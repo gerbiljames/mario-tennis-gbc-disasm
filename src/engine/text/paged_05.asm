@@ -3,7 +3,7 @@ RunPagedTextMenu:
 	push de ; $4945
 	push hl ; $4946
 	ld b, a ; $4947
-	push_wram_bank $05 ; $4948
+	push_wram_bank WRAM_TEXT ; $4948
 	ld a, b ; $4951
 	add sp, -3 ; $4952
 	ld b, h ; $4954
@@ -14,7 +14,7 @@ RunPagedTextMenu:
 	ld [hl], c ; $495b
 	ld hl, sp + 2 ; $495c
 	ld [hl], a ; $495e
-	wram_bank $05 ; $495f
+	wram_bank WRAM_TEXT ; $495f
 	xor a ; $4965
 	ld [wMenuPage], a ; $4966
 .pageLoop:
@@ -92,7 +92,7 @@ PagedMenuFrameTask:
 	push bc ; $49dd
 	push de ; $49de
 	push hl ; $49df
-	push_wram_bank $05 ; $49e0
+	push_wram_bank WRAM_TEXT ; $49e0
 	ld a, [wMenuCursorRow] ; $49e9
 	pop_wram_bank ; $49ec
 	pop hl ; $49f1
@@ -105,7 +105,7 @@ RunPagedTextMenuAutoSize:
 	push de ; $49f7
 	push hl ; $49f8
 	ld b, a ; $49f9
-	push_wram_bank $05 ; $49fa
+	push_wram_bank WRAM_TEXT ; $49fa
 	ld a, b ; $4a03
 	add sp, -3 ; $4a04
 	ld b, h ; $4a06
@@ -116,7 +116,7 @@ RunPagedTextMenuAutoSize:
 	ld [hl], c ; $4a0d
 	ld hl, sp + 2 ; $4a0e
 	ld [hl], a ; $4a10
-	wram_bank $05 ; $4a11
+	wram_bank WRAM_TEXT ; $4a11
 	xor a ; $4a17
 	ld [wMenuPage], a ; $4a18
 	ld a, $01 ; $4a1b
@@ -200,7 +200,7 @@ RunMenuSelectionShared:
 	push bc ; $4aa8
 	push de ; $4aa9
 	push hl ; $4aaa
-	push_wram_bank $05 ; $4aab
+	push_wram_bank WRAM_TEXT ; $4aab
 	xor a ; $4ab4
 	ld [wTextArrowEraseAddr], a ; $4ab5
 	ld [wTextArrowEraseAddr + 1], a ; $4ab8

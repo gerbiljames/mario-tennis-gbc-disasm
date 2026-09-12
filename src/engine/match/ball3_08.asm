@@ -161,7 +161,7 @@ DrawBallTouchCharEffect:
 	ld a, [wCharScreenY] ; $5498
 	add $f8 ; $549b
 	ld e, a ; $549d
-	wram_bank $04 ; $549e
+	wram_bank WRAM_ACTORS ; $549e
 	ld bc, $0a78 ; $54a4
 	call QueueSprite16 ; $54a7
 	ld hl, wBallTouchCharTimer ; $54aa

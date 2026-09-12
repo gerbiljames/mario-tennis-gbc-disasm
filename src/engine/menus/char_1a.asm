@@ -1,7 +1,7 @@
 CopyBank1ToBank3Buffer:
-	wram_bank $01 ; $6be1
+	wram_bank WRAM_STAGING ; $6be1
 	ld d, [hl] ; $6be7
-	wram_bank $03 ; $6be8
+	wram_bank WRAM_SCREEN ; $6be8
 	ld [hl], d ; $6bee
 	inc hl ; $6bef
 	dec bc ; $6bf0
@@ -10,9 +10,9 @@ CopyBank1ToBank3Buffer:
 	jr nz, CopyBank1ToBank3Buffer ; $6bf3
 	ret ; $6bf5
 CopyBank1ToBank2Buffer:
-	wram_bank $01 ; $6bf6
+	wram_bank WRAM_STAGING ; $6bf6
 	ld d, [hl] ; $6bfc
-	wram_bank $02 ; $6bfd
+	wram_bank WRAM_COURT_PLANES ; $6bfd
 	ld [hl], d ; $6c03
 	inc hl ; $6c04
 	dec bc ; $6c05
@@ -21,7 +21,7 @@ CopyBank1ToBank2Buffer:
 	jr nz, CopyBank1ToBank2Buffer ; $6c08
 	ret ; $6c0a
 InitCharViewerState:
-	wram_bank $06 ; $6c0b
+	wram_bank WRAM_SCENE ; $6c0b
 	xor a ; $6c11
 	ld [wCharViewerCursor], a ; $6c12
 	ld [wCharViewerRow], a ; $6c15
@@ -32,7 +32,7 @@ InitCharViewerState:
 	ld [wCharViewerPalette], a ; $6c24
 	ret ; $6c27
 DrawCharViewerCursorSprite:
-	wram_bank $06 ; $6c28
+	wram_bank WRAM_SCENE ; $6c28
 	ld a, [wCharViewerRow] ; $6c2e
 	or a ; $6c31
 	jr nz, .nonZero ; $6c32
@@ -73,7 +73,7 @@ DrawCharViewerCursorSpriteTable1:
 	INCBIN "data/bank_01a/DrawCharViewerCursorSpriteTable1.bin" ; $6c95, 10 bytes
 RunCharViewerInputLoop:
 	call DrawCharViewerCharSprite ; $6c9f
-	wram_bank $06 ; $6ca2
+	wram_bank WRAM_SCENE ; $6ca2
 	call AdvanceFrame ; $6ca8
 	ldh a, [hInputPressed] ; $6cab
 	bit PADB_UP, a ; $6cad
@@ -95,7 +95,7 @@ RunCharViewerInputLoop:
 	jr RunCharViewerInputLoop ; $6cd3
 .up:
 	sound SFX_MENU_MOVE ; $6cd5
-	wram_bank $06 ; $6cd7
+	wram_bank WRAM_SCENE ; $6cd7
 	ld a, [wCharViewerRow] ; $6cdd
 	or a ; $6ce0
 	jr nz, .upWrapToChar ; $6ce1
@@ -107,7 +107,7 @@ RunCharViewerInputLoop:
 	ld [wCharViewerCursor], a ; $6cef
 	jp .refresh ; $6cf2
 .upWrapToPalette:
-	wram_bank $06 ; $6cf5
+	wram_bank WRAM_SCENE ; $6cf5
 	ld a, [wCharViewerRow] ; $6cfb
 	xor $01 ; $6cfe
 	ld [wCharViewerRow], a ; $6d00
@@ -115,7 +115,7 @@ RunCharViewerInputLoop:
 	ld [wCharViewerCursor], a ; $6d06
 	jp .refresh ; $6d09
 .upWrapToChar:
-	wram_bank $06 ; $6d0c
+	wram_bank WRAM_SCENE ; $6d0c
 	ld a, [wCharViewerRow] ; $6d12
 	xor $01 ; $6d15
 	ld [wCharViewerRow], a ; $6d17
@@ -124,7 +124,7 @@ RunCharViewerInputLoop:
 	jp .refresh ; $6d20
 .down:
 	sound SFX_MENU_MOVE ; $6d23
-	wram_bank $06 ; $6d25
+	wram_bank WRAM_SCENE ; $6d25
 	ld a, [wCharViewerRow] ; $6d2b
 	or a ; $6d2e
 	jr nz, .downWrapToChar ; $6d2f
@@ -136,7 +136,7 @@ RunCharViewerInputLoop:
 	ld [wCharViewerCursor], a ; $6d3d
 	jp .refresh ; $6d40
 .downWrapToPalette:
-	wram_bank $06 ; $6d43
+	wram_bank WRAM_SCENE ; $6d43
 	ld a, [wCharViewerRow] ; $6d49
 	xor $01 ; $6d4c
 	ld [wCharViewerRow], a ; $6d4e
@@ -144,7 +144,7 @@ RunCharViewerInputLoop:
 	ld [wCharViewerCursor], a ; $6d54
 	jp .refresh ; $6d57
 .downWrapToChar:
-	wram_bank $06 ; $6d5a
+	wram_bank WRAM_SCENE ; $6d5a
 	ld a, [wCharViewerRow] ; $6d60
 	xor $01 ; $6d63
 	ld [wCharViewerRow], a ; $6d65
@@ -153,7 +153,7 @@ RunCharViewerInputLoop:
 	jp .refresh ; $6d6e
 .left:
 	sound SFX_MENU_MOVE ; $6d71
-	wram_bank $06 ; $6d73
+	wram_bank WRAM_SCENE ; $6d73
 	ld a, [wCharViewerRow] ; $6d79
 	or a ; $6d7c
 	jr nz, .leftPalette ; $6d7d
@@ -182,7 +182,7 @@ RunCharViewerInputLoop:
 	jr .refresh ; $6dac
 .right:
 	sound SFX_MENU_MOVE ; $6dae
-	wram_bank $06 ; $6db0
+	wram_bank WRAM_SCENE ; $6db0
 	ld a, [wCharViewerRow] ; $6db6
 	or a ; $6db9
 	jr nz, .rightPalette ; $6dba
@@ -210,7 +210,7 @@ RunCharViewerInputLoop:
 	jr .refresh ; $6de2
 .confirm:
 	sound SFX_MENU_MOVE ; $6de4
-	wram_bank $06 ; $6de6
+	wram_bank WRAM_SCENE ; $6de6
 	ld a, [wCharViewerRow] ; $6dec
 	or a ; $6def
 	jr nz, .selectPalette ; $6df0
@@ -223,9 +223,9 @@ RunCharViewerInputLoop:
 	inc h ; $6dff
 .readAnimId:
 	ld d, [hl] ; $6e00
-	wram_bank $04 ; $6e01
+	wram_bank WRAM_ACTORS ; $6e01
 	farcall SetCharAnimation ; $6e07
-	wram_bank $06 ; $6e0a
+	wram_bank WRAM_SCENE ; $6e0a
 	jr .refresh ; $6e10
 .selectPalette:
 	ld a, [wCharViewerCursor] ; $6e12
@@ -252,7 +252,7 @@ RunCharViewerInputLoop:
 	ld [wCharViewerPose], a ; $6e3b
 	jp RunCharViewerInputLoop ; $6e3e
 RefreshCharViewerSelection:
-	wram_bank $02 ; $6e41
+	wram_bank WRAM_COURT_PLANES ; $6e41
 	ld a, $09 ; $6e47
 	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH + 8 ; $6e49
 	ld [hl+], a ; $6e4c
@@ -284,7 +284,7 @@ RefreshCharViewerSelection:
 	ld [hl+], a ; $6e6a
 	ld [hl+], a ; $6e6b
 	ld [hl+], a ; $6e6c
-	wram_bank $06 ; $6e6d
+	wram_bank WRAM_SCENE ; $6e6d
 	ld a, [wCharViewerSavedCursor] ; $6e73
 	cp $0b ; $6e76
 	jr nc, .ge0b ; $6e78
@@ -302,28 +302,28 @@ RefreshCharViewerSelection:
 	sub l ; $6e8a
 	ld h, a ; $6e8b
 .queueVRAMCopy:
-	wram_bank $02 ; $6e8c
+	wram_bank WRAM_COURT_PLANES ; $6e8c
 	ld a, $08 ; $6e92
 	ld [hl], a ; $6e94
 	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $6e95
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $6e98
 	ld c, $04 ; $6e9b
 	call QueueVRAMCopy ; $6e9d
-	wram_bank $06 ; $6ea0
+	wram_bank WRAM_SCENE ; $6ea0
 	ld a, [wCharViewerPalette] ; $6ea6
 	add $c8 ; $6ea9
 	ld l, a ; $6eab
 	adc $d1 ; $6eac
 	sub l ; $6eae
 	ld h, a ; $6eaf
-	wram_bank $02 ; $6eb0
+	wram_bank WRAM_COURT_PLANES ; $6eb0
 	ld a, $08 ; $6eb6
 	ld [hl], a ; $6eb8
 	ld hl, wScreenAttrmap + 14 * TILEMAP_WIDTH ; $6eb9
 	ld de, vBGMap0 + 14 * TILEMAP_WIDTH + VRAM_BANK1 ; $6ebc
 	ld c, $02 ; $6ebf
 	call QueueVRAMCopy ; $6ec1
-	wram_bank $03 ; $6ec4
+	wram_bank WRAM_SCREEN ; $6ec4
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH + 1 ; $6eca
 	ld a, $20 ; $6ecd
 	ld [hl+], a ; $6ecf
@@ -359,7 +359,7 @@ RefreshCharViewerSelection:
 	ld [hl+], a ; $6eef
 	ld [hl+], a ; $6ef0
 	ld [hl+], a ; $6ef1
-	wram_bank $06 ; $6ef2
+	wram_bank WRAM_SCENE ; $6ef2
 	ld a, [wCharViewerRow] ; $6ef8
 	or a ; $6efb
 	jr nz, .nonZero ; $6efc
@@ -372,17 +372,17 @@ RefreshCharViewerSelection:
 	ld h, a ; $6f09
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6f0a
 	ld c, $20 ; $6f0d
-	wram_bank $03 ; $6f0f
+	wram_bank WRAM_SCREEN ; $6f0f
 	farcall RenderTextToBuffer64 ; $6f15
 	jr .queueVRAMCopy2 ; $6f18
 .nonZero:
-	wram_bank $03 ; $6f1a
+	wram_bank WRAM_SCREEN ; $6f1a
 	ld hl, Text_34_192 ; $6f20
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6f23
 	ld c, $20 ; $6f26
 	farcall RenderTextToBuffer64 ; $6f28
 .queueVRAMCopy2:
-	wram_bank $03 ; $6f2b
+	wram_bank WRAM_SCREEN ; $6f2b
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6f31
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $6f34
 	ld c, $04 ; $6f37
@@ -390,11 +390,11 @@ RefreshCharViewerSelection:
 	ret ; $6f3c
 SetupCharViewerScene:
 	call LoadCharViewerMugshot ; $6f3d
-	wram_bank $06 ; $6f40
+	wram_bank WRAM_SCENE ; $6f40
 	ld a, [wCharViewerCharId] ; $6f46
 	farcall LookupTileId ; $6f49
 	ld d, a ; $6f4c
-	wram_bank $04 ; $6f4d
+	wram_bank WRAM_ACTORS ; $6f4d
 	ldh a, [hRomBank] ; $6f53
 	ld hl, CharViewerSceneActors_1a ; $6f55
 	farcall SpawnActorsFromList ; $6f58
@@ -420,11 +420,11 @@ SetupCharViewerScene:
 	ld [wActors + 1 * ACTOR_SIZE + 55], a ; $6f92
 	ld [wActors + 2 * ACTOR_SIZE + 55], a ; $6f95
 	ld [wActors + 3 * ACTOR_SIZE + 55], a ; $6f98
-	wram_bank $06 ; $6f9b
+	wram_bank WRAM_CHAR2 ; $6f9b
 	ld a, [wCharViewerCharId] ; $6fa1
 	ld [wMatchPlayerChar], a ; $6fa4
 	ld d, a ; $6fa7
-	wram_bank $04 ; $6fa8
+	wram_bank WRAM_CHAR0 ; $6fa8
 	ld hl, wCharPosX ; $6fae
 	ld c, $10 ; $6fb1
 	call ClearMemory16 ; $6fb3

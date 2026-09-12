@@ -10,10 +10,10 @@ PlotTilesAtOffsets:
 .read:
 	ld a, [hl+] ; $477c
 	ld c, a ; $477d
-	wram_bank $03 ; $477e
+	wram_bank WRAM_SCREEN ; $477e
 	ld a, c ; $4784
 	ld [de], a ; $4785
-	wram_bank $02 ; $4786
+	wram_bank WRAM_COURT_PLANES ; $4786
 	ld a, b ; $478c
 	ld [de], a ; $478d
 	pop de ; $478e
@@ -24,11 +24,11 @@ PlotTilesAtOffsets:
 DrawFourTileFlagLabel:
 	or a ; $4793
 	jr nz, .nonZero ; $4794
-	wram_bank $03 ; $4796
+	wram_bank WRAM_SCREEN ; $4796
 	ld a, $01 ; $479c
 	jr .store ; $479e
 .nonZero:
-	wram_bank $03 ; $47a0
+	wram_bank WRAM_SCREEN ; $47a0
 	ld a, $05 ; $47a6
 .store:
 	ld [hl+], a ; $47a8
@@ -48,10 +48,10 @@ WriteNameStringTiles:
 	cp $df ; $47b7
 	jr z, .nameTilePtrUpOneRow ; $47b9
 	ld b, a ; $47bb
-	wram_bank $03 ; $47bc
+	wram_bank WRAM_SCREEN ; $47bc
 	ld a, b ; $47c2
 	ld [de], a ; $47c3
-	wram_bank $02 ; $47c4
+	wram_bank WRAM_COURT_PLANES ; $47c4
 	xor a ; $47ca
 	ld [de], a ; $47cb
 	inc de ; $47cc
@@ -59,14 +59,14 @@ WriteNameStringTiles:
 .nameTilePtrUpOneRow:
 	call NameTilePtrUpOneRow ; $47cf
 	ld b, a ; $47d2
-	wram_bank $03 ; $47d3
+	wram_bank WRAM_SCREEN ; $47d3
 	ld a, [de] ; $47d9
 	or a ; $47da
 	jr z, .zero ; $47db
 	ld a, b ; $47dd
 	sub $30 ; $47de
 	ld [de], a ; $47e0
-	wram_bank $02 ; $47e1
+	wram_bank WRAM_COURT_PLANES ; $47e1
 	ld a, $08 ; $47e7
 	ld [de], a ; $47e9
 	call NameTilePtrDownOneRow ; $47ea
@@ -74,7 +74,7 @@ WriteNameStringTiles:
 .zero:
 	ld a, b ; $47ef
 	ld [de], a ; $47f0
-	wram_bank $02 ; $47f1
+	wram_bank WRAM_COURT_PLANES ; $47f1
 	xor a ; $47f7
 	ld [de], a ; $47f8
 	call NameTilePtrDownOneRow ; $47f9
@@ -98,7 +98,7 @@ NameTilePtrDownOneRow:
 .done:
 	ret ; $480d
 FormatExp24BitDecimal:
-	wram_bank $06 ; $480e
+	wram_bank WRAM_SCENE ; $480e
 	ld a, [hl+] ; $4814
 	ld b, [hl] ; $4815
 	ld c, a ; $4816
@@ -223,7 +223,7 @@ FormatExp24BitDecimal:
 	jp nz, .loop ; $48c3
 	ret ; $48c6
 CharDataValuesSyncTask:
-	wram_bank $06 ; $48c7
+	wram_bank WRAM_SCENE ; $48c7
 	ld a, [wCharDataSyncSource] ; $48cd
 	or a ; $48d0
 	jr nz, .nonZero ; $48d1
@@ -283,7 +283,7 @@ CharDataValuesSyncTask:
 	ld hl, wCharDataValuesSlideX ; $494a
 	call ApplySlideOffsetToSpriteX ; $494d
 	call QueueSprite ; $4950
-	wram_bank $06 ; $4953
+	wram_bank WRAM_SCENE ; $4953
 	ld a, [wCharStatPageMain + 10] ; $4959
 	cp $20 ; $495c
 	jr z, .eq203 ; $495e
@@ -374,60 +374,60 @@ SaveWorkTilemapToPage:
 	jr z, .page2 ; $4a18
 	dec a ; $4a1a
 	jr z, .page1 ; $4a1b
-	wram_bank $03 ; $4a1d
+	wram_bank WRAM_SCREEN ; $4a1d
 	ld hl, wShadowTilemap ; $4a23
 	ld de, wCharDataPageSlot3 ; $4a26
 	ld c, $24 ; $4a29
 	call CopyMemoryFast ; $4a2b
-	wram_bank $02 ; $4a2e
+	wram_bank WRAM_COURT_PLANES ; $4a2e
 	ld hl, wScreenAttrmap ; $4a34
 	ld de, wCharDataPageSlot3 ; $4a37
 	ld c, $24 ; $4a3a
 	call CopyMemoryFast ; $4a3c
 	ret ; $4a3f
 .page1:
-	wram_bank $03 ; $4a40
+	wram_bank WRAM_SCREEN ; $4a40
 	ld hl, wShadowTilemap ; $4a46
 	ld de, wCharDataPageSlot2 ; $4a49
 	ld c, $24 ; $4a4c
 	call CopyMemoryFast ; $4a4e
-	wram_bank $02 ; $4a51
+	wram_bank WRAM_COURT_PLANES ; $4a51
 	ld hl, wScreenAttrmap ; $4a57
 	ld de, wCharDataPageSlot2 ; $4a5a
 	ld c, $24 ; $4a5d
 	call CopyMemoryFast ; $4a5f
 	ret ; $4a62
 .page2:
-	wram_bank $03 ; $4a63
+	wram_bank WRAM_SCREEN ; $4a63
 	ld hl, wShadowTilemap ; $4a69
 	ld de, wCharDataPageSlot1 ; $4a6c
 	ld c, $24 ; $4a6f
 	call CopyMemoryFast ; $4a71
-	wram_bank $02 ; $4a74
+	wram_bank WRAM_COURT_PLANES ; $4a74
 	ld hl, wScreenAttrmap ; $4a7a
 	ld de, wCharDataPageSlot1 ; $4a7d
 	ld c, $24 ; $4a80
 	call CopyMemoryFast ; $4a82
 	ret ; $4a85
 .page3:
-	wram_bank $03 ; $4a86
+	wram_bank WRAM_SCREEN ; $4a86
 	ld hl, wShadowTilemap ; $4a8c
 	ld de, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4a8f
 	ld c, $24 ; $4a92
 	call CopyMemoryFast ; $4a94
-	wram_bank $02 ; $4a97
+	wram_bank WRAM_COURT_PLANES ; $4a97
 	ld hl, wScreenAttrmap ; $4a9d
 	ld de, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4aa0
 	ld c, $24 ; $4aa3
 	call CopyMemoryFast ; $4aa5
 	ret ; $4aa8
 LoadBasePageIntoWorkTilemap:
-	wram_bank $03 ; $4aa9
+	wram_bank WRAM_SCREEN ; $4aa9
 	ld hl, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4aaf
 	ld de, wShadowTilemap ; $4ab2
 	ld c, $24 ; $4ab5
 	call CopyMemoryFast ; $4ab7
-	wram_bank $02 ; $4aba
+	wram_bank WRAM_COURT_PLANES ; $4aba
 	ld hl, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4ac0
 	ld de, wScreenAttrmap ; $4ac3
 	ld c, $24 ; $4ac6
@@ -449,7 +449,7 @@ BuildMainCharStatPage:
 	xor a ; $4aeb
 	ld [wStoryCharacterSlot], a ; $4aec
 	call BuildCharStatDisplay ; $4aef
-	wram_bank $06 ; $4af2
+	wram_bank WRAM_SCENE ; $4af2
 	ld a, [wCharDataLevels] ; $4af8
 	ld [wCharStatPageMain], a ; $4afb
 	ld a, [wCharDataLevels + 1] ; $4afe

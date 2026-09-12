@@ -326,7 +326,7 @@ SeniorCourtReloadIntoVictoryScene:
 	farcall StubNop_1e ; $6d9c
 	ret ; $6d9f
 SeniorCourtPostMatchReturn:
-	wram_bank $04 ; $6da0
+	wram_bank WRAM_ACTORS ; $6da0
 	ld a, [wMatchExitRequest] ; $6da6
 	cp $01 ; $6da9
 	jr z, .eq01 ; $6dab

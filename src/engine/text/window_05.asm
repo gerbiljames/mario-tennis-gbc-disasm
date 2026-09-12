@@ -6,7 +6,7 @@ FetchShortTextToBuffer:
 	push bc ; $409b
 	push de ; $409c
 	push hl ; $409d
-	push_wram_bank $05 ; $409e
+	push_wram_bank WRAM_TEXT ; $409e
 	call FetchShortText ; $40a7
 	ld hl, wShortTextBuffer ; $40aa
 .copyLoop:
@@ -22,7 +22,7 @@ FetchShortTextToBuffer:
 	pop af ; $40bc
 	ret ; $40bd
 ClearWindowGlyphPage:
-	push_wram_bank $05 ; $40be
+	push_wram_bank WRAM_TEXT ; $40be
 	ld hl, wWindowShadowTilemap ; $40c7
 	ld c, $80 ; $40ca
 	call ClearMemory16 ; $40cc
@@ -36,7 +36,7 @@ QueueGlyphPageDMAOnA:
 .startDMA:
 	xor a ; $40dd
 	ldh [rVBK], a ; $40de
-	wram_bank $05 ; $40e0
+	wram_bank WRAM_TEXT ; $40e0
 	ld bc, wWindowShadowTilemap ; $40e6
 	ld de, $1800 ; $40e9
 	ld a, $24 ; $40ec
@@ -57,7 +57,7 @@ WriteTileToShadowMapCell:
 	push de ; $40fc
 	push bc ; $40fd
 	push af ; $40fe
-	wram_bank $05 ; $40ff
+	wram_bank WRAM_TEXT ; $40ff
 	pop af ; $4105
 	call GetTilemapCellAddress ; $4106
 	or a ; $4109
@@ -72,7 +72,7 @@ Unused_05_ReadShadowMapCell:
 	push af ; $4111
 	push de ; $4112
 	push af ; $4113
-	wram_bank $05 ; $4114
+	wram_bank WRAM_TEXT ; $4114
 	pop af ; $411a
 	call GetTilemapCellAddress ; $411b
 	ld a, [de] ; $411e

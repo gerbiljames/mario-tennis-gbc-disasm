@@ -544,6 +544,23 @@ def MARIOGAME_TREASURE_BOX    equ $06 ; Wario; first cell of the expanded grid
 def MARIOGAME_MEDALLION_MATCH equ $07 ; Waluigi
 def MARIOGAME_TWO_ON_ONE      equ $08 ; Bowser
 
+; --- WRAM banks (wram_bank / push_wram_bank; the "at a glance" notes in ram/wram.asm) ---
+; Banks 1-3 and 5-7 each have one main owner; 4-7 also hold the four
+; on-court character structs at $df00, one per wCharIndex, which the match
+; engine selects with WRAM_CHARn. The two spellings are the same number: the
+; name at a site says which use the code is reaching for.
+def WRAM_STAGING      equ 1 ; VRAM staging: wDecompBuffer, which every screen decompresses into
+def WRAM_COURT_PLANES equ 2 ; the court's tile and attribute planes; the overworld scroll buffer's attribute half; the char-data screen's attribute pages
+def WRAM_SCREEN       equ 3 ; wShadowTilemap, the full-screen UIs' tile plane; the scroll buffer's tile half; the char-data screen's tile pages
+def WRAM_ACTORS       equ 4 ; overworld actors and the actor engine; minigame targets
+def WRAM_TEXT         equ 5 ; the text and window engine and wWindowShadowTilemap
+def WRAM_SCENE        equ 6 ; the story scene's collision and behaviour maps, scene loading, and the per-screen scratch overlays
+def WRAM_SOUND        equ 7 ; the sound driver; glyph tiles and save-block staging
+def WRAM_CHAR0        equ 4 ; on-court character 0's struct (wCharIndex 0)
+def WRAM_CHAR1        equ 5
+def WRAM_CHAR2        equ 6
+def WRAM_CHAR3        equ 7
+
 ; --- Notes (snd_note in a sound channel script: the low nibble of the note byte) ---
 ; Index into NotePeriodTable's twelve semitones; snd_tone_flag picks which
 ; of the table's two octaves, and the note's octave argument halves the

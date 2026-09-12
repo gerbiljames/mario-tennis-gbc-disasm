@@ -411,7 +411,7 @@ ActorScript_11_29:
 	as_wait $f0
 	as_jump .L8
 JuniorClassCourtSinglesMatchReturn:
-	wram_bank $04 ; $6e4d
+	wram_bank WRAM_ACTORS ; $6e4d
 	ld a, [wMatchExitRequest] ; $6e53
 	cp $01 ; $6e56
 	jr z, .eq01 ; $6e58

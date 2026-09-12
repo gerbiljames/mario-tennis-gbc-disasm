@@ -44,7 +44,7 @@ ProcessTargetTileHit:
 	ld a, [hl] ; $58e2
 	cp $01 ; $58e3
 	ret z ; $58e5
-	push_wram_bank $02 ; $58e6
+	push_wram_bank WRAM_COURT_PLANES ; $58e6
 	ld a, $01 ; $58ef
 	ld [hl], a ; $58f1
 	ld a, b ; $58f2
@@ -74,7 +74,7 @@ ProcessTargetTileHit:
 	jr nc, .ge09 ; $5923
 	inc [hl] ; $5925
 .ge09:
-	push_wram_bank $02 ; $5926
+	push_wram_bank WRAM_COURT_PLANES ; $5926
 	ld a, $01 ; $592f
 	ld [wMatchSimFrozen], a ; $5931
 	call AnimateTargetGridClear ; $5934

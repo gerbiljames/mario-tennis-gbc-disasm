@@ -80,7 +80,7 @@ LoadOnCourtCharacterGfx:
 	dw LoadOnCourtCharacterGfx.char3 ; $40c5 jumptable
 	dw LoadOnCourtCharacterGfx.char2 ; $40c7 jumptable
 .char2:
-	wram_bank $06 ; $40c9
+	wram_bank WRAM_CHAR2 ; $40c9
 	ld a, [wCharSpriteSetId] ; $40cf
 	ld de, vTiles0 + $10 * TILE_SIZE ; $40d2
 	farcall LoadOnCourtCharTilesA ; $40d5
@@ -88,7 +88,7 @@ LoadOnCourtCharacterGfx:
 	ld de, vTiles0 + $14 * TILE_SIZE ; $40db
 	farcall LoadOnCourtCharTilesB ; $40de
 .char3:
-	wram_bank $07 ; $40e1
+	wram_bank WRAM_CHAR3 ; $40e1
 	ld a, [wCharSpriteSetId] ; $40e7
 	ld de, vTiles0 + $18 * TILE_SIZE ; $40ea
 	farcall LoadOnCourtCharTilesA ; $40ed
@@ -96,7 +96,7 @@ LoadOnCourtCharacterGfx:
 	ld de, vTiles0 + $1c * TILE_SIZE ; $40f3
 	farcall LoadOnCourtCharTilesB ; $40f6
 .char4:
-	wram_bank $05 ; $40f9
+	wram_bank WRAM_CHAR1 ; $40f9
 	ld a, [wCharSpriteSetId] ; $40ff
 	ld de, vTiles0 + $08 * TILE_SIZE ; $4102
 	farcall LoadOnCourtCharTilesA ; $4105
@@ -104,7 +104,7 @@ LoadOnCourtCharacterGfx:
 	ld de, vTiles0 + $0c * TILE_SIZE ; $410b
 	farcall LoadOnCourtCharTilesB ; $410e
 .done:
-	wram_bank $04 ; $4111
+	wram_bank WRAM_CHAR0 ; $4111
 	ld a, [wCharSpriteSetId] ; $4117
 	ld de, vTiles0 ; $411a
 	farcall LoadOnCourtCharTilesA ; $411d
@@ -113,7 +113,7 @@ LoadOnCourtCharacterGfx:
 	farcall LoadOnCourtCharTilesB ; $4126
 	ret ; $4129
 SpawnGameScoreDisplayObjs:
-	wram_bank $04 ; $412a
+	wram_bank WRAM_ACTORS ; $412a
 	call ClearAllObjSlots ; $4130
 	ld a, [wScoreboardLayout] ; $4133
 	cp $03 ; $4136
@@ -122,12 +122,12 @@ SpawnGameScoreDisplayObjs:
 	cpl ; $413d
 	and $01 ; $413e
 	ld b, a ; $4140
-	wram_bank $04 ; $4141
+	wram_bank WRAM_CHAR0 ; $4141
 	ld a, [wCharCourtPos] ; $4147
 	and $02 ; $414a
 	or b ; $414c
 	ld b, a ; $414d
-	wram_bank $04 ; $414e
+	wram_bank WRAM_ACTORS ; $414e
 	push bc ; $4154
 	ld a, b ; $4155
 	ld hl, ObjTemplates_09 ; $4156
@@ -337,7 +337,7 @@ CourtBannerObjTemplates_09:
 	dw $4840, $7098, $4764, $0000, $4764, $0003, $0067, $0000 ; record 27
 	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 28
 InitAllObjSlots:
-	wram_bank $04 ; $4555
+	wram_bank WRAM_ACTORS ; $4555
 	ld bc, wObjSlot0 ; $455b
 	call InitObjSlot ; $455e
 	ld bc, wObjSlot1 ; $4561
@@ -640,7 +640,7 @@ FinishObjSlotUpdate:
 	ld d, a ; $4729
 	ld a, [wCharScreenY] ; $472a
 	ld e, a ; $472d
-	wram_bank $04 ; $472e
+	wram_bank WRAM_ACTORS ; $472e
 	ld a, [wObjSlotWork + 10] ; $4734
 	ld hl, wObjSlotWork + 6 ; $4737
 	add [hl] ; $473a

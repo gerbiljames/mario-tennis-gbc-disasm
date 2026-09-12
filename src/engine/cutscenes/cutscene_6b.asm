@@ -12,7 +12,7 @@ IntroCutsceneState16Exit_6b:
 IntroCutsceneState16InitPalettes_6b:
 	INCLUDE "data/bank_06b/IntroCutsceneState16InitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
 IntroCutsceneState17Init_6b:
-	wram_bank $04 ; $4a98
+	wram_bank WRAM_ACTORS ; $4a98
 	ld hl, wIntroCharactersTilemap + 6 * TILEMAP_WIDTH ; $4a9e
 	ld de, vBGMap1 + 6 * TILEMAP_WIDTH ; $4aa1
 	ld c, $10 ; $4aa4
@@ -50,7 +50,7 @@ IntroCutsceneState18Init_6b:
 	ld hl, IntroCutsceneState18InitPalettes_6b ; $4af2
 	lb de, $00, $08 ; $4af5 palette index, count
 	call LoadPaletteShadow ; $4af8
-	wram_bank $05 ; $4afb
+	wram_bank WRAM_TEXT ; $4afb
 	ld hl, wWindowShadowTilemap + 19 * TILEMAP_WIDTH ; $4b01
 	ld de, vBGMap1 + 19 * TILEMAP_WIDTH ; $4b04
 	ld c, $10 ; $4b07
@@ -96,7 +96,7 @@ IntroCutsceneState18Init_6b:
 	lb de, $01, $07 ; $4b74 palette index, count
 	call LoadPaletteShadow ; $4b77
 	call AdvanceFrame ; $4b7a
-	wram_bank $01 ; $4b7d
+	wram_bank WRAM_STAGING ; $4b7d
 	ld hl, wDecompBuffer ; $4b83
 	ld de, vTiles2 ; $4b86
 	ld c, $20 ; $4b89
@@ -142,7 +142,7 @@ IntroCutsceneState18Update_6b:
 IntroCutsceneState18Exit_6b:
 	ld hl, ApplyScrollYFromWram ; $4bed
 	call UnregisterFrameTask ; $4bf0
-	wram_bank $03 ; $4bf3
+	wram_bank WRAM_SCREEN ; $4bf3
 	ld a, $00 ; $4bf9
 	ldh [hShowDebugConsole], a ; $4bfb
 	jp DispatchCutsceneStateInit.loop2 ; $4bfd

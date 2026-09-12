@@ -1,5 +1,5 @@
 ShowTournamentBracket:
-	wram_bank $03 ; $775d
+	wram_bank WRAM_SCREEN ; $775d
 	ld a, b ; $7763
 	ld [wScreenScratch], a ; $7764
 	ld a, c ; $7767
@@ -39,7 +39,7 @@ BuildTournamentBracketScreen:
 	ld c, TournamentBracketGfx_SIZE / 16 ; $77b4
 	ld de, vTiles2 ; $77b6
 	farcall LoadCompressedTileBlock ; $77b9
-	wram_bank $03 ; $77bc
+	wram_bank WRAM_SCREEN ; $77bc
 	call ClearTournamentBracketAttrs ; $77c2
 	call DrawTournamentBracketNameBoxes ; $77c5
 	call WriteBracketSinglesNames ; $77c8
@@ -53,7 +53,7 @@ BuildTournamentBracketScreen:
 	ld c, TournamentBracketGfx_SIZE / 16 ; $77d9
 	ld de, vTiles2 ; $77db
 	farcall LoadCompressedTileBlock ; $77de
-	wram_bank $03 ; $77e1
+	wram_bank WRAM_SCREEN ; $77e1
 	call ClearTournamentBracketAttrs ; $77e7
 	call DrawTournamentBracketNameBoxes ; $77ea
 	call WriteBracketDoublesNames ; $77ed
@@ -378,7 +378,7 @@ RunMarioCastExhibResults:
 	call EnableLCD ; $7a1b
 	script_fade_in $10 ; $7a1e
 	call WaitFadeEnd ; $7a23
-	wram_bank $03 ; $7a26
+	wram_bank WRAM_SCREEN ; $7a26
 .loop:
 	call AdvanceFrame ; $7a2c
 	ldh a, [hInputPressed] ; $7a2f
@@ -413,7 +413,7 @@ RunMarioCastExhibResults:
 	ld a, $ff ; $7a6a
 	ret ; $7a6c
 MarioCastChartScrollArrowsTask:
-	push_wram_bank $03 ; $7a6d
+	push_wram_bank WRAM_SCREEN ; $7a6d
 	call CheckMarioCastChartExpanded ; $7a76
 	or a ; $7a79
 	jr z, .checkMenuCursorY3 ; $7a7a
@@ -488,7 +488,7 @@ MarioCastChartScrollArrowsTask:
 	pop_wram_bank ; $7b0b
 	ret ; $7b10
 BuildMarioCastExhibScreen:
-	wram_bank $03 ; $7b11
+	wram_bank WRAM_SCREEN ; $7b11
 	xor a ; $7b17
 	ld [wN64ExhibCursorRow], a ; $7b18
 	ld [wN64ExhibPage], a ; $7b1b
@@ -501,7 +501,7 @@ BuildMarioCastExhibScreen:
 	ld b, $08 ; $7b2f
 	ld c, $0f ; $7b31
 	farcall LoadIndexedPalette ; $7b33
-	wram_bank $03 ; $7b36
+	wram_bank WRAM_SCREEN ; $7b36
 	call BuildMarioCastChartColumnList ; $7b3c
 	call LoadMarioCastExhibGrid ; $7b3f
 	call ApplyMarioCastChartReducedLayout ; $7b42
@@ -588,7 +588,7 @@ ScrollMarioCastChartCursorSmall:
 .done:
 	ret ; $7be9
 RedrawMarioCastChartWindow:
-	wram_bank $03 ; $7bea
+	wram_bank WRAM_SCREEN ; $7bea
 	call CheckMarioCastChartExpanded ; $7bf0
 	or a ; $7bf3
 	jr z, .compact ; $7bf4
@@ -762,7 +762,7 @@ MarioCastChartColumnTable:
 	db $03, $04, $05 ; 0x03
 	db $07, $08, $0c ; 0x06
 LoadMarioCastExhibGrid:
-	push_wram_bank $03 ; $7d1e
+	push_wram_bank WRAM_SCREEN ; $7d1e
 	ld hl, wN64RecordsBlock ; $7d27
 	farcall ReadMarioCastVictoryGrid ; $7d2a
 	ld hl, wN64RecordsBlock ; $7d2d

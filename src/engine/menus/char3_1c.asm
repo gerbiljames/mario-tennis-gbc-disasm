@@ -13,7 +13,7 @@ CharDataScreen_DrawPageColumnsTable1:
 	dw CharDataScreenPage3Columns ; record 3
 	dw CharDataScreenPage4Columns ; record 4
 DrawStatValueSprites:
-	wram_bank $06 ; $4e54
+	wram_bank WRAM_SCENE ; $4e54
 	ld b, $0e ; $4e5a
 	ld a, [wCharDataLevels] ; $4e5c
 	ld l, a ; $4e5f
@@ -235,7 +235,7 @@ GetStatDigitSpritePos:
 RadialOffsetRamps_1c:
 	INCBIN "data/bank_01c/RadialOffsetRamps_1c.bin" ; $4fe9, 96 bytes
 DrawRemainingPointsSprite:
-	wram_bank $06 ; $5049
+	wram_bank WRAM_SCENE ; $5049
 	ld a, [wCharDataPointsLeft] ; $504f
 	cp $0a ; $5052
 	jr c, .lt0a ; $5054
@@ -278,7 +278,7 @@ OffsetStatSpriteX:
 	ld e, a ; $509b
 	ret ; $509c
 CharDataScreen_InputLoop:
-	wram_bank $06 ; $509d
+	wram_bank WRAM_SCENE ; $509d
 	ld a, [wCharDataViewOnly] ; $50a3
 	or a ; $50a6
 	jp nz, .finish ; $50a7
@@ -323,7 +323,7 @@ CharDataScreen_InputLoop:
 	call MoveCharDataScreenSelection ; $50f3
 	jp CharDataScreen_InputLoop ; $50f6
 .pressB:
-	wram_bank $06 ; $50f9
+	wram_bank WRAM_SCENE ; $50f9
 	ld a, [wCharDataPage] ; $50ff
 	cp $04 ; $5102
 	jr nz, .selectConfirmCell ; $5104
@@ -343,7 +343,7 @@ CharDataScreen_InputLoop:
 	call FlushCharDataTilemaps ; $5124
 	jp nz, CharDataScreen_InputLoop ; $5127
 .pressA:
-	wram_bank $06 ; $512a
+	wram_bank WRAM_SCENE ; $512a
 	ld a, [wCharDataPage] ; $5130
 	cp $04 ; $5133
 	jp z, CharDataScreen_InputLoop ; $5135
@@ -351,7 +351,7 @@ CharDataScreen_InputLoop:
 	ld d, a ; $513a
 	ld a, [wStoryCharacterSlot] ; $513b
 	farcall LevelUpPlayer ; $513e
-	wram_bank $06 ; $5141
+	wram_bank WRAM_SCENE ; $5141
 	ld hl, wCharDataPointsLeft ; $5147
 	dec [hl] ; $514a
 	ld a, [wCharDataChoiceCount] ; $514b
@@ -400,7 +400,7 @@ CharDataScreen_InputLoop:
 	call FlushCharDataTilemaps ; $519d
 	jp CharDataScreen_InputLoop ; $51a0
 .finish:
-	wram_bank $06 ; $51a3
+	wram_bank WRAM_SCENE ; $51a3
 	ld a, [wCharDataViewOnly] ; $51a9
 	or a ; $51ac
 	jp nz, .skipWipe ; $51ad
@@ -416,7 +416,7 @@ CharDataScreen_InputLoop:
 	ld hl, CharDataBand5RunsStep2_1c ; $51cb
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $51ce
 	call BlitTilemapRunsFromTable ; $51d1
-	wram_bank $06 ; $51d4
+	wram_bank WRAM_SCENE ; $51d4
 	ld a, $01 ; $51da
 	ld [wCharDataRevealStep], a ; $51dc
 	ld [wCharDataConfirmState], a ; $51df
@@ -430,11 +430,11 @@ CharDataScreen_InputLoop:
 	ld hl, CharDataBand5RunsStep1_1c ; $51f7
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $51fa
 	call BlitTilemapRunsFromTable ; $51fd
-	wram_bank $06 ; $5200
+	wram_bank WRAM_SCENE ; $5200
 	ld a, $02 ; $5206
 	ld [wCharDataRevealStep], a ; $5208
 	call FlushCharDataTilemaps ; $520b
-	wram_bank $06 ; $520e
+	wram_bank WRAM_SCENE ; $520e
 	ld a, $03 ; $5214
 	ld [wCharDataRevealStep], a ; $5216
 	ld hl, DrawRemainingPointsSprite ; $5219
@@ -495,7 +495,7 @@ CharDataScreen_InputLoop:
 	ld [wCharDataConfirmState], a ; $52ac
 	jr .confirmLoop ; $52af
 .confirmA:
-	wram_bank $06 ; $52b1
+	wram_bank WRAM_SCENE ; $52b1
 	ld a, [wCharDataConfirmState] ; $52b7
 	or a ; $52ba
 	jr nz, .cancel ; $52bb
@@ -534,7 +534,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $5314
 	call DrawCharStatRows ; $5317
 	call FlushCharDataTilemaps ; $531a
-	wram_bank $06 ; $531d
+	wram_bank WRAM_SCENE ; $531d
 	ld a, $03 ; $5323
 	ld [wCharDataRevealStep], a ; $5325
 	call FlushCharDataTilemaps ; $5328
@@ -549,7 +549,7 @@ CharDataScreen_InputLoop:
 	ld hl, CharDataBand5RunsStep1_1c ; $5342
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $5345
 	call BlitTilemapRunsFromTable ; $5348
-	wram_bank $06 ; $534b
+	wram_bank WRAM_SCENE ; $534b
 	ld a, $02 ; $5351
 	ld [wCharDataRevealStep], a ; $5353
 	call FlushCharDataTilemaps ; $5356
@@ -561,11 +561,11 @@ CharDataScreen_InputLoop:
 	ld hl, CharDataBand5RunsStep2_1c ; $5368
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $536b
 	call BlitTilemapRunsFromTable ; $536e
-	wram_bank $06 ; $5371
+	wram_bank WRAM_SCENE ; $5371
 	ld a, $01 ; $5377
 	ld [wCharDataRevealStep], a ; $5379
 	call FlushCharDataTilemaps ; $537c
-	wram_bank $06 ; $537f
+	wram_bank WRAM_SCENE ; $537f
 	xor a ; $5385
 	ld [wCharDataLevelPreview], a ; $5386
 	ld [wCharDataRevealStep], a ; $5389

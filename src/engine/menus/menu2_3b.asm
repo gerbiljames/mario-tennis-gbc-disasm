@@ -19,7 +19,7 @@ RunMainMenu:
 	ld [wMenuBgScrollTile + 1], a ; $55fa
 	ld a, $01 ; $55fd
 	ld [wMenuBgScrollAttr + 1], a ; $55ff
-	wram_bank $03 ; $5602
+	wram_bank WRAM_SCREEN ; $5602
 	ld a, [wMenuSlideDirection] ; $5608
 	ld b, a ; $560b
 	call MainMenuSlideIn ; $560c
@@ -29,7 +29,7 @@ RunMainMenu:
 	call DrawMainMenuSelection ; $5617
 	call ResetSerialState ; $561a
 	farcall ResetCheatCodeBuffer ; $561d
-	wram_bank $03 ; $5620
+	wram_bank WRAM_SCREEN ; $5620
 .loop:
 	call AdvanceFrame ; $5626
 	farcall UpdateCheatCodeEntry ; $5629
@@ -111,7 +111,7 @@ MapMainMenuCursorToItemIdTable:
 	db $06, $07, $08 ; 0x06
 	ret ; $56c3
 LoadMainMenuGfx:
-	push_wram_bank $01 ; $56c4
+	push_wram_bank WRAM_STAGING ; $56c4
 	ld c, $00 ; $56cd
 .loop:
 	ld a, c ; $56cf
@@ -164,7 +164,7 @@ LoadMainMenuGfx:
 	ld a, c ; $570e
 	cp $06 ; $570f
 	jr nz, .loop ; $5711
-	wram_bank $03 ; $5713
+	wram_bank WRAM_SCREEN ; $5713
 	ld a, $00 ; $5719
 	ld [wCurrentStorySlot], a ; $571b
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $571e
@@ -172,7 +172,7 @@ LoadMainMenuGfx:
 	ld de, $9680 + VRAM_BANK1 ; $5724
 	farcall CopyMugshotBufferToVram ; $5727
 	call AdvanceFrame ; $572a
-	wram_bank $03 ; $572d
+	wram_bank WRAM_SCREEN ; $572d
 	ld a, $01 ; $5733
 	ld [wCurrentStorySlot], a ; $5735
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $5738
@@ -180,7 +180,7 @@ LoadMainMenuGfx:
 	ld de, $9710 + VRAM_BANK1 ; $573e
 	farcall CopyMugshotBufferToVram ; $5741
 	call AdvanceFrame ; $5744
-	wram_bank $03 ; $5747
+	wram_bank WRAM_SCREEN ; $5747
 	ld a, $02 ; $574d
 	ld [wCurrentStorySlot], a ; $574f
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $5752
@@ -431,7 +431,7 @@ MainMenuCursorSpriteTaskTable2:
 	db $00, $10, $38, $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12 ; 0x20
 	db $00, $80 ; 0x30
 DrawMainMenuSelection:
-	wram_bank $03 ; $5968
+	wram_bank WRAM_SCREEN ; $5968
 	ld b, $00 ; $596e
 	ld c, $00 ; $5970
 .loop:
@@ -472,7 +472,7 @@ DrawMainMenuSelection:
 .loadMainMenuItemPalette:
 	call LoadMainMenuItemPalette ; $59ae
 .fillTilemapRect:
-	wram_bank $03 ; $59b1
+	wram_bank WRAM_SCREEN ; $59b1
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $59b7
 	ld b, $14 ; $59ba
 	ld c, $01 ; $59bc

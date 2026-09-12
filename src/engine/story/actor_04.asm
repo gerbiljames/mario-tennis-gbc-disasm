@@ -1,5 +1,5 @@
 ClearActorSlots:
-	wram_bank $04 ; $4032
+	wram_bank WRAM_ACTORS ; $4032
 	ld hl, wActors ; $4038
 	ld c, $60 ; $403b
 	call ClearMemory16 ; $403d
@@ -17,7 +17,7 @@ SpawnActor:
 	push af ; $4055
 	push de ; $4056
 	push hl ; $4057
-	wram_bank $04 ; $4058
+	wram_bank WRAM_ACTORS ; $4058
 	ld hl, wActors ; $405e
 	ld c, $18 ; $4061
 .findSlot:
@@ -80,7 +80,7 @@ InitActorSlotFields:
 	push af ; $40af
 	push bc ; $40b0
 	push af ; $40b1
-	wram_bank $04 ; $40b2
+	wram_bank WRAM_ACTORS ; $40b2
 	ld a, l ; $40b8
 	ld [bc], a ; $40b9
 	inc bc ; $40ba
@@ -102,7 +102,7 @@ SetActorPosition:
 	push af ; $40c9
 	push de ; $40ca
 	push hl ; $40cb
-	wram_bank $04 ; $40cc
+	wram_bank WRAM_ACTORS ; $40cc
 	push hl ; $40d2
 	ld hl, $000e ; $40d3
 	add hl, bc ; $40d6
@@ -136,7 +136,7 @@ Unused_04_SetActorTarget:
 	push af ; $40f7
 	push de ; $40f8
 	push hl ; $40f9
-	wram_bank $04 ; $40fa
+	wram_bank WRAM_ACTORS ; $40fa
 	push hl ; $4100
 	ld hl, $000a ; $4101
 	add hl, bc ; $4104
@@ -160,7 +160,7 @@ Unused_04_SetActorTargetRelative:
 	push af ; $4117
 	push de ; $4118
 	push hl ; $4119
-	wram_bank $04 ; $411a
+	wram_bank WRAM_ACTORS ; $411a
 	push hl ; $4120
 	ld hl, $000e ; $4121
 	add hl, bc ; $4124
@@ -199,7 +199,7 @@ SetActorMode:
 	ret z ; $414a
 	push af ; $414b
 	push hl ; $414c
-	wram_bank $04 ; $414d
+	wram_bank WRAM_ACTORS ; $414d
 	ld hl, $0020 ; $4153
 	add hl, bc ; $4156
 	ld [hl], d ; $4157
@@ -234,7 +234,7 @@ AttachActorWaypointFollower:
 	push af ; $417e
 	push de ; $417f
 	push hl ; $4180
-	wram_bank $04 ; $4181
+	wram_bank WRAM_ACTORS ; $4181
 	ld hl, $0016 ; $4187
 	add hl, bc ; $418a
 	ld a, e ; $418b
@@ -302,7 +302,7 @@ ActorScript_Deactivate:
 	as_set_field $20, $0000
 	as_halt
 UpdateActors:
-	wram_bank $04 ; $41e7
+	wram_bank WRAM_ACTORS ; $41e7
 	ld hl, wActors ; $41ed
 	ld c, $18 ; $41f0
 .actorLoop:

@@ -9,7 +9,7 @@ InitCutsceneSceneA:
 	call DisableLCDSafely ; $53fc
 	farcall InitSceneScroll ; $53ff
 	farcall InitTextWindows ; $5402
-	wram_bank $01 ; $5405
+	wram_bank WRAM_STAGING ; $5405
 	ld hl, CutsceneSceneAGfx0 ; $540b
 	ld de, wDecompBuffer ; $540e
 	call DecompressData ; $5411
@@ -21,11 +21,11 @@ InitCutsceneSceneA:
 	ld de, vTiles1 ; $5422
 	ld c, $80 ; $5425
 	call QueueVRAMCopy ; $5427
-	wram_bank $02 ; $542a
+	wram_bank WRAM_COURT_PLANES ; $542a
 	ld hl, CutsceneSceneAGfx1 ; $5430
 	ld de, wScreenAttrmap ; $5433
 	call DecompressData ; $5436
-	wram_bank $03 ; $5439
+	wram_bank WRAM_SCREEN ; $5439
 	ld hl, CutsceneSceneAGfx2 ; $543f
 	ld de, wShadowTilemap ; $5442
 	call DecompressData ; $5445
@@ -43,7 +43,7 @@ InitCutsceneSceneB:
 	call DisableLCDSafely ; $545e
 	farcall InitSceneScroll ; $5461
 	farcall InitTextWindows ; $5464
-	wram_bank $01 ; $5467
+	wram_bank WRAM_STAGING ; $5467
 	ld hl, CutsceneSceneAGfx0 ; $546d
 	ld de, wDecompBuffer ; $5470
 	call DecompressData ; $5473
@@ -55,11 +55,11 @@ InitCutsceneSceneB:
 	ld de, vTiles1 ; $5484
 	ld c, $80 ; $5487
 	call QueueVRAMCopy ; $5489
-	wram_bank $02 ; $548c
+	wram_bank WRAM_COURT_PLANES ; $548c
 	ld hl, CutsceneSceneBGfx1 ; $5492
 	ld de, wScreenAttrmap ; $5495
 	call DecompressData ; $5498
-	wram_bank $03 ; $549b
+	wram_bank WRAM_SCREEN ; $549b
 	ld hl, CutsceneSceneBGfx0 ; $54a1
 	ld de, wShadowTilemap ; $54a4
 	call DecompressData ; $54a7
@@ -74,7 +74,7 @@ InitCutsceneSceneC:
 	call DisableLCDSafely ; $54b9
 	farcall InitSceneScroll ; $54bc
 	farcall InitTextWindows ; $54bf
-	wram_bank $01 ; $54c2
+	wram_bank WRAM_STAGING ; $54c2
 	ld hl, CutsceneSceneAGfx0 ; $54c8
 	ld de, wDecompBuffer ; $54cb
 	call DecompressData ; $54ce
@@ -86,11 +86,11 @@ InitCutsceneSceneC:
 	ld de, vTiles1 ; $54df
 	ld c, $80 ; $54e2
 	call QueueVRAMCopy ; $54e4
-	wram_bank $02 ; $54e7
+	wram_bank WRAM_COURT_PLANES ; $54e7
 	ld hl, CutsceneSceneBGfx1 ; $54ed
 	ld de, wScreenAttrmap ; $54f0
 	call DecompressData ; $54f3
-	wram_bank $03 ; $54f6
+	wram_bank WRAM_SCREEN ; $54f6
 	ld hl, CutsceneSceneBGfx0 ; $54fc
 	ld de, wShadowTilemap ; $54ff
 	call DecompressData ; $5502
@@ -259,7 +259,7 @@ InitTitleSceneGraphics:
 	call DisableLCDSafely ; $617c
 	farcall InitSceneScroll ; $617f
 	farcall InitTextWindows ; $6182
-	wram_bank $01 ; $6185
+	wram_bank WRAM_STAGING ; $6185
 	ld hl, TitleSceneGraphicsGfx0 ; $618b
 	ld de, wDecompBuffer ; $618e
 	call DecompressData ; $6191
@@ -271,11 +271,11 @@ InitTitleSceneGraphics:
 	ld de, vTiles1 + VRAM_BANK1 ; $61a2
 	ld c, $80 ; $61a5
 	call QueueVRAMCopy ; $61a7
-	wram_bank $02 ; $61aa
+	wram_bank WRAM_COURT_PLANES ; $61aa
 	ld hl, TitleSceneGraphicsGfx2 ; $61b0
 	ld de, wScreenAttrmap ; $61b3
 	call DecompressData ; $61b6
-	wram_bank $03 ; $61b9
+	wram_bank WRAM_SCREEN ; $61b9
 	ld hl, TitleSceneGraphicsGfx1 ; $61bf
 	ld de, wShadowTilemap ; $61c2
 	call DecompressData ; $61c5

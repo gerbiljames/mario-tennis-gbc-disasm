@@ -162,13 +162,13 @@ ApplyMatchSettingsExpBonus:
 	add hl, hl ; $68ff
 	ret ; $6900
 GetOpponentExpTier:
-	push_wram_bank $05 ; $6901
+	push_wram_bank WRAM_TEXT ; $6901
 	call LookupExpTierForChar ; $690a
 	ld a, [wMatchIsDoubles] ; $690d
 	and a ; $6910
 	jr z, .zero ; $6911
 	push bc ; $6913
-	wram_bank $07 ; $6914
+	wram_bank WRAM_SOUND ; $6914
 	call LookupExpTierForChar ; $691a
 	ld a, c ; $691d
 	pop bc ; $691e
@@ -564,7 +564,7 @@ ApplyPendingExpAwards:
 	ld c, $00 ; $6b8d
 	farcall SetPendingExpAward ; $6b8f
 .applyToRecord:
-	wram_bank $06 ; $6b92
+	wram_bank WRAM_SCENE ; $6b92
 	ld hl, wTrophyExpTotal ; $6b98
 	ld a, [hl+] ; $6b9b
 	ld d, [hl] ; $6b9c

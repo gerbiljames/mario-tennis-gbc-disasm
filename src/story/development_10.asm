@@ -607,7 +607,7 @@ MatchSelectHandlersBHandler3:
 	jp z, .savedDataFlow ; $51ca
 .linkFlow:
 	ld d, a ; $51cd
-	wram_bank $04 ; $51ce
+	wram_bank WRAM_ACTORS ; $51ce
 	ld a, d ; $51d4
 	ld [wCurrentlyUsedCourt], a ; $51d5
 	call ApplyMatchTypeSettings ; $51d8

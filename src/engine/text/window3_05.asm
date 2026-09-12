@@ -322,7 +322,7 @@ DelayTextCharacter:
 	push de ; $579d
 	push hl ; $579e
 	ld c, a ; $579f
-	push_wram_bank $05 ; $57a0
+	push_wram_bank WRAM_TEXT ; $57a0
 	ld a, [wTextRedrawGuard] ; $57a9
 	or a ; $57ac
 	ld b, a ; $57ad
@@ -363,7 +363,7 @@ DelayTextCharacter:
 	ret ; $57e6
 ApplyMessageSpeed:
 	push af ; $57e7
-	push_wram_bank $05 ; $57e8
+	push_wram_bank WRAM_TEXT ; $57e8
 	ld a, [wMessageSpeed] ; $57f1
 	bit 7, a ; $57f4
 	jr z, .speed1 ; $57f6
@@ -394,7 +394,7 @@ ShowSpeakerDialogue:
 	push bc ; $5820
 	push de ; $5821
 	ld b, a ; $5822
-	push_wram_bank $05 ; $5823
+	push_wram_bank WRAM_TEXT ; $5823
 	xor a ; $582c
 	ld [wTextArgStringWriteIndex], a ; $582d
 	ld [wTextArgStringMeasureIndex], a ; $5830
@@ -424,7 +424,7 @@ ShowSpeakerDialogue:
 	xor a ; $5864
 	ld [wGlyphRowStartCol], a ; $5865
 	ld [wGlyphFlushedCol], a ; $5868
-	push_wram_bank $07 ; $586b
+	push_wram_bank WRAM_SOUND ; $586b
 	call ClearGlyphBuffer ; $5874
 	call UploadGlyphBufferFull ; $5877
 	pop_wram_bank ; $587a
@@ -435,7 +435,7 @@ ShowSpeakerDialogue:
 	xor a ; $5888
 	ld [wGlyphRowStartCol], a ; $5889
 	ld [wGlyphFlushedCol], a ; $588c
-	push_wram_bank $07 ; $588f
+	push_wram_bank WRAM_SOUND ; $588f
 	call ClearGlyphBuffer ; $5898
 	call UploadGlyphBufferFull ; $589b
 	pop_wram_bank ; $589e
@@ -475,7 +475,7 @@ ShowSpeakerDialogueRestoreBG:
 	push bc ; $58f1
 	push de ; $58f2
 	ld b, a ; $58f3
-	push_wram_bank $05 ; $58f4
+	push_wram_bank WRAM_TEXT ; $58f4
 	xor a ; $58fd
 	ld [wTextArgStringWriteIndex], a ; $58fe
 	ld [wTextArgStringMeasureIndex], a ; $5901
@@ -505,7 +505,7 @@ ShowSpeakerDialogueRestoreBG:
 	xor a ; $5935
 	ld [wGlyphRowStartCol], a ; $5936
 	ld [wGlyphFlushedCol], a ; $5939
-	push_wram_bank $07 ; $593c
+	push_wram_bank WRAM_SOUND ; $593c
 	call ClearGlyphBuffer ; $5945
 	call UploadGlyphBufferFull ; $5948
 	pop_wram_bank ; $594b
@@ -515,7 +515,7 @@ ShowSpeakerDialogueRestoreBG:
 	xor a ; $5956
 	ld [wGlyphRowStartCol], a ; $5957
 	ld [wGlyphFlushedCol], a ; $595a
-	push_wram_bank $07 ; $595d
+	push_wram_bank WRAM_SOUND ; $595d
 	call ClearGlyphBuffer ; $5966
 	call UploadGlyphBufferFull ; $5969
 	pop_wram_bank ; $596c

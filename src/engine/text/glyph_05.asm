@@ -85,7 +85,7 @@ ClearWindowGlyphTiles:
 	push bc ; $73e5
 	push de ; $73e6
 	push hl ; $73e7
-	wram_bank $05 ; $73e8
+	wram_bank WRAM_TEXT ; $73e8
 	ld a, [wGlyphWindowId] ; $73ee
 	farcall GetWindowStructPtr ; $73f1
 	inc hl ; $73f4
@@ -113,7 +113,7 @@ ClearWindowGlyphTiles:
 	add hl, de ; $7413
 	ld d, h ; $7414
 	ld e, l ; $7415
-	wram_bank $07 ; $7416
+	wram_bank WRAM_SOUND ; $7416
 .loop:
 	ld hl, FontGlyphs ; $741c
 	ld c, $01 ; $741f -- 1 of FontGlyphs's 102 tiles
@@ -141,7 +141,7 @@ UploadGlyphBufferFull:
 .lcdSettled:
 	pop af ; $7440
 	ld hl, $8c00 ; $7441
-	wram_bank $05 ; $7444
+	wram_bank WRAM_TEXT ; $7444
 	ld a, [wWindowTileAttr] ; $744a
 	bit 3, a ; $744d
 	jr z, .pushPageDests ; $744f
@@ -158,7 +158,7 @@ UploadGlyphBufferFull:
 	add hl, de ; $745e
 	ld d, h ; $745f
 	ld e, l ; $7460
-	wram_bank $07 ; $7461
+	wram_bank WRAM_SOUND ; $7461
 	ld hl, wGlyphTileBuffer ; $7467
 	ld c, $10 ; $746a
 	call QueueVRAMCopy ; $746c
@@ -232,7 +232,7 @@ DrawWindowGlyphRun:
 	ldh a, [hWramBank] ; $74e2
 	push af ; $74e4
 	push hl ; $74e5
-	wram_bank $05 ; $74e6
+	wram_bank WRAM_TEXT ; $74e6
 	ld a, [wGlyphWindowId] ; $74ec
 	farcall GetWindowStructPtr ; $74ef
 	inc hl ; $74f2
@@ -242,7 +242,7 @@ DrawWindowGlyphRun:
 	dec b ; $74f6
 	ld c, b ; $74f7
 	pop hl ; $74f8
-	wram_bank $07 ; $74f9
+	wram_bank WRAM_SOUND ; $74f9
 	call ClearGlyphBuffer ; $74ff
 	ld de, $0000 ; $7502
 .glyphLoop:
@@ -276,7 +276,7 @@ InitGlyphStreamForWindow:
 	push bc ; $752e
 	push de ; $752f
 	push hl ; $7530
-	push_wram_bank $05 ; $7531
+	push_wram_bank WRAM_TEXT ; $7531
 	ld de, $0000 ; $753a
 	ld a, [wGlyphWindowId] ; $753d
 	or a ; $7540
@@ -323,7 +323,7 @@ DrawStreamGlyph:
 	push bc ; $757f
 	push de ; $7580
 	push hl ; $7581
-	push_wram_bank $05 ; $7582
+	push_wram_bank WRAM_TEXT ; $7582
 	ld hl, wTextRowWidth ; $758b
 	ld b, [hl] ; $758e
 	inc hl ; $758f
@@ -353,7 +353,7 @@ DrawStreamGlyph:
 	jr .step2 ; $75b6
 .ne01:
 	push af ; $75b8
-	wram_bank $07 ; $75b9
+	wram_bank WRAM_SOUND ; $75b9
 	pop af ; $75bf
 	call DrawGlyph ; $75c0
 .step2:
@@ -433,7 +433,7 @@ UploadLastGlyphTiles:
 	pop af ; $762f
 	ret ; $7630
 .maskSet:
-	push_wram_bank $07 ; $7631
+	push_wram_bank WRAM_SOUND ; $7631
 	ld a, [wKeepMatchStatsFlag] ; $763a
 	or a ; $763d
 	jr z, .zero ; $763e

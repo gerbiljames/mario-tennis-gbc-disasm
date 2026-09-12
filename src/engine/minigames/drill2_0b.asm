@@ -106,7 +106,7 @@ LoadDrillOpponentChar:
 	ld b, a ; $4404
 	ld c, $02 ; $4405
 	farcall InitCa00RecordFromCharId ; $4407
-	push_wram_bank $05 ; $440a
+	push_wram_bank WRAM_TEXT ; $440a
 	farcall LoadCharacterAttributes ; $4413
 	pop_wram_bank ; $4416
 	ret ; $441b
@@ -123,7 +123,7 @@ LoadDrillOpponentBySide:
 	ret ; $442a
 WriteCharStructByte:
 	ld b, a ; $442b
-	push_wram_bank $05 ; $442c
+	push_wram_bank WRAM_CHAR1 ; $442c
 	ld de, wCharPosX ; $4435
 	add hl, de ; $4438
 	ld [hl], b ; $4439
@@ -155,7 +155,7 @@ TestCharStateBit4:
 	xor a ; $446c
 	ret ; $446d
 SyncPointWinLoseFlagTask:
-	push_wram_bank $05 ; $446e
+	push_wram_bank WRAM_CHAR1 ; $446e
 	ld hl, wCharPointResult ; $4477
 	ld a, [wPointWinLoseFlag] ; $447a
 	ld [hl], a ; $447d
@@ -342,7 +342,7 @@ ShowDrillMessageByIndex:
 	ld l, c ; $459d
 	add $02 ; $459e
 	ld b, a ; $45a0
-	push_wram_bank $05 ; $45a1
+	push_wram_bank WRAM_TEXT ; $45a1
 	ld a, [wFitTextLineCount] ; $45aa
 	ld e, a ; $45ad
 	pop_wram_bank ; $45ae

@@ -5,7 +5,7 @@
 ; note is above its `twin` line. A fix here lands in every bank.
 
 DrawConfirmSelectionCursor_{TWIN}:
-	wram_bank $06
+	wram_bank WRAM_SCENE
 	ld a, [wCharDataConfirmState]
 	or a
 	jr nz, .nonZero

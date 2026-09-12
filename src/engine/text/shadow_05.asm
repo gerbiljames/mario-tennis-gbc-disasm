@@ -98,7 +98,7 @@ RestoreShadowTilemapRow:
 	ld b, h ; $43f4
 	ld c, l ; $43f5
 	push bc ; $43f6
-	wram_bank $03 ; $43f7
+	wram_bank WRAM_SCREEN ; $43f7
 	ld hl, wTilemapRowStage ; $43fd
 	ld a, c ; $4400
 	and $1f ; $4401
@@ -145,13 +145,13 @@ RestoreShadowTilemapRow:
 	ld d, h ; $443b
 	ld e, l ; $443c
 	ld hl, wTilemapRowStage ; $443d
-	wram_bank $05 ; $4440
+	wram_bank WRAM_TEXT ; $4440
 	ld bc, $0002 ; $4446
 	call CopyMemoryFast ; $4449
 	pop de ; $444c
 	pop bc ; $444d
 	ld hl, wTilemapRowStage ; $444e
-	wram_bank $02 ; $4451
+	wram_bank WRAM_COURT_PLANES ; $4451
 	ld a, c ; $4457
 	and $1f ; $4458
 	add l ; $445a
@@ -196,7 +196,7 @@ RestoreShadowTilemapRow:
 	ld d, h ; $4491
 	ld e, l ; $4492
 	ld hl, wTilemapRowStage ; $4493
-	wram_bank $05 ; $4496
+	wram_bank WRAM_TEXT ; $4496
 	ld bc, $0002 ; $449c
 	call CopyMemoryFast ; $449f
 	ret ; $44a2
@@ -205,7 +205,7 @@ RefreshShadowTilemapFromMapBuffer:
 	push bc ; $44a4
 	push de ; $44a5
 	push hl ; $44a6
-	push_wram_bank $05 ; $44a7
+	push_wram_bank WRAM_TEXT ; $44a7
 	ld a, [wShadowTilemapBank] ; $44b0
 	push af ; $44b3
 	ld hl, wShadowTilemapPtr ; $44b4

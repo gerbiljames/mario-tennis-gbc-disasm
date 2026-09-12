@@ -1,5 +1,5 @@
 RunCpuDifficultySubmenu:
-	push_wram_bank $03 ; $6216
+	push_wram_bank WRAM_SCREEN ; $6216
 	ld a, [wCpuDifficultyPanelOpen] ; $621f
 	or a ; $6222
 	jr nz, .inputLoop ; $6223
@@ -19,7 +19,7 @@ RunCpuDifficultySubmenu:
 .cancel:
 	call CloseCpuDifficultyPanel ; $6243
 	sound SFX_MENU_CANCEL ; $6246
-	wram_bank $03 ; $6248
+	wram_bank WRAM_SCREEN ; $6248
 	ld hl, wCharSelectSlotDifficulty ; $624e
 	ld a, [wCharSelectSlot] ; $6251
 	add l ; $6254
@@ -183,7 +183,7 @@ CpuDifficultyCursorBoxTable1:
 	; $6365, 8 bytes (bytes:8)
 	db $04, $20, $04, $2a, $04, $1c, $04, $27 ; 0x00
 OpenCpuDifficultyPanel:
-	push_wram_bank $03 ; $636d
+	push_wram_bank WRAM_SCREEN ; $636d
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $6376
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH ; $6379
 	ld b, $14 ; $637c
@@ -197,7 +197,7 @@ OpenCpuDifficultyPanel:
 	pop_wram_bank ; $6390
 	ret ; $6395
 QueueCpuDifficultyPanelToVram:
-	push_wram_bank $03 ; $6396
+	push_wram_bank WRAM_SCREEN ; $6396
 	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH ; $639f
 	ld de, vBGMap0 + 14 * TILEMAP_WIDTH ; $63a2
 	ld c, $08 ; $63a5
@@ -220,7 +220,7 @@ RunLinkCharSelectScreen:
 	call ResetSerialState ; $63ca
 	call EnableTimerInterrupt ; $63cd
 	sound BGM_MENU ; $63d0
-	wram_bank $03 ; $63d2
+	wram_bank WRAM_SCREEN ; $63d2
 	ld a, $02 ; $63d8
 	ld [wCharGridHandedness], a ; $63da
 	ld a, [wMatchIsDoubles] ; $63dd
@@ -290,7 +290,7 @@ RunLinkCharSelectScreen:
 	ld a, $01 ; $645d
 	ld hl, TickMenuBgScrollTask_38 ; $645f
 	call RegisterFrameTask ; $6462
-	wram_bank $03 ; $6465
+	wram_bank WRAM_SCREEN ; $6465
 	call RefreshCharInfoPanel ; $646b
 .frameLoop:
 	push af ; $646e
@@ -311,7 +311,7 @@ RunLinkCharSelectScreen:
 	call HandleCharGridDpad ; $648c
 	call HandleLinkGridButtons ; $648f
 	call ProcessLinkSelectCommand ; $6492
-	push_wram_bank $03 ; $6495
+	push_wram_bank WRAM_SCREEN ; $6495
 	call CheckLinkSelectionComplete ; $649e
 	ld a, [wCharSelectSlot] ; $64a1
 	cp $04 ; $64a4

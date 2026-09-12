@@ -148,7 +148,7 @@ ApplyLinkRoleToWinLoseFlag:
 RunMatchStatsScreen:
 	call DisableLCDSafely ; $5c35
 	farcall LoadMenuFontGfx ; $5c38
-	wram_bank $03 ; $5c3b
+	wram_bank WRAM_SCREEN ; $5c3b
 	ld a, $01 ; $5c41
 	ld [wResultScreenMode], a ; $5c43
 	call InitMatchStatsScreen ; $5c46
@@ -201,7 +201,7 @@ InitMatchStatsScreen:
 	ld a, $00 ; $5cae
 	ld d, $07 ; $5cb0
 	farcall LoadIndexedPalette_18 ; $5cb2
-	wram_bank $03 ; $5cb5
+	wram_bank WRAM_SCREEN ; $5cb5
 	call CopyMatchStatsHeaderRects ; $5cbb
 	call LoadResultScreenTileGraphics ; $5cbe
 	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $5cc1

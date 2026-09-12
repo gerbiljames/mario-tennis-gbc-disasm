@@ -1,5 +1,5 @@
 ApplyCpuDifficultyToCharRecords:
-	push_wram_bank $03 ; $5f4c
+	push_wram_bank WRAM_SCREEN ; $5f4c
 	ld a, [wCharSelectSlotDifficulty + 1] ; $5f55
 	ld hl, CpuDifficultyParamPtrs_38 ; $5f58
 	add a ; $5f5b
@@ -127,7 +127,7 @@ IsCreatedCharId:
 	xor a ; $601a
 	ret ; $601b
 ApplyHandednessToCharRecords:
-	push_wram_bank $03 ; $601c
+	push_wram_bank WRAM_SCREEN ; $601c
 	ld a, [wPlayer1MainLeftHanded] ; $6025
 	or a ; $6028
 	jr nz, .slot2 ; $6029
@@ -159,7 +159,7 @@ CacheStorySlotNames:
 	push bc ; $605c
 	push de ; $605d
 	push hl ; $605e
-	push_wram_bank $01 ; $605f
+	push_wram_bank WRAM_STAGING ; $605f
 	ld a, $00 ; $6068
 	ld [wCurrentStorySlot], a ; $606a
 	farcall CheckStorySlot ; $606d
@@ -196,7 +196,7 @@ LoadCachedStorySlotName:
 	push bc ; $60ba
 	push de ; $60bb
 	push hl ; $60bc
-	push_wram_bank $01 ; $60bd
+	push_wram_bank WRAM_STAGING ; $60bd
 	ld a, b ; $60c6
 	add a ; $60c7
 	ld hl, CachedStorySlotNameTable ; $60c8

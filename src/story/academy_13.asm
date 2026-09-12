@@ -22,7 +22,7 @@ RunPlayDoublesTodayPrompt:
 	script_wait_idle ACTOR_PLAYER ; $56fb
 	script_wait_frames $05 ; $5700
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5707
-	wram_bank $04 ; $570e
+	wram_bank WRAM_ACTORS ; $570e
 	ld a, $01 ; $5714
 	ld [wMatchIsDoubles], a ; $5716
 	call SetDormRoomEventTriggerCells_13 ; $5719
@@ -46,7 +46,7 @@ RunPlayDoublesTodayPrompt:
 	farcall AdvanceDialogueTextCursor ; $574f
 	script_speak $03 ; $5752
 	clear_flag FLAG_DOUBLES ; $5757
-	wram_bank $04 ; $575a
+	wram_bank WRAM_ACTORS ; $575a
 	ld a, $00 ; $5760
 	ld [wMatchIsDoubles], a ; $5762
 	script_null_script $03 ; $5765
@@ -78,7 +78,7 @@ RunPlayDoublesTodayPrompt:
 	script_speak $03 ; $57ad
 	script_null_script $03 ; $57b2
 	clear_flag FLAG_DOUBLES ; $57b7
-	wram_bank $04 ; $57ba
+	wram_bank WRAM_ACTORS ; $57ba
 	ld a, $00 ; $57c0
 	ld [wMatchIsDoubles], a ; $57c2
 	script_move_target $03, $0b00, $0900 ; $57c5
@@ -104,7 +104,7 @@ RunPlayDoublesTodayPrompt:
 	script_wait_idle ACTOR_PLAYER ; $5819
 	script_face ACTOR_PLAYER, FACE_DOWN ; $581e
 	script_wait_frames $05 ; $5825
-	wram_bank $04 ; $582c
+	wram_bank WRAM_ACTORS ; $582c
 	ld a, $01 ; $5832
 	ld [wMatchIsDoubles], a ; $5834
 	set_flag FLAG_DOUBLES ; $5837

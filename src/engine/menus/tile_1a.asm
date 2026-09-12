@@ -4,7 +4,7 @@ DrawExpScreenNameAndLevel:
 	push de ; $4b21
 	push hl ; $4b22
 	call ClearExpScreenNameBox ; $4b23
-	wram_bank $01 ; $4b26
+	wram_bank WRAM_STAGING ; $4b26
 	push af ; $4b2c
 	ld hl, wStoryModeNameOfMainCharacter ; $4b2d
 	ld a, [wStoryCharacterSlot] ; $4b30
@@ -208,7 +208,7 @@ WriteTileBufferCell:
 	push bc ; $4c39
 	push de ; $4c3a
 	push hl ; $4c3b
-	push_wram_bank $01 ; $4c3c
+	push_wram_bank WRAM_STAGING ; $4c3c
 	call GetTileBufferCellAddr ; $4c45
 	ld a, e ; $4c48
 	ld [hl], a ; $4c49

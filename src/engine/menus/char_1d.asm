@@ -11,7 +11,7 @@
 	farptr GrayscalePaletteColorInPlace ; $4014
 ShowCharDataScreen:
 	ld b, a ; $4016
-	wram_bank $06 ; $4017
+	wram_bank WRAM_SCENE ; $4017
 	ld a, b ; $401d
 	ld [wCharDataSyncSource], a ; $401e
 	sound BGM_STATUS_SCREEN ; $4021
@@ -24,7 +24,7 @@ ShowCharDataScreen:
 	ld hl, CharDataScreenPalettes ; $4034
 	lb de, $0d, $01 ; $4037 palette index, count
 	call LoadPaletteShadow ; $403a
-	wram_bank $01 ; $403d
+	wram_bank WRAM_STAGING ; $403d
 	ld hl, CharDataScreenGfx14 ; $4043
 	ld de, wDecompBuffer ; $4046
 	call DecompressData ; $4049
@@ -79,7 +79,7 @@ CharDataScreenBgScrollTask:
 	farcall TickMenuBgScroll ; $40cc
 	ret ; $40cf
 InitDrillWorkRam:
-	wram_bank $06 ; $40d0
+	wram_bank WRAM_SCENE ; $40d0
 	xor a ; $40d6
 	ld [wCharDataAnimCounter], a ; $40d7
 	ld [wCharDataAnimSubStep], a ; $40da
@@ -130,19 +130,19 @@ BuildCharDataScreenPages:
 	ld hl, DrillDisplayData_1d ; $4149
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $414c
 	call ApplyTilemapPatchList ; $414f
-	wram_bank $03 ; $4152
+	wram_bank WRAM_SCREEN ; $4152
 	ld hl, wShadowTilemap ; $4158
 	ld de, vBGMap0 ; $415b
 	ld c, $24 ; $415e
 	call QueueVRAMCopy ; $4160
-	wram_bank $02 ; $4163
+	wram_bank WRAM_COURT_PLANES ; $4163
 	ld hl, wScreenAttrmap ; $4169
 	ld de, vBGMap0 + VRAM_BANK1 ; $416c
 	ld c, $24 ; $416f
 	call QueueVRAMCopy ; $4171
 	ret ; $4174
 LoadCharDataScreenPageGraphics:
-	wram_bank $01 ; $4175
+	wram_bank WRAM_STAGING ; $4175
 	ld hl, CharDataScreenPageGfx14 ; $417b
 	ld de, wDecompBuffer ; $417e
 	call DecompressData ; $4181
@@ -150,7 +150,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, vTiles0 + $14 * TILE_SIZE + VRAM_BANK1 ; $4187
 	ld c, CharDataScreenPageGfx14_SIZE / 16 ; $418a
 	call QueueVRAMCopy ; $418c
-	wram_bank $01 ; $418f
+	wram_bank WRAM_STAGING ; $418f
 	ld hl, CharDataScreenPageGraphicsGfx0 ; $4195
 	ld de, wDecompBuffer ; $4198
 	call DecompressData ; $419b
@@ -158,7 +158,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, vTiles0 + $1e * TILE_SIZE + VRAM_BANK1 ; $41a1
 	ld c, CharDataScreenPageGraphicsGfx0_SIZE / 16 ; $41a4
 	call QueueVRAMCopy ; $41a6
-	wram_bank $01 ; $41a9
+	wram_bank WRAM_STAGING ; $41a9
 	ld hl, CharDataScreenPageGraphicsGfx1 ; $41af
 	ld de, wDecompBuffer ; $41b2
 	call DecompressData ; $41b5
@@ -166,7 +166,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, vTiles0 + $28 * TILE_SIZE + VRAM_BANK1 ; $41bb
 	ld c, CharDataScreenPageGraphicsGfx1_SIZE / 16 ; $41be
 	call QueueVRAMCopy ; $41c0
-	wram_bank $01 ; $41c3
+	wram_bank WRAM_STAGING ; $41c3
 	ld hl, CharDataScreenPageGraphicsGfx2 ; $41c9
 	ld de, wDecompBuffer ; $41cc
 	call DecompressData ; $41cf
@@ -174,91 +174,91 @@ LoadCharDataScreenPageGraphics:
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $41d5
 	ld c, $08 ; $41d8
 	call QueueVRAMCopy ; $41da
-	wram_bank $01 ; $41dd
+	wram_bank WRAM_STAGING ; $41dd
 	ld hl, CharDataScreenPageGfx06 ; $41e3
 	ld de, wDecompBuffer + 56 * TILE_SIZE ; $41e6
 	call DecompressData ; $41e9
 	ld hl, wDecompBuffer + 56 * TILE_SIZE ; $41ec
 	ld bc, $0009 ; $41ef
 	call CopyWram1ToWram3CharData ; $41f2
-	wram_bank $01 ; $41f5
+	wram_bank WRAM_STAGING ; $41f5
 	ld hl, CharDataScreenPageGfx07 ; $41fb
 	ld de, wDecompBuffer + 56 * TILE_SIZE ; $41fe
 	call DecompressData ; $4201
 	ld hl, wDecompBuffer + 56 * TILE_SIZE ; $4204
 	ld bc, $0009 ; $4207
 	call CopyWram1ToWram2CharData ; $420a
-	wram_bank $01 ; $420d
+	wram_bank WRAM_STAGING ; $420d
 	ld hl, CharDataScreenPageGfx00 ; $4213
 	ld de, wDecompBuffer + 57 * TILE_SIZE ; $4216
 	call DecompressData ; $4219
 	ld hl, wDecompBuffer + 57 * TILE_SIZE ; $421c
 	ld bc, $0028 ; $421f
 	call CopyWram1ToWram3CharData ; $4222
-	wram_bank $01 ; $4225
+	wram_bank WRAM_STAGING ; $4225
 	ld hl, CharDataScreenPageGfx01 ; $422b
 	ld de, wDecompBuffer + 57 * TILE_SIZE ; $422e
 	call DecompressData ; $4231
 	ld hl, wDecompBuffer + 57 * TILE_SIZE ; $4234
 	ld bc, $0028 ; $4237
 	call CopyWram1ToWram2CharData ; $423a
-	wram_bank $01 ; $423d
+	wram_bank WRAM_STAGING ; $423d
 	ld hl, CharDataScreenPageGfx02 ; $4243
 	ld de, wDecompBuffer + 60 * TILE_SIZE ; $4246
 	call DecompressData ; $4249
 	ld hl, wDecompBuffer + 60 * TILE_SIZE ; $424c
 	ld bc, $0082 ; $424f
 	call CopyWram1ToWram3CharData ; $4252
-	wram_bank $01 ; $4255
+	wram_bank WRAM_STAGING ; $4255
 	ld hl, CharDataScreenPageGfx03 ; $425b
 	ld de, wDecompBuffer + 60 * TILE_SIZE ; $425e
 	call DecompressData ; $4261
 	ld hl, wDecompBuffer + 60 * TILE_SIZE ; $4264
 	ld bc, $0082 ; $4267
 	call CopyWram1ToWram2CharData ; $426a
-	wram_bank $01 ; $426d
+	wram_bank WRAM_STAGING ; $426d
 	ld hl, CharDataScreenPageGfx02 ; $4273
 	ld de, wDecompBuffer + 69 * TILE_SIZE ; $4276
 	call DecompressData ; $4279
 	ld hl, wDecompBuffer + 69 * TILE_SIZE ; $427c
 	ld bc, $0082 ; $427f
 	call CopyWram1ToWram3CharData ; $4282
-	wram_bank $01 ; $4285
+	wram_bank WRAM_STAGING ; $4285
 	ld hl, CharDataScreenPageGfx03 ; $428b
 	ld de, wDecompBuffer + 69 * TILE_SIZE ; $428e
 	call DecompressData ; $4291
 	ld hl, wDecompBuffer + 69 * TILE_SIZE ; $4294
 	ld bc, $0082 ; $4297
 	call CopyWram1ToWram2CharData ; $429a
-	wram_bank $01 ; $429d
+	wram_bank WRAM_STAGING ; $429d
 	ld hl, CharDataScreenPageGfx04 ; $42a3
 	ld de, wDecompBuffer + 78 * TILE_SIZE ; $42a6
 	call DecompressData ; $42a9
 	ld hl, wDecompBuffer + 78 * TILE_SIZE ; $42ac
 	ld bc, $001c ; $42af
 	call CopyWram1ToWram3CharData ; $42b2
-	wram_bank $01 ; $42b5
+	wram_bank WRAM_STAGING ; $42b5
 	ld hl, CharDataScreenPageGfx05 ; $42bb
 	ld de, wDecompBuffer + 78 * TILE_SIZE ; $42be
 	call DecompressData ; $42c1
 	ld hl, wDecompBuffer + 78 * TILE_SIZE ; $42c4
 	ld bc, $001c ; $42c7
 	call CopyWram1ToWram2CharData ; $42ca
-	wram_bank $01 ; $42cd
+	wram_bank WRAM_STAGING ; $42cd
 	ld hl, CharDataScreenPageGfx08 ; $42d3
 	ld de, wDecompBuffer + 80 * TILE_SIZE ; $42d6
 	call DecompressData ; $42d9
 	ld hl, wDecompBuffer + 80 * TILE_SIZE ; $42dc
 	ld bc, $002a ; $42df
 	call CopyWram1ToWram3CharData ; $42e2
-	wram_bank $01 ; $42e5
+	wram_bank WRAM_STAGING ; $42e5
 	ld hl, CharDataScreenPageGfx09 ; $42eb
 	ld de, wDecompBuffer + 80 * TILE_SIZE ; $42ee
 	call DecompressData ; $42f1
 	ld hl, wDecompBuffer + 80 * TILE_SIZE ; $42f4
 	ld bc, $002a ; $42f7
 	call CopyWram1ToWram2CharData ; $42fa
-	wram_bank $01 ; $42fd
+	wram_bank WRAM_STAGING ; $42fd
 	ld hl, CharDataScreenPageGfx10 ; $4303
 	ld de, wDecompBuffer ; $4306
 	call DecompressData ; $4309
@@ -273,14 +273,14 @@ LoadCharDataScreenPageGraphics:
 	ld de, vTiles0 + $4c * TILE_SIZE + VRAM_BANK1 ; $4323
 	ld c, CharDataScreenPageGfx13_SIZE / 16 ; $4326
 	call QueueVRAMCopy ; $4328
-	wram_bank $01 ; $432b
+	wram_bank WRAM_STAGING ; $432b
 	ld hl, CharDataScreenPageGfx11 ; $4331
 	ld de, wDecompBuffer + 83 * TILE_SIZE ; $4334
 	call DecompressData ; $4337
 	ld hl, wDecompBuffer + 83 * TILE_SIZE ; $433a
 	ld bc, $001e ; $433d
 	call CopyWram1ToWram3CharData ; $4340
-	wram_bank $01 ; $4343
+	wram_bank WRAM_STAGING ; $4343
 	ld hl, CharDataScreenPageGfx12 ; $4349
 	ld de, wDecompBuffer + 83 * TILE_SIZE ; $434c
 	call DecompressData ; $434f
@@ -306,7 +306,7 @@ LoadCharDataScreenPageGraphics:
 	ld a, [hl] ; $4374
 	lb de, $04, $01 ; $4375 palette index, count
 	farcall LoadIndexedPaletteThunk ; $4378
-	wram_bank $01 ; $437b
+	wram_bank WRAM_STAGING ; $437b
 	push af ; $4381
 	ld hl, wStoryModeNameOfMainCharacter ; $4382
 	ld a, [wStoryCharacterSlot] ; $4385
@@ -355,7 +355,7 @@ LoadCharDataScreenPageGraphics:
 	ld a, [hl] ; $43d8
 	lb de, $01, $01 ; $43d9 palette index, count
 	farcall LoadIndexedPaletteThunk ; $43dc
-	wram_bank $01 ; $43df
+	wram_bank WRAM_STAGING ; $43df
 	push af ; $43e5
 	ld hl, wStoryModeNameOfMainCharacter ; $43e6
 	ld a, [wStoryCharacterSlot] ; $43e9
@@ -387,9 +387,9 @@ LoadCharDataScreenPageGraphics:
 	call QueueVRAMCopy ; $441f
 	ret ; $4422
 CopyWram1ToWram3CharData:
-	wram_bank $01 ; $4423
+	wram_bank WRAM_STAGING ; $4423
 	ld d, [hl] ; $4429
-	wram_bank $03 ; $442a
+	wram_bank WRAM_SCREEN ; $442a
 	ld [hl], d ; $4430
 	inc hl ; $4431
 	dec bc ; $4432
@@ -398,9 +398,9 @@ CopyWram1ToWram3CharData:
 	jr nz, CopyWram1ToWram3CharData ; $4435
 	ret ; $4437
 CopyWram1ToWram2CharData:
-	wram_bank $01 ; $4438
+	wram_bank WRAM_STAGING ; $4438
 	ld d, [hl] ; $443e
-	wram_bank $02 ; $443f
+	wram_bank WRAM_COURT_PLANES ; $443f
 	ld [hl], d ; $4445
 	inc hl ; $4446
 	dec bc ; $4447
@@ -449,7 +449,7 @@ BuildCharDataSummaryFields:
 	ld a, [hl] ; $448e
 	ld hl, wScreenAttrmap + 31 * TILEMAP_WIDTH + 3 ; $448f
 	call DrawFourTileFlagLabel ; $4492
-	wram_bank $06 ; $4495
+	wram_bank WRAM_SCENE ; $4495
 	push af ; $449b
 	ld hl, wStoryModeNameOfMainCharacter ; $449c
 	ld a, [wStoryCharacterSlot] ; $449f
@@ -472,7 +472,7 @@ BuildCharDataSummaryFields:
 	call FormatDecimalNumberUnsigned ; $44b9
 	ld de, wCharDataScreenCell + 30 * TILEMAP_WIDTH + 27 ; $44bc
 	farcall CharDataScreen_WriteStatNumber ; $44bf
-	wram_bank $06 ; $44c2
+	wram_bank WRAM_SCENE ; $44c2
 	push af ; $44c8
 	ld hl, wStoryModeNameOfMainCharacter ; $44c9
 	ld a, [wStoryCharacterSlot] ; $44cc
@@ -495,7 +495,7 @@ BuildCharDataSummaryFields:
 	call FormatDecimalNumberUnsigned ; $44e6
 	ld de, wCharDataScreenCell + 31 * TILEMAP_WIDTH + 25 ; $44e9
 	farcall CharDataScreen_WriteStatNumber ; $44ec
-	wram_bank $06 ; $44ef
+	wram_bank WRAM_SCENE ; $44ef
 	push af ; $44f5
 	ld hl, wStoryModeNameOfMainCharacter ; $44f6
 	ld a, [wStoryCharacterSlot] ; $44f9
@@ -518,7 +518,7 @@ BuildCharDataSummaryFields:
 	call FormatDecimalNumberUnsigned ; $4513
 	ld de, wCharDataPagePlane + 3 ; $4516
 	farcall CharDataScreen_WriteStatNumber ; $4519
-	wram_bank $06 ; $451c
+	wram_bank WRAM_SCENE ; $451c
 	push af ; $4522
 	ld hl, wStoryModeNameOfMainCharacter ; $4523
 	ld a, [wStoryCharacterSlot] ; $4526
@@ -541,7 +541,7 @@ BuildCharDataSummaryFields:
 	call FormatDecimalNumberUnsigned ; $4540
 	ld de, wCharDataPagePlane + 13 ; $4543
 	farcall CharDataScreen_WriteStatNumber ; $4546
-	wram_bank $06 ; $4549
+	wram_bank WRAM_SCENE ; $4549
 	push af ; $454f
 	ld hl, wStoryModeNameOfMainCharacter ; $4550
 	ld a, [wStoryCharacterSlot] ; $4553
@@ -567,7 +567,7 @@ BuildCharDataSummaryFields:
 	call ComputeExpProgressBar ; $4576
 	ld de, wCharDataPagePlane + 1 * TILEMAP_WIDTH + 15 ; $4579
 	call DrawExpProgressBarTiles ; $457c
-	wram_bank $06 ; $457f
+	wram_bank WRAM_SCENE ; $457f
 	xor a ; $4585
 	farcall GetExpRemainingToNextLevel ; $4586
 	ld a, $03 ; $4589
@@ -583,7 +583,7 @@ BuildCharDataSummaryFields:
 	inc de ; $459c
 	ld a, [hl] ; $459d
 	ld [de], a ; $459e
-	wram_bank $06 ; $459f
+	wram_bank WRAM_SCENE ; $459f
 	push af ; $45a5
 	ld hl, wStoryModeNameOfMainCharacter ; $45a6
 	ld a, [wStoryCharacterSlot] ; $45a9
@@ -638,7 +638,7 @@ BuildCharDataSummaryFields:
 	ld de, wCharDataPagePlane + 2 * TILEMAP_WIDTH + 27 ; $45f5
 	ld c, $0a ; $45f8
 	call WriteNameStringTiles ; $45fa
-	wram_bank $03 ; $45fd
+	wram_bank WRAM_SCREEN ; $45fd
 	ld hl, CharDataSummaryFieldsTilePlot1 ; $4603
 	ld de, wCharDataPagePlane + 2 * TILEMAP_WIDTH + 16 ; $4606
 	ld b, $09 ; $4609
@@ -660,7 +660,7 @@ BuildCharDataSummaryFields:
 	ld a, [hl] ; $4623
 	ld hl, wCharDataPagePlane + 3 * TILEMAP_WIDTH + 19 ; $4624
 	call DrawFourTileFlagLabel ; $4627
-	wram_bank $06 ; $462a
+	wram_bank WRAM_SCENE ; $462a
 	push af ; $4630
 	ld hl, wStoryModeNameOfMainCharacter ; $4631
 	ld a, [wStoryCharacterSlot] ; $4634
@@ -683,7 +683,7 @@ BuildCharDataSummaryFields:
 	call FormatDecimalNumberUnsigned ; $464e
 	ld de, wCharDataPagePlane + 3 * TILEMAP_WIDTH + 11 ; $4651
 	farcall CharDataScreen_WriteStatNumber ; $4654
-	wram_bank $06 ; $4657
+	wram_bank WRAM_SCENE ; $4657
 	push af ; $465d
 	ld hl, wStoryModeNameOfMainCharacter ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
@@ -706,7 +706,7 @@ BuildCharDataSummaryFields:
 	call FormatDecimalNumberUnsigned ; $467b
 	ld de, wCharDataPagePlane + 4 * TILEMAP_WIDTH + 9 ; $467e
 	farcall CharDataScreen_WriteStatNumber ; $4681
-	wram_bank $06 ; $4684
+	wram_bank WRAM_SCENE ; $4684
 	push af ; $468a
 	ld hl, wStoryModeNameOfMainCharacter ; $468b
 	ld a, [wStoryCharacterSlot] ; $468e
@@ -729,7 +729,7 @@ BuildCharDataSummaryFields:
 	call FormatDecimalNumberUnsigned ; $46a8
 	ld de, wCharDataPagePlane + 4 * TILEMAP_WIDTH + 19 ; $46ab
 	farcall CharDataScreen_WriteStatNumber ; $46ae
-	wram_bank $06 ; $46b1
+	wram_bank WRAM_SCENE ; $46b1
 	push af ; $46b7
 	ld hl, wStoryModeNameOfMainCharacter ; $46b8
 	ld a, [wStoryCharacterSlot] ; $46bb
@@ -752,7 +752,7 @@ BuildCharDataSummaryFields:
 	call FormatDecimalNumberUnsigned ; $46d5
 	ld de, wCharDataPagePlane + 4 * TILEMAP_WIDTH + 29 ; $46d8
 	farcall CharDataScreen_WriteStatNumber ; $46db
-	wram_bank $06 ; $46de
+	wram_bank WRAM_SCENE ; $46de
 	push af ; $46e4
 	ld hl, wStoryModeNameOfMainCharacter ; $46e5
 	ld a, [wStoryCharacterSlot] ; $46e8
@@ -778,7 +778,7 @@ BuildCharDataSummaryFields:
 	call ComputeExpProgressBar ; $470b
 	ld de, wCharDataPagePlane + 5 * TILEMAP_WIDTH + 31 ; $470e
 	call DrawExpProgressBarTiles ; $4711
-	wram_bank $06 ; $4714
+	wram_bank WRAM_SCENE ; $4714
 	ld a, $01 ; $471a
 	farcall GetExpRemainingToNextLevel ; $471c
 	ld a, $03 ; $471f
@@ -794,7 +794,7 @@ BuildCharDataSummaryFields:
 	inc de ; $4732
 	ld a, [hl] ; $4733
 	ld [de], a ; $4734
-	wram_bank $06 ; $4735
+	wram_bank WRAM_SCENE ; $4735
 	push af ; $473b
 	ld hl, wStoryModeNameOfMainCharacter ; $473c
 	ld a, [wStoryCharacterSlot] ; $473f

@@ -84,7 +84,7 @@ DrawCharSelectSlotLabel:
 	farcall FillTilemapRect ; $5987
 	ret ; $598a
 DrawCharGridSlotIcons:
-	push_wram_bank $03 ; $598b
+	push_wram_bank WRAM_SCREEN ; $598b
 	ld a, [wCharSelectMode] ; $5994
 	add a ; $5997
 	ld hl, CharGridSlotIconListPtrs_38 ; $5998
@@ -156,7 +156,7 @@ WriteSlotIconTiles:
 	push bc ; $59fb
 	push de ; $59fc
 	push hl ; $59fd
-	push_wram_bank $03 ; $59fe
+	push_wram_bank WRAM_SCREEN ; $59fe
 	dec c ; $5a07
 	ld a, $50 ; $5a08
 	add c ; $5a0a
@@ -172,7 +172,7 @@ WriteSlotIconTiles:
 	pop af ; $5a19
 	ret ; $5a1a
 InitCharGridState:
-	push_wram_bank $03 ; $5a1b
+	push_wram_bank WRAM_SCREEN ; $5a1b
 	ld a, $00 ; $5a24
 	ld [wCharGridPage], a ; $5a26
 	xor a ; $5a29
@@ -211,7 +211,7 @@ InitCharGridState:
 	pop_wram_bank ; $5a7c
 	ret ; $5a81
 BuildCharUnlockFlags:
-	push_wram_bank $03 ; $5a82
+	push_wram_bank WRAM_SCREEN ; $5a82
 	ld hl, wCharUnlockFlags ; $5a8b
 	ld bc, $0028 ; $5a8e
 	call ClearBytes ; $5a91
@@ -397,7 +397,7 @@ FillCharGridPaletteIndices:
 	jr nz, .loop ; $5bd6
 	ret ; $5bd8
 AddCreatedCharsToCharGrid:
-	push_wram_bank $03 ; $5bd9
+	push_wram_bank WRAM_SCREEN ; $5bd9
 	ld c, $00 ; $5be2
 	ld b, $00 ; $5be4
 	ld hl, wCreatedCharRecords ; $5be6

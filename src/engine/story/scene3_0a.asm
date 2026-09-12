@@ -25,7 +25,7 @@ ReadBehaviorMapCell:
 	push de ; $5f50
 	push hl ; $5f51
 	call GetBehaviorMapCellAddr ; $5f52
-	push_wram_bank $06 ; $5f55
+	push_wram_bank WRAM_SCENE ; $5f55
 	ld b, [hl] ; $5f5e
 	pop_wram_bank ; $5f5f
 	ld a, b ; $5f64
@@ -47,7 +47,7 @@ WriteBehaviorMapCell:
 	push hl ; $5f77
 	call GetBehaviorMapCellAddr ; $5f78
 	ld b, a ; $5f7b
-	push_wram_bank $06 ; $5f7c
+	push_wram_bank WRAM_SCENE ; $5f7c
 	ld [hl], b ; $5f85
 	pop_wram_bank ; $5f86
 	pop hl ; $5f8b
@@ -72,7 +72,7 @@ CopyCollisionMapRect:
 	call GetCollisionMapCellAddr ; $5fa2
 	pop de ; $5fa5
 	pop bc ; $5fa6
-	wram_bank $06 ; $5fa7
+	wram_bank WRAM_SCENE ; $5fa7
 	ld a, c ; $5fad
 	ld c, b ; $5fae
 	ld b, $00 ; $5faf
@@ -122,7 +122,7 @@ CopyBehaviorMapRect:
 	call GetBehaviorMapCellAddr ; $5fe8
 	pop de ; $5feb
 	pop bc ; $5fec
-	wram_bank $06 ; $5fed
+	wram_bank WRAM_SCENE ; $5fed
 	ld a, c ; $5ff3
 	ld c, b ; $5ff4
 	ld b, $00 ; $5ff5
@@ -387,7 +387,7 @@ CopySceneTilemapRect:
 	push hl ; $61b5
 	push de ; $61b6
 	push bc ; $61b7
-	wram_bank $02 ; $61b8
+	wram_bank WRAM_COURT_PLANES ; $61b8
 	ld a, c ; $61be
 	ld c, b ; $61bf
 	ld b, $00 ; $61c0
@@ -417,7 +417,7 @@ CopySceneTilemapRect:
 	pop bc ; $61dd
 	pop de ; $61de
 	pop hl ; $61df
-	wram_bank $03 ; $61e0
+	wram_bank WRAM_SCREEN ; $61e0
 	ld a, c ; $61e6
 	ld c, b ; $61e7
 	ld b, $00 ; $61e8
@@ -446,7 +446,7 @@ CopySceneTilemapRect:
 	jr nz, .rowLoop2 ; $6203
 	pop hl ; $6205
 	pop de ; $6206
-	wram_bank $05 ; $6207
+	wram_bank WRAM_TEXT ; $6207
 	farcall RestoreShadowTilemap ; $620d
 	ld d, e ; $6210
 	ld e, l ; $6211

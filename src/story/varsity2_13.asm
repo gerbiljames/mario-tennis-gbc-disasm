@@ -236,13 +236,13 @@ ReturnVarsityCourtBNpcsToSpawn_13:
 	script_set_actor_script $09, ActorScript_13_19 ; $70e0
 	ret ; $70eb
 RunSinglesTravelingTeamVictoryIfWon_13:
-	wram_bank $04 ; $70ec
+	wram_bank WRAM_ACTORS ; $70ec
 	ld a, [wMatchWinLoseFlag] ; $70f2
 	cp WINLOSE_WIN ; $70f5
 	jp z, SinglesTravelingTeamVictoryCutscene ; $70f7
 	ret ; $70fa
 SinglesTravelingTeamVictoryCutscene:
-	wram_bank $06 ; $70fb
+	wram_bank WRAM_SCENE ; $70fb
 	ldh a, [hRomBank] ; $7101
 	ld hl, SinglesTravelingTeamActors_13 ; $7103
 	farcall ScriptRespawnLocationActors ; $7106
@@ -377,7 +377,7 @@ SinglesTravelingTeamActors_13:
 	map_actor $0000, ActorScript_13_27, $1700, $1d00, FACE_LEFT, $29, $01, $00
 	map_actor_end
 RunDoublesTravelingTeamVictoryIfWon_13:
-	wram_bank $04 ; $7440
+	wram_bank WRAM_ACTORS ; $7440
 	ld a, [wMatchWinLoseFlag] ; $7446
 	cp WINLOSE_WIN ; $7449
 	jp z, DoublesTravelingTeamVictoryCutscene ; $744b

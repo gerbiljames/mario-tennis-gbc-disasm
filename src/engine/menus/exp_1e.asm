@@ -61,14 +61,14 @@ ShowExpAwardScreen:
 	call UnregisterFrameTask ; $54a5
 	ld hl, DrawExpTotalDigits ; $54a8
 	call UnregisterFrameTask ; $54ab
-	wram_bank $06 ; $54ae
+	wram_bank WRAM_SCENE ; $54ae
 	ld hl, wExpAwardRunningTotal ; $54b4
 	ld a, [hl+] ; $54b7
 	ld h, [hl] ; $54b8
 	ld l, a ; $54b9
 	ret ; $54ba
 InitExpAwardScreenState:
-	wram_bank $06 ; $54bb
+	wram_bank WRAM_SCENE ; $54bb
 	xor a ; $54c1
 	ld hl, wExpAwardScreenState ; $54c2
 	ld d, $05 ; $54c5
@@ -100,12 +100,12 @@ FillMemoryD:
 BuildExpAwardScreenTilemap:
 	call LoadExpAwardScreenGraphics ; $54f5
 	call DrawExpAwardScreenPanels ; $54f8
-	wram_bank $03 ; $54fb
+	wram_bank WRAM_SCREEN ; $54fb
 	ld hl, wShadowTilemap ; $5501
 	ld de, vBGMap0 ; $5504
 	ld c, $24 ; $5507
 	call QueueVRAMCopy ; $5509
-	wram_bank $02 ; $550c
+	wram_bank WRAM_COURT_PLANES ; $550c
 	ld hl, wScreenAttrmap ; $5512
 	ld de, vBGMap0 + VRAM_BANK1 ; $5515
 	ld c, $24 ; $5518
@@ -115,7 +115,7 @@ LoadExpAwardScreenGraphics:
 	ld hl, ExpAwardScreenPalettes0 ; $551e
 	lb de, $00, $03 ; $5521 palette index, count
 	call LoadPaletteShadow ; $5524
-	wram_bank $01 ; $5527
+	wram_bank WRAM_STAGING ; $5527
 	ld hl, ExpAwardScreenGfx_1e ; $552d
 	ld de, wDecompBuffer ; $5530
 	call DecompressData ; $5533
@@ -127,21 +127,21 @@ LoadExpAwardScreenGraphics:
 	ld de, vTiles1 + VRAM_BANK1 ; $5544
 	ld c, $80 ; $5547
 	call QueueVRAMCopy ; $5549
-	wram_bank $01 ; $554c
+	wram_bank WRAM_STAGING ; $554c
 	ld hl, ExpAwardScreenTilemap_1e ; $5552
 	ld de, wDecompBuffer ; $5555
 	call DecompressData ; $5558
 	ld hl, wDecompBuffer ; $555b
 	ld bc, $0240 ; $555e
 	call ExpScreenCopyToTilemap ; $5561
-	wram_bank $01 ; $5564
+	wram_bank WRAM_STAGING ; $5564
 	ld hl, ExpAwardScreenAttrmap_1e ; $556a
 	ld de, wDecompBuffer ; $556d
 	call DecompressData ; $5570
 	ld hl, wDecompBuffer ; $5573
 	ld bc, $0240 ; $5576
 	call ExpScreenCopyToAttrmap ; $5579
-	wram_bank $01 ; $557c
+	wram_bank WRAM_STAGING ; $557c
 	ld hl, PanelFrameGfx_1e ; $5582
 	ld de, wDecompBuffer ; $5585
 	call DecompressData ; $5588
@@ -152,7 +152,7 @@ LoadExpAwardScreenGraphics:
 	ld hl, ExpAwardScreenPalettes1 ; $5596
 	lb de, $08, $01 ; $5599 palette index, count
 	call LoadPaletteShadow ; $559c
-	wram_bank $01 ; $559f
+	wram_bank WRAM_STAGING ; $559f
 	ld hl, ExpDigitSpriteGfx_1e ; $55a5
 	ld de, wDecompBuffer ; $55a8
 	call DecompressData ; $55ab
@@ -162,9 +162,9 @@ LoadExpAwardScreenGraphics:
 	call QueueVRAMCopy ; $55b6
 	ret ; $55b9
 ExpScreenCopyToTilemap:
-	wram_bank $01 ; $55ba
+	wram_bank WRAM_STAGING ; $55ba
 	ld d, [hl] ; $55c0
-	wram_bank $03 ; $55c1
+	wram_bank WRAM_SCREEN ; $55c1
 	ld [hl], d ; $55c7
 	inc hl ; $55c8
 	dec bc ; $55c9
@@ -173,9 +173,9 @@ ExpScreenCopyToTilemap:
 	jr nz, ExpScreenCopyToTilemap ; $55cc
 	ret ; $55ce
 ExpScreenCopyToAttrmap:
-	wram_bank $01 ; $55cf
+	wram_bank WRAM_STAGING ; $55cf
 	ld d, [hl] ; $55d5
-	wram_bank $02 ; $55d6
+	wram_bank WRAM_COURT_PLANES ; $55d6
 	ld [hl], d ; $55dc
 	inc hl ; $55dd
 	dec bc ; $55de
@@ -491,9 +491,9 @@ DrawExpMessageWindow:
 	call FillTilemapRun ; $58fc
 	ret ; $58ff
 FillTilemapRun:
-	wram_bank $03 ; $5900
+	wram_bank WRAM_SCREEN ; $5900
 	ld [hl], b ; $5906
-	wram_bank $02 ; $5907
+	wram_bank WRAM_COURT_PLANES ; $5907
 	ld a, $00 ; $590d
 	ld [hl+], a ; $590f
 	dec c ; $5910
@@ -515,7 +515,7 @@ DrawExpScreenCharSprites:
 	call UpdateExpScreenCharSprite ; $5927
 	ld hl, wCharSpriteSlot ; $592a
 	farcall DrawCharSprite ; $592d
-	wram_bank $04 ; $5930
+	wram_bank WRAM_ACTORS ; $5930
 	pop bc ; $5936
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5937
 	ret z ; $593a
@@ -527,7 +527,7 @@ DrawExpScreenCharSprites:
 	call UpdateExpScreenCharSprite ; $5944
 	ld hl, wCharSpriteSlot ; $5947
 	farcall DrawCharSprite ; $594a
-	wram_bank $04 ; $594d
+	wram_bank WRAM_CHAR0 ; $594d
 	ret ; $5953
 UpdateExpScreenCharSprite:
 	push af ; $5954
@@ -591,7 +591,7 @@ UpdateExpScreenCharSpriteTable:
 	; $59b3, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawNextExpAwardMessage:
-	wram_bank $06 ; $59bb
+	wram_bank WRAM_SCENE ; $59bb
 	ld a, [wExpAwardIndex] ; $59c1
 	cp $05 ; $59c4
 	jr z, .uploadGlyphBuffer ; $59c6
@@ -630,7 +630,7 @@ DrawNextExpAwardMessage:
 .drawExpMessageWindow:
 	push hl ; $59f8
 	call DrawExpMessageWindow ; $59f9
-	wram_bank $06 ; $59fc
+	wram_bank WRAM_SCENE ; $59fc
 	ld hl, wExpAwardRunningTotal ; $5a02
 	ld a, [hl+] ; $5a05
 	ld d, [hl] ; $5a06
@@ -668,7 +668,7 @@ DrawNextExpAwardMessageTable:
 	; $5a44, 10 bytes (bytes:10)
 	db $c9, $04, $ca, $04, $cb, $04, $cc, $04, $d1, $04 ; 0x00
 DrawExpTotalDigits:
-	wram_bank $06 ; $5a4e
+	wram_bank WRAM_SCENE ; $5a4e
 	ld hl, wExpAwardRunningTotal ; $5a54
 	ld a, [hl+] ; $5a57
 	ld h, [hl] ; $5a58

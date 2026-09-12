@@ -116,9 +116,9 @@ ActorScript_0f_08:
 	as_wait $78
 	as_jump .L8
 QueueShortText:
-	push_wram_bank $07 ; $7a8e
+	push_wram_bank WRAM_CHAR3 ; $7a8e
 	ld de, wTextArgFetchBuffer ; $7a97
-	wram_bank $05 ; $7a9a
+	wram_bank WRAM_CHAR1 ; $7a9a
 	farcall FetchShortTextToBuffer ; $7aa0
 	ld hl, wTextArgFetchBuffer ; $7aa3
 	farcall PushTextArgString ; $7aa6

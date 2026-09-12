@@ -1,5 +1,5 @@
 FadeOutAndResetMenuScreen:
-	push_wram_bank $03 ; $64f8
+	push_wram_bank WRAM_SCREEN ; $64f8
 	ld c, $10 ; $6501
 	call BeginFadeOut ; $6503
 	call WaitFadeEnd ; $6506
@@ -21,7 +21,7 @@ RunCourtSelect9Menu:
 	ld c, $01 ; $652e
 	farcall LoadMenuSpritePalettePair ; $6530
 	call LoadCourtSelectHeader ; $6533
-	wram_bank $03 ; $6536
+	wram_bank WRAM_SCREEN ; $6536
 	ld a, [wMenuSlideDirection] ; $653c
 	ld b, a ; $653f
 	call OpenCourtSelect9Panel ; $6540
@@ -33,7 +33,7 @@ RunCourtSelect9Menu:
 	ld hl, CourtSelect9CursorSpriteTask ; $654c
 	call RegisterFrameTask ; $654f
 	call RedrawCourtSelect9Menu ; $6552
-	wram_bank $03 ; $6555
+	wram_bank WRAM_SCREEN ; $6555
 .loop:
 	call AdvanceFrame ; $655b
 	ldh a, [hInputPressed] ; $655e
@@ -107,7 +107,7 @@ RunLinkCourtSelect9Menu:
 	ld c, $01 ; $65e8
 	farcall LoadMenuSpritePalettePair ; $65ea
 	call LoadCourtSelectHeader ; $65ed
-	wram_bank $03 ; $65f0
+	wram_bank WRAM_SCREEN ; $65f0
 	ld a, [wMenuSlideDirection] ; $65f6
 	ld b, a ; $65f9
 	call OpenCourtSelect9Panel ; $65fa
@@ -129,7 +129,7 @@ RunLinkCourtSelect9Menu:
 	push af ; $661e
 	farcall RunLinkInputFrame ; $661f
 	pop af ; $6622
-	wram_bank $03 ; $6623
+	wram_bank WRAM_SCREEN ; $6623
 .loop:
 	ldh a, [hLinkInput] ; $6629
 	ld [wMenuInputPressed], a ; $662b
@@ -370,7 +370,7 @@ AdjustCursorForLockedCourt:
 	pop af ; $6822
 	ret ; $6823
 RedrawCourtSelect9Menu:
-	wram_bank $03 ; $6824
+	wram_bank WRAM_SCREEN ; $6824
 	ld b, $00 ; $682a
 	ld c, $00 ; $682c
 .tabLoop:
@@ -512,7 +512,7 @@ CourtSelect9Palette8:
 	db $cd, $6f, $60, $c1, $cd, $93, $60, $18 ; 0x20
 	db $00, $f1, $e0, $96, $e0, $70, $c9 ; 0x28
 StoreCourtUnlockBits:
-	push_wram_bank $02 ; $695a
+	push_wram_bank WRAM_COURT_PLANES ; $695a
 	ld c, $00 ; $6963
 	ld hl, wScreenAttrmap ; $6965
 .loop:
@@ -534,7 +534,7 @@ IsCourtUnlocked:
 	ld a, $01 ; $6980
 	ret ; $6982
 .lookup:
-	push_wram_bank $02 ; $6983
+	push_wram_bank WRAM_COURT_PLANES ; $6983
 	ld a, b ; $698c
 	sub COURT_STAR ; $698d
 	ld hl, wScreenAttrmap ; $698f

@@ -38,7 +38,7 @@ InitGameProgressScreen:
 	jr nz, .loop ; $72ac
 	ret ; $72ae
 BuildGameProgressScreen:
-	push_wram_bank $05 ; $72af
+	push_wram_bank WRAM_TEXT ; $72af
 	ld c, $10 ; $72b8
 	call BeginFadeOut ; $72ba
 	call WaitFadeEnd ; $72bd
@@ -109,7 +109,7 @@ BuildGameProgressScreen:
 	call WaitFadeEnd ; $7350
 .loop:
 	call AdvanceFrame ; $7353
-	wram_bank $05 ; $7356
+	wram_bank WRAM_TEXT ; $7356
 	ldh a, [hInputPressed] ; $735c
 	bit PADB_UP, a ; $735e
 	call nz, ScrollProgressListUp ; $7360
@@ -134,7 +134,7 @@ UpdateProgressScreenAnimatedTiles:
 ScrollProgressListDown:
 	push af ; $7382
 	farcall ResetGlyphStream ; $7383
-	wram_bank $05 ; $7386
+	wram_bank WRAM_CHAR1 ; $7386
 	ld a, [wCharPosDepth] ; $738c
 	sub $06 ; $738f
 	jr c, .restore ; $7391
@@ -157,7 +157,7 @@ ScrollProgressListDown:
 ScrollProgressListUp:
 	push af ; $73b0
 	farcall ResetGlyphStream ; $73b1
-	wram_bank $05 ; $73b4
+	wram_bank WRAM_CHAR1 ; $73b4
 	ld hl, wCharPosDepth + 2 ; $73ba
 	ld a, [hl] ; $73bd
 	dec a ; $73be
@@ -382,7 +382,7 @@ LoadGameProgressScreenAssets:
 	call FillProgressListRowAttrs ; $7500
 	ret ; $7503
 LoadGameProgressScreenTiles:
-	push_wram_bank $01 ; $7504
+	push_wram_bank WRAM_STAGING ; $7504
 	ld hl, GameProgressHeaderGfx_1e ; $750d
 	ld de, wDecompBuffer ; $7510
 	call DecompressData ; $7513

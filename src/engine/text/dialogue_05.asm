@@ -3,7 +3,7 @@ ShowDialogueAtPosition:
 	push bc ; $59b1
 	push de ; $59b2
 	ld b, a ; $59b3
-	push_wram_bank $05 ; $59b4
+	push_wram_bank WRAM_TEXT ; $59b4
 	xor a ; $59bd
 	ld [wTextArgStringWriteIndex], a ; $59be
 	ld [wTextArgStringMeasureIndex], a ; $59c1
@@ -31,7 +31,7 @@ ShowDialogueAtPosition:
 	xor a ; $59f2
 	ld [wGlyphRowStartCol], a ; $59f3
 	ld [wGlyphFlushedCol], a ; $59f6
-	push_wram_bank $07 ; $59f9
+	push_wram_bank WRAM_SOUND ; $59f9
 	call ClearGlyphBuffer ; $5a02
 	call UploadGlyphBufferFull ; $5a05
 	pop_wram_bank ; $5a08
@@ -72,7 +72,7 @@ DrawDialogueAtPosition:
 	sub $09 ; $5a57
 	ld e, a ; $5a59
 	ld b, a ; $5a5a
-	push_wram_bank $05 ; $5a5b
+	push_wram_bank WRAM_TEXT ; $5a5b
 	ld a, b ; $5a64
 	bit 7, a ; $5a65
 	ld a, $08 ; $5a67
@@ -98,7 +98,7 @@ DrawDialogueAtPosition:
 	ret ; $5a92
 CloseActiveDialogueWindow:
 	push af ; $5a93
-	push_wram_bank $05 ; $5a94
+	push_wram_bank WRAM_TEXT ; $5a94
 	ld a, [wDialogueWindowId] ; $5a9d
 	call CloseWindow ; $5aa0
 	ld a, DIALOGUEWIN_NONE ; $5aa3
@@ -129,7 +129,7 @@ OpenSpeechBubble:
 	ldh [hActorPtr], a ; $5aca
 	ld a, h ; $5acc
 	ldh [hActorPtr + 1], a ; $5acd
-	wram_bank $04 ; $5acf
+	wram_bank WRAM_ACTORS ; $5acf
 	ld hl, hActorPtr ; $5ad5
 	ld a, [hl+] ; $5ad8
 	ld h, [hl] ; $5ad9
@@ -147,7 +147,7 @@ OpenSpeechBubble:
 	ld e, $0a ; $5aea
 	ld b, $01 ; $5aec
 .step2:
-	wram_bank $05 ; $5aee
+	wram_bank WRAM_TEXT ; $5aee
 	ld a, b ; $5af4
 	ld [wSpeechBubbleLowerHalf], a ; $5af5
 	pop_wram_bank ; $5af8
@@ -163,7 +163,7 @@ OpenSpeechBubble:
 	ld [wTextArgShortTextMeasureIndex], a ; $5b11
 	ld a, [wDialogueWindowId] ; $5b14
 	call GetWindowStructPtr ; $5b17
-	wram_bank $05 ; $5b1a
+	wram_bank WRAM_TEXT ; $5b1a
 	ld a, [wDialogueWindowCol] ; $5b20
 	add $08 ; $5b23
 	and $1f ; $5b25
@@ -315,7 +315,7 @@ OpenDialogueWindowCentered:
 	ret ; $5bfb
 MeasureDialogueWidthTiles:
 	push bc ; $5bfc
-	push_wram_bank $05 ; $5bfd
+	push_wram_bank WRAM_TEXT ; $5bfd
 	call FetchDialogueText ; $5c06
 	call FitWindowToText ; $5c09
 	ld a, [wFitTextWidthCells] ; $5c0c

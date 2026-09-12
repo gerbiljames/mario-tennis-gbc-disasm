@@ -281,7 +281,7 @@ CheckTileTriggerAtPoint:
 	pop af ; $5169
 	ret ; $516a
 UpdatePlayerControl:
-	wram_bank $04 ; $516b
+	wram_bank WRAM_ACTORS ; $516b
 	call BuildNearbyActorList ; $5171
 	ld hl, hActorPtr ; $5174
 	ld a, [hl+] ; $5177

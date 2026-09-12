@@ -369,11 +369,11 @@ UpdateLinkSession:
 	xor a ; $48b7
 	ldh [hLinkRemoteInputPrev], a ; $48b8
 	ld hl, wCharInputSource ; $48ba
-	wram_bank $04 ; $48bd
+	wram_bank WRAM_CHAR0 ; $48bd
 	ld [hl], $05 ; $48c3
-	wram_bank $05 ; $48c5
+	wram_bank WRAM_CHAR1 ; $48c5
 	ld [hl], $06 ; $48cb
-	wram_bank $04 ; $48cd
+	wram_bank WRAM_CHAR0 ; $48cd
 	xor a ; $48d3
 	ldh [hLinkRxByte], a ; $48d4
 	ldh [hLinkTransferDone], a ; $48d6
@@ -451,7 +451,7 @@ ExchangeLinkBlockToWram5:
 .asSlave:
 	call ExchangeHandshakeBlockSlave ; $494f
 .copyToWram:
-	wram_bank $05 ; $4952
+	wram_bank WRAM_TEXT ; $4952
 	ld hl, wTextBuffer + 80 ; $4958
 	ld c, $28 ; $495b
 	call PackNibblesToBytes ; $495d

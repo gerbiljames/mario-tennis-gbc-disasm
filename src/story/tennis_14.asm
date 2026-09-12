@@ -336,7 +336,7 @@ ComputeMachineCourtProgress:
 	ld b, a ; $4400
 	ld a, $01 ; $4401
 	farcall ReadMinigameRecord ; $4403
-	push_wram_bank $07 ; $4406
+	push_wram_bank WRAM_SOUND ; $4406
 	ld hl, wMinigameRecordValue ; $440f
 	ld a, [hl+] ; $4412
 	ld h, [hl] ; $4413
@@ -365,7 +365,7 @@ TennisMachineRoomNpc05_14:
 	ld a, [wMapSceneStage] ; $4444
 	cp MACHINECOURTSTAGE_EXPERT ; $4447
 	jr c, .prompt ; $4449
-	push_wram_bank $07 ; $444b
+	push_wram_bank WRAM_SOUND ; $444b
 	ld a, $01 ; $4454
 	farcall ReadMinigameRecord ; $4456
 	ld hl, wMinigameRecordValue ; $4459

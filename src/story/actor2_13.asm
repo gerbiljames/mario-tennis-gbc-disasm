@@ -7,7 +7,7 @@ RunTravelingTeamVictoryCutscene_13:
 	call SinglesTravelingTeamVictoryCutscene ; $7991
 	ret ; $7994
 RunTravelingTeamBracketIfWon_13:
-	wram_bank $04 ; $7995
+	wram_bank WRAM_ACTORS ; $7995
 	ld a, [wMatchWinLoseFlag] ; $799b
 	cp WINLOSE_WIN ; $799e
 	jp z, .eq01 ; $79a0

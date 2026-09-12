@@ -299,7 +299,7 @@ IntroCutsceneState01Init_6b:
 	ld c, SCREENASSET_IntroRallies ; $423d
 	farcall LoadScreenAssetRecord ; $423f
 	call LoadCutsceneTileset ; $4242
-	push_wram_bank $03 ; $4245
+	push_wram_bank WRAM_SCREEN ; $4245
 	ld h, $8a ; $424e
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $4250
 	ld b, $20 ; $4253
@@ -307,7 +307,7 @@ IntroCutsceneState01Init_6b:
 	farcall FillTilemapRect ; $4257
 	pop_wram_bank ; $425a
 	farcall QueueWram3MapToVRAM ; $425f
-	wram_bank $01 ; $4262
+	wram_bank WRAM_STAGING ; $4262
 	ld hl, (BANK(DataPtr_IntroSwingTiles) << 8) | LOW(DataPtr_IntroSwingTiles) ; $4268
 	ld de, wDecompBuffer ; $426b
 	call DecompressDataFromBank ; $426e
@@ -319,7 +319,7 @@ IntroCutsceneState01Init_6b:
 	ld de, vTiles1 ; $427f
 	ld c, $80 ; $4282
 	call QueueVRAMCopy ; $4284
-	wram_bank $03 ; $4287
+	wram_bank WRAM_SCREEN ; $4287
 	ld hl, (BANK(DataPtr_IntroSwingTilemap) << 8) | LOW(DataPtr_IntroSwingTilemap) ; $428d
 	ld de, wScreenScratch ; $4290
 	call DecompressDataFromBank ; $4293
@@ -359,7 +359,7 @@ IntroCutsceneState01Update_6b:
 .timerExpired:
 	jp DispatchCutsceneStateInit.loopB ; $4323
 IntroCutsceneState02Init_6b:
-	push_wram_bank $03 ; $4326
+	push_wram_bank WRAM_SCREEN ; $4326
 	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $432f
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $4332
 	ld c, $0a ; $4335
@@ -404,7 +404,7 @@ IntroCutsceneState03Init_6b:
 	call DisableLCDSafely ; $43cf
 	ld c, SCREENASSET_IntroRallies2 ; $43d2
 	farcall LoadScreenAssetRecord ; $43d4
-	push_wram_bank $03 ; $43d7
+	push_wram_bank WRAM_SCREEN ; $43d7
 	ld h, $8a ; $43e0
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $43e2
 	ld b, $20 ; $43e5
@@ -412,7 +412,7 @@ IntroCutsceneState03Init_6b:
 	farcall FillTilemapRect ; $43e9
 	pop_wram_bank ; $43ec
 	farcall QueueWram3MapToVRAM ; $43f1
-	wram_bank $01 ; $43f4
+	wram_bank WRAM_STAGING ; $43f4
 	ld hl, (BANK(DataPtr_IntroCloseupTiles) << 8) | LOW(DataPtr_IntroCloseupTiles) ; $43fa
 	ld de, wDecompBuffer ; $43fd
 	call DecompressDataFromBank ; $4400
@@ -424,7 +424,7 @@ IntroCutsceneState03Init_6b:
 	ld de, vTiles1 ; $4411
 	ld c, $80 ; $4414
 	call QueueVRAMCopy ; $4416
-	wram_bank $03 ; $4419
+	wram_bank WRAM_SCREEN ; $4419
 	ld hl, (BANK(DataPtr_IntroCloseupTilemap) << 8) | LOW(DataPtr_IntroCloseupTilemap) ; $441f
 	ld de, wScreenScratch ; $4422
 	call DecompressDataFromBank ; $4425
@@ -467,7 +467,7 @@ IntroCutsceneState03Update_6b:
 	ld [wCutsceneSpriteBX], a ; $4481
 	jp DispatchCutsceneStateInit.loop ; $4484
 IntroCutsceneState04Init_6b:
-	push_wram_bank $03 ; $4487
+	push_wram_bank WRAM_SCREEN ; $4487
 	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4490
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $4493
 	ld c, $0a ; $4496
@@ -510,7 +510,7 @@ IntroCutsceneState05Init_6b:
 	call DisableLCDSafely ; $452e
 	ld c, SCREENASSET_IntroRallies3 ; $4531
 	farcall LoadScreenAssetRecord ; $4533
-	push_wram_bank $03 ; $4536
+	push_wram_bank WRAM_SCREEN ; $4536
 	ld h, $8a ; $453f
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH ; $4541
 	ld b, $20 ; $4544
@@ -559,7 +559,7 @@ IntroCutsceneState05Init_6b:
 IntroCutsceneState05Exit_6b:
 	ld hl, rIE ; $45b5
 	res 1, [hl] ; $45b8
-	push_wram_bank $03 ; $45ba
+	push_wram_bank WRAM_SCREEN ; $45ba
 	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $45c3
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $45c6
 	ld c, $0c ; $45c9
@@ -576,7 +576,7 @@ IntroCutsceneState05Exit_6b:
 	xor a ; $45ea
 	ldh [hScrollX], a ; $45eb
 	call AdvanceFrame ; $45ed
-	push_wram_bank $03 ; $45f0
+	push_wram_bank WRAM_SCREEN ; $45f0
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $45f9
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $45fc
 	ld c, $0c ; $45ff
@@ -682,7 +682,7 @@ IntroCutsceneState13Init_6b:
 	ldh [hScrollY], a ; $46e6
 	ldh [hScrollX], a ; $46e8
 	ld [wCutsceneStepTimer], a ; $46ea
-	push_wram_bank $05 ; $46ed
+	push_wram_bank WRAM_TEXT ; $46ed
 	ld hl, IntroCutsceneState13InitPalettes_6b ; $46f6
 	lb de, $00, $08 ; $46f9 palette index, count
 	call LoadPaletteShadow ; $46fc
@@ -829,7 +829,7 @@ IntroCutsceneState11Init_6b:
 	ldh [hShowDebugConsole], a ; $488f
 	ld hl, rLCDC ; $4891
 	set 3, [hl] ; $4894
-	wram_bank $03 ; $4896
+	wram_bank WRAM_SCREEN ; $4896
 	ld hl, wShadowTilemap ; $489c
 	ld de, vBGMap1 ; $489f
 	ld c, $40 ; $48a2
@@ -923,7 +923,7 @@ IntroCutsceneState16Init_6b:
 	ldh [hShowDebugConsole], a ; $496b
 	ld hl, rLCDC ; $496d
 	set 3, [hl] ; $4970
-	wram_bank $01 ; $4972
+	wram_bank WRAM_STAGING ; $4972
 	ld hl, (BANK(DataPtr_IntroGreatestPlayerTiles) << 8) | LOW(DataPtr_IntroGreatestPlayerTiles) ; $4978
 	ld de, wDecompBuffer ; $497b
 	call DecompressDataFromBank ; $497e
@@ -952,7 +952,7 @@ IntroCutsceneState16Init_6b:
 	ld hl, IntroCutsceneState16InitPalettes_6b ; $49bf
 	lb de, $00, $08 ; $49c2 palette index, count
 	call LoadPaletteShadow ; $49c5
-	wram_bank $01 ; $49c8
+	wram_bank WRAM_STAGING ; $49c8
 	ld hl, (BANK(DataPtr_IntroCharactersTiles) << 8) | LOW(DataPtr_IntroCharactersTiles) ; $49ce
 	ld de, wDecompBuffer ; $49d1
 	call DecompressDataFromBank ; $49d4
@@ -964,21 +964,21 @@ IntroCutsceneState16Init_6b:
 	ld de, vTiles1 + VRAM_BANK1 ; $49e5
 	ld c, $80 ; $49e8
 	call QueueVRAMCopy ; $49ea
-	wram_bank $04 ; $49ed
+	wram_bank WRAM_ACTORS ; $49ed
 	ld hl, (BANK(DataPtr_IntroCharactersTilemap) << 8) | LOW(DataPtr_IntroCharactersTilemap) ; $49f3
 	ld de, wIntroCharactersTilemap ; $49f6
 	call DecompressDataFromBank ; $49f9
 	ld hl, (BANK(DataPtr_IntroCharactersAttrmap) << 8) | LOW(DataPtr_IntroCharactersAttrmap) ; $49fc
 	ld de, wIntroCharactersAttrmap ; $49ff
 	call DecompressDataFromBank ; $4a02
-	wram_bank $05 ; $4a05
+	wram_bank WRAM_TEXT ; $4a05
 	ld hl, (BANK(DataPtr_IntroCharactersTilemap2) << 8) | LOW(DataPtr_IntroCharactersTilemap2) ; $4a0b
 	ld de, wWindowShadowTilemap ; $4a0e
 	call DecompressDataFromBank ; $4a11
 	ld hl, (BANK(DataPtr_IntroCharactersAttrmap2) << 8) | LOW(DataPtr_IntroCharactersAttrmap2) ; $4a14
 	ld de, wWindowShadowAttrmap ; $4a17
 	call DecompressDataFromBank ; $4a1a
-	wram_bank $01 ; $4a1d
+	wram_bank WRAM_STAGING ; $4a1d
 	ld hl, CutsceneSceneAGfx0 ; $4a23
 	ld de, wDecompBuffer ; $4a26
 	call DecompressData ; $4a29

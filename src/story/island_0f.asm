@@ -242,7 +242,7 @@ SetActorDrawModeFromSceneTile_0f:
 	ld h, a ; $631f
 	ld l, $00 ; $6320
 	push af ; $6322
-	wram_bank $04 ; $6323
+	wram_bank WRAM_ACTORS ; $6323
 	srl h ; $6329
 	rr l ; $632b
 	srl h ; $632d
@@ -279,7 +279,7 @@ SetActorDrawModeFromSceneTile_0f:
 	and $87 ; $635a
 	cp $05 ; $635c
 	jr nz, .checkBelow ; $635e
-	wram_bank $04 ; $6360
+	wram_bank WRAM_ACTORS ; $6360
 	ld hl, $0020 ; $6366
 	add hl, bc ; $6369
 	ld a, [hl] ; $636a
@@ -292,7 +292,7 @@ SetActorDrawModeFromSceneTile_0f:
 	and $07 ; $6373
 	cp $05 ; $6375
 	jr nz, .actorLoop ; $6377
-	wram_bank $04 ; $6379
+	wram_bank WRAM_ACTORS ; $6379
 	ld hl, $0020 ; $637f
 	add hl, bc ; $6382
 	ld a, [hl] ; $6383
@@ -300,7 +300,7 @@ SetActorDrawModeFromSceneTile_0f:
 	ld [hl], a ; $6386
 	ret ; $6387
 .actorLoop:
-	wram_bank $04 ; $6388
+	wram_bank WRAM_ACTORS ; $6388
 	ld hl, $0020 ; $638e
 	add hl, bc ; $6391
 	ld a, $02 ; $6392
@@ -310,7 +310,7 @@ SetActorDrawModeFromSceneTile_0f:
 UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ld h, a ; $6396
 	ld l, $00 ; $6397
-	wram_bank $04 ; $6399
+	wram_bank WRAM_ACTORS ; $6399
 	srl h ; $639f
 	rr l ; $63a1
 	srl h ; $63a3
@@ -343,7 +343,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	and $87 ; $63cc
 	cp $05 ; $63ce
 	jr nz, .nextActor ; $63d0
-	wram_bank $04 ; $63d2
+	wram_bank WRAM_ACTORS ; $63d2
 	ld hl, $0020 ; $63d8
 	add hl, bc ; $63db
 	ld a, [hl] ; $63dc
@@ -356,7 +356,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	and $07 ; $63e5
 	cp $05 ; $63e7
 	jr nz, .done ; $63e9
-	wram_bank $04 ; $63eb
+	wram_bank WRAM_ACTORS ; $63eb
 	ld hl, $0020 ; $63f1
 	add hl, bc ; $63f4
 	ld a, [hl] ; $63f5
@@ -364,7 +364,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ld [hl], a ; $63f8
 	ret ; $63f9
 .done:
-	wram_bank $04 ; $63fa
+	wram_bank WRAM_ACTORS ; $63fa
 	ld hl, $0020 ; $6400
 	add hl, bc ; $6403
 	ld a, $02 ; $6404

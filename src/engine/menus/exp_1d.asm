@@ -2,7 +2,7 @@ ExpBarFillTiles_1d:
 	; $6f35, 9 bytes (bytes:9)
 	db $0d, $1d, $2d, $0e, $1e, $2e, $0f, $1f, $2f ; 0x00
 RunExpDistributionLoop:
-	wram_bank $06 ; $6f3e
+	wram_bank WRAM_SCENE ; $6f3e
 	ld a, [wCharDataViewOnly] ; $6f44
 	or a ; $6f47
 	jr z, .tick ; $6f48
@@ -10,7 +10,7 @@ RunExpDistributionLoop:
 	ld [wCharDataViewOnly], a ; $6f4b
 	jp CheckExpLevelDown.step2 ; $6f4e
 .tick:
-	wram_bank $06 ; $6f51
+	wram_bank WRAM_SCENE ; $6f51
 	ld a, [wExpInputRepeating] ; $6f57
 	and $08 ; $6f5a
 	or a ; $6f5c
@@ -36,7 +36,7 @@ RunExpDistributionLoop:
 	bit PADB_B, a ; $6f82
 	jr z, .checkButtons ; $6f84
 	push af ; $6f86
-	wram_bank $06 ; $6f87
+	wram_bank WRAM_SCENE ; $6f87
 	xor a ; $6f8d
 	ld [wExpRedrawPending], a ; $6f8e
 	pop af ; $6f91
@@ -47,7 +47,7 @@ RunExpDistributionLoop:
 	jp nz, .increase ; $6f99
 	bit 0, a ; $6f9c
 	jp nz, .increase ; $6f9e
-	wram_bank $06 ; $6fa1
+	wram_bank WRAM_SCENE ; $6fa1
 	ld a, $a8 ; $6fa7
 	ld [wExpBarMarkerX], a ; $6fa9
 	ld a, $08 ; $6fac
@@ -63,7 +63,7 @@ RunExpDistributionLoop:
 	jr nz, .selectPartner ; $6fc2
 	jp RunExpDistributionLoop ; $6fc4
 .selectMainChar:
-	wram_bank $06 ; $6fc7
+	wram_bank WRAM_SCENE ; $6fc7
 	ld a, [wStoryCharacterSlot] ; $6fcd
 	or a ; $6fd0
 	jp z, RunExpDistributionLoop ; $6fd1
@@ -80,7 +80,7 @@ RunExpDistributionLoop:
 	set 0, [hl] ; $6fee
 	jp RunExpDistributionLoop ; $6ff0
 .selectPartner:
-	wram_bank $06 ; $6ff3
+	wram_bank WRAM_SCENE ; $6ff3
 	ld a, [wStoryCharacterSlot] ; $6ff9
 	or a ; $6ffc
 	jp nz, RunExpDistributionLoop ; $6ffd
@@ -97,7 +97,7 @@ RunExpDistributionLoop:
 	set 0, [hl] ; $701b
 	jp RunExpDistributionLoop ; $701d
 .decrease:
-	wram_bank $06 ; $7020
+	wram_bank WRAM_SCENE ; $7020
 	ld a, [wExpCursorChar] ; $7026
 	bit 0, a ; $7029
 	jp nz, RunExpDistributionLoop ; $702b
@@ -110,7 +110,7 @@ RunExpDistributionLoop:
 	or a ; $703b
 	jr z, .decreaseFailed ; $703c
 	sound SFX_MENU_CANCEL ; $703e
-	wram_bank $06 ; $7040
+	wram_bank WRAM_SCENE ; $7040
 	ld a, [wExpRepeatDelay] ; $7046
 	or a ; $7049
 	jr nz, .applyDecrease ; $704a
@@ -133,7 +133,7 @@ RunExpDistributionLoop:
 	call SweepExpBarMarkerLeft ; $7070
 	jp RunExpDistributionLoop ; $7073
 .increase:
-	wram_bank $06 ; $7076
+	wram_bank WRAM_SCENE ; $7076
 	ld a, [wExpCursorChar] ; $707c
 	bit 0, a ; $707f
 	jp nz, RunExpDistributionLoop ; $7081
@@ -146,7 +146,7 @@ RunExpDistributionLoop:
 	or a ; $7091
 	jr z, .increaseFailed ; $7092
 	sound SFX_MENU_SELECT ; $7094
-	wram_bank $06 ; $7096
+	wram_bank WRAM_SCENE ; $7096
 	ld a, [wExpRepeatDelay] ; $709c
 	or a ; $709f
 	jr nz, .applyIncrease ; $70a0
@@ -169,7 +169,7 @@ RunExpDistributionLoop:
 	call SweepExpBarMarkerRight ; $70c6
 	jp RunExpDistributionLoop ; $70c9
 SlideExpCursorToMainCharTask:
-	wram_bank $06 ; $70cc
+	wram_bank WRAM_SCENE ; $70cc
 	ld a, [wExpCursorSlide] ; $70d2
 	dec a ; $70d5
 	ld [wExpCursorSlide], a ; $70d6
@@ -180,7 +180,7 @@ SlideExpCursorToMainCharTask:
 	call UnregisterFrameTask ; $70e2
 	ret ; $70e5
 SlideExpCursorToPartnerTask:
-	wram_bank $06 ; $70e6
+	wram_bank WRAM_SCENE ; $70e6
 	ld a, [wExpCursorSlide] ; $70ec
 	inc a ; $70ef
 	ld [wExpCursorSlide], a ; $70f0
@@ -193,7 +193,7 @@ SlideExpCursorToPartnerTask:
 	ret ; $7101
 SweepExpBarMarkerLeft:
 	call GetExpBarSweepStep ; $7102
-	wram_bank $06 ; $7105
+	wram_bank WRAM_SCENE ; $7105
 	ld a, [wExpBarMarkerX] ; $710b
 	cp $a8 ; $710e
 	jr z, .checkStoryCharacterSlot ; $7110
@@ -218,7 +218,7 @@ SweepExpBarMarkerLeft:
 	ret ; $7132
 SweepExpBarMarkerRight:
 	call GetExpBarSweepStep ; $7133
-	wram_bank $06 ; $7136
+	wram_bank WRAM_SCENE ; $7136
 	ld a, [wExpBarMarkerX] ; $713c
 	cp $a8 ; $713f
 	jr z, .eqa8 ; $7141
@@ -246,7 +246,7 @@ SweepExpBarMarkerRight:
 	ld [wExpBarMarkerX], a ; $7164
 	ret ; $7167
 GetExpBarSweepStep:
-	wram_bank $06 ; $7168
+	wram_bank WRAM_SCENE ; $7168
 	ld a, [wStoryCharacterSlot] ; $716e
 	or a ; $7171
 	jr nz, .nonZero ; $7172
@@ -270,7 +270,7 @@ UpdateExpScreenSelectionPalettes:
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7192
 	lb de, $02, $01 ; $7195 palette index, count
 	farcall LoadIndexedPaletteThunk ; $7198
-	wram_bank $06 ; $719b
+	wram_bank WRAM_SCENE ; $719b
 	ld a, [wExpScreenCharStats + 10] ; $71a1
 	ld [wBGPalettes + 58], a ; $71a4
 	ld a, [wExpScreenCharStats + 11] ; $71a7
@@ -328,7 +328,7 @@ GrayscalePaletteColorInPlace:
 ; See docs/bugs.md.
 ConvertColorToGrayscale:
 	push hl ; $7210
-	push_wram_bank $01 ; $7211
+	push_wram_bank WRAM_STAGING ; $7211
 	ld a, e ; $721a
 	and $1f ; $721b
 	ld [wDecompBuffer], a ; $721d
@@ -381,7 +381,7 @@ ConvertColorToGrayscale:
 	pop hl ; $726b
 	ret ; $726c
 AssignExpPointToChar:
-	wram_bank $06 ; $726d
+	wram_bank WRAM_SCENE ; $726d
 	ld a, [wExpPoolRemaining] ; $7273
 	ld d, a ; $7276
 	ld a, [wExpPoolRemaining + 1] ; $7277

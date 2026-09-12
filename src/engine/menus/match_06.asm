@@ -17,7 +17,7 @@ RunMinigameEndMenu:
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4023
 	call QueueVRAMCopy ; $4025
 	farcall StepMatchFrame ; $4028
-	wram_bank $02 ; $402b
+	wram_bank WRAM_COURT_PLANES ; $402b
 	ld b, $00 ; $4031
 	call DrawScoreboard ; $4033
 	ld a, $0a ; $4036
@@ -64,7 +64,7 @@ RunMatchPauseMenu:
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4099
 	call QueueVRAMCopy ; $409b
 	farcall StepMatchFrame ; $409e
-	wram_bank $02 ; $40a1
+	wram_bank WRAM_COURT_PLANES ; $40a1
 .loop:
 	ld b, $00 ; $40a7
 	call DrawScoreboard ; $40a9
@@ -386,7 +386,7 @@ MatchPauseMenu_ReviewControls:
 	ldh a, [hDebugStepMode] ; $43c7
 	and a ; $43c9
 	jr z, .stepMatchFrame ; $43ca
-	push_wram_bank $04 ; $43cc
+	push_wram_bank WRAM_CHAR0 ; $43cc
 	ld hl, wCharInputSource ; $43d5
 	ld a, [hl] ; $43d8
 	xor $01 ; $43d9

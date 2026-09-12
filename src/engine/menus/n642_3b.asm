@@ -1,5 +1,5 @@
 BuildN64ExhibColumnList:
-	wram_bank $03 ; $4743
+	wram_bank WRAM_SCREEN ; $4743
 	ld hl, N64ExhibColumn ; $4749
 	ld de, wChartColumnList ; $474c
 	ld bc, $0001 ; $474f
@@ -246,7 +246,7 @@ ExpandByteToBitArray:
 	pop hl ; $48b6
 	ret ; $48b7
 Unused_3b_FillN64RecordsPalettes:
-	wram_bank $03 ; $48b8
+	wram_bank WRAM_SCREEN ; $48b8
 	ld hl, wN64RecordsBlock + 216 ; $48be
 	ld c, $00 ; $48c1
 .loopB:
@@ -335,7 +335,7 @@ ChartCharIconTable:
 	db $0e ; 0x10
 ReadN64RecordsSaveBlock:
 	push bc ; $493f
-	push_wram_bank $03 ; $4940
+	push_wram_bank WRAM_SCREEN ; $4940
 	ld hl, wN64RecordsBlock ; $4949
 	ld bc, $0020 ; $494c
 	call ClearMemory16 ; $494f
@@ -362,7 +362,7 @@ RunTrophiesScreen:
 	call EnableLCD ; $497f
 	script_fade_in $10 ; $4982
 	call WaitFadeEnd ; $4987
-	wram_bank $03 ; $498a
+	wram_bank WRAM_SCREEN ; $498a
 .loop:
 	ldh a, [hInputPressed] ; $4990
 	ld [wMenuInputPressed], a ; $4992
@@ -409,7 +409,7 @@ RunTrophiesScreen:
 StubNop_3b_2:
 	ret ; $49e4
 BuildTrophiesScreen:
-	wram_bank $03 ; $49e5
+	wram_bank WRAM_SCREEN ; $49e5
 	call DecodeTrophyCounts ; $49eb
 	ld a, [wTrophySecondSetPresent] ; $49ee
 	or a ; $49f1
@@ -421,7 +421,7 @@ BuildTrophiesScreen:
 	ld c, SCREENASSET_N64Tournament ; $49fb
 	farcall LoadScreenAssetRecord ; $49fd
 .drawTrophiesWonRows:
-	wram_bank $03 ; $4a00
+	wram_bank WRAM_SCREEN ; $4a00
 	call DrawTrophiesWonRows ; $4a06
 	ld a, [wTrophySecondSetPresent] ; $4a09
 	or a ; $4a0c

@@ -66,7 +66,7 @@ InitMinigameScore:
 	ld_hl_indexed MinigameRecordSlotIds ; $40f0
 	ld a, [hl] ; $40f7
 	farcall ReadMinigameRecord ; $40f8
-	push_wram_bank $07 ; $40fb
+	push_wram_bank WRAM_SOUND ; $40fb
 	ld hl, wMinigameRecordValue ; $4104
 	ld de, wMinigameHighScore ; $4107
 	ld a, [hl+] ; $410a
@@ -256,7 +256,7 @@ IsMinigameScoreLimitReached:
 	ld a, $01 ; $420e
 	ret ; $4210
 StartScorePopup:
-	push_wram_bank $04 ; $4211
+	push_wram_bank WRAM_ACTORS ; $4211
 	ld hl, wBallHistory + 30 ; $421a
 	ld de, wScorePopupSource ; $421d
 	ld a, [hl+] ; $4220
@@ -341,7 +341,7 @@ MinigameGridCellAttrs:
 	db $0c, $0c, $0c, $0c ; 0x18
 	db $0c, $0c, $0c, $0c ; 0x1c
 GetMinigameGridCellIndex:
-	push_wram_bank $04 ; $42bf
+	push_wram_bank WRAM_ACTORS ; $42bf
 	ld hl, wBallHistory + 30 ; $42c8
 	ld a, [hl+] ; $42cb
 	ld d, [hl] ; $42cc

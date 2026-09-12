@@ -1,7 +1,7 @@
 ; Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1d (one copy per bank); a change here belongs in every copy.
 	twin draw_confirm_selection_cursor, 1c ; $53a3 DrawConfirmSelectionCursor_1c
 MoveCharDataScreenSelection:
-	wram_bank $06 ; $53c3
+	wram_bank WRAM_SCENE ; $53c3
 	ld a, [wCharDataPage] ; $53c9
 	add l ; $53cc
 	ld l, a ; $53cd
@@ -31,7 +31,7 @@ MoveCharDataScreenSelection:
 	call FlushCharDataTilemaps ; $5400
 	ret ; $5403
 ApplyCharStatLevelUp:
-	wram_bank $06 ; $5404
+	wram_bank WRAM_SCENE ; $5404
 	ld a, [wCharDataChoiceCount] ; $540a
 	or a ; $540d
 	ret z ; $540e
@@ -159,13 +159,13 @@ ApplyCharStatLevelUp:
 	ld a, $01 ; $54e0
 	ret ; $54e2
 SelectCharDataConfirmSlot:
-	wram_bank $06 ; $54e3
+	wram_bank WRAM_SCENE ; $54e3
 	ld a, $04 ; $54e9
 	ld [wCharDataPage], a ; $54eb
 	call WriteCharStatsToDisplayBuffer ; $54ee
 	ret ; $54f1
 DrawStatArrowIndicators:
-	wram_bank $06 ; $54f2
+	wram_bank WRAM_SCENE ; $54f2
 	ld a, [wCharDataStatDeltas] ; $54f8
 	lb de, $4c, $24 ; $54fb x, y
 	call QueueStatChangeArrow ; $54fe
@@ -232,20 +232,20 @@ SetupCharDataScreen:
 	ld hl, CharDataBand4RunsStep3_1c ; $559b
 	ld bc, wCharDataScreenCell + 27 * TILEMAP_WIDTH + 16 ; $559e
 	call BlitTilemapRunsFromTable ; $55a1
-	wram_bank $06 ; $55a4
+	wram_bank WRAM_SCENE ; $55a4
 	xor a ; $55aa
 	ld [wCharDataRevealTimer], a ; $55ab
-	wram_bank $03 ; $55ae
+	wram_bank WRAM_SCREEN ; $55ae
 	ld hl, wCharDataScreenCell ; $55b4
 	ld de, vBGMap0 ; $55b7
 	ld c, $24 ; $55ba
 	call QueueVRAMCopy ; $55bc
-	wram_bank $02 ; $55bf
+	wram_bank WRAM_COURT_PLANES ; $55bf
 	ld hl, wCharDataScreenCell ; $55c5
 	ld de, vBGMap0 + VRAM_BANK1 ; $55c8
 	ld c, $24 ; $55cb
 	call QueueVRAMCopy ; $55cd
-	wram_bank $06 ; $55d0
+	wram_bank WRAM_SCENE ; $55d0
 	ld a, $03 ; $55d6
 	ld [wCharDataRevealStep], a ; $55d8
 	ld a, $01 ; $55db

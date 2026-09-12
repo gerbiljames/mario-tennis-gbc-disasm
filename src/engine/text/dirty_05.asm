@@ -381,7 +381,7 @@ RenderTextAtWindowCell:
 	ld d, h ; $727d
 	ld e, l ; $727e
 	pop hl ; $727f
-	push_wram_bank $05 ; $7280
+	push_wram_bank WRAM_TEXT ; $7280
 	ld a, [wMenuWindowId] ; $7289
 	ld c, a ; $728c
 	ld a, [wShadowTilemapBank] ; $728d
@@ -438,11 +438,11 @@ PrepareGlyphBuffer:
 	push bc ; $72dd
 	push de ; $72de
 	push hl ; $72df
-	push_wram_bank $05 ; $72e0
+	push_wram_bank WRAM_TEXT ; $72e0
 	ld a, [wGlyphBufferHoldCount] ; $72e9
 	or a ; $72ec
 	jr nz, .keepBuffer ; $72ed
-	wram_bank $07 ; $72ef
+	wram_bank WRAM_SOUND ; $72ef
 	call ClearGlyphBuffer ; $72f5
 	call ResetGlyphStream ; $72f8
 	jr .done ; $72fb

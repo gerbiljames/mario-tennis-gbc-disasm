@@ -380,7 +380,7 @@ PlayScreenSequence0:
 	call EnableLCD ; $76ba
 	script_fade_in $02 ; $76bd
 	call WaitFadeEnd ; $76c2
-	wram_bank $03 ; $76c5
+	wram_bank WRAM_SCREEN ; $76c5
 	xor a ; $76cb
 	ld [wScreenSequenceTimer], a ; $76cc
 .scrollLoop:

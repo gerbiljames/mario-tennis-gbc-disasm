@@ -109,7 +109,7 @@ ReturnDownLineBriefing_AdvanceAnim_BracketPosTable:
 	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.bin" ; $6f0b, 16 bytes
 ShowRulesScreen:
 	push af ; $6f1b
-	wram_bank $03 ; $6f1c
+	wram_bank WRAM_SCREEN ; $6f1c
 	pop af ; $6f22
 	ld [wRulesPageListId], a ; $6f23
 	ld a, [wMinigameLevel] ; $6f26
@@ -135,7 +135,7 @@ ShowRulesScreen:
 	call EnableLCD ; $6f5c
 	script_fade_in $20 ; $6f5f
 	call WaitFadeEnd ; $6f64
-	wram_bank $03 ; $6f67
+	wram_bank WRAM_SCREEN ; $6f67
 	ld a, $01 ; $6f6d
 	ld hl, AdvanceRulesScreenAnimFrame ; $6f6f
 	call RegisterFrameTask ; $6f72
@@ -152,17 +152,17 @@ ShowRulesScreen:
 	ret ; $6f8f
 	ret ; $6f90
 RunMinigameRulesPages:
-	push_wram_bank $03 ; $6f91
+	push_wram_bank WRAM_SCREEN ; $6f91
 	ld a, [wSelectedMinigame] ; $6f9a
 	inc a ; $6f9d
 	inc a ; $6f9e
 	farcall ReadMinigameRecord ; $6f9f
-	wram_bank $07 ; $6fa2
+	wram_bank WRAM_SOUND ; $6fa2
 	ld hl, wMinigameRecordValue ; $6fa8
 	ld a, [hl+] ; $6fab
 	ld h, [hl] ; $6fac
 	ld l, a ; $6fad
-	wram_bank $03 ; $6fae
+	wram_bank WRAM_SCREEN ; $6fae
 	farcall PushTextArgNumber ; $6fb4
 	ld a, [wSelectedMinigame] ; $6fb7
 	ld hl, MinigameRulesTextIdBases_17 ; $6fba
@@ -245,12 +245,12 @@ MinigameRulesPageLoop:
 	jr z, .step ; $70ad
 	push af ; $70af
 	ld d, a ; $70b0
-	wram_bank $07 ; $70b1
+	wram_bank WRAM_SOUND ; $70b1
 	ld hl, wMinigameRecordValue ; $70b7
 	ld a, [hl+] ; $70ba
 	ld h, [hl] ; $70bb
 	ld l, a ; $70bc
-	wram_bank $03 ; $70bd
+	wram_bank WRAM_SCREEN ; $70bd
 	ld a, h ; $70c3
 	cp $27 ; $70c4
 	jr nz, .restore ; $70c6
@@ -342,7 +342,7 @@ LoadRulesScreen:
 	ldh a, [hWramBank] ; $7162
 	push af ; $7164
 	farcall InitTextWindows ; $7165
-	wram_bank $05 ; $7168
+	wram_bank WRAM_TEXT ; $7168
 	ld a, $03 ; $716e
 	ld [wShadowTilemapBank], a ; $7170
 	ld a, $00 ; $7173
@@ -375,7 +375,7 @@ LoadRulesScreen:
 	farcall QueueWram3MapToVRAM ; $71b9
 	ret ; $71bc
 ClearRulesScreenTextArea:
-	push_wram_bank $03 ; $71bd
+	push_wram_bank WRAM_SCREEN ; $71bd
 	ld de, wShadowAttrmap + 3 * TILEMAP_WIDTH + 2 ; $71c6
 	ld b, $10 ; $71c9
 	ld c, $0e ; $71cb
@@ -385,7 +385,7 @@ ClearRulesScreenTextArea:
 	pop_wram_bank ; $71d5
 	ret ; $71da
 ClearRulesPageRows:
-	push_wram_bank $03 ; $71db
+	push_wram_bank WRAM_SCREEN ; $71db
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $71e4
 	ld b, $10 ; $71e7
 	ld c, $01 ; $71e9
@@ -399,7 +399,7 @@ ClearRulesPageRows:
 	pop_wram_bank ; $71fc
 	ret ; $7201
 PrepareRulesPageTilemap:
-	push_wram_bank $03 ; $7202
+	push_wram_bank WRAM_SCREEN ; $7202
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $720b
 	ld b, $10 ; $720e
 	ld c, $01 ; $7210
@@ -461,7 +461,7 @@ QueueRulesPageToVRAM:
 	call QueueVRAMCopy ; $728f
 	ret ; $7292
 LoadRulesBorderAnimTiles:
-	wram_bank $01 ; $7293
+	wram_bank WRAM_STAGING ; $7293
 	ld hl, RulesBorderAnimTiles0 ; $7299
 	ld de, wDecompBuffer ; $729c
 	call DecompressData ; $729f
@@ -594,7 +594,7 @@ LoadRulesBorderAnimTiles:
 	call QueueVRAMCopy ; $741c
 	ret ; $741f
 AdvanceRulesScreenAnimFrame:
-	push_wram_bank $03 ; $7420
+	push_wram_bank WRAM_SCREEN ; $7420
 	ld a, [wRulesAnimCounter] ; $7429
 	inc a ; $742c
 	ld [wRulesAnimCounter], a ; $742d
@@ -694,7 +694,7 @@ RulesScreenAnimFrameTable1:
 	dw $0302 ; record 28
 	dw $0402 ; record 29
 DrawRulesScreenCharacters:
-	push_wram_bank $03 ; $74db
+	push_wram_bank WRAM_SCREEN ; $74db
 	ld a, [wRulesScreenAnimFrame] ; $74e4
 	ld hl, RulesScreenCharactersTable0 ; $74e7
 	add l ; $74ea

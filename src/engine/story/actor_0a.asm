@@ -40,7 +40,7 @@ ScriptSetActorMoveTarget:
 	ldh [hActorPtr], a ; $440e
 	ld a, h ; $4410
 	ldh [hActorPtr + 1], a ; $4411
-	wram_bank $04 ; $4413
+	wram_bank WRAM_ACTORS ; $4413
 	call SetActorMoveTargetRaw ; $4419
 .done:
 	add sp, 4 ; $441c
@@ -198,7 +198,7 @@ MoveActorByDelta:
 	ldh [hActorPtr], a ; $44e0
 	ld a, h ; $44e2
 	ldh [hActorPtr + 1], a ; $44e3
-	wram_bank $04 ; $44e5
+	wram_bank WRAM_ACTORS ; $44e5
 	call MoveActorByDeltaRaw ; $44eb
 .done:
 	add sp, 4 ; $44ee
@@ -289,7 +289,7 @@ MoveActorByAngle:
 	ldh [hActorPtr], a ; $4558
 	ld a, h ; $455a
 	ldh [hActorPtr + 1], a ; $455b
-	wram_bank $04 ; $455d
+	wram_bank WRAM_ACTORS ; $455d
 	call MoveActorByAngleRaw ; $4563
 .done:
 	add sp, 3 ; $4566
@@ -390,7 +390,7 @@ ScriptSetActorFacingLock:
 SetActorFacing:
 	call GetActorStateAddr ; $45e2
 	ret z ; $45e5
-	wram_bank $04 ; $45e6
+	wram_bank WRAM_ACTORS ; $45e6
 	ld a, $14 ; $45ec
 	add l ; $45ee
 	ld l, a ; $45ef
@@ -416,7 +416,7 @@ FaceActorTowardActor:
 	ldh [hActorPtr], a ; $4608
 	ld a, h ; $460a
 	ldh [hActorPtr + 1], a ; $460b
-	wram_bank $04 ; $460d
+	wram_bank WRAM_ACTORS ; $460d
 	ld hl, hActorPtr ; $4613
 	ld a, [hl+] ; $4616
 	ld h, [hl] ; $4617

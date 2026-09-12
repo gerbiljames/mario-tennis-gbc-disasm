@@ -2,9 +2,9 @@ Unclassified_12:
 	; $7a65, 3 bytes (bytes:3)
 	db $fa, $4d, $c9 ; 0x00
 PushTextArgFetchedString:
-	push_wram_bank $07 ; $7a68
+	push_wram_bank WRAM_CHAR3 ; $7a68
 	ld de, wTextArgFetchBuffer ; $7a71
-	wram_bank $05 ; $7a74
+	wram_bank WRAM_CHAR1 ; $7a74
 	farcall FetchShortTextToBuffer ; $7a7a
 	ld hl, wTextArgFetchBuffer ; $7a7d
 	farcall PushTextArgString ; $7a80

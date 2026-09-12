@@ -151,7 +151,7 @@ RunEndingCreditsSequence:
 	clear_flag FLAG_ACTORS_FROZEN ; $6f19
 	ret ; $6f1c
 FreezeAllActors:
-	wram_bank $04 ; $6f1d
+	wram_bank WRAM_ACTORS ; $6f1d
 	ld de, wActors ; $6f23
 	ld c, $18 ; $6f26
 .actorLoop:

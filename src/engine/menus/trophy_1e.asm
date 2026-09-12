@@ -80,7 +80,7 @@ ComputeTrophyExpAwards:
 	push af ; $6ffb
 	push bc ; $6ffc
 	push de ; $6ffd
-	push_wram_bank $06 ; $6ffe
+	push_wram_bank WRAM_SCENE ; $6ffe
 	ld hl, $0000 ; $7007
 	call ComputeTrophyExpGroup0 ; $700a
 	push hl ; $700d
@@ -144,7 +144,7 @@ ComputeTrophyExpAwards:
 	pop af ; $7063
 	ret ; $7064
 UnusedSetPendingTrophyExpAwards:
-	push_wram_bank $06 ; $7065
+	push_wram_bank WRAM_SCENE ; $7065
 	ld hl, wTrophyExpGroup0 ; $706e
 	ld a, [hl+] ; $7071
 	ld d, [hl] ; $7072
@@ -242,7 +242,7 @@ ComputeTrophyExpForGroup:
 	push de ; $70ff
 	push hl ; $7100
 	ld c, a ; $7101
-	push_wram_bank $06 ; $7102
+	push_wram_bank WRAM_SCENE ; $7102
 	ld a, c ; $710b
 	ld [wTrophyExpGroup], a ; $710c
 	ld hl, TrophyExpForGroupTable4 ; $710f

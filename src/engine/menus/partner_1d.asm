@@ -3,7 +3,7 @@ SlideToPartnerStatPage:
 	ld a, [wCharDataFlushChunk] ; $5440
 	or a ; $5443
 	jr nz, SlideToPartnerStatPage ; $5444
-	wram_bank $06 ; $5446
+	wram_bank WRAM_SCENE ; $5446
 	ld hl, wCharDataValuesSlideX ; $544c
 	ld de, $ffe0 ; $544f
 	ld a, e ; $5452
@@ -23,7 +23,7 @@ SlideToPartnerStatPage:
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $5476
 	call ApplyTilemapPatchList ; $5479
 	farcall FlushCharDataTilemapsFar ; $547c
-	wram_bank $06 ; $547f
+	wram_bank WRAM_SCENE ; $547f
 	ld hl, wCharDataStatsSlideX ; $5485
 	ld de, $00a0 ; $5488
 	ld a, e ; $548b
@@ -57,7 +57,7 @@ SlideToPartnerStatPage:
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $54d3
 	call ApplyTilemapPatchList ; $54d6
 	farcall FlushCharDataTilemapsFar ; $54d9
-	wram_bank $06 ; $54dc
+	wram_bank WRAM_SCENE ; $54dc
 	ld hl, wCharDataStatsSlideX ; $54e2
 	ld de, $0080 ; $54e5
 	ld a, e ; $54e8
@@ -88,7 +88,7 @@ SlideToPartnerStatPage:
 	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $5527
 	call ApplyTilemapPatchList ; $552a
 	farcall FlushCharDataTilemapsFar ; $552d
-	wram_bank $06 ; $5530
+	wram_bank WRAM_SCENE ; $5530
 	ld hl, wCharDataStatsSlideX ; $5536
 	ld de, $0060 ; $5539
 	ld a, e ; $553c
@@ -119,7 +119,7 @@ SlideToPartnerStatPage:
 	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $557b
 	call ApplyTilemapPatchList ; $557e
 	farcall FlushCharDataTilemapsFar ; $5581
-	wram_bank $06 ; $5584
+	wram_bank WRAM_SCENE ; $5584
 	ld hl, wCharDataStatsSlideX ; $558a
 	ld de, $0040 ; $558d
 	ld a, e ; $5590
@@ -141,7 +141,7 @@ SlideToPartnerStatPage:
 	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $55b4
 	call ApplyTilemapPatchList ; $55b7
 	farcall FlushCharDataTilemapsFar ; $55ba
-	wram_bank $06 ; $55bd
+	wram_bank WRAM_SCENE ; $55bd
 	ld hl, wCharDataStatsSlideX ; $55c3
 	ld de, $0020 ; $55c6
 	ld a, e ; $55c9
@@ -163,7 +163,7 @@ SlideToPartnerStatPage:
 	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $55ed
 	call ApplyTilemapPatchList ; $55f0
 	farcall FlushCharDataTilemapsFar ; $55f3
-	wram_bank $06 ; $55f6
+	wram_bank WRAM_SCENE ; $55f6
 	ld hl, wCharDataStatsSlideX ; $55fc
 	xor a ; $55ff
 	ld [hl+], a ; $5600
@@ -174,7 +174,7 @@ SlideFromPartnerStatPage:
 	ld a, [wCharDataFlushChunk] ; $5606
 	or a ; $5609
 	jr nz, SlideFromPartnerStatPage ; $560a
-	wram_bank $06 ; $560c
+	wram_bank WRAM_SCENE ; $560c
 	ld hl, wCharDataStatsSlideX ; $5612
 	ld de, $0020 ; $5615
 	ld a, e ; $5618
@@ -191,7 +191,7 @@ SlideFromPartnerStatPage:
 	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $5633
 	call ApplyTilemapPatchList ; $5636
 	farcall FlushCharDataTilemapsFar ; $5639
-	wram_bank $06 ; $563c
+	wram_bank WRAM_SCENE ; $563c
 	ld hl, wCharDataValuesSlideX ; $5642
 	ld de, $ff60 ; $5645
 	ld a, e ; $5648
@@ -222,7 +222,7 @@ SlideFromPartnerStatPage:
 	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $5687
 	call ApplyTilemapPatchList ; $568a
 	farcall FlushCharDataTilemapsFar ; $568d
-	wram_bank $06 ; $5690
+	wram_bank WRAM_SCENE ; $5690
 	ld hl, wCharDataValuesSlideX ; $5696
 	ld de, $ff80 ; $5699
 	ld a, e ; $569c
@@ -253,7 +253,7 @@ SlideFromPartnerStatPage:
 	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $56db
 	call ApplyTilemapPatchList ; $56de
 	farcall FlushCharDataTilemapsFar ; $56e1
-	wram_bank $06 ; $56e4
+	wram_bank WRAM_SCENE ; $56e4
 	ld hl, wCharDataValuesSlideX ; $56ea
 	ld de, $ffa0 ; $56ed
 	ld a, e ; $56f0
@@ -287,7 +287,7 @@ SlideFromPartnerStatPage:
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $5738
 	call ApplyTilemapPatchList ; $573b
 	farcall FlushCharDataTilemapsFar ; $573e
-	wram_bank $06 ; $5741
+	wram_bank WRAM_SCENE ; $5741
 	ld hl, wCharDataValuesSlideX ; $5747
 	ld de, $ffc0 ; $574a
 	ld a, e ; $574d
@@ -312,7 +312,7 @@ SlideFromPartnerStatPage:
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $577a
 	call ApplyTilemapPatchList ; $577d
 	farcall FlushCharDataTilemapsFar ; $5780
-	wram_bank $06 ; $5783
+	wram_bank WRAM_SCENE ; $5783
 	ld hl, wCharDataValuesSlideX ; $5789
 	ld de, $ffe0 ; $578c
 	ld a, e ; $578f
@@ -337,14 +337,14 @@ SlideFromPartnerStatPage:
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $57bc
 	call ApplyTilemapPatchList ; $57bf
 	farcall FlushCharDataTilemapsFar ; $57c2
-	wram_bank $06 ; $57c5
+	wram_bank WRAM_SCENE ; $57c5
 	ld hl, wCharDataValuesSlideX ; $57cb
 	xor a ; $57ce
 	ld [hl+], a ; $57cf
 	ld [hl], a ; $57d0
 	ret ; $57d1
 DrawCharStatDigitsTask:
-	wram_bank $06 ; $57d2
+	wram_bank WRAM_SCENE ; $57d2
 	ld b, $0f ; $57d8
 	ld a, [wCharDataLevels] ; $57da
 	ld l, a ; $57dd

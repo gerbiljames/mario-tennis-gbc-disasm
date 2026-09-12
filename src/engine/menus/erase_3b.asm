@@ -1,5 +1,5 @@
 LoadN64RecordsToWram2:
-	push_wram_bank $02 ; $6c3d
+	push_wram_bank WRAM_COURT_PLANES ; $6c3d
 	ld hl, wScreenAttrmap ; $6c46
 	ld bc, $0020 ; $6c49
 	call ClearMemory16 ; $6c4c
@@ -9,7 +9,7 @@ LoadN64RecordsToWram2:
 	pop_wram_bank ; $6c57
 	ret ; $6c5c
 CheckN64DataPresent:
-	push_wram_bank $02 ; $6c5d
+	push_wram_bank WRAM_COURT_PLANES ; $6c5d
 	ld a, [wN64BlockProbe] ; $6c66
 	ld b, a ; $6c69
 	ld a, [wN64BlockProbe + 1] ; $6c6a
@@ -28,7 +28,7 @@ RunEraseSavedDataSelect:
 	sound BGM_MENU ; $6c84
 	call BuildSaveSlotSummaries ; $6c86
 	call LoadEraseSavedDataGfx ; $6c89
-	wram_bank $03 ; $6c8c
+	wram_bank WRAM_SCREEN ; $6c8c
 	ld a, [wMenuSlideDirection] ; $6c92
 	ld b, a ; $6c95
 	call SavedDataPickerSlideIn ; $6c96
@@ -43,7 +43,7 @@ RunEraseSavedDataSelect:
 	ld hl, EraseSavedDataCursorSpriteTask ; $6cac
 	call RegisterFrameTask ; $6caf
 	call DrawEraseSavedDataGrid ; $6cb2
-	wram_bank $03 ; $6cb5
+	wram_bank WRAM_SCREEN ; $6cb5
 .loop:
 	ldh a, [hInputPressed] ; $6cbb
 	ld [wMenuInputPressed], a ; $6cbd
@@ -108,8 +108,8 @@ RunEraseSavedDataSelect:
 	ld a, $ff ; $6d2e
 	ret ; $6d30
 LoadEraseSavedDataGfx:
-	push_wram_bank $01 ; $6d31
-	wram_bank $03 ; $6d3a
+	push_wram_bank WRAM_STAGING ; $6d31
+	wram_bank WRAM_SCREEN ; $6d3a
 	ld a, $00 ; $6d40
 	ld [wCurrentStorySlot], a ; $6d42
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $6d45
@@ -117,7 +117,7 @@ LoadEraseSavedDataGfx:
 	ld de, $9680 + VRAM_BANK1 ; $6d4b
 	farcall CopyMugshotBufferToVram ; $6d4e
 	call AdvanceFrame ; $6d51
-	wram_bank $03 ; $6d54
+	wram_bank WRAM_SCREEN ; $6d54
 	ld a, $01 ; $6d5a
 	ld [wCurrentStorySlot], a ; $6d5c
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $6d5f
@@ -125,7 +125,7 @@ LoadEraseSavedDataGfx:
 	ld de, $9710 + VRAM_BANK1 ; $6d65
 	farcall CopyMugshotBufferToVram ; $6d68
 	call AdvanceFrame ; $6d6b
-	wram_bank $03 ; $6d6e
+	wram_bank WRAM_SCREEN ; $6d6e
 	ld a, $02 ; $6d74
 	ld [wCurrentStorySlot], a ; $6d76
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $6d79
@@ -133,7 +133,7 @@ LoadEraseSavedDataGfx:
 	ld de, $8f00 + VRAM_BANK1 ; $6d7f
 	farcall CopyMugshotBufferToVram ; $6d82
 	call AdvanceFrame ; $6d85
-	wram_bank $01 ; $6d88
+	wram_bank WRAM_STAGING ; $6d88
 	ld hl, (BANK(DataPtr_N64TransferLabelTiles0) << 8) | LOW(DataPtr_N64TransferLabelTiles0) ; $6d8e
 	ld de, wDecompBuffer ; $6d91
 	call DecompressDataFromBank ; $6d94
@@ -448,7 +448,7 @@ EraseSavedDataCursorSpriteTaskTable1:
 	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
 	db $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12, $00, $80 ; 0x20
 DrawEraseSavedDataGrid:
-	wram_bank $03 ; $6ffb
+	wram_bank WRAM_SCREEN ; $6ffb
 	ld b, $00 ; $7001
 	ld c, $00 ; $7003
 .loop:
@@ -486,7 +486,7 @@ DrawEraseSavedDataGrid:
 .loadEraseSavedDataCellPalette:
 	call LoadEraseSavedDataCellPalette ; $703b
 .fillTilemapRect:
-	wram_bank $03 ; $703e
+	wram_bank WRAM_SCREEN ; $703e
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $7044
 	ld b, $14 ; $7047
 	ld c, $01 ; $7049

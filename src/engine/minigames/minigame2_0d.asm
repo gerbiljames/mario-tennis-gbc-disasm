@@ -70,13 +70,13 @@ ShowMinigamePointResult:
 	ld [wMatchAbortFlag], a ; $443c
 	ret ; $443f
 ClearMinigameActors:
-	wram_bank $04 ; $4440
+	wram_bank WRAM_ACTORS ; $4440
 	ld hl, wMinigameActors ; $4446
 	ld c, $07 ; $4449
 	call ClearMemory16 ; $444b
 	ret ; $444e
 SetMinigameActorHandler:
-	wram_bank $04 ; $444f
+	wram_bank WRAM_ACTORS ; $444f
 	ld hl, $000e ; $4455
 	add hl, bc ; $4458
 	ld a, e ; $4459
@@ -88,7 +88,7 @@ SetMinigameActorHandler:
 	set 1, [hl] ; $4462
 	ret ; $4464
 SetMinigameActorPosition:
-	wram_bank $04 ; $4465
+	wram_bank WRAM_ACTORS ; $4465
 	push de ; $446b
 	push hl ; $446c
 	push hl ; $446d
@@ -153,7 +153,7 @@ SetMinigameActorWorldPos:
 	ld [hl+], a ; $44bb
 	ret ; $44bc
 UpdateMinigameActors:
-	wram_bank $04 ; $44bd
+	wram_bank WRAM_ACTORS ; $44bd
 	ld hl, wMinigameActors ; $44c3
 	ld c, $07 ; $44c6
 .actorLoop:
@@ -288,13 +288,13 @@ StartMinigameMatch:
 	ld a, e ; $4693
 	ld [hl+], a ; $4694
 	ld [hl], d ; $4695
-	wram_bank $04 ; $4696
+	wram_bank WRAM_ACTORS ; $4696
 	ld hl, $0000 ; $469c
 	ld de, $0480 ; $469f
 	farcall SetCharPosAndTarget ; $46a2
 	ld a, CHARSTATE_STANDBY ; $46a5
 	farcall SetCharState ; $46a7
-	wram_bank $05 ; $46aa
+	wram_bank WRAM_CHAR1 ; $46aa
 	ld a, [wMinigameServeSlot] ; $46b0
 	call GetMinigameCharCoordsEntry ; $46b3
 	farcall SetCharPosAndTarget ; $46b6
@@ -318,7 +318,7 @@ DrawMinigameScoreHud:
 	ld a, [wMinigameServeState] ; $46dd
 	and a ; $46e0
 	jr z, .done ; $46e1
-	push_wram_bank $05 ; $46e3
+	push_wram_bank WRAM_CHAR1 ; $46e3
 	ld hl, wCharSpriteSlot + 1 ; $46ec
 	res 5, [hl] ; $46ef
 	pop_wram_bank ; $46f1
@@ -341,7 +341,7 @@ LaunchMinigameServe:
 .gotSpeed:
 	ld a, b ; $470b
 	ld [wMinigameServeSpeed], a ; $470c
-	push_wram_bank $05 ; $470f
+	push_wram_bank WRAM_TEXT ; $470f
 	ld d, CHARANIM_FOREHAND ; $4718
 	farcall SetCharAnimation ; $471a
 	pop_wram_bank ; $471d
@@ -377,7 +377,7 @@ AwardMinigamePointAndEnd:
 	ld de, $0001 ; $4757
 	call AddToMinigameScore ; $475a
 EndMinigamePoint:
-	push_wram_bank $04 ; $475d
+	push_wram_bank WRAM_ACTORS ; $475d
 	ld a, CHARSTATE_STANDBY ; $4766
 	farcall SetCharState ; $4768
 	pop_wram_bank ; $476b
@@ -401,9 +401,9 @@ EndMinigamePoint:
 .resolve:
 	call DetermineMinigamePointResult ; $479b
 	push de ; $479e
-	push_wram_bank $04 ; $479f
+	push_wram_bank WRAM_ACTORS ; $479f
 	farcall CharPointEndReaction ; $47a8
-	wram_bank $05 ; $47ab
+	wram_bank WRAM_TEXT ; $47ab
 	farcall CharPointEndReaction ; $47b1
 	pop_wram_bank ; $47b4
 	pop de ; $47b9
@@ -433,7 +433,7 @@ FreezeMinigameOpponentOnReturn:
 	ld a, [wRallyLength] ; $47e2
 	cp $03 ; $47e5
 	jr nz, .done ; $47e7
-	push_wram_bank $05 ; $47e9
+	push_wram_bank WRAM_CHAR1 ; $47e9
 	ld a, $28 ; $47f2
 	ld [wCharFreezeTimer], a ; $47f4
 	pop_wram_bank ; $47f7
@@ -448,7 +448,7 @@ LaunchBall:
 	ld [wRallyLength], a ; $480a
 	ld a, $02 ; $480d
 	ld [wBallCourtQuadrant], a ; $480f
-	push_wram_bank $05 ; $4812
+	push_wram_bank WRAM_CHAR1 ; $4812
 	ld a, $20 ; $481b
 	ld [wCharSwingFrames], a ; $481d
 	ld a, [wMinigameServeSpeed] ; $4820

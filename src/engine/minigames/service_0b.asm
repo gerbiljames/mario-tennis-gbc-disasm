@@ -113,22 +113,22 @@ DrillDefinitionPtrs:
 	dw StrokePractice3Drill ; record 17
 ClearBGForDrillResult:
 	call DisableLCDSafely ; $47d8
-	wram_bank $02 ; $47db
+	wram_bank WRAM_COURT_PLANES ; $47db
 	ld a, $00 ; $47e1
 	ld hl, wScreenAttrmap ; $47e3
 	ld bc, $0500 ; $47e6
 	call FillMemoryBC_0b ; $47e9
-	wram_bank $03 ; $47ec
+	wram_bank WRAM_SCREEN ; $47ec
 	ld a, $20 ; $47f2
 	ld hl, wShadowTilemap ; $47f4
 	ld bc, $0500 ; $47f7
 	call FillMemoryBC_0b ; $47fa
-	wram_bank $03 ; $47fd
+	wram_bank WRAM_SCREEN ; $47fd
 	ld hl, wShadowTilemap ; $4803
 	ld de, vBGMap0 ; $4806
 	ld c, $24 ; $4809
 	call QueueVRAMCopy ; $480b
-	wram_bank $02 ; $480e
+	wram_bank WRAM_COURT_PLANES ; $480e
 	ld hl, wScreenAttrmap ; $4814
 	ld de, vBGMap0 + VRAM_BANK1 ; $4817
 	ld c, $24 ; $481a

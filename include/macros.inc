@@ -343,9 +343,10 @@ MACRO sound_entry
 ENDM
 
 ; WRAM bank switch: writes rWBK (rSVBK) plus its HRAM shadow hWramBank.
-; With an argument the bank id is loaded into a first; the bare form
-; switches to the bank already in a. The match engine keeps per-character
-; structs in banks 4-7 (see docs/ram_map.md).
+; With an argument the bank id is loaded into a first -- a WRAM_* constant
+; (constants.inc): the bank's owner (WRAM_TEXT, WRAM_SCENE, ...) or, in the
+; match engine, the on-court character whose struct lives there (WRAM_CHAR0-3
+; are banks 4-7). The bare form switches to the bank already in a.
 MACRO wram_bank
 	IF _NARG == 1
 	ld a, \1

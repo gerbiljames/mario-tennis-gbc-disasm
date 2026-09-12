@@ -162,7 +162,7 @@ RunPlayAlonePartnerMenu:
 	ld hl, rIE ; $5194
 	res 2, [hl] ; $5197
 	call LoadPlayAlonePartnerGraphics ; $5199
-	wram_bank $03 ; $519c
+	wram_bank WRAM_SCREEN ; $519c
 	ld a, [wMenuSlideDirection] ; $51a2
 	ld b, a ; $51a5
 	call OpenChoiceTabPanel ; $51a6
@@ -178,7 +178,7 @@ RunPlayAlonePartnerMenu:
 	ld hl, ChoiceTabCursorSpriteTask ; $51bc
 	call RegisterFrameTask ; $51bf
 	call RedrawPlayAlonePartnerMenu ; $51c2
-	wram_bank $03 ; $51c5
+	wram_bank WRAM_SCREEN ; $51c5
 .loop:
 	call AdvanceFrame ; $51cb
 	ldh a, [hInputPressed] ; $51ce
@@ -226,7 +226,7 @@ RunPlayAlonePartnerMenu:
 	ld a, $ff ; $5226
 	ret ; $5228
 LoadPlayAlonePartnerGraphics:
-	push_wram_bank $01 ; $5229
+	push_wram_bank WRAM_STAGING ; $5229
 	ld c, $00 ; $5232
 .loop:
 	ld a, c ; $5234
@@ -307,7 +307,7 @@ PlayAlonePartnerGfxDests_3e:
 	; $52b3, 4 bytes (bytes:4)
 	db $00, $a8, $00, $a9 ; 0x00
 RedrawPlayAlonePartnerMenu:
-	wram_bank $03 ; $52b7
+	wram_bank WRAM_SCREEN ; $52b7
 	ld b, $00 ; $52bd
 	ld c, $00 ; $52bf
 .loop:
@@ -325,7 +325,7 @@ RedrawPlayAlonePartnerMenu:
 	ld c, $02 ; $52d6
 	call GetMenuCursorIndex_3e ; $52d8
 	call SetPlayAlonePartnerPalette ; $52db
-	wram_bank $03 ; $52de
+	wram_bank WRAM_SCREEN ; $52de
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $52e4
 	ld b, $14 ; $52e7
 	ld c, $01 ; $52e9
@@ -380,7 +380,7 @@ PlayAlonePartnerPalette:
 	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
 	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x08
 DrawPlayAlonePartnerCaption:
-	push_wram_bank $03 ; $5355
+	push_wram_bank WRAM_SCREEN ; $5355
 	ld c, $02 ; $535e
 	call GetMenuCursorIndex_3e ; $5360
 	ld b, a ; $5363
@@ -442,7 +442,7 @@ ShowEquipmentStatusScreen:
 DrawEquipmentStatusScreen:
 	call LoadEquipmentStatusWindows ; $53cf
 	farcall PrepareGlyphBuffer ; $53d2
-	wram_bank $03 ; $53d5
+	wram_bank WRAM_SCREEN ; $53d5
 	ld hl, wScreenScratch ; $53db
 	ld bc, $0003 ; $53de
 	call ClearMemory16 ; $53e1
@@ -459,7 +459,7 @@ LoadEquipmentStatusWindows:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $53fb
 	ld de, vTiles2 ; $53fd
 	farcall LoadCompressedTileBlock ; $5400
-	wram_bank $05 ; $5403
+	wram_bank WRAM_TEXT ; $5403
 	ld a, $03 ; $5409
 	ld [wShadowTilemapBank], a ; $540b
 	ld a, $00 ; $540e
@@ -481,7 +481,7 @@ LoadEquipmentStatusWindows:
 	call SetEquipmentStatusAttrRects ; $5435
 	ret ; $5438
 SetEquipmentStatusAttrRects:
-	wram_bank $03 ; $5439
+	wram_bank WRAM_SCREEN ; $5439
 	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 1 ; $543f
 	ld b, $12 ; $5442
 	ld c, $05 ; $5444

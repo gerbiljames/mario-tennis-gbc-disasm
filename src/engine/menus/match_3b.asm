@@ -1,5 +1,5 @@
 BuildSaveSlotSummaries:
-	push_wram_bank $03 ; $5aac
+	push_wram_bank WRAM_SCREEN ; $5aac
 	ld hl, wShadowTilemap + 24 * TILEMAP_WIDTH ; $5ab5
 	ld bc, $0003 ; $5ab8
 	call ClearMemory16 ; $5abb
@@ -8,16 +8,16 @@ BuildSaveSlotSummaries:
 .loop:
 	push af ; $5ac3
 	push af ; $5ac4
-	wram_bank $02 ; $5ac5
+	wram_bank WRAM_COURT_PLANES ; $5ac5
 	pop af ; $5acb
 	farcall LoadCharacterRecordToBuffer ; $5acc
 	farcall CheckCharacterUnlocked ; $5acf
 	ld hl, $0000 ; $5ad2
 	add hl, bc ; $5ad5
-	wram_bank $02 ; $5ad6
+	wram_bank WRAM_COURT_PLANES ; $5ad6
 	ld a, [wCharRecordScratch + 11] ; $5adc
 	push af ; $5adf
-	wram_bank $03 ; $5ae0
+	wram_bank WRAM_SCREEN ; $5ae0
 	pop af ; $5ae6
 	cp $04 ; $5ae7
 	jr c, .checkStoryModeMainCharacterOverworldSprite ; $5ae9
@@ -70,7 +70,7 @@ BuildSaveSlotSummaries:
 	pop_wram_bank ; $5b38
 	ret ; $5b3d
 DrawMainMenuCaption:
-	push_wram_bank $03 ; $5b3e
+	push_wram_bank WRAM_SCREEN ; $5b3e
 	ld c, $03 ; $5b47
 	call GetMenuCursorIndex_3b ; $5b49
 	ld b, a ; $5b4c
@@ -330,7 +330,7 @@ RunMatchFormatSelect:
 	res 2, [hl] ; $5cf6
 	sound BGM_MENU ; $5cf8
 	call LoadMatchFormatGfx ; $5cfa
-	wram_bank $03 ; $5cfd
+	wram_bank WRAM_SCREEN ; $5cfd
 	ld a, [wMenuSlideDirection] ; $5d03
 	ld b, a ; $5d06
 	call MatchFormatSlideIn ; $5d07
@@ -343,7 +343,7 @@ RunMatchFormatSelect:
 	ld hl, MatchFormatCursorSpriteTask ; $5d19
 	call RegisterFrameTask ; $5d1c
 	call DrawMatchFormatCaption ; $5d1f
-	wram_bank $03 ; $5d22
+	wram_bank WRAM_SCREEN ; $5d22
 .loop:
 	call AdvanceFrame ; $5d28
 	ldh a, [hInputPressed] ; $5d2b
@@ -433,7 +433,7 @@ MatchFormatOptionsPalettes2:
 	; $5de4, 8 bytes (bytes:8)
 	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
 LoadMatchFormatGfx:
-	push_wram_bank $01 ; $5dec
+	push_wram_bank WRAM_STAGING ; $5dec
 	ld c, $00 ; $5df5
 .loop:
 	ld a, c ; $5df7
@@ -730,7 +730,7 @@ FillMatchFormatOptionCell:
 	push bc ; $604a
 	push de ; $604b
 	push hl ; $604c
-	push_wram_bank $03 ; $604d
+	push_wram_bank WRAM_SCREEN ; $604d
 	ld hl, FillMatchFormatOptionCellTable ; $6056
 	ld a, b ; $6059
 	add a ; $605a
@@ -854,7 +854,7 @@ MatchFormatCursorSpriteTaskTable1:
 	; $615d, 7 bytes (bytes:7)
 	db $00, $10, $20, $30, $40, $50, $60 ; 0x00
 DrawMatchFormatCaption:
-	wram_bank $03 ; $6164
+	wram_bank WRAM_SCREEN ; $6164
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $616a
 	ld b, $14 ; $616d
 	ld c, $01 ; $616f
@@ -876,7 +876,7 @@ DrawMatchFormatCaption:
 	call QueueVRAMCopy ; $6197
 	ret ; $619a
 RenderMatchFormatOptionText:
-	wram_bank $03 ; $619b
+	wram_bank WRAM_SCREEN ; $619b
 	ld c, $01 ; $61a1
 	call GetMenuCursorIndex_3b ; $61a3
 	or a ; $61a6

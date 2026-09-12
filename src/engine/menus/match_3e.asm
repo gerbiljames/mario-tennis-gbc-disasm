@@ -5,7 +5,7 @@
 ; Instruction-identical to SetMenuCursorFromIndexToPtr_16 and SetMenuCursorFromIndexToPtr_38 (one copy per bank); a change here belongs in every copy.
 	twin set_menu_cursor_from_index_to_ptr, 3e ; $43fd SetMenuCursorFromIndexToPtr_3e
 ClearWram3Row64_3e:
-	push_wram_bank $03 ; $440b
+	push_wram_bank WRAM_SCREEN ; $440b
 	xor a ; $4414
 	ld c, $40 ; $4415
 .loop:
@@ -15,7 +15,7 @@ ClearWram3Row64_3e:
 	pop_wram_bank ; $441b
 	ret ; $4420
 ClearWram3Row64Alt_3e:
-	push_wram_bank $03 ; $4421
+	push_wram_bank WRAM_SCREEN ; $4421
 	ld a, $00 ; $442a
 	ld c, $40 ; $442c
 .loop:
@@ -59,7 +59,7 @@ RunLinkMatchRulesMenu:
 	ldh [hLinkExchangeActive], a ; $44db
 	call ResetSerialState ; $44dd
 	call LoadMatchRulesMenuGraphics ; $44e0
-	wram_bank $03 ; $44e3
+	wram_bank WRAM_SCREEN ; $44e3
 	ld a, [wMenuSlideDirection] ; $44e9
 	ld b, a ; $44ec
 	call OpenMatchRulesPanel ; $44ed
@@ -84,7 +84,7 @@ RunLinkMatchRulesMenu:
 	pop af ; $4519
 	ld hl, rIE ; $451a
 	res 2, [hl] ; $451d
-	wram_bank $03 ; $451f
+	wram_bank WRAM_SCREEN ; $451f
 .loop:
 	farcall TickMenuBgScroll ; $4525
 	ldh a, [hLinkInput] ; $4528
@@ -190,7 +190,7 @@ MatchRulesInitialStatePalettes2:
 	; $45ff, 8 bytes (bytes:8)
 	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
 LoadMatchRulesMenuGraphics:
-	push_wram_bank $01 ; $4607
+	push_wram_bank WRAM_STAGING ; $4607
 	ld c, $00 ; $4610
 .loop:
 	ld a, c ; $4612

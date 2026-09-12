@@ -13,7 +13,7 @@ RenderProportionalTextAt:
 	ld [hl], d ; $5dc2
 	pop hl ; $5dc3
 	call InitGlyphStreamAt ; $5dc4
-	push_wram_bank $05 ; $5dc7
+	push_wram_bank WRAM_TEXT ; $5dc7
 	xor a ; $5dd0
 	call AddTextIdOffset ; $5dd1
 	xor a ; $5dd4
@@ -95,7 +95,7 @@ ProportionalTextCodeHandler14_05:
 	pop hl ; $5e59
 	inc hl ; $5e5a
 	push af ; $5e5b
-	wram_bank $05 ; $5e5c
+	wram_bank WRAM_TEXT ; $5e5c
 	ld a, [hl] ; $5e62
 	ld [wTextCharNameArg], a ; $5e63
 	pop_wram_bank ; $5e66
@@ -169,7 +169,7 @@ ProportionalTextCodeHandler5_05:
 	jp RenderProportionalTextAt.charLoop ; $5eca
 ProportionalTextCodeHandler0_05:
 	pop hl ; $5ecd
-	push_wram_bank $05 ; $5ece
+	push_wram_bank WRAM_TEXT ; $5ece
 	xor a ; $5ed7
 	ld [wTextRowIndent], a ; $5ed8
 	ld [wTextArgStringWriteIndex], a ; $5edb
@@ -254,7 +254,7 @@ RenderTextToBuffer64:
 	push bc ; $5f53
 	push de ; $5f54
 	push hl ; $5f55
-	push_wram_bank $05 ; $5f56
+	push_wram_bank WRAM_TEXT ; $5f56
 	xor a ; $5f5f
 	call AddTextIdOffset ; $5f60
 	ld a, e ; $5f63

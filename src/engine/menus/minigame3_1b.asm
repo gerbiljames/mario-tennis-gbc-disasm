@@ -82,7 +82,7 @@ Unused_1b_SavedDataCursorCells:
 	; $7349, 9 bytes (bytes:9)
 	db $50, $0c, $50, $54, $50, $5c, $00, $10, $20 ; 0x00
 RedrawSavedDataTypeSelect:
-	wram_bank $03 ; $7352
+	wram_bank WRAM_SCREEN ; $7352
 	ld b, $00 ; $7358
 	ld c, $00 ; $735a
 .loop:
@@ -105,7 +105,7 @@ RedrawSavedDataTypeSelect:
 	call FlushLevelSelectTextRows ; $737f
 	ret ; $7382
 DrawSavedDataTypeDescription:
-	push_wram_bank $03 ; $7383
+	push_wram_bank WRAM_SCREEN ; $7383
 	ld c, $03 ; $738c
 	call GetMenuCursorIndex_1b ; $738e
 	ld b, a ; $7391
@@ -175,7 +175,7 @@ ShowMinigameDataScreen:
 	call EnableLCD ; $7402
 	script_fade_in $10 ; $7405
 	call WaitFadeEnd ; $740a
-	wram_bank $03 ; $740d
+	wram_bank WRAM_SCREEN ; $740d
 .loop:
 	ldh a, [hInputPressed] ; $7413
 	ld [wMenuInputPressed], a ; $7415
@@ -208,7 +208,7 @@ BuildMinigameDataScreen:
 	xor a ; $744e
 	ld [wMenuCursorX], a ; $744f
 	ld [wMenuCursorY], a ; $7452
-	wram_bank $03 ; $7455
+	wram_bank WRAM_SCREEN ; $7455
 	call LoadMinigameDataState ; $745b
 	ld de, $8ac0 + VRAM_BANK1 ; $745e
 	farcall LoadChartWindowTiles ; $7461
@@ -381,12 +381,12 @@ LoadMinigameHighScores:
 	inc a ; $757e
 	inc a ; $757f
 	farcall ReadMinigameRecord ; $7580
-	wram_bank $07 ; $7583
+	wram_bank WRAM_SOUND ; $7583
 	ld hl, wMinigameRecordValue ; $7589
 	ld a, [hl+] ; $758c
 	ld d, [hl] ; $758d
 	ld e, a ; $758e
-	wram_bank $03 ; $758f
+	wram_bank WRAM_SCREEN ; $758f
 	ld hl, wMinigameDataHighScores ; $7595
 	ld a, c ; $7598
 	add a ; $7599
@@ -439,7 +439,7 @@ FlushMinigameDataRowsToVram:
 	call AdvanceFrame ; $7600
 	ret ; $7603
 DrawMinigameDataMugshotsScrolled:
-	push_wram_bank $03 ; $7604
+	push_wram_bank WRAM_SCREEN ; $7604
 	ld a, [wMenuCursorY] ; $760d
 	ld c, a ; $7610
 	ld b, $00 ; $7611
@@ -466,7 +466,7 @@ DrawMinigameDataMugshotsScrolled:
 	pop_wram_bank ; $762e
 	ret ; $7633
 DrawMinigameDataMugshotsStatic:
-	push_wram_bank $03 ; $7634
+	push_wram_bank WRAM_SCREEN ; $7634
 	ld c, $00 ; $763d
 	ld b, $00 ; $763f
 .loop:
@@ -499,7 +499,7 @@ DrawMinigameDataMugshot:
 	push bc ; $766a
 	push de ; $766b
 	push hl ; $766c
-	push_wram_bank $03 ; $766d
+	push_wram_bank WRAM_SCREEN ; $766d
 	call MapMinigameRowToMugshotSlot ; $7676
 	call GetMinigameRowTilemapDest ; $7679
 	ld b, c ; $767c

@@ -1,21 +1,21 @@
 RunCharacterSelectScreen:
 	sound BGM_MENU ; $47c7
-	wram_bank $02 ; $47c9
+	wram_bank WRAM_COURT_PLANES ; $47c9
 	ld a, b ; $47cf
 	ld [wCharSelectIsPartner], a ; $47d0
-	wram_bank $07 ; $47d3
+	wram_bank WRAM_CHAR3 ; $47d3
 	ld hl, wCharPosX ; $47d9
 	ld c, $10 ; $47dc
 	call ClearMemory16 ; $47de
-	wram_bank $06 ; $47e1
+	wram_bank WRAM_CHAR2 ; $47e1
 	ld hl, wCharPosX ; $47e7
 	ld c, $10 ; $47ea
 	call ClearMemory16 ; $47ec
-	wram_bank $05 ; $47ef
+	wram_bank WRAM_CHAR1 ; $47ef
 	ld hl, wCharPosX ; $47f5
 	ld c, $10 ; $47f8
 	call ClearMemory16 ; $47fa
-	wram_bank $04 ; $47fd
+	wram_bank WRAM_CHAR0 ; $47fd
 	ld hl, wCharPosX ; $4803
 	ld c, $10 ; $4806
 	call ClearMemory16 ; $4808
@@ -73,7 +73,7 @@ RunCharacterSelectScreen:
 	ld c, $02 ; $4886
 	call GetMenuCursorIndex_38 ; $4888
 	push af ; $488b
-	wram_bank $02 ; $488c
+	wram_bank WRAM_COURT_PLANES ; $488c
 	ld a, [wCharSelectHandedness] ; $4892
 	ld b, a ; $4895
 	ld a, [wCharSelectIsPartner] ; $4896
@@ -126,7 +126,7 @@ RunCharacterSelectScreen:
 	ret ; $48f0
 .viewStats:
 	sound SFX_MENU_MOVE ; $48f1
-	push_wram_bank $02 ; $48f3
+	push_wram_bank WRAM_COURT_PLANES ; $48f3
 	ld a, [wCharSelectHandedness] ; $48fc
 	xor $01 ; $48ff
 	ld [wCharSelectHandedness], a ; $4901
@@ -170,7 +170,7 @@ LoadHighlightedCharPalette:
 	ld c, $02 ; $4949
 	call GetMenuCursorIndex_38 ; $494b
 	ld b, a ; $494e
-	push_wram_bank $02 ; $494f
+	push_wram_bank WRAM_COURT_PLANES ; $494f
 	ld a, [wCharSelectIsPartner] ; $4958
 	ld c, a ; $495b
 	pop_wram_bank ; $495c
@@ -204,7 +204,7 @@ SetupCharacterSelectScreen:
 	xor a ; $4975
 	ldh [hScrollX], a ; $4976
 	ldh [hScrollY], a ; $4978
-	wram_bank $02 ; $497a
+	wram_bank WRAM_COURT_PLANES ; $497a
 	xor a ; $4980
 	ld [wCharSelectIdleAnimState], a ; $4981
 	ld [wCharSelectHandedness], a ; $4984
@@ -231,7 +231,7 @@ SetupCharacterSelectScreen:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $49bc
 	ld de, vTiles2 ; $49be
 	farcall LoadCompressedTileBlock ; $49c1
-	wram_bank $05 ; $49c4
+	wram_bank WRAM_TEXT ; $49c4
 	ld a, $03 ; $49ca
 	ld [wShadowTilemapBank], a ; $49cc
 	ld a, $00 ; $49cf
@@ -265,7 +265,7 @@ SetupCharacterSelectScreen:
 	farcall LoadCharMugshotToBuffer ; $4a18
 	ld de, $9300 + VRAM_BANK1 ; $4a1b
 	farcall CopyMugshotBufferToVram ; $4a1e
-	wram_bank $02 ; $4a21
+	wram_bank WRAM_COURT_PLANES ; $4a21
 	ld a, [wCharSelectIsPartner] ; $4a27
 	or a ; $4a2a
 	jr z, .secondRow ; $4a2b
@@ -277,7 +277,7 @@ SetupCharacterSelectScreen:
 	farcall LoadCharMugshotToBuffer ; $4a3a
 	ld de, $9300 + VRAM_BANK1 ; $4a3d
 	farcall CopyMugshotBufferToVram ; $4a40
-	wram_bank $03 ; $4a43
+	wram_bank WRAM_SCREEN ; $4a43
 	ld b, $03 ; $4a49
 	ld c, $03 ; $4a4b
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH + 6 ; $4a4d
@@ -297,7 +297,7 @@ SetupCharacterSelectScreen:
 	ld c, $0c ; $4a6d
 	farcall LoadIndexedPalette ; $4a6f
 	farcall QueueWram3MapToVRAM ; $4a72
-	wram_bank $02 ; $4a75
+	wram_bank WRAM_COURT_PLANES ; $4a75
 	xor a ; $4a7b
 	ld [wCharSelectIdleAnimState], a ; $4a7c
 	ld [wCharSelectIdleTimer], a ; $4a7f
@@ -324,7 +324,7 @@ RefreshCharacterSelectHighlight:
 	call LoadHighlightedCharPalette ; $4ab3
 	call SetCharSelectAnimations ; $4ab6
 	call ReloadSelectedCharGfx ; $4ab9
-	push_wram_bank $02 ; $4abc
+	push_wram_bank WRAM_COURT_PLANES ; $4abc
 	xor a ; $4ac5
 	ld [wCharSelectIdleTimer], a ; $4ac6
 	pop_wram_bank ; $4ac9
@@ -334,24 +334,24 @@ DrawCharacterSelectPrompt:
 	push bc ; $4ad0
 	push de ; $4ad1
 	push hl ; $4ad2
-	push_wram_bank $02 ; $4ad3
+	push_wram_bank WRAM_COURT_PLANES ; $4ad3
 	ld a, [wCharSelectIsPartner] ; $4adc
 	or a ; $4adf
 	jr nz, .altRow ; $4ae0
-	wram_bank $03 ; $4ae2
+	wram_bank WRAM_SCREEN ; $4ae2
 	ld hl, Text_30_117 ; $4ae8
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4aeb
 	ld c, $12 ; $4aee
 	farcall RenderProportionalTextAt ; $4af0
 	jr .nextRow ; $4af3
 .altRow:
-	wram_bank $03 ; $4af5
+	wram_bank WRAM_SCREEN ; $4af5
 	ld hl, Text_30_119 ; $4afb
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $4afe
 	ld c, $12 ; $4b01
 	farcall RenderProportionalTextAt ; $4b03
 .nextRow:
-	wram_bank $03 ; $4b06
+	wram_bank WRAM_SCREEN ; $4b06
 	ld hl, Text_30_118 ; $4b0c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b0f
 	ld c, $12 ; $4b12
@@ -363,19 +363,19 @@ DrawCharacterSelectPrompt:
 	pop af ; $4b1f
 	ret ; $4b20
 InitCharacterSelectChars:
-	wram_bank $07 ; $4b21
+	wram_bank WRAM_CHAR3 ; $4b21
 	ld hl, wCharPosX ; $4b27
 	ld c, $10 ; $4b2a
 	call ClearMemory16 ; $4b2c
-	wram_bank $06 ; $4b2f
+	wram_bank WRAM_CHAR2 ; $4b2f
 	ld hl, wCharPosX ; $4b35
 	ld c, $10 ; $4b38
 	call ClearMemory16 ; $4b3a
-	wram_bank $05 ; $4b3d
+	wram_bank WRAM_CHAR1 ; $4b3d
 	ld hl, wCharPosX ; $4b43
 	ld c, $10 ; $4b46
 	call ClearMemory16 ; $4b48
-	wram_bank $04 ; $4b4b
+	wram_bank WRAM_CHAR0 ; $4b4b
 	ld hl, wCharPosX ; $4b51
 	ld c, $10 ; $4b54
 	call ClearMemory16 ; $4b56
@@ -383,123 +383,123 @@ InitCharacterSelectChars:
 	farcall GetCharPaletteIndex ; $4b5b
 	ld e, a ; $4b5e
 	ld d, $00 ; $4b5f
-	wram_bank $04 ; $4b61
+	wram_bank WRAM_ACTORS ; $4b61
 	ld a, $00 ; $4b67
 	farcall InitChar ; $4b69
 	ld a, CHAR_NINA ; $4b6c
 	farcall GetCharPaletteIndex ; $4b6e
 	ld e, a ; $4b71
 	ld d, $01 ; $4b72
-	wram_bank $05 ; $4b74
+	wram_bank WRAM_TEXT ; $4b74
 	ld a, $01 ; $4b7a
 	farcall InitChar ; $4b7c
 	ld a, CHAR_HARRY ; $4b7f
 	farcall GetCharPaletteIndex ; $4b81
 	ld e, a ; $4b84
 	ld d, $02 ; $4b85
-	wram_bank $06 ; $4b87
+	wram_bank WRAM_SCENE ; $4b87
 	ld a, $02 ; $4b8d
 	farcall InitChar ; $4b8f
 	ld a, CHAR_KATE ; $4b92
 	farcall GetCharPaletteIndex ; $4b94
 	ld e, a ; $4b97
 	ld d, $03 ; $4b98
-	wram_bank $07 ; $4b9a
+	wram_bank WRAM_CHAR3 ; $4b9a
 	ld a, $03 ; $4ba0
 	farcall InitChar ; $4ba2
-	wram_bank $04 ; $4ba5
+	wram_bank WRAM_CHAR0 ; $4ba5
 	ret ; $4bab
 DrawCharacterSelectChars:
-	wram_bank $04 ; $4bac
+	wram_bank WRAM_CHAR0 ; $4bac
 	ld hl, wCharPosX ; $4bb2
 	call UpdateCharSelectCharSprite ; $4bb5
 	ld a, $58 ; $4bb8
 	ld [wCharSpriteSlot + 2], a ; $4bba
 	ld a, $20 ; $4bbd
 	ld [wCharSpriteSlot + 3], a ; $4bbf
-	wram_bank $05 ; $4bc2
+	wram_bank WRAM_CHAR1 ; $4bc2
 	ld hl, wCharPosX ; $4bc8
 	call UpdateCharSelectCharSprite ; $4bcb
 	ld a, $58 ; $4bce
 	ld [wCharSpriteSlot + 2], a ; $4bd0
 	ld a, $61 ; $4bd3
 	ld [wCharSpriteSlot + 3], a ; $4bd5
-	wram_bank $06 ; $4bd8
+	wram_bank WRAM_CHAR2 ; $4bd8
 	ld hl, wCharPosX ; $4bde
 	call UpdateCharSelectCharSprite ; $4be1
 	ld a, $c8 ; $4be4
 	ld [wCharSpriteSlot + 2], a ; $4be6
 	ld a, $c8 ; $4be9
 	ld [wCharSpriteSlot + 3], a ; $4beb
-	wram_bank $07 ; $4bee
+	wram_bank WRAM_CHAR3 ; $4bee
 	ld hl, wCharPosX ; $4bf4
 	call UpdateCharSelectCharSprite ; $4bf7
 	ld a, $c8 ; $4bfa
 	ld [wCharSpriteSlot + 2], a ; $4bfc
 	ld a, $c8 ; $4bff
 	ld [wCharSpriteSlot + 3], a ; $4c01
-	wram_bank $04 ; $4c04
-	push_wram_bank $02 ; $4c0a
+	wram_bank WRAM_ACTORS ; $4c04
+	push_wram_bank WRAM_COURT_PLANES ; $4c0a
 	ld a, [wCharSelectIsPartner] ; $4c13
 	ld b, a ; $4c16
 	pop_wram_bank ; $4c17
 	ld a, b ; $4c1c
 	or a ; $4c1d
 	jr z, .applySlot ; $4c1e
-	wram_bank $04 ; $4c20
+	wram_bank WRAM_CHAR0 ; $4c20
 	ld a, $c8 ; $4c26
 	ld [wCharSpriteSlot + 2], a ; $4c28
 	ld a, $c8 ; $4c2b
 	ld [wCharSpriteSlot + 3], a ; $4c2d
-	wram_bank $05 ; $4c30
+	wram_bank WRAM_CHAR1 ; $4c30
 	ld a, $c8 ; $4c36
 	ld [wCharSpriteSlot + 2], a ; $4c38
 	ld a, $c8 ; $4c3b
 	ld [wCharSpriteSlot + 3], a ; $4c3d
-	wram_bank $06 ; $4c40
+	wram_bank WRAM_CHAR2 ; $4c40
 	ld a, $58 ; $4c46
 	ld [wCharSpriteSlot + 2], a ; $4c48
 	ld a, $20 ; $4c4b
 	ld [wCharSpriteSlot + 3], a ; $4c4d
-	wram_bank $07 ; $4c50
+	wram_bank WRAM_CHAR3 ; $4c50
 	ld a, $58 ; $4c56
 	ld [wCharSpriteSlot + 2], a ; $4c58
 	ld a, $61 ; $4c5b
 	ld [wCharSpriteSlot + 3], a ; $4c5d
-	wram_bank $04 ; $4c60
+	wram_bank WRAM_ACTORS ; $4c60
 .applySlot:
-	push_wram_bank $02 ; $4c66
+	push_wram_bank WRAM_COURT_PLANES ; $4c66
 	ld a, [wCharSelectHandedness] ; $4c6f
 	ld c, a ; $4c72
 	pop_wram_bank ; $4c73
 	ld a, c ; $4c78
 	or a ; $4c79
 	jr z, .applySlot2 ; $4c7a
-	wram_bank $04 ; $4c7c
+	wram_bank WRAM_CHAR0 ; $4c7c
 	ld hl, wCharSpriteSlot + 1 ; $4c82
 	set 5, [hl] ; $4c85
-	wram_bank $05 ; $4c87
+	wram_bank WRAM_CHAR1 ; $4c87
 	ld hl, wCharSpriteSlot + 1 ; $4c8d
 	set 5, [hl] ; $4c90
-	wram_bank $06 ; $4c92
+	wram_bank WRAM_CHAR2 ; $4c92
 	ld hl, wCharSpriteSlot + 1 ; $4c98
 	set 5, [hl] ; $4c9b
-	wram_bank $07 ; $4c9d
+	wram_bank WRAM_CHAR3 ; $4c9d
 	ld hl, wCharSpriteSlot + 1 ; $4ca3
 	set 5, [hl] ; $4ca6
 .applySlot2:
-	wram_bank $04 ; $4ca8
+	wram_bank WRAM_CHAR0 ; $4ca8
 	ld hl, wCharSpriteSlot ; $4cae
 	farcall DrawCharSprite ; $4cb1
-	wram_bank $05 ; $4cb4
+	wram_bank WRAM_CHAR1 ; $4cb4
 	ld hl, wCharSpriteSlot ; $4cba
 	farcall DrawCharSprite ; $4cbd
-	wram_bank $06 ; $4cc0
+	wram_bank WRAM_CHAR2 ; $4cc0
 	ld hl, wCharSpriteSlot ; $4cc6
 	farcall DrawCharSprite ; $4cc9
-	wram_bank $07 ; $4ccc
+	wram_bank WRAM_CHAR3 ; $4ccc
 	ld hl, wCharSpriteSlot ; $4cd2
 	farcall DrawCharSprite ; $4cd5
-	wram_bank $04 ; $4cd8
+	wram_bank WRAM_ACTORS ; $4cd8
 	call TickCharSelectIdleAnim ; $4cde
 	ret ; $4ce1

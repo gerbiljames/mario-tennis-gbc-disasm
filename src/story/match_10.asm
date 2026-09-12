@@ -373,7 +373,7 @@ RunLessonSelectMenu:
 	ld c, $02 ; $44da
 	ld d, $03 ; $44dc
 	farcall ShowRankingBoard ; $44de
-	push_wram_bank $07 ; $44e1
+	push_wram_bank WRAM_SOUND ; $44e1
 	ld de, $0000 ; $44ea
 	ld hl, wMinigameRecordValue ; $44ed
 	ld a, [hl+] ; $44f0

@@ -312,7 +312,7 @@ RefreshCharInfoPanel:
 	push bc ; $575f
 	push de ; $5760
 	push hl ; $5761
-	push_wram_bank $03 ; $5762
+	push_wram_bank WRAM_SCREEN ; $5762
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $576b
 	ld b, $12 ; $576e
 	ld c, $01 ; $5770
@@ -390,7 +390,7 @@ DrawCreatedCharStats:
 	push bc ; $57de
 	push de ; $57df
 	push hl ; $57e0
-	push_wram_bank $03 ; $57e1
+	push_wram_bank WRAM_SCREEN ; $57e1
 	ld a, c ; $57ea
 	ld de, $0020 ; $57eb
 	ld hl, wCreatedCharRecords ; $57ee

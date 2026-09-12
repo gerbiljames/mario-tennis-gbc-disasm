@@ -146,7 +146,7 @@ InitCa00RecordFromCharId:
 	ld hl, $002f ; $4113
 	add hl, de ; $4116
 	ld [hl], $02 ; $4117
-	push_wram_bank $06 ; $4119
+	push_wram_bank WRAM_SCENE ; $4119
 	pop_wram_bank ; $4122
 	ret ; $4127
 ; GetCharPaletteIndex with a different table base (`add $33` for `add $7e`): the same character-id lookup over the remap table above. Nothing calls it.
@@ -256,7 +256,7 @@ CacheStorySlotSummaries:
 	push bc ; $4262
 	push de ; $4263
 	push hl ; $4264
-	push_wram_bank $06 ; $4265
+	push_wram_bank WRAM_SCENE ; $4265
 	xor a ; $426e
 	ld c, $0c ; $426f
 	ld hl, wStorySlotSignatures ; $4271
@@ -318,7 +318,7 @@ Copy4Bytes:
 CheckStorySignatureCollision:
 	push de ; $42d6
 	push hl ; $42d7
-	push_wram_bank $06 ; $42d8
+	push_wram_bank WRAM_SCENE ; $42d8
 	ld hl, wStorySaveSignature ; $42e1
 	ld a, [hl+] ; $42e4
 	or [hl] ; $42e5

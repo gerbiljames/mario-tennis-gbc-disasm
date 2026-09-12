@@ -273,7 +273,7 @@ PromptExhibitionMatch:
 	farcall EndCutsceneScriptMode ; $6983
 	ret ; $6986
 MoveDoublesPartnerToPlayer:
-	wram_bank $04 ; $6987
+	wram_bank WRAM_ACTORS ; $6987
 	script_get_actor_state ACTOR_PLAYER ; $698d
 	ld c, l ; $6992
 	ld b, h ; $6993

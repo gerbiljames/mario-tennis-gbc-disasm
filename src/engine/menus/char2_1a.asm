@@ -5,15 +5,15 @@ DrawCharViewerCharSprite:
 	lb bc, $07, $72 ; $701b attr, tile
 	lb de, $4e, $15 ; $701e x, y
 	call QueueSprite ; $7021
-	wram_bank $04 ; $7024
+	wram_bank WRAM_CHAR0 ; $7024
 	ld hl, wCharPosX ; $702a
 	ld b, h ; $702d
 	ld c, l ; $702e
 	farcall StepCharAnimation ; $702f
-	wram_bank $06 ; $7032
+	wram_bank WRAM_SCENE ; $7032
 	ld a, [wCharDataNewLevels] ; $7038
 	ld d, a ; $703b
-	wram_bank $04 ; $703c
+	wram_bank WRAM_CHAR0 ; $703c
 	push de ; $7042
 	farcall ReloadCharFacingTiles ; $7043
 	pop de ; $7046
@@ -68,10 +68,10 @@ LoadCharViewerMugshot:
 	xor a ; $7096
 	lb de, $07, $01 ; $7097 palette index, count
 	farcall LoadIndexedPaletteThunk ; $709a
-	wram_bank $06 ; $709d
+	wram_bank WRAM_SCENE ; $709d
 	ld a, [wCharDataFlushChunk] ; $70a3
 	ld b, a ; $70a6
-	wram_bank $01 ; $70a7
+	wram_bank WRAM_STAGING ; $70a7
 	ld a, b ; $70ad
 	ld de, wDecompBuffer ; $70ae
 	farcall DecompressCharMugshot ; $70b1
@@ -81,7 +81,7 @@ LoadCharViewerMugshot:
 	call QueueVRAMCopy ; $70bc
 	ret ; $70bf
 ApplyCharViewerPalette:
-	wram_bank $06 ; $70c0
+	wram_bank WRAM_SCENE ; $70c0
 	ld a, [wCharDataLevel] ; $70c6
 	lb de, $07, $01 ; $70c9 palette index, count
 	farcall LoadIndexedPaletteThunk ; $70cc
@@ -108,14 +108,14 @@ CharViewerInputLoopTable:
 RunCharDataConfirmScreen:
 	farcall InitCharDataScreenVideo ; $7945
 	farcall LoadCharDataScreenTilemaps ; $7948
-	wram_bank $01 ; $794b
+	wram_bank WRAM_STAGING ; $794b
 	ld hl, CharDataConfirmScreenGfx1 ; $7951
 	ld de, wTextTileBuffer + 106 * TILE_SIZE ; $7954
 	call DecompressData ; $7957
 	ld hl, wTextTileBuffer + 106 * TILE_SIZE ; $795a
 	ld bc, $002a ; $795d
 	call CopyBank1ToBank3BufferAlt ; $7960
-	wram_bank $01 ; $7963
+	wram_bank WRAM_STAGING ; $7963
 	ld hl, CharDataConfirmScreenGfx2 ; $7969
 	ld de, wTextTileBuffer + 106 * TILE_SIZE ; $796c
 	call DecompressData ; $796f
@@ -126,12 +126,12 @@ RunCharDataConfirmScreen:
 	ld bc, wTextTileBuffer + 106 * TILE_SIZE ; $797e
 	call ApplyTilemapPatchList_1a ; $7981
 	farcall DrawCharDataConfirmPrompt ; $7984
-	wram_bank $03 ; $7987
+	wram_bank WRAM_SCREEN ; $7987
 	ld hl, wShadowTilemap ; $798d
 	ld de, vBGMap0 ; $7990
 	ld c, $24 ; $7993
 	call QueueVRAMCopy ; $7995
-	wram_bank $02 ; $7998
+	wram_bank WRAM_COURT_PLANES ; $7998
 	ld hl, wScreenAttrmap ; $799e
 	ld de, vBGMap0 + VRAM_BANK1 ; $79a1
 	ld c, $24 ; $79a4
@@ -142,7 +142,7 @@ RunCharDataConfirmScreen:
 	farcall StartCharDataValuesSyncTask ; $79b2
 	script_fade_in $10 ; $79b5
 	call WaitFadeEnd ; $79ba
-	wram_bank $06 ; $79bd
+	wram_bank WRAM_SCENE ; $79bd
 	ld a, $01 ; $79c3
 	ld [wCharDataConfirmState], a ; $79c5
 .loop:
@@ -161,14 +161,14 @@ RunCharDataConfirmScreen:
 	ld [wCharDataConfirmState], a ; $79e3
 	jr .loop ; $79e6
 .step:
-	wram_bank $06 ; $79e8
+	wram_bank WRAM_SCENE ; $79e8
 	ld a, [wCharDataConfirmState] ; $79ee
 	or a ; $79f1
 	jr nz, .beginFadeOut2 ; $79f2
 	sound SFX_MENU_SELECT ; $79f4
 	jr .beginFadeOut ; $79f6
 .beginFadeOut2:
-	wram_bank $06 ; $79f8
+	wram_bank WRAM_SCENE ; $79f8
 	ld a, $01 ; $79fe
 	ld [wCharDataConfirmState], a ; $7a00
 	sound SFX_MENU_CANCEL ; $7a03
@@ -178,15 +178,15 @@ RunCharDataConfirmScreen:
 	call WaitFadeEnd ; $7a0a
 	farcall StopCharDataValuesSyncTask ; $7a0d
 	farcall StopCharDataScreenAnimTask ; $7a10
-	wram_bank $06 ; $7a13
+	wram_bank WRAM_SCENE ; $7a13
 	ld a, [wCharDataConfirmState] ; $7a19
 	ret ; $7a1c
 ; Instruction-identical to DrawConfirmSelectionCursor_1c and DrawConfirmSelectionCursor_1d (one copy per bank); a change here belongs in every copy.
 	twin draw_confirm_selection_cursor, 1a ; $7a1d DrawConfirmSelectionCursor_1a
 CopyBank1ToBank3BufferAlt:
-	wram_bank $01 ; $7a3d
+	wram_bank WRAM_STAGING ; $7a3d
 	ld d, [hl] ; $7a43
-	wram_bank $03 ; $7a44
+	wram_bank WRAM_SCREEN ; $7a44
 	ld [hl], d ; $7a4a
 	inc hl ; $7a4b
 	dec bc ; $7a4c
@@ -195,9 +195,9 @@ CopyBank1ToBank3BufferAlt:
 	jr nz, CopyBank1ToBank3BufferAlt ; $7a4f
 	ret ; $7a51
 CopyBank1ToBank2BufferAlt:
-	wram_bank $01 ; $7a52
+	wram_bank WRAM_STAGING ; $7a52
 	ld d, [hl] ; $7a58
-	wram_bank $02 ; $7a59
+	wram_bank WRAM_COURT_PLANES ; $7a59
 	ld [hl], d ; $7a5f
 	inc hl ; $7a60
 	dec bc ; $7a61
@@ -229,7 +229,7 @@ ApplyTilemapPatchList_1a:
 	jr nc, .gotPtr ; $7a7e
 	inc h ; $7a80
 .gotPtr:
-	wram_bank $06 ; $7a81
+	wram_bank WRAM_SCENE ; $7a81
 	ld a, l ; $7a87
 	ld [wCharDataNumberBuffer], a ; $7a88
 	ld a, h ; $7a8b
@@ -243,10 +243,10 @@ ApplyTilemapPatchList_1a:
 	ld h, [hl] ; $7a97
 	ld l, a ; $7a98
 .loop:
-	wram_bank $03 ; $7a99
+	wram_bank WRAM_SCREEN ; $7a99
 	ld a, [hl] ; $7a9f
 	ld [de], a ; $7aa0
-	wram_bank $02 ; $7aa1
+	wram_bank WRAM_COURT_PLANES ; $7aa1
 	ld a, [hl+] ; $7aa7
 	ld [de], a ; $7aa8
 	inc de ; $7aa9
@@ -263,7 +263,7 @@ CharDataScreen_BuildStats:
 	ld a, [wStoryCharacterSlot] ; $7ab5
 	or a ; $7ab8
 	ret nz ; $7ab9
-	wram_bank $06 ; $7aba
+	wram_bank WRAM_SCENE ; $7aba
 	xor a ; $7ac0
 	ld hl, wCharDataRacketDeltas ; $7ac1
 	ld [hl+], a ; $7ac4
@@ -387,7 +387,7 @@ CharDataScreen_LoadGfx:
 	ld hl, CharDataScreen_LoadPalette ; $7b85
 	lb de, $0c, $02 ; $7b88 palette index, count
 	call LoadPaletteShadow ; $7b8b
-	wram_bank $01 ; $7b8e
+	wram_bank WRAM_STAGING ; $7b8e
 	ld hl, CharDataScreenGfx0 ; $7b94
 	ld de, wDecompBuffer ; $7b97
 	call DecompressData ; $7b9a
@@ -418,7 +418,7 @@ CharDataScreen_LoadGfx:
 	call QueueVRAMCopy ; $7be1
 	ret ; $7be4
 DrawStatChangeArrows:
-	wram_bank $06 ; $7be5
+	wram_bank WRAM_SCENE ; $7be5
 	ld a, [wCharDataPageArrowMode] ; $7beb
 	dec a ; $7bee
 	ret nz ; $7bef

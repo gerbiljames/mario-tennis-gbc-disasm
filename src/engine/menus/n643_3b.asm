@@ -211,7 +211,7 @@ ApplyUnlockEverythingCheat:
 	farcall SetAllUnlockablesInSaveBlock ; $4c4f
 	ret ; $4c52
 DecodeTrophyCounts:
-	wram_bank $03 ; $4c53
+	wram_bank WRAM_SCREEN ; $4c53
 	ld hl, wTrophyCellsMainSet1 ; $4c59
 	ld bc, $0018 ; $4c5c
 	call ClearBytes ; $4c5f
@@ -300,7 +300,7 @@ RunN64TnmtData:
 	call EnableLCD ; $4d16
 	script_fade_in $10 ; $4d19
 	call WaitFadeEnd ; $4d1e
-	wram_bank $03 ; $4d21
+	wram_bank WRAM_SCREEN ; $4d21
 .loop:
 	ldh a, [hInputPressed] ; $4d27
 	ld [wMenuInputPressed], a ; $4d29
@@ -380,7 +380,7 @@ ScrollN64TnmtDataCursor:
 BuildN64TnmtDataScreen:
 	ld c, SCREENASSET_ModeSelect ; $4dbd
 	farcall LoadScreenAssetRecord ; $4dbf
-	wram_bank $03 ; $4dc2
+	wram_bank WRAM_SCREEN ; $4dc2
 	xor a ; $4dc8
 	ld [wScreenScratch], a ; $4dc9
 	ld a, $00 ; $4dcc
@@ -388,7 +388,7 @@ BuildN64TnmtDataScreen:
 	ld a, $00 ; $4dd1
 	ld [wDataScreenCursorRow], a ; $4dd3
 	call LoadN64TnmtDataRecords ; $4dd6
-	wram_bank $03 ; $4dd9
+	wram_bank WRAM_SCREEN ; $4dd9
 	ld de, $8ac0 + VRAM_BANK1 ; $4ddf
 	call LoadChartWindowTiles ; $4de2
 	ld de, vTiles0 + VRAM_BANK1 ; $4de5
@@ -402,7 +402,7 @@ BuildN64TnmtDataScreen:
 	farcall QueueWram3MapToVRAM ; $4dfb
 	ret ; $4dfe
 LoadN64TnmtDataRecords:
-	wram_bank $03 ; $4dff
+	wram_bank WRAM_SCREEN ; $4dff
 	ld hl, wScreenScratch ; $4e05
 	ld bc, $0080 ; $4e08
 	call ClearMemory16 ; $4e0b

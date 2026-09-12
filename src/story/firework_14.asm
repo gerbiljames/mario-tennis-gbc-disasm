@@ -1,5 +1,5 @@
 LoadFireworkObjGfx_14:
-	push_wram_bank $01 ; $6427
+	push_wram_bank WRAM_STAGING ; $6427
 	ld hl, FireworkObjTiles_14 ; $6430
 	ld de, vTiles0 + $10 * TILE_SIZE ; $6433
 	ld c, (SpriteTemplate_14_2 - FireworkObjTiles_14) / 16 ; $6436

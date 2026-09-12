@@ -10,7 +10,7 @@ RunLevelUpStatusTrophiesMenu:
 	call DisableLCDSafely ; $6476
 	farcall ResetTextWindowState ; $6479
 	call ClearScreenMaps ; $647c
-	wram_bank $05 ; $647f
+	wram_bank WRAM_TEXT ; $647f
 	ld d, $02 ; $6485
 	ld e, $02 ; $6487
 	ld hl, Text_31_124 ; $6489
@@ -45,7 +45,7 @@ Unused_1b_RunDebugSaveDataMenu:
 	farcall ResetTextWindowState ; $64cb
 	call ClearScreenMaps ; $64ce
 	call ReadUnlockFlagsSaveBlock ; $64d1
-	wram_bank $06 ; $64d4
+	wram_bank WRAM_SCENE ; $64d4
 	ld hl, wUnlockFlagsBlock ; $64da
 	ld a, [hl+] ; $64dd
 	ld d, [hl] ; $64de
@@ -55,7 +55,7 @@ Unused_1b_RunDebugSaveDataMenu:
 	jr nz, .createMenuWindowFromText ; $64e4
 	inc hl ; $64e6
 .createMenuWindowFromText:
-	wram_bank $05 ; $64e7
+	wram_bank WRAM_TEXT ; $64e7
 	ld d, $02 ; $64ed
 	ld e, $02 ; $64ef
 	farcall CreateMenuWindowFromText ; $64f1
@@ -78,22 +78,22 @@ Unused_1b_RunDebugSaveDataMenu:
 	ret ; $651d
 ClearScreenMaps:
 	call DisableLCDSafely ; $651e
-	wram_bank $02 ; $6521
+	wram_bank WRAM_COURT_PLANES ; $6521
 	ld a, $00 ; $6527
 	ld hl, wScreenAttrmap ; $6529
 	ld bc, $0500 ; $652c
 	call FillBytesWithValue ; $652f
-	wram_bank $03 ; $6532
+	wram_bank WRAM_SCREEN ; $6532
 	ld a, $20 ; $6538
 	ld hl, wShadowTilemap ; $653a
 	ld bc, $0500 ; $653d
 	call FillBytesWithValue ; $6540
-	wram_bank $03 ; $6543
+	wram_bank WRAM_SCREEN ; $6543
 	ld hl, wShadowTilemap ; $6549
 	ld de, vBGMap0 ; $654c
 	ld c, $24 ; $654f
 	call QueueVRAMCopy ; $6551
-	wram_bank $02 ; $6554
+	wram_bank WRAM_COURT_PLANES ; $6554
 	ld hl, wScreenAttrmap ; $655a
 	ld de, vBGMap0 + VRAM_BANK1 ; $655d
 	ld c, $24 ; $6560
@@ -280,7 +280,7 @@ DrawUnlockDebugMugshots:
 	farcall StubNop_1b_01 ; $6718
 	ret ; $671b
 Unused_1b_RunMinigameFlagsDebugScreen:
-	wram_bank $01 ; $671c
+	wram_bank WRAM_STAGING ; $671c
 	call ClearFrameTasks ; $6722
 	call LoadUnlockDebugNavGrid ; $6725
 	call LoadUnlockDebugRosterTable ; $6728
@@ -311,7 +311,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	script_fade_in $20 ; $6770
 	call WaitFadeEnd ; $6775
 .loop:
-	wram_bank $01 ; $6778
+	wram_bank WRAM_STAGING ; $6778
 	ldh a, [hInputRisingEdge] ; $677e
 	and PADF_A ; $6780
 	jr z, .checkInputRisingEdge ; $6782
@@ -468,7 +468,7 @@ StepUnlockDebugCursor:
 	ret ; $686e
 ReadUnlockFlagsSaveBlock:
 	push bc ; $686f
-	push_wram_bank $06 ; $6870
+	push_wram_bank WRAM_SCENE ; $6870
 	ld hl, wUnlockFlagsBlock ; $6879
 	ld b, $0b ; $687c
 	farcall ReadSaveBlock ; $687e
@@ -478,7 +478,7 @@ ReadUnlockFlagsSaveBlock:
 	pop bc ; $6888
 	ret ; $6889
 WriteUnlockFlagsSaveBlock:
-	push_wram_bank $06 ; $688a
+	push_wram_bank WRAM_SCENE ; $688a
 	ld hl, wUnlockFlagsBlock ; $6893
 	ld de, $0000 ; $6896
 	ld b, $0b ; $6899

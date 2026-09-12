@@ -1,5 +1,5 @@
 JuniorClassCourtDoublesMatchReturn:
-	wram_bank $04 ; $5d38
+	wram_bank WRAM_ACTORS ; $5d38
 	ld a, [wMatchExitRequest] ; $5d3e
 	cp $01 ; $5d41
 	jr z, .eq01 ; $5d43

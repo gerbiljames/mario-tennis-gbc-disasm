@@ -345,7 +345,7 @@ CheckIslandOpenVictoryTransition:
 	ld a, $00 ; $7484
 	ret ; $7486
 IslandOpenSinglesMatchReturn:
-	wram_bank $04 ; $7487
+	wram_bank WRAM_ACTORS ; $7487
 	ld a, [wMatchExitRequest] ; $748d
 	cp $01 ; $7490
 	jr z, .quitOrLost ; $7492
@@ -485,7 +485,7 @@ IslandOpenSinglesStageTextPtrs_0f:
 	dw Text_25_78 ; record 3
 	dw Text_25_82 ; record 4
 IslandOpenDoublesMatchReturn:
-	wram_bank $04 ; $76a3
+	wram_bank WRAM_ACTORS ; $76a3
 	ld a, [wMatchExitRequest] ; $76a9
 	cp $01 ; $76ac
 	jr z, .quitOrLost ; $76ae

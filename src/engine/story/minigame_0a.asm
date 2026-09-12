@@ -1,5 +1,5 @@
 InitMinigameTargets:
-	wram_bank $04 ; $6596
+	wram_bank WRAM_ACTORS ; $6596
 	ld hl, wMinigameTargets ; $659c
 	ld c, $10 ; $659f
 	call ClearMemory16 ; $65a1

@@ -387,7 +387,7 @@ BlitBGRowFrom64:
 	call GetMapBufferAddr64 ; $2254
 	pop de ; $2257
 	push hl ; $2258
-	wram_bank $02 ; $2259
+	wram_bank WRAM_COURT_PLANES ; $2259
 	ld c, $20 ; $225f
 .copyLoop:
 	ld a, [hl+] ; $2261
@@ -405,7 +405,7 @@ BlitBGRowFrom64:
 	dec c ; $2271
 	jr nz, .copyLoop ; $2272
 	pop hl ; $2274
-	wram_bank $03 ; $2275
+	wram_bank WRAM_SCREEN ; $2275
 	ld bc, $4020 ; $227b
 	ld a, e ; $227e
 	add b ; $227f
@@ -446,7 +446,7 @@ BlitBGColumnFrom64:
 	call GetMapBufferAddr64 ; $22b3
 	pop de ; $22b6
 	push hl ; $22b7
-	wram_bank $02 ; $22b8
+	wram_bank WRAM_COURT_PLANES ; $22b8
 	ld c, $20 ; $22be
 .copyLoop:
 	ld a, [hl] ; $22c0
@@ -462,7 +462,7 @@ BlitBGColumnFrom64:
 	dec c ; $22cf
 	jr nz, .copyLoop ; $22d0
 	pop hl ; $22d2
-	wram_bank $03 ; $22d3
+	wram_bank WRAM_SCREEN ; $22d3
 	ld bc, $4020 ; $22d9
 	ld a, e ; $22dc
 	add b ; $22dd

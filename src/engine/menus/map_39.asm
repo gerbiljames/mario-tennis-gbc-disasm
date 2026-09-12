@@ -3,7 +3,7 @@ FlushWram3MapRows:
 	push bc ; $4cac
 	push de ; $4cad
 	push hl ; $4cae
-	push_wram_bank $03 ; $4caf
+	push_wram_bank WRAM_SCREEN ; $4caf
 	ld a, b ; $4cb8
 	or a ; $4cb9
 	jr nz, .mode1 ; $4cba

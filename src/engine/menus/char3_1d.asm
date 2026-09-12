@@ -2,7 +2,7 @@ ApplySlideOffsetToSpriteX:
 	push bc ; $5997
 	ld b, $00 ; $5998
 	ld c, d ; $599a
-	wram_bank $06 ; $599b
+	wram_bank WRAM_SCENE ; $599b
 	ld a, [hl+] ; $59a1
 	ld h, [hl] ; $59a2
 	ld l, a ; $59a3
@@ -73,7 +73,7 @@ ScaleValueToBar:
 	ret ; $59fb
 DrawExpProgressBarTiles:
 	ld b, a ; $59fc
-	wram_bank $03 ; $59fd
+	wram_bank WRAM_SCREEN ; $59fd
 .loop:
 	ld a, b ; $5a03
 	sub $08 ; $5a04
@@ -153,7 +153,7 @@ PromptCharDataConfirm:
 	farcall StartCharDataScreenAnimTask ; $5a8f
 	script_fade_in $10 ; $5a92
 	call WaitFadeEnd ; $5a97
-	wram_bank $06 ; $5a9a
+	wram_bank WRAM_SCENE ; $5a9a
 	ld a, $01 ; $5aa0
 	ld [wCharDataConfirmState], a ; $5aa2
 .loop:
@@ -172,14 +172,14 @@ PromptCharDataConfirm:
 	ld [wCharDataConfirmState], a ; $5ac0
 	jr .loop ; $5ac3
 .step:
-	wram_bank $06 ; $5ac5
+	wram_bank WRAM_SCENE ; $5ac5
 	ld a, [wCharDataConfirmState] ; $5acb
 	or a ; $5ace
 	jr nz, .beginFadeOut2 ; $5acf
 	sound SFX_MENU_SELECT ; $5ad1
 	jr .beginFadeOut ; $5ad3
 .beginFadeOut2:
-	wram_bank $06 ; $5ad5
+	wram_bank WRAM_SCENE ; $5ad5
 	ld a, $01 ; $5adb
 	ld [wCharDataConfirmState], a ; $5add
 	sound SFX_MENU_CANCEL ; $5ae0
@@ -189,7 +189,7 @@ PromptCharDataConfirm:
 	call WaitFadeEnd ; $5ae7
 	farcall StopCharDataScreenAnimTask ; $5aea
 	call ClearFrameTasks ; $5aed
-	wram_bank $06 ; $5af0
+	wram_bank WRAM_SCENE ; $5af0
 	ld a, [wCharDataConfirmState] ; $5af6
 	ret ; $5af9
 ; Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1c (one copy per bank); a change here belongs in every copy.
@@ -217,7 +217,7 @@ BuildCharDataConfirmScreen:
 	ld a, [hl] ; $5b3a
 	lb de, $04, $01 ; $5b3b palette index, count
 	farcall LoadIndexedPaletteThunk ; $5b3e
-	wram_bank $01 ; $5b41
+	wram_bank WRAM_STAGING ; $5b41
 	push af ; $5b47
 	ld hl, wStoryModeNameOfMainCharacter ; $5b48
 	ld a, [wStoryCharacterSlot] ; $5b4b
@@ -267,12 +267,12 @@ BuildCharDataConfirmScreen:
 	ld bc, wCharDataPagePlane + 10 * TILEMAP_WIDTH + 16 ; $5bb7
 	call ApplyTilemapPatchList ; $5bba
 	call DrawCharDataConfirmPrompt ; $5bbd
-	wram_bank $03 ; $5bc0
+	wram_bank WRAM_SCREEN ; $5bc0
 	ld hl, wShadowTilemap ; $5bc6
 	ld de, vBGMap0 ; $5bc9
 	ld c, $24 ; $5bcc
 	call QueueVRAMCopy ; $5bce
-	wram_bank $02 ; $5bd1
+	wram_bank WRAM_COURT_PLANES ; $5bd1
 	ld hl, wScreenAttrmap ; $5bd7
 	ld de, vBGMap0 + VRAM_BANK1 ; $5bda
 	ld c, $24 ; $5bdd

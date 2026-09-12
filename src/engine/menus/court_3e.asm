@@ -8,7 +8,7 @@ RunCourtSelect4Menu:
 	ld c, $01 ; $5ba8
 	farcall LoadMenuSpritePalettePair ; $5baa
 	call LoadCourtSelectHeader ; $5bad
-	wram_bank $03 ; $5bb0
+	wram_bank WRAM_SCREEN ; $5bb0
 	ld a, [wMenuSlideDirection] ; $5bb6
 	ld b, a ; $5bb9
 	call OpenCourtSelect4Panel ; $5bba
@@ -20,7 +20,7 @@ RunCourtSelect4Menu:
 	ld hl, CourtSelect4CursorSpriteTask ; $5bc8
 	call RegisterFrameTask ; $5bcb
 	call RedrawCourtSelect4Menu ; $5bce
-	wram_bank $03 ; $5bd1
+	wram_bank WRAM_SCREEN ; $5bd1
 .loop:
 	call AdvanceFrame ; $5bd7
 	ldh a, [hInputPressed] ; $5bda
@@ -80,7 +80,7 @@ RunLinkCourtSelect4Menu:
 	ld c, $01 ; $5c4b
 	farcall LoadMenuSpritePalettePair ; $5c4d
 	call LoadCourtSelectHeader ; $5c50
-	wram_bank $03 ; $5c53
+	wram_bank WRAM_SCREEN ; $5c53
 	ld a, [wMenuSlideDirection] ; $5c59
 	ld b, a ; $5c5c
 	call OpenCourtSelect4Panel ; $5c5d
@@ -102,7 +102,7 @@ RunLinkCourtSelect4Menu:
 	push af ; $5c81
 	farcall RunLinkInputFrame ; $5c82
 	pop af ; $5c85
-	wram_bank $03 ; $5c86
+	wram_bank WRAM_SCREEN ; $5c86
 .loop:
 	push af ; $5c8c
 	farcall RunLinkInputFrame ; $5c8d
@@ -182,7 +182,7 @@ LoadCourtSelectGraphics:
 	or b ; $5d1b
 	ld b, a ; $5d1c
 	call StoreCourtUnlockBits ; $5d1d
-	wram_bank $01 ; $5d20
+	wram_bank WRAM_STAGING ; $5d20
 	ld c, $00 ; $5d26
 .loop:
 	ld a, c ; $5d28
@@ -486,7 +486,7 @@ CourtSelect4LabelYOffsets_3e:
 	; $5f4d, 4 bytes (bytes:4)
 	db $17, $17, $17, $1b ; 0x00
 RedrawCourtSelect4Menu:
-	wram_bank $03 ; $5f51
+	wram_bank WRAM_SCREEN ; $5f51
 	ld b, $00 ; $5f57
 	ld c, $00 ; $5f59
 .tabLoop:
@@ -661,7 +661,7 @@ LoadCourtSelectHeader:
 	call AdvanceFrame ; $6114
 	ret ; $6117
 DrawCourtSelectTitleRow:
-	push_wram_bank $03 ; $6118
+	push_wram_bank WRAM_SCREEN ; $6118
 	ld a, $12 ; $6121
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6123
 	ld c, $20 ; $6126
@@ -693,7 +693,7 @@ DrawCourtSelectTitleRight:
 	farcall FillIncrementingBytes ; $615b
 	ret ; $615e
 FlushCourtSelectTitleRow:
-	push_wram_bank $03 ; $615f
+	push_wram_bank WRAM_SCREEN ; $615f
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6168
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $616b
 	ld bc, $0006 ; $616e
@@ -701,7 +701,7 @@ FlushCourtSelectTitleRow:
 	pop_wram_bank ; $6174
 	ret ; $6179
 LoadCourtSelectTitleGfx:
-	push_wram_bank $01 ; $617a
+	push_wram_bank WRAM_STAGING ; $617a
 	call LoadCourtSelectTitleTiles ; $6183
 	call LoadCourtSelectTitleTiles2 ; $6186
 	call LoadCourtSelectPanelTiles ; $6189
@@ -741,7 +741,7 @@ CourtSelectTitleTiles2Gfx:
 CourtSelectPanelTiles:
 	INCBIN "data/bank_03e/lz_CourtSelectPanelTiles.bin" ; $62c6, 457 bytes
 DrawCourtNameTiles:
-	push_wram_bank $03 ; $648f
+	push_wram_bank WRAM_SCREEN ; $648f
 	push bc ; $6498
 	call DrawCourtNameLeft ; $6499
 	pop bc ; $649c

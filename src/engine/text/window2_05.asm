@@ -49,7 +49,7 @@ GetScreenTopLeftCell:
 CreateWindowWithAttr:
 	push hl ; $4664
 	ld h, a ; $4665
-	push_wram_bank $05 ; $4666
+	push_wram_bank WRAM_TEXT ; $4666
 	ld a, h ; $466f
 	ld [wWindowTileAttr], a ; $4670
 	call CreateWindow ; $4673
@@ -92,7 +92,7 @@ CreateMenuWindowFromText:
 	push bc ; $46b0
 	push de ; $46b1
 	push hl ; $46b2
-	wram_bank $05 ; $46b3
+	wram_bank WRAM_TEXT ; $46b3
 	call FetchDialogueText ; $46b9
 	push hl ; $46bc
 	ld h, d ; $46bd
@@ -221,7 +221,7 @@ RunMenuSelection:
 	push bc ; $477f
 	push de ; $4780
 	push hl ; $4781
-	push_wram_bank $05 ; $4782
+	push_wram_bank WRAM_TEXT ; $4782
 	xor a ; $478b
 	ld [wTextArrowEraseAddr], a ; $478c
 	ld [wTextArrowEraseAddr + 1], a ; $478f
@@ -442,7 +442,7 @@ AnimateTextArrowTask:
 	push bc ; $48f2
 	push de ; $48f3
 	push hl ; $48f4
-	wram_bank $05 ; $48f5
+	wram_bank WRAM_TEXT ; $48f5
 	ld hl, wTextArrowBlinkCounter ; $48fb
 	ld a, [hl+] ; $48fe
 	and $10 ; $48ff

@@ -12,7 +12,7 @@ RunMinigameSelect:
 	ld [wMinigameSelectUnused], a ; $61f8
 	call BuildMarioCastUnlockMask ; $61fb
 	call LoadMinigameSelectGfx ; $61fe
-	wram_bank $03 ; $6201
+	wram_bank WRAM_SCREEN ; $6201
 	call CheckMinigameGridExpanded ; $6207
 	or a ; $620a
 	jr nz, .checkMenuSlideDirection ; $620b
@@ -45,7 +45,7 @@ RunMinigameSelect:
 .drawMinigameSelectGrid9:
 	call DrawMinigameSelectGrid9 ; $6246
 .storeMenuInputPressed:
-	wram_bank $03 ; $6249
+	wram_bank WRAM_SCREEN ; $6249
 .loop:
 	ldh a, [hInputPressed] ; $624f
 	ld [wMenuInputPressed], a ; $6251
@@ -128,7 +128,7 @@ RunMinigameSelect:
 	ld a, $ff ; $62ec
 	ret ; $62ee
 LoadMinigameSelectGfx:
-	push_wram_bank $01 ; $62ef
+	push_wram_bank WRAM_STAGING ; $62ef
 	ld c, $00 ; $62f8
 .loop:
 	push bc ; $62fa
@@ -429,7 +429,7 @@ OverrideMinigameCursorIfLocked:
 	pop af ; $6567
 	ret ; $6568
 DrawMinigameSelectCaption:
-	wram_bank $03 ; $6569
+	wram_bank WRAM_SCREEN ; $6569
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $656f
 	ld b, $14 ; $6572
 	ld c, $01 ; $6574
@@ -451,7 +451,7 @@ DrawMinigameSelectCaption:
 	call QueueVRAMCopy ; $659c
 	ret ; $659f
 RenderMinigameNameText:
-	wram_bank $03 ; $65a0
+	wram_bank WRAM_SCREEN ; $65a0
 	ld c, $03 ; $65a6
 	call GetMenuCursorIndex_3b ; $65a8
 	push af ; $65ab
@@ -498,7 +498,7 @@ RenderMinigameNameTextTable:
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 7
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 8
 DrawMinigameSelectGrid9:
-	wram_bank $03 ; $65ec
+	wram_bank WRAM_SCREEN ; $65ec
 	ld b, $00 ; $65f2
 	ld c, $00 ; $65f4
 .loop:

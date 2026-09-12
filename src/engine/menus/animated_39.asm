@@ -8,7 +8,7 @@ LoadScreenAssetRecord:
 	sla c ; $408b
 	rl b ; $408d
 	add hl, bc ; $408f
-	wram_bank $01 ; $4090
+	wram_bank WRAM_STAGING ; $4090
 	push hl ; $4096
 	ld a, [hl+] ; $4097
 	ld h, [hl] ; $4098
@@ -30,7 +30,7 @@ LoadScreenAssetRecord:
 	ld a, [hl+] ; $40ba
 	ld h, [hl] ; $40bb
 	ld l, a ; $40bc
-	wram_bank $03 ; $40bd
+	wram_bank WRAM_SCREEN ; $40bd
 	ld de, wShadowTilemap ; $40c3
 	call DecompressDataFromBank ; $40c6
 	pop hl ; $40c9
@@ -48,7 +48,7 @@ LoadScreenAssetRecord:
 	ld a, [hl+] ; $40d9
 	ld h, [hl] ; $40da
 	ld l, a ; $40db
-	wram_bank $01 ; $40dc
+	wram_bank WRAM_STAGING ; $40dc
 	ld de, wDecompBuffer ; $40e2
 	ld bc, $0040 ; $40e5
 	call CopyDataFromBank ; $40e8
@@ -129,7 +129,7 @@ ScreenAssetRecordTable:
 	screen_asset RulesScreen, DataPtr_RulesScreenTiles, DataPtr_RulesScreenTilemap, DataPtr_RulesScreenAttrmap, DataPtr_RulesScreenPalettes ; record 68
 	screen_asset AwardCeremonyTilesPtrs, DataPtr_AwardCeremonyTiles, DataPtr_AwardCeremonyTilesAlias1, DataPtr_AwardCeremonyTilesAlias2, DataPtr_AwardCeremonyTilesAlias3 ; record 69
 QueueWram3MapToVRAM:
-	wram_bank $03 ; $4325
+	wram_bank WRAM_SCREEN ; $4325
 	ld hl, wShadowTilemap ; $432b
 	ld de, vBGMap0 ; $432e
 	ld c, $40 ; $4331
@@ -166,7 +166,7 @@ UpdateAnimatedTiles:
 	ld [wAnimatedTileTimer], a ; $435f
 	or a ; $4362
 	jp nz, .done ; $4363
-	wram_bank $02 ; $4366
+	wram_bank WRAM_COURT_PLANES ; $4366
 	ld a, [wAnimatedTileFrame] ; $436c
 	inc a ; $436f
 	ld [wAnimatedTileFrame], a ; $4370
@@ -200,7 +200,7 @@ UpdateAnimatedTiles:
 	ld a, [hl+] ; $4396
 	ld h, [hl] ; $4397
 	ld l, a ; $4398
-	wram_bank $01 ; $4399
+	wram_bank WRAM_STAGING ; $4399
 	ld de, wDecompBuffer ; $439f
 	call DecompressDataFromBank ; $43a2
 	ld hl, wDecompBuffer ; $43a5
@@ -374,7 +374,7 @@ AnimatedTilesTable4:
 	dslot DataPtr_CharRosterIcon31 ; record 15
 LoadFixedTileBlockAndPalette:
 	push de ; $44d3
-	wram_bank $01 ; $44d4
+	wram_bank WRAM_STAGING ; $44d4
 	ld hl, FixedTileBlockAndPalette ; $44da
 	ld de, wDecompBuffer ; $44dd
 	call DecompressData ; $44e0

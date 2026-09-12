@@ -50,7 +50,7 @@ CopyScrolledSceneTilemapToVram:
 	pop de ; $5c68
 	push hl ; $5c69
 	push de ; $5c6a
-	wram_bank $02 ; $5c6b
+	wram_bank WRAM_COURT_PLANES ; $5c6b
 	ld a, $01 ; $5c71
 	ldh [rVBK], a ; $5c73
 	ld b, $15 ; $5c75
@@ -109,7 +109,7 @@ CopyScrolledSceneTilemapToVram:
 	jr nz, .attrRowLoop ; $5cb6
 	pop de ; $5cb8
 	pop hl ; $5cb9
-	wram_bank $03 ; $5cba
+	wram_bank WRAM_SCREEN ; $5cba
 	xor a ; $5cc0
 	ldh [rVBK], a ; $5cc1
 	ld b, $15 ; $5cc3
@@ -251,7 +251,7 @@ LoadSceneGraphicsDirect:
 	ld a, [hl+] ; $5d60
 	ld b, a ; $5d61
 	push bc ; $5d62
-	wram_bank $01 ; $5d63
+	wram_bank WRAM_STAGING ; $5d63
 	ld a, $01 ; $5d69
 	ldh [rVBK], a ; $5d6b
 	ld a, [hl+] ; $5d6d
@@ -267,7 +267,7 @@ LoadSceneGraphicsDirect:
 	ld de, vTiles1 ; $5d85
 	ld bc, $0080 ; $5d88
 	call StartVRAMDMAFromHL ; $5d8b
-	wram_bank $06 ; $5d8e
+	wram_bank WRAM_SCENE ; $5d8e
 	pop hl ; $5d94
 	ld de, wStorySceneUnusedBuffer ; $5d95
 	call DecompressDataFromBank ; $5d98
@@ -278,16 +278,16 @@ LoadSceneGraphicsDirect:
 	pop hl ; $5da3
 	ld de, wCollisionMap ; $5da4
 	call DecompressDataFromBank ; $5da7
-	wram_bank $02 ; $5daa
+	wram_bank WRAM_COURT_PLANES ; $5daa
 	pop hl ; $5db0
 	ld de, wScreenAttrmap ; $5db1
 	call DecompressDataFromBank ; $5db4
-	wram_bank $03 ; $5db7
+	wram_bank WRAM_SCREEN ; $5db7
 	pop hl ; $5dbd
 	ld de, wShadowTilemap ; $5dbe
 	call DecompressDataFromBank ; $5dc1
 	pop hl ; $5dc4
-	wram_bank $01 ; $5dc5
+	wram_bank WRAM_STAGING ; $5dc5
 	ld de, wDecompBuffer ; $5dcb
 	ld bc, $0040 ; $5dce
 	call CopyDataFromBank ; $5dd1
@@ -445,7 +445,7 @@ ReadCollisionMapCell:
 	push de ; $5efc
 	push hl ; $5efd
 	call GetCollisionMapCellAddr ; $5efe
-	push_wram_bank $06 ; $5f01
+	push_wram_bank WRAM_SCENE ; $5f01
 	ld b, [hl] ; $5f0a
 	pop_wram_bank ; $5f0b
 	ld a, b ; $5f10
@@ -460,7 +460,7 @@ WriteCollisionMapCell:
 	push hl ; $5f18
 	call GetCollisionMapCellAddr ; $5f19
 	ld b, a ; $5f1c
-	push_wram_bank $06 ; $5f1d
+	push_wram_bank WRAM_SCENE ; $5f1d
 	ld [hl], b ; $5f26
 	pop_wram_bank ; $5f27
 	pop hl ; $5f2c

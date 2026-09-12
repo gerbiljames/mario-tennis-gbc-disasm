@@ -1,6 +1,6 @@
 DebugStoryStatsScreen:
 	sound BGM_DICTIONARY ; $4fa6
-	wram_bank $01 ; $4fa8
+	wram_bank WRAM_STAGING ; $4fa8
 	ld a, $03 ; $4fae
 	ldh [hDebugStepMode], a ; $4fb0
 	xor a ; $4fb2

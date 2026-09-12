@@ -17,27 +17,27 @@ InitAndRunGame:
 	farcall ClearSaveFlag ; $401f
 	pop de ; $4022
 	call DisableLCDSafely ; $4023
-	wram_bank $01 ; $4026
+	wram_bank WRAM_STAGING ; $4026
 	ld hl, wDecompBuffer ; $402c
 	ld c, $00 ; $402f
 	call ClearMemory16 ; $4031
-	wram_bank $02 ; $4034
+	wram_bank WRAM_COURT_PLANES ; $4034
 	ld hl, wScreenAttrmap ; $403a
 	ld c, $00 ; $403d
 	call ClearMemory16 ; $403f
-	wram_bank $03 ; $4042
+	wram_bank WRAM_SCREEN ; $4042
 	ld hl, wShadowTilemap ; $4048
 	ld c, $00 ; $404b
 	call ClearMemory16 ; $404d
-	wram_bank $04 ; $4050
+	wram_bank WRAM_ACTORS ; $4050
 	ld hl, wActors ; $4056
 	ld c, $00 ; $4059
 	call ClearMemory16 ; $405b
-	wram_bank $05 ; $405e
+	wram_bank WRAM_TEXT ; $405e
 	ld hl, wWindowShadowTilemap ; $4064
 	ld c, $00 ; $4067
 	call ClearMemory16 ; $4069
-	wram_bank $06 ; $406c
+	wram_bank WRAM_SCENE ; $406c
 	ld hl, WRAMX_BASE ; $4072
 	ld c, $00 ; $4075
 	call ClearMemory16 ; $4077

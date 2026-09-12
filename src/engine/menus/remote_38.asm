@@ -12,7 +12,7 @@ StoreRemoteCpuDifficulty:
 	ld [wCharSelectSlotDifficulty + 1], a ; $661a
 	ret ; $661d
 ApplyRemoteCharSelection:
-	push_wram_bank $03 ; $661e
+	push_wram_bank WRAM_SCREEN ; $661e
 	push bc ; $6627
 	ld d, c ; $6628
 	ld e, $01 ; $6629
@@ -57,7 +57,7 @@ ApplyRemoteCharCancel:
 	ld d, c ; $666f
 	ld e, $00 ; $6670
 	call SetGridEntryTakenByCharId ; $6672
-	wram_bank $03 ; $6675
+	wram_bank WRAM_SCREEN ; $6675
 	ld a, [wCharSelectMode] ; $667b
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $667e
 	jr z, .clearOwnSlot ; $6680
@@ -125,7 +125,7 @@ Unused_38_CopyRemoteCharsToSlots:
 .done:
 	ret ; $66e8
 CheckLinkSelectionComplete:
-	push_wram_bank $03 ; $66e9
+	push_wram_bank WRAM_SCREEN ; $66e9
 	ld a, [wCharSelectSlot] ; $66f2
 	cp $04 ; $66f5
 	jr nz, .checkSlots ; $66f7
@@ -197,7 +197,7 @@ HandleLinkGridButtons:
 .done:
 	ret ; $676e
 ConfirmLinkGridSelection:
-	push_wram_bank $03 ; $676f
+	push_wram_bank WRAM_SCREEN ; $676f
 	ld a, [wCharSelectSlot] ; $6778
 	cp $04 ; $677b
 	jr z, .allSlotsFilled ; $677d
@@ -276,7 +276,7 @@ ConfirmLinkGridSelection:
 	pop_wram_bank ; $67ff
 	ret ; $6804
 CancelLinkGridSelection:
-	push_wram_bank $03 ; $6805
+	push_wram_bank WRAM_SCREEN ; $6805
 	call RetreatToPreviousPlayerSlot ; $680e
 	cp $ff ; $6811
 	jr nz, .clearSlot ; $6813
@@ -317,7 +317,7 @@ CancelLinkGridSelection:
 	inc hl ; $6850
 	xor a ; $6851
 	ld [hl], a ; $6852
-	wram_bank $03 ; $6853
+	wram_bank WRAM_SCREEN ; $6853
 	ld hl, wCharSelectSlotDifficulty ; $6859
 	ld a, [wCharSelectSlot] ; $685c
 	add l ; $685f
@@ -346,7 +346,7 @@ CancelLinkGridSelection:
 	pop_wram_bank ; $6887
 	ret ; $688c
 DrawRemoteSlotPortrait:
-	push_wram_bank $03 ; $688d
+	push_wram_bank WRAM_SCREEN ; $688d
 	ld a, c ; $6896
 	push bc ; $6897
 	farcall GetCharPaletteIndex ; $6898

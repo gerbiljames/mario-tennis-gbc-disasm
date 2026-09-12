@@ -528,42 +528,42 @@ CopyMapToScrollBuffers:
 	push bc ; $086d
 	push de ; $086e
 	push hl ; $086f
-	push_wram_bank $01 ; $0870
+	push_wram_bank WRAM_STAGING ; $0870
 	ld hl, wDecompBuffer ; $0879
 	ld de, wTextBuffer ; $087c
 	ld c, $20 ; $087f
 	call CopyMemoryFast ; $0881
-	wram_bank $02 ; $0884
+	wram_bank WRAM_COURT_PLANES ; $0884
 	ld hl, wTextBuffer ; $088a
 	ld de, wMapScrollPlane0 ; $088d
 	call CopyMapRows32To64 ; $0890
-	wram_bank $01 ; $0893
+	wram_bank WRAM_STAGING ; $0893
 	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $0899
 	ld de, wTextBuffer ; $089c
 	ld c, $20 ; $089f
 	call CopyMemoryFast ; $08a1
-	wram_bank $02 ; $08a4
+	wram_bank WRAM_COURT_PLANES ; $08a4
 	ld hl, wTextBuffer ; $08aa
 	ld de, wMapScrollPlane1 ; $08ad
 	call CopyMapRows32To64 ; $08b0
 	ld hl, wMapScrollPlane1 ; $08b3
 	ld c, $80 ; $08b6
 	call ClearMemory16 ; $08b8
-	wram_bank $01 ; $08bb
+	wram_bank WRAM_STAGING ; $08bb
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $08c1
 	ld de, wTextBuffer ; $08c4
 	ld c, $20 ; $08c7
 	call CopyMemoryFast ; $08c9
-	wram_bank $03 ; $08cc
+	wram_bank WRAM_SCREEN ; $08cc
 	ld hl, wTextBuffer ; $08d2
 	ld de, wShadowTilemap ; $08d5
 	call CopyMapRows32To64 ; $08d8
-	wram_bank $01 ; $08db
+	wram_bank WRAM_STAGING ; $08db
 	ld hl, wDecompBuffer + 96 * TILE_SIZE ; $08e1
 	ld de, wTextBuffer ; $08e4
 	ld c, $20 ; $08e7
 	call CopyMemoryFast ; $08e9
-	wram_bank $03 ; $08ec
+	wram_bank WRAM_SCREEN ; $08ec
 	ld hl, wTextBuffer ; $08f2
 	ld de, wScreenScratch ; $08f5
 	call CopyMapRows32To64 ; $08f8

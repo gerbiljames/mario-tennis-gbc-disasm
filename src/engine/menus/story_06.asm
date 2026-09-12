@@ -233,12 +233,12 @@ RunDebugStatsEditor:
 	push af ; $6b86
 	farcall StepMatchFrame ; $6b87
 	farcall LoadMenuTilesBChunk2 ; $6b8a
-	wram_bank $04 ; $6b8d
+	wram_bank WRAM_CHAR0 ; $6b8d
 	ld hl, wCharPosX ; $6b93
 	ld de, wDebugMenuWindowId ; $6b96
 	ld c, $08 ; $6b99
 	call CopyMemoryFast ; $6b9b
-	wram_bank $02 ; $6b9e
+	wram_bank WRAM_COURT_PLANES ; $6b9e
 	farcall StepMatchFrame ; $6ba4
 	xor a ; $6ba7
 	ld [wMatchMenuSelection], a ; $6ba8
@@ -266,7 +266,7 @@ RunDebugStatsEditor:
 	call RestoreBgTilemap ; $6bd6
 	call FlushTilemapToVram ; $6bd9
 	farcall StepMatchFrame ; $6bdc
-	wram_bank $04 ; $6bdf
+	wram_bank WRAM_CHAR0 ; $6bdf
 	ld hl, wDebugMenuWindowId ; $6be5
 	ld de, wCharPosX ; $6be8
 	ld c, $08 ; $6beb
@@ -611,7 +611,7 @@ RunStoryModeMenu:
 	ld c, $03 ; $6e44
 	farcall CreateWindowFromScreenRect ; $6e46
 	call AdvanceFrame ; $6e49
-	wram_bank $05 ; $6e4c
+	wram_bank WRAM_TEXT ; $6e4c
 .loop:
 	ld hl, ScoreboardModeGfxTail ; $6e52
 	ld de, vTiles0 + $64 * TILE_SIZE ; $6e55

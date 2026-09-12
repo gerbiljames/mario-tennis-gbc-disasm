@@ -90,7 +90,7 @@ DrawProportionalTextLine:
 	pop_wram_bank ; $456c
 	ret ; $4571
 DrawContinuePromptText:
-	push_wram_bank $03 ; $4572
+	push_wram_bank WRAM_SCREEN ; $4572
 	ld a, $80 ; $457b
 .loop:
 	cp $91 ; $457d
@@ -103,7 +103,7 @@ DrawContinuePromptText:
 	pop_wram_bank ; $4586
 	ret ; $458b
 DrawSaveWarningTextLine1:
-	push_wram_bank $03 ; $458c
+	push_wram_bank WRAM_SCREEN ; $458c
 	ld a, $92 ; $4595
 .loop:
 	cp $9e ; $4597
@@ -116,7 +116,7 @@ DrawSaveWarningTextLine1:
 	pop_wram_bank ; $45a0
 	ret ; $45a5
 DrawSaveWarningTextLine2:
-	push_wram_bank $03 ; $45a6
+	push_wram_bank WRAM_SCREEN ; $45a6
 	ld a, $a4 ; $45af
 .loop:
 	cp $b5 ; $45b1
@@ -137,7 +137,7 @@ FetchAndDrawDialogueText:
 WriteTextToTilemap:
 	ld hl, wTextBuffer ; $45c9
 .charLoop:
-	wram_bank $03 ; $45cc
+	wram_bank WRAM_SCREEN ; $45cc
 	ld a, [hl+] ; $45d2
 	or a ; $45d3
 	ret z ; $45d4
@@ -146,7 +146,7 @@ WriteTextToTilemap:
 	cp $df ; $45d9
 	jr z, .markChar ; $45db
 	ld [de], a ; $45dd
-	wram_bank $02 ; $45de
+	wram_bank WRAM_COURT_PLANES ; $45de
 	ld a, b ; $45e4
 	ld [de], a ; $45e5
 	inc de ; $45e6
@@ -167,7 +167,7 @@ WriteTextToTilemap:
 	sub $d0 ; $45f7
 .storeMark:
 	ld [de], a ; $45f9
-	wram_bank $02 ; $45fa
+	wram_bank WRAM_COURT_PLANES ; $45fa
 	ld a, b ; $4600
 	ld [de], a ; $4601
 	pop bc ; $4602
@@ -393,7 +393,7 @@ DrawRankMatchLabel:
 	call DrawProportionalTextLine ; $47d3
 	ret ; $47d6
 .checkWramBank:
-	push_wram_bank $03 ; $47d7
+	push_wram_bank WRAM_SCREEN ; $47d7
 	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; $47e0
 	ld a, $20 ; $47e3
 	ld [hl+], a ; $47e5

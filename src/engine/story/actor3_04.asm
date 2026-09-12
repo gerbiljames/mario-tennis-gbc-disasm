@@ -300,7 +300,7 @@ ComputeSpriteScrollOffset:
 DrawActors:
 	test_flag FLAG_HIDE_OVERWORLD_ACTORS ; $4a82
 	ret nz ; $4a85
-	wram_bank $04 ; $4a86
+	wram_bank WRAM_ACTORS ; $4a86
 	call ComputeSpriteScrollOffset ; $4a8c
 	ld bc, wActors ; $4a8f
 	ld e, $18 ; $4a92
@@ -345,7 +345,7 @@ LoadActorObjectDef:
 	push af ; $4ac6
 	push de ; $4ac7
 	push hl ; $4ac8
-	wram_bank $04 ; $4ac9
+	wram_bank WRAM_ACTORS ; $4ac9
 	ld hl, $0021 ; $4acf
 	add hl, bc ; $4ad2
 	ld [hl], d ; $4ad3

@@ -1,5 +1,5 @@
 ToggleSelectedUnlockFlag:
-	push_wram_bank $06 ; $68a4
+	push_wram_bank WRAM_SCENE ; $68a4
 	ld hl, wUnlockFlagsBlock ; $68ad
 	ld a, [wCharSelectChar] ; $68b0
 	cp $1a ; $68b3
@@ -23,7 +23,7 @@ ToggleSelectedUnlockFlag:
 	pop_wram_bank ; $68d0
 	ret ; $68d5
 LoadUnlockDebugCursorGfx:
-	push_wram_bank $01 ; $68d6
+	push_wram_bank WRAM_STAGING ; $68d6
 	ld hl, UnlockDebugCursorGfx ; $68df
 	ld de, wDecompBuffer ; $68e2
 	call DecompressData ; $68e5
@@ -47,7 +47,7 @@ UnlockDebugCursorGfx:
 UnlockDebugCursorPalette:
 	INCLUDE "data/bank_01b/UnlockDebugCursorPalette.asm" ; $6930, 8 bytes (palettes)
 DrawUnlockDebugFlagSprites:
-	push_wram_bank $06 ; $6938
+	push_wram_bank WRAM_SCENE ; $6938
 	ld hl, wUnlockFlagsBlock + 2 ; $6941
 	xor a ; $6944
 .loop:
@@ -88,7 +88,7 @@ QueueBobbingFlagSprite:
 	ret ; $6980
 	ret ; $6981
 RunStoryDataConfirmMenu:
-	wram_bank $01 ; $6982
+	wram_bank WRAM_STAGING ; $6982
 	ld c, $20 ; $6988
 	call BeginFadeOut ; $698a
 	call WaitFadeEnd ; $698d
@@ -100,7 +100,7 @@ RunStoryDataConfirmMenu:
 	call EnableLCD ; $699d
 	script_fade_in $20 ; $69a0
 	call WaitFadeEnd ; $69a5
-	wram_bank $07 ; $69a8
+	wram_bank WRAM_SOUND ; $69a8
 	xor a ; $69ae
 	ld [wStubbedPromptTaskState], a ; $69af
 	ld a, $0c ; $69b2
@@ -137,7 +137,7 @@ Unused_1b_StubRet2:
 Unused_1b_ShowHighScoreConfirmScreen:
 	ld hl, wMinigameHighScoreMode ; $69d9
 	ld [hl], $01 ; $69dc
-	wram_bank $01 ; $69de
+	wram_bank WRAM_STAGING ; $69de
 	ld c, $20 ; $69e4
 	call BeginFadeOut ; $69e6
 	call WaitFadeEnd ; $69e9
@@ -265,7 +265,7 @@ CopyMainCharNameWithDiacritics:
 .done:
 	ret ; $6add
 ShowNoN64DataFoundScreen:
-	wram_bank $01 ; $6ade
+	wram_bank WRAM_STAGING ; $6ade
 	ld c, $20 ; $6ae4
 	call BeginFadeOut ; $6ae6
 	call WaitFadeEnd ; $6ae9
@@ -331,7 +331,7 @@ FillTilemapRow17:
 	ld [hl+], a ; $6b6d
 	ret ; $6b6e
 ShowTrophiesPlaceholderScreen:
-	wram_bank $01 ; $6b6f
+	wram_bank WRAM_STAGING ; $6b6f
 	ld c, $20 ; $6b75
 	call BeginFadeOut ; $6b77
 	call WaitFadeEnd ; $6b7a
@@ -350,7 +350,7 @@ ShowTrophiesPlaceholderScreen:
 	sound SFX_MENU_SELECT ; $6b99
 	ret ; $6b9b
 RunMinigameLevelSelect:
-	push_wram_bank $02 ; $6b9c
+	push_wram_bank WRAM_COURT_PLANES ; $6b9c
 	ld a, c ; $6ba5
 	ld [wScreenAttrmap], a ; $6ba6
 	xor a ; $6ba9
@@ -365,7 +365,7 @@ RunMinigameLevelSelect:
 .runMinigameLevelSelect3:
 	call RunMinigameLevelSelect3 ; $6bbf
 .step:
-	wram_bank $02 ; $6bc2
+	wram_bank WRAM_COURT_PLANES ; $6bc2
 	ld a, [wScreenAttrmap + 3] ; $6bc8
 	ld c, a ; $6bcb
 	pop_wram_bank ; $6bcc
@@ -474,7 +474,7 @@ MinigameLevelRow8:
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; 1
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; 2
 LoadMinigameLevelSelectGfx:
-	push_wram_bank $01 ; $6c59
+	push_wram_bank WRAM_STAGING ; $6c59
 	ld c, $00 ; $6c62
 .loop:
 	ld a, c ; $6c64
@@ -524,7 +524,7 @@ LoadMinigameLevelSelectGfx:
 	inc a ; $6c9e
 	ld c, a ; $6c9f
 	call AdvanceFrame ; $6ca0
-	push_wram_bank $02 ; $6ca3
+	push_wram_bank WRAM_COURT_PLANES ; $6ca3
 	ld a, [wScreenAttrmap + 1] ; $6cac
 	ld b, a ; $6caf
 	pop_wram_bank ; $6cb0
@@ -545,7 +545,7 @@ LoadMinigameLevelSelectGfx:
 	ld de, vTiles0 + VRAM_BANK1 ; $6cc9
 	farcall LoadCompressedTileBlock ; $6ccc
 	call AdvanceFrame ; $6ccf
-	push_wram_bank $02 ; $6cd2
+	push_wram_bank WRAM_COURT_PLANES ; $6cd2
 	ld a, [wScreenAttrmap + 1] ; $6cdb
 	ld b, a ; $6cde
 	pop_wram_bank ; $6cdf
@@ -594,7 +594,7 @@ MinigameLevelSelectTable:
 	dw $aa00 ; record 2
 	dw $a900 ; record 3
 DrawMinigameLevelDescription:
-	push_wram_bank $02 ; $6d3d
+	push_wram_bank WRAM_COURT_PLANES ; $6d3d
 	ld a, [wScreenAttrmap + 1] ; $6d46
 	or a ; $6d49
 	jr nz, .getMenuCursorIndex ; $6d4a
@@ -602,12 +602,12 @@ DrawMinigameLevelDescription:
 	call GetMenuCursorIndex_1b ; $6d4e
 	cp $01 ; $6d51
 	jr nz, .getMenuCursorIndex ; $6d53
-	wram_bank $03 ; $6d55
+	wram_bank WRAM_SCREEN ; $6d55
 	ld hl, $00c5 ; $6d5b
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6d5e
 	jr .renderTextToBuffer64 ; $6d61
 .getMenuCursorIndex:
-	wram_bank $03 ; $6d63
+	wram_bank WRAM_SCREEN ; $6d63
 	ld c, $03 ; $6d69
 	call GetMenuCursorIndex_1b ; $6d6b
 	ld b, a ; $6d6e

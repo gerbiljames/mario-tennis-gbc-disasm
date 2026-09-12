@@ -14,22 +14,22 @@ ClearSpriteSlots:
 	ld [wBallTrailSlots + 12], a ; $631f
 	ld [wBallTrailSlots + 16], a ; $6322
 	ld [wBallShadowSlot], a ; $6325
-	wram_bank $07 ; $6328
+	wram_bank WRAM_CHAR3 ; $6328
 	ld a, $ff ; $632e
 	ld [wCharSpriteSlot], a ; $6330
 	ld [wCharAirShadowSlot], a ; $6333
 	ld [wCharGroundShadowSlot], a ; $6336
-	wram_bank $06 ; $6339
+	wram_bank WRAM_CHAR2 ; $6339
 	ld a, $ff ; $633f
 	ld [wCharSpriteSlot], a ; $6341
 	ld [wCharAirShadowSlot], a ; $6344
 	ld [wCharGroundShadowSlot], a ; $6347
-	wram_bank $05 ; $634a
+	wram_bank WRAM_CHAR1 ; $634a
 	ld a, $ff ; $6350
 	ld [wCharSpriteSlot], a ; $6352
 	ld [wCharAirShadowSlot], a ; $6355
 	ld [wCharGroundShadowSlot], a ; $6358
-	wram_bank $04 ; $635b
+	wram_bank WRAM_CHAR0 ; $635b
 	ld a, $ff ; $6361
 	ld [wCharSpriteSlot], a ; $6363
 	ld [wCharAirShadowSlot], a ; $6366
@@ -37,53 +37,53 @@ ClearSpriteSlots:
 	ret ; $636c
 DrawNearTeamChars:
 	ld hl, wCharDepthKey ; $636d
-	wram_bank $06 ; $6370
+	wram_bank WRAM_CHAR2 ; $6370
 	ld b, [hl] ; $6376
-	wram_bank $04 ; $6377
+	wram_bank WRAM_CHAR0 ; $6377
 	ld a, [hl] ; $637d
 	cp b ; $637e
 	jr c, DrawNearTeamCharsDoubles ; $637f
-	wram_bank $04 ; $6381
+	wram_bank WRAM_CHAR0 ; $6381
 	ld hl, wCharSpriteSlot ; $6387
 	call DrawCharSprite ; $638a
-	wram_bank $06 ; $638d
+	wram_bank WRAM_CHAR2 ; $638d
 	ld hl, wCharSpriteSlot ; $6393
 	call DrawCharSprite ; $6396
-	wram_bank $04 ; $6399
+	wram_bank WRAM_CHAR0 ; $6399
 	ret ; $639f
 DrawNearTeamCharsDoubles:
-	wram_bank $06 ; $63a0
+	wram_bank WRAM_CHAR2 ; $63a0
 	ld hl, wCharSpriteSlot ; $63a6
 	call DrawCharSprite ; $63a9
-	wram_bank $04 ; $63ac
+	wram_bank WRAM_CHAR0 ; $63ac
 	ld hl, wCharSpriteSlot ; $63b2
 	call DrawCharSprite ; $63b5
-	wram_bank $04 ; $63b8
+	wram_bank WRAM_CHAR0 ; $63b8
 	ret ; $63be
 DrawFarTeamChars:
 	ld hl, wCharDepthKey ; $63bf
-	wram_bank $07 ; $63c2
+	wram_bank WRAM_CHAR3 ; $63c2
 	ld b, [hl] ; $63c8
-	wram_bank $05 ; $63c9
+	wram_bank WRAM_CHAR1 ; $63c9
 	ld a, [hl] ; $63cf
 	cp b ; $63d0
 	jr c, DrawFarTeamCharsDoubles ; $63d1
-	wram_bank $05 ; $63d3
+	wram_bank WRAM_CHAR1 ; $63d3
 	ld hl, wCharSpriteSlot ; $63d9
 	call DrawCharSprite ; $63dc
-	wram_bank $07 ; $63df
+	wram_bank WRAM_CHAR3 ; $63df
 	ld hl, wCharSpriteSlot ; $63e5
 	call DrawCharSprite ; $63e8
-	wram_bank $04 ; $63eb
+	wram_bank WRAM_CHAR0 ; $63eb
 	ret ; $63f1
 DrawFarTeamCharsDoubles:
-	wram_bank $07 ; $63f2
+	wram_bank WRAM_CHAR3 ; $63f2
 	ld hl, wCharSpriteSlot ; $63f8
 	call DrawCharSprite ; $63fb
-	wram_bank $05 ; $63fe
+	wram_bank WRAM_CHAR1 ; $63fe
 	ld hl, wCharSpriteSlot ; $6404
 	call DrawCharSprite ; $6407
-	wram_bank $04 ; $640a
+	wram_bank WRAM_ACTORS ; $640a
 	ret ; $6410
 DrawBallAndEffects:
 	call DrawHitSpark ; $6411
@@ -100,9 +100,9 @@ DrawActorsByDepth:
 	and a ; $642c
 	jr nz, .done ; $642d
 	ld hl, wCharDepthKey ; $642f
-	wram_bank $05 ; $6432
+	wram_bank WRAM_TEXT ; $6432
 	ld b, [hl] ; $6438
-	wram_bank $04 ; $6439
+	wram_bank WRAM_ACTORS ; $6439
 	ld a, [hl] ; $643f
 	cp b ; $6440
 	jr nc, .drawLoop ; $6441
@@ -151,26 +151,26 @@ DrawMarkersAndShadows:
 	call DrawSlotSprite ; $64a2
 	call DrawBounceEffect ; $64a5
 	ld hl, wCharAirShadowSlot ; $64a8
-	wram_bank $07 ; $64ab
+	wram_bank WRAM_CHAR3 ; $64ab
 	call DrawSlotSprite ; $64b1
 	ld hl, wCharAirShadowSlot ; $64b4
-	wram_bank $06 ; $64b7
+	wram_bank WRAM_CHAR2 ; $64b7
 	call DrawSlotSprite ; $64bd
 	ld hl, wCharAirShadowSlot ; $64c0
-	wram_bank $05 ; $64c3
+	wram_bank WRAM_CHAR1 ; $64c3
 	call DrawSlotSprite ; $64c9
 	ld hl, wCharAirShadowSlot ; $64cc
-	wram_bank $04 ; $64cf
+	wram_bank WRAM_CHAR0 ; $64cf
 	call DrawSlotSprite ; $64d5
 	ld hl, wBallShadowSlot ; $64d8
 	call DrawSlotSprite ; $64db
 	ld hl, wCharGroundShadowSlot ; $64de
-	wram_bank $05 ; $64e1
+	wram_bank WRAM_CHAR1 ; $64e1
 	call DrawStandingShadowSlot ; $64e7
 	ld hl, wCharGroundShadowSlot ; $64ea
-	wram_bank $04 ; $64ed
+	wram_bank WRAM_CHAR0 ; $64ed
 	call DrawStandingShadowSlot ; $64f3
-	wram_bank $04 ; $64f6
+	wram_bank WRAM_CHAR0 ; $64f6
 	ret ; $64fc
 DrawSlotSprite:
 	ld a, [hl+] ; $64fd
@@ -280,7 +280,7 @@ ShowMatchResultScreens:
 	ld [wMatchSimFrozen], a ; $65ba
 	ret ; $65bd
 RunMinigamePointLoop:
-	wram_bank $04 ; $65be
+	wram_bank WRAM_CHAR0 ; $65be
 	ld a, $00 ; $65c4
 	ld [wAiPositionStrategy], a ; $65c6
 	xor a ; $65c9
@@ -386,40 +386,40 @@ LoadMinigamePointLayout:
 	call FarCopyBytes ; $6685
 	pop hl ; $6688
 	ld de, wCharCourtPos ; $6689
-	wram_bank $04 ; $668c
+	wram_bank WRAM_CHAR0 ; $668c
 	ld a, [hl+] ; $6692
 	and $03 ; $6693
 	ld [de], a ; $6695
-	wram_bank $05 ; $6696
+	wram_bank WRAM_CHAR1 ; $6696
 	ld a, [hl+] ; $669c
 	and $03 ; $669d
 	ld [de], a ; $669f
-	wram_bank $06 ; $66a0
+	wram_bank WRAM_CHAR2 ; $66a0
 	ld a, [hl+] ; $66a6
 	and $03 ; $66a7
 	ld [de], a ; $66a9
-	wram_bank $07 ; $66aa
+	wram_bank WRAM_CHAR3 ; $66aa
 	ld a, [hl+] ; $66b0
 	and $03 ; $66b1
 	ld [de], a ; $66b3
 	ld de, wCharServeRole ; $66b4
-	wram_bank $04 ; $66b7
+	wram_bank WRAM_CHAR0 ; $66b7
 	ld a, [hl+] ; $66bd
 	and $03 ; $66be
 	ld [de], a ; $66c0
-	wram_bank $05 ; $66c1
+	wram_bank WRAM_CHAR1 ; $66c1
 	ld a, [hl+] ; $66c7
 	and $03 ; $66c8
 	ld [de], a ; $66ca
-	wram_bank $06 ; $66cb
+	wram_bank WRAM_CHAR2 ; $66cb
 	ld a, [hl+] ; $66d1
 	and $03 ; $66d2
 	ld [de], a ; $66d4
-	wram_bank $07 ; $66d5
+	wram_bank WRAM_CHAR3 ; $66d5
 	ld a, [hl+] ; $66db
 	and $03 ; $66dc
 	ld [de], a ; $66de
-	wram_bank $04 ; $66df
+	wram_bank WRAM_ACTORS ; $66df
 	call IdentifyServingPlayer ; $66e5
 	ld hl, SetCharFacingFromCourtPos ; $66e8
 	call ForEachCharBank ; $66eb

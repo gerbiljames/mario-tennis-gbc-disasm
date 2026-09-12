@@ -381,7 +381,7 @@ UpdateActorTileAnimState_10:
 	ld h, a ; $79df
 	ld l, $00 ; $79e0
 	push af ; $79e2
-	wram_bank $04 ; $79e3
+	wram_bank WRAM_ACTORS ; $79e3
 	srl h ; $79e9
 	rr l ; $79eb
 	srl h ; $79ed
@@ -418,7 +418,7 @@ UpdateActorTileAnimState_10:
 	and $87 ; $7a1a
 	cp $06 ; $7a1c
 	jr nz, .checkBelow ; $7a1e
-	wram_bank $04 ; $7a20
+	wram_bank WRAM_ACTORS ; $7a20
 	ld hl, $0020 ; $7a26
 	add hl, bc ; $7a29
 	ld a, [hl] ; $7a2a
@@ -431,7 +431,7 @@ UpdateActorTileAnimState_10:
 	and $07 ; $7a33
 	cp $06 ; $7a35
 	jr nz, .actorLoop ; $7a37
-	wram_bank $04 ; $7a39
+	wram_bank WRAM_ACTORS ; $7a39
 	ld hl, $0020 ; $7a3f
 	add hl, bc ; $7a42
 	ld a, [hl] ; $7a43
@@ -439,7 +439,7 @@ UpdateActorTileAnimState_10:
 	ld [hl], a ; $7a46
 	ret ; $7a47
 .actorLoop:
-	wram_bank $04 ; $7a48
+	wram_bank WRAM_ACTORS ; $7a48
 	ld hl, $0020 ; $7a4e
 	add hl, bc ; $7a51
 	ld a, $02 ; $7a52
@@ -449,7 +449,7 @@ UpdateActorTileAnimState_10:
 Unused_10_UpdateActorTileAnimStateByIndex:
 	ld h, a ; $7a56
 	ld l, $00 ; $7a57
-	wram_bank $04 ; $7a59
+	wram_bank WRAM_ACTORS ; $7a59
 	srl h ; $7a5f
 	rr l ; $7a61
 	srl h ; $7a63
@@ -482,7 +482,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	and $87 ; $7a8c
 	cp $06 ; $7a8e
 	jr nz, .nextActor ; $7a90
-	wram_bank $04 ; $7a92
+	wram_bank WRAM_ACTORS ; $7a92
 	ld hl, $0020 ; $7a98
 	add hl, bc ; $7a9b
 	ld a, [hl] ; $7a9c
@@ -495,7 +495,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	and $07 ; $7aa5
 	cp $06 ; $7aa7
 	jr nz, .done ; $7aa9
-	wram_bank $04 ; $7aab
+	wram_bank WRAM_ACTORS ; $7aab
 	ld hl, $0020 ; $7ab1
 	add hl, bc ; $7ab4
 	ld a, [hl] ; $7ab5
@@ -503,7 +503,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	ld [hl], a ; $7ab8
 	ret ; $7ab9
 .done:
-	wram_bank $04 ; $7aba
+	wram_bank WRAM_ACTORS ; $7aba
 	ld hl, $0020 ; $7ac0
 	add hl, bc ; $7ac3
 	ld a, $02 ; $7ac4

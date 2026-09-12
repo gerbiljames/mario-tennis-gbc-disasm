@@ -27,7 +27,7 @@ SpriteTemplate_14_0:
 IslandObjPalette_14:
 	INCLUDE "data/bank_014/IslandObjPalette_14.asm" ; $5e71, 8 bytes (palettes)
 LoadPlaneObjGfx_14:
-	push_wram_bank $01 ; $5e79
+	push_wram_bank WRAM_STAGING ; $5e79
 	ld hl, PlaneObjTiles_14 ; $5e82
 	ld de, vTiles0 + VRAM_BANK1 ; $5e85
 	ld c, $60 ; $5e88
@@ -75,7 +75,7 @@ SpriteTemplate_14_1:
 WaterSplashObjPalette_14:
 	INCLUDE "data/bank_014/WaterSplashObjPalette_14.asm" ; $6099, 8 bytes (palettes)
 LoadWaterSplashObjGfx_14:
-	push_wram_bank $01 ; $60a1
+	push_wram_bank WRAM_STAGING ; $60a1
 	ld hl, WaterSplashObjGfx ; $60aa
 	ld de, vTiles0 + $20 * TILE_SIZE ; $60ad
 	ld c, (SpriteTemplate_14_1 - WaterSplashObjGfx) / 16 ; $60b0
@@ -284,7 +284,7 @@ AdvanceWaterSplash1Rise_14:
 .done:
 	ret ; $6237
 LoadPlaneObjGfx2_14:
-	push_wram_bank $01 ; $6238
+	push_wram_bank WRAM_STAGING ; $6238
 	ld hl, IslandObjTiles_14 ; $6241
 	ld de, vTiles0 + VRAM_BANK1 ; $6244
 	ld c, $60 ; $6247

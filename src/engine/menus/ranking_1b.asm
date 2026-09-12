@@ -1,5 +1,5 @@
 ClearWram3Row64_1b:
-	push_wram_bank $03 ; $4403
+	push_wram_bank WRAM_SCREEN ; $4403
 	xor a ; $440c
 	ld c, $40 ; $440d
 .loop2:
@@ -9,7 +9,7 @@ ClearWram3Row64_1b:
 	pop_wram_bank ; $4413
 	ret ; $4418
 ClearWram3Row64Alt_1b:
-	push_wram_bank $03 ; $4419
+	push_wram_bank WRAM_SCREEN ; $4419
 	ld a, $00 ; $4422
 	ld c, $40 ; $4424
 .loop3:
@@ -234,7 +234,7 @@ StubNop_1b_05:
 StubNop_1b_06:
 	ret ; $4e80
 ShowRankingBoard:
-	wram_bank $03 ; $4e81
+	wram_bank WRAM_SCREEN ; $4e81
 	xor a ; $4e87
 	ld [wRankingBoardSilent], a ; $4e88
 	ld a, b ; $4e8b
@@ -265,7 +265,7 @@ ShowRankingBoard:
 	call EnableLCD ; $4ebb
 	script_fade_in $04 ; $4ebe
 	call WaitFadeEnd ; $4ec3
-	wram_bank $03 ; $4ec6
+	wram_bank WRAM_SCREEN ; $4ec6
 	call DispatchRankingBoardAnim ; $4ecc
 	wait_frames $1e ; $4ecf
 	call WaitForAOrBPress ; $4ed3
@@ -293,7 +293,7 @@ BuildRankingBoardScreen:
 	ld [wCameraY + 1], a ; $4f00
 	farcall LoadMenuFontGfx ; $4f03
 	farcall PrepareGlyphBuffer ; $4f06
-	wram_bank $03 ; $4f09
+	wram_bank WRAM_SCREEN ; $4f09
 	xor a ; $4f0f
 	ld [wRankingBannerAnimFrame], a ; $4f10
 	ld [wRankingAnimStateDone], a ; $4f13
@@ -307,14 +307,14 @@ BuildRankingBoardScreen:
 	jr z, .zero ; $4f29
 	ld c, SCREENASSET_TournamentBracketDoubles ; $4f2b
 	farcall LoadScreenAssetRecord ; $4f2d
-	wram_bank $03 ; $4f30
+	wram_bank WRAM_SCREEN ; $4f30
 	call DrawDoublesRankingNames ; $4f36
 	call HighlightDoublesRankingRows ; $4f39
 	jr .loadRankingBoardTiles ; $4f3c
 .zero:
 	ld c, SCREENASSET_TournamentBracketSingles ; $4f3e
 	farcall LoadScreenAssetRecord ; $4f40
-	wram_bank $03 ; $4f43
+	wram_bank WRAM_SCREEN ; $4f43
 	call DrawSinglesRankingNames ; $4f49
 	call HighlightSinglesRankingRows ; $4f4c
 .loadRankingBoardTiles:
@@ -337,7 +337,7 @@ BuildRankingBoardScreen:
 RankingBoardScreenPalettes:
 	INCLUDE "data/bank_01b/RankingBoardScreenPalettes.asm" ; $4f76, 48 bytes (palettes)
 LoadRankingBoardTiles:
-	push_wram_bank $01 ; $4fa6
+	push_wram_bank WRAM_STAGING ; $4fa6
 	ld hl, (BANK(DataPtr_BracketCharIcon00) << 8) | LOW(DataPtr_BracketCharIcon00) ; $4faf
 	ld de, wDecompBuffer ; $4fb2
 	call DecompressDataFromBank ; $4fb5

@@ -56,7 +56,7 @@ CharAwaitServeState:
 	add hl, de ; $6cf4
 	bit 7, h ; $6cf5
 	jr nz, .done ; $6cf7
-	push_wram_bank $04 ; $6cf9
+	push_wram_bank WRAM_CHAR0 ; $6cf9
 	farcall DismissServeIndicatorObjs ; $6d02
 	pop_wram_bank ; $6d05
 	jp AdvanceCharStatePhase ; $6d0a

@@ -5,7 +5,7 @@
 ; note is above its `twin` line. A fix here lands in every bank.
 
 ReadSceneTilemapTile_{TWIN}:
-	wram_bank $02
+	wram_bank WRAM_COURT_PLANES
 	ld h, e
 	ld l, $00
 	srl h

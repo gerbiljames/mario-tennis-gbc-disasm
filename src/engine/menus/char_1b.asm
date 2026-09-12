@@ -164,7 +164,7 @@ Unused_1b_RunCharSelectLoop:
 	call WaitFadeEnd ; $6113
 	call StartCharSelectCursorTask ; $6116
 .loopB:
-	wram_bank $01 ; $6119
+	wram_bank WRAM_STAGING ; $6119
 	ldh a, [hInputRisingEdge] ; $611f
 	and PADF_START ; $6121
 	jr z, .checkInputRisingEdge ; $6123
@@ -253,7 +253,7 @@ RunNewGameSetup:
 	farcall InitStoryModeState ; $61bc
 	ld a, $00 ; $61bf
 	farcall RollStoryRandomByte ; $61c1
-	wram_bank $01 ; $61c4
+	wram_bank WRAM_STAGING ; $61c4
 	ld a, $01 ; $61ca
 	ld [wCharSelectCursorCol], a ; $61cc
 	ld a, $01 ; $61cf
@@ -479,7 +479,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	pop bc ; $6363
 	or a ; $6364
 	jr nz, .loop ; $6365
-	wram_bank $03 ; $6367
+	wram_bank WRAM_SCREEN ; $6367
 	ld hl, wPlayer1MainName ; $636d
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH ; $6370
 	ld c, $0b ; $6373
@@ -516,7 +516,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld e, a ; $63a7
 	or d ; $63a8
 	jr z, .step4 ; $63a9
-	push_wram_bank $06 ; $63ab
+	push_wram_bank WRAM_SCENE ; $63ab
 	xor a ; $63b4
 	ld [$d000], a ; $63b5
 	pop_wram_bank ; $63b8
@@ -533,7 +533,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld e, a ; $63d0
 	or d ; $63d1
 	jr z, .step5 ; $63d2
-	push_wram_bank $06 ; $63d4
+	push_wram_bank WRAM_SCENE ; $63d4
 	xor a ; $63dd
 	ld [$d000], a ; $63de
 	pop_wram_bank ; $63e1

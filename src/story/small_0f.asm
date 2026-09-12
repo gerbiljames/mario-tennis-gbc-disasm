@@ -143,7 +143,7 @@ SmallCharTestButtonTask_0f:
 	ret ; $41c4
 SetPlayerActorObjectDef:
 	ld d, a ; $41c5
-	wram_bank $04 ; $41c6
+	wram_bank WRAM_ACTORS ; $41c6
 	ld hl, wPlayerObjDefPending ; $41cc
 	ld [hl], $00 ; $41cf
 	ld bc, wActors ; $41d1

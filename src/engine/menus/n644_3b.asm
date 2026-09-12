@@ -128,7 +128,7 @@ DrawN64TnmtRowIcons:
 	push bc ; $4f46
 	push de ; $4f47
 	push hl ; $4f48
-	push_wram_bank $03 ; $4f49
+	push_wram_bank WRAM_SCREEN ; $4f49
 	ld hl, wN64TnmtLayout ; $4f52
 	ld a, [wDataScreenCursorRow] ; $4f55
 	add l ; $4f58
@@ -161,7 +161,7 @@ DrawN64TnmtRowIcons:
 	pop af ; $4f7f
 	ret ; $4f80
 DrawN64TnmtPageLabels:
-	push_wram_bank $03 ; $4f81
+	push_wram_bank WRAM_SCREEN ; $4f81
 	ld a, [wDataScreenPage] ; $4f8a
 	or a ; $4f8d
 	jr nz, .nonZero ; $4f8e
@@ -211,7 +211,7 @@ DrawN64TnmtPageLabels:
 	pop_wram_bank ; $4ffa
 	ret ; $4fff
 DrawN64TnmtTrophyRows:
-	wram_bank $03 ; $5000
+	wram_bank WRAM_SCREEN ; $5000
 	ld a, [wDataScreenCursorRow] ; $5006
 	add a ; $5009
 	ld b, a ; $500a
@@ -343,7 +343,7 @@ FlushN64TnmtWindowToVram:
 	call QueueVRAMCopy ; $50d2
 	ret ; $50d5
 N64TnmtScrollArrowsTask:
-	push_wram_bank $03 ; $50d6
+	push_wram_bank WRAM_SCREEN ; $50d6
 	ld a, [wScreenScratch] ; $50df
 	or a ; $50e2
 	jr z, .applyCursorBounceX ; $50e3
@@ -411,7 +411,7 @@ RunN64RingShotData:
 	call EnableLCD ; $516c
 	script_fade_in $10 ; $516f
 	call WaitFadeEnd ; $5174
-	wram_bank $03 ; $5177
+	wram_bank WRAM_SCREEN ; $5177
 .loop:
 	ldh a, [hInputPressed] ; $517d
 	ld [wMenuInputPressed], a ; $517f
@@ -444,9 +444,9 @@ BuildN64RingShotScreen:
 	ld [wMenuCursorY], a ; $51b7
 	ld c, SCREENASSET_RingShotHud ; $51ba
 	farcall LoadScreenAssetRecord ; $51bc
-	wram_bank $03 ; $51bf
+	wram_bank WRAM_SCREEN ; $51bf
 	call LoadN64RingShotRecords ; $51c5
-	wram_bank $03 ; $51c8
+	wram_bank WRAM_SCREEN ; $51c8
 	ld de, $8ac0 + VRAM_BANK1 ; $51ce
 	call LoadChartWindowTiles ; $51d1
 	ld de, vTiles0 + VRAM_BANK1 ; $51d4

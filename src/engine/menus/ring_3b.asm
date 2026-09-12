@@ -3,7 +3,7 @@ DrawRingShotRowIcons:
 	push bc ; $5203
 	push de ; $5204
 	push hl ; $5205
-	push_wram_bank $03 ; $5206
+	push_wram_bank WRAM_SCREEN ; $5206
 	ld hl, wRingShotEntryList ; $520f
 	ld a, [wMenuCursorY] ; $5212
 	add l ; $5215
@@ -36,7 +36,7 @@ DrawRingShotRowIcons:
 	pop af ; $523c
 	ret ; $523d
 LoadN64RingShotRecords:
-	wram_bank $03 ; $523e
+	wram_bank WRAM_SCREEN ; $523e
 	call ReadN64RecordsSaveBlock ; $5244
 	ld hl, N64RingShot ; $5247
 	ld de, wRingShotEntryList ; $524a
@@ -287,7 +287,7 @@ RedrawRingShotWindow:
 	call FlushRingShotWindowToVram ; $5422
 	ret ; $5425
 DrawRingShotModeTab:
-	push_wram_bank $03 ; $5426
+	push_wram_bank WRAM_SCREEN ; $5426
 	ld a, [wMenuCursorX] ; $542f
 	add a ; $5432
 	ld hl, RingShotModeTabTable ; $5433
@@ -335,7 +335,7 @@ FlushRingShotWindowToVram:
 	call QueueVRAMCopy ; $548d
 	ret ; $5490
 RingShotScrollArrowsTask:
-	push_wram_bank $03 ; $5491
+	push_wram_bank WRAM_SCREEN ; $5491
 	ld a, [wMenuCursorX] ; $549a
 	cp $03 ; $549d
 	jr z, .checkMenuCursorX ; $549f

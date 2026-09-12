@@ -419,7 +419,7 @@ RunDebugWarpMenu:
 	push bc ; $67c5
 	push de ; $67c6
 	push hl ; $67c7
-	wram_bank $05 ; $67c8
+	wram_bank WRAM_TEXT ; $67c8
 	xor a ; $67ce
 	ld [wDebugWarpCursorRow], a ; $67cf
 	ld [wDebugWarpEntryPoint], a ; $67d2

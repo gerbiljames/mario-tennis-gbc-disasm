@@ -236,7 +236,7 @@ WaterSpriteHudTiles_15:
 WaterSpriteHudPalette_15:
 	INCLUDE "data/bank_015/WaterSpriteHudPalette_15.asm" ; $5890, 8 bytes (palettes)
 LoadWaterSpriteMinigameHudGfx:
-	push_wram_bank $01 ; $5898
+	push_wram_bank WRAM_STAGING ; $5898
 	ld hl, WaterSpriteHudTiles_15 ; $58a1
 	ld de, vTiles0 + VRAM_BANK1 ; $58a4
 	ld c, (WaterSpriteHudPalette_15 - WaterSpriteHudTiles_15) / 16 ; $58a7

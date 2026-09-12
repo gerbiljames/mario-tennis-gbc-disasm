@@ -213,7 +213,7 @@ DrawDecimalNumberSprites_39:
 	push bc ; $6f11
 	push de ; $6f12
 	push hl ; $6f13
-	push_wram_bank $02 ; $6f14
+	push_wram_bank WRAM_COURT_PLANES ; $6f14
 	push de ; $6f1d
 	ld de, wDigitSpriteSlots ; $6f1e
 	ld a, $00 ; $6f21
@@ -268,7 +268,7 @@ DrawDigitSprite_39:
 	pop af ; $6f65
 	ret ; $6f66
 UpdateCheatCodeEntry:
-	push_wram_bank $01 ; $6f67
+	push_wram_bank WRAM_STAGING ; $6f67
 	ld a, [wCheatUnlockTriggered] ; $6f70
 	or a ; $6f73
 	jr nz, .restore ; $6f74
@@ -329,7 +329,7 @@ CheatCodeEntryTable:
 	db $40, $10, $04, $20, $80, $80, $10, $10, $40, $40, $20, $04, $04, $00, $00, $00 ; 0x10
 	db $00 ; 0x20
 ResetCheatCodeBuffer:
-	push_wram_bank $01 ; $6fe7
+	push_wram_bank WRAM_STAGING ; $6fe7
 	xor a ; $6ff0
 	ld [wCheatCodeLength], a ; $6ff1
 	ld hl, wDecompBuffer ; $6ff4

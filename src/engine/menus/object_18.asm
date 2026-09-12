@@ -66,7 +66,7 @@ ObjectArrayASpawnTable:
 	db $01, $00, $a0, $00, $30, $55, $a0, $00, $00 ; record 15
 	dw ObjectArrayAUpdateCallback_18
 InitObjectSceneB:
-	push_wram_bank $03 ; $7d03
+	push_wram_bank WRAM_SCREEN ; $7d03
 	ld hl, wScreenScratch ; $7d0c
 	ld bc, $0100 ; $7d0f
 	call ClearBytes ; $7d12

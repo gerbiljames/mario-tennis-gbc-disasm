@@ -8,7 +8,7 @@ UpdateCameraToActor:
 	push af ; $440a
 	push de ; $440b
 	push hl ; $440c
-	wram_bank $04 ; $440d
+	wram_bank WRAM_ACTORS ; $440d
 	ld hl, $000c ; $4413
 	add hl, bc ; $4416
 	ld a, [hl+] ; $4417

@@ -80,7 +80,7 @@ CharSelectSlotRing5:
 	; $5cb2, 5 bytes (bytes:5)
 	db $ff, $02, $03, $04, $ff ; 0x00
 GetGridSlotFromCursor:
-	push_wram_bank $03 ; $5cb7
+	push_wram_bank WRAM_SCREEN ; $5cb7
 	ld a, [wMenuCursorX] ; $5cc0
 	ld d, a ; $5cc3
 	ld a, [wMenuCursorY] ; $5cc4
@@ -112,7 +112,7 @@ BuildVisiblePageSpriteList:
 	push bc ; $5ce6
 	push de ; $5ce7
 	push hl ; $5ce8
-	push_wram_bank $03 ; $5ce9
+	push_wram_bank WRAM_SCREEN ; $5ce9
 	ld hl, wCharGridEntries ; $5cf2
 	ld a, [wCharGridPage] ; $5cf5
 	ld bc, $000c ; $5cf8
@@ -155,7 +155,7 @@ Unused_38_TestAndClearGridEntryTaken:
 	push bc ; $5d25
 	push de ; $5d26
 	push hl ; $5d27
-	push_wram_bank $03 ; $5d28
+	push_wram_bank WRAM_SCREEN ; $5d28
 	call GetGridEntryTakenPtr ; $5d31
 	ld a, [hl] ; $5d34
 	ld b, a ; $5d35
@@ -171,7 +171,7 @@ TestAndSetGridEntryTaken:
 	push bc ; $5d42
 	push de ; $5d43
 	push hl ; $5d44
-	push_wram_bank $03 ; $5d45
+	push_wram_bank WRAM_SCREEN ; $5d45
 	call GetGridEntryTakenPtr ; $5d4e
 	ld a, [hl] ; $5d51
 	ld b, a ; $5d52
@@ -219,7 +219,7 @@ BuildCreatedCharRecords:
 	push bc ; $5d84
 	push de ; $5d85
 	push hl ; $5d86
-	push_wram_bank $03 ; $5d87
+	push_wram_bank WRAM_SCREEN ; $5d87
 	ld hl, wCreatedCharRecords ; $5d90
 	ld bc, $00c0 ; $5d93
 	call ClearBytes ; $5d96
@@ -340,7 +340,7 @@ BuildCreatedCharRecords:
 	pop af ; $5e6c
 	ret ; $5e6d
 ResolveSelectedCharIds:
-	push_wram_bank $03 ; $5e6e
+	push_wram_bank WRAM_SCREEN ; $5e6e
 	ld c, $00 ; $5e77
 	ld hl, wCharSelectSlotChars ; $5e79
 .slotLoop:
@@ -376,7 +376,7 @@ ResolveSelectedCharIds:
 	pop_wram_bank ; $5ea0
 	ret ; $5ea5
 InitMatchCharsFromSelection:
-	push_wram_bank $03 ; $5ea6
+	push_wram_bank WRAM_SCREEN ; $5ea6
 	call CacheStorySlotNames ; $5eaf
 	ld a, [wCharSelectSlotChars] ; $5eb2
 	cp CHAR_NONE ; $5eb5

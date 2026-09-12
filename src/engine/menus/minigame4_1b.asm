@@ -248,7 +248,7 @@ DrawStarLegendMark:
 	farcall CopyTilemapRect ; $7823
 	ret ; $7826
 DrawMinigameHighScoreNumbers:
-	push_wram_bank $03 ; $7827
+	push_wram_bank WRAM_SCREEN ; $7827
 	ld a, [wMenuCursorY] ; $7830
 	ld c, a ; $7833
 	ld b, $00 ; $7834
@@ -323,7 +323,7 @@ CheckMinigameDataScrollable:
 	ld a, $01 ; $7893
 	ret ; $7895
 CompactMinigameDataRows:
-	push_wram_bank $03 ; $7896
+	push_wram_bank WRAM_SCREEN ; $7896
 	ld a, [wMinigameDataClearFlags + 5] ; $789f
 	ld [wMinigameDataClearFlags + 4], a ; $78a2
 	ld a, [wMinigameDataStarFlags + 5] ; $78a5

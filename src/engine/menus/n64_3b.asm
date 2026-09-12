@@ -17,7 +17,7 @@ StoreCellIndexToCursorPtr:
 	ld [hl], a ; $43f9
 	ret ; $43fa
 ClearWram3Row64:
-	push_wram_bank $03 ; $43fb
+	push_wram_bank WRAM_SCREEN ; $43fb
 	xor a ; $4404
 	ld c, $40 ; $4405
 .loop:
@@ -27,7 +27,7 @@ ClearWram3Row64:
 	pop_wram_bank ; $440b
 	ret ; $4410
 ClearWram3Row64Alt:
-	push_wram_bank $03 ; $4411
+	push_wram_bank WRAM_SCREEN ; $4411
 	ld a, $00 ; $441a
 	ld c, $40 ; $441c
 .loopB:
@@ -70,7 +70,7 @@ RunN64ExhibData:
 	call EnableLCD ; $44c6
 	script_fade_in $10 ; $44c9
 	call WaitFadeEnd ; $44ce
-	wram_bank $03 ; $44d1
+	wram_bank WRAM_SCREEN ; $44d1
 .loop:
 	ldh a, [hInputPressed] ; $44d7
 	ld [wMenuInputPressed], a ; $44d9
@@ -145,7 +145,7 @@ ScrollN64ExhibDataCursor:
 .done:
 	ret ; $4566
 N64ExhibScrollArrowsTask:
-	push_wram_bank $03 ; $4567
+	push_wram_bank WRAM_SCREEN ; $4567
 	ld a, [wN64ExhibPage] ; $4570
 	cp $09 ; $4573
 	jr z, .eq09 ; $4575
@@ -193,7 +193,7 @@ N64ExhibScrollArrowsTask:
 	pop_wram_bank ; $45ce
 	ret ; $45d3
 BuildN64ExhibDataScreen:
-	wram_bank $03 ; $45d4
+	wram_bank WRAM_SCREEN ; $45d4
 	xor a ; $45da
 	ld [wN64ExhibCursorRow], a ; $45db
 	ld [wN64ExhibPage], a ; $45de
@@ -206,7 +206,7 @@ BuildN64ExhibDataScreen:
 	ld b, $08 ; $45f2
 	ld c, $0f ; $45f4
 	farcall LoadIndexedPalette ; $45f6
-	wram_bank $03 ; $45f9
+	wram_bank WRAM_SCREEN ; $45f9
 	call ReadN64RecordsSaveBlock ; $45ff
 .buildN64ExhibColumnList:
 	jr nz, .buildN64ExhibColumnList ; $4602
@@ -226,7 +226,7 @@ BuildN64ExhibDataScreen:
 	farcall QueueWram3MapToVRAM ; $4629
 	ret ; $462c
 RedrawN64ExhibDataWindow:
-	wram_bank $03 ; $462d
+	wram_bank WRAM_SCREEN ; $462d
 	ld a, [wN64ExhibPage] ; $4633
 	ld hl, wChartColumnList ; $4636
 	add l ; $4639

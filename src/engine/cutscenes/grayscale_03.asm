@@ -1,5 +1,5 @@
 InitGrayscalePaletteFade:
-	push_wram_bank $06 ; $75ab
+	push_wram_bank WRAM_SCENE ; $75ab
 	xor a ; $75b4
 	ld hl, wPaletteFadeMask ; $75b5
 	ld b, $10 ; $75b8
@@ -13,7 +13,7 @@ InitGrayscalePaletteFade:
 	ret ; $75c9
 ; InitGrayscalePaletteFade with ClearFadeTargetPalettes in place of DesaturateFadeTargetPalettes: the fade-to-black variant of the same setup. Nothing calls it; bank $03's callers only use the grayscale one.
 Unused_03_InitBlackPaletteFade:
-	push_wram_bank $06 ; $75ca
+	push_wram_bank WRAM_SCENE ; $75ca
 	xor a ; $75d3
 	ld hl, wPaletteFadeMask ; $75d4
 	ld b, $10 ; $75d7
@@ -144,7 +144,7 @@ ComputeGrayscaleColor:
 	ld [de], a ; $7685
 	ret ; $7686
 SetupPaletteFadeMask:
-	push_wram_bank $06 ; $7687
+	push_wram_bank WRAM_SCENE ; $7687
 	ld hl, wPaletteFadeAmount ; $7690
 	ld [hl], d ; $7693
 	ld l, d ; $7694
@@ -236,7 +236,7 @@ SetupPaletteFadeMask:
 	pop_wram_bank ; $7713
 	ret ; $7718
 AnimatePaletteFadeToTarget:
-	push_wram_bank $06 ; $7719
+	push_wram_bank WRAM_SCENE ; $7719
 .loop:
 	ld a, [wPaletteFadeFrameDelay] ; $7722
 .loopB:

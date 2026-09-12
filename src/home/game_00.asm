@@ -46,7 +46,7 @@ BlitBGStrip:
 	call GetScrollBufferAddr ; $233b
 	pop de ; $233e
 	push hl ; $233f
-	wram_bank $02 ; $2340
+	wram_bank WRAM_COURT_PLANES ; $2340
 	ld c, $20 ; $2346
 .loop:
 	ld a, [hl+] ; $2348
@@ -64,7 +64,7 @@ BlitBGStrip:
 	dec c ; $2358
 	jr nz, .loop ; $2359
 	pop hl ; $235b
-	wram_bank $03 ; $235c
+	wram_bank WRAM_SCREEN ; $235c
 	ld bc, $4020 ; $2362
 	ld a, e ; $2365
 	add b ; $2366
@@ -105,7 +105,7 @@ BlitBGStrip2:
 	call GetScrollBufferAddr ; $239a
 	pop de ; $239d
 	push hl ; $239e
-	wram_bank $02 ; $239f
+	wram_bank WRAM_COURT_PLANES ; $239f
 	ld c, $20 ; $23a5
 .loop:
 	ld a, [hl] ; $23a7
@@ -121,7 +121,7 @@ BlitBGStrip2:
 	dec c ; $23b6
 	jr nz, .loop ; $23b7
 	pop hl ; $23b9
-	wram_bank $03 ; $23ba
+	wram_bank WRAM_SCREEN ; $23ba
 	ld bc, $4020 ; $23c0
 	ld a, e ; $23c3
 	add b ; $23c4
@@ -488,7 +488,7 @@ SoftReset:
 	call ClearSpriteQueue ; $25c8
 	call ClearFrameTasks ; $25cb
 	call ClearVRAMCopyQueue ; $25ce
-	push_wram_bank $07 ; $25d1
+	push_wram_bank WRAM_SOUND ; $25d1
 	ld hl, WRAMX_BASE ; $25da
 	ld c, $00 ; $25dd
 	call ClearMemory16 ; $25df
@@ -561,7 +561,7 @@ AdvanceFrame:
 	and $cf ; $264e
 	xor $05 ; $2650
 	ld [wSpriteBufferPage], a ; $2652
-	push_wram_bank $07 ; $2655
+	push_wram_bank WRAM_SOUND ; $2655
 	call ResumeBGMAfterJingle ; $265e
 	pop_wram_bank ; $2661
 	ldh a, [rLY] ; $2666

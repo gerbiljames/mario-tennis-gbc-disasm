@@ -35,7 +35,7 @@ DrawInlineGlyph:
 	jr .step3 ; $76b4
 .drawGlyph:
 	push af ; $76b6
-	wram_bank $07 ; $76b7
+	wram_bank WRAM_SOUND ; $76b7
 	pop af ; $76bd
 	call DrawGlyph ; $76be
 .step3:
@@ -64,7 +64,7 @@ Unused_05_ResetGlyphPen_1:
 	ld [hl+], a ; $76df
 	ld [hl+], a ; $76e0
 	ld [hl], a ; $76e1
-	wram_bank $07 ; $76e2
+	wram_bank WRAM_SOUND ; $76e2
 	call ClearGlyphBuffer ; $76e8
 	pop_wram_bank ; $76eb
 	pop hl ; $76f0
@@ -88,7 +88,7 @@ Unused_05_ResetGlyphPen_2:
 	ld a, $00 ; $7704
 	ld [hl+], a ; $7706
 	ld [hl+], a ; $7707
-	wram_bank $07 ; $7708
+	wram_bank WRAM_SOUND ; $7708
 	call ClearGlyphBuffer ; $770e
 	pop_wram_bank ; $7711
 	pop hl ; $7716
@@ -101,7 +101,7 @@ InitGlyphStreamAt:
 	push bc ; $771c
 	push de ; $771d
 	push hl ; $771e
-	push_wram_bank $05 ; $771f
+	push_wram_bank WRAM_TEXT ; $771f
 	xor a ; $7728
 	ld hl, wGlyphPenX ; $7729
 	ld [hl+], a ; $772c
@@ -232,7 +232,7 @@ UploadGlyphBufferQueued:
 	ldh a, [hWramBank] ; $77e1
 	push af ; $77e3
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $77e4
-	wram_bank $07 ; $77e7
+	wram_bank WRAM_SOUND ; $77e7
 	ld a, [wKeepMatchStatsFlag] ; $77ed
 	or a ; $77f0
 	jr z, .zero ; $77f1
@@ -260,7 +260,7 @@ UploadGlyphBufferQueued:
 	ld c, l ; $780f
 	ld de, $8800 ; $7810
 	add hl, de ; $7813
-	push_wram_bank $05 ; $7814
+	push_wram_bank WRAM_TEXT ; $7814
 	ld a, [wWindowTileAttr] ; $781d
 	bit 3, a ; $7820
 	jr z, .restore ; $7822
@@ -316,7 +316,7 @@ UploadGlyphBufferDMA:
 	ld a, [wGlyphRowStartCol] ; $786d
 	inc a ; $7870
 	ld b, a ; $7871
-	wram_bank $07 ; $7872
+	wram_bank WRAM_SOUND ; $7872
 	ld a, b ; $7878
 	ld b, $00 ; $7879
 .loop:
@@ -356,7 +356,7 @@ UploadGlyphTileRange:
 	push bc ; $78ad
 	push de ; $78ae
 	push hl ; $78af
-	push_wram_bank $07 ; $78b0
+	push_wram_bank WRAM_SOUND ; $78b0
 	ld a, [wGlyphUploadFirstTile] ; $78b9
 	ld l, a ; $78bc
 	ld h, $00 ; $78bd

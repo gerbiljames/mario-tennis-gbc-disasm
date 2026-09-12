@@ -33,9 +33,10 @@ three idioms the code is built from (`push_wram_bank`/`pop_wram_bank`,
 `ld_hl_indexed`, `wait_frames`), story map trees and actor bytecode, mode-hook tables, sprite templates and
 animation scripts, flag-id lists, text ids, packed bank/slot selectors,
 record tables with embedded pointers, and 3,949 local labels inside
-functions. What stays binary is content: tiles, tilemaps, palettes, strings
-and the 315 sound-channel scripts (identified and named, deliberately not
-decoded — see `docs/history.md` for the line).
+functions. What stays out of the repository is content — tiles, tilemaps,
+palettes, strings and the 315 sound-channel scripts — extracted into
+`data/` at setup as PNGs, grids, text, palette rows and `snd_*` script
+rows, all editable, with a fork's edits committed under `mods/`.
 
 ### What each document covers
 
@@ -111,6 +112,13 @@ blob.
 
 ## Recent changes
 
+* **2026-09-12** — WRAM bank switches say what they reach for. The 1,725
+  `wram_bank` / `push_wram_bank` sites use `WRAM_*` constants: the bank's
+  owner (`WRAM_STAGING`, `WRAM_COURT_PLANES`, `WRAM_SCREEN`, `WRAM_ACTORS`,
+  `WRAM_TEXT`, `WRAM_SCENE`, `WRAM_SOUND`) or, where the code goes on to
+  touch the on-court character struct at `$df00` (or is a bare switch in
+  the match engine), `WRAM_CHAR0`-`WRAM_CHAR3` for banks 4-7. Same
+  numbers, so the bytes are unchanged.
 * **2026-09-12** — a fork can commit its edits. `mods/` mirrors `data/`:
   an edited PNG, grid, text file or track lives there at the same relative
   path (tracked), and `tools/mods.py apply` copies it over `data/` before

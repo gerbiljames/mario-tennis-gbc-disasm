@@ -55,7 +55,7 @@ MatchVariantGraphicsPalettes5:
 MatchVariantGraphicsPalettes6:
 	INCLUDE "data/bank_028/MatchVariantGraphicsPalettes6.asm" ; $5ea0, 16 bytes (palettes)
 LoadMatchGraphics:
-	wram_bank $01 ; $5eb0
+	wram_bank WRAM_STAGING ; $5eb0
 	ld hl, MatchGfxPalettesA_28 ; $5eb6
 	lb de, $08, $03 ; $5eb9 palette index, count
 	call LoadPaletteShadow ; $5ebc
@@ -295,7 +295,7 @@ LoadEffectFrameTiles_28Table:
 	; $60c1, 8 bytes (bytes:8)
 	db $d0, $56, $10, $58, $50, $59, $90, $5a ; 0x00
 LoadMatchStoryGfx:
-	wram_bank $01 ; $60c9
+	wram_bank WRAM_STAGING ; $60c9
 	ld hl, MatchGfxPalettesC_28 ; $60cf
 	lb de, $09, $02 ; $60d2 palette index, count
 	call LoadPaletteShadow ; $60d5

@@ -11,7 +11,7 @@ PlayScreenSequence1:
 	call EnableLCD ; $77d3
 	script_fade_in $02 ; $77d6
 	call WaitFadeEnd ; $77db
-	wram_bank $03 ; $77de
+	wram_bank WRAM_SCREEN ; $77de
 	xor a ; $77e4
 	ld [wScreenSequenceTimer], a ; $77e5
 .scrollLoop:
@@ -178,7 +178,7 @@ PlayScreenSequence2:
 	sound BGM_CREDITS ; $7985
 	farcall RunEndingCreditsSequence ; $7987
 .scene3:
-	wram_bank $03 ; $798a
+	wram_bank WRAM_SCREEN ; $798a
 	xor a ; $7990
 	ld [wEndingSceneStep], a ; $7991
 	call ClearFrameTasks ; $7994
@@ -191,7 +191,7 @@ PlayScreenSequence2:
 	call EnableLCD ; $79a9
 	script_fade_in $02 ; $79ac
 	call WaitFadeEnd ; $79b1
-	wram_bank $03 ; $79b4
+	wram_bank WRAM_SCREEN ; $79b4
 	xor a ; $79ba
 	ld [wScreenSequenceTimer], a ; $79bb
 .scene4:
@@ -286,7 +286,7 @@ QueueScreen2Sprites_SpriteTemplate:
 	oam_sprite_end
 	ret ; $7a80
 TaskFadeInPalette_18:
-	push_wram_bank $03 ; $7a81
+	push_wram_bank WRAM_SCREEN ; $7a81
 	ld a, [wEndingSceneStep] ; $7a8a
 	cp $10 ; $7a8d
 	jr z, .alt2 ; $7a8f
@@ -437,7 +437,7 @@ ObjectUpdateLoopTail_18:
 	jr nz, TaskUpdateObjects_18.objectLoop ; $7bcb
 	ret ; $7bcd
 InitObjectSceneA:
-	push_wram_bank $03 ; $7bce
+	push_wram_bank WRAM_SCREEN ; $7bce
 	ld hl, wScreenScratch ; $7bd7
 	ld bc, $0100 ; $7bda
 	call ClearBytes ; $7bdd

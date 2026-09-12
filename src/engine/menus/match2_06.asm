@@ -16,7 +16,7 @@ ShowMessageWindow:
 	push bc ; $44ff
 	push de ; $4500
 	push hl ; $4501
-	push_wram_bank $02 ; $4502
+	push_wram_bank WRAM_COURT_PLANES ; $4502
 	ld a, $01 ; $450b
 	ld [wMatchSimFrozen], a ; $450d
 	farcall StepMatchFrame ; $4510
@@ -554,7 +554,7 @@ ShowMatchScoreboardScreen:
 	farcall StepMatchFrame ; $48df
 	call FlushTilemapToVram ; $48e2
 	farcall StepMatchFrame ; $48e5
-	wram_bank $02 ; $48e8
+	wram_bank WRAM_COURT_PLANES ; $48e8
 .loop:
 	farcall ReadMatchInputPressed ; $48ee
 	and $0f ; $48f1

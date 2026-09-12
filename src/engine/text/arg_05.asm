@@ -31,7 +31,7 @@ TextContinueArrowBlinkTask:
 	push bc ; $4fe4
 	push de ; $4fe5
 	push hl ; $4fe6
-	wram_bank $05 ; $4fe7
+	wram_bank WRAM_TEXT ; $4fe7
 	ld hl, wTextArrowBlinkCounter ; $4fed
 	ld a, [hl+] ; $4ff0
 	and $10 ; $4ff1
@@ -130,7 +130,7 @@ TextCmdDelay150Skippable:
 TextCmdPrintArgString:
 	push af ; $5089
 	push bc ; $508a
-	push_wram_bank $05 ; $508b
+	push_wram_bank WRAM_TEXT ; $508b
 	ld hl, wTextArgStringQueue ; $5094
 	ld a, [wTextArgStringCount] ; $5097
 	ld b, a ; $509a
@@ -181,7 +181,7 @@ TextCmdPrintArgString:
 	ld bc, $0020 ; $50dc
 	call CopyMemoryBC ; $50df
 	pop de ; $50e2
-	wram_bank $05 ; $50e3
+	wram_bank WRAM_TEXT ; $50e3
 	ld hl, wInlineTextBuffer ; $50e9
 	call RenderInlineString ; $50ec
 .restore:
@@ -214,7 +214,7 @@ PushTextArgString:
 	and $0f ; $5115
 	ld h, a ; $5117
 .push:
-	push_wram_bank $05 ; $5118
+	push_wram_bank WRAM_TEXT ; $5118
 	ld d, h ; $5121
 	ld e, l ; $5122
 	ld a, [wTextArgStringWriteIndex] ; $5123
@@ -243,7 +243,7 @@ PushTextArgNumber:
 	push bc ; $5148
 	push de ; $5149
 	push hl ; $514a
-	push_wram_bank $05 ; $514b
+	push_wram_bank WRAM_TEXT ; $514b
 	ld d, h ; $5154
 	ld e, l ; $5155
 	ld a, [wTextArgNumberWriteIndex] ; $5156
@@ -273,7 +273,7 @@ PushTextArgShortTextId:
 	push de ; $517c
 	push hl ; $517d
 	ld d, a ; $517e
-	push_wram_bank $05 ; $517f
+	push_wram_bank WRAM_TEXT ; $517f
 	ld a, [wTextArgShortTextWriteIndex] ; $5188
 	cp $10 ; $518b
 	jr z, .restore ; $518d
@@ -355,7 +355,7 @@ TextCmdPrintPartnerName:
 MeasureNextArgStringWidth:
 	push bc ; $51fe
 	push hl ; $51ff
-	wram_bank $05 ; $5200
+	wram_bank WRAM_TEXT ; $5200
 	ld a, [wTextArgStringMeasureIndex] ; $5206
 	ld b, $00 ; $5209
 	ld c, a ; $520b
@@ -397,7 +397,7 @@ MeasureNextArgStringWidth:
 	ld bc, $0020 ; $5245
 	call CopyMemoryBC ; $5248
 	pop de ; $524b
-	wram_bank $05 ; $524c
+	wram_bank WRAM_TEXT ; $524c
 	ld hl, wInlineTextBuffer ; $5252
 	ld b, $00 ; $5255
 .loop:

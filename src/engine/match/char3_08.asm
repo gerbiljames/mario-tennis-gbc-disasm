@@ -122,7 +122,7 @@ DidBallCrossGate:
 	xor a ; $67c0
 	ret ; $67c1
 IsBallInTargetZone:
-	push_wram_bank $04 ; $67c2
+	push_wram_bank WRAM_ACTORS ; $67c2
 	ld hl, wTargetZoneX1 ; $67cb
 	ld a, [hl+] ; $67ce
 	ld d, [hl] ; $67cf
@@ -235,19 +235,19 @@ InitChar:
 	ld [wCharInputSource], a ; $687b
 	ret ; $687e
 InitAllChars:
-	wram_bank $07 ; $687f
+	wram_bank WRAM_CHAR3 ; $687f
 	ld hl, wCharPosX ; $6885
 	ld c, $10 ; $6888
 	call ClearMemory16 ; $688a
-	wram_bank $06 ; $688d
+	wram_bank WRAM_CHAR2 ; $688d
 	ld hl, wCharPosX ; $6893
 	ld c, $10 ; $6896
 	call ClearMemory16 ; $6898
-	wram_bank $05 ; $689b
+	wram_bank WRAM_CHAR1 ; $689b
 	ld hl, wCharPosX ; $68a1
 	ld c, $10 ; $68a4
 	call ClearMemory16 ; $68a6
-	wram_bank $04 ; $68a9
+	wram_bank WRAM_CHAR0 ; $68a9
 	ld hl, wCharPosX ; $68af
 	ld c, $10 ; $68b2
 	call ClearMemory16 ; $68b4
@@ -269,7 +269,7 @@ InitAllChars:
 	dw InitAllChars.char3 ; $68d3 jumptable
 	dw InitAllChars.char4 ; $68d5 jumptable
 .char4:
-	wram_bank $06 ; $68d7
+	wram_bank WRAM_SCENE ; $68d7
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $68dd
 	ld d, a ; $68e0
 	ld a, [wPlayer1PartnerPalette] ; $68e1
@@ -277,7 +277,7 @@ InitAllChars:
 	ld a, $02 ; $68e5
 	call InitChar ; $68e7
 .char3:
-	wram_bank $07 ; $68ea
+	wram_bank WRAM_SOUND ; $68ea
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $68f0
 	ld d, a ; $68f3
 	ld a, [wPlayer2PartnerPalette] ; $68f4
@@ -285,7 +285,7 @@ InitAllChars:
 	ld a, $03 ; $68f8
 	call InitChar ; $68fa
 .char2:
-	wram_bank $05 ; $68fd
+	wram_bank WRAM_TEXT ; $68fd
 	ld a, [wPlayer2CurrentMainCharacter] ; $6903
 	ld d, a ; $6906
 	ld a, [wPlayer2MainPalette] ; $6907
@@ -293,7 +293,7 @@ InitAllChars:
 	ld a, $01 ; $690b
 	call InitChar ; $690d
 .char1:
-	wram_bank $04 ; $6910
+	wram_bank WRAM_CHAR0 ; $6910
 	ld a, [wPlayer1CurrentMainCharacter] ; $6916
 	ld d, a ; $6919
 	ld a, [wPlayer1MainPalette] ; $691a
@@ -305,15 +305,15 @@ InitAllChars:
 	farcall LoadOnCourtCharacterGfx ; $6928
 	ret ; $692b
 UpdateAllChars:
-	wram_bank $04 ; $692c
+	wram_bank WRAM_CHAR0 ; $692c
 	call UpdateChar ; $6932
-	wram_bank $05 ; $6935
+	wram_bank WRAM_CHAR1 ; $6935
 	call UpdateChar ; $693b
-	wram_bank $06 ; $693e
+	wram_bank WRAM_CHAR2 ; $693e
 	call UpdateChar ; $6944
-	wram_bank $07 ; $6947
+	wram_bank WRAM_CHAR3 ; $6947
 	call UpdateChar ; $694d
-	wram_bank $04 ; $6950
+	wram_bank WRAM_CHAR0 ; $6950
 	ret ; $6956
 StubNop_08:
 	ret ; $6957
@@ -457,18 +457,18 @@ FlipCharPositionCode:
 	ret ; $6a39
 ForEachCharBank:
 	push hl ; $6a3a
-	wram_bank $07 ; $6a3b
+	wram_bank WRAM_CHAR3 ; $6a3b
 	call JumpToHL ; $6a41
 	pop hl ; $6a44
 	push hl ; $6a45
-	wram_bank $06 ; $6a46
+	wram_bank WRAM_CHAR2 ; $6a46
 	call JumpToHL ; $6a4c
 	pop hl ; $6a4f
 	push hl ; $6a50
-	wram_bank $05 ; $6a51
+	wram_bank WRAM_CHAR1 ; $6a51
 	call JumpToHL ; $6a57
 	pop hl ; $6a5a
-	wram_bank $04 ; $6a5b
+	wram_bank WRAM_CHAR0 ; $6a5b
 	jp hl ; $6a61
 UpdateCharStateMachine:
 	xor a ; $6a62
@@ -567,7 +567,7 @@ CharServeInitPhase:
 	ld a, [wMinigameIsBooBlast] ; $6b12
 	and a ; $6b15
 	jr nz, .startAnim ; $6b16
-	push_wram_bank $04 ; $6b18
+	push_wram_bank WRAM_CHAR0 ; $6b18
 	farcall SpawnServeIndicatorObjs ; $6b21
 	pop_wram_bank ; $6b24
 .startAnim:
@@ -607,7 +607,7 @@ CharServeTossPhase:
 	ld [wBallSpriteEnabled], a ; $6b69
 	ld [wBallShadowEnabled], a ; $6b6c
 	ld [wBallTrailEnabled], a ; $6b6f
-	push_wram_bank $04 ; $6b72
+	push_wram_bank WRAM_CHAR0 ; $6b72
 	farcall DismissServeIndicatorObjs ; $6b7b
 	pop_wram_bank ; $6b7e
 	ld d, CHARANIM_OVERHEAD_READY ; $6b83

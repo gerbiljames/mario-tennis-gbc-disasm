@@ -11,7 +11,7 @@ DrawAsciiDigitChar_{TWIN}:
 	jr c, .carry
 	add $30
 	ld b, a
-	wram_bank $03
+	wram_bank WRAM_SCREEN
 	ld a, b
 	ld [de], a
 	inc de

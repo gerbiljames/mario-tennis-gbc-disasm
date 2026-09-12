@@ -738,7 +738,7 @@ IsActorJumping:
 	push bc ; $5706
 	push de ; $5707
 	push hl ; $5708
-	wram_bank $04 ; $5709
+	wram_bank WRAM_ACTORS ; $5709
 	ld c, l ; $570f
 	ld b, h ; $5710
 	ld hl, $0012 ; $5711
@@ -777,7 +777,7 @@ IsActorMoving:
 	dec h ; $5739
 	ret z ; $573a
 	push hl ; $573b
-	wram_bank $04 ; $573c
+	wram_bank WRAM_ACTORS ; $573c
 	ld a, $05 ; $5742
 	add l ; $5744
 	ld l, a ; $5745

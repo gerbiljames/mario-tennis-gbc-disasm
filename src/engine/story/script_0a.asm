@@ -29,7 +29,7 @@ BeginCutsceneScriptMode:
 	push bc ; $40d1
 	push de ; $40d2
 	push hl ; $40d3
-	push_wram_bank $05 ; $40d4
+	push_wram_bank WRAM_TEXT ; $40d4
 	pop_wram_bank ; $40dd
 	ld a, $ff ; $40e2
 	ld [wScreenShakeMagnitude], a ; $40e4
@@ -64,7 +64,7 @@ EndCutsceneScriptMode:
 	ld hl, ToggleCutsceneFastForward ; $4119
 	call UnregisterFrameTask ; $411c
 	clear_flag FLAG_CUTSCENE_FAST_FORWARD ; $411f
-	push_wram_bank $04 ; $4122
+	push_wram_bank WRAM_ACTORS ; $4122
 	ld a, [wActors + 20] ; $412b
 	ld [wPlayerMoveAngle], a ; $412e
 	pop_wram_bank ; $4131
@@ -96,7 +96,7 @@ ScriptRespawnLocationActors:
 	ret ; $4155
 InitDialogueTextCursor:
 	push af ; $4156
-	push_wram_bank $05 ; $4157
+	push_wram_bank WRAM_TEXT ; $4157
 	farcall SetActiveWindowTextId ; $4160
 	ld a, l ; $4163
 	ld [wScriptDialogueTextId], a ; $4164
@@ -109,7 +109,7 @@ AdvanceDialogueTextCursor:
 	push af ; $4172
 	push hl ; $4173
 	push de ; $4174
-	push_wram_bank $05 ; $4175
+	push_wram_bank WRAM_TEXT ; $4175
 	ld hl, wScriptDialogueTextId ; $417e
 	ld a, [hl+] ; $4181
 	ld d, [hl] ; $4182
@@ -131,7 +131,7 @@ ScriptShowSpeakerDialogue:
 	ldh a, [hWramBank] ; $4195
 	push af ; $4197
 	call WaitPlayerMoveDone ; $4198
-	wram_bank $05 ; $419b
+	wram_bank WRAM_TEXT ; $419b
 	ld hl, wScriptDialogueTextId ; $41a1
 	ld a, [hl+] ; $41a4
 	ld h, [hl] ; $41a5
@@ -157,7 +157,7 @@ ScriptShowSpeakerDialogueRestoreBG:
 	ldh a, [hWramBank] ; $41c4
 	push af ; $41c6
 	call WaitPlayerMoveDone ; $41c7
-	wram_bank $05 ; $41ca
+	wram_bank WRAM_TEXT ; $41ca
 	ld a, [wScriptDialogueTextId] ; $41d0
 	ld l, a ; $41d3
 	ld a, [wScriptDialogueTextId + 1] ; $41d4
@@ -183,7 +183,7 @@ RunDialogueYesNoPrompt:
 	push bc ; $41f6
 	push de ; $41f7
 	push hl ; $41f8
-	push_wram_bank $05 ; $41f9
+	push_wram_bank WRAM_TEXT ; $41f9
 	call FindDialogueChoiceMarker ; $4202
 	ld a, [wTextRedrawGuard] ; $4205
 	push af ; $4208
@@ -236,7 +236,7 @@ ShowYesNoPromptWindow:
 	ldh [hActorPtr], a ; $425d
 	ld a, h ; $425f
 	ldh [hActorPtr + 1], a ; $4260
-	wram_bank $04 ; $4262
+	wram_bank WRAM_ACTORS ; $4262
 	ld hl, hActorPtr ; $4268
 	ld a, [hl+] ; $426b
 	ld h, [hl] ; $426c
@@ -328,7 +328,7 @@ RunMenuFromText:
 ScriptSkipSpeakerDialogue:
 	push af ; $42e9
 	push hl ; $42ea
-	push_wram_bank $05 ; $42eb
+	push_wram_bank WRAM_TEXT ; $42eb
 	ld a, [wScriptDialogueTextId] ; $42f4
 	ld l, a ; $42f7
 	ld a, [wScriptDialogueTextId + 1] ; $42f8
@@ -360,7 +360,7 @@ GetActorStateAddr:
 	add h ; $4324
 	ld h, a ; $4325
 .haveAddr:
-	wram_bank $04 ; $4326
+	wram_bank WRAM_ACTORS ; $4326
 	push hl ; $432c
 	ld a, $20 ; $432d
 	add l ; $432f
@@ -377,7 +377,7 @@ GetActorStateAddr:
 ScriptSetActorMoveSpeed:
 	call GetActorStateAddr ; $433b
 	ret z ; $433e
-	wram_bank $04 ; $433f
+	wram_bank WRAM_ACTORS ; $433f
 	ld a, $06 ; $4345
 	add l ; $4347
 	ld l, a ; $4348
@@ -392,7 +392,7 @@ ScriptSetActorScript:
 	call GetActorStateAddr ; $4350
 	ld a, b ; $4353
 	push af ; $4354
-	wram_bank $04 ; $4355
+	wram_bank WRAM_ACTORS ; $4355
 	pop af ; $435b
 	ld c, l ; $435c
 	ld b, h ; $435d
@@ -430,7 +430,7 @@ CheckActorScriptEnd:
 	dec h ; $438b
 	ret z ; $438c
 	push de ; $438d
-	wram_bank $04 ; $438e
+	wram_bank WRAM_ACTORS ; $438e
 	push hl ; $4394
 	ld a, [hl+] ; $4395
 	ld e, a ; $4396
@@ -471,7 +471,7 @@ ScriptSetActorPosition:
 	ldh [hActorPtr], a ; $43c7
 	ld a, h ; $43c9
 	ldh [hActorPtr + 1], a ; $43ca
-	wram_bank $04 ; $43cc
+	wram_bank WRAM_ACTORS ; $43cc
 	call SetActorPositionRaw ; $43d2
 .done:
 	add sp, 4 ; $43d5

@@ -5,7 +5,7 @@
 ; Instruction-identical to SetMenuCursorFromIndexToPtr_38 and SetMenuCursorFromIndexToPtr_3e (one copy per bank); a change here belongs in every copy.
 	twin set_menu_cursor_from_index_to_ptr, 16 ; $43bb SetMenuCursorFromIndexToPtr_16
 ClearWram3Row64_16:
-	push_wram_bank $03 ; $43c9
+	push_wram_bank WRAM_SCREEN ; $43c9
 	xor a ; $43d2
 	ld c, $40 ; $43d3
 .loop:
@@ -15,7 +15,7 @@ ClearWram3Row64_16:
 	pop_wram_bank ; $43d9
 	ret ; $43de
 ClearWram3Row64Alt_16:
-	push_wram_bank $03 ; $43df
+	push_wram_bank WRAM_SCREEN ; $43df
 	ld a, $00 ; $43e8
 	ld c, $40 ; $43ea
 .loop:
@@ -121,7 +121,7 @@ RunMatchWinLoseScreen:
 	ret nz ; $447c
 	call DisableLCDSafely ; $447d
 	call ClearFrameTasks ; $4480
-	wram_bank $03 ; $4483
+	wram_bank WRAM_SCREEN ; $4483
 	ld a, [wGameMode] ; $4489
 	cp GAMEMODE_EXHIBITION ; $448c
 	jr z, .step ; $448e
@@ -233,7 +233,7 @@ InitMatchWinLoseScreen:
 	ldh [hScrollX], a ; $4575
 	ldh [hScrollY], a ; $4577
 	call LoadWinLoseScreenAssets ; $4579
-	wram_bank $03 ; $457c
+	wram_bank WRAM_SCREEN ; $457c
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $4582
 	ld b, $14 ; $4585
 	ld c, $05 ; $4587
@@ -257,7 +257,7 @@ InitMatchWinLoseScreen:
 	call SetWinLosePortraitPaletteAttrs ; $45b3
 	ld c, $00 ; $45b6
 	call LoadResultScreenPortraits ; $45b8
-	push_wram_bank $01 ; $45bb
+	push_wram_bank WRAM_STAGING ; $45bb
 	ld hl, MatchWinLoseScreenGfx ; $45c4
 	ld de, wDecompBuffer ; $45c7
 	call DecompressData ; $45ca
@@ -321,7 +321,7 @@ LoadWinLoseScreenAssets:
 	ld de, FLAG_DOUBLES ; $4920
 	call TestGameFlagByNumber ; $4923
 	jr nz, .done ; $4926
-	wram_bank $03 ; $4928
+	wram_bank WRAM_SCREEN ; $4928
 	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH ; $492e
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 11 ; $4931
 	ld b, $09 ; $4934

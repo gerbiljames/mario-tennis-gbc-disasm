@@ -128,7 +128,7 @@ ResumeBGMAfterJingle:
 	ld a, [wCurrentBGM] ; $3072
 	jp PlaySound ; $3075
 InitAudioEngine:
-	wram_bank $07 ; $3078
+	wram_bank WRAM_SOUND ; $3078
 	ld bc, $0000 ; $307e
 	call SetChannelUpdateRequest ; $3081
 	ld a, $80 ; $3084
@@ -219,7 +219,7 @@ ApplyChannelUpdateRequest:
 	ld [wSndUpdateReqAck], a ; $310c
 	ret ; $310f
 CheckMusicChannelsIdle:
-	wram_bank $07 ; $3110
+	wram_bank WRAM_SOUND ; $3110
 	ld hl, wSndChannels + 64 ; $3116
 	ld de, $0020 ; $3119
 	ld b, $04 ; $311c
@@ -239,7 +239,7 @@ StopMusic:
 	push bc ; $312a
 	push de ; $312b
 	push hl ; $312c
-	wram_bank $07 ; $312d
+	wram_bank WRAM_SOUND ; $312d
 	ld a, $ff ; $3133
 	ld hl, wSndChannels + 64 ; $3135
 	ld de, $0020 ; $3138
@@ -274,7 +274,7 @@ PlaySound:
 	ld hl, SfxIndexTable ; $32a5
 	push af ; $32a8
 	push hl ; $32a9
-	wram_bank $07 ; $32aa
+	wram_bank WRAM_SOUND ; $32aa
 	ld a, $ff ; $32b0
 	ld hl, wSndChannels ; $32b2
 	ld [hl+], a ; $32b5
@@ -426,7 +426,7 @@ StartSoundChannel:
 ; untouched. That is what lets hMatchFrameCounter and hSoundEngineBusy share
 ; bytes with the driver's channel state.
 RunSoundEngine:
-	wram_bank $07 ; $3373
+	wram_bank WRAM_SOUND ; $3373
 	ld hl, hSndScriptPtr ; $3379
 	ld de, wSndHramSave ; $337c
 	ld c, $02 ; $337f

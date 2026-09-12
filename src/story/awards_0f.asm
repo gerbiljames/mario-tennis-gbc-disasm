@@ -447,7 +447,7 @@ AwardsCeremonySwapActors_0f:
 	script_face $10, FACE_UP ; $5f4a
 	ret ; $5f51
 SavePlayerActorPosition:
-	wram_bank $04 ; $5f52
+	wram_bank WRAM_ACTORS ; $5f52
 	script_get_actor_state ACTOR_PLAYER ; $5f58
 	ld c, l ; $5f5d
 	ld b, h ; $5f5e

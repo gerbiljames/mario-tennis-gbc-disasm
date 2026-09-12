@@ -44,7 +44,7 @@ SetMatchRuleOptionAttrRect:
 	push bc ; $486b
 	push de ; $486c
 	push hl ; $486d
-	push_wram_bank $03 ; $486e
+	push_wram_bank WRAM_SCREEN ; $486e
 	ld hl, MatchRuleOptionAttrAddrs_3e ; $4877
 	ld a, b ; $487a
 	add a ; $487b
@@ -161,7 +161,7 @@ MatchRulesCursorTiles_3e:
 	; $497b, 7 bytes (bytes:7)
 	db $00, $10, $20, $30, $40, $50, $60 ; 0x00
 DrawMatchRulesCaption:
-	wram_bank $03 ; $4982
+	wram_bank WRAM_SCREEN ; $4982
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4988
 	ld b, $14 ; $498b
 	ld c, $01 ; $498d
@@ -183,7 +183,7 @@ DrawMatchRulesCaption:
 	call QueueVRAMCopy ; $49b5
 	ret ; $49b8
 DrawMatchRulesCaptionText:
-	wram_bank $03 ; $49b9
+	wram_bank WRAM_SCREEN ; $49b9
 	ld c, $01 ; $49bf
 	call GetMenuCursorIndex_3e ; $49c1
 	ld b, a ; $49c4
@@ -241,7 +241,7 @@ LoadLinkMessageScreen:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $4a1e
 	ld de, vTiles2 ; $4a20
 	farcall LoadCompressedTileBlock ; $4a23
-	wram_bank $05 ; $4a26
+	wram_bank WRAM_TEXT ; $4a26
 	ld a, $03 ; $4a2c
 	ld [wShadowTilemapBank], a ; $4a2e
 	ld a, $00 ; $4a31
@@ -253,7 +253,7 @@ LoadLinkMessageScreen:
 	farcall CreateWindowFromScreenRect ; $4a3e
 	farcall DrawTextWindowFrame ; $4a41
 	farcall RedrawWindowRows ; $4a44
-	wram_bank $03 ; $4a47
+	wram_bank WRAM_SCREEN ; $4a47
 	farcall PrepareGlyphBuffer ; $4a4d
 	farcall QueueWram3MapToVRAM ; $4a50
 	ret ; $4a53
@@ -337,7 +337,7 @@ LoadLinkErrorScreen:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $4ae8
 	ld de, vTiles2 ; $4aea
 	farcall LoadCompressedTileBlock ; $4aed
-	wram_bank $05 ; $4af0
+	wram_bank WRAM_TEXT ; $4af0
 	ld a, $03 ; $4af6
 	ld [wShadowTilemapBank], a ; $4af8
 	ld a, $00 ; $4afb
@@ -350,7 +350,7 @@ LoadLinkErrorScreen:
 	farcall DrawTextWindowFrame ; $4b0b
 	farcall RedrawWindowRows ; $4b0e
 	farcall PrepareGlyphBuffer ; $4b11
-	wram_bank $03 ; $4b14
+	wram_bank WRAM_SCREEN ; $4b14
 	ld hl, Text_30_299 ; $4b1a
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4b1d
 	ld c, $12 ; $4b20
@@ -363,7 +363,7 @@ LoadLinkErrorScreen:
 	farcall QueueWram3MapToVRAM ; $4b33
 	ret ; $4b36
 AnimateLinkErrorPalette:
-	push_wram_bank $03 ; $4b37
+	push_wram_bank WRAM_SCREEN ; $4b37
 	ld hl, LinkErrorPalette_3e ; $4b40
 	ld de, wLinkErrorPalette ; $4b43
 	ld bc, $0008 ; $4b46
@@ -411,10 +411,10 @@ LinkErrorFlashColors_3e:
 	db $bf, $02, $ff, $01, $df, $00, $1f, $00 ; 0x10
 ShowLinkStatusMessage:
 	push bc ; $4ba3
-	wram_bank $03 ; $4ba4
+	wram_bank WRAM_SCREEN ; $4ba4
 	call ClearLinkMessageWindow ; $4baa
 	farcall PrepareGlyphBuffer ; $4bad
-	wram_bank $03 ; $4bb0
+	wram_bank WRAM_SCREEN ; $4bb0
 	pop bc ; $4bb6
 	ld a, c ; $4bb7
 	or a ; $4bb8

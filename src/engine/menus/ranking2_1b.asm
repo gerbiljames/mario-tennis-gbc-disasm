@@ -6,7 +6,7 @@ WaitForAOrBPress:
 	ret ; $5510
 DrawSinglesRankingNames:
 	call InitRankingNameRender ; $5511
-	wram_bank $03 ; $5514
+	wram_bank WRAM_SCREEN ; $5514
 	call ClearSinglesRankingNameRects ; $551a
 	ld hl, wStoryModeNameOfMainCharacter ; $551d
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; $5520
@@ -131,7 +131,7 @@ ClearSinglesRankingNameRects:
 	ret ; $55d0
 DrawDoublesRankingNames:
 	call InitRankingNameRender ; $55d1
-	wram_bank $03 ; $55d4
+	wram_bank WRAM_SCREEN ; $55d4
 	call ClearDoublesRankingNameRects ; $55da
 	ld hl, wStoryModeNameOfMainCharacter ; $55dd
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $55e0
@@ -260,7 +260,7 @@ ClearDoublesRankingNameRects:
 	ret ; $569b
 InitRankingNameRender:
 	farcall InitTextWindows ; $569c
-	wram_bank $05 ; $569f
+	wram_bank WRAM_TEXT ; $569f
 	ld a, $03 ; $56a5
 	ld [wShadowTilemapBank], a ; $56a7
 	ld a, $00 ; $56aa

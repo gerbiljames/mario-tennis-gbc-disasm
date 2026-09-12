@@ -7,7 +7,7 @@ LoadEquipSelectCommon:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $57f9
 	ld de, vTiles2 ; $57fb
 	farcall LoadCompressedTileBlock ; $57fe
-	wram_bank $05 ; $5801
+	wram_bank WRAM_TEXT ; $5801
 	call CreateEquipCaptionWindow ; $5807
 	call CreateEquipListWindow ; $580a
 	ld de, $8000 + VRAM_BANK1 ; $580d
@@ -21,7 +21,7 @@ CreateEquipListWindow:
 	farcall CreateWindowFromScreenRect ; $581c
 	farcall DrawTextWindowFrame ; $581f
 	farcall RedrawWindowRows ; $5822
-	wram_bank $03 ; $5825
+	wram_bank WRAM_SCREEN ; $5825
 	ld de, wShadowAttrmap + 7 * TILEMAP_WIDTH + 1 ; $582b
 	ld b, $12 ; $582e
 	ld c, $05 ; $5830
@@ -154,7 +154,7 @@ DrawEquippedItemStatMods:
 	push bc ; $596f
 	push de ; $5970
 	push hl ; $5971
-	push_wram_bank $03 ; $5972
+	push_wram_bank WRAM_SCREEN ; $5972
 	call GetEquippedItemId ; $597b
 	jp DrawHoveredItemStatMods.drawItemStatModList ; $597e
 DrawHoveredItemStatMods:
@@ -162,7 +162,7 @@ DrawHoveredItemStatMods:
 	push bc ; $5982
 	push de ; $5983
 	push hl ; $5984
-	push_wram_bank $03 ; $5985
+	push_wram_bank WRAM_SCREEN ; $5985
 	call GetHoveredItemId ; $598e
 .drawItemStatModList:
 	call DrawItemStatModList ; $5991
@@ -224,7 +224,7 @@ EquipListCursorYPositions_3e:
 	; $59e5, 6 bytes (bytes:6)
 	db $38, $48, $58, $68, $78, $88 ; 0x00
 EquippedItemMarkerSpriteTask:
-	push_wram_bank $03 ; $59eb
+	push_wram_bank WRAM_SCREEN ; $59eb
 	ld a, [wEquipEquippedIndex] ; $59f4
 	ld hl, EquippedMarkerYPositions_3e ; $59f7
 	add l ; $59fa

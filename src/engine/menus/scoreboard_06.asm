@@ -22,16 +22,16 @@ PrepareScoreboardGfx:
 	dw PrepareScoreboardGfx.reloadCharFrameGfx2 ; $493f jumptable
 	dw PrepareScoreboardGfx.reloadCharFrameGfx ; $4941 jumptable
 .reloadCharFrameGfx:
-	wram_bank $06 ; $4943
+	wram_bank WRAM_SCENE ; $4943
 	farcall ReloadCharFrameGfx ; $4949
 .reloadCharFrameGfx2:
-	wram_bank $07 ; $494c
+	wram_bank WRAM_SOUND ; $494c
 	farcall ReloadCharFrameGfx ; $4952
 .reloadCharFrameGfx3:
-	wram_bank $05 ; $4955
+	wram_bank WRAM_TEXT ; $4955
 	farcall ReloadCharFrameGfx ; $495b
 .reloadCharFrameGfx4:
-	wram_bank $04 ; $495e
+	wram_bank WRAM_ACTORS ; $495e
 	farcall ReloadCharFrameGfx ; $4964
 	farcall StepMatchFrame ; $4967
 	ld a, [wMatchContext] ; $496a
@@ -55,7 +55,7 @@ PrepareScoreboardGfx:
 	farcall LoadScoreDigitGfx ; $499a
 	farcall StepMatchFrame ; $499d
 .eq02:
-	wram_bank $02 ; $49a0
+	wram_bank WRAM_COURT_PLANES ; $49a0
 	ret ; $49a6
 DrawScoreboard:
 	push bc ; $49a7

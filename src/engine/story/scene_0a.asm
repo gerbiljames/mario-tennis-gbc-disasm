@@ -228,7 +228,7 @@ Unused_0a_CopySceneTilemapToVram:
 	ld de, $d000 ; $578a
 	add hl, de ; $578d
 	pop de ; $578e
-	wram_bank $02 ; $578f
+	wram_bank WRAM_COURT_PLANES ; $578f
 	ld a, $01 ; $5795
 	ldh [rVBK], a ; $5797
 	push de ; $5799
@@ -255,7 +255,7 @@ Unused_0a_CopySceneTilemapToVram:
 	call CopySceneTilemapChunk ; $57d4
 	pop hl ; $57d7
 	pop de ; $57d8
-	wram_bank $03 ; $57d9
+	wram_bank WRAM_SCREEN ; $57d9
 	xor a ; $57df
 	ldh [rVBK], a ; $57e0
 	call CopySceneTilemapChunk ; $57e2
@@ -379,7 +379,7 @@ LoadStorySceneGraphics:
 	ld a, [hl+] ; $588f
 	ld b, a ; $5890
 	push bc ; $5891
-	wram_bank $01 ; $5892
+	wram_bank WRAM_STAGING ; $5892
 	ld a, [hl+] ; $5898
 	ld h, [hl] ; $5899
 	ld l, a ; $589a
@@ -393,7 +393,7 @@ LoadStorySceneGraphics:
 	ld de, vTiles1 + VRAM_BANK1 ; $58af
 	ld c, $80 ; $58b2
 	call QueueVRAMCopy ; $58b4
-	wram_bank $06 ; $58b7
+	wram_bank WRAM_SCENE ; $58b7
 	pop hl ; $58bd
 	ld de, wStorySceneUnusedBuffer ; $58be
 	pop hl ; $58c1
@@ -402,15 +402,15 @@ LoadStorySceneGraphics:
 	pop hl ; $58c8
 	ld de, wCollisionMap ; $58c9
 	call DecompressDataFromBank ; $58cc
-	wram_bank $02 ; $58cf
+	wram_bank WRAM_COURT_PLANES ; $58cf
 	pop hl ; $58d5
 	ld de, wScreenAttrmap ; $58d6
 	call DecompressDataFromBank ; $58d9
-	wram_bank $03 ; $58dc
+	wram_bank WRAM_SCREEN ; $58dc
 	pop hl ; $58e2
 	ld de, wShadowTilemap ; $58e3
 	call DecompressDataFromBank ; $58e6
-	wram_bank $01 ; $58e9
+	wram_bank WRAM_STAGING ; $58e9
 	pop hl ; $58ef
 	ld de, wDecompBuffer ; $58f0
 	ld bc, $0040 ; $58f3
@@ -418,7 +418,7 @@ LoadStorySceneGraphics:
 	ld hl, wDecompBuffer + 1 * TILE_SIZE ; $58f9
 	lb de, $02, $06 ; $58fc palette index, count
 	call LoadPaletteShadow ; $58ff
-	wram_bank $06 ; $5902
+	wram_bank WRAM_SCENE ; $5902
 	pop hl ; $5908
 	ld de, wStorySceneRecord ; $5909
 	ld bc, $0088 ; $590c

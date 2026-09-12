@@ -125,7 +125,7 @@ ResetTextWindowState:
 	push bc ; $6e0a
 	push de ; $6e0b
 	push hl ; $6e0c
-	wram_bank $05 ; $6e0d
+	wram_bank WRAM_TEXT ; $6e0d
 	ld hl, wWindowShadowTilemap ; $6e13
 	ld c, $80 ; $6e16
 	call ClearMemory16 ; $6e18
@@ -155,7 +155,7 @@ CreateWindowFromScreenRect:
 	push de ; $6e46
 	push hl ; $6e47
 	call PrepareGlyphBuffer ; $6e48
-	wram_bank $05 ; $6e4b
+	wram_bank WRAM_TEXT ; $6e4b
 	ld h, d ; $6e51
 	ld l, e ; $6e52
 	call GetScreenTopLeftCell ; $6e53
@@ -179,7 +179,7 @@ AllocWindowStruct:
 	push de ; $6e6d
 	push bc ; $6e6e
 	push hl ; $6e6f
-	wram_bank $05 ; $6e70
+	wram_bank WRAM_TEXT ; $6e70
 	call AllocWindowId ; $6e76
 	cp $ff ; $6e79
 	jr z, .restore ; $6e7b
@@ -335,7 +335,7 @@ WrapCellPtrToRowStart:
 	ret ; $6f37
 ClampCellPtrToShadowMap:
 	push af ; $6f38
-	push_wram_bank $05 ; $6f39
+	push_wram_bank WRAM_TEXT ; $6f39
 	ld a, [wShadowTilemapPtr + 1] ; $6f42
 	add $03 ; $6f45
 	cp h ; $6f47
@@ -348,7 +348,7 @@ ClampCellPtrToShadowMap:
 	ret ; $6f53
 ClampCellPtrToAttrMap:
 	push af ; $6f54
-	push_wram_bank $05 ; $6f55
+	push_wram_bank WRAM_TEXT ; $6f55
 	ld a, [wShadowTilemapPtr + 1] ; $6f5e
 	add $07 ; $6f61
 	cp h ; $6f63

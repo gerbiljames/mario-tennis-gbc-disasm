@@ -86,7 +86,7 @@ LoadRacketSelectScreen:
 	ld c, $00 ; $5518
 	ld b, $07 ; $551a
 	call SetMenuCursorFromIndex_3e ; $551c
-	wram_bank $03 ; $551f
+	wram_bank WRAM_SCREEN ; $551f
 	ld hl, wEquipItemList ; $5525
 	ld bc, $0002 ; $5528
 	call ClearMemory16 ; $552b
@@ -288,7 +288,7 @@ LoadShoesSelectScreen:
 	farcall LoadScreenAssetRecord ; $5698
 	farcall PrepareGlyphBuffer ; $569b
 	call LoadEquipSelectCommon ; $569e
-	wram_bank $03 ; $56a1
+	wram_bank WRAM_SCREEN ; $56a1
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $56a7
 	ld de, wShadowTilemap ; $56aa
 	ld b, $14 ; $56ad
@@ -302,7 +302,7 @@ LoadShoesSelectScreen:
 	ld c, $00 ; $56c1
 	ld b, $07 ; $56c3
 	call SetMenuCursorFromIndex_3e ; $56c5
-	wram_bank $03 ; $56c8
+	wram_bank WRAM_SCREEN ; $56c8
 	ld hl, wEquipItemList ; $56ce
 	ld bc, $0002 ; $56d1
 	call ClearMemory16 ; $56d4

@@ -55,7 +55,7 @@ BananaBunchReflectBallAndRecordCell:
 	ld [wMinigameLastHitCell], a ; $55b0
 	ret ; $55b3
 CopyMinigameTilemapBlock:
-	wram_bank $02 ; $55b4
+	wram_bank WRAM_COURT_PLANES ; $55b4
 	ld de, wMinigameTargetGrid ; $55ba
 	ld bc, $0018 ; $55bd
 	call CopyMemoryBC ; $55c0
@@ -198,11 +198,11 @@ ResolveAndShowMinigamePoint:
 	call ShowPointOutcomeBanner ; $56c0
 	call DetermineMinigamePointResult ; $56c3
 	push de ; $56c6
-	push_wram_bank $04 ; $56c7
+	push_wram_bank WRAM_CHAR0 ; $56c7
 	farcall CharPointEndReaction ; $56d0
 	ld a, [wCharPointResult] ; $56d3
 	push af ; $56d6
-	wram_bank $05 ; $56d7
+	wram_bank WRAM_CHAR1 ; $56d7
 	farcall CharPointEndReaction ; $56dd
 	pop af ; $56e0
 	ld [wCharPointResult], a ; $56e1

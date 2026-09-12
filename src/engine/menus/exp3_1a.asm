@@ -68,7 +68,7 @@ RunDebugCharViewer:
 	call ApplyCharViewerPalette ; $6828
 	call RefreshCharViewerSelection ; $682b
 	call AdvanceFrame ; $682e
-	wram_bank $06 ; $6831
+	wram_bank WRAM_SCENE ; $6831
 	ld a, [wCharViewerCharId] ; $6837
 	ld de, vTiles0 + $70 * TILE_SIZE ; $683a
 	farcall LoadOnCourtCharTilesA ; $683d
@@ -89,7 +89,7 @@ RunDebugCharViewer:
 	jp .loop ; $6868
 	ret ; $686b
 RunCharViewerSelectGrid:
-	wram_bank $06 ; $686c
+	wram_bank WRAM_SCENE ; $686c
 	xor a ; $6872
 	ld hl, Palette_1a_0 ; $6873
 	lb de, $00, $08 ; $6876 palette index, count
@@ -97,7 +97,7 @@ RunCharViewerSelectGrid:
 	ld hl, Palette_1a_0 ; $687c
 	lb de, $08, $08 ; $687f palette index, count
 	call LoadPaletteShadow ; $6882
-	wram_bank $01 ; $6885
+	wram_bank WRAM_STAGING ; $6885
 	ld hl, CharViewerScreenGfx0 ; $688b
 	ld de, wDecompBuffer ; $688e
 	call DecompressData ; $6891
@@ -112,12 +112,12 @@ RunCharViewerSelectGrid:
 	call LoadCharViewerGridTilemap ; $68aa
 	ld a, [wDebugCharViewerPage] ; $68ad
 	call DrawCharViewerPageNames ; $68b0
-	wram_bank $03 ; $68b3
+	wram_bank WRAM_SCREEN ; $68b3
 	ld hl, wShadowTilemap ; $68b9
 	ld de, vBGMap0 ; $68bc
 	ld c, $24 ; $68bf
 	call QueueVRAMCopy ; $68c1
-	wram_bank $02 ; $68c4
+	wram_bank WRAM_COURT_PLANES ; $68c4
 	ld hl, wScreenAttrmap ; $68ca
 	ld de, vBGMap0 + VRAM_BANK1 ; $68cd
 	ld c, $24 ; $68d0
@@ -129,7 +129,7 @@ RunCharViewerSelectGrid:
 	script_fade_in $10 ; $68e0
 	call WaitFadeEnd ; $68e5
 .loop:
-	wram_bank $06 ; $68e8
+	wram_bank WRAM_SCENE ; $68e8
 	call AdvanceFrame ; $68ee
 	ldh a, [hInputPressed] ; $68f1
 	bit PADB_UP, a ; $68f3
@@ -230,7 +230,7 @@ RunCharViewerSelectGrid:
 	call LoadCharViewerGridTilemap ; $69aa
 	pop af ; $69ad
 	call DrawCharViewerPageNames ; $69ae
-	wram_bank $03 ; $69b1
+	wram_bank WRAM_SCREEN ; $69b1
 	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $69b7
 	ld de, vBGMap0 + 1 * TILEMAP_WIDTH ; $69ba
 	ld c, $20 ; $69bd
@@ -258,21 +258,21 @@ RunCharViewerSelectGrid:
 	ld a, $ff ; $69e8
 	ret ; $69ea
 LoadCharViewerGridTilemap:
-	wram_bank $01 ; $69eb
+	wram_bank WRAM_STAGING ; $69eb
 	ld hl, CharViewerGridTilemap0 ; $69f1
 	ld de, wDecompBuffer ; $69f4
 	call DecompressData ; $69f7
 	ld hl, wDecompBuffer ; $69fa
 	ld bc, $0240 ; $69fd
 	call CopyBank1ToBank3Buffer ; $6a00
-	wram_bank $01 ; $6a03
+	wram_bank WRAM_STAGING ; $6a03
 	ld hl, CharViewerGridTilemap1 ; $6a09
 	ld de, wDecompBuffer ; $6a0c
 	call DecompressData ; $6a0f
 	ld hl, wDecompBuffer ; $6a12
 	ld bc, $0240 ; $6a15
 	call CopyBank1ToBank2Buffer ; $6a18
-	wram_bank $02 ; $6a1b
+	wram_bank WRAM_COURT_PLANES ; $6a1b
 	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH + 1 ; $6a21
 	ld c, $10 ; $6a24
 .loop:
@@ -302,7 +302,7 @@ DrawCharViewerPageNames:
 	jr z, .countDone2 ; $6a41
 	ret ; $6a43
 .zero:
-	wram_bank $03 ; $6a44
+	wram_bank WRAM_SCREEN ; $6a44
 	ld hl, Text_30_27 ; $6a4a
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 3 ; $6a4d
 	ld c, $08 ; $6a50
@@ -313,7 +313,7 @@ DrawCharViewerPageNames:
 	call RenderTextColumnToBuffer64 ; $6a5d
 	ret ; $6a60
 .countDone:
-	wram_bank $03 ; $6a61
+	wram_bank WRAM_SCREEN ; $6a61
 	ld hl, Text_30_43 ; $6a67
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 3 ; $6a6a
 	ld c, $08 ; $6a6d
@@ -324,7 +324,7 @@ DrawCharViewerPageNames:
 	call RenderTextColumnToBuffer64 ; $6a7a
 	ret ; $6a7d
 .countDone2:
-	wram_bank $03 ; $6a7e
+	wram_bank WRAM_SCREEN ; $6a7e
 	ld hl, Text_30_59 ; $6a84
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 3 ; $6a87
 	ld c, $08 ; $6a8a
@@ -354,7 +354,7 @@ RenderTextColumnToBuffer64:
 	pop hl ; $6ab0
 	jr RenderTextColumnToBuffer64 ; $6ab1
 DrawCharViewerGridCursor:
-	wram_bank $06 ; $6ab3
+	wram_bank WRAM_SCENE ; $6ab3
 	ldh a, [hVBlankCounter] ; $6ab9
 	and $1c ; $6abb
 	jr z, .checkVBlankCounter ; $6abd
@@ -402,12 +402,12 @@ DrawCharViewerGridCursorTable:
 	db $14, $53, $24, $53, $34, $53, $44, $53, $54, $53, $64, $53, $74, $53, $84, $53 ; 0x10
 LoadCharViewerScreen:
 	call LoadCharViewerScreenGfx ; $6b2f
-	wram_bank $03 ; $6b32
+	wram_bank WRAM_SCREEN ; $6b32
 	ld hl, wShadowTilemap ; $6b38
 	ld de, vBGMap0 ; $6b3b
 	ld c, $24 ; $6b3e
 	call QueueVRAMCopy ; $6b40
-	wram_bank $02 ; $6b43
+	wram_bank WRAM_COURT_PLANES ; $6b43
 	ld hl, wScreenAttrmap ; $6b49
 	ld de, vBGMap0 + VRAM_BANK1 ; $6b4c
 	ld c, $24 ; $6b4f
@@ -417,7 +417,7 @@ LoadCharViewerScreenGfx:
 	ld hl, Palette_1a_0 ; $6b55
 	lb de, $00, $08 ; $6b58 palette index, count
 	call LoadPaletteShadow ; $6b5b
-	wram_bank $01 ; $6b5e
+	wram_bank WRAM_STAGING ; $6b5e
 	ld hl, CharViewerScreenGfx0 ; $6b64
 	ld de, wDecompBuffer ; $6b67
 	call DecompressData ; $6b6a
@@ -429,21 +429,21 @@ LoadCharViewerScreenGfx:
 	ld de, vTiles1 + VRAM_BANK1 ; $6b7b
 	ld c, $80 ; $6b7e
 	call QueueVRAMCopy ; $6b80
-	wram_bank $01 ; $6b83
+	wram_bank WRAM_STAGING ; $6b83
 	ld hl, CharViewerScreenGfx1 ; $6b89
 	ld de, wDecompBuffer ; $6b8c
 	call DecompressData ; $6b8f
 	ld hl, wDecompBuffer ; $6b92
 	ld bc, $0240 ; $6b95
 	call CopyBank1ToBank3Buffer ; $6b98
-	wram_bank $01 ; $6b9b
+	wram_bank WRAM_STAGING ; $6b9b
 	ld hl, CharViewerScreenGfx2 ; $6ba1
 	ld de, wDecompBuffer ; $6ba4
 	call DecompressData ; $6ba7
 	ld hl, wDecompBuffer ; $6baa
 	ld bc, $0240 ; $6bad
 	call CopyBank1ToBank2Buffer ; $6bb0
-	wram_bank $02 ; $6bb3
+	wram_bank WRAM_COURT_PLANES ; $6bb3
 	ld hl, wScreenAttrmap + 15 * TILEMAP_WIDTH + 1 ; $6bb9
 	xor a ; $6bbc
 	ld [hl+], a ; $6bbd

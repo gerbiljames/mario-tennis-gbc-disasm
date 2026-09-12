@@ -64,7 +64,7 @@ ShowMatchResultsScreen:
 	ld hl, DrawResultsCharSprites ; $4093
 	call UnregisterFrameTask ; $4096
 	farcall LoadMenuFontGfx ; $4099
-	wram_bank $06 ; $409c
+	wram_bank WRAM_SCENE ; $409c
 	ld hl, wExpAwardRunningTotal ; $40a2
 	ld a, [hl+] ; $40a5
 	ld h, [hl] ; $40a6
@@ -72,7 +72,7 @@ ShowMatchResultsScreen:
 	ld a, [wContinuePromptResult] ; $40a8
 	ret ; $40ab
 InitResultsPromptState:
-	wram_bank $06 ; $40ac
+	wram_bank WRAM_SCENE ; $40ac
 	ld a, c ; $40b2
 	ld [wContinuePromptKind], a ; $40b3
 	xor a ; $40b6
@@ -91,12 +91,12 @@ BuildResultsScreenTilemap:
 	call DrawProportionalTextLine ; $40d6
 	call BuildResultsScreenPanels ; $40d9
 	call DrawPlayerNameAndLevel ; $40dc
-	wram_bank $03 ; $40df
+	wram_bank WRAM_SCREEN ; $40df
 	ld hl, wShadowTilemap ; $40e5
 	ld de, vBGMap0 ; $40e8
 	ld c, $24 ; $40eb
 	call QueueVRAMCopy ; $40ed
-	wram_bank $02 ; $40f0
+	wram_bank WRAM_COURT_PLANES ; $40f0
 	ld hl, wScreenAttrmap ; $40f6
 	ld de, vBGMap0 + VRAM_BANK1 ; $40f9
 	ld c, $24 ; $40fc
@@ -110,7 +110,7 @@ LoadResultsScreenGraphics:
 	ld hl, ResultsScreenPalettes ; $410e
 	lb de, $08, $01 ; $4111 palette index, count
 	call LoadPaletteShadow ; $4114
-	wram_bank $01 ; $4117
+	wram_bank WRAM_STAGING ; $4117
 	ld hl, ResultsScreenGfx_1e ; $411d
 	ld de, wDecompBuffer ; $4120
 	call DecompressData ; $4123
@@ -122,21 +122,21 @@ LoadResultsScreenGraphics:
 	ld de, vTiles1 + VRAM_BANK1 ; $4134
 	ld c, $80 ; $4137
 	call QueueVRAMCopy ; $4139
-	wram_bank $01 ; $413c
+	wram_bank WRAM_STAGING ; $413c
 	ld hl, ResultsScreenTilemap_1e ; $4142
 	ld de, wDecompBuffer ; $4145
 	call DecompressData ; $4148
 	ld hl, wDecompBuffer ; $414b
 	ld bc, $0240 ; $414e
 	call ResultsCopyToTilemap ; $4151
-	wram_bank $01 ; $4154
+	wram_bank WRAM_STAGING ; $4154
 	ld hl, ResultsScreenAttrmap_1e ; $415a
 	ld de, wDecompBuffer ; $415d
 	call DecompressData ; $4160
 	ld hl, wDecompBuffer ; $4163
 	ld bc, $0240 ; $4166
 	call ResultsCopyToAttrmap ; $4169
-	wram_bank $01 ; $416c
+	wram_bank WRAM_STAGING ; $416c
 	ld hl, PanelFrameGfx_1e ; $4172
 	ld de, wDecompBuffer ; $4175
 	call DecompressData ; $4178
@@ -146,9 +146,9 @@ LoadResultsScreenGraphics:
 	call QueueVRAMCopy ; $4183
 	ret ; $4186
 ResultsCopyToTilemap:
-	wram_bank $01 ; $4187
+	wram_bank WRAM_STAGING ; $4187
 	ld d, [hl] ; $418d
-	wram_bank $03 ; $418e
+	wram_bank WRAM_SCREEN ; $418e
 	ld [hl], d ; $4194
 	inc hl ; $4195
 	dec bc ; $4196
@@ -157,9 +157,9 @@ ResultsCopyToTilemap:
 	jr nz, ResultsCopyToTilemap ; $4199
 	ret ; $419b
 ResultsCopyToAttrmap:
-	wram_bank $01 ; $419c
+	wram_bank WRAM_STAGING ; $419c
 	ld d, [hl] ; $41a2
-	wram_bank $02 ; $41a3
+	wram_bank WRAM_COURT_PLANES ; $41a3
 	ld [hl], d ; $41a9
 	inc hl ; $41aa
 	dec bc ; $41ab
@@ -168,7 +168,7 @@ ResultsCopyToAttrmap:
 	jr nz, ResultsCopyToAttrmap ; $41ae
 	ret ; $41b0
 BuildResultsScreenPanels:
-	wram_bank $03 ; $41b1
+	wram_bank WRAM_SCREEN ; $41b1
 	ld a, $02 ; $41b7
 	ld [wShadowTilemap], a ; $41b9
 	ld a, $04 ; $41bc
@@ -203,14 +203,14 @@ BuildResultsScreenPanels:
 	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4207
 	ld c, $12 ; $420a
 	call FillMemoryC ; $420c
-	wram_bank $02 ; $420f
+	wram_bank WRAM_COURT_PLANES ; $420f
 	xor a ; $4215
 	ld hl, wScreenAttrmap ; $4216
 	ld c, $a0 ; $4219
 	call FillMemoryC ; $421b
 	ld hl, wScreenAttrmap + 2 * TILEMAP_WIDTH + 1 ; $421e
 	call DrawContinuePromptText ; $4221
-	wram_bank $03 ; $4224
+	wram_bank WRAM_SCREEN ; $4224
 	ld a, $02 ; $422a
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $422c
 	ld a, $04 ; $422f
@@ -245,12 +245,12 @@ BuildResultsScreenPanels:
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $427a
 	ld c, $12 ; $427d
 	call FillMemoryC ; $427f
-	wram_bank $02 ; $4282
+	wram_bank WRAM_COURT_PLANES ; $4282
 	xor a ; $4288
 	ld hl, wScreenAttrmap + 13 * TILEMAP_WIDTH ; $4289
 	ld c, $a0 ; $428c
 	call FillMemoryC ; $428e
-	wram_bank $03 ; $4291
+	wram_bank WRAM_SCREEN ; $4291
 	ld a, $02 ; $4297
 	ld [wShadowTilemap + 6 * TILEMAP_WIDTH + 14], a ; $4299
 	ld a, $04 ; $429c
@@ -290,7 +290,7 @@ BuildResultsScreenPanels:
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 16 ; $42e9
 	ld bc, $0020 ; $42ec
 	call FetchAndDrawDialogueText ; $42ef
-	wram_bank $02 ; $42f2
+	wram_bank WRAM_COURT_PLANES ; $42f2
 	xor a ; $42f8
 	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH + 14 ; $42f9
 	ld c, $06 ; $42fc
@@ -319,13 +319,13 @@ BuildResultsScreenPanels:
 	jp z, DrawMarioExhibitionResultsHeader ; $4336
 	ret ; $4339
 LoadSinglesLabelTiles:
-	wram_bank $01 ; $433a
+	wram_bank WRAM_STAGING ; $433a
 	ld hl, ResultsSinglesLabelTilemap_1e ; $4340
 	ld de, wDecompBuffer ; $4343
 	call DecompressData ; $4346
 	ret ; $4349
 LoadDoublesLabelTiles:
-	wram_bank $01 ; $434a
+	wram_bank WRAM_STAGING ; $434a
 	ld hl, ResultsDoublesLabelTilemap_1e ; $4350
 	ld de, wDecompBuffer ; $4353
 	call DecompressData ; $4356
@@ -340,7 +340,7 @@ DrawResultsNameLabelRows:
 	ld de, wScreenAttrmap + 12 * TILEMAP_WIDTH ; $4368
 	ld c, $07 ; $436b
 	call CopyLabelTilesToTilemap ; $436d
-	wram_bank $03 ; $4370
+	wram_bank WRAM_SCREEN ; $4370
 	ld a, $20 ; $4376
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $4378
 	ld c, $05 ; $437b
@@ -349,7 +349,7 @@ DrawResultsNameLabelRows:
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $4382
 	ld a, $08 ; $4385
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 6], a ; $4387
-	wram_bank $02 ; $438a
+	wram_bank WRAM_COURT_PLANES ; $438a
 	ld a, $08 ; $4390
 	ld [wScreenAttrmap + 13 * TILEMAP_WIDTH + 6], a ; $4392
 	ret ; $4395
@@ -361,7 +361,7 @@ DrawResultsNameLabelRows:
 	ld de, wScreenAttrmap + 10 * TILEMAP_WIDTH ; $43a1
 	ld c, $07 ; $43a4
 	call CopyLabelTilesToTilemap ; $43a6
-	wram_bank $03 ; $43a9
+	wram_bank WRAM_SCREEN ; $43a9
 	ld a, $20 ; $43af
 	ld hl, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $43b1
 	ld c, $12 ; $43b4
@@ -387,7 +387,7 @@ DrawResultsNameLabelRows:
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 19], a ; $43e8
 	ld a, $08 ; $43eb
 	ld [wShadowTilemap + 11 * TILEMAP_WIDTH + 6], a ; $43ed
-	wram_bank $02 ; $43f0
+	wram_bank WRAM_COURT_PLANES ; $43f0
 	xor a ; $43f6
 	ld hl, wScreenAttrmap + 11 * TILEMAP_WIDTH ; $43f7
 	ld c, $14 ; $43fa
@@ -399,12 +399,12 @@ DrawResultsNameLabelRows:
 	ld [wScreenAttrmap + 11 * TILEMAP_WIDTH + 6], a ; $4409
 	ret ; $440c
 CopyLabelTilesToTilemap:
-	wram_bank $01 ; $440d
+	wram_bank WRAM_STAGING ; $440d
 	ld b, [hl] ; $4413
-	wram_bank $03 ; $4414
+	wram_bank WRAM_SCREEN ; $4414
 	ld a, b ; $441a
 	ld [de], a ; $441b
-	wram_bank $02 ; $441c
+	wram_bank WRAM_COURT_PLANES ; $441c
 	ld a, $08 ; $4422
 	ld [de], a ; $4424
 	inc hl ; $4425
@@ -413,20 +413,20 @@ CopyLabelTilesToTilemap:
 	jr nz, CopyLabelTilesToTilemap ; $4428
 	ret ; $442a
 UnusedClearLabelTilemapRow:
-	wram_bank $03 ; $442b
+	wram_bank WRAM_SCREEN ; $442b
 	ld a, $20 ; $4431
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $4433
 	ld c, $05 ; $4436
 	call FillMemoryC ; $4438
-	wram_bank $03 ; $443b
+	wram_bank WRAM_SCREEN ; $443b
 	ld a, $05 ; $4441
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $4443
-	wram_bank $02 ; $4446
+	wram_bank WRAM_COURT_PLANES ; $4446
 	xor a ; $444c
 	ld [wScreenAttrmap + 13 * TILEMAP_WIDTH], a ; $444d
 	ld a, $08 ; $4450
 	ld [wScreenAttrmap + 13 * TILEMAP_WIDTH + 6], a ; $4452
-	wram_bank $03 ; $4455
+	wram_bank WRAM_SCREEN ; $4455
 	ld a, $08 ; $445b
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 6], a ; $445d
 	ret ; $4460

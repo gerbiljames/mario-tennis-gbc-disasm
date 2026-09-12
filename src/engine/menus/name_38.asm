@@ -180,7 +180,7 @@ WaitLinkSelectStartupFrames:
 RunNameEntryScreen:
 	ld a, b ; $6e14
 	ld [wStoryCharacterSlot], a ; $6e15
-	wram_bank $02 ; $6e18
+	wram_bank WRAM_COURT_PLANES ; $6e18
 	ld a, c ; $6e1e
 	ld [wScreenAttrmap + 1], a ; $6e1f
 	call DisableLCDSafely ; $6e22
@@ -251,7 +251,7 @@ RunNameEntryScreen:
 	jr .redraw ; $6eae
 .pressB:
 	sound SFX_MENU_CANCEL ; $6eb0
-	push_wram_bank $03 ; $6eb2
+	push_wram_bank WRAM_SCREEN ; $6eb2
 	ld a, [wNameEntryBuffer] ; $6ebb
 	ld b, a ; $6ebe
 	pop_wram_bank ; $6ebf
@@ -271,14 +271,14 @@ RunNameEntryScreen:
 	ld a, $ff ; $6ee0
 	ret ; $6ee2
 .accept:
-	push_wram_bank $03 ; $6ee3
+	push_wram_bank WRAM_SCREEN ; $6ee3
 	ld a, [wNameEntryBuffer] ; $6eec
 	ld b, a ; $6eef
 	pop_wram_bank ; $6ef0
 	ld a, b ; $6ef5
 	cp $00 ; $6ef6
 	jr z, .storeName ; $6ef8
-	wram_bank $03 ; $6efa
+	wram_bank WRAM_SCREEN ; $6efa
 	call TrimTrailingSpacesFromName ; $6f00
 	call GetActiveStoryNameBuffer ; $6f03
 	ld d, b ; $6f06
@@ -296,7 +296,7 @@ RunNameEntryScreen:
 	ld a, $00 ; $6f23
 	ret ; $6f25
 .storeName:
-	wram_bank $03 ; $6f26
+	wram_bank WRAM_SCREEN ; $6f26
 	call GetActiveStoryNameBuffer ; $6f2c
 	ld h, b ; $6f2f
 	ld l, c ; $6f30
@@ -342,7 +342,7 @@ SetupNameEntryScreen:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $6f92
 	ld de, vTiles2 ; $6f94
 	farcall LoadCompressedTileBlock ; $6f97
-	wram_bank $05 ; $6f9a
+	wram_bank WRAM_TEXT ; $6f9a
 	ld a, $03 ; $6fa0
 	ld [wShadowTilemapBank], a ; $6fa2
 	ld a, $00 ; $6fa5
@@ -374,12 +374,12 @@ SetupNameEntryScreen:
 	ld b, $0a ; $6fe6
 	ld c, $0c ; $6fe8
 	farcall LoadIndexedPalette ; $6fea
-	push_wram_bank $02 ; $6fed
+	push_wram_bank WRAM_COURT_PLANES ; $6fed
 	ld a, [wScreenAttrmap + 1] ; $6ff6
 	farcall LoadCharMugshotToBuffer ; $6ff9
 	ld de, $9200 + VRAM_BANK1 ; $6ffc
 	farcall CopyMugshotBufferToVram ; $6fff
-	wram_bank $02 ; $7002
+	wram_bank WRAM_COURT_PLANES ; $7002
 	call GetActiveStoryNameBuffer ; $7008
 	ld hl, $000c ; $700b
 	add hl, bc ; $700e
@@ -398,10 +398,10 @@ SetupNameEntryScreen:
 	ld c, SharedMenuGfx72_SIZE / 16 ; $702e
 	ld de, vTiles0 + $10 * TILE_SIZE ; $7030
 	farcall LoadCompressedTileBlock ; $7033
-	push_wram_bank $02 ; $7036
+	push_wram_bank WRAM_COURT_PLANES ; $7036
 	xor a ; $703f
 	ld [wScreenAttrmap], a ; $7040
-	wram_bank $03 ; $7043
+	wram_bank WRAM_SCREEN ; $7043
 	call GetActiveStoryNameBuffer ; $7049
 	ld h, b ; $704c
 	ld l, c ; $704d
@@ -463,7 +463,7 @@ DrawNameEntryCursor:
 NameEntryCursorTable:
 	INCBIN "data/bank_038/NameEntryCursorTable.bin" ; $70a5, 180 bytes
 DrawEnterNameLabel:
-	push_wram_bank $03 ; $7159
+	push_wram_bank WRAM_SCREEN ; $7159
 	ld hl, EnterNameText_38 ; $7162
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $7165
 	call DrawNameWithDiacritics_38 ; $7168
@@ -472,7 +472,7 @@ DrawEnterNameLabel:
 EnterNameText_38:
 	INCLUDE "data/bank_038/EnterNameText_38.asm" ; $7171, 11 bytes
 DrawNameEntryCharGrid:
-	push_wram_bank $03 ; $717c
+	push_wram_bank WRAM_SCREEN ; $717c
 	ld c, $05 ; $7185
 	ld b, $03 ; $7187
 	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH + 1 ; $7189

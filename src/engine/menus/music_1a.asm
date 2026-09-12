@@ -21,7 +21,7 @@ RunMinigameModePauseMenu:
 RunPauseMenuWindow:
 	xor a ; $402c
 	ld [wPauseMenuIsMinigame], a ; $402d
-	wram_bank $05 ; $4030
+	wram_bank WRAM_TEXT ; $4030
 	farcall CreateMenuWindowFromText ; $4036
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $4039
 	ld [wPauseMenuWindowId], a ; $403c

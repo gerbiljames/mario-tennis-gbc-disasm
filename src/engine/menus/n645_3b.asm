@@ -5,7 +5,7 @@ SavedDataCellPalette1:
 	; $70f8, 8 bytes (bytes:8)
 	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
 DrawEraseSavedDataCaption:
-	push_wram_bank $03 ; $7100
+	push_wram_bank WRAM_SCREEN ; $7100
 	ld c, $03 ; $7109
 	call GetMenuCursorIndex_3b ; $710b
 	ld b, a ; $710e
@@ -107,7 +107,7 @@ RunN64RecordTypeSelect:
 	ld b, $01 ; $71bd
 	ld c, $01 ; $71bf
 	farcall LoadMenuSpritePalettePair ; $71c1
-	wram_bank $03 ; $71c4
+	wram_bank WRAM_SCREEN ; $71c4
 	ld a, [wMenuSlideDirection] ; $71ca
 	ld b, a ; $71cd
 	call N64RecordTypeSlideIn ; $71ce
@@ -119,7 +119,7 @@ RunN64RecordTypeSelect:
 	ld hl, N64RecordTypeCursorSpriteTask ; $71dc
 	call RegisterFrameTask ; $71df
 	call DrawN64RecordTypeGrid ; $71e2
-	wram_bank $03 ; $71e5
+	wram_bank WRAM_SCREEN ; $71e5
 .loop:
 	call AdvanceFrame ; $71eb
 	ldh a, [hInputPressed] ; $71ee
@@ -163,7 +163,7 @@ RunN64RecordTypeSelect:
 	ld a, $ff ; $7240
 	ret ; $7242
 LoadN64RecordTypeGfx:
-	push_wram_bank $01 ; $7243
+	push_wram_bank WRAM_STAGING ; $7243
 	ld c, $00 ; $724c
 .loop:
 	ld a, c ; $724e
@@ -379,7 +379,7 @@ N64RecordTypeCursorSpriteTaskTable1:
 	; $73bc, 3 bytes (bytes:3)
 	db $00, $10, $20 ; 0x00
 DrawN64RecordTypeGrid:
-	wram_bank $03 ; $73bf
+	wram_bank WRAM_SCREEN ; $73bf
 	ld b, $00 ; $73c5
 	ld c, $00 ; $73c7
 .loop:
@@ -397,7 +397,7 @@ DrawN64RecordTypeGrid:
 	ld c, $03 ; $73de
 	call GetMenuCursorIndex_3b ; $73e0
 	call LoadN64RecordTypeCellPalette ; $73e3
-	wram_bank $03 ; $73e6
+	wram_bank WRAM_SCREEN ; $73e6
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $73ec
 	ld b, $14 ; $73ef
 	ld c, $01 ; $73f1
@@ -499,7 +499,7 @@ N64RecordTypeCellPalette2:
 	; $7492, 8 bytes (bytes:8)
 	db $32, $1b, $ff, $6b, $e0, $15, $00, $00 ; 0x00
 DrawN64RecordTypeCaption:
-	push_wram_bank $03 ; $749a
+	push_wram_bank WRAM_SCREEN ; $749a
 	ld c, $03 ; $74a3
 	call GetMenuCursorIndex_3b ; $74a5
 	ld b, a ; $74a8
@@ -519,7 +519,7 @@ RunN64TransferItemSelect:
 	ld hl, rIE ; $74c1
 	res 2, [hl] ; $74c4
 	call LoadN64TransferItemGfx ; $74c6
-	wram_bank $03 ; $74c9
+	wram_bank WRAM_SCREEN ; $74c9
 	ld a, [wMenuSlideDirection] ; $74cf
 	ld b, a ; $74d2
 	farcall OpenCourtSelect4Panel ; $74d3
@@ -535,7 +535,7 @@ RunN64TransferItemSelect:
 	ld hl, N64TransferItemCursorSpriteTask ; $74eb
 	call RegisterFrameTask ; $74ee
 	call DrawN64TransferItemGrid ; $74f1
-	wram_bank $03 ; $74f4
+	wram_bank WRAM_SCREEN ; $74f4
 .loop:
 	call AdvanceFrame ; $74fa
 	ldh a, [hInputPressed] ; $74fd
@@ -579,7 +579,7 @@ RunN64TransferItemSelect:
 	ld a, $ff ; $754f
 	ret ; $7551
 LoadN64TransferItemGfx:
-	push_wram_bank $01 ; $7552
+	push_wram_bank WRAM_STAGING ; $7552
 	ld c, $00 ; $755b
 .loop:
 	ld a, c ; $755d
@@ -680,7 +680,7 @@ N64TransferItemTable1:
 	db $00, $aa ; 0x04
 	db $00, $ab ; 0x06
 DrawN64TransferItemGrid:
-	wram_bank $03 ; $760c
+	wram_bank WRAM_SCREEN ; $760c
 	ld b, $00 ; $7612
 	ld c, $00 ; $7614
 .loop:
@@ -698,7 +698,7 @@ DrawN64TransferItemGrid:
 	ld c, $02 ; $762b
 	call GetMenuCursorIndex_3b ; $762d
 	call LoadN64TransferItemCellPalette ; $7630
-	wram_bank $03 ; $7633
+	wram_bank WRAM_SCREEN ; $7633
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $7639
 	ld b, $14 ; $763c
 	ld c, $01 ; $763e
@@ -765,7 +765,7 @@ N64TransferItemCellPalette3:
 	; $76bd, 8 bytes (bytes:8)
 	db $bf, $02, $ff, $6b, $57, $05, $00, $00 ; 0x00
 DrawN64TransferItemCaption:
-	push_wram_bank $03 ; $76c5
+	push_wram_bank WRAM_SCREEN ; $76c5
 	ld c, $02 ; $76ce
 	call GetMenuCursorIndex_3b ; $76d0
 	ld b, a ; $76d3

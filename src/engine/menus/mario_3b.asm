@@ -1,5 +1,5 @@
 RecordExhibitionVictory:
-	push_wram_bank $03 ; $7d57
+	push_wram_bank WRAM_SCREEN ; $7d57
 	ld a, [wMatchWinLoseFlag] ; $7d60
 	cp WINLOSE_LOSE ; $7d63
 	jr z, .restore ; $7d65
@@ -151,7 +151,7 @@ ApplyMarioCastChartReducedLayout:
 	push bc ; $7e44
 	push de ; $7e45
 	push hl ; $7e46
-	push_wram_bank $03 ; $7e47
+	push_wram_bank WRAM_SCREEN ; $7e47
 	call CheckMarioCastChartExpanded ; $7e50
 	or a ; $7e53
 	jr nz, .restore ; $7e54

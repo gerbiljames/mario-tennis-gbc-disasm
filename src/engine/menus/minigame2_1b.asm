@@ -1,5 +1,5 @@
 FlushLevelSelectTextRows:
-	push_wram_bank $03 ; $6dc6
+	push_wram_bank WRAM_SCREEN ; $6dc6
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $6dcf
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $6dd2
 	ld c, $06 ; $6dd5
@@ -11,7 +11,7 @@ FlushLevelSelectTextRows:
 	pop_wram_bank ; $6de5
 	ret ; $6dea
 ClearMinigameLevelDescriptionRow:
-	push_wram_bank $03 ; $6deb
+	push_wram_bank WRAM_SCREEN ; $6deb
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6df4
 	ld b, $14 ; $6df7
 	ld c, $01 ; $6df9
@@ -30,7 +30,7 @@ ClearMinigameLevelDescriptionRow:
 	ret ; $6e1b
 GetMinigameLevelColumnCount:
 	push af ; $6e1c
-	push_wram_bank $02 ; $6e1d
+	push_wram_bank WRAM_COURT_PLANES ; $6e1d
 	ld a, [wScreenAttrmap + 2] ; $6e26
 	ld b, a ; $6e29
 	pop_wram_bank ; $6e2a
@@ -41,7 +41,7 @@ RunMinigameLevelSelect2:
 	sound BGM_MARIO_MINIGAME ; $6e34
 	ld hl, rIE ; $6e36
 	res 2, [hl] ; $6e39
-	wram_bank $03 ; $6e3b
+	wram_bank WRAM_SCREEN ; $6e3b
 	ld a, [wMenuSlideDirection] ; $6e41
 	ld b, a ; $6e44
 	farcall OpenChoiceTabPanel ; $6e45
@@ -49,17 +49,17 @@ RunMinigameLevelSelect2:
 	ld b, $01 ; $6e4b
 	ld c, $01 ; $6e4d
 	farcall LoadMenuSpritePalettePair ; $6e4f
-	wram_bank $02 ; $6e52
+	wram_bank WRAM_COURT_PLANES ; $6e52
 	ld a, [wScreenAttrmap + 1] ; $6e58
 	ld c, a ; $6e5b
 	ld b, $02 ; $6e5c
 	call SetMenuCursorFromIndex ; $6e5e
-	wram_bank $03 ; $6e61
+	wram_bank WRAM_SCREEN ; $6e61
 	ld a, $01 ; $6e67
 	ld hl, DrawMinigameLevelSelect2Cursor ; $6e69
 	call RegisterFrameTask ; $6e6c
 	call RedrawMinigameLevelSelect2 ; $6e6f
-	wram_bank $03 ; $6e72
+	wram_bank WRAM_SCREEN ; $6e72
 .loop:
 	call AdvanceFrame ; $6e78
 	ldh a, [hInputPressed] ; $6e7b
@@ -83,7 +83,7 @@ RunMinigameLevelSelect2:
 	call GetMenuCursorIndex_1b ; $6e9f
 	or a ; $6ea2
 	jr z, .playSfx ; $6ea3
-	wram_bank $02 ; $6ea5
+	wram_bank WRAM_COURT_PLANES ; $6ea5
 	ld a, [wScreenAttrmap + 1] ; $6eab
 	or a ; $6eae
 	jr nz, .playSfx ; $6eaf
@@ -94,12 +94,12 @@ RunMinigameLevelSelect2:
 	call ClearFrameTasks ; $6eb7
 	ld hl, rIE ; $6eba
 	set 2, [hl] ; $6ebd
-	wram_bank $03 ; $6ebf
+	wram_bank WRAM_SCREEN ; $6ebf
 	ld b, $01 ; $6ec5
 	farcall CloseChoiceTabPanel ; $6ec7
 	ld a, MENUSLIDE_FORWARD ; $6eca
 	ld [wMenuSlideDirection], a ; $6ecc
-	wram_bank $02 ; $6ecf
+	wram_bank WRAM_COURT_PLANES ; $6ecf
 	ld c, $03 ; $6ed5
 	call GetMenuCursorIndex_1b ; $6ed7
 	ld [wScreenAttrmap + 3], a ; $6eda
@@ -109,17 +109,17 @@ RunMinigameLevelSelect2:
 	call ClearFrameTasks ; $6ee0
 	ld hl, rIE ; $6ee3
 	set 2, [hl] ; $6ee6
-	wram_bank $03 ; $6ee8
+	wram_bank WRAM_SCREEN ; $6ee8
 	ld b, $00 ; $6eee
 	farcall CloseChoiceTabPanel ; $6ef0
 	ld a, MENUSLIDE_BACK ; $6ef3
 	ld [wMenuSlideDirection], a ; $6ef5
-	wram_bank $02 ; $6ef8
+	wram_bank WRAM_COURT_PLANES ; $6ef8
 	ld a, $ff ; $6efe
 	ld [wScreenAttrmap + 3], a ; $6f00
 	ret ; $6f03
 RedrawMinigameLevelSelect2:
-	wram_bank $03 ; $6f04
+	wram_bank WRAM_SCREEN ; $6f04
 	ld b, $00 ; $6f0a
 	ld c, $00 ; $6f0c
 .loop:
@@ -243,7 +243,7 @@ RunMinigameLevelSelect3:
 	sound BGM_MARIO_MINIGAME ; $6fd5
 	ld hl, rIE ; $6fd7
 	res 2, [hl] ; $6fda
-	wram_bank $03 ; $6fdc
+	wram_bank WRAM_SCREEN ; $6fdc
 	ld a, [wMenuSlideDirection] ; $6fe2
 	ld b, a ; $6fe5
 	farcall N64RecordTypeSlideIn ; $6fe6
@@ -251,17 +251,17 @@ RunMinigameLevelSelect3:
 	ld b, $01 ; $6fec
 	ld c, $01 ; $6fee
 	farcall LoadMenuSpritePalettePair ; $6ff0
-	wram_bank $02 ; $6ff3
+	wram_bank WRAM_COURT_PLANES ; $6ff3
 	ld a, [wScreenAttrmap + 1] ; $6ff9
 	ld c, a ; $6ffc
 	ld b, $03 ; $6ffd
 	call SetMenuCursorFromIndex ; $6fff
-	wram_bank $03 ; $7002
+	wram_bank WRAM_SCREEN ; $7002
 	ld a, $01 ; $7008
 	ld hl, DrawMinigameLevelSelect3Cursor ; $700a
 	call RegisterFrameTask ; $700d
 	call RedrawMinigameLevelSelect3 ; $7010
-	wram_bank $03 ; $7013
+	wram_bank WRAM_SCREEN ; $7013
 .loop:
 	call AdvanceFrame ; $7019
 	ldh a, [hInputPressed] ; $701c
@@ -285,12 +285,12 @@ RunMinigameLevelSelect3:
 	call ClearFrameTasks ; $7040
 	ld hl, rIE ; $7043
 	set 2, [hl] ; $7046
-	wram_bank $03 ; $7048
+	wram_bank WRAM_SCREEN ; $7048
 	ld b, $01 ; $704e
 	farcall N64RecordTypeSlideOut ; $7050
 	ld a, MENUSLIDE_FORWARD ; $7053
 	ld [wMenuSlideDirection], a ; $7055
-	wram_bank $02 ; $7058
+	wram_bank WRAM_COURT_PLANES ; $7058
 	ld c, $03 ; $705e
 	call GetMenuCursorIndex_1b ; $7060
 	ld [wScreenAttrmap + 3], a ; $7063
@@ -300,17 +300,17 @@ RunMinigameLevelSelect3:
 	call ClearFrameTasks ; $7069
 	ld hl, rIE ; $706c
 	set 2, [hl] ; $706f
-	wram_bank $03 ; $7071
+	wram_bank WRAM_SCREEN ; $7071
 	ld b, $00 ; $7077
 	farcall N64RecordTypeSlideOut ; $7079
 	ld a, MENUSLIDE_BACK ; $707c
 	ld [wMenuSlideDirection], a ; $707e
-	wram_bank $02 ; $7081
+	wram_bank WRAM_COURT_PLANES ; $7081
 	ld a, $ff ; $7087
 	ld [wScreenAttrmap + 3], a ; $7089
 	ret ; $708c
 RedrawMinigameLevelSelect3:
-	wram_bank $03 ; $708d
+	wram_bank WRAM_SCREEN ; $708d
 	ld b, $00 ; $7093
 	ld c, $00 ; $7095
 .loop:
@@ -434,7 +434,7 @@ RunSavedDataTypeSelect:
 	ld hl, rIE ; $715f
 	res 2, [hl] ; $7162
 	call LoadSavedDataTypeSelectGfx ; $7164
-	wram_bank $03 ; $7167
+	wram_bank WRAM_SCREEN ; $7167
 	ld a, [wMenuSlideDirection] ; $716d
 	ld b, a ; $7170
 	farcall OpenChoiceTabPanel ; $7171
@@ -453,7 +453,7 @@ RunSavedDataTypeSelect:
 	ld hl, DrawSavedDataTypeSelectCursor ; $7191
 	call RegisterFrameTask ; $7194
 	call RedrawSavedDataTypeSelect ; $7197
-	wram_bank $03 ; $719a
+	wram_bank WRAM_SCREEN ; $719a
 .loop:
 	call AdvanceFrame ; $71a0
 	ldh a, [hInputPressed] ; $71a3
@@ -477,7 +477,7 @@ RunSavedDataTypeSelect:
 	call ClearFrameTasks ; $71c6
 	ld hl, rIE ; $71c9
 	set 2, [hl] ; $71cc
-	wram_bank $03 ; $71ce
+	wram_bank WRAM_SCREEN ; $71ce
 	ld b, $01 ; $71d4
 	farcall CloseChoiceTabPanel ; $71d6
 	ld a, MENUSLIDE_FORWARD ; $71d9
@@ -491,16 +491,16 @@ RunSavedDataTypeSelect:
 	call ClearFrameTasks ; $71e9
 	ld hl, rIE ; $71ec
 	set 2, [hl] ; $71ef
-	wram_bank $03 ; $71f1
+	wram_bank WRAM_SCREEN ; $71f1
 	ld b, $00 ; $71f7
 	farcall CloseChoiceTabPanel ; $71f9
 	ld a, MENUSLIDE_BACK ; $71fc
 	ld [wMenuSlideDirection], a ; $71fe
-	wram_bank $02 ; $7201
+	wram_bank WRAM_COURT_PLANES ; $7201
 	ld a, $ff ; $7207
 	ret ; $7209
 LoadSavedDataTypeSelectGfx:
-	push_wram_bank $01 ; $720a
+	push_wram_bank WRAM_STAGING ; $720a
 	ld c, $00 ; $7213
 .loop:
 	ld a, c ; $7215

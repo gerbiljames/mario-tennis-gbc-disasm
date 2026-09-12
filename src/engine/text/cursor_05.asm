@@ -25,7 +25,7 @@ IsCursorOnAdjustRow:
 	xor a ; $4c9b
 	ret ; $4c9c
 AnimateMenuScrollArrowsTask:
-	wram_bank $05 ; $4c9d
+	wram_bank WRAM_TEXT ; $4c9d
 	ld a, [wMenuAdjustRowMask] ; $4ca3
 	bit 7, a ; $4ca6
 	jr z, .checkFlag ; $4ca8
@@ -124,7 +124,7 @@ AnimateMenuScrollArrowsTask:
 	xor a ; $4d52
 	ld [wTextArrowEraseAddr + 1], a ; $4d53
 .zero2:
-	wram_bank $05 ; $4d56
+	wram_bank WRAM_TEXT ; $4d56
 	ld hl, wTextArrowBlinkCounter ; $4d5c
 	inc [hl] ; $4d5f
 	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4d60
@@ -204,7 +204,7 @@ AnimateMenuScrollArrowsTask:
 .doneB:
 	ret ; $4e0f
 GetMenuCursorBlinkPhase:
-	wram_bank $05 ; $4e10
+	wram_bank WRAM_TEXT ; $4e10
 	ld a, [wTextArrowBlinkCounter] ; $4e16
 	and $10 ; $4e19
 	or a ; $4e1b
@@ -356,7 +356,7 @@ TextCmdNextGlyphStreamRow:
 	ld [hl+], a ; $4eff
 	ld [hl], b ; $4f00
 	call StartGlyphStreamRow ; $4f01
-	push_wram_bank $05 ; $4f04
+	push_wram_bank WRAM_TEXT ; $4f04
 	ld hl, wGlyphVramDest ; $4f0d
 	ld a, [hl+] ; $4f10
 	ld h, [hl] ; $4f11

@@ -7,7 +7,7 @@ GetSpeakerVoice:
 	ld b, $08 ; $6091
 	or l ; $6093
 	jr z, .done ; $6094
-	push_wram_bank $04 ; $6096
+	push_wram_bank WRAM_ACTORS ; $6096
 	ld a, l ; $609f
 	ldh [hActorPtr], a ; $60a0
 	ld a, h ; $60a2
@@ -133,7 +133,7 @@ ResetTextWindowsAndRestoreMap:
 	ret ; $6180
 CreateWindowWithTextId:
 	push bc ; $6181
-	push_wram_bank $05 ; $6182
+	push_wram_bank WRAM_TEXT ; $6182
 	call CreateWindow ; $618b
 	bit 7, h ; $618e
 	jr nz, .negative ; $6190
@@ -152,7 +152,7 @@ RedrawWindowText:
 	push de ; $61a4
 	push hl ; $61a5
 	ld b, a ; $61a6
-	push_wram_bank $05 ; $61a7
+	push_wram_bank WRAM_TEXT ; $61a7
 	ld a, [wDialogueWindowId] ; $61b0
 	cp b ; $61b3
 	jr nz, .getWindowStructPtr ; $61b4
@@ -161,7 +161,7 @@ RedrawWindowText:
 	xor a ; $61b9
 	ld [wGlyphRowStartCol], a ; $61ba
 	ld [wGlyphFlushedCol], a ; $61bd
-	push_wram_bank $07 ; $61c0
+	push_wram_bank WRAM_SOUND ; $61c0
 	call ClearGlyphBuffer ; $61c9
 	call UploadGlyphTilesPartial ; $61cc
 	pop_wram_bank ; $61cf
@@ -219,7 +219,7 @@ RedrawWindowText:
 	pop af ; $622c
 	ret ; $622d
 UploadGlyphTilesPartial:
-	push_wram_bank $07 ; $622e
+	push_wram_bank WRAM_SOUND ; $622e
 	ld hl, wGlyphTileBuffer ; $6237
 	ld de, vTiles1 ; $623a
 	ld c, $1b ; $623d
@@ -250,7 +250,7 @@ RenderWindowTextToCompletion:
 	push de ; $626b
 	push hl ; $626c
 	ld b, a ; $626d
-	push_wram_bank $05 ; $626e
+	push_wram_bank WRAM_TEXT ; $626e
 	ld a, [wDialogueWindowId] ; $6277
 	cp b ; $627a
 	jr nz, .getWindowStructPtr ; $627b
@@ -301,7 +301,7 @@ RedrawWindowRowsSafe:
 	push de ; $62be
 	push hl ; $62bf
 	ld b, a ; $62c0
-	push_wram_bank $05 ; $62c1
+	push_wram_bank WRAM_TEXT ; $62c1
 	ld a, b ; $62ca
 	call RedrawWindowRowsThunk ; $62cb
 	pop_wram_bank ; $62ce
@@ -322,7 +322,7 @@ ShowDialogueCentered:
 	push af ; $62e7
 	push bc ; $62e8
 	push de ; $62e9
-	push_wram_bank $05 ; $62ea
+	push_wram_bank WRAM_TEXT ; $62ea
 	xor a ; $62f3
 	ld [wTextArgStringWriteIndex], a ; $62f4
 	ld [wTextArgStringMeasureIndex], a ; $62f7
@@ -419,7 +419,7 @@ Unused_05_ChooseSpeechBubbleHalf:
 	ldh [hActorPtr], a ; $639f
 	ld a, h ; $63a1
 	ldh [hActorPtr + 1], a ; $63a2
-	wram_bank $04 ; $63a4
+	wram_bank WRAM_ACTORS ; $63a4
 	ld hl, hActorPtr ; $63aa
 	ld a, [hl+] ; $63ad
 	ld h, [hl] ; $63ae
@@ -437,7 +437,7 @@ Unused_05_ChooseSpeechBubbleHalf:
 	ld e, $0b ; $63bf
 	ld b, $01 ; $63c1
 .step2:
-	wram_bank $05 ; $63c3
+	wram_bank WRAM_TEXT ; $63c3
 	ld a, b ; $63c9
 	ld [wSpeechBubbleLowerHalf], a ; $63ca
 	pop_wram_bank ; $63cd

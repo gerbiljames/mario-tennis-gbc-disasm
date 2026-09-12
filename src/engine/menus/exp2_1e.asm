@@ -6,7 +6,7 @@ GetDigitSpriteTile:
 	ld b, $08 ; $5b00
 	ret ; $5b02
 RunExpAwardSequence:
-	wram_bank $06 ; $5b03
+	wram_bank WRAM_SCENE ; $5b03
 	call AdvanceFrame ; $5b09
 	call BeginNextExpAward ; $5b0c
 	or a ; $5b0f
@@ -20,7 +20,7 @@ BeginNextExpAward:
 	jp z, .waitFramesCmd ; $5b1d
 	sound BGM_NONE ; $5b20
 	sound BGM_EXP_AWARD ; $5b22
-	wram_bank $06 ; $5b24
+	wram_bank WRAM_SCENE ; $5b24
 	ld a, [wExpAwardIndex] ; $5b2a
 	inc a ; $5b2d
 	ld [wExpAwardIndex], a ; $5b2e
@@ -30,12 +30,12 @@ BeginNextExpAward:
 	ld a, c ; $5b38
 	ld [hl+], a ; $5b39
 	ld [hl], b ; $5b3a
-	wram_bank $03 ; $5b3b
+	wram_bank WRAM_SCREEN ; $5b3b
 	ld hl, wShadowTilemap ; $5b41
 	ld de, vBGMap0 ; $5b44
 	ld c, $08 ; $5b47
 	call QueueVRAMCopy ; $5b49
-	wram_bank $02 ; $5b4c
+	wram_bank WRAM_COURT_PLANES ; $5b4c
 	ld hl, wScreenAttrmap ; $5b52
 	ld de, vBGMap0 + VRAM_BANK1 ; $5b55
 	ld c, $08 ; $5b58
@@ -47,7 +47,7 @@ BeginNextExpAward:
 	xor a ; $5b64
 	ret ; $5b65
 CountUpExpTotal:
-	wram_bank $06 ; $5b66
+	wram_bank WRAM_SCENE ; $5b66
 	ld hl, wExpAwardAmount ; $5b6c
 	ld a, [hl+] ; $5b6f
 	ld d, [hl] ; $5b70
@@ -254,7 +254,7 @@ ProcessMatchRewards:
 	call ShowExpAwardForMinigame ; $65f3
 	jp .runExpDistributionFlow ; $65f6
 .computeMatchStatsReward:
-	wram_bank $04 ; $65f9
+	wram_bank WRAM_ACTORS ; $65f9
 	call ComputeMatchStatsReward ; $65ff
 	ld a, [wPlayer1MainEquipment] ; $6602
 	ld d, a ; $6605
@@ -279,7 +279,7 @@ ProcessMatchRewards:
 	call ApplyClassProgressFlags ; $662b
 	jr .runExpDistributionFlow ; $662e
 .eq04:
-	wram_bank $04 ; $6630
+	wram_bank WRAM_ACTORS ; $6630
 	call ComputeMatchStatsReward ; $6636
 	ld a, [wPlayer1MainEquipment] ; $6639
 	ld d, a ; $663c
@@ -290,7 +290,7 @@ ProcessMatchRewards:
 	ld a, [wLinkMatchRole] ; $6644
 	cp LINKSTATE_SLAVE ; $6647
 	jr z, .eq02 ; $6649
-	wram_bank $04 ; $664b
+	wram_bank WRAM_ACTORS ; $664b
 	call ComputeMatchStatsReward ; $6651
 	ld a, [wPlayer1MainEquipment] ; $6654
 	ld d, a ; $6657
@@ -300,7 +300,7 @@ ProcessMatchRewards:
 	jr z, .step6 ; $6660
 	jr .awardLinkedPlayMatchExp ; $6662
 .eq02:
-	wram_bank $05 ; $6664
+	wram_bank WRAM_TEXT ; $6664
 	call ComputeMatchStatsReward ; $666a
 	ld a, [wPlayer2MainEquipment] ; $666d
 	ld d, a ; $6670

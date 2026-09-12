@@ -91,7 +91,7 @@ SetGridEntryTakenByCharId:
 	ld a, $ff ; $6a7c
 	ret ; $6a7e
 InitLinkMatchCharsFromSelection:
-	push_wram_bank $03 ; $6a7f
+	push_wram_bank WRAM_SCREEN ; $6a7f
 	call CacheStorySlotNames ; $6a88
 	ld a, [wCharSelectMode] ; $6a8b
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $6a8e
@@ -292,7 +292,7 @@ CheckMarioCastEquipCategory:
 	xor a ; $6bd5
 	ret ; $6bd6
 RunLinkCpuDifficultySubmenu:
-	push_wram_bank $03 ; $6bd7
+	push_wram_bank WRAM_SCREEN ; $6bd7
 	ld a, [wCpuDifficultyPanelOpen] ; $6be0
 	or a ; $6be3
 	jr nz, .inputLoop ; $6be4
@@ -312,7 +312,7 @@ RunLinkCpuDifficultySubmenu:
 .cancel:
 	call CloseCpuDifficultyPanel ; $6c04
 	sound SFX_MENU_CANCEL ; $6c07
-	wram_bank $03 ; $6c09
+	wram_bank WRAM_SCREEN ; $6c09
 	call ClearPlayerSlotPortrait ; $6c0f
 	call BuildVisiblePageSpriteList ; $6c12
 	jr .storeDifficulty ; $6c15
@@ -331,7 +331,7 @@ RunLinkCpuDifficultySubmenu:
 	pop_wram_bank ; $6c31
 	ret ; $6c36
 GetGridSlotFromLinkCursor:
-	push_wram_bank $03 ; $6c37
+	push_wram_bank WRAM_SCREEN ; $6c37
 	ld a, [wMenuCursor2X] ; $6c40
 	ld d, a ; $6c43
 	ld a, [wMenuCursor2Y] ; $6c44
@@ -391,7 +391,7 @@ GetLinkCursorSelectionCode:
 	ret ; $6c89
 UpdateMenuCursorFromLinkInput:
 	ld b, a ; $6c8a
-	push_wram_bank $03 ; $6c8b
+	push_wram_bank WRAM_SCREEN ; $6c8b
 	ld a, [wMenuCursor2X] ; $6c94
 	ld d, a ; $6c97
 	ld a, [wMenuCursor2Y] ; $6c98

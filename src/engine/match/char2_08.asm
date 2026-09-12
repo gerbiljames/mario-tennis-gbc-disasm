@@ -65,22 +65,22 @@ CheckAllCharsPhaseDone:
 	dw CheckAllCharsPhaseDone.char3 ; $6070 jumptable
 	dw CheckAllCharsPhaseDone.char4 ; $6072 jumptable
 .char4:
-	wram_bank $06 ; $6074
+	wram_bank WRAM_CHAR2 ; $6074
 	ld a, [de] ; $607a
 	and b ; $607b
 	ld b, a ; $607c
 .char3:
-	wram_bank $07 ; $607d
+	wram_bank WRAM_CHAR3 ; $607d
 	ld a, [de] ; $6083
 	and b ; $6084
 	ld b, a ; $6085
 .char2:
-	wram_bank $05 ; $6086
+	wram_bank WRAM_CHAR1 ; $6086
 	ld a, [de] ; $608c
 	and b ; $608d
 	ld b, a ; $608e
 .char1:
-	wram_bank $04 ; $608f
+	wram_bank WRAM_CHAR0 ; $608f
 	ld a, [de] ; $6095
 	and b ; $6096
 	ret ; $6097

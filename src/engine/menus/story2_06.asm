@@ -193,7 +193,7 @@ StoryThreeOptionCursorPositions:
 	db $60, $30 ; 0x02
 	db $60, $58 ; 0x04
 RedrawStoryTilemapRows:
-	wram_bank $05 ; $7237
+	wram_bank WRAM_TEXT ; $7237
 	farcall RedrawAllTilemapRows ; $723d
 	ret ; $7240
 RestoreStoryShadowTilemap:
@@ -220,7 +220,7 @@ DrawStoryMenuCaption:
 	farcall UploadGlyphBuffer ; $7266
 	ret ; $7269
 ClearStoryAttrPriorityBits:
-	wram_bank $05 ; $726a
+	wram_bank WRAM_TEXT ; $726a
 	ld hl, wShadowTilemapPtr ; $7270
 	ld a, [hl+] ; $7273
 	ld h, [hl] ; $7274
@@ -242,7 +242,7 @@ LoadStoryMenuItemGfx:
 	ld h, [hl] ; $728c
 	ld l, a ; $728d
 	ld de, wDecompBuffer ; $728e
-	push_wram_bank $01 ; $7291
+	push_wram_bank WRAM_STAGING ; $7291
 	call DecompressData ; $729a
 	ld hl, wDecompBuffer ; $729d
 	ld de, vTiles0 + $70 * TILE_SIZE ; $72a0

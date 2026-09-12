@@ -341,7 +341,7 @@ UpdateTargetShotScorePopup:
 	call UpdateScorePopup ; $4e1c
 	ret ; $4e1f
 SelectRandomMinigameShot:
-	push_wram_bank $02 ; $4e20
+	push_wram_bank WRAM_COURT_PLANES ; $4e20
 	ld a, [wMinigameLevel] ; $4e29
 	add a ; $4e2c
 	ld_hl_indexed TargetShotZonePoolsByLevel ; $4e2d

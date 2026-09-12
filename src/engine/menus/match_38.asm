@@ -1,5 +1,5 @@
 ClearWram3Row64_38:
-	push_wram_bank $03 ; $43db
+	push_wram_bank WRAM_SCREEN ; $43db
 	xor a ; $43e4
 	ld c, $40 ; $43e5
 .loop:
@@ -9,7 +9,7 @@ ClearWram3Row64_38:
 	pop_wram_bank ; $43eb
 	ret ; $43f0
 ClearWram3Row64Alt_38:
-	push_wram_bank $03 ; $43f1
+	push_wram_bank WRAM_SCREEN ; $43f1
 	ld a, $00 ; $43fa
 	ld c, $40 ; $43fc
 .loopB:
@@ -65,7 +65,7 @@ WriteDecimalDigitTile:
 	jr c, .skipOperand ; $4476
 	add $30 ; $4478
 	ld b, a ; $447a
-	wram_bank $03 ; $447b
+	wram_bank WRAM_SCREEN ; $447b
 	ld a, b ; $4481
 	ld [de], a ; $4482
 	inc de ; $4483
@@ -288,7 +288,7 @@ SetupMatchTypeMenuScreen:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $4622
 	ld de, vTiles2 ; $4624
 	farcall LoadCompressedTileBlock ; $4627
-	wram_bank $05 ; $462a
+	wram_bank WRAM_TEXT ; $462a
 	ld a, $03 ; $4630
 	ld [wShadowTilemapBank], a ; $4632
 	ld a, $00 ; $4635
@@ -313,7 +313,7 @@ SetupMatchTypeMenuScreen:
 	ret ; $4665
 RefreshMatchTypeLabelRow:
 	sound SFX_MENU_MOVE ; $4666
-	wram_bank $03 ; $4668
+	wram_bank WRAM_SCREEN ; $4668
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 1 ; $466e
 	ld b, $12 ; $4671
 	ld c, $01 ; $4673
@@ -333,7 +333,7 @@ RefreshMatchTypeLabelRow:
 MatchTypeLabelSpriteLayouts:
 	INCBIN "data/bank_038/MatchTypeLabelSpriteLayouts.bin" ; $4695, 141 bytes
 DrawMatchTypeOptionLabel:
-	wram_bank $03 ; $4722
+	wram_bank WRAM_SCREEN ; $4722
 	ld c, $01 ; $4728
 	call GetMenuCursorIndex_38 ; $472a
 	ld b, a ; $472d

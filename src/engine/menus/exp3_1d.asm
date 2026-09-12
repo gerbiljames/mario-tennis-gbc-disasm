@@ -1,5 +1,5 @@
 TickLevelUpJingle:
-	wram_bank $06 ; $77a7
+	wram_bank WRAM_SCENE ; $77a7
 	ld a, [wExpLevelUpFanfare] ; $77ad
 	or a ; $77b0
 	ret z ; $77b1
@@ -110,7 +110,7 @@ ClearPendingExpAwards:
 	push bc ; $7caf
 	push de ; $7cb0
 	push hl ; $7cb1
-	wram_bank $06 ; $7cb2
+	wram_bank WRAM_SCENE ; $7cb2
 	ld hl, wPendingExpAwardAmounts ; $7cb8
 	ld bc, $000f ; $7cbb
 	call ClearBytes ; $7cbe
@@ -120,7 +120,7 @@ ClearPendingExpAwards:
 	pop af ; $7cc4
 	ret ; $7cc5
 SetPendingExpAward:
-	wram_bank $06 ; $7cc6
+	wram_bank WRAM_SCENE ; $7cc6
 	ld a, b ; $7ccc
 	rlca ; $7ccd
 	ld_hl_indexed PendingExpAwardSetters_1d ; $7cce

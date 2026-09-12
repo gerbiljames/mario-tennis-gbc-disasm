@@ -16,7 +16,7 @@ AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 IslandSkyPalettes_14:
 	INCLUDE "data/bank_014/IslandSkyPalettes_14.asm" ; $738a, 32 bytes (palettes)
 LoadIslandSkyEffectObjGfx_14:
-	push_wram_bank $01 ; $73aa
+	push_wram_bank WRAM_STAGING ; $73aa
 	ld hl, IslandSkyTilesA_14 ; $73b3
 	ld de, vTiles0 + $10 * TILE_SIZE ; $73b6
 	ld c, $40 ; $73b9
@@ -90,7 +90,7 @@ SpriteTemplate_14_3:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 LoadDistantPlaneObjGfx_14:
-	push_wram_bank $01 ; $7539
+	push_wram_bank WRAM_STAGING ; $7539
 	ld hl, DistantPlaneObjGfx ; $7542
 	ld de, vTiles0 + VRAM_BANK1 ; $7545
 	ld c, (SpriteTemplate_14_3 - DistantPlaneObjGfx) / 16 ; $7548
@@ -128,7 +128,7 @@ TwinkleObjGfx:
 TwinkleObjPalette_14:
 	INCLUDE "data/bank_014/TwinkleObjPalette_14.asm" ; $7680, 8 bytes (palettes)
 LoadTwinkleObjGfx_14:
-	push_wram_bank $01 ; $7688
+	push_wram_bank WRAM_STAGING ; $7688
 	ld hl, TwinkleObjGfx ; $7691
 	ld de, vTiles0 + VRAM_BANK1 ; $7694
 	ld c, (TwinkleObjPalette_14 - TwinkleObjGfx) / 16 ; $7697

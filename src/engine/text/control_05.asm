@@ -37,7 +37,7 @@ GetNextArgShortTextLength:
 	ret ; $52cd
 TextCmdPrintArgNumber:
 	push bc ; $52ce
-	push_wram_bank $05 ; $52cf
+	push_wram_bank WRAM_TEXT ; $52cf
 	ld a, [wTextArgNumberCount] ; $52d8
 	ld b, a ; $52db
 	ld a, [wTextArgNumberWriteIndex] ; $52dc
@@ -191,7 +191,7 @@ Unused_05_SetTextVar:
 	push de ; $53b0
 	push hl ; $53b1
 	ld b, a ; $53b2
-	push_wram_bank $05 ; $53b3
+	push_wram_bank WRAM_TEXT ; $53b3
 	ld a, b ; $53bc
 	ld [wUnusedTextByte], a ; $53bd
 	pop_wram_bank ; $53c0

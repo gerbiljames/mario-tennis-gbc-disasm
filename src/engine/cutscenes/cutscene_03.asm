@@ -6,7 +6,7 @@ DebugTestMinigameRecords:
 	push bc ; $5976
 	push de ; $5977
 	push hl ; $5978
-	wram_bank $07 ; $5979
+	wram_bank WRAM_SOUND ; $5979
 	ld hl, wMinigameRecordValue ; $597f
 	ld de, $270f ; $5982
 	ld a, e ; $5985
@@ -79,7 +79,7 @@ RunScrollingTextScreen:
 	call ForceFadeIn ; $59f9
 	call WaitFadeEnd ; $59fc
 .loop:
-	wram_bank $06 ; $59ff
+	wram_bank WRAM_SCENE ; $59ff
 	ld a, [wScrollTextDelay] ; $5a05
 	dec a ; $5a08
 	ld [wScrollTextDelay], a ; $5a09
@@ -98,14 +98,14 @@ RunScrollingTextScreen:
 	ld a, [hl+] ; $5a25
 	ld h, [hl] ; $5a26
 	ld l, a ; $5a27
-	wram_bank $03 ; $5a28
+	wram_bank WRAM_SCREEN ; $5a28
 	ld de, wShadowTilemap ; $5a2e
 	ld c, $10 ; $5a31
 	farcall FetchAndDrawDialogueText ; $5a33
 	call TestTextEndMarker ; $5a36
 	and a ; $5a39
 	jr nz, .nonZero ; $5a3a
-	wram_bank $06 ; $5a3c
+	wram_bank WRAM_SCENE ; $5a3c
 	ld a, $01 ; $5a42
 	ld [wScrollTextDone], a ; $5a44
 	jr .checkDebugStepMode ; $5a47
@@ -113,12 +113,12 @@ RunScrollingTextScreen:
 	ld de, $0090 ; $5a49
 	call GetScrollTextRowVramAddr ; $5a4c
 	push de ; $5a4f
-	wram_bank $03 ; $5a50
+	wram_bank WRAM_SCREEN ; $5a50
 	ld hl, wShadowTilemap ; $5a56
 	ld c, $02 ; $5a59
 	call QueueVRAMCopy ; $5a5b
 	pop de ; $5a5e
-	wram_bank $06 ; $5a5f
+	wram_bank WRAM_SCENE ; $5a5f
 	ld hl, wScrollTextId ; $5a65
 	ld b, h ; $5a68
 	ld c, l ; $5a69
@@ -144,7 +144,7 @@ RunScrollingTextScreen:
 	jr nz, .maskSet ; $5a82
 .advanceFrame:
 	call AdvanceFrame ; $5a84
-	wram_bank $03 ; $5a87
+	wram_bank WRAM_SCREEN ; $5a87
 	xor a ; $5a8d
 	ld b, $40 ; $5a8e
 	ld hl, wShadowTilemap ; $5a90
@@ -161,7 +161,7 @@ RunScrollingTextScreen:
 	farcall LoadMenuFontGfx ; $5aa5
 	ret ; $5aa8
 InitScrollingTextScreen:
-	wram_bank $06 ; $5aa9
+	wram_bank WRAM_SCENE ; $5aa9
 	ld hl, wScrollTextDelay ; $5aaf
 	ld a, $02 ; $5ab2
 	ld [hl+], a ; $5ab4
@@ -172,7 +172,7 @@ InitScrollingTextScreen:
 	ld [hl], d ; $5abb
 	xor a ; $5abc
 	ld [wScrollTextDone], a ; $5abd
-	wram_bank $02 ; $5ac0
+	wram_bank WRAM_COURT_PLANES ; $5ac0
 	ld bc, $0400 ; $5ac6
 	ld d, $00 ; $5ac9
 	ld hl, wScreenAttrmap ; $5acb
@@ -181,7 +181,7 @@ InitScrollingTextScreen:
 	ld de, $b800 ; $5ad4
 	ld c, $40 ; $5ad7
 	call QueueVRAMCopy ; $5ad9
-	wram_bank $03 ; $5adc
+	wram_bank WRAM_SCREEN ; $5adc
 	ld bc, $0400 ; $5ae2
 	ld d, $20 ; $5ae5
 	ld hl, wShadowTilemap ; $5ae7
@@ -223,7 +223,7 @@ TestTextEndMarker:
 ScrollTextPalette_03:
 	INCLUDE "data/bank_003/ScrollTextPalette_03.asm" ; $5b20, 8 bytes (palettes)
 SetupSceneAnimationPalettes:
-	push_wram_bank $06 ; $5b28
+	push_wram_bank WRAM_SCENE ; $5b28
 	xor a ; $5b31
 	ld [wSceneAnimFrame], a ; $5b32
 	ld hl, SceneAnimObjPalette0_03 ; $5b35
@@ -235,14 +235,14 @@ SetupSceneAnimationPalettes:
 	pop_wram_bank ; $5b47
 	ret ; $5b4c
 UpdateSceneAnimation:
-	push_wram_bank $06 ; $5b4d
+	push_wram_bank WRAM_SCENE ; $5b4d
 	call LoadCutsceneAnimFrameGfx_00_08 ; $5b56
 	call LoadCutsceneAnimFrameGfx_09_11 ; $5b59
 	call LoadCutsceneAnimFrameGfx_12_1A ; $5b5c
 	call LoadCutsceneAnimFrameGfx_1B_23 ; $5b5f
 	call LoadCutsceneAnimFrameGfx_24_2C ; $5b62
 	call LoadCutsceneAnimFrameGfx_2D_35 ; $5b65
-	wram_bank $06 ; $5b68
+	wram_bank WRAM_SCENE ; $5b68
 	ld a, [wCutsceneSlideTimer] ; $5b6e
 	and $03 ; $5b71
 	jr nz, .restore ; $5b73
@@ -257,7 +257,7 @@ UpdateSceneAnimation:
 	pop_wram_bank ; $5b83
 	ret ; $5b88
 LoadCutsceneAnimFrameGfx_00_08:
-	wram_bank $06 ; $5b89
+	wram_bank WRAM_SCENE ; $5b89
 	ld a, [wSceneAnimFrame] ; $5b8f
 	cp $00 ; $5b92
 	jp z, .eq00 ; $5b94
@@ -279,7 +279,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	jp z, .eq08 ; $5bbc
 	jp .queueSpriteTemplate ; $5bbf
 .eq00:
-	wram_bank $01 ; $5bc2
+	wram_bank WRAM_STAGING ; $5bc2
 	ld hl, CutsceneAnimFrameLZ_00 ; $5bc8
 	ld de, wDecompBuffer ; $5bcb
 	call DecompressData ; $5bce
@@ -294,7 +294,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call QueueSpriteTemplate ; $5be6
 	ret ; $5be9
 .eq01:
-	wram_bank $01 ; $5bea
+	wram_bank WRAM_STAGING ; $5bea
 	ld hl, CutsceneAnimFrameLZ_01 ; $5bf0
 	ld de, wDecompBuffer ; $5bf3
 	call DecompressData ; $5bf6
@@ -309,7 +309,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call QueueSpriteTemplate ; $5c0e
 	ret ; $5c11
 .eq02:
-	wram_bank $01 ; $5c12
+	wram_bank WRAM_STAGING ; $5c12
 	ld hl, CutsceneAnimFrameLZ_02 ; $5c18
 	ld de, wDecompBuffer ; $5c1b
 	call DecompressData ; $5c1e
@@ -324,7 +324,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call QueueSpriteTemplate ; $5c36
 	ret ; $5c39
 .eq03:
-	wram_bank $01 ; $5c3a
+	wram_bank WRAM_STAGING ; $5c3a
 	ld hl, CutsceneAnimFrameLZ_03 ; $5c40
 	ld de, wDecompBuffer ; $5c43
 	call DecompressData ; $5c46
@@ -339,7 +339,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call QueueSpriteTemplate ; $5c5e
 	ret ; $5c61
 .eq04:
-	wram_bank $01 ; $5c62
+	wram_bank WRAM_STAGING ; $5c62
 	ld hl, CutsceneAnimFrameLZ_04 ; $5c68
 	ld de, wDecompBuffer ; $5c6b
 	call DecompressData ; $5c6e
@@ -354,7 +354,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call QueueSpriteTemplate ; $5c86
 	ret ; $5c89
 .eq05:
-	wram_bank $01 ; $5c8a
+	wram_bank WRAM_STAGING ; $5c8a
 	ld hl, CutsceneAnimFrameLZ_05 ; $5c90
 	ld de, wDecompBuffer ; $5c93
 	call DecompressData ; $5c96
@@ -369,7 +369,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call QueueSpriteTemplate ; $5cae
 	ret ; $5cb1
 .eq06:
-	wram_bank $01 ; $5cb2
+	wram_bank WRAM_STAGING ; $5cb2
 	ld hl, CutsceneAnimFrameLZ_06 ; $5cb8
 	ld de, wDecompBuffer ; $5cbb
 	call DecompressData ; $5cbe
@@ -384,7 +384,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call QueueSpriteTemplate ; $5cd6
 	ret ; $5cd9
 .eq07:
-	wram_bank $01 ; $5cda
+	wram_bank WRAM_STAGING ; $5cda
 	ld hl, CutsceneAnimFrameLZ_07 ; $5ce0
 	ld de, wDecompBuffer ; $5ce3
 	call DecompressData ; $5ce6
@@ -399,7 +399,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call QueueSpriteTemplate ; $5cfe
 	ret ; $5d01
 .eq08:
-	wram_bank $01 ; $5d02
+	wram_bank WRAM_STAGING ; $5d02
 	ld hl, CutsceneAnimFrameLZ_08 ; $5d08
 	ld de, wDecompBuffer ; $5d0b
 	call DecompressData ; $5d0e
@@ -421,7 +421,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call QueueSpriteTemplate ; $5d34
 	ret ; $5d37
 LoadCutsceneAnimFrameGfx_09_11:
-	wram_bank $06 ; $5d38
+	wram_bank WRAM_SCENE ; $5d38
 	ld a, [wSceneAnimFrame] ; $5d3e
 	ld b, a ; $5d41
 	sub $09 ; $5d42
@@ -447,7 +447,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	jp z, .eq11 ; $5d70
 	jp .queueSpriteTemplate ; $5d73
 .eq09:
-	wram_bank $01 ; $5d76
+	wram_bank WRAM_STAGING ; $5d76
 	ld hl, CutsceneAnimFrameLZ_09 ; $5d7c
 	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5d7f
 	call DecompressData ; $5d82
@@ -462,7 +462,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call QueueSpriteTemplate ; $5d9a
 	ret ; $5d9d
 .eq0a:
-	wram_bank $01 ; $5d9e
+	wram_bank WRAM_STAGING ; $5d9e
 	ld hl, CutsceneAnimFrameLZ_0a ; $5da4
 	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5da7
 	call DecompressData ; $5daa
@@ -477,7 +477,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call QueueSpriteTemplate ; $5dc2
 	ret ; $5dc5
 .eq0b:
-	wram_bank $01 ; $5dc6
+	wram_bank WRAM_STAGING ; $5dc6
 	ld hl, CutsceneAnimFrameLZ_0b ; $5dcc
 	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5dcf
 	call DecompressData ; $5dd2
@@ -492,7 +492,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call QueueSpriteTemplate ; $5dea
 	ret ; $5ded
 .eq0c:
-	wram_bank $01 ; $5dee
+	wram_bank WRAM_STAGING ; $5dee
 	ld hl, CutsceneAnimFrameLZ_0c ; $5df4
 	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5df7
 	call DecompressData ; $5dfa
@@ -507,7 +507,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call QueueSpriteTemplate ; $5e12
 	ret ; $5e15
 .eq0d:
-	wram_bank $01 ; $5e16
+	wram_bank WRAM_STAGING ; $5e16
 	ld hl, CutsceneAnimFrameLZ_0d ; $5e1c
 	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5e1f
 	call DecompressData ; $5e22
@@ -522,7 +522,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call QueueSpriteTemplate ; $5e3a
 	ret ; $5e3d
 .eq0e:
-	wram_bank $01 ; $5e3e
+	wram_bank WRAM_STAGING ; $5e3e
 	ld hl, CutsceneAnimFrameLZ_0e ; $5e44
 	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5e47
 	call DecompressData ; $5e4a
@@ -537,7 +537,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call QueueSpriteTemplate ; $5e62
 	ret ; $5e65
 .eq0f:
-	wram_bank $01 ; $5e66
+	wram_bank WRAM_STAGING ; $5e66
 	ld hl, CutsceneAnimFrameLZ_0f ; $5e6c
 	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5e6f
 	call DecompressData ; $5e72
@@ -552,7 +552,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call QueueSpriteTemplate ; $5e8a
 	ret ; $5e8d
 .eq10:
-	wram_bank $01 ; $5e8e
+	wram_bank WRAM_STAGING ; $5e8e
 	ld hl, CutsceneAnimFrameLZ_10 ; $5e94
 	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5e97
 	call DecompressData ; $5e9a
@@ -567,7 +567,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call QueueSpriteTemplate ; $5eb2
 	ret ; $5eb5
 .eq11:
-	wram_bank $01 ; $5eb6
+	wram_bank WRAM_STAGING ; $5eb6
 	ld hl, CutsceneAnimFrameLZ_11 ; $5ebc
 	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5ebf
 	call DecompressData ; $5ec2
@@ -589,7 +589,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call QueueSpriteTemplate ; $5ee8
 	ret ; $5eeb
 LoadCutsceneAnimFrameGfx_12_1A:
-	wram_bank $06 ; $5eec
+	wram_bank WRAM_SCENE ; $5eec
 	ld a, [wSceneAnimFrame] ; $5ef2
 	ld b, a ; $5ef5
 	sub $12 ; $5ef6
@@ -615,7 +615,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	jp z, .eq1a ; $5f24
 	jp .queueSpriteTemplate ; $5f27
 .eq12:
-	wram_bank $01 ; $5f2a
+	wram_bank WRAM_STAGING ; $5f2a
 	ld hl, CutsceneAnimFrameLZ_12 ; $5f30
 	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5f33
 	call DecompressData ; $5f36
@@ -630,7 +630,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call QueueSpriteTemplate ; $5f4e
 	ret ; $5f51
 .eq13:
-	wram_bank $01 ; $5f52
+	wram_bank WRAM_STAGING ; $5f52
 	ld hl, CutsceneAnimFrameLZ_13 ; $5f58
 	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5f5b
 	call DecompressData ; $5f5e
@@ -645,7 +645,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call QueueSpriteTemplate ; $5f76
 	ret ; $5f79
 .eq14:
-	wram_bank $01 ; $5f7a
+	wram_bank WRAM_STAGING ; $5f7a
 	ld hl, CutsceneAnimFrameLZ_14 ; $5f80
 	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5f83
 	call DecompressData ; $5f86
@@ -660,7 +660,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call QueueSpriteTemplate ; $5f9e
 	ret ; $5fa1
 .eq15:
-	wram_bank $01 ; $5fa2
+	wram_bank WRAM_STAGING ; $5fa2
 	ld hl, CutsceneAnimFrameLZ_15 ; $5fa8
 	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5fab
 	call DecompressData ; $5fae
@@ -675,7 +675,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call QueueSpriteTemplate ; $5fc6
 	ret ; $5fc9
 .eq16:
-	wram_bank $01 ; $5fca
+	wram_bank WRAM_STAGING ; $5fca
 	ld hl, CutsceneAnimFrameLZ_16 ; $5fd0
 	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5fd3
 	call DecompressData ; $5fd6
@@ -690,7 +690,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call QueueSpriteTemplate ; $5fee
 	ret ; $5ff1
 .eq17:
-	wram_bank $01 ; $5ff2
+	wram_bank WRAM_STAGING ; $5ff2
 	ld hl, CutsceneAnimFrameLZ_17 ; $5ff8
 	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5ffb
 	call DecompressData ; $5ffe
@@ -705,7 +705,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call QueueSpriteTemplate ; $6016
 	ret ; $6019
 .eq18:
-	wram_bank $01 ; $601a
+	wram_bank WRAM_STAGING ; $601a
 	ld hl, CutsceneAnimFrameLZ_18 ; $6020
 	ld de, wDecompBuffer + 8 * TILE_SIZE ; $6023
 	call DecompressData ; $6026
@@ -720,7 +720,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call QueueSpriteTemplate ; $603e
 	ret ; $6041
 .eq19:
-	wram_bank $01 ; $6042
+	wram_bank WRAM_STAGING ; $6042
 	ld hl, CutsceneAnimFrameLZ_19 ; $6048
 	ld de, wDecompBuffer + 8 * TILE_SIZE ; $604b
 	call DecompressData ; $604e
@@ -735,7 +735,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call QueueSpriteTemplate ; $6066
 	ret ; $6069
 .eq1a:
-	wram_bank $01 ; $606a
+	wram_bank WRAM_STAGING ; $606a
 	ld hl, CutsceneAnimFrameLZ_1a ; $6070
 	ld de, wDecompBuffer + 8 * TILE_SIZE ; $6073
 	call DecompressData ; $6076
@@ -757,7 +757,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call QueueSpriteTemplate ; $609c
 	ret ; $609f
 LoadCutsceneAnimFrameGfx_1B_23:
-	wram_bank $06 ; $60a0
+	wram_bank WRAM_SCENE ; $60a0
 	ld a, [wSceneAnimFrame] ; $60a6
 	ld b, a ; $60a9
 	sub $1b ; $60aa
@@ -783,7 +783,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	jp z, .eq23 ; $60d8
 	jp .queueSpriteTemplate ; $60db
 .eq1b:
-	wram_bank $01 ; $60de
+	wram_bank WRAM_STAGING ; $60de
 	ld hl, CutsceneAnimFrameLZ_1b ; $60e4
 	ld de, wDecompBuffer + 12 * TILE_SIZE ; $60e7
 	call DecompressData ; $60ea
@@ -798,7 +798,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call QueueSpriteTemplate ; $6102
 	ret ; $6105
 .eq1c:
-	wram_bank $01 ; $6106
+	wram_bank WRAM_STAGING ; $6106
 	ld hl, CutsceneAnimFrameLZ_1c ; $610c
 	ld de, wDecompBuffer + 12 * TILE_SIZE ; $610f
 	call DecompressData ; $6112
@@ -813,7 +813,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call QueueSpriteTemplate ; $612a
 	ret ; $612d
 .eq1d:
-	wram_bank $01 ; $612e
+	wram_bank WRAM_STAGING ; $612e
 	ld hl, CutsceneAnimFrameLZ_1d ; $6134
 	ld de, wDecompBuffer + 12 * TILE_SIZE ; $6137
 	call DecompressData ; $613a
@@ -828,7 +828,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call QueueSpriteTemplate ; $6152
 	ret ; $6155
 .eq1e:
-	wram_bank $01 ; $6156
+	wram_bank WRAM_STAGING ; $6156
 	ld hl, CutsceneAnimFrameLZ_1e ; $615c
 	ld de, wDecompBuffer + 12 * TILE_SIZE ; $615f
 	call DecompressData ; $6162
@@ -843,7 +843,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call QueueSpriteTemplate ; $617a
 	ret ; $617d
 .eq1f:
-	wram_bank $01 ; $617e
+	wram_bank WRAM_STAGING ; $617e
 	ld hl, CutsceneAnimFrameLZ_1f ; $6184
 	ld de, wDecompBuffer + 12 * TILE_SIZE ; $6187
 	call DecompressData ; $618a
@@ -858,7 +858,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call QueueSpriteTemplate ; $61a2
 	ret ; $61a5
 .eq20:
-	wram_bank $01 ; $61a6
+	wram_bank WRAM_STAGING ; $61a6
 	ld hl, CutsceneAnimFrameLZ_20 ; $61ac
 	ld de, wDecompBuffer + 12 * TILE_SIZE ; $61af
 	call DecompressData ; $61b2
@@ -873,7 +873,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call QueueSpriteTemplate ; $61ca
 	ret ; $61cd
 .eq21:
-	wram_bank $01 ; $61ce
+	wram_bank WRAM_STAGING ; $61ce
 	ld hl, CutsceneAnimFrameLZ_21 ; $61d4
 	ld de, wDecompBuffer + 12 * TILE_SIZE ; $61d7
 	call DecompressData ; $61da
@@ -888,7 +888,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call QueueSpriteTemplate ; $61f2
 	ret ; $61f5
 .eq22:
-	wram_bank $01 ; $61f6
+	wram_bank WRAM_STAGING ; $61f6
 	ld hl, CutsceneAnimFrameLZ_22 ; $61fc
 	ld de, wDecompBuffer + 12 * TILE_SIZE ; $61ff
 	call DecompressData ; $6202
@@ -903,7 +903,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call QueueSpriteTemplate ; $621a
 	ret ; $621d
 .eq23:
-	wram_bank $01 ; $621e
+	wram_bank WRAM_STAGING ; $621e
 	ld hl, CutsceneAnimFrameLZ_23 ; $6224
 	ld de, wDecompBuffer + 12 * TILE_SIZE ; $6227
 	call DecompressData ; $622a
@@ -925,7 +925,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call QueueSpriteTemplate ; $6250
 	ret ; $6253
 LoadCutsceneAnimFrameGfx_24_2C:
-	wram_bank $06 ; $6254
+	wram_bank WRAM_SCENE ; $6254
 	ld a, [wSceneAnimFrame] ; $625a
 	ld b, a ; $625d
 	sub $24 ; $625e
@@ -951,7 +951,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	jp z, .eq2c ; $628c
 	jp .queueSpriteTemplate ; $628f
 .eq24:
-	wram_bank $01 ; $6292
+	wram_bank WRAM_STAGING ; $6292
 	ld hl, CutsceneAnimFrameLZ_24 ; $6298
 	ld de, wDecompBuffer + 14 * TILE_SIZE ; $629b
 	call DecompressData ; $629e
@@ -966,7 +966,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call QueueSpriteTemplate ; $62b6
 	ret ; $62b9
 .eq25:
-	wram_bank $01 ; $62ba
+	wram_bank WRAM_STAGING ; $62ba
 	ld hl, CutsceneAnimFrameLZ_25 ; $62c0
 	ld de, wDecompBuffer + 14 * TILE_SIZE ; $62c3
 	call DecompressData ; $62c6
@@ -981,7 +981,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call QueueSpriteTemplate ; $62de
 	ret ; $62e1
 .eq26:
-	wram_bank $01 ; $62e2
+	wram_bank WRAM_STAGING ; $62e2
 	ld hl, CutsceneAnimFrameLZ_26 ; $62e8
 	ld de, wDecompBuffer + 14 * TILE_SIZE ; $62eb
 	call DecompressData ; $62ee
@@ -996,7 +996,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call QueueSpriteTemplate ; $6306
 	ret ; $6309
 .eq27:
-	wram_bank $01 ; $630a
+	wram_bank WRAM_STAGING ; $630a
 	ld hl, CutsceneAnimFrameLZ_27 ; $6310
 	ld de, wDecompBuffer + 14 * TILE_SIZE ; $6313
 	call DecompressData ; $6316
@@ -1011,7 +1011,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call QueueSpriteTemplate ; $632e
 	ret ; $6331
 .eq28:
-	wram_bank $01 ; $6332
+	wram_bank WRAM_STAGING ; $6332
 	ld hl, CutsceneAnimFrameLZ_28 ; $6338
 	ld de, wDecompBuffer + 14 * TILE_SIZE ; $633b
 	call DecompressData ; $633e
@@ -1026,7 +1026,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call QueueSpriteTemplate ; $6356
 	ret ; $6359
 .eq29:
-	wram_bank $01 ; $635a
+	wram_bank WRAM_STAGING ; $635a
 	ld hl, CutsceneAnimFrameLZ_29 ; $6360
 	ld de, wDecompBuffer + 14 * TILE_SIZE ; $6363
 	call DecompressData ; $6366
@@ -1041,7 +1041,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call QueueSpriteTemplate ; $637e
 	ret ; $6381
 .eq2a:
-	wram_bank $01 ; $6382
+	wram_bank WRAM_STAGING ; $6382
 	ld hl, CutsceneAnimFrameLZ_2a ; $6388
 	ld de, wDecompBuffer + 14 * TILE_SIZE ; $638b
 	call DecompressData ; $638e
@@ -1056,7 +1056,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call QueueSpriteTemplate ; $63a6
 	ret ; $63a9
 .eq2b:
-	wram_bank $01 ; $63aa
+	wram_bank WRAM_STAGING ; $63aa
 	ld hl, CutsceneAnimFrameLZ_2b ; $63b0
 	ld de, wDecompBuffer + 14 * TILE_SIZE ; $63b3
 	call DecompressData ; $63b6
@@ -1071,7 +1071,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call QueueSpriteTemplate ; $63ce
 	ret ; $63d1
 .eq2c:
-	wram_bank $01 ; $63d2
+	wram_bank WRAM_STAGING ; $63d2
 	ld hl, CutsceneAnimFrameLZ_2c ; $63d8
 	ld de, wDecompBuffer + 14 * TILE_SIZE ; $63db
 	call DecompressData ; $63de

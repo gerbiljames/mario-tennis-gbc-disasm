@@ -1,5 +1,5 @@
 UpdateCameraFromPlayer:
-	wram_bank $04 ; $6235
+	wram_bank WRAM_ACTORS ; $6235
 	ld hl, wActors + 12 ; $623b
 	ld a, [hl+] ; $623e
 	ld b, [hl] ; $623f
@@ -174,7 +174,7 @@ LoadCourtSceneGraphics:
 	push bc ; $6324
 	inc hl ; $6325
 	inc hl ; $6326
-	wram_bank $01 ; $6327
+	wram_bank WRAM_STAGING ; $6327
 	ld a, [hl+] ; $632d
 	ld h, [hl] ; $632e
 	ld l, a ; $632f
@@ -188,7 +188,7 @@ LoadCourtSceneGraphics:
 	ld de, vTiles1 + VRAM_BANK1 ; $6344
 	ld c, $80 ; $6347
 	call QueueVRAMCopy ; $6349
-	wram_bank $04 ; $634c
+	wram_bank WRAM_ACTORS ; $634c
 	pop hl ; $6352
 	ld de, wScoreboardColumnAttrs ; $6353
 	ld bc, $0028 ; $6356
@@ -197,7 +197,7 @@ LoadCourtSceneGraphics:
 	ld de, wScoreboardColumnTiles ; $635d
 	ld bc, $0028 ; $6360
 	call CopyDataFromBank ; $6363
-	wram_bank $02 ; $6366
+	wram_bank WRAM_COURT_PLANES ; $6366
 	pop hl ; $636c
 	ld de, wCourtAttrmapSaved ; $636d
 	call DecompressDataFromBank ; $6370
@@ -224,7 +224,7 @@ InitSceneTileAnimations:
 	push bc ; $639c
 	push de ; $639d
 	push hl ; $639e
-	push_wram_bank $05 ; $639f
+	push_wram_bank WRAM_TEXT ; $639f
 	ld a, $ff ; $63a8
 	ld b, $01 ; $63aa
 	ld hl, wSceneTileAnimState ; $63ac
@@ -372,7 +372,7 @@ UpdateSceneTileAnimations:
 	push bc ; $646e
 	push de ; $646f
 	push hl ; $6470
-	push_wram_bank $05 ; $6471
+	push_wram_bank WRAM_TEXT ; $6471
 	ld de, wSceneTileAnimBuffer ; $647a
 	ld hl, wSceneTileAnimBufferPtr ; $647d
 	ld a, e ; $6480

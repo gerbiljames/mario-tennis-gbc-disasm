@@ -434,7 +434,7 @@ UpdateMinigameBestScore:
 	inc a ; $6f4f
 	inc a ; $6f50
 	farcall ReadMinigameRecord ; $6f51
-	wram_bank $07 ; $6f54
+	wram_bank WRAM_SOUND ; $6f54
 	ld hl, wMinigameRecordValue ; $6f5a
 	ld a, [hl+] ; $6f5d
 	ld d, [hl] ; $6f5e

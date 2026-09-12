@@ -1,5 +1,5 @@
 DrawEnteredName:
-	push_wram_bank $03 ; $728f
+	push_wram_bank WRAM_SCREEN ; $728f
 	ld a, $20 ; $7298
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH + 7 ; $729a
 	ld [hl+], a ; $729d
@@ -15,7 +15,7 @@ DrawEnteredName:
 	pop_wram_bank ; $72ad
 	ret ; $72b2
 AppendCharToName:
-	push_wram_bank $03 ; $72b3
+	push_wram_bank WRAM_SCREEN ; $72b3
 	ld hl, wNameEntryBuffer ; $72bc
 .findEnd:
 	ld a, [hl] ; $72bf
@@ -29,7 +29,7 @@ AppendCharToName:
 	call GetMenuCursorIndex_38 ; $72ca
 	ld d, a ; $72cd
 	ld hl, NameEntryCharset_38 ; $72ce
-	wram_bank $02 ; $72d1
+	wram_bank WRAM_COURT_PLANES ; $72d1
 	ld a, [wScreenAttrmap] ; $72d7
 	or a ; $72da
 	jr z, .indexCharset ; $72db
@@ -53,7 +53,7 @@ AppendCharToName:
 	ld d, a ; $72f4
 .store:
 	pop hl ; $72f5
-	wram_bank $03 ; $72f6
+	wram_bank WRAM_SCREEN ; $72f6
 	call IsNameBufferFull ; $72fc
 	or a ; $72ff
 	jr z, .queueVram ; $7300
@@ -94,7 +94,7 @@ DeleteLastNameChar:
 	call GetEnteredNameLength ; $7344
 	and a ; $7347
 	jr z, .done ; $7348
-	wram_bank $03 ; $734a
+	wram_bank WRAM_SCREEN ; $734a
 	ld hl, wNameEntryBuffer ; $7350
 .findEnd:
 	ld a, [hl+] ; $7353
@@ -156,7 +156,7 @@ DrawNameEntryUnderlineSprites:
 	jr nz, .cellLoop ; $73ab
 	ret ; $73ad
 TrimTrailingSpacesFromName:
-	push_wram_bank $03 ; $73ae
+	push_wram_bank WRAM_SCREEN ; $73ae
 	ld hl, wNameEntryBuffer + 10 ; $73b7
 .scanLoop:
 	ld a, [hl] ; $73ba
@@ -176,7 +176,7 @@ TrimTrailingSpacesFromName:
 GetEnteredNameLength:
 	push bc ; $73cf
 	push hl ; $73d0
-	push_wram_bank $03 ; $73d1
+	push_wram_bank WRAM_SCREEN ; $73d1
 	ld hl, wNameEntryBuffer ; $73da
 	ld c, $00 ; $73dd
 .charLoop:
@@ -218,7 +218,7 @@ RunLinkMatchSequence:
 	call BeginFadeOut ; $7415
 	call WaitFadeEnd ; $7418
 .startMatch:
-	push_wram_bank $03 ; $741b
+	push_wram_bank WRAM_SCREEN ; $741b
 	ld hl, wCharGridEntries ; $7424
 	ld bc, $0080 ; $7427
 	call ClearBytes ; $742a
@@ -523,7 +523,7 @@ ExchangeLinkUnlockFlags:
 	ret ; $7645
 StoreLinkMatchCharInfo:
 	push af ; $7646
-	push_wram_bank $03 ; $7647
+	push_wram_bank WRAM_SCREEN ; $7647
 	ld hl, wCharSelectSlotChars ; $7650
 	ld de, wMatchSlotCharRefs ; $7653
 	ld a, [hl+] ; $7656

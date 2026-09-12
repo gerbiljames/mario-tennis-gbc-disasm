@@ -1,5 +1,5 @@
 UnassignExpPointFromChar:
-	wram_bank $06 ; $72dd
+	wram_bank WRAM_SCENE ; $72dd
 	ld a, [wStoryCharacterSlot] ; $72e3
 	or a ; $72e6
 	jr nz, .nonZero ; $72e7
@@ -83,7 +83,7 @@ UnassignExpPointFromChar:
 	xor a ; $7349
 	ret ; $734a
 UploadExpScreenTilemapRows:
-	wram_bank $03 ; $734b
+	wram_bank WRAM_SCREEN ; $734b
 	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $7351
 	ld de, vBGMap0 + 1 * TILEMAP_WIDTH ; $7354
 	ld c, $16 ; $7357
@@ -103,7 +103,7 @@ RefreshExpScreenReadouts:
 	call DrawExpScreenLevelBar ; $7379
 	ret ; $737c
 CheckExpLevelUp:
-	wram_bank $06 ; $737d
+	wram_bank WRAM_SCENE ; $737d
 	ld a, [wStoryCharacterSlot] ; $7383
 	or a ; $7386
 	jr nz, .nonZero ; $7387
@@ -157,7 +157,7 @@ CheckExpLevelUp:
 	ld [wExpScreenCharStats + 20], a ; $73e3
 	ret ; $73e6
 CheckExpLevelDown:
-	wram_bank $06 ; $73e7
+	wram_bank WRAM_SCENE ; $73e7
 	ld a, [wStoryCharacterSlot] ; $73ed
 	or a ; $73f0
 	jr nz, .nonZero ; $73f1
@@ -217,10 +217,10 @@ CheckExpLevelDown:
 	ld [wExpScreenCharStats + 24], a ; $744f
 	ret ; $7452
 .step2:
-	wram_bank $06 ; $7453
+	wram_bank WRAM_SCENE ; $7453
 	ld hl, wExpCursorChar ; $7459
 	set 2, [hl] ; $745c
-	wram_bank $06 ; $745e
+	wram_bank WRAM_SCENE ; $745e
 	ld a, [wExpScreenCharStats + 10] ; $7464
 	ld [wBGPalettes + 58], a ; $7467
 	ld a, [wExpScreenCharStats + 11] ; $746a
@@ -269,17 +269,17 @@ CheckExpLevelDown:
 	call ApplyTilemapPatchListExpScreen ; $74ee
 	call UploadExpPromptWindowRows ; $74f1
 	wait_frames $0c ; $74f4
-	wram_bank $06 ; $74f8
+	wram_bank WRAM_SCENE ; $74f8
 	ld a, $01 ; $74fe
 	ld [wExpPromptCursorRow], a ; $7500
 	jr UploadExpPromptWindowRows.loop ; $7503
 UploadExpPromptWindowRows:
-	wram_bank $03 ; $7505
+	wram_bank WRAM_SCREEN ; $7505
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $750b
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $750e
 	ld c, $0c ; $7511
 	call QueueVRAMCopy ; $7513
-	wram_bank $02 ; $7516
+	wram_bank WRAM_COURT_PLANES ; $7516
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $751c
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH + VRAM_BANK1 ; $751f
 	ld c, $0c ; $7522
@@ -300,12 +300,12 @@ UploadExpPromptWindowRows:
 	jr nz, DrawExpPromptCursor.playSfx2 ; $7541
 	jr .loop ; $7543
 UploadExpPromptWindowRowsClosing:
-	wram_bank $03 ; $7545
+	wram_bank WRAM_SCREEN ; $7545
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $754b
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $754e
 	ld c, $0c ; $7551
 	call QueueVRAMCopy ; $7553
-	wram_bank $02 ; $7556
+	wram_bank WRAM_COURT_PLANES ; $7556
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $755c
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH + VRAM_BANK1 ; $755f
 	ld c, $0c ; $7562
@@ -371,7 +371,7 @@ DrawExpPromptCursor:
 	farcall RestoreCharDataScreenRow ; $75f5
 	call UploadExpPromptWindowRowsClosing ; $75f8
 	wait_frames $02 ; $75fb
-	wram_bank $06 ; $75ff
+	wram_bank WRAM_SCENE ; $75ff
 	ld hl, wExpCursorChar ; $7605
 	res 2, [hl] ; $7608
 	call UpdateExpScreenSelectionPalettes ; $760a
@@ -400,7 +400,7 @@ ApplyTilemapPatchListExpScreen:
 	jr nc, .gotSrc ; $7627
 	inc h ; $7629
 .gotSrc:
-	wram_bank $06 ; $762a
+	wram_bank WRAM_SCENE ; $762a
 	ld a, l ; $7630
 	ld [wCharDataNumberBuffer], a ; $7631
 	ld a, h ; $7634
@@ -414,10 +414,10 @@ ApplyTilemapPatchListExpScreen:
 	ld h, [hl] ; $7640
 	ld l, a ; $7641
 .copyLoop:
-	wram_bank $03 ; $7642
+	wram_bank WRAM_SCREEN ; $7642
 	ld a, [hl] ; $7648
 	ld [de], a ; $7649
-	wram_bank $02 ; $764a
+	wram_bank WRAM_COURT_PLANES ; $764a
 	ld a, [hl+] ; $7650
 	ld [de], a ; $7651
 	inc de ; $7652
@@ -431,7 +431,7 @@ ApplyTilemapPatchListExpScreen:
 	inc hl ; $765b
 	jr ApplyTilemapPatchListExpScreen ; $765c
 DrawExpToNextLevelTask:
-	wram_bank $06 ; $765e
+	wram_bank WRAM_SCENE ; $765e
 	ld a, [wExpCursorChar] ; $7664
 	bit 0, a ; $7667
 	ret nz ; $7669
@@ -443,7 +443,7 @@ DrawExpToNextLevelTask:
 	ld a, [wStoryCharacterSlot] ; $7672
 	or a ; $7675
 	jr nz, .nonZero ; $7676
-	wram_bank $06 ; $7678
+	wram_bank WRAM_SCENE ; $7678
 	ld a, [wExpScreenCharStats] ; $767e
 	cp $64 ; $7681
 	ret nc ; $7683
@@ -478,7 +478,7 @@ DrawExpToNextLevelTask:
 	call QueueSpriteTemplate ; $76c7
 	ret ; $76ca
 .nonZero:
-	wram_bank $06 ; $76cb
+	wram_bank WRAM_SCENE ; $76cb
 	ld a, [wExpScreenCharStats + 15] ; $76d1
 	cp $64 ; $76d4
 	ret nc ; $76d6
@@ -520,7 +520,7 @@ GetExpScreenDigitSprite:
 	ld b, $0e ; $7724
 	ret ; $7726
 DrawExpCharCursorTask:
-	wram_bank $06 ; $7727
+	wram_bank WRAM_SCENE ; $7727
 	ld a, [wExpCursorSlide] ; $772d
 	ld_hl_indexed DrawExpCharCursorTaskTable ; $7730
 	ld a, [hl] ; $7737
@@ -536,7 +536,7 @@ DrawExpCharCursorTaskTable:
 	db $00, $01, $02, $03, $04, $06, $08, $0a, $0d, $11, $16, $1d, $24, $2b, $32, $37 ; 0x00
 	db $3b, $3e, $40, $42, $44, $45, $46, $47, $48, $00 ; 0x10
 DrawExpBarFillMarkersTask:
-	wram_bank $06 ; $7760
+	wram_bank WRAM_SCENE ; $7760
 	ld de, $3801 ; $7766
 	ld a, [wExpScreenCharStats + 3] ; $7769
 	add d ; $776c
@@ -559,7 +559,7 @@ DrawExpBarSweepSpriteTask:
 	jr z, .zero ; $778f
 	ld e, $49 ; $7791
 .zero:
-	wram_bank $06 ; $7793
+	wram_bank WRAM_SCENE ; $7793
 	ld a, [wExpBarMarkerX] ; $7799
 	ld d, a ; $779c
 	ld hl, DrawExpBarSweepSpriteTask_SpriteTemplate ; $779d

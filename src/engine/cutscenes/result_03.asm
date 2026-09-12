@@ -98,19 +98,19 @@ StorySlotBlockIds_03:
 	; $52af, 4 bytes (bytes:4)
 	db $00, $02, $04, $0b ; 0x00
 ReadCurrentSlotBlock:
-	wram_bank $07 ; $52b3
+	wram_bank WRAM_SOUND ; $52b3
 	call GetCurrentSlotBlockId ; $52b9
 	ld hl, wSaveBlockBuffer ; $52bc
 	call ReadSaveBlock ; $52bf
 	ret ; $52c2
 WriteCurrentSlotBlock:
-	wram_bank $07 ; $52c3
+	wram_bank WRAM_SOUND ; $52c3
 	call GetCurrentSlotBlockId ; $52c9
 	ld hl, wSaveBlockBuffer ; $52cc
 	call WriteSaveBlock ; $52cf
 	ret ; $52d2
 InvalidateCurrentSlotBlock:
-	wram_bank $07 ; $52d3
+	wram_bank WRAM_SOUND ; $52d3
 	call GetCurrentSlotBlockId ; $52d9
 	ld hl, wSaveBlockBuffer ; $52dc
 	call InvalidateStorySlot ; $52df
@@ -159,7 +159,7 @@ Unused_03_SaveSlotDebugEditor:
 	lb de, $05, $11 ; $5363 column, row
 	call PrintString ; $5366
 .loopB:
-	wram_bank $07 ; $5369
+	wram_bank WRAM_SOUND ; $5369
 	push de ; $536f
 	ld hl, hSaveEditorCursor ; $5370
 	ld a, [hl+] ; $5373

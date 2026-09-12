@@ -107,7 +107,7 @@ ReinitPointAfterPause:
 	wram_bank ; $44df
 	ld a, CHARSTATE_SERVE ; $44e3
 	call SetCharState ; $44e5
-	wram_bank $04 ; $44e8
+	wram_bank WRAM_CHAR0 ; $44e8
 	ret ; $44ee
 CheckDebugStatsEditorHotkey:
 	ret ; $44ef
@@ -461,5 +461,5 @@ FindServerCharBank:
 	jr z, .setBank ; $4709
 	ld b, $07 ; $470b
 .setBank:
-	wram_bank $04 ; $470d
+	wram_bank WRAM_CHAR0 ; $470d
 	ret ; $4713

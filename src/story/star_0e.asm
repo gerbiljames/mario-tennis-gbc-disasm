@@ -46,7 +46,7 @@ PlayStarWarpTransition:
 	ld de, vTiles0 + $18 * TILE_SIZE + VRAM_BANK1 ; $716a
 	ld c, (StarWarpFrameSprites - StarWarpSparkleTiles) / 16 ; $716d
 	call QueueVRAMCopy ; $716f
-	wram_bank $06 ; $7172
+	wram_bank WRAM_SCENE ; $7172
 	xor a ; $7178
 	ld hl, wStarWarpFrame ; $7179
 	ld [hl+], a ; $717c
@@ -77,7 +77,7 @@ PlayStarWarpTransition:
 	ld a, $01 ; $71c1
 	ld hl, UpdateStarWarpSprite ; $71c3
 	call RegisterFrameTask ; $71c6
-	wram_bank $06 ; $71c9
+	wram_bank WRAM_SCENE ; $71c9
 .waitLoop:
 	call AdvanceFrame ; $71cf
 	ld a, [wStarWarpCountdown] ; $71d2
@@ -92,7 +92,7 @@ PlayStarWarpTransition:
 	call BeginFadeOut ; $71e4
 	jr .waitLoop ; $71e7
 UpdateStarWarpSprite:
-	wram_bank $06 ; $71e9
+	wram_bank WRAM_SCENE ; $71e9
 	ldh a, [hVBlankCounter] ; $71ef
 	and $01 ; $71f1
 	jr nz, .draw ; $71f3

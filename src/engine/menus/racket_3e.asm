@@ -1,7 +1,7 @@
 RunEraseDataConfirmMenu:
 	ld hl, rIE ; $4c12
 	res 2, [hl] ; $4c15
-	wram_bank $03 ; $4c17
+	wram_bank WRAM_SCREEN ; $4c17
 	ld a, b ; $4c1d
 	ld [wScreenScratch], a ; $4c1e
 	call DisableLCDSafely ; $4c21
@@ -22,7 +22,7 @@ RunEraseDataConfirmMenu:
 	ld a, $01 ; $4c4c
 	ld hl, AnimateEraseConfirmPalette ; $4c4e
 	call RegisterFrameTask ; $4c51
-	wram_bank $03 ; $4c54
+	wram_bank WRAM_SCREEN ; $4c54
 .loop:
 	call AdvanceFrame ; $4c5a
 	ldh a, [hInputPressed] ; $4c5d
@@ -78,7 +78,7 @@ LoadEraseDataConfirmScreen:
 	ld [wDigitSpriteTileBase], a ; $4cc6
 	ld c, SCREENASSET_WarningScreen ; $4cc9
 	farcall LoadScreenAssetRecord ; $4ccb
-	wram_bank $03 ; $4cce
+	wram_bank WRAM_SCREEN ; $4cce
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 3 ; $4cd4
 	ld b, $0e ; $4cd7
 	ld c, $06 ; $4cd9
@@ -94,7 +94,7 @@ LoadEraseDataConfirmScreen:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $4cf1
 	ld de, vTiles2 ; $4cf3
 	farcall LoadCompressedTileBlock ; $4cf6
-	wram_bank $05 ; $4cf9
+	wram_bank WRAM_TEXT ; $4cf9
 	ld a, $03 ; $4cff
 	ld [wShadowTilemapBank], a ; $4d01
 	ld a, $00 ; $4d04
@@ -118,7 +118,7 @@ LoadEraseDataConfirmScreen:
 	ld c, $01 ; $4d30
 	farcall LoadMenuSpritePalettePair ; $4d32
 	farcall PrepareGlyphBuffer ; $4d35
-	wram_bank $03 ; $4d38
+	wram_bank WRAM_SCREEN ; $4d38
 	ld a, [wScreenScratch] ; $4d3e
 	cp $02 ; $4d41
 	jr nz, .compare ; $4d43
@@ -224,7 +224,7 @@ QueueEraseConfirmCursorSprites:
 	farcall TickMenuBgScroll ; $4e30
 	ret ; $4e33
 AnimateEraseConfirmPalette:
-	push_wram_bank $03 ; $4e34
+	push_wram_bank WRAM_SCREEN ; $4e34
 	ld hl, EraseConfirmPalette_3e ; $4e3d
 	ld de, wEraseConfirmPalette ; $4e40
 	ld bc, $0008 ; $4e43
@@ -275,7 +275,7 @@ RunRacketShoesChoiceMenu:
 	ld hl, rIE ; $4ea2
 	res 2, [hl] ; $4ea5
 	call LoadRacketShoesChoiceGraphics ; $4ea7
-	wram_bank $03 ; $4eaa
+	wram_bank WRAM_SCREEN ; $4eaa
 	ld a, [wMenuSlideDirection] ; $4eb0
 	ld b, a ; $4eb3
 	call OpenChoiceTabPanel ; $4eb4
@@ -291,7 +291,7 @@ RunRacketShoesChoiceMenu:
 	ld hl, ChoiceTabCursorSpriteTask ; $4ecc
 	call RegisterFrameTask ; $4ecf
 	call RedrawRacketShoesChoiceMenu ; $4ed2
-	wram_bank $03 ; $4ed5
+	wram_bank WRAM_SCREEN ; $4ed5
 .loop:
 	call AdvanceFrame ; $4edb
 	ldh a, [hInputPressed] ; $4ede
@@ -335,7 +335,7 @@ RunRacketShoesChoiceMenu:
 	ld a, $ff ; $4f30
 	ret ; $4f32
 LoadRacketShoesChoiceGraphics:
-	push_wram_bank $01 ; $4f33
+	push_wram_bank WRAM_STAGING ; $4f33
 	ld c, $00 ; $4f3c
 .loop:
 	ld a, c ; $4f3e
@@ -420,7 +420,7 @@ RacketShoesChoiceGfxDests_3e:
 	; $4fc9, 6 bytes (bytes:6)
 	db $00, $a8, $00, $a9, $00, $aa ; 0x00
 RedrawRacketShoesChoiceMenu:
-	wram_bank $03 ; $4fcf
+	wram_bank WRAM_SCREEN ; $4fcf
 	ld b, $00 ; $4fd5
 	ld c, $00 ; $4fd7
 .loop:
@@ -438,7 +438,7 @@ RedrawRacketShoesChoiceMenu:
 	ld c, $02 ; $4fee
 	call GetMenuCursorIndex_3e ; $4ff0
 	call SetRacketShoesChoicePalette ; $4ff3
-	wram_bank $03 ; $4ff6
+	wram_bank WRAM_SCREEN ; $4ff6
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4ffc
 	ld b, $14 ; $4fff
 	ld c, $01 ; $5001
@@ -495,7 +495,7 @@ RacketShoesChoicePalette1:
 	; $5065, 8 bytes (bytes:8)
 	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
 DrawRacketShoesChoiceCaption:
-	push_wram_bank $03 ; $506d
+	push_wram_bank WRAM_SCREEN ; $506d
 	ld c, $02 ; $5076
 	call GetMenuCursorIndex_3e ; $5078
 	ld b, a ; $507b

@@ -38,7 +38,7 @@ LoadCompressedTileBlock:
 	ld l, a ; $469a
 	push de ; $469b
 	push bc ; $469c
-	wram_bank $01 ; $469d
+	wram_bank WRAM_STAGING ; $469d
 	ld de, wDecompBuffer ; $46a3
 	call DecompressDataFromBank ; $46a6
 	pop bc ; $46a9
@@ -402,7 +402,7 @@ ResetScreenAndTextWindows:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $4c0b
 	ld de, vTiles2 ; $4c0d
 	farcall LoadCompressedTileBlock ; $4c10
-	wram_bank $05 ; $4c13
+	wram_bank WRAM_TEXT ; $4c13
 	ld a, $03 ; $4c19
 	ld [wShadowTilemapBank], a ; $4c1b
 	ld a, $00 ; $4c1e
@@ -417,7 +417,7 @@ ResetScreenAndTextWindows:
 	farcall QueueWram3MapToVRAM ; $4c34
 	ret ; $4c37
 LoadStadiumBgGraphics:
-	push_wram_bank $01 ; $4c38
+	push_wram_bank WRAM_STAGING ; $4c38
 	ld hl, (BANK(DataPtr_StadiumTiles) << 8) | LOW(DataPtr_StadiumTiles) ; $4c41
 	ld de, wDecompBuffer ; $4c44
 	call DecompressDataFromBank ; $4c47
@@ -429,7 +429,7 @@ LoadStadiumBgGraphics:
 	ld de, vTiles1 + VRAM_BANK1 ; $4c58
 	ld c, $80 ; $4c5b
 	call QueueVRAMCopy ; $4c5d
-	wram_bank $03 ; $4c60
+	wram_bank WRAM_SCREEN ; $4c60
 	ld hl, (BANK(DataPtr_StadiumTilemap) << 8) | LOW(DataPtr_StadiumTilemap) ; $4c66
 	ld de, wShadowTilemap ; $4c69
 	call DecompressDataFromBank ; $4c6c
@@ -442,7 +442,7 @@ LoadStadiumBgGraphics:
 	ld hl, (BANK(DataPtr_StadiumAttrmap) << 8) | LOW(DataPtr_StadiumAttrmap) ; $4c81
 	ld de, wRulesScreenAnimFrame ; $4c84
 	call DecompressDataFromBank ; $4c87
-	wram_bank $01 ; $4c8a
+	wram_bank WRAM_STAGING ; $4c8a
 	ld hl, (BANK(DataPtr_StadiumPalettes) << 8) | LOW(DataPtr_StadiumPalettes) ; $4c90
 	ld de, wDecompBuffer ; $4c93
 	ld bc, $0040 ; $4c96

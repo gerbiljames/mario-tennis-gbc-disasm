@@ -6,7 +6,7 @@ SetActorAnimation:
 	push af ; $4bbe
 	push de ; $4bbf
 	push hl ; $4bc0
-	wram_bank $04 ; $4bc1
+	wram_bank WRAM_ACTORS ; $4bc1
 	ld hl, $002e ; $4bc7
 	add hl, bc ; $4bca
 	ld a, [hl] ; $4bcb
@@ -232,7 +232,7 @@ SpawnActorsFromList:
 	push de ; $4cf9
 	push hl ; $4cfa
 	ld b, a ; $4cfb
-	push_wram_bank $04 ; $4cfc
+	push_wram_bank WRAM_ACTORS ; $4cfc
 	ld a, b ; $4d05
 .spawnLoop:
 	push af ; $4d06
@@ -337,7 +337,7 @@ SpawnMainCharacterActor:
 	push bc ; $4e6c
 	push de ; $4e6d
 	push hl ; $4e6e
-	wram_bank $04 ; $4e6f
+	wram_bank WRAM_ACTORS ; $4e6f
 	push hl ; $4e75
 	push bc ; $4e76
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4e77
@@ -400,7 +400,7 @@ SpawnCompanionActor:
 	push bc ; $4f11
 	push de ; $4f12
 	push hl ; $4f13
-	wram_bank $04 ; $4f14
+	wram_bank WRAM_ACTORS ; $4f14
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f1a
 	or a ; $4f1d
 	jr nz, .partnerSlot ; $4f1e

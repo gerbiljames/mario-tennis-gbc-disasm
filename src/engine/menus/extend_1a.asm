@@ -15,7 +15,7 @@ RunDebugExpEditor:
 	push bc ; $43ab
 	push de ; $43ac
 	push hl ; $43ad
-	push_wram_bank $05 ; $43ae
+	push_wram_bank WRAM_TEXT ; $43ae
 	ld de, $0000 ; $43b7
 	ld bc, $1404 ; $43ba
 	farcall CreateWindow ; $43bd
@@ -183,7 +183,7 @@ ShowExpGainScreen:
 	push de ; $4533
 	ld a, b ; $4534
 	call DrawExpScreenCaption ; $4535
-	wram_bank $06 ; $4538
+	wram_bank WRAM_SCENE ; $4538
 	push af ; $453e
 	ld hl, wStoryModeNameOfMainCharacter ; $453f
 	ld a, [wStoryCharacterSlot] ; $4542
@@ -210,7 +210,7 @@ ShowExpGainScreen:
 .captionDrawn:
 	pop de ; $4564
 	push de ; $4565
-	wram_bank $06 ; $4566
+	wram_bank WRAM_SCENE ; $4566
 	ld hl, wExpAwardTotal ; $456c
 	ld a, e ; $456f
 	ld [hl+], a ; $4570
@@ -261,7 +261,7 @@ ShowExpGainScreen:
 	xor a ; $45b1
 	ld [wExpLevelUpQueued], a ; $45b2
 	ld [wExpScreenFlags], a ; $45b5
-	wram_bank $01 ; $45b8
+	wram_bank WRAM_STAGING ; $45b8
 	ld hl, wDecompBuffer ; $45be
 	ld de, vBGMap0 + VRAM_BANK1 ; $45c1
 	ld c, $24 ; $45c4
@@ -280,7 +280,7 @@ ShowExpGainScreen:
 	ld a, $0f ; $45ea
 	ld hl, ExpScreenNumberTask ; $45ec
 	call RegisterFrameTask ; $45ef
-	wram_bank $06 ; $45f2
+	wram_bank WRAM_SCENE ; $45f2
 	pop de ; $45f8
 	pop hl ; $45f9
 	push hl ; $45fa
@@ -352,7 +352,7 @@ ShowExpGainScreen:
 	and a ; $4680
 	jr z, .finish ; $4681
 	push af ; $4683
-	wram_bank $06 ; $4684
+	wram_bank WRAM_SCENE ; $4684
 	ld c, $00 ; $468a
 	ld a, [wCharDataAnimCounter] ; $468c
 	and a ; $468f
@@ -382,7 +382,7 @@ ShowExpGainScreen:
 	call DrawExpBonusMessage ; $46b0
 	sound SFX_MENU_SELECT ; $46b3
 	wait_frames $14 ; $46b5
-	wram_bank $06 ; $46b9
+	wram_bank WRAM_SCENE ; $46b9
 	ld hl, wExpBonusAmount ; $46bf
 	ld a, [hl+] ; $46c2
 	ld d, [hl] ; $46c3
@@ -403,7 +403,7 @@ ShowExpGainScreen:
 	ld [wExpCountDone], a ; $46d8
 	jp .fillLoop ; $46db
 .finish:
-	wram_bank $06 ; $46de
+	wram_bank WRAM_SCENE ; $46de
 	ld c, $00 ; $46e4
 	ld a, [wCharDataAnimCounter] ; $46e6
 	and a ; $46e9
@@ -441,7 +441,7 @@ ShowExpGainScreen:
 	pop hl ; $4721
 	pop_wram_bank ; $4722
 	pop bc ; $4727
-	wram_bank $06 ; $4728
+	wram_bank WRAM_SCENE ; $4728
 	ld hl, wExpAwardTotal ; $472e
 	ld a, [hl+] ; $4731
 	ld d, [hl] ; $4732
@@ -453,7 +453,7 @@ ShowExpGainScreen:
 	farcall AddPlayerExp ; $473a
 	ret ; $473d
 .queueVRAMCopy:
-	wram_bank $01 ; $473e
+	wram_bank WRAM_STAGING ; $473e
 	ld hl, wDecompBuffer ; $4744
 	ld de, vBGMap0 + VRAM_BANK1 ; $4747
 	ld c, $24 ; $474a

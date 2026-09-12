@@ -1,7 +1,7 @@
 AnimateCharDataStatsReveal:
 	sound BGM_STAT_DISTRIBUTION ; $4682
 	call BackupCharDataScreenRow ; $4684
-	wram_bank $06 ; $4687
+	wram_bank WRAM_SCENE ; $4687
 .loop:
 	call AdvanceFrame ; $468d
 	ld a, [wCharDataFlushChunk] ; $4690
@@ -14,7 +14,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand3RunsStep1_1c ; $46a2
 	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $46a5
 	call BlitTilemapRunsFromTable ; $46a8
-	wram_bank $06 ; $46ab
+	wram_bank WRAM_SCENE ; $46ab
 	ld a, $09 ; $46b1
 	ld [wCharDataRevealTimer], a ; $46b3
 	call FlushCharDataTilemaps ; $46b6
@@ -31,7 +31,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand3RunsStep2_1c ; $46d7
 	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $46da
 	call BlitTilemapRunsFromTable ; $46dd
-	wram_bank $06 ; $46e0
+	wram_bank WRAM_SCENE ; $46e0
 	ld a, $07 ; $46e6
 	ld [wCharDataRevealTimer], a ; $46e8
 	call FlushCharDataTilemaps ; $46eb
@@ -48,7 +48,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand3RunsStep3_1c ; $470c
 	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $470f
 	call BlitTilemapRunsFromTable ; $4712
-	wram_bank $06 ; $4715
+	wram_bank WRAM_SCENE ; $4715
 	ld a, $05 ; $471b
 	ld [wCharDataRevealTimer], a ; $471d
 	call FlushCharDataTilemaps ; $4720
@@ -65,7 +65,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand3RunsStep4_1c ; $4741
 	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $4744
 	call BlitTilemapRunsFromTable ; $4747
-	wram_bank $06 ; $474a
+	wram_bank WRAM_SCENE ; $474a
 	ld a, $03 ; $4750
 	ld [wCharDataRevealTimer], a ; $4752
 	call FlushCharDataTilemaps ; $4755
@@ -82,7 +82,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand3RunsStep5_1c ; $4776
 	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $4779
 	call BlitTilemapRunsFromTable ; $477c
-	wram_bank $06 ; $477f
+	wram_bank WRAM_SCENE ; $477f
 	ld a, $02 ; $4785
 	ld [wCharDataRevealTimer], a ; $4787
 	call FlushCharDataTilemaps ; $478a
@@ -99,7 +99,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand3RunsStep6_1c ; $47ab
 	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $47ae
 	call BlitTilemapRunsFromTable ; $47b1
-	wram_bank $06 ; $47b4
+	wram_bank WRAM_SCENE ; $47b4
 	ld a, $01 ; $47ba
 	ld [wCharDataRevealTimer], a ; $47bc
 	call FlushCharDataTilemaps ; $47bf
@@ -116,7 +116,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand3RunsStep7_1c ; $47e0
 	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $47e3
 	call BlitTilemapRunsFromTable ; $47e6
-	wram_bank $06 ; $47e9
+	wram_bank WRAM_SCENE ; $47e9
 	ld hl, wCharDataPageArrowMode ; $47ef
 	dec [hl] ; $47f2
 	xor a ; $47f3
@@ -141,7 +141,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand5RunsStep1_1c ; $482b
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $482e
 	call BlitTilemapRunsFromTable ; $4831
-	wram_bank $06 ; $4834
+	wram_bank WRAM_SCENE ; $4834
 	ld a, $02 ; $483a
 	ld [wCharDataRevealStep], a ; $483c
 	call FlushCharDataTilemaps ; $483f
@@ -151,7 +151,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand5RunsStep2_1c ; $484b
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $484e
 	call BlitTilemapRunsFromTable ; $4851
-	wram_bank $06 ; $4854
+	wram_bank WRAM_SCENE ; $4854
 	ld a, $01 ; $485a
 	ld [wCharDataRevealStep], a ; $485c
 	call FlushCharDataTilemaps ; $485f
@@ -161,7 +161,7 @@ AnimateCharDataStatsReveal:
 	ld hl, CharDataBand5RunsStep3_1c ; $486b
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $486e
 	call BlitTilemapRunsFromTable ; $4871
-	wram_bank $06 ; $4874
+	wram_bank WRAM_SCENE ; $4874
 	xor a ; $487a
 	ld [wCharDataRevealStep], a ; $487b
 	call FlushCharDataTilemaps ; $487e
@@ -194,24 +194,24 @@ DrawCharStatRows:
 	call BlitTilemapRunsFromTable ; $48c5
 	ret ; $48c8
 BackupCharDataScreenRow:
-	wram_bank $03 ; $48c9
+	wram_bank WRAM_SCREEN ; $48c9
 	ld hl, wShadowTilemap ; $48cf
 	ld de, wCharDataScreenBackup ; $48d2
 	ld c, $24 ; $48d5
 	call CopyMemoryFast ; $48d7
-	wram_bank $02 ; $48da
+	wram_bank WRAM_COURT_PLANES ; $48da
 	ld hl, wScreenAttrmap ; $48e0
 	ld de, wCharDataScreenBackup ; $48e3
 	ld c, $24 ; $48e6
 	call CopyMemoryFast ; $48e8
 	ret ; $48eb
 RestoreCharDataScreenRow:
-	wram_bank $03 ; $48ec
+	wram_bank WRAM_SCREEN ; $48ec
 	ld hl, wCharDataScreenBackup ; $48f2
 	ld de, wShadowTilemap ; $48f5
 	ld c, $24 ; $48f8
 	call CopyMemoryFast ; $48fa
-	wram_bank $02 ; $48fd
+	wram_bank WRAM_COURT_PLANES ; $48fd
 	ld hl, wCharDataScreenBackup ; $4903
 	ld de, wScreenAttrmap ; $4906
 	ld c, $24 ; $4909
@@ -241,7 +241,7 @@ BlitTilemapRunsFromTable:
 	jr nc, .gotSrc ; $4926
 	inc h ; $4928
 .gotSrc:
-	wram_bank $06 ; $4929
+	wram_bank WRAM_SCENE ; $4929
 	ld a, l ; $492f
 	ld [wCharDataNumberBuffer], a ; $4930
 	ld a, h ; $4933
@@ -255,10 +255,10 @@ BlitTilemapRunsFromTable:
 	ld h, [hl] ; $493f
 	ld l, a ; $4940
 .copyLoop:
-	wram_bank $03 ; $4941
+	wram_bank WRAM_SCREEN ; $4941
 	ld a, [hl] ; $4947
 	ld [de], a ; $4948
-	wram_bank $02 ; $4949
+	wram_bank WRAM_COURT_PLANES ; $4949
 	ld a, [hl+] ; $494f
 	ld [de], a ; $4950
 	inc de ; $4951
@@ -277,7 +277,7 @@ FlushCharDataTilemaps:
 	call FlushCharDataTilemapChunk ; $4963
 	ret ; $4966
 FlushCharDataTilemapChunk:
-	wram_bank $06 ; $4967
+	wram_bank WRAM_SCENE ; $4967
 	ld a, [wCharDataFlushChunk] ; $496d
 	inc a ; $4970
 	dec a ; $4971
@@ -286,12 +286,12 @@ FlushCharDataTilemapChunk:
 	jr z, .countDone2 ; $4975
 	jr .queueVRAMCopy ; $4977
 .countDone:
-	wram_bank $03 ; $4979
+	wram_bank WRAM_SCREEN ; $4979
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $497f
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $4982
 	ld c, $06 ; $4985
 	call QueueVRAMCopy ; $4987
-	wram_bank $02 ; $498a
+	wram_bank WRAM_COURT_PLANES ; $498a
 	ld hl, wScreenAttrmap + 15 * TILEMAP_WIDTH ; $4990
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH + VRAM_BANK1 ; $4993
 	ld c, $06 ; $4996
@@ -299,12 +299,12 @@ FlushCharDataTilemapChunk:
 	call AdvanceFrame ; $499b
 	ret ; $499e
 .countDone2:
-	wram_bank $03 ; $499f
+	wram_bank WRAM_SCREEN ; $499f
 	ld hl, wShadowTilemap + 7 * TILEMAP_WIDTH ; $49a5
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH ; $49a8
 	ld c, $10 ; $49ab
 	call QueueVRAMCopy ; $49ad
-	wram_bank $02 ; $49b0
+	wram_bank WRAM_COURT_PLANES ; $49b0
 	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH ; $49b6
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $49b9
 	ld c, $10 ; $49bc
@@ -312,12 +312,12 @@ FlushCharDataTilemapChunk:
 	call AdvanceFrame ; $49c1
 	ret ; $49c4
 .queueVRAMCopy:
-	wram_bank $03 ; $49c5
+	wram_bank WRAM_SCREEN ; $49c5
 	ld hl, wShadowTilemap ; $49cb
 	ld de, vBGMap0 ; $49ce
 	ld c, $0e ; $49d1
 	call QueueVRAMCopy ; $49d3
-	wram_bank $02 ; $49d6
+	wram_bank WRAM_COURT_PLANES ; $49d6
 	ld hl, wScreenAttrmap ; $49dc
 	ld de, vBGMap0 + VRAM_BANK1 ; $49df
 	ld c, $0e ; $49e2
@@ -325,7 +325,7 @@ FlushCharDataTilemapChunk:
 	call AdvanceFrame ; $49e7
 	ret ; $49ea
 WriteCharStatsToDisplayBuffer:
-	wram_bank $06 ; $49eb
+	wram_bank WRAM_SCENE ; $49eb
 	ld a, [wCharDataPointsWorking] ; $49f1
 	ld [wCharDataPointsLeft], a ; $49f4
 	push af ; $49f7
@@ -424,7 +424,7 @@ WriteCharStatsToDisplayBuffer:
 	farcall RefreshPlayerStatsAndGetPtr ; $4a90
 	ret ; $4a93
 LoadCharStatsWithLevelUpDeltas:
-	wram_bank $06 ; $4a94
+	wram_bank WRAM_SCENE ; $4a94
 	ld a, [wCharDataViewOnly] ; $4a9a
 	or a ; $4a9d
 	ret nz ; $4a9e
@@ -703,7 +703,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ld [hl+], a ; $4c41
 	ret ; $4c42
 LoadCharStats:
-	wram_bank $06 ; $4c43
+	wram_bank WRAM_SCENE ; $4c43
 	push af ; $4c49
 	ld hl, wStoryModeNameOfMainCharacter ; $4c4a
 	ld a, [wStoryCharacterSlot] ; $4c4d
@@ -964,7 +964,7 @@ LoadCharStats:
 	jr nz, .clearLoop ; $4dd3
 	ret ; $4dd5
 CharDataScreen_DrawPageColumns:
-	wram_bank $06 ; $4dd6
+	wram_bank WRAM_SCENE ; $4dd6
 	ld a, [wCharDataPage] ; $4ddc
 	rlca ; $4ddf
 	push af ; $4de0
@@ -985,7 +985,7 @@ CharDataScreen_DrawPageColumns:
 .rowLoop:
 	push bc ; $4dfb
 .cellLoop:
-	wram_bank $02 ; $4dfc
+	wram_bank WRAM_COURT_PLANES ; $4dfc
 	ld a, [hl+] ; $4e02
 	ld [de], a ; $4e03
 	inc de ; $4e04
@@ -995,14 +995,14 @@ CharDataScreen_DrawPageColumns:
 	ld a, c ; $4e09
 	and $01 ; $4e0a
 	jr nz, .nextRow ; $4e0c
-	wram_bank $06 ; $4e0e
+	wram_bank WRAM_SCENE ; $4e0e
 	ld a, [wCharDataPage] ; $4e14
 	cp $04 ; $4e17
 	jr z, .nextRow ; $4e19
 	dec de ; $4e1b
 	dec de ; $4e1c
 	dec de ; $4e1d
-	wram_bank $02 ; $4e1e
+	wram_bank WRAM_COURT_PLANES ; $4e1e
 	ld a, $01 ; $4e24
 	ld [de], a ; $4e26
 	inc de ; $4e27

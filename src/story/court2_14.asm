@@ -176,7 +176,7 @@ ActorScript_14_0:
 	as_halt
 ; Reads tennis-machine record $01 and then throws the result away, storing the constant $0050 into wMinigameRecordValue instead, before sending the player back to the machine room at entry point $01. Nothing calls it (no textual or ROM-wide pointer reference), and it never calls UpdateMinigameRecord, so even if it ran the 80 would not persist -- it reads as an abandoned debug helper. The name states what the body does, not what it was for
 UnusedMachineRecordOverrideAndReturn_14:
-	push_wram_bank $07 ; $4813
+	push_wram_bank WRAM_SOUND ; $4813
 	ld a, $01 ; $481c
 	farcall ReadMinigameRecord ; $481e
 	ld de, $0050 ; $4821
@@ -201,7 +201,7 @@ MachineExpertResultScene:
 	jp z, MachineExpertCounterMaxScene ; $484c
 .notClearedMachineExpert:
 	ld bc, $0001 ; $484f
-	push_wram_bank $07 ; $4852
+	push_wram_bank WRAM_SOUND ; $4852
 	ld hl, wMinigamesCurrentScore ; $485b
 	ld a, [hl+] ; $485e
 	ld d, [hl] ; $485f
@@ -217,7 +217,7 @@ MachineExpertResultScene:
 	ld h, a ; $486d
 	jp nc, MachineExpertRetryPrompt ; $486e
 	ld bc, $270f ; $4871
-	push_wram_bank $07 ; $4874
+	push_wram_bank WRAM_SOUND ; $4874
 	ld a, $01 ; $487d
 	farcall ReadMinigameRecord ; $487f
 	ld hl, wMinigameRecordValue ; $4882
@@ -238,7 +238,7 @@ MachineExpertResultScene:
 	ld a, [hl+] ; $489b
 	ld b, [hl] ; $489c
 	ld c, a ; $489d
-	push_wram_bank $07 ; $489e
+	push_wram_bank WRAM_SOUND ; $489e
 	ld hl, wMinigameRecordValue ; $48a7
 	ld a, [hl+] ; $48aa
 	ld d, [hl] ; $48ab
@@ -280,7 +280,7 @@ MachineExpertNewRecordScene:
 	farcall AttachActorStepMover ; $48f5
 	ret ; $48f8
 MachineExpertCounterMaxScene:
-	push_wram_bank $07 ; $48f9
+	push_wram_bank WRAM_SOUND ; $48f9
 	ld a, $01 ; $4902
 	farcall ReadMinigameRecord ; $4904
 	ld hl, wMinigameRecordValue ; $4907
@@ -318,7 +318,7 @@ Unused_14_CompareMinigameScoreToRecord:
 	ld a, [hl+] ; $4954
 	ld b, [hl] ; $4955
 	ld c, a ; $4956
-	push_wram_bank $07 ; $4957
+	push_wram_bank WRAM_SOUND ; $4957
 	ld hl, wMinigameRecordValue ; $4960
 	ld a, [hl+] ; $4963
 	ld d, [hl] ; $4964
@@ -334,7 +334,7 @@ Unused_14_CompareMinigameScoreToRecord:
 	ld h, a ; $4972
 	ret ; $4973
 SaveMachineExpertRecord:
-	push_wram_bank $07 ; $4974
+	push_wram_bank WRAM_SOUND ; $4974
 	ld hl, wMinigamesCurrentScore ; $497d
 	ld a, [hl+] ; $4980
 	ld d, [hl] ; $4981

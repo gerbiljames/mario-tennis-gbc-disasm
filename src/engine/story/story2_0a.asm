@@ -2,7 +2,7 @@ GetPointAheadOfActor:
 	push af ; $51cf
 	push bc ; $51d0
 	ld b, a ; $51d1
-	wram_bank $04 ; $51d2
+	wram_bank WRAM_ACTORS ; $51d2
 	ld a, b ; $51d8
 	ld c, l ; $51d9
 	ld b, h ; $51da
@@ -65,7 +65,7 @@ FindActorFacingPlayer:
 	push bc ; $5227
 	push de ; $5228
 	push hl ; $5229
-	wram_bank $04 ; $522a
+	wram_bank WRAM_ACTORS ; $522a
 	farcall BuildActorQueryList ; $5230
 	ld hl, wActors ; $5233
 	ld de, $01c0 ; $5236
@@ -175,7 +175,7 @@ ShowLocationNamePopup:
 	ldh a, [hWramBank] ; $52f9
 	push af ; $52fb
 	call WaitPlayerMoveDone ; $52fc
-	wram_bank $05 ; $52ff
+	wram_bank WRAM_TEXT ; $52ff
 	ld a, [wMessageSpeed] ; $5305
 	set 7, a ; $5308
 	ld [wMessageSpeed], a ; $530a
@@ -191,7 +191,7 @@ ShowLocationNamePopup:
 	jr nz, .waitLoop ; $531d
 .close:
 	farcall CloseActiveDialogueWindow ; $531f
-	wram_bank $05 ; $5322
+	wram_bank WRAM_TEXT ; $5322
 	ld hl, wMessageSpeed ; $5328
 	res 7, [hl] ; $532b
 	pop_wram_bank ; $532d
@@ -269,7 +269,7 @@ FacingMaskTable_0a:
 CheckTriggerFacingMask:
 	push bc ; $53bd
 	push hl ; $53be
-	wram_bank $04 ; $53bf
+	wram_bank WRAM_ACTORS ; $53bf
 	ld c, $01 ; $53c5
 	ld a, b ; $53c7
 	cp $ff ; $53c8
@@ -350,7 +350,7 @@ RunStoryScriptOrDialogue:
 .runScript:
 	farcall BeginCutsceneScriptMode ; $543c
 	push hl ; $543f
-	wram_bank $04 ; $5440
+	wram_bank WRAM_ACTORS ; $5440
 	ld hl, wActors + 48 ; $5446
 	res 0, [hl] ; $5449
 	ld hl, wActors + 20 ; $544b
@@ -374,7 +374,7 @@ InitLocationActors:
 	push hl ; $5469
 	push af ; $546a
 	push hl ; $546b
-	wram_bank $04 ; $546c
+	wram_bank WRAM_ACTORS ; $546c
 	farcall InitActorEngine ; $5472
 	ld hl, wStoryModeSpawnPosition + 4 ; $5475
 	ld c, [hl] ; $5478
@@ -440,7 +440,7 @@ RunNpcInteraction:
 	call FarCopyBytes ; $54d9
 	ld hl, wStoryMapRecord + 6 ; $54dc
 	ld b, [hl] ; $54df
-	wram_bank $04 ; $54e0
+	wram_bank WRAM_ACTORS ; $54e0
 	ld hl, wStoryMapRecord ; $54e6
 	ld a, [hl] ; $54e9
 	call GetActorStateAddr ; $54ea

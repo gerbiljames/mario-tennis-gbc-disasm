@@ -1,5 +1,5 @@
 DrawSpinServeBriefingMarker:
-	push_wram_bank $03 ; $4843
+	push_wram_bank WRAM_SCREEN ; $4843
 	ld c, $64 ; $484c
 	ld b, $09 ; $484e
 	ld a, [wBriefingSpinMarkerUnflipped] ; $4850
@@ -21,7 +21,7 @@ DrawSpinServeBriefingMarker_SpriteTemplate:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 DrawBriefingMarkerRotated:
-	push_wram_bank $03 ; $4876
+	push_wram_bank WRAM_SCREEN ; $4876
 	ld hl, BriefingMarkerRotatedTable ; $487f
 	ld a, [wBriefingRotMarkerDir] ; $4882
 	add l ; $4885
@@ -42,7 +42,7 @@ BriefingMarkerRotatedTable:
 	; $489e, 4 bytes (bytes:4)
 	db $49, $09, $29, $69 ; 0x00
 DrawBlinkingPrompt:
-	push_wram_bank $03 ; $48a2
+	push_wram_bank WRAM_SCREEN ; $48a2
 	ldh a, [hVBlankCounter] ; $48ab
 	and $10 ; $48ad
 	jr z, .restore ; $48af
@@ -54,7 +54,7 @@ DrawBlinkingPrompt:
 	pop_wram_bank ; $48bb
 	ret ; $48c0
 DrawBriefingTargetBrackets:
-	push_wram_bank $03 ; $48c1
+	push_wram_bank WRAM_SCREEN ; $48c1
 	ld a, [wBriefingBracketX] ; $48ca
 	ld d, a ; $48cd
 	ldh a, [hVBlankCounter] ; $48ce
@@ -145,11 +145,11 @@ LoadCourtDiagramScreen:
 	ld c, SCREENASSET_CourtDiagram ; $4960
 	farcall LoadScreenAssetRecord ; $4962
 	call InitCourtDiagramTextWindow ; $4965
-	wram_bank $03 ; $4968
+	wram_bank WRAM_SCREEN ; $4968
 	call DecompressGraphicsList ; $496e
 	call LoadCourtDiagramObjPalettes ; $4971
 	farcall QueueWram3MapToVRAM ; $4974
-	wram_bank $03 ; $4977
+	wram_bank WRAM_SCREEN ; $4977
 	ret ; $497d
 WaitForInputBlinking:
 	call AdvanceFrame ; $497e
@@ -178,7 +178,7 @@ InitCourtDiagramTextWindow:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $49a4
 	ld de, vTiles2 ; $49a6
 	farcall LoadCompressedTileBlock ; $49a9
-	wram_bank $05 ; $49ac
+	wram_bank WRAM_TEXT ; $49ac
 	ld a, $03 ; $49b2
 	ld [wShadowTilemapBank], a ; $49b4
 	ld a, $00 ; $49b7

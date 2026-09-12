@@ -32,7 +32,7 @@ PlayScrollingStoryCutscene:
 	farcall StopSceneScrollTask ; $7025
 	ld a, $90 ; $7028
 	ldh [rWY], a ; $702a
-	wram_bank $06 ; $702c
+	wram_bank WRAM_SCENE ; $702c
 	xor a ; $7032
 	ld [wCutsceneSlideDone], a ; $7033
 	ld [wCutsceneSlideTimer], a ; $7036
@@ -53,12 +53,12 @@ PlayScrollingStoryCutscene:
 	dec a ; $7054
 	or a ; $7055
 	jr nz, .loopB ; $7056
-	wram_bank $01 ; $7058
+	wram_bank WRAM_STAGING ; $7058
 	ld hl, wDecompBuffer ; $705e
 	ld b, $20 ; $7061
 	ld de, $0300 ; $7063
 	call FillMemoryDE ; $7066
-	wram_bank $05 ; $7069
+	wram_bank WRAM_TEXT ; $7069
 	ld hl, wWindowShadowTilemap ; $706f
 	ld b, $20 ; $7072
 	ld de, $0100 ; $7074
@@ -84,7 +84,7 @@ WindowTileMap_03:
 	; $71a0, 256 bytes (pattern)
 	ds 256, $20
 AnimateWindowSlideUpTask:
-	push_wram_bank $06 ; $72a0
+	push_wram_bank WRAM_SCENE ; $72a0
 	ld a, [wCutsceneWindowSliding] ; $72a9
 	ld b, a ; $72ac
 	ld hl, WindowSlideStepTable_03 ; $72ad
@@ -131,7 +131,7 @@ AnimateWindowSlideUpTask:
 	jr nz, .done ; $72ed
 	ld hl, AnimateWindowSlideUpTask ; $72ef
 	call UnregisterFrameTask ; $72f2
-	wram_bank $06 ; $72f5
+	wram_bank WRAM_SCENE ; $72f5
 	ld a, $01 ; $72fb
 	ld [wCutsceneSlideDone], a ; $72fd
 .done:
@@ -184,7 +184,7 @@ DrawCutsceneTextPage:
 	jr nc, .gotPtr ; $7348
 	inc h ; $734a
 .gotPtr:
-	wram_bank $06 ; $734b
+	wram_bank WRAM_SCENE ; $734b
 	ld a, [hl] ; $7351
 	ld [wCutsceneTextScrollRows], a ; $7352
 	ld b, a ; $7355
@@ -263,7 +263,7 @@ DrawCutsceneTextLines:
 	jr nc, .gotPtr ; $742c
 	inc h ; $742e
 .gotPtr:
-	wram_bank $01 ; $742f
+	wram_bank WRAM_STAGING ; $742f
 .loop:
 	ld c, $50 ; $7435
 	call DrawDialogueLineToBuffer ; $7437
@@ -288,7 +288,7 @@ ScrollCutsceneTextWindow:
 	push bc ; $7453
 	push de ; $7454
 	push hl ; $7455
-	push_wram_bank $06 ; $7456
+	push_wram_bank WRAM_SCENE ; $7456
 	ld a, [wCutsceneTextScrollRows] ; $745f
 	and $03 ; $7462
 	jr nz, .maskSet ; $7464
@@ -341,13 +341,13 @@ BlitCutsceneTextWindow:
 	push hl ; $74a7
 	push de ; $74a8
 .loopB:
-	wram_bank $01 ; $74a9
+	wram_bank WRAM_STAGING ; $74a9
 	ld a, [hl+] ; $74af
 	push hl ; $74b0
 	ld h, d ; $74b1
 	ld l, e ; $74b2
 	push af ; $74b3
-	wram_bank $05 ; $74b4
+	wram_bank WRAM_TEXT ; $74b4
 	pop af ; $74ba
 	ld [hl], a ; $74bb
 	inc de ; $74bc
@@ -370,7 +370,7 @@ BlitCutsceneTextWindow:
 .gotPtr3:
 	dec b ; $74d1
 	jr nz, .loop ; $74d2
-	wram_bank $05 ; $74d4
+	wram_bank WRAM_TEXT ; $74d4
 	ld hl, wWindowShadowTilemap ; $74da
 	ld de, vBGMap1 ; $74dd
 	ld c, $10 ; $74e0
@@ -391,7 +391,7 @@ DrawDialogueLineToBuffer:
 	push af ; $74f8
 	farcall FetchDialogueText ; $74f9
 	ld hl, wTextBuffer ; $74fc
-	wram_bank $01 ; $74ff
+	wram_bank WRAM_STAGING ; $74ff
 	ld c, $14 ; $7505
 .loop:
 	ld a, [hl+] ; $7507
@@ -417,12 +417,12 @@ ShowStoryResultScreen:
 	push bc ; $751f
 	push de ; $7520
 	push hl ; $7521
-	push_wram_bank $02 ; $7522
+	push_wram_bank WRAM_COURT_PLANES ; $7522
 	ld hl, wScreenAttrmap ; $752b
 	ld de, $0240 ; $752e
 	ld b, $00 ; $7531
 	call FillMemoryDE ; $7533
-	wram_bank $03 ; $7536
+	wram_bank WRAM_SCREEN ; $7536
 	ld hl, wShadowTilemap ; $753c
 	ld de, $0240 ; $753f
 	ld b, $20 ; $7542
@@ -435,12 +435,12 @@ ShowStoryResultScreen:
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH ; $7556
 	ld bc, $0020 ; $7559
 	farcall FetchAndDrawDialogueText ; $755c
-	wram_bank $02 ; $755f
+	wram_bank WRAM_COURT_PLANES ; $755f
 	ld hl, wScreenAttrmap ; $7565
 	ld de, $b800 ; $7568
 	ld c, $24 ; $756b
 	call QueueVRAMCopy ; $756d
-	wram_bank $03 ; $7570
+	wram_bank WRAM_SCREEN ; $7570
 	ld hl, wShadowTilemap ; $7576
 	ld de, vBGMap0 ; $7579
 	ld c, $24 ; $757c

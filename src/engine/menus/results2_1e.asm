@@ -1,5 +1,5 @@
 ClearRoundLabelRow:
-	wram_bank $03 ; $4867
+	wram_bank WRAM_SCREEN ; $4867
 	ld a, $03 ; $486d
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 10], a ; $486f
 	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; $4872
@@ -30,7 +30,7 @@ DrawPlayerNameAndLevel:
 	ld a, [wGameMode] ; $489b
 	cp GAMEMODE_EXHIBITION ; $489e
 	ret z ; $48a0
-	wram_bank $01 ; $48a1
+	wram_bank WRAM_STAGING ; $48a1
 	ld hl, ResultsPlayerPanelTilemap_1e ; $48a7
 	ld de, wDecompBuffer ; $48aa
 	call DecompressData ; $48ad
@@ -53,7 +53,7 @@ DrawPlayerNameAndLevel:
 	ld de, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $48dc
 	ld c, $08 ; $48df
 	call CopyTilesAndAttrsRun ; $48e1
-	wram_bank $03 ; $48e4
+	wram_bank WRAM_SCREEN ; $48e4
 	ld a, $20 ; $48ea
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $48ec
 	call Fill7Bytes ; $48ef
@@ -82,7 +82,7 @@ DrawPlayerNameAndLevel:
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 4 ; $4930
 	ld bc, $0020 ; $4933
 	call WriteTextToTilemap ; $4936
-	wram_bank $02 ; $4939
+	wram_bank WRAM_COURT_PLANES ; $4939
 	ld a, $04 ; $493f
 	ld hl, wScreenAttrmap + 5 * TILEMAP_WIDTH ; $4941
 	call Fill7Bytes ; $4944
@@ -103,12 +103,12 @@ Fill7Bytes:
 	ld [hl], a ; $4960
 	ret ; $4961
 CopyTilesAndAttrsRun:
-	wram_bank $01 ; $4962
+	wram_bank WRAM_STAGING ; $4962
 	ld b, [hl] ; $4968
-	wram_bank $03 ; $4969
+	wram_bank WRAM_SCREEN ; $4969
 	ld a, b ; $496f
 	ld [de], a ; $4970
-	wram_bank $01 ; $4971
+	wram_bank WRAM_STAGING ; $4971
 	push hl ; $4977
 	ld a, $c8 ; $4978
 	add l ; $497a
@@ -117,7 +117,7 @@ CopyTilesAndAttrsRun:
 	inc h ; $497e
 .readAttr:
 	ld b, [hl] ; $497f
-	wram_bank $02 ; $4980
+	wram_bank WRAM_COURT_PLANES ; $4980
 	ld a, b ; $4986
 	ld [de], a ; $4987
 	pop hl ; $4988
@@ -177,11 +177,11 @@ InitResultsScreenCharacters:
 	farcall GetCharPaletteIndex ; $49eb
 	lb de, $0f, $01 ; $49ee palette index, count
 	farcall LoadIndexedPaletteThunk ; $49f1
-	wram_bank $06 ; $49f4
+	wram_bank WRAM_SCENE ; $49f4
 	ld a, [wContinuePromptKind] ; $49fa
 	or a ; $49fd
 	jr nz, .nonZero2 ; $49fe
-	wram_bank $04 ; $4a00
+	wram_bank WRAM_ACTORS ; $4a00
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a06
 	ret z ; $4a09
 .nonZero2:
@@ -235,23 +235,23 @@ InitResultsScreenCharacters:
 	farcall GetCharPaletteIndex ; $4a66
 	lb de, $0e, $01 ; $4a69 palette index, count
 	farcall LoadIndexedPaletteThunk ; $4a6c
-	wram_bank $04 ; $4a6f
+	wram_bank WRAM_CHAR0 ; $4a6f
 	ret ; $4a75
 DrawResultsCharSprites:
-	wram_bank $04 ; $4a76
+	wram_bank WRAM_CHAR0 ; $4a76
 	xor a ; $4a7c
 	call UpdateResultsCharSprite ; $4a7d
 	ld hl, wCharSpriteSlot ; $4a80
 	farcall DrawCharSprite ; $4a83
-	wram_bank $04 ; $4a86
+	wram_bank WRAM_CHAR0 ; $4a86
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a8c
 	ret z ; $4a8f
-	wram_bank $06 ; $4a90
+	wram_bank WRAM_CHAR2 ; $4a90
 	ld a, $01 ; $4a96
 	call UpdateResultsCharSprite ; $4a98
 	ld hl, wCharSpriteSlot ; $4a9b
 	farcall DrawCharSprite ; $4a9e
-	wram_bank $04 ; $4aa1
+	wram_bank WRAM_CHAR0 ; $4aa1
 	ret ; $4aa7
 UpdateResultsCharSprite:
 	push af ; $4aa8
@@ -353,7 +353,7 @@ RunContinuePrompt:
 	jr nz, DrawContinuePromptCursor.playSfx3 ; $4b42
 	jr RunContinuePrompt ; $4b44
 DrawContinuePromptCursor:
-	wram_bank $06 ; $4b46
+	wram_bank WRAM_SCENE ; $4b46
 	ld a, [wContinuePromptRow] ; $4b4c
 	or a ; $4b4f
 	jr nz, .nonZero ; $4b50
@@ -367,14 +367,14 @@ DrawContinuePromptCursor:
 	ret ; $4b60
 .playSfx:
 	sound SFX_MENU_MOVE ; $4b61
-	wram_bank $06 ; $4b63
+	wram_bank WRAM_SCENE ; $4b63
 	ld a, [wContinuePromptRow] ; $4b69
 	xor $01 ; $4b6c
 	ld [wContinuePromptRow], a ; $4b6e
 	jr RunContinuePrompt ; $4b71
 .playSfx2:
 	sound SFX_MENU_SELECT ; $4b73
-	wram_bank $06 ; $4b75
+	wram_bank WRAM_SCENE ; $4b75
 	ld a, [wContinuePromptPage] ; $4b7b
 	or a ; $4b7e
 	jr nz, .nonZero2 ; $4b7f
@@ -405,7 +405,7 @@ DrawContinuePromptCursor:
 	ret ; $4bae
 .playSfx3:
 	sound SFX_MENU_CANCEL ; $4baf
-	wram_bank $06 ; $4bb1
+	wram_bank WRAM_SCENE ; $4bb1
 	ld a, [wContinuePromptPage] ; $4bb7
 	or a ; $4bba
 	jr nz, .nonZero3 ; $4bbb
@@ -429,7 +429,7 @@ RefreshContinuePromptText:
 	ld de, vBGMap0 ; $4be0
 	ld c, $08 ; $4be3
 	call QueueVRAMCopy ; $4be5
-	wram_bank $06 ; $4be8
+	wram_bank WRAM_SCENE ; $4be8
 	ret ; $4bee
 .nonZero:
 	ld a, $01 ; $4bef
@@ -443,10 +443,10 @@ RefreshContinuePromptText:
 	ld de, vBGMap0 ; $4c06
 	ld c, $08 ; $4c09
 	call QueueVRAMCopy ; $4c0b
-	wram_bank $06 ; $4c0e
+	wram_bank WRAM_SCENE ; $4c0e
 	ret ; $4c14
 ClearContinuePromptRows:
-	wram_bank $03 ; $4c15
+	wram_bank WRAM_SCREEN ; $4c15
 	ld a, $03 ; $4c1b
 	ld hl, wShadowTilemap + 1 ; $4c1d
 	ld c, $12 ; $4c20

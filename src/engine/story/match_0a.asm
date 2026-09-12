@@ -220,7 +220,7 @@ RunClearStatusSetupMenu:
 	call DisableLCDSafely ; $4bb5
 	farcall LoadMenuFontGfx ; $4bb8
 	call EnableLCD ; $4bbb
-	wram_bank $05 ; $4bbe
+	wram_bank WRAM_CHAR1 ; $4bbe
 	ld hl, wClearStatusMode ; $4bc4
 	ld c, $02 ; $4bc7
 	call ClearMemory16 ; $4bc9
@@ -235,7 +235,7 @@ RunClearStatusSetupMenu:
 	farcall DrawTextWindowFrame ; $4be0
 	script_fade_in $10 ; $4be3
 	call WaitFadeEnd ; $4be8
-	wram_bank $05 ; $4beb
+	wram_bank WRAM_CHAR1 ; $4beb
 .modeMenu:
 	ld a, [wClearStatusWindowId] ; $4bf1
 	farcall DrawTextWindowFrame ; $4bf4
@@ -373,22 +373,22 @@ RunClearStatusSetupMenu:
 	ret ; $4d2b
 ClearBgTilemaps:
 	call DisableLCDSafely ; $4d2c
-	wram_bank $02 ; $4d2f
+	wram_bank WRAM_COURT_PLANES ; $4d2f
 	ld a, $00 ; $4d35
 	ld hl, wScreenAttrmap ; $4d37
 	ld bc, $0500 ; $4d3a
 	call FillMemoryFast ; $4d3d
-	wram_bank $03 ; $4d40
+	wram_bank WRAM_SCREEN ; $4d40
 	ld a, $20 ; $4d46
 	ld hl, wShadowTilemap ; $4d48
 	ld bc, $0500 ; $4d4b
 	call FillMemoryFast ; $4d4e
-	wram_bank $03 ; $4d51
+	wram_bank WRAM_SCREEN ; $4d51
 	ld hl, wShadowTilemap ; $4d57
 	ld de, vBGMap0 ; $4d5a
 	ld c, $24 ; $4d5d
 	call QueueVRAMCopy ; $4d5f
-	wram_bank $02 ; $4d62
+	wram_bank WRAM_COURT_PLANES ; $4d62
 	ld hl, wScreenAttrmap ; $4d68
 	ld de, vBGMap0 + VRAM_BANK1 ; $4d6b
 	ld c, $24 ; $4d6e

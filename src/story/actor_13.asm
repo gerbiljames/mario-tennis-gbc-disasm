@@ -169,7 +169,7 @@ VarsityCourtTourActors_13:
 	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, $49, $01, $00
 	map_actor_end
 DecompressVarsityCourtTourRecords_13:
-	push_wram_bank $01 ; $667a
+	push_wram_bank WRAM_STAGING ; $667a
 	ld c, $04 ; $6683
 	xor a ; $6685
 .loop:

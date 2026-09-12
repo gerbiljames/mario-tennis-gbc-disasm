@@ -453,7 +453,7 @@ WallPracticeScoreRetryPrompt:
 	ld a, [hl+] ; $486b
 	ld b, [hl] ; $486c
 	ld c, a ; $486d
-	push_wram_bank $07 ; $486e
+	push_wram_bank WRAM_SOUND ; $486e
 	ld a, $00 ; $4877
 	farcall ReadMinigameRecord ; $4879
 	ld hl, wMinigameRecordValue ; $487c
@@ -504,7 +504,7 @@ WallPracticeScoreRetryPrompt:
 	jp LaunchWallPracticeMinigame ; $48e7
 	ret ; $48ea
 WallPracticeNewRecordScript:
-	push_wram_bank $07 ; $48eb
+	push_wram_bank WRAM_SOUND ; $48eb
 	ld hl, wMinigamesCurrentScore ; $48f4
 	ld a, [hl+] ; $48f7
 	ld d, [hl] ; $48f8
@@ -535,7 +535,7 @@ WallPracticeNewRecordScript:
 WallPracticeMaxScoreScript:
 	script_set_text Text_36_41 ; $4936
 	script_speak $07 ; $493c
-	push_wram_bank $07 ; $4941
+	push_wram_bank WRAM_SOUND ; $4941
 	ld a, $00 ; $494a
 	farcall ReadMinigameRecord ; $494c
 	ld hl, wMinigameRecordValue ; $494f

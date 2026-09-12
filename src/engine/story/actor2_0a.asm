@@ -18,7 +18,7 @@ FaceActorsTowardEachOther:
 	ldh [hActorPtr], a ; $4687
 	ld a, h ; $4689
 	ldh [hActorPtr + 1], a ; $468a
-	wram_bank $04 ; $468c
+	wram_bank WRAM_ACTORS ; $468c
 	ld hl, hActorPtr ; $4692
 	ld a, [hl+] ; $4695
 	ld h, [hl] ; $4696
@@ -126,7 +126,7 @@ ScriptWaitActorIdle:
 ScriptSetActorJumpVelocity:
 	call GetActorStateAddr ; $4719
 	ret z ; $471c
-	wram_bank $04 ; $471d
+	wram_bank WRAM_ACTORS ; $471d
 	ld a, $12 ; $4723
 	add l ; $4725
 	ld l, a ; $4726
@@ -140,7 +140,7 @@ ScriptSetActorJumpVelocity:
 SetActorActive:
 	call GetActorStateAddr ; $472e
 	ret z ; $4731
-	wram_bank $04 ; $4732
+	wram_bank WRAM_ACTORS ; $4732
 	ld a, $20 ; $4738
 	add l ; $473a
 	ld l, a ; $473b
@@ -193,7 +193,7 @@ IsActorBusy:
 	ret z ; $476f
 	push de ; $4770
 	push hl ; $4771
-	wram_bank $04 ; $4772
+	wram_bank WRAM_ACTORS ; $4772
 	ld de, $002e ; $4778
 	add hl, de ; $477b
 	ld a, [hl] ; $477c
@@ -229,7 +229,7 @@ WaitActorIdle:
 SetPlayerMoveSpeed:
 	push af ; $47a3
 	push hl ; $47a4
-	wram_bank $04 ; $47a5
+	wram_bank WRAM_ACTORS ; $47a5
 	ld hl, wActors + 1 * ACTOR_SIZE + 6 ; $47ab
 	ld a, c ; $47ae
 	ld [hl+], a ; $47af
@@ -260,7 +260,7 @@ MovePlayerToPosition:
 	ldh [hActorPtr], a ; $47cc
 	ld a, h ; $47ce
 	ldh [hActorPtr + 1], a ; $47cf
-	wram_bank $04 ; $47d1
+	wram_bank WRAM_ACTORS ; $47d1
 	ld a, d ; $47d7
 	or a ; $47d8
 	jr nz, .waitLoop ; $47d9
@@ -304,7 +304,7 @@ MovePlayerToActor:
 	push de ; $4818
 	push hl ; $4819
 	push af ; $481a
-	wram_bank $04 ; $481b
+	wram_bank WRAM_ACTORS ; $481b
 	pop af ; $4821
 	add sp, -4 ; $4822
 	ld hl, sp + 0 ; $4824
@@ -388,7 +388,7 @@ WaitPlayerMoveDone:
 	ldh [hActorPtr], a ; $489c
 	ld a, h ; $489e
 	ldh [hActorPtr + 1], a ; $489f
-	wram_bank $04 ; $48a1
+	wram_bank WRAM_ACTORS ; $48a1
 	ld a, $05 ; $48a7
 	add l ; $48a9
 	ld l, a ; $48aa

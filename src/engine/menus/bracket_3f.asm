@@ -17,7 +17,7 @@ DrawTennisDictionaryLetterLabels:
 	jr z, .loop ; $534b
 	dec b ; $534d
 	jr nz, .loop ; $534e
-	wram_bank $03 ; $5350
+	wram_bank WRAM_SCREEN ; $5350
 	ld a, d ; $5356
 	dec a ; $5357
 	cp $ff ; $5358
@@ -65,7 +65,7 @@ DrawTennisDictionaryLetterLabels:
 SelectionMaskGrid_3f:
 	INCBIN "data/bank_03f/SelectionMaskGrid_3f.bin" ; $539e, 121 bytes
 SetTennisDictionaryListFromIndexRow:
-	wram_bank $06 ; $5417
+	wram_bank WRAM_SCENE ; $5417
 	ld c, $00 ; $541d
 	ld hl, SelectionMaskGrid_3f ; $541f
 	ld a, [wTennisDictCategoryMask] ; $5422
@@ -114,7 +114,7 @@ TennisDictionaryRowFirstLetterTable:
 	; $545f, 9 bytes (bytes:9)
 	db $00, $03, $06, $0b, $0c, $0f, $12, $15, $16 ; 0x00
 SetTennisDictionaryIndexRowFromList:
-	wram_bank $06 ; $5468
+	wram_bank WRAM_SCENE ; $5468
 	ld a, [wTennisDictCategoryMask] ; $546e
 	ld b, a ; $5471
 	call GetTennisDictionarySelectedIndex ; $5472
@@ -170,7 +170,7 @@ DrawTennisDictionaryIndexCursor:
 .compactTiles:
 	ld hl, TennisDictionaryIndexCursorTable1 ; $54d0
 .gotTiles:
-	wram_bank $03 ; $54d3
+	wram_bank WRAM_SCREEN ; $54d3
 	ld de, $cfb3 ; $54d9
 	ld c, b ; $54dc
 	inc b ; $54dd
@@ -249,7 +249,7 @@ DrawTennisDictionaryIndexCursor:
 .queueSecond:
 	ld c, $01 ; $5534
 	call QueueVRAMCopy ; $5536
-	wram_bank $06 ; $5539
+	wram_bank WRAM_SCENE ; $5539
 	ret ; $553f
 TennisDictionaryIndexCursorTable0:
 	; $5540, 36 bytes (bytes:16)
@@ -264,7 +264,7 @@ TennisDictionaryIndexCursorTable1:
 HandleTennisDictionaryIndexInput:
 	push bc ; $5588
 	push af ; $5589
-	wram_bank $06 ; $558a
+	wram_bank WRAM_SCENE ; $558a
 	ldh a, [hInputRisingEdge] ; $5590
 	bit PADB_A, a ; $5592
 	jr z, .step ; $5594
@@ -333,7 +333,7 @@ HandleTennisDictionaryIndexInput:
 HandleTennisDictionaryListInput:
 	push bc ; $55ff
 	push af ; $5600
-	wram_bank $06 ; $5601
+	wram_bank WRAM_SCENE ; $5601
 	ld a, [wTennisDictFlags] ; $5607
 	res 2, a ; $560a
 	res 3, a ; $560c
@@ -400,7 +400,7 @@ HandleTennisDictionaryListInput:
 	farcall RestoreTilemapUnderWindow ; $5687
 	farcall RedrawWindowRowsSafe ; $568a
 	farcall CloseWindowAlt ; $568d
-	wram_bank $06 ; $5690
+	wram_bank WRAM_SCENE ; $5690
 	ld a, [wTennisDictFlags] ; $5696
 	res 0, a ; $5699
 	ld [wTennisDictFlags], a ; $569b
@@ -494,7 +494,7 @@ HandleTennisDictionaryListInput:
 	pop bc ; $5747
 	ret ; $5748
 QueueTennisDictionaryGlyphTiles:
-	push_wram_bank $07 ; $5749
+	push_wram_bank WRAM_SOUND ; $5749
 	ld hl, wGlyphTileBuffer + 54 * TILE_SIZE ; $5752
 	ld de, vTiles1 + $36 * TILE_SIZE ; $5755
 	ld c, $18 ; $5758
@@ -524,7 +524,7 @@ QueueTennisDictionaryGlyphTiles:
 	pop_wram_bank ; $5789
 	ret ; $578e
 QueueTennisDictionaryListRows:
-	push_wram_bank $05 ; $578f
+	push_wram_bank WRAM_TEXT ; $578f
 	ld hl, wWindowShadowTilemap + 5 * TILEMAP_WIDTH + 16 ; $5798
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH + 16 ; $579b
 	ld c, $01 ; $579e

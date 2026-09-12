@@ -5,7 +5,7 @@ LoadMatchMenuItemGfx:
 	ld h, [hl] ; $5222
 	ld l, a ; $5223
 	ld de, wDecompBuffer ; $5224
-	push_wram_bank $01 ; $5227
+	push_wram_bank WRAM_STAGING ; $5227
 	call DecompressData ; $5230
 	ld hl, wDecompBuffer ; $5233
 	ld de, vTiles0 + $40 * TILE_SIZE ; $5236
@@ -93,7 +93,7 @@ LoadScoreboardModeGfx:
 	add a ; $5c9e
 	ld_hl_indexed ScoreboardMinigameGfxPointers ; $5c9f
 .checkWramBank:
-	push_wram_bank $01 ; $5ca6
+	push_wram_bank WRAM_STAGING ; $5ca6
 	ld a, [hl+] ; $5caf
 	ld h, [hl] ; $5cb0
 	ld l, a ; $5cb1

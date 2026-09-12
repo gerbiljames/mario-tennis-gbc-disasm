@@ -1,5 +1,5 @@
 LoadTourPointerSpriteGfx_13:
-	push_wram_bank $01 ; $4cdc
+	push_wram_bank WRAM_STAGING ; $4cdc
 	ld hl, TourPointerTiles_13 ; $4ce5
 	ld de, vTiles0 + VRAM_BANK1 ; $4ce8
 	ld c, (TourPointerPalette_13 - TourPointerTiles_13) / 16 ; $4ceb
@@ -360,7 +360,7 @@ PlaceDormRoomArrivalActors_13:
 	jr z, .stage3 ; $51b5
 	cp $01 ; $51b7
 	jr z, .stage2 ; $51b9
-	wram_bank $04 ; $51bb
+	wram_bank WRAM_ACTORS ; $51bb
 	test_flag FLAG_DOUBLES ; $51c1
 	jp nz, DormRoomNpc04IdleScripts_13.isDoubles ; $51c4
 	script_set_position $03, $0b00, $0a00 ; $51c7

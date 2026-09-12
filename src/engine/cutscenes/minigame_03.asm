@@ -254,7 +254,7 @@ ReinitSaveRamPreservingBlock6:
 	push bc ; $4f7e
 	push de ; $4f7f
 	push hl ; $4f80
-	push_wram_bank $01 ; $4f81
+	push_wram_bank WRAM_STAGING ; $4f81
 	ld hl, wDecompBuffer ; $4f8a
 	call ReadBlock6 ; $4f8d
 	ld b, a ; $4f90
@@ -344,7 +344,7 @@ ReadMinigameRecord:
 	push de ; $5017
 	push hl ; $5018
 	ld b, a ; $5019
-	push_wram_bank $07 ; $501a
+	push_wram_bank WRAM_SOUND ; $501a
 	ld a, b ; $5023
 	sub $02 ; $5024
 	jr nc, .read ; $5026
@@ -404,7 +404,7 @@ UpdateMinigameRecord:
 	push de ; $5073
 	push hl ; $5074
 	ld b, a ; $5075
-	push_wram_bank $07 ; $5076
+	push_wram_bank WRAM_SOUND ; $5076
 	ld a, b ; $507f
 	sub $02 ; $5080
 	jr nc, .readSlot0 ; $5082
@@ -535,7 +535,7 @@ InitCurrentSlotMinigameRecords:
 	push bc ; $5142
 	push de ; $5143
 	push hl ; $5144
-	push_wram_bank $07 ; $5145
+	push_wram_bank WRAM_SOUND ; $5145
 	ld a, [wCurrentStorySlot] ; $514e
 	add $38 ; $5151
 	ld b, a ; $5153
@@ -579,7 +579,7 @@ InitAllMinigameRecordBlocks:
 	push bc ; $519b
 	push de ; $519c
 	push hl ; $519d
-	push_wram_bank $07 ; $519e
+	push_wram_bank WRAM_SOUND ; $519e
 	push af ; $51a7
 	push bc ; $51a8
 	push de ; $51a9

@@ -1,5 +1,5 @@
 DecompressIntroTitleTiles:
-	push_wram_bank $01 ; $73f2
+	push_wram_bank WRAM_STAGING ; $73f2
 	ld hl, (BANK(DataPtr_IntroAwesomeTiles) << 8) | LOW(DataPtr_IntroAwesomeTiles) ; $73fb
 	ld de, wDecompBuffer ; $73fe
 	call DecompressDataFromBank ; $7401
@@ -11,7 +11,7 @@ DecompressIntroTitleTiles:
 	ld de, vTiles1 ; $7412
 	ld c, $80 ; $7415
 	call QueueVRAMCopy ; $7417
-	wram_bank $05 ; $741a
+	wram_bank WRAM_TEXT ; $741a
 	ld hl, DecompressIntroTitleTiles1 ; $7420
 	ld de, wWindowShadowTilemap ; $7423
 	call DecompressData ; $7426
@@ -37,7 +37,7 @@ IntroCutsceneState18InitPalettes_6b:
 	INCLUDE "data/bank_06b/IntroCutsceneState18InitPalettes_6b.asm" ; $756f, 64 bytes (palettes)
 RunTitleScreen:
 	call ClearFrameTasks ; $75af
-	wram_bank $03 ; $75b2
+	wram_bank WRAM_SCREEN ; $75b2
 	xor a ; $75b8
 	ldh [hScrollX], a ; $75b9
 	ldh [hScrollY], a ; $75bb
@@ -98,7 +98,7 @@ RunTitleScreen:
 	call EnableLCD ; $7649
 	script_fade_in $04 ; $764c
 	call WaitFadeEnd ; $7651
-	wram_bank $03 ; $7654
+	wram_bank WRAM_SCREEN ; $7654
 	ld a, $9f ; $765a
 	ld [wScreenScratch], a ; $765c
 .loop:
@@ -144,7 +144,7 @@ RunTitleScreen:
 	ld a, $ff ; $76b3
 	ret ; $76b5
 QueueTitleSprite:
-	push_wram_bank $03 ; $76b6
+	push_wram_bank WRAM_SCREEN ; $76b6
 	ld a, [wTitleSpriteFrame] ; $76bf
 	ld hl, TitleSpriteTable0 ; $76c2
 	add l ; $76c5

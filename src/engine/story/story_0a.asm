@@ -154,7 +154,7 @@ ClearStatusSetupMenuEntry:
 DrawPlayerPositionDebugOverlay:
 	test_flag FLAG_DEBUG_SHOW_PLAYER_POS ; $4efc
 	jr z, .done ; $4eff
-	wram_bank $04 ; $4f01
+	wram_bank WRAM_ACTORS ; $4f01
 	ld hl, wStoryModePlayersXPosition ; $4f07
 	ld a, [hl+] ; $4f0a
 	ld h, [hl] ; $4f0b
@@ -273,7 +273,7 @@ RunStoryLocation:
 .noNamePopup:
 	wait_frames $04 ; $4ff1
 .frameLoop:
-	wram_bank $04 ; $4ff5
+	wram_bank WRAM_ACTORS ; $4ff5
 	call CheckStoryEventRequests ; $4ffb
 	and a ; $4ffe
 	jp z, .waitForEvent ; $4fff
@@ -318,7 +318,7 @@ RunStoryLocation:
 	and a ; $5050
 	jr z, .runInteract ; $5051
 	ld [hl], $00 ; $5053
-	wram_bank $04 ; $5055
+	wram_bank WRAM_ACTORS ; $5055
 	ld a, [wPlayerMoveAngleApplied] ; $505b
 	and a ; $505e
 	jr z, .runInteract ; $505f

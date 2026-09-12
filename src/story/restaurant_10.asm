@@ -12,7 +12,7 @@ MinigameDrillIdTable:
 	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
 CopyExhibitionCharSlotIds:
 	push af ; $56fc
-	push_wram_bank $03 ; $56fd
+	push_wram_bank WRAM_SCREEN ; $56fd
 	ld hl, wCharSelectSlotChars ; $5706
 	ld de, wMatchSlotCharRefs ; $5709
 	ld a, [hl+] ; $570c
@@ -966,7 +966,7 @@ RestaurantNpc12StageFlagTable_10:
 	dw $0073 ; 3: flag $00, 3
 	dw $007a ; 4: flag $00, 3
 RestaurantShowActor11NearPlayer_10:
-	wram_bank $04 ; $615a
+	wram_bank WRAM_ACTORS ; $615a
 	script_get_actor_state ACTOR_PLAYER ; $6160
 	ld c, l ; $6165
 	ld b, h ; $6166

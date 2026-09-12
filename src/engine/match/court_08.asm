@@ -257,7 +257,7 @@ LoadCourtSceneData:
 	pop_wram_bank ; $5e4c
 	ret ; $5e51
 SnapshotCourtTilemaps:
-	wram_bank $02 ; $5e52
+	wram_bank WRAM_COURT_PLANES ; $5e52
 	ld hl, wCourtTilemapSaved ; $5e58
 	ld de, wCourtTilemap ; $5e5b
 	ld c, $40 ; $5e5e
@@ -268,14 +268,14 @@ SnapshotCourtTilemaps:
 	call CopyMemoryFast ; $5e6b
 	ret ; $5e6e
 UploadCourtTilemap:
-	wram_bank $02 ; $5e6f
+	wram_bank WRAM_COURT_PLANES ; $5e6f
 	ld hl, wCourtTilemap ; $5e75
 	ld de, vBGMap0 ; $5e78
 	ld c, $40 ; $5e7b
 	call QueueVRAMCopy ; $5e7d
 	ret ; $5e80
 UploadCourtAttrmap:
-	wram_bank $02 ; $5e81
+	wram_bank WRAM_COURT_PLANES ; $5e81
 	ld hl, wCourtAttrmap ; $5e87
 	ld de, vBGMap0 + VRAM_BANK1 ; $5e8a
 	ld c, $40 ; $5e8d
@@ -318,13 +318,13 @@ RefreshCourtScoreboardFlipped:
 	call SnapshotCourtTilemaps ; $5eeb
 	ret ; $5eee
 CopyScoreboardTileColumn:
-	wram_bank $04 ; $5eef
+	wram_bank WRAM_ACTORS ; $5eef
 	push de ; $5ef5
 	ld de, wTextBuffer ; $5ef6
 	ld c, $02 ; $5ef9
 	call CopyMemoryFast ; $5efb
 	pop de ; $5efe
-	wram_bank $02 ; $5eff
+	wram_bank WRAM_COURT_PLANES ; $5eff
 	ld hl, wTextBuffer ; $5f05
 	ld a, [hl+] ; $5f08
 	ld [de], a ; $5f09
@@ -395,7 +395,7 @@ RefreshCourtAfterEndChange:
 	call StepMatchFrame ; $5f58
 	call RefreshCourtScoreboard ; $5f5b
 	call StepMatchFrame ; $5f5e
-	wram_bank $02 ; $5f61
+	wram_bank WRAM_COURT_PLANES ; $5f61
 	ld hl, wCourtTilemap + 12 * TILEMAP_WIDTH ; $5f67
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $5f6a
 	ld c, $0a ; $5f6d
@@ -408,7 +408,7 @@ RefreshCourtAfterEndChange:
 	ld [wMatchDrawFrozen], a ; $5f7e
 	pop af ; $5f81
 	ld [wMatchSimFrozen], a ; $5f82
-	wram_bank $04 ; $5f85
+	wram_bank WRAM_ACTORS ; $5f85
 	ret ; $5f8b
 RunChangeoverSequence:
 	ld a, $01 ; $5f8c

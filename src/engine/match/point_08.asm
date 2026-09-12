@@ -127,7 +127,7 @@ AnnouncePointSituation:
 	inc a ; $4dc2
 	srl a ; $4dc3
 	ld b, a ; $4dc5
-	wram_bank $04 ; $4dc6
+	wram_bank WRAM_CHAR0 ; $4dc6
 	ld a, [wCharCourtPos] ; $4dcc
 	rrca ; $4dcf
 	xor b ; $4dd0
@@ -409,48 +409,48 @@ SpreadTeammateTargets:
 	dw SpreadFarTeamPair ; $4ffd jumptable
 	dw SpreadBothTeamPairs ; $4fff jumptable
 SpreadBothTeamPairs:
-	wram_bank $04 ; $5001
+	wram_bank WRAM_CHAR0 ; $5001
 	ld hl, wCharPosDepth + 1 ; $5007
 	ld a, [hl+] ; $500a
 	ld d, [hl] ; $500b
 	ld e, a ; $500c
-	wram_bank $06 ; $500d
+	wram_bank WRAM_CHAR2 ; $500d
 	ld hl, wCharPosDepth + 1 ; $5013
 	ld a, [hl+] ; $5016
 	ld h, [hl] ; $5017
 	ld l, a ; $5018
 	call ComputePairSpread ; $5019
-	wram_bank $04 ; $501c
+	wram_bank WRAM_CHAR0 ; $501c
 	ld hl, wCharWalkTargetDepth ; $5022
 	ld a, e ; $5025
 	ld [hl+], a ; $5026
 	ld [hl], d ; $5027
-	wram_bank $06 ; $5028
+	wram_bank WRAM_CHAR2 ; $5028
 	ld hl, wCharWalkTargetDepth ; $502e
 	ld a, c ; $5031
 	ld [hl+], a ; $5032
 	ld [hl], b ; $5033
 SpreadFarTeamPair:
-	wram_bank $05 ; $5034
+	wram_bank WRAM_CHAR1 ; $5034
 	ld hl, wCharPosDepth + 1 ; $503a
 	ld a, [hl+] ; $503d
 	ld d, [hl] ; $503e
 	ld e, a ; $503f
-	wram_bank $07 ; $5040
+	wram_bank WRAM_CHAR3 ; $5040
 	ld hl, wCharPosDepth + 1 ; $5046
 	ld a, [hl+] ; $5049
 	ld h, [hl] ; $504a
 	ld l, a ; $504b
 	call ComputePairSpread ; $504c
-	wram_bank $05 ; $504f
+	wram_bank WRAM_CHAR1 ; $504f
 	ld hl, wCharWalkTargetDepth ; $5055
 	ld a, e ; $5058
 	ld [hl+], a ; $5059
 	ld [hl], d ; $505a
-	wram_bank $07 ; $505b
+	wram_bank WRAM_CHAR3 ; $505b
 	ld hl, wCharWalkTargetDepth ; $5061
 	ld a, c ; $5064
 	ld [hl+], a ; $5065
 	ld [hl], b ; $5066
-	wram_bank $04 ; $5067
+	wram_bank WRAM_CHAR0 ; $5067
 	ret ; $506d

@@ -10,7 +10,7 @@ RelaunchWallPracticeMasterLevel:
 	farcall RunTrainingDrillByID ; $49e1
 	ret ; $49e4
 .carry:
-	push_wram_bank $07 ; $49e5
+	push_wram_bank WRAM_SOUND ; $49e5
 	ld hl, wMinigamesCurrentScore ; $49ee
 	ld a, [hl+] ; $49f1
 	ld d, [hl] ; $49f2
@@ -137,7 +137,7 @@ WallPracticeLevelResultScriptTextIds:
 	call WaitFadeEnd ; $4bad
 	jr .speakAndLeave ; $4bb0
 .variant2:
-	push_wram_bank $07 ; $4bb2
+	push_wram_bank WRAM_SOUND ; $4bb2
 	ld de, $0032 ; $4bbb
 	ld hl, wMinigameRecordValue ; $4bbe
 	ld a, e ; $4bc1
@@ -514,7 +514,7 @@ WallPracticeRoomNpc07_12:
 	ld a, [wMapSceneStage] ; $50ee
 	cp WALLPRACTICESTAGE_EXPERT ; $50f1
 	jr nz, .prompt ; $50f3
-	push_wram_bank $07 ; $50f5
+	push_wram_bank WRAM_SOUND ; $50f5
 	ld a, $00 ; $50fe
 	farcall ReadMinigameRecord ; $5100
 	ld hl, wMinigameRecordValue ; $5103

@@ -116,7 +116,7 @@ FinalizeServeSideOrientation:
 	call IdentifyServingPlayer ; $47f8
 	ld hl, SetCharFacingFromCourtPos ; $47fb
 	call ForEachCharBank ; $47fe
-	wram_bank $04 ; $4801
+	wram_bank WRAM_ACTORS ; $4801
 	ret ; $4807
 GetGamePositionHandler:
 	ld a, [wOnCourtCharCountMinus1] ; $4808
@@ -154,46 +154,46 @@ GamePositionPtrs:
 	dw GamePosition0 ; record 3
 FlipNearCharPosition:
 	ld b, $01 ; $4847
-	wram_bank $04 ; $4849
+	wram_bank WRAM_CHAR0 ; $4849
 	call FlipCharPositionCode ; $484f
 	ret ; $4852
 FlipBothCharPositions:
-	wram_bank $04 ; $4853
+	wram_bank WRAM_CHAR0 ; $4853
 	ld a, [wCharServeRole] ; $4859
 	and $01 ; $485c
 	jr nz, .toggleRows ; $485e
 	ld b, $01 ; $4860
-	wram_bank $04 ; $4862
+	wram_bank WRAM_CHAR0 ; $4862
 	call FlipCharPositionCode ; $4868
-	wram_bank $06 ; $486b
+	wram_bank WRAM_CHAR2 ; $486b
 	call FlipCharPositionCode ; $4871
 	ret ; $4874
 .toggleRows:
-	wram_bank $04 ; $4875
+	wram_bank WRAM_CHAR0 ; $4875
 	call ToggleCharCourtRow ; $487b
-	wram_bank $06 ; $487e
+	wram_bank WRAM_CHAR2 ; $487e
 	call ToggleCharCourtRow ; $4884
 	ret ; $4887
 FlipFarCharPosition:
 	ld b, $01 ; $4888
-	wram_bank $05 ; $488a
+	wram_bank WRAM_CHAR1 ; $488a
 	call FlipCharPositionCode ; $4890
 	ret ; $4893
 FlipFarBothCharPositions:
-	wram_bank $04 ; $4894
+	wram_bank WRAM_CHAR0 ; $4894
 	ld a, [wCharServeRole] ; $489a
 	and $01 ; $489d
 	jr z, .toggleRows ; $489f
 	ld b, $01 ; $48a1
-	wram_bank $05 ; $48a3
+	wram_bank WRAM_CHAR1 ; $48a3
 	call FlipCharPositionCode ; $48a9
-	wram_bank $07 ; $48ac
+	wram_bank WRAM_CHAR3 ; $48ac
 	call FlipCharPositionCode ; $48b2
 	ret ; $48b5
 .toggleRows:
-	wram_bank $05 ; $48b6
+	wram_bank WRAM_TEXT ; $48b6
 	call ToggleCharCourtRow ; $48bc
-	wram_bank $07 ; $48bf
+	wram_bank WRAM_SOUND ; $48bf
 	call ToggleCharCourtRow ; $48c5
 	ret ; $48c8
 .done:
@@ -224,16 +224,16 @@ LoadPositionRecord:
 	inc h ; $48f4
 .singles:
 	ld de, wCharCourtPos ; $48f5
-	wram_bank $04 ; $48f8
+	wram_bank WRAM_CHAR0 ; $48f8
 	ld a, [hl+] ; $48fe
 	ld [de], a ; $48ff
-	wram_bank $05 ; $4900
+	wram_bank WRAM_CHAR1 ; $4900
 	ld a, [hl+] ; $4906
 	ld [de], a ; $4907
-	wram_bank $06 ; $4908
+	wram_bank WRAM_CHAR2 ; $4908
 	ld a, [hl+] ; $490e
 	ld [de], a ; $490f
-	wram_bank $07 ; $4910
+	wram_bank WRAM_CHAR3 ; $4910
 	ld a, [hl+] ; $4916
 	ld [de], a ; $4917
 	jr .done ; $4918
@@ -247,34 +247,34 @@ LoadPositionRecord:
 	inc h ; $4921
 .doublesEntry:
 	ld de, wCharCourtPos ; $4922
-	wram_bank $04 ; $4925
+	wram_bank WRAM_CHAR0 ; $4925
 	ld a, [hl+] ; $492b
 	xor $03 ; $492c
 	ld [de], a ; $492e
-	wram_bank $05 ; $492f
+	wram_bank WRAM_CHAR1 ; $492f
 	ld a, [hl+] ; $4935
 	xor $03 ; $4936
 	ld [de], a ; $4938
-	wram_bank $06 ; $4939
+	wram_bank WRAM_CHAR2 ; $4939
 	ld a, [hl+] ; $493f
 	xor $03 ; $4940
 	ld [de], a ; $4942
-	wram_bank $07 ; $4943
+	wram_bank WRAM_CHAR3 ; $4943
 	ld a, [hl+] ; $4949
 	xor $03 ; $494a
 	ld [de], a ; $494c
 .done:
 	ld de, wCharServeRole ; $494d
-	wram_bank $04 ; $4950
+	wram_bank WRAM_CHAR0 ; $4950
 	ld a, [hl+] ; $4956
 	ld [de], a ; $4957
-	wram_bank $05 ; $4958
+	wram_bank WRAM_CHAR1 ; $4958
 	ld a, [hl+] ; $495e
 	ld [de], a ; $495f
-	wram_bank $06 ; $4960
+	wram_bank WRAM_CHAR2 ; $4960
 	ld a, [hl+] ; $4966
 	ld [de], a ; $4967
-	wram_bank $07 ; $4968
+	wram_bank WRAM_CHAR3 ; $4968
 	ld a, [hl+] ; $496e
 	ld [de], a ; $496f
 	ret ; $4970
@@ -381,7 +381,7 @@ TiebreakPosition1:
 	db $03, $01, $09, $00, $01, $02, $09, $00 ; 0xb0
 	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0xb8
 CheckServerEndChanged:
-	wram_bank $04 ; $4c19
+	wram_bank WRAM_CHAR0 ; $4c19
 	ld a, [wCharCourtPos] ; $4c1f
 	ld b, a ; $4c22
 	ld hl, wPrevCourtPos ; $4c23
@@ -415,13 +415,13 @@ FlipAllCharPositions:
 	and a ; $4c51
 	ret z ; $4c52
 	ld b, $03 ; $4c53
-	wram_bank $07 ; $4c55
+	wram_bank WRAM_CHAR3 ; $4c55
 	call FlipCharPositionCode ; $4c5b
-	wram_bank $06 ; $4c5e
+	wram_bank WRAM_CHAR2 ; $4c5e
 	call FlipCharPositionCode ; $4c64
-	wram_bank $05 ; $4c67
+	wram_bank WRAM_CHAR1 ; $4c67
 	call FlipCharPositionCode ; $4c6d
-	wram_bank $04 ; $4c70
+	wram_bank WRAM_ACTORS ; $4c70
 	call FlipCharPositionCode ; $4c76
 	ret ; $4c79
 IdentifyServingPlayer:
@@ -434,7 +434,7 @@ IdentifyServingPlayer:
 	ld [wCurrentServingPlayer], a ; $4c89
 	ld a, [wCharCourtPos] ; $4c8c
 	ld [wServingCharCourtPos], a ; $4c8f
-	wram_bank $04 ; $4c92
+	wram_bank WRAM_CHAR0 ; $4c92
 	ret ; $4c98
 SetCharFacingFromCourtPos:
 	ld a, [wCharCourtPos] ; $4c99

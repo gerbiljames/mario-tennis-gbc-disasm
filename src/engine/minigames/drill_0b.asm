@@ -149,7 +149,7 @@ UnusedGetObjectXAndDepth:
 	ld l, a ; $4149
 	ret ; $414a
 ResetActiveCharState:
-	push_wram_bank $05 ; $414b
+	push_wram_bank WRAM_TEXT ; $414b
 	ld a, CHARSTATE_INERT ; $4154
 	farcall SetCharState ; $4156
 	pop_wram_bank ; $4159

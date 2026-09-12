@@ -82,7 +82,7 @@ SetPartnerObjDefByGender_27:
 	jr z, .notDoubles ; $5646
 	jp .scriptRespawnLocationActors ; $5648
 .notDoubles:
-	wram_bank $06 ; $564b
+	wram_bank WRAM_SCENE ; $564b
 	ldh a, [hRomBank] ; $5651
 	ld hl, End10VarsityCourtActorsAlt_27 ; $5653
 	farcall ScriptRespawnLocationActors ; $5656

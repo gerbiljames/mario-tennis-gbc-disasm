@@ -16,7 +16,7 @@ WriteGridPosFromLinearIndex_17:
 	ld [hl], a ; $43d7
 	ret ; $43d8
 ClearWram3Row64_17:
-	push_wram_bank $03 ; $43d9
+	push_wram_bank WRAM_SCREEN ; $43d9
 	xor a ; $43e2
 	ld c, $40 ; $43e3
 .loop4:
@@ -26,7 +26,7 @@ ClearWram3Row64_17:
 	pop_wram_bank ; $43e9
 	ret ; $43ee
 ClearWram3Row64Alt_17:
-	push_wram_bank $03 ; $43ef
+	push_wram_bank WRAM_SCREEN ; $43ef
 	ld a, $00 ; $43f8
 	ld c, $40 ; $43fa
 .loop5:
@@ -254,7 +254,7 @@ DrawDiagramTargetOverlay:
 	call QueueDiagramServiceBoxesToVRAM ; $4672
 	ret ; $4675
 CycleDiagramTargetPalette:
-	push_wram_bank $03 ; $4676
+	push_wram_bank WRAM_SCREEN ; $4676
 	ld hl, CycleDiagramTargetPaletteData ; $467f
 	ld de, wBriefingTargetPalette ; $4682
 	ld bc, $0008 ; $4685
@@ -311,7 +311,7 @@ DiagramTargetPaletteRamp_17:
 	dw $00df ; record 10
 	dw $001f ; record 11
 DrawBriefingPlayerSprite:
-	push_wram_bank $03 ; $46e2
+	push_wram_bank WRAM_SCREEN ; $46e2
 	ld a, [wBriefingPlayerX] ; $46eb
 	ld d, a ; $46ee
 	ld a, [wBriefingPlayerY] ; $46ef
@@ -328,7 +328,7 @@ DrawBriefingPlayerSprite_SpriteTemplate:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 DrawBriefingOpponentSprite:
-	push_wram_bank $03 ; $470c
+	push_wram_bank WRAM_SCREEN ; $470c
 	ld a, [wBriefingOpponentX] ; $4715
 	ld d, a ; $4718
 	ld a, [wBriefingOpponentY] ; $4719
@@ -345,7 +345,7 @@ DrawBriefingOpponentSprite_SpriteTemplate:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 DrawBriefingBallSprite:
-	push_wram_bank $03 ; $4736
+	push_wram_bank WRAM_SCREEN ; $4736
 	ld a, [wBriefingBallX] ; $473f
 	ld d, a ; $4742
 	ld a, [wBriefingBallY] ; $4743
@@ -356,7 +356,7 @@ DrawBriefingBallSprite:
 	pop_wram_bank ; $474e
 	ret ; $4753
 DrawBriefingMarkerHFlip:
-	push_wram_bank $03 ; $4754
+	push_wram_bank WRAM_SCREEN ; $4754
 	ld b, $09 ; $475d
 	ld a, [wBriefingHMarkerUnflipped] ; $475f
 	cp $01 ; $4762
@@ -383,7 +383,7 @@ DrawBriefingMarkerHFlip_SpriteTemplate:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 DrawBriefingSwingAnim:
-	push_wram_bank $03 ; $478e
+	push_wram_bank WRAM_SCREEN ; $478e
 	ld a, [wBriefingSwingFrame] ; $4797
 	ld hl, BriefingSwingAnimTable0 ; $479a
 	add l ; $479d
@@ -421,7 +421,7 @@ BriefingSwingAnimTable1:
 	; $47e2, 13 bytes (bytes:13)
 	db $10, $08, $00, $00, $10, $10, $02, $00, $10, $18, $04, $00, $80 ; 0x00
 DrawBriefingPoleSprites:
-	push_wram_bank $03 ; $47ef
+	push_wram_bank WRAM_SCREEN ; $47ef
 	ld a, [wBriefingPole1X] ; $47f8
 	ld d, a ; $47fb
 	ld a, [wBriefingPole1Y] ; $47fc
@@ -439,7 +439,7 @@ DrawBriefingPoleSprites:
 	pop_wram_bank ; $4816
 	ret ; $481b
 DrawBriefingMarkerVFlip:
-	push_wram_bank $03 ; $481c
+	push_wram_bank WRAM_SCREEN ; $481c
 	ld c, $70 ; $4825
 	ld b, $09 ; $4827
 	ld a, [wBriefingVMarkerUpright] ; $4829

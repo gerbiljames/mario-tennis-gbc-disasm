@@ -27,16 +27,16 @@ UpdateCharSelectCharSprite:
 	call CopyMemoryFast ; $4d10
 	ret ; $4d13
 SetCharSelectAnimations:
-	wram_bank $04 ; $4d14
+	wram_bank WRAM_ACTORS ; $4d14
 	ld d, CHARANIM_STAND ; $4d1a
 	farcall SetCharAnimation ; $4d1c
-	wram_bank $05 ; $4d1f
+	wram_bank WRAM_TEXT ; $4d1f
 	ld d, CHARANIM_STAND ; $4d25
 	farcall SetCharAnimation ; $4d27
-	wram_bank $06 ; $4d2a
+	wram_bank WRAM_SCENE ; $4d2a
 	ld d, CHARANIM_STAND ; $4d30
 	farcall SetCharAnimation ; $4d32
-	wram_bank $07 ; $4d35
+	wram_bank WRAM_SOUND ; $4d35
 	ld d, CHARANIM_STAND ; $4d3b
 	farcall SetCharAnimation ; $4d3d
 	call GetSelectedCharWramBank ; $4d40
@@ -44,8 +44,8 @@ SetCharSelectAnimations:
 	wram_bank ; $4d44
 	ld d, CHARANIM_FOREHAND ; $4d48
 	farcall SetCharAnimation ; $4d4a
-	wram_bank $04 ; $4d4d
-	push_wram_bank $02 ; $4d53
+	wram_bank WRAM_ACTORS ; $4d4d
+	push_wram_bank WRAM_COURT_PLANES ; $4d53
 	xor a ; $4d5c
 	ld [wCharSelectIdleAnimState], a ; $4d5d
 	pop_wram_bank ; $4d60
@@ -70,7 +70,7 @@ ReloadSelectedCharGfx:
 	ld a, b ; $4d8c
 	wram_bank ; $4d8d
 	farcall ReloadCharFrameGfx ; $4d91
-	wram_bank $04 ; $4d94
+	wram_bank WRAM_CHAR0 ; $4d94
 	ret ; $4d9a
 TickCharSelectIdleAnim:
 	call GetSelectedCharWramBank ; $4d9b
@@ -82,7 +82,7 @@ TickCharSelectIdleAnim:
 	ld a, [hl] ; $4daa
 	cp $01 ; $4dab
 	jr nz, .done ; $4dad
-	push_wram_bank $02 ; $4daf
+	push_wram_bank WRAM_COURT_PLANES ; $4daf
 	ld a, [wCharSelectIdleAnimState] ; $4db8
 	inc a ; $4dbb
 	ld [wCharSelectIdleAnimState], a ; $4dbc
@@ -93,7 +93,7 @@ TickCharSelectIdleAnim:
 	jr nz, .done ; $4dc8
 	ld d, CHARANIM_FOREHAND ; $4dca
 	farcall SetCharAnimation ; $4dcc
-	push_wram_bank $02 ; $4dcf
+	push_wram_bank WRAM_COURT_PLANES ; $4dcf
 	ld a, [wCharSelectIdleTimer] ; $4dd8
 	inc a ; $4ddb
 	ld [wCharSelectIdleTimer], a ; $4ddc
@@ -114,7 +114,7 @@ GetSelectedCharWramBank:
 	ld c, $02 ; $4dfa
 	call GetMenuCursorIndex_38 ; $4dfc
 	ld b, a ; $4dff
-	push_wram_bank $02 ; $4e00
+	push_wram_bank WRAM_COURT_PLANES ; $4e00
 	ld a, [wCharSelectIsPartner] ; $4e09
 	ld c, a ; $4e0c
 	pop_wram_bank ; $4e0d
@@ -145,7 +145,7 @@ DrawCharacterSelectCursor:
 	ld a, [hl+] ; $4e31
 	ld d, [hl] ; $4e32
 	ld e, a ; $4e33
-	wram_bank $02 ; $4e34
+	wram_bank WRAM_COURT_PLANES ; $4e34
 	ld c, $00 ; $4e3a
 	ld a, [wCharSelectHandedness] ; $4e3c
 	or a ; $4e3f
@@ -162,12 +162,12 @@ TickMenuBgScrollTask_38:
 	farcall TickMenuBgScroll ; $4e52
 	ret ; $4e55
 Unused_38_WramBank3Nop:
-	push_wram_bank $03 ; $4e56
+	push_wram_bank WRAM_SCREEN ; $4e56
 	pop_wram_bank ; $4e5f
 	ret ; $4e64
 RunExhibitionCharSelectScreen:
 	sound BGM_MENU ; $4e65
-	wram_bank $03 ; $4e67
+	wram_bank WRAM_SCREEN ; $4e67
 	ld a, b ; $4e6d
 	ld [wCharSelectMode], a ; $4e6e
 	ld a, $02 ; $4e71
@@ -194,7 +194,7 @@ RunExhibitionCharSelectScreen:
 	call AdvanceFrame ; $4eaa
 	ldh a, [hInputPressed] ; $4ead
 	ld [wMenuInputPressed], a ; $4eaf
-	wram_bank $03 ; $4eb2
+	wram_bank WRAM_SCREEN ; $4eb2
 	ld a, [wCharGridScrollCount] ; $4eb8
 	push de ; $4ebb
 	push af ; $4ebc
@@ -217,7 +217,7 @@ RunExhibitionCharSelectScreen:
 	xor a ; $4edd
 	ld [wMenuInputPressed], a ; $4ede
 	ldh [hInputPressed], a ; $4ee1
-	push_wram_bank $03 ; $4ee3
+	push_wram_bank WRAM_SCREEN ; $4ee3
 	ld a, [wCharSelectSlot] ; $4eec
 	cp $04 ; $4eef
 	jr z, .cancel ; $4ef1
@@ -292,7 +292,7 @@ SetupCharGridScreen:
 	ld b, $03 ; $4f83
 	ld c, $00 ; $4f85
 	call SetMenuCursorFromIndex_38 ; $4f87
-	wram_bank $01 ; $4f8a
+	wram_bank WRAM_STAGING ; $4f8a
 	ld hl, CharGridScreenGfx1 ; $4f90
 	ld de, wDecompBuffer ; $4f93
 	call DecompressData ; $4f96
@@ -303,7 +303,7 @@ SetupCharGridScreen:
 	ld hl, CharGridScreenGfx2 ; $4fa4
 	lb de, $09, $01 ; $4fa7 palette index, count
 	call LoadPalettesMasterOnly ; $4faa
-	wram_bank $01 ; $4fad
+	wram_bank WRAM_STAGING ; $4fad
 	ld hl, CharGridScreenGfx3 ; $4fb3
 	ld de, wDecompBuffer ; $4fb6
 	call DecompressData ; $4fb9
@@ -314,7 +314,7 @@ SetupCharGridScreen:
 	ld c, SCREENASSET_ExhibitionSetup ; $4fc7
 	farcall LoadScreenAssetRecord ; $4fc9
 	farcall ResetTextWindowState ; $4fcc
-	wram_bank $05 ; $4fcf
+	wram_bank WRAM_TEXT ; $4fcf
 	ld a, $03 ; $4fd5
 	ld [wShadowTilemapBank], a ; $4fd7
 	ld a, $00 ; $4fda
@@ -395,7 +395,7 @@ CharGridScreenGfx3:
 	INCBIN "data/bank_038/lz_CharGridScreenGfx3.bin" ; $50f9, 156 bytes
 	INCLUDE "data/bank_038/lz_CharGridScreenGfx3.inc" ; DEF CharGridScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
 HandleCharGridDpad:
-	push_wram_bank $03 ; $5195
+	push_wram_bank WRAM_SCREEN ; $5195
 	ld a, [wCharSelectSlot] ; $519e
 	cp $04 ; $51a1
 	jr z, .done ; $51a3
@@ -596,7 +596,7 @@ HandleCharGridButtons:
 .done:
 	ret ; $5301
 ConfirmCharGridSelection:
-	push_wram_bank $03 ; $5302
+	push_wram_bank WRAM_SCREEN ; $5302
 	ld a, [wCharSelectSlot] ; $530b
 	ld a, [wCharGridPage] ; $530e
 	ld c, a ; $5311
@@ -691,7 +691,7 @@ ConfirmCharGridSelection:
 	pop_wram_bank ; $53aa
 	ret ; $53af
 CancelCharGridSelection:
-	push_wram_bank $03 ; $53b0
+	push_wram_bank WRAM_SCREEN ; $53b0
 	call RetreatToPreviousPlayerSlot ; $53b9
 	cp $ff ; $53bc
 	jr nz, .clearSlot ; $53be
@@ -723,7 +723,7 @@ CancelCharGridSelection:
 	inc hl ; $53e7
 	xor a ; $53e8
 	ld [hl], a ; $53e9
-	wram_bank $03 ; $53ea
+	wram_bank WRAM_SCREEN ; $53ea
 	ld hl, wCharSelectSlotDifficulty ; $53f0
 	ld a, [wCharSelectSlot] ; $53f3
 	add l ; $53f6
@@ -752,11 +752,11 @@ CancelCharGridSelection:
 	pop_wram_bank ; $541e
 	ret ; $5423
 DrawCharGridSlotPrompt:
-	wram_bank $03 ; $5424
+	wram_bank WRAM_SCREEN ; $5424
 	ld a, [wCharSelectSlot] ; $542a
 	cp $ff ; $542d
 	ret z ; $542f
-	wram_bank $03 ; $5430
+	wram_bank WRAM_SCREEN ; $5430
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $5436
 	ld b, $12 ; $5439
 	ld c, $01 ; $543b
@@ -824,7 +824,7 @@ DrawCharGridWaitBanner_SpriteTemplate:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
 DrawCharGridScrollArrows:
-	push_wram_bank $03 ; $54cc
+	push_wram_bank WRAM_SCREEN ; $54cc
 	ld a, [wCharSelectSlot] ; $54d5
 	cp $04 ; $54d8
 	jr z, .done ; $54da
@@ -878,7 +878,7 @@ DrawCharGridScrollArrows:
 	pop_wram_bank ; $553f
 	ret ; $5544
 DrawCharGridCharSprites:
-	push_wram_bank $03 ; $5545
+	push_wram_bank WRAM_SCREEN ; $5545
 	ld hl, wScreenScratch ; $554e
 	ld c, $00 ; $5551
 .slotLoop:

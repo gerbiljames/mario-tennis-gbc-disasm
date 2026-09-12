@@ -24,7 +24,7 @@ InitDefaultMatchSettings:
 	ld [wMatchBGM], a ; $40a7
 	ret ; $40aa
 ResetMatchState:
-	wram_bank $04 ; $40ab
+	wram_bank WRAM_ACTORS ; $40ab
 	ld hl, wBallXFrac ; $40b1
 	ld c, $0e ; $40b4
 	call ClearMemory16 ; $40b6
@@ -108,7 +108,7 @@ InitMatchScene:
 	call InitViewFlipPreference ; $4158
 	call ApplyMatchBgmPreference ; $415b
 	call LoadCourtSceneData ; $415e
-	wram_bank $04 ; $4161
+	wram_bank WRAM_ACTORS ; $4161
 	call ResetBallState ; $4167
 	call InitAllChars ; $416a
 	farcall InitAllObjSlots ; $416d
@@ -121,7 +121,7 @@ InitMatchScene:
 	call UploadCourtTilemap ; $4180
 	call UploadCourtAttrmap ; $4183
 	farcall LoadMatchGraphics ; $4186
-	wram_bank $04 ; $4189
+	wram_bank WRAM_CHAR0 ; $4189
 	ret ; $418f
 RunMatch:
 	ld c, $20 ; $4190
@@ -140,7 +140,7 @@ RunMatch:
 	ld a, $ff ; $41b5
 	ld [wAiServeAimOverride], a ; $41b7
 	script_fade_in $20 ; $41ba
-	wram_bank $04 ; $41bf
+	wram_bank WRAM_ACTORS ; $41bf
 	call PlayCourtIntro ; $41c5
 	xor a ; $41c8
 	ld [wMatchSimFrozen], a ; $41c9
@@ -161,7 +161,7 @@ RunMatch:
 	farcall ProcessMatchRewards ; $41f3
 	ret ; $41f6
 UpdateMatchFrame:
-	wram_bank $04 ; $41f7
+	wram_bank WRAM_ACTORS ; $41f7
 	ld a, [wMatchSimFrozen] ; $41fd
 	and a ; $4200
 	jr nz, .draw ; $4201
@@ -242,13 +242,13 @@ HandleBallHitEvent:
 	ld [wLandingMarkerActive], a ; $428f
 	call StartLandingMarker ; $4292
 	call StartHitEffect ; $4295
-	wram_bank $07 ; $4298
+	wram_bank WRAM_CHAR3 ; $4298
 	call SetCharStateOnBallHit ; $429e
-	wram_bank $06 ; $42a1
+	wram_bank WRAM_CHAR2 ; $42a1
 	call SetCharStateOnBallHit ; $42a7
-	wram_bank $05 ; $42aa
+	wram_bank WRAM_TEXT ; $42aa
 	call SetCharStateOnBallHit ; $42b0
-	wram_bank $04 ; $42b3
+	wram_bank WRAM_ACTORS ; $42b3
 	call SetCharStateOnBallHit ; $42b9
 	call DetectServeAceOutcome ; $42bc
 	ld d, $04 ; $42bf

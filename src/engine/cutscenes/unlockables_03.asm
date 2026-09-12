@@ -1,5 +1,5 @@
 RepairAllSaveSlots:
-	wram_bank $01 ; $5669
+	wram_bank WRAM_STAGING ; $5669
 	ld b, $00 ; $566f
 	call RestoreStoryBlockFromBackup ; $5671
 	ld b, $02 ; $5674
@@ -35,7 +35,7 @@ ApplyN64RecordsUnlockFlags:
 	push bc ; $56a9
 	push de ; $56aa
 	push hl ; $56ab
-	push_wram_bank $07 ; $56ac
+	push_wram_bank WRAM_SOUND ; $56ac
 	ld hl, wSaveBlockBuffer ; $56b5
 	ld b, $0b ; $56b8
 	call ReadSaveBlock ; $56ba
@@ -79,7 +79,7 @@ UpdateUnlockablesSaveBlock:
 	push bc ; $56fc
 	push de ; $56fd
 	push hl ; $56fe
-	push_wram_bank $07 ; $56ff
+	push_wram_bank WRAM_SOUND ; $56ff
 	ld hl, wSaveBlockBuffer ; $5708
 	ld b, $0b ; $570b
 	call ReadSaveBlock ; $570d
@@ -155,7 +155,7 @@ SetAllUnlockablesInSaveBlock:
 	push bc ; $5788
 	push de ; $5789
 	push hl ; $578a
-	push_wram_bank $07 ; $578b
+	push_wram_bank WRAM_SOUND ; $578b
 	ld hl, wSaveBlockBuffer ; $5794
 	ld b, $0b ; $5797
 	call ReadSaveBlock ; $5799
@@ -206,7 +206,7 @@ CheckUnlockCondition:
 	push de ; $57e3
 	push hl ; $57e4
 	ld b, a ; $57e5
-	push_wram_bank $07 ; $57e6
+	push_wram_bank WRAM_SOUND ; $57e6
 	cp $02 ; $57ef
 	jr nc, .saveFlagCondition ; $57f1
 	or a ; $57f3

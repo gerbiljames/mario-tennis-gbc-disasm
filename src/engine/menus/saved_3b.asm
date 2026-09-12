@@ -154,7 +154,7 @@ MinigameSelectSlideOut6:
 	jr nz, .loopB ; $6760
 	ret ; $6762
 DrawMinigameSelectGrid6:
-	wram_bank $03 ; $6763
+	wram_bank WRAM_SCREEN ; $6763
 	ld b, $00 ; $6769
 	ld c, $00 ; $676b
 .loop:
@@ -192,7 +192,7 @@ RunSavedDataSourceSelect:
 	ld c, $01 ; $67b3
 	farcall LoadMenuSpritePalettePair ; $67b5
 	call LoadN64RecordsToWram2 ; $67b8
-	wram_bank $03 ; $67bb
+	wram_bank WRAM_SCREEN ; $67bb
 	ld a, [wMenuSlideDirection] ; $67c1
 	ld b, a ; $67c4
 	farcall SavedDataPickerSlideIn ; $67c5
@@ -204,7 +204,7 @@ RunSavedDataSourceSelect:
 	ld hl, SavedDataSourceCursorSpriteTask ; $67d3
 	call RegisterFrameTask ; $67d6
 	call DrawSavedDataSourceGrid ; $67d9
-	wram_bank $03 ; $67dc
+	wram_bank WRAM_SCREEN ; $67dc
 .loop:
 	call AdvanceFrame ; $67e2
 	ldh a, [hInputPressed] ; $67e5
@@ -280,7 +280,7 @@ RunSavedDataSourceSelect:
 	ld a, $ff ; $686b
 	ret ; $686d
 LoadSavedDataSourceGfx:
-	push_wram_bank $01 ; $686e
+	push_wram_bank WRAM_STAGING ; $686e
 	ld hl, (BANK(DataPtr_ModeSelectLabelTiles1) << 8) | LOW(DataPtr_ModeSelectLabelTiles1) ; $6877
 	ld de, wDecompBuffer ; $687a
 	call DecompressDataFromBank ; $687d
@@ -297,7 +297,7 @@ LoadSavedDataSourceGfx:
 	ld bc, $0010 ; $689e
 	call QueueVRAMCopy ; $68a1
 	call AdvanceFrame ; $68a4
-	wram_bank $03 ; $68a7
+	wram_bank WRAM_SCREEN ; $68a7
 	ld a, $00 ; $68ad
 	ld [wCurrentStorySlot], a ; $68af
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $68b2
@@ -305,7 +305,7 @@ LoadSavedDataSourceGfx:
 	ld de, $9680 + VRAM_BANK1 ; $68b8
 	farcall CopyMugshotBufferToVram ; $68bb
 	call AdvanceFrame ; $68be
-	wram_bank $03 ; $68c1
+	wram_bank WRAM_SCREEN ; $68c1
 	ld a, $01 ; $68c7
 	ld [wCurrentStorySlot], a ; $68c9
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $68cc
@@ -313,7 +313,7 @@ LoadSavedDataSourceGfx:
 	ld de, $9710 + VRAM_BANK1 ; $68d2
 	farcall CopyMugshotBufferToVram ; $68d5
 	call AdvanceFrame ; $68d8
-	wram_bank $03 ; $68db
+	wram_bank WRAM_SCREEN ; $68db
 	ld a, $02 ; $68e1
 	ld [wCurrentStorySlot], a ; $68e3
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $68e6
@@ -503,7 +503,7 @@ SavedDataSourceCursorSpriteTaskTable1:
 	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
 	db $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12, $00, $80 ; 0x20
 DrawSavedDataSourceGrid:
-	wram_bank $03 ; $6a7e
+	wram_bank WRAM_SCREEN ; $6a7e
 	ld b, $00 ; $6a84
 	ld c, $00 ; $6a86
 .loop:
@@ -541,7 +541,7 @@ DrawSavedDataSourceGrid:
 .loadSavedDataSourceCellPalette:
 	call LoadSavedDataSourceCellPalette ; $6abe
 .fillTilemapRect:
-	wram_bank $03 ; $6ac1
+	wram_bank WRAM_SCREEN ; $6ac1
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6ac7
 	ld b, $14 ; $6aca
 	ld c, $01 ; $6acc
@@ -653,7 +653,7 @@ SavedDataSourceCellPalette1:
 	; $6b7b, 8 bytes (bytes:8)
 	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
 DrawSavedDataSourceCaption:
-	push_wram_bank $03 ; $6b83
+	push_wram_bank WRAM_SCREEN ; $6b83
 	ld c, $03 ; $6b8c
 	call GetMenuCursorIndex_3b ; $6b8e
 	ld b, a ; $6b91

@@ -151,7 +151,7 @@ RunDebugColorEditor:
 	call CloseWindow ; $6a50
 	ret ; $6a53
 RunDebugPaletteViewer:
-	wram_bank $05 ; $6a54
+	wram_bank WRAM_TEXT ; $6a54
 	ld de, $0000 ; $6a5a
 	ld bc, $0712 ; $6a5d
 	ld a, $00 ; $6a60
@@ -520,7 +520,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	push bc ; $6c7a
 	push de ; $6c7b
 	push hl ; $6c7c
-	push_wram_bank $05 ; $6c7d
+	push_wram_bank WRAM_TEXT ; $6c7d
 	xor a ; $6c86
 	call AddTextIdOffset ; $6c87
 	xor a ; $6c8a
@@ -600,7 +600,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	pop hl ; $6cff
 	jr .loopB ; $6d00
 .checkWramBank:
-	push_wram_bank $05 ; $6d02
+	push_wram_bank WRAM_TEXT ; $6d02
 	xor a ; $6d0b
 	ld [wTextRowIndent], a ; $6d0c
 	ld [wTextArgStringWriteIndex], a ; $6d0f

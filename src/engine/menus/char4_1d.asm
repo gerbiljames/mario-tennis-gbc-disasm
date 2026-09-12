@@ -119,12 +119,12 @@ DrawCharDataPageArrowsTask_SpriteTemplate3:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite_end
 RunExpDistributionFlow:
-	wram_bank $06 ; $682c
+	wram_bank WRAM_SCENE ; $682c
 	xor a ; $6832
 	ld [wCharDataViewOnly], a ; $6833
 .loop:
 	call ShowExpDistributionScreen ; $6836
-	wram_bank $06 ; $6839
+	wram_bank WRAM_SCENE ; $6839
 	ld hl, wExpScreenCharStats + 6 ; $683f
 	ld a, [hl+] ; $6842
 	ld d, [hl] ; $6843
@@ -156,7 +156,7 @@ RunExpDistributionFlow:
 	jr z, .countDone ; $6870
 	ret ; $6872
 .loop2:
-	wram_bank $06 ; $6873
+	wram_bank WRAM_SCENE ; $6873
 	ld hl, wExpScreenCharStats + 12 ; $6879
 	ld de, wStoryMainCharExp ; $687c
 	ld a, [hl+] ; $687f
@@ -222,7 +222,7 @@ ShowExpDistributionScreen:
 	ld [wStoryCharacterSlot], a ; $68f5
 	script_fade_in $10 ; $68f8
 	call WaitFadeEnd ; $68fd
-	wram_bank $06 ; $6900
+	wram_bank WRAM_SCENE ; $6900
 	xor a ; $6906
 	ld [wStoryCharacterSlot], a ; $6907
 	call UpdateExpScreenSelectionPalettes ; $690a
@@ -241,7 +241,7 @@ ShowExpDistributionScreen:
 	call UnregisterFrameTask ; $6930
 	ret ; $6933
 InitLevelUpScreenState:
-	wram_bank $06 ; $6934
+	wram_bank WRAM_SCENE ; $6934
 	ld a, [wCharDataViewOnly] ; $693a
 	or a ; $693d
 	jr nz, .nonZero ; $693e
@@ -280,21 +280,21 @@ BuildExpDistributionScreen:
 	ld [wStoryCharacterSlot], a ; $6989
 	call DrawExpScreenLevelNumber ; $698c
 	call DrawExpScreenLevelBar ; $698f
-	wram_bank $01 ; $6992
+	wram_bank WRAM_STAGING ; $6992
 	ld hl, ExpDistributionScreenGfx5 ; $6998
 	ld de, wDecompBuffer + 36 * TILE_SIZE ; $699b
 	call DecompressData ; $699e
 	ld hl, wDecompBuffer + 36 * TILE_SIZE ; $69a1
 	ld bc, $0030 ; $69a4
 	call CopyWram1ToWram3ExpScreen ; $69a7
-	wram_bank $01 ; $69aa
+	wram_bank WRAM_STAGING ; $69aa
 	ld hl, ExpDistributionScreenGfx6 ; $69b0
 	ld de, wDecompBuffer + 36 * TILE_SIZE ; $69b3
 	call DecompressData ; $69b6
 	ld hl, wDecompBuffer + 36 * TILE_SIZE ; $69b9
 	ld bc, $0030 ; $69bc
 	call CopyWram1ToWram2ExpScreen ; $69bf
-	wram_bank $01 ; $69c2
+	wram_bank WRAM_STAGING ; $69c2
 	ld hl, ExpDistributionScreenGfx7 ; $69c8
 	ld de, wDecompBuffer ; $69cb
 	call DecompressData ; $69ce
@@ -302,7 +302,7 @@ BuildExpDistributionScreen:
 	ld de, vTiles0 + $16 * TILE_SIZE + VRAM_BANK1 ; $69d4
 	ld c, ExpDistributionScreenGfx7_SIZE / 16 ; $69d7
 	call QueueVRAMCopy ; $69d9
-	wram_bank $01 ; $69dc
+	wram_bank WRAM_STAGING ; $69dc
 	ld hl, ExpDistributionScreenGfx2 ; $69e2
 	ld de, wDecompBuffer ; $69e5
 	call DecompressData ; $69e8
@@ -310,7 +310,7 @@ BuildExpDistributionScreen:
 	ld de, vTiles0 + $18 * TILE_SIZE + VRAM_BANK1 ; $69ee
 	ld c, ExpDistributionScreenGfx2_SIZE / 16 ; $69f1
 	call QueueVRAMCopy ; $69f3
-	wram_bank $01 ; $69f6
+	wram_bank WRAM_STAGING ; $69f6
 	ld hl, ExpDistributionScreenGfx3 ; $69fc
 	ld de, wDecompBuffer ; $69ff
 	call DecompressData ; $6a02
@@ -318,7 +318,7 @@ BuildExpDistributionScreen:
 	ld de, vTiles0 + $2c * TILE_SIZE + VRAM_BANK1 ; $6a08
 	ld c, ExpDistributionScreenGfx3_SIZE / 16 ; $6a0b
 	call QueueVRAMCopy ; $6a0d
-	wram_bank $01 ; $6a10
+	wram_bank WRAM_STAGING ; $6a10
 	ld hl, ExpDistributionScreenGfx4 ; $6a16
 	ld de, wDecompBuffer ; $6a19
 	call DecompressData ; $6a1c
@@ -329,7 +329,7 @@ BuildExpDistributionScreen:
 	ld hl, ExpDistributionScreenPalettes ; $6a2a
 	lb de, $0e, $02 ; $6a2d palette index, count
 	call LoadPaletteShadow ; $6a30
-	wram_bank $01 ; $6a33
+	wram_bank WRAM_STAGING ; $6a33
 	ld hl, ExpDistributionScreenGfx8 ; $6a39
 	ld de, wDecompBuffer ; $6a3c
 	call DecompressData ; $6a3f
@@ -337,7 +337,7 @@ BuildExpDistributionScreen:
 	ld de, vTiles0 + VRAM_BANK1 ; $6a45
 	ld c, ExpDistributionScreenGfx8_SIZE / 16 ; $6a48
 	call QueueVRAMCopy ; $6a4a
-	wram_bank $01 ; $6a4d
+	wram_bank WRAM_STAGING ; $6a4d
 	ld hl, ExpDistributionScreenGfx0 ; $6a53
 	ld de, wDecompBuffer ; $6a56
 	call DecompressData ; $6a59
@@ -345,7 +345,7 @@ BuildExpDistributionScreen:
 	ld de, vTiles0 + $0c * TILE_SIZE + VRAM_BANK1 ; $6a5f
 	ld c, ExpDistributionScreenGfx0_SIZE / 16 ; $6a62
 	call QueueVRAMCopy ; $6a64
-	wram_bank $01 ; $6a67
+	wram_bank WRAM_STAGING ; $6a67
 	ld hl, ExpDistributionScreenGfx1 ; $6a6d
 	ld de, wDecompBuffer ; $6a70
 	call DecompressData ; $6a73
@@ -353,21 +353,21 @@ BuildExpDistributionScreen:
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6a79
 	ld c, ExpDistributionScreenGfx1_SIZE / 16 ; $6a7c
 	call QueueVRAMCopy ; $6a7e
-	wram_bank $03 ; $6a81
+	wram_bank WRAM_SCREEN ; $6a81
 	ld hl, wShadowTilemap ; $6a87
 	ld de, vBGMap0 ; $6a8a
 	ld c, $24 ; $6a8d
 	call QueueVRAMCopy ; $6a8f
-	wram_bank $02 ; $6a92
+	wram_bank WRAM_COURT_PLANES ; $6a92
 	ld hl, wScreenAttrmap ; $6a98
 	ld de, vBGMap0 + VRAM_BANK1 ; $6a9b
 	ld c, $24 ; $6a9e
 	call QueueVRAMCopy ; $6aa0
 	ret ; $6aa3
 CopyWram1ToWram3ExpScreen:
-	wram_bank $01 ; $6aa4
+	wram_bank WRAM_STAGING ; $6aa4
 	ld d, [hl] ; $6aaa
-	wram_bank $03 ; $6aab
+	wram_bank WRAM_SCREEN ; $6aab
 	ld [hl], d ; $6ab1
 	inc hl ; $6ab2
 	dec bc ; $6ab3
@@ -376,9 +376,9 @@ CopyWram1ToWram3ExpScreen:
 	jr nz, CopyWram1ToWram3ExpScreen ; $6ab6
 	ret ; $6ab8
 CopyWram1ToWram2ExpScreen:
-	wram_bank $01 ; $6ab9
+	wram_bank WRAM_STAGING ; $6ab9
 	ld d, [hl] ; $6abf
-	wram_bank $02 ; $6ac0
+	wram_bank WRAM_COURT_PLANES ; $6ac0
 	ld [hl], d ; $6ac6
 	inc hl ; $6ac7
 	dec bc ; $6ac8
@@ -387,7 +387,7 @@ CopyWram1ToWram2ExpScreen:
 	jr nz, CopyWram1ToWram2ExpScreen ; $6acb
 	ret ; $6acd
 DrawExpPoolReadout:
-	wram_bank $06 ; $6ace
+	wram_bank WRAM_SCENE ; $6ace
 	ld hl, wExpPoolRemaining ; $6ad4
 	ld a, [hl+] ; $6ad7
 	ld h, [hl] ; $6ad8
@@ -401,7 +401,7 @@ DrawExpPoolReadout:
 	call DrawExpPoolGauge ; $6aeb
 	ret ; $6aee
 DrawExpPoolGauge:
-	wram_bank $06 ; $6aef
+	wram_bank WRAM_SCENE ; $6aef
 	ld hl, wExpPoolRemaining ; $6af5
 	ld a, [hl+] ; $6af8
 	ld d, [hl] ; $6af9
@@ -422,7 +422,7 @@ DrawExpPoolGauge:
 	ld de, wExpScreenCharStats ; $6b12
 	ld b, a ; $6b15
 	ld c, $0b ; $6b16
-	wram_bank $03 ; $6b18
+	wram_bank WRAM_SCREEN ; $6b18
 .loop:
 	ld a, b ; $6b1e
 	sub $08 ; $6b1f
@@ -487,7 +487,7 @@ ExpPoolGaugeTilePairTable:
 	db $03, $04 ; 0x0e
 	db $03, $04 ; 0x10
 InitExpScreenCharStats:
-	wram_bank $06 ; $6b7b
+	wram_bank WRAM_SCENE ; $6b7b
 	ld a, [wCharDataViewOnly] ; $6b81
 	or a ; $6b84
 	jp nz, .clearStoryCharacterSlot ; $6b85
@@ -510,7 +510,7 @@ InitExpScreenCharStats:
 	ld de, wCharDataChoiceBackup + 47 ; $6ba1
 	ld c, $20 ; $6ba4
 	call WriteExpScreenStringTiles ; $6ba6
-	wram_bank $06 ; $6ba9
+	wram_bank WRAM_SCENE ; $6ba9
 	push af ; $6baf
 	ld hl, wStoryModeNameOfMainCharacter ; $6bb0
 	ld a, [wStoryCharacterSlot] ; $6bb3
@@ -538,7 +538,7 @@ InitExpScreenCharStats:
 	call FormatDecimalNumberUnsigned ; $6bd4
 	ld de, wCharDataChoiceLog + 65 ; $6bd7
 	farcall CharDataScreen_WriteStatNumber ; $6bda
-	wram_bank $06 ; $6bdd
+	wram_bank WRAM_SCENE ; $6bdd
 	pop af ; $6be3
 	farcall GetExpRequiredForLevel ; $6be4
 	ld a, l ; $6be7
@@ -596,7 +596,7 @@ InitExpScreenCharStats:
 	ld de, wCharDataScreenCell + 16 * TILEMAP_WIDTH + 12 ; $6c42
 	ld c, $20 ; $6c45
 	call WriteExpScreenStringTiles ; $6c47
-	wram_bank $06 ; $6c4a
+	wram_bank WRAM_SCENE ; $6c4a
 	push af ; $6c50
 	ld hl, wStoryModeNameOfMainCharacter ; $6c51
 	ld a, [wStoryCharacterSlot] ; $6c54
@@ -624,7 +624,7 @@ InitExpScreenCharStats:
 	call FormatDecimalNumberUnsigned ; $6c75
 	ld de, wCharDataScreenCell + 12 * TILEMAP_WIDTH + 11 ; $6c78
 	farcall CharDataScreen_WriteStatNumber ; $6c7b
-	wram_bank $06 ; $6c7e
+	wram_bank WRAM_SCENE ; $6c7e
 	pop af ; $6c84
 	farcall GetExpRequiredForLevel ; $6c85
 	ld a, l ; $6c88
@@ -684,7 +684,7 @@ InitExpScreenCharStats:
 	ld de, wCharDataChoiceBackup + 47 ; $6ce5
 	ld c, $20 ; $6ce8
 	call WriteExpScreenStringTiles ; $6cea
-	wram_bank $06 ; $6ced
+	wram_bank WRAM_SCENE ; $6ced
 	push af ; $6cf3
 	ld hl, wStoryModeNameOfMainCharacter ; $6cf4
 	ld a, [wStoryCharacterSlot] ; $6cf7
@@ -726,7 +726,7 @@ InitExpScreenCharStats:
 	ld de, wCharDataScreenCell + 16 * TILEMAP_WIDTH + 12 ; $6d34
 	ld c, $20 ; $6d37
 	call WriteExpScreenStringTiles ; $6d39
-	wram_bank $06 ; $6d3c
+	wram_bank WRAM_SCENE ; $6d3c
 	push af ; $6d42
 	ld hl, wStoryModeNameOfMainCharacter ; $6d43
 	ld a, [wStoryCharacterSlot] ; $6d46
@@ -751,7 +751,7 @@ InitExpScreenCharStats:
 	farcall CharDataScreen_WriteStatNumber ; $6d66
 	ret ; $6d69
 WriteExpScreenStringTiles:
-	wram_bank $06 ; $6d6a
+	wram_bank WRAM_SCENE ; $6d6a
 	ld a, [hl+] ; $6d70
 	or a ; $6d71
 	ret z ; $6d72
@@ -760,10 +760,10 @@ WriteExpScreenStringTiles:
 	cp $df ; $6d77
 	jr z, .rowAbove ; $6d79
 	ld b, a ; $6d7b
-	wram_bank $03 ; $6d7c
+	wram_bank WRAM_SCREEN ; $6d7c
 	ld a, b ; $6d82
 	ld [de], a ; $6d83
-	wram_bank $02 ; $6d84
+	wram_bank WRAM_COURT_PLANES ; $6d84
 	xor a ; $6d8a
 	ld [de], a ; $6d8b
 	inc de ; $6d8c
@@ -771,7 +771,7 @@ WriteExpScreenStringTiles:
 .rowAbove:
 	call ExpScreenTilePtrUpOneRow ; $6d8f
 	ld b, a ; $6d92
-	wram_bank $03 ; $6d93
+	wram_bank WRAM_SCREEN ; $6d93
 	ld a, [de] ; $6d99
 	cp $73 ; $6d9a
 	jr z, .statLabel ; $6d9c
@@ -792,7 +792,7 @@ WriteExpScreenStringTiles:
 	ld c, $0c ; $6db3
 	ld a, b ; $6db5
 	ld [de], a ; $6db6
-	wram_bank $02 ; $6db7
+	wram_bank WRAM_COURT_PLANES ; $6db7
 	ld a, c ; $6dbd
 	ld [de], a ; $6dbe
 	pop bc ; $6dbf
@@ -801,7 +801,7 @@ WriteExpScreenStringTiles:
 .plainTile:
 	ld a, b ; $6dc5
 	ld [de], a ; $6dc6
-	wram_bank $02 ; $6dc7
+	wram_bank WRAM_COURT_PLANES ; $6dc7
 	ld a, c ; $6dcd
 	ld [de], a ; $6dce
 	pop bc ; $6dcf
@@ -826,7 +826,7 @@ ExpScreenTilePtrDownOneRow:
 .done:
 	ret ; $6de6
 DrawExpScreenLevelNumber:
-	wram_bank $06 ; $6de7
+	wram_bank WRAM_SCENE ; $6de7
 	ld a, [wStoryCharacterSlot] ; $6ded
 	or a ; $6df0
 	jr nz, .nonZero ; $6df1
@@ -859,7 +859,7 @@ DrawExpScreenLevelNumber:
 	call DrawExpScreenLevelDigit ; $6e23
 	ret ; $6e26
 .ge64:
-	wram_bank $03 ; $6e27
+	wram_bank WRAM_SCREEN ; $6e27
 	ld h, d ; $6e2d
 	ld l, e ; $6e2e
 	dec hl ; $6e2f
@@ -886,13 +886,13 @@ DrawExpScreenLevelNumber:
 	ld [hl+], a ; $6e47
 	inc a ; $6e48
 	ld [hl], a ; $6e49
-	wram_bank $06 ; $6e4a
+	wram_bank WRAM_SCENE ; $6e4a
 	ret ; $6e50
 DrawExpScreenLevelDigit:
 	sub $30 ; $6e51
 	add $66 ; $6e53
 	ld b, a ; $6e55
-	wram_bank $03 ; $6e56
+	wram_bank WRAM_SCREEN ; $6e56
 	ld a, b ; $6e5c
 	ld [de], a ; $6e5d
 	push de ; $6e5e
@@ -908,12 +908,12 @@ DrawExpScreenLevelDigit:
 	ld a, b ; $6e6a
 	ld [de], a ; $6e6b
 	pop de ; $6e6c
-	wram_bank $06 ; $6e6d
+	wram_bank WRAM_SCENE ; $6e6d
 	ret ; $6e73
 ClearExpScreenLevelDigits:
 	push af ; $6e74
 	push de ; $6e75
-	wram_bank $03 ; $6e76
+	wram_bank WRAM_SCREEN ; $6e76
 	ld h, d ; $6e7c
 	ld l, e ; $6e7d
 	dec hl ; $6e7e
@@ -938,12 +938,12 @@ ClearExpScreenLevelDigits:
 	ld a, $51 ; $6e95
 	ld [hl+], a ; $6e97
 	ld [hl], a ; $6e98
-	wram_bank $06 ; $6e99
+	wram_bank WRAM_SCENE ; $6e99
 	pop de ; $6e9f
 	pop af ; $6ea0
 	ret ; $6ea1
 DrawExpScreenLevelBar:
-	wram_bank $06 ; $6ea2
+	wram_bank WRAM_SCENE ; $6ea2
 	ld a, [wStoryCharacterSlot] ; $6ea8
 	or a ; $6eab
 	jr nz, .nonZero ; $6eac
@@ -992,7 +992,7 @@ DrawExpScreenLevelBar:
 .step4:
 	ld b, a ; $6efe
 	ld c, $08 ; $6eff
-	wram_bank $03 ; $6f01
+	wram_bank WRAM_SCREEN ; $6f01
 .loop:
 	ld a, b ; $6f07
 	sub $08 ; $6f08

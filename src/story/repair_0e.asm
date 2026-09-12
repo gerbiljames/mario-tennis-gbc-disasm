@@ -375,9 +375,9 @@ RestoreScreenAfterEquipSelect:
 	call RestoreScreenAfterEquipSelect ; $4f38
 	ret ; $4f3b
 FetchAndPushShortTextArg:
-	push_wram_bank $07 ; $4f3c
+	push_wram_bank WRAM_CHAR3 ; $4f3c
 	ld de, wTextArgFetchBuffer ; $4f45
-	wram_bank $05 ; $4f48
+	wram_bank WRAM_CHAR1 ; $4f48
 	farcall FetchShortTextToBuffer ; $4f4e
 	ld hl, wTextArgFetchBuffer ; $4f51
 	farcall PushTextArgString ; $4f54
