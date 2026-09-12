@@ -10,6 +10,14 @@ RAM_SRCS := ram.asm $(wildcard ram/*.asm)
 
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 
+# The mods/ overlay: edited data files a fork commits (mods/README.md) are
+# copied over data/ before anything is built, at parse time so no target can
+# race it. A copy is newer than the .bin it covers, so a PNG or grid from
+# mods/ is re-encoded by the rules below.
+ifeq (,$(filter clean,$(MAKECMDGOALS)))
+$(info $(shell python3 tools/mods.py apply))
+endif
+
 .PHONY: all compare check test previews clean
 
 all: $(ROM)

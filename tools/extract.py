@@ -703,6 +703,12 @@ def main() -> int:
     if gfx_skipped:
         note += f" ({gfx_skipped} gfx blobs not a whole number of tiles)"
     print(f"extracted {count} files to {outdir}/{note}")
+    # the mods/ overlay goes back on top of a fresh extraction of the real tree
+    if Path(outdir).resolve() == (Path(__file__).resolve().parent.parent / "data"):
+        import mods
+        n = mods.apply()
+        if n:
+            print(f"mods: {n} file(s) overlaid onto data/")
     return 0
 
 

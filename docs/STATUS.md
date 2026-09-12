@@ -111,6 +111,14 @@ blob.
 
 ## Recent changes
 
+* **2026-09-12** — a fork can commit its edits. `mods/` mirrors `data/`:
+  an edited PNG, grid, text file or track lives there at the same relative
+  path (tracked), and `tools/mods.py apply` copies it over `data/` before
+  every `make` (at Makefile parse time, so no target races it) and after
+  every extraction; `tools/mods.py collect baserom.gbc` brings every file
+  edited in `data/` into `mods/` by comparing against a fresh extraction.
+  ROM content stays out of the repository; only the fork's own changes go
+  in.
 * **2026-09-12** — the sound scripts are source. Reading the driver
   settled the format: every command is two bytes and the interpreter
   steps by command index, the one four-byte command (`$ac`) carrying a

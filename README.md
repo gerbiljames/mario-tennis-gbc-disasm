@@ -150,11 +150,20 @@ restated:
 - **Save files.** `tools/savetool.py` verifies, dumps and edits battery saves
   (levels, stats, unlock flags), recomputing the checksums (`docs/save_format.md`).
 
+- **A fork commits its edits in `mods/`.** `data/` is ROM content and is
+  not committed; an edited file lives at the same relative path under
+  `mods/` (`mods/bank_040/AlexSpriteFrame00.png`) and is copied over
+  `data/` before every `make` and after every extraction. Edit in `data/`
+  and run `python3 tools/mods.py collect baserom.gbc` to bring every changed
+  file into `mods/`, or put files there directly (`mods/README.md`).
+
 `data/` is extracted, so `./setup.sh` and `tools/extract.py` overwrite it
-and delete files the manifest no longer lists. To re-extract without losing
-edits, run extraction with `--keep`: a file that differs from what the ROM would give (a `.bin`, a
-generated `.asm`, or a PNG that no longer encodes to its blob) is left as
-it is and reported, and nothing is deleted.
+and delete files the manifest no longer lists; the `mods/` overlay is put
+back afterwards. To re-extract without losing edits made in `data/` that are
+not yet in `mods/`, run extraction with `--keep`: a file that differs from
+what the ROM would give (a `.bin`, a generated `.asm`, or a PNG that no
+longer encodes to its blob) is left as it is and reported, and nothing is
+deleted.
 
 ## Reading the source
 
