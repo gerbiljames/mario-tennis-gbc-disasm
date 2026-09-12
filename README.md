@@ -129,6 +129,11 @@ restated:
   follows and every reference moves. A slot in a bank's `$4000` table is
   likewise a `DataPtr_`/`FarPtr_` label, referenced as `BANK(...)` /
   `LOW(...)` or through `dslot`.
+- **The shot physics are source.** The fifteen trajectory tables the shot
+  solver looks answers up in (`docs/match_engine.md` "The trajectory
+  tables") are extracted to `data/bank_02x/<Table>.asm` as `traj_row speed,
+  elevation, delta` rows, blocked by contact-height band and placement
+  variant. Edit a row and `make`; `make check` proves the round trip.
 - **Sound is source.** The 315 channel scripts behind every song and effect
   are extracted to `data/bank_07x/<Track>.asm`, one `snd_*` row per command
   (`snd_note C#, 3, 8`, `snd_loop_point 0`, `snd_call 2, .call0`, ...), with

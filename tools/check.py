@@ -176,6 +176,26 @@ def check_sound(rom, manifest, fail):
     return n
 
 
+def check_traj(rom, manifest, fail):
+    """Every traj table is whole rows of its width and renders to rows that
+    parse back to the same bytes."""
+    from extract import parse_traj, render_traj
+    n = 0
+    for path, off, length, spec in manifest:
+        if not (spec or "").startswith("traj"):
+            continue
+        n += 1
+        data = rom[off:off + length]
+        try:
+            text = render_traj(data, spec.partition(":")[2])
+        except ValueError as e:
+            fail("traj", f"{path}: {e}")
+            continue
+        if parse_traj(text) != data:
+            fail("traj", f"{path}: rendering does not parse back to the table")
+    return n
+
+
 def check_regions(manifest, fail):
     spans = sorted((o, o + n, p) for p, o, n, _s in manifest)
     prev = None
@@ -328,6 +348,7 @@ def main():
         "lz-labels": check_lz_labels(labels, manifest, fail),
         "regions": check_regions(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
+        "traj": check_traj(rom, manifest, fail),
         "scopes": check_stranded_scopes(fail),
         "branches": check_collapsed_branches(fail),
         "gfx": check_gfx(manifest, fail),

@@ -112,6 +112,14 @@ blob.
 
 ## Recent changes
 
+* **2026-09-12** — the trajectory tables are source. The fifteen
+  ballistic-solution tables of the nine shot banks (15,360 bytes each in
+  the four stroke banks, 7,200 in the three serve banks, the lob, drop,
+  fallback, neutral, reach and three stretch tables) are extracted to
+  `data/bank_02x/<Table>.asm` as `traj_row` / `traj_row4` rows with block
+  separators where the offset tables index in 64-row blocks, and the five
+  small offset blobs of bank `$24` as `dw` rows; the banks `INCLUDE` them.
+  `make check` (`traj`) proves each renders back to its bytes.
 * **2026-09-12** — WRAM bank switches say what they reach for. The 1,725
   `wram_bank` / `push_wram_bank` sites use `WRAM_*` constants: the bank's
   owner (`WRAM_STAGING`, `WRAM_COURT_PLANES`, `WRAM_SCREEN`, `WRAM_ACTORS`,

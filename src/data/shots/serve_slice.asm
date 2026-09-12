@@ -32,7 +32,7 @@
 ; Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_24, LookupBallPosByShotIndex_29 and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy.
 	twin lookup_ball_pos_by_shot_index, 2a ; $426e LookupBallPosByShotIndex_2a
 BallPosData_2a:
-	INCBIN "data/bank_02a/BallPosData_2a.bin" ; $427d, 7200 bytes
+	INCLUDE "data/bank_02a/BallPosData_2a.asm" ; $427d, 7200 bytes (traj:6)
 ShotBallPathServeSlice:
 	farcall ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_2a ; $5ea0

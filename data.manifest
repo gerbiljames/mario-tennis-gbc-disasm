@@ -883,20 +883,20 @@ bank_01e/GameProgressScreenTiles1.asm 07b820 140 palettes
 bank_01e/GameProgressScreenTiles2.asm 07b960 80 palettes
 bank_01e/GameProgressScreenPalettes2.asm 07b9e0 8 palettes
 bank_01f/TextStrings_1f.asm 07c17e 390d text_pool
-bank_020/BallPosData_20.bin 08027d 3c00
-bank_021/BallPosData_21.bin 08427d 3c00
-bank_022/BallPosData_22.bin 08827d 3c00
-bank_023/BallPosData_23.bin 08c27d 3c00
-bank_024/BallPosDataLob_24.bin 090289 300
-bank_024/BallPosBlockOffsetsLob_24.bin 09059c 4
-bank_024/BallPosDataDrop_24.bin 0905a0 c00
-bank_024/BallPosAimOffsetsDrop_24.bin 0911b9 40
-bank_024/BallPosBlockOffsetsDrop_24.bin 0911f9 4
-bank_024/BallPosDataFallback_24.bin 0911fd 600
-bank_024/BallPosFallbackOffsets_24.bin 09183c 8
-bank_024/BallPosDataNeutral_24.bin 091844 e00
-bank_024/BallPosDataReach_24.bin 092707 1000
-bank_024/BallPosHeightOffsetsReach_24.bin 093719 40
+bank_020/BallPosData_20.asm 08027d 3c00 traj:6:64
+bank_021/BallPosData_21.asm 08427d 3c00 traj:6:64
+bank_022/BallPosData_22.asm 08827d 3c00 traj:6:64
+bank_023/BallPosData_23.asm 08c27d 3c00 traj:6:64
+bank_024/BallPosDataLob_24.asm 090289 300 traj:6
+bank_024/BallPosBlockOffsetsLob_24.asm 09059c 4 words:1
+bank_024/BallPosDataDrop_24.asm 0905a0 c00 traj:6
+bank_024/BallPosAimOffsetsDrop_24.asm 0911b9 40 words:1
+bank_024/BallPosBlockOffsetsDrop_24.asm 0911f9 4 words:1
+bank_024/BallPosDataFallback_24.asm 0911fd 600 traj:6
+bank_024/BallPosFallbackOffsets_24.asm 09183c 8 words:1
+bank_024/BallPosDataNeutral_24.asm 091844 e00 traj:4:64
+bank_024/BallPosDataReach_24.asm 092707 1000 traj:4:64
+bank_024/BallPosHeightOffsetsReach_24.asm 093719 40 words:1
 bank_025/TextStrings_25.asm 09421a 391e text_pool
 bank_026/TextStrings_26.asm 0981f6 3921 text_pool
 bank_027/End11TrainingCourtInitScriptPalette0_27.asm 09d580 40 palettes
@@ -927,12 +927,12 @@ bank_028/lz_MatchGfxTilesB_28.bin 0a2180 b94 gfx
 bank_028/UnusedMatchGfxPalette_28.bin 0a2d14 8
 bank_028/MatchGfxPalettesC_28.asm 0a2d1c 38 palettes
 bank_028/MatchStoryGfxPalettes.asm 0a2d54 10 palettes
-bank_029/BallPosData_29.bin 0a427d 1c20
-bank_02a/BallPosData_2a.bin 0a827d 1c20
-bank_02b/BallPosData_2b.bin 0ac27d 1c20
-bank_02c/ShotPlacementData0_2c.bin 0b0281 c00
-bank_02c/ShotPlacementData1_2c.bin 0b0e81 1200
-bank_02c/ShotPlacementData2_2c.bin 0b2081 1200
+bank_029/BallPosData_29.asm 0a427d 1c20 traj:6
+bank_02a/BallPosData_2a.asm 0a827d 1c20 traj:6
+bank_02b/BallPosData_2b.asm 0ac27d 1c20 traj:6
+bank_02c/ShotPlacementData0_2c.asm 0b0281 c00 traj:4
+bank_02c/ShotPlacementData1_2c.asm 0b0e81 1200 traj:6
+bank_02c/ShotPlacementData2_2c.asm 0b2081 1200 traj:6
 bank_02d/SineTable.bin 0b4000 1000
 bank_02d/CosecantTable.bin 0b5000 1000
 bank_02e/PerspectiveScaleTable.bin 0b8000 3fe0

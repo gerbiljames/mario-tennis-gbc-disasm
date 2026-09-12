@@ -491,10 +491,46 @@ def render_sprite_template(data: bytes) -> str:
     return "\n".join(out) + "\n"
 
 
+def render_traj(data: bytes, param: str) -> str:
+    """A shot-solver trajectory table (docs/match_engine.md "The trajectory
+    tables"): rows of `speed, elevation[, lateral delta]` words, `traj:6` or
+    `traj:4`; an optional `:B` is the rows per block, which the height and
+    placement offset tables index, drawn as a separator."""
+    width_s, _, block_s = param.partition(":")
+    width = int(width_s or 6)
+    block = int(block_s) if block_s else 0
+    if len(data) % width:
+        raise ValueError(f"trajectory table of {len(data)} bytes is not {width}-byte rows")
+    macro = "traj_row" if width == 6 else "traj_row4"
+    out = []
+    for i in range(0, len(data), width):
+        row = i // width
+        if block and row % block == 0:
+            out.append(f"; block {row // block}")
+        elif not block and row % 16 == 0:
+            out.append(f"; row {row}")
+        words = [data[i + k] | (data[i + k + 1] << 8) for k in range(0, width, 2)]
+        out.append(f"\t{macro} " + ", ".join(f"${w:04x}" for w in words))
+    return "\n".join(out) + "\n"
+
+
+def parse_traj(text: str) -> bytes:
+    out = bytearray()
+    for line in text.split("\n"):
+        m = re.match(r"\ttraj_row4? (.*)$", line.split(";")[0].rstrip())
+        if m:
+            for w in m.group(1).split(","):
+                v = int(w.strip()[1:], 16)
+                out += bytes([v & 0xff, v >> 8])
+    return bytes(out)
+
+
 def render_spec(data: bytes, spec: str, name: str | None = None) -> str:
     kind, _, param = spec.partition(":")
     if kind == "palettes":
         return render_palettes(data)
+    if kind == "traj":
+        return render_traj(data, param)
     if kind == "snd_script":
         # a sound channel script: name is the track label the file's rows
         # take their call offsets from, param the hardware channel kind

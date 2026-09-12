@@ -539,6 +539,15 @@ entry points and the trailing data differ.
 topspin on every court, and the per-court data is the two damping bytes in
 `CourtSceneDataTable` (`court_scene` rows, one per court id).
 
+**The files.** Each table is extracted to `data/bank_02x/<Table>.asm` as one
+`traj_row speed, elevation, delta` (or `traj_row4 speed, elevation`) per row,
+with a `; block N` separator every 64 rows where the height and placement
+offset tables index in 64-row blocks (the four stroke banks, neutral and
+reach) and a `; row N` marker every sixteen elsewhere; the bank `INCLUDE`s
+the file in place of the old `INCBIN`, and `make check` (`traj`) proves the
+rendering parses back to the bytes. Editing a row and running `make` is
+how a shot's reach or arc is tuned.
+
 **A row.** Rows are 6 bytes (or 4 in the tables that do not carry a lateral
 delta):
 

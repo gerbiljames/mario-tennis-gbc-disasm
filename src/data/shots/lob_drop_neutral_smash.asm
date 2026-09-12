@@ -38,7 +38,7 @@
 ; Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_29, LookupBallPosByShotIndex_2a and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy.
 	twin lookup_ball_pos_by_shot_index, 24 ; $427a LookupBallPosByShotIndex_24
 BallPosDataLob_24:
-	INCBIN "data/bank_024/BallPosDataLob_24.bin" ; $4289, 768 bytes
+	INCLUDE "data/bank_024/BallPosDataLob_24.asm" ; $4289, 768 bytes (traj:6)
 ShotBallPathLob:
 	farcall ComputeShotPlacement ; $4589
 	ld hl, BallPosDataLob_24 ; $458c
@@ -48,9 +48,9 @@ ShotBallPathLob:
 	call ApplyBallTrajectoryCapped_24 ; $4598
 	ret ; $459b
 BallPosBlockOffsetsLob_24:
-	INCBIN "data/bank_024/BallPosBlockOffsetsLob_24.bin" ; $459c, 4 bytes
+	INCLUDE "data/bank_024/BallPosBlockOffsetsLob_24.asm" ; $459c, 4 bytes (words:1)
 BallPosDataDrop_24:
-	INCBIN "data/bank_024/BallPosDataDrop_24.bin" ; $45a0, 3072 bytes
+	INCLUDE "data/bank_024/BallPosDataDrop_24.asm" ; $45a0, 3072 bytes (traj:6)
 ShotBallPathDrop:
 	farcall ComputeShotPlacement ; $51a0
 	ld hl, BallPosDataDrop_24 ; $51a3
@@ -62,11 +62,11 @@ ShotBallPathDrop:
 	call ApplyBallTrajectoryCapped_24 ; $51b5
 	ret ; $51b8
 BallPosAimOffsetsDrop_24:
-	INCBIN "data/bank_024/BallPosAimOffsetsDrop_24.bin" ; $51b9, 64 bytes
+	INCLUDE "data/bank_024/BallPosAimOffsetsDrop_24.asm" ; $51b9, 64 bytes (words:1)
 BallPosBlockOffsetsDrop_24:
-	INCBIN "data/bank_024/BallPosBlockOffsetsDrop_24.bin" ; $51f9, 4 bytes
+	INCLUDE "data/bank_024/BallPosBlockOffsetsDrop_24.asm" ; $51f9, 4 bytes (words:1)
 BallPosDataFallback_24:
-	INCBIN "data/bank_024/BallPosDataFallback_24.bin" ; $51fd, 1536 bytes
+	INCLUDE "data/bank_024/BallPosDataFallback_24.asm" ; $51fd, 1536 bytes (traj:6)
 ApplyFallbackBallTrajectory_24:
 	ld a, $01 ; $57fd
 	ld [wFallbackTrajectoryFlag], a ; $57ff
@@ -102,9 +102,9 @@ ApplyFallbackBallTrajectory_24:
 	call ApplyBallTrajectoryCapped_24 ; $5838
 	ret ; $583b
 BallPosFallbackOffsets_24:
-	INCBIN "data/bank_024/BallPosFallbackOffsets_24.bin" ; $583c, 8 bytes
+	INCLUDE "data/bank_024/BallPosFallbackOffsets_24.asm" ; $583c, 8 bytes (words:1)
 BallPosDataNeutral_24:
-	INCBIN "data/bank_024/BallPosDataNeutral_24.bin" ; $5844, 3584 bytes
+	INCLUDE "data/bank_024/BallPosDataNeutral_24.asm" ; $5844, 3584 bytes (traj:4:64)
 ShotBallPathNeutral:
 	farcall ComputeShotPlacement ; $6644
 	push bc ; $6647
@@ -225,7 +225,7 @@ SmashVelocityBySpeed_24:
 StubNop_24:
 	ret ; $6706
 BallPosDataReach_24:
-	INCBIN "data/bank_024/BallPosDataReach_24.bin" ; $6707, 4096 bytes
+	INCLUDE "data/bank_024/BallPosDataReach_24.asm" ; $6707, 4096 bytes (traj:4:64)
 ShotBallPathReach:
 	farcall ComputeShotPlacement ; $7707
 	push bc ; $770a
@@ -236,5 +236,5 @@ ShotBallPathReach:
 	call ApplyBallTrajectory4Capped_24 ; $7715
 	ret ; $7718
 BallPosHeightOffsetsReach_24:
-	INCBIN "data/bank_024/BallPosHeightOffsetsReach_24.bin" ; $7719, 64 bytes
+	INCLUDE "data/bank_024/BallPosHeightOffsetsReach_24.asm" ; $7719, 64 bytes (words:1)
 	; $7759, 2215 bytes fill to bank end (linker-padded)

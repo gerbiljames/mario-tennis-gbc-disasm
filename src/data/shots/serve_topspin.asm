@@ -70,7 +70,7 @@ ApplyBallTrajectoryCapped_29:
 ; Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_24, LookupBallPosByShotIndex_2a and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy.
 	twin lookup_ball_pos_by_shot_index, 29 ; $426e LookupBallPosByShotIndex_29
 BallPosData_29:
-	INCBIN "data/bank_029/BallPosData_29.bin" ; $427d, 7200 bytes
+	INCLUDE "data/bank_029/BallPosData_29.asm" ; $427d, 7200 bytes (traj:6)
 ShotBallPathServeTopspin:
 	farcall ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_29 ; $5ea0
