@@ -40,7 +40,7 @@ The HRAM layout is the sound-driver variant of the shared `$ffd0` union in
 | `$ffd6` | `hSndToneCtrl` | duty (bits 6-7), flag (bit 4), note-length increment (low nibble) |
 | `$ffd7` | `hSndLengthAccum` | fractional note-length accumulator |
 | `$ffd8` | `hSndVolume` | volume/envelope (high nibble = level, steps by `$10`) |
-| `$ffd9` | `hSndPortamentoTimer` | portamento/glide countdown |
+| `$ffd9` | `hSndNoteTimer` | portamento/glide countdown |
 | `$ffda` | `hSndWaveId` | wave-pattern id (wave ch) / note byte (others) |
 | `$ffdb` | `hSndNoteOffset` | signed detune applied at note-on (bit 7 = active) |
 | `$ffdc` | `hSndTranspose` | per-channel transpose |
@@ -116,7 +116,7 @@ extracted scripts are written with (`include/macros.inc`):
 | `$a4` | offset | `snd_detune` | `hSndNoteOffset` |
 | `$a5` | mask | `snd_pan` | `hSndPanMask`; `$01` swaps the current mask's nibbles |
 | `$a6` | value | `snd_master_volume` | written to `rAUDVOL` |
-| `$a7` | ticks | `snd_glide` | the note timer (`hSndPortamentoTimer`) without a key-on |
+| `$a7` | ticks | `snd_glide` | the note timer (`hSndNoteTimer`) without a key-on |
 | `$a8` | index | `snd_instrument` | `hSndInstrument` |
 | `$a9` | value | `snd_transpose` | `hSndTranspose`/`wSndTranspose`; `$f0`-`$f3` step them, `$fe`/`$ff` read a jump table of indices that follows. Unused by the shipped scripts |
 | `$aa` | value | `snd_echo` | echo count and note offset; 0 clears |

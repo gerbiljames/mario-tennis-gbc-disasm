@@ -31,12 +31,12 @@ SndTriggerNote:
 	ld c, a ; $3872
 	ld a, [hl] ; $3873
 	sub c ; $3874
-	ldh [hSndPortamentoTimer], a ; $3875
+	ldh [hSndNoteTimer], a ; $3875
 	pop de ; $3877
 	jr .step ; $3878
 .read:
 	ld a, [hl] ; $387a
-	ldh [hSndPortamentoTimer], a ; $387b
+	ldh [hSndNoteTimer], a ; $387b
 .step:
 	push bc ; $387d
 	ld c, a ; $387e

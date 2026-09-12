@@ -204,13 +204,13 @@ deleted.
   sibling of a live routine, its note says which and how it differs.
 - **Twins.** 279 live routines are instruction-identical copies of one
   another, mostly one per bank (`FetchText_25` / `FetchText_26`, the shot
-  solver's helpers in every court bank, the menu-cursor library). 271 of
+  solver's helpers in every court bank, the menu-cursor library). 275 of
   them are assembled from one shared file under `src/twins/`: a bank says
   `twin fetch_text, 25` where its copy sits, and the file's
   `FetchText_{TWIN}:` and bank-local references become that bank's, so a
   fix has one home. The shared bodies carry no per-instruction addresses;
   the `twin` line has the copy's start. `docs/duplicated_code.md` lists the
-  families and the eight copies that stay separate.
+  families and the four copies that stay separate.
 
 ## Layout
 

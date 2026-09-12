@@ -10,14 +10,24 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 _FRAG_RE = re.compile(r'^INCLUDE "(src/[^"]+\.asm)"')
-_TWIN_RE = re.compile(r"^\t(twin|twin_named) (\w+), (\w+)")
+_TWIN_RE = re.compile(r"^\t(twin|twin_named|twin_in) (\w+), (\w+)(?:, (\w+))?")
 
 
-def _twin_lines(kind, name, arg):
+def _twin_lines(kind, name, arg, arg2=None):
     """The shared routine src/twins/<name>.asm as the bank sees it."""
     body = (ROOT / "src" / "twins" / f"{name}.asm").read_text().split("\n")
-    key = "{TWIN}" if kind == "twin" else "{TWIN_LABEL}"
-    return [l.replace(key, arg) for l in body]
+    if kind == "twin":
+        subs = {"{TWIN}": arg}
+    elif kind == "twin_named":
+        subs = {"{TWIN_LABEL}": arg}
+    else:
+        subs = {"{TWIN_LABEL}": arg, "{TWIN}": arg2}
+    out = []
+    for l in body:
+        for k, v in subs.items():
+            l = l.replace(k, v)
+        out.append(l)
+    return out
 
 
 def holders():
@@ -50,7 +60,7 @@ def bank_lines(holder):
             for k, fl in enumerate(frag.read_text().split("\n")):
                 t = _TWIN_RE.match(fl)
                 if t:
-                    for tl in _twin_lines(t.group(1), t.group(2), t.group(3)):
+                    for tl in _twin_lines(t.group(1), t.group(2), t.group(3), t.group(4)):
                         lines.append(tl)
                         origin.append((frag, k + 1))
                     continue

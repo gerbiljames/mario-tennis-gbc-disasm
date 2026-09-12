@@ -34,18 +34,7 @@
 BallPosData_21:
 	INCLUDE "data/bank_021/BallPosData_21.asm" ; $427d, 15360 bytes (traj:6:64)
 ; Instruction-identical to ShotBallPathSlice (one copy per bank); a change here belongs in every copy.
-ShotBallPathPowerSlice:
-	farcall ComputeShotPlacement ; $7e7d
-	push bc ; $7e80
-	ld hl, BallPosData_21 ; $7e81
-	ld bc, BallPosHeightOffsets_21 ; $7e84
-	call LookupBallPosByHeight_21 ; $7e87
-	ld bc, BallPosBlockOffsets_21 ; $7e8a
-	ld a, [wSlicePlacementIndex] ; $7e8d
-	call LookupBallPosByShotIndex_21 ; $7e90
-	pop bc ; $7e93
-	call ApplyBallTrajectory6Capped_21 ; $7e94
-	ret ; $7e97
+	twin_in shot_ball_path_slice, ShotBallPathPowerSlice, 21 ; $7e7d
 BallPosHeightOffsets_21:
 	; $7e98, 64 bytes (records:2)
 	dw $0000 ; record 0

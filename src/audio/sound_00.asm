@@ -511,7 +511,7 @@ UpdateSoundChannels:
 	dec a ; $340f
 	ldh [hSndNoteLenTimer], a ; $3410
 .zero:
-	ldh a, [hSndPortamentoTimer] ; $3412
+	ldh a, [hSndNoteTimer] ; $3412
 	and a ; $3414
 	jr nz, .nonZero ; $3415
 	ldh a, [hSndEchoCtrl] ; $3417
@@ -546,7 +546,7 @@ UpdateSoundChannels:
 	jr .checkSndWaveReloadPending ; $344b
 .nonZero:
 	dec a ; $344d
-	ldh [hSndPortamentoTimer], a ; $344e
+	ldh [hSndNoteTimer], a ; $344e
 	push af ; $3450
 	ldh a, [hSndRestFlag] ; $3451
 	or a ; $3453
@@ -982,7 +982,7 @@ RunSoundChannelScript:
 	cp $a7 ; $370e
 	jr nz, .setInstrument ; $3710
 	ld a, [hl] ; $3712
-	ldh [hSndPortamentoTimer], a ; $3713
+	ldh [hSndNoteTimer], a ; $3713
 	jp SndTriggerNote.checkSndChannelPanMask ; $3715
 .setInstrument:
 	cp $a8 ; $3718

@@ -1,4 +1,4 @@
-# Project status — 2026-09-11
+# Project status — 2026-09-12
 
 This is where the disassembly stands and what is still open. The dated
 working log that used to live here — every session's findings in the order
@@ -112,6 +112,19 @@ blob.
 
 ## Recent changes
 
+* **2026-09-12** — polish across the tree. 77 fragments whose dominant-word
+  names misled were renamed for what they hold (`vectors_00`, `vblank_00`,
+  `decompress_00`, `trig_00`, `boot_01`, `courtselect_3e`, `dictionary_3f`,
+  ...), the bank `$03` save routines moved under `src/engine/save/` and the
+  sound note trigger under `src/audio/`. The docs' `file:line` citations
+  are file names only; the routine each sentence names is the stable key,
+  and the address comments give the original location. The two
+  `ShotBallPath` pairs share a source through a third macro form,
+  `twin_in file, Label, bank`, leaving four copies separate (the Island
+  Open NPC scripts). `hSndPortamentoTimer` is `hSndNoteTimer`: the note
+  command's length operand sets it. The debug test menu needs no build
+  flag: `InitAndRunGame` sets `SAVEFLAG_DEBUG_TEST_MENU` when A is held
+  at boot.
 * **2026-09-12** — the trajectory tables are source. The fifteen
   ballistic-solution tables of the nine shot banks (15,360 bytes each in
   the four stroke banks, 7,200 in the three serve banks, the lob, drop,

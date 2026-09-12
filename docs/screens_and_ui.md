@@ -27,7 +27,7 @@ Every non-obvious claim below carries evidence: a `bank:addr`, a symbol, or a
 
 ### 1.1 `AdvanceFrame` — the barrier
 
-`AdvanceFrame` (`$00:$2631`, `src/home/game_00.asm:562`) is the only frame barrier
+`AdvanceFrame` (`$00:$2631`, `src/home/flags_00.asm`) is the only frame barrier
 in the game and has 419 call sites. Every screen loop, every fade wait, every
 "wait n frames" helper goes through it. It is not a bare `halt`; per call it:
 
@@ -53,7 +53,7 @@ count from the byte after the call site; the source renders each call as
 
 ### 1.2 What VBlank does, in order
 
-`VBlankHandler` (`$00:$2749`, `src/home/serial_00.asm:24`). The order matters,
+`VBlankHandler` (`$00:$2749`, `src/home/vblank_00.asm`). The order matters,
 because several of these steps compete for the same ~1.09 ms.
 
 | # | step | addr | note |
@@ -157,7 +157,7 @@ sound `$6f` (`$00:$04e1`) and a truncated text fetch plays `$2c`
 
 ### 2.1 `QueueVRAMCopy` is the only door
 
-`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm:204`) has 613 call sites and
+`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`) has 613 call sites and
 there is not one direct `ld [$8xxx], a` in the ROM.
 
 ```
@@ -511,7 +511,7 @@ entries below the base would persist across frames. In practice they never do �
 `sprite_template` data spec that renders it; the spec appears in 21 banks.
 Walk-sprite banks (`$6a`, `$6f`, `$70`-`$77`) hold object headers whose
 `dw .frames, <name>_AnimPtrs, .frames` triple points at a frame-pointer array and
-an animation-script pointer array (e.g. `src/data/sprites/walk_72.asm:19`-`23`); the scripts
+an animation-script pointer array (e.g. `src/data/sprites/walk_72.asm`-`23`); the scripts
 render as `anim_*` macros (`docs/graphics_formats.md` §4.4).
 
 `PositionSpriteWorld` (`$00:$1f6b`) and `PositionSpriteWorld2` (`$00:$1fb1`) are
@@ -604,7 +604,7 @@ branch at `$1d7a`, and bit 7 of `hFadeState` is set in exactly one place —
 ## 7. Text and windows
 
 Bank `$05` is the text and window engine. Its `$4000` table
-(`src/engine/text/slots_05.asm:1`-`$4095`, 76 slots) is the whole public API; every other
+(`src/engine/text/slots_05.asm`-`$4095`, 76 slots) is the whole public API; every other
 bank reaches it by `farcall`.
 
 ### 7.1 A text id is a coordinate, not an address

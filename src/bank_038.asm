@@ -11,7 +11,7 @@ SECTION "ROM Bank $38", ROMX[$4000], BANK[$38]
 	INCLUDE "data/bank_03d/lz_SharedMenuGfx72.inc" ; DEF SharedMenuGfx72_SIZE EQU its decoded length, generated from the .bin by make
 
 INCLUDE "src/engine/menus/menu_38.asm"
-INCLUDE "src/engine/menus/match_38.asm"
+INCLUDE "src/engine/menus/matchtype_38.asm"
 INCLUDE "src/engine/menus/character_38.asm"
 INCLUDE "src/engine/menus/char_38.asm"
 INCLUDE "src/engine/menus/player_38.asm"

@@ -38,10 +38,10 @@ per-character struct), `save_format.md`, `bugs.md`.
 | `$2d` | `SineTable` (`$2d:$4000`, 4 KiB) and `CosecantTable` (`$2d:$5000`, 4 KiB), the trig tables all the geometry goes through. |
 | `$28` | Match graphics loaders (`LoadMatchGraphics`, effect tiles). |
 | `$0d`, `$0b`, `$0a` | Minigame/drill drivers that reuse the match engine through its mode hooks. |
-| `$04` | *Not* match AI, despite the overworld/actor code living there. Its one contribution to a match is `SetupCharSpriteFromObjectDef` (`src/engine/story/actor3_04.asm:442`), which fills a character's sprite/animation pointer fields. |
+| `$04` | *Not* match AI, despite the overworld/actor code living there. Its one contribution to a match is `SetupCharSpriteFromObjectDef` (`src/engine/story/actor3_04.asm`), which fills a character's sprite/animation pointer fields. |
 
 Entry points are published through bank `$08`'s farptr header at `$08:$4000`
-(`src/engine/match/slots_08.asm:1-58`) — 45 slots, which is the engine's public API. The
+(`src/engine/match/slots_08.asm`) — 45 slots, which is the engine's public API. The
 outer callers are the exhibition and story menus (`$10`, `$0a`, `$0b`, `$38`,
 `$01`) plus a debug test match at `$07:$5e9d`.
 
@@ -53,7 +53,7 @@ delay is a call that spins the whole frame pipeline the required number of
 times. The call graph is the match structure.
 
 ```
-RunMatch                     $08:$4190   src/engine/match/match_08.asm:126
+RunMatch                     $08:$4190   src/engine/match/match_08.asm
 ├─ InitMatchScene            $08:$4145   court data, chars, scoreboard, graphics
 ├─ PlayCourtIntro            $08:$5fdd   camera pan + walk-on
 ├─ RunMatchPlayLoop          $08:$4714   loop: PlaySet until wMatchWinLoseFlag
@@ -62,7 +62,7 @@ RunMatch                     $08:$4190   src/engine/match/match_08.asm:126
 │     │  └─ loop: AssignCourtPositions; PlayPoint  until wGameWinLoseFlag
 │     └─ CheckSetComplete.tiebreak  $08:$4782   tiebreak game
 │        └─ loop: changeover; PlayPoint  until wGameWinLoseFlag
-│           └─ PlayPoint     $08:$4d0f   src/engine/match/point_08.asm:58
+│           └─ PlayPoint     $08:$4d0f   src/engine/match/point_08.asm
 │              ├─ ResetPointState
 │              ├─ AnnouncePointSituation   game/set/match-point banner
 │              ├─ .rallyLoop: StepMatchFrame until wPointOutcome != 0
@@ -91,7 +91,7 @@ every one of those wait points without the callers knowing about it.
 
 ### One simulation frame
 
-`UpdateMatchFrame` (`$08:$41f7`, `src/engine/match/match_08.asm:163`) runs, in this fixed
+`UpdateMatchFrame` (`$08:$41f7`, `src/engine/match/match_08.asm`) runs, in this fixed
 order, with WRAM bank `$04` mapped:
 
 1. `ClearSpriteSlots` — reset every sprite-slot record for the frame
@@ -142,7 +142,7 @@ implements 1, 2, 4 and 5 and stubs the rest.
 ### The minigame loop
 
 Drills and minigames replace `RunMatchPlayLoop` with `RunMinigamePointLoop`
-(`$08:$65be`, `src/engine/match/minigame_08.asm:328`), driven by a **point table**: an 8-byte
+(`$08:$65be`, `src/engine/match/minigame_08.asm`), driven by a **point table**: an 8-byte
 record per point (four court-position codes, four serve-role codes) that
 `LoadMinigamePointLayout` (`$08:$6662`) reads out of the hook bank and installs
 directly into each character's `wCharCourtPos`/`wCharServeRole`. The loop ends
@@ -163,7 +163,7 @@ and `FlagServiceReturnAce`, and returns.
 
 The ball's velocity/position alignment is worth stating precisely because the
 names are easy to misread. `AddVel24ToPos32` (`$08:$5a87`,
-`src/engine/match/mul_08.asm:210`) adds velocity byte 0 into position byte 0, byte 1 into
+`src/engine/match/project_08.asm`) adds velocity byte 0 into position byte 0, byte 1 into
 byte 1 and byte 2 into byte 2 — that is, **the velocity's 24 bits line up with
 the position's two fraction bytes and its low integer byte**. So a raw velocity
 word `v` advances the position by `v / 65536` world units per frame, and the
@@ -252,7 +252,7 @@ parts that are banked (`ResetMatchState` clears `$c400`+`$0e` words at
 
 ### The physics step
 
-`StepBallPhysics` (`$08:$5767`, `src/engine/match/ball3_08.asm:602`) is the whole
+`StepBallPhysics` (`$08:$5767`, `src/engine/match/ball3_08.asm`) is the whole
 integrator, in order:
 
 1. clear `wBallBounceEvent`
@@ -346,7 +346,7 @@ raised in one routine and consumed in another, in the same frame.
 (`$07:$53b0-$53b5`), which is what stops two characters hitting the same ball
 on one frame.
 
-`HandleBallHitEvent` (`src/engine/match/match_08.asm:229`) does the bookkeeping for a strike:
+`HandleBallHitEvent` (`src/engine/match/match_08.asm`) does the bookkeeping for a strike:
 increment `wRallyLength` (saturating at `$64`), clear the bounce/marker flags,
 start the landing marker and hit effect, poke every character's state through
 `SetCharStateOnBallHit`, run `DetectServeAceOutcome`, fire mode hook 4, and
@@ -389,7 +389,7 @@ is used.
 
 ### The chain
 
-Everything hangs off `ExecuteShot` (`$07:$53b0`, `src/engine/match/shot2_07.asm:11`), which
+Everything hangs off `ExecuteShot` (`$07:$53b0`, `src/engine/match/shot2_07.asm`), which
 the character state machine farcalls at the contact frame (`$08:$6bd1` for a
 serve, `$08:$6c91` for a rally shot).
 
@@ -441,7 +441,7 @@ Charge then bends that depth before the solver sees it:
 
 ### Where the ball is aimed
 
-`ComputeShotTrajectory` (`$07:$571e`, `src/engine/match/execute_07.asm:90`) turns that depth
+`ComputeShotTrajectory` (`$07:$571e`, `src/engine/match/execute_07.asm`) turns that depth
 plus the player's left/right nudge into a world aim point and a legal distance
 window.
 
@@ -558,7 +558,7 @@ delta):
 | `+4` | lateral **aim delta** added to `wShotAimAngle`, negated when `wShotAimMirror` is set (6-byte rows only) |
 
 **Which block.** Before searching, the bank narrows the table down twice
-(`ShotBallPathSlice`, `src/data/shots/slice.asm:482` is the clearest example):
+(`ShotBallPathSlice`, `src/data/shots/slice.asm` is the clearest example):
 
 - `LookupBallPosByHeight_20` (`$20:$424c`) takes `-wBallHeight`, scales by 16 and
   masks to 5 bits — a **32-band contact-height stratification** in 16-unit

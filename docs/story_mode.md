@@ -535,7 +535,7 @@ Win flags are **not** written by any shared match-end routine. Each court's own
 post-match cutscene script checks `wMatchExitRequest` and `wMatchWinLoseFlag` and
 then sets the specific flag — e.g. `ActorScript_11_21.checkMatchExitRequest`
 (`$11:$5d38`) dispatches on `wCurrentMinigameStoryMatch + 1` to
-`set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`src/story/doubles_11.asm:56`,
+`set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`src/story/doubles_11.asm`,
 `1854`, `1896`). The arcade-minigame clears go the other way, through the SRAM
 space: `SetMinigameClearFlag` (`$1e:$6edc`) indexes `MinigameClearFlagTable_1e`
 and calls `SetSaveFlag`.
@@ -669,14 +669,14 @@ bits (`wGameFlags` bytes `$0c`/`$0d`); the equip screen in bank `$3e`
 
 ### EXP and levelling
 
-`LevelUpPlayerRecord` (`$02:$4?`, `src/engine/story/stat2_02.asm:141`) increments `+$18`
+`LevelUpPlayerRecord` (`$02:$4?`, `src/engine/story/equip_02.asm`) increments `+$18`
 (capped at 99), bumps one of the four trainable levels chosen by `d` = 0-3, and
 recomputes the stats. `LevelUpPlayer` is the far entry point that resolves the
 record through `GetPlayerRecordPtr` first, and `ComputeLevelUpStatDeltas`
 snapshots the eleven bars before and after so the level-up screen can show
 arrows.
 
-EXP is added by `AddPlayerExp` → `AddExpCapped` (`src/engine/story/exp_02.asm:122`). The
+EXP is added by `AddPlayerExp` → `AddExpCapped` (`src/engine/story/records_02.asm`). The
 threshold curve is `ExpLevelThresholds_02`, a cumulative 3-bytes-per-level
 table (`exp_threshold` rows, 99 levels) terminated by `$ff,$ff,$ff` and
 indexed by `(level-1)*3`; `GetExpRequiredForLevel`, `GetExpRemainingToNextLevel`,
@@ -690,9 +690,9 @@ award as the average crosses 10/20/30/40/50.
 ### Save signature
 
 `wStorySaveSignature` (`$c880`, 4 bytes) distinguishes two slots that otherwise
-look identical. `GenerateUniqueStorySaveSignature` (`src/engine/story/story_02.asm:411`)
+look identical. `GenerateUniqueStorySaveSignature` (`src/engine/story/story_02.asm`)
 seeds it from `wStoryRandomBytes` and re-rolls until
-`CheckStorySignatureCollision` (`src/engine/story/story_02.asm:331`) passes against the cached
+`CheckStorySignatureCollision` (`src/engine/story/story_02.asm`) passes against the cached
 per-slot signatures (`CacheStorySlotSummaries` copies each slot's into `$d400 +
 slot*4`). An all-zero candidate is treated as an automatic collision. It is
 called once, on the new-game path (`$10:$5076`).
@@ -797,7 +797,7 @@ marked *resolved* were fixed in the source on 2026-09-10; the rest stand.
 * **The character-vs-level naming at record `+$18`.** `ram/wram.asm` names
   `$c818` "Level (1-99)" and `$c918` "ExpTier" — the same offset in two records
   with the same layout. For player characters the raw byte is a level;
-  `LookupExpTierForChar` (`$1e:$…`, `src/engine/menus/exp3_1e.asm:224`) is what derives a
+  `LookupExpTierForChar` (`$1e:$…`, `src/engine/menus/exp3_1e.asm`) is what derives a
   coarse 0-6 tier from it.
 * **EXP field width.** `ram/wram.asm` documents `$c92c`/`$c82c` as 16-bit, but
   `AddExpCapped` maintains three bytes and caps at 99999, while

@@ -206,7 +206,7 @@ hLinkTxInput:: db
 hLinkTransferDone:: db
 ; [8-bit] Non-zero while a serial block exchange runs (UpdateLinkSession, ResyncLinkSession, ExchangeLinkBlockToWram5 set it; the link menus clear it when done). AdvanceFrame skips the SELECT+START debug single-step while it is set
 hLinkExchangeActive:: db
-; [8-bit] Cleared by InitSerialLink and ResetSerialState; no other serial-path site touches it (the sound driver owns the same byte as hSndPortamentoTimer)
+; [8-bit] Cleared by InitSerialLink and ResetSerialState; no other serial-path site touches it (the sound driver owns the same byte as hSndNoteTimer)
 hUnusedLinkSlot:: db
 ; [8-bit] Written with hLinkLastRxByte by both ExchangeLinkFrameByte routines and read by nothing
 hLinkLastRxMirror:: db
@@ -255,8 +255,8 @@ hSndToneCtrl:: db
 hSndLengthAccum:: db
 ; [8-bit] Current channel volume/envelope value (high nibble = level; envelope steps by $10)
 hSndVolume:: db
-; [8-bit] Portamento/glide countdown; while non-zero the channel slides toward the target note instead of advancing the script (cmd $a7)
-hSndPortamentoTimer:: db
+; [8-bit] The current note's remaining ticks: SndTriggerNote sets it from the note command's length operand (less the echo count while an echo is armed) and snd_glide ($a7) sets it without a key-on; while non-zero the channel holds or slides instead of advancing the script
+hSndNoteTimer:: db
 ; [8-bit] Wave-pattern id for the wave channel (compared with wSndLoadedWaveId); reused as a note/instrument byte on the other channels
 hSndWaveId:: db
 ; [8-bit] Signed note offset/detune applied when a note is triggered (bit 7 = active); set by cmd $a4

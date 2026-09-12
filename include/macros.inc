@@ -202,6 +202,16 @@ DEF TWIN_LABEL EQUS "\2"
 PURGE TWIN_LABEL
 ENDM
 
+; twin_in file, Label, bank: both at once, for a body that carries its own
+; name in each bank and references that bank's tables by suffix.
+MACRO twin_in
+DEF TWIN_LABEL EQUS "\2"
+DEF TWIN EQUS "\3"
+	INCLUDE "src/twins/\1.asm"
+PURGE TWIN
+PURGE TWIN_LABEL
+ENDM
+
 ; --- Tunable record tables (one macro row per record, fields in order) ---
 
 ; One StoryCharacterRecords_02 row: the 29 bytes InitCa00RecordFromCharId

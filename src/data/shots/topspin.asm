@@ -34,18 +34,7 @@
 BallPosData_22:
 	INCLUDE "data/bank_022/BallPosData_22.asm" ; $427d, 15360 bytes (traj:6:64)
 ; Instruction-identical to ShotBallPathPowerTopspin (one copy per bank); a change here belongs in every copy.
-ShotBallPathTopspin:
-	farcall ComputeShotPlacement ; $7e7d
-	push bc ; $7e80
-	ld hl, BallPosData_22 ; $7e81
-	ld bc, BallPosHeightOffsets_22 ; $7e84
-	call LookupBallPosByHeight_22 ; $7e87
-	ld bc, BallPosBlockOffsets_22 ; $7e8a
-	ld a, [wTopspinPlacementIndex] ; $7e8d
-	call LookupBallPosByShotIndex_22 ; $7e90
-	pop bc ; $7e93
-	call ApplyBallTrajectory6Capped_22 ; $7e94
-	ret ; $7e97
+	twin_in shot_ball_path_topspin, ShotBallPathTopspin, 22 ; $7e7d
 BallPosHeightOffsets_22:
 	; $7e98, 64 bytes (records:2)
 	dw $0000 ; record 0

@@ -12,8 +12,8 @@ SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 	INCLUDE "data/bank_01b/lz_Screen2ObjGfx.inc" ; DEF Screen2ObjGfx_SIZE EQU its decoded length, generated from the .bin by make
 
 INCLUDE "src/engine/menus/slots_18.asm"
-INCLUDE "src/engine/menus/bobbing_18.asm"
-INCLUDE "src/engine/menus/screen_18.asm"
+INCLUDE "src/engine/menus/cursorbox_18.asm"
+INCLUDE "src/engine/menus/prompts_18.asm"
 INCLUDE "src/engine/menus/char_18.asm"
-INCLUDE "src/engine/menus/screen2_18.asm"
+INCLUDE "src/engine/menus/sequences_18.asm"
 INCLUDE "src/engine/menus/object_18.asm"

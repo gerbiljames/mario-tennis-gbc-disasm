@@ -33,9 +33,10 @@ every bank. The shared bodies carry no per-instruction address comments; the
 stays above its `twin` line. `tools/banksrc.py` expands the `twin` lines, so
 the tools and the tests still see every bank whole.
 
-Eight copies stay separate. `ShotBallPathSlice`/`ShotBallPathPowerSlice` and
-the topspin pair are the same code under different names *and* read their
-own bank's table, which neither form covers. The four Island Open NPC scripts
+`ShotBallPathSlice`/`ShotBallPathPowerSlice` and the topspin pair are the
+same code under different names *and* read their own bank's table, so they
+use the third form, `twin_in file, Label, bank`, which sets both `{TWIN_LABEL}`
+and `{TWIN}`. Four copies stay separate: the Island Open NPC scripts
 (`IslandOpenFinalDoublesNpc0B_0f` / `IslandOpenRound1DoublesNpc0B_0f`, and the
 `Npc0D` pair) differ in the text id they set; `twins.py` had read the id's
 `_61` as a bank suffix, and no longer does.
@@ -95,6 +96,8 @@ own bank's table, which neither form covers. The four Island Open NPC scripts
 | `src/twins/set_ball_velocity_from_entry4.asm` | `SetBallVelocityFromEntry4_<bank>` | $20-$24, $29-$2c |
 | `src/twins/set_ball_velocity_from_entry6.asm` | `SetBallVelocityFromEntry6_<bank>` | $20-$24, $29-$2c |
 | `src/twins/set_menu_cursor_from_index.asm` | `SetMenuCursorFromIndex_<bank>` | $16, $38, $3b, $3e |
+| `src/twins/shot_ball_path_slice.asm` | `ShotBallPathSlice`, `ShotBallPathPowerSlice` (`twin_in`) | $20, $21 |
+| `src/twins/shot_ball_path_topspin.asm` | `ShotBallPathTopspin`, `ShotBallPathPowerTopspin` (`twin_in`) | $22, $23 |
 | `src/twins/set_menu_cursor_from_index_to_ptr.asm` | `SetMenuCursorFromIndexToPtr_<bank>` | $16, $38, $3e |
 | `src/twins/snap_camera_to.asm` | `SnapCameraTo`, `SnapCameraTo_0d` | $08, $0d |
 | `src/twins/start_drill_from_definition.asm` | `StartDrillFromDefinition`, `InitMinigameFromConfig` | $0b, $0d |

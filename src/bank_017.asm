@@ -6,7 +6,7 @@ SECTION "ROM Bank $17", ROMX[$4000], BANK[$17]
 INCLUDE "src/engine/menus/slots_17.asm"
 INCLUDE "src/engine/menus/menu_17.asm"
 INCLUDE "src/engine/menus/briefing_17.asm"
-INCLUDE "src/engine/menus/court_17.asm"
+INCLUDE "src/engine/menus/briefing2_17.asm"
 INCLUDE "src/engine/menus/spin_17.asm"
 INCLUDE "src/engine/menus/pole_17.asm"
 INCLUDE "src/engine/menus/drill_17.asm"

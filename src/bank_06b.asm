@@ -25,6 +25,6 @@ SECTION "ROM Bank $6b", ROMX[$4000], BANK[$6b]
 
 INCLUDE "src/engine/cutscenes/slots_6b.asm"
 INCLUDE "src/engine/cutscenes/intro_6b.asm"
-INCLUDE "src/engine/cutscenes/cutscene_6b.asm"
-INCLUDE "src/engine/cutscenes/cutscene2_6b.asm"
+INCLUDE "src/engine/cutscenes/intro2_6b.asm"
+INCLUDE "src/engine/cutscenes/intro3_6b.asm"
 INCLUDE "src/engine/cutscenes/title_6b.asm"
