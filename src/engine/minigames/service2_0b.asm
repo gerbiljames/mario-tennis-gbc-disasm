@@ -185,8 +185,8 @@ ServiceMatch3JudgePoint:
 	ld a, [hl] ; $4d75
 	ret ; $4d76
 ServiceMatch3JudgePointDrillShotTable:
-	; $4d77, 10 bytes (bytes:10)
-	db $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01 ; 0x00
+	; $4d77, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01
 ServiceMatch3Cases1:
 	xor a ; $4d81
 	ret ; $4d82
@@ -226,8 +226,8 @@ ServiceMatch3Cases1:
 	ld a, [hl] ; $4daf
 	ret ; $4db0
 ServiceMatch3Cases1DrillShotTable:
-	; $4db1, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
+	; $4db1, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff
 ServiceMatch3Cases2:
 	ld a, [wPointOutcome] ; $4dbb
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $4dbe

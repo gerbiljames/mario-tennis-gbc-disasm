@@ -112,6 +112,15 @@ blob.
 
 ## Recent changes
 
+* **2026-09-12** — four more table families have named fields: every story
+  and minigame match's settings (`match_settings mode, opponent, court,
+  sets, games, bgm`, the two 25-row tables, each row commented with its
+  `MINIGAME_*` id), the training drills' per-outcome rows (`drill_outcomes`,
+  38 tables indexed by `POINTOUTCOME_*`), the six court-position record
+  tables (`court_positions`, the four `wCharCourtPos` codes then the four
+  `wCharServeRole` codes) and the Target Shot scoring rules (`score_rule`).
+  The remaining raw tables are a long tail of screen geometry, sprite offset
+  lists and per-screen scratch, worth a macro only when someone edits one.
 * **2026-09-12** — polish across the tree. 77 fragments whose dominant-word
   names misled were renamed for what they hold (`vectors_00`, `vblank_00`,
   `decompress_00`, `trig_00`, `boot_01`, `courtselect_3e`, `dictionary_3f`,

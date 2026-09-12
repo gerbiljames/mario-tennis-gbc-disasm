@@ -213,8 +213,8 @@ StrokeMatch2JudgePoint:
 	ld a, [hl] ; $684c
 	ret ; $684d
 StrokeMatch2JudgePointDrillShotTable:
-	; $684e, 10 bytes (bytes:10)
-	db $ff, $ff, $42, $ff, $ff, $ff, $3f, $ff, $ff, $3f ; 0x00
+	; $684e, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $42, $ff, $ff, $ff, $3f, $ff, $ff, $3f
 StrokeMatch2Cases1:
 	xor a ; $6858
 	ret ; $6859
@@ -254,8 +254,8 @@ StrokeMatch2Cases1:
 	ld a, [hl] ; $6886
 	ret ; $6887
 StrokeMatch2Cases1DrillShotTable:
-	; $6888, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $48, $48, $3d, $47, $47, $3d ; 0x00
+	; $6888, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $48, $48, $3d, $47, $47, $3d
 StrokeMatch2Cases2:
 	ld a, [wBallBounceCount] ; $6892
 	or a ; $6895
@@ -304,8 +304,8 @@ StrokeMatch2Cases2:
 	ld a, [hl] ; $68d4
 	ret ; $68d5
 StrokeMatch2Cases2DrillShotTable:
-	; $68d6, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $3d, $3d, $43, $ff, $ff, $43 ; 0x00
+	; $68d6, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $3d, $3d, $43, $ff, $ff, $43
 StrokeMatch2Cases3:
 	ld a, $46 ; $68e0
 	ld b, $0d ; $68e2
@@ -542,8 +542,8 @@ StrokeMatch3JudgePoint:
 	ld a, [hl] ; $6a97
 	ret ; $6a98
 StrokeMatch3JudgePointDrillShotTable:
-	; $6a99, 10 bytes (bytes:10)
-	db $ff, $ff, $42, $ff, $ff, $ff, $3f, $ff, $ff, $3f ; 0x00
+	; $6a99, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $42, $ff, $ff, $ff, $3f, $ff, $ff, $3f
 StrokeMatch3Cases1:
 	xor a ; $6aa3
 	ret ; $6aa4
@@ -583,8 +583,8 @@ StrokeMatch3Cases1:
 	ld a, [hl] ; $6ad1
 	ret ; $6ad2
 StrokeMatch3Cases1DrillShotTable:
-	; $6ad3, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $3f, $49, $3e, $47, $47, $3e ; 0x00
+	; $6ad3, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $3f, $49, $3e, $47, $47, $3e
 StrokeMatch3Cases2:
 	xor a ; $6add
 	ret ; $6ade
@@ -624,8 +624,8 @@ StrokeMatch3Cases2:
 	ld a, [hl] ; $6b0b
 	ret ; $6b0c
 StrokeMatch3Cases2DrillShotTable:
-	; $6b0d, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $3e, $3e, $43, $ff, $ff, $43 ; 0x00
+	; $6b0d, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $3e, $3e, $43, $ff, $ff, $43
 StrokeMatch3Cases3:
 	ld a, $46 ; $6b17
 	ld b, $0d ; $6b19

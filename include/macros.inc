@@ -271,6 +271,42 @@ MACRO exp_threshold
 	db LOW(\1), HIGH(\1), (\1) >> 16
 ENDM
 
+; One story/minigame match's settings (Singles/DoublesMatchSettingsTable_0a,
+; indexed by the MINIGAME_* id; LoadMatchSettingsFromTable): the game mode,
+; the opponent (a CHAR_* id, or a story opponent id >= $20, which have no
+; constants), the court, sets and games (one packed byte), and the music.
+;   match_settings mode, opponent, court, sets, games, bgm
+MACRO match_settings
+	db \1, \2, \3, ((\4) << 4) | (\5), \6
+ENDM
+
+; A training drill's per-outcome byte row: ten entries indexed by
+; wPointOutcome -- 0 undecided, then POINTOUTCOME_FAULT, DOUBLE_FAULT, LET,
+; NET, OUT, WINNER, SERVE_VOLLEYED, WRONG_RECEIVER, BALL_HIT_PLAYER -- a
+; message id ($ff = none) in the *DrillShotTable rows, a signed verdict in
+; the SignedTable_0b_* rows.
+MACRO drill_outcomes
+	db \1, \2, \3, \4, \5, \6, \7, \8, \9, \<10>
+ENDM
+
+; One court-position record (GamePosition*, TiebreakPosition*; LoadPositionRecord):
+; the court-position code (wCharCourtPos: bit 1 = which end, bit 0 = which
+; lateral half) for characters 0-3, then their serve/side role codes
+; (wCharServeRole: 0 server, 1 receiver, 2/3 partners, $09 unused slot).
+;   court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
+MACRO court_positions
+	db \1, \2, \3, \4, \5, \6, \7, \8
+ENDM
+
+; One Target Shot scoring rule (TargetShotScoreRules; LookupMinigameShotResult
+; walks them to the first match): the shot roll (wMinigameShotRoll), the
+; button combination (wLastShotButtons), the shot type it applies to
+; (SHOTTYPE_*, or $ff for any) and the points awarded. The list ends on $ff.
+;   score_rule roll, buttons, shot, points
+MACRO score_rule
+	db \1, \2, \3, \4
+ENDM
+
 ; One CourtSceneDataTable row, indexed by court id: the two surface damping
 ; bytes LoadCourtSceneData stores (wCourtSurfaceFriction, wCourtSurfaceBounce),
 ; the scene index handed to LoadCourtSceneGraphics, and a byte nothing reads.

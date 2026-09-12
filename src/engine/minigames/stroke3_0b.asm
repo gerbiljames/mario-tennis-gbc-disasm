@@ -412,8 +412,8 @@ StrokePractice2JudgePoint:
 	ld a, [hl] ; $6f75
 	ret ; $6f76
 StrokePractice2JudgePointDrillShotTable:
-	; $6f77, 10 bytes (bytes:10)
-	db $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59 ; 0x00
+	; $6f77, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59
 StrokePractice2Cases1:
 	xor a ; $6f81
 	ret ; $6f82
@@ -453,8 +453,8 @@ StrokePractice2Cases1:
 	ld a, [hl] ; $6faf
 	ret ; $6fb0
 StrokePractice2Cases1DrillShotTable:
-	; $6fb1, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
+	; $6fb1, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57
 StrokePractice2Cases2:
 	ld a, [wBallBounceCount] ; $6fbb
 	or a ; $6fbe
@@ -672,8 +672,8 @@ StrokePractice3JudgePoint:
 	ld a, [hl] ; $71d7
 	ret ; $71d8
 StrokePractice3JudgePointDrillShotTable:
-	; $71d9, 10 bytes (bytes:10)
-	db $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59 ; 0x00
+	; $71d9, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59
 StrokePractice3Cases1:
 	xor a ; $71e3
 	ret ; $71e4
@@ -713,8 +713,8 @@ StrokePractice3Cases1:
 	ld a, [hl] ; $7211
 	ret ; $7212
 StrokePractice3Cases1DrillShotTable:
-	; $7213, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
+	; $7213, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57
 ; Instruction-identical to StrokePractice1Cases2 (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_cases2, StrokePractice3Cases2 ; $721d
 RunDoublesDrillMatch:

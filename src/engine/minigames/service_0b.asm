@@ -1,9 +1,9 @@
 SignedTable_0b_00:
-	; $46f1, 10 bytes (bytes:10)
-	db $00, $00, $ff, $00, $ff, $ff, $01, $ff, $ff, $01 ; 0x00
+	; $46f1, 10 bytes (drill_outcomes)
+	drill_outcomes $00, $00, $ff, $00, $ff, $ff, $01, $ff, $ff, $01
 SignedTable_0b_01:
-	; $46fb, 10 bytes (bytes:10)
-	db $00, $00, $01, $00, $01, $01, $ff, $01, $01, $ff ; 0x00
+	; $46fb, 10 bytes (drill_outcomes)
+	drill_outcomes $00, $00, $01, $00, $01, $01, $ff, $01, $01, $ff
 RunTrainingDrillByID:
 	push af ; $4705
 	farcall InitMinigameMatchSettings ; $4706
@@ -616,8 +616,8 @@ ServiceMatch2JudgePoint:
 	ld a, [hl] ; $4b8b
 	ret ; $4b8c
 ServiceMatch2JudgePointDrillShotTable:
-	; $4b8d, 10 bytes (bytes:10)
-	db $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01 ; 0x00
+	; $4b8d, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01
 ServiceMatch2Cases1:
 	xor a ; $4b97
 	ret ; $4b98
@@ -670,8 +670,8 @@ ServiceMatch2Cases1:
 	ld a, [hl] ; $4be0
 	ret ; $4be1
 ServiceMatch2Cases1DrillShotTable:
-	; $4be2, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
+	; $4be2, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff
 ServiceMatch2Cases2:
 	ld a, [wPointOutcome] ; $4bec
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $4bef

@@ -213,8 +213,8 @@ NetGamePractice3JudgePoint:
 	ld a, [hl] ; $6320
 	ret ; $6321
 NetGamePractice3JudgePointDrillShotTable:
-	; $6322, 10 bytes (bytes:10)
-	db $ff, $ff, $33, $ff, $ff, $38, $31, $ff, $ff, $31 ; 0x00
+	; $6322, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $33, $ff, $ff, $38, $31, $ff, $ff, $31
 NetGamePractice3Cases1:
 	xor a ; $632c
 	ret ; $632d
@@ -273,8 +273,8 @@ NetGamePractice3Cases1:
 	ld a, [hl] ; $6382
 	ret ; $6383
 NetGamePractice3Cases1DrillShotTable:
-	; $6384, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $31, $31, $39, $31, $31, $39 ; 0x00
+	; $6384, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $31, $31, $39, $31, $31, $39
 NetGamePractice3Cases2:
 	xor a ; $638e
 	ret ; $638f
@@ -314,8 +314,8 @@ NetGamePractice3Cases2:
 	ld a, [hl] ; $63bc
 	ret ; $63bd
 NetGamePractice3Cases2DrillShotTable:
-	; $63be, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $3c, $3c, $30, $ff, $ff, $30 ; 0x00
+	; $63be, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $3c, $3c, $30, $ff, $ff, $30
 NetGamePractice3Cases3:
 	ld a, $35 ; $63c8
 	ld b, $00 ; $63ca
@@ -537,8 +537,8 @@ StrokeMatch1JudgePoint:
 	ld a, [hl] ; $6547
 	ret ; $6548
 StrokeMatch1JudgePointDrillShotTable:
-	; $6549, 10 bytes (bytes:10)
-	db $ff, $ff, $63, $ff, $ff, $ff, $60, $ff, $ff, $60 ; 0x00
+	; $6549, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $63, $ff, $ff, $ff, $60, $ff, $ff, $60
 StrokeMatch1Cases1:
 	xor a ; $6553
 	ret ; $6554
@@ -578,8 +578,8 @@ StrokeMatch1Cases1:
 	ld a, [hl] ; $6581
 	ret ; $6582
 StrokeMatch1Cases1DrillShotTable:
-	; $6583, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $60, $60, $5e, $64, $64, $60 ; 0x00
+	; $6583, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $60, $60, $5e, $64, $64, $60
 StrokeMatch1Cases2:
 	ld a, [wBallBounceCount] ; $658d
 	cp $01 ; $6590
@@ -638,8 +638,8 @@ StrokeMatch1Cases2:
 	ld a, [hl] ; $65e7
 	ret ; $65e8
 StrokeMatch1Cases2DrillShotTable:
-	; $65e9, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60 ; 0x00
+	; $65e9, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60
 StrokeMatch1Cases3:
 	ld a, $62 ; $65f3
 	ld b, $07 ; $65f5
@@ -695,8 +695,8 @@ StrokeMatch1Cases3:
 	ld a, [hl] ; $6647
 	ret ; $6648
 StrokeMatch1Cases3DrillShotTable:
-	; $6649, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60 ; 0x00
+	; $6649, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60
 StrokeMatch1Cases4:
 	ld a, $62 ; $6653
 	ld b, $07 ; $6655

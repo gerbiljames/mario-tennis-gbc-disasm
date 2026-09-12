@@ -109,12 +109,18 @@ restated:
   layouts. The tables a balance mod reaches for are one macro row per record
   with the field order in the macro's comment (`include/macros.inc`): every
   character's attributes and eleven stat bars (`char_record`, named per
-  character, `src/bank_002.asm`), the racket and shoe bonuses
+  character, `src/engine/story/debug_02.asm`), the racket and shoe bonuses
   (`equip_stat_deltas`), the four stat-growth archetypes (`stat_thresholds`),
   the EXP curve (`exp_threshold`), the AI's shot habits per serve style
-  (`AISHOT_*`), the CPU difficulty rows (`cpu_difficulty`, `src/bank_038.asm`),
-  the shot-type presets (`shot_preset`, `src/bank_007.asm`) and the per-court
-  surface physics (`court_scene`, `src/bank_008.asm`).
+  (`AISHOT_*`), the CPU difficulty rows (`cpu_difficulty`, `src/engine/menus/cpu_38.asm`),
+  the shot-type presets (`shot_preset`, `src/engine/match/shot2_07.asm`), the
+  per-court surface physics (`court_scene`, `src/engine/match/court_08.asm`),
+  every story and
+  minigame match's mode, opponent, court, format and music
+  (`match_settings`, `src/engine/story/match_0a.asm`), the training drills'
+  per-outcome message and verdict rows (`drill_outcomes`), the court
+  position records (`court_positions`) and the Target Shot scoring rules
+  (`score_rule`).
 - **Ids are constants.** Character, court, scene, game-mode, story-location,
   minigame, shot-type, sound and menu-item ids, the link roles and control
   tokens, and the per-location story stages each have a family in

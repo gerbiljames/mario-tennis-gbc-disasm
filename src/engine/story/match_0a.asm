@@ -155,61 +155,63 @@ LoadMatchSettingsFromTable:
 	ld [wMatchBGM], a ; $4aae
 	ret ; $4ab1
 SinglesMatchSettingsTable_0a:
-	; $4ab2, 125 bytes (records:5)
+	; $4ab2, 125 bytes (match_settings)
 ; 25 records x 5 bytes
-	db $03, $24, $00, $36, $20 ; record 0
-	db $01, $23, $00, $36, $21 ; record 1
-	db $01, $22, $00, $36, $21 ; record 2
-	db $01, $21, $00, $36, $21 ; record 3
-	db $01, $20, $00, $36, $21 ; record 4
-	db $03, $2c, $01, $36, $20 ; record 5
-	db $01, $2b, $01, $36, $22 ; record 6
-	db $01, $2a, $01, $36, $22 ; record 7
-	db $01, $29, $01, $36, $22 ; record 8
-	db $01, $28, $01, $36, $22 ; record 9
-	db $03, $34, $03, $36, $20 ; record 10
-	db $01, $33, $03, $36, $23 ; record 11
-	db $00, $00, $00, $12, $23 ; record 12
-	db $00, $00, $00, $12, $23 ; record 13
-	db $00, $00, $00, $12, $23 ; record 14
-	db $03, $34, $02, $56, $20 ; record 15
-	db $02, $0e, $0d, $56, $26 ; record 16
-	db $02, $10, $0d, $56, $26 ; record 17
-	db $02, $11, $0d, $56, $27 ; record 18
-	db $02, $13, $0c, $56, $28 ; record 19
-	db $03, $34, $02, $56, $20 ; record 20
-	db $00, $00, $00, $12, $29 ; record 21
-	db $0a, $5d, $05, $56, $29 ; record 22
-	db $0a, $5c, $05, $56, $29 ; record 23
-	db $0a, $5b, $05, $56, $29 ; record 24
+; match_settings mode, opponent, court, sets, games, bgm
+	match_settings GAMEMODE_PRACTICE_MATCH, $24, COURT_HARD, 3, 6, $20 ; MINIGAME_SERVICE_MATCH_1
+	match_settings GAMEMODE_RANKING_MATCH, $23, COURT_HARD, 3, 6, $21 ; MINIGAME_SERVICE_MATCH_2
+	match_settings GAMEMODE_RANKING_MATCH, $22, COURT_HARD, 3, 6, $21 ; MINIGAME_SERVICE_MATCH_3
+	match_settings GAMEMODE_RANKING_MATCH, $21, COURT_HARD, 3, 6, $21 ; MINIGAME_SERVICE_PRACTICE_1
+	match_settings GAMEMODE_RANKING_MATCH, $20, COURT_HARD, 3, 6, $21 ; MINIGAME_SERVICE_PRACTICE_2
+	match_settings GAMEMODE_PRACTICE_MATCH, $2c, COURT_CLAY, 3, 6, $20 ; MINIGAME_SERVICE_PRACTICE_3
+	match_settings GAMEMODE_RANKING_MATCH, $2b, COURT_CLAY, 3, 6, BGM_SENIOR_RANKING ; MINIGAME_NET_GAME_MATCH_1
+	match_settings GAMEMODE_RANKING_MATCH, $2a, COURT_CLAY, 3, 6, BGM_SENIOR_RANKING ; MINIGAME_NET_GAME_MATCH_2
+	match_settings GAMEMODE_RANKING_MATCH, $29, COURT_CLAY, 3, 6, BGM_SENIOR_RANKING ; MINIGAME_NET_GAME_MATCH_3
+	match_settings GAMEMODE_RANKING_MATCH, $28, COURT_CLAY, 3, 6, BGM_SENIOR_RANKING ; MINIGAME_NET_GAME_PRACTICE_1
+	match_settings GAMEMODE_PRACTICE_MATCH, $34, COURT_COMPOSITION, 3, 6, $20 ; MINIGAME_NET_GAME_PRACTICE_2
+	match_settings GAMEMODE_RANKING_MATCH, $33, COURT_COMPOSITION, 3, 6, $23 ; MINIGAME_NET_GAME_PRACTICE_3
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 1, 2, $23 ; MINIGAME_STROKE_MATCH_1
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 1, 2, $23 ; MINIGAME_STROKE_MATCH_2
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 1, 2, $23 ; MINIGAME_STROKE_MATCH_3
+	match_settings GAMEMODE_PRACTICE_MATCH, $34, COURT_GRASS, 5, 6, $20 ; MINIGAME_STROKE_PRACTICE_1
+	match_settings GAMEMODE_ISLAND_OPEN, CHAR_SAMMI, COURT_GRASS_ISLAND_OPEN, 5, 6, $26 ; MINIGAME_STROKE_PRACTICE_2
+	match_settings GAMEMODE_ISLAND_OPEN, CHAR_SPIKE, COURT_GRASS_ISLAND_OPEN, 5, 6, $26 ; MINIGAME_STROKE_PRACTICE_3
+	match_settings GAMEMODE_ISLAND_OPEN, CHAR_EMILY, COURT_GRASS_ISLAND_OPEN, 5, 6, $27 ; MINIGAME_TENNIS_MACHINE_1
+	match_settings GAMEMODE_ISLAND_OPEN, CHAR_A_COZ, COURT_CENTER, 5, 6, $28 ; MINIGAME_TENNIS_MACHINE_2
+	match_settings GAMEMODE_PRACTICE_MATCH, $34, COURT_GRASS, 5, 6, $20 ; MINIGAME_TENNIS_MACHINE_3
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 1, 2, $29 ; MINIGAME_TENNIS_MACHINE_4
+	match_settings GAMEMODE_DREAM_MATCH, $5d, COURT_CASTLE, 5, 6, $29 ; MINIGAME_WALL_PRACTICE_1
+	match_settings GAMEMODE_DREAM_MATCH, $5c, COURT_CASTLE, 5, 6, $29 ; MINIGAME_WALL_PRACTICE_2
+	match_settings GAMEMODE_DREAM_MATCH, $5b, COURT_CASTLE, 5, 6, $29 ; MINIGAME_WALL_PRACTICE_3
 DoublesMatchSettingsTable_0a:
-	; $4b2f, 125 bytes (records:5)
+	; $4b2f, 125 bytes (match_settings)
 ; 25 records x 5 bytes
-	db $03, $27, $00, $36, $20 ; record 0
-	db $00, $00, $00, $36, $21 ; record 1
-	db $01, $24, $00, $36, $21 ; record 2
-	db $01, $21, $00, $36, $21 ; record 3
-	db $01, $20, $00, $36, $21 ; record 4
-	db $03, $2e, $01, $36, $20 ; record 5
-	db $00, $00, $00, $36, $22 ; record 6
-	db $01, $2c, $01, $36, $22 ; record 7
-	db $01, $2a, $01, $36, $22 ; record 8
-	db $01, $28, $01, $36, $22 ; record 9
-	db $03, $34, $03, $36, $20 ; record 10
-	db $00, $00, $00, $12, $23 ; record 11
-	db $00, $00, $00, $12, $23 ; record 12
-	db $01, $32, $03, $36, $23 ; record 13
-	db $01, $30, $03, $36, $23 ; record 14
-	db $03, $34, $02, $56, $20 ; record 15
-	db $00, $00, $00, $12, $26 ; record 16
-	db $02, $0e, $0d, $56, $26 ; record 17
-	db $02, $10, $0d, $56, $27 ; record 18
-	db $02, $13, $0c, $56, $28 ; record 19
-	db $03, $34, $02, $56, $20 ; record 20
-	db $00, $00, $00, $12, $29 ; record 21
-	db $0a, $60, $05, $56, $29 ; record 22
-	db $0a, $5f, $05, $56, $29 ; record 23
-	db $0a, $5e, $05, $56, $29 ; record 24
+; match_settings mode, opponent, court, sets, games, bgm
+	match_settings GAMEMODE_PRACTICE_MATCH, $27, COURT_HARD, 3, 6, $20 ; MINIGAME_SERVICE_MATCH_1
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 3, 6, $21 ; MINIGAME_SERVICE_MATCH_2
+	match_settings GAMEMODE_RANKING_MATCH, $24, COURT_HARD, 3, 6, $21 ; MINIGAME_SERVICE_MATCH_3
+	match_settings GAMEMODE_RANKING_MATCH, $21, COURT_HARD, 3, 6, $21 ; MINIGAME_SERVICE_PRACTICE_1
+	match_settings GAMEMODE_RANKING_MATCH, $20, COURT_HARD, 3, 6, $21 ; MINIGAME_SERVICE_PRACTICE_2
+	match_settings GAMEMODE_PRACTICE_MATCH, $2e, COURT_CLAY, 3, 6, $20 ; MINIGAME_SERVICE_PRACTICE_3
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 3, 6, BGM_SENIOR_RANKING ; MINIGAME_NET_GAME_MATCH_1
+	match_settings GAMEMODE_RANKING_MATCH, $2c, COURT_CLAY, 3, 6, BGM_SENIOR_RANKING ; MINIGAME_NET_GAME_MATCH_2
+	match_settings GAMEMODE_RANKING_MATCH, $2a, COURT_CLAY, 3, 6, BGM_SENIOR_RANKING ; MINIGAME_NET_GAME_MATCH_3
+	match_settings GAMEMODE_RANKING_MATCH, $28, COURT_CLAY, 3, 6, BGM_SENIOR_RANKING ; MINIGAME_NET_GAME_PRACTICE_1
+	match_settings GAMEMODE_PRACTICE_MATCH, $34, COURT_COMPOSITION, 3, 6, $20 ; MINIGAME_NET_GAME_PRACTICE_2
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 1, 2, $23 ; MINIGAME_NET_GAME_PRACTICE_3
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 1, 2, $23 ; MINIGAME_STROKE_MATCH_1
+	match_settings GAMEMODE_RANKING_MATCH, $32, COURT_COMPOSITION, 3, 6, $23 ; MINIGAME_STROKE_MATCH_2
+	match_settings GAMEMODE_RANKING_MATCH, $30, COURT_COMPOSITION, 3, 6, $23 ; MINIGAME_STROKE_MATCH_3
+	match_settings GAMEMODE_PRACTICE_MATCH, $34, COURT_GRASS, 5, 6, $20 ; MINIGAME_STROKE_PRACTICE_1
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 1, 2, $26 ; MINIGAME_STROKE_PRACTICE_2
+	match_settings GAMEMODE_ISLAND_OPEN, CHAR_SAMMI, COURT_GRASS_ISLAND_OPEN, 5, 6, $26 ; MINIGAME_STROKE_PRACTICE_3
+	match_settings GAMEMODE_ISLAND_OPEN, CHAR_SPIKE, COURT_GRASS_ISLAND_OPEN, 5, 6, $27 ; MINIGAME_TENNIS_MACHINE_1
+	match_settings GAMEMODE_ISLAND_OPEN, CHAR_A_COZ, COURT_CENTER, 5, 6, $28 ; MINIGAME_TENNIS_MACHINE_2
+	match_settings GAMEMODE_PRACTICE_MATCH, $34, COURT_GRASS, 5, 6, $20 ; MINIGAME_TENNIS_MACHINE_3
+	match_settings GAMEMODE_NONE, CHAR_ALEX, COURT_HARD, 1, 2, $29 ; MINIGAME_TENNIS_MACHINE_4
+	match_settings GAMEMODE_DREAM_MATCH, $60, COURT_CASTLE, 5, 6, $29 ; MINIGAME_WALL_PRACTICE_1
+	match_settings GAMEMODE_DREAM_MATCH, $5f, COURT_CASTLE, 5, 6, $29 ; MINIGAME_WALL_PRACTICE_2
+	match_settings GAMEMODE_DREAM_MATCH, $5e, COURT_CASTLE, 5, 6, $29 ; MINIGAME_WALL_PRACTICE_3
 RunClearStatusSetupMenu:
 	push bc ; $4bac
 	push de ; $4bad

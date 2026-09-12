@@ -419,25 +419,26 @@ LookupMinigameShotResult:
 	ld a, $01 ; $4ebe
 	ret ; $4ec0
 TargetShotScoreRules:
-	; $4ec1, 69 bytes (bytes:4)
-	db $00, $11, $01, $03 ; 0x00
-	db $00, $11, $06, $03 ; 0x04
-	db $00, $11, $ff, $03 ; 0x08
-	db $01, $22, $03, $03 ; 0x0c
-	db $01, $22, $07, $03 ; 0x10
-	db $01, $22, $ff, $03 ; 0x14
-	db $02, $21, $0b, $05 ; 0x18
-	db $02, $21, $ff, $05 ; 0x1c
-	db $03, $12, $0a, $05 ; 0x20
-	db $03, $12, $ff, $05 ; 0x24
-	db $04, $30, $09, $05 ; 0x28
-	db $04, $30, $04, $03 ; 0x2c
-	db $04, $30, $ff, $03 ; 0x30
-	db $05, $21, $0b, $05 ; 0x34
-	db $05, $21, $ff, $05 ; 0x38
-	db $06, $12, $0a, $05 ; 0x3c
-	db $06, $12, $ff, $05 ; 0x40
-	db $ff ; 0x44
+	; $4ec1, 69 bytes (score_rule)
+; score_rule roll, buttons, shot, points
+	score_rule 0, $11, SHOTTYPE_POWER_TOPSPIN, 3
+	score_rule 0, $11, SHOTTYPE_REACH_POWER_TOPSPIN, 3
+	score_rule 0, $11, $ff, 3
+	score_rule 1, $22, SHOTTYPE_POWER_SLICE, 3
+	score_rule 1, $22, SHOTTYPE_REACH_POWER_SLICE, 3
+	score_rule 1, $22, $ff, 3
+	score_rule 2, $21, SHOTTYPE_DROP, 5
+	score_rule 2, $21, $ff, 5
+	score_rule 3, $12, SHOTTYPE_LOB, 5
+	score_rule 3, $12, $ff, 5
+	score_rule 4, $30, SHOTTYPE_SMASH, 5
+	score_rule 4, $30, SHOTTYPE_NEUTRAL, 3
+	score_rule 4, $30, $ff, 3
+	score_rule 5, $21, SHOTTYPE_DROP, 5
+	score_rule 5, $21, $ff, 5
+	score_rule 6, $12, SHOTTYPE_LOB, 5
+	score_rule 6, $12, $ff, 5
+	db $ff ; end
 TargetShotZoneOverlayTiles:
 	; $4f06, 250 bytes (bytes:10)
 	db $14, $14, $14, $14, $14, $15, $14, $14, $14, $14 ; 0x00

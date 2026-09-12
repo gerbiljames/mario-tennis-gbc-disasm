@@ -64,8 +64,8 @@ NetGameMatch3JudgePoint:
 	ld a, [hl] ; $5adc
 	ret ; $5add
 NetGameMatch3JudgePointDrillShotTable:
-	; $5ade, 10 bytes (bytes:10)
-	db $ff, $ff, $19, $ff, $ff, $1d, $17, $ff, $ff, $17 ; 0x00
+	; $5ade, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $19, $ff, $ff, $1d, $17, $ff, $ff, $17
 NetGameMatch3Cases1:
 	xor a ; $5ae8
 	ret ; $5ae9
@@ -105,8 +105,8 @@ NetGameMatch3Cases1:
 	ld a, [hl] ; $5b16
 	ret ; $5b17
 NetGameMatch3Cases1DrillShotTable:
-	; $5b18, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $17, $17, $20, $1e, $1e, $20 ; 0x00
+	; $5b18, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $17, $17, $20, $1e, $1e, $20
 NetGameMatch3Cases2:
 	xor a ; $5b22
 	ret ; $5b23
@@ -146,8 +146,8 @@ NetGameMatch3Cases2:
 	ld a, [hl] ; $5b50
 	ret ; $5b51
 NetGameMatch3Cases2DrillShotTable:
-	; $5b52, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $1d, $1d, $16, $ff, $ff, $16 ; 0x00
+	; $5b52, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $1d, $1d, $16, $ff, $ff, $16
 NetGameMatch3Cases3:
 	ld a, $1b ; $5b5c
 	ld b, $0d ; $5b5e
@@ -195,8 +195,8 @@ NetGameMatch3Cases3:
 	ld a, [hl] ; $5b9d
 	ret ; $5b9e
 NetGameMatch3Cases3DrillShotTable:
-	; $5b9f, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $16, $16, $1d, $ff, $ff, $1d ; 0x00
+	; $5b9f, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $16, $16, $1d, $ff, $ff, $1d
 NetGameMatch3Cases4:
 	xor a ; $5ba9
 	ret ; $5baa
@@ -813,8 +813,8 @@ NetGamePractice2JudgePoint:
 	ld a, [hl] ; $6061
 	ret ; $6062
 NetGamePractice2JudgePointDrillShotTable:
-	; $6063, 10 bytes (bytes:10)
-	db $ff, $ff, $33, $ff, $ff, $3b, $31, $ff, $ff, $31 ; 0x00
+	; $6063, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $33, $ff, $ff, $3b, $31, $ff, $ff, $31
 NetGamePractice2Cases1:
 	xor a ; $606d
 	ret ; $606e
@@ -877,8 +877,8 @@ NetGamePractice2Cases1:
 	ld a, [hl] ; $60cb
 	ret ; $60cc
 NetGamePractice2Cases1DrillShotTable:
-	; $60cd, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $31, $31, $36, $31, $31, $36 ; 0x00
+	; $60cd, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $31, $31, $36, $31, $31, $36
 NetGamePractice2Cases2:
 	ld a, [wBallBounceCount] ; $60d7
 	or a ; $60da
@@ -927,8 +927,8 @@ NetGamePractice2Cases2:
 	ld a, [hl] ; $6119
 	ret ; $611a
 NetGamePractice2Cases2DrillShotTable:
-	; $611b, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $37, $37, $2f, $ff, $ff, $2f ; 0x00
+	; $611b, 10 bytes (drill_outcomes)
+	drill_outcomes $ff, $ff, $ff, $ff, $37, $37, $2f, $ff, $ff, $2f
 NetGamePractice2Cases3:
 	ld a, $36 ; $6125
 	ld b, $00 ; $6127
