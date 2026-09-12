@@ -175,17 +175,17 @@ DismissGameScoreDisplayObjs:
 	ret ; $41bb
 ObjTemplates_09:
 	; $41bc, 64 bytes (obj_template)
-	obj_template $50, $4c, 0, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $66, 0 ; record 0
-	obj_template $50, $34, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, $66, 0 ; record 1
-	obj_template $30, $4c, 0, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $66, 0 ; record 2
-	obj_template $30, $34, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, $66, 0 ; record 3
+	obj_template $50, $4c, 0, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, SFX_SCORE_DISPLAY, 0 ; record 0
+	obj_template $50, $34, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, SFX_SCORE_DISPLAY, 0 ; record 1
+	obj_template $30, $4c, 0, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, SFX_SCORE_DISPLAY, 0 ; record 2
+	obj_template $30, $34, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, SFX_SCORE_DISPLAY, 0 ; record 3
 GameScoreDisplayObjsObjTemplate:
 	; $41fc, 16 bytes (obj_template)
-	obj_template $40, $40, SpriteTemplate_09_8, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $66, 0 ; record 0
+	obj_template $40, $40, SpriteTemplate_09_8, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_SCORE_DISPLAY, 0 ; record 0
 SpawnGameScoreDisplayObjsObjTemplate:
 	; $420c, 32 bytes (obj_template)
-	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateShow, 0, ObjUpdateHide, 0, $66, 0 ; record 0
-	obj_template $50, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, $66, 0 ; record 1
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateShow, 0, ObjUpdateHide, 0, SFX_SCORE_DISPLAY, 0 ; record 0
+	obj_template $50, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, SFX_SCORE_DISPLAY, 0 ; record 1
 SpawnGameResultObj:
 	ld a, $01 ; $422c
 	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $422e
@@ -300,35 +300,35 @@ HideCourtBanner:
 	ret ; $4384
 CourtBannerObjTemplates_09:
 	; $4385, 464 bytes (obj_template)
-	obj_template $38, $30, ObjTwoColumn8SpriteTemplate_09, ObjUpdateShow, 0, ObjUpdateHide, 0, SFX_RANKING_MARKER, 0 ; record 0
-	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6a, 0 ; record 1
-	obj_template $40, $34, ObjColumn8SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6a, 0 ; record 2
-	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6c, 0 ; record 3
-	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6c, 0 ; record 4
-	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6c, 0 ; record 5
-	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows5, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6c, 0 ; record 6
-	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, $68, 0 ; record 7
-	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, $68, 0 ; record 8
-	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, $68, 0 ; record 9
-	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, $68, 0 ; record 10
-	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $6b, 0 ; record 11
-	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $6b, 0 ; record 12
-	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $6b, 0 ; record 13
+	obj_template $38, $30, ObjTwoColumn8SpriteTemplate_09, ObjUpdateShow, 0, ObjUpdateHide, 0, SFX_MARKER, 0 ; record 0
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_FAULT, 0 ; record 1
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_FAULT, 0 ; record 2
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_CALL, 0 ; record 3
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_CALL, 0 ; record 4
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_CALL, 0 ; record 5
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows5, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_CALL, 0 ; record 6
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, SFX_BANNER_POINT_SITUATION, 0 ; record 7
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, SFX_BANNER_POINT_SITUATION, 0 ; record 8
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, SFX_BANNER_POINT_SITUATION, 0 ; record 9
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, SFX_BANNER_POINT_SITUATION, 0 ; record 10
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, SFX_BANNER_GAME_WON, 0 ; record 11
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, SFX_BANNER_GAME_WON, 0 ; record 12
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, SFX_BANNER_GAME_WON, 0 ; record 13
 	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 14, ObjUpdateRunCurve, 3, 0, 1 ; record 14
-	obj_template $38, $30, ObjTwoColumn8SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_RANKING_MARKER, 0 ; record 15
+	obj_template $38, $30, ObjTwoColumn8SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_MARKER, 0 ; record 15
 	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, 0, 0 ; record 16
 	obj_template $40, $48, ObjColumn8SpriteTemplate_09.rows2, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, 0, 0 ; record 17
-	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $42, 0 ; record 18
-	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $42, 0 ; record 19
-	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $42, 0 ; record 20
-	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $42, 0 ; record 21
-	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $43, 0 ; record 22
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, JINGLE_LEVEL_CLEARED, 0 ; record 18
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, JINGLE_LEVEL_CLEARED, 0 ; record 19
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, JINGLE_LEVEL_CLEARED, 0 ; record 20
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, JINGLE_LEVEL_CLEARED, 0 ; record 21
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, JINGLE_HIGH_SCORE, 0 ; record 22
 	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, 0, 0 ; record 23
-	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 24
-	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 25
-	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 26
-	obj_template $40, $48, ObjColumn8SpriteTemplate_09.rows2, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 27
-	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 28
+	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_WINNER, 0 ; record 24
+	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_WINNER, 0 ; record 25
+	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_WINNER, 0 ; record 26
+	obj_template $40, $48, ObjColumn8SpriteTemplate_09.rows2, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_WINNER, 0 ; record 27
+	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_BANNER_WINNER, 0 ; record 28
 InitAllObjSlots:
 	wram_bank WRAM_ACTORS ; $4555
 	ld bc, wObjSlot0 ; $455b

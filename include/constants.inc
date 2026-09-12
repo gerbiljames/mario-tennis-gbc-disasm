@@ -599,6 +599,7 @@ def B_ equ 11
 ; MinigameConfigTable's records (+5 -> wMatchBGM), DrillDefinitionPtrs' records,
 ; Singles/DoublesMatchSettingsTable_0a (+4), and SetPointSituationBgm.
 def BGM_NONE                 equ $00 ; silence: stops the four music channels
+def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing (the location loop skips the start)
 def BGM_INTRO                equ $01 ; RunIntroCutscene ($6b:$4041)
 def BGM_TITLE_SCREEN         equ $02 ; RunTitleScreen ($6b:$7647)
 def BGM_MENU                 equ $03 ; shared theme of ~20 menu screens (main menu, character/court/format select, save and N64 flows)
@@ -621,8 +622,18 @@ def BGM_COURT_TROPIC         equ $13 ; row 6; MinigameConfig_FruitFantasy
 def BGM_COURT_WAREHOUSE      equ $14 ; row 8; MinigameConfig_TreasureBox
 def BGM_TWO_ON_ONE           equ $15 ; RunDoublesDrillMatch ($0b:$726b -> wMatchBGM)
 def BGM_COURT_JUNGLE         equ $16 ; row 7; MinigameConfig_BananaBunch
+def BGM_ACADEMY_BUILDING     equ $1a ; story_location: the Academy Main Building and the Academy Wing
+def BGM_ACADEMY_OUTDOORS     equ $1b ; story_location: the courtyards, entrances, class courts, Court #1/#2, the awards ceremony and the island flyover (13 locations)
 def BGM_DORM_ROOM            equ $1c ; DormRoomInitScript_13 / DormRoomNpc03_13
+def BGM_ACADEMY_ROOMS        equ $1d ; story_location: the restaurant, cafeteria, training rooms, the Center Court and the tournament (7 locations)
+def BGM_TRAINING_DRILL       equ $20 ; MatchSettingsTable: Service Match 1, Service Practice 3, Net Game Practice 2, Stroke Practice 1, Tennis Machine 3
+def BGM_SERVICE_DRILL        equ $21 ; MatchSettingsTable: Service Match 2/3, Service Practice 1/2
 def BGM_SENIOR_RANKING       equ $22 ; MatchSettingsTable records 6-9; reused by the intro character showcase and the trophy cheat screen
+def BGM_STROKE_MATCH         equ $23 ; MatchSettingsTable: Stroke Match 1-3, Net Game Practice 3
+def BGM_STROKE_PRACTICE      equ $26 ; MatchSettingsTable: Stroke Practice 2/3
+def BGM_TENNIS_MACHINE_A     equ $27 ; MatchSettingsTable: Tennis Machine 1
+def BGM_TENNIS_MACHINE_B     equ $28 ; MatchSettingsTable: Tennis Machine 2
+def BGM_WALL_PRACTICE        equ $29 ; MatchSettingsTable: Wall Practice 1-3 and Tennis Machine 4
 def BGM_ISLAND_OPEN_LOSE     equ $2a ; ShowRankingBoard with wRankingBoardMode 2, which SetupRankingBoardArgs sets when wMatchWinLoseFlag != 1
 def BGM_ISLAND_OPEN_WIN      equ $2b ; the same board with mode 1 (match won)
 def BGM_CREDITS              equ $2c ; RunEndingCreditsSequence, the End1 story_location, and the debug text-overflow alarm
@@ -633,6 +644,8 @@ def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle ($1d:$77c5)
 ; hActiveJingle, plays JingleSoundIds[id - $40] (a music id) and leaves
 ; ResumeBGMAfterJingle/WaitJingleEnd to restore wCurrentBGM when the music
 ; channels fall idle. Only one is used.
+def JINGLE_LEVEL_CLEARED     equ $42 ; the LEVEL n CLEARED court banners (CourtBannerObjTemplates_09 rows 18-21)
+def JINGLE_HIGH_SCORE        equ $43 ; the HIGH SCORE court banner (row 22)
 def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomNpc03_13) and the save-slot debug editor
 
 ; Sound effects. Named from the event the call site plays them for.
@@ -684,6 +697,14 @@ def SFX_SCORE_STEP7          equ $ba
 def SFX_SPECIAL_HIT            equ $55 ; the special-shot hit spark (StartHitEffect $08)
 def SFX_SWING_CHARGE           equ $59 ; a character starting a swing windup (CharSwingWindupPhase $08)
 def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNetCrossing $08)
+; The on-court object cues, from the *ObjTemplate* tables of bank $09 (the
+; sound field LoadObjTemplate_09 plays as the object appears).
+def SFX_SCORE_DISPLAY          equ $66 ; the point-score digit objects appearing (ObjTemplates_09, the game-score display)
+def SFX_BANNER_WINNER          equ $67 ; the SERVICE/RETURN/SMASH ACE, LOB and DROP SHOT banners (rows 24-28)
+def SFX_BANNER_POINT_SITUATION equ $68 ; the BREAK/GAME/SET/MATCH POINT banners (rows 7-10)
+def SFX_BANNER_FAULT           equ $6a ; the FAULT and DOUBLE FAULT banners (rows 1-2)
+def SFX_BANNER_GAME_WON        equ $6b ; the GAME, SET MATCH and MATCH banners (rows 11-13)
+def SFX_BANNER_CALL            equ $6c ; the LET, NET, OUT and START banners (rows 3-6)
 def SFX_LOGO_JINGLE            equ $65 ; the intro logo screen, and TriggerCheatUnlock
 def SFX_DEUCE                  equ $69 ; the deuce call after a point (DelayAfterPointResolution $08)
 def SFX_LANDING_MARKER         equ $6d ; the landing marker appearing (StartLandingMarker $08)
@@ -691,7 +712,7 @@ def SFX_DEBUG_ALARM            equ $6f ; QueueVRAMCopy on queue overflow, debug 
 def SFX_BEEP                   equ $72 ; link-input decode errors (SerialEncode/DecodeInput), the debug window demo
 def SFX_CAPTION                equ $73 ; an EXP-screen caption appearing (DrawExpScreenCaption $1a)
 def SFX_BALL_LAUNCH            equ $76 ; the minigame ball launcher (LaunchBall $0d)
-def SFX_RANKING_MARKER         equ $78 ; a ranking-board marker moving (RankingBoardAnimState_* $1b), the tournament bracket
+def SFX_MARKER                 equ $78 ; a marker landing: the ranking-board marker (RankingBoardAnimate*), the on-court score digits and banner row 15 (CourtBannerObjTemplates_09)
 def SFX_FIREWORK_LAUNCH        equ $7a ; the island sky scene: firework ascent, the plane pass (bank $14)
 def SFX_FIREWORK_SPARKLE       equ $7d ; the island sky scene: twinkle and plane cues (bank $14)
 def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingBoard $1b, unless wRankingBoardSilent)

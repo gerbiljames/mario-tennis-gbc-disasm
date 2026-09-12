@@ -176,4 +176,10 @@ project drives gives no audio, so what a cue sounds like is not established.
 A name has to hold at every site of its id, which is why the two cutscene
 pop sounds are `SFX_APPEAR1`/`SFX_APPEAR2` and `$a2` is `SFX_STORY_CUE`:
 the handler that plays it exists in every story bank and nothing names the
-map script that selects it.
+map script that selects it. The ids that only tables carry were named on
+2026-09-12 from the rows that select them: the drill and lesson themes of
+the match-settings tables, the three story-location themes, the cues the
+on-court object templates play as a banner or the score digits appear
+(`SFX_BANNER_*`, `SFX_SCORE_DISPLAY`) and the two level jingles. The same
+rule renamed `SFX_RANKING_MARKER` to `SFX_MARKER` once the templates showed
+it landing the score digits too.

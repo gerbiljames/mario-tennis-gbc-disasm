@@ -639,7 +639,7 @@ SetCourtSelectBGM:
 	ret ; $60ea
 CourtSelectBgmIds_3e:
 	; $60eb, 9 bytes (bytes:9)
-	db $06, $06, $06, $06, $11, $12, $13, $16, $14 ; 0x00
+	db BGM_EXHIBITION_MATCH, BGM_EXHIBITION_MATCH, BGM_EXHIBITION_MATCH, BGM_EXHIBITION_MATCH, BGM_COURT_STAR, BGM_COURT_CASTLE, BGM_COURT_TROPIC, BGM_COURT_JUNGLE, BGM_COURT_WAREHOUSE ; 0x00
 SetCourtSelectBGMLink:
 	ld a, c ; $60f4
 	ld hl, CourtSelectBgmIdsLink_3e ; $60f5
@@ -653,7 +653,7 @@ SetCourtSelectBGMLink:
 	ret ; $6101
 CourtSelectBgmIdsLink_3e:
 	; $6102, 9 bytes (bytes:9)
-	db $07, $07, $07, $07, $11, $12, $13, $16, $14 ; 0x00
+	db BGM_EXHIBITION_MATCH_LINK, BGM_EXHIBITION_MATCH_LINK, BGM_EXHIBITION_MATCH_LINK, BGM_EXHIBITION_MATCH_LINK, BGM_COURT_STAR, BGM_COURT_CASTLE, BGM_COURT_TROPIC, BGM_COURT_JUNGLE, BGM_COURT_WAREHOUSE ; 0x00
 LoadCourtSelectHeader:
 	call LoadCourtSelectTitleGfx ; $610b
 	call DrawCourtSelectTitleRow ; $610e

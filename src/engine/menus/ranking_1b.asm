@@ -463,7 +463,7 @@ RankingBoardAnimState_5077_1b:
 	ld hl, RankingBoardAnimTask_1b ; $5079
 	call RegisterFrameTask ; $507c
 	wait_frames $8c ; $507f
-	sound SFX_RANKING_MARKER ; $5083
+	sound SFX_MARKER ; $5083
 	ld c, $00 ; $5085
 	call GetRankingMarkerSlot ; $5087
 	ld de, RankingBoardAnimState_5077Table3 ; $508a
@@ -486,7 +486,7 @@ RankingBoardAnimState_5077_1b:
 	ld de, RankingBoardAnimState_5077Table0 ; $50b9
 	call StartRankingMarkerAnim1 ; $50bc
 	wait_frames $5a ; $50bf
-	sound SFX_RANKING_MARKER ; $50c3
+	sound SFX_MARKER ; $50c3
 	ld c, $03 ; $50c5
 	call GetRankingMarkerSlot ; $50c7
 	ld de, RankingBoardAnimState_5077Table3 ; $50ca
@@ -509,7 +509,7 @@ RankingBoardAnimState_5077_1b:
 	ld de, RankingBoardAnimState_5077Table2 ; $50f9
 	call StartRankingMarkerAnim1 ; $50fc
 	wait_frames $5a ; $50ff
-	sound SFX_RANKING_MARKER ; $5103
+	sound SFX_MARKER ; $5103
 	ld c, $06 ; $5105
 	call GetRankingMarkerSlot ; $5107
 	ld de, RankingBoardAnimState_5077Table3 ; $510a
@@ -532,7 +532,7 @@ RankingBoardAnimState_5077_1b:
 	ld de, RankingBoardAnimState_5077Table2 ; $5139
 	call StartRankingMarkerAnim1 ; $513c
 	wait_frames $5a ; $513f
-	sound SFX_RANKING_MARKER ; $5143
+	sound SFX_MARKER ; $5143
 	ld c, $09 ; $5145
 	call GetRankingMarkerSlot ; $5147
 	ld de, RankingBoardAnimState_5077Table3 ; $514a
@@ -553,7 +553,7 @@ RankingBoardAnimState_516f_1b:
 	ld hl, RankingBoardAnimTask_1b ; $5171
 	call RegisterFrameTask ; $5174
 	wait_frames $8c ; $5177
-	sound SFX_RANKING_MARKER ; $517b
+	sound SFX_MARKER ; $517b
 	ld c, $00 ; $517d
 	call GetRankingMarkerSlot ; $517f
 	ld de, RankingBoardAnimState_516fTable0 ; $5182
@@ -577,7 +577,7 @@ RankingBoardAnimState_516f_1b:
 	ld de, RankingBoardAnimState_516fTable2 ; $51b5
 	call StartRankingMarkerAnim0 ; $51b8
 	wait_frames $78 ; $51bb
-	sound SFX_RANKING_MARKER ; $51bf
+	sound SFX_MARKER ; $51bf
 	ld c, $05 ; $51c1
 	call GetRankingMarkerSlot ; $51c3
 	ld de, RankingBoardAnimState_516fTable3 ; $51c6
@@ -601,7 +601,7 @@ RankingBoardAnimState_516f_1b:
 	ld de, RankingBoardAnimState_516fTable5 ; $51f9
 	call StartRankingMarkerAnim0 ; $51fc
 	wait_frames $5a ; $51ff
-	sound SFX_RANKING_MARKER ; $5203
+	sound SFX_MARKER ; $5203
 	ld c, $08 ; $5205
 	call GetRankingMarkerSlot ; $5207
 	ld de, RankingBoardAnimState_516fTable3 ; $520a
@@ -625,7 +625,7 @@ RankingBoardAnimState_516f_1b:
 	ld de, RankingBoardAnimState_516fTable5 ; $523d
 	call StartRankingMarkerAnim0 ; $5240
 	wait_frames $5a ; $5243
-	sound SFX_RANKING_MARKER ; $5247
+	sound SFX_MARKER ; $5247
 	ld c, $0b ; $5249
 	call GetRankingMarkerSlot ; $524b
 	ld de, RankingBoardAnimState_516fTable1 ; $524e
@@ -646,7 +646,7 @@ RankingBoardAnimState_5273_1b:
 	ld hl, RankingBoardAnimTask_1b ; $5275
 	call RegisterFrameTask ; $5278
 	wait_frames $8c ; $527b
-	sound SFX_RANKING_MARKER ; $527f
+	sound SFX_MARKER ; $527f
 	ld c, $00 ; $5281
 	call GetRankingMarkerSlot ; $5283
 	ld de, RankingBoardAnimState_5273Table0 ; $5286
@@ -669,7 +669,7 @@ RankingBoardAnimState_5273_1b:
 	ld de, RankingBoardAnimState_516fTable5 ; $52b5
 	call StartRankingMarkerAnim1 ; $52b8
 	wait_frames $5a ; $52bb
-	sound SFX_RANKING_MARKER ; $52bf
+	sound SFX_MARKER ; $52bf
 	ld c, $08 ; $52c1
 	call GetRankingMarkerSlot ; $52c3
 	ld de, RankingBoardAnimState_5077Table1 ; $52c6
@@ -749,7 +749,7 @@ RankingBoardAnimState_5387_1b:
 	ld hl, RankingBoardAnimTask_1b ; $5389
 	call RegisterFrameTask ; $538c
 	wait_frames $8c ; $538f
-	sound SFX_RANKING_MARKER ; $5393
+	sound SFX_MARKER ; $5393
 	ld c, $00 ; $5395
 	call GetRankingMarkerSlot ; $5397
 	ld de, RankingBoardAnimState_5387Table1 ; $539a
@@ -772,7 +772,7 @@ RankingBoardAnimState_5387_1b:
 	ld de, RankingBoardAnimState_5077Table2 ; $53c9
 	call StartRankingMarkerAnim1 ; $53cc
 	wait_frames $5a ; $53cf
-	sound SFX_RANKING_MARKER ; $53d3
+	sound SFX_MARKER ; $53d3
 	ld c, $03 ; $53d5
 	call GetRankingMarkerSlot ; $53d7
 	ld de, RankingBoardAnimState_5387Table1 ; $53da
@@ -791,7 +791,7 @@ RankingBoardAnimState_53fa_1b:
 	ld hl, RankingBoardAnimTask_1b ; $53fc
 	call RegisterFrameTask ; $53ff
 	wait_frames $8c ; $5402
-	sound SFX_RANKING_MARKER ; $5406
+	sound SFX_MARKER ; $5406
 	ld c, $00 ; $5408
 	call GetRankingMarkerSlot ; $540a
 	ld de, RankingBoardAnimState_53faTable ; $540d
@@ -814,7 +814,7 @@ RankingBoardAnimState_53fa_1b:
 	ld de, RankingBoardAnimState_516fTable3 ; $543c
 	call StartRankingMarkerAnim1 ; $543f
 	wait_frames $8c ; $5442
-	sound SFX_RANKING_MARKER ; $5446
+	sound SFX_MARKER ; $5446
 	ld c, $03 ; $5448
 	call GetRankingMarkerSlot ; $544a
 	ld de, RankingBoardAnimState_53faTable ; $544d
@@ -833,7 +833,7 @@ RankingBoardAnimState_546d_1b:
 	ld hl, RankingBoardAnimTask_1b ; $546f
 	call RegisterFrameTask ; $5472
 	wait_frames $8c ; $5475
-	sound SFX_RANKING_MARKER ; $5479
+	sound SFX_MARKER ; $5479
 	ld c, $00 ; $547b
 	call GetRankingMarkerSlot ; $547d
 	ld de, RankingBoardAnimState_546dTable ; $5480

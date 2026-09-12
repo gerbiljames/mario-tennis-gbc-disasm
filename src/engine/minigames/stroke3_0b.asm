@@ -718,7 +718,7 @@ RunDoublesDrillMatch:
 	ld [wCurrentMinigameStoryMatch], a ; $7263
 	ld a, MINIGAME_TWO_ON_ONE ; $7266
 	ld [wCurrentMinigameStoryMatch + 1], a ; $7268
-	ld a, $15 ; $726b
+	ld a, BGM_TWO_ON_ONE ; $726b
 	ld [wMatchBGM], a ; $726d
 	ld a, $01 ; $7270
 	ld [wMatchIsDoubles], a ; $7272

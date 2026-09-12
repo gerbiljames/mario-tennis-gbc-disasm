@@ -20,7 +20,7 @@ InitDefaultMatchSettings:
 	ld [wMatchIsDoubles], a ; $409d
 	ld a, $02 ; $40a0
 	ld [wOnCourtCharCount], a ; $40a2
-	ld a, $11 ; $40a5
+	ld a, BGM_COURT_STAR ; $40a5
 	ld [wMatchBGM], a ; $40a7
 	ret ; $40aa
 ResetMatchState:

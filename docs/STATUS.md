@@ -112,6 +112,18 @@ blob.
 
 ## Recent changes
 
+* **2026-09-12** — the last unnamed sound ids. The ids carried by tables
+  rather than `sound` sites are named for what they accompany: the seven
+  drill and lesson themes the match-settings tables select
+  (`BGM_TRAINING_DRILL`, `BGM_SERVICE_DRILL`, `BGM_STROKE_MATCH`,
+  `BGM_STROKE_PRACTICE`, `BGM_TENNIS_MACHINE_A/B`, `BGM_WALL_PRACTICE`),
+  the three story-location themes (`BGM_ACADEMY_BUILDING`,
+  `BGM_ACADEMY_OUTDOORS`, `BGM_ACADEMY_ROOMS`) and the `BGM_UNCHANGED`
+  sentinel, the six on-court cues the object templates play
+  (`SFX_SCORE_DISPLAY`, the five `SFX_BANNER_*` by banner row) and the two
+  level jingles. `SFX_RANKING_MARKER` is `SFX_MARKER`: the same cue lands the
+  score digits and a banner. The court-select music rows and the two raw
+  `wMatchBGM` stores use the names too.
 * **2026-09-12** — the minigame point tables and the drill gate tables have
   named fields. The eight `*PointTable`s are the court-position record shape
   (`court_positions`, one row per point; the old rendering had split each

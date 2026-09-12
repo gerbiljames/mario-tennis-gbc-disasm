@@ -674,7 +674,8 @@ ENDM
 ; wStoryModeCurrentLocation (GetStoryLocationRecordPtr). `map_scripts` is a
 ; slot in the target bank's $4000 directory (a DataPtr_*MapScripts label); the
 ; engine copies its 7-word map_tree to $c286 (LoadStoryLocationHeader), loads
-; `scene` graphics (LoadStorySceneGraphics), and plays `bgm` ($ff = none).
+; `scene` graphics (LoadStorySceneGraphics), and plays `bgm` (a BGM_* id;
+; BGM_UNCHANGED, $ff, keeps what is playing).
 ; Usage: story_location id, scene, map_scripts, bgm
 MACRO story_location
 	db \1, \2
