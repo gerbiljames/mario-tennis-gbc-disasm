@@ -174,21 +174,18 @@ DismissGameScoreDisplayObjs:
 	call StartObjExitAnim ; $41b8
 	ret ; $41bb
 ObjTemplates_09:
-	; $41bc, 64 bytes (records:16)
-; 4 records x 16 bytes
-	dw $4c50, $0000, $4764, $0001, $4764, $0003, $0066, $0000 ; record 0
-	dw $3450, $0000, $4764, $0000, $4764, $0002, $0066, $0000 ; record 1
-	dw $4c30, $0000, $4764, $0001, $4764, $0003, $0066, $0000 ; record 2
-	dw $3430, $0000, $4764, $0000, $4764, $0002, $0066, $0000 ; record 3
+	; $41bc, 64 bytes (obj_template)
+	obj_template $50, $4c, 0, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $66, 0 ; record 0
+	obj_template $50, $34, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, $66, 0 ; record 1
+	obj_template $30, $4c, 0, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $66, 0 ; record 2
+	obj_template $30, $34, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, $66, 0 ; record 3
 GameScoreDisplayObjsObjTemplate:
-	; $41fc, 16 bytes (records:16)
-; 1 records x 16 bytes
-	dw $4040, $71f7, $4764, $0000, $4764, $0003, $0066, $0000 ; record 0
+	; $41fc, 16 bytes (obj_template)
+	obj_template $40, $40, SpriteTemplate_09_8, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $66, 0 ; record 0
 SpawnGameScoreDisplayObjsObjTemplate:
-	; $420c, 32 bytes (records:16)
-; 2 records x 16 bytes
-	dw $4040, $7090, $4758, $0000, $475e, $0000, $0066, $0000 ; record 0
-	dw $4050, $7090, $4764, $0000, $4764, $0002, $0066, $0000 ; record 1
+	; $420c, 32 bytes (obj_template)
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateShow, 0, ObjUpdateHide, 0, $66, 0 ; record 0
+	obj_template $50, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, $66, 0 ; record 1
 SpawnGameResultObj:
 	ld a, $01 ; $422c
 	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $422e
@@ -238,12 +235,11 @@ DismissServeIndicatorObjs:
 	call StartObjExitAnim ; $4294
 	ret ; $4297
 ServeIndicatorObjTemplates_09:
-	; $4298, 64 bytes (records:16)
-; 4 records x 16 bytes
-	dw $0070, $0000, $4764, $0004, $4764, $0006, $0000, $0000 ; record 0
-	dw $7070, $0000, $4764, $0005, $4764, $0007, $0000, $0000 ; record 1
-	dw $0000, $0000, $4764, $0004, $4764, $0006, $0000, $0000 ; record 2
-	dw $7000, $0000, $4764, $0005, $4764, $0007, $0000, $0000 ; record 3
+	; $4298, 64 bytes (obj_template)
+	obj_template $70, $00, 0, ObjUpdateRunCurve, 4, ObjUpdateRunCurve, 6, 0, 0 ; record 0
+	obj_template $70, $70, 0, ObjUpdateRunCurve, 5, ObjUpdateRunCurve, 7, 0, 0 ; record 1
+	obj_template $00, $00, 0, ObjUpdateRunCurve, 4, ObjUpdateRunCurve, 6, 0, 0 ; record 2
+	obj_template $00, $70, 0, ObjUpdateRunCurve, 5, ObjUpdateRunCurve, 7, 0, 0 ; record 3
 SpawnWinLoseResultObj:
 	push af ; $42d8
 	ld a, $00 ; $42d9
@@ -266,9 +262,8 @@ DismissWinLoseResultObj:
 	call StartObjExitAnim ; $42fc
 	ret ; $42ff
 WinLoseResultObjTemplate_09:
-	; $4300, 16 bytes (records:16)
-; 1 records x 16 bytes
-	dw $4050, $0000, $4764, $0000, $4764, $0002, $0000, $0000 ; record 0
+	; $4300, 16 bytes (obj_template)
+	obj_template $50, $40, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, 0, 0 ; record 0
 SpawnServeIndicatorSideObj:
 	ld a, [wServingCharCourtPos] ; $4310
 	ld hl, ServeIndicatorSideObjTemplates_09 ; $4313
@@ -281,12 +276,11 @@ DismissServeIndicatorSideObj:
 	call StartObjExitAnim ; $4323
 	ret ; $4326
 ServeIndicatorSideObjTemplates_09:
-	; $4327, 64 bytes (records:16)
-; 4 records x 16 bytes
-	dw $f4d2, $7098, $4764, $0009, $4764, $000b, $0000, $0001 ; record 0
-	dw $f4d2, $7098, $4764, $0008, $4764, $000a, $0000, $0001 ; record 1
-	dw $f402, $7098, $4764, $0009, $4764, $000b, $0000, $0001 ; record 2
-	dw $f402, $7098, $4764, $0008, $4764, $000a, $0000, $0001 ; record 3
+	; $4327, 64 bytes (obj_template)
+	obj_template $d2, $f4, ObjColumn8SpriteTemplate_09.rows2, ObjUpdateRunCurve, 9, ObjUpdateRunCurve, 11, 0, 1 ; record 0
+	obj_template $d2, $f4, ObjColumn8SpriteTemplate_09.rows2, ObjUpdateRunCurve, 8, ObjUpdateRunCurve, 10, 0, 1 ; record 1
+	obj_template $02, $f4, ObjColumn8SpriteTemplate_09.rows2, ObjUpdateRunCurve, 9, ObjUpdateRunCurve, 11, 0, 1 ; record 2
+	obj_template $02, $f4, ObjColumn8SpriteTemplate_09.rows2, ObjUpdateRunCurve, 8, ObjUpdateRunCurve, 10, 0, 1 ; record 3
 ShowCourtBanner:
 	push af ; $4367
 	call ClearAllObjSlots ; $4368
@@ -305,37 +299,36 @@ HideCourtBanner:
 	call StartObjExitAnim ; $4381
 	ret ; $4384
 CourtBannerObjTemplates_09:
-	; $4385, 464 bytes (records:16)
-; 29 records x 16 bytes
-	dw $3038, $70a1, $4758, $0000, $475e, $0000, $0078, $0000 ; record 0
-	dw $4440, $7090, $4764, $0000, $4764, $0003, $006a, $0000 ; record 1
-	dw $3440, $7080, $4764, $0000, $4764, $0003, $006a, $0000 ; record 2
-	dw $4440, $7094, $4764, $0000, $4764, $0003, $006c, $0000 ; record 3
-	dw $4440, $7094, $4764, $0000, $4764, $0003, $006c, $0000 ; record 4
-	dw $4440, $7094, $4764, $0000, $4764, $0003, $006c, $0000 ; record 5
-	dw $4440, $708c, $4764, $0000, $4764, $0003, $006c, $0000 ; record 6
-	dw $3440, $7084, $4764, $0001, $4764, $0002, $0068, $0000 ; record 7
-	dw $3440, $7084, $4764, $0001, $4764, $0002, $0068, $0000 ; record 8
-	dw $3440, $7084, $4764, $0001, $4764, $0002, $0068, $0000 ; record 9
-	dw $3440, $7084, $4764, $0001, $4764, $0002, $0068, $0000 ; record 10
-	dw $4040, $7090, $4764, $0001, $4764, $0003, $006b, $0000 ; record 11
-	dw $4040, $7090, $4764, $0001, $4764, $0003, $006b, $0000 ; record 12
-	dw $4040, $7090, $4764, $0001, $4764, $0003, $006b, $0000 ; record 13
-	dw $4040, $7094, $4764, $000e, $4764, $0003, $0000, $0001 ; record 14
-	dw $3038, $70a1, $4764, $0000, $4764, $0003, $0078, $0000 ; record 15
-	dw $4040, $7090, $4764, $0000, $4764, $0003, $0000, $0000 ; record 16
-	dw $4840, $7098, $4764, $0000, $4764, $0003, $0000, $0000 ; record 17
-	dw $3444, $7084, $4764, $0000, $4764, $0003, $0042, $0000 ; record 18
-	dw $3444, $7084, $4764, $0000, $4764, $0003, $0042, $0000 ; record 19
-	dw $3444, $7084, $4764, $0000, $4764, $0003, $0042, $0000 ; record 20
-	dw $3444, $7084, $4764, $0000, $4764, $0003, $0042, $0000 ; record 21
-	dw $3444, $7084, $4764, $0000, $4764, $0003, $0043, $0000 ; record 22
-	dw $3444, $7084, $4764, $0000, $4764, $0003, $0000, $0000 ; record 23
-	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 24
-	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 25
-	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 26
-	dw $4840, $7098, $4764, $0000, $4764, $0003, $0067, $0000 ; record 27
-	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 28
+	; $4385, 464 bytes (obj_template)
+	obj_template $38, $30, ObjTwoColumn8SpriteTemplate_09, ObjUpdateShow, 0, ObjUpdateHide, 0, SFX_RANKING_MARKER, 0 ; record 0
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6a, 0 ; record 1
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6a, 0 ; record 2
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6c, 0 ; record 3
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6c, 0 ; record 4
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6c, 0 ; record 5
+	obj_template $40, $44, ObjColumn8SpriteTemplate_09.rows5, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $6c, 0 ; record 6
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, $68, 0 ; record 7
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, $68, 0 ; record 8
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, $68, 0 ; record 9
+	obj_template $40, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 2, $68, 0 ; record 10
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $6b, 0 ; record 11
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $6b, 0 ; record 12
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, $6b, 0 ; record 13
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows3, ObjUpdateRunCurve, 14, ObjUpdateRunCurve, 3, 0, 1 ; record 14
+	obj_template $38, $30, ObjTwoColumn8SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_RANKING_MARKER, 0 ; record 15
+	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, 0, 0 ; record 16
+	obj_template $40, $48, ObjColumn8SpriteTemplate_09.rows2, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, 0, 0 ; record 17
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $42, 0 ; record 18
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $42, 0 ; record 19
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $42, 0 ; record 20
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $42, 0 ; record 21
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $43, 0 ; record 22
+	obj_template $44, $34, ObjColumn8SpriteTemplate_09.rows7, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, 0, 0 ; record 23
+	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 24
+	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 25
+	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 26
+	obj_template $40, $48, ObjColumn8SpriteTemplate_09.rows2, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 27
+	obj_template $3c, $40, ObjTwoColumn4SpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, $67, 0 ; record 28
 InitAllObjSlots:
 	wram_bank WRAM_ACTORS ; $4555
 	ld bc, wObjSlot0 ; $455b
@@ -370,13 +363,13 @@ InitObjSlot:
 	pop bc ; $45a0
 	ld hl, $0008 ; $45a1
 	add hl, bc ; $45a4
-	ld de, FinishObjSlotUpdate.done ; $45a5
+	ld de, ObjUpdateRunCurve.done ; $45a5
 	ld a, e ; $45a8
 	ld [hl+], a ; $45a9
 	ld [hl], d ; $45aa
 	ld hl, $0002 ; $45ab
 	add hl, bc ; $45ae
-	ld de, ObjSlotSpriteTemplate_09 ; $45af
+	ld de, ObjColumn8SpriteTemplate_09.rows2 ; $45af
 	ld a, e ; $45b2
 	ld [hl+], a ; $45b3
 	ld [hl], d ; $45b4
@@ -661,16 +654,19 @@ FinishObjSlotUpdate:
 	ld l, a ; $4753
 	call QueueSpriteTemplate ; $4754
 	ret ; $4757
+ObjUpdateShow:
 	ld hl, wObjSlotWork + 1 ; $4758
 	set 0, [hl] ; $475b
 	ret ; $475d
+ObjUpdateHide:
 	ld hl, wObjSlotWork + 1 ; $475e
 	res 0, [hl] ; $4761
 	ret ; $4763
+ObjUpdateRunCurve:
 	ld a, [wObjSlotWork + 12] ; $4764
 	rst Rst00 ; $4767
-	dw FinishObjSlotUpdate.stepCurve ; $4768 jumptable
-	dw FinishObjSlotUpdate.done ; $476a jumptable
+	dw ObjUpdateRunCurve.stepCurve ; $4768 jumptable
+	dw ObjUpdateRunCurve.done ; $476a jumptable
 .stepCurve:
 	ld hl, wObjSlotWork + 1 ; $476c
 	set 0, [hl] ; $476f

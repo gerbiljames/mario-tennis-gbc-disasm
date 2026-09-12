@@ -180,110 +180,56 @@ LoadServeGfx:
 	call QueueVRAMCopy ; $6c6a
 	ret ; $6c6d
 ServeGfxPtrTable_09:
-	INCBIN "data/bank_009/ServeGfxPtrTable_09.bin" ; $6c6e, 1066 bytes
-ObjSlotSpriteTemplate_09:
-	; $7098, 107 bytes (sprite_template)
+	INCBIN "data/bank_009/ServeGfxPtrTable_09.bin" ; $6c6e, 1042 bytes
+; A column of up to eight 8x16 objects one tile apart, tiles $0e down to $00;
+; an object template enters it part-way to draw fewer (the entry labels
+; say how many rows remain). ServeGfxPtrTable_09 used to swallow its head.
+ObjColumn8SpriteTemplate_09:
+	; $7080, 33 bytes (sprite_template)
+	oam_sprite $10, $40, $0e, $00
+.rows7:
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $30, $0a, $00
+.rows5:
+	oam_sprite $10, $28, $08, $00
+.rows4:
+	oam_sprite $10, $20, $06, $00
+.rows3:
+	oam_sprite $10, $18, $04, $00
+.rows2:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-	db $10
-	db $40
-	db $1c
-	db $00
-	db $20
-	db $40
-	db $1e
-	db $00
-	db $10
-	db $38
-	db $18
-	db $00
-	db $20
-	db $38
-	db $1a
-	db $00
-	db $10
-	db $30
-	db $14
-	db $00
-	db $20
-	db $30
-	db $16
-	db $00
-	db $10
-	db $28
-	db $10
-	db $00
-	db $20
-	db $28
-	db $12
-	db $00
-	db $10
-	db $20
-	db $0c
-	db $00
-	db $20
-	db $20
-	db $0e
-	db $00
-	db $10
-	db $18
-	db $08
-	db $00
-	db $20
-	db $18
-	db $0a
-	db $00
-	db $10
-	db $10
-	db $04
-	db $00
-	db $20
-	db $10
-	db $06
-	db $00
-	db $10
-	db $08
-	db $00
-	db $00
-	db $20
-	db $08
-	db $02
-	db $00
-	db $80
-	db $10
-	db $20
-	db $0c
-	db $00
-	db $20
-	db $28
-	db $0e
-	db $00
-	db $10
-	db $18
-	db $08
-	db $00
-	db $20
-	db $20
-	db $0a
-	db $00
-	db $10
-	db $10
-	db $04
-	db $00
-	db $20
-	db $18
-	db $06
-	db $00
-	db $10
-	db $08
-	db $00
-	db $00
-	db $20
-	db $10
-	db $02
-	db $00
-	db $80
+ObjTwoColumn8SpriteTemplate_09:
+	; $70a1, 65 bytes (sprite_template)
+	oam_sprite $10, $40, $1c, $00
+	oam_sprite $20, $40, $1e, $00
+	oam_sprite $10, $38, $18, $00
+	oam_sprite $20, $38, $1a, $00
+	oam_sprite $10, $30, $14, $00
+	oam_sprite $20, $30, $16, $00
+	oam_sprite $10, $28, $10, $00
+	oam_sprite $20, $28, $12, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite_end
+ObjTwoColumn4SpriteTemplate_09:
+	; $70e2, 33 bytes (sprite_template)
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $28, $0e, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $20, $0a, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $18, $06, $00
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $10, $02, $00
+	oam_sprite_end
 GetPlayer1ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7103
 	add a ; $7106

@@ -307,6 +307,19 @@ MACRO score_rule
 	db \1, \2, \3, \4
 ENDM
 
+; One match-screen object template (bank $09's *ObjTemplate* tables;
+; LoadObjTemplate_09 copies it into a wObjSlot): where the object appears,
+; the sprite template it draws (0 = set by the caller), the per-frame
+; update routine and the move curve it steps (MoveCurveTable_09 index), the
+; routine and curve StartObjExitAnim switches to when the object leaves,
+; the sound played when it appears (0 = none), and the draw mode (0 = at
+; the stored position, 1 = relative to the serving character).
+;   obj_template x, y, sprite_template, update, curve, exit_update, exit_curve, sound, draw_mode
+MACRO obj_template
+	db \1, \2
+	dw \3, \4, \5, \6, \7, \8, \9
+ENDM
+
 ; One CourtSceneDataTable row, indexed by court id: the two surface damping
 ; bytes LoadCourtSceneData stores (wCourtSurfaceFriction, wCourtSurfaceBounce),
 ; the scene index handed to LoadCourtSceneGraphics, and a byte nothing reads.

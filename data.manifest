@@ -167,7 +167,7 @@ bank_009/VramGfxPtrTable_09.bin 02616d 4
 bank_009/Player1ScoreDigitGfxSource.bin 026171 4
 bank_009/LoadPlayer2ScoreDigitGfxTable.bin 026175 a4b
 bank_009/DeuceAdvantageTiles.bin 026bc0 80 gfx
-bank_009/ServeGfxPtrTable_09.bin 026c6e 42a
+bank_009/ServeGfxPtrTable_09.bin 026c6e 412
 bank_00a/StoryObjPalettes.asm 029341 28 palettes
 bank_00a/DrawMinigameTargetTable.bin 02a6fe 10
 bank_00a/MinigameTargetFormation0Script0.bin 02a8e1 a

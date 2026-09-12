@@ -112,6 +112,20 @@ blob.
 
 ## Recent changes
 
+* **2026-09-12** — the match-screen object templates have named fields.
+  Bank `$09`'s seven `*ObjTemplate*` tables (45 records: the score display,
+  the serve indicators, the win/lose result, the 29 court banners) render as
+  `obj_template x, y, sprite_template, update, curve, exit_update,
+  exit_curve, sound, draw_mode`, the layout read from `LoadObjTemplate_09`
+  and `StartObjExitAnim`. Their update-routine words were entry points
+  inside an unlabelled tail of `FinishObjSlotUpdate`, now `ObjUpdateShow`,
+  `ObjUpdateHide` and `ObjUpdateRunCurve`; and six of their sprite-template
+  words pointed into the last 24 bytes of the `ServeGfxPtrTable_09` blob
+  and part-way into the region after it, which turned out to be one
+  8-row column template entered at different rows to draw fewer objects
+  (`ObjColumn8SpriteTemplate_09` with `.rows7`-`.rows2` entries), followed
+  by two more templates the generator had left as raw bytes. The blob is
+  24 bytes shorter and the three templates are rows.
 * **2026-09-12** — four more table families have named fields: every story
   and minigame match's settings (`match_settings mode, opponent, court,
   sets, games, bgm`, the two 25-row tables, each row commented with its
