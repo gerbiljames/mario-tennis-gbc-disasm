@@ -550,12 +550,12 @@ TilemapAssemblyDispatch_39:
 	dw .rl_0
 	dw .rl_0
 	dw .rl_0
-	dw $6dc2
-	dw $6dc2
-	dw $6dc2
-	dw $6dc2
-	dw $6dc2
-	dw $6dc2
+	dw .pastEnd
+	dw .pastEnd
+	dw .pastEnd
+	dw .pastEnd
+	dw .pastEnd
+	dw .pastEnd
 .rl_0:
 	tilemap_rect_end
 .rl_1:
@@ -2003,3 +2003,4 @@ TilemapAssemblyDispatch_39:
 .rl_213:
 	tilemap_rect $da4f, $d11c, $03, $03
 	tilemap_rect_end
+.pastEnd:

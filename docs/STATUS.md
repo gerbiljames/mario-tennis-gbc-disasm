@@ -1,4 +1,4 @@
-# Project status — 2026-09-12
+# Project status — 2026-09-27
 
 This is where the disassembly stands and what is still open. The dated
 working log that used to live here — every session's findings in the order
@@ -112,6 +112,20 @@ blob.
 
 ## Recent changes
 
+* **2026-09-27** — the last hardcoded ROM addresses. A scan for ROM
+  addresses written as numbers (4-digit literals in address operands,
+  split `LOW`/`HIGH` halves, literal banks beside cross-bank labels, and
+  label-valued words inside the untyped blobs) found three. The Training
+  Gym joggers' actor scripts made 96 `as_call`s to `$4c8e` and `$4ce5`,
+  two unlabelled wait routines inside `Unused…ClearWaypoint` bodies: they
+  are `TrainingGymRunner0BWaitWaypointClear` and
+  `TrainingGymRunner0CWaitWaypointClear`, and the tail all three waits jump
+  to, filed as `.checkTimer` under an unused label, is the proximity test
+  `TrainingGymRunnerCheckClearance`. `VramTileset_09`'s 29 source words
+  are offsets into `TilesetTiles_09`, and six rows of
+  `TilemapAssemblyDispatch_39` point one byte past the last rect list
+  (`.pastEnd`). Everything else the scan raised was coordinates, sizes,
+  colours or text ids.
 * **2026-09-12** — the last unnamed sound ids. The ids carried by tables
   rather than `sound` sites are named for what they accompany: the seven
   drill and lesson themes the match-settings tables select

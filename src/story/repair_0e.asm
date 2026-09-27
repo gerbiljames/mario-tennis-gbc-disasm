@@ -41,8 +41,8 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, e ; $4c76
 	ld [hl+], a ; $4c77
 	ld [hl], d ; $4c78
-	jp UnusedTrainingGymRunner0CClearWaypoint.checkTimer ; $4c79
-; TrainingGymRunner0AWaitWaypointClear with ten extra instructions that fetch actor $0a's state and `res 0` its +5 flag before returning -- the clear-and-return variant of the wait. Nothing calls it.
+	jp TrainingGymRunnerCheckClearance ; $4c79
+; Fetches actor $0a's state and `res 0`s its +5 flag. Nothing calls it.
 UnusedTrainingGymRunner0AClearWaypoint:
 	script_get_actor_state $0a ; $4c7c
 	ld c, l ; $4c81
@@ -53,6 +53,7 @@ UnusedTrainingGymRunner0AClearWaypoint:
 	ld b, $00 ; $4c89
 	ld a, $00 ; $4c8b
 	ret ; $4c8d
+TrainingGymRunner0BWaitWaypointClear:
 	script_get_actor_state $0a ; $4c8e
 	ld c, l ; $4c93
 	ld b, h ; $4c94
@@ -95,8 +96,8 @@ UnusedTrainingGymRunner0AClearWaypoint:
 	ld a, e ; $4ccd
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
-	jp UnusedTrainingGymRunner0CClearWaypoint.checkTimer ; $4cd0
-; The same clear-and-return variant as UnusedTrainingGymRunner0AClearWaypoint for actor $0b. Nothing calls it.
+	jp TrainingGymRunnerCheckClearance ; $4cd0
+; The same as UnusedTrainingGymRunner0AClearWaypoint for actor $0b. Nothing calls it.
 UnusedTrainingGymRunner0BClearWaypoint:
 	script_get_actor_state $0b ; $4cd3
 	ld c, l ; $4cd8
@@ -107,6 +108,7 @@ UnusedTrainingGymRunner0BClearWaypoint:
 	ld b, $00 ; $4ce0
 	ld a, $00 ; $4ce2
 	ret ; $4ce4
+TrainingGymRunner0CWaitWaypointClear:
 	script_get_actor_state $0b ; $4ce5
 	ld c, l ; $4cea
 	ld b, h ; $4ceb
@@ -149,7 +151,7 @@ UnusedTrainingGymRunner0BClearWaypoint:
 	ld a, e ; $4d24
 	ld [hl+], a ; $4d25
 	ld [hl], d ; $4d26
-	jp UnusedTrainingGymRunner0CClearWaypoint.checkTimer ; $4d27
+	jp TrainingGymRunnerCheckClearance ; $4d27
 UnusedTrainingGymRunner0CClearWaypoint:
 	script_get_actor_state $0c ; $4d2a
 	ld c, l ; $4d2f
@@ -160,7 +162,8 @@ UnusedTrainingGymRunner0CClearWaypoint:
 	ld b, $00 ; $4d37
 	ld a, $00 ; $4d39
 	ret ; $4d3b
-.checkTimer:
+; a = b = 1 while both coordinate pairs in wMapScratch are within 5 tiles of each other.
+TrainingGymRunnerCheckClearance:
 	ld hl, wMapScratch + 2 ; $4d3c
 	ld a, [hl+] ; $4d3f
 	ld d, [hl] ; $4d40

@@ -50,35 +50,35 @@ LoadTilesetGfx:
 VramTileset_09:
 	; $488a, 118 bytes (records:4)
 ; 29 records x 4 bytes
-	dw $4900, $0020 ; record 0
-	dw $4b00, $0008 ; record 1
-	dw $4b80, $0010 ; record 2
-	dw $4c80, $0008 ; record 3
-	dw $4ce0, $0008 ; record 4
-	dw $4d40, $0008 ; record 5
-	dw $4da0, $000a ; record 6
-	dw $4e40, $0010 ; record 7
-	dw $4f40, $0010 ; record 8
-	dw $5040, $0010 ; record 9
-	dw $5140, $0010 ; record 10
-	dw $5240, $0010 ; record 11
-	dw $52c0, $0010 ; record 12
-	dw $5340, $0010 ; record 13
-	dw $53c0, $0008 ; record 14
-	dw $5420, $0020 ; record 15
-	dw $5620, $0010 ; record 16
-	dw $4900, $0001 ; record 17
-	dw $5780, $000e ; record 18
-	dw $5860, $000e ; record 19
-	dw $5940, $000e ; record 20
-	dw $5a20, $000e ; record 21
-	dw $5b00, $000e ; record 22
-	dw $5be0, $000e ; record 23
-	dw $5cc0, $0010 ; record 24
-	dw $5dc0, $0010 ; record 25
-	dw $5ec0, $0010 ; record 26
-	dw $5fc0, $0004 ; record 27
-	dw $6000, $0010 ; record 28
+	dw TilesetTiles_09, $0020 ; record 0
+	dw TilesetTiles_09 + $200, $0008 ; record 1
+	dw TilesetTiles_09 + $280, $0010 ; record 2
+	dw TilesetTiles_09 + $380, $0008 ; record 3
+	dw TilesetTiles_09 + $3e0, $0008 ; record 4
+	dw TilesetTiles_09 + $440, $0008 ; record 5
+	dw TilesetTiles_09 + $4a0, $000a ; record 6
+	dw TilesetTiles_09 + $540, $0010 ; record 7
+	dw TilesetTiles_09 + $640, $0010 ; record 8
+	dw TilesetTiles_09 + $740, $0010 ; record 9
+	dw TilesetTiles_09 + $840, $0010 ; record 10
+	dw TilesetTiles_09 + $940, $0010 ; record 11
+	dw TilesetTiles_09 + $9c0, $0010 ; record 12
+	dw TilesetTiles_09 + $a40, $0010 ; record 13
+	dw TilesetTiles_09 + $ac0, $0008 ; record 14
+	dw TilesetTiles_09 + $b20, $0020 ; record 15
+	dw TilesetTiles_09 + $d20, $0010 ; record 16
+	dw TilesetTiles_09, $0001 ; record 17
+	dw TilesetTiles_09 + $e80, $000e ; record 18
+	dw TilesetTiles_09 + $f60, $000e ; record 19
+	dw TilesetTiles_09 + $1040, $000e ; record 20
+	dw TilesetTiles_09 + $1120, $000e ; record 21
+	dw TilesetTiles_09 + $1200, $000e ; record 22
+	dw TilesetTiles_09 + $12e0, $000e ; record 23
+	dw TilesetTiles_09 + $13c0, $0010 ; record 24
+	dw TilesetTiles_09 + $14c0, $0010 ; record 25
+	dw TilesetTiles_09 + $15c0, $0010 ; record 26
+	dw TilesetTiles_09 + $16c0, $0004 ; record 27
+	dw TilesetTiles_09 + $1700, $0010 ; record 28
 	db $00, $00
 TilesetTiles_09:
 	INCBIN "data/bank_009/TilesetTiles_09.bin" ; $4900, 6144 bytes
