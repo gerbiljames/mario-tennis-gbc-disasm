@@ -15,7 +15,8 @@ the detector for those; booting the padded ROM this leaves at
 <tmp>/mariotennis.gbc is the proof that none is left. The build itself also
 proves the slot-table ASSERTs and every bank's size survive the shift.
 
-Banks with fewer than PAD free bytes are left unpadded (the pure data banks
+Banks with fewer than PAD + 15 free bytes are left unpadded (a shifted bank's
+first `ALIGN 4` absorbs up to 15 more) (the pure data banks
 that fill their 16 KiB exactly); references into them do not move.
 """
 import argparse
@@ -49,7 +50,8 @@ def pad_tree(tree, pad, free, only=None):
     padded = set()
     for holder in sorted((tree / "src").glob("bank_*.asm")):
         bank = int(holder.stem.split("_")[1], 16)
-        if free.get(bank, 0) < pad or (only is not None and bank not in only):
+        # a shifted bank's first ALIGN 4 can take up to 15 more bytes
+        if free.get(bank, 0) < pad + 15 or (only is not None and bank not in only):
             continue
         if bank == 0:
             f = tree / ROM0_PAD_FILE
@@ -62,17 +64,46 @@ def pad_tree(tree, pad, free, only=None):
     return padded
 
 
-def compare(a, b, pad, padded, rom0_start):
+def symbols(path):
+    out = {}
+    for line in path.read_text().splitlines():
+        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line)
+        if m and int(m.group(2), 16) < 0x8000:
+            out[m.group(3)] = (int(m.group(1), 16), int(m.group(2), 16))
+    return out
+
+
+def displacements(sym_a, sym_b, padded):
+    """Per bank, the sorted (address, shift) steps: a byte moved by the shift
+    of the nearest label at or before it. The shift is PAD before a bank's
+    first `ds ALIGN[4]` and more after it."""
+    steps = {}
+    for name, (bank, addr) in sym_a.items():
+        if bank in padded and name in sym_b:
+            steps.setdefault(bank, {})[addr] = sym_b[name][1] - addr
+    return {bank: sorted(d.items()) for bank, d in steps.items()}
+
+
+def compare(a, b, padded, steps, rom0_start):
     moved = carried = 0
     odd = []
+    shifts = {d for s in steps.values() for _, d in s if d}
     for bank in sorted(padded):
         lo = rom0_start if bank == 0 else bank * BANK
-        hi = bank * BANK + BANK - pad
-        for i in range(lo, hi):
-            j = i + pad
+        base = 0 if bank == 0 else 0x4000 - bank * BANK
+        table = steps.get(bank, [])
+        k, d = 0, 0
+        for i in range(lo, bank * BANK + BANK):
+            cpu = i + base
+            while k < len(table) and table[k][0] <= cpu:
+                d = table[k][1]
+                k += 1
+            j = i + d
+            if j >= bank * BANK + BANK:
+                break
             if a[i] == b[j]:
                 continue
-            if (b[j] - a[i]) & 0xff == pad:
+            if (b[j] - a[i]) & 0xff in shifts:
                 moved += 1
             elif (b[j] - a[i]) & 0xff == 1 and a[i - 1] != b[j - 1]:
                 carried += 1
@@ -113,13 +144,16 @@ def main():
     sym = (tree / "build" / "mariotennis.sym").read_text()
     rom0_start = int(re.search(r"00:([0-9a-f]{4}) CallHLInBankA", sym).group(1), 16)
     a, b = rom.read_bytes(), (tree / "mariotennis.gbc").read_bytes()
-    moved, carried, odd = compare(a, b, args.pad, padded, rom0_start - args.pad)
+    steps = displacements(symbols(ROOT / "build" / "mariotennis.sym"),
+                          symbols(tree / "build" / "mariotennis.sym"), padded)
+    moved, carried, odd = compare(a, b, padded, steps, rom0_start - args.pad)
 
     # A high byte one up with no low byte beside it is the adc half of a
     # split-base ld_hl_indexed, whose add half is two instructions earlier.
     real = []
     for bank, i, x, y in odd:
-        if (y - x) & 0xff == 1 and any(a[k] != b[k + args.pad] for k in range(i - 4, i)):
+        if (y - x) & 0xff == 1 and any(a[k] != b[k + dd] for k in range(i - 4, i)
+                                        for dd in {s for st in steps.values() for _, s in st}):
             carried += 1
         else:
             real.append((bank, i, x, y))

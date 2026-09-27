@@ -1,8 +1,10 @@
 Padding_18:
 	; $4096, 10 bytes (fill)
 	ds 10, $00
+	ds ALIGN[4]
 FontTiles:
 	INCBIN "data/bank_018/FontTiles.bin" ; $40a0, 512 bytes
+	ds ALIGN[4]
 MenuHandCursorGfx:
 	INCBIN "data/bank_018/MenuHandCursorGfx.bin" ; $42a0, 64 bytes
 MenuHandCursorPalette:

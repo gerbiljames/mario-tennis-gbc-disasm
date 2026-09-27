@@ -151,118 +151,175 @@ AllieSpriteFrames:
 	dw AllieSpriteFrame55 ; $412a
 	dw AllieSpriteFrame55 ; $412c
 	dw AllieSpriteFrame55 ; $412e
+	ds ALIGN[4]
 AllieSpriteFrame00:
 	INCBIN "data/bank_04c/AllieSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame01:
 	INCBIN "data/bank_04c/AllieSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame02:
 	INCBIN "data/bank_04c/AllieSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame03:
 	INCBIN "data/bank_04c/AllieSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame04:
 	INCBIN "data/bank_04c/AllieSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame05:
 	INCBIN "data/bank_04c/AllieSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame06:
 	INCBIN "data/bank_04c/AllieSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame07:
 	INCBIN "data/bank_04c/AllieSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame08:
 	INCBIN "data/bank_04c/AllieSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame09:
 	INCBIN "data/bank_04c/AllieSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame10:
 	INCBIN "data/bank_04c/AllieSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame11:
 	INCBIN "data/bank_04c/AllieSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame12:
 	INCBIN "data/bank_04c/AllieSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame13:
 	INCBIN "data/bank_04c/AllieSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame14:
 	INCBIN "data/bank_04c/AllieSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame15:
 	INCBIN "data/bank_04c/AllieSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame16:
 	INCBIN "data/bank_04c/AllieSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame17:
 	INCBIN "data/bank_04c/AllieSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame18:
 	INCBIN "data/bank_04c/AllieSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame19:
 	INCBIN "data/bank_04c/AllieSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame20:
 	INCBIN "data/bank_04c/AllieSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame21:
 	INCBIN "data/bank_04c/AllieSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame22:
 	INCBIN "data/bank_04c/AllieSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame23:
 	INCBIN "data/bank_04c/AllieSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame24:
 	INCBIN "data/bank_04c/AllieSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame25:
 	INCBIN "data/bank_04c/AllieSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame26:
 	INCBIN "data/bank_04c/AllieSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame27:
 	INCBIN "data/bank_04c/AllieSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame28:
 	INCBIN "data/bank_04c/AllieSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame29:
 	INCBIN "data/bank_04c/AllieSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame30:
 	INCBIN "data/bank_04c/AllieSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame31:
 	INCBIN "data/bank_04c/AllieSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame32:
 	INCBIN "data/bank_04c/AllieSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame33:
 	INCBIN "data/bank_04c/AllieSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame34:
 	INCBIN "data/bank_04c/AllieSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame35:
 	INCBIN "data/bank_04c/AllieSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame36:
 	INCBIN "data/bank_04c/AllieSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame37:
 	INCBIN "data/bank_04c/AllieSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame38:
 	INCBIN "data/bank_04c/AllieSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame39:
 	INCBIN "data/bank_04c/AllieSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame40:
 	INCBIN "data/bank_04c/AllieSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 AllieSpriteFrame41:
 	INCBIN "data/bank_04c/AllieSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 AllieSpriteFrame42:
 	INCBIN "data/bank_04c/AllieSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame43:
 	INCBIN "data/bank_04c/AllieSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame44:
 	INCBIN "data/bank_04c/AllieSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame45:
 	INCBIN "data/bank_04c/AllieSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame46:
 	INCBIN "data/bank_04c/AllieSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame47:
 	INCBIN "data/bank_04c/AllieSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame48:
 	INCBIN "data/bank_04c/AllieSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame49:
 	INCBIN "data/bank_04c/AllieSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame50:
 	INCBIN "data/bank_04c/AllieSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame51:
 	INCBIN "data/bank_04c/AllieSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame52:
 	INCBIN "data/bank_04c/AllieSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame53:
 	INCBIN "data/bank_04c/AllieSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame54:
 	INCBIN "data/bank_04c/AllieSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFrame55:
 	INCBIN "data/bank_04c/AllieSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 AllieSpriteFramesUnused:
 	INCBIN "data/bank_04c/AllieSpriteFramesUnused.bin" ; $7650, 1680 bytes
 AllieSpriteOam:

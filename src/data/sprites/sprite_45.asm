@@ -151,118 +151,175 @@ MarkSpriteFrames:
 	dw MarkSpriteFrame55 ; $412a
 	dw MarkSpriteFrame55 ; $412c
 	dw MarkSpriteFrame55 ; $412e
+	ds ALIGN[4]
 MarkSpriteFrame00:
 	INCBIN "data/bank_045/MarkSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame01:
 	INCBIN "data/bank_045/MarkSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame02:
 	INCBIN "data/bank_045/MarkSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame03:
 	INCBIN "data/bank_045/MarkSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame04:
 	INCBIN "data/bank_045/MarkSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame05:
 	INCBIN "data/bank_045/MarkSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame06:
 	INCBIN "data/bank_045/MarkSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame07:
 	INCBIN "data/bank_045/MarkSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame08:
 	INCBIN "data/bank_045/MarkSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame09:
 	INCBIN "data/bank_045/MarkSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame10:
 	INCBIN "data/bank_045/MarkSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame11:
 	INCBIN "data/bank_045/MarkSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame12:
 	INCBIN "data/bank_045/MarkSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame13:
 	INCBIN "data/bank_045/MarkSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame14:
 	INCBIN "data/bank_045/MarkSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame15:
 	INCBIN "data/bank_045/MarkSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame16:
 	INCBIN "data/bank_045/MarkSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame17:
 	INCBIN "data/bank_045/MarkSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame18:
 	INCBIN "data/bank_045/MarkSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame19:
 	INCBIN "data/bank_045/MarkSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame20:
 	INCBIN "data/bank_045/MarkSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame21:
 	INCBIN "data/bank_045/MarkSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame22:
 	INCBIN "data/bank_045/MarkSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame23:
 	INCBIN "data/bank_045/MarkSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame24:
 	INCBIN "data/bank_045/MarkSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame25:
 	INCBIN "data/bank_045/MarkSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame26:
 	INCBIN "data/bank_045/MarkSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame27:
 	INCBIN "data/bank_045/MarkSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame28:
 	INCBIN "data/bank_045/MarkSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame29:
 	INCBIN "data/bank_045/MarkSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame30:
 	INCBIN "data/bank_045/MarkSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame31:
 	INCBIN "data/bank_045/MarkSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame32:
 	INCBIN "data/bank_045/MarkSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame33:
 	INCBIN "data/bank_045/MarkSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame34:
 	INCBIN "data/bank_045/MarkSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame35:
 	INCBIN "data/bank_045/MarkSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame36:
 	INCBIN "data/bank_045/MarkSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame37:
 	INCBIN "data/bank_045/MarkSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame38:
 	INCBIN "data/bank_045/MarkSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame39:
 	INCBIN "data/bank_045/MarkSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame40:
 	INCBIN "data/bank_045/MarkSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 MarkSpriteFrame41:
 	INCBIN "data/bank_045/MarkSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 MarkSpriteFrame42:
 	INCBIN "data/bank_045/MarkSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame43:
 	INCBIN "data/bank_045/MarkSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame44:
 	INCBIN "data/bank_045/MarkSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame45:
 	INCBIN "data/bank_045/MarkSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame46:
 	INCBIN "data/bank_045/MarkSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame47:
 	INCBIN "data/bank_045/MarkSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame48:
 	INCBIN "data/bank_045/MarkSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame49:
 	INCBIN "data/bank_045/MarkSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame50:
 	INCBIN "data/bank_045/MarkSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame51:
 	INCBIN "data/bank_045/MarkSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame52:
 	INCBIN "data/bank_045/MarkSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame53:
 	INCBIN "data/bank_045/MarkSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame54:
 	INCBIN "data/bank_045/MarkSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFrame55:
 	INCBIN "data/bank_045/MarkSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 MarkSpriteFramesUnused:
 	INCBIN "data/bank_045/MarkSpriteFramesUnused.bin" ; $7650, 1680 bytes
 MarkSpriteOam:

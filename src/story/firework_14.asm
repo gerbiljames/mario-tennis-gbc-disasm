@@ -221,6 +221,7 @@ FireworkMapActors_14:
 	; $6675, 11 bytes (map_actors)
 	map_actor_end
 	db $00 ; padding after the list end
+	ds ALIGN[4]
 FireworkObjTiles_14:
 	INCBIN "data/bank_014/FireworkObjTiles_14.bin" ; $6680, 2048 bytes
 SpriteTemplate_14_2:

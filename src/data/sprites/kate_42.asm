@@ -151,118 +151,175 @@ KateSpriteFrames:
 	dw KateSpriteFrame55 ; $412a
 	dw KateSpriteFrame55 ; $412c
 	dw KateSpriteFrame55 ; $412e
+	ds ALIGN[4]
 KateSpriteFrame00:
 	INCBIN "data/bank_042/KateSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame01:
 	INCBIN "data/bank_042/KateSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame02:
 	INCBIN "data/bank_042/KateSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame03:
 	INCBIN "data/bank_042/KateSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame04:
 	INCBIN "data/bank_042/KateSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame05:
 	INCBIN "data/bank_042/KateSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame06:
 	INCBIN "data/bank_042/KateSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame07:
 	INCBIN "data/bank_042/KateSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame08:
 	INCBIN "data/bank_042/KateSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame09:
 	INCBIN "data/bank_042/KateSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame10:
 	INCBIN "data/bank_042/KateSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame11:
 	INCBIN "data/bank_042/KateSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame12:
 	INCBIN "data/bank_042/KateSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame13:
 	INCBIN "data/bank_042/KateSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame14:
 	INCBIN "data/bank_042/KateSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame15:
 	INCBIN "data/bank_042/KateSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame16:
 	INCBIN "data/bank_042/KateSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame17:
 	INCBIN "data/bank_042/KateSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame18:
 	INCBIN "data/bank_042/KateSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame19:
 	INCBIN "data/bank_042/KateSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame20:
 	INCBIN "data/bank_042/KateSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame21:
 	INCBIN "data/bank_042/KateSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame22:
 	INCBIN "data/bank_042/KateSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame23:
 	INCBIN "data/bank_042/KateSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame24:
 	INCBIN "data/bank_042/KateSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame25:
 	INCBIN "data/bank_042/KateSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame26:
 	INCBIN "data/bank_042/KateSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame27:
 	INCBIN "data/bank_042/KateSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame28:
 	INCBIN "data/bank_042/KateSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame29:
 	INCBIN "data/bank_042/KateSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame30:
 	INCBIN "data/bank_042/KateSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame31:
 	INCBIN "data/bank_042/KateSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame32:
 	INCBIN "data/bank_042/KateSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame33:
 	INCBIN "data/bank_042/KateSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame34:
 	INCBIN "data/bank_042/KateSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame35:
 	INCBIN "data/bank_042/KateSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame36:
 	INCBIN "data/bank_042/KateSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame37:
 	INCBIN "data/bank_042/KateSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame38:
 	INCBIN "data/bank_042/KateSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame39:
 	INCBIN "data/bank_042/KateSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame40:
 	INCBIN "data/bank_042/KateSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 KateSpriteFrame41:
 	INCBIN "data/bank_042/KateSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 KateSpriteFrame42:
 	INCBIN "data/bank_042/KateSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame43:
 	INCBIN "data/bank_042/KateSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame44:
 	INCBIN "data/bank_042/KateSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame45:
 	INCBIN "data/bank_042/KateSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame46:
 	INCBIN "data/bank_042/KateSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame47:
 	INCBIN "data/bank_042/KateSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame48:
 	INCBIN "data/bank_042/KateSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame49:
 	INCBIN "data/bank_042/KateSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame50:
 	INCBIN "data/bank_042/KateSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame51:
 	INCBIN "data/bank_042/KateSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame52:
 	INCBIN "data/bank_042/KateSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame53:
 	INCBIN "data/bank_042/KateSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame54:
 	INCBIN "data/bank_042/KateSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 KateSpriteFrame55:
 	INCBIN "data/bank_042/KateSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 KateSpriteFramesUnused:
 	INCBIN "data/bank_042/KateSpriteFramesUnused.bin" ; $7650, 1680 bytes
 KateSpriteOam:

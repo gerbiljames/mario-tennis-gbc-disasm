@@ -151,118 +151,175 @@ CurtSpriteFrames:
 	dw CurtSpriteFrame55 ; $412a
 	dw CurtSpriteFrame55 ; $412c
 	dw CurtSpriteFrame55 ; $412e
+	ds ALIGN[4]
 CurtSpriteFrame00:
 	INCBIN "data/bank_04e/CurtSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame01:
 	INCBIN "data/bank_04e/CurtSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame02:
 	INCBIN "data/bank_04e/CurtSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame03:
 	INCBIN "data/bank_04e/CurtSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame04:
 	INCBIN "data/bank_04e/CurtSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame05:
 	INCBIN "data/bank_04e/CurtSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame06:
 	INCBIN "data/bank_04e/CurtSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame07:
 	INCBIN "data/bank_04e/CurtSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame08:
 	INCBIN "data/bank_04e/CurtSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame09:
 	INCBIN "data/bank_04e/CurtSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame10:
 	INCBIN "data/bank_04e/CurtSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame11:
 	INCBIN "data/bank_04e/CurtSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame12:
 	INCBIN "data/bank_04e/CurtSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame13:
 	INCBIN "data/bank_04e/CurtSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame14:
 	INCBIN "data/bank_04e/CurtSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame15:
 	INCBIN "data/bank_04e/CurtSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame16:
 	INCBIN "data/bank_04e/CurtSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame17:
 	INCBIN "data/bank_04e/CurtSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame18:
 	INCBIN "data/bank_04e/CurtSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame19:
 	INCBIN "data/bank_04e/CurtSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame20:
 	INCBIN "data/bank_04e/CurtSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame21:
 	INCBIN "data/bank_04e/CurtSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame22:
 	INCBIN "data/bank_04e/CurtSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame23:
 	INCBIN "data/bank_04e/CurtSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame24:
 	INCBIN "data/bank_04e/CurtSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame25:
 	INCBIN "data/bank_04e/CurtSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame26:
 	INCBIN "data/bank_04e/CurtSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame27:
 	INCBIN "data/bank_04e/CurtSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame28:
 	INCBIN "data/bank_04e/CurtSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame29:
 	INCBIN "data/bank_04e/CurtSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame30:
 	INCBIN "data/bank_04e/CurtSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame31:
 	INCBIN "data/bank_04e/CurtSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame32:
 	INCBIN "data/bank_04e/CurtSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame33:
 	INCBIN "data/bank_04e/CurtSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame34:
 	INCBIN "data/bank_04e/CurtSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame35:
 	INCBIN "data/bank_04e/CurtSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame36:
 	INCBIN "data/bank_04e/CurtSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame37:
 	INCBIN "data/bank_04e/CurtSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame38:
 	INCBIN "data/bank_04e/CurtSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame39:
 	INCBIN "data/bank_04e/CurtSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame40:
 	INCBIN "data/bank_04e/CurtSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 CurtSpriteFrame41:
 	INCBIN "data/bank_04e/CurtSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 CurtSpriteFrame42:
 	INCBIN "data/bank_04e/CurtSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame43:
 	INCBIN "data/bank_04e/CurtSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame44:
 	INCBIN "data/bank_04e/CurtSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame45:
 	INCBIN "data/bank_04e/CurtSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame46:
 	INCBIN "data/bank_04e/CurtSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame47:
 	INCBIN "data/bank_04e/CurtSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame48:
 	INCBIN "data/bank_04e/CurtSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame49:
 	INCBIN "data/bank_04e/CurtSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame50:
 	INCBIN "data/bank_04e/CurtSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame51:
 	INCBIN "data/bank_04e/CurtSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame52:
 	INCBIN "data/bank_04e/CurtSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame53:
 	INCBIN "data/bank_04e/CurtSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame54:
 	INCBIN "data/bank_04e/CurtSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFrame55:
 	INCBIN "data/bank_04e/CurtSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 CurtSpriteFramesUnused:
 	INCBIN "data/bank_04e/CurtSpriteFramesUnused.bin" ; $7650, 1680 bytes
 CurtSpriteOam:

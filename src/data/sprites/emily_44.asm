@@ -151,118 +151,175 @@ EmilySpriteFrames:
 	dw EmilySpriteFrame55 ; $412a
 	dw EmilySpriteFrame55 ; $412c
 	dw EmilySpriteFrame55 ; $412e
+	ds ALIGN[4]
 EmilySpriteFrame00:
 	INCBIN "data/bank_044/EmilySpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame01:
 	INCBIN "data/bank_044/EmilySpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame02:
 	INCBIN "data/bank_044/EmilySpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame03:
 	INCBIN "data/bank_044/EmilySpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame04:
 	INCBIN "data/bank_044/EmilySpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame05:
 	INCBIN "data/bank_044/EmilySpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame06:
 	INCBIN "data/bank_044/EmilySpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame07:
 	INCBIN "data/bank_044/EmilySpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame08:
 	INCBIN "data/bank_044/EmilySpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame09:
 	INCBIN "data/bank_044/EmilySpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame10:
 	INCBIN "data/bank_044/EmilySpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame11:
 	INCBIN "data/bank_044/EmilySpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame12:
 	INCBIN "data/bank_044/EmilySpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame13:
 	INCBIN "data/bank_044/EmilySpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame14:
 	INCBIN "data/bank_044/EmilySpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame15:
 	INCBIN "data/bank_044/EmilySpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame16:
 	INCBIN "data/bank_044/EmilySpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame17:
 	INCBIN "data/bank_044/EmilySpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame18:
 	INCBIN "data/bank_044/EmilySpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame19:
 	INCBIN "data/bank_044/EmilySpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame20:
 	INCBIN "data/bank_044/EmilySpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame21:
 	INCBIN "data/bank_044/EmilySpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame22:
 	INCBIN "data/bank_044/EmilySpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame23:
 	INCBIN "data/bank_044/EmilySpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame24:
 	INCBIN "data/bank_044/EmilySpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame25:
 	INCBIN "data/bank_044/EmilySpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame26:
 	INCBIN "data/bank_044/EmilySpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame27:
 	INCBIN "data/bank_044/EmilySpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame28:
 	INCBIN "data/bank_044/EmilySpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame29:
 	INCBIN "data/bank_044/EmilySpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame30:
 	INCBIN "data/bank_044/EmilySpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame31:
 	INCBIN "data/bank_044/EmilySpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame32:
 	INCBIN "data/bank_044/EmilySpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame33:
 	INCBIN "data/bank_044/EmilySpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame34:
 	INCBIN "data/bank_044/EmilySpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame35:
 	INCBIN "data/bank_044/EmilySpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame36:
 	INCBIN "data/bank_044/EmilySpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame37:
 	INCBIN "data/bank_044/EmilySpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame38:
 	INCBIN "data/bank_044/EmilySpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame39:
 	INCBIN "data/bank_044/EmilySpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame40:
 	INCBIN "data/bank_044/EmilySpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 EmilySpriteFrame41:
 	INCBIN "data/bank_044/EmilySpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 EmilySpriteFrame42:
 	INCBIN "data/bank_044/EmilySpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame43:
 	INCBIN "data/bank_044/EmilySpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame44:
 	INCBIN "data/bank_044/EmilySpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame45:
 	INCBIN "data/bank_044/EmilySpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame46:
 	INCBIN "data/bank_044/EmilySpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame47:
 	INCBIN "data/bank_044/EmilySpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame48:
 	INCBIN "data/bank_044/EmilySpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame49:
 	INCBIN "data/bank_044/EmilySpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame50:
 	INCBIN "data/bank_044/EmilySpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame51:
 	INCBIN "data/bank_044/EmilySpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame52:
 	INCBIN "data/bank_044/EmilySpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame53:
 	INCBIN "data/bank_044/EmilySpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame54:
 	INCBIN "data/bank_044/EmilySpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFrame55:
 	INCBIN "data/bank_044/EmilySpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 EmilySpriteFramesUnused:
 	INCBIN "data/bank_044/EmilySpriteFramesUnused.bin" ; $7650, 1680 bytes
 EmilySpriteOam:

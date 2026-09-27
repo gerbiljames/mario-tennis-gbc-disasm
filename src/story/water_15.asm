@@ -231,6 +231,7 @@ QueueWaterSpriteMinigameCounterPanel_SpriteTemplate:
 	oam_sprite_end
 	; $57c7, 9 bytes (fill)
 	ds 9, $00
+	ds ALIGN[4]
 WaterSpriteHudTiles_15:
 	INCBIN "data/bank_015/WaterSpriteHudTiles_15.bin" ; $57d0, 192 bytes
 WaterSpriteHudPalette_15:

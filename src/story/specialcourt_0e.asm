@@ -241,8 +241,10 @@ StarWarpPalette:
 	INCLUDE "data/bank_00e/StarWarpPalette.asm" ; $72ce, 8 bytes (palettes)
 	; $72d6, 10 bytes (fill)
 	ds 10, $00
+	ds ALIGN[4]
 StarWarpTiles:
 	INCBIN "data/bank_00e/StarWarpTiles.bin" ; $72e0, 384 bytes
+	ds ALIGN[4]
 StarWarpSparkleTiles:
 	INCBIN "data/bank_00e/StarWarpSparkleTiles.bin" ; $7460, 32 bytes
 StarWarpFrameSprites:

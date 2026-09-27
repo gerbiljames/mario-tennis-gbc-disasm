@@ -228,18 +228,24 @@ Unused_01:
 	call AdvanceFrame ; $4209
 	jp Unused_01_MenuRedraw.loop ; $420c
 	db $00 ; $420f
+	ds ALIGN[4]
 MenuWindowTiles_01:
 	INCBIN "data/bank_001/MenuWindowTiles_01.bin" ; $4210, 256 bytes
 	ds 256, $00 ; $4310, fill
+	ds ALIGN[4]
 MenuFontTiles_01:
 	INCBIN "data/bank_001/MenuFontTiles_01.bin" ; $4410, 512 bytes
+	ds ALIGN[4]
 MenuTilesBStagedTiles0:
 	INCBIN "data/bank_001/MenuTilesBStagedTiles0.bin" ; $4610, 512 bytes
+	ds ALIGN[4]
 MenuTilesBStagedTiles1:
 	INCBIN "data/bank_001/MenuTilesBStagedTiles1.bin" ; $4810, 512 bytes
+	ds ALIGN[4]
 MenuFontFillTiles_01:
 	; $4a10, 1536 bytes (pattern)
 	ds 1536, $ff, $00
+	ds ALIGN[4]
 MenuFontPalettes_01:
 	INCLUDE "data/bank_001/MenuFontPalettes_01.asm" ; $5010, 64 bytes (palettes)
 LoadMenuFontPalette:
@@ -372,9 +378,11 @@ LoadDebugMenuPalette:
 	ret ; $51aa
 	; $51ab, 5 bytes (fill)
 	ds 5, $00
+	ds ALIGN[4]
 UnusedJpWindowTiles_01:
 	INCBIN "data/bank_001/UnusedJpWindowTiles_01.bin" ; $51b0, 256 bytes
 	ds 256, $00 ; $52b0, fill
+	ds ALIGN[4]
 UnusedJpFontTiles_01:
 	INCBIN "data/bank_001/UnusedJpFontTiles_01.bin" ; $53b0, 3136 bytes
 UnusedJpFontPalettes_01:

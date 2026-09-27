@@ -103,6 +103,7 @@ ConfirmScreenSpritePalette1:
 ConfirmScreenSpritePalette1Pad:
 	; $58dd, 3 bytes (fill)
 	ds 3, $00
+	ds ALIGN[4]
 CharSelectCursorGfx:
 	INCBIN "data/bank_018/CharSelectCursorGfx.bin" ; $58e0, 217 bytes
 CharSelectCursorPalette:
@@ -217,10 +218,13 @@ LoadOnCourtCharTilesFallback:
 	ld c, (CharRosterIcon00 - OnCourtCharTilesFallbackGfx) / 16 ; $5aea
 	call QueueVRAMCopy ; $5aec
 	ret ; $5aef
+	ds ALIGN[4]
 OnCourtCharTilesAGfx:
 	INCBIN "data/bank_018/OnCourtCharTilesAGfx.bin" ; $5af0, 2048 bytes
+	ds ALIGN[4]
 OnCourtCharTilesBGfx:
 	INCBIN "data/bank_018/OnCourtCharTilesBGfx.bin" ; $62f0, 2048 bytes
+	ds ALIGN[4]
 OnCourtCharTilesFallbackGfx:
 	INCBIN "data/bank_018/OnCourtCharTilesFallbackGfx.bin" ; $6af0, 64 bytes
 CharRosterIcon00:

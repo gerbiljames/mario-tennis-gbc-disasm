@@ -1,5 +1,7 @@
+	ds ALIGN[4]
 IslandSkyTilesA_14:
 	INCBIN "data/bank_014/IslandSkyTilesA_14.bin" ; $7190, 256 bytes
+	ds ALIGN[4]
 IslandSkyTilesB_14:
 	INCBIN "data/bank_014/IslandSkyTilesB_14.bin" ; $7290, 192 bytes
 IslandSkySpriteData_14:
@@ -82,6 +84,7 @@ AnimateIslandSkyEffectSprites_14:
 	ret ; $742c
 	; $742d, 3 bytes (fill)
 	ds 3, $00
+	ds ALIGN[4]
 DistantPlaneObjGfx:
 	INCBIN "data/bank_014/DistantPlaneObjGfx.bin" ; $7430, 256 bytes
 SpriteTemplate_14_3:
@@ -123,6 +126,7 @@ GetSceneObjectScreenPos_14:
 	ret ; $757d
 	; $757e, 2 bytes (fill)
 	ds 2, $00
+	ds ALIGN[4]
 TwinkleObjGfx:
 	INCBIN "data/bank_014/TwinkleObjGfx.bin" ; $7580, 256 bytes
 TwinkleObjPalette_14:

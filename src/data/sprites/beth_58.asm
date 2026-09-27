@@ -151,118 +151,175 @@ BethSpriteFrames:
 	dw BethSpriteFrame55 ; $412a
 	dw BethSpriteFrame55 ; $412c
 	dw BethSpriteFrame55 ; $412e
+	ds ALIGN[4]
 BethSpriteFrame00:
 	INCBIN "data/bank_058/BethSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame01:
 	INCBIN "data/bank_058/BethSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame02:
 	INCBIN "data/bank_058/BethSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame03:
 	INCBIN "data/bank_058/BethSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame04:
 	INCBIN "data/bank_058/BethSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame05:
 	INCBIN "data/bank_058/BethSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame06:
 	INCBIN "data/bank_058/BethSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame07:
 	INCBIN "data/bank_058/BethSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame08:
 	INCBIN "data/bank_058/BethSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame09:
 	INCBIN "data/bank_058/BethSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame10:
 	INCBIN "data/bank_058/BethSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame11:
 	INCBIN "data/bank_058/BethSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame12:
 	INCBIN "data/bank_058/BethSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame13:
 	INCBIN "data/bank_058/BethSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame14:
 	INCBIN "data/bank_058/BethSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame15:
 	INCBIN "data/bank_058/BethSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame16:
 	INCBIN "data/bank_058/BethSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame17:
 	INCBIN "data/bank_058/BethSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame18:
 	INCBIN "data/bank_058/BethSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame19:
 	INCBIN "data/bank_058/BethSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame20:
 	INCBIN "data/bank_058/BethSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame21:
 	INCBIN "data/bank_058/BethSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame22:
 	INCBIN "data/bank_058/BethSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame23:
 	INCBIN "data/bank_058/BethSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame24:
 	INCBIN "data/bank_058/BethSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame25:
 	INCBIN "data/bank_058/BethSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame26:
 	INCBIN "data/bank_058/BethSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame27:
 	INCBIN "data/bank_058/BethSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame28:
 	INCBIN "data/bank_058/BethSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame29:
 	INCBIN "data/bank_058/BethSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame30:
 	INCBIN "data/bank_058/BethSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame31:
 	INCBIN "data/bank_058/BethSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame32:
 	INCBIN "data/bank_058/BethSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame33:
 	INCBIN "data/bank_058/BethSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame34:
 	INCBIN "data/bank_058/BethSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame35:
 	INCBIN "data/bank_058/BethSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame36:
 	INCBIN "data/bank_058/BethSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame37:
 	INCBIN "data/bank_058/BethSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame38:
 	INCBIN "data/bank_058/BethSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame39:
 	INCBIN "data/bank_058/BethSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame40:
 	INCBIN "data/bank_058/BethSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 BethSpriteFrame41:
 	INCBIN "data/bank_058/BethSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 BethSpriteFrame42:
 	INCBIN "data/bank_058/BethSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame43:
 	INCBIN "data/bank_058/BethSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame44:
 	INCBIN "data/bank_058/BethSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame45:
 	INCBIN "data/bank_058/BethSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame46:
 	INCBIN "data/bank_058/BethSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame47:
 	INCBIN "data/bank_058/BethSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame48:
 	INCBIN "data/bank_058/BethSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame49:
 	INCBIN "data/bank_058/BethSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame50:
 	INCBIN "data/bank_058/BethSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame51:
 	INCBIN "data/bank_058/BethSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame52:
 	INCBIN "data/bank_058/BethSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame53:
 	INCBIN "data/bank_058/BethSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame54:
 	INCBIN "data/bank_058/BethSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 BethSpriteFrame55:
 	INCBIN "data/bank_058/BethSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 BethSpriteFramesUnused:
 	INCBIN "data/bank_058/BethSpriteFramesUnused.bin" ; $7650, 1680 bytes
 BethSpriteOam:

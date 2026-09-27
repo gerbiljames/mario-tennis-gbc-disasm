@@ -10,12 +10,16 @@
 Padding_28_0:
 	; $4012, 14 bytes (fill)
 	ds 14, $00
+	ds ALIGN[4]
 MatchGraphicsGfx:
 	INCBIN "data/bank_028/MatchGraphicsGfx.bin" ; $4020, 832 bytes
+	ds ALIGN[4]
 SpecialHitEffectTiles_28:
 	INCBIN "data/bank_028/SpecialHitEffectTiles_28.bin" ; $4360, 256 bytes
+	ds ALIGN[4]
 BallTouchCharEffectTilesA_28:
 	INCBIN "data/bank_028/BallTouchCharEffectTilesA_28.bin" ; $4460, 256 bytes
+	ds ALIGN[4]
 BallTouchCharEffectTilesB_28:
 	INCBIN "data/bank_028/BallTouchCharEffectTilesB_28.bin" ; $4560, 128 bytes
 MatchGfxTilesA_28:
@@ -24,18 +28,25 @@ MatchGfxPalettesA_28:
 	INCLUDE "data/bank_028/MatchGfxPalettesA_28.asm" ; $4ba0, 64 bytes (palettes)
 MatchGraphicsPalettes:
 	INCLUDE "data/bank_028/MatchGraphicsPalettes.asm" ; $4be0, 16 bytes (palettes)
+	ds ALIGN[4]
 MatchGfxMapsA_28:
 	INCBIN "data/bank_028/MatchGfxMapsA_28.bin" ; $4bf0, 320 bytes
+	ds ALIGN[4]
 MatchVariantTiles0:
 	INCBIN "data/bank_028/MatchVariantTiles0.bin" ; $4d30, 256 bytes
+	ds ALIGN[4]
 MatchVariantTiles1:
 	INCBIN "data/bank_028/MatchVariantTiles1.bin" ; $4e30, 768 bytes
+	ds ALIGN[4]
 MatchVariantTiles2:
 	INCBIN "data/bank_028/MatchVariantTiles2.bin" ; $5130, 832 bytes
+	ds ALIGN[4]
 MatchVariantTiles3:
 	INCBIN "data/bank_028/MatchVariantTiles3.bin" ; $5470, 32 bytes
+	ds ALIGN[4]
 MatchVariantTiles4:
 	INCBIN "data/bank_028/MatchVariantTiles4.bin" ; $5490, 256 bytes
+	ds ALIGN[4]
 MatchSharedTiles_28:
 	INCBIN "data/bank_028/MatchSharedTiles_28.bin" ; $5590, 2208 bytes
 MatchGfxPalettesB_28:

@@ -151,118 +151,175 @@ SpikeSpriteFrames:
 	dw SpikeSpriteFrame55 ; $412a
 	dw SpikeSpriteFrame55 ; $412c
 	dw SpikeSpriteFrame55 ; $412e
+	ds ALIGN[4]
 SpikeSpriteFrame00:
 	INCBIN "data/bank_048/SpikeSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame01:
 	INCBIN "data/bank_048/SpikeSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame02:
 	INCBIN "data/bank_048/SpikeSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame03:
 	INCBIN "data/bank_048/SpikeSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame04:
 	INCBIN "data/bank_048/SpikeSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame05:
 	INCBIN "data/bank_048/SpikeSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame06:
 	INCBIN "data/bank_048/SpikeSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame07:
 	INCBIN "data/bank_048/SpikeSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame08:
 	INCBIN "data/bank_048/SpikeSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame09:
 	INCBIN "data/bank_048/SpikeSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame10:
 	INCBIN "data/bank_048/SpikeSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame11:
 	INCBIN "data/bank_048/SpikeSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame12:
 	INCBIN "data/bank_048/SpikeSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame13:
 	INCBIN "data/bank_048/SpikeSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame14:
 	INCBIN "data/bank_048/SpikeSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame15:
 	INCBIN "data/bank_048/SpikeSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame16:
 	INCBIN "data/bank_048/SpikeSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame17:
 	INCBIN "data/bank_048/SpikeSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame18:
 	INCBIN "data/bank_048/SpikeSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame19:
 	INCBIN "data/bank_048/SpikeSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame20:
 	INCBIN "data/bank_048/SpikeSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame21:
 	INCBIN "data/bank_048/SpikeSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame22:
 	INCBIN "data/bank_048/SpikeSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame23:
 	INCBIN "data/bank_048/SpikeSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame24:
 	INCBIN "data/bank_048/SpikeSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame25:
 	INCBIN "data/bank_048/SpikeSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame26:
 	INCBIN "data/bank_048/SpikeSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame27:
 	INCBIN "data/bank_048/SpikeSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame28:
 	INCBIN "data/bank_048/SpikeSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame29:
 	INCBIN "data/bank_048/SpikeSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame30:
 	INCBIN "data/bank_048/SpikeSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame31:
 	INCBIN "data/bank_048/SpikeSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame32:
 	INCBIN "data/bank_048/SpikeSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame33:
 	INCBIN "data/bank_048/SpikeSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame34:
 	INCBIN "data/bank_048/SpikeSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame35:
 	INCBIN "data/bank_048/SpikeSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame36:
 	INCBIN "data/bank_048/SpikeSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame37:
 	INCBIN "data/bank_048/SpikeSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame38:
 	INCBIN "data/bank_048/SpikeSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame39:
 	INCBIN "data/bank_048/SpikeSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame40:
 	INCBIN "data/bank_048/SpikeSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame41:
 	INCBIN "data/bank_048/SpikeSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame42:
 	INCBIN "data/bank_048/SpikeSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame43:
 	INCBIN "data/bank_048/SpikeSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame44:
 	INCBIN "data/bank_048/SpikeSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame45:
 	INCBIN "data/bank_048/SpikeSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame46:
 	INCBIN "data/bank_048/SpikeSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame47:
 	INCBIN "data/bank_048/SpikeSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame48:
 	INCBIN "data/bank_048/SpikeSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame49:
 	INCBIN "data/bank_048/SpikeSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame50:
 	INCBIN "data/bank_048/SpikeSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame51:
 	INCBIN "data/bank_048/SpikeSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame52:
 	INCBIN "data/bank_048/SpikeSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame53:
 	INCBIN "data/bank_048/SpikeSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame54:
 	INCBIN "data/bank_048/SpikeSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFrame55:
 	INCBIN "data/bank_048/SpikeSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 SpikeSpriteFramesUnused:
 	INCBIN "data/bank_048/SpikeSpriteFramesUnused.bin" ; $7650, 1680 bytes
 SpikeSpriteOam:

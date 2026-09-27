@@ -41,6 +41,7 @@ MatchMenuItemGfxPointers:
 	dw MatchMenuItemGfx_QuitMinigame ; record 23
 	; $5274, 12 bytes (bytes:12)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	ds ALIGN[4]
 ScoreboardModeGfxTail:
 	INCBIN "data/bank_006/ScoreboardModeGfxTail.bin" ; $5280, 64 bytes
 MatchMenuItemGfx_Rules:

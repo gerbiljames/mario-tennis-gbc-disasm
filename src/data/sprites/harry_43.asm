@@ -151,118 +151,175 @@ HarrySpriteFrames:
 	dw HarrySpriteFrame55 ; $412a
 	dw HarrySpriteFrame55 ; $412c
 	dw HarrySpriteFrame55 ; $412e
+	ds ALIGN[4]
 HarrySpriteFrame00:
 	INCBIN "data/bank_043/HarrySpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame01:
 	INCBIN "data/bank_043/HarrySpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame02:
 	INCBIN "data/bank_043/HarrySpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame03:
 	INCBIN "data/bank_043/HarrySpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame04:
 	INCBIN "data/bank_043/HarrySpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame05:
 	INCBIN "data/bank_043/HarrySpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame06:
 	INCBIN "data/bank_043/HarrySpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame07:
 	INCBIN "data/bank_043/HarrySpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame08:
 	INCBIN "data/bank_043/HarrySpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame09:
 	INCBIN "data/bank_043/HarrySpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame10:
 	INCBIN "data/bank_043/HarrySpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame11:
 	INCBIN "data/bank_043/HarrySpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame12:
 	INCBIN "data/bank_043/HarrySpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame13:
 	INCBIN "data/bank_043/HarrySpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame14:
 	INCBIN "data/bank_043/HarrySpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame15:
 	INCBIN "data/bank_043/HarrySpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame16:
 	INCBIN "data/bank_043/HarrySpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame17:
 	INCBIN "data/bank_043/HarrySpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame18:
 	INCBIN "data/bank_043/HarrySpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame19:
 	INCBIN "data/bank_043/HarrySpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame20:
 	INCBIN "data/bank_043/HarrySpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame21:
 	INCBIN "data/bank_043/HarrySpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame22:
 	INCBIN "data/bank_043/HarrySpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame23:
 	INCBIN "data/bank_043/HarrySpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame24:
 	INCBIN "data/bank_043/HarrySpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame25:
 	INCBIN "data/bank_043/HarrySpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame26:
 	INCBIN "data/bank_043/HarrySpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame27:
 	INCBIN "data/bank_043/HarrySpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame28:
 	INCBIN "data/bank_043/HarrySpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame29:
 	INCBIN "data/bank_043/HarrySpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame30:
 	INCBIN "data/bank_043/HarrySpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame31:
 	INCBIN "data/bank_043/HarrySpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame32:
 	INCBIN "data/bank_043/HarrySpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame33:
 	INCBIN "data/bank_043/HarrySpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame34:
 	INCBIN "data/bank_043/HarrySpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame35:
 	INCBIN "data/bank_043/HarrySpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame36:
 	INCBIN "data/bank_043/HarrySpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame37:
 	INCBIN "data/bank_043/HarrySpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame38:
 	INCBIN "data/bank_043/HarrySpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame39:
 	INCBIN "data/bank_043/HarrySpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame40:
 	INCBIN "data/bank_043/HarrySpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 HarrySpriteFrame41:
 	INCBIN "data/bank_043/HarrySpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 HarrySpriteFrame42:
 	INCBIN "data/bank_043/HarrySpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame43:
 	INCBIN "data/bank_043/HarrySpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame44:
 	INCBIN "data/bank_043/HarrySpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame45:
 	INCBIN "data/bank_043/HarrySpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame46:
 	INCBIN "data/bank_043/HarrySpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame47:
 	INCBIN "data/bank_043/HarrySpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame48:
 	INCBIN "data/bank_043/HarrySpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame49:
 	INCBIN "data/bank_043/HarrySpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame50:
 	INCBIN "data/bank_043/HarrySpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame51:
 	INCBIN "data/bank_043/HarrySpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame52:
 	INCBIN "data/bank_043/HarrySpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame53:
 	INCBIN "data/bank_043/HarrySpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame54:
 	INCBIN "data/bank_043/HarrySpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFrame55:
 	INCBIN "data/bank_043/HarrySpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 HarrySpriteFramesUnused:
 	INCBIN "data/bank_043/HarrySpriteFramesUnused.bin" ; $7650, 1680 bytes
 HarrySpriteOam:

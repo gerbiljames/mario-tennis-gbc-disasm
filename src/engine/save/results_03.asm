@@ -117,6 +117,7 @@ InvalidateCurrentSlotBlock:
 	ret ; $52e2
 	; $52e3, 13 bytes (fill)
 	ds 13, $00
+	ds ALIGN[4]
 SaveEditorCursorTiles_03:
 	INCBIN "data/bank_003/SaveEditorCursorTiles_03.bin" ; $52f0, 32 bytes
 Unused_03_SaveSlotDebugEditor:

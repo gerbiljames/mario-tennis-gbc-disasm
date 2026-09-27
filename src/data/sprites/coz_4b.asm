@@ -151,118 +151,175 @@ BCozSpriteFrames:
 	dw BCozSpriteFrame55 ; $412a
 	dw BCozSpriteFrame55 ; $412c
 	dw BCozSpriteFrame55 ; $412e
+	ds ALIGN[4]
 BCozSpriteFrame00:
 	INCBIN "data/bank_04b/BCozSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame01:
 	INCBIN "data/bank_04b/BCozSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame02:
 	INCBIN "data/bank_04b/BCozSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame03:
 	INCBIN "data/bank_04b/BCozSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame04:
 	INCBIN "data/bank_04b/BCozSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame05:
 	INCBIN "data/bank_04b/BCozSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame06:
 	INCBIN "data/bank_04b/BCozSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame07:
 	INCBIN "data/bank_04b/BCozSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame08:
 	INCBIN "data/bank_04b/BCozSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame09:
 	INCBIN "data/bank_04b/BCozSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame10:
 	INCBIN "data/bank_04b/BCozSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame11:
 	INCBIN "data/bank_04b/BCozSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame12:
 	INCBIN "data/bank_04b/BCozSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame13:
 	INCBIN "data/bank_04b/BCozSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame14:
 	INCBIN "data/bank_04b/BCozSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame15:
 	INCBIN "data/bank_04b/BCozSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame16:
 	INCBIN "data/bank_04b/BCozSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame17:
 	INCBIN "data/bank_04b/BCozSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame18:
 	INCBIN "data/bank_04b/BCozSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame19:
 	INCBIN "data/bank_04b/BCozSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame20:
 	INCBIN "data/bank_04b/BCozSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame21:
 	INCBIN "data/bank_04b/BCozSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame22:
 	INCBIN "data/bank_04b/BCozSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame23:
 	INCBIN "data/bank_04b/BCozSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame24:
 	INCBIN "data/bank_04b/BCozSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame25:
 	INCBIN "data/bank_04b/BCozSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame26:
 	INCBIN "data/bank_04b/BCozSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame27:
 	INCBIN "data/bank_04b/BCozSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame28:
 	INCBIN "data/bank_04b/BCozSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame29:
 	INCBIN "data/bank_04b/BCozSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame30:
 	INCBIN "data/bank_04b/BCozSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame31:
 	INCBIN "data/bank_04b/BCozSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame32:
 	INCBIN "data/bank_04b/BCozSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame33:
 	INCBIN "data/bank_04b/BCozSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame34:
 	INCBIN "data/bank_04b/BCozSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame35:
 	INCBIN "data/bank_04b/BCozSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame36:
 	INCBIN "data/bank_04b/BCozSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame37:
 	INCBIN "data/bank_04b/BCozSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame38:
 	INCBIN "data/bank_04b/BCozSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame39:
 	INCBIN "data/bank_04b/BCozSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame40:
 	INCBIN "data/bank_04b/BCozSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 BCozSpriteFrame41:
 	INCBIN "data/bank_04b/BCozSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 BCozSpriteFrame42:
 	INCBIN "data/bank_04b/BCozSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame43:
 	INCBIN "data/bank_04b/BCozSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame44:
 	INCBIN "data/bank_04b/BCozSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame45:
 	INCBIN "data/bank_04b/BCozSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame46:
 	INCBIN "data/bank_04b/BCozSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame47:
 	INCBIN "data/bank_04b/BCozSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame48:
 	INCBIN "data/bank_04b/BCozSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame49:
 	INCBIN "data/bank_04b/BCozSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame50:
 	INCBIN "data/bank_04b/BCozSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame51:
 	INCBIN "data/bank_04b/BCozSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame52:
 	INCBIN "data/bank_04b/BCozSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame53:
 	INCBIN "data/bank_04b/BCozSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame54:
 	INCBIN "data/bank_04b/BCozSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFrame55:
 	INCBIN "data/bank_04b/BCozSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 BCozSpriteFramesUnused:
 	INCBIN "data/bank_04b/BCozSpriteFramesUnused.bin" ; $7650, 1680 bytes
 BCozSpriteOam:

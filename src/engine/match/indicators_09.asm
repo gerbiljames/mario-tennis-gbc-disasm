@@ -80,6 +80,7 @@ VramTileset_09:
 	dw TilesetTiles_09 + $16c0, $0004 ; record 27
 	dw TilesetTiles_09 + $1700, $0010 ; record 28
 	db $00, $00
+	ds ALIGN[4]
 TilesetTiles_09:
 	INCBIN "data/bank_009/TilesetTiles_09.bin" ; $4900, 6144 bytes
 LoadScoreDigitGfx:
@@ -149,6 +150,7 @@ Player1ScoreDigitGfxSource:
 	INCBIN "data/bank_009/Player1ScoreDigitGfxSource.bin" ; $6171, 4 bytes
 LoadPlayer2ScoreDigitGfxTable:
 	INCBIN "data/bank_009/LoadPlayer2ScoreDigitGfxTable.bin" ; $6175, 2635 bytes
+	ds ALIGN[4]
 DeuceAdvantageTiles:
 	INCBIN "data/bank_009/DeuceAdvantageTiles.bin" ; $6bc0, 128 bytes
 LoadServeGfx:

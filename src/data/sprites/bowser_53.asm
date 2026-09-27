@@ -151,118 +151,175 @@ BowserSpriteFrames:
 	dw BowserSpriteFrame55 ; $412a
 	dw BowserSpriteFrame55 ; $412c
 	dw BowserSpriteFrame55 ; $412e
+	ds ALIGN[4]
 BowserSpriteFrame00:
 	INCBIN "data/bank_053/BowserSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame01:
 	INCBIN "data/bank_053/BowserSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame02:
 	INCBIN "data/bank_053/BowserSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame03:
 	INCBIN "data/bank_053/BowserSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame04:
 	INCBIN "data/bank_053/BowserSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame05:
 	INCBIN "data/bank_053/BowserSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame06:
 	INCBIN "data/bank_053/BowserSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame07:
 	INCBIN "data/bank_053/BowserSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame08:
 	INCBIN "data/bank_053/BowserSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame09:
 	INCBIN "data/bank_053/BowserSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame10:
 	INCBIN "data/bank_053/BowserSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame11:
 	INCBIN "data/bank_053/BowserSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame12:
 	INCBIN "data/bank_053/BowserSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame13:
 	INCBIN "data/bank_053/BowserSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame14:
 	INCBIN "data/bank_053/BowserSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame15:
 	INCBIN "data/bank_053/BowserSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame16:
 	INCBIN "data/bank_053/BowserSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame17:
 	INCBIN "data/bank_053/BowserSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame18:
 	INCBIN "data/bank_053/BowserSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame19:
 	INCBIN "data/bank_053/BowserSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame20:
 	INCBIN "data/bank_053/BowserSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame21:
 	INCBIN "data/bank_053/BowserSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame22:
 	INCBIN "data/bank_053/BowserSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame23:
 	INCBIN "data/bank_053/BowserSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame24:
 	INCBIN "data/bank_053/BowserSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame25:
 	INCBIN "data/bank_053/BowserSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame26:
 	INCBIN "data/bank_053/BowserSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame27:
 	INCBIN "data/bank_053/BowserSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame28:
 	INCBIN "data/bank_053/BowserSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame29:
 	INCBIN "data/bank_053/BowserSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame30:
 	INCBIN "data/bank_053/BowserSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame31:
 	INCBIN "data/bank_053/BowserSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame32:
 	INCBIN "data/bank_053/BowserSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame33:
 	INCBIN "data/bank_053/BowserSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame34:
 	INCBIN "data/bank_053/BowserSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame35:
 	INCBIN "data/bank_053/BowserSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame36:
 	INCBIN "data/bank_053/BowserSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame37:
 	INCBIN "data/bank_053/BowserSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame38:
 	INCBIN "data/bank_053/BowserSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame39:
 	INCBIN "data/bank_053/BowserSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame40:
 	INCBIN "data/bank_053/BowserSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 BowserSpriteFrame41:
 	INCBIN "data/bank_053/BowserSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 BowserSpriteFrame42:
 	INCBIN "data/bank_053/BowserSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame43:
 	INCBIN "data/bank_053/BowserSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame44:
 	INCBIN "data/bank_053/BowserSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame45:
 	INCBIN "data/bank_053/BowserSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame46:
 	INCBIN "data/bank_053/BowserSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame47:
 	INCBIN "data/bank_053/BowserSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame48:
 	INCBIN "data/bank_053/BowserSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame49:
 	INCBIN "data/bank_053/BowserSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame50:
 	INCBIN "data/bank_053/BowserSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame51:
 	INCBIN "data/bank_053/BowserSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame52:
 	INCBIN "data/bank_053/BowserSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame53:
 	INCBIN "data/bank_053/BowserSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame54:
 	INCBIN "data/bank_053/BowserSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFrame55:
 	INCBIN "data/bank_053/BowserSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 BowserSpriteFramesUnused:
 	INCBIN "data/bank_053/BowserSpriteFramesUnused.bin" ; $7650, 1680 bytes
 BowserSpriteOam:

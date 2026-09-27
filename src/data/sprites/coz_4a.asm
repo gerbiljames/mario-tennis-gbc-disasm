@@ -151,118 +151,175 @@ ACozSpriteFrames:
 	dw ACozSpriteFrame55 ; $412a
 	dw ACozSpriteFrame55 ; $412c
 	dw ACozSpriteFrame55 ; $412e
+	ds ALIGN[4]
 ACozSpriteFrame00:
 	INCBIN "data/bank_04a/ACozSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame01:
 	INCBIN "data/bank_04a/ACozSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame02:
 	INCBIN "data/bank_04a/ACozSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame03:
 	INCBIN "data/bank_04a/ACozSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame04:
 	INCBIN "data/bank_04a/ACozSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame05:
 	INCBIN "data/bank_04a/ACozSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame06:
 	INCBIN "data/bank_04a/ACozSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame07:
 	INCBIN "data/bank_04a/ACozSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame08:
 	INCBIN "data/bank_04a/ACozSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame09:
 	INCBIN "data/bank_04a/ACozSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame10:
 	INCBIN "data/bank_04a/ACozSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame11:
 	INCBIN "data/bank_04a/ACozSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame12:
 	INCBIN "data/bank_04a/ACozSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame13:
 	INCBIN "data/bank_04a/ACozSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame14:
 	INCBIN "data/bank_04a/ACozSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame15:
 	INCBIN "data/bank_04a/ACozSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame16:
 	INCBIN "data/bank_04a/ACozSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame17:
 	INCBIN "data/bank_04a/ACozSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame18:
 	INCBIN "data/bank_04a/ACozSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame19:
 	INCBIN "data/bank_04a/ACozSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame20:
 	INCBIN "data/bank_04a/ACozSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame21:
 	INCBIN "data/bank_04a/ACozSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame22:
 	INCBIN "data/bank_04a/ACozSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame23:
 	INCBIN "data/bank_04a/ACozSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame24:
 	INCBIN "data/bank_04a/ACozSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame25:
 	INCBIN "data/bank_04a/ACozSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame26:
 	INCBIN "data/bank_04a/ACozSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame27:
 	INCBIN "data/bank_04a/ACozSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame28:
 	INCBIN "data/bank_04a/ACozSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame29:
 	INCBIN "data/bank_04a/ACozSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame30:
 	INCBIN "data/bank_04a/ACozSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame31:
 	INCBIN "data/bank_04a/ACozSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame32:
 	INCBIN "data/bank_04a/ACozSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame33:
 	INCBIN "data/bank_04a/ACozSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame34:
 	INCBIN "data/bank_04a/ACozSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame35:
 	INCBIN "data/bank_04a/ACozSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame36:
 	INCBIN "data/bank_04a/ACozSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame37:
 	INCBIN "data/bank_04a/ACozSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame38:
 	INCBIN "data/bank_04a/ACozSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame39:
 	INCBIN "data/bank_04a/ACozSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame40:
 	INCBIN "data/bank_04a/ACozSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 ACozSpriteFrame41:
 	INCBIN "data/bank_04a/ACozSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 ACozSpriteFrame42:
 	INCBIN "data/bank_04a/ACozSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame43:
 	INCBIN "data/bank_04a/ACozSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame44:
 	INCBIN "data/bank_04a/ACozSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame45:
 	INCBIN "data/bank_04a/ACozSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame46:
 	INCBIN "data/bank_04a/ACozSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame47:
 	INCBIN "data/bank_04a/ACozSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame48:
 	INCBIN "data/bank_04a/ACozSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame49:
 	INCBIN "data/bank_04a/ACozSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame50:
 	INCBIN "data/bank_04a/ACozSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame51:
 	INCBIN "data/bank_04a/ACozSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame52:
 	INCBIN "data/bank_04a/ACozSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame53:
 	INCBIN "data/bank_04a/ACozSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame54:
 	INCBIN "data/bank_04a/ACozSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFrame55:
 	INCBIN "data/bank_04a/ACozSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 ACozSpriteFramesUnused:
 	INCBIN "data/bank_04a/ACozSpriteFramesUnused.bin" ; $7650, 1680 bytes
 ACozSpriteOam:

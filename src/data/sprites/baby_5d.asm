@@ -151,118 +151,175 @@ BabyMarioSpriteFrames:
 	dw BabyMarioSpriteFrame55 ; $412a
 	dw BabyMarioSpriteFrame55 ; $412c
 	dw BabyMarioSpriteFrame55 ; $412e
+	ds ALIGN[4]
 BabyMarioSpriteFrame00:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame01:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame02:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame03:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame04:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame05:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame06:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame07:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame08:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame09:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame10:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame11:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame12:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame13:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame14:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame15:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame16:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame17:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame18:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame19:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame20:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame21:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame22:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame23:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame24:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame25:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame26:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame27:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame28:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame29:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame30:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame31:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame32:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame33:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame34:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame35:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame36:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame37:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame38:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame39:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame40:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame41:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame42:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame43:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame44:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame45:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame46:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame47:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame48:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame49:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame50:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame51:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame52:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame53:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame54:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFrame55:
 	INCBIN "data/bank_05d/BabyMarioSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 BabyMarioSpriteFramesUnused:
 	INCBIN "data/bank_05d/BabyMarioSpriteFramesUnused.bin" ; $7650, 1680 bytes
 BabyMarioSpriteOam:

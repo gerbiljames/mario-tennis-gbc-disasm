@@ -151,118 +151,175 @@ FaySpriteFrames:
 	dw FaySpriteFrame55 ; $412a
 	dw FaySpriteFrame55 ; $412c
 	dw FaySpriteFrame55 ; $412e
+	ds ALIGN[4]
 FaySpriteFrame00:
 	INCBIN "data/bank_059/FaySpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame01:
 	INCBIN "data/bank_059/FaySpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame02:
 	INCBIN "data/bank_059/FaySpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame03:
 	INCBIN "data/bank_059/FaySpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame04:
 	INCBIN "data/bank_059/FaySpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame05:
 	INCBIN "data/bank_059/FaySpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame06:
 	INCBIN "data/bank_059/FaySpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame07:
 	INCBIN "data/bank_059/FaySpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame08:
 	INCBIN "data/bank_059/FaySpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame09:
 	INCBIN "data/bank_059/FaySpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame10:
 	INCBIN "data/bank_059/FaySpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame11:
 	INCBIN "data/bank_059/FaySpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame12:
 	INCBIN "data/bank_059/FaySpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame13:
 	INCBIN "data/bank_059/FaySpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame14:
 	INCBIN "data/bank_059/FaySpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame15:
 	INCBIN "data/bank_059/FaySpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame16:
 	INCBIN "data/bank_059/FaySpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame17:
 	INCBIN "data/bank_059/FaySpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame18:
 	INCBIN "data/bank_059/FaySpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame19:
 	INCBIN "data/bank_059/FaySpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame20:
 	INCBIN "data/bank_059/FaySpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame21:
 	INCBIN "data/bank_059/FaySpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame22:
 	INCBIN "data/bank_059/FaySpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame23:
 	INCBIN "data/bank_059/FaySpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame24:
 	INCBIN "data/bank_059/FaySpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame25:
 	INCBIN "data/bank_059/FaySpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame26:
 	INCBIN "data/bank_059/FaySpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame27:
 	INCBIN "data/bank_059/FaySpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame28:
 	INCBIN "data/bank_059/FaySpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame29:
 	INCBIN "data/bank_059/FaySpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame30:
 	INCBIN "data/bank_059/FaySpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame31:
 	INCBIN "data/bank_059/FaySpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame32:
 	INCBIN "data/bank_059/FaySpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame33:
 	INCBIN "data/bank_059/FaySpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame34:
 	INCBIN "data/bank_059/FaySpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame35:
 	INCBIN "data/bank_059/FaySpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame36:
 	INCBIN "data/bank_059/FaySpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame37:
 	INCBIN "data/bank_059/FaySpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame38:
 	INCBIN "data/bank_059/FaySpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame39:
 	INCBIN "data/bank_059/FaySpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame40:
 	INCBIN "data/bank_059/FaySpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 FaySpriteFrame41:
 	INCBIN "data/bank_059/FaySpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 FaySpriteFrame42:
 	INCBIN "data/bank_059/FaySpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame43:
 	INCBIN "data/bank_059/FaySpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame44:
 	INCBIN "data/bank_059/FaySpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame45:
 	INCBIN "data/bank_059/FaySpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame46:
 	INCBIN "data/bank_059/FaySpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame47:
 	INCBIN "data/bank_059/FaySpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame48:
 	INCBIN "data/bank_059/FaySpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame49:
 	INCBIN "data/bank_059/FaySpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame50:
 	INCBIN "data/bank_059/FaySpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame51:
 	INCBIN "data/bank_059/FaySpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame52:
 	INCBIN "data/bank_059/FaySpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame53:
 	INCBIN "data/bank_059/FaySpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame54:
 	INCBIN "data/bank_059/FaySpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 FaySpriteFrame55:
 	INCBIN "data/bank_059/FaySpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 FaySpriteFramesUnused:
 	INCBIN "data/bank_059/FaySpriteFramesUnused.bin" ; $7650, 1680 bytes
 FaySpriteOam:

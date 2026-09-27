@@ -422,6 +422,7 @@ Unused_05_DrawGlyphString:
 	ret ; $7915
 	; $7916, 10 bytes (fill)
 	ds 10, $00
+	ds ALIGN[4]
 FontGlyphs:
 	INCBIN "data/bank_005/FontGlyphs.bin" ; $7920, 1632 bytes
 GlyphWidths_05:

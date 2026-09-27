@@ -1,3 +1,4 @@
+	ds ALIGN[4]
 PaletteEditorCursorTiles_05:
 	INCBIN "data/bank_005/PaletteEditorCursorTiles_05.bin" ; $6890, 192 bytes
 GetSelectedBGPaletteColorPtr:

@@ -151,118 +151,175 @@ PamSpriteFrames:
 	dw PamSpriteFrame55 ; $412a
 	dw PamSpriteFrame55 ; $412c
 	dw PamSpriteFrame55 ; $412e
+	ds ALIGN[4]
 PamSpriteFrame00:
 	INCBIN "data/bank_057/PamSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame01:
 	INCBIN "data/bank_057/PamSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame02:
 	INCBIN "data/bank_057/PamSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame03:
 	INCBIN "data/bank_057/PamSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame04:
 	INCBIN "data/bank_057/PamSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame05:
 	INCBIN "data/bank_057/PamSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame06:
 	INCBIN "data/bank_057/PamSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame07:
 	INCBIN "data/bank_057/PamSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame08:
 	INCBIN "data/bank_057/PamSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame09:
 	INCBIN "data/bank_057/PamSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame10:
 	INCBIN "data/bank_057/PamSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame11:
 	INCBIN "data/bank_057/PamSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame12:
 	INCBIN "data/bank_057/PamSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame13:
 	INCBIN "data/bank_057/PamSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame14:
 	INCBIN "data/bank_057/PamSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame15:
 	INCBIN "data/bank_057/PamSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame16:
 	INCBIN "data/bank_057/PamSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame17:
 	INCBIN "data/bank_057/PamSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame18:
 	INCBIN "data/bank_057/PamSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame19:
 	INCBIN "data/bank_057/PamSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame20:
 	INCBIN "data/bank_057/PamSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame21:
 	INCBIN "data/bank_057/PamSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame22:
 	INCBIN "data/bank_057/PamSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame23:
 	INCBIN "data/bank_057/PamSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame24:
 	INCBIN "data/bank_057/PamSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame25:
 	INCBIN "data/bank_057/PamSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame26:
 	INCBIN "data/bank_057/PamSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame27:
 	INCBIN "data/bank_057/PamSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame28:
 	INCBIN "data/bank_057/PamSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame29:
 	INCBIN "data/bank_057/PamSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame30:
 	INCBIN "data/bank_057/PamSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame31:
 	INCBIN "data/bank_057/PamSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame32:
 	INCBIN "data/bank_057/PamSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame33:
 	INCBIN "data/bank_057/PamSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame34:
 	INCBIN "data/bank_057/PamSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame35:
 	INCBIN "data/bank_057/PamSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame36:
 	INCBIN "data/bank_057/PamSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame37:
 	INCBIN "data/bank_057/PamSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame38:
 	INCBIN "data/bank_057/PamSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame39:
 	INCBIN "data/bank_057/PamSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame40:
 	INCBIN "data/bank_057/PamSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 PamSpriteFrame41:
 	INCBIN "data/bank_057/PamSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 PamSpriteFrame42:
 	INCBIN "data/bank_057/PamSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame43:
 	INCBIN "data/bank_057/PamSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame44:
 	INCBIN "data/bank_057/PamSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame45:
 	INCBIN "data/bank_057/PamSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame46:
 	INCBIN "data/bank_057/PamSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame47:
 	INCBIN "data/bank_057/PamSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame48:
 	INCBIN "data/bank_057/PamSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame49:
 	INCBIN "data/bank_057/PamSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame50:
 	INCBIN "data/bank_057/PamSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame51:
 	INCBIN "data/bank_057/PamSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame52:
 	INCBIN "data/bank_057/PamSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame53:
 	INCBIN "data/bank_057/PamSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame54:
 	INCBIN "data/bank_057/PamSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 PamSpriteFrame55:
 	INCBIN "data/bank_057/PamSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 PamSpriteFramesUnused:
 	INCBIN "data/bank_057/PamSpriteFramesUnused.bin" ; $7650, 1680 bytes
 PamSpriteOam:

@@ -151,118 +151,175 @@ JoySpriteFrames:
 	dw JoySpriteFrame55 ; $412a
 	dw JoySpriteFrame55 ; $412c
 	dw JoySpriteFrame55 ; $412e
+	ds ALIGN[4]
 JoySpriteFrame00:
 	INCBIN "data/bank_056/JoySpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame01:
 	INCBIN "data/bank_056/JoySpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame02:
 	INCBIN "data/bank_056/JoySpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame03:
 	INCBIN "data/bank_056/JoySpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame04:
 	INCBIN "data/bank_056/JoySpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame05:
 	INCBIN "data/bank_056/JoySpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame06:
 	INCBIN "data/bank_056/JoySpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame07:
 	INCBIN "data/bank_056/JoySpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame08:
 	INCBIN "data/bank_056/JoySpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame09:
 	INCBIN "data/bank_056/JoySpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame10:
 	INCBIN "data/bank_056/JoySpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame11:
 	INCBIN "data/bank_056/JoySpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame12:
 	INCBIN "data/bank_056/JoySpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame13:
 	INCBIN "data/bank_056/JoySpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame14:
 	INCBIN "data/bank_056/JoySpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame15:
 	INCBIN "data/bank_056/JoySpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame16:
 	INCBIN "data/bank_056/JoySpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame17:
 	INCBIN "data/bank_056/JoySpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame18:
 	INCBIN "data/bank_056/JoySpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame19:
 	INCBIN "data/bank_056/JoySpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame20:
 	INCBIN "data/bank_056/JoySpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame21:
 	INCBIN "data/bank_056/JoySpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame22:
 	INCBIN "data/bank_056/JoySpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame23:
 	INCBIN "data/bank_056/JoySpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame24:
 	INCBIN "data/bank_056/JoySpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame25:
 	INCBIN "data/bank_056/JoySpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame26:
 	INCBIN "data/bank_056/JoySpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame27:
 	INCBIN "data/bank_056/JoySpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame28:
 	INCBIN "data/bank_056/JoySpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame29:
 	INCBIN "data/bank_056/JoySpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame30:
 	INCBIN "data/bank_056/JoySpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame31:
 	INCBIN "data/bank_056/JoySpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame32:
 	INCBIN "data/bank_056/JoySpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame33:
 	INCBIN "data/bank_056/JoySpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame34:
 	INCBIN "data/bank_056/JoySpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame35:
 	INCBIN "data/bank_056/JoySpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame36:
 	INCBIN "data/bank_056/JoySpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame37:
 	INCBIN "data/bank_056/JoySpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame38:
 	INCBIN "data/bank_056/JoySpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame39:
 	INCBIN "data/bank_056/JoySpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame40:
 	INCBIN "data/bank_056/JoySpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 JoySpriteFrame41:
 	INCBIN "data/bank_056/JoySpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 JoySpriteFrame42:
 	INCBIN "data/bank_056/JoySpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame43:
 	INCBIN "data/bank_056/JoySpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame44:
 	INCBIN "data/bank_056/JoySpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame45:
 	INCBIN "data/bank_056/JoySpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame46:
 	INCBIN "data/bank_056/JoySpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame47:
 	INCBIN "data/bank_056/JoySpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame48:
 	INCBIN "data/bank_056/JoySpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame49:
 	INCBIN "data/bank_056/JoySpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame50:
 	INCBIN "data/bank_056/JoySpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame51:
 	INCBIN "data/bank_056/JoySpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame52:
 	INCBIN "data/bank_056/JoySpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame53:
 	INCBIN "data/bank_056/JoySpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame54:
 	INCBIN "data/bank_056/JoySpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 JoySpriteFrame55:
 	INCBIN "data/bank_056/JoySpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 JoySpriteFramesUnused:
 	INCBIN "data/bank_056/JoySpriteFramesUnused.bin" ; $7650, 1680 bytes
 JoySpriteOam:

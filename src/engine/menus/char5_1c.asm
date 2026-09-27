@@ -1,51 +1,76 @@
+	ds ALIGN[4]
 UnusedShiftGfx00:
 	INCBIN "data/bank_01c/UnusedShiftGfx00.bin" ; $6880, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx01:
 	INCBIN "data/bank_01c/UnusedShiftGfx01.bin" ; $68c0, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx02:
 	INCBIN "data/bank_01c/UnusedShiftGfx02.bin" ; $6900, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx03:
 	INCBIN "data/bank_01c/UnusedShiftGfx03.bin" ; $6940, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx04:
 	INCBIN "data/bank_01c/UnusedShiftGfx04.bin" ; $6980, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx05:
 	INCBIN "data/bank_01c/UnusedShiftGfx05.bin" ; $69c0, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx06:
 	INCBIN "data/bank_01c/UnusedShiftGfx06.bin" ; $6a00, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx07:
 	INCBIN "data/bank_01c/UnusedShiftGfx07.bin" ; $6a40, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx08:
 	INCBIN "data/bank_01c/UnusedShiftGfx08.bin" ; $6a80, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx09:
 	INCBIN "data/bank_01c/UnusedShiftGfx09.bin" ; $6ac0, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx10:
 	INCBIN "data/bank_01c/UnusedShiftGfx10.bin" ; $6b00, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx11:
 	INCBIN "data/bank_01c/UnusedShiftGfx11.bin" ; $6b40, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx12:
 	INCBIN "data/bank_01c/UnusedShiftGfx12.bin" ; $6b80, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx13:
 	INCBIN "data/bank_01c/UnusedShiftGfx13.bin" ; $6bc0, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx14:
 	INCBIN "data/bank_01c/UnusedShiftGfx14.bin" ; $6c00, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx15:
 	INCBIN "data/bank_01c/UnusedShiftGfx15.bin" ; $6c40, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx16:
 	INCBIN "data/bank_01c/UnusedShiftGfx16.bin" ; $6c80, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx17:
 	INCBIN "data/bank_01c/UnusedShiftGfx17.bin" ; $6cc0, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx18:
 	INCBIN "data/bank_01c/UnusedShiftGfx18.bin" ; $6d00, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx19:
 	INCBIN "data/bank_01c/UnusedShiftGfx19.bin" ; $6d40, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx20:
 	INCBIN "data/bank_01c/UnusedShiftGfx20.bin" ; $6d80, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx21:
 	INCBIN "data/bank_01c/UnusedShiftGfx21.bin" ; $6dc0, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx22:
 	INCBIN "data/bank_01c/UnusedShiftGfx22.bin" ; $6e00, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx23:
 	INCBIN "data/bank_01c/UnusedShiftGfx23.bin" ; $6e40, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx24:
 	INCBIN "data/bank_01c/UnusedShiftGfx24.bin" ; $6e80, 64 bytes
 UnusedShiftGfx25:
@@ -61,14 +86,19 @@ UnusedShiftGfx26:
 	db $80, $00, $00, $00, $00, $00, $80, $00, $20, $c0 ; 0x20
 CharDataScreenTiles_1c:
 	INCBIN "data/bank_01c/CharDataScreenTiles_1c.bin" ; $6f2a, 22 bytes
+	ds ALIGN[4]
 UnusedShiftGfx27:
 	INCBIN "data/bank_01c/UnusedShiftGfx27.bin" ; $6f40, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx28:
 	INCBIN "data/bank_01c/UnusedShiftGfx28.bin" ; $6f80, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx29:
 	INCBIN "data/bank_01c/UnusedShiftGfx29.bin" ; $6fc0, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx30:
 	INCBIN "data/bank_01c/UnusedShiftGfx30.bin" ; $7000, 64 bytes
+	ds ALIGN[4]
 UnusedShiftGfx31:
 	INCBIN "data/bank_01c/UnusedShiftGfx31.bin" ; $7040, 64 bytes
 CharDataScreenGfx13:

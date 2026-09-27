@@ -151,118 +151,175 @@ MarioSpriteFrames:
 	dw MarioSpriteFrame55 ; $412a
 	dw MarioSpriteFrame55 ; $412c
 	dw MarioSpriteFrame55 ; $412e
+	ds ALIGN[4]
 MarioSpriteFrame00:
 	INCBIN "data/bank_050/MarioSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame01:
 	INCBIN "data/bank_050/MarioSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame02:
 	INCBIN "data/bank_050/MarioSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame03:
 	INCBIN "data/bank_050/MarioSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame04:
 	INCBIN "data/bank_050/MarioSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame05:
 	INCBIN "data/bank_050/MarioSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame06:
 	INCBIN "data/bank_050/MarioSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame07:
 	INCBIN "data/bank_050/MarioSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame08:
 	INCBIN "data/bank_050/MarioSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame09:
 	INCBIN "data/bank_050/MarioSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame10:
 	INCBIN "data/bank_050/MarioSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame11:
 	INCBIN "data/bank_050/MarioSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame12:
 	INCBIN "data/bank_050/MarioSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame13:
 	INCBIN "data/bank_050/MarioSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame14:
 	INCBIN "data/bank_050/MarioSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame15:
 	INCBIN "data/bank_050/MarioSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame16:
 	INCBIN "data/bank_050/MarioSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame17:
 	INCBIN "data/bank_050/MarioSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame18:
 	INCBIN "data/bank_050/MarioSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame19:
 	INCBIN "data/bank_050/MarioSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame20:
 	INCBIN "data/bank_050/MarioSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame21:
 	INCBIN "data/bank_050/MarioSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame22:
 	INCBIN "data/bank_050/MarioSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame23:
 	INCBIN "data/bank_050/MarioSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame24:
 	INCBIN "data/bank_050/MarioSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame25:
 	INCBIN "data/bank_050/MarioSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame26:
 	INCBIN "data/bank_050/MarioSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame27:
 	INCBIN "data/bank_050/MarioSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame28:
 	INCBIN "data/bank_050/MarioSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame29:
 	INCBIN "data/bank_050/MarioSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame30:
 	INCBIN "data/bank_050/MarioSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame31:
 	INCBIN "data/bank_050/MarioSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame32:
 	INCBIN "data/bank_050/MarioSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame33:
 	INCBIN "data/bank_050/MarioSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame34:
 	INCBIN "data/bank_050/MarioSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame35:
 	INCBIN "data/bank_050/MarioSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame36:
 	INCBIN "data/bank_050/MarioSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame37:
 	INCBIN "data/bank_050/MarioSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame38:
 	INCBIN "data/bank_050/MarioSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame39:
 	INCBIN "data/bank_050/MarioSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame40:
 	INCBIN "data/bank_050/MarioSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 MarioSpriteFrame41:
 	INCBIN "data/bank_050/MarioSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 MarioSpriteFrame42:
 	INCBIN "data/bank_050/MarioSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame43:
 	INCBIN "data/bank_050/MarioSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame44:
 	INCBIN "data/bank_050/MarioSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame45:
 	INCBIN "data/bank_050/MarioSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame46:
 	INCBIN "data/bank_050/MarioSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame47:
 	INCBIN "data/bank_050/MarioSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame48:
 	INCBIN "data/bank_050/MarioSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame49:
 	INCBIN "data/bank_050/MarioSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame50:
 	INCBIN "data/bank_050/MarioSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame51:
 	INCBIN "data/bank_050/MarioSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame52:
 	INCBIN "data/bank_050/MarioSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame53:
 	INCBIN "data/bank_050/MarioSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame54:
 	INCBIN "data/bank_050/MarioSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFrame55:
 	INCBIN "data/bank_050/MarioSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 MarioSpriteFramesUnused:
 	INCBIN "data/bank_050/MarioSpriteFramesUnused.bin" ; $7650, 1680 bytes
 MarioSpriteOam:

@@ -151,118 +151,175 @@ YoshiSpriteFrames:
 	dw YoshiSpriteFrame55 ; $412a
 	dw YoshiSpriteFrame55 ; $412c
 	dw YoshiSpriteFrame55 ; $412e
+	ds ALIGN[4]
 YoshiSpriteFrame00:
 	INCBIN "data/bank_052/YoshiSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame01:
 	INCBIN "data/bank_052/YoshiSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame02:
 	INCBIN "data/bank_052/YoshiSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame03:
 	INCBIN "data/bank_052/YoshiSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame04:
 	INCBIN "data/bank_052/YoshiSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame05:
 	INCBIN "data/bank_052/YoshiSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame06:
 	INCBIN "data/bank_052/YoshiSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame07:
 	INCBIN "data/bank_052/YoshiSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame08:
 	INCBIN "data/bank_052/YoshiSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame09:
 	INCBIN "data/bank_052/YoshiSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame10:
 	INCBIN "data/bank_052/YoshiSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame11:
 	INCBIN "data/bank_052/YoshiSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame12:
 	INCBIN "data/bank_052/YoshiSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame13:
 	INCBIN "data/bank_052/YoshiSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame14:
 	INCBIN "data/bank_052/YoshiSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame15:
 	INCBIN "data/bank_052/YoshiSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame16:
 	INCBIN "data/bank_052/YoshiSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame17:
 	INCBIN "data/bank_052/YoshiSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame18:
 	INCBIN "data/bank_052/YoshiSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame19:
 	INCBIN "data/bank_052/YoshiSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame20:
 	INCBIN "data/bank_052/YoshiSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame21:
 	INCBIN "data/bank_052/YoshiSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame22:
 	INCBIN "data/bank_052/YoshiSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame23:
 	INCBIN "data/bank_052/YoshiSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame24:
 	INCBIN "data/bank_052/YoshiSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame25:
 	INCBIN "data/bank_052/YoshiSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame26:
 	INCBIN "data/bank_052/YoshiSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame27:
 	INCBIN "data/bank_052/YoshiSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame28:
 	INCBIN "data/bank_052/YoshiSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame29:
 	INCBIN "data/bank_052/YoshiSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame30:
 	INCBIN "data/bank_052/YoshiSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame31:
 	INCBIN "data/bank_052/YoshiSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame32:
 	INCBIN "data/bank_052/YoshiSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame33:
 	INCBIN "data/bank_052/YoshiSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame34:
 	INCBIN "data/bank_052/YoshiSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame35:
 	INCBIN "data/bank_052/YoshiSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame36:
 	INCBIN "data/bank_052/YoshiSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame37:
 	INCBIN "data/bank_052/YoshiSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame38:
 	INCBIN "data/bank_052/YoshiSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame39:
 	INCBIN "data/bank_052/YoshiSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame40:
 	INCBIN "data/bank_052/YoshiSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame41:
 	INCBIN "data/bank_052/YoshiSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame42:
 	INCBIN "data/bank_052/YoshiSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame43:
 	INCBIN "data/bank_052/YoshiSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame44:
 	INCBIN "data/bank_052/YoshiSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame45:
 	INCBIN "data/bank_052/YoshiSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame46:
 	INCBIN "data/bank_052/YoshiSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame47:
 	INCBIN "data/bank_052/YoshiSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame48:
 	INCBIN "data/bank_052/YoshiSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame49:
 	INCBIN "data/bank_052/YoshiSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame50:
 	INCBIN "data/bank_052/YoshiSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame51:
 	INCBIN "data/bank_052/YoshiSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame52:
 	INCBIN "data/bank_052/YoshiSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame53:
 	INCBIN "data/bank_052/YoshiSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame54:
 	INCBIN "data/bank_052/YoshiSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFrame55:
 	INCBIN "data/bank_052/YoshiSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 YoshiSpriteFramesUnused:
 	INCBIN "data/bank_052/YoshiSpriteFramesUnused.bin" ; $7650, 1680 bytes
 YoshiSpriteOam:

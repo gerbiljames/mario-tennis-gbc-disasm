@@ -151,118 +151,175 @@ LuigiSpriteFrames:
 	dw LuigiSpriteFrame55 ; $412a
 	dw LuigiSpriteFrame55 ; $412c
 	dw LuigiSpriteFrame55 ; $412e
+	ds ALIGN[4]
 LuigiSpriteFrame00:
 	INCBIN "data/bank_05b/LuigiSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame01:
 	INCBIN "data/bank_05b/LuigiSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame02:
 	INCBIN "data/bank_05b/LuigiSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame03:
 	INCBIN "data/bank_05b/LuigiSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame04:
 	INCBIN "data/bank_05b/LuigiSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame05:
 	INCBIN "data/bank_05b/LuigiSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame06:
 	INCBIN "data/bank_05b/LuigiSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame07:
 	INCBIN "data/bank_05b/LuigiSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame08:
 	INCBIN "data/bank_05b/LuigiSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame09:
 	INCBIN "data/bank_05b/LuigiSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame10:
 	INCBIN "data/bank_05b/LuigiSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame11:
 	INCBIN "data/bank_05b/LuigiSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame12:
 	INCBIN "data/bank_05b/LuigiSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame13:
 	INCBIN "data/bank_05b/LuigiSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame14:
 	INCBIN "data/bank_05b/LuigiSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame15:
 	INCBIN "data/bank_05b/LuigiSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame16:
 	INCBIN "data/bank_05b/LuigiSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame17:
 	INCBIN "data/bank_05b/LuigiSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame18:
 	INCBIN "data/bank_05b/LuigiSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame19:
 	INCBIN "data/bank_05b/LuigiSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame20:
 	INCBIN "data/bank_05b/LuigiSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame21:
 	INCBIN "data/bank_05b/LuigiSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame22:
 	INCBIN "data/bank_05b/LuigiSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame23:
 	INCBIN "data/bank_05b/LuigiSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame24:
 	INCBIN "data/bank_05b/LuigiSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame25:
 	INCBIN "data/bank_05b/LuigiSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame26:
 	INCBIN "data/bank_05b/LuigiSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame27:
 	INCBIN "data/bank_05b/LuigiSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame28:
 	INCBIN "data/bank_05b/LuigiSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame29:
 	INCBIN "data/bank_05b/LuigiSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame30:
 	INCBIN "data/bank_05b/LuigiSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame31:
 	INCBIN "data/bank_05b/LuigiSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame32:
 	INCBIN "data/bank_05b/LuigiSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame33:
 	INCBIN "data/bank_05b/LuigiSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame34:
 	INCBIN "data/bank_05b/LuigiSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame35:
 	INCBIN "data/bank_05b/LuigiSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame36:
 	INCBIN "data/bank_05b/LuigiSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame37:
 	INCBIN "data/bank_05b/LuigiSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame38:
 	INCBIN "data/bank_05b/LuigiSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame39:
 	INCBIN "data/bank_05b/LuigiSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame40:
 	INCBIN "data/bank_05b/LuigiSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame41:
 	INCBIN "data/bank_05b/LuigiSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame42:
 	INCBIN "data/bank_05b/LuigiSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame43:
 	INCBIN "data/bank_05b/LuigiSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame44:
 	INCBIN "data/bank_05b/LuigiSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame45:
 	INCBIN "data/bank_05b/LuigiSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame46:
 	INCBIN "data/bank_05b/LuigiSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame47:
 	INCBIN "data/bank_05b/LuigiSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame48:
 	INCBIN "data/bank_05b/LuigiSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame49:
 	INCBIN "data/bank_05b/LuigiSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame50:
 	INCBIN "data/bank_05b/LuigiSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame51:
 	INCBIN "data/bank_05b/LuigiSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame52:
 	INCBIN "data/bank_05b/LuigiSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame53:
 	INCBIN "data/bank_05b/LuigiSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame54:
 	INCBIN "data/bank_05b/LuigiSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFrame55:
 	INCBIN "data/bank_05b/LuigiSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 LuigiSpriteFramesUnused:
 	INCBIN "data/bank_05b/LuigiSpriteFramesUnused.bin" ; $7650, 1680 bytes
 LuigiSpriteOam:

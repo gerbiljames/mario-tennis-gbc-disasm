@@ -4,12 +4,16 @@ Padding_1a:
 ExpScreenGfx0:
 	INCBIN "data/bank_01a/lz_ExpScreenGfx0.bin" ; $5530, 1711 bytes
 	db $00 ; $5bdf
+	ds ALIGN[4]
 ExpScreenGfx1:
 	INCBIN "data/bank_01a/ExpScreenGfx1.bin" ; $5be0, 576 bytes
+	ds ALIGN[4]
 ExpScreenGfx2:
 	INCBIN "data/bank_01a/ExpScreenGfx2.bin" ; $5e20, 576 bytes
+	ds ALIGN[4]
 ExpScreenGfx3:
 	INCBIN "data/bank_01a/ExpScreenGfx3.bin" ; $6060, 576 bytes
+	ds ALIGN[4]
 ExpScreenGfx4:
 	INCBIN "data/bank_01a/ExpScreenGfx4.bin" ; $62a0, 576 bytes
 ExpScreenGfxPalettes0:

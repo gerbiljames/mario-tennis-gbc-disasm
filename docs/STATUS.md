@@ -89,7 +89,8 @@ make clean && make -j compare && make check && make test
 
 is the whole pipeline (`compare` holds until the first deliberate change to
 the bytes; `check` and `test` hold after it). `make shift-test` builds a
-copy with every bank padded and leaves the ROM for a boot test. `tools/strings.py --index
+copy with every bank padded, and `tools/playtest.py` (needs PyBoy) plays it
+against the original. `tools/strings.py --index
 --bank <bank>` reads a text id; `tools/gfxdump.py` draws contact sheets of
 the graphics streams and palette regions into gitignored `data/gfx/`;
 `tools/twins.py` lists the routines a fix has to land in more than once;
@@ -108,11 +109,30 @@ nothing in the tree depends on it any more.
 `make check` is what catches the mistakes a byte-perfect build cannot: an LZ
 stream that no longer decodes, an assembled symbol inside one, overlapping
 extracted regions, a routine stranded in an actor script's label scope, a
-new branch that decides nothing, a ROM address written as a number, a PNG or
-grid that no longer encodes to its blob.
+new branch that decides nothing, a ROM address written as a number, an
+unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-27** — the padded ROM boots and plays. Running it (BizHawk,
+  then headless PyBoy) found what the static checks could not. It hung
+  before the Nintendo logo because nineteen tables were addressed as
+  split-base `add $lo / ld l, a / adc $hi / sub l / ld h, a` with raw
+  operands (fixed in the previous commit). Then the main menu's caption box
+  came out garbled: VRAM DMA ignores the low four bits of its source, so
+  graphics the game copies straight from ROM must stay 16-byte aligned, and
+  a 3-byte shift misaligned them. Every aligned uncompressed graphics or
+  tilemap blob and every direct DMA source (2,363) now has `ds ALIGN[4]`
+  before it -- no bytes today, padding after an edit -- and the `dma` check
+  fails on a DMA source without one. `tools/playtest.py` runs a ROM and the
+  original side by side in PyBoy under one seeded input sequence from a
+  save and reports persistent screen mismatches; the fully padded ROM
+  agrees through the intro, title, menus and into an exhibition match
+  (11,000 frames), apart from transient timing drift: a shifted build is not
+  cycle-identical, since page-crossing lookups and lag frames move.
+  `shifttest.py` takes `--banks` and `--out`, maps each byte through the
+  symbol tables (the shift is 3 before a bank's first alignment and 16
+  after), and needs 18 free bytes to pad a bank.
 * **2026-09-27** — a correction to the 2026-09-12 music names. The match
   settings tables are indexed by story match (`STORYMATCH_*`, new: the
   class rankings counting down to #1, the Island Open rounds, the three

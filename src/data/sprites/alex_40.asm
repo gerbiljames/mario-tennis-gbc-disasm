@@ -151,118 +151,175 @@ AlexSpriteFrames:
 	dw AlexSpriteFrame55 ; $412a
 	dw AlexSpriteFrame55 ; $412c
 	dw AlexSpriteFrame55 ; $412e
+	ds ALIGN[4]
 AlexSpriteFrame00:
 	INCBIN "data/bank_040/AlexSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame01:
 	INCBIN "data/bank_040/AlexSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame02:
 	INCBIN "data/bank_040/AlexSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame03:
 	INCBIN "data/bank_040/AlexSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame04:
 	INCBIN "data/bank_040/AlexSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame05:
 	INCBIN "data/bank_040/AlexSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame06:
 	INCBIN "data/bank_040/AlexSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame07:
 	INCBIN "data/bank_040/AlexSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame08:
 	INCBIN "data/bank_040/AlexSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame09:
 	INCBIN "data/bank_040/AlexSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame10:
 	INCBIN "data/bank_040/AlexSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame11:
 	INCBIN "data/bank_040/AlexSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame12:
 	INCBIN "data/bank_040/AlexSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame13:
 	INCBIN "data/bank_040/AlexSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame14:
 	INCBIN "data/bank_040/AlexSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame15:
 	INCBIN "data/bank_040/AlexSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame16:
 	INCBIN "data/bank_040/AlexSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame17:
 	INCBIN "data/bank_040/AlexSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame18:
 	INCBIN "data/bank_040/AlexSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame19:
 	INCBIN "data/bank_040/AlexSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame20:
 	INCBIN "data/bank_040/AlexSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame21:
 	INCBIN "data/bank_040/AlexSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame22:
 	INCBIN "data/bank_040/AlexSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame23:
 	INCBIN "data/bank_040/AlexSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame24:
 	INCBIN "data/bank_040/AlexSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame25:
 	INCBIN "data/bank_040/AlexSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame26:
 	INCBIN "data/bank_040/AlexSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame27:
 	INCBIN "data/bank_040/AlexSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame28:
 	INCBIN "data/bank_040/AlexSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame29:
 	INCBIN "data/bank_040/AlexSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame30:
 	INCBIN "data/bank_040/AlexSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame31:
 	INCBIN "data/bank_040/AlexSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame32:
 	INCBIN "data/bank_040/AlexSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame33:
 	INCBIN "data/bank_040/AlexSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame34:
 	INCBIN "data/bank_040/AlexSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame35:
 	INCBIN "data/bank_040/AlexSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame36:
 	INCBIN "data/bank_040/AlexSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame37:
 	INCBIN "data/bank_040/AlexSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame38:
 	INCBIN "data/bank_040/AlexSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame39:
 	INCBIN "data/bank_040/AlexSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame40:
 	INCBIN "data/bank_040/AlexSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 AlexSpriteFrame41:
 	INCBIN "data/bank_040/AlexSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 AlexSpriteFrame42:
 	INCBIN "data/bank_040/AlexSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame43:
 	INCBIN "data/bank_040/AlexSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame44:
 	INCBIN "data/bank_040/AlexSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame45:
 	INCBIN "data/bank_040/AlexSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame46:
 	INCBIN "data/bank_040/AlexSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame47:
 	INCBIN "data/bank_040/AlexSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame48:
 	INCBIN "data/bank_040/AlexSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame49:
 	INCBIN "data/bank_040/AlexSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame50:
 	INCBIN "data/bank_040/AlexSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame51:
 	INCBIN "data/bank_040/AlexSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame52:
 	INCBIN "data/bank_040/AlexSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame53:
 	INCBIN "data/bank_040/AlexSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame54:
 	INCBIN "data/bank_040/AlexSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFrame55:
 	INCBIN "data/bank_040/AlexSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 AlexSpriteFramesUnused:
 	INCBIN "data/bank_040/AlexSpriteFramesUnused.bin" ; $7650, 1680 bytes
 AlexSpriteOam:

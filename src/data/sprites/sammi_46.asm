@@ -151,118 +151,175 @@ SammiSpriteFrames:
 	dw SammiSpriteFrame55 ; $412a
 	dw SammiSpriteFrame55 ; $412c
 	dw SammiSpriteFrame55 ; $412e
+	ds ALIGN[4]
 SammiSpriteFrame00:
 	INCBIN "data/bank_046/SammiSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame01:
 	INCBIN "data/bank_046/SammiSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame02:
 	INCBIN "data/bank_046/SammiSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame03:
 	INCBIN "data/bank_046/SammiSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame04:
 	INCBIN "data/bank_046/SammiSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame05:
 	INCBIN "data/bank_046/SammiSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame06:
 	INCBIN "data/bank_046/SammiSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame07:
 	INCBIN "data/bank_046/SammiSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame08:
 	INCBIN "data/bank_046/SammiSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame09:
 	INCBIN "data/bank_046/SammiSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame10:
 	INCBIN "data/bank_046/SammiSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame11:
 	INCBIN "data/bank_046/SammiSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame12:
 	INCBIN "data/bank_046/SammiSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame13:
 	INCBIN "data/bank_046/SammiSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame14:
 	INCBIN "data/bank_046/SammiSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame15:
 	INCBIN "data/bank_046/SammiSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame16:
 	INCBIN "data/bank_046/SammiSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame17:
 	INCBIN "data/bank_046/SammiSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame18:
 	INCBIN "data/bank_046/SammiSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame19:
 	INCBIN "data/bank_046/SammiSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame20:
 	INCBIN "data/bank_046/SammiSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame21:
 	INCBIN "data/bank_046/SammiSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame22:
 	INCBIN "data/bank_046/SammiSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame23:
 	INCBIN "data/bank_046/SammiSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame24:
 	INCBIN "data/bank_046/SammiSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame25:
 	INCBIN "data/bank_046/SammiSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame26:
 	INCBIN "data/bank_046/SammiSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame27:
 	INCBIN "data/bank_046/SammiSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame28:
 	INCBIN "data/bank_046/SammiSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame29:
 	INCBIN "data/bank_046/SammiSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame30:
 	INCBIN "data/bank_046/SammiSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame31:
 	INCBIN "data/bank_046/SammiSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame32:
 	INCBIN "data/bank_046/SammiSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame33:
 	INCBIN "data/bank_046/SammiSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame34:
 	INCBIN "data/bank_046/SammiSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame35:
 	INCBIN "data/bank_046/SammiSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame36:
 	INCBIN "data/bank_046/SammiSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame37:
 	INCBIN "data/bank_046/SammiSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame38:
 	INCBIN "data/bank_046/SammiSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame39:
 	INCBIN "data/bank_046/SammiSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame40:
 	INCBIN "data/bank_046/SammiSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 SammiSpriteFrame41:
 	INCBIN "data/bank_046/SammiSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 SammiSpriteFrame42:
 	INCBIN "data/bank_046/SammiSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame43:
 	INCBIN "data/bank_046/SammiSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame44:
 	INCBIN "data/bank_046/SammiSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame45:
 	INCBIN "data/bank_046/SammiSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame46:
 	INCBIN "data/bank_046/SammiSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame47:
 	INCBIN "data/bank_046/SammiSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame48:
 	INCBIN "data/bank_046/SammiSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame49:
 	INCBIN "data/bank_046/SammiSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame50:
 	INCBIN "data/bank_046/SammiSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame51:
 	INCBIN "data/bank_046/SammiSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame52:
 	INCBIN "data/bank_046/SammiSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame53:
 	INCBIN "data/bank_046/SammiSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame54:
 	INCBIN "data/bank_046/SammiSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFrame55:
 	INCBIN "data/bank_046/SammiSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 SammiSpriteFramesUnused:
 	INCBIN "data/bank_046/SammiSpriteFramesUnused.bin" ; $7650, 1680 bytes
 SammiSpriteOam:

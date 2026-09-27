@@ -151,118 +151,175 @@ WarioSpriteFrames:
 	dw WarioSpriteFrame55 ; $412a
 	dw WarioSpriteFrame55 ; $412c
 	dw WarioSpriteFrame55 ; $412e
+	ds ALIGN[4]
 WarioSpriteFrame00:
 	INCBIN "data/bank_055/WarioSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame01:
 	INCBIN "data/bank_055/WarioSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame02:
 	INCBIN "data/bank_055/WarioSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame03:
 	INCBIN "data/bank_055/WarioSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame04:
 	INCBIN "data/bank_055/WarioSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame05:
 	INCBIN "data/bank_055/WarioSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame06:
 	INCBIN "data/bank_055/WarioSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame07:
 	INCBIN "data/bank_055/WarioSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame08:
 	INCBIN "data/bank_055/WarioSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame09:
 	INCBIN "data/bank_055/WarioSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame10:
 	INCBIN "data/bank_055/WarioSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame11:
 	INCBIN "data/bank_055/WarioSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame12:
 	INCBIN "data/bank_055/WarioSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame13:
 	INCBIN "data/bank_055/WarioSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame14:
 	INCBIN "data/bank_055/WarioSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame15:
 	INCBIN "data/bank_055/WarioSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame16:
 	INCBIN "data/bank_055/WarioSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame17:
 	INCBIN "data/bank_055/WarioSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame18:
 	INCBIN "data/bank_055/WarioSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame19:
 	INCBIN "data/bank_055/WarioSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame20:
 	INCBIN "data/bank_055/WarioSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame21:
 	INCBIN "data/bank_055/WarioSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame22:
 	INCBIN "data/bank_055/WarioSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame23:
 	INCBIN "data/bank_055/WarioSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame24:
 	INCBIN "data/bank_055/WarioSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame25:
 	INCBIN "data/bank_055/WarioSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame26:
 	INCBIN "data/bank_055/WarioSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame27:
 	INCBIN "data/bank_055/WarioSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame28:
 	INCBIN "data/bank_055/WarioSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame29:
 	INCBIN "data/bank_055/WarioSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame30:
 	INCBIN "data/bank_055/WarioSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame31:
 	INCBIN "data/bank_055/WarioSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame32:
 	INCBIN "data/bank_055/WarioSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame33:
 	INCBIN "data/bank_055/WarioSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame34:
 	INCBIN "data/bank_055/WarioSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame35:
 	INCBIN "data/bank_055/WarioSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame36:
 	INCBIN "data/bank_055/WarioSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame37:
 	INCBIN "data/bank_055/WarioSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame38:
 	INCBIN "data/bank_055/WarioSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame39:
 	INCBIN "data/bank_055/WarioSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame40:
 	INCBIN "data/bank_055/WarioSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 WarioSpriteFrame41:
 	INCBIN "data/bank_055/WarioSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 WarioSpriteFrame42:
 	INCBIN "data/bank_055/WarioSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame43:
 	INCBIN "data/bank_055/WarioSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame44:
 	INCBIN "data/bank_055/WarioSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame45:
 	INCBIN "data/bank_055/WarioSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame46:
 	INCBIN "data/bank_055/WarioSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame47:
 	INCBIN "data/bank_055/WarioSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame48:
 	INCBIN "data/bank_055/WarioSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame49:
 	INCBIN "data/bank_055/WarioSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame50:
 	INCBIN "data/bank_055/WarioSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame51:
 	INCBIN "data/bank_055/WarioSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame52:
 	INCBIN "data/bank_055/WarioSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame53:
 	INCBIN "data/bank_055/WarioSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame54:
 	INCBIN "data/bank_055/WarioSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFrame55:
 	INCBIN "data/bank_055/WarioSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 WarioSpriteFramesUnused:
 	INCBIN "data/bank_055/WarioSpriteFramesUnused.bin" ; $7650, 1680 bytes
 WarioSpriteOam:

@@ -151,118 +151,175 @@ BobSpriteFrames:
 	dw BobSpriteFrame55 ; $412a
 	dw BobSpriteFrame55 ; $412c
 	dw BobSpriteFrame55 ; $412e
+	ds ALIGN[4]
 BobSpriteFrame00:
 	INCBIN "data/bank_04f/BobSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame01:
 	INCBIN "data/bank_04f/BobSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame02:
 	INCBIN "data/bank_04f/BobSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame03:
 	INCBIN "data/bank_04f/BobSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame04:
 	INCBIN "data/bank_04f/BobSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame05:
 	INCBIN "data/bank_04f/BobSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame06:
 	INCBIN "data/bank_04f/BobSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame07:
 	INCBIN "data/bank_04f/BobSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame08:
 	INCBIN "data/bank_04f/BobSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame09:
 	INCBIN "data/bank_04f/BobSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame10:
 	INCBIN "data/bank_04f/BobSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame11:
 	INCBIN "data/bank_04f/BobSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame12:
 	INCBIN "data/bank_04f/BobSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame13:
 	INCBIN "data/bank_04f/BobSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame14:
 	INCBIN "data/bank_04f/BobSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame15:
 	INCBIN "data/bank_04f/BobSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame16:
 	INCBIN "data/bank_04f/BobSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame17:
 	INCBIN "data/bank_04f/BobSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame18:
 	INCBIN "data/bank_04f/BobSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame19:
 	INCBIN "data/bank_04f/BobSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame20:
 	INCBIN "data/bank_04f/BobSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame21:
 	INCBIN "data/bank_04f/BobSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame22:
 	INCBIN "data/bank_04f/BobSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame23:
 	INCBIN "data/bank_04f/BobSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame24:
 	INCBIN "data/bank_04f/BobSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame25:
 	INCBIN "data/bank_04f/BobSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame26:
 	INCBIN "data/bank_04f/BobSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame27:
 	INCBIN "data/bank_04f/BobSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame28:
 	INCBIN "data/bank_04f/BobSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame29:
 	INCBIN "data/bank_04f/BobSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame30:
 	INCBIN "data/bank_04f/BobSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame31:
 	INCBIN "data/bank_04f/BobSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame32:
 	INCBIN "data/bank_04f/BobSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame33:
 	INCBIN "data/bank_04f/BobSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame34:
 	INCBIN "data/bank_04f/BobSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame35:
 	INCBIN "data/bank_04f/BobSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame36:
 	INCBIN "data/bank_04f/BobSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame37:
 	INCBIN "data/bank_04f/BobSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame38:
 	INCBIN "data/bank_04f/BobSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame39:
 	INCBIN "data/bank_04f/BobSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame40:
 	INCBIN "data/bank_04f/BobSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 BobSpriteFrame41:
 	INCBIN "data/bank_04f/BobSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 BobSpriteFrame42:
 	INCBIN "data/bank_04f/BobSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame43:
 	INCBIN "data/bank_04f/BobSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame44:
 	INCBIN "data/bank_04f/BobSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame45:
 	INCBIN "data/bank_04f/BobSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame46:
 	INCBIN "data/bank_04f/BobSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame47:
 	INCBIN "data/bank_04f/BobSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame48:
 	INCBIN "data/bank_04f/BobSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame49:
 	INCBIN "data/bank_04f/BobSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame50:
 	INCBIN "data/bank_04f/BobSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame51:
 	INCBIN "data/bank_04f/BobSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame52:
 	INCBIN "data/bank_04f/BobSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame53:
 	INCBIN "data/bank_04f/BobSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame54:
 	INCBIN "data/bank_04f/BobSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 BobSpriteFrame55:
 	INCBIN "data/bank_04f/BobSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 BobSpriteFramesUnused:
 	INCBIN "data/bank_04f/BobSpriteFramesUnused.bin" ; $7650, 1680 bytes
 BobSpriteOam:

@@ -35,6 +35,7 @@ QueueTourPointerSprite_13_SpriteTemplate:
 	oam_sprite_end
 	; $4d29, 7 bytes (fill)
 	ds 7, $00
+	ds ALIGN[4]
 TourPointerTiles_13:
 	INCBIN "data/bank_013/TourPointerTiles_13.bin" ; $4d30, 64 bytes
 TourPointerPalette_13:

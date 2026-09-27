@@ -458,12 +458,15 @@ GameProgressHeaderAttrmap_1e:
 	ds 6, $00
 GameProgressScreenPalettes0:
 	INCLUDE "data/bank_01e/GameProgressScreenPalettes0.asm" ; $7700, 16 bytes (palettes)
+	ds ALIGN[4]
 GameProgressScreenTiles0:
 	INCLUDE "data/bank_01e/GameProgressScreenTiles0.asm" ; $7710, 256 bytes (palettes)
 GameProgressScreenPalettes1:
 	INCLUDE "data/bank_01e/GameProgressScreenPalettes1.asm" ; $7810, 16 bytes (palettes)
+	ds ALIGN[4]
 GameProgressScreenTiles1:
 	INCLUDE "data/bank_01e/GameProgressScreenTiles1.asm" ; $7820, 320 bytes (palettes)
+	ds ALIGN[4]
 GameProgressScreenTiles2:
 	INCLUDE "data/bank_01e/GameProgressScreenTiles2.asm" ; $7960, 128 bytes (palettes)
 GameProgressScreenPalettes2:

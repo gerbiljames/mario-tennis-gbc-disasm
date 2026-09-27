@@ -9,8 +9,10 @@ ActorScript_14_1:
 	as_halt
 	as_halt
 	as_halt
+	ds ALIGN[4]
 PlaneObjTiles_14:
 	INCBIN "data/bank_014/PlaneObjTiles_14.bin" ; $5650, 1024 bytes
+	ds ALIGN[4]
 IslandObjTiles_14:
 	INCBIN "data/bank_014/IslandObjTiles_14.bin" ; $5a50, 1024 bytes
 SpriteTemplate_14_0:
@@ -65,6 +67,7 @@ QueuePlaneSpriteByHeight_14:
 	ret ; $5ecd
 	; $5ece, 2 bytes (fill)
 	ds 2, $00
+	ds ALIGN[4]
 WaterSplashObjGfx:
 	INCBIN "data/bank_014/WaterSplashObjGfx.bin" ; $5ed0, 448 bytes
 SpriteTemplate_14_1:

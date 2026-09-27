@@ -151,118 +151,175 @@ WaluigiSpriteFrames:
 	dw WaluigiSpriteFrame55 ; $412a
 	dw WaluigiSpriteFrame55 ; $412c
 	dw WaluigiSpriteFrame55 ; $412e
+	ds ALIGN[4]
 WaluigiSpriteFrame00:
 	INCBIN "data/bank_051/WaluigiSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame01:
 	INCBIN "data/bank_051/WaluigiSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame02:
 	INCBIN "data/bank_051/WaluigiSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame03:
 	INCBIN "data/bank_051/WaluigiSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame04:
 	INCBIN "data/bank_051/WaluigiSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame05:
 	INCBIN "data/bank_051/WaluigiSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame06:
 	INCBIN "data/bank_051/WaluigiSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame07:
 	INCBIN "data/bank_051/WaluigiSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame08:
 	INCBIN "data/bank_051/WaluigiSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame09:
 	INCBIN "data/bank_051/WaluigiSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame10:
 	INCBIN "data/bank_051/WaluigiSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame11:
 	INCBIN "data/bank_051/WaluigiSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame12:
 	INCBIN "data/bank_051/WaluigiSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame13:
 	INCBIN "data/bank_051/WaluigiSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame14:
 	INCBIN "data/bank_051/WaluigiSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame15:
 	INCBIN "data/bank_051/WaluigiSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame16:
 	INCBIN "data/bank_051/WaluigiSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame17:
 	INCBIN "data/bank_051/WaluigiSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame18:
 	INCBIN "data/bank_051/WaluigiSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame19:
 	INCBIN "data/bank_051/WaluigiSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame20:
 	INCBIN "data/bank_051/WaluigiSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame21:
 	INCBIN "data/bank_051/WaluigiSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame22:
 	INCBIN "data/bank_051/WaluigiSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame23:
 	INCBIN "data/bank_051/WaluigiSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame24:
 	INCBIN "data/bank_051/WaluigiSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame25:
 	INCBIN "data/bank_051/WaluigiSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame26:
 	INCBIN "data/bank_051/WaluigiSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame27:
 	INCBIN "data/bank_051/WaluigiSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame28:
 	INCBIN "data/bank_051/WaluigiSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame29:
 	INCBIN "data/bank_051/WaluigiSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame30:
 	INCBIN "data/bank_051/WaluigiSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame31:
 	INCBIN "data/bank_051/WaluigiSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame32:
 	INCBIN "data/bank_051/WaluigiSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame33:
 	INCBIN "data/bank_051/WaluigiSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame34:
 	INCBIN "data/bank_051/WaluigiSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame35:
 	INCBIN "data/bank_051/WaluigiSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame36:
 	INCBIN "data/bank_051/WaluigiSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame37:
 	INCBIN "data/bank_051/WaluigiSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame38:
 	INCBIN "data/bank_051/WaluigiSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame39:
 	INCBIN "data/bank_051/WaluigiSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame40:
 	INCBIN "data/bank_051/WaluigiSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame41:
 	INCBIN "data/bank_051/WaluigiSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame42:
 	INCBIN "data/bank_051/WaluigiSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame43:
 	INCBIN "data/bank_051/WaluigiSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame44:
 	INCBIN "data/bank_051/WaluigiSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame45:
 	INCBIN "data/bank_051/WaluigiSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame46:
 	INCBIN "data/bank_051/WaluigiSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame47:
 	INCBIN "data/bank_051/WaluigiSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame48:
 	INCBIN "data/bank_051/WaluigiSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame49:
 	INCBIN "data/bank_051/WaluigiSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame50:
 	INCBIN "data/bank_051/WaluigiSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame51:
 	INCBIN "data/bank_051/WaluigiSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame52:
 	INCBIN "data/bank_051/WaluigiSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame53:
 	INCBIN "data/bank_051/WaluigiSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame54:
 	INCBIN "data/bank_051/WaluigiSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFrame55:
 	INCBIN "data/bank_051/WaluigiSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 WaluigiSpriteFramesUnused:
 	INCBIN "data/bank_051/WaluigiSpriteFramesUnused.bin" ; $7650, 1680 bytes
 WaluigiSpriteOam:

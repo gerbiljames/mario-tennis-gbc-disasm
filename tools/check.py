@@ -18,6 +18,9 @@ after a real defect broke it:
             a branch that decides nothing, which is always either a deleted
             guarded block or an inverted condition (14 exist; the list is
             curated so a new one shows up as a failure)
+  dma       every ROM label handed straight to a VRAM DMA routine is
+            preceded by `ds ALIGN[4]`: the DMA ignores a source's low four
+            bits, so an edit that unaligns one garbles what it copies
   literals  no ROM address is written as a number where the source moves:
             a jp/call target, a macro argument that elsewhere always takes a
             label, or an ld rr/dw literal equal to a label in the same bank
@@ -430,6 +433,45 @@ def check_literal_pointers(fail):
     return n
 
 
+_DMA_ROUTINES = frozenset({"QueueVRAMCopy", "StartVRAMDMATransfer", "StartVRAMDMAFromHL"})
+
+
+def check_dma_alignment(fail):
+    """A label passed as the source of a VRAM DMA must be declared aligned."""
+    aligned, lines_of = set(), []
+    for h in holders():
+        lines = bank_lines(h)[0]
+        lines_of.append((bank_of(h), lines))
+        pending = False
+        for line in lines:
+            if line.strip() == "ds ALIGN[4]":
+                pending = True
+                continue
+            m = _GLOBAL_RE.match(line)
+            if m:
+                if pending:
+                    aligned.add(m.group(1))
+                continue
+            if line.strip() and not line.lstrip().startswith(";"):
+                pending = False
+    n = 0
+    for bank, lines in lines_of:
+        for i, line in enumerate(lines):
+            m = re.match(r"\tld hl, ([A-Z]\w*)(?: \+ [^;]+)? ;", line)
+            if not m or m.group(1).startswith(("w", "v", "h")):
+                continue
+            for nxt in lines[i + 1:i + 6]:
+                c = re.match(r"\t(?:call|farcall|jp) (\w+)", nxt)
+                if c:
+                    if c.group(1) in _DMA_ROUTINES:
+                        n += 1
+                        if m.group(1) not in aligned:
+                            fail("dma", f"${bank:02x}: {m.group(1)} is a DMA source "
+                                        "without ds ALIGN[4] before it")
+                    break
+    return n
+
+
 def main():
     global ROOT
     ROOT = Path(__file__).resolve().parent.parent
@@ -451,6 +493,7 @@ def main():
         "scopes": check_stranded_scopes(fail),
         "branches": check_collapsed_branches(fail),
         "literals": check_literal_pointers(fail),
+        "dma": check_dma_alignment(fail),
         "gfx": check_gfx(manifest, fail),
         "tilemap": check_tilemaps(manifest, fail),
     }

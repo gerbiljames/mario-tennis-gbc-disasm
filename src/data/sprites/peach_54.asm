@@ -151,118 +151,175 @@ PeachSpriteFrames:
 	dw PeachSpriteFrame55 ; $412a
 	dw PeachSpriteFrame55 ; $412c
 	dw PeachSpriteFrame55 ; $412e
+	ds ALIGN[4]
 PeachSpriteFrame00:
 	INCBIN "data/bank_054/PeachSpriteFrame00.bin" ; $4130, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame01:
 	INCBIN "data/bank_054/PeachSpriteFrame01.bin" ; $4220, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame02:
 	INCBIN "data/bank_054/PeachSpriteFrame02.bin" ; $4310, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame03:
 	INCBIN "data/bank_054/PeachSpriteFrame03.bin" ; $4400, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame04:
 	INCBIN "data/bank_054/PeachSpriteFrame04.bin" ; $44f0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame05:
 	INCBIN "data/bank_054/PeachSpriteFrame05.bin" ; $45e0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame06:
 	INCBIN "data/bank_054/PeachSpriteFrame06.bin" ; $46d0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame07:
 	INCBIN "data/bank_054/PeachSpriteFrame07.bin" ; $47c0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame08:
 	INCBIN "data/bank_054/PeachSpriteFrame08.bin" ; $48b0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame09:
 	INCBIN "data/bank_054/PeachSpriteFrame09.bin" ; $49a0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame10:
 	INCBIN "data/bank_054/PeachSpriteFrame10.bin" ; $4a90, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame11:
 	INCBIN "data/bank_054/PeachSpriteFrame11.bin" ; $4b80, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame12:
 	INCBIN "data/bank_054/PeachSpriteFrame12.bin" ; $4c70, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame13:
 	INCBIN "data/bank_054/PeachSpriteFrame13.bin" ; $4d60, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame14:
 	INCBIN "data/bank_054/PeachSpriteFrame14.bin" ; $4e50, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame15:
 	INCBIN "data/bank_054/PeachSpriteFrame15.bin" ; $4f40, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame16:
 	INCBIN "data/bank_054/PeachSpriteFrame16.bin" ; $5030, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame17:
 	INCBIN "data/bank_054/PeachSpriteFrame17.bin" ; $5120, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame18:
 	INCBIN "data/bank_054/PeachSpriteFrame18.bin" ; $5210, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame19:
 	INCBIN "data/bank_054/PeachSpriteFrame19.bin" ; $5300, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame20:
 	INCBIN "data/bank_054/PeachSpriteFrame20.bin" ; $53f0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame21:
 	INCBIN "data/bank_054/PeachSpriteFrame21.bin" ; $54e0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame22:
 	INCBIN "data/bank_054/PeachSpriteFrame22.bin" ; $55d0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame23:
 	INCBIN "data/bank_054/PeachSpriteFrame23.bin" ; $56c0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame24:
 	INCBIN "data/bank_054/PeachSpriteFrame24.bin" ; $57b0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame25:
 	INCBIN "data/bank_054/PeachSpriteFrame25.bin" ; $58a0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame26:
 	INCBIN "data/bank_054/PeachSpriteFrame26.bin" ; $5990, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame27:
 	INCBIN "data/bank_054/PeachSpriteFrame27.bin" ; $5a80, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame28:
 	INCBIN "data/bank_054/PeachSpriteFrame28.bin" ; $5b70, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame29:
 	INCBIN "data/bank_054/PeachSpriteFrame29.bin" ; $5c60, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame30:
 	INCBIN "data/bank_054/PeachSpriteFrame30.bin" ; $5d50, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame31:
 	INCBIN "data/bank_054/PeachSpriteFrame31.bin" ; $5e40, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame32:
 	INCBIN "data/bank_054/PeachSpriteFrame32.bin" ; $5f30, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame33:
 	INCBIN "data/bank_054/PeachSpriteFrame33.bin" ; $6020, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame34:
 	INCBIN "data/bank_054/PeachSpriteFrame34.bin" ; $6110, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame35:
 	INCBIN "data/bank_054/PeachSpriteFrame35.bin" ; $6200, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame36:
 	INCBIN "data/bank_054/PeachSpriteFrame36.bin" ; $62f0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame37:
 	INCBIN "data/bank_054/PeachSpriteFrame37.bin" ; $63e0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame38:
 	INCBIN "data/bank_054/PeachSpriteFrame38.bin" ; $64d0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame39:
 	INCBIN "data/bank_054/PeachSpriteFrame39.bin" ; $65c0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame40:
 	INCBIN "data/bank_054/PeachSpriteFrame40.bin" ; $66b0, 320 bytes
+	ds ALIGN[4]
 PeachSpriteFrame41:
 	INCBIN "data/bank_054/PeachSpriteFrame41.bin" ; $67f0, 320 bytes
+	ds ALIGN[4]
 PeachSpriteFrame42:
 	INCBIN "data/bank_054/PeachSpriteFrame42.bin" ; $6930, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame43:
 	INCBIN "data/bank_054/PeachSpriteFrame43.bin" ; $6a20, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame44:
 	INCBIN "data/bank_054/PeachSpriteFrame44.bin" ; $6b10, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame45:
 	INCBIN "data/bank_054/PeachSpriteFrame45.bin" ; $6c00, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame46:
 	INCBIN "data/bank_054/PeachSpriteFrame46.bin" ; $6cf0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame47:
 	INCBIN "data/bank_054/PeachSpriteFrame47.bin" ; $6de0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame48:
 	INCBIN "data/bank_054/PeachSpriteFrame48.bin" ; $6ed0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame49:
 	INCBIN "data/bank_054/PeachSpriteFrame49.bin" ; $6fc0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame50:
 	INCBIN "data/bank_054/PeachSpriteFrame50.bin" ; $70b0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame51:
 	INCBIN "data/bank_054/PeachSpriteFrame51.bin" ; $71a0, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame52:
 	INCBIN "data/bank_054/PeachSpriteFrame52.bin" ; $7290, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame53:
 	INCBIN "data/bank_054/PeachSpriteFrame53.bin" ; $7380, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame54:
 	INCBIN "data/bank_054/PeachSpriteFrame54.bin" ; $7470, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFrame55:
 	INCBIN "data/bank_054/PeachSpriteFrame55.bin" ; $7560, 240 bytes
+	ds ALIGN[4]
 PeachSpriteFramesUnused:
 	INCBIN "data/bank_054/PeachSpriteFramesUnused.bin" ; $7650, 1680 bytes
 PeachSpriteOam:
