@@ -18,7 +18,7 @@ ifeq (,$(filter clean,$(MAKECMDGOALS)))
 $(info $(shell python3 tools/mods.py apply))
 endif
 
-.PHONY: all compare check test shift-test previews clean
+.PHONY: all compare check test shift-test event-test previews clean
 
 all: $(ROM)
 
@@ -103,6 +103,15 @@ test:
 # (tools/shifttest.py).
 shift-test: $(ROM)
 	python3 tools/shifttest.py
+
+# Play the padded ROM and this one through every story state under the same
+# inputs and compare what the game does (tools/eventtest.py). Needs PyBoy in
+# $(PYTHON) and a battery save to start from.
+PYTHON ?= python3
+SAVE ?= maxed-unlocked.sav
+event-test: $(ROM)
+	python3 tools/shifttest.py --out build/padded.gbc
+	$(PYTHON) tools/eventtest.py build/padded.gbc --save $(SAVE)
 
 clean:
 	rm -rf build $(ROM)

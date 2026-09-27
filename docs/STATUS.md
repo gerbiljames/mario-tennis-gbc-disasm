@@ -89,8 +89,9 @@ make clean && make -j compare && make check && make test
 
 is the whole pipeline (`compare` holds until the first deliberate change to
 the bytes; `check` and `test` hold after it). `make shift-test` builds a
-copy with every bank padded, and `tools/playtest.py` (needs PyBoy) plays it
-against the original. `tools/strings.py --index
+copy with every bank padded, and `make event-test` (needs PyBoy) plays that
+copy and the original through every story state and compares what the game
+does. `tools/strings.py --index
 --bank <bank>` reads a text id; `tools/gfxdump.py` draws contact sheets of
 the graphics streams and palette regions into gitignored `data/gfx/`;
 `tools/twins.py` lists the routines a fix has to land in more than once;
@@ -113,6 +114,25 @@ new branch that decides nothing, a ROM address written as a number, an
 unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
+
+* **2026-09-27** — the padded ROM played through every story state.
+  `tools/eventtest.py` (`make event-test`) boots both builds, enters every
+  location at each entry point under 36 story-flag states, and compares the
+  ordered code labels entered, actor lists, talks and character records. It
+  hooks each build by name through its own `.sym`. Inputs are fed per logic
+  frame, and a VBlank that lands inside a lagging frame is undone, so the one-
+  or two-cycle differences a shift causes cannot move either game a frame.
+  It found faults no static check had: `CallHLInBankA` built its return address
+  from two literal bytes, so every native story script returned into moved
+  code; the pause menu took text id `$0162` as `CallHLInBankA + 4`; five
+  pointer tables sat inside `INCBIN` blobs (the match objects' move curves, the
+  score and serve graphics, the character screen's radial ramps, the court-select
+  cursor templates); the trig, view-scale, perspective and sound tables are
+  read through a computed high byte and now `ASSERT` their placement; and two
+  `TangentTable` pointers were numbers. Each class is now a `literals` rule in
+  `make check`. It also found two original-game paths whose outcome depends on
+  where code sits (`docs/bugs.md`: `GetSpeakerVoice`'s stack slip and the
+  Courtyard walk-in over-read); a run that takes one is compared only up to it.
 
 * **2026-09-27** — the free-RAM inventory re-checked at runtime. Every free
   byte poisoned, each run played twice under the same inputs across the story

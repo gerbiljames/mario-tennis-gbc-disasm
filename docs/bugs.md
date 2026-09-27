@@ -498,6 +498,30 @@ block at bytes `$08`/`$09` is never cleared, so a doubles "Set" leaves any
 higher doubles wins already in the save in place and wipes the singles ladder.
 Reachable only through the developer menu.
 
+### `GetSpeakerVoice` returns through the wrong stack slot
+
+`GetSpeakerVoice` (`$05:$608a`) pushes `bc`, `de` and `hl`, then
+`push_wram_bank WRAM_ACTORS`, and reads the speaker's type byte (actor `+$21`).
+A type below `$1e` takes `bit 7, a / jr nz, .done`, which jumps past the
+`pop_wram_bank`. With the saved WRAM bank still on the stack, `.done`'s `pop hl /
+pop de / pop bc` each take the wrong word, and `ret` jumps to the value `bc` held
+on entry. `ShowSpeakerDialogue` loads `b` with `$08` just before the call, so
+control lands somewhere in ROM0 `$08xx`, inside `CopyMapToScrollBuffers`, and runs
+on from there. In the shipped layout that wild path happens to unwind back into
+the dialogue, so the line is spoken normally. A build whose ROM0 has moved even
+three bytes crashes instead. Seen when the partner speaks in the awards
+ceremony (location `$1a`, entry 11).
+
+### Courtyard entries past 6 read their walk-in direction from code
+
+`CourtyardEntryWalkIn_13` (`$13:$62ff`) walks the player (and the partner in
+doubles) in from the entry point using `CourtyardEntryWalkInFacings_13[entry -
+1]`, a six-byte table. The Courtyard also has entry points `$0a`, `$0d`, `$0e`
+and `$0f`, which index bytes 9, 12, 13 and 14: instruction bytes of
+`VarsityCourtTourCutscene` after the table. Entry `$0a` takes the low byte of
+`ld hl, VarsityCourtTourActors_13` as its angle, so the walk-in direction on that
+entry depends on where that label happens to sit.
+
 ## Dead stores
 
 Values written and never read. None of these change behaviour; they are listed
