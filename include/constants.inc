@@ -72,6 +72,25 @@ def ACTORF_FACING_COUNT equ $35 ; object header byte 1; 1 = one facing only
 def ACTORF_OAM_ATTR     equ $37 ; object header byte 0, or the map_actor palette override
 def ACTORF_SHADOW_TABLE equ $38 ; word: per-frame placement records
 
+; --- Match object slot fields ---
+; Offsets into one 16-byte wObjSlot record (ram/wram.asm has the full
+; description), which the bank $09 object engine reaches with the slot in bc.
+def OBJSLOT_SIZE            equ $10
+def OBJSLOT_ID              equ $00 ; $ff = free
+def OBJSLOT_FLAGS           equ $01 ; bit 0 draw this frame; LoadObjTemplate_09 sets bit 7
+def OBJSLOT_SPRITE_TEMPLATE equ $02 ; word
+def OBJSLOT_OAM_ATTR        equ $04
+def OBJSLOT_TILE            equ $05
+def OBJSLOT_X               equ $06
+def OBJSLOT_Y               equ $07
+def OBJSLOT_HANDLER         equ $08 ; word
+def OBJSLOT_CURVE_X         equ $0a
+def OBJSLOT_CURVE_Y         equ $0b
+def OBJSLOT_STATE           equ $0c ; the handler's RST00 sub-state
+def OBJSLOT_CURVE_STEP      equ $0d
+def OBJSLOT_CURVE           equ $0e ; MoveCurveTable_09 index
+def OBJSLOT_ANCHOR          equ $0f ; 1 = relative to the serving character
+
 ; --- Character record fields ---
 ; The $40-byte record of the story characters ($c900/$c940, mirrored at
 ; $c800/$c840) and the four on-court match records ($ca00-$cac0), which bank

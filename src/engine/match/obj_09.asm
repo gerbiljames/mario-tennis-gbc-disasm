@@ -361,78 +361,78 @@ InitObjSlot:
 	ld c, $01 ; $459b
 	call ClearMemory16 ; $459d
 	pop bc ; $45a0
-	ld hl, $0008 ; $45a1
+	ld hl, OBJSLOT_HANDLER ; $45a1
 	add hl, bc ; $45a4
 	ld de, ObjUpdateRunCurve.done ; $45a5
 	ld a, e ; $45a8
 	ld [hl+], a ; $45a9
 	ld [hl], d ; $45aa
-	ld hl, $0002 ; $45ab
+	ld hl, OBJSLOT_SPRITE_TEMPLATE ; $45ab
 	add hl, bc ; $45ae
 	ld de, ObjColumn8SpriteTemplate_09.rows2 ; $45af
 	ld a, e ; $45b2
 	ld [hl+], a ; $45b3
 	ld [hl], d ; $45b4
-	ld hl, $0000 ; $45b5
+	ld hl, OBJSLOT_ID ; $45b5
 	add hl, bc ; $45b8
 	ld [hl], $ff ; $45b9
 	ret ; $45bb
 SetObjSpriteTemplate:
-	ld hl, $0002 ; $45bc
+	ld hl, OBJSLOT_SPRITE_TEMPLATE ; $45bc
 	add hl, bc ; $45bf
 	ld a, e ; $45c0
 	ld [hl+], a ; $45c1
 	ld [hl], d ; $45c2
 	ret ; $45c3
 SetObjPosition:
-	ld hl, $0006 ; $45c4
+	ld hl, OBJSLOT_X ; $45c4
 	add hl, bc ; $45c7
 	ld [hl], d ; $45c8
 	inc hl ; $45c9
 	ld [hl], e ; $45ca
 	ret ; $45cb
 SetObjTileOffset:
-	ld hl, $0005 ; $45cc
+	ld hl, OBJSLOT_TILE ; $45cc
 	add hl, bc ; $45cf
 	ld [hl], d ; $45d0
 	ret ; $45d1
 SetObjSpriteAttr:
-	ld hl, $0004 ; $45d2
+	ld hl, OBJSLOT_OAM_ATTR ; $45d2
 	add hl, bc ; $45d5
 	ld [hl], d ; $45d6
 	ret ; $45d7
 SetObjUpdateRoutine:
-	ld hl, $0008 ; $45d8
+	ld hl, OBJSLOT_HANDLER ; $45d8
 	add hl, bc ; $45db
 	ld a, e ; $45dc
 	ld [hl+], a ; $45dd
 	ld [hl], d ; $45de
-	ld hl, $000c ; $45df
+	ld hl, OBJSLOT_STATE ; $45df
 	add hl, bc ; $45e2
 	ld [hl], $00 ; $45e3
-	ld hl, $000d ; $45e5
+	ld hl, OBJSLOT_CURVE_STEP ; $45e5
 	add hl, bc ; $45e8
 	ld [hl], $00 ; $45e9
 	ret ; $45eb
 SetObjMoveCurve:
-	ld hl, $000e ; $45ec
+	ld hl, OBJSLOT_CURVE ; $45ec
 	add hl, bc ; $45ef
 	ld [hl], d ; $45f0
 	ret ; $45f1
 SetObjDrawMode:
-	ld hl, $000f ; $45f2
+	ld hl, OBJSLOT_ANCHOR ; $45f2
 	add hl, bc ; $45f5
 	ld [hl], d ; $45f6
 	ret ; $45f7
 UnusedToggleObjMoveCurveBits_1:
-	ld hl, $000e ; $45f8
+	ld hl, OBJSLOT_CURVE ; $45f8
 	add hl, bc ; $45fb
 	ld a, [hl] ; $45fc
 	xor $02 ; $45fd
 	ld [hl], a ; $45ff
 	ret ; $4600
 UnusedToggleObjMoveCurveBits_2:
-	ld hl, $000e ; $4601
+	ld hl, OBJSLOT_CURVE ; $4601
 	add hl, bc ; $4604
 	ld a, [hl] ; $4605
 	xor $03 ; $4606
@@ -440,7 +440,7 @@ UnusedToggleObjMoveCurveBits_2:
 	ret ; $4609
 LoadObjTemplate_09:
 	push hl ; $460a
-	ld hl, $0000 ; $460b
+	ld hl, OBJSLOT_ID ; $460b
 	add hl, bc ; $460e
 	ld [hl], a ; $460f
 	ld h, $00 ; $4610
@@ -487,16 +487,16 @@ LoadObjTemplate_09:
 	ld d, [hl] ; $4646
 	call SetObjDrawMode ; $4647
 	xor a ; $464a
-	ld hl, $000a ; $464b
+	ld hl, OBJSLOT_CURVE_X ; $464b
 	add hl, bc ; $464e
 	ld [hl+], a ; $464f
 	ld [hl+], a ; $4650
-	ld hl, $0001 ; $4651
+	ld hl, OBJSLOT_FLAGS ; $4651
 	add hl, bc ; $4654
 	set 7, [hl] ; $4655
 	ret ; $4657
 StartObjExitAnim:
-	ld a, $01 ; $4658
+	ld a, OBJSLOT_FLAGS ; $4658
 	add c ; $465a
 	ld e, a ; $465b
 	ld d, b ; $465c
@@ -505,7 +505,7 @@ StartObjExitAnim:
 	ret z ; $4660
 	res 7, a ; $4661
 	ld [de], a ; $4663
-	ld a, $00 ; $4664
+	ld a, OBJSLOT_ID ; $4664
 	add c ; $4666
 	ld e, a ; $4667
 	ld d, b ; $4668
@@ -559,7 +559,7 @@ UpdateAllObjSprites:
 ; indexing bc, and why the subsystem reads as a pile of absolute addresses. A
 ; slot whose +$00 is $ff is free.
 ProcessObjSlot:
-	ld hl, $0000 ; $46b5
+	ld hl, OBJSLOT_ID ; $46b5
 	add hl, bc ; $46b8
 	ld a, [hl] ; $46b9
 	cp $ff ; $46ba
