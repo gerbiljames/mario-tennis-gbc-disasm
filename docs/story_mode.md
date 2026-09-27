@@ -247,15 +247,19 @@ row's object (`OBJ_*` without the prefix), numbered when a list holds the
 same object twice. Scripts address actors by these names, so inserting or
 reordering rows renumbers every reference. A script was renamed only where
 the list it runs under is certain: a location's handlers and init script run
-under its default list, a script that calls `ScriptRespawnLocationActors`
+under its default list or any variant the init script installs (such a
+variant stays active for the whole visit), a script that calls `ScriptRespawnLocationActors`
 runs under the list it installs from that point on (and so do the routines it
 calls), and where several lists are possible -- a branch that installs one of
 several, a helper shared between locations -- the number stays unless every
-candidate list holds the same actor in that slot. 4,153 references are names
-(3,819 script operands, 334 `NpcScripts` ids); about 600 stay numbers: 468
-ambiguous, 109 `NpcScripts` ids in tables whose list is uncertain, 24 slots
-past the end of every candidate list (actors spawned by script, not by a
-list), and the lines inside shared twin files.
+candidate list holds the same actor in that slot. 3,496 references are names
+(3,202 script operands, 294 `NpcScripts` ids); about 1,200 stay numbers,
+mostly where a location's init-time variants put different actors in the
+slot, plus branches that install one of several lists, helpers shared
+between locations, slots past the end of every candidate list (actors
+spawned by script) and the lines inside shared twin files.
+`tools/runtime_audit.py` checks the names against the list active at run
+time: every name reached in 36 story states agreed.
 
 ### `map_script` — the script records (8 bytes, `$ff`-terminated)
 
