@@ -161,7 +161,7 @@ FarCall:
 	inc sp ; $01e4
 	ret ; $01e5
 CallVectorEntryA:
-	ld h, $40 ; $01e6
+	ld h, SLOT_TABLE_PAGE ; $01e6
 	ld l, a ; $01e8
 	ld a, [hl+] ; $01e9
 	ld h, [hl] ; $01ea
@@ -196,7 +196,7 @@ Unused_00_FarCallVectorInline:
 	inc hl ; $0211
 	jp hl ; $0212
 CallVectorEntryE:
-	ld h, $40 ; $0213
+	ld h, SLOT_TABLE_PAGE ; $0213
 	ld l, e ; $0215
 	ld a, [hl+] ; $0216
 	ld h, [hl] ; $0217
@@ -209,7 +209,7 @@ CopyDataFromBank:
 	ld a, h ; $021e
 	ldh [hRomBank], a ; $021f
 	ld [rROMB0], a ; $0221
-	ld h, $40 ; $0224
+	ld h, SLOT_TABLE_PAGE ; $0224
 	ld a, [hl+] ; $0226
 	ld h, [hl] ; $0227
 	ld l, a ; $0228
@@ -226,7 +226,7 @@ DecompressDataFromBank:
 	ld a, h ; $0238
 	ldh [hRomBank], a ; $0239
 	ld [rROMB0], a ; $023b
-	ld h, $40 ; $023e
+	ld h, SLOT_TABLE_PAGE ; $023e
 	ld a, [hl+] ; $0240
 	ld h, [hl] ; $0241
 	ld l, a ; $0242

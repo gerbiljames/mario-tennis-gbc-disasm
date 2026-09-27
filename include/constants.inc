@@ -15,6 +15,12 @@ def STACK_TOP equ $d000
 ; that as `$9800 + VRAM_BANK1` rather than hiding the bank inside a literal.
 def VRAM_BANK1 equ $2000
 
+; --- $4000 slot tables ---
+; Every banked FarPtr_/DataPtr_ table sits at the start of its bank, and a
+; (slot, bank) pair stores only the slot label's low byte: the trampolines
+; rebuild the address as SLOT_TABLE_PAGE:slot.
+def SLOT_TABLE_PAGE equ HIGH($4000)
+
 ; --- VRAM regions ---
 ; The three 128-tile blocks and the two background maps, so a copy destination
 ; reads as a place: `vTiles0 + $10 * TILE_SIZE` is tile $10 of the sprite

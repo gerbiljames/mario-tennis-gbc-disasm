@@ -88,7 +88,8 @@ make clean && make -j compare && make check && make test
 ```
 
 is the whole pipeline (`compare` holds until the first deliberate change to
-the bytes; `check` and `test` hold after it). `tools/strings.py --index
+the bytes; `check` and `test` hold after it). `make shift-test` builds a
+copy with every bank padded and leaves the ROM for a boot test. `tools/strings.py --index
 --bank <bank>` reads a text id; `tools/gfxdump.py` draws contact sheets of
 the graphics streams and palette regions into gitignored `data/gfx/`;
 `tools/twins.py` lists the routines a fix has to land in more than once;
@@ -134,6 +135,16 @@ grid that no longer encodes to its blob.
   `$4000` slot encodings `farcall`, `dslot` and the new `ld_slot` (33
   `(BANK(x) << 8) | LOW(x)` loads) assert their label is in the slot table,
   since only its low byte is stored.
+  `make shift-test` (`tools/shifttest.py`) rebuilds a copy with 3 bytes of
+  padding at the top of every bank with room (123; the five full data
+  banks `$2f`, `$64`, `$68`, `$69`, `$7f` stay put) and checks every byte
+  that changed is a moved reference: 43,694 low bytes and 157 carried high
+  bytes, nothing else. It cannot see a hardcoded address (those bytes do
+  not change), which is what `literals` is for; booting the padded ROM it
+  leaves behind is the remaining proof, not yet done. The twelve slot
+  lookups in bank `$00` load `h` with `SLOT_TABLE_PAGE`, the constant the
+  asserts check against, and no ROM table is indexed without carrying into
+  the high byte, so none depends on staying inside a 256-byte page.
 * **2026-09-12** — the last unnamed sound ids. The ids carried by tables
   rather than `sound` sites are named for what they accompany: the seven
   drill and lesson themes the match-settings tables select

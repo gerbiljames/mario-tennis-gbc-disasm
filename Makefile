@@ -18,7 +18,7 @@ ifeq (,$(filter clean,$(MAKECMDGOALS)))
 $(info $(shell python3 tools/mods.py apply))
 endif
 
-.PHONY: all compare check test previews clean
+.PHONY: all compare check test shift-test previews clean
 
 all: $(ROM)
 
@@ -97,6 +97,12 @@ previews:
 # themselves when baserom.gbc is absent.
 test:
 	python3 -m unittest discover -s tests -t . -v
+
+# Rebuild a copy with every bank padded, check each changed byte is a label
+# reference that moved with its target, and leave the padded ROM to boot
+# (tools/shifttest.py).
+shift-test: $(ROM)
+	python3 tools/shifttest.py
 
 clean:
 	rm -rf build $(ROM)

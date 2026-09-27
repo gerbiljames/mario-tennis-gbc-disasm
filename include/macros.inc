@@ -9,7 +9,7 @@
 MACRO farcall
 	rst Rst18
 	db LOW(FarPtr_\1), BANK(FarPtr_\1)
-	ASSERT HIGH(FarPtr_\1) == $40, "FarPtr_\1 is outside its bank's $4000 slot table"
+	ASSERT HIGH(FarPtr_\1) == SLOT_TABLE_PAGE, "FarPtr_\1 is outside its bank's $4000 slot table"
 ENDM
 
 ; A SoundTable entry's first word: which sound-engine channel struct the
@@ -33,7 +33,7 @@ ENDM
 MACRO dslot
 	REPT _NARG
 	db LOW(\1), BANK(\1)
-	ASSERT HIGH(\1) == $40, "\1 is outside its bank's $4000 slot table"
+	ASSERT HIGH(\1) == SLOT_TABLE_PAGE, "\1 is outside its bank's $4000 slot table"
 	SHIFT
 	ENDR
 ENDM
@@ -344,7 +344,7 @@ ENDM
 ; the operand LoadCompressedTileBlock-style loaders take in a register.
 MACRO ld_slot
 	ld \1, (BANK(\2) << 8) | LOW(\2)
-	ASSERT HIGH(\2) == $40, "\2 is outside its bank's $4000 slot table"
+	ASSERT HIGH(\2) == SLOT_TABLE_PAGE, "\2 is outside its bank's $4000 slot table"
 ENDM
 
 ; One $4000 pointer-table entry: defines the FarPtr_<suffix> label and the dw

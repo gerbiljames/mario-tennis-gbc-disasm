@@ -100,7 +100,7 @@ Unused_00_ReadFarVectorEntry:
 	ldh [hRomBank], a ; $0666
 	ld [rROMB0], a ; $0668
 	ld c, a ; $066b
-	ld h, $40 ; $066c
+	ld h, SLOT_TABLE_PAGE ; $066c
 	ld a, [hl+] ; $066e
 	ld h, [hl] ; $066f
 	ld l, a ; $0670
@@ -186,7 +186,7 @@ FarDispatchIndexed:
 	ld a, h ; $06d5
 	ldh [hRomBank], a ; $06d6
 	ld [rROMB0], a ; $06d8
-	ld h, $40 ; $06db
+	ld h, SLOT_TABLE_PAGE ; $06db
 	ld a, [hl+] ; $06dd
 	ld h, [hl] ; $06de
 	ld l, a ; $06df
@@ -218,7 +218,7 @@ FarCopyIndexed:
 	ld a, h ; $06ff
 	ldh [hRomBank], a ; $0700
 	ld [rROMB0], a ; $0702
-	ld h, $40 ; $0705
+	ld h, SLOT_TABLE_PAGE ; $0705
 	ld a, [hl+] ; $0707
 	ld h, [hl] ; $0708
 	ld l, a ; $0709
@@ -257,7 +257,7 @@ FarCallIndexed1:
 	ld a, h ; $072e
 	ldh [hRomBank], a ; $072f
 	ld [rROMB0], a ; $0731
-	ld h, $40 ; $0734
+	ld h, SLOT_TABLE_PAGE ; $0734
 	ld a, [hl+] ; $0736
 	ld h, [hl] ; $0737
 	ld l, a ; $0738
@@ -291,7 +291,7 @@ FarCallIndexed2:
 	ld a, h ; $075a
 	ldh [hRomBank], a ; $075b
 	ld [rROMB0], a ; $075d
-	ld h, $40 ; $0760
+	ld h, SLOT_TABLE_PAGE ; $0760
 	ld a, [hl+] ; $0762
 	ld h, [hl] ; $0763
 	ld l, a ; $0764
@@ -325,7 +325,7 @@ FarCallIndexed3:
 	ld a, h ; $0786
 	ldh [hRomBank], a ; $0787
 	ld [rROMB0], a ; $0789
-	ld h, $40 ; $078c
+	ld h, SLOT_TABLE_PAGE ; $078c
 	ld a, [hl+] ; $078e
 	ld h, [hl] ; $078f
 	ld l, a ; $0790
@@ -356,7 +356,7 @@ FarReadPtrIndexed:
 	ldh [hRomBank], a ; $07af
 	ld [rROMB0], a ; $07b1
 	ld c, a ; $07b4
-	ld h, $40 ; $07b5
+	ld h, SLOT_TABLE_PAGE ; $07b5
 	ld a, [hl+] ; $07b7
 	ld h, [hl] ; $07b8
 	ld l, a ; $07b9
@@ -372,7 +372,7 @@ FarCallVector:
 	ld a, h ; $07c8
 	ldh [hRomBank], a ; $07c9
 	ld [rROMB0], a ; $07cb
-	ld h, $40 ; $07ce
+	ld h, SLOT_TABLE_PAGE ; $07ce
 	ld a, [hl+] ; $07d0
 	ld h, [hl] ; $07d1
 	ld l, a ; $07d2
