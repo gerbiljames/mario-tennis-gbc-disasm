@@ -146,10 +146,8 @@ FillMemoryBC_0b:
 	jr nz, .loop ; $4829
 	ret ; $482b
 ServiceMatch1Drill:
-	; $482c, 16 bytes (drill_definition)
-	db $37, $18, $02, $05, $00, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw ServiceMatch1Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
-	db $00, $00
+	; $482c, 16 bytes
+	drill_def CHAR_DRILL_SERVICE_MATCH_1, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_MATCH_1, BGM_DRILL_MATCH, CHAR_STORY_MAIN, ServiceMatch1Hooks, MatchDrillPointTable, $0000
 ServiceMatch1Hooks:
 	; $483c, 16 bytes (mode_hooks)
 	dw ServiceMatch1Hook_PerFrame ; record 0
@@ -398,10 +396,8 @@ UnusedStoreMatchAbortFlag_1:
 	ld a, $ff ; $49c4
 	ret ; $49c6
 ServiceMatch2Drill:
-	; $49c7, 16 bytes (drill_definition)
-	db $38, $18, $02, $05, $01, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw ServiceMatch2Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
-	db $00, $00
+	; $49c7, 16 bytes
+	drill_def CHAR_DRILL_SERVICE_MATCH_2, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_MATCH_2, BGM_DRILL_MATCH, CHAR_STORY_MAIN, ServiceMatch2Hooks, MatchDrillPointTable, $0000
 ServiceMatch2Hooks:
 	; $49d7, 16 bytes (mode_hooks)
 	dw ServiceMatch2Hook_PerFrame ; record 0

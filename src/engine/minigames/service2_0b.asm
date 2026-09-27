@@ -9,10 +9,8 @@ UnusedStoreMatchAbortFlag_2:
 	ld a, $ff ; $4c10
 	ret ; $4c12
 ServiceMatch3Drill:
-	; $4c13, 16 bytes (drill_definition)
-	db $39, $18, $02, $05, $02, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw ServiceMatch3Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
-	db $00, $00
+	; $4c13, 16 bytes
+	drill_def CHAR_DRILL_SERVICE_MATCH_3, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_MATCH_3, BGM_DRILL_MATCH, CHAR_STORY_MAIN, ServiceMatch3Hooks, MatchDrillPointTable, $0000
 ServiceMatch3Hooks:
 	; $4c23, 16 bytes (mode_hooks)
 	dw ServiceMatch3Hook_PerFrame ; record 0
@@ -256,10 +254,8 @@ UnusedStoreMatchAbortFlag_3:
 	ld a, $ff ; $4ddf
 	ret ; $4de1
 ServicePractice1Drill:
-	; $4de2, 16 bytes (drill_definition)
-	db $3a, $09, $02, $05, $03, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw ServicePractice1Hooks, PracticeDrillPointTable, ServicePractice1DrillInit ; mode hooks, point table, init
-	db $00, $00
+	; $4de2, 16 bytes
+	drill_def CHAR_DRILL_SERVICE_PRACTICE_1, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_PRACTICE_1, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, ServicePractice1Hooks, PracticeDrillPointTable, ServicePractice1DrillInit
 ServicePractice1DrillInit:
 	ld a, $01 ; $4df2
 	ld [wDrillIsPracticeLesson], a ; $4df4
@@ -450,10 +446,8 @@ ServicePractice1QueueOutcomeMessage:
 	xor a ; $4f67
 	ret ; $4f68
 ServicePractice2Drill:
-	; $4f69, 16 bytes (drill_definition)
-	db $3b, $09, $02, $05, $04, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw ServicePractice2Hooks, PracticeDrillPointTable, ServicePractice2DrillInit ; mode hooks, point table, init
-	db $00, $00
+	; $4f69, 16 bytes
+	drill_def CHAR_DRILL_SERVICE_PRACTICE_2, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_PRACTICE_2, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, ServicePractice2Hooks, PracticeDrillPointTable, ServicePractice2DrillInit
 ServicePractice2DrillInit:
 	ld a, $01 ; $4f79
 	ld [wDrillIsPracticeLesson], a ; $4f7b

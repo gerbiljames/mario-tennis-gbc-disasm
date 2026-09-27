@@ -1,8 +1,6 @@
 NetGamePractice3Drill:
-	; $614e, 16 bytes (drill_definition)
-	db $42, $09, $02, $05, $0b, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw NetGamePractice3Hooks, PracticeDrillPointTable, NetGamePractice3DrillInit ; mode hooks, point table, init
-	db $00, $00
+	; $614e, 16 bytes
+	drill_def CHAR_DRILL_NET_GAME_PRACTICE_3, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_NET_GAME_PRACTICE_3, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, NetGamePractice3Hooks, PracticeDrillPointTable, NetGamePractice3DrillInit
 NetGamePractice3DrillInit:
 	ld a, $01 ; $615e
 	ld [wDrillIsPracticeLesson], a ; $6160
@@ -347,10 +345,8 @@ UnusedStoreMatchAbortFlag_6:
 	ld a, $ff ; $63fd
 	ret ; $63ff
 StrokeMatch1Drill:
-	; $6400, 16 bytes (drill_definition)
-	db $43, $18, $02, $05, $0c, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw StrokeMatch1Hooks, StrokeMatchPointTable, $0000 ; mode hooks, point table, init
-	db $00, $00
+	; $6400, 16 bytes
+	drill_def CHAR_DRILL_STROKE_MATCH_1, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_STROKE_MATCH_1, BGM_DRILL_MATCH, CHAR_STORY_MAIN, StrokeMatch1Hooks, StrokeMatchPointTable, $0000
 StrokeMatch1Hooks:
 	; $6410, 16 bytes (mode_hooks)
 	dw StrokeMatch1Hook_PerFrame ; record 0

@@ -310,6 +310,17 @@ MACRO drill_gates
 	dw \1, \2, \3, \4
 ENDM
 
+; One training drill (DrillDefinitionPtrs; StartDrillFromDefinition reads it
+; through the DRILLDEF_* offsets). Bytes 6, 14 and 15 are never read.
+;   drill_def opponent, court, chars, mode, match, bgm, player, hooks, point_table, init
+MACRO drill_def
+	db \1, \2, \3, \4, \5, \6, $00, \7
+	dw \8, \9
+	SHIFT
+	dw \9
+	db $00, $00
+ENDM
+
 ; One Target Shot scoring rule (TargetShotScoreRules; LookupMinigameShotResult
 ; walks them to the first match): the shot roll (wMinigameShotRoll), the
 ; button combination (wLastShotButtons), the shot type it applies to

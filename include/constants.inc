@@ -100,6 +100,18 @@ def OBJSLOT_CURVE_STEP      equ $0d
 def OBJSLOT_CURVE           equ $0e ; MoveCurveTable_09 index
 def OBJSLOT_ANCHOR          equ $0f ; 1 = relative to the serving character
 
+; --- Training drill definitions (drill_def rows, read by StartDrillFromDefinition) ---
+def DRILLDEF_OPPONENT     equ $00 ; -> wMatchOpponentChar
+def DRILLDEF_COURT        equ $01 ; -> wCurrentlyUsedCourt
+def DRILLDEF_CHARS        equ $02 ; -> wOnCourtCharCount
+def DRILLDEF_MODE         equ $03 ; -> wGameMode
+def DRILLDEF_MATCH        equ $04 ; -> wCurrentMinigameStoryMatch + 1, under MATCHLIST_TRAINING
+def DRILLDEF_BGM          equ $05 ; -> wMatchBGM
+def DRILLDEF_PLAYER       equ $07 ; the player's character, for InitCa00RecordFromCharId
+def DRILLDEF_HOOKS        equ $08 ; word: SetModeHookTable
+def DRILLDEF_POINT_TABLE  equ $0a ; word: SetMinigamePointTable
+def DRILLDEF_INIT         equ $0c ; word: called if nonzero
+
 ; --- Character record fields ---
 ; The $40-byte record of the story characters ($c900/$c940, mirrored at
 ; $c800/$c840) and the four on-court match records ($ca00-$cac0), which bank
@@ -526,6 +538,26 @@ def CHAR_MARK_2      equ $32 ; shown as Mark
 def CHAR_ELLIS       equ $33
 def CHAR_FRANK       equ $34
 def CHAR_EDGAR       equ $35
+; Records $37-$48 are the drill partners, one per training drill in
+; MINIGAME_* order: each drill_def names its own as the opponent.
+def CHAR_DRILL_SERVICE_MATCH_1    equ $37
+def CHAR_DRILL_SERVICE_MATCH_2    equ $38
+def CHAR_DRILL_SERVICE_MATCH_3    equ $39
+def CHAR_DRILL_SERVICE_PRACTICE_1 equ $3a
+def CHAR_DRILL_SERVICE_PRACTICE_2 equ $3b
+def CHAR_DRILL_SERVICE_PRACTICE_3 equ $3c
+def CHAR_DRILL_NET_GAME_MATCH_1   equ $3d
+def CHAR_DRILL_NET_GAME_MATCH_2   equ $3e
+def CHAR_DRILL_NET_GAME_MATCH_3   equ $3f
+def CHAR_DRILL_NET_GAME_PRACTICE_1 equ $40
+def CHAR_DRILL_NET_GAME_PRACTICE_2 equ $41
+def CHAR_DRILL_NET_GAME_PRACTICE_3 equ $42
+def CHAR_DRILL_STROKE_MATCH_1     equ $43
+def CHAR_DRILL_STROKE_MATCH_2     equ $44
+def CHAR_DRILL_STROKE_MATCH_3     equ $45
+def CHAR_DRILL_STROKE_PRACTICE_1  equ $46
+def CHAR_DRILL_STROKE_PRACTICE_2  equ $47
+def CHAR_DRILL_STROKE_PRACTICE_3  equ $48
 
 ; --- Character-id sentinels (values outside the roster) ---
 ; InitCa00RecordFromCharId ($02:$4066) branches on the id before using it as a
@@ -760,6 +792,8 @@ def BGM_ACADEMY_ROOMS        equ $1d ; story_location: the restaurant, cafeteria
 def BGM_TRAINING_DRILL       equ $20 ; MatchSettingsTable: Service Match 1, Service Practice 3, Net Game Practice 2, Stroke Practice 1, Tennis Machine 3
 def BGM_SERVICE_DRILL        equ $21 ; MatchSettingsTable: Service Match 2/3, Service Practice 1/2
 def BGM_SENIOR_RANKING       equ $22 ; MatchSettingsTable records 6-9; reused by the intro character showcase and the trophy cheat screen
+def BGM_DRILL_MATCH          equ $24 ; the match drills' drill_def (COURT_TRAINING_MATCH)
+def BGM_DRILL_PRACTICE       equ $25 ; the practice drills' drill_def (COURT_TRAINING_PRACTICE)
 def BGM_STROKE_MATCH         equ $23 ; MatchSettingsTable: Stroke Match 1-3, Net Game Practice 3
 def BGM_STROKE_PRACTICE      equ $26 ; MatchSettingsTable: Stroke Practice 2/3
 def BGM_TENNIS_MACHINE_A     equ $27 ; MatchSettingsTable: Tennis Machine 1

@@ -197,10 +197,8 @@ ServicePractice2QueueOutcomeMessageDrillShotTable:
 	; $51c8, 5 bytes (bytes:5)
 	db $0d, $0c, $0d, $0c, $0d ; 0x00
 ServicePractice3Drill:
-	; $51cd, 16 bytes (drill_definition)
-	db $3c, $09, $02, $05, $05, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw ServicePractice3Hooks, PracticeDrillPointTable, ServicePractice3DrillInit ; mode hooks, point table, init
-	db $00, $00
+	; $51cd, 16 bytes
+	drill_def CHAR_DRILL_SERVICE_PRACTICE_3, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_PRACTICE_3, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, ServicePractice3Hooks, PracticeDrillPointTable, ServicePractice3DrillInit
 ServicePractice3DrillInit:
 	ld a, $01 ; $51dd
 	ld [wDrillIsPracticeLesson], a ; $51df

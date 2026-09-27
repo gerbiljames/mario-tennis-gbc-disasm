@@ -239,10 +239,8 @@ UnusedStoreMatchAbortFlag_5:
 	ld a, $ff ; $5bd7
 	ret ; $5bd9
 NetGamePractice1Drill:
-	; $5bda, 16 bytes (drill_definition)
-	db $40, $09, $02, $05, $09, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw NetGamePractice1Hooks, PracticeDrillPointTable, NetGamePractice1DrillInit ; mode hooks, point table, init
-	db $00, $00
+	; $5bda, 16 bytes
+	drill_def CHAR_DRILL_NET_GAME_PRACTICE_1, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_NET_GAME_PRACTICE_1, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, NetGamePractice1Hooks, PracticeDrillPointTable, NetGamePractice1DrillInit
 NetGamePractice1DrillInit:
 	ld a, $01 ; $5bea
 	ld [wDrillIsPracticeLesson], a ; $5bec
@@ -603,10 +601,8 @@ NetGamePractice1Cases3:
 	ld a, $ff ; $5e92
 	ret ; $5e94
 NetGamePractice2Drill:
-	; $5e95, 16 bytes (drill_definition)
-	db $41, $09, $02, $05, $0a, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw NetGamePractice2Hooks, PracticeDrillPointTable, NetGamePractice2DrillInit ; mode hooks, point table, init
-	db $00, $00
+	; $5e95, 16 bytes
+	drill_def CHAR_DRILL_NET_GAME_PRACTICE_2, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_NET_GAME_PRACTICE_2, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, NetGamePractice2Hooks, PracticeDrillPointTable, NetGamePractice2DrillInit
 NetGamePractice2DrillInit:
 	ld a, $01 ; $5ea5
 	ld [wDrillIsPracticeLesson], a ; $5ea7

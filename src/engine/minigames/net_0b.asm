@@ -1,8 +1,6 @@
 NetGameMatch1Drill:
-	; $53dd, 16 bytes (drill_definition)
-	db $3d, $18, $02, $05, $06, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw NetGameMatch1Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
-	db $00, $00
+	; $53dd, 16 bytes
+	drill_def CHAR_DRILL_NET_GAME_MATCH_1, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_NET_GAME_MATCH_1, BGM_DRILL_MATCH, CHAR_STORY_MAIN, NetGameMatch1Hooks, MatchDrillPointTable, $0000
 NetGameMatch1Hooks:
 	; $53ed, 16 bytes (mode_hooks)
 	dw NetGameMatch1Hook_PerFrame ; record 0
@@ -353,10 +351,8 @@ UnusedStoreMatchAbortFlag_4:
 	ld a, $ff ; $5641
 	ret ; $5643
 NetGameMatch2Drill:
-	; $5644, 16 bytes (drill_definition)
-	db $3e, $18, $02, $05, $07, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw NetGameMatch2Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
-	db $00, $00
+	; $5644, 16 bytes
+	drill_def CHAR_DRILL_NET_GAME_MATCH_2, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_NET_GAME_MATCH_2, BGM_DRILL_MATCH, CHAR_STORY_MAIN, NetGameMatch2Hooks, MatchDrillPointTable, $0000
 NetGameMatch2Hooks:
 	; $5654, 16 bytes (mode_hooks)
 	dw NetGameMatch2Hook_PerFrame ; record 0
@@ -718,10 +714,8 @@ NetGameMatch2Cases4:
 	ld a, $ff ; $58bc
 	ret ; $58be
 NetGameMatch3Drill:
-	; $58bf, 16 bytes (drill_definition)
-	db $3f, $18, $02, $05, $08, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw NetGameMatch3Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
-	db $00, $00
+	; $58bf, 16 bytes
+	drill_def CHAR_DRILL_NET_GAME_MATCH_3, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_NET_GAME_MATCH_3, BGM_DRILL_MATCH, CHAR_STORY_MAIN, NetGameMatch3Hooks, MatchDrillPointTable, $0000
 NetGameMatch3Hooks:
 	; $58cf, 16 bytes (mode_hooks)
 	dw NetGameMatch3Hook_PerFrame ; record 0

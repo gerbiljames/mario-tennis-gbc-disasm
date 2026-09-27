@@ -28,10 +28,8 @@ TestBallBounceDepth:
 	xor a ; $66d9
 	ret ; $66da
 StrokeMatch2Drill:
-	; $66db, 16 bytes (drill_definition)
-	db $44, $18, $02, $05, $0d, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw StrokeMatch2Hooks, StrokeMatchPointTable, $0000 ; mode hooks, point table, init
-	db $00, $00
+	; $66db, 16 bytes
+	drill_def CHAR_DRILL_STROKE_MATCH_2, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_STROKE_MATCH_2, BGM_DRILL_MATCH, CHAR_STORY_MAIN, StrokeMatch2Hooks, StrokeMatchPointTable, $0000
 StrokeMatch2Hooks:
 	; $66eb, 16 bytes (mode_hooks)
 	dw StrokeMatch2Hook_PerFrame ; record 0
@@ -357,10 +355,8 @@ StrokeMatch2Cases3:
 	ld a, $ff ; $6923
 	ret ; $6925
 StrokeMatch3Drill:
-	; $6926, 16 bytes (drill_definition)
-	db $45, $18, $02, $05, $0e, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw StrokeMatch3Hooks, StrokeMatchPointTable, $0000 ; mode hooks, point table, init
-	db $00, $00
+	; $6926, 16 bytes
+	drill_def CHAR_DRILL_STROKE_MATCH_3, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_STROKE_MATCH_3, BGM_DRILL_MATCH, CHAR_STORY_MAIN, StrokeMatch3Hooks, StrokeMatchPointTable, $0000
 StrokeMatch3Hooks:
 	; $6936, 16 bytes (mode_hooks)
 	dw StrokeMatch3Hook_PerFrame ; record 0
@@ -677,10 +673,8 @@ StrokeMatch3Cases3:
 	ld a, $ff ; $6b5a
 	ret ; $6b5c
 StrokePractice1Drill:
-	; $6b5d, 16 bytes (drill_definition)
-	db $46, $09, $02, $05, $0f, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw StrokePractice1Hooks, StrokePracticePointTable, StrokePractice1DrillInit ; mode hooks, point table, init
-	db $00, $00
+	; $6b5d, 16 bytes
+	drill_def CHAR_DRILL_STROKE_PRACTICE_1, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_STROKE_PRACTICE_1, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, StrokePractice1Hooks, StrokePracticePointTable, StrokePractice1DrillInit
 StrokePractice1DrillInit:
 	ld a, $01 ; $6b6d
 	ld [wDrillIsPracticeLesson], a ; $6b6f

@@ -4,34 +4,34 @@
 ; A fix here lands in every copy.
 
 {TWIN_LABEL}:
-	ld hl, $0000
+	ld hl, DRILLDEF_OPPONENT
 	add hl, bc
 	ld a, [hl]
 	ld [wMatchOpponentChar], a
-	ld hl, $0001
+	ld hl, DRILLDEF_COURT
 	add hl, bc
 	ld a, [hl]
 	ld [wCurrentlyUsedCourt], a
-	ld hl, $0002
+	ld hl, DRILLDEF_CHARS
 	add hl, bc
 	ld a, [hl]
 	ld [wOnCourtCharCount], a
-	ld hl, $0003
+	ld hl, DRILLDEF_MODE
 	add hl, bc
 	ld a, [hl]
 	ld [wGameMode], a
 	ld a, MATCHLIST_TRAINING
 	ld [wCurrentMinigameStoryMatch], a
-	ld hl, $0004
+	ld hl, DRILLDEF_MATCH
 	add hl, bc
 	ld a, [hl]
 	ld [wCurrentMinigameStoryMatch + 1], a
-	ld hl, $0005
+	ld hl, DRILLDEF_BGM
 	add hl, bc
 	ld a, [hl]
 	ld [wMatchBGM], a
 	push bc
-	ld hl, $0007
+	ld hl, DRILLDEF_PLAYER
 	add hl, bc
 	ld b, [hl]
 	ld c, $00
@@ -46,20 +46,20 @@
 	farcall InitCa00RecordFromCharId
 .restore:
 	pop bc
-	ld hl, $0008
+	ld hl, DRILLDEF_HOOKS
 	add hl, bc
 	ld a, [hl+]
 	ld d, [hl]
 	ld e, a
 	ldh a, [hRomBank]
 	farcall SetModeHookTable
-	ld hl, $000a
+	ld hl, DRILLDEF_POINT_TABLE
 	add hl, bc
 	ld a, [hl+]
 	ld d, [hl]
 	ld e, a
 	farcall SetMinigamePointTable
-	ld hl, $000c
+	ld hl, DRILLDEF_INIT
 	add hl, bc
 	ld a, [hl+]
 	ld h, [hl]

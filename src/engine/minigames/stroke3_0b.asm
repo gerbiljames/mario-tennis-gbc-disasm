@@ -171,10 +171,8 @@ StrokePractice1Cases1SignedTable:
 ; Instruction-identical to StrokePractice3Cases2 (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_cases2, StrokePractice1Cases2 ; $6d73
 StrokePractice2Drill:
-	; $6dae, 16 bytes (drill_definition)
-	db $47, $09, $02, $05, $10, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw StrokePractice2Hooks, StrokePracticePointTable, StrokePractice2DrillInit ; mode hooks, point table, init
-	db $00, $00
+	; $6dae, 16 bytes
+	drill_def CHAR_DRILL_STROKE_PRACTICE_2, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_STROKE_PRACTICE_2, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, StrokePractice2Hooks, StrokePracticePointTable, StrokePractice2DrillInit
 StrokePractice2DrillInit:
 	ld a, $01 ; $6dbe
 	ld [wDrillIsPracticeLesson], a ; $6dc0
@@ -494,10 +492,8 @@ StrokePractice2Cases2:
 	ld a, $ff ; $700b
 	ret ; $700d
 StrokePractice3Drill:
-	; $700e, 16 bytes (drill_definition)
-	db $48, $09, $02, $05, $11, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw StrokePractice3Hooks, StrokePracticePointTable, StrokePractice3DrillInit ; mode hooks, point table, init
-	db $00, $00
+	; $700e, 16 bytes
+	drill_def CHAR_DRILL_STROKE_PRACTICE_3, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_STROKE_PRACTICE_3, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, StrokePractice3Hooks, StrokePracticePointTable, StrokePractice3DrillInit
 StrokePractice3DrillInit:
 	ld a, $01 ; $701e
 	ld [wDrillIsPracticeLesson], a ; $7020
