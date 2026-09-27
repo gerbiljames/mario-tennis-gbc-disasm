@@ -29,6 +29,7 @@ Timing-only differences are counted, not failed.
 """
 import argparse
 import bisect
+import collections
 import concurrent.futures
 import io
 import json
@@ -57,16 +58,18 @@ NOT_HOOKED |= {"VBlankInterrupt", "LCDStatInterrupt", "TimerInterrupt", "SerialI
                "JoypadInterrupt"}
 CODE_MACROS = {"farcall", "lb", "ld_slot", "ld_hl_indexed", "ld_de_indexed", "ld_bc_indexed"}
 BUTTONS = {"a": 0x01, "b": 0x02, "start": 0x08, "right": 0x10, "left": 0x20, "up": 0x40, "down": 0x80}
-# (label, offset) of the points the input sync hooks, taken from the base
-# build: after ReadJoypad stores the pad, and where AdvanceFrame, WaitVBlank
-# and EnableLCD clear hVBlankOccurred.
+# (label, offset) of the points the sync hooks, taken from the base build:
+# after ReadJoypad stores the pad, where AdvanceFrame, WaitVBlank and
+# EnableLCD clear hVBlankOccurred, and after the VBlank handler's
+# AdvanceRandomSeed call.
 # Original-game paths whose outcome depends on where code sits (docs/bugs.md):
 # a run that takes one logs a taint and is compared only up to it.
 TAINTS = [("GetSpeakerVoice", 0x60b1, lambda g: g.rf.A & 0x80, "GetSpeakerVoice stack slip"),
           ("CourtyardEntryWalkIn_13", 0x62ff,
            lambda g: g.mem[g.sym["wStoryModeEntryPoint"][1]] > 6, "Courtyard walk-in over-read")]
 SYNC = {"pad": ("ReadJoypad", 0x0317), "frame": [("AdvanceFrame", 0x2644), ("WaitVBlank", 0x2815),
-                                               ("EnableLCD", 0x0380)]}
+                                               ("EnableLCD", 0x0380)],
+        "seeded": ("VBlankHandler", 0x27c3)}
 
 
 def symbols(path):
@@ -125,7 +128,7 @@ def plan(seed, frames):
 
 
 class Game:
-    def __init__(self, rom, sym, save, cap, skip=()):
+    def __init__(self, rom, sym, save, cap, skip=(), learn_irq=False):
         from pyboy import PyBoy
         self.sym = symbols(sym)
         base = symbols(ROOT / "build" / "mariotennis.sym")
@@ -137,8 +140,8 @@ class Game:
         pb.set_emulation_speed(0)
         self.rf, self.mem = pb.register_file, pb.memory
         self.events, self.lf, self.inputs = [], 0, []
-        self.pad_lf, self.prev, self.edge, self.lag = -1, 0, 0, None
-        self.irq, self.armed, self.last = 0, True, None
+        self.prev, self.edge, self.lag, self.before = 0, 0, None, None
+        self.irq, self.armed, self.last, self.learn_irq = 0, True, None, learn_irq
 
         def at(label, base_addr):
             b, a = self.sym[label]
@@ -163,6 +166,7 @@ class Game:
         for label, addr in SYNC["frame"]:
             add(at(label, addr), self.on_frame)
         add(at(*SYNC["pad"]), self.on_pad)
+        add(at(*SYNC["seeded"]), self.on_seeded)
         for label, addr, cond, reason in TAINTS:
             add(at(label, addr), lambda c=cond, r=reason: c(self) and self.log("taint", r))
 
@@ -179,7 +183,8 @@ class Game:
             i = bisect.bisect_right(labels, (addr, "\uffff")) - 1
             return f"{labels[i][1]}+{addr - labels[i][0]}" if i >= 0 else f"{addr:04x}"
         w = {n: self.sym[n][1] for n in ("wStoryModeCurrentLocation", "wMapNpcScriptsPtr", "wStoryLocationBank",
-                                        "hPlayerInputFlags", "hInputRisingEdge", "hVBlankOccurred")}
+                                        "hPlayerInputFlags", "hInputRisingEdge", "hVBlankOccurred",
+                                        "hRandomSeed", "hVBlankCounter")}
         self.w = w
         mem, rf = self.mem, self.rf
         add(self.sym["InitLocationActors"],
@@ -211,17 +216,15 @@ class Game:
             for fn in fns:
                 fn()
             return
-        # Interrupt handlers (sound, timers) run whenever the cycle count says,
-        # which a shifted build does not keep, so only the main thread counts.
         if not self.armed:
             return
-        if self.irq:
-            # A routine the handlers call runs constantly; after the boot has
-            # named it, both builds leave it unhooked, and a straggler is
-            # dropped here once it is plainly interrupt code.
-            n = self.irq_hits[point] = self.irq_hits.get(point, 0) + 1
-            if n == 1000 and not self.hits.get(point):
-                self.spent.append(point)
+        # Interrupt handlers (sound, timers) run whenever the cycle count
+        # says, which a shifted build does not keep. The boot names every
+        # routine they call and both builds then leave those unhooked; the
+        # gate itself is only trusted for that, since PyBoy can miss a reti
+        # and would then swallow main-thread events up to the frame's end.
+        if self.irq and self.learn_irq:
+            self.irq_hits[point] = self.irq_hits.get(point, 0) + 1
             return
         # An interrupt taken on a breakpoint runs before its instruction, and
         # the hook fires again on return: same place, same registers.
@@ -253,15 +256,32 @@ class Game:
         # handler; main-thread code running means any such handler is done.
         self.armed, self.irq, self.lag, self.last = True, 0, None, None
         self.lf += 1
+        # The pad changes here, on the main thread, and the VBlank only
+        # re-asserts it: a VBlank can land in the middle of a heavy frame's
+        # tasks, and a new pad there would reach only the tasks after it.
+        want = self.inputs[self.lf] if self.lf < len(self.inputs) else 0
+        self.edge, self.prev = want & ~self.prev, want
+        self.on_pad()
+        # The same for the two things every VBlank steps that frame tasks read.
+        m, seed = self.mem, self.w["hRandomSeed"]
+        value = (m[seed] | m[seed + 1] << 8) * 5 + 0x3573
+        m[seed], m[seed + 1] = value & 0xff, value >> 8 & 0xff
+        m[self.w["hVBlankCounter"]] = (m[self.w["hVBlankCounter"]] + 1) & 0xff
 
     def on_pad(self):
-        want = self.inputs[self.lf] if self.lf < len(self.inputs) else 0
-        if self.lf != self.pad_lf:
-            self.edge, self.prev, self.pad_lf = want & ~self.prev, want, self.lf
-        self.mem[self.w["hPlayerInputFlags"]] = want
+        self.mem[self.w["hPlayerInputFlags"]] = self.prev
         self.mem[self.w["hInputRisingEdge"]] = self.edge
 
+    def on_seeded(self):
+        if self.before is not None:
+            m, seed = self.mem, self.w["hRandomSeed"]
+            m[seed], m[seed + 1], m[self.w["hVBlankCounter"]] = self.before
+            self.before = None
+
     def on_vblank(self):
+        m = self.mem
+        seed = self.w["hRandomSeed"]
+        self.before = (m[seed], m[seed + 1], m[self.w["hVBlankCounter"]])
         # By bank number: an interrupt between a wram_bank's two writes makes
         # the handler return with a different bank mapped than it found.
         m = self.mem
@@ -280,7 +300,7 @@ class Game:
             self.lag = None
 
     def run(self, inputs, frames, limit):
-        self.inputs, self.lf, self.pad_lf, self.prev = inputs, 0, -1, 0
+        self.inputs, self.lf, self.prev, self.edge = inputs, 0, 0, 0
         self.armed = False
         ticks = 0
         while self.lf < frames and ticks < limit:
@@ -298,7 +318,7 @@ class Game:
 
 
 def boot(rom, sym, save, out):
-    g = Game(rom, sym, save, 10 ** 9)
+    g = Game(rom, sym, save, 10 ** 9, learn_irq=True)
     presses = [(950, "start"), (90, "a"), (90, "down")] + [(150, "a")] * 6
     inputs = []
     for wait, b in presses:
@@ -333,12 +353,14 @@ def chunk(rom, sym, save, state_file, si, li, frames, cap, skip):
         g.mem[g.sym["wStoryModeEntryPoint"][1]] = entry
         g.mem[g.sym["wStoryModeExitTriggerRequest"][1]] = 0xff
         ticks = g.run(plan(si * 10000 + li * 100 + entry, frames), frames, 4 * frames)
-        result.append({"entry": entry, "events": g.events, "logic": g.lf, "ticks": ticks})
+        # the last frame is cut wherever the run stops
+        events = [e for e in g.events if e[0] < frames]
+        result.append({"entry": entry, "events": events, "logic": g.lf, "ticks": ticks})
     g.close()
     return result
 
 
-def compare(a, b, skip=3, run=12):
+def compare(a, b, skip=6, run=12):
     """Walk the two (kind, value) sequences together and return the index in
     `a` where they part for good (or None), how many events matched at a
     different logic frame, and how many dropouts were stepped over. PyBoy
@@ -350,6 +372,18 @@ def compare(a, b, skip=3, run=12):
         if cut is not None:
             del seq[cut + 1:]
     key = lambda e: tuple(e[1:])
+    # A dropout leaves that label one hit short of its cap, so it logs one
+    # more hit later than the other build does: keep only as many of each
+    # event as both logged.
+    counts = [collections.Counter(map(key, seq)) for seq in (a, b)]
+    for seq in (a, b):
+        seen = collections.Counter()
+        keep = []
+        for e in seq:
+            seen[key(e)] += 1
+            if seen[key(e)] <= min(counts[0][key(e)], counts[1][key(e)]):
+                keep.append(e)
+        seq[:] = keep
     i = j = shifted = dropouts = 0
     while i < len(a) and j < len(b):
         if key(a[i]) == key(b[j]):
