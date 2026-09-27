@@ -113,6 +113,25 @@ grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-27** — a pass over known values the source still spelled as
+  numbers. Struct fields: `ACTORF_*` (the actor record, with its flag and
+  status bits — heading at `+$14`, facing at `+$34` following it unless
+  locked, the drawn `FACE_*` at `+$32`), `CHARREC_*` (the `$40`-byte
+  character record, the eleven stats by name) and `OBJSLOT_*` (bank `$09`'s
+  object slots), about 330 sites. Ids: the extended character ids
+  `CHAR_RANKER_32`-`47` and the six named opponents (their own names in the
+  roster's name pool, though RemapExtendedCharId shows them as roster
+  characters), 97 more text ids (the challenger dialogue, base-plus-offset
+  loads, the ranking boards' name tables), the bank `$04` actor lists as
+  `map_actor` rows, `as_set_field`'s selectors (actor record offsets). Two
+  corrections: `script_facing_lock`'s operand was a lock flag, not a facing
+  (now `script_lock_facing` / `script_unlock_facing`), and the actor-field
+  opcode handlers reached `ActorFieldTypeTable_04` through a split `add $fd`
+  / `ld a, $47` / `adc $00` that `literals` now catches. `$c780` is
+  `wModeScratch`. Left as numbers on purpose: animation ids (what id 3, the
+  common one, depicts would need the frames identified), the unnamed
+  character records `$36`-`$63`, and slots that more than one actor list
+  could fill.
 * **2026-09-27** — actor slots are named by row. `map_actor` takes a
   ninth argument, and the macro defines `ACTOR_<name>` as `3 + row` (a row
   whose condition fails still takes its slot, so row order is the slot map).
