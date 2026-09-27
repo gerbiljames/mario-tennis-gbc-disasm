@@ -56,10 +56,10 @@ SeniorSinglesMatchConfirm:
 	script_wait_frames $05 ; $6b01
 	and a ; $6b08
 	jp nz, .done ; $6b09
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, $03 ; $6b0c
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $6b0c
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6b13
 .declined:
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, $03 ; $6b18
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $6b18
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6b1f
 	script_set_text Text_34_70 ; $6b24
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $6b2a
@@ -101,9 +101,9 @@ SeniorDoublesMatchConfirm:
 	script_wait_frames $05 ; $6b8f
 	and a ; $6b96
 	jp nz, .done ; $6b97
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, $03 ; $6b9a
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $6b9a
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6ba1
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, $03 ; $6ba6
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $6ba6
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6bad
 	script_set_text Text_34_118 ; $6bb2
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $6bb8
@@ -273,7 +273,7 @@ ActorScript_12_16:
 	as_halt
 ActorScript_12_17:
 	; $6d30, 15 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $2900, $1300
 	as_wait_move
@@ -281,7 +281,7 @@ ActorScript_12_17:
 	as_halt
 ActorScript_12_18:
 	; $6d3f, 15 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $2900, $1900
 	as_wait_move
@@ -289,7 +289,7 @@ ActorScript_12_18:
 	as_halt
 ActorScript_12_19:
 	; $6d4e, 15 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $3900, $1300
 	as_wait_move
@@ -297,19 +297,19 @@ ActorScript_12_19:
 	as_halt
 ActorScript_12_20:
 	; $6d5d, 45 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $3900, $1900
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $0500, $0b00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $0500, $1300
 	as_wait_move
@@ -393,7 +393,7 @@ SeniorDoublesRank2Victory:
 	script_set_position $11, $2400, $1180 ; $6ebf
 	sound SFX_APPEAR2 ; $6eca
 	script_wait_frames $1e ; $6ecc
-	script_set_anim $08, $04 ; $6ed3
+	script_set_anim $08, ANIM_SHAKE ; $6ed3
 	script_wait_idle $08 ; $6eda
 	script_set_position $11, $3f00, $3f00 ; $6edf
 	script_jump_velocity $03, $ff80 ; $6eea
@@ -431,7 +431,7 @@ SeniorDoublesRank1Victory:
 	call FadeInSeniorCourtNearPairB ; $6fbe
 	script_set_text Text_34_129 ; $6fc1
 	script_wait_frames $28 ; $6fc7
-	script_set_anim $07, $02 ; $6fce
+	script_set_anim $07, ANIM_BOUNCE ; $6fce
 	script_wait_idle $07 ; $6fd5
 	script_wait_frames $14 ; $6fda
 	script_jump_velocity $03, $ff80 ; $6fe1

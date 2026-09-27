@@ -10,7 +10,7 @@ SetupGymActorsForProgress:
 	ret ; $4692
 .stage1:
 	script_set_objdef OBJ_WALK_71_07, ACTOR_TRAINING_GYM_WALK_73_05 ; $4693
-	script_set_anim ACTOR_TRAINING_GYM_WALK_73_02, $01 ; $469f
+	script_set_anim ACTOR_TRAINING_GYM_WALK_73_02, ANIM_WALK ; $469f
 	script_set_position ACTOR_TRAINING_GYM_WALK_73_05, $2700, $0f00 ; $46a6
 	script_face ACTOR_TRAINING_GYM_WALK_73_05, FACE_RIGHT ; $46b1
 	ret ; $46b8
@@ -30,7 +30,7 @@ SetupGymActorsForProgress:
 	script_set_position ACTOR_TRAINING_GYM_WALK_73_07_1, $2900, $0700 ; $46e9
 	script_set_position ACTOR_TRAINING_GYM_WALK_73_06, $2700, $0500 ; $46f4
 	script_set_position ACTOR_TRAINING_GYM_WALK_73_07_2, $2500, $0700 ; $46ff
-	script_set_anim ACTOR_TRAINING_GYM_WALK_73_07_1, $02 ; $470a
+	script_set_anim ACTOR_TRAINING_GYM_WALK_73_07_1, ANIM_BOUNCE ; $470a
 	ret ; $4711
 ActorScript_0e_00:
 	; $4712, 439 bytes (actor_script)

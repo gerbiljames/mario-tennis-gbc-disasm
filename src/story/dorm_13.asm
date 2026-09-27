@@ -70,9 +70,9 @@ DormRoomMapScripts_13:
 	dw DormRoomInitScript_13 ; slot 6 InitScript
 DormRoomActors_13:
 	; $4e2e, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $0b00, $0900, FACE_DOWN, OBJ_KATE, $01, $00, DORM_ROOM_KATE
-	map_actor $0000, ActorScript_13_00, $0600, $1080, FACE_DOWN, OBJ_WALK_74_01, $01, $00, DORM_ROOM_WALK_74_01
-	map_actor $0000, ActorScript_13_27, $2900, $2900, FACE_DOWN, OBJ_WALK_73_12, $01, $00, DORM_ROOM_WALK_73_12
+	map_actor $0000, ActorScript_13_27, $0b00, $0900, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, DORM_ROOM_KATE
+	map_actor $0000, ActorScript_13_00, $0600, $1080, FACE_DOWN, OBJ_WALK_74_01, ANIM_WALK, $00, DORM_ROOM_WALK_74_01
+	map_actor $0000, ActorScript_13_27, $2900, $2900, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, DORM_ROOM_WALK_73_12
 	map_actor_end
 DormRoomEntryPoints_13:
 	; $4e62, 49 bytes (map_entries)
@@ -139,7 +139,7 @@ DormRoomTile0F_13:
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ROOM_KATE ; $4f35
 	script_face_toward ACTOR_DORM_ROOM_KATE, ACTOR_PLAYER ; $4f3d
 	script_set_position $06, $0c00, $0800 ; $4f45
-	script_set_anim ACTOR_DORM_ROOM_KATE, $02 ; $4f50
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_BOUNCE ; $4f50
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $4f57
 	script_set_position $06, $3f00, $3f00 ; $4f5c
 	script_speak ACTOR_DORM_ROOM_KATE ; $4f67
@@ -149,7 +149,7 @@ DormRoomTile0F_13:
 	test_flag FLAG_DOUBLES ; $4f79
 	jr nz, .advanceText ; $4f7c
 	script_speak ACTOR_DORM_ROOM_KATE ; $4f7e
-	script_set_anim ACTOR_PLAYER, $03 ; $4f83
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4f83
 	script_wait_idle ACTOR_PLAYER ; $4f8a
 	script_set_speed ACTOR_PLAYER, $0030 ; $4f8f
 	script_move_target ACTOR_PLAYER, $0b00, $1400 ; $4f97
@@ -169,7 +169,7 @@ DormRoomTile0F_13:
 .advanceText:
 	farcall AdvanceDialogueTextCursor ; $4fd0
 	script_speak ACTOR_DORM_ROOM_KATE ; $4fd3
-	script_set_anim ACTOR_PLAYER, $03 ; $4fd8
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4fd8
 	script_wait_idle ACTOR_PLAYER ; $4fdf
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $4fe4
 	ld c, l ; $4fe9
@@ -334,7 +334,7 @@ SetupDormRoomSceneVariant:
 	farcall CopyBehaviorMapRect ; $5154
 	script_copy_scene_rect $20, $00, $00, $00, $16, $18 ; $5157
 	script_set_objdef OBJ_HARRY, ACTOR_DORM_ROOM_KATE ; $5166
-	script_set_anim ACTOR_DORM_ROOM_KATE, $01 ; $5172
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_WALK ; $5172
 	script_set_position ACTOR_DORM_ROOM_WALK_74_01, $1f00, $1500 ; $5179
 	script_null_script ACTOR_DORM_ROOM_WALK_74_01 ; $5184
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $5189
@@ -488,7 +488,7 @@ DormRoomNpc03_13:
 	farcall AdvanceDialogueTextCursor ; $5352
 .speak:
 	script_speak ACTOR_DORM_ROOM_KATE ; $5355
-	script_set_anim ACTOR_PLAYER, $03 ; $535a
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $535a
 	script_wait_idle ACTOR_PLAYER ; $5361
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5366
 	ld c, l ; $536b
@@ -506,7 +506,7 @@ DormRoomNpc03_13:
 	ret ; $538e
 .speakShort:
 	script_speak ACTOR_DORM_ROOM_KATE ; $538f
-	script_set_anim ACTOR_PLAYER, $03 ; $5394
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5394
 	script_wait_idle ACTOR_PLAYER ; $539b
 	ret ; $53a0
 .walkToBed:
@@ -546,7 +546,7 @@ DormRoomNpc03_13:
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $542d
 .roommateWalks:
 	script_set_speed ACTOR_DORM_ROOM_KATE, $0010 ; $5430
-	script_set_anim ACTOR_DORM_ROOM_KATE, $03 ; $5438
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $5438
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $543f
 	script_speak ACTOR_DORM_ROOM_KATE ; $5444
 	script_move_target ACTOR_DORM_ROOM_KATE, $0900, $0a00 ; $5449
@@ -574,13 +574,13 @@ DormRoomNpc03_13:
 .continueScene:
 	script_move_target ACTOR_DORM_ROOM_KATE, $0b00, $0b00 ; $54b2
 	script_wait_move ACTOR_DORM_ROOM_KATE ; $54bd
-	script_set_anim ACTOR_DORM_ROOM_KATE, $02 ; $54c2
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_BOUNCE ; $54c2
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $54c9
 	script_speak ACTOR_DORM_ROOM_KATE ; $54ce
-	script_set_anim ACTOR_DORM_ROOM_KATE, $03 ; $54d3
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $54d3
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $54da
 	script_speak ACTOR_DORM_ROOM_KATE ; $54df
-	script_set_anim ACTOR_DORM_ROOM_KATE, $03 ; $54e4
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $54e4
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $54eb
 	ld a, $03 ; $54f0
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $54f2
@@ -596,14 +596,14 @@ DormRoomNpc03_13:
 	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $550d
 	jr nz, .wakeScene ; $5510
 	script_wait_frames $14 ; $5512
-	script_set_anim ACTOR_DORM_ROOM_KATE, $03 ; $5519
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $5519
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $5520
 	script_set_text Text_31_256 ; $5525
 	script_speak ACTOR_DORM_ROOM_KATE ; $552b
 	ret ; $5530
 .wakeScene:
 	script_wait_frames $14 ; $5531
-	script_set_anim ACTOR_DORM_ROOM_KATE, $03 ; $5538
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $5538
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $553f
 	script_set_text Text_31_257 ; $5544
 	script_speak ACTOR_DORM_ROOM_KATE ; $554a
@@ -612,14 +612,14 @@ DormRoomNpc03_13:
 	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $5550
 	jr nz, .morningSpeak ; $5553
 	script_wait_frames $14 ; $5555
-	script_set_anim ACTOR_DORM_ROOM_KATE, $03 ; $555c
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $555c
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $5563
 	script_set_text Text_31_291 ; $5568
 	script_speak ACTOR_DORM_ROOM_KATE ; $556e
 	ret ; $5573
 .morningSpeak:
 	script_wait_frames $14 ; $5574
-	script_set_anim ACTOR_DORM_ROOM_KATE, $03 ; $557b
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $557b
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $5582
 	script_set_text Text_31_290 ; $5587
 	script_speak ACTOR_DORM_ROOM_KATE ; $558d
@@ -656,7 +656,7 @@ DormRoomNpc03_13:
 	script_move_player $0b00, $0c40 ; $55d7
 	farcall WaitPlayerMoveDone ; $55e1
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $55e4
-	script_set_anim ACTOR_DORM_ROOM_KATE, $03 ; $55eb
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $55eb
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $55f2
 	script_speak ACTOR_DORM_ROOM_KATE ; $55f7
 	call GetDormRoomStoryStage_13 ; $55fc
@@ -681,7 +681,7 @@ DormRoomNpc03_13:
 	inc h ; $5619
 .dayScene:
 	farcall InitDialogueTextCursor ; $561a
-	script_set_anim ACTOR_DORM_ROOM_KATE, $04 ; $561d
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_SHAKE ; $561d
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $5624
 	ld a, $03 ; $5629
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $562b
@@ -705,8 +705,8 @@ DormRoomNpc03_13:
 	sound BGM_NONE ; $5653
 	script_wait_frames $02 ; $5655
 	sound JINGLE_DONE_FOR_THE_DAY ; $565c
-	script_set_anim ACTOR_PLAYER, $03 ; $565e
-	script_set_anim ACTOR_DORM_ROOM_KATE, $03 ; $5665
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $565e
+	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $5665
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $566c
 	call WaitJingleEnd ; $5671
 	ld c, $04 ; $5674

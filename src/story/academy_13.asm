@@ -18,7 +18,7 @@ RunPlayDoublesTodayPrompt:
 	set_flag FLAG_DOUBLES ; $56e9
 	call SetRoommateDoublesYesReplyText_13 ; $56ec
 	script_speak ACTOR_DORM_ROOM_KATE ; $56ef
-	script_set_anim ACTOR_PLAYER, $03 ; $56f4
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $56f4
 	script_wait_idle ACTOR_PLAYER ; $56fb
 	script_wait_frames $05 ; $5700
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5707
@@ -100,7 +100,7 @@ RunPlayDoublesTodayPrompt:
 	call SetRoommateSinglesNoReplyText_13 ; $5807
 	farcall AdvanceDialogueTextCursor ; $580a
 	script_speak ACTOR_DORM_ROOM_KATE ; $580d
-	script_set_anim ACTOR_PLAYER, $03 ; $5812
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5812
 	script_wait_idle ACTOR_PLAYER ; $5819
 	script_face ACTOR_PLAYER, FACE_DOWN ; $581e
 	script_wait_frames $05 ; $5825
@@ -468,7 +468,7 @@ DormRoomArrivalCutscene_13:
 	farcall AdvanceDialogueTextCursor ; $5b37
 	script_speak ACTOR_DORM_ROOM_KATE ; $5b3a
 	script_speak ACTOR_DORM_ROOM_KATE ; $5b3f
-	script_set_anim ACTOR_PLAYER, $03 ; $5b44
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5b44
 	script_wait_idle ACTOR_PLAYER ; $5b4b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5b50
 	script_wait_frames $05 ; $5b57
@@ -486,6 +486,6 @@ DormRoomArrivalCutscene_13:
 	ret ; $5b78
 .singles:
 	script_speak ACTOR_DORM_ROOM_KATE ; $5b79
-	script_set_anim ACTOR_PLAYER, $03 ; $5b7e
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5b7e
 	script_wait_idle ACTOR_PLAYER ; $5b85
 	ret ; $5b8a

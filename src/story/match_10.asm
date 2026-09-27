@@ -25,15 +25,15 @@ MatchSelectMapScripts_10:
 	dw MatchSelectInitScript_10 ; slot 6 InitScript
 MatchSelectActors_10:
 	; $401e, 136 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $0700, $1100, FACE_DOWN, OBJ_EMILY, $01, $00, MATCH_SELECT_EMILY
-	map_actor $0000, ActorScript_10_2, $0700, $0700, FACE_LEFT, OBJ_WALK_73_06, $01, $03, MATCH_SELECT_WALK_73_06
-	map_actor $0000, ActorScript_10_2, $0d00, $0700, FACE_LEFT, OBJ_WALK_73_07, $01, $03, MATCH_SELECT_WALK_73_07
-	map_actor $0000, ActorScript_10_2, $0700, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $03, MATCH_SELECT_WALK_74_00
-	map_actor $0000, ActorScript_10_2, $0d00, $0b00, FACE_DOWN, OBJ_WALK_74_01, $01, $03, MATCH_SELECT_WALK_74_01
-	map_actor $0000, ActorScript_10_2, $0d00, $1100, FACE_DOWN, OBJ_WALK_76_06, $01, $05, MATCH_SELECT_WALK_76_06
-	map_actor $0000, ActorScript_10_2, $0500, $0e00, FACE_DOWN, OBJ_WALK_73_03, $01, $03, MATCH_SELECT_WALK_73_03_1
-	map_actor $0000, ActorScript_10_2, $1100, $0e00, FACE_DOWN, OBJ_WALK_73_03, $01, $03, MATCH_SELECT_WALK_73_03_2
-	map_actor $0000, ActorScript_10_2, $1100, $0c00, FACE_DOWN, OBJ_WALK_73_03, $01, $03, MATCH_SELECT_WALK_73_03_3
+	map_actor $0000, ActorScript_10_2, $0700, $1100, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, MATCH_SELECT_EMILY
+	map_actor $0000, ActorScript_10_2, $0700, $0700, FACE_LEFT, OBJ_WALK_73_06, ANIM_WALK, $03, MATCH_SELECT_WALK_73_06
+	map_actor $0000, ActorScript_10_2, $0d00, $0700, FACE_LEFT, OBJ_WALK_73_07, ANIM_WALK, $03, MATCH_SELECT_WALK_73_07
+	map_actor $0000, ActorScript_10_2, $0700, $0b00, FACE_DOWN, OBJ_WALK_74_00, ANIM_WALK, $03, MATCH_SELECT_WALK_74_00
+	map_actor $0000, ActorScript_10_2, $0d00, $0b00, FACE_DOWN, OBJ_WALK_74_01, ANIM_WALK, $03, MATCH_SELECT_WALK_74_01
+	map_actor $0000, ActorScript_10_2, $0d00, $1100, FACE_DOWN, OBJ_WALK_76_06, ANIM_WALK, $05, MATCH_SELECT_WALK_76_06
+	map_actor $0000, ActorScript_10_2, $0500, $0e00, FACE_DOWN, OBJ_WALK_73_03, ANIM_WALK, $03, MATCH_SELECT_WALK_73_03_1
+	map_actor $0000, ActorScript_10_2, $1100, $0e00, FACE_DOWN, OBJ_WALK_73_03, ANIM_WALK, $03, MATCH_SELECT_WALK_73_03_2
+	map_actor $0000, ActorScript_10_2, $1100, $0c00, FACE_DOWN, OBJ_WALK_73_03, ANIM_WALK, $03, MATCH_SELECT_WALK_73_03_3
 	map_actor_end
 MatchSelectEntryPoints_10:
 	; $40a6, 9 bytes (map_entries)

@@ -35,17 +35,17 @@ VolleyMatchChallengeScene:
 	jr nz, .prompt ; $68fe
 .accepted:
 	script_set_text Text_6e_70 ; $6900
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $6906
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $6906
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $690d
 	script_face ACTOR_TRAINING_COURT_BRIAN, FACE_LEFT ; $6912
 	script_wait_frames $28 ; $6919
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BRIAN ; $6920
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6928
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $692d
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $692d
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6934
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6939
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $693e
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $6943
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $6943
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $694a
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $694f
 	call WalkToNetChallengeCourtCutscene ; $6954
@@ -67,22 +67,22 @@ SmashMatchChallengeScene:
 	jp nz, .speak ; $6984
 	farcall AdvanceDialogueTextCursor ; $6987
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $698a
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $698f
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $698f
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6996
 	script_face ACTOR_TRAINING_COURT_BRIAN, FACE_LEFT ; $699b
 	script_wait_frames $28 ; $69a2
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BRIAN ; $69a9
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $69b1
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $69b6
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $69b6
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $69bd
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $69c2
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $04 ; $69c7
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_SHAKE ; $69c7
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $69ce
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $69d3
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $02 ; $69d8
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_BOUNCE ; $69d8
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $69df
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $69e4
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $69e9
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $69e9
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $69f0
 	ld a, $11 ; $69f5
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $69f7
@@ -91,7 +91,7 @@ SmashMatchChallengeScene:
 	script_wait_frames $05 ; $6a00
 	and a ; $6a07
 	jr nz, .speak ; $6a08
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $6a0a
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $6a0a
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6a11
 	farcall AdvanceDialogueTextCursor ; $6a16
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6a19
@@ -114,22 +114,22 @@ DropShotMatchChallengeScene:
 	jp nz, .speak ; $6a4e
 	farcall AdvanceDialogueTextCursor ; $6a51
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6a54
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $6a59
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $6a59
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6a60
 	script_face ACTOR_TRAINING_COURT_BRIAN, FACE_LEFT ; $6a65
 	script_wait_frames $28 ; $6a6c
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BRIAN ; $6a73
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6a7b
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $6a80
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $6a80
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6a87
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6a8c
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $04 ; $6a91
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_SHAKE ; $6a91
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6a98
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6a9d
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $02 ; $6aa2
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_BOUNCE ; $6aa2
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6aa9
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6aae
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $6ab3
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $6ab3
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6aba
 	ld a, $11 ; $6abf
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6ac1
@@ -139,7 +139,7 @@ DropShotMatchChallengeScene:
 	and a ; $6ad1
 	jr nz, .speak ; $6ad2
 	farcall AdvanceDialogueTextCursor ; $6ad4
-	script_set_anim ACTOR_TRAINING_COURT_BRIAN, $03 ; $6ad7
+	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $6ad7
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6ade
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6ae3
 	call WalkToNetChallengeCourtCutscene ; $6ae8
@@ -222,16 +222,16 @@ StrokeMatchChallengeScene:
 	script_wait_frames $28 ; $6bdb
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_ALLIE ; $6be2
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6bea
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $03 ; $6bef
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_NOD ; $6bef
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6bf6
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6bfb
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $02 ; $6c00
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_BOUNCE ; $6c00
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6c07
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6c0c
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $04 ; $6c11
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_SHAKE ; $6c11
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6c18
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6c1d
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $03 ; $6c22
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_NOD ; $6c22
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6c29
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6c2e
 	call WalkToStrokeChallengeCourtCutscene ; $6c33
@@ -261,16 +261,16 @@ LobMatchChallengeScene:
 	script_face ACTOR_TRAINING_COURT_ALLIE, FACE_RIGHT ; $6c81
 	script_wait_frames $28 ; $6c88
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_ALLIE ; $6c8f
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $03 ; $6c97
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_NOD ; $6c97
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6c9e
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6ca3
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $02 ; $6ca8
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_BOUNCE ; $6ca8
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6caf
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6cb4
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $04 ; $6cb9
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_SHAKE ; $6cb9
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6cc0
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6cc5
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $03 ; $6cca
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_NOD ; $6cca
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6cd1
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6cd6
 	call WalkToStrokeChallengeCourtCutscene ; $6cdb
@@ -297,25 +297,25 @@ ReturnMatchChallengeScene:
 	and a ; $6d22
 	jp nz, SpeakStrokeChallengerDeclineLine ; $6d23
 	farcall AdvanceDialogueTextCursor ; $6d26
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $03 ; $6d29
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_NOD ; $6d29
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6d30
 	script_face ACTOR_TRAINING_COURT_ALLIE, FACE_RIGHT ; $6d35
 	script_wait_frames $28 ; $6d3c
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_ALLIE ; $6d43
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6d4b
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $03 ; $6d50
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_NOD ; $6d50
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6d57
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6d5c
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $02 ; $6d61
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_BOUNCE ; $6d61
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6d68
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6d6d
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $04 ; $6d72
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_SHAKE ; $6d72
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6d79
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6d7e
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $02 ; $6d83
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_BOUNCE ; $6d83
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6d8a
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6d8f
-	script_set_anim ACTOR_TRAINING_COURT_ALLIE, $03 ; $6d94
+	script_set_anim ACTOR_TRAINING_COURT_ALLIE, ANIM_NOD ; $6d94
 	script_wait_idle ACTOR_TRAINING_COURT_ALLIE ; $6d9b
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6da0
 	call WalkToStrokeChallengeCourtCutscene ; $6da5
@@ -354,7 +354,7 @@ ReturnCoachReturnLessonScene:
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_RIGHT ; $6e0a
 	script_set_text Text_37_202 ; $6e11
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6e17
-	script_set_anim ACTOR_TRAINING_COURT_BOB_2, $02 ; $6e1c
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $6e1c
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $6e23
 	ld a, MINIGAME_STROKE_PRACTICE_1 ; $6e28
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6e2a
@@ -393,7 +393,7 @@ ReturnCoachLobLessonScene:
 	call MovePartyToReturnCoachSpot ; $6e90
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_RIGHT ; $6e93
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6e9a
-	script_set_anim ACTOR_TRAINING_COURT_BOB_2, $02 ; $6e9f
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $6e9f
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $6ea6
 	ld a, MINIGAME_STROKE_PRACTICE_2 ; $6eab
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6ead
@@ -432,7 +432,7 @@ ReturnCoachPassingShotLessonScene:
 	call MovePartyToReturnCoachSpot ; $6f13
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_RIGHT ; $6f16
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6f1d
-	script_set_anim ACTOR_TRAINING_COURT_BOB_2, $02 ; $6f22
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $6f22
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $6f29
 	ld a, MINIGAME_STROKE_PRACTICE_3 ; $6f2e
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6f30

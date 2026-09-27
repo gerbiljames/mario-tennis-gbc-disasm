@@ -93,10 +93,10 @@ AcademyMainBldgMapScripts_10:
 	dw AcademyMainBldgInitScript_10 ; slot 6 InitScript
 AcademyMainBldgActors_10:
 	; $74b7, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $1d00, $1780, FACE_DOWN, OBJ_WALK_72_08, $01, $04, ACADEMY_MAIN_BLDG_WALK_72_08_1
-	map_actor $0000, ActorScript_10_2, $0e80, $0f00, FACE_LEFT, OBJ_WALK_73_00, $01, $00, ACADEMY_MAIN_BLDG_WALK_73_00
-	map_actor $0000, ActorScript_10_2, $0500, $0f80, FACE_DOWN, OBJ_WALK_72_08, $01, $07, ACADEMY_MAIN_BLDG_WALK_72_08_2
-	map_actor $0000, ActorScript_10_3, $2800, $1e00, FACE_DOWN, OBJ_WALK_73_01, $01, $03, ACADEMY_MAIN_BLDG_WALK_73_01
+	map_actor $0000, ActorScript_10_2, $1d00, $1780, FACE_DOWN, OBJ_WALK_72_08, ANIM_WALK, $04, ACADEMY_MAIN_BLDG_WALK_72_08_1
+	map_actor $0000, ActorScript_10_2, $0e80, $0f00, FACE_LEFT, OBJ_WALK_73_00, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_WALK_73_00
+	map_actor $0000, ActorScript_10_2, $0500, $0f80, FACE_DOWN, OBJ_WALK_72_08, ANIM_WALK, $07, ACADEMY_MAIN_BLDG_WALK_72_08_2
+	map_actor $0000, ActorScript_10_3, $2800, $1e00, FACE_DOWN, OBJ_WALK_73_01, ANIM_WALK, $03, ACADEMY_MAIN_BLDG_WALK_73_01
 	map_actor_end
 AcademyMainBldgEntryPoints_10:
 	; $74f9, 57 bytes (map_entries)
@@ -275,7 +275,7 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_wait_frames $1e ; $7767
 	script_face ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, FACE_UP ; $776e
 	script_wait_frames $0a ; $7775
-	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, $02 ; $777c
+	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_BOUNCE ; $777c
 	script_wait_frames $1e ; $7783
 	script_move_target ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, $2200, $1700 ; $778a
 	script_move_player $2200, $1700 ; $7795
@@ -293,11 +293,11 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_PLAYER ; $77eb
 	script_wait_frames $1e ; $77f3
 	farcall WaitPlayerMoveDone ; $77fa
-	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, $03 ; $77fd
+	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_NOD ; $77fd
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $7804
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $7809
 	script_wait_frames $0a ; $780e
-	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, $03 ; $7815
+	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, ANIM_NOD ; $7815
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $781c
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $7821
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $7826
@@ -316,18 +316,18 @@ AcademyMainBldgNewStudentCutscene_10:
 	farcall AdvanceDialogueTextCursor ; $7858
 .wait:
 	script_wait_frames $0f ; $785b
-	script_set_anim $04, $03 ; $7862
+	script_set_anim $04, ANIM_NOD ; $7862
 	script_wait_idle $04 ; $7869
 	script_speak $04 ; $786e
 	script_wait_frames $0f ; $7873
-	script_set_anim ACTOR_PLAYER, $03 ; $787a
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $787a
 	script_wait_idle ACTOR_PLAYER ; $7881
 	script_wait_frames $0f ; $7886
-	script_set_anim $04, $03 ; $788d
+	script_set_anim $04, ANIM_NOD ; $788d
 	script_wait_idle $04 ; $7894
 	script_speak $04 ; $7899
 	script_wait_frames $0f ; $789e
-	script_set_anim $03, $02 ; $78a5
+	script_set_anim $03, ANIM_BOUNCE ; $78a5
 	script_wait_idle $03 ; $78ac
 	script_speak $03 ; $78b1
 	script_face_toward $03, ACTOR_PLAYER ; $78b6
@@ -335,19 +335,19 @@ AcademyMainBldgNewStudentCutscene_10:
 	sound SFX_EMOTE ; $78c9
 	script_wait_frames $3c ; $78cb
 	script_set_position $06, $3f00, $3f00 ; $78d2
-	script_set_anim $04, $03 ; $78dd
+	script_set_anim $04, ANIM_NOD ; $78dd
 	script_wait_idle $04 ; $78e4
 	script_speak $04 ; $78e9
-	script_set_anim ACTOR_PLAYER, $02 ; $78ee
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $78ee
 	script_wait_idle ACTOR_PLAYER ; $78f5
 	script_wait_frames $0a ; $78fa
 	script_face_toward $04, ACTOR_PLAYER ; $7901
-	script_set_anim ACTOR_PLAYER, $03 ; $7909
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7909
 	script_wait_idle ACTOR_PLAYER ; $7910
 	script_wait_frames $0f ; $7915
 	script_face_pair $04, $03 ; $791c
-	script_set_anim $03, $03 ; $7924
-	script_set_anim $04, $03 ; $792b
+	script_set_anim $03, ANIM_NOD ; $7924
+	script_set_anim $04, ANIM_NOD ; $792b
 	script_wait_idle $04 ; $7932
 	script_move_player $2200, $1700 ; $7937
 	script_wait_frames $28 ; $7941
@@ -363,11 +363,11 @@ AcademyMainBldgNewStudentCutscene_10:
 	ret ; $797f
 AcademyMainBldgNewStudentActors_10:
 	; $7980, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $2b00, $0b00, FACE_DOWN, OBJ_EMILY, $01, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY
-	map_actor $0000, ActorScript_10_2, $1d00, $1700, FACE_DOWN, OBJ_WALK_72_08, $01, $04, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_73_12
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_73_13
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_73_15
+	map_actor $0000, ActorScript_10_2, $2b00, $0b00, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY
+	map_actor $0000, ActorScript_10_2, $1d00, $1700, FACE_DOWN, OBJ_WALK_72_08, ANIM_WALK, $04, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_73_12
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_73_13
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_73_15
 	map_actor_end
 UpdatePlayerPairTileAnimState_10:
 	ld a, $00 ; $79d0

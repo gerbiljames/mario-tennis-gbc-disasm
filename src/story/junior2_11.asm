@@ -13,22 +13,22 @@ JuniorClassCourtSinglesMapScripts_11:
 	dw JuniorClassCourtSinglesInitScript_11 ; slot 6 InitScript
 JuniorClassCourtSinglesActors_11:
 	; $6830, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $1300, $1300, FACE_DOWN, OBJ_WALK_72_00, $01, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_72_00
-	map_actor $0000, ActorScript_11_45, $2300, $1700, FACE_LEFT, OBJ_BOB, $01, $05, JUNIOR_CLASS_COURT_SINGLES_BOB
-	map_actor $0000, ActorScript_11_45, $0500, $1500, FACE_RIGHT, OBJ_BETH, $01, $04, JUNIOR_CLASS_COURT_SINGLES_BETH
-	map_actor $0000, ActorScript_11_45, $1300, $0d00, FACE_RIGHT, OBJ_CURT, $01, $07, JUNIOR_CLASS_COURT_SINGLES_CURT
-	map_actor $0000, ActorScript_11_45, $1f00, $1500, FACE_LEFT, OBJ_PAM, $01, $07, JUNIOR_CLASS_COURT_SINGLES_PAM
-	map_actor $0000, ActorScript_11_45, $2500, $0900, FACE_RIGHT, OBJ_BRIAN, $01, $03, JUNIOR_CLASS_COURT_SINGLES_BRIAN
-	map_actor $0000, ActorScript_11_45, $3100, $1500, FACE_RIGHT, OBJ_FAY, $01, $06, JUNIOR_CLASS_COURT_SINGLES_FAY
-	map_actor $0000, ActorScript_11_45, $3d00, $1900, FACE_LEFT, OBJ_ALLIE, $01, $04, JUNIOR_CLASS_COURT_SINGLES_ALLIE
-	map_actor $0000, ActorScript_11_29, $3100, $0700, FACE_DOWN, OBJ_JOY, $01, $03, JUNIOR_CLASS_COURT_SINGLES_JOY
-	map_actor $0000, ActorScript_11_50, $0800, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_1
-	map_actor $0000, ActorScript_11_51, $0c00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_2
-	map_actor $0000, ActorScript_11_48, $1800, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_3
-	map_actor $0000, ActorScript_11_49, $1c00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $05, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4
-	map_actor $0000, ActorScript_11_50, $3400, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_5
-	map_actor $0000, ActorScript_11_51, $3800, $1700, FACE_UP, OBJ_WALK_74_00, $01, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_6
-	map_actor $0000, ActorScript_11_45, $4000, $4000, FACE_UP, OBJ_WALK_73_19, $01, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_73_19
+	map_actor $0000, ActorScript_11_45, $1300, $1300, FACE_DOWN, OBJ_WALK_72_00, ANIM_WALK, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_72_00
+	map_actor $0000, ActorScript_11_45, $2300, $1700, FACE_LEFT, OBJ_BOB, ANIM_WALK, $05, JUNIOR_CLASS_COURT_SINGLES_BOB
+	map_actor $0000, ActorScript_11_45, $0500, $1500, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $04, JUNIOR_CLASS_COURT_SINGLES_BETH
+	map_actor $0000, ActorScript_11_45, $1300, $0d00, FACE_RIGHT, OBJ_CURT, ANIM_WALK, $07, JUNIOR_CLASS_COURT_SINGLES_CURT
+	map_actor $0000, ActorScript_11_45, $1f00, $1500, FACE_LEFT, OBJ_PAM, ANIM_WALK, $07, JUNIOR_CLASS_COURT_SINGLES_PAM
+	map_actor $0000, ActorScript_11_45, $2500, $0900, FACE_RIGHT, OBJ_BRIAN, ANIM_WALK, $03, JUNIOR_CLASS_COURT_SINGLES_BRIAN
+	map_actor $0000, ActorScript_11_45, $3100, $1500, FACE_RIGHT, OBJ_FAY, ANIM_WALK, $06, JUNIOR_CLASS_COURT_SINGLES_FAY
+	map_actor $0000, ActorScript_11_45, $3d00, $1900, FACE_LEFT, OBJ_ALLIE, ANIM_WALK, $04, JUNIOR_CLASS_COURT_SINGLES_ALLIE
+	map_actor $0000, ActorScript_11_29, $3100, $0700, FACE_DOWN, OBJ_JOY, ANIM_WALK, $03, JUNIOR_CLASS_COURT_SINGLES_JOY
+	map_actor $0000, ActorScript_11_50, $0800, $0b00, FACE_DOWN, OBJ_WALK_74_00, ANIM_WALK, $05, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_1
+	map_actor $0000, ActorScript_11_51, $0c00, $1700, FACE_UP, OBJ_WALK_74_00, ANIM_WALK, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_2
+	map_actor $0000, ActorScript_11_48, $1800, $0b00, FACE_DOWN, OBJ_WALK_74_00, ANIM_WALK, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_3
+	map_actor $0000, ActorScript_11_49, $1c00, $1700, FACE_UP, OBJ_WALK_74_00, ANIM_WALK, $05, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4
+	map_actor $0000, ActorScript_11_50, $3400, $0b00, FACE_DOWN, OBJ_WALK_74_00, ANIM_WALK, $05, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_5
+	map_actor $0000, ActorScript_11_51, $3800, $1700, FACE_UP, OBJ_WALK_74_00, ANIM_WALK, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_6
+	map_actor $0000, ActorScript_11_45, $4000, $4000, FACE_UP, OBJ_WALK_73_19, ANIM_WALK, $00, JUNIOR_CLASS_COURT_SINGLES_WALK_73_19
 	map_actor_end
 JuniorClassCourtSinglesEntryPoints_11:
 	; $691a, 17 bytes (map_entries)
@@ -140,7 +140,7 @@ JuniorClassCourtSinglesNpc08_11:
 	script_wait_frames $05 ; $6a4f
 	and a ; $6a56
 	jr nz, .speak ; $6a57
-	script_set_anim ACTOR_PLAYER, $03 ; $6a59
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6a59
 	script_wait_idle ACTOR_PLAYER ; $6a60
 	script_move_player $2b00, $1100 ; $6a65
 	script_move_target ACTOR_PLAYER, $2700, $1900 ; $6a6f
@@ -281,7 +281,7 @@ JuniorClassCourtSinglesDNpc0A_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cde
 	ret ; $6ce3
 .done:
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, $03 ; $6ce4
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, ANIM_NOD ; $6ce4
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6ceb
 	script_set_text Text_33_31 ; $6cf0
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cf6
@@ -342,7 +342,7 @@ JuniorClassCourtSinglesInitScript_11:
 	ret ; $6dbb
 ActorScript_11_23:
 	; $6dbc, 15 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $1f00, $0d00
 	as_wait_move
@@ -350,7 +350,7 @@ ActorScript_11_23:
 	as_halt
 ActorScript_11_24:
 	; $6dcb, 15 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $1f00, $1300
 	as_wait_move
@@ -358,7 +358,7 @@ ActorScript_11_24:
 	as_halt
 ActorScript_11_25:
 	; $6dda, 15 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $0f00, $0d00
 	as_wait_move
@@ -366,7 +366,7 @@ ActorScript_11_25:
 	as_halt
 ActorScript_11_26:
 	; $6de9, 15 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $0f00, $1300
 	as_wait_move
@@ -374,7 +374,7 @@ ActorScript_11_26:
 	as_halt
 ActorScript_11_27:
 	; $6df8, 15 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $0500, $0d00
 	as_wait_move
@@ -382,7 +382,7 @@ ActorScript_11_27:
 	as_halt
 ActorScript_11_28:
 	; $6e07, 15 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_wait $0a
 	as_set_target $0500, $1300
 	as_wait_move
@@ -540,12 +540,12 @@ JuniorClassCourtSinglesMatchReturn:
 	script_set_text Text_32_55 ; $70d1
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, $1a00, $0d00 ; $70d7
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $70e2
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, $02 ; $70e7
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_BOUNCE ; $70e7
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $70ee
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $03 ; $70f3
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_NOD ; $70f3
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $70fa
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, $02 ; $70ff
-	script_set_anim ACTOR_PLAYER, $02 ; $7106
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_BOUNCE ; $70ff
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7106
 	script_face ACTOR_PLAYER, FACE_DOWN ; $710d
 	script_player_speed $0010 ; $7114
 	script_set_speed ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $0010 ; $711a
@@ -557,37 +557,37 @@ JuniorClassCourtSinglesMatchReturn:
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $1a00, $1700 ; $7149
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7154
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, FACE_UP ; $7159
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $02 ; $7160
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_BOUNCE ; $7160
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7167
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $716c
-	script_set_anim ACTOR_PLAYER, $03 ; $7171
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7171
 	script_wait_idle ACTOR_PLAYER ; $7178
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $03 ; $717d
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_NOD ; $717d
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7184
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7189
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $1a00, $1600 ; $718e
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7199
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $02 ; $719e
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_BOUNCE ; $719e
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $71a5
 	script_wait_frames $1e ; $71aa
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $03 ; $71b1
-	script_set_anim ACTOR_PLAYER, $03 ; $71b8
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_NOD ; $71b1
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $71b8
 	script_wait_idle ACTOR_PLAYER ; $71bf
 	script_speak ACTOR_PLAYER ; $71c4
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $02 ; $71c9
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_BOUNCE ; $71c9
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $71d0
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $71d5
-	script_set_anim ACTOR_PLAYER, $03 ; $71da
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $71da
 	script_wait_idle ACTOR_PLAYER ; $71e1
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $03 ; $71e6
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_NOD ; $71e6
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $71ed
-	script_set_anim ACTOR_PLAYER, $02 ; $71f2
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $71f2
 	script_wait_idle ACTOR_PLAYER ; $71f9
 	script_face ACTOR_PLAYER, FACE_UP ; $71fe
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_73_19, $1b80, $1280 ; $7205
 	sound SFX_APPEAR2 ; $7210
 	script_wait_frames $28 ; $7212
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, $02 ; $7219
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_BOUNCE ; $7219
 	script_wait_frames $28 ; $7220
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, $1a00, $0e00 ; $7227
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $7232
@@ -600,10 +600,10 @@ JuniorClassCourtSinglesMatchReturn:
 	ld a, $ff ; $7251
 	ld [wUnusedExitTriggerIdMirror], a ; $7253
 	ld [wStoryModeExitTriggerRequest], a ; $7256
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $03 ; $7259
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_NOD ; $7259
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7260
 	script_wait_frames $28 ; $7265
-	script_set_anim ACTOR_PLAYER, $02 ; $726c
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $726c
 	script_wait_idle ACTOR_PLAYER ; $7273
 	script_wait_frames $28 ; $7278
 	ld c, $04 ; $727f

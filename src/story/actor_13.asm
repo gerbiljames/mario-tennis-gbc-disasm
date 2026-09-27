@@ -3,7 +3,7 @@ ApplyPartnerCharacterVariant_13:
 	or a ; $62c1
 	jr nz, .done ; $62c2
 	script_set_objdef OBJ_HARRY, $0d ; $62c4
-	script_set_anim $0d, $01 ; $62d0
+	script_set_anim $0d, ANIM_WALK ; $62d0
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62d7
 .done:
 	ret ; $62da
@@ -89,7 +89,7 @@ VarsityCourtTourCutscene:
 	sound SFX_EMOTE ; $645b
 	script_wait_frames $32 ; $645d
 	script_set_position ACTOR_VARSITY_COURT_TOUR_WALK_73_13, $3f00, $3f00 ; $6464
-	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, $02 ; $646f
+	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, ANIM_BOUNCE ; $646f
 	script_wait_idle ACTOR_VARSITY_COURT_TOUR_EMILY ; $6476
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $647b
 	script_wait_frames $1e ; $6480
@@ -135,16 +135,16 @@ VarsityCourtTourCutscene:
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6583
 	script_wait_frames $1e ; $6588
 	script_face ACTOR_PLAYER, FACE_UP ; $658f
-	script_set_anim ACTOR_PLAYER, $03 ; $6596
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6596
 	script_wait_idle ACTOR_PLAYER ; $659d
 	script_wait_frames $0f ; $65a2
-	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, $02 ; $65a9
+	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, ANIM_BOUNCE ; $65a9
 	script_wait_idle ACTOR_VARSITY_COURT_TOUR_EMILY ; $65b0
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $65b5
-	script_set_anim ACTOR_PLAYER, $02 ; $65ba
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $65ba
 	script_wait_idle ACTOR_PLAYER ; $65c1
 	script_wait_frames $1e ; $65c6
-	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, $03 ; $65cd
+	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, ANIM_NOD ; $65cd
 	script_wait_idle ACTOR_VARSITY_COURT_TOUR_EMILY ; $65d4
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $65d9
 	script_move_target ACTOR_PLAYER, $2200, $1f00 ; $65de
@@ -163,10 +163,10 @@ VarsityCourtTourCutscene:
 	ret ; $6637
 VarsityCourtTourActors_13:
 	; $6638, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00, VARSITY_COURT_TOUR_WALK_73_12
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00, VARSITY_COURT_TOUR_WALK_73_13
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00, VARSITY_COURT_TOUR_WALK_73_15
-	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, OBJ_EMILY, $01, $00, VARSITY_COURT_TOUR_EMILY
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, VARSITY_COURT_TOUR_WALK_73_12
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, ANIM_WALK, $00, VARSITY_COURT_TOUR_WALK_73_13
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, ANIM_WALK, $00, VARSITY_COURT_TOUR_WALK_73_15
+	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, VARSITY_COURT_TOUR_EMILY
 	map_actor_end
 DecompressVarsityCourtTourRecords_13:
 	push_wram_bank WRAM_STAGING ; $667a
@@ -315,7 +315,7 @@ VarsityCourtTourPalette_13:
 	INCBIN "data/bank_013/VarsityCourtTourPalette_13.bin" ; $6a08, 8 bytes
 SetupStoryMinigameMatch0:
 	script_null_script ACTOR_COURTYARD_FAY ; $6a10
-	script_set_anim ACTOR_COURTYARD_FAY, $01 ; $6a15
+	script_set_anim ACTOR_COURTYARD_FAY, ANIM_WALK ; $6a15
 	script_null_script ACTOR_COURTYARD_BETH ; $6a1c
 	script_set_speed ACTOR_COURTYARD_BETH, $0018 ; $6a21
 	script_set_actor_script ACTOR_COURTYARD_KEVIN, ActorScript_13_04 ; $6a29
@@ -335,8 +335,8 @@ SetupVarsityCourtDoublesMatch_13:
 	script_null_script ACTOR_COURTYARD_FAY ; $6a89
 	script_null_script ACTOR_COURTYARD_BETH ; $6a8e
 	script_set_speed ACTOR_COURTYARD_BETH, $0018 ; $6a93
-	script_set_anim ACTOR_COURTYARD_FAY, $01 ; $6a9b
-	script_set_anim ACTOR_COURTYARD_FAY, $03 ; $6aa2
+	script_set_anim ACTOR_COURTYARD_FAY, ANIM_WALK ; $6a9b
+	script_set_anim ACTOR_COURTYARD_FAY, ANIM_NOD ; $6aa2
 	script_wait_idle ACTOR_COURTYARD_FAY ; $6aa9
 	script_set_actor_script ACTOR_COURTYARD_FAY, ActorScript_13_10 ; $6aae
 	script_set_actor_script ACTOR_COURTYARD_CURT, ActorScript_13_11 ; $6ab9
@@ -360,7 +360,7 @@ ActorScript_13_04:
 	as_halt
 ActorScript_13_05:
 	; $6b24, 13 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_set_target $1300, $2100
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT

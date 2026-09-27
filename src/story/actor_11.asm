@@ -11,10 +11,10 @@ PromptChallengeRankingOpponent:
 	script_wait_frames $05 ; $72a1
 	and a ; $72a8
 	jp nz, .done ; $72a9
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, $03 ; $72ac
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, ANIM_NOD ; $72ac
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00 ; $72b3
 .declined:
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, $03 ; $72b8
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, ANIM_NOD ; $72b8
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00 ; $72bf
 	script_set_text Text_32_40 ; $72c4
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00 ; $72ca
@@ -84,7 +84,7 @@ DrawRankingOpponentInfo:
 	script_move_player_to_actor ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $73ac
 	farcall WaitPlayerMoveDone ; $73b3
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $73b6
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, $03 ; $73be
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, ANIM_NOD ; $73be
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $73c5
 	script_wait_frames $0a ; $73ca
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, ActorScript_11_30 ; $73d1
@@ -94,11 +94,11 @@ DrawRankingOpponentInfo:
 	farcall WaitPlayerMoveDone ; $73f1
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $73f4
 	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $73f9
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, $02 ; $7401
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, ANIM_BOUNCE ; $7401
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $7408
 	script_set_text Text_32_42 ; $740d
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $7413
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, $03 ; $7418
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, ANIM_NOD ; $7418
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $741f
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $7424
 	script_wait_frames $0f ; $7429
@@ -114,7 +114,7 @@ DrawRankingOpponentInfo:
 	script_move_player_to_actor ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $7463
 	farcall WaitPlayerMoveDone ; $746a
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $746d
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, $03 ; $7475
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ANIM_NOD ; $7475
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $747c
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ActorScript_11_34 ; $7481
 	script_move_player_to_actor ACTOR_PLAYER ; $748c
@@ -122,11 +122,11 @@ DrawRankingOpponentInfo:
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $749a
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ACTOR_PLAYER ; $749f
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $74a7
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, $02 ; $74ac
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ANIM_BOUNCE ; $74ac
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $74b3
 	script_set_text Text_32_44 ; $74b8
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $74be
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, $03 ; $74c3
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ANIM_NOD ; $74c3
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $74ca
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $74cf
 	script_wait_frames $0f ; $74d4
@@ -142,7 +142,7 @@ DrawRankingOpponentInfo:
 	script_move_player_to_actor ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $750e
 	farcall WaitPlayerMoveDone ; $7515
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $7518
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, $03 ; $7520
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ANIM_NOD ; $7520
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $7527
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ActorScript_11_38 ; $752c
 	script_wait_frames $0a ; $7537
@@ -150,11 +150,11 @@ DrawRankingOpponentInfo:
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, FACE_DOWN ; $7545
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $754c
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ACTOR_PLAYER ; $7551
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, $02 ; $7559
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ANIM_BOUNCE ; $7559
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $7560
 	script_set_text Text_32_46 ; $7565
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $756b
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, $03 ; $7570
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ANIM_NOD ; $7570
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $7577
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $757c
 	script_wait_frames $0f ; $7581
@@ -175,18 +175,18 @@ DrawRankingOpponentInfo:
 	ld d, h ; $75ce
 	farcall AttachActorWaypointFollower ; $75cf
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $75d2
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, $03 ; $75da
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_NOD ; $75da
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $75e1
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ActorScript_11_41 ; $75e6
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, FACE_DOWN ; $75f1
 	script_move_player_to_actor ACTOR_PLAYER ; $75f8
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $75ff
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ACTOR_PLAYER ; $7604
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, $02 ; $760c
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_BOUNCE ; $760c
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $7613
 	script_set_text Text_32_48 ; $7618
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $761e
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, $03 ; $7623
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_NOD ; $7623
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $762a
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $762f
 	script_wait_frames $0f ; $7634
@@ -365,7 +365,7 @@ OfferSinglesRankingMatch:
 	call DrawRankingOpponentInfo ; $77f6
 	script_face ACTOR_PLAYER, FACE_UP ; $77f9
 	script_wait_frames $0f ; $7800
-	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $02 ; $7807
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_BOUNCE ; $7807
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $780e
 	call PromptChallengeRankingOpponent ; $7813
 	ret ; $7816

@@ -69,7 +69,7 @@ GetDoublesProgressStage_10:
 ActorScript_10_2:
 	; $7bd1, 10 bytes (actor_script)
 	as_halt
-	as_anim $00
+	as_anim ANIM_STILL
 	as_halt
 .L4:
 	as_step
@@ -110,178 +110,178 @@ MapScriptHideLocationName_10:
 	ret ; $7c06
 ActorScript_10_4:
 	; $7c07, 438 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
 	as_jump ActorScript_10_4
-	as_anim $00
+	as_anim ANIM_STILL
 	as_wait $3c
 .L67:
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
 	as_jump .L67
-	as_anim $00
+	as_anim ANIM_STILL
 	as_wait $1e
 .Lce:
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
 	as_jump .Lce
-	as_anim $00
+	as_anim ANIM_STILL
 	as_wait $1e
 	as_wait $3c
 .L137:
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
 	as_jump .L137
 .L19a:
 	as_wait $f0
-	as_anim $03
+	as_anim ANIM_NOD
 	as_wait $50
-	as_anim $03
+	as_anim ANIM_NOD
 	as_wait $3c
 	as_jump .L19a
 .L1a7:
 	as_wait $8c
-	as_anim $04
+	as_anim ANIM_SHAKE
 	as_wait $8c
-	as_anim $04
+	as_anim ANIM_SHAKE
 	as_wait $8c
-	as_anim $03
+	as_anim ANIM_NOD
 	as_jump .L1a7
 SetStoryDialogueStage_10:
 	test_flag FLAG_DOUBLES ; $7dbd

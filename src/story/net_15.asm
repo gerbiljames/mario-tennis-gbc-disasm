@@ -67,7 +67,7 @@ NetCoachVolleyLessonScene:
 	call MovePartyToNetCoachSpot ; $701f
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_LEFT ; $7022
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7029
-	script_set_anim ACTOR_TRAINING_COURT_BETH, $02 ; $702e
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $702e
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7035
 	script_set_text Text_37_99 ; $703a
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7040
@@ -119,10 +119,10 @@ NetCoachSmashLessonScene:
 	call MovePartyToNetCoachSpot ; $70c9
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_LEFT ; $70cc
 	script_speak ACTOR_TRAINING_COURT_BETH ; $70d3
-	script_set_anim ACTOR_TRAINING_COURT_BETH, $02 ; $70d8
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $70d8
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $70df
 	script_speak ACTOR_TRAINING_COURT_BETH ; $70e4
-	script_set_anim ACTOR_TRAINING_COURT_BETH, $03 ; $70e9
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_NOD ; $70e9
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $70f0
 	script_speak ACTOR_TRAINING_COURT_BETH ; $70f5
 	ld a, MINIGAME_NET_GAME_PRACTICE_2 ; $70fa
@@ -170,7 +170,7 @@ NetCoachDropShotLessonScene:
 	call MovePartyToNetCoachSpot ; $717b
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_LEFT ; $717e
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7185
-	script_set_anim ACTOR_TRAINING_COURT_BETH, $02 ; $718a
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $718a
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7191
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7196
 	ld a, MINIGAME_NET_GAME_PRACTICE_3 ; $719b
@@ -336,14 +336,14 @@ ServeCoachIntroDialogue_15:
 	farcall AdvanceDialogueTextCursor ; $72da
 .greet:
 	script_face_toward ACTOR_PLAYER, $07 ; $72dd
-	script_set_anim $07, $03 ; $72e5
+	script_set_anim $07, ANIM_NOD ; $72e5
 	script_wait_idle $07 ; $72ec
 	script_speak $07 ; $72f1
-	script_set_anim $07, $02 ; $72f6
+	script_set_anim $07, ANIM_BOUNCE ; $72f6
 	script_wait_idle $07 ; $72fd
 	script_set_text Text_37_31 ; $7302
 	script_speak $07 ; $7308
-	script_set_anim $07, $04 ; $730d
+	script_set_anim $07, ANIM_SHAKE ; $730d
 	script_wait_idle $07 ; $7314
 	script_speak $07 ; $7319
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $731e
@@ -363,13 +363,13 @@ ServeCoachIntroDialogue_15:
 .lesson1Speak:
 	script_speak $07 ; $734a
 	script_face_toward ACTOR_PLAYER, $07 ; $734f
-	script_set_anim $07, $03 ; $7357
+	script_set_anim $07, ANIM_NOD ; $7357
 	script_wait_idle $07 ; $735e
 	script_speak $07 ; $7363
-	script_set_anim $07, $02 ; $7368
+	script_set_anim $07, ANIM_BOUNCE ; $7368
 	script_wait_idle $07 ; $736f
 	script_speak $07 ; $7374
-	script_set_anim $07, $04 ; $7379
+	script_set_anim $07, ANIM_SHAKE ; $7379
 	script_wait_idle $07 ; $7380
 	script_speak $07 ; $7385
 	script_face $07, FACE_LEFT ; $738a
@@ -381,13 +381,13 @@ ServeCoachIntroDialogue_15:
 	script_set_text Text_37_57 ; $739f
 	script_speak $07 ; $73a5
 	script_face_toward ACTOR_PLAYER, $07 ; $73aa
-	script_set_anim $07, $03 ; $73b2
+	script_set_anim $07, ANIM_NOD ; $73b2
 	script_wait_idle $07 ; $73b9
 	script_speak $07 ; $73be
-	script_set_anim $07, $02 ; $73c3
+	script_set_anim $07, ANIM_BOUNCE ; $73c3
 	script_wait_idle $07 ; $73ca
 	script_speak $07 ; $73cf
-	script_set_anim $07, $03 ; $73d4
+	script_set_anim $07, ANIM_NOD ; $73d4
 	script_wait_idle $07 ; $73db
 	script_speak $07 ; $73e0
 	script_face $07, FACE_LEFT ; $73e5

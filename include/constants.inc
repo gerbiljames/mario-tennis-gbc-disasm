@@ -931,6 +931,18 @@ def SFX_APPEAR1                equ $99 ; the first of the two pop sounds cutscen
 def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (MusicSettingHandler0/1 $1a)
 def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries; which map script selects it is not established
 
+; --- Overworld walk-sprite animations (script_set_anim, as_anim, map_actor) ---
+; Animation ids 0-4 mean the same in every walk sprite's AnimPtrs table
+; (frames identified from the sprite graphics; ids 5 and up differ by sprite:
+; a racket swing for the racket holders, another bounce for the rest).
+def ANIM_STILL  equ $00 ; frame 0, held
+def ANIM_WALK   equ $01 ; frames 0 and 1, the stepping loop (also the idle shuffle)
+def ANIM_BOUNCE equ $02 ; stand, crouch, stand, crouch, then back to ANIM_WALK
+def ANIM_NOD    equ $03 ; head lowered for half a second, then ANIM_WALK
+def ANIM_SHAKE  equ $04 ; upper body swayed left, right, left, right: a head shake
+def ANIM_SWING  equ $05 ; a racket swing, in the sprites that have one (racket-holding
+                        ; students, Bob, Pam, the twelve-animation sprites); elsewhere a bounce
+
 ; --- On-court character animation ids (wCharAnimId $df2e, wCharSwingAnim $df15) ---
 ; One id space, not two. SetCharAnimation ($08:$69ea) stores its argument in
 ; wCharAnimId and indexes wCharAnimTablePtr by it; that table is the 19-entry

@@ -146,7 +146,7 @@ HandleExhibitionMatchResult:
 ActorScript_0e_22:
 	; $7c6e, 40 bytes (actor_script)
 	as_halt
-	as_anim $00
+	as_anim ANIM_STILL
 	as_halt
 .L4:
 	as_step
@@ -185,183 +185,183 @@ MapScriptHideLocationName_0e:
 	ret ; $7ca3
 ActorScript_0e_23:
 	; $7ca4, 103 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
 	as_jump ActorScript_0e_23
-	as_anim $00
+	as_anim ANIM_STILL
 	as_wait $3c
 ActorScript_0e_24:
 	; $7d0b, 103 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
 	as_jump ActorScript_0e_24
-	as_anim $00
+	as_anim ANIM_STILL
 	as_wait $1e
 ActorScript_0e_25:
 	; $7d72, 105 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
 	as_jump ActorScript_0e_25
-	as_anim $00
+	as_anim ANIM_STILL
 	as_wait $1e
 	as_wait $3c
 ActorScript_0e_26:
 	; $7ddb, 99 bytes (actor_script)
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
-	as_anim $01
+	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $05
+	as_anim ANIM_SWING
 	as_wait $4b
 	as_jump ActorScript_0e_26
 ActorScript_0e_27:
 	; $7e3e, 13 bytes (actor_script)
 	as_wait $f0
-	as_anim $03
+	as_anim ANIM_NOD
 	as_wait $50
-	as_anim $03
+	as_anim ANIM_NOD
 	as_wait $3c
 	as_jump ActorScript_0e_27
 ActorScript_0e_28:
 	; $7e4b, 15 bytes (actor_script)
 	as_wait $8c
-	as_anim $04
+	as_anim ANIM_SHAKE
 	as_wait $8c
-	as_anim $04
+	as_anim ANIM_SHAKE
 	as_wait $8c
-	as_anim $03
+	as_anim ANIM_NOD
 	as_jump ActorScript_0e_28
 ; Instruction-identical to ComputeRankingProgressIndex_11, ComputeRankingProgressIndex_12 and ComputeRankingProgressIndex_27 (one copy per bank); a change here belongs in every copy.
 	twin compute_ranking_progress_index, 0e ; $7e5a ComputeRankingProgressIndex_0e

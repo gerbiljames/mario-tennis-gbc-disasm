@@ -33,7 +33,7 @@ RelaunchWallPracticeMasterLevel:
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4a46
 	script_face ACTOR_PLAYER, FACE_UP ; $4a4d
 	script_wait_frames $32 ; $4a54
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $02 ; $4a5b
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4a5b
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4a62
 	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4a67
 .checkDoubles:
@@ -42,8 +42,8 @@ RelaunchWallPracticeMasterLevel:
 	script_wait_frames $28 ; $4a71
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4a78
 	script_wait_frames $1e ; $4a80
-	script_set_anim ACTOR_PLAYER, $03 ; $4a87
-	script_set_anim ACTOR_PARTNER, $03 ; $4a8e
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a87
+	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4a8e
 	script_wait_idle ACTOR_PARTNER ; $4a95
 	script_get_actor_state ACTOR_PARTNER ; $4a9a
 	ld c, l ; $4a9f
@@ -101,7 +101,7 @@ WallPracticeLevelResultScript:
 	and a ; $4b14
 	jp nz, WallPracticeExitCourtScript ; $4b15
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4b18
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $02 ; $4b1f
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4b1f
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4b26
 	jp LaunchWallPracticeMinigame ; $4b2b
 WallPracticeExitCourtScript:
@@ -160,7 +160,7 @@ WallPracticeLevelResultScriptTextIds:
 	script_fade_in $06 ; $4bf4
 	call WaitFadeEnd ; $4bf9
 .speakAndLeave:
-	script_set_anim $07, $02 ; $4bfc
+	script_set_anim $07, ANIM_BOUNCE ; $4bfc
 	script_wait_idle $07 ; $4c03
 	script_speak $07 ; $4c08
 	script_set_speed ACTOR_PLAYER, $0020 ; $4c0d
@@ -177,8 +177,8 @@ WallPracticeLevelResultScriptTextIds:
 	script_wait_frames $1e ; $4c5b
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4c62
 	script_wait_frames $1e ; $4c6a
-	script_set_anim ACTOR_PLAYER, $03 ; $4c71
-	script_set_anim ACTOR_PARTNER, $03 ; $4c78
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4c71
+	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4c78
 	script_wait_idle ACTOR_PARTNER ; $4c7f
 	script_get_actor_state ACTOR_PARTNER ; $4c84
 	ld c, l ; $4c89
@@ -235,7 +235,7 @@ WallPracticeRoomTile03_12:
 	and a ; $4d41
 	jr nz, .done ; $4d42
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4d44
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $02 ; $4d4b
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4d4b
 	script_set_speed ACTOR_PLAYER, $0020 ; $4d52
 	script_move_target ACTOR_PLAYER, $0300, $3100 ; $4d5a
 	script_wait_move ACTOR_PLAYER ; $4d65
@@ -267,7 +267,7 @@ WallPracticeRoomTile04_12:
 	and a ; $4db6
 	jr nz, .done ; $4db7
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4db9
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $02 ; $4dc0
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4dc0
 	script_set_speed ACTOR_PLAYER, $0020 ; $4dc7
 	script_move_target ACTOR_PLAYER, $0700, $3100 ; $4dcf
 	script_wait_move ACTOR_PLAYER ; $4dda
@@ -299,7 +299,7 @@ WallPracticeRoomTile05_12:
 	and a ; $4e2b
 	jr nz, .done ; $4e2c
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4e2e
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $02 ; $4e35
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4e35
 	script_set_speed ACTOR_PLAYER, $0020 ; $4e3c
 	script_move_target ACTOR_PLAYER, $1100, $3100 ; $4e44
 	script_wait_move ACTOR_PLAYER ; $4e4f
@@ -331,7 +331,7 @@ WallPracticeRoomTile06_12:
 	and a ; $4ea0
 	jr nz, .done ; $4ea1
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4ea3
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $02 ; $4eaa
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4eaa
 	script_set_speed ACTOR_PLAYER, $0020 ; $4eb1
 	script_move_target ACTOR_PLAYER, $1500, $3100 ; $4eb9
 	script_wait_move ACTOR_PLAYER ; $4ec4
@@ -454,7 +454,7 @@ WallPracticeRoomInitScript_12:
 	jp nz, .done ; $5028
 .placeActors:
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $502b
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $02 ; $5032
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $5032
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5039
 	ld c, $04 ; $503e
 	call BeginFadeOut ; $5040
@@ -571,7 +571,7 @@ WallPracticeRoomNpc07_12:
 	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $51b4
 	ret ; $51b9
 .doublesDeclined:
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $03 ; $51ba
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_NOD ; $51ba
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $51c1
 	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $51c6
 	script_move_target ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $0300, $3700 ; $51cb
@@ -585,8 +585,8 @@ WallPracticeRoomNpc07_12:
 	script_wait_move ACTOR_PARTNER ; $51fe
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $5203
 	script_wait_frames $1e ; $520b
-	script_set_anim ACTOR_PLAYER, $03 ; $5212
-	script_set_anim ACTOR_PARTNER, $03 ; $5219
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5212
+	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5219
 	script_wait_idle ACTOR_PARTNER ; $5220
 	script_wait_frames $14 ; $5225
 .done:
@@ -596,7 +596,7 @@ WallPracticeRoomNpc07_12:
 	script_move_target ACTOR_PLAYER, $0500, $3100 ; $5244
 	script_wait_move ACTOR_PLAYER ; $524f
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $5254
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $02 ; $525b
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $525b
 	script_move_target ACTOR_PLAYER, $0c00, $3100 ; $5262
 	jp LaunchWallPracticeMinigame ; $526d
 	ret ; $5270

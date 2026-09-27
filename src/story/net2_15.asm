@@ -7,13 +7,13 @@ NetCoachIntroDialogue_15:
 	jr z, .animate ; $7593
 	script_set_text Text_37_130 ; $7595
 .animate:
-	script_set_anim $12, $03 ; $759b
+	script_set_anim $12, ANIM_NOD ; $759b
 	script_wait_idle $12 ; $75a2
 	script_speak $12 ; $75a7
-	script_set_anim $12, $02 ; $75ac
+	script_set_anim $12, ANIM_BOUNCE ; $75ac
 	script_wait_idle $12 ; $75b3
 	script_speak $12 ; $75b8
-	script_set_anim $12, $04 ; $75bd
+	script_set_anim $12, ANIM_SHAKE ; $75bd
 	script_wait_idle $12 ; $75c4
 	script_speak $12 ; $75c9
 	script_face $12, FACE_RIGHT ; $75ce
@@ -24,17 +24,17 @@ NetCoachIntroDialogue_15:
 	script_set_text Text_37_151 ; $75dc
 	script_speak $12 ; $75e2
 	script_face_toward ACTOR_PLAYER, $12 ; $75e7
-	script_set_anim $12, $03 ; $75ef
+	script_set_anim $12, ANIM_NOD ; $75ef
 	script_wait_idle $12 ; $75f6
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $75fb
 	jr z, .speak ; $75fe
 	script_set_text Text_37_155 ; $7600
 .speak:
 	script_speak $12 ; $7606
-	script_set_anim $12, $02 ; $760b
+	script_set_anim $12, ANIM_BOUNCE ; $760b
 	script_wait_idle $12 ; $7612
 	script_speak $12 ; $7617
-	script_set_anim $12, $04 ; $761c
+	script_set_anim $12, ANIM_SHAKE ; $761c
 	script_wait_idle $12 ; $7623
 	script_speak $12 ; $7628
 	script_face $12, FACE_RIGHT ; $762d
@@ -45,13 +45,13 @@ NetCoachIntroDialogue_15:
 	script_set_text Text_37_183 ; $763b
 	script_speak $12 ; $7641
 	script_face_toward ACTOR_PLAYER, $12 ; $7646
-	script_set_anim $12, $03 ; $764e
+	script_set_anim $12, ANIM_NOD ; $764e
 	script_wait_idle $12 ; $7655
 	script_speak $12 ; $765a
-	script_set_anim $12, $02 ; $765f
+	script_set_anim $12, ANIM_BOUNCE ; $765f
 	script_wait_idle $12 ; $7666
 	script_speak $12 ; $766b
-	script_set_anim $12, $03 ; $7670
+	script_set_anim $12, ANIM_NOD ; $7670
 	script_wait_idle $12 ; $7677
 	script_speak $12 ; $767c
 	script_face $12, FACE_RIGHT ; $7681
@@ -189,10 +189,10 @@ ReturnCoachIntroDialogue_15:
 	script_set_text Text_37_221 ; $77e6
 	script_speak $0d ; $77ec
 	script_face_toward ACTOR_PLAYER, $0d ; $77f1
-	script_set_anim $0d, $03 ; $77f9
+	script_set_anim $0d, ANIM_NOD ; $77f9
 	script_wait_idle $0d ; $7800
 	script_speak $0d ; $7805
-	script_set_anim $0d, $02 ; $780a
+	script_set_anim $0d, ANIM_BOUNCE ; $780a
 	script_wait_idle $0d ; $7811
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7816
 	jr z, .speak ; $7819
@@ -200,7 +200,7 @@ ReturnCoachIntroDialogue_15:
 .speak:
 	script_speak $0d ; $781e
 	script_set_text Text_37_225 ; $7823
-	script_set_anim $0d, $04 ; $7829
+	script_set_anim $0d, ANIM_SHAKE ; $7829
 	script_wait_idle $0d ; $7830
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7835
 	jr z, .speak2 ; $7838
@@ -215,13 +215,13 @@ ReturnCoachIntroDialogue_15:
 	script_set_text Text_37_245 ; $7850
 	script_speak $0d ; $7856
 	script_face_toward ACTOR_PLAYER, $0d ; $785b
-	script_set_anim $0d, $03 ; $7863
+	script_set_anim $0d, ANIM_NOD ; $7863
 	script_wait_idle $0d ; $786a
 	script_speak $0d ; $786f
-	script_set_anim $0d, $02 ; $7874
+	script_set_anim $0d, ANIM_BOUNCE ; $7874
 	script_wait_idle $0d ; $787b
 	script_speak $0d ; $7880
-	script_set_anim $0d, $04 ; $7885
+	script_set_anim $0d, ANIM_SHAKE ; $7885
 	script_wait_idle $0d ; $788c
 	script_speak $0d ; $7891
 	script_face $0d, FACE_UP ; $7896
@@ -232,13 +232,13 @@ ReturnCoachIntroDialogue_15:
 	script_set_text Text_6e_15 ; $78a4
 	script_speak $0d ; $78aa
 	script_face_toward ACTOR_PLAYER, $0d ; $78af
-	script_set_anim $0d, $03 ; $78b7
+	script_set_anim $0d, ANIM_NOD ; $78b7
 	script_wait_idle $0d ; $78be
 	script_speak $0d ; $78c3
-	script_set_anim $0d, $02 ; $78c8
+	script_set_anim $0d, ANIM_BOUNCE ; $78c8
 	script_wait_idle $0d ; $78cf
 	script_speak $0d ; $78d4
-	script_set_anim $0d, $03 ; $78d9
+	script_set_anim $0d, ANIM_NOD ; $78d9
 	script_wait_idle $0d ; $78e0
 	script_speak $0d ; $78e5
 	script_face $0d, FACE_UP ; $78ea

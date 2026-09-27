@@ -7,7 +7,7 @@ SetPartnerObjDefByGender_12:
 	ld b, h ; $5e9d
 	ld d, OBJ_HARRY ; $5e9e
 	farcall LoadActorObjectDefIfValid ; $5ea0
-	script_set_anim ACTOR_SENIOR_COURT_A_KATE, $01 ; $5ea3
+	script_set_anim ACTOR_SENIOR_COURT_A_KATE, ANIM_WALK ; $5ea3
 .done:
 	ret ; $5eaa
 SeniorCourtWalkPlayersOntoCourt:
@@ -74,7 +74,7 @@ SeniorSinglesRankOfferScene:
 	call RunSeniorRankingMatchIntro ; $5f97
 	script_face ACTOR_PLAYER, FACE_UP ; $5f9a
 	script_wait_frames $0f ; $5fa1
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, $02 ; $5fa8
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_BOUNCE ; $5fa8
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $5faf
 	call SeniorSinglesMatchConfirm ; $5fb4
 	ret ; $5fb7
@@ -121,7 +121,7 @@ SeniorDoublesRankOfferScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $6062
 	script_face ACTOR_PARTNER, FACE_UP ; $6069
 	script_wait_frames $0f ; $6070
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, $02 ; $6077
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_BOUNCE ; $6077
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $607e
 	call SeniorDoublesMatchConfirm ; $6083
 	ret ; $6086
@@ -367,9 +367,9 @@ SeniorDoublesRank3Intro:
 	farcall AttachActorWaypointFollower ; $6547
 	script_face_toward $03, $09 ; $654a
 	script_null_script $08 ; $6552
-	script_set_anim $08, $01 ; $6557
+	script_set_anim $08, ANIM_WALK ; $6557
 	script_face_toward $03, $08 ; $655e
-	script_set_anim $09, $03 ; $6566
+	script_set_anim $09, ANIM_NOD ; $6566
 	script_wait_idle $09 ; $656d
 	script_set_actor_script $09, ActorScript_12_21 ; $6572
 	script_set_actor_script $08, ActorScript_12_25 ; $657d
@@ -380,10 +380,10 @@ SeniorDoublesRank3Intro:
 	farcall WaitPlayerMoveDone ; $65a0
 	script_face_toward $09, ACTOR_PLAYER ; $65a3
 	script_set_text Text_34_126 ; $65ab
-	script_set_anim $08, $03 ; $65b1
+	script_set_anim $08, ANIM_NOD ; $65b1
 	script_wait_idle $08 ; $65b8
 	script_speak $08 ; $65bd
-	script_set_anim $09, $03 ; $65c2
+	script_set_anim $09, ANIM_NOD ; $65c2
 	script_wait_idle $09 ; $65c9
 	script_speak $09 ; $65ce
 	script_face $09, FACE_UP ; $65d3
@@ -406,7 +406,7 @@ SeniorDoublesRank2Intro:
 	ld d, h ; $662f
 	farcall AttachActorWaypointFollower ; $6630
 	script_face_toward $03, $07 ; $6633
-	script_set_anim $07, $03 ; $663b
+	script_set_anim $07, ANIM_NOD ; $663b
 	script_wait_idle $07 ; $6642
 	script_set_actor_script $07, ActorScript_12_29 ; $6647
 	script_set_actor_script $06, ActorScript_12_30 ; $6652
@@ -416,10 +416,10 @@ SeniorDoublesRank2Intro:
 	script_move_player_to_actor ACTOR_PLAYER ; $666e
 	farcall WaitPlayerMoveDone ; $6675
 	script_set_text Text_34_124 ; $6678
-	script_set_anim $06, $03 ; $667e
+	script_set_anim $06, ANIM_NOD ; $667e
 	script_wait_idle $06 ; $6685
 	script_speak $06 ; $668a
-	script_set_anim $07, $03 ; $668f
+	script_set_anim $07, ANIM_NOD ; $668f
 	script_wait_idle $07 ; $6696
 	script_speak $07 ; $669b
 	script_face $07, FACE_UP ; $66a0
@@ -432,7 +432,7 @@ SeniorDoublesRank1Intro:
 	script_face_toward $04, ACTOR_PLAYER ; $66c5
 	script_face_toward $05, ACTOR_PARTNER ; $66cd
 	script_null_script $04 ; $66d5
-	script_set_anim $04, $01 ; $66da
+	script_set_anim $04, ANIM_WALK ; $66da
 	script_wait_frames $1e ; $66e1
 	script_player_speed $0020 ; $66e8
 	script_null_script $04 ; $66ee
@@ -442,7 +442,7 @@ SeniorDoublesRank1Intro:
 	farcall WaitPlayerMoveDone ; $670c
 	script_face $05, FACE_DOWN ; $670f
 	script_face_toward $03, $05 ; $6716
-	script_set_anim $05, $03 ; $671e
+	script_set_anim $05, ANIM_NOD ; $671e
 	script_wait_idle $05 ; $6725
 	script_set_actor_script $05, ActorScript_12_37 ; $672a
 	script_wait_frames $0f ; $6735
@@ -453,10 +453,10 @@ SeniorDoublesRank1Intro:
 	script_face_toward $04, ACTOR_PLAYER ; $675a
 	script_face_toward $05, ACTOR_PARTNER ; $6762
 	script_set_text Text_34_122 ; $676a
-	script_set_anim $04, $03 ; $6770
+	script_set_anim $04, ANIM_NOD ; $6770
 	script_wait_idle $04 ; $6777
 	script_speak $04 ; $677c
-	script_set_anim $05, $03 ; $6781
+	script_set_anim $05, ANIM_NOD ; $6781
 	script_wait_idle $05 ; $6788
 	script_speak $05 ; $678d
 	script_face $05, FACE_UP ; $6792
@@ -477,16 +477,16 @@ SeniorSinglesRank4Intro:
 	ld d, h ; $67df
 	farcall AttachActorWaypointFollower ; $67e0
 	script_face_toward $03, $07 ; $67e3
-	script_set_anim $07, $03 ; $67eb
+	script_set_anim $07, ANIM_NOD ; $67eb
 	script_wait_idle $07 ; $67f2
 	script_set_actor_script $07, ActorScript_12_00 ; $67f7
 	script_face $03, FACE_DOWN ; $6802
 	script_wait_actor_script $07 ; $6809
 	script_null_script ACTOR_PLAYER_SHADOW ; $680e
 	script_face_toward $07, ACTOR_PLAYER ; $6813
-	script_set_anim $07, $02 ; $681b
+	script_set_anim $07, ANIM_BOUNCE ; $681b
 	script_wait_idle $07 ; $6822
-	script_set_anim $07, $03 ; $6827
+	script_set_anim $07, ANIM_NOD ; $6827
 	script_wait_idle $07 ; $682e
 	script_face $07, FACE_UP ; $6833
 	ret ; $683a
@@ -505,7 +505,7 @@ SeniorSinglesRank3Intro:
 	ld d, h ; $6879
 	farcall AttachActorWaypointFollower ; $687a
 	script_face_toward $03, $06 ; $687d
-	script_set_anim $06, $03 ; $6885
+	script_set_anim $06, ANIM_NOD ; $6885
 	script_wait_idle $06 ; $688c
 	script_set_actor_script $06, ActorScript_12_04 ; $6891
 	script_face $03, FACE_DOWN ; $689c
@@ -513,11 +513,11 @@ SeniorSinglesRank3Intro:
 	script_wait_actor_script $06 ; $68aa
 	script_null_script ACTOR_PLAYER_SHADOW ; $68af
 	script_face_pair ACTOR_PLAYER, $06 ; $68b4
-	script_set_anim $06, $02 ; $68bc
+	script_set_anim $06, ANIM_BOUNCE ; $68bc
 	script_wait_idle $06 ; $68c3
 	script_set_text Text_34_58 ; $68c8
 	script_speak $06 ; $68ce
-	script_set_anim $06, $03 ; $68d3
+	script_set_anim $06, ANIM_NOD ; $68d3
 	script_wait_idle $06 ; $68da
 	script_speak $06 ; $68df
 	script_wait_frames $0f ; $68e4
@@ -538,7 +538,7 @@ SeniorSinglesRank2Intro:
 	ld d, h ; $6931
 	farcall AttachActorWaypointFollower ; $6932
 	script_face_toward $03, $05 ; $6935
-	script_set_anim $05, $03 ; $693d
+	script_set_anim $05, ANIM_NOD ; $693d
 	script_wait_idle $05 ; $6944
 	script_set_actor_script $05, ActorScript_12_08 ; $6949
 	script_face $03, FACE_DOWN ; $6954
@@ -546,11 +546,11 @@ SeniorSinglesRank2Intro:
 	script_move_player_to_actor ACTOR_PLAYER ; $6960
 	farcall WaitPlayerMoveDone ; $6967
 	script_face_toward ACTOR_PLAYER, $05 ; $696a
-	script_set_anim $05, $02 ; $6972
+	script_set_anim $05, ANIM_BOUNCE ; $6972
 	script_wait_idle $05 ; $6979
 	script_set_text Text_34_56 ; $697e
 	script_speak $05 ; $6984
-	script_set_anim $05, $03 ; $6989
+	script_set_anim $05, ANIM_NOD ; $6989
 	script_wait_idle $05 ; $6990
 	script_speak $05 ; $6995
 	script_wait_frames $0f ; $699a
@@ -566,7 +566,7 @@ SeniorSinglesRank1Intro:
 	script_move_player_to_actor $04 ; $69d4
 	farcall WaitPlayerMoveDone ; $69db
 	script_face_toward $03, $04 ; $69de
-	script_set_anim $04, $03 ; $69e6
+	script_set_anim $04, ANIM_NOD ; $69e6
 	script_wait_idle $04 ; $69ed
 	script_set_actor_script $04, ActorScript_12_11 ; $69f2
 	script_face $03, FACE_DOWN ; $69fd
@@ -575,7 +575,7 @@ SeniorSinglesRank1Intro:
 	script_face_toward ACTOR_PLAYER, $04 ; $6a0e
 	script_set_text Text_34_54 ; $6a16
 	script_speak $04 ; $6a1c
-	script_set_anim $04, $03 ; $6a21
+	script_set_anim $04, ANIM_NOD ; $6a21
 	script_wait_idle $04 ; $6a28
 	script_speak $04 ; $6a2d
 	script_wait_frames $0f ; $6a32

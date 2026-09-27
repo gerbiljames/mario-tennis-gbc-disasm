@@ -4,17 +4,17 @@ IslandOpenDoublesVictory:
 	script_face $09, FACE_LEFT ; $7087
 	script_face $08, FACE_LEFT ; $708e
 	script_null_script $08 ; $7095
-	script_set_anim $08, $01 ; $709a
+	script_set_anim $08, ANIM_WALK ; $709a
 	script_null_script ACTOR_PARTNER ; $70a1
 	script_set_position $03, $2b00, $2700 ; $70a6
 	script_set_position $04, $2500, $0f00 ; $70b1
 	script_face $04, FACE_DOWN ; $70bc
 	script_null_script $04 ; $70c3
-	script_set_anim $04, $01 ; $70c8
+	script_set_anim $04, ANIM_WALK ; $70c8
 	script_set_position $05, $2300, $1300 ; $70cf
 	script_face $05, FACE_DOWN ; $70da
 	script_null_script $05 ; $70e1
-	script_set_anim $05, $01 ; $70e6
+	script_set_anim $05, ANIM_WALK ; $70e6
 	script_set_position ACTOR_PLAYER, $2500, $1b00 ; $70ed
 	script_face ACTOR_PLAYER, FACE_UP ; $70f8
 	script_set_position ACTOR_PARTNER, $2300, $1b00 ; $70ff
@@ -30,18 +30,18 @@ IslandOpenDoublesVictory:
 	script_move_target $04, $2500, $1300 ; $713c
 	script_wait_move $04 ; $7147
 	script_face_pair $05, $04 ; $714c
-	script_set_anim $04, $02 ; $7154
+	script_set_anim $04, ANIM_BOUNCE ; $7154
 	script_speak $04 ; $715b
 	script_face $05, FACE_DOWN ; $7160
-	script_set_anim $05, $04 ; $7167
+	script_set_anim $05, ANIM_SHAKE ; $7167
 	script_wait_idle $05 ; $716e
 	script_speak $05 ; $7173
-	script_set_anim $03, $03 ; $7178
+	script_set_anim $03, ANIM_NOD ; $7178
 	script_speak $03 ; $717f
-	script_set_anim $04, $02 ; $7184
-	script_set_anim $05, $02 ; $718b
-	script_set_anim ACTOR_PARTNER, $02 ; $7192
-	script_set_anim ACTOR_PLAYER, $02 ; $7199
+	script_set_anim $04, ANIM_BOUNCE ; $7184
+	script_set_anim $05, ANIM_BOUNCE ; $718b
+	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $7192
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7199
 	script_face ACTOR_PLAYER, FACE_DOWN ; $71a0
 	script_face ACTOR_PARTNER, FACE_DOWN ; $71a7
 	script_face $04, FACE_DOWN ; $71ae
@@ -55,47 +55,47 @@ IslandOpenDoublesVictory:
 	script_move_target $03, $2500, $1f00 ; $71ea
 	script_wait_move $03 ; $71f5
 	script_face $03, FACE_UP ; $71fa
-	script_set_anim $03, $02 ; $7201
+	script_set_anim $03, ANIM_BOUNCE ; $7201
 	script_wait_idle $03 ; $7208
 	script_speak $03 ; $720d
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $7212
 	script_wait_frames $1e ; $721a
 	script_face ACTOR_PLAYER, FACE_DOWN ; $7221
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7228
-	script_set_anim ACTOR_PARTNER, $03 ; $722f
-	script_set_anim ACTOR_PLAYER, $03 ; $7236
+	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $722f
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7236
 	script_wait_idle ACTOR_PLAYER ; $723d
-	script_set_anim $03, $03 ; $7242
+	script_set_anim $03, ANIM_NOD ; $7242
 	script_wait_idle $03 ; $7249
 	script_set_text Text_34_135 ; $724e
 	script_speak $03 ; $7254
 	script_move_target $03, $2500, $1d00 ; $7259
 	script_wait_move $03 ; $7264
-	script_set_anim $03, $02 ; $7269
+	script_set_anim $03, ANIM_BOUNCE ; $7269
 	script_wait_idle $03 ; $7270
 	script_wait_frames $1e ; $7275
-	script_set_anim $03, $03 ; $727c
-	script_set_anim ACTOR_PLAYER, $03 ; $7283
+	script_set_anim $03, ANIM_NOD ; $727c
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7283
 	script_wait_idle ACTOR_PLAYER ; $728a
 	script_speak ACTOR_PLAYER ; $728f
-	script_set_anim $03, $02 ; $7294
+	script_set_anim $03, ANIM_BOUNCE ; $7294
 	script_wait_idle $03 ; $729b
 	script_speak $03 ; $72a0
-	script_set_anim $03, $03 ; $72a5
+	script_set_anim $03, ANIM_NOD ; $72a5
 	script_wait_idle $03 ; $72ac
 	script_speak $03 ; $72b1
-	script_set_anim ACTOR_PLAYER, $03 ; $72b6
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $72b6
 	script_wait_idle ACTOR_PLAYER ; $72bd
-	script_set_anim $03, $03 ; $72c2
+	script_set_anim $03, ANIM_NOD ; $72c2
 	script_wait_idle $03 ; $72c9
-	script_set_anim ACTOR_PLAYER, $02 ; $72ce
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $72ce
 	script_wait_idle ACTOR_PLAYER ; $72d5
 	script_face ACTOR_PLAYER, FACE_UP ; $72da
 	script_face ACTOR_PARTNER, FACE_UP ; $72e1
 	script_wait_frames $28 ; $72e8
 	script_move_player $2400, $1700 ; $72ef
 	farcall WaitPlayerMoveDone ; $72f9
-	script_set_anim $05, $02 ; $72fc
+	script_set_anim $05, ANIM_BOUNCE ; $72fc
 	script_wait_frames $28 ; $7303
 	script_speak $05 ; $730a
 	script_move_target $04, $2500, $1500 ; $730f
@@ -103,17 +103,17 @@ IslandOpenDoublesVictory:
 	script_speak $04 ; $731f
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $7324
 	script_wait_frames $0a ; $732c
-	script_set_anim ACTOR_PLAYER, $02 ; $7333
-	script_set_anim ACTOR_PARTNER, $02 ; $733a
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7333
+	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $733a
 	script_wait_idle ACTOR_PARTNER ; $7341
 	script_face ACTOR_PLAYER, FACE_UP ; $7346
 	script_face ACTOR_PARTNER, FACE_UP ; $734d
-	script_set_anim ACTOR_PARTNER, $03 ; $7354
-	script_set_anim ACTOR_PLAYER, $03 ; $735b
+	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $7354
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $735b
 	script_wait_idle ACTOR_PLAYER ; $7362
 	script_wait_frames $0a ; $7367
-	script_set_anim $04, $03 ; $736e
-	script_set_anim $05, $03 ; $7375
+	script_set_anim $04, ANIM_NOD ; $736e
+	script_set_anim $05, ANIM_NOD ; $7375
 	script_wait_idle $05 ; $737c
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $7381
 	ld [wStoryModeCurrentLocation], a ; $7383
@@ -122,7 +122,7 @@ IslandOpenDoublesVictory:
 	ld a, $ff ; $738b
 	ld [wUnusedExitTriggerIdMirror], a ; $738d
 	ld [wStoryModeExitTriggerRequest], a ; $7390
-	script_set_anim $03, $03 ; $7393
+	script_set_anim $03, ANIM_NOD ; $7393
 	script_wait_idle $03 ; $739a
 	script_wait_frames $1e ; $739f
 	ld c, $08 ; $73a6
@@ -213,12 +213,12 @@ SeniorSharedVictoryScene:
 	script_set_text Text_34_78 ; $758d
 	script_move_target $04, $2400, $1300 ; $7593
 	script_wait_move $04 ; $759e
-	script_set_anim $04, $02 ; $75a3
+	script_set_anim $04, ANIM_BOUNCE ; $75a3
 	script_speak $04 ; $75aa
-	script_set_anim $03, $03 ; $75af
+	script_set_anim $03, ANIM_NOD ; $75af
 	script_speak $03 ; $75b6
-	script_set_anim $04, $02 ; $75bb
-	script_set_anim ACTOR_PLAYER, $02 ; $75c2
+	script_set_anim $04, ANIM_BOUNCE ; $75bb
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $75c2
 	script_face ACTOR_PLAYER, FACE_DOWN ; $75c9
 	script_player_speed $0010 ; $75d0
 	script_set_speed $03, $0010 ; $75d6
@@ -231,31 +231,31 @@ SeniorSharedVictoryScene:
 	script_wait_move $03 ; $7610
 	script_move_target $03, $2400, $1e00 ; $7615
 	script_wait_move $03 ; $7620
-	script_set_anim $03, $02 ; $7625
+	script_set_anim $03, ANIM_BOUNCE ; $7625
 	script_wait_idle $03 ; $762c
 	script_speak $03 ; $7631
-	script_set_anim ACTOR_PLAYER, $03 ; $7636
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7636
 	script_wait_idle ACTOR_PLAYER ; $763d
-	script_set_anim $03, $03 ; $7642
+	script_set_anim $03, ANIM_NOD ; $7642
 	script_wait_idle $03 ; $7649
 	script_speak $03 ; $764e
 	script_move_target $03, $2400, $1d00 ; $7653
 	script_wait_move $03 ; $765e
-	script_set_anim $03, $02 ; $7663
+	script_set_anim $03, ANIM_BOUNCE ; $7663
 	script_wait_idle $03 ; $766a
 	script_wait_frames $1e ; $766f
-	script_set_anim $03, $03 ; $7676
-	script_set_anim ACTOR_PLAYER, $03 ; $767d
+	script_set_anim $03, ANIM_NOD ; $7676
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $767d
 	script_wait_idle ACTOR_PLAYER ; $7684
 	script_speak ACTOR_PLAYER ; $7689
-	script_set_anim $03, $02 ; $768e
+	script_set_anim $03, ANIM_BOUNCE ; $768e
 	script_wait_idle $03 ; $7695
 	script_speak $03 ; $769a
-	script_set_anim ACTOR_PLAYER, $03 ; $769f
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $769f
 	script_wait_idle ACTOR_PLAYER ; $76a6
-	script_set_anim $03, $03 ; $76ab
+	script_set_anim $03, ANIM_NOD ; $76ab
 	script_wait_idle $03 ; $76b2
-	script_set_anim ACTOR_PLAYER, $02 ; $76b7
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $76b7
 	script_wait_idle ACTOR_PLAYER ; $76be
 	script_face ACTOR_PLAYER, FACE_UP ; $76c3
 	script_set_position $11, $2580, $1980 ; $76ca
@@ -263,7 +263,7 @@ SeniorSharedVictoryScene:
 	script_wait_frames $28 ; $76d7
 	script_move_player $2400, $1700 ; $76de
 	farcall WaitPlayerMoveDone ; $76e8
-	script_set_anim $04, $02 ; $76eb
+	script_set_anim $04, ANIM_BOUNCE ; $76eb
 	script_wait_frames $28 ; $76f2
 	script_move_target $04, $2400, $1500 ; $76f9
 	script_wait_move $04 ; $7704
@@ -276,9 +276,9 @@ SeniorSharedVictoryScene:
 	ld a, $ff ; $7723
 	ld [wUnusedExitTriggerIdMirror], a ; $7725
 	ld [wStoryModeExitTriggerRequest], a ; $7728
-	script_set_anim $03, $03 ; $772b
+	script_set_anim $03, ANIM_NOD ; $772b
 	script_wait_idle $03 ; $7732
-	script_set_anim ACTOR_PLAYER, $02 ; $7737
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7737
 	script_wait_idle ACTOR_PLAYER ; $773e
 	script_wait_frames $1e ; $7743
 	ld c, $08 ; $774a
@@ -606,7 +606,7 @@ ActorScript_12_48:
 	as_halt
 ActorScript_12_49:
 	; $7a41, 25 bytes (actor_script)
-	as_anim $02
+	as_anim ANIM_BOUNCE
 	as_set_target $0f00, $1500
 	as_wait_move
 	as_set_target $0f00, $0900

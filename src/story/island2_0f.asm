@@ -68,13 +68,13 @@ IslandOpenRoundCallCutscene:
 	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $1300, $0c00 ; $6fe6
 	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_3 ; $6ff1
 	script_face ACTOR_TOURNAMENT_WALK_6F_07_3, FACE_DOWN ; $6ff6
-	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_3, $02 ; $6ffd
+	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_3, ANIM_BOUNCE ; $6ffd
 	script_wait_idle ACTOR_TOURNAMENT_WALK_6F_07_3 ; $7004
 	call QueueUpcomingRoundNameText ; $7009
 	script_speak ACTOR_TOURNAMENT_WALK_6F_07_3 ; $700c
 	call MovePartnerForRoundCall_0f ; $7011
 	script_face ACTOR_TOURNAMENT_WALK_6F_07_2, FACE_UP ; $7014
-	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_2, $03 ; $701b
+	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_2, ANIM_NOD ; $701b
 	script_wait_idle ACTOR_TOURNAMENT_WALK_6F_07_2 ; $7022
 	script_face ACTOR_TOURNAMENT_WALK_6F_07_2, FACE_DOWN ; $7027
 	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_2, $1300, $1700 ; $702e
@@ -89,7 +89,7 @@ IslandOpenRoundCallCutscene:
 	call QueueUpcomingRoundNameText ; $7076
 	script_speak ACTOR_TOURNAMENT_WALK_6F_07_2 ; $7079
 	script_face_pair ACTOR_TOURNAMENT_WALK_6F_07_3, ACTOR_TOURNAMENT_WALK_6F_07_2 ; $707e
-	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_2, $03 ; $7086
+	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_2, ANIM_NOD ; $7086
 	script_wait_idle ACTOR_TOURNAMENT_WALK_6F_07_2 ; $708d
 	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $1000, $1700 ; $7092
 	ld a, [wMapSceneStage] ; $709d
@@ -109,8 +109,8 @@ IslandOpenRoundCallCutscene:
 	script_wait_frames $1e ; $70e2
 	script_face ACTOR_PLAYER, FACE_DOWN ; $70e9
 	script_face ACTOR_TOURNAMENT_SAMMI, FACE_DOWN ; $70f0
-	script_set_anim ACTOR_TOURNAMENT_SAMMI, $03 ; $70f7
-	script_set_anim ACTOR_PLAYER, $03 ; $70fe
+	script_set_anim ACTOR_TOURNAMENT_SAMMI, ANIM_NOD ; $70f7
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $70fe
 	script_wait_idle ACTOR_PLAYER ; $7105
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $710a
 	jr z, .doublesWalk ; $710d
@@ -175,8 +175,8 @@ IslandOpenRoundCallCutscene:
 	script_set_speed ACTOR_PLAYER, $0020 ; $7237
 	script_set_speed ACTOR_PARTNER, $0020 ; $723f
 	script_wait_frames $14 ; $7247
-	script_set_anim ACTOR_PARTNER, $03 ; $724e
-	script_set_anim ACTOR_PLAYER, $03 ; $7255
+	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $724e
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7255
 	script_wait_idle ACTOR_PLAYER ; $725c
 	script_face ACTOR_PLAYER, FACE_DOWN ; $7261
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7268
@@ -393,16 +393,16 @@ IslandOpenSinglesMatchReturn:
 	script_set_position ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_73_12, $2200, $0f80 ; $74f2
 	sound SFX_CHIME ; $74fd
 	script_wait_frames $2d ; $74ff
-	script_set_anim ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, $02 ; $7506
+	script_set_anim ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, ANIM_BOUNCE ; $7506
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08 ; $750d
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, ACTOR_PLAYER ; $7512
 	script_set_position ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_73_12, $3f00, $3f00 ; $751a
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08 ; $7525
-	script_set_anim ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, $02 ; $752a
+	script_set_anim ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, ANIM_BOUNCE ; $752a
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07 ; $7531
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, ACTOR_PLAYER ; $7536
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07 ; $753e
-	script_set_anim ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, $03 ; $7543
+	script_set_anim ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, ANIM_NOD ; $7543
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06 ; $754a
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, ACTOR_PLAYER ; $754f
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06 ; $7557
@@ -430,12 +430,12 @@ IslandOpenSinglesMatchReturn:
 	ret ; $75b6
 IslandOpenRoundActorsSingles_0f:
 	; $75b7, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_RIGHT, OBJ_WALK_74_08, $01, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_74_08
-	map_actor $0000, ActorScript_0f_09, $2500, $1300, FACE_UP, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_74_06
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_74_07, $01, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_74_07
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_6F_07_1
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_6F_07_2
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, $01, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_73_12
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_RIGHT, OBJ_WALK_74_08, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_74_08
+	map_actor $0000, ActorScript_0f_09, $2500, $1300, FACE_UP, OBJ_WALK_74_06, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_74_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_74_07
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_6F_07_1
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_6F_07_2
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_73_12
 	map_actor_end
 IslandOpenRoundNpcScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
@@ -453,7 +453,7 @@ IslandOpenRoundSinglesNpc03_0f:
 	ld h, [hl] ; $7655
 	ld l, a ; $7656
 	farcall InitDialogueTextCursor ; $7657
-	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_1, $03 ; $765a
+	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_1, ANIM_NOD ; $765a
 	script_wait_idle ACTOR_TOURNAMENT_WALK_6F_07_1 ; $7661
 	script_speak ACTOR_TOURNAMENT_WALK_6F_07_1 ; $7666
 	ret ; $766b
@@ -559,12 +559,12 @@ IslandOpenDoublesMatchReturn:
 	script_set_position $08, $2000, $0f80 ; $7794
 	sound SFX_CHIME ; $779f
 	script_wait_frames $2d ; $77a1
-	script_set_anim $03, $02 ; $77a8
+	script_set_anim $03, ANIM_BOUNCE ; $77a8
 	script_wait_idle $03 ; $77af
 	script_set_position $08, $3f00, $3f00 ; $77b4
 	script_face_toward $03, ACTOR_PLAYER ; $77bf
 	script_speak $03 ; $77c7
-	script_set_anim $04, $03 ; $77cc
+	script_set_anim $04, ANIM_NOD ; $77cc
 	script_wait_idle $04 ; $77d3
 	script_face_toward $04, ACTOR_PLAYER ; $77d8
 	script_face_toward $04, ACTOR_PARTNER ; $77e0
@@ -600,12 +600,12 @@ IslandOpenRoundSinglesNpc05TextIds:
 	dw Text_25_78 ; record 3
 IslandOpenRoundActorsDoubles_0f:
 	; $7842, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_08, $01, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06
-	map_actor $0000, ActorScript_0f_09, $3d00, $3d00, FACE_UP, OBJ_WALK_74_07, $01, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_74_07
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_1
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_2
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, $01, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_73_12
+	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_08, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_74_06, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $3d00, $3d00, FACE_UP, OBJ_WALK_74_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_74_07
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_1
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_2
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_73_12
 	map_actor_end
 IslandOpenRoundNpcScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)

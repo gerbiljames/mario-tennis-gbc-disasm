@@ -14,7 +14,7 @@
 	ld c, l
 	ld b, h
 	farcall LoadActorObjectDefIfValid
-	script_set_anim ACTOR_PARTNER, $01
+	script_set_anim ACTOR_PARTNER, ANIM_WALK
 .notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter]
 	ld d, OBJ_ALEX_B
@@ -24,5 +24,5 @@
 	ld c, l
 	ld b, h
 	farcall LoadActorObjectDefIfValid
-	script_set_anim ACTOR_PLAYER, $01
+	script_set_anim ACTOR_PLAYER, ANIM_WALK
 	ret

@@ -82,12 +82,12 @@ WaterSpriteRacketRewardScene:
 	ld a, $00 ; $4e91
 	farcall ScriptWaitActorJumpDone ; $4e93
 	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, $3f00, $3f00 ; $4e96
-	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, $03 ; $4ea1
+	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4ea1
 	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4ea8
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4ead
-	script_set_anim ACTOR_PLAYER, $02 ; $4eb2
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4eb2
 	script_wait_idle ACTOR_PLAYER ; $4eb9
-	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, $03 ; $4ebe
+	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4ebe
 	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4ec5
 	ld a, [wSwingContestSwings] ; $4eca
 	cp $96 ; $4ecd
@@ -137,7 +137,7 @@ WaterSpriteRacketRewardScene:
 	sound SFX_APPEAR2 ; $4f69
 	script_wait_frames $78 ; $4f6b
 	script_set_position ACTOR_TRAINING_COURT_WALK_73_19, $3f00, $3f00 ; $4f72
-	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, $03 ; $4f7d
+	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4f7d
 	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4f84
 	script_set_text Text_36_683 ; $4f89
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4f8f

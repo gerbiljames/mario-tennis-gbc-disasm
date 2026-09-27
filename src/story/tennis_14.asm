@@ -17,9 +17,9 @@ TennisMachineRoomMapScripts_14:
 	dw TennisMachineRoomInitScript_14 ; slot 6 InitScript
 TennisMachineRoomActors_14:
 	; $4016, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $2b00, $3300, FACE_RIGHT, OBJ_WALK_72_06, $01, $00, TENNIS_MACHINE_ROOM_WALK_72_06_1
-	map_actor $0000, ActorScript_14_2, $2b00, $3100, FACE_RIGHT, OBJ_WALK_72_06, $01, $00, TENNIS_MACHINE_ROOM_WALK_72_06_2
-	map_actor $0000, ActorScript_14_2, $2d00, $2b00, FACE_LEFT, OBJ_WALK_72_07, $01, $00, TENNIS_MACHINE_ROOM_WALK_72_07
+	map_actor $0000, ActorScript_14_2, $2b00, $3300, FACE_RIGHT, OBJ_WALK_72_06, ANIM_WALK, $00, TENNIS_MACHINE_ROOM_WALK_72_06_1
+	map_actor $0000, ActorScript_14_2, $2b00, $3100, FACE_RIGHT, OBJ_WALK_72_06, ANIM_WALK, $00, TENNIS_MACHINE_ROOM_WALK_72_06_2
+	map_actor $0000, ActorScript_14_2, $2d00, $2b00, FACE_LEFT, OBJ_WALK_72_07, ANIM_WALK, $00, TENNIS_MACHINE_ROOM_WALK_72_07
 	map_actor_end
 TennisMachineRoomEntryPoints_14:
 	; $404a, 25 bytes (map_entries)
@@ -391,7 +391,7 @@ TennisMachineRoomNpc05_14:
 	jr nz, .declined ; $4494
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4496
 .declined:
-	script_set_anim ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $03 ; $449b
+	script_set_anim ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, ANIM_NOD ; $449b
 	script_wait_idle ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $44a2
 	jr nz, MachineCourtStartLevelScene ; $44a7
 .accepted:

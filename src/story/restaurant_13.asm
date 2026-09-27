@@ -45,9 +45,9 @@ RestaurantPlazaArrival01_13:
 	script_wait_frames $14 ; $4128
 	script_move_target ACTOR_PARTNER, $0700, $0b00 ; $412f
 	script_wait_frames $14 ; $413a
-	script_set_anim ACTOR_PLAYER, $01 ; $4141
+	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $4141
 	script_wait_frames $0a ; $4148
-	script_set_anim ACTOR_PARTNER, $01 ; $414f
+	script_set_anim ACTOR_PARTNER, ANIM_WALK ; $414f
 	script_wait_move ACTOR_PLAYER ; $4156
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $415b
 	ret ; $4162
@@ -84,9 +84,9 @@ RestaurantPlazaArrivalWalkIn_13:
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0500 ; $4200
 	script_wait_frames $28 ; $420a
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0400 ; $4211
-	script_set_anim ACTOR_PLAYER, $01 ; $421b
+	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $421b
 	script_wait_frames $10 ; $4222
-	script_set_anim ACTOR_PARTNER, $01 ; $4229
+	script_set_anim ACTOR_PARTNER, ANIM_WALK ; $4229
 	script_wait_move ACTOR_PLAYER ; $4230
 .done:
 	ret ; $4235
@@ -283,7 +283,7 @@ AcademyCourtsTourCutscene:
 	script_face_pair ACTOR_PLAYER, ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $45cb
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $45d3
 	script_wait_frames $0f ; $45d8
-	script_set_anim ACTOR_PLAYER, $03 ; $45df
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $45df
 	script_wait_idle ACTOR_PLAYER ; $45e6
 	script_wait_frames $1e ; $45eb
 	script_face ACTOR_ACADEMY_COURTS_TOUR_EMILY, FACE_LEFT ; $45f2
@@ -306,9 +306,9 @@ AcademyCourtsTourCutscene:
 	farcall WaitPlayerMoveDone ; $4642
 	script_face_pair ACTOR_PLAYER, ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $4645
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $464d
-	script_set_anim ACTOR_PLAYER, $03 ; $4652
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4652
 	script_wait_idle ACTOR_PLAYER ; $4659
-	script_set_anim ACTOR_ACADEMY_COURTS_TOUR_EMILY, $03 ; $465e
+	script_set_anim ACTOR_ACADEMY_COURTS_TOUR_EMILY, ANIM_NOD ; $465e
 	script_wait_idle ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $4665
 	script_wait_frames $32 ; $466a
 	script_face ACTOR_ACADEMY_COURTS_TOUR_EMILY, FACE_LEFT ; $4671
@@ -325,7 +325,7 @@ AcademyCourtsTourCutscene:
 	script_wait_frames $0a ; $46be
 	script_face ACTOR_ACADEMY_COURTS_TOUR_EMILY, FACE_RIGHT ; $46c5
 	script_wait_frames $32 ; $46cc
-	script_set_anim ACTOR_ACADEMY_COURTS_TOUR_EMILY, $03 ; $46d3
+	script_set_anim ACTOR_ACADEMY_COURTS_TOUR_EMILY, ANIM_NOD ; $46d3
 	script_wait_idle ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $46da
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $46df
 	script_move_target ACTOR_ACADEMY_COURTS_TOUR_EMILY, $4100, $0d00 ; $46e4
@@ -342,10 +342,10 @@ AcademyCourtsTourCutscene:
 	ret ; $472b
 AcademyCourtsTourActors_13:
 	; $472c, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00, ACADEMY_COURTS_TOUR_WALK_73_12
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00, ACADEMY_COURTS_TOUR_WALK_73_13
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00, ACADEMY_COURTS_TOUR_WALK_73_15
-	map_actor $0000, ActorScript_13_27, $3200, $1300, FACE_DOWN, OBJ_EMILY, $01, $00, ACADEMY_COURTS_TOUR_EMILY
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_WALK_73_12
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_WALK_73_13
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_WALK_73_15
+	map_actor $0000, ActorScript_13_27, $3200, $1300, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_EMILY
 	map_actor_end
 ServiceAceCoachIntroCutscene:
 	ldh a, [hRomBank] ; $476e
@@ -369,13 +369,13 @@ ServiceAceCoachIntroCutscene:
 	script_face_toward ACTOR_PLAYER, ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $47f6
 	script_set_text Text_31_53 ; $47fe
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4804
-	script_set_anim ACTOR_PLAYER, $03 ; $4809
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4809
 	script_wait_idle ACTOR_PLAYER ; $4810
 	script_face ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, FACE_UP ; $4815
 	script_wait_frames $0f ; $481c
 	script_face ACTOR_PLAYER, FACE_UP ; $4823
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $482a
-	script_set_anim ACTOR_PLAYER, $03 ; $482f
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $482f
 	script_wait_idle ACTOR_PLAYER ; $4836
 	script_wait_frames $1e ; $483b
 	call AnimateDoorOpen_13 ; $4842
@@ -404,30 +404,30 @@ ServiceAceCoachIntroCutscene:
 	call AnimateDoorClose_13 ; $48f1
 	script_face ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, FACE_RIGHT ; $48f4
 	script_wait_frames $0f ; $48fb
-	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, $02 ; $4902
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ANIM_BOUNCE ; $4902
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4909
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $490e
 	script_face ACTOR_SERVICE_ACE_COACH_INTRO_MARK, FACE_DOWN ; $4913
-	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_MARK, $04 ; $491a
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_MARK, ANIM_SHAKE ; $491a
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4921
 	script_wait_frames $1e ; $4926
 	script_face_toward ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $492d
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4935
-	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, $02 ; $493a
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ANIM_BOUNCE ; $493a
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4941
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4946
-	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, $03 ; $494b
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, ANIM_NOD ; $494b
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4952
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4957
 	script_wait_frames $0f ; $495c
-	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, $02 ; $4963
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, ANIM_BOUNCE ; $4963
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $496a
 	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_WALK_73_13, $1640, $0940 ; $496f
 	sound SFX_EMOTE ; $497a
 	script_wait_frames $1e ; $497c
 	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_WALK_73_13, $3f00, $3f00 ; $4983
 	script_wait_frames $1e ; $498e
-	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, $02 ; $4995
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ANIM_BOUNCE ; $4995
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $499c
 	script_face_toward ACTOR_PLAYER, ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $49a1
 	script_wait_frames $32 ; $49a9
@@ -448,7 +448,7 @@ ServiceAceCoachIntroCutscene:
 	script_face ACTOR_PLAYER, FACE_LEFT ; $49fb
 	script_set_speed ACTOR_PLAYER, $0020 ; $4a02
 	script_wait_frames $0f ; $4a0a
-	script_set_anim ACTOR_PLAYER, $03 ; $4a11
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a11
 	script_wait_idle ACTOR_PLAYER ; $4a18
 	script_wait_frames $0f ; $4a1d
 	script_face_pair ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4a24
@@ -457,16 +457,16 @@ ServiceAceCoachIntroCutscene:
 	script_face_toward ACTOR_PLAYER, ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a3b
 	script_wait_frames $0f ; $4a43
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4a4a
-	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_MARK, $03 ; $4a4f
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_MARK, ANIM_NOD ; $4a4f
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4a56
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4a5b
-	script_set_anim ACTOR_PLAYER, $03 ; $4a60
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a60
 	script_wait_idle ACTOR_PLAYER ; $4a67
 	script_wait_frames $1e ; $4a6c
-	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, $02 ; $4a73
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, ANIM_BOUNCE ; $4a73
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a7a
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a7f
-	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, $03 ; $4a84
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, ANIM_NOD ; $4a84
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a8b
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a90
 	script_wait_frames $5a ; $4a95
@@ -497,7 +497,7 @@ ServiceAceCoachIntroCutscene:
 	script_face_toward ACTOR_PLAYER, ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4b5d
 	script_wait_frames $1e ; $4b65
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4b6c
-	script_set_anim ACTOR_PLAYER, $02 ; $4b71
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4b71
 	script_wait_idle ACTOR_PLAYER ; $4b78
 	script_wait_frames $3c ; $4b7d
 	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, $1500, $0d00 ; $4b84
@@ -537,10 +537,10 @@ ServiceAceCoachIntroCutscene:
 	ret ; $4c7d
 ServiceAceCoachIntroActors_13:
 	; $4c7e, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00, SERVICE_ACE_COACH_INTRO_WALK_73_12
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00, SERVICE_ACE_COACH_INTRO_WALK_73_13
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00, SERVICE_ACE_COACH_INTRO_WALK_73_15
-	map_actor $0000, ActorScript_13_27, $4100, $0d00, FACE_LEFT, OBJ_EMILY, $01, $00, SERVICE_ACE_COACH_INTRO_EMILY
-	map_actor $0000, ActorScript_13_27, $1500, $0d00, FACE_DOWN, OBJ_MARK, $01, $00, SERVICE_ACE_COACH_INTRO_MARK
-	map_actor $0000, ActorScript_13_27, $1300, $0d00, FACE_DOWN, OBJ_KEVIN, $01, $00, SERVICE_ACE_COACH_INTRO_KEVIN
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_WALK_73_12
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_WALK_73_13
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_WALK_73_15
+	map_actor $0000, ActorScript_13_27, $4100, $0d00, FACE_LEFT, OBJ_EMILY, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_EMILY
+	map_actor $0000, ActorScript_13_27, $1500, $0d00, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_MARK
+	map_actor $0000, ActorScript_13_27, $1300, $0d00, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_KEVIN
 	map_actor_end

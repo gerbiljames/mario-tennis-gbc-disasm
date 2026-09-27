@@ -156,7 +156,7 @@ WaterSpriteSwingContestScene:
 	jr .reward ; $5706
 .finish:
 	sound SFX_CONTEST_FINISH ; $5708
-	script_set_anim ACTOR_PLAYER, $02 ; $570a
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $570a
 	script_wait_idle ACTOR_PLAYER ; $5711
 	script_wait_frames $3c ; $5716
 	call TogglePlayerSpriteXFlip ; $571d
@@ -323,7 +323,7 @@ TrainingCourtIntroTourScene:
 	script_player_speed $0040 ; $5a92
 	script_set_text Text_36_627 ; $5a98
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5a9e
-	script_set_anim ACTOR_PLAYER, $03 ; $5aa3
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5aa3
 	script_wait_idle ACTOR_PLAYER ; $5aaa
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5aaf
 	script_move_player $2d00, $2900 ; $5ab6
@@ -333,7 +333,7 @@ TrainingCourtIntroTourScene:
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_TOUR_EMILY ; $5acf
 	script_move_player $1f00, $2d00 ; $5ad7
 	farcall WaitPlayerMoveDone ; $5ae1
-	script_set_anim ACTOR_PLAYER, $03 ; $5ae4
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5ae4
 	script_wait_idle ACTOR_PLAYER ; $5aeb
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_LEFT ; $5af0
 	script_wait_frames $28 ; $5af7
@@ -345,19 +345,19 @@ TrainingCourtIntroTourScene:
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b1b
 	script_move_player_to_actor ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b23
 	farcall WaitPlayerMoveDone ; $5b2a
-	script_set_anim ACTOR_PLAYER, $03 ; $5b2d
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5b2d
 	script_wait_idle ACTOR_PLAYER ; $5b34
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b39
 	script_face_toward ACTOR_TRAINING_COURT_TOUR_EMILY, ACTOR_PLAYER ; $5b3e
-	script_set_anim ACTOR_PLAYER, $02 ; $5b46
+	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $5b46
 	script_wait_idle ACTOR_PLAYER ; $5b4d
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b52
-	script_set_anim ACTOR_PLAYER, $03 ; $5b57
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5b57
 	script_wait_idle ACTOR_PLAYER ; $5b5e
-	script_set_anim ACTOR_TRAINING_COURT_TOUR_EMILY, $03 ; $5b63
+	script_set_anim ACTOR_TRAINING_COURT_TOUR_EMILY, ANIM_NOD ; $5b63
 	script_wait_idle ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b6a
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b6f
-	script_set_anim ACTOR_PLAYER, $03 ; $5b74
+	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5b74
 	script_wait_idle ACTOR_PLAYER ; $5b7b
 	script_player_speed $0020 ; $5b80
 	script_face ACTOR_PLAYER, FACE_LEFT ; $5b86
@@ -391,17 +391,17 @@ TrainingCourtIntroTourScene:
 	ret ; $5c4e
 TrainingCourtTourActors_15:
 	; $5c4f, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_02, $3300, $2a00, FACE_UP, OBJ_WALK_72_02, $01, $06, TRAINING_COURT_TOUR_WALK_72_02_1
-	map_actor $0000, ActorScript_15_02, $3500, $2300, FACE_DOWN, OBJ_WALK_71_05, $01, $03, TRAINING_COURT_TOUR_WALK_71_05
-	map_actor $0000, ActorScript_15_02, $3500, $2a00, FACE_UP, OBJ_WALK_71_07, $01, $07, TRAINING_COURT_TOUR_WALK_71_07_1
-	map_actor $0000, ActorScript_15_22, $2d00, $2100, FACE_RIGHT, OBJ_BRIAN, $01, $07, TRAINING_COURT_TOUR_BRIAN
-	map_actor $0000, ActorScript_15_02, $0b00, $2300, FACE_DOWN, OBJ_WALK_71_07, $01, $03, TRAINING_COURT_TOUR_WALK_71_07_2
-	map_actor $0000, ActorScript_15_02, $0d00, $2300, FACE_DOWN, OBJ_WALK_72_02, $01, $05, TRAINING_COURT_TOUR_WALK_72_02_2
-	map_actor $0000, ActorScript_15_02, $0c00, $2900, FACE_UP, OBJ_WALK_71_06, $01, $04, TRAINING_COURT_TOUR_WALK_71_06
-	map_actor $0000, ActorScript_15_22, $1300, $2700, FACE_DOWN, OBJ_ALLIE, $01, $06, TRAINING_COURT_TOUR_ALLIE
-	map_actor $0000, ActorScript_15_22, $1300, $2900, FACE_UP, OBJ_BOB, $01, $04, TRAINING_COURT_TOUR_BOB
-	map_actor $0000, ActorScript_15_22, $2d00, $2900, FACE_RIGHT, OBJ_BETH, $01, $07, TRAINING_COURT_TOUR_BETH
-	map_actor $0000, ActorScript_15_22, $0100, $0100, FACE_DOWN, OBJ_EMILY, $01, $00, TRAINING_COURT_TOUR_EMILY
+	map_actor $0000, ActorScript_15_02, $3300, $2a00, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $06, TRAINING_COURT_TOUR_WALK_72_02_1
+	map_actor $0000, ActorScript_15_02, $3500, $2300, FACE_DOWN, OBJ_WALK_71_05, ANIM_WALK, $03, TRAINING_COURT_TOUR_WALK_71_05
+	map_actor $0000, ActorScript_15_02, $3500, $2a00, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $07, TRAINING_COURT_TOUR_WALK_71_07_1
+	map_actor $0000, ActorScript_15_22, $2d00, $2100, FACE_RIGHT, OBJ_BRIAN, ANIM_WALK, $07, TRAINING_COURT_TOUR_BRIAN
+	map_actor $0000, ActorScript_15_02, $0b00, $2300, FACE_DOWN, OBJ_WALK_71_07, ANIM_WALK, $03, TRAINING_COURT_TOUR_WALK_71_07_2
+	map_actor $0000, ActorScript_15_02, $0d00, $2300, FACE_DOWN, OBJ_WALK_72_02, ANIM_WALK, $05, TRAINING_COURT_TOUR_WALK_72_02_2
+	map_actor $0000, ActorScript_15_02, $0c00, $2900, FACE_UP, OBJ_WALK_71_06, ANIM_WALK, $04, TRAINING_COURT_TOUR_WALK_71_06
+	map_actor $0000, ActorScript_15_22, $1300, $2700, FACE_DOWN, OBJ_ALLIE, ANIM_WALK, $06, TRAINING_COURT_TOUR_ALLIE
+	map_actor $0000, ActorScript_15_22, $1300, $2900, FACE_UP, OBJ_BOB, ANIM_WALK, $04, TRAINING_COURT_TOUR_BOB
+	map_actor $0000, ActorScript_15_22, $2d00, $2900, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $07, TRAINING_COURT_TOUR_BETH
+	map_actor $0000, ActorScript_15_22, $0100, $0100, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, TRAINING_COURT_TOUR_EMILY
 	map_actor_end
 ServeChallengerResultScene:
 	xor a ; $5cf3
