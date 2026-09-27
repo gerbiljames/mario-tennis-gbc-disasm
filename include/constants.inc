@@ -402,13 +402,42 @@ def CHAR_BOWSER     equ $1d
 def CHAR_WARIO      equ $1e
 def CHAR_PEACH      equ $1f
 
+; --- Extended character ids: the story and minigame opponents ---
+; Records $20-$35 of StoryCharacterRecords_02 continue the roster's name pool
+; (bank $30 string id + 27): "Ranker 32" to "Ranker 47", then six named
+; opponents. On screen RemapExtendedCharId shows each as a roster character
+; (NameTextRemap_02), so these names are the records' own, not what the player
+; reads. Records $36 and up have no name in the pool.
+def CHAR_RANKER_32     equ $20
+def CHAR_RANKER_33     equ $21
+def CHAR_RANKER_34     equ $22
+def CHAR_RANKER_35     equ $23
+def CHAR_RANKER_36     equ $24
+def CHAR_RANKER_37     equ $25
+def CHAR_RANKER_38     equ $26
+def CHAR_RANKER_39     equ $27
+def CHAR_RANKER_40     equ $28
+def CHAR_RANKER_41     equ $29
+def CHAR_RANKER_42     equ $2a
+def CHAR_RANKER_43     equ $2b
+def CHAR_RANKER_44     equ $2c
+def CHAR_RANKER_45     equ $2d
+def CHAR_RANKER_46     equ $2e
+def CHAR_RANKER_47     equ $2f
+def CHAR_KEVIN_2     equ $30 ; shown as Kevin
+def CHAR_EMILY_2     equ $31 ; shown as Emily
+def CHAR_MARK_2      equ $32 ; shown as Mark
+def CHAR_ELLIS       equ $33
+def CHAR_FRANK       equ $34
+def CHAR_EDGAR       equ $35
+
 ; --- Character-id sentinels (values outside the roster) ---
 ; InitCa00RecordFromCharId ($02:$4066) branches on the id before using it as a
 ; roster index: $ff clears the slot and stamps $ff at record +$0b, and any id
 ; with bit 7 set names a *story* character record instead of a roster entry --
 ; bit 0 selects $c900 (main) or $c940 (partner). Roster ids $20 and up are the
 ; story-mode opponents and are remapped back into 4-31 by RemapExtendedCharId
-; ($02:$4c58) for their name and portrait, so they have no constants here.
+; ($02:$4c58) for their name and portrait (their constants are above).
 ; CHAR_UNUSED_15 doubles as a "no visible opponent / locked" marker: it is the
 ; opponent of every Tennis Machine config and of Shooting Star, and
 ; GetUnlockedMarioCastCharAtGridSlot ($3b:$66b5) returns it for a Mario-cast
