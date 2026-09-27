@@ -107,8 +107,8 @@ nothing in the tree depends on it any more.
 `make check` is what catches the mistakes a byte-perfect build cannot: an LZ
 stream that no longer decodes, an assembled symbol inside one, overlapping
 extracted regions, a routine stranded in an actor script's label scope, a
-new branch that decides nothing, a PNG or grid that no longer encodes to its
-blob.
+new branch that decides nothing, a ROM address written as a number, a PNG or
+grid that no longer encodes to its blob.
 
 ## Recent changes
 
@@ -126,6 +126,14 @@ blob.
   `TilemapAssemblyDispatch_39` point one byte past the last rect list
   (`.pastEnd`). Everything else the scan raised was coordinates, sizes,
   colours or text ids.
+  A `make check` class, `literals`, now fails on a numeric `jp`/`call`
+  target, a number in a macro argument that elsewhere always takes a label,
+  and an `ld rr`/`dw` literal equal to a same-bank label. Its first run
+  found `StrokePractice2Hooks`, the one drill hook table still decoded as
+  instructions (`call c, $e06d`), now eight `dw` rows like its siblings. The
+  `$4000` slot encodings `farcall`, `dslot` and the new `ld_slot` (33
+  `(BANK(x) << 8) | LOW(x)` loads) assert their label is in the slot table,
+  since only its low byte is stored.
 * **2026-09-12** — the last unnamed sound ids. The ids carried by tables
   rather than `sound` sites are named for what they accompany: the seven
   drill and lesson themes the match-settings tables select

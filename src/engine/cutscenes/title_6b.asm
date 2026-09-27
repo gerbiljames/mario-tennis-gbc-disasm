@@ -1,6 +1,6 @@
 DecompressIntroTitleTiles:
 	push_wram_bank WRAM_STAGING ; $73f2
-	ld hl, (BANK(DataPtr_IntroAwesomeTiles) << 8) | LOW(DataPtr_IntroAwesomeTiles) ; $73fb
+	ld_slot hl, DataPtr_IntroAwesomeTiles ; $73fb
 	ld de, wDecompBuffer ; $73fe
 	call DecompressDataFromBank ; $7401
 	ld hl, wDecompBuffer ; $7404

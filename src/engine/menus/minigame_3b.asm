@@ -189,14 +189,14 @@ LoadMinigameSelectGfx:
 	ld de, vTiles0 + $50 * TILE_SIZE + VRAM_BANK1 ; $636c
 	farcall LoadCompressedTileBlock ; $636f
 	call AdvanceFrame ; $6372
-	ld hl, (BANK(DataPtr_MinigameSelectIconGfx0) << 8) | LOW(DataPtr_MinigameSelectIconGfx0) ; $6375
+	ld_slot hl, DataPtr_MinigameSelectIconGfx0 ; $6375
 	ld de, wDecompBuffer ; $6378
 	call DecompressDataFromBank ; $637b
 	ld hl, wDecompBuffer ; $637e
 	ld de, vTiles0 + $20 * TILE_SIZE ; $6381
 	ld c, $10 ; $6384
 	call QueueVRAMCopy ; $6386
-	ld hl, (BANK(DataPtr_MinigameSelectIconGfx1) << 8) | LOW(DataPtr_MinigameSelectIconGfx1) ; $6389
+	ld_slot hl, DataPtr_MinigameSelectIconGfx1 ; $6389
 	ld de, wDecompBuffer + 64 * TILE_SIZE ; $638c
 	call DecompressDataFromBank ; $638f
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $6392
@@ -204,7 +204,7 @@ LoadMinigameSelectGfx:
 	ld c, $10 ; $6398
 	call QueueVRAMCopy ; $639a
 	call AdvanceFrame ; $639d
-	ld hl, (BANK(DataPtr_MinigameSelectIconGfx2) << 8) | LOW(DataPtr_MinigameSelectIconGfx2) ; $63a0
+	ld_slot hl, DataPtr_MinigameSelectIconGfx2 ; $63a0
 	ld de, wDecompBuffer ; $63a3
 	call DecompressDataFromBank ; $63a6
 	ld hl, wDecompBuffer ; $63a9

@@ -180,18 +180,15 @@ StrokePractice2DrillInit:
 	ld [wDrillIsPracticeLesson], a ; $6dc0
 	ret ; $6dc3
 StrokePractice2Hooks:
-	call c, $e06d ; $6dc4
-	ld l, l ; $6dc7
-	dec l ; $6dc8
-	ld l, [hl] ; $6dc9
-	call nc, $a36d ; $6dca
-	ld l, [hl] ; $6dcd
-	sbc a ; $6dce
-	ld l, [hl] ; $6dcf
-	sub d ; $6dd0
-	ld l, [hl] ; $6dd1
-	xor [hl] ; $6dd2
-	inc bc ; $6dd3
+	; $6dc4, 16 bytes (mode_hooks)
+	dw StrokePractice2Hook_PerFrame ; record 0
+	dw StrokePractice2Hook_PointStart ; record 1
+	dw StrokePractice2Hook_PointEnd ; record 2
+	dw StrokePractice2Hook_MinigameStart ; record 3
+	dw StrokePractice2Hook_BallHit ; record 4
+	dw StrokePractice2Hook_Bounce ; record 5
+	dw StrokePractice2Hook_RallyTick ; record 6
+	dw RetStub ; record 7
 StrokePractice2Hook_MinigameStart:
 	xor a ; $6dd4
 	ld [wDrillCounters + 2], a ; $6dd5

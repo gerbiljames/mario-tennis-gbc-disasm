@@ -281,7 +281,7 @@ RunSavedDataSourceSelect:
 	ret ; $686d
 LoadSavedDataSourceGfx:
 	push_wram_bank WRAM_STAGING ; $686e
-	ld hl, (BANK(DataPtr_ModeSelectLabelTiles1) << 8) | LOW(DataPtr_ModeSelectLabelTiles1) ; $6877
+	ld_slot hl, DataPtr_ModeSelectLabelTiles1 ; $6877
 	ld de, wDecompBuffer ; $687a
 	call DecompressDataFromBank ; $687d
 	ld hl, wDecompBuffer ; $6880
@@ -289,7 +289,7 @@ LoadSavedDataSourceGfx:
 	ld bc, $0010 ; $6886
 	call QueueVRAMCopy ; $6889
 	call AdvanceFrame ; $688c
-	ld hl, (BANK(DataPtr_ModeSelectLabelTiles7) << 8) | LOW(DataPtr_ModeSelectLabelTiles7) ; $688f
+	ld_slot hl, DataPtr_ModeSelectLabelTiles7 ; $688f
 	ld de, wDecompBuffer ; $6892
 	call DecompressDataFromBank ; $6895
 	ld hl, wDecompBuffer ; $6898

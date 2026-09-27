@@ -308,7 +308,7 @@ IntroCutsceneState01Init_6b:
 	pop_wram_bank ; $425a
 	farcall QueueWram3MapToVRAM ; $425f
 	wram_bank WRAM_STAGING ; $4262
-	ld hl, (BANK(DataPtr_IntroSwingTiles) << 8) | LOW(DataPtr_IntroSwingTiles) ; $4268
+	ld_slot hl, DataPtr_IntroSwingTiles ; $4268
 	ld de, wDecompBuffer ; $426b
 	call DecompressDataFromBank ; $426e
 	ld hl, wDecompBuffer ; $4271
@@ -320,10 +320,10 @@ IntroCutsceneState01Init_6b:
 	ld c, $80 ; $4282
 	call QueueVRAMCopy ; $4284
 	wram_bank WRAM_SCREEN ; $4287
-	ld hl, (BANK(DataPtr_IntroSwingTilemap) << 8) | LOW(DataPtr_IntroSwingTilemap) ; $428d
+	ld_slot hl, DataPtr_IntroSwingTilemap ; $428d
 	ld de, wScreenScratch ; $4290
 	call DecompressDataFromBank ; $4293
-	ld hl, (BANK(DataPtr_IntroSwingAttrmap) << 8) | LOW(DataPtr_IntroSwingAttrmap) ; $4296
+	ld_slot hl, DataPtr_IntroSwingAttrmap ; $4296
 	ld de, wRulesScreenAnimFrame ; $4299
 	call DecompressDataFromBank ; $429c
 	ld a, $01 ; $429f
@@ -413,7 +413,7 @@ IntroCutsceneState03Init_6b:
 	pop_wram_bank ; $43ec
 	farcall QueueWram3MapToVRAM ; $43f1
 	wram_bank WRAM_STAGING ; $43f4
-	ld hl, (BANK(DataPtr_IntroCloseupTiles) << 8) | LOW(DataPtr_IntroCloseupTiles) ; $43fa
+	ld_slot hl, DataPtr_IntroCloseupTiles ; $43fa
 	ld de, wDecompBuffer ; $43fd
 	call DecompressDataFromBank ; $4400
 	ld hl, wDecompBuffer ; $4403
@@ -425,10 +425,10 @@ IntroCutsceneState03Init_6b:
 	ld c, $80 ; $4414
 	call QueueVRAMCopy ; $4416
 	wram_bank WRAM_SCREEN ; $4419
-	ld hl, (BANK(DataPtr_IntroCloseupTilemap) << 8) | LOW(DataPtr_IntroCloseupTilemap) ; $441f
+	ld_slot hl, DataPtr_IntroCloseupTilemap ; $441f
 	ld de, wScreenScratch ; $4422
 	call DecompressDataFromBank ; $4425
-	ld hl, (BANK(DataPtr_IntroCloseupAttrmap) << 8) | LOW(DataPtr_IntroCloseupAttrmap) ; $4428
+	ld_slot hl, DataPtr_IntroCloseupAttrmap ; $4428
 	ld de, wRulesScreenAnimFrame ; $442b
 	call DecompressDataFromBank ; $442e
 	ld a, $01 ; $4431
@@ -924,7 +924,7 @@ IntroCutsceneState16Init_6b:
 	ld hl, rLCDC ; $496d
 	set 3, [hl] ; $4970
 	wram_bank WRAM_STAGING ; $4972
-	ld hl, (BANK(DataPtr_IntroGreatestPlayerTiles) << 8) | LOW(DataPtr_IntroGreatestPlayerTiles) ; $4978
+	ld_slot hl, DataPtr_IntroGreatestPlayerTiles ; $4978
 	ld de, wDecompBuffer ; $497b
 	call DecompressDataFromBank ; $497e
 	ld hl, wDecompBuffer ; $4981
@@ -935,10 +935,10 @@ IntroCutsceneState16Init_6b:
 	ld de, vTiles1 ; $498f
 	ld c, $80 ; $4992
 	call QueueVRAMCopy ; $4994
-	ld hl, (BANK(DataPtr_IntroGreatestPlayerTilemap) << 8) | LOW(DataPtr_IntroGreatestPlayerTilemap) ; $4997
+	ld_slot hl, DataPtr_IntroGreatestPlayerTilemap ; $4997
 	ld de, wDecompBuffer ; $499a
 	call DecompressDataFromBank ; $499d
-	ld hl, (BANK(DataPtr_IntroGreatestPlayerAttrmap) << 8) | LOW(DataPtr_IntroGreatestPlayerAttrmap) ; $49a0
+	ld_slot hl, DataPtr_IntroGreatestPlayerAttrmap ; $49a0
 	ld de, wDecompBuffer + 64 * TILE_SIZE ; $49a3
 	call DecompressDataFromBank ; $49a6
 	ld hl, wDecompBuffer ; $49a9
@@ -953,7 +953,7 @@ IntroCutsceneState16Init_6b:
 	lb de, $00, $08 ; $49c2 palette index, count
 	call LoadPaletteShadow ; $49c5
 	wram_bank WRAM_STAGING ; $49c8
-	ld hl, (BANK(DataPtr_IntroCharactersTiles) << 8) | LOW(DataPtr_IntroCharactersTiles) ; $49ce
+	ld_slot hl, DataPtr_IntroCharactersTiles ; $49ce
 	ld de, wDecompBuffer ; $49d1
 	call DecompressDataFromBank ; $49d4
 	ld hl, wDecompBuffer ; $49d7
@@ -965,17 +965,17 @@ IntroCutsceneState16Init_6b:
 	ld c, $80 ; $49e8
 	call QueueVRAMCopy ; $49ea
 	wram_bank WRAM_ACTORS ; $49ed
-	ld hl, (BANK(DataPtr_IntroCharactersTilemap) << 8) | LOW(DataPtr_IntroCharactersTilemap) ; $49f3
+	ld_slot hl, DataPtr_IntroCharactersTilemap ; $49f3
 	ld de, wIntroCharactersTilemap ; $49f6
 	call DecompressDataFromBank ; $49f9
-	ld hl, (BANK(DataPtr_IntroCharactersAttrmap) << 8) | LOW(DataPtr_IntroCharactersAttrmap) ; $49fc
+	ld_slot hl, DataPtr_IntroCharactersAttrmap ; $49fc
 	ld de, wIntroCharactersAttrmap ; $49ff
 	call DecompressDataFromBank ; $4a02
 	wram_bank WRAM_TEXT ; $4a05
-	ld hl, (BANK(DataPtr_IntroCharactersTilemap2) << 8) | LOW(DataPtr_IntroCharactersTilemap2) ; $4a0b
+	ld_slot hl, DataPtr_IntroCharactersTilemap2 ; $4a0b
 	ld de, wWindowShadowTilemap ; $4a0e
 	call DecompressDataFromBank ; $4a11
-	ld hl, (BANK(DataPtr_IntroCharactersAttrmap2) << 8) | LOW(DataPtr_IntroCharactersAttrmap2) ; $4a14
+	ld_slot hl, DataPtr_IntroCharactersAttrmap2 ; $4a14
 	ld de, wWindowShadowAttrmap ; $4a17
 	call DecompressDataFromBank ; $4a1a
 	wram_bank WRAM_STAGING ; $4a1d

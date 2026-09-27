@@ -18,6 +18,10 @@ after a real defect broke it:
             a branch that decides nothing, which is always either a deleted
             guarded block or an inverted condition (14 exist; the list is
             curated so a new one shows up as a failure)
+  literals  no ROM address is written as a number where the source moves:
+            a jp/call target, a macro argument that elsewhere always takes a
+            label, or an ld rr/dw literal equal to a label in the same bank
+            (96 as_calls once reached two unlabelled routines by number)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -331,6 +335,65 @@ def check_collapsed_branches(fail):
     return len(found)
 
 
+_NUM_RE = re.compile(r"\$[0-9a-fA-F]+|%[01]+|\d+")
+_OPERAND_RE = re.compile(r"^\t([a-z_]\w*)\s+([^;]+)")
+_NOT_MACROS = frozenset(_MNEMONICS | {"db", "dw", "ds", "lb", "text", "line", "page"})
+_ROMX_WORD_RE = re.compile(r"\$[4-7][0-9a-fA-F]{3}")
+
+
+def _is_label(arg):
+    return arg.startswith(".") or (arg[0].isupper() and any(c.islower() for c in arg))
+
+
+def check_literal_pointers(fail):
+    """A ROM address written as a number stays put when the code around its
+    target moves, so every place the source takes an address must name it.
+
+    Three forms: a numeric jp/call/jr target; a number in a macro argument
+    position that takes only labels everywhere else (as_call, map_actor's
+    script, obj_template's routines, ...); and an `ld rr` or `dw` literal in
+    $4000-$7fff equal to a label of the same bank. The `$40xx` slot labels are
+    left out of the last: small words collide with them constantly."""
+    banks = [(bank_of(h), [m for m in map(_OPERAND_RE.match, bank_lines(h)[0]) if m])
+             for h in holders()]
+    kinds = {}
+    for _bank, lines in banks:
+        for m in lines:
+            if m.group(1) in _NOT_MACROS:
+                continue
+            for i, arg in enumerate(a.strip() for a in m.group(2).split(",")):
+                k = "num" if _NUM_RE.fullmatch(arg) else "label" if _is_label(arg) else "other"
+                kinds.setdefault((m.group(1), i), set()).add(k)
+    label_only = {k for k, v in kinds.items() if "label" in v and "other" not in v}
+    by_addr = {}
+    for line in (ROOT / "build" / "mariotennis.sym").read_text().splitlines():
+        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
+        if m and not m.group(3).startswith(("FarPtr_", "DataPtr_")):
+            by_addr.setdefault((int(m.group(1), 16), int(m.group(2), 16)), m.group(3))
+    n = 0
+    for bank, lines in banks:
+        for m in lines:
+            op, args = m.group(1), [a.strip() for a in m.group(2).split(",")]
+            where = f"${bank:02x}: {op} {m.group(2).strip()}"
+            if op in ("jp", "call", "jr"):
+                n += 1
+                if _NUM_RE.fullmatch(args[-1]):
+                    fail("literals", f"{where} -- a numeric branch target")
+            for i, arg in enumerate(args):
+                if (op, i) in label_only:
+                    n += 1
+                    if _NUM_RE.fullmatch(arg) and arg not in ("0", "$0000", "$ffff"):
+                        fail("literals", f"{where} -- argument {i} takes a label everywhere else")
+            if op == "dw" or (op == "ld" and args[0] in ("hl", "de", "bc", "sp")):
+                for arg in args if op == "dw" else args[1:]:
+                    if bank and _ROMX_WORD_RE.fullmatch(arg):
+                        n += 1
+                        name = by_addr.get((bank, int(arg[1:], 16)))
+                        if name:
+                            fail("literals", f"{where} -- {arg} is {name}")
+    return n
+
+
 def main():
     global ROOT
     ROOT = Path(__file__).resolve().parent.parent
@@ -351,6 +414,7 @@ def main():
         "traj": check_traj(rom, manifest, fail),
         "scopes": check_stranded_scopes(fail),
         "branches": check_collapsed_branches(fail),
+        "literals": check_literal_pointers(fail),
         "gfx": check_gfx(manifest, fail),
         "tilemap": check_tilemaps(manifest, fail),
     }
