@@ -51,7 +51,7 @@ rows, all editable, with a fork's edits committed under `mods/`.
 | `docs/save_format.md` | the battery save layout and `tools/savetool.py` |
 | `docs/ram_map.md` | the WRAM/HRAM symbol map, the union overlays, free RAM |
 | `docs/bugs.md` | defects in the *game* — bugs, dead stores, stubbed routines |
-| `docs/unused_code.md` | the 199 unreferenced routines and 100 blobs, and the eight patterns they fall into |
+| `docs/unused_code.md` | the 209 unreferenced routines and 100 blobs, and the eight patterns they fall into |
 | `docs/bank0_notes.md` | the ROM0 helpers |
 
 ## What is still open

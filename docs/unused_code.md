@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-307 labels carry an `Unused` prefix: 207 routines and 100 data blobs. "Unused" is a proof, not a guess —
+309 labels carry an `Unused` prefix: 209 routines and 100 data blobs. "Unused" is a proof, not a guess —
 nothing in the ROM references the label by call, jump, pointer table or
 farcall slot, and where a slot table does reference it, no `farcall` ever
 names that slot. The naming passes that found them are in `docs/history.md`;
