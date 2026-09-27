@@ -538,6 +538,16 @@ def CHAR_MARK_2      equ $32 ; shown as Mark
 def CHAR_ELLIS       equ $33
 def CHAR_FRANK       equ $34
 def CHAR_EDGAR       equ $35
+; Two match drills swap their opponent's record by server at each point
+; (LoadDrillOpponentBySide): the net-game matches use these on the points the
+; opponent serves, the stroke matches on the points the player serves.
+def CHAR_DRILL_NET_GAME_MATCH_1_SERVING   equ $54
+def CHAR_DRILL_NET_GAME_MATCH_2_SERVING   equ $55
+def CHAR_DRILL_NET_GAME_MATCH_3_SERVING   equ $56
+; $57, between them, would be Stroke Match 1's: its stats are all zero and
+; that drill loads no second record.
+def CHAR_DRILL_STROKE_MATCH_2_RECEIVING   equ $58
+def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 ; Records $5b-$60 are the Dream Match opponents' records, in the match
 ; settings rows of STORYMATCH_DREAM_HARD/_INTENSE/_MAX (singles, then doubles).
 def CHAR_DREAM_HARD            equ $5b

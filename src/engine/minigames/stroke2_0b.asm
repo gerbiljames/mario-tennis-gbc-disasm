@@ -70,8 +70,8 @@ StrokeMatch2Hook_PointStart:
 	ld [wDrillCounters + 8], a ; $6733
 	ret ; $6736
 StrokeMatch2DrillOpponent:
-	db $58 ; $6737
-	db $44 ; $6738
+	db CHAR_DRILL_STROKE_MATCH_2_RECEIVING ; $6737
+	db CHAR_DRILL_STROKE_MATCH_2 ; $6738
 StrokeMatch2Hook_PointEnd:
 	call StrokeMatch2JudgeOnPointEnd ; $6739
 	call StrokeMatch2HandlePointEnd ; $673c
@@ -397,8 +397,8 @@ StrokeMatch3Hook_PointStart:
 	ld [wDrillCounters + 8], a ; $697e
 	ret ; $6981
 StrokeMatch3DrillOpponent:
-	db $59 ; $6982
-	db $45 ; $6983
+	db CHAR_DRILL_STROKE_MATCH_3_RECEIVING ; $6982
+	db CHAR_DRILL_STROKE_MATCH_3 ; $6983
 StrokeMatch3Hook_PointEnd:
 	call StrokeMatch3JudgeOnPointEnd ; $6984
 	call StrokeMatch3HandlePointEnd ; $6987

@@ -127,6 +127,12 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
   the ones their constants say (the drill partners for their drills, Mark
   and Ellis for doubles Varsity #2, `$5b`/`$5c` for Dream Match Hard and
   Intense). `$5b`-`$60` are now `CHAR_DREAM_HARD` ... `CHAR_DREAM_DOUBLES_MAX`.
+  A record the audit saw load during Net Game Match 1, `$54`, led to
+  LoadDrillOpponentBySide: the net-game and stroke match drills swap the
+  opponent's record by server at every point, which a hook on it confirmed
+  (the player serving loads the drill's own partner, the opponent serving
+  `$54`). `$54`-`$56` are `CHAR_DRILL_NET_GAME_MATCH_n_SERVING`, `$58`/`$59`
+  `CHAR_DRILL_STROKE_MATCH_n_RECEIVING`; `$57` is Stroke Match 1's empty slot.
   Coverage is what random play reaches: scenes gated behind story states
   the save is past (most of the ranking-match intros and victory scenes,
   `AcademyWingInitScript_10`'s stage branches) never ran, so the ~600 actor

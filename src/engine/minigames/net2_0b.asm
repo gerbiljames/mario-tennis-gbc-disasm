@@ -279,7 +279,7 @@ NetGamePractice1Hook_PointStart:
 	ld [wTargetZoneEnabled], a ; $5c28
 	ld hl, NetGamePractice1Table ; $5c2b
 	call SetDrillTargetZoneForPoint ; $5c2e
-	ld a, $40 ; $5c31
+	ld a, CHAR_DRILL_NET_GAME_PRACTICE_1 ; $5c31
 	call LoadDrillOpponentChar ; $5c33
 	xor a ; $5c36
 	ld [wDrillMessageId], a ; $5c37
@@ -641,7 +641,7 @@ NetGamePractice2Hook_PointStart:
 	ld [wTargetZoneEnabled], a ; $5ee3
 	ld hl, NetGamePractice2PointStartDrillPositions ; $5ee6
 	call SetDrillTargetZoneForPoint ; $5ee9
-	ld a, $41 ; $5eec
+	ld a, CHAR_DRILL_NET_GAME_PRACTICE_2 ; $5eec
 	call LoadDrillOpponentChar ; $5eee
 	xor a ; $5ef1
 	ld [wDrillMessageId], a ; $5ef2

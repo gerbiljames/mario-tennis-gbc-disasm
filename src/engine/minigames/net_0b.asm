@@ -35,8 +35,8 @@ NetGameMatch1Hook_PointStart:
 	ld [wDrillCounters + 4], a ; $5428
 	ret ; $542b
 NetGameMatch1DrillOpponent:
-	db $3d ; $542c
-	db $54 ; $542d
+	db CHAR_DRILL_NET_GAME_MATCH_1 ; $542c
+	db CHAR_DRILL_NET_GAME_MATCH_1_SERVING ; $542d
 NetGameMatch1Hook_PointEnd:
 	call NetGameMatch1JudgeOnPointEnd ; $542e
 	call NetGameMatch1HandlePointEnd ; $5431
@@ -389,8 +389,8 @@ NetGameMatch2Hook_PointStart:
 	ld [wDrillCounters + 6], a ; $5695
 	ret ; $5698
 NetGameMatch2DrillOpponent:
-	db $3e ; $5699
-	db $55 ; $569a
+	db CHAR_DRILL_NET_GAME_MATCH_2 ; $5699
+	db CHAR_DRILL_NET_GAME_MATCH_2_SERVING ; $569a
 NetGameMatch2Hook_PointEnd:
 	call NetGameMatch2JudgeOnPointEnd ; $569b
 	call NetGameMatch2HandlePointEnd ; $569e
@@ -786,8 +786,8 @@ NetGameMatch3Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $5948
 	ret ; $594b
 NetGameMatch3DrillOpponent:
-	db $3f ; $594c
-	db $56 ; $594d
+	db CHAR_DRILL_NET_GAME_MATCH_3 ; $594c
+	db CHAR_DRILL_NET_GAME_MATCH_3_SERVING ; $594d
 NetGameMatch3Hook_RallyTick:
 	call NetGameMatch3JudgeOnRallyTick ; $594e
 	ret ; $5951

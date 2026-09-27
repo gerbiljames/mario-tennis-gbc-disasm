@@ -36,7 +36,7 @@ NetGamePractice3Hook_PointStart:
 	ld [wTargetZoneEnabled], a ; $6195
 	ld hl, NetGamePractice3PointStartDrillPositions ; $6198
 	call SetDrillTargetZoneForPoint ; $619b
-	ld a, $42 ; $619e
+	ld a, CHAR_DRILL_NET_GAME_PRACTICE_3 ; $619e
 	call LoadDrillOpponentChar ; $61a0
 	xor a ; $61a3
 	ld [wDrillMessageId], a ; $61a4
