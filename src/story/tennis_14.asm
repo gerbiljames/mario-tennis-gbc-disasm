@@ -96,8 +96,8 @@ TennisMachineRoomNpc04TextIds:
 	dw Text_6e_215 ; record 6
 TennisMachineRoomNpcScripts_14:
 	; $40fa, 25 bytes (map_scripts)
-	map_script ACTOR_TENNIS_MACHINE_ROOM_WALK_72_06_1, FACEMASK_ANY, $0000, TennisMachineRoomNpc03_14, $03, $00
-	map_script ACTOR_TENNIS_MACHINE_ROOM_WALK_72_06_2, FACEMASK_ANY, $0000, TennisMachineRoomNpc04_14, $03, $00
+	map_script ACTOR_TENNIS_MACHINE_ROOM_WALK_72_06_1, FACEMASK_ANY, $0000, TennisMachineRoomNpc03_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TENNIS_MACHINE_ROOM_WALK_72_06_2, FACEMASK_ANY, $0000, TennisMachineRoomNpc04_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACEMASK_ANY, $0000, TennisMachineRoomNpc05_14, $00, $00
 	db $ff
 MachineLevel1FailedPrompt:
@@ -188,10 +188,10 @@ TennisMachineRoomFacingScripts_14:
 TennisMachineRoomTileTriggers_14:
 	; $41e7, 41 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $9c20, TennisMachineRoomTile01_14, $00, $00
-	map_script $03, FACEMASK_ANY, $0000, TennisMachineRoomTile03_14, $01, $00
-	map_script $04, FACEMASK_ANY, $0000, TennisMachineRoomTile04_14, $01, $00
-	map_script $05, FACEMASK_ANY, $0000, TennisMachineRoomTile05_14, $01, $00
-	map_script $06, FACEMASK_ANY, $0000, TennisMachineRoomTile06_14, $01, $00
+	map_script $03, FACEMASK_ANY, $0000, TennisMachineRoomTile03_14, TILETRIGGER_PRESS_ONLY, $00
+	map_script $04, FACEMASK_ANY, $0000, TennisMachineRoomTile04_14, TILETRIGGER_PRESS_ONLY, $00
+	map_script $05, FACEMASK_ANY, $0000, TennisMachineRoomTile05_14, TILETRIGGER_PRESS_ONLY, $00
+	map_script $06, FACEMASK_ANY, $0000, TennisMachineRoomTile06_14, TILETRIGGER_PRESS_ONLY, $00
 	db $ff
 TennisMachineRoomTile03_14:
 	ld a, $00 ; $4210

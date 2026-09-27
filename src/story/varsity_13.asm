@@ -220,13 +220,13 @@ CourtyardNpc03_13:
 	ret ; $5edb
 CourtyardNpcScripts_13:
 	; $5edc, 57 bytes (map_scripts)
-	map_script ACTOR_COURTYARD_KEVIN, FACEMASK_ANY, $0000, CourtyardNpc03_13, $03, $00
-	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $05e0, Text_30_532, $03, $00
-	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $05e0, Text_30_533, $1b, $00
-	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $0000, Text_30_536, $03, $00
-	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $0000, Text_30_537, $1b, $00
-	map_script ACTOR_COURTYARD_CURT, FACEMASK_ANY, $0000, Text_30_534, $03, $00
-	map_script ACTOR_COURTYARD_BETH, FACEMASK_ANY, $0000, Text_30_535, $13, $00
+	map_script ACTOR_COURTYARD_KEVIN, FACEMASK_ANY, $0000, CourtyardNpc03_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $05e0, Text_30_532, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $05e0, Text_30_533, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $0000, Text_30_536, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $0000, Text_30_537, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_COURTYARD_CURT, FACEMASK_ANY, $0000, Text_30_534, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_BETH, FACEMASK_ANY, $0000, Text_30_535, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtANpc05_13:
 	script_null_script ACTOR_COURTYARD_FAY ; $5f15
@@ -257,12 +257,12 @@ VarsityCourtANpc05_13:
 	ret ; $5f6f
 VarsityCourtNpcScriptsA_13:
 	; $5f70, 49 bytes (map_scripts)
-	map_script $03, FACEMASK_UP, $0000, VarsityCourtANpc03FaceUp_13, $03, $00
-	map_script $03, FACEMASK_ANY, $0000, VarsityCourtANpc03_13, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_30_538, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, VarsityCourtANpc05_13, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, Text_30_542, $13, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_30_543, $13, $00
+	map_script $03, FACEMASK_UP, $0000, VarsityCourtANpc03FaceUp_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $03, FACEMASK_ANY, $0000, VarsityCourtANpc03_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_30_538, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtANpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_30_542, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_30_543, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtBNpc09_13:
 	script_set_text Text_31_3 ; $5fa1
@@ -306,13 +306,13 @@ VarsityCourtBNpc05_13:
 	ret ; $601f
 VarsityCourtNpcScriptsB_13:
 	; $6020, 57 bytes (map_scripts)
-	map_script $03, FACEMASK_UP, $0000, VarsityCourtBNpc03FaceUp_13, $03, $00
-	map_script $03, FACEMASK_ANY, $0000, VarsityCourtBNpc03_13, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_31_6, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, VarsityCourtBNpc05_13, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, Text_31_10, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_31_11, $13, $00
-	map_script $09, FACEMASK_ANY, $0000, VarsityCourtBNpc09_13, $03, $00
+	map_script $03, FACEMASK_UP, $0000, VarsityCourtBNpc03FaceUp_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $03, FACEMASK_ANY, $0000, VarsityCourtBNpc03_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_31_6, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtBNpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_31_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_31_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $09, FACEMASK_ANY, $0000, VarsityCourtBNpc09_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 VarsityCourtCNpc03_13:
 	script_null_script ACTOR_COURTYARD_KEVIN ; $6059
@@ -330,9 +330,9 @@ VarsityCourtCNpc04_13:
 	ret ; $609e
 VarsityCourtNpcScriptsC_13:
 	; $609f, 25 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, VarsityCourtCNpc03_13, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, VarsityCourtCNpc04_13, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, VarsityCourtCNpc05_13, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, VarsityCourtCNpc03_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, VarsityCourtCNpc04_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtCNpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtCNpc05_13:
 	script_set_text Text_31_36 ; $60b8
@@ -351,11 +351,11 @@ VarsityCourtDNpc05_13:
 	ret ; $60ee
 VarsityCourtNpcScriptsD_13:
 	; $60ef, 41 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Text_31_38, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_31_39, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, VarsityCourtDNpc05_13, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, Text_31_41, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_31_42, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_31_38, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_31_39, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtDNpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_31_41, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_31_42, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtENpc05_13:
 	script_null_script ACTOR_COURTYARD_FAY ; $6118
@@ -366,11 +366,11 @@ VarsityCourtENpc05_13:
 	ret ; $613a
 VarsityCourtNpcScriptsE_13:
 	; $613b, 41 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Text_31_43, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_31_44, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, VarsityCourtENpc05_13, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, Text_31_46, $13, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_31_47, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_31_43, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_31_44, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtENpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_31_46, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_31_47, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 CourtyardFacingScripts_13:
 	; $6164, 9 bytes (map_scripts)
@@ -413,7 +413,7 @@ SetupVarsityCourtSceneVariant:
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $61ae
 	jr z, .stage1 ; $61b1
 	ld hl, VarsityCourtNpcScriptsD_13 ; $61b3
-	ld de, $000c ; $61b6
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61b6
 	farcall WriteStoryStateWord ; $61b9
 	ld a, $18 ; $61bc
 	ld d, $08 ; $61be
@@ -433,7 +433,7 @@ SetupVarsityCourtSceneVariant:
 	ld hl, VarsityCourtActorsC_13 ; $61e8
 	farcall ScriptRespawnLocationActors ; $61eb
 	ld hl, VarsityCourtNpcScriptsC_13 ; $61ee
-	ld de, $000c ; $61f1
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61f1
 	farcall WriteStoryStateWord ; $61f4
 	ld a, $18 ; $61f7
 	ld d, $08 ; $61f9
@@ -451,7 +451,7 @@ SetupVarsityCourtSceneVariant:
 	ld hl, VarsityCourtActorsA_13 ; $6212
 	farcall ScriptRespawnLocationActors ; $6215
 	ld hl, VarsityCourtNpcScriptsA_13 ; $6218
-	ld de, $000c ; $621b
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $621b
 	farcall WriteStoryStateWord ; $621e
 	ret ; $6221
 .stage3:
@@ -461,7 +461,7 @@ SetupVarsityCourtSceneVariant:
 	ld hl, VarsityCourtActorsB_13 ; $6229
 	farcall ScriptRespawnLocationActors ; $622c
 	ld hl, VarsityCourtNpcScriptsE_13 ; $622f
-	ld de, $000c ; $6232
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6232
 	farcall WriteStoryStateWord ; $6235
 	script_set_position ACTOR_VARSITY_COURT_B_MARK, $3f00, $3f00 ; $6238
 	script_face ACTOR_VARSITY_COURT_B_BOB, FACE_RIGHT ; $6243
@@ -484,7 +484,7 @@ SetupVarsityCourtSceneVariant:
 	ld hl, VarsityCourtActorsD_13 ; $6285
 	farcall ScriptRespawnLocationActors ; $6288
 	ld hl, VarsityCourtNpcScriptsC_13 ; $628b
-	ld de, $000c ; $628e
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $628e
 	farcall WriteStoryStateWord ; $6291
 	ld a, $18 ; $6294
 	ld d, $08 ; $6296
@@ -502,7 +502,7 @@ SetupVarsityCourtSceneVariant:
 	ld hl, VarsityCourtActorsB_13 ; $62ae
 	farcall ScriptRespawnLocationActors ; $62b1
 	ld hl, VarsityCourtNpcScriptsB_13 ; $62b4
-	ld de, $000c ; $62b7
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $62b7
 	farcall WriteStoryStateWord ; $62ba
 .done:
 	ret ; $62bd

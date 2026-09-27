@@ -203,10 +203,10 @@ WallPracticeRoomFacing01_12:
 WallPracticeRoomTileTriggers_12:
 	; $4cc0, 41 bytes (map_scripts)
 	map_script $02, FACEMASK_ANY, $9c00, WallPracticeRoomTile02_12, $00, $00
-	map_script $03, FACEMASK_ANY, $0000, WallPracticeRoomTile03_12, $01, $00
-	map_script $04, FACEMASK_ANY, $0000, WallPracticeRoomTile04_12, $01, $00
-	map_script $05, FACEMASK_ANY, $0000, WallPracticeRoomTile05_12, $01, $00
-	map_script $06, FACEMASK_ANY, $0000, WallPracticeRoomTile06_12, $01, $00
+	map_script $03, FACEMASK_ANY, $0000, WallPracticeRoomTile03_12, TILETRIGGER_PRESS_ONLY, $00
+	map_script $04, FACEMASK_ANY, $0000, WallPracticeRoomTile04_12, TILETRIGGER_PRESS_ONLY, $00
+	map_script $05, FACEMASK_ANY, $0000, WallPracticeRoomTile05_12, TILETRIGGER_PRESS_ONLY, $00
+	map_script $06, FACEMASK_ANY, $0000, WallPracticeRoomTile06_12, TILETRIGGER_PRESS_ONLY, $00
 	db $ff
 WallPracticeRoomTile02_12:
 	script_move_target ACTOR_PLAYER, $0500, $3900 ; $4ce9

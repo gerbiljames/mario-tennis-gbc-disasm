@@ -103,7 +103,7 @@ DormRoomNpc04_13:
 DormRoomNpcScripts_13:
 	; $4eba, 17 bytes (map_scripts)
 	map_script ACTOR_DORM_ROOM_KATE, FACEMASK_ANY, $0000, DormRoomNpc03_13, $00, $00
-	map_script ACTOR_DORM_ROOM_WALK_74_01, FACEMASK_ANY, $0000, DormRoomNpc04_13, $13, $00
+	map_script ACTOR_DORM_ROOM_WALK_74_01, FACEMASK_ANY, $0000, DormRoomNpc04_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 DormRoomFacingScripts_13:
 	; $4ecb, 9 bytes (map_scripts)

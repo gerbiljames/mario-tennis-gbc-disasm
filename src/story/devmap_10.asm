@@ -171,7 +171,7 @@ DevelopmentNpcScripts_10:
 	map_script $0a, FACEMASK_ANY, $0000, DevelopmentRespawnActors_10, $00, $00
 	map_script $0b, FACEMASK_ANY, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
 	map_script $0c, FACEMASK_ANY, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
-	map_script $0d, FACEMASK_ANY, $0000, DevelopmentRespawnActorsAlt_10, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, DevelopmentRespawnActorsAlt_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script $0e, FACEMASK_ANY, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
 	map_script $0f, FACEMASK_ANY, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
 	map_script $10, FACEMASK_ANY, $0000, DevelopmentRespawnActorsAlt_10, $00, $00

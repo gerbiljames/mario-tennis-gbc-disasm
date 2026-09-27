@@ -453,7 +453,7 @@ RunNpcInteraction:
 	ld a, $01 ; $54f7
 	ld [hl], a ; $54f9
 	ld a, b ; $54fa
-	and $08 ; $54fb
+	and NPC_IDLE_ANIM ; $54fb
 	jr z, .applyFlags ; $54fd
 	ld hl, $002e ; $54ff
 	add hl, de ; $5502
@@ -470,14 +470,14 @@ RunNpcInteraction:
 	pop bc ; $5513
 .applyFlags:
 	ld a, b ; $5514
-	and $10 ; $5515
+	and NPC_FREEZE ; $5515
 	jr z, .faceThePlayer ; $5517
 	ld hl, $0005 ; $5519
 	add hl, de ; $551c
 	set 0, [hl] ; $551d
 	set 1, [hl] ; $551f
 .faceThePlayer:
-	bit 0, b ; $5521
+	bit NPCB_FACE_PLAYER, b ; $5521
 	jr z, .runScript ; $5523
 	ld hl, $0014 ; $5525
 	add hl, de ; $5528
@@ -494,14 +494,14 @@ RunNpcInteraction:
 	ld a, [wStoryMapRecord] ; $5537
 	call RunStoryScriptOrDialogue ; $553a
 	pop de ; $553d
-	bit 1, b ; $553e
+	bit NPCB_RESTORE_FACING, b ; $553e
 	jr z, .restoreFlags ; $5540
 	ld hl, $0014 ; $5542
 	add hl, de ; $5545
 	ld [hl], c ; $5546
 .restoreFlags:
 	ld a, b ; $5547
-	and $10 ; $5548
+	and NPC_FREEZE ; $5548
 	jr z, .restoreAnim ; $554a
 	ld hl, $0005 ; $554c
 	add hl, de ; $554f
@@ -509,7 +509,7 @@ RunNpcInteraction:
 	res 1, [hl] ; $5552
 .restoreAnim:
 	ld a, b ; $5554
-	and $08 ; $5555
+	and NPC_IDLE_ANIM ; $5555
 	jr z, .clearBusy ; $5557
 	push bc ; $5559
 	push de ; $555a

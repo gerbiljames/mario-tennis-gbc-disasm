@@ -187,6 +187,20 @@ def FACEMASK_LEFT  equ $20
 def FACEMASK_UP    equ $40
 def FACEMASK_DOWN  equ $80
 
+; --- NPC talk behaviour (arg0 of an NpcScripts map_script record) ---
+; RunNpcInteraction ($0a:$54b5) applies these around the handler.
+def NPC_FACE_PLAYER    equ $01 ; turn the actor toward the player first
+def NPC_RESTORE_FACING equ $02 ; and back to its old facing afterwards
+def NPC_IDLE_ANIM      equ $08 ; hold animation 1 while the handler runs
+def NPC_FREEZE         equ $10 ; set ACTORF_FLAGS bits 0 and 1 while it runs
+DEF NPCB_FACE_PLAYER    EQU 0
+DEF NPCB_RESTORE_FACING EQU 1
+
+; --- Tile-trigger behaviour (arg0 of a TileTriggers map_script record) ---
+; RunQueuedTriggerScript ignores a queued (walked-onto) trigger whose arg0 is
+; this, so the tile only acts on a deliberate A press.
+def TILETRIGGER_PRESS_ONLY equ $01
+
 ; --- Shot types (wCurrentShotType, $c4a0) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
 ; SelectServeShotType ($08:$707e/$706b), which index the button (df16) x

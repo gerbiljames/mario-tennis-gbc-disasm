@@ -76,19 +76,19 @@ TournamentNpc0A_0f:
 	ret ; $6101
 TournamentNpcScripts_0f:
 	; $6102, 105 bytes (map_scripts)
-	map_script ACTOR_TOURNAMENT_WALK_74_08, FACEMASK_ANY, $0000, Text_1f_159, $03, $00
-	map_script ACTOR_TOURNAMENT_WALK_74_07, FACEMASK_ANY, $0000, Text_1f_160, $13, $00
-	map_script ACTOR_TOURNAMENT_WALK_74_06, FACEMASK_ANY, $0000, Text_1f_161, $03, $00
-	map_script ACTOR_TOURNAMENT_SPIKE, FACEMASK_ANY, $0000, Text_1f_162, $03, $00
-	map_script ACTOR_TOURNAMENT_SAMMI, FACEMASK_ANY, $0000, TournamentNpc0A_0f, $03, $00
-	map_script ACTOR_TOURNAMENT_ELDEN, FACEMASK_ANY, $0000, Text_1f_166, $03, $00
-	map_script ACTOR_TOURNAMENT_A_COZ, FACEMASK_ANY, $0000, Text_1f_167, $03, $00
-	map_script ACTOR_TOURNAMENT_B_COZ, FACEMASK_ANY, $0000, Text_1f_168, $03, $00
-	map_script ACTOR_TOURNAMENT_SEAN, FACEMASK_ANY, $0000, Text_1f_169, $03, $00
-	map_script ACTOR_TOURNAMENT_WALK_6F_00, FACEMASK_ANY, $0000, Text_1f_170, $03, $00
-	map_script ACTOR_TOURNAMENT_WALK_6F_01, FACEMASK_ANY, $0000, Text_1f_171, $03, $00
-	map_script ACTOR_TOURNAMENT_WALK_6F_07_1, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
-	map_script ACTOR_TOURNAMENT_WALK_6F_07_2, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	map_script ACTOR_TOURNAMENT_WALK_74_08, FACEMASK_ANY, $0000, Text_1f_159, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_WALK_74_07, FACEMASK_ANY, $0000, Text_1f_160, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_WALK_74_06, FACEMASK_ANY, $0000, Text_1f_161, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_SPIKE, FACEMASK_ANY, $0000, Text_1f_162, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_SAMMI, FACEMASK_ANY, $0000, TournamentNpc0A_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_ELDEN, FACEMASK_ANY, $0000, Text_1f_166, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_A_COZ, FACEMASK_ANY, $0000, Text_1f_167, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_B_COZ, FACEMASK_ANY, $0000, Text_1f_168, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_SEAN, FACEMASK_ANY, $0000, Text_1f_169, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_WALK_6F_00, FACEMASK_ANY, $0000, Text_1f_170, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_WALK_6F_01, FACEMASK_ANY, $0000, Text_1f_171, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_WALK_6F_07_1, FACEMASK_ANY, $0000, TournamentNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_WALK_6F_07_2, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentFacingScripts_0f:
 	; $616b, 9 bytes (map_scripts)
@@ -166,8 +166,8 @@ TournamentInitScript_0f:
 	ldh a, [hRomBank] ; $6230
 	ld hl, IslandOpenRoundActors_0f ; $6232
 	farcall ScriptRespawnLocationActors ; $6235
-	ld hl, IslandOpenRoundScripts_0f ; $6238
-	ld de, $000c ; $623b
+	ld hl, IslandOpenRoundNpcScripts_0f ; $6238
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $623b
 	farcall WriteStoryStateWord ; $623e
 	farcall BeginCutsceneScriptMode ; $6241
 	script_set_position ACTOR_ISLAND_OPEN_ROUND_WALK_74_08, $1c00, $1c00 ; $6244
@@ -188,8 +188,8 @@ TournamentInitScript_0f:
 	ldh a, [hRomBank] ; $6293
 	ld hl, IslandOpenRoundActorsSingles_0f ; $6295
 	farcall ScriptRespawnLocationActors ; $6298
-	ld hl, IslandOpenRoundScriptsSingles_0f ; $629b
-	ld de, $000c ; $629e
+	ld hl, IslandOpenRoundNpcScriptsSingles_0f ; $629b
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $629e
 	farcall WriteStoryStateWord ; $62a1
 	farcall BeginCutsceneScriptMode ; $62a4
 	call SetPlayerAndPartnerObjectDefs ; $62a7
@@ -201,8 +201,8 @@ TournamentInitScript_0f:
 	ldh a, [hRomBank] ; $62c4
 	ld hl, IslandOpenRoundActorsDoubles_0f ; $62c6
 	farcall ScriptRespawnLocationActors ; $62c9
-	ld hl, IslandOpenRoundScriptsDoubles_0f ; $62cc
-	ld de, $000c ; $62cf
+	ld hl, IslandOpenRoundNpcScriptsDoubles_0f ; $62cc
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $62cf
 	farcall WriteStoryStateWord ; $62d2
 	farcall BeginCutsceneScriptMode ; $62d5
 	call SetPlayerAndPartnerObjectDefs ; $62d8
@@ -377,8 +377,8 @@ IslandOpenArrivalCutscene:
 	ldh a, [hRomBank] ; $6429
 	ld hl, IslandOpenRoundActors_0f ; $642b
 	farcall ScriptRespawnLocationActors ; $642e
-	ld hl, IslandOpenRoundScripts_0f ; $6431
-	ld de, $000c ; $6434
+	ld hl, IslandOpenRoundNpcScripts_0f ; $6431
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6434
 	farcall WriteStoryStateWord ; $6437
 	farcall BeginCutsceneScriptMode ; $643a
 	call ReplacePartnerWithStandInActor ; $643d
@@ -458,11 +458,11 @@ IslandOpenRoundActors_0f:
 	map_actor $0000, ActorScript_0f_09, $1c00, $2f00, FACE_UP, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_ROUND_WALK_74_06
 	map_actor $0000, ActorScript_0f_09, $1d00, $3100, FACE_UP, OBJ_WALK_74_07, $01, $00, ISLAND_OPEN_ROUND_WALK_74_07
 	map_actor_end
-IslandOpenRoundScripts_0f:
+IslandOpenRoundNpcScripts_0f:
 	; $65f6, 25 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Text_1f_25, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_1f_26, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, Text_1f_27, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_25, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_26, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_1f_27, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 ComputeIslandOpenRound:
 	test_flag FLAG_DOUBLES ; $660f
@@ -514,8 +514,8 @@ LoadIslandOpenRoundNpcs:
 	ldh a, [hRomBank] ; $6669
 	ld hl, IslandOpenFinalActors_0f ; $666b
 	farcall ScriptRespawnLocationActors ; $666e
-	ld hl, IslandOpenFinalScripts_0f ; $6671
-	ld de, $000c ; $6674
+	ld hl, IslandOpenFinalNpcScripts_0f ; $6671
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6674
 	farcall WriteStoryStateWord ; $6677
 	ld a, ISLANDOPENROUND_FINAL ; $667a
 	ld [wMapSceneStage], a ; $667c
@@ -526,8 +526,8 @@ LoadIslandOpenRoundNpcs:
 	ldh a, [hRomBank] ; $6685
 	ld hl, IslandOpenSemifinalActors_0f ; $6687
 	farcall ScriptRespawnLocationActors ; $668a
-	ld hl, IslandOpenSemifinalScripts_0f ; $668d
-	ld de, $000c ; $6690
+	ld hl, IslandOpenSemifinalNpcScripts_0f ; $668d
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6690
 	farcall WriteStoryStateWord ; $6693
 	ld a, ISLANDOPENROUND_SEMIFINAL ; $6696
 	ld [wMapSceneStage], a ; $6698
@@ -538,8 +538,8 @@ LoadIslandOpenRoundNpcs:
 	ldh a, [hRomBank] ; $66a1
 	ld hl, IslandOpenRound2Actors_0f ; $66a3
 	farcall ScriptRespawnLocationActors ; $66a6
-	ld hl, IslandOpenRound2Scripts_0f ; $66a9
-	ld de, $000c ; $66ac
+	ld hl, IslandOpenRound2NpcScripts_0f ; $66a9
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $66ac
 	farcall WriteStoryStateWord ; $66af
 	ld a, ISLANDOPENROUND_ROUND2 ; $66b2
 	ld [wMapSceneStage], a ; $66b4
@@ -559,8 +559,8 @@ LoadIslandOpenRoundNpcsDoubles:
 	ldh a, [hRomBank] ; $66cf
 	ld hl, IslandOpenFinalActorsDoubles_0f ; $66d1
 	farcall ScriptRespawnLocationActors ; $66d4
-	ld hl, IslandOpenFinalScriptsDoubles_0f ; $66d7
-	ld de, $000c ; $66da
+	ld hl, IslandOpenFinalNpcScriptsDoubles_0f ; $66d7
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $66da
 	farcall WriteStoryStateWord ; $66dd
 	ld a, ISLANDOPENROUND_FINAL ; $66e0
 	ld [wMapSceneStage], a ; $66e2
@@ -571,8 +571,8 @@ LoadIslandOpenRoundNpcsDoubles:
 	ldh a, [hRomBank] ; $66eb
 	ld hl, IslandOpenSemifinalActorsDoubles_0f ; $66ed
 	farcall ScriptRespawnLocationActors ; $66f0
-	ld hl, IslandOpenSemifinalScriptsDoubles_0f ; $66f3
-	ld de, $000c ; $66f6
+	ld hl, IslandOpenSemifinalNpcScriptsDoubles_0f ; $66f3
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $66f6
 	farcall WriteStoryStateWord ; $66f9
 	ld a, ISLANDOPENROUND_SEMIFINAL ; $66fc
 	ld [wMapSceneStage], a ; $66fe
@@ -581,8 +581,8 @@ LoadIslandOpenRoundNpcsDoubles:
 	ldh a, [hRomBank] ; $6702
 	ld hl, IslandOpenRound1ActorsDoubles_0f ; $6704
 	farcall ScriptRespawnLocationActors ; $6707
-	ld hl, IslandOpenRound1ScriptsDoubles_0f ; $670a
-	ld de, $000c ; $670d
+	ld hl, IslandOpenRound1NpcScriptsDoubles_0f ; $670a
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $670d
 	farcall WriteStoryStateWord ; $6710
 	ret ; $6713
 IslandOpenRound2Actors_0f:
@@ -602,21 +602,21 @@ IslandOpenRound2Actors_0f:
 	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $00, ISLAND_OPEN_ROUND2_WALK_6F_00
 	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_ROUND2_WALK_6F_01
 	map_actor_end
-IslandOpenRound2Scripts_0f:
+IslandOpenRound2NpcScripts_0f:
 	; $67e2, 105 bytes (map_scripts)
-	map_script $06, FACEMASK_ANY, $0000, Text_1f_182, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_1f_183, $03, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_1f_184, $03, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_1f_185, $03, $00
-	map_script $0a, FACEMASK_ANY, $0000, Text_1f_186, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, Text_1f_187, $03, $00
-	map_script $0c, FACEMASK_ANY, $0000, Text_1f_188, $03, $00
-	map_script $0d, FACEMASK_ANY, $0000, Text_1f_189, $03, $00
-	map_script $0e, FACEMASK_ANY, $0000, Text_1f_190, $03, $00
-	map_script $0f, FACEMASK_ANY, $0000, Text_1f_191, $03, $00
-	map_script $10, FACEMASK_ANY, $0000, Text_1f_192, $13, $00
-	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_182, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_183, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_184, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_185, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_1f_186, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_1f_187, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_1f_188, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_1f_189, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_1f_190, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_1f_191, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_1f_192, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 IslandOpenSemifinalActors_0f:
 	; $684b, 206 bytes (map_actors)
@@ -635,21 +635,21 @@ IslandOpenSemifinalActors_0f:
 	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, OBJ_WALK_6F_00, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_6F_00
 	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_6F_01
 	map_actor_end
-IslandOpenSemifinalScripts_0f:
+IslandOpenSemifinalNpcScripts_0f:
 	; $6919, 105 bytes (map_scripts)
-	map_script $06, FACEMASK_ANY, $0000, Text_25_4, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_25_5, $13, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_25_6, $03, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_25_7, $03, $00
-	map_script $0a, FACEMASK_ANY, $0000, Text_25_8, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, Text_25_9, $03, $00
-	map_script $0c, FACEMASK_ANY, $0000, Text_25_10, $03, $00
-	map_script $0d, FACEMASK_ANY, $0000, Text_25_11, $13, $00
-	map_script $0e, FACEMASK_ANY, $0000, Text_25_12, $03, $00
-	map_script $0f, FACEMASK_ANY, $0000, Text_25_13, $03, $00
-	map_script $10, FACEMASK_ANY, $0000, Text_25_14, $13, $00
-	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_4, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_5, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_6, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_7, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_8, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_25_9, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_25_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_25_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 IslandOpenFinalActors_0f:
 	; $6982, 206 bytes (map_actors)
@@ -668,21 +668,21 @@ IslandOpenFinalActors_0f:
 	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, OBJ_WALK_6F_00, $01, $00, ISLAND_OPEN_FINAL_WALK_6F_00
 	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_FINAL_WALK_6F_01
 	map_actor_end
-IslandOpenFinalScripts_0f:
+IslandOpenFinalNpcScripts_0f:
 	; $6a50, 105 bytes (map_scripts)
-	map_script $06, FACEMASK_ANY, $0000, Text_25_15, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_25_16, $13, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_25_17, $03, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_25_18, $03, $00
-	map_script $0a, FACEMASK_ANY, $0000, Text_25_19, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, Text_25_20, $03, $00
-	map_script $0c, FACEMASK_ANY, $0000, Text_25_21, $03, $00
-	map_script $0d, FACEMASK_ANY, $0000, Text_25_22, $13, $00
-	map_script $0e, FACEMASK_ANY, $0000, Text_25_23, $03, $00
-	map_script $0f, FACEMASK_ANY, $0000, Text_25_24, $03, $00
-	map_script $10, FACEMASK_ANY, $0000, Text_25_25, $13, $00
-	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_16, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_17, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_18, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_19, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_25_20, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_21, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_25_22, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_23, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_24, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_25_25, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 IslandOpenRound1ActorsDoubles_0f:
 	; $6ab9, 192 bytes (map_actors)
@@ -700,20 +700,20 @@ IslandOpenRound1ActorsDoubles_0f:
 	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_WALK_6F_01
 	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $05, ISLAND_OPEN_ROUND1_DOUBLES_WALK_6F_00
 	map_actor_end
-IslandOpenRound1ScriptsDoubles_0f:
+IslandOpenRound1NpcScriptsDoubles_0f:
 	; $6b79, 97 bytes (map_scripts)
-	map_script $06, FACEMASK_ANY, $0000, Text_25_26, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_25_27, $13, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_25_28, $03, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_25_29, $03, $00
-	map_script $0a, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0A_0f, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0B_0f, $03, $00
-	map_script $0c, FACEMASK_ANY, $0000, Text_25_36, $03, $00
-	map_script $0d, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0D_0f, $13, $00
-	map_script $0e, FACEMASK_ANY, $0000, Text_25_40, $03, $00
-	map_script $0f, FACEMASK_ANY, $0000, Text_25_41, $03, $00
-	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_26, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_27, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_28, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_29, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0a, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0A_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0b, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0B_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_36, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0d, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0D_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_40, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_41, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 IslandOpenRound1DoublesNpc0A_0f:
 	script_set_text Text_25_30 ; $6bda
@@ -772,20 +772,20 @@ IslandOpenSemifinalActorsDoubles_0f:
 	map_actor $0000, ActorScript_0f_09, $2900, $1300, FACE_UP, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_WALK_6F_01
 	map_actor $0000, ActorScript_0f_11, $2500, $1900, FACE_DOWN, OBJ_WALK_6F_00, $01, $05, ISLAND_OPEN_SEMIFINAL_DOUBLES_WALK_6F_00
 	map_actor_end
-IslandOpenSemifinalScriptsDoubles_0f:
+IslandOpenSemifinalNpcScriptsDoubles_0f:
 	; $6d06, 97 bytes (map_scripts)
-	map_script $06, FACEMASK_ANY, $0000, Text_25_42, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_25_43, $03, $00
-	map_script $08, FACEMASK_ANY, $0000, IslandOpenSemifinalDoublesNpc08_0f, $03, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_25_47, $03, $00
-	map_script $0a, FACEMASK_ANY, $0000, Text_25_48, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, Text_25_49, $03, $00
-	map_script $0c, FACEMASK_ANY, $0000, Text_25_50, $03, $00
-	map_script $0d, FACEMASK_ANY, $0000, IslandOpenSemifinalDoublesNpc0D_0f, $13, $00
-	map_script $0e, FACEMASK_ANY, $0000, Text_25_54, $13, $00
-	map_script $0f, FACEMASK_ANY, $0000, Text_25_55, $13, $00
-	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_42, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_43, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $08, FACEMASK_ANY, $0000, IslandOpenSemifinalDoublesNpc08_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_47, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_48, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_25_49, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_50, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0d, FACEMASK_ANY, $0000, IslandOpenSemifinalDoublesNpc0D_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_54, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_55, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 IslandOpenSemifinalDoublesNpc08_0f:
 	script_set_text Text_25_44 ; $6d67
@@ -830,20 +830,20 @@ IslandOpenFinalActorsDoubles_0f:
 	map_actor $0000, ActorScript_0f_09, $2900, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_01
 	map_actor $0000, ActorScript_0f_11, $2400, $1800, FACE_DOWN, OBJ_WALK_6F_00, $01, $05, ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_00
 	map_actor_end
-IslandOpenFinalScriptsDoubles_0f:
+IslandOpenFinalNpcScriptsDoubles_0f:
 	; $6e6f, 97 bytes (map_scripts)
-	map_script $06, FACEMASK_ANY, $0000, Text_25_56, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_25_57, $03, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_25_58, $03, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_25_59, $03, $00
-	map_script $0a, FACEMASK_ANY, $0000, Text_25_60, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, IslandOpenFinalDoublesNpc0B_0f, $03, $00
-	map_script $0c, FACEMASK_ANY, $0000, IslandOpenFinalDoublesNpc0C_0f, $03, $00
-	map_script $0d, FACEMASK_ANY, $0000, Text_25_67, $03, $00
-	map_script $0e, FACEMASK_ANY, $0000, Text_25_68, $13, $00
-	map_script $0f, FACEMASK_ANY, $0000, Text_25_69, $13, $00
-	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_56, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_57, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_58, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_59, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_60, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0b, FACEMASK_ANY, $0000, IslandOpenFinalDoublesNpc0B_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0c, FACEMASK_ANY, $0000, IslandOpenFinalDoublesNpc0C_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_25_67, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_68, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_69, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 IslandOpenFinalDoublesNpc0C_0f:
 	script_set_text Text_25_64 ; $6ed0

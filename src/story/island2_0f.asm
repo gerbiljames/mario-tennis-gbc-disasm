@@ -367,8 +367,8 @@ IslandOpenSinglesMatchReturn:
 	ldh a, [hRomBank] ; $74b0
 	ld hl, IslandOpenRoundActorsSingles_0f ; $74b2
 	farcall ScriptRespawnLocationActors ; $74b5
-	ld hl, IslandOpenRoundScriptsSingles_0f ; $74b8
-	ld de, $000c ; $74bb
+	ld hl, IslandOpenRoundNpcScriptsSingles_0f ; $74b8
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $74bb
 	farcall WriteStoryStateWord ; $74be
 	call ComputeIslandOpenRound ; $74c1
 	farcall BeginCutsceneScriptMode ; $74c4
@@ -437,11 +437,11 @@ IslandOpenRoundActorsSingles_0f:
 	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_6F_07_2
 	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, $01, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_73_12
 	map_actor_end
-IslandOpenRoundScriptsSingles_0f:
+IslandOpenRoundNpcScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc03_0f, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 ; Instruction-identical to IslandOpenRoundDoublesNpc04_0f (in this bank); a change here belongs in every copy.
 	twin_named island_open_round_doubles_npc04, IslandOpenRoundSinglesNpc04_0f ; $762e
@@ -513,8 +513,8 @@ IslandOpenDoublesMatchReturn:
 	ld hl, IslandOpenRoundActorsDoubles_0f ; $76f8
 	farcall ScriptRespawnLocationActors ; $76fb
 	farcall BeginCutsceneScriptMode ; $76fe
-	ld hl, IslandOpenRoundScriptsDoubles_0f ; $7701
-	ld de, $000c ; $7704
+	ld hl, IslandOpenRoundNpcScriptsDoubles_0f ; $7701
+	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $7704
 	farcall WriteStoryStateWord ; $7707
 	call SetPlayerAndPartnerObjectDefs ; $770a
 	script_null_script ACTOR_PARTNER ; $770d
@@ -607,10 +607,10 @@ IslandOpenRoundActorsDoubles_0f:
 	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_2
 	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, $01, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_73_12
 	map_actor_end
-IslandOpenRoundScriptsDoubles_0f:
+IslandOpenRoundNpcScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 ; Instruction-identical to IslandOpenRoundSinglesNpc04_0f (in this bank); a change here belongs in every copy.
 	twin_named island_open_round_doubles_npc04, IslandOpenRoundDoublesNpc04_0f ; $78b1
