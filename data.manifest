@@ -161,13 +161,34 @@ bank_007/ShotPlacementDataServeSlice_07.bin 01d0c1 50
 bank_007/ShotPlacementDataServeFlat_07.bin 01d111 50
 bank_007/SetupCharacterSprite_CharTileBaseTable.bin 01daaf 4
 bank_008/AngleToDpadTable_08.bin 023296 10
-bank_009/MoveCurveTable_09.bin 0247ae c5
+bank_009/MoveCurve00_09.bin 0247ce d
+bank_009/MoveCurve01_09.bin 0247db d
+bank_009/MoveCurve02_09.bin 0247e8 d
+bank_009/MoveCurve03_09.bin 0247f5 d
+bank_009/MoveCurve04_09.bin 024802 9
+bank_009/MoveCurve05_09.bin 02480b 9
+bank_009/MoveCurve06_09.bin 024814 9
+bank_009/MoveCurve07_09.bin 02481d 9
+bank_009/MoveCurve08_09.bin 024826 9
+bank_009/MoveCurve09_09.bin 02482f 9
+bank_009/MoveCurve10_09.bin 024838 9
+bank_009/MoveCurve11_09.bin 024841 9
+bank_009/MoveCurve15_09.bin 02484a a
+bank_009/MoveCurve14_09.bin 024854 a
+bank_009/MoveCurve13_09.bin 02485e a
+bank_009/MoveCurve12_09.bin 024868 b
 bank_009/TilesetTiles_09.bin 024900 1800 gfx
-bank_009/VramGfxPtrTable_09.bin 02616d 4
-bank_009/Player1ScoreDigitGfxSource.bin 026171 4
-bank_009/LoadPlayer2ScoreDigitGfxTable.bin 026175 a4b
+bank_009/PointsDigitGfx0_09.bin 026180 180
+bank_009/PointsDigitGfx1_09.bin 026300 240
+bank_009/Player1ScoreDigitGfx0_09.bin 026540 140
+bank_009/Player1ScoreDigitGfx1_09.bin 026680 200
+bank_009/Player2ScoreDigitGfx0_09.bin 026880 140
+bank_009/Player2ScoreDigitGfx1_09.bin 0269c0 200
 bank_009/DeuceAdvantageTiles.bin 026bc0 80 gfx
-bank_009/ServeGfxPtrTable_09.bin 026c6e 412
+bank_009/ServeGfx0_09.bin 026c80 100
+bank_009/ServeGfx1_09.bin 026d80 100
+bank_009/ServeGfx2_09.bin 026e80 100
+bank_009/ServeGfx3_09.bin 026f80 100
 bank_00a/StoryObjPalettes.asm 029341 28 palettes
 bank_00a/DrawMinigameTargetTable.bin 02a6fe 10
 bank_00a/MinigameTargetFormation0Script0.bin 02a8e1 a
@@ -644,7 +665,10 @@ bank_01b/lz_ObjectSceneBGfx2.bin 06faf6 41 gfx
 bank_01b/lz_Screen0Gfx.bin 06fb37 1f7 gfx
 bank_01b/lz_Screen1ObjGfx.bin 06fd2e 141 gfx
 bank_01b/lz_Screen2ObjGfx.bin 06fe6f 143 gfx
-bank_01c/RadialOffsetRamps_1c.bin 070fe9 60
+bank_01c/RadialOffsetRamp0_1c.bin 070ff1 16
+bank_01c/RadialOffsetRamp1_1c.bin 071007 16
+bank_01c/RadialOffsetRamp2_1c.bin 07101d 16
+bank_01c/RadialOffsetRamp3_1c.bin 071033 16
 bank_01c/CharDataScreen_LoadScreenPalette.asm 07198c 40 palettes
 bank_01c/lz_CharDataScreenGfx0_1c.bin 0719cc a3a
 bank_01c/lz_CharDataScreenGfx1_1c.bin 072406 63
@@ -1124,7 +1148,8 @@ bank_03e/Palette_3e.asm 0f955b 8 palettes
 bank_03e/lz_CourtSelectTitleTiles.bin 0fa1d4 9f gfx
 bank_03e/lz_CourtSelectTitleTiles2Gfx.bin 0fa273 53 gfx
 bank_03e/lz_CourtSelectPanelTiles.bin 0fa2c6 1c9 gfx
-bank_03e/CourtSelect9CursorTemplatePtrs_3e.bin 0fa77b 58
+bank_03e/CourtSelect9CursorTemplate0_3e.bin 0fa78d 21
+bank_03e/CourtSelect9CursorTemplate1_3e.bin 0fa7ae 25
 bank_03e/lz_AwardCeremonyTiles.bin 0fa9d5 a51 gfx
 bank_03e/AwardCeremonyPalettes.asm 0fb426 40 palettes
 bank_03e/lz_AwardCeremonyTilemap5.bin 0fb466 117 tilemap:32

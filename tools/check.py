@@ -203,6 +203,23 @@ def check_traj(rom, manifest, fail):
     return n
 
 
+def check_blob_pointers(rom, manifest, fail):
+    """A blob that opens with two or more words pointing back into itself is
+    a pointer table the assembler cannot move: split it into a `dw` table of
+    labels over the pieces it points at."""
+    n = 0
+    for path, off, length, spec in manifest:
+        if off < BANK_SIZE or length > 0x1000 or (spec or "").startswith(("text", "traj", "sound")):
+            continue
+        n += 1
+        start = BANK_SIZE + off % BANK_SIZE
+        heads = [rom[off + i] | rom[off + i + 1] << 8 for i in range(0, min(length, 8) - 1, 2)]
+        if len(heads) >= 2 and all(start <= w < start + length for w in heads[:2]):
+            fail("literals", f"{path}: opens with pointers into itself "
+                             f"(${heads[0]:04x}, ${heads[1]:04x})")
+    return n
+
+
 def check_regions(manifest, fail):
     spans = sorted((o, o + n, p) for p, o, n, _s in manifest)
     prev = None
@@ -515,7 +532,7 @@ def main():
         "traj": check_traj(rom, manifest, fail),
         "scopes": check_stranded_scopes(fail),
         "branches": check_collapsed_branches(fail),
-        "literals": check_literal_pointers(fail),
+        "literals": check_literal_pointers(fail) + check_blob_pointers(rom, manifest, fail),
         "dma": check_dma_alignment(fail),
         "gfx": check_gfx(manifest, fail),
         "tilemap": check_tilemaps(manifest, fail),

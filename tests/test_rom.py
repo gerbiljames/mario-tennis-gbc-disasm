@@ -88,7 +88,7 @@ class Manifest(unittest.TestCase):
     def test_counts(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
-        self.assertEqual(len(lines), 4218)
+        self.assertEqual(len(lines), 4243)
         self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 839)
         specs = [f[3] for f in lines if len(f) > 3]
         self.assertEqual(sum(s.startswith("gfx") for s in specs), 2725)

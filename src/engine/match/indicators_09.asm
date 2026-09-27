@@ -32,7 +32,54 @@ GetNextMoveCurveValue:
 	xor a ; $47ac
 	ret ; $47ad
 MoveCurveTable_09:
-	INCBIN "data/bank_009/MoveCurveTable_09.bin" ; $47ae, 197 bytes
+	dw MoveCurve00_09 ; $47ae
+	dw MoveCurve01_09 ; $47b0
+	dw MoveCurve02_09 ; $47b2
+	dw MoveCurve03_09 ; $47b4
+	dw MoveCurve04_09 ; $47b6
+	dw MoveCurve05_09 ; $47b8
+	dw MoveCurve06_09 ; $47ba
+	dw MoveCurve07_09 ; $47bc
+	dw MoveCurve08_09 ; $47be
+	dw MoveCurve09_09 ; $47c0
+	dw MoveCurve10_09 ; $47c2
+	dw MoveCurve11_09 ; $47c4
+	dw MoveCurve12_09 ; $47c6
+	dw MoveCurve13_09 ; $47c8
+	dw MoveCurve14_09 ; $47ca
+	dw MoveCurve15_09 ; $47cc
+MoveCurve00_09:
+	INCBIN "data/bank_009/MoveCurve00_09.bin" ; $47ce, 13 bytes
+MoveCurve01_09:
+	INCBIN "data/bank_009/MoveCurve01_09.bin" ; $47db, 13 bytes
+MoveCurve02_09:
+	INCBIN "data/bank_009/MoveCurve02_09.bin" ; $47e8, 13 bytes
+MoveCurve03_09:
+	INCBIN "data/bank_009/MoveCurve03_09.bin" ; $47f5, 13 bytes
+MoveCurve04_09:
+	INCBIN "data/bank_009/MoveCurve04_09.bin" ; $4802, 9 bytes
+MoveCurve05_09:
+	INCBIN "data/bank_009/MoveCurve05_09.bin" ; $480b, 9 bytes
+MoveCurve06_09:
+	INCBIN "data/bank_009/MoveCurve06_09.bin" ; $4814, 9 bytes
+MoveCurve07_09:
+	INCBIN "data/bank_009/MoveCurve07_09.bin" ; $481d, 9 bytes
+MoveCurve08_09:
+	INCBIN "data/bank_009/MoveCurve08_09.bin" ; $4826, 9 bytes
+MoveCurve09_09:
+	INCBIN "data/bank_009/MoveCurve09_09.bin" ; $482f, 9 bytes
+MoveCurve10_09:
+	INCBIN "data/bank_009/MoveCurve10_09.bin" ; $4838, 9 bytes
+MoveCurve11_09:
+	INCBIN "data/bank_009/MoveCurve11_09.bin" ; $4841, 9 bytes
+MoveCurve15_09:
+	INCBIN "data/bank_009/MoveCurve15_09.bin" ; $484a, 10 bytes
+MoveCurve14_09:
+	INCBIN "data/bank_009/MoveCurve14_09.bin" ; $4854, 10 bytes
+MoveCurve13_09:
+	INCBIN "data/bank_009/MoveCurve13_09.bin" ; $485e, 10 bytes
+MoveCurve12_09:
+	INCBIN "data/bank_009/MoveCurve12_09.bin" ; $4868, 11 bytes
 LoadTilesetGfx:
 	add a ; $4873
 	add a ; $4874
@@ -111,7 +158,7 @@ LoadPlayer1ScoreDigitGfx:
 	call QueueVRAMCopy ; $6135
 	ret ; $6138
 LoadPlayer2ScoreDigitGfx:
-	ld hl, LoadPlayer2ScoreDigitGfxTable ; $6139
+	ld hl, Player2ScoreDigitGfxSource ; $6139
 	call GetGfxSourcePtr ; $613c
 	ld de, vTiles0 + $34 * TILE_SIZE ; $613f
 	ld c, $04 ; $6142
@@ -145,11 +192,29 @@ GetGfxSourcePtr:
 	add hl, bc ; $616b
 	ret ; $616c
 VramGfxPtrTable_09:
-	INCBIN "data/bank_009/VramGfxPtrTable_09.bin" ; $616d, 4 bytes
+	dw PointsDigitGfx0_09, PointsDigitGfx1_09 ; $616d
 Player1ScoreDigitGfxSource:
-	INCBIN "data/bank_009/Player1ScoreDigitGfxSource.bin" ; $6171, 4 bytes
-LoadPlayer2ScoreDigitGfxTable:
-	INCBIN "data/bank_009/LoadPlayer2ScoreDigitGfxTable.bin" ; $6175, 2635 bytes
+	dw Player1ScoreDigitGfx0_09, Player1ScoreDigitGfx1_09 ; $6171
+Player2ScoreDigitGfxSource:
+	dw Player2ScoreDigitGfx0_09, Player2ScoreDigitGfx1_09 ; $6175
+	ds ALIGN[4]
+PointsDigitGfx0_09:
+	INCBIN "data/bank_009/PointsDigitGfx0_09.bin" ; $6180, 384 bytes
+	ds ALIGN[4]
+PointsDigitGfx1_09:
+	INCBIN "data/bank_009/PointsDigitGfx1_09.bin" ; $6300, 576 bytes
+	ds ALIGN[4]
+Player1ScoreDigitGfx0_09:
+	INCBIN "data/bank_009/Player1ScoreDigitGfx0_09.bin" ; $6540, 320 bytes
+	ds ALIGN[4]
+Player1ScoreDigitGfx1_09:
+	INCBIN "data/bank_009/Player1ScoreDigitGfx1_09.bin" ; $6680, 512 bytes
+	ds ALIGN[4]
+Player2ScoreDigitGfx0_09:
+	INCBIN "data/bank_009/Player2ScoreDigitGfx0_09.bin" ; $6880, 320 bytes
+	ds ALIGN[4]
+Player2ScoreDigitGfx1_09:
+	INCBIN "data/bank_009/Player2ScoreDigitGfx1_09.bin" ; $69c0, 512 bytes
 	ds ALIGN[4]
 DeuceAdvantageTiles:
 	INCBIN "data/bank_009/DeuceAdvantageTiles.bin" ; $6bc0, 128 bytes
@@ -182,7 +247,19 @@ LoadServeGfx:
 	call QueueVRAMCopy ; $6c6a
 	ret ; $6c6d
 ServeGfxPtrTable_09:
-	INCBIN "data/bank_009/ServeGfxPtrTable_09.bin" ; $6c6e, 1042 bytes
+	dw ServeGfx0_09, ServeGfx1_09, ServeGfx2_09, ServeGfx3_09 ; $6c6e
+	ds ALIGN[4]
+ServeGfx0_09:
+	INCBIN "data/bank_009/ServeGfx0_09.bin" ; $6c80, 256 bytes
+	ds ALIGN[4]
+ServeGfx1_09:
+	INCBIN "data/bank_009/ServeGfx1_09.bin" ; $6d80, 256 bytes
+	ds ALIGN[4]
+ServeGfx2_09:
+	INCBIN "data/bank_009/ServeGfx2_09.bin" ; $6e80, 256 bytes
+	ds ALIGN[4]
+ServeGfx3_09:
+	INCBIN "data/bank_009/ServeGfx3_09.bin" ; $6f80, 256 bytes
 ; A column of up to eight 8x16 objects one tile apart, tiles $0e down to $00;
 ; an object template enters it part-way to draw fewer (the entry labels
 ; say how many rows remain). ServeGfxPtrTable_09 used to swallow its head.

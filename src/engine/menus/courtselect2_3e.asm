@@ -332,7 +332,11 @@ CourtSelect9CursorSpriteTask:
 	call QueueSpriteTemplate ; $6777
 	ret ; $677a
 CourtSelect9CursorTemplatePtrs_3e:
-	INCBIN "data/bank_03e/CourtSelect9CursorTemplatePtrs_3e.bin" ; $677b, 88 bytes
+	dw CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate1_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e ; $677b
+CourtSelect9CursorTemplate0_3e:
+	INCBIN "data/bank_03e/CourtSelect9CursorTemplate0_3e.bin" ; $678d, 33 bytes
+CourtSelect9CursorTemplate1_3e:
+	INCBIN "data/bank_03e/CourtSelect9CursorTemplate1_3e.bin" ; $67ae, 37 bytes
 CourtSelect9CursorSpriteTask_SpriteTemplate:
 	; $67d3, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
