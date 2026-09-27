@@ -2,9 +2,9 @@ ToggleSelectedUnlockFlag:
 	push_wram_bank WRAM_SCENE ; $68a4
 	ld hl, wUnlockFlagsBlock ; $68ad
 	ld a, [wCharSelectChar] ; $68b0
-	cp $1a ; $68b3
+	cp CHAR_MARIO ; $68b3
 	jr c, .playSfx ; $68b5
-	cp $20 ; $68b7
+	cp CHAR_PEACH + 1 ; $68b7
 	jr nc, .playSfx ; $68b9
 	sub $18 ; $68bb
 	add l ; $68bd
