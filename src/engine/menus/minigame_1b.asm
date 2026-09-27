@@ -622,7 +622,7 @@ DrawMinigameLevelDescription:
 	ld d, [hl] ; $6d79
 	ld e, a ; $6d7a
 	ld a, b ; $6d7b
-	ld hl, $00c2 ; $6d7c
+	ld hl, Text_30_194 ; $6d7c
 	add l ; $6d7f
 	ld l, a ; $6d80
 	jr nc, .renderTextToBuffer64 ; $6d81

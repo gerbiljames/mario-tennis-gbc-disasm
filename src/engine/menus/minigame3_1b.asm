@@ -120,7 +120,7 @@ DrawSavedDataTypeDescription:
 	ld d, [hl] ; $739c
 	ld e, a ; $739d
 	ld a, b ; $739e
-	ld hl, $00ca ; $739f
+	ld hl, Text_30_202 ; $739f
 	add l ; $73a2
 	ld l, a ; $73a3
 	jr nc, .renderTextToBuffer64 ; $73a4

@@ -501,7 +501,7 @@ DrawRacketShoesChoiceCaption:
 	ld c, $02 ; $5076
 	call GetMenuCursorIndex_3e ; $5078
 	ld b, a ; $507b
-	ld hl, $00e0 ; $507c
+	ld hl, Text_30_224 ; $507c
 	add l ; $507f
 	ld l, a ; $5080
 	jr nc, .renderTextToBuffer64 ; $5081

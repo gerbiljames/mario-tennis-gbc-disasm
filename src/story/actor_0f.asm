@@ -3,7 +3,7 @@ QueueFinishedRoundNameText:
 	jr nz, .doubles ; $78ef
 	ld a, [wMapSceneStage] ; $78f1
 	dec a ; $78f4
-	ld hl, $2861 ; $78f5
+	ld hl, Text_25_97 ; $78f5
 	add l ; $78f8
 	ld l, a ; $78f9
 	jr nc, .queue ; $78fa
@@ -14,7 +14,7 @@ QueueFinishedRoundNameText:
 .doubles:
 	ld a, [wMapSceneStage] ; $7901
 	dec a ; $7904
-	ld hl, $2865 ; $7905
+	ld hl, Text_25_101 ; $7905
 	add l ; $7908
 	ld l, a ; $7909
 	jr nc, .queueDoubles ; $790a
@@ -45,7 +45,7 @@ IslandOpenBreakCutscene:
 	script_set_anim $06, $03 ; $799a
 	script_wait_idle $06 ; $79a1
 	ld a, [wMapSceneStage] ; $79a6
-	ld hl, $2861 ; $79a9
+	ld hl, Text_25_97 ; $79a9
 	add l ; $79ac
 	ld l, a ; $79ad
 	jr nc, .queue ; $79ae

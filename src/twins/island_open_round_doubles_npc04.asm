@@ -7,7 +7,7 @@
 	script_set_text Text_25_73
 	ld a, [wMapSceneStage]
 	dec a
-	ld hl, $2862
+	ld hl, Text_25_98
 	add l
 	ld l, a
 	jr nc, .queue

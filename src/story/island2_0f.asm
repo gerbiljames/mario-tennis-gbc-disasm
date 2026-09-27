@@ -313,7 +313,7 @@ ShowTournamentRankingBoard_0f:
 	ret ; $744c
 QueueUpcomingRoundNameText:
 	ld a, [wMapSceneStage] ; $744d
-	ld hl, $2861 ; $7450
+	ld hl, Text_25_97 ; $7450
 	add l ; $7453
 	ld l, a ; $7454
 	jr nc, .queue ; $7455
@@ -410,7 +410,7 @@ IslandOpenSinglesMatchReturn:
 	script_set_text Text_25_73 ; $755f
 	ld a, [wMapSceneStage] ; $7565
 	dec a ; $7568
-	ld hl, $2862 ; $7569
+	ld hl, Text_25_98 ; $7569
 	add l ; $756c
 	ld l, a ; $756d
 	jr nc, .done ; $756e
@@ -575,7 +575,7 @@ IslandOpenDoublesMatchReturn:
 	script_set_text Text_25_73 ; $77ff
 	ld a, [wMapSceneStage] ; $7805
 	dec a ; $7808
-	ld hl, $2862 ; $7809
+	ld hl, Text_25_98 ; $7809
 	add l ; $780c
 	ld l, a ; $780d
 	jr nc, .done ; $780e

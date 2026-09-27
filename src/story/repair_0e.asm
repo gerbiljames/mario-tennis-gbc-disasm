@@ -432,7 +432,7 @@ InitEquipmentHandoutDialogue:
 	jr .shoes ; $4f9f
 .racket:
 	call GetEquippedRacketNibble ; $4fa1
-	ld hl, $2403 ; $4fa4
+	ld hl, Text_1f_3 ; $4fa4
 	add l ; $4fa7
 	ld l, a ; $4fa8
 	jr nc, .setRacketCursor ; $4fa9
@@ -442,7 +442,7 @@ InitEquipmentHandoutDialogue:
 	ret ; $4faf
 .shoes:
 	call GetEquippedRacketNibble ; $4fb0
-	ld hl, $240a ; $4fb3
+	ld hl, Text_1f_10 ; $4fb3
 	add l ; $4fb6
 	ld l, a ; $4fb7
 	jr nc, .setShoesCursor ; $4fb8

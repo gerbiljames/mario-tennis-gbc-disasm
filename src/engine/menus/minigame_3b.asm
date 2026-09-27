@@ -477,7 +477,7 @@ RenderMinigameNameText:
 	ld d, [hl] ; $65c9
 	ld e, a ; $65ca
 	ld a, b ; $65cb
-	ld hl, $00b2 ; $65cc
+	ld hl, Text_30_178 ; $65cc
 	add l ; $65cf
 	ld l, a ; $65d0
 	jr nc, .renderTextToBuffer64 ; $65d1

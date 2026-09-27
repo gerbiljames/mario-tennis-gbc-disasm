@@ -354,7 +354,7 @@ DrawProgressListRows:
 	cp $ff ; $74d3
 	jr z, .eqff ; $74d5
 	push hl ; $74d7
-	ld hl, $04a0 ; $74d8
+	ld hl, Text_31_160 ; $74d8
 	add l ; $74db
 	ld l, a ; $74dc
 	jr nc, .renderProportionalTextAt ; $74dd

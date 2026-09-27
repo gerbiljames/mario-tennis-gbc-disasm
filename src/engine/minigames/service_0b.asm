@@ -73,7 +73,7 @@ RunTrainingDrillByID:
 	ld a, [wPointWinLoseFlag] ; $478c
 	inc a ; $478f
 	srl a ; $4790
-	ld hl, $015f ; $4792
+	ld hl, Text_30_351 ; $4792
 	add l ; $4795
 	ld l, a ; $4796
 	jr nc, .showSpeakerDialogue ; $4797

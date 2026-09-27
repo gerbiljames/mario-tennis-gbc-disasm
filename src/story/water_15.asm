@@ -430,7 +430,7 @@ ServeChallengerResultScene:
 	cp $01 ; $5d58
 	jr nz, .dispatch ; $5d5a
 	ld hl, wUnusedChallengerLoseTextId ; $5d5c
-	ld de, $201d ; $5d5f
+	ld de, Text_6e_29 ; $5d5f
 	ld a, e ; $5d62
 	ld [hl+], a ; $5d63
 	ld [hl], d ; $5d64

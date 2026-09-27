@@ -882,7 +882,7 @@ RenderMatchFormatOptionText:
 	or a ; $61a6
 	jr nz, .compare ; $61a7
 	ld a, [wMatchFormatDoubles] ; $61a9
-	ld hl, $0087 ; $61ac
+	ld hl, Text_30_135 ; $61ac
 	add l ; $61af
 	ld l, a ; $61b0
 	jr nc, .renderTextToBuffer64 ; $61b1
@@ -896,7 +896,7 @@ RenderMatchFormatOptionText:
 	cp $01 ; $61bd
 	jr nz, .checkMatchFormatSets ; $61bf
 	ld a, [wMatchFormatGames] ; $61c1
-	ld hl, $0089 ; $61c4
+	ld hl, Text_30_137 ; $61c4
 	add l ; $61c7
 	ld l, a ; $61c8
 	jr nc, .renderTextToBuffer642 ; $61c9
@@ -908,7 +908,7 @@ RenderMatchFormatOptionText:
 	ret ; $61d4
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $61d5
-	ld hl, $008b ; $61d8
+	ld hl, Text_30_139 ; $61d8
 	add l ; $61db
 	ld l, a ; $61dc
 	jr nc, .renderTextToBuffer643 ; $61dd

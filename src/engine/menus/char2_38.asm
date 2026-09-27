@@ -1,7 +1,7 @@
 DrawCharNameAndType:
 	push bc ; $58cd
 	ld a, c ; $58ce
-	ld hl, $001b ; $58cf
+	ld hl, Text_30_27 ; $58cf
 	add l ; $58d2
 	ld l, a ; $58d3
 	jr nc, .drawName ; $58d4
@@ -19,7 +19,7 @@ DrawCharNameAndType:
 	inc h ; $58e8
 .readType:
 	ld a, [hl] ; $58e9
-	ld hl, $0099 ; $58ea
+	ld hl, Text_30_153 ; $58ea
 	add l ; $58ed
 	ld l, a ; $58ee
 	jr nc, .drawType ; $58ef

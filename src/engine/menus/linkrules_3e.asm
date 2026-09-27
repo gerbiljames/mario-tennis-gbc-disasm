@@ -198,7 +198,7 @@ DrawMatchRulesCaptionText:
 	ld d, [hl] ; $49cf
 	ld e, a ; $49d0
 	ld a, b ; $49d1
-	ld hl, $0084 ; $49d2
+	ld hl, Text_30_132 ; $49d2
 	add l ; $49d5
 	ld l, a ; $49d6
 	jr nc, .renderTextToBuffer64 ; $49d7

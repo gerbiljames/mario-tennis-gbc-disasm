@@ -18,7 +18,7 @@ RepairCounterCheckEquipChanged:
 	cp $ff ; $5024
 	jp nz, .repairRacket ; $5026
 	ld a, [wMapScratch + 10] ; $5029
-	ld hl, $2401 ; $502c
+	ld hl, Text_1f_1 ; $502c
 	add l ; $502f
 	ld l, a ; $5030
 	jr nc, .askRepair ; $5031
@@ -109,7 +109,7 @@ RepairCounterReopenServiceMenu:
 	ret ; $5152
 ShowEquipChangeConfirmation:
 	ld a, [wMapScratch + 10] ; $5153
-	ld hl, $20ef ; $5156
+	ld hl, Text_6e_239 ; $5156
 	add l ; $5159
 	ld l, a ; $515a
 	jr nc, .speak ; $515b

@@ -396,7 +396,7 @@ DrawPlayAlonePartnerCaption:
 	ld d, [hl] ; $536e
 	ld e, a ; $536f
 	ld a, b ; $5370
-	ld hl, $00e2 ; $5371
+	ld hl, Text_30_226 ; $5371
 	add l ; $5374
 	ld l, a ; $5375
 	jr nc, .renderTextToBuffer64 ; $5376

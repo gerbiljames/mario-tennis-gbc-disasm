@@ -27,7 +27,7 @@ RunStoryTwoOptionMenu:
 	jr z, .redrawStoryTilemapRows ; $70e4
 	ld hl, wMatchMenuSelection ; $70e6
 	add [hl] ; $70e9
-	ld hl, $0162 ; $70ea
+	ld hl, Text_30_354 ; $70ea
 	add l ; $70ed
 	ld l, a ; $70ee
 	jr nc, .drawStoryMenuCaption ; $70ef
@@ -70,7 +70,7 @@ RunStoryTwoOptionMenu:
 	jr z, .checkMatchMenuSelection ; $713a
 	ld hl, wMatchMenuSelection ; $713c
 	add [hl] ; $713f
-	ld hl, $0162 ; $7140
+	ld hl, Text_30_354 ; $7140
 	add l ; $7143
 	ld l, a ; $7144
 	jr nc, .drawStoryMenuCaption2 ; $7145
@@ -119,7 +119,7 @@ RunStoryThreeOptionMenu:
 	cp $06 ; $719e
 	ld hl, wMatchMenuSelection ; $71a0
 	add [hl] ; $71a3
-	ld hl, $0162 ; $71a4
+	ld hl, Text_30_354 ; $71a4
 	add l ; $71a7
 	ld l, a ; $71a8
 	jr nc, .drawStoryMenuCaption ; $71a9
@@ -160,7 +160,7 @@ RunStoryThreeOptionMenu:
 	cp $06 ; $71f2
 	ld hl, wMatchMenuSelection ; $71f4
 	add [hl] ; $71f7
-	ld hl, $0162 ; $71f8
+	ld hl, Text_30_354 ; $71f8
 	add l ; $71fb
 	ld l, a ; $71fc
 	jr nc, .drawStoryMenuCaption2 ; $71fd

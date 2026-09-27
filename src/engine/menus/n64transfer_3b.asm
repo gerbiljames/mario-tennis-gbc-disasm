@@ -503,7 +503,7 @@ DrawN64RecordTypeCaption:
 	ld c, $03 ; $74a3
 	call GetMenuCursorIndex_3b ; $74a5
 	ld b, a ; $74a8
-	ld hl, $00cf ; $74a9
+	ld hl, Text_30_207 ; $74a9
 	add l ; $74ac
 	ld l, a ; $74ad
 	jr nc, .renderTextToBuffer64 ; $74ae
@@ -769,7 +769,7 @@ DrawN64TransferItemCaption:
 	ld c, $02 ; $76ce
 	call GetMenuCursorIndex_3b ; $76d0
 	ld b, a ; $76d3
-	ld hl, $00d2 ; $76d4
+	ld hl, Text_30_210 ; $76d4
 	add l ; $76d7
 	ld l, a ; $76d8
 	jr nc, .renderTextToBuffer64 ; $76d9
