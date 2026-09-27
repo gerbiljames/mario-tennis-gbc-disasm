@@ -292,20 +292,20 @@ SpecialCourtMapScripts_0e:
 	dw SpecialCourtInitScript_0e ; slot 6 InitScript
 SpecialCourtActors_0e:
 	; $7604, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_22, $0f00, $0500, FACE_DOWN, $2e, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1700, $0d00, FACE_LEFT, $6d, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1700, $0f00, FACE_LEFT, $6f, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1700, $1100, FACE_LEFT, $2c, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1700, $1900, FACE_LEFT, $6e, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0480, $0f00, FACE_RIGHT, $73, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0500, $1100, FACE_RIGHT, $2d, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0500, $1900, FACE_RIGHT, $48, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0500, $1b00, FACE_RIGHT, $2b, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0d00, $0500, FACE_DOWN, $72, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0d00, $1700, FACE_DOWN, $2a, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0500, $1f00, FACE_UP, $70, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0500, $0d00, FACE_RIGHT, $71, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1700, $1b00, FACE_LEFT, $71, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0f00, $0500, FACE_DOWN, OBJ_PEACH, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $0d00, FACE_LEFT, OBJ_LUIGI, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $0f00, FACE_LEFT, OBJ_BABY_MARIO, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $1100, FACE_LEFT, OBJ_YOSHI, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $1900, FACE_LEFT, OBJ_DK, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0480, $0f00, FACE_RIGHT, OBJ_WALK_77_06, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $1100, FACE_RIGHT, OBJ_BOWSER, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $1900, FACE_RIGHT, OBJ_WARIO, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $1b00, FACE_RIGHT, OBJ_WALUIGI, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0d00, $0500, FACE_DOWN, OBJ_WALK_77_05, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0d00, $1700, FACE_DOWN, OBJ_MARIO, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $1f00, FACE_UP, OBJ_WALK_77_03, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $0d00, FACE_RIGHT, OBJ_WALK_77_04, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $1b00, FACE_LEFT, OBJ_WALK_77_04, $01, $00
 	map_actor_end
 SpecialCourtEntryPoints_0e:
 	; $76d2, 9 bytes (map_entries)

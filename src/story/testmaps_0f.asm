@@ -15,18 +15,18 @@ SmallCharTestMapScripts_0f:
 	dw SmallCharTestInitScript_0f ; slot 6 InitScript
 SmallCharTestActors_0f:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $0700, $0300, FACE_DOWN, $26, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0d00, $0300, FACE_DOWN, $2b, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0700, $0700, FACE_DOWN, $2c, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0d00, $0700, FACE_DOWN, $2d, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0500, $0d00, FACE_DOWN, $70, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0900, $0d00, FACE_DOWN, $71, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0d00, $0d00, FACE_DOWN, $72, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $0d00, FACE_DOWN, $73, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0500, $1100, FACE_DOWN, $6d, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0900, $1100, FACE_DOWN, $6e, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0d00, $1100, FACE_DOWN, $48, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1100, FACE_DOWN, $2b, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0700, $0300, FACE_DOWN, OBJ_ALEX, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0d00, $0300, FACE_DOWN, OBJ_WALUIGI, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0700, $0700, FACE_DOWN, OBJ_YOSHI, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0d00, $0700, FACE_DOWN, OBJ_BOWSER, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0500, $0d00, FACE_DOWN, OBJ_WALK_77_03, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0900, $0d00, FACE_DOWN, OBJ_WALK_77_04, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0d00, $0d00, FACE_DOWN, OBJ_WALK_77_05, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $0d00, FACE_DOWN, OBJ_WALK_77_06, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0500, $1100, FACE_DOWN, OBJ_LUIGI, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0900, $1100, FACE_DOWN, OBJ_DK, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0d00, $1100, FACE_DOWN, OBJ_WARIO, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1100, FACE_DOWN, OBJ_WALUIGI, $01, $00
 	map_actor_end
 SmallCharTestEntryPoints_0f:
 	; $40c6, 9 bytes (map_entries)
@@ -161,49 +161,49 @@ AwardsCeremonyMapScripts_0f:
 	dw AwardsCeremonyInitScript_0f ; slot 6 InitScript
 AwardsCeremonyActors_0f:
 	; $41e9, 290 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $0b00, $2700, FACE_UP, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0d00, $2700, FACE_UP, $61, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0e80, $1b00, FACE_LEFT, $62, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0800, $1f00, FACE_RIGHT, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0700, $2100, FACE_RIGHT, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0800, $1d00, FACE_RIGHT, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1d00, FACE_LEFT, $24, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0980, $1b00, FACE_RIGHT, $23, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0800, $1940, FACE_RIGHT, $25, $01, $05
-	map_actor $0000, ActorScript_0f_09, $0800, $1700, FACE_RIGHT, $63, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0ec0, $1780, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1040, $17c0, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1180, $17c0, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1600, FACE_LEFT, $25, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $2100, FACE_LEFT, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1000, $1f00, FACE_LEFT, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, $4e, $01, $00
-	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, $53, $01, $00
-	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, $26, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0b00, $2700, FACE_UP, OBJ_WALK_74_08, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0d00, $2700, FACE_UP, OBJ_A_COZ, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0e80, $1b00, FACE_LEFT, OBJ_B_COZ, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0800, $1f00, FACE_RIGHT, OBJ_SAMMI, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0700, $2100, FACE_RIGHT, OBJ_SEAN, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0800, $1d00, FACE_RIGHT, OBJ_SPIKE, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1d00, FACE_LEFT, OBJ_WALK_6F_06, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0980, $1b00, FACE_RIGHT, OBJ_WALK_6F_05, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0800, $1940, FACE_RIGHT, OBJ_WALK_6F_07, $01, $05
+	map_actor $0000, ActorScript_0f_09, $0800, $1700, FACE_RIGHT, OBJ_WALK_75_06, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0ec0, $1780, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1040, $17c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1180, $17c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1600, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $2100, FACE_LEFT, OBJ_WALK_74_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1000, $1f00, FACE_LEFT, OBJ_WALK_74_06, $01, $00
+	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_14, $01, $00
+	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, OBJ_ALEX, $01, $00
 	map_actor_end
 AwardsCeremonyActorsDoubles_0f:
 	; $430b, 290 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $0f00, $1b00, FACE_LEFT, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0d00, $2700, FACE_UP, $61, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0d00, $2900, FACE_UP, $62, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0800, $1f00, FACE_RIGHT, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0700, $2100, FACE_RIGHT, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0800, $1d00, FACE_RIGHT, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1d00, FACE_LEFT, $24, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0900, $1b00, FACE_RIGHT, $23, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0800, $1940, FACE_RIGHT, $25, $01, $05
-	map_actor $0000, ActorScript_0f_09, $0800, $1700, FACE_RIGHT, $63, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1780, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $17c0, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $2900, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1600, FACE_LEFT, $25, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2f00, $2100, FACE_LEFT, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1000, $2000, FACE_LEFT, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, $4e, $01, $00
-	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, $53, $01, $00
-	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, $26, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1b00, FACE_LEFT, OBJ_WALK_74_08, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0d00, $2700, FACE_UP, OBJ_A_COZ, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0d00, $2900, FACE_UP, OBJ_B_COZ, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0800, $1f00, FACE_RIGHT, OBJ_SAMMI, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0700, $2100, FACE_RIGHT, OBJ_SEAN, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0800, $1d00, FACE_RIGHT, OBJ_SPIKE, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1d00, FACE_LEFT, OBJ_WALK_6F_06, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0900, $1b00, FACE_RIGHT, OBJ_WALK_6F_05, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0800, $1940, FACE_RIGHT, OBJ_WALK_6F_07, $01, $05
+	map_actor $0000, ActorScript_0f_09, $0800, $1700, FACE_RIGHT, OBJ_WALK_75_06, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1780, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $17c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $2900, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1600, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2f00, $2100, FACE_LEFT, OBJ_WALK_74_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1000, $2000, FACE_LEFT, OBJ_WALK_74_06, $01, $00
+	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_14, $01, $00
+	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_0f_09, $fd00, $0100, FACE_DOWN, OBJ_ALEX, $01, $00
 	map_actor_end
 AwardsCeremonyEntryPoints_0f:
 	; $442d, 25 bytes (map_entries)
@@ -261,7 +261,7 @@ AwardsCeremonyTile01_0f:
 	call ReplacePlayerWithStandInActor ; $4507
 	script_set_position $16, $0b00, $1b00 ; $450a
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4515
-	ld d, $58 ; $4518
+	ld d, OBJ_HARRY_B ; $4518
 	add d ; $451a
 	ld d, a ; $451b
 	script_get_actor_state $15 ; $451c
@@ -332,7 +332,7 @@ AwardsCeremonyTile01_0f:
 	test_flag FLAG_DOUBLES ; $4699
 	jp z, .done ; $469c
 	script_set_position $15, $3f00, $3f00 ; $469f
-	script_set_objdef $4d, $15 ; $46aa
+	script_set_objdef OBJ_WALK_73_13, $15 ; $46aa
 	script_set_anim $15, $01 ; $46b6
 	script_face ACTOR_PLAYER, FACE_DOWN ; $46bd
 	script_set_position ACTOR_PLAYER, $0b00, $1b00 ; $46c4
@@ -414,7 +414,7 @@ AwardsCeremonyTile02_0f:
 	ld a, $14 ; $486c
 	call DelayFrames ; $486e
 	call AwardsCeremonySwapActors_0f ; $4871
-	script_set_objdef $5c, $11 ; $4874
+	script_set_objdef OBJ_WALK_74_08, $11 ; $4874
 	script_set_anim $11, $01 ; $4880
 	script_set_position $03, $3f00, $3f00 ; $4887
 	script_set_position $11, $0e00, $0e40 ; $4892
@@ -491,9 +491,9 @@ AwardsCeremonyTile02_0f:
 	script_set_position $0e, $1080, $1600 ; $4a08
 	ld a, $14 ; $4a13
 	call DelayFrames ; $4a15
-	script_set_objdef $74, $10 ; $4a18
+	script_set_objdef OBJ_WALK_77_07, $10 ; $4a18
 	script_set_anim $10, $01 ; $4a24
-	script_set_objdef $25, $0e ; $4a2b
+	script_set_objdef OBJ_WALK_6F_07, $0e ; $4a2b
 	script_set_anim $0e, $01 ; $4a37
 	script_set_position $0e, $1000, $1600 ; $4a3e
 	script_set_position $10, $1000, $1500 ; $4a49
@@ -502,9 +502,9 @@ AwardsCeremonyTile02_0f:
 	script_move_target $10, $1000, $1200 ; $4a62
 	script_move_target $0e, $1000, $1300 ; $4a6d
 	script_wait_move $0e ; $4a78
-	script_set_objdef $25, $10 ; $4a7d
+	script_set_objdef OBJ_WALK_6F_07, $10 ; $4a7d
 	script_set_anim $10, $01 ; $4a89
-	script_set_objdef $74, $0e ; $4a90
+	script_set_objdef OBJ_WALK_77_07, $0e ; $4a90
 	script_set_anim $0e, $01 ; $4a9c
 	script_set_position $10, $1000, $1300 ; $4aa3
 	script_set_position $0e, $0f00, $1300 ; $4aae
@@ -521,7 +521,7 @@ AwardsCeremonyTile02_0f:
 	script_move_target $10, $1000, $1600 ; $4b08
 	script_wait_move $10 ; $4b13
 	script_face $10, FACE_UP ; $4b18
-	script_set_objdef $61, $12 ; $4b1f
+	script_set_objdef OBJ_A_COZ, $12 ; $4b1f
 	script_set_anim $12, $01 ; $4b2b
 	script_set_position $04, $3f00, $3f00 ; $4b32
 	script_set_position $12, $0a00, $0dc0 ; $4b3d
@@ -583,9 +583,9 @@ AwardsCeremonyTile02_0f:
 	script_set_position $0d, $0f80, $1600 ; $4c9e
 	ld a, $14 ; $4ca9
 	call DelayFrames ; $4cab
-	script_set_objdef $74, $10 ; $4cae
+	script_set_objdef OBJ_WALK_77_07, $10 ; $4cae
 	script_set_anim $10, $01 ; $4cba
-	script_set_objdef $25, $0d ; $4cc1
+	script_set_objdef OBJ_WALK_6F_07, $0d ; $4cc1
 	script_set_anim $0d, $01 ; $4ccd
 	script_set_position $0d, $0f00, $1600 ; $4cd4
 	script_set_position $10, $0f00, $1500 ; $4cdf
@@ -594,9 +594,9 @@ AwardsCeremonyTile02_0f:
 	script_move_target $10, $0f00, $1200 ; $4cf8
 	script_move_target $0d, $0f00, $1300 ; $4d03
 	script_wait_move $0d ; $4d0e
-	script_set_objdef $25, $10 ; $4d13
+	script_set_objdef OBJ_WALK_6F_07, $10 ; $4d13
 	script_set_anim $10, $01 ; $4d1f
-	script_set_objdef $74, $0d ; $4d26
+	script_set_objdef OBJ_WALK_77_07, $0d ; $4d26
 	script_set_anim $0d, $01 ; $4d32
 	script_set_position $10, $0f00, $1300 ; $4d39
 	script_set_position $0d, $0e00, $1300 ; $4d44
@@ -635,7 +635,7 @@ AwardsCeremonyTile02_0f:
 	ld a, $3c ; $4e39
 	call DelayFrames ; $4e3b
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4e3e
-	ld d, $26 ; $4e41
+	ld d, OBJ_ALEX ; $4e41
 	add d ; $4e43
 	ld d, a ; $4e44
 	script_get_actor_state $16 ; $4e45
@@ -706,7 +706,7 @@ AwardsCeremonyTile02_0f:
 	call ReplacePlayerWithStandInActor ; $4f70
 	script_set_position $16, $0d00, $0d60 ; $4f73
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f7e
-	ld d, $58 ; $4f81
+	ld d, OBJ_HARRY_B ; $4f81
 	add d ; $4f83
 	ld d, a ; $4f84
 	script_get_actor_state $11 ; $4f85
@@ -716,17 +716,17 @@ AwardsCeremonyTile02_0f:
 	script_set_anim $11, $01 ; $4f8f
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $4f96
 	script_set_position $11, $0f00, $0d60 ; $4fa1
-	script_set_objdef $61, $13 ; $4fac
+	script_set_objdef OBJ_A_COZ, $13 ; $4fac
 	script_set_anim $13, $01 ; $4fb8
-	script_set_objdef $62, $15 ; $4fbf
+	script_set_objdef OBJ_B_COZ, $15 ; $4fbf
 	script_set_anim $15, $01 ; $4fcb
 	script_set_position $04, $3f00, $3f00 ; $4fd2
 	script_set_position $05, $3f00, $3f00 ; $4fdd
 	script_set_position $13, $0b00, $0e00 ; $4fe8
 	script_set_position $15, $0900, $0e00 ; $4ff3
-	script_set_objdef $4e, $04 ; $4ffe
+	script_set_objdef OBJ_WALK_73_14, $04 ; $4ffe
 	script_set_anim $04, $01 ; $500a
-	script_set_objdef $4d, $05 ; $5011
+	script_set_objdef OBJ_WALK_73_13, $05 ; $5011
 	script_set_anim $05, $01 ; $501d
 	script_face $16, FACE_DOWN ; $5024
 	script_face $11, FACE_DOWN ; $502b
@@ -751,7 +751,7 @@ AwardsCeremonyTile02_0f:
 	script_set_position $0f, $1100, $1600 ; $50ac
 	ld a, $14 ; $50b7
 	call DelayFrames ; $50b9
-	script_set_objdef $25, $09 ; $50bc
+	script_set_objdef OBJ_WALK_6F_07, $09 ; $50bc
 	script_set_anim $09, $01 ; $50c8
 	script_set_position $10, $3f00, $3f00 ; $50cf
 	script_set_position $09, $1100, $1600 ; $50da
@@ -920,7 +920,7 @@ AwardsCeremonyTile02_0f:
 	ld a, $3c ; $550c
 	call DelayFrames ; $550e
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5511
-	ld d, $26 ; $5514
+	ld d, OBJ_ALEX ; $5514
 	add d ; $5516
 	ld d, a ; $5517
 	script_get_actor_state $16 ; $5518

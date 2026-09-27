@@ -364,17 +364,17 @@ SinglesTravelingTeamVictoryCutscene:
 	ret ; $739b
 SinglesTravelingTeamActors_13:
 	; $739c, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $1900, $1f00, FACE_LEFT, $4b, $01, $00
-	map_actor $0000, ActorScript_13_27, $0b00, $1300, FACE_DOWN, $68, $01, $07
-	map_actor $0000, ActorScript_13_27, $1300, $2100, FACE_LEFT, $65, $01, $03
-	map_actor $0000, ActorScript_13_27, $1300, $2300, FACE_LEFT, $67, $01, $06
-	map_actor $0000, ActorScript_13_27, $1300, $1700, FACE_LEFT, $6b, $01, $06
-	map_actor $0000, ActorScript_13_27, $1b00, $1d00, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_13_27, $1900, $1d00, FACE_LEFT, $4a, $01, $00
-	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $53, $01, $00
-	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
-	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4d, $01, $00
-	map_actor $0000, ActorScript_13_27, $1700, $1d00, FACE_LEFT, $29, $01, $00
+	map_actor $0000, ActorScript_13_27, $1900, $1f00, FACE_LEFT, OBJ_KEVIN, $01, $00
+	map_actor $0000, ActorScript_13_27, $0b00, $1300, FACE_DOWN, OBJ_BOB, $01, $07
+	map_actor $0000, ActorScript_13_27, $1300, $2100, FACE_LEFT, OBJ_FAY, $01, $03
+	map_actor $0000, ActorScript_13_27, $1300, $2300, FACE_LEFT, OBJ_CURT, $01, $06
+	map_actor $0000, ActorScript_13_27, $1300, $1700, FACE_LEFT, OBJ_BETH, $01, $06
+	map_actor $0000, ActorScript_13_27, $1b00, $1d00, FACE_LEFT, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_13_27, $1900, $1d00, FACE_LEFT, OBJ_MARK, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_13_27, $1700, $1d00, FACE_LEFT, OBJ_KATE, $01, $00
 	map_actor_end
 RunDoublesTravelingTeamVictoryIfWon_13:
 	wram_bank WRAM_ACTORS ; $7440
@@ -593,17 +593,17 @@ PlayDoublesTravelingTeamScreenSequence_13:
 	ret ; $78d6
 DoublesTravelingTeamActors_13:
 	; $78d7, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $1900, $1d00, FACE_LEFT, $4b, $01, $00
-	map_actor $0000, ActorScript_13_27, $0d00, $1700, FACE_DOWN, $68, $01, $07
-	map_actor $0000, ActorScript_13_27, $1300, $2100, FACE_LEFT, $65, $01, $03
-	map_actor $0000, ActorScript_13_27, $1300, $2300, FACE_LEFT, $67, $01, $06
-	map_actor $0000, ActorScript_13_27, $1300, $1700, FACE_LEFT, $6b, $01, $06
-	map_actor $0000, ActorScript_13_27, $1700, $1d00, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_13_27, $0b00, $1300, FACE_DOWN, $4a, $01, $00
-	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $53, $01, $00
-	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
-	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
-	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $1900, $1d00, FACE_LEFT, OBJ_KEVIN, $01, $00
+	map_actor $0000, ActorScript_13_27, $0d00, $1700, FACE_DOWN, OBJ_BOB, $01, $07
+	map_actor $0000, ActorScript_13_27, $1300, $2100, FACE_LEFT, OBJ_FAY, $01, $03
+	map_actor $0000, ActorScript_13_27, $1300, $2300, FACE_LEFT, OBJ_CURT, $01, $06
+	map_actor $0000, ActorScript_13_27, $1300, $1700, FACE_LEFT, OBJ_BETH, $01, $06
+	map_actor $0000, ActorScript_13_27, $1700, $1d00, FACE_LEFT, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_13_27, $0b00, $1300, FACE_DOWN, OBJ_MARK, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_12, $01, $00
 	map_actor_end
 DoublesTravelingTeamInitScript_13:
 	set_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $797b

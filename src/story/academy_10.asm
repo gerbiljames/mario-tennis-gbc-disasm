@@ -9,10 +9,10 @@ AcademyWingMapScripts_10:
 	dw AcademyWingInitScript_10 ; slot 6 InitScript
 AcademyWingActors_10:
 	; $61bf, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $3f00, $1900, FACE_RIGHT, $63, $01, $00
-	map_actor $0000, ActorScript_10_2, $1900, $3f00, FACE_RIGHT, $36, $01, $00
-	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_10_2, $3f00, $1900, FACE_RIGHT, OBJ_WALK_75_06, $01, $00
+	map_actor $0000, ActorScript_10_2, $1900, $3f00, FACE_RIGHT, OBJ_WALK_71_09, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00
 	map_actor_end
 AcademyWingEntryPoints_10:
 	; $6201, 17 bytes (map_entries)
@@ -324,9 +324,9 @@ AcademyWingInitScript_10:
 	script_face $09, FACE_UP ; $67ef
 	script_set_text Text_30_482 ; $67f6
 	script_speak $06 ; $67fc
-	script_set_objdef $53, $03 ; $6801
+	script_set_objdef OBJ_WALK_73_19, $03 ; $6801
 	script_set_anim $03, $01 ; $680d
-	script_set_objdef $53, $05 ; $6814
+	script_set_objdef OBJ_WALK_73_19, $05 ; $6814
 	script_set_anim $05, $01 ; $6820
 	script_set_position $03, $1f80, $3100 ; $6827
 	sound SFX_APPEAR2 ; $6832
@@ -497,7 +497,7 @@ AcademyWingInitScript_10:
 	script_speak $06 ; $6c74
 	script_set_anim ACTOR_PLAYER, $03 ; $6c79
 	script_wait_idle ACTOR_PLAYER ; $6c80
-	script_set_objdef $51, $05 ; $6c85
+	script_set_objdef OBJ_WALK_73_17, $05 ; $6c85
 	script_set_anim $05, $01 ; $6c91
 	script_set_position $05, $2380, $3300 ; $6c98
 	sound SFX_CHIME ; $6ca3
@@ -526,7 +526,7 @@ AcademyWingInitScript_10:
 	script_set_anim $08, $03 ; $6d3b
 	script_wait_idle $08 ; $6d42
 	script_wait_frames $3c ; $6d47
-	script_set_objdef $4d, $05 ; $6d4e
+	script_set_objdef OBJ_WALK_73_13, $05 ; $6d4e
 	script_set_anim $05, $01 ; $6d5a
 	script_set_position $05, $2180, $2d80 ; $6d61
 	sound SFX_EMOTE ; $6d6c
@@ -623,15 +623,15 @@ AcademyWingInitScript_10:
 	ret ; $6f44
 AcademyWingInitActors0_10:
 	; $6f45, 136 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $4e, $01, $00
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $53, $01, $00
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $51, $01, $00
-	map_actor $0000, ActorScript_10_2, $2000, $2f00, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_10_2, $2200, $3300, FACE_UP, $4b, $01, $00
-	map_actor $0000, ActorScript_10_2, $2000, $3300, FACE_UP, $4a, $01, $00
-	map_actor $0000, ActorScript_10_2, $1e00, $3300, FACE_UP, $49, $01, $00
-	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_14, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_17, $01, $00
+	map_actor $0000, ActorScript_10_2, $2000, $2f00, FACE_DOWN, OBJ_WALK_75_06, $01, $00
+	map_actor $0000, ActorScript_10_2, $2200, $3300, FACE_UP, OBJ_KEVIN, $01, $00
+	map_actor $0000, ActorScript_10_2, $2000, $3300, FACE_UP, OBJ_MARK, $01, $00
+	map_actor $0000, ActorScript_10_2, $1e00, $3300, FACE_UP, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00
 	map_actor_end
 .eq0f:
 	ldh a, [hRomBank] ; $6fcd
@@ -820,9 +820,9 @@ AcademyWingCloseDoor_10:
 	ret ; $739d
 AcademyWingInitActors1_10:
 	; $739e, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $2000, $3000, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_10_2, $2000, $3000, FACE_DOWN, OBJ_WALK_75_06, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
 	map_actor_end

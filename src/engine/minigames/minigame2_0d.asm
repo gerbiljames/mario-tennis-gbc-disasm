@@ -514,7 +514,7 @@ LaunchBall:
 	ld_hl_indexed MinigameShotSpinPool ; $489d
 	ld a, [hl] ; $48a4
 	ld [wCharAimOffset], a ; $48a5
-	ld hl, $073c ; $48a8
+	ld_slot hl, FarPtr_ExecuteShot ; $48a8
 	call FarCallVector ; $48ab
 	sound SFX_BALL_LAUNCH ; $48ae
 	pop_wram_bank ; $48b0

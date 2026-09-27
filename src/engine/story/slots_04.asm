@@ -22,4 +22,4 @@
 	farptr WaitActorJumpDone ; $402a
 	farptr LoadActorObjectDefIfValid ; $402c
 	farptr GetObjectDefCount ; $402e
-	farptr LookupTileId ; $4030
+	farptr GetCharObjectId ; $4030

@@ -301,8 +301,9 @@ LoadPlayAlonePartnerGraphics:
 	pop_wram_bank ; $52a9
 	ret ; $52ae
 PlayAlonePartnerGfxParams_3e:
-	; $52af, 4 bytes (bytes:4)
-	db $62, $3c, $64, $3c ; 0x00
+	; $52af, 2 slot words
+	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
+	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
 PlayAlonePartnerGfxDests_3e:
 	; $52b3, 4 bytes (bytes:4)
 	db $00, $a8, $00, $a9 ; 0x00

@@ -70,9 +70,9 @@ DormRoomMapScripts_13:
 	dw DormRoomInitScript_13 ; slot 6 InitScript
 DormRoomActors_13:
 	; $4e2e, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $0b00, $0900, FACE_DOWN, $29, $01, $00
-	map_actor $0000, ActorScript_13_00, $0600, $1080, FACE_DOWN, $55, $01, $00
-	map_actor $0000, ActorScript_13_27, $2900, $2900, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $0b00, $0900, FACE_DOWN, OBJ_KATE, $01, $00
+	map_actor $0000, ActorScript_13_00, $0600, $1080, FACE_DOWN, OBJ_WALK_74_01, $01, $00
+	map_actor $0000, ActorScript_13_27, $2900, $2900, FACE_DOWN, OBJ_WALK_73_12, $01, $00
 	map_actor_end
 DormRoomEntryPoints_13:
 	; $4e62, 49 bytes (map_entries)
@@ -333,7 +333,7 @@ SetupDormRoomSceneVariant:
 	ld l, $16 ; $5152
 	farcall CopyBehaviorMapRect ; $5154
 	script_copy_scene_rect $20, $00, $00, $00, $16, $18 ; $5157
-	script_set_objdef $28, $03 ; $5166
+	script_set_objdef OBJ_HARRY, $03 ; $5166
 	script_set_anim $03, $01 ; $5172
 	script_set_position $04, $1f00, $1500 ; $5179
 	script_null_script $04 ; $5184

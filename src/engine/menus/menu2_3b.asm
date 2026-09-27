@@ -238,13 +238,13 @@ LoadMainMenuGfx:
 	pop_wram_bank ; $57da
 	ret ; $57df
 MainMenuTable0:
-	; $57e0, 12 bytes (bytes:2)
-	db $12, $3c ; 0x00
-	db $14, $3c ; 0x02
-	db $16, $3c ; 0x04
-	db $18, $3c ; 0x06
-	db $1a, $3c ; 0x08
-	db $1c, $3c ; 0x0a
+	; $57e0, 6 slot words
+	dslot DataPtr_ModeSelectLabelTiles0 ; record 0
+	dslot DataPtr_ModeSelectLabelTiles1 ; record 1
+	dslot DataPtr_ModeSelectLabelTiles2 ; record 2
+	dslot DataPtr_ModeSelectLabelTiles3 ; record 3
+	dslot DataPtr_ModeSelectLabelTiles4 ; record 4
+	dslot DataPtr_ModeSelectLabelTiles5 ; record 5
 MainMenuTable1:
 	; $57ec, 20 bytes (bytes:2)
 	db $00, $a8 ; 0x00

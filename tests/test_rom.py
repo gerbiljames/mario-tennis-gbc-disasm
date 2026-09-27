@@ -28,9 +28,12 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tpop_wram_bank"), 452)
         self.assertEqual(count(r"^\tld_hl_indexed "), 414)
         self.assertEqual(count(r"^\twait_frames "), 79)
-        self.assertEqual(count(r"^\tlb (de|bc|hl), "), 440)
+        self.assertEqual(count(r"^\tlb (de|bc|hl), "), 443)
         self.assertEqual(count(r"^\tadd LOW\("), 0, "no split-base index left raw")
         self.assertEqual(count(r"inline arg$"), 0)
+        self.assertEqual(count(r"^\tld_slot hl, "), 37)
+        self.assertEqual(count(r"^\tobject_id "), 117)
+        self.assertEqual(count(r"\(BANK\([\w.]+\) << 8\) \| LOW\("), 0, "a slot pair not written with ld_slot")
 
     def test_named_ids(self):
         self.assertEqual(count(r"ld hl, Text_[0-9a-f]+_\d+ ;"), 205)

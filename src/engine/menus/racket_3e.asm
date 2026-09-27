@@ -414,8 +414,10 @@ LoadRacketShoesChoiceGraphics:
 	pop_wram_bank ; $4fbd
 	ret ; $4fc2
 RacketShoesChoiceGfxParams_3e:
-	; $4fc3, 6 bytes (bytes:6)
-	db $54, $3d, $56, $3d, $04, $3d ; 0x00
+	; $4fc3, 3 slot words
+	dslot DataPtr_MatchStatsLabelTiles0 ; record 0
+	dslot DataPtr_MatchStatsLabelTiles1 ; record 1
+	dslot DataPtr_N64ItemLabelTiles2 ; record 2
 RacketShoesChoiceGfxDests_3e:
 	; $4fc9, 6 bytes (bytes:6)
 	db $00, $a8, $00, $a9, $00, $aa ; 0x00

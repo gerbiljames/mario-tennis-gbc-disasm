@@ -1,11 +1,18 @@
-WalkSprites_77:
+DataPtr_WalkSprite_77_00:
 	dw WalkSprite_77_00 ; $4000
+DataPtr_WalkSprite_77_01:
 	dw WalkSprite_77_01 ; $4002
+DataPtr_WalkSprite_77_02:
 	dw WalkSprite_77_02 ; $4004
+DataPtr_WalkSprite_77_03:
 	dw WalkSprite_77_03 ; $4006
+DataPtr_WalkSprite_77_04:
 	dw WalkSprite_77_04 ; $4008
+DataPtr_WalkSprite_77_05:
 	dw WalkSprite_77_05 ; $400a
+DataPtr_WalkSprite_77_06:
 	dw WalkSprite_77_06 ; $400c
+DataPtr_WalkSprite_77_07:
 	dw WalkSprite_77_07 ; $400e
 WalkSprite_77_00:
 	db $03, $04, $02, $00 ; OAM attr, facing count, unread, unread

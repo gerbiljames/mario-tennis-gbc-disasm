@@ -579,8 +579,9 @@ LoadSavedDataTypeSelectGfx:
 	pop_wram_bank ; $7294
 	ret ; $7299
 SavedDataTypeSelectGfx0:
-	; $729a, 4 bytes (bytes:4)
-	db $7a, $3c, $58, $3a ; 0x00
+	; $729a, 2 slot words
+	dslot DataPtr_CharacterSelectLabelTiles1 ; record 0
+	dslot DataPtr_LinkErrorLabelTiles ; record 1
 SavedDataTypeSelectGfx1:
 	; $729e, 6 bytes (bytes:6)
 	db $00, $a8, $00, $a9, $00, $aa ; 0x00

@@ -73,10 +73,10 @@ End3DormEntMapScripts_27:
 	dw End3DormEntInitScript_27 ; slot 6 InitScript
 End3DormEntActors_27:
 	; $6c26, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, $49, $01, $00
-	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, $29, $01, $00
-	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_KATE, $01, $00
+	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
 	map_actor_end
 End3DormEntEntryPoints_27:
 	; $6c68, 25 bytes (map_entries)
@@ -164,7 +164,7 @@ End3DormEntCutscene_27:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $6e4f
 	or a ; $6e52
 	jr nz, .walk ; $6e53
-	script_set_objdef $28, $04 ; $6e55
+	script_set_objdef OBJ_HARRY, $04 ; $6e55
 	script_set_anim $04, $01 ; $6e61
 .walk:
 	script_move_target $03, $1500, $0f00 ; $6e68
@@ -294,12 +294,12 @@ EndRestaurantEntCutscene_27:
 	ret ; $710c
 EndRestaurantEntActorsAlt_27:
 	; $710d, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, $4f, $01, $00
-	map_actor $0000, ActorScript_27_27, $4100, $0d00, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $0d00, FACE_DOWN, $4a, $01, $00
-	map_actor $0000, ActorScript_27_27, $1300, $0d00, FACE_DOWN, $4b, $01, $00
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00
+	map_actor $0000, ActorScript_27_27, $4100, $0d00, FACE_LEFT, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_27_27, $1500, $0d00, FACE_DOWN, OBJ_MARK, $01, $00
+	map_actor $0000, ActorScript_27_27, $1300, $0d00, FACE_DOWN, OBJ_KEVIN, $01, $00
 	map_actor_end
 OpenRestaurantEntDoor_27:
 	sound SFX_DOOR ; $716b
@@ -332,16 +332,16 @@ End1MainBldgMapScripts_27:
 	dw End1MainBldgInitScript_27 ; slot 6 InitScript
 End1MainBldgActors_27:
 	; $7221, 150 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, $4d, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, $4c, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, $53, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, $4f, $01, $00
-	map_actor $0000, ActorScript_27_27, $1800, $1100, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_27_27, $1a00, $1500, FACE_UP, $5c, $01, $00
-	map_actor $0000, ActorScript_27_27, $1600, $1500, FACE_UP, $5b, $01, $00
-	map_actor $0000, ActorScript_27_27, $1900, $1700, FACE_UP, $5a, $01, $00
-	map_actor $0000, ActorScript_27_27, $0100, $1900, FACE_UP, $4a, $01, $00
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_DOWN, OBJ_WALK_75_06, $01, $00
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_15, $01, $00
+	map_actor $0000, ActorScript_27_27, $1800, $1100, FACE_DOWN, OBJ_WALK_75_06, $01, $00
+	map_actor $0000, ActorScript_27_27, $1a00, $1500, FACE_UP, OBJ_WALK_74_08, $01, $00
+	map_actor $0000, ActorScript_27_27, $1600, $1500, FACE_UP, OBJ_WALK_74_07, $01, $00
+	map_actor $0000, ActorScript_27_27, $1900, $1700, FACE_UP, OBJ_WALK_74_06, $01, $00
+	map_actor $0000, ActorScript_27_27, $0100, $1900, FACE_UP, OBJ_MARK, $01, $00
 	map_actor_end
 End1MainBldgEntryPoints_27:
 	; $72b7, 25 bytes (map_entries)

@@ -386,23 +386,23 @@ Court2MapScripts_14:
 	dw Court2InitScript_14 ; slot 6 InitScript
 Court2Actors_14:
 	; $4a47, 248 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $1d00, $1500, FACE_RIGHT, $25, $01, $00
-	map_actor $0000, ActorScript_14_2, $1900, $1800, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_14_2, $1b00, $1c00, FACE_LEFT, $30, $01, $05
-	map_actor $0000, ActorScript_14_2, $1b00, $1a00, FACE_LEFT, $39, $01, $05
-	map_actor $0000, ActorScript_14_3, $0700, $3100, FACE_RIGHT, $39, $01, $04
-	map_actor $0000, ActorScript_14_2, $0900, $2300, FACE_RIGHT, $39, $01, $04
-	map_actor $0000, ActorScript_14_2, $0b00, $2300, FACE_LEFT, $3a, $01, $00
-	map_actor $0000, ActorScript_14_2, $0b00, $2b00, FACE_RIGHT, $23, $01, $00
-	map_actor $0000, ActorScript_14_2, $0f00, $2b00, FACE_LEFT, $24, $01, $00
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $53, $01, $00
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_14_2, $1b00, $0c00, FACE_LEFT, $39, $01, $00
-	map_actor $0000, ActorScript_14_2, $1900, $0e00, FACE_LEFT, $39, $01, $06
-	map_actor $0000, ActorScript_14_2, $1b00, $1000, FACE_LEFT, $3a, $01, $03
-	map_actor $0000, ActorScript_14_2, $0500, $1b00, FACE_RIGHT, $33, $01, $00
-	map_actor $0000, ActorScript_14_2, $0500, $1d00, FACE_RIGHT, $3a, $01, $04
+	map_actor $0000, ActorScript_14_2, $1d00, $1500, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_14_2, $1900, $1800, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_14_2, $1b00, $1c00, FACE_LEFT, OBJ_WALK_71_03, $01, $05
+	map_actor $0000, ActorScript_14_2, $1b00, $1a00, FACE_LEFT, OBJ_WALK_72_02, $01, $05
+	map_actor $0000, ActorScript_14_3, $0700, $3100, FACE_RIGHT, OBJ_WALK_72_02, $01, $04
+	map_actor $0000, ActorScript_14_2, $0900, $2300, FACE_RIGHT, OBJ_WALK_72_02, $01, $04
+	map_actor $0000, ActorScript_14_2, $0b00, $2300, FACE_LEFT, OBJ_WALK_72_03, $01, $00
+	map_actor $0000, ActorScript_14_2, $0b00, $2b00, FACE_RIGHT, OBJ_WALK_6F_05, $01, $00
+	map_actor $0000, ActorScript_14_2, $0f00, $2b00, FACE_LEFT, OBJ_WALK_6F_06, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_14_2, $1b00, $0c00, FACE_LEFT, OBJ_WALK_72_02, $01, $00
+	map_actor $0000, ActorScript_14_2, $1900, $0e00, FACE_LEFT, OBJ_WALK_72_02, $01, $06
+	map_actor $0000, ActorScript_14_2, $1b00, $1000, FACE_LEFT, OBJ_WALK_72_03, $01, $03
+	map_actor $0000, ActorScript_14_2, $0500, $1b00, FACE_RIGHT, OBJ_WALK_71_06, $01, $00
+	map_actor $0000, ActorScript_14_2, $0500, $1d00, FACE_RIGHT, OBJ_WALK_72_03, $01, $04
 	map_actor_end
 Court2EntryPoints_14:
 	; $4b3f, 17 bytes (map_entries)
@@ -663,18 +663,18 @@ InitCourt2SceneVariant:
 	ret ; $4eb3
 Court2ActorsAlt_14:
 	; $4eb4, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $1d00, $1500, FACE_RIGHT, $25, $01, $00
-	map_actor $0000, ActorScript_14_2, $1b00, $2300, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_14_2, $1f00, $2d00, FACE_LEFT, $30, $01, $05
-	map_actor $0000, ActorScript_14_3, $1d00, $3000, FACE_UP, $39, $01, $05
-	map_actor $0000, ActorScript_14_3, $0700, $3100, FACE_RIGHT, $39, $01, $04
-	map_actor $0000, ActorScript_14_2, $0900, $2300, FACE_RIGHT, $39, $01, $04
-	map_actor $0000, ActorScript_14_2, $0b00, $2300, FACE_LEFT, $3a, $01, $00
-	map_actor $0000, ActorScript_14_2, $0b00, $2b00, FACE_RIGHT, $23, $01, $00
-	map_actor $0000, ActorScript_14_2, $0f00, $2b00, FACE_LEFT, $24, $01, $00
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $53, $01, $00
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_14_2, $1d00, $1500, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_14_2, $1b00, $2300, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_14_2, $1f00, $2d00, FACE_LEFT, OBJ_WALK_71_03, $01, $05
+	map_actor $0000, ActorScript_14_3, $1d00, $3000, FACE_UP, OBJ_WALK_72_02, $01, $05
+	map_actor $0000, ActorScript_14_3, $0700, $3100, FACE_RIGHT, OBJ_WALK_72_02, $01, $04
+	map_actor $0000, ActorScript_14_2, $0900, $2300, FACE_RIGHT, OBJ_WALK_72_02, $01, $04
+	map_actor $0000, ActorScript_14_2, $0b00, $2300, FACE_LEFT, OBJ_WALK_72_03, $01, $00
+	map_actor $0000, ActorScript_14_2, $0b00, $2b00, FACE_RIGHT, OBJ_WALK_6F_05, $01, $00
+	map_actor $0000, ActorScript_14_2, $0f00, $2b00, FACE_LEFT, OBJ_WALK_6F_06, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
 	map_actor_end
 ; Instruction-identical to RestaurantPlazaArrival06_13 (one copy per bank); a change here belongs in every copy.
 	twin_named restaurant_plaza_arrival06, Court2EntryWalkIn ; $4f66

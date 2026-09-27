@@ -340,6 +340,16 @@ MACRO court_scene
 	db \1, \2, \3, \4
 ENDM
 
+; One row of ObjectIdList_04, the table LoadActorObjectDef indexes with an
+; object id: the slot word of the object's header and OBJ_<name>, its index,
+; exported so a map_actor row or a load reads `OBJ_HARRY`. The index is the
+; row's position, so inserting a row renumbers everything after it.
+MACRO object_id
+DEF OBJ_\1 EQU (@ - ObjectIdList_04) / 2
+EXPORT OBJ_\1
+	dslot \2
+ENDM
+
 ; ld_slot hl, DataPtr_X: hl = the (slot, bank) pair of a $4000-table entry,
 ; the operand LoadCompressedTileBlock-style loaders take in a register.
 MACRO ld_slot

@@ -9,11 +9,11 @@ End7TrainingCtrMapScripts_27:
 	dw End7TrainingCtrInitScript_27 ; slot 6 InitScript
 End7TrainingCtrActors_27:
 	; $618d, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $2b00, $3300, FACE_RIGHT, $3d, $01, $00
-	map_actor $0000, ActorScript_27_27, $2b00, $3100, FACE_RIGHT, $3d, $01, $00
-	map_actor $0000, ActorScript_27_27, $2d00, $2b00, FACE_LEFT, $3e, $01, $00
-	map_actor $0000, ActorScript_27_27, $1900, $1100, FACE_UP, $39, $01, $06
-	map_actor $0000, ActorScript_27_27, $0d00, $1300, FACE_RIGHT, $39, $01, $07
+	map_actor $0000, ActorScript_27_27, $2b00, $3300, FACE_RIGHT, OBJ_WALK_72_06, $01, $00
+	map_actor $0000, ActorScript_27_27, $2b00, $3100, FACE_RIGHT, OBJ_WALK_72_06, $01, $00
+	map_actor $0000, ActorScript_27_27, $2d00, $2b00, FACE_LEFT, OBJ_WALK_72_07, $01, $00
+	map_actor $0000, ActorScript_27_27, $1900, $1100, FACE_UP, OBJ_WALK_72_02, $01, $06
+	map_actor $0000, ActorScript_27_27, $0d00, $1300, FACE_RIGHT, OBJ_WALK_72_02, $01, $07
 	map_actor_end
 End7TrainingCtrEntryPoints_27:
 	; $61dd, 17 bytes (map_entries)
@@ -160,23 +160,23 @@ End5ServiceAceMapScripts_27:
 	dw End5ServiceAceInitScript_27 ; slot 6 InitScript
 End5ServiceAceActors_27:
 	; $6455, 248 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $1100, $1900, FACE_LEFT, $2f, $01, $00
-	map_actor $0000, ActorScript_27_27, $2100, $1500, FACE_UP, $2f, $01, $07
-	map_actor $0000, ActorScript_27_27, $1600, $1300, FACE_DOWN, $30, $01, $00
-	map_actor $0000, ActorScript_27_27, $1d00, $1700, FACE_UP, $31, $01, $00
-	map_actor $0000, ActorScript_27_27, $2900, $2900, FACE_RIGHT, $4c, $01, $00
-	map_actor $0000, ActorScript_27_27, $2100, $1100, FACE_RIGHT, $33, $01, $00
-	map_actor $0000, ActorScript_27_27, $0900, $0f00, FACE_RIGHT, $34, $01, $00
-	map_actor $0000, ActorScript_27_28, $0b00, $1900, FACE_LEFT, $30, $01, $06
-	map_actor $0000, ActorScript_27_27, $0d00, $0f00, FACE_LEFT, $3a, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $0b00, FACE_LEFT, $33, $01, $00
-	map_actor $0000, ActorScript_27_27, $1d00, $0b00, FACE_LEFT, $3c, $01, $04
-	map_actor $0000, ActorScript_27_27, $1b00, $0900, FACE_DOWN, $3b, $01, $00
-	map_actor $0000, ActorScript_27_27, $1d00, $0f00, FACE_LEFT, $3c, $01, $00
-	map_actor $0000, ActorScript_27_27, $1900, $0f00, FACE_RIGHT, $3b, $01, $06
-	map_actor $0000, ActorScript_27_27, $2900, $2900, FACE_RIGHT, $4f, $01, $00
-	map_actor $0000, ActorScript_27_27, $1b00, $1200, FACE_DOWN, $3a, $01, $00
-	map_actor $0000, ActorScript_27_27, $1900, $0900, FACE_DOWN, $35, $01, $00
+	map_actor $0000, ActorScript_27_27, $1100, $1900, FACE_LEFT, OBJ_WALK_71_02, $01, $00
+	map_actor $0000, ActorScript_27_27, $2100, $1500, FACE_UP, OBJ_WALK_71_02, $01, $07
+	map_actor $0000, ActorScript_27_27, $1600, $1300, FACE_DOWN, OBJ_WALK_71_03, $01, $00
+	map_actor $0000, ActorScript_27_27, $1d00, $1700, FACE_UP, OBJ_WALK_71_04, $01, $00
+	map_actor $0000, ActorScript_27_27, $2900, $2900, FACE_RIGHT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_27_27, $2100, $1100, FACE_RIGHT, OBJ_WALK_71_06, $01, $00
+	map_actor $0000, ActorScript_27_27, $0900, $0f00, FACE_RIGHT, OBJ_WALK_71_07, $01, $00
+	map_actor $0000, ActorScript_27_28, $0b00, $1900, FACE_LEFT, OBJ_WALK_71_03, $01, $06
+	map_actor $0000, ActorScript_27_27, $0d00, $0f00, FACE_LEFT, OBJ_WALK_72_03, $01, $00
+	map_actor $0000, ActorScript_27_27, $1500, $0b00, FACE_LEFT, OBJ_WALK_71_06, $01, $00
+	map_actor $0000, ActorScript_27_27, $1d00, $0b00, FACE_LEFT, OBJ_WALK_72_05, $01, $04
+	map_actor $0000, ActorScript_27_27, $1b00, $0900, FACE_DOWN, OBJ_WALK_72_04, $01, $00
+	map_actor $0000, ActorScript_27_27, $1d00, $0f00, FACE_LEFT, OBJ_WALK_72_05, $01, $00
+	map_actor $0000, ActorScript_27_27, $1900, $0f00, FACE_RIGHT, OBJ_WALK_72_04, $01, $06
+	map_actor $0000, ActorScript_27_27, $2900, $2900, FACE_RIGHT, OBJ_WALK_73_15, $01, $00
+	map_actor $0000, ActorScript_27_27, $1b00, $1200, FACE_DOWN, OBJ_WALK_72_03, $01, $00
+	map_actor $0000, ActorScript_27_27, $1900, $0900, FACE_DOWN, OBJ_WALK_71_08, $01, $00
 	map_actor_end
 End5ServiceAceEntryPoints_27:
 	; $654d, 17 bytes (map_entries)
@@ -236,38 +236,38 @@ End4JrCourtMapScripts_27:
 	dw End4JrCourtInitScript_27 ; slot 6 InitScript
 End4JrCourtActors_27:
 	; $6630, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $1300, $1300, FACE_DOWN, $37, $01, $00
-	map_actor $0000, ActorScript_27_27, $2300, $1700, FACE_LEFT, $68, $01, $05
-	map_actor $0000, ActorScript_27_27, $0500, $1500, FACE_RIGHT, $6b, $01, $04
-	map_actor $0000, ActorScript_27_27, $1300, $0d00, FACE_RIGHT, $67, $01, $07
-	map_actor $0000, ActorScript_27_27, $1f00, $1500, FACE_LEFT, $6a, $01, $07
-	map_actor $0000, ActorScript_27_27, $2500, $0900, FACE_RIGHT, $66, $01, $03
-	map_actor $0000, ActorScript_27_27, $3100, $1500, FACE_RIGHT, $65, $01, $06
-	map_actor $0000, ActorScript_27_27, $3d00, $1900, FACE_LEFT, $64, $01, $04
-	map_actor $0000, ActorScript_27_16, $3100, $0700, FACE_DOWN, $69, $01, $03
-	map_actor $0000, ActorScript_27_32, $0800, $0b00, FACE_DOWN, $54, $01, $05
-	map_actor $0000, ActorScript_27_33, $0c00, $1700, FACE_UP, $54, $01, $00
-	map_actor $0000, ActorScript_27_30, $1800, $0b00, FACE_DOWN, $54, $01, $00
-	map_actor $0000, ActorScript_27_31, $1c00, $1700, FACE_UP, $54, $01, $05
-	map_actor $0000, ActorScript_27_32, $3400, $0b00, FACE_DOWN, $54, $01, $05
-	map_actor $0000, ActorScript_27_33, $3800, $1700, FACE_UP, $54, $01, $00
-	map_actor $0000, ActorScript_27_27, $4000, $4000, FACE_UP, $53, $01, $00
+	map_actor $0000, ActorScript_27_27, $1300, $1300, FACE_DOWN, OBJ_WALK_72_00, $01, $00
+	map_actor $0000, ActorScript_27_27, $2300, $1700, FACE_LEFT, OBJ_BOB, $01, $05
+	map_actor $0000, ActorScript_27_27, $0500, $1500, FACE_RIGHT, OBJ_BETH, $01, $04
+	map_actor $0000, ActorScript_27_27, $1300, $0d00, FACE_RIGHT, OBJ_CURT, $01, $07
+	map_actor $0000, ActorScript_27_27, $1f00, $1500, FACE_LEFT, OBJ_PAM, $01, $07
+	map_actor $0000, ActorScript_27_27, $2500, $0900, FACE_RIGHT, OBJ_BRIAN, $01, $03
+	map_actor $0000, ActorScript_27_27, $3100, $1500, FACE_RIGHT, OBJ_FAY, $01, $06
+	map_actor $0000, ActorScript_27_27, $3d00, $1900, FACE_LEFT, OBJ_ALLIE, $01, $04
+	map_actor $0000, ActorScript_27_16, $3100, $0700, FACE_DOWN, OBJ_JOY, $01, $03
+	map_actor $0000, ActorScript_27_32, $0800, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_27_33, $0c00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_27_30, $1800, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_27_31, $1c00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_27_32, $3400, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_27_33, $3800, $1700, FACE_UP, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_27_27, $4000, $4000, FACE_UP, OBJ_WALK_73_19, $01, $00
 	map_actor_end
 End4JrCourtActorsAlt_27:
 	; $671a, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $1300, $1300, FACE_DOWN, $37, $01, $00
-	map_actor $0000, ActorScript_27_27, $2300, $1700, FACE_LEFT, $68, $01, $05
-	map_actor $0000, ActorScript_27_27, $0500, $1500, FACE_RIGHT, $6b, $01, $04
-	map_actor $0000, ActorScript_27_27, $2100, $1500, FACE_DOWN, $67, $01, $07
-	map_actor $0000, ActorScript_27_27, $0500, $1300, FACE_RIGHT, $6a, $01, $07
-	map_actor $0000, ActorScript_27_27, $1b00, $1300, FACE_DOWN, $66, $01, $03
-	map_actor $0000, ActorScript_27_27, $1b00, $1500, FACE_UP, $65, $01, $06
-	map_actor $0000, ActorScript_27_27, $3700, $0700, FACE_LEFT, $64, $01, $04
-	map_actor $0000, ActorScript_27_27, $3500, $0700, FACE_RIGHT, $69, $01, $03
-	map_actor $0000, ActorScript_27_32, $0800, $0b00, FACE_DOWN, $54, $01, $05
-	map_actor $0000, ActorScript_27_33, $0c00, $1700, FACE_UP, $54, $01, $00
-	map_actor $0000, ActorScript_27_30, $2a00, $0b00, FACE_DOWN, $54, $01, $00
-	map_actor $0000, ActorScript_27_31, $2e00, $1700, FACE_UP, $54, $01, $05
+	map_actor $0000, ActorScript_27_27, $1300, $1300, FACE_DOWN, OBJ_WALK_72_00, $01, $00
+	map_actor $0000, ActorScript_27_27, $2300, $1700, FACE_LEFT, OBJ_BOB, $01, $05
+	map_actor $0000, ActorScript_27_27, $0500, $1500, FACE_RIGHT, OBJ_BETH, $01, $04
+	map_actor $0000, ActorScript_27_27, $2100, $1500, FACE_DOWN, OBJ_CURT, $01, $07
+	map_actor $0000, ActorScript_27_27, $0500, $1300, FACE_RIGHT, OBJ_PAM, $01, $07
+	map_actor $0000, ActorScript_27_27, $1b00, $1300, FACE_DOWN, OBJ_BRIAN, $01, $03
+	map_actor $0000, ActorScript_27_27, $1b00, $1500, FACE_UP, OBJ_FAY, $01, $06
+	map_actor $0000, ActorScript_27_27, $3700, $0700, FACE_LEFT, OBJ_ALLIE, $01, $04
+	map_actor $0000, ActorScript_27_27, $3500, $0700, FACE_RIGHT, OBJ_JOY, $01, $03
+	map_actor $0000, ActorScript_27_32, $0800, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_27_33, $0c00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_27_30, $2a00, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_27_31, $2e00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $05
 	map_actor_end
 End4JrCourtEntryPoints_27:
 	; $67da, 10 bytes (map_entries)

@@ -15,18 +15,18 @@ TrainingGymMapScripts_0e:
 	dw TrainingGymInitScript_0e ; slot 6 InitScript
 TrainingGymActors_0e:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_22, $2500, $0d00, FACE_DOWN, $42, $01, $00
-	map_actor $0000, ActorScript_0e_22, $2900, $0f00, FACE_DOWN, $45, $01, $05
-	map_actor $0000, ActorScript_0e_22, $2500, $1500, FACE_DOWN, $43, $01, $07
-	map_actor $0000, ActorScript_0e_22, $2900, $1300, FACE_DOWN, $44, $01, $05
-	map_actor $0000, ActorScript_0e_22, $2500, $0500, FACE_DOWN, $47, $01, $07
-	map_actor $0000, ActorScript_0e_22, $2700, $0700, FACE_DOWN, $46, $01, $00
-	map_actor $0000, ActorScript_0e_22, $2900, $0500, FACE_DOWN, $47, $01, $00
-	map_actor $0000, ActorScript_0e_00, $2100, $0c00, FACE_DOWN, $3b, $01, $00
-	map_actor $0000, ActorScript_0e_01, $2c00, $0b00, FACE_LEFT, $3c, $01, $00
-	map_actor $0000, ActorScript_0e_02, $2d60, $1700, FACE_RIGHT, $3b, $01, $06
-	map_actor $0000, ActorScript_0e_05, $1900, $1100, FACE_UP, $39, $01, $06
-	map_actor $0000, ActorScript_0e_22, $0d00, $1300, FACE_RIGHT, $39, $01, $07
+	map_actor $0000, ActorScript_0e_22, $2500, $0d00, FACE_DOWN, OBJ_WALK_73_02, $01, $00
+	map_actor $0000, ActorScript_0e_22, $2900, $0f00, FACE_DOWN, OBJ_WALK_73_05, $01, $05
+	map_actor $0000, ActorScript_0e_22, $2500, $1500, FACE_DOWN, OBJ_WALK_73_03, $01, $07
+	map_actor $0000, ActorScript_0e_22, $2900, $1300, FACE_DOWN, OBJ_WALK_73_04, $01, $05
+	map_actor $0000, ActorScript_0e_22, $2500, $0500, FACE_DOWN, OBJ_WALK_73_07, $01, $07
+	map_actor $0000, ActorScript_0e_22, $2700, $0700, FACE_DOWN, OBJ_WALK_73_06, $01, $00
+	map_actor $0000, ActorScript_0e_22, $2900, $0500, FACE_DOWN, OBJ_WALK_73_07, $01, $00
+	map_actor $0000, ActorScript_0e_00, $2100, $0c00, FACE_DOWN, OBJ_WALK_72_04, $01, $00
+	map_actor $0000, ActorScript_0e_01, $2c00, $0b00, FACE_LEFT, OBJ_WALK_72_05, $01, $00
+	map_actor $0000, ActorScript_0e_02, $2d60, $1700, FACE_RIGHT, OBJ_WALK_72_04, $01, $06
+	map_actor $0000, ActorScript_0e_05, $1900, $1100, FACE_UP, OBJ_WALK_72_02, $01, $06
+	map_actor $0000, ActorScript_0e_22, $0d00, $1300, FACE_RIGHT, OBJ_WALK_72_02, $01, $07
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)

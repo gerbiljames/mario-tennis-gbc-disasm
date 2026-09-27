@@ -392,7 +392,7 @@ SetupCharViewerScene:
 	call LoadCharViewerMugshot ; $6f3d
 	wram_bank WRAM_SCENE ; $6f40
 	ld a, [wCharViewerCharId] ; $6f46
-	farcall LookupTileId ; $6f49
+	farcall GetCharObjectId ; $6f49
 	ld d, a ; $6f4c
 	wram_bank WRAM_ACTORS ; $6f4d
 	ldh a, [hRomBank] ; $6f53
@@ -442,10 +442,10 @@ SetupCharViewerScene:
 	ret ; $6fce
 CharViewerSceneActors_1a:
 	; $6fcf, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_1a_CharViewer, $0f00, $0400, FACE_DOWN, $26, $01, $00
-	map_actor $0000, ActorScript_1a_CharViewer, $1180, $0400, FACE_LEFT, $26, $01, $00
-	map_actor $0000, ActorScript_1a_CharViewer, $0f00, $0680, FACE_UP, $26, $01, $00
-	map_actor $0000, ActorScript_1a_CharViewer, $1180, $0680, FACE_RIGHT, $26, $01, $00
+	map_actor $0000, ActorScript_1a_CharViewer, $0f00, $0400, FACE_DOWN, OBJ_ALEX, $01, $00
+	map_actor $0000, ActorScript_1a_CharViewer, $1180, $0400, FACE_LEFT, OBJ_ALEX, $01, $00
+	map_actor $0000, ActorScript_1a_CharViewer, $0f00, $0680, FACE_UP, OBJ_ALEX, $01, $00
+	map_actor $0000, ActorScript_1a_CharViewer, $1180, $0680, FACE_RIGHT, OBJ_ALEX, $01, $00
 	map_actor_end
 ; A one-opcode actor script, as_halt: the four character-viewer actors stand still.
 ActorScript_1a_CharViewer:

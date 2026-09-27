@@ -39,8 +39,8 @@ WaterSpriteRacketRewardScene:
 	script_wait_frames $1e ; $4da7
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4dae
 	script_wait_frames $1e ; $4db5
-	script_set_objdef $4d, $16 ; $4dbc
-	script_set_objdef $4c, $13 ; $4dc8
+	script_set_objdef OBJ_WALK_73_13, $16 ; $4dbc
+	script_set_objdef OBJ_WALK_73_12, $13 ; $4dc8
 	script_set_position $16, $3480, $0b80 ; $4dd4
 	sound SFX_EMOTE ; $4ddf
 	script_wait_frames $3c ; $4de1

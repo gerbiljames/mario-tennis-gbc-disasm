@@ -247,10 +247,10 @@ LoadN64RecordTypeGfx:
 	pop_wram_bank ; $72da
 	ret ; $72df
 N64RecordTypeTable0:
-	; $72e0, 6 bytes (bytes:2)
-	db $78, $3c ; 0x00
-	db $7a, $3c ; 0x02
-	db $7c, $3c ; 0x04
+	; $72e0, 3 slot words
+	dslot DataPtr_CharacterSelectLabelTiles0 ; record 0
+	dslot DataPtr_CharacterSelectLabelTiles1 ; record 1
+	dslot DataPtr_CharacterSelectLabelTiles2 ; record 2
 N64RecordTypeTable1:
 	; $72e6, 6 bytes (bytes:2)
 	db $00, $a8 ; 0x00
@@ -668,11 +668,11 @@ LoadN64TransferItemGfx:
 	pop_wram_bank ; $75f6
 	ret ; $75fb
 N64TransferItemTable0:
-	; $75fc, 8 bytes (bytes:2)
-	db $02, $3d ; 0x00
-	db $06, $3d ; 0x02
-	db $00, $3d ; 0x04
-	db $04, $3d ; 0x06
+	; $75fc, 4 slot words
+	dslot DataPtr_N64ItemLabelTiles1 ; record 0
+	dslot DataPtr_N64ItemLabelTiles3 ; record 1
+	dslot DataPtr_N64ItemLabelTiles0 ; record 2
+	dslot DataPtr_N64ItemLabelTiles2 ; record 3
 N64TransferItemTable1:
 	; $7604, 8 bytes (bytes:2)
 	db $00, $a8 ; 0x00

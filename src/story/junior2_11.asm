@@ -13,22 +13,22 @@ JuniorClassCourtSinglesMapScripts_11:
 	dw JuniorClassCourtSinglesInitScript_11 ; slot 6 InitScript
 JuniorClassCourtSinglesActors_11:
 	; $6830, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $1300, $1300, FACE_DOWN, $37, $01, $00
-	map_actor $0000, ActorScript_11_45, $2300, $1700, FACE_LEFT, $68, $01, $05
-	map_actor $0000, ActorScript_11_45, $0500, $1500, FACE_RIGHT, $6b, $01, $04
-	map_actor $0000, ActorScript_11_45, $1300, $0d00, FACE_RIGHT, $67, $01, $07
-	map_actor $0000, ActorScript_11_45, $1f00, $1500, FACE_LEFT, $6a, $01, $07
-	map_actor $0000, ActorScript_11_45, $2500, $0900, FACE_RIGHT, $66, $01, $03
-	map_actor $0000, ActorScript_11_45, $3100, $1500, FACE_RIGHT, $65, $01, $06
-	map_actor $0000, ActorScript_11_45, $3d00, $1900, FACE_LEFT, $64, $01, $04
-	map_actor $0000, ActorScript_11_29, $3100, $0700, FACE_DOWN, $69, $01, $03
-	map_actor $0000, ActorScript_11_50, $0800, $0b00, FACE_DOWN, $54, $01, $05
-	map_actor $0000, ActorScript_11_51, $0c00, $1700, FACE_UP, $54, $01, $00
-	map_actor $0000, ActorScript_11_48, $1800, $0b00, FACE_DOWN, $54, $01, $00
-	map_actor $0000, ActorScript_11_49, $1c00, $1700, FACE_UP, $54, $01, $05
-	map_actor $0000, ActorScript_11_50, $3400, $0b00, FACE_DOWN, $54, $01, $05
-	map_actor $0000, ActorScript_11_51, $3800, $1700, FACE_UP, $54, $01, $00
-	map_actor $0000, ActorScript_11_45, $4000, $4000, FACE_UP, $53, $01, $00
+	map_actor $0000, ActorScript_11_45, $1300, $1300, FACE_DOWN, OBJ_WALK_72_00, $01, $00
+	map_actor $0000, ActorScript_11_45, $2300, $1700, FACE_LEFT, OBJ_BOB, $01, $05
+	map_actor $0000, ActorScript_11_45, $0500, $1500, FACE_RIGHT, OBJ_BETH, $01, $04
+	map_actor $0000, ActorScript_11_45, $1300, $0d00, FACE_RIGHT, OBJ_CURT, $01, $07
+	map_actor $0000, ActorScript_11_45, $1f00, $1500, FACE_LEFT, OBJ_PAM, $01, $07
+	map_actor $0000, ActorScript_11_45, $2500, $0900, FACE_RIGHT, OBJ_BRIAN, $01, $03
+	map_actor $0000, ActorScript_11_45, $3100, $1500, FACE_RIGHT, OBJ_FAY, $01, $06
+	map_actor $0000, ActorScript_11_45, $3d00, $1900, FACE_LEFT, OBJ_ALLIE, $01, $04
+	map_actor $0000, ActorScript_11_29, $3100, $0700, FACE_DOWN, OBJ_JOY, $01, $03
+	map_actor $0000, ActorScript_11_50, $0800, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_11_51, $0c00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_11_48, $1800, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_11_49, $1c00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_11_50, $3400, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_11_51, $3800, $1700, FACE_UP, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_11_45, $4000, $4000, FACE_UP, OBJ_WALK_73_19, $01, $00
 	map_actor_end
 JuniorClassCourtSinglesEntryPoints_11:
 	; $691a, 17 bytes (map_entries)

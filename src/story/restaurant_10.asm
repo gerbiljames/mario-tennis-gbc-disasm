@@ -161,13 +161,13 @@ CafeteriaMapScripts_10:
 	dw CafeteriaInitScript_10 ; slot 6 InitScript
 CafeteriaActors_10:
 	; $5804, 108 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $3b00, $3700, FACE_DOWN, $30, $01, $00
-	map_actor $0000, ActorScript_10_2, $3d00, $3900, FACE_LEFT, $30, $01, $05
-	map_actor $0000, ActorScript_10_2, $3d00, $3b00, FACE_LEFT, $3a, $01, $00
-	map_actor $0000, ActorScript_10_2, $2f00, $3100, FACE_RIGHT, $3a, $01, $07
-	map_actor $0000, ActorScript_10_2, $3300, $3100, FACE_LEFT, $3b, $01, $00
-	map_actor $0000, ActorScript_10_2, $3700, $2f00, FACE_RIGHT, $3c, $01, $00
-	map_actor $0000, ActorScript_10_2, $3b00, $2f00, FACE_LEFT, $3b, $01, $04
+	map_actor $0000, ActorScript_10_2, $3b00, $3700, FACE_DOWN, OBJ_WALK_71_03, $01, $00
+	map_actor $0000, ActorScript_10_2, $3d00, $3900, FACE_LEFT, OBJ_WALK_71_03, $01, $05
+	map_actor $0000, ActorScript_10_2, $3d00, $3b00, FACE_LEFT, OBJ_WALK_72_03, $01, $00
+	map_actor $0000, ActorScript_10_2, $2f00, $3100, FACE_RIGHT, OBJ_WALK_72_03, $01, $07
+	map_actor $0000, ActorScript_10_2, $3300, $3100, FACE_LEFT, OBJ_WALK_72_04, $01, $00
+	map_actor $0000, ActorScript_10_2, $3700, $2f00, FACE_RIGHT, OBJ_WALK_72_05, $01, $00
+	map_actor $0000, ActorScript_10_2, $3b00, $2f00, FACE_LEFT, OBJ_WALK_72_04, $01, $04
 	map_actor_end
 CafeteriaEntryPoints_10:
 	; $5870, 9 bytes (map_entries)
@@ -412,23 +412,23 @@ RestaurantMapScripts_10:
 	dw RestaurantInitScript_10 ; slot 6 InitScript
 RestaurantActors_10:
 	; $5a8e, 248 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $1100, $1900, FACE_LEFT, $2f, $01, $00
-	map_actor $0000, ActorScript_10_2, $2100, $1500, FACE_UP, $2f, $01, $07
-	map_actor $0000, ActorScript_10_2, $1600, $1300, FACE_DOWN, $30, $01, $00
-	map_actor $0000, ActorScript_10_2, $1d00, $1700, FACE_UP, $31, $01, $00
-	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, $4c, $01, $00
-	map_actor $0000, ActorScript_10_2, $2100, $1100, FACE_RIGHT, $33, $01, $00
-	map_actor $0000, ActorScript_10_2, $0900, $0f00, FACE_RIGHT, $34, $01, $00
-	map_actor $0000, ActorScript_10_3, $0b00, $1900, FACE_LEFT, $30, $01, $06
-	map_actor $0000, ActorScript_10_2, $0d00, $0f00, FACE_LEFT, $3a, $01, $00
-	map_actor $0000, ActorScript_10_2, $1500, $0b00, FACE_LEFT, $33, $01, $00
-	map_actor $0000, ActorScript_10_2, $1d00, $0b00, FACE_LEFT, $3c, $01, $04
-	map_actor $0000, ActorScript_10_2, $1b00, $0900, FACE_DOWN, $3b, $01, $00
-	map_actor $0000, ActorScript_10_2, $1d00, $0f00, FACE_LEFT, $3c, $01, $00
-	map_actor $0000, ActorScript_10_2, $1900, $0f00, FACE_RIGHT, $3b, $01, $06
-	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, $4f, $01, $00
-	map_actor $0000, ActorScript_10_2, $1b00, $1200, FACE_DOWN, $3a, $01, $00
-	map_actor $0000, ActorScript_10_2, $1900, $0900, FACE_DOWN, $35, $01, $00
+	map_actor $0000, ActorScript_10_2, $1100, $1900, FACE_LEFT, OBJ_WALK_71_02, $01, $00
+	map_actor $0000, ActorScript_10_2, $2100, $1500, FACE_UP, OBJ_WALK_71_02, $01, $07
+	map_actor $0000, ActorScript_10_2, $1600, $1300, FACE_DOWN, OBJ_WALK_71_03, $01, $00
+	map_actor $0000, ActorScript_10_2, $1d00, $1700, FACE_UP, OBJ_WALK_71_04, $01, $00
+	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_10_2, $2100, $1100, FACE_RIGHT, OBJ_WALK_71_06, $01, $00
+	map_actor $0000, ActorScript_10_2, $0900, $0f00, FACE_RIGHT, OBJ_WALK_71_07, $01, $00
+	map_actor $0000, ActorScript_10_3, $0b00, $1900, FACE_LEFT, OBJ_WALK_71_03, $01, $06
+	map_actor $0000, ActorScript_10_2, $0d00, $0f00, FACE_LEFT, OBJ_WALK_72_03, $01, $00
+	map_actor $0000, ActorScript_10_2, $1500, $0b00, FACE_LEFT, OBJ_WALK_71_06, $01, $00
+	map_actor $0000, ActorScript_10_2, $1d00, $0b00, FACE_LEFT, OBJ_WALK_72_05, $01, $04
+	map_actor $0000, ActorScript_10_2, $1b00, $0900, FACE_DOWN, OBJ_WALK_72_04, $01, $00
+	map_actor $0000, ActorScript_10_2, $1d00, $0f00, FACE_LEFT, OBJ_WALK_72_05, $01, $00
+	map_actor $0000, ActorScript_10_2, $1900, $0f00, FACE_RIGHT, OBJ_WALK_72_04, $01, $06
+	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, OBJ_WALK_73_15, $01, $00
+	map_actor $0000, ActorScript_10_2, $1b00, $1200, FACE_DOWN, OBJ_WALK_72_03, $01, $00
+	map_actor $0000, ActorScript_10_2, $1900, $0900, FACE_DOWN, OBJ_WALK_71_08, $01, $00
 	map_actor_end
 RestaurantEntryPoints_10:
 	; $5b86, 17 bytes (map_entries)

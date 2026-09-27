@@ -7,7 +7,7 @@
 	test_flag FLAG_DOUBLES
 	jp z, .notDoubles
 	ld a, [wStoryModeGenderOfPartnerCharacter]
-	ld d, $58
+	ld d, OBJ_HARRY_B
 	add d
 	ld d, a
 	script_get_actor_state ACTOR_PARTNER
@@ -17,7 +17,7 @@
 	script_set_anim ACTOR_PARTNER, $01
 .notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter]
-	ld d, $56
+	ld d, OBJ_ALEX_B
 	add d
 	ld d, a
 	script_get_actor_state ACTOR_PLAYER

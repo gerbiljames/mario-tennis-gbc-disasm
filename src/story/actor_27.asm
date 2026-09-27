@@ -10,7 +10,7 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_null_script ACTOR_PARTNER ; $761f
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $7624
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $762f
-	ld d, $58 ; $7632
+	ld d, OBJ_HARRY_B ; $7632
 	add d ; $7634
 	ld d, a ; $7635
 	script_get_actor_state $0a ; $7636
@@ -22,7 +22,7 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_face $0c, FACE_DOWN ; $7652
 .checkStoryModeGenderOfMainCharacter:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7659
-	ld d, $56 ; $765c
+	ld d, OBJ_ALEX_B ; $765c
 	add d ; $765e
 	ld d, a ; $765f
 	script_get_actor_state ACTOR_PLAYER ; $7660

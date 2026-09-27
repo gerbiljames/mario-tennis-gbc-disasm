@@ -9,54 +9,54 @@ SeniorCourtMapScripts_12:
 	dw SeniorCourtInitScript_12 ; slot 6 InitScript
 SeniorCourtActors_12:
 	; $5305, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_12_51, $2900, $1900, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_12_43, $3500, $1e00, FACE_UP, $65, $06, $07
-	map_actor $0000, ActorScript_12_57, $3200, $1e00, FACE_RIGHT, $64, $01, $05
-	map_actor $0000, ActorScript_12_52, $3300, $1100, FACE_LEFT, $69, $01, $04
-	map_actor $0000, ActorScript_12_51, $2900, $1300, FACE_LEFT, $66, $01, $06
-	map_actor $0000, ActorScript_12_43, $0b00, $1500, FACE_UP, $6b, $01, $05
-	map_actor $0000, ActorScript_12_58, $0b00, $1300, FACE_DOWN, $67, $01, $03
-	map_actor $0000, ActorScript_12_56, $1500, $1700, FACE_UP, $68, $01, $06
-	map_actor $0000, ActorScript_12_55, $1300, $0b00, FACE_DOWN, $6a, $01, $03
-	map_actor $05e0, ActorScript_12_52, $0900, $0b00, FACE_DOWN, $29, $01, $00
-	map_actor $0000, ActorScript_12_53, $2200, $1300, FACE_DOWN, $54, $01, $00
-	map_actor $0000, ActorScript_12_54, $2500, $1d00, FACE_UP, $54, $01, $04
+	map_actor $0000, ActorScript_12_51, $2900, $1900, FACE_LEFT, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_12_43, $3500, $1e00, FACE_UP, OBJ_FAY, $06, $07
+	map_actor $0000, ActorScript_12_57, $3200, $1e00, FACE_RIGHT, OBJ_ALLIE, $01, $05
+	map_actor $0000, ActorScript_12_52, $3300, $1100, FACE_LEFT, OBJ_JOY, $01, $04
+	map_actor $0000, ActorScript_12_51, $2900, $1300, FACE_LEFT, OBJ_BRIAN, $01, $06
+	map_actor $0000, ActorScript_12_43, $0b00, $1500, FACE_UP, OBJ_BETH, $01, $05
+	map_actor $0000, ActorScript_12_58, $0b00, $1300, FACE_DOWN, OBJ_CURT, $01, $03
+	map_actor $0000, ActorScript_12_56, $1500, $1700, FACE_UP, OBJ_BOB, $01, $06
+	map_actor $0000, ActorScript_12_55, $1300, $0b00, FACE_DOWN, OBJ_PAM, $01, $03
+	map_actor $05e0, ActorScript_12_52, $0900, $0b00, FACE_DOWN, OBJ_KATE, $01, $00
+	map_actor $0000, ActorScript_12_53, $2200, $1300, FACE_DOWN, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_12_54, $2500, $1d00, FACE_UP, OBJ_WALK_74_00, $01, $04
 	map_actor_end
 SeniorCourtActorsA_12:
 	; $53b7, 220 bytes (map_actors)
-	map_actor $0000, ActorScript_12_51, $2d00, $1900, FACE_DOWN, $49, $01, $00
-	map_actor $0000, ActorScript_12_51, $2900, $1b00, FACE_LEFT, $65, $01, $07
-	map_actor $0000, ActorScript_12_57, $3900, $1d00, FACE_LEFT, $64, $01, $05
-	map_actor $0000, ActorScript_12_51, $2d00, $1300, FACE_RIGHT, $69, $01, $04
-	map_actor $0000, ActorScript_12_51, $2b00, $1100, FACE_LEFT, $66, $01, $06
-	map_actor $0000, ActorScript_12_43, $0a00, $1500, FACE_UP, $6b, $01, $05
-	map_actor $0000, ActorScript_12_51, $0300, $1700, FACE_RIGHT, $67, $01, $03
-	map_actor $0000, ActorScript_12_57, $1200, $0d00, FACE_RIGHT, $68, $01, $06
-	map_actor $0000, ActorScript_12_44, $1500, $0d00, FACE_DOWN, $6a, $06, $03
-	map_actor $05e0, ActorScript_12_52, $0300, $0b00, FACE_DOWN, $29, $01, $00
-	map_actor $0000, ActorScript_12_53, $2200, $1100, FACE_DOWN, $54, $01, $05
-	map_actor $0000, ActorScript_12_54, $2600, $1d00, FACE_UP, $54, $01, $00
-	map_actor $0000, ActorScript_12_55, $3200, $1100, FACE_DOWN, $54, $01, $00
-	map_actor $0000, ActorScript_12_56, $3600, $1d00, FACE_UP, $54, $01, $06
-	map_actor $0000, ActorScript_12_51, $4000, $4000, FACE_UP, $53, $01, $00
+	map_actor $0000, ActorScript_12_51, $2d00, $1900, FACE_DOWN, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_12_51, $2900, $1b00, FACE_LEFT, OBJ_FAY, $01, $07
+	map_actor $0000, ActorScript_12_57, $3900, $1d00, FACE_LEFT, OBJ_ALLIE, $01, $05
+	map_actor $0000, ActorScript_12_51, $2d00, $1300, FACE_RIGHT, OBJ_JOY, $01, $04
+	map_actor $0000, ActorScript_12_51, $2b00, $1100, FACE_LEFT, OBJ_BRIAN, $01, $06
+	map_actor $0000, ActorScript_12_43, $0a00, $1500, FACE_UP, OBJ_BETH, $01, $05
+	map_actor $0000, ActorScript_12_51, $0300, $1700, FACE_RIGHT, OBJ_CURT, $01, $03
+	map_actor $0000, ActorScript_12_57, $1200, $0d00, FACE_RIGHT, OBJ_BOB, $01, $06
+	map_actor $0000, ActorScript_12_44, $1500, $0d00, FACE_DOWN, OBJ_PAM, $06, $03
+	map_actor $05e0, ActorScript_12_52, $0300, $0b00, FACE_DOWN, OBJ_KATE, $01, $00
+	map_actor $0000, ActorScript_12_53, $2200, $1100, FACE_DOWN, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_12_54, $2600, $1d00, FACE_UP, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_12_55, $3200, $1100, FACE_DOWN, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_12_56, $3600, $1d00, FACE_UP, OBJ_WALK_74_00, $01, $06
+	map_actor $0000, ActorScript_12_51, $4000, $4000, FACE_UP, OBJ_WALK_73_19, $01, $00
 	map_actor_end
 SeniorCourtActorsB_12:
 	; $5493, 220 bytes (map_actors)
-	map_actor $0000, ActorScript_12_51, $2d00, $1900, FACE_DOWN, $49, $01, $00
-	map_actor $0000, ActorScript_12_43, $2d00, $1100, FACE_UP, $65, $06, $07
-	map_actor $0000, ActorScript_12_57, $2d00, $0f00, FACE_DOWN, $64, $01, $05
-	map_actor $0000, ActorScript_12_51, $3900, $1d00, FACE_LEFT, $69, $01, $04
-	map_actor $0000, ActorScript_12_51, $3900, $1b00, FACE_LEFT, $66, $01, $06
-	map_actor $0000, ActorScript_12_43, $2300, $1e00, FACE_UP, $6b, $01, $05
-	map_actor $0000, ActorScript_12_51, $2300, $1c00, FACE_DOWN, $67, $01, $03
-	map_actor $0000, ActorScript_12_51, $0900, $0700, FACE_RIGHT, $68, $01, $06
-	map_actor $0000, ActorScript_12_51, $0b00, $0700, FACE_LEFT, $6a, $01, $03
-	map_actor $05e0, ActorScript_12_52, $0300, $0b00, FACE_DOWN, $29, $01, $00
-	map_actor $0000, ActorScript_12_53, $1200, $0b00, FACE_DOWN, $54, $01, $05
-	map_actor $0000, ActorScript_12_54, $1600, $1600, FACE_UP, $54, $01, $00
-	map_actor $0000, ActorScript_12_55, $3200, $1100, FACE_DOWN, $54, $01, $00
-	map_actor $0000, ActorScript_12_56, $3600, $1d00, FACE_UP, $54, $01, $06
-	map_actor $0000, ActorScript_12_51, $4000, $4000, FACE_UP, $53, $01, $00
+	map_actor $0000, ActorScript_12_51, $2d00, $1900, FACE_DOWN, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_12_43, $2d00, $1100, FACE_UP, OBJ_FAY, $06, $07
+	map_actor $0000, ActorScript_12_57, $2d00, $0f00, FACE_DOWN, OBJ_ALLIE, $01, $05
+	map_actor $0000, ActorScript_12_51, $3900, $1d00, FACE_LEFT, OBJ_JOY, $01, $04
+	map_actor $0000, ActorScript_12_51, $3900, $1b00, FACE_LEFT, OBJ_BRIAN, $01, $06
+	map_actor $0000, ActorScript_12_43, $2300, $1e00, FACE_UP, OBJ_BETH, $01, $05
+	map_actor $0000, ActorScript_12_51, $2300, $1c00, FACE_DOWN, OBJ_CURT, $01, $03
+	map_actor $0000, ActorScript_12_51, $0900, $0700, FACE_RIGHT, OBJ_BOB, $01, $06
+	map_actor $0000, ActorScript_12_51, $0b00, $0700, FACE_LEFT, OBJ_PAM, $01, $03
+	map_actor $05e0, ActorScript_12_52, $0300, $0b00, FACE_DOWN, OBJ_KATE, $01, $00
+	map_actor $0000, ActorScript_12_53, $1200, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_12_54, $1600, $1600, FACE_UP, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_12_55, $3200, $1100, FACE_DOWN, OBJ_WALK_74_00, $01, $00
+	map_actor $0000, ActorScript_12_56, $3600, $1d00, FACE_UP, OBJ_WALK_74_00, $01, $06
+	map_actor $0000, ActorScript_12_51, $4000, $4000, FACE_UP, OBJ_WALK_73_19, $01, $00
 	map_actor_end
 SeniorCourtEntryPoints_12:
 	; $556f, 17 bytes (map_entries)
@@ -738,7 +738,7 @@ SeniorCourtPositionActorsByProgressB:
 	script_get_actor_state $03 ; $5dc9
 	ld c, l ; $5dce
 	ld b, h ; $5dcf
-	ld d, $3b ; $5dd0
+	ld d, OBJ_WALK_72_04 ; $5dd0
 	farcall LoadActorObjectDefIfValid ; $5dd2
 	script_set_anim $03, $01 ; $5dd5
 .checkDoubles:

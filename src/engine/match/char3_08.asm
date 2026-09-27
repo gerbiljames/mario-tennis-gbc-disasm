@@ -386,7 +386,7 @@ ReloadCharFrameGfx:
 	ld d, a ; $69c9
 	ld a, [wCharGfxBank] ; $69ca
 	ld b, a ; $69cd
-	ld hl, $0110 ; $69ce
+	ld_slot hl, FarPtr_LoadDebugMenuPalette ; $69ce
 	call FarCallVector ; $69d1
 	ret ; $69d4
 LoadCharChargeFlashGfx:
@@ -397,7 +397,7 @@ LoadCharChargeFlashGfx:
 	ld a, [wCharGfxBank] ; $69dd
 	add $08 ; $69e0
 	ld b, a ; $69e2
-	ld hl, $0110 ; $69e3
+	ld_slot hl, FarPtr_LoadDebugMenuPalette ; $69e3
 	call FarCallVector ; $69e6
 	ret ; $69e9
 SetCharAnimation:

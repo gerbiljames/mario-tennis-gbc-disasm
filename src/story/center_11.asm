@@ -17,10 +17,10 @@ CenterCourtMapScripts_11:
 	dw CenterCourtInitScript_11 ; slot 6 InitScript
 CenterCourtActors_11:
 	; $4016, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $0f00, $2e00, FACE_LEFT, $25, $01, $00
-	map_actor $0000, ActorScript_11_45, $0d00, $1300, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_11_45, $1f00, $2e00, FACE_RIGHT, $39, $01, $07
-	map_actor $0000, ActorScript_11_45, $2100, $2e00, FACE_LEFT, $32, $01, $07
+	map_actor $0000, ActorScript_11_45, $0f00, $2e00, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_11_45, $0d00, $1300, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_11_45, $1f00, $2e00, FACE_RIGHT, OBJ_WALK_72_02, $01, $07
+	map_actor $0000, ActorScript_11_45, $2100, $2e00, FACE_LEFT, OBJ_WALK_71_05, $01, $07
 	map_actor_end
 CenterCourtEntryPoints_11:
 	; $4058, 25 bytes (map_entries)
@@ -209,22 +209,22 @@ SetupCenterCourtSceneVariant:
 	ret ; $4212
 CenterCourtSceneVariantActors_11:
 	; $4213, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $0f00, $2e00, FACE_LEFT, $25, $01, $00
-	map_actor $0000, ActorScript_11_45, $0d00, $2700, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_11_45, $2500, $2400, FACE_LEFT, $39, $01, $07
-	map_actor $0000, ActorScript_11_45, $2300, $2100, FACE_LEFT, $32, $01, $07
-	map_actor $0000, ActorScript_11_45, $2700, $2300, FACE_LEFT, $23, $01, $04
-	map_actor $0000, ActorScript_11_45, $2700, $2100, FACE_LEFT, $39, $01, $06
-	map_actor $0000, ActorScript_11_45, $2500, $2000, FACE_LEFT, $3a, $01, $03
-	map_actor $0000, ActorScript_11_45, $0b00, $2400, FACE_RIGHT, $33, $01, $00
-	map_actor $0000, ActorScript_11_45, $0d00, $2100, FACE_RIGHT, $3a, $01, $04
-	map_actor $0000, ActorScript_11_45, $0900, $2300, FACE_RIGHT, $39, $01, $03
-	map_actor $0000, ActorScript_11_45, $0500, $2000, FACE_RIGHT, $39, $01, $06
-	map_actor $0000, ActorScript_11_45, $0900, $2100, FACE_RIGHT, $3a, $01, $03
-	map_actor $0000, ActorScript_11_45, $2b00, $2200, FACE_LEFT, $33, $01, $00
-	map_actor $0000, ActorScript_11_45, $2b00, $2000, FACE_LEFT, $3a, $01, $04
-	map_actor $0000, ActorScript_11_45, $2b00, $1e00, FACE_LEFT, $6b, $01, $00
-	map_actor $0000, ActorScript_11_45, $2700, $1d00, FACE_LEFT, $6a, $01, $04
+	map_actor $0000, ActorScript_11_45, $0f00, $2e00, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_11_45, $0d00, $2700, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_11_45, $2500, $2400, FACE_LEFT, OBJ_WALK_72_02, $01, $07
+	map_actor $0000, ActorScript_11_45, $2300, $2100, FACE_LEFT, OBJ_WALK_71_05, $01, $07
+	map_actor $0000, ActorScript_11_45, $2700, $2300, FACE_LEFT, OBJ_WALK_6F_05, $01, $04
+	map_actor $0000, ActorScript_11_45, $2700, $2100, FACE_LEFT, OBJ_WALK_72_02, $01, $06
+	map_actor $0000, ActorScript_11_45, $2500, $2000, FACE_LEFT, OBJ_WALK_72_03, $01, $03
+	map_actor $0000, ActorScript_11_45, $0b00, $2400, FACE_RIGHT, OBJ_WALK_71_06, $01, $00
+	map_actor $0000, ActorScript_11_45, $0d00, $2100, FACE_RIGHT, OBJ_WALK_72_03, $01, $04
+	map_actor $0000, ActorScript_11_45, $0900, $2300, FACE_RIGHT, OBJ_WALK_72_02, $01, $03
+	map_actor $0000, ActorScript_11_45, $0500, $2000, FACE_RIGHT, OBJ_WALK_72_02, $01, $06
+	map_actor $0000, ActorScript_11_45, $0900, $2100, FACE_RIGHT, OBJ_WALK_72_03, $01, $03
+	map_actor $0000, ActorScript_11_45, $2b00, $2200, FACE_LEFT, OBJ_WALK_71_06, $01, $00
+	map_actor $0000, ActorScript_11_45, $2b00, $2000, FACE_LEFT, OBJ_WALK_72_03, $01, $04
+	map_actor $0000, ActorScript_11_45, $2b00, $1e00, FACE_LEFT, OBJ_BETH, $01, $00
+	map_actor $0000, ActorScript_11_45, $2700, $1d00, FACE_LEFT, OBJ_PAM, $01, $04
 	map_actor_end
 ; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival01, MapArrivalWalk_11 ; $42fd
@@ -232,7 +232,7 @@ SetPlayerAndPartnerObjectDefs_11:
 	test_flag FLAG_DOUBLES ; $4343
 	jp z, .notDoubles ; $4346
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4349
-	ld d, $58 ; $434c
+	ld d, OBJ_HARRY_B ; $434c
 	add d ; $434e
 	ld d, a ; $434f
 	script_get_actor_state ACTOR_PARTNER ; $4350
@@ -242,7 +242,7 @@ SetPlayerAndPartnerObjectDefs_11:
 	script_set_anim ACTOR_PARTNER, $01 ; $435a
 .notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4361
-	ld d, $56 ; $4364
+	ld d, OBJ_ALEX_B ; $4364
 	add d ; $4366
 	ld d, a ; $4367
 	script_get_actor_state ACTOR_PLAYER ; $4368
@@ -296,24 +296,24 @@ AcademyArrivalMapScripts_11:
 	dw AcademyArrivalInitScript_11 ; slot 6 InitScript
 AcademyArrivalActors_11:
 	; $440f, 262 bytes (map_actors)
-	map_actor $0000, ActorScript_11_46, $1900, $1900, FACE_DOWN, $30, $01, $05
-	map_actor $0000, ActorScript_11_45, $1500, $2500, FACE_LEFT, $32, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $2700, FACE_LEFT, $39, $01, $00
-	map_actor $0000, ActorScript_11_48, $0100, $1c00, FACE_DOWN, $54, $01, $03
-	map_actor $0000, ActorScript_11_49, $0500, $2800, FACE_UP, $54, $01, $04
-	map_actor $0000, ActorScript_11_50, $0a00, $1c00, FACE_DOWN, $54, $01, $07
-	map_actor $0000, ActorScript_11_51, $0f00, $2800, FACE_UP, $54, $01, $06
-	map_actor $0000, ActorScript_11_48, $2200, $1c00, FACE_DOWN, $54, $01, $06
-	map_actor $0000, ActorScript_11_49, $2600, $2800, FACE_UP, $54, $01, $03
-	map_actor $0000, ActorScript_11_50, $2c00, $1c00, FACE_DOWN, $54, $01, $07
-	map_actor $0000, ActorScript_11_51, $3000, $2800, FACE_UP, $54, $01, $04
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, $4d, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, $4c, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, $53, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_DOWN, $49, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, $4f, $01, $00
-	map_actor $0000, ActorScript_11_45, $1800, $3300, FACE_UP, $30, $01, $03
+	map_actor $0000, ActorScript_11_46, $1900, $1900, FACE_DOWN, OBJ_WALK_71_03, $01, $05
+	map_actor $0000, ActorScript_11_45, $1500, $2500, FACE_LEFT, OBJ_WALK_71_05, $01, $00
+	map_actor $0000, ActorScript_11_45, $1500, $2700, FACE_LEFT, OBJ_WALK_72_02, $01, $00
+	map_actor $0000, ActorScript_11_48, $0100, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $03
+	map_actor $0000, ActorScript_11_49, $0500, $2800, FACE_UP, OBJ_WALK_74_00, $01, $04
+	map_actor $0000, ActorScript_11_50, $0a00, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $07
+	map_actor $0000, ActorScript_11_51, $0f00, $2800, FACE_UP, OBJ_WALK_74_00, $01, $06
+	map_actor $0000, ActorScript_11_48, $2200, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $06
+	map_actor $0000, ActorScript_11_49, $2600, $2800, FACE_UP, OBJ_WALK_74_00, $01, $03
+	map_actor $0000, ActorScript_11_50, $2c00, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $07
+	map_actor $0000, ActorScript_11_51, $3000, $2800, FACE_UP, OBJ_WALK_74_00, $01, $04
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_DOWN, OBJ_WALK_75_06, $01, $00
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_DOWN, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_15, $01, $00
+	map_actor $0000, ActorScript_11_45, $1800, $3300, FACE_UP, OBJ_WALK_71_03, $01, $03
 	map_actor_end
 AcademyArrivalEntryPoints_11:
 	; $4515, 33 bytes (map_entries)

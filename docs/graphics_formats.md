@@ -540,8 +540,26 @@ Every routine re-checks the cap and silently drops the sprite on overflow.
 ### 4.3 Object headers
 
 Overworld and on-court characters are described by a **16-byte object header**.
-`ObjectIdList_04` (`$04:$4f75`) maps 117 object ids to `db slot, bank` pairs in
-the §1.4 encoding; `CopyDataFromBank` resolves them.
+`ObjectIdList_04` (`$04:$4f75`) maps 117 object ids to slot words in the §1.4
+encoding, which `CopyDataFromBank` resolves; a `$0000` row ends it, and
+`GetObjectDefCount` counts up to it. Each row is `object_id NAME, DataPtr_*`,
+which defines `OBJ_NAME` as the row's index:
+
+| ids | objects | names |
+|---|---|---|
+| `$00`-`$1d` | the character banks `$40`-`$5d`, one match sprite each | `OBJ_MATCH_ALEX` ... `OBJ_MATCH_BALL_MACHINE` |
+| `$1e`-`$74` | the walk-sprite banks `$6f`-`$77` | `OBJ_WALK_<bank>_<slot>`, or the character's name where the game says who it is |
+
+The game names 31 of the walk sprites itself: `CharObjectIdTable`
+(`$04:$4c29`, read by `GetCharObjectId`) gives each `CHAR_*` id its
+overworld object, so `OBJ_ALEX`, `OBJ_MARIO`, `OBJ_YOSHI` and the rest are
+those rows (the two unused roster slots share `OBJ_WALK_73_15`). Ids
+`$56`-`$59` are `OBJ_ALEX_B`, `OBJ_NINA_B`, `OBJ_HARRY_B`, `OBJ_KATE_B`: the
+same four drawings with fewer frames, which `LoadCourtPlayerPartnerObjDefs`
+and the ending scenes load as `base + gender`, so each male/female pair sits
+side by side. The other 55 walk sprites are the anonymous students and staff
+of `docs/story_mode.md`, and props (the flat ellipses). Bank `$6a` holds eight
+more walk sprites no object id reaches.
 
 `LoadActorObjectDef` (`$04:$4ac6`) copies the header to `wActorObjDef` and
 expands it into the actor struct; `SetupCharSpriteFromObjectDef` (`$04:$4b68`)

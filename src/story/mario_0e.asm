@@ -193,24 +193,24 @@ MarioWorldMapScripts_0e:
 	dw MarioWorldInitScript_0e ; slot 6 InitScript
 MarioWorldActors_0e:
 	; $5256, 262 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $4c, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $53, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $53, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $53, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $4e, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1200, $1300, FACE_DOWN, $2e, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1800, $1200, FACE_DOWN, $2c, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1800, $0f40, FACE_DOWN, $6f, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1800, $0d00, FACE_DOWN, $6d, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1700, $1400, FACE_DOWN, $6e, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0a00, $0f00, FACE_DOWN, $73, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0c00, $1100, FACE_DOWN, $2b, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0c00, $0f00, FACE_DOWN, $2d, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0c00, $0d00, FACE_DOWN, $48, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0e00, $0b00, FACE_DOWN, $72, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1600, $0b00, FACE_DOWN, $2a, $01, $00
-	map_actor $0000, ActorScript_0e_22, $0f00, $1f00, FACE_DOWN, $70, $01, $00
-	map_actor $0000, ActorScript_0e_22, $1500, $1f00, FACE_DOWN, $71, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_14, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1200, $1300, FACE_DOWN, OBJ_PEACH, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1800, $1200, FACE_DOWN, OBJ_YOSHI, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1800, $0f40, FACE_DOWN, OBJ_BABY_MARIO, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1800, $0d00, FACE_DOWN, OBJ_LUIGI, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $1400, FACE_DOWN, OBJ_DK, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0a00, $0f00, FACE_DOWN, OBJ_WALK_77_06, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0c00, $1100, FACE_DOWN, OBJ_WALUIGI, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0c00, $0f00, FACE_DOWN, OBJ_BOWSER, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0c00, $0d00, FACE_DOWN, OBJ_WARIO, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0e00, $0b00, FACE_DOWN, OBJ_WALK_77_05, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1600, $0b00, FACE_DOWN, OBJ_MARIO, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0f00, $1f00, FACE_DOWN, OBJ_WALK_77_03, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $1f00, FACE_DOWN, OBJ_WALK_77_04, $01, $00
 	map_actor_end
 MarioWorldEntryPoints_0e:
 	; $535c, 41 bytes (map_entries)

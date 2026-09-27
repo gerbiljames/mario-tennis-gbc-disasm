@@ -391,17 +391,17 @@ TrainingCourtIntroTourScene:
 	ret ; $5c4e
 TrainingCourtTourActors_15:
 	; $5c4f, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_02, $3300, $2a00, FACE_UP, $39, $01, $06
-	map_actor $0000, ActorScript_15_02, $3500, $2300, FACE_DOWN, $32, $01, $03
-	map_actor $0000, ActorScript_15_02, $3500, $2a00, FACE_UP, $34, $01, $07
-	map_actor $0000, ActorScript_15_22, $2d00, $2100, FACE_RIGHT, $66, $01, $07
-	map_actor $0000, ActorScript_15_02, $0b00, $2300, FACE_DOWN, $34, $01, $03
-	map_actor $0000, ActorScript_15_02, $0d00, $2300, FACE_DOWN, $39, $01, $05
-	map_actor $0000, ActorScript_15_02, $0c00, $2900, FACE_UP, $33, $01, $04
-	map_actor $0000, ActorScript_15_22, $1300, $2700, FACE_DOWN, $64, $01, $06
-	map_actor $0000, ActorScript_15_22, $1300, $2900, FACE_UP, $68, $01, $04
-	map_actor $0000, ActorScript_15_22, $2d00, $2900, FACE_RIGHT, $6b, $01, $07
-	map_actor $0000, ActorScript_15_22, $0100, $0100, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_15_02, $3300, $2a00, FACE_UP, OBJ_WALK_72_02, $01, $06
+	map_actor $0000, ActorScript_15_02, $3500, $2300, FACE_DOWN, OBJ_WALK_71_05, $01, $03
+	map_actor $0000, ActorScript_15_02, $3500, $2a00, FACE_UP, OBJ_WALK_71_07, $01, $07
+	map_actor $0000, ActorScript_15_22, $2d00, $2100, FACE_RIGHT, OBJ_BRIAN, $01, $07
+	map_actor $0000, ActorScript_15_02, $0b00, $2300, FACE_DOWN, OBJ_WALK_71_07, $01, $03
+	map_actor $0000, ActorScript_15_02, $0d00, $2300, FACE_DOWN, OBJ_WALK_72_02, $01, $05
+	map_actor $0000, ActorScript_15_02, $0c00, $2900, FACE_UP, OBJ_WALK_71_06, $01, $04
+	map_actor $0000, ActorScript_15_22, $1300, $2700, FACE_DOWN, OBJ_ALLIE, $01, $06
+	map_actor $0000, ActorScript_15_22, $1300, $2900, FACE_UP, OBJ_BOB, $01, $04
+	map_actor $0000, ActorScript_15_22, $2d00, $2900, FACE_RIGHT, OBJ_BETH, $01, $07
+	map_actor $0000, ActorScript_15_22, $0100, $0100, FACE_DOWN, OBJ_EMILY, $01, $00
 	map_actor_end
 ServeChallengerResultScene:
 	xor a ; $5cf3

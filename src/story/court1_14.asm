@@ -9,15 +9,15 @@ Court1MapScripts_14:
 	dw Court1InitScript_14 ; slot 6 InitScript
 Court1Actors_14:
 	; $4fba, 136 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $0b00, $1500, FACE_LEFT, $25, $01, $00
-	map_actor $0000, ActorScript_14_2, $1100, $2300, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_14_2, $2300, $1900, FACE_LEFT, $39, $01, $03
-	map_actor $0000, ActorScript_14_2, $2300, $1c00, FACE_LEFT, $32, $01, $03
-	map_actor $0000, ActorScript_14_2, $0e00, $0d00, FACE_RIGHT, $39, $01, $00
-	map_actor $0000, ActorScript_14_2, $0f00, $0f00, FACE_RIGHT, $39, $01, $06
-	map_actor $0000, ActorScript_14_2, $0e00, $1100, FACE_RIGHT, $3a, $01, $03
-	map_actor $0000, ActorScript_14_2, $2300, $0f00, FACE_LEFT, $33, $01, $00
-	map_actor $0000, ActorScript_14_2, $2100, $1100, FACE_LEFT, $3a, $01, $04
+	map_actor $0000, ActorScript_14_2, $0b00, $1500, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_14_2, $1100, $2300, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_14_2, $2300, $1900, FACE_LEFT, OBJ_WALK_72_02, $01, $03
+	map_actor $0000, ActorScript_14_2, $2300, $1c00, FACE_LEFT, OBJ_WALK_71_05, $01, $03
+	map_actor $0000, ActorScript_14_2, $0e00, $0d00, FACE_RIGHT, OBJ_WALK_72_02, $01, $00
+	map_actor $0000, ActorScript_14_2, $0f00, $0f00, FACE_RIGHT, OBJ_WALK_72_02, $01, $06
+	map_actor $0000, ActorScript_14_2, $0e00, $1100, FACE_RIGHT, OBJ_WALK_72_03, $01, $03
+	map_actor $0000, ActorScript_14_2, $2300, $0f00, FACE_LEFT, OBJ_WALK_71_06, $01, $00
+	map_actor $0000, ActorScript_14_2, $2100, $1100, FACE_LEFT, OBJ_WALK_72_03, $01, $04
 	map_actor_end
 Court1EntryPoints_14:
 	; $5042, 17 bytes (map_entries)
@@ -148,10 +148,10 @@ InitCourt1SceneVariant:
 	ret ; $5161
 Court1ActorsAlt_14:
 	; $5162, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $0b00, $1500, FACE_LEFT, $25, $01, $00
-	map_actor $0000, ActorScript_14_2, $1100, $2300, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_14_2, $1b00, $2300, FACE_DOWN, $39, $01, $03
-	map_actor $0000, ActorScript_14_2, $1d00, $2300, FACE_DOWN, $32, $01, $03
+	map_actor $0000, ActorScript_14_2, $0b00, $1500, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_14_2, $1100, $2300, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_14_2, $1b00, $2300, FACE_DOWN, OBJ_WALK_72_02, $01, $03
+	map_actor $0000, ActorScript_14_2, $1d00, $2300, FACE_DOWN, OBJ_WALK_71_05, $01, $03
 	map_actor_end
 Court1EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $51a4
@@ -182,10 +182,10 @@ IslandSkyMapScripts_14:
 	dw IslandSkyInitScript_14 ; slot 6 InitScript
 IslandSkyActors_14:
 	; $522f, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, $5c, $01, $00
-	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, $5b, $01, $00
-	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, OBJ_WALK_75_06, $01, $00
+	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, OBJ_WALK_74_08, $01, $00
+	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, OBJ_WALK_74_07, $01, $00
+	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, OBJ_WALK_74_06, $01, $00
 	map_actor_end
 IslandSkyEntryPoints_14:
 	; $5271, 49 bytes (map_entries)
@@ -245,7 +245,7 @@ IslandSkyInitScript_14:
 	script_null_script ACTOR_PARTNER ; $532a
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $532f
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $533a
-	ld d, $58 ; $533d
+	ld d, OBJ_HARRY_B ; $533d
 	add d ; $533f
 	ld d, a ; $5340
 	script_get_actor_state $05 ; $5341
@@ -255,7 +255,7 @@ IslandSkyInitScript_14:
 	script_set_anim $05, $01 ; $534b
 .setPlayerObjDef:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5352
-	ld d, $56 ; $5355
+	ld d, OBJ_ALEX_B ; $5355
 	add d ; $5357
 	ld d, a ; $5358
 	script_get_actor_state ACTOR_PLAYER ; $5359

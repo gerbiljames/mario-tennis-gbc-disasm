@@ -413,7 +413,7 @@ AcademyArrivalInitScriptActorListEnd_11:
 	script_null_script ACTOR_PARTNER ; $4fe0
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $4fe5
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4ff0
-	ld d, $58 ; $4ff3
+	ld d, OBJ_HARRY_B ; $4ff3
 	add d ; $4ff5
 	ld d, a ; $4ff6
 	script_get_actor_state $05 ; $4ff7
@@ -425,7 +425,7 @@ AcademyArrivalInitScriptActorListEnd_11:
 	script_face $07, FACE_DOWN ; $5013
 .notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $501a
-	ld d, $56 ; $501d
+	ld d, OBJ_ALEX_B ; $501d
 	add d ; $501f
 	ld d, a ; $5020
 	script_get_actor_state ACTOR_PLAYER ; $5021

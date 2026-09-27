@@ -78,7 +78,7 @@ ReplacePartnerWithStandInActor:
 .noPartner:
 	ret ; $7a29
 .female:
-	ld d, $59 ; $7a2a
+	ld d, OBJ_KATE_B ; $7a2a
 	jr .apply ; $7a2c
 .apply:
 	script_get_actor_state $05 ; $7a2e
@@ -167,7 +167,7 @@ SetPlayerAndPartnerObjectDefs:
 	test_flag FLAG_DOUBLES ; $7b20
 	jp z, .mainChar ; $7b23
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7b26
-	ld d, $58 ; $7b29
+	ld d, OBJ_HARRY_B ; $7b29
 	add d ; $7b2b
 	ld d, a ; $7b2c
 	script_get_actor_state ACTOR_PARTNER ; $7b2d
@@ -177,7 +177,7 @@ SetPlayerAndPartnerObjectDefs:
 	script_set_anim ACTOR_PARTNER, $01 ; $7b37
 .mainChar:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7b3e
-	ld d, $56 ; $7b41
+	ld d, OBJ_ALEX_B ; $7b41
 	add d ; $7b43
 	ld d, a ; $7b44
 	script_get_actor_state ACTOR_PLAYER ; $7b45

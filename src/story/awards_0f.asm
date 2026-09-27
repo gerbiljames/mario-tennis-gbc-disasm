@@ -9,7 +9,7 @@ AwardsCeremonyNpc08_0f:
 	ret ; $5640
 ReplacePlayerWithStandInActor:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5641
-	ld d, $56 ; $5644
+	ld d, OBJ_ALEX_B ; $5644
 	add d ; $5646
 	ld d, a ; $5647
 	script_get_actor_state $16 ; $5648
@@ -295,9 +295,9 @@ AwardsCeremonyArrivalIntro:
 	ld [wStoryModeShowLocationName], a ; $5b61
 	script_fade_in $04 ; $5b64
 	call WaitFadeEnd ; $5b69
-	script_set_objdef $30, $13 ; $5b6c
+	script_set_objdef OBJ_WALK_71_03, $13 ; $5b6c
 	script_set_anim $13, $01 ; $5b78
-	script_set_objdef $3a, $14 ; $5b7f
+	script_set_objdef OBJ_WALK_72_03, $14 ; $5b7f
 	script_set_anim $14, $01 ; $5b8b
 	script_set_position $13, $0700, $0100 ; $5b92
 	script_set_position $14, $0f00, $0100 ; $5b9d
@@ -319,9 +319,9 @@ AwardsCeremonyArrivalIntro:
 	farcall WaitPlayerMoveDone ; $5c0d
 	ld a, $1e ; $5c10
 	call DelayFrames ; $5c12
-	script_set_objdef $4e, $13 ; $5c15
+	script_set_objdef OBJ_WALK_73_14, $13 ; $5c15
 	script_set_anim $13, $01 ; $5c21
-	script_set_objdef $53, $14 ; $5c28
+	script_set_objdef OBJ_WALK_73_19, $14 ; $5c28
 	script_set_anim $14, $01 ; $5c34
 	script_set_position $13, $3f00, $3f00 ; $5c3b
 	script_set_position $14, $3f00, $3f00 ; $5c46
@@ -398,9 +398,9 @@ AwardsCeremonyChairmanSpeech:
 	ld a, $1e ; $5dc6
 	call DelayFrames ; $5dc8
 	script_speak $0b ; $5dcb
-	script_set_objdef $30, $07 ; $5dd0
+	script_set_objdef OBJ_WALK_71_03, $07 ; $5dd0
 	script_set_anim $07, $01 ; $5ddc
-	script_set_objdef $3a, $14 ; $5de3
+	script_set_objdef OBJ_WALK_72_03, $14 ; $5de3
 	script_set_anim $14, $01 ; $5def
 	script_set_position $07, $0700, $0500 ; $5df6
 	script_set_position $14, $0f00, $0780 ; $5e01
@@ -415,9 +415,9 @@ AwardsCeremonyChairmanSpeech:
 	script_wait_move $0c ; $5e44
 	ret ; $5e49
 AwardsCeremonySwapActors_0f:
-	script_set_objdef $74, $10 ; $5e4a
+	script_set_objdef OBJ_WALK_77_07, $10 ; $5e4a
 	script_set_anim $10, $01 ; $5e56
-	script_set_objdef $25, $0f ; $5e5d
+	script_set_objdef OBJ_WALK_6F_07, $0f ; $5e5d
 	script_set_anim $0f, $01 ; $5e69
 	script_set_position $0f, $1100, $1600 ; $5e70
 	script_set_position $10, $1100, $1500 ; $5e7b
@@ -426,9 +426,9 @@ AwardsCeremonySwapActors_0f:
 	script_move_target $10, $1100, $1200 ; $5e94
 	script_move_target $0f, $1100, $1300 ; $5e9f
 	script_wait_move $0f ; $5eaa
-	script_set_objdef $25, $10 ; $5eaf
+	script_set_objdef OBJ_WALK_6F_07, $10 ; $5eaf
 	script_set_anim $10, $01 ; $5ebb
-	script_set_objdef $74, $0f ; $5ec2
+	script_set_objdef OBJ_WALK_77_07, $0f ; $5ec2
 	script_set_anim $0f, $01 ; $5ece
 	script_set_position $10, $1100, $1300 ; $5ed5
 	script_set_position $0f, $1000, $1300 ; $5ee0

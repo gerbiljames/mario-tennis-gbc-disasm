@@ -72,7 +72,7 @@ SetPartnerObjDefByGender_27:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5626
 	or a ; $5629
 	jr nz, .done ; $562a
-	script_set_objdef $28, $0d ; $562c
+	script_set_objdef OBJ_HARRY, $0d ; $562c
 	script_set_anim $0d, $01 ; $5638
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $563f
 .done:
@@ -403,31 +403,31 @@ ActorScript_27_12:
 	as_halt
 End10VarsityCourtActorsAlt_27:
 	; $5ccd, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $1900, $1f00, FACE_LEFT, $4b, $01, $00
-	map_actor $0000, ActorScript_27_27, $0b00, $1300, FACE_DOWN, $68, $01, $07
-	map_actor $0000, ActorScript_27_27, $1300, $2100, FACE_LEFT, $65, $01, $03
-	map_actor $0000, ActorScript_27_27, $1300, $2300, FACE_LEFT, $67, $01, $06
-	map_actor $0000, ActorScript_27_27, $1300, $1700, FACE_LEFT, $6b, $01, $06
-	map_actor $0000, ActorScript_27_27, $1b00, $1d00, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_27_27, $1900, $1d00, FACE_LEFT, $4a, $01, $00
-	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, $53, $01, $00
-	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
-	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, $4d, $01, $00
-	map_actor $0000, ActorScript_27_27, $1700, $1d00, FACE_LEFT, $29, $01, $00
+	map_actor $0000, ActorScript_27_27, $1900, $1f00, FACE_LEFT, OBJ_KEVIN, $01, $00
+	map_actor $0000, ActorScript_27_27, $0b00, $1300, FACE_DOWN, OBJ_BOB, $01, $07
+	map_actor $0000, ActorScript_27_27, $1300, $2100, FACE_LEFT, OBJ_FAY, $01, $03
+	map_actor $0000, ActorScript_27_27, $1300, $2300, FACE_LEFT, OBJ_CURT, $01, $06
+	map_actor $0000, ActorScript_27_27, $1300, $1700, FACE_LEFT, OBJ_BETH, $01, $06
+	map_actor $0000, ActorScript_27_27, $1b00, $1d00, FACE_LEFT, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_27_27, $1900, $1d00, FACE_LEFT, OBJ_MARK, $01, $00
+	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_27_27, $1700, $1d00, FACE_LEFT, OBJ_KATE, $01, $00
 	map_actor_end
 End10VarsityCourtActorsAltB_27:
 	; $5d71, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $1900, $1d00, FACE_LEFT, $4b, $01, $00
-	map_actor $0000, ActorScript_27_27, $0d00, $1700, FACE_DOWN, $68, $01, $07
-	map_actor $0000, ActorScript_27_27, $1300, $2100, FACE_LEFT, $65, $01, $03
-	map_actor $0000, ActorScript_27_27, $1300, $2300, FACE_LEFT, $67, $01, $06
-	map_actor $0000, ActorScript_27_27, $1300, $1700, FACE_LEFT, $6b, $01, $06
-	map_actor $0000, ActorScript_27_27, $1700, $1d00, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_27_27, $0b00, $1300, FACE_DOWN, $4a, $01, $00
-	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, $53, $01, $00
-	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
-	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
-	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
+	map_actor $0000, ActorScript_27_27, $1900, $1d00, FACE_LEFT, OBJ_KEVIN, $01, $00
+	map_actor $0000, ActorScript_27_27, $0d00, $1700, FACE_DOWN, OBJ_BOB, $01, $07
+	map_actor $0000, ActorScript_27_27, $1300, $2100, FACE_LEFT, OBJ_FAY, $01, $03
+	map_actor $0000, ActorScript_27_27, $1300, $2300, FACE_LEFT, OBJ_CURT, $01, $06
+	map_actor $0000, ActorScript_27_27, $1300, $1700, FACE_LEFT, OBJ_BETH, $01, $06
+	map_actor $0000, ActorScript_27_27, $1700, $1d00, FACE_LEFT, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_27_27, $0b00, $1300, FACE_DOWN, OBJ_MARK, $01, $00
+	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_19, $01, $00
+	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_27_27, $3d00, $3d00, FACE_LEFT, OBJ_WALK_73_12, $01, $00
 	map_actor_end
 End8SrCourtMapScripts_27:
 	; $5e15, 14 bytes (map_tree)
@@ -440,19 +440,19 @@ End8SrCourtMapScripts_27:
 	dw End8SrCourtInitScript_27 ; slot 6 InitScript
 End8SrCourtActors_27:
 	; $5e23, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $2b00, $2700, FACE_UP, $49, $01, $00
-	map_actor $0000, ActorScript_27_27, $2200, $0f00, FACE_DOWN, $65, $01, $07
-	map_actor $0000, ActorScript_27_27, $2d00, $1300, FACE_RIGHT, $69, $01, $04
-	map_actor $0000, ActorScript_27_27, $1b00, $0d00, FACE_LEFT, $66, $01, $06
-	map_actor $0000, ActorScript_27_27, $2900, $1300, FACE_LEFT, $54, $01, $05
-	map_actor $0000, ActorScript_27_27, $2900, $1900, FACE_LEFT, $54, $01, $00
+	map_actor $0000, ActorScript_27_27, $2b00, $2700, FACE_UP, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_27_27, $2200, $0f00, FACE_DOWN, OBJ_FAY, $01, $07
+	map_actor $0000, ActorScript_27_27, $2d00, $1300, FACE_RIGHT, OBJ_JOY, $01, $04
+	map_actor $0000, ActorScript_27_27, $1b00, $0d00, FACE_LEFT, OBJ_BRIAN, $01, $06
+	map_actor $0000, ActorScript_27_27, $2900, $1300, FACE_LEFT, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_27_27, $2900, $1900, FACE_LEFT, OBJ_WALK_74_00, $01, $00
 	map_actor_end
 End8SrCourtActorsAlt_27:
 	; $5e81, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $2b00, $2700, FACE_UP, $49, $01, $00
-	map_actor $0000, ActorScript_27_27, $2500, $0f00, FACE_DOWN, $65, $01, $07
-	map_actor $0000, ActorScript_27_27, $2300, $1300, FACE_DOWN, $64, $01, $05
-	map_actor $0000, ActorScript_27_27, $1b00, $0d00, FACE_LEFT, $6b, $01, $05
+	map_actor $0000, ActorScript_27_27, $2b00, $2700, FACE_UP, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_27_27, $2500, $0f00, FACE_DOWN, OBJ_FAY, $01, $07
+	map_actor $0000, ActorScript_27_27, $2300, $1300, FACE_DOWN, OBJ_ALLIE, $01, $05
+	map_actor $0000, ActorScript_27_27, $1b00, $0d00, FACE_LEFT, OBJ_BETH, $01, $05
 	map_actor_end
 End8SrCourtEntryPoints_27:
 	; $5ec3, 9 bytes (map_entries)

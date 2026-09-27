@@ -9,7 +9,7 @@ SetupGymActorsForProgress:
 	jr z, .done ; $4690
 	ret ; $4692
 .stage1:
-	script_set_objdef $34, $04 ; $4693
+	script_set_objdef OBJ_WALK_71_07, $04 ; $4693
 	script_set_anim $03, $01 ; $469f
 	script_set_position $04, $2700, $0f00 ; $46a6
 	script_face $04, FACE_RIGHT ; $46b1

@@ -175,7 +175,7 @@ UpdateMatchFrame:
 	call HandleBallBounceEvent ; $4218
 	ld d, $00 ; $421b
 	call CallModeHook ; $421d
-	ld hl, $0902 ; $4220
+	ld_slot hl, FarPtr_UpdateAllObjSprites ; $4220
 	call FarCallVector ; $4223
 .draw:
 	ld a, [wMatchDrawFrozen] ; $4226

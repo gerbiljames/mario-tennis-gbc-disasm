@@ -339,6 +339,11 @@ _NUM_RE = re.compile(r"\$[0-9a-fA-F]+|%[01]+|\d+")
 _OPERAND_RE = re.compile(r"^\t([a-z_]\w*)\s+([^;]+)")
 _NOT_MACROS = frozenset(_MNEMONICS | {"db", "dw", "ds", "lb", "text", "line", "page"})
 _ROMX_WORD_RE = re.compile(r"\$[4-7][0-9a-fA-F]{3}")
+# The ROM0 routines that take a (bank << 8) | slot pair in hl.
+_SLOT_CONSUMERS = frozenset(
+    "CopyDataFromBank DecompressDataFromBank FarCallVector FarCallIndexed1 "
+    "FarCallIndexed2 FarCallIndexed3 FarCopyIndexed FarDispatchIndexed "
+    "FarReadPtrIndexed".split())
 
 
 def _is_label(arg):
@@ -372,9 +377,21 @@ def check_literal_pointers(fail):
             by_addr.setdefault((int(m.group(1), 16), int(m.group(2), 16)), m.group(3))
     n = 0
     for bank, lines in banks:
+        pending_hl = None
         for m in lines:
             op, args = m.group(1), [a.strip() for a in m.group(2).split(",")]
             where = f"${bank:02x}: {op} {m.group(2).strip()}"
+            if op == "ld" and args[0] == "hl":
+                pending_hl = where if _NUM_RE.fullmatch(args[1]) else None
+            elif op in ("call", "jp") and args[-1] in _SLOT_CONSUMERS:
+                n += 1
+                if pending_hl:
+                    fail("literals", f"{pending_hl} -- a (bank, slot) pair for "
+                                     f"{args[-1]}: use ld_slot")
+                pending_hl = None
+            elif (op not in _MNEMONICS or op in ("call", "jp", "jr", "rst", "ret")
+                  or args[0] in ("h", "l", "hl") or "hl" in args[1:] or "[hl+]" in args):
+                pending_hl = None
             if op in ("jp", "call", "jr"):
                 n += 1
                 if _NUM_RE.fullmatch(args[-1]):

@@ -1,8 +1,12 @@
-WalkSprites_6a:
+DataPtr_WalkSprite_6a_00:
 	dw WalkSprite_6a_00 ; $4000
+DataPtr_WalkSprite_6a_01:
 	dw WalkSprite_6a_01 ; $4002
+DataPtr_WalkSprite_6a_02:
 	dw WalkSprite_6a_02 ; $4004
+DataPtr_WalkSprite_6a_03:
 	dw WalkSprite_6a_03 ; $4006
+DataPtr_WalkSprite_6a_04:
 	dw WalkSprite_6a_04 ; $4008
 WalkSprite_6a_00:
 	db $05, $04, $02, $00 ; OAM attr, facing count, unread, unread

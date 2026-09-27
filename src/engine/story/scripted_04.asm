@@ -73,9 +73,9 @@ GetObjectDefCount:
 	pop hl ; $4c1a
 	pop bc ; $4c1b
 	ret ; $4c1c
-LookupTileId:
+GetCharObjectId:
 	push hl ; $4c1d
-	ld hl, TileIdLookup ; $4c1e
+	ld hl, CharObjectIdTable ; $4c1e
 	add l ; $4c21
 	ld l, a ; $4c22
 	jr nc, .read ; $4c23
@@ -84,12 +84,40 @@ LookupTileId:
 	ld a, [hl] ; $4c26
 	pop hl ; $4c27
 	ret ; $4c28
-TileIdLookup:
-	; $4c29, 32 bytes (bytes:8)
-	db $26, $27, $28, $29, $64, $69, $66, $6a ; 0x00
-	db $68, $6b, $65, $67, $4a, $5e, $5d, $60 ; 0x08
-	db $5f, $49, $62, $61, $4b, $4f, $4f, $6d ; 0x10
-	db $6e, $6f, $2a, $2b, $2c, $2d, $48, $2e ; 0x18
+CharObjectIdTable:
+	; $4c29, 32 bytes: the overworld object id of each CHAR_* id
+	db OBJ_ALEX ; CHAR_ALEX
+	db OBJ_NINA ; CHAR_NINA
+	db OBJ_HARRY ; CHAR_HARRY
+	db OBJ_KATE ; CHAR_KATE
+	db OBJ_ALLIE ; CHAR_ALLIE
+	db OBJ_JOY ; CHAR_JOY
+	db OBJ_BRIAN ; CHAR_BRIAN
+	db OBJ_PAM ; CHAR_PAM
+	db OBJ_BOB ; CHAR_BOB
+	db OBJ_BETH ; CHAR_BETH
+	db OBJ_FAY ; CHAR_FAY
+	db OBJ_CURT ; CHAR_CURT
+	db OBJ_MARK ; CHAR_MARK
+	db OBJ_SEAN ; CHAR_SEAN
+	db OBJ_SAMMI ; CHAR_SAMMI
+	db OBJ_ELDEN ; CHAR_ELDEN
+	db OBJ_SPIKE ; CHAR_SPIKE
+	db OBJ_EMILY ; CHAR_EMILY
+	db OBJ_B_COZ ; CHAR_B_COZ
+	db OBJ_A_COZ ; CHAR_A_COZ
+	db OBJ_KEVIN ; CHAR_KEVIN
+	db OBJ_WALK_73_15 ; CHAR_UNUSED_15
+	db OBJ_WALK_73_15 ; CHAR_UNUSED_16
+	db OBJ_LUIGI ; CHAR_LUIGI
+	db OBJ_DK ; CHAR_DK
+	db OBJ_BABY_MARIO ; CHAR_BABY_MARIO
+	db OBJ_MARIO ; CHAR_MARIO
+	db OBJ_WALUIGI ; CHAR_WALUIGI
+	db OBJ_YOSHI ; CHAR_YOSHI
+	db OBJ_BOWSER ; CHAR_BOWSER
+	db OBJ_WARIO ; CHAR_WARIO
+	db OBJ_PEACH ; CHAR_PEACH
 EvalFlagCondition:
 	ld a, e ; $4c49
 	or d ; $4c4a

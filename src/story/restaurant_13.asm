@@ -342,10 +342,10 @@ AcademyCourtsTourCutscene:
 	ret ; $472b
 AcademyCourtsTourActors_13:
 	; $472c, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4f, $01, $00
-	map_actor $0000, ActorScript_13_27, $3200, $1300, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00
+	map_actor $0000, ActorScript_13_27, $3200, $1300, FACE_DOWN, OBJ_EMILY, $01, $00
 	map_actor_end
 ServiceAceCoachIntroCutscene:
 	ldh a, [hRomBank] ; $476e
@@ -537,10 +537,10 @@ ServiceAceCoachIntroCutscene:
 	ret ; $4c7d
 ServiceAceCoachIntroActors_13:
 	; $4c7e, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4f, $01, $00
-	map_actor $0000, ActorScript_13_27, $4100, $0d00, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_13_27, $1500, $0d00, FACE_DOWN, $4a, $01, $00
-	map_actor $0000, ActorScript_13_27, $1300, $0d00, FACE_DOWN, $4b, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00
+	map_actor $0000, ActorScript_13_27, $4100, $0d00, FACE_LEFT, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_13_27, $1500, $0d00, FACE_DOWN, OBJ_MARK, $01, $00
+	map_actor $0000, ActorScript_13_27, $1300, $0d00, FACE_DOWN, OBJ_KEVIN, $01, $00
 	map_actor_end

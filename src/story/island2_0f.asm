@@ -430,12 +430,12 @@ IslandOpenSinglesMatchReturn:
 	ret ; $75b6
 IslandOpenRoundActorsSingles_0f:
 	; $75b7, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_RIGHT, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2500, $1300, FACE_UP, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, $25, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, $25, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, $4c, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_RIGHT, OBJ_WALK_74_08, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2500, $1300, FACE_UP, OBJ_WALK_74_06, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_74_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, $01, $00
 	map_actor_end
 IslandOpenRoundScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
@@ -600,12 +600,12 @@ IslandOpenRoundSinglesNpc05TextIds:
 	dw Text_25_78 ; record 3
 IslandOpenRoundActorsDoubles_0f:
 	; $7842, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_09, $3d00, $3d00, FACE_UP, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, $25, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, $25, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, $4c, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_08, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_74_06, $01, $00
+	map_actor $0000, ActorScript_0f_09, $3d00, $3d00, FACE_UP, OBJ_WALK_74_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, $01, $00
 	map_actor_end
 IslandOpenRoundScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)

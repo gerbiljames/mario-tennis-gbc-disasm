@@ -2,7 +2,7 @@ ApplyPartnerCharacterVariant_13:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $62be
 	or a ; $62c1
 	jr nz, .done ; $62c2
-	script_set_objdef $28, $0d ; $62c4
+	script_set_objdef OBJ_HARRY, $0d ; $62c4
 	script_set_anim $0d, $01 ; $62d0
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62d7
 .done:
@@ -163,10 +163,10 @@ VarsityCourtTourCutscene:
 	ret ; $6637
 VarsityCourtTourActors_13:
 	; $6638, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4f, $01, $00
-	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00
+	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, OBJ_EMILY, $01, $00
 	map_actor_end
 DecompressVarsityCourtTourRecords_13:
 	push_wram_bank WRAM_STAGING ; $667a

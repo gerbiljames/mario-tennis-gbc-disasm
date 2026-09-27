@@ -5,7 +5,7 @@ SetPartnerObjDefByGender_12:
 	script_get_actor_state $0c ; $5e97
 	ld c, l ; $5e9c
 	ld b, h ; $5e9d
-	ld d, $28 ; $5e9e
+	ld d, OBJ_HARRY ; $5e9e
 	farcall LoadActorObjectDefIfValid ; $5ea0
 	script_set_anim $0c, $01 ; $5ea3
 .done:

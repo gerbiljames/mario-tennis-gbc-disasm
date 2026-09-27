@@ -537,14 +537,14 @@ LoadMatchFormatGfx:
 	pop_wram_bank ; $5eb7
 	ret ; $5ebc
 MatchFormatTable0:
-	; $5ebd, 14 bytes (bytes:2)
-	db $62, $3c ; 0x00
-	db $64, $3c ; 0x02
-	db $66, $3c ; 0x04
-	db $68, $3c ; 0x06
-	db $6a, $3c ; 0x08
-	db $6c, $3c ; 0x0a
-	db $6e, $3c ; 0x0c
+	; $5ebd, 7 slot words
+	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
+	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
+	dslot DataPtr_GamesLabelTiles ; record 2
+	dslot DataPtr_GamesLabelTiles2 ; record 3
+	dslot DataPtr_OneSetLabelTiles ; record 4
+	dslot DataPtr_ThreeSetsLabelTiles ; record 5
+	dslot DataPtr_FiveSetsLabelTiles ; record 6
 MatchFormatTable1:
 	; $5ecb, 14 bytes (bytes:2)
 	db $00, $a8 ; 0x00

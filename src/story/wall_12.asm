@@ -15,10 +15,10 @@ DormEntranceMapScripts_12:
 	dw DormEntranceInitScript_12 ; slot 6 InitScript
 DormEntranceActors_12:
 	; $4014, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, $49, $01, $00
-	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, $29, $01, $00
-	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_EMILY, $01, $00
+	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_KATE, $01, $00
+	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
+	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
 	map_actor_end
 DormEntranceEntryPoints_12:
 	; $4056, 25 bytes (map_entries)
@@ -153,7 +153,7 @@ DormEntranceEntry0FScene:
 	or a ; $439f
 	jr nz, .doubles ; $43a0
 	script_set_text Text_31_92 ; $43a2
-	script_set_objdef $28, $04 ; $43a8
+	script_set_objdef OBJ_HARRY, $04 ; $43a8
 	script_set_anim $04, $01 ; $43b4
 .doubles:
 	script_move_target $03, $1500, $0f00 ; $43bb
@@ -287,11 +287,11 @@ WallPracticeRoomMapScripts_12:
 	dw WallPracticeRoomInitScript_12 ; slot 6 InitScript
 WallPracticeRoomActors_12:
 	; $468a, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_12_51, $0300, $3900, FACE_RIGHT, $39, $01, $00
-	map_actor $0000, ActorScript_12_51, $0800, $3700, FACE_UP, $32, $01, $00
-	map_actor $0000, ActorScript_12_51, $0d00, $3700, FACE_UP, $30, $01, $00
-	map_actor $0000, ActorScript_12_51, $1300, $3900, FACE_RIGHT, $3e, $01, $00
-	map_actor $0000, ActorScript_12_51, $0500, $3700, FACE_DOWN, $3d, $01, $00
+	map_actor $0000, ActorScript_12_51, $0300, $3900, FACE_RIGHT, OBJ_WALK_72_02, $01, $00
+	map_actor $0000, ActorScript_12_51, $0800, $3700, FACE_UP, OBJ_WALK_71_05, $01, $00
+	map_actor $0000, ActorScript_12_51, $0d00, $3700, FACE_UP, OBJ_WALK_71_03, $01, $00
+	map_actor $0000, ActorScript_12_51, $1300, $3900, FACE_RIGHT, OBJ_WALK_72_07, $01, $00
+	map_actor $0000, ActorScript_12_51, $0500, $3700, FACE_DOWN, OBJ_WALK_72_06, $01, $00
 	map_actor_end
 WallPracticeRoomEntryPoints_12:
 	; $46da, 25 bytes (map_entries)

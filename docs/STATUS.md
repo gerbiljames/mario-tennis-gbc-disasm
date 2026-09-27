@@ -145,6 +145,18 @@ grid that no longer encodes to its blob.
   lookups in bank `$00` load `h` with `SLOT_TABLE_PAGE`, the constant the
   asserts check against, and no ROM table is indexed without carrying into
   the high byte, so none depends on staying inside a 256-byte page.
+  Going through the slot consumers turned up 117 more hardcoded slots:
+  `ObjectIdList_04` stored `db slot, bank` bytes into banks whose slot words
+  had no label, so a shifted build would have loaded the wrong header for
+  every object without a byte of the diff changing. The character banks'
+  and walk-sprite banks' slots are labelled, the list is `object_id` rows
+  defining `OBJ_*` (`docs/graphics_formats.md` §4.3), and every `map_actor`
+  row, `script_set_objdef` and object load names its object. The table the
+  generator had called `TileIdLookup` is `CharObjectIdTable`, the game's own
+  map from `CHAR_*` to walk sprite, which names 31 of them. Seven menu
+  label-tile tables and four `FarCallVector` calls held raw slot pairs too;
+  they are `dslot` rows and `ld_slot` loads, and `literals` fails on a
+  numeric `hl` handed to any slot consumer.
 * **2026-09-12** — the last unnamed sound ids. The ids carried by tables
   rather than `sound` sites are named for what they accompany: the seven
   drill and lesson themes the match-settings tables select

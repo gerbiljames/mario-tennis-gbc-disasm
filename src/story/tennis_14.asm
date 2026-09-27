@@ -17,9 +17,9 @@ TennisMachineRoomMapScripts_14:
 	dw TennisMachineRoomInitScript_14 ; slot 6 InitScript
 TennisMachineRoomActors_14:
 	; $4016, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $2b00, $3300, FACE_RIGHT, $3d, $01, $00
-	map_actor $0000, ActorScript_14_2, $2b00, $3100, FACE_RIGHT, $3d, $01, $00
-	map_actor $0000, ActorScript_14_2, $2d00, $2b00, FACE_LEFT, $3e, $01, $00
+	map_actor $0000, ActorScript_14_2, $2b00, $3300, FACE_RIGHT, OBJ_WALK_72_06, $01, $00
+	map_actor $0000, ActorScript_14_2, $2b00, $3100, FACE_RIGHT, OBJ_WALK_72_06, $01, $00
+	map_actor $0000, ActorScript_14_2, $2d00, $2b00, FACE_LEFT, OBJ_WALK_72_07, $01, $00
 	map_actor_end
 TennisMachineRoomEntryPoints_14:
 	; $404a, 25 bytes (map_entries)
