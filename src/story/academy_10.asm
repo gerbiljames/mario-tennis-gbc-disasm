@@ -252,24 +252,24 @@ AcademyWingInitScript_10:
 	script_set_position $03, $3f00, $3f00 ; $65f3
 	script_face_toward $08, $07 ; $65fe
 	script_wait_frames $01 ; $6606
-	script_facing_lock $07, $01 ; $660d
+	script_lock_facing $07 ; $660d
 	script_move_target $07, $2100, $3300 ; $6614
 	script_wait_move $07 ; $661f
 	script_set_anim $08, $02 ; $6624
 	script_move_target $07, $2200, $3300 ; $662b
 	script_wait_move $07 ; $6636
-	script_facing_lock $07, FACE_RIGHT ; $663b
+	script_unlock_facing $07 ; $663b
 	script_face_pair $08, $07 ; $6642
 	script_speak $07 ; $664a
 	script_face_toward $08, $09 ; $664f
 	script_wait_frames $01 ; $6657
-	script_facing_lock $09, $01 ; $665e
+	script_lock_facing $09 ; $665e
 	script_move_target $09, $1f00, $3300 ; $6665
 	script_wait_move $09 ; $6670
 	script_set_anim $08, $02 ; $6675
 	script_move_target $09, $1e00, $3300 ; $667c
 	script_wait_move $09 ; $6687
-	script_facing_lock $09, FACE_RIGHT ; $668c
+	script_unlock_facing $09 ; $668c
 	script_face_pair $08, $09 ; $6693
 	script_speak $09 ; $669b
 	jr .face ; $66a0
@@ -282,23 +282,23 @@ AcademyWingInitScript_10:
 .face:
 	script_face_toward $08, $07 ; $66c6
 	script_wait_frames $01 ; $66ce
-	script_facing_lock $07, $01 ; $66d5
+	script_lock_facing $07 ; $66d5
 	script_move_target $07, $2100, $3300 ; $66dc
 	script_wait_move $07 ; $66e7
 	script_move_target $07, $2200, $3300 ; $66ec
 	script_wait_move $07 ; $66f7
-	script_facing_lock $07, FACE_RIGHT ; $66fc
+	script_unlock_facing $07 ; $66fc
 	script_face_pair $08, $07 ; $6703
 	script_set_anim $08, $02 ; $670b
 	script_wait_idle $08 ; $6712
 	script_face_toward $08, $09 ; $6717
 	script_wait_frames $01 ; $671f
-	script_facing_lock $09, $01 ; $6726
+	script_lock_facing $09 ; $6726
 	script_move_target $09, $1f00, $3300 ; $672d
 	script_wait_move $09 ; $6738
 	script_move_target $09, $1e00, $3300 ; $673d
 	script_wait_move $09 ; $6748
-	script_facing_lock $09, FACE_RIGHT ; $674d
+	script_unlock_facing $09 ; $674d
 	script_face_pair $08, $09 ; $6754
 	script_set_anim $08, $02 ; $675c
 	script_wait_idle $08 ; $6763

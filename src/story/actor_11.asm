@@ -343,7 +343,7 @@ OfferSinglesRankingMatch:
 	script_wait_frames $05 ; $7795
 	and a ; $779c
 	jp nz, .speak2 ; $779d
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $77a0
+	script_unlock_facing ACTOR_PLAYER ; $77a0
 	script_set_speed ACTOR_PLAYER, $0018 ; $77a7
 	script_move_target ACTOR_PLAYER, $1300, $1500 ; $77af
 	script_wait_move ACTOR_PLAYER ; $77ba

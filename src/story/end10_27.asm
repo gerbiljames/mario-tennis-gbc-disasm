@@ -210,7 +210,7 @@ SceneSharedData_27:
 	script_set_position $0a, $3f00, $3f00 ; $5930
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $593b
 	script_wait_frames $0a ; $5943
-	script_facing_lock ACTOR_PLAYER, $01 ; $594a
+	script_lock_facing ACTOR_PLAYER ; $594a
 	script_wait_frames $0a ; $5951
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $5958
 	script_wait_move ACTOR_PLAYER ; $5962
@@ -258,7 +258,7 @@ CeremonyDoublesReaction_27:
 	script_wait_frames $28 ; $5a46
 	script_set_position $0a, $3f00, $3f00 ; $5a4d
 	script_wait_frames $0a ; $5a58
-	script_facing_lock ACTOR_PLAYER, $01 ; $5a5f
+	script_lock_facing ACTOR_PLAYER ; $5a5f
 	script_wait_frames $0a ; $5a66
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $5a6d
 	script_wait_move ACTOR_PLAYER ; $5a77
@@ -291,7 +291,7 @@ CeremonyDoublesReaction_27:
 	script_wait_idle ACTOR_PLAYER ; $5b07
 .continue:
 	script_wait_frames $14 ; $5b0c
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5b13
+	script_unlock_facing ACTOR_PLAYER ; $5b13
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5b1a
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5b21
 	script_set_actor_script $08, ActorScript_27_07 ; $5b28

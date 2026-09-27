@@ -78,10 +78,10 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_face_pair ACTOR_END1_MAIN_BLDG_WALK_74_06, ACTOR_PLAYER ; $7773
 	script_face_pair ACTOR_END1_MAIN_BLDG_WALK_74_08, ACTOR_END1_MAIN_BLDG_WALK_74_07 ; $777b
 	script_delay $0a ; $7783
-	script_facing_lock ACTOR_PLAYER, $01 ; $7788
-	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_06, $01 ; $778f
-	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_07, $01 ; $7796
-	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_08, $01 ; $779d
+	script_lock_facing ACTOR_PLAYER ; $7788
+	script_lock_facing ACTOR_END1_MAIN_BLDG_WALK_74_06 ; $778f
+	script_lock_facing ACTOR_END1_MAIN_BLDG_WALK_74_07 ; $7796
+	script_lock_facing ACTOR_END1_MAIN_BLDG_WALK_74_08 ; $779d
 	script_move_target ACTOR_PLAYER, $1600, $1700 ; $77a4
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_06, $1a00, $1700 ; $77af
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_07, $1500, $1500 ; $77ba
@@ -91,10 +91,10 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_move_player $1800, $2f00 ; $77db
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_2, $1800, $1900 ; $77e5
 	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_2 ; $77f0
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $77f5
-	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_06, FACE_RIGHT ; $77fc
-	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_07, FACE_RIGHT ; $7803
-	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_08, FACE_RIGHT ; $780a
+	script_unlock_facing ACTOR_PLAYER ; $77f5
+	script_unlock_facing ACTOR_END1_MAIN_BLDG_WALK_74_06 ; $77fc
+	script_unlock_facing ACTOR_END1_MAIN_BLDG_WALK_74_07 ; $7803
+	script_unlock_facing ACTOR_END1_MAIN_BLDG_WALK_74_08 ; $780a
 	script_move_target ACTOR_PLAYER, $1600, $1f00 ; $7811
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_06, $1a00, $1f00 ; $781c
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_07, $1500, $1d00 ; $7827

@@ -262,10 +262,10 @@ JuniorClassCourtDoublesANpc0A_11:
 	ret ; $57e8
 JuniorClassCourtDoublesNpc03FaceUp_11:
 	script_set_speed ACTOR_PLAYER, $0008 ; $57e9
-	script_facing_lock ACTOR_PLAYER, $01 ; $57f1
+	script_lock_facing ACTOR_PLAYER ; $57f1
 	script_move_target ACTOR_PLAYER, $1300, $1500 ; $57f8
 	script_wait_move ACTOR_PLAYER ; $5803
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5808
+	script_unlock_facing ACTOR_PLAYER ; $5808
 	script_face ACTOR_PLAYER, FACE_UP ; $580f
 JuniorClassCourtDoublesNpc03_11:
 	call OfferDoublesRankingMatch ; $5816

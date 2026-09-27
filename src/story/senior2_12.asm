@@ -35,7 +35,7 @@ SeniorRankOfferScenePrep:
 SeniorRankOfferScenePrepFacingUp:
 	script_set_speed ACTOR_PLAYER, $0008 ; $5f03
 	script_face ACTOR_PLAYER, FACE_UP ; $5f0b
-	script_facing_lock ACTOR_PLAYER, $01 ; $5f12
+	script_lock_facing ACTOR_PLAYER ; $5f12
 	test_flag FLAG_DOUBLES ; $5f19
 	jr z, SeniorSinglesRankOfferScene ; $5f1c
 	call SeniorDoublesRankOfferScene ; $5f1e
@@ -44,7 +44,7 @@ SeniorSinglesRankOfferScene:
 	script_move_target ACTOR_PLAYER, $2d00, $1b00 ; $5f22
 	script_wait_move ACTOR_PLAYER ; $5f2d
 	script_wait_frames $0a ; $5f32
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5f39
+	script_unlock_facing ACTOR_PLAYER ; $5f39
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PLAYER ; $5f40
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $5f48
 	script_set_text Text_34_60 ; $5f50
@@ -90,7 +90,7 @@ SeniorDoublesRankOfferScene:
 	script_move_target ACTOR_PLAYER, $2d00, $1b00 ; $5fde
 	script_wait_frames $0a ; $5fe9
 	script_wait_move ACTOR_PLAYER ; $5ff0
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5ff5
+	script_unlock_facing ACTOR_PLAYER ; $5ff5
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PLAYER ; $5ffc
 	script_wait_move ACTOR_PARTNER ; $6004
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $6009

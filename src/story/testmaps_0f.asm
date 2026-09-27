@@ -434,10 +434,10 @@ AwardsCeremonyTile02_0f:
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_77_07_3 ; $48f4
 	ld a, $05 ; $48f9
 	call DelayFrames ; $48fb
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, $01 ; $48fe
+	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $48fe
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, $0e00, $1100 ; $4905
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $4910
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_RIGHT ; $4915
+	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $4915
 	script_face ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_UP ; $491c
 	ld a, $14 ; $4923
 	call DelayFrames ; $4925
@@ -513,10 +513,10 @@ AwardsCeremonyTile02_0f:
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0c00, $1300 ; $4ac7
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_77_07_2, $0b00, $1300 ; $4ad2
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_77_07_2 ; $4add
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $01 ; $4ae2
+	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $4ae2
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0e00, $1300 ; $4ae9
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $4af4
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_RIGHT ; $4af9
+	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $4af9
 	script_set_speed ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0020 ; $4b00
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $1000, $1600 ; $4b08
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $4b13
@@ -543,10 +543,10 @@ AwardsCeremonyTile02_0f:
 	call DelayFrames ; $4ba6
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_74_06, $02 ; $4ba9
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_74_06 ; $4bb0
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, $01 ; $4bb5
+	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $4bb5
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, $0a00, $1100 ; $4bbc
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $4bc7
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_RIGHT ; $4bcc
+	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $4bcc
 	script_face ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_UP ; $4bd3
 	ld a, $14 ; $4bda
 	call DelayFrames ; $4bdc
@@ -605,10 +605,10 @@ AwardsCeremonyTile02_0f:
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0e00, $1300 ; $4d5d
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_77_07_1, $0d00, $1300 ; $4d68
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_77_07_1 ; $4d73
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $01 ; $4d78
+	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $4d78
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0f00, $1300 ; $4d7f
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $4d8a
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_RIGHT ; $4d8f
+	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $4d8f
 	script_set_speed ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0020 ; $4d96
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0f00, $1600 ; $4d9e
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $4da9
@@ -622,10 +622,10 @@ AwardsCeremonyTile02_0f:
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, $0c00, $0f80 ; $4dda
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_77_07_1, $0c00, $0e40 ; $4de5
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_77_07_1 ; $4df0
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, $01 ; $4df5
+	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $4df5
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, $0c00, $1100 ; $4dfc
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $4e07
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_RIGHT ; $4e0c
+	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $4e0c
 	script_face ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_UP ; $4e13
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, $02 ; $4e1a
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $4e21
@@ -768,10 +768,10 @@ AwardsCeremonyTile02_0f:
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0c00, $1300 ; $5141
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_77_07_3, $0b00, $1300 ; $514c
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_77_07_3 ; $5157
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $01 ; $515c
+	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $515c
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0f00, $1300 ; $5163
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $516e
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_RIGHT ; $5173
+	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $5173
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $1100, $1600 ; $517a
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $5185
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_UP ; $518a
@@ -792,10 +792,10 @@ AwardsCeremonyTile02_0f:
 	call DelayFrames ; $51e6
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_73_14, $02 ; $51e9
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_73_14 ; $51f0
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, $01 ; $51f5
+	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $51f5
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, $0a00, $1100 ; $51fc
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $5207
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_RIGHT ; $520c
+	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $520c
 	script_face ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_UP ; $5213
 	ld a, $32 ; $521a
 	call DelayFrames ; $521c
@@ -861,10 +861,10 @@ AwardsCeremonyTile02_0f:
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_06, $3f00, $3f00 ; $5390
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0f00, $1400 ; $539b
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_UP ; $53a6
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $01 ; $53ad
+	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $53ad
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0f00, $1600 ; $53b4
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $53bf
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_RIGHT ; $53c4
+	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $53c4
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_UP ; $53cb
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_77_07_1, $0ec0, $1300 ; $53d2
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, $0f00, $1300 ; $53dd
@@ -902,10 +902,10 @@ AwardsCeremonyTile02_0f:
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_77_07_1 ; $549f
 	ld a, $05 ; $54a4
 	call DelayFrames ; $54a6
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, $01 ; $54a9
+	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $54a9
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, $0d00, $1100 ; $54b0
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $54bb
-	script_facing_lock ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_RIGHT ; $54c0
+	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $54c0
 	script_face ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_UP ; $54c7
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, $02 ; $54ce
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $54d5

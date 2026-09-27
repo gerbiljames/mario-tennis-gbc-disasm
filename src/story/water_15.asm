@@ -363,13 +363,13 @@ TrainingCourtIntroTourScene:
 	script_face ACTOR_PLAYER, FACE_LEFT ; $5b86
 	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $1e00, $2b00 ; $5b8d
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b98
-	script_facing_lock ACTOR_PLAYER, $01 ; $5b9d
+	script_lock_facing ACTOR_PLAYER ; $5b9d
 	script_move_target ACTOR_PLAYER, $2000, $2d00 ; $5ba4
 	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $1e00, $2f00 ; $5baf
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5bba
 	script_move_target ACTOR_PLAYER, $1f00, $2d00 ; $5bbf
 	script_wait_move ACTOR_PLAYER ; $5bca
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5bcf
+	script_unlock_facing ACTOR_PLAYER ; $5bcf
 	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $1f00, $2f00 ; $5bd6
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5be1
 	script_move_target ACTOR_PLAYER, $1f00, $3700 ; $5be6

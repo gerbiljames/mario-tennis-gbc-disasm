@@ -502,11 +502,11 @@ MarioWorldLuigiDefendsChampCutscene:
 	script_move_target ACTOR_MARIO_WORLD_WALUIGI, $1300, $0f00 ; $6eee
 	script_wait_move ACTOR_MARIO_WORLD_WALUIGI ; $6ef9
 	script_wait_frames $0a ; $6efe
-	script_facing_lock ACTOR_MARIO_WORLD_LUIGI, $01 ; $6f05
+	script_lock_facing ACTOR_MARIO_WORLD_LUIGI ; $6f05
 	script_move_target ACTOR_MARIO_WORLD_LUIGI, $1800, $0d00 ; $6f0c
 	script_wait_move ACTOR_MARIO_WORLD_LUIGI ; $6f17
 	script_face ACTOR_MARIO_WORLD_LUIGI, FACE_LEFT ; $6f1c
-	script_facing_lock ACTOR_MARIO_WORLD_LUIGI, FACE_RIGHT ; $6f23
+	script_unlock_facing ACTOR_MARIO_WORLD_LUIGI ; $6f23
 	ret ; $6f2a
 MarioWorldExhibitionDemandCutscene:
 	script_face ACTOR_MARIO_WORLD_WARIO, FACE_UP ; $6f2b

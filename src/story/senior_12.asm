@@ -160,7 +160,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_set_speed ACTOR_PARTNER, $0010 ; $56a7
 	script_set_speed ACTOR_PLAYER, $0008 ; $56af
 	script_face ACTOR_PLAYER, FACE_UP ; $56b7
-	script_facing_lock ACTOR_PLAYER, $01 ; $56be
+	script_lock_facing ACTOR_PLAYER ; $56be
 	script_null_script ACTOR_PARTNER ; $56c5
 	script_move_target ACTOR_PLAYER, $2900, $1b00 ; $56ca
 	script_move_target ACTOR_PARTNER, $2b00, $1b00 ; $56d5
@@ -190,7 +190,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $576a
 	script_set_anim ACTOR_SENIOR_COURT_EMILY, $03 ; $5772
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $5779
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $577e
+	script_unlock_facing ACTOR_PLAYER ; $577e
 	script_face ACTOR_PLAYER, FACE_UP ; $5785
 	script_set_text Text_34_7 ; $578c
 	set_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5792

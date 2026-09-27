@@ -1,9 +1,9 @@
 VarsityCourtANpc03FaceUp_13:
 	script_set_speed ACTOR_PLAYER, $0008 ; $6c13
-	script_facing_lock ACTOR_PLAYER, $01 ; $6c1b
+	script_lock_facing ACTOR_PLAYER ; $6c1b
 	script_move_target ACTOR_PLAYER, $0d00, $1f00 ; $6c22
 	script_wait_move ACTOR_PLAYER ; $6c2d
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $6c32
+	script_unlock_facing ACTOR_PLAYER ; $6c32
 	script_face ACTOR_PLAYER, FACE_UP ; $6c39
 VarsityCourtANpc03_13:
 	script_set_text Text_30_544 ; $6c40
@@ -102,10 +102,10 @@ VarsityCourtANpc03_13:
 	ret ; $6e1f
 VarsityCourtBNpc03FaceUp_13:
 	script_set_speed ACTOR_PLAYER, $0008 ; $6e20
-	script_facing_lock ACTOR_PLAYER, $01 ; $6e28
+	script_lock_facing ACTOR_PLAYER ; $6e28
 	script_move_target ACTOR_PLAYER, $0d00, $1f00 ; $6e2f
 	script_wait_move ACTOR_PLAYER ; $6e3a
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $6e3f
+	script_unlock_facing ACTOR_PLAYER ; $6e3f
 	script_face ACTOR_PLAYER, FACE_UP ; $6e46
 VarsityCourtBNpc03_13:
 	script_null_script ACTOR_PARTNER ; $6e4d
@@ -436,7 +436,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_position ACTOR_DOUBLES_TRAVELING_TEAM_WALK_73_19, $3f00, $3f00 ; $757d
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7588
 	script_wait_frames $0a ; $7590
-	script_facing_lock ACTOR_PLAYER, $01 ; $7597
+	script_lock_facing ACTOR_PLAYER ; $7597
 	script_wait_frames $0a ; $759e
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $75a5
 	script_wait_move ACTOR_PLAYER ; $75af
@@ -487,7 +487,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_frames $28 ; $76a3
 	script_set_position $0a, $3f00, $3f00 ; $76aa
 	script_wait_frames $0a ; $76b5
-	script_facing_lock ACTOR_PLAYER, $01 ; $76bc
+	script_lock_facing ACTOR_PLAYER ; $76bc
 	script_wait_frames $0a ; $76c3
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $76ca
 	script_wait_move ACTOR_PLAYER ; $76d4
@@ -522,7 +522,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_text Text_31_28 ; $7769
 	script_wait_frames $14 ; $776f
 	script_speak $08 ; $7776
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $777b
+	script_unlock_facing ACTOR_PLAYER ; $777b
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7782
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $7789
 	script_set_actor_script $08, ActorScript_13_21 ; $7790

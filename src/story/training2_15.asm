@@ -220,10 +220,10 @@ TrainingCourtNpc06_15:
 	ret ; $5111
 TrainingCourtNpc07FaceDown_15:
 	script_set_speed ACTOR_PLAYER, $0008 ; $5112
-	script_facing_lock ACTOR_PLAYER, $01 ; $511a
+	script_lock_facing ACTOR_PLAYER ; $511a
 	script_move_target ACTOR_PLAYER, $1300, $1300 ; $5121
 	script_wait_move ACTOR_PLAYER ; $512c
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5131
+	script_unlock_facing ACTOR_PLAYER ; $5131
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5138
 TrainingCourtNpc07_15:
 	test_flag FLAG_CLEARED_SERVICE_PRACTICE_1 ; $513f
@@ -283,10 +283,10 @@ TrainingCourtNpc11_15:
 	ret ; $51bd
 TrainingCourtNpc12FaceUp_15:
 	script_set_speed ACTOR_PLAYER, $0008 ; $51be
-	script_facing_lock ACTOR_PLAYER, $01 ; $51c6
+	script_lock_facing ACTOR_PLAYER ; $51c6
 	script_move_target ACTOR_PLAYER, $2d00, $2b00 ; $51cd
 	script_wait_move ACTOR_PLAYER ; $51d8
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $51dd
+	script_unlock_facing ACTOR_PLAYER ; $51dd
 	script_face ACTOR_PLAYER, FACE_UP ; $51e4
 TrainingCourtNpc12_15:
 	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_1 ; $51eb
@@ -346,10 +346,10 @@ TrainingCourtNpc0C_15:
 	ret ; $5269
 TrainingCourtNpc0DFaceUp_15:
 	script_set_speed ACTOR_PLAYER, $0008 ; $526a
-	script_facing_lock ACTOR_PLAYER, $01 ; $5272
+	script_lock_facing ACTOR_PLAYER ; $5272
 	script_move_target ACTOR_PLAYER, $1300, $2b00 ; $5279
 	script_wait_move ACTOR_PLAYER ; $5284
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5289
+	script_unlock_facing ACTOR_PLAYER ; $5289
 	script_face ACTOR_PLAYER, FACE_UP ; $5290
 TrainingCourtNpc0D_15:
 	test_flag FLAG_CLEARED_STROKE_PRACTICE_1 ; $5297

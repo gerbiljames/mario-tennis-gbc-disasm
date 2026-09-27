@@ -106,7 +106,7 @@ TrainingGymExitTriggers_0e:
 	db $ff
 TrainingGymExit02_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $4290
-	script_facing_lock ACTOR_PLAYER, $01 ; $4297
+	script_lock_facing ACTOR_PLAYER ; $4297
 	script_set_speed ACTOR_PLAYER, $0018 ; $429e
 	script_move_target ACTOR_PLAYER, $0b00, $0d00 ; $42a6
 	script_wait_move ACTOR_PLAYER ; $42b1
@@ -121,12 +121,12 @@ TrainingGymExit02_0e:
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $42fd
 	ld c, $08 ; $4307
 	call BeginFadeOut ; $4309
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $430c
+	script_unlock_facing ACTOR_PLAYER ; $430c
 	script_wait_frames $0a ; $4313
 	ret ; $431a
 TrainingGymExit03_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $431b
-	script_facing_lock ACTOR_PLAYER, $01 ; $4322
+	script_lock_facing ACTOR_PLAYER ; $4322
 	script_set_speed ACTOR_PLAYER, $0018 ; $4329
 	script_move_target ACTOR_PLAYER, $1500, $0d00 ; $4331
 	script_wait_move ACTOR_PLAYER ; $433c
@@ -141,7 +141,7 @@ TrainingGymExit03_0e:
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $4388
 	ld c, $08 ; $4392
 	call BeginFadeOut ; $4394
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $4397
+	script_unlock_facing ACTOR_PLAYER ; $4397
 	script_wait_frames $0a ; $439e
 	ret ; $43a5
 TrainingGymNpc03_0e:

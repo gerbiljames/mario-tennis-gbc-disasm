@@ -127,7 +127,7 @@ LateStudentCrashCutscene:
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4a49
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4a4e
 	call KnockPlayerAirborneFlipped_11 ; $4a53
-	script_facing_lock ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $01 ; $4a56
+	script_lock_facing ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4a56
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $05 ; $4a5d
 	script_wait_frames $14 ; $4a64
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $ff80 ; $4a6b
@@ -142,7 +142,7 @@ LateStudentCrashCutscene:
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4aac
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $1a00, $2400 ; $4ab4
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4abf
-	script_facing_lock ACTOR_ACADEMY_ARRIVAL_WALK_75_06, FACE_RIGHT ; $4ac4
+	script_unlock_facing ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4ac4
 	script_set_anim ACTOR_PLAYER, $02 ; $4acb
 	script_wait_idle ACTOR_PLAYER ; $4ad2
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $02 ; $4ad7
@@ -513,10 +513,10 @@ AcademyArrivalInitScriptActorListEnd_11:
 	script_face_pair ACTOR_LIST_11_0_WALK_74_06, ACTOR_PLAYER ; $520d
 	script_face_pair ACTOR_LIST_11_0_WALK_74_08, ACTOR_LIST_11_0_WALK_74_07 ; $5215
 	script_wait_frames $0a ; $521d
-	script_facing_lock ACTOR_PLAYER, $01 ; $5224
-	script_facing_lock ACTOR_LIST_11_0_WALK_74_06, $01 ; $522b
-	script_facing_lock ACTOR_LIST_11_0_WALK_74_07, $01 ; $5232
-	script_facing_lock ACTOR_LIST_11_0_WALK_74_08, $01 ; $5239
+	script_lock_facing ACTOR_PLAYER ; $5224
+	script_lock_facing ACTOR_LIST_11_0_WALK_74_06 ; $522b
+	script_lock_facing ACTOR_LIST_11_0_WALK_74_07 ; $5232
+	script_lock_facing ACTOR_LIST_11_0_WALK_74_08 ; $5239
 	script_move_target ACTOR_PLAYER, $1600, $1700 ; $5240
 	script_move_target ACTOR_LIST_11_0_WALK_74_06, $1a00, $1700 ; $524b
 	script_move_target ACTOR_LIST_11_0_WALK_74_07, $1500, $1500 ; $5256
@@ -525,10 +525,10 @@ AcademyArrivalInitScriptActorListEnd_11:
 	script_move_player $1800, $2f00 ; $5271
 	script_move_target ACTOR_LIST_11_0_WALK_75_06, $1800, $1900 ; $527b
 	script_wait_move ACTOR_LIST_11_0_WALK_75_06 ; $5286
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $528b
-	script_facing_lock ACTOR_LIST_11_0_WALK_74_06, FACE_RIGHT ; $5292
-	script_facing_lock ACTOR_LIST_11_0_WALK_74_07, FACE_RIGHT ; $5299
-	script_facing_lock ACTOR_LIST_11_0_WALK_74_08, FACE_RIGHT ; $52a0
+	script_unlock_facing ACTOR_PLAYER ; $528b
+	script_unlock_facing ACTOR_LIST_11_0_WALK_74_06 ; $5292
+	script_unlock_facing ACTOR_LIST_11_0_WALK_74_07 ; $5299
+	script_unlock_facing ACTOR_LIST_11_0_WALK_74_08 ; $52a0
 	script_move_target ACTOR_PLAYER, $1600, $2b00 ; $52a7
 	script_move_target ACTOR_LIST_11_0_WALK_74_06, $1a00, $2b00 ; $52b2
 	script_move_target ACTOR_LIST_11_0_WALK_74_07, $1500, $2900 ; $52bd

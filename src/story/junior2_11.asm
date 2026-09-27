@@ -44,10 +44,10 @@ JuniorClassCourtSinglesExitTriggers_11:
 	db $ff
 JuniorClassCourtSinglesNpc03FaceUp_11:
 	script_set_speed ACTOR_PLAYER, $0008 ; $693d
-	script_facing_lock ACTOR_PLAYER, $01 ; $6945
+	script_lock_facing ACTOR_PLAYER ; $6945
 	script_move_target ACTOR_PLAYER, $1300, $1500 ; $694c
 	script_wait_move ACTOR_PLAYER ; $6957
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $695c
+	script_unlock_facing ACTOR_PLAYER ; $695c
 	script_face ACTOR_PLAYER, FACE_UP ; $6963
 JuniorClassCourtSinglesNpc03_11:
 	call OfferSinglesRankingMatch ; $696a

@@ -434,10 +434,10 @@ MarioWorldNpc08FaceUp_0e:
 	script_set_speed ACTOR_PARTNER, $0018 ; $63fc
 	test_flag FLAG_DOUBLES ; $6404
 	jr nz, .doubles ; $6407
-	script_facing_lock ACTOR_PLAYER, $01 ; $6409
+	script_lock_facing ACTOR_PLAYER ; $6409
 	script_move_target ACTOR_PLAYER, $1200, $0d00 ; $6410
 	script_wait_move ACTOR_PLAYER ; $641b
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $6420
+	script_unlock_facing ACTOR_PLAYER ; $6420
 	script_face ACTOR_PLAYER, FACE_UP ; $6427
 	script_face ACTOR_PLAYER, FACE_UP ; $642e
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_DOWN ; $6435

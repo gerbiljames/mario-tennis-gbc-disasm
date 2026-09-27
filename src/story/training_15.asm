@@ -769,7 +769,7 @@ TrainingCourtNpc13_15:
 	script_set_speed ACTOR_PLAYER, $0020 ; $4c66
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4c6e
 	script_wait_frames $01 ; $4c75
-	script_facing_lock ACTOR_PLAYER, $01 ; $4c7c
+	script_lock_facing ACTOR_PLAYER ; $4c7c
 	script_set_anim ACTOR_PLAYER, $02 ; $4c83
 	script_move_target ACTOR_PLAYER, $3300, $0d00 ; $4c8a
 	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, $3300, $0f00 ; $4c95
@@ -779,7 +779,7 @@ TrainingCourtNpc13_15:
 	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, $1f00, $1500 ; $4cb5
 	script_wait_move ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4cc0
 	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, $3f00, $3f00 ; $4cc5
-	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $4cd0
+	script_unlock_facing ACTOR_PLAYER ; $4cd0
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4cd7
 	script_get_actor_state ACTOR_PLAYER ; $4cde
 	ld a, $02 ; $4ce3

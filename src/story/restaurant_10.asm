@@ -572,7 +572,7 @@ RestaurantNpc12_10:
 	script_speak ACTOR_RESTAURANT_WALK_72_03_2 ; $5d5b
 	script_face ACTOR_RESTAURANT_WALK_72_03_2, FACE_DOWN ; $5d60
 	script_wait_frames $14 ; $5d67
-	script_facing_lock ACTOR_RESTAURANT_WALK_72_03_2, $01 ; $5d6e
+	script_lock_facing ACTOR_RESTAURANT_WALK_72_03_2 ; $5d6e
 	script_move_angle ACTOR_RESTAURANT_WALK_72_03_2, FACE_UP, $0100 ; $5d75
 	call SetRestaurantNpc12StageFlag_10 ; $5d7f
 	script_face_toward ACTOR_PLAYER, ACTOR_RESTAURANT_WALK_72_03_2 ; $5d82
@@ -590,7 +590,7 @@ RestaurantNpc12_10:
 .altText:
 	farcall InitDialogueTextCursor ; $5d9f
 	script_speak ACTOR_RESTAURANT_WALK_72_03_2 ; $5da2
-	script_facing_lock ACTOR_RESTAURANT_WALK_72_03_2, FACE_RIGHT ; $5da7
+	script_unlock_facing ACTOR_RESTAURANT_WALK_72_03_2 ; $5da7
 	script_face ACTOR_RESTAURANT_WALK_72_03_2, FACE_DOWN ; $5dae
 	ret ; $5db5
 .speak:

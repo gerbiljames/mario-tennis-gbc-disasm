@@ -819,11 +819,20 @@ MACRO script_face_toward
 	ld a, \2
 	farcall FaceActorTowardActor
 ENDM
-; Sets an actor's facing and locks it (won't auto-turn while walking).
-; Usage: script_facing_lock actor, facing
-MACRO script_facing_lock
+; ScriptSetActorFacingLock with b != 0: sets bit 0 of the actor's +$30, so it
+; keeps its facing while it walks.
+; Usage: script_lock_facing actor
+MACRO script_lock_facing
 	ld a, \1
-	ld b, \2
+	ld b, $01
+	farcall ScriptSetActorFacingLock
+ENDM
+; ScriptSetActorFacingLock with b = 0: clears the lock bit and copies the
+; actor's facing (+$14) into +$34.
+; Usage: script_unlock_facing actor
+MACRO script_unlock_facing
+	ld a, \1
+	ld b, $00
 	farcall ScriptSetActorFacingLock
 ENDM
 ; Writes `state` to the actor's activity byte (state struct +$20).
