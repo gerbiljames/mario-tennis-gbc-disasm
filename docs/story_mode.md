@@ -843,10 +843,12 @@ marked *resolved* were fixed in the source on 2026-09-10; the rest stand.
   calls `SetSaveFlag` with `SAVEFLAG_COURT_STAR`. So the Star Court is the
   exhibition unlock for finishing *everything* in story mode, singles and
   doubles, and it is granted on the match that completes the set.
-* **Record fields `+$2b`, `+$2f` and `+$3d`-`+$3f` are dead stores.** `+$2f`
+* **Record fields `+$2f` and `+$3d`-`+$3f` are dead stores.** `+$2f`
   is written `$00`/`$02`/`$03` by the three record-init paths and nothing
-  reads it; the others are neither written by the game nor read. Listed under
-  dead stores in `docs/bugs.md`.
+  reads it; `+$3d`-`+$3f` are neither written by the game nor read. Listed
+  under dead stores in `docs/bugs.md`. `+$2b`, once counted with them, is the
+  speed bonus: a runtime poison of the story record's copy changed the match
+  that followed, and `LoadCharacterAttributes` adds it to the Speed stat.
 * **The `$ff, $c9` list endings — resolved.** The `$c9` after the `$ff`
   terminator of `JuniorClassCourtSinglesEntryPoints_11`,
   `JuniorClassCourtDoublesFacingScripts_11` and `…TileTriggers_11` is a `ret`

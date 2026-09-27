@@ -122,10 +122,10 @@ DrawProgressScreenSprites:
 	xor a ; $7a8d
 	ld [wCharPosHeight + 1], a ; $7a8e
 	ld [wCharPosHeight + 2], a ; $7a91
-	ld a, [wCharPosDepth] ; $7a94
+	ld a, [wProgressVisibleCount] ; $7a94
 	sub $07 ; $7a97
 	ld b, a ; $7a99
-	ld a, [wCharPosDepth + 2] ; $7a9a
+	ld a, [wProgressListIndex] ; $7a9a
 	or a ; $7a9d
 	jr z, .compare ; $7a9e
 	ld [wCharPosHeight + 1], a ; $7aa0
@@ -159,8 +159,8 @@ DrawProgressScreenSprites:
 	ld h, $03 ; $7ad6
 	farcall QueueStackedSpritePair ; $7ad8
 .zero2:
-	ld hl, wCharReachHeight ; $7adb
-	ld a, [wCharPosDepth + 2] ; $7ade
+	ld hl, wProgressVisibleEntries ; $7adb
+	ld a, [wProgressListIndex] ; $7ade
 	add l ; $7ae1
 	ld l, a ; $7ae2
 	jr nc, .gotPtr ; $7ae3

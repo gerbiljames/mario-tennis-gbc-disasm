@@ -371,3 +371,25 @@ def wCharExpTier equ $df95
 
 ; [8-bit] Per-character banked struct (WRAM4-7): draw-order depth key ((depth*8)>>8 + $80); DrawActorsByDepth paints teammates back-to-front
 def wCharDepthKey equ $df96
+
+; The game progress screen (bank $1e, WRAM bank $05 selected) keeps its lists
+; in the $df00 page the on-court character struct uses in banks $04-$07.
+; [1 byte] How many progress entries BuildVisibleProgressEntryList found unlocked
+; in WRAM banks $05
+def wProgressVisibleCount equ $df03
+
+; [1 byte] The row the progress list is scrolled to, an index into wProgressVisibleEntries
+; in WRAM banks $05
+def wProgressListIndex equ $df05
+
+; [48 bytes] Per progress entry, 1 if its flag is set (RunRewardCategoryList); BuildVisibleProgressEntryList packs the set ones into wProgressVisibleEntries
+; in WRAM banks $05
+def wProgressEntryUnlocked equ $df10
+
+; [37 bytes] Per progress entry, whether it has been earned (BuildProgressEntryEarnedTable, read by GetProgressEntryEarned)
+; in WRAM banks $05
+def wProgressEntryEarned equ $df40
+
+; [48 bytes] The entry ids to draw, in order, $ff-filled past wProgressVisibleCount
+; in WRAM banks $05
+def wProgressVisibleEntries equ $df70

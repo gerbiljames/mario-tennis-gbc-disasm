@@ -137,7 +137,9 @@ def CHARREC_STAT_SPEED       equ $27
 def CHARREC_STAT_DASH        equ $28
 def CHARREC_STAT_REACTION    equ $29
 def CHARREC_STAT_STOP        equ $2a
+def CHARREC_SPEED_BONUS      equ $2b ; added to the Speed stat for the shot-placement row
 def CHARREC_EXP              equ $2c ; 3-byte accumulator, capped at 99999
+def CHARREC_BUILD_KIND        equ $2f ; written by InitCa00RecordFromCharId, read by nothing
 def CHARREC_PHYSICS_TEMPLATE equ $30 ; four words
 def CHARREC_TRAIN_LEVELS     equ $38 ; four levels, spin first
 def CHARREC_EQUIPMENT        equ $3c ; racket (low nibble) and shoes (high)

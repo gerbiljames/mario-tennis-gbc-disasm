@@ -1284,11 +1284,13 @@ wStoryModeMainCharacterReactionStat:: db
 
 ; [8-bit] Story Mode - Main Character Stop Stat (0x00-0x09)
 wStoryModeMainCharacterStopStat:: db
-	ds 1
+; [8-bit] Character record +$2b of the saved-slot mirror: speed bonus (see wStoryMainCharSpeedBonus)
+wStoryModeMainCharacterSpeedBonus:: db
 
 ; [3 bytes] Story Mode - Main Character EXP -- a 3-byte accumulator, capped at 99999 by AddExpCapped
 wStoryModeMainCharacterEXP:: ds 3
-	ds 1
+; [8-bit] Character record +$2f of the saved-slot mirror: write-only build tag (see wStoryMainCharBuildKind)
+wStoryModeMainCharacterBuildKind:: db
 
 ; [8 bytes] Character record +$30-$37 of the saved-slot mirror of the story main character record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
 wStoryModeMainCharacterPhysicsTemplate:: ds 8
@@ -1371,11 +1373,13 @@ wStoryModePartnerCharacterReactionStat:: db
 
 ; [8-bit] Story Mode - Partner Character Stop Stat (0x00-0x09)
 wStoryModePartnerCharacterStopStat:: db
-	ds 1
+; [8-bit] Character record +$2b of the saved-slot mirror: speed bonus (see wStoryMainCharSpeedBonus)
+wStoryModePartnerCharacterSpeedBonus:: db
 
 ; [3 bytes] Story Mode - Partner Character EXP -- a 3-byte accumulator, capped at 99999 by AddExpCapped
 wStoryModePartnerCharacterEXP:: ds 3
-	ds 1
+; [8-bit] Character record +$2f of the saved-slot mirror: write-only build tag (see wStoryMainCharBuildKind)
+wStoryModePartnerCharacterBuildKind:: db
 
 ; [8 bytes] Character record +$30-$37 of the saved-slot mirror of the partner record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
 wStoryModePartnerCharacterPhysicsTemplate:: ds 8
@@ -1785,11 +1789,13 @@ wStoryMainCharAiParams:: ds 5
 
 ; [11 bytes] The eleven 0-9 stats of the story main character's record ($c900 + $20), in the wStoryModeMainCharacter*Stat order: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
 wStoryMainCharStats:: ds 11
-	ds 1
+; [8-bit] Character record +$2b: speed bonus, the last byte InitCa00RecordFromCharId copies from the roster row; LoadCharacterAttributes adds it to the Speed stat to pick the shot-placement row
+wStoryMainCharSpeedBonus:: db
 
 ; [3 bytes] EXP in the story main character's record ($c900 + $2c) -- a 3-byte accumulator, capped at 99999 by AddExpCapped
 wStoryMainCharExp:: ds 3
-	ds 1
+; [8-bit] Character record +$2f: written by InitCa00RecordFromCharId ($02 roster, $03 the story main character, $00 cleared) and read by nothing
+wStoryMainCharBuildKind:: db
 
 ; [8 bytes] Character record +$30-$37 of the live story main character record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
 wStoryMainCharPhysicsTemplate:: ds 8
@@ -1856,11 +1862,13 @@ wStoryPartnerCharAiParams:: ds 5
 
 ; [11 bytes] Character record +$20-$2a of the live partner record: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
 wStoryPartnerCharStats:: ds 11
-	ds 1
+; [8-bit] Character record +$2b: speed bonus, the last byte InitCa00RecordFromCharId copies from the roster row; LoadCharacterAttributes adds it to the Speed stat to pick the shot-placement row
+wStoryPartnerCharSpeedBonus:: db
 
 ; [3 bytes] EXP in the story partner's record ($c940 + $2c) -- a 3-byte accumulator, capped at 99999 by AddExpCapped
 wStoryPartnerCharExp:: ds 3
-	ds 1
+; [8-bit] Character record +$2f: written by InitCa00RecordFromCharId ($02 roster, $03 the story main character, $00 cleared) and read by nothing
+wStoryPartnerCharBuildKind:: db
 
 ; [8 bytes] Character record +$30-$37 of the live partner record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
 wStoryPartnerCharPhysicsTemplate:: ds 8
@@ -2070,7 +2078,8 @@ wPlayer1CurrentMainCharacter:: db
 
 ; [8-bit] Palette index of the player-1 main character: LoadResultPortraitSlot hands it to LoadIndexedPalette_18, and InitChar passes it (plus 3) to SetupCharacterSprite as the OBJ palette the character is drawn with
 wPlayer1MainPalette:: db
-	ds 1
+; [8-bit] Character record +$0d: gender, 0 male / 1 female (InitPlayerRecordFromTemplate, from StoryCharGenderTable for the story records)
+wPlayer1MainGender:: db
 
 ; [8-bit] Nonzero mirrors the player-1 main character: LoadCharacterAttributes turns it into wCharMirrorAttrMask ($20, the OAM X-flip bit) and the results-screen portrait code XORs the same bit in. ApplyStarFlagsToCharRecords seeds it from wCharSelectSlotStar
 wPlayer1MainLeftHanded:: db
@@ -2089,11 +2098,13 @@ wPlayer1MainAiParams:: ds 5
 
 ; [11 bytes] Character record +$20-$2a of on-court record for player 1 main: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
 wPlayer1MainStats:: ds 11
-	ds 1
+; [8-bit] Character record +$2b: speed bonus, the last byte InitCa00RecordFromCharId copies from the roster row; LoadCharacterAttributes adds it to the Speed stat to pick the shot-placement row
+wPlayer1MainSpeedBonus:: db
 
 ; [3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped
 wPlayer1MainExp:: ds 3
-	ds 1
+; [8-bit] Character record +$2f: written by InitCa00RecordFromCharId ($02 roster, $03 the story main character, $00 cleared) and read by nothing
+wPlayer1MainBuildKind:: db
 
 ; [8 bytes] Character record +$30-$37 of on-court record for player 1 main: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
 wPlayer1MainPhysicsTemplate:: ds 8
@@ -2116,7 +2127,8 @@ wPlayer1CurrentPartnerCharacter:: db
 
 ; [8-bit] Palette index of the player-1 partner (see wPlayer1MainPalette)
 wPlayer1PartnerPalette:: db
-	ds 1
+; [8-bit] Character record +$0d: gender, 0 male / 1 female (InitPlayerRecordFromTemplate, from StoryCharGenderTable for the story records)
+wPlayer1PartnerGender:: db
 
 ; [8-bit] Mirror flag of the player-1 partner (see wPlayer1MainLeftHanded)
 wPlayer1PartnerLeftHanded:: db
@@ -2143,11 +2155,13 @@ wExhibitionModePlayerPartnerCharacterDifficulty:: db
 
 ; [11 bytes] Character record +$20-$2a of on-court record for player 1 partner: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
 wPlayer1PartnerStats:: ds 11
-	ds 1
+; [8-bit] Character record +$2b: speed bonus, the last byte InitCa00RecordFromCharId copies from the roster row; LoadCharacterAttributes adds it to the Speed stat to pick the shot-placement row
+wPlayer1PartnerSpeedBonus:: db
 
 ; [3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped
 wPlayer1PartnerExp:: ds 3
-	ds 1
+; [8-bit] Character record +$2f: written by InitCa00RecordFromCharId ($02 roster, $03 the story main character, $00 cleared) and read by nothing
+wPlayer1PartnerBuildKind:: db
 
 ; [8 bytes] Character record +$30-$37 of on-court record for player 1 partner: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
 wPlayer1PartnerPhysicsTemplate:: ds 8
@@ -2170,7 +2184,8 @@ wPlayer2CurrentMainCharacter:: db
 
 ; [8-bit] Palette index of the player-2 main character (see wPlayer1MainPalette)
 wPlayer2MainPalette:: db
-	ds 1
+; [8-bit] Character record +$0d: gender, 0 male / 1 female (InitPlayerRecordFromTemplate, from StoryCharGenderTable for the story records)
+wPlayer2MainGender:: db
 
 ; [8-bit] Mirror flag of the player-2 main character (see wPlayer1MainLeftHanded)
 wPlayer2MainLeftHanded:: db
@@ -2195,11 +2210,13 @@ wExhibitionModeCPUMainCharacterDifficulty:: db
 
 ; [11 bytes] Character record +$20-$2a of on-court record for player 2 main: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
 wPlayer2MainStats:: ds 11
-	ds 1
+; [8-bit] Character record +$2b: speed bonus, the last byte InitCa00RecordFromCharId copies from the roster row; LoadCharacterAttributes adds it to the Speed stat to pick the shot-placement row
+wPlayer2MainSpeedBonus:: db
 
 ; [3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped
 wPlayer2MainExp:: ds 3
-	ds 1
+; [8-bit] Character record +$2f: written by InitCa00RecordFromCharId ($02 roster, $03 the story main character, $00 cleared) and read by nothing
+wPlayer2MainBuildKind:: db
 
 ; [8 bytes] Character record +$30-$37 of on-court record for player 2 main: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
 wPlayer2MainPhysicsTemplate:: ds 8
@@ -2222,7 +2239,8 @@ wPlayer2CurrentPartnerCharacter:: db
 
 ; [8-bit] Palette index of the player-2 partner (see wPlayer1MainPalette)
 wPlayer2PartnerPalette:: db
-	ds 1
+; [8-bit] Character record +$0d: gender, 0 male / 1 female (InitPlayerRecordFromTemplate, from StoryCharGenderTable for the story records)
+wPlayer2PartnerGender:: db
 
 ; [8-bit] Mirror flag of the player-2 partner (see wPlayer1MainLeftHanded)
 wPlayer2PartnerLeftHanded:: db
@@ -2244,11 +2262,13 @@ wExhibitionModeCPUPartnerCharacterDifficulty:: db
 
 ; [11 bytes] Character record +$20-$2a of on-court record for player 2 partner: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
 wPlayer2PartnerStats:: ds 11
-	ds 1
+; [8-bit] Character record +$2b: speed bonus, the last byte InitCa00RecordFromCharId copies from the roster row; LoadCharacterAttributes adds it to the Speed stat to pick the shot-placement row
+wPlayer2PartnerSpeedBonus:: db
 
 ; [3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped
 wPlayer2PartnerExp:: ds 3
-	ds 1
+; [8-bit] Character record +$2f: written by InitCa00RecordFromCharId ($02 roster, $03 the story main character, $00 cleared) and read by nothing
+wPlayer2PartnerBuildKind:: db
 
 ; [8 bytes] Character record +$30-$37 of on-court record for player 2 partner: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
 wPlayer2PartnerPhysicsTemplate:: ds 8

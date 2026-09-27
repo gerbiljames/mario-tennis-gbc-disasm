@@ -31,7 +31,7 @@ InitGameProgressScreen:
 	ld [wMenuWindowId], a ; $72a0
 	ld a, $ff ; $72a3
 	ld c, $30 ; $72a5
-	ld hl, wCharReachHeight ; $72a7
+	ld hl, wProgressVisibleEntries ; $72a7
 .loop:
 	ld [hl+], a ; $72aa
 	dec c ; $72ab
@@ -135,11 +135,11 @@ ScrollProgressListDown:
 	push af ; $7382
 	farcall ResetGlyphStream ; $7383
 	wram_bank WRAM_CHAR1 ; $7386
-	ld a, [wCharPosDepth] ; $738c
+	ld a, [wProgressVisibleCount] ; $738c
 	sub $06 ; $738f
 	jr c, .restore ; $7391
 	ld b, a ; $7393
-	ld hl, wCharPosDepth + 2 ; $7394
+	ld hl, wProgressListIndex ; $7394
 	ld a, [hl] ; $7397
 	inc a ; $7398
 	cp b ; $7399
@@ -158,7 +158,7 @@ ScrollProgressListUp:
 	push af ; $73b0
 	farcall ResetGlyphStream ; $73b1
 	wram_bank WRAM_CHAR1 ; $73b4
-	ld hl, wCharPosDepth + 2 ; $73ba
+	ld hl, wProgressListIndex ; $73ba
 	ld a, [hl] ; $73bd
 	dec a ; $73be
 	bit 7, a ; $73bf
@@ -247,7 +247,7 @@ RunRewardCategoryList:
 .storeState:
 	ld e, a ; $7435
 	pop af ; $7436
-	ld hl, wCharFreezeTimer ; $7437
+	ld hl, wProgressEntryUnlocked ; $7437
 	add l ; $743a
 	ld l, a ; $743b
 	jr nc, .writeSlot ; $743c
@@ -289,8 +289,8 @@ RewardCategoryEntryList5_1e:
 BuildVisibleProgressEntryList:
 	ld c, $00 ; $747c
 	ld b, $00 ; $747e
-	ld hl, wCharFreezeTimer ; $7480
-	ld de, wCharReachHeight ; $7483
+	ld hl, wProgressEntryUnlocked ; $7480
+	ld de, wProgressVisibleEntries ; $7483
 .loop:
 	ld a, [hl+] ; $7486
 	or a ; $7487
@@ -305,10 +305,10 @@ BuildVisibleProgressEntryList:
 	cp $30 ; $7490
 	jr c, .loop ; $7492
 	ld a, b ; $7494
-	ld [wCharPosDepth], a ; $7495
+	ld [wProgressVisibleCount], a ; $7495
 	ret ; $7498
 BuildProgressEntryEarnedTable:
-	ld hl, wCharVelX ; $7499
+	ld hl, wProgressEntryEarned ; $7499
 	ld c, $25 ; $749c
 	xor a ; $749e
 .entryLoop:
@@ -322,7 +322,7 @@ BuildProgressEntryEarnedTable:
 	ret ; $74a9
 GetProgressEntryEarned:
 	push hl ; $74aa
-	ld hl, wCharVelX ; $74ab
+	ld hl, wProgressEntryEarned ; $74ab
 	add l ; $74ae
 	ld l, a ; $74af
 	jr nc, .read ; $74b0
@@ -341,8 +341,8 @@ DrawProgressListRows:
 	add hl, de ; $74c2
 	ld d, h ; $74c3
 	ld e, l ; $74c4
-	ld a, [wCharPosDepth + 2] ; $74c5
-	ld hl, wCharReachHeight ; $74c8
+	ld a, [wProgressListIndex] ; $74c5
+	ld hl, wProgressVisibleEntries ; $74c8
 	add l ; $74cb
 	ld l, a ; $74cc
 	jr nc, .gotPtr ; $74cd

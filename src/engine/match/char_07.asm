@@ -112,7 +112,7 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5abe
 	ld d, [hl] ; $5abf
 	ld e, a ; $5ac0
-	ld hl, $0010 ; $5ac1
+	ld hl, CHARREC_REACH ; $5ac1
 	add hl, de ; $5ac4
 	ld a, [hl+] ; $5ac5
 	ld b, [hl] ; $5ac6
@@ -125,7 +125,7 @@ LoadCharacterAttributes:
 	ld a, c ; $5ad1
 	ld [hl+], a ; $5ad2
 	ld [hl], b ; $5ad3
-	ld hl, $0012 ; $5ad4
+	ld hl, CHARREC_REACH + 2 ; $5ad4
 	add hl, de ; $5ad7
 	ld a, [hl+] ; $5ad8
 	ld b, [hl] ; $5ad9
@@ -134,7 +134,7 @@ LoadCharacterAttributes:
 	ld a, c ; $5ade
 	ld [hl+], a ; $5adf
 	ld [hl], b ; $5ae0
-	ld hl, $0014 ; $5ae1
+	ld hl, CHARREC_REACH + 4 ; $5ae1
 	add hl, de ; $5ae4
 	ld a, [hl+] ; $5ae5
 	ld b, [hl] ; $5ae6
@@ -147,7 +147,7 @@ LoadCharacterAttributes:
 	ld a, c ; $5af1
 	ld [hl+], a ; $5af2
 	ld [hl], b ; $5af3
-	ld hl, $0016 ; $5af4
+	ld hl, CHARREC_REACH + 6 ; $5af4
 	add hl, de ; $5af7
 	ld a, [hl+] ; $5af8
 	ld b, [hl] ; $5af9
@@ -156,7 +156,7 @@ LoadCharacterAttributes:
 	ld a, c ; $5afe
 	ld [hl+], a ; $5aff
 	ld [hl], b ; $5b00
-	ld hl, $0019 ; $5b01
+	ld hl, CHARREC_SWING ; $5b01
 	add hl, de ; $5b04
 	ld a, [hl+] ; $5b05
 	ld b, [hl] ; $5b06
@@ -165,12 +165,12 @@ LoadCharacterAttributes:
 	ld a, c ; $5b0b
 	ld [hl+], a ; $5b0c
 	ld [hl], b ; $5b0d
-	ld hl, $0018 ; $5b0e
+	ld hl, CHARREC_EXP_TIER ; $5b0e
 	add hl, de ; $5b11
 	ld a, [hl] ; $5b12
 	ld [wCharExpTier], a ; $5b13
 	ld b, $00 ; $5b16
-	ld hl, $000e ; $5b18
+	ld hl, CHARREC_LEFT_HANDED ; $5b18
 	add hl, de ; $5b1b
 	ld a, [hl] ; $5b1c
 	and a ; $5b1d
@@ -179,7 +179,7 @@ LoadCharacterAttributes:
 .storeHandedness:
 	ld a, b ; $5b22
 	ld [wCharMirrorAttrMask], a ; $5b23
-	ld hl, $0027 ; $5b26
+	ld hl, CHARREC_STAT_SPEED ; $5b26
 	add hl, de ; $5b29
 	ld a, [hl] ; $5b2a
 	add a ; $5b2b
@@ -191,10 +191,10 @@ LoadCharacterAttributes:
 	ld a, c ; $5b39
 	ld [hl+], a ; $5b3a
 	ld [hl], b ; $5b3b
-	ld hl, $0027 ; $5b3c
+	ld hl, CHARREC_STAT_SPEED ; $5b3c
 	add hl, de ; $5b3f
 	ld a, [hl] ; $5b40
-	ld hl, $002b ; $5b41
+	ld hl, CHARREC_SPEED_BONUS ; $5b41
 	add hl, de ; $5b44
 	add [hl] ; $5b45
 	add a ; $5b46
@@ -217,7 +217,7 @@ LoadCharacterAttributes:
 	ld a, c ; $5b62
 	ld [hl+], a ; $5b63
 	ld [hl], b ; $5b64
-	ld hl, $0028 ; $5b65
+	ld hl, CHARREC_STAT_DASH ; $5b65
 	add hl, de ; $5b68
 	ld a, [hl] ; $5b69
 	add a ; $5b6a
@@ -229,7 +229,7 @@ LoadCharacterAttributes:
 	ld a, c ; $5b78
 	ld [hl+], a ; $5b79
 	ld [hl], b ; $5b7a
-	ld hl, $002a ; $5b7b
+	ld hl, CHARREC_STAT_STOP ; $5b7b
 	add hl, de ; $5b7e
 	ld a, [hl] ; $5b7f
 	add a ; $5b80
@@ -241,65 +241,65 @@ LoadCharacterAttributes:
 	ld a, c ; $5b8e
 	ld [hl+], a ; $5b8f
 	ld [hl], b ; $5b90
-	ld hl, $0029 ; $5b91
+	ld hl, CHARREC_STAT_REACTION ; $5b91
 	add hl, de ; $5b94
 	ld a, [hl] ; $5b95
 	ld_hl_indexed CharStatTable_07_3 ; $5b96
 	ld a, [hl] ; $5b9d
 	ld [wCharFacingEaseRate], a ; $5b9e
-	ld hl, $0025 ; $5ba1
+	ld hl, CHARREC_STAT_ANGLE ; $5ba1
 	add hl, de ; $5ba4
 	ld a, [hl] ; $5ba5
 	ld_hl_indexed CharStatTable_07_4 ; $5ba6
 	ld a, [hl] ; $5bad
 	ld [wCharAimOffsetScale], a ; $5bae
-	ld hl, $0026 ; $5bb1
+	ld hl, CHARREC_STAT_PLACEMENT ; $5bb1
 	add hl, de ; $5bb4
 	ld a, [hl] ; $5bb5
 	ld_hl_indexed CharStatTable_07_5 ; $5bb6
 	ld a, [hl] ; $5bbd
 	ld [wCharAimJitterScale], a ; $5bbe
-	ld hl, $0023 ; $5bc1
+	ld hl, CHARREC_STAT_STROKE ; $5bc1
 	add hl, de ; $5bc4
 	ld a, [hl] ; $5bc5
 	ld [wGroundStrokeSpeedIndex], a ; $5bc6
-	ld hl, $0022 ; $5bc9
+	ld hl, CHARREC_STAT_SERVE ; $5bc9
 	add hl, de ; $5bcc
 	ld a, [hl] ; $5bcd
 	ld [wSmashServeSpeedIndex], a ; $5bce
-	ld hl, $0024 ; $5bd1
+	ld hl, CHARREC_STAT_VOLLEY ; $5bd1
 	add hl, de ; $5bd4
 	ld a, [hl] ; $5bd5
 	ld [wReachSpeedIndex], a ; $5bd6
-	ld hl, $0021 ; $5bd9
+	ld hl, CHARREC_STAT_SLICE ; $5bd9
 	add hl, de ; $5bdc
 	ld a, [hl] ; $5bdd
 	ld [wSlicePlacementIndex], a ; $5bde
-	ld hl, $0020 ; $5be1
+	ld hl, CHARREC_STAT_TOP ; $5be1
 	add hl, de ; $5be4
 	ld a, [hl] ; $5be5
 	ld [wTopspinPlacementIndex], a ; $5be6
-	ld hl, $000f ; $5be9
+	ld hl, CHARREC_PHYSICS ; $5be9
 	add hl, de ; $5bec
 	ld a, [hl] ; $5bed
 	ld [wAiPositionStrategy], a ; $5bee
-	ld hl, $001b ; $5bf1
+	ld hl, CHARREC_AI_PARAMS ; $5bf1
 	add hl, de ; $5bf4
 	ld a, [hl] ; $5bf5
 	ld [wAiReactionDelayNear], a ; $5bf6
-	ld hl, $001c ; $5bf9
+	ld hl, CHARREC_AI_PARAMS + 1 ; $5bf9
 	add hl, de ; $5bfc
 	ld a, [hl] ; $5bfd
 	ld [wAiReactionDelayFar], a ; $5bfe
-	ld hl, $001d ; $5c01
+	ld hl, CHARREC_AI_PARAMS + 2 ; $5c01
 	add hl, de ; $5c04
 	ld a, [hl] ; $5c05
 	ld [wAiTrackingParam], a ; $5c06
-	ld hl, $001e ; $5c09
+	ld hl, CHARREC_AI_PARAMS + 3 ; $5c09
 	add hl, de ; $5c0c
 	ld a, [hl] ; $5c0d
 	ld [wAiAimAwayChance], a ; $5c0e
-	ld hl, $001f ; $5c11
+	ld hl, CHARREC_AI_PARAMS + 4 ; $5c11
 	add hl, de ; $5c14
 	ld a, [hl] ; $5c15
 	ld [wAiServeStyle], a ; $5c16

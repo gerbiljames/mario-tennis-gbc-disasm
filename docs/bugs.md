@@ -510,9 +510,12 @@ store with a missing counterpart.
 The three record-init paths (`InitCa00RecordFromCharId` and the story
 main/partner initialisers, `docs/story_mode.md`) each write a constant into
 byte `+$2f` of the `$40`-byte character record — `$00`, `$02` or `$03`
-depending on which path built the record. No code reads `+$2f`, nor `+$2b`
-or `+$3d`-`+$3f`, in any bank; the field is a record-type tag that nothing
-consults.
+depending on which path built the record. No code reads `+$2f` (nor
+`+$3d`-`+$3f`) in any bank, and poisoning it in a runtime audit changed
+nothing; the field is a record-type tag that nothing consults (`CHARREC_BUILD_KIND`).
+`+$2b`, once listed here too, is live: `InitCa00RecordFromCharId` copies it
+from the roster row and `LoadCharacterAttributes` adds it to the Speed stat
+to pick the shot-placement row (`CHARREC_SPEED_BONUS`).
 
 | symbol | where | note |
 | --- | --- | --- |
