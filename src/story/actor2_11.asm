@@ -95,37 +95,37 @@ ActorScript_11_48:
 	as_anim $01
 	as_target_rel $0400, $0200
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $fe00
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_jump ActorScript_11_48
@@ -137,37 +137,37 @@ ActorScript_11_49:
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $fe00
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0200
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_jump .L4
@@ -179,37 +179,37 @@ ActorScript_11_50:
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0200
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $fe00
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_jump .L4
@@ -222,37 +222,37 @@ ActorScript_11_51:
 	as_anim $01
 	as_target_rel $fc00, $fe00
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0200
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_jump .L6

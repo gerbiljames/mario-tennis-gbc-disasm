@@ -184,7 +184,7 @@ Unused_0a_1:
 ActorScript_0a:
 	; $4766, 6 bytes (actor_script)
 	as_halt
-	as_set_field $20, $0000
+	as_set_field ACTORF_MODE, $0000
 	as_halt
 IsActorBusy:
 	xor a ; $476c

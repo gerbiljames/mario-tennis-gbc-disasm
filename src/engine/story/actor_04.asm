@@ -299,7 +299,7 @@ ActorScript_StepToTarget:
 	as_jump ActorScript_StepToTarget
 ActorScript_Deactivate:
 	; $41e2, 5 bytes (actor_script)
-	as_set_field $20, $0000
+	as_set_field ACTORF_MODE, $0000
 	as_halt
 UpdateActors:
 	wram_bank WRAM_ACTORS ; $41e7

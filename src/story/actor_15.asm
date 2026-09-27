@@ -380,7 +380,7 @@ ActorScript_15_04:
 	; $66c8, 11 bytes (actor_script)
 	as_set_target $1700, $0700
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_15_05:
 	; $66d3, 17 bytes (actor_script)
@@ -388,13 +388,13 @@ ActorScript_15_05:
 	as_wait_move
 	as_set_target $1900, $1700
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_15_06:
 	; $66e4, 11 bytes (actor_script)
 	as_set_target $1300, $1100
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 SpeakServeCoachDeclineLine:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $66ef

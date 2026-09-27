@@ -4,7 +4,7 @@ ActorScript_0e_12:
 	as_wait_move
 	as_set_target $1100, $0d00
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_13:
@@ -13,7 +13,7 @@ ActorScript_0e_13:
 	as_wait_move
 	as_set_target $1300, $0d00
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait $1e
 	as_halt
 MarioWorldNpc08FaceRight_0e:
@@ -44,7 +44,7 @@ ActorScript_0e_14:
 	as_wait_move
 	as_set_target $1100, $0d00
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_15:
@@ -53,7 +53,7 @@ ActorScript_0e_15:
 	as_wait_move
 	as_set_target $1300, $0d00
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait $1e
 	as_halt
 MarioWorldNpc08FaceLeft_0e:

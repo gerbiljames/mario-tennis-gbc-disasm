@@ -172,7 +172,7 @@ ActorScript_14_0:
 	; $4808, 11 bytes (actor_script)
 	as_set_target $2900, $2b00
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ; Reads tennis-machine record $01 and then throws the result away, storing the constant $0050 into wMinigameRecordValue instead, before sending the player back to the machine room at entry point $01. Nothing calls it (no textual or ROM-wide pointer reference), and it never calls UpdateMinigameRecord, so even if it ran the 80 would not persist -- it reads as an abandoned debug helper. The name states what the body does, not what it was for
 UnusedMachineRecordOverrideAndReturn_14:

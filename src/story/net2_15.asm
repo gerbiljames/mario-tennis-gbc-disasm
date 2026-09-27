@@ -413,19 +413,19 @@ ActorScript_15_13:
 	as_wait_move
 	as_set_target $1700, $0700
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_15_14:
 	; $7b1a, 11 bytes (actor_script)
 	as_set_target $1900, $1700
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_15_15:
 	; $7b25, 11 bytes (actor_script)
 	as_set_target $1300, $1500
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 NetCoachWalkToCourtAndStartLesson:
 	script_player_speed $0020 ; $7b30

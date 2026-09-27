@@ -378,6 +378,7 @@ def check_literal_pointers(fail):
     n = 0
     for bank, lines in banks:
         pending_hl = None
+        split_lo, split_hi = None, None
         for m in lines:
             op, args = m.group(1), [a.strip() for a in m.group(2).split(",")]
             where = f"${bank:02x}: {op} {m.group(2).strip()}"
@@ -401,6 +402,19 @@ def check_literal_pointers(fail):
                     n += 1
                     if _NUM_RE.fullmatch(arg) and arg not in ("0", "$0000", "$ffff"):
                         fail("literals", f"{where} -- argument {i} takes a label everywhere else")
+            if op == "add" and re.fullmatch(r"\$[0-9a-fA-F]{2}", args[-1]):
+                split_lo = (int(args[-1][1:], 16), 3)
+            elif split_lo and op == "ld" and args[0] == "a" and re.fullmatch(r"\$[4-7][0-9a-fA-F]", args[1]):
+                split_hi = int(args[1][1:], 16)
+            elif split_lo and split_hi is not None and op == "adc" and args[-1] == "$00":
+                n += 1
+                name = by_addr.get((bank, split_hi << 8 | split_lo[0]))
+                if name:
+                    fail("literals", f"{where} -- add/adc spells {name} in halves")
+            if op != "add":
+                split_lo = (split_lo[0], split_lo[1] - 1) if split_lo and split_lo[1] > 1 else None
+                if not split_lo:
+                    split_hi = None
             if op == "dw" or (op == "ld" and args[0] in ("hl", "de", "bc", "sp")):
                 for arg in args if op == "dw" else args[1:]:
                     if bank and _ROMX_WORD_RE.fullmatch(arg):

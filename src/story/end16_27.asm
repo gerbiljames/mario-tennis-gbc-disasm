@@ -337,7 +337,7 @@ ActorScript_27_00:
 	; $48ce, 11 bytes (actor_script)
 	as_set_target $1100, $1500
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_27_01:
 	; $48d9, 23 bytes (actor_script)
@@ -347,7 +347,7 @@ ActorScript_27_01:
 	as_wait_move
 	as_set_target $0f00, $1500
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 SetEnd16BeforeFinalsDoublesWalkScripts_27:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_00 ; $48f0

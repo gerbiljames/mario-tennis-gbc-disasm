@@ -25,11 +25,11 @@ ActorScript_27_03:
 .L21:
 	as_target_rel $fe00, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait $4b
 	as_target_rel $0200, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait $4b
 	as_jump .L21
 End12PrincipalsOfficeMapScripts_27:

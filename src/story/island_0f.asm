@@ -133,13 +133,13 @@ ActorScript_0f_01:
 	; $61e0, 11 bytes (actor_script)
 	as_set_target $1100, $1500
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_0f_02:
 	; $61eb, 11 bytes (actor_script)
 	as_set_target $0f00, $1500
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 TournamentTile0F_0f:
 	ld a, $00 ; $61f6

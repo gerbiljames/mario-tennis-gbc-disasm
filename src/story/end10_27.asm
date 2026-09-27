@@ -345,7 +345,7 @@ ActorScript_27_07:
 	as_wait_move
 	as_set_target $0a00, $2100
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_27_08:
 	; $5c4d, 29 bytes (actor_script)
@@ -357,7 +357,7 @@ ActorScript_27_08:
 	as_wait_move
 	as_set_target $0c00, $2100
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_27_09:
 	; $5c6a, 35 bytes (actor_script)
@@ -371,7 +371,7 @@ ActorScript_27_09:
 	as_wait_move
 	as_set_target $0c00, $2100
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_27_10:
 	; $5c8d, 7 bytes (actor_script)
@@ -389,7 +389,7 @@ ActorScript_27_11:
 	as_set_target $0700, $1d00
 	as_set_target $0900, $1d00
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_27_12:
 	; $5cb6, 23 bytes (actor_script)
@@ -399,7 +399,7 @@ ActorScript_27_12:
 	as_wait_move
 	as_set_target $0900, $1d00
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 End10VarsityCourtActorsAlt_27:
 	; $5ccd, 164 bytes (map_actors)

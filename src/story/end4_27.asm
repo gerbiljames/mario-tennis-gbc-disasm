@@ -137,15 +137,15 @@ ComputeMachineCourtProgress_27:
 ActorScript_27_13:
 	; $6424, 35 bytes (actor_script)
 	as_anim $0b
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait $32
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $01
 	as_wait $01
 	as_anim $0b
-	as_set_field $14, FACE_LEFT
+	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_wait $32
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $01
 	as_wait $01
 	as_jump ActorScript_27_13
@@ -302,7 +302,7 @@ ActorScript_27_14:
 	as_wait $0a
 	as_set_target $1f00, $0d00
 	as_wait_move
-	as_set_field $14, FACE_LEFT
+	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_27_15:
 	; $6820, 15 bytes (actor_script)
@@ -310,7 +310,7 @@ ActorScript_27_15:
 	as_wait $0a
 	as_set_target $1f00, $1300
 	as_wait_move
-	as_set_field $14, FACE_LEFT
+	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_27_16:
 	; $682f, 55 bytes (actor_script)
@@ -319,7 +319,7 @@ ActorScript_27_16:
 .L8:
 	as_set_target $2d00, $0700
 	as_wait_move2
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait $c8
 	as_wait $f0
 	as_set_target $3300, $0700
@@ -330,7 +330,7 @@ ActorScript_27_16:
 	as_wait $3c
 	as_set_target $3300, $0700
 	as_wait_move2
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait $f0
 	as_wait $f0
 	as_jump .L8
@@ -370,7 +370,7 @@ ActorScript_27_17:
 	as_wait_move
 	as_set_target $1500, $1500
 	as_wait_move
-	as_set_field $14, FACE_LEFT
+	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_27_18:
 	; $692f, 17 bytes (actor_script)
@@ -378,7 +378,7 @@ ActorScript_27_18:
 	as_wait_move
 	as_set_target $1900, $0900
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_27_19:
 	; $6940, 17 bytes (actor_script)
@@ -386,7 +386,7 @@ ActorScript_27_19:
 	as_wait_move
 	as_set_target $1b00, $1900
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 End4JrCourtSceneSingles_27:
 	farcall BeginCutsceneScriptMode ; $6951

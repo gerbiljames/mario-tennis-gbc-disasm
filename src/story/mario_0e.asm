@@ -150,19 +150,19 @@ ActorScript_0e_03:
 ActorScript_0e_04:
 	; $51e4, 43 bytes (actor_script)
 	as_anim $0b
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait $0c
 	as_sound $92
 	as_wait $28
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $01
 	as_wait $01
 	as_anim $0b
-	as_set_field $14, FACE_LEFT
+	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_wait $0c
 	as_sound $92
 	as_wait $28
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $01
 	as_wait $01
 	as_jump ActorScript_0e_04
@@ -175,11 +175,11 @@ ActorScript_0e_05:
 .L8:
 	as_target_rel $fe00, $0000
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait $4b
 	as_target_rel $0200, $0000
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait $4b
 	as_jump .L8
 MarioWorldMapScripts_0e:

@@ -454,7 +454,7 @@ ActorScript_11_03:
 	as_wait_move
 	as_set_target $1b00, $1300
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_11_04:
 	; $5b28, 26 bytes (actor_script)
@@ -466,7 +466,7 @@ ActorScript_11_04:
 	as_wait_move
 	as_set_target $2500, $0900
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_05:
 	; $5b42, 20 bytes (actor_script)
@@ -476,7 +476,7 @@ ActorScript_11_05:
 	as_wait_move
 	as_set_target $1b00, $1500
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_11_06:
 	; $5b56, 26 bytes (actor_script)
@@ -488,7 +488,7 @@ ActorScript_11_06:
 	as_wait_move
 	as_set_target $2500, $0b00
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_07:
 	; $5b70, 20 bytes (actor_script)
@@ -498,7 +498,7 @@ ActorScript_11_07:
 	as_wait_move
 	as_set_target $1700, $0900
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_11_08:
 	; $5b84, 20 bytes (actor_script)
@@ -508,7 +508,7 @@ ActorScript_11_08:
 	as_wait_move
 	as_set_target $1b00, $0e00
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_11_09:
 	; $5b98, 26 bytes (actor_script)
@@ -520,7 +520,7 @@ ActorScript_11_09:
 	as_wait_move
 	as_set_target $0900, $0900
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_11_10:
 	; $5bb2, 20 bytes (actor_script)
@@ -530,7 +530,7 @@ ActorScript_11_10:
 	as_wait_move
 	as_set_target $0b00, $0d00
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_11_11:
 	; $5bc6, 26 bytes (actor_script)
@@ -542,7 +542,7 @@ ActorScript_11_11:
 	as_wait_move
 	as_set_target $3700, $1900
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_11_12:
 	; $5be0, 26 bytes (actor_script)
@@ -554,7 +554,7 @@ ActorScript_11_12:
 	as_wait_move
 	as_set_target $3500, $1500
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_11_13:
 	; $5bfa, 26 bytes (actor_script)
@@ -566,7 +566,7 @@ ActorScript_11_13:
 	as_wait_move
 	as_set_target $0500, $1500
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_14:
 	; $5c14, 26 bytes (actor_script)
@@ -578,7 +578,7 @@ ActorScript_11_14:
 	as_wait_move
 	as_set_target $0500, $1500
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_15:
 	; $5c2e, 23 bytes (actor_script)
@@ -588,7 +588,7 @@ ActorScript_11_15:
 	as_wait_move
 	as_set_target $1100, $1700
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_16:
 	; $5c45, 26 bytes (actor_script)
@@ -600,7 +600,7 @@ ActorScript_11_16:
 	as_wait_move
 	as_set_target $0500, $1300
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_17:
 	; $5c5f, 32 bytes (actor_script)
@@ -614,7 +614,7 @@ ActorScript_11_17:
 	as_wait_move
 	as_set_target $0500, $1300
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_18:
 	; $5c7f, 64 bytes (actor_script)
@@ -628,7 +628,7 @@ ActorScript_11_18:
 	as_wait_move
 	as_set_target $2300, $1700
 	as_wait_move
-	as_set_field $14, FACE_LEFT
+	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 	as_anim $01
 	as_wait_move
@@ -640,7 +640,7 @@ ActorScript_11_18:
 	as_wait_move
 	as_set_target $2500, $0900
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_11_19:
 	; $5cbf, 64 bytes (actor_script)
@@ -654,7 +654,7 @@ ActorScript_11_19:
 	as_wait_move
 	as_set_target $2100, $1500
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 	as_anim $01
 	as_wait_move
@@ -666,7 +666,7 @@ ActorScript_11_19:
 	as_wait_move
 	as_set_target $2500, $0b00
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_11_20:
 	; $5cff, 40 bytes (actor_script)
@@ -676,13 +676,13 @@ ActorScript_11_20:
 	as_wait_move
 	as_set_target $1500, $1700
 	as_wait_move
-	as_set_field $14, FACE_LEFT
+	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 	as_set_target $1300, $1900
 	as_wait_move
 	as_set_target $1900, $1500
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_11_21:
 	; $5d27, 17 bytes (actor_script)
@@ -690,5 +690,5 @@ ActorScript_11_21:
 	as_wait_move
 	as_set_target $0900, $1500
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt

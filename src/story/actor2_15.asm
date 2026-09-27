@@ -170,7 +170,7 @@ ActorScript_15_07:
 	; $6b49, 11 bytes (actor_script)
 	as_set_target $2700, $1f00
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_15_08:
 	; $6b54, 29 bytes (actor_script)
@@ -182,7 +182,7 @@ ActorScript_15_08:
 	as_wait_move
 	as_set_target $2900, $2e00
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_15_09:
 	; $6b71, 29 bytes (actor_script)
@@ -194,7 +194,7 @@ ActorScript_15_09:
 	as_wait_move
 	as_set_target $2d00, $2d00
 	as_wait_move
-	as_set_field $14, FACE_LEFT
+	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 SpeakStrokeChallengerDeclineLine:
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6b8e

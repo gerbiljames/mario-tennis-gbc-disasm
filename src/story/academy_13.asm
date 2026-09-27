@@ -128,41 +128,41 @@ ActorScript_13_00:
 .L1:
 	as_rand_box $02, $02
 	as_wait_move2
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait $b4
 	as_rand_box $02, $02
 	as_wait_move2
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait $b4
 	as_jump .L1
 ActorScript_13_01:
 	; $5877, 10 bytes (actor_script)
 	as_set_pos $0f40, $0ee0
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_13_02:
 	; $5881, 10 bytes (actor_script)
 	as_set_pos $1100, $0380
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_13_03:
 	; $588b, 51 bytes (actor_script)
 	as_set_pos $0300, $0700
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_begin_path
 .La:
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait $b4
 	as_set_target $0300, $0800
 	as_wait_move2
 	as_wait $50
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait $12
 	as_set_target $0300, $0700
 	as_wait_move2
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait $f0
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait $12
 	as_jump .La
 RunAcademyQuestionsMenu:

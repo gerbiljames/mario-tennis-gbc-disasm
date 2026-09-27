@@ -6,7 +6,7 @@ ActorScript_27_20:
 	as_wait_move
 	as_set_target $1b00, $1300
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_27_21:
 	; $6ba8, 26 bytes (actor_script)
@@ -18,7 +18,7 @@ ActorScript_27_21:
 	as_wait_move
 	as_set_target $2500, $0900
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_27_22:
 	; $6bc2, 20 bytes (actor_script)
@@ -28,7 +28,7 @@ ActorScript_27_22:
 	as_wait_move
 	as_set_target $1b00, $1500
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_27_23:
 	; $6bd6, 26 bytes (actor_script)
@@ -40,7 +40,7 @@ ActorScript_27_23:
 	as_wait_move
 	as_set_target $2500, $0b00
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_27_24:
 	; $6bf0, 20 bytes (actor_script)
@@ -50,7 +50,7 @@ ActorScript_27_24:
 	as_wait_move
 	as_set_target $1700, $0900
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_27_25:
 	; $6c04, 20 bytes (actor_script)
@@ -60,7 +60,7 @@ ActorScript_27_25:
 	as_wait_move
 	as_set_target $1b00, $0e00
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 End3DormEntMapScripts_27:
 	; $6c18, 14 bytes (map_tree)

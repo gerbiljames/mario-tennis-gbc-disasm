@@ -18,7 +18,7 @@ ActorScript_15_10:
 	; $6f9c, 11 bytes (actor_script)
 	as_set_target $1700, $1f00
 	as_wait_move
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_15_11:
 	; $6fa7, 23 bytes (actor_script)
@@ -28,7 +28,7 @@ ActorScript_15_11:
 	as_wait_move
 	as_set_target $1900, $2e00
 	as_wait_move
-	as_set_field $14, FACE_UP
+	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_15_12:
 	; $6fbe, 17 bytes (actor_script)
@@ -36,7 +36,7 @@ ActorScript_15_12:
 	as_wait_move
 	as_set_target $1300, $2d00
 	as_wait_move
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 NetCoachVolleyLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_BETH, ACTOR_PARTNER ; $6fcf

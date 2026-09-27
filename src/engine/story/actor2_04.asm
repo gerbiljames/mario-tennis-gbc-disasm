@@ -647,9 +647,9 @@ ActorScriptOp_SetField:
 	ld l, a ; $479c
 	pop af ; $479d
 	push hl ; $479e
-	add $fd ; $479f
+	add LOW(ActorFieldTypeTable_04) ; $479f
 	ld l, a ; $47a1
-	ld a, $47 ; $47a2
+	ld a, HIGH(ActorFieldTypeTable_04) ; $47a2
 	adc $00 ; $47a4
 	ld h, a ; $47a6
 	ld a, [hl] ; $47a7
@@ -688,9 +688,9 @@ ActorScriptOp_AddField:
 	ld l, a ; $47d5
 	pop af ; $47d6
 	push hl ; $47d7
-	add $fd ; $47d8
+	add LOW(ActorFieldTypeTable_04) ; $47d8
 	ld l, a ; $47da
-	ld a, $47 ; $47db
+	ld a, HIGH(ActorFieldTypeTable_04) ; $47db
 	adc $00 ; $47dd
 	ld h, a ; $47df
 	ld a, [hl] ; $47e0

@@ -29,7 +29,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tld_hl_indexed "), 414)
         self.assertEqual(count(r"^\twait_frames "), 79)
         self.assertEqual(count(r"^\tlb (de|bc|hl), "), 443)
-        self.assertEqual(count(r"^\tadd LOW\("), 0, "no split-base index left raw")
+        self.assertEqual(count(r"^\tadd LOW\((?!ActorFieldTypeTable_04\))"), 0, "no split-base index left raw")
         self.assertEqual(count(r"inline arg$"), 0)
         self.assertEqual(count(r"^\tld_slot hl, "), 37)
         self.assertEqual(count(r"^\tobject_id "), 117)

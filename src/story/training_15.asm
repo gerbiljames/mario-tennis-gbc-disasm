@@ -111,10 +111,10 @@ TournamentCourtyardInitScript_15:
 	ret ; $41b9
 ActorScript_15_00:
 	; $41ba, 19 bytes (actor_script)
-	as_set_field $14, FACE_RIGHT
+	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_anim $04
 	as_wait $78
-	as_set_field $14, FACE_DOWN
+	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim $04
 	as_wait $78
 	as_jump ActorScript_15_00
