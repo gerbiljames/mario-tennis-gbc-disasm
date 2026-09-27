@@ -58,17 +58,17 @@ DrawSinglesRankingEntry:
 SinglesRankingEntryTable:
 	; $555e, 24 bytes (records:2)
 	dw $0000 ; record 0
-	dw $0029 ; record 1
-	dw $002b ; record 2
-	dw $002d ; record 3
-	dw $004e ; record 4
-	dw $002c ; record 5
-	dw $004f ; record 6
-	dw $0028 ; record 7
-	dw $004b ; record 8
-	dw $002e ; record 9
-	dw $002a ; record 10
-	dw $0027 ; record 11
+	dw Text_30_41 ; record 1
+	dw Text_30_43 ; record 2
+	dw Text_30_45 ; record 3
+	dw Text_30_78 ; record 4
+	dw Text_30_44 ; record 5
+	dw Text_30_79 ; record 6
+	dw Text_30_40 ; record 7
+	dw Text_30_75 ; record 8
+	dw Text_30_46 ; record 9
+	dw Text_30_42 ; record 10
+	dw Text_30_39 ; record 11
 SinglesRankingEntryTable1:
 	; $5576, 24 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; record 0
@@ -187,17 +187,17 @@ DoublesRankingEntryTable:
 	; $5627, 26 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
-	dw $0029 ; record 2
-	dw $0028 ; record 3
-	dw $002b ; record 4
-	dw $002a ; record 5
-	dw $002e ; record 6
-	dw $002d ; record 7
-	dw $004e ; record 8
-	dw $0050 ; record 9
-	dw $004b ; record 10
-	dw $004c ; record 11
-	dw $002b ; record 12
+	dw Text_30_41 ; record 2
+	dw Text_30_40 ; record 3
+	dw Text_30_43 ; record 4
+	dw Text_30_42 ; record 5
+	dw Text_30_46 ; record 6
+	dw Text_30_45 ; record 7
+	dw Text_30_78 ; record 8
+	dw Text_30_80 ; record 9
+	dw Text_30_75 ; record 10
+	dw Text_30_76 ; record 11
+	dw Text_30_43 ; record 12
 DoublesRankingEntryTable1:
 	; $5641, 24 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; record 0

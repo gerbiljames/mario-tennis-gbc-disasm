@@ -20,11 +20,17 @@ def Text_30_40 equ $0028
 def Text_30_41 equ $0029
 def Text_30_42 equ $002a
 def Text_30_43 equ $002b
+def Text_30_44 equ $002c
+def Text_30_45 equ $002d
+def Text_30_46 equ $002e
 def Text_30_51 equ $0033
 def Text_30_59 equ $003b
 def Text_30_67 equ $0043
 def Text_30_75 equ $004b
 def Text_30_76 equ $004c
+def Text_30_78 equ $004e
+def Text_30_79 equ $004f
+def Text_30_80 equ $0050
 def Text_30_117 equ $0075
 def Text_30_118 equ $0076
 def Text_30_119 equ $0077
