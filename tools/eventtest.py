@@ -262,12 +262,21 @@ class Game:
         self.mem[self.w["hInputRisingEdge"]] = self.edge
 
     def on_vblank(self):
-        if self.mem[self.w["hVBlankOccurred"]]:
-            self.lag = (self.mem[0xc000:0xe000], self.mem[0xff80:0xffff])
+        # By bank number: an interrupt between a wram_bank's two writes makes
+        # the handler return with a different bank mapped than it found.
+        m = self.mem
+        if m[self.w["hVBlankOccurred"]]:
+            self.lag = (m[0xc000:0xd000], [m[b, 0xd000:0xdfff] + [m[b, 0xdfff]] for b in range(1, 8)],
+                        m[0xff80:0xffff])
 
     def on_vblank_reti(self):
         if self.lag:
-            self.mem[0xc000:0xe000], self.mem[0xff80:0xffff] = self.lag
+            m = self.mem
+            low, banks, high = self.lag
+            m[0xc000:0xd000], m[0xff80:0xffff] = low, high
+            for b, data in enumerate(banks, 1):
+                m[b, 0xd000:0xdfff] = data[:-1]
+                m[b, 0xdfff] = data[-1]
             self.lag = None
 
     def run(self, inputs, frames, limit):
