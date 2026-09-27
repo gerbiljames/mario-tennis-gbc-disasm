@@ -505,6 +505,15 @@ because each one is a loose end that a future reader will otherwise re-derive,
 and because the class is worth watching — the grayscale bug above is a dead
 store with a missing counterpart.
 
+### The menu stack has six frames and no depth check
+
+`wMenuStack` (WRAM bank `$05`) holds six two-byte frames indexed by
+`wMenuDepth * 2`, and `CreateMenuWindowFromText` pushes without comparing the
+depth against it. A seventh nested menu writes its frame over `wMenuDepth`
+itself and the byte after it: a runtime audit run that opened menus at random
+ended with `wMenuDepth` = `$20` (the frame's first byte) and `$d83f` = the
+window id. Normal play never nests that deep.
+
 ### Story character record `+$2f`
 
 The three record-init paths (`InitCa00RecordFromCharId` and the story

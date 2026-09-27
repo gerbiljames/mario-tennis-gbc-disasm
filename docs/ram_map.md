@@ -708,6 +708,34 @@ as unnamed):
   `wCharSpriteSlotFrame`: the single-character screens park the frame
   descriptor after the sprite slot, and only they write it.)
 
-Not exercised: the minigames, link play, the N64 transfer screens and the
-story scenes beyond the Test map, so a range here is free for those modes
-only as far as the static pass says -- nothing addresses it by name.
+**Re-checked at runtime, 2026-09-27.** `tools/runtime_audit.py`'s harness,
+with every free byte poisoned to `$5a` after each run started and each run
+played twice (poisoned and clean) under the same inputs: 36 story states at
+every location and entry point, the Test map, the main menu, exhibition
+matches and the Mario minigames, several million frames in all (runs that
+crashed on an impossible warp -- the `rst $38` loop that sprays `$0039` down
+the stack -- are left out). What changed:
+
+* Three record fields the inventory counted as free are live and are now
+  declared in all eight `$40`-byte records: `+$2b` is the speed bonus
+  (`LoadCharacterAttributes` adds it to the Speed stat; poisoning the story
+  record's copy changed the next match -- the only poison read the whole
+  sweep found outside the Test 2 map's debug scratch at `$c71a-$c75f`),
+  `+$0d` is gender in the match records too, and `+$2f` is the write-only
+  build tag.
+* The game progress screen keeps five lists in WRAM bank `$05`'s `$df00`
+  page (`wProgressEntryUnlocked`, `wProgressVisibleEntries`, ...), which the
+  code had addressed through unrelated character-struct names.
+* The save engine's staging copy through `$c600-$c7ff` also leaves data at
+  `$c7d8-$c7f7`, which moves those bytes from *cleared only* to *holds data*.
+* `$d83f` in WRAM bank `$05` is where a seventh nested menu's stack frame
+  lands: `wMenuStack` holds six and `CreateMenuWindowFromText` does not check
+  `wMenuDepth`, so the frame overwrites it (`docs/bugs.md`). `$d872-$d87f`
+  and `$d892-$d896`, beside `wShortTextBuffer`, are written by the same
+  window code and are not free.
+
+Every *untouched* range of eight bytes or more in the table above stayed
+untouched through all of it, as did the minigame and exhibition runs this
+section once listed as unexercised. Free bytes now: 4,360 (2,704 untouched,
+1,598 cleared only, 58 holding data, all explained). Still not exercised:
+link play and the N64 transfer screens.

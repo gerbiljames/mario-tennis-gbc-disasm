@@ -114,6 +114,18 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-27** — the free-RAM inventory re-checked at runtime. Every free
+  byte poisoned, each run played twice under the same inputs across the story
+  states, menus, exhibition matches and minigames (`docs/ram_map.md`, "Free
+  RAM"). The only poison read was record `+$2b`, which the docs had called a
+  dead store: it is the speed bonus `LoadCharacterAttributes` adds to the
+  Speed stat, now `CHARREC_SPEED_BONUS` and declared in all eight records
+  (with `+$0d` gender and the write-only `+$2f`). Tracing each unexplained
+  write to its routine (a hook on every code label for the one frame the
+  byte changes) found the game progress screen's five lists in bank `$05`'s
+  `$df00` page, more of the save engine's staging leftovers, and a menu-stack
+  overflow: a seventh nested menu overwrites `wMenuDepth` (`docs/bugs.md`).
+  All the old *untouched* ranges held. 4,360 free bytes remain.
 * **2026-09-27** — the audit run through story states, and a correction.
   Writing `wGameFlags` before each warp recreated 36 story states (every
   step of the singles and doubles progress chains: class ranks, Island Open
