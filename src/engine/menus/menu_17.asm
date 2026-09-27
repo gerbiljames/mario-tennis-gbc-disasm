@@ -8,6 +8,7 @@ SpriteWobbleXTable_17:
 SpriteWobbleYTable_17:
 	; $40bd, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
+Unused_17_DrawCornerBrackets:
 	push de ; $40cd
 	push bc ; $40ce
 	ld c, $00 ; $40cf

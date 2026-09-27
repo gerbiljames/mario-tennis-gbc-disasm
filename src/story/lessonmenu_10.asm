@@ -146,6 +146,7 @@ Test2ExitTriggers_10:
 	map_script $07, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $01
 	map_script $08, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_MAIN_MENU, $01
 	db $ff
+Unused_10_Test2Npc03:
 	ld hl, wStoryModePlayersXPosition ; $47cf
 	ld de, wStoryModeSpawnPosition ; $47d2
 	ld bc, $0005 ; $47d5

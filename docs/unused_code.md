@@ -1,7 +1,6 @@
 # Unused code, and the patterns in it
 
-299 labels carry an `Unused` prefix: 199 routines (12.8 KB of code, measured
-to the next label) and 100 data blobs. "Unused" is a proof, not a guess —
+307 labels carry an `Unused` prefix: 207 routines and 100 data blobs. "Unused" is a proof, not a guess —
 nothing in the ROM references the label by call, jump, pointer table or
 farcall slot, and where a slot table does reference it, no `farcall` ever
 names that slot. The naming passes that found them are in `docs/history.md`;
@@ -108,3 +107,20 @@ patterns matter for reading: an unused routine next to a live one is
 usually its sibling from the same family (pattern 1), its copy from another
 bank (pattern 2), or its unused library neighbour (patterns 3 and 5), and
 the twin's name is the best description of what the unused one does.
+
+## Bodies with no label at all
+
+Eight of the routines had no label to classify, which is how they escaped
+the passes above: each sits straight after a table (a `dw` jump table, a
+farcall slot list, a record array), where nothing falls through, and no
+pointer anywhere in the ROM holds its address. They were found on
+2026-09-27 by looking for instructions that follow data with no label in
+between: `Unused_00_RenderNumberToTiles`, `Unused_08_DrawShotAimMarker`,
+`Unused_0b_GetBallXAndDepth`, `Unused_10_Test2Npc03` (the first of the Test 2
+map's drill-launcher NPC handlers), `Unused_38_GetGridEntryAtCursor`, and the
+corner-bracket drawers of banks `$16` and `$17`
+(`Unused_16_DrawWobblingCornerBrackets`, whose old label sat sixteen bytes
+into the routine, `Unused_17_DrawWobblingCornerBrackets`,
+`Unused_17_DrawCornerBrackets`). What else that search finds is a lone dead
+`ret` after a jump table, or a dead case inside a live routine's own scope.
+

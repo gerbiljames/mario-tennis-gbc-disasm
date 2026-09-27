@@ -93,6 +93,7 @@ NumberFontGlyphPtrs:
 	dw NumberFontGlyph_0a ; record 13
 	dw NumberFontGlyph_0a ; record 14
 	dw NumberFontGlyph_0a ; record 15
+Unused_00_RenderNumberToTiles:
 	push af ; $20b1
 	push bc ; $20b2
 	push de ; $20b3

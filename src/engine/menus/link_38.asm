@@ -35,6 +35,7 @@ RemotePlayerSlotList0:
 RemotePlayerSlotList1:
 	; $6a37, 5 bytes (bytes:5)
 	db $ff, $00, $01, $02, $ff ; 0x00
+Unused_38_GetGridEntryAtCursor:
 	call GetGridSlotFromCursor ; $6a3c
 	ld hl, wCharGridEntries ; $6a3f
 	add a ; $6a42

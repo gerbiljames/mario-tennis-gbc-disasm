@@ -17,6 +17,7 @@ DataPtr_RulesScreenAttrmap:
 	dw RulesScreenAttrmap ; $4012
 DataPtr_RulesScreenPalettes:
 	dw RulesScreenPalettes ; $4014
+Unused_17_DrawWobblingCornerBrackets:
 	push de ; $4016
 	push bc ; $4017
 	ld c, $00 ; $4018

@@ -1,6 +1,7 @@
 	farptr RunMatchWinLoseScreen ; $4000
 	farptr RunMatchStatsScreen ; $4002
 	farptr DecompressCharacterPortrait ; $4004
+Unused_16_DrawWobblingCornerBrackets:
 	push de ; $4006
 	push bc ; $4007
 	ld c, $00 ; $4008
@@ -9,7 +10,6 @@
 	call ApplySpriteWobbleY_16 ; $400f
 	ld c, $00 ; $4012
 	ld b, $08 ; $4014
-DrawWobblingCornerBrackets:
 	call QueueSprite ; $4016
 	pop bc ; $4019
 	pop de ; $401a

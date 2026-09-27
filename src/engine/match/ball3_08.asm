@@ -180,6 +180,7 @@ DrawBallTouchCharEffectTable:
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x10
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x18
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x20
+Unused_08_DrawShotAimMarker:
 	ld bc, $0000 ; $54ea
 	ld hl, wShotAimTargetDepth ; $54ed
 	ld a, [hl+] ; $54f0
