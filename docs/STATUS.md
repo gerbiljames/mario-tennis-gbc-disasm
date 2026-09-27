@@ -114,6 +114,23 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-27** — a runtime audit. `tools/runtime_audit.py` (needs PyBoy)
+  plays the game headless from a save -- every story location entered at
+  each of its entry points through the game's own `$ff` reload request, then
+  walked about at random, and a long random session from the Test map,
+  whose debug NPCs launch story matches -- with hooks that check the
+  source's claims against what runs. On 3.5 million frames: none of the
+  206 `Unused*` routines executed; every actor-slot name reached (1,553
+  distinct script sites, about 19,700 executions, and 164 NPC talks) ran
+  under a list holding the same actor in that slot as the list its name
+  comes from, with no disagreement; and the character records loaded were
+  the ones their constants say (the drill partners for their drills, Mark
+  and Ellis for doubles Varsity #2, `$5b`/`$5c` for Dream Match Hard and
+  Intense). `$5b`-`$60` are now `CHAR_DREAM_HARD` ... `CHAR_DREAM_DOUBLES_MAX`.
+  Coverage is what random play reaches: scenes gated behind story states
+  the save is past (most of the ranking-match intros and victory scenes,
+  `AcademyWingInitScript_10`'s stage branches) never ran, so the ~600 actor
+  slots still written as numbers were not resolved this way.
 * **2026-09-27** — the padded ROM boots and plays. Running it (BizHawk,
   then headless PyBoy) found what the static checks could not. It hung
   before the Nintendo logo because nineteen tables were addressed as

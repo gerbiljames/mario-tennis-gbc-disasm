@@ -538,6 +538,14 @@ def CHAR_MARK_2      equ $32 ; shown as Mark
 def CHAR_ELLIS       equ $33
 def CHAR_FRANK       equ $34
 def CHAR_EDGAR       equ $35
+; Records $5b-$60 are the Dream Match opponents' records, in the match
+; settings rows of STORYMATCH_DREAM_HARD/_INTENSE/_MAX (singles, then doubles).
+def CHAR_DREAM_HARD            equ $5b
+def CHAR_DREAM_INTENSE         equ $5c
+def CHAR_DREAM_MAX             equ $5d
+def CHAR_DREAM_DOUBLES_HARD    equ $5e
+def CHAR_DREAM_DOUBLES_INTENSE equ $5f
+def CHAR_DREAM_DOUBLES_MAX     equ $60
 ; Records $37-$48 are the drill partners, one per training drill in
 ; MINIGAME_* order: each drill_def names its own as the opponent.
 def CHAR_DRILL_SERVICE_MATCH_1    equ $37

@@ -11,6 +11,10 @@ an unused routine has a live twin, the exact difference is in the comment
 above it in `src/`, so the relationship is visible where the routine is
 read, not only here.
 
+The proof is static. `tools/runtime_audit.py` adds a runtime check: in 3.5
+million frames of play from a save (every story location, the Test map's
+match launchers, menus, matches) none of the `Unused*` routines executed.
+
 ## The patterns
 
 **1. Helper families with unused members.** The code reads as if each game
