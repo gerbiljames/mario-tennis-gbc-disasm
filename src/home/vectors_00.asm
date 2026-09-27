@@ -61,9 +61,9 @@ CallHLInBankA:
 	push hl ; $0160
 	push af ; $0161
 	ld hl, sp + 4 ; $0162
-	ld [hl], $75 ; $0164
+	ld [hl], LOW(.restoreBank) ; $0164
 	inc hl ; $0166
-	ld [hl], $01 ; $0167
+	ld [hl], HIGH(.restoreBank) ; $0167
 	inc hl ; $0169
 	ldh a, [hRomBank] ; $016a
 	ld [hl], a ; $016c
@@ -72,6 +72,7 @@ CallHLInBankA:
 	ld [rROMB0], a ; $0170
 	pop hl ; $0173
 	jp hl ; $0174
+.restoreBank:
 	push af ; $0175
 	push hl ; $0176
 	ld hl, sp + 4 ; $0177
@@ -89,9 +90,9 @@ Unused_00_CallTableEntryInBankA:
 	push hl ; $0186
 	push af ; $0187
 	ld hl, sp + 4 ; $0188
-	ld [hl], $a7 ; $018a
+	ld [hl], LOW(.restoreBank) ; $018a
 	inc hl ; $018c
-	ld [hl], $01 ; $018d
+	ld [hl], HIGH(.restoreBank) ; $018d
 	inc hl ; $018f
 	ldh a, [hRomBank] ; $0190
 	ld [hl], a ; $0192
@@ -112,6 +113,7 @@ Unused_00_CallTableEntryInBankA:
 	or h ; $01a4
 	ret z ; $01a5
 	jp hl ; $01a6
+.restoreBank:
 	push af ; $01a7
 	push hl ; $01a8
 	ld hl, sp + 4 ; $01a9

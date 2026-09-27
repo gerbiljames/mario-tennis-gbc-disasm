@@ -460,7 +460,7 @@ RunStoryMenu:
 	push af ; $6d53
 	call LoadStoryMenuItemGfx ; $6d54
 	pop af ; $6d57
-	ld_hl_indexed CallHLInBankA + 4 ; $6d58
+	ld_hl_indexed Text_30_354 ; $6d58
 	ld de, $000e ; $6d5f
 	call DrawStoryMenuCaption ; $6d62
 	call RedrawStoryTilemapRows ; $6d65
@@ -700,7 +700,7 @@ UnusedStoryMenuRedrawReentry:
 	ld a, [wMatchMenuSelection] ; $6f07
 	call LoadStoryMenuItemGfx ; $6f0a
 	ld a, [wMatchMenuSelection] ; $6f0d
-	ld_hl_indexed CallHLInBankA + 4 ; $6f10
+	ld_hl_indexed Text_30_354 ; $6f10
 	ld de, $000e ; $6f17
 	call DrawStoryMenuCaption ; $6f1a
 	call RedrawStoryTilemapRows ; $6f1d

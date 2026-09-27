@@ -361,7 +361,10 @@ def check_literal_pointers(fail):
     position that takes only labels everywhere else (as_call, map_actor's
     script, obj_template's routines, ...); and an `ld rr` or `dw` literal in
     $4000-$7fff equal to a label of the same bank. The `$40xx` slot labels are
-    left out of the last: small words collide with them constantly."""
+    left out of the last: small words collide with them constantly. A number
+    stored through `ld hl, sp + n` is a return address built by hand, and an
+    ld_*_indexed base that names a routine is a constant (a text id, say)
+    that happened to fall on code."""
     banks = [(bank_of(h), [m for m in map(_OPERAND_RE.match, bank_lines(h)[0]) if m])
              for h in holders()]
     kinds = {}
@@ -378,13 +381,29 @@ def check_literal_pointers(fail):
         m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
         if m and not m.group(3).startswith(("FarPtr_", "DataPtr_")):
             by_addr.setdefault((int(m.group(1), 16), int(m.group(2), 16)), m.group(3))
+    routines = set()
+    for h in holders():
+        lines = bank_lines(h)[0]
+        for i, line in enumerate(lines[:-1]):
+            m = re.match(r"^([A-Za-z_]\w*):", line)
+            op = re.match(r"^\t([a-z]+)\b", lines[i + 1])
+            if m and op and op.group(1) in _MNEMONICS:
+                routines.add(m.group(1))
     n = 0
     for bank, lines in banks:
-        pending_hl = None
+        pending_hl = stack_hl = None
         split_lo, split_hi = None, None
         for m in lines:
             op, args = m.group(1), [a.strip() for a in m.group(2).split(",")]
             where = f"${bank:02x}: {op} {m.group(2).strip()}"
+            if op == "ld" and args[0] == "hl" and args[1].startswith("sp"):
+                stack_hl = True
+            elif stack_hl and op == "ld" and args[0] in ("[hl]", "[hl+]"):
+                n += 1
+                if _NUM_RE.fullmatch(args[1]):
+                    fail("literals", f"{where} -- a number stored into the stack")
+            elif op not in ("inc", "dec") or args[0] != "hl":
+                stack_hl = None
             if op == "ld" and args[0] == "hl":
                 pending_hl = where if _NUM_RE.fullmatch(args[1]) else None
             elif op in ("call", "jp") and args[-1] in _SLOT_CONSUMERS:
@@ -396,6 +415,10 @@ def check_literal_pointers(fail):
             elif (op not in _MNEMONICS or op in ("call", "jp", "jr", "rst", "ret")
                   or args[0] in ("h", "l", "hl") or "hl" in args[1:] or "[hl+]" in args):
                 pending_hl = None
+            if re.fullmatch(r"ld_(hl|de|bc)_indexed", op):
+                n += 1
+                if re.match(r"\w+", args[0]).group(0) in routines:
+                    fail("literals", f"{where} -- indexes into a routine")
             if op in ("jp", "call", "jr"):
                 n += 1
                 if _NUM_RE.fullmatch(args[-1]):
