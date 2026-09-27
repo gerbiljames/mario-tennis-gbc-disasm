@@ -7,7 +7,7 @@ InitDefaultMatchSettings:
 	ld hl, wMatchTypeNumberOfSets ; $407c
 	ld c, $01 ; $407f
 	call ClearMemory16 ; $4081
-	ld hl, $c780 ; $4084
+	ld hl, wModeScratch ; $4084
 	ld c, $08 ; $4087
 	call ClearMemory16 ; $4089
 	ld a, COURT_HARD ; $408c
@@ -134,7 +134,7 @@ RunMatch:
 	farcall UpdateLinkSession ; $41a4
 	ld a, [wMatchBGM] ; $41a7
 	call PlaySoundManaged ; $41aa
-	ld hl, $c780 ; $41ad
+	ld hl, wModeScratch ; $41ad
 	ld c, $08 ; $41b0
 	call ClearMemory16 ; $41b2
 	ld a, $ff ; $41b5

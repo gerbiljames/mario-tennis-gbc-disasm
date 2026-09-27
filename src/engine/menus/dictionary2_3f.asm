@@ -171,7 +171,7 @@ DrawTennisDictionaryIndexCursor:
 	ld hl, TennisDictionaryIndexCursorTable1 ; $54d0
 .gotTiles:
 	wram_bank WRAM_SCREEN ; $54d3
-	ld de, $cfb3 ; $54d9
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 19 - $80 ; $54d9 one step back: .rowLoop adds $80 first
 	ld c, b ; $54dc
 	inc b ; $54dd
 .rowLoop:
@@ -209,8 +209,8 @@ DrawTennisDictionaryIndexCursor:
 	ld a, [hl] ; $5500
 	ld [de], a ; $5501
 	pop af ; $5502
-	ld hl, $cff0 ; $5503
-	ld de, $97f0 ; $5506
+	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH + 16 - $40 ; $5503 one step back, as is de
+	ld de, vBGMap0 + 16 - TILEMAP_WIDTH ; $5506
 	add a ; $5509
 	ld b, a ; $550a
 	inc b ; $550b

@@ -1040,6 +1040,7 @@ wDebugStatWords2:: ds 8
 ; variant, the wTargetZone*/wDrillGate* flats and the mode-hook table
 ; between modes. ResetMugshotPalettes_1b also writes $ff to $c780 before
 ; reloading palettes; nothing in bank $1b reads it back.
+wModeScratch::
 UNION
 ; character select (bank $1b)
 	ds 1

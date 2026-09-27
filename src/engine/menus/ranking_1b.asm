@@ -142,7 +142,7 @@ StubNop_1b_00:
 	ret ; $4e0c
 ResetMugshotPalettes_1b:
 	ld a, $ff ; $4e0d
-	ld [$c780], a ; $4e0f
+	ld [wModeScratch], a ; $4e0f
 	ld d, $03 ; $4e12
 	farcall LoadAllIndexedPalettes_18 ; $4e14
 	ret ; $4e17
