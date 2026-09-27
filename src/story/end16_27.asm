@@ -9,33 +9,33 @@ End17AwardCeremonyMapScripts_27:
 	dw End17AwardCeremonyInitScript_27 ; slot 6 InitScript
 End17AwardCeremonyActors_27:
 	; $4026, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $0f00, $1600, FACE_UP, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $0c00, $1300, FACE_UP, OBJ_WALK_75_06, $01, $00
-	map_actor $0000, ActorScript_27_27, $0e80, $17c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $0f00, $1600, FACE_UP, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $0e00, $0e40, FACE_DOWN, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_27_27, $0a00, $0dc0, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $0c00, $0d40, FACE_DOWN, OBJ_ALEX, $01, $00
-	map_actor $0000, ActorScript_27_27, $0700, $0500, FACE_DOWN, OBJ_WALK_71_03, $01, $00
-	map_actor $0000, ActorScript_27_27, $0f00, $0700, FACE_DOWN, OBJ_WALK_72_03, $01, $00
-	map_actor $0000, ActorScript_27_27, $0e80, $1b00, FACE_UP, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $0980, $1b00, FACE_UP, OBJ_WALK_6F_05, $01, $00
-	map_actor $0000, ActorScript_27_27, $0800, $1940, FACE_RIGHT, OBJ_WALK_6F_07, $01, $05
+	map_actor $0000, ActorScript_27_27, $0f00, $1600, FACE_UP, OBJ_WALK_6F_07, $01, $00, END17_AWARD_CEREMONY_WALK_6F_07_1
+	map_actor $0000, ActorScript_27_27, $0c00, $1300, FACE_UP, OBJ_WALK_75_06, $01, $00, END17_AWARD_CEREMONY_WALK_75_06
+	map_actor $0000, ActorScript_27_27, $0e80, $17c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00, END17_AWARD_CEREMONY_WALK_77_07
+	map_actor $0000, ActorScript_27_27, $0f00, $1600, FACE_UP, OBJ_WALK_6F_07, $01, $00, END17_AWARD_CEREMONY_WALK_6F_07_2
+	map_actor $0000, ActorScript_27_27, $0e00, $0e40, FACE_DOWN, OBJ_WALK_74_08, $01, $00, END17_AWARD_CEREMONY_WALK_74_08
+	map_actor $0000, ActorScript_27_27, $0a00, $0dc0, FACE_DOWN, OBJ_A_COZ, $01, $00, END17_AWARD_CEREMONY_A_COZ
+	map_actor $0000, ActorScript_27_27, $0c00, $0d40, FACE_DOWN, OBJ_ALEX, $01, $00, END17_AWARD_CEREMONY_ALEX
+	map_actor $0000, ActorScript_27_27, $0700, $0500, FACE_DOWN, OBJ_WALK_71_03, $01, $00, END17_AWARD_CEREMONY_WALK_71_03
+	map_actor $0000, ActorScript_27_27, $0f00, $0700, FACE_DOWN, OBJ_WALK_72_03, $01, $00, END17_AWARD_CEREMONY_WALK_72_03
+	map_actor $0000, ActorScript_27_27, $0e80, $1b00, FACE_UP, OBJ_B_COZ, $01, $00, END17_AWARD_CEREMONY_B_COZ
+	map_actor $0000, ActorScript_27_27, $0980, $1b00, FACE_UP, OBJ_WALK_6F_05, $01, $00, END17_AWARD_CEREMONY_WALK_6F_05
+	map_actor $0000, ActorScript_27_27, $0800, $1940, FACE_RIGHT, OBJ_WALK_6F_07, $01, $05, END17_AWARD_CEREMONY_WALK_6F_07_3
 	map_actor_end
 End17AwardCeremonyActorsAlt_27:
 	; $40d8, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $0f00, $1600, FACE_UP, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $0e00, $1300, FACE_UP, OBJ_WALK_75_06, $01, $00
-	map_actor $0000, ActorScript_27_27, $0e80, $17c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $0f00, $1600, FACE_UP, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $0900, $0e00, FACE_DOWN, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $0b00, $0e00, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $0d00, $0d60, FACE_DOWN, OBJ_ALEX, $01, $00
-	map_actor $0000, ActorScript_27_27, $0700, $0500, FACE_DOWN, OBJ_WALK_71_03, $01, $00
-	map_actor $0000, ActorScript_27_27, $0f00, $0700, FACE_DOWN, OBJ_WALK_72_03, $01, $00
-	map_actor $0000, ActorScript_27_27, $0f00, $1b00, FACE_UP, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_27_27, $0900, $1b00, FACE_UP, OBJ_WALK_6F_05, $01, $00
-	map_actor $0000, ActorScript_27_27, $0800, $1940, FACE_RIGHT, OBJ_WALK_6F_07, $01, $05
+	map_actor $0000, ActorScript_27_27, $0f00, $1600, FACE_UP, OBJ_WALK_6F_07, $01, $00, END17_AWARD_CEREMONY_ALT_WALK_6F_07_1
+	map_actor $0000, ActorScript_27_27, $0e00, $1300, FACE_UP, OBJ_WALK_75_06, $01, $00, END17_AWARD_CEREMONY_ALT_WALK_75_06
+	map_actor $0000, ActorScript_27_27, $0e80, $17c0, FACE_DOWN, OBJ_WALK_77_07, $01, $00, END17_AWARD_CEREMONY_ALT_WALK_77_07
+	map_actor $0000, ActorScript_27_27, $0f00, $1600, FACE_UP, OBJ_WALK_6F_07, $01, $00, END17_AWARD_CEREMONY_ALT_WALK_6F_07_2
+	map_actor $0000, ActorScript_27_27, $0900, $0e00, FACE_DOWN, OBJ_B_COZ, $01, $00, END17_AWARD_CEREMONY_ALT_B_COZ
+	map_actor $0000, ActorScript_27_27, $0b00, $0e00, FACE_DOWN, OBJ_A_COZ, $01, $00, END17_AWARD_CEREMONY_ALT_A_COZ
+	map_actor $0000, ActorScript_27_27, $0d00, $0d60, FACE_DOWN, OBJ_ALEX, $01, $00, END17_AWARD_CEREMONY_ALT_ALEX
+	map_actor $0000, ActorScript_27_27, $0700, $0500, FACE_DOWN, OBJ_WALK_71_03, $01, $00, END17_AWARD_CEREMONY_ALT_WALK_71_03
+	map_actor $0000, ActorScript_27_27, $0f00, $0700, FACE_DOWN, OBJ_WALK_72_03, $01, $00, END17_AWARD_CEREMONY_ALT_WALK_72_03
+	map_actor $0000, ActorScript_27_27, $0f00, $1b00, FACE_UP, OBJ_WALK_74_08, $01, $00, END17_AWARD_CEREMONY_ALT_WALK_74_08
+	map_actor $0000, ActorScript_27_27, $0900, $1b00, FACE_UP, OBJ_WALK_6F_05, $01, $00, END17_AWARD_CEREMONY_ALT_WALK_6F_05
+	map_actor $0000, ActorScript_27_27, $0800, $1940, FACE_RIGHT, OBJ_WALK_6F_07, $01, $05, END17_AWARD_CEREMONY_ALT_WALK_6F_07_3
 	map_actor_end
 End17AwardCeremonyEntryPoints_27:
 	; $418a, 9 bytes (map_entries)
@@ -61,13 +61,13 @@ End17AwardCeremonyInitScript_27:
 	farcall BeginCutsceneScriptMode ; $41bb
 	jr .setEnd17CeremonyObjectDefs ; $41be
 .animate:
-	script_set_anim $05, $06 ; $41c0
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $06 ; $41c0
 .setEnd17CeremonyObjectDefs:
 	call SetEnd17CeremonyObjectDefs_27 ; $41c7
 	jr .placeActors ; $41ca
 	ret ; $41cc
 .placeActors:
-	script_set_position $03, $3f00, $3f00 ; $41cd
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $3f00, $3f00 ; $41cd
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $41d8
 	xor a ; $41e3
 	ld [wStoryModeShowLocationName], a ; $41e4
@@ -75,66 +75,66 @@ End17AwardCeremonyInitScript_27:
 	call WaitFadeEnd ; $41ec
 	test_flag FLAG_DOUBLES ; $41ef
 	jp nz, .isDoubles ; $41f2
-	script_set_speed $03, $0010 ; $41f5
-	script_set_speed $04, $0010 ; $41fd
-	script_set_speed $05, $0010 ; $4205
-	script_set_speed $06, $0010 ; $420d
-	script_face $06, FACE_DOWN ; $4215
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $0010 ; $41f5
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0010 ; $41fd
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0010 ; $4205
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $0010 ; $420d
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, FACE_DOWN ; $4215
 	script_delay $1e ; $421c
-	script_set_position $05, $0f80, $1600 ; $4221
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0f80, $1600 ; $4221
 	script_delay $1e ; $422c
-	script_set_position $06, $3f00, $3f00 ; $4231
-	script_set_position $03, $0f00, $1600 ; $423c
-	script_set_position $05, $0f00, $1500 ; $4247
-	script_face $03, FACE_UP ; $4252
-	script_move_target $05, $0f00, $1200 ; $4259
-	script_move_target $03, $0f00, $1300 ; $4264
-	script_wait_move $03 ; $426f
-	script_set_position $03, $3f00, $3f00 ; $4274
-	script_set_position $06, $0f00, $1300 ; $427f
-	script_set_position $05, $0e00, $1300 ; $428a
-	script_face $06, FACE_LEFT ; $4295
-	script_move_target $06, $0e00, $1300 ; $429c
-	script_move_target $05, $0d00, $1300 ; $42a7
-	script_wait_move $05 ; $42b2
-	script_facing_lock $06, $01 ; $42b7
-	script_move_target $06, $0f00, $1300 ; $42be
-	script_wait_move $06 ; $42c9
-	script_facing_lock $06, FACE_RIGHT ; $42ce
-	script_move_target $06, $0f00, $1600 ; $42d5
-	script_wait_move $06 ; $42e0
-	script_face $06, FACE_UP ; $42e5
-	script_move_target $04, $0c00, $1100 ; $42ec
-	script_move_target $05, $0c00, $1000 ; $42f7
-	script_wait_move $05 ; $4302
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $3f00, $3f00 ; $4231
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $0f00, $1600 ; $423c
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0f00, $1500 ; $4247
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, FACE_UP ; $4252
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0f00, $1200 ; $4259
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $0f00, $1300 ; $4264
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1 ; $426f
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $3f00, $3f00 ; $4274
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $0f00, $1300 ; $427f
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0e00, $1300 ; $428a
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, FACE_LEFT ; $4295
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $0e00, $1300 ; $429c
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0d00, $1300 ; $42a7
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07 ; $42b2
+	script_facing_lock ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $01 ; $42b7
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $0f00, $1300 ; $42be
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2 ; $42c9
+	script_facing_lock ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, FACE_RIGHT ; $42ce
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $0f00, $1600 ; $42d5
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2 ; $42e0
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, FACE_UP ; $42e5
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0c00, $1100 ; $42ec
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0c00, $1000 ; $42f7
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07 ; $4302
 	script_delay $50 ; $4307
-	script_move_target $04, $0c00, $0f80 ; $430c
-	script_move_target $05, $0c00, $0e40 ; $4317
-	script_wait_move $05 ; $4322
-	script_facing_lock $04, $01 ; $4327
-	script_move_target $04, $0c00, $1100 ; $432e
-	script_wait_move $04 ; $4339
-	script_facing_lock $04, FACE_RIGHT ; $433e
-	script_face $04, FACE_UP ; $4345
-	script_set_anim $0e, $02 ; $434c
-	script_wait_idle $0e ; $4353
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0c00, $0f80 ; $430c
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0c00, $0e40 ; $4317
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07 ; $4322
+	script_facing_lock ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $01 ; $4327
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0c00, $1100 ; $432e
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06 ; $4339
+	script_facing_lock ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, FACE_RIGHT ; $433e
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, FACE_UP ; $4345
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3, $02 ; $434c
+	script_wait_idle ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3 ; $4353
 	script_delay $32 ; $4358
 	script_face $07, FACE_LEFT ; $435d
-	script_face $08, FACE_RIGHT ; $4364
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_A_COZ, FACE_RIGHT ; $4364
 	script_delay $3c ; $436b
-	script_set_position $05, $0b40, $0c40 ; $4370
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0b40, $0c40 ; $4370
 .loop:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $437b
 	ld d, OBJ_ALEX ; $437e
 	add d ; $4380
 	ld d, a ; $4381
-	script_get_actor_state $09 ; $4382
+	script_get_actor_state ACTOR_END17_AWARD_CEREMONY_ALT_ALEX ; $4382
 	ld c, l ; $4387
 	ld b, h ; $4388
 	farcall LoadActorObjectDefIfValid ; $4389
-	script_set_anim $09, $01 ; $438c
-	script_face $09, FACE_RIGHT ; $4393
-	script_set_anim $09, $08 ; $439a
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, $01 ; $438c
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, FACE_RIGHT ; $4393
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, $08 ; $439a
 	script_player_speed $0006 ; $43a1
 	script_move_player $0c00, $0d00 ; $43a7
 	farcall WaitPlayerMoveDone ; $43b1
@@ -144,72 +144,72 @@ End17AwardCeremonyInitScript_27:
 	ld [wStoryModeExitTriggerRequest], a ; $43be
 	ret ; $43c1
 .isDoubles:
-	script_set_speed $03, $0010 ; $43c2
-	script_set_speed $04, $0010 ; $43ca
-	script_set_speed $05, $0010 ; $43d2
-	script_set_speed $06, $0010 ; $43da
-	script_move_target $06, $0f00, $1600 ; $43e2
-	script_wait_move $06 ; $43ed
-	script_face $06, FACE_DOWN ; $43f2
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $0010 ; $43c2
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0010 ; $43ca
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0010 ; $43d2
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $0010 ; $43da
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $0f00, $1600 ; $43e2
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2 ; $43ed
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, FACE_DOWN ; $43f2
 	script_delay $14 ; $43f9
-	script_set_position $05, $0f80, $1600 ; $43fe
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0f80, $1600 ; $43fe
 	script_delay $14 ; $4409
-	script_set_position $06, $3f00, $3f00 ; $440e
-	script_set_position $03, $0f00, $1600 ; $4419
-	script_set_position $05, $0f00, $1500 ; $4424
-	script_face $03, FACE_UP ; $442f
-	script_move_target $05, $0f00, $1300 ; $4436
-	script_move_target $03, $0f00, $1400 ; $4441
-	script_wait_move $03 ; $444c
-	script_face $06, FACE_UP ; $4451
-	script_facing_lock $03, $01 ; $4458
-	script_move_target $03, $0f00, $1600 ; $445f
-	script_wait_move $03 ; $446a
-	script_facing_lock $03, FACE_RIGHT ; $446f
-	script_face $03, FACE_UP ; $4476
-	script_set_position $05, $0ec0, $1300 ; $447d
-	script_move_target $04, $0f00, $1300 ; $4488
-	script_move_target $05, $0fc0, $1300 ; $4493
-	script_wait_move $05 ; $449e
-	script_move_target $04, $0f00, $1100 ; $44a3
-	script_move_target $05, $0fc0, $1100 ; $44ae
-	script_wait_move $05 ; $44b9
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $3f00, $3f00 ; $440e
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $0f00, $1600 ; $4419
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0f00, $1500 ; $4424
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, FACE_UP ; $442f
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0f00, $1300 ; $4436
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $0f00, $1400 ; $4441
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1 ; $444c
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, FACE_UP ; $4451
+	script_facing_lock ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $01 ; $4458
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, $0f00, $1600 ; $445f
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1 ; $446a
+	script_facing_lock ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, FACE_RIGHT ; $446f
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, FACE_UP ; $4476
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0ec0, $1300 ; $447d
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0f00, $1300 ; $4488
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0fc0, $1300 ; $4493
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07 ; $449e
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0f00, $1100 ; $44a3
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0fc0, $1100 ; $44ae
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07 ; $44b9
 	script_delay $3c ; $44be
 	script_set_anim ACTOR_PARTNER, $03 ; $44c3
 	script_wait_idle ACTOR_PARTNER ; $44ca
-	script_set_anim $04, $03 ; $44cf
-	script_wait_idle $04 ; $44d6
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $03 ; $44cf
+	script_wait_idle ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06 ; $44d6
 	script_delay $3c ; $44db
-	script_set_position $05, $0e40, $1100 ; $44e0
-	script_move_target $04, $0d00, $1100 ; $44eb
-	script_move_target $05, $0c40, $1100 ; $44f6
-	script_wait_move $05 ; $4501
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0e40, $1100 ; $44e0
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0d00, $1100 ; $44eb
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0c40, $1100 ; $44f6
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07 ; $4501
 	script_delay $04 ; $4506
-	script_face $04, FACE_UP ; $450b
-	script_move_target $05, $0d00, $1000 ; $4512
-	script_wait_move $05 ; $451d
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, FACE_UP ; $450b
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0d00, $1000 ; $4512
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07 ; $451d
 	script_delay $32 ; $4522
-	script_move_target $04, $0d00, $1000 ; $4527
-	script_move_target $05, $0d00, $0e80 ; $4532
-	script_wait_move $05 ; $453d
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0d00, $1000 ; $4527
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0d00, $0e80 ; $4532
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07 ; $453d
 	script_delay $05 ; $4542
-	script_facing_lock $04, $01 ; $4547
-	script_move_target $04, $0d00, $1100 ; $454e
-	script_wait_move $04 ; $4559
-	script_facing_lock $04, FACE_RIGHT ; $455e
-	script_face $04, FACE_UP ; $4565
-	script_set_anim $0e, $02 ; $456c
-	script_wait_idle $0e ; $4573
+	script_facing_lock ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $01 ; $4547
+	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, $0d00, $1100 ; $454e
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06 ; $4559
+	script_facing_lock ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, FACE_RIGHT ; $455e
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, FACE_UP ; $4565
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3, $02 ; $456c
+	script_wait_idle ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3 ; $4573
 	script_delay $1e ; $4578
-	script_set_anim $09, $03 ; $457d
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, $03 ; $457d
 	script_set_anim ACTOR_PARTNER, $03 ; $4584
 	script_wait_idle ACTOR_PARTNER ; $458b
 	script_delay $1e ; $4590
 	script_face ACTOR_PARTNER, FACE_LEFT ; $4595
 	script_face $07, FACE_RIGHT ; $459c
-	script_face $08, FACE_RIGHT ; $45a3
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_A_COZ, FACE_RIGHT ; $45a3
 	script_delay $3c ; $45aa
-	script_set_position $05, $0c40, $0c60 ; $45af
+	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_77_07, $0c40, $0c60 ; $45af
 	jp .loop ; $45ba
 	ret ; $45bd
 SetEnd17CeremonyObjectDefs_27:
@@ -232,11 +232,11 @@ SetEnd17CeremonyObjectDefs_27:
 	ld d, OBJ_ALEX_B ; $45f6
 	add d ; $45f8
 	ld d, a ; $45f9
-	script_get_actor_state $09 ; $45fa
+	script_get_actor_state ACTOR_END17_AWARD_CEREMONY_ALT_ALEX ; $45fa
 	ld c, l ; $45ff
 	ld b, h ; $4600
 	farcall LoadActorObjectDefIfValid ; $4601
-	script_set_anim $09, $01 ; $4604
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, $01 ; $4604
 	ret ; $460b
 End16BeforeFinalsMapScripts_27:
 	; $460c, 14 bytes (map_tree)
@@ -249,20 +249,20 @@ End16BeforeFinalsMapScripts_27:
 	dw End16BeforeFinalsInitScript_27 ; slot 6 InitScript
 End16BeforeFinalsActors_27:
 	; $461a, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $0100, $0c00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_27_29, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_27_27, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_27_27, $1100, $1500, FACE_DOWN, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_27_27, $1900, $1300, FACE_DOWN, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_27_27, $1700, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $0f00, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $1900, $1500, FACE_DOWN, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_27_27, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $00
-	map_actor $0000, ActorScript_27_27, $1100, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00
+	map_actor $0000, ActorScript_27_27, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, END16_BEFORE_FINALS_WALK_6F_07_1
+	map_actor $0000, ActorScript_27_27, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, END16_BEFORE_FINALS_WALK_6F_07_2
+	map_actor $0000, ActorScript_27_27, $0100, $0c00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, END16_BEFORE_FINALS_WALK_6F_07_3
+	map_actor $0000, ActorScript_27_27, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00, END16_BEFORE_FINALS_WALK_74_08
+	map_actor $0000, ActorScript_27_29, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00, END16_BEFORE_FINALS_WALK_74_07
+	map_actor $0000, ActorScript_27_27, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_06, $01, $00, END16_BEFORE_FINALS_WALK_74_06
+	map_actor $0000, ActorScript_27_27, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00, END16_BEFORE_FINALS_SPIKE
+	map_actor $0000, ActorScript_27_27, $1100, $1500, FACE_DOWN, OBJ_SAMMI, $01, $00, END16_BEFORE_FINALS_SAMMI
+	map_actor $0000, ActorScript_27_27, $1900, $1300, FACE_DOWN, OBJ_ELDEN, $01, $00, END16_BEFORE_FINALS_ELDEN
+	map_actor $0000, ActorScript_27_27, $1700, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00, END16_BEFORE_FINALS_A_COZ
+	map_actor $0000, ActorScript_27_27, $0f00, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00, END16_BEFORE_FINALS_B_COZ
+	map_actor $0000, ActorScript_27_27, $1900, $1500, FACE_DOWN, OBJ_SEAN, $01, $00, END16_BEFORE_FINALS_SEAN
+	map_actor $0000, ActorScript_27_27, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $00, END16_BEFORE_FINALS_WALK_6F_00
+	map_actor $0000, ActorScript_27_27, $1100, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, END16_BEFORE_FINALS_WALK_6F_01
 	map_actor_end
 End16BeforeFinalsEntryPoints_27:
 	; $46e8, 9 bytes (map_entries)
@@ -294,36 +294,36 @@ End16BeforeFinalsInitScript_27:
 	ret ; $4719
 End16BeforeFinalsActorsAlt_27:
 	; $471a, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $0e00, $0400, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_27_29, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_27_27, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_27_27, $1100, $1500, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_27_27, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_27_28, $0700, $1f00, FACE_DOWN, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $1d00, $1300, FACE_RIGHT, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_27_27, $0500, $2100, FACE_DOWN, OBJ_WALK_6F_00, $01, $00
-	map_actor $0000, ActorScript_27_29, $2900, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00
+	map_actor $0000, ActorScript_27_27, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, END16_BEFORE_FINALS_ALT_WALK_6F_07_1
+	map_actor $0000, ActorScript_27_27, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, END16_BEFORE_FINALS_ALT_WALK_6F_07_2
+	map_actor $0000, ActorScript_27_27, $0e00, $0400, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, END16_BEFORE_FINALS_ALT_WALK_6F_07_3
+	map_actor $0000, ActorScript_27_27, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00, END16_BEFORE_FINALS_ALT_WALK_74_08
+	map_actor $0000, ActorScript_27_29, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00, END16_BEFORE_FINALS_ALT_WALK_74_07
+	map_actor $0000, ActorScript_27_27, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00, END16_BEFORE_FINALS_ALT_SAMMI
+	map_actor $0000, ActorScript_27_27, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00, END16_BEFORE_FINALS_ALT_SPIKE
+	map_actor $0000, ActorScript_27_27, $1100, $1500, FACE_DOWN, OBJ_A_COZ, $01, $00, END16_BEFORE_FINALS_ALT_A_COZ
+	map_actor $0000, ActorScript_27_27, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_06, $01, $00, END16_BEFORE_FINALS_ALT_WALK_74_06
+	map_actor $0000, ActorScript_27_27, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00, END16_BEFORE_FINALS_ALT_ELDEN
+	map_actor $0000, ActorScript_27_28, $0700, $1f00, FACE_DOWN, OBJ_B_COZ, $01, $00, END16_BEFORE_FINALS_ALT_B_COZ
+	map_actor $0000, ActorScript_27_27, $1d00, $1300, FACE_RIGHT, OBJ_SEAN, $01, $00, END16_BEFORE_FINALS_ALT_SEAN
+	map_actor $0000, ActorScript_27_27, $0500, $2100, FACE_DOWN, OBJ_WALK_6F_00, $01, $00, END16_BEFORE_FINALS_ALT_WALK_6F_00
+	map_actor $0000, ActorScript_27_29, $2900, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, END16_BEFORE_FINALS_ALT_WALK_6F_01
 	map_actor_end
 End16BeforeFinalsActorsAltB_27:
 	; $47e8, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $0e00, $0400, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $2300, $1100, FACE_DOWN, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_27_27, $2300, $1300, FACE_UP, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_27_27, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_27_27, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_27_27, $0f00, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $1100, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_27_27, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_27_27, $1d00, $1300, FACE_RIGHT, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_27_29, $2900, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00
-	map_actor $0000, ActorScript_27_29, $2400, $1800, FACE_DOWN, OBJ_WALK_6F_00, $01, $05
+	map_actor $0000, ActorScript_27_27, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, END16_BEFORE_FINALS_ALT_B_WALK_6F_07_1
+	map_actor $0000, ActorScript_27_27, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, END16_BEFORE_FINALS_ALT_B_WALK_6F_07_2
+	map_actor $0000, ActorScript_27_27, $0e00, $0400, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, END16_BEFORE_FINALS_ALT_B_WALK_6F_07_3
+	map_actor $0000, ActorScript_27_27, $2300, $1100, FACE_DOWN, OBJ_WALK_74_08, $01, $00, END16_BEFORE_FINALS_ALT_B_WALK_74_08
+	map_actor $0000, ActorScript_27_27, $2300, $1300, FACE_UP, OBJ_WALK_74_06, $01, $00, END16_BEFORE_FINALS_ALT_B_WALK_74_06
+	map_actor $0000, ActorScript_27_27, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00, END16_BEFORE_FINALS_ALT_B_SPIKE
+	map_actor $0000, ActorScript_27_27, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00, END16_BEFORE_FINALS_ALT_B_ELDEN
+	map_actor $0000, ActorScript_27_27, $0f00, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00, END16_BEFORE_FINALS_ALT_B_A_COZ
+	map_actor $0000, ActorScript_27_27, $1100, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00, END16_BEFORE_FINALS_ALT_B_B_COZ
+	map_actor $0000, ActorScript_27_27, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00, END16_BEFORE_FINALS_ALT_B_SAMMI
+	map_actor $0000, ActorScript_27_27, $1d00, $1300, FACE_RIGHT, OBJ_SEAN, $01, $00, END16_BEFORE_FINALS_ALT_B_SEAN
+	map_actor $0000, ActorScript_27_29, $2900, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, END16_BEFORE_FINALS_ALT_B_WALK_6F_01
+	map_actor $0000, ActorScript_27_29, $2400, $1800, FACE_DOWN, OBJ_WALK_6F_00, $01, $05, END16_BEFORE_FINALS_ALT_B_WALK_6F_00
 	map_actor_end
 End16BeforeFinalsScriptBody_27:
 	script_move_target ACTOR_PLAYER, $1c00, $1900 ; $48a8
@@ -361,32 +361,32 @@ End16BeforeFinalsCutscene_27:
 	farcall BeginCutsceneScriptMode ; $4917
 	script_move_player $1100, $0f00 ; $491a
 	farcall WaitPlayerMoveDone ; $4924
-	script_move_target $05, $0e00, $0c00 ; $4927
-	script_wait_move $05 ; $4932
-	script_move_target $05, $1300, $0c00 ; $4937
-	script_wait_move $05 ; $4942
-	script_face $05, FACE_DOWN ; $4947
-	script_set_anim $05, $02 ; $494e
-	script_wait_idle $05 ; $4955
-	script_face $04, FACE_UP ; $495a
-	script_set_anim $04, $03 ; $4961
-	script_wait_idle $04 ; $4968
-	script_face $04, FACE_DOWN ; $496d
-	script_move_target $04, $1300, $1700 ; $4974
-	script_move_target $05, $1300, $1700 ; $497f
+	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, $0e00, $0c00 ; $4927
+	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $4932
+	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, $1300, $0c00 ; $4937
+	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $4942
+	script_face ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, FACE_DOWN ; $4947
+	script_set_anim ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, $02 ; $494e
+	script_wait_idle ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $4955
+	script_face ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2, FACE_UP ; $495a
+	script_set_anim ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2, $03 ; $4961
+	script_wait_idle ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2 ; $4968
+	script_face ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2, FACE_DOWN ; $496d
+	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2, $1300, $1700 ; $4974
+	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, $1300, $1700 ; $497f
 	script_move_player $1100, $1300 ; $498a
-	script_wait_move $04 ; $4994
-	script_move_target $04, $1500, $1700 ; $4999
-	script_wait_move $04 ; $49a4
-	script_face $04, FACE_UP ; $49a9
-	script_wait_move $05 ; $49b0
-	script_face $05, FACE_UP ; $49b5
-	script_face_pair $05, $04 ; $49bc
-	script_set_anim $04, $03 ; $49c4
-	script_wait_idle $04 ; $49cb
-	script_move_target $05, $1000, $1700 ; $49d0
-	script_wait_move $05 ; $49db
-	script_face $05, FACE_UP ; $49e0
+	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2 ; $4994
+	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2, $1500, $1700 ; $4999
+	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2 ; $49a4
+	script_face ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2, FACE_UP ; $49a9
+	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $49b0
+	script_face ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, FACE_UP ; $49b5
+	script_face_pair ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2 ; $49bc
+	script_set_anim ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2, $03 ; $49c4
+	script_wait_idle ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_2 ; $49cb
+	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, $1000, $1700 ; $49d0
+	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $49db
+	script_face ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, FACE_UP ; $49e0
 	test_flag FLAG_DOUBLES ; $49e7
 	jp nz, .face ; $49ea
 	script_set_speed ACTOR_PLAYER, $0020 ; $49ed
@@ -397,9 +397,9 @@ End16BeforeFinalsCutscene_27:
 	script_set_anim $0a, $03 ; $4a12
 	script_set_anim ACTOR_PLAYER, $03 ; $4a19
 	script_wait_idle ACTOR_PLAYER ; $4a20
-	script_move_target $05, $1300, $1700 ; $4a25
-	script_wait_move $05 ; $4a30
-	script_set_actor_script $05, ActorScript_27_02 ; $4a35
+	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, $1300, $1700 ; $4a25
+	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $4a30
+	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, ActorScript_27_02 ; $4a35
 	script_wait_frames $14 ; $4a40
 	script_set_actor_script $0a, ActorScript_27_02 ; $4a47
 	script_wait_frames $14 ; $4a52
@@ -422,9 +422,9 @@ End16BeforeFinalsCutscene_27:
 	script_wait_idle ACTOR_PLAYER ; $4ab5
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4aba
 	script_face ACTOR_PARTNER, FACE_DOWN ; $4ac1
-	script_move_target $05, $1300, $1700 ; $4ac8
-	script_wait_move $05 ; $4ad3
-	script_set_actor_script $05, ActorScript_27_02 ; $4ad8
+	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, $1300, $1700 ; $4ac8
+	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $4ad3
+	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, ActorScript_27_02 ; $4ad8
 	script_wait_frames $14 ; $4ae3
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_02 ; $4aea
 	script_wait_frames $14 ; $4af5

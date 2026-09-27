@@ -1,50 +1,50 @@
 ParkMiddleCourtPracticePair:
-	script_null_script $0e ; $7a76
-	script_null_script $0f ; $7a7b
-	script_set_anim $0e, $01 ; $7a80
-	script_set_anim $0f, $01 ; $7a87
-	script_set_position $0e, $1f00, $0b00 ; $7a8e
-	script_set_position $0f, $1f00, $1300 ; $7a99
-	script_face $0e, FACE_LEFT ; $7aa4
-	script_face $0f, FACE_LEFT ; $7aab
+	script_null_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_3 ; $7a76
+	script_null_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4 ; $7a7b
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_3, $01 ; $7a80
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4, $01 ; $7a87
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_3, $1f00, $0b00 ; $7a8e
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4, $1f00, $1300 ; $7a99
+	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_3, FACE_LEFT ; $7aa4
+	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4, FACE_LEFT ; $7aab
 	ret ; $7ab2
 ParkLeftCourtPracticePairRightSide:
-	script_null_script $0c ; $7ab3
-	script_null_script $0d ; $7ab8
-	script_set_anim $0c, $01 ; $7abd
-	script_set_anim $0d, $01 ; $7ac4
-	script_set_position $0c, $0f00, $0b00 ; $7acb
-	script_set_position $0d, $0f00, $1300 ; $7ad6
-	script_face $0c, FACE_LEFT ; $7ae1
-	script_face $0d, FACE_LEFT ; $7ae8
+	script_null_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_1 ; $7ab3
+	script_null_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_2 ; $7ab8
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_1, $01 ; $7abd
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_2, $01 ; $7ac4
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_1, $0f00, $0b00 ; $7acb
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_2, $0f00, $1300 ; $7ad6
+	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_1, FACE_LEFT ; $7ae1
+	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_2, FACE_LEFT ; $7ae8
 	script_wait_frames $14 ; $7aef
 	ret ; $7af6
 ParkLeftCourtPracticePairLeftSide:
-	script_null_script $0c ; $7af7
-	script_null_script $0d ; $7afc
-	script_set_position $0c, $0500, $0b00 ; $7b01
-	script_set_position $0d, $0500, $1300 ; $7b0c
-	script_face $0c, FACE_RIGHT ; $7b17
-	script_face $0d, FACE_RIGHT ; $7b1e
+	script_null_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1 ; $7af7
+	script_null_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2 ; $7afc
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1, $0500, $0b00 ; $7b01
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2, $0500, $1300 ; $7b0c
+	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1, FACE_RIGHT ; $7b17
+	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2, FACE_RIGHT ; $7b1e
 	script_wait_frames $14 ; $7b25
 	ret ; $7b2c
 ResumeMiddleCourtPractice:
-	script_move_target $0e, $1800, $0b00 ; $7b2d
-	script_move_target $0f, $1c00, $1700 ; $7b38
-	script_wait_move $0f ; $7b43
-	script_face $0f, FACE_UP ; $7b48
-	script_wait_move $0e ; $7b4f
-	script_set_actor_script $0e, ActorScript_11_48 ; $7b54
-	script_set_actor_script $0f, ActorScript_11_49 ; $7b5f
+	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_3, $1800, $0b00 ; $7b2d
+	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4, $1c00, $1700 ; $7b38
+	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4 ; $7b43
+	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4, FACE_UP ; $7b48
+	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_3 ; $7b4f
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_3, ActorScript_11_48 ; $7b54
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_74_00_4, ActorScript_11_49 ; $7b5f
 	ret ; $7b6a
 ResumeLeftCourtPractice:
-	script_move_target $0c, $0800, $0b00 ; $7b6b
-	script_move_target $0d, $0c00, $1700 ; $7b76
-	script_wait_move $0d ; $7b81
-	script_face $0d, FACE_UP ; $7b86
-	script_wait_move $0c ; $7b8d
-	script_set_actor_script $0c, ActorScript_11_50 ; $7b92
-	script_set_actor_script $0d, ActorScript_11_51 ; $7b9d
+	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1, $0800, $0b00 ; $7b6b
+	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2, $0c00, $1700 ; $7b76
+	script_wait_move ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2 ; $7b81
+	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2, FACE_UP ; $7b86
+	script_wait_move ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1 ; $7b8d
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1, ActorScript_11_50 ; $7b92
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2, ActorScript_11_51 ; $7b9d
 	ret ; $7ba8
 ActorScript_11_45:
 	; $7ba9, 10 bytes (actor_script)

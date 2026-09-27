@@ -4,7 +4,7 @@ ActorScript_27_26:
 	as_wait $50
 	as_jump ActorScript_27_26
 End1MainBldgGroupDepartureCutscene_27:
-	script_set_position $06, $3f00, $3f00 ; $760e
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $3f00, $3f00 ; $760e
 	test_flag FLAG_DOUBLES ; $7619
 	jp z, .checkStoryModeGenderOfMainCharacter ; $761c
 	script_null_script ACTOR_PARTNER ; $761f
@@ -13,13 +13,13 @@ End1MainBldgGroupDepartureCutscene_27:
 	ld d, OBJ_HARRY_B ; $7632
 	add d ; $7634
 	ld d, a ; $7635
-	script_get_actor_state $0a ; $7636
+	script_get_actor_state ACTOR_END1_MAIN_BLDG_WALK_74_07 ; $7636
 	ld c, l ; $763b
 	ld b, h ; $763c
 	farcall LoadActorObjectDefIfValid ; $763d
-	script_set_anim $0a, $01 ; $7640
-	script_set_position $0c, $1a00, $1100 ; $7647
-	script_face $0c, FACE_DOWN ; $7652
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_74_07, $01 ; $7640
+	script_set_position ACTOR_END1_MAIN_BLDG_MARK, $1a00, $1100 ; $7647
+	script_face ACTOR_END1_MAIN_BLDG_MARK, FACE_DOWN ; $7652
 .checkStoryModeGenderOfMainCharacter:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7659
 	ld d, OBJ_ALEX_B ; $765c
@@ -37,70 +37,70 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_delay $3c ; $768b
 	test_flag FLAG_DOUBLES ; $7690
 	jp z, .face ; $7693
-	script_face_pair $0a, ACTOR_PLAYER ; $7696
+	script_face_pair ACTOR_END1_MAIN_BLDG_WALK_74_07, ACTOR_PLAYER ; $7696
 	script_delay $1e ; $769e
 	script_set_anim ACTOR_PLAYER, $03 ; $76a3
-	script_set_anim $0a, $03 ; $76aa
-	script_wait_idle $0a ; $76b1
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_74_07, $03 ; $76aa
+	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_74_07 ; $76b1
 	script_delay $1e ; $76b6
-	script_face $0a, FACE_UP ; $76bb
+	script_face ACTOR_END1_MAIN_BLDG_WALK_74_07, FACE_UP ; $76bb
 	script_delay $1e ; $76c2
-	script_set_anim $0c, $02 ; $76c7
-	script_wait_idle $0c ; $76ce
+	script_set_anim ACTOR_END1_MAIN_BLDG_MARK, $02 ; $76c7
+	script_wait_idle ACTOR_END1_MAIN_BLDG_MARK ; $76ce
 	script_delay $32 ; $76d3
-	script_face_pair $0c, $08 ; $76d8
-	script_set_anim $08, $03 ; $76e0
-	script_set_anim $0c, $03 ; $76e7
-	script_wait_idle $0c ; $76ee
-	script_face $0c, FACE_DOWN ; $76f3
-	script_face $08, FACE_DOWN ; $76fa
+	script_face_pair ACTOR_END1_MAIN_BLDG_MARK, ACTOR_END1_MAIN_BLDG_WALK_75_06_2 ; $76d8
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_2, $03 ; $76e0
+	script_set_anim ACTOR_END1_MAIN_BLDG_MARK, $03 ; $76e7
+	script_wait_idle ACTOR_END1_MAIN_BLDG_MARK ; $76ee
+	script_face ACTOR_END1_MAIN_BLDG_MARK, FACE_DOWN ; $76f3
+	script_face ACTOR_END1_MAIN_BLDG_WALK_75_06_2, FACE_DOWN ; $76fa
 	jp .step ; $7701
 .face:
-	script_face_pair $0b, ACTOR_PLAYER ; $7704
+	script_face_pair ACTOR_END1_MAIN_BLDG_WALK_74_06, ACTOR_PLAYER ; $7704
 	script_delay $1e ; $770c
 	script_set_anim ACTOR_PLAYER, $03 ; $7711
-	script_set_anim $0b, $03 ; $7718
-	script_wait_idle $0b ; $771f
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_74_06, $03 ; $7718
+	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_74_06 ; $771f
 	script_delay $0a ; $7724
 	script_face ACTOR_PLAYER, FACE_UP ; $7729
-	script_face $0b, FACE_UP ; $7730
+	script_face ACTOR_END1_MAIN_BLDG_WALK_74_06, FACE_UP ; $7730
 	script_delay $14 ; $7737
-	script_set_anim $08, $03 ; $773c
-	script_wait_idle $08 ; $7743
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_2, $03 ; $773c
+	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_2 ; $7743
 .step:
 	script_delay $28 ; $7748
-	script_set_anim $09, $03 ; $774d
-	script_set_anim $0a, $03 ; $7754
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_74_08, $03 ; $774d
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_74_07, $03 ; $7754
 	script_set_anim ACTOR_PLAYER, $03 ; $775b
-	script_set_anim $0b, $03 ; $7762
-	script_wait_idle $0b ; $7769
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_74_06, $03 ; $7762
+	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_74_06 ; $7769
 	script_delay $14 ; $776e
-	script_face_pair $0b, ACTOR_PLAYER ; $7773
-	script_face_pair $09, $0a ; $777b
+	script_face_pair ACTOR_END1_MAIN_BLDG_WALK_74_06, ACTOR_PLAYER ; $7773
+	script_face_pair ACTOR_END1_MAIN_BLDG_WALK_74_08, ACTOR_END1_MAIN_BLDG_WALK_74_07 ; $777b
 	script_delay $0a ; $7783
 	script_facing_lock ACTOR_PLAYER, $01 ; $7788
-	script_facing_lock $0b, $01 ; $778f
-	script_facing_lock $0a, $01 ; $7796
-	script_facing_lock $09, $01 ; $779d
+	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_06, $01 ; $778f
+	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_07, $01 ; $7796
+	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_08, $01 ; $779d
 	script_move_target ACTOR_PLAYER, $1600, $1700 ; $77a4
-	script_move_target $0b, $1a00, $1700 ; $77af
-	script_move_target $0a, $1500, $1500 ; $77ba
-	script_move_target $09, $1b00, $1500 ; $77c5
-	script_wait_move $09 ; $77d0
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_06, $1a00, $1700 ; $77af
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_07, $1500, $1500 ; $77ba
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_08, $1b00, $1500 ; $77c5
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_74_08 ; $77d0
 	script_player_speed $0020 ; $77d5
 	script_move_player $1800, $2f00 ; $77db
-	script_move_target $08, $1800, $1900 ; $77e5
-	script_wait_move $08 ; $77f0
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_2, $1800, $1900 ; $77e5
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_2 ; $77f0
 	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $77f5
-	script_facing_lock $0b, FACE_RIGHT ; $77fc
-	script_facing_lock $0a, FACE_RIGHT ; $7803
-	script_facing_lock $09, FACE_RIGHT ; $780a
+	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_06, FACE_RIGHT ; $77fc
+	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_07, FACE_RIGHT ; $7803
+	script_facing_lock ACTOR_END1_MAIN_BLDG_WALK_74_08, FACE_RIGHT ; $780a
 	script_move_target ACTOR_PLAYER, $1600, $1f00 ; $7811
-	script_move_target $0b, $1a00, $1f00 ; $781c
-	script_move_target $0a, $1500, $1d00 ; $7827
-	script_move_target $09, $1b00, $1d00 ; $7832
-	script_move_target $08, $1800, $2100 ; $783d
-	script_wait_move $08 ; $7848
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_06, $1a00, $1f00 ; $781c
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_07, $1500, $1d00 ; $7827
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_08, $1b00, $1d00 ; $7832
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_2, $1800, $2100 ; $783d
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_2 ; $7848
 	ld a, $05 ; $784d
 	ld [wUnusedExitTriggerIdMirror], a ; $784f
 	ld [wStoryModeExitTriggerRequest], a ; $7852

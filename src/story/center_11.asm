@@ -17,10 +17,10 @@ CenterCourtMapScripts_11:
 	dw CenterCourtInitScript_11 ; slot 6 InitScript
 CenterCourtActors_11:
 	; $4016, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $0f00, $2e00, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_11_45, $0d00, $1300, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_11_45, $1f00, $2e00, FACE_RIGHT, OBJ_WALK_72_02, $01, $07
-	map_actor $0000, ActorScript_11_45, $2100, $2e00, FACE_LEFT, OBJ_WALK_71_05, $01, $07
+	map_actor $0000, ActorScript_11_45, $0f00, $2e00, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, CENTER_COURT_WALK_6F_07_1
+	map_actor $0000, ActorScript_11_45, $0d00, $1300, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, CENTER_COURT_WALK_6F_07_2
+	map_actor $0000, ActorScript_11_45, $1f00, $2e00, FACE_RIGHT, OBJ_WALK_72_02, $01, $07, CENTER_COURT_WALK_72_02
+	map_actor $0000, ActorScript_11_45, $2100, $2e00, FACE_LEFT, OBJ_WALK_71_05, $01, $07, CENTER_COURT_WALK_71_05
 	map_actor_end
 CenterCourtEntryPoints_11:
 	; $4058, 25 bytes (map_entries)
@@ -48,7 +48,7 @@ CenterCourtNpc03_11:
 	jr nz, .speak ; $40a1
 	script_set_text Text_1f_91 ; $40a3
 .speak:
-	script_speak $03 ; $40a9
+	script_speak ACTOR_CENTER_COURT_WALK_6F_07_1 ; $40a9
 	ret ; $40ae
 CenterCourtNpc04_11:
 	test_flag FLAG_DOUBLES ; $40af
@@ -69,7 +69,7 @@ CenterCourtNpc04_11:
 	and a ; $40e1
 	jr z, .speak ; $40e2
 	farcall AdvanceDialogueTextCursor ; $40e4
-	script_speak $04 ; $40e7
+	script_speak ACTOR_CENTER_COURT_WALK_6F_07_2 ; $40e7
 	ret ; $40ec
 .speak:
 	ld a, [wMapSceneStage] ; $40ed
@@ -78,7 +78,7 @@ CenterCourtNpc04_11:
 	farcall AdvanceDialogueTextCursor ; $40f4
 	farcall AdvanceDialogueTextCursor ; $40f7
 .done:
-	script_speak $04 ; $40fa
+	script_speak ACTOR_CENTER_COURT_WALK_6F_07_2 ; $40fa
 	ret ; $40ff
 CenterCourtNpc05_11:
 	ld a, [wMapSceneStage] ; $4100
@@ -91,7 +91,7 @@ CenterCourtNpc05_11:
 	ld a, [wMapSceneStage] ; $4111
 	cp ISLANDOPENSTAGE_SINGLES_FINAL ; $4114
 	jr z, .eq03 ; $4116
-	script_speak $05 ; $4118
+	script_speak ACTOR_CENTER_COURT_WALK_72_02 ; $4118
 	ret ; $411d
 .eq03:
 	ld a, $05 ; $411e
@@ -103,7 +103,7 @@ CenterCourtNpc05_11:
 	jr z, .speak ; $4131
 	farcall AdvanceDialogueTextCursor ; $4133
 .speak:
-	script_speak $05 ; $4136
+	script_speak ACTOR_CENTER_COURT_WALK_72_02 ; $4136
 	ret ; $413b
 CenterCourtNpc05TextIds:
 	; $413c, 14 bytes (text_ids)
@@ -122,7 +122,7 @@ CenterCourtNpc06_11:
 	ld h, [hl] ; $4156
 	ld l, a ; $4157
 	farcall InitDialogueTextCursor ; $4158
-	script_speak $05 ; $415b
+	script_speak ACTOR_CENTER_COURT_WALK_72_02 ; $415b
 	ret ; $4160
 CenterCourtNpc06TextIds:
 	; $4161, 14 bytes (text_ids)
@@ -135,10 +135,10 @@ CenterCourtNpc06TextIds:
 	dw Text_1f_103 ; record 6
 CenterCourtNpcScripts_11:
 	; $416f, 33 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, CenterCourtNpc03_11, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, CenterCourtNpc04_11, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, CenterCourtNpc05_11, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, CenterCourtNpc06_11, $03, $00
+	map_script ACTOR_CENTER_COURT_WALK_6F_07_1, FACEMASK_ANY, $0000, CenterCourtNpc03_11, $03, $00
+	map_script ACTOR_CENTER_COURT_WALK_6F_07_2, FACEMASK_ANY, $0000, CenterCourtNpc04_11, $03, $00
+	map_script ACTOR_CENTER_COURT_WALK_72_02, FACEMASK_ANY, $0000, CenterCourtNpc05_11, $03, $00
+	map_script ACTOR_CENTER_COURT_WALK_71_05, FACEMASK_ANY, $0000, CenterCourtNpc06_11, $03, $00
 	db $ff
 CenterCourtFacingScripts_11:
 	; $4190, 9 bytes (map_scripts)
@@ -209,22 +209,22 @@ SetupCenterCourtSceneVariant:
 	ret ; $4212
 CenterCourtSceneVariantActors_11:
 	; $4213, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $0f00, $2e00, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_11_45, $0d00, $2700, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_11_45, $2500, $2400, FACE_LEFT, OBJ_WALK_72_02, $01, $07
-	map_actor $0000, ActorScript_11_45, $2300, $2100, FACE_LEFT, OBJ_WALK_71_05, $01, $07
-	map_actor $0000, ActorScript_11_45, $2700, $2300, FACE_LEFT, OBJ_WALK_6F_05, $01, $04
-	map_actor $0000, ActorScript_11_45, $2700, $2100, FACE_LEFT, OBJ_WALK_72_02, $01, $06
-	map_actor $0000, ActorScript_11_45, $2500, $2000, FACE_LEFT, OBJ_WALK_72_03, $01, $03
-	map_actor $0000, ActorScript_11_45, $0b00, $2400, FACE_RIGHT, OBJ_WALK_71_06, $01, $00
-	map_actor $0000, ActorScript_11_45, $0d00, $2100, FACE_RIGHT, OBJ_WALK_72_03, $01, $04
-	map_actor $0000, ActorScript_11_45, $0900, $2300, FACE_RIGHT, OBJ_WALK_72_02, $01, $03
-	map_actor $0000, ActorScript_11_45, $0500, $2000, FACE_RIGHT, OBJ_WALK_72_02, $01, $06
-	map_actor $0000, ActorScript_11_45, $0900, $2100, FACE_RIGHT, OBJ_WALK_72_03, $01, $03
-	map_actor $0000, ActorScript_11_45, $2b00, $2200, FACE_LEFT, OBJ_WALK_71_06, $01, $00
-	map_actor $0000, ActorScript_11_45, $2b00, $2000, FACE_LEFT, OBJ_WALK_72_03, $01, $04
-	map_actor $0000, ActorScript_11_45, $2b00, $1e00, FACE_LEFT, OBJ_BETH, $01, $00
-	map_actor $0000, ActorScript_11_45, $2700, $1d00, FACE_LEFT, OBJ_PAM, $01, $04
+	map_actor $0000, ActorScript_11_45, $0f00, $2e00, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, CENTER_COURT_SCENE_VARIANT_WALK_6F_07_1
+	map_actor $0000, ActorScript_11_45, $0d00, $2700, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, CENTER_COURT_SCENE_VARIANT_WALK_6F_07_2
+	map_actor $0000, ActorScript_11_45, $2500, $2400, FACE_LEFT, OBJ_WALK_72_02, $01, $07, CENTER_COURT_SCENE_VARIANT_WALK_72_02_1
+	map_actor $0000, ActorScript_11_45, $2300, $2100, FACE_LEFT, OBJ_WALK_71_05, $01, $07, CENTER_COURT_SCENE_VARIANT_WALK_71_05
+	map_actor $0000, ActorScript_11_45, $2700, $2300, FACE_LEFT, OBJ_WALK_6F_05, $01, $04, CENTER_COURT_SCENE_VARIANT_WALK_6F_05
+	map_actor $0000, ActorScript_11_45, $2700, $2100, FACE_LEFT, OBJ_WALK_72_02, $01, $06, CENTER_COURT_SCENE_VARIANT_WALK_72_02_2
+	map_actor $0000, ActorScript_11_45, $2500, $2000, FACE_LEFT, OBJ_WALK_72_03, $01, $03, CENTER_COURT_SCENE_VARIANT_WALK_72_03_1
+	map_actor $0000, ActorScript_11_45, $0b00, $2400, FACE_RIGHT, OBJ_WALK_71_06, $01, $00, CENTER_COURT_SCENE_VARIANT_WALK_71_06_1
+	map_actor $0000, ActorScript_11_45, $0d00, $2100, FACE_RIGHT, OBJ_WALK_72_03, $01, $04, CENTER_COURT_SCENE_VARIANT_WALK_72_03_2
+	map_actor $0000, ActorScript_11_45, $0900, $2300, FACE_RIGHT, OBJ_WALK_72_02, $01, $03, CENTER_COURT_SCENE_VARIANT_WALK_72_02_3
+	map_actor $0000, ActorScript_11_45, $0500, $2000, FACE_RIGHT, OBJ_WALK_72_02, $01, $06, CENTER_COURT_SCENE_VARIANT_WALK_72_02_4
+	map_actor $0000, ActorScript_11_45, $0900, $2100, FACE_RIGHT, OBJ_WALK_72_03, $01, $03, CENTER_COURT_SCENE_VARIANT_WALK_72_03_3
+	map_actor $0000, ActorScript_11_45, $2b00, $2200, FACE_LEFT, OBJ_WALK_71_06, $01, $00, CENTER_COURT_SCENE_VARIANT_WALK_71_06_2
+	map_actor $0000, ActorScript_11_45, $2b00, $2000, FACE_LEFT, OBJ_WALK_72_03, $01, $04, CENTER_COURT_SCENE_VARIANT_WALK_72_03_4
+	map_actor $0000, ActorScript_11_45, $2b00, $1e00, FACE_LEFT, OBJ_BETH, $01, $00, CENTER_COURT_SCENE_VARIANT_BETH
+	map_actor $0000, ActorScript_11_45, $2700, $1d00, FACE_LEFT, OBJ_PAM, $01, $04, CENTER_COURT_SCENE_VARIANT_PAM
 	map_actor_end
 ; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival01, MapArrivalWalk_11 ; $42fd
@@ -296,24 +296,24 @@ AcademyArrivalMapScripts_11:
 	dw AcademyArrivalInitScript_11 ; slot 6 InitScript
 AcademyArrivalActors_11:
 	; $440f, 262 bytes (map_actors)
-	map_actor $0000, ActorScript_11_46, $1900, $1900, FACE_DOWN, OBJ_WALK_71_03, $01, $05
-	map_actor $0000, ActorScript_11_45, $1500, $2500, FACE_LEFT, OBJ_WALK_71_05, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $2700, FACE_LEFT, OBJ_WALK_72_02, $01, $00
-	map_actor $0000, ActorScript_11_48, $0100, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $03
-	map_actor $0000, ActorScript_11_49, $0500, $2800, FACE_UP, OBJ_WALK_74_00, $01, $04
-	map_actor $0000, ActorScript_11_50, $0a00, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $07
-	map_actor $0000, ActorScript_11_51, $0f00, $2800, FACE_UP, OBJ_WALK_74_00, $01, $06
-	map_actor $0000, ActorScript_11_48, $2200, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $06
-	map_actor $0000, ActorScript_11_49, $2600, $2800, FACE_UP, OBJ_WALK_74_00, $01, $03
-	map_actor $0000, ActorScript_11_50, $2c00, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $07
-	map_actor $0000, ActorScript_11_51, $3000, $2800, FACE_UP, OBJ_WALK_74_00, $01, $04
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_13, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_12, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_19, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_DOWN, OBJ_WALK_75_06, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_DOWN, OBJ_EMILY, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_15, $01, $00
-	map_actor $0000, ActorScript_11_45, $1800, $3300, FACE_UP, OBJ_WALK_71_03, $01, $03
+	map_actor $0000, ActorScript_11_46, $1900, $1900, FACE_DOWN, OBJ_WALK_71_03, $01, $05, ACADEMY_ARRIVAL_WALK_71_03_1
+	map_actor $0000, ActorScript_11_45, $1500, $2500, FACE_LEFT, OBJ_WALK_71_05, $01, $00, ACADEMY_ARRIVAL_WALK_71_05
+	map_actor $0000, ActorScript_11_45, $1500, $2700, FACE_LEFT, OBJ_WALK_72_02, $01, $00, ACADEMY_ARRIVAL_WALK_72_02
+	map_actor $0000, ActorScript_11_48, $0100, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $03, ACADEMY_ARRIVAL_WALK_74_00_1
+	map_actor $0000, ActorScript_11_49, $0500, $2800, FACE_UP, OBJ_WALK_74_00, $01, $04, ACADEMY_ARRIVAL_WALK_74_00_2
+	map_actor $0000, ActorScript_11_50, $0a00, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $07, ACADEMY_ARRIVAL_WALK_74_00_3
+	map_actor $0000, ActorScript_11_51, $0f00, $2800, FACE_UP, OBJ_WALK_74_00, $01, $06, ACADEMY_ARRIVAL_WALK_74_00_4
+	map_actor $0000, ActorScript_11_48, $2200, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $06, ACADEMY_ARRIVAL_WALK_74_00_5
+	map_actor $0000, ActorScript_11_49, $2600, $2800, FACE_UP, OBJ_WALK_74_00, $01, $03, ACADEMY_ARRIVAL_WALK_74_00_6
+	map_actor $0000, ActorScript_11_50, $2c00, $1c00, FACE_DOWN, OBJ_WALK_74_00, $01, $07, ACADEMY_ARRIVAL_WALK_74_00_7
+	map_actor $0000, ActorScript_11_51, $3000, $2800, FACE_UP, OBJ_WALK_74_00, $01, $04, ACADEMY_ARRIVAL_WALK_74_00_8
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_13, $01, $00, ACADEMY_ARRIVAL_WALK_73_13
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_12, $01, $00, ACADEMY_ARRIVAL_WALK_73_12
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_19, $01, $00, ACADEMY_ARRIVAL_WALK_73_19
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_DOWN, OBJ_WALK_75_06, $01, $00, ACADEMY_ARRIVAL_WALK_75_06
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_DOWN, OBJ_EMILY, $01, $00, ACADEMY_ARRIVAL_EMILY
+	map_actor $0000, ActorScript_11_45, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_15, $01, $00, ACADEMY_ARRIVAL_WALK_73_15
+	map_actor $0000, ActorScript_11_45, $1800, $3300, FACE_UP, OBJ_WALK_71_03, $01, $03, ACADEMY_ARRIVAL_WALK_71_03_2
 	map_actor_end
 AcademyArrivalEntryPoints_11:
 	; $4515, 33 bytes (map_entries)
@@ -347,7 +347,7 @@ AcademyArrivalNpc03_11:
 	cp STORYRANK_SINGLES_JUNIOR_CHAMP ; $45b9
 	jr c, .speak ; $45bb
 .altText:
-	script_speak $03 ; $45bd
+	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_71_03_1 ; $45bd
 	ret ; $45c2
 .speak:
 	ld a, $03 ; $45c3
@@ -359,7 +359,7 @@ AcademyArrivalNpc03_11:
 	jr z, .done ; $45d6
 	farcall AdvanceDialogueTextCursor ; $45d8
 .done:
-	script_speak $03 ; $45db
+	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_71_03_1 ; $45db
 	ret ; $45e0
 AcademyArrivalNpc03TextIds:
 	; $45e1, 20 bytes (text_ids)
@@ -381,7 +381,7 @@ AcademyArrivalNpc04_11:
 	ld h, [hl] ; $4601
 	ld l, a ; $4602
 	farcall InitDialogueTextCursor ; $4603
-	script_speak $04 ; $4606
+	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_71_05 ; $4606
 	ret ; $460b
 AcademyArrivalNpc04TextIds:
 	; $460c, 20 bytes (text_ids)
@@ -404,7 +404,7 @@ AcademyArrivalNpc05_11:
 	ld h, [hl] ; $462e
 	ld l, a ; $462f
 	farcall InitDialogueTextCursor ; $4630
-	script_speak $05 ; $4633
+	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_72_02 ; $4633
 	ret ; $4638
 AcademyArrivalNpc05TextIds:
 	; $4639, 10 bytes (text_ids)
@@ -424,9 +424,9 @@ AcademyArrivalNpc14_11:
 	jr z, .loop ; $4659
 	farcall AdvanceDialogueTextCursor ; $465b
 .loop:
-	script_set_anim $14, $04 ; $465e
-	script_wait_idle $14 ; $4665
-	script_speak $14 ; $466a
+	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_71_03_2, $04 ; $465e
+	script_wait_idle ACTOR_ACADEMY_ARRIVAL_WALK_71_03_2 ; $4665
+	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_71_03_2 ; $466a
 	ret ; $466f
 .checkFlag:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $4670
@@ -438,10 +438,10 @@ AcademyArrivalNpc14_11:
 	jr .loop ; $4680
 AcademyArrivalNpcScripts_11:
 	; $4682, 33 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, AcademyArrivalNpc03_11, $13, $00
-	map_script $04, FACEMASK_ANY, $0000, AcademyArrivalNpc04_11, $01, $00
-	map_script $05, FACEMASK_ANY, $0000, AcademyArrivalNpc05_11, $01, $00
-	map_script $14, FACEMASK_ANY, $0000, AcademyArrivalNpc14_11, $03, $00
+	map_script ACTOR_ACADEMY_ARRIVAL_WALK_71_03_1, FACEMASK_ANY, $0000, AcademyArrivalNpc03_11, $13, $00
+	map_script ACTOR_ACADEMY_ARRIVAL_WALK_71_05, FACEMASK_ANY, $0000, AcademyArrivalNpc04_11, $01, $00
+	map_script ACTOR_ACADEMY_ARRIVAL_WALK_72_02, FACEMASK_ANY, $0000, AcademyArrivalNpc05_11, $01, $00
+	map_script ACTOR_ACADEMY_ARRIVAL_WALK_71_03_2, FACEMASK_ANY, $0000, AcademyArrivalNpc14_11, $03, $00
 	db $ff
 AcademyArrivalFacingScripts_11:
 	ds 1, $ff ; $46a3, fill

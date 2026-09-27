@@ -114,22 +114,22 @@ Test2MapScripts_10:
 	dw Test2InitScript_10 ; slot 6 InitScript
 Test2Actors_10:
 	; $469b, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $0500, $0f00, FACE_DOWN, OBJ_WALK_74_01, $01, $00
-	map_actor $0000, ActorScript_10_2, $0500, $0500, FACE_DOWN, OBJ_NINA, $01, $07
-	map_actor $0000, ActorScript_10_2, $0500, $0300, FACE_DOWN, OBJ_ALEX, $01, $00
-	map_actor $0000, ActorScript_10_2, $0500, $0900, FACE_DOWN, OBJ_KATE, $01, $05
-	map_actor $0000, ActorScript_10_2, $0500, $0700, FACE_DOWN, OBJ_HARRY, $01, $00
-	map_actor $0000, ActorScript_10_2, $0500, $0d00, FACE_DOWN, OBJ_MARIO, $01, $07
-	map_actor $0000, ActorScript_10_2, $0500, $0b00, FACE_DOWN, OBJ_BOWSER, $01, $00
-	map_actor $0000, ActorScript_10_2, $0500, $1100, FACE_DOWN, OBJ_WALUIGI, $01, $00
-	map_actor $0000, ActorScript_10_2, $0d00, $0300, FACE_DOWN, OBJ_WALK_71_02, $01, $00
-	map_actor $0000, ActorScript_10_2, $0d00, $0500, FACE_DOWN, OBJ_WALK_71_02, $01, $07
-	map_actor $0000, ActorScript_10_2, $0d00, $0700, FACE_DOWN, OBJ_WALK_71_03, $01, $00
-	map_actor $0000, ActorScript_10_2, $0d00, $0900, FACE_DOWN, OBJ_WALK_71_03, $01, $05
-	map_actor $0000, ActorScript_10_2, $0d00, $0b00, FACE_DOWN, OBJ_WALK_71_02, $01, $00
-	map_actor $0000, ActorScript_10_2, $0d00, $0d00, FACE_DOWN, OBJ_WALK_71_02, $01, $07
-	map_actor $0000, ActorScript_10_2, $0d00, $0f00, FACE_DOWN, OBJ_WALK_71_03, $01, $00
-	map_actor $0000, ActorScript_10_2, $0d00, $1100, FACE_DOWN, OBJ_WALK_71_03, $01, $00
+	map_actor $0000, ActorScript_10_2, $0500, $0f00, FACE_DOWN, OBJ_WALK_74_01, $01, $00, TEST2_WALK_74_01
+	map_actor $0000, ActorScript_10_2, $0500, $0500, FACE_DOWN, OBJ_NINA, $01, $07, TEST2_NINA
+	map_actor $0000, ActorScript_10_2, $0500, $0300, FACE_DOWN, OBJ_ALEX, $01, $00, TEST2_ALEX
+	map_actor $0000, ActorScript_10_2, $0500, $0900, FACE_DOWN, OBJ_KATE, $01, $05, TEST2_KATE
+	map_actor $0000, ActorScript_10_2, $0500, $0700, FACE_DOWN, OBJ_HARRY, $01, $00, TEST2_HARRY
+	map_actor $0000, ActorScript_10_2, $0500, $0d00, FACE_DOWN, OBJ_MARIO, $01, $07, TEST2_MARIO
+	map_actor $0000, ActorScript_10_2, $0500, $0b00, FACE_DOWN, OBJ_BOWSER, $01, $00, TEST2_BOWSER
+	map_actor $0000, ActorScript_10_2, $0500, $1100, FACE_DOWN, OBJ_WALUIGI, $01, $00, TEST2_WALUIGI
+	map_actor $0000, ActorScript_10_2, $0d00, $0300, FACE_DOWN, OBJ_WALK_71_02, $01, $00, TEST2_WALK_71_02_1
+	map_actor $0000, ActorScript_10_2, $0d00, $0500, FACE_DOWN, OBJ_WALK_71_02, $01, $07, TEST2_WALK_71_02_2
+	map_actor $0000, ActorScript_10_2, $0d00, $0700, FACE_DOWN, OBJ_WALK_71_03, $01, $00, TEST2_WALK_71_03_1
+	map_actor $0000, ActorScript_10_2, $0d00, $0900, FACE_DOWN, OBJ_WALK_71_03, $01, $05, TEST2_WALK_71_03_2
+	map_actor $0000, ActorScript_10_2, $0d00, $0b00, FACE_DOWN, OBJ_WALK_71_02, $01, $00, TEST2_WALK_71_02_3
+	map_actor $0000, ActorScript_10_2, $0d00, $0d00, FACE_DOWN, OBJ_WALK_71_02, $01, $07, TEST2_WALK_71_02_4
+	map_actor $0000, ActorScript_10_2, $0d00, $0f00, FACE_DOWN, OBJ_WALK_71_03, $01, $00, TEST2_WALK_71_03_3
+	map_actor $0000, ActorScript_10_2, $0d00, $1100, FACE_DOWN, OBJ_WALK_71_03, $01, $00, TEST2_WALK_71_03_4
 	map_actor_end
 Test2EntryPoints_10:
 	; $4785, 9 bytes (map_entries)
@@ -426,22 +426,22 @@ Test2Npc12_10:
 	ret ; $4ade
 Test2NpcScripts_10:
 	; $4adf, 129 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Text_33_33, $00, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_33_34, $00, $00
-	map_script $05, FACEMASK_ANY, $0000, Text_33_35, $00, $00
-	map_script $06, FACEMASK_ANY, $0000, Text_33_36, $00, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_33_37, $00, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_33_38, $00, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_33_39, $00, $00
-	map_script $0a, FACEMASK_ANY, $0000, Text_33_40, $00, $00
-	map_script $0b, FACEMASK_ANY, $0000, Test2Npc0B_10, $00, $00
-	map_script $0c, FACEMASK_ANY, $0000, Test2Npc0C_10, $00, $00
-	map_script $0d, FACEMASK_ANY, $0000, Test2Npc0D_10, $00, $00
-	map_script $0e, FACEMASK_ANY, $0000, Test2Npc0E_10, $00, $00
-	map_script $0f, FACEMASK_ANY, $0000, Test2Npc0F_10, $00, $00
-	map_script $10, FACEMASK_ANY, $0000, Test2Npc10_10, $00, $00
-	map_script $11, FACEMASK_ANY, $0000, Test2Npc11_10, $00, $00
-	map_script $12, FACEMASK_ANY, $0000, Test2Npc12_10, $00, $00
+	map_script ACTOR_TEST2_WALK_74_01, FACEMASK_ANY, $0000, Text_33_33, $00, $00
+	map_script ACTOR_TEST2_NINA, FACEMASK_ANY, $0000, Text_33_34, $00, $00
+	map_script ACTOR_TEST2_ALEX, FACEMASK_ANY, $0000, Text_33_35, $00, $00
+	map_script ACTOR_TEST2_KATE, FACEMASK_ANY, $0000, Text_33_36, $00, $00
+	map_script ACTOR_TEST2_HARRY, FACEMASK_ANY, $0000, Text_33_37, $00, $00
+	map_script ACTOR_TEST2_MARIO, FACEMASK_ANY, $0000, Text_33_38, $00, $00
+	map_script ACTOR_TEST2_BOWSER, FACEMASK_ANY, $0000, Text_33_39, $00, $00
+	map_script ACTOR_TEST2_WALUIGI, FACEMASK_ANY, $0000, Text_33_40, $00, $00
+	map_script ACTOR_TEST2_WALK_71_02_1, FACEMASK_ANY, $0000, Test2Npc0B_10, $00, $00
+	map_script ACTOR_TEST2_WALK_71_02_2, FACEMASK_ANY, $0000, Test2Npc0C_10, $00, $00
+	map_script ACTOR_TEST2_WALK_71_03_1, FACEMASK_ANY, $0000, Test2Npc0D_10, $00, $00
+	map_script ACTOR_TEST2_WALK_71_03_2, FACEMASK_ANY, $0000, Test2Npc0E_10, $00, $00
+	map_script ACTOR_TEST2_WALK_71_02_3, FACEMASK_ANY, $0000, Test2Npc0F_10, $00, $00
+	map_script ACTOR_TEST2_WALK_71_02_4, FACEMASK_ANY, $0000, Test2Npc10_10, $00, $00
+	map_script ACTOR_TEST2_WALK_71_03_3, FACEMASK_ANY, $0000, Test2Npc11_10, $00, $00
+	map_script ACTOR_TEST2_WALK_71_03_4, FACEMASK_ANY, $0000, Test2Npc12_10, $00, $00
 	db $ff
 Test2FacingScripts_10:
 	; $4b60, 9 bytes (map_scripts)

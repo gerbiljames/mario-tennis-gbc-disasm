@@ -9,16 +9,16 @@ SetupGymActorsForProgress:
 	jr z, .done ; $4690
 	ret ; $4692
 .stage1:
-	script_set_objdef OBJ_WALK_71_07, $04 ; $4693
-	script_set_anim $03, $01 ; $469f
-	script_set_position $04, $2700, $0f00 ; $46a6
-	script_face $04, FACE_RIGHT ; $46b1
+	script_set_objdef OBJ_WALK_71_07, ACTOR_TRAINING_GYM_WALK_73_05 ; $4693
+	script_set_anim ACTOR_TRAINING_GYM_WALK_73_02, $01 ; $469f
+	script_set_position ACTOR_TRAINING_GYM_WALK_73_05, $2700, $0f00 ; $46a6
+	script_face ACTOR_TRAINING_GYM_WALK_73_05, FACE_RIGHT ; $46b1
 	ret ; $46b8
 .stage2:
-	script_set_position $07, $2900, $0700 ; $46b9
-	script_set_position $08, $2700, $0500 ; $46c4
-	script_set_position $09, $2500, $0700 ; $46cf
-	script_get_actor_state $07 ; $46da
+	script_set_position ACTOR_TRAINING_GYM_WALK_73_07_1, $2900, $0700 ; $46b9
+	script_set_position ACTOR_TRAINING_GYM_WALK_73_06, $2700, $0500 ; $46c4
+	script_set_position ACTOR_TRAINING_GYM_WALK_73_07_2, $2500, $0700 ; $46cf
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_73_07_1 ; $46da
 	ld a, $01 ; $46df
 	ld e, l ; $46e1
 	ld d, h ; $46e2
@@ -27,10 +27,10 @@ SetupGymActorsForProgress:
 	ld [hl], a ; $46e7
 	ret ; $46e8
 .done:
-	script_set_position $07, $2900, $0700 ; $46e9
-	script_set_position $08, $2700, $0500 ; $46f4
-	script_set_position $09, $2500, $0700 ; $46ff
-	script_set_anim $07, $02 ; $470a
+	script_set_position ACTOR_TRAINING_GYM_WALK_73_07_1, $2900, $0700 ; $46e9
+	script_set_position ACTOR_TRAINING_GYM_WALK_73_06, $2700, $0500 ; $46f4
+	script_set_position ACTOR_TRAINING_GYM_WALK_73_07_2, $2500, $0700 ; $46ff
+	script_set_anim ACTOR_TRAINING_GYM_WALK_73_07_1, $02 ; $470a
 	ret ; $4711
 ActorScript_0e_00:
 	; $4712, 439 bytes (actor_script)

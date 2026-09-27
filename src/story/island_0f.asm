@@ -24,20 +24,20 @@ TournamentMapScripts_0f:
 	dw TournamentInitScript_0f ; slot 6 InitScript
 TournamentActors_0f:
 	; $5fa2, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $0c00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1900, $1300, FACE_DOWN, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, TOURNAMENT_WALK_6F_07_1
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, TOURNAMENT_WALK_6F_07_2
+	map_actor $0000, ActorScript_0f_09, $0100, $0c00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, TOURNAMENT_WALK_6F_07_3
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00, TOURNAMENT_WALK_74_08
+	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00, TOURNAMENT_WALK_74_07
+	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_06, $01, $00, TOURNAMENT_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00, TOURNAMENT_SPIKE
+	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, OBJ_SAMMI, $01, $00, TOURNAMENT_SAMMI
+	map_actor $0000, ActorScript_0f_09, $1900, $1300, FACE_DOWN, OBJ_ELDEN, $01, $00, TOURNAMENT_ELDEN
+	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00, TOURNAMENT_A_COZ
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00, TOURNAMENT_B_COZ
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_SEAN, $01, $00, TOURNAMENT_SEAN
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $00, TOURNAMENT_WALK_6F_00
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, TOURNAMENT_WALK_6F_01
 	map_actor_end
 TournamentEntryPoints_0f:
 	; $6070, 65 bytes (map_entries)
@@ -72,23 +72,23 @@ TournamentNpc0A_0f:
 	jr z, .speak ; $60f7
 	farcall AdvanceDialogueTextCursor ; $60f9
 .speak:
-	script_speak $0b ; $60fc
+	script_speak ACTOR_TOURNAMENT_ELDEN ; $60fc
 	ret ; $6101
 TournamentNpcScripts_0f:
 	; $6102, 105 bytes (map_scripts)
-	map_script $06, FACEMASK_ANY, $0000, Text_1f_159, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_1f_160, $13, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_1f_161, $03, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_1f_162, $03, $00
-	map_script $0a, FACEMASK_ANY, $0000, TournamentNpc0A_0f, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, Text_1f_166, $03, $00
-	map_script $0c, FACEMASK_ANY, $0000, Text_1f_167, $03, $00
-	map_script $0d, FACEMASK_ANY, $0000, Text_1f_168, $03, $00
-	map_script $0e, FACEMASK_ANY, $0000, Text_1f_169, $03, $00
-	map_script $0f, FACEMASK_ANY, $0000, Text_1f_170, $03, $00
-	map_script $10, FACEMASK_ANY, $0000, Text_1f_171, $03, $00
-	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	map_script ACTOR_TOURNAMENT_WALK_74_08, FACEMASK_ANY, $0000, Text_1f_159, $03, $00
+	map_script ACTOR_TOURNAMENT_WALK_74_07, FACEMASK_ANY, $0000, Text_1f_160, $13, $00
+	map_script ACTOR_TOURNAMENT_WALK_74_06, FACEMASK_ANY, $0000, Text_1f_161, $03, $00
+	map_script ACTOR_TOURNAMENT_SPIKE, FACEMASK_ANY, $0000, Text_1f_162, $03, $00
+	map_script ACTOR_TOURNAMENT_SAMMI, FACEMASK_ANY, $0000, TournamentNpc0A_0f, $03, $00
+	map_script ACTOR_TOURNAMENT_ELDEN, FACEMASK_ANY, $0000, Text_1f_166, $03, $00
+	map_script ACTOR_TOURNAMENT_A_COZ, FACEMASK_ANY, $0000, Text_1f_167, $03, $00
+	map_script ACTOR_TOURNAMENT_B_COZ, FACEMASK_ANY, $0000, Text_1f_168, $03, $00
+	map_script ACTOR_TOURNAMENT_SEAN, FACEMASK_ANY, $0000, Text_1f_169, $03, $00
+	map_script ACTOR_TOURNAMENT_WALK_6F_00, FACEMASK_ANY, $0000, Text_1f_170, $03, $00
+	map_script ACTOR_TOURNAMENT_WALK_6F_01, FACEMASK_ANY, $0000, Text_1f_171, $03, $00
+	map_script ACTOR_TOURNAMENT_WALK_6F_07_1, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script ACTOR_TOURNAMENT_WALK_6F_07_2, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 TournamentFacingScripts_0f:
 	; $616b, 9 bytes (map_scripts)
@@ -170,15 +170,15 @@ TournamentInitScript_0f:
 	ld de, $000c ; $623b
 	farcall WriteStoryStateWord ; $623e
 	farcall BeginCutsceneScriptMode ; $6241
-	script_set_position $03, $1c00, $1c00 ; $6244
-	script_set_position $04, $1c00, $1f00 ; $624f
-	script_set_position $05, $1d00, $2100 ; $625a
-	script_face $03, FACE_DOWN ; $6265
-	script_face $04, FACE_DOWN ; $626c
-	script_face $05, FACE_LEFT ; $6273
+	script_set_position ACTOR_ISLAND_OPEN_ROUND_WALK_74_08, $1c00, $1c00 ; $6244
+	script_set_position ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, $1c00, $1f00 ; $624f
+	script_set_position ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, $1d00, $2100 ; $625a
+	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_08, FACE_DOWN ; $6265
+	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, FACE_DOWN ; $626c
+	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, FACE_LEFT ; $6273
 	test_flag FLAG_DOUBLES ; $627a
 	jr z, .setObjectDefs ; $627d
-	script_set_position $05, $3f00, $3f00 ; $627f
+	script_set_position ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, $3f00, $3f00 ; $627f
 .setObjectDefs:
 	call SetPlayerAndPartnerObjectDefs ; $628a
 	ret ; $628d
@@ -193,9 +193,9 @@ TournamentInitScript_0f:
 	farcall WriteStoryStateWord ; $62a1
 	farcall BeginCutsceneScriptMode ; $62a4
 	call SetPlayerAndPartnerObjectDefs ; $62a7
-	script_face $03, FACE_RIGHT ; $62aa
-	script_set_position $04, $2700, $1300 ; $62b1
-	script_face $04, FACE_LEFT ; $62bc
+	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, FACE_RIGHT ; $62aa
+	script_set_position ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, $2700, $1300 ; $62b1
+	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACE_LEFT ; $62bc
 	ret ; $62c3
 .doubles:
 	ldh a, [hRomBank] ; $62c4
@@ -206,8 +206,8 @@ TournamentInitScript_0f:
 	farcall WriteStoryStateWord ; $62d2
 	farcall BeginCutsceneScriptMode ; $62d5
 	call SetPlayerAndPartnerObjectDefs ; $62d8
-	script_face_toward ACTOR_PLAYER, $04 ; $62db
-	script_face $03, FACE_RIGHT ; $62e3
+	script_face_toward ACTOR_PLAYER, ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06 ; $62db
+	script_face ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08, FACE_RIGHT ; $62e3
 	ret ; $62ea
 .notInProgress:
 	ld a, [wStoryModeEntryPoint] ; $62eb
@@ -389,13 +389,13 @@ IslandOpenArrivalCutscene:
 	call WaitFadeEnd ; $6458
 	script_player_speed $0018 ; $645b
 	script_move_player $1c00, $1b00 ; $6461
-	script_move_target $03, $1c00, $1c00 ; $646b
-	script_move_target $04, $1c00, $1f00 ; $6476
-	script_move_target $05, $1d00, $2100 ; $6481
+	script_move_target ACTOR_ISLAND_OPEN_ROUND_WALK_74_08, $1c00, $1c00 ; $646b
+	script_move_target ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, $1c00, $1f00 ; $6476
+	script_move_target ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, $1d00, $2100 ; $6481
 	script_move_target ACTOR_PLAYER, $1b00, $2100 ; $648c
 	script_wait_move ACTOR_PLAYER ; $6497
 	script_wait_frames $28 ; $649c
-	script_face $03, FACE_DOWN ; $64a3
+	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_08, FACE_DOWN ; $64a3
 	script_set_text Text_1f_21 ; $64aa
 	script_face ACTOR_PLAYER, FACE_DOWN ; $64b0
 	script_wait_frames $28 ; $64b7
@@ -409,27 +409,27 @@ IslandOpenArrivalCutscene:
 	script_wait_frames $28 ; $64ef
 	script_set_anim ACTOR_PLAYER, $02 ; $64f6
 	script_wait_idle ACTOR_PLAYER ; $64fd
-	script_face $04, FACE_RIGHT ; $6502
-	script_face $04, FACE_DOWN ; $6509
-	script_face $05, FACE_LEFT ; $6510
+	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, FACE_RIGHT ; $6502
+	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, FACE_DOWN ; $6509
+	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, FACE_LEFT ; $6510
 	script_wait_frames $14 ; $6517
-	script_set_anim $04, $04 ; $651e
-	script_wait_idle $04 ; $6525
-	script_speak $04 ; $652a
+	script_set_anim ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, $04 ; $651e
+	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_WALK_74_06 ; $6525
+	script_speak ACTOR_ISLAND_OPEN_ROUND_WALK_74_06 ; $652a
 	script_face ACTOR_PLAYER, FACE_UP ; $652f
 	script_wait_frames $28 ; $6536
 	script_set_anim ACTOR_PLAYER, $03 ; $653d
 	script_wait_idle ACTOR_PLAYER ; $6544
-	script_set_anim $03, $02 ; $6549
-	script_wait_idle $03 ; $6550
-	script_speak $03 ; $6555
+	script_set_anim ACTOR_ISLAND_OPEN_ROUND_WALK_74_08, $02 ; $6549
+	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_WALK_74_08 ; $6550
+	script_speak ACTOR_ISLAND_OPEN_ROUND_WALK_74_08 ; $6555
 	script_set_anim ACTOR_PLAYER, $02 ; $655a
 	script_wait_idle ACTOR_PLAYER ; $6561
 	test_flag FLAG_DOUBLES ; $6566
 	jr nz, .doubles ; $6569
-	script_set_anim $05, $03 ; $656b
-	script_wait_idle $05 ; $6572
-	script_speak $05 ; $6577
+	script_set_anim ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, $03 ; $656b
+	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_WALK_74_07 ; $6572
+	script_speak ACTOR_ISLAND_OPEN_ROUND_WALK_74_07 ; $6577
 	set_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $657c
 	jr .walkOn ; $657f
 	ret ; $6581
@@ -454,9 +454,9 @@ IslandOpenArrivalCutscene:
 	ret ; $65c1
 IslandOpenRoundActors_0f:
 	; $65c2, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $1c00, $2c00, FACE_UP, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1c00, $2f00, FACE_UP, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $3100, FACE_UP, OBJ_WALK_74_07, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1c00, $2c00, FACE_UP, OBJ_WALK_74_08, $01, $00, ISLAND_OPEN_ROUND_WALK_74_08
+	map_actor $0000, ActorScript_0f_09, $1c00, $2f00, FACE_UP, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_ROUND_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $1d00, $3100, FACE_UP, OBJ_WALK_74_07, $01, $00, ISLAND_OPEN_ROUND_WALK_74_07
 	map_actor_end
 IslandOpenRoundScripts_0f:
 	; $65f6, 25 bytes (map_scripts)
@@ -587,20 +587,20 @@ LoadIslandOpenRoundNpcsDoubles:
 	ret ; $6713
 IslandOpenRound2Actors_0f:
 	; $6714, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1900, $1300, FACE_DOWN, OBJ_WALK_74_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1500, FACE_DOWN, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $00
-	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND2_WALK_6F_07_1
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND2_WALK_6F_07_2
+	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND2_WALK_6F_07_3
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_WALK_74_08, $01, $00, ISLAND_OPEN_ROUND2_WALK_74_08
+	map_actor $0000, ActorScript_0f_09, $1900, $1300, FACE_DOWN, OBJ_WALK_74_07, $01, $00, ISLAND_OPEN_ROUND2_WALK_74_07
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_ROUND2_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00, ISLAND_OPEN_ROUND2_SAMMI
+	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, OBJ_SPIKE, $01, $00, ISLAND_OPEN_ROUND2_SPIKE
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00, ISLAND_OPEN_ROUND2_ELDEN
+	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00, ISLAND_OPEN_ROUND2_A_COZ
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00, ISLAND_OPEN_ROUND2_B_COZ
+	map_actor $0000, ActorScript_0f_09, $1d00, $1500, FACE_DOWN, OBJ_SEAN, $01, $00, ISLAND_OPEN_ROUND2_SEAN
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $00, ISLAND_OPEN_ROUND2_WALK_6F_00
+	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_ROUND2_WALK_6F_01
 	map_actor_end
 IslandOpenRound2Scripts_0f:
 	; $67e2, 105 bytes (map_scripts)
@@ -620,20 +620,20 @@ IslandOpenRound2Scripts_0f:
 	db $ff
 IslandOpenSemifinalActors_0f:
 	; $684b, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_10, $0700, $1f00, FACE_DOWN, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1300, FACE_RIGHT, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, OBJ_WALK_6F_00, $01, $00
-	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_6F_07_1
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_6F_07_2
+	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_6F_07_3
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_74_08, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_74_08
+	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_74_07
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00, ISLAND_OPEN_SEMIFINAL_SAMMI
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00, ISLAND_OPEN_SEMIFINAL_SPIKE
+	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00, ISLAND_OPEN_SEMIFINAL_ELDEN
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_A_COZ, $01, $00, ISLAND_OPEN_SEMIFINAL_A_COZ
+	map_actor $0000, ActorScript_0f_10, $0700, $1f00, FACE_DOWN, OBJ_B_COZ, $01, $00, ISLAND_OPEN_SEMIFINAL_B_COZ
+	map_actor $0000, ActorScript_0f_09, $1d00, $1300, FACE_RIGHT, OBJ_SEAN, $01, $00, ISLAND_OPEN_SEMIFINAL_SEAN
+	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, OBJ_WALK_6F_00, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_6F_00
+	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_SEMIFINAL_WALK_6F_01
 	map_actor_end
 IslandOpenSemifinalScripts_0f:
 	; $6919, 105 bytes (map_scripts)
@@ -653,20 +653,20 @@ IslandOpenSemifinalScripts_0f:
 	db $ff
 IslandOpenFinalActors_0f:
 	; $6982, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0e00, $0400, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_0f_10, $0700, $1f00, FACE_DOWN, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1300, FACE_RIGHT, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, OBJ_WALK_6F_00, $01, $00
-	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_FINAL_WALK_6F_07_1
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_FINAL_WALK_6F_07_2
+	map_actor $0000, ActorScript_0f_09, $0e00, $0400, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_FINAL_WALK_6F_07_3
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00, ISLAND_OPEN_FINAL_WALK_74_08
+	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_UP, OBJ_WALK_74_07, $01, $00, ISLAND_OPEN_FINAL_WALK_74_07
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00, ISLAND_OPEN_FINAL_SAMMI
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00, ISLAND_OPEN_FINAL_SPIKE
+	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, OBJ_A_COZ, $01, $00, ISLAND_OPEN_FINAL_A_COZ
+	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_FINAL_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00, ISLAND_OPEN_FINAL_ELDEN
+	map_actor $0000, ActorScript_0f_10, $0700, $1f00, FACE_DOWN, OBJ_B_COZ, $01, $00, ISLAND_OPEN_FINAL_B_COZ
+	map_actor $0000, ActorScript_0f_09, $1d00, $1300, FACE_RIGHT, OBJ_SEAN, $01, $00, ISLAND_OPEN_FINAL_SEAN
+	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, OBJ_WALK_6F_00, $01, $00, ISLAND_OPEN_FINAL_WALK_6F_00
+	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_FINAL_WALK_6F_01
 	map_actor_end
 IslandOpenFinalScripts_0f:
 	; $6a50, 105 bytes (map_scripts)
@@ -686,19 +686,19 @@ IslandOpenFinalScripts_0f:
 	db $ff
 IslandOpenRound1ActorsDoubles_0f:
 	; $6ab9, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_RIGHT, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_UP, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_07, $1900, $10c0, FACE_LEFT, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $05
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_WALK_6F_07_1
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_WALK_6F_07_2
+	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_WALK_6F_07_3
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_UP, OBJ_WALK_74_08, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_WALK_74_08
+	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_RIGHT, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_SPIKE
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_ELDEN
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_SAMMI, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_SAMMI
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_SEAN, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_SEAN
+	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_UP, OBJ_A_COZ, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_A_COZ
+	map_actor $0000, ActorScript_0f_07, $1900, $10c0, FACE_LEFT, OBJ_B_COZ, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_B_COZ
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_ROUND1_DOUBLES_WALK_6F_01
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_WALK_6F_00, $01, $05, ISLAND_OPEN_ROUND1_DOUBLES_WALK_6F_00
 	map_actor_end
 IslandOpenRound1ScriptsDoubles_0f:
 	; $6b79, 97 bytes (map_scripts)
@@ -726,7 +726,7 @@ IslandOpenRound1DoublesNpc0A_0f:
 	jr z, .speak ; $6bf3
 	farcall AdvanceDialogueTextCursor ; $6bf5
 .speak:
-	script_speak $0a ; $6bf8
+	script_speak ACTOR_TOURNAMENT_SAMMI ; $6bf8
 	ret ; $6bfd
 ; Instruction-identical to IslandOpenFinalDoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0B_0f:
@@ -740,7 +740,7 @@ IslandOpenRound1DoublesNpc0B_0f:
 	jr z, .speak ; $6c17
 	farcall AdvanceDialogueTextCursor ; $6c19
 .speak:
-	script_speak $0b ; $6c1c
+	script_speak ACTOR_TOURNAMENT_ELDEN ; $6c1c
 	ret ; $6c21
 ; Instruction-identical to IslandOpenSemifinalDoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0D_0f:
@@ -754,23 +754,23 @@ IslandOpenRound1DoublesNpc0D_0f:
 	jr z, .speak ; $6c3b
 	farcall AdvanceDialogueTextCursor ; $6c3d
 .speak:
-	script_speak $0d ; $6c40
+	script_speak ACTOR_TOURNAMENT_B_COZ ; $6c40
 	ret ; $6c45
 IslandOpenSemifinalActorsDoubles_0f:
 	; $6c46, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1500, FACE_DOWN, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_UP, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_07, $1900, $10c0, FACE_LEFT, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1300, FACE_UP, OBJ_WALK_6F_01, $01, $00
-	map_actor $0000, ActorScript_0f_11, $2500, $1900, FACE_DOWN, OBJ_WALK_6F_00, $01, $05
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_WALK_6F_07_1
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_WALK_6F_07_2
+	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_WALK_6F_07_3
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, OBJ_WALK_74_08, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_WALK_74_08
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_SAMMI
+	map_actor $0000, ActorScript_0f_09, $1d00, $1500, FACE_DOWN, OBJ_SEAN, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_SEAN
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_SPIKE, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_SPIKE
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_ELDEN, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_ELDEN
+	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_UP, OBJ_A_COZ, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_A_COZ
+	map_actor $0000, ActorScript_0f_07, $1900, $10c0, FACE_LEFT, OBJ_B_COZ, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_B_COZ
+	map_actor $0000, ActorScript_0f_09, $2900, $1300, FACE_UP, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_SEMIFINAL_DOUBLES_WALK_6F_01
+	map_actor $0000, ActorScript_0f_11, $2500, $1900, FACE_DOWN, OBJ_WALK_6F_00, $01, $05, ISLAND_OPEN_SEMIFINAL_DOUBLES_WALK_6F_00
 	map_actor_end
 IslandOpenSemifinalScriptsDoubles_0f:
 	; $6d06, 97 bytes (map_scripts)
@@ -798,7 +798,7 @@ IslandOpenSemifinalDoublesNpc08_0f:
 	jr z, .speak ; $6d80
 	farcall AdvanceDialogueTextCursor ; $6d82
 .speak:
-	script_speak $08 ; $6d85
+	script_speak ACTOR_TOURNAMENT_WALK_74_06 ; $6d85
 	ret ; $6d8a
 ; Instruction-identical to IslandOpenRound1DoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenSemifinalDoublesNpc0D_0f:
@@ -812,23 +812,23 @@ IslandOpenSemifinalDoublesNpc0D_0f:
 	jr z, .speak ; $6da4
 	farcall AdvanceDialogueTextCursor ; $6da6
 .speak:
-	script_speak $0d ; $6da9
+	script_speak ACTOR_TOURNAMENT_B_COZ ; $6da9
 	ret ; $6dae
 IslandOpenFinalActorsDoubles_0f:
 	; $6daf, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0e00, $0400, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_DOWN, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2300, $1300, FACE_UP, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00
-	map_actor $0000, ActorScript_0f_09, $1d00, $1500, FACE_DOWN, OBJ_SEAN, $01, $00
-	map_actor $0000, ActorScript_0f_09, $2900, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00
-	map_actor $0000, ActorScript_0f_11, $2400, $1800, FACE_DOWN, OBJ_WALK_6F_00, $01, $05
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_1
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_2
+	map_actor $0000, ActorScript_0f_09, $0e00, $0400, FACE_RIGHT, OBJ_WALK_6F_07, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_3
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_DOWN, OBJ_WALK_74_08, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_WALK_74_08
+	map_actor $0000, ActorScript_0f_09, $2300, $1300, FACE_UP, OBJ_WALK_74_06, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_WALK_74_06
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, OBJ_SPIKE, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_SPIKE
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, OBJ_ELDEN, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_ELDEN
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, OBJ_A_COZ, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_A_COZ
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, OBJ_B_COZ, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_B_COZ
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, OBJ_SAMMI, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_SAMMI
+	map_actor $0000, ActorScript_0f_09, $1d00, $1500, FACE_DOWN, OBJ_SEAN, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_SEAN
+	map_actor $0000, ActorScript_0f_09, $2900, $1500, FACE_DOWN, OBJ_WALK_6F_01, $01, $00, ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_01
+	map_actor $0000, ActorScript_0f_11, $2400, $1800, FACE_DOWN, OBJ_WALK_6F_00, $01, $05, ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_00
 	map_actor_end
 IslandOpenFinalScriptsDoubles_0f:
 	; $6e6f, 97 bytes (map_scripts)
@@ -856,7 +856,7 @@ IslandOpenFinalDoublesNpc0C_0f:
 	jr z, .speak ; $6ee9
 	farcall AdvanceDialogueTextCursor ; $6eeb
 .speak:
-	script_speak $0c ; $6eee
+	script_speak ACTOR_TOURNAMENT_A_COZ ; $6eee
 	ret ; $6ef3
 ; Instruction-identical to IslandOpenRound1DoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenFinalDoublesNpc0B_0f:
@@ -870,5 +870,5 @@ IslandOpenFinalDoublesNpc0B_0f:
 	jr z, .speak ; $6f0d
 	farcall AdvanceDialogueTextCursor ; $6f0f
 .speak:
-	script_speak $0b ; $6f12
+	script_speak ACTOR_TOURNAMENT_ELDEN ; $6f12
 	ret ; $6f17

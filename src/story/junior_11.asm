@@ -1,11 +1,11 @@
 ActorList_11_0:
 	; $537d, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $1800, $1100, FACE_DOWN, OBJ_WALK_75_06, $01, $00
-	map_actor $0000, ActorScript_11_45, $1a00, $1500, FACE_UP, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_11_45, $1600, $1500, FACE_UP, OBJ_WALK_74_07, $01, $00
-	map_actor $0000, ActorScript_11_45, $1900, $1700, FACE_UP, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_11_45, $0100, $1900, FACE_UP, OBJ_MARK, $01, $00
-	map_actor $0000, ActorScript_11_45, $1500, $2f00, FACE_RIGHT, OBJ_WALK_71_03, $01, $03
+	map_actor $0000, ActorScript_11_45, $1800, $1100, FACE_DOWN, OBJ_WALK_75_06, $01, $00, LIST_11_0_WALK_75_06
+	map_actor $0000, ActorScript_11_45, $1a00, $1500, FACE_UP, OBJ_WALK_74_08, $01, $00, LIST_11_0_WALK_74_08
+	map_actor $0000, ActorScript_11_45, $1600, $1500, FACE_UP, OBJ_WALK_74_07, $01, $00, LIST_11_0_WALK_74_07
+	map_actor $0000, ActorScript_11_45, $1900, $1700, FACE_UP, OBJ_WALK_74_06, $01, $00, LIST_11_0_WALK_74_06
+	map_actor $0000, ActorScript_11_45, $0100, $1900, FACE_UP, OBJ_MARK, $01, $00, LIST_11_0_MARK
+	map_actor $0000, ActorScript_11_45, $1500, $2f00, FACE_RIGHT, OBJ_WALK_71_03, $01, $03, LIST_11_0_WALK_71_03
 	map_actor_end
 .scriptRespawnLocationActors2:
 	ldh a, [hRomBank] ; $53db
@@ -27,8 +27,8 @@ ActorList_11_0:
 	script_fade_in $04 ; $542f
 	call WaitFadeEnd ; $5434
 	script_wait_frames $3c ; $5437
-	script_set_anim $03, $03 ; $543e
-	script_wait_idle $03 ; $5445
+	script_set_anim ACTOR_LIST_11_1_WALK_71_03, $03 ; $543e
+	script_wait_idle ACTOR_LIST_11_1_WALK_71_03 ; $5445
 	script_wait_move ACTOR_PLAYER ; $544a
 	ld c, $04 ; $544f
 	call BeginFadeOut ; $5451
@@ -43,7 +43,7 @@ ActorList_11_0:
 	ret ; $5469
 ActorList_11_1:
 	; $546a, 24 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $1500, $2f00, FACE_RIGHT, OBJ_WALK_71_03, $01, $03
+	map_actor $0000, ActorScript_11_45, $1500, $2f00, FACE_RIGHT, OBJ_WALK_71_03, $01, $03, LIST_11_1_WALK_71_03
 	map_actor_end
 EnableAcademyCampusExit:
 	test_flag FLAG_DOUBLES ; $5482
@@ -69,8 +69,8 @@ MoveCampusGateGuardAside:
 	ld a, [wMapSceneStage] ; $54a6
 	cp STORYRANK_SINGLES_ISLAND_OPEN ; $54a9
 	jr c, .done ; $54ab
-	script_set_position $14, $1500, $3000 ; $54ad
-	script_face $14, FACE_RIGHT ; $54b8
+	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_71_03_2, $1500, $3000 ; $54ad
+	script_face ACTOR_ACADEMY_ARRIVAL_WALK_71_03_2, FACE_RIGHT ; $54b8
 .done:
 	ret ; $54bf
 JuniorClassCourtDoublesMapScripts_11:
@@ -84,19 +84,19 @@ JuniorClassCourtDoublesMapScripts_11:
 	dw JuniorClassCourtDoublesInitScript_11 ; slot 6 InitScript
 JuniorClassCourtDoublesActors_11:
 	; $54ce, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $1300, $1300, FACE_DOWN, OBJ_WALK_72_00, $01, $00
-	map_actor $0000, ActorScript_11_45, $2300, $1700, FACE_LEFT, OBJ_BOB, $01, $05
-	map_actor $0000, ActorScript_11_45, $0500, $1500, FACE_RIGHT, OBJ_BETH, $01, $04
-	map_actor $0000, ActorScript_11_45, $2100, $1500, FACE_DOWN, OBJ_CURT, $01, $07
-	map_actor $0000, ActorScript_11_45, $0500, $1300, FACE_RIGHT, OBJ_PAM, $01, $07
-	map_actor $0000, ActorScript_11_52, $1b00, $1300, FACE_DOWN, OBJ_BRIAN, $01, $03
-	map_actor $0000, ActorScript_11_22, $1b00, $1500, FACE_UP, OBJ_FAY, $01, $06
-	map_actor $0000, ActorScript_11_45, $3700, $0700, FACE_LEFT, OBJ_ALLIE, $01, $04
-	map_actor $0000, ActorScript_11_45, $3500, $0700, FACE_RIGHT, OBJ_JOY, $01, $03
-	map_actor $0000, ActorScript_11_50, $0800, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05
-	map_actor $0000, ActorScript_11_51, $0c00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $00
-	map_actor $0000, ActorScript_11_48, $2a00, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $00
-	map_actor $0000, ActorScript_11_49, $2e00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $05
+	map_actor $0000, ActorScript_11_45, $1300, $1300, FACE_DOWN, OBJ_WALK_72_00, $01, $00, JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00
+	map_actor $0000, ActorScript_11_45, $2300, $1700, FACE_LEFT, OBJ_BOB, $01, $05, JUNIOR_CLASS_COURT_DOUBLES_BOB
+	map_actor $0000, ActorScript_11_45, $0500, $1500, FACE_RIGHT, OBJ_BETH, $01, $04, JUNIOR_CLASS_COURT_DOUBLES_BETH
+	map_actor $0000, ActorScript_11_45, $2100, $1500, FACE_DOWN, OBJ_CURT, $01, $07, JUNIOR_CLASS_COURT_DOUBLES_CURT
+	map_actor $0000, ActorScript_11_45, $0500, $1300, FACE_RIGHT, OBJ_PAM, $01, $07, JUNIOR_CLASS_COURT_DOUBLES_PAM
+	map_actor $0000, ActorScript_11_52, $1b00, $1300, FACE_DOWN, OBJ_BRIAN, $01, $03, JUNIOR_CLASS_COURT_DOUBLES_BRIAN
+	map_actor $0000, ActorScript_11_22, $1b00, $1500, FACE_UP, OBJ_FAY, $01, $06, JUNIOR_CLASS_COURT_DOUBLES_FAY
+	map_actor $0000, ActorScript_11_45, $3700, $0700, FACE_LEFT, OBJ_ALLIE, $01, $04, JUNIOR_CLASS_COURT_DOUBLES_ALLIE
+	map_actor $0000, ActorScript_11_45, $3500, $0700, FACE_RIGHT, OBJ_JOY, $01, $03, JUNIOR_CLASS_COURT_DOUBLES_JOY
+	map_actor $0000, ActorScript_11_50, $0800, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $05, JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1
+	map_actor $0000, ActorScript_11_51, $0c00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $00, JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2
+	map_actor $0000, ActorScript_11_48, $2a00, $0b00, FACE_DOWN, OBJ_WALK_74_00, $01, $00, JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_3
+	map_actor $0000, ActorScript_11_49, $2e00, $1700, FACE_UP, OBJ_WALK_74_00, $01, $05, JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_4
 	map_actor_end
 JuniorClassCourtDoublesEntryPoints_11:
 	; $558e, 17 bytes (map_entries)
@@ -117,7 +117,7 @@ JuniorClassCourtDoublesNpc04_11:
 	jr nz, .speak ; $55c1
 	farcall AdvanceDialogueTextCursor ; $55c3
 .speak:
-	script_speak $04 ; $55c6
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB ; $55c6
 	ret ; $55cb
 JuniorClassCourtDoublesNpc05_11:
 	script_set_text Text_32_120 ; $55cc
@@ -128,7 +128,7 @@ JuniorClassCourtDoublesNpc05_11:
 	jr nz, .speak ; $55dd
 	farcall AdvanceDialogueTextCursor ; $55df
 .speak:
-	script_speak $05 ; $55e2
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH ; $55e2
 	ret ; $55e7
 JuniorClassCourtDoublesNpc06_11:
 	script_set_text Text_32_108 ; $55e8
@@ -147,7 +147,7 @@ JuniorClassCourtDoublesNpc06_11:
 	jr z, .speak ; $5611
 	farcall AdvanceDialogueTextCursor ; $5613
 .speak:
-	script_speak $06 ; $5616
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT ; $5616
 	ret ; $561b
 JuniorClassCourtDoublesNpc07_11:
 	script_set_text Text_32_123 ; $561c
@@ -158,7 +158,7 @@ JuniorClassCourtDoublesNpc07_11:
 	jr nz, .speak ; $562d
 	farcall AdvanceDialogueTextCursor ; $562f
 .speak:
-	script_speak $07 ; $5632
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $5632
 	ret ; $5637
 JuniorClassCourtDoublesNpc08_11:
 	script_set_text Text_32_126 ; $5638
@@ -166,18 +166,18 @@ JuniorClassCourtDoublesNpc08_11:
 	jr nz, .loop ; $5641
 	farcall AdvanceDialogueTextCursor ; $5643
 .loop:
-	script_speak $08 ; $5646
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN ; $5646
 	ret ; $564b
 JuniorClassCourtDoublesNpc09_11:
 	script_set_text Text_32_128 ; $564c
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5652
 	jr nz, JuniorClassCourtDoublesNpc08_11.loop ; $5655
 	farcall AdvanceDialogueTextCursor ; $5657
-	script_speak $09 ; $565a
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY ; $565a
 	ret ; $565f
 .loop:
-	script_speak $0a ; $5660
-	script_face_pair $0b, $0a ; $5665
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5660
+	script_face_pair ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5665
 	ret ; $566d
 JuniorClassCourtDoublesNpc0A_11:
 	script_set_text Text_32_135 ; $566e
@@ -192,7 +192,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	and a ; $5692
 	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $5693
 	farcall AdvanceDialogueTextCursor ; $5695
-	script_face_toward ACTOR_PLAYER, $0b ; $5698
+	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $5698
 	ld a, $0a ; $56a0
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $56a2
 	farcall RunDialogueYesNoPrompt ; $56a5
@@ -209,11 +209,11 @@ JuniorClassCourtDoublesNpc0A_11:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_11_12 ; $56e3
 	script_wait_frames $1e ; $56ee
 	script_move_player $3500, $1100 ; $56f5
-	script_move_target $0a, $3700, $0d00 ; $56ff
-	script_move_target $0b, $3500, $0900 ; $570a
-	script_wait_move $0a ; $5715
-	script_face $0a, FACE_DOWN ; $571a
-	script_face $0b, FACE_DOWN ; $5721
+	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, $3700, $0d00 ; $56ff
+	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, $3500, $0900 ; $570a
+	script_wait_move ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5715
+	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACE_DOWN ; $571a
+	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACE_DOWN ; $5721
 	script_wait_actor_script ACTOR_PLAYER ; $5728
 	ld hl, wStoryModePlayersXPosition ; $572d
 	ld de, wStoryModeSpawnPosition ; $5730
@@ -224,7 +224,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	ld [wUnusedExitTriggerIdMirror], a ; $573e
 	ld [wStoryModeExitTriggerRequest], a ; $5741
 	farcall WaitPlayerMoveDone ; $5744
-	script_set_anim $0a, $03 ; $5747
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, $03 ; $5747
 	script_set_anim ACTOR_PLAYER, $03 ; $574e
 	script_wait_idle ACTOR_PLAYER ; $5755
 	farcall InitStoryMatchSettings ; $575a
@@ -237,10 +237,10 @@ JuniorClassCourtDoublesNpc0B_11:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5777
 	jr nz, Unused_11_JuniorClassCourtDoublesNpcSpeech.speak ; $577a
 	script_set_text Text_32_130 ; $577c
-	script_speak $0b ; $5782
-	script_face_toward ACTOR_PLAYER, $0a ; $5787
-	script_set_anim $0a, $02 ; $578f
-	script_wait_idle $0a ; $5796
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $5782
+	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5787
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, $02 ; $578f
+	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5796
 	jp JuniorClassCourtDoublesNpc0A_11 ; $579b
 Unused_11_JuniorClassCourtDoublesNpcSpeech:
 	script_set_text Text_32_82 ; $579e
@@ -255,10 +255,10 @@ Unused_11_JuniorClassCourtDoublesNpcSpeech:
 	ret ; $57cb
 JuniorClassCourtDoublesANpc0A_11:
 	script_set_text Text_32_151 ; $57cc
-	script_speak $0a ; $57d2
-	script_set_anim $0a, $04 ; $57d7
-	script_wait_idle $0a ; $57de
-	script_speak $0a ; $57e3
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $57d2
+	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, $04 ; $57d7
+	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $57de
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $57e3
 	ret ; $57e8
 JuniorClassCourtDoublesNpc03FaceUp_11:
 	script_set_speed ACTOR_PLAYER, $0008 ; $57e9
@@ -272,52 +272,52 @@ JuniorClassCourtDoublesNpc03_11:
 	ret ; $5819
 JuniorClassCourtDoublesNpcScripts_11:
 	; $581a, 81 bytes (map_scripts)
-	map_script $03, FACEMASK_UP, $0000, JuniorClassCourtDoublesNpc03FaceUp_11, $03, $00
-	map_script $03, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc03_11, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc04_11, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc05_11, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc06_11, $01, $00
-	map_script $07, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc07_11, $03, $00
-	map_script $08, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc08_11, $1b, $00
-	map_script $09, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc09_11, $1b, $00
-	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc0A_11, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc0B_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, FACEMASK_UP, $0000, JuniorClassCourtDoublesNpc03FaceUp_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc03_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc04_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc05_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc06_11, $01, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc07_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc08_11, $1b, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc09_11, $1b, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc0A_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc0B_11, $03, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsA_11:
 	; $586b, 73 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Text_32_137, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_32_145, $01, $00
-	map_script $05, FACEMASK_ANY, $0000, Text_32_147, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, Text_32_146, $11, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_32_148, $03, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_32_149, $1b, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_32_150, $1b, $00
-	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtDoublesANpc0A_11, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, Text_32_153, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, FACEMASK_ANY, $0000, Text_32_137, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, FACEMASK_ANY, $0000, Text_32_145, $01, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, FACEMASK_ANY, $0000, Text_32_147, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, FACEMASK_ANY, $0000, Text_32_146, $11, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, FACEMASK_ANY, $0000, Text_32_148, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACEMASK_ANY, $0000, Text_32_149, $1b, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACEMASK_ANY, $0000, Text_32_150, $1b, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACEMASK_ANY, $0000, JuniorClassCourtDoublesANpc0A_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACEMASK_ANY, $0000, Text_32_153, $03, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsB_11:
 	; $58b4, 73 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Text_32_162, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_32_163, $01, $00
-	map_script $05, FACEMASK_ANY, $0000, Text_32_165, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, Text_32_164, $11, $00
-	map_script $07, FACEMASK_ANY, $0000, Text_32_166, $03, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_32_167, $1b, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_32_168, $1b, $00
-	map_script $0a, FACEMASK_ANY, $0000, Text_32_169, $01, $00
-	map_script $0b, FACEMASK_ANY, $0000, Text_32_170, $01, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, FACEMASK_ANY, $0000, Text_32_162, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, FACEMASK_ANY, $0000, Text_32_163, $01, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, FACEMASK_ANY, $0000, Text_32_165, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, FACEMASK_ANY, $0000, Text_32_164, $11, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, FACEMASK_ANY, $0000, Text_32_166, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACEMASK_ANY, $0000, Text_32_167, $1b, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACEMASK_ANY, $0000, Text_32_168, $1b, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACEMASK_ANY, $0000, Text_32_169, $01, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACEMASK_ANY, $0000, Text_32_170, $01, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsC_11:
 	; $58fd, 73 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Text_32_182, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_32_183, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, Text_32_185, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, Text_32_184, $11, $00
-	map_script $07, FACEMASK_ANY, $0000, JuniorClassCourtDoublesCNpc07_11, $03, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_32_189, $13, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_32_190, $1b, $00
-	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtDoublesCNpc0A_11, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, Text_32_195, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, FACEMASK_ANY, $0000, Text_32_182, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, FACEMASK_ANY, $0000, Text_32_183, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, FACEMASK_ANY, $0000, Text_32_185, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, FACEMASK_ANY, $0000, Text_32_184, $11, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, FACEMASK_ANY, $0000, JuniorClassCourtDoublesCNpc07_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACEMASK_ANY, $0000, Text_32_189, $13, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACEMASK_ANY, $0000, Text_32_190, $1b, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACEMASK_ANY, $0000, JuniorClassCourtDoublesCNpc0A_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACEMASK_ANY, $0000, Text_32_195, $03, $00
 	db $ff
 JuniorClassCourtDoublesCNpc07_11:
 	script_set_text Text_32_186 ; $5946
@@ -330,7 +330,7 @@ JuniorClassCourtDoublesCNpc07_11:
 	jp z, .speak ; $595f
 	farcall AdvanceDialogueTextCursor ; $5962
 .speak:
-	script_speak $07 ; $5965
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $5965
 	ret ; $596a
 JuniorClassCourtDoublesDNpc07_11:
 	script_set_text Text_33_24 ; $596b
@@ -343,30 +343,30 @@ JuniorClassCourtDoublesDNpc07_11:
 	jp z, .speak ; $5984
 	farcall AdvanceDialogueTextCursor ; $5987
 .speak:
-	script_speak $07 ; $598a
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $598a
 	ret ; $598f
 JuniorClassCourtDoublesCNpc0A_11:
 	script_set_text Text_32_191 ; $5990
-	script_speak $0a ; $5996
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5996
 	set_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $599b
 	ret ; $599e
 JuniorClassCourtDoublesNpcScriptsD_11:
 	; $599f, 73 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Text_33_20, $01, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_33_21, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, Text_33_23, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, Text_33_22, $11, $00
-	map_script $07, FACEMASK_ANY, $0000, JuniorClassCourtDoublesDNpc07_11, $03, $00
-	map_script $08, FACEMASK_ANY, $0000, Text_33_27, $13, $00
-	map_script $09, FACEMASK_ANY, $0000, Text_33_28, $1b, $00
-	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtDoublesDNpc0A_11, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, Text_33_29, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, FACEMASK_ANY, $0000, Text_33_20, $01, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, FACEMASK_ANY, $0000, Text_33_21, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, FACEMASK_ANY, $0000, Text_33_23, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, FACEMASK_ANY, $0000, Text_33_22, $11, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, FACEMASK_ANY, $0000, JuniorClassCourtDoublesDNpc07_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACEMASK_ANY, $0000, Text_33_27, $13, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACEMASK_ANY, $0000, Text_33_28, $1b, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACEMASK_ANY, $0000, JuniorClassCourtDoublesDNpc0A_11, $03, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACEMASK_ANY, $0000, Text_33_29, $03, $00
 	db $ff
 JuniorClassCourtDoublesDNpc0A_11:
 	test_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $59e8
 	jr nz, .setText ; $59eb
 	script_set_text Text_33_15 ; $59ed
-	script_speak $0a ; $59f3
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $59f3
 	ret ; $59f8
 .setText:
 	script_set_text Text_33_30 ; $59f9
@@ -379,7 +379,7 @@ JuniorClassCourtDoublesDNpc0A_11:
 	jp z, .speak ; $5a12
 	farcall AdvanceDialogueTextCursor ; $5a15
 .speak:
-	script_speak $0a ; $5a18
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5a18
 	ret ; $5a1d
 JuniorClassCourtDoublesFacingScripts_11:
 	ds 1, $ff ; $5a1e, fill
@@ -394,12 +394,12 @@ JuniorClassCourtDoublesInitScript_11:
 	jr nz, .stage2 ; $5a25
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5a27
 	jr z, .stage2 ; $5a2a
-	script_set_position $08, $2500, $0900 ; $5a2c
-	script_face $08, FACE_RIGHT ; $5a37
-	script_set_actor_script $08, ActorScript_11_45 ; $5a3e
-	script_set_position $09, $2500, $0b00 ; $5a49
-	script_face $09, FACE_RIGHT ; $5a54
-	script_set_actor_script $09, ActorScript_11_45 ; $5a5b
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, $2500, $0900 ; $5a2c
+	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACE_RIGHT ; $5a37
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, ActorScript_11_45 ; $5a3e
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, $2500, $0b00 ; $5a49
+	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACE_RIGHT ; $5a54
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, ActorScript_11_45 ; $5a5b
 .stage2:
 	ld a, [wStoryModeEntryPoint] ; $5a66
 	cp $0f ; $5a69
@@ -421,30 +421,30 @@ JuniorClassCourtDoublesInitScript_11:
 	ld hl, JuniorClassCourtDoublesNpcScriptsD_11 ; $5a8d
 	ld de, $000c ; $5a90
 	farcall WriteStoryStateWord ; $5a93
-	script_set_position $06, $2000, $1900 ; $5a96
-	script_set_actor_script $06, ActorScript_11_46 ; $5aa1
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, $2000, $1900 ; $5a96
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5aa1
 	ret ; $5aac
 .stage4:
 	ld hl, JuniorClassCourtDoublesNpcScriptsC_11 ; $5aad
 	ld de, $000c ; $5ab0
 	farcall WriteStoryStateWord ; $5ab3
-	script_set_position $06, $2000, $1900 ; $5ab6
-	script_set_actor_script $06, ActorScript_11_46 ; $5ac1
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, $2000, $1900 ; $5ab6
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5ac1
 	ret ; $5acc
 .placeActors:
 	ld hl, JuniorClassCourtDoublesNpcScriptsB_11 ; $5acd
 	ld de, $000c ; $5ad0
 	farcall WriteStoryStateWord ; $5ad3
-	script_set_position $06, $2000, $1900 ; $5ad6
-	script_set_actor_script $06, ActorScript_11_46 ; $5ae1
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, $2000, $1900 ; $5ad6
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5ae1
 	ret ; $5aec
 .done:
 	ld hl, JuniorClassCourtDoublesNpcScriptsA_11 ; $5aed
 	ld de, $000c ; $5af0
 	farcall WriteStoryStateWord ; $5af3
-	script_set_position $06, $2000, $1900 ; $5af6
-	script_set_actor_script $06, ActorScript_11_46 ; $5b01
-	script_face $0a, FACE_DOWN ; $5b0c
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, $2000, $1900 ; $5af6
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5b01
+	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACE_DOWN ; $5b0c
 	ret ; $5b13
 ActorScript_11_03:
 	; $5b14, 20 bytes (actor_script)

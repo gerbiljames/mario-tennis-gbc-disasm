@@ -56,13 +56,13 @@ SeniorSinglesMatchConfirm:
 	script_wait_frames $05 ; $6b01
 	and a ; $6b08
 	jp nz, .done ; $6b09
-	script_set_anim $03, $03 ; $6b0c
-	script_wait_idle $03 ; $6b13
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, $03 ; $6b0c
+	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6b13
 .declined:
-	script_set_anim $03, $03 ; $6b18
-	script_wait_idle $03 ; $6b1f
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, $03 ; $6b18
+	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6b1f
 	script_set_text Text_34_70 ; $6b24
-	script_speak $03 ; $6b2a
+	script_speak ACTOR_SENIOR_COURT_EMILY ; $6b2a
 	call StartSeniorRankingMatch ; $6b2f
 	farcall EndCutsceneScriptMode ; $6b32
 	ret ; $6b35
@@ -72,7 +72,7 @@ SeniorSinglesMatchConfirm:
 	jr z, .startMatch ; $6b3f
 	farcall AdvanceDialogueTextCursor ; $6b41
 .startMatch:
-	script_speak $03 ; $6b44
+	script_speak ACTOR_SENIOR_COURT_EMILY ; $6b44
 	call ResumeSeniorOpponentScripts ; $6b49
 	script_wait_frames $1e ; $6b4c
 	farcall EndCutsceneScriptMode ; $6b53
@@ -101,18 +101,18 @@ SeniorDoublesMatchConfirm:
 	script_wait_frames $05 ; $6b8f
 	and a ; $6b96
 	jp nz, .done ; $6b97
-	script_set_anim $03, $03 ; $6b9a
-	script_wait_idle $03 ; $6ba1
-	script_set_anim $03, $03 ; $6ba6
-	script_wait_idle $03 ; $6bad
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, $03 ; $6b9a
+	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6ba1
+	script_set_anim ACTOR_SENIOR_COURT_EMILY, $03 ; $6ba6
+	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6bad
 	script_set_text Text_34_118 ; $6bb2
-	script_speak $03 ; $6bb8
+	script_speak ACTOR_SENIOR_COURT_EMILY ; $6bb8
 .declined:
 	call StartSeniorRankingMatch ; $6bbd
 	farcall EndCutsceneScriptMode ; $6bc0
 	ret ; $6bc3
 .accepted:
-	script_speak $03 ; $6bc4
+	script_speak ACTOR_SENIOR_COURT_EMILY ; $6bc4
 	call ResumeSeniorOpponentScripts ; $6bc9
 	script_wait_frames $1e ; $6bcc
 	script_get_actor_state ACTOR_PARTNER ; $6bd3
@@ -132,7 +132,7 @@ SeniorDoublesMatchConfirm:
 	and a ; $6bfc
 	jr z, .accepted ; $6bfd
 	script_set_text Text_34_121 ; $6bff
-	script_speak $03 ; $6c05
+	script_speak ACTOR_SENIOR_COURT_EMILY ; $6c05
 	jp .declined ; $6c0a
 ActorScript_12_00:
 	; $6c0d, 11 bytes (actor_script)

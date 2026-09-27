@@ -17,7 +17,7 @@ RunPlayDoublesTodayPrompt:
 	jr nz, .declined ; $56e7
 	set_flag FLAG_DOUBLES ; $56e9
 	call SetRoommateDoublesYesReplyText_13 ; $56ec
-	script_speak $03 ; $56ef
+	script_speak ACTOR_DORM_ROOM_KATE ; $56ef
 	script_set_anim ACTOR_PLAYER, $03 ; $56f4
 	script_wait_idle ACTOR_PLAYER ; $56fb
 	script_wait_frames $05 ; $5700
@@ -27,12 +27,12 @@ RunPlayDoublesTodayPrompt:
 	ld [wMatchIsDoubles], a ; $5716
 	call SetDormRoomEventTriggerCells_13 ; $5719
 	script_wait_frames $05 ; $571c
-	script_get_actor_state $03 ; $5723
+	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5723
 	ld c, l ; $5728
 	ld b, h ; $5729
 	ld de, wActors ; $572a
 	farcall AttachActorStepMover ; $572d
-	script_get_actor_state $03 ; $5730
+	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5730
 	ld c, l ; $5735
 	ld b, h ; $5736
 	ld hl, $0005 ; $5737
@@ -44,20 +44,20 @@ RunPlayDoublesTodayPrompt:
 .declined:
 	call SetRoommateDoublesNoReplyText_13 ; $574c
 	farcall AdvanceDialogueTextCursor ; $574f
-	script_speak $03 ; $5752
+	script_speak ACTOR_DORM_ROOM_KATE ; $5752
 	clear_flag FLAG_DOUBLES ; $5757
 	wram_bank WRAM_ACTORS ; $575a
 	ld a, $00 ; $5760
 	ld [wMatchIsDoubles], a ; $5762
-	script_null_script $03 ; $5765
-	script_get_actor_state $03 ; $576a
+	script_null_script ACTOR_DORM_ROOM_KATE ; $5765
+	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $576a
 	ld c, l ; $576f
 	ld b, h ; $5770
 	ld hl, $0005 ; $5771
 	add hl, bc ; $5774
 	set 3, [hl] ; $5775
 	call SetDormRoomEventTriggerCells_13 ; $5777
-	script_face $03, FACE_DOWN ; $577a
+	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $577a
 	ret ; $5781
 .accepted:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5782
@@ -75,31 +75,31 @@ RunPlayDoublesTodayPrompt:
 	and a ; $57a7
 	jr nz, .done ; $57a8
 	call SetRoommateSinglesYesReplyText_13 ; $57aa
-	script_speak $03 ; $57ad
-	script_null_script $03 ; $57b2
+	script_speak ACTOR_DORM_ROOM_KATE ; $57ad
+	script_null_script ACTOR_DORM_ROOM_KATE ; $57b2
 	clear_flag FLAG_DOUBLES ; $57b7
 	wram_bank WRAM_ACTORS ; $57ba
 	ld a, $00 ; $57c0
 	ld [wMatchIsDoubles], a ; $57c2
-	script_move_target $03, $0b00, $0900 ; $57c5
-	script_wait_move $03 ; $57d0
+	script_move_target ACTOR_DORM_ROOM_KATE, $0b00, $0900 ; $57c5
+	script_wait_move ACTOR_DORM_ROOM_KATE ; $57d0
 	script_wait_frames $05 ; $57d5
-	script_face $03, FACE_DOWN ; $57dc
+	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $57dc
 	script_wait_frames $05 ; $57e3
-	script_get_actor_state $03 ; $57ea
+	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $57ea
 	ld c, l ; $57ef
 	ld b, h ; $57f0
 	ld hl, $0005 ; $57f1
 	add hl, bc ; $57f4
 	set 3, [hl] ; $57f5
 	call SetDormRoomEventTriggerCells_13 ; $57f7
-	script_null_script $03 ; $57fa
-	script_face $03, FACE_DOWN ; $57ff
+	script_null_script ACTOR_DORM_ROOM_KATE ; $57fa
+	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $57ff
 	ret ; $5806
 .done:
 	call SetRoommateSinglesNoReplyText_13 ; $5807
 	farcall AdvanceDialogueTextCursor ; $580a
-	script_speak $03 ; $580d
+	script_speak ACTOR_DORM_ROOM_KATE ; $580d
 	script_set_anim ACTOR_PLAYER, $03 ; $5812
 	script_wait_idle ACTOR_PLAYER ; $5819
 	script_face ACTOR_PLAYER, FACE_DOWN ; $581e
@@ -109,12 +109,12 @@ RunPlayDoublesTodayPrompt:
 	ld [wMatchIsDoubles], a ; $5834
 	set_flag FLAG_DOUBLES ; $5837
 	call SetDormRoomEventTriggerCells_13 ; $583a
-	script_get_actor_state $03 ; $583d
+	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $583d
 	ld c, l ; $5842
 	ld b, h ; $5843
 	ld de, wActors ; $5844
 	farcall AttachActorStepMover ; $5847
-	script_get_actor_state $03 ; $584a
+	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $584a
 	ld c, l ; $584f
 	ld b, h ; $5850
 	ld hl, $0005 ; $5851
@@ -197,7 +197,7 @@ RunAcademyQuestionsMenu:
 	ld h, [hl] ; $58fd
 	ld l, a ; $58fe
 	call JumpToHL ; $58ff
-	script_speak $03 ; $5902
+	script_speak ACTOR_DORM_ROOM_KATE ; $5902
 	ld hl, wMapScratch ; $5907
 	ld a, [hl+] ; $590a
 	ld h, [hl] ; $590b
@@ -459,25 +459,25 @@ DormRoomArrivalCutscene_13:
 	script_null_script ACTOR_PARTNER ; $5b01
 	script_set_position ACTOR_PARTNER, $0b00, $1e00 ; $5b06
 	script_face ACTOR_PARTNER, FACE_DOWN ; $5b11
-	script_set_position $03, $0b00, $0a00 ; $5b18
-	script_face $03, FACE_DOWN ; $5b23
+	script_set_position ACTOR_DORM_ROOM_KATE, $0b00, $0a00 ; $5b18
+	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $5b23
 	script_fade_in $04 ; $5b2a
 	call WaitFadeEnd ; $5b2f
 	test_flag FLAG_DOUBLES ; $5b32
 	jr z, .singles ; $5b35
 	farcall AdvanceDialogueTextCursor ; $5b37
-	script_speak $03 ; $5b3a
-	script_speak $03 ; $5b3f
+	script_speak ACTOR_DORM_ROOM_KATE ; $5b3a
+	script_speak ACTOR_DORM_ROOM_KATE ; $5b3f
 	script_set_anim ACTOR_PLAYER, $03 ; $5b44
 	script_wait_idle ACTOR_PLAYER ; $5b4b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5b50
 	script_wait_frames $05 ; $5b57
-	script_get_actor_state $03 ; $5b5e
+	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5b5e
 	ld c, l ; $5b63
 	ld b, h ; $5b64
 	ld de, wActors ; $5b65
 	farcall AttachActorStepMover ; $5b68
-	script_get_actor_state $03 ; $5b6b
+	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5b6b
 	ld c, l ; $5b70
 	ld b, h ; $5b71
 	ld hl, $0005 ; $5b72
@@ -485,7 +485,7 @@ DormRoomArrivalCutscene_13:
 	set 4, [hl] ; $5b76
 	ret ; $5b78
 .singles:
-	script_speak $03 ; $5b79
+	script_speak ACTOR_DORM_ROOM_KATE ; $5b79
 	script_set_anim ACTOR_PLAYER, $03 ; $5b7e
 	script_wait_idle ACTOR_PLAYER ; $5b85
 	ret ; $5b8a

@@ -219,7 +219,7 @@ splits it into `wStoryModeSpawnPosition` (X, Y at +0..+3, facing at +4) and
 
 | off | field |
 | --- | --- |
-| +$00 | `cond` — flag condition; the actor is *skipped* if it is met |
+| +$00 | `cond` — flag condition; when `EvalFlagCondition` rejects it the slot still spawns, as `ActorScript_Idle` with none of the fields below |
 | +$02 | `objdef` — pointer to an actor script (see [`actor_script.md`](actor_script.md)) |
 | +$04 | X (16-bit) |
 | +$06 | Y (16-bit) |
@@ -238,6 +238,24 @@ Actor slots are assigned in a fixed order (`include/constants.inc`): `$00`
 `ACTOR_PLAYER`, `$01` `ACTOR_PLAYER_SHADOW`, `$02` `ACTOR_PARTNER`, then list
 entry *i* lands in slot `3+i`. There are 24 slots of `$40` bytes from `$d000` in
 WRAM bank `$04`.
+
+Because a row keeps its slot whatever its condition, a list's row order is
+its slot map, and the source says so: each `map_actor` row ends in a name,
+and the macro defines `ACTOR_<name>` as `3 + row` (`ACTOR_MARIO_WORLD_PEACH`,
+`ACTOR_TRAINING_GYM_WALK_72_04_1`). The name is the list's location and the
+row's object (`OBJ_*` without the prefix), numbered when a list holds the
+same object twice. Scripts address actors by these names, so inserting or
+reordering rows renumbers every reference. A script was renamed only where
+the list it runs under is certain: a location's handlers and init script run
+under its default list, a script that calls `ScriptRespawnLocationActors`
+runs under the list it installs from that point on (and so do the routines it
+calls), and where several lists are possible -- a branch that installs one of
+several, a helper shared between locations -- the number stays unless every
+candidate list holds the same actor in that slot. 4,153 references are names
+(3,819 script operands, 334 `NpcScripts` ids); about 600 stay numbers: 468
+ambiguous, 109 `NpcScripts` ids in tables whose list is uncertain, 24 slots
+past the end of every candidate list (actors spawned by script, not by a
+list), and the lines inside shared twin files.
 
 ### `map_script` — the script records (8 bytes, `$ff`-terminated)
 

@@ -529,8 +529,21 @@ ENDM
 ; SpawnActorFromTemplate ($04:$4c60) spawns `objdef` unless `cond` is met,
 ; then seeds the actor's position, facing, object id, animation, and (if
 ; nonzero) a palette override. `facing` is a FACE_* constant (constants.inc).
-; Usage: map_actor cond, objdef, x, y, facing, obj_id, anim, palette
+; Usage: map_actor cond, objdef, x, y, facing, obj_id, anim, palette[, NAME]
+; InitLocationActors spawns the player, its shadow and the companion into
+; slots 0-2 and then the list in order, a row whose cond fails still taking
+; its slot as an idle actor, so row n is actor slot 3 + n. NAME defines
+; ACTOR_NAME as that slot, and the scripts address the actor by it: inserting
+; or reordering rows renumbers them.
 MACRO map_actor
+IF !DEF(_MAP_ACTOR_ROW)
+DEF _MAP_ACTOR_ROW = 0
+ENDC
+IF _NARG == 9
+DEF ACTOR_\9 EQU _MAP_ACTOR_ROW + 3
+EXPORT ACTOR_\9
+ENDC
+DEF _MAP_ACTOR_ROW += 1
 	dw \1, \2, \3, \4
 	db \5, $00, \6, \7, \8, $00
 ENDM
@@ -538,6 +551,7 @@ ENDM
 ; Terminates a map_actor list: nine $00 bytes then the $ff sentinel that
 ; SpawnActorsFromList ($04:$4cf7) stops on (it reads template byte 9).
 MACRO map_actor_end
+DEF _MAP_ACTOR_ROW = 0
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff
 ENDM
 

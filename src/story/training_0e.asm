@@ -15,18 +15,18 @@ TrainingGymMapScripts_0e:
 	dw TrainingGymInitScript_0e ; slot 6 InitScript
 TrainingGymActors_0e:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_22, $2500, $0d00, FACE_DOWN, OBJ_WALK_73_02, $01, $00
-	map_actor $0000, ActorScript_0e_22, $2900, $0f00, FACE_DOWN, OBJ_WALK_73_05, $01, $05
-	map_actor $0000, ActorScript_0e_22, $2500, $1500, FACE_DOWN, OBJ_WALK_73_03, $01, $07
-	map_actor $0000, ActorScript_0e_22, $2900, $1300, FACE_DOWN, OBJ_WALK_73_04, $01, $05
-	map_actor $0000, ActorScript_0e_22, $2500, $0500, FACE_DOWN, OBJ_WALK_73_07, $01, $07
-	map_actor $0000, ActorScript_0e_22, $2700, $0700, FACE_DOWN, OBJ_WALK_73_06, $01, $00
-	map_actor $0000, ActorScript_0e_22, $2900, $0500, FACE_DOWN, OBJ_WALK_73_07, $01, $00
-	map_actor $0000, ActorScript_0e_00, $2100, $0c00, FACE_DOWN, OBJ_WALK_72_04, $01, $00
-	map_actor $0000, ActorScript_0e_01, $2c00, $0b00, FACE_LEFT, OBJ_WALK_72_05, $01, $00
-	map_actor $0000, ActorScript_0e_02, $2d60, $1700, FACE_RIGHT, OBJ_WALK_72_04, $01, $06
-	map_actor $0000, ActorScript_0e_05, $1900, $1100, FACE_UP, OBJ_WALK_72_02, $01, $06
-	map_actor $0000, ActorScript_0e_22, $0d00, $1300, FACE_RIGHT, OBJ_WALK_72_02, $01, $07
+	map_actor $0000, ActorScript_0e_22, $2500, $0d00, FACE_DOWN, OBJ_WALK_73_02, $01, $00, TRAINING_GYM_WALK_73_02
+	map_actor $0000, ActorScript_0e_22, $2900, $0f00, FACE_DOWN, OBJ_WALK_73_05, $01, $05, TRAINING_GYM_WALK_73_05
+	map_actor $0000, ActorScript_0e_22, $2500, $1500, FACE_DOWN, OBJ_WALK_73_03, $01, $07, TRAINING_GYM_WALK_73_03
+	map_actor $0000, ActorScript_0e_22, $2900, $1300, FACE_DOWN, OBJ_WALK_73_04, $01, $05, TRAINING_GYM_WALK_73_04
+	map_actor $0000, ActorScript_0e_22, $2500, $0500, FACE_DOWN, OBJ_WALK_73_07, $01, $07, TRAINING_GYM_WALK_73_07_1
+	map_actor $0000, ActorScript_0e_22, $2700, $0700, FACE_DOWN, OBJ_WALK_73_06, $01, $00, TRAINING_GYM_WALK_73_06
+	map_actor $0000, ActorScript_0e_22, $2900, $0500, FACE_DOWN, OBJ_WALK_73_07, $01, $00, TRAINING_GYM_WALK_73_07_2
+	map_actor $0000, ActorScript_0e_00, $2100, $0c00, FACE_DOWN, OBJ_WALK_72_04, $01, $00, TRAINING_GYM_WALK_72_04_1
+	map_actor $0000, ActorScript_0e_01, $2c00, $0b00, FACE_LEFT, OBJ_WALK_72_05, $01, $00, TRAINING_GYM_WALK_72_05
+	map_actor $0000, ActorScript_0e_02, $2d60, $1700, FACE_RIGHT, OBJ_WALK_72_04, $01, $06, TRAINING_GYM_WALK_72_04_2
+	map_actor $0000, ActorScript_0e_05, $1900, $1100, FACE_UP, OBJ_WALK_72_02, $01, $06, TRAINING_GYM_WALK_72_02_1
+	map_actor $0000, ActorScript_0e_22, $0d00, $1300, FACE_RIGHT, OBJ_WALK_72_02, $01, $07, TRAINING_GYM_WALK_72_02_2
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)
@@ -152,7 +152,7 @@ TrainingGymNpc03_0e:
 	ld h, [hl] ; $43b2
 	ld l, a ; $43b3
 	farcall InitDialogueTextCursor ; $43b4
-	script_speak $03 ; $43b7
+	script_speak ACTOR_TRAINING_GYM_WALK_73_02 ; $43b7
 	ret ; $43bc
 TrainingGymNpc03TextIds:
 	; $43bd, 20 bytes (text_ids)
@@ -175,7 +175,7 @@ TrainingGymNpc04_0e:
 	ld h, [hl] ; $43df
 	ld l, a ; $43e0
 	farcall InitDialogueTextCursor ; $43e1
-	script_speak $04 ; $43e4
+	script_speak ACTOR_TRAINING_GYM_WALK_73_05 ; $43e4
 	ret ; $43e9
 TrainingGymNpc04TextIds:
 	; $43ea, 10 bytes (text_ids)
@@ -192,7 +192,7 @@ TrainingGymNpc05_0e:
 	ld h, [hl] ; $4400
 	ld l, a ; $4401
 	farcall InitDialogueTextCursor ; $4402
-	script_speak $05 ; $4405
+	script_speak ACTOR_TRAINING_GYM_WALK_73_03 ; $4405
 	ret ; $440a
 TrainingGymNpc05TextIds:
 	; $440b, 20 bytes (text_ids)
@@ -214,7 +214,7 @@ TrainingGymNpc06_0e:
 	ld h, [hl] ; $442b
 	ld l, a ; $442c
 	farcall InitDialogueTextCursor ; $442d
-	script_speak $06 ; $4430
+	script_speak ACTOR_TRAINING_GYM_WALK_73_04 ; $4430
 	ret ; $4435
 TrainingGymNpc06TextIds:
 	; $4436, 20 bytes (text_ids)
@@ -239,7 +239,7 @@ TrainingGymNpc07_0e:
 	ld h, [hl] ; $445c
 	ld l, a ; $445d
 	farcall InitDialogueTextCursor ; $445e
-	script_speak $07 ; $4461
+	script_speak ACTOR_TRAINING_GYM_WALK_73_07_1 ; $4461
 	ret ; $4466
 TrainingGymNpc07TextIds:
 	; $4467, 10 bytes (text_ids)
@@ -270,7 +270,7 @@ TrainingGymNpc08_0e:
 	ld h, [hl] ; $44a3
 	ld l, a ; $44a4
 	farcall InitDialogueTextCursor ; $44a5
-	script_speak $08 ; $44a8
+	script_speak ACTOR_TRAINING_GYM_WALK_73_06 ; $44a8
 	ret ; $44ad
 TrainingGymNpc08TextIds:
 	; $44ae, 10 bytes (text_ids)
@@ -288,7 +288,7 @@ TrainingGymNpc09_0e:
 	ld h, [hl] ; $44c6
 	ld l, a ; $44c7
 	farcall InitDialogueTextCursor ; $44c8
-	script_speak $09 ; $44cb
+	script_speak ACTOR_TRAINING_GYM_WALK_73_07_2 ; $44cb
 	ret ; $44d0
 TrainingGymNpc09TextIds:
 	; $44d1, 10 bytes (text_ids)
@@ -305,7 +305,7 @@ TrainingGymNpc0A_0e:
 	ld h, [hl] ; $44e7
 	ld l, a ; $44e8
 	farcall InitDialogueTextCursor ; $44e9
-	script_speak $0a ; $44ec
+	script_speak ACTOR_TRAINING_GYM_WALK_72_04_1 ; $44ec
 	ret ; $44f1
 TrainingGymNpc0ATextIds:
 	; $44f2, 20 bytes (text_ids)
@@ -327,7 +327,7 @@ TrainingGymNpc0B_0e:
 	ld h, [hl] ; $4512
 	ld l, a ; $4513
 	farcall InitDialogueTextCursor ; $4514
-	script_speak $0b ; $4517
+	script_speak ACTOR_TRAINING_GYM_WALK_72_05 ; $4517
 	ret ; $451c
 TrainingGymNpc0BTextIds:
 	; $451d, 20 bytes (text_ids)
@@ -350,7 +350,7 @@ TrainingGymNpc0C_0e:
 	ld h, [hl] ; $453f
 	ld l, a ; $4540
 	farcall InitDialogueTextCursor ; $4541
-	script_speak $0c ; $4544
+	script_speak ACTOR_TRAINING_GYM_WALK_72_04_2 ; $4544
 	ret ; $4549
 TrainingGymNpc0CTextIds:
 	; $454a, 10 bytes (text_ids)
@@ -361,17 +361,17 @@ TrainingGymNpc0CTextIds:
 	dw Text_35_230 ; record 4
 TrainingGymNpcScripts_0e:
 	; $4554, 89 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, TrainingGymNpc03_0e, $03, $00
-	map_script $04, FACEMASK_ANY, $0000, TrainingGymNpc04_0e, $03, $00
-	map_script $05, FACEMASK_ANY, $0000, TrainingGymNpc05_0e, $03, $00
-	map_script $06, FACEMASK_ANY, $0000, TrainingGymNpc06_0e, $03, $00
-	map_script $07, FACEMASK_ANY, $0000, TrainingGymNpc07_0e, $00, $00
-	map_script $08, FACEMASK_ANY, $0000, TrainingGymNpc08_0e, $00, $00
-	map_script $09, FACEMASK_ANY, $0000, TrainingGymNpc09_0e, $00, $00
-	map_script $0a, FACEMASK_ANY, $0000, TrainingGymNpc0A_0e, $13, $00
-	map_script $0b, FACEMASK_ANY, $0000, TrainingGymNpc0B_0e, $10, $00
-	map_script $0c, FACEMASK_ANY, $0000, TrainingGymNpc0C_0e, $13, $00
-	map_script $0d, FACEMASK_ANY, $0000, Text_6e_226, $13, $00
+	map_script ACTOR_TRAINING_GYM_WALK_73_02, FACEMASK_ANY, $0000, TrainingGymNpc03_0e, $03, $00
+	map_script ACTOR_TRAINING_GYM_WALK_73_05, FACEMASK_ANY, $0000, TrainingGymNpc04_0e, $03, $00
+	map_script ACTOR_TRAINING_GYM_WALK_73_03, FACEMASK_ANY, $0000, TrainingGymNpc05_0e, $03, $00
+	map_script ACTOR_TRAINING_GYM_WALK_73_04, FACEMASK_ANY, $0000, TrainingGymNpc06_0e, $03, $00
+	map_script ACTOR_TRAINING_GYM_WALK_73_07_1, FACEMASK_ANY, $0000, TrainingGymNpc07_0e, $00, $00
+	map_script ACTOR_TRAINING_GYM_WALK_73_06, FACEMASK_ANY, $0000, TrainingGymNpc08_0e, $00, $00
+	map_script ACTOR_TRAINING_GYM_WALK_73_07_2, FACEMASK_ANY, $0000, TrainingGymNpc09_0e, $00, $00
+	map_script ACTOR_TRAINING_GYM_WALK_72_04_1, FACEMASK_ANY, $0000, TrainingGymNpc0A_0e, $13, $00
+	map_script ACTOR_TRAINING_GYM_WALK_72_05, FACEMASK_ANY, $0000, TrainingGymNpc0B_0e, $10, $00
+	map_script ACTOR_TRAINING_GYM_WALK_72_04_2, FACEMASK_ANY, $0000, TrainingGymNpc0C_0e, $13, $00
+	map_script ACTOR_TRAINING_GYM_WALK_72_02_1, FACEMASK_ANY, $0000, Text_6e_226, $13, $00
 	db $ff
 TrainingGymFacingScripts_0e:
 	; $45ad, 17 bytes (map_scripts)
@@ -411,30 +411,30 @@ TrainingGymTile03_0e:
 	ret ; $4618
 TrainingGymInitScript_0e:
 	call ComputeRankingProgressIndex_0e ; $4619
-	script_get_actor_state $07 ; $461c
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_73_07_1 ; $461c
 	ld a, $03 ; $4621
 	ld e, l ; $4623
 	ld d, h ; $4624
 	ld hl, $0018 ; $4625
 	add hl, de ; $4628
 	ld [hl], a ; $4629
-	script_get_actor_state $08 ; $462a
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_73_06 ; $462a
 	ld a, $03 ; $462f
 	ld e, l ; $4631
 	ld d, h ; $4632
 	ld hl, $0018 ; $4633
 	add hl, de ; $4636
 	ld [hl], a ; $4637
-	script_get_actor_state $09 ; $4638
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_73_07_2 ; $4638
 	ld a, $03 ; $463d
 	ld e, l ; $463f
 	ld d, h ; $4640
 	ld hl, $0018 ; $4641
 	add hl, de ; $4644
 	ld [hl], a ; $4645
-	script_set_anim $07, $05 ; $4646
-	script_set_anim $08, $05 ; $464d
-	script_set_anim $09, $05 ; $4654
+	script_set_anim ACTOR_TRAINING_GYM_WALK_73_07_1, $05 ; $4646
+	script_set_anim ACTOR_TRAINING_GYM_WALK_73_06, $05 ; $464d
+	script_set_anim ACTOR_TRAINING_GYM_WALK_73_07_2, $05 ; $4654
 	call SetupGymActorsForProgress ; $465b
 	ld a, [wStoryModeEntryPoint] ; $465e
 	cp $0b ; $4661

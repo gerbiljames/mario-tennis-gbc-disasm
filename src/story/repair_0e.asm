@@ -1,5 +1,5 @@
 TrainingGymRunner0AWaitWaypointClear:
-	script_get_actor_state $0c ; $4c37
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_04_2 ; $4c37
 	ld c, l ; $4c3c
 	ld b, h ; $4c3d
 	ld hl, $000e ; $4c3e
@@ -20,7 +20,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, e ; $4c55
 	ld [hl+], a ; $4c56
 	ld [hl], d ; $4c57
-	script_get_actor_state $0a ; $4c58
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_04_1 ; $4c58
 	ld c, l ; $4c5d
 	ld b, h ; $4c5e
 	ld hl, $000a ; $4c5f
@@ -54,7 +54,7 @@ UnusedTrainingGymRunner0AClearWaypoint:
 	ld a, $00 ; $4c8b
 	ret ; $4c8d
 TrainingGymRunner0BWaitWaypointClear:
-	script_get_actor_state $0a ; $4c8e
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_04_1 ; $4c8e
 	ld c, l ; $4c93
 	ld b, h ; $4c94
 	ld hl, $000e ; $4c95
@@ -75,7 +75,7 @@ TrainingGymRunner0BWaitWaypointClear:
 	ld a, e ; $4cac
 	ld [hl+], a ; $4cad
 	ld [hl], d ; $4cae
-	script_get_actor_state $0b ; $4caf
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_05 ; $4caf
 	ld c, l ; $4cb4
 	ld b, h ; $4cb5
 	ld hl, $000a ; $4cb6
@@ -109,7 +109,7 @@ UnusedTrainingGymRunner0BClearWaypoint:
 	ld a, $00 ; $4ce2
 	ret ; $4ce4
 TrainingGymRunner0CWaitWaypointClear:
-	script_get_actor_state $0b ; $4ce5
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_05 ; $4ce5
 	ld c, l ; $4cea
 	ld b, h ; $4ceb
 	ld hl, $000e ; $4cec
@@ -130,7 +130,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	ld a, e ; $4d03
 	ld [hl+], a ; $4d04
 	ld [hl], d ; $4d05
-	script_get_actor_state $0c ; $4d06
+	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_04_2 ; $4d06
 	ld c, l ; $4d0b
 	ld b, h ; $4d0c
 	ld hl, $000a ; $4d0d
@@ -224,7 +224,7 @@ TrainingGymRunnerCheckClearance:
 	ld a, $00 ; $4d85
 	ret ; $4d87
 RunRepairCounterDialogue:
-	script_face_toward ACTOR_PLAYER, $0e ; $4d88
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4d88
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4d90
 	jp z, .greeting ; $4d93
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4d96
@@ -243,8 +243,8 @@ RunRepairCounterDialogue:
 	script_set_text Text_6e_227 ; $4db7
 	set_flag FLAG_REPAIR_COUNTER_GREETED ; $4dbd
 .speak:
-	script_speak $0e ; $4dc0
-	script_face $0e, FACE_RIGHT ; $4dc5
+	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4dc0
+	script_face ACTOR_TRAINING_GYM_WALK_72_02_2, FACE_RIGHT ; $4dc5
 	ret ; $4dcc
 .doublesGreeting:
 	test_flag FLAG_REPAIR_COUNTER_GREETED ; $4dcd
@@ -278,7 +278,7 @@ RunRepairCounterDialogue:
 	script_set_text Text_6e_231 ; $4e1d
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e23
 .done:
-	script_face_toward ACTOR_PLAYER, $0e ; $4e26
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e26
 	ld a, $0e ; $4e2e
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4e30
 	farcall RunDialogueYesNoPrompt ; $4e33
@@ -288,11 +288,11 @@ RunRepairCounterDialogue:
 	jr z, RepairCounterFarewell.altLine ; $4e41
 RepairCounterFarewell:
 	script_set_text Text_6e_234 ; $4e43
-	script_speak $0e ; $4e49
+	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e49
 	ret ; $4e4e
 .altLine:
 	script_set_text Text_6e_235 ; $4e4f
-	script_speak $0e ; $4e55
+	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e55
 	script_wait_frames $05 ; $4e5a
 RepairCounterServiceMenu:
 	ld hl, Text_6e_236 ; $4e61
@@ -309,7 +309,7 @@ RepairCounterServiceMenu:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4e7c
 	jp nz, RepairCounterChangeShoes ; $4e7f
 	script_set_text Text_6e_232 ; $4e82
-	script_speak $0e ; $4e88
+	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e88
 	script_set_text Text_6e_242 ; $4e8d
 	ld a, $0e ; $4e93
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4e95
@@ -319,7 +319,7 @@ RepairCounterServiceMenu:
 	and a ; $4ea5
 	jr z, RepairCounterServiceMenu ; $4ea6
 	jr RepairCounterFarewell ; $4ea8
-	script_face $0e, FACE_RIGHT ; $4eaa
+	script_face ACTOR_TRAINING_GYM_WALK_72_02_2, FACE_RIGHT ; $4eaa
 	ret ; $4eb1
 PrepareEquipmentSelectScreen:
 	ld a, [wEquippedRacket] ; $4eb2
@@ -346,7 +346,7 @@ PrepareEquipmentSelectScreen:
 	ret ; $4ee8
 RepairCounterChangeRackets:
 	script_set_text Text_6e_237 ; $4ee9
-	script_speak $0e ; $4eef
+	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4eef
 	call PrepareEquipmentSelectScreen ; $4ef4
 	farcall RunRacketSelectScreen ; $4ef7
 	and a ; $4efa
@@ -354,7 +354,7 @@ RepairCounterChangeRackets:
 	jr RestoreScreenAfterEquipSelect ; $4efd
 RepairCounterChangeShoes:
 	script_set_text Text_6e_238 ; $4eff
-	script_speak $0e ; $4f05
+	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4f05
 	call PrepareEquipmentSelectScreen ; $4f0a
 	farcall RunShoesSelectScreen ; $4f0d
 	and a ; $4f10
@@ -453,7 +453,7 @@ InitEquipmentHandoutDialogue:
 RepairCounterReturnA:
 	ld a, $0b ; $4fbf
 	ld [wMapSceneStage2], a ; $4fc1
-	script_face_toward ACTOR_PLAYER, $0e ; $4fc4
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4fc4
 	script_set_position ACTOR_PARTNER, $0f00, $0f00 ; $4fcc
 	jp RepairCounterCheckEquipChanged ; $4fd7
 	ret ; $4fda

@@ -113,6 +113,13 @@ grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-27** — actor slots are named by row. `map_actor` takes a
+  ninth argument, and the macro defines `ACTOR_<name>` as `3 + row` (a row
+  whose condition fails still takes its slot, so row order is the slot map).
+  All 79 lists name their rows after location and object, and 4,153 slot
+  numbers in the story scripts and `NpcScripts` tables became names where
+  the active list is certain (`docs/story_mode.md`, "map_actor"); about 600
+  stay numbers because more than one list could be active.
 * **2026-09-27** — the last hardcoded ROM addresses. A scan for ROM
   addresses written as numbers (4-digit literals in address operands,
   split `LOW`/`HIGH` halves, literal banks beside cross-bank labels, and

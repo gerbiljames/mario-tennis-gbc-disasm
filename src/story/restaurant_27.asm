@@ -73,10 +73,10 @@ End3DormEntMapScripts_27:
 	dw End3DormEntInitScript_27 ; slot 6 InitScript
 End3DormEntActors_27:
 	; $6c26, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_EMILY, $01, $00
-	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_KATE, $01, $00
-	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
-	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
+	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_EMILY, $01, $00, END3_DORM_ENT_EMILY
+	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_KATE, $01, $00, END3_DORM_ENT_KATE
+	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00, END3_DORM_ENT_WALK_73_12
+	map_actor $0000, ActorScript_27_27, $0100, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00, END3_DORM_ENT_WALK_73_13
 	map_actor_end
 End3DormEntEntryPoints_27:
 	; $6c68, 25 bytes (map_entries)
@@ -105,26 +105,26 @@ End3DormEntCutscene_27:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_27 ; $6c99
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6ca4
 .notDoubles:
-	script_set_speed $03, $0010 ; $6caf
-	script_set_speed $04, $0010 ; $6cb7
+	script_set_speed ACTOR_END3_DORM_ENT_EMILY, $0010 ; $6caf
+	script_set_speed ACTOR_END3_DORM_ENT_KATE, $0010 ; $6cb7
 	script_set_speed ACTOR_PLAYER, $0010 ; $6cbf
 	script_player_speed $0010 ; $6cc7
 	script_set_position ACTOR_PLAYER, $1600, $1f00 ; $6ccd
-	script_set_position $03, $1600, $1d00 ; $6cd8
-	script_face $03, FACE_UP ; $6ce3
+	script_set_position ACTOR_END3_DORM_ENT_EMILY, $1600, $1d00 ; $6cd8
+	script_face ACTOR_END3_DORM_ENT_EMILY, FACE_UP ; $6ce3
 	script_fade_in $20 ; $6cea
-	script_move_target $03, $1600, $1100 ; $6cef
+	script_move_target ACTOR_END3_DORM_ENT_EMILY, $1600, $1100 ; $6cef
 	script_move_player $1600, $0f00 ; $6cfa
 	script_move_target ACTOR_PLAYER, $1600, $1400 ; $6d04
 	script_wait_move ACTOR_PLAYER ; $6d0f
-	script_move_target $03, $1600, $1100 ; $6d14
+	script_move_target ACTOR_END3_DORM_ENT_EMILY, $1600, $1100 ; $6d14
 	script_move_target ACTOR_PLAYER, $1600, $1300 ; $6d1f
 	script_wait_move ACTOR_PLAYER ; $6d2a
 	script_wait_frames $14 ; $6d2f
-	script_wait_move $03 ; $6d36
-	script_face_toward ACTOR_PLAYER, $03 ; $6d3b
-	script_set_anim $03, $03 ; $6d43
-	script_wait_idle $03 ; $6d4a
+	script_wait_move ACTOR_END3_DORM_ENT_EMILY ; $6d36
+	script_face_toward ACTOR_PLAYER, ACTOR_END3_DORM_ENT_EMILY ; $6d3b
+	script_set_anim ACTOR_END3_DORM_ENT_EMILY, $03 ; $6d43
+	script_wait_idle ACTOR_END3_DORM_ENT_EMILY ; $6d4a
 	script_set_anim ACTOR_PLAYER, $02 ; $6d4f
 	script_player_speed $0018 ; $6d56
 	script_move_player $1600, $0b00 ; $6d5c
@@ -145,13 +145,13 @@ End3DormEntCutscene_27:
 	script_wait_frames $14 ; $6dc2
 	script_player_speed $0010 ; $6dc9
 	sound SFX_CHIME ; $6dcf
-	script_set_position $05, $1780, $0f00 ; $6dd1
-	script_set_anim $03, $02 ; $6ddc
-	script_wait_idle $03 ; $6de3
-	script_set_position $05, $0100, $0100 ; $6de8
-	script_move_target $03, $1600, $0b00 ; $6df3
-	script_wait_move $03 ; $6dfe
-	script_set_position $04, $1700, $0b00 ; $6e03
+	script_set_position ACTOR_END3_DORM_ENT_WALK_73_12, $1780, $0f00 ; $6dd1
+	script_set_anim ACTOR_END3_DORM_ENT_EMILY, $02 ; $6ddc
+	script_wait_idle ACTOR_END3_DORM_ENT_EMILY ; $6de3
+	script_set_position ACTOR_END3_DORM_ENT_WALK_73_12, $0100, $0100 ; $6de8
+	script_move_target ACTOR_END3_DORM_ENT_EMILY, $1600, $0b00 ; $6df3
+	script_wait_move ACTOR_END3_DORM_ENT_EMILY ; $6dfe
+	script_set_position ACTOR_END3_DORM_ENT_KATE, $1700, $0b00 ; $6e03
 	script_wait_frames $3c ; $6e0e
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6e15
 	script_wait_frames $14 ; $6e1c
@@ -159,29 +159,29 @@ End3DormEntCutscene_27:
 	script_wait_idle ACTOR_PLAYER ; $6e2a
 	script_wait_frames $14 ; $6e2f
 	script_face ACTOR_PLAYER, FACE_UP ; $6e36
-	script_set_active $03, $02 ; $6e3d
-	script_set_position $03, $1500, $0b00 ; $6e44
+	script_set_active ACTOR_END3_DORM_ENT_EMILY, $02 ; $6e3d
+	script_set_position ACTOR_END3_DORM_ENT_EMILY, $1500, $0b00 ; $6e44
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $6e4f
 	or a ; $6e52
 	jr nz, .walk ; $6e53
-	script_set_objdef OBJ_HARRY, $04 ; $6e55
-	script_set_anim $04, $01 ; $6e61
+	script_set_objdef OBJ_HARRY, ACTOR_END3_DORM_ENT_KATE ; $6e55
+	script_set_anim ACTOR_END3_DORM_ENT_KATE, $01 ; $6e61
 .walk:
-	script_move_target $03, $1500, $0f00 ; $6e68
-	script_wait_move $03 ; $6e73
-	script_move_target $04, $1700, $0f00 ; $6e78
-	script_wait_move $04 ; $6e83
+	script_move_target ACTOR_END3_DORM_ENT_EMILY, $1500, $0f00 ; $6e68
+	script_wait_move ACTOR_END3_DORM_ENT_EMILY ; $6e73
+	script_move_target ACTOR_END3_DORM_ENT_KATE, $1700, $0f00 ; $6e78
+	script_wait_move ACTOR_END3_DORM_ENT_KATE ; $6e83
 	sound SFX_EMOTE ; $6e88
-	script_set_position $06, $1780, $1100 ; $6e8a
+	script_set_position ACTOR_END3_DORM_ENT_WALK_73_13, $1780, $1100 ; $6e8a
 	script_wait_frames $3c ; $6e95
-	script_set_anim $03, $04 ; $6e9c
-	script_wait_idle $03 ; $6ea3
-	script_set_position $06, $0100, $0100 ; $6ea8
-	script_face_toward $04, $03 ; $6eb3
+	script_set_anim ACTOR_END3_DORM_ENT_EMILY, $04 ; $6e9c
+	script_wait_idle ACTOR_END3_DORM_ENT_EMILY ; $6ea3
+	script_set_position ACTOR_END3_DORM_ENT_WALK_73_13, $0100, $0100 ; $6ea8
+	script_face_toward ACTOR_END3_DORM_ENT_KATE, ACTOR_END3_DORM_ENT_EMILY ; $6eb3
 	script_wait_frames $3c ; $6ebb
-	script_face_toward ACTOR_PLAYER, $03 ; $6ec2
-	script_set_anim $04, $03 ; $6eca
-	script_wait_idle $04 ; $6ed1
+	script_face_toward ACTOR_PLAYER, ACTOR_END3_DORM_ENT_EMILY ; $6ec2
+	script_set_anim ACTOR_END3_DORM_ENT_KATE, $03 ; $6eca
+	script_wait_idle ACTOR_END3_DORM_ENT_KATE ; $6ed1
 	ld a, $0f ; $6ed6
 	ld [wUnusedExitTriggerIdMirror], a ; $6ed8
 	ld [wStoryModeExitTriggerRequest], a ; $6edb
@@ -238,22 +238,22 @@ EndRestaurantEntCutscene_27:
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6f72
 .placeActors:
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $6f7d
-	script_set_position $06, $3f00, $3f00 ; $6f88
-	script_set_position $07, $3f00, $3f00 ; $6f93
-	script_set_position $08, $3f00, $3f00 ; $6f9e
+	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_EMILY, $3f00, $3f00 ; $6f88
+	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_MARK, $3f00, $3f00 ; $6f93
+	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_KEVIN, $3f00, $3f00 ; $6f9e
 	script_fade_in $04 ; $6fa9
-	script_set_position $06, $4100, $0d00 ; $6fae
-	script_move_target $06, $1b00, $0d00 ; $6fb9
+	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_EMILY, $4100, $0d00 ; $6fae
+	script_move_target ACTOR_END_RESTAURANT_ENT_ALT_EMILY, $1b00, $0d00 ; $6fb9
 	script_set_position ACTOR_PLAYER, $4300, $0d00 ; $6fc4
 	script_move_target ACTOR_PLAYER, $1d00, $0d00 ; $6fcf
 	script_wait_frames $0f ; $6fda
 	script_move_player $1b00, $0d00 ; $6fe1
 	script_wait_move ACTOR_PLAYER ; $6feb
 	script_wait_frames $1e ; $6ff0
-	script_face_toward ACTOR_PLAYER, $06 ; $6ff7
+	script_face_toward ACTOR_PLAYER, ACTOR_END_RESTAURANT_ENT_ALT_EMILY ; $6ff7
 	script_set_anim ACTOR_PLAYER, $03 ; $6fff
 	script_wait_idle ACTOR_PLAYER ; $7006
-	script_face $06, FACE_UP ; $700b
+	script_face ACTOR_END_RESTAURANT_ENT_ALT_EMILY, FACE_UP ; $700b
 	script_wait_frames $0f ; $7012
 	script_face ACTOR_PLAYER, FACE_UP ; $7019
 	script_set_anim ACTOR_PLAYER, $03 ; $7020
@@ -262,31 +262,31 @@ EndRestaurantEntCutscene_27:
 	call OpenRestaurantEntDoor_27 ; $7033
 	script_wait_frames $0f ; $7036
 	sound SFX_CHIME ; $703d
-	script_set_position $03, $1c00, $0b00 ; $703f
+	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_WALK_73_12, $1c00, $0b00 ; $703f
 	script_wait_frames $1e ; $704a
-	script_set_position $03, $3f00, $3f00 ; $7051
-	script_face $06, FACE_LEFT ; $705c
+	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_WALK_73_12, $3f00, $3f00 ; $7051
+	script_face ACTOR_END_RESTAURANT_ENT_ALT_EMILY, FACE_LEFT ; $705c
 	script_wait_frames $0f ; $7063
 	script_face ACTOR_PLAYER, FACE_LEFT ; $706a
 	script_move_player $1800, $0d00 ; $7071
 	script_wait_frames $0f ; $707b
-	script_set_position $07, $1500, $0980 ; $7082
+	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_MARK, $1500, $0980 ; $7082
 	script_wait_frames $0f ; $708d
-	script_set_speed $07, $0010 ; $7094
-	script_move_target $07, $1500, $0d00 ; $709c
-	script_wait_move $07 ; $70a7
-	script_face $07, FACE_RIGHT ; $70ac
-	script_set_position $08, $1500, $0900 ; $70b3
+	script_set_speed ACTOR_END_RESTAURANT_ENT_ALT_MARK, $0010 ; $7094
+	script_move_target ACTOR_END_RESTAURANT_ENT_ALT_MARK, $1500, $0d00 ; $709c
+	script_wait_move ACTOR_END_RESTAURANT_ENT_ALT_MARK ; $70a7
+	script_face ACTOR_END_RESTAURANT_ENT_ALT_MARK, FACE_RIGHT ; $70ac
+	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_KEVIN, $1500, $0900 ; $70b3
 	script_wait_frames $0f ; $70be
-	script_set_speed $08, $0010 ; $70c5
-	script_move_target $08, $1500, $0b00 ; $70cd
-	script_wait_move $08 ; $70d8
+	script_set_speed ACTOR_END_RESTAURANT_ENT_ALT_KEVIN, $0010 ; $70c5
+	script_move_target ACTOR_END_RESTAURANT_ENT_ALT_KEVIN, $1500, $0b00 ; $70cd
+	script_wait_move ACTOR_END_RESTAURANT_ENT_ALT_KEVIN ; $70d8
 	call CloseRestaurantEntDoor_27 ; $70dd
-	script_face $08, FACE_RIGHT ; $70e0
+	script_face ACTOR_END_RESTAURANT_ENT_ALT_KEVIN, FACE_RIGHT ; $70e0
 	script_wait_frames $0f ; $70e7
-	script_set_anim $06, $02 ; $70ee
-	script_wait_idle $06 ; $70f5
-	script_face $07, FACE_DOWN ; $70fa
+	script_set_anim ACTOR_END_RESTAURANT_ENT_ALT_EMILY, $02 ; $70ee
+	script_wait_idle ACTOR_END_RESTAURANT_ENT_ALT_EMILY ; $70f5
+	script_face ACTOR_END_RESTAURANT_ENT_ALT_MARK, FACE_DOWN ; $70fa
 	ld a, $0e ; $7101
 	ld [wUnusedExitTriggerIdMirror], a ; $7103
 	ld [wStoryModeExitTriggerRequest], a ; $7106
@@ -294,12 +294,12 @@ EndRestaurantEntCutscene_27:
 	ret ; $710c
 EndRestaurantEntActorsAlt_27:
 	; $710d, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00
-	map_actor $0000, ActorScript_27_27, $4100, $0d00, FACE_LEFT, OBJ_EMILY, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $0d00, FACE_DOWN, OBJ_MARK, $01, $00
-	map_actor $0000, ActorScript_27_27, $1300, $0d00, FACE_DOWN, OBJ_KEVIN, $01, $00
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, $01, $00, END_RESTAURANT_ENT_ALT_WALK_73_12
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, $01, $00, END_RESTAURANT_ENT_ALT_WALK_73_13
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, $01, $00, END_RESTAURANT_ENT_ALT_WALK_73_15
+	map_actor $0000, ActorScript_27_27, $4100, $0d00, FACE_LEFT, OBJ_EMILY, $01, $00, END_RESTAURANT_ENT_ALT_EMILY
+	map_actor $0000, ActorScript_27_27, $1500, $0d00, FACE_DOWN, OBJ_MARK, $01, $00, END_RESTAURANT_ENT_ALT_MARK
+	map_actor $0000, ActorScript_27_27, $1300, $0d00, FACE_DOWN, OBJ_KEVIN, $01, $00, END_RESTAURANT_ENT_ALT_KEVIN
 	map_actor_end
 OpenRestaurantEntDoor_27:
 	sound SFX_DOOR ; $716b
@@ -332,16 +332,16 @@ End1MainBldgMapScripts_27:
 	dw End1MainBldgInitScript_27 ; slot 6 InitScript
 End1MainBldgActors_27:
 	; $7221, 150 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_13, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_12, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_19, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_DOWN, OBJ_WALK_75_06, $01, $00
-	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_15, $01, $00
-	map_actor $0000, ActorScript_27_27, $1800, $1100, FACE_DOWN, OBJ_WALK_75_06, $01, $00
-	map_actor $0000, ActorScript_27_27, $1a00, $1500, FACE_UP, OBJ_WALK_74_08, $01, $00
-	map_actor $0000, ActorScript_27_27, $1600, $1500, FACE_UP, OBJ_WALK_74_07, $01, $00
-	map_actor $0000, ActorScript_27_27, $1900, $1700, FACE_UP, OBJ_WALK_74_06, $01, $00
-	map_actor $0000, ActorScript_27_27, $0100, $1900, FACE_UP, OBJ_MARK, $01, $00
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_13, $01, $00, END1_MAIN_BLDG_WALK_73_13
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_12, $01, $00, END1_MAIN_BLDG_WALK_73_12
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_19, $01, $00, END1_MAIN_BLDG_WALK_73_19
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_DOWN, OBJ_WALK_75_06, $01, $00, END1_MAIN_BLDG_WALK_75_06_1
+	map_actor $0000, ActorScript_27_27, $1500, $3d00, FACE_RIGHT, OBJ_WALK_73_15, $01, $00, END1_MAIN_BLDG_WALK_73_15
+	map_actor $0000, ActorScript_27_27, $1800, $1100, FACE_DOWN, OBJ_WALK_75_06, $01, $00, END1_MAIN_BLDG_WALK_75_06_2
+	map_actor $0000, ActorScript_27_27, $1a00, $1500, FACE_UP, OBJ_WALK_74_08, $01, $00, END1_MAIN_BLDG_WALK_74_08
+	map_actor $0000, ActorScript_27_27, $1600, $1500, FACE_UP, OBJ_WALK_74_07, $01, $00, END1_MAIN_BLDG_WALK_74_07
+	map_actor $0000, ActorScript_27_27, $1900, $1700, FACE_UP, OBJ_WALK_74_06, $01, $00, END1_MAIN_BLDG_WALK_74_06
+	map_actor $0000, ActorScript_27_27, $0100, $1900, FACE_UP, OBJ_MARK, $01, $00, END1_MAIN_BLDG_MARK
 	map_actor_end
 End1MainBldgEntryPoints_27:
 	; $72b7, 25 bytes (map_entries)
@@ -374,13 +374,13 @@ End1MainBldgInitScript_27:
 	script_set_speed ACTOR_PLAYER, $0010 ; $730a
 	xor a ; $7312
 	ld [wStoryModeShowLocationName], a ; $7313
-	script_set_position $06, $1800, $0d00 ; $7316
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $1800, $0d00 ; $7316
 	script_set_position ACTOR_PLAYER, $1800, $3700 ; $7321
-	script_set_position $0b, $3f00, $3f00 ; $732c
-	script_set_position $0a, $3f00, $3f00 ; $7337
-	script_set_position $09, $3f00, $3f00 ; $7342
-	script_set_position $08, $3f00, $3f00 ; $734d
-	script_set_position $0c, $3f00, $3f00 ; $7358
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_74_06, $3f00, $3f00 ; $732c
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_74_07, $3f00, $3f00 ; $7337
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_74_08, $3f00, $3f00 ; $7342
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_75_06_2, $3f00, $3f00 ; $734d
+	script_set_position ACTOR_END1_MAIN_BLDG_MARK, $3f00, $3f00 ; $7358
 	test_flag FLAG_DOUBLES ; $7363
 	jr z, .notDoubles ; $7366
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_27 ; $7368
@@ -395,73 +395,73 @@ End1MainBldgInitScript_27:
 	script_wait_frames $14 ; $73a4
 	script_set_position ACTOR_PLAYER, $1800, $2000 ; $73ab
 	script_face ACTOR_PLAYER, FACE_UP ; $73b6
-	script_set_speed $06, $0024 ; $73bd
-	script_move_target $06, $1800, $1400 ; $73c5
-	script_wait_move $06 ; $73d0
-	script_set_anim $06, $04 ; $73d5
-	script_wait_idle $06 ; $73dc
-	script_face $06, FACE_UP ; $73e1
-	script_set_anim $06, $03 ; $73e8
-	script_wait_idle $06 ; $73ef
-	script_set_speed $06, $0020 ; $73f4
-	script_face $06, FACE_DOWN ; $73fc
-	script_jump_velocity $06, $ff80 ; $7403
+	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $0024 ; $73bd
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $1800, $1400 ; $73c5
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $73d0
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $04 ; $73d5
+	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $73dc
+	script_face ACTOR_END1_MAIN_BLDG_WALK_75_06_1, FACE_UP ; $73e1
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $03 ; $73e8
+	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $73ef
+	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $0020 ; $73f4
+	script_face ACTOR_END1_MAIN_BLDG_WALK_75_06_1, FACE_DOWN ; $73fc
+	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $ff80 ; $7403
 	ld a, $06 ; $740b
 	farcall ScriptWaitActorJumpDone ; $740d
-	script_move_target $06, $1800, $1700 ; $7410
-	script_wait_move $06 ; $741b
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $1800, $1700 ; $7410
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $741b
 	sound SFX_EMOTE ; $7420
-	script_set_position $03, $1980, $15c0 ; $7422
-	script_set_speed $06, $0010 ; $742d
-	script_set_speed $03, $0010 ; $7435
-	script_move_target $03, $1980, $18c0 ; $743d
-	script_move_target $06, $1800, $1a00 ; $7448
-	script_wait_move $06 ; $7453
-	script_set_position $03, $3f00, $3f00 ; $7458
-	script_move_target $06, $1800, $1600 ; $7463
-	script_wait_move $06 ; $746e
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_73_13, $1980, $15c0 ; $7422
+	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $0010 ; $742d
+	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_73_13, $0010 ; $7435
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_73_13, $1980, $18c0 ; $743d
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $1800, $1a00 ; $7448
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7453
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_73_13, $3f00, $3f00 ; $7458
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $1800, $1600 ; $7463
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $746e
 	script_wait_frames $1e ; $7473
-	script_set_anim $06, $02 ; $747a
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $02 ; $747a
 	sound SFX_CHIME ; $7481
-	script_set_position $04, $1980, $14c0 ; $7483
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_73_12, $1980, $14c0 ; $7483
 	script_wait_frames $14 ; $748e
-	script_set_position $04, $3f00, $3f00 ; $7495
-	script_set_speed $06, $0020 ; $74a0
-	script_jump_velocity $06, $ff80 ; $74a8
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_73_12, $3f00, $3f00 ; $7495
+	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $0020 ; $74a0
+	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $ff80 ; $74a8
 	ld a, $06 ; $74b0
 	farcall ScriptWaitActorJumpDone ; $74b2
-	script_move_target $06, $1800, $2000 ; $74b5
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $1800, $2000 ; $74b5
 	script_wait_frames $1e ; $74c0
 	ld bc, wActors + 1 * ACTOR_SIZE ; $74c7
-	script_get_actor_state $06 ; $74ca
+	script_get_actor_state ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74ca
 	ld e, l ; $74cf
 	ld d, h ; $74d0
 	farcall AttachActorWaypointFollower ; $74d1
 	script_move_target ACTOR_PLAYER, $1800, $1e00 ; $74d4
 	script_wait_frames $14 ; $74df
 	call End1MainBldgKnockdown_27 ; $74e6
-	script_wait_move $06 ; $74e9
-	script_set_anim $06, $02 ; $74ee
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74e9
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $02 ; $74ee
 	sound SFX_APPEAR2 ; $74f5
-	script_set_position $05, $1900, $1e00 ; $74f7
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_73_19, $1900, $1e00 ; $74f7
 	script_wait_frames $3c ; $7502
-	script_set_position $05, $3f00, $3f00 ; $7509
-	script_move_target $06, $1700, $2200 ; $7514
-	script_wait_move $06 ; $751f
-	script_face_toward ACTOR_PLAYER, $06 ; $7524
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_73_19, $3f00, $3f00 ; $7509
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $1700, $2200 ; $7514
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $751f
+	script_face_toward ACTOR_PLAYER, ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7524
 	script_wait_frames $14 ; $752c
-	script_move_target $06, $1900, $2400 ; $7533
-	script_wait_move $06 ; $753e
+	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $1900, $2400 ; $7533
+	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $753e
 	script_null_script ACTOR_PLAYER_SHADOW ; $7543
-	script_face_toward ACTOR_PLAYER, $06 ; $7548
-	script_set_anim $06, $02 ; $7550
-	script_wait_idle $06 ; $7557
+	script_face_toward ACTOR_PLAYER, ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7548
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $02 ; $7550
+	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7557
 	script_wait_frames $14 ; $755c
-	script_set_position $07, $1a80, $2280 ; $7563
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_73_15, $1a80, $2280 ; $7563
 	script_wait_frames $3c ; $756e
-	script_set_position $07, $3f00, $3f00 ; $7575
-	script_set_anim $06, $02 ; $7580
-	script_wait_idle $06 ; $7587
+	script_set_position ACTOR_END1_MAIN_BLDG_WALK_73_15, $3f00, $3f00 ; $7575
+	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $02 ; $7580
+	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7587
 	ld a, $01 ; $758c
 	ld [wUnusedExitTriggerIdMirror], a ; $758e
 	ld [wStoryModeExitTriggerRequest], a ; $7591
