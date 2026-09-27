@@ -307,51 +307,38 @@ Unused_04_SpawnScriptedActorScene:
 	ret ; $4d62
 ActorList_04_0:
 	; $4d63, 66 bytes (actor_list)
-	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $01, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	dw $0000, ActorScript_Idle, $1700, $1d00 ; actor 1: cond, script, x, y
-	db FACE_DOWN, $00, $00, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	dw $0000, ActorScript_Idle, $0e00, $1900 ; actor 2: cond, script, x, y
-	db FACE_RIGHT, $00, $00, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	dw $0000, ActorScript_Idle, $2200, $1900 ; actor 3: cond, script, x, y
-	db FACE_LEFT, $00, $00, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $0000, ActorScript_Idle, $0100, $0100, FACE_DOWN, OBJ_MATCH_NINA, $01, $00
+	map_actor $0000, ActorScript_Idle, $1700, $1d00, FACE_DOWN, OBJ_MATCH_ALEX, $01, $00
+	map_actor $0000, ActorScript_Idle, $0e00, $1900, FACE_RIGHT, OBJ_MATCH_ALEX, $01, $00
+	map_actor $0000, ActorScript_Idle, $2200, $1900, FACE_LEFT, OBJ_MATCH_ALEX, $01, $00
+	map_actor_end
 ActorList_04_1:
 	; $4da5, 24 bytes (actor_list)
-	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $26, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $0000, ActorScript_Idle, $1900, $2500, FACE_DOWN, OBJ_ALEX, $01, $00
+	map_actor_end
 ScriptedActorList0_04:
 	; $4dbd, 24 bytes (actor_list)
-	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $27, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $0000, ActorScript_Idle, $1900, $2500, FACE_DOWN, OBJ_NINA, $01, $00
+	map_actor_end
 ScriptedActorList1_04:
 	; $4dd5, 24 bytes (actor_list)
-	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $28, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $0000, ActorScript_Idle, $1900, $2500, FACE_DOWN, OBJ_HARRY, $01, $00
+	map_actor_end
 ScriptedActorList2_04:
 	; $4ded, 24 bytes (actor_list)
-	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $29, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $0000, ActorScript_Idle, $1900, $2500, FACE_DOWN, OBJ_KATE, $01, $00
+	map_actor_end
 ScriptedActorSceneActorList0:
 	; $4e05, 24 bytes (actor_list)
-	dw $0000, ActorScript_Idle, $1d00, $2900 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $0000, ActorScript_Idle, $1d00, $2900, FACE_DOWN, OBJ_MARIO, $01, $00
+	map_actor_end
 ScriptedActorSceneActorList1:
 	; $4e1d, 66 bytes (actor_list)
-	dw $0000, ActorScript_Idle, $1700, $1500 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	dw $0000, ActorScript_Idle, $1700, $1900 ; actor 1: cond, script, x, y
-	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	dw $0000, ActorScript_Idle, $1700, $1d00 ; actor 2: cond, script, x, y
-	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	dw $0000, ActorScript_Idle, $1700, $2100 ; actor 3: cond, script, x, y
-	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $0000, ActorScript_Idle, $1700, $1500, FACE_DOWN, OBJ_MARIO, $01, $00
+	map_actor $0000, ActorScript_Idle, $1700, $1900, FACE_DOWN, OBJ_MARIO, $01, $00
+	map_actor $0000, ActorScript_Idle, $1700, $1d00, FACE_DOWN, OBJ_MARIO, $01, $00
+	map_actor $0000, ActorScript_Idle, $1700, $2100, FACE_DOWN, OBJ_MARIO, $01, $00
+	map_actor_end
 ScriptedActorListPtrs_04:
 	; $4e5f, 8 bytes (records:2)
 	dw ActorList_04_1 ; record 0
@@ -410,19 +397,16 @@ SpawnMainCharacterActor:
 	ret ; $4ec7
 CompanionActorPartnerActorList0:
 	; $4ec8, 24 bytes (actor_list)
-	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $28, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $0000, ActorScript_Idle, $0100, $0100, FACE_DOWN, OBJ_HARRY, $01, $00
+	map_actor_end
 CompanionActorPartnerActorList1:
 	; $4ee0, 24 bytes (actor_list)
-	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $29, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $0000, ActorScript_Idle, $0100, $0100, FACE_DOWN, OBJ_KATE, $01, $00
+	map_actor_end
 CompanionActorPartnerActorList2:
 	; $4ef8, 24 bytes (actor_list)
-	dw $01e0, ActorScript_Deactivate, $0100, $0100 ; actor 0: cond, script, x, y
-	db FACE_DOWN, $00, $2f, $01, $00, $00 ; facing, -, obj def, anim, extra, -
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+	map_actor $01e0, ActorScript_Deactivate, $0100, $0100, FACE_DOWN, OBJ_WALK_71_02, $01, $00
+	map_actor_end
 SpawnCompanionActor:
 	push af ; $4f10
 	push bc ; $4f11
