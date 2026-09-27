@@ -1,4 +1,5 @@
 SoundTable_78:
+	ASSERT SoundTable_78 == $4000
 	snd_channel 2, $01 ; $4000
 	dw Sfx01_Trk0 ; $4002
 	snd_channel 3, $00 ; $4004

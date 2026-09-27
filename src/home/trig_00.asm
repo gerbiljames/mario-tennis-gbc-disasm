@@ -198,11 +198,11 @@ MulSinUnsigned:
 	res 0, a ; $1370
 	ld l, a ; $1372
 	ld a, h ; $1373
-	add $40 ; $1374
+	add HIGH(SineTable) ; $1374
 	ld h, a ; $1376
 	ldh a, [hRomBank] ; $1377
 	ld b, a ; $1379
-	ld a, $2d ; $137a
+	ld a, BANK(SineTable) ; $137a
 	ldh [hRomBank], a ; $137c
 	ld [rROMB0], a ; $137e
 	ld a, [hl+] ; $1381
@@ -294,11 +294,11 @@ DivBySinUnsigned:
 	res 0, a ; $13ec
 	ld l, a ; $13ee
 	ld a, h ; $13ef
-	add $50 ; $13f0
+	add HIGH(CosecantTable) ; $13f0
 	ld h, a ; $13f2
 	ldh a, [hRomBank] ; $13f3
 	ld b, a ; $13f5
-	ld a, $2d ; $13f6
+	ld a, BANK(CosecantTable) ; $13f6
 	ldh [hRomBank], a ; $13f8
 	ld [rROMB0], a ; $13fa
 	ld a, [hl+] ; $13fd

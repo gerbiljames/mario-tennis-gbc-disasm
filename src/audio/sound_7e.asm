@@ -1,4 +1,5 @@
 SoundTable_7e:
+	ASSERT SoundTable_7e == $4000
 	snd_channel 2, $00 ; $4000
 	dw Sfx28_Trk0 ; $4002
 	snd_channel 3, $01 ; $4004

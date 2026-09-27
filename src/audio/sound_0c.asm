@@ -1,4 +1,5 @@
 SoundTable_0c:
+	ASSERT SoundTable_0c == $4000
 	snd_channel 2, $01 ; $4000
 	dw UnusedSnd0c_00 ; $4002
 	snd_channel 3, $00 ; $4004

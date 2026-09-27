@@ -1,4 +1,5 @@
 SoundTable_7f:
+	ASSERT SoundTable_7f == $4000
 	snd_channel 0, $00 ; $4000
 	dw Music96_Trk0 ; $4002
 	snd_channel 1, $02 ; $4004

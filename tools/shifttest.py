@@ -17,7 +17,9 @@ proves the slot-table ASSERTs and every bank's size survive the shift.
 
 Banks with fewer than PAD + 15 free bytes are left unpadded (a shifted bank's
 first `ALIGN 4` absorbs up to 15 more) (the pure data banks
-that fill their 16 KiB exactly); references into them do not move.
+that fill their 16 KiB exactly); references into them do not move. So is a
+bank that opens with a table pinned by an ASSERT (the trig, view-scale and
+sound tables, whose readers build the address from a computed high byte).
 """
 import argparse
 import re
@@ -46,10 +48,20 @@ def free_bytes(map_path):
     return free
 
 
+def pinned(holder):
+    first = re.search(r'^INCLUDE "([^"]+)"', holder.read_text(), re.M)
+    if not first:
+        return False
+    head = (holder.parent.parent / first.group(1)).read_text().splitlines()[:3]
+    return any(line.strip().startswith("ASSERT") for line in head)
+
+
 def pad_tree(tree, pad, free, only=None):
     padded = set()
     for holder in sorted((tree / "src").glob("bank_*.asm")):
         bank = int(holder.stem.split("_")[1], 16)
+        if bank and pinned(holder):
+            continue
         # a shifted bank's first ALIGN 4 can take up to 15 more bytes
         if free.get(bank, 0) < pad + 15 or (only is not None and bank not in only):
             continue
@@ -116,7 +128,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--pad", type=int, default=3)
     ap.add_argument("--keep", action="store_true", help="keep the padded tree")
-    ap.add_argument("--out", help="also copy the padded ROM here")
+    ap.add_argument("--out", help="also copy the padded ROM here, and its .sym beside it")
     ap.add_argument("--banks", help="pad only these banks: hex numbers and ranges, e.g. 0,1-3f")
     args = ap.parse_args()
 
@@ -160,7 +172,7 @@ def main():
 
     skipped = sorted(set(range(128)) - padded)
     print(f"padded {len(padded)} banks by {args.pad} "
-          f"(full, left in place: {', '.join(f'${x:02x}' for x in skipped)})")
+          f"(full or pinned, left in place: {', '.join(f'${x:02x}' for x in skipped)})")
     print(f"{moved} low bytes moved with their targets, {carried} high bytes carried")
     for bank, i, x, y in real[:20]:
         cpu = i if bank == 0 else 0x4000 + i % BANK
@@ -168,6 +180,7 @@ def main():
     shutil.copy(tree / "mariotennis.gbc", tmp / "mariotennis.gbc")
     if args.out:
         shutil.copy(tree / "mariotennis.gbc", args.out)
+        shutil.copy(tree / "build" / "mariotennis.sym", Path(args.out).with_suffix(".sym"))
     if not args.keep:
         shutil.rmtree(tree)
     print(f"padded ROM: {tmp / 'mariotennis.gbc'}")

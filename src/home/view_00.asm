@@ -81,7 +81,7 @@ QueueSpriteBlockPart:
 ProjectWorldToScreen:
 	ldh a, [hRomBank] ; $2d8c
 	push af ; $2d8e
-	ld a, $2f ; $2d8f
+	ld a, BANK(ViewScaleTableA) ; $2d8f
 	ldh [hRomBank], a ; $2d91
 	ld [rROMB0], a ; $2d93
 	push hl ; $2d96
@@ -110,7 +110,7 @@ ProjectWorldToScreen:
 	ld d, h ; $2db5
 	pop bc ; $2db6
 	pop hl ; $2db7
-	ld a, $2e ; $2db8
+	ld a, BANK(PerspectiveScaleTable) ; $2db8
 	ldh [hRomBank], a ; $2dba
 	ld [rROMB0], a ; $2dbc
 	push de ; $2dbf
@@ -148,7 +148,7 @@ MulViewScaleA:
 	res 0, l ; $2ded
 	ld a, h ; $2def
 	and $1f ; $2df0
-	add $40 ; $2df2
+	add HIGH(ViewScaleTableA) ; $2df2
 	ld h, a ; $2df4
 	ld a, [hl+] ; $2df5
 	ld h, [hl] ; $2df6
@@ -164,7 +164,7 @@ MulViewScaleA:
 	res 0, l ; $2dff
 	ld a, h ; $2e01
 	and $1f ; $2e02
-	add $40 ; $2e04
+	add HIGH(ViewScaleTableA) ; $2e04
 	ld h, a ; $2e06
 	ld a, [hl+] ; $2e07
 	ld h, [hl] ; $2e08
@@ -182,7 +182,7 @@ MulViewScaleANeg:
 	res 0, l ; $2e15
 	ld a, h ; $2e17
 	and $1f ; $2e18
-	add $40 ; $2e1a
+	add HIGH(ViewScaleTableA) ; $2e1a
 	ld h, a ; $2e1c
 	ld a, [hl+] ; $2e1d
 	ld h, [hl] ; $2e1e
@@ -204,7 +204,7 @@ MulViewScaleANeg:
 	res 0, l ; $2e2d
 	ld a, h ; $2e2f
 	and $1f ; $2e30
-	add $40 ; $2e32
+	add HIGH(ViewScaleTableA) ; $2e32
 	ld h, a ; $2e34
 	ld a, [hl+] ; $2e35
 	ld h, [hl] ; $2e36
@@ -216,7 +216,7 @@ MulViewScaleB:
 	res 0, l ; $2e3d
 	ld a, h ; $2e3f
 	and $1f ; $2e40
-	add $60 ; $2e42
+	add HIGH(ViewScaleTableB) ; $2e42
 	ld h, a ; $2e44
 	ld a, [hl+] ; $2e45
 	ld h, [hl] ; $2e46
@@ -232,7 +232,7 @@ MulViewScaleB:
 	res 0, l ; $2e4f
 	ld a, h ; $2e51
 	and $1f ; $2e52
-	add $60 ; $2e54
+	add HIGH(ViewScaleTableB) ; $2e54
 	ld h, a ; $2e56
 	ld a, [hl+] ; $2e57
 	ld h, [hl] ; $2e58
