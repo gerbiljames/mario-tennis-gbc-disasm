@@ -140,7 +140,7 @@ StatArchetype3_02:
 LevelUpPlayer:
 	call GetPlayerRecordPtr ; $49be
 LevelUpPlayerRecord:
-	ld hl, $0018 ; $49c1
+	ld hl, CHARREC_EXP_TIER ; $49c1
 	add hl, bc ; $49c4
 	ld a, [hl] ; $49c5
 	cp $63 ; $49c6
@@ -148,33 +148,33 @@ LevelUpPlayerRecord:
 	ld a, d ; $49cb
 	or a ; $49cc
 	jr nz, .compare ; $49cd
-	ld hl, $0038 ; $49cf
+	ld hl, CHARREC_TRAIN_LEVELS ; $49cf
 	add hl, bc ; $49d2
 	inc [hl] ; $49d3
 	jr .recomputeCharacterStats ; $49d4
 .compare:
 	cp $01 ; $49d6
 	jr nz, .compare2 ; $49d8
-	ld hl, $0039 ; $49da
+	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $49da
 	add hl, bc ; $49dd
 	inc [hl] ; $49de
 	jr .recomputeCharacterStats ; $49df
 .compare2:
 	cp $02 ; $49e1
 	jr nz, .compare3 ; $49e3
-	ld hl, $003a ; $49e5
+	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $49e5
 	add hl, bc ; $49e8
 	inc [hl] ; $49e9
 	jr .recomputeCharacterStats ; $49ea
 .compare3:
 	cp $03 ; $49ec
 	jr nz, .recomputeCharacterStats ; $49ee
-	ld hl, $003b ; $49f0
+	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $49f0
 	add hl, bc ; $49f3
 	inc [hl] ; $49f4
 	jr .recomputeCharacterStats ; $49f5
 .recomputeCharacterStats:
-	ld hl, $0018 ; $49f7
+	ld hl, CHARREC_EXP_TIER ; $49f7
 	add hl, bc ; $49fa
 	inc [hl] ; $49fb
 	call RecomputeCharacterStats ; $49fc
@@ -210,10 +210,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4a2a
 	ld h, [hl] ; $4a2b
 	ld l, a ; $4a2c
-	ld de, $0020 ; $4a2d
+	ld de, CHARREC_STAT_TOP ; $4a2d
 	add hl, de ; $4a30
 	ld d, [hl] ; $4a31
-	ld hl, $0020 ; $4a32
+	ld hl, CHARREC_STAT_TOP ; $4a32
 	add hl, bc ; $4a35
 	ld a, [hl] ; $4a36
 	sub d ; $4a37
@@ -232,10 +232,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4a4a
 	ld h, [hl] ; $4a4b
 	ld l, a ; $4a4c
-	ld de, $0021 ; $4a4d
+	ld de, CHARREC_STAT_SLICE ; $4a4d
 	add hl, de ; $4a50
 	ld d, [hl] ; $4a51
-	ld hl, $0021 ; $4a52
+	ld hl, CHARREC_STAT_SLICE ; $4a52
 	add hl, bc ; $4a55
 	ld a, [hl] ; $4a56
 	sub d ; $4a57
@@ -254,10 +254,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4a6a
 	ld h, [hl] ; $4a6b
 	ld l, a ; $4a6c
-	ld de, $0022 ; $4a6d
+	ld de, CHARREC_STAT_SERVE ; $4a6d
 	add hl, de ; $4a70
 	ld d, [hl] ; $4a71
-	ld hl, $0022 ; $4a72
+	ld hl, CHARREC_STAT_SERVE ; $4a72
 	add hl, bc ; $4a75
 	ld a, [hl] ; $4a76
 	sub d ; $4a77
@@ -276,10 +276,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4a8a
 	ld h, [hl] ; $4a8b
 	ld l, a ; $4a8c
-	ld de, $0023 ; $4a8d
+	ld de, CHARREC_STAT_STROKE ; $4a8d
 	add hl, de ; $4a90
 	ld d, [hl] ; $4a91
-	ld hl, $0023 ; $4a92
+	ld hl, CHARREC_STAT_STROKE ; $4a92
 	add hl, bc ; $4a95
 	ld a, [hl] ; $4a96
 	sub d ; $4a97
@@ -298,10 +298,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4aaa
 	ld h, [hl] ; $4aab
 	ld l, a ; $4aac
-	ld de, $0024 ; $4aad
+	ld de, CHARREC_STAT_VOLLEY ; $4aad
 	add hl, de ; $4ab0
 	ld d, [hl] ; $4ab1
-	ld hl, $0024 ; $4ab2
+	ld hl, CHARREC_STAT_VOLLEY ; $4ab2
 	add hl, bc ; $4ab5
 	ld a, [hl] ; $4ab6
 	sub d ; $4ab7
@@ -320,10 +320,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4aca
 	ld h, [hl] ; $4acb
 	ld l, a ; $4acc
-	ld de, $0025 ; $4acd
+	ld de, CHARREC_STAT_ANGLE ; $4acd
 	add hl, de ; $4ad0
 	ld d, [hl] ; $4ad1
-	ld hl, $0025 ; $4ad2
+	ld hl, CHARREC_STAT_ANGLE ; $4ad2
 	add hl, bc ; $4ad5
 	ld a, [hl] ; $4ad6
 	sub d ; $4ad7
@@ -342,10 +342,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4aea
 	ld h, [hl] ; $4aeb
 	ld l, a ; $4aec
-	ld de, $0026 ; $4aed
+	ld de, CHARREC_STAT_PLACEMENT ; $4aed
 	add hl, de ; $4af0
 	ld d, [hl] ; $4af1
-	ld hl, $0026 ; $4af2
+	ld hl, CHARREC_STAT_PLACEMENT ; $4af2
 	add hl, bc ; $4af5
 	ld a, [hl] ; $4af6
 	sub d ; $4af7
@@ -364,10 +364,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4b0a
 	ld h, [hl] ; $4b0b
 	ld l, a ; $4b0c
-	ld de, $0027 ; $4b0d
+	ld de, CHARREC_STAT_SPEED ; $4b0d
 	add hl, de ; $4b10
 	ld d, [hl] ; $4b11
-	ld hl, $0027 ; $4b12
+	ld hl, CHARREC_STAT_SPEED ; $4b12
 	add hl, bc ; $4b15
 	ld a, [hl] ; $4b16
 	sub d ; $4b17
@@ -386,10 +386,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4b2a
 	ld h, [hl] ; $4b2b
 	ld l, a ; $4b2c
-	ld de, $0028 ; $4b2d
+	ld de, CHARREC_STAT_DASH ; $4b2d
 	add hl, de ; $4b30
 	ld d, [hl] ; $4b31
-	ld hl, $0028 ; $4b32
+	ld hl, CHARREC_STAT_DASH ; $4b32
 	add hl, bc ; $4b35
 	ld a, [hl] ; $4b36
 	sub d ; $4b37
@@ -408,10 +408,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4b4a
 	ld h, [hl] ; $4b4b
 	ld l, a ; $4b4c
-	ld de, $0029 ; $4b4d
+	ld de, CHARREC_STAT_REACTION ; $4b4d
 	add hl, de ; $4b50
 	ld d, [hl] ; $4b51
-	ld hl, $0029 ; $4b52
+	ld hl, CHARREC_STAT_REACTION ; $4b52
 	add hl, bc ; $4b55
 	ld a, [hl] ; $4b56
 	sub d ; $4b57
@@ -430,10 +430,10 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl+] ; $4b6a
 	ld h, [hl] ; $4b6b
 	ld l, a ; $4b6c
-	ld de, $002a ; $4b6d
+	ld de, CHARREC_STAT_STOP ; $4b6d
 	add hl, de ; $4b70
 	ld d, [hl] ; $4b71
-	ld hl, $002a ; $4b72
+	ld hl, CHARREC_STAT_STOP ; $4b72
 	add hl, bc ; $4b75
 	ld a, [hl] ; $4b76
 	sub d ; $4b77
@@ -534,7 +534,7 @@ Unused_02_ListForEach:
 	ld a, [hl+] ; $4bf3
 	ld d, [hl] ; $4bf4
 	ld e, a ; $4bf5
-	ld hl, $0018 ; $4bf6
+	ld hl, CHARREC_EXP_TIER ; $4bf6
 	add hl, bc ; $4bf9
 	ld a, [hl] ; $4bfa
 	cp $01 ; $4bfb
@@ -551,7 +551,7 @@ Unused_02_ListForEach:
 .gotPtr:
 	ld d, h ; $4c09
 	ld e, l ; $4c0a
-	ld hl, $002c ; $4c0b
+	ld hl, CHARREC_EXP ; $4c0b
 	add hl, bc ; $4c0e
 	ld a, [de] ; $4c0f
 	ld [hl+], a ; $4c10

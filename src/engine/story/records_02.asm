@@ -146,7 +146,7 @@ Compare24Bit:
 	ret ; $4d60
 ClearCa00RecordExp:
 	call GetCa00RecordPtr ; $4d61
-	ld hl, $002c ; $4d64
+	ld hl, CHARREC_EXP ; $4d64
 	add hl, bc ; $4d67
 	xor a ; $4d68
 	ld [hl+], a ; $4d69
@@ -160,7 +160,7 @@ AddExpToCa00RecordHooked:
 	call StubNop ; $4d71
 AddExpToCa00Record:
 	call GetCa00RecordPtr ; $4d74
-	ld hl, $002c ; $4d77
+	ld hl, CHARREC_EXP ; $4d77
 	add hl, bc ; $4d7a
 	jp AddExpCapped ; $4d7b
 StubNop:
@@ -170,12 +170,12 @@ Table_02:
 	db $02, $02, $03, $04, $05, $07, $07, $07, $02, $02, $02, $03, $02, $02, $02, $02 ; 0x00
 AddPlayerExp:
 	call GetPlayerRecordPtr ; $4d8f
-	ld hl, $002c ; $4d92
+	ld hl, CHARREC_EXP ; $4d92
 	add hl, bc ; $4d95
 	jp AddExpCapped ; $4d96
 HasReachedNextLevelExp:
 	call GetPlayerRecordPtr ; $4d99
-	ld hl, $0018 ; $4d9c
+	ld hl, CHARREC_EXP_TIER ; $4d9c
 	add hl, bc ; $4d9f
 	ld a, [hl] ; $4da0
 	cp $63 ; $4da1
@@ -210,7 +210,7 @@ HasReachedNextLevelExp:
 	ret ; $4dc7
 GetExpRemainingToNextLevel:
 	call GetPlayerRecordPtr ; $4dc8
-	ld hl, $0018 ; $4dcb
+	ld hl, CHARREC_EXP_TIER ; $4dcb
 	add hl, bc ; $4dce
 	ld a, [hl] ; $4dcf
 	cp $63 ; $4dd0
@@ -238,7 +238,7 @@ GetExpRemainingToNextLevel:
 	ld h, [hl] ; $4dec
 	ld l, a ; $4ded
 	push hl ; $4dee
-	ld hl, $002c ; $4def
+	ld hl, CHARREC_EXP ; $4def
 	add hl, bc ; $4df2
 	ld a, [hl+] ; $4df3
 	ld d, [hl] ; $4df4
@@ -256,7 +256,7 @@ GetExpRemainingToNextLevel:
 	ret ; $4e01
 GetExpProgressInCurrentLevel:
 	call GetPlayerRecordPtr ; $4e02
-	ld hl, $0018 ; $4e05
+	ld hl, CHARREC_EXP_TIER ; $4e05
 	add hl, bc ; $4e08
 	ld a, [hl] ; $4e09
 	cp $63 ; $4e0a
@@ -284,7 +284,7 @@ GetExpProgressInCurrentLevel:
 	ld a, [hl+] ; $4e25
 	ld d, [hl] ; $4e26
 	ld e, a ; $4e27
-	ld hl, $002c ; $4e28
+	ld hl, CHARREC_EXP ; $4e28
 	add hl, bc ; $4e2b
 	ld a, [hl+] ; $4e2c
 	ld h, [hl] ; $4e2d

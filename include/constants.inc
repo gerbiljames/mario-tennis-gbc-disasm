@@ -72,6 +72,36 @@ def ACTORF_FACING_COUNT equ $35 ; object header byte 1; 1 = one facing only
 def ACTORF_OAM_ATTR     equ $37 ; object header byte 0, or the map_actor palette override
 def ACTORF_SHADOW_TABLE equ $38 ; word: per-frame placement records
 
+; --- Character record fields ---
+; The $40-byte record of the story characters ($c900/$c940, mirrored at
+; $c800/$c840) and the four on-court match records ($ca00-$cac0), which bank
+; $02 reaches as `ld hl, CHARREC_* / add hl, bc` with the record in bc.
+def CHARREC_NAME             equ $00 ; 7 bytes, then padding
+def CHARREC_CHAR             equ $0b ; CHAR_* id
+def CHARREC_PALETTE          equ $0c
+def CHARREC_GENDER           equ $0d ; 0 male, 1 female
+def CHARREC_LEFT_HANDED      equ $0e ; becomes the OAM X-flip on court
+def CHARREC_PHYSICS          equ $0f
+def CHARREC_REACH            equ $10 ; 8 bytes: the reach box
+def CHARREC_EXP_TIER         equ $18
+def CHARREC_SWING            equ $19 ; word
+def CHARREC_AI_PARAMS        equ $1b ; 5 bytes
+def CHARREC_STAT_TOP         equ $20 ; the eleven 0-9 stats, in this order
+def CHARREC_STAT_SLICE       equ $21
+def CHARREC_STAT_SERVE       equ $22
+def CHARREC_STAT_STROKE      equ $23
+def CHARREC_STAT_VOLLEY      equ $24
+def CHARREC_STAT_ANGLE       equ $25
+def CHARREC_STAT_PLACEMENT   equ $26
+def CHARREC_STAT_SPEED       equ $27
+def CHARREC_STAT_DASH        equ $28
+def CHARREC_STAT_REACTION    equ $29
+def CHARREC_STAT_STOP        equ $2a
+def CHARREC_EXP              equ $2c ; 3-byte accumulator, capped at 99999
+def CHARREC_PHYSICS_TEMPLATE equ $30 ; four words
+def CHARREC_TRAIN_LEVELS     equ $38 ; four levels, spin first
+def CHARREC_EQUIPMENT        equ $3c ; racket (low nibble) and shoes (high)
+
 ; --- Joypad buttons (standard GB layout) ---
 ; The per-character input byte ($df1f, built by ReadCharPadInput) and the raw
 ; joypad shadow use the standard layout: buttons in the low nibble, d-pad in the

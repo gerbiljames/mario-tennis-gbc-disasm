@@ -54,10 +54,10 @@ Copy64Bytes:
 	ret ; $4484
 RefreshPlayerStatsAndGetPtr:
 	call GetPlayerRecordPtr ; $4485
-	ld hl, $0018 ; $4488
+	ld hl, CHARREC_EXP_TIER ; $4488
 	add hl, bc ; $448b
 	call RecomputeCharacterStats ; $448c
-	ld hl, $0018 ; $448f
+	ld hl, CHARREC_EXP_TIER ; $448f
 	add hl, bc ; $4492
 	ret ; $4493
 LookupStatBarLevel:
@@ -94,7 +94,7 @@ ScaleStatForBarLevel:
 	ld h, $00 ; $44b8
 	call MulHLByA ; $44ba
 	push hl ; $44bd
-	ld hl, $0018 ; $44be
+	ld hl, CHARREC_EXP_TIER ; $44be
 	add hl, bc ; $44c1
 	ld e, [hl] ; $44c2
 	ld d, $00 ; $44c3
@@ -128,7 +128,7 @@ ScaleStatForBarLevel:
 	ret ; $44e8
 RecomputeCharacterStats:
 	push bc ; $44e9
-	ld hl, $000b ; $44ea
+	ld hl, CHARREC_CHAR ; $44ea
 	add hl, bc ; $44ed
 	ld a, [hl] ; $44ee
 	and $03 ; $44ef
@@ -140,7 +140,7 @@ RecomputeCharacterStats:
 	push de ; $44fc
 	push bc ; $44fd
 	push de ; $44fe
-	ld hl, $0038 ; $44ff
+	ld hl, CHARREC_TRAIN_LEVELS ; $44ff
 	add hl, bc ; $4502
 	ld a, $05 ; $4503
 	call ScaleStatForBarLevel ; $4505
@@ -149,14 +149,14 @@ RecomputeCharacterStats:
 	add hl, de ; $450c
 	call LookupStatBarLevel ; $450d
 	pop bc ; $4510
-	ld hl, $0020 ; $4511
+	ld hl, CHARREC_STAT_TOP ; $4511
 	add hl, bc ; $4514
 	ld [hl], e ; $4515
 	pop de ; $4516
 	push de ; $4517
 	push bc ; $4518
 	push de ; $4519
-	ld hl, $0038 ; $451a
+	ld hl, CHARREC_TRAIN_LEVELS ; $451a
 	add hl, bc ; $451d
 	ld a, $05 ; $451e
 	call ScaleStatForBarLevel ; $4520
@@ -165,14 +165,14 @@ RecomputeCharacterStats:
 	add hl, de ; $4527
 	call LookupStatBarLevel ; $4528
 	pop bc ; $452b
-	ld hl, $0021 ; $452c
+	ld hl, CHARREC_STAT_SLICE ; $452c
 	add hl, bc ; $452f
 	ld [hl], e ; $4530
 	pop de ; $4531
 	push de ; $4532
 	push bc ; $4533
 	push de ; $4534
-	ld hl, $0039 ; $4535
+	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $4535
 	add hl, bc ; $4538
 	ld a, $05 ; $4539
 	call ScaleStatForBarLevel ; $453b
@@ -181,14 +181,14 @@ RecomputeCharacterStats:
 	add hl, de ; $4542
 	call LookupStatBarLevel ; $4543
 	pop bc ; $4546
-	ld hl, $0022 ; $4547
+	ld hl, CHARREC_STAT_SERVE ; $4547
 	add hl, bc ; $454a
 	ld [hl], e ; $454b
 	pop de ; $454c
 	push de ; $454d
 	push bc ; $454e
 	push de ; $454f
-	ld hl, $0039 ; $4550
+	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $4550
 	add hl, bc ; $4553
 	ld a, $05 ; $4554
 	call ScaleStatForBarLevel ; $4556
@@ -197,14 +197,14 @@ RecomputeCharacterStats:
 	add hl, de ; $455d
 	call LookupStatBarLevel ; $455e
 	pop bc ; $4561
-	ld hl, $0023 ; $4562
+	ld hl, CHARREC_STAT_STROKE ; $4562
 	add hl, bc ; $4565
 	ld [hl], e ; $4566
 	pop de ; $4567
 	push de ; $4568
 	push bc ; $4569
 	push de ; $456a
-	ld hl, $0039 ; $456b
+	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $456b
 	add hl, bc ; $456e
 	ld a, $05 ; $456f
 	call ScaleStatForBarLevel ; $4571
@@ -213,14 +213,14 @@ RecomputeCharacterStats:
 	add hl, de ; $4578
 	call LookupStatBarLevel ; $4579
 	pop bc ; $457c
-	ld hl, $0024 ; $457d
+	ld hl, CHARREC_STAT_VOLLEY ; $457d
 	add hl, bc ; $4580
 	ld [hl], e ; $4581
 	pop de ; $4582
 	push de ; $4583
 	push bc ; $4584
 	push de ; $4585
-	ld hl, $003a ; $4586
+	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $4586
 	add hl, bc ; $4589
 	ld a, $05 ; $458a
 	call ScaleStatForBarLevel ; $458c
@@ -229,14 +229,14 @@ RecomputeCharacterStats:
 	add hl, de ; $4593
 	call LookupStatBarLevel ; $4594
 	pop bc ; $4597
-	ld hl, $0025 ; $4598
+	ld hl, CHARREC_STAT_ANGLE ; $4598
 	add hl, bc ; $459b
 	ld [hl], e ; $459c
 	pop de ; $459d
 	push de ; $459e
 	push bc ; $459f
 	push de ; $45a0
-	ld hl, $003a ; $45a1
+	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $45a1
 	add hl, bc ; $45a4
 	ld a, $05 ; $45a5
 	call ScaleStatForBarLevel ; $45a7
@@ -245,14 +245,14 @@ RecomputeCharacterStats:
 	add hl, de ; $45ae
 	call LookupStatBarLevel ; $45af
 	pop bc ; $45b2
-	ld hl, $0026 ; $45b3
+	ld hl, CHARREC_STAT_PLACEMENT ; $45b3
 	add hl, bc ; $45b6
 	ld [hl], e ; $45b7
 	pop de ; $45b8
 	push de ; $45b9
 	push bc ; $45ba
 	push de ; $45bb
-	ld hl, $003b ; $45bc
+	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $45bc
 	add hl, bc ; $45bf
 	ld a, $05 ; $45c0
 	call ScaleStatForBarLevel ; $45c2
@@ -261,14 +261,14 @@ RecomputeCharacterStats:
 	add hl, de ; $45c9
 	call LookupStatBarLevel ; $45ca
 	pop bc ; $45cd
-	ld hl, $0027 ; $45ce
+	ld hl, CHARREC_STAT_SPEED ; $45ce
 	add hl, bc ; $45d1
 	ld [hl], e ; $45d2
 	pop de ; $45d3
 	push de ; $45d4
 	push bc ; $45d5
 	push de ; $45d6
-	ld hl, $003b ; $45d7
+	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $45d7
 	add hl, bc ; $45da
 	ld a, $05 ; $45db
 	call ScaleStatForBarLevel ; $45dd
@@ -277,14 +277,14 @@ RecomputeCharacterStats:
 	add hl, de ; $45e4
 	call LookupStatBarLevel ; $45e5
 	pop bc ; $45e8
-	ld hl, $0028 ; $45e9
+	ld hl, CHARREC_STAT_DASH ; $45e9
 	add hl, bc ; $45ec
 	ld [hl], e ; $45ed
 	pop de ; $45ee
 	push de ; $45ef
 	push bc ; $45f0
 	push de ; $45f1
-	ld hl, $003b ; $45f2
+	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $45f2
 	add hl, bc ; $45f5
 	ld a, $05 ; $45f6
 	call ScaleStatForBarLevel ; $45f8
@@ -293,14 +293,14 @@ RecomputeCharacterStats:
 	add hl, de ; $45ff
 	call LookupStatBarLevel ; $4600
 	pop bc ; $4603
-	ld hl, $0029 ; $4604
+	ld hl, CHARREC_STAT_REACTION ; $4604
 	add hl, bc ; $4607
 	ld [hl], e ; $4608
 	pop de ; $4609
 	push de ; $460a
 	push bc ; $460b
 	push de ; $460c
-	ld hl, $003b ; $460d
+	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $460d
 	add hl, bc ; $4610
 	ld a, $05 ; $4611
 	call ScaleStatForBarLevel ; $4613
@@ -309,11 +309,11 @@ RecomputeCharacterStats:
 	add hl, de ; $461a
 	call LookupStatBarLevel ; $461b
 	pop bc ; $461e
-	ld hl, $002a ; $461f
+	ld hl, CHARREC_STAT_STOP ; $461f
 	add hl, bc ; $4622
 	ld [hl], e ; $4623
 	pop de ; $4624
-	ld hl, $0018 ; $4625
+	ld hl, CHARREC_EXP_TIER ; $4625
 	add hl, bc ; $4628
 	ld a, [hl] ; $4629
 	ld hl, $0070 ; $462a
@@ -351,7 +351,7 @@ RecomputeCharacterStats:
 	inc hl ; $4651
 	jr .modifierLoop ; $4652
 .copyStats:
-	ld hl, $0030 ; $4654
+	ld hl, CHARREC_PHYSICS_TEMPLATE ; $4654
 	add hl, bc ; $4657
 	ld a, $10 ; $4658
 	add c ; $465a
@@ -395,14 +395,14 @@ ApplyStatModifiers:
 	push de ; $4690
 	push hl ; $4691
 	push bc ; $4692
-	ld hl, $003c ; $4693
+	ld hl, CHARREC_EQUIPMENT ; $4693
 	add hl, bc ; $4696
 	ld a, [hl] ; $4697
 	and $0f ; $4698
 	ld d, $00 ; $469a
 	call ApplyStatModifierRow ; $469c
 	pop bc ; $469f
-	ld hl, $003c ; $46a0
+	ld hl, CHARREC_EQUIPMENT ; $46a0
 	add hl, bc ; $46a3
 	ld a, [hl] ; $46a4
 	swap a ; $46a5

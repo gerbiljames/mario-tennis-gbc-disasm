@@ -450,12 +450,12 @@ InitPlayerRecordFromTemplate:
 	pop bc ; $43b6
 	ld a, d ; $43b7
 	call RemapExtendedCharId ; $43b8
-	ld hl, $000b ; $43bb
+	ld hl, CHARREC_CHAR ; $43bb
 	add hl, bc ; $43be
 	ld [hl], a ; $43bf
 	ld a, d ; $43c0
 	call GetCharPaletteIndex ; $43c1
-	ld hl, $000c ; $43c4
+	ld hl, CHARREC_PALETTE ; $43c4
 	add hl, bc ; $43c7
 	ld [hl], a ; $43c8
 	ld a, d ; $43c9
@@ -474,7 +474,7 @@ InitPlayerRecordFromTemplate:
 	ld a, d ; $43db
 	ld_hl_indexed StoryCharGenderTable ; $43dc
 	ld a, [hl] ; $43e3
-	ld hl, $000d ; $43e4
+	ld hl, CHARREC_GENDER ; $43e4
 	add hl, bc ; $43e7
 	ld [hl], a ; $43e8
 	push bc ; $43e9
@@ -486,7 +486,7 @@ InitPlayerRecordFromTemplate:
 	ld l, a ; $43f5
 	ld a, [hl+] ; $43f6
 	push hl ; $43f7
-	ld hl, $0018 ; $43f8
+	ld hl, CHARREC_EXP_TIER ; $43f8
 	add hl, bc ; $43fb
 	ld [hl], a ; $43fc
 	pop hl ; $43fd

@@ -235,7 +235,7 @@ DrawExpSinglesPlayerPanel:
 	ld [wPlayer2MainExpTier], a ; $5655
 .ne02:
 	push bc ; $5658
-	ld hl, $0000 ; $5659
+	ld hl, CHARREC_NAME ; $5659
 	add hl, bc ; $565c
 	call CopyStringToTextBuffer ; $565d
 	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 4 ; $5660
@@ -246,7 +246,7 @@ DrawExpSinglesPlayerPanel:
 	ld bc, $0020 ; $566f
 	call FetchAndDrawDialogueText ; $5672
 	pop bc ; $5675
-	ld hl, $0018 ; $5676
+	ld hl, CHARREC_EXP_TIER ; $5676
 	add hl, bc ; $5679
 	ld a, [hl] ; $567a
 	ld h, $00 ; $567b
@@ -310,7 +310,7 @@ DrawExpDoublesPlayerPanel:
 	ld [wPlayer2MainExpTier], a ; $5717
 .copyStringToTextBuffer:
 	push bc ; $571a
-	ld hl, $0000 ; $571b
+	ld hl, CHARREC_NAME ; $571b
 	add hl, bc ; $571e
 	call CopyStringToTextBuffer ; $571f
 	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 1 ; $5722
@@ -321,7 +321,7 @@ DrawExpDoublesPlayerPanel:
 	ld bc, $0020 ; $5731
 	call FetchAndDrawDialogueText ; $5734
 	pop bc ; $5737
-	ld hl, $0018 ; $5738
+	ld hl, CHARREC_EXP_TIER ; $5738
 	add hl, bc ; $573b
 	ld a, [hl] ; $573c
 	ld h, $00 ; $573d
@@ -384,7 +384,7 @@ DrawExpDoublesPartnerPanel:
 	ld bc, wPlayer2PartnerName ; $57d6
 .copyStringToTextBuffer:
 	push bc ; $57d9
-	ld hl, $0000 ; $57da
+	ld hl, CHARREC_NAME ; $57da
 	add hl, bc ; $57dd
 	call CopyStringToTextBuffer ; $57de
 	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 12 ; $57e1
@@ -395,7 +395,7 @@ DrawExpDoublesPartnerPanel:
 	ld bc, $0020 ; $57f0
 	call FetchAndDrawDialogueText ; $57f3
 	pop bc ; $57f6
-	ld hl, $0018 ; $57f7
+	ld hl, CHARREC_EXP_TIER ; $57f7
 	add hl, bc ; $57fa
 	ld a, [hl] ; $57fb
 	ld h, $00 ; $57fc
