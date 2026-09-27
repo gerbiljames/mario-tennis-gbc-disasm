@@ -327,7 +327,7 @@ SetupStoryMinigameMatch0:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $6a62
 	script_wait_actor_script ACTOR_COURTYARD_FAY ; $6a6d
 	farcall InitStoryMatchSettings ; $6a72
-	load_match_settings $000a ; $6a75
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_VARSITY_PRACTICE ; $6a75
 	farcall RunStoryMatch ; $6a82
 	farcall RestoreOverworldAfterMatch ; $6a85
 	ret ; $6a88
@@ -348,7 +348,7 @@ SetupVarsityCourtDoublesMatch_13:
 	farcall WaitPlayerMoveDone ; $6afa
 	script_wait_actor_script ACTOR_COURTYARD_FAY ; $6afd
 	farcall InitStoryMatchSettings ; $6b02
-	load_match_settings $010a ; $6b05
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_VARSITY_PRACTICE ; $6b05
 	farcall RunStoryMatch ; $6b12
 	farcall RestoreOverworldAfterMatch ; $6b15
 	ret ; $6b18

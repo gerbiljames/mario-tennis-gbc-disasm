@@ -273,10 +273,9 @@ MACRO exp_threshold
 	db LOW(\1), HIGH(\1), (\1) >> 16
 ENDM
 
-; One story/minigame match's settings (Singles/DoublesMatchSettingsTable_0a,
-; indexed by the MINIGAME_* id; LoadMatchSettingsFromTable): the game mode,
-; the opponent (a CHAR_* id, or a story opponent id >= $20, which have no
-; constants), the court, sets and games (one packed byte), and the music.
+; One story match's settings (Singles/DoublesMatchSettingsTable_0a, indexed
+; by the STORYMATCH_* id; LoadMatchSettingsFromTable): the game mode,
+; the opponent (a CHAR_* id, extended ones included), the court, sets and games (one packed byte), and the music.
 ;   match_settings mode, opponent, court, sets, games, bgm
 MACRO match_settings
 	db \1, \2, \3, ((\4) << 4) | (\5), \6
@@ -705,11 +704,17 @@ ENDM
 ; (0 singles, 1 doubles, 2 minigame/practice) and the low byte the match; see
 ; the wCurrentMinigameStoryMatch id table in docs/ram_map.md. The standalone
 ; launcher stubs follow it with a ret; some callers continue with more setup.
-; Usage: load_match_settings match_id
+; Usage: load_match_settings MATCHLIST_*, STORYMATCH_* (or one 16-bit id)
 MACRO load_match_settings
+IF _NARG == 2
+	ld a, \1
+	ld [wCurrentMinigameStoryMatch], a
+	ld a, \2
+ELSE
 	ld a, HIGH(\1)
 	ld [wCurrentMinigameStoryMatch], a
 	ld a, LOW(\1)
+ENDC
 	ld [wCurrentMinigameStoryMatch + 1], a
 	farcall LoadMatchSettingsFromTable
 ENDM

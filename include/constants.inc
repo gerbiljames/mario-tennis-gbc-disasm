@@ -630,6 +630,33 @@ def MATCHLIST_SINGLES  equ $00
 def MATCHLIST_DOUBLES  equ $01
 def MATCHLIST_TRAINING equ $02
 
+; --- Story match ids (wCurrentMinigameStoryMatch low byte under
+; MATCHLIST_SINGLES / MATCHLIST_DOUBLES): the row of the match settings table.
+; The ranked matches count down to #1. $0f, $14 and $15 are table rows no
+; documented match uses (two grass practice matches and an empty row).
+def STORYMATCH_JUNIOR_PRACTICE       equ $00
+def STORYMATCH_JUNIOR_4              equ $01
+def STORYMATCH_JUNIOR_3              equ $02
+def STORYMATCH_JUNIOR_2              equ $03
+def STORYMATCH_JUNIOR_1              equ $04
+def STORYMATCH_SENIOR_PRACTICE       equ $05
+def STORYMATCH_SENIOR_4              equ $06
+def STORYMATCH_SENIOR_3              equ $07
+def STORYMATCH_SENIOR_2              equ $08
+def STORYMATCH_SENIOR_1              equ $09
+def STORYMATCH_VARSITY_PRACTICE      equ $0a
+def STORYMATCH_VARSITY_4             equ $0b
+def STORYMATCH_VARSITY_3             equ $0c
+def STORYMATCH_VARSITY_2             equ $0d
+def STORYMATCH_VARSITY_1             equ $0e
+def STORYMATCH_ISLAND_OPEN_ROUND_1   equ $10
+def STORYMATCH_ISLAND_OPEN_ROUND_2   equ $11
+def STORYMATCH_ISLAND_OPEN_SEMIFINAL equ $12
+def STORYMATCH_ISLAND_OPEN_FINAL     equ $13
+def STORYMATCH_DREAM_MAX             equ $16
+def STORYMATCH_DREAM_INTENSE         equ $17
+def STORYMATCH_DREAM_HARD            equ $18
+
 ; --- Training/minigame ids (wCurrentMinigameStoryMatch low byte, $c8f7) ---
 ; The argument of RunTrainingDrillByID ($0b:$4705), which is the single entry
 ; point for everything in MATCHLIST_TRAINING: below $12 it indexes

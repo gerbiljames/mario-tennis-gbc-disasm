@@ -404,7 +404,7 @@ StartNextDoublesRankingMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $6625
 	ld [wStoryModeExitTriggerRequest], a ; $6628
 	farcall InitStoryMatchSettings ; $662b
-	load_match_settings $0102 ; $662e
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_JUNIOR_3 ; $662e
 	farcall RunStoryMatch ; $663b
 	farcall RestoreOverworldAfterMatch ; $663e
 	ret ; $6641
@@ -433,7 +433,7 @@ StartNextDoublesRankingMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $66e5
 	ld [wStoryModeExitTriggerRequest], a ; $66e8
 	farcall InitStoryMatchSettings ; $66eb
-	load_match_settings $0103 ; $66ee
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_JUNIOR_2 ; $66ee
 	farcall RunStoryMatch ; $66fb
 	farcall RestoreOverworldAfterMatch ; $66fe
 	ret ; $6701
@@ -458,7 +458,7 @@ StartNextDoublesRankingMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $6783
 	ld [wStoryModeExitTriggerRequest], a ; $6786
 	farcall InitStoryMatchSettings ; $6789
-	load_match_settings $0104 ; $678c
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_JUNIOR_1 ; $678c
 	farcall RunStoryMatch ; $6799
 	farcall RestoreOverworldAfterMatch ; $679c
 	ret ; $679f

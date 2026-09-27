@@ -162,7 +162,7 @@ JuniorClassCourtSinglesNpc08_11:
 	ld [wUnusedExitTriggerIdMirror], a ; $6acc
 	ld [wStoryModeExitTriggerRequest], a ; $6acf
 	farcall InitStoryMatchSettings ; $6ad2
-	load_match_settings $0000 ; $6ad5
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_JUNIOR_PRACTICE ; $6ad5
 	farcall RunStoryMatch ; $6ae2
 	farcall RestoreOverworldAfterMatch ; $6ae5
 	ret ; $6ae8

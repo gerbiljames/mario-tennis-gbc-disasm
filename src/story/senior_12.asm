@@ -426,7 +426,7 @@ SeniorCourtNpc08_12:
 	ld [wUnusedExitTriggerIdMirror], a ; $5a0e
 	ld [wStoryModeExitTriggerRequest], a ; $5a11
 	farcall InitStoryMatchSettings ; $5a14
-	load_match_settings $0005 ; $5a17
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_SENIOR_PRACTICE ; $5a17
 	farcall RunStoryMatch ; $5a24
 	farcall RestoreOverworldAfterMatch ; $5a27
 	ret ; $5a2a
@@ -540,7 +540,7 @@ SeniorCourtNpc0A_12:
 	ld [wUnusedExitTriggerIdMirror], a ; $5b58
 	ld [wStoryModeExitTriggerRequest], a ; $5b5b
 	farcall InitStoryMatchSettings ; $5b5e
-	load_match_settings $0105 ; $5b61
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_SENIOR_PRACTICE ; $5b61
 	farcall RunStoryMatch ; $5b6e
 	farcall RestoreOverworldAfterMatch ; $5b71
 	ret ; $5b74

@@ -210,109 +210,109 @@ RunDoublesMatchListMenuTable:
 	dw LoadMatchDoublesDreamIntense ; $4262
 	dw LoadMatchDoublesDreamMax ; $4264
 LoadMatchSinglesDreamHard:
-	load_match_settings $0018 ; $4266
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_DREAM_HARD ; $4266
 	ret ; $4273
 LoadMatchSinglesDreamIntense:
-	load_match_settings $0017 ; $4274
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_DREAM_INTENSE ; $4274
 	ret ; $4281
 LoadMatchSinglesDreamMax:
-	load_match_settings $0016 ; $4282
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_DREAM_MAX ; $4282
 	ret ; $428f
 LoadMatchDoublesDreamHard:
-	load_match_settings $0118 ; $4290
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_DREAM_HARD ; $4290
 	ret ; $429d
 LoadMatchDoublesDreamIntense:
-	load_match_settings $0117 ; $429e
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_DREAM_INTENSE ; $429e
 	ret ; $42ab
 LoadMatchDoublesDreamMax:
-	load_match_settings $0116 ; $42ac
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_DREAM_MAX ; $42ac
 	ret ; $42b9
 LoadMatchSinglesOpenRound1:
-	load_match_settings $0010 ; $42ba
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_ISLAND_OPEN_ROUND_1 ; $42ba
 	ret ; $42c7
 LoadMatchSinglesOpenRound2:
-	load_match_settings $0011 ; $42c8
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $42c8
 	ret ; $42d5
 LoadMatchSinglesOpenSemifinals:
-	load_match_settings $0012 ; $42d6
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_ISLAND_OPEN_SEMIFINAL ; $42d6
 	ret ; $42e3
 LoadMatchSinglesOpenFinals:
-	load_match_settings $0013 ; $42e4
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_ISLAND_OPEN_FINAL ; $42e4
 	ret ; $42f1
 LoadMatchDoublesOpenRound1:
-	load_match_settings $0111 ; $42f2
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $42f2
 	ret ; $42ff
 LoadMatchDoublesOpenSemifinals:
-	load_match_settings $0112 ; $4300
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_SEMIFINAL ; $4300
 	ret ; $430d
 LoadMatchDoublesOpenFinals:
-	load_match_settings $0113 ; $430e
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_FINAL ; $430e
 	ret ; $431b
 LoadMatchSinglesJuniorPractice:
-	load_match_settings $0000 ; $431c
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_JUNIOR_PRACTICE ; $431c
 	ret ; $4329
 LoadMatchSinglesJunior1:
-	load_match_settings $0004 ; $432a
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_JUNIOR_1 ; $432a
 	ret ; $4337
 LoadMatchSinglesJunior2:
-	load_match_settings $0003 ; $4338
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_JUNIOR_2 ; $4338
 	ret ; $4345
 LoadMatchSinglesJunior3:
-	load_match_settings $0002 ; $4346
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_JUNIOR_3 ; $4346
 	ret ; $4353
 LoadMatchSinglesJunior4:
-	load_match_settings $0001 ; $4354
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_JUNIOR_4 ; $4354
 	ret ; $4361
 LoadMatchSinglesSenior1:
-	load_match_settings $0009 ; $4362
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_SENIOR_1 ; $4362
 	ret ; $436f
 LoadMatchSinglesSenior2:
-	load_match_settings $0008 ; $4370
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_SENIOR_2 ; $4370
 	ret ; $437d
 LoadMatchSinglesSenior3:
-	load_match_settings $0007 ; $437e
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_SENIOR_3 ; $437e
 	ret ; $438b
 LoadMatchSinglesSenior4:
-	load_match_settings $0006 ; $438c
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_SENIOR_4 ; $438c
 	ret ; $4399
 LoadMatchSinglesSeniorPractice:
-	load_match_settings $0005 ; $439a
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_SENIOR_PRACTICE ; $439a
 	ret ; $43a7
 LoadMatchSinglesJunior3Alias:
-	load_match_settings $0002 ; $43a8
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_JUNIOR_3 ; $43a8
 	ret ; $43b5
 LoadMatchSinglesVarsityPractice:
-	load_match_settings $000a ; $43b6
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_VARSITY_PRACTICE ; $43b6
 	ret ; $43c3
 LoadMatchDoublesJuniorPractice:
-	load_match_settings $0100 ; $43c4
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_JUNIOR_PRACTICE ; $43c4
 	ret ; $43d1
 LoadMatchDoublesJunior3:
-	load_match_settings $0102 ; $43d2
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_JUNIOR_3 ; $43d2
 	ret ; $43df
 LoadMatchDoublesJunior2:
-	load_match_settings $0103 ; $43e0
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_JUNIOR_2 ; $43e0
 	ret ; $43ed
 LoadMatchDoublesJunior1:
-	load_match_settings $0104 ; $43ee
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_JUNIOR_1 ; $43ee
 	ret ; $43fb
 LoadMatchDoublesSeniorPractice:
-	load_match_settings $0105 ; $43fc
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_SENIOR_PRACTICE ; $43fc
 	ret ; $4409
 LoadMatchDoublesSenior3:
-	load_match_settings $0107 ; $440a
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_SENIOR_3 ; $440a
 	ret ; $4417
 LoadMatchDoublesSenior2:
-	load_match_settings $0108 ; $4418
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_SENIOR_2 ; $4418
 	ret ; $4425
 LoadMatchDoublesSenior1:
-	load_match_settings $0109 ; $4426
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_SENIOR_1 ; $4426
 	ret ; $4433
 LoadMatchDoublesVarsity2:
-	load_match_settings $010d ; $4434
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_VARSITY_2 ; $4434
 	ret ; $4441
 LoadMatchDoublesVarsityPractice:
-	load_match_settings $010a ; $4442
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_VARSITY_PRACTICE ; $4442
 	ret ; $444f
 RunDrillMatchListMenu:
 	ld hl, Text_31_141 ; $4450

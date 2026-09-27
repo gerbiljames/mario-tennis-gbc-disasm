@@ -78,7 +78,7 @@ VarsityCourtANpc03_13:
 	farcall WaitPlayerMoveDone ; $6dd6
 	script_wait_actor_script ACTOR_COURTYARD_BOB ; $6dd9
 	farcall InitStoryMatchSettings ; $6dde
-	load_match_settings $000b ; $6de1
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_VARSITY_4 ; $6de1
 	farcall RunStoryMatch ; $6dee
 	farcall RestoreOverworldAfterMatch ; $6df1
 	ret ; $6df4
@@ -195,7 +195,7 @@ VarsityCourtBNpc03_13:
 	farcall WaitPlayerMoveDone ; $705e
 	script_wait_actor_script ACTOR_COURTYARD_BOB ; $7061
 	farcall InitStoryMatchSettings ; $7066
-	load_match_settings $010d ; $7069
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_VARSITY_2 ; $7069
 	farcall RunStoryMatch ; $7076
 	farcall RestoreOverworldAfterMatch ; $7079
 	ret ; $707c

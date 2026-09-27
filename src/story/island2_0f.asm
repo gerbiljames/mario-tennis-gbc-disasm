@@ -152,20 +152,20 @@ IslandOpenRoundCallCutscene:
 	farcall InitStoryMatchSettings ; $71dc
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $71df
 	jr z, .checkRound2 ; $71e2
-	load_match_settings $0013 ; $71e4
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_ISLAND_OPEN_FINAL ; $71e4
 	jr .runMatch ; $71f1
 .checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $71f3
 	jr z, .checkRound1 ; $71f6
-	load_match_settings $0012 ; $71f8
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_ISLAND_OPEN_SEMIFINAL ; $71f8
 	jr .runMatch ; $7205
 .checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $7207
 	jr z, .round1Settings ; $720a
-	load_match_settings $0011 ; $720c
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $720c
 	jr .runMatch ; $7219
 .round1Settings:
-	load_match_settings $0010 ; $721b
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_ISLAND_OPEN_ROUND_1 ; $721b
 .runMatch:
 	farcall RunStoryMatch ; $7228
 	farcall RestoreOverworldAfterMatch ; $722b
@@ -226,15 +226,15 @@ IslandOpenRoundCallCutscene:
 	farcall InitStoryMatchSettings ; $737c
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $737f
 	jp z, .walkOffDoubles ; $7382
-	load_match_settings $0113 ; $7385
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_FINAL ; $7385
 	jr .done ; $7392
 .walkOffDoubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $7394
 	jp z, .fadeOut ; $7397
-	load_match_settings $0112 ; $739a
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_SEMIFINAL ; $739a
 	jp .done ; $73a7
 .fadeOut:
-	load_match_settings $0111 ; $73aa
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $73aa
 .done:
 	farcall RunStoryMatch ; $73b7
 	farcall RestoreOverworldAfterMatch ; $73ba

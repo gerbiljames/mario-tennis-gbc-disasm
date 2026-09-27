@@ -228,7 +228,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	script_set_anim ACTOR_PLAYER, $03 ; $574e
 	script_wait_idle ACTOR_PLAYER ; $5755
 	farcall InitStoryMatchSettings ; $575a
-	load_match_settings $0100 ; $575d
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_JUNIOR_PRACTICE ; $575d
 	farcall RunStoryMatch ; $576a
 	farcall RestoreOverworldAfterMatch ; $576d
 	ret ; $5770

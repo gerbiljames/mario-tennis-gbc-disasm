@@ -76,22 +76,22 @@ PrepareStoryMatchTable:
 	dw LoadExhibitionMatchSettings4 ; $7bb4
 	dw LoadExhibitionMatchSettings5 ; $7bb6
 LoadExhibitionMatchSettings0:
-	load_match_settings $0018 ; $7bb8
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_DREAM_HARD ; $7bb8
 	ret ; $7bc5
 LoadExhibitionMatchSettings1:
-	load_match_settings $0017 ; $7bc6
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_DREAM_INTENSE ; $7bc6
 	ret ; $7bd3
 LoadExhibitionMatchSettings2:
-	load_match_settings $0016 ; $7bd4
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_DREAM_MAX ; $7bd4
 	ret ; $7be1
 LoadExhibitionMatchSettings3:
-	load_match_settings $0118 ; $7be2
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_DREAM_HARD ; $7be2
 	ret ; $7bef
 LoadExhibitionMatchSettings4:
-	load_match_settings $0117 ; $7bf0
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_DREAM_INTENSE ; $7bf0
 	ret ; $7bfd
 LoadExhibitionMatchSettings5:
-	load_match_settings $0116 ; $7bfe
+	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_DREAM_MAX ; $7bfe
 	ret ; $7c0b
 HandleExhibitionMatchResult:
 	ld a, [wMatchWinLoseFlag] ; $7c0c

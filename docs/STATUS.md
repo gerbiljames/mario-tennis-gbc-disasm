@@ -113,6 +113,20 @@ grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-27** — a correction to the 2026-09-12 music names. The match
+  settings tables are indexed by story match (`STORYMATCH_*`, new: the
+  class rankings counting down to #1, the Island Open rounds, the three
+  Dream Matches), not by `MINIGAME_*` id as their row comments claimed, so
+  the seven tunes named from those rows were wrong: they are
+  `BGM_PRACTICE_MATCH`, `BGM_JUNIOR_RANKING`, `BGM_VARSITY_RANKING`,
+  `BGM_ISLAND_OPEN` (and `_SEMIFINAL`, `_FINAL`) and `BGM_DREAM_MATCH`. The
+  real drill, machine and wall tunes come from the drill definitions, now
+  `drill_def` rows in both banks (`$0b`'s eighteen training drills and
+  `$0d`'s eighteen minigame and room configs, seven of which had been
+  decoded as instructions): `BGM_DRILL_MATCH`, `BGM_DRILL_PRACTICE`,
+  `BGM_TENNIS_MACHINE`, `BGM_WALL_PRACTICE`, `BGM_TARGET_MINIGAMES`. The
+  drills' opponents are records `$37`-`$48`, `CHAR_DRILL_*`; the 70
+  `load_match_settings` calls name their match.
 * **2026-09-27** — a pass over known values the source still spelled as
   numbers. Struct fields: `ACTORF_*` (the actor record, with its flag and
   status bits — heading at `+$14`, facing at `+$34` following it unless
