@@ -71,6 +71,15 @@ def ACTORF_FACING       equ $34 ; angle byte: follows ACTORF_HEADING unless lock
 def ACTORF_FACING_COUNT equ $35 ; object header byte 1; 1 = one facing only
 def ACTORF_OAM_ATTR     equ $37 ; object header byte 0, or the map_actor palette override
 def ACTORF_SHADOW_TABLE equ $38 ; word: per-frame placement records
+; ACTORF_FLAGS bits
+def ACTORFLAGB_PAUSED   equ 0 ; StepActorScript yields without running the script
+def ACTORFLAGB_SOLID    equ 3 ; BuildNearbyActorList: blocks the player (IsPointBlocked)
+def ACTORFLAGB_TALKABLE equ 4 ; BuildActorQueryList: FindActorFacingPlayer can pick it
+def ACTORFLAGB_MOVING   equ 7
+; ACTORF_STATUS bits
+def ACTORSTATUSB_FACING_LOCKED equ 0 ; ACTORF_FACING stops following ACTORF_HEADING
+def ACTORSTATUSB_FRAME_DIRTY   equ 6 ; ACTORF_DRAWN_FACING changed: upload the frame again
+def ACTORSTATUSB_LIVE          equ 7
 
 ; --- Match object slot fields ---
 ; Offsets into one 16-byte wObjSlot record (ram/wram.asm has the full

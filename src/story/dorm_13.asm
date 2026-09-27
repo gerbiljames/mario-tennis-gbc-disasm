@@ -377,7 +377,7 @@ PlaceDormRoomArrivalActors_13:
 	ld b, h ; $5200
 	ld hl, ACTORF_FLAGS ; $5201
 	add hl, bc ; $5204
-	set 4, [hl] ; $5205
+	set ACTORFLAGB_TALKABLE, [hl] ; $5205
 	ret ; $5207
 .stage2Singles:
 	script_set_position ACTOR_DORM_ROOM_KATE, $0b00, $0a00 ; $5208
@@ -399,7 +399,7 @@ PlaceDormRoomArrivalActors_13:
 	ld b, h ; $5246
 	ld hl, ACTORF_FLAGS ; $5247
 	add hl, bc ; $524a
-	set 4, [hl] ; $524b
+	set ACTORFLAGB_TALKABLE, [hl] ; $524b
 	ret ; $524d
 SetRandomDormRoomNpc04Script_13:
 	call AdvanceRandomSeed ; $524e
@@ -501,7 +501,7 @@ DormRoomNpc03_13:
 	ld b, h ; $5380
 	ld hl, ACTORF_FLAGS ; $5381
 	add hl, bc ; $5384
-	set 4, [hl] ; $5385
+	set ACTORFLAGB_TALKABLE, [hl] ; $5385
 	script_wait_frames $05 ; $5387
 	ret ; $538e
 .speakShort:

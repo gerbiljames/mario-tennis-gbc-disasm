@@ -72,7 +72,7 @@ IsPointNearPlayer:
 	push hl ; $537c
 	ld c, l ; $537d
 	ld b, h ; $537e
-	ld hl, wActors + 10 ; $537f
+	ld hl, wActors + ACTORF_TARGET_Y ; $537f
 	ld a, [hl+] ; $5382
 	ld h, [hl] ; $5383
 	ld l, a ; $5384
@@ -100,7 +100,7 @@ IsPointNearPlayer:
 	call GetSquareOfByte ; $539e
 	ld e, l ; $53a1
 	ld d, h ; $53a2
-	ld hl, wActors + 8 ; $53a3
+	ld hl, wActors + ACTORF_TARGET_X ; $53a3
 	ld a, [hl+] ; $53a6
 	ld h, [hl] ; $53a7
 	ld l, a ; $53a8
@@ -260,13 +260,13 @@ BuildNearbyActorList:
 	jr z, .done ; $5468
 	ld hl, ACTORF_STATUS ; $546a
 	add hl, bc ; $546d
-	bit 7, [hl] ; $546e
+	bit ACTORSTATUSB_LIVE, [hl] ; $546e
 	jr z, .done ; $5470
 	ld hl, ACTORF_FLAGS ; $5472
 	add hl, bc ; $5475
-	bit 3, [hl] ; $5476
+	bit ACTORFLAGB_SOLID, [hl] ; $5476
 	jr z, .done ; $5478
-	ld hl, wActors + 14 ; $547a
+	ld hl, wActors + ACTORF_Y ; $547a
 	ld a, [hl+] ; $547d
 	ld d, [hl] ; $547e
 	ld e, a ; $547f
@@ -293,7 +293,7 @@ BuildNearbyActorList:
 	ld a, h ; $5497
 	and $fe ; $5498
 	jr nz, .done ; $549a
-	ld hl, wActors + 12 ; $549c
+	ld hl, wActors + ACTORF_X ; $549c
 	ld a, [hl+] ; $549f
 	ld d, [hl] ; $54a0
 	ld e, a ; $54a1
@@ -361,11 +361,11 @@ BuildActorQueryList:
 	jr z, .done ; $54e9
 	ld hl, ACTORF_STATUS ; $54eb
 	add hl, bc ; $54ee
-	bit 7, [hl] ; $54ef
+	bit ACTORSTATUSB_LIVE, [hl] ; $54ef
 	jr z, .done ; $54f1
 	ld hl, ACTORF_FLAGS ; $54f3
 	add hl, bc ; $54f6
-	bit 4, [hl] ; $54f7
+	bit ACTORFLAGB_TALKABLE, [hl] ; $54f7
 	jr z, .done ; $54f9
 	pop hl ; $54fb
 	ld a, c ; $54fc
@@ -410,7 +410,7 @@ DrawAndAnimateActor:
 	call DrawActorSprite ; $5526
 	ld hl, ACTORF_STATUS ; $5529
 	add hl, bc ; $552c
-	bit 7, [hl] ; $552d
+	bit ACTORSTATUSB_LIVE, [hl] ; $552d
 	jr nz, .drawAndAnimate ; $552f
 	bit 3, [hl] ; $5531
 	ret z ; $5533
@@ -424,7 +424,7 @@ DrawAndAnimateActor:
 DrawActorSprite:
 	ld hl, ACTORF_STATUS ; $5542
 	add hl, bc ; $5545
-	res 7, [hl] ; $5546
+	res ACTORSTATUSB_LIVE, [hl] ; $5546
 	ld hl, wActorScreenOriginY ; $5548
 	ld a, [hl+] ; $554b
 	ld d, [hl] ; $554c
@@ -514,7 +514,7 @@ DrawActorSprite:
 	pop bc ; $55b9
 	ld hl, ACTORF_STATUS ; $55ba
 	add hl, bc ; $55bd
-	set 7, [hl] ; $55be
+	set ACTORSTATUSB_LIVE, [hl] ; $55be
 .done:
 	ret ; $55c0
 AdvanceActorAnimation:
@@ -599,7 +599,7 @@ AdvanceActorAnimation:
 	push bc ; $5630
 	ld hl, ACTORF_FLAGS ; $5631
 	add hl, bc ; $5634
-	bit 7, [hl] ; $5635
+	bit ACTORFLAGB_MOVING, [hl] ; $5635
 	jr z, .noFlip ; $5637
 	ld hl, $0019 ; $5639
 	add hl, bc ; $563c
@@ -640,13 +640,13 @@ AdvanceActorAnimation:
 	ld [hl], e ; $566b
 	ld hl, ACTORF_STATUS ; $566c
 	add hl, bc ; $566f
-	set 6, [hl] ; $5670
+	set ACTORSTATUSB_FRAME_DIRTY, [hl] ; $5670
 .done:
 	ret ; $5672
 UpdateActorFacingFromHeading:
 	ld hl, ACTORF_STATUS ; $5673
 	add hl, bc ; $5676
-	bit 0, [hl] ; $5677
+	bit ACTORSTATUSB_FACING_LOCKED, [hl] ; $5677
 	jr nz, .fromTable ; $5679
 	ld hl, ACTORF_HEADING ; $567b
 	add hl, bc ; $567e
@@ -678,7 +678,7 @@ UpdateActorFacingFromHeading:
 	ld [hl], d ; $56ab
 	ld hl, ACTORF_STATUS ; $56ac
 	add hl, bc ; $56af
-	set 6, [hl] ; $56b0
+	set ACTORSTATUSB_FRAME_DIRTY, [hl] ; $56b0
 .done:
 	ret ; $56b2
 DirectionToFacing_04:
@@ -690,7 +690,7 @@ QueueActorFrameTileCopy:
 	ret nz ; $56c6
 	ld hl, ACTORF_STATUS ; $56c7
 	add hl, bc ; $56ca
-	bit 6, [hl] ; $56cb
+	bit ACTORSTATUSB_FRAME_DIRTY, [hl] ; $56cb
 	ret z ; $56cd
 	res 6, [hl] ; $56ce
 	push bc ; $56d0

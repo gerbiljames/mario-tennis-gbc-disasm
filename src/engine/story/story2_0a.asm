@@ -351,9 +351,9 @@ RunStoryScriptOrDialogue:
 	farcall BeginCutsceneScriptMode ; $543c
 	push hl ; $543f
 	wram_bank WRAM_ACTORS ; $5440
-	ld hl, wActors + 48 ; $5446
+	ld hl, wActors + ACTORF_STATUS ; $5446
 	res 0, [hl] ; $5449
-	ld hl, wActors + 20 ; $544b
+	ld hl, wActors + ACTORF_HEADING ; $544b
 	ld a, [wPlayerMoveAngle] ; $544e
 	ld [hl], a ; $5451
 	pop hl ; $5452

@@ -416,7 +416,7 @@ SetupCharViewerScene:
 	ld bc, wActors + 3 * ACTOR_SIZE ; $6f87
 	farcall SetActorAnimationChecked ; $6f8a
 	ld a, $07 ; $6f8d
-	ld [wActors + 55], a ; $6f8f
+	ld [wActors + ACTORF_OAM_ATTR], a ; $6f8f
 	ld [wActors + 1 * ACTOR_SIZE + 55], a ; $6f92
 	ld [wActors + 2 * ACTOR_SIZE + 55], a ; $6f95
 	ld [wActors + 3 * ACTOR_SIZE + 55], a ; $6f98

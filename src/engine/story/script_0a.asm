@@ -65,7 +65,7 @@ EndCutsceneScriptMode:
 	call UnregisterFrameTask ; $411c
 	clear_flag FLAG_CUTSCENE_FAST_FORWARD ; $411f
 	push_wram_bank WRAM_ACTORS ; $4122
-	ld a, [wActors + 20] ; $412b
+	ld a, [wActors + ACTORF_HEADING] ; $412b
 	ld [wPlayerMoveAngle], a ; $412e
 	pop_wram_bank ; $4131
 	pop hl ; $4136

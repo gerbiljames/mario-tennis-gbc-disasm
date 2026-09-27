@@ -69,7 +69,7 @@ TryPickRandomReachableTarget:
 	call SetActorMoveTarget ; $4939
 	ld hl, ACTORF_FLAGS ; $493c
 	add hl, bc ; $493f
-	set 7, [hl] ; $4940
+	set ACTORFLAGB_MOVING, [hl] ; $4940
 	ld a, $01 ; $4942
 	jr .done ; $4944
 .failed:
@@ -178,7 +178,7 @@ Unused_04_ActorScriptOpMoveVector:
 	ld b, h ; $49d4
 	ld hl, ACTORF_FLAGS ; $49d5
 	add hl, bc ; $49d8
-	set 7, [hl] ; $49d9
+	set ACTORFLAGB_MOVING, [hl] ; $49d9
 	ld a, $01 ; $49db
 	ret ; $49dd
 ActorScriptOp_Flag:

@@ -37,7 +37,7 @@ RunPlayDoublesTodayPrompt:
 	ld b, h ; $5736
 	ld hl, ACTORF_FLAGS ; $5737
 	add hl, bc ; $573a
-	set 4, [hl] ; $573b
+	set ACTORFLAGB_TALKABLE, [hl] ; $573b
 	script_wait_frames $05 ; $573d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5744
 	ret ; $574b
@@ -55,7 +55,7 @@ RunPlayDoublesTodayPrompt:
 	ld b, h ; $5770
 	ld hl, ACTORF_FLAGS ; $5771
 	add hl, bc ; $5774
-	set 3, [hl] ; $5775
+	set ACTORFLAGB_SOLID, [hl] ; $5775
 	call SetDormRoomEventTriggerCells_13 ; $5777
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $577a
 	ret ; $5781
@@ -91,7 +91,7 @@ RunPlayDoublesTodayPrompt:
 	ld b, h ; $57f0
 	ld hl, ACTORF_FLAGS ; $57f1
 	add hl, bc ; $57f4
-	set 3, [hl] ; $57f5
+	set ACTORFLAGB_SOLID, [hl] ; $57f5
 	call SetDormRoomEventTriggerCells_13 ; $57f7
 	script_null_script ACTOR_DORM_ROOM_KATE ; $57fa
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $57ff
@@ -119,7 +119,7 @@ RunPlayDoublesTodayPrompt:
 	ld b, h ; $5850
 	ld hl, ACTORF_FLAGS ; $5851
 	add hl, bc ; $5854
-	set 4, [hl] ; $5855
+	set ACTORFLAGB_TALKABLE, [hl] ; $5855
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5857
 	ret ; $585e
 ActorScript_13_00:
@@ -482,7 +482,7 @@ DormRoomArrivalCutscene_13:
 	ld b, h ; $5b71
 	ld hl, ACTORF_FLAGS ; $5b72
 	add hl, bc ; $5b75
-	set 4, [hl] ; $5b76
+	set ACTORFLAGB_TALKABLE, [hl] ; $5b76
 	ret ; $5b78
 .singles:
 	script_speak ACTOR_DORM_ROOM_KATE ; $5b79

@@ -463,7 +463,7 @@ UpdatePlayerControl:
 	call SetActorMoveTarget ; $52c6
 	ld hl, ACTORF_FLAGS ; $52c9
 	add hl, bc ; $52cc
-	set 7, [hl] ; $52cd
+	set ACTORFLAGB_MOVING, [hl] ; $52cd
 	ld hl, $0018 ; $52cf
 	add hl, bc ; $52d2
 	ld [hl], $02 ; $52d3
@@ -521,7 +521,7 @@ UpdatePlayerControl:
 	ld [hl], d ; $531d
 	ld hl, ACTORF_FLAGS ; $531e
 	add hl, bc ; $5321
-	res 7, [hl] ; $5322
+	res ACTORFLAGB_MOVING, [hl] ; $5322
 	ld hl, $0018 ; $5324
 	add hl, bc ; $5327
 	ld [hl], $01 ; $5328

@@ -464,7 +464,7 @@ ActorScriptOp_FollowWaypoint:
 	ld [hl], d ; $46a6
 	ld hl, ACTORF_FLAGS ; $46a7
 	add hl, bc ; $46aa
-	set 7, [hl] ; $46ab
+	set ACTORFLAGB_MOVING, [hl] ; $46ab
 .done:
 	pop de ; $46ad
 	xor a ; $46ae
@@ -588,7 +588,7 @@ ActorScriptOp_Step:
 	ld c, a ; $4750
 	ld hl, ACTORF_FLAGS ; $4751
 	add hl, bc ; $4754
-	set 7, [hl] ; $4755
+	set ACTORFLAGB_MOVING, [hl] ; $4755
 .done:
 	pop de ; $4757
 	xor a ; $4758

@@ -380,12 +380,12 @@ ScriptSetActorFacingLock:
 	ld [hl], a ; $45d3
 	ld hl, ACTORF_STATUS ; $45d4
 	add hl, bc ; $45d7
-	res 0, [hl] ; $45d8
+	res ACTORSTATUSB_FACING_LOCKED, [hl] ; $45d8
 	ret ; $45da
 .setBit:
 	ld hl, ACTORF_STATUS ; $45db
 	add hl, bc ; $45de
-	set 0, [hl] ; $45df
+	set ACTORSTATUSB_FACING_LOCKED, [hl] ; $45df
 	ret ; $45e1
 SetActorFacing:
 	call GetActorStateAddr ; $45e2

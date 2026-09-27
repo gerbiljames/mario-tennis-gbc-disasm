@@ -1,6 +1,6 @@
 UpdateCameraFromPlayer:
 	wram_bank WRAM_ACTORS ; $6235
-	ld hl, wActors + 12 ; $623b
+	ld hl, wActors + ACTORF_X ; $623b
 	ld a, [hl+] ; $623e
 	ld b, [hl] ; $623f
 	ld c, a ; $6240

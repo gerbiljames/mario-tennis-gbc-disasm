@@ -218,11 +218,11 @@ AttachActorControllerScript:
 	call SetActorScript ; $4166
 	ld hl, ACTORF_FLAGS ; $4169
 	add hl, bc ; $416c
-	res 3, [hl] ; $416d
-	res 4, [hl] ; $416f
+	res ACTORFLAGB_SOLID, [hl] ; $416d
+	res ACTORFLAGB_TALKABLE, [hl] ; $416f
 	ld hl, ACTORF_STATUS ; $4171
 	add hl, bc ; $4174
-	set 0, [hl] ; $4175
+	set ACTORSTATUSB_FACING_LOCKED, [hl] ; $4175
 	pop hl ; $4177
 	pop de ; $4178
 	pop af ; $4179
@@ -270,13 +270,13 @@ AttachActorStepMover:
 	call SetActorScript ; $41b8
 	ld hl, ACTORF_FLAGS ; $41bb
 	add hl, bc ; $41be
-	res 3, [hl] ; $41bf
+	res ACTORFLAGB_SOLID, [hl] ; $41bf
 	ld hl, $0015 ; $41c1
 	add hl, bc ; $41c4
 	ld [hl], $40 ; $41c5
 	ld hl, ACTORF_FLAGS ; $41c7
 	add hl, bc ; $41ca
-	res 4, [hl] ; $41cb
+	res ACTORFLAGB_TALKABLE, [hl] ; $41cb
 	pop hl ; $41cd
 	pop de ; $41ce
 	pop af ; $41cf
@@ -329,17 +329,17 @@ UpdateActors:
 	add hl, de ; $4212
 	dec c ; $4213
 	jr nz, .actorLoop ; $4214
-	ld hl, wActors + 12 ; $4216
+	ld hl, wActors + ACTORF_X ; $4216
 	ld de, wStoryModePlayersXPosition ; $4219
 	ld bc, $0004 ; $421c
 	call CopyMemoryBC ; $421f
-	ld a, [wActors + 50] ; $4222
+	ld a, [wActors + ACTORF_DRAWN_FACING] ; $4222
 	ld [wStoryModePlayerFacing], a ; $4225
 	ret ; $4228
 StepActorScript:
 	ld hl, ACTORF_FLAGS ; $4229
 	add hl, bc ; $422c
-	bit 0, [hl] ; $422d
+	bit ACTORFLAGB_PAUSED, [hl] ; $422d
 	ret nz ; $422f
 	ld hl, ACTORF_WAIT ; $4230
 	add hl, bc ; $4233
@@ -676,7 +676,7 @@ AdvanceActorTowardTarget:
 	ld c, a ; $43e5
 	ld hl, ACTORF_FLAGS ; $43e6
 	add hl, bc ; $43e9
-	res 7, [hl] ; $43ea
+	res ACTORFLAGB_MOVING, [hl] ; $43ea
 	ld a, ACTORF_X ; $43ec
 	add c ; $43ee
 	ld e, a ; $43ef

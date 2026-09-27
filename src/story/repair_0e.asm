@@ -49,7 +49,7 @@ UnusedTrainingGymRunner0AClearWaypoint:
 	ld b, h ; $4c82
 	ld hl, ACTORF_FLAGS ; $4c83
 	add hl, bc ; $4c86
-	res 0, [hl] ; $4c87
+	res ACTORFLAGB_PAUSED, [hl] ; $4c87
 	ld b, $00 ; $4c89
 	ld a, $00 ; $4c8b
 	ret ; $4c8d
@@ -104,7 +104,7 @@ UnusedTrainingGymRunner0BClearWaypoint:
 	ld b, h ; $4cd9
 	ld hl, ACTORF_FLAGS ; $4cda
 	add hl, bc ; $4cdd
-	res 0, [hl] ; $4cde
+	res ACTORFLAGB_PAUSED, [hl] ; $4cde
 	ld b, $00 ; $4ce0
 	ld a, $00 ; $4ce2
 	ret ; $4ce4
@@ -158,7 +158,7 @@ UnusedTrainingGymRunner0CClearWaypoint:
 	ld b, h ; $4d30
 	ld hl, ACTORF_FLAGS ; $4d31
 	add hl, bc ; $4d34
-	res 0, [hl] ; $4d35
+	res ACTORFLAGB_PAUSED, [hl] ; $4d35
 	ld b, $00 ; $4d37
 	ld a, $00 ; $4d39
 	ret ; $4d3b

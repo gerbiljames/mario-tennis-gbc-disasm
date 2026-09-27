@@ -230,8 +230,8 @@ SpawnActorFromTemplate:
 	inc hl ; $4cd0
 	ld hl, ACTORF_FLAGS ; $4cd1
 	add hl, bc ; $4cd4
-	set 3, [hl] ; $4cd5
-	set 4, [hl] ; $4cd7
+	set ACTORFLAGB_SOLID, [hl] ; $4cd5
+	set ACTORFLAGB_TALKABLE, [hl] ; $4cd7
 	ld l, c ; $4cd9
 	ld h, b ; $4cda
 	add hl, hl ; $4cdb
@@ -366,7 +366,7 @@ SpawnMainCharacterActor:
 	call SpawnActorFromTemplate ; $4e89
 	pop bc ; $4e8c
 	ld a, c ; $4e8d
-	ld [wActors + 20], a ; $4e8e
+	ld [wActors + ACTORF_HEADING], a ; $4e8e
 	ld [wPlayerMoveAngle], a ; $4e91
 	pop hl ; $4e94
 	ld bc, wActors ; $4e95
