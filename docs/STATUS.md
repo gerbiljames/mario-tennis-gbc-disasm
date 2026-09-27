@@ -18,7 +18,7 @@ per `data.manifest`.
 | proven code + structured source | 428,461 bytes, 20.4% of the 2 MiB ROM |
 | instructions disassembled | 160,919 |
 | banks containing code | 59 of 128 |
-| labels | 21,979, of which 20,399 human-named and 1,580 derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
+| labels (counted 2026-09-12) | 21,979, of which 20,399 human-named and 1,580 derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
 | data blobs (`INCBIN`) | 4,218 — 838 LZ streams, the rest raw graphics, tilemaps, sprite frames and sound |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator and its 174 coverage dumps and 2 hook captures are retired at tag `generator-final` |
 | bare banked-WRAM operands | 97, all `dead`: inside `Unused*` routines nothing references, so no trace can ever reach them. Zero in live code |
