@@ -29,6 +29,7 @@ after a real defect broke it:
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
 """
+import bisect
 import re
 import sys
 from pathlib import Path
@@ -381,7 +382,9 @@ def check_literal_pointers(fail):
     left out of the last: small words collide with them constantly. A number
     stored through `ld hl, sp + n` is a return address built by hand, and an
     ld_*_indexed base that names a routine is a constant (a text id, say)
-    that happened to fall on code."""
+    that happened to fall on code. A number inside a data table (in ROM0 or
+    the same bank) that the next instructions index or dereference is a
+    pointer into that table."""
     banks = [(bank_of(h), [m for m in map(_OPERAND_RE.match, bank_lines(h)[0]) if m])
              for h in holders()]
     kinds = {}
@@ -398,7 +401,7 @@ def check_literal_pointers(fail):
         m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
         if m and not m.group(3).startswith(("FarPtr_", "DataPtr_")):
             by_addr.setdefault((int(m.group(1), 16), int(m.group(2), 16)), m.group(3))
-    routines = set()
+    routines, tables = set(), set()
     for h in holders():
         lines = bank_lines(h)[0]
         for i, line in enumerate(lines[:-1]):
@@ -406,11 +409,25 @@ def check_literal_pointers(fail):
             op = re.match(r"^\t([a-z]+)\b", lines[i + 1])
             if m and op and op.group(1) in _MNEMONICS:
                 routines.add(m.group(1))
+            nxt = next((x for x in lines[i + 1:i + 4] if x.strip() and not x.strip().startswith(";")), "")
+            if m and re.match(r"\t(dw|db|INCBIN)\b", nxt):
+                tables.add(m.group(1))
+    spans = {}
+    for (b, a), name in sorted(by_addr.items()):
+        if "." not in name and a < 0x8000:
+            spans.setdefault(b, []).append((a, name))
+
+    def table_at(bank, value):
+        labels = spans.get(bank, [])
+        i = bisect.bisect_right(labels, (value, "\uffff")) - 1
+        if i >= 0 and labels[i][1] in tables and i + 1 < len(labels) and value < labels[i + 1][0]:
+            return labels[i][1]
+        return None
     n = 0
     for bank, lines in banks:
         pending_hl = stack_hl = None
         split_lo, split_hi = None, None
-        for m in lines:
+        for k, m in enumerate(lines):
             op, args = m.group(1), [a.strip() for a in m.group(2).split(",")]
             where = f"${bank:02x}: {op} {m.group(2).strip()}"
             if op == "ld" and args[0] == "hl" and args[1].startswith("sp"):
@@ -432,6 +449,14 @@ def check_literal_pointers(fail):
             elif (op not in _MNEMONICS or op in ("call", "jp", "jr", "rst", "ret")
                   or args[0] in ("h", "l", "hl") or "hl" in args[1:] or "[hl+]" in args):
                 pending_hl = None
+            if op == "ld" and args[0] in ("hl", "de", "bc") and _NUM_RE.fullmatch(args[1]):
+                value = int(args[1].lstrip("$"), 16) if args[1].startswith("$") else None
+                if value is not None and 0x150 <= value < 0x8000 and value & 0xff:
+                    name = table_at(0 if value < 0x4000 else bank, value)
+                    after = " ".join(x.group(0) for x in lines[k + 1:k + 4])
+                    if name and (("[hl" in after) if args[0] == "hl" else f"add hl, {args[0]}" in after):
+                        n += 1
+                        fail("literals", f"{where} -- points into {name}")
             if re.fullmatch(r"ld_(hl|de|bc)_indexed", op):
                 n += 1
                 if re.match(r"\w+", args[0]).group(0) in routines:

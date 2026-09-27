@@ -266,7 +266,7 @@ GetTangent:
 	ld l, a ; $176d
 	ld h, $00 ; $176e
 	add hl, hl ; $1770
-	ld bc, $1568 ; $1771
+	ld bc, TangentTable + 3 ; $1771
 	add hl, bc ; $1774
 	ld a, [hl-] ; $1775
 	ld l, [hl] ; $1776

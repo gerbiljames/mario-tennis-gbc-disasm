@@ -355,7 +355,7 @@ AngleFromVector16:
 	jp nz, .restore ; $1446
 	ld e, l ; $1449
 	ld d, h ; $144a
-	ld hl, $1663 ; $144b
+	ld hl, TangentTable + 127 * 2 ; $144b
 	ld b, $00 ; $144e
 	ld a, [hl+] ; $1450
 	ld c, a ; $1451
