@@ -25,13 +25,13 @@ ActorScript_15_18:
 ReturnCoachWalkToCourtAndStartLesson:
 	script_null_script ACTOR_PARTNER ; $7bc9
 	script_player_speed $0020 ; $7bce
-	script_set_actor_script ACTOR_TRAINING_COURT_BOB_2, ActorScript_15_19 ; $7bd4
+	script_set_actor_script $0d, ActorScript_15_19 ; $7bd4
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_20 ; $7bdf
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_21 ; $7bea
 	script_move_player $1800, $2700 ; $7bf5
 	script_wait_actor_script ACTOR_PLAYER ; $7bff
 	farcall WaitPlayerMoveDone ; $7c04
-	script_wait_actor_script ACTOR_TRAINING_COURT_BOB_2 ; $7c07
+	script_wait_actor_script $0d ; $7c07
 	script_wait_frames $05 ; $7c0c
 	call PlayerPartnerGestureCutscene ; $7c13
 	ld a, STORYLOC_TRAINING_COURT ; $7c16

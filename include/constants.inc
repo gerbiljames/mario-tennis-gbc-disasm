@@ -556,6 +556,11 @@ def CHAR_DREAM_MAX             equ $5d
 def CHAR_DREAM_DOUBLES_HARD    equ $5e
 def CHAR_DREAM_DOUBLES_INTENSE equ $5f
 def CHAR_DREAM_DOUBLES_MAX     equ $60
+; ... and their doubles partners, which DoublesPartnerTable_0a pairs with
+; them (AssignStoryMatchCharacters loads the partner from the opponent's id).
+def CHAR_DREAM_DOUBLES_HARD_PARTNER    equ $61
+def CHAR_DREAM_DOUBLES_INTENSE_PARTNER equ $62
+def CHAR_DREAM_DOUBLES_MAX_PARTNER     equ $63
 ; Records $37-$48 are the drill partners, one per training drill in
 ; MINIGAME_* order: each drill_def names its own as the opponent.
 def CHAR_DRILL_SERVICE_MATCH_1    equ $37

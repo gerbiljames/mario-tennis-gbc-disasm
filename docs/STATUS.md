@@ -114,6 +114,26 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-27** — the audit run through story states, and a correction.
+  Writing `wGameFlags` before each warp recreated 36 story states (every
+  step of the singles and doubles progress chains: class ranks, Island Open
+  rounds, story completion, Peach's Castle, the Dream Match), each visited
+  at every location and entry point, 1,512 runs in separate PyBoy processes
+  (nine hung on inconsistent flag mixes). It exposed a flaw in the
+  actor-slot rule: a variant list installed by a location's *init* script
+  (the Courtyard's varsity variants, the Training Court's tour, the Senior
+  Court and tournament variants) stays active for the whole visit, so the
+  location's NPC and scene scripts can run under it -- the audit caught
+  `ACTOR_COURTYARD_KEVIN` running where the variant has someone else in
+  that slot. With the init-installed variants added to each location's
+  candidates, 617 script operands and 40 `NpcScripts` ids were no longer
+  certain and are slot numbers again; 3,202 names remain, and every one the
+  runs reached (1,853 sites) agrees. The states also loaded record `$62`
+  in the doubles Dream Match, which led to `PairSwapIndexTable_0a`: it is
+  `DoublesPartnerTable_0a`, the doubles partner of each opponent id
+  (`AssignStoryMatchCharacters`), now written as character names, and
+  `$61`-`$63` are the Dream Match doubles partners. No `Unused*` routine ran
+  in any state.
 * **2026-09-27** — a runtime audit. `tools/runtime_audit.py` (needs PyBoy)
   plays the game headless from a save -- every story location entered at
   each of its entry points through the game's own `$ff` reload request, then

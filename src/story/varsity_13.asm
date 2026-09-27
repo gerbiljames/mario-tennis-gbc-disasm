@@ -216,21 +216,21 @@ CourtyardNpc03_13:
 	jr nz, .speak ; $5ece
 	script_set_text Text_30_531 ; $5ed0
 .speak:
-	script_speak ACTOR_COURTYARD_KEVIN ; $5ed6
+	script_speak $03 ; $5ed6
 	ret ; $5edb
 CourtyardNpcScripts_13:
 	; $5edc, 57 bytes (map_scripts)
-	map_script ACTOR_COURTYARD_KEVIN, FACEMASK_ANY, $0000, CourtyardNpc03_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $05e0, Text_30_532, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $05e0, Text_30_533, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $0000, Text_30_536, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $0000, Text_30_537, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script ACTOR_COURTYARD_CURT, FACEMASK_ANY, $0000, Text_30_534, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_BETH, FACEMASK_ANY, $0000, Text_30_535, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $03, FACEMASK_ANY, $0000, CourtyardNpc03_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $05e0, Text_30_532, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $05e0, Text_30_533, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_30_536, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_30_537, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_30_534, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_30_535, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtANpc05_13:
-	script_null_script ACTOR_COURTYARD_FAY ; $5f15
-	script_set_anim ACTOR_COURTYARD_FAY, ANIM_WALK ; $5f1a
+	script_null_script $05 ; $5f15
+	script_set_anim $05, ANIM_WALK ; $5f1a
 	script_set_text Text_30_539 ; $5f21
 	ld a, $05 ; $5f27
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f29
@@ -239,12 +239,12 @@ VarsityCourtANpc05_13:
 	script_wait_frames $05 ; $5f32
 	and a ; $5f39
 	jr z, .advanceText ; $5f3a
-	script_speak ACTOR_COURTYARD_FAY ; $5f3c
-	script_set_actor_script ACTOR_COURTYARD_FAY, ActorScript_13_20 ; $5f41
+	script_speak $05 ; $5f3c
+	script_set_actor_script $05, ActorScript_13_20 ; $5f41
 	ret ; $5f4c
 .advanceText:
 	farcall AdvanceDialogueTextCursor ; $5f4d
-	script_speak ACTOR_COURTYARD_FAY ; $5f50
+	script_speak $05 ; $5f50
 	ld hl, wStoryModePlayersXPosition ; $5f55
 	ld de, wStoryModeSpawnPosition ; $5f58
 	ld bc, $0005 ; $5f5b
@@ -278,8 +278,8 @@ VarsityCourtBNpc09_13:
 	script_speak $09 ; $5fbf
 	ret ; $5fc4
 VarsityCourtBNpc05_13:
-	script_null_script ACTOR_COURTYARD_FAY ; $5fc5
-	script_set_anim ACTOR_COURTYARD_FAY, ANIM_WALK ; $5fca
+	script_null_script $05 ; $5fc5
+	script_set_anim $05, ANIM_WALK ; $5fca
 	script_set_text Text_31_7 ; $5fd1
 	ld a, $05 ; $5fd7
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5fd9
@@ -288,12 +288,12 @@ VarsityCourtBNpc05_13:
 	script_wait_frames $05 ; $5fe2
 	and a ; $5fe9
 	jr z, .advanceText ; $5fea
-	script_speak ACTOR_COURTYARD_FAY ; $5fec
-	script_set_actor_script ACTOR_COURTYARD_FAY, ActorScript_13_20 ; $5ff1
+	script_speak $05 ; $5fec
+	script_set_actor_script $05, ActorScript_13_20 ; $5ff1
 	ret ; $5ffc
 .advanceText:
 	farcall AdvanceDialogueTextCursor ; $5ffd
-	script_speak ACTOR_COURTYARD_FAY ; $6000
+	script_speak $05 ; $6000
 	ld hl, wStoryModePlayersXPosition ; $6005
 	ld de, wStoryModeSpawnPosition ; $6008
 	ld bc, $0005 ; $600b
@@ -315,18 +315,18 @@ VarsityCourtNpcScriptsB_13:
 	map_script $09, FACEMASK_ANY, $0000, VarsityCourtBNpc09_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 VarsityCourtCNpc03_13:
-	script_null_script ACTOR_COURTYARD_KEVIN ; $6059
-	script_set_anim ACTOR_COURTYARD_KEVIN, ANIM_WALK ; $605e
+	script_null_script $03 ; $6059
+	script_set_anim $03, ANIM_WALK ; $605e
 	script_set_text Text_31_34 ; $6065
-	script_speak ACTOR_COURTYARD_KEVIN ; $606b
-	script_set_actor_script ACTOR_COURTYARD_KEVIN, ActorScript_13_20 ; $6070
+	script_speak $03 ; $606b
+	script_set_actor_script $03, ActorScript_13_20 ; $6070
 	ret ; $607b
 VarsityCourtCNpc04_13:
-	script_null_script ACTOR_COURTYARD_KEVIN ; $607c
-	script_set_anim ACTOR_COURTYARD_BOB, ANIM_WALK ; $6081
+	script_null_script $03 ; $607c
+	script_set_anim $04, ANIM_WALK ; $6081
 	script_set_text Text_31_35 ; $6088
-	script_speak ACTOR_COURTYARD_BOB ; $608e
-	script_set_actor_script ACTOR_COURTYARD_BOB, ActorScript_13_20 ; $6093
+	script_speak $04 ; $608e
+	script_set_actor_script $04, ActorScript_13_20 ; $6093
 	ret ; $609e
 VarsityCourtNpcScriptsC_13:
 	; $609f, 25 bytes (map_scripts)
@@ -340,14 +340,14 @@ VarsityCourtCNpc05_13:
 	jr z, .speak ; $60c1
 	farcall AdvanceDialogueTextCursor ; $60c3
 .speak:
-	script_speak ACTOR_COURTYARD_FAY ; $60c6
+	script_speak $05 ; $60c6
 	ret ; $60cb
 VarsityCourtDNpc05_13:
-	script_null_script ACTOR_COURTYARD_FAY ; $60cc
-	script_set_anim ACTOR_COURTYARD_FAY, ANIM_WALK ; $60d1
+	script_null_script $05 ; $60cc
+	script_set_anim $05, ANIM_WALK ; $60d1
 	script_set_text Text_31_40 ; $60d8
-	script_speak ACTOR_COURTYARD_FAY ; $60de
-	script_set_actor_script ACTOR_COURTYARD_FAY, ActorScript_13_20 ; $60e3
+	script_speak $05 ; $60de
+	script_set_actor_script $05, ActorScript_13_20 ; $60e3
 	ret ; $60ee
 VarsityCourtNpcScriptsD_13:
 	; $60ef, 41 bytes (map_scripts)
@@ -358,11 +358,11 @@ VarsityCourtNpcScriptsD_13:
 	map_script $07, FACEMASK_ANY, $0000, Text_31_42, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtENpc05_13:
-	script_null_script ACTOR_COURTYARD_FAY ; $6118
-	script_set_anim ACTOR_COURTYARD_FAY, ANIM_WALK ; $611d
+	script_null_script $05 ; $6118
+	script_set_anim $05, ANIM_WALK ; $611d
 	script_set_text Text_31_45 ; $6124
-	script_speak ACTOR_COURTYARD_FAY ; $612a
-	script_set_actor_script ACTOR_COURTYARD_FAY, ActorScript_13_20 ; $612f
+	script_speak $05 ; $612a
+	script_set_actor_script $05, ActorScript_13_20 ; $612f
 	ret ; $613a
 VarsityCourtNpcScriptsE_13:
 	; $613b, 41 bytes (map_scripts)

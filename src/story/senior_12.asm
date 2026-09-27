@@ -231,7 +231,7 @@ SeniorCourtNpc04_12:
 	ld h, [hl] ; $582c
 	ld l, a ; $582d
 	farcall InitDialogueTextCursor ; $582e
-	script_speak ACTOR_SENIOR_COURT_FAY ; $5831
+	script_speak $04 ; $5831
 	ld a, [wMapSceneStage2] ; $5836
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $5839
 	jr nc, .ge02 ; $583b
@@ -306,7 +306,7 @@ SeniorCourtNpc06_12:
 	ld a, [wMapSceneStage2] ; $58c4
 	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $58c7
 	jr z, .eq06 ; $58c9
-	script_speak ACTOR_SENIOR_COURT_JOY ; $58cb
+	script_speak $06 ; $58cb
 	ret ; $58d0
 .eq06:
 	ld a, $06 ; $58d1
@@ -322,7 +322,7 @@ SeniorCourtNpc06_12:
 	jr nz, .speak ; $58ed
 	farcall AdvanceDialogueTextCursor ; $58ef
 .speak:
-	script_speak ACTOR_SENIOR_COURT_JOY ; $58f2
+	script_speak $06 ; $58f2
 	ret ; $58f7
 SeniorCourtNpc06TextIds_12:
 	; $58f8, 30 bytes (text_ids)
@@ -458,9 +458,9 @@ SeniorCourtNpc09_12:
 	ld a, [wMapSceneStage2] ; $5a5a
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $5a5d
 	jr nc, .speak ; $5a5f
-	script_face ACTOR_SENIOR_COURT_CURT, FACE_DOWN ; $5a61
+	script_face $09, FACE_DOWN ; $5a61
 .speak:
-	script_speak ACTOR_SENIOR_COURT_CURT ; $5a68
+	script_speak $09 ; $5a68
 	ret ; $5a6d
 SeniorCourtNpc09TextIds:
 	; $5a6e, 30 bytes (text_ids)
@@ -490,7 +490,7 @@ SeniorCourtNpc0A_12:
 	ld a, [wMapSceneStage2] ; $5a9d
 	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $5aa0
 	jr z, .altText ; $5aa2
-	script_speak ACTOR_SENIOR_COURT_BOB ; $5aa4
+	script_speak $0a ; $5aa4
 	ret ; $5aa9
 .altText:
 	ld a, $0a ; $5aaa
@@ -500,7 +500,7 @@ SeniorCourtNpc0A_12:
 	script_wait_frames $05 ; $5ab5
 	and a ; $5abc
 	jr z, .speak ; $5abd
-	script_speak ACTOR_SENIOR_COURT_BOB ; $5abf
+	script_speak $0a ; $5abf
 	ret ; $5ac4
 .speak:
 	farcall AdvanceDialogueTextCursor ; $5ac5
@@ -511,10 +511,10 @@ SeniorCourtNpc0A_12:
 	script_wait_frames $05 ; $5ad3
 	and a ; $5ada
 	jr z, .done ; $5adb
-	script_speak ACTOR_SENIOR_COURT_BOB ; $5add
+	script_speak $0a ; $5add
 	ret ; $5ae2
 .done:
-	script_get_actor_state ACTOR_SENIOR_COURT_BOB ; $5ae3
+	script_get_actor_state $0a ; $5ae3
 	ld e, l ; $5ae8
 	ld d, h ; $5ae9
 	ld hl, $0005 ; $5aea
@@ -526,8 +526,8 @@ SeniorCourtNpc0A_12:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_47 ; $5b02
 	script_wait_frames $20 ; $5b0d
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_48 ; $5b14
-	script_set_actor_script ACTOR_SENIOR_COURT_BOB, ActorScript_12_45 ; $5b1f
-	script_set_actor_script ACTOR_SENIOR_COURT_PAM, ActorScript_12_46 ; $5b2a
+	script_set_actor_script $0a, ActorScript_12_45 ; $5b1f
+	script_set_actor_script $0b, ActorScript_12_46 ; $5b2a
 	script_move_player $0a00, $1100 ; $5b35
 	farcall WaitPlayerMoveDone ; $5b3f
 	script_wait_actor_script ACTOR_PLAYER ; $5b42
@@ -579,7 +579,7 @@ SeniorCourtNpc0B_12:
 	jr nz, .speak ; $5bb4
 	farcall AdvanceDialogueTextCursor ; $5bb6
 .speak:
-	script_speak ACTOR_SENIOR_COURT_PAM ; $5bb9
+	script_speak $0b ; $5bb9
 	ret ; $5bbe
 SeniorCourtNpc0BTextIds:
 	; $5bbf, 30 bytes (text_ids)
@@ -646,16 +646,16 @@ SeniorCourtNpcScripts_12:
 	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, $0840, SeniorCourtNpc03FaceUpFlag0840_12, NPC_FACE_PLAYER, $00
 	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, $0000, SeniorCourtNpc03FaceUpFlag0000_12, NPC_FACE_PLAYER, $00
 	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_ANY, $0000, SeniorCourtNpc03_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_SENIOR_COURT_FAY, FACEMASK_ANY, $0000, SeniorCourtNpc04_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script $04, FACEMASK_ANY, $0000, SeniorCourtNpc04_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
 	map_script ACTOR_SENIOR_COURT_ALLIE, FACEMASK_ANY, $0000, SeniorCourtNpc05_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_SENIOR_COURT_JOY, FACEMASK_ANY, $08a0, SeniorCourtNpc06_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_SENIOR_COURT_JOY, FACEMASK_ANY, $0000, SeniorCourtNpc06_12, NPC_FACE_PLAYER | NPC_FREEZE, $00
+	map_script $06, FACEMASK_ANY, $08a0, SeniorCourtNpc06_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $06, FACEMASK_ANY, $0000, SeniorCourtNpc06_12, NPC_FACE_PLAYER | NPC_FREEZE, $00
 	map_script ACTOR_SENIOR_COURT_BRIAN, FACEMASK_ANY, $08a0, SeniorCourtNpc07_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_SENIOR_COURT_BRIAN, FACEMASK_ANY, $0000, SeniorCourtNpc07_12, NPC_FACE_PLAYER, $00
 	map_script ACTOR_SENIOR_COURT_BETH, FACEMASK_ANY, $0000, SeniorCourtNpc08_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM, $00
-	map_script ACTOR_SENIOR_COURT_CURT, FACEMASK_ANY, $0000, SeniorCourtNpc09_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_SENIOR_COURT_BOB, FACEMASK_ANY, $0000, SeniorCourtNpc0A_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_SENIOR_COURT_PAM, FACEMASK_ANY, $0000, SeniorCourtNpc0B_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script $09, FACEMASK_ANY, $0000, SeniorCourtNpc09_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $0a, FACEMASK_ANY, $0000, SeniorCourtNpc0A_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $0b, FACEMASK_ANY, $0000, SeniorCourtNpc0B_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
 	map_script ACTOR_SENIOR_COURT_KATE, FACEMASK_ANY, $0000, SeniorCourtNpc0C_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 SeniorCourtFacingScripts_12:
@@ -666,16 +666,16 @@ SeniorCourtTileTriggers_12:
 	db $ff
 SeniorCourtTile01_12:
 	set_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5cd0
-	script_null_script ACTOR_SENIOR_COURT_BOB ; $5cd3
-	script_null_script ACTOR_SENIOR_COURT_PAM ; $5cd8
-	script_set_anim ACTOR_SENIOR_COURT_BOB, ANIM_WALK ; $5cdd
-	script_set_anim ACTOR_SENIOR_COURT_PAM, ANIM_WALK ; $5ce4
-	script_move_target ACTOR_SENIOR_COURT_BOB, $1400, $1300 ; $5ceb
-	script_move_target ACTOR_SENIOR_COURT_PAM, $1400, $0f00 ; $5cf6
-	script_wait_move ACTOR_SENIOR_COURT_BOB ; $5d01
-	script_wait_move ACTOR_SENIOR_COURT_PAM ; $5d06
-	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_BOB ; $5d0b
-	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_PAM ; $5d13
+	script_null_script $0a ; $5cd3
+	script_null_script $0b ; $5cd8
+	script_set_anim $0a, ANIM_WALK ; $5cdd
+	script_set_anim $0b, ANIM_WALK ; $5ce4
+	script_move_target $0a, $1400, $1300 ; $5ceb
+	script_move_target $0b, $1400, $0f00 ; $5cf6
+	script_wait_move $0a ; $5d01
+	script_wait_move $0b ; $5d06
+	script_face_toward ACTOR_PLAYER, $0a ; $5d0b
+	script_face_toward ACTOR_PLAYER, $0b ; $5d13
 	ret ; $5d1b
 SeniorCourtInitScript_12:
 	call ComputeRankingProgressIndex_12 ; $5d1c

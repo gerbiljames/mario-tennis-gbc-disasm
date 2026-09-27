@@ -21,7 +21,7 @@ TournamentNpc03_0f:
 	script_wait_frames $05 ; $6f4d
 	and a ; $6f54
 	jr nz, .altLine ; $6f55
-	script_speak ACTOR_TOURNAMENT_WALK_6F_07_1 ; $6f57
+	script_speak $03 ; $6f57
 	ret ; $6f5c
 .altLine:
 	ld hl, $24ae ; $6f5d
@@ -32,7 +32,7 @@ TournamentNpc03_0f:
 	inc h ; $6f67
 .setCursor:
 	farcall InitDialogueTextCursor ; $6f68
-	script_speak ACTOR_TOURNAMENT_WALK_6F_07_1 ; $6f6b
+	script_speak $03 ; $6f6b
 	ret ; $6f70
 TournamentNpc04_0f:
 	ld hl, $24b2 ; $6f71
@@ -43,82 +43,82 @@ TournamentNpc04_0f:
 	inc h ; $6f7b
 .setCursor:
 	farcall InitDialogueTextCursor ; $6f7c
-	script_speak ACTOR_TOURNAMENT_WALK_6F_07_2 ; $6f7f
+	script_speak $04 ; $6f7f
 	ret ; $6f84
 MovePartnerForRoundCall_0f:
 	test_flag FLAG_DOUBLES ; $6f85
 	jr z, .done ; $6f88
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $6f8a
 	jr nz, .done ; $6f8d
-	script_null_script ACTOR_TOURNAMENT_B_COZ ; $6f8f
-	script_move_target ACTOR_TOURNAMENT_B_COZ, $1900, $1100 ; $6f94
-	script_wait_move ACTOR_TOURNAMENT_B_COZ ; $6f9f
-	script_move_target ACTOR_TOURNAMENT_B_COZ, $1900, $1300 ; $6fa4
-	script_wait_move ACTOR_TOURNAMENT_B_COZ ; $6faf
-	script_face ACTOR_TOURNAMENT_A_COZ, FACE_DOWN ; $6fb4
-	script_face ACTOR_TOURNAMENT_B_COZ, FACE_DOWN ; $6fbb
+	script_null_script $0d ; $6f8f
+	script_move_target $0d, $1900, $1100 ; $6f94
+	script_wait_move $0d ; $6f9f
+	script_move_target $0d, $1900, $1300 ; $6fa4
+	script_wait_move $0d ; $6faf
+	script_face $0c, FACE_DOWN ; $6fb4
+	script_face $0d, FACE_DOWN ; $6fbb
 .done:
 	ret ; $6fc2
 IslandOpenRoundCallCutscene:
 	script_set_text Text_25_94 ; $6fc3
 	script_move_player $1100, $0f00 ; $6fc9
 	farcall WaitPlayerMoveDone ; $6fd3
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $0e00, $0c00 ; $6fd6
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_3 ; $6fe1
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $1300, $0c00 ; $6fe6
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_3 ; $6ff1
-	script_face ACTOR_TOURNAMENT_WALK_6F_07_3, FACE_DOWN ; $6ff6
-	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_3, ANIM_BOUNCE ; $6ffd
-	script_wait_idle ACTOR_TOURNAMENT_WALK_6F_07_3 ; $7004
+	script_move_target $05, $0e00, $0c00 ; $6fd6
+	script_wait_move $05 ; $6fe1
+	script_move_target $05, $1300, $0c00 ; $6fe6
+	script_wait_move $05 ; $6ff1
+	script_face $05, FACE_DOWN ; $6ff6
+	script_set_anim $05, ANIM_BOUNCE ; $6ffd
+	script_wait_idle $05 ; $7004
 	call QueueUpcomingRoundNameText ; $7009
-	script_speak ACTOR_TOURNAMENT_WALK_6F_07_3 ; $700c
+	script_speak $05 ; $700c
 	call MovePartnerForRoundCall_0f ; $7011
-	script_face ACTOR_TOURNAMENT_WALK_6F_07_2, FACE_UP ; $7014
-	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_2, ANIM_NOD ; $701b
-	script_wait_idle ACTOR_TOURNAMENT_WALK_6F_07_2 ; $7022
-	script_face ACTOR_TOURNAMENT_WALK_6F_07_2, FACE_DOWN ; $7027
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_2, $1300, $1700 ; $702e
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $1300, $1700 ; $7039
+	script_face $04, FACE_UP ; $7014
+	script_set_anim $04, ANIM_NOD ; $701b
+	script_wait_idle $04 ; $7022
+	script_face $04, FACE_DOWN ; $7027
+	script_move_target $04, $1300, $1700 ; $702e
+	script_move_target $05, $1300, $1700 ; $7039
 	script_move_player $1100, $1300 ; $7044
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_2 ; $704e
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_2, $1500, $1700 ; $7053
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_2 ; $705e
-	script_face ACTOR_TOURNAMENT_WALK_6F_07_2, FACE_UP ; $7063
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_3 ; $706a
-	script_face ACTOR_TOURNAMENT_WALK_6F_07_3, FACE_UP ; $706f
+	script_wait_move $04 ; $704e
+	script_move_target $04, $1500, $1700 ; $7053
+	script_wait_move $04 ; $705e
+	script_face $04, FACE_UP ; $7063
+	script_wait_move $05 ; $706a
+	script_face $05, FACE_UP ; $706f
 	call QueueUpcomingRoundNameText ; $7076
-	script_speak ACTOR_TOURNAMENT_WALK_6F_07_2 ; $7079
-	script_face_pair ACTOR_TOURNAMENT_WALK_6F_07_3, ACTOR_TOURNAMENT_WALK_6F_07_2 ; $707e
-	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_2, ANIM_NOD ; $7086
-	script_wait_idle ACTOR_TOURNAMENT_WALK_6F_07_2 ; $708d
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $1000, $1700 ; $7092
+	script_speak $04 ; $7079
+	script_face_pair $05, $04 ; $707e
+	script_set_anim $04, ANIM_NOD ; $7086
+	script_wait_idle $04 ; $708d
+	script_move_target $05, $1000, $1700 ; $7092
 	ld a, [wMapSceneStage] ; $709d
 	cp ISLANDOPENROUND_FINAL ; $70a0
 	jr z, .partnerReady ; $70a2
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_2, $1800, $1700 ; $70a4
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_2 ; $70af
-	script_face ACTOR_TOURNAMENT_WALK_6F_07_2, FACE_UP ; $70b4
+	script_move_target $04, $1800, $1700 ; $70a4
+	script_wait_move $04 ; $70af
+	script_face $04, FACE_UP ; $70b4
 .partnerReady:
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_3 ; $70bb
-	script_face ACTOR_TOURNAMENT_WALK_6F_07_3, FACE_UP ; $70c0
-	script_speak ACTOR_TOURNAMENT_WALK_6F_07_2 ; $70c7
+	script_wait_move $05 ; $70bb
+	script_face $05, FACE_UP ; $70c0
+	script_speak $04 ; $70c7
 	test_flag FLAG_DOUBLES ; $70cc
 	jp nz, .afterMatch ; $70cf
 	script_set_speed ACTOR_PLAYER, $0020 ; $70d2
-	script_face_pair ACTOR_TOURNAMENT_SAMMI, ACTOR_PLAYER ; $70da
+	script_face_pair $0a, ACTOR_PLAYER ; $70da
 	script_wait_frames $1e ; $70e2
 	script_face ACTOR_PLAYER, FACE_DOWN ; $70e9
-	script_face ACTOR_TOURNAMENT_SAMMI, FACE_DOWN ; $70f0
-	script_set_anim ACTOR_TOURNAMENT_SAMMI, ANIM_NOD ; $70f7
+	script_face $0a, FACE_DOWN ; $70f0
+	script_set_anim $0a, ANIM_NOD ; $70f7
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $70fe
 	script_wait_idle ACTOR_PLAYER ; $7105
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $710a
 	jr z, .doublesWalk ; $710d
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $1300, $1700 ; $710f
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_3 ; $711a
-	script_set_actor_script ACTOR_TOURNAMENT_WALK_6F_07_3, ActorScript_0f_05 ; $711f
+	script_move_target $05, $1300, $1700 ; $710f
+	script_wait_move $05 ; $711a
+	script_set_actor_script $05, ActorScript_0f_05 ; $711f
 	script_wait_frames $14 ; $712a
-	script_set_actor_script ACTOR_TOURNAMENT_SAMMI, ActorScript_0f_05 ; $7131
+	script_set_actor_script $0a, ActorScript_0f_05 ; $7131
 	script_wait_frames $14 ; $713c
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_05 ; $7143
 	script_wait_frames $14 ; $714e
@@ -127,11 +127,11 @@ IslandOpenRoundCallCutscene:
 	script_wait_frames $1e ; $7162
 	jp .startMatch ; $7169
 .doublesWalk:
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $1300, $1700 ; $716c
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_3 ; $7177
-	script_set_actor_script ACTOR_TOURNAMENT_WALK_6F_07_3, ActorScript_0f_03 ; $717c
+	script_move_target $05, $1300, $1700 ; $716c
+	script_wait_move $05 ; $7177
+	script_set_actor_script $05, ActorScript_0f_03 ; $717c
 	script_wait_frames $14 ; $7187
-	script_set_actor_script ACTOR_TOURNAMENT_SAMMI, ActorScript_0f_03 ; $718e
+	script_set_actor_script $0a, ActorScript_0f_03 ; $718e
 	script_wait_frames $14 ; $7199
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_03 ; $71a0
 	script_move_player $1100, $0d00 ; $71ab
@@ -182,32 +182,32 @@ IslandOpenRoundCallCutscene:
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7268
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $726f
 	jp z, .afterMatchDoubles ; $7272
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $1300, $1700 ; $7275
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_3 ; $7280
-	script_set_actor_script ACTOR_TOURNAMENT_WALK_6F_07_3, ActorScript_0f_05 ; $7285
+	script_move_target $05, $1300, $1700 ; $7275
+	script_wait_move $05 ; $7280
+	script_set_actor_script $05, ActorScript_0f_05 ; $7285
 	script_wait_frames $14 ; $7290
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_05 ; $7297
 	script_wait_frames $14 ; $72a2
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0f_05 ; $72a9
 	script_wait_frames $3c ; $72b4
-	script_set_actor_script ACTOR_TOURNAMENT_ELDEN, ActorScript_0f_06 ; $72bb
+	script_set_actor_script $0b, ActorScript_0f_06 ; $72bb
 	script_wait_frames $14 ; $72c6
-	script_set_actor_script ACTOR_TOURNAMENT_SAMMI, ActorScript_0f_06 ; $72cd
+	script_set_actor_script $0a, ActorScript_0f_06 ; $72cd
 	script_move_player $1100, $0d00 ; $72d8
 	farcall WaitPlayerMoveDone ; $72e2
 	jp .walkOff ; $72e5
 .afterMatchDoubles:
-	script_move_target ACTOR_TOURNAMENT_WALK_6F_07_3, $1300, $1700 ; $72e8
-	script_wait_move ACTOR_TOURNAMENT_WALK_6F_07_3 ; $72f3
-	script_set_actor_script ACTOR_TOURNAMENT_WALK_6F_07_3, ActorScript_0f_03 ; $72f8
+	script_move_target $05, $1300, $1700 ; $72e8
+	script_wait_move $05 ; $72f3
+	script_set_actor_script $05, ActorScript_0f_03 ; $72f8
 	script_wait_frames $14 ; $7303
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_03 ; $730a
 	script_wait_frames $14 ; $7315
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0f_03 ; $731c
 	script_wait_frames $3c ; $7327
-	script_set_actor_script ACTOR_TOURNAMENT_ELDEN, ActorScript_0f_04 ; $732e
+	script_set_actor_script $0b, ActorScript_0f_04 ; $732e
 	script_wait_frames $14 ; $7339
-	script_set_actor_script ACTOR_TOURNAMENT_SAMMI, ActorScript_0f_04 ; $7340
+	script_set_actor_script $0a, ActorScript_0f_04 ; $7340
 	script_move_player $1100, $0d00 ; $734b
 	farcall WaitPlayerMoveDone ; $7355
 	script_wait_frames $3c ; $7358
@@ -453,9 +453,9 @@ IslandOpenRoundSinglesNpc03_0f:
 	ld h, [hl] ; $7655
 	ld l, a ; $7656
 	farcall InitDialogueTextCursor ; $7657
-	script_set_anim ACTOR_TOURNAMENT_WALK_6F_07_1, ANIM_NOD ; $765a
-	script_wait_idle ACTOR_TOURNAMENT_WALK_6F_07_1 ; $7661
-	script_speak ACTOR_TOURNAMENT_WALK_6F_07_1 ; $7666
+	script_set_anim $03, ANIM_NOD ; $765a
+	script_wait_idle $03 ; $7661
+	script_speak $03 ; $7666
 	ret ; $766b
 IslandOpenRoundSinglesNpc05_0f:
 	ld a, [wMapSceneStage] ; $766c
@@ -466,10 +466,10 @@ IslandOpenRoundSinglesNpc05_0f:
 	ld h, [hl] ; $7679
 	ld l, a ; $767a
 	farcall InitDialogueTextCursor ; $767b
-	script_jump_velocity ACTOR_TOURNAMENT_WALK_6F_07_3, $ff80 ; $767e
+	script_jump_velocity $05, $ff80 ; $767e
 	ld a, $05 ; $7686
 	farcall ScriptWaitActorJumpDone ; $7688
-	script_speak ACTOR_TOURNAMENT_WALK_6F_07_3 ; $768b
+	script_speak $05 ; $768b
 	ret ; $7690
 IslandOpenRoundSinglesNpc05_0fTable:
 	; $7691, 8 bytes (text_ids)
@@ -623,7 +623,7 @@ IslandOpenRoundDoublesNpc03_0f:
 	ld h, [hl] ; $78d9
 	ld l, a ; $78da
 	farcall InitDialogueTextCursor ; $78db
-	script_speak ACTOR_TOURNAMENT_WALK_6F_07_1 ; $78de
+	script_speak $03 ; $78de
 	ret ; $78e3
 IslandOpenRoundDoublesNpc03TextIds:
 	; $78e4, 8 bytes (text_ids)

@@ -150,7 +150,7 @@ StartSeniorRankingMatch:
 .rank1:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $60c4
 	script_wait_frames $0f ; $60cb
-	script_set_actor_script ACTOR_SENIOR_COURT_CURT, ActorScript_12_26 ; $60d2
+	script_set_actor_script $09, ActorScript_12_26 ; $60d2
 	script_set_actor_script ACTOR_SENIOR_COURT_BETH, ActorScript_12_22 ; $60dd
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_15 ; $60e8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_13 ; $60f3
@@ -172,9 +172,9 @@ StartSeniorRankingMatch:
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6144
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $614b
 	script_face ACTOR_SENIOR_COURT_BRIAN, FACE_RIGHT ; $6152
-	script_face ACTOR_SENIOR_COURT_JOY, FACE_RIGHT ; $6159
+	script_face $06, FACE_RIGHT ; $6159
 	call ApproachSeniorCourtPairB ; $6160
-	script_set_actor_script ACTOR_SENIOR_COURT_JOY, ActorScript_12_31 ; $6163
+	script_set_actor_script $06, ActorScript_12_31 ; $6163
 	script_set_actor_script ACTOR_SENIOR_COURT_BRIAN, ActorScript_12_32 ; $616e
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_16 ; $6179
 	farcall WaitPlayerMoveDone ; $6184
@@ -194,12 +194,12 @@ StartSeniorRankingMatch:
 	script_face ACTOR_PLAYER, FACE_LEFT ; $61c0
 	script_face ACTOR_SENIOR_COURT_BRIAN, FACE_LEFT ; $61c7
 	script_set_actor_script ACTOR_SENIOR_COURT_ALLIE, ActorScript_12_39 ; $61ce
-	script_set_actor_script ACTOR_SENIOR_COURT_FAY, ActorScript_12_40 ; $61d9
+	script_set_actor_script $04, ActorScript_12_40 ; $61d9
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_15 ; $61e4
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_13 ; $61ef
 	script_move_player $2400, $1700 ; $61fa
 	farcall WaitPlayerMoveDone ; $6204
-	script_wait_actor_script ACTOR_SENIOR_COURT_FAY ; $6207
+	script_wait_actor_script $04 ; $6207
 	script_wait_frames $1e ; $620c
 	ld a, $0f ; $6213
 	ld [wUnusedExitTriggerIdMirror], a ; $6215
@@ -231,12 +231,12 @@ StartSeniorRankingMatch:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_RIGHT ; $628a
 	script_wait_frames $0f ; $6291
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6298
-	script_face ACTOR_SENIOR_COURT_JOY, FACE_RIGHT ; $629f
+	script_face $06, FACE_RIGHT ; $629f
 	script_wait_frames $1e ; $62a6
 	call ApproachSeniorCourtPairB ; $62ad
-	script_set_actor_script ACTOR_SENIOR_COURT_JOY, ActorScript_12_05 ; $62b0
+	script_set_actor_script $06, ActorScript_12_05 ; $62b0
 	farcall WaitPlayerMoveDone ; $62bb
-	script_wait_actor_script ACTOR_SENIOR_COURT_JOY ; $62be
+	script_wait_actor_script $06 ; $62be
 	script_wait_frames $1e ; $62c3
 	ld a, $0f ; $62ca
 	ld [wUnusedExitTriggerIdMirror], a ; $62cc
@@ -269,10 +269,10 @@ StartSeniorRankingMatch:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $6348
 	script_wait_frames $0f ; $634f
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6356
-	script_face ACTOR_SENIOR_COURT_FAY, FACE_LEFT ; $635d
+	script_face $04, FACE_LEFT ; $635d
 	script_wait_frames $1e ; $6364
 	call ApproachSeniorCourtPairA ; $636b
-	script_set_actor_script ACTOR_SENIOR_COURT_FAY, ActorScript_12_01 ; $636e
+	script_set_actor_script $04, ActorScript_12_01 ; $636e
 	farcall WaitPlayerMoveDone ; $6379
 	script_wait_frames $b4 ; $637c
 	ld a, $0f ; $6383

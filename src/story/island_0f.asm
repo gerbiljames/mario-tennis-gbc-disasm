@@ -72,23 +72,23 @@ TournamentNpc0A_0f:
 	jr z, .speak ; $60f7
 	farcall AdvanceDialogueTextCursor ; $60f9
 .speak:
-	script_speak ACTOR_TOURNAMENT_ELDEN ; $60fc
+	script_speak $0b ; $60fc
 	ret ; $6101
 TournamentNpcScripts_0f:
 	; $6102, 105 bytes (map_scripts)
 	map_script ACTOR_TOURNAMENT_WALK_74_08, FACEMASK_ANY, $0000, Text_1f_159, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_WALK_74_07, FACEMASK_ANY, $0000, Text_1f_160, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_WALK_74_06, FACEMASK_ANY, $0000, Text_1f_161, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_161, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_SPIKE, FACEMASK_ANY, $0000, Text_1f_162, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_SAMMI, FACEMASK_ANY, $0000, TournamentNpc0A_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_ELDEN, FACEMASK_ANY, $0000, Text_1f_166, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_A_COZ, FACEMASK_ANY, $0000, Text_1f_167, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_B_COZ, FACEMASK_ANY, $0000, Text_1f_168, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0a, FACEMASK_ANY, $0000, TournamentNpc0A_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_1f_166, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_1f_167, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_1f_168, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_SEAN, FACEMASK_ANY, $0000, Text_1f_169, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_WALK_6F_00, FACEMASK_ANY, $0000, Text_1f_170, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_WALK_6F_01, FACEMASK_ANY, $0000, Text_1f_171, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_WALK_6F_07_1, FACEMASK_ANY, $0000, TournamentNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_WALK_6F_07_2, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentFacingScripts_0f:
 	; $616b, 9 bytes (map_scripts)
@@ -726,7 +726,7 @@ IslandOpenRound1DoublesNpc0A_0f:
 	jr z, .speak ; $6bf3
 	farcall AdvanceDialogueTextCursor ; $6bf5
 .speak:
-	script_speak ACTOR_TOURNAMENT_SAMMI ; $6bf8
+	script_speak $0a ; $6bf8
 	ret ; $6bfd
 ; Instruction-identical to IslandOpenFinalDoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0B_0f:
@@ -740,7 +740,7 @@ IslandOpenRound1DoublesNpc0B_0f:
 	jr z, .speak ; $6c17
 	farcall AdvanceDialogueTextCursor ; $6c19
 .speak:
-	script_speak ACTOR_TOURNAMENT_ELDEN ; $6c1c
+	script_speak $0b ; $6c1c
 	ret ; $6c21
 ; Instruction-identical to IslandOpenSemifinalDoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0D_0f:
@@ -754,7 +754,7 @@ IslandOpenRound1DoublesNpc0D_0f:
 	jr z, .speak ; $6c3b
 	farcall AdvanceDialogueTextCursor ; $6c3d
 .speak:
-	script_speak ACTOR_TOURNAMENT_B_COZ ; $6c40
+	script_speak $0d ; $6c40
 	ret ; $6c45
 IslandOpenSemifinalActorsDoubles_0f:
 	; $6c46, 192 bytes (map_actors)
@@ -798,7 +798,7 @@ IslandOpenSemifinalDoublesNpc08_0f:
 	jr z, .speak ; $6d80
 	farcall AdvanceDialogueTextCursor ; $6d82
 .speak:
-	script_speak ACTOR_TOURNAMENT_WALK_74_06 ; $6d85
+	script_speak $08 ; $6d85
 	ret ; $6d8a
 ; Instruction-identical to IslandOpenRound1DoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenSemifinalDoublesNpc0D_0f:
@@ -812,7 +812,7 @@ IslandOpenSemifinalDoublesNpc0D_0f:
 	jr z, .speak ; $6da4
 	farcall AdvanceDialogueTextCursor ; $6da6
 .speak:
-	script_speak ACTOR_TOURNAMENT_B_COZ ; $6da9
+	script_speak $0d ; $6da9
 	ret ; $6dae
 IslandOpenFinalActorsDoubles_0f:
 	; $6daf, 192 bytes (map_actors)
@@ -856,7 +856,7 @@ IslandOpenFinalDoublesNpc0C_0f:
 	jr z, .speak ; $6ee9
 	farcall AdvanceDialogueTextCursor ; $6eeb
 .speak:
-	script_speak ACTOR_TOURNAMENT_A_COZ ; $6eee
+	script_speak $0c ; $6eee
 	ret ; $6ef3
 ; Instruction-identical to IslandOpenRound1DoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenFinalDoublesNpc0B_0f:
@@ -870,5 +870,5 @@ IslandOpenFinalDoublesNpc0B_0f:
 	jr z, .speak ; $6f0d
 	farcall AdvanceDialogueTextCursor ; $6f0f
 .speak:
-	script_speak ACTOR_TOURNAMENT_ELDEN ; $6f12
+	script_speak $0b ; $6f12
 	ret ; $6f17

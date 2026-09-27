@@ -502,9 +502,9 @@ StoryCharacterRecords_02:
 	char_record 1, $0080, $00a0, $0900, $000c, 5, $0080, 8, 7, 3, 190, 0,  3, 2, 5, 6, 5, 4, 6, 6, 5, 3, 3,  0 ; $5e Dream Doubles Hard
 	char_record 1, $0080, $00a0, $0900, $000c, 6, $0080, 2, 2, 0, 230, 0,  3, 2, 5, 6, 5, 4, 6, 6, 5, 3, 3,  0 ; $5f Dream Doubles Intense
 	char_record 1, $0080, $00a0, $0900, $000c, 7, $0080, 0, 0, 0, 255, 0,  4, 3, 6, 7, 6, 5, 7, 7, 6, 4, 4,  0 ; $60 Dream Doubles Max
-	char_record 1, $0080, $00a0, $0800, $000c, 5, $0080, 8, 7, 3, 190, 0,  1, 3, 4, 4, 6, 5, 9, 4, 7, 7, 8,  0 ; $61
-	char_record 1, $0080, $00a0, $0800, $000c, 6, $0080, 2, 2, 0, 230, 0,  1, 3, 4, 4, 6, 5, 9, 4, 7, 7, 8,  0 ; $62
-	char_record 1, $0080, $00a0, $0800, $000c, 7, $0080, 0, 0, 0, 255, 0,  2, 4, 5, 5, 7, 6, 9, 5, 8, 8, 9,  0 ; $63
+	char_record 1, $0080, $00a0, $0800, $000c, 5, $0080, 8, 7, 3, 190, 0,  1, 3, 4, 4, 6, 5, 9, 4, 7, 7, 8,  0 ; $61 Dream Doubles Hard Partner
+	char_record 1, $0080, $00a0, $0800, $000c, 6, $0080, 2, 2, 0, 230, 0,  1, 3, 4, 4, 6, 5, 9, 4, 7, 7, 8,  0 ; $62 Dream Doubles Intense Partner
+	char_record 1, $0080, $00a0, $0800, $000c, 7, $0080, 0, 0, 0, 255, 0,  2, 4, 5, 5, 7, 6, 9, 5, 8, 8, 9,  0 ; $63 Dream Doubles Max Partner
 CharGroupTable_02:
 	; $5e23, 144 bytes (AISHOT_* x 16 per serve style)
 	db AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_NEUTRAL, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_NEUTRAL ; serve style 0

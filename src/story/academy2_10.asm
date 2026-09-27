@@ -133,7 +133,7 @@ AcademyMainBldgNpc03_10:
 	sra a ; $75fd
 	cp STORYTIER_ISLAND_OPEN ; $75ff
 	jr z, .eq03 ; $7601
-	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1 ; $7603
+	script_speak $03 ; $7603
 	ret ; $7608
 .eq03:
 	ld a, $03 ; $7609
@@ -145,7 +145,7 @@ AcademyMainBldgNpc03_10:
 	jr z, .speak ; $761c
 	farcall AdvanceDialogueTextCursor ; $761e
 .speak:
-	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1 ; $7621
+	script_speak $03 ; $7621
 	ret ; $7626
 AcademyMainBldgNpc03TextIds:
 	; $7627, 10 bytes (text_ids)
@@ -163,7 +163,7 @@ AcademyMainBldgNpc04_10:
 	ld h, [hl] ; $763f
 	ld l, a ; $7640
 	farcall InitDialogueTextCursor ; $7641
-	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_73_00 ; $7644
+	script_speak $04 ; $7644
 	ret ; $7649
 AcademyMainBldgNpc04TextIds:
 	; $764a, 10 bytes (text_ids)
@@ -174,11 +174,11 @@ AcademyMainBldgNpc04TextIds:
 	dw Text_30_458 ; record 4
 AcademyMainBldgNpc05_10:
 	script_set_text Text_30_462 ; $7654
-	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $765a
-	script_face ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2, FACE_DOWN ; $765f
+	script_speak $05 ; $765a
+	script_face $05, FACE_DOWN ; $765f
 	test_flag FLAG_DOUBLES ; $7666
 	jr nz, AcademyMainBldgNpc05TextIds.setText ; $7669
-	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $766b
+	script_speak $05 ; $766b
 	ld a, [wMapSceneStage] ; $7670
 	sra a ; $7673
 	add a ; $7675
@@ -189,8 +189,8 @@ AcademyMainBldgNpc05_10:
 	farcall InitDialogueTextCursor ; $7680
 .loop:
 	script_wait_frames $14 ; $7683
-	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $768a
-	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $7692
+	script_face_toward ACTOR_PLAYER, $05 ; $768a
+	script_speak $05 ; $7692
 	ret ; $7697
 AcademyMainBldgNpc05TextIds:
 	; $7698, 10 bytes (text_ids)
@@ -227,7 +227,7 @@ AcademyMainBldgNpc06_10:
 	ld h, [hl] ; $76df
 	ld l, a ; $76e0
 	farcall InitDialogueTextCursor ; $76e1
-	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_73_01 ; $76e4
+	script_speak $06 ; $76e4
 	ret ; $76e9
 AcademyMainBldgNpc06TextIds:
 	; $76ea, 10 bytes (text_ids)
@@ -238,10 +238,10 @@ AcademyMainBldgNpc06TextIds:
 	dw Text_30_459 ; record 4
 AcademyMainBldgNpcScripts_10:
 	; $76f4, 33 bytes (map_scripts)
-	map_script ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1, FACEMASK_ANY, $0000, AcademyMainBldgNpc03_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_ACADEMY_MAIN_BLDG_WALK_73_00, FACEMASK_ANY, $0000, AcademyMainBldgNpc04_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2, FACEMASK_ANY, $0000, AcademyMainBldgNpc05_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_ACADEMY_MAIN_BLDG_WALK_73_01, FACEMASK_ANY, $0000, AcademyMainBldgNpc06_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $03, FACEMASK_ANY, $0000, AcademyMainBldgNpc03_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script $04, FACEMASK_ANY, $0000, AcademyMainBldgNpc04_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $05, FACEMASK_ANY, $0000, AcademyMainBldgNpc05_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script $06, FACEMASK_ANY, $0000, AcademyMainBldgNpc06_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 AcademyMainBldgFacingScripts_10:
 	ds 1, $ff ; $7715, fill
@@ -253,7 +253,7 @@ AcademyMainBldgInitScript_10:
 	sra a ; $771d
 	cp STORYTIER_SENIOR_CHAMP ; $771f
 	jr nz, .ne02 ; $7721
-	script_set_actor_script ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1, ActorScript_10_1 ; $7723
+	script_set_actor_script $03, ActorScript_10_1 ; $7723
 .ne02:
 	ld a, $01 ; $772e
 	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730

@@ -28,13 +28,13 @@ AcademyWingExitTriggers_10:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $0f
 	db $ff
 AcademyWingNpc03_10:
-	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_WING_WALK_75_06 ; $623b
+	script_face_toward ACTOR_PLAYER, $03 ; $623b
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $6243
 	jr z, .altText ; $6246
 	script_set_text Text_30_517 ; $6248
 	jr .done ; $624e
 .altText:
-	script_get_actor_state ACTOR_ACADEMY_WING_TROPHY_2 ; $6250
+	script_get_actor_state $06 ; $6250
 	ld c, l ; $6255
 	ld b, h ; $6256
 	ld hl, ACTORF_OAM_ATTR ; $6257
@@ -42,10 +42,10 @@ AcademyWingNpc03_10:
 	ld a, [hl] ; $625b
 	or $20 ; $625c
 	ld [hl], a ; $625e
-	script_set_position ACTOR_ACADEMY_WING_TROPHY_2, $1b80, $2e00 ; $625f
+	script_set_position $06, $1b80, $2e00 ; $625f
 	sound SFX_CHIME ; $626a
 	script_wait_frames $3c ; $626c
-	script_set_position ACTOR_ACADEMY_WING_TROPHY_2, $0100, $0100 ; $6273
+	script_set_position $06, $0100, $0100 ; $6273
 	script_set_text Text_30_513 ; $627e
 	test_flag FLAG_DOUBLES ; $6284
 	jr z, .speak ; $6287
@@ -62,11 +62,11 @@ AcademyWingNpc03_10:
 	script_set_text Text_30_516 ; $62a7
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62ad
 .done:
-	script_speak ACTOR_ACADEMY_WING_WALK_75_06 ; $62b0
+	script_speak $03 ; $62b0
 	ret ; $62b5
 AcademyWingNpcScripts_10:
 	; $62b6, 9 bytes (map_scripts)
-	map_script ACTOR_ACADEMY_WING_WALK_75_06, FACEMASK_ANY, $0000, AcademyWingNpc03_10, NPC_FACE_PLAYER, $00
+	map_script $03, FACEMASK_ANY, $0000, AcademyWingNpc03_10, NPC_FACE_PLAYER, $00
 	db $ff
 AcademyWingFacingScripts_10:
 	; $62bf, 17 bytes (map_scripts)
@@ -81,18 +81,18 @@ AcademyWingFacing02_10:
 	script_player_speed $0020 ; $62da
 	script_move_player $2100, $3300 ; $62e0
 	script_set_text Text_30_449 ; $62ea
-	script_face ACTOR_ACADEMY_WING_WALK_75_06, FACE_DOWN ; $62f0
+	script_face $03, FACE_DOWN ; $62f0
 	script_wait_frames $0a ; $62f7
-	script_speak ACTOR_ACADEMY_WING_INVISIBLE ; $62fe
+	script_speak $04 ; $62fe
 	script_wait_frames $0a ; $6303
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $630a
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $6311
 	script_wait_idle ACTOR_PLAYER ; $6318
-	script_set_anim ACTOR_ACADEMY_WING_WALK_75_06, ANIM_SHAKE ; $631d
-	script_wait_idle ACTOR_ACADEMY_WING_WALK_75_06 ; $6324
+	script_set_anim $03, ANIM_SHAKE ; $631d
+	script_wait_idle $03 ; $6324
 	script_player_speed $0018 ; $6329
-	script_speak ACTOR_ACADEMY_WING_INVISIBLE ; $632f
-	script_face ACTOR_ACADEMY_WING_WALK_75_06, FACE_RIGHT ; $6334
+	script_speak $04 ; $632f
+	script_face $03, FACE_RIGHT ; $6334
 	script_move_player $2100, $3b00 ; $633b
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $6345
 	script_wait_idle ACTOR_PLAYER ; $634c

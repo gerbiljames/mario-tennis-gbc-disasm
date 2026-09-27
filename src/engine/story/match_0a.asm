@@ -67,7 +67,7 @@ AssignStoryMatchCharacters:
 	ld c, $01 ; $49c2
 	farcall InitCa00RecordFromCharId ; $49c4
 	ld a, [wMatchOpponentChar] ; $49c7
-	ld hl, PairSwapIndexTable_0a ; $49ca
+	ld hl, DoublesPartnerTable_0a ; $49ca
 	add l ; $49cd
 	ld l, a ; $49ce
 	jr nc, .read ; $49cf
@@ -78,15 +78,112 @@ AssignStoryMatchCharacters:
 	farcall InitCa00RecordFromCharId ; $49d5
 .done:
 	ret ; $49d8
-PairSwapIndexTable_0a:
-	; $49d9, 104 bytes (bytes:16)
-	db $02, $03, $00, $01, $05, $04, $07, $06, $09, $08, $0b, $0a, $0c, $0e, $0d, $10 ; 0x00
-	db $0f, $14, $13, $12, $11, $14, $17, $16, $19, $18, $1b, $1a, $1d, $1c, $1f, $1e ; 0x10
-	db $22, $23, $20, $21, $25, $24, $27, $26, $29, $28, $2b, $2a, $2d, $2c, $2f, $2e ; 0x20
-	db $31, $30, $33, $32, $35, $34, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x30
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x40
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $61, $62 ; 0x50
-	db $63, $5e, $5f, $60, $00, $00, $00, $00 ; 0x60
+DoublesPartnerTable_0a:
+	; $49d9, 104 bytes: the doubles partner of each opponent id, 0 = none
+	db CHAR_HARRY ; CHAR_ALEX
+	db CHAR_KATE ; CHAR_NINA
+	db CHAR_ALEX ; CHAR_HARRY
+	db CHAR_NINA ; CHAR_KATE
+	db CHAR_JOY ; CHAR_ALLIE
+	db CHAR_ALLIE ; CHAR_JOY
+	db CHAR_PAM ; CHAR_BRIAN
+	db CHAR_BRIAN ; CHAR_PAM
+	db CHAR_BETH ; CHAR_BOB
+	db CHAR_BOB ; CHAR_BETH
+	db CHAR_CURT ; CHAR_FAY
+	db CHAR_FAY ; CHAR_CURT
+	db CHAR_MARK ; CHAR_MARK
+	db CHAR_SAMMI ; CHAR_SEAN
+	db CHAR_SEAN ; CHAR_SAMMI
+	db CHAR_SPIKE ; CHAR_ELDEN
+	db CHAR_ELDEN ; CHAR_SPIKE
+	db CHAR_KEVIN ; CHAR_EMILY
+	db CHAR_A_COZ ; CHAR_B_COZ
+	db CHAR_B_COZ ; CHAR_A_COZ
+	db CHAR_EMILY ; CHAR_KEVIN
+	db CHAR_KEVIN ; CHAR_UNUSED_15
+	db CHAR_LUIGI ; CHAR_UNUSED_16
+	db CHAR_UNUSED_16 ; CHAR_LUIGI
+	db CHAR_BABY_MARIO ; CHAR_DK
+	db CHAR_DK ; CHAR_BABY_MARIO
+	db CHAR_WALUIGI ; CHAR_MARIO
+	db CHAR_MARIO ; CHAR_WALUIGI
+	db CHAR_BOWSER ; CHAR_YOSHI
+	db CHAR_YOSHI ; CHAR_BOWSER
+	db CHAR_PEACH ; CHAR_WARIO
+	db CHAR_WARIO ; CHAR_PEACH
+	db CHAR_RANKER_34 ; CHAR_RANKER_32
+	db CHAR_RANKER_35 ; CHAR_RANKER_33
+	db CHAR_RANKER_32 ; CHAR_RANKER_34
+	db CHAR_RANKER_33 ; CHAR_RANKER_35
+	db CHAR_RANKER_37 ; CHAR_RANKER_36
+	db CHAR_RANKER_36 ; CHAR_RANKER_37
+	db CHAR_RANKER_39 ; CHAR_RANKER_38
+	db CHAR_RANKER_38 ; CHAR_RANKER_39
+	db CHAR_RANKER_41 ; CHAR_RANKER_40
+	db CHAR_RANKER_40 ; CHAR_RANKER_41
+	db CHAR_RANKER_43 ; CHAR_RANKER_42
+	db CHAR_RANKER_42 ; CHAR_RANKER_43
+	db CHAR_RANKER_45 ; CHAR_RANKER_44
+	db CHAR_RANKER_44 ; CHAR_RANKER_45
+	db CHAR_RANKER_47 ; CHAR_RANKER_46
+	db CHAR_RANKER_46 ; CHAR_RANKER_47
+	db CHAR_EMILY_2 ; CHAR_KEVIN_2
+	db CHAR_KEVIN_2 ; CHAR_EMILY_2
+	db CHAR_ELLIS ; CHAR_MARK_2
+	db CHAR_MARK_2 ; CHAR_ELLIS
+	db CHAR_EDGAR ; CHAR_FRANK
+	db CHAR_FRANK ; CHAR_EDGAR
+	db $00 ; $36
+	db $00 ; $37
+	db $00 ; $38
+	db $00 ; $39
+	db $00 ; $3a
+	db $00 ; $3b
+	db $00 ; $3c
+	db $00 ; $3d
+	db $00 ; $3e
+	db $00 ; $3f
+	db $00 ; $40
+	db $00 ; $41
+	db $00 ; $42
+	db $00 ; $43
+	db $00 ; $44
+	db $00 ; $45
+	db $00 ; $46
+	db $00 ; $47
+	db $00 ; $48
+	db $00 ; $49
+	db $00 ; $4a
+	db $00 ; $4b
+	db $00 ; $4c
+	db $00 ; $4d
+	db $00 ; $4e
+	db $00 ; $4f
+	db $00 ; $50
+	db $00 ; $51
+	db $00 ; $52
+	db $00 ; $53
+	db $00 ; $54
+	db $00 ; $55
+	db $00 ; $56
+	db $00 ; $57
+	db $00 ; $58
+	db $00 ; $59
+	db $00 ; $5a
+	db $00 ; $5b
+	db $00 ; $5c
+	db $00 ; $5d
+	db CHAR_DREAM_DOUBLES_HARD_PARTNER ; CHAR_DREAM_DOUBLES_HARD
+	db CHAR_DREAM_DOUBLES_INTENSE_PARTNER ; CHAR_DREAM_DOUBLES_INTENSE
+	db CHAR_DREAM_DOUBLES_MAX_PARTNER ; CHAR_DREAM_DOUBLES_MAX
+	db CHAR_DREAM_DOUBLES_HARD ; CHAR_DREAM_DOUBLES_HARD_PARTNER
+	db CHAR_DREAM_DOUBLES_INTENSE ; CHAR_DREAM_DOUBLES_INTENSE_PARTNER
+	db CHAR_DREAM_DOUBLES_MAX ; CHAR_DREAM_DOUBLES_MAX_PARTNER
+	db $00 ; $64
+	db $00 ; $65
+	db $00 ; $66
+	db $00 ; $67
 SetMatchDoublesMode:
 	ld [wMatchIsDoubles], a ; $4a41
 	sla a ; $4a44

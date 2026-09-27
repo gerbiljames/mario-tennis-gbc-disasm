@@ -580,7 +580,7 @@ save-and-quit request saves and bounces to the main menu, otherwise the caller
 continues its cutscene. `AssignStoryMatchCharacters` fills the four on-court
 records via `InitCa00RecordFromCharId`: selector `$80`/`$81` mean "copy the story
 main/partner record", the opponent uses its character id, and the opponent's
-doubles partner comes from `PairSwapIndexTable_0a` (`$0a:$49d9`).
+doubles partner comes from `DoublesPartnerTable_0a` (`$0a:$49d9`), indexed by the opponent id.
 `RestoreOverworldAfterMatch` (`$0a:$4991`) restores the overworld palettes and
 menu font afterwards.
 
