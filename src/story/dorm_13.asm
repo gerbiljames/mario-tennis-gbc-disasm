@@ -375,7 +375,7 @@ PlaceDormRoomArrivalActors_13:
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $51fa
 	ld c, l ; $51ff
 	ld b, h ; $5200
-	ld hl, $0005 ; $5201
+	ld hl, ACTORF_FLAGS ; $5201
 	add hl, bc ; $5204
 	set 4, [hl] ; $5205
 	ret ; $5207
@@ -397,7 +397,7 @@ PlaceDormRoomArrivalActors_13:
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5240
 	ld c, l ; $5245
 	ld b, h ; $5246
-	ld hl, $0005 ; $5247
+	ld hl, ACTORF_FLAGS ; $5247
 	add hl, bc ; $524a
 	set 4, [hl] ; $524b
 	ret ; $524d
@@ -499,7 +499,7 @@ DormRoomNpc03_13:
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $537a
 	ld c, l ; $537f
 	ld b, h ; $5380
-	ld hl, $0005 ; $5381
+	ld hl, ACTORF_FLAGS ; $5381
 	add hl, bc ; $5384
 	set 4, [hl] ; $5385
 	script_wait_frames $05 ; $5387

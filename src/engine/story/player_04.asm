@@ -120,13 +120,13 @@ ObjectIdList_04:
 	db $00, $00 ; end: GetObjectDefCount counts rows up to here
 SetActorMoveTarget:
 	push hl ; $5061
-	ld hl, $000a ; $5062
+	ld hl, ACTORF_TARGET_Y ; $5062
 	add hl, bc ; $5065
 	ld a, e ; $5066
 	ld [hl+], a ; $5067
 	ld [hl], d ; $5068
 	pop de ; $5069
-	ld hl, $0008 ; $506a
+	ld hl, ACTORF_TARGET_X ; $506a
 	add hl, bc ; $506d
 	ld a, e ; $506e
 	ld [hl+], a ; $506f
@@ -191,7 +191,7 @@ IndexPlayerControlTable:
 	ld e, a ; $50f8
 	ld a, [hl+] ; $50f9
 	ld d, a ; $50fa
-	ld hl, $000e ; $50fb
+	ld hl, ACTORF_Y ; $50fb
 	add hl, bc ; $50fe
 	ld a, [hl+] ; $50ff
 	ld h, [hl] ; $5100
@@ -203,7 +203,7 @@ IndexPlayerControlTable:
 	push de ; $5106
 	ld e, l ; $5107
 	ld d, h ; $5108
-	ld hl, $000c ; $5109
+	ld hl, ACTORF_X ; $5109
 	add hl, bc ; $510c
 	ld a, [hl+] ; $510d
 	ld h, [hl] ; $510e
@@ -214,7 +214,7 @@ IndexPlayerControlTable:
 ProjectPointFromActor:
 	call VectorFromLengthAndAngle ; $5113
 	push hl ; $5116
-	ld hl, $000e ; $5117
+	ld hl, ACTORF_Y ; $5117
 	add hl, bc ; $511a
 	ld a, [hl+] ; $511b
 	ld h, [hl] ; $511c
@@ -226,7 +226,7 @@ ProjectPointFromActor:
 	push de ; $5122
 	ld e, l ; $5123
 	ld d, h ; $5124
-	ld hl, $000c ; $5125
+	ld hl, ACTORF_X ; $5125
 	add hl, bc ; $5128
 	ld a, [hl+] ; $5129
 	ld h, [hl] ; $512a
@@ -292,10 +292,10 @@ UpdatePlayerControl:
 	jr z, .checkStart ; $517e
 	ld hl, wStoryModeInteractRequest ; $5180
 	ld [hl], $01 ; $5183
-	ld hl, $000f ; $5185
+	ld hl, ACTORF_Y + 1 ; $5185
 	add hl, bc ; $5188
 	ld d, [hl] ; $5189
-	ld hl, $000d ; $518a
+	ld hl, ACTORF_X + 1 ; $518a
 	add hl, bc ; $518d
 	ld h, [hl] ; $518e
 	call CheckTileTriggerAtPoint ; $518f
@@ -347,7 +347,7 @@ UpdatePlayerControl:
 	ld a, [hl+] ; $51e4
 	ld b, [hl] ; $51e5
 	ld c, a ; $51e6
-	ld hl, $0034 ; $51e7
+	ld hl, ACTORF_FACING ; $51e7
 	add hl, bc ; $51ea
 	ld a, [wPlayerMoveAngle] ; $51eb
 	ld [hl], a ; $51ee
@@ -366,10 +366,10 @@ UpdatePlayerControl:
 	ld [hl], d ; $5208
 	jr .slideDepth ; $5209
 .checkBlocked:
-	ld hl, $000d ; $520b
+	ld hl, ACTORF_X + 1 ; $520b
 	add hl, bc ; $520e
 	ld d, [hl] ; $520f
-	ld hl, $000f ; $5210
+	ld hl, ACTORF_Y + 1 ; $5210
 	add hl, bc ; $5213
 	ld e, [hl] ; $5214
 	farcall ReadCollisionMapCell ; $5215
@@ -445,7 +445,7 @@ UpdatePlayerControl:
 	ld hl, wStoryAutoInteractArmed ; $52a6
 	ld [hl], $01 ; $52a9
 .setFacing:
-	ld hl, $0014 ; $52ab
+	ld hl, ACTORF_HEADING ; $52ab
 	add hl, bc ; $52ae
 	ld a, [wPlayerMoveAngle] ; $52af
 	ld [hl], a ; $52b2
@@ -461,7 +461,7 @@ UpdatePlayerControl:
 	call ProjectPointFromActor ; $52c0
 	call CheckTileTriggerAtPoint ; $52c3
 	call SetActorMoveTarget ; $52c6
-	ld hl, $0005 ; $52c9
+	ld hl, ACTORF_FLAGS ; $52c9
 	add hl, bc ; $52cc
 	set 7, [hl] ; $52cd
 	ld hl, $0018 ; $52cf
@@ -485,7 +485,7 @@ UpdatePlayerControl:
 	ld a, [hl+] ; $52eb
 	ld b, [hl] ; $52ec
 	ld c, a ; $52ed
-	ld hl, $000e ; $52ee
+	ld hl, ACTORF_Y ; $52ee
 	add hl, bc ; $52f1
 	ld a, [hl+] ; $52f2
 	ld h, [hl] ; $52f3
@@ -496,13 +496,13 @@ UpdatePlayerControl:
 	and $e0 ; $52fa
 	ld l, a ; $52fc
 	push hl ; $52fd
-	ld hl, $000e ; $52fe
+	ld hl, ACTORF_Y ; $52fe
 	add hl, bc ; $5301
 	pop de ; $5302
 	ld [hl], e ; $5303
 	inc hl ; $5304
 	ld [hl], d ; $5305
-	ld hl, $000c ; $5306
+	ld hl, ACTORF_X ; $5306
 	add hl, bc ; $5309
 	ld a, [hl+] ; $530a
 	ld h, [hl] ; $530b
@@ -513,13 +513,13 @@ UpdatePlayerControl:
 	and $e0 ; $5312
 	ld l, a ; $5314
 	push hl ; $5315
-	ld hl, $000c ; $5316
+	ld hl, ACTORF_X ; $5316
 	add hl, bc ; $5319
 	pop de ; $531a
 	ld [hl], e ; $531b
 	inc hl ; $531c
 	ld [hl], d ; $531d
-	ld hl, $0005 ; $531e
+	ld hl, ACTORF_FLAGS ; $531e
 	add hl, bc ; $5321
 	res 7, [hl] ; $5322
 	ld hl, $0018 ; $5324

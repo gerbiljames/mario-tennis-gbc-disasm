@@ -21,7 +21,7 @@ SetActorAnimation:
 	and $0f ; $4bda
 	ld [hl], a ; $4bdc
 	push bc ; $4bdd
-	ld hl, $0028 ; $4bde
+	ld hl, ACTORF_ANIM_TABLE ; $4bde
 	add hl, bc ; $4be1
 	ld a, [hl+] ; $4be2
 	ld h, [hl] ; $4be3
@@ -167,7 +167,7 @@ SpawnActorFromTemplate:
 	inc b ; $4c85
 	dec b ; $4c86
 	jr z, .done ; $4c87
-	ld a, $0c ; $4c89
+	ld a, ACTORF_X ; $4c89
 	add c ; $4c8b
 	ld e, a ; $4c8c
 	ld d, b ; $4c8d
@@ -176,7 +176,7 @@ SpawnActorFromTemplate:
 	inc de ; $4c90
 	ld a, [hl-] ; $4c91
 	ld [de], a ; $4c92
-	ld a, $08 ; $4c93
+	ld a, ACTORF_TARGET_X ; $4c93
 	add c ; $4c95
 	ld e, a ; $4c96
 	ld d, b ; $4c97
@@ -185,7 +185,7 @@ SpawnActorFromTemplate:
 	inc de ; $4c9a
 	ld a, [hl+] ; $4c9b
 	ld [de], a ; $4c9c
-	ld a, $0e ; $4c9d
+	ld a, ACTORF_Y ; $4c9d
 	add c ; $4c9f
 	ld e, a ; $4ca0
 	ld d, b ; $4ca1
@@ -194,7 +194,7 @@ SpawnActorFromTemplate:
 	inc de ; $4ca4
 	ld a, [hl-] ; $4ca5
 	ld [de], a ; $4ca6
-	ld a, $0a ; $4ca7
+	ld a, ACTORF_TARGET_Y ; $4ca7
 	add c ; $4ca9
 	ld e, a ; $4caa
 	ld d, b ; $4cab
@@ -203,7 +203,7 @@ SpawnActorFromTemplate:
 	inc de ; $4cae
 	ld a, [hl+] ; $4caf
 	ld [de], a ; $4cb0
-	ld a, $14 ; $4cb1
+	ld a, ACTORF_HEADING ; $4cb1
 	add c ; $4cb3
 	ld e, a ; $4cb4
 	ld d, b ; $4cb5
@@ -219,7 +219,7 @@ SpawnActorFromTemplate:
 	ld a, [hl] ; $4cc3
 	cp $00 ; $4cc4
 	jr z, .setFlags ; $4cc6
-	ld a, $37 ; $4cc8
+	ld a, ACTORF_OAM_ATTR ; $4cc8
 	add c ; $4cca
 	ld e, a ; $4ccb
 	ld d, b ; $4ccc
@@ -228,7 +228,7 @@ SpawnActorFromTemplate:
 .setFlags:
 	inc hl ; $4ccf
 	inc hl ; $4cd0
-	ld hl, $0005 ; $4cd1
+	ld hl, ACTORF_FLAGS ; $4cd1
 	add hl, bc ; $4cd4
 	set 3, [hl] ; $4cd5
 	set 4, [hl] ; $4cd7
@@ -387,7 +387,7 @@ SpawnMainCharacterActor:
 	ld a, [hl] ; $4eb8
 	add $03 ; $4eb9
 	ld bc, wActors ; $4ebb
-	ld hl, $0037 ; $4ebe
+	ld hl, ACTORF_OAM_ATTR ; $4ebe
 	add hl, bc ; $4ec1
 	ld [hl], a ; $4ec2
 	pop hl ; $4ec3
@@ -442,7 +442,7 @@ SpawnCompanionActor:
 	ld hl, $0014 ; $4f53
 	add hl, de ; $4f56
 	ld a, [hl] ; $4f57
-	ld hl, $0014 ; $4f58
+	ld hl, ACTORF_HEADING ; $4f58
 	add hl, bc ; $4f5b
 	ld [hl], a ; $4f5c
 	ld hl, $000c ; $4f5d

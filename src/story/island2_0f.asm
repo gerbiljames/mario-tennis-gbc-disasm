@@ -376,7 +376,7 @@ IslandOpenSinglesMatchReturn:
 	script_get_actor_state ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_73_12 ; $74ca
 	ld c, l ; $74cf
 	ld b, h ; $74d0
-	ld hl, $0037 ; $74d1
+	ld hl, ACTORF_OAM_ATTR ; $74d1
 	add hl, bc ; $74d4
 	ld a, [hl] ; $74d5
 	xor $20 ; $74d6
@@ -545,7 +545,7 @@ IslandOpenDoublesMatchReturn:
 	script_get_actor_state $08 ; $7763
 	ld c, l ; $7768
 	ld b, h ; $7769
-	ld hl, $0037 ; $776a
+	ld hl, ACTORF_OAM_ATTR ; $776a
 	add hl, bc ; $776d
 	ld a, [hl] ; $776e
 	xor $20 ; $776f

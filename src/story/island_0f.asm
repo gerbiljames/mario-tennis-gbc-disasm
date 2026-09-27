@@ -251,7 +251,7 @@ SetActorDrawModeFromSceneTile_0f:
 	add hl, bc ; $6334
 	ld b, h ; $6335
 	ld c, l ; $6336
-	ld hl, $000c ; $6337
+	ld hl, ACTORF_X ; $6337
 	add hl, bc ; $633a
 	ld a, [hl+] ; $633b
 	ld h, [hl] ; $633c
@@ -259,7 +259,7 @@ SetActorDrawModeFromSceneTile_0f:
 	ld de, $ffb0 ; $633e
 	add hl, de ; $6341
 	ld d, h ; $6342
-	ld hl, $000e ; $6343
+	ld hl, ACTORF_Y ; $6343
 	add hl, bc ; $6346
 	ld a, [hl+] ; $6347
 	add $40 ; $6348
@@ -280,7 +280,7 @@ SetActorDrawModeFromSceneTile_0f:
 	cp $05 ; $635c
 	jr nz, .checkBelow ; $635e
 	wram_bank WRAM_ACTORS ; $6360
-	ld hl, $0020 ; $6366
+	ld hl, ACTORF_MODE ; $6366
 	add hl, bc ; $6369
 	ld a, [hl] ; $636a
 	xor $01 ; $636b
@@ -293,7 +293,7 @@ SetActorDrawModeFromSceneTile_0f:
 	cp $05 ; $6375
 	jr nz, .actorLoop ; $6377
 	wram_bank WRAM_ACTORS ; $6379
-	ld hl, $0020 ; $637f
+	ld hl, ACTORF_MODE ; $637f
 	add hl, bc ; $6382
 	ld a, [hl] ; $6383
 	xor $01 ; $6384
@@ -301,7 +301,7 @@ SetActorDrawModeFromSceneTile_0f:
 	ret ; $6387
 .actorLoop:
 	wram_bank WRAM_ACTORS ; $6388
-	ld hl, $0020 ; $638e
+	ld hl, ACTORF_MODE ; $638e
 	add hl, bc ; $6391
 	ld a, $02 ; $6392
 	ld [hl], a ; $6394
@@ -319,7 +319,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	add hl, bc ; $63aa
 	ld b, h ; $63ab
 	ld c, l ; $63ac
-	ld hl, $000c ; $63ad
+	ld hl, ACTORF_X ; $63ad
 	add hl, bc ; $63b0
 	ld a, [hl+] ; $63b1
 	ld h, [hl] ; $63b2
@@ -327,7 +327,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ld de, $ffb0 ; $63b4
 	add hl, de ; $63b7
 	ld d, h ; $63b8
-	ld hl, $000e ; $63b9
+	ld hl, ACTORF_Y ; $63b9
 	add hl, bc ; $63bc
 	ld a, [hl+] ; $63bd
 	add $40 ; $63be
@@ -344,7 +344,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	cp $05 ; $63ce
 	jr nz, .nextActor ; $63d0
 	wram_bank WRAM_ACTORS ; $63d2
-	ld hl, $0020 ; $63d8
+	ld hl, ACTORF_MODE ; $63d8
 	add hl, bc ; $63db
 	ld a, [hl] ; $63dc
 	xor $01 ; $63dd
@@ -357,7 +357,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	cp $05 ; $63e7
 	jr nz, .done ; $63e9
 	wram_bank WRAM_ACTORS ; $63eb
-	ld hl, $0020 ; $63f1
+	ld hl, ACTORF_MODE ; $63f1
 	add hl, bc ; $63f4
 	ld a, [hl] ; $63f5
 	xor $01 ; $63f6
@@ -365,7 +365,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ret ; $63f9
 .done:
 	wram_bank WRAM_ACTORS ; $63fa
-	ld hl, $0020 ; $6400
+	ld hl, ACTORF_MODE ; $6400
 	add hl, bc ; $6403
 	ld a, $02 ; $6404
 	ld [hl], a ; $6406

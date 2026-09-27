@@ -1,5 +1,5 @@
 UpdateCameraIfActorIsCameraTarget:
-	ld hl, $0020 ; $4402
+	ld hl, ACTORF_MODE ; $4402
 	add hl, bc ; $4405
 	ld a, [hl] ; $4406
 	cp $01 ; $4407
@@ -9,7 +9,7 @@ UpdateCameraToActor:
 	push de ; $440b
 	push hl ; $440c
 	wram_bank WRAM_ACTORS ; $440d
-	ld hl, $000c ; $4413
+	ld hl, ACTORF_X ; $4413
 	add hl, bc ; $4416
 	ld a, [hl+] ; $4417
 	ld h, [hl] ; $4418
@@ -41,7 +41,7 @@ UpdateCameraToActor:
 	ld [wCameraX], a ; $443f
 	ld a, h ; $4442
 	ld [wCameraX + 1], a ; $4443
-	ld hl, $000e ; $4446
+	ld hl, ACTORF_Y ; $4446
 	add hl, bc ; $4449
 	ld a, [hl+] ; $444a
 	ld h, [hl] ; $444b
@@ -387,7 +387,7 @@ ActorScriptOp_FollowWaypoint:
 	ld e, a ; $4631
 	ld hl, $000c ; $4632
 	add hl, de ; $4635
-	ld a, $08 ; $4636
+	ld a, ACTORF_TARGET_X ; $4636
 	add c ; $4638
 	ld e, a ; $4639
 	ld d, b ; $463a
@@ -404,10 +404,10 @@ ActorScriptOp_FollowWaypoint:
 	ld [de], a ; $4645
 	call IsActorAtTarget ; $4646
 	jr z, .done ; $4649
-	ld hl, $0009 ; $464b
+	ld hl, ACTORF_TARGET_X + 1 ; $464b
 	add hl, bc ; $464e
 	ld a, [hl] ; $464f
-	ld hl, $000d ; $4650
+	ld hl, ACTORF_X + 1 ; $4650
 	add hl, bc ; $4653
 	sub [hl] ; $4654
 	bit 7, a ; $4655
@@ -417,10 +417,10 @@ ActorScriptOp_FollowWaypoint:
 .squareDeltaX:
 	call GetSquareOfByte ; $465b
 	push hl ; $465e
-	ld hl, $000b ; $465f
+	ld hl, ACTORF_TARGET_Y + 1 ; $465f
 	add hl, bc ; $4662
 	ld a, [hl] ; $4663
-	ld hl, $000f ; $4664
+	ld hl, ACTORF_Y + 1 ; $4664
 	add hl, bc ; $4667
 	sub [hl] ; $4668
 	bit 7, a ; $4669
@@ -462,7 +462,7 @@ ActorScriptOp_FollowWaypoint:
 	ld a, e ; $46a4
 	ld [hl+], a ; $46a5
 	ld [hl], d ; $46a6
-	ld hl, $0005 ; $46a7
+	ld hl, ACTORF_FLAGS ; $46a7
 	add hl, bc ; $46aa
 	set 7, [hl] ; $46ab
 .done:
@@ -510,7 +510,7 @@ ActorScriptOp_Step:
 	ld a, [hl+] ; $46e2
 	ld b, [hl] ; $46e3
 	ld c, a ; $46e4
-	ld hl, $000d ; $46e5
+	ld hl, ACTORF_X + 1 ; $46e5
 	add hl, bc ; $46e8
 	ld a, d ; $46e9
 	sub [hl] ; $46ea
@@ -521,7 +521,7 @@ ActorScriptOp_Step:
 .negative:
 	call GetSquareOfByte ; $46f1
 	push hl ; $46f4
-	ld hl, $000f ; $46f5
+	ld hl, ACTORF_Y + 1 ; $46f5
 	add hl, bc ; $46f8
 	ld a, e ; $46f9
 	sub [hl] ; $46fa
@@ -586,7 +586,7 @@ ActorScriptOp_Step:
 	ld a, [hl+] ; $474e
 	ld b, [hl] ; $474f
 	ld c, a ; $4750
-	ld hl, $0005 ; $4751
+	ld hl, ACTORF_FLAGS ; $4751
 	add hl, bc ; $4754
 	set 7, [hl] ; $4755
 .done:
@@ -594,9 +594,9 @@ ActorScriptOp_Step:
 	xor a ; $4758
 	ret ; $4759
 IsActorAtTarget:
-	ld hl, $000c ; $475a
+	ld hl, ACTORF_X ; $475a
 	add hl, bc ; $475d
-	ld a, $08 ; $475e
+	ld a, ACTORF_TARGET_X ; $475e
 	add c ; $4760
 	ld e, a ; $4761
 	ld d, b ; $4762

@@ -56,7 +56,7 @@ SpawnActor:
 	ld hl, $0036 ; $408c
 	add hl, bc ; $408f
 	ld [hl], a ; $4090
-	ld hl, $0020 ; $4091
+	ld hl, ACTORF_MODE ; $4091
 	add hl, bc ; $4094
 	ld [hl], $00 ; $4095
 	ld hl, $0015 ; $4097
@@ -104,23 +104,23 @@ SetActorPosition:
 	push hl ; $40cb
 	wram_bank WRAM_ACTORS ; $40cc
 	push hl ; $40d2
-	ld hl, $000e ; $40d3
+	ld hl, ACTORF_Y ; $40d3
 	add hl, bc ; $40d6
 	ld a, e ; $40d7
 	ld [hl+], a ; $40d8
 	ld [hl], d ; $40d9
-	ld hl, $000a ; $40da
+	ld hl, ACTORF_TARGET_Y ; $40da
 	add hl, bc ; $40dd
 	ld a, e ; $40de
 	ld [hl+], a ; $40df
 	ld [hl], d ; $40e0
 	pop de ; $40e1
-	ld hl, $000c ; $40e2
+	ld hl, ACTORF_X ; $40e2
 	add hl, bc ; $40e5
 	ld a, e ; $40e6
 	ld [hl+], a ; $40e7
 	ld [hl], d ; $40e8
-	ld hl, $0008 ; $40e9
+	ld hl, ACTORF_TARGET_X ; $40e9
 	add hl, bc ; $40ec
 	ld a, e ; $40ed
 	ld [hl+], a ; $40ee
@@ -138,13 +138,13 @@ Unused_04_SetActorTarget:
 	push hl ; $40f9
 	wram_bank WRAM_ACTORS ; $40fa
 	push hl ; $4100
-	ld hl, $000a ; $4101
+	ld hl, ACTORF_TARGET_Y ; $4101
 	add hl, bc ; $4104
 	ld a, e ; $4105
 	ld [hl+], a ; $4106
 	ld [hl], d ; $4107
 	pop de ; $4108
-	ld hl, $0008 ; $4109
+	ld hl, ACTORF_TARGET_X ; $4109
 	add hl, bc ; $410c
 	ld a, e ; $410d
 	ld [hl+], a ; $410e
@@ -162,7 +162,7 @@ Unused_04_SetActorTargetRelative:
 	push hl ; $4119
 	wram_bank WRAM_ACTORS ; $411a
 	push hl ; $4120
-	ld hl, $000e ; $4121
+	ld hl, ACTORF_Y ; $4121
 	add hl, bc ; $4124
 	ld a, [hl+] ; $4125
 	ld h, [hl] ; $4126
@@ -170,13 +170,13 @@ Unused_04_SetActorTargetRelative:
 	add hl, de ; $4128
 	ld e, l ; $4129
 	ld d, h ; $412a
-	ld hl, $000a ; $412b
+	ld hl, ACTORF_TARGET_Y ; $412b
 	add hl, bc ; $412e
 	ld a, e ; $412f
 	ld [hl+], a ; $4130
 	ld [hl], d ; $4131
 	pop de ; $4132
-	ld hl, $000c ; $4133
+	ld hl, ACTORF_X ; $4133
 	add hl, bc ; $4136
 	ld a, [hl+] ; $4137
 	ld h, [hl] ; $4138
@@ -184,7 +184,7 @@ Unused_04_SetActorTargetRelative:
 	add hl, de ; $413a
 	ld e, l ; $413b
 	ld d, h ; $413c
-	ld hl, $0008 ; $413d
+	ld hl, ACTORF_TARGET_X ; $413d
 	add hl, bc ; $4140
 	ld a, e ; $4141
 	ld [hl+], a ; $4142
@@ -200,7 +200,7 @@ SetActorMode:
 	push af ; $414b
 	push hl ; $414c
 	wram_bank WRAM_ACTORS ; $414d
-	ld hl, $0020 ; $4153
+	ld hl, ACTORF_MODE ; $4153
 	add hl, bc ; $4156
 	ld [hl], d ; $4157
 	pop hl ; $4158
@@ -216,11 +216,11 @@ AttachActorControllerScript:
 	ldh a, [hRomBank] ; $4161
 	ld hl, ActorScript_PlayerControl ; $4163
 	call SetActorScript ; $4166
-	ld hl, $0005 ; $4169
+	ld hl, ACTORF_FLAGS ; $4169
 	add hl, bc ; $416c
 	res 3, [hl] ; $416d
 	res 4, [hl] ; $416f
-	ld hl, $0030 ; $4171
+	ld hl, ACTORF_STATUS ; $4171
 	add hl, bc ; $4174
 	set 0, [hl] ; $4175
 	pop hl ; $4177
@@ -243,7 +243,7 @@ AttachActorWaypointFollower:
 	ldh a, [hRomBank] ; $418e
 	ld hl, ActorScript_FollowWaypoints ; $4190
 	call SetActorScript ; $4193
-	ld hl, $0020 ; $4196
+	ld hl, ACTORF_MODE ; $4196
 	add hl, bc ; $4199
 	ld [hl], $01 ; $419a
 	ld hl, $0015 ; $419c
@@ -268,13 +268,13 @@ AttachActorStepMover:
 	ldh a, [hRomBank] ; $41b3
 	ld hl, ActorScript_StepToTarget ; $41b5
 	call SetActorScript ; $41b8
-	ld hl, $0005 ; $41bb
+	ld hl, ACTORF_FLAGS ; $41bb
 	add hl, bc ; $41be
 	res 3, [hl] ; $41bf
 	ld hl, $0015 ; $41c1
 	add hl, bc ; $41c4
 	ld [hl], $40 ; $41c5
-	ld hl, $0005 ; $41c7
+	ld hl, ACTORF_FLAGS ; $41c7
 	add hl, bc ; $41ca
 	res 4, [hl] ; $41cb
 	pop hl ; $41cd
@@ -337,11 +337,11 @@ UpdateActors:
 	ld [wStoryModePlayerFacing], a ; $4225
 	ret ; $4228
 StepActorScript:
-	ld hl, $0005 ; $4229
+	ld hl, ACTORF_FLAGS ; $4229
 	add hl, bc ; $422c
 	bit 0, [hl] ; $422d
 	ret nz ; $422f
-	ld hl, $0003 ; $4230
+	ld hl, ACTORF_WAIT ; $4230
 	add hl, bc ; $4233
 	ld a, [hl] ; $4234
 	or a ; $4235
@@ -350,7 +350,7 @@ StepActorScript:
 	ret ; $4239
 .stepJump:
 	push bc ; $423a
-	ld hl, $0000 ; $423b
+	ld hl, ACTORF_SCRIPT ; $423b
 	add hl, bc ; $423e
 	ld a, [hl+] ; $423f
 	ld e, a ; $4240
@@ -374,7 +374,7 @@ StepActorScript:
 	jp hl ; $425f
 ActorScriptOpcodeReturn:
 	pop bc ; $4260
-	ld hl, $0000 ; $4261
+	ld hl, ACTORF_SCRIPT ; $4261
 	add hl, bc ; $4264
 	ld [hl], e ; $4265
 	inc hl ; $4266
@@ -434,7 +434,7 @@ UpdateActorJumpPhysics:
 .done:
 	ret ; $42ad
 AdvanceActorTowardTarget:
-	ld hl, $0005 ; $42ae
+	ld hl, ACTORF_FLAGS ; $42ae
 	add hl, bc ; $42b1
 	res 6, [hl] ; $42b2
 	bit 1, [hl] ; $42b4
@@ -442,12 +442,12 @@ AdvanceActorTowardTarget:
 	bit 7, [hl] ; $42b7
 	ret z ; $42b9
 	push bc ; $42ba
-	ld hl, $0008 ; $42bb
+	ld hl, ACTORF_TARGET_X ; $42bb
 	add hl, bc ; $42be
 	ld a, [hl+] ; $42bf
 	ld d, [hl] ; $42c0
 	ld e, a ; $42c1
-	ld hl, $000c ; $42c2
+	ld hl, ACTORF_X ; $42c2
 	add hl, bc ; $42c5
 	ld a, [hl+] ; $42c6
 	ld h, [hl] ; $42c7
@@ -459,12 +459,12 @@ AdvanceActorTowardTarget:
 	sbc d ; $42cd
 	ld h, a ; $42ce
 	push hl ; $42cf
-	ld hl, $000a ; $42d0
+	ld hl, ACTORF_TARGET_Y ; $42d0
 	add hl, bc ; $42d3
 	ld a, [hl+] ; $42d4
 	ld d, [hl] ; $42d5
 	ld e, a ; $42d6
-	ld hl, $000e ; $42d7
+	ld hl, ACTORF_Y ; $42d7
 	add hl, bc ; $42da
 	ld a, [hl+] ; $42db
 	ld h, [hl] ; $42dc
@@ -481,7 +481,7 @@ AdvanceActorTowardTarget:
 	call AngleFromVectorCoarse ; $42e7
 	add $80 ; $42ea
 	push af ; $42ec
-	ld hl, $0014 ; $42ed
+	ld hl, ACTORF_HEADING ; $42ed
 	add hl, bc ; $42f0
 	ld e, [hl] ; $42f1
 	sub e ; $42f2
@@ -530,7 +530,7 @@ AdvanceActorTowardTarget:
 	ld a, [hl+] ; $432b
 	ld b, [hl] ; $432c
 	ld c, a ; $432d
-	ld hl, $0005 ; $432e
+	ld hl, ACTORF_FLAGS ; $432e
 	add hl, bc ; $4331
 	bit 2, [hl] ; $4332
 	pop hl ; $4334
@@ -540,7 +540,7 @@ AdvanceActorTowardTarget:
 	push de ; $4339
 	ld e, l ; $433a
 	ld d, h ; $433b
-	ld hl, $000c ; $433c
+	ld hl, ACTORF_X ; $433c
 	add hl, bc ; $433f
 	ld a, [hl+] ; $4340
 	ld h, [hl] ; $4341
@@ -548,7 +548,7 @@ AdvanceActorTowardTarget:
 	add hl, de ; $4343
 	pop de ; $4344
 	push hl ; $4345
-	ld hl, $000e ; $4346
+	ld hl, ACTORF_Y ; $4346
 	add hl, bc ; $4349
 	ld a, [hl+] ; $434a
 	ld h, [hl] ; $434b
@@ -562,7 +562,7 @@ AdvanceActorTowardTarget:
 	pop de ; $4355
 	and a ; $4356
 	jr z, .arrived ; $4357
-	ld hl, $0005 ; $4359
+	ld hl, ACTORF_FLAGS ; $4359
 	add hl, bc ; $435c
 	set 6, [hl] ; $435d
 	pop af ; $435f
@@ -674,14 +674,14 @@ AdvanceActorTowardTarget:
 	ld a, [hl+] ; $43e3
 	ld b, [hl] ; $43e4
 	ld c, a ; $43e5
-	ld hl, $0005 ; $43e6
+	ld hl, ACTORF_FLAGS ; $43e6
 	add hl, bc ; $43e9
 	res 7, [hl] ; $43ea
-	ld a, $0c ; $43ec
+	ld a, ACTORF_X ; $43ec
 	add c ; $43ee
 	ld e, a ; $43ef
 	ld d, b ; $43f0
-	ld hl, $0008 ; $43f1
+	ld hl, ACTORF_TARGET_X ; $43f1
 	add hl, bc ; $43f4
 	ld a, [hl+] ; $43f5
 	ld [de], a ; $43f6

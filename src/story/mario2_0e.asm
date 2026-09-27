@@ -277,12 +277,12 @@ MoveDoublesPartnerToPlayer:
 	script_get_actor_state ACTOR_PLAYER ; $698d
 	ld c, l ; $6992
 	ld b, h ; $6993
-	ld hl, $000e ; $6994
+	ld hl, ACTORF_Y ; $6994
 	add hl, bc ; $6997
 	ld a, [hl+] ; $6998
 	ld d, [hl] ; $6999
 	ld e, a ; $699a
-	ld hl, $000c ; $699b
+	ld hl, ACTORF_X ; $699b
 	add hl, bc ; $699e
 	ld a, [hl+] ; $699f
 	ld b, [hl] ; $69a0

@@ -2,7 +2,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_04_2 ; $4c37
 	ld c, l ; $4c3c
 	ld b, h ; $4c3d
-	ld hl, $000e ; $4c3e
+	ld hl, ACTORF_Y ; $4c3e
 	add hl, bc ; $4c41
 	ld a, [hl+] ; $4c42
 	ld d, [hl] ; $4c43
@@ -11,7 +11,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, e ; $4c48
 	ld [hl+], a ; $4c49
 	ld [hl], d ; $4c4a
-	ld hl, $000c ; $4c4b
+	ld hl, ACTORF_X ; $4c4b
 	add hl, bc ; $4c4e
 	ld a, [hl+] ; $4c4f
 	ld d, [hl] ; $4c50
@@ -23,7 +23,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_04_1 ; $4c58
 	ld c, l ; $4c5d
 	ld b, h ; $4c5e
-	ld hl, $000a ; $4c5f
+	ld hl, ACTORF_TARGET_Y ; $4c5f
 	add hl, bc ; $4c62
 	ld a, [hl+] ; $4c63
 	ld d, [hl] ; $4c64
@@ -32,7 +32,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, e ; $4c69
 	ld [hl+], a ; $4c6a
 	ld [hl], d ; $4c6b
-	ld hl, $0008 ; $4c6c
+	ld hl, ACTORF_TARGET_X ; $4c6c
 	add hl, bc ; $4c6f
 	ld a, [hl+] ; $4c70
 	ld d, [hl] ; $4c71
@@ -47,7 +47,7 @@ UnusedTrainingGymRunner0AClearWaypoint:
 	script_get_actor_state $0a ; $4c7c
 	ld c, l ; $4c81
 	ld b, h ; $4c82
-	ld hl, $0005 ; $4c83
+	ld hl, ACTORF_FLAGS ; $4c83
 	add hl, bc ; $4c86
 	res 0, [hl] ; $4c87
 	ld b, $00 ; $4c89
@@ -57,7 +57,7 @@ TrainingGymRunner0BWaitWaypointClear:
 	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_04_1 ; $4c8e
 	ld c, l ; $4c93
 	ld b, h ; $4c94
-	ld hl, $000e ; $4c95
+	ld hl, ACTORF_Y ; $4c95
 	add hl, bc ; $4c98
 	ld a, [hl+] ; $4c99
 	ld d, [hl] ; $4c9a
@@ -66,7 +66,7 @@ TrainingGymRunner0BWaitWaypointClear:
 	ld a, e ; $4c9f
 	ld [hl+], a ; $4ca0
 	ld [hl], d ; $4ca1
-	ld hl, $000c ; $4ca2
+	ld hl, ACTORF_X ; $4ca2
 	add hl, bc ; $4ca5
 	ld a, [hl+] ; $4ca6
 	ld d, [hl] ; $4ca7
@@ -78,7 +78,7 @@ TrainingGymRunner0BWaitWaypointClear:
 	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_05 ; $4caf
 	ld c, l ; $4cb4
 	ld b, h ; $4cb5
-	ld hl, $000a ; $4cb6
+	ld hl, ACTORF_TARGET_Y ; $4cb6
 	add hl, bc ; $4cb9
 	ld a, [hl+] ; $4cba
 	ld d, [hl] ; $4cbb
@@ -87,7 +87,7 @@ TrainingGymRunner0BWaitWaypointClear:
 	ld a, e ; $4cc0
 	ld [hl+], a ; $4cc1
 	ld [hl], d ; $4cc2
-	ld hl, $0008 ; $4cc3
+	ld hl, ACTORF_TARGET_X ; $4cc3
 	add hl, bc ; $4cc6
 	ld a, [hl+] ; $4cc7
 	ld d, [hl] ; $4cc8
@@ -102,7 +102,7 @@ UnusedTrainingGymRunner0BClearWaypoint:
 	script_get_actor_state $0b ; $4cd3
 	ld c, l ; $4cd8
 	ld b, h ; $4cd9
-	ld hl, $0005 ; $4cda
+	ld hl, ACTORF_FLAGS ; $4cda
 	add hl, bc ; $4cdd
 	res 0, [hl] ; $4cde
 	ld b, $00 ; $4ce0
@@ -112,7 +112,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_05 ; $4ce5
 	ld c, l ; $4cea
 	ld b, h ; $4ceb
-	ld hl, $000e ; $4cec
+	ld hl, ACTORF_Y ; $4cec
 	add hl, bc ; $4cef
 	ld a, [hl+] ; $4cf0
 	ld d, [hl] ; $4cf1
@@ -121,7 +121,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	ld a, e ; $4cf6
 	ld [hl+], a ; $4cf7
 	ld [hl], d ; $4cf8
-	ld hl, $000c ; $4cf9
+	ld hl, ACTORF_X ; $4cf9
 	add hl, bc ; $4cfc
 	ld a, [hl+] ; $4cfd
 	ld d, [hl] ; $4cfe
@@ -133,7 +133,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	script_get_actor_state ACTOR_TRAINING_GYM_WALK_72_04_2 ; $4d06
 	ld c, l ; $4d0b
 	ld b, h ; $4d0c
-	ld hl, $000a ; $4d0d
+	ld hl, ACTORF_TARGET_Y ; $4d0d
 	add hl, bc ; $4d10
 	ld a, [hl+] ; $4d11
 	ld d, [hl] ; $4d12
@@ -142,7 +142,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	ld a, e ; $4d17
 	ld [hl+], a ; $4d18
 	ld [hl], d ; $4d19
-	ld hl, $0008 ; $4d1a
+	ld hl, ACTORF_TARGET_X ; $4d1a
 	add hl, bc ; $4d1d
 	ld a, [hl+] ; $4d1e
 	ld d, [hl] ; $4d1f
@@ -156,7 +156,7 @@ UnusedTrainingGymRunner0CClearWaypoint:
 	script_get_actor_state $0c ; $4d2a
 	ld c, l ; $4d2f
 	ld b, h ; $4d30
-	ld hl, $0005 ; $4d31
+	ld hl, ACTORF_FLAGS ; $4d31
 	add hl, bc ; $4d34
 	res 0, [hl] ; $4d35
 	ld b, $00 ; $4d37

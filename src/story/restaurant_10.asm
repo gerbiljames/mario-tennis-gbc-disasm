@@ -970,7 +970,7 @@ RestaurantShowActor11NearPlayer_10:
 	script_get_actor_state ACTOR_PLAYER ; $6160
 	ld c, l ; $6165
 	ld b, h ; $6166
-	ld hl, $000c ; $6167
+	ld hl, ACTORF_X ; $6167
 	add hl, bc ; $616a
 	ld a, [hl+] ; $616b
 	ld h, [hl] ; $616c
@@ -983,7 +983,7 @@ RestaurantShowActor11NearPlayer_10:
 	ld a, e ; $6177
 	ld [hl+], a ; $6178
 	ld [hl], d ; $6179
-	ld hl, $000e ; $617a
+	ld hl, ACTORF_Y ; $617a
 	add hl, bc ; $617d
 	ld a, [hl+] ; $617e
 	ld h, [hl] ; $617f

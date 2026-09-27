@@ -117,7 +117,7 @@ MoveActorTowardPointRaw:
 	ld a, [hl+] ; $4478
 	ld b, [hl] ; $4479
 	ld c, a ; $447a
-	ld hl, $000c ; $447b
+	ld hl, ACTORF_X ; $447b
 	add hl, bc ; $447e
 	ld a, [hl+] ; $447f
 	ld h, [hl] ; $4480
@@ -130,7 +130,7 @@ MoveActorTowardPointRaw:
 	ld h, a ; $4487
 	pop de ; $4488
 	push hl ; $4489
-	ld hl, $000e ; $448a
+	ld hl, ACTORF_Y ; $448a
 	add hl, bc ; $448d
 	ld a, [hl+] ; $448e
 	ld h, [hl] ; $448f
@@ -168,7 +168,7 @@ MoveActorTowardPointRaw:
 	inc hl ; $44b7
 	ld [hl], d ; $44b8
 	pop bc ; $44b9
-	ld hl, $0005 ; $44ba
+	ld hl, ACTORF_FLAGS ; $44ba
 	add hl, bc ; $44bd
 	ld c, l ; $44be
 	ld b, h ; $44bf
@@ -372,18 +372,18 @@ ScriptSetActorFacingLock:
 	ld c, l ; $45c6
 	ld b, h ; $45c7
 	jr nz, .setBit ; $45c8
-	ld hl, $0014 ; $45ca
+	ld hl, ACTORF_HEADING ; $45ca
 	add hl, bc ; $45cd
 	ld a, [hl] ; $45ce
-	ld hl, $0034 ; $45cf
+	ld hl, ACTORF_FACING ; $45cf
 	add hl, bc ; $45d2
 	ld [hl], a ; $45d3
-	ld hl, $0030 ; $45d4
+	ld hl, ACTORF_STATUS ; $45d4
 	add hl, bc ; $45d7
 	res 0, [hl] ; $45d8
 	ret ; $45da
 .setBit:
-	ld hl, $0030 ; $45db
+	ld hl, ACTORF_STATUS ; $45db
 	add hl, bc ; $45de
 	set 0, [hl] ; $45df
 	ret ; $45e1

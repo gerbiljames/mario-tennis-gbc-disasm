@@ -481,7 +481,7 @@ End1MainBldgKnockdown_27:
 	script_get_actor_state ACTOR_PLAYER ; $75d2
 	ld c, l ; $75d7
 	ld b, h ; $75d8
-	ld hl, $0037 ; $75d9
+	ld hl, ACTORF_OAM_ATTR ; $75d9
 	add hl, bc ; $75dc
 	ld a, [hl] ; $75dd
 	or $40 ; $75de

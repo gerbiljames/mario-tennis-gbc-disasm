@@ -6,14 +6,14 @@ GetPointAheadOfActor:
 	ld a, b ; $51d8
 	ld c, l ; $51d9
 	ld b, h ; $51da
-	ld hl, $0032 ; $51db
+	ld hl, ACTORF_DRAWN_FACING ; $51db
 	add hl, bc ; $51de
 	add [hl] ; $51df
 	ld l, e ; $51e0
 	ld h, d ; $51e1
 	call VectorFromLengthAndAngle ; $51e2
 	push hl ; $51e5
-	ld hl, $000e ; $51e6
+	ld hl, ACTORF_Y ; $51e6
 	add hl, bc ; $51e9
 	ld a, [hl+] ; $51ea
 	ld h, [hl] ; $51eb
@@ -25,7 +25,7 @@ GetPointAheadOfActor:
 	push de ; $51f1
 	ld e, l ; $51f2
 	ld d, h ; $51f3
-	ld hl, $000c ; $51f4
+	ld hl, ACTORF_X ; $51f4
 	add hl, bc ; $51f7
 	ld a, [hl+] ; $51f8
 	ld h, [hl] ; $51f9
@@ -212,10 +212,10 @@ GetTileTriggerAtPlayer:
 	push de ; $536a
 	push hl ; $536b
 	ld bc, wActors ; $536c
-	ld hl, $000d ; $536f
+	ld hl, ACTORF_X + 1 ; $536f
 	add hl, bc ; $5372
 	ld d, [hl] ; $5373
-	ld hl, $000f ; $5374
+	ld hl, ACTORF_Y + 1 ; $5374
 	add hl, bc ; $5377
 	ld e, [hl] ; $5378
 	farcall ReadBehaviorMapCell ; $5379

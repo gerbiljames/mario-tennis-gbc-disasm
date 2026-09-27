@@ -50,7 +50,7 @@ ComputeEmoteActorPosition_13:
 	farcall GetActorStateAddr ; $5bfb
 	ld c, l ; $5bfe
 	ld b, h ; $5bff
-	ld hl, $000c ; $5c00
+	ld hl, ACTORF_X ; $5c00
 	add hl, bc ; $5c03
 	ld a, [hl+] ; $5c04
 	ld h, [hl] ; $5c05
@@ -63,7 +63,7 @@ ComputeEmoteActorPosition_13:
 	ld a, e ; $5c10
 	ld [hl+], a ; $5c11
 	ld [hl], d ; $5c12
-	ld hl, $000e ; $5c13
+	ld hl, ACTORF_Y ; $5c13
 	add hl, bc ; $5c16
 	ld a, [hl+] ; $5c17
 	ld h, [hl] ; $5c18
@@ -93,7 +93,7 @@ PlaceRoommateAtPlayerTarget_13:
 	script_get_actor_state ACTOR_PLAYER ; $5c39
 	ld c, l ; $5c3e
 	ld b, h ; $5c3f
-	ld hl, $000c ; $5c40
+	ld hl, ACTORF_X ; $5c40
 	add hl, bc ; $5c43
 	ld a, [hl+] ; $5c44
 	ld h, [hl] ; $5c45
@@ -106,7 +106,7 @@ PlaceRoommateAtPlayerTarget_13:
 	ld a, e ; $5c50
 	ld [hl+], a ; $5c51
 	ld [hl], d ; $5c52
-	ld hl, $000e ; $5c53
+	ld hl, ACTORF_Y ; $5c53
 	add hl, bc ; $5c56
 	ld a, [hl+] ; $5c57
 	ld h, [hl] ; $5c58

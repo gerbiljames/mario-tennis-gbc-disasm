@@ -250,7 +250,7 @@ LateStudentCrashImpact:
 	script_get_actor_state ACTOR_PLAYER ; $4d33
 	ld c, l ; $4d38
 	ld b, h ; $4d39
-	ld hl, $0037 ; $4d3a
+	ld hl, ACTORF_OAM_ATTR ; $4d3a
 	add hl, bc ; $4d3d
 	ld a, [hl] ; $4d3e
 	or $40 ; $4d3f
@@ -268,7 +268,7 @@ KnockPlayerAirborneFlipped_11:
 	script_get_actor_state ACTOR_PLAYER ; $4d7d
 	ld c, l ; $4d82
 	ld b, h ; $4d83
-	ld hl, $0037 ; $4d84
+	ld hl, ACTORF_OAM_ATTR ; $4d84
 	add hl, bc ; $4d87
 	ld a, [hl] ; $4d88
 	xor $40 ; $4d89

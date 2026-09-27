@@ -37,7 +37,7 @@ AcademyWingNpc03_10:
 	script_get_actor_state ACTOR_ACADEMY_WING_WALK_77_07_2 ; $6250
 	ld c, l ; $6255
 	ld b, h ; $6256
-	ld hl, $0037 ; $6257
+	ld hl, ACTORF_OAM_ATTR ; $6257
 	add hl, bc ; $625a
 	ld a, [hl] ; $625b
 	or $20 ; $625c

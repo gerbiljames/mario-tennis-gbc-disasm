@@ -67,7 +67,7 @@ TryPickRandomReachableTarget:
 	ld c, a ; $4937
 	pop hl ; $4938
 	call SetActorMoveTarget ; $4939
-	ld hl, $0005 ; $493c
+	ld hl, ACTORF_FLAGS ; $493c
 	add hl, bc ; $493f
 	set 7, [hl] ; $4940
 	ld a, $01 ; $4942
@@ -133,14 +133,14 @@ Unused_04_ActorScriptOpMoveVector:
 	ld a, [hl+] ; $4999
 	ld b, [hl] ; $499a
 	ld c, a ; $499b
-	ld hl, $000c ; $499c
+	ld hl, ACTORF_X ; $499c
 	add hl, bc ; $499f
 	ld a, [hl+] ; $49a0
 	ld h, [hl] ; $49a1
 	ld l, a ; $49a2
 	pop de ; $49a3
 	push hl ; $49a4
-	ld hl, $000e ; $49a5
+	ld hl, ACTORF_Y ; $49a5
 	add hl, bc ; $49a8
 	ld a, [hl+] ; $49a9
 	ld h, [hl] ; $49aa
@@ -172,11 +172,11 @@ Unused_04_ActorScriptOpMoveVector:
 	inc hl ; $49cc
 	ld [hl], d ; $49cd
 	pop bc ; $49ce
-	ld hl, $0005 ; $49cf
+	ld hl, ACTORF_FLAGS ; $49cf
 	add hl, bc ; $49d2
 	ld c, l ; $49d3
 	ld b, h ; $49d4
-	ld hl, $0005 ; $49d5
+	ld hl, ACTORF_FLAGS ; $49d5
 	add hl, bc ; $49d8
 	set 7, [hl] ; $49d9
 	ld a, $01 ; $49db
@@ -323,7 +323,7 @@ DrawActors:
 	add hl, bc ; $4aa9
 	ld a, [hl] ; $4aaa
 	ld [wActorScriptBank], a ; $4aab
-	ld hl, $0020 ; $4aae
+	ld hl, ACTORF_MODE ; $4aae
 	add hl, bc ; $4ab1
 	ld a, [hl] ; $4ab2
 	cp $02 ; $4ab3
@@ -346,7 +346,7 @@ LoadActorObjectDef:
 	push de ; $4ac7
 	push hl ; $4ac8
 	wram_bank WRAM_ACTORS ; $4ac9
-	ld hl, $0021 ; $4acf
+	ld hl, ACTORF_OBJECT ; $4acf
 	add hl, bc ; $4ad2
 	ld [hl], d ; $4ad3
 	ld a, d ; $4ad4
@@ -367,32 +367,32 @@ LoadActorObjectDef:
 	call CopyDataFromBank ; $4aee
 	pop bc ; $4af1
 	ld a, [wActorObjDef] ; $4af2
-	ld hl, $0037 ; $4af5
+	ld hl, ACTORF_OAM_ATTR ; $4af5
 	add hl, bc ; $4af8
 	ld [hl], a ; $4af9
 	ld a, [wActorObjDef + 1] ; $4afa
-	ld hl, $0035 ; $4afd
+	ld hl, ACTORF_FACING_COUNT ; $4afd
 	add hl, bc ; $4b00
 	ld [hl], a ; $4b01
-	ld hl, $0024 ; $4b02
+	ld hl, ACTORF_FRAME_TABLE ; $4b02
 	add hl, bc ; $4b05
 	ld a, [wActorObjDef + 4] ; $4b06
 	ld [hl+], a ; $4b09
 	ld a, [wActorObjDef + 5] ; $4b0a
 	ld [hl+], a ; $4b0d
-	ld hl, $0028 ; $4b0e
+	ld hl, ACTORF_ANIM_TABLE ; $4b0e
 	add hl, bc ; $4b11
 	ld a, [wActorObjDef + 6] ; $4b12
 	ld [hl+], a ; $4b15
 	ld a, [wActorObjDef + 7] ; $4b16
 	ld [hl+], a ; $4b19
-	ld hl, $0038 ; $4b1a
+	ld hl, ACTORF_SHADOW_TABLE ; $4b1a
 	add hl, bc ; $4b1d
 	ld a, [wActorObjDef + 10] ; $4b1e
 	ld [hl+], a ; $4b21
 	ld a, [wActorObjDef + 11] ; $4b22
 	ld [hl+], a ; $4b25
-	ld hl, $0037 ; $4b26
+	ld hl, ACTORF_OAM_ATTR ; $4b26
 	add hl, bc ; $4b29
 	ld a, [hl] ; $4b2a
 	cp $63 ; $4b2b
@@ -416,10 +416,10 @@ LoadActorObjectDef:
 	call LoadPalettesMasterOnly ; $4b4d
 	pop bc ; $4b50
 .initFields:
-	ld hl, $0020 ; $4b51
+	ld hl, ACTORF_MODE ; $4b51
 	add hl, bc ; $4b54
 	ld [hl], $02 ; $4b55
-	ld hl, $0032 ; $4b57
+	ld hl, ACTORF_DRAWN_FACING ; $4b57
 	add hl, bc ; $4b5a
 	ld a, $ff ; $4b5b
 	ld [hl+], a ; $4b5d

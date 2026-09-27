@@ -451,7 +451,7 @@ SavePlayerActorPosition:
 	script_get_actor_state ACTOR_PLAYER ; $5f58
 	ld c, l ; $5f5d
 	ld b, h ; $5f5e
-	ld hl, $000c ; $5f5f
+	ld hl, ACTORF_X ; $5f5f
 	add hl, bc ; $5f62
 	ld a, [hl+] ; $5f63
 	ld d, [hl] ; $5f64
@@ -460,7 +460,7 @@ SavePlayerActorPosition:
 	ld a, e ; $5f69
 	ld [hl+], a ; $5f6a
 	ld [hl], d ; $5f6b
-	ld hl, $000e ; $5f6c
+	ld hl, ACTORF_Y ; $5f6c
 	add hl, bc ; $5f6f
 	ld a, [hl+] ; $5f70
 	ld d, [hl] ; $5f71

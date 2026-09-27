@@ -390,7 +390,7 @@ UpdateActorTileAnimState_10:
 	add hl, bc ; $79f4
 	ld b, h ; $79f5
 	ld c, l ; $79f6
-	ld hl, $000c ; $79f7
+	ld hl, ACTORF_X ; $79f7
 	add hl, bc ; $79fa
 	ld a, [hl+] ; $79fb
 	ld h, [hl] ; $79fc
@@ -398,7 +398,7 @@ UpdateActorTileAnimState_10:
 	ld de, $ffb0 ; $79fe
 	add hl, de ; $7a01
 	ld d, h ; $7a02
-	ld hl, $000e ; $7a03
+	ld hl, ACTORF_Y ; $7a03
 	add hl, bc ; $7a06
 	ld a, [hl+] ; $7a07
 	add $40 ; $7a08
@@ -419,7 +419,7 @@ UpdateActorTileAnimState_10:
 	cp $06 ; $7a1c
 	jr nz, .checkBelow ; $7a1e
 	wram_bank WRAM_ACTORS ; $7a20
-	ld hl, $0020 ; $7a26
+	ld hl, ACTORF_MODE ; $7a26
 	add hl, bc ; $7a29
 	ld a, [hl] ; $7a2a
 	xor $01 ; $7a2b
@@ -432,7 +432,7 @@ UpdateActorTileAnimState_10:
 	cp $06 ; $7a35
 	jr nz, .actorLoop ; $7a37
 	wram_bank WRAM_ACTORS ; $7a39
-	ld hl, $0020 ; $7a3f
+	ld hl, ACTORF_MODE ; $7a3f
 	add hl, bc ; $7a42
 	ld a, [hl] ; $7a43
 	xor $01 ; $7a44
@@ -440,7 +440,7 @@ UpdateActorTileAnimState_10:
 	ret ; $7a47
 .actorLoop:
 	wram_bank WRAM_ACTORS ; $7a48
-	ld hl, $0020 ; $7a4e
+	ld hl, ACTORF_MODE ; $7a4e
 	add hl, bc ; $7a51
 	ld a, $02 ; $7a52
 	ld [hl], a ; $7a54
@@ -458,7 +458,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	add hl, bc ; $7a6a
 	ld b, h ; $7a6b
 	ld c, l ; $7a6c
-	ld hl, $000c ; $7a6d
+	ld hl, ACTORF_X ; $7a6d
 	add hl, bc ; $7a70
 	ld a, [hl+] ; $7a71
 	ld h, [hl] ; $7a72
@@ -466,7 +466,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	ld de, $ffb0 ; $7a74
 	add hl, de ; $7a77
 	ld d, h ; $7a78
-	ld hl, $000e ; $7a79
+	ld hl, ACTORF_Y ; $7a79
 	add hl, bc ; $7a7c
 	ld a, [hl+] ; $7a7d
 	add $40 ; $7a7e
@@ -483,7 +483,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	cp $06 ; $7a8e
 	jr nz, .nextActor ; $7a90
 	wram_bank WRAM_ACTORS ; $7a92
-	ld hl, $0020 ; $7a98
+	ld hl, ACTORF_MODE ; $7a98
 	add hl, bc ; $7a9b
 	ld a, [hl] ; $7a9c
 	xor $01 ; $7a9d
@@ -496,7 +496,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	cp $06 ; $7aa7
 	jr nz, .done ; $7aa9
 	wram_bank WRAM_ACTORS ; $7aab
-	ld hl, $0020 ; $7ab1
+	ld hl, ACTORF_MODE ; $7ab1
 	add hl, bc ; $7ab4
 	ld a, [hl] ; $7ab5
 	xor $01 ; $7ab6
@@ -504,7 +504,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	ret ; $7ab9
 .done:
 	wram_bank WRAM_ACTORS ; $7aba
-	ld hl, $0020 ; $7ac0
+	ld hl, ACTORF_MODE ; $7ac0
 	add hl, bc ; $7ac3
 	ld a, $02 ; $7ac4
 	ld [hl], a ; $7ac6

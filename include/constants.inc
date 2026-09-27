@@ -48,6 +48,30 @@ def NO_BOX equ $0000
 ; number that ties an actor id to an address.
 def ACTOR_SIZE equ $40
 
+; --- Overworld actor record fields ---
+; Offsets into one wActors record, which the engine and the story scripts
+; reach as `ld hl, ACTORF_* / add hl, bc` with the record in bc. Only fields
+; whose reader and writer agree are named; the rest stay offsets.
+def ACTORF_SCRIPT       equ $00 ; word: the actor script's next opcode
+def ACTORF_SCRIPT_BANK  equ $02
+def ACTORF_WAIT         equ $03 ; as_wait counter
+def ACTORF_FLAGS        equ $05 ; bit 0 paused, bit 7 moving; bits 3 and 4 set at spawn
+def ACTORF_TARGET_X     equ $08 ; word: where the actor is walking to
+def ACTORF_TARGET_Y     equ $0a ; word
+def ACTORF_X            equ $0c ; word: world position (1/256 tile)
+def ACTORF_Y            equ $0e ; word
+def ACTORF_HEADING      equ $14 ; movement direction, a full angle byte
+def ACTORF_MODE         equ $20 ; SetActorMode / script_set_active
+def ACTORF_OBJECT       equ $21 ; OBJ_* id (LoadActorObjectDef)
+def ACTORF_FRAME_TABLE  equ $24 ; word: object header's frame array
+def ACTORF_ANIM_TABLE   equ $28 ; word: object header's animation scripts
+def ACTORF_STATUS       equ $30 ; bit 0 facing locked, bit 6 frame dirty, bit 7 live
+def ACTORF_DRAWN_FACING equ $32 ; FACE_*: ACTORF_FACING quantised by DirectionToFacing_04
+def ACTORF_FACING       equ $34 ; angle byte: follows ACTORF_HEADING unless locked
+def ACTORF_FACING_COUNT equ $35 ; object header byte 1; 1 = one facing only
+def ACTORF_OAM_ATTR     equ $37 ; object header byte 0, or the map_actor palette override
+def ACTORF_SHADOW_TABLE equ $38 ; word: per-frame placement records
+
 ; --- Joypad buttons (standard GB layout) ---
 ; The per-character input byte ($df1f, built by ReadCharPadInput) and the raw
 ; joypad shadow use the standard layout: buttons in the low nibble, d-pad in the

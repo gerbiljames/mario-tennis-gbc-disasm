@@ -3148,16 +3148,16 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ; builds its slot address and only then runs `wram_bank $04`, and
 ; EndCutsceneScriptMode hands slots 1 and 0 to AttachActorWaypointFollower,
 ; which selects the bank itself.
-; Record fields are addressed as offsets (`ld hl, $00xx / add hl, bc`), not
-; as absolute addresses, so they are not RAM symbols; the layout is in
-; docs/actor_script.md and the field-size table the script opcodes use is
+; Record fields are addressed as offsets (`ld hl, ACTORF_* / add hl, bc`),
+; not as absolute addresses, so they are ACTORF_* constants rather than RAM
+; symbols; the field-size table the script opcodes use is
 ; ActorFieldTypeTable_04.
 ; The story cutscene scripts in banks $0e-$15 load slot 0 or slot 1 (`ld de,
 ; $d000` / `ld bc, $d040`) and hand it straight to AttachActorStepMover or
 ; script_get_actor_state, which select WRAM bank $04 themselves; those loads
 ; are scoped by instruction range, like WaitPlayerMoveDone's.
 ; overworld actors (WRAM bank $04)
-; [24 x ACTOR_SIZE] Actor slots. +$00 script pointer, +$02 its bank, +$03 wait counter, +$05 flags (bit 0 paused, bit 7 moving), +$08/+$0a move target, +$0c/+$0e position, +$21 object id, +$30 flags (bit 7 = live), +$32 facing. A slot is free when +$01 is zero
+; [24 x ACTOR_SIZE] Actor slots; the fields are the ACTORF_* offsets (include/constants.inc). A slot is free when ACTORF_SCRIPT + 1 is zero
 wActors:: ds 1536
 
 	ds 1024

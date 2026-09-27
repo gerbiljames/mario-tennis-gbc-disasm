@@ -96,7 +96,7 @@ WaterSpriteRacketRewardScene:
 	script_get_actor_state ACTOR_TRAINING_COURT_WALK_71_08 ; $4ed5
 	ld c, l ; $4eda
 	ld b, h ; $4edb
-	ld hl, $0037 ; $4edc
+	ld hl, ACTORF_OAM_ATTR ; $4edc
 	add hl, bc ; $4edf
 	ld a, [hl] ; $4ee0
 	and $f8 ; $4ee1

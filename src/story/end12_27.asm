@@ -373,7 +373,7 @@ End11TrainingCourtInitScript_27:
 	script_get_actor_state ACTOR_PLAYER ; $529f
 	ld c, l ; $52a4
 	ld b, h ; $52a5
-	ld hl, $0037 ; $52a6
+	ld hl, ACTORF_OAM_ATTR ; $52a6
 	add hl, bc ; $52a9
 	ld a, [hl] ; $52aa
 	xor $20 ; $52ab
