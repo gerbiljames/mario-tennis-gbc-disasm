@@ -329,11 +329,7 @@ RecomputeCharacterStats:
 	push hl ; $4638
 	and $0f ; $4639
 	add a ; $463b
-	add $6e ; $463c
-	ld l, a ; $463e
-	adc $46 ; $463f
-	sub l ; $4641
-	ld h, a ; $4642
+	ld_hl_indexed CharIconMasks_02 ; $463c
 	ld a, $19 ; $4643
 	add c ; $4645
 	ld e, a ; $4646

@@ -45,11 +45,11 @@ def free_bytes(map_path):
     return free
 
 
-def pad_tree(tree, pad, free):
+def pad_tree(tree, pad, free, only=None):
     padded = set()
     for holder in sorted((tree / "src").glob("bank_*.asm")):
         bank = int(holder.stem.split("_")[1], 16)
-        if free.get(bank, 0) < pad:
+        if free.get(bank, 0) < pad or (only is not None and bank not in only):
             continue
         if bank == 0:
             f = tree / ROM0_PAD_FILE
@@ -85,6 +85,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--pad", type=int, default=3)
     ap.add_argument("--keep", action="store_true", help="keep the padded tree")
+    ap.add_argument("--out", help="also copy the padded ROM here")
+    ap.add_argument("--banks", help="pad only these banks: hex numbers and ranges, e.g. 0,1-3f")
     args = ap.parse_args()
 
     rom = ROOT / "mariotennis.gbc"
@@ -95,7 +97,13 @@ def main():
     tree = tmp / "tree"
     shutil.copytree(ROOT, tree, ignore=shutil.ignore_patterns(
         ".git", "build", "*.gbc", "__pycache__"))
-    padded = pad_tree(tree, args.pad, free)
+    only = None
+    if args.banks:
+        only = set()
+        for part in args.banks.split(","):
+            lo, _, hi = part.partition("-")
+            only.update(range(int(lo, 16), int(hi or lo, 16) + 1))
+    padded = pad_tree(tree, args.pad, free, only)
     r = subprocess.run(["make", "-j", "mariotennis.gbc"], cwd=tree,
                        capture_output=True, text=True)
     if r.returncode:
@@ -124,6 +132,8 @@ def main():
         cpu = i if bank == 0 else 0x4000 + i % BANK
         print(f"    unexplained: ${bank:02x}:${cpu:04x} {x:02x} -> {y:02x}")
     shutil.copy(tree / "mariotennis.gbc", tmp / "mariotennis.gbc")
+    if args.out:
+        shutil.copy(tree / "mariotennis.gbc", args.out)
     if not args.keep:
         shutil.rmtree(tree)
     print(f"padded ROM: {tmp / 'mariotennis.gbc'}")

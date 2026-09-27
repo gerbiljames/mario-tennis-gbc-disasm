@@ -433,11 +433,7 @@ MulHLBySinHalf:
 	add $81 ; $0b18
 .bit6Clear:
 	push bc ; $0b1a
-	add $5c ; $0b1b
-	ld c, a ; $0b1d
-	adc $0b ; $0b1e
-	sub c ; $0b20
-	ld b, a ; $0b21
+	ld_bc_indexed QuarterSineTable ; $0b1b
 	ld a, [bc] ; $0b22
 	call MulHLByA ; $0b23
 	ld bc, $0040 ; $0b26
@@ -469,11 +465,7 @@ MulHLBySinSignedHalf:
 	add $81 ; $0b47
 .bit6Clear:
 	push bc ; $0b49
-	add $5c ; $0b4a
-	ld c, a ; $0b4c
-	adc $0b ; $0b4d
-	sub c ; $0b4f
-	ld b, a ; $0b50
+	ld_bc_indexed QuarterSineTable ; $0b4a
 	ld a, [bc] ; $0b51
 	call MulHLByASigned ; $0b52
 	ld bc, $0040 ; $0b55

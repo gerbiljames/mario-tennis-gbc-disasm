@@ -521,11 +521,7 @@ GetCharGroupEntry:
 	add a ; $5eb4
 	add a ; $5eb5
 	add a ; $5eb6
-	add $23 ; $5eb7
-	ld l, a ; $5eb9
-	adc $5e ; $5eba
-	sub l ; $5ebc
-	ld h, a ; $5ebd
+	ld_hl_indexed CharGroupTable_02 ; $5eb7
 	ld a, b ; $5ebe
 	and $0f ; $5ebf
 	add l ; $5ec1

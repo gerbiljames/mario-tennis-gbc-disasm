@@ -406,6 +406,11 @@ def check_literal_pointers(fail):
                 split_lo = (int(args[-1][1:], 16), 3)
             elif split_lo and op == "ld" and args[0] == "a" and re.fullmatch(r"\$[4-7][0-9a-fA-F]", args[1]):
                 split_hi = int(args[1][1:], 16)
+            elif split_lo and op == "adc" and re.fullmatch(r"\$[4-7][0-9a-fA-F]", args[-1]):
+                n += 1
+                name = by_addr.get((bank, int(args[-1][1:], 16) << 8 | split_lo[0]))
+                if name:
+                    fail("literals", f"{where} -- add/adc spells {name} in halves: use ld_hl_indexed")
             elif split_lo and split_hi is not None and op == "adc" and args[-1] == "$00":
                 n += 1
                 name = by_addr.get((bank, split_hi << 8 | split_lo[0]))

@@ -285,19 +285,11 @@ AwardHitScore:
 	ld a, $01 ; $5310
 	ld [wMinigameHitScored], a ; $5312
 	ld a, [wMinigameHitStreak] ; $5315
-	add $4f ; $5318
-	ld e, a ; $531a
-	adc $53 ; $531b
-	sub e ; $531d
-	ld d, a ; $531e
+	ld_de_indexed MinigameHitStreakSounds ; $5318
 	ld a, [de] ; $531f
 	call PlaySoundManaged ; $5320
 	ld a, [wMinigameHitStreak] ; $5323
-	add $57 ; $5326
-	ld e, a ; $5328
-	adc $53 ; $5329
-	sub e ; $532b
-	ld d, a ; $532c
+	ld_de_indexed MinigameHitStreakMultipliers ; $5326
 	ld a, [de] ; $532d
 	call MulHLByA ; $532e
 	ld e, l ; $5331

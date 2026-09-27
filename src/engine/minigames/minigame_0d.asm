@@ -409,21 +409,13 @@ DrawMinigameGridCell:
 	ld a, b ; $4326
 	add a ; $4327
 	add a ; $4328
-	add $9f ; $4329
-	ld l, a ; $432b
-	adc $42 ; $432c
-	sub l ; $432e
-	ld h, a ; $432f
+	ld_hl_indexed MinigameGridCellAttrs ; $4329
 	push hl ; $4330
 	push hl ; $4331
 	ld a, b ; $4332
 	add a ; $4333
 	add a ; $4334
-	add $7f ; $4335
-	ld l, a ; $4337
-	adc $42 ; $4338
-	sub l ; $433a
-	ld h, a ; $433b
+	ld_hl_indexed MinigameGridCellTiles ; $4335
 	push hl ; $433c
 	push hl ; $433d
 	pop hl ; $433e

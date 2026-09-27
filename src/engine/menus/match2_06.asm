@@ -421,11 +421,7 @@ GetMatchMenuItemId:
 	add a ; $480e
 	add a ; $480f
 	add a ; $4810
-	add $6f ; $4811
-	ld l, a ; $4813
-	adc $46 ; $4814
-	sub l ; $4816
-	ld h, a ; $4817
+	ld_hl_indexed MatchMenuDefs ; $4811
 	ld a, b ; $4818
 	add l ; $4819
 	ld l, a ; $481a

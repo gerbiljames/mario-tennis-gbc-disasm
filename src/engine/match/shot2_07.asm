@@ -338,11 +338,7 @@ GetShotAimOffsetForSide:
 	add a ; $55f7
 	add a ; $55f8
 	add a ; $55f9
-	add $2e ; $55fa
-	ld l, a ; $55fc
-	adc $56 ; $55fd
-	sub l ; $55ff
-	ld h, a ; $5600
+	ld_hl_indexed CourtSideOffsets_07_0 ; $55fa
 .readAim:
 	ld a, [wCharAimOffset] ; $5601
 	inc a ; $5604

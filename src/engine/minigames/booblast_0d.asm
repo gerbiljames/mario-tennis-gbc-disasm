@@ -359,11 +359,7 @@ ScoreBallHit:
 	ld [wMinigameHitScored], a ; $57c5
 	sound SFX_THUD ; $57c8
 	ld a, [wMinigameHitStreak] ; $57ca
-	add $f5 ; $57cd
-	ld e, a ; $57cf
-	adc $57 ; $57d0
-	sub e ; $57d2
-	ld d, a ; $57d3
+	ld_de_indexed UnusedBitMaskTable_0d ; $57cd
 	ld a, [de] ; $57d4
 	ld hl, $0001 ; $57d5
 	call MulHLByA ; $57d8

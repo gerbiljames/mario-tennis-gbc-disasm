@@ -184,11 +184,7 @@ GetStoryLocationRecordPtr:
 	add a ; $574f
 	add h ; $5750
 	add a ; $5751
-	add $4f ; $5752
-	ld l, a ; $5754
-	adc $56 ; $5755
-	sub l ; $5757
-	ld h, a ; $5758
+	ld_hl_indexed StoryLocationTable_0a ; $5752
 	ret ; $5759
 	db $ff ; $575a
 	ret ; $575b

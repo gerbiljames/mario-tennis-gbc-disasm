@@ -1247,6 +1247,11 @@ def Text_25_177 equ $28b1
 def Text_25_180 equ $28b4
 def Text_25_183 equ $28b7
 def Text_25_185 equ $28b9
+def Text_26_37 equ $2c25
+def Text_26_43 equ $2c2b
+def Text_26_71 equ $2c47
+def Text_26_98 equ $2c62
+def Text_26_106 equ $2c6a
 def Text_5e_75 equ $304b
 def Text_5e_96 equ $3060
 def Text_5e_99 equ $3063

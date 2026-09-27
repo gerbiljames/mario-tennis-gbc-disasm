@@ -82,11 +82,7 @@ LoadScoreboardModeGfx:
 	cp GAMEMODE_TRAINING_DRILL ; $5c8d
 	jr z, .eq05 ; $5c8f
 	add a ; $5c91
-	add $c9 ; $5c92
-	ld l, a ; $5c94
-	adc $5c ; $5c95
-	sub l ; $5c97
-	ld h, a ; $5c98
+	ld_hl_indexed ScoreboardModeGfxPointers ; $5c92
 	jr .checkWramBank ; $5c99
 .eq05:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b

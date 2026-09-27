@@ -470,11 +470,7 @@ LaunchBall:
 	add a ; $4848
 	add a ; $4849
 	add a ; $484a
-	add $b3 ; $484b
-	ld l, a ; $484d
-	adc $45 ; $484e
-	sub l ; $4850
-	ld h, a ; $4851
+	ld_hl_indexed MinigameShotAimPools ; $484b
 	farcall AdvanceMatchRng ; $4852
 	and $0f ; $4855
 	add l ; $4857

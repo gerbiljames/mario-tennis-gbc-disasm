@@ -493,6 +493,22 @@ MACRO ld_hl_indexed
 	ld h, a
 ENDM
 
+; de / bc = \1 + a: the same split-base index, landing in the other pairs.
+MACRO ld_de_indexed
+	add LOW(\1)
+	ld e, a
+	adc HIGH(\1)
+	sub e
+	ld d, a
+ENDM
+MACRO ld_bc_indexed
+	add LOW(\1)
+	ld c, a
+	adc HIGH(\1)
+	sub c
+	ld b, a
+ENDM
+
 ; WaitFramesCmd takes its frame count as an inline byte after the call and
 ; returns past it; the byte is an argument, not the next instruction.
 MACRO wait_frames

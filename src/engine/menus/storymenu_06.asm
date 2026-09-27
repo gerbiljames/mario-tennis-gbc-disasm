@@ -477,11 +477,7 @@ GetStoryMenuItemId:
 	add a ; $6d78
 	add a ; $6d79
 	add a ; $6d7a
-	add $e0 ; $6d7b
-	ld l, a ; $6d7d
-	adc $6c ; $6d7e
-	sub l ; $6d80
-	ld h, a ; $6d81
+	ld_hl_indexed StoryMenuDefs ; $6d7b
 	ld a, b ; $6d82
 	add l ; $6d83
 	ld l, a ; $6d84

@@ -137,16 +137,12 @@ ShowMatchRulesPages:
 	add a ; $413a
 	add b ; $413b
 	ld [wRulesPageListIndex], a ; $413c
-	add $25 ; $413f
-	ld e, a ; $4141
-	adc $2c ; $4142
-	sub e ; $4144
-	ld d, a ; $4145
+	ld_de_indexed Text_26_37 ; $413f
 	ld hl, wRulesTitleTextId ; $4146
 	ld a, e ; $4149
 	ld [hl+], a ; $414a
 	ld [hl], d ; $414b
-	ld de, $2c62 ; $414c
+	ld de, Text_26_98 ; $414c
 	ld hl, wRulesFirstPageTextId ; $414f
 	ld a, e ; $4152
 	ld [hl+], a ; $4153
@@ -169,16 +165,12 @@ MatchRulesPageLists:
 ShowTrainingRulesPages:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $417d
 	ld [wRulesPageListIndex], a ; $4180
-	add $2b ; $4183
-	ld e, a ; $4185
-	adc $2c ; $4186
-	sub e ; $4188
-	ld d, a ; $4189
+	ld_de_indexed Text_26_43 ; $4183
 	ld hl, wRulesTitleTextId ; $418a
 	ld a, e ; $418d
 	ld [hl+], a ; $418e
 	ld [hl], d ; $418f
-	ld de, $2c6a ; $4190
+	ld de, Text_26_106 ; $4190
 	ld hl, wRulesFirstPageTextId ; $4193
 	ld a, e ; $4196
 	ld [hl+], a ; $4197
@@ -231,11 +223,7 @@ ShowMinigameRulesPages:
 	ld a, [wMinigameLevel] ; $4226
 	add b ; $4229
 	ld [wRulesPageListIndex], a ; $422a
-	add $47 ; $422d
-	ld e, a ; $422f
-	adc $2c ; $4230
-	sub e ; $4232
-	ld d, a ; $4233
+	ld_de_indexed Text_26_71 ; $422d
 	ld hl, wRulesTitleTextId ; $4234
 	ld a, e ; $4237
 	ld [hl+], a ; $4238

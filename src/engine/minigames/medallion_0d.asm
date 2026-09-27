@@ -4,11 +4,7 @@ AwardTreasureBoxHitScore:
 	ld a, $01 ; $5c31
 	ld [wMinigameHitScored], a ; $5c33
 	ld a, [wMinigameHitStreak] ; $5c36
-	add $81 ; $5c39
-	ld e, a ; $5c3b
-	adc $5c ; $5c3c
-	sub e ; $5c3e
-	ld d, a ; $5c3f
+	ld_de_indexed TreasureBoxHitStreakSounds ; $5c39
 	ld a, [de] ; $5c40
 	call PlaySoundManaged ; $5c41
 	ld a, [wMinigameSceneActor + 1] ; $5c44
@@ -16,11 +12,7 @@ AwardTreasureBoxHitScore:
 	ld l, [hl] ; $5c4e
 	ld h, $00 ; $5c4f
 	ld a, [wMinigameHitStreak] ; $5c51
-	add $85 ; $5c54
-	ld e, a ; $5c56
-	adc $5c ; $5c57
-	sub e ; $5c59
-	ld d, a ; $5c5a
+	ld_de_indexed TreasureBoxHitStreakMultipliers ; $5c54
 	ld a, [de] ; $5c5b
 	call MulHLByA ; $5c5c
 	ld e, l ; $5c5f
@@ -265,19 +257,11 @@ AwardMedallionMatchHitScore:
 	ld hl, $0002 ; $5eb2
 .step:
 	ld a, [wMinigameHitStreak] ; $5eb5
-	add $e4 ; $5eb8
-	ld e, a ; $5eba
-	adc $5e ; $5ebb
-	sub e ; $5ebd
-	ld d, a ; $5ebe
+	ld_de_indexed MedallionMatchHitStreakSounds ; $5eb8
 	ld a, [de] ; $5ebf
 	call PlaySoundManaged ; $5ec0
 	ld a, [wMinigameHitStreak] ; $5ec3
-	add $ec ; $5ec6
-	ld e, a ; $5ec8
-	adc $5e ; $5ec9
-	sub e ; $5ecb
-	ld d, a ; $5ecc
+	ld_de_indexed MedallionMatchHitStreakMultipliers ; $5ec6
 	ld a, [de] ; $5ecd
 	call MulHLByA ; $5ece
 	ld e, l ; $5ed1
