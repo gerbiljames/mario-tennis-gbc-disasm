@@ -3,12 +3,10 @@ CharSelectNavGridTable:
 	db $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fd, $ff, $00, $01, $02, $03, $ff, $fe, $fd ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fd, $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fd ; 0x10
 CharSelectRosterTable:
-	; $5f9c, 38 bytes (bytes:16)
+	; $5f9c, 40 bytes (bytes:16)
 	db $00, $00, $00, $b5, $30, $20, $c4, $00, $01, $00, $00, $b6, $30, $38, $c7, $00 ; 0x00
 	db $02, $00, $00, $b7, $30, $50, $ca, $00, $03, $00, $00, $a8, $30, $68, $cd, $00 ; 0x10
-	db $ff, $00, $00, $b0, $18, $20 ; 0x20
-	ld h, h ; $5fc2
-	nop ; $5fc3
+	db $ff, $00, $00, $b0, $18, $20, $64, $00 ; 0x20
 FindCharSelectRosterEntry:
 	ld hl, wCharSelectRoster ; $5fc4
 	farcall FindRosterEntry ; $5fc7
