@@ -57,8 +57,8 @@ MinigameTargetZoneBounds:
 	db $50, $fe, $20, $fb, $b0, $01, $00, $00 ; 0x28
 	db $50, $fe, $20, $fb, $b0, $01, $00, $00 ; 0x30
 MinigameConfig_ShootingStar:
-	; $5194, 16 bytes (bytes:16)
-	db $15, $10, $02, $08, $1d, $19, $00, $17, $b6, $51, $bd, $40, $a4, $51, $00, $00 ; 0x00
+	; $5194, 16 bytes
+	drill_def CHAR_UNUSED_15, COURT_SHOOTING_STAR, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_SHOOTING_STAR, BGM_TARGET_MINIGAMES, CHAR_LUIGI, MinigameHooks_ShootingStar, MinigamePointLayoutDuo, InitMinigame_ShootingStar
 InitMinigame_ShootingStar:
 	ld a, $01 ; $51a4
 	ld [wMinigameUsesTennisMachine], a ; $51a6
@@ -441,8 +441,8 @@ MinigameHitBurstParticleOffsets:
 	db $00, $ff, $fe, $fd, $fc, $fb, $fa, $f9, $f8, $f7, $f6, $f5, $f4, $f3, $f2, $f1 ; 0xa0
 	db $ff, $fe, $fd, $fc, $fb, $fb, $fa, $fa, $f9, $f9, $f9, $fa, $fa, $fb, $fb, $fc ; 0xb0
 MinigameConfig_BananaBunch:
-	; $54ec, 16 bytes (bytes:16)
-	db $00, $11, $01, $08, $21, $16, $00, $18, $1b, $55, $b4, $40, $fc, $54, $00, $00 ; 0x00
+	; $54ec, 16 bytes
+	drill_def CHAR_ALEX, COURT_BANANA_BUNCH, 1, GAMEMODE_MARIO_MINIGAME, MINIGAME_BANANA_BUNCH, BGM_COURT_JUNGLE, CHAR_DK, MinigameHooks_BananaBunch, MinigamePointLayoutSolo, InitMinigame_BananaBunch
 InitMinigame_BananaBunch:
 	farcall InitMinigameTargets ; $54fc
 	ld a, $05 ; $54ff

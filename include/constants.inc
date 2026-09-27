@@ -785,20 +785,23 @@ def BGM_COURT_TROPIC         equ $13 ; row 6; MinigameConfig_FruitFantasy
 def BGM_COURT_WAREHOUSE      equ $14 ; row 8; MinigameConfig_TreasureBox
 def BGM_TWO_ON_ONE           equ $15 ; RunDoublesDrillMatch ($0b:$726b -> wMatchBGM)
 def BGM_COURT_JUNGLE         equ $16 ; row 7; MinigameConfig_BananaBunch
+def BGM_TARGET_MINIGAMES     equ $19 ; the drill_defs of Medallion Match, Shooting Star and Target Shot
 def BGM_ACADEMY_BUILDING     equ $1a ; story_location: the Academy Main Building and the Academy Wing
 def BGM_ACADEMY_OUTDOORS     equ $1b ; story_location: the courtyards, entrances, class courts, Court #1/#2, the awards ceremony and the island flyover (13 locations)
 def BGM_DORM_ROOM            equ $1c ; DormRoomInitScript_13 / DormRoomNpc03_13
 def BGM_ACADEMY_ROOMS        equ $1d ; story_location: the restaurant, cafeteria, training rooms, the Center Court and the tournament (7 locations)
-def BGM_TRAINING_DRILL       equ $20 ; MatchSettingsTable: Service Match 1, Service Practice 3, Net Game Practice 2, Stroke Practice 1, Tennis Machine 3
-def BGM_SERVICE_DRILL        equ $21 ; MatchSettingsTable: Service Match 2/3, Service Practice 1/2
+def BGM_TENNIS_MACHINE       equ $1e ; the Tennis Machine Room's drill_defs
+def BGM_WALL_PRACTICE        equ $1f ; the Wall Practice Room's drill_defs
+def BGM_PRACTICE_MATCH       equ $20 ; the story practice matches (GAMEMODE_PRACTICE_MATCH rows of the match settings tables)
+def BGM_JUNIOR_RANKING       equ $21 ; the Junior class ranking matches (hard court)
 def BGM_SENIOR_RANKING       equ $22 ; MatchSettingsTable records 6-9; reused by the intro character showcase and the trophy cheat screen
 def BGM_DRILL_MATCH          equ $24 ; the match drills' drill_def (COURT_TRAINING_MATCH)
 def BGM_DRILL_PRACTICE       equ $25 ; the practice drills' drill_def (COURT_TRAINING_PRACTICE)
-def BGM_STROKE_MATCH         equ $23 ; MatchSettingsTable: Stroke Match 1-3, Net Game Practice 3
-def BGM_STROKE_PRACTICE      equ $26 ; MatchSettingsTable: Stroke Practice 2/3
-def BGM_TENNIS_MACHINE_A     equ $27 ; MatchSettingsTable: Tennis Machine 1
-def BGM_TENNIS_MACHINE_B     equ $28 ; MatchSettingsTable: Tennis Machine 2
-def BGM_WALL_PRACTICE        equ $29 ; MatchSettingsTable: Wall Practice 1-3 and Tennis Machine 4
+def BGM_VARSITY_RANKING      equ $23 ; the Varsity ranking matches (composition court)
+def BGM_ISLAND_OPEN          equ $26 ; the Island Open's early rounds
+def BGM_ISLAND_OPEN_SEMIFINAL equ $27
+def BGM_ISLAND_OPEN_FINAL    equ $28 ; on the Center Court
+def BGM_DREAM_MATCH          equ $29 ; the Dream Matches on the castle court
 def BGM_ISLAND_OPEN_LOSE     equ $2a ; ShowRankingBoard with wRankingBoardMode 2, which SetupRankingBoardArgs sets when wMatchWinLoseFlag != 1
 def BGM_ISLAND_OPEN_WIN      equ $2b ; the same board with mode 1 (match won)
 def BGM_CREDITS              equ $2c ; RunEndingCreditsSequence, the End1 story_location, and the debug text-overflow alarm

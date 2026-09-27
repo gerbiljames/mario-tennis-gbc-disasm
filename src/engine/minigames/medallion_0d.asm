@@ -78,8 +78,8 @@ DrawTreasureBoxHitCountdown:
 ; Instruction-identical to ProjectMedallionMatchWorldPosition (in this bank); a change here belongs in every copy.
 	twin_named project_medallion_match_world_position, ProjectTreasureBoxWorldPosition ; $5cd7
 MinigameConfig_MedallionMatch:
-	; $5cea, 16 bytes (bytes:16)
-	db $17, $15, $02, $08, $23, $19, $00, $1b, $0c, $5d, $bd, $40, $fa, $5c, $00, $00 ; 0x00
+	; $5cea, 16 bytes
+	drill_def CHAR_LUIGI, COURT_MEDALLION_MATCH, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_MEDALLION_MATCH, BGM_TARGET_MINIGAMES, CHAR_WALUIGI, MinigameHooks_MedallionMatch, MinigamePointLayoutDuo, InitMinigame_MedallionMatch
 InitMinigame_MedallionMatch:
 	ld a, $01 ; $5cfa
 	ld [wMinigameUsesTennisMachine], a ; $5cfc
@@ -322,8 +322,8 @@ DrawMedallionMatchHitCountdown:
 ; Instruction-identical to ProjectTreasureBoxWorldPosition (in this bank); a change here belongs in every copy.
 	twin_named project_medallion_match_world_position, ProjectMedallionMatchWorldPosition ; $5f1f
 MinigameConfig_FruitFantasy:
-	; $5f32, 16 bytes (bytes:16)
-	db $00, $16, $01, $08, $20, $13, $00, $1c, $61, $5f, $b4, $40, $42, $5f, $00, $00 ; 0x00
+	; $5f32, 16 bytes
+	drill_def CHAR_ALEX, COURT_FRUIT_FANTASY, 1, GAMEMODE_MARIO_MINIGAME, MINIGAME_FRUIT_FANTASY, BGM_COURT_TROPIC, CHAR_YOSHI, MinigameHooks_FruitFantasy, MinigamePointLayoutSolo, InitMinigame_FruitFantasy
 InitMinigame_FruitFantasy:
 	farcall InitMinigameTargets ; $5f42
 	ld a, $06 ; $5f45

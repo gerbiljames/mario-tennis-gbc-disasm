@@ -8,8 +8,8 @@ DrawMinigameScore:
 	farcall DrawNumberWithSprites ; $4bf4
 	ret ; $4bf7
 MinigameConfig_WallPractice2:
-	; $4bf8, 16 bytes (bytes:16)
-	db $00, $0b, $01, $07, $17, $1f, $00, $80, $1b, $4c, $b4, $40, $08, $4c, $00, $00 ; 0x00
+	; $4bf8, 16 bytes
+	drill_def CHAR_ALEX, COURT_WALL_PRACTICE, 1, GAMEMODE_WALL_PRACTICE, MINIGAME_WALL_PRACTICE_2, BGM_WALL_PRACTICE, CHAR_STORY_MAIN, MinigameHooks_WallPractice2, MinigamePointLayoutSolo, InitMinigame_WallPractice2
 InitMinigame_WallPractice2:
 	ld a, $01 ; $4c08
 	ld [wMinigameUsesWall], a ; $4c0a
@@ -48,20 +48,8 @@ WallPractice2Hook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4c3f
 	ret ; $4c42
 MinigameConfig_WallPractice3:
-	nop ; $4c43
-	dec bc ; $4c44
-	ld bc, $1807 ; $4c45
-	rra ; $4c48
-	nop ; $4c49
-	add b ; $4c4a
-	ld h, [hl] ; $4c4b
-	ld c, h ; $4c4c
-	or h ; $4c4d
-	ld b, b ; $4c4e
-	ld d, e ; $4c4f
-	ld c, h ; $4c50
-	nop ; $4c51
-	nop ; $4c52
+	; $4c43, 16 bytes
+	drill_def CHAR_ALEX, COURT_WALL_PRACTICE, 1, GAMEMODE_WALL_PRACTICE, MINIGAME_WALL_PRACTICE_3, BGM_WALL_PRACTICE, CHAR_STORY_MAIN, MinigameHooks_WallPractice3, MinigamePointLayoutSolo, InitMinigame_WallPractice3
 InitMinigame_WallPractice3:
 	ld a, $01 ; $4c53
 	ld [wMinigameUsesWall], a ; $4c55
@@ -100,20 +88,8 @@ WallPractice3Hook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4c8a
 	ret ; $4c8d
 MinigameConfig_WallPractice4:
-	nop ; $4c8e
-	dec bc ; $4c8f
-	ld bc, $1907 ; $4c90
-	rra ; $4c93
-	nop ; $4c94
-	add b ; $4c95
-	or c ; $4c96
-	ld c, h ; $4c97
-	or h ; $4c98
-	ld b, b ; $4c99
-	sbc [hl] ; $4c9a
-	ld c, h ; $4c9b
-	nop ; $4c9c
-	nop ; $4c9d
+	; $4c8e, 16 bytes
+	drill_def CHAR_ALEX, COURT_WALL_PRACTICE, 1, GAMEMODE_WALL_PRACTICE, MINIGAME_WALL_PRACTICE_4, BGM_WALL_PRACTICE, CHAR_STORY_MAIN, MinigameHooks_WallPractice4, MinigamePointLayoutSolo, InitMinigame_WallPractice4
 InitMinigame_WallPractice4:
 	ld a, $01 ; $4c9e
 	ld [wMinigameUsesWall], a ; $4ca0
@@ -152,8 +128,8 @@ WallPractice4Hook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4cd5
 	ret ; $4cd8
 MinigameConfig_TennisMachineHighScore:
-	; $4cd9, 16 bytes (bytes:16)
-	db $15, $0a, $02, $06, $1a, $1e, $00, $80, $f9, $4c, $bd, $40, $e9, $4c, $00, $00 ; 0x00
+	; $4cd9, 16 bytes
+	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachineHighScore, MinigamePointLayoutDuo, InitMinigame_TennisMachineHighScore
 InitMinigame_TennisMachineHighScore:
 	ld a, $01 ; $4ce9
 	ld [wMinigameUsesTennisMachine], a ; $4ceb
@@ -195,20 +171,8 @@ TennisMachineHighScoreHook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4d37
 	ret ; $4d3a
 MinigameConfig_WallPracticeHighScore:
-	nop ; $4d3b
-	dec bc ; $4d3c
-	ld bc, $1b07 ; $4d3d
-	rra ; $4d40
-	nop ; $4d41
-	add b ; $4d42
-	ld h, e ; $4d43
-	ld c, l ; $4d44
-	or h ; $4d45
-	ld b, b ; $4d46
-	ld c, e ; $4d47
-	ld c, l ; $4d48
-	nop ; $4d49
-	nop ; $4d4a
+	; $4d3b, 16 bytes
+	drill_def CHAR_ALEX, COURT_WALL_PRACTICE, 1, GAMEMODE_WALL_PRACTICE, MINIGAME_WALL_PRACTICE_HIGH_SCORE, BGM_WALL_PRACTICE, CHAR_STORY_MAIN, MinigameHooks_WallPracticeHighScore, MinigamePointLayoutSolo, InitMinigame_WallPracticeHighScore
 InitMinigame_WallPracticeHighScore:
 	ld a, $01 ; $4d4b
 	ld [wMinigameHighScoreMode], a ; $4d4d
@@ -249,20 +213,8 @@ WallPracticeHighScoreHook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4d87
 	ret ; $4d8a
 MinigameConfig_TargetShot:
-	dec d ; $4d8b
-	rrca ; $4d8c
-	ld [bc], a ; $4d8d
-	ld [$191f], sp ; $4d8e
-	nop ; $4d91
-	add hl, de ; $4d92
-	xor l ; $4d93
-	ld c, l ; $4d94
-	cp l ; $4d95
-	ld b, b ; $4d96
-	sbc e ; $4d97
-	ld c, l ; $4d98
-	nop ; $4d99
-	nop ; $4d9a
+	; $4d8b, 16 bytes
+	drill_def CHAR_UNUSED_15, COURT_TARGET_SHOT, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_TARGET_SHOT, BGM_TARGET_MINIGAMES, CHAR_BABY_MARIO, MinigameHooks_TargetShot, MinigamePointLayoutDuo, InitMinigame_TargetShot
 InitMinigame_TargetShot:
 	ld a, $01 ; $4d9b
 	ld [wMinigameUsesTennisMachine], a ; $4d9d

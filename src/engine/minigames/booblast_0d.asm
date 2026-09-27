@@ -104,8 +104,8 @@ MinigameTargetTypeScores:
 	sound SFX_BALL_CONTACT ; $5612
 	ret ; $5614
 MinigameConfig_BooBlast:
-	; $5615, 16 bytes (bytes:16)
-	db $17, $12, $02, $08, $1c, $11, $00, $1a, $58, $56, $c6, $40, $25, $56, $00, $00 ; 0x00
+	; $5615, 16 bytes
+	drill_def CHAR_LUIGI, COURT_BOO_BLAST, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_BOO_BLAST, BGM_COURT_STAR, CHAR_MARIO, MinigameHooks_BooBlast, MinigamePointLayoutBooBlast, InitMinigame_BooBlast
 InitMinigame_BooBlast:
 	ld a, $01 ; $5625
 	ld [wMinigameIsBooBlast], a ; $5627
@@ -433,8 +433,8 @@ MinigameHitStreakValueTable_0d:
 	; $5866, 8 bytes (bytes:8)
 	db $0f, $0e, $0e, $0e, $0e, $0e, $0e, $0d ; 0x00
 MinigameConfig_PerfectShot:
-	; $586e, 16 bytes (bytes:16)
-	db $00, $13, $01, $08, $1e, $12, $00, $1f, $a6, $58, $b4, $40, $7e, $58, $00, $00 ; 0x00
+	; $586e, 16 bytes
+	drill_def CHAR_ALEX, COURT_PERFECT_SHOT, 1, GAMEMODE_MARIO_MINIGAME, MINIGAME_PERFECT_SHOT, BGM_COURT_CASTLE, CHAR_PEACH, MinigameHooks_PerfectShot, MinigamePointLayoutSolo, InitMinigame_PerfectShot
 InitMinigame_PerfectShot:
 	ld a, $01 ; $587e
 	ld [wMinigameUsesWall], a ; $5880

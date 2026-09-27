@@ -69,8 +69,8 @@ GetMinigameCharCoordsEntry:
 ; Instruction-identical to SnapCameraTo (one copy per bank); a change here belongs in every copy.
 	twin_named snap_camera_to, SnapCameraTo_0d ; $493a
 MinigameConfig_TennisMachine2:
-	; $4959, 16 bytes (bytes:16)
-	db $15, $0a, $02, $06, $13, $1e, $00, $80, $74, $49, $bd, $40, $69, $49, $00, $00 ; 0x00
+	; $4959, 16 bytes
+	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_2, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine2, MinigamePointLayoutDuo, InitMinigame_TennisMachine2
 InitMinigame_TennisMachine2:
 	ld a, $01 ; $4969
 	ld [wMinigameUsesTennisMachine], a ; $496b
@@ -121,19 +121,8 @@ TennisMachine2Hook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $49b2
 	ret ; $49b5
 MinigameConfig_TennisMachine3:
-	dec d ; $49b6
-	ld a, [bc] ; $49b7
-	ld [bc], a ; $49b8
-	ld b, $14 ; $49b9
-	ld e, $00 ; $49bb
-	add b ; $49bd
-	pop de ; $49be
-	ld c, c ; $49bf
-	cp l ; $49c0
-	ld b, b ; $49c1
-	add $49 ; $49c2
-	nop ; $49c4
-	nop ; $49c5
+	; $49b6, 16 bytes
+	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_3, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine3, MinigamePointLayoutDuo, InitMinigame_TennisMachine3
 InitMinigame_TennisMachine3:
 	ld a, $01 ; $49c6
 	ld [wMinigameUsesTennisMachine], a ; $49c8
@@ -184,19 +173,8 @@ TennisMachine3Hook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4a0f
 	ret ; $4a12
 MinigameConfig_TennisMachine4:
-	dec d ; $4a13
-	ld a, [bc] ; $4a14
-	ld [bc], a ; $4a15
-	ld b, $15 ; $4a16
-	ld e, $00 ; $4a18
-	add b ; $4a1a
-	ld l, $4a ; $4a1b
-	cp l ; $4a1d
-	ld b, b ; $4a1e
-	inc hl ; $4a1f
-	ld c, d ; $4a20
-	nop ; $4a21
-	nop ; $4a22
+	; $4a13, 16 bytes
+	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_4, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine4, MinigamePointLayoutDuo, InitMinigame_TennisMachine4
 InitMinigame_TennisMachine4:
 	ld a, $01 ; $4a23
 	ld [wMinigameUsesTennisMachine], a ; $4a25
@@ -236,20 +214,8 @@ TennisMachine4Hook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4a6c
 	ret ; $4a6f
 MinigameConfig_WallPractice1:
-	nop ; $4a70
-	dec bc ; $4a71
-	ld bc, $1607 ; $4a72
-	rra ; $4a75
-	nop ; $4a76
-	add b ; $4a77
-	sub e ; $4a78
-	ld c, d ; $4a79
-	or h ; $4a7a
-	ld b, b ; $4a7b
-	add b ; $4a7c
-	ld c, d ; $4a7d
-	nop ; $4a7e
-	nop ; $4a7f
+	; $4a70, 16 bytes
+	drill_def CHAR_ALEX, COURT_WALL_PRACTICE, 1, GAMEMODE_WALL_PRACTICE, MINIGAME_WALL_PRACTICE_1, BGM_WALL_PRACTICE, CHAR_STORY_MAIN, MinigameHooks_WallPractice1, MinigamePointLayoutSolo, InitMinigame_WallPractice1
 InitMinigame_WallPractice1:
 	ld a, $01 ; $4a80
 	ld [wMinigameUsesWall], a ; $4a82

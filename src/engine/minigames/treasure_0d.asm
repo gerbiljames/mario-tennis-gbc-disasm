@@ -143,8 +143,8 @@ AreAllTargetsHit:
 	ld a, $00 ; $59c8
 	ret ; $59ca
 MinigameConfig_TreasureBox:
-	; $59cb, 16 bytes (bytes:16)
-	db $1b, $14, $02, $08, $22, $14, $00, $1e, $ed, $59, $bd, $40, $db, $59, $00, $00 ; 0x00
+	; $59cb, 16 bytes
+	drill_def CHAR_WALUIGI, COURT_TREASURE_BOX, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_TREASURE_BOX, BGM_COURT_WAREHOUSE, CHAR_WARIO, MinigameHooks_TreasureBox, MinigamePointLayoutDuo, InitMinigame_TreasureBox
 InitMinigame_TreasureBox:
 	ld a, $01 ; $59db
 	ld [wMinigameUsesTennisMachine], a ; $59dd

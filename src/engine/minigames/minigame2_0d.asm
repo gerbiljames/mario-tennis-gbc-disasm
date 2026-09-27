@@ -189,8 +189,8 @@ UpdateMinigameActor:
 	pop af ; $44f8
 	ret ; $44f9
 MinigameConfig_TennisMachine1:
-	; $44fa, 16 bytes (bytes:16)
-	db $15, $0a, $02, $06, $12, $1e, $00, $80, $15, $45, $bd, $40, $0a, $45, $00, $00 ; 0x00
+	; $44fa, 16 bytes
+	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_1, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine1, MinigamePointLayoutDuo, InitMinigame_TennisMachine1
 InitMinigame_TennisMachine1:
 	ld a, $01 ; $450a
 	ld [wMinigameUsesTennisMachine], a ; $450c
