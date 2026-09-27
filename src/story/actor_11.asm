@@ -391,9 +391,9 @@ StartNextRankingMatch:
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7851
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, FACE_RIGHT ; $7858
 	script_wait_frames $1e ; $785f
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_3, ActorScript_11_23 ; $7866
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_4, ActorScript_11_24 ; $7871
-	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_4 ; $787c
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_3, ActorScript_11_23 ; $7866
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_4, ActorScript_11_24 ; $7871
+	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_4 ; $787c
 	script_move_player $1b00, $1100 ; $7881
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, ActorScript_11_31 ; $788b
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_43 ; $7896
@@ -414,8 +414,8 @@ StartNextRankingMatch:
 	script_face ACTOR_PLAYER, FACE_LEFT ; $78dd
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, FACE_LEFT ; $78e4
 	script_wait_frames $1e ; $78eb
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1, ActorScript_11_25 ; $78f2
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2, ActorScript_11_26 ; $78fd
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_1, ActorScript_11_25 ; $78f2
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_2, ActorScript_11_26 ; $78fd
 	script_wait_frames $78 ; $7908
 	script_move_player $0b00, $1100 ; $790f
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_35 ; $7919
@@ -437,8 +437,8 @@ StartNextRankingMatch:
 	script_face ACTOR_PLAYER, FACE_LEFT ; $796b
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, FACE_LEFT ; $7972
 	script_wait_frames $1e ; $7979
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1, ActorScript_11_25 ; $7980
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2, ActorScript_11_26 ; $798b
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_1, ActorScript_11_25 ; $7980
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_2, ActorScript_11_26 ; $798b
 	script_wait_frames $78 ; $7996
 	script_move_player $0b00, $1100 ; $799d
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, ActorScript_11_35 ; $79a7
@@ -459,8 +459,8 @@ StartNextRankingMatch:
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $79f6
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, FACE_RIGHT ; $79fd
 	script_wait_frames $1e ; $7a04
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_3, ActorScript_11_23 ; $7a0b
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_4, ActorScript_11_24 ; $7a16
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_3, ActorScript_11_23 ; $7a0b
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_4, ActorScript_11_24 ; $7a16
 	script_wait_frames $78 ; $7a21
 	script_move_player $1700, $1300 ; $7a28
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, ActorScript_11_31 ; $7a32

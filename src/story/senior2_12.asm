@@ -284,9 +284,9 @@ StartSeniorRankingMatch:
 	farcall RestoreOverworldAfterMatch ; $639e
 	ret ; $63a1
 ApproachSeniorCourtPairA:
-	script_set_actor_script ACTOR_SENIOR_COURT_WALK_74_00_1, ActorScript_12_17 ; $63a2
-	script_set_actor_script ACTOR_SENIOR_COURT_WALK_74_00_2, ActorScript_12_18 ; $63ad
-	script_wait_actor_script ACTOR_SENIOR_COURT_WALK_74_00_2 ; $63b8
+	script_set_actor_script ACTOR_SENIOR_COURT_RACKET_STUDENT_1, ActorScript_12_17 ; $63a2
+	script_set_actor_script ACTOR_SENIOR_COURT_RACKET_STUDENT_2, ActorScript_12_18 ; $63ad
+	script_wait_actor_script ACTOR_SENIOR_COURT_RACKET_STUDENT_2 ; $63b8
 	script_move_player $2400, $1700 ; $63bd
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_13 ; $63c7
 	ret ; $63d2

@@ -20,10 +20,10 @@ TournamentCourtyardActors_15:
 	map_actor $0000, ActorScript_15_22, $1f00, $1d00, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $05, TOURNAMENT_COURTYARD_WALK_71_03
 	map_actor $0000, ActorScript_15_22, $0b00, $2700, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_72_02
 	map_actor $0000, ActorScript_15_22, $0900, $2900, FACE_UP, OBJ_WALK_72_03, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_72_03
-	map_actor $0000, ActorScript_15_22, $1b40, $2640, FACE_LEFT, OBJ_WALK_71_09, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_71_09_1
-	map_actor $0000, ActorScript_15_22, $1cc0, $2640, FACE_LEFT, OBJ_WALK_71_09, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_71_09_2
-	map_actor $0000, ActorScript_15_22, $0740, $2640, FACE_LEFT, OBJ_WALK_71_09, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_71_09_3
-	map_actor $0000, ActorScript_15_22, $08c0, $2640, FACE_LEFT, OBJ_WALK_71_09, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_71_09_4
+	map_actor $0000, ActorScript_15_22, $1b40, $2640, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_1
+	map_actor $0000, ActorScript_15_22, $1cc0, $2640, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_2
+	map_actor $0000, ActorScript_15_22, $0740, $2640, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_3
+	map_actor $0000, ActorScript_15_22, $08c0, $2640, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_4
 	map_actor_end
 TournamentCourtyardEntryPoints_15:
 	; $40b6, 41 bytes (map_entries)
@@ -444,9 +444,9 @@ TrainingCourtActors_15:
 	map_actor $0000, ActorScript_15_22, $2d00, $2900, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $07, TRAINING_COURT_BETH
 	map_actor $0000, ActorScript_15_01, $3f00, $0300, FACE_DOWN, OBJ_WALK_71_06, ANIM_WALK, $07, TRAINING_COURT_WALK_71_06_3
 	map_actor $0000, ActorScript_15_22, $3f00, $0500, FACE_DOWN, OBJ_WALK_76_06, ANIM_WALK, $00, TRAINING_COURT_WALK_76_06
-	map_actor $0000, ActorScript_15_22, $3f00, $0700, FACE_DOWN, OBJ_WALK_71_08, ANIM_WALK, $05, TRAINING_COURT_WALK_71_08
-	map_actor $0000, ActorScript_15_22, $3f00, $0900, FACE_DOWN, OBJ_WALK_73_16, ANIM_WALK, $00, TRAINING_COURT_WALK_73_16
-	map_actor $0000, ActorScript_15_22, $3f00, $0b00, FACE_DOWN, OBJ_WALK_73_19, ANIM_WALK, $00, TRAINING_COURT_WALK_73_19
+	map_actor $0000, ActorScript_15_22, $3f00, $0700, FACE_DOWN, OBJ_RACKET, ANIM_WALK, $05, TRAINING_COURT_RACKET
+	map_actor $0000, ActorScript_15_22, $3f00, $0900, FACE_DOWN, OBJ_BALLOON_SCRIBBLE, ANIM_WALK, $00, TRAINING_COURT_BALLOON_SCRIBBLE
+	map_actor $0000, ActorScript_15_22, $3f00, $0b00, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, TRAINING_COURT_BALLOON_SWEAT
 	map_actor_end
 TrainingCourtEntryPoints_15:
 	; $48d4, 57 bytes (map_entries)
@@ -740,7 +740,7 @@ TrainingCourtNpc13_15:
 	ld hl, $0018 ; $4bb3
 	add hl, de ; $4bb6
 	ld [hl], a ; $4bb7
-	script_set_position ACTOR_TRAINING_COURT_WALK_73_16, $3680, $0d80 ; $4bb8
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3680, $0d80 ; $4bb8
 	sound SFX_APPEAR1 ; $4bc3
 	farcall AdvanceDialogueTextCursor ; $4bc5
 	script_speak ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4bc8
@@ -751,7 +751,7 @@ TrainingCourtNpc13_15:
 	script_wait_move ACTOR_PLAYER ; $4bec
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4bf1
 	script_wait_frames $0a ; $4bf8
-	script_set_position ACTOR_TRAINING_COURT_WALK_73_16, $3f00, $3f00 ; $4bff
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3f00, $3f00 ; $4bff
 	script_wait_frames $14 ; $4c0a
 	script_set_anim ACTOR_PLAYER, $06 ; $4c11
 	script_wait_frames $b4 ; $4c18
@@ -789,6 +789,6 @@ TrainingCourtNpc13_15:
 	add hl, de ; $4cea
 	ld [hl], a ; $4ceb
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4cec
-	script_set_position ACTOR_TRAINING_COURT_WALK_73_16, $3480, $0b80 ; $4cf3
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3480, $0b80 ; $4cf3
 	sound SFX_APPEAR1 ; $4cfe
 	script_wait_frames $50 ; $4d00

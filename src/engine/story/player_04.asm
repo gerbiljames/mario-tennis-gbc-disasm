@@ -53,8 +53,8 @@ ObjectIdList_04:
 	object_id WALK_71_05, DataPtr_WalkSprite_71_05 ; $32
 	object_id WALK_71_06, DataPtr_WalkSprite_71_06 ; $33
 	object_id WALK_71_07, DataPtr_WalkSprite_71_07 ; $34
-	object_id WALK_71_08, DataPtr_WalkSprite_71_08 ; $35
-	object_id WALK_71_09, DataPtr_WalkSprite_71_09 ; $36
+	object_id RACKET, DataPtr_WalkSprite_71_08 ; $35
+	object_id INVISIBLE, DataPtr_WalkSprite_71_09 ; $36
 	object_id WALK_72_00, DataPtr_WalkSprite_72_00 ; $37
 	object_id WALK_72_01, DataPtr_WalkSprite_72_01 ; $38
 	object_id WALK_72_02, DataPtr_WalkSprite_72_02 ; $39
@@ -66,26 +66,26 @@ ObjectIdList_04:
 	object_id WALK_72_08, DataPtr_WalkSprite_72_08 ; $3f
 	object_id WALK_73_00, DataPtr_WalkSprite_73_00 ; $40
 	object_id WALK_73_01, DataPtr_WalkSprite_73_01 ; $41
-	object_id WALK_73_02, DataPtr_WalkSprite_73_02 ; $42
-	object_id WALK_73_03, DataPtr_WalkSprite_73_03 ; $43
-	object_id WALK_73_04, DataPtr_WalkSprite_73_04 ; $44
-	object_id WALK_73_05, DataPtr_WalkSprite_73_05 ; $45
-	object_id WALK_73_06, DataPtr_WalkSprite_73_06 ; $46
-	object_id WALK_73_07, DataPtr_WalkSprite_73_07 ; $47
+	object_id WEIGHTLIFTER_A, DataPtr_WalkSprite_73_02 ; $42
+	object_id SITUPS_A, DataPtr_WalkSprite_73_03 ; $43
+	object_id SITUPS_B, DataPtr_WalkSprite_73_04 ; $44
+	object_id WEIGHTLIFTER_B, DataPtr_WalkSprite_73_05 ; $45
+	object_id JUMPING_JACKS_A, DataPtr_WalkSprite_73_06 ; $46
+	object_id JUMPING_JACKS_B, DataPtr_WalkSprite_73_07 ; $47
 	object_id WARIO, DataPtr_WalkSprite_73_08 ; $48
 	object_id EMILY, DataPtr_WalkSprite_73_09 ; $49
 	object_id MARK, DataPtr_WalkSprite_73_10 ; $4a
 	object_id KEVIN, DataPtr_WalkSprite_73_11 ; $4b
-	object_id WALK_73_12, DataPtr_WalkSprite_73_12 ; $4c
-	object_id WALK_73_13, DataPtr_WalkSprite_73_13 ; $4d
-	object_id WALK_73_14, DataPtr_WalkSprite_73_14 ; $4e
-	object_id WALK_73_15, DataPtr_WalkSprite_73_15 ; $4f
-	object_id WALK_73_16, DataPtr_WalkSprite_73_16 ; $50
-	object_id WALK_73_17, DataPtr_WalkSprite_73_17 ; $51
-	object_id WALK_73_18, DataPtr_WalkSprite_73_18 ; $52
-	object_id WALK_73_19, DataPtr_WalkSprite_73_19 ; $53
-	object_id WALK_74_00, DataPtr_WalkSprite_74_00 ; $54
-	object_id WALK_74_01, DataPtr_WalkSprite_74_01 ; $55
+	object_id BALLOON_EXCLAIM, DataPtr_WalkSprite_73_12 ; $4c
+	object_id BALLOON_QUESTION, DataPtr_WalkSprite_73_13 ; $4d
+	object_id BALLOON_ANGRY, DataPtr_WalkSprite_73_14 ; $4e
+	object_id BALLOON_ELLIPSIS, DataPtr_WalkSprite_73_15 ; $4f
+	object_id BALLOON_SCRIBBLE, DataPtr_WalkSprite_73_16 ; $50
+	object_id BALLOON_MUSIC, DataPtr_WalkSprite_73_17 ; $51
+	object_id BALLOON_SHOCK, DataPtr_WalkSprite_73_18 ; $52
+	object_id BALLOON_SWEAT, DataPtr_WalkSprite_73_19 ; $53
+	object_id RACKET_STUDENT, DataPtr_WalkSprite_74_00 ; $54
+	object_id CAT, DataPtr_WalkSprite_74_01 ; $55
 	object_id ALEX_B, DataPtr_WalkSprite_74_02 ; $56
 	object_id NINA_B, DataPtr_WalkSprite_74_03 ; $57
 	object_id HARRY_B, DataPtr_WalkSprite_74_04 ; $58
@@ -112,11 +112,11 @@ ObjectIdList_04:
 	object_id LUIGI, DataPtr_WalkSprite_77_00 ; $6d
 	object_id DK, DataPtr_WalkSprite_77_01 ; $6e
 	object_id BABY_MARIO, DataPtr_WalkSprite_77_02 ; $6f
-	object_id WALK_77_03, DataPtr_WalkSprite_77_03 ; $70
-	object_id WALK_77_04, DataPtr_WalkSprite_77_04 ; $71
+	object_id TOAD, DataPtr_WalkSprite_77_03 ; $70
+	object_id BOB_OMB, DataPtr_WalkSprite_77_04 ; $71
 	object_id WALK_77_05, DataPtr_WalkSprite_77_05 ; $72
-	object_id WALK_77_06, DataPtr_WalkSprite_77_06 ; $73
-	object_id WALK_77_07, DataPtr_WalkSprite_77_07 ; $74
+	object_id BOO, DataPtr_WalkSprite_77_06 ; $73
+	object_id TROPHY, DataPtr_WalkSprite_77_07 ; $74
 	db $00, $00 ; end: GetObjectDefCount counts rows up to here
 SetActorMoveTarget:
 	push hl ; $5061

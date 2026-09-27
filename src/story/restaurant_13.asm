@@ -342,9 +342,9 @@ AcademyCourtsTourCutscene:
 	ret ; $472b
 AcademyCourtsTourActors_13:
 	; $472c, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_WALK_73_12
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_WALK_73_13
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_WALK_73_15
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_BALLOON_QUESTION
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_BALLOON_ELLIPSIS
 	map_actor $0000, ActorScript_13_27, $3200, $1300, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_EMILY
 	map_actor_end
 ServiceAceCoachIntroCutscene:
@@ -381,10 +381,10 @@ ServiceAceCoachIntroCutscene:
 	call AnimateDoorOpen_13 ; $4842
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4845
 	script_wait_frames $0f ; $484a
-	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_WALK_73_12, $1c00, $0b00 ; $4851
+	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_EXCLAIM, $1c00, $0b00 ; $4851
 	sound SFX_CHIME ; $485c
 	script_wait_frames $1e ; $485e
-	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_WALK_73_12, $3f00, $3f00 ; $4865
+	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_EXCLAIM, $3f00, $3f00 ; $4865
 	script_face ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, FACE_LEFT ; $4870
 	script_wait_frames $0f ; $4877
 	script_face ACTOR_PLAYER, FACE_LEFT ; $487e
@@ -422,10 +422,10 @@ ServiceAceCoachIntroCutscene:
 	script_wait_frames $0f ; $495c
 	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, ANIM_BOUNCE ; $4963
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $496a
-	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_WALK_73_13, $1640, $0940 ; $496f
+	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_QUESTION, $1640, $0940 ; $496f
 	sound SFX_EMOTE ; $497a
 	script_wait_frames $1e ; $497c
-	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_WALK_73_13, $3f00, $3f00 ; $4983
+	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_QUESTION, $3f00, $3f00 ; $4983
 	script_wait_frames $1e ; $498e
 	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ANIM_BOUNCE ; $4995
 	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $499c
@@ -489,9 +489,9 @@ ServiceAceCoachIntroCutscene:
 	script_wait_frames $3c ; $4b1e
 	script_face_toward ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ACTOR_PLAYER ; $4b25
 	script_wait_frames $0f ; $4b2d
-	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_WALK_73_15, $1c00, $0900 ; $4b34
+	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_ELLIPSIS, $1c00, $0900 ; $4b34
 	script_wait_frames $5a ; $4b3f
-	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_WALK_73_15, $3f00, $3f00 ; $4b46
+	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_ELLIPSIS, $3f00, $3f00 ; $4b46
 	script_wait_frames $0f ; $4b51
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4b58
 	script_face_toward ACTOR_PLAYER, ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4b5d
@@ -537,9 +537,9 @@ ServiceAceCoachIntroCutscene:
 	ret ; $4c7d
 ServiceAceCoachIntroActors_13:
 	; $4c7e, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_WALK_73_12
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_WALK_73_13
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_WALK_73_15
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_BALLOON_QUESTION
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_BALLOON_ELLIPSIS
 	map_actor $0000, ActorScript_13_27, $4100, $0d00, FACE_LEFT, OBJ_EMILY, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_EMILY
 	map_actor $0000, ActorScript_13_27, $1500, $0d00, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_MARK
 	map_actor $0000, ActorScript_13_27, $1300, $0d00, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, SERVICE_ACE_COACH_INTRO_KEVIN

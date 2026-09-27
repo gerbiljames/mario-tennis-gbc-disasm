@@ -17,8 +17,8 @@ DormEntranceActors_12:
 	; $4014, 66 bytes (map_actors)
 	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, DORM_ENTRANCE_EMILY
 	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, DORM_ENTRANCE_KATE
-	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, DORM_ENTRANCE_WALK_73_12
-	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_WALK_73_13, ANIM_WALK, $00, DORM_ENTRANCE_WALK_73_13
+	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, DORM_ENTRANCE_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_12_51, $0100, $0100, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, DORM_ENTRANCE_BALLOON_QUESTION
 	map_actor_end
 DormEntranceEntryPoints_12:
 	; $4056, 25 bytes (map_entries)
@@ -116,11 +116,11 @@ DormEntranceEntry0FScene:
 	script_wait_idle ACTOR_PLAYER ; $429e
 	script_wait_frames $14 ; $42a3
 	script_player_speed $0010 ; $42aa
-	script_set_position ACTOR_DORM_ENTRANCE_WALK_73_12, $1780, $0f00 ; $42b0
+	script_set_position ACTOR_DORM_ENTRANCE_BALLOON_EXCLAIM, $1780, $0f00 ; $42b0
 	sound SFX_CHIME ; $42bb
 	script_set_anim ACTOR_DORM_ENTRANCE_EMILY, ANIM_BOUNCE ; $42bd
 	script_wait_idle ACTOR_DORM_ENTRANCE_EMILY ; $42c4
-	script_set_position ACTOR_DORM_ENTRANCE_WALK_73_12, $0100, $0100 ; $42c9
+	script_set_position ACTOR_DORM_ENTRANCE_BALLOON_EXCLAIM, $0100, $0100 ; $42c9
 	script_speak ACTOR_DORM_ENTRANCE_EMILY ; $42d4
 	script_move_target ACTOR_DORM_ENTRANCE_EMILY, $1600, $0b00 ; $42d9
 	script_wait_move ACTOR_DORM_ENTRANCE_EMILY ; $42e4
@@ -160,12 +160,12 @@ DormEntranceEntry0FScene:
 	script_wait_move ACTOR_DORM_ENTRANCE_EMILY ; $43c6
 	script_move_target ACTOR_DORM_ENTRANCE_KATE, $1700, $0f00 ; $43cb
 	script_wait_move ACTOR_DORM_ENTRANCE_KATE ; $43d6
-	script_set_position ACTOR_DORM_ENTRANCE_WALK_73_13, $1800, $1100 ; $43db
+	script_set_position ACTOR_DORM_ENTRANCE_BALLOON_QUESTION, $1800, $1100 ; $43db
 	sound SFX_EMOTE ; $43e6
 	script_wait_frames $3c ; $43e8
 	script_set_anim ACTOR_DORM_ENTRANCE_EMILY, ANIM_SHAKE ; $43ef
 	script_wait_idle ACTOR_DORM_ENTRANCE_EMILY ; $43f6
-	script_set_position ACTOR_DORM_ENTRANCE_WALK_73_13, $0100, $0100 ; $43fb
+	script_set_position ACTOR_DORM_ENTRANCE_BALLOON_QUESTION, $0100, $0100 ; $43fb
 	script_speak ACTOR_DORM_ENTRANCE_EMILY ; $4406
 	script_face_toward ACTOR_DORM_ENTRANCE_KATE, ACTOR_DORM_ENTRANCE_EMILY ; $440b
 	script_wait_frames $3c ; $4413
@@ -212,10 +212,10 @@ DormEntranceEntry0FScene:
 	script_set_anim ACTOR_DORM_ENTRANCE_EMILY, ANIM_BOUNCE ; $44e2
 	script_wait_idle ACTOR_DORM_ENTRANCE_EMILY ; $44e9
 	script_speak ACTOR_DORM_ENTRANCE_EMILY ; $44ee
-	script_set_position ACTOR_DORM_ENTRANCE_WALK_73_13, $1800, $1100 ; $44f3
+	script_set_position ACTOR_DORM_ENTRANCE_BALLOON_QUESTION, $1800, $1100 ; $44f3
 	sound SFX_EMOTE ; $44fe
 	script_wait_frames $3c ; $4500
-	script_set_position ACTOR_DORM_ENTRANCE_WALK_73_13, $0100, $0100 ; $4507
+	script_set_position ACTOR_DORM_ENTRANCE_BALLOON_QUESTION, $0100, $0100 ; $4507
 	script_set_anim ACTOR_DORM_ENTRANCE_KATE, ANIM_NOD ; $4512
 	script_wait_idle ACTOR_DORM_ENTRANCE_KATE ; $4519
 	script_speak ACTOR_DORM_ENTRANCE_KATE ; $451e

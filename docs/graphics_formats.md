@@ -553,13 +553,23 @@ which defines `OBJ_NAME` as the row's index:
 The game names 31 of the walk sprites itself: `CharObjectIdTable`
 (`$04:$4c29`, read by `GetCharObjectId`) gives each `CHAR_*` id its
 overworld object, so `OBJ_ALEX`, `OBJ_MARIO`, `OBJ_YOSHI` and the rest are
-those rows (the two unused roster slots share `OBJ_WALK_73_15`). Ids
+those rows (the two unused roster slots share `OBJ_BALLOON_ELLIPSIS`). Ids
 `$56`-`$59` are `OBJ_ALEX_B`, `OBJ_NINA_B`, `OBJ_HARRY_B`, `OBJ_KATE_B`: the
 same four drawings with fewer frames, which `LoadCourtPlayerPartnerObjDefs`
 and the ending scenes load as `base + gender`, so each male/female pair sits
-side by side. The other 55 walk sprites are the anonymous students and staff
-of `docs/story_mode.md`, and props (the flat ellipses). Bank `$6a` holds eight
-more walk sprites no object id reaches.
+side by side. Twenty-two more are named from their graphics (2026-09-27): the eight
+speech balloons (`OBJ_BALLOON_EXCLAIM`, `_QUESTION`, `_ANGRY`, `_ELLIPSIS`,
+`_SCRIBBLE`, `_MUSIC`, `_SHOCK`, `_SWEAT` -- the unused roster slots' entry in
+`CharObjectIdTable` is the ellipsis), `OBJ_RACKET`, `OBJ_TROPHY` (the one the
+awards ceremony hands over by swapping object definitions), `OBJ_TOAD`,
+`OBJ_BOB_OMB`, `OBJ_BOO` (Peach's Castle), `OBJ_CAT` (the dorm room),
+`OBJ_RACKET_STUDENT`, the Training Gym's six exercisers
+(`OBJ_WEIGHTLIFTER_A/B`, `OBJ_SITUPS_A/B`, `OBJ_JUMPING_JACKS_A/B`) and
+`OBJ_INVISIBLE`, whose graphics are all zero (the Tournament Courtyard's
+talk targets). A single-facing object (header byte 1 = 1) uses only the
+first 16x16 of each frame blob. The remaining 33 are the anonymous students
+and staff of `docs/story_mode.md`. Bank `$6a` holds eight more walk sprites
+no object id reaches.
 
 `LoadActorObjectDef` (`$04:$4ac6`) copies the header to `wActorObjDef` and
 expands it into the actor struct; `SetupCharSpriteFromObjectDef` (`$04:$4b68`)

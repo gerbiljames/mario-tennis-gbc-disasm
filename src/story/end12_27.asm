@@ -43,10 +43,10 @@ End12PrincipalsOfficeMapScripts_27:
 	dw End12PrincipalsOfficeInitScript_27 ; slot 6 InitScript
 End12PrincipalsOfficeActors_27:
 	; $4bca, 122 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_14, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_WALK_73_14
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_19, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_WALK_73_19_1
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_17, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_WALK_73_17
-	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_19, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_WALK_73_19_2
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_ANGRY, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_BALLOON_ANGRY
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_1
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_MUSIC, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_BALLOON_MUSIC
+	map_actor $0000, ActorScript_27_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_2
 	map_actor $0000, ActorScript_27_27, $2000, $2f00, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_WALK_75_06
 	map_actor $0000, ActorScript_27_27, $2200, $3300, FACE_LEFT, OBJ_KEVIN, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_KEVIN
 	map_actor $0000, ActorScript_27_27, $2000, $3300, FACE_LEFT, OBJ_MARK, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_MARK
@@ -227,7 +227,7 @@ End12PrincipalsOfficeInitScript_27:
 	ld hl, End12PrincipalsOfficeActorsAlt_27 ; $4ff2
 	farcall ScriptRespawnLocationActors ; $4ff5
 	farcall BeginCutsceneScriptMode ; $4ff8
-	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_WALK_77_07_1, $06 ; $4ffb
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, $06 ; $4ffb
 	test_flag FLAG_DOUBLES ; $5002
 	jp z, .placeActors ; $5005
 	script_null_script ACTOR_PARTNER ; $5008
@@ -236,7 +236,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_face ACTOR_PARTNER, FACE_UP ; $5023
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $502a
 	jr nz, .face ; $502d
-	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_ALT_WALK_77_07_1, $3f00, $3f00 ; $502f
+	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, $3f00, $3f00 ; $502f
 	jr .face ; $503a
 .placeActors:
 	script_set_position ACTOR_PLAYER, $2000, $3400 ; $503c
@@ -321,8 +321,8 @@ ActorScript_27_04:
 End12PrincipalsOfficeActorsAlt_27:
 	; $51dd, 52 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, $2000, $3000, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_ALT_WALK_75_06
-	map_actor $0000, ActorScript_27_27, $2700, $3240, FACE_DOWN, OBJ_WALK_77_07, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_ALT_WALK_77_07_1
-	map_actor $0000, ActorScript_27_27, $2700, $30c0, FACE_DOWN, OBJ_WALK_77_07, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_ALT_WALK_77_07_2
+	map_actor $0000, ActorScript_27_27, $2700, $3240, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_ALT_TROPHY_1
+	map_actor $0000, ActorScript_27_27, $2700, $30c0, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, END12_PRINCIPALS_OFFICE_ALT_TROPHY_2
 	map_actor_end
 End11TrainingCourtMapScripts_27:
 	; $5211, 14 bytes (map_tree)
@@ -336,8 +336,8 @@ End11TrainingCourtMapScripts_27:
 End11TrainingCourtActors_27:
 	; $521f, 52 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, $3f00, $0500, FACE_DOWN, OBJ_WALK_76_06, ANIM_WALK, $00, END11_TRAINING_COURT_WALK_76_06
-	map_actor $0000, ActorScript_27_27, $3f00, $0500, FACE_DOWN, OBJ_WALK_73_13, ANIM_WALK, $00, END11_TRAINING_COURT_WALK_73_13
-	map_actor $0000, ActorScript_27_27, $3f00, $0500, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, END11_TRAINING_COURT_WALK_73_12
+	map_actor $0000, ActorScript_27_27, $3f00, $0500, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, END11_TRAINING_COURT_BALLOON_QUESTION
+	map_actor $0000, ActorScript_27_27, $3f00, $0500, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END11_TRAINING_COURT_BALLOON_EXCLAIM
 	map_actor_end
 End11TrainingCourtEntryPoints_27:
 	; $5253, 17 bytes (map_entries)

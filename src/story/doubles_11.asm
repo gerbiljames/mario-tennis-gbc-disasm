@@ -415,9 +415,9 @@ StartNextDoublesRankingMatch:
 	script_face ACTOR_PARTNER, FACE_LEFT ; $6657
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, FACE_LEFT ; $665e
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, FACE_LEFT ; $6665
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_1, ActorScript_11_27 ; $666c
-	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2, ActorScript_11_28 ; $6677
-	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_74_00_2 ; $6682
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_1, ActorScript_11_27 ; $666c
+	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_2, ActorScript_11_28 ; $6677
+	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_2 ; $6682
 	script_null_script ACTOR_PARTNER ; $6687
 	script_move_player $0b00, $1100 ; $668c
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, ActorScript_11_09 ; $6696

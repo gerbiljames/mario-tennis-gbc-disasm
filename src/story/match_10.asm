@@ -26,14 +26,14 @@ MatchSelectMapScripts_10:
 MatchSelectActors_10:
 	; $401e, 136 bytes (map_actors)
 	map_actor $0000, ActorScript_10_2, $0700, $1100, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, MATCH_SELECT_EMILY
-	map_actor $0000, ActorScript_10_2, $0700, $0700, FACE_LEFT, OBJ_WALK_73_06, ANIM_WALK, $03, MATCH_SELECT_WALK_73_06
-	map_actor $0000, ActorScript_10_2, $0d00, $0700, FACE_LEFT, OBJ_WALK_73_07, ANIM_WALK, $03, MATCH_SELECT_WALK_73_07
-	map_actor $0000, ActorScript_10_2, $0700, $0b00, FACE_DOWN, OBJ_WALK_74_00, ANIM_WALK, $03, MATCH_SELECT_WALK_74_00
-	map_actor $0000, ActorScript_10_2, $0d00, $0b00, FACE_DOWN, OBJ_WALK_74_01, ANIM_WALK, $03, MATCH_SELECT_WALK_74_01
+	map_actor $0000, ActorScript_10_2, $0700, $0700, FACE_LEFT, OBJ_JUMPING_JACKS_A, ANIM_WALK, $03, MATCH_SELECT_JUMPING_JACKS_A
+	map_actor $0000, ActorScript_10_2, $0d00, $0700, FACE_LEFT, OBJ_JUMPING_JACKS_B, ANIM_WALK, $03, MATCH_SELECT_JUMPING_JACKS_B
+	map_actor $0000, ActorScript_10_2, $0700, $0b00, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $03, MATCH_SELECT_RACKET_STUDENT
+	map_actor $0000, ActorScript_10_2, $0d00, $0b00, FACE_DOWN, OBJ_CAT, ANIM_WALK, $03, MATCH_SELECT_CAT
 	map_actor $0000, ActorScript_10_2, $0d00, $1100, FACE_DOWN, OBJ_WALK_76_06, ANIM_WALK, $05, MATCH_SELECT_WALK_76_06
-	map_actor $0000, ActorScript_10_2, $0500, $0e00, FACE_DOWN, OBJ_WALK_73_03, ANIM_WALK, $03, MATCH_SELECT_WALK_73_03_1
-	map_actor $0000, ActorScript_10_2, $1100, $0e00, FACE_DOWN, OBJ_WALK_73_03, ANIM_WALK, $03, MATCH_SELECT_WALK_73_03_2
-	map_actor $0000, ActorScript_10_2, $1100, $0c00, FACE_DOWN, OBJ_WALK_73_03, ANIM_WALK, $03, MATCH_SELECT_WALK_73_03_3
+	map_actor $0000, ActorScript_10_2, $0500, $0e00, FACE_DOWN, OBJ_SITUPS_A, ANIM_WALK, $03, MATCH_SELECT_SITUPS_A_1
+	map_actor $0000, ActorScript_10_2, $1100, $0e00, FACE_DOWN, OBJ_SITUPS_A, ANIM_WALK, $03, MATCH_SELECT_SITUPS_A_2
+	map_actor $0000, ActorScript_10_2, $1100, $0c00, FACE_DOWN, OBJ_SITUPS_A, ANIM_WALK, $03, MATCH_SELECT_SITUPS_A_3
 	map_actor_end
 MatchSelectEntryPoints_10:
 	; $40a6, 9 bytes (map_entries)
@@ -99,14 +99,14 @@ SceneAnimationFrameTask_10:
 MatchSelectHandlerTable_10:
 	; $4145, 73 bytes (map_scripts)
 	map_script ACTOR_MATCH_SELECT_EMILY, FACEMASK_ANY, $0000, MatchSelectRunCharacterSelect, $00, $00
-	map_script ACTOR_MATCH_SELECT_WALK_73_06, FACEMASK_ANY, $0000, RunSinglesMatchListMenu, $00, $00
-	map_script ACTOR_MATCH_SELECT_WALK_73_07, FACEMASK_ANY, $0000, RunDoublesMatchListMenu, $00, $00
-	map_script ACTOR_MATCH_SELECT_WALK_74_00, FACEMASK_ANY, $0000, RunDrillMatchListMenu, $00, $00
-	map_script ACTOR_MATCH_SELECT_WALK_74_01, FACEMASK_ANY, $0000, MatchSelectCharDataOptionDisabled, $00, $00
+	map_script ACTOR_MATCH_SELECT_JUMPING_JACKS_A, FACEMASK_ANY, $0000, RunSinglesMatchListMenu, $00, $00
+	map_script ACTOR_MATCH_SELECT_JUMPING_JACKS_B, FACEMASK_ANY, $0000, RunDoublesMatchListMenu, $00, $00
+	map_script ACTOR_MATCH_SELECT_RACKET_STUDENT, FACEMASK_ANY, $0000, RunDrillMatchListMenu, $00, $00
+	map_script ACTOR_MATCH_SELECT_CAT, FACEMASK_ANY, $0000, MatchSelectCharDataOptionDisabled, $00, $00
 	map_script ACTOR_MATCH_SELECT_WALK_76_06, FACEMASK_ANY, $0000, RunLessonSelectMenu, $00, $00
-	map_script ACTOR_MATCH_SELECT_WALK_73_03_1, FACEMASK_ANY, $0000, RunMinigameSelectMenu, $00, $00
-	map_script ACTOR_MATCH_SELECT_WALK_73_03_2, FACEMASK_ANY, $0000, MatchSelectPlayEpilogueScene, $00, $00
-	map_script ACTOR_MATCH_SELECT_WALK_73_03_3, FACEMASK_ANY, $0000, MatchSelectRunEndingCredits, $00, $00
+	map_script ACTOR_MATCH_SELECT_SITUPS_A_1, FACEMASK_ANY, $0000, RunMinigameSelectMenu, $00, $00
+	map_script ACTOR_MATCH_SELECT_SITUPS_A_2, FACEMASK_ANY, $0000, MatchSelectPlayEpilogueScene, $00, $00
+	map_script ACTOR_MATCH_SELECT_SITUPS_A_3, FACEMASK_ANY, $0000, MatchSelectRunEndingCredits, $00, $00
 	db $ff
 MatchSelectFacingScripts_10:
 	ds 1, $ff ; $418e, fill

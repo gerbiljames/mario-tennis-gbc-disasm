@@ -85,10 +85,10 @@ VarsityCourtTourCutscene:
 	script_move_player $2200, $1d00 ; $643d
 	farcall WaitPlayerMoveDone ; $6447
 	script_player_speed $0020 ; $644a
-	script_set_position ACTOR_VARSITY_COURT_TOUR_WALK_73_13, $2100, $1d00 ; $6450
+	script_set_position ACTOR_VARSITY_COURT_TOUR_BALLOON_QUESTION, $2100, $1d00 ; $6450
 	sound SFX_EMOTE ; $645b
 	script_wait_frames $32 ; $645d
-	script_set_position ACTOR_VARSITY_COURT_TOUR_WALK_73_13, $3f00, $3f00 ; $6464
+	script_set_position ACTOR_VARSITY_COURT_TOUR_BALLOON_QUESTION, $3f00, $3f00 ; $6464
 	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, ANIM_BOUNCE ; $646f
 	script_wait_idle ACTOR_VARSITY_COURT_TOUR_EMILY ; $6476
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $647b
@@ -163,9 +163,9 @@ VarsityCourtTourCutscene:
 	ret ; $6637
 VarsityCourtTourActors_13:
 	; $6638, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, VARSITY_COURT_TOUR_WALK_73_12
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_13, ANIM_WALK, $00, VARSITY_COURT_TOUR_WALK_73_13
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_15, ANIM_WALK, $00, VARSITY_COURT_TOUR_WALK_73_15
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_QUESTION
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_ELLIPSIS
 	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, VARSITY_COURT_TOUR_EMILY
 	map_actor_end
 DecompressVarsityCourtTourRecords_13:

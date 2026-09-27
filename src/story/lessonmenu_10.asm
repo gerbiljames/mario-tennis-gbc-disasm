@@ -114,7 +114,7 @@ Test2MapScripts_10:
 	dw Test2InitScript_10 ; slot 6 InitScript
 Test2Actors_10:
 	; $469b, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $0500, $0f00, FACE_DOWN, OBJ_WALK_74_01, ANIM_WALK, $00, TEST2_WALK_74_01
+	map_actor $0000, ActorScript_10_2, $0500, $0f00, FACE_DOWN, OBJ_CAT, ANIM_WALK, $00, TEST2_CAT
 	map_actor $0000, ActorScript_10_2, $0500, $0500, FACE_DOWN, OBJ_NINA, ANIM_WALK, $07, TEST2_NINA
 	map_actor $0000, ActorScript_10_2, $0500, $0300, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00, TEST2_ALEX
 	map_actor $0000, ActorScript_10_2, $0500, $0900, FACE_DOWN, OBJ_KATE, ANIM_WALK, $05, TEST2_KATE
@@ -427,7 +427,7 @@ Test2Npc12_10:
 	ret ; $4ade
 Test2NpcScripts_10:
 	; $4adf, 129 bytes (map_scripts)
-	map_script ACTOR_TEST2_WALK_74_01, FACEMASK_ANY, $0000, Text_33_33, $00, $00
+	map_script ACTOR_TEST2_CAT, FACEMASK_ANY, $0000, Text_33_33, $00, $00
 	map_script ACTOR_TEST2_NINA, FACEMASK_ANY, $0000, Text_33_34, $00, $00
 	map_script ACTOR_TEST2_ALEX, FACEMASK_ANY, $0000, Text_33_35, $00, $00
 	map_script ACTOR_TEST2_KATE, FACEMASK_ANY, $0000, Text_33_36, $00, $00

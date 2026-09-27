@@ -53,24 +53,24 @@ LateStudentCrashCutscene:
 	farcall ScriptWaitActorJumpDone ; $483a
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $1800, $1700 ; $483d
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4848
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $1980, $15c0 ; $484d
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $1980, $15c0 ; $484d
 	sound SFX_EMOTE ; $4858
 	script_set_speed ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $0010 ; $485a
-	script_set_speed ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $0010 ; $4862
-	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $1980, $18c0 ; $486a
+	script_set_speed ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $0010 ; $4862
+	script_move_target ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $1980, $18c0 ; $486a
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $1800, $1a00 ; $4875
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4880
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4885
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $3f00, $3f00 ; $488a
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $3f00, $3f00 ; $488a
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $1800, $1600 ; $4895
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $48a0
 	script_wait_frames $1e ; $48a5
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, ANIM_BOUNCE ; $48ac
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_12, $1980, $14c0 ; $48b3
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, $1980, $14c0 ; $48b3
 	sound SFX_CHIME ; $48be
 	script_wait_frames $14 ; $48c0
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $48c7
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_12, $3f00, $3f00 ; $48cc
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, $3f00, $3f00 ; $48cc
 	script_set_speed ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $0020 ; $48d7
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $ff80 ; $48df
 	ld a, $11 ; $48e7
@@ -87,10 +87,10 @@ LateStudentCrashCutscene:
 	call LateStudentCrashImpact ; $491d
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4920
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, ANIM_BOUNCE ; $4925
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_19, $1900, $1e00 ; $492c
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_SWEAT, $1900, $1e00 ; $492c
 	sound SFX_APPEAR2 ; $4937
 	script_wait_frames $3c ; $4939
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_19, $3f00, $3f00 ; $4940
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_SWEAT, $3f00, $3f00 ; $4940
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $1700, $2200 ; $494b
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4956
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $495b
@@ -102,9 +102,9 @@ LateStudentCrashCutscene:
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, ANIM_BOUNCE ; $4985
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $498c
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4991
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_15, $1a80, $2280 ; $4996
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_ELLIPSIS, $1a80, $2280 ; $4996
 	script_wait_frames $3c ; $49a1
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_15, $3f00, $3f00 ; $49a8
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_ELLIPSIS, $3f00, $3f00 ; $49a8
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $1900, $2300 ; $49b3
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $49be
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $1a00, $2300 ; $49c3
@@ -168,26 +168,26 @@ LateStudentCrashCutscene:
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4b2a
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4b2f
 	script_wait_frames $3c ; $4b34
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $1b80, $21c0 ; $4b3b
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $1b80, $21c0 ; $4b3b
 	sound SFX_EMOTE ; $4b46
 	script_wait_frames $28 ; $4b48
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $3f00, $3f00 ; $4b4f
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $3f00, $3f00 ; $4b4f
 	script_move_angle ACTOR_ACADEMY_ARRIVAL_WALK_75_06, FACE_LEFT, $0100 ; $4b5a
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4b64
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4b69
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4b6e
 	script_wait_idle ACTOR_PLAYER ; $4b75
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $1a80, $21c0 ; $4b7a
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $1a80, $21c0 ; $4b7a
 	script_wait_frames $3c ; $4b85
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $3f00, $3f00 ; $4b8c
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $3f00, $3f00 ; $4b8c
 	script_wait_frames $3c ; $4b97
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_12, $1a80, $21c0 ; $4b9e
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, $1a80, $21c0 ; $4b9e
 	sound SFX_CHIME ; $4ba9
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $ff80 ; $4bab
 	ld a, $11 ; $4bb3
 	farcall ScriptWaitActorJumpDone ; $4bb5
 	script_wait_frames $0a ; $4bb8
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_12, $3f00, $3f00 ; $4bbf
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, $3f00, $3f00 ; $4bbf
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4bca
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, ANIM_BOUNCE ; $4bcf
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4bd6
@@ -205,10 +205,10 @@ LateStudentCrashCutscene:
 	script_face ACTOR_ACADEMY_ARRIVAL_WALK_75_06, FACE_UP ; $4c1d
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, ANIM_BOUNCE ; $4c24
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4c2b
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_12, $1a80, $21c0 ; $4c30
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, $1a80, $21c0 ; $4c30
 	sound SFX_CHIME ; $4c3b
 	script_wait_frames $28 ; $4c3d
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_12, $3f00, $3f00 ; $4c44
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, $3f00, $3f00 ; $4c44
 	script_face ACTOR_ACADEMY_ARRIVAL_WALK_75_06, FACE_UP ; $4c4f
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, ANIM_BOUNCE ; $4c56
 	script_move_player $1800, $0b00 ; $4c5d
@@ -297,10 +297,10 @@ AcademyArrivalGreetingScene:
 	farcall AdvanceDialogueTextCursor ; $4df2
 .doubles:
 	script_speak ACTOR_ACADEMY_ARRIVAL_EMILY ; $4df5
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_12, $1940, $11c0 ; $4dfa
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, $1940, $11c0 ; $4dfa
 	sound SFX_CHIME ; $4e05
 	script_wait_frames $28 ; $4e07
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_12, $3f00, $3f00 ; $4e0e
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, $3f00, $3f00 ; $4e0e
 	script_face_toward ACTOR_ACADEMY_ARRIVAL_EMILY, ACTOR_PLAYER ; $4e19
 	script_player_speed $0020 ; $4e21
 	script_move_target ACTOR_ACADEMY_ARRIVAL_EMILY, $1800, $1100 ; $4e27
@@ -317,10 +317,10 @@ AcademyArrivalGreetingScene:
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_EMILY ; $4e76
 	script_set_text Text_30_421 ; $4e7b
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_71_03_1 ; $4e81
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $1940, $11c0 ; $4e86
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $1940, $11c0 ; $4e86
 	sound SFX_EMOTE ; $4e91
 	script_wait_frames $32 ; $4e93
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_73_13, $3f00, $3f00 ; $4e9a
+	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, $3f00, $3f00 ; $4e9a
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_EMILY, ANIM_NOD ; $4ea5
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_EMILY ; $4eac
 	script_speak ACTOR_ACADEMY_ARRIVAL_EMILY ; $4eb1

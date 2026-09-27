@@ -71,8 +71,8 @@ DormRoomMapScripts_13:
 DormRoomActors_13:
 	; $4e2e, 52 bytes (map_actors)
 	map_actor $0000, ActorScript_13_27, $0b00, $0900, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, DORM_ROOM_KATE
-	map_actor $0000, ActorScript_13_00, $0600, $1080, FACE_DOWN, OBJ_WALK_74_01, ANIM_WALK, $00, DORM_ROOM_WALK_74_01
-	map_actor $0000, ActorScript_13_27, $2900, $2900, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, DORM_ROOM_WALK_73_12
+	map_actor $0000, ActorScript_13_00, $0600, $1080, FACE_DOWN, OBJ_CAT, ANIM_WALK, $00, DORM_ROOM_CAT
+	map_actor $0000, ActorScript_13_27, $2900, $2900, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, DORM_ROOM_BALLOON_EXCLAIM
 	map_actor_end
 DormRoomEntryPoints_13:
 	; $4e62, 49 bytes (map_entries)
@@ -98,12 +98,12 @@ DormRoomNpc04_13:
 	sub l ; $4eaf
 	ld h, a ; $4eb0
 	farcall InitDialogueTextCursor ; $4eb1
-	script_speak ACTOR_DORM_ROOM_WALK_74_01 ; $4eb4
+	script_speak ACTOR_DORM_ROOM_CAT ; $4eb4
 	ret ; $4eb9
 DormRoomNpcScripts_13:
 	; $4eba, 17 bytes (map_scripts)
 	map_script ACTOR_DORM_ROOM_KATE, FACEMASK_ANY, $0000, DormRoomNpc03_13, $00, $00
-	map_script ACTOR_DORM_ROOM_WALK_74_01, FACEMASK_ANY, $0000, DormRoomNpc04_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_DORM_ROOM_CAT, FACEMASK_ANY, $0000, DormRoomNpc04_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 DormRoomFacingScripts_13:
 	; $4ecb, 9 bytes (map_scripts)
@@ -134,7 +134,7 @@ DormRoomTile0F_13:
 	call PlaceEmoteActorAtComputedPosition_13 ; $4f19
 	sound SFX_CHIME ; $4f1c
 	script_wait_frames $46 ; $4f1e
-	script_set_position ACTOR_DORM_ROOM_WALK_73_12, $3f00, $3f00 ; $4f25
+	script_set_position ACTOR_DORM_ROOM_BALLOON_EXCLAIM, $3f00, $3f00 ; $4f25
 	script_speak ACTOR_DORM_ROOM_KATE ; $4f30
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ROOM_KATE ; $4f35
 	script_face_toward ACTOR_DORM_ROOM_KATE, ACTOR_PLAYER ; $4f3d
@@ -335,8 +335,8 @@ SetupDormRoomSceneVariant:
 	script_copy_scene_rect $20, $00, $00, $00, $16, $18 ; $5157
 	script_set_objdef OBJ_HARRY, ACTOR_DORM_ROOM_KATE ; $5166
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_WALK ; $5172
-	script_set_position ACTOR_DORM_ROOM_WALK_74_01, $1f00, $1500 ; $5179
-	script_null_script ACTOR_DORM_ROOM_WALK_74_01 ; $5184
+	script_set_position ACTOR_DORM_ROOM_CAT, $1f00, $1500 ; $5179
+	script_null_script ACTOR_DORM_ROOM_CAT ; $5184
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $5189
 	ld a, $02 ; $518c
 	ld [wMapScrollMinX], a ; $518e

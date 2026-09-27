@@ -373,7 +373,7 @@ IslandOpenSinglesMatchReturn:
 	call ComputeIslandOpenRound ; $74c1
 	farcall BeginCutsceneScriptMode ; $74c4
 	call SetPlayerAndPartnerObjectDefs ; $74c7
-	script_get_actor_state ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_73_12 ; $74ca
+	script_get_actor_state ACTOR_ISLAND_OPEN_ROUND_SINGLES_BALLOON_EXCLAIM ; $74ca
 	ld c, l ; $74cf
 	ld b, h ; $74d0
 	ld hl, ACTORF_OAM_ATTR ; $74d1
@@ -390,13 +390,13 @@ IslandOpenSinglesMatchReturn:
 	ld h, [hl] ; $74ed
 	ld l, a ; $74ee
 	farcall InitDialogueTextCursor ; $74ef
-	script_set_position ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_73_12, $2200, $0f80 ; $74f2
+	script_set_position ACTOR_ISLAND_OPEN_ROUND_SINGLES_BALLOON_EXCLAIM, $2200, $0f80 ; $74f2
 	sound SFX_CHIME ; $74fd
 	script_wait_frames $2d ; $74ff
 	script_set_anim ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, ANIM_BOUNCE ; $7506
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08 ; $750d
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, ACTOR_PLAYER ; $7512
-	script_set_position ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_73_12, $3f00, $3f00 ; $751a
+	script_set_position ACTOR_ISLAND_OPEN_ROUND_SINGLES_BALLOON_EXCLAIM, $3f00, $3f00 ; $751a
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08 ; $7525
 	script_set_anim ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, ANIM_BOUNCE ; $752a
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07 ; $7531
@@ -435,7 +435,7 @@ IslandOpenRoundActorsSingles_0f:
 	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, OBJ_WALK_74_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_74_07
 	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_6F_07_1
 	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_6F_07_2
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_WALK_73_12
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, ISLAND_OPEN_ROUND_SINGLES_BALLOON_EXCLAIM
 	map_actor_end
 IslandOpenRoundNpcScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
@@ -605,7 +605,7 @@ IslandOpenRoundActorsDoubles_0f:
 	map_actor $0000, ActorScript_0f_09, $3d00, $3d00, FACE_UP, OBJ_WALK_74_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_74_07
 	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_1
 	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_6F_07, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_2
-	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_WALK_73_12, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_WALK_73_12
+	map_actor $0000, ActorScript_0f_09, $0100, $3100, FACE_UP, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_BALLOON_EXCLAIM
 	map_actor_end
 IslandOpenRoundNpcScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)

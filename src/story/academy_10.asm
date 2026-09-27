@@ -10,9 +10,9 @@ AcademyWingMapScripts_10:
 AcademyWingActors_10:
 	; $61bf, 66 bytes (map_actors)
 	map_actor $0000, ActorScript_10_2, $3f00, $1900, FACE_RIGHT, OBJ_WALK_75_06, ANIM_WALK, $00, ACADEMY_WING_WALK_75_06
-	map_actor $0000, ActorScript_10_2, $1900, $3f00, FACE_RIGHT, OBJ_WALK_71_09, ANIM_WALK, $00, ACADEMY_WING_WALK_71_09
-	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, OBJ_WALK_77_07, ANIM_WALK, $00, ACADEMY_WING_WALK_77_07_1
-	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, OBJ_WALK_77_07, ANIM_WALK, $00, ACADEMY_WING_WALK_77_07_2
+	map_actor $0000, ActorScript_10_2, $1900, $3f00, FACE_RIGHT, OBJ_INVISIBLE, ANIM_WALK, $00, ACADEMY_WING_INVISIBLE
+	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_TROPHY_1
+	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_TROPHY_2
 	map_actor_end
 AcademyWingEntryPoints_10:
 	; $6201, 17 bytes (map_entries)
@@ -34,7 +34,7 @@ AcademyWingNpc03_10:
 	script_set_text Text_30_517 ; $6248
 	jr .done ; $624e
 .altText:
-	script_get_actor_state ACTOR_ACADEMY_WING_WALK_77_07_2 ; $6250
+	script_get_actor_state ACTOR_ACADEMY_WING_TROPHY_2 ; $6250
 	ld c, l ; $6255
 	ld b, h ; $6256
 	ld hl, ACTORF_OAM_ATTR ; $6257
@@ -42,10 +42,10 @@ AcademyWingNpc03_10:
 	ld a, [hl] ; $625b
 	or $20 ; $625c
 	ld [hl], a ; $625e
-	script_set_position ACTOR_ACADEMY_WING_WALK_77_07_2, $1b80, $2e00 ; $625f
+	script_set_position ACTOR_ACADEMY_WING_TROPHY_2, $1b80, $2e00 ; $625f
 	sound SFX_CHIME ; $626a
 	script_wait_frames $3c ; $626c
-	script_set_position ACTOR_ACADEMY_WING_WALK_77_07_2, $0100, $0100 ; $6273
+	script_set_position ACTOR_ACADEMY_WING_TROPHY_2, $0100, $0100 ; $6273
 	script_set_text Text_30_513 ; $627e
 	test_flag FLAG_DOUBLES ; $6284
 	jr z, .speak ; $6287
@@ -83,7 +83,7 @@ AcademyWingFacing02_10:
 	script_set_text Text_30_449 ; $62ea
 	script_face ACTOR_ACADEMY_WING_WALK_75_06, FACE_DOWN ; $62f0
 	script_wait_frames $0a ; $62f7
-	script_speak ACTOR_ACADEMY_WING_WALK_71_09 ; $62fe
+	script_speak ACTOR_ACADEMY_WING_INVISIBLE ; $62fe
 	script_wait_frames $0a ; $6303
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $630a
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $6311
@@ -91,7 +91,7 @@ AcademyWingFacing02_10:
 	script_set_anim ACTOR_ACADEMY_WING_WALK_75_06, ANIM_SHAKE ; $631d
 	script_wait_idle ACTOR_ACADEMY_WING_WALK_75_06 ; $6324
 	script_player_speed $0018 ; $6329
-	script_speak ACTOR_ACADEMY_WING_WALK_71_09 ; $632f
+	script_speak ACTOR_ACADEMY_WING_INVISIBLE ; $632f
 	script_face ACTOR_ACADEMY_WING_WALK_75_06, FACE_RIGHT ; $6334
 	script_move_player $2100, $3b00 ; $633b
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $6345
@@ -203,10 +203,10 @@ AcademyWingInitScript_10:
 	ld hl, AcademyWingInitActors0_10 ; $64e2
 	farcall ScriptRespawnLocationActors ; $64e5
 	farcall BeginCutsceneScriptMode ; $64e8
-	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_77_07_1, $06 ; $64eb
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_TROPHY_1, $06 ; $64eb
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $64f2
 	jr nz, .placeActors ; $64f5
-	script_set_position ACTOR_ACADEMY_WING_INIT0_WALK_77_07_1, $0100, $0100 ; $64f7
+	script_set_position ACTOR_ACADEMY_WING_INIT0_TROPHY_1, $0100, $0100 ; $64f7
 .placeActors:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6502
 	jr nz, .done ; $6505
@@ -324,9 +324,9 @@ AcademyWingInitScript_10:
 	script_face $09, FACE_UP ; $67ef
 	script_set_text Text_30_482 ; $67f6
 	script_speak $06 ; $67fc
-	script_set_objdef OBJ_WALK_73_19, $03 ; $6801
+	script_set_objdef OBJ_BALLOON_SWEAT, $03 ; $6801
 	script_set_anim $03, ANIM_WALK ; $680d
-	script_set_objdef OBJ_WALK_73_19, $05 ; $6814
+	script_set_objdef OBJ_BALLOON_SWEAT, $05 ; $6814
 	script_set_anim $05, ANIM_WALK ; $6820
 	script_set_position $03, $1f80, $3100 ; $6827
 	sound SFX_APPEAR2 ; $6832
@@ -497,7 +497,7 @@ AcademyWingInitScript_10:
 	script_speak $06 ; $6c74
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6c79
 	script_wait_idle ACTOR_PLAYER ; $6c80
-	script_set_objdef OBJ_WALK_73_17, $05 ; $6c85
+	script_set_objdef OBJ_BALLOON_MUSIC, $05 ; $6c85
 	script_set_anim $05, ANIM_WALK ; $6c91
 	script_set_position $05, $2380, $3300 ; $6c98
 	sound SFX_CHIME ; $6ca3
@@ -526,7 +526,7 @@ AcademyWingInitScript_10:
 	script_set_anim $08, ANIM_NOD ; $6d3b
 	script_wait_idle $08 ; $6d42
 	script_wait_frames $3c ; $6d47
-	script_set_objdef OBJ_WALK_73_13, $05 ; $6d4e
+	script_set_objdef OBJ_BALLOON_QUESTION, $05 ; $6d4e
 	script_set_anim $05, ANIM_WALK ; $6d5a
 	script_set_position $05, $2180, $2d80 ; $6d61
 	sound SFX_EMOTE ; $6d6c
@@ -623,22 +623,22 @@ AcademyWingInitScript_10:
 	ret ; $6f44
 AcademyWingInitActors0_10:
 	; $6f45, 136 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_14, ANIM_WALK, $00, ACADEMY_WING_INIT0_WALK_73_14
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_19, ANIM_WALK, $00, ACADEMY_WING_INIT0_WALK_73_19
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_17, ANIM_WALK, $00, ACADEMY_WING_INIT0_WALK_73_17
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_ANGRY, ANIM_WALK, $00, ACADEMY_WING_INIT0_BALLOON_ANGRY
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, ACADEMY_WING_INIT0_BALLOON_SWEAT
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_MUSIC, ANIM_WALK, $00, ACADEMY_WING_INIT0_BALLOON_MUSIC
 	map_actor $0000, ActorScript_10_2, $2000, $2f00, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, ACADEMY_WING_INIT0_WALK_75_06
 	map_actor $0000, ActorScript_10_2, $2200, $3300, FACE_UP, OBJ_KEVIN, ANIM_WALK, $00, ACADEMY_WING_INIT0_KEVIN
 	map_actor $0000, ActorScript_10_2, $2000, $3300, FACE_UP, OBJ_MARK, ANIM_WALK, $00, ACADEMY_WING_INIT0_MARK
 	map_actor $0000, ActorScript_10_2, $1e00, $3300, FACE_UP, OBJ_EMILY, ANIM_WALK, $00, ACADEMY_WING_INIT0_EMILY
-	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, OBJ_WALK_77_07, ANIM_WALK, $00, ACADEMY_WING_INIT0_WALK_77_07_1
-	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, OBJ_WALK_77_07, ANIM_WALK, $00, ACADEMY_WING_INIT0_WALK_77_07_2
+	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_INIT0_TROPHY_1
+	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_INIT0_TROPHY_2
 	map_actor_end
 .eq0f:
 	ldh a, [hRomBank] ; $6fcd
 	ld hl, AcademyWingInitActors1_10 ; $6fcf
 	farcall ScriptRespawnLocationActors ; $6fd2
 	farcall BeginCutsceneScriptMode ; $6fd5
-	script_set_anim ACTOR_ACADEMY_WING_INIT1_WALK_77_07_1, $06 ; $6fd8
+	script_set_anim ACTOR_ACADEMY_WING_INIT1_TROPHY_1, $06 ; $6fd8
 	test_flag FLAG_DOUBLES ; $6fdf
 	jp z, .checkFlag2 ; $6fe2
 	script_null_script ACTOR_PARTNER ; $6fe5
@@ -647,12 +647,12 @@ AcademyWingInitActors0_10:
 	script_face ACTOR_PARTNER, FACE_UP ; $7000
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $7007
 	jr nz, .face2 ; $700a
-	script_set_position ACTOR_ACADEMY_WING_INIT1_WALK_77_07_1, $3f00, $3f00 ; $700c
+	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_1, $3f00, $3f00 ; $700c
 	jr .face2 ; $7017
 .checkFlag2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7019
 	jr nz, .face2 ; $701c
-	script_set_position ACTOR_ACADEMY_WING_INIT1_WALK_77_07_2, $3f00, $3f00 ; $701e
+	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_2, $3f00, $3f00 ; $701e
 .face2:
 	script_face ACTOR_PLAYER, FACE_UP ; $7029
 	xor a ; $7030
@@ -692,18 +692,18 @@ AcademyWingInitActors0_10:
 	call SpeakNpc03SinglesOrDoublesLine_10 ; $70c1
 	test_flag FLAG_DOUBLES ; $70c4
 	jp z, .placeActors4 ; $70c7
-	script_set_position ACTOR_ACADEMY_WING_INIT1_WALK_73_12_1, $2080, $3200 ; $70ca
-	script_set_position ACTOR_ACADEMY_WING_INIT1_WALK_73_12_2, $2280, $3200 ; $70d5
+	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_1, $2080, $3200 ; $70ca
+	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_2, $2280, $3200 ; $70d5
 	sound SFX_CHIME ; $70e0
 	script_wait_frames $50 ; $70e2
-	script_set_position ACTOR_ACADEMY_WING_INIT1_WALK_73_12_1, $3f00, $3f00 ; $70e9
-	script_set_position ACTOR_ACADEMY_WING_INIT1_WALK_73_12_2, $3f00, $3f00 ; $70f4
+	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_1, $3f00, $3f00 ; $70e9
+	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_2, $3f00, $3f00 ; $70f4
 	jr .face3 ; $70ff
 .placeActors4:
-	script_set_position ACTOR_ACADEMY_WING_INIT1_WALK_73_12_1, $2180, $3200 ; $7101
+	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_1, $2180, $3200 ; $7101
 	sound SFX_CHIME ; $710c
 	script_wait_frames $50 ; $710e
-	script_set_position ACTOR_ACADEMY_WING_INIT1_WALK_73_12_1, $3f00, $3f00 ; $7115
+	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_1, $3f00, $3f00 ; $7115
 .face3:
 	script_face ACTOR_ACADEMY_WING_INIT1_WALK_75_06, FACE_DOWN ; $7120
 	script_wait_frames $01 ; $7127
@@ -821,8 +821,8 @@ AcademyWingCloseDoor_10:
 AcademyWingInitActors1_10:
 	; $739e, 80 bytes (map_actors)
 	map_actor $0000, ActorScript_10_2, $2000, $3000, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, ACADEMY_WING_INIT1_WALK_75_06
-	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, OBJ_WALK_77_07, ANIM_WALK, $00, ACADEMY_WING_INIT1_WALK_77_07_1
-	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, OBJ_WALK_77_07, ANIM_WALK, $00, ACADEMY_WING_INIT1_WALK_77_07_2
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, ACADEMY_WING_INIT1_WALK_73_12_1
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_WALK_73_12, ANIM_WALK, $00, ACADEMY_WING_INIT1_WALK_73_12_2
+	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_INIT1_TROPHY_1
+	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_INIT1_TROPHY_2
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, ACADEMY_WING_INIT1_BALLOON_EXCLAIM_1
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, ACADEMY_WING_INIT1_BALLOON_EXCLAIM_2
 	map_actor_end

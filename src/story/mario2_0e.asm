@@ -175,8 +175,8 @@ PromptExhibitionMatch:
 	script_set_anim ACTOR_MARIO_WORLD_BABY_MARIO, ANIM_NOD ; $6701
 	script_set_anim ACTOR_MARIO_WORLD_YOSHI, ANIM_NOD ; $6708
 	script_set_anim ACTOR_MARIO_WORLD_DK, ANIM_NOD ; $670f
-	script_set_anim ACTOR_MARIO_WORLD_WALK_77_03, ANIM_NOD ; $6716
-	script_wait_idle ACTOR_MARIO_WORLD_WALK_77_03 ; $671d
+	script_set_anim ACTOR_MARIO_WORLD_TOAD, ANIM_NOD ; $6716
+	script_wait_idle ACTOR_MARIO_WORLD_TOAD ; $671d
 	script_player_speed $0018 ; $6722
 	script_move_player $1500, $0d00 ; $6728
 	script_set_speed ACTOR_MARIO_WORLD_PEACH, $0020 ; $6732
@@ -188,9 +188,9 @@ PromptExhibitionMatch:
 	script_set_speed ACTOR_MARIO_WORLD_LUIGI, $0020 ; $6762
 	script_set_speed ACTOR_MARIO_WORLD_BABY_MARIO, $0020 ; $676a
 	script_set_speed ACTOR_MARIO_WORLD_YOSHI, $0020 ; $6772
-	script_set_speed ACTOR_MARIO_WORLD_WALK_77_06, $0020 ; $677a
+	script_set_speed ACTOR_MARIO_WORLD_BOO, $0020 ; $677a
 	script_set_speed ACTOR_MARIO_WORLD_DK, $0020 ; $6782
-	script_set_speed ACTOR_MARIO_WORLD_WALK_77_03, $0020 ; $678a
+	script_set_speed ACTOR_MARIO_WORLD_TOAD, $0020 ; $678a
 	script_set_speed ACTOR_PLAYER, $0020 ; $6792
 	script_face ACTOR_MARIO_WORLD_MARIO, FACE_RIGHT ; $679a
 	script_wait_frames $0a ; $67a1
@@ -217,7 +217,7 @@ PromptExhibitionMatch:
 	script_set_actor_script ACTOR_MARIO_WORLD_BABY_MARIO, ActorScript_0e_06 ; $6835
 	script_set_actor_script ACTOR_MARIO_WORLD_YOSHI, ActorScript_0e_06 ; $6840
 	script_set_actor_script ACTOR_MARIO_WORLD_DK, ActorScript_0e_06 ; $684b
-	script_set_actor_script ACTOR_MARIO_WORLD_WALK_77_06, ActorScript_0e_06 ; $6856
+	script_set_actor_script ACTOR_MARIO_WORLD_BOO, ActorScript_0e_06 ; $6856
 	script_wait_frames $1e ; $6861
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6868
 	test_flag FLAG_DOUBLES ; $686f
@@ -239,11 +239,11 @@ PromptExhibitionMatch:
 	script_move_target ACTOR_PLAYER, $1100, $0b00 ; $68cb
 	script_move_target ACTOR_PARTNER, $1300, $0b00 ; $68d6
 .coachArrives:
-	script_move_target ACTOR_MARIO_WORLD_WALK_77_03, $1200, $0d00 ; $68e1
-	script_wait_move ACTOR_MARIO_WORLD_WALK_77_03 ; $68ec
-	script_face ACTOR_MARIO_WORLD_WALK_77_03, FACE_UP ; $68f1
+	script_move_target ACTOR_MARIO_WORLD_TOAD, $1200, $0d00 ; $68e1
+	script_wait_move ACTOR_MARIO_WORLD_TOAD ; $68ec
+	script_face ACTOR_MARIO_WORLD_TOAD, FACE_UP ; $68f1
 	script_wait_frames $14 ; $68f8
-	script_speak ACTOR_MARIO_WORLD_WALK_77_03 ; $68ff
+	script_speak ACTOR_MARIO_WORLD_TOAD ; $68ff
 	script_wait_frames $0a ; $6904
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $690b
 	test_flag FLAG_DOUBLES ; $6912
@@ -252,7 +252,7 @@ PromptExhibitionMatch:
 .bothReady:
 	script_wait_idle ACTOR_PLAYER ; $691e
 	script_wait_frames $14 ; $6923
-	script_set_actor_script ACTOR_MARIO_WORLD_WALK_77_03, ActorScript_0e_07 ; $692a
+	script_set_actor_script ACTOR_MARIO_WORLD_TOAD, ActorScript_0e_07 ; $692a
 	script_wait_frames $14 ; $6935
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_07 ; $693c
 	test_flag FLAG_DOUBLES ; $6947
@@ -314,14 +314,14 @@ MoveDoublesPartnerToPlayer:
 	script_set_position ACTOR_MARIO_WORLD_PEACH, $1200, $0b00 ; $69fb
 	script_face ACTOR_MARIO_WORLD_WARIO, FACE_RIGHT ; $6a06
 	script_face ACTOR_MARIO_WORLD_BOWSER, FACE_RIGHT ; $6a0d
-	script_face ACTOR_MARIO_WORLD_WALK_77_06, FACE_RIGHT ; $6a14
+	script_face ACTOR_MARIO_WORLD_BOO, FACE_RIGHT ; $6a14
 	script_face ACTOR_MARIO_WORLD_WALUIGI, FACE_RIGHT ; $6a1b
 	script_face ACTOR_MARIO_WORLD_LUIGI, FACE_LEFT ; $6a22
 	script_face ACTOR_MARIO_WORLD_BABY_MARIO, FACE_LEFT ; $6a29
 	script_face ACTOR_MARIO_WORLD_YOSHI, FACE_LEFT ; $6a30
 	script_face ACTOR_MARIO_WORLD_DK, FACE_LEFT ; $6a37
-	script_set_position ACTOR_MARIO_WORLD_WALK_77_03, $0d00, $1300 ; $6a3e
-	script_face ACTOR_MARIO_WORLD_WALK_77_03, FACE_RIGHT ; $6a49
+	script_set_position ACTOR_MARIO_WORLD_TOAD, $0d00, $1300 ; $6a3e
+	script_face ACTOR_MARIO_WORLD_TOAD, FACE_RIGHT ; $6a49
 	ret ; $6a50
 MarioWorldArrivalIntroCutscene:
 	script_player_speed $0020 ; $6a51
@@ -332,19 +332,19 @@ MarioWorldArrivalIntroCutscene:
 	script_move_player $1200, $1900 ; $6a71
 	farcall WaitPlayerMoveDone ; $6a7b
 	sound SFX_CHIME ; $6a7e
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_12, $1000, $1d00 ; $6a80
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_EXCLAIM, $1000, $1d00 ; $6a80
 	script_wait_frames $0a ; $6a8b
-	script_jump_velocity ACTOR_MARIO_WORLD_WALK_77_03, $ff80 ; $6a92
-	script_jump_velocity ACTOR_MARIO_WORLD_WALK_73_12, $ff80 ; $6a9a
+	script_jump_velocity ACTOR_MARIO_WORLD_TOAD, $ff80 ; $6a92
+	script_jump_velocity ACTOR_MARIO_WORLD_BALLOON_EXCLAIM, $ff80 ; $6a9a
 	script_wait_frames $1e ; $6aa2
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_12, $3f00, $3f00 ; $6aa9
-	script_set_speed ACTOR_MARIO_WORLD_WALK_77_03, $0040 ; $6ab4
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_EXCLAIM, $3f00, $3f00 ; $6aa9
+	script_set_speed ACTOR_MARIO_WORLD_TOAD, $0040 ; $6ab4
 	ld a, $13 ; $6abc
 	ld bc, $0300 ; $6abe
 	ld de, rJOYP ; $6ac1
 	farcall MoveActorByDelta ; $6ac4
-	script_wait_move ACTOR_MARIO_WORLD_WALK_77_03 ; $6ac7
-	script_face ACTOR_MARIO_WORLD_WALK_77_03, FACE_DOWN ; $6acc
+	script_wait_move ACTOR_MARIO_WORLD_TOAD ; $6ac7
+	script_face ACTOR_MARIO_WORLD_TOAD, FACE_DOWN ; $6acc
 	ret ; $6ad3
 MarioWorldWelcomeCutscene:
 	script_wait_frames $0a ; $6ad4
@@ -354,7 +354,7 @@ MarioWorldWelcomeCutscene:
 	script_wait_frames $04 ; $6af0
 	script_face ACTOR_MARIO_WORLD_BOWSER, FACE_RIGHT ; $6af7
 	script_wait_frames $04 ; $6afe
-	script_face ACTOR_MARIO_WORLD_WALK_77_06, FACE_RIGHT ; $6b05
+	script_face ACTOR_MARIO_WORLD_BOO, FACE_RIGHT ; $6b05
 	script_wait_frames $04 ; $6b0c
 	script_face ACTOR_MARIO_WORLD_WALUIGI, FACE_RIGHT ; $6b13
 	script_wait_frames $04 ; $6b1a
@@ -364,7 +364,7 @@ MarioWorldWelcomeCutscene:
 	script_wait_frames $04 ; $6b36
 	script_face ACTOR_MARIO_WORLD_YOSHI, FACE_LEFT ; $6b3d
 	script_wait_frames $04 ; $6b44
-	script_face ACTOR_MARIO_WORLD_WALK_77_03, FACE_UP ; $6b4b
+	script_face ACTOR_MARIO_WORLD_TOAD, FACE_UP ; $6b4b
 	script_wait_frames $04 ; $6b52
 	script_face ACTOR_MARIO_WORLD_DK, FACE_UP ; $6b59
 	script_wait_frames $14 ; $6b60
@@ -417,13 +417,13 @@ MarioWorldWelcomeCutscene:
 	script_speak ACTOR_MARIO_WORLD_WALUIGI ; $6c95
 	script_wait_frames $14 ; $6c9a
 	sound SFX_APPEAR2 ; $6ca1
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_1, $0f00, $0900 ; $6ca3
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_1, $0f00, $0900 ; $6ca3
 	script_wait_frames $04 ; $6cae
 	sound SFX_APPEAR2 ; $6cb5
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_2, $1300, $0700 ; $6cb7
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_2, $1300, $0700 ; $6cb7
 	script_wait_frames $04 ; $6cc2
 	sound SFX_APPEAR2 ; $6cc9
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_3, $1700, $0900 ; $6ccb
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_3, $1700, $0900 ; $6ccb
 	script_wait_frames $28 ; $6cd6
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_LEFT ; $6cdd
 	script_wait_frames $0a ; $6ce4
@@ -443,16 +443,16 @@ MarioWorldWelcomeCutscene:
 	script_wait_frames $04 ; $6d48
 	script_face ACTOR_MARIO_WORLD_MARIO, FACE_DOWN ; $6d4f
 	script_wait_frames $14 ; $6d56
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_1, $3f00, $3f00 ; $6d5d
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_2, $3f00, $3f00 ; $6d68
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_3, $3f00, $3f00 ; $6d73
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_1, $3f00, $3f00 ; $6d5d
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_2, $3f00, $3f00 ; $6d68
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_3, $3f00, $3f00 ; $6d73
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $6d7e
 	script_wait_frames $0a ; $6d83
 	script_set_anim ACTOR_MARIO_WORLD_BOWSER, ANIM_SHAKE ; $6d8a
 	script_wait_idle ACTOR_MARIO_WORLD_BOWSER ; $6d91
 	script_face ACTOR_MARIO_WORLD_BOWSER, FACE_RIGHT ; $6d96
 	sound SFX_APPEAR1 ; $6d9d
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_14, $0f00, $0d00 ; $6d9f
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, $0f00, $0d00 ; $6d9f
 	script_wait_frames $14 ; $6daa
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $6db1
 	ret ; $6db6
@@ -460,9 +460,9 @@ MarioWorldLuigiDefendsChampCutscene:
 	script_jump_velocity ACTOR_MARIO_WORLD_LUIGI, $ff80 ; $6db7
 	script_wait_frames $14 ; $6dbf
 	script_speak ACTOR_MARIO_WORLD_LUIGI ; $6dc6
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_1, $3f00, $3f00 ; $6dcb
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_2, $3f00, $3f00 ; $6dd6
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_3, $3f00, $3f00 ; $6de1
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_1, $3f00, $3f00 ; $6dcb
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_2, $3f00, $3f00 ; $6dd6
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_3, $3f00, $3f00 ; $6de1
 	script_wait_frames $0a ; $6dec
 	script_face ACTOR_MARIO_WORLD_BOWSER, FACE_RIGHT ; $6df3
 	script_wait_frames $04 ; $6dfa
@@ -483,7 +483,7 @@ MarioWorldLuigiDefendsChampCutscene:
 	script_wait_frames $0a ; $6e64
 	script_face ACTOR_MARIO_WORLD_BOWSER, FACE_RIGHT ; $6e6b
 	sound SFX_APPEAR1 ; $6e72
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_14, $1200, $0b00 ; $6e74
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, $1200, $0b00 ; $6e74
 	script_wait_frames $0a ; $6e7f
 	script_set_anim ACTOR_MARIO_WORLD_BOWSER, ANIM_BOUNCE ; $6e86
 	script_wait_idle ACTOR_MARIO_WORLD_BOWSER ; $6e8d
@@ -491,7 +491,7 @@ MarioWorldLuigiDefendsChampCutscene:
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $6e99
 	script_face ACTOR_MARIO_WORLD_WARIO, FACE_RIGHT ; $6e9e
 	script_face ACTOR_MARIO_WORLD_WALUIGI, FACE_RIGHT ; $6ea5
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_14, $3f00, $3f00 ; $6eac
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, $3f00, $3f00 ; $6eac
 	script_move_target ACTOR_MARIO_WORLD_BOWSER, $1300, $0d00 ; $6eb7
 	script_wait_move ACTOR_MARIO_WORLD_BOWSER ; $6ec2
 	script_wait_frames $0a ; $6ec7
@@ -530,15 +530,15 @@ MarioWorldExhibitionDemandCutscene:
 	script_speak ACTOR_MARIO_WORLD_WALUIGI ; $6fa6
 	script_wait_frames $0a ; $6fab
 	sound SFX_APPEAR2 ; $6fb2
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_1, $1300, $0900 ; $6fb4
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_2, $1700, $0900 ; $6fbf
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_1, $1300, $0900 ; $6fb4
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_2, $1700, $0900 ; $6fbf
 	script_wait_frames $14 ; $6fca
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_RIGHT ; $6fd1
 	script_wait_frames $0a ; $6fd8
 	script_face ACTOR_MARIO_WORLD_MARIO, FACE_LEFT ; $6fdf
 	script_wait_frames $14 ; $6fe6
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_1, $3f00, $3f00 ; $6fed
-	script_set_position ACTOR_MARIO_WORLD_WALK_73_19_2, $3f00, $3f00 ; $6ff8
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_1, $3f00, $3f00 ; $6fed
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_2, $3f00, $3f00 ; $6ff8
 	script_wait_frames $14 ; $7003
 	script_set_anim ACTOR_MARIO_WORLD_PEACH, ANIM_NOD ; $700a
 	script_set_anim ACTOR_MARIO_WORLD_MARIO, ANIM_NOD ; $7011

@@ -416,7 +416,7 @@ RestaurantActors_10:
 	map_actor $0000, ActorScript_10_2, $2100, $1500, FACE_UP, OBJ_WALK_71_02, ANIM_WALK, $07, RESTAURANT_WALK_71_02_2
 	map_actor $0000, ActorScript_10_2, $1600, $1300, FACE_DOWN, OBJ_WALK_71_03, ANIM_WALK, $00, RESTAURANT_WALK_71_03_1
 	map_actor $0000, ActorScript_10_2, $1d00, $1700, FACE_UP, OBJ_WALK_71_04, ANIM_WALK, $00, RESTAURANT_WALK_71_04
-	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, OBJ_WALK_73_12, ANIM_WALK, $00, RESTAURANT_WALK_73_12
+	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, RESTAURANT_BALLOON_EXCLAIM
 	map_actor $0000, ActorScript_10_2, $2100, $1100, FACE_RIGHT, OBJ_WALK_71_06, ANIM_WALK, $00, RESTAURANT_WALK_71_06_1
 	map_actor $0000, ActorScript_10_2, $0900, $0f00, FACE_RIGHT, OBJ_WALK_71_07, ANIM_WALK, $00, RESTAURANT_WALK_71_07
 	map_actor $0000, ActorScript_10_3, $0b00, $1900, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $06, RESTAURANT_WALK_71_03_2
@@ -426,9 +426,9 @@ RestaurantActors_10:
 	map_actor $0000, ActorScript_10_2, $1b00, $0900, FACE_DOWN, OBJ_WALK_72_04, ANIM_WALK, $00, RESTAURANT_WALK_72_04_1
 	map_actor $0000, ActorScript_10_2, $1d00, $0f00, FACE_LEFT, OBJ_WALK_72_05, ANIM_WALK, $00, RESTAURANT_WALK_72_05_2
 	map_actor $0000, ActorScript_10_2, $1900, $0f00, FACE_RIGHT, OBJ_WALK_72_04, ANIM_WALK, $06, RESTAURANT_WALK_72_04_2
-	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, OBJ_WALK_73_15, ANIM_WALK, $00, RESTAURANT_WALK_73_15
+	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, RESTAURANT_BALLOON_ELLIPSIS
 	map_actor $0000, ActorScript_10_2, $1b00, $1200, FACE_DOWN, OBJ_WALK_72_03, ANIM_WALK, $00, RESTAURANT_WALK_72_03_2
-	map_actor $0000, ActorScript_10_2, $1900, $0900, FACE_DOWN, OBJ_WALK_71_08, ANIM_WALK, $00, RESTAURANT_WALK_71_08
+	map_actor $0000, ActorScript_10_2, $1900, $0900, FACE_DOWN, OBJ_RACKET, ANIM_WALK, $00, RESTAURANT_RACKET
 	map_actor_end
 RestaurantEntryPoints_10:
 	; $5b86, 17 bytes (map_entries)
@@ -564,11 +564,11 @@ RestaurantNpc12_10:
 	farcall InitDialogueTextCursor ; $5d25
 	script_speak ACTOR_RESTAURANT_WALK_72_03_2 ; $5d28
 	script_face_toward ACTOR_PLAYER, ACTOR_RESTAURANT_WALK_72_03_2 ; $5d2d
-	script_set_position ACTOR_RESTAURANT_WALK_73_12, $1c00, $1100 ; $5d35
+	script_set_position ACTOR_RESTAURANT_BALLOON_EXCLAIM, $1c00, $1100 ; $5d35
 	sound SFX_CHIME ; $5d40
 	script_set_anim ACTOR_RESTAURANT_WALK_72_03_2, ANIM_BOUNCE ; $5d42
 	script_wait_frames $28 ; $5d49
-	script_set_position ACTOR_RESTAURANT_WALK_73_12, $3f00, $3f00 ; $5d50
+	script_set_position ACTOR_RESTAURANT_BALLOON_EXCLAIM, $3f00, $3f00 ; $5d50
 	script_speak ACTOR_RESTAURANT_WALK_72_03_2 ; $5d5b
 	script_face ACTOR_RESTAURANT_WALK_72_03_2, FACE_DOWN ; $5d60
 	script_wait_frames $14 ; $5d67
@@ -1007,5 +1007,5 @@ RestaurantShowActor11NearPlayer_10:
 	ld a, $11 ; $6199
 	farcall ScriptSetActorPosition ; $619b
 	script_wait_frames $46 ; $619e
-	script_set_position ACTOR_RESTAURANT_WALK_73_15, $3f00, $3f00 ; $61a5
+	script_set_position ACTOR_RESTAURANT_BALLOON_ELLIPSIS, $3f00, $3f00 ; $61a5
 	ret ; $61b0
