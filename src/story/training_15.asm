@@ -366,11 +366,11 @@ SetupTournamentSitePartnerActor:
 	ld d, OBJ_KATE_B ; $46ca
 	jr .apply ; $46cc
 .apply:
-	script_get_actor_state $05 ; $46ce
+	script_get_actor_state ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07 ; $46ce
 	ld c, l ; $46d3
 	ld b, h ; $46d4
 	farcall LoadActorObjectDefIfValid ; $46d5
-	script_set_anim $05, ANIM_WALK ; $46d8
+	script_set_anim ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07, ANIM_WALK ; $46d8
 	script_null_script ACTOR_PARTNER ; $46df
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $46e4
 	ret ; $46ef

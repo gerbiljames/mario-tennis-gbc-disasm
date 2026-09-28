@@ -245,26 +245,40 @@ and the macro defines `ACTOR_<name>` as `3 + row` (`ACTOR_MARIO_WORLD_PEACH`,
 `ACTOR_TRAINING_GYM_WALK_72_04_1`). The name is the list's location and the
 row's object (`OBJ_*` without the prefix), numbered when a list holds the
 same object twice. Scripts address actors by these names, so inserting or
-reordering rows renumbers every reference. A script was renamed only where
-the list it runs under is certain: a location's handlers and init script run
-under its default list or any variant the init script installs (such a
-variant stays active for the whole visit), a script that calls `ScriptRespawnLocationActors`
-runs under the list it installs from that point on (and so do the routines it
-calls), and where several lists are possible -- a branch that installs one of
-several, a helper shared between locations -- the number stays unless every
-candidate list holds the same actor in that slot. A variant installed by a
-scene that then ends the visit (it writes `wStoryModeExitTriggerRequest` and
-returns, with no branch after the install) is not a candidate for the rest of
-the location: the player never has control under it. The Training Court,
-Academy Courts and Varsity Court tours, the Tournament Site arrival and one
-ending scene are of that kind. 3,877 references are names (3,562 script
-operands, 315 `NpcScripts` ids); about 880 stay numbers,
-mostly where a location's init-time variants put different actors in the
-slot, plus branches that install one of several lists, helpers shared
-between locations, slots past the end of every candidate list (actors
-spawned by script) and the lines inside shared twin files.
-`tools/runtime_audit.py` checks the names against the list active at run
-time: every name reached in 36 story states agreed.
+reordering rows renumbers every reference. A slot is a name only where the
+list active at that line is certain, found by following control flow through
+the story code with the set of (list, `NpcScripts` table) pairs that can be
+active:
+
+* a location loads with its default list and table; the entry point's arrival
+  script runs next, then the init script, each starting from what the step
+  before can leave;
+* `ScriptRespawnLocationActors` replaces the list, and `WriteStoryStateWord`
+  into `wMapNpcScriptsPtr` the table, on the path that calls it -- so a
+  branch that installs a variant runs under that variant alone after the
+  call, and a callee's installs reach its caller;
+* the pairs active while the player has control are what the init script
+  and every handler can leave behind, repeated until nothing new appears; a
+  path that has written `wStoryModeExitTriggerRequest` ends the visit and
+  leaves nothing (the Training Court, Academy Courts and Varsity Court tours,
+  the Tournament Site arrival and several ending scenes install their lists
+  on such paths);
+* facing, tile and exit handlers and actor-script `as_call` routines run
+  under any of those pairs, an `NpcScripts` handler only under the pairs
+  holding its own table, and a routine dispatched through a `JumpToHL` table
+  under whatever its dispatcher had.
+
+Where more than one list is possible the number stays, unless every
+candidate holds the same actor in that slot. 4,465 script operands and 436
+`NpcScripts` ids are names; 469 and 97 stay numbers: slots whose
+candidate lists disagree (mostly handlers that several variants share),
+slots past the end of every candidate list (actors spawned by script), the
+lines inside shared twin files, and tables of locations the player never
+controls. A routine that can also be entered from somewhere the flow does
+not follow keeps a number unless it installs its own list first.
+Checked at run time over 36 story states and every location (a hook at each
+named site comparing the list `InitLocationActors` last installed): every
+name reached agreed.
 
 ### `map_script` — the script records (8 bytes, `$ff`-terminated)
 

@@ -28,7 +28,7 @@ AcademyWingExitTriggers_10:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $0f
 	db $ff
 AcademyWingNpc03_10:
-	script_face_toward ACTOR_PLAYER, $03 ; $623b
+	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_WING_WALK_75_06 ; $623b
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $6243
 	jr z, .altText ; $6246
 	script_set_text Text_30_517 ; $6248
@@ -62,11 +62,11 @@ AcademyWingNpc03_10:
 	script_set_text Text_30_516 ; $62a7
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62ad
 .done:
-	script_speak $03 ; $62b0
+	script_speak ACTOR_ACADEMY_WING_WALK_75_06 ; $62b0
 	ret ; $62b5
 AcademyWingNpcScripts_10:
 	; $62b6, 9 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, AcademyWingNpc03_10, NPC_FACE_PLAYER, $00
+	map_script ACTOR_ACADEMY_WING_WALK_75_06, FACEMASK_ANY, $0000, AcademyWingNpc03_10, NPC_FACE_PLAYER, $00
 	db $ff
 AcademyWingFacingScripts_10:
 	; $62bf, 17 bytes (map_scripts)
@@ -81,18 +81,18 @@ AcademyWingFacing02_10:
 	script_player_speed $0020 ; $62da
 	script_move_player $2100, $3300 ; $62e0
 	script_set_text Text_30_449 ; $62ea
-	script_face $03, FACE_DOWN ; $62f0
+	script_face ACTOR_ACADEMY_WING_WALK_75_06, FACE_DOWN ; $62f0
 	script_wait_frames $0a ; $62f7
 	script_speak $04 ; $62fe
 	script_wait_frames $0a ; $6303
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $630a
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $6311
 	script_wait_idle ACTOR_PLAYER ; $6318
-	script_set_anim $03, ANIM_SHAKE ; $631d
-	script_wait_idle $03 ; $6324
+	script_set_anim ACTOR_ACADEMY_WING_WALK_75_06, ANIM_SHAKE ; $631d
+	script_wait_idle ACTOR_ACADEMY_WING_WALK_75_06 ; $6324
 	script_player_speed $0018 ; $6329
 	script_speak $04 ; $632f
-	script_face $03, FACE_RIGHT ; $6334
+	script_face ACTOR_ACADEMY_WING_WALK_75_06, FACE_RIGHT ; $6334
 	script_move_player $2100, $3b00 ; $633b
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $6345
 	script_wait_idle ACTOR_PLAYER ; $634c
@@ -145,14 +145,14 @@ AcademyWingTile02_10:
 	call AcademyWingCloseDoor_10 ; $6437
 	ret ; $643a
 AcademyWingInitScript_10:
-	script_set_anim $05, ANIM_TROPHY_SINGLES ; $643b
+	script_set_anim ACTOR_ACADEMY_WING_TROPHY_1, ANIM_TROPHY_SINGLES ; $643b
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $6442
 	jr nz, .checkDoublesFinal ; $6445
-	script_set_position $05, $0100, $0100 ; $6447
+	script_set_position ACTOR_ACADEMY_WING_TROPHY_1, $0100, $0100 ; $6447
 .checkDoublesFinal:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6452
 	jr nz, .byStage ; $6455
-	script_set_position $06, $0100, $0100 ; $6457
+	script_set_position ACTOR_ACADEMY_WING_TROPHY_2, $0100, $0100 ; $6457
 .byStage:
 	call SetAcademyWingDialogueStage_10 ; $6462
 	ld a, [wMapSceneStage] ; $6465
@@ -177,7 +177,7 @@ AcademyWingInitScript_10:
 	ld a, [wMapSceneStage] ; $649e
 	cp ACADEMYWINGSTAGE_SENIOR_CHAMP ; $64a1
 	jr nz, .stage5 ; $64a3
-	script_set_position $03, $19a0, $32c0 ; $64a5
+	script_set_position ACTOR_ACADEMY_WING_WALK_75_06, $19a0, $32c0 ; $64a5
 .stage5:
 	ld a, $16 ; $64b0
 	ld [wMapScrollMinX], a ; $64b2
@@ -210,7 +210,7 @@ AcademyWingInitScript_10:
 .placeActors:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6502
 	jr nz, .done ; $6505
-	script_set_position $0b, $0100, $0100 ; $6507
+	script_set_position ACTOR_ACADEMY_WING_INIT0_TROPHY_2, $0100, $0100 ; $6507
 .done:
 	script_player_speed $00f0 ; $6512
 	script_move_player $1f00, $3b00 ; $6518
@@ -222,145 +222,145 @@ AcademyWingInitScript_10:
 	script_fade_in $08 ; $653f
 	call WaitFadeEnd ; $6544
 	script_wait_frames $3c ; $6547
-	script_set_anim $06, ANIM_BOUNCE ; $654e
-	script_wait_idle $06 ; $6555
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_75_06, ANIM_BOUNCE ; $654e
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6555
 	script_set_text Text_30_475 ; $655a
-	script_speak $06 ; $6560
-	script_set_anim $07, ANIM_BOUNCE ; $6565
-	script_set_anim $08, ANIM_BOUNCE ; $656c
-	script_set_anim $09, ANIM_BOUNCE ; $6573
-	script_wait_idle $09 ; $657a
-	script_face_pair $07, $08 ; $657f
+	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6560
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_KEVIN, ANIM_BOUNCE ; $6565
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_BOUNCE ; $656c
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_BOUNCE ; $6573
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_EMILY ; $657a
+	script_face_pair ACTOR_ACADEMY_WING_INIT0_KEVIN, ACTOR_ACADEMY_WING_INIT0_MARK ; $657f
 	script_wait_frames $28 ; $6587
-	script_face $07, FACE_UP ; $658e
-	script_face $08, FACE_UP ; $6595
+	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_UP ; $658e
+	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_UP ; $6595
 	script_wait_frames $28 ; $659c
-	script_set_position $05, $2380, $3100 ; $65a3
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $2380, $3100 ; $65a3
 	sound SFX_CHIME ; $65ae
-	script_speak $07 ; $65b0
-	script_set_position $05, $3f00, $3f00 ; $65b5
-	script_set_anim $06, ANIM_NOD ; $65c0
-	script_wait_idle $06 ; $65c7
-	script_speak $06 ; $65cc
+	script_speak ACTOR_ACADEMY_WING_INIT0_KEVIN ; $65b0
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $3f00, $3f00 ; $65b5
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_75_06, ANIM_NOD ; $65c0
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $65c7
+	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $65cc
 	test_flag FLAG_DOUBLES ; $65d1
 	jp z, .placeActors2 ; $65d4
-	script_set_position $03, $2180, $3100 ; $65d7
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY, $2180, $3100 ; $65d7
 	sound SFX_APPEAR1 ; $65e2
 	script_wait_frames $0a ; $65e4
 	farcall AdvanceDialogueTextCursor ; $65eb
-	script_speak $08 ; $65ee
-	script_set_position $03, $3f00, $3f00 ; $65f3
-	script_face_toward $08, $07 ; $65fe
+	script_speak ACTOR_ACADEMY_WING_INIT0_MARK ; $65ee
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY, $3f00, $3f00 ; $65f3
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_KEVIN ; $65fe
 	script_wait_frames $01 ; $6606
-	script_lock_facing $07 ; $660d
-	script_move_target $07, $2100, $3300 ; $6614
-	script_wait_move $07 ; $661f
-	script_set_anim $08, ANIM_BOUNCE ; $6624
-	script_move_target $07, $2200, $3300 ; $662b
-	script_wait_move $07 ; $6636
-	script_unlock_facing $07 ; $663b
-	script_face_pair $08, $07 ; $6642
-	script_speak $07 ; $664a
-	script_face_toward $08, $09 ; $664f
+	script_lock_facing ACTOR_ACADEMY_WING_INIT0_KEVIN ; $660d
+	script_move_target ACTOR_ACADEMY_WING_INIT0_KEVIN, $2100, $3300 ; $6614
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_KEVIN ; $661f
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_BOUNCE ; $6624
+	script_move_target ACTOR_ACADEMY_WING_INIT0_KEVIN, $2200, $3300 ; $662b
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6636
+	script_unlock_facing ACTOR_ACADEMY_WING_INIT0_KEVIN ; $663b
+	script_face_pair ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6642
+	script_speak ACTOR_ACADEMY_WING_INIT0_KEVIN ; $664a
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_EMILY ; $664f
 	script_wait_frames $01 ; $6657
-	script_lock_facing $09 ; $665e
-	script_move_target $09, $1f00, $3300 ; $6665
-	script_wait_move $09 ; $6670
-	script_set_anim $08, ANIM_BOUNCE ; $6675
-	script_move_target $09, $1e00, $3300 ; $667c
-	script_wait_move $09 ; $6687
-	script_unlock_facing $09 ; $668c
-	script_face_pair $08, $09 ; $6693
-	script_speak $09 ; $669b
+	script_lock_facing ACTOR_ACADEMY_WING_INIT0_EMILY ; $665e
+	script_move_target ACTOR_ACADEMY_WING_INIT0_EMILY, $1f00, $3300 ; $6665
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_EMILY ; $6670
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_BOUNCE ; $6675
+	script_move_target ACTOR_ACADEMY_WING_INIT0_EMILY, $1e00, $3300 ; $667c
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_EMILY ; $6687
+	script_unlock_facing ACTOR_ACADEMY_WING_INIT0_EMILY ; $668c
+	script_face_pair ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_EMILY ; $6693
+	script_speak ACTOR_ACADEMY_WING_INIT0_EMILY ; $669b
 	jr .face ; $66a0
 .placeActors2:
-	script_set_position $05, $2180, $3100 ; $66a2
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $2180, $3100 ; $66a2
 	sound SFX_CHIME ; $66ad
 	script_wait_frames $1e ; $66af
-	script_speak $08 ; $66b6
-	script_set_position $05, $3f00, $3f00 ; $66bb
+	script_speak ACTOR_ACADEMY_WING_INIT0_MARK ; $66b6
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $3f00, $3f00 ; $66bb
 .face:
-	script_face_toward $08, $07 ; $66c6
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_KEVIN ; $66c6
 	script_wait_frames $01 ; $66ce
-	script_lock_facing $07 ; $66d5
-	script_move_target $07, $2100, $3300 ; $66dc
-	script_wait_move $07 ; $66e7
-	script_move_target $07, $2200, $3300 ; $66ec
-	script_wait_move $07 ; $66f7
-	script_unlock_facing $07 ; $66fc
-	script_face_pair $08, $07 ; $6703
-	script_set_anim $08, ANIM_BOUNCE ; $670b
-	script_wait_idle $08 ; $6712
-	script_face_toward $08, $09 ; $6717
+	script_lock_facing ACTOR_ACADEMY_WING_INIT0_KEVIN ; $66d5
+	script_move_target ACTOR_ACADEMY_WING_INIT0_KEVIN, $2100, $3300 ; $66dc
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_KEVIN ; $66e7
+	script_move_target ACTOR_ACADEMY_WING_INIT0_KEVIN, $2200, $3300 ; $66ec
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_KEVIN ; $66f7
+	script_unlock_facing ACTOR_ACADEMY_WING_INIT0_KEVIN ; $66fc
+	script_face_pair ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6703
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_BOUNCE ; $670b
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_MARK ; $6712
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_EMILY ; $6717
 	script_wait_frames $01 ; $671f
-	script_lock_facing $09 ; $6726
-	script_move_target $09, $1f00, $3300 ; $672d
-	script_wait_move $09 ; $6738
-	script_move_target $09, $1e00, $3300 ; $673d
-	script_wait_move $09 ; $6748
-	script_unlock_facing $09 ; $674d
-	script_face_pair $08, $09 ; $6754
-	script_set_anim $08, ANIM_BOUNCE ; $675c
-	script_wait_idle $08 ; $6763
-	script_set_anim $09, ANIM_NOD ; $6768
-	script_set_anim $07, ANIM_NOD ; $676f
-	script_wait_idle $07 ; $6776
-	script_move_target $06, $1e00, $2f00 ; $677b
-	script_wait_move $06 ; $6786
-	script_face $06, FACE_DOWN ; $678b
+	script_lock_facing ACTOR_ACADEMY_WING_INIT0_EMILY ; $6726
+	script_move_target ACTOR_ACADEMY_WING_INIT0_EMILY, $1f00, $3300 ; $672d
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_EMILY ; $6738
+	script_move_target ACTOR_ACADEMY_WING_INIT0_EMILY, $1e00, $3300 ; $673d
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_EMILY ; $6748
+	script_unlock_facing ACTOR_ACADEMY_WING_INIT0_EMILY ; $674d
+	script_face_pair ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_EMILY ; $6754
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_BOUNCE ; $675c
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_MARK ; $6763
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_NOD ; $6768
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_KEVIN, ANIM_NOD ; $676f
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6776
+	script_move_target ACTOR_ACADEMY_WING_INIT0_WALK_75_06, $1e00, $2f00 ; $677b
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6786
+	script_face ACTOR_ACADEMY_WING_INIT0_WALK_75_06, FACE_DOWN ; $678b
 	script_wait_frames $1e ; $6792
-	script_move_target $06, $2200, $2f00 ; $6799
-	script_wait_move $06 ; $67a4
-	script_face $06, FACE_DOWN ; $67a9
+	script_move_target ACTOR_ACADEMY_WING_INIT0_WALK_75_06, $2200, $2f00 ; $6799
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $67a4
+	script_face ACTOR_ACADEMY_WING_INIT0_WALK_75_06, FACE_DOWN ; $67a9
 	script_wait_frames $1e ; $67b0
-	script_move_target $06, $2000, $2f00 ; $67b7
-	script_wait_move $06 ; $67c2
-	script_face $06, FACE_DOWN ; $67c7
+	script_move_target ACTOR_ACADEMY_WING_INIT0_WALK_75_06, $2000, $2f00 ; $67b7
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $67c2
+	script_face ACTOR_ACADEMY_WING_INIT0_WALK_75_06, FACE_DOWN ; $67c7
 	script_wait_frames $0a ; $67ce
-	script_set_anim $06, ANIM_BOUNCE ; $67d5
-	script_wait_idle $06 ; $67dc
-	script_face $07, FACE_UP ; $67e1
-	script_face $08, FACE_UP ; $67e8
-	script_face $09, FACE_UP ; $67ef
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_75_06, ANIM_BOUNCE ; $67d5
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $67dc
+	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_UP ; $67e1
+	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_UP ; $67e8
+	script_face ACTOR_ACADEMY_WING_INIT0_EMILY, FACE_UP ; $67ef
 	script_set_text Text_30_482 ; $67f6
-	script_speak $06 ; $67fc
-	script_set_objdef OBJ_BALLOON_SWEAT, $03 ; $6801
-	script_set_anim $03, ANIM_WALK ; $680d
-	script_set_objdef OBJ_BALLOON_SWEAT, $05 ; $6814
-	script_set_anim $05, ANIM_WALK ; $6820
-	script_set_position $03, $1f80, $3100 ; $6827
+	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $67fc
+	script_set_objdef OBJ_BALLOON_SWEAT, ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY ; $6801
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY, ANIM_WALK ; $680d
+	script_set_objdef OBJ_BALLOON_SWEAT, ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC ; $6814
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, ANIM_WALK ; $6820
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY, $1f80, $3100 ; $6827
 	sound SFX_APPEAR2 ; $6832
 	script_wait_frames $28 ; $6834
-	script_set_position $04, $2180, $3100 ; $683b
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_SWEAT, $2180, $3100 ; $683b
 	sound SFX_APPEAR2 ; $6846
 	script_wait_frames $28 ; $6848
-	script_set_position $03, $3f00, $3f00 ; $684f
-	script_set_position $05, $2380, $3100 ; $685a
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY, $3f00, $3f00 ; $684f
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $2380, $3100 ; $685a
 	sound SFX_APPEAR2 ; $6865
 	script_wait_frames $28 ; $6867
-	script_set_position $04, $3f00, $3f00 ; $686e
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_SWEAT, $3f00, $3f00 ; $686e
 	script_wait_frames $28 ; $6879
-	script_set_position $05, $3f00, $3f00 ; $6880
-	script_face $07, FACE_DOWN ; $688b
-	script_face $08, FACE_DOWN ; $6892
-	script_face $09, FACE_DOWN ; $6899
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $3f00, $3f00 ; $6880
+	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_DOWN ; $688b
+	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_DOWN ; $6892
+	script_face ACTOR_ACADEMY_WING_INIT0_EMILY, FACE_DOWN ; $6899
 	script_wait_frames $78 ; $68a0
-	script_face $07, FACE_UP ; $68a7
-	script_face $08, FACE_UP ; $68ae
-	script_face $09, FACE_UP ; $68b5
+	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_UP ; $68a7
+	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_UP ; $68ae
+	script_face ACTOR_ACADEMY_WING_INIT0_EMILY, FACE_UP ; $68b5
 	script_wait_frames $28 ; $68bc
-	script_face_toward $07, $08 ; $68c3
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_KEVIN, ACTOR_ACADEMY_WING_INIT0_MARK ; $68c3
 	script_wait_frames $01 ; $68cb
-	script_set_anim $08, ANIM_BOUNCE ; $68d2
-	script_wait_idle $08 ; $68d9
-	script_set_position $05, $2380, $3100 ; $68de
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_BOUNCE ; $68d2
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_MARK ; $68d9
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $2380, $3100 ; $68de
 	sound SFX_APPEAR2 ; $68e9
 	script_wait_frames $3c ; $68eb
-	script_face_toward $09, $08 ; $68f2
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_EMILY, ACTOR_ACADEMY_WING_INIT0_MARK ; $68f2
 	script_wait_frames $01 ; $68fa
-	script_set_anim $08, ANIM_BOUNCE ; $6901
-	script_wait_idle $08 ; $6908
-	script_set_position $03, $1f80, $3100 ; $690d
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_BOUNCE ; $6901
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_MARK ; $6908
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY, $1f80, $3100 ; $690d
 	sound SFX_APPEAR2 ; $6918
 	script_wait_frames $3c ; $691a
 	test_flag FLAG_DOUBLES ; $6921
@@ -398,29 +398,29 @@ AcademyWingInitScript_10:
 	script_wait_frames $01 ; $6a01
 .academyWingCloseDoor:
 	call AcademyWingCloseDoor_10 ; $6a08
-	script_set_position $03, $3f00, $3f00 ; $6a0b
-	script_set_position $05, $3f00, $3f00 ; $6a16
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY, $3f00, $3f00 ; $6a0b
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $3f00, $3f00 ; $6a16
 	script_wait_frames $0a ; $6a21
-	script_face $07, FACE_DOWN ; $6a28
-	script_face $08, FACE_DOWN ; $6a2f
-	script_face $09, FACE_DOWN ; $6a36
+	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_DOWN ; $6a28
+	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_DOWN ; $6a2f
+	script_face ACTOR_ACADEMY_WING_INIT0_EMILY, FACE_DOWN ; $6a36
 	script_wait_frames $01 ; $6a3d
-	script_set_anim $06, ANIM_BOUNCE ; $6a44
-	script_set_anim $07, ANIM_BOUNCE ; $6a4b
-	script_set_anim $08, ANIM_BOUNCE ; $6a52
-	script_set_anim $09, ANIM_BOUNCE ; $6a59
-	script_wait_idle $09 ; $6a60
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_75_06, ANIM_BOUNCE ; $6a44
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_KEVIN, ANIM_BOUNCE ; $6a4b
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_BOUNCE ; $6a52
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_BOUNCE ; $6a59
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_EMILY ; $6a60
 	script_wait_frames $1e ; $6a65
-	script_move_target $08, $2300, $3300 ; $6a6c
-	script_move_target $07, $2500, $3300 ; $6a77
-	script_move_target $09, $1d00, $3500 ; $6a82
-	script_wait_move $09 ; $6a8d
-	script_face $09, FACE_RIGHT ; $6a92
-	script_move_target $08, $2300, $3500 ; $6a99
-	script_move_target $07, $2500, $3500 ; $6aa4
-	script_wait_move $07 ; $6aaf
-	script_face $08, FACE_LEFT ; $6ab4
-	script_face $07, FACE_LEFT ; $6abb
+	script_move_target ACTOR_ACADEMY_WING_INIT0_MARK, $2300, $3300 ; $6a6c
+	script_move_target ACTOR_ACADEMY_WING_INIT0_KEVIN, $2500, $3300 ; $6a77
+	script_move_target ACTOR_ACADEMY_WING_INIT0_EMILY, $1d00, $3500 ; $6a82
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_EMILY ; $6a8d
+	script_face ACTOR_ACADEMY_WING_INIT0_EMILY, FACE_RIGHT ; $6a92
+	script_move_target ACTOR_ACADEMY_WING_INIT0_MARK, $2300, $3500 ; $6a99
+	script_move_target ACTOR_ACADEMY_WING_INIT0_KEVIN, $2500, $3500 ; $6aa4
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6aaf
+	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_LEFT ; $6ab4
+	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_LEFT ; $6abb
 	script_wait_frames $0a ; $6ac2
 	test_flag FLAG_DOUBLES ; $6ac9
 	jp z, .placeActors3 ; $6acc
@@ -436,10 +436,10 @@ AcademyWingInitScript_10:
 	script_wait_frames $14 ; $6b0c
 	script_face ACTOR_PLAYER, FACE_UP ; $6b13
 	script_face ACTOR_PARTNER, FACE_UP ; $6b1a
-	script_set_anim $07, ANIM_NOD ; $6b21
-	script_set_anim $08, ANIM_NOD ; $6b28
-	script_set_anim $09, ANIM_NOD ; $6b2f
-	script_wait_idle $09 ; $6b36
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_KEVIN, ANIM_NOD ; $6b21
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_NOD ; $6b28
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_NOD ; $6b2f
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_EMILY ; $6b36
 	script_wait_frames $28 ; $6b3b
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6b42
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $6b49
@@ -449,37 +449,37 @@ AcademyWingInitScript_10:
 	script_wait_move ACTOR_PARTNER ; $6b6b
 	jp .wait ; $6b70
 .placeActors3:
-	script_set_position $04, $2180, $3300 ; $6b73
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_SWEAT, $2180, $3300 ; $6b73
 	sound SFX_APPEAR2 ; $6b7e
 	script_wait_frames $50 ; $6b80
-	script_set_position $04, $3f00, $3f00 ; $6b87
-	script_face_toward $09, ACTOR_PLAYER ; $6b92
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_SWEAT, $3f00, $3f00 ; $6b87
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_EMILY, ACTOR_PLAYER ; $6b92
 	script_wait_frames $28 ; $6b9a
-	script_face_toward ACTOR_PLAYER, $09 ; $6ba1
+	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_WING_INIT0_EMILY ; $6ba1
 	script_wait_frames $01 ; $6ba9
-	script_set_anim $09, ANIM_NOD ; $6bb0
-	script_wait_idle $09 ; $6bb7
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_NOD ; $6bb0
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_EMILY ; $6bb7
 	script_wait_frames $14 ; $6bbc
 	script_face ACTOR_PLAYER, FACE_UP ; $6bc3
-	script_set_anim $07, ANIM_NOD ; $6bca
-	script_set_anim $08, ANIM_NOD ; $6bd1
-	script_set_anim $09, ANIM_NOD ; $6bd8
-	script_wait_idle $09 ; $6bdf
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_KEVIN, ANIM_NOD ; $6bca
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_NOD ; $6bd1
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_NOD ; $6bd8
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_EMILY ; $6bdf
 	script_wait_frames $28 ; $6be4
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6beb
 	script_move_target ACTOR_PLAYER, $2000, $3200 ; $6bf2
 	script_wait_move ACTOR_PLAYER ; $6bfd
 .wait:
 	script_wait_frames $01 ; $6c02
-	script_move_target $09, $1e00, $3500 ; $6c09
-	script_move_target $08, $2000, $3500 ; $6c14
-	script_move_target $07, $2200, $3500 ; $6c1f
-	script_wait_move $07 ; $6c2a
-	script_face $09, FACE_UP ; $6c2f
-	script_face $08, FACE_UP ; $6c36
-	script_face $07, FACE_UP ; $6c3d
-	script_set_anim $06, ANIM_NOD ; $6c44
-	script_wait_idle $06 ; $6c4b
+	script_move_target ACTOR_ACADEMY_WING_INIT0_EMILY, $1e00, $3500 ; $6c09
+	script_move_target ACTOR_ACADEMY_WING_INIT0_MARK, $2000, $3500 ; $6c14
+	script_move_target ACTOR_ACADEMY_WING_INIT0_KEVIN, $2200, $3500 ; $6c1f
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6c2a
+	script_face ACTOR_ACADEMY_WING_INIT0_EMILY, FACE_UP ; $6c2f
+	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_UP ; $6c36
+	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_UP ; $6c3d
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_75_06, ANIM_NOD ; $6c44
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6c4b
 	ld h, $00 ; $6c50
 	ld l, $02 ; $6c52
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $6c54
@@ -491,47 +491,47 @@ AcademyWingInitScript_10:
 	inc l ; $6c5f
 .pushArg:
 	farcall PushTextArgNumber ; $6c60
-	script_speak $06 ; $6c63
+	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6c63
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $6c68
 	script_wait_idle ACTOR_PLAYER ; $6c6f
-	script_speak $06 ; $6c74
+	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6c74
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6c79
 	script_wait_idle ACTOR_PLAYER ; $6c80
-	script_set_objdef OBJ_BALLOON_MUSIC, $05 ; $6c85
-	script_set_anim $05, ANIM_WALK ; $6c91
-	script_set_position $05, $2380, $3300 ; $6c98
+	script_set_objdef OBJ_BALLOON_MUSIC, ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC ; $6c85
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, ANIM_WALK ; $6c91
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $2380, $3300 ; $6c98
 	sound SFX_CHIME ; $6ca3
 	script_wait_frames $14 ; $6ca5
-	script_speak $07 ; $6cac
-	script_set_position $05, $3f00, $3f00 ; $6cb1
-	script_set_anim $06, ANIM_NOD ; $6cbc
-	script_wait_idle $06 ; $6cc3
-	script_speak $06 ; $6cc8
-	script_face_pair $08, $07 ; $6ccd
-	script_set_anim $07, ANIM_NOD ; $6cd5
-	script_set_anim $08, ANIM_NOD ; $6cdc
-	script_wait_idle $08 ; $6ce3
+	script_speak ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6cac
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $3f00, $3f00 ; $6cb1
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_75_06, ANIM_NOD ; $6cbc
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6cc3
+	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6cc8
+	script_face_pair ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6ccd
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_KEVIN, ANIM_NOD ; $6cd5
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_NOD ; $6cdc
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_MARK ; $6ce3
 	script_wait_frames $28 ; $6ce8
-	script_face_pair $08, $09 ; $6cef
-	script_set_anim $09, ANIM_NOD ; $6cf7
-	script_set_anim $08, ANIM_NOD ; $6cfe
-	script_wait_idle $08 ; $6d05
+	script_face_pair ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_ACADEMY_WING_INIT0_EMILY ; $6cef
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_NOD ; $6cf7
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_NOD ; $6cfe
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_MARK ; $6d05
 	script_wait_frames $28 ; $6d0a
-	script_face $07, FACE_UP ; $6d11
-	script_face $08, FACE_UP ; $6d18
-	script_face $09, FACE_UP ; $6d1f
+	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_UP ; $6d11
+	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_UP ; $6d18
+	script_face ACTOR_ACADEMY_WING_INIT0_EMILY, FACE_UP ; $6d1f
 	script_wait_frames $28 ; $6d26
-	script_set_anim $09, ANIM_NOD ; $6d2d
-	script_set_anim $07, ANIM_NOD ; $6d34
-	script_set_anim $08, ANIM_NOD ; $6d3b
-	script_wait_idle $08 ; $6d42
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_NOD ; $6d2d
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_KEVIN, ANIM_NOD ; $6d34
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_NOD ; $6d3b
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_MARK ; $6d42
 	script_wait_frames $3c ; $6d47
-	script_set_objdef OBJ_BALLOON_QUESTION, $05 ; $6d4e
-	script_set_anim $05, ANIM_WALK ; $6d5a
-	script_set_position $05, $2180, $2d80 ; $6d61
+	script_set_objdef OBJ_BALLOON_QUESTION, ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC ; $6d4e
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, ANIM_WALK ; $6d5a
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $2180, $2d80 ; $6d61
 	sound SFX_EMOTE ; $6d6c
 	script_wait_frames $50 ; $6d6e
-	script_set_position $05, $3f00, $3f00 ; $6d75
+	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, $3f00, $3f00 ; $6d75
 	ld a, $06 ; $6d80
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d82
 	farcall RunDialogueYesNoPrompt ; $6d85
@@ -539,45 +539,45 @@ AcademyWingInitScript_10:
 	script_wait_frames $05 ; $6d8b
 	and a ; $6d92
 	jp z, .animate ; $6d93
-	script_set_anim $06, ANIM_BOUNCE ; $6d96
-	script_wait_idle $06 ; $6d9d
-	script_speak $06 ; $6da2
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_75_06, ANIM_BOUNCE ; $6d96
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6d9d
+	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6da2
 	test_flag FLAG_DOUBLES ; $6da7
 	jp z, .walk ; $6daa
-	script_move_target $08, $2000, $3400 ; $6dad
-	script_wait_move $08 ; $6db8
-	script_face_toward $08, ACTOR_PLAYER ; $6dbd
-	script_face_toward $08, ACTOR_PARTNER ; $6dc5
-	script_speak $08 ; $6dcd
+	script_move_target ACTOR_ACADEMY_WING_INIT0_MARK, $2000, $3400 ; $6dad
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_MARK ; $6db8
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_PLAYER ; $6dbd
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_PARTNER ; $6dc5
+	script_speak ACTOR_ACADEMY_WING_INIT0_MARK ; $6dcd
 	script_wait_frames $1e ; $6dd2
-	script_move_target $07, $2200, $3400 ; $6dd9
-	script_wait_move $07 ; $6de4
-	script_face_toward $07, ACTOR_PLAYER ; $6de9
-	script_face_toward $07, ACTOR_PARTNER ; $6df1
-	script_speak $07 ; $6df9
+	script_move_target ACTOR_ACADEMY_WING_INIT0_KEVIN, $2200, $3400 ; $6dd9
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6de4
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_KEVIN, ACTOR_PLAYER ; $6de9
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_KEVIN, ACTOR_PARTNER ; $6df1
+	script_speak ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6df9
 	script_wait_frames $1e ; $6dfe
-	script_move_target $09, $1d00, $3200 ; $6e05
-	script_wait_move $09 ; $6e10
-	script_face_pair $09, ACTOR_PLAYER ; $6e15
-	script_face_toward $09, ACTOR_PARTNER ; $6e1d
+	script_move_target ACTOR_ACADEMY_WING_INIT0_EMILY, $1d00, $3200 ; $6e05
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_EMILY ; $6e10
+	script_face_pair ACTOR_ACADEMY_WING_INIT0_EMILY, ACTOR_PLAYER ; $6e15
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_EMILY, ACTOR_PARTNER ; $6e1d
 	jr .loop ; $6e25
 .walk:
-	script_move_target $08, $2000, $3400 ; $6e27
-	script_wait_move $08 ; $6e32
-	script_face_toward $08, ACTOR_PLAYER ; $6e37
-	script_speak $08 ; $6e3f
+	script_move_target ACTOR_ACADEMY_WING_INIT0_MARK, $2000, $3400 ; $6e27
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_MARK ; $6e32
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_MARK, ACTOR_PLAYER ; $6e37
+	script_speak ACTOR_ACADEMY_WING_INIT0_MARK ; $6e3f
 	script_wait_frames $1e ; $6e44
-	script_move_target $07, $2200, $3400 ; $6e4b
-	script_wait_move $07 ; $6e56
-	script_face_toward $07, ACTOR_PLAYER ; $6e5b
-	script_speak $07 ; $6e63
+	script_move_target ACTOR_ACADEMY_WING_INIT0_KEVIN, $2200, $3400 ; $6e4b
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6e56
+	script_face_toward ACTOR_ACADEMY_WING_INIT0_KEVIN, ACTOR_PLAYER ; $6e5b
+	script_speak ACTOR_ACADEMY_WING_INIT0_KEVIN ; $6e63
 	script_wait_frames $1e ; $6e68
-	script_move_target $09, $1e00, $3200 ; $6e6f
-	script_wait_move $09 ; $6e7a
-	script_face_pair $09, ACTOR_PLAYER ; $6e7f
+	script_move_target ACTOR_ACADEMY_WING_INIT0_EMILY, $1e00, $3200 ; $6e6f
+	script_wait_move ACTOR_ACADEMY_WING_INIT0_EMILY ; $6e7a
+	script_face_pair ACTOR_ACADEMY_WING_INIT0_EMILY, ACTOR_PLAYER ; $6e7f
 .loop:
-	script_set_anim $09, ANIM_SHAKE ; $6e87
-	script_wait_idle $09 ; $6e8e
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_SHAKE ; $6e87
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_EMILY ; $6e8e
 	script_set_text Text_30_491 ; $6e93
 	ld a, $09 ; $6e99
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6e9b
@@ -587,20 +587,20 @@ AcademyWingInitScript_10:
 	and a ; $6eab
 	jr nz, .loop ; $6eac
 .animate:
-	script_set_anim $06, ANIM_NOD ; $6eae
-	script_wait_idle $06 ; $6eb5
-	script_face $07, FACE_UP ; $6eba
-	script_face $08, FACE_UP ; $6ec1
-	script_face $09, FACE_UP ; $6ec8
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_75_06, ANIM_NOD ; $6eae
+	script_wait_idle ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6eb5
+	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_UP ; $6eba
+	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_UP ; $6ec1
+	script_face ACTOR_ACADEMY_WING_INIT0_EMILY, FACE_UP ; $6ec8
 	script_face ACTOR_PLAYER, FACE_UP ; $6ecf
 	test_flag FLAG_DOUBLES ; $6ed6
 	jp z, .wait2 ; $6ed9
 	script_face ACTOR_PARTNER, FACE_UP ; $6edc
 .wait2:
 	script_wait_frames $14 ; $6ee3
-	script_set_anim $07, ANIM_NOD ; $6eea
-	script_set_anim $08, ANIM_NOD ; $6ef1
-	script_set_anim $09, ANIM_NOD ; $6ef8
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_KEVIN, ANIM_NOD ; $6eea
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_NOD ; $6ef1
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_NOD ; $6ef8
 	test_flag FLAG_DOUBLES ; $6eff
 	jp z, .animate2 ; $6f02
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $6f05
@@ -608,7 +608,7 @@ AcademyWingInitScript_10:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6f0c
 	script_wait_idle ACTOR_PLAYER ; $6f13
 	script_set_text Text_30_492 ; $6f18
-	script_speak $06 ; $6f1e
+	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6f1e
 	ld c, $04 ; $6f23
 	call BeginFadeOut ; $6f25
 	call WaitFadeEnd ; $6f28

@@ -489,15 +489,15 @@ End8SrCourtInitScript_27:
 	script_fade_in $04 ; $5f20
 	script_move_target ACTOR_END8_SR_COURT_ALT_FAY, $2500, $1300 ; $5f25
 	script_wait_move ACTOR_END8_SR_COURT_ALT_FAY ; $5f30
-	script_face_pair $05, ACTOR_END8_SR_COURT_ALT_FAY ; $5f35
+	script_face_pair ACTOR_END8_SR_COURT_ALT_ALLIE, ACTOR_END8_SR_COURT_ALT_FAY ; $5f35
 	script_set_anim ACTOR_END8_SR_COURT_ALT_FAY, ANIM_BOUNCE ; $5f3d
 	script_delay $32 ; $5f44
-	script_face $05, FACE_DOWN ; $5f49
-	script_set_anim $05, ANIM_SHAKE ; $5f50
-	script_wait_idle $05 ; $5f57
+	script_face ACTOR_END8_SR_COURT_ALT_ALLIE, FACE_DOWN ; $5f49
+	script_set_anim ACTOR_END8_SR_COURT_ALT_ALLIE, ANIM_SHAKE ; $5f50
+	script_wait_idle ACTOR_END8_SR_COURT_ALT_ALLIE ; $5f57
 	script_delay $32 ; $5f5c
 	script_set_anim ACTOR_END8_SR_COURT_ALT_FAY, ANIM_BOUNCE ; $5f61
-	script_set_anim $05, ANIM_BOUNCE ; $5f68
+	script_set_anim ACTOR_END8_SR_COURT_ALT_ALLIE, ANIM_BOUNCE ; $5f68
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5f6f
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $5f76
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5f7d

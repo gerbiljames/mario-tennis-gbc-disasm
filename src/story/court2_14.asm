@@ -367,8 +367,8 @@ MachineCourtWalkToAttendantCutscene:
 	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4a00
 	jr z, .done ; $4a03
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $4a05
-	script_set_position $05, $2d00, $2900 ; $4a08
-	script_face $05, FACE_DOWN ; $4a13
+	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2900 ; $4a08
+	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $4a13
 	script_null_script ACTOR_PARTNER ; $4a1a
 	script_wait_frames $01 ; $4a1f
 	script_set_position ACTOR_PARTNER, $2900, $2b00 ; $4a26

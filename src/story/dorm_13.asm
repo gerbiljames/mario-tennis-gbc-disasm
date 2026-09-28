@@ -431,11 +431,11 @@ DormRoomNpc04IdleScripts_13:
 .isDoubles:
 	script_null_script ACTOR_PARTNER ; $527a
 	script_set_position ACTOR_PARTNER, $1500, $1f00 ; $527f
-	script_set_position $03, $0b00, $1000 ; $528a
-	script_face $03, FACE_UP ; $5295
+	script_set_position ACTOR_DORM_ROOM_KATE, $0b00, $1000 ; $528a
+	script_face ACTOR_DORM_ROOM_KATE, FACE_UP ; $5295
 	script_fade_in $04 ; $529c
 	call WaitFadeEnd ; $52a1
-	script_move_target $03, $0b00, $0a00 ; $52a4
+	script_move_target ACTOR_DORM_ROOM_KATE, $0b00, $0a00 ; $52a4
 	ret ; $52af
 DormRoomNpc03_13:
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ROOM_KATE ; $52b0

@@ -383,8 +383,8 @@ AcademyTopicTopRanked:
 	ret ; $5a27
 ShowStoryNarration_13:
 	sound BGM_NONE ; $5a28
-	script_set_position $03, $3f00, $3f00 ; $5a2a
-	script_set_position $04, $3f00, $3f00 ; $5a35
+	script_set_position ACTOR_DORM_ROOM_KATE, $3f00, $3f00 ; $5a2a
+	script_set_position ACTOR_DORM_ROOM_CAT, $3f00, $3f00 ; $5a35
 	script_set_active ACTOR_PLAYER, $00 ; $5a40
 	script_set_active ACTOR_PARTNER, $00 ; $5a47
 	script_copy_scene_rect $00, $20, $00, $00, $16, $18 ; $5a4e

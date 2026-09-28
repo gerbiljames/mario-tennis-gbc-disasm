@@ -115,6 +115,19 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-29** — 1,030 more actor slots, by following control flow. The
+  slot resolver now tracks which (actor list, `NpcScripts` table) pairs can
+  be active at each line: a variant installed on one branch of an init
+  script only covers that branch, a location starts from its default list
+  and table, `JumpToHL` dispatch tables are followed into the ranking-match
+  intros and victory scenes, and an `NpcScripts` handler runs only under
+  the lists its own table is installed with. 903 script operands and 127
+  `NpcScripts` ids became names; none of the 3,348 names already there that
+  the analysis reaches disagreed. A PyBoy sweep of 36 story states × every location hooked each
+  new site: 1,435 hits, all on the list the name comes from. Now 4,465
+  script operands and 436 ids are names, 469 and 97 numbers
+  (`docs/story_mode.md`, "map_actor").
+
 * **2026-09-28** — the last animation ids. Ids 5 and up depend on the
   sprite's `AnimPtrs` layout (fifteen layouts across the walk sprites), so
   each new name says which sprites it holds for: `ANIM_EXERCISE`, `ANIM_HOP`,

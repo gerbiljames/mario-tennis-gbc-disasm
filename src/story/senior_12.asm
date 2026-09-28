@@ -692,14 +692,14 @@ SeniorCourtInitScript_12:
 	farcall CopyBehaviorMapRect ; $5d35
 	test_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5d38
 	jr z, .fromMatch ; $5d3b
-	script_null_script $0a ; $5d3d
-	script_null_script $0b ; $5d42
-	script_set_anim $0a, ANIM_WALK ; $5d47
-	script_set_anim $0b, ANIM_WALK ; $5d4e
-	script_set_position $0a, $1400, $1300 ; $5d55
-	script_set_position $0b, $1400, $0f00 ; $5d60
-	script_face_toward ACTOR_PLAYER, $0a ; $5d6b
-	script_face_toward ACTOR_PLAYER, $0b ; $5d73
+	script_null_script ACTOR_SENIOR_COURT_BOB ; $5d3d
+	script_null_script ACTOR_SENIOR_COURT_PAM ; $5d42
+	script_set_anim ACTOR_SENIOR_COURT_BOB, ANIM_WALK ; $5d47
+	script_set_anim ACTOR_SENIOR_COURT_PAM, ANIM_WALK ; $5d4e
+	script_set_position ACTOR_SENIOR_COURT_BOB, $1400, $1300 ; $5d55
+	script_set_position ACTOR_SENIOR_COURT_PAM, $1400, $0f00 ; $5d60
+	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_BOB ; $5d6b
+	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_PAM ; $5d73
 .fromMatch:
 	test_flag FLAG_DOUBLES ; $5d7b
 	jr nz, .done ; $5d7e

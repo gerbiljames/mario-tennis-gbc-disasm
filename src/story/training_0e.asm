@@ -259,7 +259,7 @@ TrainingGymNpc07TextIds:
 	jr z, .speakLine ; $448a
 	farcall AdvanceDialogueTextCursor ; $448c
 .speakLine:
-	script_speak $07 ; $448f
+	script_speak ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1 ; $448f
 	ret ; $4494
 TrainingGymNpc08_0e:
 	ld a, [wMapSceneStage] ; $4495

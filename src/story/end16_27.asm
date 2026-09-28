@@ -390,18 +390,18 @@ End16BeforeFinalsCutscene_27:
 	test_flag FLAG_DOUBLES ; $49e7
 	jp nz, .face ; $49ea
 	script_set_speed ACTOR_PLAYER, $0020 ; $49ed
-	script_face_pair $0a, ACTOR_PLAYER ; $49f5
+	script_face_pair ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ACTOR_PLAYER ; $49f5
 	script_wait_frames $1e ; $49fd
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4a04
-	script_face $0a, FACE_DOWN ; $4a0b
-	script_set_anim $0a, ANIM_NOD ; $4a12
+	script_face ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, FACE_DOWN ; $4a0b
+	script_set_anim ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ANIM_NOD ; $4a12
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a19
 	script_wait_idle ACTOR_PLAYER ; $4a20
 	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, $1300, $1700 ; $4a25
 	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $4a30
 	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, ActorScript_27_02 ; $4a35
 	script_wait_frames $14 ; $4a40
-	script_set_actor_script $0a, ActorScript_27_02 ; $4a47
+	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ActorScript_27_02 ; $4a47
 	script_wait_frames $14 ; $4a52
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_02 ; $4a59
 	script_wait_frames $14 ; $4a64
@@ -432,7 +432,7 @@ End16BeforeFinalsCutscene_27:
 	script_wait_frames $3c ; $4b07
 	script_set_actor_script $0b, ActorScript_27_03 ; $4b0e
 	script_wait_frames $14 ; $4b19
-	script_set_actor_script $0a, ActorScript_27_03 ; $4b20
+	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ActorScript_27_03 ; $4b20
 	script_move_player $1100, $0d00 ; $4b2b
 	farcall WaitPlayerMoveDone ; $4b35
 	ld a, $01 ; $4b38

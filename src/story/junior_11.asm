@@ -251,7 +251,7 @@ Unused_11_JuniorClassCourtDoublesNpcSpeech:
 	script_face_toward $0b, $0a ; $57bd
 	ret ; $57c5
 .speak:
-	script_speak $0b ; $57c6
+	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $57c6
 	ret ; $57cb
 JuniorClassCourtDoublesANpc0A_11:
 	script_set_text Text_32_151 ; $57cc

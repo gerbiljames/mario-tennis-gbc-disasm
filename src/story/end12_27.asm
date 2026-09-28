@@ -92,35 +92,35 @@ End12PrincipalsOfficeInitScript_27:
 	script_set_position ACTOR_PARTNER, $2b00, $3b00 ; $4c9b
 	script_fade_in $04 ; $4ca6
 	script_delay $14 ; $4cab
-	script_move_target $07, $1e00, $2f00 ; $4cb0
-	script_wait_move $07 ; $4cbb
-	script_face $07, FACE_DOWN ; $4cc0
+	script_move_target ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, $1e00, $2f00 ; $4cb0
+	script_wait_move ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06 ; $4cbb
+	script_face ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, FACE_DOWN ; $4cc0
 	script_delay $1e ; $4cc7
-	script_move_target $07, $2200, $2f00 ; $4ccc
-	script_wait_move $07 ; $4cd7
-	script_face $07, FACE_DOWN ; $4cdc
+	script_move_target ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, $2200, $2f00 ; $4ccc
+	script_wait_move ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06 ; $4cd7
+	script_face ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, FACE_DOWN ; $4cdc
 	script_delay $1e ; $4ce3
-	script_move_target $07, $2000, $2f00 ; $4ce8
-	script_wait_move $07 ; $4cf3
-	script_face $07, FACE_DOWN ; $4cf8
+	script_move_target ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, $2000, $2f00 ; $4ce8
+	script_wait_move ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06 ; $4cf3
+	script_face ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, FACE_DOWN ; $4cf8
 	script_delay $0a ; $4cff
-	script_set_anim $07, ANIM_BOUNCE ; $4d04
-	script_wait_idle $07 ; $4d0b
-	script_face $08, FACE_UP ; $4d10
-	script_face $09, FACE_UP ; $4d17
-	script_face $0a, FACE_UP ; $4d1e
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, ANIM_BOUNCE ; $4d04
+	script_wait_idle ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06 ; $4d0b
+	script_face ACTOR_END12_PRINCIPALS_OFFICE_KEVIN, FACE_UP ; $4d10
+	script_face ACTOR_END12_PRINCIPALS_OFFICE_MARK, FACE_UP ; $4d17
+	script_face ACTOR_END12_PRINCIPALS_OFFICE_EMILY, FACE_UP ; $4d1e
 	sound SFX_APPEAR2 ; $4d25
-	script_set_position $04, $1f80, $3180 ; $4d27
+	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_1, $1f80, $3180 ; $4d27
 	script_delay $28 ; $4d32
 	sound SFX_APPEAR2 ; $4d37
-	script_set_position $06, $2180, $3180 ; $4d39
+	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_2, $2180, $3180 ; $4d39
 	script_delay $28 ; $4d44
 	sound SFX_APPEAR2 ; $4d49
-	script_set_position $04, $2380, $3180 ; $4d4b
+	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_1, $2380, $3180 ; $4d4b
 	script_delay $28 ; $4d56
-	script_set_position $06, $3f00, $3f00 ; $4d5b
+	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_2, $3f00, $3f00 ; $4d5b
 	script_delay $28 ; $4d66
-	script_set_position $04, $3f00, $3f00 ; $4d6b
+	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_1, $3f00, $3f00 ; $4d6b
 	test_flag FLAG_DOUBLES ; $4d76
 	jp z, .walkPlayer ; $4d79
 	script_null_script ACTOR_PARTNER ; $4d7c
@@ -156,19 +156,19 @@ End12PrincipalsOfficeInitScript_27:
 	script_delay $01 ; $4e54
 .closePrincipalsOfficeDoor:
 	call ClosePrincipalsOfficeDoor_27 ; $4e59
-	script_set_anim $07, ANIM_BOUNCE ; $4e5c
-	script_set_anim $08, ANIM_BOUNCE ; $4e63
-	script_set_anim $09, ANIM_BOUNCE ; $4e6a
-	script_set_anim $0a, ANIM_BOUNCE ; $4e71
-	script_wait_idle $0a ; $4e78
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, ANIM_BOUNCE ; $4e5c
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_KEVIN, ANIM_BOUNCE ; $4e63
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_MARK, ANIM_BOUNCE ; $4e6a
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_EMILY, ANIM_BOUNCE ; $4e71
+	script_wait_idle ACTOR_END12_PRINCIPALS_OFFICE_EMILY ; $4e78
 	script_delay $1e ; $4e7d
-	script_move_target $0a, $1d00, $3500 ; $4e82
-	script_move_target $09, $2300, $3500 ; $4e8d
-	script_move_target $08, $2500, $3500 ; $4e98
-	script_wait_move $08 ; $4ea3
-	script_face $0a, FACE_RIGHT ; $4ea8
-	script_face $09, FACE_LEFT ; $4eaf
-	script_face $08, FACE_LEFT ; $4eb6
+	script_move_target ACTOR_END12_PRINCIPALS_OFFICE_EMILY, $1d00, $3500 ; $4e82
+	script_move_target ACTOR_END12_PRINCIPALS_OFFICE_MARK, $2300, $3500 ; $4e8d
+	script_move_target ACTOR_END12_PRINCIPALS_OFFICE_KEVIN, $2500, $3500 ; $4e98
+	script_wait_move ACTOR_END12_PRINCIPALS_OFFICE_KEVIN ; $4ea3
+	script_face ACTOR_END12_PRINCIPALS_OFFICE_EMILY, FACE_RIGHT ; $4ea8
+	script_face ACTOR_END12_PRINCIPALS_OFFICE_MARK, FACE_LEFT ; $4eaf
+	script_face ACTOR_END12_PRINCIPALS_OFFICE_KEVIN, FACE_LEFT ; $4eb6
 	script_delay $0a ; $4ebd
 	test_flag FLAG_DOUBLES ; $4ec2
 	jp z, .playSfx ; $4ec5
@@ -184,10 +184,10 @@ End12PrincipalsOfficeInitScript_27:
 	script_delay $14 ; $4eff
 	script_face ACTOR_PLAYER, FACE_UP ; $4f04
 	script_face ACTOR_PARTNER, FACE_UP ; $4f0b
-	script_set_anim $08, ANIM_NOD ; $4f12
-	script_set_anim $09, ANIM_NOD ; $4f19
-	script_set_anim $0a, ANIM_NOD ; $4f20
-	script_wait_idle $0a ; $4f27
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_KEVIN, ANIM_NOD ; $4f12
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_MARK, ANIM_NOD ; $4f19
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_EMILY, ANIM_NOD ; $4f20
+	script_wait_idle ACTOR_END12_PRINCIPALS_OFFICE_EMILY ; $4f27
 	script_delay $28 ; $4f2c
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4f31
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4f38
@@ -198,21 +198,21 @@ End12PrincipalsOfficeInitScript_27:
 	jp .storeStoryModeExitLocationRequest ; $4f5f
 .playSfx:
 	sound SFX_APPEAR2 ; $4f62
-	script_set_position $04, $2180, $3380 ; $4f64
+	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_1, $2180, $3380 ; $4f64
 	script_delay $50 ; $4f6f
-	script_set_position $04, $3f00, $3f00 ; $4f74
-	script_face_toward $0a, ACTOR_PLAYER ; $4f7f
+	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_1, $3f00, $3f00 ; $4f74
+	script_face_toward ACTOR_END12_PRINCIPALS_OFFICE_EMILY, ACTOR_PLAYER ; $4f7f
 	script_delay $28 ; $4f87
-	script_face_toward ACTOR_PLAYER, $0a ; $4f8c
+	script_face_toward ACTOR_PLAYER, ACTOR_END12_PRINCIPALS_OFFICE_EMILY ; $4f8c
 	script_delay $01 ; $4f94
-	script_set_anim $0a, ANIM_NOD ; $4f99
-	script_wait_idle $0a ; $4fa0
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_EMILY, ANIM_NOD ; $4f99
+	script_wait_idle ACTOR_END12_PRINCIPALS_OFFICE_EMILY ; $4fa0
 	script_delay $14 ; $4fa5
 	script_face ACTOR_PLAYER, FACE_UP ; $4faa
-	script_set_anim $08, ANIM_NOD ; $4fb1
-	script_set_anim $09, ANIM_NOD ; $4fb8
-	script_set_anim $0a, ANIM_NOD ; $4fbf
-	script_wait_idle $0a ; $4fc6
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_KEVIN, ANIM_NOD ; $4fb1
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_MARK, ANIM_NOD ; $4fb8
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_EMILY, ANIM_NOD ; $4fbf
+	script_wait_idle ACTOR_END12_PRINCIPALS_OFFICE_EMILY ; $4fc6
 	script_delay $28 ; $4fcb
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4fd0
 	script_move_target ACTOR_PLAYER, $2000, $3200 ; $4fd7
@@ -242,7 +242,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_set_position ACTOR_PLAYER, $2000, $3400 ; $503c
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5047
 	jr nz, .face ; $504a
-	script_set_position $05, $3f00, $3f00 ; $504c
+	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_2, $3f00, $3f00 ; $504c
 .face:
 	script_face ACTOR_PLAYER, FACE_UP ; $5057
 	xor a ; $505e
@@ -253,8 +253,8 @@ End12PrincipalsOfficeInitScript_27:
 	jp z, .animate ; $506d
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5070
 	script_wait_idle ACTOR_PLAYER ; $5077
-	script_set_anim $03, ANIM_NOD ; $507c
-	script_wait_idle $03 ; $5083
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_WALK_75_06, ANIM_NOD ; $507c
+	script_wait_idle ACTOR_END12_PRINCIPALS_OFFICE_ALT_WALK_75_06 ; $5083
 	script_delay $3c ; $5088
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $508d
 	script_delay $1e ; $5095
@@ -275,8 +275,8 @@ End12PrincipalsOfficeInitScript_27:
 .animate:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $50ff
 	script_wait_idle ACTOR_PLAYER ; $5106
-	script_set_anim $03, ANIM_NOD ; $510b
-	script_wait_idle $03 ; $5112
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_WALK_75_06, ANIM_NOD ; $510b
+	script_wait_idle ACTOR_END12_PRINCIPALS_OFFICE_ALT_WALK_75_06 ; $5112
 	script_delay $3c ; $5117
 	script_move_target ACTOR_PLAYER, $2100, $3400 ; $511c
 	script_wait_move ACTOR_PLAYER ; $5127
@@ -408,12 +408,12 @@ End11TrainingCourtInitScript_27:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5329
 	script_delay $1e ; $5330
 	sound SFX_EMOTE ; $5335
-	script_set_position $04, $3480, $0b80 ; $5337
+	script_set_position ACTOR_END11_TRAINING_COURT_BALLOON_QUESTION, $3480, $0b80 ; $5337
 	script_delay $3c ; $5342
-	script_set_position $03, $3300, $0700 ; $5347
-	script_set_active $03, $00 ; $5352
+	script_set_position ACTOR_END11_TRAINING_COURT_WALK_76_06, $3300, $0700 ; $5347
+	script_set_active ACTOR_END11_TRAINING_COURT_WALK_76_06, $00 ; $5352
 	script_player_speed $0010 ; $5359
-	script_move_player_to_actor $03 ; $535f
+	script_move_player_to_actor ACTOR_END11_TRAINING_COURT_WALK_76_06 ; $535f
 	ld hl, End11TrainingCourtInitScriptPalette0_27 ; $5366
 	lb de, $02, $06 ; $5369 palette index, count
 	call LoadPalettesImmediate ; $536c
@@ -424,9 +424,9 @@ End11TrainingCourtInitScript_27:
 	ld a, $10 ; $537d
 .loop:
 	ld d, a ; $537f
-	script_set_active $03, $02 ; $5380
+	script_set_active ACTOR_END11_TRAINING_COURT_WALK_76_06, $02 ; $5380
 	script_wait_frames $04 ; $5387
-	script_set_active $03, $00 ; $538e
+	script_set_active ACTOR_END11_TRAINING_COURT_WALK_76_06, $00 ; $538e
 	push af ; $5395
 	ld a, d ; $5396
 	farcall WaitScriptFrames ; $5397
@@ -434,15 +434,15 @@ End11TrainingCourtInitScript_27:
 	ld a, d ; $539b
 	sub $02 ; $539c
 	jp nz, .loop ; $539e
-	script_set_active $03, $02 ; $53a1
+	script_set_active ACTOR_END11_TRAINING_COURT_WALK_76_06, $02 ; $53a1
 	script_delay $3c ; $53a8
-	script_set_position $04, $3f00, $3f00 ; $53ad
+	script_set_position ACTOR_END11_TRAINING_COURT_BALLOON_QUESTION, $3f00, $3f00 ; $53ad
 	script_face ACTOR_PLAYER, FACE_UP ; $53b8
 	script_delay $1e ; $53bf
 	sound SFX_CHIME ; $53c4
-	script_set_position $05, $3480, $0b80 ; $53c6
+	script_set_position ACTOR_END11_TRAINING_COURT_BALLOON_EXCLAIM, $3480, $0b80 ; $53c6
 	script_delay $14 ; $53d1
-	script_jump_velocity $05, $ff40 ; $53d6
+	script_jump_velocity ACTOR_END11_TRAINING_COURT_BALLOON_EXCLAIM, $ff40 ; $53d6
 	script_jump_velocity ACTOR_PLAYER, $ff40 ; $53de
 	ld a, $00 ; $53e6
 	farcall ScriptWaitActorJumpDone ; $53e8

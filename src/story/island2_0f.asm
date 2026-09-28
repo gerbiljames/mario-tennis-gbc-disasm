@@ -21,7 +21,7 @@ TournamentNpc03_0f:
 	script_wait_frames $05 ; $6f4d
 	and a ; $6f54
 	jr nz, .altLine ; $6f55
-	script_speak $03 ; $6f57
+	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_1 ; $6f57
 	ret ; $6f5c
 .altLine:
 	ld hl, $24ae ; $6f5d
@@ -32,7 +32,7 @@ TournamentNpc03_0f:
 	inc h ; $6f67
 .setCursor:
 	farcall InitDialogueTextCursor ; $6f68
-	script_speak $03 ; $6f6b
+	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_1 ; $6f6b
 	ret ; $6f70
 TournamentNpc04_0f:
 	ld hl, $24b2 ; $6f71
@@ -43,7 +43,7 @@ TournamentNpc04_0f:
 	inc h ; $6f7b
 .setCursor:
 	farcall InitDialogueTextCursor ; $6f7c
-	script_speak $04 ; $6f7f
+	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_2 ; $6f7f
 	ret ; $6f84
 MovePartnerForRoundCall_0f:
 	test_flag FLAG_DOUBLES ; $6f85
@@ -417,15 +417,15 @@ IslandOpenSinglesMatchReturn:
 	inc h ; $7570
 .done:
 	call QueueShortText ; $7571
-	script_face $04, FACE_UP ; $7574
-	script_face $03, FACE_RIGHT ; $757b
-	script_face_toward $04, ACTOR_PLAYER ; $7582
-	script_speak $04 ; $758a
-	script_move_angle $04, FACE_RIGHT, $0200 ; $758f
-	script_wait_move $04 ; $7599
+	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACE_UP ; $7574
+	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, FACE_RIGHT ; $757b
+	script_face_toward ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, ACTOR_PLAYER ; $7582
+	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06 ; $758a
+	script_move_angle ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACE_RIGHT, $0200 ; $758f
+	script_wait_move ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06 ; $7599
 	script_wait_frames $0a ; $759e
 	script_wait_frames $0a ; $75a5
-	script_face $04, FACE_LEFT ; $75ac
+	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACE_LEFT ; $75ac
 	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $75b3
 	ret ; $75b6
 IslandOpenRoundActorsSingles_0f:
@@ -439,9 +439,9 @@ IslandOpenRoundActorsSingles_0f:
 	map_actor_end
 IslandOpenRoundNpcScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $05, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 ; Instruction-identical to IslandOpenRoundDoublesNpc04_0f (in this bank); a change here belongs in every copy.
 	twin_named island_open_round_doubles_npc04, IslandOpenRoundSinglesNpc04_0f ; $762e
@@ -453,9 +453,9 @@ IslandOpenRoundSinglesNpc03_0f:
 	ld h, [hl] ; $7655
 	ld l, a ; $7656
 	farcall InitDialogueTextCursor ; $7657
-	script_set_anim $03, ANIM_NOD ; $765a
-	script_wait_idle $03 ; $7661
-	script_speak $03 ; $7666
+	script_set_anim ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, ANIM_NOD ; $765a
+	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08 ; $7661
+	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08 ; $7666
 	ret ; $766b
 IslandOpenRoundSinglesNpc05_0f:
 	ld a, [wMapSceneStage] ; $766c
@@ -466,10 +466,10 @@ IslandOpenRoundSinglesNpc05_0f:
 	ld h, [hl] ; $7679
 	ld l, a ; $767a
 	farcall InitDialogueTextCursor ; $767b
-	script_jump_velocity $05, $ff80 ; $767e
+	script_jump_velocity ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, $ff80 ; $767e
 	ld a, $05 ; $7686
 	farcall ScriptWaitActorJumpDone ; $7688
-	script_speak $05 ; $768b
+	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07 ; $768b
 	ret ; $7690
 IslandOpenRoundSinglesNpc05_0fTable:
 	; $7691, 8 bytes (text_ids)
@@ -542,7 +542,7 @@ IslandOpenDoublesMatchReturn:
 	farcall AdvanceDialogueTextCursor ; $775d
 	farcall AdvanceDialogueTextCursor ; $7760
 .declined:
-	script_get_actor_state $08 ; $7763
+	script_get_actor_state ACTOR_ISLAND_OPEN_ROUND_DOUBLES_BALLOON_EXCLAIM ; $7763
 	ld c, l ; $7768
 	ld b, h ; $7769
 	ld hl, ACTORF_OAM_ATTR ; $776a
@@ -556,22 +556,22 @@ IslandOpenDoublesMatchReturn:
 	farcall ScriptWaitActorJumpDone ; $7784
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7787
 	script_speak ACTOR_PARTNER ; $778f
-	script_set_position $08, $2000, $0f80 ; $7794
+	script_set_position ACTOR_ISLAND_OPEN_ROUND_DOUBLES_BALLOON_EXCLAIM, $2000, $0f80 ; $7794
 	sound SFX_CHIME ; $779f
 	script_wait_frames $2d ; $77a1
-	script_set_anim $03, ANIM_BOUNCE ; $77a8
-	script_wait_idle $03 ; $77af
-	script_set_position $08, $3f00, $3f00 ; $77b4
-	script_face_toward $03, ACTOR_PLAYER ; $77bf
-	script_speak $03 ; $77c7
-	script_set_anim $04, ANIM_NOD ; $77cc
-	script_wait_idle $04 ; $77d3
-	script_face_toward $04, ACTOR_PLAYER ; $77d8
-	script_face_toward $04, ACTOR_PARTNER ; $77e0
-	script_speak $04 ; $77e8
+	script_set_anim ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08, ANIM_BOUNCE ; $77a8
+	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08 ; $77af
+	script_set_position ACTOR_ISLAND_OPEN_ROUND_DOUBLES_BALLOON_EXCLAIM, $3f00, $3f00 ; $77b4
+	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08, ACTOR_PLAYER ; $77bf
+	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08 ; $77c7
+	script_set_anim ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ANIM_NOD ; $77cc
+	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06 ; $77d3
+	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PLAYER ; $77d8
+	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PARTNER ; $77e0
+	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06 ; $77e8
 	call IslandOpenBreakCutscene ; $77ed
-	script_face_toward ACTOR_PLAYER, $04 ; $77f0
-	script_face $03, FACE_RIGHT ; $77f8
+	script_face_toward ACTOR_PLAYER, ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06 ; $77f0
+	script_face ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08, FACE_RIGHT ; $77f8
 	script_set_text Text_25_73 ; $77ff
 	ld a, [wMapSceneStage] ; $7805
 	dec a ; $7808
@@ -582,9 +582,9 @@ IslandOpenDoublesMatchReturn:
 	inc h ; $7810
 .done:
 	call QueueShortText ; $7811
-	script_face_toward $04, ACTOR_PLAYER ; $7814
-	script_face_toward $04, ACTOR_PARTNER ; $781c
-	script_speak $03 ; $7824
+	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PLAYER ; $7814
+	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PARTNER ; $781c
+	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08 ; $7824
 	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $7829
 	script_get_actor_state ACTOR_PARTNER ; $782c
 	ld c, l ; $7831
@@ -609,8 +609,8 @@ IslandOpenRoundActorsDoubles_0f:
 	map_actor_end
 IslandOpenRoundNpcScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 ; Instruction-identical to IslandOpenRoundSinglesNpc04_0f (in this bank); a change here belongs in every copy.
 	twin_named island_open_round_doubles_npc04, IslandOpenRoundDoublesNpc04_0f ; $78b1
@@ -623,7 +623,7 @@ IslandOpenRoundDoublesNpc03_0f:
 	ld h, [hl] ; $78d9
 	ld l, a ; $78da
 	farcall InitDialogueTextCursor ; $78db
-	script_speak $03 ; $78de
+	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08 ; $78de
 	ret ; $78e3
 IslandOpenRoundDoublesNpc03TextIds:
 	; $78e4, 8 bytes (text_ids)

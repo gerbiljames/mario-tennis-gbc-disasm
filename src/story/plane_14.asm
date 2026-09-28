@@ -337,7 +337,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld hl, QueuePlaneSpriteByFrameCounter_14 ; $62a8
 	call RegisterFrameTask ; $62ab
 	script_set_active ACTOR_PLAYER, $00 ; $62ae
-	script_set_active $03, $00 ; $62b5
+	script_set_active ACTOR_ISLAND_SKY_WALK_75_06, $00 ; $62b5
 	test_flag FLAG_DOUBLES ; $62bc
 	jp z, .fadeIn ; $62bf
 	script_null_script ACTOR_PARTNER ; $62c2
