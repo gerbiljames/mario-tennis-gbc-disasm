@@ -143,13 +143,13 @@ InitNetCoachScene:
 	farcall WaitPlayerMoveDone ; $777c
 	script_face ACTOR_PLAYER, FACE_UP ; $777f
 	script_face ACTOR_PARTNER, FACE_UP ; $7786
-	script_face $12, FACE_DOWN ; $778d
+	script_face ACTOR_TRAINING_COURT_BETH, FACE_DOWN ; $778d
 	script_fade_in $04 ; $7794
 	call WaitFadeEnd ; $7799
 	ret ; $779c
 .speak:
-	script_speak $12 ; $779d
-	script_face $12, FACE_RIGHT ; $77a2
+	script_speak ACTOR_TRAINING_COURT_BETH ; $779d
+	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $77a2
 	ret ; $77a9
 .dispatchStage:
 	ld a, [wDrillLessonResult] ; $77aa
@@ -336,13 +336,13 @@ InitReturnCoachScene:
 	farcall WaitPlayerMoveDone ; $79f5
 	script_face ACTOR_PLAYER, FACE_UP ; $79f8
 	script_face ACTOR_PARTNER, FACE_UP ; $79ff
-	script_face $0d, FACE_DOWN ; $7a06
+	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_DOWN ; $7a06
 	script_fade_in $04 ; $7a0d
 	call WaitFadeEnd ; $7a12
 	ret ; $7a15
 .speak:
-	script_speak $0d ; $7a16
-	script_face $0d, FACE_UP ; $7a1b
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7a16
+	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7a1b
 	ret ; $7a22
 Table_15:
 	; $7a23, 34 bytes (bytes:17)
@@ -357,7 +357,7 @@ PlaceSwingPracticeKidActor:
 	jp nz, .done ; $7a52
 	test_flag FLAG_SWING_PRACTICE_KID_PLACED ; $7a55
 	jp nz, .done ; $7a58
-	script_set_position $13, $3500, $0f00 ; $7a5b
+	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, $3500, $0f00 ; $7a5b
 .done:
 	ret ; $7a66
 StartPendingLessonScene:
@@ -372,7 +372,7 @@ StartPendingLessonScene:
 	jr nc, .returnLesson ; $7a77
 	call InitNetCoachScene ; $7a79
 	script_set_text Text_37_106 ; $7a7c
-	script_speak $12 ; $7a82
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7a82
 	call NetCoachWalkToCourtAndStartLesson ; $7a87
 	ret ; $7a8a
 .returnLesson:
@@ -386,13 +386,13 @@ ServeCoachWalkToCourtAndStartLesson:
 	script_null_script ACTOR_PARTNER ; $7a96
 	script_player_speed $0020 ; $7a9b
 	script_wait_frames $14 ; $7aa1
-	script_set_actor_script $07, ActorScript_15_13 ; $7aa8
+	script_set_actor_script ACTOR_TRAINING_COURT_CURT, ActorScript_15_13 ; $7aa8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_14 ; $7ab3
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_15 ; $7abe
 	script_move_player $1800, $0f00 ; $7ac9
 	script_wait_actor_script ACTOR_PLAYER ; $7ad3
 	farcall WaitPlayerMoveDone ; $7ad8
-	script_wait_actor_script $07 ; $7adb
+	script_wait_actor_script ACTOR_TRAINING_COURT_CURT ; $7adb
 	script_wait_frames $05 ; $7ae0
 	call PlayerPartnerGestureCutscene ; $7ae7
 	ld a, STORYLOC_TRAINING_COURT ; $7aea
@@ -430,13 +430,13 @@ ActorScript_15_15:
 NetCoachWalkToCourtAndStartLesson:
 	script_player_speed $0020 ; $7b30
 	script_null_script ACTOR_PARTNER ; $7b36
-	script_set_actor_script $12, ActorScript_15_16 ; $7b3b
+	script_set_actor_script ACTOR_TRAINING_COURT_BETH, ActorScript_15_16 ; $7b3b
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_17 ; $7b46
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_18 ; $7b51
 	script_move_player $2800, $2600 ; $7b5c
 	script_wait_actor_script ACTOR_PLAYER ; $7b66
 	farcall WaitPlayerMoveDone ; $7b6b
-	script_wait_actor_script $12 ; $7b6e
+	script_wait_actor_script ACTOR_TRAINING_COURT_BETH ; $7b6e
 	script_wait_frames $05 ; $7b73
 	call PlayerPartnerGestureCutscene ; $7b7a
 	ld a, STORYLOC_TRAINING_COURT ; $7b7d

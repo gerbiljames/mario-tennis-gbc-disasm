@@ -203,7 +203,7 @@ MovePlayerToLessonCourtSpot:
 	call StrokeChallengerResultScene ; $63dd
 	ret ; $63e0
 ServiceAceMatchChallengeScene:
-	script_face_toward $06, ACTOR_PARTNER ; $63e1
+	script_face_toward ACTOR_TRAINING_COURT_BOB_1, ACTOR_PARTNER ; $63e1
 	script_set_text Text_6e_20 ; $63e9
 	ld a, $06 ; $63ef
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $63f1
@@ -221,23 +221,23 @@ ServiceAceMatchChallengeScene:
 	and a ; $641a
 	jp nz, .loop ; $641b
 	farcall AdvanceDialogueTextCursor ; $641e
-	script_speak $06 ; $6421
-	script_set_anim $06, ANIM_NOD ; $6426
-	script_wait_idle $06 ; $642d
-	script_face $06, FACE_RIGHT ; $6432
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6421
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $6426
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $642d
+	script_face ACTOR_TRAINING_COURT_BOB_1, FACE_RIGHT ; $6432
 	script_wait_frames $28 ; $6439
-	script_face_toward ACTOR_PLAYER, $06 ; $6440
-	script_speak $06 ; $6448
-	script_set_anim $06, ANIM_NOD ; $644d
-	script_wait_idle $06 ; $6454
-	script_speak $06 ; $6459
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BOB_1 ; $6440
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6448
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $644d
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $6454
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6459
 	script_wait_frames $28 ; $645e
-	script_set_anim $06, ANIM_BOUNCE ; $6465
-	script_wait_idle $06 ; $646c
-	script_speak $06 ; $6471
-	script_set_anim $06, ANIM_NOD ; $6476
-	script_wait_idle $06 ; $647d
-	script_speak $06 ; $6482
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_BOUNCE ; $6465
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $646c
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6471
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $6476
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $647d
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6482
 	call WalkToServeChallengeCourtCutscene ; $6487
 	ld a, STORYLOC_TRAINING_COURT ; $648a
 	ld [wStoryModeCurrentLocation], a ; $648c
@@ -250,10 +250,10 @@ ServiceAceMatchChallengeScene:
 	farcall RunTrainingDrillByID ; $649e
 	ret ; $64a1
 .loop:
-	script_speak $06 ; $64a2
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $64a2
 	ret ; $64a7
 CenterLineServeMatchChallengeScene:
-	script_face_toward $06, ACTOR_PARTNER ; $64a8
+	script_face_toward ACTOR_TRAINING_COURT_BOB_1, ACTOR_PARTNER ; $64a8
 	script_set_text Text_6e_38 ; $64b0
 	ld a, $06 ; $64b6
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $64b8
@@ -271,28 +271,28 @@ CenterLineServeMatchChallengeScene:
 	and a ; $64e1
 	jp nz, ServiceAceMatchChallengeScene.loop ; $64e2
 	farcall AdvanceDialogueTextCursor ; $64e5
-	script_speak $06 ; $64e8
-	script_set_anim $06, ANIM_NOD ; $64ed
-	script_wait_idle $06 ; $64f4
-	script_face $06, FACE_RIGHT ; $64f9
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $64e8
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $64ed
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $64f4
+	script_face ACTOR_TRAINING_COURT_BOB_1, FACE_RIGHT ; $64f9
 	script_wait_frames $28 ; $6500
-	script_face_toward ACTOR_PLAYER, $06 ; $6507
-	script_speak $06 ; $650f
-	script_set_anim $06, ANIM_SHAKE ; $6514
-	script_wait_idle $06 ; $651b
-	script_speak $06 ; $6520
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BOB_1 ; $6507
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $650f
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_SHAKE ; $6514
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $651b
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6520
 	script_wait_frames $14 ; $6525
-	script_speak $06 ; $652c
-	script_set_anim $06, ANIM_NOD ; $6531
-	script_wait_idle $06 ; $6538
-	script_speak $06 ; $653d
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $652c
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $6531
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $6538
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $653d
 	script_wait_frames $14 ; $6542
-	script_set_anim $06, ANIM_BOUNCE ; $6549
-	script_wait_idle $06 ; $6550
-	script_speak $06 ; $6555
-	script_set_anim $06, ANIM_NOD ; $655a
-	script_wait_idle $06 ; $6561
-	script_speak $06 ; $6566
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_BOUNCE ; $6549
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $6550
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6555
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $655a
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $6561
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6566
 	call WalkToServeChallengeCourtCutscene ; $656b
 	ld a, STORYLOC_TRAINING_COURT ; $656e
 	ld [wStoryModeCurrentLocation], a ; $6570
@@ -305,7 +305,7 @@ CenterLineServeMatchChallengeScene:
 	farcall RunTrainingDrillByID ; $6582
 	ret ; $6585
 AcademyRulesServeMatchChallengeScene:
-	script_face_toward $06, ACTOR_PARTNER ; $6586
+	script_face_toward ACTOR_TRAINING_COURT_BOB_1, ACTOR_PARTNER ; $6586
 	script_set_text Text_6e_52 ; $658e
 	ld a, $06 ; $6594
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6596
@@ -323,23 +323,23 @@ AcademyRulesServeMatchChallengeScene:
 	and a ; $65bf
 	jp nz, ServiceAceMatchChallengeScene.loop ; $65c0
 	farcall AdvanceDialogueTextCursor ; $65c3
-	script_speak $06 ; $65c6
-	script_set_anim $06, ANIM_NOD ; $65cb
-	script_wait_idle $06 ; $65d2
-	script_face $06, FACE_RIGHT ; $65d7
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $65c6
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $65cb
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $65d2
+	script_face ACTOR_TRAINING_COURT_BOB_1, FACE_RIGHT ; $65d7
 	script_wait_frames $28 ; $65de
-	script_face_toward ACTOR_PLAYER, $06 ; $65e5
-	script_speak $06 ; $65ed
-	script_set_anim $06, ANIM_NOD ; $65f2
-	script_wait_idle $06 ; $65f9
-	script_speak $06 ; $65fe
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BOB_1 ; $65e5
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $65ed
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $65f2
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $65f9
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $65fe
 	script_wait_frames $28 ; $6603
-	script_set_anim $06, ANIM_BOUNCE ; $660a
-	script_wait_idle $06 ; $6611
-	script_speak $06 ; $6616
-	script_set_anim $06, ANIM_NOD ; $661b
-	script_wait_idle $06 ; $6622
-	script_speak $06 ; $6627
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_BOUNCE ; $660a
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $6611
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6616
+	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $661b
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_1 ; $6622
+	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6627
 	call WalkToServeChallengeCourtCutscene ; $662c
 	ld a, STORYLOC_TRAINING_COURT ; $662f
 	ld [wStoryModeCurrentLocation], a ; $6631
@@ -371,7 +371,7 @@ WalkToServeChallengeCourtCutscene:
 	script_null_script ACTOR_PARTNER ; $668f
 	script_move_player $1800, $0f00 ; $6694
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_05 ; $669e
-	script_set_actor_script $06, ActorScript_15_04 ; $66a9
+	script_set_actor_script ACTOR_TRAINING_COURT_BOB_1, ActorScript_15_04 ; $66a9
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_06 ; $66b4
 	script_wait_actor_script ACTOR_PLAYER ; $66bf
 	call PlayerPartnerGestureCutscene ; $66c4
@@ -397,10 +397,10 @@ ActorScript_15_06:
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 SpeakServeCoachDeclineLine:
-	script_speak $07 ; $66ef
+	script_speak ACTOR_TRAINING_COURT_CURT ; $66ef
 	ret ; $66f4
 ServeCoachJuniorLessonScene:
-	script_face_toward $07, ACTOR_PARTNER ; $66f5
+	script_face_toward ACTOR_TRAINING_COURT_CURT, ACTOR_PARTNER ; $66f5
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $66fd
 	jr nz, .setText ; $6700
 	script_set_text Text_37_16 ; $6702
@@ -424,11 +424,11 @@ ServeCoachJuniorLessonScene:
 	and a ; $673a
 	jr nz, SpeakServeCoachDeclineLine ; $673b
 	farcall AdvanceDialogueTextCursor ; $673d
-	script_speak $07 ; $6740
+	script_speak ACTOR_TRAINING_COURT_CURT ; $6740
 	call MovePartyToServeCoachSpot ; $6745
-	script_face $07, FACE_RIGHT ; $6748
+	script_face ACTOR_TRAINING_COURT_CURT, FACE_RIGHT ; $6748
 	script_wait_frames $14 ; $674f
-	script_speak $07 ; $6756
+	script_speak ACTOR_TRAINING_COURT_CURT ; $6756
 	ld a, MINIGAME_SERVICE_PRACTICE_1 ; $675b
 	ld [wCurrentMinigameStoryMatch + 1], a ; $675d
 	ld a, STORYLOC_TRAINING_COURT ; $6760
@@ -444,7 +444,7 @@ ServeCoachJuniorLessonScene:
 	farcall ShowDrillBriefingScreen ; $677a
 	ret ; $677d
 ServeCoachSeniorLessonScene:
-	script_face_toward $07, ACTOR_PARTNER ; $677e
+	script_face_toward ACTOR_TRAINING_COURT_CURT, ACTOR_PARTNER ; $677e
 	script_set_text Text_37_36 ; $6786
 	ld a, $07 ; $678c
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $678e
@@ -462,11 +462,11 @@ ServeCoachSeniorLessonScene:
 	and a ; $67b7
 	jp nz, SpeakServeCoachDeclineLine ; $67b8
 	farcall AdvanceDialogueTextCursor ; $67bb
-	script_speak $07 ; $67be
+	script_speak ACTOR_TRAINING_COURT_CURT ; $67be
 	call MovePartyToServeCoachSpot ; $67c3
-	script_face $07, FACE_RIGHT ; $67c6
+	script_face ACTOR_TRAINING_COURT_CURT, FACE_RIGHT ; $67c6
 	script_wait_frames $14 ; $67cd
-	script_speak $07 ; $67d4
+	script_speak ACTOR_TRAINING_COURT_CURT ; $67d4
 	ld a, MINIGAME_SERVICE_PRACTICE_2 ; $67d9
 	ld [wCurrentMinigameStoryMatch + 1], a ; $67db
 	ld a, STORYLOC_TRAINING_COURT ; $67de
@@ -482,7 +482,7 @@ ServeCoachSeniorLessonScene:
 	farcall ShowDrillBriefingScreen ; $67f8
 	ret ; $67fb
 ServeCoachVarsityLessonScene:
-	script_face_toward $07, ACTOR_PARTNER ; $67fc
+	script_face_toward ACTOR_TRAINING_COURT_CURT, ACTOR_PARTNER ; $67fc
 	script_set_text Text_37_51 ; $6804
 	ld a, $07 ; $680a
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $680c
@@ -500,11 +500,11 @@ ServeCoachVarsityLessonScene:
 	and a ; $6835
 	jp nz, SpeakServeCoachDeclineLine ; $6836
 	farcall AdvanceDialogueTextCursor ; $6839
-	script_speak $07 ; $683c
+	script_speak ACTOR_TRAINING_COURT_CURT ; $683c
 	call MovePartyToServeCoachSpot ; $6841
-	script_face $07, FACE_RIGHT ; $6844
+	script_face ACTOR_TRAINING_COURT_CURT, FACE_RIGHT ; $6844
 	script_wait_frames $14 ; $684b
-	script_speak $07 ; $6852
+	script_speak ACTOR_TRAINING_COURT_CURT ; $6852
 	ld a, MINIGAME_SERVICE_PRACTICE_3 ; $6857
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6859
 	ld a, STORYLOC_TRAINING_COURT ; $685c

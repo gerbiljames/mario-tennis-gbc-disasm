@@ -402,14 +402,16 @@ def session(rom, sym, save, state_file, seed, frames, cap, skip):
 TEST_MAP_NPCS = [(0x0700, 0x1100), (0x0700, 0x0700), (0x0d00, 0x0700), (0x0700, 0x0b00),
                  (0x0d00, 0x0b00), (0x0d00, 0x1100), (0x0500, 0x0e00), (0x1100, 0x0e00),
                  (0x1100, 0x0c00)]
-TARGETS = ["attract", "debug"] + [f"npc{k}" for k in range(len(TEST_MAP_NPCS))]
+TARGETS = (["attract", "debug"] + [f"npc{k}" for k in range(len(TEST_MAP_NPCS))]
+           + [f"drill{k}" for k in range(9)])
 
 
 def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
     """Random play from a start the main menu and the story locations do not
     give: the intro and attract loop from power-on, the debug menu (armed
-    through hDebugStepMode in the dorm), and each Test-map NPC's flow (match
-    and drill lists, minigame select, epilogue, credits)."""
+    through hDebugStepMode in the dorm), each Test-map NPC's flow (match
+    and drill lists, minigame select, epilogue, credits), and each of the
+    nine drills picked from its list."""
     g = Game(rom, sym, save, cap, set(json.loads(Path(skip).read_text())))
     m, actions = g.mem, {}
     if name == "attract":
@@ -424,7 +426,7 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
             m[g.sym["wStoryModeCurrentLocation"][1]] = 3
             m[g.sym["wStoryModeEntryPoint"][1]] = 1
             m[g.sym["wStoryModeExitTriggerRequest"][1]] = 0xff
-            x, y = TEST_MAP_NPCS[int(name[3:])]
+            x, y = TEST_MAP_NPCS[3 if name.startswith("drill") else int(name[3:])]
             side = 0x100 if x <= 0x0700 else -0x100
             actor = g.sym["wActors"][1]
 
@@ -433,6 +435,12 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
                     m[4, actor + field], m[4, actor + field + 1] = value & 0xff, value >> 8
             actions[80] = place
             inputs += [BUTTONS["left" if side > 0 else "right"]] * 30 + [0] * 60
+            if name.startswith("drill"):
+                # the drill list: nine rows, four to a page, Right pages
+                k = int(name[5:])
+                for button in ["right"] * (k // 4) + ["down"] * (k % 4) + ["a"]:
+                    inputs += [BUTTONS[button]] * 6 + [0] * 24
+                inputs += [0] * 60
     g.reset_caps()
     g.events = []
     inputs += plan(2000000 + seed * 16 + TARGETS.index(name), frames - len(inputs))

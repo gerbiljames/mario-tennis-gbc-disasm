@@ -12,7 +12,7 @@ RunWaterSpriteSwingContestAndReward:
 	farcall WaitPlayerMoveDone ; $4d29
 	script_set_text Text_36_675 ; $4d2c
 	script_speak ACTOR_PLAYER ; $4d32
-	script_set_position $16, $3f00, $3f00 ; $4d37
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3f00, $3f00 ; $4d37
 	call WaterSpriteSwingContestScene ; $4d42
 	test_flag FLAG_HAVE_SILVER_RACKET ; $4d45
 	jp nz, .done ; $4d48
@@ -27,7 +27,7 @@ RunWaterSpriteSwingContestAndReward:
 WaterSpriteRacketRewardScene:
 	script_wait_frames $3c ; $4d5d
 	script_set_text Text_36_677 ; $4d64
-	script_speak $14 ; $4d6a
+	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4d6a
 	script_wait_frames $1e ; $4d6f
 	script_face ACTOR_PLAYER, FACE_LEFT ; $4d76
 	script_wait_frames $1e ; $4d7d
@@ -39,15 +39,15 @@ WaterSpriteRacketRewardScene:
 	script_wait_frames $1e ; $4da7
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4dae
 	script_wait_frames $1e ; $4db5
-	script_set_objdef OBJ_BALLOON_QUESTION, $16 ; $4dbc
-	script_set_objdef OBJ_BALLOON_EXCLAIM, $13 ; $4dc8
-	script_set_position $16, $3480, $0b80 ; $4dd4
+	script_set_objdef OBJ_BALLOON_QUESTION, ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE ; $4dbc
+	script_set_objdef OBJ_BALLOON_EXCLAIM, ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4dc8
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3480, $0b80 ; $4dd4
 	sound SFX_EMOTE ; $4ddf
 	script_wait_frames $3c ; $4de1
-	script_set_position $14, $3300, $0700 ; $4de8
-	script_set_active $14, $00 ; $4df3
+	script_set_position ACTOR_TRAINING_COURT_WALK_76_06, $3300, $0700 ; $4de8
+	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4df3
 	script_player_speed $0010 ; $4dfa
-	script_move_player_to_actor $14 ; $4e00
+	script_move_player_to_actor ACTOR_TRAINING_COURT_WALK_76_06 ; $4e00
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4e07
 	lb de, $02, $06 ; $4e0a palette index, count
 	call LoadPalettesImmediate ; $4e0d
@@ -59,9 +59,9 @@ WaterSpriteRacketRewardScene:
 	ld a, $10 ; $4e22
 .handOver:
 	ld d, a ; $4e24
-	script_set_active $14, $02 ; $4e25
+	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $02 ; $4e25
 	script_wait_frames $04 ; $4e2c
-	script_set_active $14, $00 ; $4e33
+	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4e33
 	push af ; $4e3a
 	ld a, d ; $4e3b
 	farcall WaitScriptFrames ; $4e3c
@@ -69,31 +69,31 @@ WaterSpriteRacketRewardScene:
 	ld a, d ; $4e40
 	sub $02 ; $4e41
 	jp nz, .handOver ; $4e43
-	script_set_active $14, $02 ; $4e46
+	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $02 ; $4e46
 	script_wait_frames $3c ; $4e4d
-	script_set_position $16, $3f00, $3f00 ; $4e54
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3f00, $3f00 ; $4e54
 	script_face ACTOR_PLAYER, FACE_UP ; $4e5f
 	script_wait_frames $1e ; $4e66
-	script_set_position $13, $3480, $0b80 ; $4e6d
+	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, $3480, $0b80 ; $4e6d
 	sound SFX_CHIME ; $4e78
 	script_wait_frames $14 ; $4e7a
-	script_jump_velocity $13, $ff40 ; $4e81
+	script_jump_velocity ACTOR_TRAINING_COURT_WALK_71_06_3, $ff40 ; $4e81
 	script_jump_velocity ACTOR_PLAYER, $ff40 ; $4e89
 	ld a, $00 ; $4e91
 	farcall ScriptWaitActorJumpDone ; $4e93
-	script_set_position $13, $3f00, $3f00 ; $4e96
-	script_set_anim $14, ANIM_NOD ; $4ea1
-	script_wait_idle $14 ; $4ea8
-	script_speak $14 ; $4ead
+	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, $3f00, $3f00 ; $4e96
+	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4ea1
+	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4ea8
+	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4ead
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4eb2
 	script_wait_idle ACTOR_PLAYER ; $4eb9
-	script_set_anim $14, ANIM_NOD ; $4ebe
-	script_wait_idle $14 ; $4ec5
+	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4ebe
+	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4ec5
 	ld a, [wSwingContestSwings] ; $4eca
 	cp $96 ; $4ecd
 	jp nc, .alreadyOwned ; $4ecf
 	farcall AdvanceDialogueTextCursor ; $4ed2
-	script_get_actor_state $15 ; $4ed5
+	script_get_actor_state ACTOR_TRAINING_COURT_RACKET ; $4ed5
 	ld c, l ; $4eda
 	ld b, h ; $4edb
 	ld hl, ACTORF_OAM_ATTR ; $4edc
@@ -115,39 +115,39 @@ WaterSpriteRacketRewardScene:
 	and $f0 ; $4ef8
 	or b ; $4efa
 	ld [wEquippedRacket], a ; $4efb
-	script_speak $14 ; $4efe
+	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4efe
 	script_wait_frames $0a ; $4f03
 	ld c, $03 ; $4f0a
 	call BeginFadeOut ; $4f0c
 	call WaitFadeEnd ; $4f0f
 	sound SFX_WATER_SPRITE_APPEAR ; $4f12
-	script_set_position $15, $3300, $0900 ; $4f14
+	script_set_position ACTOR_TRAINING_COURT_RACKET, $3300, $0900 ; $4f14
 	script_wait_frames $1e ; $4f1f
 	script_fade_in $03 ; $4f26
 	call WaitFadeEnd ; $4f2b
 	script_wait_frames $3c ; $4f2e
 	sound SFX_WATER_SPRITE_FLY ; $4f35
-	script_set_speed $15, $0005 ; $4f37
-	script_move_target $15, $3300, $0d00 ; $4f3f
-	script_wait_move $15 ; $4f4a
+	script_set_speed ACTOR_TRAINING_COURT_RACKET, $0005 ; $4f37
+	script_move_target ACTOR_TRAINING_COURT_RACKET, $3300, $0d00 ; $4f3f
+	script_wait_move ACTOR_TRAINING_COURT_RACKET ; $4f4a
 	script_wait_frames $3c ; $4f4f
 	farcall AdvanceDialogueTextCursor ; $4f56
 	script_speak ACTOR_PLAYER ; $4f59
-	script_set_position $17, $3480, $0b80 ; $4f5e
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SWEAT, $3480, $0b80 ; $4f5e
 	sound SFX_APPEAR2 ; $4f69
 	script_wait_frames $78 ; $4f6b
-	script_set_position $17, $3f00, $3f00 ; $4f72
-	script_set_anim $14, ANIM_NOD ; $4f7d
-	script_wait_idle $14 ; $4f84
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SWEAT, $3f00, $3f00 ; $4f72
+	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4f7d
+	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4f84
 	script_set_text Text_36_683 ; $4f89
-	script_speak $14 ; $4f8f
+	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4f8f
 	script_wait_frames $32 ; $4f94
 	sound SFX_RACKET_GET ; $4f9b
 	ld d, $10 ; $4f9d
 .done:
-	script_set_active $14, $00 ; $4f9f
+	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4f9f
 	script_wait_frames $04 ; $4fa6
-	script_set_active $14, $02 ; $4fad
+	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $02 ; $4fad
 	push af ; $4fb4
 	ld a, d ; $4fb5
 	farcall WaitScriptFrames ; $4fb6
@@ -156,11 +156,11 @@ WaterSpriteRacketRewardScene:
 	sub $02 ; $4fbb
 	ld d, a ; $4fbd
 	jp nz, .done ; $4fbe
-	script_set_active $14, $00 ; $4fc1
+	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4fc1
 	script_wait_frames $1e ; $4fc8
-	script_set_position $14, $3300, $0b00 ; $4fcf
-	script_speak $14 ; $4fda
-	script_set_position $15, $3f00, $3f00 ; $4fdf
+	script_set_position ACTOR_TRAINING_COURT_WALK_76_06, $3300, $0b00 ; $4fcf
+	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4fda
+	script_set_position ACTOR_TRAINING_COURT_RACKET, $3f00, $3f00 ; $4fdf
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4fea
 	lb de, $02, $06 ; $4fed palette index, count
 	call LoadPalettesImmediate ; $4ff0
@@ -184,26 +184,26 @@ WaterSpriteRacketRewardScene:
 	ret ; $505a
 TrainingCourtNpcScripts_15:
 	; $505b, 161 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, TrainingCourtNpc03_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $04, FACEMASK_ANY, $0000, TrainingCourtNpc04_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $05, FACEMASK_ANY, $0000, TrainingCourtNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $06, FACEMASK_ANY, $0000, TrainingCourtNpc06_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $07, FACEMASK_DOWN, $0000, TrainingCourtNpc07FaceDown_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $07, FACEMASK_ANY, $0000, TrainingCourtNpc07_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $08, FACEMASK_ANY, $0000, TrainingCourtNpc08_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $09, FACEMASK_ANY, $0000, TrainingCourtNpc09_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $0a, FACEMASK_ANY, $0000, TrainingCourtNpc0A_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $0b, FACEMASK_ANY, $0000, TrainingCourtNpc0B_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $0c, FACEMASK_ANY, $0000, TrainingCourtNpc0C_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $0d, FACEMASK_UP, $0000, TrainingCourtNpc0DFaceUp_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $0d, FACEMASK_ANY, $0000, TrainingCourtNpc0D_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TRAINING_COURT_WALK_71_06_1, FACEMASK_ANY, $0000, TrainingCourtNpc03_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_COURT_WALK_71_05_1, FACEMASK_ANY, $0000, TrainingCourtNpc04_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_COURT_WALK_71_07_1, FACEMASK_ANY, $0000, TrainingCourtNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_COURT_BOB_1, FACEMASK_ANY, $0000, TrainingCourtNpc06_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TRAINING_COURT_CURT, FACEMASK_DOWN, $0000, TrainingCourtNpc07FaceDown_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TRAINING_COURT_CURT, FACEMASK_ANY, $0000, TrainingCourtNpc07_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TRAINING_COURT_WALK_71_07_2, FACEMASK_ANY, $0000, TrainingCourtNpc08_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_COURT_WALK_72_02_1, FACEMASK_ANY, $0000, TrainingCourtNpc09_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_COURT_WALK_71_06_2, FACEMASK_ANY, $0000, TrainingCourtNpc0A_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_COURT_PAM, FACEMASK_ANY, $0000, TrainingCourtNpc0B_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_COURT_ALLIE, FACEMASK_ANY, $0000, TrainingCourtNpc0C_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TRAINING_COURT_BOB_2, FACEMASK_UP, $0000, TrainingCourtNpc0DFaceUp_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TRAINING_COURT_BOB_2, FACEMASK_ANY, $0000, TrainingCourtNpc0D_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TRAINING_COURT_WALK_72_02_2, FACEMASK_ANY, $0000, TrainingCourtNpc0E_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $0f, FACEMASK_ANY, $0000, TrainingCourtNpc0F_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $10, FACEMASK_ANY, $0000, TrainingCourtNpc10_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script $11, FACEMASK_ANY, $0000, TrainingCourtNpc11_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $12, FACEMASK_UP, $0000, TrainingCourtNpc12FaceUp_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $12, FACEMASK_ANY, $0000, TrainingCourtNpc12_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $13, FACEMASK_ANY, $0000, TrainingCourtNpc13_15, $00, $00
+	map_script ACTOR_TRAINING_COURT_WALK_71_05_2, FACEMASK_ANY, $0000, TrainingCourtNpc0F_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_COURT_WALK_71_07_3, FACEMASK_ANY, $0000, TrainingCourtNpc10_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_COURT_BRIAN, FACEMASK_ANY, $0000, TrainingCourtNpc11_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TRAINING_COURT_BETH, FACEMASK_UP, $0000, TrainingCourtNpc12FaceUp_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TRAINING_COURT_BETH, FACEMASK_ANY, $0000, TrainingCourtNpc12_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TRAINING_COURT_WALK_71_06_3, FACEMASK_ANY, $0000, TrainingCourtNpc13_15, $00, $00
 	db $ff
 TrainingCourtNpc06_15:
 	test_flag FLAG_CLEARED_SERVICE_MATCH_1 ; $50fc
@@ -245,7 +245,7 @@ TrainingCourtNpc07_15:
 	jr z, .speak ; $5164
 	script_set_text Text_37_34 ; $5166
 .speak:
-	script_speak $07 ; $516c
+	script_speak ACTOR_TRAINING_COURT_CURT ; $516c
 	ret ; $5171
 .lesson3:
 	test_flag FLAG_CLEARED_SERVICE_PRACTICE_3 ; $5172
@@ -262,11 +262,11 @@ TrainingCourtNpc07_15:
 	jr z, .speakLesson3 ; $518e
 	script_set_text Text_37_34 ; $5190
 .speakLesson3:
-	script_speak $07 ; $5196
+	script_speak ACTOR_TRAINING_COURT_CURT ; $5196
 	ret ; $519b
 .done:
 	script_set_text Text_37_61 ; $519c
-	script_speak $07 ; $51a2
+	script_speak ACTOR_TRAINING_COURT_CURT ; $51a2
 	ret ; $51a7
 TrainingCourtNpc11_15:
 	test_flag FLAG_CLEARED_NET_GAME_MATCH_1 ; $51a8
@@ -308,7 +308,7 @@ TrainingCourtNpc12_15:
 	jr z, .speak ; $5210
 	script_set_text Text_37_131 ; $5212
 .speak:
-	script_speak $12 ; $5218
+	script_speak ACTOR_TRAINING_COURT_BETH ; $5218
 	ret ; $521d
 .lesson3:
 	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_3 ; $521e
@@ -325,11 +325,11 @@ TrainingCourtNpc12_15:
 	jr z, .speakLesson3 ; $523a
 	script_set_text Text_37_156 ; $523c
 .speakLesson3:
-	script_speak $12 ; $5242
+	script_speak ACTOR_TRAINING_COURT_BETH ; $5242
 	ret ; $5247
 .done:
 	script_set_text Text_37_187 ; $5248
-	script_speak $12 ; $524e
+	script_speak ACTOR_TRAINING_COURT_BETH ; $524e
 	ret ; $5253
 TrainingCourtNpc0C_15:
 	test_flag FLAG_CLEARED_STROKE_MATCH_1 ; $5254
@@ -374,7 +374,7 @@ TrainingCourtNpc0D_15:
 	jr z, .speak ; $52c7
 	script_set_text Text_37_226 ; $52c9
 .speak:
-	script_speak $0d ; $52cf
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $52cf
 	ret ; $52d4
 .lesson3:
 	test_flag FLAG_CLEARED_STROKE_PRACTICE_3 ; $52d5
@@ -387,11 +387,11 @@ TrainingCourtNpc0D_15:
 	ret ; $52e7
 .lesson3Line:
 	script_set_text Text_37_248 ; $52e8
-	script_speak $0d ; $52ee
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $52ee
 	ret ; $52f3
 .done:
 	script_set_text Text_6e_18 ; $52f4
-	script_speak $0d ; $52fa
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $52fa
 	ret ; $52ff
 TrainingCourtFacingScripts_15:
 	; $5300, 9 bytes (map_scripts)
@@ -529,7 +529,7 @@ TrainingCourtReentryDispatch:
 	farcall WaitPlayerMoveDone ; $5461
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5464
 	script_face ACTOR_PARTNER, FACE_DOWN ; $546b
-	script_face $07, FACE_LEFT ; $5472
+	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $5472
 	script_fade_in $04 ; $5479
 	call WaitFadeEnd ; $547e
 	ret ; $5481
@@ -567,7 +567,7 @@ TrainingCourtReentryDispatch:
 	farcall WaitPlayerMoveDone ; $5511
 	script_face ACTOR_PLAYER, FACE_UP ; $5514
 	script_face ACTOR_PARTNER, FACE_UP ; $551b
-	script_face $12, FACE_RIGHT ; $5522
+	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $5522
 	script_fade_in $04 ; $5529
 	call WaitFadeEnd ; $552e
 	ret ; $5531
@@ -605,7 +605,7 @@ TrainingCourtReentryDispatch:
 	farcall WaitPlayerMoveDone ; $55c1
 	script_face ACTOR_PLAYER, FACE_UP ; $55c4
 	script_face ACTOR_PARTNER, FACE_UP ; $55cb
-	script_face $0d, FACE_UP ; $55d2
+	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $55d2
 	script_fade_in $04 ; $55d9
 	call WaitFadeEnd ; $55de
 	ret ; $55e1

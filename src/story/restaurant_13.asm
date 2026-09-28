@@ -107,7 +107,7 @@ RestaurantPlazaExitTriggers_13:
 	ret ; $428a
 RestaurantPlazaNpcScripts_13:
 	; $428b, 9 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Text_35_55, $00, $00
+	map_script ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_EXCLAIM, FACEMASK_ANY, $0000, Text_35_55, $00, $00
 	db $ff
 RestaurantPlazaFacingScripts_13:
 	; $4294, 33 bytes (map_scripts)
@@ -451,39 +451,39 @@ ServiceAceCoachIntroCutscene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a11
 	script_wait_idle ACTOR_PLAYER ; $4a18
 	script_wait_frames $0f ; $4a1d
-	script_face_pair $08, $07 ; $4a24
+	script_face_pair ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4a24
 	script_wait_frames $46 ; $4a2c
-	script_face_toward ACTOR_PLAYER, $07 ; $4a33
-	script_face_toward ACTOR_PLAYER, $08 ; $4a3b
+	script_face_toward ACTOR_PLAYER, ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4a33
+	script_face_toward ACTOR_PLAYER, ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a3b
 	script_wait_frames $0f ; $4a43
-	script_speak $07 ; $4a4a
-	script_set_anim $07, ANIM_NOD ; $4a4f
-	script_wait_idle $07 ; $4a56
-	script_speak $07 ; $4a5b
+	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4a4a
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_MARK, ANIM_NOD ; $4a4f
+	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4a56
+	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4a5b
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a60
 	script_wait_idle ACTOR_PLAYER ; $4a67
 	script_wait_frames $1e ; $4a6c
-	script_set_anim $08, ANIM_BOUNCE ; $4a73
-	script_wait_idle $08 ; $4a7a
-	script_speak $08 ; $4a7f
-	script_set_anim $08, ANIM_NOD ; $4a84
-	script_wait_idle $08 ; $4a8b
-	script_speak $08 ; $4a90
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, ANIM_BOUNCE ; $4a73
+	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a7a
+	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a7f
+	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, ANIM_NOD ; $4a84
+	script_wait_idle ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a8b
+	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a90
 	script_wait_frames $5a ; $4a95
-	script_move_target $08, $1500, $0980 ; $4a9c
+	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, $1500, $0980 ; $4a9c
 	call AnimateDoorOpen_13 ; $4aa7
-	script_move_target $08, $14c0, $0900 ; $4aaa
-	script_move_target $07, $1500, $0b00 ; $4ab5
-	script_set_position $08, $3f00, $3f00 ; $4ac0
-	script_wait_move $07 ; $4acb
+	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, $14c0, $0900 ; $4aaa
+	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_MARK, $1500, $0b00 ; $4ab5
+	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, $3f00, $3f00 ; $4ac0
+	script_wait_move ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4acb
 	script_wait_frames $0f ; $4ad0
-	script_face_toward ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, $07 ; $4ad7
-	script_speak $07 ; $4adf
-	script_move_target $07, $1500, $0980 ; $4ae4
-	script_wait_move $07 ; $4aef
-	script_move_target $07, $14c0, $0900 ; $4af4
+	script_face_toward ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4ad7
+	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4adf
+	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_MARK, $1500, $0980 ; $4ae4
+	script_wait_move ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4aef
+	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_MARK, $14c0, $0900 ; $4af4
 	script_wait_frames $0f ; $4aff
-	script_set_position $07, $3f00, $3f00 ; $4b06
+	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_MARK, $3f00, $3f00 ; $4b06
 	call AnimateDoorClose_13 ; $4b11
 	script_move_player $1b00, $0d00 ; $4b14
 	script_wait_frames $3c ; $4b1e

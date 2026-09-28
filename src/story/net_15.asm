@@ -1,7 +1,7 @@
 WalkToStrokeChallengeCourtCutscene:
 	script_null_script ACTOR_PARTNER ; $6f51
 	script_move_player $1800, $2700 ; $6f56
-	script_set_actor_script $0c, ActorScript_15_10 ; $6f60
+	script_set_actor_script ACTOR_TRAINING_COURT_ALLIE, ActorScript_15_10 ; $6f60
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_11 ; $6f6b
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_12 ; $6f76
 	script_wait_actor_script ACTOR_PLAYER ; $6f81
@@ -39,7 +39,7 @@ ActorScript_15_12:
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 NetCoachVolleyLessonScene:
-	script_face_toward $12, ACTOR_PARTNER ; $6fcf
+	script_face_toward ACTOR_TRAINING_COURT_BETH, ACTOR_PARTNER ; $6fcf
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6fd7
 	jr nz, .setText ; $6fda
 	script_set_text Text_37_93 ; $6fdc
@@ -63,14 +63,14 @@ NetCoachVolleyLessonScene:
 	and a ; $7014
 	jr nz, .loop ; $7015
 	farcall AdvanceDialogueTextCursor ; $7017
-	script_speak $12 ; $701a
+	script_speak ACTOR_TRAINING_COURT_BETH ; $701a
 	call MovePartyToNetCoachSpot ; $701f
-	script_face $12, FACE_LEFT ; $7022
-	script_speak $12 ; $7029
-	script_set_anim $12, ANIM_BOUNCE ; $702e
-	script_wait_idle $12 ; $7035
+	script_face ACTOR_TRAINING_COURT_BETH, FACE_LEFT ; $7022
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7029
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $702e
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7035
 	script_set_text Text_37_99 ; $703a
-	script_speak $12 ; $7040
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7040
 	ld a, MINIGAME_NET_GAME_PRACTICE_1 ; $7045
 	ld [wCurrentMinigameStoryMatch + 1], a ; $7047
 	ld a, STORYLOC_TRAINING_COURT ; $704a
@@ -86,10 +86,10 @@ NetCoachVolleyLessonScene:
 	farcall ShowDrillBriefingScreen ; $7064
 	ret ; $7067
 .loop:
-	script_speak $12 ; $7068
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7068
 	ret ; $706d
 NetCoachSmashLessonScene:
-	script_face_toward $12, ACTOR_PARTNER ; $706e
+	script_face_toward ACTOR_TRAINING_COURT_BETH, ACTOR_PARTNER ; $706e
 	script_set_text Text_37_134 ; $7076
 	ld a, $12 ; $707c
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $707e
@@ -115,16 +115,16 @@ NetCoachSmashLessonScene:
 	and a ; $70be
 	jr nz, NetCoachVolleyLessonScene.loop ; $70bf
 	farcall AdvanceDialogueTextCursor ; $70c1
-	script_speak $12 ; $70c4
+	script_speak ACTOR_TRAINING_COURT_BETH ; $70c4
 	call MovePartyToNetCoachSpot ; $70c9
-	script_face $12, FACE_LEFT ; $70cc
-	script_speak $12 ; $70d3
-	script_set_anim $12, ANIM_BOUNCE ; $70d8
-	script_wait_idle $12 ; $70df
-	script_speak $12 ; $70e4
-	script_set_anim $12, ANIM_NOD ; $70e9
-	script_wait_idle $12 ; $70f0
-	script_speak $12 ; $70f5
+	script_face ACTOR_TRAINING_COURT_BETH, FACE_LEFT ; $70cc
+	script_speak ACTOR_TRAINING_COURT_BETH ; $70d3
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $70d8
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $70df
+	script_speak ACTOR_TRAINING_COURT_BETH ; $70e4
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_NOD ; $70e9
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $70f0
+	script_speak ACTOR_TRAINING_COURT_BETH ; $70f5
 	ld a, MINIGAME_NET_GAME_PRACTICE_2 ; $70fa
 	ld [wCurrentMinigameStoryMatch + 1], a ; $70fc
 	ld a, STORYLOC_TRAINING_COURT ; $70ff
@@ -140,7 +140,7 @@ NetCoachSmashLessonScene:
 	farcall ShowDrillBriefingScreen ; $7119
 	ret ; $711c
 NetCoachDropShotLessonScene:
-	script_face_toward $12, ACTOR_PARTNER ; $711d
+	script_face_toward ACTOR_TRAINING_COURT_BETH, ACTOR_PARTNER ; $711d
 	script_set_text Text_37_159 ; $7125
 	ld a, $12 ; $712b
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $712d
@@ -166,13 +166,13 @@ NetCoachDropShotLessonScene:
 	and a ; $716f
 	jp nz, NetCoachVolleyLessonScene.loop ; $7170
 	farcall AdvanceDialogueTextCursor ; $7173
-	script_speak $12 ; $7176
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7176
 	call MovePartyToNetCoachSpot ; $717b
-	script_face $12, FACE_LEFT ; $717e
-	script_speak $12 ; $7185
-	script_set_anim $12, ANIM_BOUNCE ; $718a
-	script_wait_idle $12 ; $7191
-	script_speak $12 ; $7196
+	script_face ACTOR_TRAINING_COURT_BETH, FACE_LEFT ; $717e
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7185
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $718a
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7191
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7196
 	ld a, MINIGAME_NET_GAME_PRACTICE_3 ; $719b
 	ld [wCurrentMinigameStoryMatch + 1], a ; $719d
 	ld a, STORYLOC_TRAINING_COURT ; $71a0
@@ -193,7 +193,7 @@ HideServeChallengerActor:
 	call TestServeChallengerGameFlag ; $71c3
 	jr z, .done ; $71c6
 .placeActors:
-	script_set_position $06, $3f00, $3f00 ; $71c8
+	script_set_position ACTOR_TRAINING_COURT_BOB_1, $3f00, $3f00 ; $71c8
 .done:
 	ret ; $71d3
 TestServeChallengerGameFlag:
@@ -229,7 +229,7 @@ HideNetChallengerActor:
 	call TestNetChallengerGameFlag ; $7209
 	jr z, .done ; $720c
 .placeActors:
-	script_set_position $11, $3f00, $3f00 ; $720e
+	script_set_position ACTOR_TRAINING_COURT_BRIAN, $3f00, $3f00 ; $720e
 .done:
 	ret ; $7219
 TestNetChallengerGameFlag:
@@ -265,7 +265,7 @@ HideStrokeChallengerActor:
 	call TestStrokeChallengerGameFlag ; $724f
 	jr z, .done ; $7252
 .placeActors:
-	script_set_position $0c, $3f00, $3f00 ; $7254
+	script_set_position ACTOR_TRAINING_COURT_ALLIE, $3f00, $3f00 ; $7254
 .done:
 	ret ; $725f
 TestStrokeChallengerGameFlag:
@@ -491,13 +491,13 @@ InitServeCoachScene:
 	farcall WaitPlayerMoveDone ; $750b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $750e
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7515
-	script_face $07, FACE_UP ; $751c
+	script_face ACTOR_TRAINING_COURT_CURT, FACE_UP ; $751c
 	script_fade_in $04 ; $7523
 	call WaitFadeEnd ; $7528
 	ret ; $752b
 .speak:
-	script_speak $07 ; $752c
-	script_face $07, FACE_LEFT ; $7531
+	script_speak ACTOR_TRAINING_COURT_CURT ; $752c
+	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $7531
 	ret ; $7538
 .dispatchStage:
 	ld a, [wDrillLessonResult] ; $7539

@@ -252,8 +252,13 @@ variant stays active for the whole visit), a script that calls `ScriptRespawnLoc
 runs under the list it installs from that point on (and so do the routines it
 calls), and where several lists are possible -- a branch that installs one of
 several, a helper shared between locations -- the number stays unless every
-candidate list holds the same actor in that slot. 3,496 references are names
-(3,202 script operands, 294 `NpcScripts` ids); about 1,200 stay numbers,
+candidate list holds the same actor in that slot. A variant installed by a
+scene that then ends the visit (it writes `wStoryModeExitTriggerRequest` and
+returns, with no branch after the install) is not a candidate for the rest of
+the location: the player never has control under it. The Training Court,
+Academy Courts and Varsity Court tours, the Tournament Site arrival and one
+ending scene are of that kind. 3,877 references are names (3,562 script
+operands, 315 `NpcScripts` ids); about 880 stay numbers,
 mostly where a location's init-time variants put different actors in the
 slot, plus branches that install one of several lists, helpers shared
 between locations, slots past the end of every candidate list (actors

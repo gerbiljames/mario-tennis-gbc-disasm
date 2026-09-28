@@ -59,14 +59,14 @@ TournamentCourtyardNpc05_15:
 	jr nz, .done ; $4123
 	set_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4125
 .speak:
-	script_speak $05 ; $4128
-	script_set_anim $05, ANIM_BOUNCE ; $412d
-	script_wait_idle $05 ; $4134
-	script_speak $05 ; $4139
+	script_speak ACTOR_TOURNAMENT_COURTYARD_WALK_71_06 ; $4128
+	script_set_anim ACTOR_TOURNAMENT_COURTYARD_WALK_71_06, ANIM_BOUNCE ; $412d
+	script_wait_idle ACTOR_TOURNAMENT_COURTYARD_WALK_71_06 ; $4134
+	script_speak ACTOR_TOURNAMENT_COURTYARD_WALK_71_06 ; $4139
 	ret ; $413e
 .done:
 	script_set_text Text_1f_32 ; $413f
-	script_speak $05 ; $4145
+	script_speak ACTOR_TOURNAMENT_COURTYARD_WALK_71_06 ; $4145
 	ret ; $414a
 TournamentCourtyardNpc05TextIds:
 	; $414b, 14 bytes (text_ids)
@@ -81,7 +81,7 @@ TournamentCourtyardNpcScripts_15:
 	; $4159, 57 bytes (map_scripts)
 	map_script ACTOR_TOURNAMENT_COURTYARD_WALK_6F_03, FACEMASK_ANY, $0000, Text_1f_28, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_WALK_6F_04, FACEMASK_ANY, $0000, Text_1f_29, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script $05, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_WALK_71_06, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_WALK_71_07, FACEMASK_ANY, $0000, Text_1f_33, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_WALK_71_03, FACEMASK_ANY, $0000, Text_1f_34, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_WALK_72_02, FACEMASK_ANY, $0000, Text_1f_35, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -496,7 +496,7 @@ TrainingCourtNpc03_15:
 	ld h, [hl] ; $4986
 	ld l, a ; $4987
 	farcall InitDialogueTextCursor ; $4988
-	script_speak $03 ; $498b
+	script_speak ACTOR_TRAINING_COURT_WALK_71_06_1 ; $498b
 	ret ; $4990
 TrainingCourtNpc03TextIds:
 	; $4991, 10 bytes (text_ids)
@@ -513,7 +513,7 @@ TrainingCourtNpc04_15:
 	ld h, [hl] ; $49a7
 	ld l, a ; $49a8
 	farcall InitDialogueTextCursor ; $49a9
-	script_speak $04 ; $49ac
+	script_speak ACTOR_TRAINING_COURT_WALK_71_05_1 ; $49ac
 	ret ; $49b1
 TrainingCourtNpc04TextIds:
 	; $49b2, 10 bytes (text_ids)
@@ -530,7 +530,7 @@ TrainingCourtNpc05_15:
 	ld h, [hl] ; $49c8
 	ld l, a ; $49c9
 	farcall InitDialogueTextCursor ; $49ca
-	script_speak $05 ; $49cd
+	script_speak ACTOR_TRAINING_COURT_WALK_71_07_1 ; $49cd
 	ret ; $49d2
 TrainingCourtNpc05TextIds:
 	; $49d3, 10 bytes (text_ids)
@@ -547,7 +547,7 @@ TrainingCourtNpc08_15:
 	ld h, [hl] ; $49e9
 	ld l, a ; $49ea
 	farcall InitDialogueTextCursor ; $49eb
-	script_speak $08 ; $49ee
+	script_speak ACTOR_TRAINING_COURT_WALK_71_07_2 ; $49ee
 	ret ; $49f3
 TrainingCourtNpc08TextIds:
 	; $49f4, 10 bytes (text_ids)
@@ -564,7 +564,7 @@ TrainingCourtNpc09_15:
 	ld h, [hl] ; $4a0a
 	ld l, a ; $4a0b
 	farcall InitDialogueTextCursor ; $4a0c
-	script_speak $09 ; $4a0f
+	script_speak ACTOR_TRAINING_COURT_WALK_72_02_1 ; $4a0f
 	ret ; $4a14
 TrainingCourtNpc09TextIds_15:
 	; $4a15, 10 bytes (text_ids)
@@ -581,7 +581,7 @@ TrainingCourtNpc0A_15:
 	ld h, [hl] ; $4a2b
 	ld l, a ; $4a2c
 	farcall InitDialogueTextCursor ; $4a2d
-	script_speak $0a ; $4a30
+	script_speak ACTOR_TRAINING_COURT_WALK_71_06_2 ; $4a30
 	ret ; $4a35
 TrainingCourtNpc0ATextIds:
 	; $4a36, 10 bytes (text_ids)
@@ -610,7 +610,7 @@ TrainingCourtNpc0B_15:
 	jr z, .speak ; $4a6b
 	farcall AdvanceDialogueTextCursor ; $4a6d
 .speak:
-	script_speak $0b ; $4a70
+	script_speak ACTOR_TRAINING_COURT_PAM ; $4a70
 	ret ; $4a75
 TrainingCourtNpc0BTextIds:
 	; $4a76, 10 bytes (text_ids)
@@ -627,7 +627,7 @@ TrainingCourtNpc0E_15:
 	ld h, [hl] ; $4a8c
 	ld l, a ; $4a8d
 	farcall InitDialogueTextCursor ; $4a8e
-	script_speak $0f ; $4a91
+	script_speak ACTOR_TRAINING_COURT_WALK_71_05_2 ; $4a91
 	ret ; $4a96
 TrainingCourtNpc0ETextIds:
 	; $4a97, 10 bytes (text_ids)
@@ -656,7 +656,7 @@ TrainingCourtNpc0F_15:
 	jr z, .speak ; $4acc
 	farcall AdvanceDialogueTextCursor ; $4ace
 .speak:
-	script_speak $0f ; $4ad1
+	script_speak ACTOR_TRAINING_COURT_WALK_71_05_2 ; $4ad1
 	ret ; $4ad6
 TrainingCourtNpc0FTextIds:
 	; $4ad7, 10 bytes (text_ids)
@@ -685,7 +685,7 @@ TrainingCourtNpc10_15:
 	jr z, .speak ; $4b0c
 	farcall AdvanceDialogueTextCursor ; $4b0e
 .speak:
-	script_speak $10 ; $4b11
+	script_speak ACTOR_TRAINING_COURT_WALK_71_07_3 ; $4b11
 	ret ; $4b16
 TrainingCourtNpc10TextIds_15:
 	; $4b17, 10 bytes (text_ids)
@@ -695,7 +695,7 @@ TrainingCourtNpc10TextIds_15:
 	dw Text_36_652 ; record 3
 	dw Text_36_652 ; record 4
 TrainingCourtNpc13_15:
-	script_move_player_to_actor $13 ; $4b21
+	script_move_player_to_actor ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4b21
 	farcall WaitPlayerMoveDone ; $4b28
 	script_get_actor_state ACTOR_PLAYER ; $4b2b
 	ld a, $01 ; $4b30
@@ -714,36 +714,36 @@ TrainingCourtNpc13_15:
 	jp nz, .setFlag ; $4b52
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4b55
 	script_wait_idle ACTOR_PLAYER ; $4b5c
-	script_speak $13 ; $4b61
+	script_speak ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4b61
 	script_wait_frames $0a ; $4b66
 	ret ; $4b6d
 .setFlag:
 	set_flag FLAG_SWING_PRACTICE_KID_PLACED ; $4b6e
 	script_set_anim ACTOR_PLAYER, ANIM_SHAKE ; $4b71
 	script_wait_idle ACTOR_PLAYER ; $4b78
-	script_set_anim $13, ANIM_WALK ; $4b7d
-	script_wait_idle $13 ; $4b84
-	script_face $13, FACE_LEFT ; $4b89
-	script_get_actor_state $13 ; $4b90
+	script_set_anim ACTOR_TRAINING_COURT_WALK_71_06_3, ANIM_WALK ; $4b7d
+	script_wait_idle ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4b84
+	script_face ACTOR_TRAINING_COURT_WALK_71_06_3, FACE_LEFT ; $4b89
+	script_get_actor_state ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4b90
 	ld a, $02 ; $4b95
 	ld e, l ; $4b97
 	ld d, h ; $4b98
 	ld hl, $0018 ; $4b99
 	add hl, de ; $4b9c
 	ld [hl], a ; $4b9d
-	script_set_anim $13, ANIM_BOUNCE ; $4b9e
-	script_wait_idle $13 ; $4ba5
-	script_get_actor_state $13 ; $4baa
+	script_set_anim ACTOR_TRAINING_COURT_WALK_71_06_3, ANIM_BOUNCE ; $4b9e
+	script_wait_idle ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4ba5
+	script_get_actor_state ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4baa
 	ld a, $01 ; $4baf
 	ld e, l ; $4bb1
 	ld d, h ; $4bb2
 	ld hl, $0018 ; $4bb3
 	add hl, de ; $4bb6
 	ld [hl], a ; $4bb7
-	script_set_position $16, $3680, $0d80 ; $4bb8
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3680, $0d80 ; $4bb8
 	sound SFX_APPEAR1 ; $4bc3
 	farcall AdvanceDialogueTextCursor ; $4bc5
-	script_speak $13 ; $4bc8
+	script_speak ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4bc8
 	script_set_speed ACTOR_PLAYER, $0012 ; $4bcd
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4bd5
 	script_wait_idle ACTOR_PLAYER ; $4bdc
@@ -751,20 +751,20 @@ TrainingCourtNpc13_15:
 	script_wait_move ACTOR_PLAYER ; $4bec
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4bf1
 	script_wait_frames $0a ; $4bf8
-	script_set_position $16, $3f00, $3f00 ; $4bff
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3f00, $3f00 ; $4bff
 	script_wait_frames $14 ; $4c0a
 	script_set_anim ACTOR_PLAYER, $06 ; $4c11
 	script_wait_frames $b4 ; $4c18
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $4c1f
 	script_wait_idle ACTOR_PLAYER ; $4c26
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $4c2b
-	script_face $13, FACE_DOWN ; $4c32
+	script_face ACTOR_TRAINING_COURT_WALK_71_06_3, FACE_DOWN ; $4c32
 	script_wait_frames $01 ; $4c39
-	script_set_anim $13, ANIM_SHAKE ; $4c40
-	script_wait_idle $13 ; $4c47
-	script_face $13, FACE_LEFT ; $4c4c
+	script_set_anim ACTOR_TRAINING_COURT_WALK_71_06_3, ANIM_SHAKE ; $4c40
+	script_wait_idle ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4c47
+	script_face ACTOR_TRAINING_COURT_WALK_71_06_3, FACE_LEFT ; $4c4c
 	script_wait_frames $01 ; $4c53
-	script_speak $13 ; $4c5a
+	script_speak ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4c5a
 	script_wait_frames $1e ; $4c5f
 	script_set_speed ACTOR_PLAYER, $0020 ; $4c66
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4c6e
@@ -772,13 +772,13 @@ TrainingCourtNpc13_15:
 	script_lock_facing ACTOR_PLAYER ; $4c7c
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4c83
 	script_move_target ACTOR_PLAYER, $3300, $0d00 ; $4c8a
-	script_move_target $13, $3300, $0f00 ; $4c95
-	script_wait_move $13 ; $4ca0
-	script_move_target $13, $3300, $1500 ; $4ca5
-	script_wait_move $13 ; $4cb0
-	script_move_target $13, $1f00, $1500 ; $4cb5
-	script_wait_move $13 ; $4cc0
-	script_set_position $13, $3f00, $3f00 ; $4cc5
+	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, $3300, $0f00 ; $4c95
+	script_wait_move ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4ca0
+	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, $3300, $1500 ; $4ca5
+	script_wait_move ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4cb0
+	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, $1f00, $1500 ; $4cb5
+	script_wait_move ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4cc0
+	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, $3f00, $3f00 ; $4cc5
 	script_unlock_facing ACTOR_PLAYER ; $4cd0
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4cd7
 	script_get_actor_state ACTOR_PLAYER ; $4cde
@@ -789,6 +789,6 @@ TrainingCourtNpc13_15:
 	add hl, de ; $4cea
 	ld [hl], a ; $4ceb
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4cec
-	script_set_position $16, $3480, $0b80 ; $4cf3
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3480, $0b80 ; $4cf3
 	sound SFX_APPEAR1 ; $4cfe
 	script_wait_frames $50 ; $4d00
