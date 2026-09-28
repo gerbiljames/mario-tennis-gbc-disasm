@@ -396,17 +396,17 @@ PeachSpriteAnim05:
 	; $7f95, 6 bytes (sprite_anim)
 	anim_frame $06, $04
 	anim_frame $07, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 PeachSpriteAnim06:
 	; $7f9b, 6 bytes (sprite_anim)
 	anim_frame $09, $04
 	anim_frame $0a, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 PeachSpriteAnim07:
 	; $7fa1, 6 bytes (sprite_anim)
 	anim_frame $0c, $04
 	anim_frame $0d, $14
-	anim_set $01
+	anim_set CHARANIM_IDLE
 PeachSpriteAnim08:
 	; $7fa7, 5 bytes (sprite_anim)
 	anim_frame $15, $04
@@ -415,15 +415,15 @@ PeachSpriteAnim08:
 PeachSpriteAnim09:
 	; $7fac, 4 bytes (sprite_anim)
 	anim_frame $06, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 PeachSpriteAnim10:
 	; $7fb0, 4 bytes (sprite_anim)
 	anim_frame $09, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 PeachSpriteAnim11:
 	; $7fb4, 4 bytes (sprite_anim)
 	anim_frame $0c, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 PeachSpriteAnim12:
 	; $7fb8, 3 bytes (sprite_anim)
 	anim_frame $15, $18
@@ -451,11 +451,11 @@ PeachSpriteAnim17:
 	anim_frame $0f, $07
 	anim_frame $10, $07
 	anim_frame $0f, $07
-	anim_set $10
+	anim_set CHARANIM_SERVE_READY
 PeachSpriteAnim18:
 	; $7fd3, 8 bytes (sprite_anim)
 	anim_frame $11, $12
 	anim_frame $12, $14
 	anim_frame $13, $16
-	anim_set $01
+	anim_set CHARANIM_IDLE
 	; $7fdb, 37 bytes fill to bank end (linker-padded)

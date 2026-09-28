@@ -376,17 +376,17 @@ FaySpriteAnim05:
 	; $7f6d, 6 bytes (sprite_anim)
 	anim_frame $06, $04
 	anim_frame $07, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 FaySpriteAnim06:
 	; $7f73, 6 bytes (sprite_anim)
 	anim_frame $09, $04
 	anim_frame $0a, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 FaySpriteAnim07:
 	; $7f79, 6 bytes (sprite_anim)
 	anim_frame $0c, $04
 	anim_frame $0d, $14
-	anim_set $01
+	anim_set CHARANIM_IDLE
 FaySpriteAnim08:
 	; $7f7f, 5 bytes (sprite_anim)
 	anim_frame $15, $04
@@ -395,15 +395,15 @@ FaySpriteAnim08:
 FaySpriteAnim09:
 	; $7f84, 4 bytes (sprite_anim)
 	anim_frame $06, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 FaySpriteAnim10:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $09, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 FaySpriteAnim11:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $0c, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 FaySpriteAnim12:
 	; $7f90, 3 bytes (sprite_anim)
 	anim_frame $15, $18
@@ -431,11 +431,11 @@ FaySpriteAnim17:
 	anim_frame $0f, $07
 	anim_frame $10, $07
 	anim_frame $0f, $07
-	anim_set $10
+	anim_set CHARANIM_SERVE_READY
 FaySpriteAnim18:
 	; $7fab, 8 bytes (sprite_anim)
 	anim_frame $11, $12
 	anim_frame $12, $14
 	anim_frame $13, $16
-	anim_set $01
+	anim_set CHARANIM_IDLE
 	; $7fb3, 77 bytes fill to bank end (linker-padded)

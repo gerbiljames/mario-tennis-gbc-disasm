@@ -464,7 +464,7 @@ RunNpcInteraction:
 	push de ; $550a
 	ld c, e ; $550b
 	ld b, d ; $550c
-	ld d, $01 ; $550d
+	ld d, ANIM_WALK ; $550d
 	farcall SetActorAnimationChecked ; $550f
 	pop de ; $5512
 	pop bc ; $5513

@@ -498,7 +498,7 @@ AwardsCeremonyTile02_0f:
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_2, $1000, $1600 ; $4a3e
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $1000, $1500 ; $4a49
 	script_face ACTOR_AWARDS_CEREMONY_TROPHY_2, FACE_UP ; $4a54
-	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $08 ; $4a5b
+	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, ANIM_TROPHY_SMALL ; $4a5b
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $1000, $1200 ; $4a62
 	script_move_target ACTOR_AWARDS_CEREMONY_TROPHY_2, $1000, $1300 ; $4a6d
 	script_wait_move ACTOR_AWARDS_CEREMONY_TROPHY_2 ; $4a78
@@ -509,7 +509,7 @@ AwardsCeremonyTile02_0f:
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $1000, $1300 ; $4aa3
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_2, $0f00, $1300 ; $4aae
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_LEFT ; $4ab9
-	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_2, $08 ; $4ac0
+	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_2, ANIM_TROPHY_SMALL ; $4ac0
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0c00, $1300 ; $4ac7
 	script_move_target ACTOR_AWARDS_CEREMONY_TROPHY_2, $0b00, $1300 ; $4ad2
 	script_wait_move ACTOR_AWARDS_CEREMONY_TROPHY_2 ; $4add
@@ -590,7 +590,7 @@ AwardsCeremonyTile02_0f:
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_1, $0f00, $1600 ; $4cd4
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0f00, $1500 ; $4cdf
 	script_face ACTOR_AWARDS_CEREMONY_TROPHY_1, FACE_UP ; $4cea
-	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $06 ; $4cf1
+	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, ANIM_TROPHY_SINGLES ; $4cf1
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0f00, $1200 ; $4cf8
 	script_move_target ACTOR_AWARDS_CEREMONY_TROPHY_1, $0f00, $1300 ; $4d03
 	script_wait_move ACTOR_AWARDS_CEREMONY_TROPHY_1 ; $4d0e
@@ -601,7 +601,7 @@ AwardsCeremonyTile02_0f:
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0f00, $1300 ; $4d39
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_1, $0e00, $1300 ; $4d44
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_LEFT ; $4d4f
-	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_1, $06 ; $4d56
+	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_1, ANIM_TROPHY_SINGLES ; $4d56
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0e00, $1300 ; $4d5d
 	script_move_target ACTOR_AWARDS_CEREMONY_TROPHY_1, $0d00, $1300 ; $4d68
 	script_wait_move ACTOR_AWARDS_CEREMONY_TROPHY_1 ; $4d73
@@ -644,7 +644,7 @@ AwardsCeremonyTile02_0f:
 	farcall LoadActorObjectDefIfValid ; $4e4c
 	script_set_anim ACTOR_AWARDS_CEREMONY_ALEX, ANIM_WALK ; $4e4f
 	script_face ACTOR_AWARDS_CEREMONY_ALEX, FACE_RIGHT ; $4e56
-	script_set_anim ACTOR_AWARDS_CEREMONY_ALEX, $08 ; $4e5d
+	script_set_anim ACTOR_AWARDS_CEREMONY_ALEX, ANIM_DISTANT ; $4e5d
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_1, $0b40, $0c40 ; $4e64
 	script_move_player $0c00, $0d00 ; $4e6f
 	farcall WaitPlayerMoveDone ; $4e79
@@ -757,7 +757,7 @@ AwardsCeremonyTile02_0f:
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_06, $1100, $1600 ; $50da
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_3, $1100, $1500 ; $50e5
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_06, FACE_UP ; $50f0
-	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_3, $08 ; $50f7
+	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_3, ANIM_TROPHY_SMALL ; $50f7
 	script_move_target ACTOR_AWARDS_CEREMONY_TROPHY_3, $1100, $1200 ; $50fe
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_06, $1100, $1300 ; $5109
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_06 ; $5114
@@ -854,7 +854,7 @@ AwardsCeremonyTile02_0f:
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_06, $0f00, $1600 ; $5351
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_1, $0f00, $1500 ; $535c
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_06, FACE_UP ; $5367
-	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_1, $08 ; $536e
+	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_1, ANIM_TROPHY_SMALL ; $536e
 	script_move_target ACTOR_AWARDS_CEREMONY_TROPHY_1, $0f00, $1300 ; $5375
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_06, $0f00, $1400 ; $5380
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_06 ; $538b
@@ -929,7 +929,7 @@ AwardsCeremonyTile02_0f:
 	farcall LoadActorObjectDefIfValid ; $551f
 	script_set_anim ACTOR_AWARDS_CEREMONY_ALEX, ANIM_WALK ; $5522
 	script_face ACTOR_AWARDS_CEREMONY_ALEX, FACE_RIGHT ; $5529
-	script_set_anim ACTOR_AWARDS_CEREMONY_ALEX, $08 ; $5530
+	script_set_anim ACTOR_AWARDS_CEREMONY_ALEX, ANIM_DISTANT ; $5530
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_1, $0c40, $0c60 ; $5537
 	script_move_player $0c00, $0d00 ; $5542
 	farcall WaitPlayerMoveDone ; $554c
@@ -968,11 +968,11 @@ AwardsCeremonyInitScript_0f:
 	script_copy_scene_rect $1a, $0d, $08, $0d, $08, $03 ; $5597
 	farcall BeginCutsceneScriptMode ; $55a6
 .setAnims:
-	script_set_anim ACTOR_AWARDS_CEREMONY_DOUBLES_TROPHY_2, $08 ; $55a9
-	script_set_anim ACTOR_AWARDS_CEREMONY_DOUBLES_TROPHY_3, $08 ; $55b0
+	script_set_anim ACTOR_AWARDS_CEREMONY_DOUBLES_TROPHY_2, ANIM_TROPHY_SMALL ; $55a9
+	script_set_anim ACTOR_AWARDS_CEREMONY_DOUBLES_TROPHY_3, ANIM_TROPHY_SMALL ; $55b0
 	test_flag FLAG_DOUBLES ; $55b7
 	jr nz, .setObjectDefs ; $55ba
-	script_set_anim ACTOR_AWARDS_CEREMONY_DOUBLES_TROPHY_1, $06 ; $55bc
+	script_set_anim ACTOR_AWARDS_CEREMONY_DOUBLES_TROPHY_1, ANIM_TROPHY_SINGLES ; $55bc
 .setObjectDefs:
 	call SetPlayerAndPartnerObjectDefs ; $55c3
 	ld a, [wStoryModeEntryPoint] ; $55c6

@@ -128,7 +128,7 @@ LateStudentCrashCutscene:
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4a4e
 	call KnockPlayerAirborneFlipped_11 ; $4a53
 	script_lock_facing ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4a56
-	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $05 ; $4a5d
+	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, ANIM_HOP ; $4a5d
 	script_wait_frames $14 ; $4a64
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $ff80 ; $4a6b
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $1b00, $2400 ; $4a73

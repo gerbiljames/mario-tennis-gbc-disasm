@@ -1,12 +1,12 @@
 ActorScript_27_05:
 	; $5557, 7 bytes (actor_script)
-	as_anim $08
+	as_anim ANIM_OVERHEAD_SWING
 	as_wait $3c
 	as_jump ActorScript_27_05
 ActorScript_27_06:
 	; $555e, 18 bytes (actor_script)
 	as_set_field $18, $0006
-	as_anim $06
+	as_anim ANIM_SWING_LOOP
 	as_halt
 	as_halt
 	as_halt

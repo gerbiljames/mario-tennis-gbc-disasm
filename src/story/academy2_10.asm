@@ -42,7 +42,7 @@ AcademyWingInstallDoorTriggers_10:
 .done:
 	ret ; $7442
 AcademyWingHideActorByProgressFlag_10:
-	script_set_anim $04, $06 ; $7443
+	script_set_anim $04, ANIM_TROPHY_SINGLES ; $7443
 	test_flag FLAG_DOUBLES ; $744a
 	jr z, .checkFlag ; $744d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $744f

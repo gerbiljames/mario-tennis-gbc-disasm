@@ -145,7 +145,7 @@ AcademyWingTile02_10:
 	call AcademyWingCloseDoor_10 ; $6437
 	ret ; $643a
 AcademyWingInitScript_10:
-	script_set_anim $05, $06 ; $643b
+	script_set_anim $05, ANIM_TROPHY_SINGLES ; $643b
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $6442
 	jr nz, .checkDoublesFinal ; $6445
 	script_set_position $05, $0100, $0100 ; $6447
@@ -203,7 +203,7 @@ AcademyWingInitScript_10:
 	ld hl, AcademyWingInitActors0_10 ; $64e2
 	farcall ScriptRespawnLocationActors ; $64e5
 	farcall BeginCutsceneScriptMode ; $64e8
-	script_set_anim ACTOR_ACADEMY_WING_INIT0_TROPHY_1, $06 ; $64eb
+	script_set_anim ACTOR_ACADEMY_WING_INIT0_TROPHY_1, ANIM_TROPHY_SINGLES ; $64eb
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $64f2
 	jr nz, .placeActors ; $64f5
 	script_set_position ACTOR_ACADEMY_WING_INIT0_TROPHY_1, $0100, $0100 ; $64f7
@@ -638,7 +638,7 @@ AcademyWingInitActors0_10:
 	ld hl, AcademyWingInitActors1_10 ; $6fcf
 	farcall ScriptRespawnLocationActors ; $6fd2
 	farcall BeginCutsceneScriptMode ; $6fd5
-	script_set_anim ACTOR_ACADEMY_WING_INIT1_TROPHY_1, $06 ; $6fd8
+	script_set_anim ACTOR_ACADEMY_WING_INIT1_TROPHY_1, ANIM_TROPHY_SINGLES ; $6fd8
 	test_flag FLAG_DOUBLES ; $6fdf
 	jp z, .checkFlag2 ; $6fe2
 	script_null_script ACTOR_PARTNER ; $6fe5

@@ -1,6 +1,6 @@
 ActorScript_11_22:
 	; $681f, 3 bytes (actor_script)
-	as_anim $06
+	as_anim ANIM_SWING_LOOP
 	as_halt
 JuniorClassCourtSinglesMapScripts_11:
 	; $6822, 14 bytes (map_tree)

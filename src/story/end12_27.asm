@@ -227,7 +227,7 @@ End12PrincipalsOfficeInitScript_27:
 	ld hl, End12PrincipalsOfficeActorsAlt_27 ; $4ff2
 	farcall ScriptRespawnLocationActors ; $4ff5
 	farcall BeginCutsceneScriptMode ; $4ff8
-	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, $06 ; $4ffb
+	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, ANIM_TROPHY_SINGLES ; $4ffb
 	test_flag FLAG_DOUBLES ; $5002
 	jp z, .placeActors ; $5005
 	script_null_script ACTOR_PARTNER ; $5008

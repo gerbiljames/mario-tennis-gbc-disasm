@@ -241,7 +241,7 @@ StrokeChallengerResultScene:
 	ret ; $5fc1
 .draw:
 	ld a, [wMapSceneStage2] ; $5fc2
-	ld d, $02 ; $5fc5
+	ld d, ANIM_BOUNCE ; $5fc5
 	farcall ScriptSetActorAnimation ; $5fc7
 	ld a, [wMapSceneStage2] ; $5fca
 	farcall ScriptWaitActorIdle ; $5fcd
@@ -269,7 +269,7 @@ StrokeChallengerResultScene:
 	ld a, [wMapSceneStage2] ; $600a
 	farcall ScriptWaitActorMoveDone ; $600d
 	ld a, [wMapSceneStage2] ; $6010
-	ld d, $02 ; $6013
+	ld d, ANIM_BOUNCE ; $6013
 	farcall ScriptSetActorAnimation ; $6015
 	ld a, [wMapSceneStage2] ; $6018
 	farcall ScriptWaitActorIdle ; $601b
@@ -360,12 +360,12 @@ WalkChallengerAwayDefeated:
 	ld b, $c0 ; $60f9
 	farcall SetActorFacing ; $60fb
 	ld a, [wMapSceneStage2] ; $60fe
-	ld d, $02 ; $6101
+	ld d, ANIM_BOUNCE ; $6101
 	farcall ScriptSetActorAnimation ; $6103
 	ld a, [wMapSceneStage2] ; $6106
 	farcall ScriptWaitActorIdle ; $6109
 	ld a, [wMapSceneStage2] ; $610c
-	ld d, $02 ; $610f
+	ld d, ANIM_BOUNCE ; $610f
 	farcall ScriptSetActorAnimation ; $6111
 	ld a, [wMapSceneStage2] ; $6114
 	farcall ScriptWaitActorIdle ; $6117

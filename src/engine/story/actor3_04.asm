@@ -424,7 +424,7 @@ LoadActorObjectDef:
 	ld a, $ff ; $4b5b
 	ld [hl+], a ; $4b5d
 	ld [hl+], a ; $4b5e
-	ld d, $00 ; $4b5f
+	ld d, ANIM_STILL ; $4b5f
 	call SetActorAnimation ; $4b61
 	pop hl ; $4b64
 	pop de ; $4b65

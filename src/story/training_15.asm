@@ -753,7 +753,7 @@ TrainingCourtNpc13_15:
 	script_wait_frames $0a ; $4bf8
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3f00, $3f00 ; $4bff
 	script_wait_frames $14 ; $4c0a
-	script_set_anim ACTOR_PLAYER, $06 ; $4c11
+	script_set_anim ACTOR_PLAYER, ANIM_SWING_LOOP ; $4c11
 	script_wait_frames $b4 ; $4c18
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $4c1f
 	script_wait_idle ACTOR_PLAYER ; $4c26

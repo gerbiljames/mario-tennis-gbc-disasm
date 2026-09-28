@@ -1,4 +1,4 @@
-# Project status — 2026-09-27
+# Project status — 2026-09-28
 
 This is where the disassembly stands and what is still open. The dated
 working log that used to live here — every session's findings in the order
@@ -114,6 +114,22 @@ new branch that decides nothing, a ROM address written as a number, an
 unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
+
+* **2026-09-28** — the last animation ids. Ids 5 and up depend on the
+  sprite's `AnimPtrs` layout (fifteen layouts across the walk sprites), so
+  each new name says which sprites it holds for: `ANIM_EXERCISE`, `ANIM_HOP`,
+  `ANIM_SWING_LOOP`, `ANIM_TROPHY_SINGLES`, `ANIM_TROPHY_SMALL`,
+  `ANIM_DISTANT`, `ANIM_OVERHEAD_SWING`, `ANIM_SWING_BACK`,
+  `ANIM_SWING_THROUGH`, `ANIM_SIDESTEP`. The awards scenes swap sprites with
+  `script_set_objdef` before animating, so each site was resolved to the
+  sprite it animates, and a PyBoy sweep (36 story states × every location,
+  a hook on `SetActorAnimation`) confirmed every site it reached ran on that
+  sprite. The trophy's ids pick which trophy it shows: the doubles trophy,
+  the singles cup, the small ones. No `as_anim`, `script_set_anim` or
+  `map_actor` animation is a number now, and the sprite scripts' `anim_set`
+  operands are `ANIM_WALK`, `CHARANIM_IDLE` or `CHARANIM_SERVE_READY`. The
+  character records still unnamed (`$36`, `$49`-`$53`, `$57`, `$5a`) are
+  loaded by nothing.
 
 * **2026-09-28** — drills and 381 more actor slots. Nine eventtest targets
   pick each drill from the Test map's list; 240 targeted sessions match the

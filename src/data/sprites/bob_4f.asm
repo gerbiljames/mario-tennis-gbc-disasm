@@ -378,17 +378,17 @@ BobSpriteAnim05:
 	; $7f71, 6 bytes (sprite_anim)
 	anim_frame $06, $04
 	anim_frame $07, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 BobSpriteAnim06:
 	; $7f77, 6 bytes (sprite_anim)
 	anim_frame $09, $04
 	anim_frame $0a, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 BobSpriteAnim07:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $0c, $04
 	anim_frame $0d, $14
-	anim_set $01
+	anim_set CHARANIM_IDLE
 BobSpriteAnim08:
 	; $7f83, 5 bytes (sprite_anim)
 	anim_frame $15, $04
@@ -397,15 +397,15 @@ BobSpriteAnim08:
 BobSpriteAnim09:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $06, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 BobSpriteAnim10:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $09, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 BobSpriteAnim11:
 	; $7f90, 4 bytes (sprite_anim)
 	anim_frame $0c, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 BobSpriteAnim12:
 	; $7f94, 3 bytes (sprite_anim)
 	anim_frame $15, $18
@@ -433,11 +433,11 @@ BobSpriteAnim17:
 	anim_frame $0f, $07
 	anim_frame $10, $07
 	anim_frame $0f, $07
-	anim_set $10
+	anim_set CHARANIM_SERVE_READY
 BobSpriteAnim18:
 	; $7faf, 8 bytes (sprite_anim)
 	anim_frame $11, $12
 	anim_frame $12, $14
 	anim_frame $13, $16
-	anim_set $01
+	anim_set CHARANIM_IDLE
 	; $7fb7, 73 bytes fill to bank end (linker-padded)

@@ -54,7 +54,7 @@ RunTravelingTeamBracketIfWon_13:
 	ret ; $7a3f
 ActorScript_13_20:
 	; $7a40, 3 bytes (actor_script)
-	as_anim $06
+	as_anim ANIM_SWING_LOOP
 	as_halt
 ActorScript_13_21:
 	; $7a43, 29 bytes (actor_script)

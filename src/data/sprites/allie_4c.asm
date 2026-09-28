@@ -384,17 +384,17 @@ AllieSpriteAnim05:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $06, $04
 	anim_frame $07, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AllieSpriteAnim06:
 	; $7f83, 6 bytes (sprite_anim)
 	anim_frame $09, $04
 	anim_frame $0a, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AllieSpriteAnim07:
 	; $7f89, 6 bytes (sprite_anim)
 	anim_frame $0c, $04
 	anim_frame $0d, $14
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AllieSpriteAnim08:
 	; $7f8f, 5 bytes (sprite_anim)
 	anim_frame $15, $04
@@ -403,15 +403,15 @@ AllieSpriteAnim08:
 AllieSpriteAnim09:
 	; $7f94, 4 bytes (sprite_anim)
 	anim_frame $06, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AllieSpriteAnim10:
 	; $7f98, 4 bytes (sprite_anim)
 	anim_frame $09, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AllieSpriteAnim11:
 	; $7f9c, 4 bytes (sprite_anim)
 	anim_frame $0c, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AllieSpriteAnim12:
 	; $7fa0, 3 bytes (sprite_anim)
 	anim_frame $15, $18
@@ -439,11 +439,11 @@ AllieSpriteAnim17:
 	anim_frame $0f, $07
 	anim_frame $10, $07
 	anim_frame $0f, $07
-	anim_set $10
+	anim_set CHARANIM_SERVE_READY
 AllieSpriteAnim18:
 	; $7fbb, 8 bytes (sprite_anim)
 	anim_frame $11, $12
 	anim_frame $12, $14
 	anim_frame $13, $16
-	anim_set $01
+	anim_set CHARANIM_IDLE
 	; $7fc3, 61 bytes fill to bank end (linker-padded)

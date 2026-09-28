@@ -71,13 +71,13 @@ WalkSprite_72_00_Anim02:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_00_Anim03:
 	; $4655, 8 bytes (sprite_anim)
 	anim_frame $00, $0a
 	anim_frame $06, $1e
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_00_Anim04:
 	; $465d, 20 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -89,7 +89,7 @@ WalkSprite_72_00_Anim04:
 	anim_frame $00, $03
 	anim_frame $08, $0a
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_00_Anim05:
 	; $4671, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -97,7 +97,7 @@ WalkSprite_72_00_Anim05:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_01:
 	db $07, $04, $02, $00 ; OAM attr, facing count, unread, unread
 	dw .frames, WalkSprite_72_01_AnimPtrs, .frames ; frame array, anim scripts, frame array
@@ -156,13 +156,13 @@ WalkSprite_72_01_Anim02:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_01_Anim03:
 	; $4cc5, 8 bytes (sprite_anim)
 	anim_frame $00, $0a
 	anim_frame $06, $1e
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_01_Anim04:
 	; $4ccd, 20 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -174,7 +174,7 @@ WalkSprite_72_01_Anim04:
 	anim_frame $00, $03
 	anim_frame $08, $0a
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_01_Anim05:
 	; $4ce1, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -182,7 +182,7 @@ WalkSprite_72_01_Anim05:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_02:
 	db $03, $04, $02, $00 ; OAM attr, facing count, unread, unread
 	dw .frames, WalkSprite_72_02_AnimPtrs, .frames ; frame array, anim scripts, frame array
@@ -250,13 +250,13 @@ WalkSprite_72_02_Anim02:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_02_Anim03:
 	; $5635, 8 bytes (sprite_anim)
 	anim_frame $00, $0a
 	anim_frame $06, $1e
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_02_Anim04:
 	; $563d, 20 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -268,7 +268,7 @@ WalkSprite_72_02_Anim04:
 	anim_frame $00, $03
 	anim_frame $08, $0a
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_02_Anim05:
 	; $5651, 8 bytes (sprite_anim)
 	anim_frame $00, $14
@@ -288,7 +288,7 @@ WalkSprite_72_02_Anim07:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_03:
 	db $06, $04, $02, $00 ; OAM attr, facing count, unread, unread
 	dw .frames, WalkSprite_72_03_AnimPtrs, .frames ; frame array, anim scripts, frame array
@@ -347,13 +347,13 @@ WalkSprite_72_03_Anim02:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_03_Anim03:
 	; $5cb5, 8 bytes (sprite_anim)
 	anim_frame $00, $0a
 	anim_frame $06, $1e
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_03_Anim04:
 	; $5cbd, 20 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -365,7 +365,7 @@ WalkSprite_72_03_Anim04:
 	anim_frame $00, $03
 	anim_frame $08, $0a
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_03_Anim05:
 	; $5cd1, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -373,7 +373,7 @@ WalkSprite_72_03_Anim05:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_04:
 	db $07, $04, $02, $00 ; OAM attr, facing count, unread, unread
 	dw .frames, WalkSprite_72_04_AnimPtrs, .frames ; frame array, anim scripts, frame array
@@ -432,13 +432,13 @@ WalkSprite_72_04_Anim02:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_04_Anim03:
 	; $6325, 8 bytes (sprite_anim)
 	anim_frame $00, $0a
 	anim_frame $06, $1e
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_04_Anim04:
 	; $632d, 20 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -450,7 +450,7 @@ WalkSprite_72_04_Anim04:
 	anim_frame $00, $03
 	anim_frame $08, $0a
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_04_Anim05:
 	; $6341, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -458,7 +458,7 @@ WalkSprite_72_04_Anim05:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_05:
 	db $07, $04, $02, $00 ; OAM attr, facing count, unread, unread
 	dw .frames, WalkSprite_72_05_AnimPtrs, .frames ; frame array, anim scripts, frame array
@@ -517,13 +517,13 @@ WalkSprite_72_05_Anim02:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_05_Anim03:
 	; $6995, 8 bytes (sprite_anim)
 	anim_frame $00, $0a
 	anim_frame $06, $1e
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_05_Anim04:
 	; $699d, 20 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -535,7 +535,7 @@ WalkSprite_72_05_Anim04:
 	anim_frame $00, $03
 	anim_frame $08, $0a
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_05_Anim05:
 	; $69b1, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -543,7 +543,7 @@ WalkSprite_72_05_Anim05:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_06:
 	db $03, $04, $02, $00 ; OAM attr, facing count, unread, unread
 	dw .frames, WalkSprite_72_06_AnimPtrs, .frames ; frame array, anim scripts, frame array
@@ -602,13 +602,13 @@ WalkSprite_72_06_Anim02:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_06_Anim03:
 	; $7005, 8 bytes (sprite_anim)
 	anim_frame $00, $0a
 	anim_frame $06, $1e
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_06_Anim04:
 	; $700d, 20 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -620,7 +620,7 @@ WalkSprite_72_06_Anim04:
 	anim_frame $00, $03
 	anim_frame $08, $0a
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_06_Anim05:
 	; $7021, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -628,7 +628,7 @@ WalkSprite_72_06_Anim05:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_07:
 	db $04, $04, $02, $00 ; OAM attr, facing count, unread, unread
 	dw .frames, WalkSprite_72_07_AnimPtrs, .frames ; frame array, anim scripts, frame array
@@ -687,13 +687,13 @@ WalkSprite_72_07_Anim02:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_07_Anim03:
 	; $7675, 8 bytes (sprite_anim)
 	anim_frame $00, $0a
 	anim_frame $06, $1e
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_07_Anim04:
 	; $767d, 20 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -705,7 +705,7 @@ WalkSprite_72_07_Anim04:
 	anim_frame $00, $03
 	anim_frame $08, $0a
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_07_Anim05:
 	; $7691, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -713,7 +713,7 @@ WalkSprite_72_07_Anim05:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_08:
 	db $05, $04, $02, $00 ; OAM attr, facing count, unread, unread
 	dw .frames, WalkSprite_72_08_AnimPtrs, .frames ; frame array, anim scripts, frame array
@@ -772,13 +772,13 @@ WalkSprite_72_08_Anim02:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_08_Anim03:
 	; $7ce5, 8 bytes (sprite_anim)
 	anim_frame $00, $0a
 	anim_frame $06, $1e
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_08_Anim04:
 	; $7ced, 20 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -790,7 +790,7 @@ WalkSprite_72_08_Anim04:
 	anim_frame $00, $03
 	anim_frame $08, $0a
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 WalkSprite_72_08_Anim05:
 	; $7d01, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -798,5 +798,5 @@ WalkSprite_72_08_Anim05:
 	anim_frame $00, $08
 	anim_frame $09, $08
 	anim_frame $00, $0a
-	anim_set $01
+	anim_set ANIM_WALK
 	; $7d0d, 755 bytes fill to bank end (linker-padded)

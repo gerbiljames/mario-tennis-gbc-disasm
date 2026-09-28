@@ -3,11 +3,11 @@ ActorScript_15_01:
 	as_set_field $18, $0004
 ActorScript_15_02:
 	; $55e6, 3 bytes (actor_script)
-	as_anim $06
+	as_anim ANIM_SWING_LOOP
 	as_halt
 ActorScript_15_03:
 	; $55e9, 7 bytes (actor_script)
-	as_anim $08
+	as_anim ANIM_OVERHEAD_SWING
 	as_wait $3c
 	as_jump ActorScript_15_03
 WaterSpriteSwingCountTask:

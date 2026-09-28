@@ -143,7 +143,7 @@ CourtyardActors_13:
 	; $5c86, 94 bytes (map_actors)
 	map_actor $0000, ActorScript_13_27, $0d00, $1d00, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, COURTYARD_KEVIN
 	map_actor $0000, ActorScript_13_27, $0500, $1d00, FACE_RIGHT, OBJ_BOB, ANIM_WALK, $07, COURTYARD_BOB
-	map_actor $0000, ActorScript_13_20, $0d00, $2300, FACE_UP, OBJ_FAY, $06, $03, COURTYARD_FAY
+	map_actor $0000, ActorScript_13_20, $0d00, $2300, FACE_UP, OBJ_FAY, ANIM_SWING_LOOP, $03, COURTYARD_FAY
 	map_actor $0000, ActorScript_13_27, $0800, $1300, FACE_UP, OBJ_CURT, ANIM_WALK, $06, COURTYARD_CURT
 	map_actor $0000, ActorScript_13_28, $0f00, $1700, FACE_DOWN, OBJ_BETH, ANIM_WALK, $06, COURTYARD_BETH
 	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, COURTYARD_INVISIBLE

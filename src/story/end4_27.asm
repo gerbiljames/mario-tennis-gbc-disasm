@@ -136,13 +136,13 @@ ComputeMachineCourtProgress_27:
 	ret ; $6423
 ActorScript_27_13:
 	; $6424, 35 bytes (actor_script)
-	as_anim $0b
+	as_anim ANIM_SIDESTEP
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait $32
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_WALK
 	as_wait $01
-	as_anim $0b
+	as_anim ANIM_SIDESTEP
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_wait $32
 	as_set_field ACTORF_HEADING, FACE_DOWN

@@ -422,7 +422,7 @@ AwardsCeremonySwapActors_0f:
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_3, $1100, $1600 ; $5e70
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $1100, $1500 ; $5e7b
 	script_face ACTOR_AWARDS_CEREMONY_TROPHY_3, FACE_UP ; $5e86
-	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $08 ; $5e8d
+	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, ANIM_TROPHY_SMALL ; $5e8d
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $1100, $1200 ; $5e94
 	script_move_target ACTOR_AWARDS_CEREMONY_TROPHY_3, $1100, $1300 ; $5e9f
 	script_wait_move ACTOR_AWARDS_CEREMONY_TROPHY_3 ; $5eaa
@@ -433,7 +433,7 @@ AwardsCeremonySwapActors_0f:
 	script_set_position ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $1100, $1300 ; $5ed5
 	script_set_position ACTOR_AWARDS_CEREMONY_TROPHY_3, $1000, $1300 ; $5ee0
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_LEFT ; $5eeb
-	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_3, $08 ; $5ef2
+	script_set_anim ACTOR_AWARDS_CEREMONY_TROPHY_3, ANIM_TROPHY_SMALL ; $5ef2
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $1000, $1300 ; $5ef9
 	script_move_target ACTOR_AWARDS_CEREMONY_TROPHY_3, $0f00, $1300 ; $5f04
 	script_wait_move ACTOR_AWARDS_CEREMONY_TROPHY_3 ; $5f0f

@@ -432,9 +432,9 @@ TrainingGymInitScript_0e:
 	ld hl, $0018 ; $4641
 	add hl, de ; $4644
 	ld [hl], a ; $4645
-	script_set_anim ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1, $05 ; $4646
-	script_set_anim ACTOR_TRAINING_GYM_JUMPING_JACKS_A, $05 ; $464d
-	script_set_anim ACTOR_TRAINING_GYM_JUMPING_JACKS_B_2, $05 ; $4654
+	script_set_anim ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1, ANIM_EXERCISE ; $4646
+	script_set_anim ACTOR_TRAINING_GYM_JUMPING_JACKS_A, ANIM_EXERCISE ; $464d
+	script_set_anim ACTOR_TRAINING_GYM_JUMPING_JACKS_B_2, ANIM_EXERCISE ; $4654
 	call SetupGymActorsForProgress ; $465b
 	ld a, [wStoryModeEntryPoint] ; $465e
 	cp $0b ; $4661

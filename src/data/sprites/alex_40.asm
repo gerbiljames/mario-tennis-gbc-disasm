@@ -390,17 +390,17 @@ AlexSpriteAnim05:
 	; $7f89, 6 bytes (sprite_anim)
 	anim_frame $06, $04
 	anim_frame $07, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AlexSpriteAnim06:
 	; $7f8f, 6 bytes (sprite_anim)
 	anim_frame $09, $04
 	anim_frame $0a, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AlexSpriteAnim07:
 	; $7f95, 6 bytes (sprite_anim)
 	anim_frame $0c, $04
 	anim_frame $0d, $14
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AlexSpriteAnim08:
 	; $7f9b, 5 bytes (sprite_anim)
 	anim_frame $15, $04
@@ -409,15 +409,15 @@ AlexSpriteAnim08:
 AlexSpriteAnim09:
 	; $7fa0, 4 bytes (sprite_anim)
 	anim_frame $06, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AlexSpriteAnim10:
 	; $7fa4, 4 bytes (sprite_anim)
 	anim_frame $09, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AlexSpriteAnim11:
 	; $7fa8, 4 bytes (sprite_anim)
 	anim_frame $0c, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 AlexSpriteAnim12:
 	; $7fac, 3 bytes (sprite_anim)
 	anim_frame $15, $18
@@ -445,11 +445,11 @@ AlexSpriteAnim17:
 	anim_frame $0f, $07
 	anim_frame $10, $07
 	anim_frame $0f, $07
-	anim_set $10
+	anim_set CHARANIM_SERVE_READY
 AlexSpriteAnim18:
 	; $7fc7, 8 bytes (sprite_anim)
 	anim_frame $11, $12
 	anim_frame $12, $14
 	anim_frame $13, $16
-	anim_set $01
+	anim_set CHARANIM_IDLE
 	; $7fcf, 49 bytes fill to bank end (linker-padded)

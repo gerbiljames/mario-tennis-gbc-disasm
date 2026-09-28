@@ -408,7 +408,7 @@ ActorScript_12_27:
 	as_set_target $2300, $1e00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $06
+	as_anim ANIM_SWING_LOOP
 	as_halt
 ActorScript_12_28:
 	; $7894, 23 bytes (actor_script)
@@ -540,7 +540,7 @@ ActorScript_12_42:
 	as_set_target $2d00, $1100
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $06
+	as_anim ANIM_SWING_LOOP
 	as_halt
 	as_set_target $1900, $0f00
 	as_wait_move
@@ -561,12 +561,12 @@ ActorScript_12_42:
 ActorScript_12_43:
 	; $79e3, 7 bytes (actor_script)
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_anim $06
+	as_anim ANIM_SWING_LOOP
 	as_halt
 ActorScript_12_44:
 	; $79ea, 7 bytes (actor_script)
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_anim $06
+	as_anim ANIM_SWING_LOOP
 	as_halt
 ActorScript_12_45:
 	; $79f1, 11 bytes (actor_script)

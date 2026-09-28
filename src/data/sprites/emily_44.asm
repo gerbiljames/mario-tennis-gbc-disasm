@@ -377,17 +377,17 @@ EmilySpriteAnim05:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, $04
 	anim_frame $07, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 EmilySpriteAnim06:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, $04
 	anim_frame $0a, $17
-	anim_set $01
+	anim_set CHARANIM_IDLE
 EmilySpriteAnim07:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, $04
 	anim_frame $0d, $14
-	anim_set $01
+	anim_set CHARANIM_IDLE
 EmilySpriteAnim08:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, $04
@@ -396,15 +396,15 @@ EmilySpriteAnim08:
 EmilySpriteAnim09:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 EmilySpriteAnim10:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 EmilySpriteAnim11:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, $19
-	anim_set $01
+	anim_set CHARANIM_IDLE
 EmilySpriteAnim12:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, $18
@@ -432,11 +432,11 @@ EmilySpriteAnim17:
 	anim_frame $0f, $07
 	anim_frame $10, $07
 	anim_frame $0f, $07
-	anim_set $10
+	anim_set CHARANIM_SERVE_READY
 EmilySpriteAnim18:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, $12
 	anim_frame $12, $14
 	anim_frame $13, $16
-	anim_set $01
+	anim_set CHARANIM_IDLE
 	; $7fb5, 75 bytes fill to bank end (linker-padded)

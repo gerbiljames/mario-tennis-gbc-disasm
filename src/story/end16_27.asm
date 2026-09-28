@@ -61,7 +61,7 @@ End17AwardCeremonyInitScript_27:
 	farcall BeginCutsceneScriptMode ; $41bb
 	jr .setEnd17CeremonyObjectDefs ; $41be
 .animate:
-	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, $06 ; $41c0
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, ANIM_TROPHY_SINGLES ; $41c0
 .setEnd17CeremonyObjectDefs:
 	call SetEnd17CeremonyObjectDefs_27 ; $41c7
 	jr .placeActors ; $41ca
@@ -134,7 +134,7 @@ End17AwardCeremonyInitScript_27:
 	farcall LoadActorObjectDefIfValid ; $4389
 	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, ANIM_WALK ; $438c
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, FACE_RIGHT ; $4393
-	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, $08 ; $439a
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, ANIM_DISTANT ; $439a
 	script_player_speed $0006 ; $43a1
 	script_move_player $0c00, $0d00 ; $43a7
 	farcall WaitPlayerMoveDone ; $43b1

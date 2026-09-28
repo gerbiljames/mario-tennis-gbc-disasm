@@ -406,7 +406,7 @@ SetupCharViewerScene:
 	farcall LoadActorObjectDefIfValid ; $6f6a
 	ld bc, wActors + 3 * ACTOR_SIZE ; $6f6d
 	farcall LoadActorObjectDefIfValid ; $6f70
-	ld d, $01 ; $6f73
+	ld d, ANIM_WALK ; $6f73
 	ld bc, wActors ; $6f75
 	farcall SetActorAnimationChecked ; $6f78
 	ld bc, wActors + 1 * ACTOR_SIZE ; $6f7b

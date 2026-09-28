@@ -517,7 +517,10 @@ def CHAR_PEACH      equ $1f
 ; (bank $30 string id + 27): "Ranker 32" to "Ranker 47", then six named
 ; opponents. On screen RemapExtendedCharId shows each as a roster character
 ; (NameTextRemap_02), so these names are the records' own, not what the player
-; reads. Records $36 and up have no name in the pool.
+; reads. Records $36 and up have no name in the pool. $36, $49-$53, $57 and
+; $5a are named nowhere below because nothing loads them: no match settings
+; row, drill_def, partner table entry or code site holds those ids, and their
+; stats are all zero.
 def CHAR_RANKER_32     equ $20
 def CHAR_RANKER_33     equ $21
 def CHAR_RANKER_34     equ $22
@@ -967,6 +970,25 @@ def ANIM_NOD    equ $03 ; head lowered for half a second, then ANIM_WALK
 def ANIM_SHAKE  equ $04 ; upper body swayed left, right, left, right: a head shake
 def ANIM_SWING  equ $05 ; a racket swing, in the sprites that have one (racket-holding
                         ; students, Bob, Pam, the twelve-animation sprites); elsewhere a bounce
+; Ids 5 and up, each named for the sprites whose AnimPtrs table gives it that
+; meaning; the same id is something else in other sprites, or reads past the
+; end of their frame array. The twelve-animation sprites are OBJ_ALEX,
+; OBJ_NINA, the WALK_6F_* students, Toad, Bob-omb, Boo and OBJ_WALK_77_05;
+; only Alex and Nina have the frames their ids 8 and 11 show.
+def ANIM_EXERCISE       equ $05 ; OBJ_JUMPING_JACKS_A/_B: the exercise, four poses held $30 frames each, looped
+def ANIM_HOP            equ $05 ; OBJ_WALK_75_06: one quick crouch, then ANIM_WALK
+def ANIM_SWING_LOOP     equ $06 ; the racket holders (the twelve-animation sprites, Bob, Pam, Beth, Fay,
+                                ; OBJ_WALK_72_02, OBJ_WALK_71_05-07): backswing, follow-through, repeated
+def ANIM_TROPHY_SINGLES equ $06 ; OBJ_TROPHY frames 2-3: the singles cup (ANIM_WALK shows the doubles trophy)
+def ANIM_DISTANT        equ $08 ; Alex, Nina, Harry, Kate, Emily, Luigi, DK, Baby Mario: a smaller figure
+                                ; stepping, as if far off (walking away through a doorway); Alex's and
+                                ; Nina's sideways facings show a full-size front view instead
+def ANIM_TROPHY_SMALL   equ $08 ; OBJ_TROPHY frames 4-5: the small trophy, glinting
+def ANIM_OVERHEAD_SWING equ $08 ; Bob and OBJ_WALK_71_05-07: racket held overhead, a quick swing, the
+                                ; follow-through held, looped
+def ANIM_SWING_BACK     equ $09 ; the twelve-animation sprites: the backswing pose, held
+def ANIM_SWING_THROUGH  equ $0a ; the twelve-animation sprites: the follow-through pose, held
+def ANIM_SIDESTEP       equ $0b ; Alex and Nina: a lean to the side, twice, then held
 
 ; --- On-court character animation ids (wCharAnimId $df2e, wCharSwingAnim $df15) ---
 ; One id space, not two. SetCharAnimation ($08:$69ea) stores its argument in

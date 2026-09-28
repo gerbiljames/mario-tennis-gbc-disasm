@@ -121,7 +121,7 @@ ShowEquipChangeConfirmation:
 	and a ; $5167
 	jr nz, .handOver ; $5168
 	call MirrorPlayerSpriteIfLeftHanded ; $516a
-	script_set_anim ACTOR_PLAYER, $09 ; $516d
+	script_set_anim ACTOR_PLAYER, ANIM_SWING_BACK ; $516d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5174
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_03 ; $517b
 	script_speak $8c ; $5186
@@ -141,15 +141,15 @@ ShowEquipChangeConfirmation:
 	ret ; $51d6
 ActorScript_0e_03:
 	; $51d7, 13 bytes (actor_script)
-	as_anim $09
+	as_anim ANIM_SWING_BACK
 	as_wait $1e
-	as_anim $0a
+	as_anim ANIM_SWING_THROUGH
 	as_sound $91
 	as_wait $1e
 	as_jump ActorScript_0e_03
 ActorScript_0e_04:
 	; $51e4, 43 bytes (actor_script)
-	as_anim $0b
+	as_anim ANIM_SIDESTEP
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait $0c
 	as_sound $92
@@ -157,7 +157,7 @@ ActorScript_0e_04:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_WALK
 	as_wait $01
-	as_anim $0b
+	as_anim ANIM_SIDESTEP
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_wait $0c
 	as_sound $92
