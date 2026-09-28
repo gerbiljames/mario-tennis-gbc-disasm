@@ -28,7 +28,7 @@ ClearWindowGlyphPage:
 	call ClearMemory16 ; $40cc
 	pop_wram_bank ; $40cf
 	ret ; $40d4
-QueueGlyphPageDMAOnA:
+Unused_05_QueueGlyphPageDMAOnA:
 	ldh a, [hPlayerInputFlags] ; $40d5
 	bit PADB_A, a ; $40d7
 	jr nz, .startDMA ; $40d9

@@ -25,7 +25,7 @@ Unused_00_SetInterruptsVBlankSerial:
 	ldh [rIE], a ; $2a2a
 	ei ; $2a2c
 	ret ; $2a2d
-QueueDeferredTilemapCopy:
+Unused_00_QueueDeferredTilemapCopy:
 	push af ; $2a2e
 	ld [wDeferredTilemapWramBank], a ; $2a2f
 	ld a, c ; $2a32

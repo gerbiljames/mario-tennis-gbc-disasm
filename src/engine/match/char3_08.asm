@@ -315,7 +315,7 @@ UpdateAllChars:
 	call UpdateChar ; $694d
 	wram_bank WRAM_CHAR0 ; $6950
 	ret ; $6956
-StubNop_08:
+Unused_08_StubNop:
 	ret ; $6957
 UpdateChar:
 	ld a, [wCharObjectBank] ; $6958

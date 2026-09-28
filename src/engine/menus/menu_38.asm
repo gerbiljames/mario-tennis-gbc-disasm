@@ -129,8 +129,9 @@ SpriteBobOffsetYTable_38:
 ; Instruction-identical to MoveMenuCursorGridFromLinkInput_16 and MoveMenuCursorGridFromLinkInput_3e (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid_from_link_input, 38 ; $4188 MoveMenuCursorGridFromLinkInput_38
 ; Instruction-identical to MoveMenuCursorGridRemote_16 and MoveMenuCursorGridRemote_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor_grid_remote, 38 ; $4205 MoveMenuCursorGridRemote_38
-MoveMenuCursor2GridRemote_38:
+Unused_38_MoveMenuCursor2GridRemote:
 	ld a, [wMenuCursor2X] ; $42d0
 	ld d, a ; $42d3
 	ld a, [wMenuCursor2Y] ; $42d4
@@ -266,8 +267,10 @@ MoveMenuCursor2GridRemote_38:
 ; Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_1b, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
 	twin get_menu_cursor_index, 38 ; $4399 GetMenuCursorIndex_38
 ; Instruction-identical to GetMenuCursorIndexFromPtr_1b (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin get_menu_cursor_index_from_ptr, 38 ; $43ab GetMenuCursorIndexFromPtr_38
 ; Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_3b and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
 	twin set_menu_cursor_from_index, 38 ; $43bb SetMenuCursorFromIndex_38
 ; Instruction-identical to SetMenuCursorFromIndexToPtr_16 and SetMenuCursorFromIndexToPtr_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin set_menu_cursor_from_index_to_ptr, 38 ; $43cd SetMenuCursorFromIndexToPtr_38

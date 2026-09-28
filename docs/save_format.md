@@ -95,7 +95,7 @@ than the game ever writes. Full layout (`b`=SRAM bank, `off` from
 | 0/2/4 | 0:`$0800/$0d00/$1200` | `$300` | story slot N primary: image of WRAM `$c800-$caff` |
 | 1/3/5 | 0:`$0b00/$1000/$1500` | `$200` | story slot N secondary block (written during play) |
 | 6 | 0:`$1700` | `$30` | small record; the only block preserved across a full save wipe (`ReinitSaveRamPreservingBlock6`) |
-| 7-10 | 0:`$1730+` | `$20/$10` | small records; accessors (`WriteBlock7WithBackup` ... `ReadBlock10`, 03:587b+) exist but no caller found — never valid in a real save |
+| 7-10 | 0:`$1730+` | `$20/$10` | small records; accessors (`Unused_03_WriteBlock7WithBackup` ... `Unused_03_ReadBlock10`, 03:587b+) exist but no caller found — never valid in a real save |
 | 11 (`$0b`) | 0:`$1800` | `$200` | N64 (Transfer Pak) records block, see below |
 | 12-26 | 0:`$1a00+` | `$20/$80` | defined, never written by GBC code |
 | 27-37 (`$1b-$25`) | 1: same off as 0-10 | same | bank-1 backups of blocks 0-10 (backup id = primary + `$1b`) |

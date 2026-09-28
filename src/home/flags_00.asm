@@ -18,7 +18,7 @@ GetScrollBufferAddr:
 	ld de, wMapBuffer64 ; $230e
 	add hl, de ; $2311
 	ret ; $2312
-BlitBGStrip:
+Unused_00_BlitBGStrip:
 	ld a, [wCameraY + 1] ; $2313
 	add c ; $2316
 	and $1f ; $2317
@@ -87,7 +87,7 @@ BlitBGStrip:
 	ld a, $01 ; $237b
 	ldh [hBGRowBlitPending], a ; $237d
 	ret ; $237f
-BlitBGStrip2:
+Unused_00_BlitBGStrip2:
 	ld a, [wCameraX + 1] ; $2380
 	add b ; $2383
 	and $1f ; $2384

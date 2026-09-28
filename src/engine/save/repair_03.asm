@@ -300,7 +300,7 @@ ReadBlock6:
 	pop de ; $5878
 	pop bc ; $5879
 	ret ; $587a
-WriteBlock7WithBackup:
+Unused_03_WriteBlock7WithBackup:
 	push bc ; $587b
 	push de ; $587c
 	push hl ; $587d
@@ -328,7 +328,7 @@ WriteBlock7WithBackup:
 	pop de ; $58a3
 	pop bc ; $58a4
 	ret ; $58a5
-ReadBlock7:
+Unused_03_ReadBlock7:
 	push bc ; $58a6
 	push de ; $58a7
 	push hl ; $58a8
@@ -338,7 +338,7 @@ ReadBlock7:
 	pop de ; $58af
 	pop bc ; $58b0
 	ret ; $58b1
-WriteBlock8WithBackup:
+Unused_03_WriteBlock8WithBackup:
 	push bc ; $58b2
 	push de ; $58b3
 	push hl ; $58b4
@@ -366,7 +366,7 @@ WriteBlock8WithBackup:
 	pop de ; $58da
 	pop bc ; $58db
 	ret ; $58dc
-ReadBlock8:
+Unused_03_ReadBlock8:
 	push bc ; $58dd
 	push de ; $58de
 	push hl ; $58df
@@ -376,7 +376,7 @@ ReadBlock8:
 	pop de ; $58e6
 	pop bc ; $58e7
 	ret ; $58e8
-WriteBlock9WithBackup:
+Unused_03_WriteBlock9WithBackup:
 	push bc ; $58e9
 	push de ; $58ea
 	push hl ; $58eb
@@ -404,7 +404,7 @@ WriteBlock9WithBackup:
 	pop de ; $5911
 	pop bc ; $5912
 	ret ; $5913
-ReadBlock9:
+Unused_03_ReadBlock9:
 	push bc ; $5914
 	push de ; $5915
 	push hl ; $5916
@@ -414,7 +414,7 @@ ReadBlock9:
 	pop de ; $591d
 	pop bc ; $591e
 	ret ; $591f
-WriteBlock10WithBackup:
+Unused_03_WriteBlock10WithBackup:
 	push bc ; $5920
 	push de ; $5921
 	push hl ; $5922
@@ -442,7 +442,7 @@ WriteBlock10WithBackup:
 	pop de ; $5948
 	pop bc ; $5949
 	ret ; $594a
-ReadBlock10:
+Unused_03_ReadBlock10:
 	push bc ; $594b
 	push de ; $594c
 	push hl ; $594d

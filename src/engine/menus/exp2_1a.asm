@@ -1,4 +1,4 @@
-StubNop_1a_3:
+Unused_1a_StubNop3:
 	ret ; $4da8
 UnusedDrawExpScreenMessage_1:
 	push af ; $4da9

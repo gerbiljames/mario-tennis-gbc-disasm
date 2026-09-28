@@ -219,14 +219,14 @@ ActorScript_0f_11:
 	as_jump .L1
 MapScriptNopAlt_0f:
 	ret ; $7b7f
-MapScriptClearActiveFlag_0f:
+Unused_0f_MapScriptClearActiveFlag:
 	xor a ; $7b80
 	ld [wStoryScriptRan], a ; $7b81
 	ret ; $7b84
 MapScriptPlaySoundA2_0f:
 	sound SFX_STORY_CUE ; $7b85
 	ret ; $7b87
-MapScriptHideLocationName_0f:
+Unused_0f_MapScriptHideLocationName:
 	xor a ; $7b88
 	ld [wStoryModeShowLocationName], a ; $7b89
 	ret ; $7b8c
@@ -439,7 +439,7 @@ ComputeRankingProgressIndex_0f:
 	jr z, .loop ; $7d84
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7d86
 	jr .loop ; $7d88
-; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one.
+; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_0f_ComputeStoryRankTier:
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c

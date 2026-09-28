@@ -24,6 +24,7 @@ UpdateAnimatedTilesTask:
 ; Instruction-identical to DrawNameWithDiacritics_17 and DrawNameWithDiacritics_3e (one copy per bank); a change here belongs in every copy.
 	twin draw_name_with_diacritics, 1b ; $4434 DrawNameWithDiacritics_1b
 ; Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_3b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin draw_decimal_number, 1b ; $446d DrawDecimalNumber_1b
 DrawAsciiDigitString_1b:
 	ld a, [hl+] ; $448e

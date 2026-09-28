@@ -341,7 +341,7 @@ font tileset reserves tiles `$02`-`$09` for the box:
 | `QueueFullTilemapCopy` / `QueueFullAttrmapCopy` | `$05:$41c6` / `$41df` | `b` = WRAM bank; `$d000` → `$9800` and `$d400` → `$9800 + VRAM_BANK1`, `c = $40`. |
 | `CopyVisibleTilemapToVRAM` | `$05:$4146` | scroll-aware: 19 rows starting at `(wCameraY+1) & $1f`, split into two copies when the band wraps past row 32. Both planes. |
 | `CopyScrolledSceneTilemapToVram` | `$0a:$5c29` | the overworld's LCD-off blit — see below. |
-| `QueueDeferredTilemapCopy` | `$00:$2a2e` | stores `a` = WRAM bank, `c` = length, `hl` = tile source, `de` = attribute source, then registers `VBlankDeferredTilemapCopyTask` as a frame task with id `$05`. `wDeferredTilemapPending`'s low nibble owes the tile plane and the high nibble the attributes; the destination is hard-coded `$9800`. |
+| `Unused_00_QueueDeferredTilemapCopy` | `$00:$2a2e` | stores `a` = WRAM bank, `c` = length, `hl` = tile source, `de` = attribute source, then registers `VBlankDeferredTilemapCopyTask` as a frame task with id `$05`. `wDeferredTilemapPending`'s low nibble owes the tile plane and the high nibble the attributes; the destination is hard-coded `$9800`. |
 | `FlushDirtyRowsPerFrame` | `$05:$711a` | the text engine's incremental flush — §7.6. |
 
 `CopyScrolledSceneTilemapToVram` is worth reading once, because it is the
@@ -373,8 +373,8 @@ screen uses is fixed by which blitter it calls.
 |---|---|---|
 | `BlitBGRowFrom64` | `$00:$222c` | 64-wide, gathers one 32-cell row |
 | `BlitBGColumnFrom64` | `$00:$2299` | 64-wide, gathers one 32-cell column |
-| `BlitBGStrip` | `$00:$2313` | 32-wide row |
-| `BlitBGStrip2` | `$00:$2380` | 32-wide column |
+| `Unused_00_BlitBGStrip` | `$00:$2313` | 32-wide row |
+| `Unused_00_BlitBGStrip2` | `$00:$2380` | 32-wide column |
 
 Each gathers into the staging buffers of §2.4 *indexed by the destination
 column*, so the row lands correctly rotated on the VRAM torus (`inc e / res 5, e`
@@ -503,7 +503,7 @@ entries below the base would persist across frames. In practice they never do �
 |---|---|---|
 | `QueueSprite` | `$00:$1f51` | one entry; `e` + `$0c` → Y, `d` + `$04` → X, `c` = tile, `b` = attribute |
 | `QueueSprite16` | `$00:$1e55` | two entries forming a 16×16 metasprite: the second at X+8 with tile `c+2`. When attribute bit 5 (X-flip) is set the halves are emitted in the opposite order so the mirror is correct. |
-| `QueueSpriteGrid` | `$00:$1f0d` | an `h` × `l` grid; applies the `+$10`/`+$08` OAM bias up front, steps X by 8 and tile by 2 per column, Y by `$10` per row |
+| `Unused_00_QueueSpriteGrid` | `$00:$1f0d` | an `h` × `l` grid; applies the `+$10`/`+$08` OAM bias up front, steps X by 8 and tile by 2 per column, Y by `$10` per row |
 | `QueueSpriteTemplate` | `$00:$1e9d` | walks an `oam_sprite` list, adding each record's `{dy, dx, tile, attr}` to the base in `e`/`d`/`c`/`b`; terminator is `dy == $80`. Mirrored variant (attribute bit 5) negates `dx` as `8 - dx` and ORs the attribute instead of adding it. |
 | `QueueSprite24x32`, `QueueSprite32x32`, `QueueSpriteBlockPart` | `$00:$2c2b`, `$2ced`, `$2d79` | fixed larger blocks, used by the court renderer |
 
@@ -514,7 +514,7 @@ Walk-sprite banks (`$6a`, `$6f`, `$70`-`$77`) hold object headers whose
 an animation-script pointer array (e.g. `src/data/sprites/walk_72.asm`-`23`); the scripts
 render as `anim_*` macros (`docs/graphics_formats.md` §4.4).
 
-`PositionSpriteWorld` (`$00:$1f6b`) and `PositionSpriteWorld2` (`$00:$1fb1`) are
+`Unused_00_PositionSpriteWorld` (`$00:$1f6b`) and `Unused_00_PositionSpriteWorld2` (`$00:$1fb1`) are
 the world-space wrappers: subtract `wCameraX`/`wCameraY`, cull if the high byte
 of the difference is out of range (`cp $16` for X, `cp $14`/`$13` for Y),
 multiply by 8 and take the high byte — so one high-byte unit is 8 screen pixels
@@ -586,7 +586,7 @@ later.
 
 Waiting: `WaitFadeEnd` (`$00:$1da4`) spins on `hFadeState`, advancing a frame
 locally or, when `hLinkExchangeActive`, through `SyncLinkFrame`.
-`WaitFadeEndLinked` (`$00:$1dbd`) is the same loop hard-wired to `SyncLinkFrame`
+`Unused_00_WaitFadeEndLinked` (`$00:$1dbd`) is the same loop hard-wired to `SyncLinkFrame`
 for the link case.
 
 `ApplyWhiteFade` (`$00:$1dcc`) is a second, cheaper curve: it adds a per-channel
@@ -1023,10 +1023,10 @@ differs is only the input source and which cursor pair is written:
 
 | bank | local pad (`wMenuInputPressed`) | link frame (`hLinkInput`) | remote, cursor 1 | remote, cursor 2 |
 |---|---|---|---|---|
-| `$16` | `MoveMenuCursorGrid_16` `$40cd` | `MoveMenuCursorGridFromLinkInput_16` `$414b` | `MoveMenuCursorGridRemote_16` `$41d5` | `MoveMenuCursor2GridRemote_16` `$42a0` |
-| `$1b` | `MoveMenuCursorGrid_1b` `$4107` | — | — | `MoveMenuCursor2GridRemote_1b` `$42da` |
-| `$38` | `MoveMenuCursorGrid_38` `$410a` | `MoveMenuCursorGridFromLinkInput_38` `$4188` | `MoveMenuCursorGridRemote_38` `$4212` | `MoveMenuCursor2GridRemote_38` `$42dd` |
-| `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `MoveMenuCursorRepeat` `$41a8` | `MoveMenuCursorLinkLocal` `$4225` | `MoveMenuCursorLinkRemote` `$42f0` |
+| `$16` | `Unused_16_MoveMenuCursorGrid` `$40cd` | `MoveMenuCursorGridFromLinkInput_16` `$414b` | `MoveMenuCursorGridRemote_16` `$41d5` | `MoveMenuCursor2GridRemote_16` `$42a0` |
+| `$1b` | `MoveMenuCursorGrid_1b` `$4107` | — | — | `Unused_1b_MoveMenuCursor2GridRemote` `$42da` |
+| `$38` | `MoveMenuCursorGrid_38` `$410a` | `MoveMenuCursorGridFromLinkInput_38` `$4188` | `MoveMenuCursorGridRemote_38` `$4212` | `Unused_38_MoveMenuCursor2GridRemote` `$42dd` |
+| `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `Unused_3b_MoveMenuCursorRepeat` `$41a8` | `Unused_3b_MoveMenuCursorLinkLocal` `$4225` | `Unused_3b_MoveMenuCursorLinkRemote` `$42f0` |
 | `$3e` | `MoveMenuCursorGrid_3e` `$413a` | `MoveMenuCursorGridFromLinkInput_3e` `$41b8` | `MoveMenuCursorGridRemote_3e` `$4242` | `MoveMenuCursor2GridRemote_3e` `$430d` |
 
 The "remote" variants choose between `hLinkRemoteInputBuf` and
@@ -1181,9 +1181,9 @@ does not re-derive them.
   `$1d09` is likewise unreferenced.
 - The persistent-sprite floor `hSpriteQueueBase` is only ever set to 0; the
   routine that would raise it (`$00:$1e50`) has no callers.
-- `AllocWindowSlotBit` (`$05:$4627`) is a byte-identical duplicate of the live
+- `Unused_05_AllocWindowSlotBit` (`$05:$4627`) is a byte-identical duplicate of the live
   `AllocWindowId` (`$05:$6e96`) with no callers.
-- `DrawWindowGlyphRun` (`$05:$74de`) has no callers and is not in the `$4000`
+- `Unused_05_DrawWindowGlyphRun` (`$05:$74de`) has no callers and is not in the `$4000`
   table; its use of `b`/`c` reads as a fragment of an earlier design. The live
   per-window glyph path is `InitGlyphStreamForWindow` → `DrawStreamGlyph` →
   `StampGlyphTileAtPen` → `FlushGlyphRow`.

@@ -41,14 +41,14 @@ ActorScript_12_52:
 	as_jump .L15
 MapScriptNop_12:
 	ret ; $7ab1
-MapScriptClearActiveFlag_12:
+Unused_12_MapScriptClearActiveFlag:
 	xor a ; $7ab2
 	ld [wStoryScriptRan], a ; $7ab3
 	ret ; $7ab6
 MapScriptPlaySoundA2_12:
 	sound SFX_STORY_CUE ; $7ab7
 	ret ; $7ab9
-MapScriptHideLocationName_12:
+Unused_12_MapScriptHideLocationName:
 	xor a ; $7aba
 	ld [wStoryModeShowLocationName], a ; $7abb
 	ret ; $7abe
@@ -237,7 +237,7 @@ ActorScript_12_58:
 	as_jump ActorScript_12_58
 ; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and ComputeRankingProgressIndex_27 (one copy per bank); a change here belongs in every copy.
 	twin compute_ranking_progress_index, 12 ; $7c75 ComputeRankingProgressIndex_12
-; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one.
+; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_12_ComputeStoryRankTier:
 	ld a, $00 ; $7cbc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7cbe

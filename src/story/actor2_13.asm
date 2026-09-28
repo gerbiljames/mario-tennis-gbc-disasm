@@ -189,14 +189,14 @@ ActorScript_13_28:
 	as_jump .L15
 MapScriptNop_13:
 	ret ; $7b4d
-MapScriptClearActiveFlag_13:
+Unused_13_MapScriptClearActiveFlag:
 	xor a ; $7b4e
 	ld [wStoryScriptRan], a ; $7b4f
 	ret ; $7b52
 MapScriptPlaySoundA2_13:
 	sound SFX_STORY_CUE ; $7b53
 	ret ; $7b55
-MapScriptHideLocationName_13:
+Unused_13_MapScriptHideLocationName:
 	xor a ; $7b56
 	ld [wStoryModeShowLocationName], a ; $7b57
 	ret ; $7b5a

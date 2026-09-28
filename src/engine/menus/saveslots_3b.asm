@@ -241,7 +241,7 @@ PrintNumberRightAligned:
 	dec c ; $5c4e
 	jr nz, .copyLoop ; $5c4f
 	ret ; $5c51
-StubNop_3b_3:
+Unused_3b_StubNop3:
 	ret ; $5c52
 TryMainMenuLinkHandshake:
 	di ; $5c53

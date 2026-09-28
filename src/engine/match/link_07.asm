@@ -214,7 +214,7 @@ ExchangeNibbleBlockMaster:
 	pop bc ; $41ae
 	pop af ; $41af
 	ret ; $41b0
-DelayByLinkPhase:
+Unused_07_DelayByLinkPhase:
 	push af ; $41b1
 	push bc ; $41b2
 	ld bc, $007d ; $41b3

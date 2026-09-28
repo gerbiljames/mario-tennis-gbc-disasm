@@ -1,6 +1,6 @@
 StubNop_05_0:
 	ret ; $4626
-AllocWindowSlotBit:
+Unused_05_AllocWindowSlotBit:
 	push hl ; $4627
 	push bc ; $4628
 	push de ; $4629

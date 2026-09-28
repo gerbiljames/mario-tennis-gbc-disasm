@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-309 labels carry an `Unused` prefix: 209 routines and 100 data blobs. "Unused" is a proof, not a guess —
+399 labels carry an `Unused` prefix: 299 routines and 100 data blobs. "Unused" is a proof, not a guess —
 nothing in the ROM references the label by call, jump, pointer table or
 farcall slot, and where a slot table does reference it, no `farcall` ever
 names that slot. The naming passes that found them are in `docs/history.md`;
@@ -14,6 +14,20 @@ read, not only here.
 The proof is static. `tools/runtime_audit.py` adds a runtime check: in 3.5
 million frames of play from a save (every story location, the Test map's
 match launchers, menus, matches) none of the `Unused*` routines executed.
+
+The coverage pass of 2026-09-28 turned the check around.
+`tools/eventtest.py --coverage` ran every story location under 36 story
+states plus 360 long sessions from the main menu's nine items, and
+`tools/coverage.py` listed the routines no run entered. Of those, 158 also
+had no reference anywhere in the source and could not be reached by falling
+through from the code above them. 90 were renamed `Unused_<bank>_…`: ROM0
+spares (`FarCallIndexed1`-`3`, `FarCopyIndexed`, `AngleFromVector`, …), the
+save-repair block helpers, per-bank map-script helpers no bank calls,
+menu-cursor variants, and 19 `ret`-only stubs. The other 68 are members of
+`src/twins` groups (the trajectory helpers in banks `$20`-`$2c`, the menu
+cursor and decimal-number copies). Those keep the group name and carry
+"Nothing calls this copy." above their `twin` line. No `Unused*` routine
+ran in those 19 million events.
 
 ## The patterns
 

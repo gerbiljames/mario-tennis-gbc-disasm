@@ -95,7 +95,7 @@ CountDrillShotSuccesses:
 	pop hl ; $40fa
 	pop bc ; $40fb
 	ret ; $40fc
-CheckTwoPointLead:
+Unused_0b_CheckTwoPointLead:
 	ld a, [wPlayer2PointsWon] ; $40fd
 	ld b, a ; $4100
 	ld a, [wPlayer1PointsWon] ; $4101

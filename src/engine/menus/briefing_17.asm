@@ -1,7 +1,7 @@
-; Same divide as SetMenuCursorFromLinearIndex_17 (c / b), but stores the
+; Same divide as Unused_17_SetMenuCursorFromLinearIndex (c / b), but stores the
 ; remainder and quotient through the caller's hl rather than into the
 ; menu cursor. Also had no proven caller.
-WriteGridPosFromLinearIndex_17:
+Unused_17_WriteGridPosFromLinearIndex:
 	ld d, $00 ; $43cb
 	ld a, c ; $43cd
 .loop3:
@@ -39,8 +39,10 @@ UpdateAnimatedTilesTask_17:
 	farcall UpdateAnimatedTiles ; $4406
 	ret ; $4409
 ; Instruction-identical to DrawNameWithDiacritics_1b and DrawNameWithDiacritics_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin draw_name_with_diacritics, 17 ; $440a DrawNameWithDiacritics_17
 ; Instruction-identical to DrawDecimalNumber_1b, DrawDecimalNumber_3b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin draw_decimal_number, 17 ; $4443 DrawDecimalNumber_17
 DrawAsciiDigitString_17:
 	ld a, [hl+] ; $4464

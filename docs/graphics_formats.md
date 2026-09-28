@@ -531,11 +531,11 @@ Every routine re-checks the cap and silently drops the sprite on overflow.
 | `QueueSprite` | `$00:$1f51` | `e`+$0c → Y, `d`+$04 → X, `c` tile, `b` attr; 1 entry |
 | `QueueSprite16` | `$00:$1e55` | 2 entries at X and X+8, tiles `c` and `c+2`; `bit 5, b` swaps emission order |
 | `QueueSpriteTemplate` | `$00:$1e9d` | `hl` template + base (§4.1) |
-| `QueueSpriteGrid` | `$00:$1f0d` | `h` columns, `l` rows; +8 X and +2 tile per column, +$10 Y per row |
+| `Unused_00_QueueSpriteGrid` | `$00:$1f0d` | `h` columns, `l` rows; +8 X and +2 tile per column, +$10 Y per row |
 | `QueueSprite24x32` | `$00:$2c2b` | 6 8×16 objects |
 | `QueueSprite32x32` | `$00:$2ced` | 8 8×16 objects via `QueueSpriteBlockPart` |
 | `QueueSpriteBlockPart` | `$00:$2d79` | one part; advances `c` by 2 |
-| `PositionSpriteWorld` | `$00:$1f6b` | world coords, subtracts `wCameraX/Y`, culls, ×8 → `QueueSprite16` |
+| `Unused_00_PositionSpriteWorld` | `$00:$1f6b` | world coords, subtracts `wCameraX/Y`, culls, ×8 → `QueueSprite16` |
 
 ### 4.3 Object headers
 

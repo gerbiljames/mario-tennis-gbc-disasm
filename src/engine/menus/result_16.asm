@@ -38,7 +38,7 @@ AdjustResultTilemapForLoss:
 	ld [wAnimatedTilePeriod], a ; $4a6c
 .done:
 	ret ; $4a6f
-StubNop_16:
+Unused_16_StubNop:
 	ret ; $4a70
 Unused_16_BuildMatchResultTilemap:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a71

@@ -1,8 +1,11 @@
 ; Instruction-identical to GetCellIndexFromCursorPtr_3b and GetCellIndexFromCursorPtr_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin get_cell_index_from_cursor_ptr, 16 ; $4399 GetCellIndexFromCursorPtr_16
 ; Instruction-identical to SetMenuCursorFromIndex_38, SetMenuCursorFromIndex_3b and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin set_menu_cursor_from_index, 16 ; $43a9 SetMenuCursorFromIndex_16
 ; Instruction-identical to SetMenuCursorFromIndexToPtr_38 and SetMenuCursorFromIndexToPtr_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin set_menu_cursor_from_index_to_ptr, 16 ; $43bb SetMenuCursorFromIndexToPtr_16
 ClearWram3Row64_16:
 	push_wram_bank WRAM_SCREEN ; $43c9

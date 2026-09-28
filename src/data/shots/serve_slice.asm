@@ -14,18 +14,23 @@
 ; Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_21, SetBallTargetByPrediction_22, SetBallTargetByPrediction_23, SetBallTargetByPrediction_24, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2b and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy.
 	twin set_ball_target_by_prediction, 2a ; $4098 SetBallTargetByPrediction_2a
 ; Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_24, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2b and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin apply_ball_trajectory6_capped, 2a ; $4102 ApplyBallTrajectory6Capped_2a
 ; Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_21, ApplyBallTrajectory6_22, ApplyBallTrajectory6_23, ApplyBallTrajectory6_24, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2b and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin apply_ball_trajectory6, 2a ; $4135 ApplyBallTrajectory6_2a
 ; Instruction-identical to ApplyBallTrajectoryCapped_20, ApplyBallTrajectoryCapped_21, ApplyBallTrajectoryCapped_22, ApplyBallTrajectoryCapped_23, ApplyBallTrajectoryCapped_24, ApplyBallTrajectoryCapped_2b and ApplyBallTrajectoryCapped_2c (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin apply_ball_trajectory_capped, 2a ; $415d ApplyBallTrajectoryCapped_2a
 ; Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_24, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2b and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin apply_ball_trajectory4_capped, 2a ; $4196 ApplyBallTrajectory4Capped_2a
 ; Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_24, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2b and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy.
 	twin apply_ball_trajectory4, 2a ; $41c9 ApplyBallTrajectory4_2a
 ; Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_24, SetBallTargetFromAim_29, SetBallTargetFromAim_2b and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy.
 	twin set_ball_target_from_aim, 2a ; $41f5 SetBallTargetFromAim_2a
 ; Instruction-identical to LookupBallPosByAim_20, LookupBallPosByAim_21, LookupBallPosByAim_22, LookupBallPosByAim_23, LookupBallPosByAim_29 and LookupBallPosByAim_2b (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin lookup_ball_pos_by_aim, 2a ; $4221 LookupBallPosByAim_2a
 ; Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_21, LookupBallPosByHeight_22, LookupBallPosByHeight_23, LookupBallPosByHeight_24, LookupBallPosByHeight_29, LookupBallPosByHeight_2b and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy.
 	twin lookup_ball_pos_by_height, 2a ; $424c LookupBallPosByHeight_2a

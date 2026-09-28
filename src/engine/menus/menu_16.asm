@@ -104,7 +104,7 @@ DrawCornerBrackets_16:
 	call QueueSprite ; $40f3
 	pop de ; $40f6
 	ret ; $40f7
-MoveMenuCursorGrid_16:
+Unused_16_MoveMenuCursorGrid:
 	ld a, [wMenuCursorX] ; $40f8
 	ld d, a ; $40fb
 	ld a, [wMenuCursorY] ; $40fc
@@ -193,10 +193,14 @@ MoveMenuCursorGrid_16:
 	ld a, $01 ; $4173
 	ret ; $4175
 ; Instruction-identical to MoveMenuCursorGridFromLinkInput_38 and MoveMenuCursorGridFromLinkInput_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor_grid_from_link_input, 16 ; $4176 MoveMenuCursorGridFromLinkInput_16
 ; Instruction-identical to MoveMenuCursorGridRemote_38 and MoveMenuCursorGridRemote_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor_grid_remote, 16 ; $41f3 MoveMenuCursorGridRemote_16
 ; Instruction-identical to MoveMenuCursor2GridRemote_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor2_grid_remote, 16 ; $42be MoveMenuCursor2GridRemote_16
 ; Instruction-identical to GetMenuCursorIndex_1b, GetMenuCursorIndex_38, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin get_menu_cursor_index, 16 ; $4387 GetMenuCursorIndex_16

@@ -115,8 +115,9 @@ ArrowBobOffsetTable_1b:
 ; Instruction-identical to MoveMenuCursorGrid_17 (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid_17, 1b ; $4132 MoveMenuCursorGrid_1b
 ; Instruction-identical to MoveMenuCursorGridFromLinkInput_17 (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor_grid_from_link_input_17, 1b ; $41b0 MoveMenuCursorGridFromLinkInput_1b
-MoveMenuCursorGridRemote_1b:
+Unused_1b_MoveMenuCursorGridRemote:
 	ld a, [wMenuCursorX] ; $422d
 	ld d, a ; $4230
 	ld a, [wMenuCursorY] ; $4231
@@ -250,7 +251,7 @@ MoveMenuCursorGridRemote_1b:
 .returnOne:
 	ld a, $01 ; $42f5
 	ret ; $42f7
-MoveMenuCursor2GridRemote_1b:
+Unused_1b_MoveMenuCursor2GridRemote:
 	ld a, [wMenuCursor2X] ; $42f8
 	ld d, a ; $42fb
 	ld a, [wMenuCursor2Y] ; $42fc
@@ -386,6 +387,7 @@ MoveMenuCursor2GridRemote_1b:
 ; Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_38, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
 	twin get_menu_cursor_index, 1b ; $43c1 GetMenuCursorIndex_1b
 ; Instruction-identical to GetMenuCursorIndexFromPtr_38 (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin get_menu_cursor_index_from_ptr, 1b ; $43d3 GetMenuCursorIndexFromPtr_1b
 SetMenuCursorFromIndex:
 	ld d, $00 ; $43e3
@@ -401,7 +403,7 @@ SetMenuCursorFromIndex:
 	ld a, d ; $43f0
 	ld [wMenuCursorY], a ; $43f1
 	ret ; $43f4
-SetMenuCursorFromIndexToPtr_1b:
+Unused_1b_SetMenuCursorFromIndexToPtr:
 	ld d, $00 ; $43f5
 	ld a, c ; $43f7
 .loopB:

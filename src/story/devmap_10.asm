@@ -132,27 +132,27 @@ Unused_10_SpeakCheckedChest:
 	script_speak ACTOR_PLAYER ; $4d92
 	farcall EndCutsceneScriptMode ; $4d97
 	ret ; $4d9a
-StubNop_10_0:
+Unused_10_StubNop0:
 	ret ; $4d9b
-StubNop_10_1:
+Unused_10_StubNop1:
 	ret ; $4d9c
-StubNop_10_2:
+Unused_10_StubNop2:
 	ret ; $4d9d
-StubNop_10_3:
+Unused_10_StubNop3:
 	ret ; $4d9e
-StubNop_10_4:
+Unused_10_StubNop4:
 	ret ; $4d9f
-StubNop_10_5:
+Unused_10_StubNop5:
 	ret ; $4da0
-StubNop_10_6:
+Unused_10_StubNop6:
 	ret ; $4da1
-StubNop_10_7:
+Unused_10_StubNop7:
 	ret ; $4da2
-StubNop_10_8:
+Unused_10_StubNop8:
 	ret ; $4da3
-StubNop_10_9:
+Unused_10_StubNop9:
 	ret ; $4da4
-StubNop_10_10:
+Unused_10_StubNop10:
 	ret ; $4da5
 Unused_10_RequestExitTrigger0e:
 	ld a, $0e ; $4da6

@@ -20,7 +20,7 @@ BuildN64ExhibColumnList:
 .buildN64ExhibResultsGrid:
 	call BuildN64ExhibResultsGrid ; $476d
 	ret ; $4770
-StubNop_3b_1:
+Unused_3b_StubNop1:
 	ret ; $4771
 N64ExhibColumn:
 	; $4772, 17 bytes (bytes:8)
@@ -406,7 +406,7 @@ RunTrophiesScreen:
 	call ClearFrameTasks ; $49de
 	ld a, $ff ; $49e1
 	ret ; $49e3
-StubNop_3b_2:
+Unused_3b_StubNop2:
 	ret ; $49e4
 BuildTrophiesScreen:
 	wram_bank WRAM_SCREEN ; $49e5

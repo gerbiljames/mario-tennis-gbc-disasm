@@ -1,4 +1,4 @@
-StubNop_3b_4:
+Unused_3b_StubNop4:
 	ret ; $61e9
 	; $61ea, 6 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0

@@ -224,7 +224,7 @@ UploadGlyphBufferFull:
 	pop bc ; $74db
 	pop af ; $74dc
 	ret ; $74dd
-DrawWindowGlyphRun:
+Unused_05_DrawWindowGlyphRun:
 	push af ; $74de
 	push bc ; $74df
 	push de ; $74e0

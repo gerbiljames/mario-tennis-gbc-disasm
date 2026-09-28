@@ -1,4 +1,4 @@
-WaitFadeEndLinked:
+Unused_00_WaitFadeEndLinked:
 	push af ; $1dbd
 .loop:
 	ldh a, [hFadeState] ; $1dbe
@@ -267,7 +267,7 @@ QueueSpriteTemplate:
 	ldh [hSpriteQueueIndex], a ; $1f08
 	add sp, 4 ; $1f0a
 	ret ; $1f0c
-QueueSpriteGrid:
+Unused_00_QueueSpriteGrid:
 	push af ; $1f0d
 	push bc ; $1f0e
 	push de ; $1f0f
@@ -346,7 +346,7 @@ QueueSprite:
 	ld a, l ; $1f67
 	ldh [hSpriteQueueIndex], a ; $1f68
 	ret ; $1f6a
-PositionSpriteWorld:
+Unused_00_PositionSpriteWorld:
 	push af ; $1f6b
 	push bc ; $1f6c
 	push de ; $1f6d
@@ -404,7 +404,7 @@ PositionSpriteWorld:
 	pop bc ; $1fae
 	pop af ; $1faf
 	ret ; $1fb0
-PositionSpriteWorld2:
+Unused_00_PositionSpriteWorld2:
 	push af ; $1fb1
 	push bc ; $1fb2
 	push de ; $1fb3

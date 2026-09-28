@@ -239,7 +239,7 @@ Unused_17_DrawSecondCaptionRow:
 ; No proven caller, so what it draws is not established -- it sits
 ; between QueueCaptionRowToVRAM and RestoreDiagramServiceBoxes in the
 ; court-diagram code. Named for what it does, not what it is for.
-QueueSpritePair_17:
+Unused_17_QueueSpritePair:
 	ld c, $04 ; $4a1b
 	ld b, $09 ; $4a1d
 	ld hl, QueueSpritePair_17_SpriteTemplate ; $4a1f

@@ -208,7 +208,7 @@ DecompressVarsityCourtTourRecords_13:
 	call LoadPaletteShadow ; $66ba
 	pop_wram_bank ; $66bd
 	ret ; $66c2
-QueueVarsityCourtTourSprites_13:
+Unused_13_QueueVarsityCourtTourSprites:
 	ld a, [wCameraX + 1] ; $66c3
 	cp $18 ; $66c6
 	ret c ; $66c8

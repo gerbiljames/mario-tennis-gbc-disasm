@@ -450,7 +450,7 @@ SendByteGetReplyMaster:
 	ei ; $45f5
 	pop bc ; $45f6
 	ret ; $45f7
-SendByteAwaitReplyMaster:
+Unused_07_SendByteAwaitReplyMaster:
 	push bc ; $45f8
 	ldh [hLinkTxByte], a ; $45f9
 .sendLoop:

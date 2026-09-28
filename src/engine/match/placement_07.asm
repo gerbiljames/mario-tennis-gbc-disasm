@@ -1,4 +1,4 @@
-AdvanceLinkPlayerCount:
+Unused_07_AdvanceLinkPlayerCount:
 	ld a, [wMatchIsDoubles] ; $4cb1
 	inc a ; $4cb4
 	ld b, a ; $4cb5

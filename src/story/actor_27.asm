@@ -144,14 +144,14 @@ ActorScript_27_29:
 	as_jump .L1
 MapScriptNop_27:
 	ret ; $7885
-MapScriptClearActiveFlag_27:
+Unused_27_MapScriptClearActiveFlag:
 	xor a ; $7886
 	ld [wStoryScriptRan], a ; $7887
 	ret ; $788a
 MapScriptPlaySoundA2_27:
 	sound SFX_STORY_CUE ; $788b
 	ret ; $788d
-MapScriptHideLocationName_27:
+Unused_27_MapScriptHideLocationName:
 	xor a ; $788e
 	ld [wStoryModeShowLocationName], a ; $788f
 	ret ; $7892
@@ -338,7 +338,7 @@ ActorScript_27_33:
 	as_jump .L76
 ; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and ComputeRankingProgressIndex_12 (one copy per bank); a change here belongs in every copy.
 	twin compute_ranking_progress_index, 27 ; $7a49 ComputeRankingProgressIndex_27
-SetStoryRankTier:
+Unused_27_SetStoryRankTier:
 	ld a, $00 ; $7a90
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7a92
 	jr z, .store ; $7a95

@@ -114,7 +114,7 @@ CursorBounceYTable:
 	twin draw_corner_brackets, 3b ; $40ef DrawCornerBrackets_3b
 ; Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3e (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid, 3b ; $412a MoveMenuCursorGrid_3b
-MoveMenuCursorRepeat:
+Unused_3b_MoveMenuCursorRepeat:
 	ld a, [wMenuCursorX] ; $41a8
 	ld d, a ; $41ab
 	ld a, [wMenuCursorY] ; $41ac
@@ -202,7 +202,7 @@ MoveMenuCursorRepeat:
 .checkMenuCursorX2:
 	ld a, $01 ; $4222
 	ret ; $4224
-MoveMenuCursorLinkLocal:
+Unused_3b_MoveMenuCursorLinkLocal:
 	ld a, [wMenuCursorX] ; $4225
 	ld d, a ; $4228
 	ld a, [wMenuCursorY] ; $4229
@@ -336,7 +336,7 @@ MoveMenuCursorLinkLocal:
 .checkMenuCursor2X:
 	ld a, $01 ; $42ed
 	ret ; $42ef
-MoveMenuCursorLinkRemote:
+Unused_3b_MoveMenuCursorLinkRemote:
 	ld a, [wMenuCursor2X] ; $42f0
 	ld d, a ; $42f3
 	ld a, [wMenuCursor2Y] ; $42f4

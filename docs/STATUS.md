@@ -115,6 +115,18 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-28** — beyond the story, and a coverage pass. `make event-test`
+  now also plays long seeded sessions from each of the main menu's nine items
+  (exhibition, minigames, match select, the story-slot screens, the
+  dictionary, link play). Story sweep plus 360 sessions: 18.96 million
+  events, no difference between the padded ROM and the original. With
+  `--coverage` the same run records the routines it entered, and
+  `tools/coverage.py` reports on them: 1,929 of the 3,227 observable routines
+  ran, and no `Unused*` routine did. 158 of those that never ran also have no
+  reference in the source. 90 are now `Unused_<bank>_…` (399 labels in all),
+  and the 68 twin-group copies carry "Nothing calls this copy."
+  (`docs/unused_code.md`).
+
 * **2026-09-27** — the padded ROM played through every story state.
   `tools/eventtest.py` (`make event-test`) boots both builds, enters every
   location at each entry point under 36 story-flag states, and compares the

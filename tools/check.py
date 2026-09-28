@@ -362,9 +362,9 @@ _NOT_MACROS = frozenset(_MNEMONICS | {"db", "dw", "ds", "lb", "text", "line", "p
 _ROMX_WORD_RE = re.compile(r"\$[4-7][0-9a-fA-F]{3}")
 # The ROM0 routines that take a (bank << 8) | slot pair in hl.
 _SLOT_CONSUMERS = frozenset(
-    "CopyDataFromBank DecompressDataFromBank FarCallVector FarCallIndexed1 "
-    "FarCallIndexed2 FarCallIndexed3 FarCopyIndexed FarDispatchIndexed "
-    "FarReadPtrIndexed".split())
+    "CopyDataFromBank DecompressDataFromBank FarCallVector Unused_00_FarCallIndexed1 "
+    "Unused_00_FarCallIndexed2 Unused_00_FarCallIndexed3 Unused_00_FarCopyIndexed Unused_00_FarDispatchIndexed "
+    "Unused_00_FarReadPtrIndexed".split())
 
 
 def _is_label(arg):

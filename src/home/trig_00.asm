@@ -15,7 +15,7 @@ GetSquareOfByte:
 	ld l, a ; $1087
 	pop af ; $1088
 	ret ; $1089
-AngleFromVector:
+Unused_00_AngleFromVector:
 	push bc ; $108a
 	push de ; $108b
 	push hl ; $108c

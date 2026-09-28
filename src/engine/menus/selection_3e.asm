@@ -114,10 +114,13 @@ SelectionBoxWobbleYTable_3e:
 ; Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3b (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid, 3e ; $413a MoveMenuCursorGrid_3e
 ; Instruction-identical to MoveMenuCursorGridFromLinkInput_16 and MoveMenuCursorGridFromLinkInput_38 (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor_grid_from_link_input, 3e ; $41b8 MoveMenuCursorGridFromLinkInput_3e
 ; Instruction-identical to MoveMenuCursorGridRemote_16 and MoveMenuCursorGridRemote_38 (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor_grid_remote, 3e ; $4235 MoveMenuCursorGridRemote_3e
 ; Instruction-identical to MoveMenuCursor2GridRemote_16 (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor2_grid_remote, 3e ; $4300 MoveMenuCursor2GridRemote_3e
 ; Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_1b, GetMenuCursorIndex_38 and GetMenuCursorIndex_3b (one copy per bank); a change here belongs in every copy.
 	twin get_menu_cursor_index, 3e ; $43c9 GetMenuCursorIndex_3e

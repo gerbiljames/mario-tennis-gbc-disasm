@@ -91,7 +91,7 @@ FarReadWordDI:
 	ld [rROMB0], a ; $065c
 	ei ; $065f
 	ret ; $0660
-; FarReadPtrIndexed that returns instead of tail-jumping through the entry it read. Nothing calls it.
+; Unused_00_FarReadPtrIndexed that returns instead of tail-jumping through the entry it read. Nothing calls it.
 Unused_00_ReadFarVectorEntry:
 	push bc ; $0661
 	ldh a, [hRomBank] ; $0662
@@ -177,7 +177,7 @@ JumpTableDispatch:
 	ld l, a ; $06cd
 JumpToHL:
 	jp hl ; $06ce
-FarDispatchIndexed:
+Unused_00_FarDispatchIndexed:
 	push af ; $06cf
 	push bc ; $06d0
 	ld c, a ; $06d1
@@ -207,7 +207,7 @@ FarDispatchIndexed:
 	pop bc ; $06f4
 	pop af ; $06f5
 	ret ; $06f6
-FarCopyIndexed:
+Unused_00_FarCopyIndexed:
 	push af ; $06f7
 	push bc ; $06f8
 	push de ; $06f9
@@ -246,7 +246,7 @@ FarCopyIndexed:
 	pop bc ; $0723
 	pop af ; $0724
 	ret ; $0725
-FarCallIndexed1:
+Unused_00_FarCallIndexed1:
 	push af ; $0726
 	push bc ; $0727
 	push de ; $0728
@@ -280,7 +280,7 @@ FarCallIndexed1:
 	pop bc ; $074f
 	pop af ; $0750
 	ret ; $0751
-FarCallIndexed2:
+Unused_00_FarCallIndexed2:
 	push af ; $0752
 	push bc ; $0753
 	push de ; $0754
@@ -314,7 +314,7 @@ FarCallIndexed2:
 	pop bc ; $077b
 	pop af ; $077c
 	ret ; $077d
-FarCallIndexed3:
+Unused_00_FarCallIndexed3:
 	push af ; $077e
 	push bc ; $077f
 	push de ; $0780
@@ -348,7 +348,7 @@ FarCallIndexed3:
 	pop bc ; $07a7
 	pop af ; $07a8
 	ret ; $07a9
-FarReadPtrIndexed:
+Unused_00_FarReadPtrIndexed:
 	push bc ; $07aa
 	ldh a, [hRomBank] ; $07ab
 	ld b, a ; $07ad

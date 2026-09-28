@@ -53,10 +53,12 @@ Unused_17_DrawCornerBrackets:
 	pop de ; $4106
 	ret ; $4107
 ; Instruction-identical to MoveMenuCursorGrid_1b (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor_grid_17, 17 ; $4108 MoveMenuCursorGrid_17
 ; Instruction-identical to MoveMenuCursorGridFromLinkInput_1b (one copy per bank); a change here belongs in every copy.
+; Nothing calls this copy.
 	twin move_menu_cursor_grid_from_link_input_17, 17 ; $4186 MoveMenuCursorGridFromLinkInput_17
-MoveMenuCursorGridRemote_17:
+Unused_17_MoveMenuCursorGridRemote:
 	ld a, [wMenuCursorX] ; $4203
 	ld d, a ; $4206
 	ld a, [wMenuCursorY] ; $4207
@@ -190,7 +192,7 @@ MoveMenuCursorGridRemote_17:
 .checkMenuCursor2X2:
 	ld a, $01 ; $42cb
 	ret ; $42cd
-MoveMenuCursor2GridRemote_17:
+Unused_17_MoveMenuCursor2GridRemote:
 	ld a, [wMenuCursor2X] ; $42ce
 	ld d, a ; $42d1
 	ld a, [wMenuCursor2Y] ; $42d2
@@ -323,7 +325,7 @@ MoveMenuCursor2GridRemote_17:
 .checkMenuCursorY:
 	ld a, $01 ; $4394
 	ret ; $4396
-GetMenuCursorLinearIndex_17:
+Unused_17_GetMenuCursorLinearIndex:
 	ld a, [wMenuCursorY] ; $4397
 	ld b, a ; $439a
 	xor a ; $439b
@@ -338,7 +340,7 @@ GetMenuCursorLinearIndex_17:
 	ld a, [wMenuCursorX] ; $43a4
 	add b ; $43a7
 	ret ; $43a8
-GetMenuCursorLinearIndexFromPtr_17:
+Unused_17_GetMenuCursorLinearIndexFromPtr:
 	push bc ; $43a9
 	ld a, [hl-] ; $43aa
 	ld b, a ; $43ab
@@ -357,12 +359,12 @@ GetMenuCursorLinearIndexFromPtr_17:
 	ret ; $43b8
 ; Divides the linear index in c by the row width in b: remainder ->
 ; wMenuCursorX, quotient -> wMenuCursorY. Twin of
-; WriteGridPosFromLinearIndex_17, which writes through hl instead.
+; Unused_17_WriteGridPosFromLinearIndex, which writes through hl instead.
 ;
 ; No proven caller: the two-instruction prologue was never executed in
 ; any trace, so only the loop from $43bc was proven and these 3 bytes
 ; read as data until they were seeded as code.
-SetMenuCursorFromLinearIndex_17:
+Unused_17_SetMenuCursorFromLinearIndex:
 	ld d, $00 ; $43b9
 	ld a, c ; $43bb
 .loop2:

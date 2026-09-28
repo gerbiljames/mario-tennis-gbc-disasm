@@ -401,7 +401,7 @@ ResumeBGM:
 	pop bc ; $2f4f
 	pop af ; $2f50
 	ret ; $2f51
-StopBGMIfPlaying:
+Unused_00_StopBGMIfPlaying:
 	push hl ; $2f52
 	ld hl, hMusic ; $2f53
 	bit 0, [hl] ; $2f56
@@ -411,7 +411,7 @@ StopBGMIfPlaying:
 .done:
 	pop hl ; $2f5e
 	ret ; $2f5f
-SyncBGMEnableFlag:
+Unused_00_SyncBGMEnableFlag:
 	push af ; $2f60
 	push bc ; $2f61
 	push de ; $2f62
