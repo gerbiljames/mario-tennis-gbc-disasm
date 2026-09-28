@@ -11,7 +11,12 @@ then
 boots it and mariotennis.gbc headless in PyBoy (`pip install pyboy`) to the
 story overworld, then for each of 36 story states (wGameFlags rewritten to
 each step of the singles and doubles ladders) enters every location at each
-of its entry points and plays seeded random input. Each build is hooked by
+of its entry points and plays seeded random input. `--free N` adds N long
+random sessions from the main menu, each opening one of its nine items
+first (exhibition, minigames, the match-select and story-slot screens, the
+dictionary, link play), for the modes the story never enters; `--states
+none` runs only those. `--coverage FILE` accumulates which routines the
+base build entered, for tools/coverage.py. Each build is hooked by
 label through its own .sym, and records in order: every code label entered
 (its first --cap entries), the actor list InitLocationActors installs, each
 NpcScripts talk and each character record loaded.
@@ -317,9 +322,11 @@ class Game:
         shutil.rmtree(self.tmp)
 
 
-def boot(rom, sym, save, out):
+def boot(rom, sym, save, out, menu=False):
     g = Game(rom, sym, save, 10 ** 9, learn_irq=True)
-    presses = [(950, "start"), (90, "a"), (90, "down")] + [(150, "a")] * 6
+    presses = [(950, "start"), (90, "a")]
+    if not menu:
+        presses += [(90, "down")] + [(150, "a")] * 6
     inputs = []
     for wait, b in presses:
         inputs += [0] * wait + [BUTTONS[b]] * 6
@@ -358,6 +365,27 @@ def chunk(rom, sym, save, state_file, si, li, frames, cap, skip):
         result.append({"entry": entry, "events": events, "logic": g.lf, "ticks": ticks})
     g.close()
     return result
+
+
+def session(rom, sym, save, state_file, seed, frames, cap, skip):
+    """Random play from one of the main menu's nine items: the menus,
+    exhibition matches, practice modes and minigames it wanders into."""
+    g = Game(rom, sym, save, cap, set(json.loads(Path(skip).read_text())))
+    g.pb.load_state(io.BytesIO(Path(state_file).read_bytes()))
+    g.reset_caps()
+    g.events = []
+    # the main menu is a 3x3 grid: open item seed % 9, then play at random
+    item = seed % 9
+    moves = ["right"] * (item % 3) + ["down"] * (item // 3) + ["a"]
+    inputs = [0] * 30
+    for button in moves:
+        inputs += [BUTTONS[button]] * 6 + [0] * 24
+    inputs += [0] * 60
+    inputs += plan(1000000 + seed, frames - len(inputs))
+    ticks = g.run(inputs, frames, 4 * frames)
+    events = [e for e in g.events if e[0] < frames]
+    g.close()
+    return [{"entry": seed, "events": events, "logic": g.lf, "ticks": ticks}]
 
 
 def compare(a, b, skip=6, run=12):
@@ -410,14 +438,23 @@ def main():
     ap.add_argument("--cap", type=int, default=20, help="entries recorded per code label")
     ap.add_argument("--jobs", type=int, default=8)
     ap.add_argument("--timeout", type=int, default=120)
-    ap.add_argument("--states", help="only these state indices, e.g. 0,5,20")
+    ap.add_argument("--states", help="only these state indices, e.g. 0,5,20; 'none' for no story runs")
+    ap.add_argument("--free", type=int, default=0,
+                    help="also play this many seeded random sessions from the main menu")
+    ap.add_argument("--free-frames", type=int, default=20000, help="logic frames per session")
+    ap.add_argument("--coverage", help="merge the routines the base build entered into this JSON "
+                                       "file (read by tools/coverage.py)")
     ap.add_argument("--worker", nargs="+", help=argparse.SUPPRESS)
     args = ap.parse_args()
 
     if args.worker:
         kind, rom, sym, *rest = args.worker
         if kind == "boot":
-            print(boot(rom, sym, args.save, rest[0]))
+            print(boot(rom, sym, args.save, rest[0], menu=rest[1:] == ["menu"]))
+        elif kind == "free":
+            state_file, seed, skip, out = rest
+            res = session(rom, sym, args.save, state_file, int(seed), args.free_frames, args.cap, skip)
+            Path(out).write_text(json.dumps(res))
         else:
             state_file, si, li, skip, out = rest
             res = chunk(rom, sym, args.save, state_file, int(si), int(li), args.frames, args.cap, skip)
@@ -432,46 +469,69 @@ def main():
               "rom": (args.rom, Path(args.rom).with_suffix(".sym"))}
     tmp = Path(tempfile.mkdtemp(prefix="eventtest-"))
     me = [sys.executable, __file__, "--save", args.save, "--frames", str(args.frames),
-          "--cap", str(args.cap), "--worker"]
+          "--free-frames", str(args.free_frames), "--cap", str(args.cap), "--worker"]
+    picked = ([] if args.states == "none" else
+              [int(x) for x in args.states.split(",")] if args.states else range(len(states())))
+    boots = [("story", [])] * bool(picked) + [("menu", ["menu"])] * bool(args.free)
     for key, (rom, sym) in builds.items():
-        r = subprocess.run(me + ["boot", str(rom), str(sym), str(tmp / f"{key}.state")],
-                           capture_output=True, text=True, timeout=args.timeout)
-        if r.returncode:
-            sys.exit(f"{key} failed to boot:\n{r.stderr[-2000:]}")
-        print(f"{key} booted to story location {r.stdout.strip()}")
+        for kind, extra in boots:
+            r = subprocess.run(me + ["boot", str(rom), str(sym), str(tmp / f"{key}.{kind}")] + extra,
+                               capture_output=True, text=True, timeout=args.timeout)
+            if r.returncode:
+                sys.exit(f"{key} failed to boot:\n{r.stderr[-2000:]}")
+        print(f"{key} booted")
     skip = tmp / "irq.json"
-    skip.write_text(json.dumps(sorted({n for key in builds
-                                       for n in json.loads((tmp / f"{key}.state.irq").read_text())})))
+    skip.write_text(json.dumps(sorted({n for key in builds for kind, _ in boots
+                                       for n in json.loads((tmp / f"{key}.{kind}.irq").read_text())})))
 
     locs = targets(symbols(builds["base"][1]))[5]
-    picked = [int(x) for x in args.states.split(",")] if args.states else range(len(states()))
-    jobs = [(key, si, li) for si in picked for li in range(len(locs)) for key in builds]
+    units = [("story", si, li) for si in picked for li in range(len(locs))]
+    units += [("free", seed, None) for seed in range(args.free)]
 
     def work(job):
-        key, si, li = job
+        key, (kind, a, b) = job
         rom, sym = builds[key]
-        out = tmp / f"{key}_{si}_{li}.json"
+        out = tmp / f"{key}_{kind}_{a}_{b}.json"
+        if kind == "story":
+            cmd, limit = ["chunk", str(rom), str(sym), str(tmp / f"{key}.story"),
+                          str(a), str(b), str(skip), str(out)], args.timeout
+        else:
+            cmd = ["free", str(rom), str(sym), str(tmp / f"{key}.menu"), str(a), str(skip), str(out)]
+            limit = args.timeout * max(1, args.free_frames // args.frames)
         try:
-            subprocess.run(me + ["chunk", str(rom), str(sym), str(tmp / f"{key}.state"),
-                                 str(si), str(li), str(skip), str(out)],
-                           capture_output=True, timeout=args.timeout)
+            subprocess.run(me + cmd, capture_output=True, timeout=limit)
         except subprocess.TimeoutExpired:
             return job, "timeout"
         return job, json.loads(out.read_text()) if out.exists() else "failed"
 
     results = {}
     with concurrent.futures.ThreadPoolExecutor(args.jobs) as ex:
-        for job, res in ex.map(work, jobs):
+        for job, res in ex.map(work, [(key, u) for u in units for key in builds]):
             results[job] = res
+    if args.coverage:
+        path = Path(args.coverage)
+        old = json.loads(path.read_text()) if path.exists() else {"entered": [], "hooked": []}
+        entered = set(old["entered"]) | {e[2] for (key, _), res in results.items()
+                                         if key == "base" and not isinstance(res, str)
+                                         for x in res for e in x["events"] if e[1] == "run"}
+        hooked = set(old["hooked"]) | (set(code_labels()) - set(json.loads(skip.read_text())))
+        path.write_text(json.dumps({"entered": sorted(entered), "hooked": sorted(hooked)}, indent=0))
     shutil.rmtree(tmp)
 
+    def where(unit, entry):
+        kind, a, b = unit
+        if kind == "free":
+            return f"main-menu session {a}"
+        dbl, on = states()[a]
+        return (f"state {a} ({'doubles' if dbl else 'singles'} step {len(on)}), "
+                f"location {locs[b][0]:#04x} entry {entry}")
+
     bad, unsure, events, shifted, tainted, dropouts = [], [], 0, 0, 0, 0
-    for si in picked:
-        for li in range(len(locs)):
-            a, b = results[("base", si, li)], results[("rom", si, li)]
+    for unit in units:
+            a, b = results[("base", unit)], results[("rom", unit)]
             if isinstance(a, str) or isinstance(b, str):
-                unsure.append((si, li, None, f"base {a if isinstance(a, str) else 'ran'}, "
-                                             f"rom {b if isinstance(b, str) else 'ran'}"))
+                unsure.append((unit, None, f"base {a if isinstance(a, str) else 'ran'}, "
+                                           f"rom {b if isinstance(b, str) else 'ran'}"))
                 continue
             for x, y in zip(a, b):
                 i, s, d = compare(x["events"], y["events"])
@@ -481,16 +541,15 @@ def main():
                 tainted += any(e[1] == "taint" for e in x["events"])
                 if i is not None:
                     ev = lambda e: f"{e[i][1]} {e[i][2]} at logic frame {e[i][0]}" if i < len(e) else "nothing"
-                    bad.append((si, li, x["entry"], f"event {i}: base {ev(x['events'])}, rom {ev(y['events'])}"))
-    print(f"{len(picked)} states x {len(locs)} locations: {events} events compared, "
+                    bad.append((unit, x["entry"], f"event {i}: base {ev(x['events'])}, rom {ev(y['events'])}"))
+    print(f"{len(picked)} states x {len(locs)} locations and {args.free} main-menu sessions: "
+          f"{events} events compared, "
           f"{shifted} at a different logic frame, {dropouts} hook dropouts stepped over, "
           f"{tainted} entries cut at a known "
           f"layout-dependent path, {len(unsure)} chunks inconclusive (PyBoy timed out)")
     for label, rows in (("differs", bad), ("inconclusive", unsure)):
-        for si, li, entry, what in rows:
-            dbl, on = states()[si]
-            print(f"    {label}: state {si} ({'doubles' if dbl else 'singles'} step {len(on)}), "
-                  f"location {locs[li][0]:#04x} entry {entry}: {what}")
+        for unit, entry, what in rows:
+            print(f"    {label}: {where(unit, entry)}: {what}")
     return 1 if bad else 0
 
 
