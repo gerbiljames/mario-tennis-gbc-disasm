@@ -123,9 +123,9 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
   `--coverage` the same run records the routines it entered, and
   `tools/coverage.py` reports on them: 1,929 of the 3,227 observable routines
   ran, and no `Unused*` routine did. 158 of those that never ran also have no
-  reference in the source. 90 are now `Unused_<bank>_…` (399 labels in all),
-  and the 68 twin-group copies carry "Nothing calls this copy."
-  (`docs/unused_code.md`).
+  reference in the source. All 158 are now `Unused_<bank>_…` (467 labels in
+  all). For the 68 that are twin-group copies, their 19 templates were moved
+  to `twin_in` so each copy names itself (`docs/unused_code.md`).
 
 * **2026-09-27** — the padded ROM played through every story state.
   `tools/eventtest.py` (`make event-test`) boots both builds, enters every
@@ -561,7 +561,7 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
   helpers, per-minigame handlers). Every member's note names its copies,
   39 whose names had drifted apart were renamed to one base plus bank
   suffix (`MoveMenuCursorBox` is `MoveMenuCursorGrid_38`,
-  `PrintNumberString_3b` is `DrawDecimalNumber_3b`), and
+  `PrintNumberString_3b` is `Unused_3b_DrawDecimalNumber`), and
   `docs/duplicated_code.md` lists the groups.
 * **2026-09-11** — two modding fixes. Data files are named after their
   labels (`data/bank_040/AlexSpriteFrame00.png`, `lz_MenuFontTiles_01.bin`,

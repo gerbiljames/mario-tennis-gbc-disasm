@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-399 labels carry an `Unused` prefix: 299 routines and 100 data blobs. "Unused" is a proof, not a guess —
+467 labels carry an `Unused` prefix: 367 routines and 100 data blobs. "Unused" is a proof, not a guess —
 nothing in the ROM references the label by call, jump, pointer table or
 farcall slot, and where a slot table does reference it, no `farcall` ever
 names that slot. The naming passes that found them are in `docs/history.md`;
@@ -23,10 +23,12 @@ had no reference anywhere in the source and could not be reached by falling
 through from the code above them. 90 were renamed `Unused_<bank>_…`: ROM0
 spares (`FarCallIndexed1`-`3`, `FarCopyIndexed`, `AngleFromVector`, …), the
 save-repair block helpers, per-bank map-script helpers no bank calls,
-menu-cursor variants, and 19 `ret`-only stubs. The other 68 are members of
-`src/twins` groups (the trajectory helpers in banks `$20`-`$2c`, the menu
-cursor and decimal-number copies). Those keep the group name and carry
-"Nothing calls this copy." above their `twin` line. No `Unused*` routine
+menu-cursor variants, and 19 `ret`-only stubs. The other 68 are copies in
+`src/twins` groups: the trajectory helpers in banks `$20`-`$2c`, and the
+menu-cursor and decimal-number copies. Their 19 templates now take their
+label from the bank (`twin_in <file>, <Label>, <bank>`), so each dead copy
+is `Unused_<bank>_…` like any other, with "Nothing calls this copy." above
+its line. No `Unused*` routine
 ran in those 19 million events.
 
 ## The patterns

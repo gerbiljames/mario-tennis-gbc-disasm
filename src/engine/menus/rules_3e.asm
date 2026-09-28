@@ -1,11 +1,11 @@
-; Instruction-identical to GetCellIndexFromCursorPtr_16 and GetCellIndexFromCursorPtr_3b (one copy per bank); a change here belongs in every copy.
+; Instruction-identical to Unused_16_GetCellIndexFromCursorPtr and Unused_3b_GetCellIndexFromCursorPtr (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin get_cell_index_from_cursor_ptr, 3e ; $43db GetCellIndexFromCursorPtr_3e
-; Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3b (one copy per bank); a change here belongs in every copy.
-	twin set_menu_cursor_from_index, 3e ; $43eb SetMenuCursorFromIndex_3e
-; Instruction-identical to SetMenuCursorFromIndexToPtr_16 and SetMenuCursorFromIndexToPtr_38 (one copy per bank); a change here belongs in every copy.
+	twin_in get_cell_index_from_cursor_ptr, Unused_3e_GetCellIndexFromCursorPtr, 3e ; $43db Unused_3e_GetCellIndexFromCursorPtr
+; Instruction-identical to Unused_16_SetMenuCursorFromIndex, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3b (one copy per bank); a change here belongs in every copy.
+	twin_in set_menu_cursor_from_index, SetMenuCursorFromIndex_3e, 3e ; $43eb SetMenuCursorFromIndex_3e
+; Instruction-identical to Unused_16_SetMenuCursorFromIndexToPtr and Unused_38_SetMenuCursorFromIndexToPtr (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin set_menu_cursor_from_index_to_ptr, 3e ; $43fd SetMenuCursorFromIndexToPtr_3e
+	twin_in set_menu_cursor_from_index_to_ptr, Unused_3e_SetMenuCursorFromIndexToPtr, 3e ; $43fd Unused_3e_SetMenuCursorFromIndexToPtr
 ClearWram3Row64_3e:
 	push_wram_bank WRAM_SCREEN ; $440b
 	xor a ; $4414
@@ -29,12 +29,12 @@ ClearWram3Row64Alt_3e:
 UpdateAnimatedTiles_3e:
 	farcall UpdateAnimatedTiles ; $4438
 	ret ; $443b
-; Instruction-identical to DrawNameWithDiacritics_17 and DrawNameWithDiacritics_1b (one copy per bank); a change here belongs in every copy.
+; Instruction-identical to Unused_17_DrawNameWithDiacritics and DrawNameWithDiacritics_1b (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin draw_name_with_diacritics, 3e ; $443c DrawNameWithDiacritics_3e
-; Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_1b and DrawDecimalNumber_3b (one copy per bank); a change here belongs in every copy.
+	twin_in draw_name_with_diacritics, Unused_3e_DrawNameWithDiacritics, 3e ; $443c Unused_3e_DrawNameWithDiacritics
+; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_1b_DrawDecimalNumber and Unused_3b_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin draw_decimal_number, 3e ; $4475 DrawDecimalNumber_3e
+	twin_in draw_decimal_number, Unused_3e_DrawDecimalNumber, 3e ; $4475 Unused_3e_DrawDecimalNumber
 DrawAsciiDigitString_3e:
 	ld a, [hl+] ; $4496
 	and a ; $4497

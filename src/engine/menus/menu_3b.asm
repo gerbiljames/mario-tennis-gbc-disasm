@@ -469,5 +469,5 @@ Unused_3b_MoveMenuCursorLinkRemote:
 .checkMenuCursorY:
 	ld a, $01 ; $43b6
 	ret ; $43b8
-; Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_1b, GetMenuCursorIndex_38 and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
-	twin get_menu_cursor_index, 3b ; $43b9 GetMenuCursorIndex_3b
+; Instruction-identical to Unused_16_GetMenuCursorIndex, GetMenuCursorIndex_1b, GetMenuCursorIndex_38 and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
+	twin_in get_menu_cursor_index, GetMenuCursorIndex_3b, 3b ; $43b9 GetMenuCursorIndex_3b

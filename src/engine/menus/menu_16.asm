@@ -192,15 +192,15 @@ Unused_16_MoveMenuCursorGrid:
 .moved:
 	ld a, $01 ; $4173
 	ret ; $4175
-; Instruction-identical to MoveMenuCursorGridFromLinkInput_38 and MoveMenuCursorGridFromLinkInput_3e (one copy per bank); a change here belongs in every copy.
+; Instruction-identical to MoveMenuCursorGridFromLinkInput_38 and Unused_3e_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin move_menu_cursor_grid_from_link_input, 16 ; $4176 MoveMenuCursorGridFromLinkInput_16
-; Instruction-identical to MoveMenuCursorGridRemote_38 and MoveMenuCursorGridRemote_3e (one copy per bank); a change here belongs in every copy.
+	twin_in move_menu_cursor_grid_from_link_input, Unused_16_MoveMenuCursorGridFromLinkInput, 16 ; $4176 Unused_16_MoveMenuCursorGridFromLinkInput
+; Instruction-identical to Unused_38_MoveMenuCursorGridRemote and Unused_3e_MoveMenuCursorGridRemote (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin move_menu_cursor_grid_remote, 16 ; $41f3 MoveMenuCursorGridRemote_16
-; Instruction-identical to MoveMenuCursor2GridRemote_3e (one copy per bank); a change here belongs in every copy.
+	twin_in move_menu_cursor_grid_remote, Unused_16_MoveMenuCursorGridRemote, 16 ; $41f3 Unused_16_MoveMenuCursorGridRemote
+; Instruction-identical to Unused_3e_MoveMenuCursor2GridRemote (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin move_menu_cursor2_grid_remote, 16 ; $42be MoveMenuCursor2GridRemote_16
+	twin_in move_menu_cursor2_grid_remote, Unused_16_MoveMenuCursor2GridRemote, 16 ; $42be Unused_16_MoveMenuCursor2GridRemote
 ; Instruction-identical to GetMenuCursorIndex_1b, GetMenuCursorIndex_38, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin get_menu_cursor_index, 16 ; $4387 GetMenuCursorIndex_16
+	twin_in get_menu_cursor_index, Unused_16_GetMenuCursorIndex, 16 ; $4387 Unused_16_GetMenuCursorIndex

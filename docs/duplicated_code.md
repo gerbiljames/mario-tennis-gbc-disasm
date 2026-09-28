@@ -12,7 +12,7 @@ with a floor of ten instructions. `Unused*` routines are left to
 The note above each member in `src/` names its twins, so the fact is visible
 where the routine is read; on 2026-09-11 the copies whose names had
 drifted apart (`MoveMenuCursorBox` / `MoveMenuCursor` / `MoveMenuCursorGrid_3e`,
-`PrintNumberString_3b` / `DrawDecimalNumber_17`, `ComputeSeniorCourtStageB` /
+`PrintNumberString_3b` / `Unused_17_DrawDecimalNumber`, `ComputeSeniorCourtStageB` /
 `ComputeRankingProgressIndex`) were renamed to one base name plus bank suffix.
 Names that differ because the copies serve different screens or minigames
 (`IsBallInMedallionMatchHitZone` / `IsBallInTreasureBoxHitZone`, the seven

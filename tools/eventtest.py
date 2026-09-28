@@ -304,13 +304,18 @@ class Game:
                 m[b, 0xdfff] = data[-1]
             self.lag = None
 
-    def run(self, inputs, frames, limit):
+    def run(self, inputs, frames, limit, actions=None):
+        """Play `inputs` for `frames` logic frames; `actions` maps a logic
+        frame to a function run (once) at the first frame edge past it."""
         self.inputs, self.lf, self.prev, self.edge = inputs, 0, 0, 0
         self.armed = False
+        pending = sorted((actions or {}).items())
         ticks = 0
         while self.lf < frames and ticks < limit:
             self.pb.tick(1, False)
             ticks += 1
+            while pending and self.lf >= pending[0][0]:
+                pending.pop(0)[1]()
             for point in self.spent:
                 self.pb.hook_deregister(*point)
             self.removed += self.spent
@@ -388,6 +393,51 @@ def session(rom, sym, save, state_file, seed, frames, cap, skip):
     return [{"entry": seed, "events": events, "logic": g.lf, "ticks": ticks}]
 
 
+# The Test map's nine NPCs (docs: STORYLOC_TEST) as (x, y) from
+# MatchSelectActors_10, and which side the player walks into each from.
+TEST_MAP_NPCS = [(0x0700, 0x1100), (0x0700, 0x0700), (0x0d00, 0x0700), (0x0700, 0x0b00),
+                 (0x0d00, 0x0b00), (0x0d00, 0x1100), (0x0500, 0x0e00), (0x1100, 0x0e00),
+                 (0x1100, 0x0c00)]
+TARGETS = ["attract", "debug"] + [f"npc{k}" for k in range(len(TEST_MAP_NPCS))]
+
+
+def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
+    """Random play from a start the main menu and the story locations do not
+    give: the intro and attract loop from power-on, the debug menu (armed
+    through hDebugStepMode in the dorm), and each Test-map NPC's flow (match
+    and drill lists, minigame select, epilogue, credits)."""
+    g = Game(rom, sym, save, cap, set(json.loads(Path(skip).read_text())))
+    m, actions = g.mem, {}
+    if name == "attract":
+        inputs = [0] * min(frames, 6000)
+    else:
+        g.pb.load_state(io.BytesIO(Path(state_file).read_bytes()))
+        inputs = [0] * 90
+        if name == "debug":
+            actions[60] = lambda: m.__setitem__(g.sym["hDebugStepMode"][1], 1)
+            inputs += [BUTTONS["a"]] * 6 + [0] * 60
+        else:
+            m[g.sym["wStoryModeCurrentLocation"][1]] = 3
+            m[g.sym["wStoryModeEntryPoint"][1]] = 1
+            m[g.sym["wStoryModeExitTriggerRequest"][1]] = 0xff
+            x, y = TEST_MAP_NPCS[int(name[3:])]
+            side = 0x100 if x <= 0x0700 else -0x100
+            actor = g.sym["wActors"][1]
+
+            def place():
+                for field, value in ((0x0c, x + side), (0x0e, y)):
+                    m[4, actor + field], m[4, actor + field + 1] = value & 0xff, value >> 8
+            actions[80] = place
+            inputs += [BUTTONS["left" if side > 0 else "right"]] * 30 + [0] * 60
+    g.reset_caps()
+    g.events = []
+    inputs += plan(2000000 + seed * 16 + TARGETS.index(name), frames - len(inputs))
+    ticks = g.run(inputs, frames, 4 * frames, actions)
+    events = [e for e in g.events if e[0] < frames]
+    g.close()
+    return [{"entry": seed, "events": events, "logic": g.lf, "ticks": ticks}]
+
+
 def compare(a, b, skip=6, run=12):
     """Walk the two (kind, value) sequences together and return the index in
     `a` where they part for good (or None), how many events matched at a
@@ -442,6 +492,9 @@ def main():
     ap.add_argument("--free", type=int, default=0,
                     help="also play this many seeded random sessions from the main menu")
     ap.add_argument("--free-frames", type=int, default=20000, help="logic frames per session")
+    ap.add_argument("--targets", type=int, default=0,
+                    help="also play this many seeded sessions from each targeted start "
+                         "(intro, debug menu, each Test-map NPC)")
     ap.add_argument("--coverage", help="merge the routines the base build entered into this JSON "
                                        "file (read by tools/coverage.py)")
     ap.add_argument("--worker", nargs="+", help=argparse.SUPPRESS)
@@ -451,6 +504,10 @@ def main():
         kind, rom, sym, *rest = args.worker
         if kind == "boot":
             print(boot(rom, sym, args.save, rest[0], menu=rest[1:] == ["menu"]))
+        elif kind == "target":
+            state_file, name, seed, skip, out = rest
+            res = target(rom, sym, args.save, state_file, name, int(seed), args.free_frames, args.cap, skip)
+            Path(out).write_text(json.dumps(res))
         elif kind == "free":
             state_file, seed, skip, out = rest
             res = session(rom, sym, args.save, state_file, int(seed), args.free_frames, args.cap, skip)
@@ -472,7 +529,7 @@ def main():
           "--free-frames", str(args.free_frames), "--cap", str(args.cap), "--worker"]
     picked = ([] if args.states == "none" else
               [int(x) for x in args.states.split(",")] if args.states else range(len(states())))
-    boots = [("story", [])] * bool(picked) + [("menu", ["menu"])] * bool(args.free)
+    boots = [("story", [])] * bool(picked or args.targets) + [("menu", ["menu"])] * bool(args.free)
     for key, (rom, sym) in builds.items():
         for kind, extra in boots:
             r = subprocess.run(me + ["boot", str(rom), str(sym), str(tmp / f"{key}.{kind}")] + extra,
@@ -487,6 +544,7 @@ def main():
     locs = targets(symbols(builds["base"][1]))[5]
     units = [("story", si, li) for si in picked for li in range(len(locs))]
     units += [("free", seed, None) for seed in range(args.free)]
+    units += [("target", name, seed) for seed in range(args.targets) for name in TARGETS]
 
     def work(job):
         key, (kind, a, b) = job
@@ -496,7 +554,9 @@ def main():
             cmd, limit = ["chunk", str(rom), str(sym), str(tmp / f"{key}.story"),
                           str(a), str(b), str(skip), str(out)], args.timeout
         else:
-            cmd = ["free", str(rom), str(sym), str(tmp / f"{key}.menu"), str(a), str(skip), str(out)]
+            state = tmp / f"{key}.{'menu' if kind == 'free' else 'story'}"
+            cmd = [kind, str(rom), str(sym), str(state)] + ([a] if kind == "target" else []) + \
+                  [str(a if kind == "free" else b), str(skip), str(out)]
             limit = args.timeout * max(1, args.free_frames // args.frames)
         try:
             subprocess.run(me + cmd, capture_output=True, timeout=limit)
@@ -522,6 +582,8 @@ def main():
         kind, a, b = unit
         if kind == "free":
             return f"main-menu session {a}"
+        if kind == "target":
+            return f"{a} session {b}"
         dbl, on = states()[a]
         return (f"state {a} ({'doubles' if dbl else 'singles'} step {len(on)}), "
                 f"location {locs[b][0]:#04x} entry {entry}")
@@ -542,7 +604,8 @@ def main():
                 if i is not None:
                     ev = lambda e: f"{e[i][1]} {e[i][2]} at logic frame {e[i][0]}" if i < len(e) else "nothing"
                     bad.append((unit, x["entry"], f"event {i}: base {ev(x['events'])}, rom {ev(y['events'])}"))
-    print(f"{len(picked)} states x {len(locs)} locations and {args.free} main-menu sessions: "
+    print(f"{len(picked)} states x {len(locs)} locations, {args.free} main-menu sessions and "
+          f"{args.targets * len(TARGETS)} targeted sessions: "
           f"{events} events compared, "
           f"{shifted} at a different logic frame, {dropouts} hook dropouts stepped over, "
           f"{tainted} entries cut at a known "

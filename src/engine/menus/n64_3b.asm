@@ -1,8 +1,8 @@
-; Instruction-identical to GetCellIndexFromCursorPtr_16 and GetCellIndexFromCursorPtr_3e (one copy per bank); a change here belongs in every copy.
+; Instruction-identical to Unused_16_GetCellIndexFromCursorPtr and Unused_3e_GetCellIndexFromCursorPtr (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin get_cell_index_from_cursor_ptr, 3b ; $43cb GetCellIndexFromCursorPtr_3b
-; Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
-	twin set_menu_cursor_from_index, 3b ; $43db SetMenuCursorFromIndex_3b
+	twin_in get_cell_index_from_cursor_ptr, Unused_3b_GetCellIndexFromCursorPtr, 3b ; $43cb Unused_3b_GetCellIndexFromCursorPtr
+; Instruction-identical to Unused_16_SetMenuCursorFromIndex, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
+	twin_in set_menu_cursor_from_index, SetMenuCursorFromIndex_3b, 3b ; $43db SetMenuCursorFromIndex_3b
 Unused_3b_StoreCellIndexToCursorPtr:
 	ld d, $00 ; $43ed
 	ld a, c ; $43ef
@@ -42,9 +42,9 @@ UpdateAnimatedTilesTask_3b:
 	ret ; $442b
 ; Instruction-identical to DrawNameWithDiacritics_38 (one copy per bank); a change here belongs in every copy.
 	twin draw_name_with_diacritics_38, 3b ; $442c DrawNameWithDiacritics_3b
-; Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_1b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy.
+; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_1b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin draw_decimal_number, 3b ; $4465 DrawDecimalNumber_3b
+	twin_in draw_decimal_number, Unused_3b_DrawDecimalNumber, 3b ; $4465 Unused_3b_DrawDecimalNumber
 DrawAsciiDigitString_3b:
 	ld a, [hl+] ; $4486
 	and a ; $4487

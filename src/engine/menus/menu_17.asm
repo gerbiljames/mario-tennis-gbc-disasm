@@ -54,10 +54,10 @@ Unused_17_DrawCornerBrackets:
 	ret ; $4107
 ; Instruction-identical to MoveMenuCursorGrid_1b (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin move_menu_cursor_grid_17, 17 ; $4108 MoveMenuCursorGrid_17
-; Instruction-identical to MoveMenuCursorGridFromLinkInput_1b (one copy per bank); a change here belongs in every copy.
+	twin_in move_menu_cursor_grid_17, Unused_17_MoveMenuCursorGrid, 17 ; $4108 Unused_17_MoveMenuCursorGrid
+; Instruction-identical to Unused_1b_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin move_menu_cursor_grid_from_link_input_17, 17 ; $4186 MoveMenuCursorGridFromLinkInput_17
+	twin_in move_menu_cursor_grid_from_link_input_17, Unused_17_MoveMenuCursorGridFromLinkInput, 17 ; $4186 Unused_17_MoveMenuCursorGridFromLinkInput
 Unused_17_MoveMenuCursorGridRemote:
 	ld a, [wMenuCursorX] ; $4203
 	ld d, a ; $4206

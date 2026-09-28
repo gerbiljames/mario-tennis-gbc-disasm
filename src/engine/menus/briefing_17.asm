@@ -38,12 +38,12 @@ ClearWram3Row64Alt_17:
 UpdateAnimatedTilesTask_17:
 	farcall UpdateAnimatedTiles ; $4406
 	ret ; $4409
-; Instruction-identical to DrawNameWithDiacritics_1b and DrawNameWithDiacritics_3e (one copy per bank); a change here belongs in every copy.
+; Instruction-identical to DrawNameWithDiacritics_1b and Unused_3e_DrawNameWithDiacritics (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin draw_name_with_diacritics, 17 ; $440a DrawNameWithDiacritics_17
-; Instruction-identical to DrawDecimalNumber_1b, DrawDecimalNumber_3b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy.
+	twin_in draw_name_with_diacritics, Unused_17_DrawNameWithDiacritics, 17 ; $440a Unused_17_DrawNameWithDiacritics
+; Instruction-identical to Unused_1b_DrawDecimalNumber, Unused_3b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
-	twin draw_decimal_number, 17 ; $4443 DrawDecimalNumber_17
+	twin_in draw_decimal_number, Unused_17_DrawDecimalNumber, 17 ; $4443 Unused_17_DrawDecimalNumber
 DrawAsciiDigitString_17:
 	ld a, [hl+] ; $4464
 	and a ; $4465

@@ -1,10 +1,11 @@
 ; MoveMenuCursor2GridRemote_<bank>: one routine assembled into banks $16, $3e through
-; `twin move_menu_cursor2_grid_remote, <bank>` -- {TWIN} is the bank suffix, so the labels and the
+; `twin_in move_menu_cursor2_grid_remote, <Label>, <bank>` -- {TWIN_LABEL} is the copy's name
+; (Unused_<bank>_MoveMenuCursor2GridRemote where nothing calls it) and {TWIN} the bank suffix, so the labels and the
 ; bank-local references become that bank's. No per-instruction addresses:
-; the `twin` line in each bank carries the member's address. Every member's
-; note is above its `twin` line. A fix here lands in every bank.
+; the `twin_in` line in each bank carries the member's address. Every member's
+; note is above its `twin_in` line. A fix here lands in every bank.
 
-MoveMenuCursor2GridRemote_{TWIN}:
+{TWIN_LABEL}:
 	ld a, [wMenuCursor2X]
 	ld d, a
 	ld a, [wMenuCursor2Y]
