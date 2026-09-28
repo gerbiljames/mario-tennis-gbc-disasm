@@ -115,6 +115,16 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-28** — drills and 381 more actor slots. Nine eventtest targets
+  pick each drill from the Test map's list; 240 targeted sessions match the
+  original, and 2,155 routines have now been entered. The actor-slot rule no
+  longer counts a variant that a visit-ending scene installs (the three court
+  tours, the Tournament Site arrival, one ending scene): the player is never
+  in control under it. That names 360 more script operands and 21 more
+  `NpcScripts` ids, and all 593 runtime hits on them matched the active list.
+  3,877 slot references are names now, about 880 still numbers
+  (`docs/story_mode.md`).
+
 * **2026-09-28** — beyond the story, and a coverage pass. `make event-test`
   now also plays long seeded sessions from each of the main menu's nine items
   (exhibition, minigames, match select, the story-slot screens, the
