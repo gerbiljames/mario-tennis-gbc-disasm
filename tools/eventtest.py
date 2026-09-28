@@ -71,7 +71,11 @@ BUTTONS = {"a": 0x01, "b": 0x02, "start": 0x08, "right": 0x10, "left": 0x20, "up
 # a run that takes one logs a taint and is compared only up to it.
 TAINTS = [("GetSpeakerVoice", 0x60b1, lambda g: g.rf.A & 0x80, "GetSpeakerVoice stack slip"),
           ("CourtyardEntryWalkIn_13", 0x62ff,
-           lambda g: g.mem[g.sym["wStoryModeEntryPoint"][1]] > 6, "Courtyard walk-in over-read")]
+           lambda g: g.mem[g.sym["wStoryModeEntryPoint"][1]] > 6, "Courtyard walk-in over-read"),
+          ("GetCollisionMapCellAddr", 0x5edd, lambda g: g.rf.D > 0x1f or g.rf.E > 0x3f,
+           "map read off the edge"),
+          ("GetBehaviorMapCellAddr", 0x5f31, lambda g: g.rf.D > 0x1f or g.rf.E > 0x3f,
+           "map read off the edge")]
 SYNC = {"pad": ("ReadJoypad", 0x0317), "frame": [("AdvanceFrame", 0x2644), ("WaitVBlank", 0x2815),
                                                ("EnableLCD", 0x0380)],
         "seeded": ("VBlankHandler", 0x27c3)}

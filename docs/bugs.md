@@ -512,6 +512,17 @@ the dialogue, so the line is spoken normally. A build whose ROM0 has moved even
 three bytes crashes instead. Seen when the partner speaks in the awards
 ceremony (location `$1a`, entry 11).
 
+### Map reads off the edge have no bounds check
+
+`GetCollisionMapCellAddr` (`$0a:$5edd`) and `GetBehaviorMapCellAddr`
+(`$0a:$5f31`) turn a tile position (`d` = x, `e` = y, the high bytes of an
+actor's coordinates) into an address in the 32 × 64-tile `wCollisionMap` /
+`wBehaviorMap` without clamping it. An actor off the map, which the Test map's
+open star field allows by simply walking off its top edge, indexes far past the
+`$400`-byte maps into echo RAM. Echo RAM mirrors bank-0 WRAM: the stack and
+stored ROM pointers. Collision and tile triggers there are whatever those bytes
+say, so one layout lets the player wander on and another fires an exit.
+
 ### Courtyard entries past 6 read their walk-in direction from code
 
 `CourtyardEntryWalkIn_13` (`$13:$62ff`) walks the player (and the partner in

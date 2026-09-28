@@ -126,6 +126,13 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
   reference in the source. All 158 are now `Unused_<bank>_…` (467 labels in
   all). For the 68 that are twin-group copies, their 19 templates were moved
   to `twin_in` so each copy names itself (`docs/unused_code.md`).
+  `--targets` adds eleven starts random play cannot reach: the intro and
+  attract loop, the debug menu, and each Test-map NPC's flow (match and drill
+  lists, lessons, minigames, epilogue, credits). 132 sessions: no difference,
+  and 2,102 routines entered in all. These runs found a third layout-dependent
+  original-game path: the collision and behavior map reads have no bounds
+  check, so an actor off the map (easy on the Test map's open edges) reads echo
+  RAM (`docs/bugs.md`).
 
 * **2026-09-27** — the padded ROM played through every story state.
   `tools/eventtest.py` (`make event-test`) boots both builds, enters every
