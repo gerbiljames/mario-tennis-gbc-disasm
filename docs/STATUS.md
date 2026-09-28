@@ -133,6 +133,10 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
   `make check`. It also found two original-game paths whose outcome depends on
   where code sits (`docs/bugs.md`: `GetSpeakerVoice`'s stack slip and the
   Courtyard walk-in over-read); a run that takes one is compared only up to it.
+  Final sweep: 36 states × 42 locations, 14.66 million events, no difference;
+  161 entries stop at one of those two paths, and 48 of the 1,512 location
+  runs are inconclusive because PyBoy wedged (a chained breakpoint), not
+  because either build did.
 
 * **2026-09-27** — the free-RAM inventory re-checked at runtime. Every free
   byte poisoned, each run played twice under the same inputs across the story
