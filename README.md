@@ -166,6 +166,20 @@ restated:
 - **Save files.** `tools/savetool.py` verifies, dumps and edits battery saves
   (levels, stats, unlock flags), recomputing the checksums (`docs/save_format.md`).
 
+- **What an edit looks like end to end.** On a branch: fix code in `src/`
+  and edit data in `data/` (the PNG, grid, text or track); `python3
+  tools/mods.py collect baserom.gbc` copies each changed data file into
+  `mods/`; `make`. `make compare` now fails -- that is the point -- and
+  everything else still applies: `make check` and `make test` read the
+  build's own layout, `make shift-test` proves the edited code still
+  relocates, and `make event-test` plays the edited ROM against a padded
+  copy of itself (`make venv` first for PyBoy). Commit `src/` and `mods/`.
+  Checking out a tree without a mod puts the extracted file back on the next
+  `make`, so switching between a fork and upstream needs no re-extraction.
+  To show a fix works, run the routine in PyBoy on both builds: the
+  grayscale and menu-stack fixes in `docs/bugs.md` were confirmed by calling
+  `ConvertColorToGrayscale` on test colours and by forcing a full menu
+  stack under the debug menu.
 - **A fork commits its edits in `mods/`.** `data/` is ROM content and is
   not committed; an edited file lives at the same relative path under
   `mods/` (`mods/bank_040/AlexSpriteFrame00.png`) and is copied over
@@ -258,9 +272,14 @@ deleted.
 `src/`, `ram/` and `include/` are the source: a name, a note, a union
 variant or a table layout is changed there, and `make` is the whole
 pipeline. Every instruction still carries its original address in a
-trailing comment, which is the key the docs use; it is a record of where
-the instruction came from, not something the assembler reads, so a moved
-or inserted instruction can simply do without one.
+trailing comment (`; $4719`), which is the key the docs use and the address
+to break on in an emulator running the original cartridge. It is a record of
+where the instruction came from, not something the assembler reads: once an
+edit changes a bank's size the comments after it are the original ROM's
+addresses, not the build's, and a moved or inserted instruction can simply
+do without one. No tool takes them as build addresses -- the runtime tools
+place a line relative to its nearest label in the build's symbol file and
+skip a stretch that has been edited (`tools/banksrc.py`, `build_addresses`).
 
 The tree was produced by a generator — coverage traces from real runs of
 the game, a conservative recursive descent, and JSON inputs holding every

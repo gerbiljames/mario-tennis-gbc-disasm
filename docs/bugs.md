@@ -57,6 +57,18 @@ no-op; it is a RAM-gate write whose *effect* is benign. It renders as
 `ld [rRAMG + 2], a` since the MBC registers were named, which makes it visibly
 wrong rather than looking like an ordinary store to a low address.
 
+It is not the routine's only fault. Green's top two bits come from `d & 3`
+shifted left *twice*, landing on bits 2-3 where they overlap the three low
+bits instead of bits 3-4, so green never exceeds 15. And the "average" is
+`srl a` -- the sum halved, not divided by three -- masked to five bits, so
+restoring the blue store alone would make white (31, 31, 31) come out as
+93 / 2 = 46, masked to 14: dark grey. Run in the emulator on the shipped
+routine, white gives 23, pure red 15, pure green 7 and pure blue 0. A fix
+that holds needs all three changes: the store to `$d002`, a third `rlca` for
+green, and a weighting that cannot overflow -- `(r + 2g + b) / 4`, green
+added twice and the sum shifted right twice, which keeps white at 31 and
+every grey at itself.
+
 ### The save mirror re-check compares the wrong signature
 
 The header region `$a000-$a7ff` is mirrored into SRAM bank 1 after every write.
@@ -547,7 +559,11 @@ store with a missing counterpart.
 depth against it. A seventh nested menu writes its frame over `wMenuDepth`
 itself and the byte after it: a runtime audit run that opened menus at random
 ended with `wMenuDepth` = `$20` (the frame's first byte) and `$d83f` = the
-window id. Normal play never nests that deep.
+window id. Normal play never nests that deep. Growing the stack only moves
+the limit (two free bytes follow `wMenuDepth`, one more frame); the fix is a
+bound on the push -- after `inc a`, `cp (wMenuDepth - wMenuStack) / 2` /
+`jr nc` past the frame write, keeping the window id and cursor reset -- so a
+seventh menu leaves the stack as it was and at worst unwinds one level early.
 
 ### Story character record `+$2f`
 

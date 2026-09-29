@@ -115,6 +115,21 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-29** — a real mod, and what it broke. On a throwaway branch:
+  the grayscale conversion fixed (it had three faults, not one: see
+  `docs/bugs.md`), a bounds guard on the menu stack, and a longer string
+  through `mods/`; both fixes confirmed in PyBoy against the original. The
+  pipeline assumed an unmodified ROM in more places than expected, and
+  those fixes are on main: the `lz` and `lz-labels` checks read the
+  original's offsets (every label after an edit looked like it truncated a
+  stream), the branch and scope checks keyed on address comments (new code
+  has none), the runtime tools hooked the addresses in those comments
+  (stale after a size change: `banksrc.build_addresses` places a line from
+  its nearest label instead), `rgbfix` warned on every edited build, and
+  removing a mod left the edit in `data/` (the overlay now keeps and restores
+  the extracted file). On the edited tree `make check`, `make test` and
+  `make shift-test` pass and an event-test state compares clean.
+
 * **2026-09-29** — the slot analysis is a tool and a check.
   `tools/actorslots.py` is the control-flow analysis that named the actor
   slots; it now also follows inline `rst Rst00` jump tables, which settled
