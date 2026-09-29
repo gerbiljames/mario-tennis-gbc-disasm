@@ -66,6 +66,51 @@ ACTOR_ARGS = {
     ("script_unlock_facing", 0),
 }
 FIXED = {"ACTOR_PLAYER", "ACTOR_PLAYER_SHADOW", "ACTOR_PARTNER"}
+# The Senior Court's init script picks its list from the same story flags
+# ComputeSeniorCourtStage turns into wMapSceneStage2, and neither changes
+# during a visit (the matches that change them end it): list A exactly at
+# the singles stages after the junior title, B at the doubles ones, the
+# default list before either. So a jump on the stage also says which list
+# is active. Only ComputeSeniorCourtStage writes the stage in bank $12.
+# The Tournament's round lists are installed by LoadIslandOpenRoundNpcs,
+# which sets wMapSceneStage to the round alongside; the default list
+# survives there only at round 1.
+STAGE_LISTS = {
+    "SeniorCourtActors_12": ("wMapSceneStage2", {0x00, 0x01}),
+    "SeniorCourtActorsA_12": ("wMapSceneStage2", {0x02, 0x03, 0x04, 0x05, 0x09, 0x0b, 0x0d}),
+    "SeniorCourtActorsB_12": ("wMapSceneStage2", {0x06, 0x07, 0x08, 0x0a, 0x0c, 0x0e}),
+    "TournamentActors_0f": ("wMapSceneStage", {0x00}),
+    "IslandOpenRound2Actors_0f": ("wMapSceneStage", {0x01}),
+    "IslandOpenSemifinalActors_0f": ("wMapSceneStage", {0x02}),
+    "IslandOpenFinalActors_0f": ("wMapSceneStage", {0x03}),
+    "IslandOpenRound1ActorsDoubles_0f": ("wMapSceneStage", {0x00}),
+    "IslandOpenSemifinalActorsDoubles_0f": ("wMapSceneStage", {0x02}),
+    "IslandOpenFinalActorsDoubles_0f": ("wMapSceneStage", {0x03}),
+}
+STAGE_VARS = {v for v, _ in STAGE_LISTS.values()}
+# A tile trigger whose cell is not in the map's own behaviour data runs only
+# under the lists installed by the routine that writes the cell:
+# LoadIslandOpenRoundNpcs writes trigger $0f for singles, $0e for doubles.
+TILE_LISTS = {
+    "TournamentTile0F_0f": {"TournamentActors_0f", "IslandOpenRound2Actors_0f",
+                            "IslandOpenSemifinalActors_0f", "IslandOpenFinalActors_0f"},
+    "TournamentTile0E_0f": {"IslandOpenRound1ActorsDoubles_0f", "IslandOpenSemifinalActorsDoubles_0f",
+                            "IslandOpenFinalActorsDoubles_0f"},
+}
+
+
+def constants():
+    out = {}
+    for inc in (ROOT / "include").glob("*.inc"):
+        for m in re.finditer(r"^def (\w+)\s+equ \$([0-9a-f]+)", inc.read_text(), re.M | re.I):
+            out[m.group(1)] = int(m.group(2), 16)
+    return out
+
+
+def stage_filter(st, var, ok):
+    """Keep the states whose list is not bound to var's stage, or has a stage ok() accepts."""
+    return frozenset(x for x in st if STAGE_LISTS.get(x[0], (None,))[0] != var
+                     or any(ok(v) for v in STAGE_LISTS[x[0]][1]))
 DATA = re.compile(r"\t(db|dw|dn|ds|map_\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|"
                   r"story_location|obj_template)\b")
 GLOBAL = re.compile(r"^([A-Za-z_]\w*):")
@@ -151,6 +196,23 @@ class Source:
         return True
 
 
+def dispatch(info, st):
+    """Jump-table targets with the states that reach each: a stage-indexed
+    table's entry only runs at its own stage."""
+    out = []
+    for t in info:
+        if isinstance(t[1], tuple) or (len(t) == 2 and isinstance(t[0], tuple)):
+            entry, (var, stage) = t
+            out.append((entry, stage_filter(st, var, lambda x, stage=stage: x == stage)))
+        else:
+            out.append((t, st))
+    return out
+
+
+def entry_of_target(t):
+    return t[0] if isinstance(t[0], tuple) else t
+
+
 class Flow:
     def __init__(self, src):
         self.s = src
@@ -163,6 +225,7 @@ class Flow:
                         if m and m[-1] in src.funcs:
                             self.tables.add(m[-1])
         self.cache, self.summ, self.stack = {}, {}, set()
+        self.consts = constants()
 
     def resolve(self, b, i, target):
         s = self.s
@@ -178,6 +241,44 @@ class Flow:
         if (b, i) not in self.cache:
             self.cache[(b, i)] = self._step(b, i)
         return self.cache[(b, i)]
+
+    def stage_base(self, prev):
+        """If the lines before a dispatch load a stage and subtract one,
+        (stage variable, the stage its first entry stands for)."""
+        for k in range(len(prev) - 1, -1, -1):
+            m = re.match(r"ld a, \[(\w+)\]$", prev[k])
+            if m and m.group(1) in STAGE_VARS:
+                subs = [re.match(r"sub (\w+)$", x) for x in prev[k + 1:]]
+                subs = [m.group(1) for m in subs if m]
+                base = self.consts.get(subs[0], None) if subs else 0
+                return None if base is None else (m.group(1), base)
+        return None
+
+    def stage_compare(self, L, i):
+        """(cond, stage, variable) when line i branches on a compare of a loaded stage."""
+        code = L[i].split(";")[0].strip()
+        m = re.match(r"(?:jr|jp|ret) (nz|z|nc|c)\b", code)
+        if not m:
+            return None
+        k, cmp = i - 1, None
+        while k >= 0:
+            c = L[k].split(";")[0].strip()
+            if not c:
+                k -= 1
+                continue
+            mm = re.match(r"cp (\S+)$", c)
+            if mm and cmp is None:
+                cmp = mm.group(1)
+            elif re.match(r"ld a, \[(\w+)\]$", c) and c[7:-1] in STAGE_VARS:
+                var = c[7:-1]
+                break
+            elif not (mm or re.match(r"(jr|jp) (nz|z|nc|c),", c)):
+                return None
+            k -= 1
+        if k < 0 or cmp is None:
+            return None
+        value = self.consts.get(cmp, int(cmp.lstrip("$"), 16) if re.match(r"\$[0-9a-f]+$", cmp) else None)
+        return None if value is None else (m.group(1), value, var)
 
     def _step(self, b, i):
         s = self.s
@@ -200,6 +301,9 @@ class Flow:
                 if not (r and r[1] is not None and s.is_story(mm.group(1).split(".")[0])):
                     return ("jump_out", None)
                 tg.append(r)
+            base = self.stage_base(prev)
+            if tg and base is not None:
+                tg = [(t, (base[0], base[1] + k)) for k, t in enumerate(tg)]
             return ("multitail", tg) if tg else ("jump_out", None)
         m = re.match(r"(call|farcall) (\w+(?:\.\w+)?)$", code)
         if m:
@@ -220,7 +324,11 @@ class Flow:
                         if tb in s.funcs and t == "JumpToHL":
                             tg = [y for z in s.body(tb) for y in re.findall(r"\bdw (\w+)", z.split(";")[0])]
                             if tg and all(s.is_story(y) for y in tg):
-                                return ("multicall", [s.entry(y) for y in tg])
+                                base = self.stage_base(prev)
+                                entries = [s.entry(y) for y in tg]
+                                if base is not None:
+                                    entries = [(e, (base[0], base[1] + k)) for k, e in enumerate(entries)]
+                                return ("multicall", entries)
                         break
                 return ("unknown_call", None)
             r = self.resolve(b, i, t)
@@ -272,6 +380,24 @@ class Flow:
                 kind, info = self.step(b, i)
                 if kind == "data":
                     break
+                cmp = self.stage_compare(L, i) if kind in ("cjump", "ctail", "cret", "cjump_out") else None
+                if cmp:
+                    cond, v, var = cmp
+                    test = {"z": lambda x: x == v, "nz": lambda x: x != v,
+                            "c": lambda x: x < v, "nc": lambda x: x >= v}[cond]
+                    taken = stage_filter(st, var, test)
+                    st = stage_filter(st, var, lambda x: not test(x))
+                    if kind == "cjump":
+                        work.append((info, taken))
+                    elif kind == "ctail":
+                        if calls is not None:
+                            calls.append((info, taken))
+                        out |= self.apply(info, taken)
+                    elif kind == "cret":
+                        out |= taken
+                    else:
+                        out |= self.poison(taken)
+                    kind = "nop"
                 if kind == "install":
                     st = frozenset((info, t, e) for (_, t, e) in st)
                 elif kind == "table":
@@ -282,18 +408,18 @@ class Flow:
                     st = frozenset((l, t, False) for (l, t, _) in st)
                 elif kind in ("call", "multicall"):
                     res = set()
-                    for ce in (info if kind == "multicall" else [info]):
+                    for ce, cs in (dispatch(info, st) if kind == "multicall" else [(info, st)]):
                         if calls is not None:
-                            calls.append((ce, st))
-                        res |= self.apply(ce, st)
+                            calls.append((ce, cs))
+                        res |= self.apply(ce, cs)
                     st = frozenset(res)
                 elif kind == "unknown_call":
                     st = frozenset(set(st) | self.poison(st))
                 elif kind == "multitail":
-                    for ce in info:
+                    for ce, cs in dispatch(info, st):
                         if calls is not None:
-                            calls.append((ce, st))
-                        out |= self.apply(ce, st)
+                            calls.append((ce, cs))
+                        out |= self.apply(ce, cs)
                     break
                 elif kind in ("tail", "ctail"):
                     if calls is not None:
@@ -364,7 +490,8 @@ class Flow:
             while True:
                 before = set(visit)
                 vin = {(l, t, False) for (l, t, _) in visit}
-                roots = [(h, vin) for h in common]
+                roots = [(h, {x for x in vin if x[0] in TILE_LISTS[h]} if h in TILE_LISTS else vin)
+                         for h in common]
                 for tb in {t for (_, t, _) in visit if t in s.funcs}:
                     sub = {x for x in vin if x[1] == tb}
                     roots += [(h, sub) for h in s.handlers(tb)]
@@ -426,7 +553,7 @@ class Flow:
         for (b, i) in walked:
             k, info = self.step(b, i)
             if k in ("multicall", "multitail"):
-                dispatched |= {s.owner[x] for x in info}
+                dispatched |= {s.owner[entry_of_target(x)] for x in info}
         ext = set()
         for b, (L, O) in s.banks.items():
             for i, line in enumerate(L):
@@ -449,7 +576,8 @@ class Flow:
         callees = collections.defaultdict(set)
         for (b, i) in walked:
             k, info = self.step(b, i)
-            for t in (info if k in ("multicall", "multitail") else [info] if k in ("call", "tail", "ctail") else []):
+            for t in ([entry_of_target(x) for x in info] if k in ("multicall", "multitail")
+                      else [info] if k in ("call", "tail", "ctail") else []):
                 callees[s.owner[(b, i)]].add(s.owner[t])
         self.tainted, stack = set(), list(ext)
         while stack:

@@ -1,16 +1,16 @@
 IslandOpenDoublesVictory:
-	script_set_position $09, $1b00, $0b00 ; $7071
+	script_set_position ACTOR_SENIOR_COURT_B_CURT, $1b00, $0b00 ; $7071
 	script_set_position ACTOR_SENIOR_COURT_A_BETH, $1b00, $0d00 ; $707c
-	script_face $09, FACE_LEFT ; $7087
+	script_face ACTOR_SENIOR_COURT_B_CURT, FACE_LEFT ; $7087
 	script_face ACTOR_SENIOR_COURT_A_BETH, FACE_LEFT ; $708e
 	script_null_script ACTOR_SENIOR_COURT_A_BETH ; $7095
 	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_WALK ; $709a
 	script_null_script ACTOR_PARTNER ; $70a1
 	script_set_position ACTOR_SENIOR_COURT_A_EMILY, $2b00, $2700 ; $70a6
-	script_set_position $04, $2500, $0f00 ; $70b1
-	script_face $04, FACE_DOWN ; $70bc
-	script_null_script $04 ; $70c3
-	script_set_anim $04, ANIM_WALK ; $70c8
+	script_set_position ACTOR_SENIOR_COURT_B_FAY, $2500, $0f00 ; $70b1
+	script_face ACTOR_SENIOR_COURT_B_FAY, FACE_DOWN ; $70bc
+	script_null_script ACTOR_SENIOR_COURT_B_FAY ; $70c3
+	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_WALK ; $70c8
 	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, $2300, $1300 ; $70cf
 	script_face ACTOR_SENIOR_COURT_A_ALLIE, FACE_DOWN ; $70da
 	script_null_script ACTOR_SENIOR_COURT_A_ALLIE ; $70e1
@@ -27,24 +27,24 @@ IslandOpenDoublesVictory:
 	script_fade_in $20 ; $712e
 	call WaitFadeEnd ; $7133
 	script_set_text Text_34_130 ; $7136
-	script_move_target $04, $2500, $1300 ; $713c
-	script_wait_move $04 ; $7147
-	script_face_pair ACTOR_SENIOR_COURT_A_ALLIE, $04 ; $714c
-	script_set_anim $04, ANIM_BOUNCE ; $7154
-	script_speak $04 ; $715b
+	script_move_target ACTOR_SENIOR_COURT_B_FAY, $2500, $1300 ; $713c
+	script_wait_move ACTOR_SENIOR_COURT_B_FAY ; $7147
+	script_face_pair ACTOR_SENIOR_COURT_A_ALLIE, ACTOR_SENIOR_COURT_B_FAY ; $714c
+	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_BOUNCE ; $7154
+	script_speak ACTOR_SENIOR_COURT_B_FAY ; $715b
 	script_face ACTOR_SENIOR_COURT_A_ALLIE, FACE_DOWN ; $7160
 	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_SHAKE ; $7167
 	script_wait_idle ACTOR_SENIOR_COURT_A_ALLIE ; $716e
 	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $7173
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $7178
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $717f
-	script_set_anim $04, ANIM_BOUNCE ; $7184
+	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_BOUNCE ; $7184
 	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_BOUNCE ; $718b
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $7192
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7199
 	script_face ACTOR_PLAYER, FACE_DOWN ; $71a0
 	script_face ACTOR_PARTNER, FACE_DOWN ; $71a7
-	script_face $04, FACE_DOWN ; $71ae
+	script_face ACTOR_SENIOR_COURT_B_FAY, FACE_DOWN ; $71ae
 	script_player_speed $0010 ; $71b5
 	script_set_speed ACTOR_SENIOR_COURT_A_EMILY, $0010 ; $71bb
 	script_move_player $2b00, $2000 ; $71c3
@@ -98,9 +98,9 @@ IslandOpenDoublesVictory:
 	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_BOUNCE ; $72fc
 	script_wait_frames $28 ; $7303
 	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $730a
-	script_move_target $04, $2500, $1500 ; $730f
-	script_wait_move $04 ; $731a
-	script_speak $04 ; $731f
+	script_move_target ACTOR_SENIOR_COURT_B_FAY, $2500, $1500 ; $730f
+	script_wait_move ACTOR_SENIOR_COURT_B_FAY ; $731a
+	script_speak ACTOR_SENIOR_COURT_B_FAY ; $731f
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $7324
 	script_wait_frames $0a ; $732c
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7333
@@ -112,7 +112,7 @@ IslandOpenDoublesVictory:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $735b
 	script_wait_idle ACTOR_PLAYER ; $7362
 	script_wait_frames $0a ; $7367
-	script_set_anim $04, ANIM_NOD ; $736e
+	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_NOD ; $736e
 	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_NOD ; $7375
 	script_wait_idle ACTOR_SENIOR_COURT_A_ALLIE ; $737c
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $7381
@@ -156,18 +156,18 @@ SeniorSinglesRank4And3Victory:
 	ret ; $7448
 SeniorSinglesRank2Victory:
 	set_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $7449
-	script_set_position $06, $3300, $0f00 ; $744c
-	script_face $06, FACE_DOWN ; $7457
+	script_set_position ACTOR_SENIOR_COURT_A_JOY, $3300, $0f00 ; $744c
+	script_face ACTOR_SENIOR_COURT_A_JOY, FACE_DOWN ; $7457
 	call FadeInSeniorCourtNearPairB ; $745e
 	script_set_position ACTOR_PLAYER, $3400, $1b00 ; $7461
 	script_set_text Text_34_35 ; $746c
-	script_speak $06 ; $7472
+	script_speak ACTOR_SENIOR_COURT_A_JOY ; $7472
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, $ff80 ; $7477
 	ld a, $03 ; $747f
 	farcall ScriptWaitActorJumpDone ; $7481
 	script_set_text Text_34_76 ; $7484
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $748a
-	script_set_actor_script $06, ActorScript_12_07 ; $748f
+	script_set_actor_script ACTOR_SENIOR_COURT_A_JOY, ActorScript_12_07 ; $748f
 	script_move_target ACTOR_PLAYER, $2d00, $1b00 ; $749a
 	script_wait_move ACTOR_PLAYER ; $74a5
 	script_face ACTOR_PLAYER, FACE_DOWN ; $74aa
@@ -258,7 +258,7 @@ SeniorSharedVictoryScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $76b7
 	script_wait_idle ACTOR_PLAYER ; $76be
 	script_face ACTOR_PLAYER, FACE_UP ; $76c3
-	script_set_position $11, $2580, $1980 ; $76ca
+	script_set_position ACTOR_SENIOR_COURT_A_BALLOON_SWEAT, $2580, $1980 ; $76ca
 	sound SFX_APPEAR2 ; $76d5
 	script_wait_frames $28 ; $76d7
 	script_move_player $2400, $1700 ; $76de
@@ -267,7 +267,7 @@ SeniorSharedVictoryScene:
 	script_wait_frames $28 ; $76f2
 	script_move_target $04, $2400, $1500 ; $76f9
 	script_wait_move $04 ; $7704
-	script_set_position $11, $3f00, $3f00 ; $7709
+	script_set_position ACTOR_SENIOR_COURT_A_BALLOON_SWEAT, $3f00, $3f00 ; $7709
 	script_speak $04 ; $7714
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $7719
 	ld [wStoryModeCurrentLocation], a ; $771b

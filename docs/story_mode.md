@@ -266,12 +266,23 @@ active:
 * facing, tile and exit handlers and actor-script `as_call` routines run
   under any of those pairs, an `NpcScripts` handler only under the pairs
   holding its own table, and a routine dispatched through a `JumpToHL` table
-  or an inline `rst Rst00` jump table under whatever its dispatcher had.
+  or an inline `rst Rst00` jump table under whatever its dispatcher had;
+* two locations pick their list from a stage number computed from story
+  flags, and a branch on that stage also narrows the list: the Senior
+  Court's lists each belong to a set of `wMapSceneStage2` stages, and the
+  Tournament Site's round lists to the `wMapSceneStage` round
+  `LoadIslandOpenRoundNpcs` sets beside them (`STAGE_LISTS`). A table
+  indexed by the stage dispatches each entry under its own stage's lists;
+* the Tournament Site's round-call tile triggers exist only once
+  `LoadIslandOpenRoundNpcs` has written their cells, so they run only
+  under the round lists it installs -- singles for trigger `$0f`, doubles
+  for `$0e` (`TILE_LISTS`).
 
 Where more than one list is possible the number stays, unless every
-candidate holds the same actor in that slot. 4,599 script operands and 436
-`NpcScripts` ids are names; 335 and 97 stay numbers: slots whose
-candidate lists disagree (mostly handlers that several variants share),
+candidate holds the same actor in that slot. 4,781 script operands and 436
+`NpcScripts` ids are names; 153 and 97 stay numbers: slots whose
+candidate lists disagree (the Island Open's opponent slots, which hold a
+different player each round, and handlers that several variants share),
 slots past the end of every candidate list (actors spawned by script), the
 lines inside shared twin files, and tables of locations the player never
 controls. A routine that can also be entered from somewhere the flow does

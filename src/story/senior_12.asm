@@ -322,7 +322,7 @@ SeniorCourtNpc06_12:
 	jr nz, .speak ; $58ed
 	farcall AdvanceDialogueTextCursor ; $58ef
 .speak:
-	script_speak $06 ; $58f2
+	script_speak ACTOR_SENIOR_COURT_B_JOY ; $58f2
 	ret ; $58f7
 SeniorCourtNpc06TextIds_12:
 	; $58f8, 30 bytes (text_ids)
@@ -458,7 +458,7 @@ SeniorCourtNpc09_12:
 	ld a, [wMapSceneStage2] ; $5a5a
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $5a5d
 	jr nc, .speak ; $5a5f
-	script_face $09, FACE_DOWN ; $5a61
+	script_face ACTOR_SENIOR_COURT_CURT, FACE_DOWN ; $5a61
 .speak:
 	script_speak $09 ; $5a68
 	ret ; $5a6d
@@ -500,7 +500,7 @@ SeniorCourtNpc0A_12:
 	script_wait_frames $05 ; $5ab5
 	and a ; $5abc
 	jr z, .speak ; $5abd
-	script_speak $0a ; $5abf
+	script_speak ACTOR_SENIOR_COURT_B_BOB ; $5abf
 	ret ; $5ac4
 .speak:
 	farcall AdvanceDialogueTextCursor ; $5ac5
@@ -511,10 +511,10 @@ SeniorCourtNpc0A_12:
 	script_wait_frames $05 ; $5ad3
 	and a ; $5ada
 	jr z, .done ; $5adb
-	script_speak $0a ; $5add
+	script_speak ACTOR_SENIOR_COURT_B_BOB ; $5add
 	ret ; $5ae2
 .done:
-	script_get_actor_state $0a ; $5ae3
+	script_get_actor_state ACTOR_SENIOR_COURT_B_BOB ; $5ae3
 	ld e, l ; $5ae8
 	ld d, h ; $5ae9
 	ld hl, $0005 ; $5aea
@@ -526,8 +526,8 @@ SeniorCourtNpc0A_12:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_47 ; $5b02
 	script_wait_frames $20 ; $5b0d
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_48 ; $5b14
-	script_set_actor_script $0a, ActorScript_12_45 ; $5b1f
-	script_set_actor_script $0b, ActorScript_12_46 ; $5b2a
+	script_set_actor_script ACTOR_SENIOR_COURT_B_BOB, ActorScript_12_45 ; $5b1f
+	script_set_actor_script ACTOR_SENIOR_COURT_B_PAM, ActorScript_12_46 ; $5b2a
 	script_move_player $0a00, $1100 ; $5b35
 	farcall WaitPlayerMoveDone ; $5b3f
 	script_wait_actor_script ACTOR_PLAYER ; $5b42
@@ -777,9 +777,9 @@ SeniorCourtPositionActorsByProgressA:
 	jr c, .checkStage10 ; $5e3d
 	cp $09 ; $5e3f
 	jr nc, .checkStage10 ; $5e41
-	script_set_position $09, $1b00, $0b00 ; $5e43
+	script_set_position ACTOR_SENIOR_COURT_A_CURT, $1b00, $0b00 ; $5e43
 	script_set_position ACTOR_SENIOR_COURT_A_BETH, $1b00, $0d00 ; $5e4e
-	script_face $09, FACE_LEFT ; $5e59
+	script_face ACTOR_SENIOR_COURT_A_CURT, FACE_LEFT ; $5e59
 	script_face ACTOR_SENIOR_COURT_A_BETH, FACE_LEFT ; $5e60
 	script_null_script ACTOR_SENIOR_COURT_A_BETH ; $5e67
 	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_WALK ; $5e6c

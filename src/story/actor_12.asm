@@ -18,16 +18,16 @@ ResumeSeniorOpponentScriptsPtrs:
 	dw ResumeSeniorDoublesRank2Opponents ; record 5
 	dw ResumeSeniorDoublesRank1Opponents ; record 6
 ResumeSeniorDoublesRank3Opponents:
-	script_set_actor_script $09, ActorScript_12_23 ; $6a63
+	script_set_actor_script ACTOR_SENIOR_COURT_B_CURT, ActorScript_12_23 ; $6a63
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BETH, ActorScript_12_27 ; $6a6e
 	ret ; $6a79
 ResumeSeniorDoublesRank2Opponents:
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BRIAN, ActorScript_12_33 ; $6a7a
-	script_set_actor_script $06, ActorScript_12_34 ; $6a85
+	script_set_actor_script ACTOR_SENIOR_COURT_B_JOY, ActorScript_12_34 ; $6a85
 	ret ; $6a90
 ResumeSeniorDoublesRank1Opponents:
 	script_set_actor_script ACTOR_SENIOR_COURT_A_ALLIE, ActorScript_12_41 ; $6a91
-	script_set_actor_script $04, ActorScript_12_42 ; $6a9c
+	script_set_actor_script ACTOR_SENIOR_COURT_B_FAY, ActorScript_12_42 ; $6a9c
 	script_wait_actor_script ACTOR_SENIOR_COURT_A_ALLIE ; $6aa7
 	script_set_actor_script ACTOR_SENIOR_COURT_A_ALLIE, ActorScript_12_57 ; $6aac
 	ret ; $6ab7
@@ -35,13 +35,13 @@ ResumeSeniorSinglesRank4Opponents:
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BRIAN, ActorScript_12_02 ; $6ab8
 	ret ; $6ac3
 ResumeSeniorSinglesRank3Opponents:
-	script_set_actor_script $06, ActorScript_12_06 ; $6ac4
+	script_set_actor_script ACTOR_SENIOR_COURT_A_JOY, ActorScript_12_06 ; $6ac4
 	ret ; $6acf
 ResumeSeniorSinglesRank2Opponents:
 	script_set_actor_script ACTOR_SENIOR_COURT_A_ALLIE, ActorScript_12_09 ; $6ad0
 	ret ; $6adb
 ResumeSeniorSinglesRank1Opponents:
-	script_set_actor_script $04, ActorScript_12_12 ; $6adc
+	script_set_actor_script ACTOR_SENIOR_COURT_A_FAY, ActorScript_12_12 ; $6adc
 	ret ; $6ae7
 SeniorSinglesMatchConfirm:
 	script_set_text Text_34_68 ; $6ae8
@@ -373,8 +373,8 @@ SeniorDoublesRank2Victory:
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_LEFT ; $6e29
 	script_set_position ACTOR_SENIOR_COURT_A_BETH, $2500, $1300 ; $6e30
 	script_face ACTOR_SENIOR_COURT_A_BETH, FACE_DOWN ; $6e3b
-	script_set_position $09, $2300, $0f00 ; $6e42
-	script_face $09, FACE_DOWN ; $6e4d
+	script_set_position ACTOR_SENIOR_COURT_B_CURT, $2300, $0f00 ; $6e42
+	script_face ACTOR_SENIOR_COURT_B_CURT, FACE_DOWN ; $6e4d
 	script_set_text Text_34_128 ; $6e54
 	script_set_position ACTOR_PLAYER, $2500, $1b00 ; $6e5a
 	script_set_position ACTOR_PARTNER, $2300, $1b00 ; $6e65
@@ -386,22 +386,22 @@ SeniorDoublesRank2Victory:
 	script_fade_in $08 ; $6e91
 	call WaitFadeEnd ; $6e96
 	script_wait_frames $3c ; $6e99
-	script_move_target $09, $2300, $1300 ; $6ea0
-	script_wait_move $09 ; $6eab
-	script_face_pair $09, ACTOR_SENIOR_COURT_A_BETH ; $6eb0
+	script_move_target ACTOR_SENIOR_COURT_B_CURT, $2300, $1300 ; $6ea0
+	script_wait_move ACTOR_SENIOR_COURT_B_CURT ; $6eab
+	script_face_pair ACTOR_SENIOR_COURT_B_CURT, ACTOR_SENIOR_COURT_A_BETH ; $6eb0
 	script_wait_frames $14 ; $6eb8
-	script_set_position $11, $2400, $1180 ; $6ebf
+	script_set_position ACTOR_SENIOR_COURT_B_BALLOON_SWEAT, $2400, $1180 ; $6ebf
 	sound SFX_APPEAR2 ; $6eca
 	script_wait_frames $1e ; $6ecc
 	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_SHAKE ; $6ed3
 	script_wait_idle ACTOR_SENIOR_COURT_A_BETH ; $6eda
-	script_set_position $11, $3f00, $3f00 ; $6edf
+	script_set_position ACTOR_SENIOR_COURT_B_BALLOON_SWEAT, $3f00, $3f00 ; $6edf
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, $ff80 ; $6eea
 	ld a, $03 ; $6ef2
 	farcall ScriptWaitActorJumpDone ; $6ef4
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $6ef7
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BETH, ActorScript_12_28 ; $6efc
-	script_set_actor_script $09, ActorScript_12_24 ; $6f07
+	script_set_actor_script ACTOR_SENIOR_COURT_B_CURT, ActorScript_12_24 ; $6f07
 	script_wait_frames $3c ; $6f12
 	script_move_target ACTOR_SENIOR_COURT_A_EMILY, $2d00, $1900 ; $6f19
 	script_move_player $2d00, $1b00 ; $6f24
@@ -422,8 +422,8 @@ SeniorDoublesRank1Victory:
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_RIGHT ; $6f6f
 	script_set_position ACTOR_SENIOR_COURT_A_BRIAN, $3300, $1100 ; $6f76
 	script_face ACTOR_SENIOR_COURT_A_BRIAN, FACE_DOWN ; $6f81
-	script_set_position $06, $3500, $1300 ; $6f88
-	script_face $06, FACE_DOWN ; $6f93
+	script_set_position ACTOR_SENIOR_COURT_B_JOY, $3500, $1300 ; $6f88
+	script_face ACTOR_SENIOR_COURT_B_JOY, FACE_DOWN ; $6f93
 	script_set_position ACTOR_PLAYER, $3300, $1b00 ; $6f9a
 	script_set_position ACTOR_PARTNER, $3500, $1b00 ; $6fa5
 	script_face ACTOR_PLAYER, FACE_UP ; $6fb0
@@ -447,7 +447,7 @@ SeniorDoublesRank1Victory:
 	script_move_target ACTOR_PLAYER, $2d00, $1b00 ; $701c
 	script_move_target ACTOR_PARTNER, $2d00, $1d00 ; $7027
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BRIAN, ActorScript_12_36 ; $7032
-	script_set_actor_script $06, ActorScript_12_35 ; $703d
+	script_set_actor_script ACTOR_SENIOR_COURT_B_JOY, ActorScript_12_35 ; $703d
 	call StartSeniorCourtPairBRally ; $7048
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_DOWN ; $704b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $7052
