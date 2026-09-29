@@ -115,6 +115,14 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-29** — the full event test after the edited-build tool changes
+  (eventtest now places its hooks through build addresses): 36 states × 42
+  locations, 90 main-menu and 240 targeted sessions, 13.13 million events,
+  no difference; 52 runs inconclusive on PyBoy timeouts, 36 of them at
+  location `$13`. The sweeps' temp copies now live in one run directory
+  that is removed at exit -- killed workers had left 4,978 of them in
+  `/tmp`, enough to fill it.
+
 * **2026-09-29** — a real mod, and what it broke. On a throwaway branch:
   the grayscale conversion fixed (it had three faults, not one: see
   `docs/bugs.md`), a bounds guard on the menu stack, and a longer string
