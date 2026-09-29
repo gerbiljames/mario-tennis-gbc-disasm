@@ -33,11 +33,13 @@ difference in the event sequence is a real fault of the shifted build.
 Timing-only differences are counted, not failed.
 """
 import argparse
+import atexit
 import bisect
 import collections
 import concurrent.futures
 import io
 import json
+import os
 import random
 import re
 import shutil
@@ -141,7 +143,9 @@ class Game:
         from pyboy import PyBoy
         self.sym = symbols(sym)
         base = symbols(ROOT / "build" / "mariotennis.sym")
-        self.tmp = Path(tempfile.mkdtemp(prefix="eventtest-"))
+        # under the sweep's run directory when there is one, so a worker
+        # killed on a timeout does not leave its copy behind in /tmp
+        self.tmp = Path(tempfile.mkdtemp(prefix="eventtest-", dir=os.environ.get("EVENTTEST_TMP")))
         copy = self.tmp / "rom.gbc"
         shutil.copy(rom, copy)
         shutil.copy(save, str(copy) + ".ram")
@@ -551,6 +555,8 @@ def main():
     builds = {"base": (args.base, ROOT / "build" / "mariotennis.sym"),
               "rom": (args.rom, Path(args.rom).with_suffix(".sym"))}
     tmp = Path(tempfile.mkdtemp(prefix="eventtest-"))
+    os.environ["EVENTTEST_TMP"] = str(tmp)
+    atexit.register(shutil.rmtree, tmp, True)
     me = [sys.executable, __file__, "--save", args.save, "--frames", str(args.frames),
           "--free-frames", str(args.free_frames), "--cap", str(args.cap), "--worker"]
     picked = ([] if args.states == "none" else
@@ -602,7 +608,7 @@ def main():
                                          for x in res for e in x["events"] if e[1] == "run"}
         hooked = set(old["hooked"]) | (set(code_labels()) - set(json.loads(skip.read_text())))
         path.write_text(json.dumps({"entered": sorted(entered), "hooked": sorted(hooked)}, indent=0))
-    shutil.rmtree(tmp)
+    shutil.rmtree(tmp, True)
 
     def where(unit, entry):
         kind, a, b = unit

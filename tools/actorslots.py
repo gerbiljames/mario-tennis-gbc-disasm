@@ -37,9 +37,11 @@ whose slot holds a different actor in some list the analysis finds possible
 at that line is a failure.
 """
 import argparse
+import atexit
 import collections
 import io
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -626,6 +628,8 @@ def runtime(save, jobs, frames, timeout):
     from runtime_audit import targets
     sym = ROOT / "build" / "mariotennis.sym"
     tmp = Path(tempfile.mkdtemp(prefix="actorslots-"))
+    os.environ["EVENTTEST_TMP"] = str(tmp)
+    atexit.register(shutil.rmtree, tmp, True)
     state = tmp / "story.state"
     E.boot(str(ROOT / "mariotennis.gbc"), str(sym), save, str(state))
     nloc = len(targets(E.symbols(sym))[5])
@@ -648,7 +652,7 @@ def runtime(save, jobs, frames, timeout):
                 continue
             for n, l, ok, c in r:
                 (total if ok else bad)[(n, l)] += c
-    shutil.rmtree(tmp)
+    shutil.rmtree(tmp, True)
     print(f"{sum(total.values())} hits on {len({n for n, _ in total})} names agreed, "
           f"{sum(bad.values())} disagreed; {lost} of {len(work)} runs lost (PyBoy wedges)")
     for (n, l), c in bad.most_common():
