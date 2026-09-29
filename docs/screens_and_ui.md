@@ -793,7 +793,7 @@ the bit.
 | `+$02` | **width** in cells | see the note below |
 | `+$03` | **height** in cells | see the note below |
 | `+$04` | state | `SetWindowState` / `GetWindowState` (`$05:$4767` / `$4773`); `$02` = plain menu, `$03` = paged menu, `$ff` = do not draw. Bit 1 also indents the text one extra column (`$05:$620a`). |
-| `+$05` | *not established* — no reader or writer found |
+| `+$05` | unused: no live code addresses it. `FreeWindow`'s clear and the `wSavedWindowStruct` save/restore copy it with the rest of the record; the only code naming `$dc05` is the dead `Unused_05_WriteStringToTilemapStreamed`, which keeps a tilemap pointer at `$dc05`/`$dc06` and a flag at `$dc09` -- scratch from before the window structs lived here |
 | `+$06`/`+$07` | text id lo/hi | `SetWindowTextId` (`$05:$55d5`); `$03` in the high byte is the "no text" sentinel |
 
 > The width/height assignment above contradicts the note currently on
@@ -1154,18 +1154,18 @@ overworld call never returns. It was called `RunDebugTestMenu` until 2026-07-30.
 
 ### Things this document could not establish
 
-- Window struct field `+$05`: no reader or writer found in bank `$05`.
 - `wShadowTilemapReadOffset` (`$dc76`) is read by
-  `RefreshShadowTilemapFromMapBuffer` and never written, so it stays 0.
+  `PrepareGlyphBuffer`'s keep branch and written nowhere in the ROM, by name
+  or by address, so it stays 0 -- and that branch never runs anyway (below).
 - Whether `ControlCodeHandler16`-`19` (codes `$10`-`$13`) were ever meaningful.
   They are four *separate* one-byte `ret`s, which is suggestive of deleted
   handlers, but nothing proves it.
 - How the `or $80` on `wMessageSpeed` at `$1a:$427c`/`$4295` interacts with
   `ApplyMessageSpeed`'s "bit 7 = instant" reading. `RestoreMessageSpeed`
   exists, but no call ordering was traced that guarantees the bit is cleared.
-- What raises `wGlyphBufferHoldCount`: `PrepareGlyphBuffer` and
-  `DrawTileAttrRect` read and decrement it, but no site in bank `$05`
-  increments it.
+- `wGlyphBufferHoldCount` (`$d822`) is read and decremented but raised
+  nowhere in the ROM, by name or by address: see
+  [bugs.md](bugs.md#the-glyph-buffers-keep-branch-is-unreachable).
 - `LoadScreenAssetRecord` sends both its tile copies to VRAM bank 1 (`$9000`
   and `$8800`, `$39:$40a3`/`$40ae`). That is what the code says; why the shared
   font/tile area lives in bank 1 rather than bank 0 was not established.

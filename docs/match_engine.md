@@ -875,7 +875,12 @@ The bounds are hardcoded immediates in this routine and are *not*
 | Corner rule | `X ≥ $240` is only allowed when depth `≥ 0` or `< -$2a0` (`$08:$732f-$7347`, mirrored at `$737b-$738f`) |
 
 The corner rule carves an asymmetric keep-out box out of one side of the far
-court. What is standing there is not established from the source.
+court: `X >= $240`, between the net and depth `-$2a0`, for a human-controlled
+player only. Positive X is screen-right on both halves (a character placed at
+`X = -$300` beside the net, on either side, is drawn at the left net post).
+The umpire's chair stands at that *left* post, so the box is not the chair --
+it is the mirror-image corner. What, if anything, the rule keeps players out
+of there is not established.
 
 **Bit 6 of `wCharFlags` is never read anywhere in the ROM.** The sliding is a
 consequence of the refusal itself, not of anything consuming the flag; treat the

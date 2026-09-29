@@ -445,7 +445,7 @@ Byte 40 is inside the range just consumed as BG palette 5. The same eight bytes
 are therefore both BG palette 5 and OBJ palette 3; changing one changes the
 other.
 
-### 3.5 Open question: the stride-18 readers
+### 3.5 The stride-18 readers (a debug-path bug)
 
 `LoadSceneGraphicsDirect` (`$0a:$5d2a`, `src/engine/story/scene2_0a.asm`) indexes the
 same table with a stride of **18**. The arithmetic is not ambiguous: `hl = a`,
@@ -467,8 +467,9 @@ so that count is meaningless either way, and `InitSceneViewerDefault` uses
 `inc c` rather than `inc bc`, leaving `b = $ff` in the dividend. The correct
 scene count, 37, is hardcoded elsewhere as `ld a, $25` (`$0a:$5934`).
 
-**This is already written up as a bug** — `docs/bugs.md:616-650` and
-`docs/history.md:9776-9796` — with the finding that the only caller of
+**This is already written up as a bug** — [bugs.md, "The scene viewer
+indexes the slot table with the wrong stride"](bugs.md#the-scene-viewer-indexes-the-slot-table-with-the-wrong-stride)
+and `docs/history.md:9776-9796` — with the finding that the only caller of
 `LoadSceneGraphicsDirect` is `LoadAndDisplayScene`, whose four callers are all
 the scene viewer hanging off the debug menu, which nothing in the retail build
 opens. Flagging it here rather than restating it: **if you write a new consumer
@@ -703,12 +704,12 @@ and stay `dw`.
 The row stride is fixed at 8 (`render_palettes`), so an over-running region
 cannot render as 5-byte palettes.
 
-Sizes across the 160 regions (8,619 bytes): 86 are the full 64-byte set, 28 are
+Sizes across the 160 regions (8,568 bytes): 86 are the full 64-byte set, 28 are
 a single palette, 3 are 32-byte half-sets, 6 are 128 bytes (a full BG+OBJ pair,
-matching `wMasterPalettes`), and a scatter in between. **Three are not a
-multiple of 8** — 129, 79 and 51 bytes — and hit `render_palettes`' raw-`db`
-tail branch. Whether those runs over-reach by a few bytes or the trailing bytes
-are a different structure is **not established**.
+matching `wMasterPalettes`), and a scatter in between -- every one a whole
+number of 8-byte palettes. Three used to end mid-palette (129, 79 and 51
+bytes); they were over-declared and were trimmed on 2026-09-11, so the raw-`db`
+tail branch of `render_palettes` no longer fires.
 
 ### 5.3 The live/master pair
 
