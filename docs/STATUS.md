@@ -126,7 +126,13 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
   428 reachable routines no run entered each sit below a routine that did,
   which names the missing condition: link play and the N64 Transfer Pak,
   story handlers random walks miss, the practice drills 2-3, a damaged
-  save, debug hotkeys (`docs/unused_code.md`, "Reachability").
+  save, debug hotkeys (`docs/unused_code.md`, "Reachability"). eventtest
+  then gained targets for two of those: six damaged saves booted from
+  power-on (the header, its mirror, a story slot, its backup, block `$36`,
+  N64 records) and every drill and minigame-room id the drill list does not
+  offer, swapped in at the launcher. 318 sessions compared clean, and 366
+  reachable routines remain unentered, mostly link play, the Transfer Pak
+  and story handlers.
 
 * **2026-09-29** — the full event test after the edited-build tool changes
   (eventtest now places its hooks through build addresses): 36 states × 42

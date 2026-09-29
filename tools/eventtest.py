@@ -139,7 +139,7 @@ def plan(seed, frames):
 
 
 class Game:
-    def __init__(self, rom, sym, save, cap, skip=(), learn_irq=False):
+    def __init__(self, rom, sym, save, cap, skip=(), learn_irq=False, extra=None):
         from pyboy import PyBoy
         self.sym = symbols(sym)
         base = symbols(ROOT / "build" / "mariotennis.sym")
@@ -226,6 +226,9 @@ class Game:
             if name in self.sym and self.sym[name] not in hooks and name not in skip:
                 add(self.sym[name], lambda n=name: self.log("run", n))
                 self.names[self.sym[name]] = name
+        # a target's own actions at a label, after the label's event is logged
+        for label, fn in (extra or {}).items():
+            add(self.sym[label], fn)
         self.hits, self.cap, self.spent, self.removed = {}, cap, [], []
         self.irq_hits = {}
         self.hooks = hooks
@@ -326,11 +329,13 @@ class Game:
                 m[b, 0xdfff] = data[-1]
             self.lag = None
 
-    def run(self, inputs, frames, limit, actions=None):
+    def run(self, inputs, frames, limit, actions=None, armed=False):
         """Play `inputs` for `frames` logic frames; `actions` maps a logic
-        frame to a function run (once) at the first frame edge past it."""
+        frame to a function run (once) at the first frame edge past it.
+        `armed` records from the first instruction -- for a run from
+        power-on, whose boot code runs before the first frame edge."""
         self.inputs, self.lf, self.prev, self.edge = inputs, 0, 0, 0
-        self.armed = False
+        self.armed = armed
         pending = sorted((actions or {}).items())
         ticks = 0
         while self.lf < frames and ticks < limit:
@@ -420,8 +425,45 @@ def session(rom, sym, save, state_file, seed, frames, cap, skip):
 TEST_MAP_NPCS = [(0x0700, 0x1100), (0x0700, 0x0700), (0x0d00, 0x0700), (0x0700, 0x0b00),
                  (0x0d00, 0x0b00), (0x0d00, 0x1100), (0x0500, 0x0e00), (0x1100, 0x0e00),
                  (0x1100, 0x0c00)]
+# Damaged battery saves the game repairs at power-on (docs/save_format.md):
+# the header signature (the bank-1 mirror intact, then both), story slot 0's
+# block (its backup good, then both), block $36 (backup $37 good), and N64
+# records present in block $0b.
+SAVE_DAMAGE = ["header", "header-mirror", "slot", "slot-backup", "block36", "n64"]
+# The drill list offers MINIGAME_* ids $00-$08; the story's lessons and
+# minigame rooms pass the rest to the same launcher.
+DRILL_IDS = range(0x09, 0x24)
 TARGETS = (["attract", "debug"] + [f"npc{k}" for k in range(len(TEST_MAP_NPCS))]
-           + [f"drill{k}" for k in range(9)])
+           + [f"drill{k}" for k in range(9)] + [f"save-{d}" for d in SAVE_DAMAGE]
+           + [f"drillid{i:02x}" for i in DRILL_IDS])
+
+
+def damaged_save(save, kind, out):
+    """A copy of `save` with one fault the boot code repairs."""
+    import savetool as T
+    sav = bytearray(Path(save).read_bytes())
+
+    def spoil(block):
+        ent = T.entry(sav, block)
+        sav[ent["data"]] ^= 0xff
+    if kind == "header":
+        sav[T.SIG_OFF] ^= 0xff
+    elif kind == "header-mirror":
+        sav[T.SIG_OFF] ^= 0xff
+        sav[0x2000 + T.SIG_OFF] ^= 0xff
+    elif kind == "slot":
+        spoil(0)
+    elif kind == "slot-backup":
+        spoil(0)
+        spoil(T.BACKUP_DELTA)
+    elif kind == "block36":
+        spoil(0x36)
+    elif kind == "n64":
+        ent = T.entry(sav, 0x0b)
+        sav[ent["data"]] = 1
+        T.fix(sav)
+    Path(out).write_bytes(sav)
+    return out
 
 
 def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
@@ -430,9 +472,22 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
     through hDebugStepMode in the dorm), each Test-map NPC's flow (match
     and drill lists, minigame select, epilogue, credits), and each of the
     nine drills picked from its list."""
-    g = Game(rom, sym, save, cap, set(json.loads(Path(skip).read_text())))
+    extra, armed = {}, False
+    if name.startswith("save-"):
+        save = damaged_save(save, name[5:], Path(tempfile.mkdtemp(dir=os.environ.get("EVENTTEST_TMP"))) / "damaged.sav")
+    if name.startswith("drillid"):
+        want, done = int(name[7:], 16), []
+
+        def pick():
+            if not done:
+                g.rf.A = want
+                done.append(1)
+        extra["RunTrainingDrillByID"] = pick
+    g = Game(rom, sym, save, cap, set(json.loads(Path(skip).read_text())), extra=extra)
     m, actions = g.mem, {}
-    if name == "attract":
+    if name == "attract" or name.startswith("save-"):
+        # from power-on, so the boot code (the save check among it) runs
+        armed = True
         inputs = [0] * min(frames, 6000)
     else:
         g.pb.load_state(io.BytesIO(Path(state_file).read_bytes()))
@@ -454,15 +509,16 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
             actions[80] = place
             inputs += [BUTTONS["left" if side > 0 else "right"]] * 30 + [0] * 60
             if name.startswith("drill"):
-                # the drill list: nine rows, four to a page, Right pages
-                k = int(name[5:])
+                # the drill list: nine rows, four to a page, Right pages;
+                # a drillid target takes row 0 and swaps the id at the launcher
+                k = 0 if name.startswith("drillid") else int(name[5:])
                 for button in ["right"] * (k // 4) + ["down"] * (k % 4) + ["a"]:
                     inputs += [BUTTONS[button]] * 6 + [0] * 24
                 inputs += [0] * 60
     g.reset_caps()
     g.events = []
     inputs += plan(2000000 + seed * 16 + TARGETS.index(name), frames - len(inputs))
-    ticks = g.run(inputs, frames, 4 * frames, actions)
+    ticks = g.run(inputs, frames, 4 * frames, actions, armed)
     events = [e for e in g.events if e[0] < frames]
     g.close()
     return [{"entry": seed, "events": events, "logic": g.lf, "ticks": ticks}]

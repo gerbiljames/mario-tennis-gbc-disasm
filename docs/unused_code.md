@@ -60,25 +60,27 @@ so it is recorded as unexplained rather than as a path.
 
 The same sweep (15.7 million events: every story location under 36 story
 states, 180 main-menu and 480 targeted sessions) left 428 reachable routines
-never entered. Each hangs below a routine that did run, which says what the
-sweeps did not set up:
+never entered. Two groups were conditions a target can set up, and now does:
+the save repair runs from power-on with a damaged save (`save-*` targets:
+the header signature, with and without its bank-1 mirror, a story slot with
+and without its backup, block `$36`, N64 records present), and the practice
+drills and minigame rooms the drill list does not offer run through the same
+launcher with the id the story would pass (`drillid*` targets, `$09`-`$23`).
+With those, 366 remain, each below a routine that did run:
 
 | never entered | below | why |
 | --- | --- | --- |
-| 101 | the main menu's flows | link play and the N64 Transfer Pak screens (ring shots, tournament data, trophies): a second Game Boy or an N64 |
+| 113 | the main menu's flows | link play and the N64 Transfer Pak screens (ring shots, tournament data, trophies), and the link handshake and frame sync: a second Game Boy or an N64 |
 | 64 | `GetStoryLocationRecordPtr` | story NPC, facing and tile handlers random walking did not trigger |
-| 36 | `RunTrainingDrillByID` | the second and third practice drills of each kind |
-| 22 | the link-frame exchange | the serial handshake and frame sync of a link match |
 | 21 | the Special Court's init | its scene sequences |
-| 16 | frame and save start-up | the save signature check and repair, which run on a damaged save |
 | 15 | `CheckDebugStatsEditorHotkey` | the in-match stats editor, behind a debug hotkey |
 | 13 | `DispatchRankingBoardAnim` | ranking-board animation states |
 | 12 | `DispatchControlCode` | text control codes no string uses (`$10`-`$13` among them) |
 | 11 | `FetchShortText` | per-bank copies of the short-text fetch |
-| 8 | the interrupt vectors | `ApplyWhiteFade` (see bugs.md) and handlers the hooks do not see |
-| 7 | `StartMinigameByID` | Tennis Machine 2 and 4, Wall Practice 2 and others |
+| 8 | `ProcessMatchRewards` | reward paths for results the sessions did not reach |
+| 6 | the interrupt vectors | `ApplyWhiteFade` (see bugs.md) and handlers the hooks do not see |
 
-and a tail of small groups: tiebreaks, reward and EXP paths, trajectory
+and a tail of small groups: tiebreaks, EXP-screen stat arrows, trajectory
 table 4 of each shot type, ranking-board rows 9-10, drill briefings.
 
 ## The patterns
