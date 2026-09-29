@@ -31,6 +31,11 @@ the layout, the names and the structure.
    make test                    # codecs, macros and source pins (ROM optional)
    ```
 
+   The tools need Python 3 with Pillow; the runtime checks (`make
+   event-test`, `make slot-audit`) also need PyBoy. `make venv` puts both,
+   at the versions in `requirements.txt`, into `.venv`, which those targets
+   then use.
+
 ## What is here
 
 The ROM is 128 banks of 16 KiB. 59 of them contain code; the rest are
@@ -272,8 +277,14 @@ of the ROM was reached.
   extent and survives a re-encode, no assembled symbol sits inside a
   stream, the extracted regions do not overlap, no routine sits inside an
   actor script's label scope, no new conditional branch targets the
-  instruction after it, and every PNG and tilemap grid encodes back to its
-  blob.
+  instruction after it, every PNG and tilemap grid encodes back to its
+  blob, and every actor-slot name holds its actor in each list that can be
+  active where it is used.
+- `tools/actorslots.py` — which `map_actor` list a story script addresses
+  at each slot operand, by following control flow through the story code
+  (`docs/story_mode.md`, "map_actor"): reports the slot numbers it can
+  settle and renames them with `--apply`; `--runtime` (`make slot-audit`)
+  checks every name against the list active in a PyBoy sweep.
 - `tests/` (`make test`) — the codecs, every idiom macro assembled and
   compared to the bytes it stands for, the extractor's `--keep`, and pins on
   the source (idiom, sound-id, VRAM-name and copy-length counts) that a

@@ -1,60 +1,60 @@
 NetCoachIntroDialogue_15:
 	script_set_text Text_37_126 ; $757a
 	call InitNetCoachScene ; $7580
-	script_speak $12 ; $7583
-	script_face_toward ACTOR_PLAYER, $12 ; $7588
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7583
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BETH ; $7588
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7590
 	jr z, .animate ; $7593
 	script_set_text Text_37_130 ; $7595
 .animate:
-	script_set_anim $12, ANIM_NOD ; $759b
-	script_wait_idle $12 ; $75a2
-	script_speak $12 ; $75a7
-	script_set_anim $12, ANIM_BOUNCE ; $75ac
-	script_wait_idle $12 ; $75b3
-	script_speak $12 ; $75b8
-	script_set_anim $12, ANIM_SHAKE ; $75bd
-	script_wait_idle $12 ; $75c4
-	script_speak $12 ; $75c9
-	script_face $12, FACE_RIGHT ; $75ce
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_NOD ; $759b
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $75a2
+	script_speak ACTOR_TRAINING_COURT_BETH ; $75a7
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $75ac
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $75b3
+	script_speak ACTOR_TRAINING_COURT_BETH ; $75b8
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_SHAKE ; $75bd
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $75c4
+	script_speak ACTOR_TRAINING_COURT_BETH ; $75c9
+	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $75ce
 	set_flag FLAG_NET_COACH_GREETED ; $75d5
 	ret ; $75d8
 .initNetCoachScene:
 	call InitNetCoachScene ; $75d9
 	script_set_text Text_37_151 ; $75dc
-	script_speak $12 ; $75e2
-	script_face_toward ACTOR_PLAYER, $12 ; $75e7
-	script_set_anim $12, ANIM_NOD ; $75ef
-	script_wait_idle $12 ; $75f6
+	script_speak ACTOR_TRAINING_COURT_BETH ; $75e2
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BETH ; $75e7
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_NOD ; $75ef
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $75f6
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $75fb
 	jr z, .speak ; $75fe
 	script_set_text Text_37_155 ; $7600
 .speak:
-	script_speak $12 ; $7606
-	script_set_anim $12, ANIM_BOUNCE ; $760b
-	script_wait_idle $12 ; $7612
-	script_speak $12 ; $7617
-	script_set_anim $12, ANIM_SHAKE ; $761c
-	script_wait_idle $12 ; $7623
-	script_speak $12 ; $7628
-	script_face $12, FACE_RIGHT ; $762d
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7606
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $760b
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7612
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7617
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_SHAKE ; $761c
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7623
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7628
+	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $762d
 	set_flag FLAG_NET_COACH_GREETED ; $7634
 	ret ; $7637
 .initNetCoachScene2:
 	call InitNetCoachScene ; $7638
 	script_set_text Text_37_183 ; $763b
-	script_speak $12 ; $7641
-	script_face_toward ACTOR_PLAYER, $12 ; $7646
-	script_set_anim $12, ANIM_NOD ; $764e
-	script_wait_idle $12 ; $7655
-	script_speak $12 ; $765a
-	script_set_anim $12, ANIM_BOUNCE ; $765f
-	script_wait_idle $12 ; $7666
-	script_speak $12 ; $766b
-	script_set_anim $12, ANIM_NOD ; $7670
-	script_wait_idle $12 ; $7677
-	script_speak $12 ; $767c
-	script_face $12, FACE_RIGHT ; $7681
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7641
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BETH ; $7646
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_NOD ; $764e
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7655
+	script_speak ACTOR_TRAINING_COURT_BETH ; $765a
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $765f
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7666
+	script_speak ACTOR_TRAINING_COURT_BETH ; $766b
+	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_NOD ; $7670
+	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7677
+	script_speak ACTOR_TRAINING_COURT_BETH ; $767c
+	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $7681
 	set_flag FLAG_NET_COACH_GREETED ; $7688
 	ret ; $768b
 .initNetCoachScene3:
@@ -118,7 +118,7 @@ NetCoachIntroDialogue_15:
 	call NetCoachResultRetryPrompt ; $7724
 	ret ; $7727
 NetCoachResultRetryPrompt:
-	script_speak $12 ; $7728
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7728
 NetCoachRetryPrompt:
 	ld a, $12 ; $772d
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $772f
@@ -130,7 +130,7 @@ NetCoachRetryPrompt:
 	farcall AdvanceDialogueTextCursor ; $7743
 	jp InitNetCoachScene.speak ; $7746
 .retry:
-	script_speak $12 ; $7749
+	script_speak ACTOR_TRAINING_COURT_BETH ; $7749
 	call NetCoachWalkToCourtAndStartLesson ; $774e
 	ret ; $7751
 InitNetCoachScene:
@@ -187,61 +187,61 @@ InitNetCoachScene:
 ReturnCoachIntroDialogue_15:
 	call InitReturnCoachScene ; $77e3
 	script_set_text Text_37_221 ; $77e6
-	script_speak $0d ; $77ec
-	script_face_toward ACTOR_PLAYER, $0d ; $77f1
-	script_set_anim $0d, ANIM_NOD ; $77f9
-	script_wait_idle $0d ; $7800
-	script_speak $0d ; $7805
-	script_set_anim $0d, ANIM_BOUNCE ; $780a
-	script_wait_idle $0d ; $7811
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $77ec
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BOB_2 ; $77f1
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_NOD ; $77f9
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $7800
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7805
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $780a
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $7811
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7816
 	jr z, .speak ; $7819
 	farcall AdvanceDialogueTextCursor ; $781b
 .speak:
-	script_speak $0d ; $781e
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $781e
 	script_set_text Text_37_225 ; $7823
-	script_set_anim $0d, ANIM_SHAKE ; $7829
-	script_wait_idle $0d ; $7830
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_SHAKE ; $7829
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $7830
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7835
 	jr z, .speak2 ; $7838
 	farcall AdvanceDialogueTextCursor ; $783a
 .speak2:
-	script_speak $0d ; $783d
-	script_face $0d, FACE_UP ; $7842
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $783d
+	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7842
 	set_flag FLAG_RETURN_COACH_GREETED ; $7849
 	ret ; $784c
 .initReturnCoachScene:
 	call InitReturnCoachScene ; $784d
 	script_set_text Text_37_245 ; $7850
-	script_speak $0d ; $7856
-	script_face_toward ACTOR_PLAYER, $0d ; $785b
-	script_set_anim $0d, ANIM_NOD ; $7863
-	script_wait_idle $0d ; $786a
-	script_speak $0d ; $786f
-	script_set_anim $0d, ANIM_BOUNCE ; $7874
-	script_wait_idle $0d ; $787b
-	script_speak $0d ; $7880
-	script_set_anim $0d, ANIM_SHAKE ; $7885
-	script_wait_idle $0d ; $788c
-	script_speak $0d ; $7891
-	script_face $0d, FACE_UP ; $7896
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7856
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BOB_2 ; $785b
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_NOD ; $7863
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $786a
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $786f
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $7874
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $787b
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7880
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_SHAKE ; $7885
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $788c
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7891
+	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7896
 	set_flag FLAG_RETURN_COACH_GREETED ; $789d
 	ret ; $78a0
 .initReturnCoachScene2:
 	call InitReturnCoachScene ; $78a1
 	script_set_text Text_6e_15 ; $78a4
-	script_speak $0d ; $78aa
-	script_face_toward ACTOR_PLAYER, $0d ; $78af
-	script_set_anim $0d, ANIM_NOD ; $78b7
-	script_wait_idle $0d ; $78be
-	script_speak $0d ; $78c3
-	script_set_anim $0d, ANIM_BOUNCE ; $78c8
-	script_wait_idle $0d ; $78cf
-	script_speak $0d ; $78d4
-	script_set_anim $0d, ANIM_NOD ; $78d9
-	script_wait_idle $0d ; $78e0
-	script_speak $0d ; $78e5
-	script_face $0d, FACE_UP ; $78ea
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $78aa
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BOB_2 ; $78af
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_NOD ; $78b7
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $78be
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $78c3
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $78c8
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $78cf
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $78d4
+	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_NOD ; $78d9
+	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $78e0
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $78e5
+	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $78ea
 	set_flag FLAG_RETURN_COACH_GREETED ; $78f1
 	ret ; $78f4
 .initReturnCoachScene3:
@@ -310,7 +310,7 @@ ReturnCoachIntroDialogue_15:
 	call ReturnCoachResultRetryPrompt ; $799a
 	ret ; $799d
 ReturnCoachResultRetryPrompt:
-	script_speak $0d ; $799e
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $799e
 ReturnCoachRetryPrompt:
 	ld a, $0d ; $79a3
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $79a5
@@ -322,7 +322,7 @@ ReturnCoachRetryPrompt:
 	jp InitReturnCoachScene.speak ; $79b9
 .retry:
 	farcall AdvanceDialogueTextCursor ; $79bc
-	script_speak $0d ; $79bf
+	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $79bf
 	call ReturnCoachWalkToCourtAndStartLesson ; $79c4
 	farcall EndCutsceneScriptMode ; $79c7
 	ret ; $79ca

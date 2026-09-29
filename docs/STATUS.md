@@ -115,6 +115,23 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-29** — the slot analysis is a tool and a check.
+  `tools/actorslots.py` is the control-flow analysis that named the actor
+  slots; it now also follows inline `rst Rst00` jump tables, which settled
+  134 more operands in the lesson-result scenes and proved the nine coach
+  scene names that had rested on the old rule alone. `make check` gains
+  `slots`: a name whose slot holds another actor in a list the analysis
+  finds possible fails (tried on a same-numbered name from another list:
+  the build still compared OK and `slots` failed). `make slot-audit` runs
+  its PyBoy sweep of every name: 665,785 hits on 347 names over 36 story
+  states and every location, no disagreement. `requirements.txt` pins
+  Pillow and PyBoy and `make venv` installs them into `.venv`, which
+  `event-test` and `slot-audit` use. 4,599 script operands and 436
+  `NpcScripts` ids are names; 335 and 97 numbers. Most of the rest are the
+  Senior Court's and the Island Open's scenes, picked by a stage number the
+  location computes from story flags; tracking the flags themselves along
+  paths settled one more, so they stay numbers.
+
 * **2026-09-29** — 1,030 more actor slots, by following control flow. The
   slot resolver now tracks which (actor list, `NpcScripts` table) pairs can
   be active at each line: a variant installed on one branch of an init

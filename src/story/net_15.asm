@@ -330,28 +330,28 @@ TestStrokeChallengerGameFlagTable:
 ServeCoachIntroDialogue_15:
 	call InitServeCoachScene ; $72c7
 	script_set_text Text_37_28 ; $72ca
-	script_speak $07 ; $72d0
+	script_speak ACTOR_TRAINING_COURT_CURT ; $72d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $72d5
 	jr z, .greet ; $72d8
 	farcall AdvanceDialogueTextCursor ; $72da
 .greet:
-	script_face_toward ACTOR_PLAYER, $07 ; $72dd
-	script_set_anim $07, ANIM_NOD ; $72e5
-	script_wait_idle $07 ; $72ec
-	script_speak $07 ; $72f1
-	script_set_anim $07, ANIM_BOUNCE ; $72f6
-	script_wait_idle $07 ; $72fd
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_CURT ; $72dd
+	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_NOD ; $72e5
+	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $72ec
+	script_speak ACTOR_TRAINING_COURT_CURT ; $72f1
+	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_BOUNCE ; $72f6
+	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $72fd
 	script_set_text Text_37_31 ; $7302
-	script_speak $07 ; $7308
-	script_set_anim $07, ANIM_SHAKE ; $730d
-	script_wait_idle $07 ; $7314
-	script_speak $07 ; $7319
+	script_speak ACTOR_TRAINING_COURT_CURT ; $7308
+	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_SHAKE ; $730d
+	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $7314
+	script_speak ACTOR_TRAINING_COURT_CURT ; $7319
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $731e
 	jr z, .speakGreeting ; $7321
 	farcall AdvanceDialogueTextCursor ; $7323
 .speakGreeting:
-	script_speak $07 ; $7326
-	script_face $07, FACE_LEFT ; $732b
+	script_speak ACTOR_TRAINING_COURT_CURT ; $7326
+	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $732b
 	set_flag FLAG_SERVE_COACH_GREETED ; $7332
 	ret ; $7335
 .lesson1:
@@ -361,36 +361,36 @@ ServeCoachIntroDialogue_15:
 	jr z, .lesson1Speak ; $7342
 	script_set_text Text_37_46 ; $7344
 .lesson1Speak:
-	script_speak $07 ; $734a
-	script_face_toward ACTOR_PLAYER, $07 ; $734f
-	script_set_anim $07, ANIM_NOD ; $7357
-	script_wait_idle $07 ; $735e
-	script_speak $07 ; $7363
-	script_set_anim $07, ANIM_BOUNCE ; $7368
-	script_wait_idle $07 ; $736f
-	script_speak $07 ; $7374
-	script_set_anim $07, ANIM_SHAKE ; $7379
-	script_wait_idle $07 ; $7380
-	script_speak $07 ; $7385
-	script_face $07, FACE_LEFT ; $738a
+	script_speak ACTOR_TRAINING_COURT_CURT ; $734a
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_CURT ; $734f
+	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_NOD ; $7357
+	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $735e
+	script_speak ACTOR_TRAINING_COURT_CURT ; $7363
+	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_BOUNCE ; $7368
+	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $736f
+	script_speak ACTOR_TRAINING_COURT_CURT ; $7374
+	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_SHAKE ; $7379
+	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $7380
+	script_speak ACTOR_TRAINING_COURT_CURT ; $7385
+	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $738a
 	script_wait_frames $05 ; $7391
 	set_flag FLAG_SERVE_COACH_GREETED ; $7398
 	ret ; $739b
 .lesson2:
 	call InitServeCoachScene ; $739c
 	script_set_text Text_37_57 ; $739f
-	script_speak $07 ; $73a5
-	script_face_toward ACTOR_PLAYER, $07 ; $73aa
-	script_set_anim $07, ANIM_NOD ; $73b2
-	script_wait_idle $07 ; $73b9
-	script_speak $07 ; $73be
-	script_set_anim $07, ANIM_BOUNCE ; $73c3
-	script_wait_idle $07 ; $73ca
-	script_speak $07 ; $73cf
-	script_set_anim $07, ANIM_NOD ; $73d4
-	script_wait_idle $07 ; $73db
-	script_speak $07 ; $73e0
-	script_face $07, FACE_LEFT ; $73e5
+	script_speak ACTOR_TRAINING_COURT_CURT ; $73a5
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_CURT ; $73aa
+	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_NOD ; $73b2
+	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $73b9
+	script_speak ACTOR_TRAINING_COURT_CURT ; $73be
+	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_BOUNCE ; $73c3
+	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $73ca
+	script_speak ACTOR_TRAINING_COURT_CURT ; $73cf
+	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_NOD ; $73d4
+	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $73db
+	script_speak ACTOR_TRAINING_COURT_CURT ; $73e0
+	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $73e5
 	set_flag FLAG_SERVE_COACH_GREETED ; $73ec
 	ret ; $73ef
 .lesson3:
@@ -478,7 +478,7 @@ ServeCoachTwoStageRetryPrompt:
 	jp InitServeCoachScene.speak ; $74cf
 .setText:
 	script_set_text Text_37_65 ; $74d2
-	script_speak $07 ; $74d8
+	script_speak ACTOR_TRAINING_COURT_CURT ; $74d8
 	call ServeCoachWalkToCourtAndStartLesson ; $74dd
 	ret ; $74e0
 InitServeCoachScene:

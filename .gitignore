@@ -7,3 +7,4 @@ tools/rgbds/
 *.sav
 !*.sym
 __pycache__/
+.venv/

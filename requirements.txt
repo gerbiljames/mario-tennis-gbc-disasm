@@ -1,0 +1,6 @@
+# Python packages the tools use beyond the standard library.
+# Pillow: the PNG codec (make, make check). PyBoy: the runtime tools
+# (make event-test, tools/runtime_audit.py, tools/playtest.py,
+# tools/actorslots.py --runtime). `make venv` installs both into .venv.
+Pillow==12.3.0
+pyboy==2.7.0

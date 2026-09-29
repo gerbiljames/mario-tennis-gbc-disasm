@@ -266,19 +266,22 @@ active:
 * facing, tile and exit handlers and actor-script `as_call` routines run
   under any of those pairs, an `NpcScripts` handler only under the pairs
   holding its own table, and a routine dispatched through a `JumpToHL` table
-  under whatever its dispatcher had.
+  or an inline `rst Rst00` jump table under whatever its dispatcher had.
 
 Where more than one list is possible the number stays, unless every
-candidate holds the same actor in that slot. 4,465 script operands and 436
-`NpcScripts` ids are names; 469 and 97 stay numbers: slots whose
+candidate holds the same actor in that slot. 4,599 script operands and 436
+`NpcScripts` ids are names; 335 and 97 stay numbers: slots whose
 candidate lists disagree (mostly handlers that several variants share),
 slots past the end of every candidate list (actors spawned by script), the
 lines inside shared twin files, and tables of locations the player never
 controls. A routine that can also be entered from somewhere the flow does
 not follow keeps a number unless it installs its own list first.
-Checked at run time over 36 story states and every location (a hook at each
-named site comparing the list `InitLocationActors` last installed): every
-name reached agreed.
+`tools/actorslots.py` is the analysis: it lists what is left, renames what
+it can settle (`--apply`), and `make check` fails on any name whose slot
+holds a different actor in a list it finds possible at that line.
+`make slot-audit` checks every name at run time over 36 story states and
+every location (a hook at each named site comparing the list
+`InitLocationActors` last installed).
 
 ### `map_script` — the script records (8 bytes, `$ff`-terminated)
 

@@ -113,7 +113,7 @@ MachineLevel1FailedPrompt:
 MachineLevel1ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $412b
 	script_set_text Text_6e_175 ; $412e
-	script_speak $05 ; $4134
+	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4134
 	script_get_actor_state ACTOR_PARTNER ; $4139
 	ld c, l ; $413e
 	ld b, h ; $413f
@@ -134,7 +134,7 @@ MachineLevel2FailedPrompt:
 MachineLevel2ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4160
 	script_set_text Text_6e_183 ; $4163
-	script_speak $05 ; $4169
+	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4169
 	script_get_actor_state ACTOR_PARTNER ; $416e
 	ld c, l ; $4173
 	ld b, h ; $4174
@@ -155,7 +155,7 @@ MachineLevel3FailedPrompt:
 MachineLevel3ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4195
 	script_set_text Text_6e_190 ; $4198
-	script_speak $05 ; $419e
+	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $419e
 	script_get_actor_state ACTOR_PARTNER ; $41a3
 	ld c, l ; $41a8
 	ld b, h ; $41a9
@@ -176,7 +176,7 @@ MachineLevel4FailedPrompt:
 MachineLevel4ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $41ca
 	script_set_text Text_6e_197 ; $41cd
-	script_speak $05 ; $41d3
+	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $41d3
 	script_get_actor_state ACTOR_PARTNER ; $41d8
 	ld c, l ; $41dd
 	ld b, h ; $41de

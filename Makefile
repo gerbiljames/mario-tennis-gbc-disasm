@@ -18,7 +18,7 @@ ifeq (,$(filter clean,$(MAKECMDGOALS)))
 $(info $(shell python3 tools/mods.py apply))
 endif
 
-.PHONY: all compare check test shift-test event-test previews clean
+.PHONY: all compare check test shift-test event-test slot-audit venv previews clean
 
 all: $(ROM)
 
@@ -106,12 +106,22 @@ shift-test: $(ROM)
 
 # Play the padded ROM and this one through every story state under the same
 # inputs and compare what the game does (tools/eventtest.py). Needs PyBoy in
-# $(PYTHON) and a battery save to start from.
-PYTHON ?= python3
+# $(PYTHON) (`make venv`) and a battery save to start from.
+PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 SAVE ?= maxed-unlocked.sav
 event-test: $(ROM)
 	python3 tools/shifttest.py --out build/padded.gbc
 	$(PYTHON) tools/eventtest.py build/padded.gbc --save $(SAVE)
+
+# Check every actor-slot name against the list active at run time, over
+# every story state and location (tools/actorslots.py --runtime).
+slot-audit: $(ROM)
+	$(PYTHON) tools/actorslots.py --runtime --save $(SAVE)
+
+# A virtualenv with the packages in requirements.txt; PYTHON uses it.
+venv:
+	python3 -m venv .venv
+	.venv/bin/pip install -r requirements.txt
 
 clean:
 	rm -rf build $(ROM)

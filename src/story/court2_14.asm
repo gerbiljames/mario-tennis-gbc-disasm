@@ -124,7 +124,7 @@ MachineCourtHandleRetryChoice:
 	and a ; $4760
 	jr z, MachineCourtRestartLevel ; $4761
 	script_set_text Text_6e_220 ; $4763
-	script_speak $05 ; $4769
+	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4769
 	script_move_target ACTOR_PLAYER, $3300, $3600 ; $476e
 	script_wait_move ACTOR_PLAYER ; $4779
 	script_move_player $2f00, $2d00 ; $477e
@@ -132,9 +132,9 @@ MachineCourtHandleRetryChoice:
 	script_wait_move ACTOR_PLAYER ; $4793
 	script_move_target ACTOR_PLAYER, $2b00, $2b00 ; $4798
 	script_wait_move ACTOR_PLAYER ; $47a3
-	script_move_target $05, $2d00, $2b00 ; $47a8
-	script_wait_move $05 ; $47b3
-	script_face $05, FACE_LEFT ; $47b8
+	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2b00 ; $47a8
+	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $47b3
+	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $47b8
 	script_get_actor_state ACTOR_PARTNER ; $47bf
 	ld c, l ; $47c4
 	ld b, h ; $47c5
@@ -272,7 +272,7 @@ MachineExpertNewRecordScene:
 	ld l, a ; $48df
 	farcall PushTextArgNumber ; $48e0
 	call MachineCourtWalkToAttendantCutscene ; $48e3
-	script_speak $05 ; $48e6
+	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $48e6
 	script_get_actor_state ACTOR_PARTNER ; $48eb
 	ld c, l ; $48f0
 	ld b, h ; $48f1
@@ -305,8 +305,8 @@ MachineExpertCounterMaxScene:
 	farcall PushTextArgNumber ; $492d
 	script_set_text Text_6e_212 ; $4930
 	call MachineCourtWalkToAttendantCutscene ; $4936
-	script_speak $05 ; $4939
-	script_speak $05 ; $493e
+	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4939
+	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $493e
 	script_get_actor_state ACTOR_PARTNER ; $4943
 	ld c, l ; $4948
 	ld b, h ; $4949
@@ -356,12 +356,12 @@ MachineCourtWalkToAttendantCutscene:
 	script_wait_move ACTOR_PLAYER ; $49bc
 	script_move_target ACTOR_PLAYER, $2a80, $2b00 ; $49c1
 	script_wait_move ACTOR_PLAYER ; $49cc
-	script_move_target $05, $2d00, $2b00 ; $49d1
-	script_wait_move $05 ; $49dc
+	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2b00 ; $49d1
+	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $49dc
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $49e1
 	script_move_target ACTOR_PLAYER, $2b00, $2b00 ; $49e8
 	script_wait_move ACTOR_PLAYER ; $49f3
-	script_face $05, FACE_LEFT ; $49f8
+	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $49f8
 	ret ; $49ff
 .practiceRoom:
 	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4a00

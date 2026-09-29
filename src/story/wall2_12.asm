@@ -160,18 +160,18 @@ WallPracticeLevelResultScriptTextIds:
 	script_fade_in $06 ; $4bf4
 	call WaitFadeEnd ; $4bf9
 .speakAndLeave:
-	script_set_anim $07, ANIM_BOUNCE ; $4bfc
-	script_wait_idle $07 ; $4c03
-	script_speak $07 ; $4c08
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4bfc
+	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c03
+	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c08
 	script_set_speed ACTOR_PLAYER, $0020 ; $4c0d
 	script_move_target ACTOR_PLAYER, $0500, $3100 ; $4c15
 	script_wait_move ACTOR_PLAYER ; $4c20
 	script_move_player $0500, $3700 ; $4c25
 	script_move_target ACTOR_PLAYER, $0500, $3900 ; $4c2f
 	script_wait_move ACTOR_PLAYER ; $4c3a
-	script_move_target $07, $0500, $3700 ; $4c3f
-	script_wait_move $07 ; $4c4a
-	script_face $07, FACE_DOWN ; $4c4f
+	script_move_target ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, $0500, $3700 ; $4c3f
+	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c4a
+	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4c4f
 	test_flag FLAG_DOUBLES ; $4c56
 	jr z, .wait ; $4c59
 	script_wait_frames $1e ; $4c5b

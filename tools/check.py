@@ -25,6 +25,10 @@ after a real defect broke it:
             a jp/call target, a macro argument that elsewhere always takes a
             label, or an ld rr/dw literal equal to a label in the same bank
             (96 as_calls once reached two unlabelled routines by number)
+  slots     every ACTOR_<list>_<object> name a story script uses holds that
+            actor in every map_actor list tools/actorslots.py finds can be
+            active at that line (a name is a row number, so reordering or
+            retargeting a list keeps the bytes and changes the actor)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -37,6 +41,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from banksrc import bank_lines, bank_of, holders
 from lz import compress, decompress
+import actorslots
 
 ROOT = BANK = None
 BANK_SIZE = 0x4000
@@ -561,6 +566,7 @@ def main():
         "dma": check_dma_alignment(fail),
         "gfx": check_gfx(manifest, fail),
         "tilemap": check_tilemaps(manifest, fail),
+        "slots": actorslots.check(fail),
     }
     by_check = {}
     for check, msg in failures:
