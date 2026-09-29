@@ -115,6 +115,20 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-29** — link play, emulated. PyBoy has no link cable (its serial
+  port drops what is written and never finishes an external transfer), so
+  `tools/linktest.py` runs two games and makes the cable out of hooks on
+  each game's own serial code; the games then run their own protocol --
+  the master/slave handshake, the rules screen, the unlock exchange,
+  character select and link matches. 97 routines ran for the first time.
+  With the story handler targets, the reachable routines no run has
+  entered fell from 366 to 233 (`docs/unused_code.md`, "Reachability"):
+  `tools/reach.py` now also knows that nothing runs after an unconditional
+  `ret` or `jp` without a label, which makes the in-match debug stats editor
+  (behind a hotkey check that returns at once) 16 more `Unused` routines.
+  The one of them the sweep saw run was a wild jump from a state play
+  cannot reach, a Wall Practice win at level 1.
+
 * **2026-09-29** — stage-picked actor lists, and story handlers on demand.
   The Senior Court and the Tournament Site pick their actor lists from a
   stage number computed from story flags, so `tools/actorslots.py` now ties
