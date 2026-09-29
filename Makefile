@@ -28,7 +28,7 @@ all: $(ROM)
 # boot ROM refuse the cart -- changing one character of the title is enough.
 $(ROM): $(OBJS)
 	$(RGBLINK) -p 0xff -o $@ -m build/$(ROM:.gbc=.map) -n build/$(ROM:.gbc=.sym) $(OBJS)
-	$(RGBFIX) -v $@
+	$(RGBFIX) -Wno-overwrite -v $@
 
 # hardware.inc + macros.inc are preincluded for every bank via -P instead of a
 # repeated INCLUDE at the top of each source file.

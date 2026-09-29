@@ -47,7 +47,7 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from banksrc import bank_lines, holders
+from banksrc import bank_lines, build_addresses, holders, placed_original
 from runtime_audit import MNEMONICS, targets
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -152,9 +152,21 @@ class Game:
         self.prev, self.edge, self.lag, self.before = 0, 0, None, None
         self.irq, self.armed, self.last, self.learn_irq = 0, True, None, learn_irq
 
-        def at(label, base_addr):
+        def at_build(label, base_addr):
             b, a = self.sym[label]
             return b, a + base_addr - base[label][1]
+
+        bank_src = {}
+
+        def at(label, orig):
+            # a label and an original-ROM address (its address comment)
+            b = base[label][0]
+            if b not in bank_src:
+                bank_src[b] = bank_lines(holders()[b])[0]
+            placed = placed_original(b, bank_src[b], base, orig)
+            if placed is None:
+                sys.exit(f"eventtest: ${b:02x}:{orig:04x} in {label} was edited; update its hook point")
+            return at_build(label, placed)
 
         hooks = {}
 
@@ -165,13 +177,15 @@ class Game:
         for label in ("VBlankHandler", "LCDStatHandler", "TimerHandler", "SerialHandler"):
             add(self.sym[label], self.on_irq)
         home = sorted((a, n) for n, (b, a) in base.items() if b == 0 and a < 0x4000 and "." not in n)
-        for f in (ROOT / "src" / "home").glob("*.asm"):
-            for m in re.finditer(r"^\treti ; \$([0-9a-f]{4})", f.read_text(), re.M):
-                addr = int(m.group(1), 16)
+        lines = bank_lines(holders()[0])[0]
+        placed = build_addresses(0, lines, base)
+        for i, line in enumerate(lines):
+            if line.split(";")[0].strip() == "reti" and i in placed:
+                addr = placed[i]
                 label = home[bisect.bisect_right(home, (addr, "\uffff")) - 1][1]
                 if label == "VBlankHandler":
-                    add(at(label, addr), self.on_vblank_reti)
-                add(at(label, addr), self.on_reti)
+                    add(at_build(label, addr), self.on_vblank_reti)
+                add(at_build(label, addr), self.on_reti)
         for label, addr in SYNC["frame"]:
             add(at(label, addr), self.on_frame)
         add(at(*SYNC["pad"]), self.on_pad)

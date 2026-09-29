@@ -48,7 +48,7 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from banksrc import bank_lines, bank_of, holders  # noqa: E402
+from banksrc import bank_lines, bank_of, build_addresses, holders  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 ANY = "*"
@@ -554,18 +554,20 @@ def runtime_job(sym_path, save, state, si, li, frames):
     src = Source()
     sites = collections.defaultdict(list)
     tab_ids = collections.defaultdict(dict)
+    sym = E.symbols(sym_path)
     for b, (L, O) in src.banks.items():
         tbl = None
+        placed = build_addresses(b, L, sym)
         for i, line in enumerate(L):
             m = GLOBAL.match(line)
             if m:
                 tbl = m.group(1)
-            m = re.match(r"\t(\w+) ([^;]*); \$([0-9a-f]{4})", line)
-            if m:
+            m = re.match(r"\t(\w+) ([^;]*)", line)
+            if m and i in placed:
                 args = [a.strip() for a in m.group(2).split(",")]
                 for pos, a in enumerate(args):
                     if (m.group(1), pos) in ACTOR_ARGS and a in src.slot_of:
-                        sites[(b, int(m.group(3), 16))].append(a)
+                        sites[(b, placed[i])].append(a)
             m = re.match(r"\tmap_script (ACTOR_\w+),", line)
             if m and m.group(1) in src.slot_of:
                 tab_ids[tbl][src.slot_of[m.group(1)][1]] = m.group(1)

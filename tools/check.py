@@ -58,17 +58,19 @@ def load_manifest():
     return out
 
 
-def check_lz(rom, manifest, fail):
-    streams = [(p, o, n) for p, o, n, _s in manifest if "/lz_" in p]
-    for path, off, length in streams:
+def check_lz(manifest, fail):
+    """Every LZ stream the build includes (data/, after the mods/ overlay)
+    decodes using exactly its bytes, and survives a re-encode."""
+    streams = [p for p, _o, _n, _s in manifest if "/lz_" in p]
+    for path in streams:
+        blob = (ROOT / "data" / path).read_bytes()
         try:
-            data, used = decompress(rom, off, off + length)
+            data, used = decompress(blob, 0, len(blob))
         except ValueError as e:
-            fail("lz", f"{path}: does not decode inside its {length}-byte "
-                       f"extent ({e})")
+            fail("lz", f"{path}: does not decode inside its {len(blob)} bytes ({e})")
             continue
-        if used != length:
-            fail("lz", f"{path}: decodes {used} bytes, extent says {length}")
+        if used != len(blob):
+            fail("lz", f"{path}: decodes {used} bytes, the file has {len(blob)}")
         back, _ = decompress(compress(data), 0)
         if back != data:
             fail("lz", f"{path}: re-encoded stream does not decode back")
@@ -97,15 +99,36 @@ def load_symbols():
 
 
 def check_lz_labels(labels, manifest, fail):
-    spans = [(o, o + n, p) for p, o, n, _s in manifest if "/lz_" in p]
+    """No symbol lands inside a compressed stream, where the build put it:
+    each stream is found by the label on its INCBIN, so the check holds for
+    an edited build whose code has moved as well as for the original."""
+    at = {}
+    for line in (ROOT / "build" / "mariotennis.sym").read_text().splitlines():
+        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
+        if m and int(m.group(2), 16) < 0x8000:
+            bank, addr = int(m.group(1), 16), int(m.group(2), 16)
+            at[m.group(3)] = addr if bank == 0 else bank * BANK_SIZE + addr - 0x4000
+    streams = {p for p, _o, _n, _s in manifest if "/lz_" in p}
+    spans = []
+    for h in holders():
+        lines, origin = bank_lines(h)
+        for i, line in enumerate(lines):
+            m = re.match(r'\tINCBIN "data/([^"]+)"', line)
+            if not m or m.group(1) not in streams:
+                continue
+            label = next((re.match(r"^([A-Za-z_][\w.]*):", x).group(1) for x in reversed(lines[max(0, i - 3):i])
+                          if re.match(r"^[A-Za-z_][\w.]*:", x)), None)
+            if label not in at:
+                fail("lz-labels", f"{m.group(1)}: no label on its INCBIN ({origin[i][0].name}:{origin[i][1]})")
+                continue
+            size = (ROOT / "data" / m.group(1)).stat().st_size
+            spans.append((at[label], at[label] + size, m.group(1)))
     spans.sort()
-    for off in sorted(labels):
-        for lo, hi, path in spans:
-            if lo < off < hi:
-                fail("lz-labels", f"{labels[off]} (0x{off:x}) is {off - lo} "
-                                  f"bytes inside {path}, which truncates it")
-            if lo > off:
-                break
+    offs = sorted(labels)
+    for lo, hi, path in spans:
+        for off in offs[bisect.bisect_right(offs, lo):bisect.bisect_left(offs, hi)]:
+            fail("lz-labels", f"{labels[off]} (0x{off:x}) is {off - lo} "
+                              f"bytes inside {path}, which truncates it")
     return len(spans)
 
 
@@ -113,7 +136,7 @@ _MNEMONICS = frozenset(
     "adc add and bit call ccf cp cpl daa dec di ei halt inc jp jr ld ldd ldh "
     "ldi nop or pop push res ret reti rl rla rlc rlca rr rra rrc rrca rst sbc "
     "scf set sla sra srl stop sub swap xor".split())
-_INSTR_LINE_RE = re.compile(r"^\t(\w+)[^;]*; \$([0-9a-f]{4})\s*$")
+_INSTR_LINE_RE = re.compile(r"^\t(\w+)\b")
 
 
 # Routines that follow an actor-script blob with no label of their own, so
@@ -149,19 +172,17 @@ def check_stranded_scopes(fail):
                 entry.pop(scope, None)     # code before the script is its header
                 continue
             mi = _INSTR_LINE_RE.match(line)
-            addr = _ADDR_RE.search(line)
-            if mi and mi.group(1) in _MNEMONICS or (addr and "script_" in line):
+            if mi and (mi.group(1) in _MNEMONICS or mi.group(1).startswith("script_")):
                 kinds[scope].add("code")
-                if addr:
-                    entry.setdefault(scope, int(addr.group(1), 16))
+                entry.setdefault(scope, True)
         for name, kind in kinds.items():
             if kind == {"script", "code"} and name in entry:
-                found[(bank, entry[name])] = name
-    for bank, at in sorted(set(found) - KNOWN_STRANDED_IN_SCRIPT):
-        fail("scopes", f"${bank:02x}:${at:04x} ({found[(bank, at)]}) is code "
-                       "inside an actor script's label scope -- name its entry")
-    for bank, at in sorted(KNOWN_STRANDED_IN_SCRIPT - set(found)):
-        fail("scopes", f"${bank:02x}:${at:04x} is no longer stranded -- drop it "
+                found[(bank, name)] = name
+    for bank, name in sorted(set(found) - KNOWN_STRANDED_IN_SCRIPT):
+        fail("scopes", f"bank ${bank:02x}: {name} holds code inside an actor "
+                       "script's label scope -- name its entry")
+    for bank, name in sorted(KNOWN_STRANDED_IN_SCRIPT - set(found)):
+        fail("scopes", f"bank ${bank:02x}: {name} is no longer stranded -- drop it "
                        "from KNOWN_STRANDED_IN_SCRIPT")
     return len(found)
 
@@ -316,49 +337,43 @@ def check_tilemaps(manifest, fail):
 
 
 def check_collapsed_branches(fail):
-    """Find `jr cc, X` / `jp cc, X` where X is the very next instruction.
-
-    Local labels repeat across functions -- `.done` appears 34 times in bank
-    $00 -- so a target has to be resolved inside its own scope or the answer is
-    whichever `.done` came first in the file."""
-    found = set()
+    """Find `jr cc, X` / `jp cc, X` where X is the very next instruction:
+    the branch is followed, past blank and comment lines and other labels,
+    by its own target. Read from the source's structure, so an edited build
+    is checked the same way; a known branch is identified by its address
+    comment, a new one by its line."""
+    found = {}
     for path in holders():
         bank = bank_of(path)
-        lines = bank_lines(path)[0]
-        addr_of, scope = {}, None
-        for i, line in enumerate(lines):
-            g, lo = _GLOBAL_RE.match(line), _LOCAL_RE.match(line)
-            if not (g or lo):
-                continue
-            name = g.group(1) if g else lo.group(1)
-            key = (None, name) if g else (scope, name)
-            for nxt in lines[i + 1:i + 4]:
-                m = _ADDR_RE.search(nxt)
-                if m:
-                    addr_of[key] = int(m.group(1), 16)
-                    break
-            if g:
-                scope = name
+        lines, origin = bank_lines(path)
         scope = None
-        for line in lines:
+        for i, line in enumerate(lines):
             g = _GLOBAL_RE.match(line)
             if g:
                 scope = g.group(1)
                 continue
-            m = _BRANCH_RE.match(line)
+            m = re.match(r"^\t(jr|jp) (nz|z|nc|c), ([.A-Za-z_][\w.]*)", line)
             if not m:
                 continue
-            target, at = m.group(3), int(m.group(4), 16)
-            size = 2 if m.group(1) == "jr" else 3
-            key = (scope, target) if target.startswith(".") else (None, target)
-            if addr_of.get(key) == at + size:
-                found.add((bank, at))
-    for bank, at in sorted(found - KNOWN_COLLAPSED_BRANCHES):
-        fail("branches", f"new collapsed branch at ${bank:02x}:${at:04x}")
-    for bank, at in sorted(KNOWN_COLLAPSED_BRANCHES - found):
-        fail("branches", f"${bank:02x}:${at:04x} no longer collapsed -- "
-                         "drop it from KNOWN_COLLAPSED_BRANCHES")
+            target = m.group(3)
+            labels, crossed = set(), False
+            for nxt in lines[i + 1:]:
+                gl, lo = _GLOBAL_RE.match(nxt), _LOCAL_RE.match(nxt)
+                if gl:
+                    labels.add(gl.group(1))
+                    crossed = True
+                elif lo and not crossed:
+                    labels.add(lo.group(1))
+                elif nxt.strip() and not nxt.strip().startswith(";"):
+                    break
+            if target in labels:
+                a = _ADDR_RE.search(line)
+                key = (bank, int(a.group(1), 16)) if a else (bank, f"{origin[i][0].name}:{origin[i][1]}")
+                found[key] = f"{origin[i][0].name}:{origin[i][1]}"
+    for key in sorted(set(found) - KNOWN_COLLAPSED_BRANCHES, key=str):
+        fail("branches", f"new collapsed branch at {found[key]}")
     return len(found)
+
 
 
 _NUM_RE = re.compile(r"\$[0-9a-fA-F]+|%[01]+|\d+")
@@ -555,7 +570,7 @@ def main():
         failures.append((check, msg))
 
     counts = {
-        "lz": check_lz(rom, manifest, fail),
+        "lz": check_lz(manifest, fail),
         "lz-labels": check_lz_labels(labels, manifest, fail),
         "regions": check_regions(manifest, fail),
         "sound": check_sound(rom, manifest, fail),

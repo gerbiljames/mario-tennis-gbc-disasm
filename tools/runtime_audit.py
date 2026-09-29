@@ -36,7 +36,7 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from banksrc import bank_lines, bank_of, holders
+from banksrc import bank_lines, bank_of, build_addresses, holders
 
 ROOT = Path(__file__).resolve().parent.parent
 MNEMONICS = set("adc add and bit call ccf cp cpl daa dec di ei halt inc jp jr ld ldh "
@@ -79,12 +79,13 @@ def targets(sym):
             if mm and last and "NpcScripts" in last:
                 npc_tables.setdefault(last, []).append(mm.group(1))
     for bank, lines in banks:
-        for line in lines:
-            m = re.match(r"\t(script_\w+) ([^;]*); \$([0-9a-f]{4})", line)
-            if m:
+        placed = build_addresses(bank, lines, sym)
+        for i, line in enumerate(lines):
+            m = re.match(r"\t(script_\w+) ([^;]*)", line)
+            if m and i in placed:
                 for const in re.findall(r"\b(ACTOR_\w+)", m.group(2)):
                     if const in defs:
-                        named.append((bank, int(m.group(3), 16), const))
+                        named.append((bank, placed[i], const))
     scene = (ROOT / "src" / "engine" / "story" / "scene_0a.asm").read_text()
     text = "\n".join("\n".join(l) for _, l in banks)
     for i, tree in enumerate(re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)):

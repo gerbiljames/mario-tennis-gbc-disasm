@@ -74,3 +74,58 @@ def bank_lines(holder):
 
 def bank_text(holder):
     return "\n".join(bank_lines(holder)[0])
+
+
+_ADDR_COMMENT = re.compile(r"; \$([0-9a-f]{4})\b")
+_LABEL = re.compile(r"^([A-Za-z_]\w*|\.\w+):")
+
+
+def build_addresses(bank, lines, sym):
+    """Where each line that carries an address comment sits in the build.
+
+    The comments give the original ROM's addresses, which an edit that
+    changes size leaves stale. Each line is placed relative to the nearest
+    label before it (`sym` maps a symbol to (bank, address) in the build):
+    its address is the label's plus the line's original offset from it. A
+    line with code between that label and itself that carries no comment
+    (an inserted or rewritten stretch) is left out rather than guessed.
+    Returns {line index: address}."""
+    out = {}
+    glob = anchor = None
+    anchor_orig = None
+    dirty = False
+    for i, line in enumerate(lines):
+        m = _LABEL.match(line)
+        if m:
+            name = m.group(1)
+            if not name.startswith("."):
+                glob = name
+            full = name if not name.startswith(".") else f"{glob}{name}"
+            got = sym.get(full)
+            anchor = got[1] if got and got[0] == bank else None
+            anchor_orig, dirty = None, False
+            continue
+        code = line.split(";")[0].strip()
+        c = _ADDR_COMMENT.search(line)
+        if not code:
+            continue
+        if not c:
+            dirty = True
+            continue
+        orig = int(c.group(1), 16)
+        if anchor_orig is None:
+            anchor_orig = orig
+        if anchor is not None and not dirty:
+            out[i] = anchor + orig - anchor_orig
+    return out
+
+
+def placed_original(bank, lines, sym, orig):
+    """The build address of the line whose address comment is `orig`, or
+    None when that line is gone or sits in an edited stretch."""
+    placed = build_addresses(bank, lines, sym)
+    for i, addr in placed.items():
+        c = _ADDR_COMMENT.search(lines[i])
+        if c and int(c.group(1), 16) == orig:
+            return addr
+    return None
