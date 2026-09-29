@@ -15,7 +15,12 @@ of its entry points and plays seeded random input. `--free N` adds N long
 random sessions from the main menu, each opening one of its nine items
 first (exhibition, minigames, the match-select and story-slot screens, the
 dictionary, link play), for the modes the story never enters; `--states
-none` runs only those. `--coverage FILE` accumulates which routines the
+none` runs only those. `--targets N` plays N sessions from each targeted
+start (the intro, the debug menu, each Test-map NPC, the drills, damaged
+saves), and `--handlers N` N from each story NPC and facing handler: the
+target warps to the handler's location and, once it has settled, hands the
+interaction loop that handler's table, facing, flag condition and id, so
+handlers random walking would not find are called. `--coverage FILE` accumulates which routines the
 base build entered, for tools/coverage.py. Each build is hooked by
 label through its own .sym, and records in order: every code label entered
 (its first --cap entries), the actor list InitLocationActors installs, each
@@ -228,7 +233,11 @@ class Game:
                 self.names[self.sym[name]] = name
         # a target's own actions at a label, after the label's event is logged
         for label, fn in (extra or {}).items():
-            add(self.sym[label], fn)
+            point = self.sym[label] if isinstance(label, str) else label
+            add(point, fn)
+            if point not in self.names:
+                # a target's own hook runs every time, never capped
+                self.sync_points.add(point)
         self.hits, self.cap, self.spent, self.removed = {}, cap, [], []
         self.irq_hits = {}
         self.hooks = hooks
@@ -438,6 +447,121 @@ TARGETS = (["attract", "debug"] + [f"npc{k}" for k in range(len(TEST_MAP_NPCS))]
            + [f"drillid{i:02x}" for i in DRILL_IDS])
 
 
+def handler_rows():
+    """Every map_script row of a story location's NpcScripts and
+    FacingScripts tables whose handler is code: (location index, entry,
+    kind, table, id, facing mask, flag condition, handler)."""
+    from runtime_audit import targets
+    scene = (ROOT / "src" / "engine" / "story" / "scene_0a.asm").read_text()
+    trees = re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)
+    text = "\n".join("\n".join(bank_lines(h)[0]) for h in holders())
+    locs = dict(targets(symbols(ROOT / "build" / "mariotennis.sym"))[5])
+    rows = []
+    for i, tree in enumerate(trees):
+        m = re.search(rf"^{tree}:\n(?:\t;[^\n]*\n)?((?:\tdw \w+ ; slot \d \w+\n)+)", text, re.M)
+        slots = {role: t for t, role in re.findall(r"\tdw (\w+) ; slot \d (\w+)", m.group(1))} if m else {}
+        for kind, role in (("npc", "NpcScripts"), ("facing", "FacingScripts")):
+            table = slots.get(role)
+            m = table and re.search(rf"^{table}:\n((?:\t[^\n]*\n)+?)(?=^\S)", text, re.M)
+            if not m:
+                continue
+            for line in m.group(1).split("\n"):
+                r = re.match(r"\tmap_script ([^,]+), ([^,]+), ([^,]+), ([^,]+),", line)
+                if not r or not re.match(r"[A-Z]\w*$", r.group(4)) or r.group(4).startswith("Text_"):
+                    continue
+                rows.append((i, (locs.get(i) or [1])[0], kind, table, r.group(1), r.group(2),
+                             r.group(3), r.group(4)))
+    return rows
+
+
+def unique_handlers():
+    seen, out = set(), []
+    for row in (handler_rows() if (ROOT / "build" / "mariotennis.sym").exists() else []):
+        if row[7] not in seen:
+            seen.add(row[7])
+            out.append(row)
+    return out
+
+
+HANDLERS = unique_handlers()
+
+
+def after_call(sym_path, routine, callee):
+    """The build address of the instruction after `call callee` in routine
+    (bank $0a), where a target can hand the loop a different answer."""
+    lines = bank_lines(holders()[0x0a])[0]
+    placed = build_addresses(0x0a, lines, symbols(sym_path))
+    inside = False
+    for i, line in enumerate(lines):
+        if line.startswith(routine + ":"):
+            inside = True
+        elif inside and line.split(";")[0].strip() == f"call {callee}":
+            j = next(k for k in range(i + 1, len(lines)) if lines[k].split(";")[0].strip()
+                     and not lines[k].startswith("."))
+            return (0x0a, placed[j])
+    raise KeyError(f"{routine}: no call {callee}")
+
+
+def handler_setup(g, sym_path, row, extra, actions):
+    """Warp to the row's location and, once its scripts have run, raise the
+    interact request with the row's table in place, its facing and flag
+    condition met, and the row's id handed to the NPC or facing lookup."""
+    import actorslots
+    loc, entry, kind, table, ident, mask, cond, handler = row
+    slot = actorslots.Source().slot_of
+    value = slot[ident][1] if ident in slot else int(ident.lstrip("$"), 16)
+    masks = {"FACEMASK_ANY": 0xff, "FACEMASK_RIGHT": 0x10, "FACEMASK_LEFT": 0x20,
+             "FACEMASK_UP": 0x40, "FACEMASK_DOWN": 0x80}
+    mvalue = masks.get(mask, None)
+    if mvalue is None:
+        mvalue = eval(re.sub(r"FACEMASK_\w+", lambda m: str(masks[m.group(0)]), mask).replace("$", "0x"))
+    armed = []
+
+    def npc_answer():
+        # an NPC row is found by FindActorFacingPlayer; a facing row needs it
+        # to find no one, so the loop goes on to the facing lookup
+        if armed and armed[0] == "npc":
+            g.rf.A = value if kind == "npc" else 0
+            armed[0] = "facing" if kind == "facing" else "done"
+
+    def facing_answer():
+        if armed and armed[0] == "facing":
+            g.rf.A = value
+            armed[0] = "done"
+    extra[after_call(sym_path, "RunStoryLocation", "FindActorFacingPlayer")] = npc_answer
+    extra[after_call(sym_path, "RunStoryLocation", "GetFacingTileInteractionId")] = facing_answer
+
+    def request():
+        if armed and armed[0] == "npc" and not armed[1:]:
+            g.mem[g.sym["wStoryModeInteractRequest"][1]] = 1
+            armed.append("requested")
+    # at the head of the loop that waits for any request to be pending, so
+    # the interact request is there when it next looks
+    extra[symbols(sym_path)["RunStoryLocation.eventWaitLoop"]] = request
+
+    def fire():
+        m = g.mem
+        ptr = {"npc": "wMapNpcScriptsPtr", "facing": "wMapFacingScriptsPtr"}[kind]
+        a = g.sym[table][1]
+        m[g.sym[ptr][1]], m[g.sym[ptr][1] + 1] = a & 0xff, a >> 8
+        facing = next(i for i, bit in enumerate((0x10, 0x80, 0x20, 0x40)) if mvalue & bit)
+        m[4, g.sym["wPlayerMoveAngle"][1]] = facing << 6
+        c = int(cond.lstrip("$"), 16) if cond.startswith("$") else 0
+        if c:
+            n = ((c >> 8) & 0x7f) * 8 + ((c >> 5) & 7)
+            addr, bit = g.sym["wGameFlags"][1] + n // 8, 0x80 >> (n % 8)
+            m[addr] = (m[addr] | bit) if c & 0x8000 else (m[addr] & ~bit & 0xff)
+        armed.append("npc")
+    actions[240] = fire
+
+    def warp():
+        m = g.mem
+        m[g.sym["wStoryModeCurrentLocation"][1]] = loc
+        m[g.sym["wStoryModeEntryPoint"][1]] = entry
+        m[g.sym["wStoryModeExitTriggerRequest"][1]] = 0xff
+    return warp
+
+
 def damaged_save(save, kind, out):
     """A copy of `save` with one fault the boot code repairs."""
     import savetool as T
@@ -483,8 +607,19 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
                 g.rf.A = want
                 done.append(1)
         extra["RunTrainingDrillByID"] = pick
+    actions, warp = {}, None
+    if name.startswith("handler"):
+        # the Game object is filled in below; the setup's closures read it late
+        holder = []
+
+        class Late:
+            def __getattr__(self, attr):
+                return getattr(holder[0], attr)
+        warp = handler_setup(Late(), sym, HANDLERS[int(name[7:])], extra, actions)
     g = Game(rom, sym, save, cap, set(json.loads(Path(skip).read_text())), extra=extra)
-    m, actions = g.mem, {}
+    if warp:
+        holder.append(g)
+    m = g.mem
     if name == "attract" or name.startswith("save-"):
         # from power-on, so the boot code (the save check among it) runs
         armed = True
@@ -492,7 +627,10 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
     else:
         g.pb.load_state(io.BytesIO(Path(state_file).read_bytes()))
         inputs = [0] * 90
-        if name == "debug":
+        if warp:
+            warp()
+            inputs += [0] * 240        # stand still until the handler has been called
+        elif name == "debug":
             actions[60] = lambda: m.__setitem__(g.sym["hDebugStepMode"][1], 1)
             inputs += [BUTTONS["a"]] * 6 + [0] * 60
         else:
@@ -517,7 +655,8 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
                 inputs += [0] * 60
     g.reset_caps()
     g.events = []
-    inputs += plan(2000000 + seed * 16 + TARGETS.index(name), frames - len(inputs))
+    index = TARGETS.index(name) if name in TARGETS else 1000 + int(name[7:])
+    inputs += plan(2000000 + seed * 16 + index, frames - len(inputs))
     ticks = g.run(inputs, frames, 4 * frames, actions, armed)
     events = [e for e in g.events if e[0] < frames]
     g.close()
@@ -581,6 +720,9 @@ def main():
     ap.add_argument("--targets", type=int, default=0,
                     help="also play this many seeded sessions from each targeted start "
                          "(intro, debug menu, each Test-map NPC)")
+    ap.add_argument("--handlers", type=int, default=0,
+                    help="also play this many seeded sessions from each story NPC and facing "
+                         "handler, called in its own location")
     ap.add_argument("--coverage", help="merge the routines the base build entered into this JSON "
                                        "file (read by tools/coverage.py)")
     ap.add_argument("--worker", nargs="+", help=argparse.SUPPRESS)
@@ -617,7 +759,7 @@ def main():
           "--free-frames", str(args.free_frames), "--cap", str(args.cap), "--worker"]
     picked = ([] if args.states == "none" else
               [int(x) for x in args.states.split(",")] if args.states else range(len(states())))
-    boots = [("story", [])] * bool(picked or args.targets) + [("menu", ["menu"])] * bool(args.free)
+    boots = [("story", [])] * bool(picked or args.targets or args.handlers) + [("menu", ["menu"])] * bool(args.free)
     for key, (rom, sym) in builds.items():
         for kind, extra in boots:
             r = subprocess.run(me + ["boot", str(rom), str(sym), str(tmp / f"{key}.{kind}")] + extra,
@@ -633,6 +775,7 @@ def main():
     units = [("story", si, li) for si in picked for li in range(len(locs))]
     units += [("free", seed, None) for seed in range(args.free)]
     units += [("target", name, seed) for seed in range(args.targets) for name in TARGETS]
+    units += [("target", f"handler{k}", seed) for seed in range(args.handlers) for k in range(len(HANDLERS))]
 
     def work(job):
         key, (kind, a, b) = job
@@ -693,7 +836,7 @@ def main():
                     ev = lambda e: f"{e[i][1]} {e[i][2]} at logic frame {e[i][0]}" if i < len(e) else "nothing"
                     bad.append((unit, x["entry"], f"event {i}: base {ev(x['events'])}, rom {ev(y['events'])}"))
     print(f"{len(picked)} states x {len(locs)} locations, {args.free} main-menu sessions and "
-          f"{args.targets * len(TARGETS)} targeted sessions: "
+          f"{args.targets * len(TARGETS) + args.handlers * len(HANDLERS)} targeted sessions: "
           f"{events} events compared, "
           f"{shifted} at a different logic frame, {dropouts} hook dropouts stepped over, "
           f"{tainted} entries cut at a known "

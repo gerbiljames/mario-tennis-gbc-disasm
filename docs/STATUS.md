@@ -1,4 +1,4 @@
-# Project status — 2026-09-28
+# Project status — 2026-09-29
 
 This is where the disassembly stands and what is still open. The dated
 working log that used to live here — every session's findings in the order
@@ -114,6 +114,24 @@ new branch that decides nothing, a ROM address written as a number, an
 unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
+
+* **2026-09-29** — stage-picked actor lists, and story handlers on demand.
+  The Senior Court and the Tournament Site pick their actor lists from a
+  stage number computed from story flags, so `tools/actorslots.py` now ties
+  each of those lists to its stage (`wMapSceneStage2` for the court,
+  `wMapSceneStage`, the Island Open round, for the site): a branch on the
+  stage narrows the list, and a stage-indexed jump table runs each entry
+  under its own stage's lists. The site's round-call tile triggers exist
+  only once `LoadIslandOpenRoundNpcs` has written their cells, so they run
+  only under the round lists it installs. 182 more operands are names
+  (4,781 in all); 153 stay numbers, which hold a different actor in each
+  possible list (the Island Open opponent slots change every round).
+  `make slot-audit`: 665,903 hits on 351 names, no disagreement.
+  `eventtest --handlers N` plays each of the 180 story NPC and facing
+  handlers: it warps to the handler's location, then hands the interaction
+  loop that handler's table, facing, flag condition and id. Of the 41
+  handlers no earlier run had entered, 34 ran; the other 7 are the Test2
+  location's, whose init script never finishes.
 
 * **2026-09-29** — the routines no run entered, explained. A coverage
   sweep (15.7 million events, no difference) left 1,059 never entered.
