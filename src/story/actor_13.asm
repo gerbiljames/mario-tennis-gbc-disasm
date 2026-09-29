@@ -168,7 +168,7 @@ VarsityCourtTourActors_13:
 	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_ELLIPSIS
 	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, VARSITY_COURT_TOUR_EMILY
 	map_actor_end
-DecompressVarsityCourtTourRecords_13:
+Unused_13_DecompressVarsityCourtTourRecords:
 	push_wram_bank WRAM_STAGING ; $667a
 	ld c, $04 ; $6683
 	xor a ; $6685

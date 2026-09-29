@@ -1,24 +1,24 @@
-	farptr RunMinigameModePauseMenu ; $4000
-	farptr QueueWindowTileWrite ; $4002
-	farptr ResetCharDataScreenAnim ; $4004
-	farptr CheckDebugExpEditorHotkey ; $4006
-	farptr RunDebugCharViewer ; $4008
-	farptr ShowExpGainScreen ; $400a
+	farptr Unused_1a_RunMinigameModePauseMenu ; $4000
+	farptr Unused_1a_QueueWindowTileWrite ; $4002
+	farptr Unused_1a_ResetCharDataScreenAnim ; $4004
+	farptr Unused_1a_CheckDebugExpEditorHotkey ; $4006
+	farptr Unused_1a_RunDebugCharViewer ; $4008
+	farptr Unused_1a_ShowExpGainScreen ; $400a
 	farptr RunCharDataConfirmScreen ; $400c
 	farptr CharDataScreen_BuildStats ; $400e
 	farptr CharDataScreen_LoadGfx ; $4010
 	farptr DrawStatChangeArrows ; $4012
-RunMinigameModePauseMenu:
+Unused_1a_RunMinigameModePauseMenu:
 	ldh a, [hWramBank] ; $4014
 	push af ; $4016
-	call ForceInstantMessageSpeed ; $4017
-	call BuildMinigameModePauseMenu ; $401a
-	call RunPauseMenuWindow ; $401d
-	call RestoreMessageSpeed ; $4020
+	call Unused_1a_ForceInstantMessageSpeed ; $4017
+	call Unused_1a_BuildMinigameModePauseMenu ; $401a
+	call Unused_1a_RunPauseMenuWindow ; $401d
+	call Unused_1a_RestoreMessageSpeed ; $4020
 	pop_wram_bank ; $4023
 	ld a, [wPauseMenuIsMinigame] ; $4028
 	ret ; $402b
-RunPauseMenuWindow:
+Unused_1a_RunPauseMenuWindow:
 	xor a ; $402c
 	ld [wPauseMenuIsMinigame], a ; $402d
 	wram_bank WRAM_TEXT ; $4030
@@ -29,9 +29,9 @@ RunPauseMenuWindow:
 	farcall RenderMenuWindowText ; $4042
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $4045
 .menuLoop:
-	call DrawPauseMenuSettingValues ; $4048
+	call Unused_1a_DrawPauseMenuSettingValues ; $4048
 	ld a, [wPauseMenuWindowId] ; $404b
-	farcall RunMenuSelectionShared ; $404e
+	farcall Unused_05_RunMenuSelectionShared ; $404e
 	push af ; $4051
 	push bc ; $4052
 	cp $ff ; $4053
@@ -73,16 +73,16 @@ RunPauseMenuWindow:
 	ld l, a ; $408c
 	jp hl ; $408d
 .done:
-	call ResetPauseMenuState ; $408e
+	call Unused_1a_ResetPauseMenuState ; $408e
 	ret ; $4091
-ResetPauseMenuState:
+Unused_1a_ResetPauseMenuState:
 	xor a ; $4092
 	ld [wMenuInitialRow], a ; $4093
 	ld [wMenuAdjustRowMask], a ; $4096
 	ld [wPauseMenuOptionBits], a ; $4099
 	ld [wMenuKeepOpenRowMask], a ; $409c
 	ret ; $409f
-DrawPauseMenuSettingValues:
+Unused_1a_DrawPauseMenuSettingValues:
 	push af ; $40a0
 	push bc ; $40a1
 	push de ; $40a2
@@ -103,35 +103,35 @@ DrawPauseMenuSettingValues:
 	jr z, .countDone ; $40b8
 	ld l, $75 ; $40ba
 	lb de, $0a, $05 ; $40bc column, row
-	call QueueWindowTileWrite ; $40bf
+	call Unused_1a_QueueWindowTileWrite ; $40bf
 	ld l, $7f ; $40c2
 	lb de, $0b, $05 ; $40c4 column, row
-	call QueueWindowTileWrite ; $40c7
+	call Unused_1a_QueueWindowTileWrite ; $40c7
 	ld l, $72 ; $40ca
 	lb de, $0c, $05 ; $40cc column, row
-	call QueueWindowTileWrite ; $40cf
+	call Unused_1a_QueueWindowTileWrite ; $40cf
 	jr .checkMusic ; $40d2
 .countDone:
 	ld l, $8c ; $40d4
 	lb de, $0a, $05 ; $40d6 column, row
-	call QueueWindowTileWrite ; $40d9
+	call Unused_1a_QueueWindowTileWrite ; $40d9
 	ld l, $82 ; $40dc
 	lb de, $0b, $05 ; $40de column, row
-	call QueueWindowTileWrite ; $40e1
+	call Unused_1a_QueueWindowTileWrite ; $40e1
 	ld l, $73 ; $40e4
 	lb de, $0c, $05 ; $40e6 column, row
-	call QueueWindowTileWrite ; $40e9
+	call Unused_1a_QueueWindowTileWrite ; $40e9
 	jr .checkMusic ; $40ec
 .maskClear:
 	ld l, $8a ; $40ee
 	lb de, $0a, $05 ; $40f0 column, row
-	call QueueWindowTileWrite ; $40f3
+	call Unused_1a_QueueWindowTileWrite ; $40f3
 	ld l, $94 ; $40f6
 	lb de, $0b, $05 ; $40f8 column, row
-	call QueueWindowTileWrite ; $40fb
+	call Unused_1a_QueueWindowTileWrite ; $40fb
 	ld l, $72 ; $40fe
 	lb de, $0c, $05 ; $4100 column, row
-	call QueueWindowTileWrite ; $4103
+	call Unused_1a_QueueWindowTileWrite ; $4103
 	jr .checkMusic ; $4106
 .checkMusic:
 	ldh a, [hMusic] ; $4108
@@ -152,24 +152,24 @@ DrawPauseMenuSettingValues:
 	jr nz, .maskSet ; $4123
 	ld l, $dd ; $4125
 	lb de, $0b, $07 ; $4127 column, row
-	call QueueWindowTileWrite ; $412a
+	call Unused_1a_QueueWindowTileWrite ; $412a
 	jr .restore ; $412d
 .maskSet:
 	ld l, $cc ; $412f
 	lb de, $0b, $07 ; $4131 column, row
-	call QueueWindowTileWrite ; $4134
+	call Unused_1a_QueueWindowTileWrite ; $4134
 .restore:
 	pop hl ; $4137
 	pop de ; $4138
 	pop bc ; $4139
 	pop af ; $413a
 	ret ; $413b
-QueueWindowTileWrite:
+Unused_1a_QueueWindowTileWrite:
 	ld h, $80 ; $413c
-	call GetTilemapBufferCellDest ; $413e
+	call Unused_1a_GetTilemapBufferCellDest ; $413e
 	call QueueBGTileWrite ; $4141
 	ret ; $4144
-GetTilemapBufferCellDest:
+Unused_1a_GetTilemapBufferCellDest:
 	push af ; $4145
 	push bc ; $4146
 	push hl ; $4147
@@ -201,12 +201,12 @@ GetTilemapBufferCellDest:
 	ret ; $416b
 MessageSpeedSettingPtrs:
 	; $416c, 10 bytes (records:2)
-	dw MessageSpeedSettingHandler0 ; record 0
-	dw ShowGameProgressScreenThunk ; record 1
-	dw AdjustMessageSpeedSettingThunk ; record 2
-	dw ToggleMusicSettingThunk ; record 3
-	dw MessageSpeedSettingHandler4 ; record 4
-MessageSpeedSettingHandler0:
+	dw Unused_1a_MessageSpeedSettingHandler0 ; record 0
+	dw Unused_1a_ShowGameProgressScreenThunk ; record 1
+	dw Unused_1a_AdjustMessageSpeedSettingThunk ; record 2
+	dw Unused_1a_ToggleMusicSettingThunk ; record 3
+	dw Unused_1a_MessageSpeedSettingHandler4 ; record 4
+Unused_1a_MessageSpeedSettingHandler0:
 	ld a, $01 ; $4176
 	farcall ShowCharDataScreen ; $4178
 	ld hl, wStoryModePlayersXPosition ; $417b
@@ -217,8 +217,8 @@ MessageSpeedSettingHandler0:
 	ld [wStoryModeEntryPoint], a ; $4189
 	ld [wUnusedExitTriggerIdMirror], a ; $418c
 	ld [wStoryModeExitTriggerRequest], a ; $418f
-	jp RunPauseMenuWindow.done ; $4192
-ShowGameProgressScreenThunk:
+	jp Unused_1a_RunPauseMenuWindow.done ; $4192
+Unused_1a_ShowGameProgressScreenThunk:
 	farcall ShowGameProgressScreen ; $4195
 	ld hl, wStoryModePlayersXPosition ; $4198
 	ld de, wStoryModeSpawnPosition ; $419b
@@ -228,30 +228,30 @@ ShowGameProgressScreenThunk:
 	ld [wStoryModeEntryPoint], a ; $41a6
 	ld [wUnusedExitTriggerIdMirror], a ; $41a9
 	ld [wStoryModeExitTriggerRequest], a ; $41ac
-	jp RunPauseMenuWindow.done ; $41af
-AdjustMessageSpeedSettingThunk:
-	call AdjustMessageSpeedSetting ; $41b2
+	jp Unused_1a_RunPauseMenuWindow.done ; $41af
+Unused_1a_AdjustMessageSpeedSettingThunk:
+	call Unused_1a_AdjustMessageSpeedSetting ; $41b2
 	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $41b5
 	ld [wMenuInitialRow], a ; $41b8
 	ld bc, MessageSpeedSettingPtrs ; $41bb
 	ld a, [wPauseMenuWindowId] ; $41be
-	jp RunPauseMenuWindow.menuLoop ; $41c1
-ToggleMusicSettingThunk:
-	call ToggleMusicSetting ; $41c4
+	jp Unused_1a_RunPauseMenuWindow.menuLoop ; $41c1
+Unused_1a_ToggleMusicSettingThunk:
+	call Unused_1a_ToggleMusicSetting ; $41c4
 	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $41c7
 	ld [wMenuInitialRow], a ; $41ca
 	ld bc, MessageSpeedSettingPtrs ; $41cd
 	ld a, [wPauseMenuWindowId] ; $41d0
-	jp RunPauseMenuWindow.menuLoop ; $41d3
-MessageSpeedSettingHandler4:
+	jp Unused_1a_RunPauseMenuWindow.menuLoop ; $41d3
+Unused_1a_MessageSpeedSettingHandler4:
 	xor a ; $41d6
 	ld [wSuppressMinigamePauseFlag], a ; $41d7
-	jp RestoreMessageSpeed.scriptShowSpeakerDialogueRestoreBG ; $41da
+	jp Unused_1a_RestoreMessageSpeed.scriptShowSpeakerDialogueRestoreBG ; $41da
 MusicSettingPtrs:
 	; $41dd, 4 bytes (records:2)
-	dw MusicSettingHandler0 ; record 0
-	dw MusicSettingHandler1 ; record 1
-MusicSettingHandler0:
+	dw Unused_1a_MusicSettingHandler0 ; record 0
+	dw Unused_1a_MusicSettingHandler1 ; record 1
+Unused_1a_MusicSettingHandler0:
 	ld a, [wPauseMenuOptionBits] ; $41e1
 	and $0f ; $41e4
 	jr z, .storeMenuInitialRow ; $41e6
@@ -272,8 +272,8 @@ MusicSettingHandler0:
 	ld [wMenuInitialRow], a ; $4203
 	ld bc, MusicSettingPtrs ; $4206
 	ld a, [wPauseMenuWindowId] ; $4209
-	jp RunPauseMenuWindow.menuLoop ; $420c
-MusicSettingHandler1:
+	jp Unused_1a_RunPauseMenuWindow.menuLoop ; $420c
+Unused_1a_MusicSettingHandler1:
 	ld a, [wPauseMenuOptionBits] ; $420f
 	and $0f ; $4212
 	and a ; $4214
@@ -295,9 +295,9 @@ MusicSettingHandler1:
 	ld [wMenuInitialRow], a ; $4232
 	ld bc, MusicSettingPtrs ; $4235
 	ld a, [wPauseMenuWindowId] ; $4238
-	jp RunPauseMenuWindow.menuLoop ; $423b
+	jp Unused_1a_RunPauseMenuWindow.menuLoop ; $423b
 UnusedRunMusicSettingMenu:
-	call ResetPauseMenuState ; $423e
+	call Unused_1a_ResetPauseMenuState ; $423e
 	ld a, $c0 ; $4241
 	ld [wPauseMenuOptionBits], a ; $4243
 	ld hl, wMenuAdjustRowMask ; $4246
@@ -308,13 +308,13 @@ UnusedRunMusicSettingMenu:
 	ld bc, MusicSettingPtrs ; $4253
 	ld de, $0305 ; $4256
 	set_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4259
-	call RunPauseMenuWindow ; $425c
-	call ResetPauseMenuState ; $425f
+	call Unused_1a_RunPauseMenuWindow ; $425c
+	call Unused_1a_ResetPauseMenuState ; $425f
 	ld hl, wPauseMenuOptionBits ; $4262
 	set 7, [hl] ; $4265
 	clear_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4267
 	ret ; $426a
-AdjustMessageSpeedSetting:
+Unused_1a_AdjustMessageSpeedSetting:
 	ld a, [wPauseMenuOptionBits] ; $426b
 	and $0f ; $426e
 	cp $02 ; $4270
@@ -355,7 +355,7 @@ AdjustMessageSpeedSetting:
 	ld [hl], a ; $42a7
 .done:
 	ret ; $42a8
-ToggleMusicSetting:
+Unused_1a_ToggleMusicSetting:
 	sound SFX_MENU_MOVE ; $42a9
 	ld a, [wSoundOptionBits] ; $42ab
 	ld b, a ; $42ae
@@ -367,12 +367,12 @@ ToggleMusicSetting:
 	or c ; $42b7
 	ld [wSoundOptionBits], a ; $42b8
 	ret ; $42bb
-ForceInstantMessageSpeed:
+Unused_1a_ForceInstantMessageSpeed:
 	ld a, [wMessageSpeed] ; $42bc
 	set 7, a ; $42bf
 	ld [wMessageSpeed], a ; $42c1
 	ret ; $42c4
-RestoreMessageSpeed:
+Unused_1a_RestoreMessageSpeed:
 	ld a, [wMessageSpeed] ; $42c5
 	res 7, a ; $42c8
 	ld [wMessageSpeed], a ; $42ca
@@ -402,11 +402,11 @@ RestoreMessageSpeed:
 	ld a, $ff ; $430c
 	ld [wUnusedExitTriggerIdMirror], a ; $430e
 	ld [wStoryModeExitTriggerRequest], a ; $4311
-	jp RunPauseMenuWindow.done ; $4314
+	jp Unused_1a_RunPauseMenuWindow.done ; $4314
 .compare:
 	cp $ff ; $4317
 	jr nz, .setText ; $4319
-	call BuildMinigameModePauseMenu ; $431b
+	call Unused_1a_BuildMinigameModePauseMenu ; $431b
 	ld a, $03 ; $431e
 	ld [wMenuInitialRow], a ; $4320
 	ld a, [wSuppressMinigamePauseFlag] ; $4323
@@ -415,7 +415,7 @@ RestoreMessageSpeed:
 	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4329
 	jr .runPauseMenuWindow ; $432c
 .runPauseMenuWindow:
-	jp RunPauseMenuWindow ; $432e
+	jp Unused_1a_RunPauseMenuWindow ; $432e
 .setText:
 	script_set_text Text_31_157 ; $4331
 	ld a, $80 ; $4337
@@ -434,9 +434,9 @@ RestoreMessageSpeed:
 	ld a, $ff ; $435b
 	ld [wUnusedExitTriggerIdMirror], a ; $435d
 	ld [wStoryModeExitTriggerRequest], a ; $4360
-	jp RunPauseMenuWindow.done ; $4363
+	jp Unused_1a_RunPauseMenuWindow.done ; $4363
 .buildMinigameModePauseMenu:
-	call BuildMinigameModePauseMenu ; $4366
+	call Unused_1a_BuildMinigameModePauseMenu ; $4366
 	ld a, $03 ; $4369
 	ld [wMenuInitialRow], a ; $436b
 	ld a, [wSuppressMinigamePauseFlag] ; $436e
@@ -445,9 +445,9 @@ RestoreMessageSpeed:
 	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4374
 	jr .runPauseMenuWindow2 ; $4377
 .runPauseMenuWindow2:
-	jp RunPauseMenuWindow ; $4379
-BuildMinigameModePauseMenu:
-	call ResetPauseMenuState ; $437c
+	jp Unused_1a_RunPauseMenuWindow ; $4379
+Unused_1a_BuildMinigameModePauseMenu:
+	call Unused_1a_ResetPauseMenuState ; $437c
 	ld a, $a0 ; $437f
 	ld [wPauseMenuOptionBits], a ; $4381
 	ld a, $8c ; $4384

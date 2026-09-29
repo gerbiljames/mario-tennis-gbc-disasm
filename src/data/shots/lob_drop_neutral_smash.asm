@@ -3,7 +3,7 @@
 	farptr ApplyFallbackBallTrajectory_24 ; $4004
 	farptr ShotBallPathNeutral ; $4006
 	farptr ShotBallPathSmash ; $4008
-	farptr StubNop_24 ; $400a
+	farptr Unused_24_StubNop ; $400a
 	farptr ShotBallPathReach ; $400c
 ; Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a, BallTrajEntryPtr6_2b and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy.
 	twin ball_traj_entry_ptr6, 24 ; $400e BallTrajEntryPtr6_24
@@ -225,7 +225,7 @@ SmashVelocityBySpeed_24:
 	dw $fe50 ; record 7
 	dw $fee0 ; record 8
 	dw $ff70 ; record 9
-StubNop_24:
+Unused_24_StubNop:
 	ret ; $6706
 BallPosDataReach_24:
 	INCLUDE "data/bank_024/BallPosDataReach_24.asm" ; $6707, 4096 bytes (traj:4:64)

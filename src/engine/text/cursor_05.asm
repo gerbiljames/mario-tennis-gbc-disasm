@@ -1,4 +1,4 @@
-IsCursorOnAdjustRow:
+Unused_05_IsCursorOnAdjustRow:
 	push bc ; $4c76
 	ld a, [wMenuAdjustRowMask] ; $4c77
 	bit 7, a ; $4c7a
@@ -24,7 +24,7 @@ IsCursorOnAdjustRow:
 	pop bc ; $4c9a
 	xor a ; $4c9b
 	ret ; $4c9c
-AnimateMenuScrollArrowsTask:
+Unused_05_AnimateMenuScrollArrowsTask:
 	wram_bank WRAM_TEXT ; $4c9d
 	ld a, [wMenuAdjustRowMask] ; $4ca3
 	bit 7, a ; $4ca6
@@ -53,18 +53,18 @@ AnimateMenuScrollArrowsTask:
 .isPauseOptionsMenuOpen:
 	ld l, $20 ; $4cd6
 	lb de, $0b, $01 ; $4cd8 column, row
-	farcall QueueWindowTileWrite ; $4cdb
+	farcall Unused_1a_QueueWindowTileWrite ; $4cdb
 	ld l, $20 ; $4cde
 	lb de, $0b, $03 ; $4ce0 column, row
-	farcall QueueWindowTileWrite ; $4ce3
+	farcall Unused_1a_QueueWindowTileWrite ; $4ce3
 	jr .step3 ; $4ce6
 .isMinigamePauseMenuOpen:
 	ld l, $20 ; $4ce8
 	lb de, $0d, $05 ; $4cea column, row
-	farcall QueueWindowTileWrite ; $4ced
+	farcall Unused_1a_QueueWindowTileWrite ; $4ced
 	ld l, $20 ; $4cf0
 	lb de, $0d, $07 ; $4cf2 column, row
-	farcall QueueWindowTileWrite ; $4cf5
+	farcall Unused_1a_QueueWindowTileWrite ; $4cf5
 	jr .step3 ; $4cf8
 .step3:
 	ld hl, wTextArrowBlinkCounter ; $4cfa
@@ -135,75 +135,75 @@ AnimateMenuScrollArrowsTask:
 .isPauseOptionsMenuOpen2:
 	ld l, $20 ; $4d6d
 	lb de, $0b, $01 ; $4d6f column, row
-	farcall QueueWindowTileWrite ; $4d72
+	farcall Unused_1a_QueueWindowTileWrite ; $4d72
 	ld l, $20 ; $4d75
 	lb de, $0b, $03 ; $4d77 column, row
-	farcall QueueWindowTileWrite ; $4d7a
+	farcall Unused_1a_QueueWindowTileWrite ; $4d7a
 	ld a, [wMenuCursorRow] ; $4d7d
 	and a ; $4d80
 	jr nz, .getMenuCursorBlinkPhase ; $4d81
-	call GetMenuCursorBlinkPhase ; $4d83
+	call Unused_05_GetMenuCursorBlinkPhase ; $4d83
 	and a ; $4d86
 	ld de, $0101 ; $4d87
 	jp z, .queueWindowTileWrite ; $4d8a
 	ld l, $0c ; $4d8d
 	lb de, $01, $01 ; $4d8f column, row
-	farcall QueueWindowTileWrite ; $4d92
+	farcall Unused_1a_QueueWindowTileWrite ; $4d92
 	ld l, $0d ; $4d95
 	lb de, $0b, $01 ; $4d97 column, row
-	farcall QueueWindowTileWrite ; $4d9a
+	farcall Unused_1a_QueueWindowTileWrite ; $4d9a
 	jp .doneB ; $4d9d
 .getMenuCursorBlinkPhase:
-	call GetMenuCursorBlinkPhase ; $4da0
+	call Unused_05_GetMenuCursorBlinkPhase ; $4da0
 	and a ; $4da3
 	ld de, $0103 ; $4da4
 	jp z, .queueWindowTileWrite ; $4da7
 	ld l, $0c ; $4daa
 	lb de, $01, $03 ; $4dac column, row
-	farcall QueueWindowTileWrite ; $4daf
+	farcall Unused_1a_QueueWindowTileWrite ; $4daf
 	ld l, $0d ; $4db2
 	lb de, $0b, $03 ; $4db4 column, row
-	farcall QueueWindowTileWrite ; $4db7
+	farcall Unused_1a_QueueWindowTileWrite ; $4db7
 	jp .doneB ; $4dba
 .isMinigamePauseMenuOpen2:
 	ld l, $20 ; $4dbd
 	lb de, $0d, $05 ; $4dbf column, row
-	farcall QueueWindowTileWrite ; $4dc2
+	farcall Unused_1a_QueueWindowTileWrite ; $4dc2
 	ld l, $20 ; $4dc5
 	lb de, $0d, $07 ; $4dc7 column, row
-	farcall QueueWindowTileWrite ; $4dca
+	farcall Unused_1a_QueueWindowTileWrite ; $4dca
 	ld a, [wMenuCursorRow] ; $4dcd
 	cp $03 ; $4dd0
 	jr z, .getMenuCursorBlinkPhase2 ; $4dd2
-	call GetMenuCursorBlinkPhase ; $4dd4
+	call Unused_05_GetMenuCursorBlinkPhase ; $4dd4
 	or a ; $4dd7
 	ld de, $0105 ; $4dd8
 	jr z, .queueWindowTileWrite ; $4ddb
 	ld l, $0c ; $4ddd
 	lb de, $01, $05 ; $4ddf column, row
-	farcall QueueWindowTileWrite ; $4de2
+	farcall Unused_1a_QueueWindowTileWrite ; $4de2
 	ld l, $0d ; $4de5
 	lb de, $0d, $05 ; $4de7 column, row
-	farcall QueueWindowTileWrite ; $4dea
+	farcall Unused_1a_QueueWindowTileWrite ; $4dea
 	jr .doneB ; $4ded
 .getMenuCursorBlinkPhase2:
-	call GetMenuCursorBlinkPhase ; $4def
+	call Unused_05_GetMenuCursorBlinkPhase ; $4def
 	or a ; $4df2
 	ld de, $0107 ; $4df3
 	jr z, .queueWindowTileWrite ; $4df6
 	ld l, $0c ; $4df8
 	lb de, $01, $07 ; $4dfa column, row
-	farcall QueueWindowTileWrite ; $4dfd
+	farcall Unused_1a_QueueWindowTileWrite ; $4dfd
 	ld l, $0d ; $4e00
 	lb de, $0d, $07 ; $4e02 column, row
-	farcall QueueWindowTileWrite ; $4e05
+	farcall Unused_1a_QueueWindowTileWrite ; $4e05
 	jr .doneB ; $4e08
 .queueWindowTileWrite:
 	ld l, $20 ; $4e0a
-	farcall QueueWindowTileWrite ; $4e0c
+	farcall Unused_1a_QueueWindowTileWrite ; $4e0c
 .doneB:
 	ret ; $4e0f
-GetMenuCursorBlinkPhase:
+Unused_05_GetMenuCursorBlinkPhase:
 	wram_bank WRAM_TEXT ; $4e10
 	ld a, [wTextArrowBlinkCounter] ; $4e16
 	and $10 ; $4e19

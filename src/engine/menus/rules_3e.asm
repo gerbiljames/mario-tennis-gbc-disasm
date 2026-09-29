@@ -6,7 +6,7 @@
 ; Instruction-identical to Unused_16_SetMenuCursorFromIndexToPtr and Unused_38_SetMenuCursorFromIndexToPtr (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in set_menu_cursor_from_index_to_ptr, Unused_3e_SetMenuCursorFromIndexToPtr, 3e ; $43fd Unused_3e_SetMenuCursorFromIndexToPtr
-ClearWram3Row64_3e:
+Unused_3e_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $440b
 	xor a ; $4414
 	ld c, $40 ; $4415
@@ -16,7 +16,7 @@ ClearWram3Row64_3e:
 	jr nz, .loop ; $4419
 	pop_wram_bank ; $441b
 	ret ; $4420
-ClearWram3Row64Alt_3e:
+Unused_3e_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $4421
 	ld a, $00 ; $442a
 	ld c, $40 ; $442c
@@ -35,12 +35,12 @@ UpdateAnimatedTiles_3e:
 ; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_1b_DrawDecimalNumber and Unused_3b_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_3e_DrawDecimalNumber, 3e ; $4475 Unused_3e_DrawDecimalNumber
-DrawAsciiDigitString_3e:
+Unused_3e_DrawAsciiDigitString:
 	ld a, [hl+] ; $4496
 	and a ; $4497
 	jr z, .done ; $4498
 	call DrawAsciiDigitChar_3e ; $449a
-	jr DrawAsciiDigitString_3e ; $449d
+	jr Unused_3e_DrawAsciiDigitString ; $449d
 .done:
 	ret ; $449f
 ; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b and DrawAsciiDigitChar_3b (one copy per bank); a change here belongs in every copy.

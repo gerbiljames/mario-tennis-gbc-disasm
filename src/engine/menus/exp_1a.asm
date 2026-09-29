@@ -1,6 +1,6 @@
-StubNop_1a_0:
+Unused_1a_StubNop_1a_0:
 	ret ; $4779
-ExpScreenDrawTask:
+Unused_1a_ExpScreenDrawTask:
 	push af ; $477a
 	push bc ; $477b
 	push de ; $477c
@@ -46,7 +46,7 @@ ExpScreenDrawTask:
 	dec b ; $47de
 	jr nz, .loopB ; $47df
 	ld a, $03 ; $47e1
-	call DrawExpScreenCaption ; $47e3
+	call Unused_1a_DrawExpScreenCaption ; $47e3
 	ld hl, wScreenScratch ; $47e6
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $47e9
 	ld c, $04 ; $47ec
@@ -76,7 +76,7 @@ ExpScreenDrawTask_SpriteTemplate:
 	oam_sprite $10, $08, $06, $00
 	oam_sprite_end
 	db $00 ; $4851
-LoadExpScreenGfx:
+Unused_1a_LoadExpScreenGfx:
 	wram_bank WRAM_STAGING ; $4852
 	push hl ; $4858
 	ld hl, ExpScreenGfx0 ; $4859
@@ -268,7 +268,7 @@ ExpScreenMessageBoxTilemap:
 	dw $0b21 ; record 97
 	dw $0b21 ; record 98
 	dw $0b22 ; record 99
-DrawExpScreenMessageBox:
+Unused_1a_DrawExpScreenMessageBox:
 	push af ; $4a18
 	push bc ; $4a19
 	push de ; $4a1a
@@ -289,7 +289,7 @@ DrawExpScreenMessageBox:
 	inc hl ; $4a2f
 	ld a, [hl] ; $4a30
 	ld e, a ; $4a31
-	call WriteTileBufferCell ; $4a32
+	call Unused_1a_WriteTileBufferCell ; $4a32
 	inc hl ; $4a35
 	inc b ; $4a36
 	jr .loopB ; $4a37
@@ -334,7 +334,7 @@ ExpScreenYesNoBoxTilemap:
 	dw $0b21 ; record 27
 	dw $0b21 ; record 28
 	dw $0b22 ; record 29
-DrawExpScreenYesNoBox:
+Unused_1a_DrawExpScreenYesNoBox:
 	push af ; $4a7d
 	push bc ; $4a7e
 	push de ; $4a7f
@@ -356,7 +356,7 @@ DrawExpScreenYesNoBox:
 	inc hl ; $4a97
 	ld a, [hl] ; $4a98
 	ld e, a ; $4a99
-	call WriteTileBufferCell ; $4a9a
+	call Unused_1a_WriteTileBufferCell ; $4a9a
 	inc hl ; $4a9d
 	inc b ; $4a9e
 	jr .loopB ; $4a9f
@@ -373,7 +373,7 @@ DrawExpScreenYesNoBox:
 	pop bc ; $4ab1
 	pop af ; $4ab2
 	ret ; $4ab3
-; 32 words walked by FillTileBufferBlockFromTable_1a, one per cell
+; 32 words walked by Unused_1a_FillTileBufferBlockFromTable, one per cell
 ; of the 4x8 block it fills. The values run $0b38-$0b6f
 ; consecutively, so the high byte is constant and only the low byte
 ; varies across the block.
@@ -414,13 +414,13 @@ TileBufferBlockCells_1a:
 ; Fills a 4-row by 8-column block of the tile buffer from
 ; TileBufferBlockCells_1a, the 32-word table immediately above it:
 ; c counts rows $0b-$0e, b counts columns $01-$08, and each iteration
-; reads one word into de and calls WriteTileBufferCell. 4 x 8 is
+; reads one word into de and calls Unused_1a_WriteTileBufferCell. 4 x 8 is
 ; exactly the table's 32 entries.
 ;
 ; Was 43 bytes of INCBIN with no proven caller; seeded as code because
 ; it decodes as one complete push/pop-balanced routine and its
 ; `ld hl, $4ab4` lands exactly on that table.
-FillTileBufferBlockFromTable_1a:
+Unused_1a_FillTileBufferBlockFromTable:
 	push af ; $4af4
 	push bc ; $4af5
 	push de ; $4af6
@@ -442,7 +442,7 @@ FillTileBufferBlockFromTable_1a:
 	inc hl ; $4b0d
 	ld a, [hl] ; $4b0e
 	ld e, a ; $4b0f
-	call WriteTileBufferCell ; $4b10
+	call Unused_1a_WriteTileBufferCell ; $4b10
 	inc hl ; $4b13
 	inc b ; $4b14
 	jr .colLoop ; $4b15

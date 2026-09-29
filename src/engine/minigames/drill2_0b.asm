@@ -115,7 +115,7 @@ LoadDrillOpponentBySide:
 	ld a, [hl] ; $4426
 	call LoadDrillOpponentChar ; $4427
 	ret ; $442a
-WriteCharStructByte:
+Unused_0b_WriteCharStructByte:
 	ld b, a ; $442b
 	push_wram_bank WRAM_CHAR1 ; $442c
 	ld de, wCharPosX ; $4435
@@ -125,7 +125,7 @@ WriteCharStructByte:
 	ret ; $443f
 UnusedSetAiReactionDelayFar:
 	ld hl, $007a ; $4440
-	call WriteCharStructByte ; $4443
+	call Unused_0b_WriteCharStructByte ; $4443
 	ret ; $4446
 TestCharStateBit4:
 	ld b, a ; $4447

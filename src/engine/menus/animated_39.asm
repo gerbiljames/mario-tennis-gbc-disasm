@@ -391,7 +391,7 @@ FixedTileBlockAndPalette:
 	INCLUDE "data/bank_039/lz_FixedTileBlockAndPalette.inc" ; DEF FixedTileBlockAndPalette_SIZE EQU its decoded length, generated from the .bin by make
 FixedTileBlockPalette:
 	INCLUDE "data/bank_039/FixedTileBlockPalette.asm" ; $4516, 8 bytes (palettes)
-LoadFixedBgPalette0:
+Unused_39_LoadFixedBgPalette0:
 	lb de, $00, $01 ; $451e palette index, count
 	ld hl, FixedBgPalette0Palette ; $4521
 	call LoadPaletteShadow ; $4524

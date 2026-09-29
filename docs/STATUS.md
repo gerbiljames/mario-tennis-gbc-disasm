@@ -115,6 +115,19 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-29** — the routines no run entered, explained. A coverage
+  sweep (15.7 million events, no difference) left 1,059 never entered.
+  `tools/reach.py` follows every reference from the reset, interrupt and
+  `rst` vectors -- macro bodies, slot aliases, fall-through, local-label
+  jumps -- and found 330 more routines nothing live can reach: many were
+  named only by their own slot-table row, or called only from `Unused`
+  code. They are `Unused_<bank>_...` now (697 routines in all), and `make
+  check` (`reach`) fails whenever a name and reachability disagree. The
+  428 reachable routines no run entered each sit below a routine that did,
+  which names the missing condition: link play and the N64 Transfer Pak,
+  story handlers random walks miss, the practice drills 2-3, a damaged
+  save, debug hotkeys (`docs/unused_code.md`, "Reachability").
+
 * **2026-09-29** — the full event test after the edited-build tool changes
   (eventtest now places its hooks through build addresses): 36 states × 42
   locations, 90 main-menu and 240 targeted sessions, 13.13 million events,
@@ -505,7 +518,7 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
   under different names. The bytes are unchanged; the shared bodies drop
   the per-instruction address comments and the `twin` line carries the
   copy's start. Three labels gained the suffix their family used
-  (`FetchTextTable_1f`, `DrawAsciiDigitString_1b`,
+  (`FetchTextTable_1f`, `Unused_1b_DrawAsciiDigitString`,
   `SpriteWobbleXTable_17`). Eight copies stay separate: the two
   `ShotBallPath*` pairs reference different tables under different names,
   and four Island Open NPC scripts differ only in a text id, which the

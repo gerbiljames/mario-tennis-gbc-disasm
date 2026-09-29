@@ -87,12 +87,12 @@ TestStorySlotFlagA:
 .zero:
 	ld a, $00 ; $4d26
 	ret ; $4d28
-; The gate on awarding EXP: AddExpToCa00RecordChecked calls it and returns on
+; The gate on awarding EXP: Unused_02_AddExpToCa00RecordChecked calls it and returns on
 ; z. It cannot return z -- `xor a` / `dec a` sets the flags from $ff and the
 ; following `ld a, c` restores the caller's a without touching them -- so the
 ; gate always passes and the award always happens. Whatever condition it was
 ; meant to test is not in the ROM.
-CheckExpAwardAllowed:
+Unused_02_CheckExpAwardAllowed:
 	push bc ; $4d29
 	ld c, a ; $4d2a
 	xor a ; $4d2b
@@ -144,7 +144,7 @@ Compare24Bit:
 	sbc [hl] ; $4d5d
 	bit 7, a ; $4d5e
 	ret ; $4d60
-ClearCa00RecordExp:
+Unused_02_ClearCa00RecordExp:
 	call GetCa00RecordPtr ; $4d61
 	ld hl, CHARREC_EXP ; $4d64
 	add hl, bc ; $4d67
@@ -153,17 +153,17 @@ ClearCa00RecordExp:
 	ld [hl+], a ; $4d6a
 	ld [hl+], a ; $4d6b
 	ret ; $4d6c
-AddExpToCa00RecordChecked:
-	call CheckExpAwardAllowed ; $4d6d
+Unused_02_AddExpToCa00RecordChecked:
+	call Unused_02_CheckExpAwardAllowed ; $4d6d
 	ret z ; $4d70
-AddExpToCa00RecordHooked:
-	call StubNop ; $4d71
-AddExpToCa00Record:
+Unused_02_AddExpToCa00RecordHooked:
+	call Unused_02_StubNop ; $4d71
+Unused_02_AddExpToCa00Record:
 	call GetCa00RecordPtr ; $4d74
 	ld hl, CHARREC_EXP ; $4d77
 	add hl, bc ; $4d7a
 	jp AddExpCapped ; $4d7b
-StubNop:
+Unused_02_StubNop:
 	ret ; $4d7e
 Table_02:
 	; $4d7f, 16 bytes (bytes:16)

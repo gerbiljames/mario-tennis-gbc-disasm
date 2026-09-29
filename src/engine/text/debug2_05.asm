@@ -326,7 +326,7 @@ StartDebugPaletteEditor:
 	ld [wDebugPaletteIndex], a ; $6b7b
 	call RunDebugPaletteViewer ; $6b7e
 	ret ; $6b81
-WriteStringToTilemap:
+Unused_05_WriteStringToTilemap:
 	push af ; $6b82
 .loop:
 	ld a, [hl] ; $6b83
@@ -373,7 +373,7 @@ WriteStringToTilemap:
 .restore:
 	pop af ; $6bb7
 	ret ; $6bb8
-WriteStringToTilemapAlt:
+Unused_05_WriteStringToTilemapAlt:
 	push af ; $6bb9
 .loop:
 	ld a, [hl] ; $6bba

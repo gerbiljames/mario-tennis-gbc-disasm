@@ -41,11 +41,11 @@ Unused_00_QueueDeferredTilemapCopy:
 	xor a ; $2a46
 	ld [wDeferredTilemapPending], a ; $2a47
 	ld a, $05 ; $2a4a
-	ld hl, VBlankDeferredTilemapCopyTask ; $2a4c
+	ld hl, Unused_00_VBlankDeferredTilemapCopyTask ; $2a4c
 	call RegisterFrameTask ; $2a4f
 	pop af ; $2a52
 	ret ; $2a53
-VBlankDeferredTilemapCopyTask:
+Unused_00_VBlankDeferredTilemapCopyTask:
 	push af ; $2a54
 	push bc ; $2a55
 	push de ; $2a56
@@ -155,7 +155,7 @@ DrawHexWord:
 	pop bc ; $2aef
 	pop af ; $2af0
 	ret ; $2af1
-DrawDecimalWord:
+Unused_00_DrawDecimalWord:
 	push af ; $2af2
 	push bc ; $2af3
 	push hl ; $2af4
@@ -184,27 +184,27 @@ Unused_00_DrawDecimalByte1Digit:
 	ld l, a ; $2b11
 	ld h, $00 ; $2b12
 	ld a, $01 ; $2b14
-	jr DrawDecimalWord ; $2b16
+	jr Unused_00_DrawDecimalWord ; $2b16
 Unused_00_DrawDecimalByte2Digits:
 	ld l, a ; $2b18
 	ld h, $00 ; $2b19
 	ld a, $02 ; $2b1b
-	jr DrawDecimalWord ; $2b1d
+	jr Unused_00_DrawDecimalWord ; $2b1d
 Unused_00_DrawDecimalByte3Digits:
 	ld l, a ; $2b1f
 	ld h, $00 ; $2b20
 	ld a, $03 ; $2b22
-	jr DrawDecimalWord ; $2b24
+	jr Unused_00_DrawDecimalWord ; $2b24
 Unused_00_DrawThreeHalvedWordsDecimal:
 	push af ; $2b26
 	push hl ; $2b27
-	call DrawHalvedWordDecimal ; $2b28
-	call DrawHalvedWordDecimal ; $2b2b
-	call DrawHalvedWordDecimal ; $2b2e
+	call Unused_00_DrawHalvedWordDecimal ; $2b28
+	call Unused_00_DrawHalvedWordDecimal ; $2b2b
+	call Unused_00_DrawHalvedWordDecimal ; $2b2e
 	pop hl ; $2b31
 	pop af ; $2b32
 	ret ; $2b33
-DrawHalvedWordDecimal:
+Unused_00_DrawHalvedWordDecimal:
 	push hl ; $2b34
 	ld a, [hl+] ; $2b35
 	ld h, [hl] ; $2b36
@@ -212,7 +212,7 @@ DrawHalvedWordDecimal:
 	sra h ; $2b38
 	rr l ; $2b3a
 	ld a, $04 ; $2b3c
-	call DrawDecimalWord ; $2b3e
+	call Unused_00_DrawDecimalWord ; $2b3e
 	inc de ; $2b41
 	pop hl ; $2b42
 	inc hl ; $2b43

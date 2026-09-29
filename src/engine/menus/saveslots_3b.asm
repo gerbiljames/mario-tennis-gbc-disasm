@@ -318,7 +318,7 @@ TryMainMenuLinkHandshake:
 	jr c, .loop ; $5cde
 .done:
 	ret ; $5ce0
-RestoreScreenAfterLinkAttempt:
+Unused_3b_RestoreScreenAfterLinkAttempt:
 	call DisableLCDSafely ; $5ce1
 	farcall LoadMenuFontGfx ; $5ce4
 	farcall ResetScreenAndTextWindows ; $5ce7

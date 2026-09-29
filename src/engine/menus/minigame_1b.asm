@@ -1,4 +1,4 @@
-ToggleSelectedUnlockFlag:
+Unused_1b_ToggleSelectedUnlockFlag:
 	push_wram_bank WRAM_SCENE ; $68a4
 	ld hl, wUnlockFlagsBlock ; $68ad
 	ld a, [wCharSelectChar] ; $68b0
@@ -22,7 +22,7 @@ ToggleSelectedUnlockFlag:
 	sound SFX_MENU_CANCEL ; $68ce
 	pop_wram_bank ; $68d0
 	ret ; $68d5
-LoadUnlockDebugCursorGfx:
+Unused_1b_LoadUnlockDebugCursorGfx:
 	push_wram_bank WRAM_STAGING ; $68d6
 	ld hl, UnlockDebugCursorGfx ; $68df
 	ld de, wDecompBuffer ; $68e2
@@ -36,7 +36,7 @@ LoadUnlockDebugCursorGfx:
 	lb de, $08, $01 ; $68fb palette index, count
 	call LoadPaletteShadow ; $68fe
 	ld a, $01 ; $6901
-	ld hl, DrawUnlockDebugFlagSprites ; $6903
+	ld hl, Unused_1b_DrawUnlockDebugFlagSprites ; $6903
 	call RegisterFrameTask ; $6906
 	ret ; $6909
 UnlockDebugCursorGfx:
@@ -46,7 +46,7 @@ UnlockDebugCursorGfx:
 	ds 9, $00
 UnlockDebugCursorPalette:
 	INCLUDE "data/bank_01b/UnlockDebugCursorPalette.asm" ; $6930, 8 bytes (palettes)
-DrawUnlockDebugFlagSprites:
+Unused_1b_DrawUnlockDebugFlagSprites:
 	push_wram_bank WRAM_SCENE ; $6938
 	ld hl, wUnlockFlagsBlock + 2 ; $6941
 	xor a ; $6944
@@ -67,7 +67,7 @@ DrawUnlockDebugFlagSprites:
 	inc hl ; $6956
 	ld e, [hl] ; $6957
 	pop hl ; $6958
-	call QueueBobbingFlagSprite ; $6959
+	call Unused_1b_QueueBobbingFlagSprite ; $6959
 .restore:
 	pop af ; $695c
 	inc a ; $695d
@@ -78,16 +78,16 @@ DrawUnlockDebugFlagSprites:
 UnlockDebugFlagSprites:
 	; $6968, 12 bytes (bytes:12)
 	db $24, $28, $3c, $28, $54, $28, $6c, $28, $84, $28, $24, $40 ; 0x00
-QueueBobbingFlagSprite:
+Unused_1b_QueueBobbingFlagSprite:
 	push hl ; $6974
-	farcall ApplySpriteBobOffset_18 ; $6975
+	farcall Unused_18_ApplySpriteBobOffset ; $6975
 	ld c, $50 ; $6978
 	ld b, $00 ; $697a
 	call QueueSprite ; $697c
 	pop hl ; $697f
 	ret ; $6980
 	ret ; $6981
-RunStoryDataConfirmMenu:
+Unused_1b_RunStoryDataConfirmMenu:
 	wram_bank WRAM_STAGING ; $6982
 	ld c, $20 ; $6988
 	call BeginFadeOut ; $698a
@@ -96,7 +96,7 @@ RunStoryDataConfirmMenu:
 	xor a ; $6993
 	ld [wMinigameHighScoreMode], a ; $6994
 	ld [wStoryDataPromptFlag], a ; $6997
-	farcall ForceFlushBgMapToVram ; $699a
+	farcall Unused_18_ForceFlushBgMapToVram ; $699a
 	call EnableLCD ; $699d
 	script_fade_in $20 ; $69a0
 	call WaitFadeEnd ; $69a5
@@ -106,18 +106,18 @@ RunStoryDataConfirmMenu:
 	ld a, $0c ; $69b2
 	ld [wStubbedPromptTaskState + 1], a ; $69b4
 	ld a, $01 ; $69b7
-	ld hl, StubNop_1b_09 ; $69b9
+	ld hl, Unused_1b_StubNop_1b_09 ; $69b9
 	call RegisterFrameTask ; $69bc
 	ld b, $01 ; $69bf
-	farcall RunTwoOptionSelectB ; $69c1
+	farcall Unused_18_RunTwoOptionSelectB ; $69c1
 	push af ; $69c4
-	ld hl, StubNop_1b_09 ; $69c5
+	ld hl, Unused_1b_StubNop_1b_09 ; $69c5
 	call UnregisterFrameTask ; $69c8
 	pop af ; $69cb
 	ret ; $69cc
 ; A lone $c9 (ret) followed by the byte pair $ff $36 four times, wedged
 ; between the end of a two-option-select wrapper and the run of ret
-; bytes named StubNop_1b_09. Reads as a stub return plus filler.
+; bytes named Unused_1b_StubNop_1b_09. Reads as a stub return plus filler.
 ;
 ; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
 ; HIGH split base, no 8-bit register pair, and no dw word -- searched over
@@ -128,7 +128,7 @@ RunStoryDataConfirmMenu:
 Unused_1b_StubRetAndFill:
 	; $69cd, 9 bytes (bytes:9)
 	db $c9, $ff, $36, $ff, $36, $ff, $36, $ff, $36 ; 0x00
-StubNop_1b_09:
+Unused_1b_StubNop_1b_09:
 	ret ; $69d6
 Unused_1b_StubRet1:
 	ret ; $69d7
@@ -142,9 +142,9 @@ Unused_1b_ShowHighScoreConfirmScreen:
 	call BeginFadeOut ; $69e6
 	call WaitFadeEnd ; $69e9
 	call DisableLCDSafely ; $69ec
-	farcall InitConfirmScreen ; $69ef
-	call StubNop_1b_10 ; $69f2
-	farcall ForceFlushBgMapToVram ; $69f5
+	farcall Unused_18_InitConfirmScreen ; $69ef
+	call Unused_1b_StubNop_1b_10 ; $69f2
+	farcall Unused_18_ForceFlushBgMapToVram ; $69f5
 	call EnableLCD ; $69f8
 	script_fade_in $20 ; $69fb
 	call WaitFadeEnd ; $6a00
@@ -152,43 +152,43 @@ Unused_1b_ShowHighScoreConfirmScreen:
 	and a ; $6a03
 	jr nz, .loop ; $6a04
 	ld b, $00 ; $6a06
-	farcall StubNop_18_1 ; $6a08
+	farcall Unused_18_StubNop_18_1 ; $6a08
 	call AdvanceFrame ; $6a0b
 	ret ; $6a0e
 Unused_1b_DrawErasePrompt:
 	ld hl, wPlayer1MainName ; $6a0f
 	farcall PushTextArgString ; $6a12
 	ld de, $d9c1 ; $6a15
-	call CopyMainCharNameWithDiacritics ; $6a18
+	call Unused_1b_CopyMainCharNameWithDiacritics ; $6a18
 	ld hl, Text_31_106 ; $6a1b
-	farcall RenderProportionalTextAt32 ; $6a1e
+	farcall Unused_18_RenderProportionalTextAt32 ; $6a1e
 	farcall Unused_18_DrawYesNoLabels ; $6a21
 	ret ; $6a24
 Unused_1b_DrawContinuePrompt:
 	ld hl, Text_31_109 ; $6a25
 	ld de, $d9c1 ; $6a28
-	farcall RenderProportionalTextAt32 ; $6a2b
+	farcall Unused_18_RenderProportionalTextAt32 ; $6a2b
 	farcall Unused_18_DrawYesNoLabels ; $6a2e
 	ret ; $6a31
 Unused_1b_DrawEraseConfirmPrompt:
 	ld hl, Text_31_107 ; $6a32
 	ld de, $d9c1 ; $6a35
-	farcall RenderProportionalTextAt32 ; $6a38
+	farcall Unused_18_RenderProportionalTextAt32 ; $6a38
 	farcall Unused_18_DrawYesNoLabels ; $6a3b
 	ret ; $6a3e
 Unused_1b_DrawIsThisCorrectPrompt:
 	ld hl, Text_31_113 ; $6a3f
 	ld de, $d9c1 ; $6a42
-	farcall RenderProportionalTextAt32 ; $6a45
+	farcall Unused_18_RenderProportionalTextAt32 ; $6a45
 	farcall Unused_18_DrawYesNoLabels ; $6a48
 	ret ; $6a4b
 Unused_1b_DrawCharAndItemDataPrompt:
 	ld hl, Text_30_354 ; $6a4c
 	ld de, $d9c1 ; $6a4f
-	farcall RenderProportionalTextAt32 ; $6a52
+	farcall Unused_18_RenderProportionalTextAt32 ; $6a52
 	ld hl, Text_30_354 ; $6a55
 	ld de, $da01 ; $6a58
-	farcall RenderProportionalTextAt32 ; $6a5b
+	farcall Unused_18_RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e
 Unused_1b_DrawGameTimerRow:
 	ld a, [wGameTimer + 3] ; $6a5f
@@ -196,27 +196,27 @@ Unused_1b_DrawGameTimerRow:
 	ld l, a ; $6a64
 	ld a, $02 ; $6a65
 	ld de, $da05 ; $6a67
-	farcall DrawDecimalNumberToTilemap ; $6a6a
+	farcall Unused_18_DrawDecimalNumberToTilemap ; $6a6a
 	ld a, [wGameTimer + 2] ; $6a6d
 	add $64 ; $6a70
 	ld h, $00 ; $6a72
 	ld l, a ; $6a74
 	ld a, $03 ; $6a75
 	ld de, $da07 ; $6a77
-	farcall DrawDecimalNumberToTilemap ; $6a7a
+	farcall Unused_18_DrawDecimalNumberToTilemap ; $6a7a
 	ld a, [wGameTimer + 1] ; $6a7d
 	add $64 ; $6a80
 	ld h, $00 ; $6a82
 	ld l, a ; $6a84
 	ld a, $03 ; $6a85
 	ld de, $da0a ; $6a87
-	farcall DrawDecimalNumberToTilemap ; $6a8a
+	farcall Unused_18_DrawDecimalNumberToTilemap ; $6a8a
 	ld a, $3a ; $6a8d
 	ld de, $da07 ; $6a8f
-	farcall WriteTilemapByteAdvance ; $6a92
+	farcall Unused_18_WriteTilemapByteAdvance ; $6a92
 	ld a, $3a ; $6a95
 	ld de, $da0a ; $6a97
-	farcall WriteTilemapByteAdvance ; $6a9a
+	farcall Unused_18_WriteTilemapByteAdvance ; $6a9a
 	call Unused_1b_QueueStoryInfoRowToVram ; $6a9d
 	ret ; $6aa0
 Unused_1b_QueueStoryInfoRowToVram:
@@ -225,9 +225,9 @@ Unused_1b_QueueStoryInfoRowToVram:
 	ld c, $01 ; $6aa7
 	call QueueVRAMCopy ; $6aa9
 	ret ; $6aac
-StubNop_1b_10:
+Unused_1b_StubNop_1b_10:
 	ret ; $6aad
-CopyMainCharNameWithDiacritics:
+Unused_1b_CopyMainCharNameWithDiacritics:
 	push de ; $6aae
 	ld hl, wStoryModeNameOfMainCharacter ; $6aaf
 	pop de ; $6ab2
@@ -264,7 +264,7 @@ CopyMainCharNameWithDiacritics:
 	jr .loop ; $6adb
 .done:
 	ret ; $6add
-ShowNoN64DataFoundScreen:
+Unused_1b_ShowNoN64DataFoundScreen:
 	wram_bank WRAM_STAGING ; $6ade
 	ld c, $20 ; $6ae4
 	call BeginFadeOut ; $6ae6
@@ -272,33 +272,33 @@ ShowNoN64DataFoundScreen:
 	call DisableLCDSafely ; $6aec
 	ld a, $20 ; $6aef
 	ld hl, wTextTileBuffer + 6 * TILE_SIZE + 2 ; $6af1
-	call FillTilemapRow17 ; $6af4
+	call Unused_1b_FillTilemapRow17 ; $6af4
 	ld hl, wTextTileBuffer + 8 * TILE_SIZE + 2 ; $6af7
-	call FillTilemapRow17 ; $6afa
+	call Unused_1b_FillTilemapRow17 ; $6afa
 	ld hl, wTextTileBuffer + 10 * TILE_SIZE + 2 ; $6afd
-	call FillTilemapRow17 ; $6b00
+	call Unused_1b_FillTilemapRow17 ; $6b00
 	ld hl, wTextTileBuffer + 12 * TILE_SIZE + 2 ; $6b03
-	call FillTilemapRow17 ; $6b06
+	call Unused_1b_FillTilemapRow17 ; $6b06
 	ld hl, wTextTileBuffer + 14 * TILE_SIZE + 2 ; $6b09
-	call FillTilemapRow17 ; $6b0c
+	call Unused_1b_FillTilemapRow17 ; $6b0c
 	ld a, $00 ; $6b0f
 	ld hl, wTextTileBuffer + 70 * TILE_SIZE + 2 ; $6b11
-	call FillTilemapRow17 ; $6b14
+	call Unused_1b_FillTilemapRow17 ; $6b14
 	ld hl, wTextTileBuffer + 72 * TILE_SIZE + 2 ; $6b17
-	call FillTilemapRow17 ; $6b1a
+	call Unused_1b_FillTilemapRow17 ; $6b1a
 	ld hl, wTextTileBuffer + 74 * TILE_SIZE + 2 ; $6b1d
-	call FillTilemapRow17 ; $6b20
+	call Unused_1b_FillTilemapRow17 ; $6b20
 	ld hl, wTextTileBuffer + 76 * TILE_SIZE + 2 ; $6b23
-	call FillTilemapRow17 ; $6b26
+	call Unused_1b_FillTilemapRow17 ; $6b26
 	ld hl, wTextTileBuffer + 78 * TILE_SIZE + 2 ; $6b29
-	call FillTilemapRow17 ; $6b2c
+	call Unused_1b_FillTilemapRow17 ; $6b2c
 	ld hl, Text_31_123 ; $6b2f
 	ld de, wTextTileBuffer + 8 * TILE_SIZE + 3 ; $6b32
-	farcall RenderProportionalTextAt32 ; $6b35
+	farcall Unused_18_RenderProportionalTextAt32 ; $6b35
 	ld hl, Text_31_124 ; $6b38
 	ld de, wTextTileBuffer + 12 * TILE_SIZE + 3 ; $6b3b
-	farcall RenderProportionalTextAt32 ; $6b3e
-	farcall ForceFlushBgMapToVram ; $6b41
+	farcall Unused_18_RenderProportionalTextAt32 ; $6b3e
+	farcall Unused_18_ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44
 	script_fade_in $20 ; $6b47
 	call WaitFadeEnd ; $6b4c
@@ -311,7 +311,7 @@ ShowNoN64DataFoundScreen:
 .playSfx:
 	sound SFX_MENU_SELECT ; $6b5a
 	ret ; $6b5c
-FillTilemapRow17:
+Unused_1b_FillTilemapRow17:
 	ld [hl+], a ; $6b5d
 	ld [hl+], a ; $6b5e
 	ld [hl+], a ; $6b5f
@@ -330,13 +330,13 @@ FillTilemapRow17:
 	ld [hl+], a ; $6b6c
 	ld [hl+], a ; $6b6d
 	ret ; $6b6e
-ShowTrophiesPlaceholderScreen:
+Unused_1b_ShowTrophiesPlaceholderScreen:
 	wram_bank WRAM_STAGING ; $6b6f
 	ld c, $20 ; $6b75
 	call BeginFadeOut ; $6b77
 	call WaitFadeEnd ; $6b7a
 	call DisableLCDSafely ; $6b7d
-	farcall ForceFlushBgMapToVram ; $6b80
+	farcall Unused_18_ForceFlushBgMapToVram ; $6b80
 	call EnableLCD ; $6b83
 	script_fade_in $20 ; $6b86
 	call WaitFadeEnd ; $6b8b

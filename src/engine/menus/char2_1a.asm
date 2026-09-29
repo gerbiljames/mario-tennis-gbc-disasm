@@ -1,4 +1,4 @@
-DrawCharViewerCharSprite:
+Unused_1a_DrawCharViewerCharSprite:
 	lb bc, $07, $70 ; $7012 attr, tile
 	lb de, $46, $15 ; $7015 x, y
 	call QueueSprite ; $7018
@@ -64,7 +64,7 @@ DrawCharViewerCharSprite:
 DrawCharViewerCharSprite_CharScreenPosTable:
 	; $708e, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
-LoadCharViewerMugshot:
+Unused_1a_LoadCharViewerMugshot:
 	xor a ; $7096
 	lb de, $07, $01 ; $7097 palette index, count
 	farcall LoadIndexedPaletteThunk ; $709a
@@ -80,7 +80,7 @@ LoadCharViewerMugshot:
 	ld c, $09 ; $70ba
 	call QueueVRAMCopy ; $70bc
 	ret ; $70bf
-ApplyCharViewerPalette:
+Unused_1a_ApplyCharViewerPalette:
 	wram_bank WRAM_SCENE ; $70c0
 	ld a, [wCharDataLevel] ; $70c6
 	lb de, $07, $01 ; $70c9 palette index, count

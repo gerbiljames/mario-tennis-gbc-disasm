@@ -267,7 +267,7 @@ PushTextArgNumber:
 	pop bc ; $5177
 	pop af ; $5178
 	ret ; $5179
-PushTextArgShortTextId:
+Unused_05_PushTextArgShortTextId:
 	push af ; $517a
 	push bc ; $517b
 	push de ; $517c

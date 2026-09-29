@@ -35,7 +35,7 @@ WipeAllSaveRam:
 	cp $04 ; $4820
 	jr c, .loop ; $4822
 	ret ; $4824
-ClearSaveFlagsArea:
+Unused_03_ClearSaveFlagsArea:
 	xor a ; $4825
 	ldh [hSramBank], a ; $4826
 	ld [rRAMB], a ; $4828

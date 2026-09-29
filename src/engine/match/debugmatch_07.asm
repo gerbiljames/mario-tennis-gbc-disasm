@@ -1,4 +1,4 @@
-RunDebugTestMatch:
+Unused_07_RunDebugTestMatch:
 	ld a, GAMEMODE_EXHIBITION ; $5df9
 	ld [wGameMode], a ; $5dfb
 	ld a, STORYSLOT_NONE ; $5dfe
@@ -66,7 +66,7 @@ RunDebugTestMatch:
 	ld [wDebugMatchFlags], a ; $5e9a
 	farcall RunMatch ; $5e9d
 	ret ; $5ea0
-RunTargetZoneTestMode_07:
+Unused_07_RunTargetZoneTestMode:
 	farcall InitMinigameMatchSettings ; $5ea1
 	ld a, COURT_GRASS ; $5ea4
 	ld [wCurrentlyUsedCourt], a ; $5ea6
@@ -86,9 +86,9 @@ RunTargetZoneTestMode_07:
 	farcall RunN64ExhibData ; $5ecb
 	farcall RunMinigameMatch ; $5ece
 	ret ; $5ed1
-StubNop_07_0:
+Unused_07_StubNop_07_0:
 	ret ; $5ed2
-ResolveTargetModePoint:
+Unused_07_ResolveTargetModePoint:
 	farcall UpdateScorePanelDisplay ; $5ed3
 	farcall ResolvePointWinner ; $5ed6
 	ld [wPointWinLoseFlag], a ; $5ed9
@@ -106,17 +106,17 @@ ResolveTargetModePoint:
 	ret ; $5efb
 ModeHookTable_07:
 	; $5efc, 16 bytes (mode_hooks)
-	dw ModeHookNop_07 ; record 0
-	dw TargetZonePointStartHook_07 ; record 1
-	dw TargetZonePointEndHook_07 ; record 2
+	dw Unused_07_ModeHookNop ; record 0
+	dw Unused_07_TargetZonePointStartHook ; record 1
+	dw Unused_07_TargetZonePointEndHook ; record 2
 	dw RetStub ; record 3
-	dw TargetZoneBallHitHook_07 ; record 4
-	dw TargetZoneBounceHook_07 ; record 5
-	dw StubNop_07_1 ; record 6
+	dw Unused_07_TargetZoneBallHitHook ; record 4
+	dw Unused_07_TargetZoneBounceHook ; record 5
+	dw Unused_07_StubNop_07_1 ; record 6
 	dw RetStub ; record 7
-ModeHookNop_07:
+Unused_07_ModeHookNop:
 	ret ; $5f0c
-TargetZoneHitStopHook_07:
+Unused_07_TargetZoneHitStopHook:
 	test_flag $0c, 4 ; $5f0d
 	ret z ; $5f10
 	ld a, $01 ; $5f11
@@ -127,9 +127,9 @@ TargetZoneHitStopHook_07:
 	ld [wMatchSimFrozen], a ; $5f1d
 	clear_flag $0c, 4 ; $5f20
 	ret ; $5f23
-StubNop_07_1:
+Unused_07_StubNop_07_1:
 	ret ; $5f24
-TargetZoneBounceHook_07:
+Unused_07_TargetZoneBounceHook:
 	farcall IsBallInTargetZone ; $5f25
 	jr z, .done ; $5f28
 	farcall AdvanceMatchRng ; $5f2a
@@ -154,10 +154,10 @@ TargetZoneBounceHook_07:
 	farcall SetTargetZoneCorner2 ; $5f45
 .done:
 	ret ; $5f48
-TargetZoneBallHitHook_07:
+Unused_07_TargetZoneBallHitHook:
 	set_flag $0c, 4 ; $5f49
 	ret ; $5f4c
-TargetZonePointStartHook_07:
+Unused_07_TargetZonePointStartHook:
 	ld hl, $fdc0 ; $5f4d
 	ld de, $fd80 ; $5f50
 	farcall SetBallGatePoint1 ; $5f53
@@ -170,14 +170,14 @@ TargetZonePointStartHook_07:
 	ld hl, $0000 ; $5f68
 	ld de, rJOYP ; $5f6b
 	farcall SetTargetZoneCorner2 ; $5f6e
-	call StubNop_07_0 ; $5f71
+	call Unused_07_StubNop_07_0 ; $5f71
 	ret ; $5f74
-TargetZonePointEndHook_07:
+Unused_07_TargetZonePointEndHook:
 	ld hl, $013f ; $5f75
 	ld de, $000b ; $5f78
 	ld bc, $1305 ; $5f7b
 	farcall ShowMessageWindow ; $5f7e
-	call ResolveTargetModePoint ; $5f81
+	call Unused_07_ResolveTargetModePoint ; $5f81
 	ld a, [wCharacter1ServiceAces] ; $5f84
 	ld hl, wCharacter2ServiceAces ; $5f87
 	cp [hl] ; $5f8a

@@ -1,4 +1,4 @@
-CopyBytes11:
+Unused_18_CopyBytes11:
 	ld a, [hl+] ; $55b9
 	ld [de], a ; $55ba
 	inc de ; $55bb
@@ -33,7 +33,7 @@ CopyBytes11:
 	ld [de], a ; $55d8
 	inc de ; $55d9
 	ret ; $55da
-ClearTileVramBothBanks:
+Unused_18_ClearTileVramBothBanks:
 	ld hl, vTiles0 ; $55db
 	ld c, $80 ; $55de
 	call ClearMemory16 ; $55e0
@@ -47,7 +47,7 @@ ClearTileVramBothBanks:
 	xor $01 ; $55f3
 	ldh [rVBK], a ; $55f5
 	ret ; $55f7
-LoadConfirmScreenSpriteGfx:
+Unused_18_LoadConfirmScreenSpriteGfx:
 	ld hl, ConfirmScreenSpriteGfx0 ; $55f8
 	ld de, wDecompBuffer ; $55fb
 	call DecompressData ; $55fe
@@ -108,7 +108,7 @@ CharSelectCursorGfx:
 	INCBIN "data/bank_018/CharSelectCursorGfx.bin" ; $58e0, 217 bytes
 CharSelectCursorPalette:
 	INCLUDE "data/bank_018/CharSelectCursorPalette.asm" ; $59b9, 8 bytes (palettes)
-LoadCharSelectCursorGfx:
+Unused_18_LoadCharSelectCursorGfx:
 	ld hl, CharSelectCursorGfx ; $59c1
 	ld de, vTiles0 + $40 * TILE_SIZE ; $59c4
 	ld c, $0c ; $59c7 -- 12 of CharSelectCursorGfx's 13 tiles
@@ -117,7 +117,7 @@ LoadCharSelectCursorGfx:
 	lb de, $0a, $01 ; $59cf palette index, count
 	call LoadPaletteShadow ; $59d2
 	ret ; $59d5
-DrawCharSelectCursor:
+Unused_18_DrawCharSelectCursor:
 	ld c, $00 ; $59d6
 	cp $84 ; $59d8
 	jr nz, .animate ; $59da
@@ -173,7 +173,7 @@ CharSelectCursorTemplate3:
 	oam_sprite $0f, $49, $00, $20
 	oam_sprite $19, $49, $00, $60
 	oam_sprite_end
-ApplySpriteBobOffset_18:
+Unused_18_ApplySpriteBobOffset:
 	ldh a, [hVBlankCounter] ; $5a6a
 	and $3f ; $5a6c
 	ld_hl_indexed SpriteBobRamp_18 ; $5a6e
@@ -336,7 +336,7 @@ ResetScrollAndCamera:
 	ld [wCameraY], a ; $7652
 	ld [wCameraY + 1], a ; $7655
 	ret ; $7658
-DebugScreenAssetViewer:
+Unused_18_DebugScreenAssetViewer:
 	call FadeOutAndResetScreen ; $7659
 	ld c, $00 ; $765c
 .screenLoop:

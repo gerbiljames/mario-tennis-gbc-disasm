@@ -1,4 +1,4 @@
-CheckDebugExpEditorHotkey:
+Unused_1a_CheckDebugExpEditorHotkey:
 	push af ; $4399
 	ldh a, [hDebugStepMode] ; $439a
 	or a ; $439c
@@ -6,11 +6,11 @@ CheckDebugExpEditorHotkey:
 	ldh a, [hPlayerInputFlags] ; $439f
 	bit PADB_SELECT, a ; $43a1
 	jr z, .restore ; $43a3
-	call RunDebugExpEditor ; $43a5
+	call Unused_1a_RunDebugExpEditor ; $43a5
 .restore:
 	pop af ; $43a8
 	ret ; $43a9
-RunDebugExpEditor:
+Unused_1a_RunDebugExpEditor:
 	push af ; $43aa
 	push bc ; $43ab
 	push de ; $43ac
@@ -21,7 +21,7 @@ RunDebugExpEditor:
 	farcall CreateWindow ; $43bd
 	ld [wPauseMenuWindowId], a ; $43c0
 	farcall RestoreShadowTilemap ; $43c3
-	farcall StubNop_05_0 ; $43c6
+	farcall Unused_05_StubNop_05_0 ; $43c6
 	ld c, $00 ; $43c9
 .loop:
 	ld hl, wStoryMainCharExp ; $43cb
@@ -47,14 +47,14 @@ RunDebugExpEditor:
 	ld a, [wPauseMenuWindowId] ; $43f9
 	farcall WriteStringToWindow ; $43fc
 	farcall RestoreShadowTilemap ; $43ff
-	farcall StubNop_05_0 ; $4402
+	farcall Unused_05_StubNop_05_0 ; $4402
 	call AdvanceFrame ; $4405
 	ldh a, [hPlayerInputFlags] ; $4408
 	and PADF_A ; $440a
 	jr z, .checkPlayerInputFlags ; $440c
 	sound SFX_MENU_SELECT ; $440e
 	ld de, $0064 ; $4410
-	call DebugAddExp ; $4413
+	call Unused_1a_DebugAddExp ; $4413
 	jr .loop ; $4416
 .checkPlayerInputFlags:
 	ldh a, [hPlayerInputFlags] ; $4418
@@ -62,7 +62,7 @@ RunDebugExpEditor:
 	jr z, .checkPlayerInputFlags2 ; $441c
 	sound SFX_MENU_MOVE ; $441e
 	ld de, $000a ; $4420
-	call DebugAddExp ; $4423
+	call Unused_1a_DebugAddExp ; $4423
 	jr .loop ; $4426
 .checkPlayerInputFlags2:
 	ldh a, [hPlayerInputFlags] ; $4428
@@ -70,7 +70,7 @@ RunDebugExpEditor:
 	jr z, .checkPlayerInputFlags3 ; $442c
 	sound SFX_MENU_MOVE ; $442e
 	ld de, $0001 ; $4430
-	call DebugAddExp ; $4433
+	call Unused_1a_DebugAddExp ; $4433
 	jr .loop ; $4436
 .checkPlayerInputFlags3:
 	ldh a, [hPlayerInputFlags] ; $4438
@@ -92,20 +92,20 @@ RunDebugExpEditor:
 	ld d, [hl] ; $4457
 	ld e, a ; $4458
 	ld l, $00 ; $4459
-	call ResetCharDataScreenAnim ; $445b
+	call Unused_1a_ResetCharDataScreenAnim ; $445b
 	ld hl, wStoryPartnerCharExp ; $445e
 	ld a, [hl+] ; $4461
 	ld d, [hl] ; $4462
 	ld e, a ; $4463
 	ld l, $01 ; $4464
-	call ResetCharDataScreenAnim ; $4466
+	call Unused_1a_ResetCharDataScreenAnim ; $4466
 	pop_wram_bank ; $4469
 	pop hl ; $446e
 	pop de ; $446f
 	pop bc ; $4470
 	pop af ; $4471
 	ret ; $4472
-DebugAddExp:
+Unused_1a_DebugAddExp:
 	ld a, c ; $4473
 	or a ; $4474
 	jr nz, .nonZero ; $4475
@@ -133,7 +133,7 @@ ExtendModifierByteGfx3:
 	; $44c1, 23 bytes (bytes:13)
 	db $01, $03, $01, $96, $9b, $7c, $72, $83, $de, $7d, $76, $3f, $00 ; 0x00
 	db $08, $10, $01, $bd, $ba, $b1, $20, $60, $30, $00 ; 0x0d
-ShowExpGainScreen:
+Unused_1a_ShowExpGainScreen:
 	push bc ; $44d8
 	push de ; $44d9
 	push hl ; $44da
@@ -158,19 +158,19 @@ ShowExpGainScreen:
 	ldh [hScrollX], a ; $4500
 	pop hl ; $4502
 	push hl ; $4503
-	call LoadExpScreenGfx ; $4504
-	call DrawExpScreenNameAndLevel ; $4507
+	call Unused_1a_LoadExpScreenGfx ; $4504
+	call Unused_1a_DrawExpScreenNameAndLevel ; $4507
 	pop hl ; $450a
 	ld a, h ; $450b
 	cp $00 ; $450c
 	jr nz, .done ; $450e
-	call DrawExpScreenYesNoBox ; $4510
+	call Unused_1a_DrawExpScreenYesNoBox ; $4510
 	ld a, $0e ; $4513
-	ld hl, StubNop_1a_0 ; $4515
+	ld hl, Unused_1a_StubNop_1a_0 ; $4515
 	call RegisterFrameTask ; $4518
-	call StubNop_1a_1 ; $451b
+	call Unused_1a_StubNop_1a_1 ; $451b
 	jp .queueVRAMCopy ; $451e
-	call StubNop_1a_2 ; $4521
+	call Unused_1a_StubNop_1a_2 ; $4521
 	jp .queueVRAMCopy ; $4524
 .done:
 	pop_wram_bank ; $4527
@@ -182,7 +182,7 @@ ShowExpGainScreen:
 	push hl ; $4532
 	push de ; $4533
 	ld a, b ; $4534
-	call DrawExpScreenCaption ; $4535
+	call Unused_1a_DrawExpScreenCaption ; $4535
 	wram_bank WRAM_SCENE ; $4538
 	push af ; $453e
 	ld hl, wStoryModeNameOfMainCharacter ; $453f
@@ -202,11 +202,11 @@ ShowExpGainScreen:
 	cp $63 ; $4554
 	jr z, .captionMaxLevel ; $4556
 	ld a, $02 ; $4558
-	call DrawExpScreenCaption ; $455a
+	call Unused_1a_DrawExpScreenCaption ; $455a
 	jr .captionDrawn ; $455d
 .captionMaxLevel:
 	ld a, $05 ; $455f
-	call DrawExpScreenCaption ; $4561
+	call Unused_1a_DrawExpScreenCaption ; $4561
 .captionDrawn:
 	pop de ; $4564
 	push de ; $4565
@@ -270,15 +270,15 @@ ShowExpGainScreen:
 	ld de, vBGMap0 ; $45cc
 	ld c, $24 ; $45cf
 	call QueueVRAMCopy ; $45d1
-	call CopyMapToScrollBuffers ; $45d4
+	call Unused_00_CopyMapToScrollBuffers ; $45d4
 	ld a, $0f ; $45d7
-	ld hl, ExpScreenDrawTask ; $45d9
+	ld hl, Unused_1a_ExpScreenDrawTask ; $45d9
 	call RegisterFrameTask ; $45dc
 	call EnableLCD ; $45df
 	script_fade_in $10 ; $45e2
 	call WaitFadeEnd ; $45e7
 	ld a, $0f ; $45ea
-	ld hl, ExpScreenNumberTask ; $45ec
+	ld hl, Unused_1a_ExpScreenNumberTask ; $45ec
 	call RegisterFrameTask ; $45ef
 	wram_bank WRAM_SCENE ; $45f2
 	pop de ; $45f8
@@ -296,7 +296,7 @@ ShowExpGainScreen:
 	or l ; $4609
 	jp z, .finish ; $460a
 .fillLoop:
-	call AdvanceExpGaugeFill ; $460d
+	call Unused_1a_AdvanceExpGaugeFill ; $460d
 	ld a, [wExpCountDone] ; $4610
 	and a ; $4613
 	jr nz, .levelUp ; $4614
@@ -313,7 +313,7 @@ ShowExpGainScreen:
 	ld a, $01 ; $462a
 	ld [wExpCountFastForward], a ; $462c
 	sound SFX_MENU_SELECT ; $462f
-	call AdvanceExpGaugeFill ; $4631
+	call Unused_1a_AdvanceExpGaugeFill ; $4631
 	ld hl, wExpAwardTotal ; $4634
 	ld a, [hl+] ; $4637
 	ld h, [hl] ; $4638
@@ -328,21 +328,21 @@ ShowExpGainScreen:
 	ld de, $d8f0 ; $4646
 	add hl, de ; $4649
 	jr nc, .fastFill ; $464a
-	call AdvanceExpGaugeFill ; $464c
-	call AdvanceExpGaugeFill ; $464f
-	call AdvanceExpGaugeFill ; $4652
-	call AdvanceExpGaugeFill ; $4655
-	call AdvanceExpGaugeFill ; $4658
-	call AdvanceExpGaugeFill ; $465b
-	call AdvanceExpGaugeFill ; $465e
-	call AdvanceExpGaugeFill ; $4661
+	call Unused_1a_AdvanceExpGaugeFill ; $464c
+	call Unused_1a_AdvanceExpGaugeFill ; $464f
+	call Unused_1a_AdvanceExpGaugeFill ; $4652
+	call Unused_1a_AdvanceExpGaugeFill ; $4655
+	call Unused_1a_AdvanceExpGaugeFill ; $4658
+	call Unused_1a_AdvanceExpGaugeFill ; $465b
+	call Unused_1a_AdvanceExpGaugeFill ; $465e
+	call Unused_1a_AdvanceExpGaugeFill ; $4661
 .fastFill:
-	call AdvanceExpGaugeFill ; $4664
-	call AdvanceExpGaugeFill ; $4667
-	call AdvanceExpGaugeFill ; $466a
-	call AdvanceExpGaugeFill ; $466d
-	call AdvanceExpGaugeFill ; $4670
-	call AdvanceExpGaugeFill ; $4673
+	call Unused_1a_AdvanceExpGaugeFill ; $4664
+	call Unused_1a_AdvanceExpGaugeFill ; $4667
+	call Unused_1a_AdvanceExpGaugeFill ; $466a
+	call Unused_1a_AdvanceExpGaugeFill ; $466d
+	call Unused_1a_AdvanceExpGaugeFill ; $4670
+	call Unused_1a_AdvanceExpGaugeFill ; $4673
 .nextFrame:
 	call AdvanceFrame ; $4676
 	jr .fillLoop ; $4679
@@ -379,7 +379,7 @@ ShowExpGainScreen:
 	jr z, .bonusWaitLoop ; $46ad
 .bonusDone:
 	pop af ; $46af
-	call DrawExpBonusMessage ; $46b0
+	call Unused_1a_DrawExpBonusMessage ; $46b0
 	sound SFX_MENU_SELECT ; $46b3
 	wait_frames $14 ; $46b5
 	wram_bank WRAM_SCENE ; $46b9
@@ -432,9 +432,9 @@ ShowExpGainScreen:
 	ld c, $10 ; $4709
 	call BeginFadeOut ; $470b
 	call WaitFadeEnd ; $470e
-	ld hl, ExpScreenDrawTask ; $4711
+	ld hl, Unused_1a_ExpScreenDrawTask ; $4711
 	call UnregisterFrameTask ; $4714
-	ld hl, ExpScreenNumberTask ; $4717
+	ld hl, Unused_1a_ExpScreenNumberTask ; $4717
 	call UnregisterFrameTask ; $471a
 	call AdvanceFrame ; $471d
 	pop de ; $4720
@@ -462,9 +462,9 @@ ShowExpGainScreen:
 	ld de, vBGMap0 ; $4752
 	ld c, $24 ; $4755
 	call QueueVRAMCopy ; $4757
-	call CopyMapToScrollBuffers ; $475a
+	call Unused_00_CopyMapToScrollBuffers ; $475a
 	ld a, $0f ; $475d
-	ld hl, ExpScreenDrawTask ; $475f
+	ld hl, Unused_1a_ExpScreenDrawTask ; $475f
 	call RegisterFrameTask ; $4762
 	call EnableLCD ; $4765
 	script_fade_in $10 ; $4768

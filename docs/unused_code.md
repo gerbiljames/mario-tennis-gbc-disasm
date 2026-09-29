@@ -1,9 +1,14 @@
 # Unused code, and the patterns in it
 
-467 labels carry an `Unused` prefix: 367 routines and 100 data blobs. "Unused" is a proof, not a guess —
-nothing in the ROM references the label by call, jump, pointer table or
-farcall slot, and where a slot table does reference it, no `farcall` ever
-names that slot. The naming passes that found them are in `docs/history.md`;
+797 labels carry an `Unused` prefix: 697 routines and 100 data blobs. "Unused" is a proof, not a guess:
+nothing reachable from the game's entry points -- the reset vector, the
+interrupt vectors and the `rst` vectors -- reaches the label, by call, jump,
+branch, pointer table, macro body, fall-through or farcall. A `farptr` row
+in a bank's slot table defines a slot and does not count: a routine only its
+slot names, with no `farcall` of that slot anywhere, is unreachable.
+`tools/reach.py` computes this, and `make check` (`reach`) fails if a
+routine's name and its reachability disagree in either direction. The
+naming passes that found them are in `docs/history.md`;
 this file is what they have in common. Measured 2026-09-10 by fingerprinting
 each unused routine's opcode sequence against every live routine
 (the 97 raw `$dxxx` operands left in the source are all inside them). Where
@@ -30,6 +35,51 @@ label from the bank (`twin_in <file>, <Label>, <bank>`), so each dead copy
 is `Unused_<bank>_…` like any other, with "Nothing calls this copy." above
 its line. No `Unused*` routine
 ran in those 19 million events.
+
+## Reachability (2026-09-29)
+
+The earlier passes counted a routine as referenced if any line named it --
+including its own slot-table row, and including callers that were
+themselves unused. Following references from the entry points instead
+named 330 more routines `Unused`. They hang from 86 dead roots: routines
+only a slot row names (the minigame pause menu, the link match-type menu,
+the dialogue-at-position and auto-size paged-menu helpers, the scene viewer,
+the EXP editor hotkey), routines only `Unused` code calls (the helpers of
+the debug save-data, minigame-flags and character-select screens, the
+high-score confirm screen), and everything below them. The largest subtrees
+are the debug save-data flow (22 routines), the minigame-flags debug screen
+(20), the high-score confirm screen (20) and the minigame pause menu (11).
+58 unreachable labels sit inside shared `src/twins` templates, which take
+their name from the template, and keep it; the check exempts them.
+
+One routine ran that the analysis cannot reach: `CallVectorEntryE`
+(`$00:$0213`), a slot dispatcher whose only caller is
+`Unused_00_FarCallVectorInline`. Nothing in the ROM calls or jumps to either
+address, and no routine that only a slot names ran in the coverage sweep,
+so it is recorded as unexplained rather than as a path.
+
+The same sweep (15.7 million events: every story location under 36 story
+states, 180 main-menu and 480 targeted sessions) left 428 reachable routines
+never entered. Each hangs below a routine that did run, which says what the
+sweeps did not set up:
+
+| never entered | below | why |
+| --- | --- | --- |
+| 101 | the main menu's flows | link play and the N64 Transfer Pak screens (ring shots, tournament data, trophies): a second Game Boy or an N64 |
+| 64 | `GetStoryLocationRecordPtr` | story NPC, facing and tile handlers random walking did not trigger |
+| 36 | `RunTrainingDrillByID` | the second and third practice drills of each kind |
+| 22 | the link-frame exchange | the serial handshake and frame sync of a link match |
+| 21 | the Special Court's init | its scene sequences |
+| 16 | frame and save start-up | the save signature check and repair, which run on a damaged save |
+| 15 | `CheckDebugStatsEditorHotkey` | the in-match stats editor, behind a debug hotkey |
+| 13 | `DispatchRankingBoardAnim` | ranking-board animation states |
+| 12 | `DispatchControlCode` | text control codes no string uses (`$10`-`$13` among them) |
+| 11 | `FetchShortText` | per-bank copies of the short-text fetch |
+| 8 | the interrupt vectors | `ApplyWhiteFade` (see bugs.md) and handlers the hooks do not see |
+| 7 | `StartMinigameByID` | Tennis Machine 2 and 4, Wall Practice 2 and others |
+
+and a tail of small groups: tiebreaks, reward and EXP paths, trajectory
+table 4 of each shot type, ranking-board rows 9-10, drill briefings.
 
 ## The patterns
 
@@ -69,7 +119,7 @@ sixteen `Restore/Clear/InvalidateBlock…` helpers), the save-data debug flow
 (`Unused_1b_RunDebugSaveDataFlow`, 180 instructions, with its menu, the
 minigame-flags screen and the nav-grid loader), the character-select loop,
 the window demo, the scene viewer, and `Unused_01_MenuRedraw`, which calls
-`RunDebugTestMatch`. They are self-consistent and call live helpers; only
+`Unused_07_RunDebugTestMatch`. They are self-consistent and call live helpers; only
 the menu that would launch them is unreachable (the retail build never sets
 `hDebugStepMode`, see `docs/screens_and_ui.md`). The developer "Test" map
 (`docs/story_mode.md`) is the part of this tooling that *is* reachable.

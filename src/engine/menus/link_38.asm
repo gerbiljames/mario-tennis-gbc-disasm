@@ -221,11 +221,11 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	call PrintDecimalByte ; $6b6b
 	pop af ; $6b6e
 	pop de ; $6b6f
-	call RunLinkCpuDifficultySubmenu ; $6b70
-	call HandleLinkCpuDifficultyInput ; $6b73
+	call Unused_38_RunLinkCpuDifficultySubmenu ; $6b70
+	call Unused_38_HandleLinkCpuDifficultyInput ; $6b73
 	jr .doubles ; $6b76
 	ret ; $6b78
-HandleLinkCpuDifficultyInput:
+Unused_38_HandleLinkCpuDifficultyInput:
 	ldh a, [hLinkRemoteInput] ; $6b79
 	bit 5, a ; $6b7b
 	jr nz, .decrease ; $6b7d
@@ -269,16 +269,16 @@ HandleLinkCpuDifficultyInput:
 	ld [wLinkCpuDifficulty], a ; $6bb4
 	ret ; $6bb7
 .confirm:
-	call StubNop_38_0 ; $6bb8
+	call Unused_38_StubNop_38_0 ; $6bb8
 	ret ; $6bbb
 .cancel:
-	call StubNop_38_1 ; $6bbc
+	call Unused_38_StubNop_38_1 ; $6bbc
 	ret ; $6bbf
-StubNop_38_0:
+Unused_38_StubNop_38_0:
 	ret ; $6bc0
-StubNop_38_1:
+Unused_38_StubNop_38_1:
 	ret ; $6bc1
-CheckMarioCastEquipCategory:
+Unused_38_CheckMarioCastEquipCategory:
 	call IsMarioCastCharacter ; $6bc2
 	or a ; $6bc5
 	jr z, .returnFalse ; $6bc6
@@ -292,7 +292,7 @@ CheckMarioCastEquipCategory:
 .returnFalse:
 	xor a ; $6bd5
 	ret ; $6bd6
-RunLinkCpuDifficultySubmenu:
+Unused_38_RunLinkCpuDifficultySubmenu:
 	push_wram_bank WRAM_SCREEN ; $6bd7
 	ld a, [wCpuDifficultyPanelOpen] ; $6be0
 	or a ; $6be3

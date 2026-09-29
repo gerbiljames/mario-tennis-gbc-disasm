@@ -1495,7 +1495,7 @@ The results live in the saved story record (`$c920`-`$c92a` for the eleven bars,
 | `+$0f`, `+$1b`-`+$1f` | — | the `wAi*` block | AI behaviour; see [The AI](#the-ai) |
 
 `OverrideCharStatsForDebug` (`$07:$5cf4`), reached only when `wDebugMatchFlags`
-bit 1 is set by `RunDebugTestMatch`, forces a perfect-AI profile: minimum
+bit 1 is set by `Unused_07_RunDebugTestMatch`, forces a perfect-AI profile: minimum
 reaction delays, zero tracking latency, always place the shot, zero aim jitter,
 net-play strategy.
 
@@ -1600,7 +1600,7 @@ Things this document deliberately does not claim:
   deeper than the master's. The net input latency is probably equal on both
   sides, but proving the frame alignment needs a live trace.
 - Several routines are unreachable as disassembled and are called out at their
-  sites above: `ComputeBallEtaToChar`'s only call site, the lob check before
+  sites above: `Unused_08_ComputeBallEtaToChar`'s only call site, the lob check before
   `AiChoosePositionByStrategy`'s strategy-0 entry, the prologue of
   `AiNetPlayerPoachCheck`, the `wSpecialShotFlag` block at `$07:$59ec`, and the
   stranded stat-preset loader after `OverrideCharStatsForDebug`.

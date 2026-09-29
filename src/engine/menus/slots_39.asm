@@ -2,12 +2,12 @@
 	farptr QueueWram3MapToVRAM ; $4002
 	farptr UpdateAnimatedTiles ; $4004
 	farptr LoadFixedTileBlockAndPalette ; $4006
-	farptr LoadFixedBgPalette0 ; $4008
+	farptr Unused_39_LoadFixedBgPalette0 ; $4008
 	farptr CopyTilemapRect ; $400a
 	farptr FillTilemapRect ; $400c
 	farptr LoadIndexedPalette ; $400e
 	farptr LoadCompressedTileBlock ; $4010
-	farptr LoadFixedPaletteSet ; $4012
+	farptr Unused_39_LoadFixedPaletteSet ; $4012
 	farptr ApplySpriteWaveOffset ; $4014
 	farptr ApplySpriteBobOffset ; $4016
 	farptr LoadMenuArrowSpriteTiles ; $4018

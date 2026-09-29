@@ -4,8 +4,8 @@
 	farptr RunLinkMatchFrameSlave ; $4006
 	farptr ExchangeNibbleBlockMaster ; $4008
 	farptr ExchangeNibbleBlockSlave ; $400a
-	farptr SendNibbleBlockSlave ; $400c
-	farptr ReceiveNibbleBlockMaster ; $400e
+	farptr Unused_07_SendNibbleBlockSlave ; $400c
+	farptr Unused_07_ReceiveNibbleBlockMaster ; $400e
 	farptr UnpackBytesToNibbles ; $4010
 	farptr ExchangeLinkFrameByteMaster ; $4012
 	farptr ExchangeLinkFrameByteSlave ; $4014
@@ -17,9 +17,9 @@
 	farptr RunLinkInputFrame ; $4020
 	farptr UpdateLinkSession ; $4022
 	farptr EndLinkSession ; $4024
-	farptr ExchangeHandshakeBlockMaster ; $4026
-	farptr ExchangeHandshakeBlockSlave ; $4028
-	farptr ExchangeLinkBlockToWram5 ; $402a
+	farptr Unused_07_ExchangeHandshakeBlockMaster ; $4026
+	farptr Unused_07_ExchangeHandshakeBlockSlave ; $4028
+	farptr Unused_07_ExchangeLinkBlockToWram5 ; $402a
 	farptr PrimeSlaveSerialReply ; $402c
 	farptr PrepareLinkStatePayload ; $402e
 	farptr PrepareLinkInputPayload ; $4030
@@ -33,4 +33,4 @@
 	farptr LookupCharSpriteSet ; $4040
 	farptr SetupCharacterSprite ; $4042
 	farptr LoadCharacterAttributes ; $4044
-	farptr RunDebugTestMatch ; $4046
+	farptr Unused_07_RunDebugTestMatch ; $4046

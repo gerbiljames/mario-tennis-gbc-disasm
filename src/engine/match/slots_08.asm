@@ -18,7 +18,7 @@
 	farptr SetCharPosAndTarget ; $4022
 	farptr SetBallTrailColor ; $4024
 	farptr SetBallVelocityPolar ; $4026
-	farptr SetBallSpinComponents ; $4028
+	farptr Unused_08_SetBallSpinComponents ; $4028
 	farptr CheckBallOutOfBounds ; $402a
 	farptr FindServerCharBank ; $402c
 	farptr SetCameraTarget ; $402e

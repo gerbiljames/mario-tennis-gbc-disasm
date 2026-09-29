@@ -217,13 +217,13 @@ ActorScript_0f_11:
 	as_wait_move2
 	as_wait $28
 	as_jump .L1
-MapScriptNopAlt_0f:
+Unused_0f_MapScriptNopAlt:
 	ret ; $7b7f
 Unused_0f_MapScriptClearActiveFlag:
 	xor a ; $7b80
 	ld [wStoryScriptRan], a ; $7b81
 	ret ; $7b84
-MapScriptPlaySoundA2_0f:
+Unused_0f_MapScriptPlaySoundA2:
 	sound SFX_STORY_CUE ; $7b85
 	ret ; $7b87
 Unused_0f_MapScriptHideLocationName:
@@ -405,7 +405,7 @@ ActorScript_0f_12:
 	as_wait $8c
 	as_anim ANIM_NOD
 	as_jump .L1a7
-ComputeRankingProgressIndex_0f:
+Unused_0f_ComputeRankingProgressIndex:
 	test_flag FLAG_DOUBLES ; $7d43
 	jr nz, .doubles ; $7d46
 	ld a, STORYRANK_SINGLES_ACADEMY ; $7d48

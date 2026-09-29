@@ -1,4 +1,4 @@
-InitPlayerRecordForCharacter:
+Unused_18_InitPlayerRecordForCharacter:
 	push af ; $463b
 	ld d, a ; $463c
 	ldh a, [hPlayerInputFlags] ; $463d
@@ -8,7 +8,7 @@ InitPlayerRecordForCharacter:
 	or a ; $4645
 	jr z, .fromTemplate ; $4646
 	ld a, b ; $4648
-	farcall LoadMainCharacterFromRoster ; $4649
+	farcall Unused_02_LoadMainCharacterFromRoster ; $4649
 	jr .storeRecord ; $464c
 .fromTemplate:
 	ld a, b ; $464e
@@ -80,11 +80,11 @@ ConfirmScreenGfx3:
 	INCLUDE "data/bank_018/lz_ConfirmScreenGfx3.inc" ; DEF ConfirmScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
 ConfirmScreenPalette1:
 	INCLUDE "data/bank_018/ConfirmScreenPalette1.asm" ; $52c6, 24 bytes (palettes)
-InitConfirmScreen:
+Unused_18_InitConfirmScreen:
 	call ClearFrameTasks ; $52de
 	call ClearSpriteQueue ; $52e1
-	call ClearTileVramBothBanks ; $52e4
-	call LoadScorePanelValue ; $52e7
+	call Unused_18_ClearTileVramBothBanks ; $52e4
+	call Unused_18_LoadScorePanelValue ; $52e7
 	xor a ; $52ea
 	ld [wScorePanelBobActive], a ; $52eb
 	ld [wScorePanelBobStep], a ; $52ee
@@ -108,8 +108,8 @@ InitConfirmScreen:
 	ld hl, ConfirmScreenGfx1 ; $5322
 	ld de, wTextTileBuffer ; $5325
 	call DecompressData ; $5328
-	call LoadFontTiles ; $532b
-	call DrawConfirmScreenBox ; $532e
+	call Unused_18_LoadFontTiles ; $532b
+	call Unused_18_DrawConfirmScreenBox ; $532e
 	ld hl, ConfirmScreenGfx3 ; $5331
 	ld de, wDecompBuffer ; $5334
 	call DecompressData ; $5337
@@ -123,53 +123,53 @@ InitConfirmScreen:
 	ld hl, vTiles0 + $50 * TILE_SIZE ; $534e
 	ld de, $0e01 ; $5351
 	call LoadMenuHandCursorGfx ; $5354
-	call LoadConfirmScreenSpriteGfx ; $5357
-	call SetupScoreboardDisplay ; $535a
+	call Unused_18_LoadConfirmScreenSpriteGfx ; $5357
+	call Unused_18_SetupScoreboardDisplay ; $535a
 	ld hl, wMinigameHighScoreMode ; $535d
 	ld b, [hl] ; $5360
-	call StubNop_18_1 ; $5361
+	call Unused_18_StubNop_18_1 ; $5361
 	ret ; $5364
-DrawConfirmScreenBox:
+Unused_18_DrawConfirmScreenBox:
 	ld hl, wTextTileBuffer + 26 * TILE_SIZE ; $5365
 	ld de, wTextTileBuffer + 90 * TILE_SIZE ; $5368
 	ld bc, $0e05 ; $536b
-	call DrawBox ; $536e
+	call Unused_18_DrawBox ; $536e
 	ret ; $5371
-LoadScorePanelValue:
+Unused_18_LoadScorePanelValue:
 	ld a, [wStoryMainCharExpTier] ; $5372
 	ld [wScorePanelExpTier], a ; $5375
 	ret ; $5378
-StubNop_18_1:
+Unused_18_StubNop_18_1:
 	ret ; $5379
-SetupScoreboardDisplay:
+Unused_18_SetupScoreboardDisplay:
 	ld a, [wScorePanelValues] ; $537a
-	call GetTextSlotPointer ; $537d
+	call Unused_18_GetTextSlotPointer ; $537d
 	ld de, wTextTileBuffer + 4 * TILE_SIZE + 11 ; $5380
-	call DrawTileBlock6x2ToTilemap ; $5383
+	call Unused_18_DrawTileBlock6x2ToTilemap ; $5383
 	ld a, [wScorePanelValues + 1] ; $5386
-	call GetTextSlotPointer ; $5389
+	call Unused_18_GetTextSlotPointer ; $5389
 	ld de, wTextTileBuffer + 8 * TILE_SIZE + 11 ; $538c
-	call DrawTileBlock6x2ToTilemap ; $538f
+	call Unused_18_DrawTileBlock6x2ToTilemap ; $538f
 	ld a, [wScorePanelValues + 2] ; $5392
-	call GetTextSlotPointer ; $5395
+	call Unused_18_GetTextSlotPointer ; $5395
 	ld de, wTextTileBuffer + 12 * TILE_SIZE + 11 ; $5398
-	call DrawTileBlock6x2ToTilemap ; $539b
+	call Unused_18_DrawTileBlock6x2ToTilemap ; $539b
 	ld a, [wTargetZoneX1] ; $539e
-	call GetTextSlotPointer ; $53a1
+	call Unused_18_GetTextSlotPointer ; $53a1
 	ld de, wTextTileBuffer + 16 * TILE_SIZE + 11 ; $53a4
-	call DrawTileBlock6x2ToTilemap ; $53a7
+	call Unused_18_DrawTileBlock6x2ToTilemap ; $53a7
 	ld a, $0a ; $53aa
-	ld hl, DrawScoreNumbersTask ; $53ac
+	ld hl, Unused_18_DrawScoreNumbersTask ; $53ac
 	call RegisterFrameTask ; $53af
 	ret ; $53b2
-DrawScoreNumbersTask:
+Unused_18_DrawScoreNumbersTask:
 	ld a, [wScorePanelExpTier] ; $53b3
 	ld h, $00 ; $53b6
 	ld l, a ; $53b8
 	ld de, $4404 ; $53b9
 	ld b, $03 ; $53bc
 	ld a, $02 ; $53be
-	call DrawDecimalNumberSprites ; $53c0
+	call Unused_18_DrawDecimalNumberSprites ; $53c0
 	ld a, [wScorePanelBobStep] ; $53c3
 	cp $03 ; $53c6
 	jr nz, .draw ; $53c8
@@ -183,11 +183,11 @@ DrawScoreNumbersTask:
 	ld de, $4454 ; $53d5
 	ld b, $01 ; $53d8
 	ld a, $03 ; $53da
-	call DrawDecimalNumberSprites ; $53dc
+	call Unused_18_DrawDecimalNumberSprites ; $53dc
 	xor a ; $53df
 	ld [wScorePanelBobActive], a ; $53e0
 	ret ; $53e3
-GetTextSlotPointer:
+Unused_18_GetTextSlotPointer:
 	add $04 ; $53e4
 	and $0f ; $53e6
 	add a ; $53e8
@@ -216,12 +216,12 @@ TextSlotPointerTable:
 	dw $0016 ; record 13
 	dw $0016 ; record 14
 	dw $0016 ; record 15
-ForceFlushBgMapToVram:
+Unused_18_ForceFlushBgMapToVram:
 	ld a, $ff ; $5418
 	ld [wBgMapShadowDirty], a ; $541a
-	call FlushBgMapShadowToVram ; $541d
+	call Unused_18_FlushBgMapShadowToVram ; $541d
 	ret ; $5420
-RunTwoOptionSelect:
+Unused_18_RunTwoOptionSelect:
 	ldh a, [hInputRisingEdge] ; $5421
 	and PADF_LEFT ; $5423
 	jr z, .inputLoop ; $5425
@@ -249,13 +249,13 @@ RunTwoOptionSelect:
 	jr z, .redraw ; $544a
 	ld de, $3a8e ; $544c
 .redraw:
-	call AddBobbingOffsetXY ; $544f
+	call Unused_18_AddBobbingOffsetXY ; $544f
 	push bc ; $5452
 	ld bc, $0650 ; $5453
 	call QueueSprite16 ; $5456
 	pop bc ; $5459
 	call AdvanceFrame ; $545a
-	jr RunTwoOptionSelect ; $545d
+	jr Unused_18_RunTwoOptionSelect ; $545d
 .confirm:
 	ld a, b ; $545f
 	and a ; $5460
@@ -265,7 +265,7 @@ RunTwoOptionSelect:
 .done:
 	sound SFX_MENU_SELECT ; $5466
 	ret ; $5468
-RunTwoOptionSelectB:
+Unused_18_RunTwoOptionSelectB:
 	ldh a, [hInputRisingEdge] ; $5469
 	and PADF_LEFT ; $546b
 	jr z, .inputLoop ; $546d
@@ -293,13 +293,13 @@ RunTwoOptionSelectB:
 	jr z, .redraw ; $5492
 	ld de, TwoOptionSelectBTable ; $5494
 .redraw:
-	call AddBobbingOffsetXY ; $5497
+	call Unused_18_AddBobbingOffsetXY ; $5497
 	push bc ; $549a
 	ld bc, $0650 ; $549b
 	call QueueSprite16 ; $549e
 	pop bc ; $54a1
 	call AdvanceFrame ; $54a2
-	jr RunTwoOptionSelectB ; $54a5
+	jr Unused_18_RunTwoOptionSelectB ; $54a5
 .confirm:
 	ld a, b ; $54a7
 	and a ; $54a8
@@ -309,7 +309,7 @@ RunTwoOptionSelectB:
 .done:
 	sound SFX_MENU_SELECT ; $54ae
 	ret ; $54b0
-DrawDecimalNumberSprites:
+Unused_18_DrawDecimalNumberSprites:
 	push af ; $54b1
 	push bc ; $54b2
 	push hl ; $54b3
@@ -330,21 +330,21 @@ DrawDecimalNumberSprites:
 	ld h, b ; $54c6
 	pop de ; $54c7
 	pop bc ; $54c8
-	call DrawStringSprites ; $54c9
+	call Unused_18_DrawStringSprites ; $54c9
 	add sp, 10 ; $54cc
 	pop hl ; $54ce
 	pop bc ; $54cf
 	pop af ; $54d0
 	ret ; $54d1
-DrawStringSprites:
+Unused_18_DrawStringSprites:
 	ld a, [hl+] ; $54d2
 	and a ; $54d3
 	jr z, .done ; $54d4
-	call DrawGlyphSprite ; $54d6
-	jr DrawStringSprites ; $54d9
+	call Unused_18_DrawGlyphSprite ; $54d6
+	jr Unused_18_DrawStringSprites ; $54d9
 .done:
 	ret ; $54db
-DrawGlyphSprite:
+Unused_18_DrawGlyphSprite:
 	sub $30 ; $54dc
 	jr c, .advance ; $54de
 	push de ; $54e0
@@ -375,41 +375,41 @@ DrawGlyphSprite:
 UnusedBobRamp_18:
 	INCBIN "data/bank_018/UnusedBobRamp_18.bin" ; $5507, 32 bytes
 Unused_18_DrawThreeOptionLabels:
-	call DrawConfirmScreenBox ; $5527
+	call Unused_18_DrawConfirmScreenBox ; $5527
 	ld hl, ThreeOptionLabelsData3 ; $552a
 	ld de, $ddc1 ; $552d
-	call CopyBytes11 ; $5530
+	call Unused_18_CopyBytes11 ; $5530
 	ld hl, ThreeOptionLabelsData4 ; $5533
 	ld de, $dde1 ; $5536
-	call CopyBytes11 ; $5539
+	call Unused_18_CopyBytes11 ; $5539
 	ld hl, ThreeOptionLabelsData5 ; $553c
 	ld de, $de01 ; $553f
-	call CopyBytes11 ; $5542
+	call Unused_18_CopyBytes11 ; $5542
 	ld hl, ThreeOptionLabelsData0 ; $5545
 	ld de, $d9c1 ; $5548
-	call CopyBytes11 ; $554b
+	call Unused_18_CopyBytes11 ; $554b
 	ld hl, ThreeOptionLabelsData1 ; $554e
 	ld de, $d9e1 ; $5551
-	call CopyBytes11 ; $5554
+	call Unused_18_CopyBytes11 ; $5554
 	ld hl, ThreeOptionLabelsData2 ; $5557
 	ld de, $da01 ; $555a
-	call CopyBytes11 ; $555d
+	call Unused_18_CopyBytes11 ; $555d
 	ret ; $5560
 Unused_18_DrawYesNoLabels:
 	ld hl, YesNoLabels2 ; $5561
 	ld de, $dde1 ; $5564
-	call CopyBytes11 ; $5567
+	call Unused_18_CopyBytes11 ; $5567
 	ld hl, YesNoLabels3 ; $556a
 	ld de, $de01 ; $556d
-	call CopyBytes11 ; $5570
+	call Unused_18_CopyBytes11 ; $5570
 	ld hl, YesNoLabels0 ; $5573
 	ld de, $d9e1 ; $5576
-	call CopyBytes11 ; $5579
+	call Unused_18_CopyBytes11 ; $5579
 	ld hl, YesNoLabels1 ; $557c
 	ld de, $da01 ; $557f
-	call CopyBytes11 ; $5582
+	call Unused_18_CopyBytes11 ; $5582
 	ret ; $5585
-DrawTileBlock6x2ToTilemap:
+Unused_18_DrawTileBlock6x2ToTilemap:
 	ld a, [hl+] ; $5586
 	ld [de], a ; $5587
 	inc de ; $5588

@@ -4,8 +4,8 @@
 	farptr ReadSaveBlock ; $4006
 	farptr ReadSaveBlockTag ; $4008
 	farptr VerifySaveBlock ; $400a
-	farptr InvalidateStorySlot ; $400c
-	farptr ResetAllSaveBlocks ; $400e
+	farptr Unused_03_InvalidateStorySlot ; $400c
+	farptr Unused_03_ResetAllSaveBlocks ; $400e
 	farptr EraseAndInitSaveRam ; $4010
 	farptr RepairAllSaveSlots ; $4012
 	farptr ReinitSaveRamPreservingBlock6 ; $4014

@@ -1,11 +1,11 @@
 	farptr RunCharacterSelectScreen ; $4000
-	farptr RunMatchTypeMenu ; $4002
+	farptr Unused_38_RunMatchTypeMenu ; $4002
 	farptr RunLinkMatchSequence ; $4004
 	farptr RunNameEntryScreen ; $4006
 	farptr RunExhibitionCharSelectScreen ; $4008
 	farptr UpdateMenuCursorFromLinkInput ; $400a
 	farptr RunLinkCharSelectScreen ; $400c
-	farptr RunMatchTypeMenuLink ; $400e
+	farptr Unused_38_RunMatchTypeMenuLink ; $400e
 	farptr RunLinkMatchSequenceAlias1, RunLinkMatchSequence ; $4010
 	farptr ApplySpriteBobOffsetX ; $4012
 	farptr ApplySpriteBobOffsetY ; $4014
@@ -127,7 +127,7 @@ SpriteBobOffsetYTable_38:
 ; Instruction-identical to MoveMenuCursorGrid_3b and MoveMenuCursorGrid_3e (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid, 38 ; $410a MoveMenuCursorGrid_38
 ; Instruction-identical to Unused_16_MoveMenuCursorGridFromLinkInput and Unused_3e_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
-	twin_in move_menu_cursor_grid_from_link_input, MoveMenuCursorGridFromLinkInput_38, 38 ; $4188 MoveMenuCursorGridFromLinkInput_38
+	twin_in move_menu_cursor_grid_from_link_input, Unused_38_MoveMenuCursorGridFromLinkInput, 38 ; $4188 Unused_38_MoveMenuCursorGridFromLinkInput
 ; Instruction-identical to Unused_16_MoveMenuCursorGridRemote and Unused_3e_MoveMenuCursorGridRemote (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_remote, Unused_38_MoveMenuCursorGridRemote, 38 ; $4205 Unused_38_MoveMenuCursorGridRemote

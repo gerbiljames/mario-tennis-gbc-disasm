@@ -93,7 +93,7 @@ MoveLinkCursorLeft:
 .store:
 	ld [wMenuCursor2X], a ; $6d93
 	ret ; $6d96
-RetreatLinkGridSelection:
+Unused_38_RetreatLinkGridSelection:
 	call RetreatToPreviousPlayerSlot ; $6d97
 	cp $ff ; $6d9a
 	jr nz, .clearSlot ; $6d9c

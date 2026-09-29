@@ -447,7 +447,7 @@ other.
 
 ### 3.5 The stride-18 readers (a debug-path bug)
 
-`LoadSceneGraphicsDirect` (`$0a:$5d2a`, `src/engine/story/scene2_0a.asm`) indexes the
+`Unused_0a_LoadSceneGraphicsDirect` (`$0a:$5d2a`, `src/engine/story/scene2_0a.asm`) indexes the
 same table with a stride of **18**. The arithmetic is not ambiguous: `hl = a`,
 `add hl, hl` → `2a` saved in `de`, three more `add hl, hl` → `16a`,
 `add hl, de` → **`18a`** (`$5d31`-`$5d37`). It then does `inc hl` twice and
@@ -458,26 +458,26 @@ multiple of 18, and the record contents (§3.1) are a dense 8-per-scene
 enumeration. Its sibling `GetSceneSlotPtr` twenty bytes earlier
 (`$0a:$5d0c`) does the same job correctly with four `add hl, hl` and `+ 2*slot`.
 
-Two more consumers agree with the 18: `InitSceneViewer` (`$0a:$601c`) and
-`InitSceneViewerDefault` (`$0a:$6076`) both count words to the first zero word
+Two more consumers agree with the 18: `Unused_0a_InitSceneViewer` (`$0a:$601c`) and
+`Unused_0a_InitSceneViewerDefault` (`$0a:$6076`) both count words to the first zero word
 and divide by **9** (`ld de, $0009` at `$603e` and `$608e`). Scanning
 `baserom.gbc` from the table base, the first all-zero word is at word index
 **932** — 1272 bytes past the end of the table, inside the code that follows —
-so that count is meaningless either way, and `InitSceneViewerDefault` uses
+so that count is meaningless either way, and `Unused_0a_InitSceneViewerDefault` uses
 `inc c` rather than `inc bc`, leaving `b = $ff` in the dividend. The correct
 scene count, 37, is hardcoded elsewhere as `ld a, $25` (`$0a:$5934`).
 
 **This is already written up as a bug** — [bugs.md, "The scene viewer
 indexes the slot table with the wrong stride"](bugs.md#the-scene-viewer-indexes-the-slot-table-with-the-wrong-stride)
 and `docs/history.md:9776-9796` — with the finding that the only caller of
-`LoadSceneGraphicsDirect` is `LoadAndDisplayScene`, whose four callers are all
+`Unused_0a_LoadSceneGraphicsDirect` is `Unused_0a_LoadAndDisplayScene`, whose four callers are all
 the scene viewer hanging off the debug menu, which nothing in the retail build
 opens. Flagging it here rather than restating it: **if you write a new consumer
 of `SceneGfxSlotTable`, use stride 16, and do not take the debug path's shape
 as a second interpretation of the table.**
 
 One more difference between the two paths, which supports "bug" over "second
-interpretation": `LoadSceneGraphicsDirect` loads palettes as *7 palettes at
+interpretation": `Unused_0a_LoadSceneGraphicsDirect` loads palettes as *7 palettes at
 index 1 starting at byte 8* (`ld de, $0107`, `$5dd7`) where both working
 loaders use *6 at index 2 starting at byte 16*. Two loaders that disagree about
 the same 64-byte block cannot both be reading it correctly.
@@ -552,7 +552,7 @@ which defines `OBJ_NAME` as the row's index:
 | `$1e`-`$74` | the walk-sprite banks `$6f`-`$77` | `OBJ_WALK_<bank>_<slot>`, or the character's name where the game says who it is |
 
 The game names 31 of the walk sprites itself: `CharObjectIdTable`
-(`$04:$4c29`, read by `GetCharObjectId`) gives each `CHAR_*` id its
+(`$04:$4c29`, read by `Unused_04_GetCharObjectId`) gives each `CHAR_*` id its
 overworld object, so `OBJ_ALEX`, `OBJ_MARIO`, `OBJ_YOSHI` and the rest are
 those rows (the two unused roster slots share `OBJ_BALLOON_ELLIPSIS`). Ids
 `$56`-`$59` are `OBJ_ALEX_B`, `OBJ_NINA_B`, `OBJ_HARRY_B`, `OBJ_KATE_B`: the
@@ -807,7 +807,7 @@ bank `$06` (`wPaletteFadeTarget` `$d0a0`, `wPaletteFadeLive` `$d140`,
 pass** toward a target buffer rather than scaling:
 `CopyMasterPalettesToFadeBuffers` (`$03:$75e9`) seeds both buffers from
 `wMasterPalettes`, the caller rewrites the target with
-`ClearFadeTargetPalettes` (`$03:$7606`, → black) or
+`Unused_03_ClearFadeTargetPalettes` (`$03:$7606`, → black) or
 `DesaturateFadeTargetPalettes` (`$03:$7616`, → grayscale), then
 `AnimatePaletteFadeToTarget` (`$03:$7719`) waits `wPaletteFadeFrameDelay`
 frames, steps every masked palette of the *live* buffer with

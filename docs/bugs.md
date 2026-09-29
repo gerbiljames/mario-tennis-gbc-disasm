@@ -325,10 +325,10 @@ and continuing the current one:
 ```
 
 `wGlyphBufferHoldCount` (`$d822`, WRAM bank `$05`) has exactly one producer:
-`DrawTileAttrRect` (`$05:$4552`) decrements it at `$45d3`. `DrawTileAttrRect`
+`Unused_05_DrawTileAttrRect` (`$05:$4552`) decrements it at `$45d3`. `Unused_05_DrawTileAttrRect`
 has no callers — it appears in the bank `$05` `$4000` directory only, as the
-`farptr DrawTileAttrRect` slot at `$05:$4020`, and there is no
-`farcall DrawTileAttrRect` anywhere in the ROM, and the only indexed slot references (`dslot`) are data pointers in
+`farptr Unused_05_DrawTileAttrRect` slot at `$05:$4020`, and there is no
+`farcall Unused_05_DrawTileAttrRect` anywhere in the ROM, and the only indexed slot references (`dslot`) are data pointers in
 banks `$0a` and `$039`. Nothing increments the count at all.
 
 So the count is whatever `ResetTextWindowState`'s block clear left, i.e. 0,
@@ -336,7 +336,7 @@ forever; `PrepareGlyphBuffer` always clears and resets, and `.keepBuffer` is
 dead. This answers the open question in `docs/screens_and_ui.md` about what
 raises the hold count: nothing does, and the routine that would have consumed it
 is not called either. `wShadowTilemapReadOffset` (`$dc76`) is the same shape with
-the halves reversed — `RefreshShadowTilemapFromMapBuffer` (`$05:$44ba`) adds it
+the halves reversed — `Unused_05_RefreshShadowTilemapFromMapBuffer` (`$05:$44ba`) adds it
 to the shadow-tilemap pointer and no instruction in the ROM writes it, so it is
 always 0.
 
@@ -466,7 +466,7 @@ So the contact window is `wCharReachX` (or 1.25x of it when `wCharFlags` bit 1 i
 set) in every animation state, and the four swing states that were meant to
 differ do not. What they were meant to differ *by* is not in the ROM, so nothing
 looks wrong in play: the window is at least the same one the rest of the match
-engine assumes. This is the same shape as `RewriteCutsceneCameraY_6b` below — a
+engine assumes. This is the same shape as `Unused_6b_RewriteCutsceneCameraY` below — a
 read-modify-write with the modify deleted — except that this one is live code on
 the rally path.
 
@@ -518,7 +518,7 @@ A type below `$1e` takes `bit 7, a / jr nz, .done`, which jumps past the
 `pop_wram_bank`. With the saved WRAM bank still on the stack, `.done`'s `pop hl /
 pop de / pop bc` each take the wrong word, and `ret` jumps to the value `bc` held
 on entry. `ShowSpeakerDialogue` loads `b` with `$08` just before the call, so
-control lands somewhere in ROM0 `$08xx`, inside `CopyMapToScrollBuffers`, and runs
+control lands somewhere in ROM0 `$08xx`, inside `Unused_00_CopyMapToScrollBuffers`, and runs
 on from there. In the shipped layout that wild path happens to unwind back into
 the dialogue, so the line is spoken normally. A build whose ROM0 has moved even
 three bytes crashes instead. Seen when the partner speaks in the awards
@@ -590,21 +590,21 @@ to pick the shot-placement row (`CHARREC_SPEED_BONUS`).
 | `wCharSwingHoldButton` | bank `$08` | written on three paths beside the frame count, consumed on none |
 | `wCharWalkTargetFlag` | bank `$08` | zeroed immediately after each write of `wCharWalkTargetX`/`Depth`, at `$69bc` and `$7c82` |
 
-### `CopyMapToScrollBuffers` throws away half the work it does
+### `Unused_00_CopyMapToScrollBuffers` throws away half the work it does
 
-`CopyMapToScrollBuffers` (ROM0, `$086c`) stages four 512-byte blocks of a
+`Unused_00_CopyMapToScrollBuffers` (ROM0, `$086c`) stages four 512-byte blocks of a
 just-decompressed map through `wTextBuffer` and expands each into a 64-wide
-plane with `CopyMapRows32To64` (16 rows of 32 source bytes followed by 32
+plane with `Unused_00_CopyMapRows32To64` (16 rows of 32 source bytes followed by 32
 zeros, so 1024 bytes written per plane). Two of the four are then immediately
 erased:
 
 ```
-        ld hl, wTextBuffer / ld de, wMapScrollPlane1 / call CopyMapRows32To64
+        ld hl, wTextBuffer / ld de, wMapScrollPlane1 / call Unused_00_CopyMapRows32To64
         ld hl, wMapScrollPlane1        ; $08b3
         ld c, $80                      ; 2048 bytes
         call ClearMemory16
         ...
-        ld hl, wTextBuffer / ld de, wScreenScratch / call CopyMapRows32To64
+        ld hl, wTextBuffer / ld de, wScreenScratch / call Unused_00_CopyMapRows32To64
         ld hl, wScreenScratch          ; $08fb
         ld c, $80
         call ClearMemory16
@@ -616,11 +616,11 @@ zeros before anything can read it. Per call that is 3072 bytes of copying
 discarded: two 512-byte staging copies plus two 1024-byte expansions.
 
 The clears themselves are load-bearing, which is why this is a dead store and
-not a broken screen. The only two callers are `ShowExpGainScreen`
+not a broken screen. The only two callers are `Unused_1a_ShowExpGainScreen`
 (`$1a:$45d4`, `$1a:$475a`), and in WRAM banks `$02`/`$03` the cleared region
 `$d800`-`$dfff` is where the EXP screen keeps its caption rows —
-`ExpScreenDrawTask` uploads `wCharDataPageSlot1 + 1 * TILEMAP_WIDTH` (`$d800`)
-to `$99e0`, and `DrawExpScreenCaption` renders into `$d82b`. The clear is the
+`Unused_1a_ExpScreenDrawTask` uploads `wCharDataPageSlot1 + 1 * TILEMAP_WIDTH` (`$d800`)
+to `$99e0`, and `Unused_1a_DrawExpScreenCaption` renders into `$d82b`. The clear is the
 initialisation the caller depends on; the expansion feeding it is not.
 
 The two surviving expansions land at `$d000` in WRAM banks `$02` and `$03` and
@@ -665,7 +665,7 @@ copy proves the intent.
 
 ## A routine whose body is a no-op
 
-`RewriteCutsceneCameraY_6b` (bank `$6b`, `$615e`) guards on
+`Unused_6b_RewriteCutsceneCameraY` (bank `$6b`, `$615e`) guards on
 `wCutsceneStepTimer >= $14` and on `[$c323]` being nonzero, then does this:
 
 ```
@@ -737,22 +737,22 @@ named for what they do now, with the leading `ret` recorded in the note:
 | --- | --- | --- |
 | `StubNop_0b_5d63` | `NetGamePractice1JudgeOnRallyTick` | the drill's fourth judge |
 | `StubNop_0b_6ceb` | `StrokePractice1JudgeOnRallyTick` | the drill's fourth judge |
-| `StubLoadFontTiles` | `LoadFontTiles` | copies `FontTiles` to `$9000` |
+| `StubLoadFontTiles` | `Unused_18_LoadFontTiles` | copies `FontTiles` to `$9000` |
 | `StubNop_1b_664a` | `LoadUnlockDebugNavGridGfx` | decompresses and uploads debug-screen artwork |
-| `StubAlwaysNotZero` | `CheckExpAwardAllowed` | the EXP-award gate — see below |
-| `StubNop_05_49dc` | `PagedMenuFrameTask` | a live frame task whose body has no effect |
+| `StubAlwaysNotZero` | `Unused_02_CheckExpAwardAllowed` | the EXP-award gate — see below |
+| `StubNop_05_49dc` | `Unused_05_PagedMenuFrameTask` | a live frame task whose body has no effect |
 
 The other 32 `StubNop_*` labels have a bare `ret` for a body and keep the
 name, which for them is accurate.
 
-`CheckExpAwardAllowed` is worth its own line. `AddExpToCa00RecordChecked` calls
+`Unused_02_CheckExpAwardAllowed` is worth its own line. `Unused_02_AddExpToCa00RecordChecked` calls
 it and returns on z, but it cannot return z: `xor a` / `dec a` sets the flags
 from `$ff` and the following `ld a, c` restores the caller's `a` without
 touching them. The gate always passes and the award always happens. Whatever
 condition it was meant to test is not in the ROM.
 
-`PagedMenuFrameTask` is the other interesting one: it is genuinely registered
-per frame by `RunPagedTextMenuAutoSize` and unregistered when the menu closes,
+`Unused_05_PagedMenuFrameTask` is the other interesting one: it is genuinely registered
+per frame by `Unused_05_RunPagedTextMenuAutoSize` and unregistered when the menu closes,
 so the plumbing around it is real — but the body reads `wMenuCursorRow` into `a`
 and then `pop af` discards it. The task runs and does nothing.
 
@@ -770,7 +770,7 @@ words**, and `GetSceneSlotPtr` (`$0a:$5d0f`) walks it correctly — four
         ld e, b / sla e / ld d, $00 / add hl, de            ; + 2 * slot
 ```
 
-`LoadSceneGraphicsDirect` (`$0a:$5d2a`) computes a different multiplier from the
+`Unused_0a_LoadSceneGraphicsDirect` (`$0a:$5d2a`) computes a different multiplier from the
 same input:
 
 ```
@@ -795,11 +795,11 @@ wants slot 1, and scene 8 lands exactly on record 9 and loads a different
 scene's graphics entirely.
 
 **It has never been noticed because only debug code calls it.** Its one caller
-is `LoadAndDisplayScene` (`$0a:$5de2`), and that routine's four callers are
-`SceneViewerSelectScene`, `InitSceneViewer` and `InitSceneViewerDefault` — the
-scene viewer, which hangs off `RunSceneSelectDebugMenu` and is reachable only
+is `Unused_0a_LoadAndDisplayScene` (`$0a:$5de2`), and that routine's four callers are
+`Unused_0a_SceneViewerSelectScene`, `Unused_0a_InitSceneViewer` and `Unused_0a_InitSceneViewerDefault` — the
+scene viewer, which hangs off `Unused_0a_RunSceneSelectDebugMenu` and is reachable only
 through the in-game debug menu (itself gated on `hDebugStepMode`, which nothing
-in the retail build sets). No `farcall` to `LoadAndDisplayScene` exists outside
+in the retail build sets). No `farcall` to `Unused_0a_LoadAndDisplayScene` exists outside
 bank `$0a`, despite its directory slot at `$4078`.
 
 
@@ -835,16 +835,16 @@ amount of play can prove them. They had been attributed to
 ### A confirm-screen suite in bank `$1b` that nothing can reach
 
 `$1b:$69d9`-`$6aa0` holds seven complete routines with no way in. They sit
-immediately after `StubNop_1b_09` — three bare `ret`s that *are* legitimately
-used, registered as a no-op frame task around `RunTwoOptionSelectB`
+immediately after `Unused_1b_StubNop_1b_09` — three bare `ret`s that *are* legitimately
+used, registered as a no-op frame task around `Unused_18_RunTwoOptionSelectB`
 (`$1b:$69b9`/`$69c5`) — so the disassembler attributes the whole run to that
 label, which is why they read as part of a stub.
 
 They are a working screen: `Unused_1b_ShowHighScoreConfirmScreen` sets
-`wMinigameHighScoreMode`, fades out, calls `InitConfirmScreen`, flushes and
+`wMinigameHighScoreMode`, fades out, calls `Unused_18_InitConfirmScreen`, flushes and
 fades back in; five siblings draw one prompt each with its Yes/No labels —
 "Erase?" (with the player's name pushed as a text argument through
-`CopyMainCharNameWithDiacritics`), "Erase it? Really?", "Continue?", "Is this
+`Unused_1b_CopyMainCharNameWithDiacritics`), "Erase it? Really?", "Continue?", "Is this
 correct?" and "Char. and item data." twice; and `Unused_1b_DrawGameTimerRow`
 renders `wGameTimer` as `hh:mm:ss`, writing the `$3a` colon glyph between the
 fields, then queues the row to VRAM.
@@ -876,13 +876,13 @@ onward) that polls `hInputPressed` and launches a different subsystem per button
 | bit | button | what it runs |
 | --- | --- | --- |
 | 3 | START | the overworld at the main menu |
-| 2 | SELECT | `RunSoundTest` |
-| 0 | A | `RunDebugTestMatch`, looping |
+| 2 | SELECT | `Unused_01_RunSoundTest` |
+| 0 | A | `Unused_07_RunDebugTestMatch`, looping |
 | 1 | B | `RunMatch`, looping |
 | 6 | UP | two `ShowTournamentBracket` calls, then `RunMatchWinLoseScreen` looping over result ids |
 | 7 | DOWN | `RunIntroCutscene` then `RunTitleScreen`, looping |
 | 4 | RIGHT | the overworld at `STORYLOC_TEST` |
-| 5 | LEFT | `RunDebugCharViewer` |
+| 5 | LEFT | `Unused_1a_RunDebugCharViewer` |
 
 with a further block (`$419e`) for `ShowEquipmentStatusScreen`,
 `RunMatchStatsScreen`, `ShowLinkErrorScreen`, `ShowLinkMessageScreen`,

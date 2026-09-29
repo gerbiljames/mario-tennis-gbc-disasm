@@ -108,7 +108,7 @@ Unused_00_RenderNumberToTiles:
 	call FormatDecimalNumber ; $20be
 	ld hl, sp + 4 ; $20c1
 	pop de ; $20c3
-	call RenderTextToTiles ; $20c4
+	call Unused_00_RenderTextToTiles ; $20c4
 	add sp, 16 ; $20c7
 	pop hl ; $20c9
 	pop de ; $20ca
@@ -125,11 +125,11 @@ Unused_00_RenderCharToTiles:
 	ld a, [hl+] ; $20dc
 	ld h, [hl] ; $20dd
 	ld l, a ; $20de
-	call RenderGlyphToTiles ; $20df
+	call Unused_00_RenderGlyphToTiles ; $20df
 	pop hl ; $20e2
 	pop af ; $20e3
 	ret ; $20e4
-RenderTextToTiles:
+Unused_00_RenderTextToTiles:
 	push af ; $20e5
 	push bc ; $20e6
 	push de ; $20e7
@@ -152,7 +152,7 @@ RenderTextToTiles:
 	ld a, [hl+] ; $2102
 	ld h, [hl] ; $2103
 	ld l, a ; $2104
-	call RenderGlyphToTiles ; $2105
+	call Unused_00_RenderGlyphToTiles ; $2105
 	ld a, [hl] ; $2108
 	add b ; $2109
 	ld b, a ; $210a
@@ -167,7 +167,7 @@ RenderTextToTiles:
 PixelMaskTable:
 	; $2113, 8 bytes (bytes:8)
 	db $80, $40, $20, $10, $08, $04, $02, $01 ; 0x00
-RenderGlyphToTiles:
+Unused_00_RenderGlyphToTiles:
 	push af ; $211b
 	push bc ; $211c
 	push de ; $211d

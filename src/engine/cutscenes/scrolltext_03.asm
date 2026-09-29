@@ -1,7 +1,7 @@
 TestCartIdString_03:
 	; $5957, 30 bytes (ascii)
 	db "TESTCARTIDTESTCARTIDTESTCARTID"
-DebugTestMinigameRecords:
+Unused_03_DebugTestMinigameRecords:
 	push af ; $5975
 	push bc ; $5976
 	push de ; $5977

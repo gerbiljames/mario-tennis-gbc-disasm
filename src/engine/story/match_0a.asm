@@ -190,16 +190,16 @@ SetMatchDoublesMode:
 	add $02 ; $4a46
 	ld [wOnCourtCharCount], a ; $4a48
 	ret ; $4a4b
-SetStoryMatchOpponent:
+Unused_0a_SetStoryMatchOpponent:
 	ld [wMatchOpponentChar], a ; $4a4c
 	ret ; $4a4f
-SetCurrentlyUsedCourt:
+Unused_0a_SetCurrentlyUsedCourt:
 	ld [wCurrentlyUsedCourt], a ; $4a50
 	ret ; $4a53
-SetMatchNumberOfSets:
+Unused_0a_SetMatchNumberOfSets:
 	ld [wMatchTypeNumberOfSets], a ; $4a54
 	ret ; $4a57
-SetMatchNumberOfGames:
+Unused_0a_SetMatchNumberOfGames:
 	ld [wMatchTypeNumberOfGames], a ; $4a58
 	ret ; $4a5b
 LoadMatchSettingsFromTable:

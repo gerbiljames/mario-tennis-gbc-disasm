@@ -14,11 +14,11 @@ def wActiveTilemap equ $d000
 ; in WRAM banks $02, $03
 def wCharDataScreenCell equ $d000
 
-; [1024 bytes] One byte per half-tile cell of the scene, 32 columns by 32 rows, addressed as (y & ~1) * 16 + (x & ~1) / 2 by GetCollisionMapCellAddr. ReadCollisionMapCell and WriteCollisionMapCell are the only accessors, each selecting WRAM bank $06 for the one instruction that touches it.
+; [1024 bytes] One byte per half-tile cell of the scene, 32 columns by 32 rows, addressed as (y & ~1) * 16 + (x & ~1) / 2 by GetCollisionMapCellAddr. ReadCollisionMapCell and Unused_0a_WriteCollisionMapCell are the only accessors, each selecting WRAM bank $06 for the one instruction that touches it.
 ; in WRAM banks $06
 def wCollisionMap equ $d000
 
-; [4096 bytes] 64 rows of 64 cells, one plane in *each* of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half. Rows are 64 apart and both axes wrap within the buffer, which is what the `and $3f` on each camera coordinate and the `res 5, h / set 4, h` in BlitBGColumnFrom64 are for. Only the top 32 rows carry map data; CopyMapToScrollBuffers clears the bottom half after building it.
+; [4096 bytes] 64 rows of 64 cells, one plane in *each* of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half. Rows are 64 apart and both axes wrap within the buffer, which is what the `and $3f` on each camera coordinate and the `res 5, h / set 4, h` in BlitBGColumnFrom64 are for. Only the top 32 rows carry map data; Unused_00_CopyMapToScrollBuffers clears the bottom half after building it.
 ; in WRAM banks $02, $03
 def wMapBuffer64 equ $d000
 
@@ -345,7 +345,7 @@ def wAiPositionStrategy equ $df7f
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 def wCharSpriteSlot equ $df80
 
-; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: Unused_1a_DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
 def wCharSpriteSlotFrame equ $df84
 
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)

@@ -15,7 +15,7 @@ LoadIndexedPalette:
 	ret ; $4598
 IndexedPalettes:
 	INCLUDE "data/bank_039/IndexedPalettes.asm" ; $4599, 200 bytes (palettes)
-LoadFixedPaletteSet:
+Unused_39_LoadFixedPaletteSet:
 	ld hl, FixedPaletteSetPalettes ; $4661
 	lb de, $09, $04 ; $4664 palette index, count
 	call LoadPaletteShadow ; $4667

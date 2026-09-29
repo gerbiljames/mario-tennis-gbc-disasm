@@ -325,7 +325,7 @@ RunMenuFromText:
 	pop de ; $42e6
 	pop bc ; $42e7
 	ret ; $42e8
-ScriptSkipSpeakerDialogue:
+Unused_0a_ScriptSkipSpeakerDialogue:
 	push af ; $42e9
 	push hl ; $42ea
 	push_wram_bank WRAM_TEXT ; $42eb

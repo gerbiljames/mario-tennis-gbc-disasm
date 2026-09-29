@@ -1,4 +1,4 @@
-QueueBouncingCursorCorners:
+Unused_3b_QueueBouncingCursorCorners:
 	push de ; $4038
 	push bc ; $4039
 	ld c, $00 ; $403a

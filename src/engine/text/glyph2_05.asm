@@ -352,7 +352,7 @@ UploadGlyphBufferDMA:
 	pop bc ; $78aa
 	pop af ; $78ab
 	ret ; $78ac
-UploadGlyphTileRange:
+Unused_05_UploadGlyphTileRange:
 	push bc ; $78ad
 	push de ; $78ae
 	push hl ; $78af

@@ -229,57 +229,57 @@ Unused_0a_CopySceneTilemapToVram:
 	ldh [rVBK], a ; $5797
 	push de ; $5799
 	push hl ; $579a
-	call CopySceneTilemapChunk ; $579b
-	call CopySceneTilemapChunk ; $579e
-	call CopySceneTilemapChunk ; $57a1
-	call CopySceneTilemapChunk ; $57a4
-	call CopySceneTilemapChunk ; $57a7
-	call CopySceneTilemapChunk ; $57aa
-	call CopySceneTilemapChunk ; $57ad
-	call CopySceneTilemapChunk ; $57b0
-	call CopySceneTilemapChunk ; $57b3
-	call CopySceneTilemapChunk ; $57b6
-	call CopySceneTilemapChunk ; $57b9
-	call CopySceneTilemapChunk ; $57bc
-	call CopySceneTilemapChunk ; $57bf
-	call CopySceneTilemapChunk ; $57c2
-	call CopySceneTilemapChunk ; $57c5
-	call CopySceneTilemapChunk ; $57c8
-	call CopySceneTilemapChunk ; $57cb
-	call CopySceneTilemapChunk ; $57ce
-	call CopySceneTilemapChunk ; $57d1
-	call CopySceneTilemapChunk ; $57d4
+	call Unused_0a_CopySceneTilemapChunk ; $579b
+	call Unused_0a_CopySceneTilemapChunk ; $579e
+	call Unused_0a_CopySceneTilemapChunk ; $57a1
+	call Unused_0a_CopySceneTilemapChunk ; $57a4
+	call Unused_0a_CopySceneTilemapChunk ; $57a7
+	call Unused_0a_CopySceneTilemapChunk ; $57aa
+	call Unused_0a_CopySceneTilemapChunk ; $57ad
+	call Unused_0a_CopySceneTilemapChunk ; $57b0
+	call Unused_0a_CopySceneTilemapChunk ; $57b3
+	call Unused_0a_CopySceneTilemapChunk ; $57b6
+	call Unused_0a_CopySceneTilemapChunk ; $57b9
+	call Unused_0a_CopySceneTilemapChunk ; $57bc
+	call Unused_0a_CopySceneTilemapChunk ; $57bf
+	call Unused_0a_CopySceneTilemapChunk ; $57c2
+	call Unused_0a_CopySceneTilemapChunk ; $57c5
+	call Unused_0a_CopySceneTilemapChunk ; $57c8
+	call Unused_0a_CopySceneTilemapChunk ; $57cb
+	call Unused_0a_CopySceneTilemapChunk ; $57ce
+	call Unused_0a_CopySceneTilemapChunk ; $57d1
+	call Unused_0a_CopySceneTilemapChunk ; $57d4
 	pop hl ; $57d7
 	pop de ; $57d8
 	wram_bank WRAM_SCREEN ; $57d9
 	xor a ; $57df
 	ldh [rVBK], a ; $57e0
-	call CopySceneTilemapChunk ; $57e2
-	call CopySceneTilemapChunk ; $57e5
-	call CopySceneTilemapChunk ; $57e8
-	call CopySceneTilemapChunk ; $57eb
-	call CopySceneTilemapChunk ; $57ee
-	call CopySceneTilemapChunk ; $57f1
-	call CopySceneTilemapChunk ; $57f4
-	call CopySceneTilemapChunk ; $57f7
-	call CopySceneTilemapChunk ; $57fa
-	call CopySceneTilemapChunk ; $57fd
-	call CopySceneTilemapChunk ; $5800
-	call CopySceneTilemapChunk ; $5803
-	call CopySceneTilemapChunk ; $5806
-	call CopySceneTilemapChunk ; $5809
-	call CopySceneTilemapChunk ; $580c
-	call CopySceneTilemapChunk ; $580f
-	call CopySceneTilemapChunk ; $5812
-	call CopySceneTilemapChunk ; $5815
-	call CopySceneTilemapChunk ; $5818
-	call CopySceneTilemapChunk ; $581b
+	call Unused_0a_CopySceneTilemapChunk ; $57e2
+	call Unused_0a_CopySceneTilemapChunk ; $57e5
+	call Unused_0a_CopySceneTilemapChunk ; $57e8
+	call Unused_0a_CopySceneTilemapChunk ; $57eb
+	call Unused_0a_CopySceneTilemapChunk ; $57ee
+	call Unused_0a_CopySceneTilemapChunk ; $57f1
+	call Unused_0a_CopySceneTilemapChunk ; $57f4
+	call Unused_0a_CopySceneTilemapChunk ; $57f7
+	call Unused_0a_CopySceneTilemapChunk ; $57fa
+	call Unused_0a_CopySceneTilemapChunk ; $57fd
+	call Unused_0a_CopySceneTilemapChunk ; $5800
+	call Unused_0a_CopySceneTilemapChunk ; $5803
+	call Unused_0a_CopySceneTilemapChunk ; $5806
+	call Unused_0a_CopySceneTilemapChunk ; $5809
+	call Unused_0a_CopySceneTilemapChunk ; $580c
+	call Unused_0a_CopySceneTilemapChunk ; $580f
+	call Unused_0a_CopySceneTilemapChunk ; $5812
+	call Unused_0a_CopySceneTilemapChunk ; $5815
+	call Unused_0a_CopySceneTilemapChunk ; $5818
+	call Unused_0a_CopySceneTilemapChunk ; $581b
 	pop hl ; $581e
 	pop de ; $581f
 	pop bc ; $5820
 	pop af ; $5821
 	ret ; $5822
-CopySceneTilemapChunk:
+Unused_0a_CopySceneTilemapChunk:
 	push de ; $5823
 	push hl ; $5824
 	ld c, $16 ; $5825

@@ -1,20 +1,20 @@
 WaterSpriteModeHooks_10:
 	; $4bd8, 16 bytes (mode_hooks)
-	dw WaterSpriteHook_Frame ; record 0
-	dw WaterSpriteHook_PointStart ; record 1
-	dw WaterSpriteHook_PointEnd ; record 2
+	dw Unused_10_WaterSpriteHook_Frame ; record 0
+	dw Unused_10_WaterSpriteHook_PointStart ; record 1
+	dw Unused_10_WaterSpriteHook_PointEnd ; record 2
 	dw RetStub ; record 3
-	dw WaterSpriteHook_BallHit ; record 4
-	dw WaterSpriteHook_Bounce ; record 5
-	dw WaterSpriteHook_RallyTick ; record 6
+	dw Unused_10_WaterSpriteHook_BallHit ; record 4
+	dw Unused_10_WaterSpriteHook_Bounce ; record 5
+	dw Unused_10_WaterSpriteHook_RallyTick ; record 6
 	dw RetStub ; record 7
-WaterSpriteHook_Frame:
+Unused_10_WaterSpriteHook_Frame:
 	ret ; $4be8
-WaterSpriteHook_RallyTick:
+Unused_10_WaterSpriteHook_RallyTick:
 	ret ; $4be9
-WaterSpriteHook_Bounce:
+Unused_10_WaterSpriteHook_Bounce:
 	ret ; $4bea
-WaterSpriteHook_BallHit:
+Unused_10_WaterSpriteHook_BallHit:
 	ld a, [wRallyLength] ; $4beb
 	cp $02 ; $4bee
 	jr c, .done ; $4bf0
@@ -24,9 +24,9 @@ WaterSpriteHook_BallHit:
 	inc [hl] ; $4bfa
 .done:
 	ret ; $4bfb
-WaterSpriteHook_PointStart:
+Unused_10_WaterSpriteHook_PointStart:
 	ret ; $4bfc
-WaterSpriteHook_PointEnd:
+Unused_10_WaterSpriteHook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4bfd
 	bit 0, a ; $4c00
 	ret nz ; $4c02

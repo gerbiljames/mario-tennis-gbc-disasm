@@ -131,7 +131,7 @@ ResetTextWindowsAndRestoreMap:
 	call InitTextWindows ; $617a
 	call RestoreShadowTilemap ; $617d
 	ret ; $6180
-CreateWindowWithTextId:
+Unused_05_CreateWindowWithTextId:
 	push bc ; $6181
 	push_wram_bank WRAM_TEXT ; $6182
 	call CreateWindow ; $618b
@@ -244,7 +244,7 @@ UploadGlyphTilesPartial:
 	pop af ; $6262
 	pop_wram_bank ; $6263
 	ret ; $6268
-RenderWindowTextToCompletion:
+Unused_05_RenderWindowTextToCompletion:
 	push af ; $6269
 	push bc ; $626a
 	push de ; $626b
@@ -318,7 +318,7 @@ CloseWindowAlt:
 	call FreeWindow ; $62e2
 	pop af ; $62e5
 	ret ; $62e6
-ShowDialogueCentered:
+Unused_05_ShowDialogueCentered:
 	push af ; $62e7
 	push bc ; $62e8
 	push de ; $62e9
@@ -335,7 +335,7 @@ ShowDialogueCentered:
 	ld a, [wDialogueWindowId] ; $630c
 	cp DIALOGUEWIN_NONE ; $630f
 	jr nz, .loop ; $6311
-	call OpenCenteredDialogueWindow ; $6313
+	call Unused_05_OpenCenteredDialogueWindow ; $6313
 .loop:
 	call SetActiveWindowTextId ; $6316
 	ld a, [wDialogueWindowId] ; $6319
@@ -360,7 +360,7 @@ ShowDialogueCentered:
 	pop bc ; $634c
 	pop af ; $634d
 	ret ; $634e
-OpenCenteredDialogueWindow:
+Unused_05_OpenCenteredDialogueWindow:
 	push af ; $634f
 	push bc ; $6350
 	push de ; $6351

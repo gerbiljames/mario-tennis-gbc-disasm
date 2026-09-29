@@ -809,7 +809,7 @@ def B_ equ 11
 ; second; nothing reaches them, because the `sound` macro's handler ($2fb3)
 ; claims $40-$4f as jingles first. That handler also latches every id below $40
 ; into wCurrentBGM, so the wCurrentBGM values are exactly these BGM_* ids.
-; The sound test (RunSoundTest, $01:$6a5b) lists the same two spaces: ids
+; The sound test (Unused_01_RunSoundTest, $01:$6a5b) lists the same two spaces: ids
 ; $00-$32 plus the five jingles on one axis, $50-$c1 on the other.
 
 ; Music. Proven per id from the tables that select one: CourtSelectBgmIds_3e
@@ -933,7 +933,7 @@ def SFX_DEUCE                  equ $69 ; the deuce call after a point (DelayAfte
 def SFX_LANDING_MARKER         equ $6d ; the landing marker appearing (StartLandingMarker $08)
 def SFX_DEBUG_ALARM            equ $6f ; QueueVRAMCopy on queue overflow, debug step mode only
 def SFX_BEEP                   equ $72 ; link-input decode errors (SerialEncode/DecodeInput), the debug window demo
-def SFX_CAPTION                equ $73 ; an EXP-screen caption appearing (DrawExpScreenCaption $1a)
+def SFX_CAPTION                equ $73 ; an EXP-screen caption appearing (Unused_1a_DrawExpScreenCaption $1a)
 def SFX_BALL_LAUNCH            equ $76 ; the minigame ball launcher (LaunchBall $0d)
 def SFX_MARKER                 equ $78 ; a marker landing: the ranking-board marker (RankingBoardAnimate*), the on-court score digits and banner row 15 (CourtBannerObjTemplates_09)
 def SFX_FIREWORK_LAUNCH        equ $7a ; the island sky scene: firework ascent, the plane pass (bank $14)
@@ -956,7 +956,7 @@ def SFX_APPEAR2                equ $96 ; the second of the two pop sounds cutsce
 def SFX_CHIME                  equ $97 ; a minigame target hit / score popup, and a success cue in cutscenes
 def SFX_EMOTE                  equ $98 ; an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)
 def SFX_APPEAR1                equ $99 ; the first of the two pop sounds cutscenes alternate as actors are placed one by one; also after a stomp
-def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (MusicSettingHandler0/1 $1a)
+def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_MusicSettingHandler0/1 $1a)
 def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries; which map script selects it is not established
 
 ; --- Overworld walk-sprite animations (script_set_anim, as_anim, map_actor) ---
@@ -1073,12 +1073,12 @@ def CHARB_MOVE_BLOCKED       equ 6 ; StepCharMovement refused an axis at the cou
 ; rather than the two defined ones, so that value needs a name of its own.
 def MATCHABORT_POINT         equ $01 ; give up the current rally: tested `and $01` by PlayPoint.rallyLoop ($08:$4d2c) and PlayMinigamePoint.rallyLoop
 def MATCHABORT_MATCH         equ $80 ; break out of the point/game/set/match loops: tested `and $80` in RunMatchPlayLoop, CheckSetComplete and RunMinigameLoop
-def MATCHABORT_ALL           equ $ff ; every bit set, written by the four MatchQuitMenu_* actions, StoryPauseMenu_ReturnToMainMenu and TargetZonePointEndHook_07
+def MATCHABORT_ALL           equ $ff ; every bit set, written by the four MatchQuitMenu_* actions, StoryPauseMenu_ReturnToMainMenu and Unused_07_TargetZonePointEndHook
 def MATCHABORTB_MATCH        equ 7   ; bit-index form of MATCHABORT_MATCH, for the one `bit 7, a` consumer ($16:$447a)
 
 ; --- Story save slot (wCurrentStorySlot, $c8a5) ---
 ; Slots 0-2 are the three story files; the byte doubles as an index
-; (GetCurrentSlotBlockId $03:$529d reads StorySlotBlockIds_03[slot], and a slot
+; (Unused_03_GetCurrentSlotBlockId $03:$529d reads StorySlotBlockIds_03[slot], and a slot
 ; saves as block 2N with its backup at +$1b), so the real ids stay numeric. The
 ; out-of-range value is the one worth naming: it means "not a story file at
 ; all" -- exhibition, link, mini-game and the two debug screens set it, and

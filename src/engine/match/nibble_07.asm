@@ -147,7 +147,7 @@ ComputeNibbleBufferChecksum:
 	pop bc ; $4427
 	pop af ; $4428
 	ret ; $4429
-SendNibbleBlockSlave:
+Unused_07_SendNibbleBlockSlave:
 	push af ; $442a
 	push bc ; $442b
 	push de ; $442c
@@ -161,7 +161,7 @@ SendNibbleBlockSlave:
 .startBlock:
 	ld a, LINKMSG_SYNC_MASTER ; $4438
 	ld b, LINKMSG_SYNC_SLAVE ; $443a
-	call SendByteAwaitEchoSlave ; $443c
+	call Unused_07_SendByteAwaitEchoSlave ; $443c
 	jr c, .startBlock ; $443f
 	ld hl, wLinkNibbleBuffer ; $4441
 	ld de, $0000 ; $4444
@@ -195,7 +195,7 @@ SendNibbleBlockSlave:
 .sendBlockEnd:
 	ld a, LINKMSG_BLOCK_END ; $4470
 	ld b, LINKMSG_BLOCK_END_ACK ; $4472
-	call SendByteAwaitEchoSlave ; $4474
+	call Unused_07_SendByteAwaitEchoSlave ; $4474
 	jr c, .sendBlockEnd ; $4477
 	ld hl, $0000 ; $4479
 .compareChecksum:
@@ -247,7 +247,7 @@ SendNibbleBlockSlave:
 	pop bc ; $44be
 	pop af ; $44bf
 	ret ; $44c0
-ReceiveNibbleBlockMaster:
+Unused_07_ReceiveNibbleBlockMaster:
 	push af ; $44c1
 	push bc ; $44c2
 	push de ; $44c3
@@ -376,7 +376,7 @@ SendByteAwaitEchoMaster:
 .done:
 	pop bc ; $4588
 	ret ; $4589
-SendByteAwaitEchoSlave:
+Unused_07_SendByteAwaitEchoSlave:
 	push bc ; $458a
 	ldh [hLinkTxByte], a ; $458b
 	ld c, $1e ; $458d

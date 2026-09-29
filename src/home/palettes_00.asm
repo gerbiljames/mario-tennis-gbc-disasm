@@ -381,7 +381,7 @@ FarCallVector:
 	ldh [hRomBank], a ; $07d7
 	ld [rROMB0], a ; $07d9
 	ret ; $07dc
-CopyMapRows32To64:
+Unused_00_CopyMapRows32To64:
 	ld c, $10 ; $07dd
 .copyLoop:
 	ld a, [hl+] ; $07df
@@ -523,7 +523,7 @@ CopyMapRows32To64:
 	dec c ; $0867
 	jp nz, .copyLoop ; $0868
 	ret ; $086b
-CopyMapToScrollBuffers:
+Unused_00_CopyMapToScrollBuffers:
 	push af ; $086c
 	push bc ; $086d
 	push de ; $086e
@@ -536,7 +536,7 @@ CopyMapToScrollBuffers:
 	wram_bank WRAM_COURT_PLANES ; $0884
 	ld hl, wTextBuffer ; $088a
 	ld de, wMapScrollPlane0 ; $088d
-	call CopyMapRows32To64 ; $0890
+	call Unused_00_CopyMapRows32To64 ; $0890
 	wram_bank WRAM_STAGING ; $0893
 	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $0899
 	ld de, wTextBuffer ; $089c
@@ -545,7 +545,7 @@ CopyMapToScrollBuffers:
 	wram_bank WRAM_COURT_PLANES ; $08a4
 	ld hl, wTextBuffer ; $08aa
 	ld de, wMapScrollPlane1 ; $08ad
-	call CopyMapRows32To64 ; $08b0
+	call Unused_00_CopyMapRows32To64 ; $08b0
 	ld hl, wMapScrollPlane1 ; $08b3
 	ld c, $80 ; $08b6
 	call ClearMemory16 ; $08b8
@@ -557,7 +557,7 @@ CopyMapToScrollBuffers:
 	wram_bank WRAM_SCREEN ; $08cc
 	ld hl, wTextBuffer ; $08d2
 	ld de, wShadowTilemap ; $08d5
-	call CopyMapRows32To64 ; $08d8
+	call Unused_00_CopyMapRows32To64 ; $08d8
 	wram_bank WRAM_STAGING ; $08db
 	ld hl, wDecompBuffer + 96 * TILE_SIZE ; $08e1
 	ld de, wTextBuffer ; $08e4
@@ -566,7 +566,7 @@ CopyMapToScrollBuffers:
 	wram_bank WRAM_SCREEN ; $08ec
 	ld hl, wTextBuffer ; $08f2
 	ld de, wScreenScratch ; $08f5
-	call CopyMapRows32To64 ; $08f8
+	call Unused_00_CopyMapRows32To64 ; $08f8
 	ld hl, wScreenScratch ; $08fb
 	ld c, $80 ; $08fe
 	call ClearMemory16 ; $0900

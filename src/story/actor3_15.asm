@@ -151,7 +151,7 @@ Unused_15_MapScriptClearActiveFlag:
 	xor a ; $7d96
 	ld [wStoryScriptRan], a ; $7d97
 	ret ; $7d9a
-MapScriptPlaySoundA2_15:
+Unused_15_MapScriptPlaySoundA2:
 	sound SFX_STORY_CUE ; $7d9b
 	ret ; $7d9d
 Unused_15_MapScriptHideLocationName:

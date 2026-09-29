@@ -4,9 +4,9 @@
 	farptr CreateDialogueWindow ; $4006
 	farptr CreateMenuWindowFromText ; $4008
 	farptr CloseActiveDialogueWindow ; $400a
-	farptr StubNop_05_1 ; $400c
+	farptr Unused_05_StubNop_05_1 ; $400c
 	farptr SetWindowTextId ; $400e
-	farptr StubNop_05_0 ; $4010
+	farptr Unused_05_StubNop_05_0 ; $4010
 	farptr Unused_05_QueueFullTilemapCopy ; $4012
 	farptr Unused_05_QueueFullAttrmapCopy ; $4014
 	farptr Unused_05_CopyVisibleTilemapToVRAM ; $4016
@@ -14,28 +14,28 @@
 	farptr WriteWindowCellTileAttr ; $401a
 	farptr RenderProportionalTextAt ; $401c
 	farptr FetchDialogueText ; $401e
-	farptr DrawTileAttrRect ; $4020
+	farptr Unused_05_DrawTileAttrRect ; $4020
 	farptr Unused_05_CopyTilemapRowsAnimated ; $4022
 	farptr ApplyMessageSpeed ; $4024
 	farptr MeasureDialogueWidthTiles ; $4026
 	farptr ResetWindowState ; $4028
-	farptr SetFixedMenuWindowTextId ; $402a
-	farptr RunFixedTextMenu ; $402c
+	farptr Unused_05_SetFixedMenuWindowTextId ; $402a
+	farptr Unused_05_RunFixedTextMenu ; $402c
 	farptr RenderTextString ; $402e
 	farptr RenderActiveWindowText ; $4030
 	farptr SetActiveWindowTextId ; $4032
 	farptr ShowSpeakerDialogue ; $4034
 	farptr ShowSpeakerDialogueRestoreBG ; $4036
-	farptr ShowDialogueAtPosition ; $4038
-	farptr DrawDialogueAtPosition ; $403a
+	farptr Unused_05_ShowDialogueAtPosition ; $4038
+	farptr Unused_05_DrawDialogueAtPosition ; $403a
 	farptr RunMenuSelection ; $403c
 	farptr RunPagedTextMenu ; $403e
-	farptr RunPagedTextMenuAutoSize ; $4040
-	farptr RunMenuSelectionShared ; $4042
+	farptr Unused_05_RunPagedTextMenuAutoSize ; $4040
+	farptr Unused_05_RunMenuSelectionShared ; $4042
 	farptr AddTextIdOffset ; $4044
 	farptr PushTextArgString ; $4046
 	farptr PushTextArgNumber ; $4048
-	farptr PushTextArgShortTextId ; $404a
+	farptr Unused_05_PushTextArgShortTextId ; $404a
 	farptr Unused_05_SetTextVar ; $404c
 	farptr FetchShortTextToBuffer ; $404e
 	farptr RunDebugFlagEditor ; $4050
@@ -45,15 +45,15 @@
 	farptr GetTilemapCellAddress ; $4058
 	farptr WriteDialogueToWindow ; $405a
 	farptr ResetTextWindowsAndRestoreMap ; $405c
-	farptr CreateWindowWithTextId ; $405e
+	farptr Unused_05_CreateWindowWithTextId ; $405e
 	farptr RedrawWindowText ; $4060
-	farptr RenderWindowTextToCompletion ; $4062
+	farptr Unused_05_RenderWindowTextToCompletion ; $4062
 	farptr RedrawWindowRowsSafe ; $4064
 	farptr CloseWindowAlt ; $4066
-	farptr ShowDialogueCentered ; $4068
+	farptr Unused_05_ShowDialogueCentered ; $4068
 	farptr RestoreTilemapUnderWindow ; $406a
-	farptr WriteStringToTilemap ; $406c
-	farptr WriteStringToTilemapAlt ; $406e
+	farptr Unused_05_WriteStringToTilemap ; $406c
+	farptr Unused_05_WriteStringToTilemapAlt ; $406e
 	farptr Unused_05_WriteStringToTilemapStreamed ; $4070
 	farptr RenderTextToBuffer64 ; $4072
 	farptr Unused_05_RunDebugWindowDemo ; $4074
@@ -71,5 +71,5 @@
 	farptr PrepareGlyphBuffer ; $408c
 	farptr ResetGlyphStream ; $408e
 	farptr UploadGlyphBuffer ; $4090
-	farptr UploadGlyphTileRange ; $4092
+	farptr Unused_05_UploadGlyphTileRange ; $4092
 	farptr UploadGlyphBufferFull ; $4094

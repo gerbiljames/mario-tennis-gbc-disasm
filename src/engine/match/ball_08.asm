@@ -250,7 +250,7 @@ SetBallVelocityPolar:
 	ld [hl+], a ; $45d5
 	ld [hl], d ; $45d6
 	ret ; $45d7
-SetBallSpinComponents:
+Unused_08_SetBallSpinComponents:
 	ld hl, wBallSideSpin ; $45d8
 	ld a, e ; $45db
 	ld [hl+], a ; $45dc

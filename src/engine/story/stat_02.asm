@@ -5,7 +5,7 @@ Unused_02:
 	; $441f, 28 bytes (bytes:16)
 	db $00, $01, $00, $00, $00, $01, $00, $01, $00, $01, $00, $00, $00, $00, $00, $01 ; 0x00
 	db $00, $01, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00 ; 0x10
-LoadMainCharacterFromRoster:
+Unused_02_LoadMainCharacterFromRoster:
 	push de ; $443b
 	ld hl, wStoryModeNameOfMainCharacter ; $443c
 	ld c, $04 ; $443f
@@ -17,7 +17,7 @@ LoadMainCharacterFromRoster:
 	ld b, a ; $4449
 	call GetStoryCharacterRecordPtr ; $444a
 	ld de, wStoryModeNameOfMainCharacter ; $444d
-	call Copy64Bytes ; $4450
+	call Unused_02_Copy64Bytes ; $4450
 	ld hl, $000b ; $4453
 	add hl, de ; $4456
 	ld [hl], b ; $4457
@@ -41,7 +41,7 @@ LoadMainCharacterFromRoster:
 	push af ; $4473
 	pop_wram_bank ; $4474
 	ret ; $4479
-Copy64Bytes:
+Unused_02_Copy64Bytes:
 	push de ; $447a
 	ld c, $40 ; $447b
 .loop:

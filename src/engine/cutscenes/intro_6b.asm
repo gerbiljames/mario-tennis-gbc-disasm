@@ -163,14 +163,14 @@ IntroCutsceneState10_6b:
 	dw IntroCutsceneState10Exit_6b ; record 2
 IntroCutsceneState11_6b:
 	; $4123, 6 bytes (records:2)
-	dw IntroCutsceneState11Init_6b ; record 0
-	dw IntroCutsceneState11Update_6b ; record 1
-	dw IntroCutsceneState11Exit_6b ; record 2
+	dw Unused_6b_IntroCutsceneState11Init ; record 0
+	dw Unused_6b_IntroCutsceneState11Update ; record 1
+	dw Unused_6b_IntroCutsceneState11Exit ; record 2
 IntroCutsceneState12_6b:
 	; $4129, 6 bytes (records:2)
-	dw IntroCutsceneState12Init_6b ; record 0
-	dw IntroCutsceneState12Update_6b ; record 1
-	dw IntroCutsceneState12Exit_6b ; record 2
+	dw Unused_6b_IntroCutsceneState12Init ; record 0
+	dw Unused_6b_IntroCutsceneState12Update ; record 1
+	dw Unused_6b_IntroCutsceneState12Exit ; record 2
 IntroCutsceneState13_6b:
 	; $412f, 6 bytes (records:2)
 	dw IntroCutsceneState13Init_6b ; record 0
@@ -821,7 +821,7 @@ IntroCutsceneState10Update_6b:
 	cp $2b ; $487d
 	jp z, DispatchCutsceneStateInit.loopB ; $487f
 	jp DispatchCutsceneStateInit.loop ; $4882
-IntroCutsceneState11Init_6b:
+Unused_6b_IntroCutsceneState11Init:
 	call DisableLCDSafely ; $4885
 	ld c, SCREENASSET_DecompressIntroTitleTilesPtrs ; $4888
 	farcall LoadScreenAssetRecord ; $488a
@@ -838,7 +838,7 @@ IntroCutsceneState11Init_6b:
 	ld de, vBGMap1 + VRAM_BANK1 ; $48aa
 	ld c, $40 ; $48ad
 	call QueueVRAMCopy ; $48af
-	call InitCutsceneSceneB ; $48b2
+	call Unused_6b_InitCutsceneSceneB ; $48b2
 	call LoadIntroTilesAndPalette ; $48b5
 	call EnableLCD ; $48b8
 	script_fade_in $20 ; $48bb
@@ -846,7 +846,7 @@ IntroCutsceneState11Init_6b:
 	xor a ; $48c3
 	ld [wCutsceneStepTimer], a ; $48c4
 	jp DispatchCutsceneStateInit.loop ; $48c7
-IntroCutsceneState11Exit_6b:
+Unused_6b_IntroCutsceneState11Exit:
 	ld a, $00 ; $48ca
 	ldh [hShowDebugConsole], a ; $48cc
 	ld hl, rLCDC ; $48ce
@@ -857,14 +857,14 @@ IntroCutsceneState11Exit_6b:
 	xor a ; $48dc
 	ld [wCutsceneStepTimer], a ; $48dd
 	jp DispatchCutsceneStateInit.loop2 ; $48e0
-IntroCutsceneState11Update_6b:
+Unused_6b_IntroCutsceneState11Update:
 	ld a, [wCutsceneStepTimer] ; $48e3
 	inc a ; $48e6
 	ld [wCutsceneStepTimer], a ; $48e7
 	cp $70 ; $48ea
 	jp z, DispatchCutsceneStateInit.loopB ; $48ec
 	jp DispatchCutsceneStateInit.loop ; $48ef
-IntroCutsceneState12Init_6b:
+Unused_6b_IntroCutsceneState12Init:
 	xor a ; $48f2
 	ld [wCutsceneStepTimer], a ; $48f3
 	ld [wCutsceneSpriteAY], a ; $48f6
@@ -886,12 +886,12 @@ IntroCutsceneState12Init_6b:
 	ld [hl+], a ; $491a
 	ld [hl], d ; $491b
 	jp DispatchCutsceneStateInit.loop ; $491c
-IntroCutsceneState12Exit_6b:
+Unused_6b_IntroCutsceneState12Exit:
 	ld c, $04 ; $491f
 	call BeginFadeOut ; $4921
 	call WaitFadeEnd ; $4924
 	jp DispatchCutsceneStateInit.loop2 ; $4927
-IntroCutsceneState12Update_6b:
+Unused_6b_IntroCutsceneState12Update:
 	ld a, [wCutsceneSpriteAY] ; $492a
 	cp $0a ; $492d
 	jr z, .checkCutsceneStepTimer ; $492f

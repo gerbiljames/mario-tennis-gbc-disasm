@@ -1,4 +1,4 @@
-CopyBank1ToBank3Buffer:
+Unused_1a_CopyBank1ToBank3Buffer:
 	wram_bank WRAM_STAGING ; $6be1
 	ld d, [hl] ; $6be7
 	wram_bank WRAM_SCREEN ; $6be8
@@ -7,9 +7,9 @@ CopyBank1ToBank3Buffer:
 	dec bc ; $6bf0
 	ld a, b ; $6bf1
 	or c ; $6bf2
-	jr nz, CopyBank1ToBank3Buffer ; $6bf3
+	jr nz, Unused_1a_CopyBank1ToBank3Buffer ; $6bf3
 	ret ; $6bf5
-CopyBank1ToBank2Buffer:
+Unused_1a_CopyBank1ToBank2Buffer:
 	wram_bank WRAM_STAGING ; $6bf6
 	ld d, [hl] ; $6bfc
 	wram_bank WRAM_COURT_PLANES ; $6bfd
@@ -18,9 +18,9 @@ CopyBank1ToBank2Buffer:
 	dec bc ; $6c05
 	ld a, b ; $6c06
 	or c ; $6c07
-	jr nz, CopyBank1ToBank2Buffer ; $6c08
+	jr nz, Unused_1a_CopyBank1ToBank2Buffer ; $6c08
 	ret ; $6c0a
-InitCharViewerState:
+Unused_1a_InitCharViewerState:
 	wram_bank WRAM_SCENE ; $6c0b
 	xor a ; $6c11
 	ld [wCharViewerCursor], a ; $6c12
@@ -31,7 +31,7 @@ InitCharViewerState:
 	farcall GetCharPaletteIndex ; $6c21
 	ld [wCharViewerPalette], a ; $6c24
 	ret ; $6c27
-DrawCharViewerCursorSprite:
+Unused_1a_DrawCharViewerCursorSprite:
 	wram_bank WRAM_SCENE ; $6c28
 	ld a, [wCharViewerRow] ; $6c2e
 	or a ; $6c31
@@ -71,8 +71,8 @@ DrawCharViewerCursorSpriteTable0:
 	db $58, $60, $58, $68, $58, $70, $58, $78, $58, $80, $58, $88 ; 0x20
 DrawCharViewerCursorSpriteTable1:
 	INCBIN "data/bank_01a/DrawCharViewerCursorSpriteTable1.bin" ; $6c95, 10 bytes
-RunCharViewerInputLoop:
-	call DrawCharViewerCharSprite ; $6c9f
+Unused_1a_RunCharViewerInputLoop:
+	call Unused_1a_DrawCharViewerCharSprite ; $6c9f
 	wram_bank WRAM_SCENE ; $6ca2
 	call AdvanceFrame ; $6ca8
 	ldh a, [hInputPressed] ; $6cab
@@ -92,7 +92,7 @@ RunCharViewerInputLoop:
 	jp nz, .prevPose ; $6ccb
 	bit 2, a ; $6cce
 	jp nz, .nextPose ; $6cd0
-	jr RunCharViewerInputLoop ; $6cd3
+	jr Unused_1a_RunCharViewerInputLoop ; $6cd3
 .up:
 	sound SFX_MENU_MOVE ; $6cd5
 	wram_bank WRAM_SCENE ; $6cd7
@@ -230,28 +230,28 @@ RunCharViewerInputLoop:
 .selectPalette:
 	ld a, [wCharViewerCursor] ; $6e12
 	ld [wCharViewerPalette], a ; $6e15
-	call ApplyCharViewerPalette ; $6e18
+	call Unused_1a_ApplyCharViewerPalette ; $6e18
 	jr .refresh ; $6e1b
 .exit:
 	sound SFX_MENU_CANCEL ; $6e1d
 	ret ; $6e1f
 .refresh:
-	call RefreshCharViewerSelection ; $6e20
+	call Unused_1a_RefreshCharViewerSelection ; $6e20
 	call AdvanceFrame ; $6e23
-	jp RunCharViewerInputLoop ; $6e26
+	jp Unused_1a_RunCharViewerInputLoop ; $6e26
 .prevPose:
 	ld a, [wCharViewerPose] ; $6e29
 	dec a ; $6e2c
 	and $07 ; $6e2d
 	ld [wCharViewerPose], a ; $6e2f
-	jp RunCharViewerInputLoop ; $6e32
+	jp Unused_1a_RunCharViewerInputLoop ; $6e32
 .nextPose:
 	ld a, [wCharViewerPose] ; $6e35
 	inc a ; $6e38
 	and $07 ; $6e39
 	ld [wCharViewerPose], a ; $6e3b
-	jp RunCharViewerInputLoop ; $6e3e
-RefreshCharViewerSelection:
+	jp Unused_1a_RunCharViewerInputLoop ; $6e3e
+Unused_1a_RefreshCharViewerSelection:
 	wram_bank WRAM_COURT_PLANES ; $6e41
 	ld a, $09 ; $6e47
 	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH + 8 ; $6e49
@@ -388,11 +388,11 @@ RefreshCharViewerSelection:
 	ld c, $04 ; $6f37
 	call QueueVRAMCopy ; $6f39
 	ret ; $6f3c
-SetupCharViewerScene:
-	call LoadCharViewerMugshot ; $6f3d
+Unused_1a_SetupCharViewerScene:
+	call Unused_1a_LoadCharViewerMugshot ; $6f3d
 	wram_bank WRAM_SCENE ; $6f40
 	ld a, [wCharViewerCharId] ; $6f46
-	farcall GetCharObjectId ; $6f49
+	farcall Unused_04_GetCharObjectId ; $6f49
 	ld d, a ; $6f4c
 	wram_bank WRAM_ACTORS ; $6f4d
 	ldh a, [hRomBank] ; $6f53

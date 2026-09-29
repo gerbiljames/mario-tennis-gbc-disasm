@@ -1,4 +1,4 @@
-DebugStoryStatsScreen:
+Unused_02_DebugStoryStatsScreen:
 	sound BGM_DICTIONARY ; $4fa6
 	wram_bank WRAM_STAGING ; $4fa8
 	ld a, $03 ; $4fae
@@ -26,7 +26,7 @@ DebugStoryStatsScreen:
 	ld hl, DebugStoryStatsScreenString0 ; $4fdf
 	lb de, $08, $02 ; $4fe2 column, row
 	call PrintString ; $4fe5
-	call ValidateN64TransferRecord ; $4fe8
+	call Unused_02_ValidateN64TransferRecord ; $4fe8
 	or a ; $4feb
 	jr z, .printString ; $4fec
 	push de ; $4fee
@@ -35,13 +35,13 @@ DebugStoryStatsScreen:
 	ld h, [hl] ; $4ff3
 	ld l, a ; $4ff4
 	ld de, $0210 ; $4ff5
-	call PrintDecimalWord ; $4ff8
+	call Unused_00_PrintDecimalWord ; $4ff8
 	ld hl, wPendingExpTrophy ; $4ffb
 	ld a, [hl+] ; $4ffe
 	ld h, [hl] ; $4fff
 	ld l, a ; $5000
 	ld de, $0a10 ; $5001
-	call PrintDecimalWord ; $5004
+	call Unused_00_PrintDecimalWord ; $5004
 	pop de ; $5007
 	ld hl, wPendingExpStory ; $5008
 	xor a ; $500b

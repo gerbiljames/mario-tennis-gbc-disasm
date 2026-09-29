@@ -1,4 +1,4 @@
-	farptr StubNop_3b ; $4000
+	farptr Unused_3b_StubNop ; $4000
 	farptr RunN64ExhibData ; $4002
 	farptr RunN64ExhibDataAlias1, RunN64ExhibData ; $4004
 	farptr RunTrophiesScreen ; $4006

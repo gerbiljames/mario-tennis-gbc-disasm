@@ -37,7 +37,7 @@ Unused_03_MoveSaveEditorCursor:
 	ld l, a ; $525a
 	ld b, l ; $525b
 	ld e, c ; $525c
-	call SignExtendEToDE ; $525d
+	call Unused_00_SignExtendEToDE ; $525d
 	add hl, de ; $5260
 	ld a, h ; $5261
 	and $03 ; $5262
@@ -84,7 +84,7 @@ Unused_03_MoveSaveEditorCursor:
 	call PrintHexWord ; $5298
 	xor a ; $529b
 	ret ; $529c
-GetCurrentSlotBlockId:
+Unused_03_GetCurrentSlotBlockId:
 	push af ; $529d
 	push hl ; $529e
 	ld a, [wCurrentStorySlot] ; $529f
@@ -97,23 +97,23 @@ GetCurrentSlotBlockId:
 StorySlotBlockIds_03:
 	; $52af, 4 bytes (bytes:4)
 	db $00, $02, $04, $0b ; 0x00
-ReadCurrentSlotBlock:
+Unused_03_ReadCurrentSlotBlock:
 	wram_bank WRAM_SOUND ; $52b3
-	call GetCurrentSlotBlockId ; $52b9
+	call Unused_03_GetCurrentSlotBlockId ; $52b9
 	ld hl, wSaveBlockBuffer ; $52bc
 	call ReadSaveBlock ; $52bf
 	ret ; $52c2
-WriteCurrentSlotBlock:
+Unused_03_WriteCurrentSlotBlock:
 	wram_bank WRAM_SOUND ; $52c3
-	call GetCurrentSlotBlockId ; $52c9
+	call Unused_03_GetCurrentSlotBlockId ; $52c9
 	ld hl, wSaveBlockBuffer ; $52cc
 	call WriteSaveBlock ; $52cf
 	ret ; $52d2
-InvalidateCurrentSlotBlock:
+Unused_03_InvalidateCurrentSlotBlock:
 	wram_bank WRAM_SOUND ; $52d3
-	call GetCurrentSlotBlockId ; $52d9
+	call Unused_03_GetCurrentSlotBlockId ; $52d9
 	ld hl, wSaveBlockBuffer ; $52dc
-	call InvalidateStorySlot ; $52df
+	call Unused_03_InvalidateStorySlot ; $52df
 	ret ; $52e2
 	; $52e3, 13 bytes (fill)
 	ds 13, $00
@@ -143,7 +143,7 @@ Unused_03_SaveSlotDebugEditor:
 	farcall InitStoryModeState ; $533e
 	ld de, $0000 ; $5341
 .loop:
-	call ReadCurrentSlotBlock ; $5344
+	call Unused_03_ReadCurrentSlotBlock ; $5344
 	or a ; $5347
 	jr z, .zero ; $5348
 	push de ; $534a
@@ -291,7 +291,7 @@ Unused_03_SaveSlotDebugEditor:
 	push af ; $5441
 	ld a, STORYSLOT_NONE ; $5442
 	ld [wCurrentStorySlot], a ; $5444
-	call ReadCurrentSlotBlock ; $5447
+	call Unused_03_ReadCurrentSlotBlock ; $5447
 	or a ; $544a
 	jr nz, .restore ; $544b
 	ld hl, $d300 ; $544d
@@ -306,7 +306,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld [hl+], a ; $545a
 	ld [hl+], a ; $545b
 	ld [hl+], a ; $545c
-	call WriteCurrentSlotBlock ; $545d
+	call Unused_03_WriteCurrentSlotBlock ; $545d
 	pop af ; $5460
 	sound JINGLE_DONE_FOR_THE_DAY ; $5461
 	jp .loop ; $5463
@@ -334,7 +334,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld hl, SaveResultSavedString_03 ; $548c
 	lb de, $05, $11 ; $548f column, row
 	call PrintString ; $5492
-	call WriteCurrentSlotBlock ; $5495
+	call Unused_03_WriteCurrentSlotBlock ; $5495
 	pop de ; $5498
 	jp .loop4 ; $5499
 .bit3Set:
@@ -342,7 +342,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld hl, SaveResultDeletedString_03 ; $549d
 	lb de, $05, $11 ; $54a0 column, row
 	call PrintString ; $54a3
-	call InvalidateCurrentSlotBlock ; $54a6
+	call Unused_03_InvalidateCurrentSlotBlock ; $54a6
 	jp .loop4 ; $54a9
 	db $d1 ; $54ac
 .skipSave:

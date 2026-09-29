@@ -1,4 +1,4 @@
-ShowDialogueAtPosition:
+Unused_05_ShowDialogueAtPosition:
 	push af ; $59b0
 	push bc ; $59b1
 	push de ; $59b2
@@ -25,8 +25,8 @@ ShowDialogueAtPosition:
 	ld a, [wDialogueWindowId] ; $59e5
 	cp DIALOGUEWIN_NONE ; $59e8
 	jr nz, .loop ; $59ea
-	call OpenDialogueWindowCentered ; $59ec
-	call RefreshShadowTilemapFromMapBuffer ; $59ef
+	call Unused_05_OpenDialogueWindowCentered ; $59ec
+	call Unused_05_RefreshShadowTilemapFromMapBuffer ; $59ef
 .loop:
 	xor a ; $59f2
 	ld [wGlyphRowStartCol], a ; $59f3
@@ -61,7 +61,7 @@ ShowDialogueAtPosition:
 	pop bc ; $5a4c
 	pop af ; $5a4d
 	ret ; $5a4e
-DrawDialogueAtPosition:
+Unused_05_DrawDialogueAtPosition:
 	push af ; $5a4f
 	push bc ; $5a50
 	push de ; $5a51
@@ -83,11 +83,11 @@ DrawDialogueAtPosition:
 	ld a, [wDialogueWindowId] ; $5a71
 	cp DIALOGUEWIN_NONE ; $5a74
 	jr nz, .loop ; $5a76
-	call OpenDialogueWindowCentered ; $5a78
+	call Unused_05_OpenDialogueWindowCentered ; $5a78
 .loop:
 	call SetActiveWindowTextId ; $5a7b
 	call RestoreShadowTilemap ; $5a7e
-	call StubNop_05_0 ; $5a81
+	call Unused_05_StubNop_05_0 ; $5a81
 	ld a, [wTextPageBreakRequest] ; $5a84
 	or a ; $5a87
 	jr nz, .loop ; $5a88
@@ -249,7 +249,7 @@ OpenSpeechBubble:
 	pop bc ; $5b9d
 	pop af ; $5b9e
 	ret ; $5b9f
-OpenDialogueWindowCentered:
+Unused_05_OpenDialogueWindowCentered:
 	push af ; $5ba0
 	push bc ; $5ba1
 	push de ; $5ba2

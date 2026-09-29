@@ -446,7 +446,7 @@ StoryMenuItemRowTextRect:
 	tilemap_row $49, $4a, $4b, $14, $15, $16, $17, $18, $19, $1a, $1b, $1c ; row 0
 	tilemap_row $59, $5a, $5b, $24, $25, $26, $27, $28, $29, $2a, $2b, $2c ; row 1
 	tilemap_end
-DrawStoryMenuItemRow:
+Unused_06_DrawStoryMenuItemRow:
 	ld de, $030a ; $7863
 	call GetShadowTilemapAddr ; $7866
 	ld hl, StoryMenuItemRowTextRect ; $7869

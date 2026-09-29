@@ -17,7 +17,7 @@ Unused_3b_StoreCellIndexToCursorPtr:
 	ld a, d ; $43f8
 	ld [hl], a ; $43f9
 	ret ; $43fa
-ClearWram3Row64:
+Unused_3b_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $43fb
 	xor a ; $4404
 	ld c, $40 ; $4405
@@ -27,7 +27,7 @@ ClearWram3Row64:
 	jr nz, .loop ; $4409
 	pop_wram_bank ; $440b
 	ret ; $4410
-ClearWram3Row64Alt:
+Unused_3b_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $4411
 	ld a, $00 ; $441a
 	ld c, $40 ; $441c
@@ -45,17 +45,17 @@ UpdateAnimatedTilesTask_3b:
 ; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_1b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_3b_DrawDecimalNumber, 3b ; $4465 Unused_3b_DrawDecimalNumber
-DrawAsciiDigitString_3b:
+Unused_3b_DrawAsciiDigitString:
 	ld a, [hl+] ; $4486
 	and a ; $4487
 	jr z, .done ; $4488
 	call DrawAsciiDigitChar_3b ; $448a
-	jr DrawAsciiDigitString_3b ; $448d
+	jr Unused_3b_DrawAsciiDigitString ; $448d
 .done:
 	ret ; $448f
 ; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
 	twin draw_ascii_digit_char, 3b ; $4490 DrawAsciiDigitChar_3b
-StubNop_3b:
+Unused_3b_StubNop:
 	ret ; $44a9
 RunN64ExhibData:
 	sound BGM_STATUS_SCREEN ; $44aa

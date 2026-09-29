@@ -1,4 +1,4 @@
-InvalidateStorySlot:
+Unused_03_InvalidateStorySlot:
 	push hl ; $4aff
 	push de ; $4b00
 	push bc ; $4b01
@@ -57,7 +57,7 @@ InvalidateSaveBlock:
 	pop de ; $4b51
 	pop hl ; $4b52
 	ret ; $4b53
-ResetAllSaveBlocks:
+Unused_03_ResetAllSaveBlocks:
 	ld a, $00 ; $4b54
 	ld [wCurrentStorySlot], a ; $4b56
 	ld a, $00 ; $4b59
@@ -81,7 +81,7 @@ ResetAllSaveBlocks:
 	ld a, $00 ; $4b86
 	ldh [hSramBank], a ; $4b88
 	ld [rRAMB], a ; $4b8a
-	call ClearSaveFlagsArea ; $4b8d
+	call Unused_03_ClearSaveFlagsArea ; $4b8d
 	call InitSaveHeader ; $4b90
 	call MirrorSaveHeaderToBank1 ; $4b93
 	xor a ; $4b96

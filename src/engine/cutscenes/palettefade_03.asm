@@ -11,7 +11,7 @@ InitGrayscalePaletteFade:
 	call DesaturateFadeTargetPalettes ; $75c1
 	pop_wram_bank ; $75c4
 	ret ; $75c9
-; InitGrayscalePaletteFade with ClearFadeTargetPalettes in place of DesaturateFadeTargetPalettes: the fade-to-black variant of the same setup. Nothing calls it; bank $03's callers only use the grayscale one.
+; InitGrayscalePaletteFade with Unused_03_ClearFadeTargetPalettes in place of DesaturateFadeTargetPalettes: the fade-to-black variant of the same setup. Nothing calls it; bank $03's callers only use the grayscale one.
 Unused_03_InitBlackPaletteFade:
 	push_wram_bank WRAM_SCENE ; $75ca
 	xor a ; $75d3
@@ -22,7 +22,7 @@ Unused_03_InitBlackPaletteFade:
 	dec b ; $75da
 	jr nz, .loopB ; $75db
 	call CopyMasterPalettesToFadeBuffers ; $75dd
-	call ClearFadeTargetPalettes ; $75e0
+	call Unused_03_ClearFadeTargetPalettes ; $75e0
 	pop_wram_bank ; $75e3
 	ret ; $75e8
 CopyMasterPalettesToFadeBuffers:
@@ -45,7 +45,7 @@ CopyMasterPalettesToFadeBuffers:
 	dec b ; $7602
 	jr nz, .loopB ; $7603
 	ret ; $7605
-ClearFadeTargetPalettes:
+Unused_03_ClearFadeTargetPalettes:
 	ld hl, wPaletteFadeTarget ; $7606
 	ld b, $40 ; $7609
 	ld de, $0000 ; $760b

@@ -64,7 +64,7 @@ LoadN64RingShotRecords:
 N64RingShot:
 	; $5278, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
-SeedDefaultRingShotRecords:
+Unused_3b_SeedDefaultRingShotRecords:
 	ld hl, DefaultRingShot0 ; $5288
 	ld de, wN64RecordsBlock + 24 ; $528b
 	ld bc, $0010 ; $528e

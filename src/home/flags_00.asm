@@ -1,4 +1,4 @@
-GetScrollBufferAddr:
+Unused_00_GetScrollBufferAddr:
 	ld a, [wCameraY + 1] ; $22f6
 	add c ; $22f9
 	and $7f ; $22fa
@@ -43,7 +43,7 @@ Unused_00_BlitBGStrip:
 	ld de, wBGRowBlitAttrs ; $2336
 	add hl, de ; $2339
 	push hl ; $233a
-	call GetScrollBufferAddr ; $233b
+	call Unused_00_GetScrollBufferAddr ; $233b
 	pop de ; $233e
 	push hl ; $233f
 	wram_bank WRAM_COURT_PLANES ; $2340
@@ -102,7 +102,7 @@ Unused_00_BlitBGStrip2:
 	ld de, wBGColumnBlitAttrs ; $2395
 	add hl, de ; $2398
 	push hl ; $2399
-	call GetScrollBufferAddr ; $239a
+	call Unused_00_GetScrollBufferAddr ; $239a
 	pop de ; $239d
 	push hl ; $239e
 	wram_bank WRAM_COURT_PLANES ; $239f

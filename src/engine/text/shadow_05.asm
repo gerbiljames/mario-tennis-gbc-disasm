@@ -200,7 +200,7 @@ RestoreShadowTilemapRow:
 	ld bc, $0002 ; $449c
 	call CopyMemoryFast ; $449f
 	ret ; $44a2
-RefreshShadowTilemapFromMapBuffer:
+Unused_05_RefreshShadowTilemapFromMapBuffer:
 	push af ; $44a3
 	push bc ; $44a4
 	push de ; $44a5
@@ -254,7 +254,7 @@ Unused_05_GetCameraTileRow:
 	ld a, [wCameraY + 1] ; $44f3
 	and $3f ; $44f6
 	ret ; $44f8
-SetFixedMenuWindowTextId:
+Unused_05_SetFixedMenuWindowTextId:
 	push bc ; $44f9
 	push de ; $44fa
 	push hl ; $44fb
@@ -269,14 +269,14 @@ SetFixedMenuWindowTextId:
 	pop de ; $450d
 	pop bc ; $450e
 	ret ; $450f
-RunFixedTextMenu:
+Unused_05_RunFixedTextMenu:
 	push hl ; $4510
 	ldh a, [hWramBank] ; $4511
 	push af ; $4513
 	ld hl, Text_30_26 ; $4514
 	call CreateMenuWindowFromText ; $4517
 	call RestoreShadowTilemap ; $451a
-	call StubNop_05_0 ; $451d
+	call Unused_05_StubNop_05_0 ; $451d
 	call RunMenuSelection ; $4520
 	ld h, a ; $4523
 	ld a, [wMenuWindowId] ; $4524
@@ -311,7 +311,7 @@ DrawTextWindowFrameSaveRegs:
 	pop bc ; $454f
 	pop af ; $4550
 	ret ; $4551
-DrawTileAttrRect:
+Unused_05_DrawTileAttrRect:
 	push af ; $4552
 	push bc ; $4553
 	push de ; $4554

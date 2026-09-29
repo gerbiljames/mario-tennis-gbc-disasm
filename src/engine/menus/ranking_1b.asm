@@ -1,4 +1,4 @@
-ClearWram3Row64_1b:
+Unused_1b_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $4403
 	xor a ; $440c
 	ld c, $40 ; $440d
@@ -8,7 +8,7 @@ ClearWram3Row64_1b:
 	jr nz, .loop2 ; $4411
 	pop_wram_bank ; $4413
 	ret ; $4418
-ClearWram3Row64Alt_1b:
+Unused_1b_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $4419
 	ld a, $00 ; $4422
 	ld c, $40 ; $4424
@@ -26,12 +26,12 @@ UpdateAnimatedTilesTask:
 ; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_3b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_1b_DrawDecimalNumber, 1b ; $446d Unused_1b_DrawDecimalNumber
-DrawAsciiDigitString_1b:
+Unused_1b_DrawAsciiDigitString:
 	ld a, [hl+] ; $448e
 	and a ; $448f
 	jr z, .done ; $4490
 	call DrawAsciiDigitChar_1b ; $4492
-	jr DrawAsciiDigitString_1b ; $4495
+	jr Unused_1b_DrawAsciiDigitString ; $4495
 .done:
 	ret ; $4497
 ; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
@@ -141,13 +141,13 @@ CharMugshotGfxPointers:
 	dw $d600, $d690, $d720, $0000, $0090, $0120
 StubNop_1b_00:
 	ret ; $4e0c
-ResetMugshotPalettes_1b:
+Unused_1b_ResetMugshotPalettes:
 	ld a, $ff ; $4e0d
 	ld [wModeScratch], a ; $4e0f
 	ld d, $03 ; $4e12
-	farcall LoadAllIndexedPalettes_18 ; $4e14
+	farcall Unused_18_LoadAllIndexedPalettes ; $4e14
 	ret ; $4e17
-SetMugshotAttrs:
+Unused_1b_SetMugshotAttrs:
 	push af ; $4e18
 	push de ; $4e19
 	push hl ; $4e1a
@@ -180,11 +180,11 @@ LoadCharMugshotToBuffer:
 	call DecompressCharMugshot ; $4e3e
 	pop de ; $4e41
 	ret ; $4e42
-StubNop_1b_01:
+Unused_1b_StubNop_1b_01:
 	ret ; $4e43
-StubNop_1b_02:
+Unused_1b_StubNop_1b_02:
 	ret ; $4e44
-StubNop_1b_03:
+Unused_1b_StubNop_1b_03:
 	ret ; $4e45
 CopyMugshotBufferToVram:
 	push af ; $4e46
@@ -199,7 +199,7 @@ CopyMugshotBufferToVram:
 	pop bc ; $4e54
 	pop af ; $4e55
 	ret ; $4e56
-StubNop_1b_04:
+Unused_1b_StubNop_1b_04:
 	ret ; $4e57
 LoadIndexedPaletteThunk:
 	farcall LoadIndexedPalette_18 ; $4e58
@@ -230,9 +230,9 @@ DecompressCharMugshot:
 	pop de ; $4e7c
 	pop af ; $4e7d
 	ret ; $4e7e
-StubNop_1b_05:
+Unused_1b_StubNop_1b_05:
 	ret ; $4e7f
-StubNop_1b_06:
+Unused_1b_StubNop_1b_06:
 	ret ; $4e80
 ShowRankingBoard:
 	wram_bank WRAM_SCREEN ; $4e81

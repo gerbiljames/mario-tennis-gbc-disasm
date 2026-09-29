@@ -1,20 +1,20 @@
 	farptr DecompressCharMugshot ; $4000
 	farptr LoadIndexedPaletteThunk ; $4002
-	farptr StubNop_1b_05 ; $4004
-	farptr StubNop_1b_06 ; $4006
-	farptr StubNop_1b_06Alias1, StubNop_1b_06 ; $4008
-	farptr StubNop_1b_04 ; $400a
-	farptr ResetMugshotPalettes_1b ; $400c
-	farptr SetMugshotAttrs ; $400e
+	farptr Unused_1b_StubNop_1b_05 ; $4004
+	farptr Unused_1b_StubNop_1b_06 ; $4006
+	farptr StubNop_1b_06Alias1, Unused_1b_StubNop_1b_06 ; $4008
+	farptr Unused_1b_StubNop_1b_04 ; $400a
+	farptr Unused_1b_ResetMugshotPalettes ; $400c
+	farptr Unused_1b_SetMugshotAttrs ; $400e
 	farptr LoadCharMugshotToBuffer ; $4010
-	farptr StubNop_1b_01 ; $4012
-	farptr StubNop_1b_02 ; $4014
-	farptr StubNop_1b_03 ; $4016
+	farptr Unused_1b_StubNop_1b_01 ; $4012
+	farptr Unused_1b_StubNop_1b_02 ; $4014
+	farptr Unused_1b_StubNop_1b_03 ; $4016
 	farptr CopyMugshotBufferToVram ; $4018
 	farptr ShowRankingBoard ; $401a
-	farptr UpdateCharSelectSelection ; $401c
-	farptr RunStoryDataConfirmMenu ; $401e
-	farptr ShowNoN64DataFoundScreen ; $4020
+	farptr Unused_1b_UpdateCharSelectSelection ; $401c
+	farptr Unused_1b_RunStoryDataConfirmMenu ; $401e
+	farptr Unused_1b_ShowNoN64DataFoundScreen ; $4020
 	farptr RunNewGameSetup ; $4022
 	farptr Unused_1b_RunDebugSaveDataFlow ; $4024
 	farptr Unused_1b_RunMinigameFlagsDebugScreen ; $4026

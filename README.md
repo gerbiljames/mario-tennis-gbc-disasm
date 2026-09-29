@@ -299,6 +299,11 @@ of the ROM was reached.
   instruction after it, every PNG and tilemap grid encodes back to its
   blob, and every actor-slot name holds its actor in each list that can be
   active where it is used.
+- `tools/reach.py` — which routines can run at all, following every
+  reference from the reset, interrupt and `rst` vectors; `make check`
+  holds the `Unused` names to it, and `--coverage` sorts the routines a
+  sweep never entered into unreachable and not-yet-reached
+  (`docs/unused_code.md`).
 - `tools/actorslots.py` — which `map_actor` list a story script addresses
   at each slot operand, by following control flow through the story code
   (`docs/story_mode.md`, "map_actor"): reports the slot numbers it can

@@ -39,7 +39,7 @@ InitCutsceneSceneA:
 	xor a ; $5459
 	ld [wCameraY + 1], a ; $545a
 	ret ; $545d
-InitCutsceneSceneB:
+Unused_6b_InitCutsceneSceneB:
 	call DisableLCDSafely ; $545e
 	farcall InitSceneScroll ; $5461
 	farcall InitTextWindows ; $5464
@@ -238,7 +238,7 @@ QueueIntroSpriteBlock_SpriteTemplate:
 ;
 ; Was 30 bytes of data with no proven caller; seeded as code because it
 ; decodes as one complete routine ending in ret.
-RewriteCutsceneCameraY_6b:
+Unused_6b_RewriteCutsceneCameraY:
 	ld a, [wCutsceneStepTimer] ; $615e
 	cp $14 ; $6161
 	jr c, .done ; $6163

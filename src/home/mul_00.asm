@@ -4,7 +4,7 @@ SignExtendLToHL:
 	ret z ; $0911
 	dec h ; $0912
 	ret ; $0913
-SignExtendEToDE:
+Unused_00_SignExtendEToDE:
 	ld d, $00 ; $0914
 	bit 7, e ; $0916
 	ret z ; $0918

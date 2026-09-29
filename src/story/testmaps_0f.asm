@@ -34,7 +34,7 @@ SmallCharTestEntryPoints_0f:
 	db $ff
 SmallCharTestExitTriggers_0f:
 	ds 1, $ff ; $40cf, fill
-SmallCharTestStageStepDown_0f:
+Unused_0f_SmallCharTestStageStepDown:
 	ld hl, wMapSceneStage ; $40d0
 	ld a, [hl] ; $40d3
 	dec a ; $40d4

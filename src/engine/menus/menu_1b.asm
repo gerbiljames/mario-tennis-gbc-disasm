@@ -1,8 +1,8 @@
-DrawMenuCursorCorners:
+Unused_1b_DrawMenuCursorCorners:
 	push de ; $4040
 	push bc ; $4041
 	ld c, $00 ; $4042
-	call ApplyCursorBobOffsetX ; $4044
+	call Unused_1b_ApplyCursorBobOffsetX ; $4044
 	ld c, $00 ; $4047
 	call ApplyArrowBobOffset ; $4049
 	ld c, $00 ; $404c
@@ -17,7 +17,7 @@ DrawMenuCursorCorners:
 	ld d, a ; $4059
 	push de ; $405a
 	ld c, $01 ; $405b
-	call ApplyCursorBobOffsetX ; $405d
+	call Unused_1b_ApplyCursorBobOffsetX ; $405d
 	ld c, $00 ; $4060
 	call ApplyArrowBobOffset ; $4062
 	ld c, $00 ; $4065
@@ -36,7 +36,7 @@ DrawMenuCursorCorners:
 	ld d, a ; $4076
 	push de ; $4077
 	ld c, $01 ; $4078
-	call ApplyCursorBobOffsetX ; $407a
+	call Unused_1b_ApplyCursorBobOffsetX ; $407a
 	ld c, $01 ; $407d
 	call ApplyArrowBobOffset ; $407f
 	ld c, $00 ; $4082
@@ -50,7 +50,7 @@ DrawMenuCursorCorners:
 	ld e, a ; $408e
 	push de ; $408f
 	ld c, $00 ; $4090
-	call ApplyCursorBobOffsetX ; $4092
+	call Unused_1b_ApplyCursorBobOffsetX ; $4092
 	ld c, $01 ; $4095
 	call ApplyArrowBobOffset ; $4097
 	ld c, $00 ; $409a
@@ -58,7 +58,7 @@ DrawMenuCursorCorners:
 	call QueueSprite ; $409e
 	pop de ; $40a1
 	ret ; $40a2
-ApplyCursorBobOffsetX:
+Unused_1b_ApplyCursorBobOffsetX:
 	ldh a, [hVBlankCounter] ; $40a3
 	and $0f ; $40a5
 	ld hl, CursorBobOffsetTableX ; $40a7

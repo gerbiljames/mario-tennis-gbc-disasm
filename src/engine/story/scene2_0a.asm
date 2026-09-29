@@ -196,7 +196,7 @@ GetSceneSlotPtr:
 	pop bc ; $5d27
 	pop af ; $5d28
 	ret ; $5d29
-LoadSceneGraphicsDirect:
+Unused_0a_LoadSceneGraphicsDirect:
 	push af ; $5d2a
 	push bc ; $5d2b
 	push de ; $5d2c
@@ -299,12 +299,12 @@ LoadSceneGraphicsDirect:
 	pop bc ; $5ddf
 	pop af ; $5de0
 	ret ; $5de1
-LoadAndDisplayScene:
+Unused_0a_LoadAndDisplayScene:
 	push bc ; $5de2
 	push af ; $5de3
 	call DisableLCDSafely ; $5de4
 	pop af ; $5de7
-	call LoadSceneGraphicsDirect ; $5de8
+	call Unused_0a_LoadSceneGraphicsDirect ; $5de8
 	ld a, $00 ; $5deb
 	call GetSceneSlotPtr ; $5ded
 	ld de, wTextBuffer ; $5df0
@@ -328,7 +328,7 @@ LoadAndDisplayScene:
 	call AdvanceFrame ; $5e18
 	call AdvanceFrame ; $5e1b
 	ret ; $5e1e
-SceneViewerSelectScene:
+Unused_0a_SceneViewerSelectScene:
 	ldh a, [hInputRisingEdge] ; $5e1f
 	bit PADB_B, a ; $5e21
 	ret z ; $5e23
@@ -348,7 +348,7 @@ SceneViewerSelectScene:
 	cp $ff ; $5e41
 	jp z, .done ; $5e43
 	ld b, $01 ; $5e46
-	call LoadAndDisplayScene ; $5e48
+	call Unused_0a_LoadAndDisplayScene ; $5e48
 	ld a, [wCurrentScene] ; $5e4b
 	call InitSceneTileAnimations ; $5e4e
 .done:
@@ -361,7 +361,7 @@ UnusedSceneViewerSelectSceneMenu:
 	ld a, [$d820] ; $5e5c
 	ld [$d82f], a ; $5e5f
 	farcall RestoreShadowTilemap ; $5e62
-	farcall StubNop_05_0 ; $5e65
+	farcall Unused_05_StubNop_05_0 ; $5e65
 .inputLoop:
 	call AdvanceFrame ; $5e68
 	ldh a, [hPlayerInputFlags] ; $5e6b
@@ -376,11 +376,11 @@ UnusedSceneViewerSelectSceneMenu:
 	jp z, .redraw ; $5e82
 	ld a, [wCurrentScene] ; $5e85
 	ld b, $01 ; $5e88
-	call LoadAndDisplayScene ; $5e8a
+	call Unused_0a_LoadAndDisplayScene ; $5e8a
 	farcall RestoreShadowTilemap ; $5e8d
 .redraw:
 	ret ; $5e90
-RunSceneSelectDebugMenu:
+Unused_0a_RunSceneSelectDebugMenu:
 	push af ; $5e91
 	push bc ; $5e92
 	push de ; $5e93
@@ -453,7 +453,7 @@ ReadCollisionMapCell:
 	pop de ; $5f12
 	pop bc ; $5f13
 	ret ; $5f14
-WriteCollisionMapCell:
+Unused_0a_WriteCollisionMapCell:
 	push af ; $5f15
 	push bc ; $5f16
 	push de ; $5f17

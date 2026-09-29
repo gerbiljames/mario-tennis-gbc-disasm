@@ -155,7 +155,7 @@ CopyBehaviorMapRect:
 	pop bc ; $6019
 	pop af ; $601a
 	ret ; $601b
-InitSceneViewer:
+Unused_0a_InitSceneViewer:
 	push af ; $601c
 	push bc ; $601d
 	push de ; $601e
@@ -188,14 +188,14 @@ InitSceneViewer:
 	jr nz, .clearScroll ; $604b
 	and $7f ; $604d
 	ld b, $00 ; $604f
-	call LoadAndDisplayScene ; $6051
+	call Unused_0a_LoadAndDisplayScene ; $6051
 .clearScroll:
 	xor a ; $6054
 	ldh [hBGColumnBlitPending], a ; $6055
 	ldh [hBGRowBlitPending], a ; $6057
 	farcall InitTextWindows ; $6059
 	ld a, $01 ; $605c
-	ld hl, StubNop_0a ; $605e
+	ld hl, Unused_0a_StubNop ; $605e
 	call RegisterFrameTask ; $6061
 	ld a, [wCurrentScene] ; $6064
 	call InitSceneTileAnimations ; $6067
@@ -205,10 +205,10 @@ InitSceneViewer:
 	pop af ; $606d
 	ret ; $606e
 UnusedUnregisterSceneViewerFrameTask:
-	ld hl, StubNop_0a ; $606f
+	ld hl, Unused_0a_StubNop ; $606f
 	call UnregisterFrameTask ; $6072
 	ret ; $6075
-InitSceneViewerDefault:
+Unused_0a_InitSceneViewerDefault:
 	push af ; $6076
 	push bc ; $6077
 	push de ; $6078
@@ -234,7 +234,7 @@ InitSceneViewerDefault:
 	ld a, $00 ; $6098
 	ld [wCurrentScene], a ; $609a
 	ld b, $00 ; $609d
-	call LoadAndDisplayScene ; $609f
+	call Unused_0a_LoadAndDisplayScene ; $609f
 	farcall InitTextWindows ; $60a2
 	farcall RestoreShadowTilemap ; $60a5
 	ld a, [wCurrentScene] ; $60a8
@@ -245,20 +245,20 @@ InitSceneViewerDefault:
 	pop af ; $60b1
 	ret ; $60b2
 UnusedSceneViewerMainLoop:
-	call InitSceneViewerDefault ; $60b3
+	call Unused_0a_InitSceneViewerDefault ; $60b3
 .clearScroll:
-	call UpdateSceneViewerScroll ; $60b6
-	call SceneViewerSelectScene ; $60b9
+	call Unused_0a_UpdateSceneViewerScroll ; $60b6
+	call Unused_0a_SceneViewerSelectScene ; $60b9
 	call AdvanceFrame ; $60bc
 	jr .clearScroll ; $60bf
-StubNop_0a:
+Unused_0a_StubNop:
 	ret ; $60c1
-UpdateSceneViewerScroll:
+Unused_0a_UpdateSceneViewerScroll:
 	ld a, [wCameraX + 1] ; $60c2
 	push af ; $60c5
 	ld a, [wCameraY + 1] ; $60c6
 	push af ; $60c9
-	call MoveSceneViewerCamera ; $60ca
+	call Unused_0a_MoveSceneViewerCamera ; $60ca
 	pop hl ; $60cd
 	ld a, [wCameraY + 1] ; $60ce
 	cp h ; $60d1
@@ -323,7 +323,7 @@ DPadMoveVectors_0a:
 	dw $0040, $0000 ; record 13
 	dw $ffc0, $0000 ; record 14
 	dw $0000, $0000 ; record 15
-MoveSceneViewerCamera:
+Unused_0a_MoveSceneViewerCamera:
 	ldh a, [hPlayerInputFlags] ; $6160
 	rra ; $6162
 	rra ; $6163

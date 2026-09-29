@@ -8,7 +8,7 @@
 	farptr InitDialogueTextCursor ; $400e
 	farptr AdvanceDialogueTextCursor ; $4010
 	farptr RunDialogueYesNoPrompt ; $4012
-	farptr ScriptSkipSpeakerDialogue ; $4014
+	farptr Unused_0a_ScriptSkipSpeakerDialogue ; $4014
 	farptr GetActorStateAddr ; $4016
 	farptr ScriptSetActorMoveSpeed ; $4018
 	farptr ScriptSetActorScript ; $401a
@@ -17,7 +17,7 @@
 	farptr ScriptWaitActorMoveDone ; $4020
 	farptr ScriptSetActorPosition ; $4022
 	farptr ScriptSetActorMoveTarget ; $4024
-	farptr MoveActorTowardPoint ; $4026
+	farptr Unused_0a_MoveActorTowardPoint ; $4026
 	farptr MoveActorByDelta ; $4028
 	farptr MoveActorByAngle ; $402a
 	farptr ScriptSetActorFacingLock ; $402c
@@ -39,10 +39,10 @@
 	farptr RunStoryMatch ; $404c
 	farptr RestoreOverworldAfterMatch ; $404e
 	farptr SetMatchDoublesMode ; $4050
-	farptr SetStoryMatchOpponent ; $4052
-	farptr SetCurrentlyUsedCourt ; $4054
-	farptr SetMatchNumberOfSets ; $4056
-	farptr SetMatchNumberOfGames ; $4058
+	farptr Unused_0a_SetStoryMatchOpponent ; $4052
+	farptr Unused_0a_SetCurrentlyUsedCourt ; $4054
+	farptr Unused_0a_SetMatchNumberOfSets ; $4056
+	farptr Unused_0a_SetMatchNumberOfGames ; $4058
 	farptr LoadMatchSettingsFromTable ; $405a
 	farptr RunStoryModeOverworld ; $405c
 	farptr InitLocationActors ; $405e
@@ -55,10 +55,10 @@
 	farptr LoadStorySceneGraphics ; $406c
 	farptr Unused_0a_CopySceneTilemapToVram ; $406e
 	farptr UpdateSceneScroll ; $4070
-	farptr InitSceneViewer ; $4072
-	farptr RunSceneSelectDebugMenu ; $4074
+	farptr Unused_0a_InitSceneViewer ; $4072
+	farptr Unused_0a_RunSceneSelectDebugMenu ; $4074
 	farptr CopyScrolledSceneTilemapToVram ; $4076
-	farptr LoadAndDisplayScene ; $4078
+	farptr Unused_0a_LoadAndDisplayScene ; $4078
 	farptr InitSceneTileAnimations ; $407a
 	farptr StopSceneTileAnimations ; $407c
 	farptr CopySceneTilemapRect ; $407e
@@ -66,12 +66,12 @@
 	farptr CopyBehaviorMapRect ; $4082
 	farptr ReadCollisionMapCell ; $4084
 	farptr ReadBehaviorMapCell ; $4086
-	farptr WriteCollisionMapCell ; $4088
+	farptr Unused_0a_WriteCollisionMapCell ; $4088
 	farptr WriteBehaviorMapCell ; $408a
 	farptr LoadCourtSceneGraphics ; $408c
-	farptr UpdateSceneViewerScroll ; $408e
+	farptr Unused_0a_UpdateSceneViewerScroll ; $408e
 	farptr ShowLocationNamePopup ; $4090
-	farptr CopySceneTilemapChunk ; $4092
+	farptr Unused_0a_CopySceneTilemapChunk ; $4092
 	farptr ClearStatusSetupMenuEntry ; $4094
 	farptr InitMinigameTargets ; $4096
 	farptr UpdateMinigameTargets ; $4098

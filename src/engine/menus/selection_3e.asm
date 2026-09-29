@@ -113,7 +113,7 @@ SelectionBoxWobbleYTable_3e:
 	twin draw_corner_brackets, 3e ; $40ff DrawCornerBrackets_3e
 ; Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3b (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid, 3e ; $413a MoveMenuCursorGrid_3e
-; Instruction-identical to Unused_16_MoveMenuCursorGridFromLinkInput and MoveMenuCursorGridFromLinkInput_38 (one copy per bank); a change here belongs in every copy.
+; Instruction-identical to Unused_16_MoveMenuCursorGridFromLinkInput and Unused_38_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_from_link_input, Unused_3e_MoveMenuCursorGridFromLinkInput, 3e ; $41b8 Unused_3e_MoveMenuCursorGridFromLinkInput
 ; Instruction-identical to Unused_16_MoveMenuCursorGridRemote and Unused_38_MoveMenuCursorGridRemote (one copy per bank); a change here belongs in every copy.

@@ -1,9 +1,9 @@
-DrawExpScreenNameAndLevel:
+Unused_1a_DrawExpScreenNameAndLevel:
 	push af ; $4b1f
 	push bc ; $4b20
 	push de ; $4b21
 	push hl ; $4b22
-	call ClearExpScreenNameBox ; $4b23
+	call Unused_1a_ClearExpScreenNameBox ; $4b23
 	wram_bank WRAM_STAGING ; $4b26
 	push af ; $4b2c
 	ld hl, wStoryModeNameOfMainCharacter ; $4b2d
@@ -20,7 +20,7 @@ DrawExpScreenNameAndLevel:
 	ld h, a ; $4b3f
 	pop af ; $4b40
 	ld de, wDecompBuffer + 76 * TILE_SIZE + 7 ; $4b41
-	call CopyNameToTileBuffer ; $4b44
+	call Unused_1a_CopyNameToTileBuffer ; $4b44
 	push af ; $4b47
 	ld hl, wStoryModeNameOfMainCharacter ; $4b48
 	ld a, [wStoryCharacterSlot] ; $4b4b
@@ -48,7 +48,7 @@ DrawExpScreenNameAndLevel:
 	pop bc ; $4b70
 	pop af ; $4b71
 	ret ; $4b72
-CopyNameToTileBuffer:
+Unused_1a_CopyNameToTileBuffer:
 	ld a, [hl+] ; $4b73
 	or a ; $4b74
 	ret z ; $4b75
@@ -58,9 +58,9 @@ CopyNameToTileBuffer:
 	jr z, .moveTileBufferDestUpRow ; $4b7c
 	ld [de], a ; $4b7e
 	inc de ; $4b7f
-	jr CopyNameToTileBuffer ; $4b80
+	jr Unused_1a_CopyNameToTileBuffer ; $4b80
 .moveTileBufferDestUpRow:
-	call MoveTileBufferDestUpRow ; $4b82
+	call Unused_1a_MoveTileBufferDestUpRow ; $4b82
 	ld [de], a ; $4b85
 	ld a, $21 ; $4b86
 	add e ; $4b88
@@ -68,15 +68,15 @@ CopyNameToTileBuffer:
 	jr nc, .copyNameToTileBuffer ; $4b8a
 	inc d ; $4b8c
 .copyNameToTileBuffer:
-	jr CopyNameToTileBuffer ; $4b8d
-MoveTileBufferDestUpRow:
+	jr Unused_1a_CopyNameToTileBuffer ; $4b8d
+Unused_1a_MoveTileBufferDestUpRow:
 	ld b, $21 ; $4b8f
 .loop:
 	dec de ; $4b91
 	dec b ; $4b92
 	jr nz, .loop ; $4b93
 	ret ; $4b95
-ClearExpScreenNameBox:
+Unused_1a_ClearExpScreenNameBox:
 	push af ; $4b96
 	push bc ; $4b97
 	push de ; $4b98
@@ -92,7 +92,7 @@ ClearExpScreenNameBox:
 	cp $0d ; $4ba4
 	jr z, .eq0d ; $4ba6
 	ld de, $2000 ; $4ba8
-	call WriteTileBufferCell ; $4bab
+	call Unused_1a_WriteTileBufferCell ; $4bab
 	inc b ; $4bae
 	jr .loopB ; $4baf
 .eq0d:
@@ -104,11 +104,11 @@ ClearExpScreenNameBox:
 	pop bc ; $4bb6
 	pop af ; $4bb7
 	ret ; $4bb8
-StubNop_1a_1:
+Unused_1a_StubNop_1a_1:
 	ret ; $4bb9
-StubNop_1a_2:
+Unused_1a_StubNop_1a_2:
 	ret ; $4bba
-DrawPositionedStringToTileBuffer:
+Unused_1a_DrawPositionedStringToTileBuffer:
 	push af ; $4bbb
 	push bc ; $4bbc
 	push de ; $4bbd
@@ -122,13 +122,13 @@ DrawPositionedStringToTileBuffer:
 	ld a, [hl] ; $4bc5
 	ld e, a ; $4bc6
 	inc hl ; $4bc7
-	call DrawStringToTileBuffer ; $4bc8
+	call Unused_1a_DrawStringToTileBuffer ; $4bc8
 	pop hl ; $4bcb
 	pop de ; $4bcc
 	pop bc ; $4bcd
 	pop af ; $4bce
 	ret ; $4bcf
-DrawStringToTileBuffer:
+Unused_1a_DrawStringToTileBuffer:
 	push af ; $4bd0
 	push bc ; $4bd1
 	push de ; $4bd2
@@ -146,7 +146,7 @@ DrawStringToTileBuffer:
 	cp $df ; $4be5
 	jr z, .specialChar ; $4be7
 	ld d, a ; $4be9
-	call WriteTileBufferCell ; $4bea
+	call Unused_1a_WriteTileBufferCell ; $4bea
 	inc b ; $4bed
 	inc hl ; $4bee
 	jr .charLoop ; $4bef
@@ -160,7 +160,7 @@ DrawStringToTileBuffer:
 	jr z, .noRoom ; $4bf8
 	pop af ; $4bfa
 	ld d, a ; $4bfb
-	call WriteTileBufferCell ; $4bfc
+	call Unused_1a_WriteTileBufferCell ; $4bfc
 	pop bc ; $4bff
 	inc hl ; $4c00
 	jr .charLoop ; $4c01
@@ -176,7 +176,7 @@ DrawStringToTileBuffer:
 .altTile:
 	ld de, $030b ; $4c12
 .writeTile:
-	call WriteTileBufferCell ; $4c15
+	call Unused_1a_WriteTileBufferCell ; $4c15
 	pop de ; $4c18
 	pop bc ; $4c19
 	inc hl ; $4c1a
@@ -187,7 +187,7 @@ DrawStringToTileBuffer:
 	pop bc ; $4c1f
 	pop af ; $4c20
 	ret ; $4c21
-GetTileBufferCellAddr:
+Unused_1a_GetTileBufferCellAddr:
 	push af ; $4c22
 	push de ; $4c23
 	ld hl, $0020 ; $4c24
@@ -203,13 +203,13 @@ GetTileBufferCellAddr:
 	pop de ; $4c35
 	pop af ; $4c36
 	ret ; $4c37
-WriteTileBufferCell:
+Unused_1a_WriteTileBufferCell:
 	push af ; $4c38
 	push bc ; $4c39
 	push de ; $4c3a
 	push hl ; $4c3b
 	push_wram_bank WRAM_STAGING ; $4c3c
-	call GetTileBufferCellAddr ; $4c45
+	call Unused_1a_GetTileBufferCellAddr ; $4c45
 	ld a, e ; $4c48
 	ld [hl], a ; $4c49
 	push de ; $4c4a
@@ -232,11 +232,11 @@ Unused_1a_WriteStatModifierToTileBuffer:
 	ld d, a ; $4c60
 	push bc ; $4c61
 	push de ; $4c62
-	call SignExtendModifierByte ; $4c63
+	call Unused_1a_SignExtendModifierByte ; $4c63
 	push hl ; $4c66
 	pop bc ; $4c67
 	ld de, $0000 ; $4c68
-	call CompareBCToDE ; $4c6b
+	call Unused_1a_CompareBCToDE ; $4c6b
 	cp $00 ; $4c6e
 	jr z, .zero ; $4c70
 	bit 7, h ; $4c72
@@ -254,7 +254,7 @@ Unused_1a_WriteStatModifierToTileBuffer:
 	push de ; $4c82
 	ld d, a ; $4c83
 	ld e, $01 ; $4c84
-	call WriteTileBufferCell ; $4c86
+	call Unused_1a_WriteTileBufferCell ; $4c86
 	pop de ; $4c89
 	inc b ; $4c8a
 	ld a, d ; $4c8b
@@ -262,7 +262,7 @@ Unused_1a_WriteStatModifierToTileBuffer:
 	jr z, .tens ; $4c8e
 	push bc ; $4c90
 	push de ; $4c91
-	call SignExtendModifierByte ; $4c92
+	call Unused_1a_SignExtendModifierByte ; $4c92
 	bit 7, h ; $4c95
 	jr z, .divide ; $4c97
 	push hl ; $4c99
@@ -285,12 +285,12 @@ Unused_1a_WriteStatModifierToTileBuffer:
 	push de ; $4cb1
 	ld d, $31 ; $4cb2
 	ld e, $01 ; $4cb4
-	call WriteTileBufferCell ; $4cb6
+	call Unused_1a_WriteTileBufferCell ; $4cb6
 	pop de ; $4cb9
 	inc b ; $4cba
 .tens:
 	ld a, d ; $4cbb
-	call GetModifierTensDigit ; $4cbc
+	call Unused_1a_GetModifierTensDigit ; $4cbc
 	cp $00 ; $4cbf
 	jr nz, .writeTens ; $4cc1
 	ld a, d ; $4cc3
@@ -303,24 +303,24 @@ Unused_1a_WriteStatModifierToTileBuffer:
 	push de ; $4cce
 	ld d, a ; $4ccf
 	ld e, $01 ; $4cd0
-	call WriteTileBufferCell ; $4cd2
+	call Unused_1a_WriteTileBufferCell ; $4cd2
 	pop de ; $4cd5
 	inc b ; $4cd6
 .ones:
 	ld a, d ; $4cd7
-	call GetModifierOnesDigit ; $4cd8
+	call Unused_1a_GetModifierOnesDigit ; $4cd8
 	add $30 ; $4cdb
 	push de ; $4cdd
 	ld d, a ; $4cde
 	ld e, $01 ; $4cdf
-	call WriteTileBufferCell ; $4ce1
+	call Unused_1a_WriteTileBufferCell ; $4ce1
 	pop de ; $4ce4
 	pop hl ; $4ce5
 	pop de ; $4ce6
 	pop bc ; $4ce7
 	pop af ; $4ce8
 	ret ; $4ce9
-CompareBCToDE:
+Unused_1a_CompareBCToDE:
 	push bc ; $4cea
 	push de ; $4ceb
 	push hl ; $4cec
@@ -352,11 +352,11 @@ CompareBCToDE:
 	pop de ; $4d0e
 	pop bc ; $4d0f
 	ret ; $4d10
-GetModifierTensDigit:
+Unused_1a_GetModifierTensDigit:
 	push bc ; $4d11
 	push de ; $4d12
 	push hl ; $4d13
-	call SignExtendModifierByte ; $4d14
+	call Unused_1a_SignExtendModifierByte ; $4d14
 	bit 7, h ; $4d17
 	jr z, .positive ; $4d19
 	push hl ; $4d1b
@@ -392,11 +392,11 @@ GetModifierTensDigit:
 	pop de ; $4d41
 	pop bc ; $4d42
 	ret ; $4d43
-GetModifierOnesDigit:
+Unused_1a_GetModifierOnesDigit:
 	push bc ; $4d44
 	push de ; $4d45
 	push hl ; $4d46
-	call SignExtendModifierByte ; $4d47
+	call Unused_1a_SignExtendModifierByte ; $4d47
 	bit 7, h ; $4d4a
 	jr z, .positive ; $4d4c
 	push hl ; $4d4e
@@ -444,7 +444,7 @@ GetModifierOnesDigit:
 	pop de ; $4d83
 	pop bc ; $4d84
 	ret ; $4d85
-SignExtendModifierByte:
+Unused_1a_SignExtendModifierByte:
 	push af ; $4d86
 	push bc ; $4d87
 	push de ; $4d88

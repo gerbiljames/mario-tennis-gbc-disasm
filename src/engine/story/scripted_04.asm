@@ -73,7 +73,7 @@ GetObjectDefCount:
 	pop hl ; $4c1a
 	pop bc ; $4c1b
 	ret ; $4c1c
-GetCharObjectId:
+Unused_04_GetCharObjectId:
 	push hl ; $4c1d
 	ld hl, CharObjectIdTable ; $4c1e
 	add l ; $4c21

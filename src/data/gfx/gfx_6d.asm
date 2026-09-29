@@ -36,7 +36,7 @@ DataPtr_IntroCharactersTilemap2:
 	dw IntroCharactersTilemap2 ; $4022
 DataPtr_IntroCharactersAttrmap2:
 	dw IntroCharactersAttrmap2 ; $4024
-	farptr ShowIntroCharacterScreen ; $4026
+	farptr Unused_6d_ShowIntroCharacterScreen ; $4026
 DataPtr_IntroCharacterIcon00:
 	dw IntroCharacterIcon00 ; $4028
 DataPtr_IntroCharacterIcon00Alias1:
@@ -185,7 +185,7 @@ IntroCharactersAttrmap2:
 	INCBIN "data/bank_06d/lz_IntroCharactersAttrmap2.bin" ; $6250, 133 bytes
 TitleScreenTiles:
 	INCBIN "data/bank_06d/lz_TitleScreenTiles.bin" ; $62d5, 1962 bytes
-ShowIntroCharacterScreen:
+Unused_6d_ShowIntroCharacterScreen:
 	sound BGM_SENIOR_RANKING ; $6a7f
 	call DisableLCDSafely ; $6a81
 	call ClearFrameTasks ; $6a84
@@ -197,7 +197,7 @@ ShowIntroCharacterScreen:
 	farcall LoadIntroTilesAndPalette ; $6a91
 	farcall QueueWram3MapToVRAM ; $6a94
 	ld a, $01 ; $6a97
-	ld hl, IntroCharacterScreenFrameTask ; $6a99
+	ld hl, Unused_6d_IntroCharacterScreenFrameTask ; $6a99
 	call RegisterFrameTask ; $6a9c
 	call EnableLCD ; $6a9f
 	script_fade_in $10 ; $6aa2
@@ -212,7 +212,7 @@ ShowIntroCharacterScreen:
 	call WaitFadeEnd ; $6ab8
 	call ClearFrameTasks ; $6abb
 	ret ; $6abe
-IntroCharacterScreenFrameTask:
+Unused_6d_IntroCharacterScreenFrameTask:
 	ld de, $4020 ; $6abf
 	ld c, $03 ; $6ac2
 	farcall QueueIntroSpriteBlock ; $6ac4

@@ -341,7 +341,7 @@ font tileset reserves tiles `$02`-`$09` for the box:
 | `QueueFullTilemapCopy` / `QueueFullAttrmapCopy` | `$05:$41c6` / `$41df` | `b` = WRAM bank; `$d000` → `$9800` and `$d400` → `$9800 + VRAM_BANK1`, `c = $40`. |
 | `CopyVisibleTilemapToVRAM` | `$05:$4146` | scroll-aware: 19 rows starting at `(wCameraY+1) & $1f`, split into two copies when the band wraps past row 32. Both planes. |
 | `CopyScrolledSceneTilemapToVram` | `$0a:$5c29` | the overworld's LCD-off blit — see below. |
-| `Unused_00_QueueDeferredTilemapCopy` | `$00:$2a2e` | stores `a` = WRAM bank, `c` = length, `hl` = tile source, `de` = attribute source, then registers `VBlankDeferredTilemapCopyTask` as a frame task with id `$05`. `wDeferredTilemapPending`'s low nibble owes the tile plane and the high nibble the attributes; the destination is hard-coded `$9800`. |
+| `Unused_00_QueueDeferredTilemapCopy` | `$00:$2a2e` | stores `a` = WRAM bank, `c` = length, `hl` = tile source, `de` = attribute source, then registers `Unused_00_VBlankDeferredTilemapCopyTask` as a frame task with id `$05`. `wDeferredTilemapPending`'s low nibble owes the tile plane and the high nibble the attributes; the destination is hard-coded `$9800`. |
 | `FlushDirtyRowsPerFrame` | `$05:$711a` | the text engine's incremental flush — §7.6. |
 
 `CopyScrolledSceneTilemapToVram` is worth reading once, because it is the
@@ -364,7 +364,7 @@ geometries, and pushes one row and one column per frame through §2.4.
 | addressing helper | addr | geometry |
 |---|---|---|
 | `GetMapBufferAddr64` | `$00:$220e` | 64 × 64 cells: `$d000 + ((camY+c) & $3f) * 64 + ((camX+b) & $3f)` |
-| `GetScrollBufferAddr` | `$00:$22f6` | 32 × 128 cells: `$d000 + ((camY+c) & $7f) * 32 + ((camX+b) & $1f)` |
+| `Unused_00_GetScrollBufferAddr` | `$00:$22f6` | 32 × 128 cells: `$d000 + ((camY+c) & $7f) * 32 + ((camX+b) & $1f)` |
 
 Both are 4096 bytes, i.e. the same region carved differently; which one a
 screen uses is fixed by which blitter it calls.
@@ -380,9 +380,9 @@ Each gathers into the staging buffers of §2.4 *indexed by the destination
 column*, so the row lands correctly rotated on the VRAM torus (`inc e / res 5, e`
 wraps the stage at 32), and sets the matching pending flag.
 
-`CopyMapToScrollBuffers` (`$00:$086c`) fills the 64-wide buffers from a
+`Unused_00_CopyMapToScrollBuffers` (`$00:$086c`) fills the 64-wide buffers from a
 decompressed 32-wide map: four 512-byte chunks are copied out of `wDecompBuffer`
-(WRAM bank `$01`) through `wTextBuffer` and expanded by `CopyMapRows32To64`
+(WRAM bank `$01`) through `wTextBuffer` and expanded by `Unused_00_CopyMapRows32To64`
 (`$00:$07dd`), which writes 32 source bytes then 32 zero bytes per row, 16 rows
 per call. Note that the second and fourth chunks are expanded and then
 immediately cleared — `ClearMemory16` with `c = $80` over `wMapScrollPlane1`
@@ -472,7 +472,7 @@ advances `wAnimatedTileFrame`, looks up `wAnimatedTileSet` in
 two-lane scrolling sprite band behind menus, alternating lanes each frame and
 emitting a 10-sprite row through `QueueSpriteTemplate`.
 `LoadIndexedPalette` (`$39:$457f`, `c` = palette data index, `b` = destination
-slot) and `LoadFixedPaletteSet` (`$39:$4661`) are the shared palette loaders.
+slot) and `Unused_39_LoadFixedPaletteSet` (`$39:$4661`) are the shared palette loaders.
 
 ---
 
@@ -642,7 +642,7 @@ the assembled bytes are unchanged while the operand names its string;
 the generator (`tools/disasmlib/textids.py` at tag `generator-final`)
 implemented the same decode and found sites by
 walking *consumers* of `hl` (`TEXT_ID_SINKS` = `FetchDialogueText`,
-`AddTextIdOffset`, `CreateWindowWithTextId`, grown through wrappers that forward
+`AddTextIdOffset`, `Unused_05_CreateWindowWithTextId`, grown through wrappers that forward
 `hl` untouched); `tools/strings.py --index --bank XX` dumps `bank:index → text`
 from the reader's own ROM.
 
@@ -729,7 +729,7 @@ shadow tilemap, skipping cells that already hold `$06` (the right border).
 So a window's interior text cells hold tile ids `$80 + column`
 (`DrawTextWindowFrame`, `$05:$6fc1`), and the engine keeps rewriting the VRAM
 tiles under them. Upload paths: `UploadLastGlyphTiles` (`$05:$7607`, the
-typewriter — just the 2 tiles at the pen), `UploadGlyphTileRange` (`$05:$78ad`),
+typewriter — just the 2 tiles at the pen), `Unused_05_UploadGlyphTileRange` (`$05:$78ad`),
 `UploadGlyphBufferFull` (`$05:$742c`, five 16-tile pages with `AdvanceFrame`
 between them), `FlushGlyphRow` (`$05:$77a3`, queued or DMA depending on the LCD).
 
@@ -760,7 +760,7 @@ entry point (`ShowSpeakerDialogue`, `$05:$582c`-`$583e`).
 |---|---|---|---|---|
 | `wTextArgStringQueue` | `$d8b0` | 2-byte pointer, high nibble = WRAM bank tag | `PushTextArgString` (`$05:$50f7`) | code `$04` |
 | `wTextArgNumberQueue` | `$d8d0` | 2-byte value | `PushTextArgNumber` (`$05:$5147`) | code `$09` |
-| `wTextArgShortTextQueue` | `$d8f0` | 1-byte short-text id | `PushTextArgShortTextId` (`$05:$517a`) | **nobody** — code `$08` is a `ret` |
+| `wTextArgShortTextQueue` | `$d8f0` | 1-byte short-text id | `Unused_05_PushTextArgShortTextId` (`$05:$517a`) | **nobody** — code `$08` is a `ret` |
 
 Each has three cursors: a write index, a count, and a separate *measure* index.
 That is because `FitWindowToText` / `MeasureTextDimensions` walk the whole
@@ -848,7 +848,7 @@ to `$9800`, attributes from `+$0400` to `$9800 + VRAM_BANK1` — and calling
 
 ### 7.7 Menus over windows
 
-`RunMenuSelection` (`$05:$477f`) and `RunMenuSelectionShared` (`$05:$4b17`) run
+`RunMenuSelection` (`$05:$477f`) and `Unused_05_RunMenuSelectionShared` (`$05:$4b17`) run
 the cursor loop over a text-derived menu window and return:
 
 | return | meaning |
@@ -862,8 +862,8 @@ A "paged text menu" is a menu whose items are consecutive text ids, four per
 page. `RunPagedTextMenu` (`$05:$4944`) takes `hl` = base text id, `de` = window
 column/row, `a` = page count, and returns `wMenuPage * 4 + row` or `$ff`
 (caller example: `$10:$4088`, `ld hl,$0484 / ld de,$0101 / ld a,$05`).
-`RunPagedTextMenuAutoSize` (`$05:$49f6`) re-derives the column per page and
-registers `PagedMenuFrameTask` — and has no callers.
+`Unused_05_RunPagedTextMenuAutoSize` (`$05:$49f6`) re-derives the column per page and
+registers `Unused_05_PagedMenuFrameTask` — and has no callers.
 
 `wMenuStack` (`$d832`, six 2-byte frames of
 `[rowCount << 4 | cursorRow, windowId]`) plus `wMenuDepth` (`$d83e`) let nested
@@ -871,7 +871,7 @@ menus restore their cursor: `CreateMenuWindowFromText` writes the outgoing
 menu's `wMenuCursorRow` into the current frame before pushing a new one
 (`$05:$4707`-`$4738`).
 
-Bank `$1a` is the shared layer above this — the pause menus. `RunPauseMenuWindow`
+Bank `$1a` is the shared layer above this — the pause menus. `Unused_1a_RunPauseMenuWindow`
 (`$1a:$402c`) shows the whole idiom:
 
 ```
@@ -881,8 +881,8 @@ set_flag FLAG_VRAM_UPDATE_BUSY
 farcall RestoreShadowTilemap / RenderMenuWindowText
 clear_flag FLAG_VRAM_UPDATE_BUSY
 .menuLoop:
-  DrawPauseMenuSettingValues
-  farcall RunMenuSelectionShared
+  Unused_1a_DrawPauseMenuSettingValues
+  farcall Unused_05_RunMenuSelectionShared
   ... test wMenuKeepOpenRowMask bit for the chosen row ...
   farcall CloseWindow                 ; unless the row is marked keep-open
 ```
@@ -900,11 +900,11 @@ caption text id.
 
 ROM0 carries a second, independent text renderer used for numbers and debug
 output. `NumberFontGlyphPtrs` (`$00:$2091`) is 16 pointers to `font_glyph`
-records — `db width, height` then 2bpp rows. `RenderGlyphToTiles`
+records — `db width, height` then 2bpp rows. `Unused_00_RenderGlyphToTiles`
 (`$00:$211b`) is a true per-pixel 2bpp blitter: it takes a pixel X in `b`, a
 row offset in `c` and a tile-strip base in `de`, builds a destination bit mask
 from `PixelMaskTable` (`$00:$2113`), and consumes two source bits per iteration
-to write both bitplanes. `RenderTextToTiles` (`$00:$20e5`) walks a NUL-terminated
+to write both bitplanes. `Unused_00_RenderTextToTiles` (`$00:$20e5`) walks a NUL-terminated
 ASCII string, treats any byte below `$30` as a 6-pixel space, and advances by
 each glyph's own width — a proportional number font. `PrintString` (`$00:$1bd8`),
 `FormatHexWord` (`$00:$1935`), `FormatDecimalNumber` (`$00:$1961`) and
@@ -1025,7 +1025,7 @@ differs is only the input source and which cursor pair is written:
 |---|---|---|---|---|
 | `$16` | `Unused_16_MoveMenuCursorGrid` `$40cd` | `Unused_16_MoveMenuCursorGridFromLinkInput` `$414b` | `Unused_16_MoveMenuCursorGridRemote` `$41d5` | `Unused_16_MoveMenuCursor2GridRemote` `$42a0` |
 | `$1b` | `MoveMenuCursorGrid_1b` `$4107` | — | — | `Unused_1b_MoveMenuCursor2GridRemote` `$42da` |
-| `$38` | `MoveMenuCursorGrid_38` `$410a` | `MoveMenuCursorGridFromLinkInput_38` `$4188` | `Unused_38_MoveMenuCursorGridRemote` `$4212` | `Unused_38_MoveMenuCursor2GridRemote` `$42dd` |
+| `$38` | `MoveMenuCursorGrid_38` `$410a` | `Unused_38_MoveMenuCursorGridFromLinkInput` `$4188` | `Unused_38_MoveMenuCursorGridRemote` `$4212` | `Unused_38_MoveMenuCursor2GridRemote` `$42dd` |
 | `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `Unused_3b_MoveMenuCursorRepeat` `$41a8` | `Unused_3b_MoveMenuCursorLinkLocal` `$4225` | `Unused_3b_MoveMenuCursorLinkRemote` `$42f0` |
 | `$3e` | `MoveMenuCursorGrid_3e` `$413a` | `Unused_3e_MoveMenuCursorGridFromLinkInput` `$41b8` | `Unused_3e_MoveMenuCursorGridRemote` `$4242` | `Unused_3e_MoveMenuCursor2GridRemote` `$430d` |
 
@@ -1046,8 +1046,8 @@ confirmation runs.
 ### 8.4 Confirm dialogs
 
 The reusable path is a menu window over a text id: `CreateMenuWindowFromText`
-with the prompt's text id, then `RunMenuSelectionShared`, then `CloseWindow`
-(§7.7). Bank `$18` has a hand-built alternative: `InitConfirmScreen` builds the
+with the prompt's text id, then `Unused_05_RunMenuSelectionShared`, then `CloseWindow`
+(§7.7). Bank `$18` has a hand-built alternative: `Unused_18_InitConfirmScreen` builds the
 box, font, cursor and score panel, and `DrawYesNoLabels` writes two 3×2 tile
 words plus their attribute rows into fixed cells, with prompts at text ids
 `$046a`/`$046b`/`$046d`/`$0471` (bank `$31`, indices 106/107/109/113 — "Erase?",
@@ -1161,7 +1161,7 @@ overworld call never returns. It was called `RunDebugTestMenu` until 2026-07-30.
   They are four *separate* one-byte `ret`s, which is suggestive of deleted
   handlers, but nothing proves it.
 - How the `or $80` on `wMessageSpeed` at `$1a:$427c`/`$4295` interacts with
-  `ApplyMessageSpeed`'s "bit 7 = instant" reading. `RestoreMessageSpeed`
+  `ApplyMessageSpeed`'s "bit 7 = instant" reading. `Unused_1a_RestoreMessageSpeed`
   exists, but no call ordering was traced that guarantees the bit is cleared.
 - `wGlyphBufferHoldCount` (`$d822`) is read and decremented but raised
   nowhere in the ROM, by name or by address: see
@@ -1187,14 +1187,14 @@ does not re-derive them.
   table; its use of `b`/`c` reads as a fragment of an earlier design. The live
   per-window glyph path is `InitGlyphStreamForWindow` → `DrawStreamGlyph` →
   `StampGlyphTileAtPen` → `FlushGlyphRow`.
-- `RunPagedTextMenuAutoSize` (`$05:$49f6`) has no callers, which is why nobody
-  noticed that the frame task it registers, `PagedMenuFrameTask`, has an empty
+- `Unused_05_RunPagedTextMenuAutoSize` (`$05:$49f6`) has no callers, which is why nobody
+  noticed that the frame task it registers, `Unused_05_PagedMenuFrameTask`, has an empty
   body (see [bugs.md](bugs.md)).
-- `PushTextArgShortTextId` (`$05:$517a`) has no callers and control code `$08`
+- `Unused_05_PushTextArgShortTextId` (`$05:$517a`) has no callers and control code `$08`
   is a `ret`, so the short-text argument queue is write-never/read-never; only
   the measuring pass would consume it.
 - Control codes `$05` and `$08` never appear in any string in `data/*/TextStrings_*.asm`.
-- `CopyMapToScrollBuffers` (`$00:$086c`) expands two of its four map planes and
+- `Unused_00_CopyMapToScrollBuffers` (`$00:$086c`) expands two of its four map planes and
   then immediately clears the region it wrote (`$08b3`, `$08fb`).
 - The queue-compaction tail at `$00:$0595`-`$05ae` sits after a `ret` and is
   unreachable.

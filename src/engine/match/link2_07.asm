@@ -403,7 +403,7 @@ EndLinkSession:
 	ld [wLinkSessionActive], a ; $48f7
 	call InitSerialLink ; $48fa
 	ret ; $48fd
-ExchangeHandshakeBlockMaster:
+Unused_07_ExchangeHandshakeBlockMaster:
 	ld hl, wTextBuffer ; $48fe
 	ld c, $28 ; $4901
 	ld a, $02 ; $4903
@@ -415,7 +415,7 @@ ExchangeHandshakeBlockMaster:
 	ld c, $28 ; $490c
 	call ExchangeNibbleBlockMaster ; $490e
 	ret ; $4911
-ExchangeHandshakeBlockSlave:
+Unused_07_ExchangeHandshakeBlockSlave:
 	ld hl, wTextBuffer ; $4912
 	ld c, $28 ; $4915
 	ld a, $08 ; $4917
@@ -427,7 +427,7 @@ ExchangeHandshakeBlockSlave:
 	ld c, $28 ; $4920
 	call ExchangeNibbleBlockSlave ; $4922
 	ret ; $4925
-ExchangeLinkBlockToWram5:
+Unused_07_ExchangeLinkBlockToWram5:
 	call DisableLCDSafely ; $4926
 	di ; $4929
 	ldh a, [rIF] ; $492a
@@ -446,10 +446,10 @@ ExchangeLinkBlockToWram5:
 	jr z, .asMaster ; $4945
 	call LinkErrorReset ; $4947
 .asMaster:
-	call ExchangeHandshakeBlockMaster ; $494a
+	call Unused_07_ExchangeHandshakeBlockMaster ; $494a
 	jr .copyToWram ; $494d
 .asSlave:
-	call ExchangeHandshakeBlockSlave ; $494f
+	call Unused_07_ExchangeHandshakeBlockSlave ; $494f
 .copyToWram:
 	wram_bank WRAM_TEXT ; $4952
 	ld hl, wTextBuffer + 80 ; $4958

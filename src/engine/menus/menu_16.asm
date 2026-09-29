@@ -72,7 +72,7 @@ SpriteWobbleYTable_16:
 	; $40ad, 32 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 	db $d5, $c5, $0e, $00, $06, $09, $cd, $51, $1f, $c1, $d1, $d5, $c5, $78, $82, $57 ; 0x10
-DrawCornerBrackets_16:
+Unused_16_DrawCornerBrackets:
 	push de ; $40cd
 	ld c, $00 ; $40ce
 	ld b, $29 ; $40d0
@@ -192,7 +192,7 @@ Unused_16_MoveMenuCursorGrid:
 .moved:
 	ld a, $01 ; $4173
 	ret ; $4175
-; Instruction-identical to MoveMenuCursorGridFromLinkInput_38 and Unused_3e_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
+; Instruction-identical to Unused_38_MoveMenuCursorGridFromLinkInput and Unused_3e_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_from_link_input, Unused_16_MoveMenuCursorGridFromLinkInput, 16 ; $4176 Unused_16_MoveMenuCursorGridFromLinkInput
 ; Instruction-identical to Unused_38_MoveMenuCursorGridRemote and Unused_3e_MoveMenuCursorGridRemote (one copy per bank); a change here belongs in every copy.

@@ -666,7 +666,7 @@ StoryPauseMenu_AfterItem:
 	pop_wram_bank ; $6ec1
 	ret ; $6ec6
 UnusedStoryMenuRedrawReentry:
-	call DrawStoryMenuItemRow ; $6ec7
+	call Unused_06_DrawStoryMenuItemRow ; $6ec7
 	ld hl, ScoreboardModeGfxTail ; $6eca
 	ld de, vTiles0 + $64 * TILE_SIZE ; $6ecd
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6ed0

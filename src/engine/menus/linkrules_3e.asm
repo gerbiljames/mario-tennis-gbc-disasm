@@ -182,7 +182,7 @@ DrawMatchRulesCaption:
 	ld c, $04 ; $49b3
 	call QueueVRAMCopy ; $49b5
 	ret ; $49b8
-DrawMatchRulesCaptionText:
+Unused_3e_DrawMatchRulesCaptionText:
 	wram_bank WRAM_SCREEN ; $49b9
 	ld c, $01 ; $49bf
 	call GetMenuCursorIndex_3e ; $49c1

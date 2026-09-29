@@ -21,7 +21,7 @@ FetchShortTextToBuffer:
 	pop bc ; $40bb
 	pop af ; $40bc
 	ret ; $40bd
-ClearWindowGlyphPage:
+Unused_05_ClearWindowGlyphPage:
 	push_wram_bank WRAM_TEXT ; $40be
 	ld hl, wWindowShadowTilemap ; $40c7
 	ld c, $80 ; $40ca

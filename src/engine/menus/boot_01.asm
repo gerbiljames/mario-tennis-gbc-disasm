@@ -4,12 +4,12 @@
 	farptr LoadMenuTilesB ; $4006
 	farptr LoadMenuFontPalette ; $4008
 	farptr LoadMenuFontGfx ; $400a
-	farptr LoadMenuBgPalettes3To7 ; $400c
+	farptr Unused_01_LoadMenuBgPalettes3To7 ; $400c
 	farptr LoadMenuObjPalettes3To7 ; $400e
 	farptr LoadDebugMenuPalette ; $4010
 	farptr LoadMenuTilesBChunk2 ; $4012
 	farptr LoadMenuFontGfxStaged ; $4014
-	farptr RunSoundTest ; $4016
+	farptr Unused_01_RunSoundTest ; $4016
 InitAndRunGame:
 	call InitSerialLink ; $4018
 	push de ; $401b
@@ -111,14 +111,14 @@ Unused_01_MenuRedraw:
 .runSoundTest:
 	bit 2, a ; $4113
 	jr z, .bit2Clear ; $4115
-	farcall RunSoundTest ; $4117
+	farcall Unused_01_RunSoundTest ; $4117
 .bit2Clear:
 	bit 0, a ; $411a
 	jr z, .bit0Clear ; $411c
 	ld a, $01 ; $411e
 	ldh [hDebugStepMode], a ; $4120
 .loopB:
-	farcall RunDebugTestMatch ; $4122
+	farcall Unused_07_RunDebugTestMatch ; $4122
 	jr .loopB ; $4125
 .bit0Clear:
 	bit 1, a ; $4127
@@ -126,7 +126,7 @@ Unused_01_MenuRedraw:
 	ld a, $01 ; $412b
 	ldh [hDebugStepMode], a ; $412d
 .loop2:
-	farcall StubNop_3b ; $412f
+	farcall Unused_3b_StubNop ; $412f
 	farcall RunMatch ; $4132
 	jp .loop2 ; $4135
 .bit1Clear:
@@ -185,7 +185,7 @@ Unused_01_MatchSetup:
 	farcall RunRacketSelectScreen ; $41b8
 	ld a, $01 ; $41bb
 	ldh [hDebugStepMode], a ; $41bd
-	farcall RunDebugCharViewer ; $41bf
+	farcall Unused_1a_RunDebugCharViewer ; $41bf
 .bit6Clear:
 	bit 7, a ; $41c2
 	jr z, Unused_01.positive ; $41c4
@@ -218,7 +218,7 @@ Unused_01:
 	jr z, .advanceFrame ; $41f7
 	ld a, $01 ; $41f9
 	ldh [hDebugStepMode], a ; $41fb
-	farcall RunDebugCharViewer ; $41fd
+	farcall Unused_1a_RunDebugCharViewer ; $41fd
 	ld a, $00 ; $4200
 	ldh [hDebugStepMode], a ; $4202
 .loop:
@@ -341,7 +341,7 @@ LoadMenuFontGfxStaged:
 	ret ; $50f5
 DebugMenuPalettes_01:
 	INCLUDE "data/bank_001/DebugMenuPalettes_01.asm" ; $50f6, 128 bytes (palettes)
-LoadMenuBgPalettes3To7:
+Unused_01_LoadMenuBgPalettes3To7:
 	push af ; $5176
 	push bc ; $5177
 	push de ; $5178
@@ -424,7 +424,7 @@ DmgLockoutTilesLZ_01:
 	INCBIN "data/bank_001/lz_DmgLockoutTilesLZ_01.bin" ; $607c, 2183 bytes
 DmgLockoutTilemapLZ_01:
 	INCBIN "data/bank_001/lz_DmgLockoutTilemapLZ_01.bin" ; $6903, 344 bytes
-RunSoundTest:
+Unused_01_RunSoundTest:
 	push af ; $6a5b
 	push bc ; $6a5c
 	push de ; $6a5d

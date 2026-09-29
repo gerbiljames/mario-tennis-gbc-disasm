@@ -7,31 +7,31 @@ CharSelectRosterTable:
 	db $00, $00, $00, $b5, $30, $20, $c4, $00, $01, $00, $00, $b6, $30, $38, $c7, $00 ; 0x00
 	db $02, $00, $00, $b7, $30, $50, $ca, $00, $03, $00, $00, $a8, $30, $68, $cd, $00 ; 0x10
 	db $ff, $00, $00, $b0, $18, $20, $64, $00 ; 0x20
-FindCharSelectRosterEntry:
+Unused_1b_FindCharSelectRosterEntry:
 	ld hl, wCharSelectRoster ; $5fc4
-	farcall FindRosterEntry ; $5fc7
+	farcall Unused_18_FindRosterEntry ; $5fc7
 	ret ; $5fca
-GetCharSelectRosterField:
+Unused_1b_GetCharSelectRosterField:
 	push hl ; $5fcb
-	call FindCharSelectRosterEntry ; $5fcc
+	call Unused_1b_FindCharSelectRosterEntry ; $5fcc
 	ld a, [hl+] ; $5fcf
 	ld d, [hl] ; $5fd0
 	ld e, a ; $5fd1
 	pop hl ; $5fd2
 	ret ; $5fd3
-LoadCharSelectNavGrid:
+Unused_1b_LoadCharSelectNavGrid:
 	ld hl, CharSelectNavGridTable ; $5fd4
 	ld de, wNavGridBuffer ; $5fd7
 	ld bc, $0020 ; $5fda
 	call CopyMemoryBC ; $5fdd
 	ret ; $5fe0
-LoadCharSelectRosterTable:
+Unused_1b_LoadCharSelectRosterTable:
 	ld hl, CharSelectRosterTable ; $5fe1
 	ld de, wCharSelectRoster ; $5fe4
 	ld bc, $0080 ; $5fe7
 	call CopyMemoryBC ; $5fea
 	ret ; $5fed
-; LoadUnlockDebugScreenGfx with one more decompress and CharSelectNavGridTable as its source: the character-select variant of the same screen loader. Called only from Unused_1b_RunCharSelectLoop.
+; Unused_1b_LoadUnlockDebugScreenGfx with one more decompress and CharSelectNavGridTable as its source: the character-select variant of the same screen loader. Called only from Unused_1b_RunCharSelectLoop.
 Unused_1b_LoadCharSelectScreenGfx:
 	ld hl, CharSelectNavGridTable ; $5fee
 	ld de, $d000 ; $5ff1
@@ -54,18 +54,18 @@ Unused_1b_LoadCharSelectScreenGfx:
 	lb de, $00, $08 ; $6022 palette index, count
 	call LoadPaletteShadow ; $6025
 	ret ; $6028
-StartCharSelectCursorTask:
-	farcall LoadCharSelectCursorGfx ; $6029
+Unused_1b_StartCharSelectCursorTask:
+	farcall Unused_18_LoadCharSelectCursorGfx ; $6029
 	ld a, $0a ; $602c
-	ld hl, UpdateCharSelectCursorTask ; $602e
+	ld hl, Unused_1b_UpdateCharSelectCursorTask ; $602e
 	call RegisterFrameTask ; $6031
 	ret ; $6034
-UpdateCharSelectCursorTask:
+Unused_1b_UpdateCharSelectCursorTask:
 	ld a, [wCharSelectChar] ; $6035
 	ld de, $0004 ; $6038
-	call GetCharSelectRosterField ; $603b
+	call Unused_1b_GetCharSelectRosterField ; $603b
 	ld a, [wCharSelectChar] ; $603e
-	farcall DrawCharSelectCursor ; $6041
+	farcall Unused_18_DrawCharSelectCursor ; $6041
 	ret ; $6044
 Unused_1b_DrawCharSelectPrompt:
 	ld hl, $d000 ; $6045
@@ -75,7 +75,7 @@ Unused_1b_DrawCharSelectPrompt:
 	ld hl, $d9e0 ; $6050
 	ld de, $dde0 ; $6053
 	ld bc, $1403 ; $6056
-	farcall DrawBox ; $6059
+	farcall Unused_18_DrawBox ; $6059
 	ld hl, $0470 ; $605c
 	ld a, [wStoryCharacterSlot] ; $605f
 	or a ; $6062
@@ -83,10 +83,10 @@ Unused_1b_DrawCharSelectPrompt:
 	ld hl, Text_31_123 ; $6065
 .zero:
 	ld de, $da01 ; $6068
-	farcall RenderProportionalTextAt32 ; $606b
+	farcall Unused_18_RenderProportionalTextAt32 ; $606b
 	ret ; $606e
-DrawCharSelectMugshots:
-	farcall ResetMugshotPalettes_1b ; $606f
+Unused_1b_DrawCharSelectMugshots:
+	farcall Unused_1b_ResetMugshotPalettes ; $606f
 	ld hl, wCharSelectRoster ; $6072
 .loop:
 	ld a, [hl] ; $6075
@@ -97,11 +97,11 @@ DrawCharSelectMugshots:
 	farcall LoadCharMugshotToBuffer ; $6081
 	ld a, [hl] ; $6084
 	ld de, $0002 ; $6085
-	call GetCharSelectRosterField ; $6088
+	call Unused_1b_GetCharSelectRosterField ; $6088
 	farcall CopyMugshotBufferToVram ; $608b
 	ld a, [hl] ; $608e
 	ld de, $0006 ; $608f
-	call GetCharSelectRosterField ; $6092
+	call Unused_1b_GetCharSelectRosterField ; $6092
 	ld a, [wCharRecordScratch + 11] ; $6095
 	add a ; $6098
 	add $c1 ; $6099
@@ -110,7 +110,7 @@ DrawCharSelectMugshots:
 	sub c ; $609e
 	ld b, a ; $609f
 	ld a, [bc] ; $60a0
-	farcall SetMugshotAttrs ; $60a1
+	farcall Unused_1b_SetMugshotAttrs ; $60a1
 .step:
 	ld a, $08 ; $60a4
 	add l ; $60a6
@@ -124,7 +124,7 @@ DrawCharSelectMugshots:
 	ld a, [wCharSelectChar] ; $60b0
 	farcall LoadCharacterRecordToBuffer ; $60b3
 	ld a, [wCharRecordScratch + 11] ; $60b6
-	farcall StubNop_1b_01 ; $60b9
+	farcall Unused_1b_StubNop_1b_01 ; $60b9
 	ret ; $60bc
 Unused_1b_RunCharSelectLoop:
 	and $01 ; $60bd
@@ -132,14 +132,14 @@ Unused_1b_RunCharSelectLoop:
 	call ClearFrameTasks ; $60c2
 	call AdvanceFrame ; $60c5
 	push de ; $60c8
-	call LoadCharSelectNavGrid ; $60c9
-	call LoadCharSelectRosterTable ; $60cc
+	call Unused_1b_LoadCharSelectNavGrid ; $60c9
+	call Unused_1b_LoadCharSelectRosterTable ; $60cc
 	pop de ; $60cf
 	ld a, d ; $60d0
 	ld [wCharSelectCol], a ; $60d1
 	ld a, e ; $60d4
 	ld [wCharSelectRow], a ; $60d5
-	farcall UpdateCharSelectSelection ; $60d8
+	farcall Unused_1b_UpdateCharSelectSelection ; $60d8
 	ld a, [wCharSelectChar] ; $60db
 	ld [wCharSelectPrevChar], a ; $60de
 	ld c, $20 ; $60e1
@@ -147,7 +147,7 @@ Unused_1b_RunCharSelectLoop:
 	call WaitFadeEnd ; $60e6
 	call DisableLCDSafely ; $60e9
 	call Unused_1b_LoadCharSelectScreenGfx ; $60ec
-	call DrawCharSelectMugshots ; $60ef
+	call Unused_1b_DrawCharSelectMugshots ; $60ef
 	call Unused_1b_DrawCharSelectPrompt ; $60f2
 	ld hl, $dc00 ; $60f5
 	ld de, vBGMap0 + VRAM_BANK1 ; $60f8
@@ -160,7 +160,7 @@ Unused_1b_RunCharSelectLoop:
 	call EnableLCD ; $610b
 	script_fade_in $20 ; $610e
 	call WaitFadeEnd ; $6113
-	call StartCharSelectCursorTask ; $6116
+	call Unused_1b_StartCharSelectCursorTask ; $6116
 .loopB:
 	wram_bank WRAM_STAGING ; $6119
 	ldh a, [hInputRisingEdge] ; $611f
@@ -169,7 +169,7 @@ Unused_1b_RunCharSelectLoop:
 	ld a, [wTargetZoneX2] ; $6125
 	ld b, a ; $6128
 	ld a, [wCharSelectChar] ; $6129
-	farcall InitPlayerRecordForCharacter ; $612c
+	farcall Unused_18_InitPlayerRecordForCharacter ; $612c
 	sound SFX_MENU_SELECT ; $612f
 	ld a, $fe ; $6131
 	jr .step4 ; $6133
@@ -180,7 +180,7 @@ Unused_1b_RunCharSelectLoop:
 	ld a, [wTargetZoneX2] ; $613b
 	ld b, a ; $613e
 	ld a, [wCharSelectChar] ; $613f
-	farcall InitPlayerRecordForCharacter ; $6142
+	farcall Unused_18_InitPlayerRecordForCharacter ; $6142
 	sound SFX_MENU_SELECT ; $6145
 	ld a, [wCharSelectChar] ; $6147
 	jr .step4 ; $614a
@@ -192,8 +192,8 @@ Unused_1b_RunCharSelectLoop:
 	ld a, $ff ; $6154
 	jr .step4 ; $6156
 .moveCharSelectCursor:
-	call MoveCharSelectCursor ; $6158
-	call UpdateCharSelectSelection ; $615b
+	call Unused_1b_MoveCharSelectCursor ; $6158
+	call Unused_1b_UpdateCharSelectSelection ; $615b
 	ld a, [wCharSelectChar] ; $615e
 	farcall LoadCharacterRecordToBuffer ; $6161
 	call AdvanceFrame ; $6164
@@ -204,7 +204,7 @@ Unused_1b_RunCharSelectLoop:
 	ld hl, wCharSelectRow ; $616d
 	ld e, [hl] ; $6170
 	ret ; $6171
-UpdateCharSelectSelection:
+Unused_1b_UpdateCharSelectSelection:
 	ld a, [wCharSelectChar] ; $6172
 	ld [wCharSelectPrevChar], a ; $6175
 	ld a, [wCharSelectRow] ; $6178
@@ -224,7 +224,7 @@ UpdateCharSelectSelection:
 	jr z, .storeCharSelectChar ; $618c
 	ld [wCharSelectChar], a ; $618e
 	ret ; $6191
-MoveCharSelectCursor:
+Unused_1b_MoveCharSelectCursor:
 	ldh a, [hInputPressed] ; $6192
 	ld b, a ; $6194
 	and $f0 ; $6195
@@ -236,7 +236,7 @@ MoveCharSelectCursor:
 	ld e, a ; $61a2
 .loop:
 	ld hl, wNavGridBuffer ; $61a3
-	farcall MoveGridCursor ; $61a6
+	farcall Unused_18_MoveGridCursor ; $61a6
 	farcall LoadCharacterRecordToBuffer ; $61a9
 	farcall CheckCharacterUnlocked ; $61ac
 	jr z, .loop ; $61af
@@ -473,7 +473,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	jr .loop ; $635d
 .zero:
 	push bc ; $635f
-	call StubNop_1b_09 ; $6360
+	call Unused_1b_StubNop_1b_09 ; $6360
 	pop bc ; $6363
 	or a ; $6364
 	jr nz, .loop ; $6365
@@ -505,7 +505,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	jp .loop ; $6396
 .clearFrameTasks:
 	call ClearFrameTasks ; $6399
-	farcall ValidateN64TransferRecord ; $639c
+	farcall Unused_02_ValidateN64TransferRecord ; $639c
 	or a ; $639f
 	jr z, .showNoN64DataFoundScreen ; $63a0
 	ld hl, wPendingExpStory ; $63a2
@@ -521,7 +521,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld h, $01 ; $63bd
 	ld l, $00 ; $63bf
 	ld a, $01 ; $63c1
-	farcall ShowExpGainScreen ; $63c3
+	farcall Unused_1a_ShowExpGainScreen ; $63c3
 	ld c, $00 ; $63c6
 	farcall CharDataScreen_Show ; $63c8
 .step4:
@@ -538,7 +538,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld h, $01 ; $63e6
 	ld l, $01 ; $63e8
 	ld a, $01 ; $63ea
-	farcall ShowExpGainScreen ; $63ec
+	farcall Unused_1a_ShowExpGainScreen ; $63ec
 	ld c, $01 ; $63ef
 	farcall CharDataScreen_Show ; $63f1
 .step5:
@@ -555,9 +555,9 @@ Unused_1b_RunDebugSaveDataFlow:
 	farcall SaveStorySlotWithTimer ; $6400
 	jr .loop2 ; $6403
 .showNoN64DataFoundScreen:
-	farcall ShowNoN64DataFoundScreen ; $6405
+	farcall Unused_1b_ShowNoN64DataFoundScreen ; $6405
 .loop2:
-	call RunLevelUpStatusTrophiesMenu ; $6408
+	call Unused_1b_RunLevelUpStatusTrophiesMenu ; $6408
 	cp $ff ; $640b
 	jp z, Unused_1b_RunDebugSaveDataFlow ; $640d
 	cp $01 ; $6410
@@ -598,6 +598,6 @@ Unused_1b_RunDebugSaveDataFlow:
 	farcall ShowCharDataScreen ; $645a
 	jp .loop2 ; $645d
 .showTrophiesPlaceholderScreen:
-	call ShowTrophiesPlaceholderScreen ; $6460
+	call Unused_1b_ShowTrophiesPlaceholderScreen ; $6460
 	jp .loop2 ; $6463
 	ret ; $6466

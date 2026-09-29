@@ -68,7 +68,7 @@ SetActorMoveTargetRaw:
 	ld l, a ; $443c
 	set 7, [hl] ; $443d
 	ret ; $443f
-MoveActorTowardPoint:
+Unused_0a_MoveActorTowardPoint:
 	add sp, -5 ; $4440
 	push af ; $4442
 	ld a, l ; $4443
@@ -92,11 +92,11 @@ MoveActorTowardPoint:
 	ldh [hActorPtr], a ; $445a
 	ld a, h ; $445c
 	ldh [hActorPtr + 1], a ; $445d
-	call MoveActorTowardPointRaw ; $445f
+	call Unused_0a_MoveActorTowardPointRaw ; $445f
 .done:
 	add sp, 5 ; $4462
 	ret ; $4464
-MoveActorTowardPointRaw:
+Unused_0a_MoveActorTowardPointRaw:
 	push bc ; $4465
 	ld l, c ; $4466
 	ld h, b ; $4467

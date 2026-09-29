@@ -190,7 +190,7 @@ RallyShotTypeTable1:
 	db SHOTTYPE_TOPSPIN, SHOTTYPE_POWER_TOPSPIN, SHOTTYPE_DROP, SHOTTYPE_NEUTRAL ; 0x04
 	db SHOTTYPE_TOPSPIN, SHOTTYPE_LOB, SHOTTYPE_POWER_SLICE, SHOTTYPE_NEUTRAL ; 0x08
 	db SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL ; 0x0c
-ComputeBallEtaToChar:
+Unused_08_ComputeBallEtaToChar:
 	ld hl, wBallVelocityDepth ; $70c4
 	ld a, [hl+] ; $70c7
 	ld d, [hl] ; $70c8
@@ -218,7 +218,7 @@ ComputeBallEtaToChar:
 	ld d, h ; $70ef
 	ret ; $70f0
 UnusedComputeBallEtaToCharWrapper:
-	call ComputeBallEtaToChar ; $70f1
+	call Unused_08_ComputeBallEtaToChar ; $70f1
 	ret ; $70f4
 PredictBallLateralOffset:
 	ld hl, wBallHeadingAngle ; $70f5

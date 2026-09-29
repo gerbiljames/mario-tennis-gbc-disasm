@@ -27,7 +27,7 @@ the referenced byte is `$a040 + d` (`sSaveFlags`). A flag's *number* is
 the `de` id for each one, and every immediate call site renders by name.
 
 **Only bytes `$00`-`$07` are ever used** — 64 of the 256 bits. The rest
-(`sSaveFlagsUnused`, `$a048-$a05f`) is zeroed by `ClearSaveFlagsArea` and
+(`sSaveFlagsUnused`, `$a048-$a05f`) is zeroed by `Unused_03_ClearSaveFlagsArea` and
 never read: every immediate id in the ROM is `$01xx`-`$07xx`, and the three
 computed callers are bounded (character ids stop at `$1f`,
 `MinigameClearFlagTable_1e` at #54, `UnlockConditionFlagRows_03` at #54).
@@ -112,7 +112,7 @@ than the game ever writes. Full layout (`b`=SRAM bank, `off` from
 | 104-112 | 6-14:`$0000` | `$1e00` | one whole-bank block per SRAM bank 6-14; the cart only has 4×8 KiB, so these (and banks 4-5 above) address SRAM that doesn't exist — presumably reserved headroom; MBC5 masks the bank number so they'd alias banks 0-3 if ever touched |
 
 `SaveStorySlot` writes block `2N` and its backup `2N+$1b` (slot from
-`$c36c`, 0-2); `InvalidateStorySlot` clears blocks `2N` and `2N+1`.
+`$c36c`, 0-2); `Unused_03_InvalidateStorySlot` clears blocks `2N` and `2N+1`.
 Verified against `maxed-unlocked.sav`: only blocks 0/1, 11, 27/28,
 54/55, and 56-62 have ever been valid.
 
@@ -123,7 +123,7 @@ Verified against `maxed-unlocked.sav`: only blocks 0/1, 11, 27/28,
 value passed through WRAM7 `$de00`. Records 0-1 are per-story-slot
 (block `$38 + wCurrentStorySlot`); records 2-10 always live in block
 `$38`. Per-record defaults come from `FarPtr_GetDefaultMinigameRecordValue`
-(the debug helper `DebugTestMinigameRecords` seeds records 0/1 with
+(the debug helper `Unused_03_DebugTestMinigameRecords` seeds records 0/1 with
 9999/999). `UpdateMinigameRecord` writes
 the primary and its `+3` backup, both verified.
 `InitAllMinigameRecordBlocks` (03:519a) resets all six blocks to
@@ -142,7 +142,7 @@ resets just records 0-1 of the current slot (called from
 | off | contents |
 |---|---|
 | +0/+1 | data-present indicator (checked as `[+0]+[+1] != 0` by `CheckN64DataPresent` / `ApplyN64RecordsUnlockFlags`) |
-| +2..+7 | per-character unlock/toggle flags for characters `$1a-$1f`, flipped on the character-select screen by `ToggleSelectedUnlockFlag` (1b:68a4); set by `UpdateUnlockablesSaveBlock` when the matching minigame record beats its default + save flag (mapping id→off: 2→+2, 9→+3, 6→+4, $0a→+5, 8→+6, 4→+7) |
+| +2..+7 | per-character unlock/toggle flags for characters `$1a-$1f`, flipped on the character-select screen by `Unused_1b_ToggleSelectedUnlockFlag` (1b:68a4); set by `UpdateUnlockablesSaveBlock` when the matching minigame record beats its default + save flag (mapping id→off: 2→+2, 9→+3, 6→+4, $0a→+5, 8→+6, 4→+7) |
 
 When present, `ApplyN64RecordsUnlockFlags` (03:56a8) sets global save
 flags `$07c0/$0140/$0160/$0180/$01a0` at boot.
@@ -171,7 +171,7 @@ WRAM bank `$07` agreed, keeps the two apart. The rest stay numeric.
 |---|---|
 | WRAM1 `$d000` | generic block scratch: `RestoreStoryBlockFromBackup`/`RepairAllSaveSlots`, block-6 preserve, `$d400` = tag readback |
 | WRAM7 `$d480` `wMinigameRecordBlock` | minigame-record block image (blocks `$38-$3d`) |
-| WRAM7 `$d500` `wSaveBlockBuffer` | `$200`-byte record staging: N64 block, slot secondary blocks, debug save editor (block from `GetCurrentSlotBlockId` table 03:52af = `00 02 04 0b`) |
+| WRAM7 `$d500` `wSaveBlockBuffer` | `$200`-byte record staging: N64 block, slot secondary blocks, debug save editor (block from `Unused_03_GetCurrentSlotBlockId` table 03:52af = `00 02 04 0b`) |
 | WRAM7 `$de00` `wMinigameRecordValue` | 16-bit minigame-record value in/out parameter |
 | WRAM6 `$d400` | N64 block staging in bank $1b char select |
 | WRAM3 `$d900` | N64 block (trophies screen) and star victory grid staging in bank $3b |

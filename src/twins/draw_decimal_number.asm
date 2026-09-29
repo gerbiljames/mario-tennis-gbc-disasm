@@ -26,7 +26,7 @@
 	ld h, b
 	pop de
 	pop bc
-	call DrawAsciiDigitString_{TWIN}
+	call Unused_{TWIN}_DrawAsciiDigitString
 	add sp, 10
 	pop hl
 	pop bc

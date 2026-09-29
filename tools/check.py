@@ -25,6 +25,8 @@ after a real defect broke it:
             a jp/call target, a macro argument that elsewhere always takes a
             label, or an ld rr/dw literal equal to a label in the same bank
             (96 as_calls once reached two unlabelled routines by number)
+  reach     a routine is named Unused exactly when nothing reachable from
+            the reset, interrupt and rst vectors reaches it (tools/reach.py)
   slots     every ACTOR_<list>_<object> name a story script uses holds that
             actor in every map_actor list tools/actorslots.py finds can be
             active at that line (a name is a row number, so reordering or
@@ -42,6 +44,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from banksrc import bank_lines, bank_of, holders
 from lz import compress, decompress
 import actorslots
+import reach
 
 ROOT = BANK = None
 BANK_SIZE = 0x4000
@@ -582,6 +585,7 @@ def main():
         "gfx": check_gfx(manifest, fail),
         "tilemap": check_tilemaps(manifest, fail),
         "slots": actorslots.check(fail),
+        "reach": reach.check(fail),
     }
     by_check = {}
     for check, msg in failures:

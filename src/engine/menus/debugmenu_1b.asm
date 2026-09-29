@@ -1,4 +1,4 @@
-RunLevelUpStatusTrophiesMenu:
+Unused_1b_RunLevelUpStatusTrophiesMenu:
 	push bc ; $6467
 	push de ; $6468
 	push hl ; $6469
@@ -9,7 +9,7 @@ RunLevelUpStatusTrophiesMenu:
 	farcall LoadMenuFontGfx ; $6473
 	call DisableLCDSafely ; $6476
 	farcall ResetTextWindowState ; $6479
-	call ClearScreenMaps ; $647c
+	call Unused_1b_ClearScreenMaps ; $647c
 	wram_bank WRAM_TEXT ; $647f
 	ld d, $02 ; $6485
 	ld e, $02 ; $6487
@@ -43,8 +43,8 @@ Unused_1b_RunDebugSaveDataMenu:
 	farcall LoadMenuFontGfx ; $64c5
 	call EnableLCD ; $64c8
 	farcall ResetTextWindowState ; $64cb
-	call ClearScreenMaps ; $64ce
-	call ReadUnlockFlagsSaveBlock ; $64d1
+	call Unused_1b_ClearScreenMaps ; $64ce
+	call Unused_1b_ReadUnlockFlagsSaveBlock ; $64d1
 	wram_bank WRAM_SCENE ; $64d4
 	ld hl, wUnlockFlagsBlock ; $64da
 	ld a, [hl+] ; $64dd
@@ -76,18 +76,18 @@ Unused_1b_RunDebugSaveDataMenu:
 	pop de ; $651b
 	pop bc ; $651c
 	ret ; $651d
-ClearScreenMaps:
+Unused_1b_ClearScreenMaps:
 	call DisableLCDSafely ; $651e
 	wram_bank WRAM_COURT_PLANES ; $6521
 	ld a, $00 ; $6527
 	ld hl, wScreenAttrmap ; $6529
 	ld bc, $0500 ; $652c
-	call FillBytesWithValue ; $652f
+	call Unused_1b_FillBytesWithValue ; $652f
 	wram_bank WRAM_SCREEN ; $6532
 	ld a, $20 ; $6538
 	ld hl, wShadowTilemap ; $653a
 	ld bc, $0500 ; $653d
-	call FillBytesWithValue ; $6540
+	call Unused_1b_FillBytesWithValue ; $6540
 	wram_bank WRAM_SCREEN ; $6543
 	ld hl, wShadowTilemap ; $6549
 	ld de, vBGMap0 ; $654c
@@ -100,7 +100,7 @@ ClearScreenMaps:
 	call QueueVRAMCopy ; $6562
 	call EnableLCD ; $6565
 	ret ; $6568
-FillBytesWithValue:
+Unused_1b_FillBytesWithValue:
 	ld e, a ; $6569
 .loop:
 	ld [hl], e ; $656a
@@ -127,19 +127,19 @@ UnlockDebugRosterTable:
 	db $14, $00, $00, $ae, $38, $60, $ec, $00 ; 0x40
 	db $15, $00, $00, $af, $38, $78, $ef, $00 ; 0x48
 	db $ff, $00, $00, $b0, $18, $20, $64, $00 ; 0x50
-FindUnlockDebugRosterEntry:
+Unused_1b_FindUnlockDebugRosterEntry:
 	ld hl, wCharSelectRoster ; $65ea
-	farcall FindRosterEntry ; $65ed
+	farcall Unused_18_FindRosterEntry ; $65ed
 	ret ; $65f0
-GetUnlockDebugRosterField:
+Unused_1b_GetUnlockDebugRosterField:
 	push hl ; $65f1
-	call FindUnlockDebugRosterEntry ; $65f2
+	call Unused_1b_FindUnlockDebugRosterEntry ; $65f2
 	ld a, [hl+] ; $65f5
 	ld d, [hl] ; $65f6
 	ld e, a ; $65f7
 	pop hl ; $65f8
 	ret ; $65f9
-LoadUnlockDebugNavGrid:
+Unused_1b_LoadUnlockDebugNavGrid:
 	ld hl, UnlockDebugNavGridTable ; $65fa
 	ld de, wNavGridBuffer ; $65fd
 	ld bc, $0020 ; $6600
@@ -147,7 +147,7 @@ LoadUnlockDebugNavGrid:
 	ret ; $6606
 	db $0b ; $6607
 	db $0c ; $6608
-LoadUnlockDebugRosterTable:
+Unused_1b_LoadUnlockDebugRosterTable:
 	ld hl, UnlockDebugRosterTable ; $6609
 	ld de, wCharSelectRoster ; $660c
 	ld bc, $0080 ; $660f
@@ -155,7 +155,7 @@ LoadUnlockDebugRosterTable:
 	ret ; $6615
 	db $08 ; $6616
 	db $09 ; $6617
-LoadUnlockDebugScreenGfx:
+Unused_1b_LoadUnlockDebugScreenGfx:
 	ld hl, wDecompBuffer ; $6618
 	ld de, vTiles2 + VRAM_BANK1 ; $661b
 	ld c, $80 ; $661e
@@ -190,38 +190,38 @@ Unused_1b_LoadUnlockDebugNavGridGfx:
 	lb de, $08, $01 ; $6662 palette index, count
 	call LoadPaletteShadow ; $6665
 	ld a, $0a ; $6668
-	ld hl, UpdateBobbingDecorSprite ; $666a
+	ld hl, Unused_1b_UpdateBobbingDecorSprite ; $666a
 	call RegisterFrameTask ; $666d
 	ret ; $6670
-UpdateBobbingDecorSprite:
+Unused_1b_UpdateBobbingDecorSprite:
 	ld de, $2cfa ; $6671
-	farcall ApplySpriteBobOffset_18 ; $6674
+	farcall Unused_18_ApplySpriteBobOffset ; $6674
 	ld hl, UnlockDebugNavGridTable ; $6677
 	lb bc, $00, $50 ; $667a attr, tile
 	call QueueSpriteTemplate ; $667d
 	ret ; $6680
-StartUnlockDebugCursorTask:
-	farcall LoadCharSelectCursorGfx ; $6681
+Unused_1b_StartUnlockDebugCursorTask:
+	farcall Unused_18_LoadCharSelectCursorGfx ; $6681
 	ld a, $0a ; $6684
-	ld hl, UpdateUnlockDebugCursorTask ; $6686
+	ld hl, Unused_1b_UpdateUnlockDebugCursorTask ; $6686
 	call RegisterFrameTask ; $6689
 	ret ; $668c
-UpdateUnlockDebugCursorTask:
+Unused_1b_UpdateUnlockDebugCursorTask:
 	ld a, [wCharSelectChar] ; $668d
 	ld de, $0004 ; $6690
-	call GetUnlockDebugRosterField ; $6693
+	call Unused_1b_GetUnlockDebugRosterField ; $6693
 	ld a, [wCharSelectChar] ; $6696
-	farcall DrawCharSelectCursor ; $6699
+	farcall Unused_18_DrawCharSelectCursor ; $6699
 	ret ; $669c
-UpdateUnlockDebugSelectedMugshot:
+Unused_1b_UpdateUnlockDebugSelectedMugshot:
 	ld a, [wCharSelectChar] ; $669d
 	push af ; $66a0
 	ld de, $0006 ; $66a1
-	call GetUnlockDebugRosterField ; $66a4
+	call Unused_1b_GetUnlockDebugRosterField ; $66a4
 	pop af ; $66a7
 	ld b, a ; $66a8
 	push bc ; $66a9
-	farcall CheckUnlockFlag ; $66aa
+	farcall Unused_18_CheckUnlockFlag ; $66aa
 	pop bc ; $66ad
 	ld a, b ; $66ae
 	jr z, .registerFrameTask2 ; $66af
@@ -232,38 +232,38 @@ UpdateUnlockDebugSelectedMugshot:
 	ld [wCharRecordBuffer + 11], a ; $66b8
 .registerFrameTask:
 	ld a, $0a ; $66bb
-	ld hl, UpdateUnlockDebugStatOnChange ; $66bd
+	ld hl, Unused_1b_UpdateUnlockDebugStatOnChange ; $66bd
 	call RegisterFrameTask ; $66c0
 	ret ; $66c3
-UpdateUnlockDebugStatOnChange:
+Unused_1b_UpdateUnlockDebugStatOnChange:
 	ld hl, wCharSelectChar ; $66c4
 	ld a, [wCharSelectPrevChar] ; $66c7
 	cp [hl] ; $66ca
 	jr z, .done ; $66cb
 	ld a, [wCharSelectChar] ; $66cd
 	ld de, $0006 ; $66d0
-	call GetUnlockDebugRosterField ; $66d3
+	call Unused_1b_GetUnlockDebugRosterField ; $66d3
 .done:
 	ret ; $66d6
-DrawUnlockDebugMugshots:
-	farcall ResetMugshotPalettes_1b ; $66d7
+Unused_1b_DrawUnlockDebugMugshots:
+	farcall Unused_1b_ResetMugshotPalettes ; $66d7
 	ld hl, wCharSelectRoster ; $66da
 .loop:
 	ld a, [hl] ; $66dd
 	farcall LoadCharacterRecordToBuffer ; $66de
-	farcall CheckUnlockFlag ; $66e1
+	farcall Unused_18_CheckUnlockFlag ; $66e1
 	jr z, .step ; $66e4
 	ld a, [wCharRecordBuffer + 11] ; $66e6
 	farcall LoadCharMugshotToBuffer ; $66e9
 	ld a, [hl] ; $66ec
 	ld de, $0002 ; $66ed
-	call GetUnlockDebugRosterField ; $66f0
+	call Unused_1b_GetUnlockDebugRosterField ; $66f0
 	farcall CopyMugshotBufferToVram ; $66f3
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
-	call GetUnlockDebugRosterField ; $66fa
+	call Unused_1b_GetUnlockDebugRosterField ; $66fa
 	ld a, [wCharRecordBuffer + 12] ; $66fd
-	farcall SetMugshotAttrs ; $6700
+	farcall Unused_1b_SetMugshotAttrs ; $6700
 .step:
 	ld a, $08 ; $6703
 	add l ; $6705
@@ -277,27 +277,27 @@ DrawUnlockDebugMugshots:
 	ld a, [wCharSelectChar] ; $670f
 	farcall LoadCharacterRecordToBuffer ; $6712
 	ld a, [wCharRecordBuffer + 11] ; $6715
-	farcall StubNop_1b_01 ; $6718
+	farcall Unused_1b_StubNop_1b_01 ; $6718
 	ret ; $671b
 Unused_1b_RunMinigameFlagsDebugScreen:
 	wram_bank WRAM_STAGING ; $671c
 	call ClearFrameTasks ; $6722
-	call LoadUnlockDebugNavGrid ; $6725
-	call LoadUnlockDebugRosterTable ; $6728
+	call Unused_1b_LoadUnlockDebugNavGrid ; $6725
+	call Unused_1b_LoadUnlockDebugRosterTable ; $6728
 	ld hl, wUnlockDebugSelection ; $672b
-	call UpdateUnlockDebugSelection ; $672e
+	call Unused_1b_UpdateUnlockDebugSelection ; $672e
 	ld a, [wCharSelectChar] ; $6731
 	ld [wCharSelectPrevChar], a ; $6734
-	call ReadUnlockFlagsSaveBlock ; $6737
+	call Unused_1b_ReadUnlockFlagsSaveBlock ; $6737
 	ld c, $20 ; $673a
 	call BeginFadeOut ; $673c
 	call WaitFadeEnd ; $673f
 	call DisableLCDSafely ; $6742
 	call Unused_1b_LoadUnlockDebugNavGridGfx ; $6745
-	call StartUnlockDebugCursorTask ; $6748
-	call LoadUnlockDebugScreenGfx ; $674b
-	call DrawUnlockDebugMugshots ; $674e
-	call UpdateUnlockDebugSelectedMugshot ; $6751
+	call Unused_1b_StartUnlockDebugCursorTask ; $6748
+	call Unused_1b_LoadUnlockDebugScreenGfx ; $674b
+	call Unused_1b_DrawUnlockDebugMugshots ; $674e
+	call Unused_1b_UpdateUnlockDebugSelectedMugshot ; $6751
 	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $6754
 	ld de, vBGMap0 + VRAM_BANK1 ; $6757
 	ld c, $24 ; $675a
@@ -306,7 +306,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	ld de, vBGMap0 ; $6762
 	ld c, $24 ; $6765
 	call QueueVRAMCopy ; $6767
-	call LoadUnlockDebugCursorGfx ; $676a
+	call Unused_1b_LoadUnlockDebugCursorGfx ; $676a
 	call EnableLCD ; $676d
 	script_fade_in $20 ; $6770
 	call WaitFadeEnd ; $6775
@@ -318,7 +318,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	ld a, [wCharSelectChar] ; $6784
 	ld b, a ; $6787
 	push bc ; $6788
-	farcall CheckUnlockFlag ; $6789
+	farcall Unused_18_CheckUnlockFlag ; $6789
 	pop bc ; $678c
 	ld a, b ; $678d
 	jr z, .playSfx ; $678e
@@ -344,10 +344,10 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	ldh a, [hInputRisingEdge] ; $67af
 	and PADF_START ; $67b1
 	jr z, .moveUnlockDebugCursor ; $67b3
-	call ToggleSelectedUnlockFlag ; $67b5
+	call Unused_1b_ToggleSelectedUnlockFlag ; $67b5
 .moveUnlockDebugCursor:
-	call MoveUnlockDebugCursor ; $67b8
-	call UpdateUnlockDebugSelection ; $67bb
+	call Unused_1b_MoveUnlockDebugCursor ; $67b8
+	call Unused_1b_UpdateUnlockDebugSelection ; $67bb
 	ld a, [wCharSelectChar] ; $67be
 	call AdvanceFrame ; $67c1
 	jr .loop ; $67c4
@@ -355,11 +355,11 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	ld c, $08 ; $67c6
 	call BeginFadeOut ; $67c8
 	call WaitFadeEnd ; $67cb
-	call WriteUnlockFlagsSaveBlock ; $67ce
+	call Unused_1b_WriteUnlockFlagsSaveBlock ; $67ce
 	call AdvanceFrame ; $67d1
 	call AdvanceFrame ; $67d4
 	ret ; $67d7
-UpdateUnlockDebugSelection:
+Unused_1b_UpdateUnlockDebugSelection:
 	ld a, [wCharSelectChar] ; $67d8
 	ld [wCharSelectPrevChar], a ; $67db
 	ld a, [wCharSelectRow] ; $67de
@@ -376,7 +376,7 @@ UpdateUnlockDebugSelection:
 	ld a, [hl] ; $67ef
 	ld [wCharSelectChar], a ; $67f0
 	ret ; $67f3
-MoveUnlockDebugCursor:
+Unused_1b_MoveUnlockDebugCursor:
 	ldh a, [hInputPressed] ; $67f4
 	ld b, a ; $67f6
 	and $f0 ; $67f7
@@ -387,10 +387,10 @@ MoveUnlockDebugCursor:
 	ld a, [wCharSelectRow] ; $6801
 	ld e, a ; $6804
 	ld hl, wNavGridBuffer ; $6805
-	call StepUnlockDebugCursor ; $6808
+	call Unused_1b_StepUnlockDebugCursor ; $6808
 	ld b, a ; $680b
 	push bc ; $680c
-	farcall CheckUnlockFlag ; $680d
+	farcall Unused_18_CheckUnlockFlag ; $680d
 	pop bc ; $6810
 	ld a, b ; $6811
 	jr z, .storeCharSelectCol2 ; $6812
@@ -406,7 +406,7 @@ MoveUnlockDebugCursor:
 	ld [wCharSelectRow], a ; $6823
 .done:
 	ret ; $6826
-StepUnlockDebugCursor:
+Unused_1b_StepUnlockDebugCursor:
 	bit 5, b ; $6827
 	jr z, .bit5Clear ; $6829
 	dec d ; $682b
@@ -466,7 +466,7 @@ StepUnlockDebugCursor:
 	ld a, [hl] ; $686c
 	pop hl ; $686d
 	ret ; $686e
-ReadUnlockFlagsSaveBlock:
+Unused_1b_ReadUnlockFlagsSaveBlock:
 	push bc ; $686f
 	push_wram_bank WRAM_SCENE ; $6870
 	ld hl, wUnlockFlagsBlock ; $6879
@@ -477,7 +477,7 @@ ReadUnlockFlagsSaveBlock:
 	ld a, b ; $6887
 	pop bc ; $6888
 	ret ; $6889
-WriteUnlockFlagsSaveBlock:
+Unused_1b_WriteUnlockFlagsSaveBlock:
 	push_wram_bank WRAM_SCENE ; $688a
 	ld hl, wUnlockFlagsBlock ; $6893
 	ld de, $0000 ; $6896

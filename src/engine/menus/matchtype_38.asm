@@ -1,4 +1,4 @@
-ClearWram3Row64_38:
+Unused_38_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $43db
 	xor a ; $43e4
 	ld c, $40 ; $43e5
@@ -8,7 +8,7 @@ ClearWram3Row64_38:
 	jr nz, .loop ; $43e9
 	pop_wram_bank ; $43eb
 	ret ; $43f0
-ClearWram3Row64Alt_38:
+Unused_38_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $43f1
 	ld a, $00 ; $43fa
 	ld c, $40 ; $43fc
@@ -75,12 +75,12 @@ WriteDecimalDigitTile:
 	inc de ; $4486
 	pop hl ; $4487
 	ret ; $4488
-RunMatchTypeMenu:
+Unused_38_RunMatchTypeMenu:
 	call DisableLCDSafely ; $4489
 	farcall LoadMenuFontGfx ; $448c
-	call SetupMatchTypeMenuScreen ; $448f
+	call Unused_38_SetupMatchTypeMenuScreen ; $448f
 	ld a, $01 ; $4492
-	ld hl, DrawMatchTypeOptionBoxes ; $4494
+	ld hl, Unused_38_DrawMatchTypeOptionBoxes ; $4494
 	call RegisterFrameTask ; $4497
 	ld a, $01 ; $449a
 	ld hl, UpdateAnimatedTilesTask_38 ; $449c
@@ -91,13 +91,13 @@ RunMatchTypeMenu:
 .inputLoop:
 	ldh a, [hInputPressed] ; $44ad
 	ld [wMenuInputPressed], a ; $44af
-	call AdjustMatchTypeSetting ; $44b2
+	call Unused_38_AdjustMatchTypeSetting ; $44b2
 	ld b, $01 ; $44b5
 	ld c, $03 ; $44b7
 	call MoveMenuCursorGrid_38 ; $44b9
 	or a ; $44bc
 	jr z, .adjust ; $44bd
-	call RefreshMatchTypeLabelRow ; $44bf
+	call Unused_38_RefreshMatchTypeLabelRow ; $44bf
 .adjust:
 	call AdvanceFrame ; $44c2
 	ld a, [wMenuInputPressed] ; $44c5
@@ -122,14 +122,14 @@ RunMatchTypeMenu:
 	call ClearFrameTasks ; $44eb
 	ld a, $ff ; $44ee
 	ret ; $44f0
-RunMatchTypeMenuLink:
+Unused_38_RunMatchTypeMenuLink:
 	xor a ; $44f1
 	ldh [hLinkExchangeActive], a ; $44f2
 	call ResetSerialState ; $44f4
 	call DisableLCDSafely ; $44f7
-	call SetupMatchTypeMenuScreen ; $44fa
+	call Unused_38_SetupMatchTypeMenuScreen ; $44fa
 	ld a, $01 ; $44fd
-	ld hl, DrawMatchTypeOptionBoxes ; $44ff
+	ld hl, Unused_38_DrawMatchTypeOptionBoxes ; $44ff
 	call RegisterFrameTask ; $4502
 	ld a, $01 ; $4505
 	ld hl, UpdateAnimatedTilesTask_38 ; $4507
@@ -150,13 +150,13 @@ RunMatchTypeMenuLink:
 .inputLoop:
 	ldh a, [hLinkInput] ; $4529
 	ld [wMenuInputPressed], a ; $452b
-	call AdjustMatchTypeSetting ; $452e
+	call Unused_38_AdjustMatchTypeSetting ; $452e
 	ld b, $01 ; $4531
 	ld c, $03 ; $4533
-	call MoveMenuCursorGridFromLinkInput_38 ; $4535
+	call Unused_38_MoveMenuCursorGridFromLinkInput ; $4535
 	or a ; $4538
 	jr z, .adjust ; $4539
-	call RefreshMatchTypeLabelRow ; $453b
+	call Unused_38_RefreshMatchTypeLabelRow ; $453b
 .adjust:
 	push af ; $453e
 	farcall RunLinkInputFrame ; $453f
@@ -199,7 +199,7 @@ RunMatchTypeMenuLink:
 	call ClearFrameTasks ; $4587
 	ld a, $ff ; $458a
 	ret ; $458c
-DrawMatchTypeOptionBoxes:
+Unused_38_DrawMatchTypeOptionBoxes:
 	ld a, [wMatchFormatDoubles] ; $458d
 	add a ; $4590
 	ld hl, MatchTypeOptionBoxesTable0 ; $4591
@@ -276,7 +276,7 @@ MatchTypeOptionBoxesTable1:
 MatchTypeOptionBoxesTable2:
 	; $4607, 8 bytes (bytes:8)
 	db $58, $08, $58, $38, $58, $68, $c9, $c9 ; 0x00
-SetupMatchTypeMenuScreen:
+Unused_38_SetupMatchTypeMenuScreen:
 	ld b, $01 ; $460f
 	ld a, [wMainMenuCursor] ; $4611
 	ld c, a ; $4614
@@ -300,7 +300,7 @@ SetupMatchTypeMenuScreen:
 	farcall CreateWindowFromScreenRect ; $4642
 	farcall DrawTextWindowFrame ; $4645
 	farcall RedrawWindowRows ; $4648
-	call DrawMatchTypeOptionLabel ; $464b
+	call Unused_38_DrawMatchTypeOptionLabel ; $464b
 	farcall QueueWram3MapToVRAM ; $464e
 	ld de, $8000 + VRAM_BANK1 ; $4651
 	farcall LoadFixedTileBlockAndPalette ; $4654
@@ -311,7 +311,7 @@ SetupMatchTypeMenuScreen:
 	ld c, $0e ; $4660
 	farcall LoadIndexedPalette ; $4662
 	ret ; $4665
-RefreshMatchTypeLabelRow:
+Unused_38_RefreshMatchTypeLabelRow:
 	sound SFX_MENU_MOVE ; $4666
 	wram_bank WRAM_SCREEN ; $4668
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 1 ; $466e
@@ -324,7 +324,7 @@ RefreshMatchTypeLabelRow:
 	ld c, $01 ; $467f
 	ld h, $20 ; $4681
 	farcall FillTilemapRect ; $4683
-	call DrawMatchTypeOptionLabel ; $4686
+	call Unused_38_DrawMatchTypeOptionLabel ; $4686
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4689
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $468c
 	ld c, $04 ; $468f
@@ -332,7 +332,7 @@ RefreshMatchTypeLabelRow:
 	ret ; $4694
 MatchTypeLabelSpriteLayouts:
 	INCBIN "data/bank_038/MatchTypeLabelSpriteLayouts.bin" ; $4695, 141 bytes
-DrawMatchTypeOptionLabel:
+Unused_38_DrawMatchTypeOptionLabel:
 	wram_bank WRAM_SCREEN ; $4722
 	ld c, $01 ; $4728
 	call GetMenuCursorIndex_38 ; $472a
@@ -360,7 +360,7 @@ DrawMatchTypeOptionLabel:
 MatchTypeOptionLabelTable:
 	; $4749, 6 bytes (bytes:6)
 	db $01, $d2, $02, $d2, $02, $d2 ; 0x00
-AdjustMatchTypeSetting:
+Unused_38_AdjustMatchTypeSetting:
 	ld a, [wMenuInputPressed] ; $474f
 	bit PADB_LEFT, a ; $4752
 	jr nz, .decrease ; $4754

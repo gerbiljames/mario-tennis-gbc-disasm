@@ -1,4 +1,4 @@
-StubNop_05_0:
+Unused_05_StubNop_05_0:
 	ret ; $4626
 Unused_05_AllocWindowSlotBit:
 	push hl ; $4627
@@ -195,7 +195,7 @@ ResetWindowState:
 	ld [hl], $ff ; $4762
 	pop af ; $4764
 	ret ; $4765
-StubNop_05_1:
+Unused_05_StubNop_05_1:
 	ret ; $4766
 SetWindowState:
 	call GetWindowStructPtr ; $4767

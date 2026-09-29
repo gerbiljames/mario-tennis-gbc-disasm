@@ -182,7 +182,7 @@ PowersOfTen_05:
 	dw $0064 ; record 2
 	dw $03e8 ; record 3
 	dw $2710 ; record 4
-StubNop_05_2:
+Unused_05_StubNop_05_2:
 	ret ; $53ac
 	ret ; $53ad
 Unused_05_SetTextVar:

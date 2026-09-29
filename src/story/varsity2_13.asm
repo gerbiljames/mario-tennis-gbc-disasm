@@ -235,7 +235,7 @@ ReturnVarsityCourtBNpcsToSpawn_13:
 	script_set_actor_script ACTOR_VARSITY_COURT_B_BOB, ActorScript_13_18 ; $70d5
 	script_set_actor_script ACTOR_VARSITY_COURT_B_MARK, ActorScript_13_19 ; $70e0
 	ret ; $70eb
-RunSinglesTravelingTeamVictoryIfWon_13:
+Unused_13_RunSinglesTravelingTeamVictoryIfWon:
 	wram_bank WRAM_ACTORS ; $70ec
 	ld a, [wMatchWinLoseFlag] ; $70f2
 	cp WINLOSE_WIN ; $70f5
@@ -376,7 +376,7 @@ SinglesTravelingTeamActors_13:
 	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, SINGLES_TRAVELING_TEAM_BALLOON_QUESTION
 	map_actor $0000, ActorScript_13_27, $1700, $1d00, FACE_LEFT, OBJ_KATE, ANIM_WALK, $00, SINGLES_TRAVELING_TEAM_KATE
 	map_actor_end
-RunDoublesTravelingTeamVictoryIfWon_13:
+Unused_13_RunDoublesTravelingTeamVictoryIfWon:
 	wram_bank WRAM_ACTORS ; $7440
 	ld a, [wMatchWinLoseFlag] ; $7446
 	cp WINLOSE_WIN ; $7449
@@ -605,7 +605,7 @@ DoublesTravelingTeamActors_13:
 	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, DOUBLES_TRAVELING_TEAM_BALLOON_EXCLAIM_2
 	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, DOUBLES_TRAVELING_TEAM_BALLOON_EXCLAIM_3
 	map_actor_end
-DoublesTravelingTeamInitScript_13:
+Unused_13_DoublesTravelingTeamInitScript:
 	set_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $797b
 	set_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $797e
 	set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7981

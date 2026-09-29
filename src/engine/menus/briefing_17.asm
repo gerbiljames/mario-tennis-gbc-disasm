@@ -15,7 +15,7 @@ Unused_17_WriteGridPosFromLinearIndex:
 	ld a, d ; $43d6
 	ld [hl], a ; $43d7
 	ret ; $43d8
-ClearWram3Row64_17:
+Unused_17_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $43d9
 	xor a ; $43e2
 	ld c, $40 ; $43e3
@@ -25,7 +25,7 @@ ClearWram3Row64_17:
 	jr nz, .loop4 ; $43e7
 	pop_wram_bank ; $43e9
 	ret ; $43ee
-ClearWram3Row64Alt_17:
+Unused_17_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $43ef
 	ld a, $00 ; $43f8
 	ld c, $40 ; $43fa
@@ -44,12 +44,12 @@ UpdateAnimatedTilesTask_17:
 ; Instruction-identical to Unused_1b_DrawDecimalNumber, Unused_3b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_17_DrawDecimalNumber, 17 ; $4443 Unused_17_DrawDecimalNumber
-DrawAsciiDigitString_17:
+Unused_17_DrawAsciiDigitString:
 	ld a, [hl+] ; $4464
 	and a ; $4465
 	jr z, .done ; $4466
 	call DrawAsciiDigitChar_17 ; $4468
-	jr DrawAsciiDigitString_17 ; $446b
+	jr Unused_17_DrawAsciiDigitString ; $446b
 .done:
 	ret ; $446d
 ; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_1b, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
@@ -101,7 +101,7 @@ ShowDrillBriefingScreen:
 .done:
 	call ClearFrameTasks ; $44e7
 	ret ; $44ea
-ShowCourtDiagramTestScreen:
+Unused_17_ShowCourtDiagramTestScreen:
 	call DisableLCDSafely ; $44eb
 	call LoadCourtDiagramScreen ; $44ee
 	call EnableLCD ; $44f1

@@ -1,37 +1,37 @@
-	farptr LoadAllIndexedPalettes_18 ; $4000
+	farptr Unused_18_LoadAllIndexedPalettes ; $4000
 	farptr LoadIndexedPalette_18 ; $4002
-	farptr RenderProportionalTextAt32 ; $4004
+	farptr Unused_18_RenderProportionalTextAt32 ; $4004
 	farptr LoadMenuHandCursorGfx ; $4006
-	farptr LoadFontTiles ; $4008
-	farptr DrawBox ; $400a
-	farptr FlushBgMapShadowToVram ; $400c
-	farptr WriteTilemapByteAdvance ; $400e
-	farptr DrawStringToTilemap ; $4010
-	farptr AddBobbingOffsetXY ; $4012
+	farptr Unused_18_LoadFontTiles ; $4008
+	farptr Unused_18_DrawBox ; $400a
+	farptr Unused_18_FlushBgMapShadowToVram ; $400c
+	farptr Unused_18_WriteTilemapByteAdvance ; $400e
+	farptr Unused_18_DrawStringToTilemap ; $4010
+	farptr Unused_18_AddBobbingOffsetXY ; $4012
 	farptr AddBobbingOffsetY ; $4014
 	farptr AddBobbingOffsetYLarge ; $4016
-	farptr StubNop_18 ; $4018
-	farptr DrawDecimalNumberToTilemap ; $401a
-	farptr FindRosterEntry ; $401c
-	farptr ApplySpriteBobOffset_18 ; $401e
-	farptr LoadCharSelectCursorGfx ; $4020
-	farptr DrawCharSelectCursor ; $4022
+	farptr Unused_18_StubNop ; $4018
+	farptr Unused_18_DrawDecimalNumberToTilemap ; $401a
+	farptr Unused_18_FindRosterEntry ; $401c
+	farptr Unused_18_ApplySpriteBobOffset ; $401e
+	farptr Unused_18_LoadCharSelectCursorGfx ; $4020
+	farptr Unused_18_DrawCharSelectCursor ; $4022
 	farptr LoadCharacterRecordToBuffer ; $4024
 	farptr CheckCharacterUnlocked ; $4026
-	farptr CheckUnlockFlag ; $4028
-	farptr MoveGridCursor ; $402a
-	farptr InitPlayerRecordForCharacter ; $402c
-	farptr ForceFlushBgMapToVram ; $402e
-	farptr DrawConfirmScreenBox ; $4030
-	farptr RunTwoOptionSelect ; $4032
-	farptr RunTwoOptionSelectB ; $4034
-	farptr InitConfirmScreen ; $4036
-	farptr SetupScoreboardDisplay ; $4038
-	farptr LoadScorePanelValue ; $403a
-	farptr StubNop_18_1 ; $403c
-	farptr DrawDecimalNumberSprites ; $403e
+	farptr Unused_18_CheckUnlockFlag ; $4028
+	farptr Unused_18_MoveGridCursor ; $402a
+	farptr Unused_18_InitPlayerRecordForCharacter ; $402c
+	farptr Unused_18_ForceFlushBgMapToVram ; $402e
+	farptr Unused_18_DrawConfirmScreenBox ; $4030
+	farptr Unused_18_RunTwoOptionSelect ; $4032
+	farptr Unused_18_RunTwoOptionSelectB ; $4034
+	farptr Unused_18_InitConfirmScreen ; $4036
+	farptr Unused_18_SetupScoreboardDisplay ; $4038
+	farptr Unused_18_LoadScorePanelValue ; $403a
+	farptr Unused_18_StubNop_18_1 ; $403c
+	farptr Unused_18_DrawDecimalNumberSprites ; $403e
 	farptr Unused_18_DrawYesNoLabels ; $4040
-	farptr DrawTileBlock6x2ToTilemap ; $4042
+	farptr Unused_18_DrawTileBlock6x2ToTilemap ; $4042
 	farptr LoadOnCourtCharTilesA ; $4044
 	farptr LoadOnCourtCharTilesB ; $4046
 DataPtr_CharRosterIcon00:
@@ -105,7 +105,7 @@ DataPtr_MarioMiniGamesAttrmap:
 DataPtr_MarioMiniGamesPalettes:
 	dw MarioMiniGamesPalettes ; $408c
 	farptr RunStorySceneByMode ; $408e
-	farptr DebugScreenAssetViewer ; $4090
+	farptr Unused_18_DebugScreenAssetViewer ; $4090
 DataPtr_MatchWinLoseGfx:
 	dw MatchWinLoseGfx ; $4092
 DataPtr_UnusedJpCourtStatLabelTiles_18:

@@ -1,4 +1,4 @@
-	farptr ShowCourtDiagramTestScreen ; $4000
+	farptr Unused_17_ShowCourtDiagramTestScreen ; $4000
 DataPtr_CourtDiagramTiles:
 	dw CourtDiagramTiles ; $4002
 DataPtr_CourtDiagramTilemap:

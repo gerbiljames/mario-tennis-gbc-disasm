@@ -11,7 +11,7 @@ MenuHandCursorPalette:
 	INCLUDE "data/bank_018/MenuHandCursorPalette.asm" ; $42e0, 32 bytes (palettes)
 AllIndexedPalettes_18:
 	INCLUDE "data/bank_018/AllIndexedPalettes_18.asm" ; $4300, 40 bytes (palettes)
-LoadAllIndexedPalettes_18:
+Unused_18_LoadAllIndexedPalettes:
 	push af ; $4328
 	push bc ; $4329
 	push de ; $432a
@@ -41,7 +41,7 @@ LoadIndexedPalette_18:
 	pop bc ; $4350
 	pop af ; $4351
 	ret ; $4352
-FlushBgMapShadowToVram:
+Unused_18_FlushBgMapShadowToVram:
 	ld a, [wBgMapShadowDirty] ; $4353
 	and $0f ; $4356
 	jr z, .attrPlane ; $4358
@@ -73,27 +73,27 @@ LoadMenuHandCursorGfx:
 ; Copies FontTiles to $9000, 16 blocks. The leading `ret` means it never does:
 ; the one caller gets a no-op, and whatever put the font there has already
 ; done so by the time this is reached.
-LoadFontTiles:
+Unused_18_LoadFontTiles:
 	ret ; $438d
 	ld hl, FontTiles ; $438e
 	ld de, vTiles2 ; $4391
 	ld c, $10 ; $4394 -- 16 of FontTiles's 32 tiles
 	call QueueVRAMCopy ; $4396
 	ret ; $4399
-RenderProportionalTextAt32:
+Unused_18_RenderProportionalTextAt32:
 	push bc ; $439a
 	ld c, $20 ; $439b
 	farcall RenderProportionalTextAt ; $439d
 	pop bc ; $43a0
 	ret ; $43a1
-DrawStringToTilemap:
-	farcall WriteStringToTilemap ; $43a2
+Unused_18_DrawStringToTilemap:
+	farcall Unused_05_WriteStringToTilemap ; $43a2
 	ret ; $43a5
-WriteTilemapByteAdvance:
+Unused_18_WriteTilemapByteAdvance:
 	ld [de], a ; $43a6
 	inc de ; $43a7
 	ret ; $43a8
-DrawDecimalNumberToTilemap:
+Unused_18_DrawDecimalNumberToTilemap:
 	push af ; $43a9
 	push bc ; $43aa
 	push hl ; $43ab
@@ -112,13 +112,13 @@ DrawDecimalNumberToTilemap:
 	ld l, c ; $43bc
 	ld h, b ; $43bd
 	pop de ; $43be
-	call DrawStringToTilemap ; $43bf
+	call Unused_18_DrawStringToTilemap ; $43bf
 	add sp, 10 ; $43c2
 	pop hl ; $43c4
 	pop bc ; $43c5
 	pop af ; $43c6
 	ret ; $43c7
-DrawBox:
+Unused_18_DrawBox:
 	push af ; $43c8
 	push bc ; $43c9
 	push de ; $43ca
@@ -158,7 +158,7 @@ DrawBox:
 	pop hl ; $43f0
 	pop de ; $43f1
 	pop bc ; $43f2
-	call DrawBoxTopRow ; $43f3
+	call Unused_18_DrawBoxTopRow ; $43f3
 	ld a, $20 ; $43f6
 	add l ; $43f8
 	ld l, a ; $43f9
@@ -168,7 +168,7 @@ DrawBox:
 	dec c ; $43fd
 	dec c ; $43fe
 .bottomRow:
-	call DrawBoxSideRow ; $43ff
+	call Unused_18_DrawBoxSideRow ; $43ff
 	ld a, $20 ; $4402
 	add l ; $4404
 	ld l, a ; $4405
@@ -177,13 +177,13 @@ DrawBox:
 .done:
 	dec c ; $4409
 	jr nz, .bottomRow ; $440a
-	call DrawBoxBottomRow ; $440c
+	call Unused_18_DrawBoxBottomRow ; $440c
 	pop hl ; $440f
 	pop de ; $4410
 	pop bc ; $4411
 	pop af ; $4412
 	ret ; $4413
-DrawBoxTopRow:
+Unused_18_DrawBoxTopRow:
 	push bc ; $4414
 	push hl ; $4415
 	ld a, $02 ; $4416
@@ -200,7 +200,7 @@ DrawBoxTopRow:
 	pop hl ; $4424
 	pop bc ; $4425
 	ret ; $4426
-DrawBoxSideRow:
+Unused_18_DrawBoxSideRow:
 	push hl ; $4427
 	ld [hl], $05 ; $4428
 	ld a, b ; $442a
@@ -213,7 +213,7 @@ DrawBoxSideRow:
 	ld [hl], $06 ; $4431
 	pop hl ; $4433
 	ret ; $4434
-DrawBoxBottomRow:
+Unused_18_DrawBoxBottomRow:
 	ld a, $07 ; $4435
 	ld [hl+], a ; $4437
 	dec b ; $4438
@@ -226,7 +226,7 @@ DrawBoxBottomRow:
 	ld a, $09 ; $4440
 	ld [hl+], a ; $4442
 	ret ; $4443
-AddBobbingOffsetXY:
+Unused_18_AddBobbingOffsetXY:
 	push af ; $4444
 	push hl ; $4445
 	ldh a, [hVBlankCounter] ; $4446
@@ -282,9 +282,9 @@ AddBobbingOffsetYLargeTable:
 	db $03, $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $01, $01, $01, $00, $00 ; 0x10
 	db $00, $00, $00, $ff, $ff, $ff, $fe, $fe, $fe, $fd, $fd, $fd, $fd, $fd, $fd, $fd ; 0x20
 	db $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fe, $fe, $fe, $ff, $ff, $ff, $00, $00 ; 0x30
-StubNop_18:
+Unused_18_StubNop:
 	ret ; $44ee
-FindRosterEntry:
+Unused_18_FindRosterEntry:
 	push af ; $44ef
 	push bc ; $44f0
 	ld b, a ; $44f1
@@ -365,9 +365,9 @@ UnusedCheckCharacterIdUnlocked:
 .done:
 	xor a ; $4555
 	ret ; $4556
-CheckUnlockFlag:
+Unused_18_CheckUnlockFlag:
 	bit 7, a ; $4557
-	jr z, TestUnlockFlagById ; $4559
+	jr z, Unused_18_TestUnlockFlagById ; $4559
 	cp $84 ; $455b
 	jr nz, .locked ; $455d
 	cp $ff ; $455f
@@ -375,7 +375,7 @@ CheckUnlockFlag:
 .locked:
 	xor a ; $4562
 	ret ; $4563
-TestUnlockFlagById:
+Unused_18_TestUnlockFlagById:
 	push hl ; $4564
 	push de ; $4565
 	ld hl, UnlockFlagIds_18 ; $4566
@@ -410,7 +410,7 @@ UnlockFlagIds_18:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x10
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x20
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x30
-MoveGridCursor:
+Unused_18_MoveGridCursor:
 	bit 5, b ; $45ca
 	jr z, .checkRight ; $45cc
 	dec d ; $45ce
@@ -470,23 +470,23 @@ MoveGridCursor:
 	ld a, [hl] ; $460f
 	pop hl ; $4610
 	cp $ff ; $4611
-	jr z, MoveGridCursor ; $4613
+	jr z, Unused_18_MoveGridCursor ; $4613
 	cp $fe ; $4615
 	jr nz, .occupied ; $4617
 	inc d ; $4619
 	inc e ; $461a
-	jr MoveGridCursor ; $461b
+	jr Unused_18_MoveGridCursor ; $461b
 .occupied:
 	cp $fd ; $461d
 	jr nz, .store ; $461f
 	dec d ; $4621
 	dec e ; $4622
-	jr MoveGridCursor ; $4623
+	jr Unused_18_MoveGridCursor ; $4623
 .store:
 	cp $fc ; $4625
 	jr nz, .retry ; $4627
 	dec d ; $4629
-	jr MoveGridCursor ; $462a
+	jr Unused_18_MoveGridCursor ; $462a
 .retry:
 	cp $fb ; $462c
 	jr nz, .done ; $462e
@@ -495,6 +495,6 @@ MoveGridCursor:
 	bit 5, a ; $4633
 	jr nz, .done ; $4635
 	inc d ; $4637
-	jr MoveGridCursor ; $4638
+	jr Unused_18_MoveGridCursor ; $4638
 .done:
 	ret ; $463a

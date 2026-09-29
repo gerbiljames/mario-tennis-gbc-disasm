@@ -1,4 +1,4 @@
-ValidateN64TransferRecord:
+Unused_02_ValidateN64TransferRecord:
 	ld a, [wN64TransferMarker] ; $4044
 	cp $64 ; $4047
 	jr nz, .returnZero ; $4049

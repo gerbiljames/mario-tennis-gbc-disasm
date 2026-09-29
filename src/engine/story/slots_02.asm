@@ -1,8 +1,8 @@
-	farptr DebugStoryStatsScreen ; $4000
+	farptr Unused_02_DebugStoryStatsScreen ; $4000
 	farptr InitStoryModeState ; $4002
-	farptr ValidateN64TransferRecord ; $4004
+	farptr Unused_02_ValidateN64TransferRecord ; $4004
 	farptr InitPlayerRecordFromTemplate ; $4006
-	farptr LoadMainCharacterFromRoster ; $4008
+	farptr Unused_02_LoadMainCharacterFromRoster ; $4008
 	farptr LevelUpPlayer ; $400a
 	farptr ComputeLevelUpStatDeltas ; $400c
 	farptr RefreshPlayerStatsAndGetPtr ; $400e
@@ -14,10 +14,10 @@
 	farptr LoadCharacterRecordToCa80 ; $401a
 	farptr AddExpCapped ; $401c
 	farptr Compare24Bit ; $401e
-	farptr ClearCa00RecordExp ; $4020
-	farptr AddExpToCa00RecordChecked ; $4022
-	farptr AddExpToCa00RecordHooked ; $4024
-	farptr AddExpToCa00Record ; $4026
+	farptr Unused_02_ClearCa00RecordExp ; $4020
+	farptr Unused_02_AddExpToCa00RecordChecked ; $4022
+	farptr Unused_02_AddExpToCa00RecordHooked ; $4024
+	farptr Unused_02_AddExpToCa00Record ; $4026
 	farptr AddPlayerExp ; $4028
 	farptr HasReachedNextLevelExp ; $402a
 	farptr GetExpRemainingToNextLevel ; $402c

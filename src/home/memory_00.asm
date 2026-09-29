@@ -59,14 +59,14 @@ CopyMemoryBC:
 	dec b ; $03e6
 	jr nz, .loop ; $03e7
 	ret ; $03e9
-CopyMemoryReverseBC:
+Unused_00_CopyMemoryReverseBC:
 	ld a, [hl-] ; $03ea
 	ld [de], a ; $03eb
 	dec de ; $03ec
 	dec bc ; $03ed
 	ld a, b ; $03ee
 	or c ; $03ef
-	jr nz, CopyMemoryReverseBC ; $03f0
+	jr nz, Unused_00_CopyMemoryReverseBC ; $03f0
 	ret ; $03f2
 CopyMemoryFast:
 	ld a, $0f ; $03f3
@@ -176,10 +176,10 @@ CopyMemoryFast:
 	dec c ; $045c
 	jr nz, .copyAlignedLoop ; $045d
 	ret ; $045f
-FillMemoryCFast:
+Unused_00_FillMemoryCFast:
 	ld [hl+], a ; $0460
 	dec c ; $0461
-	jr nz, FillMemoryCFast ; $0462
+	jr nz, Unused_00_FillMemoryCFast ; $0462
 	ret ; $0464
 ClearVRAMCopyQueue:
 	ld hl, wVRAMCopyQueue ; $0465

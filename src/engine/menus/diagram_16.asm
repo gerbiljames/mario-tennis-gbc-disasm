@@ -7,7 +7,7 @@
 ; Instruction-identical to Unused_38_SetMenuCursorFromIndexToPtr and Unused_3e_SetMenuCursorFromIndexToPtr (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in set_menu_cursor_from_index_to_ptr, Unused_16_SetMenuCursorFromIndexToPtr, 16 ; $43bb Unused_16_SetMenuCursorFromIndexToPtr
-ClearWram3Row64_16:
+Unused_16_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $43c9
 	xor a ; $43d2
 	ld c, $40 ; $43d3
@@ -17,7 +17,7 @@ ClearWram3Row64_16:
 	jr nz, .loop ; $43d7
 	pop_wram_bank ; $43d9
 	ret ; $43de
-ClearWram3Row64Alt_16:
+Unused_16_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $43df
 	ld a, $00 ; $43e8
 	ld c, $40 ; $43ea
@@ -36,12 +36,12 @@ UnusedDrawCourtDiagramMarkers:
 .loop:
 	ld a, [hl] ; $43fc
 	cp $00 ; $43fd
-	jr z, CourtDiagramBaseTask.restore ; $43ff
+	jr z, Unused_16_CourtDiagramBaseTask.restore ; $43ff
 	ld [de], a ; $4401
 	inc hl ; $4402
 	ld a, [hl] ; $4403
 	cp $de ; $4404
-CourtDiagramBaseTask:
+Unused_16_CourtDiagramBaseTask:
 	jr z, .eqde ; $4406
 	cp $df ; $4408
 	jr nz, .nedf ; $440a
@@ -95,25 +95,25 @@ UnusedPrintDecimalNumber_16:
 	ld l, c ; $4440
 	ld h, b ; $4441
 	ld c, e ; $4442
-PrintDecimalNumber:
+Unused_16_PrintDecimalNumber:
 	ld b, d ; $4443
 	call FormatDecimalNumber ; $4444
 	ld l, c ; $4447
 	ld h, b ; $4448
 	pop de ; $4449
 	pop bc ; $444a
-	call PrintNumberString_16 ; $444b
+	call Unused_16_PrintNumberString ; $444b
 	add sp, 10 ; $444e
 	pop hl ; $4450
 	pop bc ; $4451
 	pop af ; $4452
 	ret ; $4453
-PrintNumberString_16:
+Unused_16_PrintNumberString:
 	ld a, [hl+] ; $4454
 	and a ; $4455
 	jr z, .done ; $4456
 	call DrawAsciiDigitChar_16 ; $4458
-	jr PrintNumberString_16 ; $445b
+	jr Unused_16_PrintNumberString ; $445b
 .done:
 	ret ; $445d
 ; Instruction-identical to DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
