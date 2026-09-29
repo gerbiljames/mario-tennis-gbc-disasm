@@ -876,11 +876,15 @@ The bounds are hardcoded immediates in this routine and are *not*
 
 The corner rule carves an asymmetric keep-out box out of one side of the far
 court: `X >= $240`, between the net and depth `-$2a0`, for a human-controlled
-player only. Positive X is screen-right on both halves (a character placed at
-`X = -$300` beside the net, on either side, is drawn at the left net post).
-The umpire's chair stands at that *left* post, so the box is not the chair --
-it is the mirror-image corner. What, if anything, the rule keeps players out
-of there is not established.
+player only. That is the **umpire's chair**. Every court tilemap that has one
+(Clay, Grass, Hard, Training, Center, Composition, Tropics, Castle) stands it
+at the right-hand net post on the far side, and positive X is screen-right (a
+character placed at `X = +$300` beside the net is drawn at the right post).
+With the view flipped so the human stays at the bottom of the screen, the
+whole scene is drawn turned round and the chair appears at the *left* post on
+the near side -- which is where it first showed up in an emulated doubles
+match, and why it looked like the opposite corner. A CPU player takes the
+unclamped path and can walk through it.
 
 **Bit 6 of `wCharFlags` is never read anywhere in the ROM.** The sliding is a
 consequence of the refusal itself, not of anything consuming the flag; treat the
@@ -1418,6 +1422,28 @@ region) exists but is only called from the link menus, never from inside
 Role election is first-come: `TryEstablishLink` (`$07:$4048`) reads
 `hLinkRxByte`, and if the peer's `$c1` probe is already sitting there this side
 becomes the slave, otherwise it becomes the master and sends `$c1` itself.
+
+### Connecting, as it actually happens
+
+Played out between two emulated consoles (`tools/linktest.py`), the
+handshake needs the players in a particular order. At boot `InitSerialLink`
+loads `SB` with `$c0` and arms an external-clock transfer, so a console
+sitting on the main menu answers any probe with `$c0` and latches the probe
+in its serial interrupt. The first player to choose Link Play becomes the
+master: its first `$c1` probe gets `$c0` back, which is neither silence
+(`$ff`) nor a rival master (`$c1`), so it draws the waiting message and then
+probes once a frame for up to 1,000 frames. The second player's console has
+been latching those probes; when that player chooses Link Play,
+`TryMainMenuLinkHandshake` finds `$c1` already in `hLinkRxByte` and takes
+the slave path, whose `$c2` reply reaches the master a probe later. Both
+players choosing Link Play at once fails -- each probes, and each hears the
+other's `$c1` -- and so does the second player choosing it while the
+master's message is still being drawn: the slave's `AwaitSerialByte` counts
+loop passes, not frames, once a VBlank has gone unanswered, and gives up in
+a few frames. After the handshake the pair walks the rules screen (per-frame
+input exchange), trades the unlock-flag block by nibbles, and goes on
+through character select into the match loop described above.
+
 
 ## Character stats into the engine
 
