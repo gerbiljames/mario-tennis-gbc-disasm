@@ -1,5 +1,5 @@
 	farptr RunMatchPauseMenu ; $4000
-	farptr RunDebugStatsEditor ; $4002
+	farptr Unused_06_RunDebugStatsEditor ; $4002
 	farptr ShowMessageWindow ; $4004
 	farptr ShowMatchScoreboardScreen ; $4006
 	farptr RunStoryModeMenu ; $4008

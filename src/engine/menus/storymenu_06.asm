@@ -121,7 +121,7 @@ DebugStatName_Jump:
 	INCLUDE "data/bank_006/DebugStatName_Jump.asm" ; $6aae, 6 bytes
 DebugStatName_Dive:
 	INCLUDE "data/bank_006/DebugStatName_Dive.asm" ; $6ab4, 6 bytes
-DrawDebugStatsLabels:
+Unused_06_DrawDebugStatsLabels:
 	ld de, $0000 ; $6aba
 	call GetShadowAttrmapAddr ; $6abd
 	ld c, e ; $6ac0
@@ -144,7 +144,7 @@ DrawDebugStatsLabels:
 	ld a, [hl+] ; $6ae3
 	ld h, [hl] ; $6ae4
 	ld l, a ; $6ae5
-	call CopyTextString ; $6ae6
+	call Unused_00_CopyTextString ; $6ae6
 	pop de ; $6ae9
 	pop bc ; $6aea
 	inc e ; $6aeb
@@ -153,86 +153,86 @@ DrawDebugStatsLabels:
 	cp $0f ; $6aee
 	jr nz, .loop ; $6af0
 	ret ; $6af2
-DrawDebugStatsValues:
+Unused_06_DrawDebugStatsValues:
 	ld de, $0a01 ; $6af3
 	call GetShadowTilemapAddr ; $6af6
 	ld hl, wDebugStatWords ; $6af9
 	ld a, [hl+] ; $6afc
 	ld h, [hl] ; $6afd
 	ld l, a ; $6afe
-	call DrawDebugStatWord ; $6aff
+	call Unused_06_DrawDebugStatWord ; $6aff
 	ld hl, wDebugStatWords + 4 ; $6b02
 	ld a, [hl+] ; $6b05
 	ld h, [hl] ; $6b06
 	ld l, a ; $6b07
-	call DrawDebugStatWord ; $6b08
+	call Unused_06_DrawDebugStatWord ; $6b08
 	ld hl, wDebugStatWords + 6 ; $6b0b
 	ld a, [hl+] ; $6b0e
 	ld h, [hl] ; $6b0f
 	ld l, a ; $6b10
-	call DrawDebugStatWord ; $6b11
+	call Unused_06_DrawDebugStatWord ; $6b11
 	ld a, [wDebugStatBytes] ; $6b14
-	call DrawDebugStatByte ; $6b17
+	call Unused_06_DrawDebugStatByte ; $6b17
 	ld a, [wDebugStatBytes + 1] ; $6b1a
-	call DrawDebugStatByte ; $6b1d
+	call Unused_06_DrawDebugStatByte ; $6b1d
 	ld a, [wDebugStatBytes + 2] ; $6b20
-	call DrawDebugStatByte ; $6b23
+	call Unused_06_DrawDebugStatByte ; $6b23
 	ld a, [wDebugStatBytes + 3] ; $6b26
-	call DrawDebugStatByte ; $6b29
+	call Unused_06_DrawDebugStatByte ; $6b29
 	ld a, [wDebugStatBytes + 4] ; $6b2c
-	call DrawDebugStatByte ; $6b2f
+	call Unused_06_DrawDebugStatByte ; $6b2f
 	ld a, [wDebugStatBytes + 5] ; $6b32
-	call DrawDebugStatByte ; $6b35
+	call Unused_06_DrawDebugStatByte ; $6b35
 	ld a, [wDebugStatBytes + 6] ; $6b38
-	call DrawDebugStatByte ; $6b3b
+	call Unused_06_DrawDebugStatByte ; $6b3b
 	ld a, [wDebugStatBytes + 7] ; $6b3e
-	call DrawDebugStatByte ; $6b41
+	call Unused_06_DrawDebugStatByte ; $6b41
 	ld hl, wDebugStatWords2 ; $6b44
 	ld a, [hl+] ; $6b47
 	ld h, [hl] ; $6b48
 	ld l, a ; $6b49
-	call DrawDebugStatWord ; $6b4a
+	call Unused_06_DrawDebugStatWord ; $6b4a
 	ld hl, wDebugStatWords2 + 2 ; $6b4d
 	ld a, [hl+] ; $6b50
 	ld h, [hl] ; $6b51
 	ld l, a ; $6b52
-	call DrawDebugStatWord ; $6b53
+	call Unused_06_DrawDebugStatWord ; $6b53
 	ld hl, wDebugStatWords2 + 4 ; $6b56
 	ld a, [hl+] ; $6b59
 	ld h, [hl] ; $6b5a
 	ld l, a ; $6b5b
-	call DrawDebugStatWord ; $6b5c
+	call Unused_06_DrawDebugStatWord ; $6b5c
 	ld hl, wDebugStatWords2 + 6 ; $6b5f
 	ld a, [hl+] ; $6b62
 	ld h, [hl] ; $6b63
 	ld l, a ; $6b64
-	call DrawDebugStatWord ; $6b65
+	call Unused_06_DrawDebugStatWord ; $6b65
 	ret ; $6b68
-DrawDebugStatByte:
+Unused_06_DrawDebugStatByte:
 	push de ; $6b69
 	ld l, a ; $6b6a
 	ld h, $00 ; $6b6b
-	call DrawHexWord ; $6b6d
+	call Unused_00_DrawHexWord ; $6b6d
 	pop de ; $6b70
 	ld hl, $0020 ; $6b71
 	add hl, de ; $6b74
 	ld e, l ; $6b75
 	ld d, h ; $6b76
 	ret ; $6b77
-DrawDebugStatWord:
+Unused_06_DrawDebugStatWord:
 	push de ; $6b78
-	call DrawHexWord ; $6b79
+	call Unused_00_DrawHexWord ; $6b79
 	pop de ; $6b7c
 	ld hl, $0020 ; $6b7d
 	add hl, de ; $6b80
 	ld e, l ; $6b81
 	ld d, h ; $6b82
 	ret ; $6b83
-RunDebugStatsEditor:
+Unused_06_RunDebugStatsEditor:
 	ldh a, [hWramBank] ; $6b84
 	push af ; $6b86
 	farcall StepMatchFrame ; $6b87
-	farcall LoadMenuTilesBChunk2 ; $6b8a
+	farcall Unused_01_LoadMenuTilesBChunk2 ; $6b8a
 	wram_bank WRAM_CHAR0 ; $6b8d
 	ld hl, wCharPosX ; $6b93
 	ld de, wDebugMenuWindowId ; $6b96
@@ -242,16 +242,16 @@ RunDebugStatsEditor:
 	farcall StepMatchFrame ; $6ba4
 	xor a ; $6ba7
 	ld [wMatchMenuSelection], a ; $6ba8
-	call DrawDebugStatsLabels ; $6bab
-	call DrawDebugStatsValues ; $6bae
+	call Unused_06_DrawDebugStatsLabels ; $6bab
+	call Unused_06_DrawDebugStatsValues ; $6bae
 	call FlushTilemapToVram ; $6bb1
 	farcall StepMatchFrame ; $6bb4
 .loop:
 	farcall ReadMatchInputPressed ; $6bb7
 	and $0d ; $6bba
 	jr nz, .maskSet ; $6bbc
-	call HandleDebugStatsInput ; $6bbe
-	call FlushTilemapToVramIfDirty ; $6bc1
+	call Unused_06_HandleDebugStatsInput ; $6bbe
+	call Unused_06_FlushTilemapToVramIfDirty ; $6bc1
 	farcall StepMatchFrame ; $6bc4
 	jr .loop ; $6bc7
 .maskSet:
@@ -273,20 +273,20 @@ RunDebugStatsEditor:
 	call CopyMemoryFast ; $6bed
 	pop_wram_bank ; $6bf0
 	ret ; $6bf5
-HandleDebugStatsInput:
+Unused_06_HandleDebugStatsInput:
 	ldh a, [hInputPressed] ; $6bf6
 	ld b, a ; $6bf8
 	ld c, $0b ; $6bf9
 	ld a, [wMatchMenuSelection] ; $6bfb
-	call MoveCursorVertical ; $6bfe
+	call Unused_00_MoveCursorVertical ; $6bfe
 	ld [wMatchMenuSelection], a ; $6c01
-	call AdjustSelectedDebugStat ; $6c04
-	call QueueDebugStatsCursorSprites ; $6c07
-	call DrawDebugStatsValues ; $6c0a
+	call Unused_06_AdjustSelectedDebugStat ; $6c04
+	call Unused_06_QueueDebugStatsCursorSprites ; $6c07
+	call Unused_06_DrawDebugStatsValues ; $6c0a
 	ld a, $01 ; $6c0d
 	ld [wTilemapDirtyFlag], a ; $6c0f
 	ret ; $6c12
-QueueDebugStatsCursorSprites:
+Unused_06_QueueDebugStatsCursorSprites:
 	ld de, $0c0c ; $6c13
 	call AdjustSpriteCoordsForScroll ; $6c16
 	ld a, [wMatchMenuSelection] ; $6c19
@@ -303,60 +303,60 @@ QueueDebugStatsCursorSprites:
 	lb bc, $09, $42 ; $6c2b attr, tile
 	call QueueSprite ; $6c2e
 	ret ; $6c31
-AdjustSelectedDebugStat:
+Unused_06_AdjustSelectedDebugStat:
 	ld a, [wMatchMenuSelection] ; $6c32
 	rst Rst00 ; $6c35
-	dw AdjustSelectedDebugStat.adjustDebugStatWord ; $6c36 jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatWord2 ; $6c38 jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatWord3 ; $6c3a jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatByte ; $6c3c jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatByte2 ; $6c3e jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatByte3 ; $6c40 jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatDigit ; $6c42 jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatDigit2 ; $6c44 jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatDigit3 ; $6c46 jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatDigit4 ; $6c48 jumptable
-	dw AdjustSelectedDebugStat.adjustDebugStatDigit5 ; $6c4a jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatWord ; $6c36 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatWord2 ; $6c38 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatWord3 ; $6c3a jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatByte ; $6c3c jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatByte2 ; $6c3e jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatByte3 ; $6c40 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit ; $6c42 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit2 ; $6c44 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit3 ; $6c46 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit4 ; $6c48 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit5 ; $6c4a jumptable
 .adjustDebugStatWord:
 	ld hl, wDebugStatWords ; $6c4c
 	ld bc, $0010 ; $6c4f
-	jp AdjustDebugStatWord ; $6c52
+	jp Unused_06_AdjustDebugStatWord ; $6c52
 .adjustDebugStatWord2:
 	ld hl, wDebugStatWords + 4 ; $6c55
 	ld bc, $0010 ; $6c58
-	jp AdjustDebugStatWord ; $6c5b
+	jp Unused_06_AdjustDebugStatWord ; $6c5b
 .adjustDebugStatWord3:
 	ld hl, wDebugStatWords + 6 ; $6c5e
 	ld bc, $0010 ; $6c61
-	jp AdjustDebugStatWord ; $6c64
+	jp Unused_06_AdjustDebugStatWord ; $6c64
 .adjustDebugStatByte:
 	ld hl, wDebugStatBytes ; $6c67
 	ld b, $02 ; $6c6a
-	jp AdjustDebugStatByte ; $6c6c
+	jp Unused_06_AdjustDebugStatByte ; $6c6c
 .adjustDebugStatByte2:
 	ld hl, wDebugStatBytes + 1 ; $6c6f
 	ld b, $08 ; $6c72
-	jp AdjustDebugStatByte ; $6c74
+	jp Unused_06_AdjustDebugStatByte ; $6c74
 .adjustDebugStatByte3:
 	ld hl, wDebugStatBytes + 2 ; $6c77
 	ld b, $02 ; $6c7a
-	jp AdjustDebugStatByte ; $6c7c
+	jp Unused_06_AdjustDebugStatByte ; $6c7c
 .adjustDebugStatDigit:
 	ld hl, wDebugStatBytes + 3 ; $6c7f
-	jp AdjustDebugStatDigit ; $6c82
+	jp Unused_06_AdjustDebugStatDigit ; $6c82
 .adjustDebugStatDigit2:
 	ld hl, wDebugStatBytes + 4 ; $6c85
-	jp AdjustDebugStatDigit ; $6c88
+	jp Unused_06_AdjustDebugStatDigit ; $6c88
 .adjustDebugStatDigit3:
 	ld hl, wDebugStatBytes + 5 ; $6c8b
-	jp AdjustDebugStatDigit ; $6c8e
+	jp Unused_06_AdjustDebugStatDigit ; $6c8e
 .adjustDebugStatDigit4:
 	ld hl, wDebugStatBytes + 6 ; $6c91
-	jp AdjustDebugStatDigit ; $6c94
+	jp Unused_06_AdjustDebugStatDigit ; $6c94
 .adjustDebugStatDigit5:
 	ld hl, wDebugStatBytes + 7 ; $6c97
-	jp AdjustDebugStatDigit ; $6c9a
-AdjustDebugStatDigit:
+	jp Unused_06_AdjustDebugStatDigit ; $6c9a
+Unused_06_AdjustDebugStatDigit:
 	ldh a, [hInputPressed] ; $6c9d
 	ld b, a ; $6c9f
 	ld c, $0a ; $6ca0
@@ -364,7 +364,7 @@ AdjustDebugStatDigit:
 	call MoveCursorHorizontal ; $6ca3
 	ld [hl], a ; $6ca6
 	ret ; $6ca7
-AdjustDebugStatByte:
+Unused_06_AdjustDebugStatByte:
 	ldh a, [hInputPressed] ; $6ca8
 	bit PADB_LEFT, a ; $6caa
 	jr nz, .read ; $6cac
@@ -381,7 +381,7 @@ AdjustDebugStatByte:
 	add b ; $6cb8
 	ld [hl], a ; $6cb9
 	ret ; $6cba
-AdjustDebugStatWord:
+Unused_06_AdjustDebugStatWord:
 	ldh a, [hInputPressed] ; $6cbb
 	bit PADB_LEFT, a ; $6cbd
 	jr nz, .read ; $6cbf

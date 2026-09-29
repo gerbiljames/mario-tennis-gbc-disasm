@@ -908,7 +908,7 @@ to write both bitplanes. `Unused_00_RenderTextToTiles` (`$00:$20e5`) walks a NUL
 ASCII string, treats any byte below `$30` as a 6-pixel space, and advances by
 each glyph's own width — a proportional number font. `PrintString` (`$00:$1bd8`),
 `FormatHexWord` (`$00:$1935`), `FormatDecimalNumber` (`$00:$1961`) and
-`CopyTextString` (`$00:$2aa6`) round out the debug text path, which draws into
+`Unused_00_CopyTextString` (`$00:$2aa6`) round out the debug text path, which draws into
 `wDebugTextBuffer` (`$cc00`) for the `$9c00`-page console.
 
 `RenderProportionalMenuText` (`$00:$2a9e`) is *not* part of this — it is a
@@ -1009,8 +1009,8 @@ The wrap-and-clamp step is one idiom, repeated everywhere:
 ```
 
 ROM0 provides it as `MoveCursorHorizontal` (`$00:$2c0d`) and
-`MoveCursorVertical` (`$00:$2c04`) — `a` = current index, `b` = pad bits,
-`c` = item count, result in `a`. `MoveCursorVertical` tests UP/DOWN and jumps
+`Unused_00_MoveCursorVertical` (`$00:$2c04`) — `a` = current index, `b` = pad bits,
+`c` = item count, result in `a`. `Unused_00_MoveCursorVertical` tests UP/DOWN and jumps
 into the horizontal routine's tail, so the two share the arithmetic. Only bank
 `$06` calls them (7 sites).
 

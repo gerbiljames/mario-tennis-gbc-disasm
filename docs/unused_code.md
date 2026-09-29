@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-797 labels carry an `Unused` prefix: 697 routines and 100 data blobs. "Unused" is a proof, not a guess:
+871 labels carry an `Unused` prefix: 771 routines and 100 data blobs. "Unused" is a proof, not a guess:
 nothing reachable from the game's entry points -- the reset vector, the
 interrupt vectors and the `rst` vectors -- reaches the label, by call, jump,
 branch, pointer table, macro body, fall-through or farcall. A `farptr` row
@@ -49,8 +49,21 @@ the debug save-data, minigame-flags and character-select screens, the
 high-score confirm screen), and everything below them. The largest subtrees
 are the debug save-data flow (22 routines), the minigame-flags debug screen
 (20), the high-score confirm screen (20) and the minigame pause menu (11).
-58 unreachable labels sit inside shared `src/twins` templates, which take
-their name from the template, and keep it; the check exempts them.
+58 more were copies inside shared `src/twins` templates, which used to take
+their name from the template: each bank now declares the name of its copy,
+so a dead one is `Unused_<bank>_…` too, and the check exempts nothing.
+
+Code after an unconditional `ret` or `jp` with no label on it runs for no
+one. `CheckDebugStatsEditorHotkey` begins with `ret`, and everything after
+it -- the in-match debug stats editor, 16 routines down to the ROM0 helpers
+only the editor calls (`Unused_00_CopyTextString`, `_DrawHexWord`,
+`_MoveCursorVertical`) -- is `Unused` for it. The coverage sweep did record
+`Unused_00_CopyTextString` as run, once per story state: entering the Wall
+Practice room by its back-from-a-match entry with no match played leaves a
+stale win flag at level 1, where `WallPracticeLevelResultScript` indexes its
+four-entry jump table with the stage minus one, reads a pointer from past
+its end, and lands inside `Unused_00_DrawHexWord`. In play a win always sets
+the level's flag first, so the stage there is 1 to 4.
 
 One routine ran that the analysis cannot reach: `CallVectorEntryE`
 (`$00:$0213`), a slot dispatcher whose only caller is
@@ -66,21 +79,25 @@ the header signature, with and without its bank-1 mirror, a story slot with
 and without its backup, block `$36`, N64 records present), and the practice
 drills and minigame rooms the drill list does not offer run through the same
 launcher with the id the story would pass (`drillid*` targets, `$09`-`$23`).
-With those, 366 remain, each below a routine that did run:
+With those, 366 remained. Two more tools then reached most of the two
+biggest groups: `tools/linktest.py` joins two games over an emulated link
+cable and plays link matches (97 routines entered), and `eventtest
+--handlers` calls every story NPC and facing handler in its own location
+(34 of the 41 unentered ran; the other 7 are the Test2 location's, whose
+init script never finishes). 233 remain, each below a routine that did run:
 
 | never entered | below | why |
 | --- | --- | --- |
-| 113 | the main menu's flows | link play and the N64 Transfer Pak screens (ring shots, tournament data, trophies), and the link handshake and frame sync: a second Game Boy or an N64 |
-| 64 | `GetStoryLocationRecordPtr` | story NPC, facing and tile handlers random walking did not trigger |
-| 21 | the Special Court's init | its scene sequences |
-| 15 | `CheckDebugStatsEditorHotkey` | the in-match stats editor, behind a debug hotkey |
+| 34 | the match-select screens | the N64 Transfer Pak records screens (ring shots, tournament data, trophies) and the unlock-everything cheat: an N64 |
+| 30 | `GetStoryLocationRecordPtr` | story tile triggers random walking did not step on, and the Test2 handlers |
+| 22 | the Special Court's init | its scene sequences |
 | 13 | `DispatchRankingBoardAnim` | ranking-board animation states |
 | 12 | `DispatchControlCode` | text control codes no string uses (`$10`-`$13` among them) |
 | 11 | `FetchShortText` | per-bank copies of the short-text fetch |
 | 8 | `ProcessMatchRewards` | reward paths for results the sessions did not reach |
-| 6 | the interrupt vectors | `ApplyWhiteFade` (see bugs.md) and handlers the hooks do not see |
+| 10 | link play | the link error screen, linked-play EXP awards, the four-court select menu and the remote player's cancel commands |
 
-and a tail of small groups: tiebreaks, EXP-screen stat arrows, trajectory
+and a tail of small groups: the interrupt vectors' unhooked handlers, tiebreaks, EXP-screen stat arrows, trajectory
 table 4 of each shot type, ranking-board rows 9-10, drill briefings.
 
 ## The patterns

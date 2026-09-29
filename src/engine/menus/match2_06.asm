@@ -154,7 +154,7 @@ ClearAttrPriorityRegion:
 	or c ; $45ef
 	jr nz, ClearAttrPriorityRegion ; $45f0
 	ret ; $45f2
-FlushTilemapToVramIfDirty:
+Unused_06_FlushTilemapToVramIfDirty:
 	ld a, [wTilemapDirtyFlag] ; $45f3
 	and a ; $45f6
 	ret z ; $45f7

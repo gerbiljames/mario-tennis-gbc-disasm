@@ -132,7 +132,11 @@ class Graph:
                     continue           # assembler directives name nothing at run time
                 if glob not in self.first_is_code:
                     self.first_is_code[glob] = self.is_code(code)
+                if dead and self.is_code(code):
+                    continue           # after an unconditional ret/jp/jr: nothing gets here
                 last = code
+                if self.is_code(code) and TERMINAL.match(code) and not CONDITIONAL.match(code):
+                    dead = True
                 if code.startswith("farptr"):
                     continue
                 head = code.split(" ")[0]

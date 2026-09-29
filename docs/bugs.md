@@ -927,18 +927,18 @@ CheckDebugStatsEditorHotkey:
         ld a, $ff
         ld [wMatchSimFrozen], a
         ld [wMatchDrawFrozen], a
-        farcall RunDebugStatsEditor
+        farcall Unused_06_RunDebugStatsEditor
         ld a, $00
         ld [wMatchSimFrozen], a
         ld [wMatchDrawFrozen], a
         ret
 ```
 
-That `farcall` is the only reference to `RunDebugStatsEditor` (`$06:$6b84`) in
+That `farcall` is the only reference to `Unused_06_RunDebugStatsEditor` (`$06:$6b84`) in
 the ROM other than its slot in bank `$06`'s `$4000` directory, and no indexed
 dispatch reaches that slot. So the leading `ret` orphans a working in-match
-editor: `RunDebugStatsEditor` plus `DrawDebugStatsLabels`,
-`DrawDebugStatsValues` and `HandleDebugStatsInput`, none of which is referenced
+editor: `Unused_06_RunDebugStatsEditor` plus `Unused_06_DrawDebugStatsLabels`,
+`Unused_06_DrawDebugStatsValues` and `Unused_06_HandleDebugStatsInput`, none of which is referenced
 from anywhere else.
 
 Unlike the drill judges this one is a single routine rather than a family, and

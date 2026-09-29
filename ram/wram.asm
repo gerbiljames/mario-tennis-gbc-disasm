@@ -922,7 +922,7 @@ wMatchMenuSelection:: db
 ; [8-bit] Item id of the first entry of the story option submenu about to be drawn ($04 court view, $06 message speed, $09 music, $0b save; $0e for the story pause root at $06:$6fec). RunStoryTwoOptionMenu ($06:$70cc) and RunStoryThreeOptionMenu ($06:$717a) draw this id, +1 and +2, add wMatchMenuSelection to it to pick the caption text ($0162 + n) and to load the highlighted item graphics.
 wStoryMenuFirstItem:: db
 
-; [8-bit] Nonzero means the shadow tilemap needs flushing to VRAM. FlushTilemapToVramIfDirty ($06:$45f3) returns when it is 0 and FlushTilemapToVram clears it at $06:$45f9; set to 1 by the debug stats editor after redrawing ($06:$6c0f).
+; [8-bit] Nonzero means the shadow tilemap needs flushing to VRAM. Unused_06_FlushTilemapToVramIfDirty ($06:$45f3) returns when it is 0 and FlushTilemapToVram clears it at $06:$45f9; set to 1 by the debug stats editor after redrawing ($06:$6c0f).
 wTilemapDirtyFlag:: db
 
 ; [16-bit] Packed base position of the match scoreboard layout (low byte $c4e3, high byte $c4e4), added to the fixed offsets of each element. Set by PrepareScoreboardGfx ($06:$4917/$491c, to $0002 or $0202 depending on wScoreboardLayout) and to 5 in the low byte by ShowMatchScoreboardScreen ($06:$48bb). Read as a coordinate pair by all four ScoreboardCaption_* handlers ($06:$478e, $47a1, $47b4, $47df), by DrawScoreboard ($06:$49a8), by the pip drawers ($06:$4a13, $4a3d, $4a57) and, as h/l shifted left 3, by the sprite helpers Func_06_506a ($06:$506a) and Func_06_69c8 ($06:$69ca).
@@ -1025,7 +1025,7 @@ wDebugNumberEntryText:: ds 16
 ; [8 bytes] Four 16-bit values the debug stats page shows as words. Only +$00, +$04 and +$06 are drawn; +$02 is skipped
 wDebugStatWords:: ds 8
 
-; [8 bytes] The eight single-byte fields of the debug stats editor, drawn by DrawDebugStatByte and stepped in place: the first three wrap at 2, 8 and 2, the last five are decimal digits 0-9. They sit in a larger scratch block whose 16-bit fields start at $c760
+; [8 bytes] The eight single-byte fields of the debug stats editor, drawn by Unused_06_DrawDebugStatByte and stepped in place: the first three wrap at 2, 8 and 2, the last five are decimal digits 0-9. They sit in a larger scratch block whose 16-bit fields start at $c760
 wDebugStatBytes:: ds 8
 
 ; [8 bytes] Four more 16-bit values on the same page, drawn after wDebugStatBytes

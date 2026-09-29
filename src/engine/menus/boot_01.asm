@@ -7,7 +7,7 @@
 	farptr Unused_01_LoadMenuBgPalettes3To7 ; $400c
 	farptr LoadMenuObjPalettes3To7 ; $400e
 	farptr LoadDebugMenuPalette ; $4010
-	farptr LoadMenuTilesBChunk2 ; $4012
+	farptr Unused_01_LoadMenuTilesBChunk2 ; $4012
 	farptr LoadMenuFontGfxStaged ; $4014
 	farptr Unused_01_RunSoundTest ; $4016
 InitAndRunGame:
@@ -323,7 +323,7 @@ LoadMenuTilesBStaged:
 	pop bc ; $50d3
 	pop af ; $50d4
 	ret ; $50d5
-LoadMenuTilesBChunk2:
+Unused_01_LoadMenuTilesBChunk2:
 	ld hl, MenuTilesBStagedTiles0 ; $50d6
 	ld de, vTiles2 + $40 * TILE_SIZE ; $50d9
 	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50dc

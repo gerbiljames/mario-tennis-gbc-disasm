@@ -92,7 +92,7 @@ RenderProportionalMenuText:
 	farcall RenderProportionalTextAt ; $2aa1
 	pop bc ; $2aa4
 	ret ; $2aa5
-CopyTextString:
+Unused_00_CopyTextString:
 	push af ; $2aa6
 	push bc ; $2aa7
 	push hl ; $2aa8
@@ -130,7 +130,7 @@ Unused_00_WriteByteAdvanceDE:
 	ld [de], a ; $2ad0
 	inc de ; $2ad1
 	ret ; $2ad2
-DrawHexWord:
+Unused_00_DrawHexWord:
 	push af ; $2ad3
 	push bc ; $2ad4
 	push hl ; $2ad5
@@ -149,7 +149,7 @@ DrawHexWord:
 	ld l, c ; $2ae6
 	ld h, b ; $2ae7
 	pop de ; $2ae8
-	call CopyTextString ; $2ae9
+	call Unused_00_CopyTextString ; $2ae9
 	add sp, 10 ; $2aec
 	pop hl ; $2aee
 	pop bc ; $2aef
@@ -174,7 +174,7 @@ Unused_00_DrawDecimalWord:
 	ld l, c ; $2b05
 	ld h, b ; $2b06
 	pop de ; $2b07
-	call CopyTextString ; $2b08
+	call Unused_00_CopyTextString ; $2b08
 	add sp, 10 ; $2b0b
 	pop hl ; $2b0d
 	pop bc ; $2b0e
@@ -382,7 +382,7 @@ Unused_00_MoveCoordsByDpad:
 	ret ; $2c02
 .done:
 	ret ; $2c03
-MoveCursorVertical:
+Unused_00_MoveCursorVertical:
 	bit 6, b ; $2c04
 	jr nz, MoveCursorHorizontal.wrap ; $2c06
 	bit 7, b ; $2c08
