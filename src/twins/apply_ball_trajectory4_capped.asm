@@ -16,7 +16,7 @@
 	ld e, a
 	ld a, [wShotDistMin + 1]
 	ld d, a
-	call BallTrajEntryPtr4_{TWIN}
+	call {BallTrajEntryPtr4_{TWIN}_NAME}
 	push hl
 	ld a, [hl+]
 	ld h, [hl]
@@ -25,10 +25,10 @@
 	ld e, l
 	ld d, h
 	pop hl
-	jp c, ApplyBallTrajectory4_{TWIN}.applyFallbackBallTrajectory
-	call SeekBallTrajEntry4_{TWIN}
+	jp c, {ApplyBallTrajectory4_{TWIN}_NAME}.applyFallbackBallTrajectory
+	call {SeekBallTrajEntry4_{TWIN}_NAME}
 	push de
-	call SetBallVelocityFromEntry4_{TWIN}
+	call {SetBallVelocityFromEntry4_{TWIN}_NAME}
 	pop de
 	ld h, d
 	ld l, $00
@@ -36,5 +36,5 @@
 	rr l
 	sra h
 	rr l
-	call SetBallTargetFromAim_{TWIN}
+	call {SetBallTargetFromAim_{TWIN}_NAME}
 	ret

@@ -112,12 +112,12 @@ Unused_16_PrintNumberString:
 	ld a, [hl+] ; $4454
 	and a ; $4455
 	jr z, .done ; $4456
-	call DrawAsciiDigitChar_16 ; $4458
+	call Unused_16_DrawAsciiDigitChar ; $4458
 	jr Unused_16_PrintNumberString ; $445b
 .done:
 	ret ; $445d
-; Instruction-identical to DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
-	twin draw_ascii_digit_char, 16 ; $445e DrawAsciiDigitChar_16
+; Instruction-identical to Unused_17_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar, Unused_3b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
+	twin_in draw_ascii_digit_char, Unused_16_DrawAsciiDigitChar, 16 ; $445e Unused_16_DrawAsciiDigitChar
 RunMatchWinLoseScreen:
 	ld a, [wMatchAbortFlag] ; $4477
 	bit MATCHABORTB_MATCH, a ; $447a

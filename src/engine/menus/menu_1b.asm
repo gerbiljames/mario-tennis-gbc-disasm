@@ -110,8 +110,8 @@ ApplyArrowBobOffset:
 ArrowBobOffsetTable_1b:
 	; $40e7, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-; Instruction-identical to DrawCornerBrackets_38, DrawCornerBrackets_3b and DrawCornerBrackets_3e (one copy per bank); a change here belongs in every copy.
-	twin draw_corner_brackets, 1b ; $40f7 DrawCornerBrackets_1b
+; Instruction-identical to Unused_38_DrawCornerBrackets, Unused_3b_DrawCornerBrackets and Unused_3e_DrawCornerBrackets (one copy per bank); a change here belongs in every copy.
+	twin_in draw_corner_brackets, Unused_1b_DrawCornerBrackets, 1b ; $40f7 Unused_1b_DrawCornerBrackets
 ; Instruction-identical to Unused_17_MoveMenuCursorGrid (one copy per bank); a change here belongs in every copy.
 	twin_in move_menu_cursor_grid_17, MoveMenuCursorGrid_1b, 1b ; $4132 MoveMenuCursorGrid_1b
 ; Instruction-identical to Unused_17_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.

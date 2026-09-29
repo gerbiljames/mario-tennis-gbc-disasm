@@ -49,12 +49,12 @@ Unused_3b_DrawAsciiDigitString:
 	ld a, [hl+] ; $4486
 	and a ; $4487
 	jr z, .done ; $4488
-	call DrawAsciiDigitChar_3b ; $448a
+	call Unused_3b_DrawAsciiDigitChar ; $448a
 	jr Unused_3b_DrawAsciiDigitString ; $448d
 .done:
 	ret ; $448f
-; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
-	twin draw_ascii_digit_char, 3b ; $4490 DrawAsciiDigitChar_3b
+; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_17_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
+	twin_in draw_ascii_digit_char, Unused_3b_DrawAsciiDigitChar, 3b ; $4490 Unused_3b_DrawAsciiDigitChar
 Unused_3b_StubNop:
 	ret ; $44a9
 RunN64ExhibData:

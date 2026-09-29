@@ -122,8 +122,8 @@ ApplySpriteBobOffsetY:
 SpriteBobOffsetYTable_38:
 	; $40bf, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-; Instruction-identical to DrawCornerBrackets_1b, DrawCornerBrackets_3b and DrawCornerBrackets_3e (one copy per bank); a change here belongs in every copy.
-	twin draw_corner_brackets, 38 ; $40cf DrawCornerBrackets_38
+; Instruction-identical to Unused_1b_DrawCornerBrackets, Unused_3b_DrawCornerBrackets and Unused_3e_DrawCornerBrackets (one copy per bank); a change here belongs in every copy.
+	twin_in draw_corner_brackets, Unused_38_DrawCornerBrackets, 38 ; $40cf Unused_38_DrawCornerBrackets
 ; Instruction-identical to MoveMenuCursorGrid_3b and MoveMenuCursorGrid_3e (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid, 38 ; $410a MoveMenuCursorGrid_38
 ; Instruction-identical to Unused_16_MoveMenuCursorGridFromLinkInput and Unused_3e_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.

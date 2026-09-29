@@ -1,10 +1,12 @@
 ; ApplySpriteWobbleX_<bank>: one routine assembled into banks $16, $17 through
-; `twin apply_sprite_wobble_x, <bank>` -- {TWIN} is the bank suffix, so the labels and the
+; `twin_in apply_sprite_wobble_x, <Label>, <bank>` -- {TWIN_LABEL} is the copy's name
+; (Unused_<bank>_ApplySpriteWobbleX where nothing reaches it) and {TWIN} the bank suffix, so the labels and the
 ; bank-local references become that bank's. No per-instruction addresses:
 ; the `twin` line in each bank carries the member's address. Every member's
 ; note is above its `twin` line. A fix here lands in every bank.
 
-ApplySpriteWobbleX_{TWIN}:
+ASSERT STRCMP("{TWIN_LABEL}", "{ApplySpriteWobbleX_{TWIN}_NAME}") == 0
+{TWIN_LABEL}:
 	ldh a, [hVBlankCounter]
 	and $0f
 	ld hl, SpriteWobbleXTable_{TWIN}

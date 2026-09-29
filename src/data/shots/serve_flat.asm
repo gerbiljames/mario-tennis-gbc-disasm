@@ -1,16 +1,16 @@
 	farptr ShotBallPathServeFlat ; $4000
-; Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_24, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy.
-	twin ball_traj_entry_ptr6, 2b ; $4002 BallTrajEntryPtr6_2b
-; Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_21, BallTrajEntryPtr4_22, BallTrajEntryPtr4_23, BallTrajEntryPtr4_24, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2a and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy.
-	twin ball_traj_entry_ptr4, 2b ; $4012 BallTrajEntryPtr4_2b
-; Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, SeekBallTrajEntry6_24, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2a and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy.
-	twin seek_ball_traj_entry6, 2b ; $401f SeekBallTrajEntry6_2b
-; Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_21, SeekBallTrajEntry4_22, SeekBallTrajEntry4_23, SeekBallTrajEntry4_24, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2a and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy.
-	twin seek_ball_traj_entry4, 2b ; $403e SeekBallTrajEntry4_2b
-; Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_24, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2a and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy.
-	twin set_ball_velocity_from_entry6, 2b ; $405d SetBallVelocityFromEntry6_2b
-; Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_24, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2a and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy.
-	twin set_ball_velocity_from_entry4, 2b ; $4084 SetBallVelocityFromEntry4_2b
+; Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_24, Unused_29_BallTrajEntryPtr6, Unused_2a_BallTrajEntryPtr6 and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy.
+	twin_in ball_traj_entry_ptr6, Unused_2b_BallTrajEntryPtr6, 2b ; $4002 Unused_2b_BallTrajEntryPtr6
+; Instruction-identical to Unused_20_BallTrajEntryPtr4, Unused_21_BallTrajEntryPtr4, Unused_22_BallTrajEntryPtr4, Unused_23_BallTrajEntryPtr4, BallTrajEntryPtr4_24, Unused_29_BallTrajEntryPtr4, Unused_2a_BallTrajEntryPtr4 and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy.
+	twin_in ball_traj_entry_ptr4, Unused_2b_BallTrajEntryPtr4, 2b ; $4012 Unused_2b_BallTrajEntryPtr4
+; Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, Unused_24_SeekBallTrajEntry6, Unused_29_SeekBallTrajEntry6, Unused_2a_SeekBallTrajEntry6 and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy.
+	twin_in seek_ball_traj_entry6, Unused_2b_SeekBallTrajEntry6, 2b ; $401f Unused_2b_SeekBallTrajEntry6
+; Instruction-identical to Unused_20_SeekBallTrajEntry4, Unused_21_SeekBallTrajEntry4, Unused_22_SeekBallTrajEntry4, Unused_23_SeekBallTrajEntry4, SeekBallTrajEntry4_24, Unused_29_SeekBallTrajEntry4, Unused_2a_SeekBallTrajEntry4 and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy.
+	twin_in seek_ball_traj_entry4, Unused_2b_SeekBallTrajEntry4, 2b ; $403e Unused_2b_SeekBallTrajEntry4
+; Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_24, Unused_29_SetBallVelocityFromEntry6, Unused_2a_SetBallVelocityFromEntry6 and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy.
+	twin_in set_ball_velocity_from_entry6, Unused_2b_SetBallVelocityFromEntry6, 2b ; $405d Unused_2b_SetBallVelocityFromEntry6
+; Instruction-identical to Unused_20_SetBallVelocityFromEntry4, Unused_21_SetBallVelocityFromEntry4, Unused_22_SetBallVelocityFromEntry4, Unused_23_SetBallVelocityFromEntry4, SetBallVelocityFromEntry4_24, Unused_29_SetBallVelocityFromEntry4, Unused_2a_SetBallVelocityFromEntry4 and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy.
+	twin_in set_ball_velocity_from_entry4, Unused_2b_SetBallVelocityFromEntry4, 2b ; $4084 Unused_2b_SetBallVelocityFromEntry4
 ; Instruction-identical to Unused_20_SetBallTargetByPrediction, Unused_21_SetBallTargetByPrediction, Unused_22_SetBallTargetByPrediction, Unused_23_SetBallTargetByPrediction, Unused_24_SetBallTargetByPrediction, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2a and Unused_2c_SetBallTargetByPrediction (one copy per bank); a change here belongs in every copy.
 	twin_in set_ball_target_by_prediction, SetBallTargetByPrediction_2b, 2b ; $4098 SetBallTargetByPrediction_2b
 ; Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, Unused_24_ApplyBallTrajectory6Capped, Unused_29_ApplyBallTrajectory6Capped, Unused_2a_ApplyBallTrajectory6Capped and Unused_2c_ApplyBallTrajectory6Capped (one copy per bank); a change here belongs in every copy.
@@ -25,10 +25,10 @@
 ; Instruction-identical to Unused_20_ApplyBallTrajectory4Capped, Unused_21_ApplyBallTrajectory4Capped, Unused_22_ApplyBallTrajectory4Capped, Unused_23_ApplyBallTrajectory4Capped, ApplyBallTrajectory4Capped_24, Unused_29_ApplyBallTrajectory4Capped, Unused_2a_ApplyBallTrajectory4Capped and Unused_2c_ApplyBallTrajectory4Capped (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in apply_ball_trajectory4_capped, Unused_2b_ApplyBallTrajectory4Capped, 2b ; $4196 Unused_2b_ApplyBallTrajectory4Capped
-; Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_24, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2a and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy.
-	twin apply_ball_trajectory4, 2b ; $41c9 ApplyBallTrajectory4_2b
-; Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_24, SetBallTargetFromAim_29, SetBallTargetFromAim_2a and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy.
-	twin set_ball_target_from_aim, 2b ; $41f5 SetBallTargetFromAim_2b
+; Instruction-identical to Unused_20_ApplyBallTrajectory4, Unused_21_ApplyBallTrajectory4, Unused_22_ApplyBallTrajectory4, Unused_23_ApplyBallTrajectory4, Unused_24_ApplyBallTrajectory4, Unused_29_ApplyBallTrajectory4, Unused_2a_ApplyBallTrajectory4 and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy.
+	twin_in apply_ball_trajectory4, Unused_2b_ApplyBallTrajectory4, 2b ; $41c9 Unused_2b_ApplyBallTrajectory4
+; Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_24, Unused_29_SetBallTargetFromAim, Unused_2a_SetBallTargetFromAim and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy.
+	twin_in set_ball_target_from_aim, Unused_2b_SetBallTargetFromAim, 2b ; $41f5 Unused_2b_SetBallTargetFromAim
 ; Instruction-identical to Unused_20_LookupBallPosByAim, Unused_21_LookupBallPosByAim, Unused_22_LookupBallPosByAim, Unused_23_LookupBallPosByAim, Unused_29_LookupBallPosByAim and Unused_2a_LookupBallPosByAim (one copy per bank); a change here belongs in every copy.
 ; Nothing calls this copy.
 	twin_in lookup_ball_pos_by_aim, Unused_2b_LookupBallPosByAim, 2b ; $4221 Unused_2b_LookupBallPosByAim

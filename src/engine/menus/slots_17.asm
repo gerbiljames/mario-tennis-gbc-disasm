@@ -21,7 +21,7 @@ Unused_17_DrawWobblingCornerBrackets:
 	push de ; $4016
 	push bc ; $4017
 	ld c, $00 ; $4018
-	call ApplySpriteWobbleX_17 ; $401a
+	call Unused_17_ApplySpriteWobbleX ; $401a
 	ld c, $00 ; $401d
 	call ApplySpriteWobbleY_17 ; $401f
 	ld c, $00 ; $4022
@@ -36,7 +36,7 @@ Unused_17_DrawWobblingCornerBrackets:
 	ld d, a ; $402f
 	push de ; $4030
 	ld c, $01 ; $4031
-	call ApplySpriteWobbleX_17 ; $4033
+	call Unused_17_ApplySpriteWobbleX ; $4033
 	ld c, $00 ; $4036
 	call ApplySpriteWobbleY_17 ; $4038
 	ld c, $00 ; $403b
@@ -55,7 +55,7 @@ Unused_17_DrawWobblingCornerBrackets:
 	ld d, a ; $404c
 	push de ; $404d
 	ld c, $01 ; $404e
-	call ApplySpriteWobbleX_17 ; $4050
+	call Unused_17_ApplySpriteWobbleX ; $4050
 	ld c, $01 ; $4053
 	call ApplySpriteWobbleY_17 ; $4055
 	ld c, $00 ; $4058
@@ -69,7 +69,7 @@ Unused_17_DrawWobblingCornerBrackets:
 	ld e, a ; $4064
 	push de ; $4065
 	ld c, $00 ; $4066
-	call ApplySpriteWobbleX_17 ; $4068
+	call Unused_17_ApplySpriteWobbleX ; $4068
 	ld c, $01 ; $406b
 	call ApplySpriteWobbleY_17 ; $406d
 	ld c, $00 ; $4070

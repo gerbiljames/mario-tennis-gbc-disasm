@@ -1,10 +1,12 @@
 ; DrawCornerBrackets_<bank>: one routine assembled into banks $1b, $38, $3b, $3e through
-; `twin draw_corner_brackets, <bank>` -- {TWIN} is the bank suffix, so the labels and the
+; `twin_in draw_corner_brackets, <Label>, <bank>` -- {TWIN_LABEL} is the copy's name
+; (Unused_<bank>_DrawCornerBrackets where nothing reaches it) and {TWIN} the bank suffix, so the labels and the
 ; bank-local references become that bank's. No per-instruction addresses:
 ; the `twin` line in each bank carries the member's address. Every member's
 ; note is above its `twin` line. A fix here lands in every bank.
 
-DrawCornerBrackets_{TWIN}:
+ASSERT STRCMP("{TWIN_LABEL}", "{DrawCornerBrackets_{TWIN}_NAME}") == 0
+{TWIN_LABEL}:
 	push de
 	push bc
 	ld c, $00

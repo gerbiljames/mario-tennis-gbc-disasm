@@ -337,7 +337,7 @@ ActorScript_27_33:
 	as_anim ANIM_NOD
 	as_jump .L76
 ; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and ComputeRankingProgressIndex_12 (one copy per bank); a change here belongs in every copy.
-	twin compute_ranking_progress_index, 27 ; $7a49 ComputeRankingProgressIndex_27
+	twin_in compute_ranking_progress_index, Unused_27_ComputeRankingProgressIndex, 27 ; $7a49 Unused_27_ComputeRankingProgressIndex
 Unused_27_SetStoryRankTier:
 	ld a, $00 ; $7a90
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7a92

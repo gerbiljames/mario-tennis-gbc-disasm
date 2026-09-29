@@ -216,7 +216,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	or a ; $45a1
 	jr z, .drawDoubles ; $45a2
 	ld bc, $3010 ; $45a4
-	call DrawCornerBrackets_38 ; $45a7
+	call Unused_38_DrawCornerBrackets ; $45a7
 	jr .gamesBox ; $45aa
 .drawDoubles:
 	ld bc, $3010 ; $45ac
@@ -238,7 +238,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	cp $01 ; $45c6
 	jr z, .drawGames ; $45c8
 	ld bc, $3010 ; $45ca
-	call DrawCornerBrackets_38 ; $45cd
+	call Unused_38_DrawCornerBrackets ; $45cd
 	jr .setsBox ; $45d0
 .drawGames:
 	ld bc, $3010 ; $45d2
@@ -260,7 +260,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	cp $02 ; $45ec
 	jr z, .drawSets ; $45ee
 	ld bc, $3010 ; $45f0
-	call DrawCornerBrackets_38 ; $45f3
+	call Unused_38_DrawCornerBrackets ; $45f3
 	jr .done ; $45f6
 .drawSets:
 	ld bc, $3010 ; $45f8

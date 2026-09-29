@@ -1,10 +1,10 @@
-; Instruction-identical to ApplySpriteWobbleX_16 (one copy per bank); a change here belongs in every copy.
-	twin apply_sprite_wobble_x, 17 ; $4079 ApplySpriteWobbleX_17
+; Instruction-identical to Unused_16_ApplySpriteWobbleX (one copy per bank); a change here belongs in every copy.
+	twin_in apply_sprite_wobble_x, Unused_17_ApplySpriteWobbleX, 17 ; $4079 Unused_17_ApplySpriteWobbleX
 SpriteWobbleXTable_17:
 	; $4093, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-; Instruction-identical to ApplySpriteWobbleY_16 (one copy per bank); a change here belongs in every copy.
-	twin apply_sprite_wobble_y, 17 ; $40a3 ApplySpriteWobbleY_17
+; Instruction-identical to Unused_16_ApplySpriteWobbleY (one copy per bank); a change here belongs in every copy.
+	twin_in apply_sprite_wobble_y, ApplySpriteWobbleY_17, 17 ; $40a3 ApplySpriteWobbleY_17
 SpriteWobbleYTable_17:
 	; $40bd, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00

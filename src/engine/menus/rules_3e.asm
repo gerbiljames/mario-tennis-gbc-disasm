@@ -39,12 +39,12 @@ Unused_3e_DrawAsciiDigitString:
 	ld a, [hl+] ; $4496
 	and a ; $4497
 	jr z, .done ; $4498
-	call DrawAsciiDigitChar_3e ; $449a
+	call Unused_3e_DrawAsciiDigitChar ; $449a
 	jr Unused_3e_DrawAsciiDigitString ; $449d
 .done:
 	ret ; $449f
-; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b and DrawAsciiDigitChar_3b (one copy per bank); a change here belongs in every copy.
-	twin draw_ascii_digit_char, 3e ; $44a0 DrawAsciiDigitChar_3e
+; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_17_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar and Unused_3b_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
+	twin_in draw_ascii_digit_char, Unused_3e_DrawAsciiDigitChar, 3e ; $44a0 Unused_3e_DrawAsciiDigitChar
 RestoreMenuScreenAndFadeIn:
 	call DisableLCDSafely ; $44b9
 	farcall LoadMenuFontGfx ; $44bc

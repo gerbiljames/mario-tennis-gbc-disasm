@@ -30,12 +30,12 @@ Unused_1b_DrawAsciiDigitString:
 	ld a, [hl+] ; $448e
 	and a ; $448f
 	jr z, .done ; $4490
-	call DrawAsciiDigitChar_1b ; $4492
+	call Unused_1b_DrawAsciiDigitChar ; $4492
 	jr Unused_1b_DrawAsciiDigitString ; $4495
 .done:
 	ret ; $4497
-; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
-	twin draw_ascii_digit_char, 1b ; $4498 DrawAsciiDigitChar_1b
+; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_17_DrawAsciiDigitChar, Unused_3b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
+	twin_in draw_ascii_digit_char, Unused_1b_DrawAsciiDigitChar, 1b ; $4498 Unused_1b_DrawAsciiDigitChar
 MugshotGfxAlex_1b:
 	INCBIN "data/bank_01b/lz_MugshotGfxAlex_1b.bin" ; $44b1, 158 bytes
 MugshotGfxNina_1b:

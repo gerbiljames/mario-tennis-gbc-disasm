@@ -16,10 +16,10 @@
 	ld e, a
 	ld a, [wShotDistMin + 1]
 	ld d, a
-	call BallTrajEntryPtr6_{TWIN}
-	call SeekBallTrajEntry6_{TWIN}
+	call {BallTrajEntryPtr6_{TWIN}_NAME}
+	call {SeekBallTrajEntry6_{TWIN}_NAME}
 	push de
-	call SetBallVelocityFromEntry6_{TWIN}
+	call {SetBallVelocityFromEntry6_{TWIN}_NAME}
 	pop de
 	ld h, d
 	ld l, $00
@@ -27,5 +27,5 @@
 	rr l
 	sra h
 	rr l
-	call SetBallTargetFromAim_{TWIN}
+	call {SetBallTargetFromAim_{TWIN}_NAME}
 	ret

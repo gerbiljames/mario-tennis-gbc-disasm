@@ -334,8 +334,8 @@ ActorScript_15_25:
 	as_wait $8c
 	as_anim ANIM_NOD
 	as_jump .Ld
-; Instruction-identical to ComputeRankingProgressIndex_13 and ComputeRankingProgressIndex_14 (one copy per bank); a change here belongs in every copy.
-	twin compute_ranking_progress_index_13, 15 ; $7f59 ComputeRankingProgressIndex_15
+; Instruction-identical to Unused_13_ComputeRankingProgressIndex and Unused_14_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
+	twin_in compute_ranking_progress_index_13, Unused_15_ComputeRankingProgressIndex, 15 ; $7f59 Unused_15_ComputeRankingProgressIndex
 ; Instruction-identical to ComputeStoryRankTier_13 (one copy per bank); a change here belongs in every copy.
 	twin compute_story_rank_tier, 15 ; $7fa0 ComputeStoryRankTier_15
 	; $7fd1, 47 bytes fill to bank end (linker-padded)

@@ -564,8 +564,8 @@ ActorScript_14_4:
 	as_wait $8c
 	as_anim ANIM_NOD
 	as_jump .L1a7
-; Instruction-identical to ComputeRankingProgressIndex_13 and ComputeRankingProgressIndex_15 (one copy per bank); a change here belongs in every copy.
-	twin compute_ranking_progress_index_13, 14 ; $7a9d ComputeRankingProgressIndex_14
+; Instruction-identical to Unused_13_ComputeRankingProgressIndex and Unused_15_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
+	twin_in compute_ranking_progress_index_13, Unused_14_ComputeRankingProgressIndex, 14 ; $7a9d Unused_14_ComputeRankingProgressIndex
 ; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_14_ComputeStoryRankTier:
 	ld a, $00 ; $7ae4

@@ -110,8 +110,8 @@ ApplyCursorBounceY:
 CursorBounceYTable:
 	; $40df, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-; Instruction-identical to DrawCornerBrackets_1b, DrawCornerBrackets_38 and DrawCornerBrackets_3e (one copy per bank); a change here belongs in every copy.
-	twin draw_corner_brackets, 3b ; $40ef DrawCornerBrackets_3b
+; Instruction-identical to Unused_1b_DrawCornerBrackets, Unused_38_DrawCornerBrackets and Unused_3e_DrawCornerBrackets (one copy per bank); a change here belongs in every copy.
+	twin_in draw_corner_brackets, Unused_3b_DrawCornerBrackets, 3b ; $40ef Unused_3b_DrawCornerBrackets
 ; Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3e (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid, 3b ; $412a MoveMenuCursorGrid_3b
 Unused_3b_MoveMenuCursorRepeat:

@@ -40,8 +40,8 @@
 .restore:
 	pop hl
 	push de
-	call BallTrajEntryPtr6_{TWIN}
-	call SetBallVelocityFromEntry6_{TWIN}
+	call {BallTrajEntryPtr6_{TWIN}_NAME}
+	call {SetBallVelocityFromEntry6_{TWIN}_NAME}
 	pop hl
-	call SetBallTargetFromAim_{TWIN}
+	call {SetBallTargetFromAim_{TWIN}_NAME}
 	ret

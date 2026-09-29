@@ -1,5 +1,10 @@
 SECTION "ROM Bank $3e", ROMX[$4000], BANK[$3e]
 
+; The name of each shared-template copy in this bank, for the templates
+; that call one another (src/twins): a copy nothing reaches is Unused_<bank>_...
+DEF DrawAsciiDigitChar_3e_NAME EQUS "Unused_3e_DrawAsciiDigitChar"
+DEF DrawCornerBrackets_3e_NAME EQUS "Unused_3e_DrawCornerBrackets"
+
 ; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
 	INCLUDE "data/bank_039/lz_RacketShoesChoiceGfx0.inc" ; DEF RacketShoesChoiceGfx0_SIZE EQU its decoded length, generated from the .bin by make
 	INCLUDE "data/bank_039/lz_RacketShoesChoiceGfx1.inc" ; DEF RacketShoesChoiceGfx1_SIZE EQU its decoded length, generated from the .bin by make

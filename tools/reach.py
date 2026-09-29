@@ -114,7 +114,7 @@ class Graph:
         self.first_is_code = {}
         for lines, _ in self.banks:
             glob = seg = None
-            last = ""
+            last, dead = "", False
             for i, line in enumerate(lines):
                 g, lo = GLOBAL.match(line), LOCAL.match(line)
                 if g or lo:
@@ -123,13 +123,13 @@ class Graph:
                         self.out[seg].add(new)
                     if g:
                         glob = g.group(1)
-                    seg, last = new, ""
+                    seg, last, dead = new, "", False
                     continue
                 if seg is None:
                     continue           # the $4000 slot table: a farptr row is not a call
                 code = line.split(";")[0].strip()
-                if not code:
-                    continue
+                if not code or re.match(r"(ASSERT|DEF|PURGE)\b", code):
+                    continue           # assembler directives name nothing at run time
                 if glob not in self.first_is_code:
                     self.first_is_code[glob] = self.is_code(code)
                 last = code

@@ -48,12 +48,12 @@ Unused_17_DrawAsciiDigitString:
 	ld a, [hl+] ; $4464
 	and a ; $4465
 	jr z, .done ; $4466
-	call DrawAsciiDigitChar_17 ; $4468
+	call Unused_17_DrawAsciiDigitChar ; $4468
 	jr Unused_17_DrawAsciiDigitString ; $446b
 .done:
 	ret ; $446d
-; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_1b, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
-	twin draw_ascii_digit_char, 17 ; $446e DrawAsciiDigitChar_17
+; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar, Unused_3b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
+	twin_in draw_ascii_digit_char, Unused_17_DrawAsciiDigitChar, 17 ; $446e Unused_17_DrawAsciiDigitChar
 ShowDrillBriefingScreen:
 	xor a ; $4487
 	ldh [hBGColumnBlitPending], a ; $4488

@@ -5,9 +5,9 @@ Unused_16_DrawWobblingCornerBrackets:
 	push de ; $4006
 	push bc ; $4007
 	ld c, $00 ; $4008
-	call ApplySpriteWobbleX_16 ; $400a
+	call Unused_16_ApplySpriteWobbleX ; $400a
 	ld c, $00 ; $400d
-	call ApplySpriteWobbleY_16 ; $400f
+	call Unused_16_ApplySpriteWobbleY ; $400f
 	ld c, $00 ; $4012
 	ld b, $08 ; $4014
 	call QueueSprite ; $4016
@@ -20,9 +20,9 @@ Unused_16_DrawWobblingCornerBrackets:
 	ld d, a ; $401f
 	push de ; $4020
 	ld c, $01 ; $4021
-	call ApplySpriteWobbleX_16 ; $4023
+	call Unused_16_ApplySpriteWobbleX ; $4023
 	ld c, $00 ; $4026
-	call ApplySpriteWobbleY_16 ; $4028
+	call Unused_16_ApplySpriteWobbleY ; $4028
 	ld c, $00 ; $402b
 	ld b, $28 ; $402d
 	call QueueSprite ; $402f
@@ -39,9 +39,9 @@ Unused_16_DrawWobblingCornerBrackets:
 	ld d, a ; $403c
 	push de ; $403d
 	ld c, $01 ; $403e
-	call ApplySpriteWobbleX_16 ; $4040
+	call Unused_16_ApplySpriteWobbleX ; $4040
 	ld c, $01 ; $4043
-	call ApplySpriteWobbleY_16 ; $4045
+	call Unused_16_ApplySpriteWobbleY ; $4045
 	ld c, $00 ; $4048
 	ld b, $68 ; $404a
 	call QueueSprite ; $404c
@@ -53,21 +53,21 @@ Unused_16_DrawWobblingCornerBrackets:
 	ld e, a ; $4054
 	push de ; $4055
 	ld c, $00 ; $4056
-	call ApplySpriteWobbleX_16 ; $4058
+	call Unused_16_ApplySpriteWobbleX ; $4058
 	ld c, $01 ; $405b
-	call ApplySpriteWobbleY_16 ; $405d
+	call Unused_16_ApplySpriteWobbleY ; $405d
 	ld c, $00 ; $4060
 	ld b, $48 ; $4062
 	call QueueSprite ; $4064
 	pop de ; $4067
 	ret ; $4068
-; Instruction-identical to ApplySpriteWobbleX_17 (one copy per bank); a change here belongs in every copy.
-	twin apply_sprite_wobble_x, 16 ; $4069 ApplySpriteWobbleX_16
+; Instruction-identical to Unused_17_ApplySpriteWobbleX (one copy per bank); a change here belongs in every copy.
+	twin_in apply_sprite_wobble_x, Unused_16_ApplySpriteWobbleX, 16 ; $4069 Unused_16_ApplySpriteWobbleX
 SpriteWobbleXTable_16:
 	; $4083, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 ; Instruction-identical to ApplySpriteWobbleY_17 (one copy per bank); a change here belongs in every copy.
-	twin apply_sprite_wobble_y, 16 ; $4093 ApplySpriteWobbleY_16
+	twin_in apply_sprite_wobble_y, Unused_16_ApplySpriteWobbleY, 16 ; $4093 Unused_16_ApplySpriteWobbleY
 SpriteWobbleYTable_16:
 	; $40ad, 32 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00

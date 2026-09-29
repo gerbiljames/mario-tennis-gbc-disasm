@@ -13,8 +13,14 @@ _FRAG_RE = re.compile(r'^INCLUDE "(src/[^"]+\.asm)"')
 _TWIN_RE = re.compile(r"^\t(twin|twin_named|twin_in) (\w+), (\w+)(?:, (\w+))?")
 
 
-def _twin_lines(kind, name, arg, arg2=None):
-    """The shared routine src/twins/<name>.asm as the bank sees it."""
+_EQUS_RE = re.compile(r'^DEF (\w+) EQUS "(.*)"')
+_INTERP_RE = re.compile(r"\{(\w+)\}")
+
+
+def _twin_lines(kind, name, arg, arg2=None, equs=None):
+    """The shared routine src/twins/<name>.asm as the bank sees it: {TWIN}
+    and {TWIN_LABEL} substituted, then any {SYMBOL} the bank's holder
+    defines with EQUS (the per-bank names templates call one another by)."""
     body = (ROOT / "src" / "twins" / f"{name}.asm").read_text().split("\n")
     if kind == "twin":
         subs = {"{TWIN}": arg}
@@ -26,6 +32,8 @@ def _twin_lines(kind, name, arg, arg2=None):
     for l in body:
         for k, v in subs.items():
             l = l.replace(k, v)
+        while equs and _INTERP_RE.search(l) and any(m in equs for m in _INTERP_RE.findall(l)):
+            l = _INTERP_RE.sub(lambda m: equs.get(m.group(1), m.group(0)), l)
         out.append(l)
     return out
 
@@ -53,14 +61,18 @@ def bank_lines(holder):
     """The bank's source lines with every fragment INCLUDE expanded in place,
     and, per line, the (file, line number) it came from."""
     lines, origin = [], []
+    equs = {}
     for line in Path(holder).read_text().split("\n"):
+        e = _EQUS_RE.match(line)
+        if e:
+            equs[e.group(1)] = e.group(2)
         m = _FRAG_RE.match(line)
         if m:
             frag = ROOT / m.group(1)
             for k, fl in enumerate(frag.read_text().split("\n")):
                 t = _TWIN_RE.match(fl)
                 if t:
-                    for tl in _twin_lines(t.group(1), t.group(2), t.group(3), t.group(4)):
+                    for tl in _twin_lines(t.group(1), t.group(2), t.group(3), t.group(4), equs):
                         lines.append(tl)
                         origin.append((frag, k + 1))
                     continue
