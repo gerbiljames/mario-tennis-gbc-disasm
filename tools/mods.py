@@ -9,7 +9,10 @@ without committing ROM content.
 
 usage: mods.py apply [ROOT]        copy every mods/ file whose content differs
                                    over data/ (the copy is newer, so make
-                                   re-encodes a PNG or grid it covers)
+                                   re-encodes a PNG or grid it covers), and
+                                   put back the extracted file under any mod
+                                   that is gone (a reverted edit, or a branch
+                                   without it)
        mods.py collect <baserom>   compare data/ against a fresh extraction
                                    and copy every file that differs into
                                    mods/ -- how an edit made in data/ is kept
@@ -23,6 +26,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 MODS, DATA = ROOT / "mods", ROOT / "data"
+# The extracted files the overlay has covered, kept so that removing a mod
+# restores what extraction gave rather than leaving the edit in data/.
+PRISTINE = DATA / ".mods-pristine"
 SIDECARS = (".bin", ".inc", ".preview.png")   # generated from the file beside them
 
 
@@ -33,11 +39,29 @@ def overlay_files():
 def apply():
     n = 0
     for src in overlay_files():
-        dest = DATA / src.relative_to(MODS)
+        rel = src.relative_to(MODS)
+        dest, keep = DATA / rel, PRISTINE / rel
         if dest.exists() and dest.read_bytes() == src.read_bytes():
             continue
+        if dest.exists() and not keep.exists():
+            keep.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(dest, keep)
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src, dest)
+        n += 1
+    return n
+
+
+def restore():
+    n = 0
+    if not PRISTINE.exists():
+        return 0
+    for keep in sorted(p for p in PRISTINE.rglob("*") if p.is_file()):
+        rel = keep.relative_to(PRISTINE)
+        if (MODS / rel).exists():
+            continue
+        shutil.copyfile(keep, DATA / rel)
+        keep.unlink()
         n += 1
     return n
 
@@ -52,7 +76,7 @@ def collect(baserom):
             if not p.is_file():
                 continue
             rel = p.relative_to(DATA)
-            if str(rel).endswith(SIDECARS) or rel.parts[0] == "gfx":
+            if str(rel).endswith(SIDECARS) or rel.parts[0] in ("gfx", PRISTINE.name):
                 continue
             ref = fresh / rel
             if ref.exists() and ref.read_bytes() == p.read_bytes():
@@ -62,6 +86,10 @@ def collect(baserom):
             dest = MODS / rel
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(p, dest)
+            keep = PRISTINE / rel
+            if ref.exists() and not keep.exists():
+                keep.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ref, keep)
             n += 1
     return n
 
@@ -72,6 +100,9 @@ def main():
         return 1
     cmd = sys.argv[1]
     if cmd == "apply":
+        r = restore()
+        if r:
+            print(f"mods: {r} removed mod(s) restored to the extracted file")
         n = apply()
         if n:
             print(f"mods: {n} file(s) overlaid onto data/")
