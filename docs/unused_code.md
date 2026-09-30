@@ -117,18 +117,22 @@ on the chain, and nothing else:
 
 So each routine ran with the game's own registers and RAM, with one decision
 at a time overridden. That shows it can run, not that play gets there. None
-of the steered runs entered an `Unused` routine. Three remain:
+of the steered runs entered an `Unused` routine.
 
-* `ApplyWhiteFade` and `TickSecondaryTimer` wait on flags that nothing ever
-  sets. `ApplyWhiteFade` needs bit 7 of `hFadeState`, which only an
-  unreferenced routine sets (bugs.md). `TickSecondaryTimer` runs from
-  `UpdateGameTimer` when `wSecondaryTimerMode` is 1, and the only store to
-  that variable is `Unused_00_TickSecondaryTimerCountdown` writing `$ff`.
-  They are unreachable by data rather than by code, so the call graph
-  cannot see it.
-* `SeniorCourtReloadIntoVictoryScene`: the Senior Court's init script jumps
-  there for entry point `$0e`, returning from a match. Every replay of that
-  location wedged PyBoy before it got there.
+`SeniorCourtReloadIntoVictoryScene` needed neither: the Senior Court's init
+script jumps there for entry point `$0e`, which no `map_entry` row lists
+(the game sets it returning from a match), and entering the court by `$0e`
+runs it in any story state. Its replays had looked stuck because of a PyBoy
+bug in the harness, since fixed (STATUS, 2026-09-30).
+
+Two remain, unreachable by data rather than by code, which the call graph
+cannot see. Both wait on flags that nothing sets:
+
+* `ApplyWhiteFade` needs bit 7 of `hFadeState`, which only an unreferenced
+  routine sets (bugs.md).
+* `TickSecondaryTimer` runs from `UpdateGameTimer` when
+  `wSecondaryTimerMode` is 1. The only store to that variable is
+  `Unused_00_TickSecondaryTimerCountdown` writing `$ff`.
 
 ## The patterns
 

@@ -115,7 +115,27 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
-* **2026-09-30** — three reachable routines left unrun. Steering now
+* **2026-09-30** — the PyBoy wedges. The event test's inconclusive chunks
+  (52 in the last full sweep) had two causes. Location `$13`, every state:
+  the sweep enters the Wall Practice room "returning from a match" with the
+  saved state's stale win, and `WallPracticeLevelResultScript` indexes its
+  jump table with the stage minus one, reading past its end. The original
+  lands in an `rst $38` loop, while the padded build lands somewhere that
+  stops PyBoy completing a frame. `chunk` and the handler warps now enter
+  with the last match lost and nothing pending, a state every story state
+  allows; that also ended the false `CopyTextString` sighting. The rest were
+  a PyBoy bug: a breakpoint hit on the cycle a frame ends re-fires forever
+  without its instruction running. PyBoy swallows callback exceptions, so
+  `eventtest` moves PC off the address on the third identical re-fire
+  (registers, DIV, TIMA, LY and STAT unchanged, so no cycles have passed)
+  and puts it back after the frame. A full story sweep now leaves 7
+  inconclusive chunks, all at the Test2 location. The original build
+  crashes there in the debug "clear status" menu under random input: SP
+  ends up in cartridge RAM during a menu-window redraw. The padded build,
+  under different interrupt timing, does not. Probably an interrupt race in
+  the game; the cause is not established.
+
+* **2026-09-30** — two reachable routines left unrun. Steering now
   follows jump-table entries into the middle of routines (the lesson-result
   dispatch), picks the branch that reaches its goal soonest (so a loop
   exits), steers mode hooks at `CallModeHook` while each minigame runs (new
@@ -123,9 +143,8 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
   routines. `linktest` also gained `--keys`, `--unplug-after` (pull the
   cable) and a locked-courts save, which reached the four-court select menu
   and the link error screen by play. Of the 158 routines no play reaches,
-  all but three have run under steering. The three: two wait on flags
-  nothing sets (`ApplyWhiteFade`, `TickSecondaryTimer`), and one sits
-  behind a Senior Court replay that wedges PyBoy (`docs/unused_code.md`).
+  all but two have run under steering or a warp. Both wait on flags nothing
+  sets (`ApplyWhiteFade`, `TickSecondaryTimer`; `docs/unused_code.md`).
 
 * **2026-09-30** — steering the last routines. `tools/steer.py` runs a
   reachable routine no session entered by replaying a session that entered
