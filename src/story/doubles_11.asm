@@ -391,8 +391,8 @@ StartNextDoublesRankingMatch:
 	script_wait_frames $1e ; $65c0
 	script_null_script ACTOR_PARTNER ; $65c7
 	script_move_player $1900, $1100 ; $65cc
-	script_set_actor_script $08, ActorScript_11_07 ; $65d6
-	script_set_actor_script $09, ActorScript_11_08 ; $65e1
+	script_set_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_BRIAN, ActorScript_11_07 ; $65d6
+	script_set_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_FAY, ActorScript_11_08 ; $65e1
 	script_move_target ACTOR_PLAYER, $1b00, $1900 ; $65ec
 	script_wait_frames $0a ; $65f7
 	script_move_target ACTOR_PARTNER, $1900, $1500 ; $65fe
@@ -471,12 +471,12 @@ LoadDoublesRankingOpponentGraphics:
 	jr z, .done ; $67ad
 	ret ; $67af
 .rank2:
-	script_set_actor_script $08, ActorScript_11_03 ; $67b0
-	script_set_actor_script $09, ActorScript_11_05 ; $67bb
-	script_wait_actor_script $09 ; $67c6
-	script_set_actor_script $09, ActorScript_11_22 ; $67cb
-	script_wait_actor_script $08 ; $67d6
-	script_set_actor_script $08, ActorScript_11_52 ; $67db
+	script_set_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_BRIAN, ActorScript_11_03 ; $67b0
+	script_set_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_FAY, ActorScript_11_05 ; $67bb
+	script_wait_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_FAY ; $67c6
+	script_set_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_FAY, ActorScript_11_22 ; $67cb
+	script_wait_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_BRIAN ; $67d6
+	script_set_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_BRIAN, ActorScript_11_52 ; $67db
 	ret ; $67e6
 .rank3:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, ActorScript_11_13 ; $67e7

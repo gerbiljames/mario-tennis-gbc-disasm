@@ -197,27 +197,27 @@ SeniorSinglesRank1Victory:
 	ret ; $7529
 SeniorSharedVictoryScene:
 	script_player_speed $0040 ; $752a
-	script_set_speed $04, $0018 ; $7530
+	script_set_speed ACTOR_ROLE_SENIOR_COURT_FAY, $0018 ; $7530
 	script_set_position ACTOR_SENIOR_COURT_A_EMILY, $2b00, $2700 ; $7538
-	script_set_position $04, $2200, $0f00 ; $7543
+	script_set_position ACTOR_ROLE_SENIOR_COURT_FAY, $2200, $0f00 ; $7543
 	script_set_position ACTOR_PLAYER, $2400, $1b00 ; $754e
 	script_move_player $2400, $1500 ; $7559
 	farcall WaitPlayerMoveDone ; $7563
 	script_face ACTOR_PLAYER, FACE_UP ; $7566
-	script_face $04, FACE_DOWN ; $756d
+	script_face ACTOR_ROLE_SENIOR_COURT_FAY, FACE_DOWN ; $756d
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_UP ; $7574
 	call PlaceSeniorCourtPairA ; $757b
 	script_fade_in $08 ; $757e
 	call WaitFadeEnd ; $7583
 	script_wait_frames $1e ; $7586
 	script_set_text Text_34_78 ; $758d
-	script_move_target $04, $2400, $1300 ; $7593
-	script_wait_move $04 ; $759e
-	script_set_anim $04, ANIM_BOUNCE ; $75a3
-	script_speak $04 ; $75aa
+	script_move_target ACTOR_ROLE_SENIOR_COURT_FAY, $2400, $1300 ; $7593
+	script_wait_move ACTOR_ROLE_SENIOR_COURT_FAY ; $759e
+	script_set_anim ACTOR_ROLE_SENIOR_COURT_FAY, ANIM_BOUNCE ; $75a3
+	script_speak ACTOR_ROLE_SENIOR_COURT_FAY ; $75aa
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $75af
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $75b6
-	script_set_anim $04, ANIM_BOUNCE ; $75bb
+	script_set_anim ACTOR_ROLE_SENIOR_COURT_FAY, ANIM_BOUNCE ; $75bb
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $75c2
 	script_face ACTOR_PLAYER, FACE_DOWN ; $75c9
 	script_player_speed $0010 ; $75d0
@@ -263,12 +263,12 @@ SeniorSharedVictoryScene:
 	script_wait_frames $28 ; $76d7
 	script_move_player $2400, $1700 ; $76de
 	farcall WaitPlayerMoveDone ; $76e8
-	script_set_anim $04, ANIM_BOUNCE ; $76eb
+	script_set_anim ACTOR_ROLE_SENIOR_COURT_FAY, ANIM_BOUNCE ; $76eb
 	script_wait_frames $28 ; $76f2
-	script_move_target $04, $2400, $1500 ; $76f9
-	script_wait_move $04 ; $7704
+	script_move_target ACTOR_ROLE_SENIOR_COURT_FAY, $2400, $1500 ; $76f9
+	script_wait_move ACTOR_ROLE_SENIOR_COURT_FAY ; $7704
 	script_set_position ACTOR_SENIOR_COURT_A_BALLOON_SWEAT, $3f00, $3f00 ; $7709
-	script_speak $04 ; $7714
+	script_speak ACTOR_ROLE_SENIOR_COURT_FAY ; $7714
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $7719
 	ld [wStoryModeCurrentLocation], a ; $771b
 	ld a, $01 ; $771e

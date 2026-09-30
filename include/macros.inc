@@ -574,6 +574,15 @@ DEF _MAP_ACTOR_ROW += 1
 	db \5, $00, \6, \7, \8, $00
 ENDM
 
+; Names an actor slot by what it is for in a scene, where the lists that can
+; be active there hold different actors (or the same character under different
+; scripts) in it: `actor_role ISLAND_OPEN_OPPONENT, $0a, List, List...` defines
+; ACTOR_ROLE_ISLAND_OPEN_OPPONENT = $0a. The lists are not assembled;
+; tools/actorslots.py holds every use to them (include/actor_roles.inc).
+MACRO actor_role
+DEF ACTOR_ROLE_\1 EQU \2
+ENDM
+
 ; Terminates a map_actor list: nine $00 bytes then the $ff sentinel that
 ; SpawnActorsFromList ($04:$4cf7) stops on (it reads template byte 9).
 MACRO map_actor_end

@@ -105,11 +105,11 @@ IslandOpenRoundCallCutscene:
 	test_flag FLAG_DOUBLES ; $70cc
 	jp nz, .afterMatch ; $70cf
 	script_set_speed ACTOR_PLAYER, $0020 ; $70d2
-	script_face_pair $0a, ACTOR_PLAYER ; $70da
+	script_face_pair ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ACTOR_PLAYER ; $70da
 	script_wait_frames $1e ; $70e2
 	script_face ACTOR_PLAYER, FACE_DOWN ; $70e9
-	script_face $0a, FACE_DOWN ; $70f0
-	script_set_anim $0a, ANIM_NOD ; $70f7
+	script_face ACTOR_ROLE_ISLAND_OPEN_OPPONENT, FACE_DOWN ; $70f0
+	script_set_anim ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ANIM_NOD ; $70f7
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $70fe
 	script_wait_idle ACTOR_PLAYER ; $7105
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $710a
@@ -118,7 +118,7 @@ IslandOpenRoundCallCutscene:
 	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_3 ; $711a
 	script_set_actor_script ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_3, ActorScript_0f_05 ; $711f
 	script_wait_frames $14 ; $712a
-	script_set_actor_script $0a, ActorScript_0f_05 ; $7131
+	script_set_actor_script ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ActorScript_0f_05 ; $7131
 	script_wait_frames $14 ; $713c
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_05 ; $7143
 	script_wait_frames $14 ; $714e
@@ -131,7 +131,7 @@ IslandOpenRoundCallCutscene:
 	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_3 ; $7177
 	script_set_actor_script ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_3, ActorScript_0f_03 ; $717c
 	script_wait_frames $14 ; $7187
-	script_set_actor_script $0a, ActorScript_0f_03 ; $718e
+	script_set_actor_script ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ActorScript_0f_03 ; $718e
 	script_wait_frames $14 ; $7199
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_03 ; $71a0
 	script_move_player $1100, $0d00 ; $71ab
@@ -190,9 +190,9 @@ IslandOpenRoundCallCutscene:
 	script_wait_frames $14 ; $72a2
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0f_05 ; $72a9
 	script_wait_frames $3c ; $72b4
-	script_set_actor_script $0b, ActorScript_0f_06 ; $72bb
+	script_set_actor_script ACTOR_ROLE_ISLAND_OPEN_OPPONENT_PARTNER, ActorScript_0f_06 ; $72bb
 	script_wait_frames $14 ; $72c6
-	script_set_actor_script $0a, ActorScript_0f_06 ; $72cd
+	script_set_actor_script ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ActorScript_0f_06 ; $72cd
 	script_move_player $1100, $0d00 ; $72d8
 	farcall WaitPlayerMoveDone ; $72e2
 	jp .walkOff ; $72e5
@@ -205,9 +205,9 @@ IslandOpenRoundCallCutscene:
 	script_wait_frames $14 ; $7315
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0f_03 ; $731c
 	script_wait_frames $3c ; $7327
-	script_set_actor_script $0b, ActorScript_0f_04 ; $732e
+	script_set_actor_script ACTOR_ROLE_ISLAND_OPEN_OPPONENT_PARTNER, ActorScript_0f_04 ; $732e
 	script_wait_frames $14 ; $7339
-	script_set_actor_script $0a, ActorScript_0f_04 ; $7340
+	script_set_actor_script ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ActorScript_0f_04 ; $7340
 	script_move_player $1100, $0d00 ; $734b
 	farcall WaitPlayerMoveDone ; $7355
 	script_wait_frames $3c ; $7358

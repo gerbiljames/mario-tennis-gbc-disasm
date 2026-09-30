@@ -153,6 +153,12 @@ class Source:
             for k, name in enumerate(names):
                 if name:
                     self.slot_of["ACTOR_" + name] = (n, k + 3)
+        # ACTOR_ROLE_ names: slot and the lists each may be used under
+        self.roles = {}
+        for m in re.finditer(r"^\tactor_role (\w+), \$([0-9a-f]+), (.*)$",
+                             (ROOT / "include" / "actor_roles.inc").read_text(), re.M):
+            self.roles["ACTOR_ROLE_" + m.group(1)] = (int(m.group(2), 16),
+                                                      {x.strip() for x in m.group(3).split(",")})
 
     def body(self, name):
         b, i, e = self.funcs[name]
@@ -624,6 +630,13 @@ def evaluate(src, flow):
         twin = src.banks[b][0][k] != Path(f).read_text().split("\n")[ln - 1]
         if a in FIXED:
             continue
+        if a in src.roles:
+            counts["names"] += 1
+            if ls is not None:
+                bad = [l for l in ls if l not in src.roles[a][1]]
+                if bad:
+                    conflicts.append((f, ln, a, bad))
+            continue
         if a.startswith("ACTOR_"):
             counts["names"] += 1
             if ls is None:
@@ -655,7 +668,7 @@ def check(fail):
     flow.analyse()
     renames, conflicts, counts = evaluate(src, flow)
     for f, ln, name, bad in conflicts:
-        fail("slots", f"{Path(f).relative_to(ROOT)}:{ln}: {name} is another actor in {', '.join(bad)}")
+        fail("slots", f"{Path(f).relative_to(ROOT)}:{ln}: {name} does not hold in {', '.join(bad)}")
     return counts["names"]
 
 
@@ -696,7 +709,7 @@ def runtime_job(sym_path, save, state, si, li, frames):
             if m and i in placed:
                 args = [a.strip() for a in m.group(2).split(",")]
                 for pos, a in enumerate(args):
-                    if (m.group(1), pos) in ACTOR_ARGS and a in src.slot_of:
+                    if (m.group(1), pos) in ACTOR_ARGS and (a in src.slot_of or a in src.roles):
                         sites[(b, placed[i])].append(a)
             m = re.match(r"\tmap_script (ACTOR_\w+),", line)
             if m and m.group(1) in src.slot_of:
@@ -707,8 +720,11 @@ def runtime_job(sym_path, save, state, si, li, frames):
     res = collections.Counter()
 
     def judge(name, lst):
-        l0, slot = src.slot_of[name]
-        ok = lst in src.lists and src.ident(lst, slot) == src.ident(l0, slot)
+        if name in src.roles:
+            ok = lst in src.roles[name][1]
+        else:
+            l0, slot = src.slot_of[name]
+            ok = lst in src.lists and src.ident(lst, slot) == src.ident(l0, slot)
         res[(name, lst, ok)] += 1
     olog = g.log
 
@@ -813,7 +829,7 @@ def main():
           f"{counts['numbers']} numbers reached: {len(renames)} resolvable, {counts['ambiguous']} ambiguous, "
           f"{counts['unknown']} unknown state, {counts['twin']} in twin files")
     for f, ln, name, bad in conflicts:
-        print(f"    {Path(f).relative_to(ROOT)}:{ln}: {name} is another actor in {', '.join(bad)}")
+        print(f"    {Path(f).relative_to(ROOT)}:{ln}: {name} does not hold in {', '.join(bad)}")
     if a.list:
         for b, k, op, pos, arg, ls in flow.sites():
             if re.match(r"\$[0-9a-f]{2}$", arg) and int(arg[1:], 16) >= 3:

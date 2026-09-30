@@ -69,12 +69,12 @@ Nothing the call graph can reach is `Unused`.
   WRAM bank no static dataflow or trace has pinned renders as a raw number,
   because a name in the wrong bank is worse than none. The 97 that remain
   all sit in `Unused*` routines, left raw on purpose.
-* Actor slots: 153 script operands and 24 `NpcScripts` ids are still
-  numbers, because the slot holds a different actor in each list that can
-  be active there. The Island Open's opponent slots, for example, change
-  every round. They would need role names (`ACTOR_ISLAND_OPEN_OPPONENT`)
-  rather than row names, which is a convention still to decide
-  (`docs/story_mode.md`).
+* Actor slots: 105 script operands and 17 `NpcScripts` ids are still
+  numbers. Each is a slot with no single part across the lists that can
+  be active there, a slot past the end of every list, a line in a shared
+  twin file, or a table of a location the player never controls. Slots
+  that mean one thing in every candidate list have role names
+  (`include/actor_roles.inc`, `docs/story_mode.md`).
 * Free RAM: 4,360 bytes, poison-checked at runtime over every flow the
   tools can drive, link play and the N64 screens included
   (`docs/ram_map.md`).
@@ -130,6 +130,17 @@ new branch that decides nothing, a ROM address written as a number, an
 unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
+
+* **2026-09-30** — actor role names. A slot whose actor changes with the
+  active list, but whose part in the scene does not, is now named for its
+  part: `ACTOR_ROLE_ISLAND_OPEN_OPPONENT` is this round's opponent, whoever
+  that is, and `ACTOR_ROLE_SENIOR_COURT_FAY` is Fay in any of the Senior
+  Court's three lists. Each role is declared in `include/actor_roles.inc`
+  with the lists it holds for. `make check` (slots) fails a use where
+  another list is possible, tested by planting Court #2's spectator in a
+  Senior Court script, and the runtime slot audit checks the same thing in
+  play. Ten roles name 48 operands and 7 `NpcScripts` ids. 105 and 17
+  numbers remain, none of which has a single part.
 
 * **2026-09-30** — crashes counted, and the RAM audit as a tool. The event
   test now tells a game crash from a PyBoy wedge. After each frame it stops

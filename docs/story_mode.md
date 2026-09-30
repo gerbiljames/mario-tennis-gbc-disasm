@@ -278,18 +278,32 @@ active:
   under the round lists it installs -- singles for trigger `$0f`, doubles
   for `$0e` (`TILE_LISTS`).
 
-Where more than one list is possible the number stays, unless every
-candidate holds the same actor in that slot. 4,781 script operands and 436
-`NpcScripts` ids are names; 153 and 24 stay numbers: slots whose
-candidate lists disagree (the Island Open's opponent slots, which hold a
-different player each round, and handlers that several variants share),
-slots past the end of every candidate list (actors spawned by script), the
-lines inside shared twin files, and tables of locations the player never
-controls. A routine that can also be entered from somewhere the flow does
-not follow keeps a number unless it installs its own list first.
+Where more than one list is possible, a row name does not fit unless every
+candidate holds the same actor in that slot. Some of those slots still
+mean one thing in every candidate list. A slot can hold the same character
+under different actor scripts: the five seniors stand at the same Senior
+Court slots in all three of its lists. Or it can hold whoever plays that
+part: the Island Open's slot `$0a` is this round's opponent, Spike in one
+round and A. Coz in another. These get *role* names,
+`ACTOR_ROLE_<location>_<role>`, declared with the lists they hold for in
+`include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`). Ten
+roles cover 48 operands and 7 `NpcScripts` ids.
+
+In all, 4,781 script operands and 436 `NpcScripts` ids have row names, and
+105 and 17 stay numbers. These are:
+* slots with no single part: a trophy in one list and an exclamation
+  balloon in another, the Coz twins waiting while the Island Open's pairs
+  change;
+* slots past the end of every candidate list (actors spawned by script);
+* the lines inside shared twin files;
+* tables of locations the player never controls.
+
+A routine that can also be entered from somewhere the flow does not follow
+keeps a number unless it installs its own list first.
 `tools/actorslots.py` is the analysis: it lists what is left, renames what
-it can settle (`--apply`), and `make check` fails on any name whose slot
-holds a different actor in a list it finds possible at that line.
+it can settle (`--apply`). `make check` fails on any row name whose slot
+holds a different actor in a list it finds possible at that line, and on
+any role name used where a list the role was not declared for is possible.
 `make slot-audit` checks every name at run time over 36 story states and
 every location (a hook at each named site comparing the list
 `InitLocationActors` last installed).
