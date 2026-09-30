@@ -740,7 +740,7 @@ section once listed as unexercised. Free bytes now: 4,360 (2,704 untouched,
 1,598 cleared only, 58 holding data, all explained).
 
 **Re-checked for the flows added since, 2026-09-30.** The same poison and
-replay, over:
+replay (now `tools/ramaudit.py free`), over:
 * four link-play sessions, both games (`tools/linktest.py`);
 * the three N64 Transfer Pak record screens, with forged records;
 * both unlock codes;

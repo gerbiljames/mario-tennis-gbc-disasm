@@ -56,27 +56,43 @@ rows, all editable, with a fork's edits committed under `mods/`.
 
 ## What is still open
 
-**Banked-WRAM operands: none left in live code.** A `$dxxx` literal whose
-WRAM bank neither static dataflow nor any trace has pinned renders as a raw
-number, because a name in the wrong bank is worse than none. The 97 that
-remain all sit in `Unused*` routines: nothing references them, so no trace
-can ever prove them, and they are left raw on purpose. The last live ones went three ways — a callee that
-selects the bank itself (the story scripts' actor-slot pointers handed to
-`AttachActorStepMover`, the digit drawers' `wram_bank $03`), which the
-unions express as instruction-range scopes; siblings behind a jump table
-whose traced twins prove the bank (ranking rows 9-11, doubles markers 5/6,
-which no `ShowRankingBoard` argument ever selects); and one arithmetic
-constant. The generator's last run reported no site whose bank the dataflow
-knew but no union named.
+**Code.** Every routine is proven code or data, and every routine
+`tools/reach.py` can reach from the vectors has run: in play and in targeted
+sessions, and under `tools/steer.py` for the ones behind conditions no
+session meets. Two are the exception. `ApplyWhiteFade` and
+`TickSecondaryTimer` sit behind flags nothing in the ROM ever sets, so they
+are unreachable by data rather than by code (`docs/unused_code.md`).
+Nothing the call graph can reach is `Unused`.
 
-**Named in the docs as not established.** `docs/graphics_formats.md` §8 now
-holds two items, and both are about the developers' intent rather than the
-bytes: why the `$63` per-object-palette sentinel exists when no object uses
-it, and why there are two additive fades. Everything else there was settled
-on 2026-09-11 (the odd palette regions were over-declared, the header bytes
-are a constant, the scene record is read only to `+5`); `docs/story_mode.md` "Oddities
-and open questions" keeps only the shipped-defect entries (the Star Court
-unlock and the dead record fields are resolved); the "not established" sentences in `docs/match_engine.md`.
+**Names.**
+* Banked-WRAM operands: none left in live code. A `$dxxx` literal whose
+  WRAM bank no static dataflow or trace has pinned renders as a raw number,
+  because a name in the wrong bank is worse than none. The 97 that remain
+  all sit in `Unused*` routines, left raw on purpose.
+* Actor slots: 153 script operands and 24 `NpcScripts` ids are still
+  numbers, because the slot holds a different actor in each list that can
+  be active there. The Island Open's opponent slots, for example, change
+  every round. They would need role names (`ACTOR_ISLAND_OPEN_OPPONENT`)
+  rather than row names, which is a convention still to decide
+  (`docs/story_mode.md`).
+* Free RAM: 4,360 bytes, poison-checked at runtime over every flow the
+  tools can drive, link play and the N64 screens included
+  (`docs/ram_map.md`).
+
+**Behaviour.** The event test compares a shifted build with the original
+over every story state and location, the menu sessions and every target
+without a difference. Its one known game crash, the Test2 debug screens'
+glyph underrun, happens in both builds, and it counts crashes separately
+from differences. `docs/bugs.md` lists the shipped defects found along the
+way.
+
+**Named in the docs as not established.**
+* `docs/graphics_formats.md` §8 holds two items, both about the developers'
+  intent rather than the bytes: why the `$63` per-object-palette sentinel
+  exists when no object uses it, and why there are two additive fades.
+* `docs/story_mode.md` "Oddities and open questions" keeps only
+  shipped-defect entries.
+* The "not established" sentences in `docs/match_engine.md`.
 
 ## How to resume
 
@@ -114,6 +130,18 @@ new branch that decides nothing, a ROM address written as a number, an
 unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
+
+* **2026-09-30** — crashes counted, and the RAM audit as a tool. The event
+  test now tells a game crash from a PyBoy wedge. After each frame it stops
+  a run whose stack has left RAM. A watchdog in each worker catches a
+  `tick()` that never returns and checks whether the game is executing RAM
+  or an opcode the CPU does not have. Crashes in both builds are counted,
+  and crashes in one build listed. The Test2 chunks that had stayed
+  inconclusive are now six entries where both builds crash, with nothing
+  inconclusive left. `tools/ramaudit.py` makes the free-RAM poison check
+  (`free`) and the first-writer search (`writer`) repeatable over any
+  eventtest target, story chunk or link session. "What is still open"
+  above is rewritten for where things now stand.
 
 * **2026-09-30** — free RAM re-checked for the new flows, and the Test2
   crash explained. The poison-and-replay check of the free-RAM inventory

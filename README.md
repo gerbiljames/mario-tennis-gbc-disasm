@@ -326,6 +326,11 @@ of the ROM was reached.
   hand-written raw form would move.
 - `tools/ram_free.py` — the RAM bytes no symbol covers, the static half of
   the free-RAM inventory in `docs/ram_map.md`.
+- `tools/ramaudit.py` — the runtime half: `free` poisons every byte
+  `ram_free.py` lists and plays a flow (an eventtest target, a story chunk,
+  a link session) twice, poisoned and clean, reporting the bytes that hold
+  data and any read of poison; `writer` names the routine that first writes
+  a given byte.
 - `tools/twins.py` — the groups of instruction-identical live routines
   (`docs/duplicated_code.md`).
 - `tools/lz.py` — codec for the game's LZ format, both directions; the

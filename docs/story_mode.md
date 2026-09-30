@@ -280,7 +280,7 @@ active:
 
 Where more than one list is possible the number stays, unless every
 candidate holds the same actor in that slot. 4,781 script operands and 436
-`NpcScripts` ids are names; 153 and 97 stay numbers: slots whose
+`NpcScripts` ids are names; 153 and 24 stay numbers: slots whose
 candidate lists disagree (the Island Open's opponent slots, which hold a
 different player each round, and handlers that several variants share),
 slots past the end of every candidate list (actors spawned by script), the
