@@ -145,6 +145,13 @@ def plan(seed, frames):
     return held
 
 
+PLUGINS = []
+# labels hooked for an event of their own (a list, talk or char record, an
+# interrupt), never logged as entered
+EVENT_LABELS = {"VBlankHandler", "LCDStatHandler", "TimerHandler", "SerialHandler",
+                "InitLocationActors", "RunNpcInteraction", "InitCa00RecordFromCharId"}
+
+
 class Game:
     def __init__(self, rom, sym, save, cap, skip=(), learn_irq=False, extra=None):
         from pyboy import PyBoy
@@ -239,6 +246,12 @@ class Game:
             add(point, fn)
             if point not in self.names:
                 # a target's own hook runs every time, never capped
+                self.sync_points.add(point)
+        # a tool's own hooks (tools/steer.py): each plugin maps points to
+        # actions, which run every time
+        for plugin in PLUGINS:
+            for point, fn in plugin(self).items():
+                add(point, fn)
                 self.sync_points.add(point)
         self.hits, self.cap, self.spent, self.removed = {}, cap, [], []
         self.irq_hits = {}
@@ -459,19 +472,34 @@ TARGETS = (["attract", "debug"] + [f"npc{k}" for k in range(len(TEST_MAP_NPCS))]
 
 def handler_rows():
     """Every map_script row of a story location's NpcScripts,
-    FacingScripts and TileTriggers tables whose handler is code: (location
+    FacingScripts and TileTriggers tables whose handler is code, then of the
+    NpcScripts tables its scripts install (tools/actorslots.py): (location
     index, entry, kind, table, id, facing mask, flag condition, handler)."""
+    import actorslots
     from runtime_audit import targets
     scene = (ROOT / "src" / "engine" / "story" / "scene_0a.asm").read_text()
     trees = re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)
     text = "\n".join("\n".join(bank_lines(h)[0]) for h in holders())
     locs = dict(targets(symbols(ROOT / "build" / "mariotennis.sym"))[5])
-    rows = []
+    rows, installed = [], []
+    flow = actorslots.Flow(actorslots.Source())
+    flow.analyse()
     for i, tree in enumerate(trees):
         m = re.search(rf"^{tree}:\n(?:\t;[^\n]*\n)?((?:\tdw \w+ ; slot \d \w+\n)+)", text, re.M)
         slots = {role: t for t, role in re.findall(r"\tdw (\w+) ; slot \d (\w+)", m.group(1))} if m else {}
-        for kind, role in (("npc", "NpcScripts"), ("facing", "FacingScripts"), ("tile", "TileTriggers")):
-            table = slots.get(role)
+        entry = (locs.get(i) or [1])[0]
+        # an init script that stays only for one entry point (and otherwise
+        # sends the player straight out) is entered by that one
+        init = slots.get("InitScript")
+        m = init and re.search(rf"^{init}:\n\tld a, \[wStoryModeEntryPoint\][^\n]*\n\tcp (\$[0-9a-f]+)[^\n]*\n"
+                               rf"\tret z", text, re.M)
+        if m:
+            entry = int(m.group(1)[1:], 16)
+        tables = [(kind, slots.get(role)) for kind, role in
+                  (("npc", "NpcScripts"), ("facing", "FacingScripts"), ("tile", "TileTriggers"))]
+        extra = sorted({t for (_, t, _) in flow.visits.get(tree, ())
+                        if t in flow.s.funcs and t != slots.get("NpcScripts")})
+        for kind, table in tables + [("npc", t) for t in extra]:
             m = table and re.search(rf"^{table}:\n((?:\t[^\n]*\n)+?)(?=^\S)", text, re.M)
             if not m:
                 continue
@@ -479,21 +507,23 @@ def handler_rows():
                 r = re.match(r"\tmap_script ([^,]+), ([^,]+), ([^,]+), ([^,]+),", line)
                 if not r or not re.match(r"[A-Z]\w*$", r.group(4)) or r.group(4).startswith("Text_"):
                     continue
-                rows.append((i, (locs.get(i) or [1])[0], kind, table, r.group(1), r.group(2),
-                             r.group(3), r.group(4)))
-    return rows
+                (installed if table in extra else rows).append(
+                    (i, entry, kind, table, r.group(1), r.group(2), r.group(3), r.group(4)))
+    return rows + installed
 
 
-def unique_handlers():
-    seen, out = set(), []
-    for row in (handler_rows() if (ROOT / "build" / "mariotennis.sym").exists() else []):
-        if row[7] not in seen:
-            seen.add(row[7])
-            out.append(row)
-    return out
+_HANDLERS = []
 
 
-HANDLERS = unique_handlers()
+def handlers():
+    """handler_rows(), one row per handler; worked out on first use."""
+    if not _HANDLERS:
+        seen = set()
+        for row in handler_rows():
+            if row[7] not in seen:
+                seen.add(row[7])
+                _HANDLERS.append(row)
+    return _HANDLERS
 
 
 def after_call(sym_path, routine, callee):
@@ -641,7 +671,7 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
         class Late:
             def __getattr__(self, attr):
                 return getattr(holder[0], attr)
-        warp = handler_setup(Late(), sym, HANDLERS[int(name[7:])], extra, actions)
+        warp = handler_setup(Late(), sym, handlers()[int(name[7:])], extra, actions)
     g = Game(rom, sym, save, cap, set(json.loads(Path(skip).read_text())), extra=extra)
     if warp:
         holder.append(g)
@@ -772,6 +802,8 @@ def main():
                          "tile-trigger handler, called in its own location")
     ap.add_argument("--coverage", help="merge the routines the base build entered into this JSON "
                                        "file (read by tools/coverage.py)")
+    ap.add_argument("--units", help="write which routines the base build entered in each "
+                                    "session to this JSON file (read by tools/steer.py)")
     ap.add_argument("--worker", nargs="+", help=argparse.SUPPRESS)
     args = ap.parse_args()
 
@@ -823,7 +855,7 @@ def main():
     units = [("story", si, li) for si in picked for li in range(len(locs))]
     units += [("free", seed, None) for seed in range(args.free)]
     units += [("target", name, seed) for seed in range(args.targets) for name in TARGETS]
-    units += [("target", f"handler{k}", seed) for seed in range(args.handlers) for k in range(len(HANDLERS))]
+    units += [("target", f"handler{k}", seed) for seed in range(args.handlers) for k in range(len(handlers()))]
 
     def work(job):
         key, (kind, a, b) = job
@@ -848,13 +880,17 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(args.jobs) as ex:
         for job, res in ex.map(work, [(key, u) for u in units for key in builds]):
             results[job] = res
+    if args.units:
+        Path(args.units).write_text(json.dumps(
+            [[list(unit), sorted({e[2] for x in res for e in x["events"] if e[1] == "run"})]
+             for (key, unit), res in results.items() if key == "base" and not isinstance(res, str)]))
     if args.coverage:
         path = Path(args.coverage)
         old = json.loads(path.read_text()) if path.exists() else {"entered": [], "hooked": []}
         entered = set(old["entered"]) | {e[2] for (key, _), res in results.items()
                                          if key == "base" and not isinstance(res, str)
                                          for x in res for e in x["events"] if e[1] == "run"}
-        hooked = set(old["hooked"]) | (set(code_labels()) - set(json.loads(skip.read_text())))
+        hooked = set(old["hooked"]) | (set(code_labels()) - set(json.loads(skip.read_text())) - EVENT_LABELS)
         path.write_text(json.dumps({"entered": sorted(entered), "hooked": sorted(hooked)}, indent=0))
     shutil.rmtree(tmp, True)
 
@@ -885,7 +921,7 @@ def main():
                     ev = lambda e: f"{e[i][1]} {e[i][2]} at logic frame {e[i][0]}" if i < len(e) else "nothing"
                     bad.append((unit, x["entry"], f"event {i}: base {ev(x['events'])}, rom {ev(y['events'])}"))
     print(f"{len(picked)} states x {len(locs)} locations, {args.free} main-menu sessions and "
-          f"{args.targets * len(TARGETS) + args.handlers * len(HANDLERS)} targeted sessions: "
+          f"{args.targets * len(TARGETS) + args.handlers * len(handlers())} targeted sessions: "
           f"{events} events compared, "
           f"{shifted} at a different logic frame, {dropouts} hook dropouts stepped over, "
           f"{tainted} entries cut at a known "

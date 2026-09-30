@@ -309,6 +309,10 @@ of the ROM was reached.
   holds the `Unused` names to it, and `--coverage` sorts the routines a
   sweep never entered into unreachable and not-yet-reached
   (`docs/unused_code.md`).
+- `tools/steer.py` — runs the reachable routines no session entered, by
+  replaying a session (`eventtest.py --units`) that entered a routine above
+  one and forcing each branch, jump-table index and table jump on the way
+  down to it; everything else is the game's own state.
 - `tools/actorslots.py` — which `map_actor` list a story script addresses
   at each slot operand, by following control flow through the story code
   (`docs/story_mode.md`, "map_actor"): reports the slot numbers it can
