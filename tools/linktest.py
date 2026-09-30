@@ -28,8 +28,12 @@ A session starts both games on the main menu, moves both cursors to Link
 Play, and has one player press A first and the other a few seconds later --
 the order the game needs: the first console probes as master, and the
 second, which has been latching those probes, answers as slave. After the
-rules screen both players press buttons at random (mostly A), which walks
-them through character select into a link match.
+rules screen both players press buttons at random (mostly A, or `--keys`),
+which walks them through character select into a link match.
+`--unplug-after N` pulls the cable out N frames in: the side driving the
+clock then reads $ff, as on hardware, and the other hears nothing.
+`--steer ROUTINE` adds tools/steer.py's hooks on both games, forcing each
+branch on the way down to ROUTINE from one the --coverage file says ran.
 """
 import argparse
 import collections
@@ -98,7 +102,7 @@ def boot_to_menu(rom, save, out):
     shutil.rmtree(tmp)
 
 
-def connect(a, b, sym, sites):
+def connect(a, b, sym, sites, cable):
     writes_sb, writes_sc, reads_sb = sites
     for me, other in ((a, b), (b, a)):
         me.sb = me.pb.memory[sym["hLinkTxByte"][1]]   # loaded at boot, before the saved state
@@ -108,6 +112,10 @@ def connect(a, b, sym, sites):
 
         def start(_, me=me, other=other):
             if me.pb.register_file.A & 0x81 != 0x81:
+                return
+            if not cable["plugged"]:
+                # pulled: the driving side clocks in $ff, the other hears nothing
+                me.rx, me.driving = None, True
                 return
             for _ in range(4):
                 if not (other.pending or other.need_tick):
@@ -154,7 +162,24 @@ def watch(side, sym, taken, labels):
         side.pb.hook_register(pt[0], pt[1], enter, name)
 
 
-def session(rom, sym_path, save, seed, frames, lag, settle, menu_state):
+def steer_hooks(side, sym_path, chain, taken):
+    """tools/steer.py's steering along `chain` on one side; returns the list
+    that fills when the chain's last routine runs."""
+    import steer
+
+    class Game:
+        rf = side.pb.register_file
+    code = steer.Code(E.symbols(sym_path))
+    plugin, steps, done = steer.plugin_for(sym_path, chain, code.is_code)
+    for pt, fn in plugin(Game).items():
+        if pt not in taken:
+            side.pb.hook_register(pt[0], pt[1], lambda _, fn=fn: fn(), None)
+            taken.add(pt)
+    return done
+
+
+def session(rom, sym_path, save, seed, frames, lag, settle, menu_state, keys=KEYS, unplug=None,
+            chain=None):
     from pyboy import PyBoy
     sym = E.symbols(sym_path)
     tmp = Path(tempfile.mkdtemp(dir=ROOT / "build"))
@@ -169,10 +194,13 @@ def session(rom, sym_path, save, seed, frames, lag, settle, menu_state):
         pb.load_state(io.BytesIO(Path(menu_state).read_bytes()))
         sides.append(Side(name, pb))
     a, b = sides
-    taken = connect(a, b, sym, serial_sites(sym))
+    cable = {"plugged": True}
+    taken = connect(a, b, sym, serial_sites(sym), cable)
     labels = E.code_labels()
     for s in sides:
-        watch(s, sym, set(taken), labels)
+        mine = set(taken)
+        s.steered = steer_hooks(s, sym_path, chain, mine) if chain else []
+        watch(s, sym, mine, labels)
     moves = ["right"] * (LINK_PLAY_ITEM % 3) + ["down"] * (LINK_PLAY_ITEM // 3)
     press = {s.name: [(30 + 30 * k, mv) for k, mv in enumerate(moves)] for s in sides}
     press["a"].append((30 + 30 * len(moves), "a"))
@@ -182,12 +210,15 @@ def session(rom, sym_path, save, seed, frames, lag, settle, menu_state):
     link = sym["hLinkState"][1]
     states = collections.Counter()
     for t in range(frames):
+        if t == unplug:
+            cable["plugged"] = False
         for k, s in enumerate(sides):
             for when, button in press[s.name]:
                 if when == t:
                     s.pb.button(button, 6)
             if t >= random_from and t % 12 == 6 * k:
-                s.pb.button(rng.choice(KEYS), 6)
+                for button in rng.choice(keys).split("+"):
+                    s.pb.button(button, 6)
             s.pb.tick(1, False)
             s.need_tick = False
             if s.driving and s.pb.memory[0xff0f] & 0x08:
@@ -209,18 +240,35 @@ def main():
     ap.add_argument("--sym", default=str(ROOT / "build" / "mariotennis.sym"))
     ap.add_argument("--save", default=str(ROOT / "maxed-unlocked.sav"))
     ap.add_argument("--seeds", type=int, default=4)
+    ap.add_argument("--first-seed", type=int, default=0)
     ap.add_argument("--frames", type=int, default=12000)
     ap.add_argument("--lag", type=int, default=200, help="frames between the two players pressing A")
     ap.add_argument("--settle", type=int, default=300, help="frames before the random presses start")
+    ap.add_argument("--keys", default=",".join(KEYS),
+                    help="the buttons the random presses pick from, repeats weighting them; "
+                         "a+b presses both")
+    ap.add_argument("--unplug-after", type=int, help="pull the cable out after this many frames")
+    ap.add_argument("--steer", help="force the branches on the way to this routine (tools/steer.py), "
+                                    "down from one a --coverage file says ran")
     ap.add_argument("--coverage", help="merge the routines entered into this eventtest coverage file")
     a = ap.parse_args()
     tmp = Path(tempfile.mkdtemp(dir=ROOT / "build"))
     menu = tmp / "menu.state"
     boot_to_menu(a.rom, a.save, menu)
-    entered = set()
+    entered, chain = set(), None
+    if a.steer:
+        import reach
+        import steer
+        ran = set(json.loads(Path(a.coverage).read_text())["entered"])
+        chain = steer.chains([a.steer], ran, reach.Graph()).get(a.steer)
+        print("steering:", " -> ".join(chain or ["no chain"]))
     try:
-        for seed in range(a.seeds):
-            x, y, states = session(a.rom, a.sym, a.save, seed, a.frames, a.lag, a.settle, menu)
+        for seed in range(a.first_seed, a.first_seed + a.seeds):
+            x, y, states = session(a.rom, a.sym, a.save, seed, a.frames, a.lag, a.settle, menu,
+                                   a.keys.split(","), a.unplug_after, chain)
+            if chain and (x.steered or y.steered):
+                entered.add(chain[-1])
+                print(f"seed {seed}: steered into {chain[-1]}")
             linked = states[(1, 2)] + states[(2, 1)]
             entered |= x.entered | y.entered
             print(f"seed {seed}: {x.exchanges + y.exchanges} bytes over the cable, linked for "

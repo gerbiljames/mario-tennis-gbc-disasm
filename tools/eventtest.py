@@ -460,11 +460,13 @@ DRILL_IDS = range(0x09, 0x24)
 # From the main menu: the two button codes that unlock everything (29
 # presses then A on the main menu; Right 12 times, Left 34 times, then A
 # with Select on a story slot's trophies screen), and the Saved Data screens' three N64
-# Transfer Pak record screens, with random records forged into block $0b.
+# Transfer Pak record screens, with random records forged into block $0b;
+# and each of the nine Mario minigames, opened from the main menu.
 CHEAT_CODE = ["down", "down", "right", "right", "up", "up", "left", "select", "select", "select",
               "right", "down", "down", "left", "left", "up", "up", "right", "select", "left",
               "down", "down", "right", "right", "up", "up", "left", "select", "select"]
-MENU_TARGETS = ["menu-cheat", "trophies-cheat", "n64-tnmt", "n64-exhib", "n64-ring"]
+MENU_TARGETS = ["menu-cheat", "trophies-cheat", "n64-tnmt", "n64-exhib", "n64-ring"] + \
+    [f"minigame{k}" for k in range(9)]
 TARGETS = (["attract", "debug"] + [f"npc{k}" for k in range(len(TEST_MAP_NPCS))]
            + [f"drill{k}" for k in range(9)] + [f"save-{d}" for d in SAVE_DAMAGE]
            + [f"drillid{i:02x}" for i in DRILL_IDS] + MENU_TARGETS)
@@ -687,6 +689,10 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
             forge_n64_records(g, random.Random(seed))
         if name == "menu-cheat":
             moves = CHEAT_CODE + ["a"]
+        elif name.startswith("minigame"):
+            # Minigames (main-menu cell 1), then cell k of its 3x3 grid
+            k = int(name[8:])
+            moves = ["right", "a", None, None] + ["right"] * (k % 3) + ["down"] * (k // 3) + ["a"]
         elif name == "trophies-cheat":
             # Saved Data (main-menu cell 6), story slot 0, its transfer
             # items' third (a 2x2 grid), the trophies

@@ -302,8 +302,10 @@ of the ROM was reached.
 - `tools/linktest.py` — two copies of the game in PyBoy joined by a link
   cable made of hooks on each game's own serial code (PyBoy's port is
   unplugged), playing through the link handshake, rules and character
-  select into a link match; `--coverage` merges the routines entered into
-  an eventtest coverage file.
+  select into a link match; `--keys` picks the random presses,
+  `--unplug-after` pulls the cable, `--steer` forces the way to one
+  routine, and `--coverage` merges the routines entered into an eventtest
+  coverage file.
 - `tools/reach.py` — which routines can run at all, following every
   reference from the reset, interrupt and `rst` vectors; `make check`
   holds the `Unused` names to it, and `--coverage` sorts the routines a

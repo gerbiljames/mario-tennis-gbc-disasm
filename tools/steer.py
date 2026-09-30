@@ -6,15 +6,19 @@
 
 For a reachable routine R that no session entered, the static call graph
 (tools/reach.py) gives a chain E -> X1 -> ... -> R from a routine E some
-session did enter. The session is replayed (the same eventtest unit, from
-`eventtest.py --units`) with hooks that steer each routine on the chain
-toward the next: at a conditional branch from which only one way leads on,
-the flag it tests is set so it goes that way; at an `rst Rst00` jump table
-the index is set to the entry that leads on; at an indirect jump through a
-table of routines (`jp hl`, `JumpToHL`, `CallHLInBankA`) HL is set to the
-next routine. Everything else -- registers, RAM, the rest of the game -- is
-what the game had, so R runs in a real context with one decision overridden
-at a time; what it then does is recorded like any other run. Steering stops
+session did enter, in segments: a jump-table entry that lands on a label
+inside a routine is a step of its own. The session is replayed (the same
+eventtest unit, from `eventtest.py --units`) with hooks that steer each
+routine on the chain toward the next: at a conditional branch the flag it
+tests is set so it goes the way that leads on soonest (out of a loop rather
+than round it); at an `rst Rst00` jump table the index is set to the entry
+that leads on; at an indirect jump through a table of routines (`jp hl`,
+`JumpToHL`, `CallHLInBankA`) HL is set to the next routine. A story
+script's chain starts at the location's own script, replayed in that
+location; a mode hook's at `CallModeHook`, while each minigame and drill
+runs. Everything else -- registers, RAM, the rest of the game -- is what
+the game had, so R runs in a real context with one decision overridden at
+a time; what it then does is recorded like any other run. Steering stops
 once R has been entered.
 
 This proves R can run, not that play reaches it: the conditions the game
@@ -44,6 +48,8 @@ RETCC = re.compile(r"^ret (nz|z|nc|c)$")
 JUMP = re.compile(r"^(jr|jp) (\S+)$")
 INDIRECT = re.compile(r"^(jp hl|call JumpToHL|jp JumpToHL|call CallHLInBankA|jp CallHLInBankA)$")
 FLAG = {"z": (0x80, True), "nz": (0x80, False), "c": (0x10, True), "nc": (0x10, False)}
+DATA = re.compile(r"(db|dw|dn|ds|map_\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|"
+                  r"story_location|obj_template)\b")
 
 
 class Code:
@@ -72,11 +78,33 @@ class Code:
         """Whether a line names `target` itself (`target.local` is inside it,
         and jumping there does not enter it)."""
         for t, loc in re.findall(r"(?<![\w.])([A-Za-z_]\w*)(\.\w+)?", code):
-            if loc:
-                continue
             t = t[7:] if t.startswith("FarPtr_") else t
-            if self.alias.get(t, t) == target:
+            if self.alias.get(t, t) + loc == target:
                 return True
+        return False
+
+    def is_mode_hooks(self, name):
+        """Whether a label is a mode-hook table (a minigame's or drill's)."""
+        if name not in self.body:
+            return False
+        b, lines, placed, i0, end = self.body[name]
+        return any("(mode_hooks)" in x for x in lines[i0 + 1:i0 + 3])
+
+    def is_code(self, name):
+        """Whether a routine or interior label starts with an instruction."""
+        g, _, loc = name.partition(".")
+        if g not in self.body:
+            return False
+        b, lines, placed, i0, end = self.body[g]
+        start = i0
+        if loc:
+            start = next((i for i in range(i0, end) if lines[i].startswith(f".{loc}:")), None)
+            if start is None:
+                return False
+        for x in lines[start + 1:end]:
+            c = x.split(";")[0].strip()
+            if c and not LOCAL.match(x) and not re.match(r"(ASSERT|DEF|PURGE)\b", c):
+                return not DATA.match(c)
         return False
 
 
@@ -106,8 +134,7 @@ def cfg(code, name):
         if not c or LOCAL.match(lines[i]) or re.match(r"(ASSERT|DEF|PURGE)\b", c):
             i += 1
             continue
-        if c.startswith(("db ", "dw ", "dn ", "ds ", "INCBIN", "INCLUDE")) or c.startswith("map_") or \
-                c.startswith("as_"):
+        if DATA.match(c):
             i += 1
             continue
         m = COND.match(c)
@@ -157,20 +184,23 @@ def steer_plan(code, a, b_name, bsym, via=()):
         for i, (kind, succ, info) in nodes.items():
             c = lines[i].split(";")[0].strip()
             if INDIRECT.match(c):
-                if any(code.refers(lines[j].split(";")[0], t) for j in range(i0, i) for t in tables):
+                # "*": the table is found through RAM (a mode-hook table)
+                if "*" in via or any(code.refers(lines[j].split(";")[0], t) for j in range(i0, i) for t in tables):
                     goals.add(i)
                     special[i] = ("hl", bsym)
     if not goals:
         return None
-    # which nodes can reach a goal
-    reach_goal = set(goals)
+    # how far each node is from a goal (steps along the way)
+    dist = {i: 0 for i in goals}
     changed = True
     while changed:
         changed = False
         for i, (kind, succ, info) in nodes.items():
-            if i not in reach_goal and any(s in reach_goal for s in succ):
-                reach_goal.add(i)
+            d = min((dist[s] + 1 for s in succ if s in dist), default=None)
+            if d is not None and d < dist.get(i, d + 1):
+                dist[i] = d
                 changed = True
+    reach_goal = set(dist)
     plan = []
     for i, (kind, succ, info) in nodes.items():
         if i not in placed:
@@ -185,28 +215,33 @@ def steer_plan(code, a, b_name, bsym, via=()):
             bit, when = FLAG[m.group(1)]
             plan.append((point, ("flag", bit, when)))
         elif kind == "cond" and i in reach_goal and i not in goals:
-            ok = [s in reach_goal for s in succ]
-            if ok[0] != ok[1]:
+            # the way that gets there sooner: out of a loop, not round it again
+            d = [dist.get(s, float("inf")) for s in succ]
+            if d[0] != d[1]:
                 bit, when = FLAG[info]
-                plan.append((point, ("flag", bit, when if ok[1] else not when)))
+                plan.append((point, ("flag", bit, when if d[1] < d[0] else not when)))
         elif kind == "table" and i in reach_goal and i not in goals:
-            for k, s in enumerate(succ):
-                if s in reach_goal:
-                    plan.append((point, ("index", k)))
-                    break
+            k = min(range(len(succ)), key=lambda k: dist.get(succ[k], float("inf")))
+            plan.append((point, ("index", k)))
     return plan
 
 
 def chains(targets, entered, graph):
-    """For each target, the shortest caller chain from an entered routine."""
+    """For each target, the shortest chain of code segments (a routine, or a
+    label inside one that something jumps to directly) down from the entry
+    of a routine some session entered."""
     callers = collections.defaultdict(set)
-    for (s, _), ts in graph.out.items():
-        for (t, _) in ts:
+    for s, ts in graph.out.items():
+        for t in ts:
             if s != t:
                 callers[t].add(s)
+
+    def name(seg):
+        return seg[0] + ("." + seg[1].lstrip(".") if seg[1] else "")
     out = {}
     for r in targets:
-        prev, frontier, found = {r: None}, [r], None
+        start = (r, "")
+        prev, frontier, found = {start: None}, [start], None
         while frontier and not found:
             nxt = []
             for x in sorted(frontier):
@@ -214,7 +249,7 @@ def chains(targets, entered, graph):
                     if c in prev:
                         continue
                     prev[c] = x
-                    if c in entered:
+                    if c[1] == "" and c[0] in entered:
                         found = c
                         break
                     nxt.append(c)
@@ -223,21 +258,22 @@ def chains(targets, entered, graph):
             frontier = nxt
         if found:
             chain = [found]
-            while chain[-1] != r:
+            while chain[-1] != start:
                 chain.append(prev[chain[-1]])
-            out[r] = chain
+            out[r] = [name(x) for x in chain]
     return out
 
 
 def hops(chain, is_code):
-    """(routine, next routine, the data tables between) along a chain."""
-    out, a, via = [], chain[0], []
+    """(routine, next segment, the data tables between) along a chain: a
+    segment in the same routine as the one before is reached inside it."""
+    out, a, via = [], chain[0].split(".")[0], []
     for x in chain[1:]:
-        if is_code(x):
-            out.append((a, x, via))
-            a, via = x, []
-        else:
+        if not is_code(x):
             via.append(x)
+        elif x.split(".")[0] != a:
+            out.append((a, x, via))
+            a, via = x.split(".")[0], []
     return out
 
 
@@ -281,8 +317,8 @@ def run_one(args):
     """Worker: replay one unit with steering along one chain."""
     rom, sym_path, save, state, unit, chain, frames = args
     import eventtest as E
-    g = reach.Graph()
-    plugin, steps, done = plugin_for(sym_path, chain, lambda n: g.first_is_code.get(n, False))
+    code = Code(E.symbols(sym_path))
+    plugin, steps, done = plugin_for(sym_path, chain, code.is_code)
     E.PLUGINS.append(plugin)
     tmp = Path(tempfile.mkdtemp(dir=os.environ.get("EVENTTEST_TMP")))
     skip = tmp / "skip.json"
@@ -342,6 +378,7 @@ def main():
     trees = re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)
     locs = E.targets(E.symbols(a.sym))[5]
     handler_k = {row[7]: k for k, row in enumerate(E.handlers())}
+    code = Code(E.symbols(a.sym))
     jobs = []
     for r in todo:
         if r not in ch:
@@ -349,14 +386,25 @@ def main():
             continue
         chain = ch[r]
         tree = next((x for x in chain if x in trees), None)
-        if tree:
+        hooks = next((x for x in chain if code.is_mode_hooks(x)), None)
+        if hooks:
+            # a mode hook runs from CallModeHook, which reads the table from
+            # RAM: steer there while that minigame or drill is running
+            chain = ["CallModeHook", "*"] + chain[chain.index(hooks) + 1:]
+            us = [("target", t, 0) for t in E.MENU_TARGETS + E.TARGETS
+                  if t.startswith(("minigame", "drill")) and not t.startswith("drillid")]
+        elif tree:
             # a story script: steer from the location's own script, in
             # that location or as its handler target
             chain = chain[chain.index(tree) + 1:]
-            while chain and not g.first_is_code.get(chain[0], False):
+            while chain and not code.is_code(chain[0]):
                 chain = chain[1:]
             li = [k for k, (loc, _) in enumerate(locs) if loc == trees.index(tree)]
+            # the script's own handler target, any other of the location's
+            # (a short warp there), then its story chunks
+            here = [k for k, row in enumerate(E.handlers()) if row[0] == trees.index(tree)]
             us = ([("target", f"handler{handler_k[chain[0]]}", 0)] if chain[0] in handler_k else []) + \
+                [("target", f"handler{k}", 0) for k in here[:1]] + \
                 [("story", si, li[0]) for si in (0, 20, 35) if li]
         else:
             us = sorted({u for u, ran in units if chain[0] in ran}, key=lambda u: (cost[u[0]], str(u)))
