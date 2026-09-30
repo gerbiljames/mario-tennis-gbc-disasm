@@ -37,7 +37,11 @@ found them, so the game timer, fades, sound and random seed it would step
 cannot move a lagging build a frame ahead. Events the interrupt handlers
 run are not recorded. Both builds then see the same game, and any
 difference in the event sequence is a real fault of the shifted build.
-Timing-only differences are counted, not failed.
+Timing-only differences are counted, not failed. A run where the game
+itself crashes -- the stack leaves RAM, or it runs RAM or an opcode the CPU
+does not have, caught after a frame or by a watchdog when PyBoy stops
+returning -- is counted when both builds crash and listed when only one
+does, and its events are kept out of the coverage.
 """
 import argparse
 import atexit
@@ -256,6 +260,8 @@ class Game:
                 self.sync_points.add(point)
         self.hits, self.cap, self.spent, self.removed = {}, cap, [], []
         self.refire, self.pc_fix = (None, 0), None
+        self.progress, self.crash = 0, None
+        PROGRESS["game"] = self
         self.irq_hits = {}
         self.hooks = hooks
         for point, fns in hooks.items():
@@ -377,10 +383,15 @@ class Game:
         self.inputs, self.lf, self.prev, self.edge = inputs, 0, 0, 0
         self.armed = armed
         pending = sorted((actions or {}).items())
-        ticks = 0
+        ticks, self.crash = 0, None
         while self.lf < frames and ticks < limit:
             self.pb.tick(1, False)
             ticks += 1
+            self.progress += 1
+            crash = crashed(self)
+            if crash:
+                self.crash = crash
+                break
             while pending and self.lf >= pending[0][0]:
                 pending.pop(0)[1]()
             if self.pc_fix is not None:
@@ -415,6 +426,57 @@ def boot(rom, sym, save, out, menu=False):
     return loc
 
 
+# The worker in progress, for the watchdog: the game, the chunk's finished
+# entries, and the entry being played.
+PROGRESS = {"game": None, "done": [], "entry": None, "frames": None}
+# opcodes the CPU does not have ($db is left out: PyBoy's breakpoints use it)
+ILLEGAL = {0xd3, 0xdd, 0xe3, 0xe4, 0xeb, 0xec, 0xed, 0xf4, 0xfc, 0xfd}
+
+
+def crashed(g):
+    """Where the game has crashed, or None: the stack outside WRAM and HRAM
+    (the rst $38 loop that pushes $0039 forever), or execution in RAM
+    below HRAM, or on an opcode the CPU does not have."""
+    r = g.rf
+    pc, sp = r.PC, r.SP
+    if not (0xc000 <= sp <= 0xe000 or 0xff80 <= sp <= 0xfffe):
+        why = "stack left RAM"
+    elif 0x8000 <= pc < 0xff80:
+        why = "running RAM"
+    elif g.mem[pc] in ILLEGAL:
+        why = "illegal opcode"
+    else:
+        return None
+    return {"why": why, "pc": pc, "sp": sp, "frame": g.lf}
+
+
+def watchdog(out):
+    """In a worker: when PyBoy stops returning from tick() -- a crash that
+    stops frames, or a wedge -- write what the run has so far, with the
+    crash, and end the process; a wedge that is not a crash just ends it."""
+    import threading
+    import time
+
+    def watch():
+        last = None
+        while True:
+            time.sleep(10)
+            g = PROGRESS["game"]
+            if g is None:
+                continue
+            now = (id(g), g.progress)
+            if now == last:
+                crash = crashed(g)
+                if crash:
+                    part = {"entry": PROGRESS["entry"], "logic": g.lf, "ticks": g.progress,
+                            "events": [e for e in g.events if e[0] < (PROGRESS["frames"] or g.lf + 1)],
+                            "crash": dict(crash, hung=True)}
+                    Path(out).write_text(json.dumps(PROGRESS["done"] + [part]))
+                os._exit(0)
+            last = now
+    threading.Thread(target=watch, daemon=True).start()
+
+
 def match_lost(g):
     """The last match lost and nothing pending: the one result every story
     state allows. An entry point that returns from a match reads these, and
@@ -444,10 +506,12 @@ def chunk(rom, sym, save, state_file, si, li, frames, cap, skip):
         g.mem[g.sym["wStoryModeEntryPoint"][1]] = entry
         g.mem[g.sym["wStoryModeExitTriggerRequest"][1]] = 0xff
         match_lost(g)
+        PROGRESS.update(entry=entry, frames=frames)
         ticks = g.run(plan(si * 10000 + li * 100 + entry, frames), frames, 4 * frames)
         # the last frame is cut wherever the run stops
         events = [e for e in g.events if e[0] < frames]
-        result.append({"entry": entry, "events": events, "logic": g.lf, "ticks": ticks})
+        result.append({"entry": entry, "events": events, "logic": g.lf, "ticks": ticks, "crash": g.crash})
+        PROGRESS["done"] = list(result)
     g.close()
     return result
 
@@ -467,10 +531,11 @@ def session(rom, sym, save, state_file, seed, frames, cap, skip):
         inputs += [BUTTONS[button]] * 6 + [0] * 24
     inputs += [0] * 60
     inputs += plan(1000000 + seed, frames - len(inputs))
+    PROGRESS.update(entry=seed, frames=frames)
     ticks = g.run(inputs, frames, 4 * frames)
     events = [e for e in g.events if e[0] < frames]
     g.close()
-    return [{"entry": seed, "events": events, "logic": g.lf, "ticks": ticks}]
+    return [{"entry": seed, "events": events, "logic": g.lf, "ticks": ticks, "crash": g.crash}]
 
 
 # The Test map's nine NPCs (docs: STORYLOC_TEST) as (x, y) from
@@ -770,10 +835,11 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
     g.events = []
     index = TARGETS.index(name) if name in TARGETS else 1000 + int(name[7:])
     inputs += plan(2000000 + seed * 16 + index, frames - len(inputs))
+    PROGRESS.update(entry=seed, frames=frames)
     ticks = g.run(inputs, frames, 4 * frames, actions, armed)
     events = [e for e in g.events if e[0] < frames]
     g.close()
-    return [{"entry": seed, "events": events, "logic": g.lf, "ticks": ticks}]
+    return [{"entry": seed, "events": events, "logic": g.lf, "ticks": ticks, "crash": g.crash}]
 
 
 def compare(a, b, skip=6, run=12):
@@ -845,6 +911,8 @@ def main():
 
     if args.worker:
         kind, rom, sym, *rest = args.worker
+        if kind != "boot":
+            watchdog(rest[-1])
         if kind == "boot":
             print(boot(rom, sym, args.save, rest[0], menu=rest[1:] == ["menu"]))
         elif kind == "target":
@@ -918,14 +986,14 @@ def main():
             results[job] = res
     if args.units:
         Path(args.units).write_text(json.dumps(
-            [[list(unit), sorted({e[2] for x in res for e in x["events"] if e[1] == "run"})]
+            [[list(unit), sorted({e[2] for x in res if not x.get("crash") for e in x["events"] if e[1] == "run"})]
              for (key, unit), res in results.items() if key == "base" and not isinstance(res, str)]))
     if args.coverage:
         path = Path(args.coverage)
         old = json.loads(path.read_text()) if path.exists() else {"entered": [], "hooked": []}
         entered = set(old["entered"]) | {e[2] for (key, _), res in results.items()
                                          if key == "base" and not isinstance(res, str)
-                                         for x in res for e in x["events"] if e[1] == "run"}
+                                         for x in res if not x.get("crash") for e in x["events"] if e[1] == "run"}
         hooked = set(old["hooked"]) | (set(code_labels()) - set(json.loads(skip.read_text())) - EVENT_LABELS)
         path.write_text(json.dumps({"entered": sorted(entered), "hooked": sorted(hooked)}, indent=0))
     shutil.rmtree(tmp, True)
@@ -940,7 +1008,11 @@ def main():
         return (f"state {a} ({'doubles' if dbl else 'singles'} step {len(on)}), "
                 f"location {locs[b][0]:#04x} entry {entry}")
 
-    bad, unsure, events, shifted, tainted, dropouts = [], [], 0, 0, 0, 0
+    bad, unsure, crashes, events, shifted, tainted, dropouts, both = [], [], [], 0, 0, 0, 0, 0
+
+    def crash_text(c):
+        return "ran" if not c else (f"crashed ({c['why']}, PC ${c['pc']:04x}, SP ${c['sp']:04x}) "
+                                    f"at logic frame {c['frame']}")
     for unit in units:
             a, b = results[("base", unit)], results[("rom", unit)]
             if isinstance(a, str) or isinstance(b, str):
@@ -948,6 +1020,15 @@ def main():
                                            f"rom {b if isinstance(b, str) else 'ran'}"))
                 continue
             for x, y in zip(a, b):
+                if x.get("crash") or y.get("crash"):
+                    # the game itself went wrong: expected of both builds, a
+                    # finding (not a layout fault) when only one does
+                    if x.get("crash") and y.get("crash"):
+                        both += 1
+                    else:
+                        crashes.append((unit, x["entry"], f"base {crash_text(x.get('crash'))}, "
+                                                          f"rom {crash_text(y.get('crash'))}"))
+                    continue
                 i, s, d = compare(x["events"], y["events"])
                 events += len(x["events"])
                 shifted += s
@@ -961,8 +1042,9 @@ def main():
           f"{events} events compared, "
           f"{shifted} at a different logic frame, {dropouts} hook dropouts stepped over, "
           f"{tainted} entries cut at a known "
-          f"layout-dependent path, {len(unsure)} chunks inconclusive (PyBoy timed out)")
-    for label, rows in (("differs", bad), ("inconclusive", unsure)):
+          f"layout-dependent path, {both} entries where the game crashed in both builds, "
+          f"{len(crashes)} where it crashed in one, {len(unsure)} chunks inconclusive (PyBoy wedged)")
+    for label, rows in (("differs", bad), ("crashed", crashes), ("inconclusive", unsure)):
         for unit, entry, what in rows:
             print(f"    {label}: {where(unit, entry)}: {what}")
     return 1 if bad else 0
