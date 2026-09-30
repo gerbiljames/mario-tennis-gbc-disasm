@@ -145,6 +145,7 @@ def plan(seed, frames):
     return held
 
 
+WINLOSE_LOSE = 0xff
 PLUGINS = []
 # labels hooked for an event of their own (a list, talk or char record, an
 # interrupt), never logged as entered
@@ -254,6 +255,7 @@ class Game:
                 add(point, fn)
                 self.sync_points.add(point)
         self.hits, self.cap, self.spent, self.removed = {}, cap, [], []
+        self.refire, self.pc_fix = (None, 0), None
         self.irq_hits = {}
         self.hooks = hooks
         for point, fns in hooks.items():
@@ -266,6 +268,20 @@ class Game:
 
     def dispatch(self, ctx):
         point, fns = ctx
+        # A breakpoint hit on the cycle a frame ends is hit again and again
+        # without its instruction running: PyBoy's frame loop returns at once
+        # but still reports a single step, and puts the breakpoint back under
+        # PC each time round. Moved off it, PC ends the frame; run() puts it
+        # back and the instruction runs next frame. The divider and LY say no
+        # cycles have passed since the last call, which a loop calling the
+        # same routine with the same registers cannot match.
+        r, m = self.rf, self.mem
+        state = (point, r.SP, r.A, r.F, r.B, r.C, r.D, r.E, r.HL, m[0xff04], m[0xff05], m[0xff44], m[0xff41])
+        n = self.refire[1] + 1 if state == self.refire[0] else 1
+        self.refire = (state, n)
+        if n >= 3:
+            self.pc_fix, r.PC = r.PC, (r.PC + 1) & 0xffff
+            return
         if point in self.sync_points:
             for fn in fns:
                 fn()
@@ -367,6 +383,8 @@ class Game:
             ticks += 1
             while pending and self.lf >= pending[0][0]:
                 pending.pop(0)[1]()
+            if self.pc_fix is not None:
+                self.rf.PC, self.pc_fix, self.refire = self.pc_fix, None, (None, 0)
             for point in self.spent:
                 self.pb.hook_deregister(*point)
             self.removed += self.spent
@@ -397,6 +415,16 @@ def boot(rom, sym, save, out, menu=False):
     return loc
 
 
+def match_lost(g):
+    """The last match lost and nothing pending: the one result every story
+    state allows. An entry point that returns from a match reads these, and
+    the saved state's leftovers (a win at a stage the flags say is not won)
+    send some of them through a jump table past its end."""
+    for name, value in (("wMatchWinLoseFlag", WINLOSE_LOSE), ("wPointWinLoseFlag", WINLOSE_LOSE),
+                        ("wMatchExitRequest", 0), ("wPointOutcome", 0), ("wKeepMatchStatsFlag", 0)):
+        g.mem[g.sym[name][1]] = value
+
+
 def chunk(rom, sym, save, state_file, si, li, frames, cap, skip):
     g = Game(rom, sym, save, cap, set(json.loads(Path(skip).read_text())))
     story = Path(state_file).read_bytes()
@@ -415,6 +443,7 @@ def chunk(rom, sym, save, state_file, si, li, frames, cap, skip):
         g.mem[g.sym["wStoryModeCurrentLocation"][1]] = loc
         g.mem[g.sym["wStoryModeEntryPoint"][1]] = entry
         g.mem[g.sym["wStoryModeExitTriggerRequest"][1]] = 0xff
+        match_lost(g)
         ticks = g.run(plan(si * 10000 + li * 100 + entry, frames), frames, 4 * frames)
         # the last frame is cut wherever the run stops
         events = [e for e in g.events if e[0] < frames]
@@ -600,6 +629,7 @@ def handler_setup(g, sym_path, row, extra, actions):
         m[g.sym["wStoryModeCurrentLocation"][1]] = loc
         m[g.sym["wStoryModeEntryPoint"][1]] = entry
         m[g.sym["wStoryModeExitTriggerRequest"][1]] = 0xff
+        match_lost(g)
     return warp
 
 
