@@ -737,5 +737,24 @@ the stack -- are left out). What changed:
 Every *untouched* range of eight bytes or more in the table above stayed
 untouched through all of it, as did the minigame and exhibition runs this
 section once listed as unexercised. Free bytes now: 4,360 (2,704 untouched,
-1,598 cleared only, 58 holding data, all explained). Still not exercised:
-link play and the N64 transfer screens.
+1,598 cleared only, 58 holding data, all explained).
+
+**Re-checked for the flows added since, 2026-09-30.** The same poison and
+replay, over:
+* four link-play sessions, both games (`tools/linktest.py`);
+* the three N64 Transfer Pak record screens, with forged records;
+* both unlock codes;
+* all nine Mario minigames from the main menu;
+* every handler in the NpcScripts tables scripts install at run time;
+* the Test2 location's NPCs, entered by `$0f`.
+
+No free byte turned out to be a live variable. The only writes were:
+* the save engine's staging leftovers at `$c6e0-$c75f`, as above;
+* the menu-stack overflow at `$d83f` and the window-code bytes beside
+  `wShortTextBuffer`, as above;
+* two handler targets forced into a list their location had not installed,
+  which crashed (excluded);
+* the Test2 debug screens. Their glyph underrun (`docs/bugs.md`) sprays text
+  pixels over `$cb35-$cbff` in WRAM0 and `$db00-$db1f` in bank `$07`. Those
+  bytes are free as far as the retail game goes, but those debug screens
+  write them.

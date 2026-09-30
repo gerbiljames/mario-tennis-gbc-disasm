@@ -115,6 +115,18 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-30** — free RAM re-checked for the new flows, and the Test2
+  crash explained. The poison-and-replay check of the free-RAM inventory
+  now covers link play (both games), the N64 record screens, both unlock
+  codes, the minigames and the run-time NpcScripts tables. No free byte is
+  a live variable (`docs/ram_map.md`). The Test2 debug location's crash,
+  the last inconclusive event-test chunks, is the glyph underrun in
+  `docs/bugs.md` at full strength. The line-break code seeds the pen from
+  the row's glyph-tile column with a signed shift, so a row at column `$80`
+  or above draws below `wGlyphTileBuffer`. By column `$c8` the writes reach
+  the stack. The bug entry had blamed the row width and called the underrun
+  harmless; both corrected.
+
 * **2026-09-30** — the PyBoy wedges. The event test's inconclusive chunks
   (52 in the last full sweep) had two causes. Location `$13`, every state:
   the sweep enters the Wall Practice room "returning from a match" with the
@@ -129,11 +141,9 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
   `eventtest` moves PC off the address on the third identical re-fire
   (registers, DIV, TIMA, LY and STAT unchanged, so no cycles have passed)
   and puts it back after the frame. A full story sweep now leaves 7
-  inconclusive chunks, all at the Test2 location. The original build
-  crashes there in the debug "clear status" menu under random input: SP
-  ends up in cartridge RAM during a menu-window redraw. The padded build,
-  under different interrupt timing, does not. Probably an interrupt race in
-  the game; the cause is not established.
+  inconclusive chunks, all at the Test2 location: the game crashes there
+  itself. Its debug "clear status" screens run the glyph pen negative at a
+  line break, and the underrun reaches the stack (`docs/bugs.md`).
 
 * **2026-09-30** — two reachable routines left unrun. Steering now
   follows jump-table entries into the middle of routines (the lesson-result

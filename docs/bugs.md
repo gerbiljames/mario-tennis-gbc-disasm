@@ -950,12 +950,28 @@ distinguish that from an editing accident.
 
 `PlotGlyphRow` (`$05:$737a`) turns the glyph pen position into a byte offset
 with a signed shift (`sra d / rr e` three times) and adds it to
-`wGlyphTileBuffer` (bank `$07`, `$d300`), so a negative pen writes tiles
-*below* the buffer. The lesson menu's second page does it: five glyph tiles
-land at `$d2b0-$d2ff`, found by a RAM poison run (2026-09-11) as the only
-bank `$07` bytes below `$d300` that ever hold data. Nothing lives there, so
-the underrun is harmless in the retail layout; anything allocated in that
-range would be overwritten by text. `DrawInlineGlyph`'s `.eq01` path seeds
-the pen from a signed half of the row width, which is where a negative
-value can come from.
+`wGlyphTileBuffer` (bank `$07`, `$d300`), with no bounds check. A negative
+pen therefore writes glyph pixels *below* the buffer. The pen goes negative
+at a line break. `DrawInlineGlyph`'s `.eq01` path (code `$01`) seeds it
+from the glyph-tile column the new row starts at, `wTextRowColumn`:
 
+        ld e, $00
+        ld d, c          ; c = wTextRowColumn
+        sra d            ; pen = column * $80, sign-extended from bit 7
+        rr e
+
+A row that starts at column `$80` or above therefore gets a negative pen,
+`(column - $100) * $10` bytes below `$d300`: `$88` lands at `$cb80` in WRAM0,
+`$c0` at `$cf00`, the stack.
+
+* The lesson menu's second page starts just past `$80`, and five glyph tiles
+  land at `$d2b0-$d2ff`, found by a RAM poison run (2026-09-11). Nothing
+  lives there, so it is harmless in the retail layout, but anything
+  allocated in that range would be overwritten by text.
+* The Test2 debug location's "clear status" screens start their glyph rows
+  at column `$78` and give each row `$10` columns, carrying on from one
+  prompt or menu to the next. The row at `$88` already writes at `$cb80`.
+  By the row at `$c8` the writes land at `$cf80`, on the stack: return
+  addresses turn into glyph pixels and the game jumps into the stack (seen
+  as `PC=$cf7b`). Found through the event test, whose runs at that location
+  kept hanging (2026-09-30). It is only reachable from the debug warp menu.
