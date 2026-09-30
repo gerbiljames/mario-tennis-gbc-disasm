@@ -79,23 +79,24 @@ the header signature, with and without its bank-1 mirror, a story slot with
 and without its backup, block `$36`, N64 records present), and the practice
 drills and minigame rooms the drill list does not offer run through the same
 launcher with the id the story would pass (`drillid*` targets, `$09`-`$23`).
-With those, 366 remained. Two more tools then reached most of the two
-biggest groups: `tools/linktest.py` joins two games over an emulated link
-cable and plays link matches (97 routines entered), and `eventtest
---handlers` calls every story NPC and facing handler in its own location
-(34 of the 41 unentered ran; the other 7 are the Test2 location's, whose
-init script never finishes). 233 remain, each below a routine that did run:
+With those, 366 remained. More targets then reached most of the biggest
+groups: `tools/linktest.py` joins two games over an emulated link cable and
+plays link matches (97 routines entered); `eventtest --handlers` calls every
+story NPC, facing and tile-trigger handler in its own location (all but the
+Test2 location's, whose init script never finishes); and the menu targets
+forge N64 Transfer Pak records into save block `$0b` to open the three
+record screens, and enter the two button codes that unlock everything
+(`docs/save_format.md`). 191 remain, each below a routine that did run:
 
 | never entered | below | why |
 | --- | --- | --- |
-| 34 | the match-select screens | the N64 Transfer Pak records screens (ring shots, tournament data, trophies) and the unlock-everything cheat: an N64 |
-| 30 | `GetStoryLocationRecordPtr` | story tile triggers random walking did not step on, and the Test2 handlers |
+| 24 | `GetStoryLocationRecordPtr` | story scenes and helpers behind conditions a handler target does not set (the Water Sprite minigame's HUD, the awards ceremony speech, the doubles traveling-team sequence), and the Test2 handlers |
 | 22 | the Special Court's init | its scene sequences |
+| 13 | `ProcessMatchRewards` | reward paths for results the sessions did not reach, linked-play EXP among them |
 | 13 | `DispatchRankingBoardAnim` | ranking-board animation states |
 | 12 | `DispatchControlCode` | text control codes no string uses (`$10`-`$13` among them) |
 | 11 | `FetchShortText` | per-bank copies of the short-text fetch |
-| 8 | `ProcessMatchRewards` | reward paths for results the sessions did not reach |
-| 10 | link play | the link error screen, linked-play EXP awards, the four-court select menu and the remote player's cancel commands |
+| 7 | link play | the link error screen, the four-court select menu and the remote player's cancel commands |
 
 and a tail of small groups: the interrupt vectors' unhooked handlers, tiebreaks, EXP-screen stat arrows, trajectory
 table 4 of each shot type, ranking-board rows 9-10, drill briefings.

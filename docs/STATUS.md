@@ -1,4 +1,4 @@
-# Project status — 2026-09-29
+# Project status — 2026-09-30
 
 This is where the disassembly stands and what is still open. The dated
 working log that used to live here — every session's findings in the order
@@ -114,6 +114,17 @@ new branch that decides nothing, a ROM address written as a number, an
 unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
+
+* **2026-09-30** — the N64 screens and two unlock codes. `eventtest`'s
+  handler targets now cover tile triggers too, and five menu targets start
+  from the main menu: three forge N64 Transfer Pak records into save block
+  `$0b` and open the tournament, exhibition and ring-shot record screens
+  (33 routines no run had entered), and two enter button codes nothing had
+  documented, both of which call `ApplyUnlockEverythingCheat`: 29 presses
+  then A on the main menu, and Right ×12, Left ×34, Select+A on the
+  trophies screen (`docs/save_format.md`). A shifted build agrees with the
+  original over all 58 targets. Reachable routines no run has entered:
+  233 → 191.
 
 * **2026-09-29** — link play, emulated. PyBoy has no link cable (its serial
   port drops what is written and never finishes an external transfer), so
