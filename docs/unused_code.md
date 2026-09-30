@@ -82,24 +82,29 @@ launcher with the id the story would pass (`drillid*` targets, `$09`-`$23`).
 With those, 366 remained. More targets then reached most of the biggest
 groups: `tools/linktest.py` joins two games over an emulated link cable and
 plays link matches (97 routines entered); `eventtest --handlers` calls every
-story NPC, facing and tile-trigger handler in its own location (all but the
-Test2 location's, whose init script never finishes); and the menu targets
-forge N64 Transfer Pak records into save block `$0b` to open the three
-record screens, and enter the two button codes that unlock everything
-(`docs/save_format.md`). 191 remain, each below a routine that did run:
+story NPC, facing and tile-trigger handler in its own location, including
+the NpcScripts tables scripts install at run time, and enters a location
+whose init script stays only for one entry point (Test2's `$0f`) by that
+one; and the menu targets forge N64 Transfer Pak records into save block
+`$0b` to open the three record screens, and enter the two button codes that
+unlock everything (`docs/save_format.md`). That left 173.
 
-| never entered | below | why |
-| --- | --- | --- |
-| 24 | `GetStoryLocationRecordPtr` | story scenes and helpers behind conditions a handler target does not set (the Water Sprite minigame's HUD, the awards ceremony speech, the doubles traveling-team sequence), and the Test2 handlers |
-| 22 | the Special Court's init | its scene sequences |
-| 13 | `ProcessMatchRewards` | reward paths for results the sessions did not reach, linked-play EXP among them |
-| 13 | `DispatchRankingBoardAnim` | ranking-board animation states |
-| 12 | `DispatchControlCode` | text control codes no string uses (`$10`-`$13` among them) |
-| 11 | `FetchShortText` | per-bank copies of the short-text fetch |
-| 7 | link play | the link error screen, the four-court select menu and the remote player's cancel commands |
+`tools/steer.py` then ran 141 of those by steering rather than playing.
+For each, the call graph gives a chain down from a routine some session
+entered; the session is replayed (`eventtest.py --units` records which
+session entered what) with hooks that force each conditional branch,
+`rst Rst00` index and table jump on the chain toward the next routine, and
+nothing else. So each ran with the game's own registers and RAM, one
+overridden decision at a time -- which shows it can run, not that play
+gets there. None of the steered runs entered an `Unused` routine. 32
+remain:
 
-and a tail of small groups: the interrupt vectors' unhooked handlers, tiebreaks, EXP-screen stat arrows, trajectory
-table 4 of each shot type, ranking-board rows 9-10, drill briefings.
+| never entered | why |
+| --- | --- |
+| 9 | link play: the four-court select menu, the rules rows, the remote player's cancel commands and frame counter -- reached only with a partner, which a replayed session does not have |
+| 16 | story scenes behind a long chain of script conditions: the Special Court's screen sequences, the coach retry prompts and challenger result scenes, the Senior Court and traveling-team victory reloads, the ending's story result screen |
+| 5 | minigame and drill judges (net game cases, the tiebreak counter, a drill outcome message, the target-grid clear) |
+| 2 | interrupt-driven: `ApplyWhiteFade` (see bugs.md) and `TickSecondaryTimer` |
 
 ## The patterns
 

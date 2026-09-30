@@ -115,6 +115,19 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-30** — steering the last routines. `tools/steer.py` runs a
+  reachable routine no session entered by replaying a session that entered
+  a routine above it, forcing each branch condition, jump-table index and
+  table jump on the way down and nothing else; `eventtest --units` records
+  which session entered what, and `eventtest` takes plugins for the hooks.
+  The handler targets also cover the NpcScripts tables scripts install,
+  and enter Test2 by the one entry point its init script stays for. Of the
+  173 routines play still missed, 141 ran under steering (none of them
+  led into an `Unused` routine); 32 remain, mostly link-play menus that
+  need a partner and long story-scene chains (`docs/unused_code.md`). A
+  full sweep, 36 story states, 18 menu sessions and 273 targets, compared
+  a shifted build clean over 11.8 million events.
+
 * **2026-09-30** — the N64 screens and two unlock codes. `eventtest`'s
   handler targets now cover tile triggers too, and five menu targets start
   from the main menu: three forge N64 Transfer Pak records into save block
