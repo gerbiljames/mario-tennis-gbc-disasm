@@ -49,6 +49,7 @@ def Text_30_199 equ $00c7
 def Text_30_200 equ $00c8
 def Text_30_201 equ $00c9
 def Text_30_202 equ $00ca
+def Text_30_204 equ $00cc
 def Text_30_206 equ $00ce
 def Text_30_207 equ $00cf
 def Text_30_210 equ $00d2
@@ -65,6 +66,8 @@ def Text_30_223 equ $00df
 def Text_30_224 equ $00e0
 def Text_30_226 equ $00e2
 def Text_30_228 equ $00e4
+def Text_30_229 equ $00e5
+def Text_30_237 equ $00ed
 def Text_30_296 equ $0128
 def Text_30_297 equ $0129
 def Text_30_298 equ $012a
@@ -154,6 +157,7 @@ def Text_30_544 equ $0220
 def Text_30_548 equ $0224
 def Text_30_554 equ $022a
 def Text_31_3 equ $0403
+def Text_31_4 equ $0404
 def Text_31_6 equ $0406
 def Text_31_7 equ $0407
 def Text_31_10 equ $040a
@@ -214,6 +218,8 @@ def Text_31_214 equ $04d6
 def Text_31_215 equ $04d7
 def Text_31_216 equ $04d8
 def Text_31_217 equ $04d9
+def Text_31_218 equ $04da
+def Text_31_219 equ $04db
 def Text_31_220 equ $04dc
 def Text_31_221 equ $04dd
 def Text_31_222 equ $04de
@@ -245,6 +251,7 @@ def Text_31_255 equ $04ff
 def Text_31_256 equ $0500
 def Text_31_257 equ $0501
 def Text_31_258 equ $0502
+def Text_31_261 equ $0505
 def Text_31_263 equ $0507
 def Text_31_268 equ $050c
 def Text_31_270 equ $050e
@@ -264,6 +271,8 @@ def Text_31_310 equ $0536
 def Text_31_313 equ $0539
 def Text_31_324 equ $0544
 def Text_31_328 equ $0548
+def Text_31_332 equ $054c
+def Text_31_333 equ $054d
 def Text_31_334 equ $054e
 def Text_32_28 equ $081c
 def Text_32_34 equ $0822
@@ -639,6 +648,7 @@ def Text_34_217 equ $10d9
 def Text_34_218 equ $10da
 def Text_34_228 equ $10e4
 def Text_34_229 equ $10e5
+def Text_34_230 equ $10e6
 def Text_34_232 equ $10e8
 def Text_35_48 equ $1430
 def Text_35_55 equ $1437
@@ -828,6 +838,7 @@ def Text_36_692 equ $1ab4
 def Text_36_693 equ $1ab5
 def Text_36_694 equ $1ab6
 def Text_36_695 equ $1ab7
+def Text_36_696 equ $1ab8
 def Text_36_697 equ $1ab9
 def Text_36_698 equ $1aba
 def Text_36_699 equ $1abb
@@ -1145,6 +1156,8 @@ def Text_1f_169 equ $24a9
 def Text_1f_170 equ $24aa
 def Text_1f_171 equ $24ab
 def Text_1f_172 equ $24ac
+def Text_1f_174 equ $24ae
+def Text_1f_178 equ $24b2
 def Text_1f_182 equ $24b6
 def Text_1f_183 equ $24b7
 def Text_1f_184 equ $24b8
@@ -1260,10 +1273,15 @@ def Text_5e_125 equ $307d
 def Text_5e_128 equ $3080
 def Text_5e_136 equ $3088
 def Text_5e_142 equ $308e
+def Text_5e_143 equ $308f
+def Text_5e_147 equ $3093
 def Text_5e_151 equ $3097
 def Text_5e_152 equ $3098
 def Text_5e_153 equ $3099
 def Text_5e_154 equ $309a
+def Text_5e_155 equ $309b
+def Text_5e_159 equ $309f
+def Text_5e_163 equ $30a3
 def Text_5e_167 equ $30a7
 def Text_5e_168 equ $30a8
 def Text_5e_169 equ $30a9

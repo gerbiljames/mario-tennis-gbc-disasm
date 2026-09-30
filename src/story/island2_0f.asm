@@ -24,7 +24,7 @@ TournamentNpc03_0f:
 	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_1 ; $6f57
 	ret ; $6f5c
 .altLine:
-	ld hl, $24ae ; $6f5d
+	ld hl, Text_1f_174 ; $6f5d
 	ld a, [wMapSceneStage] ; $6f60
 	add l ; $6f63
 	ld l, a ; $6f64
@@ -35,7 +35,7 @@ TournamentNpc03_0f:
 	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_1 ; $6f6b
 	ret ; $6f70
 TournamentNpc04_0f:
-	ld hl, $24b2 ; $6f71
+	ld hl, Text_1f_178 ; $6f71
 	ld a, [wMapSceneStage] ; $6f74
 	add l ; $6f77
 	ld l, a ; $6f78

@@ -176,7 +176,7 @@ RenderShoesDescText:
 	ld hl, $00f7 ; $599e
 	jp RenderRacketDescText.step ; $59a1
 RenderRacketDescText:
-	ld hl, $00ed ; $59a4
+	ld hl, Text_30_237 ; $59a4
 .step:
 	ld a, c ; $59a7
 	add l ; $59a8
@@ -194,7 +194,7 @@ RenderShoesNameText:
 	ld hl, $00f4 ; $59b8
 	jp RenderRacketNameText.step ; $59bb
 RenderRacketNameText:
-	ld hl, $00e5 ; $59be
+	ld hl, Text_30_229 ; $59be
 .step:
 	ld a, c ; $59c1
 	add l ; $59c2

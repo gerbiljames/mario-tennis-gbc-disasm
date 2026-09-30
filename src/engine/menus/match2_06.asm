@@ -372,7 +372,7 @@ ScoreboardCaption_ScoreTarget:
 	ld a, [hl+] ; $47b7
 	ld b, [hl] ; $47b8
 	ld c, a ; $47b9
-	ld hl, $0502 ; $47ba
+	ld hl, Text_31_258 ; $47ba
 	add hl, bc ; $47bd
 	ld e, l ; $47be
 	ld d, h ; $47bf
@@ -384,7 +384,7 @@ ScoreboardCaption_ScoreTarget:
 	ld d, h ; $47cb
 	ld hl, Text_30_349 ; $47cc
 	call DrawMenuTextLine ; $47cf
-	ld hl, $0505 ; $47d2
+	ld hl, Text_31_261 ; $47d2
 	add hl, bc ; $47d5
 	ld e, l ; $47d6
 	ld d, h ; $47d7
@@ -396,19 +396,19 @@ ScoreboardCaption_ScoreHigh:
 	ld a, [hl+] ; $47e2
 	ld b, [hl] ; $47e3
 	ld c, a ; $47e4
-	ld hl, $0502 ; $47e5
+	ld hl, Text_31_258 ; $47e5
 	add hl, bc ; $47e8
 	ld e, l ; $47e9
 	ld d, h ; $47ea
 	ld hl, Text_30_348 ; $47eb
 	call DrawMenuTextLine ; $47ee
-	ld hl, $0404 ; $47f1
+	ld hl, Text_31_4 ; $47f1
 	add hl, bc ; $47f4
 	ld e, l ; $47f5
 	ld d, h ; $47f6
 	ld hl, Text_30_350 ; $47f7
 	call DrawMenuTextLine ; $47fa
-	ld hl, $0505 ; $47fd
+	ld hl, Text_31_261 ; $47fd
 	add hl, bc ; $4800
 	ld e, l ; $4801
 	ld d, h ; $4802

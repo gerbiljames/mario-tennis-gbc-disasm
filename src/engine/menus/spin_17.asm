@@ -289,7 +289,7 @@ DrillBriefing_SpinServe:
 	ld a, $01 ; $59f3
 	ld hl, CycleDiagramTargetPalette ; $59f5
 	call RegisterFrameTask ; $59f8
-	ld hl, $1ab8 ; $59fb
+	ld hl, Text_36_696 ; $59fb
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $59fe
 	and a ; $5a01
 	jr z, .drawBriefingCaption ; $5a02

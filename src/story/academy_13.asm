@@ -178,10 +178,10 @@ RunAcademyQuestionsMenu:
 	ld a, e ; $58d1
 	ld [hl+], a ; $58d2
 	ld [hl], d ; $58d3
-	ld hl, $054c ; $58d4
+	ld hl, Text_31_332 ; $58d4
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $58d7
 	jr z, .runMenu ; $58da
-	ld hl, $054d ; $58dc
+	ld hl, Text_31_333 ; $58dc
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $58df
 	jr z, .runMenu ; $58e2
 	ld hl, Text_31_334 ; $58e4

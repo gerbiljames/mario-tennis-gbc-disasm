@@ -229,7 +229,7 @@ MarioWorldNpc12Mario_0e:
 	script_speak ACTOR_MARIO_WORLD_MARIO ; $5394
 	ret ; $5399
 MarioWorldNpc11_0e:
-	ld hl, $308f ; $539a
+	ld hl, Text_5e_143 ; $539a
 	ld a, [wMapSceneStage] ; $539d
 	add l ; $53a0
 	ld l, a ; $53a1
@@ -240,7 +240,7 @@ MarioWorldNpc11_0e:
 	script_speak ACTOR_MARIO_WORLD_WALK_77_05 ; $53a8
 	ret ; $53ad
 MarioWorldNpc0BLuigi_0e:
-	ld hl, $3093 ; $53ae
+	ld hl, Text_5e_147 ; $53ae
 	ld a, [wMapSceneStage] ; $53b1
 	add l ; $53b4
 	ld l, a ; $53b5
@@ -271,7 +271,7 @@ MarioWorldNpc0D_0e:
 	script_speak ACTOR_MARIO_WORLD_BOO ; $53f4
 	ret ; $53f9
 MarioWorldNpc0FBowser_0e:
-	ld hl, $309b ; $53fa
+	ld hl, Text_5e_155 ; $53fa
 	ld a, [wMapSceneStage] ; $53fd
 	add l ; $5400
 	ld l, a ; $5401
@@ -282,7 +282,7 @@ MarioWorldNpc0FBowser_0e:
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $5408
 	ret ; $540d
 MarioWorldNpc10Wario_0e:
-	ld hl, $309f ; $540e
+	ld hl, Text_5e_159 ; $540e
 	ld a, [wMapSceneStage] ; $5411
 	add l ; $5414
 	ld l, a ; $5415
@@ -293,7 +293,7 @@ MarioWorldNpc10Wario_0e:
 	script_speak ACTOR_MARIO_WORLD_WARIO ; $541c
 	ret ; $5421
 MarioWorldNpc0EWaluigi_0e:
-	ld hl, $30a3 ; $5422
+	ld hl, Text_5e_163 ; $5422
 	ld a, [wMapSceneStage] ; $5425
 	add l ; $5428
 	ld l, a ; $5429

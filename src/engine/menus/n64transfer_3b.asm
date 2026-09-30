@@ -85,7 +85,7 @@ DrawEraseSavedDataCaption:
 	farcall RenderTextToBuffer64 ; $7193
 	jr .restore ; $7196
 .ge03:
-	ld hl, $00cc ; $7198
+	ld hl, Text_30_204 ; $7198
 	sub $03 ; $719b
 	add l ; $719d
 	ld l, a ; $719e

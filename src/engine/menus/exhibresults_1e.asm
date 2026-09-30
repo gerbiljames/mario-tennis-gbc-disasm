@@ -307,10 +307,10 @@ DrawClassNameLabel:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $472d
 	jr nz, .senior ; $4730
 .junior:
-	ld hl, $04da ; $4732
+	ld hl, Text_31_218 ; $4732
 	jr .draw ; $4735
 .senior:
-	ld hl, $04db ; $4737
+	ld hl, Text_31_219 ; $4737
 	jr .draw ; $473a
 .varsity:
 	ld hl, Text_31_220 ; $473c

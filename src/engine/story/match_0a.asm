@@ -418,7 +418,7 @@ RunClearStatusSetupMenu:
 	jp z, .formatMenu ; $4cb9
 	ld a, [wClearStatusWindowId] ; $4cbc
 	farcall DrawTextWindowFrame ; $4cbf
-	ld hl, $10e6 ; $4cc2
+	ld hl, Text_34_230 ; $4cc2
 	ld a, [wClearStatusFormat] ; $4cc5
 	add l ; $4cc8
 	ld l, a ; $4cc9
