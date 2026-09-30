@@ -17,7 +17,9 @@ first (exhibition, minigames, the match-select and story-slot screens, the
 dictionary, link play), for the modes the story never enters; `--states
 none` runs only those. `--targets N` plays N sessions from each targeted
 start (the intro, the debug menu, each Test-map NPC, the drills, damaged
-saves), and `--handlers N` N from each story NPC and facing handler: the
+saves, the two unlock-everything button codes, the N64 Transfer Pak record
+screens with forged records), and `--handlers N` N from each story NPC, facing and tile-trigger
+handler: the
 target warps to the handler's location and, once it has settled, hands the
 interaction loop that handler's table, facing, flag condition and id, so
 handlers random walking would not find are called. `--coverage FILE` accumulates which routines the
@@ -69,7 +71,7 @@ NOT_HOOKED = {"OAMDMARoutine"}
 NOT_HOOKED |= {"VBlankInterrupt", "LCDStatInterrupt", "TimerInterrupt", "SerialInterrupt",
                "JoypadInterrupt"}
 CODE_MACROS = {"farcall", "lb", "ld_slot", "ld_hl_indexed", "ld_de_indexed", "ld_bc_indexed"}
-BUTTONS = {"a": 0x01, "b": 0x02, "start": 0x08, "right": 0x10, "left": 0x20, "up": 0x40, "down": 0x80}
+BUTTONS = {"a": 0x01, "b": 0x02, "select": 0x04, "start": 0x08, "right": 0x10, "left": 0x20, "up": 0x40, "down": 0x80}
 # (label, offset) of the points the sync hooks, taken from the base build:
 # after ReadJoypad stores the pad, where AdvanceFrame, WaitVBlank and
 # EnableLCD clear hVBlankOccurred, and after the VBlank handler's
@@ -442,15 +444,23 @@ SAVE_DAMAGE = ["header", "header-mirror", "slot", "slot-backup", "block36", "n64
 # The drill list offers MINIGAME_* ids $00-$08; the story's lessons and
 # minigame rooms pass the rest to the same launcher.
 DRILL_IDS = range(0x09, 0x24)
+# From the main menu: the two button codes that unlock everything (29
+# presses then A on the main menu; Right 12 times, Left 34 times, then A
+# with Select on a story slot's trophies screen), and the Saved Data screens' three N64
+# Transfer Pak record screens, with random records forged into block $0b.
+CHEAT_CODE = ["down", "down", "right", "right", "up", "up", "left", "select", "select", "select",
+              "right", "down", "down", "left", "left", "up", "up", "right", "select", "left",
+              "down", "down", "right", "right", "up", "up", "left", "select", "select"]
+MENU_TARGETS = ["menu-cheat", "trophies-cheat", "n64-tnmt", "n64-exhib", "n64-ring"]
 TARGETS = (["attract", "debug"] + [f"npc{k}" for k in range(len(TEST_MAP_NPCS))]
            + [f"drill{k}" for k in range(9)] + [f"save-{d}" for d in SAVE_DAMAGE]
-           + [f"drillid{i:02x}" for i in DRILL_IDS])
+           + [f"drillid{i:02x}" for i in DRILL_IDS] + MENU_TARGETS)
 
 
 def handler_rows():
-    """Every map_script row of a story location's NpcScripts and
-    FacingScripts tables whose handler is code: (location index, entry,
-    kind, table, id, facing mask, flag condition, handler)."""
+    """Every map_script row of a story location's NpcScripts,
+    FacingScripts and TileTriggers tables whose handler is code: (location
+    index, entry, kind, table, id, facing mask, flag condition, handler)."""
     from runtime_audit import targets
     scene = (ROOT / "src" / "engine" / "story" / "scene_0a.asm").read_text()
     trees = re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)
@@ -460,7 +470,7 @@ def handler_rows():
     for i, tree in enumerate(trees):
         m = re.search(rf"^{tree}:\n(?:\t;[^\n]*\n)?((?:\tdw \w+ ; slot \d \w+\n)+)", text, re.M)
         slots = {role: t for t, role in re.findall(r"\tdw (\w+) ; slot \d (\w+)", m.group(1))} if m else {}
-        for kind, role in (("npc", "NpcScripts"), ("facing", "FacingScripts")):
+        for kind, role in (("npc", "NpcScripts"), ("facing", "FacingScripts"), ("tile", "TileTriggers")):
             table = slots.get(role)
             m = table and re.search(rf"^{table}:\n((?:\t[^\n]*\n)+?)(?=^\S)", text, re.M)
             if not m:
@@ -505,7 +515,8 @@ def after_call(sym_path, routine, callee):
 def handler_setup(g, sym_path, row, extra, actions):
     """Warp to the row's location and, once its scripts have run, raise the
     interact request with the row's table in place, its facing and flag
-    condition met, and the row's id handed to the NPC or facing lookup."""
+    condition met, and the row's id handed to the NPC, facing or tile
+    lookup (the ones before it find nothing)."""
     import actorslots
     loc, entry, kind, table, ident, mask, cond, handler = row
     slot = actorslots.Source().slot_of
@@ -516,20 +527,17 @@ def handler_setup(g, sym_path, row, extra, actions):
     if mvalue is None:
         mvalue = eval(re.sub(r"FACEMASK_\w+", lambda m: str(masks[m.group(0)]), mask).replace("$", "0x"))
     armed = []
+    order = ["npc", "facing", "tile"]
 
-    def npc_answer():
-        # an NPC row is found by FindActorFacingPlayer; a facing row needs it
-        # to find no one, so the loop goes on to the facing lookup
-        if armed and armed[0] == "npc":
-            g.rf.A = value if kind == "npc" else 0
-            armed[0] = "facing" if kind == "facing" else "done"
-
-    def facing_answer():
-        if armed and armed[0] == "facing":
-            g.rf.A = value
-            armed[0] = "done"
-    extra[after_call(sym_path, "RunStoryLocation", "FindActorFacingPlayer")] = npc_answer
-    extra[after_call(sym_path, "RunStoryLocation", "GetFacingTileInteractionId")] = facing_answer
+    def answer(step):
+        def fn():
+            if armed and armed[0] == step:
+                g.rf.A = value if kind == step else 0
+                armed[0] = "done" if kind == step else order[order.index(step) + 1]
+        return fn
+    for step, callee in zip(order, ("FindActorFacingPlayer", "GetFacingTileInteractionId",
+                                    "GetTileTriggerAtPlayer")):
+        extra[after_call(sym_path, "RunStoryLocation", callee)] = answer(step)
 
     def request():
         if armed and armed[0] == "npc" and not armed[1:]:
@@ -541,7 +549,8 @@ def handler_setup(g, sym_path, row, extra, actions):
 
     def fire():
         m = g.mem
-        ptr = {"npc": "wMapNpcScriptsPtr", "facing": "wMapFacingScriptsPtr"}[kind]
+        ptr = {"npc": "wMapNpcScriptsPtr", "facing": "wMapFacingScriptsPtr",
+               "tile": "wMapTileTriggersPtr"}[kind]
         a = g.sym[table][1]
         m[g.sym[ptr][1]], m[g.sym[ptr][1] + 1] = a & 0xff, a >> 8
         facing = next(i for i, bit in enumerate((0x10, 0x80, 0x20, 0x40)) if mvalue & bit)
@@ -590,12 +599,29 @@ def damaged_save(save, kind, out):
     return out
 
 
+def forge_n64_records(g, rng):
+    """Fill save block $0b in the running game's cartridge RAM with random N64
+    records, present (first two bytes not both zero), checksums fixed."""
+    import savetool as T
+    mem = g.pb.memory
+    sav = bytearray(mem[b, 0xa000 + i] for b in range(4) for i in range(0x2000))
+    old = bytes(sav)
+    ent = T.entry(sav, 0x0b)
+    sav[ent["data"]:ent["data"] + ent["len"]] = bytes(rng.randrange(256) for _ in range(ent["len"]))
+    sav[ent["data"]] = rng.randrange(1, 256)
+    T.fix(sav)
+    for i, (a, b) in enumerate(zip(old, sav)):
+        if a != b:
+            mem[i // 0x2000, 0xa000 + i % 0x2000] = b
+
+
 def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
     """Random play from a start the main menu and the story locations do not
     give: the intro and attract loop from power-on, the debug menu (armed
     through hDebugStepMode in the dorm), each Test-map NPC's flow (match
-    and drill lists, minigame select, epilogue, credits), and each of the
-    nine drills picked from its list."""
+    and drill lists, minigame select, epilogue, credits), each of the
+    nine drills picked from its list, damaged saves, every drill id, the
+    two unlock codes and the N64 record screens."""
     extra, armed = {}, False
     if name.startswith("save-"):
         save = damaged_save(save, name[5:], Path(tempfile.mkdtemp(dir=os.environ.get("EVENTTEST_TMP"))) / "damaged.sav")
@@ -624,6 +650,27 @@ def target(rom, sym, save, state_file, name, seed, frames, cap, skip):
         # from power-on, so the boot code (the save check among it) runs
         armed = True
         inputs = [0] * min(frames, 6000)
+    elif name in MENU_TARGETS:
+        # state_file is the main-menu state
+        g.pb.load_state(io.BytesIO(Path(state_file).read_bytes()))
+        if name.startswith("n64-"):
+            forge_n64_records(g, random.Random(seed))
+        if name == "menu-cheat":
+            moves = CHEAT_CODE + ["a"]
+        elif name == "trophies-cheat":
+            # Saved Data (main-menu cell 6), story slot 0, its transfer
+            # items' third (a 2x2 grid), the trophies
+            moves = ["down", "down", "a", None, "a", None, "down", "a", None, None] + \
+                ["right"] * 0x0c + ["left"] * 0x22 + ["a+select"]
+        else:
+            # Saved Data, the N64 records (picker cell 4), one of its three
+            moves = ["down", "down", "a", None, "down", "right", "a", None] + \
+                {"n64-tnmt": [], "n64-exhib": ["right"], "n64-ring": ["right", "right"]}[name] + ["a"]
+        inputs = [0] * 30
+        for button in moves:
+            pad = 0 if button is None else sum(BUTTONS[b] for b in button.split("+"))
+            inputs += [0] * 60 if button is None else [pad] * 6 + [0] * 24
+        inputs += [0] * 120
     else:
         g.pb.load_state(io.BytesIO(Path(state_file).read_bytes()))
         inputs = [0] * 90
@@ -721,8 +768,8 @@ def main():
                     help="also play this many seeded sessions from each targeted start "
                          "(intro, debug menu, each Test-map NPC)")
     ap.add_argument("--handlers", type=int, default=0,
-                    help="also play this many seeded sessions from each story NPC and facing "
-                         "handler, called in its own location")
+                    help="also play this many seeded sessions from each story NPC, facing and "
+                         "tile-trigger handler, called in its own location")
     ap.add_argument("--coverage", help="merge the routines the base build entered into this JSON "
                                        "file (read by tools/coverage.py)")
     ap.add_argument("--worker", nargs="+", help=argparse.SUPPRESS)
@@ -759,7 +806,8 @@ def main():
           "--free-frames", str(args.free_frames), "--cap", str(args.cap), "--worker"]
     picked = ([] if args.states == "none" else
               [int(x) for x in args.states.split(",")] if args.states else range(len(states())))
-    boots = [("story", [])] * bool(picked or args.targets or args.handlers) + [("menu", ["menu"])] * bool(args.free)
+    boots = [("story", [])] * bool(picked or args.targets or args.handlers) + \
+            [("menu", ["menu"])] * bool(args.free or args.targets)
     for key, (rom, sym) in builds.items():
         for kind, extra in boots:
             r = subprocess.run(me + ["boot", str(rom), str(sym), str(tmp / f"{key}.{kind}")] + extra,
@@ -785,7 +833,8 @@ def main():
             cmd, limit = ["chunk", str(rom), str(sym), str(tmp / f"{key}.story"),
                           str(a), str(b), str(skip), str(out)], args.timeout
         else:
-            state = tmp / f"{key}.{'menu' if kind == 'free' else 'story'}"
+            menu = kind == "free" or a in MENU_TARGETS
+            state = tmp / f"{key}.{'menu' if menu else 'story'}"
             cmd = [kind, str(rom), str(sym), str(state)] + ([a] if kind == "target" else []) + \
                   [str(a if kind == "free" else b), str(skip), str(out)]
             limit = args.timeout * max(1, args.free_frames // args.frames)

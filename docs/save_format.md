@@ -58,6 +58,22 @@ ROM boots clean and the Mario cast and all mini-games are selectable.
 `tools/savetool.py unlock` does exactly this. Per-story-slot progress is
 separate (the `wGameFlags` block at slot +0x1c0) and is left untouched.
 
+Two button codes call `ApplyUnlockEverythingCheat` (then
+`SetAllUnlockablesInSaveBlock`); `eventtest` targets `menu-cheat` and
+`trophies-cheat` enter them and both were seen to run it:
+
+* **Main menu:** ↓ ↓ → → ↑ ↑ ← Select Select Select → ↓ ↓ ← ← ↑ ↑ →
+  Select ← ↓ ↓ → → ↑ ↑ ← Select Select, then A. `UpdateCheatCodeEntry`
+  (`$39:$6f67`) buffers every non-A press in `wDecompBuffer` (32 entries,
+  cleared by `ResetCheatCodeBuffer` when the menu opens) and on A compares
+  the buffer with `CheatCodeEntryTable` (`$39:$6fc6`): 29 presses and three
+  empty entries. `wCheatUnlockTriggered` stops it matching twice.
+* **Trophies screen** (Saved Data → a story slot → the third item):
+  `RunTrophiesScreen` zeroes two bytes at WRAM3 `$d900`, counts Right
+  presses in the first and Left in the second, and on A with Select held
+  `CheckTrophiesCheatCode` unlocks when they are `$0c` and `$22` -- Right 12
+  times, Left 34 times, then Select+A.
+
 The whole header region `$a000-$a7ff` is mirrored verbatim into SRAM
 bank 1 by `MirrorSaveHeaderToBank1` after every write. On boot
 `ValidateSaveRam` checks signature + master checksum; on failure it
@@ -174,7 +190,7 @@ WRAM bank `$07` agreed, keeps the two apart. The rest stay numeric.
 | WRAM7 `$d500` `wSaveBlockBuffer` | `$200`-byte record staging: N64 block, slot secondary blocks, debug save editor (block from `Unused_03_GetCurrentSlotBlockId` table 03:52af = `00 02 04 0b`) |
 | WRAM7 `$de00` `wMinigameRecordValue` | 16-bit minigame-record value in/out parameter |
 | WRAM6 `$d400` | N64 block staging in bank $1b char select |
-| WRAM3 `$d900` | N64 block (trophies screen) and star victory grid staging in bank $3b |
+| WRAM3 `$d900` | N64 block and star victory grid staging in bank $3b; on the trophies screen, the unlock code's two press counters |
 | WRAM2 `$d000` | N64 block presence check (`CheckN64DataPresent`) |
 
 ## Story slot block layout (image of WRAM `$c800-$caff`)
