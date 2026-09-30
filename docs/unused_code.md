@@ -89,22 +89,46 @@ one; and the menu targets forge N64 Transfer Pak records into save block
 `$0b` to open the three record screens, and enter the two button codes that
 unlock everything (`docs/save_format.md`). That left 173.
 
-`tools/steer.py` then ran 141 of those by steering rather than playing.
-For each, the call graph gives a chain down from a routine some session
-entered; the session is replayed (`eventtest.py --units` records which
-session entered what) with hooks that force each conditional branch,
-`rst Rst00` index and table jump on the chain toward the next routine, and
-nothing else. So each ran with the game's own registers and RAM, one
-overridden decision at a time -- which shows it can run, not that play
-gets there. None of the steered runs entered an `Unused` routine. 32
-remain:
+More play then reached 15 of those. Link play with every button equally
+likely hit the rules rows and the cursor and cancel commands. A save with
+the courts locked (`build/locked.sav` is the maxed save with its global flag
+array cleared) opens the four-court select menu, which only appears when
+neither player has a court unlocked. And `linktest --unplug-after N` pulls
+the cable during a session, which reaches the link error screen as a player
+would. That left 158 routines no play reached.
 
-| never entered | why |
-| --- | --- |
-| 9 | link play: the four-court select menu, the rules rows, the remote player's cancel commands and frame counter -- reached only with a partner, which a replayed session does not have |
-| 16 | story scenes behind a long chain of script conditions: the Special Court's screen sequences, the coach retry prompts and challenger result scenes, the Senior Court and traveling-team victory reloads, the ending's story result screen |
-| 5 | minigame and drill judges (net game cases, the tiebreak counter, a drill outcome message, the target-grid clear) |
-| 2 | interrupt-driven: `ApplyWhiteFade` (see bugs.md) and `TickSecondaryTimer` |
+`tools/steer.py` ran all but three of them by steering rather than playing.
+For each routine, the call graph gives a chain down from a routine some
+session entered. The chain is taken at segment level, so a jump-table entry
+that lands on an interior label (the lesson-result dispatch jumps into the
+middle of a dozen scene routines) is a step of its own. The session is then
+replayed (`eventtest.py --units` records which session entered what) with
+hooks that force each conditional branch, `rst Rst00` index and table jump
+on the chain, and nothing else:
+
+* a branch goes whichever way reaches the next routine sooner, so a loop
+  exits instead of going round again;
+* a story script's chain starts at the location's own script, replayed as
+  that location's story chunk or a handler target that warps there;
+* a mode hook is steered at `CallModeHook`, which reads the hook table from
+  RAM, while each minigame (`minigame0`-`8` targets) or drill runs;
+* link routines are steered in `tools/linktest.py --steer`, since only a
+  session with a partner gets near them.
+
+So each routine ran with the game's own registers and RAM, with one decision
+at a time overridden. That shows it can run, not that play gets there. None
+of the steered runs entered an `Unused` routine. Three remain:
+
+* `ApplyWhiteFade` and `TickSecondaryTimer` wait on flags that nothing ever
+  sets. `ApplyWhiteFade` needs bit 7 of `hFadeState`, which only an
+  unreferenced routine sets (bugs.md). `TickSecondaryTimer` runs from
+  `UpdateGameTimer` when `wSecondaryTimerMode` is 1, and the only store to
+  that variable is `Unused_00_TickSecondaryTimerCountdown` writing `$ff`.
+  They are unreachable by data rather than by code, so the call graph
+  cannot see it.
+* `SeniorCourtReloadIntoVictoryScene`: the Senior Court's init script jumps
+  there for entry point `$0e`, returning from a match. Every replay of that
+  location wedged PyBoy before it got there.
 
 ## The patterns
 

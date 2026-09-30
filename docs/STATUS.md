@@ -115,6 +115,18 @@ unaligned DMA source, a PNG or grid that no longer encodes to its blob.
 
 ## Recent changes
 
+* **2026-09-30** — three reachable routines left unrun. Steering now
+  follows jump-table entries into the middle of routines (the lesson-result
+  dispatch), picks the branch that reaches its goal soonest (so a loop
+  exits), steers mode hooks at `CallModeHook` while each minigame runs (new
+  `minigame0`-`8` targets), and runs in `linktest --steer` for link
+  routines. `linktest` also gained `--keys`, `--unplug-after` (pull the
+  cable) and a locked-courts save, which reached the four-court select menu
+  and the link error screen by play. Of the 158 routines no play reaches,
+  all but three have run under steering. The three: two wait on flags
+  nothing sets (`ApplyWhiteFade`, `TickSecondaryTimer`), and one sits
+  behind a Senior Court replay that wedges PyBoy (`docs/unused_code.md`).
+
 * **2026-09-30** — steering the last routines. `tools/steer.py` runs a
   reachable routine no session entered by replaying a session that entered
   a routine above it, forcing each branch condition, jump-table index and
