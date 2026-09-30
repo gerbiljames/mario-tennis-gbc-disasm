@@ -16,7 +16,7 @@ wGameTimer:: ds 4
 ; [8-bit] Enables the second timer at wSecondaryTimer: UpdateGameTimer ticks it only while this reads exactly 1. The stranded countdown routine at $00:$240a (nothing calls it) writes $ff here when its clock runs out, so $ff means expired
 wSecondaryTimerMode:: db
 
-; [3 bytes] Second clock alongside wGameTimer, ticked by TickSecondaryTimer: frames (0-59), seconds, minutes. It saturates at 9:59 rather than wrapping (minutes reaching $0a is undone and seconds pinned to $3b). The stranded countdown at $00:$240a runs the same three bytes downwards, one sound $af per second and sound $b0 at zero
+; [3 bytes] Second clock alongside wGameTimer, ticked by Unused_00_TickSecondaryTimer: frames (0-59), seconds, minutes. It saturates at 9:59 rather than wrapping (minutes reaching $0a is undone and seconds pinned to $3b). The stranded countdown at $00:$240a runs the same three bytes downwards, one sound $af per second and sound $b0 at zero
 wSecondaryTimer:: ds 3
 
 ; [8-bit] Width in pixels of the glyph RenderGlyphToTiles is drawing, read from the glyph's first byte. It is the inner loop count, one iteration per pixel column, and the caller re-reads the same byte after the call to advance the pen

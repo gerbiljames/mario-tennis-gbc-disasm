@@ -589,12 +589,12 @@ locally or, when `hLinkExchangeActive`, through `SyncLinkFrame`.
 `Unused_00_WaitFadeEndLinked` (`$00:$1dbd`) is the same loop hard-wired to `SyncLinkFrame`
 for the link case.
 
-`ApplyWhiteFade` (`$00:$1dcc`) is a second, cheaper curve: it adds a per-channel
+`Unused_00_ApplyWhiteFade` (`$00:$1dcc`) is a second, cheaper curve: it adds a per-channel
 increment to the packed BGR555 word with `add`/`adc` and then repairs the
 carries that leak across channel boundaries. It is reached only from the bit-7
 branch at `$1d7a`, and bit 7 of `hFadeState` is set in exactly one place —
 `$00:$1d19`, inside an **unlabelled and unreachable** routine at `$1d0f`. So
-`ApplyWhiteFade` never runs in the shipped ROM.
+`Unused_00_ApplyWhiteFade` never runs in the shipped ROM.
 
 `ConvertColorToGrayscale` (`$1d:$7210`) has a shipped bug — see
 [bugs.md](bugs.md#grayscale-conversion-drops-the-blue-channel).
@@ -1175,7 +1175,7 @@ overworld call never returns. It was called `RunDebugTestMenu` until 2026-07-30.
 Not defects, and not in [bugs.md](bugs.md); recorded here so a future reader
 does not re-derive them.
 
-- `ApplyWhiteFade` (`$00:$1dcc`) is unreachable: the only write that sets
+- `Unused_00_ApplyWhiteFade` (`$00:$1dcc`) is unreachable: the only write that sets
   `hFadeState` bit 7 is at `$00:$1d19`, inside an unlabelled routine at
   `$1d0f` that nothing calls. The unlabelled `ForceFadeOut`-shaped entry at
   `$1d09` is likewise unreferenced.

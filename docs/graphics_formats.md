@@ -789,9 +789,9 @@ multiply, and the delta is always in 0-31 because `srl c` twice
 > component ends at maximum. That is a fade to **white**. The `bit 7`
 > clamp-to-zero branch is unreachable from this caller, since a 0-31 component
 > plus a 0-31 delta never sets bit 7. STATUS is right that the `hFadeState`
-> bit-7 path (`ApplyWhiteFade`, `$00:$1dcc`) cannot be selected — its only
+> bit-7 path (`Unused_00_ApplyWhiteFade`, `$00:$1dcc`) cannot be selected — its only
 > setter is an unreferenced fragment at `$00:$1d0f` preceded by an
-> unconditional `jr` — but `ApplyWhiteFade` is *also* additive-toward-`$1f`;
+> unconditional `jr` — but `Unused_00_ApplyWhiteFade` is *also* additive-toward-`$1f`;
 > it differs by being cheaper (one 16-bit add per colour) and coarser
 > (saturating at `$1e`, because it pre-clears each field's low bit to make the
 > carry detectable). Seen live: four frames into the erase-menu fade-out
@@ -1026,7 +1026,7 @@ templates — were all fixed on 2026-09-10 (the `jp` form, once accepted by
   it *would* do is clear — load the object's own palette from the pointer at
   +8 — so the sentinel is a per-object-palette feature no shipped object uses.
 * What the intended difference between `AdjustColorsBrightness` and
-  `ApplyWhiteFade` was, given both add toward `$1f`. Only the developers could
+  `Unused_00_ApplyWhiteFade` was, given both add toward `$1f`. Only the developers could
   say; the cheaper 16-bit form is the one left unreachable.
 
 **Settled on 2026-09-11**

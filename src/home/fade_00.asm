@@ -11,7 +11,7 @@ Unused_00_WaitFadeEndLinked:
 .done:
 	pop af ; $1dca
 	ret ; $1dcb
-ApplyWhiteFade:
+Unused_00_ApplyWhiteFade:
 	push af ; $1dcc
 	ld a, c ; $1dcd
 	and $78 ; $1dce

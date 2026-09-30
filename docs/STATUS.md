@@ -52,7 +52,7 @@ rows, all editable, with a fork's edits committed under `mods/`.
 | `docs/save_format.md` | the battery save layout and `tools/savetool.py` |
 | `docs/ram_map.md` | the WRAM/HRAM symbol map, the union overlays, free RAM |
 | `docs/bugs.md` | defects in the *game* — bugs, dead stores, stubbed routines |
-| `docs/unused_code.md` | the 771 routines and 100 blobs nothing live reaches, the patterns they fall into, and how every reachable routine was made to run |
+| `docs/unused_code.md` | the 773 routines and 100 blobs nothing live reaches, the patterns they fall into, and how every reachable routine was made to run |
 | `docs/bank0_notes.md` | the ROM0 helpers |
 
 ## What is still open
@@ -60,10 +60,12 @@ rows, all editable, with a fork's edits committed under `mods/`.
 **Code.** Every routine is proven code or data, and every routine
 `tools/reach.py` can reach from the vectors has run: in play and in targeted
 sessions, and under `tools/steer.py` for the ones behind conditions no
-session meets. Two are the exception. `ApplyWhiteFade` and
-`TickSecondaryTimer` sit behind flags nothing in the ROM ever sets, so they
-are unreachable by data rather than by code (`docs/unused_code.md`).
-Nothing the call graph can reach is `Unused`.
+session meets. The two it cannot run, `Unused_00_ApplyWhiteFade` and
+`Unused_00_TickSecondaryTimer`, sit behind flags nothing in the ROM ever
+sets. `reach.py` now proves that too: it finds calls decided by a variable
+no store can make pass, and `make check` holds each such variable to a
+reviewed verdict (`docs/unused_code.md`). Nothing the analysis can reach is
+`Unused`, and nothing it cannot reach is anything else.
 
 **Names.**
 * Banked-WRAM operands: none left in live code. A `$dxxx` literal whose
@@ -149,9 +151,14 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries, newest first from 2026-08-07, are at the end of
 `docs/history.md`. In short:
 
+* **2026-10-01 — unreachable by data.** `tools/reach.py` finds calls and
+  jumps decided by a variable that no visible store can make pass. Each is
+  reviewed in `DATA_FLAGS`, and `make check` fails on any it has not seen.
+  The four dead ones drop their edges, so `ApplyWhiteFade` and
+  `TickSecondaryTimer` are now `Unused_00_*` (773 in all).
 * **2026-09-30 — coverage finished.** Every routine `tools/reach.py` says
   the vectors can reach has now run, except two that wait on flags nothing
-  sets (`ApplyWhiteFade`, `TickSecondaryTimer`). Several routes were added:
+  sets (`Unused_00_ApplyWhiteFade`, `Unused_00_TickSecondaryTimer`). Several routes were added:
   * link play over an emulated cable (`tools/linktest.py`, which can also
     pull the cable or play from a locked save);
   * story handlers called on demand, including the tables scripts install;

@@ -194,19 +194,19 @@ The fade engine has two ways to scale a palette. `UpdateFadeOut` and
         add a
         jr nc, .noCarry2         ; -> AdjustColorsBrightness (fade to black)
         ld a, c / and $04
-        call z, ApplyWhiteFade
+        call z, Unused_00_ApplyWhiteFade
 ```
 
 `hFadeState` is written in five places: `$1d28` stores `$01`, `$1d36` stores
 `$02`, `$1d97` and `$261e` store `$00`, and only `$1d1b` sets bit 7 — with
 `or $80`, inside the unlabelled routine at `$00:$1d0f` that nothing in the ROM
 references. Bit 7 is therefore never set, `add a` never carries, and
-`ApplyWhiteFade` (`$00:$1dcc`) never runs even though it is reached by a live
+`Unused_00_ApplyWhiteFade` (`$00:$1dcc`) never runs even though it is reached by a live
 `call z`.
 
 Every fade in the game is a fade to black. The white-fade code and the routine
 that would have armed it both shipped dead; `docs/screens_and_ui.md` records
-`ApplyWhiteFade` as unreachable, and the reason is a flag with no writer — the
+`Unused_00_ApplyWhiteFade` as unreachable, and the reason is a flag with no writer — the
 same shape as the link-error check above.
 
 ### `LoadMenuTilesBStaged` uploads palettes and code to VRAM as tiles

@@ -453,7 +453,7 @@ UpdateFadeOut:
 	jr nc, .noCarry2 ; $1d7a
 	ld a, c ; $1d7c
 	and $04 ; $1d7d
-	call z, ApplyWhiteFade ; $1d7f
+	call z, Unused_00_ApplyWhiteFade ; $1d7f
 	jr .restore ; $1d82
 .noCarry2:
 	ld hl, wMasterPalettes ; $1d84

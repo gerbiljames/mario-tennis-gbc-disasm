@@ -145,7 +145,7 @@ Unused_00_BlitBGStrip2:
 UpdateGameTimer:
 	ld a, [wSecondaryTimerMode] ; $23dd
 	cp $01 ; $23e0
-	call z, TickSecondaryTimer ; $23e2
+	call z, Unused_00_TickSecondaryTimer ; $23e2
 	ld hl, wGameTimer ; $23e5
 	inc [hl] ; $23e8
 	ld a, [hl] ; $23e9
@@ -203,7 +203,7 @@ Unused_00_TickSecondaryTimerCountdown:
 	ld [hl+], a ; $2431
 	sound SFX_TIMER_UP ; $2432
 	ret ; $2434
-TickSecondaryTimer:
+Unused_00_TickSecondaryTimer:
 	ld hl, wSecondaryTimer ; $2435
 	inc [hl] ; $2438
 	ld a, [hl] ; $2439

@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-871 labels carry an `Unused` prefix: 771 routines and 100 data blobs. "Unused" is a proof, not a guess:
+873 labels carry an `Unused` prefix: 773 routines and 100 data blobs. "Unused" is a proof, not a guess:
 nothing reachable from the game's entry points -- the reset vector, the
 interrupt vectors and the `rst` vectors -- reaches the label, by call, jump,
 branch, pointer table, macro body, fall-through or farcall. A `farptr` row
@@ -125,14 +125,36 @@ script jumps there for entry point `$0e`, which no `map_entry` row lists
 runs it in any story state. Its replays had looked stuck because of a PyBoy
 bug in the harness, since fixed (STATUS, 2026-09-30).
 
-Two remain, unreachable by data rather than by code, which the call graph
-cannot see. Both wait on flags that nothing sets:
+Two more were unreachable by data rather than by code, which a call graph
+alone cannot see. Both wait on flags nothing sets:
 
-* `ApplyWhiteFade` needs bit 7 of `hFadeState`, which only an unreferenced
-  routine sets (bugs.md).
-* `TickSecondaryTimer` runs from `UpdateGameTimer` when
+* `Unused_00_ApplyWhiteFade` needs bit 7 of `hFadeState`, which only an
+  unreferenced routine sets (bugs.md).
+* `Unused_00_TickSecondaryTimer` runs from `UpdateGameTimer` when
   `wSecondaryTimerMode` is 1. The only store to that variable is
   `Unused_00_TickSecondaryTimerCountdown` writing `$ff`.
+
+`tools/reach.py` now finds these itself. For each call or jump whose way
+there is decided by one variable -- loaded with `ld a, [V]` and tested by
+`cp`, `and`, `or`, `add a` or `bit` on the path, including a branch that
+would skip it -- it collects the values code outside `Unused` routines
+stores into V (`ld a, K`, `xor a`, a zero proved by a `jr nz` past the
+store, and zero for the boot clear). If none passes the test, the variable
+is a candidate. A static scan cannot see a record copied in through a
+computed pointer, so every candidate is reviewed in `DATA_FLAGS`:
+* **dead:** the edge is dropped, and what only it reached must be named
+  `Unused`, like any other unreachable routine;
+* **live**, with how it is written.
+
+`make check` fails on a candidate nobody has reviewed. The four dead ones:
+* the two flags above;
+* `hLinkErrorFlags`, whose stores are all clears (`AdvanceFrame`'s
+  link-error reset);
+* `wGlyphBufferHoldCount` (`PrepareGlyphBuffer`'s keep branch; both in
+  bugs.md).
+
+The four live ones are story-record fields, a location header field and the
+match id word, all written through pointers.
 
 ## The patterns
 

@@ -17,6 +17,14 @@ slot; it is not a call, so a routine only its slot names is unreachable.
 Code is followed from label to label: a jump to `X.local` reaches the code
 from that local label on, not `X`'s entry.
 
+A call or jump that only runs when a variable holds a value no code stores
+into it is dead by data (`data_dead()`): the variable is loaded and tested
+on the way there, and every value code outside `Unused` routines visibly
+stores fails the test. A scan cannot see a record copied in through a
+computed pointer, so each such variable is reviewed in DATA_FLAGS -- dead
+(the edge is dropped) or live -- and one nobody has reviewed fails the
+check.
+
 `Unused` in a name claims the routine's entry is unreachable, and `make
 check` holds every routine to it (`check()`): an `Unused` routine that is
 reachable, or an unreachable one that is not named so, fails. Labels inside
@@ -42,6 +50,25 @@ MNEMONICS = frozenset(
 # is Unused_00_FarCallVectorInline, and nothing in the ROM calls or jumps to
 # either (docs/unused_code.md).
 KNOWN_UNEXPLAINED = {"CallVectorEntryE"}
+# Variables that decide a call or jump and that no code outside `Unused`
+# routines visibly stores a value for that passes the test (data_dead()),
+# each reviewed: dead (the edge is dropped, and what only it reached must be
+# named Unused) or live (written some way the scan does not see).
+DATA_FLAGS = {
+    "hFadeState": ("dead", "bit 7 selects Unused_00_ApplyWhiteFade; the stores are $00, $01 and $02, "
+                           "and only Unused_00_BeginWhiteFadeOut sets bit 7 (docs/bugs.md)"),
+    "wSecondaryTimerMode": ("dead", "UpdateGameTimer ticks the second timer at mode 1; the only store "
+                                    "is Unused_00_TickSecondaryTimerCountdown's $ff"),
+    "hLinkErrorFlags": ("dead", "AdvanceFrame's link-error reset needs bits 5-7; both stores are "
+                                "xor a clears (docs/bugs.md)"),
+    "wGlyphBufferHoldCount": ("dead", "PrepareGlyphBuffer's keep branch; nothing ever raises the "
+                                      "count (docs/bugs.md)"),
+    "wStoryModeGenderOfMainCharacter": ("live", "a story record field, copied in with the record"),
+    "wStoryModeGenderOfPartnerCharacter": ("live", "a story record field, copied in with the record"),
+    "wStoryLocationBGM": ("live", "copied from the location header by LoadStoryLocationHeader"),
+    "wCurrentMinigameStoryMatch": ("live", "the match launchers store the (list, index) word through "
+                                           "a pointer; the doubles lists are odd"),
+}
 GLOBAL = re.compile(r"^([A-Za-z_]\w*):")
 LOCAL = re.compile(r"^(\.\w+):")
 TERMINAL = re.compile(r"^(reti?|jp|jr)\b")
@@ -111,8 +138,9 @@ class Graph:
                     alias[m.group(1)] = m.group(2)
         # segments: (global, local or "") -> set of segment keys it reaches
         self.out = collections.defaultdict(set)
+        self.sites = collections.defaultdict(list)     # (segment, target) -> [(bank index, line)]
         self.first_is_code = {}
-        for lines, _ in self.banks:
+        for bi, (lines, _) in enumerate(self.banks):
             glob = seg = None
             last, dead = "", False
             for i, line in enumerate(lines):
@@ -149,17 +177,84 @@ class Graph:
                     t = alias.get(t, t)
                     if t in self.labels and (t, loc or "") != seg:
                         self.out[seg].add((t, loc or ""))
+                        self.sites[(seg, (t, loc or ""))].append((bi, i))
+
+    def data_dead(self):
+        """Edges no value the game can store makes it take: (edges, notes).
+
+        A call or jump whose way there is decided by one variable -- loaded
+        with `ld a, [V]` / `ldh a, [V]` and tested by the instructions up to
+        it (`cp`, `and`, `or`, `add a`, `bit`), including an earlier branch
+        that would skip it -- is dead if none of the values code outside
+        `Unused` routines stores into V (and zero, the boot clear) meets the
+        test. It says nothing if any store's value is unknown, or if code
+        outside `Unused` routines takes V's address (a store through a
+        pointer could reach it)."""
+        if hasattr(self, "_dead"):
+            return self._dead
+        consts = constants()
+        values = {}                          # V -> set of stored values, or None
+        taken = set()
+        owner_of = {}
+        for bi, (lines, _) in enumerate(self.banks):
+            glob = None
+            for i, line in enumerate(lines):
+                m = GLOBAL.match(line)
+                if m:
+                    glob = m.group(1)
+                owner_of[(bi, i)] = glob
+                if glob is None or glob.startswith("Unused"):
+                    continue
+                code = line.split(";")[0].strip()
+                m = re.match(r"^ld (?:hl|de|bc), (\w+)", code) or re.match(r"^ld c, LOW\((\w+)", code)
+                if m:
+                    taken.add(m.group(1))
+                m = re.match(r"^ldh? \[(\w+)\], a$", code)
+                if m:
+                    v = stored_value(lines, i, consts)
+                    have = values.setdefault(m.group(1), {0})     # 0: the boot clear
+                    if have is not None:
+                        values[m.group(1)] = None if v is None else have | {v}
+        edges, notes = set(), []
+        self.unreviewed = set()
+        for (seg, t), where in self.sites.items():
+            verdicts = []
+            for bi, i in where:
+                lines, origin = self.banks[bi]
+                test = guard(lines, i, consts)
+                if not test:
+                    verdicts.append(False)
+                    continue
+                var, pred = test
+                vals = values.get(var, {0})
+                if vals is None or var in taken or var.startswith("r") or any(pred(v) for v in vals):
+                    verdicts.append(False)
+                    continue
+                if not seg[0].startswith("Unused"):
+                    notes.append((origin[i], seg[0], t[0], var, sorted(vals)))
+                    if var not in DATA_FLAGS:
+                        self.unreviewed.add(var)
+                verdicts.append(DATA_FLAGS.get(var, ("",))[0] == "dead")
+            if verdicts and all(verdicts):
+                edges.add((seg, t))
+        self._dead = (edges, notes)
+        return self._dead
 
     def is_code(self, stmt):
         head = stmt.split(" ")[0]
         return head in MNEMONICS or self.mcode.get(head, False)
 
-    def reach(self):
+    def reach(self, drop=None):
+        """Routines reachable from the vectors; `drop` defaults to the edges
+        data_dead() finds."""
+        drop = self.data_dead()[0] if drop is None else drop
         live = {(r, "") for r in ROOTS}
         stack = list(live)
         while stack:
             x = stack.pop()
             for t in self.out.get(x, ()):
+                if (x, t) in drop:
+                    continue
                 if t not in live:
                     live.add(t)
                     stack.append(t)
@@ -169,9 +264,143 @@ class Graph:
         return {n for n, c in self.first_is_code.items() if c}
 
 
+def constants():
+    out = {}
+    for inc in (ROOT / "include").glob("*.inc"):
+        for m in re.finditer(r"^def (\w+)\s+equ \$([0-9a-f]+)", inc.read_text(), re.M | re.I):
+            out[m.group(1)] = int(m.group(2), 16)
+    return out
+
+
+def number(tok, consts):
+    tok = tok.strip()
+    if re.match(r"^\$[0-9a-f]+$", tok, re.I):
+        return int(tok[1:], 16)
+    if re.match(r"^\d+$", tok):
+        return int(tok)
+    return consts.get(tok)
+
+
+def stored_value(lines, i, consts):
+    """The value `ld [V], a` at line i stores, when the lines just before it
+    fix it: `ld a, K`, `xor a`, or `and a`/`or a` then a `jr nz` past it."""
+    zero_if_falls = False
+    for k in range(i - 1, max(i - 8, -1), -1):
+        code = lines[k].split(";")[0].strip()
+        if not code:
+            continue
+        if GLOBAL.match(lines[k]) or LOCAL.match(lines[k]):
+            return None
+        m = re.match(r"^ld a, (\S+)$", code)
+        if m:
+            return number(m.group(1), consts)
+        if code == "xor a":
+            return 0
+        if re.match(r"^jr nz, ", code):
+            zero_if_falls = True
+            continue
+        if code in ("and a", "or a") and zero_if_falls:
+            return 0
+        if re.match(r"^ldh? \[\w+\], a$", code) or code.startswith(("ld b", "ld c", "ld d", "ld e", "ld h", "ld l")):
+            continue
+        return None
+    return None
+
+
+def guard(lines, i, consts):
+    """(V, test) when the transfer at line i happens only for values of V that
+    pass test: the path back to `ld a, [V]` has no label, and every branch
+    on it tests flags that V decides."""
+    code = lines[i].split(";")[0].strip()
+    m = re.match(r"^(call|jp|jr) (?:(nz|z|nc|c), )?\S+$", code)
+    if not m:
+        return None
+    start = None
+    for k in range(i - 1, max(i - 12, -1), -1):
+        c = lines[k].split(";")[0].strip()
+        if GLOBAL.match(lines[k]) or LOCAL.match(lines[k]):
+            break
+        mm = re.match(r"^ldh? a, \[(\w+)\]$", c)
+        if mm:
+            start = (k, mm.group(1))
+            break
+    if not start:
+        return None
+    k0, var = start
+    a = lambda v: v                      # A as a function of V, or None
+    z = cflag = None                     # flags as tests of V, or None
+    tests = []
+    for k in range(k0 + 1, i + 1):
+        c = lines[k].split(";")[0].strip()
+        if not c:
+            continue
+        cc = re.match(r"^(?:jr|jp|call|ret) (nz|z|nc|c)\b", c)
+        if cc:
+            flag = {"z": z, "nz": z, "c": cflag, "nc": cflag}[cc.group(1)]
+            if flag is None:
+                continue                      # decided by something else: either way
+            want = cc.group(1) in ("z", "c")
+            if k == i:
+                tests.append(lambda v, f=flag, w=want: f(v) == w)   # taken: the transfer
+            else:
+                tests.append(lambda v, f=flag, w=want: f(v) != w)   # not taken: onto the path
+            continue
+        mm = re.match(r"^(cp|and|or|xor) (\S+)$", c)
+        if mm and mm.group(2) != "a":
+            n = number(mm.group(2), consts)
+            if n is None or a is None:
+                a = z = cflag = None
+                continue
+            op = mm.group(1)
+            if op == "cp":
+                z, cflag = (lambda v, f=a, n=n: f(v) == n), (lambda v, f=a, n=n: f(v) < n)
+            else:
+                f0 = a
+                a = {"and": lambda v, f=f0, n=n: f(v) & n, "or": lambda v, f=f0, n=n: f(v) | n,
+                     "xor": lambda v, f=f0, n=n: f(v) ^ n}[op]
+                z, cflag = (lambda v, f=a: f(v) == 0), (lambda v: False)
+            continue
+        if c in ("and a", "or a"):
+            if a is None:
+                z = cflag = None
+            else:
+                z, cflag = (lambda v, f=a: f(v) == 0), (lambda v: False)
+            continue
+        if c == "add a":
+            if a is None:
+                z = cflag = None
+            else:
+                f0 = a
+                cflag = lambda v, f=f0: f(v) >= 0x80
+                a = lambda v, f=f0: (f(v) * 2) & 0xff
+                z = lambda v, f=a: f(v) == 0
+            continue
+        mm = re.match(r"^bit (\d), a$", c)
+        if mm:
+            z = None if a is None else (lambda v, f=a, b=int(mm.group(1)): not (f(v) >> b) & 1)
+            continue
+        if re.match(r"^ld a, ", c) or c == "pop af":
+            a = None
+            if c == "pop af":
+                z = cflag = None
+            continue
+        if re.match(r"^(ld [bcdehl]|ld \[|ldh \[|push|ld [bdh][cel], )", c) or c.startswith(("call ", "farcall ")):
+            if c.startswith(("call ", "farcall ")) and k != i:
+                a = z = cflag = None          # a callee may change anything
+            continue
+        a = z = cflag = None                  # anything else: flags unknown
+    if not tests:
+        return None
+    return var, (lambda v: all(t(v) for t in tests))
+
+
 def check(fail):
     g = Graph()
     live = g.reach()
+    for var in sorted(g.unreviewed):
+        where = [f"{Path(f).relative_to(ROOT)}:{ln}" for (f, ln), *_ , v, _vals in g.data_dead()[1] if v == var]
+        fail("reach", f"{where[0]}: {var} decides a call no visible store can take; review it in "
+                      f"DATA_FLAGS (tools/reach.py)")
     n = 0
     for name in sorted(g.routines()):
         n += 1
@@ -192,6 +421,12 @@ def main():
     g = Graph()
     live = g.reach()
     rout = g.routines()
+    for (f, ln), seg, t, var, vals in g.data_dead()[1]:
+        state = DATA_FLAGS.get(var, ("unreviewed",))[0]
+        if state == "live":
+            continue
+        print(f"{Path(f).relative_to(ROOT)}:{ln}: {seg} -> {t} needs {var} to hold a value it never "
+              f"is given ({', '.join(f'${v:02x}' for v in vals)}): {state}")
     wrong = [n for n in sorted(rout) if n not in g.twin_internal and n not in KNOWN_UNEXPLAINED
              and (n.startswith("Unused")) == (n in live)]
     print(f"{len(rout)} routines, {len(rout & live)} reachable; {len(wrong)} names disagree")
