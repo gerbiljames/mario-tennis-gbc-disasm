@@ -179,7 +179,7 @@ def steer_hooks(side, sym_path, chain, taken):
 
 
 def session(rom, sym_path, save, seed, frames, lag, settle, menu_state, keys=KEYS, unplug=None,
-            chain=None):
+            chain=None, finish=None):
     from pyboy import PyBoy
     sym = E.symbols(sym_path)
     tmp = Path(tempfile.mkdtemp(dir=ROOT / "build"))
@@ -228,6 +228,8 @@ def session(rom, sym_path, save, seed, frames, lag, settle, menu_state, keys=KEY
                 s.pb.hook_deregister(*pt)
             s.spent = []
         states[(a.pb.memory[link], b.pb.memory[link])] += 1
+    if finish:
+        finish(sides)
     for s in sides:
         s.pb.stop(save=False)
     shutil.rmtree(tmp)
