@@ -4,7 +4,7 @@ LoadN64RecordsToWram2:
 	ld bc, $0020 ; $6c49
 	call ClearMemory16 ; $6c4c
 	ld hl, wScreenAttrmap ; $6c4f
-	ld b, $0b ; $6c52
+	ld b, SAVEBLOCK_N64_RECORDS ; $6c52
 	farcall ReadSaveBlock ; $6c54
 	pop_wram_bank ; $6c57
 	ret ; $6c5c

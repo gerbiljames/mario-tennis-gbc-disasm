@@ -85,7 +85,8 @@ The mirror is spoiled before the check even runs. The first thing
 ahead of `ValidateSaveRam`, and every save-flag write ends in
 `UpdateSaveHeaderChecksum` (`$03:$4866`): it recomputes the master checksum
 over whatever the bank-0 header holds and copies the header's first 64 bytes
-(`$a000-$a03f`: signature, checksum, version, the flags) over bank 1's. So at
+(`$a000-$a03f`: signature, checksum and version, stopping just short of the
+flags) over bank 1's. So at
 boot a damaged signature is copied into the mirror, and damage elsewhere in the
 checksummed region is blessed with a fresh checksum and passes.
 

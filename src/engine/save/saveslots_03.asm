@@ -103,7 +103,7 @@ ClearSaveBlockData:
 	ld a, [hl+] ; $4eb8
 	ld b, [hl] ; $4eb9
 	ld c, a ; $4eba
-	ld hl, $a000 ; $4ebb
+	ld hl, SRAM_BASE ; $4ebb
 	add hl, de ; $4ebe
 	ld d, h ; $4ebf
 	ld e, l ; $4ec0
@@ -172,7 +172,7 @@ Unused_03_EraseSaveBlock:
 	ld a, [hl+] ; $4f12
 	ld b, [hl] ; $4f13
 	ld c, a ; $4f14
-	ld hl, $a000 ; $4f15
+	ld hl, SRAM_BASE ; $4f15
 	add hl, de ; $4f18
 	ld d, h ; $4f19
 	ld e, l ; $4f1a
@@ -275,27 +275,27 @@ ReinitSaveRamPreservingBlock6:
 	pop af ; $4fac
 	ret ; $4fad
 WriteExhibitionSaveBlock:
-	ld a, $36 ; $4fae
+	ld a, SAVEBLOCK_EXHIBITION ; $4fae
 	ld b, a ; $4fb0
 	ld hl, wStorySlotData ; $4fb1
 	ld de, $0000 ; $4fb4
 	call WriteSaveBlock ; $4fb7
 	or a ; $4fba
 	ret nz ; $4fbb
-	ld a, $36 ; $4fbc
+	ld a, SAVEBLOCK_EXHIBITION ; $4fbc
 	ld b, a ; $4fbe
 	ld hl, wStorySlotData ; $4fbf
 	call VerifySaveBlock ; $4fc2
 	or a ; $4fc5
 	ret nz ; $4fc6
-	ld a, $37 ; $4fc7
+	ld a, SAVEBLOCK_EXHIBITION_BACKUP ; $4fc7
 	ld b, a ; $4fc9
 	ld hl, wStorySlotData ; $4fca
 	ld de, wTextBuffer ; $4fcd
 	call WriteSaveBlock ; $4fd0
 	or a ; $4fd3
 	ret nz ; $4fd4
-	ld a, $37 ; $4fd5
+	ld a, SAVEBLOCK_EXHIBITION_BACKUP ; $4fd5
 	ld b, a ; $4fd7
 	ld hl, wStorySlotData ; $4fd8
 	call VerifySaveBlock ; $4fdb
@@ -310,7 +310,7 @@ ReadExhibitionSaveBlock:
 	push bc ; $4fea
 	push de ; $4feb
 	push hl ; $4fec
-	ld a, $36 ; $4fed
+	ld a, SAVEBLOCK_EXHIBITION ; $4fed
 	ld b, a ; $4fef
 	ld hl, wStorySlotData ; $4ff0
 	call ReadSaveBlock ; $4ff3
@@ -328,7 +328,7 @@ ClearSaveBlock11:
 	push hl ; $5000
 	ld a, $0a ; $5001
 	ld [rRAMG], a ; $5003
-	ld b, $0b ; $5006
+	ld b, SAVEBLOCK_N64_RECORDS ; $5006
 	call ClearSaveBlockData ; $5008
 	push af ; $500b
 	xor a ; $500c
@@ -609,38 +609,38 @@ InitAllMinigameRecordBlocks:
 	inc hl ; $51cb
 	jr .loop ; $51cc
 .eq0b:
-	ld a, $38 ; $51ce
+	ld a, SAVEBLOCK_MINIGAME_RECORDS ; $51ce
 	ld b, a ; $51d0
 	ld hl, wMinigameRecordBlock ; $51d1
 	ld de, $0000 ; $51d4
 	call WriteSaveBlock ; $51d7
 	or a ; $51da
 	jr nz, .restore ; $51db
-	ld a, $3b ; $51dd
+	ld a, SAVEBLOCK_MINIGAME_RECORDS + 3 ; $51dd
 	ld b, a ; $51df
 	ld hl, wMinigameRecordBlock ; $51e0
 	ld de, $0000 ; $51e3
 	call WriteSaveBlock ; $51e6
-	ld a, $39 ; $51e9
+	ld a, SAVEBLOCK_MINIGAME_RECORDS + 1 ; $51e9
 	ld b, a ; $51eb
 	ld hl, wMinigameRecordBlock ; $51ec
 	ld de, $0000 ; $51ef
 	call WriteSaveBlock ; $51f2
 	or a ; $51f5
 	jr nz, .restore ; $51f6
-	ld a, $3c ; $51f8
+	ld a, SAVEBLOCK_MINIGAME_RECORDS + 4 ; $51f8
 	ld b, a ; $51fa
 	ld hl, wMinigameRecordBlock ; $51fb
 	ld de, $0000 ; $51fe
 	call WriteSaveBlock ; $5201
-	ld a, $3a ; $5204
+	ld a, SAVEBLOCK_MINIGAME_RECORDS + 2 ; $5204
 	ld b, a ; $5206
 	ld hl, wMinigameRecordBlock ; $5207
 	ld de, $0000 ; $520a
 	call WriteSaveBlock ; $520d
 	or a ; $5210
 	jr nz, .restore ; $5211
-	ld a, $3d ; $5213
+	ld a, SAVEBLOCK_MINIGAME_RECORDS + 5 ; $5213
 	ld b, a ; $5215
 	ld hl, wMinigameRecordBlock ; $5216
 	ld de, $0000 ; $5219

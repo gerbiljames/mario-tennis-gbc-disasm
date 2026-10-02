@@ -3,7 +3,7 @@ ReadMarioCastVictoryGrid:
 	push bc ; $522a
 	push de ; $522b
 	push hl ; $522c
-	ld b, $3e ; $522d
+	ld b, SAVEBLOCK_STAR_GRID ; $522d
 	call ReadSaveBlock ; $522f
 	or a ; $5232
 	jr z, .restore ; $5233
@@ -20,7 +20,7 @@ WriteMarioCastVictoryGrid:
 	push bc ; $5240
 	push de ; $5241
 	push hl ; $5242
-	ld b, $3e ; $5243
+	ld b, SAVEBLOCK_STAR_GRID ; $5243
 	ld de, $0000 ; $5245
 	call WriteSaveBlock ; $5248
 	pop hl ; $524b
@@ -430,108 +430,108 @@ Unused_03_RestoreBlockOrClear:
 	call WriteSaveBlock ; $5577
 	ret ; $557a
 Unused_03_RestoreBlock06FromBackup:
-	ld b, $06 ; $557b
+	ld b, SAVEBLOCK_PRESERVED ; $557b
 	ld hl, $d000 ; $557d
 	call ReadSaveBlock ; $5580
 	cp $ff ; $5583
 	ret nz ; $5585
-	ld b, $21 ; $5586
+	ld b, SAVEBLOCK_PRESERVED + SAVEBLOCK_BACKUP ; $5586
 	call ReadSaveBlock ; $5588
 	or a ; $558b
 	jr nz, .nonZero2 ; $558c
-	ld b, $06 ; $558e
+	ld b, SAVEBLOCK_PRESERVED ; $558e
 	ld hl, $d000 ; $5590
 	ld de, $0000 ; $5593
 	call WriteSaveBlock ; $5596
 	ret ; $5599
 .nonZero2:
-	ld b, $06 ; $559a
+	ld b, SAVEBLOCK_PRESERVED ; $559a
 	call InvalidateSaveBlock ; $559c
-	ld b, $21 ; $559f
+	ld b, SAVEBLOCK_PRESERVED + SAVEBLOCK_BACKUP ; $559f
 	call InvalidateSaveBlock ; $55a1
 	ret ; $55a4
 Unused_03_RestoreBlock07FromBackup:
-	ld b, $07 ; $55a5
+	ld b, SAVEBLOCK_SPARE7 ; $55a5
 	ld hl, $d000 ; $55a7
 	call ReadSaveBlock ; $55aa
 	cp $ff ; $55ad
 	ret nz ; $55af
-	ld b, $22 ; $55b0
+	ld b, SAVEBLOCK_SPARE7 + SAVEBLOCK_BACKUP ; $55b0
 	call ReadSaveBlock ; $55b2
 	or a ; $55b5
 	jr nz, .nonZero3 ; $55b6
-	ld b, $07 ; $55b8
+	ld b, SAVEBLOCK_SPARE7 ; $55b8
 	ld hl, $d000 ; $55ba
 	ld de, $0000 ; $55bd
 	call WriteSaveBlock ; $55c0
 	ret ; $55c3
 .nonZero3:
-	ld b, $07 ; $55c4
+	ld b, SAVEBLOCK_SPARE7 ; $55c4
 	call InvalidateSaveBlock ; $55c6
-	ld b, $22 ; $55c9
+	ld b, SAVEBLOCK_SPARE7 + SAVEBLOCK_BACKUP ; $55c9
 	call InvalidateSaveBlock ; $55cb
 	ret ; $55ce
 Unused_03_RestoreBlock08FromBackup:
-	ld b, $08 ; $55cf
+	ld b, SAVEBLOCK_SPARE8 ; $55cf
 	ld hl, $d000 ; $55d1
 	call ReadSaveBlock ; $55d4
 	cp $ff ; $55d7
 	ret nz ; $55d9
-	ld b, $23 ; $55da
+	ld b, SAVEBLOCK_SPARE8 + SAVEBLOCK_BACKUP ; $55da
 	call ReadSaveBlock ; $55dc
 	or a ; $55df
 	jr nz, .nonZero4 ; $55e0
-	ld b, $08 ; $55e2
+	ld b, SAVEBLOCK_SPARE8 ; $55e2
 	ld hl, $d000 ; $55e4
 	ld de, $0000 ; $55e7
 	call WriteSaveBlock ; $55ea
 	ret ; $55ed
 .nonZero4:
-	ld b, $08 ; $55ee
+	ld b, SAVEBLOCK_SPARE8 ; $55ee
 	call InvalidateSaveBlock ; $55f0
-	ld b, $23 ; $55f3
+	ld b, SAVEBLOCK_SPARE8 + SAVEBLOCK_BACKUP ; $55f3
 	call InvalidateSaveBlock ; $55f5
 	ret ; $55f8
 Unused_03_RestoreBlock09FromBackup:
-	ld b, $09 ; $55f9
+	ld b, SAVEBLOCK_SPARE9 ; $55f9
 	ld hl, $d000 ; $55fb
 	call ReadSaveBlock ; $55fe
 	cp $ff ; $5601
 	ret nz ; $5603
-	ld b, $24 ; $5604
+	ld b, SAVEBLOCK_SPARE9 + SAVEBLOCK_BACKUP ; $5604
 	call ReadSaveBlock ; $5606
 	or a ; $5609
 	jr nz, .nonZero5 ; $560a
-	ld b, $09 ; $560c
+	ld b, SAVEBLOCK_SPARE9 ; $560c
 	ld hl, $d000 ; $560e
 	ld de, $0000 ; $5611
 	call WriteSaveBlock ; $5614
 	ret ; $5617
 .nonZero5:
-	ld b, $09 ; $5618
+	ld b, SAVEBLOCK_SPARE9 ; $5618
 	call InvalidateSaveBlock ; $561a
-	ld b, $24 ; $561d
+	ld b, SAVEBLOCK_SPARE9 + SAVEBLOCK_BACKUP ; $561d
 	call InvalidateSaveBlock ; $561f
 	ret ; $5622
 Unused_03_RestoreBlock0aFromBackup:
-	ld b, $0a ; $5623
+	ld b, SAVEBLOCK_SPARE10 ; $5623
 	ld hl, $d000 ; $5625
 	call ReadSaveBlock ; $5628
 	cp $ff ; $562b
 	ret nz ; $562d
-	ld b, $25 ; $562e
+	ld b, SAVEBLOCK_SPARE10 + SAVEBLOCK_BACKUP ; $562e
 	call ReadSaveBlock ; $5630
 	or a ; $5633
 	jr nz, .nonZero6 ; $5634
-	ld b, $0a ; $5636
+	ld b, SAVEBLOCK_SPARE10 ; $5636
 	ld hl, $d000 ; $5638
 	ld de, $0000 ; $563b
 	call WriteSaveBlock ; $563e
 	ret ; $5641
 .nonZero6:
-	ld b, $0a ; $5642
+	ld b, SAVEBLOCK_SPARE10 ; $5642
 	call InvalidateSaveBlock ; $5644
-	ld b, $25 ; $5647
+	ld b, SAVEBLOCK_SPARE10 + SAVEBLOCK_BACKUP ; $5647
 	call InvalidateSaveBlock ; $5649
 	ret ; $564c
 Unused_03_ClearBlockIfSet:

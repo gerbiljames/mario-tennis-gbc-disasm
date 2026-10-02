@@ -8,6 +8,10 @@ SECTION "SRAM bank 0", SRAM[$a000], BANK[0]
 ;   $a040-$a05f  save engine
 ;   $a060-$a76e  save engine
 
+; [2048 bytes] The header region, $a000-$a7ff, as MirrorSaveHeaderToBank1 and
+; ValidateSaveRam copy it in four SAVE_HEADER_CHUNKs: the 32 unused bytes here,
+; the fields below, and 144 bytes past the end of the block directory.
+sSaveHeader::
 	ds 32
 
 ; Battery-save header fields (SRAM bank 0), owned by the bank $03 save

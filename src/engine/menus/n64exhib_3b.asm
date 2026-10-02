@@ -340,7 +340,7 @@ ReadN64RecordsSaveBlock:
 	ld bc, wN64RecordsBlock_SIZE / 16 ; $494c
 	call ClearMemory16 ; $494f
 	ld hl, wN64RecordsBlock ; $4952
-	ld b, $0b ; $4955
+	ld b, SAVEBLOCK_N64_RECORDS ; $4955
 	farcall ReadSaveBlock ; $4957
 	ld b, a ; $495a
 	pop_wram_bank ; $495b

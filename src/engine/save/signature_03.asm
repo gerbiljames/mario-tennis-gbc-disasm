@@ -7,7 +7,7 @@ WipeAllSaveRam:
 	ldh [hSramBank], a ; $47fc
 	ld [rRAMB], a ; $47fe
 	ld bc, $0200 ; $4801
-	ld hl, $a000 ; $4804
+	ld hl, SRAM_BASE ; $4804
 	xor a ; $4807
 .loopB:
 	ld [hl+], a ; $4808
@@ -102,8 +102,8 @@ UpdateSaveHeaderChecksum:
 	ld hl, sp + 0 ; $4877
 	ld d, h ; $4879
 	ld e, l ; $487a
-	ld hl, $a000 ; $487b
-	ld c, $04 ; $487e
+	ld hl, sSaveHeader ; $487b
+	ld c, (sSaveFlags - sSaveHeader) / 16 ; $487e
 	push hl ; $4880
 	push de ; $4881
 	call CopyMemoryFast ; $4882
@@ -133,58 +133,58 @@ MirrorSaveHeaderToBank1:
 	ld [sSaveMasterChecksum], a ; $48a9
 	ld a, h ; $48ac
 	ld [sSaveMasterChecksum + 1], a ; $48ad
-	ld hl, $a000 ; $48b0
+	ld hl, sSaveHeader ; $48b0
 	ld de, wTextBuffer ; $48b3
-	ld c, $20 ; $48b6
+	ld c, SAVE_HEADER_CHUNK / 16 ; $48b6
 	call CopyMemoryFast ; $48b8
 	ld a, $01 ; $48bb
 	ldh [hSramBank], a ; $48bd
 	ld [rRAMB], a ; $48bf
 	ld hl, wTextBuffer ; $48c2
-	ld de, $a000 ; $48c5
-	ld c, $20 ; $48c8
+	ld de, sSaveHeader ; $48c5
+	ld c, SAVE_HEADER_CHUNK / 16 ; $48c8
 	call CopyMemoryFast ; $48ca
 	ld a, $00 ; $48cd
 	ldh [hSramBank], a ; $48cf
 	ld [rRAMB], a ; $48d1
-	ld hl, sSaveBlockDirectory + 416 ; $48d4
+	ld hl, sSaveHeader + 1 * SAVE_HEADER_CHUNK ; $48d4
 	ld de, wTextBuffer ; $48d7
-	ld c, $20 ; $48da
+	ld c, SAVE_HEADER_CHUNK / 16 ; $48da
 	call CopyMemoryFast ; $48dc
 	ld a, $01 ; $48df
 	ldh [hSramBank], a ; $48e1
 	ld [rRAMB], a ; $48e3
 	ld hl, wTextBuffer ; $48e6
-	ld de, sSaveBlockDirectory + 416 ; $48e9
-	ld c, $20 ; $48ec
+	ld de, sSaveHeader + 1 * SAVE_HEADER_CHUNK ; $48e9
+	ld c, SAVE_HEADER_CHUNK / 16 ; $48ec
 	call CopyMemoryFast ; $48ee
 	ld a, $00 ; $48f1
 	ldh [hSramBank], a ; $48f3
 	ld [rRAMB], a ; $48f5
-	ld hl, sSaveBlockDirectory + 928 ; $48f8
+	ld hl, sSaveHeader + 2 * SAVE_HEADER_CHUNK ; $48f8
 	ld de, wTextBuffer ; $48fb
-	ld c, $20 ; $48fe
+	ld c, SAVE_HEADER_CHUNK / 16 ; $48fe
 	call CopyMemoryFast ; $4900
 	ld a, $01 ; $4903
 	ldh [hSramBank], a ; $4905
 	ld [rRAMB], a ; $4907
 	ld hl, wTextBuffer ; $490a
-	ld de, sSaveBlockDirectory + 928 ; $490d
-	ld c, $20 ; $4910
+	ld de, sSaveHeader + 2 * SAVE_HEADER_CHUNK ; $490d
+	ld c, SAVE_HEADER_CHUNK / 16 ; $4910
 	call CopyMemoryFast ; $4912
 	ld a, $00 ; $4915
 	ldh [hSramBank], a ; $4917
 	ld [rRAMB], a ; $4919
-	ld hl, sSaveBlockDirectory + 1440 ; $491c
+	ld hl, sSaveHeader + 3 * SAVE_HEADER_CHUNK ; $491c
 	ld de, wTextBuffer ; $491f
-	ld c, $20 ; $4922
+	ld c, SAVE_HEADER_CHUNK / 16 ; $4922
 	call CopyMemoryFast ; $4924
 	ld a, $01 ; $4927
 	ldh [hSramBank], a ; $4929
 	ld [rRAMB], a ; $492b
 	ld hl, wTextBuffer ; $492e
-	ld de, sSaveBlockDirectory + 1440 ; $4931
-	ld c, $20 ; $4934
+	ld de, sSaveHeader + 3 * SAVE_HEADER_CHUNK ; $4931
+	ld c, SAVE_HEADER_CHUNK / 16 ; $4934
 	call CopyMemoryFast ; $4936
 	ld a, $00 ; $4939
 	ldh [hSramBank], a ; $493b
@@ -236,60 +236,60 @@ ValidateSaveRam:
 	ld a, $01 ; $4980
 	ldh [hSramBank], a ; $4982
 	ld [rRAMB], a ; $4984
-	ld hl, $a000 ; $4987
+	ld hl, sSaveHeader ; $4987
 	ld de, wTextBuffer ; $498a
-	ld c, $20 ; $498d
+	ld c, SAVE_HEADER_CHUNK / 16 ; $498d
 	call CopyMemoryFast ; $498f
 	ld a, $00 ; $4992
 	ldh [hSramBank], a ; $4994
 	ld [rRAMB], a ; $4996
 	ld hl, wTextBuffer ; $4999
-	ld de, $a000 ; $499c
-	ld c, $20 ; $499f
+	ld de, sSaveHeader ; $499c
+	ld c, SAVE_HEADER_CHUNK / 16 ; $499f
 	call CopyMemoryFast ; $49a1
 	ld a, $01 ; $49a4
 	ldh [hSramBank], a ; $49a6
 	ld [rRAMB], a ; $49a8
-	ld hl, sSaveBlockDirectory + 416 ; $49ab
+	ld hl, sSaveHeader + 1 * SAVE_HEADER_CHUNK ; $49ab
 	ld de, wTextBuffer ; $49ae
-	ld c, $20 ; $49b1
+	ld c, SAVE_HEADER_CHUNK / 16 ; $49b1
 	call CopyMemoryFast ; $49b3
 	ld a, $00 ; $49b6
 	ldh [hSramBank], a ; $49b8
 	ld [rRAMB], a ; $49ba
 	ld hl, wTextBuffer ; $49bd
-	ld de, sSaveBlockDirectory + 416 ; $49c0
-	ld c, $20 ; $49c3
+	ld de, sSaveHeader + 1 * SAVE_HEADER_CHUNK ; $49c0
+	ld c, SAVE_HEADER_CHUNK / 16 ; $49c3
 	call CopyMemoryFast ; $49c5
 	ld a, $01 ; $49c8
 	ldh [hSramBank], a ; $49ca
 	ld [rRAMB], a ; $49cc
-	ld hl, sSaveBlockDirectory + 928 ; $49cf
+	ld hl, sSaveHeader + 2 * SAVE_HEADER_CHUNK ; $49cf
 	ld de, wTextBuffer ; $49d2
-	ld c, $20 ; $49d5
+	ld c, SAVE_HEADER_CHUNK / 16 ; $49d5
 	call CopyMemoryFast ; $49d7
 	ld a, $00 ; $49da
 	ldh [hSramBank], a ; $49dc
 	ld [rRAMB], a ; $49de
 	ld hl, wTextBuffer ; $49e1
-	ld de, sSaveBlockDirectory + 928 ; $49e4
-	ld c, $20 ; $49e7
+	ld de, sSaveHeader + 2 * SAVE_HEADER_CHUNK ; $49e4
+	ld c, SAVE_HEADER_CHUNK / 16 ; $49e7
 	call CopyMemoryFast ; $49e9
 	ld a, $01 ; $49ec
 	ldh [hSramBank], a ; $49ee
 	ld [rRAMB], a ; $49f0
-	ld hl, sSaveBlockDirectory + 1440 ; $49f3
+	ld hl, sSaveHeader + 3 * SAVE_HEADER_CHUNK ; $49f3
 	ld de, wTextBuffer ; $49f6
-	ld c, $20 ; $49f9
+	ld c, SAVE_HEADER_CHUNK / 16 ; $49f9
 	call CopyMemoryFast ; $49fb
 	ld a, $00 ; $49fe
 	ldh [hSramBank], a ; $4a00
 	ld [rRAMB], a ; $4a02
 	ld hl, wTextBuffer ; $4a05
-	ld de, sSaveBlockDirectory + 1440 ; $4a08
-	ld c, $20 ; $4a0b
+	ld de, sSaveHeader + 3 * SAVE_HEADER_CHUNK ; $4a08
+	ld c, SAVE_HEADER_CHUNK / 16 ; $4a0b
 	call CopyMemoryFast ; $4a0d
-	ld hl, $a000 ; $4a10
+	ld hl, sSaveHeader ; $4a10 the signature is at sSaveSignature (docs/bugs.md)
 	ld de, SaveSignature ; $4a13
 	call CompareSaveSignature ; $4a16
 	jr nz, .wipeAllSaveRam ; $4a19
@@ -401,7 +401,7 @@ WriteSaveBlock:
 	ld a, [hl+] ; $4aad
 	ld b, [hl] ; $4aae
 	ld c, a ; $4aaf
-	ld hl, $a000 ; $4ab0
+	ld hl, SRAM_BASE ; $4ab0
 	add hl, de ; $4ab3
 	ld d, h ; $4ab4
 	ld e, l ; $4ab5

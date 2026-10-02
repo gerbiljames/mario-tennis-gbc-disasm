@@ -10,6 +10,41 @@ def WRAMX_SIZE equ $1000
 def WRAMX_END  equ WRAMX_BASE + WRAMX_SIZE
 def STACK_TOP equ $d000
 
+; --- Battery save (docs/save_format.md) ---
+; SRAM bank 0 opens with the 2 KiB header: signature, master checksum, flags
+; and the 113-entry block directory. MirrorSaveHeaderToBank1 copies it to
+; bank 1 in four chunks staged through wTextBuffer. A directory entry's
+; offset field counts from SRAM_BASE in the entry's own SRAM bank.
+def SRAM_BASE           equ $a000
+def SRAM_BANK_SIZE      equ $2000
+def SAVE_HEADER_CHUNK   equ $200
+def SAVEDIR_ENTRY_SIZE  equ 16
+def SAVEDIR_VALID       equ 0 ; 1 = in use
+def SAVEDIR_BANK        equ 1 ; SRAM bank of the data
+def SAVEDIR_OFFSET      equ 2 ; word, from SRAM_BASE
+def SAVEDIR_LENGTH      equ 4 ; word
+def SAVEDIR_CHECKSUM    equ 6 ; word, byte-sum of the data
+def SAVEDIR_TAG         equ 8 ; word, high byte first
+; Block ids (WriteSaveBlock/ReadSaveBlock and friends take one in b). The
+; bank-1 backup of block n (n <= $0a) is n + SAVEBLOCK_BACKUP.
+def SAVEBLOCK_SLOT0             equ $00 ; story slot primary: image of $c800-$caff
+def SAVEBLOCK_SLOT0_EXTRA       equ $01 ; story slot secondary block
+def SAVEBLOCK_SLOT1             equ $02
+def SAVEBLOCK_SLOT1_EXTRA       equ $03
+def SAVEBLOCK_SLOT2             equ $04
+def SAVEBLOCK_SLOT2_EXTRA       equ $05
+def SAVEBLOCK_PRESERVED         equ $06 ; kept across a full save wipe
+def SAVEBLOCK_SPARE7            equ $07 ; $07-$0a: small records only unreachable code touches
+def SAVEBLOCK_SPARE8            equ $08
+def SAVEBLOCK_SPARE9            equ $09
+def SAVEBLOCK_SPARE10           equ $0a
+def SAVEBLOCK_N64_RECORDS       equ $0b ; Transfer Pak records and the unlock flags
+def SAVEBLOCK_BACKUP            equ $1b
+def SAVEBLOCK_EXHIBITION        equ $36 ; save-and-quit resume image of wStorySlotData
+def SAVEBLOCK_EXHIBITION_BACKUP equ $37
+def SAVEBLOCK_MINIGAME_RECORDS  equ $38 ; + story slot; backups at + 3
+def SAVEBLOCK_STAR_GRID         equ $3e ; star-character exhibition victory grid
+
 ; One VRAM bank: the three tile blocks and both maps.
 def VRAM_SIZE equ $2000
 

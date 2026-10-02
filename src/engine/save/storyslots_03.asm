@@ -72,9 +72,9 @@ Unused_03_ResetAllSaveBlocks:
 	call EraseStorySlotSaveData ; $4b6f
 	ld a, $00 ; $4b72
 	ld [wCurrentStorySlot], a ; $4b74
-	ld b, $36 ; $4b77
+	ld b, SAVEBLOCK_EXHIBITION ; $4b77
 	call InvalidateSaveBlock ; $4b79
-	ld b, $37 ; $4b7c
+	ld b, SAVEBLOCK_EXHIBITION_BACKUP ; $4b7c
 	call InvalidateSaveBlock ; $4b7e
 	ld a, $0a ; $4b81
 	ld [rRAMG], a ; $4b83
@@ -118,7 +118,7 @@ ReadSaveBlock:
 	ld a, [hl+] ; $4bc5
 	ld b, [hl] ; $4bc6
 	ld c, a ; $4bc7
-	ld hl, $a000 ; $4bc8
+	ld hl, SRAM_BASE ; $4bc8
 	add hl, de ; $4bcb
 	ld d, h ; $4bcc
 	ld e, l ; $4bcd
@@ -208,7 +208,7 @@ VerifySaveBlock:
 	ld a, [hl+] ; $4c3e
 	ld b, [hl] ; $4c3f
 	ld c, a ; $4c40
-	ld hl, $a000 ; $4c41
+	ld hl, SRAM_BASE ; $4c41
 	add hl, de ; $4c44
 	ld d, h ; $4c45
 	ld e, l ; $4c46

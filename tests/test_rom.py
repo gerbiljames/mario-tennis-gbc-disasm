@@ -64,7 +64,7 @@ class Source(unittest.TestCase):
         self.assertLessEqual(count(r"^\tld (?:de|hl|bc), \$[89][0-9a-f]{3} ;"), 60)
 
     def test_copy_lengths_follow_their_blobs(self):
-        self.assertEqual(count(r"^\tld c, \((?!WRAMX_END)\w+ - \w+\) / 16 ;"), 34)
+        self.assertEqual(count(r"^\tld c, \((?!WRAMX_END|[whs][A-Z])\w+ - \w+\) / 16 ;"), 34)
         n = count(r"^\tld c, (\w+)_SIZE / 16 ;")
         self.assertGreaterEqual(n, 90)
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob

@@ -9,14 +9,14 @@ RepairAllSaveSlots:
 	call RestoreBlock36FromBackup ; $567e
 	ret ; $5681
 RestoreBlock36FromBackup:
-	ld a, $36 ; $5682
+	ld a, SAVEBLOCK_EXHIBITION ; $5682
 	ld b, a ; $5684
 	ld hl, wDecompBuffer ; $5685
 	call ReadSaveBlock ; $5688
 	cp $ff ; $568b
 	ret nz ; $568d
 	push bc ; $568e
-	ld a, $37 ; $568f
+	ld a, SAVEBLOCK_EXHIBITION_BACKUP ; $568f
 	ld b, a ; $5691
 	call ReadSaveBlock ; $5692
 	or a ; $5695
@@ -37,7 +37,7 @@ ApplyN64RecordsUnlockFlags:
 	push hl ; $56ab
 	push_wram_bank WRAM_SOUND ; $56ac
 	ld hl, wSaveBlockBuffer ; $56b5
-	ld b, $0b ; $56b8
+	ld b, SAVEBLOCK_N64_RECORDS ; $56b8
 	call ReadSaveBlock ; $56ba
 	or a ; $56bd
 	jr nz, .restore ; $56be
@@ -81,7 +81,7 @@ UpdateUnlockablesSaveBlock:
 	push hl ; $56fe
 	push_wram_bank WRAM_SOUND ; $56ff
 	ld hl, wSaveBlockBuffer ; $5708
-	ld b, $0b ; $570b
+	ld b, SAVEBLOCK_N64_RECORDS ; $570b
 	call ReadSaveBlock ; $570d
 	or a ; $5710
 	jp nz, .restore ; $5711
@@ -140,7 +140,7 @@ UpdateUnlockablesSaveBlock:
 	ld [hl], a ; $5771
 .zero6:
 	ld hl, wSaveBlockBuffer ; $5772
-	ld b, $0b ; $5775
+	ld b, SAVEBLOCK_N64_RECORDS ; $5775
 	ld de, $0000 ; $5777
 	call WriteSaveBlock ; $577a
 .restore:
@@ -157,7 +157,7 @@ SetAllUnlockablesInSaveBlock:
 	push hl ; $578a
 	push_wram_bank WRAM_SOUND ; $578b
 	ld hl, wSaveBlockBuffer ; $5794
-	ld b, $0b ; $5797
+	ld b, SAVEBLOCK_N64_RECORDS ; $5797
 	call ReadSaveBlock ; $5799
 	or a ; $579c
 	jp nz, .restore ; $579d
@@ -180,7 +180,7 @@ SetAllUnlockablesInSaveBlock:
 	ld a, $01 ; $57c1
 	ld [hl], a ; $57c3
 	ld hl, wSaveBlockBuffer ; $57c4
-	ld b, $0b ; $57c7
+	ld b, SAVEBLOCK_N64_RECORDS ; $57c7
 	ld de, $0000 ; $57c9
 	call WriteSaveBlock ; $57cc
 .restore:
@@ -267,14 +267,14 @@ WriteBlock6WithBackup:
 	push de ; $5845
 	push hl ; $5846
 	ld de, $0000 ; $5847
-	ld b, $06 ; $584a
+	ld b, SAVEBLOCK_PRESERVED ; $584a
 	call WriteSaveBlock ; $584c
 	or a ; $584f
 	jr nz, .step ; $5850
 	call VerifySaveBlock ; $5852
 	or a ; $5855
 	jr nz, .step ; $5856
-	ld b, $21 ; $5858
+	ld b, SAVEBLOCK_PRESERVED + SAVEBLOCK_BACKUP ; $5858
 	call WriteSaveBlock ; $585a
 	or a ; $585d
 	jr nz, .step ; $585e
@@ -294,7 +294,7 @@ ReadBlock6:
 	push bc ; $586f
 	push de ; $5870
 	push hl ; $5871
-	ld b, $06 ; $5872
+	ld b, SAVEBLOCK_PRESERVED ; $5872
 	call ReadSaveBlock ; $5874
 	pop hl ; $5877
 	pop de ; $5878
@@ -305,14 +305,14 @@ Unused_03_WriteBlock7WithBackup:
 	push de ; $587c
 	push hl ; $587d
 	ld de, $0000 ; $587e
-	ld b, $07 ; $5881
+	ld b, SAVEBLOCK_SPARE7 ; $5881
 	call WriteSaveBlock ; $5883
 	or a ; $5886
 	jr nz, .step ; $5887
 	call VerifySaveBlock ; $5889
 	or a ; $588c
 	jr nz, .step ; $588d
-	ld b, $22 ; $588f
+	ld b, SAVEBLOCK_SPARE7 + SAVEBLOCK_BACKUP ; $588f
 	call WriteSaveBlock ; $5891
 	or a ; $5894
 	jr nz, .step ; $5895
@@ -332,7 +332,7 @@ Unused_03_ReadBlock7:
 	push bc ; $58a6
 	push de ; $58a7
 	push hl ; $58a8
-	ld b, $07 ; $58a9
+	ld b, SAVEBLOCK_SPARE7 ; $58a9
 	call ReadSaveBlock ; $58ab
 	pop hl ; $58ae
 	pop de ; $58af
@@ -343,14 +343,14 @@ Unused_03_WriteBlock8WithBackup:
 	push de ; $58b3
 	push hl ; $58b4
 	ld de, $0000 ; $58b5
-	ld b, $08 ; $58b8
+	ld b, SAVEBLOCK_SPARE8 ; $58b8
 	call WriteSaveBlock ; $58ba
 	or a ; $58bd
 	jr nz, .step ; $58be
 	call VerifySaveBlock ; $58c0
 	or a ; $58c3
 	jr nz, .step ; $58c4
-	ld b, $23 ; $58c6
+	ld b, SAVEBLOCK_SPARE8 + SAVEBLOCK_BACKUP ; $58c6
 	call WriteSaveBlock ; $58c8
 	or a ; $58cb
 	jr nz, .step ; $58cc
@@ -370,7 +370,7 @@ Unused_03_ReadBlock8:
 	push bc ; $58dd
 	push de ; $58de
 	push hl ; $58df
-	ld b, $08 ; $58e0
+	ld b, SAVEBLOCK_SPARE8 ; $58e0
 	call ReadSaveBlock ; $58e2
 	pop hl ; $58e5
 	pop de ; $58e6
@@ -381,14 +381,14 @@ Unused_03_WriteBlock9WithBackup:
 	push de ; $58ea
 	push hl ; $58eb
 	ld de, $0000 ; $58ec
-	ld b, $09 ; $58ef
+	ld b, SAVEBLOCK_SPARE9 ; $58ef
 	call WriteSaveBlock ; $58f1
 	or a ; $58f4
 	jr nz, .step ; $58f5
 	call VerifySaveBlock ; $58f7
 	or a ; $58fa
 	jr nz, .step ; $58fb
-	ld b, $24 ; $58fd
+	ld b, SAVEBLOCK_SPARE9 + SAVEBLOCK_BACKUP ; $58fd
 	call WriteSaveBlock ; $58ff
 	or a ; $5902
 	jr nz, .step ; $5903
@@ -408,7 +408,7 @@ Unused_03_ReadBlock9:
 	push bc ; $5914
 	push de ; $5915
 	push hl ; $5916
-	ld b, $09 ; $5917
+	ld b, SAVEBLOCK_SPARE9 ; $5917
 	call ReadSaveBlock ; $5919
 	pop hl ; $591c
 	pop de ; $591d
@@ -419,14 +419,14 @@ Unused_03_WriteBlock10WithBackup:
 	push de ; $5921
 	push hl ; $5922
 	ld de, $0000 ; $5923
-	ld b, $0a ; $5926
+	ld b, SAVEBLOCK_SPARE10 ; $5926
 	call WriteSaveBlock ; $5928
 	or a ; $592b
 	jr nz, .step ; $592c
 	call VerifySaveBlock ; $592e
 	or a ; $5931
 	jr nz, .step ; $5932
-	ld b, $25 ; $5934
+	ld b, SAVEBLOCK_SPARE10 + SAVEBLOCK_BACKUP ; $5934
 	call WriteSaveBlock ; $5936
 	or a ; $5939
 	jr nz, .step ; $593a
@@ -446,7 +446,7 @@ Unused_03_ReadBlock10:
 	push bc ; $594b
 	push de ; $594c
 	push hl ; $594d
-	ld b, $0a ; $594e
+	ld b, SAVEBLOCK_SPARE10 ; $594e
 	call ReadSaveBlock ; $5950
 	pop hl ; $5953
 	pop de ; $5954

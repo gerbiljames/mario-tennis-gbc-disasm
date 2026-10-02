@@ -81,7 +81,9 @@ Two button codes call `ApplyUnlockEverythingCheat` (then
 The whole header region `$a000-$a7ff` is mirrored verbatim into SRAM
 bank 1 by `MirrorSaveHeaderToBank1` after every block write, and every
 save-flag write (`UpdateSaveHeaderChecksum`) recomputes the master checksum
-and copies the first 64 bytes, `$a000-$a03f`, to bank 1. On boot
+and copies the first 64 bytes, `$a000-$a03f`, to bank 1: the signature,
+checksum and version, but not the flags at `$a040`, so the mirror's
+checksum covers flags it does not hold. On boot
 `ValidateSaveRam` checks signature + master checksum; on failure it
 restores bank 1's mirror and re-checks. The mirror never helps, for two
 reasons (`docs/bugs.md`): boot clears a save flag before validating, which
@@ -91,6 +93,11 @@ elsewhere, and the re-check compares the signature at `$a000` instead of
 re-init.
 
 ## Block directory entry (16 bytes, at `$a060 + 16*i`)
+
+In the source the fields are `SAVEDIR_VALID` ... `SAVEDIR_TAG`
+(`include/constants.inc`), an entry is `sSaveBlockDirectory + id *
+SAVEDIR_ENTRY_SIZE`, and the block ids the code passes are `SAVEBLOCK_*`
+(a bank-1 backup is `id + SAVEBLOCK_BACKUP`).
 
 | off | field |
 |---|---|

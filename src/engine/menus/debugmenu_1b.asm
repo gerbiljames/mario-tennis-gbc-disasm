@@ -470,7 +470,7 @@ Unused_1b_ReadUnlockFlagsSaveBlock:
 	push bc ; $686f
 	push_wram_bank WRAM_SCENE ; $6870
 	ld hl, wUnlockFlagsBlock ; $6879
-	ld b, $0b ; $687c
+	ld b, SAVEBLOCK_N64_RECORDS ; $687c
 	farcall ReadSaveBlock ; $687e
 	ld b, a ; $6881
 	pop_wram_bank ; $6882
@@ -481,7 +481,7 @@ Unused_1b_WriteUnlockFlagsSaveBlock:
 	push_wram_bank WRAM_SCENE ; $688a
 	ld hl, wUnlockFlagsBlock ; $6893
 	ld de, $0000 ; $6896
-	ld b, $0b ; $6899
+	ld b, SAVEBLOCK_N64_RECORDS ; $6899
 	farcall WriteSaveBlock ; $689b
 	pop_wram_bank ; $689e
 	ret ; $68a3
