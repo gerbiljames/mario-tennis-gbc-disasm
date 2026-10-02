@@ -321,11 +321,15 @@ Court and menu screens use the flat 32×32 form instead — `wShadowTilemap`
 
 ### 2.5 The `tilemap` spec
 
-Screen layouts are written as rows of cells in two places. The 213
+Screen layouts are written as rows of cells in two places. The 231
 extracted blobs `data.manifest` tags `tilemap:W` (all `lz_*`
 streams, decompressed first) get a `.tilemap` text grid beside their `.bin`
 (`tools/tilemap.py`); the Makefile encodes an edited grid back into the blob
-and `make check` (`tilemap`) round-trips every one. The 70 small layouts
+and `make check` (`tilemap`) round-trips every one. The character-data screens' patches
+are grids too: each is a run of a 32-wide plane copied in at a row and column
+(`wDecompBuffer + 18 * TILEMAP_WIDTH` and so on); the ones that start at
+column 0 are tagged, and the ones that start mid-row keep their `.bin` only,
+since a 32-wide grid would show them shifted. The 70 small layouts
 written in the source itself carry a `(tilemap:W)` comment on their first
 line. Both use the same lines:
 
@@ -1012,7 +1016,7 @@ structure the source claims is true. At HEAD, all thirteen pass:
 | `literals` | 35808 | no ROM address is written as a number where the source moves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
 | `gfx` | 2728 | every PNG encodes back to the blob it was decoded from |
-| `tilemap` | 213 | every tilemap grid encodes back to its blob |
+| `tilemap` | 231 | every tilemap grid encodes back to its blob |
 | `slots` | 4967 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4754 | a routine is named `Unused` exactly when nothing reachable reaches it |
 

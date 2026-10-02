@@ -28,12 +28,12 @@ ExpLevelDownTilemapPatch3:
 	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch3.bin" ; $7814, 9 bytes
 ExpLevelDownTilemapPatch4:
 	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch4.bin" ; $781d, 5 bytes
-ExpDistributionScreenGfx5:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx5.bin" ; $7822, 47 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx5.inc" ; DEF ExpDistributionScreenGfx5_SIZE EQU its decoded length, generated from the .bin by make
-ExpDistributionScreenGfx6:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx6.bin" ; $7851, 37 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx6.inc" ; DEF ExpDistributionScreenGfx6_SIZE EQU its decoded length, generated from the .bin by make
+ExpDistributionScreenPatchTilemap:
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenPatchTilemap.bin" ; $7822, 47 bytes
+	INCLUDE "data/bank_01d/lz_ExpDistributionScreenPatchTilemap.inc" ; DEF ExpDistributionScreenPatchTilemap_SIZE EQU its decoded length, generated from the .bin by make
+ExpDistributionScreenPatchAttrmap:
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenPatchAttrmap.bin" ; $7851, 37 bytes
+	INCLUDE "data/bank_01d/lz_ExpDistributionScreenPatchAttrmap.inc" ; DEF ExpDistributionScreenPatchAttrmap_SIZE EQU its decoded length, generated from the .bin by make
 ExpDistributionScreenGfx7:
 	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx7.bin" ; $7876, 25 bytes
 	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx7.inc" ; DEF ExpDistributionScreenGfx7_SIZE EQU its decoded length, generated from the .bin by make

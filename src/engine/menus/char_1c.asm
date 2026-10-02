@@ -243,60 +243,60 @@ CharDataScreen_BuildTilemap:
 CharDataScreen_LoadUIGraphics:
 	call CharDataScreen_LoadScreen ; $4208
 	wram_bank WRAM_STAGING ; $420b
-	ld hl, CharDataScreenUIGraphicsGfx4 ; $4211
-	ld de, wDecompBuffer + 62 * TILE_SIZE ; $4214
+	ld hl, CharDataScreenUIPatch2Tilemap ; $4211
+	ld de, wDecompBuffer + 31 * TILEMAP_WIDTH ; $4214
 	call DecompressData ; $4217
-	ld hl, wDecompBuffer + 62 * TILE_SIZE ; $421a
-	ld bc, CharDataScreenUIGraphicsGfx4_SIZE ; $421d
+	ld hl, wDecompBuffer + 31 * TILEMAP_WIDTH ; $421a
+	ld bc, CharDataScreenUIPatch2Tilemap_SIZE ; $421d
 	call CopyWram1ToWram3 ; $4220
 	wram_bank WRAM_STAGING ; $4223
-	ld hl, CharDataScreenUIGraphicsGfx5 ; $4229
-	ld de, wDecompBuffer + 62 * TILE_SIZE ; $422c
+	ld hl, CharDataScreenUIPatch2Attrmap ; $4229
+	ld de, wDecompBuffer + 31 * TILEMAP_WIDTH ; $422c
 	call DecompressData ; $422f
-	ld hl, wDecompBuffer + 62 * TILE_SIZE ; $4232
-	ld bc, CharDataScreenUIGraphicsGfx5_SIZE ; $4235
+	ld hl, wDecompBuffer + 31 * TILEMAP_WIDTH ; $4232
+	ld bc, CharDataScreenUIPatch2Attrmap_SIZE ; $4235
 	call CopyWram1ToWram2 ; $4238
 	wram_bank WRAM_STAGING ; $423b
-	ld hl, CharDataScreenUIGraphicsGfx6 ; $4241
-	ld de, wDecompBuffer + 65 * TILE_SIZE ; $4244
+	ld hl, CharDataScreenUIPatch3Tilemap ; $4241
+	ld de, wDecompBuffer + 32 * TILEMAP_WIDTH + 16 ; $4244
 	call DecompressData ; $4247
-	ld hl, wDecompBuffer + 65 * TILE_SIZE ; $424a
-	ld bc, CharDataScreenUIGraphicsGfx6_SIZE ; $424d
+	ld hl, wDecompBuffer + 32 * TILEMAP_WIDTH + 16 ; $424a
+	ld bc, CharDataScreenUIPatch3Tilemap_SIZE ; $424d
 	call CopyWram1ToWram3 ; $4250
 	wram_bank WRAM_STAGING ; $4253
-	ld hl, CharDataScreenUIGraphicsGfx7 ; $4259
-	ld de, wDecompBuffer + 65 * TILE_SIZE ; $425c
+	ld hl, CharDataScreenUIPatch3Attrmap ; $4259
+	ld de, wDecompBuffer + 32 * TILEMAP_WIDTH + 16 ; $425c
 	call DecompressData ; $425f
-	ld hl, wDecompBuffer + 65 * TILE_SIZE ; $4262
-	ld bc, CharDataScreenUIGraphicsGfx7_SIZE ; $4265
+	ld hl, wDecompBuffer + 32 * TILEMAP_WIDTH + 16 ; $4262
+	ld bc, CharDataScreenUIPatch3Attrmap_SIZE ; $4265
 	call CopyWram1ToWram2 ; $4268
 	wram_bank WRAM_STAGING ; $426b
-	ld hl, CharDataScreenUIGraphicsGfx2 ; $4271
-	ld de, wDecompBuffer + 58 * TILE_SIZE ; $4274
+	ld hl, CharDataScreenUIPatch1Tilemap ; $4271
+	ld de, wDecompBuffer + 29 * TILEMAP_WIDTH ; $4274
 	call DecompressData ; $4277
-	ld hl, wDecompBuffer + 58 * TILE_SIZE ; $427a
-	ld bc, CharDataScreenUIGraphicsGfx2_SIZE ; $427d
+	ld hl, wDecompBuffer + 29 * TILEMAP_WIDTH ; $427a
+	ld bc, CharDataScreenUIPatch1Tilemap_SIZE ; $427d
 	call CopyWram1ToWram3 ; $4280
 	wram_bank WRAM_STAGING ; $4283
-	ld hl, CharDataScreenUIGraphicsGfx3 ; $4289
-	ld de, wDecompBuffer + 58 * TILE_SIZE ; $428c
+	ld hl, CharDataScreenUIPatch1Attrmap ; $4289
+	ld de, wDecompBuffer + 29 * TILEMAP_WIDTH ; $428c
 	call DecompressData ; $428f
-	ld hl, wDecompBuffer + 58 * TILE_SIZE ; $4292
-	ld bc, CharDataScreenUIGraphicsGfx3_SIZE ; $4295
+	ld hl, wDecompBuffer + 29 * TILEMAP_WIDTH ; $4292
+	ld bc, CharDataScreenUIPatch1Attrmap_SIZE ; $4295
 	call CopyWram1ToWram2 ; $4298
 	wram_bank WRAM_STAGING ; $429b
-	ld hl, CharDataScreenUIGraphicsGfx0 ; $42a1
-	ld de, wDecompBuffer + 56 * TILE_SIZE ; $42a4
+	ld hl, CharDataScreenUIPatch0Tilemap ; $42a1
+	ld de, wDecompBuffer + 28 * TILEMAP_WIDTH ; $42a4
 	call DecompressData ; $42a7
-	ld hl, wDecompBuffer + 56 * TILE_SIZE ; $42aa
-	ld bc, CharDataScreenUIGraphicsGfx0_SIZE ; $42ad
+	ld hl, wDecompBuffer + 28 * TILEMAP_WIDTH ; $42aa
+	ld bc, CharDataScreenUIPatch0Tilemap_SIZE ; $42ad
 	call CopyWram1ToWram3 ; $42b0
 	wram_bank WRAM_STAGING ; $42b3
-	ld hl, CharDataScreenUIGraphicsGfx1 ; $42b9
-	ld de, wDecompBuffer + 56 * TILE_SIZE ; $42bc
+	ld hl, CharDataScreenUIPatch0Attrmap ; $42b9
+	ld de, wDecompBuffer + 28 * TILEMAP_WIDTH ; $42bc
 	call DecompressData ; $42bf
-	ld hl, wDecompBuffer + 56 * TILE_SIZE ; $42c2
-	ld bc, CharDataScreenUIGraphicsGfx1_SIZE ; $42c5
+	ld hl, wDecompBuffer + 28 * TILEMAP_WIDTH ; $42c2
+	ld bc, CharDataScreenUIPatch0Attrmap_SIZE ; $42c5
 	call CopyWram1ToWram2 ; $42c8
 	ret ; $42cb
 CopyWram1ToWram3:

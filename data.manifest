@@ -671,8 +671,8 @@ bank_01c/RadialOffsetRamp2_1c.bin 07101d 16
 bank_01c/RadialOffsetRamp3_1c.bin 071033 16
 bank_01c/CharDataScreen_LoadScreenPalette.asm 07198c 40 palettes
 bank_01c/lz_CharDataScreenGfx0_1c.bin 0719cc a3a
-bank_01c/lz_CharDataScreenGfx1_1c.bin 072406 63
-bank_01c/lz_CharDataScreenGfx2_1c.bin 072469 3b
+bank_01c/lz_CharDataScreenTilemap_1c.bin 072406 63 tilemap:32
+bank_01c/lz_CharDataScreenAttrmap_1c.bin 072469 3b tilemap:32
 bank_01c/CharDataScreenStatBar00.bin 0724a4 5
 bank_01c/CharDataScreenStatBar01.bin 0724a9 5
 bank_01c/CharDataScreenStatBar02.bin 0724ae 5
@@ -706,29 +706,29 @@ bank_01c/CharDataScreenStatBar29.bin 072535 5
 bank_01c/CharDataScreenStatBar30.bin 07253a 5
 bank_01c/CharDataScreenStatBar31.bin 07253f 5
 bank_01c/CharDataScreenStatBar32.bin 072544 5
-bank_01c/lz_CharDataScreenGfx3_1c.bin 072549 36
-bank_01c/lz_CharDataScreenGfx4.bin 07257f 17
+bank_01c/lz_CharDataScreenBand1Tilemap.bin 072549 36 tilemap:32
+bank_01c/lz_CharDataScreenBand1Attrmap.bin 07257f 17 tilemap:32
 bank_01c/CharDataScreenPage0Columns.bin 072596 32
-bank_01c/lz_CharDataScreenGfx5.bin 0725c8 43
-bank_01c/lz_CharDataScreenGfx6.bin 07260b 17
+bank_01c/lz_CharDataScreenBand2Tilemap.bin 0725c8 43 tilemap:32
+bank_01c/lz_CharDataScreenBand2Attrmap.bin 07260b 17 tilemap:32
 bank_01c/CharDataScreenPage1Columns.bin 072622 46
-bank_01c/lz_CharDataScreenGfx7.bin 072668 3a
-bank_01c/lz_CharDataScreenGfx8.bin 0726a2 18
+bank_01c/lz_CharDataScreenBand3Tilemap.bin 072668 3a
+bank_01c/lz_CharDataScreenBand3Attrmap.bin 0726a2 18
 bank_01c/CharDataScreenPage2Columns.bin 0726ba 32
-bank_01c/lz_CharDataScreenGfx9.bin 0726ec 48
-bank_01c/lz_CharDataScreenGfx10.bin 072734 19
+bank_01c/lz_CharDataScreenBand4Tilemap.bin 0726ec 48
+bank_01c/lz_CharDataScreenBand4Attrmap.bin 072734 19
 bank_01c/CharDataScreenPage3Columns.bin 07274d 5a
 bank_01c/CharDataScreenPage4Columns.bin 0727a7 1e
-bank_01c/lz_CharDataScreenGfx11.bin 0727c5 e
-bank_01c/lz_CharDataScreenGfx12.bin 0727d3 7
-bank_01c/lz_CharDataScreenUIGraphicsGfx0.bin 0727da 18
-bank_01c/lz_CharDataScreenUIGraphicsGfx1.bin 0727f2 c
-bank_01c/lz_CharDataScreenUIGraphicsGfx2.bin 0727fe 27
-bank_01c/lz_CharDataScreenUIGraphicsGfx3.bin 072825 9
-bank_01c/lz_CharDataScreenUIGraphicsGfx4.bin 07282e 1a
-bank_01c/lz_CharDataScreenUIGraphicsGfx5.bin 072848 7
-bank_01c/lz_CharDataScreenUIGraphicsGfx6.bin 07284f 1c
-bank_01c/lz_CharDataScreenUIGraphicsGfx7.bin 07286b 7
+bank_01c/lz_CharDataScreenBand5Tilemap.bin 0727c5 e
+bank_01c/lz_CharDataScreenBand5Attrmap.bin 0727d3 7
+bank_01c/lz_CharDataScreenUIPatch0Tilemap.bin 0727da 18 tilemap:32
+bank_01c/lz_CharDataScreenUIPatch0Attrmap.bin 0727f2 c tilemap:32
+bank_01c/lz_CharDataScreenUIPatch1Tilemap.bin 0727fe 27 tilemap:32
+bank_01c/lz_CharDataScreenUIPatch1Attrmap.bin 072825 9 tilemap:32
+bank_01c/lz_CharDataScreenUIPatch2Tilemap.bin 07282e 1a
+bank_01c/lz_CharDataScreenUIPatch2Attrmap.bin 072848 7
+bank_01c/lz_CharDataScreenUIPatch3Tilemap.bin 07284f 1c
+bank_01c/lz_CharDataScreenUIPatch3Attrmap.bin 07286b 7
 bank_01c/UnusedShiftGfx00.bin 072880 40 gfx
 bank_01c/UnusedShiftGfx01.bin 0728c0 40 gfx
 bank_01c/UnusedShiftGfx02.bin 072900 40 gfx
@@ -764,8 +764,8 @@ bank_01c/UnusedShiftGfx31.bin 073040 40 gfx
 bank_01c/lz_CharDataScreenGfx13.bin 073080 96
 bank_01c/CharDataScreenBgAndPalettes.asm 073541 40 palettes
 bank_01c/lz_CharDataScreenBgAndPalettes0.bin 073581 75e
-bank_01c/lz_CharDataScreenBgAndPalettes1.bin 073cdf 140
-bank_01c/lz_CharDataScreenBgAndPalettes2.bin 073e1f d8
+bank_01c/lz_CharDataScreenBgTilemap.bin 073cdf 140 tilemap:32
+bank_01c/lz_CharDataScreenBgAttrmap.bin 073e1f d8 tilemap:32
 bank_01d/DrillDisplayData_1d.bin 075c25 9
 bank_01d/StatPageTilemapPatch0.bin 075c2e 5
 bank_01d/CharDataSummaryPageTilemapPatch0.bin 075c33 35
@@ -846,21 +846,21 @@ bank_01d/PartnerStatPageTilemapPatch27.bin 0762d9 21
 bank_01d/PartnerStatPageTilemapPatch28.bin 0762fa 9
 bank_01d/CharDataConfirmScreenTilemapPatch5.bin 076303 d
 bank_01d/CharDataConfirmPromptTilemapPatch.bin 076310 11
-bank_01d/lz_CharDataScreenPageGfx00.bin 076321 a
-bank_01d/lz_CharDataScreenPageGfx01.bin 07632b 9
+bank_01d/lz_CharDataScreenPagePatch0Tilemap.bin 076321 a
+bank_01d/lz_CharDataScreenPagePatch0Attrmap.bin 07632b 9
 bank_01d/CharDataScreenPalettes.bin 076334 8
 bank_01d/lz_CharDataScreenGfx14.bin 07633c b8
-bank_01d/lz_CharDataScreenPageGfx02.bin 0763f4 55
-bank_01d/lz_CharDataScreenPageGfx03.bin 076449 12
-bank_01d/lz_CharDataScreenPageGfx04.bin 07645b 23
-bank_01d/lz_CharDataScreenPageGfx05.bin 07647e 7
-bank_01d/lz_CharDataScreenPageGfx06.bin 076485 e
-bank_01d/lz_CharDataScreenPageGfx07.bin 076493 7
-bank_01d/lz_CharDataScreenPageGfx08.bin 07649a 18
-bank_01d/lz_CharDataScreenPageGfx09.bin 0764b2 9
+bank_01d/lz_CharDataScreenPagePatch1Tilemap.bin 0763f4 55
+bank_01d/lz_CharDataScreenPagePatch1Attrmap.bin 076449 12
+bank_01d/lz_CharDataScreenPagePatch2Tilemap.bin 07645b 23 tilemap:32
+bank_01d/lz_CharDataScreenPagePatch2Attrmap.bin 07647e 7 tilemap:32
+bank_01d/lz_CharDataScreenPagePatch3Tilemap.bin 076485 e tilemap:32
+bank_01d/lz_CharDataScreenPagePatch3Attrmap.bin 076493 7 tilemap:32
+bank_01d/lz_CharDataScreenPagePatch4Tilemap.bin 07649a 18 tilemap:32
+bank_01d/lz_CharDataScreenPagePatch4Attrmap.bin 0764b2 9 tilemap:32
 bank_01d/lz_CharDataScreenPageGfx10.bin 0764bb 95
-bank_01d/lz_CharDataScreenPageGfx11.bin 076550 18
-bank_01d/lz_CharDataScreenPageGfx12.bin 076568 7
+bank_01d/lz_CharDataScreenPagePatch5Tilemap.bin 076550 18
+bank_01d/lz_CharDataScreenPagePatch5Attrmap.bin 076568 7
 bank_01d/lz_CharDataScreenPageGfx13.bin 07656f 75
 bank_01d/lz_CharDataScreenPageGfx14.bin 0765e4 86
 bank_01d/lz_CharDataScreenPageGraphicsGfx0.bin 07667f 8d
@@ -872,8 +872,8 @@ bank_01d/ExpLevelDownTilemapPatch1.bin 0777f6 11
 bank_01d/ExpLevelDownTilemapPatch2.bin 077807 d
 bank_01d/ExpLevelDownTilemapPatch3.bin 077814 9
 bank_01d/ExpLevelDownTilemapPatch4.bin 07781d 5
-bank_01d/lz_ExpDistributionScreenGfx5.bin 077822 2f gfx
-bank_01d/lz_ExpDistributionScreenGfx6.bin 077851 25 gfx
+bank_01d/lz_ExpDistributionScreenPatchTilemap.bin 077822 2f gfx
+bank_01d/lz_ExpDistributionScreenPatchAttrmap.bin 077851 25 gfx
 bank_01d/lz_ExpDistributionScreenGfx7.bin 077876 19 gfx
 bank_01d/ExpDistributionScreenPalettes.bin 07788f 18
 bank_01d/lz_ExpDistributionScreenGfx8.bin 0778a7 89 gfx

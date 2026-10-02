@@ -503,12 +503,12 @@ CharDataScreen_LoadScreenPalette:
 	INCLUDE "data/bank_01c/CharDataScreen_LoadScreenPalette.asm" ; $598c, 64 bytes (palettes)
 CharDataScreenGfx0_1c:
 	INCBIN "data/bank_01c/lz_CharDataScreenGfx0_1c.bin" ; $59cc, 2618 bytes
-CharDataScreenGfx1_1c:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx1_1c.bin" ; $6406, 99 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx1_1c.inc" ; DEF CharDataScreenGfx1_1c_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx2_1c:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx2_1c.bin" ; $6469, 59 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx2_1c.inc" ; DEF CharDataScreenGfx2_1c_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenTilemap_1c:
+	INCBIN "data/bank_01c/lz_CharDataScreenTilemap_1c.bin" ; $6406, 99 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenTilemap_1c.inc" ; DEF CharDataScreenTilemap_1c_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenAttrmap_1c:
+	INCBIN "data/bank_01c/lz_CharDataScreenAttrmap_1c.bin" ; $6469, 59 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenAttrmap_1c.inc" ; DEF CharDataScreenAttrmap_1c_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenStatBar00:
 	INCBIN "data/bank_01c/CharDataScreenStatBar00.bin" ; $64a4, 5 bytes
 CharDataScreenStatBar01:
@@ -575,69 +575,69 @@ CharDataScreenStatBar31:
 	INCBIN "data/bank_01c/CharDataScreenStatBar31.bin" ; $653f, 5 bytes
 CharDataScreenStatBar32:
 	INCBIN "data/bank_01c/CharDataScreenStatBar32.bin" ; $6544, 5 bytes
-CharDataScreenGfx3_1c:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx3_1c.bin" ; $6549, 54 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx3_1c.inc" ; DEF CharDataScreenGfx3_1c_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx4:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx4.bin" ; $657f, 23 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx4.inc" ; DEF CharDataScreenGfx4_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand1Tilemap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand1Tilemap.bin" ; $6549, 54 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand1Tilemap.inc" ; DEF CharDataScreenBand1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand1Attrmap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand1Attrmap.bin" ; $657f, 23 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand1Attrmap.inc" ; DEF CharDataScreenBand1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage0Columns:
 	INCBIN "data/bank_01c/CharDataScreenPage0Columns.bin" ; $6596, 50 bytes
-CharDataScreenGfx5:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx5.bin" ; $65c8, 67 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx5.inc" ; DEF CharDataScreenGfx5_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx6:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx6.bin" ; $660b, 23 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx6.inc" ; DEF CharDataScreenGfx6_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand2Tilemap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand2Tilemap.bin" ; $65c8, 67 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand2Tilemap.inc" ; DEF CharDataScreenBand2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand2Attrmap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand2Attrmap.bin" ; $660b, 23 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand2Attrmap.inc" ; DEF CharDataScreenBand2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage1Columns:
 	INCBIN "data/bank_01c/CharDataScreenPage1Columns.bin" ; $6622, 70 bytes
-CharDataScreenGfx7:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx7.bin" ; $6668, 58 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx7.inc" ; DEF CharDataScreenGfx7_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx8:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx8.bin" ; $66a2, 24 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx8.inc" ; DEF CharDataScreenGfx8_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand3Tilemap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand3Tilemap.bin" ; $6668, 58 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand3Tilemap.inc" ; DEF CharDataScreenBand3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand3Attrmap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand3Attrmap.bin" ; $66a2, 24 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand3Attrmap.inc" ; DEF CharDataScreenBand3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage2Columns:
 	INCBIN "data/bank_01c/CharDataScreenPage2Columns.bin" ; $66ba, 50 bytes
-CharDataScreenGfx9:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx9.bin" ; $66ec, 72 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx9.inc" ; DEF CharDataScreenGfx9_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx10:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx10.bin" ; $6734, 25 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx10.inc" ; DEF CharDataScreenGfx10_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand4Tilemap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand4Tilemap.bin" ; $66ec, 72 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand4Tilemap.inc" ; DEF CharDataScreenBand4Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand4Attrmap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand4Attrmap.bin" ; $6734, 25 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand4Attrmap.inc" ; DEF CharDataScreenBand4Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage3Columns:
 	INCBIN "data/bank_01c/CharDataScreenPage3Columns.bin" ; $674d, 90 bytes
 CharDataScreenPage4Columns:
 	INCBIN "data/bank_01c/CharDataScreenPage4Columns.bin" ; $67a7, 30 bytes
-CharDataScreenGfx11:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx11.bin" ; $67c5, 14 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx11.inc" ; DEF CharDataScreenGfx11_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx12:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx12.bin" ; $67d3, 7 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx12.inc" ; DEF CharDataScreenGfx12_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenUIGraphicsGfx0:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx0.bin" ; $67da, 24 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIGraphicsGfx0.inc" ; DEF CharDataScreenUIGraphicsGfx0_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenUIGraphicsGfx1:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx1.bin" ; $67f2, 12 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIGraphicsGfx1.inc" ; DEF CharDataScreenUIGraphicsGfx1_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenUIGraphicsGfx2:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx2.bin" ; $67fe, 39 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIGraphicsGfx2.inc" ; DEF CharDataScreenUIGraphicsGfx2_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenUIGraphicsGfx3:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx3.bin" ; $6825, 9 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIGraphicsGfx3.inc" ; DEF CharDataScreenUIGraphicsGfx3_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenUIGraphicsGfx4:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx4.bin" ; $682e, 26 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIGraphicsGfx4.inc" ; DEF CharDataScreenUIGraphicsGfx4_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenUIGraphicsGfx5:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx5.bin" ; $6848, 7 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIGraphicsGfx5.inc" ; DEF CharDataScreenUIGraphicsGfx5_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenUIGraphicsGfx6:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx6.bin" ; $684f, 28 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIGraphicsGfx6.inc" ; DEF CharDataScreenUIGraphicsGfx6_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenUIGraphicsGfx7:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx7.bin" ; $686b, 7 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIGraphicsGfx7.inc" ; DEF CharDataScreenUIGraphicsGfx7_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand5Tilemap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand5Tilemap.bin" ; $67c5, 14 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand5Tilemap.inc" ; DEF CharDataScreenBand5Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenBand5Attrmap:
+	INCBIN "data/bank_01c/lz_CharDataScreenBand5Attrmap.bin" ; $67d3, 7 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBand5Attrmap.inc" ; DEF CharDataScreenBand5Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenUIPatch0Tilemap:
+	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch0Tilemap.bin" ; $67da, 24 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch0Tilemap.inc" ; DEF CharDataScreenUIPatch0Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenUIPatch0Attrmap:
+	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch0Attrmap.bin" ; $67f2, 12 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch0Attrmap.inc" ; DEF CharDataScreenUIPatch0Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenUIPatch1Tilemap:
+	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch1Tilemap.bin" ; $67fe, 39 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch1Tilemap.inc" ; DEF CharDataScreenUIPatch1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenUIPatch1Attrmap:
+	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch1Attrmap.bin" ; $6825, 9 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch1Attrmap.inc" ; DEF CharDataScreenUIPatch1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenUIPatch2Tilemap:
+	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch2Tilemap.bin" ; $682e, 26 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch2Tilemap.inc" ; DEF CharDataScreenUIPatch2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenUIPatch2Attrmap:
+	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch2Attrmap.bin" ; $6848, 7 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch2Attrmap.inc" ; DEF CharDataScreenUIPatch2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenUIPatch3Tilemap:
+	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch3Tilemap.bin" ; $684f, 28 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch3Tilemap.inc" ; DEF CharDataScreenUIPatch3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+CharDataScreenUIPatch3Attrmap:
+	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch3Attrmap.bin" ; $686b, 7 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch3Attrmap.inc" ; DEF CharDataScreenUIPatch3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 	; $6872, 14 bytes (fill)
 	ds 14, $00
