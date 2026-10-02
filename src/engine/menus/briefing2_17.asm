@@ -366,7 +366,7 @@ CourtDiagramGraphicsList:
 	db $00, $00 ; 0x50
 LoadCourtDiagramObjPalettes:
 	ld hl, CourtDiagramObjPalettes ; $4b0d
-	lb de, $08, $03 ; $4b10 palette index, count
+	ld_obj_pals de, 0, 3 ; $4b10
 	call LoadPaletteShadow ; $4b13
 	ret ; $4b16
 CourtDiagramTiles:

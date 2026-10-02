@@ -254,7 +254,7 @@ LoadMenuFontPalette:
 	push de ; $5052
 	push hl ; $5053
 	ld hl, MenuFontPalettes_01 ; $5054
-	lb de, $00, $01 ; $5057 palette index, count
+	ld_bg_pals de, 0, 1 ; $5057
 	call LoadPaletteShadow ; $505a
 	pop hl ; $505d
 	pop de ; $505e
@@ -347,7 +347,7 @@ Unused_01_LoadMenuBgPalettes3To7:
 	push de ; $5178
 	push hl ; $5179
 	ld hl, vTiles0 + $7c * TILE_SIZE + 8 ; $517a
-	lb de, $03, $05 ; $517d palette index, count
+	ld_bg_pals de, 3, 5 ; $517d
 	call LoadPaletteShadow ; $5180
 	pop hl ; $5183
 	pop de ; $5184
@@ -360,7 +360,7 @@ LoadMenuObjPalettes3To7:
 	push de ; $518a
 	push hl ; $518b
 	ld hl, vTiles0 + $7c * TILE_SIZE + 8 ; $518c
-	lb de, $0b, $05 ; $518f palette index, count
+	ld_obj_pals de, 3, 5 ; $518f
 	call LoadPaletteShadow ; $5192
 	pop hl ; $5195
 	pop de ; $5196

@@ -321,7 +321,7 @@ BuildRankingBoardScreen:
 .loadRankingBoardTiles:
 	call LoadRankingBoardTiles ; $4f4f
 	ld hl, RankingBoardScreenPalettes ; $4f52
-	lb de, $08, $06 ; $4f55 palette index, count
+	ld_obj_pals de, 0, 6 ; $4f55
 	call LoadPaletteShadow ; $4f58
 	ld a, $01 ; $4f5b
 	ld hl, DrawRankingMarkersTask ; $4f5d

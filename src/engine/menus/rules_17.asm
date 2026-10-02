@@ -351,7 +351,7 @@ LoadRulesScreen:
 	farcall PrepareGlyphBuffer ; $717d
 	call ClearRulesScreenTextArea ; $7180
 	ld hl, RulesScreenPalette ; $7183
-	lb de, $09, $02 ; $7186 palette index, count
+	ld_obj_pals de, 1, 2 ; $7186
 	call LoadPalettesImmediate ; $7189
 	ld de, vTiles0 + VRAM_BANK1 ; $718c
 	farcall LoadMenuArrowSpriteTiles ; $718f

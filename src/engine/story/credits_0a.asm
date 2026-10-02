@@ -82,7 +82,7 @@ RunEndingCreditsSequence:
 	sound BGM_CREDITS ; $6e7f
 	farcall LoadMenuFontGfx ; $6e81
 	ld hl, EndingCreditsSequencePalette ; $6e84
-	lb de, $00, $01 ; $6e87 palette index, count
+	ld_bg_pals de, 0, 1 ; $6e87
 	call LoadPalettesMasterOnly ; $6e8a
 	xor a ; $6e8d
 	ld [wStoryCharacterSlot], a ; $6e8e

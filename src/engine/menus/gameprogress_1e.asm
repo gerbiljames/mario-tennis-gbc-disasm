@@ -440,10 +440,10 @@ LoadGameProgressScreenTiles:
 	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
 	ld hl, GameProgressScreenPalettes1 ; $7593
-	lb de, $0a, $01 ; $7596 palette index, count
+	ld_obj_pals de, 2, 1 ; $7596
 	call LoadPaletteShadow ; $7599
 	ld hl, GameProgressScreenPalettes2 ; $759c
-	lb de, $09, $01 ; $759f palette index, count
+	ld_obj_pals de, 1, 1 ; $759f
 	call LoadPaletteShadow ; $75a2
 	ret ; $75a5
 GameProgressHeaderGfx_1e:

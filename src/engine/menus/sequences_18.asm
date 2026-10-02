@@ -70,28 +70,28 @@ FillAllBgPalettes:
 	ld c, SCREENASSET_ShopCutscene ; $7858
 	farcall LoadScreenAssetRecord ; $785a
 	ld hl, AllBgPalettes ; $785d
-	lb de, $00, $01 ; $7860 palette index, count
+	ld_bg_pals de, 0, 1 ; $7860
 	call LoadPaletteShadow ; $7863
 	ld hl, AllBgPalettes ; $7866
-	lb de, $01, $01 ; $7869 palette index, count
+	ld_bg_pals de, 1, 1 ; $7869
 	call LoadPaletteShadow ; $786c
 	ld hl, AllBgPalettes ; $786f
-	lb de, $02, $01 ; $7872 palette index, count
+	ld_bg_pals de, 2, 1 ; $7872
 	call LoadPaletteShadow ; $7875
 	ld hl, AllBgPalettes ; $7878
-	lb de, $03, $01 ; $787b palette index, count
+	ld_bg_pals de, 3, 1 ; $787b
 	call LoadPaletteShadow ; $787e
 	ld hl, AllBgPalettes ; $7881
-	lb de, $04, $01 ; $7884 palette index, count
+	ld_bg_pals de, 4, 1 ; $7884
 	call LoadPaletteShadow ; $7887
 	ld hl, AllBgPalettes ; $788a
-	lb de, $05, $01 ; $788d palette index, count
+	ld_bg_pals de, 5, 1 ; $788d
 	call LoadPaletteShadow ; $7890
 	ld hl, AllBgPalettes ; $7893
-	lb de, $06, $01 ; $7896 palette index, count
+	ld_bg_pals de, 6, 1 ; $7896
 	call LoadPaletteShadow ; $7899
 	ld hl, AllBgPalettes ; $789c
-	lb de, $07, $01 ; $789f palette index, count
+	ld_bg_pals de, 7, 1 ; $789f
 	call LoadPaletteShadow ; $78a2
 	farcall QueueWram3MapToVRAM ; $78a5
 	ret ; $78a8
@@ -103,7 +103,7 @@ LoadScreen1ObjTiles:
 	ld de, vTiles0 ; $78b5
 	farcall LoadCompressedTileBlock ; $78b8
 	ld hl, Screen1ObjPalette ; $78bb
-	lb de, $08, $01 ; $78be palette index, count
+	ld_obj_pals de, 0, 1 ; $78be
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
 Screen1ObjPalette:
@@ -259,7 +259,7 @@ LoadScreen2ObjTiles:
 	ld de, vTiles0 ; $7a31
 	farcall LoadCompressedTileBlock ; $7a34
 	ld hl, Screen2ObjPalette ; $7a37
-	lb de, $08, $01 ; $7a3a palette index, count
+	ld_obj_pals de, 0, 1 ; $7a3a
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
 Screen2ObjPalette:
@@ -299,7 +299,7 @@ TaskFadeInPalette_18:
 	jr nc, .read ; $7a99
 	inc h ; $7a9b
 .read:
-	lb de, $08, $01 ; $7a9c palette index, count
+	ld_obj_pals de, 0, 1 ; $7a9c
 	call LoadPalettesImmediate ; $7a9f
 	ldh a, [hVBlankCounter] ; $7aa2
 	and $03 ; $7aa4
@@ -458,7 +458,7 @@ LoadObjectSceneATiles:
 	ld de, vTiles0 + $20 * TILE_SIZE ; $7bff
 	farcall LoadCompressedTileBlock ; $7c02
 	ld hl, ObjectSceneATilesPalettes ; $7c05
-	lb de, $09, $03 ; $7c08 palette index, count
+	ld_obj_pals de, 1, 3 ; $7c08
 	call LoadPaletteShadow ; $7c0b
 	ret ; $7c0e
 ObjectSceneATilesPalettes:

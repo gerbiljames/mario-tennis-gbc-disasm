@@ -66,7 +66,7 @@ DrawCharViewerCharSprite_CharScreenPosTable:
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 Unused_1a_LoadCharViewerMugshot:
 	xor a ; $7096
-	lb de, $07, $01 ; $7097 palette index, count
+	ld_bg_pals de, 7, 1 ; $7097
 	farcall LoadIndexedPaletteThunk ; $709a
 	wram_bank WRAM_SCENE ; $709d
 	ld a, [wCharDataFlushChunk] ; $70a3
@@ -83,10 +83,10 @@ Unused_1a_LoadCharViewerMugshot:
 Unused_1a_ApplyCharViewerPalette:
 	wram_bank WRAM_SCENE ; $70c0
 	ld a, [wCharDataLevel] ; $70c6
-	lb de, $07, $01 ; $70c9 palette index, count
+	ld_bg_pals de, 7, 1 ; $70c9
 	farcall LoadIndexedPaletteThunk ; $70cc
 	ld a, [wCharDataLevel] ; $70cf
-	lb de, $0f, $01 ; $70d2 palette index, count
+	ld_obj_pals de, 7, 1 ; $70d2
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
 Palette_1a_0:
@@ -385,7 +385,7 @@ CharDataScreen_BuildStats:
 	ret ; $7b84
 CharDataScreen_LoadGfx:
 	ld hl, CharDataScreen_LoadPalette ; $7b85
-	lb de, $0c, $02 ; $7b88 palette index, count
+	ld_obj_pals de, 4, 2 ; $7b88
 	call LoadPaletteShadow ; $7b8b
 	wram_bank WRAM_STAGING ; $7b8e
 	ld hl, CharDataScreenGfx0 ; $7b94

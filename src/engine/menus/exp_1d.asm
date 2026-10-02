@@ -265,10 +265,10 @@ GetExpBarSweepStep:
 	ret ; $7188
 UpdateExpScreenSelectionPalettes:
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $7189
-	lb de, $01, $01 ; $718c palette index, count
+	ld_bg_pals de, 1, 1 ; $718c
 	farcall LoadIndexedPaletteThunk ; $718f
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7192
-	lb de, $02, $01 ; $7195 palette index, count
+	ld_bg_pals de, 2, 1 ; $7195
 	farcall LoadIndexedPaletteThunk ; $7198
 	wram_bank WRAM_SCENE ; $719b
 	ld a, [wExpScreenCharStats + 10] ; $71a1

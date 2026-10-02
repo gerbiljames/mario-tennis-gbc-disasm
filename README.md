@@ -212,7 +212,8 @@ deleted.
   `wait_frames N` for the frame-wait's inline argument, `lb rr, hi, lo` where
   a callee reads a register pair as two bytes (the site comment names them),
   `ld_xy de, x, y` for a sprite's screen position and `ld_cell de, column,
-  row` for a background-map cell,
+  row` for a tile cell, `ld_bg_pals` / `ld_obj_pals de, first, count` for a
+  run of palettes,
   `set_flag` / `test_flag` / `clear_flag` and `ld_flag_id` for the
   per-story-slot game flags (`include/flag_constants.inc`), `palette` for
   a CGB palette as four `r,g,b` triples, `sound` for the

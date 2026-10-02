@@ -35,7 +35,7 @@ LoadPlaneObjGfx_14:
 	ld c, $60 ; $5e88
 	call QueueVRAMCopy ; $5e8a
 	ld hl, IslandObjPalette_14 ; $5e8d
-	lb de, $08, $01 ; $5e90 palette index, count
+	ld_obj_pals de, 0, 1 ; $5e90
 	call LoadPaletteShadow ; $5e93
 	pop_wram_bank ; $5e96
 	ret ; $5e9b
@@ -84,7 +84,7 @@ LoadWaterSplashObjGfx_14:
 	ld c, (SpriteTemplate_14_1 - WaterSplashObjGfx) / 16 ; $60b0
 	call QueueVRAMCopy ; $60b2
 	ld hl, WaterSplashObjPalette_14 ; $60b5
-	lb de, $09, $01 ; $60b8 palette index, count
+	ld_obj_pals de, 1, 1 ; $60b8
 	call LoadPaletteShadow ; $60bb
 	pop_wram_bank ; $60be
 	ret ; $60c3
@@ -293,7 +293,7 @@ LoadPlaneObjGfx2_14:
 	ld c, $60 ; $6247
 	call QueueVRAMCopy ; $6249
 	ld hl, IslandObjPalette_14 ; $624c
-	lb de, $08, $01 ; $624f palette index, count
+	ld_obj_pals de, 0, 1 ; $624f
 	call LoadPaletteShadow ; $6252
 	pop_wram_bank ; $6255
 	ret ; $625a

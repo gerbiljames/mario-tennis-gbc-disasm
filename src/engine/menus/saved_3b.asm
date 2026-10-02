@@ -632,7 +632,7 @@ LoadSavedDataSourceCellPalette:
 	ld a, [hl+] ; $6b57
 	ld h, [hl] ; $6b58
 	ld l, a ; $6b59
-	lb de, $04, $01 ; $6b5a palette index, count
+	ld_bg_pals de, 4, 1 ; $6b5a
 	call LoadPaletteShadow ; $6b5d
 	ret ; $6b60
 SavedDataSourceCellPalettePtrs:

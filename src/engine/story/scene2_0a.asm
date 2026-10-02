@@ -292,7 +292,7 @@ Unused_0a_LoadSceneGraphicsDirect:
 	ld bc, $0040 ; $5dce
 	call CopyDataFromBank ; $5dd1
 	ld hl, wDecompBuffer + 8 ; $5dd4
-	lb de, $01, $07 ; $5dd7 palette index, count
+	ld_bg_pals de, 1, 7 ; $5dd7
 	call LoadPalettesMasterOnly ; $5dda
 	pop hl ; $5ddd
 	pop de ; $5dde

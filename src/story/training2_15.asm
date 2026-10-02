@@ -49,11 +49,11 @@ WaterSpriteRacketRewardScene:
 	script_player_speed $0010 ; $4dfa
 	script_move_player_to_actor ACTOR_TRAINING_COURT_WALK_76_06 ; $4e00
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4e07
-	lb de, $02, $06 ; $4e0a palette index, count
+	ld_bg_pals de, 2, 6 ; $4e0a
 	call LoadPalettesImmediate ; $4e0d
 	script_wait_frames $1e ; $4e10
 	ld hl, WaterSpriteRacketRewardScenePalettes2 ; $4e17
-	lb de, $02, $06 ; $4e1a palette index, count
+	ld_bg_pals de, 2, 6 ; $4e1a
 	call LoadPalettesImmediate ; $4e1d
 	sound SFX_WATER_SPRITE_MAGIC ; $4e20
 	ld a, $10 ; $4e22
@@ -162,11 +162,11 @@ WaterSpriteRacketRewardScene:
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4fda
 	script_set_position ACTOR_TRAINING_COURT_RACKET, $3f00, $3f00 ; $4fdf
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4fea
-	lb de, $02, $06 ; $4fed palette index, count
+	ld_bg_pals de, 2, 6 ; $4fed
 	call LoadPalettesImmediate ; $4ff0
 	script_wait_frames $1e ; $4ff3
 	ld hl, WaterSpriteRacketRewardScenePalettes0 ; $4ffa
-	lb de, $02, $06 ; $4ffd palette index, count
+	ld_bg_pals de, 2, 6 ; $4ffd
 	call LoadPalettesImmediate ; $5000
 	script_wait_frames $1e ; $5003
 	script_face ACTOR_PLAYER, FACE_LEFT ; $500a

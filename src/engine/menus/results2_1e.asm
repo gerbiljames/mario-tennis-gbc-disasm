@@ -175,7 +175,7 @@ InitResultsScreenCharacters:
 	farcall SetCharAnimation ; $49e7
 	pop af ; $49ea
 	farcall GetCharPaletteIndex ; $49eb
-	lb de, $0f, $01 ; $49ee palette index, count
+	ld_obj_pals de, 7, 1 ; $49ee
 	farcall LoadIndexedPaletteThunk ; $49f1
 	wram_bank WRAM_SCENE ; $49f4
 	ld a, [wContinuePromptKind] ; $49fa
@@ -233,7 +233,7 @@ InitResultsScreenCharacters:
 	farcall SetCharAnimation ; $4a62
 	pop af ; $4a65
 	farcall GetCharPaletteIndex ; $4a66
-	lb de, $0e, $01 ; $4a69 palette index, count
+	ld_obj_pals de, 6, 1 ; $4a69
 	farcall LoadIndexedPaletteThunk ; $4a6c
 	wram_bank WRAM_CHAR0 ; $4a6f
 	ret ; $4a75

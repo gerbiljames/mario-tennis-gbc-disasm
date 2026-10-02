@@ -100,7 +100,7 @@ Unused_18_InitConfirmScreen:
 	ld c, $80 ; $530b
 	call QueueVRAMCopy ; $530d
 	ld hl, ConfirmScreenPalette0 ; $5310
-	lb de, $00, $08 ; $5313 palette index, count
+	ld_bg_pals de, 0, 8 ; $5313
 	call LoadPaletteShadow ; $5316
 	ld hl, ConfirmScreenGfx2 ; $5319
 	ld de, wTextTileBuffer + 64 * TILE_SIZE ; $531c
@@ -118,7 +118,7 @@ Unused_18_InitConfirmScreen:
 	ld c, ConfirmScreenGfx3_SIZE / 16 ; $5340
 	call QueueVRAMCopy ; $5342
 	ld hl, ConfirmScreenPalette1 ; $5345
-	lb de, $09, $03 ; $5348 palette index, count
+	ld_obj_pals de, 1, 3 ; $5348
 	call LoadPaletteShadow ; $534b
 	ld hl, vTiles0 + $50 * TILE_SIZE ; $534e
 	ld de, $0e01 ; $5351

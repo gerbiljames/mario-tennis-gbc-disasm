@@ -259,7 +259,7 @@ AnimateEraseConfirmPalette:
 	inc hl ; $4e6f
 	ld [hl], d ; $4e70
 	ld hl, wEraseConfirmPalette ; $4e71
-	lb de, $04, $01 ; $4e74 palette index, count
+	ld_bg_pals de, 4, 1 ; $4e74
 	call LoadPaletteShadow ; $4e77
 	pop_wram_bank ; $4e7a
 	ret ; $4e7f
@@ -476,7 +476,7 @@ SetRacketShoesChoicePalette:
 	ld a, [hl+] ; $5041
 	ld h, [hl] ; $5042
 	ld l, a ; $5043
-	lb de, $04, $01 ; $5044 palette index, count
+	ld_bg_pals de, 4, 1 ; $5044
 	call LoadPaletteShadow ; $5047
 	ret ; $504a
 RacketShoesChoicePalettePtrs:

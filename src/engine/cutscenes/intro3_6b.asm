@@ -95,7 +95,7 @@ InitCutsceneSceneC:
 	ld de, wShadowTilemap ; $54ff
 	call DecompressData ; $5502
 	ld hl, Palette_6b_1 ; $5505
-	lb de, $00, $08 ; $5508 palette index, count
+	ld_bg_pals de, 0, 8 ; $5508
 	call LoadPaletteShadow ; $550b
 	xor a ; $550e
 	ld [wCameraY], a ; $550f
@@ -146,7 +146,7 @@ LoadIntroTilesAndPalette:
 	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $60b5
 	farcall LoadCompressedTileBlock ; $60b8
 	ld hl, IntroPalettes ; $60bb
-	lb de, $08, $02 ; $60be palette index, count
+	ld_obj_pals de, 0, 2 ; $60be
 	call LoadPaletteShadow ; $60c1
 	ret ; $60c4
 IntroPalettes:
@@ -280,7 +280,7 @@ InitTitleSceneGraphics:
 	ld de, wShadowTilemap ; $61c2
 	call DecompressData ; $61c5
 	ld hl, TitleScenePalette ; $61c8
-	lb de, $00, $08 ; $61cb palette index, count
+	ld_bg_pals de, 0, 8 ; $61cb
 	call LoadPaletteShadow ; $61ce
 	ld a, $20 ; $61d1
 	ld [wCameraX + 1], a ; $61d3
@@ -349,7 +349,7 @@ AnimateBgPalette1Task:
 	jr nc, .loadPalettesImmediate ; $72cc
 	inc h ; $72ce
 .loadPalettesImmediate:
-	lb de, $01, $01 ; $72cf palette index, count
+	ld_bg_pals de, 1, 1 ; $72cf
 	call LoadPalettesImmediate ; $72d2
 	ret ; $72d5
 .ge10:
@@ -376,7 +376,7 @@ AnimateBgPalettes2And3Task:
 	jr nc, .loadPalettesImmediate ; $72fb
 	inc h ; $72fd
 .loadPalettesImmediate:
-	lb de, $02, $01 ; $72fe palette index, count
+	ld_bg_pals de, 2, 1 ; $72fe
 	call LoadPalettesImmediate ; $7301
 	pop af ; $7304
 	ld hl, BgPalettes2And3TaskPalettes1 ; $7305
@@ -385,7 +385,7 @@ AnimateBgPalettes2And3Task:
 	jr nc, .loadPalettesImmediate2 ; $730a
 	inc h ; $730c
 .loadPalettesImmediate2:
-	lb de, $03, $01 ; $730d palette index, count
+	ld_bg_pals de, 3, 1 ; $730d
 	call LoadPalettesImmediate ; $7310
 	ret ; $7313
 .ge10:
@@ -411,7 +411,7 @@ CycleBgPalettes4To7Task:
 	jr nc, .loadPalettesImmediate ; $7338
 	inc h ; $733a
 .loadPalettesImmediate:
-	lb de, $04, $04 ; $733b palette index, count
+	ld_bg_pals de, 4, 4 ; $733b
 	call LoadPalettesImmediate ; $733e
 	ret ; $7341
 .compare:
@@ -429,7 +429,7 @@ CycleBgPalettes4To7Task:
 	jr nc, .loadPalettesImmediate2 ; $7355
 	inc h ; $7357
 .loadPalettesImmediate2:
-	lb de, $04, $04 ; $7358 palette index, count
+	ld_bg_pals de, 4, 4 ; $7358
 	call LoadPalettesImmediate ; $735b
 	ret ; $735e
 .lt20:

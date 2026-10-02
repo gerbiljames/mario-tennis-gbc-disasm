@@ -475,7 +475,7 @@ LoadN64RecordTypeCellPalette:
 	ld a, [hl+] ; $7466
 	ld h, [hl] ; $7467
 	ld l, a ; $7468
-	lb de, $04, $01 ; $7469 palette index, count
+	ld_bg_pals de, 4, 1 ; $7469
 	call LoadPaletteShadow ; $746c
 	ret ; $746f
 N64RecordTypeCellPalettePtrs:
@@ -738,7 +738,7 @@ LoadN64TransferItemCellPalette:
 	ld a, [hl+] ; $7689
 	ld h, [hl] ; $768a
 	ld l, a ; $768b
-	lb de, $04, $01 ; $768c palette index, count
+	ld_bg_pals de, 4, 1 ; $768c
 	call LoadPaletteShadow ; $768f
 	ret ; $7692
 N64TransferItemCellPalettePtrs:

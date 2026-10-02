@@ -204,7 +204,7 @@ Unused_13_DecompressVarsityCourtTourRecords:
 	dec c ; $66b1
 	jr nz, .loop ; $66b2
 	ld hl, VarsityCourtTourPalette_13 ; $66b4
-	lb de, $08, $01 ; $66b7 palette index, count
+	ld_obj_pals de, 0, 1 ; $66b7
 	call LoadPaletteShadow ; $66ba
 	pop_wram_bank ; $66bd
 	ret ; $66c2

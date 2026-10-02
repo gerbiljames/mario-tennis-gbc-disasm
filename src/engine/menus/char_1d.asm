@@ -22,7 +22,7 @@ ShowCharDataScreen:
 	call WaitFadeEnd ; $402e
 	call InitCharDataScreenVideo ; $4031
 	ld hl, CharDataScreenPalettes ; $4034
-	lb de, $0d, $01 ; $4037 palette index, count
+	ld_obj_pals de, 5, 1 ; $4037
 	call LoadPaletteShadow ; $403a
 	wram_bank WRAM_STAGING ; $403d
 	ld hl, CharDataScreenGfx14 ; $4043
@@ -304,7 +304,7 @@ LoadCharDataScreenPageGraphics:
 	ld h, a ; $4372
 	pop af ; $4373
 	ld a, [hl] ; $4374
-	lb de, $04, $01 ; $4375 palette index, count
+	ld_bg_pals de, 4, 1 ; $4375
 	farcall LoadIndexedPaletteThunk ; $4378
 	wram_bank WRAM_STAGING ; $437b
 	push af ; $4381
@@ -353,7 +353,7 @@ LoadCharDataScreenPageGraphics:
 	ld h, a ; $43d6
 	pop af ; $43d7
 	ld a, [hl] ; $43d8
-	lb de, $01, $01 ; $43d9 palette index, count
+	ld_bg_pals de, 1, 1 ; $43d9
 	farcall LoadIndexedPaletteThunk ; $43dc
 	wram_bank WRAM_STAGING ; $43df
 	push af ; $43e5

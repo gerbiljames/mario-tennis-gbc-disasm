@@ -105,10 +105,10 @@ BuildResultsScreenTilemap:
 	ret ; $4104
 LoadResultsScreenGraphics:
 	ld hl, ResultsScreenPalettes ; $4105
-	lb de, $00, $06 ; $4108 palette index, count
+	ld_bg_pals de, 0, 6 ; $4108
 	call LoadPaletteShadow ; $410b
 	ld hl, ResultsScreenPalettes ; $410e
-	lb de, $08, $01 ; $4111 palette index, count
+	ld_obj_pals de, 0, 1 ; $4111
 	call LoadPaletteShadow ; $4114
 	wram_bank WRAM_STAGING ; $4117
 	ld hl, ResultsScreenGfx_1e ; $411d

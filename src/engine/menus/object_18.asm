@@ -87,7 +87,7 @@ LoadObjectSceneBTiles:
 	ld de, vTiles0 + $20 * TILE_SIZE ; $7d34
 	farcall LoadCompressedTileBlock ; $7d37
 	ld hl, ObjectSceneBPalette ; $7d3a
-	lb de, $09, $03 ; $7d3d palette index, count
+	ld_obj_pals de, 1, 3 ; $7d3d
 	call LoadPaletteShadow ; $7d40
 	ret ; $7d43
 ObjectSceneBPalette:

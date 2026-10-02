@@ -291,7 +291,7 @@ CycleDiagramTargetPalette:
 	inc hl ; $46b1
 	ld [hl], d ; $46b2
 	ld hl, wBriefingTargetPalette ; $46b3
-	lb de, $02, $01 ; $46b6 palette index, count
+	ld_bg_pals de, 2, 1 ; $46b6
 	call LoadPaletteShadow ; $46b9
 	pop_wram_bank ; $46bc
 	ret ; $46c1

@@ -17,7 +17,7 @@ IndexedPalettes:
 	INCLUDE "data/bank_039/IndexedPalettes.asm" ; $4599, 200 bytes (palettes)
 Unused_39_LoadFixedPaletteSet:
 	ld hl, FixedPaletteSetPalettes ; $4661
-	lb de, $09, $04 ; $4664 palette index, count
+	ld_obj_pals de, 1, 4 ; $4664
 	call LoadPaletteShadow ; $4667
 	ret ; $466a
 FixedPaletteSetPalettes:
@@ -448,7 +448,7 @@ LoadStadiumBgGraphics:
 	ld bc, $0040 ; $4c96
 	call CopyDataFromBank ; $4c99
 	ld hl, wDecompBuffer ; $4c9c
-	lb de, $00, $08 ; $4c9f palette index, count
+	ld_bg_pals de, 0, 8 ; $4c9f
 	call LoadPaletteShadow ; $4ca2
 	pop_wram_bank ; $4ca5
 	ret ; $4caa

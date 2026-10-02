@@ -70,7 +70,7 @@ RunScrollingTextScreen:
 	ldh [rWY], a ; $59e1
 	call ClearSpriteQueue ; $59e3
 	ld hl, ScrollTextPalette_03 ; $59e6
-	lb de, $00, $01 ; $59e9 palette index, count
+	ld_bg_pals de, 0, 1 ; $59e9
 	call LoadPaletteShadow ; $59ec
 	call InitScrollingTextScreen ; $59ef
 	call EnableLCD ; $59f2
@@ -227,10 +227,10 @@ SetupSceneAnimationPalettes:
 	xor a ; $5b31
 	ld [wSceneAnimFrame], a ; $5b32
 	ld hl, SceneAnimObjPalette0_03 ; $5b35
-	lb de, $0a, $01 ; $5b38 palette index, count
+	ld_obj_pals de, 2, 1 ; $5b38
 	call LoadPaletteShadow ; $5b3b
 	ld hl, SceneAnimObjPalette1_03 ; $5b3e
-	lb de, $0b, $01 ; $5b41 palette index, count
+	ld_obj_pals de, 3, 1 ; $5b41
 	call LoadPaletteShadow ; $5b44
 	pop_wram_bank ; $5b47
 	ret ; $5b4c

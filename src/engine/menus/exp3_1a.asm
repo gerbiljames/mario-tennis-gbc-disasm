@@ -96,10 +96,10 @@ Unused_1a_RunCharViewerSelectGrid:
 	wram_bank WRAM_SCENE ; $686c
 	xor a ; $6872
 	ld hl, Palette_1a_0 ; $6873
-	lb de, $00, $08 ; $6876 palette index, count
+	ld_bg_pals de, 0, 8 ; $6876
 	call LoadPaletteShadow ; $6879
 	ld hl, Palette_1a_0 ; $687c
-	lb de, $08, $08 ; $687f palette index, count
+	ld_obj_pals de, 0, 8 ; $687f
 	call LoadPaletteShadow ; $6882
 	wram_bank WRAM_STAGING ; $6885
 	ld hl, CharViewerScreenGfx0 ; $688b
@@ -419,7 +419,7 @@ Unused_1a_LoadCharViewerScreen:
 	ret ; $6b54
 Unused_1a_LoadCharViewerScreenGfx:
 	ld hl, Palette_1a_0 ; $6b55
-	lb de, $00, $08 ; $6b58 palette index, count
+	ld_bg_pals de, 0, 8 ; $6b58
 	call LoadPaletteShadow ; $6b5b
 	wram_bank WRAM_STAGING ; $6b5e
 	ld hl, CharViewerScreenGfx0 ; $6b64

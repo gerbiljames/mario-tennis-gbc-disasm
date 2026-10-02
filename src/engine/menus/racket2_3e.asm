@@ -103,7 +103,7 @@ LoadRacketSelectScreen:
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5548
 	farcall LoadCompressedTileBlock ; $554b
 	ld hl, Palette_3e ; $554e
-	lb de, $09, $01 ; $5551 palette index, count
+	ld_obj_pals de, 1, 1 ; $5551
 	call LoadPaletteShadow ; $5554
 	farcall QueueWram3MapToVRAM ; $5557
 	ret ; $555a
@@ -319,7 +319,7 @@ LoadShoesSelectScreen:
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $56f1
 	farcall LoadCompressedTileBlock ; $56f4
 	ld hl, Palette_3e ; $56f7
-	lb de, $09, $01 ; $56fa palette index, count
+	ld_obj_pals de, 1, 1 ; $56fa
 	call LoadPaletteShadow ; $56fd
 	farcall QueueWram3MapToVRAM ; $5700
 	ret ; $5703

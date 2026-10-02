@@ -574,7 +574,7 @@ LoadMainMenuItemPalette:
 	ld a, [hl+] ; $5a60
 	ld h, [hl] ; $5a61
 	ld l, a ; $5a62
-	lb de, $04, $01 ; $5a63 palette index, count
+	ld_bg_pals de, 4, 1 ; $5a63
 	call LoadPaletteShadow ; $5a66
 	ret ; $5a69
 MainMenuItemPalettePtrs:

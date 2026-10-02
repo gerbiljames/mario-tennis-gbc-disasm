@@ -276,7 +276,7 @@ InitMatchWinLoseScreen:
 	ld c, $20 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
-	lb de, $08, $03 ; $45ef palette index, count
+	ld_obj_pals de, 0, 3 ; $45ef
 	call LoadPaletteShadow ; $45f2
 	ld b, TILEBLOCK_MatchWinLoseGfx ; $45f5
 	ld c, MatchWinLoseGfx_SIZE / 16 ; $45f7

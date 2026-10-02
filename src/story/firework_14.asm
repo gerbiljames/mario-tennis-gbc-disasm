@@ -5,7 +5,7 @@ LoadFireworkObjGfx_14:
 	ld c, (SpriteTemplate_14_2 - FireworkObjTiles_14) / 16 ; $6436
 	call QueueVRAMCopy ; $6438
 	ld hl, FireworkObjPalettes_14 ; $643b
-	lb de, $09, $04 ; $643e palette index, count
+	ld_obj_pals de, 1, 4 ; $643e
 	call LoadPaletteShadow ; $6441
 	pop_wram_bank ; $6444
 	ret ; $6449

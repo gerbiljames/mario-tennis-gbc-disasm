@@ -362,7 +362,7 @@ SetPlayAlonePartnerPalette:
 	ld a, [hl+] ; $5329
 	ld h, [hl] ; $532a
 	ld l, a ; $532b
-	lb de, $04, $01 ; $532c palette index, count
+	ld_bg_pals de, 4, 1 ; $532c
 	call LoadPaletteShadow ; $532f
 	ret ; $5332
 PlayAlonePartnerPalettePtrs:

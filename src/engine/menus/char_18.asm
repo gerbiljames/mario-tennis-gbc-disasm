@@ -56,7 +56,7 @@ Unused_18_LoadConfirmScreenSpriteGfx:
 	ld c, ConfirmScreenSpriteGfx0_SIZE / 16 ; $5607
 	call QueueVRAMCopy ; $5609
 	ld hl, ConfirmScreenSpritePalette0 ; $560c
-	lb de, $0c, $03 ; $560f palette index, count
+	ld_obj_pals de, 4, 3 ; $560f
 	call LoadPalettesImmediate ; $5612
 	ld hl, ConfirmScreenSpriteGfx1 ; $5615
 	ld de, wDecompBuffer ; $5618
@@ -66,7 +66,7 @@ Unused_18_LoadConfirmScreenSpriteGfx:
 	ld c, $0c ; $5624
 	call QueueVRAMCopy ; $5626
 	ld hl, ConfirmScreenSpritePalette1 ; $5629
-	lb de, $08, $01 ; $562c palette index, count
+	ld_obj_pals de, 0, 1 ; $562c
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
 ConfirmScreenSpriteGfx0:
@@ -114,7 +114,7 @@ Unused_18_LoadCharSelectCursorGfx:
 	ld c, $0c ; $59c7 -- 12 of CharSelectCursorGfx's 13 tiles
 	call QueueVRAMCopy ; $59c9
 	ld hl, CharSelectCursorPalette ; $59cc
-	lb de, $0a, $01 ; $59cf palette index, count
+	ld_obj_pals de, 2, 1 ; $59cf
 	call LoadPaletteShadow ; $59d2
 	ret ; $59d5
 Unused_18_DrawCharSelectCursor:
@@ -447,7 +447,7 @@ LoadScreen0TilesAndPalette:
 	ld de, vTiles0 ; $7744
 	farcall LoadCompressedTileBlock ; $7747
 	ld hl, Screen0Palette ; $774a
-	lb de, $08, $01 ; $774d palette index, count
+	ld_obj_pals de, 0, 1 ; $774d
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
 Screen0Palette:

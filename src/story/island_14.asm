@@ -28,7 +28,7 @@ LoadIslandSkyEffectObjGfx_14:
 	ld c, $30 ; $73c4
 	call QueueVRAMCopy ; $73c6
 	ld hl, IslandSkyPalettes_14 ; $73c9
-	lb de, $09, $03 ; $73cc palette index, count
+	ld_obj_pals de, 1, 3 ; $73cc
 	call LoadPaletteShadow ; $73cf
 	pop_wram_bank ; $73d2
 	ret ; $73d7
@@ -99,7 +99,7 @@ LoadDistantPlaneObjGfx_14:
 	ld c, (SpriteTemplate_14_3 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
 	ld hl, IslandObjPalette_14 ; $754d
-	lb de, $08, $01 ; $7550 palette index, count
+	ld_obj_pals de, 0, 1 ; $7550
 	call LoadPaletteShadow ; $7553
 	pop_wram_bank ; $7556
 	ret ; $755b
@@ -138,7 +138,7 @@ LoadTwinkleObjGfx_14:
 	ld c, (TwinkleObjPalette_14 - TwinkleObjGfx) / 16 ; $7697
 	call QueueVRAMCopy ; $7699
 	ld hl, TwinkleObjPalette_14 ; $769c
-	lb de, $08, $01 ; $769f palette index, count
+	ld_obj_pals de, 0, 1 ; $769f
 	call LoadPaletteShadow ; $76a2
 	pop_wram_bank ; $76a5
 	ret ; $76aa

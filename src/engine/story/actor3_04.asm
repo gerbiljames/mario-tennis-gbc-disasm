@@ -412,7 +412,7 @@ LoadActorObjectDef:
 	ld bc, $0008 ; $4b41
 	call FarCopyBytes ; $4b44
 	ld hl, wActorObjDef ; $4b47
-	lb de, $0a, $01 ; $4b4a palette index, count
+	ld_obj_pals de, 2, 1 ; $4b4a
 	call LoadPalettesMasterOnly ; $4b4d
 	pop bc ; $4b50
 .initFields:

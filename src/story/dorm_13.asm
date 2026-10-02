@@ -5,7 +5,7 @@ LoadTourPointerSpriteGfx_13:
 	ld c, (TourPointerPalette_13 - TourPointerTiles_13) / 16 ; $4ceb
 	call QueueVRAMCopy ; $4ced
 	ld hl, TourPointerPalette_13 ; $4cf0
-	lb de, $08, $01 ; $4cf3 palette index, count
+	ld_obj_pals de, 0, 1 ; $4cf3
 	call LoadPaletteShadow ; $4cf6
 	pop_wram_bank ; $4cf9
 	ret ; $4cfe

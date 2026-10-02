@@ -33,7 +33,7 @@ Unused_1b_LoadUnlockDebugCursorGfx:
 	call QueueVRAMCopy ; $68f0
 	pop_wram_bank ; $68f3
 	ld hl, UnlockDebugCursorPalette ; $68f8
-	lb de, $08, $01 ; $68fb palette index, count
+	ld_obj_pals de, 0, 1 ; $68fb
 	call LoadPaletteShadow ; $68fe
 	ld a, $01 ; $6901
 	ld hl, Unused_1b_DrawUnlockDebugFlagSprites ; $6903
@@ -654,7 +654,7 @@ LoadMinigameLevelSelectPalette:
 	ld a, [hl+] ; $6d9e
 	ld h, [hl] ; $6d9f
 	ld l, a ; $6da0
-	lb de, $04, $01 ; $6da1 palette index, count
+	ld_bg_pals de, 4, 1 ; $6da1
 	call LoadPaletteShadow ; $6da4
 	ret ; $6da7
 MinigameLevelSelectPalettePtrs:

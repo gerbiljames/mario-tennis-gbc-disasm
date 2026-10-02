@@ -202,7 +202,7 @@ ShowLocationNamePopup:
 	ret ; $5336
 LoadStoryObjPalettes:
 	ld hl, StoryObjPalettes ; $5337
-	lb de, $0b, $05 ; $533a palette index, count
+	ld_obj_pals de, 3, 5 ; $533a
 	call LoadPaletteShadow ; $533d
 	ret ; $5340
 StoryObjPalettes:

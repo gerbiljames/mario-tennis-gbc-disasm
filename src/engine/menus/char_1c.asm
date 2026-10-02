@@ -652,7 +652,7 @@ CharDataScreen_DrawPortrait:
 	ld h, a ; $45ad
 	pop af ; $45ae
 	ld a, [hl] ; $45af
-	lb de, $04, $01 ; $45b0 palette index, count
+	ld_bg_pals de, 4, 1 ; $45b0
 	farcall LoadIndexedPaletteThunk ; $45b3
 	wram_bank WRAM_STAGING ; $45b6
 	push af ; $45bc

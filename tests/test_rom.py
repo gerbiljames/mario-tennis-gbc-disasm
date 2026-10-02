@@ -28,11 +28,13 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tpop_wram_bank"), 452)
         self.assertEqual(count(r"^\tld_hl_indexed "), 424)
         self.assertEqual(count(r"^\twait_frames "), 79)
-        self.assertEqual(count(r"^\tlb (de|bc|hl), "), 329)
+        self.assertEqual(count(r"^\tlb (de|bc|hl), "), 172)
         self.assertEqual(count(r"^\tld_xy de, "), 169)
         self.assertEqual(count(r"^\tld_cell de, "), 160)
-        self.assertEqual(count(r"^\tlb de, .*; \$[0-9a-f]{4} (x, y|y, x|column, row)$"), 0,
-                         "a position written with lb instead of ld_xy/ld_cell")
+        self.assertEqual(count(r"^\tld_bg_pals de, "), 86)
+        self.assertEqual(count(r"^\tld_obj_pals de, "), 71)
+        self.assertEqual(count(r"^\tlb de, .*; \$[0-9a-f]{4} (x, y|y, x|column, row|palette index, count)$"), 0,
+                         "a position or palette run written with lb instead of its macro")
         self.assertEqual(count(r"^\tadd LOW\((?!ActorFieldTypeTable_04\))"), 0, "no split-base index left raw")
         self.assertEqual(count(r"inline arg$"), 0)
         self.assertEqual(count(r"^\tld_slot hl, "), 37)

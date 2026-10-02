@@ -577,7 +577,7 @@ LoadEraseSavedDataCellPalette:
 	ld a, [hl+] ; $70d4
 	ld h, [hl] ; $70d5
 	ld l, a ; $70d6
-	lb de, $04, $01 ; $70d7 palette index, count
+	ld_bg_pals de, 4, 1 ; $70d7
 	call LoadPaletteShadow ; $70da
 	ret ; $70dd
 EraseSavedDataCellPalettePtrs:

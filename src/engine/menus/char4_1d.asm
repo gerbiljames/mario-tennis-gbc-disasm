@@ -327,7 +327,7 @@ BuildExpDistributionScreen:
 	ld c, ExpDistributionScreenGfx4_SIZE / 16 ; $6a25
 	call QueueVRAMCopy ; $6a27
 	ld hl, ExpDistributionScreenPalettes ; $6a2a
-	lb de, $0e, $02 ; $6a2d palette index, count
+	ld_obj_pals de, 6, 2 ; $6a2d
 	call LoadPaletteShadow ; $6a30
 	wram_bank WRAM_STAGING ; $6a33
 	ld hl, ExpDistributionScreenGfx8 ; $6a39

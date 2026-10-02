@@ -163,7 +163,7 @@ SetBallTrailColor:
 	add a ; $518d
 	add a ; $518e
 	ld_hl_indexed BallTrailPalettes ; $518f
-	lb de, $08, $01 ; $5196 palette index, count
+	ld_obj_pals de, 0, 1 ; $5196
 	call LoadPalettesImmediate ; $5199
 	ret ; $519c
 BuildBallSlot:

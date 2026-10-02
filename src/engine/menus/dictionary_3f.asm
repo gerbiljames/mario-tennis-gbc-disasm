@@ -225,7 +225,7 @@ LoadTennisDictionaryAssetsDefault:
 	ld c, $80 ; $427f
 	call QueueVRAMCopy ; $4281
 	ld hl, TennisDictionaryPalettesDefault ; $4284
-	lb de, $00, $08 ; $4287 palette index, count
+	ld_bg_pals de, 0, 8 ; $4287
 	call LoadPalettesMasterOnly ; $428a
 	wram_bank WRAM_COURT_PLANES ; $428d
 	ld hl, TennisDictionaryListDataDefault ; $4293
@@ -247,7 +247,7 @@ LoadTennisDictionaryAssetsChar6:
 	ld c, $80 ; $42c0
 	call QueueVRAMCopy ; $42c2
 	ld hl, TennisDictionaryPalettesChar6 ; $42c5
-	lb de, $00, $08 ; $42c8 palette index, count
+	ld_bg_pals de, 0, 8 ; $42c8
 	call LoadPalettesMasterOnly ; $42cb
 	wram_bank WRAM_COURT_PLANES ; $42ce
 	ld hl, TennisDictionaryListDataChar6 ; $42d4
@@ -345,7 +345,7 @@ LoadTennisDictionaryScreen:
 	ld c, TennisDictionaryTilesA400_SIZE / 16 ; $43aa
 	call QueueVRAMCopy ; $43ac
 	ld hl, TennisDictionaryPalettes ; $43af
-	lb de, $08, $08 ; $43b2 palette index, count
+	ld_obj_pals de, 0, 8 ; $43b2
 	call LoadPalettesMasterOnly ; $43b5
 	wram_bank WRAM_SCENE ; $43b8
 	ld a, [wTennisDictMode] ; $43be

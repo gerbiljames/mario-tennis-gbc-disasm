@@ -144,7 +144,7 @@ LoadSavedDataTypePalette:
 	ld a, [hl+] ; $73bf
 	ld h, [hl] ; $73c0
 	ld l, a ; $73c1
-	lb de, $04, $01 ; $73c2 palette index, count
+	ld_bg_pals de, 4, 1 ; $73c2
 	call LoadPaletteShadow ; $73c5
 	ret ; $73c8
 SavedDataTypePalettePtrs:

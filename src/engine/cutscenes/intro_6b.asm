@@ -379,7 +379,7 @@ IntroCutsceneState02Init_6b:
 	call QueueVRAMCopy ; $435b
 	pop_wram_bank ; $435e
 	ld hl, IntroCutsceneState02InitPalette_6b ; $4363
-	lb de, $00, $08 ; $4366 palette index, count
+	ld_bg_pals de, 0, 8 ; $4366
 	call LoadPalettesImmediate ; $4369
 	jp DispatchCutsceneStateInit.loop ; $436c
 IntroCutsceneState02InitPalette_6b:
@@ -487,7 +487,7 @@ IntroCutsceneState04Init_6b:
 	call QueueVRAMCopy ; $44bc
 	pop_wram_bank ; $44bf
 	ld hl, IntroCutsceneState04InitPalettes ; $44c4
-	lb de, $00, $08 ; $44c7 palette index, count
+	ld_bg_pals de, 0, 8 ; $44c7
 	call LoadPalettesImmediate ; $44ca
 	jp DispatchCutsceneStateInit.loop ; $44cd
 IntroCutsceneState04InitPalettes:
@@ -684,7 +684,7 @@ IntroCutsceneState13Init_6b:
 	ld [wCutsceneStepTimer], a ; $46ea
 	push_wram_bank WRAM_TEXT ; $46ed
 	ld hl, IntroCutsceneState13InitPalettes_6b ; $46f6
-	lb de, $00, $08 ; $46f9 palette index, count
+	ld_bg_pals de, 0, 8 ; $46f9
 	call LoadPaletteShadow ; $46fc
 	ld hl, wWindowShadowTilemap + 6 * TILEMAP_WIDTH ; $46ff
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $4702
@@ -852,7 +852,7 @@ Unused_6b_IntroCutsceneState11Exit:
 	ld hl, rLCDC ; $48ce
 	res 3, [hl] ; $48d1
 	ld hl, Palette_6b_1 ; $48d3
-	lb de, $00, $08 ; $48d6 palette index, count
+	ld_bg_pals de, 0, 8 ; $48d6
 	call LoadPaletteShadow ; $48d9
 	xor a ; $48dc
 	ld [wCutsceneStepTimer], a ; $48dd
@@ -950,7 +950,7 @@ IntroCutsceneState16Init_6b:
 	ld c, $40 ; $49ba
 	call QueueVRAMCopy ; $49bc
 	ld hl, IntroCutsceneState16InitPalettes_6b ; $49bf
-	lb de, $00, $08 ; $49c2 palette index, count
+	ld_bg_pals de, 0, 8 ; $49c2
 	call LoadPaletteShadow ; $49c5
 	wram_bank WRAM_STAGING ; $49c8
 	ld_slot hl, DataPtr_IntroCharactersTiles ; $49ce

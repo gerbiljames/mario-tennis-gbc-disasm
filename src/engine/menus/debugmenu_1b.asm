@@ -171,7 +171,7 @@ Unused_1b_LoadUnlockDebugScreenGfx:
 	ld de, wTextTileBuffer ; $663a
 	call DecompressData ; $663d
 	ld hl, UnlockDebugNavGridTable ; $6640
-	lb de, $00, $08 ; $6643 palette index, count
+	ld_bg_pals de, 0, 8 ; $6643
 	call LoadPaletteShadow ; $6646
 	ret ; $6649
 ; Decompresses UnlockDebugNavGridTable to $d000, uploads it to $8500 and loads
@@ -187,7 +187,7 @@ Unused_1b_LoadUnlockDebugNavGridGfx:
 	ld c, $28 ; $665a
 	call QueueVRAMCopy ; $665c
 	ld hl, UnlockDebugNavGridTable ; $665f
-	lb de, $08, $01 ; $6662 palette index, count
+	ld_obj_pals de, 0, 1 ; $6662
 	call LoadPaletteShadow ; $6665
 	ld a, $0a ; $6668
 	ld hl, Unused_1b_UpdateBobbingDecorSprite ; $666a

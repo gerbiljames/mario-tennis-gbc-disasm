@@ -51,7 +51,7 @@ Unused_1b_LoadCharSelectScreenGfx:
 	ld de, $d800 ; $6019
 	call DecompressData ; $601c
 	ld hl, CharSelectNavGridTable ; $601f
-	lb de, $00, $08 ; $6022 palette index, count
+	ld_bg_pals de, 0, 8 ; $6022
 	call LoadPaletteShadow ; $6025
 	ret ; $6028
 Unused_1b_StartCharSelectCursorTask:

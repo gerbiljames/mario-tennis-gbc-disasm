@@ -301,7 +301,7 @@ SetupCharGridScreen:
 	ld c, CharGridScreenGfx1_SIZE / 16 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
 	ld hl, CharGridScreenGfx2 ; $4fa4
-	lb de, $09, $01 ; $4fa7 palette index, count
+	ld_obj_pals de, 1, 1 ; $4fa7
 	call LoadPalettesMasterOnly ; $4faa
 	wram_bank WRAM_STAGING ; $4fad
 	ld hl, CharGridScreenGfx3 ; $4fb3
@@ -360,7 +360,7 @@ SetupCharGridScreen:
 	ld de, vTiles0 + VRAM_BANK1 ; $5041
 	farcall LoadFixedTileBlockAndPalette ; $5044
 	ld hl, CharGridScreenTable0 ; $5047
-	lb de, $0b, $05 ; $504a palette index, count
+	ld_obj_pals de, 3, 5 ; $504a
 	call LoadPalettesMasterOnly ; $504d
 	ld c, $0b ; $5050
 	ld b, $0a ; $5052

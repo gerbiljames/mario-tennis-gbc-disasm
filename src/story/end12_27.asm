@@ -415,11 +415,11 @@ End11TrainingCourtInitScript_27:
 	script_player_speed $0010 ; $5359
 	script_move_player_to_actor ACTOR_END11_TRAINING_COURT_WALK_76_06 ; $535f
 	ld hl, End11TrainingCourtInitScriptPalette0_27 ; $5366
-	lb de, $02, $06 ; $5369 palette index, count
+	ld_bg_pals de, 2, 6 ; $5369
 	call LoadPalettesImmediate ; $536c
 	script_delay $1e ; $536f
 	ld hl, End11TrainingCourtInitScriptPalette1_27 ; $5374
-	lb de, $02, $06 ; $5377 palette index, count
+	ld_bg_pals de, 2, 6 ; $5377
 	call LoadPalettesImmediate ; $537a
 	ld a, $10 ; $537d
 .loop:

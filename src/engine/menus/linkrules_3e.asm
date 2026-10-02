@@ -276,7 +276,7 @@ AnimateLinkStatusPalette:
 	ld a, [hl+] ; $4a69
 	ld h, [hl] ; $4a6a
 	ld l, a ; $4a6b
-	lb de, $05, $01 ; $4a6c palette index, count
+	ld_bg_pals de, 5, 1 ; $4a6c
 	call LoadPaletteShadow ; $4a6f
 	pop hl ; $4a72
 	pop de ; $4a73
@@ -398,7 +398,7 @@ AnimateLinkErrorPalette:
 	inc hl ; $4b72
 	ld [hl], d ; $4b73
 	ld hl, wLinkErrorPalette ; $4b74
-	lb de, $03, $01 ; $4b77 palette index, count
+	ld_bg_pals de, 3, 1 ; $4b77
 	call LoadPaletteShadow ; $4b7a
 	pop_wram_bank ; $4b7d
 	ret ; $4b82

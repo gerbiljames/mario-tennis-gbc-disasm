@@ -352,7 +352,7 @@ BracketHighlightBlinkTask:
 	jr z, .maskClear ; $79dd
 	ld hl, BracketHighlightBlinkTaskPalettes1 ; $79df
 .maskClear:
-	lb de, $05, $01 ; $79e2 palette index, count
+	ld_bg_pals de, 5, 1 ; $79e2
 	call LoadPalettesImmediate ; $79e5
 	ret ; $79e8
 BracketHighlightBlinkTaskPalettes0:

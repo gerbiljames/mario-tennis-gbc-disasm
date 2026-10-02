@@ -89,7 +89,7 @@ RunTitleScreen:
 	ld de, vTiles0 + $60 * TILE_SIZE ; $7630
 	farcall LoadCompressedTileBlock ; $7633
 	ld hl, Palettes_6b_11 ; $7636
-	lb de, $08, $01 ; $7639 palette index, count
+	ld_obj_pals de, 0, 1 ; $7639
 	call LoadPaletteShadow ; $763c
 	ld a, $01 ; $763f
 	ld hl, QueueTitleSprite ; $7641

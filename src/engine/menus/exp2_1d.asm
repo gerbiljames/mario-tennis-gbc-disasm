@@ -230,10 +230,10 @@ CheckExpLevelDown:
 	ld a, [wExpScreenCharStats + 26] ; $7476
 	ld [wBGPalettes + 35], a ; $7479
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $747c
-	lb de, $01, $01 ; $747f palette index, count
+	ld_bg_pals de, 1, 1 ; $747f
 	farcall LoadIndexedPaletteThunk ; $7482
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7485
-	lb de, $02, $01 ; $7488 palette index, count
+	ld_bg_pals de, 2, 1 ; $7488
 	farcall LoadIndexedPaletteThunk ; $748b
 	ld hl, hPaletteDirtyFlags ; $748e
 	set 0, [hl] ; $7491

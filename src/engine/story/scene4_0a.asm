@@ -209,10 +209,10 @@ LoadCourtSceneGraphics:
 	ld bc, $0040 ; $637e
 	call CopyDataFromBank ; $6381
 	ld hl, wScreenAttrmap + 16 ; $6384
-	lb de, $02, $06 ; $6387 palette index, count
+	ld_bg_pals de, 2, 6 ; $6387
 	call LoadPaletteShadow ; $638a
 	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH + 8 ; $638d
-	lb de, $0b, $01 ; $6390 palette index, count
+	ld_obj_pals de, 3, 1 ; $6390
 	call LoadPaletteShadow ; $6393
 	pop hl ; $6396
 	pop de ; $6397

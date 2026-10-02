@@ -576,7 +576,7 @@ SetCourtSelect4Palette:
 	ld a, [hl+] ; $5fe7
 	ld h, [hl] ; $5fe8
 	ld l, a ; $5fe9
-	lb de, $04, $01 ; $5fea palette index, count
+	ld_bg_pals de, 4, 1 ; $5fea
 	call LoadPaletteShadow ; $5fed
 	ret ; $5ff0
 CourtSelect4PalettePtrs:

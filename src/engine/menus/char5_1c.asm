@@ -106,10 +106,10 @@ CharDataScreenGfx13:
 	INCLUDE "data/bank_01c/lz_CharDataScreenGfx13.inc" ; DEF CharDataScreenGfx13_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreen_LoadScreen:
 	ld hl, CharDataScreen_LoadScreenPalette ; $7116
-	lb de, $00, $08 ; $7119 palette index, count
+	ld_bg_pals de, 0, 8 ; $7119
 	call LoadPaletteShadow ; $711c
 	ld hl, CharDataScreen_LoadScreenPalette ; $711f
-	lb de, $08, $08 ; $7122 palette index, count
+	ld_obj_pals de, 0, 8 ; $7122
 	call LoadPaletteShadow ; $7125
 	wram_bank WRAM_STAGING ; $7128
 	ld hl, CharDataScreenGfx13 ; $712e
@@ -394,10 +394,10 @@ LoadCharDataScreenGraphics:
 	ret ; $73fa
 LoadCharDataScreenBgAndPalettes:
 	ld hl, CharDataScreenBgAndPalettes ; $73fb
-	lb de, $00, $08 ; $73fe palette index, count
+	ld_bg_pals de, 0, 8 ; $73fe
 	call LoadPaletteShadow ; $7401
 	ld hl, CharDataScreenBgAndPalettes ; $7404
-	lb de, $08, $08 ; $7407 palette index, count
+	ld_obj_pals de, 0, 8 ; $7407
 	call LoadPaletteShadow ; $740a
 	wram_bank WRAM_SCENE ; $740d
 	ld a, [wMasterPalettes + 58] ; $7413
@@ -457,7 +457,7 @@ LoadCharDataScreenMugshots:
 	ld h, a ; $74a4
 	pop af ; $74a5
 	ld a, [hl] ; $74a6
-	lb de, $01, $01 ; $74a7 palette index, count
+	ld_bg_pals de, 1, 1 ; $74a7
 	farcall LoadIndexedPaletteThunk ; $74aa
 	wram_bank WRAM_STAGING ; $74ad
 	push af ; $74b3
@@ -498,7 +498,7 @@ LoadCharDataScreenMugshots:
 	ld h, a ; $74f2
 	pop af ; $74f3
 	ld a, [hl] ; $74f4
-	lb de, $02, $01 ; $74f5 palette index, count
+	ld_bg_pals de, 2, 1 ; $74f5
 	farcall LoadIndexedPaletteThunk ; $74f8
 	wram_bank WRAM_STAGING ; $74fb
 	push af ; $7501

@@ -5,20 +5,20 @@ LoadMatchResultPalettes:
 	ld a, $02 ; $4a16
 	ld [wAnimatedTileSet], a ; $4a18
 	ld hl, MatchResultPalettes1 ; $4a1b
-	lb de, $01, $01 ; $4a1e palette index, count
+	ld_bg_pals de, 1, 1 ; $4a1e
 	call LoadPaletteShadow ; $4a21
 	ld hl, MatchResultPalettes0 ; $4a24
-	lb de, $02, $01 ; $4a27 palette index, count
+	ld_bg_pals de, 2, 1 ; $4a27
 	call LoadPaletteShadow ; $4a2a
 	ret ; $4a2d
 .eqff:
 	ld a, $03 ; $4a2e
 	ld [wAnimatedTileSet], a ; $4a30
 	ld hl, MatchResultPalettes1 ; $4a33
-	lb de, $02, $01 ; $4a36 palette index, count
+	ld_bg_pals de, 2, 1 ; $4a36
 	call LoadPaletteShadow ; $4a39
 	ld hl, MatchResultPalettes0 ; $4a3c
-	lb de, $01, $01 ; $4a3f palette index, count
+	ld_bg_pals de, 1, 1 ; $4a3f
 	call LoadPaletteShadow ; $4a42
 	ret ; $4a45
 MatchResultPalettes0:

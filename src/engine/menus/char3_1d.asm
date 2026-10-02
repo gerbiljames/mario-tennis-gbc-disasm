@@ -215,7 +215,7 @@ BuildCharDataConfirmScreen:
 	ld h, a ; $5b38
 	pop af ; $5b39
 	ld a, [hl] ; $5b3a
-	lb de, $04, $01 ; $5b3b palette index, count
+	ld_bg_pals de, 4, 1 ; $5b3b
 	farcall LoadIndexedPaletteThunk ; $5b3e
 	wram_bank WRAM_STAGING ; $5b41
 	push af ; $5b47

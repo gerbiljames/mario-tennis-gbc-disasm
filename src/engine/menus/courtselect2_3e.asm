@@ -469,7 +469,7 @@ SetCourtSelect9Palette:
 	ld a, [hl+] ; $68cf
 	ld h, [hl] ; $68d0
 	ld l, a ; $68d1
-	lb de, $04, $01 ; $68d2 palette index, count
+	ld_bg_pals de, 4, 1 ; $68d2
 	call LoadPaletteShadow ; $68d5
 	ret ; $68d8
 CourtSelect9PalettePtrs:

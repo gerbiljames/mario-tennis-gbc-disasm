@@ -539,6 +539,19 @@ MACRO ld_xy
 	lb \1, \2, \3
 ENDM
 
+; ld_bg_pals pair, first, count / ld_obj_pals pair, first, count -- a run of
+; CGB palettes as LoadPaletteShadow and its siblings take it: the palette
+; index in the high register (0-7 background, 8-15 objects; the loader tests
+; bit 3 to pick the half) and the count in the low.
+MACRO ld_bg_pals
+	ASSERT (\2) + (\3) <= 8, "background palettes run past 7"
+	lb \1, \2, \3
+ENDM
+MACRO ld_obj_pals
+	ASSERT (\2) + (\3) <= 8, "object palettes run past 7"
+	lb \1, 8 + (\2), \3
+ENDM
+
 ; ld_cell pair, column, row -- a tile cell as the text and window routines
 ; take it, on the background map or inside a window: the column in the high
 ; register, the row in the low.

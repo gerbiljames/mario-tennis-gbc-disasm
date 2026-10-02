@@ -32,7 +32,7 @@ IntroCutsceneState17Init_6b:
 	call QueueVRAMCopy ; $4aca
 	call AdvanceFrame ; $4acd
 	ld hl, Palettes_6b_03 ; $4ad0
-	lb de, $01, $07 ; $4ad3 palette index, count
+	ld_bg_pals de, 1, 7 ; $4ad3
 	call LoadPaletteShadow ; $4ad6
 	xor a ; $4ad9
 	ld [wCutsceneStepTimer], a ; $4ada
@@ -48,7 +48,7 @@ IntroCutsceneState17Exit_6b:
 	jp DispatchCutsceneStateInit.loop2 ; $4aef
 IntroCutsceneState18Init_6b:
 	ld hl, IntroCutsceneState18InitPalettes_6b ; $4af2
-	lb de, $00, $08 ; $4af5 palette index, count
+	ld_bg_pals de, 0, 8 ; $4af5
 	call LoadPaletteShadow ; $4af8
 	wram_bank WRAM_TEXT ; $4afb
 	ld hl, wWindowShadowTilemap + 19 * TILEMAP_WIDTH ; $4b01
@@ -93,7 +93,7 @@ IntroCutsceneState18Init_6b:
 	ld c, $08 ; $4b6c
 	call QueueVRAMCopy ; $4b6e
 	ld hl, Palettes_6b_03 ; $4b71
-	lb de, $01, $07 ; $4b74 palette index, count
+	ld_bg_pals de, 1, 7 ; $4b74
 	call LoadPaletteShadow ; $4b77
 	call AdvanceFrame ; $4b7a
 	wram_bank WRAM_STAGING ; $4b7d
@@ -150,7 +150,7 @@ Palettes_6b_03:
 	INCLUDE "data/bank_06b/Palettes_6b_03.asm" ; $4c00, 56 bytes (palettes)
 IntroCutsceneState19Init_6b:
 	ld hl, Palette_6b_1 ; $4c38
-	lb de, $00, $08 ; $4c3b palette index, count
+	ld_bg_pals de, 0, 8 ; $4c3b
 	call LoadPaletteShadow ; $4c3e
 	xor a ; $4c41
 	ld [wCutsceneStepTimer], a ; $4c42
@@ -415,7 +415,7 @@ LoadCutsceneTileset:
 	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $524a
 	farcall LoadCompressedTileBlock ; $524d
 	ld hl, CutsceneTilesetPalettes ; $5250
-	lb de, $08, $02 ; $5253 palette index, count
+	ld_obj_pals de, 0, 2 ; $5253
 	call LoadPaletteShadow ; $5256
 	ret ; $5259
 CutsceneTilesetPalettes:

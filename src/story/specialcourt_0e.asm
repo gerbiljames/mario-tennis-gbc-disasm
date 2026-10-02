@@ -36,7 +36,7 @@ PlayStarWarpTransition:
 	ldh a, [hWramBank] ; $7150
 	push af ; $7152
 	ld hl, StarWarpPalette ; $7153
-	lb de, $09, $01 ; $7156 palette index, count
+	ld_obj_pals de, 1, 1 ; $7156
 	call LoadPaletteShadow ; $7159
 	ld hl, StarWarpTiles ; $715c
 	ld de, vTiles0 + VRAM_BANK1 ; $715f

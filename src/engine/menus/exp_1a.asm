@@ -91,7 +91,7 @@ Unused_1a_LoadExpScreenGfx:
 	ld c, $50 ; $4873
 	call QueueVRAMCopy ; $4875
 	ld hl, ExpScreenGfxPalettes0 ; $4878
-	lb de, $00, $08 ; $487b palette index, count
+	ld_bg_pals de, 0, 8 ; $487b
 	call LoadPalettesMasterOnly ; $487e
 	wram_bank WRAM_STAGING ; $4881
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $4887
@@ -115,7 +115,7 @@ Unused_1a_LoadExpScreenGfx:
 	ld c, ExpScreenGfx7_SIZE / 16 ; $48bd
 	call QueueVRAMCopy ; $48bf
 	ld hl, ExpScreenGfxPalettes2 ; $48c2
-	lb de, $09, $01 ; $48c5 palette index, count
+	ld_obj_pals de, 1, 1 ; $48c5
 	call LoadPalettesMasterOnly ; $48c8
 	pop hl ; $48cb
 	ld a, h ; $48cc
@@ -129,13 +129,13 @@ Unused_1a_LoadExpScreenGfx:
 	ld c, ExpScreenGfx5_SIZE / 16 ; $48e0
 	call QueueVRAMCopy ; $48e2
 	ld hl, ExpScreenGfxPalettes1 ; $48e5
-	lb de, $0a, $01 ; $48e8 palette index, count
+	ld_obj_pals de, 2, 1 ; $48e8
 	call LoadPalettesMasterOnly ; $48eb
 	jr .copyMemoryFast ; $48ee
 .processVRAMCopyQueues:
 	call ProcessVRAMCopyQueues ; $48f0
 	ld hl, ExpScreenGfxPalettes3 ; $48f3
-	lb de, $0f, $01 ; $48f6 palette index, count
+	ld_obj_pals de, 7, 1 ; $48f6
 	call LoadPalettesMasterOnly ; $48f9
 	wram_bank WRAM_STAGING ; $48fc
 	ld hl, ExpScreenGfx8 ; $4902
