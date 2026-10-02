@@ -267,7 +267,7 @@ QueueResultPortraitTop:
 	ldh a, [hVBlankCounter] ; $4cf5
 	and $10 ; $4cf7
 	jr z, .maskClear ; $4cf9
-	ld b, $0a ; $4cfb
+	ld b, OAM_BANK1 | 2 ; $4cfb
 .maskClear:
 	ld hl, ResultSpriteTemplateLeft_16 ; $4cfd
 	call QueueSpriteTemplate ; $4d00
@@ -296,7 +296,7 @@ QueueResultPortraitBottom:
 	add d ; $4d48
 	ld d, a ; $4d49
 	ld c, $20 ; $4d4a
-	ld b, $09 ; $4d4c
+	ld b, OAM_BANK1 | 1 ; $4d4c
 	ld hl, ResultSpriteTemplateRight_16 ; $4d4e
 	call QueueSpriteTemplate ; $4d51
 	ret ; $4d54
@@ -330,7 +330,7 @@ QueueWinnerMarkerForPlayer:
 	ldh a, [hVBlankCounter] ; $4da1
 	and $10 ; $4da3
 	jr z, .queueSprite ; $4da5
-	ld b, $0a ; $4da7
+	ld b, OAM_BANK1 | 2 ; $4da7
 .queueSprite:
 	call QueueSprite ; $4da9
 	ret ; $4dac
@@ -339,7 +339,7 @@ QueueLoserMarkerForOpponent:
 	add d ; $4db0
 	ld d, a ; $4db1
 	ld c, $42 ; $4db2
-	ld b, $09 ; $4db4
+	ld b, OAM_BANK1 | 1 ; $4db4
 	call QueueSprite ; $4db6
 	ret ; $4db9
 QueueWinnerMarkerForOpponent:
@@ -347,7 +347,7 @@ QueueWinnerMarkerForOpponent:
 	add d ; $4dbd
 	ld d, a ; $4dbe
 	ld c, $40 ; $4dbf
-	ld b, $09 ; $4dc1
+	ld b, OAM_BANK1 | 1 ; $4dc1
 	call QueueSprite ; $4dc3
 	ret ; $4dc6
 QueueLoserMarkerForPlayer:
@@ -361,7 +361,7 @@ QueueLoserMarkerForPlayer:
 	ldh a, [hVBlankCounter] ; $4dd2
 	and $10 ; $4dd4
 	jr z, .queueSprite ; $4dd6
-	ld b, $0a ; $4dd8
+	ld b, OAM_BANK1 | 2 ; $4dd8
 .queueSprite:
 	call QueueSprite ; $4dda
 	ret ; $4ddd

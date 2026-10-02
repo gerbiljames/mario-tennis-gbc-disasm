@@ -250,13 +250,13 @@ LoadWaterSpriteMinigameHudGfx:
 QueueWaterSpriteMinigameTimerPanel:
 	ld hl, QueueWaterSpriteMinigameTimerPanel_SpriteTemplate ; $58bb
 	ld c, $00 ; $58be
-	ld b, $08 ; $58c0
+	ld b, OAM_BANK1 ; $58c0
 	call QueueSpriteTemplate ; $58c2
 	ret ; $58c5
 QueueWaterSpriteMinigameCounterPanel:
 	ld hl, QueueWaterSpriteMinigameCounterPanel_SpriteTemplate ; $58c6
 	ld c, $06 ; $58c9
-	ld b, $08 ; $58cb
+	ld b, OAM_BANK1 ; $58cb
 	call QueueSpriteTemplate ; $58cd
 	ret ; $58d0
 QueueWaterSpriteMinigameHudPanels:

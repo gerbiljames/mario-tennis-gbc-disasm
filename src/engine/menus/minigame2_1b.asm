@@ -202,7 +202,7 @@ DrawMinigameLevelSelect2Cursor:
 	ld d, [hl] ; $6f7f
 	ld e, a ; $6f80
 	farcall ApplySpriteBobOffset ; $6f81
-	ld b, $08 ; $6f84
+	ld b, OAM_BANK1 ; $6f84
 	ld hl, DrawMinigameLevelSelect2Cursor_SpriteTemplate0 ; $6f86
 	push de ; $6f89
 	call QueueSpriteTemplate ; $6f8a
@@ -212,7 +212,7 @@ DrawMinigameLevelSelect2Cursor:
 	ld d, h ; $6f92
 	ld e, l ; $6f93
 	ld hl, DrawMinigameLevelSelect2Cursor_SpriteTemplate1 ; $6f94
-	ld b, $08 ; $6f97
+	ld b, OAM_BANK1 ; $6f97
 	ld c, $70 ; $6f99
 	call QueueSpriteTemplate ; $6f9b
 	ret ; $6f9e
@@ -393,7 +393,7 @@ DrawMinigameLevelSelect3Cursor:
 	ld d, [hl] ; $710a
 	ld e, a ; $710b
 	farcall ApplySpriteBobOffset ; $710c
-	ld b, $08 ; $710f
+	ld b, OAM_BANK1 ; $710f
 	ld hl, DrawMinigameLevelSelect3Cursor_SpriteTemplate0 ; $7111
 	push de ; $7114
 	call QueueSpriteTemplate ; $7115
@@ -403,7 +403,7 @@ DrawMinigameLevelSelect3Cursor:
 	ld d, h ; $711d
 	ld e, l ; $711e
 	ld hl, DrawMinigameLevelSelect3Cursor_SpriteTemplate1 ; $711f
-	ld b, $08 ; $7122
+	ld b, OAM_BANK1 ; $7122
 	ld c, $70 ; $7124
 	call QueueSpriteTemplate ; $7126
 	ret ; $7129

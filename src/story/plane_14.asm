@@ -62,7 +62,7 @@ QueuePlaneSpriteByHeight_14:
 .queueSpriteTemplate:
 	ld c, b ; $5ec4
 	ld hl, SpriteTemplate_14_0 ; $5ec5
-	ld b, $08 ; $5ec8
+	ld b, OAM_BANK1 ; $5ec8
 	call QueueSpriteTemplate ; $5eca
 	ret ; $5ecd
 	; $5ece, 2 bytes (fill)
@@ -172,7 +172,7 @@ UpdateWaterSplash0_14:
 	add $20 ; $615f
 	ld c, a ; $6161
 	ld hl, SpriteTemplate_14_1 ; $6162
-	ld b, $01 ; $6165
+	ld b, 1 ; $6165
 	call QueueSpriteTemplate ; $6167
 .done:
 	ret ; $616a
@@ -271,7 +271,7 @@ UpdateWaterSplash1_14:
 	add $20 ; $6219
 	ld c, a ; $621b
 	ld hl, SpriteTemplate_14_1 ; $621c
-	ld b, $01 ; $621f
+	ld b, 1 ; $621f
 	call QueueSpriteTemplate ; $6221
 .done:
 	ret ; $6224
@@ -319,7 +319,7 @@ QueuePlaneSpriteByFrameCounter_14:
 .queue:
 	ld c, b ; $6281
 	ld hl, SpriteTemplate_14_0 ; $6282
-	ld b, $08 ; $6285
+	ld b, OAM_BANK1 ; $6285
 	call QueueSpriteTemplate ; $6287
 	ret ; $628a
 .loadScene:

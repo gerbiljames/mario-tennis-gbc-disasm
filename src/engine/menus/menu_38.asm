@@ -18,7 +18,7 @@ DrawSelectedOptionBox:
 	ld c, $00 ; $401f
 	call ApplySpriteBobOffsetY ; $4021
 	ld c, $00 ; $4024
-	ld b, $08 ; $4026
+	ld b, OAM_BANK1 ; $4026
 	call QueueSprite ; $4028
 	pop bc ; $402b
 	pop de ; $402c
@@ -33,7 +33,7 @@ DrawSelectedOptionBox:
 	ld c, $00 ; $4038
 	call ApplySpriteBobOffsetY ; $403a
 	ld c, $00 ; $403d
-	ld b, $28 ; $403f
+	ld b, OAM_BANK1 | OAM_XFLIP ; $403f
 	call QueueSprite ; $4041
 	pop de ; $4044
 	pop bc ; $4045
@@ -52,7 +52,7 @@ DrawSelectedOptionBox:
 	ld c, $01 ; $4055
 	call ApplySpriteBobOffsetY ; $4057
 	ld c, $00 ; $405a
-	ld b, $68 ; $405c
+	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $405c
 	call QueueSprite ; $405e
 	pop de ; $4061
 	pop bc ; $4062
@@ -66,7 +66,7 @@ DrawSelectedOptionBox:
 	ld c, $01 ; $406d
 	call ApplySpriteBobOffsetY ; $406f
 	ld c, $00 ; $4072
-	ld b, $48 ; $4074
+	ld b, OAM_BANK1 | OAM_YFLIP ; $4074
 	call QueueSprite ; $4076
 	pop de ; $4079
 	ret ; $407a

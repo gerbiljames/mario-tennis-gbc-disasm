@@ -140,7 +140,7 @@ RankingBoardAnimTask_1b:
 	ld a, [wRankingBannerX] ; $593d
 	ld d, a ; $5940
 	ld c, $10 ; $5941
-	ld b, $0c ; $5943
+	ld b, OAM_BANK1 | 4 ; $5943
 	call QueueSpriteTemplate ; $5945
 	ld a, [wRankingBannerAnimFrame] ; $5948
 	inc a ; $594b
@@ -178,7 +178,7 @@ RankingCursorBobTask:
 	farcall ApplySpriteBobOffset ; $5a16
 	ld hl, RankingCursorBobTask_SpriteTemplate ; $5a19
 	ld c, $20 ; $5a1c
-	ld b, $0d ; $5a1e
+	ld b, OAM_BANK1 | 5 ; $5a1e
 	call QueueSpriteTemplate ; $5a20
 	ret ; $5a23
 RankingCursorBobTask_SpriteTemplate:

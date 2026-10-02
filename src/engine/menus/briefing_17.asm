@@ -319,7 +319,7 @@ DrawBriefingPlayerSprite:
 	ld a, [wBriefingPlayerY] ; $46ef
 	ld e, a ; $46f2
 	ld hl, DrawBriefingPlayerSprite_SpriteTemplate ; $46f3
-	ld b, $08 ; $46f6
+	ld b, OAM_BANK1 ; $46f6
 	ld c, $00 ; $46f8
 	call QueueSpriteTemplate ; $46fa
 	pop_wram_bank ; $46fd
@@ -336,7 +336,7 @@ DrawBriefingOpponentSprite:
 	ld a, [wBriefingOpponentY] ; $4719
 	ld e, a ; $471c
 	ld hl, DrawBriefingOpponentSprite_SpriteTemplate ; $471d
-	ld b, $08 ; $4720
+	ld b, OAM_BANK1 ; $4720
 	ld c, $04 ; $4722
 	call QueueSpriteTemplate ; $4724
 	pop_wram_bank ; $4727
@@ -353,7 +353,7 @@ DrawBriefingBallSprite:
 	ld a, [wBriefingBallY] ; $4743
 	ld e, a ; $4746
 	ld c, $6e ; $4747
-	ld b, $09 ; $4749
+	ld b, OAM_BANK1 | 1 ; $4749
 	call QueueSprite ; $474b
 	pop_wram_bank ; $474e
 	ret ; $4753
@@ -404,7 +404,7 @@ DrawBriefingSwingAnim:
 	ld d, a ; $47b3
 	ld a, [wBriefingSwingY] ; $47b4
 	ld e, a ; $47b7
-	ld b, $09 ; $47b8
+	ld b, OAM_BANK1 | 1 ; $47b8
 	call QueueSpriteTemplate ; $47ba
 	pop_wram_bank ; $47bd
 	ret ; $47c2
@@ -429,14 +429,14 @@ DrawBriefingPoleSprites:
 	ld a, [wBriefingPole1Y] ; $47fc
 	ld e, a ; $47ff
 	ld c, $6a ; $4800
-	ld b, $09 ; $4802
+	ld b, OAM_BANK1 | 1 ; $4802
 	call QueueSprite ; $4804
 	ld a, [wBriefingPole2X] ; $4807
 	ld d, a ; $480a
 	ld a, [wBriefingPole2Y] ; $480b
 	ld e, a ; $480e
 	ld c, $6a ; $480f
-	ld b, $09 ; $4811
+	ld b, OAM_BANK1 | 1 ; $4811
 	call QueueSprite ; $4813
 	pop_wram_bank ; $4816
 	ret ; $481b
@@ -447,7 +447,7 @@ DrawBriefingMarkerVFlip:
 	ld a, [wBriefingVMarkerUpright] ; $4829
 	cp $01 ; $482c
 	jr z, .eq01 ; $482e
-	ld b, $49 ; $4830
+	ld b, OAM_BANK1 | OAM_YFLIP | 1 ; $4830
 .eq01:
 	ld a, [wBriefingVMarkerX] ; $4832
 	ld d, a ; $4835

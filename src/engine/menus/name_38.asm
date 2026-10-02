@@ -553,7 +553,7 @@ SnapNameEntryCursorLeftTable:
 	db $0a, $0a, $0a, $0a, $0a, $0a, $0a, $0a, $0a, $07, $07, $07, $07, $07, $0a ; 0x00
 QueueNameEntryCursorSprites:
 	ld c, $00 ; $727a
-	ld b, $08 ; $727c
+	ld b, OAM_BANK1 ; $727c
 	push de ; $727e
 	call QueueSprite ; $727f
 	pop de ; $7282
@@ -561,6 +561,6 @@ QueueNameEntryCursorSprites:
 	add d ; $7285
 	ld d, a ; $7286
 	ld c, $02 ; $7287
-	ld b, $08 ; $7289
+	ld b, OAM_BANK1 ; $7289
 	call QueueSprite ; $728b
 	ret ; $728e

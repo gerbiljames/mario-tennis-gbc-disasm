@@ -234,7 +234,7 @@ EquippedItemMarkerSpriteTask:
 .read:
 	ld d, [hl] ; $59ff
 	ld e, $18 ; $5a00
-	ld b, $09 ; $5a02
+	ld b, OAM_BANK1 | 1 ; $5a02
 	ld c, $20 ; $5a04
 	call QueueSprite ; $5a06
 	pop_wram_bank ; $5a09

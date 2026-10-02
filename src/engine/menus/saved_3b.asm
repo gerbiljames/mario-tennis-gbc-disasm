@@ -464,7 +464,7 @@ SavedDataSourceCursorSpriteTask:
 	ld d, [hl] ; $69f9
 	ld e, a ; $69fa
 	farcall ApplySpriteBobOffset ; $69fb
-	ld b, $08 ; $69fe
+	ld b, OAM_BANK1 ; $69fe
 	ld hl, SavedDataSourceCursorSpriteTask_SpriteTemplate0 ; $6a00
 	push de ; $6a03
 	call QueueSpriteTemplate ; $6a04
@@ -474,7 +474,7 @@ SavedDataSourceCursorSpriteTask:
 	ld d, h ; $6a0c
 	ld e, l ; $6a0d
 	ld hl, SavedDataSourceCursorSpriteTask_SpriteTemplate1 ; $6a0e
-	ld b, $08 ; $6a11
+	ld b, OAM_BANK1 ; $6a11
 	ld c, $70 ; $6a13
 	call QueueSpriteTemplate ; $6a15
 	ret ; $6a18

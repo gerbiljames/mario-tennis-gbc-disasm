@@ -205,12 +205,12 @@ QueueStatChangeArrow:
 	ret z ; $555d
 	bit 7, a ; $555e
 	jr nz, .arrowDown ; $5560
-	ld b, $0e ; $5562
+	ld b, OAM_BANK1 | 6 ; $5562
 	ld c, $d0 ; $5564
 	call QueueSprite ; $5566
 	ret ; $5569
 .arrowDown:
-	ld b, $0f ; $556a
+	ld b, OAM_BANK1 | 7 ; $556a
 	ld c, $d2 ; $556c
 	call QueueSprite ; $556e
 	ret ; $5571

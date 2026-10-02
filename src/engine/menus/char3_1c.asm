@@ -258,7 +258,7 @@ DrawRemainingPointsSprite:
 	ld c, a ; $5067
 	ld_xy de, $14, $7f ; $5068
 	call OffsetStatSpriteY ; $506b
-	ld b, $0f ; $506e
+	ld b, OAM_BANK1 | 7 ; $506e
 	call QueueSprite ; $5070
 	ld a, [wCharDataNumberBuffer + 1] ; $5073
 	sub $30 ; $5076
@@ -266,7 +266,7 @@ DrawRemainingPointsSprite:
 	ld c, a ; $5079
 	ld_xy de, $1b, $7f ; $507a
 	call OffsetStatSpriteY ; $507d
-	ld b, $0f ; $5080
+	ld b, OAM_BANK1 | 7 ; $5080
 	call QueueSprite ; $5082
 	ret ; $5085
 .lt0a:
@@ -274,7 +274,7 @@ DrawRemainingPointsSprite:
 	ld c, a ; $5087
 	ld_xy de, $18, $7f ; $5088
 	call OffsetStatSpriteY ; $508b
-	ld b, $0f ; $508e
+	ld b, OAM_BANK1 | 7 ; $508e
 	call QueueSprite ; $5090
 	ret ; $5093
 OffsetStatSpriteY:

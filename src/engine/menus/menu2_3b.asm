@@ -354,7 +354,7 @@ MainMenuCursorSpriteTask:
 	ld a, [hl+] ; $588f
 	ld h, [hl] ; $5890
 	ld l, a ; $5891
-	ld b, $08 ; $5892
+	ld b, OAM_BANK1 ; $5892
 	push de ; $5894
 	call QueueSpriteTemplate ; $5895
 	ld c, $03 ; $5898
@@ -374,7 +374,7 @@ MainMenuCursorSpriteTask:
 	add d ; $58ad
 	ld d, a ; $58ae
 	ld hl, MainMenuCursorSpriteTask_SpriteTemplate ; $58af
-	ld b, $08 ; $58b2
+	ld b, OAM_BANK1 ; $58b2
 	ld c, $72 ; $58b4
 	call QueueSpriteTemplate ; $58b6
 	ret ; $58b9

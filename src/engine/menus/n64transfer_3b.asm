@@ -342,7 +342,7 @@ N64RecordTypeCursorSpriteTask:
 	ld d, [hl] ; $736c
 	ld e, a ; $736d
 	farcall ApplySpriteBobOffset ; $736e
-	ld b, $08 ; $7371
+	ld b, OAM_BANK1 ; $7371
 	ld hl, N64RecordTypeCursorSpriteTask_SpriteTemplate0 ; $7373
 	push de ; $7376
 	call QueueSpriteTemplate ; $7377
@@ -352,7 +352,7 @@ N64RecordTypeCursorSpriteTask:
 	ld d, h ; $737f
 	ld e, l ; $7380
 	ld hl, N64RecordTypeCursorSpriteTask_SpriteTemplate1 ; $7381
-	ld b, $08 ; $7384
+	ld b, OAM_BANK1 ; $7384
 	ld c, $70 ; $7386
 	call QueueSpriteTemplate ; $7388
 	ret ; $738b
@@ -804,7 +804,7 @@ N64TransferItemCursorSpriteTask:
 	ld d, [hl] ; $7707
 	ld e, a ; $7708
 	farcall ApplySpriteBobOffset ; $7709
-	ld b, $08 ; $770c
+	ld b, OAM_BANK1 ; $770c
 	ld hl, N64TransferItemCursorSpriteTask_SpriteTemplate0 ; $770e
 	push de ; $7711
 	call QueueSpriteTemplate ; $7712
@@ -814,7 +814,7 @@ N64TransferItemCursorSpriteTask:
 	ld d, h ; $771a
 	ld e, l ; $771b
 	ld hl, N64TransferItemCursorSpriteTask_SpriteTemplate1 ; $771c
-	ld b, $08 ; $771f
+	ld b, OAM_BANK1 ; $771f
 	ld c, $70 ; $7721
 	call QueueSpriteTemplate ; $7723
 	ret ; $7726

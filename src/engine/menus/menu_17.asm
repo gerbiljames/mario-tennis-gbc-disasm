@@ -12,7 +12,7 @@ Unused_17_DrawCornerBrackets:
 	push de ; $40cd
 	push bc ; $40ce
 	ld c, $00 ; $40cf
-	ld b, $09 ; $40d1
+	ld b, OAM_BANK1 | 1 ; $40d1
 	call QueueSprite ; $40d3
 	pop bc ; $40d6
 	pop de ; $40d7
@@ -23,7 +23,7 @@ Unused_17_DrawCornerBrackets:
 	ld d, a ; $40dc
 	push de ; $40dd
 	ld c, $00 ; $40de
-	ld b, $29 ; $40e0
+	ld b, OAM_BANK1 | OAM_XFLIP | 1 ; $40e0
 	call QueueSprite ; $40e2
 	pop de ; $40e5
 	pop bc ; $40e6
@@ -38,7 +38,7 @@ Unused_17_DrawCornerBrackets:
 	ld d, a ; $40ef
 	push de ; $40f0
 	ld c, $00 ; $40f1
-	ld b, $69 ; $40f3
+	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 1 ; $40f3
 	call QueueSprite ; $40f5
 	pop de ; $40f8
 	pop bc ; $40f9
@@ -48,7 +48,7 @@ Unused_17_DrawCornerBrackets:
 	ld e, a ; $40fd
 	push de ; $40fe
 	ld c, $00 ; $40ff
-	ld b, $49 ; $4101
+	ld b, OAM_BANK1 | OAM_YFLIP | 1 ; $4101
 	call QueueSprite ; $4103
 	pop de ; $4106
 	ret ; $4107

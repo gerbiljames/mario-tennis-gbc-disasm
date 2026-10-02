@@ -141,7 +141,7 @@ DrawNameEntryUnderlineSprites:
 	jr z, .next ; $7397
 .drawCursor:
 	ld c, $10 ; $7399
-	ld b, $0a ; $739b
+	ld b, OAM_BANK1 | 2 ; $739b
 	push de ; $739d
 	call QueueSprite ; $739e
 	pop de ; $73a1

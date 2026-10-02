@@ -152,7 +152,7 @@ DrawCharacterSelectCursor:
 	jr nz, .gotColumn ; $4e40
 	ld c, $02 ; $4e42
 .gotColumn:
-	ld b, $00 ; $4e44
+	ld b, 0 ; $4e44
 	call QueueSprite ; $4e46
 	ret ; $4e49
 CharacterSelectCursorTable:
@@ -832,13 +832,13 @@ DrawCharGridScrollArrows:
 	ld c, $01 ; $54df
 	call ApplySpriteBobOffsetX ; $54e1
 	ld c, $10 ; $54e4
-	ld b, $0f ; $54e6
+	ld b, OAM_BANK1 | 7 ; $54e6
 	call QueueSprite ; $54e8
 	ld de, $5045 ; $54eb
 	ld c, $00 ; $54ee
 	call ApplySpriteBobOffsetX ; $54f0
 	ld c, $12 ; $54f3
-	ld b, $0f ; $54f5
+	ld b, OAM_BANK1 | 7 ; $54f5
 	call QueueSprite ; $54f7
 	ld a, [wCharGridPage] ; $54fa
 	or a ; $54fd
@@ -849,7 +849,7 @@ DrawCharGridScrollArrows:
 	ld c, $01 ; $5507
 	call ApplySpriteBobOffsetY ; $5509
 	ld c, $14 ; $550c
-	ld b, $0f ; $550e
+	ld b, OAM_BANK1 | 7 ; $550e
 	call QueueSprite ; $5510
 .checkUpArrow:
 	ld a, [wCharGridPage] ; $5513
@@ -872,7 +872,7 @@ DrawCharGridScrollArrows:
 	ld c, $00 ; $5533
 	call ApplySpriteBobOffsetY ; $5535
 	ld c, $16 ; $5538
-	ld b, $0f ; $553a
+	ld b, OAM_BANK1 | 7 ; $553a
 	call QueueSprite ; $553c
 .done:
 	pop_wram_bank ; $553f

@@ -211,7 +211,7 @@ EraseConfirmCursorSpriteTask:
 	ret ; $4e1b
 QueueEraseConfirmCursorSprites:
 	ld c, $00 ; $4e1c
-	ld b, $08 ; $4e1e
+	ld b, OAM_BANK1 ; $4e1e
 	push de ; $4e20
 	call QueueSprite ; $4e21
 	pop de ; $4e24
@@ -219,7 +219,7 @@ QueueEraseConfirmCursorSprites:
 	add d ; $4e27
 	ld d, a ; $4e28
 	ld c, $02 ; $4e29
-	ld b, $08 ; $4e2b
+	ld b, OAM_BANK1 ; $4e2b
 	call QueueSprite ; $4e2d
 	farcall TickMenuBgScroll ; $4e30
 	ret ; $4e33

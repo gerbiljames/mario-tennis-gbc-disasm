@@ -107,7 +107,7 @@ DrawHitSpark:
 	add a ; $542c
 	add $68 ; $542d
 	ld c, a ; $542f
-	ld b, $0a ; $5430
+	ld b, OAM_BANK1 | 2 ; $5430
 	call QueueSprite ; $5432
 	ret ; $5435
 DrawSpecialHitEffect:

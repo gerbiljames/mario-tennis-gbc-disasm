@@ -10,7 +10,7 @@ ASSERT STRCMP("{TWIN_LABEL}", "{DrawCornerBrackets_{TWIN}_NAME}") == 0
 	push de
 	push bc
 	ld c, $00
-	ld b, $09
+	ld b, OAM_BANK1 | 1
 	call QueueSprite
 	pop bc
 	pop de
@@ -21,7 +21,7 @@ ASSERT STRCMP("{TWIN_LABEL}", "{DrawCornerBrackets_{TWIN}_NAME}") == 0
 	ld d, a
 	push de
 	ld c, $00
-	ld b, $29
+	ld b, OAM_BANK1 | OAM_XFLIP | 1
 	call QueueSprite
 	pop de
 	pop bc
@@ -36,7 +36,7 @@ ASSERT STRCMP("{TWIN_LABEL}", "{DrawCornerBrackets_{TWIN}_NAME}") == 0
 	ld d, a
 	push de
 	ld c, $00
-	ld b, $69
+	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 1
 	call QueueSprite
 	pop de
 	pop bc
@@ -46,7 +46,7 @@ ASSERT STRCMP("{TWIN_LABEL}", "{DrawCornerBrackets_{TWIN}_NAME}") == 0
 	ld e, a
 	push de
 	ld c, $00
-	ld b, $49
+	ld b, OAM_BANK1 | OAM_YFLIP | 1
 	call QueueSprite
 	pop de
 	ret

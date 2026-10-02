@@ -84,7 +84,7 @@ ChoiceTabCursorSpriteTask:
 	ld d, [hl] ; $5112
 	ld e, a ; $5113
 	farcall ApplySpriteBobOffset ; $5114
-	ld b, $08 ; $5117
+	ld b, OAM_BANK1 ; $5117
 	ld hl, ChoiceTabCursorSpriteTask_SpriteTemplate0 ; $5119
 	push de ; $511c
 	call QueueSpriteTemplate ; $511d
@@ -94,7 +94,7 @@ ChoiceTabCursorSpriteTask:
 	ld d, h ; $5125
 	ld e, l ; $5126
 	ld hl, ChoiceTabCursorSpriteTask_SpriteTemplate1 ; $5127
-	ld b, $08 ; $512a
+	ld b, OAM_BANK1 ; $512a
 	ld c, $70 ; $512c
 	call QueueSpriteTemplate ; $512e
 	ret ; $5131

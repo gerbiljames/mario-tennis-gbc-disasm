@@ -409,7 +409,7 @@ EraseSavedDataCursorSpriteTask:
 	ld d, [hl] ; $6f78
 	ld e, a ; $6f79
 	farcall ApplySpriteBobOffset ; $6f7a
-	ld b, $08 ; $6f7d
+	ld b, OAM_BANK1 ; $6f7d
 	ld hl, EraseSavedDataCursorSpriteTask_SpriteTemplate0 ; $6f7f
 	push de ; $6f82
 	call QueueSpriteTemplate ; $6f83
@@ -419,7 +419,7 @@ EraseSavedDataCursorSpriteTask:
 	ld d, h ; $6f8b
 	ld e, l ; $6f8c
 	ld hl, EraseSavedDataCursorSpriteTask_SpriteTemplate1 ; $6f8d
-	ld b, $08 ; $6f90
+	ld b, OAM_BANK1 ; $6f90
 	ld c, $70 ; $6f92
 	call QueueSpriteTemplate ; $6f94
 	ret ; $6f97

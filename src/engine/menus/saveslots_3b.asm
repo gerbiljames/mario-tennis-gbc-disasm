@@ -817,7 +817,7 @@ MatchFormatCursorSpriteTask:
 	ld d, [hl] ; $6105
 	ld e, a ; $6106
 	farcall ApplySpriteBobOffset ; $6107
-	ld b, $08 ; $610a
+	ld b, OAM_BANK1 ; $610a
 	ld hl, MatchFormatCursorSpriteTask_SpriteTemplate0 ; $610c
 	push de ; $610f
 	call QueueSpriteTemplate ; $6110
@@ -827,7 +827,7 @@ MatchFormatCursorSpriteTask:
 	ld d, h ; $6118
 	ld e, l ; $6119
 	ld hl, MatchFormatCursorSpriteTask_SpriteTemplate1 ; $611a
-	ld b, $08 ; $611d
+	ld b, OAM_BANK1 ; $611d
 	ld c, $70 ; $611f
 	call QueueSpriteTemplate ; $6121
 	ret ; $6124

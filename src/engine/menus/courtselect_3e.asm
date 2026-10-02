@@ -428,7 +428,7 @@ CourtSelect4CursorSpriteTask:
 	ld a, [hl+] ; $5ec1
 	ld h, [hl] ; $5ec2
 	ld l, a ; $5ec3
-	ld b, $08 ; $5ec4
+	ld b, OAM_BANK1 ; $5ec4
 	push de ; $5ec6
 	call QueueSpriteTemplate ; $5ec7
 	pop de ; $5eca
@@ -447,7 +447,7 @@ CourtSelect4CursorSpriteTask:
 	ld d, h ; $5edd
 	ld e, l ; $5ede
 	ld hl, CourtSelect4CursorSpriteTask_SpriteTemplate ; $5edf
-	ld b, $08 ; $5ee2
+	ld b, OAM_BANK1 ; $5ee2
 	ld c, $72 ; $5ee4
 	call QueueSpriteTemplate ; $5ee6
 	ret ; $5ee9

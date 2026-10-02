@@ -5,7 +5,7 @@ DrawSpinServeBriefingMarker:
 	ld a, [wBriefingSpinMarkerUnflipped] ; $4850
 	cp $01 ; $4853
 	jr z, .eq01 ; $4855
-	ld b, $29 ; $4857
+	ld b, OAM_BANK1 | OAM_XFLIP | 1 ; $4857
 .eq01:
 	ld a, [wBriefingSpinMarkerX] ; $4859
 	ld d, a ; $485c
@@ -47,7 +47,7 @@ DrawBlinkingPrompt:
 	and $10 ; $48ad
 	jr z, .restore ; $48af
 	ld c, $72 ; $48b1
-	ld b, $09 ; $48b3
+	ld b, OAM_BANK1 | 1 ; $48b3
 	ld_xy de, $50, $8c ; $48b5
 	call QueueSprite ; $48b8
 .restore:
@@ -70,7 +70,7 @@ DrawBriefingTargetBrackets:
 	inc e ; $48df
 .maskClear2:
 	ld c, $6c ; $48e0
-	ld b, $0a ; $48e2
+	ld b, OAM_BANK1 | 2 ; $48e2
 	call QueueSprite ; $48e4
 	ld a, [wBriefingBracketWidth] ; $48e7
 	add $03 ; $48ea
@@ -91,7 +91,7 @@ DrawBriefingTargetBrackets:
 	inc e ; $4903
 .maskClear4:
 	ld c, $6c ; $4904
-	ld b, $2a ; $4906
+	ld b, OAM_BANK1 | OAM_XFLIP | 2 ; $4906
 	call QueueSprite ; $4908
 	ld a, [wBriefingBracketWidth] ; $490b
 	add $03 ; $490e
@@ -116,7 +116,7 @@ DrawBriefingTargetBrackets:
 	dec e ; $492e
 .maskClear6:
 	ld c, $6c ; $492f
-	ld b, $6a ; $4931
+	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 2 ; $4931
 	call QueueSprite ; $4933
 	ld a, [wBriefingBracketX] ; $4936
 	ld d, a ; $4939
@@ -137,7 +137,7 @@ DrawBriefingTargetBrackets:
 	dec e ; $4952
 .maskClear8:
 	ld c, $6c ; $4953
-	ld b, $4a ; $4955
+	ld b, OAM_BANK1 | OAM_YFLIP | 2 ; $4955
 	call QueueSprite ; $4957
 	pop_wram_bank ; $495a
 	ret ; $495f
@@ -241,7 +241,7 @@ Unused_17_DrawSecondCaptionRow:
 ; court-diagram code. Named for what it does, not what it is for.
 Unused_17_QueueSpritePair:
 	ld c, $04 ; $4a1b
-	ld b, $09 ; $4a1d
+	ld b, OAM_BANK1 | 1 ; $4a1d
 	ld hl, QueueSpritePair_17_SpriteTemplate ; $4a1f
 	ld_xy de, $20, $20 ; $4a22
 	call QueueSpriteTemplate ; $4a25

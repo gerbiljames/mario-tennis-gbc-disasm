@@ -82,7 +82,7 @@ Unused_1b_QueueBobbingFlagSprite:
 	push hl ; $6974
 	farcall Unused_18_ApplySpriteBobOffset ; $6975
 	ld c, $50 ; $6978
-	ld b, $00 ; $697a
+	ld b, 0 ; $697a
 	call QueueSprite ; $697c
 	pop hl ; $697f
 	ret ; $6980

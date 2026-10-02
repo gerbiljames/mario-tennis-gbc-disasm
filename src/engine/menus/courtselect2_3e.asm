@@ -327,7 +327,7 @@ CourtSelect9CursorSpriteTask:
 	ld d, h ; $676e
 	ld e, l ; $676f
 	ld hl, CourtSelect9CursorSpriteTask_SpriteTemplate ; $6770
-	ld b, $08 ; $6773
+	ld b, OAM_BANK1 ; $6773
 	ld c, $72 ; $6775
 	call QueueSpriteTemplate ; $6777
 	ret ; $677a

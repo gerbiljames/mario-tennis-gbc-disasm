@@ -109,7 +109,7 @@ QueueDistantPlaneSprite_14:
 	ld c, a ; $7562
 	ld c, a ; $7563
 	ld hl, SpriteTemplate_14_3 ; $7564
-	ld b, $08 ; $7567
+	ld b, OAM_BANK1 ; $7567
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
 GetSceneObjectScreenPos_14:
@@ -156,7 +156,7 @@ QueueTwinkleSprite_14:
 	ld a, [wCutsceneObjPhase] ; $76b9
 	ld c, a ; $76bc
 	ld hl, SpriteTemplate_14_3 ; $76bd
-	ld b, $08 ; $76c0
+	ld b, OAM_BANK1 ; $76c0
 	call QueueSpriteTemplate ; $76c2
 	ret ; $76c5
 .queue:

@@ -356,7 +356,7 @@ MinigameSelectCursorSpriteTask:
 	ld d, h ; $64a9
 	ld e, l ; $64aa
 	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate1 ; $64ab
-	ld b, $08 ; $64ae
+	ld b, OAM_BANK1 ; $64ae
 	ld c, $70 ; $64b0
 	call QueueSpriteTemplate ; $64b2
 	ret ; $64b5

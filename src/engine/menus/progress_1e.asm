@@ -82,7 +82,7 @@ DrawProgressEntryDefaultIcon:
 	add a ; $7a5a
 	add $00 ; $7a5b
 	ld c, a ; $7a5d
-	ld b, $0a ; $7a5e
+	ld b, OAM_BANK1 | 2 ; $7a5e
 	call QueueSprite16 ; $7a60
 	pop hl ; $7a63
 	pop de ; $7a64
@@ -111,7 +111,7 @@ DrawProgressEntryTrophyIcon:
 	ld c, $20 ; $7a7f
 	add c ; $7a81
 	ld c, a ; $7a82
-	ld b, $0a ; $7a83
+	ld b, OAM_BANK1 | 2 ; $7a83
 	call QueueSprite16 ; $7a85
 	pop hl ; $7a88
 	pop de ; $7a89

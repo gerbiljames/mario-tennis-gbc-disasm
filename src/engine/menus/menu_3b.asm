@@ -6,7 +6,7 @@ Unused_3b_QueueBouncingCursorCorners:
 	ld c, $00 ; $403f
 	call ApplyCursorBounceY ; $4041
 	ld c, $00 ; $4044
-	ld b, $08 ; $4046
+	ld b, OAM_BANK1 ; $4046
 	call QueueSprite ; $4048
 	pop bc ; $404b
 	pop de ; $404c
@@ -21,7 +21,7 @@ Unused_3b_QueueBouncingCursorCorners:
 	ld c, $00 ; $4058
 	call ApplyCursorBounceY ; $405a
 	ld c, $00 ; $405d
-	ld b, $28 ; $405f
+	ld b, OAM_BANK1 | OAM_XFLIP ; $405f
 	call QueueSprite ; $4061
 	pop de ; $4064
 	pop bc ; $4065
@@ -40,7 +40,7 @@ Unused_3b_QueueBouncingCursorCorners:
 	ld c, $01 ; $4075
 	call ApplyCursorBounceY ; $4077
 	ld c, $00 ; $407a
-	ld b, $68 ; $407c
+	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $407c
 	call QueueSprite ; $407e
 	pop de ; $4081
 	pop bc ; $4082
@@ -54,7 +54,7 @@ Unused_3b_QueueBouncingCursorCorners:
 	ld c, $01 ; $408d
 	call ApplyCursorBounceY ; $408f
 	ld c, $00 ; $4092
-	ld b, $48 ; $4094
+	ld b, OAM_BANK1 | OAM_YFLIP ; $4094
 	call QueueSprite ; $4096
 	pop de ; $4099
 	ret ; $409a

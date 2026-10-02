@@ -12,7 +12,7 @@ LoadTourPointerSpriteGfx_13:
 QueueTourPointerSprite_13:
 	ld hl, QueueTourPointerSprite_13_SpriteTemplate ; $4cff
 	ld c, $00 ; $4d02
-	ld b, $08 ; $4d04
+	ld b, OAM_BANK1 ; $4d04
 	call QueueSpriteTemplate ; $4d06
 	ret ; $4d09
 AnimateTourPointerSprite_13:

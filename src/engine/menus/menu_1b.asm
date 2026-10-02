@@ -6,7 +6,7 @@ Unused_1b_DrawMenuCursorCorners:
 	ld c, $00 ; $4047
 	call ApplyArrowBobOffset ; $4049
 	ld c, $00 ; $404c
-	ld b, $08 ; $404e
+	ld b, OAM_BANK1 ; $404e
 	call QueueSprite ; $4050
 	pop bc ; $4053
 	pop de ; $4054
@@ -21,7 +21,7 @@ Unused_1b_DrawMenuCursorCorners:
 	ld c, $00 ; $4060
 	call ApplyArrowBobOffset ; $4062
 	ld c, $00 ; $4065
-	ld b, $28 ; $4067
+	ld b, OAM_BANK1 | OAM_XFLIP ; $4067
 	call QueueSprite ; $4069
 	pop de ; $406c
 	pop bc ; $406d
@@ -40,7 +40,7 @@ Unused_1b_DrawMenuCursorCorners:
 	ld c, $01 ; $407d
 	call ApplyArrowBobOffset ; $407f
 	ld c, $00 ; $4082
-	ld b, $68 ; $4084
+	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $4084
 	call QueueSprite ; $4086
 	pop de ; $4089
 	pop bc ; $408a
@@ -54,7 +54,7 @@ Unused_1b_DrawMenuCursorCorners:
 	ld c, $01 ; $4095
 	call ApplyArrowBobOffset ; $4097
 	ld c, $00 ; $409a
-	ld b, $48 ; $409c
+	ld b, OAM_BANK1 | OAM_YFLIP ; $409c
 	call QueueSprite ; $409e
 	pop de ; $40a1
 	ret ; $40a2

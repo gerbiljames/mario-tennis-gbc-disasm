@@ -271,7 +271,7 @@ DrawPaletteCursorSprites:
 	add $18 ; $6b29
 	sub l ; $6b2b
 	ld e, a ; $6b2c
-	ld b, $01 ; $6b2d
+	ld b, 1 ; $6b2d
 	ld c, $60 ; $6b2f
 	push hl ; $6b31
 	call QueueSprite16 ; $6b32
@@ -279,7 +279,7 @@ DrawPaletteCursorSprites:
 	ld a, $50 ; $6b36
 	sub l ; $6b38
 	ld e, a ; $6b39
-	ld b, $00 ; $6b3a
+	ld b, 0 ; $6b3a
 	ld a, $08 ; $6b3c
 .loop:
 	push af ; $6b3e

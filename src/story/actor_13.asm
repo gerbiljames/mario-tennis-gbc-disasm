@@ -244,7 +244,7 @@ Unused_13_QueueVarsityCourtTourSprites:
 	ld a, $20 ; $66f5
 	sub b ; $66f7
 	ld e, a ; $66f8
-	ld b, $08 ; $66f9
+	ld b, OAM_BANK1 ; $66f9
 	call QueueSpriteTemplate ; $66fb
 	ret ; $66fe
 VarsityCourtTourSpritePtrs_13:

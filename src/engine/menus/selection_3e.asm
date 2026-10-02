@@ -6,7 +6,7 @@ DrawSelectionBoxCorners:
 	ld c, $00 ; $404f
 	call ApplySelectionBoxWobbleY ; $4051
 	ld c, $00 ; $4054
-	ld b, $08 ; $4056
+	ld b, OAM_BANK1 ; $4056
 	call QueueSprite ; $4058
 	pop bc ; $405b
 	pop de ; $405c
@@ -21,7 +21,7 @@ DrawSelectionBoxCorners:
 	ld c, $00 ; $4068
 	call ApplySelectionBoxWobbleY ; $406a
 	ld c, $00 ; $406d
-	ld b, $28 ; $406f
+	ld b, OAM_BANK1 | OAM_XFLIP ; $406f
 	call QueueSprite ; $4071
 	pop de ; $4074
 	pop bc ; $4075
@@ -40,7 +40,7 @@ DrawSelectionBoxCorners:
 	ld c, $01 ; $4085
 	call ApplySelectionBoxWobbleY ; $4087
 	ld c, $00 ; $408a
-	ld b, $68 ; $408c
+	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $408c
 	call QueueSprite ; $408e
 	pop de ; $4091
 	pop bc ; $4092
@@ -54,7 +54,7 @@ DrawSelectionBoxCorners:
 	ld c, $01 ; $409d
 	call ApplySelectionBoxWobbleY ; $409f
 	ld c, $00 ; $40a2
-	ld b, $48 ; $40a4
+	ld b, OAM_BANK1 | OAM_YFLIP ; $40a4
 	call QueueSprite ; $40a6
 	pop de ; $40a9
 	ret ; $40aa

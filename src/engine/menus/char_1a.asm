@@ -53,14 +53,14 @@ Unused_1a_DrawCharViewerCursorSprite:
 .queueSprite:
 	push de ; $6c52
 	ldh a, [hVBlankCounter] ; $6c53
-	ld b, $0d ; $6c55
+	ld b, OAM_BANK1 | 5 ; $6c55
 	ld c, $80 ; $6c57
 	call QueueSprite ; $6c59
 	pop de ; $6c5c
 	ld a, $08 ; $6c5d
 	add d ; $6c5f
 	ld d, a ; $6c60
-	ld b, $0d ; $6c61
+	ld b, OAM_BANK1 | 5 ; $6c61
 	ld c, $82 ; $6c63
 	call QueueSprite ; $6c65
 	ret ; $6c68

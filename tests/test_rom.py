@@ -36,6 +36,8 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tld_oam bc, "), 104)
         self.assertEqual(count(r"^\tld_size bc, "), 24)
         self.assertEqual(count(r"^\tld_tile_run bc, "), 63)
+        # an OAM attribute loaded alone for QueueSprite*: palette plus OAM_* flags
+        self.assertGreaterEqual(count(r"^\tld b, (?:OAM_\w+ \| )*(?:OAM_\w+|[0-7])(?: ;|$)"), 139)
         self.assertEqual(count(r"^\tadd LOW\((?!ActorFieldTypeTable_04\))"), 0, "no split-base index left raw")
         self.assertEqual(count(r"inline arg$"), 0)
         self.assertEqual(count(r"^\tld_slot hl, "), 37)

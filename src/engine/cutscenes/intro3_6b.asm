@@ -213,7 +213,7 @@ QueueIntroSpriteBlock:
 .read:
 	ld c, [hl] ; $612f
 	ld hl, QueueIntroSpriteBlock_SpriteTemplate ; $6130
-	ld b, $08 ; $6133
+	ld b, OAM_BANK1 ; $6133
 	call QueueSpriteTemplate ; $6135
 	ret ; $6138
 IntroSpriteBlockTable:

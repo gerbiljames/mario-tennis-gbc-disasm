@@ -124,7 +124,7 @@ MatchRulesCursorSpriteTask:
 	ld d, [hl] ; $4923
 	ld e, a ; $4924
 	farcall ApplySpriteBobOffset ; $4925
-	ld b, $08 ; $4928
+	ld b, OAM_BANK1 ; $4928
 	ld hl, MatchRulesCursorSpriteTask_SpriteTemplate0 ; $492a
 	push de ; $492d
 	call QueueSpriteTemplate ; $492e
@@ -134,7 +134,7 @@ MatchRulesCursorSpriteTask:
 	ld d, h ; $4936
 	ld e, l ; $4937
 	ld hl, MatchRulesCursorSpriteTask_SpriteTemplate1 ; $4938
-	ld b, $08 ; $493b
+	ld b, OAM_BANK1 ; $493b
 	ld c, $70 ; $493d
 	call QueueSpriteTemplate ; $493f
 	ret ; $4942
