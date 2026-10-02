@@ -96,15 +96,15 @@ UpdateFirework1_14Table:
 	test_flag FLAG_DOUBLES ; $64f5
 	jp z, .placeActors ; $64f8
 	script_null_script ACTOR_PARTNER ; $64fb
-	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6500
+	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $6500
 .placeActors:
-	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $650b
+	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $650b
 	xor a ; $6516
 	ld [wStoryModeShowLocationName], a ; $6517
 	script_fade_in $04 ; $651a
 	call WaitFadeEnd ; $651f
 	script_player_speed $0006 ; $6522
-	script_move_player $0500, $2300 ; $6528
+	script_move_player 5.0, 35.0 ; $6528
 	farcall WaitPlayerMoveDone ; $6532
 	script_wait_frames $32 ; $6535
 	ld a, $50 ; $653c
@@ -348,11 +348,11 @@ AdvanceFirework1Ascent_14:
 	ld a, $01 ; $6fa4
 	ld hl, AnimateIslandSkyEffectSprites_14 ; $6fa6
 	call RegisterFrameTask ; $6fa9
-	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $6fac
+	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $6fac
 	test_flag FLAG_DOUBLES ; $6fb7
 	jp z, .fadeIn ; $6fba
 	script_null_script ACTOR_PARTNER ; $6fbd
-	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6fc2
+	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $6fc2
 .fadeIn:
 	xor a ; $6fcd
 	ld [wStoryModeShowLocationName], a ; $6fce
@@ -396,7 +396,7 @@ AdvanceFirework1Ascent_14:
 	dec h ; $7032
 	jr nz, .descend ; $7033
 	script_player_speed $0012 ; $7035
-	script_move_player $0b00, $1800 ; $703b
+	script_move_player 11.0, 24.0 ; $703b
 	ld h, $18 ; $7045
 .land:
 	script_wait_frames $02 ; $7047
@@ -435,7 +435,7 @@ AdvanceFirework1Ascent_14:
 	call PlayPlaneMoveSfx_14 ; $7097
 	dec h ; $709a
 	jr nz, .doublesWalkOff ; $709b
-	script_move_player $0b00, $0d00 ; $709d
+	script_move_player 11.0, 13.0 ; $709d
 	call LoadDistantPlaneObjGfx_14 ; $70a7
 	ld a, $04 ; $70aa
 	ld [wCutsceneObjPhase], a ; $70ac

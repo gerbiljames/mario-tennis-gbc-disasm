@@ -84,18 +84,20 @@ ActorScript_0f_08:
 	as_flag $01, $05, $02
 	as_set_field $06, $0006
 .L8:
-	as_set_target $2700, $1300
+	as_set_target 39.0, 19.0
 	as_wait_move
 	as_wait $4b
-	as_set_target $2900, $1300
+	as_set_target 41.0, 19.0
 	as_wait_move
 	as_wait $78
 	as_jump .L8
 ```
 
 The two `as_flag`/`as_set_field` lines run once, then the body loops: move to
-`($2700,$1300)`, wait for the move and 75 frames, move to `($2900,$1300)`, wait
-for the move and 120 frames, repeat.
+tile `(39, 19)`, wait for the move and 75 frames, move to `(41, 19)`, wait for
+the move and 120 frames, repeat. Positions are written in tiles with a point
+(`map_pos` in `include/macros.inc`); the game stores them as words in 1/256
+tile, so `39.0` assembles to `$2700` and `17.5` to `$1180`.
 
 ## Where script pointers come from
 

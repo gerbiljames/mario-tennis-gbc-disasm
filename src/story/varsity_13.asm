@@ -141,56 +141,56 @@ CourtyardMapScripts_13:
 	dw CourtyardInitScript_13 ; slot 6 InitScript
 CourtyardActors_13:
 	; $5c86, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $0d00, $1d00, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, COURTYARD_KEVIN
-	map_actor $0000, ActorScript_13_27, $0500, $1d00, FACE_RIGHT, OBJ_BOB, ANIM_WALK, $07, COURTYARD_BOB
-	map_actor $0000, ActorScript_13_20, $0d00, $2300, FACE_UP, OBJ_FAY, ANIM_SWING_LOOP, $03, COURTYARD_FAY
-	map_actor $0000, ActorScript_13_27, $0800, $1300, FACE_UP, OBJ_CURT, ANIM_WALK, $06, COURTYARD_CURT
-	map_actor $0000, ActorScript_13_28, $0f00, $1700, FACE_DOWN, OBJ_BETH, ANIM_WALK, $06, COURTYARD_BETH
-	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, COURTYARD_INVISIBLE
+	map_actor $0000, ActorScript_13_27, 13.0, 29.0, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, COURTYARD_KEVIN
+	map_actor $0000, ActorScript_13_27, 5.0, 29.0, FACE_RIGHT, OBJ_BOB, ANIM_WALK, $07, COURTYARD_BOB
+	map_actor $0000, ActorScript_13_20, 13.0, 35.0, FACE_UP, OBJ_FAY, ANIM_SWING_LOOP, $03, COURTYARD_FAY
+	map_actor $0000, ActorScript_13_27, 8.0, 19.0, FACE_UP, OBJ_CURT, ANIM_WALK, $06, COURTYARD_CURT
+	map_actor $0000, ActorScript_13_28, 15.0, 23.0, FACE_DOWN, OBJ_BETH, ANIM_WALK, $06, COURTYARD_BETH
+	map_actor $0000, ActorScript_13_27, 16.75, 26.375, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, COURTYARD_INVISIBLE
 	map_actor_end
 VarsityCourtActorsA_13:
 	; $5ce4, 108 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $0d00, $1d00, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, VARSITY_COURT_A_KEVIN
-	map_actor $0000, ActorScript_13_27, $0500, $1d00, FACE_RIGHT, OBJ_BOB, ANIM_WALK, $07, VARSITY_COURT_A_BOB
-	map_actor $0000, ActorScript_13_20, $0d00, $2300, FACE_UP, OBJ_FAY, ANIM_WALK, $03, VARSITY_COURT_A_FAY
-	map_actor $0000, ActorScript_13_27, $0800, $1300, FACE_UP, OBJ_CURT, ANIM_WALK, $04, VARSITY_COURT_A_CURT
-	map_actor $0000, ActorScript_13_28, $0f00, $1700, FACE_DOWN, OBJ_BETH, ANIM_WALK, $06, VARSITY_COURT_A_BETH
-	map_actor $0000, ActorScript_13_27, $2d00, $3d00, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, VARSITY_COURT_A_EMILY
-	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, VARSITY_COURT_A_INVISIBLE
+	map_actor $0000, ActorScript_13_27, 13.0, 29.0, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, VARSITY_COURT_A_KEVIN
+	map_actor $0000, ActorScript_13_27, 5.0, 29.0, FACE_RIGHT, OBJ_BOB, ANIM_WALK, $07, VARSITY_COURT_A_BOB
+	map_actor $0000, ActorScript_13_20, 13.0, 35.0, FACE_UP, OBJ_FAY, ANIM_WALK, $03, VARSITY_COURT_A_FAY
+	map_actor $0000, ActorScript_13_27, 8.0, 19.0, FACE_UP, OBJ_CURT, ANIM_WALK, $04, VARSITY_COURT_A_CURT
+	map_actor $0000, ActorScript_13_28, 15.0, 23.0, FACE_DOWN, OBJ_BETH, ANIM_WALK, $06, VARSITY_COURT_A_BETH
+	map_actor $0000, ActorScript_13_27, 45.0, 61.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, VARSITY_COURT_A_EMILY
+	map_actor $0000, ActorScript_13_27, 16.75, 26.375, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, VARSITY_COURT_A_INVISIBLE
 	map_actor_end
 VarsityCourtActorsB_13:
 	; $5d50, 122 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $0d00, $1d00, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, VARSITY_COURT_B_KEVIN
-	map_actor $0000, ActorScript_13_27, $0500, $2300, FACE_UP, OBJ_BOB, ANIM_WALK, $07, VARSITY_COURT_B_BOB
-	map_actor $0000, ActorScript_13_20, $0d00, $2500, FACE_UP, OBJ_FAY, ANIM_WALK, $03, VARSITY_COURT_B_FAY
-	map_actor $0000, ActorScript_13_27, $1000, $2500, FACE_LEFT, OBJ_CURT, ANIM_WALK, $04, VARSITY_COURT_B_CURT
-	map_actor $0000, ActorScript_13_27, $0800, $1300, FACE_UP, OBJ_BETH, ANIM_WALK, $06, VARSITY_COURT_B_BETH
-	map_actor $0000, ActorScript_13_27, $2d00, $3d00, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, VARSITY_COURT_B_EMILY
-	map_actor $0000, ActorScript_13_27, $0500, $2100, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, VARSITY_COURT_B_MARK
-	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, VARSITY_COURT_B_INVISIBLE
+	map_actor $0000, ActorScript_13_27, 13.0, 29.0, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, VARSITY_COURT_B_KEVIN
+	map_actor $0000, ActorScript_13_27, 5.0, 35.0, FACE_UP, OBJ_BOB, ANIM_WALK, $07, VARSITY_COURT_B_BOB
+	map_actor $0000, ActorScript_13_20, 13.0, 37.0, FACE_UP, OBJ_FAY, ANIM_WALK, $03, VARSITY_COURT_B_FAY
+	map_actor $0000, ActorScript_13_27, 16.0, 37.0, FACE_LEFT, OBJ_CURT, ANIM_WALK, $04, VARSITY_COURT_B_CURT
+	map_actor $0000, ActorScript_13_27, 8.0, 19.0, FACE_UP, OBJ_BETH, ANIM_WALK, $06, VARSITY_COURT_B_BETH
+	map_actor $0000, ActorScript_13_27, 45.0, 61.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, VARSITY_COURT_B_EMILY
+	map_actor $0000, ActorScript_13_27, 5.0, 33.0, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, VARSITY_COURT_B_MARK
+	map_actor $0000, ActorScript_13_27, 16.75, 26.375, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, VARSITY_COURT_B_INVISIBLE
 	map_actor_end
 VarsityCourtActorsC_13:
 	; $5dca, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_13_20, $1000, $1500, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, VARSITY_COURT_C_BOB
-	map_actor $0000, ActorScript_13_20, $0d00, $2500, FACE_UP, OBJ_FAY, ANIM_WALK, $03, VARSITY_COURT_C_FAY
-	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, VARSITY_COURT_C_INVISIBLE
+	map_actor $0000, ActorScript_13_20, 16.0, 21.0, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, VARSITY_COURT_C_BOB
+	map_actor $0000, ActorScript_13_20, 13.0, 37.0, FACE_UP, OBJ_FAY, ANIM_WALK, $03, VARSITY_COURT_C_FAY
+	map_actor $0000, ActorScript_13_27, 16.75, 26.375, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, VARSITY_COURT_C_INVISIBLE
 	map_actor_end
 VarsityCourtActorsD_13:
 	; $5dfe, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_20, $0d00, $1d00, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, VARSITY_COURT_D_BOB
-	map_actor $0000, ActorScript_13_20, $0d00, $2300, FACE_UP, OBJ_FAY, ANIM_WALK, $03, VARSITY_COURT_D_FAY
-	map_actor $0000, ActorScript_13_28, $0900, $1500, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, VARSITY_COURT_D_MARK
-	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, VARSITY_COURT_D_INVISIBLE
+	map_actor $0000, ActorScript_13_20, 13.0, 29.0, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, VARSITY_COURT_D_BOB
+	map_actor $0000, ActorScript_13_20, 13.0, 35.0, FACE_UP, OBJ_FAY, ANIM_WALK, $03, VARSITY_COURT_D_FAY
+	map_actor $0000, ActorScript_13_28, 9.0, 21.0, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, VARSITY_COURT_D_MARK
+	map_actor $0000, ActorScript_13_27, 16.75, 26.375, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, VARSITY_COURT_D_INVISIBLE
 	map_actor_end
 CourtyardEntryPoints_13:
 	; $5e40, 57 bytes (map_entries)
-	map_entry $01, FACE_DOWN, $3600, $1600, $0000
-	map_entry $02, FACE_DOWN, $2200, $0b00, $0000
-	map_entry $03, FACE_UP, $2200, $3100, $0000
-	map_entry $0a, FACE_UP, $1100, $1d00, $0000
-	map_entry $0d, FACE_UP, $0d00, $1f00, $0000
-	map_entry $0e, FACE_UP, $0f00, $1f00, $0000
-	map_entry $0f, FACE_UP, $2200, $2f00, $0000
+	map_entry $01, FACE_DOWN, 54.0, 22.0, $0000
+	map_entry $02, FACE_DOWN, 34.0, 11.0, $0000
+	map_entry $03, FACE_UP, 34.0, 49.0, $0000
+	map_entry $0a, FACE_UP, 17.0, 29.0, $0000
+	map_entry $0d, FACE_UP, 13.0, 31.0, $0000
+	map_entry $0e, FACE_UP, 15.0, 31.0, $0000
+	map_entry $0f, FACE_UP, 34.0, 47.0, $0000
 	db $ff
 CourtyardExitTriggers_13:
 	; $5e79, 49 bytes (map_scripts:exit)
@@ -423,7 +423,7 @@ SetupVarsityCourtSceneVariant:
 	ld d, $06 ; $61c7
 	ld e, $10 ; $61c9
 	farcall WriteBehaviorMapCell ; $61cb
-	script_set_position ACTOR_COURTYARD_CURT, $0500, $1500 ; $61ce
+	script_set_position ACTOR_COURTYARD_CURT, 5.0, 21.0 ; $61ce
 	script_face ACTOR_COURTYARD_CURT, FACE_RIGHT ; $61d9
 	ret ; $61e0
 .stage1:
@@ -463,7 +463,7 @@ SetupVarsityCourtSceneVariant:
 	ld hl, VarsityCourtNpcScriptsE_13 ; $622f
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6232
 	farcall WriteStoryStateWord ; $6235
-	script_set_position ACTOR_VARSITY_COURT_B_MARK, $3f00, $3f00 ; $6238
+	script_set_position ACTOR_VARSITY_COURT_B_MARK, 63.0, 63.0 ; $6238
 	script_face ACTOR_VARSITY_COURT_B_BOB, FACE_RIGHT ; $6243
 	script_set_actor_script ACTOR_VARSITY_COURT_B_CURT, ActorScript_13_30 ; $624a
 	ld a, $18 ; $6255
@@ -474,7 +474,7 @@ SetupVarsityCourtSceneVariant:
 	ld d, $06 ; $6260
 	ld e, $10 ; $6262
 	farcall WriteBehaviorMapCell ; $6264
-	script_set_position ACTOR_VARSITY_COURT_B_BETH, $0f00, $1700 ; $6267
+	script_set_position ACTOR_VARSITY_COURT_B_BETH, 15.0, 23.0 ; $6267
 	script_set_actor_script ACTOR_VARSITY_COURT_B_BETH, ActorScript_13_28 ; $6272
 	ret ; $627d
 .stage4:

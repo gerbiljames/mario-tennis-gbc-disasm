@@ -219,7 +219,9 @@ deleted.
   (`ld_xy de, x, y` for a sprite's screen position, `ld_cell de, column, row`
   for a tile cell, `ld_size bc, width, height`, `ld_oam bc, attr, tile`,
   `ld_tile_run bc, tile, count`, `ld_bg_pals` / `ld_obj_pals de, first,
-  count`), `set_flag` / `test_flag` / `clear_flag` and `ld_flag_id` for the
+  count`), map positions in tiles with a point (`map_entry $03, FACE_DOWN,
+  18.0, 13.0`, `script_move_target ACTOR_X, 17.5, 41.0`: the game's
+  1/256-tile words, checked by `map_pos`), `set_flag` / `test_flag` / `clear_flag` and `ld_flag_id` for the
   per-story-slot game flags (`include/flag_constants.inc`), `palette` for
   a CGB palette as four `r,g,b` triples, `sound` for the
   `rst $08` sound command, and the `script_*`, `as_*`, `anim_*`, `map_*`

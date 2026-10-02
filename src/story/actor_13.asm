@@ -56,39 +56,39 @@ VarsityCourtTourCutscene:
 	ld hl, VarsityCourtTourActors_13 ; $636e
 	farcall ScriptRespawnLocationActors ; $6371
 	farcall BeginCutsceneScriptMode ; $6374
-	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $6377
-	script_set_position ACTOR_VARSITY_COURT_TOUR_EMILY, $3f00, $3f00 ; $6382
+	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $6377
+	script_set_position ACTOR_VARSITY_COURT_TOUR_EMILY, 63.0, 63.0 ; $6382
 	script_fade_in $04 ; $638d
 	call WaitFadeEnd ; $6392
-	script_set_position ACTOR_VARSITY_COURT_TOUR_EMILY, $2200, $3300 ; $6395
-	script_move_target ACTOR_VARSITY_COURT_TOUR_EMILY, $2200, $1d00 ; $63a0
+	script_set_position ACTOR_VARSITY_COURT_TOUR_EMILY, 34.0, 51.0 ; $6395
+	script_move_target ACTOR_VARSITY_COURT_TOUR_EMILY, 34.0, 29.0 ; $63a0
 	script_wait_frames $0f ; $63ab
-	script_move_player $2200, $1d00 ; $63b2
-	script_set_position ACTOR_PLAYER, $2200, $3300 ; $63bc
-	script_move_target ACTOR_PLAYER, $2200, $2100 ; $63c7
+	script_move_player 34.0, 29.0 ; $63b2
+	script_set_position ACTOR_PLAYER, 34.0, 51.0 ; $63bc
+	script_move_target ACTOR_PLAYER, 34.0, 33.0 ; $63c7
 	script_wait_move ACTOR_PLAYER ; $63d2
 	script_wait_frames $0f ; $63d7
-	script_move_target ACTOR_PLAYER, $2000, $1f00 ; $63de
+	script_move_target ACTOR_PLAYER, 32.0, 31.0 ; $63de
 	script_wait_move ACTOR_PLAYER ; $63e9
 	script_wait_frames $1e ; $63ee
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_LEFT ; $63f5
 	script_wait_frames $1e ; $63fc
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6403
 	script_wait_frames $1e ; $640a
-	script_move_player $0c00, $1b00 ; $6411
+	script_move_player 12.0, 27.0 ; $6411
 	farcall WaitPlayerMoveDone ; $641b
 	script_wait_frames $1e ; $641e
 	script_set_text Text_30_518 ; $6425
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $642b
 	script_wait_frames $0f ; $6430
 	script_player_speed $0040 ; $6437
-	script_move_player $2200, $1d00 ; $643d
+	script_move_player 34.0, 29.0 ; $643d
 	farcall WaitPlayerMoveDone ; $6447
 	script_player_speed $0020 ; $644a
-	script_set_position ACTOR_VARSITY_COURT_TOUR_BALLOON_QUESTION, $2100, $1d00 ; $6450
+	script_set_position ACTOR_VARSITY_COURT_TOUR_BALLOON_QUESTION, 33.0, 29.0 ; $6450
 	sound SFX_EMOTE ; $645b
 	script_wait_frames $32 ; $645d
-	script_set_position ACTOR_VARSITY_COURT_TOUR_BALLOON_QUESTION, $3f00, $3f00 ; $6464
+	script_set_position ACTOR_VARSITY_COURT_TOUR_BALLOON_QUESTION, 63.0, 63.0 ; $6464
 	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, ANIM_BOUNCE ; $646f
 	script_wait_idle ACTOR_VARSITY_COURT_TOUR_EMILY ; $6476
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $647b
@@ -99,35 +99,35 @@ VarsityCourtTourCutscene:
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_LEFT ; $649a
 	script_wait_frames $0f ; $64a1
 	script_player_speed $0040 ; $64a8
-	script_move_player $0c00, $1600 ; $64ae
+	script_move_player 12.0, 22.0 ; $64ae
 	farcall WaitPlayerMoveDone ; $64b8
 	script_player_speed $0020 ; $64bb
 	script_wait_frames $3c ; $64c1
-	script_move_player $0c00, $2200 ; $64c8
+	script_move_player 12.0, 34.0 ; $64c8
 	farcall WaitPlayerMoveDone ; $64d2
 	script_wait_frames $3c ; $64d5
-	script_move_player $0c00, $1b00 ; $64dc
+	script_move_player 12.0, 27.0 ; $64dc
 	farcall WaitPlayerMoveDone ; $64e6
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $64e9
 	script_wait_frames $0f ; $64ee
 	script_player_speed $0040 ; $64f5
-	script_move_player $2200, $1d00 ; $64fb
+	script_move_player 34.0, 29.0 ; $64fb
 	farcall WaitPlayerMoveDone ; $6505
 	script_player_speed $0020 ; $6508
 	script_wait_frames $1e ; $650e
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_RIGHT ; $6515
 	script_wait_frames $0f ; $651c
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6523
-	script_move_player $3000, $2600 ; $652a
+	script_move_player 48.0, 38.0 ; $652a
 	farcall WaitPlayerMoveDone ; $6534
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6537
 	script_wait_frames $0f ; $653c
-	script_move_player $3600, $1000 ; $6543
+	script_move_player 54.0, 16.0 ; $6543
 	farcall WaitPlayerMoveDone ; $654d
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6550
 	script_wait_frames $0f ; $6555
 	script_player_speed $0040 ; $655c
-	script_move_player $2200, $1d00 ; $6562
+	script_move_player 34.0, 29.0 ; $6562
 	farcall WaitPlayerMoveDone ; $656c
 	script_player_speed $0020 ; $656f
 	script_wait_frames $0f ; $6575
@@ -147,15 +147,15 @@ VarsityCourtTourCutscene:
 	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, ANIM_NOD ; $65cd
 	script_wait_idle ACTOR_VARSITY_COURT_TOUR_EMILY ; $65d4
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $65d9
-	script_move_target ACTOR_PLAYER, $2200, $1f00 ; $65de
+	script_move_target ACTOR_PLAYER, 34.0, 31.0 ; $65de
 	script_wait_move ACTOR_PLAYER ; $65e9
 	script_face ACTOR_PLAYER, FACE_UP ; $65ee
 	script_wait_frames $0f ; $65f5
-	script_move_target ACTOR_VARSITY_COURT_TOUR_EMILY, $2200, $0700 ; $65fc
+	script_move_target ACTOR_VARSITY_COURT_TOUR_EMILY, 34.0, 7.0 ; $65fc
 	script_wait_frames $05 ; $6607
-	script_move_target ACTOR_PLAYER, $2200, $0700 ; $660e
+	script_move_target ACTOR_PLAYER, 34.0, 7.0 ; $660e
 	script_wait_frames $0a ; $6619
-	script_move_player $2200, $0d00 ; $6620
+	script_move_player 34.0, 13.0 ; $6620
 	script_wait_move ACTOR_PLAYER ; $662a
 	ld a, $0f ; $662f
 	ld [wUnusedExitTriggerIdMirror], a ; $6631
@@ -163,10 +163,10 @@ VarsityCourtTourCutscene:
 	ret ; $6637
 VarsityCourtTourActors_13:
 	; $6638, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_EXCLAIM
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_QUESTION
-	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_ELLIPSIS
-	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, VARSITY_COURT_TOUR_EMILY
+	map_actor $0000, ActorScript_13_27, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_13_27, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_QUESTION
+	map_actor $0000, ActorScript_13_27, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, VARSITY_COURT_TOUR_BALLOON_ELLIPSIS
+	map_actor $0000, ActorScript_13_27, 43.0, 11.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, VARSITY_COURT_TOUR_EMILY
 	map_actor_end
 Unused_13_DecompressVarsityCourtTourRecords:
 	push_wram_bank WRAM_STAGING ; $667a
@@ -322,7 +322,7 @@ SetupStoryMinigameMatch0:
 	script_set_actor_script ACTOR_VARSITY_COURT_A_CURT, ActorScript_13_06 ; $6a34
 	script_set_actor_script ACTOR_VARSITY_COURT_A_BETH, ActorScript_13_08 ; $6a3f
 	script_set_actor_script ACTOR_VARSITY_COURT_A_FAY, ActorScript_13_10 ; $6a4a
-	script_move_player $0c00, $1c00 ; $6a55
+	script_move_player 12.0, 28.0 ; $6a55
 	farcall WaitPlayerMoveDone ; $6a5f
 	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $6a62
 	script_wait_actor_script ACTOR_VARSITY_COURT_A_FAY ; $6a6d
@@ -344,7 +344,7 @@ SetupVarsityCourtDoublesMatch_13:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $6acf
 	script_set_actor_script ACTOR_PARTNER, ActorScript_13_15 ; $6ada
 	script_set_actor_script ACTOR_VARSITY_COURT_B_KEVIN, ActorScript_13_04 ; $6ae5
-	script_move_player $0c00, $1c00 ; $6af0
+	script_move_player 12.0, 28.0 ; $6af0
 	farcall WaitPlayerMoveDone ; $6afa
 	script_wait_actor_script ACTOR_VARSITY_COURT_B_FAY ; $6afd
 	farcall InitStoryMatchSettings ; $6b02
@@ -354,122 +354,122 @@ SetupVarsityCourtDoublesMatch_13:
 	ret ; $6b18
 ActorScript_13_04:
 	; $6b19, 11 bytes (actor_script)
-	as_set_target $1100, $1d00
+	as_set_target 17.0, 29.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_13_05:
 	; $6b24, 13 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_set_target $1300, $2100
+	as_set_target 19.0, 33.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_13_06:
 	; $6b31, 11 bytes (actor_script)
-	as_set_target $1300, $1500
+	as_set_target 19.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_13_07:
 	; $6b3c, 11 bytes (actor_script)
-	as_set_target $1300, $2300
+	as_set_target 19.0, 35.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_13_08:
 	; $6b47, 17 bytes (actor_script)
-	as_set_target $1100, $1800
+	as_set_target 17.0, 24.0
 	as_wait_move
-	as_set_target $1300, $1700
+	as_set_target 19.0, 23.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_13_09:
 	; $6b58, 17 bytes (actor_script)
-	as_set_target $1100, $1300
+	as_set_target 17.0, 19.0
 	as_wait_move
-	as_set_target $1300, $1700
+	as_set_target 19.0, 23.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_13_10:
 	; $6b69, 23 bytes (actor_script)
-	as_set_target $0700, $2300
+	as_set_target 7.0, 35.0
 	as_wait_move
-	as_set_target $0700, $1300
+	as_set_target 7.0, 19.0
 	as_wait_move
-	as_set_target $0b00, $1300
+	as_set_target 11.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_13_11:
 	; $6b80, 23 bytes (actor_script)
-	as_set_target $0700, $2300
+	as_set_target 7.0, 35.0
 	as_wait_move
-	as_set_target $0700, $1700
+	as_set_target 7.0, 23.0
 	as_wait_move
-	as_set_target $0d00, $1700
+	as_set_target 13.0, 23.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_13_12:
 	; $6b97, 23 bytes (actor_script)
-	as_set_target $0700, $1d00
+	as_set_target 7.0, 29.0
 	as_wait_move
-	as_set_target $0700, $1300
+	as_set_target 7.0, 19.0
 	as_wait_move
-	as_set_target $0b00, $1300
+	as_set_target 11.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_13_13:
 	; $6bae, 23 bytes (actor_script)
-	as_set_target $0700, $2100
+	as_set_target 7.0, 33.0
 	as_wait_move
-	as_set_target $0700, $1700
+	as_set_target 7.0, 23.0
 	as_wait_move
-	as_set_target $0d00, $1700
+	as_set_target 13.0, 23.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_13_14:
 	; $6bc5, 23 bytes (actor_script)
-	as_set_target $0700, $1f00
+	as_set_target 7.0, 31.0
 	as_wait_move
-	as_set_target $0700, $1300
+	as_set_target 7.0, 19.0
 	as_wait_move
-	as_set_target $0b00, $1300
+	as_set_target 11.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_13_15:
 	; $6bdc, 11 bytes (actor_script)
-	as_set_target $0b00, $1f00
+	as_set_target 11.0, 31.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_13_16:
 	; $6be7, 11 bytes (actor_script)
-	as_set_target $0d00, $2300
+	as_set_target 13.0, 35.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_13_17:
 	; $6bf2, 11 bytes (actor_script)
-	as_set_target $0500, $1d00
+	as_set_target 5.0, 29.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_13_18:
 	; $6bfd, 11 bytes (actor_script)
-	as_set_target $0500, $2300
+	as_set_target 5.0, 35.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_13_19:
 	; $6c08, 11 bytes (actor_script)
-	as_set_target $0500, $2100
+	as_set_target 5.0, 33.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt

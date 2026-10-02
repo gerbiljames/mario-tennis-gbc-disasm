@@ -151,7 +151,7 @@ DropShotMatchChallengeScene:
 	ret ; $6af6
 WalkToNetChallengeCourtCutscene:
 	script_null_script ACTOR_PARTNER ; $6af7
-	script_move_player $2800, $2700 ; $6afc
+	script_move_player 40.0, 39.0 ; $6afc
 	script_set_actor_script ACTOR_TRAINING_COURT_BRIAN, ActorScript_15_07 ; $6b06
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_08 ; $6b11
 	script_wait_frames $0a ; $6b1c
@@ -168,31 +168,31 @@ WalkToNetChallengeCourtCutscene:
 	ret ; $6b48
 ActorScript_15_07:
 	; $6b49, 11 bytes (actor_script)
-	as_set_target $2700, $1f00
+	as_set_target 39.0, 31.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_15_08:
 	; $6b54, 29 bytes (actor_script)
-	as_set_target $2d00, $2300
+	as_set_target 45.0, 35.0
 	as_wait_move
-	as_set_target $2f00, $2300
+	as_set_target 47.0, 35.0
 	as_wait_move
-	as_set_target $2f00, $2b00
+	as_set_target 47.0, 43.0
 	as_wait_move
-	as_set_target $2900, $2e00
+	as_set_target 41.0, 46.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_15_09:
 	; $6b71, 29 bytes (actor_script)
-	as_set_target $2d00, $2300
+	as_set_target 45.0, 35.0
 	as_wait_move
-	as_set_target $2f00, $2300
+	as_set_target 47.0, 35.0
 	as_wait_move
-	as_set_target $2f00, $2d00
+	as_set_target 47.0, 45.0
 	as_wait_move
-	as_set_target $2d00, $2d00
+	as_set_target 45.0, 45.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt

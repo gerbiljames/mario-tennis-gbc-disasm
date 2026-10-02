@@ -442,10 +442,10 @@ Unused_1a_SetupCharViewerScene:
 	ret ; $6fce
 CharViewerSceneActors_1a:
 	; $6fcf, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_1a_CharViewer, $0f00, $0400, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_1
-	map_actor $0000, ActorScript_1a_CharViewer, $1180, $0400, FACE_LEFT, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_2
-	map_actor $0000, ActorScript_1a_CharViewer, $0f00, $0680, FACE_UP, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_3
-	map_actor $0000, ActorScript_1a_CharViewer, $1180, $0680, FACE_RIGHT, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_4
+	map_actor $0000, ActorScript_1a_CharViewer, 15.0, 4.0, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_1
+	map_actor $0000, ActorScript_1a_CharViewer, 17.5, 4.0, FACE_LEFT, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_2
+	map_actor $0000, ActorScript_1a_CharViewer, 15.0, 6.5, FACE_UP, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_3
+	map_actor $0000, ActorScript_1a_CharViewer, 17.5, 6.5, FACE_RIGHT, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_4
 	map_actor_end
 ; A one-opcode actor script, as_halt: the four character-viewer actors stand still.
 ActorScript_1a_CharViewer:

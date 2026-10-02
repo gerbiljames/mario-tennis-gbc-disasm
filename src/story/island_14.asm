@@ -170,11 +170,11 @@ QueueTwinkleSprite_14:
 	ld a, $01 ; $76da
 	ld hl, AnimateIslandSkyEffectSprites_14 ; $76dc
 	call RegisterFrameTask ; $76df
-	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $76e2
+	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $76e2
 	test_flag FLAG_DOUBLES ; $76ed
 	jp z, .loadScene ; $76f0
 	script_null_script ACTOR_PARTNER ; $76f3
-	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $76f8
+	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $76f8
 .loadScene:
 	xor a ; $7703
 	ld [wStoryModeShowLocationName], a ; $7704
@@ -214,7 +214,7 @@ QueueTwinkleSprite_14:
 	ld hl, QueueDistantPlaneSprite_14 ; $7761
 	call UnregisterFrameTask ; $7764
 	script_player_speed $0012 ; $7767
-	script_move_player $0b00, $1800 ; $776d
+	script_move_player 11.0, 24.0 ; $776d
 	ld h, $3c ; $7777
 .burst:
 	script_wait_frames $02 ; $7779
@@ -263,7 +263,7 @@ QueueTwinkleSprite_14:
 	call AdvancePlaneFrameCounter2_14 ; $77e3
 	dec h ; $77e6
 	jr nz, .finaleLoop ; $77e7
-	script_move_player $0b00, $1200 ; $77e9
+	script_move_player 11.0, 18.0 ; $77e9
 	ld h, $18 ; $77f3
 .speak:
 	script_wait_frames $03 ; $77f5

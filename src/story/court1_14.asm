@@ -9,20 +9,20 @@ Court1MapScripts_14:
 	dw Court1InitScript_14 ; slot 6 InitScript
 Court1Actors_14:
 	; $4fba, 136 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $0b00, $1500, FACE_LEFT, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT1_WALK_6F_07_1
-	map_actor $0000, ActorScript_14_2, $1100, $2300, FACE_DOWN, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT1_WALK_6F_07_2
-	map_actor $0000, ActorScript_14_2, $2300, $1900, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $03, COURT1_WALK_72_02_1
-	map_actor $0000, ActorScript_14_2, $2300, $1c00, FACE_LEFT, OBJ_WALK_71_05, ANIM_WALK, $03, COURT1_WALK_71_05
-	map_actor $0000, ActorScript_14_2, $0e00, $0d00, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $00, COURT1_WALK_72_02_2
-	map_actor $0000, ActorScript_14_2, $0f00, $0f00, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $06, COURT1_WALK_72_02_3
-	map_actor $0000, ActorScript_14_2, $0e00, $1100, FACE_RIGHT, OBJ_WALK_72_03, ANIM_WALK, $03, COURT1_WALK_72_03_1
-	map_actor $0000, ActorScript_14_2, $2300, $0f00, FACE_LEFT, OBJ_WALK_71_06, ANIM_WALK, $00, COURT1_WALK_71_06
-	map_actor $0000, ActorScript_14_2, $2100, $1100, FACE_LEFT, OBJ_WALK_72_03, ANIM_WALK, $04, COURT1_WALK_72_03_2
+	map_actor $0000, ActorScript_14_2, 11.0, 21.0, FACE_LEFT, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT1_WALK_6F_07_1
+	map_actor $0000, ActorScript_14_2, 17.0, 35.0, FACE_DOWN, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT1_WALK_6F_07_2
+	map_actor $0000, ActorScript_14_2, 35.0, 25.0, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $03, COURT1_WALK_72_02_1
+	map_actor $0000, ActorScript_14_2, 35.0, 28.0, FACE_LEFT, OBJ_WALK_71_05, ANIM_WALK, $03, COURT1_WALK_71_05
+	map_actor $0000, ActorScript_14_2, 14.0, 13.0, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $00, COURT1_WALK_72_02_2
+	map_actor $0000, ActorScript_14_2, 15.0, 15.0, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $06, COURT1_WALK_72_02_3
+	map_actor $0000, ActorScript_14_2, 14.0, 17.0, FACE_RIGHT, OBJ_WALK_72_03, ANIM_WALK, $03, COURT1_WALK_72_03_1
+	map_actor $0000, ActorScript_14_2, 35.0, 15.0, FACE_LEFT, OBJ_WALK_71_06, ANIM_WALK, $00, COURT1_WALK_71_06
+	map_actor $0000, ActorScript_14_2, 33.0, 17.0, FACE_LEFT, OBJ_WALK_72_03, ANIM_WALK, $04, COURT1_WALK_72_03_2
 	map_actor_end
 Court1EntryPoints_14:
 	; $5042, 17 bytes (map_entries)
-	map_entry $01, FACE_RIGHT, $0300, $1500, $0000
-	map_entry $02, FACE_RIGHT, $0300, $2500, $0000
+	map_entry $01, FACE_RIGHT, 3.0, 21.0, $0000
+	map_entry $02, FACE_RIGHT, 3.0, 37.0, $0000
 	db $ff
 Court1ExitTriggers_14:
 	; $5053, 17 bytes (map_scripts:exit)
@@ -148,10 +148,10 @@ InitCourt1SceneVariant:
 	ret ; $5161
 Court1ActorsAlt_14:
 	; $5162, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $0b00, $1500, FACE_LEFT, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT1_ALT_WALK_6F_07_1
-	map_actor $0000, ActorScript_14_2, $1100, $2300, FACE_DOWN, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT1_ALT_WALK_6F_07_2
-	map_actor $0000, ActorScript_14_2, $1b00, $2300, FACE_DOWN, OBJ_WALK_72_02, ANIM_WALK, $03, COURT1_ALT_WALK_72_02
-	map_actor $0000, ActorScript_14_2, $1d00, $2300, FACE_DOWN, OBJ_WALK_71_05, ANIM_WALK, $03, COURT1_ALT_WALK_71_05
+	map_actor $0000, ActorScript_14_2, 11.0, 21.0, FACE_LEFT, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT1_ALT_WALK_6F_07_1
+	map_actor $0000, ActorScript_14_2, 17.0, 35.0, FACE_DOWN, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT1_ALT_WALK_6F_07_2
+	map_actor $0000, ActorScript_14_2, 27.0, 35.0, FACE_DOWN, OBJ_WALK_72_02, ANIM_WALK, $03, COURT1_ALT_WALK_72_02
+	map_actor $0000, ActorScript_14_2, 29.0, 35.0, FACE_DOWN, OBJ_WALK_71_05, ANIM_WALK, $03, COURT1_ALT_WALK_71_05
 	map_actor_end
 Court1EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $51a4
@@ -182,19 +182,19 @@ IslandSkyMapScripts_14:
 	dw IslandSkyInitScript_14 ; slot 6 InitScript
 IslandSkyActors_14:
 	; $522f, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, ISLAND_SKY_WALK_75_06
-	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, OBJ_WALK_74_08, ANIM_WALK, $00, ISLAND_SKY_WALK_74_08
-	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, OBJ_WALK_74_07, ANIM_WALK, $00, ISLAND_SKY_WALK_74_07
-	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, OBJ_WALK_74_06, ANIM_WALK, $00, ISLAND_SKY_WALK_74_06
+	map_actor $0000, ActorScript_14_2, 6.0, 39.0, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, ISLAND_SKY_WALK_75_06
+	map_actor $0000, ActorScript_14_2, 6.0, 39.0, FACE_DOWN, OBJ_WALK_74_08, ANIM_WALK, $00, ISLAND_SKY_WALK_74_08
+	map_actor $0000, ActorScript_14_2, 6.0, 39.0, FACE_DOWN, OBJ_WALK_74_07, ANIM_WALK, $00, ISLAND_SKY_WALK_74_07
+	map_actor $0000, ActorScript_14_2, 6.0, 39.0, FACE_DOWN, OBJ_WALK_74_06, ANIM_WALK, $00, ISLAND_SKY_WALK_74_06
 	map_actor_end
 IslandSkyEntryPoints_14:
 	; $5271, 49 bytes (map_entries)
-	map_entry $01, FACE_DOWN, $0c00, $1200, $0000
-	map_entry $02, FACE_UP, $0600, $2700, $0000
-	map_entry $08, FACE_DOWN, $0600, $2700, $0000
-	map_entry $0c, FACE_DOWN, $0600, $2700, $0000
-	map_entry $0e, FACE_DOWN, $0c00, $0b00, $0000
-	map_entry $0f, FACE_DOWN, $0c00, $1200, $0000
+	map_entry $01, FACE_DOWN, 12.0, 18.0, $0000
+	map_entry $02, FACE_UP, 6.0, 39.0, $0000
+	map_entry $08, FACE_DOWN, 6.0, 39.0, $0000
+	map_entry $0c, FACE_DOWN, 6.0, 39.0, $0000
+	map_entry $0e, FACE_DOWN, 12.0, 11.0, $0000
+	map_entry $0f, FACE_DOWN, 12.0, 18.0, $0000
 	db $ff
 IslandSkyExitTriggers_14:
 	; $52a2, 9 bytes (map_scripts:exit)
@@ -210,10 +210,10 @@ IslandSkyFacingScripts_14:
 IslandSkyTileTriggers_14:
 	ds 1, $ff ; $52b6, fill
 IslandSkyInitScript_14:
-	script_set_position ACTOR_ISLAND_SKY_WALK_75_06, $3f00, $3f00 ; $52b7
-	script_set_position ACTOR_ISLAND_SKY_WALK_74_08, $3f00, $3f00 ; $52c2
-	script_set_position ACTOR_ISLAND_SKY_WALK_74_07, $3f00, $3f00 ; $52cd
-	script_set_position ACTOR_ISLAND_SKY_WALK_74_06, $3f00, $3f00 ; $52d8
+	script_set_position ACTOR_ISLAND_SKY_WALK_75_06, 63.0, 63.0 ; $52b7
+	script_set_position ACTOR_ISLAND_SKY_WALK_74_08, 63.0, 63.0 ; $52c2
+	script_set_position ACTOR_ISLAND_SKY_WALK_74_07, 63.0, 63.0 ; $52cd
+	script_set_position ACTOR_ISLAND_SKY_WALK_74_06, 63.0, 63.0 ; $52d8
 	ld a, [wStoryModeEntryPoint] ; $52e3
 	cp $02 ; $52e6
 	jp z, QueuePlaneSpriteByFrameCounter_14.loadScene ; $52e8
@@ -243,7 +243,7 @@ IslandSkyInitScript_14:
 	test_flag FLAG_DOUBLES ; $5324
 	jp z, .setPlayerObjDef ; $5327
 	script_null_script ACTOR_PARTNER ; $532a
-	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $532f
+	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $532f
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $533a
 	ld d, OBJ_HARRY_B ; $533d
 	add d ; $533f
@@ -267,7 +267,7 @@ IslandSkyInitScript_14:
 	ld a, [wStoryModeEntryPoint] ; $5371
 	cp $0c ; $5374
 	jr nz, .fadeIn ; $5376
-	script_set_position ACTOR_PLAYER, $0600, $2700 ; $5378
+	script_set_position ACTOR_PLAYER, 6.0, 39.0 ; $5378
 	xor a ; $5383
 	ld [wStoryModeShowLocationName], a ; $5384
 	script_fade_in $04 ; $5387
@@ -284,7 +284,7 @@ IslandSkyInitScript_14:
 	call WaitFadeEnd ; $53a5
 	sound SFX_FIREWORK_LAUNCH ; $53a8
 	script_wait_frames $3c ; $53aa
-	script_set_position ACTOR_PLAYER, $0600, $2700 ; $53b1
+	script_set_position ACTOR_PLAYER, 6.0, 39.0 ; $53b1
 	ld h, $08 ; $53bc
 .planeLoop:
 	script_wait_frames $06 ; $53be
@@ -439,10 +439,10 @@ IslandSkyInitScript_14:
 	ld hl, UpdateWaterSplash1_14 ; $5520
 	call RegisterFrameTask ; $5523
 	script_wait_frames $50 ; $5526
-	script_set_position ACTOR_ISLAND_SKY_WALK_75_06, $0600, $2900 ; $552d
-	script_set_position ACTOR_ISLAND_SKY_WALK_74_08, $0600, $2900 ; $5538
-	script_set_position ACTOR_ISLAND_SKY_WALK_74_07, $0600, $2900 ; $5543
-	script_set_position ACTOR_ISLAND_SKY_WALK_74_06, $0600, $2900 ; $554e
+	script_set_position ACTOR_ISLAND_SKY_WALK_75_06, 6.0, 41.0 ; $552d
+	script_set_position ACTOR_ISLAND_SKY_WALK_74_08, 6.0, 41.0 ; $5538
+	script_set_position ACTOR_ISLAND_SKY_WALK_74_07, 6.0, 41.0 ; $5543
+	script_set_position ACTOR_ISLAND_SKY_WALK_74_06, 6.0, 41.0 ; $554e
 	script_set_actor_script ACTOR_ISLAND_SKY_WALK_75_06, ActorScript_14_1 ; $5559
 	script_wait_frames $1e ; $5564
 	script_set_actor_script ACTOR_ISLAND_SKY_WALK_74_08, ActorScript_14_1 ; $556b
@@ -451,11 +451,11 @@ IslandSkyInitScript_14:
 	script_wait_frames $1e ; $5588
 	script_set_actor_script ACTOR_ISLAND_SKY_WALK_74_06, ActorScript_14_1 ; $558f
 	script_wait_frames $50 ; $559a
-	script_set_position ACTOR_PLAYER, $0600, $2900 ; $55a1
+	script_set_position ACTOR_PLAYER, 6.0, 41.0 ; $55a1
 	script_set_active ACTOR_PLAYER, $02 ; $55ac
 	script_face ACTOR_PLAYER, FACE_DOWN ; $55b3
 	script_wait_frames $1e ; $55ba
-	script_move_target ACTOR_PLAYER, $0b00, $2900 ; $55c1
+	script_move_target ACTOR_PLAYER, 11.0, 41.0 ; $55c1
 	script_wait_move ACTOR_PLAYER ; $55cc
 	script_face ACTOR_PLAYER, FACE_UP ; $55d1
 	script_wait_frames $1e ; $55d8
@@ -472,7 +472,7 @@ IslandSkyInitScript_14:
 	ld [wStoryModeExitTriggerRequest], a ; $55ff
 	ret ; $5602
 .done:
-	script_move_target ACTOR_PLAYER, $0b00, $2700 ; $5603
+	script_move_target ACTOR_PLAYER, 11.0, 39.0 ; $5603
 	script_wait_move ACTOR_PLAYER ; $560e
 	script_set_active ACTOR_PLAYER, $00 ; $5613
 	ld c, $04 ; $561a

@@ -454,7 +454,7 @@ RepairCounterReturnA:
 	ld a, $0b ; $4fbf
 	ld [wMapSceneStage2], a ; $4fc1
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4fc4
-	script_set_position ACTOR_PARTNER, $0f00, $0f00 ; $4fcc
+	script_set_position ACTOR_PARTNER, 15.0, 15.0 ; $4fcc
 	jp RepairCounterCheckEquipChanged ; $4fd7
 	ret ; $4fda
 RepairCounterReturnB:
@@ -462,8 +462,8 @@ RepairCounterReturnB:
 	ld [wMapSceneStage2], a ; $4fdd
 	farcall WaitPlayerMoveDone ; $4fe0
 	script_player_speed $00f0 ; $4fe3
-	script_move_player $0d00, $1100 ; $4fe9
+	script_move_player 13.0, 17.0 ; $4fe9
 	farcall WaitPlayerMoveDone ; $4ff3
-	script_set_position ACTOR_PARTNER, $1300, $1300 ; $4ff6
+	script_set_position ACTOR_PARTNER, 19.0, 19.0 ; $4ff6
 	jp RepairCounterCheckEquipChanged ; $5001
 	ret ; $5004

@@ -307,37 +307,37 @@ Unused_04_SpawnScriptedActorScene:
 	ret ; $4d62
 ActorList_04_0:
 	; $4d63, 66 bytes (actor_list)
-	map_actor $0000, ActorScript_Idle, $0100, $0100, FACE_DOWN, OBJ_MATCH_NINA, ANIM_WALK, $00
-	map_actor $0000, ActorScript_Idle, $1700, $1d00, FACE_DOWN, OBJ_MATCH_ALEX, ANIM_WALK, $00
-	map_actor $0000, ActorScript_Idle, $0e00, $1900, FACE_RIGHT, OBJ_MATCH_ALEX, ANIM_WALK, $00
-	map_actor $0000, ActorScript_Idle, $2200, $1900, FACE_LEFT, OBJ_MATCH_ALEX, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 1.0, 1.0, FACE_DOWN, OBJ_MATCH_NINA, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 23.0, 29.0, FACE_DOWN, OBJ_MATCH_ALEX, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 14.0, 25.0, FACE_RIGHT, OBJ_MATCH_ALEX, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 34.0, 25.0, FACE_LEFT, OBJ_MATCH_ALEX, ANIM_WALK, $00
 	map_actor_end
 ActorList_04_1:
 	; $4da5, 24 bytes (actor_list)
-	map_actor $0000, ActorScript_Idle, $1900, $2500, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00
 	map_actor_end
 ScriptedActorList0_04:
 	; $4dbd, 24 bytes (actor_list)
-	map_actor $0000, ActorScript_Idle, $1900, $2500, FACE_DOWN, OBJ_NINA, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_NINA, ANIM_WALK, $00
 	map_actor_end
 ScriptedActorList1_04:
 	; $4dd5, 24 bytes (actor_list)
-	map_actor $0000, ActorScript_Idle, $1900, $2500, FACE_DOWN, OBJ_HARRY, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_HARRY, ANIM_WALK, $00
 	map_actor_end
 ScriptedActorList2_04:
 	; $4ded, 24 bytes (actor_list)
-	map_actor $0000, ActorScript_Idle, $1900, $2500, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00
 	map_actor_end
 ScriptedActorSceneActorList0:
 	; $4e05, 24 bytes (actor_list)
-	map_actor $0000, ActorScript_Idle, $1d00, $2900, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 29.0, 41.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
 	map_actor_end
 ScriptedActorSceneActorList1:
 	; $4e1d, 66 bytes (actor_list)
-	map_actor $0000, ActorScript_Idle, $1700, $1500, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
-	map_actor $0000, ActorScript_Idle, $1700, $1900, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
-	map_actor $0000, ActorScript_Idle, $1700, $1d00, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
-	map_actor $0000, ActorScript_Idle, $1700, $2100, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 23.0, 21.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 23.0, 25.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 23.0, 29.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 23.0, 33.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
 	map_actor_end
 ScriptedActorListPtrs_04:
 	; $4e5f, 8 bytes (records:2)
@@ -397,15 +397,15 @@ SpawnMainCharacterActor:
 	ret ; $4ec7
 CompanionActorPartnerActorList0:
 	; $4ec8, 24 bytes (actor_list)
-	map_actor $0000, ActorScript_Idle, $0100, $0100, FACE_DOWN, OBJ_HARRY, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 1.0, 1.0, FACE_DOWN, OBJ_HARRY, ANIM_WALK, $00
 	map_actor_end
 CompanionActorPartnerActorList1:
 	; $4ee0, 24 bytes (actor_list)
-	map_actor $0000, ActorScript_Idle, $0100, $0100, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00
+	map_actor $0000, ActorScript_Idle, 1.0, 1.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00
 	map_actor_end
 CompanionActorPartnerActorList2:
 	; $4ef8, 24 bytes (actor_list)
-	map_actor $01e0, ActorScript_Deactivate, $0100, $0100, FACE_DOWN, OBJ_WALK_71_02, ANIM_WALK, $00
+	map_actor $01e0, ActorScript_Deactivate, 1.0, 1.0, FACE_DOWN, OBJ_WALK_71_02, ANIM_WALK, $00
 	map_actor_end
 SpawnCompanionActor:
 	push af ; $4f10

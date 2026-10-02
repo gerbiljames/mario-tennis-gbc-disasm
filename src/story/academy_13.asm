@@ -81,7 +81,7 @@ RunPlayDoublesTodayPrompt:
 	wram_bank WRAM_ACTORS ; $57ba
 	ld a, $00 ; $57c0
 	ld [wMatchIsDoubles], a ; $57c2
-	script_move_target ACTOR_DORM_ROOM_KATE, $0b00, $0900 ; $57c5
+	script_move_target ACTOR_DORM_ROOM_KATE, 11.0, 9.0 ; $57c5
 	script_wait_move ACTOR_DORM_ROOM_KATE ; $57d0
 	script_wait_frames $05 ; $57d5
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $57dc
@@ -137,28 +137,28 @@ ActorScript_13_00:
 	as_jump .L1
 ActorScript_13_01:
 	; $5877, 10 bytes (actor_script)
-	as_set_pos $0f40, $0ee0
+	as_set_pos 15.25, 14.875
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_13_02:
 	; $5881, 10 bytes (actor_script)
-	as_set_pos $1100, $0380
+	as_set_pos 17.0, 3.5
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_13_03:
 	; $588b, 51 bytes (actor_script)
-	as_set_pos $0300, $0700
+	as_set_pos 3.0, 7.0
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_begin_path
 .La:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait $b4
-	as_set_target $0300, $0800
+	as_set_target 3.0, 8.0
 	as_wait_move2
 	as_wait $50
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait $12
-	as_set_target $0300, $0700
+	as_set_target 3.0, 7.0
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait $f0
@@ -383,8 +383,8 @@ AcademyTopicTopRanked:
 	ret ; $5a27
 ShowStoryNarration_13:
 	sound BGM_NONE ; $5a28
-	script_set_position ACTOR_DORM_ROOM_KATE, $3f00, $3f00 ; $5a2a
-	script_set_position ACTOR_DORM_ROOM_CAT, $3f00, $3f00 ; $5a35
+	script_set_position ACTOR_DORM_ROOM_KATE, 63.0, 63.0 ; $5a2a
+	script_set_position ACTOR_DORM_ROOM_CAT, 63.0, 63.0 ; $5a35
 	script_set_active ACTOR_PLAYER, $00 ; $5a40
 	script_set_active ACTOR_PARTNER, $00 ; $5a47
 	script_copy_scene_rect $00, $20, $00, $00, $16, $18 ; $5a4e
@@ -457,9 +457,9 @@ DormRoomArrivalCutscene_13:
 	script_set_text Text_31_268 ; $5afb
 .placeActors:
 	script_null_script ACTOR_PARTNER ; $5b01
-	script_set_position ACTOR_PARTNER, $0b00, $1e00 ; $5b06
+	script_set_position ACTOR_PARTNER, 11.0, 30.0 ; $5b06
 	script_face ACTOR_PARTNER, FACE_DOWN ; $5b11
-	script_set_position ACTOR_DORM_ROOM_KATE, $0b00, $0a00 ; $5b18
+	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $5b18
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $5b23
 	script_fade_in $04 ; $5b2a
 	call WaitFadeEnd ; $5b2f

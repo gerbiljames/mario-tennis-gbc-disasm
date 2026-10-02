@@ -1,11 +1,11 @@
 ActorList_11_0:
 	; $537d, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $1800, $1100, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, LIST_11_0_WALK_75_06
-	map_actor $0000, ActorScript_11_45, $1a00, $1500, FACE_UP, OBJ_WALK_74_08, ANIM_WALK, $00, LIST_11_0_WALK_74_08
-	map_actor $0000, ActorScript_11_45, $1600, $1500, FACE_UP, OBJ_WALK_74_07, ANIM_WALK, $00, LIST_11_0_WALK_74_07
-	map_actor $0000, ActorScript_11_45, $1900, $1700, FACE_UP, OBJ_WALK_74_06, ANIM_WALK, $00, LIST_11_0_WALK_74_06
-	map_actor $0000, ActorScript_11_45, $0100, $1900, FACE_UP, OBJ_MARK, ANIM_WALK, $00, LIST_11_0_MARK
-	map_actor $0000, ActorScript_11_45, $1500, $2f00, FACE_RIGHT, OBJ_WALK_71_03, ANIM_WALK, $03, LIST_11_0_WALK_71_03
+	map_actor $0000, ActorScript_11_45, 24.0, 17.0, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, LIST_11_0_WALK_75_06
+	map_actor $0000, ActorScript_11_45, 26.0, 21.0, FACE_UP, OBJ_WALK_74_08, ANIM_WALK, $00, LIST_11_0_WALK_74_08
+	map_actor $0000, ActorScript_11_45, 22.0, 21.0, FACE_UP, OBJ_WALK_74_07, ANIM_WALK, $00, LIST_11_0_WALK_74_07
+	map_actor $0000, ActorScript_11_45, 25.0, 23.0, FACE_UP, OBJ_WALK_74_06, ANIM_WALK, $00, LIST_11_0_WALK_74_06
+	map_actor $0000, ActorScript_11_45, 1.0, 25.0, FACE_UP, OBJ_MARK, ANIM_WALK, $00, LIST_11_0_MARK
+	map_actor $0000, ActorScript_11_45, 21.0, 47.0, FACE_RIGHT, OBJ_WALK_71_03, ANIM_WALK, $03, LIST_11_0_WALK_71_03
 	map_actor_end
 .scriptRespawnLocationActors2:
 	ldh a, [hRomBank] ; $53db
@@ -13,15 +13,15 @@ ActorList_11_0:
 	farcall ScriptRespawnLocationActors ; $53e0
 	farcall BeginCutsceneScriptMode ; $53e3
 	script_player_speed $00ff ; $53e6
-	script_move_player $1800, $2f00 ; $53ec
+	script_move_player 24.0, 47.0 ; $53ec
 	farcall WaitPlayerMoveDone ; $53f6
 	test_flag FLAG_DOUBLES ; $53f9
 	jp z, .placeActors ; $53fc
-	script_set_position ACTOR_PARTNER, $1800, $1d00 ; $53ff
-	script_move_target ACTOR_PARTNER, $1800, $3900 ; $540a
+	script_set_position ACTOR_PARTNER, 24.0, 29.0 ; $53ff
+	script_move_target ACTOR_PARTNER, 24.0, 57.0 ; $540a
 .placeActors:
-	script_set_position ACTOR_PLAYER, $1800, $1f00 ; $5415
-	script_move_target ACTOR_PLAYER, $1800, $3b00 ; $5420
+	script_set_position ACTOR_PLAYER, 24.0, 31.0 ; $5415
+	script_move_target ACTOR_PLAYER, 24.0, 59.0 ; $5420
 	xor a ; $542b
 	ld [wStoryModeShowLocationName], a ; $542c
 	script_fade_in $04 ; $542f
@@ -43,7 +43,7 @@ ActorList_11_0:
 	ret ; $5469
 ActorList_11_1:
 	; $546a, 24 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $1500, $2f00, FACE_RIGHT, OBJ_WALK_71_03, ANIM_WALK, $03, LIST_11_1_WALK_71_03
+	map_actor $0000, ActorScript_11_45, 21.0, 47.0, FACE_RIGHT, OBJ_WALK_71_03, ANIM_WALK, $03, LIST_11_1_WALK_71_03
 	map_actor_end
 EnableAcademyCampusExit:
 	test_flag FLAG_DOUBLES ; $5482
@@ -69,7 +69,7 @@ MoveCampusGateGuardAside:
 	ld a, [wMapSceneStage] ; $54a6
 	cp STORYRANK_SINGLES_ISLAND_OPEN ; $54a9
 	jr c, .done ; $54ab
-	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_71_03_2, $1500, $3000 ; $54ad
+	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_71_03_2, 21.0, 48.0 ; $54ad
 	script_face ACTOR_ACADEMY_ARRIVAL_WALK_71_03_2, FACE_RIGHT ; $54b8
 .done:
 	ret ; $54bf
@@ -84,24 +84,24 @@ JuniorClassCourtDoublesMapScripts_11:
 	dw JuniorClassCourtDoublesInitScript_11 ; slot 6 InitScript
 JuniorClassCourtDoublesActors_11:
 	; $54ce, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, $1300, $1300, FACE_DOWN, OBJ_WALK_72_00, ANIM_WALK, $00, JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00
-	map_actor $0000, ActorScript_11_45, $2300, $1700, FACE_LEFT, OBJ_BOB, ANIM_WALK, $05, JUNIOR_CLASS_COURT_DOUBLES_BOB
-	map_actor $0000, ActorScript_11_45, $0500, $1500, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $04, JUNIOR_CLASS_COURT_DOUBLES_BETH
-	map_actor $0000, ActorScript_11_45, $2100, $1500, FACE_DOWN, OBJ_CURT, ANIM_WALK, $07, JUNIOR_CLASS_COURT_DOUBLES_CURT
-	map_actor $0000, ActorScript_11_45, $0500, $1300, FACE_RIGHT, OBJ_PAM, ANIM_WALK, $07, JUNIOR_CLASS_COURT_DOUBLES_PAM
-	map_actor $0000, ActorScript_11_52, $1b00, $1300, FACE_DOWN, OBJ_BRIAN, ANIM_WALK, $03, JUNIOR_CLASS_COURT_DOUBLES_BRIAN
-	map_actor $0000, ActorScript_11_22, $1b00, $1500, FACE_UP, OBJ_FAY, ANIM_WALK, $06, JUNIOR_CLASS_COURT_DOUBLES_FAY
-	map_actor $0000, ActorScript_11_45, $3700, $0700, FACE_LEFT, OBJ_ALLIE, ANIM_WALK, $04, JUNIOR_CLASS_COURT_DOUBLES_ALLIE
-	map_actor $0000, ActorScript_11_45, $3500, $0700, FACE_RIGHT, OBJ_JOY, ANIM_WALK, $03, JUNIOR_CLASS_COURT_DOUBLES_JOY
-	map_actor $0000, ActorScript_11_50, $0800, $0b00, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $05, JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_1
-	map_actor $0000, ActorScript_11_51, $0c00, $1700, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $00, JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_2
-	map_actor $0000, ActorScript_11_48, $2a00, $0b00, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $00, JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_3
-	map_actor $0000, ActorScript_11_49, $2e00, $1700, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $05, JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_4
+	map_actor $0000, ActorScript_11_45, 19.0, 19.0, FACE_DOWN, OBJ_WALK_72_00, ANIM_WALK, $00, JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00
+	map_actor $0000, ActorScript_11_45, 35.0, 23.0, FACE_LEFT, OBJ_BOB, ANIM_WALK, $05, JUNIOR_CLASS_COURT_DOUBLES_BOB
+	map_actor $0000, ActorScript_11_45, 5.0, 21.0, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $04, JUNIOR_CLASS_COURT_DOUBLES_BETH
+	map_actor $0000, ActorScript_11_45, 33.0, 21.0, FACE_DOWN, OBJ_CURT, ANIM_WALK, $07, JUNIOR_CLASS_COURT_DOUBLES_CURT
+	map_actor $0000, ActorScript_11_45, 5.0, 19.0, FACE_RIGHT, OBJ_PAM, ANIM_WALK, $07, JUNIOR_CLASS_COURT_DOUBLES_PAM
+	map_actor $0000, ActorScript_11_52, 27.0, 19.0, FACE_DOWN, OBJ_BRIAN, ANIM_WALK, $03, JUNIOR_CLASS_COURT_DOUBLES_BRIAN
+	map_actor $0000, ActorScript_11_22, 27.0, 21.0, FACE_UP, OBJ_FAY, ANIM_WALK, $06, JUNIOR_CLASS_COURT_DOUBLES_FAY
+	map_actor $0000, ActorScript_11_45, 55.0, 7.0, FACE_LEFT, OBJ_ALLIE, ANIM_WALK, $04, JUNIOR_CLASS_COURT_DOUBLES_ALLIE
+	map_actor $0000, ActorScript_11_45, 53.0, 7.0, FACE_RIGHT, OBJ_JOY, ANIM_WALK, $03, JUNIOR_CLASS_COURT_DOUBLES_JOY
+	map_actor $0000, ActorScript_11_50, 8.0, 11.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $05, JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_1
+	map_actor $0000, ActorScript_11_51, 12.0, 23.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $00, JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_2
+	map_actor $0000, ActorScript_11_48, 42.0, 11.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $00, JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_3
+	map_actor $0000, ActorScript_11_49, 46.0, 23.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $05, JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_4
 	map_actor_end
 JuniorClassCourtDoublesEntryPoints_11:
 	; $558e, 17 bytes (map_entries)
-	map_entry $01, FACE_UP, $1300, $1d00, MapArrivalWalk_11
-	map_entry $09, FACE_UP, $3700, $1900, $0000
+	map_entry $01, FACE_UP, 19.0, 29.0, MapArrivalWalk_11
+	map_entry $09, FACE_UP, 55.0, 25.0, $0000
 	db $ff
 JuniorClassCourtDoublesExitTriggers_11:
 	; $559f, 17 bytes (map_scripts:exit)
@@ -208,9 +208,9 @@ JuniorClassCourtDoublesNpc0A_11:
 	script_wait_frames $14 ; $56dc
 	script_set_actor_script ACTOR_PARTNER, ActorScript_11_12 ; $56e3
 	script_wait_frames $1e ; $56ee
-	script_move_player $3500, $1100 ; $56f5
-	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, $3700, $0d00 ; $56ff
-	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, $3500, $0900 ; $570a
+	script_move_player 53.0, 17.0 ; $56f5
+	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, 55.0, 13.0 ; $56ff
+	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, 53.0, 9.0 ; $570a
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5715
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACE_DOWN ; $571a
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACE_DOWN ; $5721
@@ -263,7 +263,7 @@ JuniorClassCourtDoublesANpc0A_11:
 JuniorClassCourtDoublesNpc03FaceUp_11:
 	script_set_speed ACTOR_PLAYER, $0008 ; $57e9
 	script_lock_facing ACTOR_PLAYER ; $57f1
-	script_move_target ACTOR_PLAYER, $1300, $1500 ; $57f8
+	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $57f8
 	script_wait_move ACTOR_PLAYER ; $5803
 	script_unlock_facing ACTOR_PLAYER ; $5808
 	script_face ACTOR_PLAYER, FACE_UP ; $580f
@@ -394,10 +394,10 @@ JuniorClassCourtDoublesInitScript_11:
 	jr nz, .stage2 ; $5a25
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5a27
 	jr z, .stage2 ; $5a2a
-	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, $2500, $0900 ; $5a2c
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, 37.0, 9.0 ; $5a2c
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACE_RIGHT ; $5a37
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, ActorScript_11_45 ; $5a3e
-	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, $2500, $0b00 ; $5a49
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, 37.0, 11.0 ; $5a49
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACE_RIGHT ; $5a54
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, ActorScript_11_45 ; $5a5b
 .stage2:
@@ -421,28 +421,28 @@ JuniorClassCourtDoublesInitScript_11:
 	ld hl, JuniorClassCourtDoublesNpcScriptsD_11 ; $5a8d
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5a90
 	farcall WriteStoryStateWord ; $5a93
-	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, $2000, $1900 ; $5a96
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, 32.0, 25.0 ; $5a96
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5aa1
 	ret ; $5aac
 .stage4:
 	ld hl, JuniorClassCourtDoublesNpcScriptsC_11 ; $5aad
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5ab0
 	farcall WriteStoryStateWord ; $5ab3
-	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, $2000, $1900 ; $5ab6
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, 32.0, 25.0 ; $5ab6
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5ac1
 	ret ; $5acc
 .placeActors:
 	ld hl, JuniorClassCourtDoublesNpcScriptsB_11 ; $5acd
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5ad0
 	farcall WriteStoryStateWord ; $5ad3
-	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, $2000, $1900 ; $5ad6
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, 32.0, 25.0 ; $5ad6
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5ae1
 	ret ; $5aec
 .done:
 	ld hl, JuniorClassCourtDoublesNpcScriptsA_11 ; $5aed
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5af0
 	farcall WriteStoryStateWord ; $5af3
-	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, $2000, $1900 ; $5af6
+	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, 32.0, 25.0 ; $5af6
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5b01
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACE_DOWN ; $5b0c
 	ret ; $5b13
@@ -450,9 +450,9 @@ ActorScript_11_03:
 	; $5b14, 20 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1b00, $1300
+	as_set_target 27.0, 19.0
 	as_wait_move
-	as_set_target $1b00, $1300
+	as_set_target 27.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
@@ -460,11 +460,11 @@ ActorScript_11_04:
 	; $5b28, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $2700, $0d00
+	as_set_target 39.0, 13.0
 	as_wait_move
-	as_set_target $2700, $0900
+	as_set_target 39.0, 9.0
 	as_wait_move
-	as_set_target $2500, $0900
+	as_set_target 37.0, 9.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
@@ -472,9 +472,9 @@ ActorScript_11_05:
 	; $5b42, 20 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1b00, $1500
+	as_set_target 27.0, 21.0
 	as_wait_move
-	as_set_target $1b00, $1500
+	as_set_target 27.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
@@ -482,11 +482,11 @@ ActorScript_11_06:
 	; $5b56, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $2700, $0d00
+	as_set_target 39.0, 13.0
 	as_wait_move
-	as_set_target $2700, $0b00
+	as_set_target 39.0, 11.0
 	as_wait_move
-	as_set_target $2500, $0b00
+	as_set_target 37.0, 11.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
@@ -494,9 +494,9 @@ ActorScript_11_07:
 	; $5b70, 20 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1500, $0900
+	as_set_target 21.0, 9.0
 	as_wait_move
-	as_set_target $1700, $0900
+	as_set_target 23.0, 9.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
@@ -504,9 +504,9 @@ ActorScript_11_08:
 	; $5b84, 20 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1500, $0e00
+	as_set_target 21.0, 14.0
 	as_wait_move
-	as_set_target $1b00, $0e00
+	as_set_target 27.0, 14.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
@@ -514,11 +514,11 @@ ActorScript_11_09:
 	; $5b98, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1100, $0a00
+	as_set_target 17.0, 10.0
 	as_wait_move
-	as_set_target $1100, $0a00
+	as_set_target 17.0, 10.0
 	as_wait_move
-	as_set_target $0900, $0900
+	as_set_target 9.0, 9.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
@@ -526,9 +526,9 @@ ActorScript_11_10:
 	; $5bb2, 20 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1100, $0d00
+	as_set_target 17.0, 13.0
 	as_wait_move
-	as_set_target $0b00, $0d00
+	as_set_target 11.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
@@ -536,11 +536,11 @@ ActorScript_11_11:
 	; $5bc6, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $3b00, $0a00
+	as_set_target 59.0, 10.0
 	as_wait_move
-	as_set_target $3b00, $1900
+	as_set_target 59.0, 25.0
 	as_wait_move
-	as_set_target $3700, $1900
+	as_set_target 55.0, 25.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
@@ -548,11 +548,11 @@ ActorScript_11_12:
 	; $5be0, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $3b00, $0900
+	as_set_target 59.0, 9.0
 	as_wait_move
-	as_set_target $3b00, $1500
+	as_set_target 59.0, 21.0
 	as_wait_move
-	as_set_target $3500, $1500
+	as_set_target 53.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
@@ -560,11 +560,11 @@ ActorScript_11_13:
 	; $5bfa, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1100, $1900
+	as_set_target 17.0, 25.0
 	as_wait_move
-	as_set_target $0500, $1900
+	as_set_target 5.0, 25.0
 	as_wait_move
-	as_set_target $0500, $1500
+	as_set_target 5.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
@@ -572,21 +572,21 @@ ActorScript_11_14:
 	; $5c14, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $0900, $0900
+	as_set_target 9.0, 9.0
 	as_wait_move
-	as_set_target $0500, $0900
+	as_set_target 5.0, 9.0
 	as_wait_move
-	as_set_target $0500, $1500
+	as_set_target 5.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_15:
 	; $5c2e, 23 bytes (actor_script)
-	as_set_target $0500, $1900
+	as_set_target 5.0, 25.0
 	as_wait_move
-	as_set_target $1100, $1900
+	as_set_target 17.0, 25.0
 	as_wait_move
-	as_set_target $1100, $1700
+	as_set_target 17.0, 23.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
@@ -594,11 +594,11 @@ ActorScript_11_16:
 	; $5c45, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1100, $1900
+	as_set_target 17.0, 25.0
 	as_wait_move
-	as_set_target $0500, $1900
+	as_set_target 5.0, 25.0
 	as_wait_move
-	as_set_target $0500, $1300
+	as_set_target 5.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
@@ -606,13 +606,13 @@ ActorScript_11_17:
 	; $5c5f, 32 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $0b00, $0d00
+	as_set_target 11.0, 13.0
 	as_wait_move
-	as_set_target $0b00, $0900
+	as_set_target 11.0, 9.0
 	as_wait_move
-	as_set_target $0500, $0900
+	as_set_target 5.0, 9.0
 	as_wait_move
-	as_set_target $0500, $1300
+	as_set_target 5.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
@@ -620,25 +620,25 @@ ActorScript_11_18:
 	; $5c7f, 64 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1500, $1900
+	as_set_target 21.0, 25.0
 	as_wait_move
-	as_set_target $2100, $1900
+	as_set_target 33.0, 25.0
 	as_wait_move
-	as_set_target $2100, $1700
+	as_set_target 33.0, 23.0
 	as_wait_move
-	as_set_target $2300, $1700
+	as_set_target 35.0, 23.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1900, $0900
+	as_set_target 25.0, 9.0
 	as_wait_move
-	as_set_target $2700, $0900
+	as_set_target 39.0, 9.0
 	as_wait_move
-	as_set_target $2500, $0900
+	as_set_target 37.0, 9.0
 	as_wait_move
-	as_set_target $2500, $0900
+	as_set_target 37.0, 9.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
@@ -646,49 +646,49 @@ ActorScript_11_19:
 	; $5cbf, 64 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $1500, $1900
+	as_set_target 21.0, 25.0
 	as_wait_move
-	as_set_target $2100, $1900
+	as_set_target 33.0, 25.0
 	as_wait_move
-	as_set_target $2100, $1700
+	as_set_target 33.0, 23.0
 	as_wait_move
-	as_set_target $2100, $1500
+	as_set_target 33.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 	as_anim ANIM_WALK
 	as_wait_move
-	as_set_target $2700, $0d00
+	as_set_target 39.0, 13.0
 	as_wait_move
-	as_set_target $2700, $0b00
+	as_set_target 39.0, 11.0
 	as_wait_move
-	as_set_target $2500, $0b00
+	as_set_target 37.0, 11.0
 	as_wait_move
-	as_set_target $2500, $0b00
+	as_set_target 37.0, 11.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_11_20:
 	; $5cff, 40 bytes (actor_script)
-	as_set_target $2100, $1900
+	as_set_target 33.0, 25.0
 	as_wait_move
-	as_set_target $1500, $1900
+	as_set_target 21.0, 25.0
 	as_wait_move
-	as_set_target $1500, $1700
+	as_set_target 21.0, 23.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
-	as_set_target $1300, $1900
+	as_set_target 19.0, 25.0
 	as_wait_move
-	as_set_target $1900, $1500
+	as_set_target 25.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_11_21:
 	; $5d27, 17 bytes (actor_script)
-	as_set_target $1300, $1900
+	as_set_target 19.0, 25.0
 	as_wait_move
-	as_set_target $0900, $1500
+	as_set_target 9.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt

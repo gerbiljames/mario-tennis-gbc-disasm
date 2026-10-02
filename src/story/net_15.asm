@@ -1,6 +1,6 @@
 WalkToStrokeChallengeCourtCutscene:
 	script_null_script ACTOR_PARTNER ; $6f51
-	script_move_player $1800, $2700 ; $6f56
+	script_move_player 24.0, 39.0 ; $6f56
 	script_set_actor_script ACTOR_TRAINING_COURT_ALLIE, ActorScript_15_10 ; $6f60
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_11 ; $6f6b
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_12 ; $6f76
@@ -16,25 +16,25 @@ WalkToStrokeChallengeCourtCutscene:
 	ret ; $6f9b
 ActorScript_15_10:
 	; $6f9c, 11 bytes (actor_script)
-	as_set_target $1700, $1f00
+	as_set_target 23.0, 31.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_15_11:
 	; $6fa7, 23 bytes (actor_script)
-	as_set_target $1100, $2700
+	as_set_target 17.0, 39.0
 	as_wait_move
-	as_set_target $1100, $2b00
+	as_set_target 17.0, 43.0
 	as_wait_move
-	as_set_target $1900, $2e00
+	as_set_target 25.0, 46.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_15_12:
 	; $6fbe, 17 bytes (actor_script)
-	as_set_target $1100, $2900
+	as_set_target 17.0, 41.0
 	as_wait_move
-	as_set_target $1300, $2d00
+	as_set_target 19.0, 45.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
@@ -193,7 +193,7 @@ HideServeChallengerActor:
 	call TestServeChallengerGameFlag ; $71c3
 	jr z, .done ; $71c6
 .placeActors:
-	script_set_position ACTOR_TRAINING_COURT_BOB_1, $3f00, $3f00 ; $71c8
+	script_set_position ACTOR_TRAINING_COURT_BOB_1, 63.0, 63.0 ; $71c8
 .done:
 	ret ; $71d3
 TestServeChallengerGameFlag:
@@ -229,7 +229,7 @@ HideNetChallengerActor:
 	call TestNetChallengerGameFlag ; $7209
 	jr z, .done ; $720c
 .placeActors:
-	script_set_position ACTOR_TRAINING_COURT_BRIAN, $3f00, $3f00 ; $720e
+	script_set_position ACTOR_TRAINING_COURT_BRIAN, 63.0, 63.0 ; $720e
 .done:
 	ret ; $7219
 TestNetChallengerGameFlag:
@@ -265,7 +265,7 @@ HideStrokeChallengerActor:
 	call TestStrokeChallengerGameFlag ; $724f
 	jr z, .done ; $7252
 .placeActors:
-	script_set_position ACTOR_TRAINING_COURT_ALLIE, $3f00, $3f00 ; $7254
+	script_set_position ACTOR_TRAINING_COURT_ALLIE, 63.0, 63.0 ; $7254
 .done:
 	ret ; $725f
 TestStrokeChallengerGameFlag:
@@ -485,9 +485,9 @@ InitServeCoachScene:
 	xor a ; $74e1
 	ld [wStoryModeShowLocationName], a ; $74e2
 	script_player_speed $00f0 ; $74e5
-	script_set_position ACTOR_PLAYER, $1300, $1300 ; $74eb
-	script_set_position ACTOR_PARTNER, $1300, $1100 ; $74f6
-	script_move_player $1300, $1300 ; $7501
+	script_set_position ACTOR_PLAYER, 19.0, 19.0 ; $74eb
+	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $74f6
+	script_move_player 19.0, 19.0 ; $7501
 	farcall WaitPlayerMoveDone ; $750b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $750e
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7515

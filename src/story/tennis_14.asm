@@ -17,15 +17,15 @@ TennisMachineRoomMapScripts_14:
 	dw TennisMachineRoomInitScript_14 ; slot 6 InitScript
 TennisMachineRoomActors_14:
 	; $4016, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $2b00, $3300, FACE_RIGHT, OBJ_WALK_72_06, ANIM_WALK, $00, TENNIS_MACHINE_ROOM_WALK_72_06_1
-	map_actor $0000, ActorScript_14_2, $2b00, $3100, FACE_RIGHT, OBJ_WALK_72_06, ANIM_WALK, $00, TENNIS_MACHINE_ROOM_WALK_72_06_2
-	map_actor $0000, ActorScript_14_2, $2d00, $2b00, FACE_LEFT, OBJ_WALK_72_07, ANIM_WALK, $00, TENNIS_MACHINE_ROOM_WALK_72_07
+	map_actor $0000, ActorScript_14_2, 43.0, 51.0, FACE_RIGHT, OBJ_WALK_72_06, ANIM_WALK, $00, TENNIS_MACHINE_ROOM_WALK_72_06_1
+	map_actor $0000, ActorScript_14_2, 43.0, 49.0, FACE_RIGHT, OBJ_WALK_72_06, ANIM_WALK, $00, TENNIS_MACHINE_ROOM_WALK_72_06_2
+	map_actor $0000, ActorScript_14_2, 45.0, 43.0, FACE_LEFT, OBJ_WALK_72_07, ANIM_WALK, $00, TENNIS_MACHINE_ROOM_WALK_72_07
 	map_actor_end
 TennisMachineRoomEntryPoints_14:
 	; $404a, 25 bytes (map_entries)
-	map_entry $01, FACE_UP, $2b00, $3900, TennisMachineRoomArrival01_14
-	map_entry $05, FACE_UP, $3800, $3600, $0000
-	map_entry $07, FACE_UP, $3800, $3600, $0000
+	map_entry $01, FACE_UP, 43.0, 57.0, TennisMachineRoomArrival01_14
+	map_entry $05, FACE_UP, 56.0, 54.0, $0000
+	map_entry $07, FACE_UP, 56.0, 54.0, $0000
 	db $ff
 TennisMachineRoomArrival01_14:
 	ld a, [wStoryModeEntryPoint] ; $4063
@@ -34,7 +34,7 @@ TennisMachineRoomArrival01_14:
 	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $406b
 	test_flag FLAG_DOUBLES ; $406e
 	jr z, .done ; $4071
-	script_set_position ACTOR_PARTNER, $2b00, $3b00 ; $4073
+	script_set_position ACTOR_PARTNER, 43.0, 59.0 ; $4073
 	script_face ACTOR_PARTNER, FACE_UP ; $407e
 .done:
 	ret ; $4085
@@ -211,9 +211,9 @@ TennisMachineRoomTile06_14:
 TennisMachineRoomTile01_14:
 	clear_flag FLAG_TEMP_SCENE_VARIANT_B ; $4227
 	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $422a
-	script_move_target ACTOR_PLAYER, $2ac0, $2b00 ; $422d
+	script_move_target ACTOR_PLAYER, 42.75, 43.0 ; $422d
 	script_wait_move ACTOR_PLAYER ; $4238
-	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2b00 ; $423d
+	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 43.0 ; $423d
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4248
 	script_wait_frames $05 ; $424d
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $4254
@@ -254,10 +254,10 @@ MachineCourtResultScene:
 	jr z, .win ; $42b3
 	script_null_script ACTOR_PARTNER ; $42b5
 	script_wait_frames $0a ; $42ba
-	script_set_position ACTOR_PARTNER, $2900, $2b00 ; $42c1
+	script_set_position ACTOR_PARTNER, 41.0, 43.0 ; $42c1
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $42cc
 .win:
-	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2900 ; $42d3
+	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $42d3
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $42de
 	script_fade_in $06 ; $42e5
 	call WaitFadeEnd ; $42ea
@@ -299,14 +299,14 @@ MachineCourtResultScene:
 MachineCourtGameOverExitScene:
 	script_set_text Text_6e_220 ; $433a
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4340
-	script_move_target ACTOR_PLAYER, $3300, $3600 ; $4345
+	script_move_target ACTOR_PLAYER, 51.0, 54.0 ; $4345
 	script_wait_move ACTOR_PLAYER ; $4350
-	script_move_player $2f00, $2d00 ; $4355
-	script_move_target ACTOR_PLAYER, $3300, $2b00 ; $435f
+	script_move_player 47.0, 45.0 ; $4355
+	script_move_target ACTOR_PLAYER, 51.0, 43.0 ; $435f
 	script_wait_move ACTOR_PLAYER ; $436a
-	script_move_target ACTOR_PLAYER, $2b00, $2b00 ; $436f
+	script_move_target ACTOR_PLAYER, 43.0, 43.0 ; $436f
 	script_wait_move ACTOR_PLAYER ; $437a
-	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2b00 ; $437f
+	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 43.0 ; $437f
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $438a
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $438f
 	script_get_actor_state ACTOR_PARTNER ; $4396
@@ -418,7 +418,7 @@ TennisMachineRoomNpc05_14:
 	ret ; $44e3
 MachineCourtStartLevelScene:
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $44e4
-	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2900 ; $44e9
+	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $44e9
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $44f4
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $44f9
 	test_flag FLAG_DOUBLES ; $4500
@@ -427,12 +427,12 @@ MachineCourtStartLevelScene:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_14_0 ; $450a
 .walkOff:
 	script_set_speed ACTOR_PLAYER, $0020 ; $4515
-	script_move_player $3800, $3300 ; $451d
-	script_move_target ACTOR_PLAYER, $3300, $2b00 ; $4527
+	script_move_player 56.0, 51.0 ; $451d
+	script_move_target ACTOR_PLAYER, 51.0, 43.0 ; $4527
 	script_wait_move ACTOR_PLAYER ; $4532
-	script_move_target ACTOR_PLAYER, $3300, $3300 ; $4537
+	script_move_target ACTOR_PLAYER, 51.0, 51.0 ; $4537
 	script_wait_move ACTOR_PLAYER ; $4542
-	script_move_target ACTOR_PLAYER, $3800, $3500 ; $4547
+	script_move_target ACTOR_PLAYER, 56.0, 53.0 ; $4547
 	script_wait_move ACTOR_PLAYER ; $4552
 	script_face ACTOR_PLAYER, FACE_UP ; $4557
 	script_wait_frames $0a ; $455e
@@ -462,13 +462,13 @@ MachineCourtStartLevelScene:
 .speak:
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $45a6
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $45ab
-	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2900 ; $45ae
+	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $45ae
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $45b9
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $45be
 	script_null_script ACTOR_PARTNER ; $45c5
 	script_set_speed ACTOR_PLAYER, $0020 ; $45ca
 	script_set_actor_script ACTOR_PARTNER, ActorScript_14_0 ; $45d2
-	script_move_target ACTOR_PLAYER, $3100, $2b00 ; $45dd
+	script_move_target ACTOR_PLAYER, 49.0, 43.0 ; $45dd
 	script_wait_move ACTOR_PLAYER ; $45e8
 	script_face ACTOR_PLAYER, FACE_DOWN ; $45ed
 	set_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $45f4

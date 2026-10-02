@@ -1,10 +1,10 @@
 ActorScript_14_1:
 	; $563b, 21 bytes (actor_script)
-	as_set_target $0b00, $2900
+	as_set_target 11.0, 41.0
 	as_wait_move
-	as_set_target $0b00, $2700
+	as_set_target 11.0, 39.0
 	as_wait_move
-	as_set_pos $0100, $0100
+	as_set_pos 1.0, 1.0
 	as_halt
 	as_halt
 	as_halt
@@ -341,7 +341,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	test_flag FLAG_DOUBLES ; $62bc
 	jp z, .fadeIn ; $62bf
 	script_null_script ACTOR_PARTNER ; $62c2
-	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $62c7
+	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $62c7
 .fadeIn:
 	xor a ; $62d2
 	ld [wStoryModeShowLocationName], a ; $62d3
@@ -349,7 +349,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	call WaitFadeEnd ; $62db
 	sound SFX_FIREWORK_LAUNCH ; $62de
 	script_wait_frames $3c ; $62e0
-	script_set_position ACTOR_PLAYER, $0c00, $1300 ; $62e7
+	script_set_position ACTOR_PLAYER, 12.0, 19.0 ; $62e7
 	ld h, $08 ; $62f2
 .planeLoop:
 	script_wait_frames $06 ; $62f4

@@ -13,25 +13,25 @@ TournamentCourtyardMapScripts_15:
 	dw TournamentCourtyardInitScript_15 ; slot 6 InitScript
 TournamentCourtyardActors_15:
 	; $4012, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_00, $0900, $1d80, FACE_DOWN, OBJ_WALK_6F_03, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_6F_03
-	map_actor $0000, ActorScript_15_22, $0700, $1d80, FACE_DOWN, OBJ_WALK_6F_04, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_6F_04
-	map_actor $0000, ActorScript_15_23, $0d00, $1b00, FACE_LEFT, OBJ_WALK_71_06, ANIM_WALK, $03, TOURNAMENT_COURTYARD_WALK_71_06
-	map_actor $0000, ActorScript_15_23, $1d00, $2300, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $07, TOURNAMENT_COURTYARD_WALK_71_07
-	map_actor $0000, ActorScript_15_22, $1f00, $1d00, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $05, TOURNAMENT_COURTYARD_WALK_71_03
-	map_actor $0000, ActorScript_15_22, $0b00, $2700, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_72_02
-	map_actor $0000, ActorScript_15_22, $0900, $2900, FACE_UP, OBJ_WALK_72_03, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_72_03
-	map_actor $0000, ActorScript_15_22, $1b40, $2640, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_1
-	map_actor $0000, ActorScript_15_22, $1cc0, $2640, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_2
-	map_actor $0000, ActorScript_15_22, $0740, $2640, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_3
-	map_actor $0000, ActorScript_15_22, $08c0, $2640, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_4
+	map_actor $0000, ActorScript_15_00, 9.0, 29.5, FACE_DOWN, OBJ_WALK_6F_03, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_6F_03
+	map_actor $0000, ActorScript_15_22, 7.0, 29.5, FACE_DOWN, OBJ_WALK_6F_04, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_6F_04
+	map_actor $0000, ActorScript_15_23, 13.0, 27.0, FACE_LEFT, OBJ_WALK_71_06, ANIM_WALK, $03, TOURNAMENT_COURTYARD_WALK_71_06
+	map_actor $0000, ActorScript_15_23, 29.0, 35.0, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $07, TOURNAMENT_COURTYARD_WALK_71_07
+	map_actor $0000, ActorScript_15_22, 31.0, 29.0, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $05, TOURNAMENT_COURTYARD_WALK_71_03
+	map_actor $0000, ActorScript_15_22, 11.0, 39.0, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_72_02
+	map_actor $0000, ActorScript_15_22, 9.0, 41.0, FACE_UP, OBJ_WALK_72_03, ANIM_WALK, $00, TOURNAMENT_COURTYARD_WALK_72_03
+	map_actor $0000, ActorScript_15_22, 27.25, 38.25, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_1
+	map_actor $0000, ActorScript_15_22, 28.75, 38.25, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_2
+	map_actor $0000, ActorScript_15_22, 7.25, 38.25, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_3
+	map_actor $0000, ActorScript_15_22, 8.75, 38.25, FACE_LEFT, OBJ_INVISIBLE, ANIM_WALK, $00, TOURNAMENT_COURTYARD_INVISIBLE_4
 	map_actor_end
 TournamentCourtyardEntryPoints_15:
 	; $40b6, 41 bytes (map_entries)
-	map_entry $01, FACE_LEFT, $2100, $1400, $0000
-	map_entry $02, FACE_RIGHT, $0300, $1400, $0000
-	map_entry $03, FACE_DOWN, $1200, $0d00, $0000
-	map_entry $04, FACE_UP, $1200, $2900, $0000
-	map_entry $0f, FACE_UP, $1100, $3900, $0000
+	map_entry $01, FACE_LEFT, 33.0, 20.0, $0000
+	map_entry $02, FACE_RIGHT, 3.0, 20.0, $0000
+	map_entry $03, FACE_DOWN, 18.0, 13.0, $0000
+	map_entry $04, FACE_UP, 18.0, 41.0, $0000
+	map_entry $0f, FACE_UP, 17.0, 57.0, $0000
 	db $ff
 TournamentCourtyardExitTriggers_15:
 	; $40df, 33 bytes (map_scripts:exit)
@@ -120,17 +120,17 @@ ActorScript_15_00:
 	as_jump ActorScript_15_00
 TournamentSiteRespawnActors_15:
 	; $41cd, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_22, $1200, $3400, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_75_06
-	map_actor $0000, ActorScript_15_22, $1100, $3700, FACE_DOWN, OBJ_WALK_74_06, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_74_06
-	map_actor $0000, ActorScript_15_22, $1300, $3900, FACE_DOWN, OBJ_WALK_74_07, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_74_07
-	map_actor $0000, ActorScript_15_22, $1300, $3700, FACE_DOWN, OBJ_WALK_74_08, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_74_08
-	map_actor $0000, ActorScript_15_00, $0900, $1d80, FACE_DOWN, OBJ_WALK_6F_03, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_6F_03
-	map_actor $0000, ActorScript_15_22, $0700, $1d80, FACE_DOWN, OBJ_WALK_6F_04, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_6F_04
-	map_actor $0000, ActorScript_15_23, $0d00, $1b00, FACE_LEFT, OBJ_WALK_71_06, ANIM_WALK, $03, TOURNAMENT_SITE_RESPAWN_WALK_71_06
-	map_actor $0000, ActorScript_15_23, $1d00, $2300, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $07, TOURNAMENT_SITE_RESPAWN_WALK_71_07
-	map_actor $0000, ActorScript_15_22, $1f00, $1d00, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $05, TOURNAMENT_SITE_RESPAWN_WALK_71_03
-	map_actor $0000, ActorScript_15_22, $0b00, $2700, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_72_02
-	map_actor $0000, ActorScript_15_22, $0900, $2900, FACE_UP, OBJ_WALK_72_03, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_72_03
+	map_actor $0000, ActorScript_15_22, 18.0, 52.0, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_75_06
+	map_actor $0000, ActorScript_15_22, 17.0, 55.0, FACE_DOWN, OBJ_WALK_74_06, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_74_06
+	map_actor $0000, ActorScript_15_22, 19.0, 57.0, FACE_DOWN, OBJ_WALK_74_07, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_74_07
+	map_actor $0000, ActorScript_15_22, 19.0, 55.0, FACE_DOWN, OBJ_WALK_74_08, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_74_08
+	map_actor $0000, ActorScript_15_00, 9.0, 29.5, FACE_DOWN, OBJ_WALK_6F_03, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_6F_03
+	map_actor $0000, ActorScript_15_22, 7.0, 29.5, FACE_DOWN, OBJ_WALK_6F_04, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_6F_04
+	map_actor $0000, ActorScript_15_23, 13.0, 27.0, FACE_LEFT, OBJ_WALK_71_06, ANIM_WALK, $03, TOURNAMENT_SITE_RESPAWN_WALK_71_06
+	map_actor $0000, ActorScript_15_23, 29.0, 35.0, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $07, TOURNAMENT_SITE_RESPAWN_WALK_71_07
+	map_actor $0000, ActorScript_15_22, 31.0, 29.0, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $05, TOURNAMENT_SITE_RESPAWN_WALK_71_03
+	map_actor $0000, ActorScript_15_22, 11.0, 39.0, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_72_02
+	map_actor $0000, ActorScript_15_22, 9.0, 41.0, FACE_UP, OBJ_WALK_72_03, ANIM_WALK, $00, TOURNAMENT_SITE_RESPAWN_WALK_72_03
 	map_actor_end
 InitTournamentSiteSceneVariant:
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND1 ; $4271
@@ -260,23 +260,23 @@ TournamentSiteArrivalScene:
 	farcall BeginCutsceneScriptMode ; $4455
 	call SetupTournamentSitePartnerActor ; $4458
 	script_player_speed $00ff ; $445b
-	script_move_player $1200, $2900 ; $4461
+	script_move_player 18.0, 41.0 ; $4461
 	farcall WaitPlayerMoveDone ; $446b
 	script_fade_in $04 ; $446e
 	call WaitFadeEnd ; $4473
-	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, $1200, $2900 ; $4476
-	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_06, $1100, $2c00 ; $4481
-	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07, $1300, $2e00 ; $448c
-	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, $1300, $2c00 ; $4497
-	script_move_target ACTOR_PLAYER, $1100, $2e00 ; $44a2
+	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, 18.0, 41.0 ; $4476
+	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_06, 17.0, 44.0 ; $4481
+	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07, 19.0, 46.0 ; $448c
+	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, 19.0, 44.0 ; $4497
+	script_move_target ACTOR_PLAYER, 17.0, 46.0 ; $44a2
 	script_wait_move ACTOR_PLAYER ; $44ad
 	script_player_speed $0020 ; $44b2
-	script_move_player $1200, $1000 ; $44b8
-	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, $1200, $1000 ; $44c2
-	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_06, $1100, $1300 ; $44cd
-	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07, $1300, $1500 ; $44d8
-	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, $1300, $1300 ; $44e3
-	script_move_target ACTOR_PLAYER, $1100, $1500 ; $44ee
+	script_move_player 18.0, 16.0 ; $44b8
+	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, 18.0, 16.0 ; $44c2
+	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_06, 17.0, 19.0 ; $44cd
+	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07, 19.0, 21.0 ; $44d8
+	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, 19.0, 19.0 ; $44e3
+	script_move_target ACTOR_PLAYER, 17.0, 21.0 ; $44ee
 	script_wait_move ACTOR_PLAYER ; $44f9
 	script_wait_frames $28 ; $44fe
 	script_face ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, FACE_DOWN ; $4505
@@ -327,7 +327,7 @@ TournamentSiteArrivalScene:
 	script_wait_frames $28 ; $4622
 	script_face ACTOR_PLAYER, FACE_UP ; $4629
 	script_wait_frames $28 ; $4630
-	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, $1200, $1000 ; $4637
+	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, 18.0, 16.0 ; $4637
 	script_wait_move ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08 ; $4642
 	script_face ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, FACE_DOWN ; $4647
 	script_speak ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08 ; $464e
@@ -372,7 +372,7 @@ SetupTournamentSitePartnerActor:
 	farcall LoadActorObjectDefIfValid ; $46d5
 	script_set_anim ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07, ANIM_WALK ; $46d8
 	script_null_script ACTOR_PARTNER ; $46df
-	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $46e4
+	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $46e4
 	ret ; $46ef
 TournamentSiteEntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $46f0
@@ -426,37 +426,37 @@ TrainingCourtMapScripts_15:
 	dw TrainingCourtInitScript_15 ; slot 6 InitScript
 TrainingCourtActors_15:
 	; $47a4, 304 bytes (map_actors)
-	map_actor $0000, ActorScript_15_03, $0b00, $0700, FACE_DOWN, OBJ_WALK_71_06, ANIM_WALK, $03, TRAINING_COURT_WALK_71_06_1
-	map_actor $0000, ActorScript_15_03, $0b00, $1700, FACE_UP, OBJ_WALK_71_05, ANIM_WALK, $07, TRAINING_COURT_WALK_71_05_1
-	map_actor $0000, ActorScript_15_03, $0e00, $1700, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $05, TRAINING_COURT_WALK_71_07_1
-	map_actor $0000, ActorScript_15_22, $1300, $0b00, FACE_LEFT, OBJ_BOB, ANIM_WALK, $00, TRAINING_COURT_BOB_1
-	map_actor $0000, ActorScript_15_22, $1300, $1500, FACE_LEFT, OBJ_CURT, ANIM_WALK, $06, TRAINING_COURT_CURT
-	map_actor $0000, ActorScript_15_02, $0b00, $2100, FACE_DOWN, OBJ_WALK_71_07, ANIM_WALK, $03, TRAINING_COURT_WALK_71_07_2
-	map_actor $0000, ActorScript_15_02, $0d00, $2100, FACE_DOWN, OBJ_WALK_72_02, ANIM_WALK, $05, TRAINING_COURT_WALK_72_02_1
-	map_actor $0000, ActorScript_15_02, $0c00, $2d00, FACE_UP, OBJ_WALK_71_06, ANIM_WALK, $04, TRAINING_COURT_WALK_71_06_2
-	map_actor $0000, ActorScript_15_25, $0700, $2d00, FACE_RIGHT, OBJ_PAM, ANIM_WALK, $07, TRAINING_COURT_PAM
-	map_actor $0000, ActorScript_15_22, $1300, $2700, FACE_DOWN, OBJ_ALLIE, ANIM_WALK, $06, TRAINING_COURT_ALLIE
-	map_actor $0000, ActorScript_15_22, $1300, $2900, FACE_UP, OBJ_BOB, ANIM_WALK, $04, TRAINING_COURT_BOB_2
-	map_actor $0000, ActorScript_15_02, $3300, $2a00, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $06, TRAINING_COURT_WALK_72_02_2
-	map_actor $0000, ActorScript_15_02, $3500, $2400, FACE_DOWN, OBJ_WALK_71_05, ANIM_WALK, $03, TRAINING_COURT_WALK_71_05_2
-	map_actor $0000, ActorScript_15_02, $3500, $2a00, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $07, TRAINING_COURT_WALK_71_07_3
-	map_actor $0000, ActorScript_15_22, $2d00, $2100, FACE_RIGHT, OBJ_BRIAN, ANIM_WALK, $07, TRAINING_COURT_BRIAN
-	map_actor $0000, ActorScript_15_22, $2d00, $2900, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $07, TRAINING_COURT_BETH
-	map_actor $0000, ActorScript_15_01, $3f00, $0300, FACE_DOWN, OBJ_WALK_71_06, ANIM_WALK, $07, TRAINING_COURT_WALK_71_06_3
-	map_actor $0000, ActorScript_15_22, $3f00, $0500, FACE_DOWN, OBJ_WALK_76_06, ANIM_WALK, $00, TRAINING_COURT_WALK_76_06
-	map_actor $0000, ActorScript_15_22, $3f00, $0700, FACE_DOWN, OBJ_RACKET, ANIM_WALK, $05, TRAINING_COURT_RACKET
-	map_actor $0000, ActorScript_15_22, $3f00, $0900, FACE_DOWN, OBJ_BALLOON_SCRIBBLE, ANIM_WALK, $00, TRAINING_COURT_BALLOON_SCRIBBLE
-	map_actor $0000, ActorScript_15_22, $3f00, $0b00, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, TRAINING_COURT_BALLOON_SWEAT
+	map_actor $0000, ActorScript_15_03, 11.0, 7.0, FACE_DOWN, OBJ_WALK_71_06, ANIM_WALK, $03, TRAINING_COURT_WALK_71_06_1
+	map_actor $0000, ActorScript_15_03, 11.0, 23.0, FACE_UP, OBJ_WALK_71_05, ANIM_WALK, $07, TRAINING_COURT_WALK_71_05_1
+	map_actor $0000, ActorScript_15_03, 14.0, 23.0, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $05, TRAINING_COURT_WALK_71_07_1
+	map_actor $0000, ActorScript_15_22, 19.0, 11.0, FACE_LEFT, OBJ_BOB, ANIM_WALK, $00, TRAINING_COURT_BOB_1
+	map_actor $0000, ActorScript_15_22, 19.0, 21.0, FACE_LEFT, OBJ_CURT, ANIM_WALK, $06, TRAINING_COURT_CURT
+	map_actor $0000, ActorScript_15_02, 11.0, 33.0, FACE_DOWN, OBJ_WALK_71_07, ANIM_WALK, $03, TRAINING_COURT_WALK_71_07_2
+	map_actor $0000, ActorScript_15_02, 13.0, 33.0, FACE_DOWN, OBJ_WALK_72_02, ANIM_WALK, $05, TRAINING_COURT_WALK_72_02_1
+	map_actor $0000, ActorScript_15_02, 12.0, 45.0, FACE_UP, OBJ_WALK_71_06, ANIM_WALK, $04, TRAINING_COURT_WALK_71_06_2
+	map_actor $0000, ActorScript_15_25, 7.0, 45.0, FACE_RIGHT, OBJ_PAM, ANIM_WALK, $07, TRAINING_COURT_PAM
+	map_actor $0000, ActorScript_15_22, 19.0, 39.0, FACE_DOWN, OBJ_ALLIE, ANIM_WALK, $06, TRAINING_COURT_ALLIE
+	map_actor $0000, ActorScript_15_22, 19.0, 41.0, FACE_UP, OBJ_BOB, ANIM_WALK, $04, TRAINING_COURT_BOB_2
+	map_actor $0000, ActorScript_15_02, 51.0, 42.0, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $06, TRAINING_COURT_WALK_72_02_2
+	map_actor $0000, ActorScript_15_02, 53.0, 36.0, FACE_DOWN, OBJ_WALK_71_05, ANIM_WALK, $03, TRAINING_COURT_WALK_71_05_2
+	map_actor $0000, ActorScript_15_02, 53.0, 42.0, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $07, TRAINING_COURT_WALK_71_07_3
+	map_actor $0000, ActorScript_15_22, 45.0, 33.0, FACE_RIGHT, OBJ_BRIAN, ANIM_WALK, $07, TRAINING_COURT_BRIAN
+	map_actor $0000, ActorScript_15_22, 45.0, 41.0, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $07, TRAINING_COURT_BETH
+	map_actor $0000, ActorScript_15_01, 63.0, 3.0, FACE_DOWN, OBJ_WALK_71_06, ANIM_WALK, $07, TRAINING_COURT_WALK_71_06_3
+	map_actor $0000, ActorScript_15_22, 63.0, 5.0, FACE_DOWN, OBJ_WALK_76_06, ANIM_WALK, $00, TRAINING_COURT_WALK_76_06
+	map_actor $0000, ActorScript_15_22, 63.0, 7.0, FACE_DOWN, OBJ_RACKET, ANIM_WALK, $05, TRAINING_COURT_RACKET
+	map_actor $0000, ActorScript_15_22, 63.0, 9.0, FACE_DOWN, OBJ_BALLOON_SCRIBBLE, ANIM_WALK, $00, TRAINING_COURT_BALLOON_SCRIBBLE
+	map_actor $0000, ActorScript_15_22, 63.0, 11.0, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, TRAINING_COURT_BALLOON_SWEAT
 	map_actor_end
 TrainingCourtEntryPoints_15:
 	; $48d4, 57 bytes (map_entries)
-	map_entry $01, FACE_RIGHT, $0900, $3700, TrainingCourtArrival01_15
-	map_entry $02, FACE_DOWN, $1300, $1300, $0000
-	map_entry $09, FACE_DOWN, $1300, $1300, $0000
-	map_entry $0a, FACE_UP, $1300, $1300, $0000
-	map_entry $0b, FACE_DOWN, $1300, $1300, $0000
-	map_entry $0c, FACE_UP, $2d00, $2b00, $0000
-	map_entry $0d, FACE_LEFT, $1500, $2900, $0000
+	map_entry $01, FACE_RIGHT, 9.0, 55.0, TrainingCourtArrival01_15
+	map_entry $02, FACE_DOWN, 19.0, 19.0, $0000
+	map_entry $09, FACE_DOWN, 19.0, 19.0, $0000
+	map_entry $0a, FACE_UP, 19.0, 19.0, $0000
+	map_entry $0b, FACE_DOWN, 19.0, 19.0, $0000
+	map_entry $0c, FACE_UP, 45.0, 43.0, $0000
+	map_entry $0d, FACE_LEFT, 21.0, 41.0, $0000
 	db $ff
 TrainingCourtArrival01_15:
 	ld a, [wStoryModeEntryPoint] ; $490d
@@ -740,18 +740,18 @@ TrainingCourtNpc13_15:
 	ld hl, $0018 ; $4bb3
 	add hl, de ; $4bb6
 	ld [hl], a ; $4bb7
-	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3680, $0d80 ; $4bb8
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 54.5, 13.5 ; $4bb8
 	sound SFX_APPEAR1 ; $4bc3
 	farcall AdvanceDialogueTextCursor ; $4bc5
 	script_speak ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4bc8
 	script_set_speed ACTOR_PLAYER, $0012 ; $4bcd
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4bd5
 	script_wait_idle ACTOR_PLAYER ; $4bdc
-	script_move_target ACTOR_PLAYER, $3300, $0f00 ; $4be1
+	script_move_target ACTOR_PLAYER, 51.0, 15.0 ; $4be1
 	script_wait_move ACTOR_PLAYER ; $4bec
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4bf1
 	script_wait_frames $0a ; $4bf8
-	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3f00, $3f00 ; $4bff
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4bff
 	script_wait_frames $14 ; $4c0a
 	script_set_anim ACTOR_PLAYER, ANIM_SWING_LOOP ; $4c11
 	script_wait_frames $b4 ; $4c18
@@ -771,14 +771,14 @@ TrainingCourtNpc13_15:
 	script_wait_frames $01 ; $4c75
 	script_lock_facing ACTOR_PLAYER ; $4c7c
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4c83
-	script_move_target ACTOR_PLAYER, $3300, $0d00 ; $4c8a
-	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, $3300, $0f00 ; $4c95
+	script_move_target ACTOR_PLAYER, 51.0, 13.0 ; $4c8a
+	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, 51.0, 15.0 ; $4c95
 	script_wait_move ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4ca0
-	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, $3300, $1500 ; $4ca5
+	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, 51.0, 21.0 ; $4ca5
 	script_wait_move ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4cb0
-	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, $1f00, $1500 ; $4cb5
+	script_move_target ACTOR_TRAINING_COURT_WALK_71_06_3, 31.0, 21.0 ; $4cb5
 	script_wait_move ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4cc0
-	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, $3f00, $3f00 ; $4cc5
+	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, 63.0, 63.0 ; $4cc5
 	script_unlock_facing ACTOR_PLAYER ; $4cd0
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4cd7
 	script_get_actor_state ACTOR_PLAYER ; $4cde
@@ -789,6 +789,6 @@ TrainingCourtNpc13_15:
 	add hl, de ; $4cea
 	ld [hl], a ; $4ceb
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4cec
-	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3480, $0b80 ; $4cf3
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 52.5, 11.5 ; $4cf3
 	sound SFX_APPEAR1 ; $4cfe
 	script_wait_frames $50 ; $4d00

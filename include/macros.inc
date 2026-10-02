@@ -621,7 +621,8 @@ DEF ACTOR_\9 EQU _MAP_ACTOR_ROW + 3
 EXPORT ACTOR_\9
 ENDC
 DEF _MAP_ACTOR_ROW += 1
-	dw \1, \2, \3, \4
+	map_pos \3, \4
+	dw \1, \2, (\3) >> 8, (\4) >> 8
 	db \5, $00, \6, \7, \8, $00
 ENDM
 
@@ -661,12 +662,14 @@ MACRO as_wait_move   ; $02 yield until the current move finishes (+$05 bit7)
 	db $02
 ENDM
 MACRO as_set_pos     ; $03 teleport: set current position -> state +$0c/+$0e, clears the +$05 bit7 move flag
+	map_pos \1, \2
 	db $03
-	dw \1, \2
+	dw (\1) >> 8, (\2) >> 8
 ENDM
 MACRO as_set_target  ; $04 set move target -> state +$08/+$0a, sets the +$05 bit7 move flag
+	map_pos \1, \2
 	db $04
-	dw \1, \2
+	dw (\1) >> 8, (\2) >> 8
 ENDM
 MACRO as_halt5       ; $05 inert (handler alias of $00)
 	db $05
@@ -754,8 +757,9 @@ ENDM
 ; constants.inc) and runs `arrival_script`.
 ; Usage: map_entry id, facing, x, y, arrival_script
 MACRO map_entry
+	map_pos \3, \4
 	db \1, \2
-	dw \3, \4, \5
+	dw (\3) >> 8, (\4) >> 8, \5
 ENDM
 
 ; Story-script record (8 bytes, table terminated by $ff). FindStoryScriptEntry
@@ -808,23 +812,34 @@ MACRO story_location
 	db \4, $00
 ENDM
 
+; map_pos x, y -- assert that a map position is written in tiles with a
+; point (18.0, 17.5): the game keeps positions in 1/256 tile (ACTORF_X), and
+; the macros below store `x >> 8` of the Q16.16 literal, so an integer would
+; silently land 256 times too close to the origin.
+MACRO map_pos
+	ASSERT (\1) % 256 == 0 && (\1) < 256.0, "map position \1: write tiles with a point, e.g. 18.0"
+	ASSERT (\2) % 256 == 0 && (\2) < 256.0, "map position \2: write tiles with a point, e.g. 18.0"
+ENDM
+
 ; Cutscene script commands. Story cutscenes are hand-written native code: fixed
 ; register setups feeding farcalls into the script engine (FarPtr_Script*, bank
 ; $0a). Each macro collapses one setup+farcall; the disassembler emits them via
 ; script_cmd_seq. `actor` is the target actor slot (ACTOR_PLAYER = the player).
 ; Usage: script_move_target actor, x, y
 MACRO script_move_target
+	map_pos \2, \3
 	ld a, \1
-	ld bc, \2
-	ld de, \3
+	ld bc, (\2) >> 8
+	ld de, (\3) >> 8
 	farcall ScriptSetActorMoveTarget
 ENDM
 ; Instantly places an actor (no walking).
 ; Usage: script_set_position actor, x, y
 MACRO script_set_position
+	map_pos \2, \3
 	ld a, \1
-	ld bc, \2
-	ld de, \3
+	ld bc, (\2) >> 8
+	ld de, (\3) >> 8
 	farcall ScriptSetActorPosition
 ENDM
 ; Usage: script_move_angle actor, angle, distance  (angle is a FACE_* cardinal)
@@ -849,9 +864,10 @@ MACRO script_jump_velocity
 ENDM
 ; Usage: script_move_player x, y (moves actor $00, the player)
 MACRO script_move_player
+	map_pos \1, \2
 	xor a
-	ld bc, \1
-	ld de, \2
+	ld bc, (\1) >> 8
+	ld de, (\2) >> 8
 	farcall MovePlayerToPosition
 ENDM
 ; Usage: script_player_speed speed

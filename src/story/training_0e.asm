@@ -15,28 +15,28 @@ TrainingGymMapScripts_0e:
 	dw TrainingGymInitScript_0e ; slot 6 InitScript
 TrainingGymActors_0e:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_22, $2500, $0d00, FACE_DOWN, OBJ_WEIGHTLIFTER_A, ANIM_WALK, $00, TRAINING_GYM_WEIGHTLIFTER_A
-	map_actor $0000, ActorScript_0e_22, $2900, $0f00, FACE_DOWN, OBJ_WEIGHTLIFTER_B, ANIM_WALK, $05, TRAINING_GYM_WEIGHTLIFTER_B
-	map_actor $0000, ActorScript_0e_22, $2500, $1500, FACE_DOWN, OBJ_SITUPS_A, ANIM_WALK, $07, TRAINING_GYM_SITUPS_A
-	map_actor $0000, ActorScript_0e_22, $2900, $1300, FACE_DOWN, OBJ_SITUPS_B, ANIM_WALK, $05, TRAINING_GYM_SITUPS_B
-	map_actor $0000, ActorScript_0e_22, $2500, $0500, FACE_DOWN, OBJ_JUMPING_JACKS_B, ANIM_WALK, $07, TRAINING_GYM_JUMPING_JACKS_B_1
-	map_actor $0000, ActorScript_0e_22, $2700, $0700, FACE_DOWN, OBJ_JUMPING_JACKS_A, ANIM_WALK, $00, TRAINING_GYM_JUMPING_JACKS_A
-	map_actor $0000, ActorScript_0e_22, $2900, $0500, FACE_DOWN, OBJ_JUMPING_JACKS_B, ANIM_WALK, $00, TRAINING_GYM_JUMPING_JACKS_B_2
-	map_actor $0000, ActorScript_0e_00, $2100, $0c00, FACE_DOWN, OBJ_WALK_72_04, ANIM_WALK, $00, TRAINING_GYM_WALK_72_04_1
-	map_actor $0000, ActorScript_0e_01, $2c00, $0b00, FACE_LEFT, OBJ_WALK_72_05, ANIM_WALK, $00, TRAINING_GYM_WALK_72_05
-	map_actor $0000, ActorScript_0e_02, $2d60, $1700, FACE_RIGHT, OBJ_WALK_72_04, ANIM_WALK, $06, TRAINING_GYM_WALK_72_04_2
-	map_actor $0000, ActorScript_0e_05, $1900, $1100, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $06, TRAINING_GYM_WALK_72_02_1
-	map_actor $0000, ActorScript_0e_22, $0d00, $1300, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $07, TRAINING_GYM_WALK_72_02_2
+	map_actor $0000, ActorScript_0e_22, 37.0, 13.0, FACE_DOWN, OBJ_WEIGHTLIFTER_A, ANIM_WALK, $00, TRAINING_GYM_WEIGHTLIFTER_A
+	map_actor $0000, ActorScript_0e_22, 41.0, 15.0, FACE_DOWN, OBJ_WEIGHTLIFTER_B, ANIM_WALK, $05, TRAINING_GYM_WEIGHTLIFTER_B
+	map_actor $0000, ActorScript_0e_22, 37.0, 21.0, FACE_DOWN, OBJ_SITUPS_A, ANIM_WALK, $07, TRAINING_GYM_SITUPS_A
+	map_actor $0000, ActorScript_0e_22, 41.0, 19.0, FACE_DOWN, OBJ_SITUPS_B, ANIM_WALK, $05, TRAINING_GYM_SITUPS_B
+	map_actor $0000, ActorScript_0e_22, 37.0, 5.0, FACE_DOWN, OBJ_JUMPING_JACKS_B, ANIM_WALK, $07, TRAINING_GYM_JUMPING_JACKS_B_1
+	map_actor $0000, ActorScript_0e_22, 39.0, 7.0, FACE_DOWN, OBJ_JUMPING_JACKS_A, ANIM_WALK, $00, TRAINING_GYM_JUMPING_JACKS_A
+	map_actor $0000, ActorScript_0e_22, 41.0, 5.0, FACE_DOWN, OBJ_JUMPING_JACKS_B, ANIM_WALK, $00, TRAINING_GYM_JUMPING_JACKS_B_2
+	map_actor $0000, ActorScript_0e_00, 33.0, 12.0, FACE_DOWN, OBJ_WALK_72_04, ANIM_WALK, $00, TRAINING_GYM_WALK_72_04_1
+	map_actor $0000, ActorScript_0e_01, 44.0, 11.0, FACE_LEFT, OBJ_WALK_72_05, ANIM_WALK, $00, TRAINING_GYM_WALK_72_05
+	map_actor $0000, ActorScript_0e_02, 45.375, 23.0, FACE_RIGHT, OBJ_WALK_72_04, ANIM_WALK, $06, TRAINING_GYM_WALK_72_04_2
+	map_actor $0000, ActorScript_0e_05, 25.0, 17.0, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $06, TRAINING_GYM_WALK_72_02_1
+	map_actor $0000, ActorScript_0e_22, 13.0, 19.0, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $07, TRAINING_GYM_WALK_72_02_2
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)
-	map_entry $01, FACE_UP, $1600, $1800, TrainingGymArrival01_0e
-	map_entry $02, FACE_DOWN, $0b00, $0c00, TrainingGymArrival02_0e
-	map_entry $03, FACE_DOWN, $1500, $0c00, TrainingGymArrival03_0e
-	map_entry $0b, FACE_DOWN, $0d00, $0f00, $0000
-	map_entry $0c, FACE_LEFT, $1100, $1300, $0000
-	map_entry $0d, FACE_DOWN, $0d00, $0f00, $0000
-	map_entry $0e, FACE_LEFT, $1100, $1300, $0000
+	map_entry $01, FACE_UP, 22.0, 24.0, TrainingGymArrival01_0e
+	map_entry $02, FACE_DOWN, 11.0, 12.0, TrainingGymArrival02_0e
+	map_entry $03, FACE_DOWN, 21.0, 12.0, TrainingGymArrival03_0e
+	map_entry $0b, FACE_DOWN, 13.0, 15.0, $0000
+	map_entry $0c, FACE_LEFT, 17.0, 19.0, $0000
+	map_entry $0d, FACE_DOWN, 13.0, 15.0, $0000
+	map_entry $0e, FACE_LEFT, 17.0, 19.0, $0000
 	db $ff
 TrainingGymArrival01_0e:
 	ld a, [wStoryModeEntryPoint] ; $40ff
@@ -66,7 +66,7 @@ TrainingGymArrival02_0e:
 	script_wait_frames $02 ; $417e
 	script_fade_in $08 ; $4185
 	call WaitFadeEnd ; $418a
-	script_move_target ACTOR_PLAYER, $0b00, $0e00 ; $418d
+	script_move_target ACTOR_PLAYER, 11.0, 14.0 ; $418d
 	script_wait_move ACTOR_PLAYER ; $4198
 	sound SFX_DOOR ; $419d
 	script_wait_frames $02 ; $419f
@@ -88,7 +88,7 @@ TrainingGymArrival03_0e:
 	script_copy_scene_rect $3d, $0a, $14, $0a, $02, $02 ; $420b
 	script_fade_in $08 ; $421a
 	call WaitFadeEnd ; $421f
-	script_move_target ACTOR_PLAYER, $1500, $0e00 ; $4222
+	script_move_target ACTOR_PLAYER, 21.0, 14.0 ; $4222
 	script_wait_move ACTOR_PLAYER ; $422d
 	sound SFX_DOOR ; $4232
 	script_wait_frames $02 ; $4234
@@ -108,7 +108,7 @@ TrainingGymExit02_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $4290
 	script_lock_facing ACTOR_PLAYER ; $4297
 	script_set_speed ACTOR_PLAYER, $0018 ; $429e
-	script_move_target ACTOR_PLAYER, $0b00, $0d00 ; $42a6
+	script_move_target ACTOR_PLAYER, 11.0, 13.0 ; $42a6
 	script_wait_move ACTOR_PLAYER ; $42b1
 	farcall WaitPlayerMoveDone ; $42b6
 	sound SFX_DOOR ; $42b9
@@ -128,7 +128,7 @@ TrainingGymExit03_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $431b
 	script_lock_facing ACTOR_PLAYER ; $4322
 	script_set_speed ACTOR_PLAYER, $0018 ; $4329
-	script_move_target ACTOR_PLAYER, $1500, $0d00 ; $4331
+	script_move_target ACTOR_PLAYER, 21.0, 13.0 ; $4331
 	script_wait_move ACTOR_PLAYER ; $433c
 	farcall WaitPlayerMoveDone ; $4341
 	sound SFX_DOOR ; $4344
@@ -382,7 +382,7 @@ TrainingGymFacing01_0e:
 	ld a, $0b ; $45be
 	ld [wMapSceneStage2], a ; $45c0
 	script_player_speed $0040 ; $45c3
-	script_move_player $0d00, $1300 ; $45c9
+	script_move_player 13.0, 19.0 ; $45c9
 	farcall WaitPlayerMoveDone ; $45d3
 	call RunRepairCounterDialogue ; $45d6
 	ret ; $45d9
@@ -390,7 +390,7 @@ TrainingGymFacing02_0e:
 	ld a, $0c ; $45da
 	ld [wMapSceneStage2], a ; $45dc
 	script_player_speed $0040 ; $45df
-	script_move_player $0d00, $1300 ; $45e5
+	script_move_player 13.0, 19.0 ; $45e5
 	farcall WaitPlayerMoveDone ; $45ef
 	call RunRepairCounterDialogue ; $45f2
 	ret ; $45f5

@@ -1,33 +1,33 @@
 IslandOpenDoublesVictory:
-	script_set_position ACTOR_SENIOR_COURT_B_CURT, $1b00, $0b00 ; $7071
-	script_set_position ACTOR_SENIOR_COURT_A_BETH, $1b00, $0d00 ; $707c
+	script_set_position ACTOR_SENIOR_COURT_B_CURT, 27.0, 11.0 ; $7071
+	script_set_position ACTOR_SENIOR_COURT_A_BETH, 27.0, 13.0 ; $707c
 	script_face ACTOR_SENIOR_COURT_B_CURT, FACE_LEFT ; $7087
 	script_face ACTOR_SENIOR_COURT_A_BETH, FACE_LEFT ; $708e
 	script_null_script ACTOR_SENIOR_COURT_A_BETH ; $7095
 	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_WALK ; $709a
 	script_null_script ACTOR_PARTNER ; $70a1
-	script_set_position ACTOR_SENIOR_COURT_A_EMILY, $2b00, $2700 ; $70a6
-	script_set_position ACTOR_SENIOR_COURT_B_FAY, $2500, $0f00 ; $70b1
+	script_set_position ACTOR_SENIOR_COURT_A_EMILY, 43.0, 39.0 ; $70a6
+	script_set_position ACTOR_SENIOR_COURT_B_FAY, 37.0, 15.0 ; $70b1
 	script_face ACTOR_SENIOR_COURT_B_FAY, FACE_DOWN ; $70bc
 	script_null_script ACTOR_SENIOR_COURT_B_FAY ; $70c3
 	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_WALK ; $70c8
-	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, $2300, $1300 ; $70cf
+	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, 35.0, 19.0 ; $70cf
 	script_face ACTOR_SENIOR_COURT_A_ALLIE, FACE_DOWN ; $70da
 	script_null_script ACTOR_SENIOR_COURT_A_ALLIE ; $70e1
 	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_WALK ; $70e6
-	script_set_position ACTOR_PLAYER, $2500, $1b00 ; $70ed
+	script_set_position ACTOR_PLAYER, 37.0, 27.0 ; $70ed
 	script_face ACTOR_PLAYER, FACE_UP ; $70f8
-	script_set_position ACTOR_PARTNER, $2300, $1b00 ; $70ff
+	script_set_position ACTOR_PARTNER, 35.0, 27.0 ; $70ff
 	script_face ACTOR_PARTNER, FACE_UP ; $710a
 	script_player_speed $0040 ; $7111
-	script_move_player $2400, $1500 ; $7117
+	script_move_player 36.0, 21.0 ; $7117
 	farcall WaitPlayerMoveDone ; $7121
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_LEFT ; $7124
 	farcall WaitPlayerMoveDone ; $712b
 	script_fade_in $20 ; $712e
 	call WaitFadeEnd ; $7133
 	script_set_text Text_34_130 ; $7136
-	script_move_target ACTOR_SENIOR_COURT_B_FAY, $2500, $1300 ; $713c
+	script_move_target ACTOR_SENIOR_COURT_B_FAY, 37.0, 19.0 ; $713c
 	script_wait_move ACTOR_SENIOR_COURT_B_FAY ; $7147
 	script_face_pair ACTOR_SENIOR_COURT_A_ALLIE, ACTOR_SENIOR_COURT_B_FAY ; $714c
 	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_BOUNCE ; $7154
@@ -47,12 +47,12 @@ IslandOpenDoublesVictory:
 	script_face ACTOR_SENIOR_COURT_B_FAY, FACE_DOWN ; $71ae
 	script_player_speed $0010 ; $71b5
 	script_set_speed ACTOR_SENIOR_COURT_A_EMILY, $0010 ; $71bb
-	script_move_player $2b00, $2000 ; $71c3
-	script_move_target ACTOR_SENIOR_COURT_A_EMILY, $2b00, $2000 ; $71cd
+	script_move_player 43.0, 32.0 ; $71c3
+	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 43.0, 32.0 ; $71cd
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $71d8
 	farcall WaitPlayerMoveDone ; $71dd
-	script_move_player $2400, $1b00 ; $71e0
-	script_move_target ACTOR_SENIOR_COURT_A_EMILY, $2500, $1f00 ; $71ea
+	script_move_player 36.0, 27.0 ; $71e0
+	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 37.0, 31.0 ; $71ea
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $71f5
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_UP ; $71fa
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_BOUNCE ; $7201
@@ -69,7 +69,7 @@ IslandOpenDoublesVictory:
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $7249
 	script_set_text Text_34_135 ; $724e
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $7254
-	script_move_target ACTOR_SENIOR_COURT_A_EMILY, $2500, $1d00 ; $7259
+	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 37.0, 29.0 ; $7259
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $7264
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_BOUNCE ; $7269
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $7270
@@ -93,12 +93,12 @@ IslandOpenDoublesVictory:
 	script_face ACTOR_PLAYER, FACE_UP ; $72da
 	script_face ACTOR_PARTNER, FACE_UP ; $72e1
 	script_wait_frames $28 ; $72e8
-	script_move_player $2400, $1700 ; $72ef
+	script_move_player 36.0, 23.0 ; $72ef
 	farcall WaitPlayerMoveDone ; $72f9
 	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_BOUNCE ; $72fc
 	script_wait_frames $28 ; $7303
 	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $730a
-	script_move_target ACTOR_SENIOR_COURT_B_FAY, $2500, $1500 ; $730f
+	script_move_target ACTOR_SENIOR_COURT_B_FAY, 37.0, 21.0 ; $730f
 	script_wait_move ACTOR_SENIOR_COURT_B_FAY ; $731a
 	script_speak ACTOR_SENIOR_COURT_B_FAY ; $731f
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $7324
@@ -131,7 +131,7 @@ IslandOpenDoublesVictory:
 	farcall EndCutsceneScriptMode ; $73ae
 	ret ; $73b1
 SeniorSinglesRank4And3Victory:
-	script_set_position ACTOR_SENIOR_COURT_A_BRIAN, $2300, $0f00 ; $73b2
+	script_set_position ACTOR_SENIOR_COURT_A_BRIAN, 35.0, 15.0 ; $73b2
 	script_face ACTOR_SENIOR_COURT_A_BRIAN, FACE_DOWN ; $73bd
 	call FadeInSeniorCourtNearPairA ; $73c4
 	script_set_text Text_34_74 ; $73c7
@@ -142,11 +142,11 @@ SeniorSinglesRank4And3Victory:
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $73df
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BRIAN, ActorScript_12_03 ; $73e4
 	script_wait_frames $3c ; $73ef
-	script_move_target ACTOR_SENIOR_COURT_A_EMILY, $2d00, $1900 ; $73f6
-	script_move_player $2d00, $1b00 ; $7401
-	script_move_target ACTOR_PLAYER, $2400, $1d00 ; $740b
+	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 45.0, 25.0 ; $73f6
+	script_move_player 45.0, 27.0 ; $7401
+	script_move_target ACTOR_PLAYER, 36.0, 29.0 ; $740b
 	script_wait_move ACTOR_PLAYER ; $7416
-	script_move_target ACTOR_PLAYER, $2d00, $1d00 ; $741b
+	script_move_target ACTOR_PLAYER, 45.0, 29.0 ; $741b
 	script_wait_frames $3c ; $7426
 	call StartSeniorCourtPairARally ; $742d
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_DOWN ; $7430
@@ -156,10 +156,10 @@ SeniorSinglesRank4And3Victory:
 	ret ; $7448
 SeniorSinglesRank2Victory:
 	set_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $7449
-	script_set_position ACTOR_SENIOR_COURT_A_JOY, $3300, $0f00 ; $744c
+	script_set_position ACTOR_SENIOR_COURT_A_JOY, 51.0, 15.0 ; $744c
 	script_face ACTOR_SENIOR_COURT_A_JOY, FACE_DOWN ; $7457
 	call FadeInSeniorCourtNearPairB ; $745e
-	script_set_position ACTOR_PLAYER, $3400, $1b00 ; $7461
+	script_set_position ACTOR_PLAYER, 52.0, 27.0 ; $7461
 	script_set_text Text_34_35 ; $746c
 	script_speak ACTOR_SENIOR_COURT_A_JOY ; $7472
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, $ff80 ; $7477
@@ -168,7 +168,7 @@ SeniorSinglesRank2Victory:
 	script_set_text Text_34_76 ; $7484
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $748a
 	script_set_actor_script ACTOR_SENIOR_COURT_A_JOY, ActorScript_12_07 ; $748f
-	script_move_target ACTOR_PLAYER, $2d00, $1b00 ; $749a
+	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $749a
 	script_wait_move ACTOR_PLAYER ; $74a5
 	script_face ACTOR_PLAYER, FACE_DOWN ; $74aa
 	call StartSeniorCourtPairBRally ; $74b1
@@ -177,10 +177,10 @@ SeniorSinglesRank2Victory:
 SeniorSinglesRank1Victory:
 	set_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $74b8
 	call PlaceSeniorCourtPairB ; $74bb
-	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, $3300, $0f00 ; $74be
+	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, 51.0, 15.0 ; $74be
 	script_face ACTOR_SENIOR_COURT_A_ALLIE, FACE_DOWN ; $74c9
 	call FadeInSeniorCourtNearPairB ; $74d0
-	script_set_position ACTOR_PLAYER, $3400, $1b00 ; $74d3
+	script_set_position ACTOR_PLAYER, 52.0, 27.0 ; $74d3
 	script_set_text Text_34_32 ; $74de
 	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $74e4
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, $ff80 ; $74e9
@@ -189,7 +189,7 @@ SeniorSinglesRank1Victory:
 	script_set_text Text_34_77 ; $74f6
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $74fc
 	script_set_actor_script ACTOR_SENIOR_COURT_A_ALLIE, ActorScript_12_10 ; $7501
-	script_move_target ACTOR_PLAYER, $2d00, $1b00 ; $750c
+	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $750c
 	script_wait_move ACTOR_PLAYER ; $7517
 	script_face ACTOR_PLAYER, FACE_DOWN ; $751c
 	call StartSeniorCourtPairBRally ; $7523
@@ -198,10 +198,10 @@ SeniorSinglesRank1Victory:
 SeniorSharedVictoryScene:
 	script_player_speed $0040 ; $752a
 	script_set_speed ACTOR_ROLE_SENIOR_COURT_FAY, $0018 ; $7530
-	script_set_position ACTOR_SENIOR_COURT_A_EMILY, $2b00, $2700 ; $7538
-	script_set_position ACTOR_ROLE_SENIOR_COURT_FAY, $2200, $0f00 ; $7543
-	script_set_position ACTOR_PLAYER, $2400, $1b00 ; $754e
-	script_move_player $2400, $1500 ; $7559
+	script_set_position ACTOR_SENIOR_COURT_A_EMILY, 43.0, 39.0 ; $7538
+	script_set_position ACTOR_ROLE_SENIOR_COURT_FAY, 34.0, 15.0 ; $7543
+	script_set_position ACTOR_PLAYER, 36.0, 27.0 ; $754e
+	script_move_player 36.0, 21.0 ; $7559
 	farcall WaitPlayerMoveDone ; $7563
 	script_face ACTOR_PLAYER, FACE_UP ; $7566
 	script_face ACTOR_ROLE_SENIOR_COURT_FAY, FACE_DOWN ; $756d
@@ -211,7 +211,7 @@ SeniorSharedVictoryScene:
 	call WaitFadeEnd ; $7583
 	script_wait_frames $1e ; $7586
 	script_set_text Text_34_78 ; $758d
-	script_move_target ACTOR_ROLE_SENIOR_COURT_FAY, $2400, $1300 ; $7593
+	script_move_target ACTOR_ROLE_SENIOR_COURT_FAY, 36.0, 19.0 ; $7593
 	script_wait_move ACTOR_ROLE_SENIOR_COURT_FAY ; $759e
 	script_set_anim ACTOR_ROLE_SENIOR_COURT_FAY, ANIM_BOUNCE ; $75a3
 	script_speak ACTOR_ROLE_SENIOR_COURT_FAY ; $75aa
@@ -222,14 +222,14 @@ SeniorSharedVictoryScene:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $75c9
 	script_player_speed $0010 ; $75d0
 	script_set_speed ACTOR_SENIOR_COURT_A_EMILY, $0010 ; $75d6
-	script_move_player $2b00, $2000 ; $75de
-	script_move_target ACTOR_SENIOR_COURT_A_EMILY, $2b00, $1f00 ; $75e8
+	script_move_player 43.0, 32.0 ; $75de
+	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 43.0, 31.0 ; $75e8
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $75f3
 	farcall WaitPlayerMoveDone ; $75f8
-	script_move_player $2400, $1e00 ; $75fb
-	script_move_target ACTOR_SENIOR_COURT_A_EMILY, $2400, $1f00 ; $7605
+	script_move_player 36.0, 30.0 ; $75fb
+	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 36.0, 31.0 ; $7605
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $7610
-	script_move_target ACTOR_SENIOR_COURT_A_EMILY, $2400, $1e00 ; $7615
+	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 36.0, 30.0 ; $7615
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $7620
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_BOUNCE ; $7625
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $762c
@@ -239,7 +239,7 @@ SeniorSharedVictoryScene:
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $7642
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $7649
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $764e
-	script_move_target ACTOR_SENIOR_COURT_A_EMILY, $2400, $1d00 ; $7653
+	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 36.0, 29.0 ; $7653
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $765e
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_BOUNCE ; $7663
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $766a
@@ -258,16 +258,16 @@ SeniorSharedVictoryScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $76b7
 	script_wait_idle ACTOR_PLAYER ; $76be
 	script_face ACTOR_PLAYER, FACE_UP ; $76c3
-	script_set_position ACTOR_SENIOR_COURT_A_BALLOON_SWEAT, $2580, $1980 ; $76ca
+	script_set_position ACTOR_SENIOR_COURT_A_BALLOON_SWEAT, 37.5, 25.5 ; $76ca
 	sound SFX_APPEAR2 ; $76d5
 	script_wait_frames $28 ; $76d7
-	script_move_player $2400, $1700 ; $76de
+	script_move_player 36.0, 23.0 ; $76de
 	farcall WaitPlayerMoveDone ; $76e8
 	script_set_anim ACTOR_ROLE_SENIOR_COURT_FAY, ANIM_BOUNCE ; $76eb
 	script_wait_frames $28 ; $76f2
-	script_move_target ACTOR_ROLE_SENIOR_COURT_FAY, $2400, $1500 ; $76f9
+	script_move_target ACTOR_ROLE_SENIOR_COURT_FAY, 36.0, 21.0 ; $76f9
 	script_wait_move ACTOR_ROLE_SENIOR_COURT_FAY ; $7704
-	script_set_position ACTOR_SENIOR_COURT_A_BALLOON_SWEAT, $3f00, $3f00 ; $7709
+	script_set_position ACTOR_SENIOR_COURT_A_BALLOON_SWEAT, 63.0, 63.0 ; $7709
 	script_speak ACTOR_ROLE_SENIOR_COURT_FAY ; $7714
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $7719
 	ld [wStoryModeCurrentLocation], a ; $771b
@@ -339,8 +339,8 @@ ComputeSeniorCourtStage:
 FadeInSeniorCourtNearPairA:
 	call PlaceSeniorCourtPairA ; $77c2
 	script_player_speed $0040 ; $77c5
-	script_set_position ACTOR_PLAYER, $2400, $1b00 ; $77cb
-	script_move_player $2400, $1500 ; $77d6
+	script_set_position ACTOR_PLAYER, 36.0, 27.0 ; $77cb
+	script_move_player 36.0, 21.0 ; $77d6
 	farcall WaitPlayerMoveDone ; $77e0
 	script_face ACTOR_PLAYER, FACE_UP ; $77e3
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_LEFT ; $77ea
@@ -351,7 +351,7 @@ FadeInSeniorCourtNearPairA:
 FadeInSeniorCourtNearPairB:
 	call PlaceSeniorCourtPairB ; $77fd
 	script_player_speed $0040 ; $7800
-	script_move_player $3500, $1500 ; $7806
+	script_move_player 53.0, 21.0 ; $7806
 	farcall WaitPlayerMoveDone ; $7810
 	script_face ACTOR_PLAYER, FACE_UP ; $7813
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_RIGHT ; $781a
@@ -361,200 +361,200 @@ FadeInSeniorCourtNearPairB:
 	ret ; $782c
 ActorScript_12_21:
 	; $782d, 11 bytes (actor_script)
-	as_set_target $2b00, $1b00
+	as_set_target 43.0, 27.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_12_22:
 	; $7838, 17 bytes (actor_script)
-	as_set_target $2b00, $0f00
+	as_set_target 43.0, 15.0
 	as_wait_move
-	as_set_target $2300, $0f00
+	as_set_target 35.0, 15.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_23:
 	; $7849, 11 bytes (actor_script)
-	as_set_target $2300, $1c00
+	as_set_target 35.0, 28.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_24:
 	; $7854, 23 bytes (actor_script)
-	as_set_target $1900, $0f00
+	as_set_target 25.0, 15.0
 	as_wait_move
-	as_set_target $1900, $0b00
+	as_set_target 25.0, 11.0
 	as_wait_move
-	as_set_target $1b00, $0b00
+	as_set_target 27.0, 11.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_12_25:
 	; $786b, 11 bytes (actor_script)
-	as_set_target $2b00, $1d00
+	as_set_target 43.0, 29.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_12_26:
 	; $7876, 17 bytes (actor_script)
-	as_set_target $2b00, $1300
+	as_set_target 43.0, 19.0
 	as_wait_move
-	as_set_target $2500, $1300
+	as_set_target 37.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_27:
 	; $7887, 13 bytes (actor_script)
-	as_set_target $2300, $1e00
+	as_set_target 35.0, 30.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING_LOOP
 	as_halt
 ActorScript_12_28:
 	; $7894, 23 bytes (actor_script)
-	as_set_target $1900, $0f00
+	as_set_target 25.0, 15.0
 	as_wait_move
-	as_set_target $1900, $0d00
+	as_set_target 25.0, 13.0
 	as_wait_move
-	as_set_target $1b00, $0d00
+	as_set_target 27.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_12_29:
 	; $78ab, 23 bytes (actor_script)
-	as_set_target $3900, $1f00
+	as_set_target 57.0, 31.0
 	as_wait_move
-	as_set_target $2f00, $1f00
+	as_set_target 47.0, 31.0
 	as_wait_move
-	as_set_target $2f00, $1d00
+	as_set_target 47.0, 29.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_12_30:
 	; $78c2, 23 bytes (actor_script)
-	as_set_target $3900, $1f00
+	as_set_target 57.0, 31.0
 	as_wait_move
-	as_set_target $2f00, $1f00
+	as_set_target 47.0, 31.0
 	as_wait_move
-	as_set_target $2f00, $1b00
+	as_set_target 47.0, 27.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_12_31:
 	; $78d9, 17 bytes (actor_script)
-	as_set_target $2f00, $0f00
+	as_set_target 47.0, 15.0
 	as_wait_move
-	as_set_target $3300, $0f00
+	as_set_target 51.0, 15.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_32:
 	; $78ea, 17 bytes (actor_script)
-	as_set_target $2f00, $1300
+	as_set_target 47.0, 19.0
 	as_wait_move
-	as_set_target $3500, $1300
+	as_set_target 53.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_33:
 	; $78fb, 23 bytes (actor_script)
-	as_set_target $2f00, $1f00
+	as_set_target 47.0, 31.0
 	as_wait_move
-	as_set_target $3900, $1f00
+	as_set_target 57.0, 31.0
 	as_wait_move
-	as_set_target $3900, $1b00
+	as_set_target 57.0, 27.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_12_34:
 	; $7912, 23 bytes (actor_script)
-	as_set_target $2f00, $1f00
+	as_set_target 47.0, 31.0
 	as_wait_move
-	as_set_target $3900, $1f00
+	as_set_target 57.0, 31.0
 	as_wait_move
-	as_set_target $3900, $1d00
+	as_set_target 57.0, 29.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_12_35:
 	; $7929, 23 bytes (actor_script)
-	as_set_target $3900, $0f00
+	as_set_target 57.0, 15.0
 	as_wait_move
-	as_set_target $3b00, $1300
+	as_set_target 59.0, 19.0
 	as_wait_move
-	as_set_target $3900, $1d00
+	as_set_target 57.0, 29.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_12_36:
 	; $7940, 19 bytes (actor_script)
 	as_wait $10
-	as_set_target $3b00, $1300
+	as_set_target 59.0, 19.0
 	as_wait_move
-	as_set_target $3900, $1b00
+	as_set_target 57.0, 27.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_12_37:
 	; $7953, 11 bytes (actor_script)
-	as_set_target $2b00, $1d00
+	as_set_target 43.0, 29.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_12_38:
 	; $795e, 17 bytes (actor_script)
-	as_set_target $2b00, $1100
+	as_set_target 43.0, 17.0
 	as_wait_move
-	as_set_target $2b00, $1b00
+	as_set_target 43.0, 27.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_12_39:
 	; $796f, 17 bytes (actor_script)
-	as_set_target $2b00, $1300
+	as_set_target 43.0, 19.0
 	as_wait_move
-	as_set_target $2500, $1300
+	as_set_target 37.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_40:
 	; $7980, 17 bytes (actor_script)
-	as_set_target $2b00, $0f00
+	as_set_target 43.0, 15.0
 	as_wait_move
-	as_set_target $2300, $0f00
+	as_set_target 35.0, 15.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_41:
 	; $7991, 17 bytes (actor_script)
-	as_set_target $2b00, $0f00
+	as_set_target 43.0, 15.0
 	as_wait_move
-	as_set_target $2d00, $0f00
+	as_set_target 45.0, 15.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_42:
 	; $79a2, 65 bytes (actor_script)
-	as_set_target $2b00, $1100
+	as_set_target 43.0, 17.0
 	as_wait_move
-	as_set_target $2d00, $1100
+	as_set_target 45.0, 17.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING_LOOP
 	as_halt
-	as_set_target $1900, $0f00
+	as_set_target 25.0, 15.0
 	as_wait_move
-	as_set_target $1900, $0d00
+	as_set_target 25.0, 13.0
 	as_wait_move
-	as_set_target $1b00, $0d00
+	as_set_target 27.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
-	as_set_target $1900, $0f00
+	as_set_target 25.0, 15.0
 	as_wait_move
-	as_set_target $1900, $0d00
+	as_set_target 25.0, 13.0
 	as_wait_move
-	as_set_target $1b00, $0d00
+	as_set_target 27.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
@@ -570,54 +570,54 @@ ActorScript_12_44:
 	as_halt
 ActorScript_12_45:
 	; $79f1, 11 bytes (actor_script)
-	as_set_target $0900, $0900
+	as_set_target 9.0, 9.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_46:
 	; $79fc, 11 bytes (actor_script)
-	as_set_target $0b00, $0d00
+	as_set_target 11.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_47:
 	; $7a07, 29 bytes (actor_script)
-	as_set_target $0700, $0900
+	as_set_target 7.0, 9.0
 	as_wait_move
-	as_set_target $0500, $0900
+	as_set_target 5.0, 9.0
 	as_wait_move
-	as_set_target $0500, $1900
+	as_set_target 5.0, 25.0
 	as_wait_move
-	as_set_target $0b00, $1900
+	as_set_target 11.0, 25.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_12_48:
 	; $7a24, 29 bytes (actor_script)
-	as_set_target $0700, $0900
+	as_set_target 7.0, 9.0
 	as_wait_move
-	as_set_target $0500, $0900
+	as_set_target 5.0, 9.0
 	as_wait_move
-	as_set_target $0500, $1500
+	as_set_target 5.0, 21.0
 	as_wait_move
-	as_set_target $0900, $1500
+	as_set_target 9.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_12_49:
 	; $7a41, 25 bytes (actor_script)
 	as_anim ANIM_BOUNCE
-	as_set_target $0f00, $1500
+	as_set_target 15.0, 21.0
 	as_wait_move
-	as_set_target $0f00, $0900
+	as_set_target 15.0, 9.0
 	as_wait_move
-	as_set_target $0900, $0900
+	as_set_target 9.0, 9.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_12_50:
 	; $7a5a, 11 bytes (actor_script)
-	as_set_target $0b00, $1900
+	as_set_target 11.0, 25.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt

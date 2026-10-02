@@ -1,11 +1,11 @@
 ExhibitionDeclinedCutscene:
 	script_wait_frames $0a ; $7082
 	sound SFX_APPEAR1 ; $7089
-	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, $1400, $0d00 ; $708b
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, 20.0, 13.0 ; $708b
 	script_wait_frames $28 ; $7096
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $709d
 	script_wait_frames $14 ; $70a2
-	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, $3f00, $3f00 ; $70a9
+	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, 63.0, 63.0 ; $70a9
 	script_set_anim ACTOR_MARIO_WORLD_PEACH, ANIM_BOUNCE ; $70b4
 	script_wait_idle ACTOR_MARIO_WORLD_PEACH ; $70bb
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $70c0
@@ -23,10 +23,10 @@ ExhibitionDeclinedCutscene:
 	ld a, $00 ; $7101
 	farcall SetScreenShake ; $7103
 	script_wait_frames $1e ; $7106
-	script_move_target ACTOR_MARIO_WORLD_WARIO, $0c00, $0d00 ; $710d
-	script_move_target ACTOR_MARIO_WORLD_WALUIGI, $0c00, $1100 ; $7118
+	script_move_target ACTOR_MARIO_WORLD_WARIO, 12.0, 13.0 ; $710d
+	script_move_target ACTOR_MARIO_WORLD_WALUIGI, 12.0, 17.0 ; $7118
 	script_wait_frames $14 ; $7123
-	script_move_target ACTOR_MARIO_WORLD_BOWSER, $0c00, $0f00 ; $712a
+	script_move_target ACTOR_MARIO_WORLD_BOWSER, 12.0, 15.0 ; $712a
 	script_wait_move ACTOR_MARIO_WORLD_BOWSER ; $7135
 	script_face ACTOR_MARIO_WORLD_WARIO, FACE_RIGHT ; $713a
 	script_face ACTOR_MARIO_WORLD_WALUIGI, FACE_RIGHT ; $7141
@@ -294,24 +294,24 @@ SpecialCourtMapScripts_0e:
 	dw SpecialCourtInitScript_0e ; slot 6 InitScript
 SpecialCourtActors_0e:
 	; $7604, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_22, $0f00, $0500, FACE_DOWN, OBJ_PEACH, ANIM_WALK, $00, SPECIAL_COURT_PEACH
-	map_actor $0000, ActorScript_0e_22, $1700, $0d00, FACE_LEFT, OBJ_LUIGI, ANIM_WALK, $00, SPECIAL_COURT_LUIGI
-	map_actor $0000, ActorScript_0e_22, $1700, $0f00, FACE_LEFT, OBJ_BABY_MARIO, ANIM_WALK, $00, SPECIAL_COURT_BABY_MARIO
-	map_actor $0000, ActorScript_0e_22, $1700, $1100, FACE_LEFT, OBJ_YOSHI, ANIM_WALK, $00, SPECIAL_COURT_YOSHI
-	map_actor $0000, ActorScript_0e_22, $1700, $1900, FACE_LEFT, OBJ_DK, ANIM_WALK, $00, SPECIAL_COURT_DK
-	map_actor $0000, ActorScript_0e_22, $0480, $0f00, FACE_RIGHT, OBJ_BOO, ANIM_WALK, $00, SPECIAL_COURT_BOO
-	map_actor $0000, ActorScript_0e_22, $0500, $1100, FACE_RIGHT, OBJ_BOWSER, ANIM_WALK, $00, SPECIAL_COURT_BOWSER
-	map_actor $0000, ActorScript_0e_22, $0500, $1900, FACE_RIGHT, OBJ_WARIO, ANIM_WALK, $00, SPECIAL_COURT_WARIO
-	map_actor $0000, ActorScript_0e_22, $0500, $1b00, FACE_RIGHT, OBJ_WALUIGI, ANIM_WALK, $00, SPECIAL_COURT_WALUIGI
-	map_actor $0000, ActorScript_0e_22, $0d00, $0500, FACE_DOWN, OBJ_WALK_77_05, ANIM_WALK, $00, SPECIAL_COURT_WALK_77_05
-	map_actor $0000, ActorScript_0e_22, $0d00, $1700, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00, SPECIAL_COURT_MARIO
-	map_actor $0000, ActorScript_0e_22, $0500, $1f00, FACE_UP, OBJ_TOAD, ANIM_WALK, $00, SPECIAL_COURT_TOAD
-	map_actor $0000, ActorScript_0e_22, $0500, $0d00, FACE_RIGHT, OBJ_BOB_OMB, ANIM_WALK, $00, SPECIAL_COURT_BOB_OMB_1
-	map_actor $0000, ActorScript_0e_22, $1700, $1b00, FACE_LEFT, OBJ_BOB_OMB, ANIM_WALK, $00, SPECIAL_COURT_BOB_OMB_2
+	map_actor $0000, ActorScript_0e_22, 15.0, 5.0, FACE_DOWN, OBJ_PEACH, ANIM_WALK, $00, SPECIAL_COURT_PEACH
+	map_actor $0000, ActorScript_0e_22, 23.0, 13.0, FACE_LEFT, OBJ_LUIGI, ANIM_WALK, $00, SPECIAL_COURT_LUIGI
+	map_actor $0000, ActorScript_0e_22, 23.0, 15.0, FACE_LEFT, OBJ_BABY_MARIO, ANIM_WALK, $00, SPECIAL_COURT_BABY_MARIO
+	map_actor $0000, ActorScript_0e_22, 23.0, 17.0, FACE_LEFT, OBJ_YOSHI, ANIM_WALK, $00, SPECIAL_COURT_YOSHI
+	map_actor $0000, ActorScript_0e_22, 23.0, 25.0, FACE_LEFT, OBJ_DK, ANIM_WALK, $00, SPECIAL_COURT_DK
+	map_actor $0000, ActorScript_0e_22, 4.5, 15.0, FACE_RIGHT, OBJ_BOO, ANIM_WALK, $00, SPECIAL_COURT_BOO
+	map_actor $0000, ActorScript_0e_22, 5.0, 17.0, FACE_RIGHT, OBJ_BOWSER, ANIM_WALK, $00, SPECIAL_COURT_BOWSER
+	map_actor $0000, ActorScript_0e_22, 5.0, 25.0, FACE_RIGHT, OBJ_WARIO, ANIM_WALK, $00, SPECIAL_COURT_WARIO
+	map_actor $0000, ActorScript_0e_22, 5.0, 27.0, FACE_RIGHT, OBJ_WALUIGI, ANIM_WALK, $00, SPECIAL_COURT_WALUIGI
+	map_actor $0000, ActorScript_0e_22, 13.0, 5.0, FACE_DOWN, OBJ_WALK_77_05, ANIM_WALK, $00, SPECIAL_COURT_WALK_77_05
+	map_actor $0000, ActorScript_0e_22, 13.0, 23.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00, SPECIAL_COURT_MARIO
+	map_actor $0000, ActorScript_0e_22, 5.0, 31.0, FACE_UP, OBJ_TOAD, ANIM_WALK, $00, SPECIAL_COURT_TOAD
+	map_actor $0000, ActorScript_0e_22, 5.0, 13.0, FACE_RIGHT, OBJ_BOB_OMB, ANIM_WALK, $00, SPECIAL_COURT_BOB_OMB_1
+	map_actor $0000, ActorScript_0e_22, 23.0, 27.0, FACE_LEFT, OBJ_BOB_OMB, ANIM_WALK, $00, SPECIAL_COURT_BOB_OMB_2
 	map_actor_end
 SpecialCourtEntryPoints_0e:
 	; $76d2, 9 bytes (map_entries)
-	map_entry $01, FACE_UP, $0500, $2100, $0000
+	map_entry $01, FACE_UP, 5.0, 33.0, $0000
 	db $ff
 SpecialCourtExitTriggers_0e:
 	; $76db, 9 bytes (map_scripts:exit)
@@ -346,23 +346,23 @@ ExhibitionMatchIntroCutscene:
 	jp nz, .startMatch ; $7709
 	script_set_speed ACTOR_SPECIAL_COURT_TOAD, $0014 ; $770c
 	script_set_speed ACTOR_PLAYER, $0014 ; $7714
-	script_set_position ACTOR_SPECIAL_COURT_TOAD, $0500, $2300 ; $771c
-	script_set_position ACTOR_PLAYER, $0500, $2500 ; $7727
-	script_set_position ACTOR_PARTNER, $0500, $2500 ; $7732
-	script_move_target ACTOR_SPECIAL_COURT_TOAD, $0500, $1f00 ; $773d
-	script_move_target ACTOR_PLAYER, $0500, $2100 ; $7748
-	script_move_target ACTOR_PARTNER, $0500, $2300 ; $7753
+	script_set_position ACTOR_SPECIAL_COURT_TOAD, 5.0, 35.0 ; $771c
+	script_set_position ACTOR_PLAYER, 5.0, 37.0 ; $7727
+	script_set_position ACTOR_PARTNER, 5.0, 37.0 ; $7732
+	script_move_target ACTOR_SPECIAL_COURT_TOAD, 5.0, 31.0 ; $773d
+	script_move_target ACTOR_PLAYER, 5.0, 33.0 ; $7748
+	script_move_target ACTOR_PARTNER, 5.0, 35.0 ; $7753
 	script_player_speed $0014 ; $775e
-	script_move_player $0e00, $1b00 ; $7764
+	script_move_player 14.0, 27.0 ; $7764
 	script_fade_in $04 ; $776e
 	call WaitFadeEnd ; $7773
 	script_wait_move ACTOR_SPECIAL_COURT_TOAD ; $7776
 	script_set_actor_script ACTOR_SPECIAL_COURT_TOAD, ActorScript_0e_16 ; $777b
-	script_move_target ACTOR_PLAYER, $0500, $1f00 ; $7786
+	script_move_target ACTOR_PLAYER, 5.0, 31.0 ; $7786
 	script_wait_move ACTOR_PLAYER ; $7791
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_16 ; $7796
 	script_wait_frames $5a ; $77a1
-	script_move_player $0e00, $1700 ; $77a8
+	script_move_player 14.0, 23.0 ; $77a8
 	script_wait_actor_script ACTOR_SPECIAL_COURT_TOAD ; $77b2
 	script_set_speed ACTOR_SPECIAL_COURT_TOAD, $0020 ; $77b7
 	script_set_actor_script ACTOR_SPECIAL_COURT_TOAD, ActorScript_0e_17 ; $77bf
@@ -379,25 +379,25 @@ ExhibitionMatchIntroCutscene:
 	ld [wStoryModeExitTriggerRequest], a ; $77fa
 	ret ; $77fd
 .doubles:
-	script_move_target ACTOR_PLAYER, $0f00, $1a00 ; $77fe
+	script_move_target ACTOR_PLAYER, 15.0, 26.0 ; $77fe
 	script_wait_move ACTOR_PLAYER ; $7809
-	script_move_target ACTOR_PLAYER, $0f00, $1700 ; $780e
+	script_move_target ACTOR_PLAYER, 15.0, 23.0 ; $780e
 	script_wait_move ACTOR_PLAYER ; $7819
 	script_face ACTOR_SPECIAL_COURT_MARIO, FACE_UP ; $781e
 	script_wait_frames $14 ; $7825
 	script_player_speed $0020 ; $782c
-	script_move_player $0e00, $0900 ; $7832
+	script_move_player 14.0, 9.0 ; $7832
 	farcall WaitPlayerMoveDone ; $783c
 	script_wait_frames $14 ; $783f
 	script_set_speed ACTOR_SPECIAL_COURT_PEACH, $0014 ; $7846
-	script_move_target ACTOR_SPECIAL_COURT_PEACH, $0f00, $0700 ; $784e
+	script_move_target ACTOR_SPECIAL_COURT_PEACH, 15.0, 7.0 ; $784e
 	script_wait_move ACTOR_SPECIAL_COURT_PEACH ; $7859
 	script_set_anim ACTOR_SPECIAL_COURT_PEACH, ANIM_NOD ; $785e
 	script_wait_idle ACTOR_SPECIAL_COURT_PEACH ; $7865
 	script_set_text Text_5e_169 ; $786a
 	script_speak ACTOR_SPECIAL_COURT_PEACH ; $7870
 	script_player_speed $0040 ; $7875
-	script_move_player $0e00, $1400 ; $787b
+	script_move_player 14.0, 20.0 ; $787b
 	farcall WaitPlayerMoveDone ; $7885
 	script_wait_frames $14 ; $7888
 	script_face ACTOR_SPECIAL_COURT_MARIO, FACE_RIGHT ; $788f
@@ -409,14 +409,14 @@ ExhibitionMatchIntroCutscene:
 	script_wait_frames $14 ; $78b7
 	script_set_speed ACTOR_PLAYER, $0020 ; $78be
 	script_set_speed ACTOR_SPECIAL_COURT_MARIO, $0020 ; $78c6
-	script_move_target ACTOR_PLAYER, $0f00, $1d00 ; $78ce
-	script_move_target ACTOR_SPECIAL_COURT_MARIO, $0900, $1700 ; $78d9
+	script_move_target ACTOR_PLAYER, 15.0, 29.0 ; $78ce
+	script_move_target ACTOR_SPECIAL_COURT_MARIO, 9.0, 23.0 ; $78d9
 	script_wait_move ACTOR_SPECIAL_COURT_MARIO ; $78e4
-	script_move_target ACTOR_SPECIAL_COURT_MARIO, $0900, $0d00 ; $78e9
+	script_move_target ACTOR_SPECIAL_COURT_MARIO, 9.0, 13.0 ; $78e9
 	script_wait_move ACTOR_PLAYER ; $78f4
 	script_face ACTOR_PLAYER, FACE_UP ; $78f9
 	script_wait_move ACTOR_SPECIAL_COURT_MARIO ; $7900
-	script_move_target ACTOR_SPECIAL_COURT_MARIO, $0d00, $0d00 ; $7905
+	script_move_target ACTOR_SPECIAL_COURT_MARIO, 13.0, 13.0 ; $7905
 	script_wait_move ACTOR_SPECIAL_COURT_MARIO ; $7910
 	script_face ACTOR_SPECIAL_COURT_MARIO, FACE_DOWN ; $7915
 	script_wait_frames $28 ; $791c
@@ -426,34 +426,34 @@ ExhibitionMatchIntroCutscene:
 	script_set_speed ACTOR_SPECIAL_COURT_TOAD, $0014 ; $7927
 	script_set_speed ACTOR_PLAYER, $0014 ; $792f
 	script_set_speed ACTOR_PARTNER, $0014 ; $7937
-	script_set_position ACTOR_SPECIAL_COURT_PEACH, $0f00, $1700 ; $793f
+	script_set_position ACTOR_SPECIAL_COURT_PEACH, 15.0, 23.0 ; $793f
 	script_null_script ACTOR_PARTNER ; $794a
-	script_set_position ACTOR_SPECIAL_COURT_TOAD, $0500, $2300 ; $794f
-	script_set_position ACTOR_PLAYER, $0500, $2500 ; $795a
-	script_set_position ACTOR_PARTNER, $0500, $2500 ; $7965
-	script_move_target ACTOR_SPECIAL_COURT_TOAD, $0500, $1f00 ; $7970
-	script_move_target ACTOR_PLAYER, $0500, $2100 ; $797b
-	script_move_target ACTOR_PARTNER, $0500, $2300 ; $7986
+	script_set_position ACTOR_SPECIAL_COURT_TOAD, 5.0, 35.0 ; $794f
+	script_set_position ACTOR_PLAYER, 5.0, 37.0 ; $795a
+	script_set_position ACTOR_PARTNER, 5.0, 37.0 ; $7965
+	script_move_target ACTOR_SPECIAL_COURT_TOAD, 5.0, 31.0 ; $7970
+	script_move_target ACTOR_PLAYER, 5.0, 33.0 ; $797b
+	script_move_target ACTOR_PARTNER, 5.0, 35.0 ; $7986
 	script_player_speed $0014 ; $7991
-	script_move_player $0e00, $1b00 ; $7997
+	script_move_player 14.0, 27.0 ; $7997
 	script_fade_in $04 ; $79a1
 	call WaitFadeEnd ; $79a6
 	script_wait_move ACTOR_SPECIAL_COURT_TOAD ; $79a9
 	script_set_actor_script ACTOR_SPECIAL_COURT_TOAD, ActorScript_0e_16 ; $79ae
-	script_move_target ACTOR_PLAYER, $0500, $1f00 ; $79b9
-	script_move_target ACTOR_PARTNER, $0500, $2100 ; $79c4
+	script_move_target ACTOR_PLAYER, 5.0, 31.0 ; $79b9
+	script_move_target ACTOR_PARTNER, 5.0, 33.0 ; $79c4
 	script_wait_move ACTOR_PLAYER ; $79cf
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_16 ; $79d4
-	script_move_target ACTOR_PARTNER, $0500, $1f00 ; $79df
+	script_move_target ACTOR_PARTNER, 5.0, 31.0 ; $79df
 	script_wait_move ACTOR_PARTNER ; $79ea
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_16 ; $79ef
 	script_wait_frames $5a ; $79fa
-	script_move_player $0e00, $1700 ; $7a01
+	script_move_player 14.0, 23.0 ; $7a01
 	script_wait_actor_script ACTOR_SPECIAL_COURT_TOAD ; $7a0b
 	script_set_speed ACTOR_SPECIAL_COURT_TOAD, $0020 ; $7a10
 	script_set_actor_script ACTOR_SPECIAL_COURT_TOAD, ActorScript_0e_17 ; $7a18
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $7a23
-	script_move_target ACTOR_PARTNER, $0f00, $1b00 ; $7a2e
+	script_move_target ACTOR_PARTNER, 15.0, 27.0 ; $7a2e
 	script_wait_actor_script ACTOR_SPECIAL_COURT_TOAD ; $7a39
 	script_wait_frames $3c ; $7a3e
 	script_set_anim ACTOR_SPECIAL_COURT_PEACH, ANIM_NOD ; $7a45
@@ -476,7 +476,7 @@ ExhibitionMatchIntroCutscene:
 	script_wait_idle ACTOR_PLAYER ; $7a94
 	script_wait_frames $14 ; $7a99
 	script_player_speed $0020 ; $7aa0
-	script_move_player $0e00, $1400 ; $7aa6
+	script_move_player 14.0, 20.0 ; $7aa6
 	script_set_speed ACTOR_PLAYER, $0020 ; $7ab0
 	script_set_speed ACTOR_PARTNER, $0020 ; $7ab8
 	script_set_speed ACTOR_SPECIAL_COURT_MARIO, $0020 ; $7ac0

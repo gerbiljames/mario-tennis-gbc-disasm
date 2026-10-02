@@ -3,7 +3,7 @@ NetChallengerResultScene:
 	ld [wStoryModeShowLocationName], a ; $5d75
 	ld a, $11 ; $5d78
 	ld [wMapSceneStage2], a ; $5d7a
-	script_set_position ACTOR_PLAYER, $2800, $2a00 ; $5d7d
+	script_set_position ACTOR_PLAYER, 40.0, 42.0 ; $5d7d
 	script_face ACTOR_PLAYER, FACE_UP ; $5d88
 	ld a, [wMapSceneStage2] ; $5d8f
 	ld bc, $2800 ; $5d92
@@ -13,10 +13,10 @@ NetChallengerResultScene:
 	ld b, $40 ; $5d9e
 	farcall SetActorFacing ; $5da0
 	script_null_script ACTOR_PARTNER ; $5da3
-	script_set_position ACTOR_PARTNER, $2d00, $2d00 ; $5da8
+	script_set_position ACTOR_PARTNER, 45.0, 45.0 ; $5da8
 	script_face ACTOR_PARTNER, FACE_LEFT ; $5db3
 	script_player_speed $00f0 ; $5dba
-	script_move_player $2800, $2900 ; $5dc0
+	script_move_player 40.0, 41.0 ; $5dc0
 	farcall WaitPlayerMoveDone ; $5dca
 	script_fade_in $08 ; $5dcd
 	call WaitFadeEnd ; $5dd2
@@ -43,7 +43,7 @@ StrokeChallengerResultScene:
 	ld [wStoryModeShowLocationName], a ; $5df4
 	ld a, $0c ; $5df7
 	ld [wMapSceneStage2], a ; $5df9
-	script_set_position ACTOR_PLAYER, $1800, $2a00 ; $5dfc
+	script_set_position ACTOR_PLAYER, 24.0, 42.0 ; $5dfc
 	script_face ACTOR_PLAYER, FACE_UP ; $5e07
 	ld a, [wMapSceneStage2] ; $5e0e
 	ld bc, $1800 ; $5e11
@@ -53,10 +53,10 @@ StrokeChallengerResultScene:
 	ld b, $40 ; $5e1d
 	farcall SetActorFacing ; $5e1f
 	script_null_script ACTOR_PARTNER ; $5e22
-	script_set_position ACTOR_PARTNER, $1300, $2d00 ; $5e27
+	script_set_position ACTOR_PARTNER, 19.0, 45.0 ; $5e27
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5e32
 	script_player_speed $00f0 ; $5e39
-	script_move_player $1800, $2800 ; $5e3f
+	script_move_player 24.0, 40.0 ; $5e3f
 	farcall WaitPlayerMoveDone ; $5e49
 	script_fade_in $08 ; $5e4c
 	call WaitFadeEnd ; $5e51
@@ -423,7 +423,7 @@ WalkChallengerOntoCourt:
 	ld bc, $1300 ; $61a0
 	ld de, $2700 ; $61a3
 	farcall ScriptSetActorMoveTarget ; $61a6
-	script_move_target ACTOR_PLAYER, $1300, $2b00 ; $61a9
+	script_move_target ACTOR_PLAYER, 19.0, 43.0 ; $61a9
 	script_wait_move ACTOR_PLAYER ; $61b4
 	script_get_actor_state ACTOR_PARTNER ; $61b9
 	ld c, l ; $61be
@@ -442,7 +442,7 @@ WalkChallengerOntoCourt:
 	ld de, $0b00 ; $61db
 	farcall ScriptSetActorMoveTarget ; $61de
 	script_wait_frames $1e ; $61e1
-	script_move_target ACTOR_PLAYER, $1300, $1300 ; $61e8
+	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $61e8
 	script_wait_move ACTOR_PLAYER ; $61f3
 	script_get_actor_state ACTOR_PARTNER ; $61f8
 	ld c, l ; $61fd
@@ -461,7 +461,7 @@ WalkChallengerOntoCourt:
 	ld de, $2100 ; $621a
 	farcall ScriptSetActorMoveTarget ; $621d
 	script_wait_frames $1e ; $6220
-	script_move_target ACTOR_PLAYER, $2d00, $2b00 ; $6227
+	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $6227
 	script_wait_move ACTOR_PLAYER ; $6232
 	script_get_actor_state ACTOR_PARTNER ; $6237
 	ld c, l ; $623c

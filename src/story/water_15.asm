@@ -296,22 +296,22 @@ TrainingCourtIntroTourScene:
 	ld hl, TrainingCourtTourActors_15 ; $59c6
 	farcall ScriptRespawnLocationActors ; $59c9
 	farcall BeginCutsceneScriptMode ; $59cc
-	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $59cf
-	script_set_position ACTOR_TRAINING_COURT_TOUR_EMILY, $3f00, $3f00 ; $59da
-	script_set_position ACTOR_TRAINING_COURT_TOUR_EMILY, $0700, $36c0 ; $59e5
-	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $1f00, $36c0 ; $59f0
+	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $59cf
+	script_set_position ACTOR_TRAINING_COURT_TOUR_EMILY, 63.0, 63.0 ; $59da
+	script_set_position ACTOR_TRAINING_COURT_TOUR_EMILY, 7.0, 54.75 ; $59e5
+	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 31.0, 54.75 ; $59f0
 	script_wait_frames $0a ; $59fb
-	script_set_position ACTOR_PLAYER, $0500, $3700 ; $5a02
-	script_move_target ACTOR_PLAYER, $1f00, $3700 ; $5a0d
-	script_move_player $1f00, $3700 ; $5a18
+	script_set_position ACTOR_PLAYER, 5.0, 55.0 ; $5a02
+	script_move_target ACTOR_PLAYER, 31.0, 55.0 ; $5a0d
+	script_move_player 31.0, 55.0 ; $5a18
 	script_fade_in $04 ; $5a22
 	call WaitFadeEnd ; $5a27
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5a2a
-	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $1f00, $2b00 ; $5a2f
+	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 31.0, 43.0 ; $5a2f
 	script_wait_move ACTOR_PLAYER ; $5a3a
-	script_move_target ACTOR_PLAYER, $1f00, $2d00 ; $5a3f
+	script_move_target ACTOR_PLAYER, 31.0, 45.0 ; $5a3f
 	farcall WaitPlayerMoveDone ; $5a4a
-	script_move_player $1f00, $2d00 ; $5a4d
+	script_move_player 31.0, 45.0 ; $5a4d
 	farcall WaitPlayerMoveDone ; $5a57
 	script_wait_frames $3c ; $5a5a
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_RIGHT ; $5a61
@@ -327,12 +327,12 @@ TrainingCourtIntroTourScene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5aa3
 	script_wait_idle ACTOR_PLAYER ; $5aaa
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5aaf
-	script_move_player $2d00, $2900 ; $5ab6
+	script_move_player 45.0, 41.0 ; $5ab6
 	farcall WaitPlayerMoveDone ; $5ac0
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5ac3
 	script_wait_frames $3c ; $5ac8
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_TOUR_EMILY ; $5acf
-	script_move_player $1f00, $2d00 ; $5ad7
+	script_move_player 31.0, 45.0 ; $5ad7
 	farcall WaitPlayerMoveDone ; $5ae1
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5ae4
 	script_wait_idle ACTOR_PLAYER ; $5aeb
@@ -362,25 +362,25 @@ TrainingCourtIntroTourScene:
 	script_wait_idle ACTOR_PLAYER ; $5b7b
 	script_player_speed $0020 ; $5b80
 	script_face ACTOR_PLAYER, FACE_LEFT ; $5b86
-	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $1e00, $2b00 ; $5b8d
+	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 30.0, 43.0 ; $5b8d
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b98
 	script_lock_facing ACTOR_PLAYER ; $5b9d
-	script_move_target ACTOR_PLAYER, $2000, $2d00 ; $5ba4
-	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $1e00, $2f00 ; $5baf
+	script_move_target ACTOR_PLAYER, 32.0, 45.0 ; $5ba4
+	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 30.0, 47.0 ; $5baf
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5bba
-	script_move_target ACTOR_PLAYER, $1f00, $2d00 ; $5bbf
+	script_move_target ACTOR_PLAYER, 31.0, 45.0 ; $5bbf
 	script_wait_move ACTOR_PLAYER ; $5bca
 	script_unlock_facing ACTOR_PLAYER ; $5bcf
-	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $1f00, $2f00 ; $5bd6
+	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 31.0, 47.0 ; $5bd6
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5be1
-	script_move_target ACTOR_PLAYER, $1f00, $3700 ; $5be6
-	script_move_player $1f00, $3700 ; $5bf1
-	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $1f00, $3700 ; $5bfb
+	script_move_target ACTOR_PLAYER, 31.0, 55.0 ; $5be6
+	script_move_player 31.0, 55.0 ; $5bf1
+	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 31.0, 55.0 ; $5bfb
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5c06
-	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, $0300, $3700 ; $5c0b
-	script_move_player $0900, $3700 ; $5c16
+	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 3.0, 55.0 ; $5c0b
+	script_move_player 9.0, 55.0 ; $5c16
 	script_wait_move ACTOR_PLAYER ; $5c20
-	script_move_target ACTOR_PLAYER, $0300, $3700 ; $5c25
+	script_move_target ACTOR_PLAYER, 3.0, 55.0 ; $5c25
 	script_wait_frames $5a ; $5c30
 	ld c, $08 ; $5c37
 	call BeginFadeOut ; $5c39
@@ -392,24 +392,24 @@ TrainingCourtIntroTourScene:
 	ret ; $5c4e
 TrainingCourtTourActors_15:
 	; $5c4f, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_02, $3300, $2a00, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $06, TRAINING_COURT_TOUR_WALK_72_02_1
-	map_actor $0000, ActorScript_15_02, $3500, $2300, FACE_DOWN, OBJ_WALK_71_05, ANIM_WALK, $03, TRAINING_COURT_TOUR_WALK_71_05
-	map_actor $0000, ActorScript_15_02, $3500, $2a00, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $07, TRAINING_COURT_TOUR_WALK_71_07_1
-	map_actor $0000, ActorScript_15_22, $2d00, $2100, FACE_RIGHT, OBJ_BRIAN, ANIM_WALK, $07, TRAINING_COURT_TOUR_BRIAN
-	map_actor $0000, ActorScript_15_02, $0b00, $2300, FACE_DOWN, OBJ_WALK_71_07, ANIM_WALK, $03, TRAINING_COURT_TOUR_WALK_71_07_2
-	map_actor $0000, ActorScript_15_02, $0d00, $2300, FACE_DOWN, OBJ_WALK_72_02, ANIM_WALK, $05, TRAINING_COURT_TOUR_WALK_72_02_2
-	map_actor $0000, ActorScript_15_02, $0c00, $2900, FACE_UP, OBJ_WALK_71_06, ANIM_WALK, $04, TRAINING_COURT_TOUR_WALK_71_06
-	map_actor $0000, ActorScript_15_22, $1300, $2700, FACE_DOWN, OBJ_ALLIE, ANIM_WALK, $06, TRAINING_COURT_TOUR_ALLIE
-	map_actor $0000, ActorScript_15_22, $1300, $2900, FACE_UP, OBJ_BOB, ANIM_WALK, $04, TRAINING_COURT_TOUR_BOB
-	map_actor $0000, ActorScript_15_22, $2d00, $2900, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $07, TRAINING_COURT_TOUR_BETH
-	map_actor $0000, ActorScript_15_22, $0100, $0100, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, TRAINING_COURT_TOUR_EMILY
+	map_actor $0000, ActorScript_15_02, 51.0, 42.0, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $06, TRAINING_COURT_TOUR_WALK_72_02_1
+	map_actor $0000, ActorScript_15_02, 53.0, 35.0, FACE_DOWN, OBJ_WALK_71_05, ANIM_WALK, $03, TRAINING_COURT_TOUR_WALK_71_05
+	map_actor $0000, ActorScript_15_02, 53.0, 42.0, FACE_UP, OBJ_WALK_71_07, ANIM_WALK, $07, TRAINING_COURT_TOUR_WALK_71_07_1
+	map_actor $0000, ActorScript_15_22, 45.0, 33.0, FACE_RIGHT, OBJ_BRIAN, ANIM_WALK, $07, TRAINING_COURT_TOUR_BRIAN
+	map_actor $0000, ActorScript_15_02, 11.0, 35.0, FACE_DOWN, OBJ_WALK_71_07, ANIM_WALK, $03, TRAINING_COURT_TOUR_WALK_71_07_2
+	map_actor $0000, ActorScript_15_02, 13.0, 35.0, FACE_DOWN, OBJ_WALK_72_02, ANIM_WALK, $05, TRAINING_COURT_TOUR_WALK_72_02_2
+	map_actor $0000, ActorScript_15_02, 12.0, 41.0, FACE_UP, OBJ_WALK_71_06, ANIM_WALK, $04, TRAINING_COURT_TOUR_WALK_71_06
+	map_actor $0000, ActorScript_15_22, 19.0, 39.0, FACE_DOWN, OBJ_ALLIE, ANIM_WALK, $06, TRAINING_COURT_TOUR_ALLIE
+	map_actor $0000, ActorScript_15_22, 19.0, 41.0, FACE_UP, OBJ_BOB, ANIM_WALK, $04, TRAINING_COURT_TOUR_BOB
+	map_actor $0000, ActorScript_15_22, 45.0, 41.0, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $07, TRAINING_COURT_TOUR_BETH
+	map_actor $0000, ActorScript_15_22, 1.0, 1.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, TRAINING_COURT_TOUR_EMILY
 	map_actor_end
 ServeChallengerResultScene:
 	xor a ; $5cf3
 	ld [wStoryModeShowLocationName], a ; $5cf4
 	ld a, $06 ; $5cf7
 	ld [wMapSceneStage2], a ; $5cf9
-	script_set_position ACTOR_PLAYER, $1800, $1100 ; $5cfc
+	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $5cfc
 	script_face ACTOR_PLAYER, FACE_UP ; $5d07
 	ld a, [wMapSceneStage2] ; $5d0e
 	ld bc, $1800 ; $5d11
@@ -419,10 +419,10 @@ ServeChallengerResultScene:
 	ld b, $40 ; $5d1d
 	farcall SetActorFacing ; $5d1f
 	script_null_script ACTOR_PARTNER ; $5d22
-	script_set_position ACTOR_PARTNER, $1300, $1100 ; $5d27
+	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5d27
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5d32
 	script_player_speed $00f0 ; $5d39
-	script_move_player $1800, $0f00 ; $5d3f
+	script_move_player 24.0, 15.0 ; $5d3f
 	farcall WaitPlayerMoveDone ; $5d49
 	script_fade_in $08 ; $5d4c
 	call WaitFadeEnd ; $5d51

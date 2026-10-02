@@ -8,11 +8,11 @@ RunWaterSpriteSwingContestAndReward:
 	ld [hl], a ; $4d14
 	script_move_player_to_actor ACTOR_PLAYER ; $4d15
 	farcall WaitPlayerMoveDone ; $4d1c
-	script_move_player $3300, $0c00 ; $4d1f
+	script_move_player 51.0, 12.0 ; $4d1f
 	farcall WaitPlayerMoveDone ; $4d29
 	script_set_text Text_36_675 ; $4d2c
 	script_speak ACTOR_PLAYER ; $4d32
-	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3f00, $3f00 ; $4d37
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4d37
 	call WaterSpriteSwingContestScene ; $4d42
 	test_flag FLAG_HAVE_SILVER_RACKET ; $4d45
 	jp nz, .done ; $4d48
@@ -41,10 +41,10 @@ WaterSpriteRacketRewardScene:
 	script_wait_frames $1e ; $4db5
 	script_set_objdef OBJ_BALLOON_QUESTION, ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE ; $4dbc
 	script_set_objdef OBJ_BALLOON_EXCLAIM, ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4dc8
-	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3480, $0b80 ; $4dd4
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 52.5, 11.5 ; $4dd4
 	sound SFX_EMOTE ; $4ddf
 	script_wait_frames $3c ; $4de1
-	script_set_position ACTOR_TRAINING_COURT_WALK_76_06, $3300, $0700 ; $4de8
+	script_set_position ACTOR_TRAINING_COURT_WALK_76_06, 51.0, 7.0 ; $4de8
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4df3
 	script_player_speed $0010 ; $4dfa
 	script_move_player_to_actor ACTOR_TRAINING_COURT_WALK_76_06 ; $4e00
@@ -71,17 +71,17 @@ WaterSpriteRacketRewardScene:
 	jp nz, .handOver ; $4e43
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $02 ; $4e46
 	script_wait_frames $3c ; $4e4d
-	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, $3f00, $3f00 ; $4e54
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4e54
 	script_face ACTOR_PLAYER, FACE_UP ; $4e5f
 	script_wait_frames $1e ; $4e66
-	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, $3480, $0b80 ; $4e6d
+	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, 52.5, 11.5 ; $4e6d
 	sound SFX_CHIME ; $4e78
 	script_wait_frames $14 ; $4e7a
 	script_jump_velocity ACTOR_TRAINING_COURT_WALK_71_06_3, $ff40 ; $4e81
 	script_jump_velocity ACTOR_PLAYER, $ff40 ; $4e89
 	ld a, $00 ; $4e91
 	farcall ScriptWaitActorJumpDone ; $4e93
-	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, $3f00, $3f00 ; $4e96
+	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, 63.0, 63.0 ; $4e96
 	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4ea1
 	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4ea8
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4ead
@@ -121,22 +121,22 @@ WaterSpriteRacketRewardScene:
 	call BeginFadeOut ; $4f0c
 	call WaitFadeEnd ; $4f0f
 	sound SFX_WATER_SPRITE_APPEAR ; $4f12
-	script_set_position ACTOR_TRAINING_COURT_RACKET, $3300, $0900 ; $4f14
+	script_set_position ACTOR_TRAINING_COURT_RACKET, 51.0, 9.0 ; $4f14
 	script_wait_frames $1e ; $4f1f
 	script_fade_in $03 ; $4f26
 	call WaitFadeEnd ; $4f2b
 	script_wait_frames $3c ; $4f2e
 	sound SFX_WATER_SPRITE_FLY ; $4f35
 	script_set_speed ACTOR_TRAINING_COURT_RACKET, $0005 ; $4f37
-	script_move_target ACTOR_TRAINING_COURT_RACKET, $3300, $0d00 ; $4f3f
+	script_move_target ACTOR_TRAINING_COURT_RACKET, 51.0, 13.0 ; $4f3f
 	script_wait_move ACTOR_TRAINING_COURT_RACKET ; $4f4a
 	script_wait_frames $3c ; $4f4f
 	farcall AdvanceDialogueTextCursor ; $4f56
 	script_speak ACTOR_PLAYER ; $4f59
-	script_set_position ACTOR_TRAINING_COURT_BALLOON_SWEAT, $3480, $0b80 ; $4f5e
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SWEAT, 52.5, 11.5 ; $4f5e
 	sound SFX_APPEAR2 ; $4f69
 	script_wait_frames $78 ; $4f6b
-	script_set_position ACTOR_TRAINING_COURT_BALLOON_SWEAT, $3f00, $3f00 ; $4f72
+	script_set_position ACTOR_TRAINING_COURT_BALLOON_SWEAT, 63.0, 63.0 ; $4f72
 	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4f7d
 	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4f84
 	script_set_text Text_36_683 ; $4f89
@@ -158,9 +158,9 @@ WaterSpriteRacketRewardScene:
 	jp nz, .done ; $4fbe
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4fc1
 	script_wait_frames $1e ; $4fc8
-	script_set_position ACTOR_TRAINING_COURT_WALK_76_06, $3300, $0b00 ; $4fcf
+	script_set_position ACTOR_TRAINING_COURT_WALK_76_06, 51.0, 11.0 ; $4fcf
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4fda
-	script_set_position ACTOR_TRAINING_COURT_RACKET, $3f00, $3f00 ; $4fdf
+	script_set_position ACTOR_TRAINING_COURT_RACKET, 63.0, 63.0 ; $4fdf
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4fea
 	ld_bg_pals de, 2, 6 ; $4fed
 	call LoadPalettesImmediate ; $4ff0
@@ -221,7 +221,7 @@ TrainingCourtNpc06_15:
 TrainingCourtNpc07FaceDown_15:
 	script_set_speed ACTOR_PLAYER, $0008 ; $5112
 	script_lock_facing ACTOR_PLAYER ; $511a
-	script_move_target ACTOR_PLAYER, $1300, $1300 ; $5121
+	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $5121
 	script_wait_move ACTOR_PLAYER ; $512c
 	script_unlock_facing ACTOR_PLAYER ; $5131
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5138
@@ -284,7 +284,7 @@ TrainingCourtNpc11_15:
 TrainingCourtNpc12FaceUp_15:
 	script_set_speed ACTOR_PLAYER, $0008 ; $51be
 	script_lock_facing ACTOR_PLAYER ; $51c6
-	script_move_target ACTOR_PLAYER, $2d00, $2b00 ; $51cd
+	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $51cd
 	script_wait_move ACTOR_PLAYER ; $51d8
 	script_unlock_facing ACTOR_PLAYER ; $51dd
 	script_face ACTOR_PLAYER, FACE_UP ; $51e4
@@ -347,7 +347,7 @@ TrainingCourtNpc0C_15:
 TrainingCourtNpc0DFaceUp_15:
 	script_set_speed ACTOR_PLAYER, $0008 ; $526a
 	script_lock_facing ACTOR_PLAYER ; $5272
-	script_move_target ACTOR_PLAYER, $1300, $2b00 ; $5279
+	script_move_target ACTOR_PLAYER, 19.0, 43.0 ; $5279
 	script_wait_move ACTOR_PLAYER ; $5284
 	script_unlock_facing ACTOR_PLAYER ; $5289
 	script_face ACTOR_PLAYER, FACE_UP ; $5290
@@ -404,7 +404,7 @@ TrainingCourtTileTriggers_15:
 	map_script $01, FACEMASK_UP, $9000, TrainingCourtTile01_15, $00, $00
 	db $ff
 TrainingCourtTile01_15:
-	script_move_target ACTOR_PLAYER, $3300, $0d00 ; $5313
+	script_move_target ACTOR_PLAYER, 51.0, 13.0 ; $5313
 	script_wait_move ACTOR_PLAYER ; $531e
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5323
 	call RunWaterSpriteSwingContestAndReward ; $532a
@@ -500,7 +500,7 @@ TrainingCourtReentryDispatch:
 	ld [wStoryModeShowLocationName], a ; $53d3
 	ld a, $06 ; $53d6
 	ld [wMapSceneStage2], a ; $53d8
-	script_set_position ACTOR_PLAYER, $1800, $1100 ; $53db
+	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $53db
 	script_face ACTOR_PLAYER, FACE_UP ; $53e6
 	ld a, [wMapSceneStage2] ; $53ed
 	ld bc, $1800 ; $53f0
@@ -510,10 +510,10 @@ TrainingCourtReentryDispatch:
 	ld b, $40 ; $53fc
 	farcall SetActorFacing ; $53fe
 	script_null_script ACTOR_PARTNER ; $5401
-	script_set_position ACTOR_PARTNER, $1300, $1100 ; $5406
+	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5406
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5411
 	script_player_speed $00f0 ; $5418
-	script_move_player $1800, $0f00 ; $541e
+	script_move_player 24.0, 15.0 ; $541e
 	farcall WaitPlayerMoveDone ; $5428
 	script_fade_in $08 ; $542b
 	call WaitFadeEnd ; $5430
@@ -523,9 +523,9 @@ TrainingCourtReentryDispatch:
 	xor a ; $5437
 	ld [wStoryModeShowLocationName], a ; $5438
 	script_player_speed $00f0 ; $543b
-	script_set_position ACTOR_PLAYER, $1300, $1300 ; $5441
-	script_set_position ACTOR_PARTNER, $1300, $1100 ; $544c
-	script_move_player $1300, $1300 ; $5457
+	script_set_position ACTOR_PLAYER, 19.0, 19.0 ; $5441
+	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $544c
+	script_move_player 19.0, 19.0 ; $5457
 	farcall WaitPlayerMoveDone ; $5461
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5464
 	script_face ACTOR_PARTNER, FACE_DOWN ; $546b
@@ -538,7 +538,7 @@ TrainingCourtReentryDispatch:
 	ld [wStoryModeShowLocationName], a ; $5483
 	ld a, $11 ; $5486
 	ld [wMapSceneStage2], a ; $5488
-	script_set_position ACTOR_PLAYER, $2800, $2a00 ; $548b
+	script_set_position ACTOR_PLAYER, 40.0, 42.0 ; $548b
 	script_face ACTOR_PLAYER, FACE_UP ; $5496
 	ld a, [wMapSceneStage2] ; $549d
 	ld bc, $2800 ; $54a0
@@ -548,10 +548,10 @@ TrainingCourtReentryDispatch:
 	ld b, $40 ; $54ac
 	farcall SetActorFacing ; $54ae
 	script_null_script ACTOR_PARTNER ; $54b1
-	script_set_position ACTOR_PARTNER, $2d00, $2d00 ; $54b6
+	script_set_position ACTOR_PARTNER, 45.0, 45.0 ; $54b6
 	script_face ACTOR_PARTNER, FACE_LEFT ; $54c1
 	script_player_speed $00f0 ; $54c8
-	script_move_player $2800, $2900 ; $54ce
+	script_move_player 40.0, 41.0 ; $54ce
 	farcall WaitPlayerMoveDone ; $54d8
 	script_fade_in $08 ; $54db
 	call WaitFadeEnd ; $54e0
@@ -561,9 +561,9 @@ TrainingCourtReentryDispatch:
 	xor a ; $54e7
 	ld [wStoryModeShowLocationName], a ; $54e8
 	script_player_speed $00f0 ; $54eb
-	script_set_position ACTOR_PLAYER, $2d00, $2b00 ; $54f1
-	script_set_position ACTOR_PARTNER, $2f00, $2b00 ; $54fc
-	script_move_player $2d00, $2b00 ; $5507
+	script_set_position ACTOR_PLAYER, 45.0, 43.0 ; $54f1
+	script_set_position ACTOR_PARTNER, 47.0, 43.0 ; $54fc
+	script_move_player 45.0, 43.0 ; $5507
 	farcall WaitPlayerMoveDone ; $5511
 	script_face ACTOR_PLAYER, FACE_UP ; $5514
 	script_face ACTOR_PARTNER, FACE_UP ; $551b
@@ -576,7 +576,7 @@ TrainingCourtReentryDispatch:
 	ld [wStoryModeShowLocationName], a ; $5533
 	ld a, $0c ; $5536
 	ld [wMapSceneStage2], a ; $5538
-	script_set_position ACTOR_PLAYER, $1800, $2a00 ; $553b
+	script_set_position ACTOR_PLAYER, 24.0, 42.0 ; $553b
 	script_face ACTOR_PLAYER, FACE_UP ; $5546
 	ld a, [wMapSceneStage2] ; $554d
 	ld bc, $1800 ; $5550
@@ -586,10 +586,10 @@ TrainingCourtReentryDispatch:
 	ld b, $40 ; $555c
 	farcall SetActorFacing ; $555e
 	script_null_script ACTOR_PARTNER ; $5561
-	script_set_position ACTOR_PARTNER, $1300, $2d00 ; $5566
+	script_set_position ACTOR_PARTNER, 19.0, 45.0 ; $5566
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5571
 	script_player_speed $00f0 ; $5578
-	script_move_player $1800, $2800 ; $557e
+	script_move_player 24.0, 40.0 ; $557e
 	farcall WaitPlayerMoveDone ; $5588
 	script_fade_in $08 ; $558b
 	call WaitFadeEnd ; $5590
@@ -599,9 +599,9 @@ TrainingCourtReentryDispatch:
 	xor a ; $5597
 	ld [wStoryModeShowLocationName], a ; $5598
 	script_player_speed $00f0 ; $559b
-	script_set_position ACTOR_PLAYER, $1300, $2b00 ; $55a1
-	script_set_position ACTOR_PARTNER, $1100, $2b00 ; $55ac
-	script_move_player $1300, $2b00 ; $55b7
+	script_set_position ACTOR_PLAYER, 19.0, 43.0 ; $55a1
+	script_set_position ACTOR_PARTNER, 17.0, 43.0 ; $55ac
+	script_move_player 19.0, 43.0 ; $55b7
 	farcall WaitPlayerMoveDone ; $55c1
 	script_face ACTOR_PLAYER, FACE_UP ; $55c4
 	script_face ACTOR_PARTNER, FACE_UP ; $55cb

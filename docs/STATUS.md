@@ -152,6 +152,14 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-03 — sizes and positions.** Copy and clear lengths follow what
+  they copy: a RAM object's exported size (`export_size`), a decompressed
+  stream's `_SIZE`, or a named slice (`SCREEN_HEIGHT * TILEMAP_WIDTH`,
+  `WRAMX_SIZE`, `2 * CHAR_RECORD_SIZE`). Map positions in `map_entry`,
+  `map_actor`, the `script_*` moves and `as_set_*` are tiles with a point
+  (`18.0`, `17.5`), 3,054 lines. Lone sprite attributes in `b` name their
+  `OAM_*` flags. Found on the way: `FetchSRAMText` copies past both text
+  buffers (harmless, `docs/bugs.md`).
 * **2026-10-02 — pair macros.** Every register pair a callee reads as two
   bytes says which is which: `ld_xy` (sprite x, y), `ld_cell` (column, row),
   `ld_size`, `ld_oam` (attribute with `OAM_*` flags, tile), `ld_tile_run`

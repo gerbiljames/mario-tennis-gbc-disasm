@@ -8,7 +8,7 @@ MovePlayerToLessonCourtSpot:
 	jp .strokeCourtSpot ; $6261
 	ret ; $6264
 .netCourtSpot:
-	script_move_target ACTOR_PLAYER, $1300, $2b00 ; $6265
+	script_move_target ACTOR_PLAYER, 19.0, 43.0 ; $6265
 	script_wait_move ACTOR_PLAYER ; $6270
 	script_get_actor_state ACTOR_PARTNER ; $6275
 	ld c, l ; $627a
@@ -17,7 +17,7 @@ MovePlayerToLessonCourtSpot:
 	farcall AttachActorStepMover ; $627f
 	ret ; $6282
 .serveCourtSpot:
-	script_move_target ACTOR_PLAYER, $1300, $1300 ; $6283
+	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $6283
 	script_wait_move ACTOR_PLAYER ; $628e
 	script_get_actor_state ACTOR_PARTNER ; $6293
 	ld c, l ; $6298
@@ -26,7 +26,7 @@ MovePlayerToLessonCourtSpot:
 	farcall AttachActorStepMover ; $629d
 	ret ; $62a0
 .strokeCourtSpot:
-	script_move_target ACTOR_PLAYER, $2d00, $2b00 ; $62a1
+	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $62a1
 	script_wait_move ACTOR_PLAYER ; $62ac
 	script_get_actor_state ACTOR_PARTNER ; $62b1
 	ld c, l ; $62b6
@@ -369,7 +369,7 @@ PlayerPartnerGestureCutscene:
 	ret ; $668e
 WalkToServeChallengeCourtCutscene:
 	script_null_script ACTOR_PARTNER ; $668f
-	script_move_player $1800, $0f00 ; $6694
+	script_move_player 24.0, 15.0 ; $6694
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_05 ; $669e
 	script_set_actor_script ACTOR_TRAINING_COURT_BOB_1, ActorScript_15_04 ; $66a9
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_06 ; $66b4
@@ -378,21 +378,21 @@ WalkToServeChallengeCourtCutscene:
 	ret ; $66c7
 ActorScript_15_04:
 	; $66c8, 11 bytes (actor_script)
-	as_set_target $1700, $0700
+	as_set_target 23.0, 7.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_15_05:
 	; $66d3, 17 bytes (actor_script)
-	as_set_target $1300, $1300
+	as_set_target 19.0, 19.0
 	as_wait_move
-	as_set_target $1900, $1700
+	as_set_target 25.0, 23.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_15_06:
 	; $66e4, 11 bytes (actor_script)
-	as_set_target $1300, $1100
+	as_set_target 19.0, 17.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt

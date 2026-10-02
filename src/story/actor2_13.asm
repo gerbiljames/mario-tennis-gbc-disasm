@@ -29,7 +29,7 @@ RunTravelingTeamBracketIfWon_13:
 	script_fade_in $04 ; $79c6
 	call WaitFadeEnd ; $79cb
 	script_player_speed $0018 ; $79ce
-	script_move_player $0900, $1300 ; $79d4
+	script_move_player 9.0, 19.0 ; $79d4
 	farcall WaitPlayerMoveDone ; $79de
 	call ShowStoryTournamentBracket_13 ; $79e1
 	ret ; $79e4
@@ -42,13 +42,13 @@ RunTravelingTeamBracketIfWon_13:
 	script_null_script ACTOR_PARTNER ; $79f3
 	script_null_script ACTOR_PLAYER_SHADOW ; $79f8
 	script_player_speed $0040 ; $79fd
-	script_set_position ACTOR_PLAYER, $0b00, $1d00 ; $7a03
-	script_set_position ACTOR_PARTNER, $0d00, $2300 ; $7a0e
+	script_set_position ACTOR_PLAYER, 11.0, 29.0 ; $7a03
+	script_set_position ACTOR_PARTNER, 13.0, 35.0 ; $7a0e
 	script_face ACTOR_PLAYER, FACE_UP ; $7a19
 	script_face ACTOR_PARTNER, FACE_UP ; $7a20
 	script_fade_in $04 ; $7a27
 	call WaitFadeEnd ; $7a2c
-	script_move_player $0900, $1300 ; $7a2f
+	script_move_player 9.0, 19.0 ; $7a2f
 	farcall WaitPlayerMoveDone ; $7a39
 	call ShowStoryTournamentBracket_13 ; $7a3c
 	ret ; $7a3f
@@ -58,67 +58,67 @@ ActorScript_13_20:
 	as_halt
 ActorScript_13_21:
 	; $7a43, 29 bytes (actor_script)
-	as_set_target $1100, $1d00
+	as_set_target 17.0, 29.0
 	as_wait_move
-	as_set_target $1100, $2300
+	as_set_target 17.0, 35.0
 	as_wait_move
-	as_set_target $0a00, $2300
+	as_set_target 10.0, 35.0
 	as_wait_move
-	as_set_target $0a00, $2100
+	as_set_target 10.0, 33.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_13_22:
 	; $7a60, 29 bytes (actor_script)
-	as_set_target $1100, $1d00
+	as_set_target 17.0, 29.0
 	as_wait_move
-	as_set_target $1100, $2300
+	as_set_target 17.0, 35.0
 	as_wait_move
-	as_set_target $0c00, $2300
+	as_set_target 12.0, 35.0
 	as_wait_move
-	as_set_target $0c00, $2100
+	as_set_target 12.0, 33.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_13_23:
 	; $7a7d, 35 bytes (actor_script)
-	as_set_target $1900, $1d00
+	as_set_target 25.0, 29.0
 	as_wait_move
-	as_set_target $1100, $1d00
+	as_set_target 17.0, 29.0
 	as_wait_move
-	as_set_target $1100, $2300
+	as_set_target 17.0, 35.0
 	as_wait_move
-	as_set_target $0c00, $2300
+	as_set_target 12.0, 35.0
 	as_wait_move
-	as_set_target $0c00, $2100
+	as_set_target 12.0, 33.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_13_24:
 	; $7aa0, 7 bytes (actor_script)
-	as_set_target $0d00, $1d00
+	as_set_target 13.0, 29.0
 	as_wait_move
 	as_halt
 ActorScript_13_25:
 	; $7aa7, 34 bytes (actor_script)
-	as_set_target $1100, $1d00
+	as_set_target 17.0, 29.0
 	as_wait_move
-	as_set_target $1100, $2300
+	as_set_target 17.0, 35.0
 	as_wait_move
-	as_set_target $0700, $2300
+	as_set_target 7.0, 35.0
 	as_wait_move
-	as_set_target $0700, $1d00
-	as_set_target $0900, $1d00
+	as_set_target 7.0, 29.0
+	as_set_target 9.0, 29.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_13_26:
 	; $7ac9, 23 bytes (actor_script)
-	as_set_target $0700, $1700
+	as_set_target 7.0, 23.0
 	as_wait_move
-	as_set_target $0700, $1d00
+	as_set_target 7.0, 29.0
 	as_wait_move
-	as_set_target $0900, $1d00
+	as_set_target 9.0, 29.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt

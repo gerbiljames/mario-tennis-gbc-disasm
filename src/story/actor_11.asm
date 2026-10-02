@@ -194,143 +194,143 @@ DrawRankingOpponentInfo:
 	ret ; $7642
 ActorScript_11_30:
 	; $7643, 23 bytes (actor_script)
-	as_set_target $1f00, $1900
+	as_set_target 31.0, 25.0
 	as_wait_move
-	as_set_target $1500, $1900
+	as_set_target 21.0, 25.0
 	as_wait_move
-	as_set_target $1500, $1500
+	as_set_target 21.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_11_31:
 	; $765a, 17 bytes (actor_script)
-	as_set_target $1500, $0900
+	as_set_target 21.0, 9.0
 	as_wait_move
-	as_set_target $1900, $0900
+	as_set_target 25.0, 9.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_11_32:
 	; $766b, 23 bytes (actor_script)
-	as_set_target $1500, $1900
+	as_set_target 21.0, 25.0
 	as_wait_move
-	as_set_target $1f00, $1900
+	as_set_target 31.0, 25.0
 	as_wait_move
-	as_set_target $1f00, $1500
+	as_set_target 31.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_11_33:
 	; $7682, 41 bytes (actor_script)
-	as_set_target $1a00, $0900
+	as_set_target 26.0, 9.0
 	as_wait_move
-	as_set_target $2100, $0900
+	as_set_target 33.0, 9.0
 	as_wait_move
-	as_set_target $2100, $0d00
+	as_set_target 33.0, 13.0
 	as_wait_move
-	as_set_target $2700, $0d00
+	as_set_target 39.0, 13.0
 	as_wait_move
-	as_set_target $2700, $0b00
+	as_set_target 39.0, 11.0
 	as_wait_move
-	as_set_target $2500, $0b00
+	as_set_target 37.0, 11.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_34:
 	; $76ab, 17 bytes (actor_script)
-	as_set_target $1100, $0d00
+	as_set_target 17.0, 13.0
 	as_wait_move
-	as_set_target $1100, $1500
+	as_set_target 17.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_35:
 	; $76bc, 17 bytes (actor_script)
-	as_set_target $1100, $0a00
+	as_set_target 17.0, 10.0
 	as_wait_move
-	as_set_target $0900, $0900
+	as_set_target 9.0, 9.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
 ActorScript_11_36:
 	; $76cd, 17 bytes (actor_script)
-	as_set_target $1100, $0d00
+	as_set_target 17.0, 13.0
 	as_wait_move
-	as_set_target $1300, $0d00
+	as_set_target 19.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_37:
 	; $76de, 11 bytes (actor_script)
-	as_set_target $1300, $0d00
+	as_set_target 19.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_38:
 	; $76e9, 23 bytes (actor_script)
-	as_set_target $0500, $1900
+	as_set_target 5.0, 25.0
 	as_wait_move
-	as_set_target $1100, $1900
+	as_set_target 17.0, 25.0
 	as_wait_move
-	as_set_target $1100, $1500
+	as_set_target 17.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_39:
 	; $7700, 23 bytes (actor_script)
-	as_set_target $1100, $1900
+	as_set_target 17.0, 25.0
 	as_wait_move
-	as_set_target $0500, $1900
+	as_set_target 5.0, 25.0
 	as_wait_move
-	as_set_target $0500, $1500
+	as_set_target 5.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_40:
 	; $7717, 17 bytes (actor_script)
-	as_set_target $0500, $0900
+	as_set_target 5.0, 9.0
 	as_wait_move
-	as_set_target $0500, $1500
+	as_set_target 5.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ActorScript_11_41:
 	; $7728, 29 bytes (actor_script)
-	as_set_target $2100, $1700
+	as_set_target 33.0, 23.0
 	as_wait_move
-	as_set_target $2100, $1900
+	as_set_target 33.0, 25.0
 	as_wait_move
-	as_set_target $1500, $1900
+	as_set_target 21.0, 25.0
 	as_wait_move
-	as_set_target $1500, $1500
+	as_set_target 21.0, 21.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_11_42:
 	; $7745, 29 bytes (actor_script)
-	as_set_target $1500, $1900
+	as_set_target 21.0, 25.0
 	as_wait_move
-	as_set_target $2100, $1900
+	as_set_target 33.0, 25.0
 	as_wait_move
-	as_set_target $2100, $1700
+	as_set_target 33.0, 23.0
 	as_wait_move
-	as_set_target $2300, $1700
+	as_set_target 35.0, 23.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 ActorScript_11_43:
 	; $7762, 17 bytes (actor_script)
-	as_set_target $1300, $1900
+	as_set_target 19.0, 25.0
 	as_wait_move
-	as_set_target $1b00, $1900
+	as_set_target 27.0, 25.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 ActorScript_11_44:
 	; $7773, 17 bytes (actor_script)
-	as_set_target $1300, $1900
+	as_set_target 19.0, 25.0
 	as_wait_move
-	as_set_target $0b00, $1900
+	as_set_target 11.0, 25.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
@@ -345,7 +345,7 @@ OfferSinglesRankingMatch:
 	jp nz, .speak2 ; $779d
 	script_unlock_facing ACTOR_PLAYER ; $77a0
 	script_set_speed ACTOR_PLAYER, $0018 ; $77a7
-	script_move_target ACTOR_PLAYER, $1300, $1500 ; $77af
+	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $77af
 	script_wait_move ACTOR_PLAYER ; $77ba
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ACTOR_PLAYER ; $77bf
 	script_wait_frames $1e ; $77c7
@@ -394,7 +394,7 @@ StartNextRankingMatch:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_3, ActorScript_11_23 ; $7866
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_4, ActorScript_11_24 ; $7871
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_4 ; $787c
-	script_move_player $1b00, $1100 ; $7881
+	script_move_player 27.0, 17.0 ; $7881
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, ActorScript_11_31 ; $788b
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_43 ; $7896
 	farcall WaitPlayerMoveDone ; $78a1
@@ -417,7 +417,7 @@ StartNextRankingMatch:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_1, ActorScript_11_25 ; $78f2
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_2, ActorScript_11_26 ; $78fd
 	script_wait_frames $78 ; $7908
-	script_move_player $0b00, $1100 ; $790f
+	script_move_player 11.0, 17.0 ; $790f
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_35 ; $7919
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_44 ; $7924
 	farcall WaitPlayerMoveDone ; $792f
@@ -440,7 +440,7 @@ StartNextRankingMatch:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_1, ActorScript_11_25 ; $7980
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_2, ActorScript_11_26 ; $798b
 	script_wait_frames $78 ; $7996
-	script_move_player $0b00, $1100 ; $799d
+	script_move_player 11.0, 17.0 ; $799d
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, ActorScript_11_35 ; $79a7
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_44 ; $79b2
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH ; $79bd
@@ -462,7 +462,7 @@ StartNextRankingMatch:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_3, ActorScript_11_23 ; $7a0b
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_RACKET_STUDENT_4, ActorScript_11_24 ; $7a16
 	script_wait_frames $78 ; $7a21
-	script_move_player $1700, $1300 ; $7a28
+	script_move_player 23.0, 19.0 ; $7a28
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, ActorScript_11_31 ; $7a32
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_43 ; $7a3d
 	farcall WaitPlayerMoveDone ; $7a48

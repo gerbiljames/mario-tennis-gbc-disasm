@@ -41,7 +41,7 @@ SeniorRankOfferScenePrepFacingUp:
 	call SeniorDoublesRankOfferScene ; $5f1e
 	ret ; $5f21
 SeniorSinglesRankOfferScene:
-	script_move_target ACTOR_PLAYER, $2d00, $1b00 ; $5f22
+	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $5f22
 	script_wait_move ACTOR_PLAYER ; $5f2d
 	script_wait_frames $0a ; $5f32
 	script_unlock_facing ACTOR_PLAYER ; $5f39
@@ -86,8 +86,8 @@ SeniorSinglesRankOfferScene:
 SeniorDoublesRankOfferScene:
 	script_null_script ACTOR_PARTNER ; $5fc7
 	script_wait_frames $0a ; $5fcc
-	script_move_target ACTOR_PARTNER, $2d00, $1d00 ; $5fd3
-	script_move_target ACTOR_PLAYER, $2d00, $1b00 ; $5fde
+	script_move_target ACTOR_PARTNER, 45.0, 29.0 ; $5fd3
+	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $5fde
 	script_wait_frames $0a ; $5fe9
 	script_wait_move ACTOR_PLAYER ; $5ff0
 	script_unlock_facing ACTOR_PLAYER ; $5ff5
@@ -154,7 +154,7 @@ StartSeniorRankingMatch:
 	script_set_actor_script ACTOR_SENIOR_COURT_BETH, ActorScript_12_22 ; $60dd
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_15 ; $60e8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_13 ; $60f3
-	script_move_player $2400, $1700 ; $60fe
+	script_move_player 36.0, 23.0 ; $60fe
 	farcall WaitPlayerMoveDone ; $6108
 	script_wait_actor_script ACTOR_SENIOR_COURT_BETH ; $610b
 	script_wait_frames $1e ; $6110
@@ -197,7 +197,7 @@ StartSeniorRankingMatch:
 	script_set_actor_script ACTOR_SENIOR_COURT_B_FAY, ActorScript_12_40 ; $61d9
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_15 ; $61e4
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_13 ; $61ef
-	script_move_player $2400, $1700 ; $61fa
+	script_move_player 36.0, 23.0 ; $61fa
 	farcall WaitPlayerMoveDone ; $6204
 	script_wait_actor_script ACTOR_SENIOR_COURT_B_FAY ; $6207
 	script_wait_frames $1e ; $620c
@@ -287,44 +287,44 @@ ApproachSeniorCourtPairA:
 	script_set_actor_script ACTOR_SENIOR_COURT_RACKET_STUDENT_1, ActorScript_12_17 ; $63a2
 	script_set_actor_script ACTOR_SENIOR_COURT_RACKET_STUDENT_2, ActorScript_12_18 ; $63ad
 	script_wait_actor_script ACTOR_SENIOR_COURT_RACKET_STUDENT_2 ; $63b8
-	script_move_player $2400, $1700 ; $63bd
+	script_move_player 36.0, 23.0 ; $63bd
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_13 ; $63c7
 	ret ; $63d2
 ApproachSeniorCourtPairB:
 	script_set_actor_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_3, ActorScript_12_19 ; $63d3
 	script_set_actor_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_4, ActorScript_12_20 ; $63de
 	script_wait_actor_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_3 ; $63e9
-	script_move_player $3500, $1700 ; $63ee
+	script_move_player 53.0, 23.0 ; $63ee
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_14 ; $63f8
 	ret ; $6403
 PlaceSeniorCourtPairA:
 	script_null_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_1 ; $6404
 	script_null_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2 ; $6409
-	script_set_position ACTOR_SENIOR_COURT_A_RACKET_STUDENT_1, $2900, $1300 ; $640e
-	script_set_position ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2, $2900, $1900 ; $6419
+	script_set_position ACTOR_SENIOR_COURT_A_RACKET_STUDENT_1, 41.0, 19.0 ; $640e
+	script_set_position ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2, 41.0, 25.0 ; $6419
 	script_face ACTOR_SENIOR_COURT_A_RACKET_STUDENT_1, FACE_LEFT ; $6424
 	script_face ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2, FACE_LEFT ; $642b
 	ret ; $6432
 PlaceSeniorCourtPairB:
 	script_null_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_3 ; $6433
 	script_null_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_4 ; $6438
-	script_set_position ACTOR_SENIOR_COURT_A_RACKET_STUDENT_3, $3900, $1300 ; $643d
-	script_set_position ACTOR_SENIOR_COURT_A_RACKET_STUDENT_4, $3900, $1900 ; $6448
+	script_set_position ACTOR_SENIOR_COURT_A_RACKET_STUDENT_3, 57.0, 19.0 ; $643d
+	script_set_position ACTOR_SENIOR_COURT_A_RACKET_STUDENT_4, 57.0, 25.0 ; $6448
 	script_face ACTOR_SENIOR_COURT_A_RACKET_STUDENT_3, FACE_LEFT ; $6453
 	script_face ACTOR_SENIOR_COURT_A_RACKET_STUDENT_4, FACE_LEFT ; $645a
 	script_wait_frames $14 ; $6461
 	ret ; $6468
 StartSeniorCourtPairARally:
-	script_move_target ACTOR_SENIOR_COURT_A_RACKET_STUDENT_1, $2200, $1100 ; $6469
-	script_move_target ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2, $2500, $1d00 ; $6474
+	script_move_target ACTOR_SENIOR_COURT_A_RACKET_STUDENT_1, 34.0, 17.0 ; $6469
+	script_move_target ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2, 37.0, 29.0 ; $6474
 	script_wait_move ACTOR_SENIOR_COURT_A_RACKET_STUDENT_1 ; $647f
 	script_wait_move ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2 ; $6484
 	script_set_actor_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_1, ActorScript_12_53 ; $6489
 	script_set_actor_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2, ActorScript_12_54 ; $6494
 	ret ; $649f
 StartSeniorCourtPairBRally:
-	script_move_target ACTOR_SENIOR_COURT_A_RACKET_STUDENT_3, $3200, $1100 ; $64a0
-	script_move_target ACTOR_SENIOR_COURT_A_RACKET_STUDENT_4, $3600, $1d00 ; $64ab
+	script_move_target ACTOR_SENIOR_COURT_A_RACKET_STUDENT_3, 50.0, 17.0 ; $64a0
+	script_move_target ACTOR_SENIOR_COURT_A_RACKET_STUDENT_4, 54.0, 29.0 ; $64ab
 	script_wait_move ACTOR_SENIOR_COURT_A_RACKET_STUDENT_3 ; $64b6
 	script_wait_move ACTOR_SENIOR_COURT_A_RACKET_STUDENT_4 ; $64bb
 	script_face ACTOR_SENIOR_COURT_A_RACKET_STUDENT_4, FACE_UP ; $64c0
@@ -437,7 +437,7 @@ SeniorDoublesRank1Intro:
 	script_player_speed $0020 ; $66e8
 	script_null_script ACTOR_SENIOR_COURT_B_FAY ; $66ee
 	script_face ACTOR_SENIOR_COURT_B_FAY, FACE_DOWN ; $66f3
-	script_move_target ACTOR_SENIOR_COURT_A_ALLIE, $2b00, $1100 ; $66fa
+	script_move_target ACTOR_SENIOR_COURT_A_ALLIE, 43.0, 17.0 ; $66fa
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_ALLIE ; $6705
 	farcall WaitPlayerMoveDone ; $670c
 	script_face ACTOR_SENIOR_COURT_A_ALLIE, FACE_DOWN ; $670f

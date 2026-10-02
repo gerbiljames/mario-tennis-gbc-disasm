@@ -30,7 +30,7 @@ MachinePracticeLevelPrompt:
 	script_set_speed ACTOR_PLAYER, $0020 ; $4646
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $464e
 	script_wait_move ACTOR_PLAYER ; $4658
-	script_move_target ACTOR_PLAYER, $3500, $3500 ; $465d
+	script_move_target ACTOR_PLAYER, 53.0, 53.0 ; $465d
 	script_wait_move ACTOR_PLAYER ; $4668
 	ld c, $08 ; $466d
 	call BeginFadeOut ; $466f
@@ -82,11 +82,11 @@ MachinePracticeResultScene:
 	test_flag FLAG_DOUBLES ; $46cc
 	jr z, .placeActors ; $46cf
 	script_null_script ACTOR_PARTNER ; $46d1
-	script_set_position ACTOR_PARTNER, $2900, $2b00 ; $46d6
+	script_set_position ACTOR_PARTNER, 41.0, 43.0 ; $46d6
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $46e1
 	script_wait_frames $0a ; $46e8
 .placeActors:
-	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2900 ; $46ef
+	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $46ef
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $46fa
 	script_fade_in $06 ; $4701
 	call WaitFadeEnd ; $4706
@@ -125,14 +125,14 @@ MachineCourtHandleRetryChoice:
 	jr z, MachineCourtRestartLevel ; $4761
 	script_set_text Text_6e_220 ; $4763
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4769
-	script_move_target ACTOR_PLAYER, $3300, $3600 ; $476e
+	script_move_target ACTOR_PLAYER, 51.0, 54.0 ; $476e
 	script_wait_move ACTOR_PLAYER ; $4779
-	script_move_player $2f00, $2d00 ; $477e
-	script_move_target ACTOR_PLAYER, $3300, $2b00 ; $4788
+	script_move_player 47.0, 45.0 ; $477e
+	script_move_target ACTOR_PLAYER, 51.0, 43.0 ; $4788
 	script_wait_move ACTOR_PLAYER ; $4793
-	script_move_target ACTOR_PLAYER, $2b00, $2b00 ; $4798
+	script_move_target ACTOR_PLAYER, 43.0, 43.0 ; $4798
 	script_wait_move ACTOR_PLAYER ; $47a3
-	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2b00 ; $47a8
+	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 43.0 ; $47a8
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $47b3
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $47b8
 	script_get_actor_state ACTOR_PARTNER ; $47bf
@@ -170,7 +170,7 @@ MachineCourtRestartLevel:
 	ret ; $4807
 ActorScript_14_0:
 	; $4808, 11 bytes (actor_script)
-	as_set_target $2900, $2b00
+	as_set_target 41.0, 43.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
@@ -349,17 +349,17 @@ SaveMachineExpertRecord:
 	call ComputeMachineCourtProgress ; $4993
 	ret ; $4996
 MachineCourtWalkToAttendantCutscene:
-	script_move_target ACTOR_PLAYER, $3300, $3600 ; $4997
+	script_move_target ACTOR_PLAYER, 51.0, 54.0 ; $4997
 	script_wait_move ACTOR_PLAYER ; $49a2
-	script_move_player $2f00, $2d00 ; $49a7
-	script_move_target ACTOR_PLAYER, $3300, $2b00 ; $49b1
+	script_move_player 47.0, 45.0 ; $49a7
+	script_move_target ACTOR_PLAYER, 51.0, 43.0 ; $49b1
 	script_wait_move ACTOR_PLAYER ; $49bc
-	script_move_target ACTOR_PLAYER, $2a80, $2b00 ; $49c1
+	script_move_target ACTOR_PLAYER, 42.5, 43.0 ; $49c1
 	script_wait_move ACTOR_PLAYER ; $49cc
-	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2b00 ; $49d1
+	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 43.0 ; $49d1
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $49dc
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $49e1
-	script_move_target ACTOR_PLAYER, $2b00, $2b00 ; $49e8
+	script_move_target ACTOR_PLAYER, 43.0, 43.0 ; $49e8
 	script_wait_move ACTOR_PLAYER ; $49f3
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $49f8
 	ret ; $49ff
@@ -367,11 +367,11 @@ MachineCourtWalkToAttendantCutscene:
 	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4a00
 	jr z, .done ; $4a03
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $4a05
-	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, $2d00, $2900 ; $4a08
+	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $4a08
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $4a13
 	script_null_script ACTOR_PARTNER ; $4a1a
 	script_wait_frames $01 ; $4a1f
-	script_set_position ACTOR_PARTNER, $2900, $2b00 ; $4a26
+	script_set_position ACTOR_PARTNER, 41.0, 43.0 ; $4a26
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4a31
 .done:
 	ret ; $4a38
@@ -386,28 +386,28 @@ Court2MapScripts_14:
 	dw Court2InitScript_14 ; slot 6 InitScript
 Court2Actors_14:
 	; $4a47, 248 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $1d00, $1500, FACE_RIGHT, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT2_WALK_6F_07_1
-	map_actor $0000, ActorScript_14_2, $1900, $1800, FACE_DOWN, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT2_WALK_6F_07_2
-	map_actor $0000, ActorScript_14_2, $1b00, $1c00, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $05, COURT2_WALK_71_03
-	map_actor $0000, ActorScript_14_2, $1b00, $1a00, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $05, COURT2_WALK_72_02_1
-	map_actor $0000, ActorScript_14_3, $0700, $3100, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $04, COURT2_WALK_72_02_2
-	map_actor $0000, ActorScript_14_2, $0900, $2300, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $04, COURT2_WALK_72_02_3
-	map_actor $0000, ActorScript_14_2, $0b00, $2300, FACE_LEFT, OBJ_WALK_72_03, ANIM_WALK, $00, COURT2_WALK_72_03_1
-	map_actor $0000, ActorScript_14_2, $0b00, $2b00, FACE_RIGHT, OBJ_WALK_6F_05, ANIM_WALK, $00, COURT2_WALK_6F_05
-	map_actor $0000, ActorScript_14_2, $0f00, $2b00, FACE_LEFT, OBJ_WALK_6F_06, ANIM_WALK, $00, COURT2_WALK_6F_06
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, COURT2_BALLOON_EXCLAIM
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, COURT2_BALLOON_SWEAT
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, COURT2_BALLOON_QUESTION
-	map_actor $0000, ActorScript_14_2, $1b00, $0c00, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $00, COURT2_WALK_72_02_4
-	map_actor $0000, ActorScript_14_2, $1900, $0e00, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $06, COURT2_WALK_72_02_5
-	map_actor $0000, ActorScript_14_2, $1b00, $1000, FACE_LEFT, OBJ_WALK_72_03, ANIM_WALK, $03, COURT2_WALK_72_03_2
-	map_actor $0000, ActorScript_14_2, $0500, $1b00, FACE_RIGHT, OBJ_WALK_71_06, ANIM_WALK, $00, COURT2_WALK_71_06
-	map_actor $0000, ActorScript_14_2, $0500, $1d00, FACE_RIGHT, OBJ_WALK_72_03, ANIM_WALK, $04, COURT2_WALK_72_03_3
+	map_actor $0000, ActorScript_14_2, 29.0, 21.0, FACE_RIGHT, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT2_WALK_6F_07_1
+	map_actor $0000, ActorScript_14_2, 25.0, 24.0, FACE_DOWN, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT2_WALK_6F_07_2
+	map_actor $0000, ActorScript_14_2, 27.0, 28.0, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $05, COURT2_WALK_71_03
+	map_actor $0000, ActorScript_14_2, 27.0, 26.0, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $05, COURT2_WALK_72_02_1
+	map_actor $0000, ActorScript_14_3, 7.0, 49.0, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $04, COURT2_WALK_72_02_2
+	map_actor $0000, ActorScript_14_2, 9.0, 35.0, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $04, COURT2_WALK_72_02_3
+	map_actor $0000, ActorScript_14_2, 11.0, 35.0, FACE_LEFT, OBJ_WALK_72_03, ANIM_WALK, $00, COURT2_WALK_72_03_1
+	map_actor $0000, ActorScript_14_2, 11.0, 43.0, FACE_RIGHT, OBJ_WALK_6F_05, ANIM_WALK, $00, COURT2_WALK_6F_05
+	map_actor $0000, ActorScript_14_2, 15.0, 43.0, FACE_LEFT, OBJ_WALK_6F_06, ANIM_WALK, $00, COURT2_WALK_6F_06
+	map_actor $0000, ActorScript_14_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, COURT2_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_14_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, COURT2_BALLOON_SWEAT
+	map_actor $0000, ActorScript_14_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, COURT2_BALLOON_QUESTION
+	map_actor $0000, ActorScript_14_2, 27.0, 12.0, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $00, COURT2_WALK_72_02_4
+	map_actor $0000, ActorScript_14_2, 25.0, 14.0, FACE_LEFT, OBJ_WALK_72_02, ANIM_WALK, $06, COURT2_WALK_72_02_5
+	map_actor $0000, ActorScript_14_2, 27.0, 16.0, FACE_LEFT, OBJ_WALK_72_03, ANIM_WALK, $03, COURT2_WALK_72_03_2
+	map_actor $0000, ActorScript_14_2, 5.0, 27.0, FACE_RIGHT, OBJ_WALK_71_06, ANIM_WALK, $00, COURT2_WALK_71_06
+	map_actor $0000, ActorScript_14_2, 5.0, 29.0, FACE_RIGHT, OBJ_WALK_72_03, ANIM_WALK, $04, COURT2_WALK_72_03_3
 	map_actor_end
 Court2EntryPoints_14:
 	; $4b3f, 17 bytes (map_entries)
-	map_entry $01, FACE_LEFT, $2500, $1500, $0000
-	map_entry $02, FACE_LEFT, $2500, $2500, $0000
+	map_entry $01, FACE_LEFT, 37.0, 21.0, $0000
+	map_entry $02, FACE_LEFT, 37.0, 37.0, $0000
 	db $ff
 Court2ExitTriggers_14:
 	; $4b50, 17 bytes (map_scripts:exit)
@@ -497,11 +497,11 @@ Court2SpectatorChat_14:
 	script_set_anim ACTOR_COURT2_WALK_72_02_3, ANIM_SHAKE ; $4c06
 	script_wait_idle ACTOR_COURT2_WALK_72_02_3 ; $4c0d
 	script_speak ACTOR_COURT2_WALK_72_02_3 ; $4c12
-	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, $0c80, $2180 ; $4c17
+	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 12.5, 33.5 ; $4c17
 	sound SFX_CHIME ; $4c22
 	script_wait_frames $14 ; $4c24
 	script_speak ACTOR_COURT2_WALK_72_03_1 ; $4c2b
-	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, $3f00, $3f00 ; $4c30
+	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 63.0, 63.0 ; $4c30
 	script_set_anim ACTOR_COURT2_WALK_72_02_3, ANIM_NOD ; $4c3b
 	script_wait_idle ACTOR_COURT2_WALK_72_02_3 ; $4c42
 	script_speak ACTOR_COURT2_WALK_72_02_3 ; $4c47
@@ -510,34 +510,34 @@ Court2SpectatorChat_14:
 	script_speak ACTOR_COURT2_WALK_72_03_1 ; $4c58
 	script_face_toward ACTOR_PLAYER, ACTOR_COURT2_WALK_72_02_3 ; $4c5d
 	script_wait_frames $14 ; $4c65
-	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, $0a80, $2180 ; $4c6c
+	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 10.5, 33.5 ; $4c6c
 	sound SFX_CHIME ; $4c77
 	script_set_anim ACTOR_COURT2_WALK_72_02_3, ANIM_BOUNCE ; $4c79
 	script_wait_idle ACTOR_COURT2_WALK_72_02_3 ; $4c80
-	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, $3f00, $3f00 ; $4c85
+	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 63.0, 63.0 ; $4c85
 	script_wait_frames $0a ; $4c90
-	script_set_position ACTOR_COURT2_BALLOON_SWEAT, $0a80, $2180 ; $4c97
+	script_set_position ACTOR_COURT2_BALLOON_SWEAT, 10.5, 33.5 ; $4c97
 	sound SFX_APPEAR2 ; $4ca2
 	script_wait_frames $14 ; $4ca4
 	script_speak ACTOR_COURT2_WALK_72_02_3 ; $4cab
-	script_set_position ACTOR_COURT2_BALLOON_SWEAT, $3f00, $3f00 ; $4cb0
-	script_set_position ACTOR_COURT2_BALLOON_QUESTION, $0c80, $2180 ; $4cbb
+	script_set_position ACTOR_COURT2_BALLOON_SWEAT, 63.0, 63.0 ; $4cb0
+	script_set_position ACTOR_COURT2_BALLOON_QUESTION, 12.5, 33.5 ; $4cbb
 	sound SFX_EMOTE ; $4cc6
 	script_wait_frames $3c ; $4cc8
-	script_set_position ACTOR_COURT2_BALLOON_QUESTION, $3f00, $3f00 ; $4ccf
+	script_set_position ACTOR_COURT2_BALLOON_QUESTION, 63.0, 63.0 ; $4ccf
 	script_face_toward ACTOR_PLAYER, ACTOR_COURT2_WALK_72_03_1 ; $4cda
 	script_wait_frames $14 ; $4ce2
-	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, $0c80, $2180 ; $4ce9
+	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 12.5, 33.5 ; $4ce9
 	sound SFX_CHIME ; $4cf4
 	script_set_anim ACTOR_COURT2_WALK_72_03_1, ANIM_BOUNCE ; $4cf6
 	script_wait_idle ACTOR_COURT2_WALK_72_03_1 ; $4cfd
-	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, $3f00, $3f00 ; $4d02
+	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 63.0, 63.0 ; $4d02
 	script_wait_frames $0a ; $4d0d
-	script_set_position ACTOR_COURT2_BALLOON_SWEAT, $0c80, $2180 ; $4d14
+	script_set_position ACTOR_COURT2_BALLOON_SWEAT, 12.5, 33.5 ; $4d14
 	sound SFX_APPEAR2 ; $4d1f
 	script_wait_frames $14 ; $4d21
 	script_speak ACTOR_COURT2_WALK_72_03_1 ; $4d28
-	script_set_position ACTOR_COURT2_BALLOON_SWEAT, $3f00, $3f00 ; $4d2d
+	script_set_position ACTOR_COURT2_BALLOON_SWEAT, 63.0, 63.0 ; $4d2d
 	script_set_anim ACTOR_COURT2_WALK_72_02_3, ANIM_NOD ; $4d38
 	script_set_anim ACTOR_COURT2_WALK_72_03_1, ANIM_NOD ; $4d3f
 	script_wait_idle ACTOR_COURT2_WALK_72_03_1 ; $4d46
@@ -663,18 +663,18 @@ InitCourt2SceneVariant:
 	ret ; $4eb3
 Court2ActorsAlt_14:
 	; $4eb4, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_14_2, $1d00, $1500, FACE_RIGHT, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT2_ALT_WALK_6F_07_1
-	map_actor $0000, ActorScript_14_2, $1b00, $2300, FACE_DOWN, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT2_ALT_WALK_6F_07_2
-	map_actor $0000, ActorScript_14_2, $1f00, $2d00, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $05, COURT2_ALT_WALK_71_03
-	map_actor $0000, ActorScript_14_3, $1d00, $3000, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $05, COURT2_ALT_WALK_72_02_1
-	map_actor $0000, ActorScript_14_3, $0700, $3100, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $04, COURT2_ALT_WALK_72_02_2
-	map_actor $0000, ActorScript_14_2, $0900, $2300, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $04, COURT2_ALT_WALK_72_02_3
-	map_actor $0000, ActorScript_14_2, $0b00, $2300, FACE_LEFT, OBJ_WALK_72_03, ANIM_WALK, $00, COURT2_ALT_WALK_72_03
-	map_actor $0000, ActorScript_14_2, $0b00, $2b00, FACE_RIGHT, OBJ_WALK_6F_05, ANIM_WALK, $00, COURT2_ALT_WALK_6F_05
-	map_actor $0000, ActorScript_14_2, $0f00, $2b00, FACE_LEFT, OBJ_WALK_6F_06, ANIM_WALK, $00, COURT2_ALT_WALK_6F_06
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, COURT2_ALT_BALLOON_EXCLAIM
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, COURT2_ALT_BALLOON_SWEAT
-	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, COURT2_ALT_BALLOON_QUESTION
+	map_actor $0000, ActorScript_14_2, 29.0, 21.0, FACE_RIGHT, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT2_ALT_WALK_6F_07_1
+	map_actor $0000, ActorScript_14_2, 27.0, 35.0, FACE_DOWN, OBJ_WALK_6F_07, ANIM_WALK, $00, COURT2_ALT_WALK_6F_07_2
+	map_actor $0000, ActorScript_14_2, 31.0, 45.0, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $05, COURT2_ALT_WALK_71_03
+	map_actor $0000, ActorScript_14_3, 29.0, 48.0, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $05, COURT2_ALT_WALK_72_02_1
+	map_actor $0000, ActorScript_14_3, 7.0, 49.0, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $04, COURT2_ALT_WALK_72_02_2
+	map_actor $0000, ActorScript_14_2, 9.0, 35.0, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $04, COURT2_ALT_WALK_72_02_3
+	map_actor $0000, ActorScript_14_2, 11.0, 35.0, FACE_LEFT, OBJ_WALK_72_03, ANIM_WALK, $00, COURT2_ALT_WALK_72_03
+	map_actor $0000, ActorScript_14_2, 11.0, 43.0, FACE_RIGHT, OBJ_WALK_6F_05, ANIM_WALK, $00, COURT2_ALT_WALK_6F_05
+	map_actor $0000, ActorScript_14_2, 15.0, 43.0, FACE_LEFT, OBJ_WALK_6F_06, ANIM_WALK, $00, COURT2_ALT_WALK_6F_06
+	map_actor $0000, ActorScript_14_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, COURT2_ALT_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_14_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, COURT2_ALT_BALLOON_SWEAT
+	map_actor $0000, ActorScript_14_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, COURT2_ALT_BALLOON_QUESTION
 	map_actor_end
 ; Instruction-identical to RestaurantPlazaArrival06_13 (one copy per bank); a change here belongs in every copy.
 	twin_named restaurant_plaza_arrival06, Court2EntryWalkIn ; $4f66

@@ -82,7 +82,7 @@ DevelopmentRespawnActorList_10:
 	map_actor_end
 DevelopmentEntryPoints_10:
 	; $4ced, 9 bytes (map_entries)
-	map_entry $01, FACE_DOWN, $0900, $0900, $0000
+	map_entry $01, FACE_DOWN, 9.0, 9.0, $0000
 	db $ff
 DevelopmentExitTriggers_10:
 	; $4cf6, 9 bytes (map_scripts:exit)
@@ -99,13 +99,13 @@ DevelopmentRespawnActors_10:
 	call WaitFadeEnd ; $4d14
 	ret ; $4d17
 Unused_10_DevelopmentMoveActorsAndExit:
-	script_move_target $03, $0100, $0100 ; $4d18
+	script_move_target $03, 1.0, 1.0 ; $4d18
 	script_wait_move $03 ; $4d23
-	script_move_target $07, $0100, $0100 ; $4d28
+	script_move_target $07, 1.0, 1.0 ; $4d28
 	script_wait_move $07 ; $4d33
-	script_move_target $0b, $0100, $0100 ; $4d38
+	script_move_target $0b, 1.0, 1.0 ; $4d38
 	script_wait_move $0b ; $4d43
-	script_move_target $10, $0100, $0100 ; $4d48
+	script_move_target $10, 1.0, 1.0 ; $4d48
 	script_wait_move $10 ; $4d53
 	ld hl, wStoryModePlayersXPosition ; $4d58
 	ld de, wStoryModeSpawnPosition ; $4d5b
@@ -215,7 +215,7 @@ MainMenuActors_10:
 	map_actor_end
 MainMenuEntryPoints_10:
 	; $4e84, 9 bytes (map_entries)
-	map_entry $01, FACE_DOWN, $ff00, $ff00, $0000
+	map_entry $01, FACE_DOWN, 255.0, 255.0, $0000
 	db $ff
 MainMenuExitTriggers_10:
 	; $4e8d, 41 bytes (map_scripts:exit)
@@ -232,7 +232,7 @@ MainMenuFacingScripts_10:
 MainMenuTileTriggers_10:
 	ds 1, $ff ; $4eb8, fill
 MainMenuInitScript_10:
-	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $4eb9
+	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $4eb9
 	call RunTitleAndMainMenuLoop ; $4ec4
 	farcall TestStorySlotFlagA ; $4ec7
 	call SetMusicMuted ; $4eca

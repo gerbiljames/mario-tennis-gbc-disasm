@@ -22,9 +22,9 @@ ShowNpc03SinglesOrDoublesPrompt_10:
 	ret ; $741b
 ActorScript_10_0:
 	; $741c, 13 bytes (actor_script)
-	as_set_target $2100, $3b00
+	as_set_target 33.0, 59.0
 	as_wait_move
-	as_set_target $3500, $3b00
+	as_set_target 53.0, 59.0
 	as_wait_move
 	as_halt
 AcademyWingInstallDoorTriggers_10:
@@ -47,12 +47,12 @@ AcademyWingHideActorByProgressFlag_10:
 	jr z, .checkFlag ; $744d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $744f
 	jr nz, .done ; $7452
-	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_1, $0100, $0100 ; $7454
+	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_1, 1.0, 1.0 ; $7454
 	jr .done ; $745f
 .checkFlag:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7461
 	jr nz, .done ; $7464
-	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_2, $0100, $0100 ; $7466
+	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_2, 1.0, 1.0 ; $7466
 .done:
 	ret ; $7471
 SetAcademyWingDialogueStage_10:
@@ -93,20 +93,20 @@ AcademyMainBldgMapScripts_10:
 	dw AcademyMainBldgInitScript_10 ; slot 6 InitScript
 AcademyMainBldgActors_10:
 	; $74b7, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $1d00, $1780, FACE_DOWN, OBJ_WALK_72_08, ANIM_WALK, $04, ACADEMY_MAIN_BLDG_WALK_72_08_1
-	map_actor $0000, ActorScript_10_2, $0e80, $0f00, FACE_LEFT, OBJ_WALK_73_00, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_WALK_73_00
-	map_actor $0000, ActorScript_10_2, $0500, $0f80, FACE_DOWN, OBJ_WALK_72_08, ANIM_WALK, $07, ACADEMY_MAIN_BLDG_WALK_72_08_2
-	map_actor $0000, ActorScript_10_3, $2800, $1e00, FACE_DOWN, OBJ_WALK_73_01, ANIM_WALK, $03, ACADEMY_MAIN_BLDG_WALK_73_01
+	map_actor $0000, ActorScript_10_2, 29.0, 23.5, FACE_DOWN, OBJ_WALK_72_08, ANIM_WALK, $04, ACADEMY_MAIN_BLDG_WALK_72_08_1
+	map_actor $0000, ActorScript_10_2, 14.5, 15.0, FACE_LEFT, OBJ_WALK_73_00, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_WALK_73_00
+	map_actor $0000, ActorScript_10_2, 5.0, 15.5, FACE_DOWN, OBJ_WALK_72_08, ANIM_WALK, $07, ACADEMY_MAIN_BLDG_WALK_72_08_2
+	map_actor $0000, ActorScript_10_3, 40.0, 30.0, FACE_DOWN, OBJ_WALK_73_01, ANIM_WALK, $03, ACADEMY_MAIN_BLDG_WALK_73_01
 	map_actor_end
 AcademyMainBldgEntryPoints_10:
 	; $74f9, 57 bytes (map_entries)
-	map_entry $01, FACE_UP, $2200, $2100, AcademyMainBldgArrival01_10
-	map_entry $02, FACE_DOWN, $2200, $0700, AcademyMainBldgArrival02_10
-	map_entry $03, FACE_DOWN, $3500, $1900, MapArrivalWalkPair_10
-	map_entry $04, FACE_DOWN, $3b00, $3900, MapArrivalWalkPair_10
-	map_entry $0d, FACE_UP, $2100, $3b00, $0000
-	map_entry $0e, FACE_UP, $2200, $1300, $0000
-	map_entry $0f, FACE_UP, $2200, $1d00, $0000
+	map_entry $01, FACE_UP, 34.0, 33.0, AcademyMainBldgArrival01_10
+	map_entry $02, FACE_DOWN, 34.0, 7.0, AcademyMainBldgArrival02_10
+	map_entry $03, FACE_DOWN, 53.0, 25.0, MapArrivalWalkPair_10
+	map_entry $04, FACE_DOWN, 59.0, 57.0, MapArrivalWalkPair_10
+	map_entry $0d, FACE_UP, 33.0, 59.0, $0000
+	map_entry $0e, FACE_UP, 34.0, 19.0, $0000
+	map_entry $0f, FACE_UP, 34.0, 29.0, $0000
 	db $ff
 ; Instruction-identical to AcademyArrivalArrival01_11 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival02, AcademyMainBldgArrival02_10 ; $7532
@@ -269,25 +269,25 @@ AcademyMainBldgNewStudentCutscene_10:
 	ld hl, AcademyMainBldgNewStudentActors_10 ; $7743
 	farcall ScriptRespawnLocationActors ; $7746
 	farcall BeginCutsceneScriptMode ; $7749
-	script_set_position ACTOR_PLAYER, $2200, $2580 ; $774c
-	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, $2200, $2400 ; $7757
+	script_set_position ACTOR_PLAYER, 34.0, 37.5 ; $774c
+	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, 34.0, 36.0 ; $7757
 	script_fade_in $04 ; $7762
 	script_wait_frames $1e ; $7767
 	script_face ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, FACE_UP ; $776e
 	script_wait_frames $0a ; $7775
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_BOUNCE ; $777c
 	script_wait_frames $1e ; $7783
-	script_move_target ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, $2200, $1700 ; $778a
-	script_move_player $2200, $1700 ; $7795
+	script_move_target ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, 34.0, 23.0 ; $778a
+	script_move_player 34.0, 23.0 ; $7795
 	script_wait_frames $0a ; $779f
-	script_move_target ACTOR_PLAYER, $2200, $1900 ; $77a6
+	script_move_target ACTOR_PLAYER, 34.0, 25.0 ; $77a6
 	script_face ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, FACE_RIGHT ; $77b1
 	farcall WaitPlayerMoveDone ; $77b8
 	script_set_text Text_30_430 ; $77bb
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $77c1
 	script_wait_move ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $77c6
 	script_wait_frames $0a ; $77cb
-	script_move_player $1d00, $1900 ; $77d2
+	script_move_player 29.0, 25.0 ; $77d2
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $77dc
 	script_wait_frames $1e ; $77e4
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_PLAYER ; $77eb
@@ -331,10 +331,10 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $78ac
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $78b1
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, ACTOR_PLAYER ; $78b6
-	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_QUESTION, $2300, $1700 ; $78be
+	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_QUESTION, 35.0, 23.0 ; $78be
 	sound SFX_EMOTE ; $78c9
 	script_wait_frames $3c ; $78cb
-	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_QUESTION, $3f00, $3f00 ; $78d2
+	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_QUESTION, 63.0, 63.0 ; $78d2
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_NOD ; $78dd
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $78e4
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $78e9
@@ -349,12 +349,12 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, ANIM_NOD ; $7924
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_NOD ; $792b
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $7932
-	script_move_player $2200, $1700 ; $7937
+	script_move_player 34.0, 23.0 ; $7937
 	script_wait_frames $28 ; $7941
-	script_move_target ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, $2200, $0300 ; $7948
+	script_move_target ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, 34.0, 3.0 ; $7948
 	script_wait_frames $0a ; $7953
-	script_move_player $2200, $0300 ; $795a
-	script_move_target ACTOR_PLAYER, $2200, $0300 ; $7964
+	script_move_player 34.0, 3.0 ; $795a
+	script_move_target ACTOR_PLAYER, 34.0, 3.0 ; $7964
 	script_wait_move ACTOR_PLAYER ; $796f
 	ld a, $0f ; $7974
 	ld [wUnusedExitTriggerIdMirror], a ; $7976
@@ -363,11 +363,11 @@ AcademyMainBldgNewStudentCutscene_10:
 	ret ; $797f
 AcademyMainBldgNewStudentActors_10:
 	; $7980, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, $2b00, $0b00, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY
-	map_actor $0000, ActorScript_10_2, $1d00, $1700, FACE_DOWN, OBJ_WALK_72_08, ANIM_WALK, $04, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_EXCLAIM
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_QUESTION
-	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_ELLIPSIS
+	map_actor $0000, ActorScript_10_2, 43.0, 11.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY
+	map_actor $0000, ActorScript_10_2, 29.0, 23.0, FACE_DOWN, OBJ_WALK_72_08, ANIM_WALK, $04, ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08
+	map_actor $0000, ActorScript_10_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_10_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_QUESTION
+	map_actor $0000, ActorScript_10_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_ELLIPSIS
 	map_actor_end
 UpdatePlayerPairTileAnimState_10:
 	ld a, $00 ; $79d0
