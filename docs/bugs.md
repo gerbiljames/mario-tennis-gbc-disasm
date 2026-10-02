@@ -251,6 +251,21 @@ chunk that lands at `$8e00` — the last of the four `$200`-byte slices that wou
 have covered `$8800`-`$8fff`, with the first three missing and the source label
 of the survivor wrong.
 
+### Boot loads five object palettes from VRAM
+
+`LoadMenuObjPalettes3To7` (`$01:$5188`), called once from the boot sequence
+at `$01:$4088`, hands `LoadPaletteShadow` the source
+`hl = vTiles0 + $7c * TILE_SIZE + 8` (`$87c8`) for object palettes 3-7. That
+is VRAM, not a palette table; bank `$01` has no palette data at the matching
+ROM address (`$47c8` is inside `MenuTilesBStagedTiles0`). Its unreachable twin
+`Unused_01_LoadMenuBgPalettes3To7` does the same for background palettes 3-7.
+
+It does no harm. Run in PyBoy, the call comes on frame 71 with the LCD off,
+the 40 bytes it reads are all zero, and the same five palettes in
+`wOBJPalettes` and `wMasterPalettes` are already zero, so the copy changes
+nothing. Story screens load the real palettes with `LoadStoryObjPalettes`
+(`$0a:$5337`, the same five slots from `StoryObjPalettes`).
+
 ### The debug console's SELECT test has no branch
 
 `UpdateDebugOverlay` (`$00:$1893`) decides each frame whether the debug console
