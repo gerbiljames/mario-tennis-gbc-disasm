@@ -40,7 +40,7 @@ DrawStatValueSprites:
 	sub $30 ; $4e84
 	rlca ; $4e86
 	ld c, a ; $4e87
-	ld de, $051c ; $4e88
+	ld_xy de, $05, $1c ; $4e88
 	xor a ; $4e8b
 	call GetStatDigitSpritePos ; $4e8c
 	call QueueSprite ; $4e8f
@@ -49,7 +49,7 @@ DrawStatValueSprites:
 	sub $30 ; $4e96
 	rlca ; $4e98
 	ld c, a ; $4e99
-	ld de, $0c1c ; $4e9a
+	ld_xy de, $0c, $1c ; $4e9a
 	xor a ; $4e9d
 	call GetStatDigitSpritePos ; $4e9e
 	call QueueSprite ; $4ea1
@@ -58,7 +58,7 @@ DrawStatValueSprites:
 	ld a, l ; $4ea6
 	rlca ; $4ea7
 	ld c, a ; $4ea8
-	ld de, $091c ; $4ea9
+	ld_xy de, $09, $1c ; $4ea9
 	xor a ; $4eac
 	call GetStatDigitSpritePos ; $4ead
 	call QueueSprite ; $4eb0
@@ -89,7 +89,7 @@ DrawStatValueSprites:
 	sub $30 ; $4ede
 	rlca ; $4ee0
 	ld c, a ; $4ee1
-	ld de, $0544 ; $4ee2
+	ld_xy de, $05, $44 ; $4ee2
 	ld a, $01 ; $4ee5
 	call GetStatDigitSpritePos ; $4ee7
 	call QueueSprite ; $4eea
@@ -98,7 +98,7 @@ DrawStatValueSprites:
 	sub $30 ; $4ef1
 	rlca ; $4ef3
 	ld c, a ; $4ef4
-	ld de, $0c44 ; $4ef5
+	ld_xy de, $0c, $44 ; $4ef5
 	ld a, $01 ; $4ef8
 	call GetStatDigitSpritePos ; $4efa
 	call QueueSprite ; $4efd
@@ -107,7 +107,7 @@ DrawStatValueSprites:
 	ld a, l ; $4f02
 	rlca ; $4f03
 	ld c, a ; $4f04
-	ld de, $0944 ; $4f05
+	ld_xy de, $09, $44 ; $4f05
 	ld a, $01 ; $4f08
 	call GetStatDigitSpritePos ; $4f0a
 	call QueueSprite ; $4f0d
@@ -138,7 +138,7 @@ DrawStatValueSprites:
 	sub $30 ; $4f3b
 	rlca ; $4f3d
 	ld c, a ; $4f3e
-	ld de, $551c ; $4f3f
+	ld_xy de, $55, $1c ; $4f3f
 	ld a, $02 ; $4f42
 	call GetStatDigitSpritePos ; $4f44
 	call QueueSprite ; $4f47
@@ -147,7 +147,7 @@ DrawStatValueSprites:
 	sub $30 ; $4f4e
 	rlca ; $4f50
 	ld c, a ; $4f51
-	ld de, $5c1c ; $4f52
+	ld_xy de, $5c, $1c ; $4f52
 	ld a, $02 ; $4f55
 	call GetStatDigitSpritePos ; $4f57
 	call QueueSprite ; $4f5a
@@ -156,7 +156,7 @@ DrawStatValueSprites:
 	ld a, l ; $4f5f
 	rlca ; $4f60
 	ld c, a ; $4f61
-	ld de, $591c ; $4f62
+	ld_xy de, $59, $1c ; $4f62
 	ld a, $02 ; $4f65
 	call GetStatDigitSpritePos ; $4f67
 	call QueueSprite ; $4f6a
@@ -187,7 +187,7 @@ DrawStatValueSprites:
 	sub $30 ; $4f98
 	rlca ; $4f9a
 	ld c, a ; $4f9b
-	ld de, $5544 ; $4f9c
+	ld_xy de, $55, $44 ; $4f9c
 	ld a, $03 ; $4f9f
 	call GetStatDigitSpritePos ; $4fa1
 	call QueueSprite ; $4fa4
@@ -196,7 +196,7 @@ DrawStatValueSprites:
 	sub $30 ; $4fab
 	rlca ; $4fad
 	ld c, a ; $4fae
-	ld de, $5c44 ; $4faf
+	ld_xy de, $5c, $44 ; $4faf
 	ld a, $03 ; $4fb2
 	call GetStatDigitSpritePos ; $4fb4
 	call QueueSprite ; $4fb7
@@ -205,7 +205,7 @@ DrawStatValueSprites:
 	ld a, l ; $4fbc
 	rlca ; $4fbd
 	ld c, a ; $4fbe
-	ld de, $5944 ; $4fbf
+	ld_xy de, $59, $44 ; $4fbf
 	ld a, $03 ; $4fc2
 	call GetStatDigitSpritePos ; $4fc4
 	call QueueSprite ; $4fc7
@@ -256,28 +256,28 @@ DrawRemainingPointsSprite:
 	sub $30 ; $5064
 	rlca ; $5066
 	ld c, a ; $5067
-	ld de, $147f ; $5068
-	call OffsetStatSpriteX ; $506b
+	ld_xy de, $14, $7f ; $5068
+	call OffsetStatSpriteY ; $506b
 	ld b, $0f ; $506e
 	call QueueSprite ; $5070
 	ld a, [wCharDataNumberBuffer + 1] ; $5073
 	sub $30 ; $5076
 	rlca ; $5078
 	ld c, a ; $5079
-	ld de, $1b7f ; $507a
-	call OffsetStatSpriteX ; $507d
+	ld_xy de, $1b, $7f ; $507a
+	call OffsetStatSpriteY ; $507d
 	ld b, $0f ; $5080
 	call QueueSprite ; $5082
 	ret ; $5085
 .lt0a:
 	rlca ; $5086
 	ld c, a ; $5087
-	ld de, $187f ; $5088
-	call OffsetStatSpriteX ; $508b
+	ld_xy de, $18, $7f ; $5088
+	call OffsetStatSpriteY ; $508b
 	ld b, $0f ; $508e
 	call QueueSprite ; $5090
 	ret ; $5093
-OffsetStatSpriteX:
+OffsetStatSpriteY:
 	ld a, [wCharDataRevealStep] ; $5094
 	rlca ; $5097
 	rlca ; $5098

@@ -454,7 +454,7 @@ Screen0Palette:
 	INCLUDE "data/bank_018/Screen0Palette.asm" ; $7754, 8 bytes (palettes)
 QueueScreen0Sprites:
 	ld hl, QueueScreen0Sprites_SpriteTemplate ; $775c
-	lb de, $28, $3a ; $775f x, y
+	ld_xy de, $28, $3a ; $775f
 	ld c, $00 ; $7762
 	ld b, $00 ; $7764
 	call QueueSpriteTemplate ; $7766

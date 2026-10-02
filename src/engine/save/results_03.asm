@@ -148,7 +148,7 @@ Unused_03_SaveSlotDebugEditor:
 	jr z, .zero ; $5348
 	push de ; $534a
 	ld hl, SaveResultFailedString_03 ; $534b
-	lb de, $05, $11 ; $534e column, row
+	ld_cell de, $05, $11 ; $534e
 	call PrintString ; $5351
 	pop de ; $5354
 	ld hl, $d300 ; $5355
@@ -157,7 +157,7 @@ Unused_03_SaveSlotDebugEditor:
 	jp .loopB ; $535d
 .zero:
 	ld hl, SaveResultLoadedString_03 ; $5360
-	lb de, $05, $11 ; $5363 column, row
+	ld_cell de, $05, $11 ; $5363
 	call PrintString ; $5366
 .loopB:
 	wram_bank WRAM_SOUND ; $5369
@@ -332,7 +332,7 @@ Unused_03_SaveSlotDebugEditor:
 	jr nz, .bit3Set ; $5489
 	push de ; $548b
 	ld hl, SaveResultSavedString_03 ; $548c
-	lb de, $05, $11 ; $548f column, row
+	ld_cell de, $05, $11 ; $548f
 	call PrintString ; $5492
 	call Unused_03_WriteCurrentSlotBlock ; $5495
 	pop de ; $5498
@@ -340,7 +340,7 @@ Unused_03_SaveSlotDebugEditor:
 .bit3Set:
 	push de ; $549c
 	ld hl, SaveResultDeletedString_03 ; $549d
-	lb de, $05, $11 ; $54a0 column, row
+	ld_cell de, $05, $11 ; $54a0
 	call PrintString ; $54a3
 	call Unused_03_InvalidateCurrentSlotBlock ; $54a6
 	jp .loop4 ; $54a9

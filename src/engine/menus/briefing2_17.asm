@@ -48,7 +48,7 @@ DrawBlinkingPrompt:
 	jr z, .restore ; $48af
 	ld c, $72 ; $48b1
 	ld b, $09 ; $48b3
-	lb de, $50, $8c ; $48b5 x, y
+	ld_xy de, $50, $8c ; $48b5
 	call QueueSprite ; $48b8
 .restore:
 	pop_wram_bank ; $48bb
@@ -243,7 +243,7 @@ Unused_17_QueueSpritePair:
 	ld c, $04 ; $4a1b
 	ld b, $09 ; $4a1d
 	ld hl, QueueSpritePair_17_SpriteTemplate ; $4a1f
-	lb de, $20, $20 ; $4a22 x, y
+	ld_xy de, $20, $20 ; $4a22
 	call QueueSpriteTemplate ; $4a25
 	ret ; $4a28
 QueueSpritePair_17_SpriteTemplate:

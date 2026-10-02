@@ -3702,7 +3702,7 @@ NEXTU
 ; star warp transition (bank $0e)
 ; [8-bit] Animation frame of the warp star, 0-5, stepped every other VBlank by UpdateStarWarpSprite
 wStarWarpFrame:: db
-; [8-bit] How far the star has travelled along its path, stepped by two each frame. OffsetStarWarpPathPoint indexes StarWarpPathY and StarWarpPathX with it to get the point wStarWarpPathX/Y then carry
+; [8-bit] How far the star has travelled along its path, stepped by two each frame. OffsetStarWarpPathPoint indexes StarWarpPathX and StarWarpPathY with it to get the point wStarWarpPathX/Y then carry
 wStarWarpPathIndex:: db
 ; [8-bit] Frames left in the transition, seeded to $5a. The wait loop starts the fade out when it reaches $1e and returns at zero
 wStarWarpCountdown:: db
@@ -3815,10 +3815,10 @@ wContinuePromptTilemapRow3:: ds 32
 NEXTU
 ; star warp transition (bank $0e)
 	ds 22
-; [8-bit] X of the point the star has reached along its path, copied into each sparkle as it spawns
-wStarWarpPathX:: db
-; [8-bit] Y of the same point
+; [8-bit] Y of the point the star has reached along its path, copied into each sparkle as it spawns
 wStarWarpPathY:: db
+; [8-bit] X of the same point
+wStarWarpPathX:: db
 NEXTU
 ; trophy EXP awards (bank $1e)
 ; [10 bytes] EXP for trophy groups 1-5, five 16-bit words. ComputeTrophyExpAwards fills them one group at a time carrying a running sum in hl -- group 0's word goes two bytes lower still, onto the byte the character-data screen calls wCharDataLevelPreview, which is why the array cannot be declared from its true base here

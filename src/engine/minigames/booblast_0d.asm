@@ -187,7 +187,7 @@ InitBooBlastScore:
 	call InitMinigameScore ; $56b0
 	ret ; $56b3
 DrawMinigameScoreAtDefaultPos:
-	ld de, $8403 ; $56b4
+	ld_xy de, $84, $03 ; $56b4
 	call DrawMinigameScore ; $56b7
 	ret ; $56ba
 DisableOffscreenArrows:

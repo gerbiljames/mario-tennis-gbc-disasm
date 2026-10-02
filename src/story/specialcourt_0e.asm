@@ -111,14 +111,14 @@ UpdateStarWarpSprite:
 	push hl ; $720b
 	ld c, [hl] ; $720c
 	ld b, $09 ; $720d
-	ld de, $8026 ; $720f
+	ld_xy de, $80, $26 ; $720f
 	call OffsetStarWarpPathPoint ; $7212
 	call QueueSprite ; $7215
 	pop hl ; $7218
 	inc hl ; $7219
 	ld c, [hl] ; $721a
 	ld b, $09 ; $721b
-	ld de, $8826 ; $721d
+	ld_xy de, $88, $26 ; $721d
 	call OffsetStarWarpPathPoint ; $7220
 	push de ; $7223
 	call QueueSprite ; $7224
@@ -126,7 +126,7 @@ UpdateStarWarpSprite:
 	ld a, $fc ; $7228
 	add d ; $722a
 	ld d, a ; $722b
-	ld hl, wStarWarpPathX ; $722c
+	ld hl, wStarWarpPathY ; $722c
 	ld a, e ; $722f
 	ld [hl+], a ; $7230
 	ld [hl], d ; $7231
@@ -146,12 +146,12 @@ UpdateStarWarpSprite:
 	ret ; $7249
 OffsetStarWarpPathPoint:
 	ld a, [wStarWarpPathIndex] ; $724a
-	ld_hl_indexed StarWarpPathY ; $724d
+	ld_hl_indexed StarWarpPathX ; $724d
 	ld a, [hl] ; $7254
 	add d ; $7255
 	ld d, a ; $7256
 	ld a, [wStarWarpPathIndex] ; $7257
-	ld_hl_indexed StarWarpPathX ; $725a
+	ld_hl_indexed StarWarpPathY ; $725a
 	ld a, [hl] ; $7261
 	add e ; $7262
 	ld e, a ; $7263
@@ -178,9 +178,9 @@ UpdateStarWarpTrailSparkles:
 	adc $d0 ; $727e
 	sub l ; $7280
 	ld h, a ; $7281
-	ld a, [wStarWarpPathX] ; $7282
+	ld a, [wStarWarpPathY] ; $7282
 	ld [hl+], a ; $7285
-	ld a, [wStarWarpPathY] ; $7286
+	ld a, [wStarWarpPathX] ; $7286
 	ld [hl], a ; $7289
 	dec hl ; $728a
 	push hl ; $728b
@@ -255,7 +255,7 @@ StarWarpFrameSprites:
 	db $0c, $0e ; 0x06
 	db $10, $12 ; 0x08
 	db $14, $16 ; 0x0a
-StarWarpPathY:
+StarWarpPathX:
 	; $748c, 181 bytes (bytes:16)
 	db $00, $ff, $fd, $fb, $f9, $f7, $f5, $f3, $f0, $ee, $eb, $e9, $e6, $e4, $e1, $de ; 0x00
 	db $db, $d9, $d6, $d3, $d0, $cd, $cb, $c8, $c5, $c3, $c0, $bd, $bb, $b8, $b6, $b3 ; 0x10
@@ -269,7 +269,7 @@ StarWarpPathY:
 	db $cd, $cf, $d2, $d5, $d8, $da, $dd, $e0, $e2, $e5, $e7, $ea, $ec, $ee, $f1, $f3 ; 0x90
 	db $f5, $f8, $fa, $fc, $fe, $00, $01, $03, $05, $07, $09, $0b, $0d, $0e, $10, $12 ; 0xa0
 	db $13, $15, $17, $18, $1a ; 0xb0
-StarWarpPathX:
+StarWarpPathY:
 	; $7541, 181 bytes (bytes:16)
 	db $00, $fe, $fc, $fa, $f8, $f6, $f4, $f3, $f1, $f0, $ef, $ee, $ed, $ec, $eb, $eb ; 0x00
 	db $ea, $ea, $ea, $ea, $eb, $eb, $eb, $ec, $ec, $ed, $ee, $ef, $f0, $f1, $f2, $f3 ; 0x10

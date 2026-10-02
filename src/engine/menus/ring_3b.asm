@@ -339,7 +339,7 @@ RingShotScrollArrowsTask:
 	ld a, [wMenuCursorX] ; $549a
 	cp $03 ; $549d
 	jr z, .checkMenuCursorX ; $549f
-	ld de, $7812 ; $54a1
+	ld_xy de, $78, $12 ; $54a1
 	ld c, $01 ; $54a4
 	call ApplyCursorBounceX ; $54a6
 	ld b, $08 ; $54a9
@@ -350,7 +350,7 @@ RingShotScrollArrowsTask:
 	ld a, [wMenuCursorX] ; $54b2
 	or a ; $54b5
 	jr z, .checkMenuCursorY ; $54b6
-	ld de, $2312 ; $54b8
+	ld_xy de, $23, $12 ; $54b8
 	ld c, $00 ; $54bb
 	call ApplyCursorBounceX ; $54bd
 	ld b, $08 ; $54c0
@@ -361,7 +361,7 @@ RingShotScrollArrowsTask:
 	ld a, [wMenuCursorY] ; $54c9
 	or a ; $54cc
 	jr z, .checkMenuCursorY2 ; $54cd
-	ld de, $0c26 ; $54cf
+	ld_xy de, $0c, $26 ; $54cf
 	ld c, $01 ; $54d2
 	call ApplyCursorBounceY ; $54d4
 	ld b, $08 ; $54d7
@@ -372,7 +372,7 @@ RingShotScrollArrowsTask:
 	ld a, [wMenuCursorY] ; $54e0
 	cp $0b ; $54e3
 	jr z, .restore ; $54e5
-	ld de, $0c82 ; $54e7
+	ld_xy de, $0c, $82 ; $54e7
 	ld c, $00 ; $54ea
 	call ApplyCursorBounceY ; $54ec
 	ld b, $08 ; $54ef
@@ -522,7 +522,7 @@ RingShotScoreDrawTask:
 	jr nc, .gotPtr ; $55ac
 	inc h ; $55ae
 .gotPtr:
-	ld de, $8a35 ; $55af
+	ld_xy de, $8a, $35 ; $55af
 	ld c, $00 ; $55b2
 .loopB:
 	push hl ; $55b4

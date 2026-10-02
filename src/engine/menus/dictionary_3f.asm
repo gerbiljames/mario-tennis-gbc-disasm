@@ -595,10 +595,10 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictFlags] ; $4f1f
 	bit 1, a ; $4f22
 	jr z, .bit1Clear ; $4f24
-	ld de, $907d ; $4f26
+	ld_xy de, $90, $7d ; $4f26
 	jr .queueSpriteTemplate ; $4f29
 .bit1Clear:
-	ld de, $807d ; $4f2b
+	ld_xy de, $80, $7d ; $4f2b
 .queueSpriteTemplate:
 	push hl ; $4f2e
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate2 ; $4f2f
@@ -611,10 +611,10 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictFlags] ; $4f3a
 	bit 1, a ; $4f3d
 	jr z, .bit1Clear2 ; $4f3f
-	ld de, $886d ; $4f41
+	ld_xy de, $88, $6d ; $4f41
 	jr .queueSpriteTemplate2 ; $4f44
 .bit1Clear2:
-	ld de, $786d ; $4f46
+	ld_xy de, $78, $6d ; $4f46
 .queueSpriteTemplate2:
 	push hl ; $4f49
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f4a
@@ -627,10 +627,10 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictFlags] ; $4f55
 	bit 1, a ; $4f58
 	jr z, .bit1Clear3 ; $4f5a
-	ld de, $887d ; $4f5c
+	ld_xy de, $88, $7d ; $4f5c
 	jr .queueSpriteTemplate3 ; $4f5f
 .bit1Clear3:
-	ld de, $787d ; $4f61
+	ld_xy de, $78, $7d ; $4f61
 .queueSpriteTemplate3:
 	push hl ; $4f64
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f65
@@ -643,10 +643,10 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictFlags] ; $4f70
 	bit 1, a ; $4f73
 	jr z, .bit1Clear4 ; $4f75
-	ld de, $888d ; $4f77
+	ld_xy de, $88, $8d ; $4f77
 	jr .queueSpriteTemplate4 ; $4f7a
 .bit1Clear4:
-	ld de, $788d ; $4f7c
+	ld_xy de, $78, $8d ; $4f7c
 .queueSpriteTemplate4:
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f7f
 	call QueueSpriteTemplate ; $4f82
@@ -692,7 +692,7 @@ UpdateTennisDictionarySprites:
 	bit 2, a ; $4fc9
 	jr z, .checkTennisDictFlags2 ; $4fcb
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fcd
-	lb de, $18, $10 ; $4fd0 x, y
+	ld_xy de, $18, $10 ; $4fd0
 	lb bc, $0d, $34 ; $4fd3 attr, tile
 	call QueueSpriteTemplate ; $4fd6
 .checkTennisDictFlags2:
@@ -700,7 +700,7 @@ UpdateTennisDictionarySprites:
 	bit 3, a ; $4fdc
 	jr z, .restore ; $4fde
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fe0
-	lb de, $88, $10 ; $4fe3 x, y
+	ld_xy de, $88, $10 ; $4fe3
 	lb bc, $0d, $3a ; $4fe6 attr, tile
 	call QueueSpriteTemplate ; $4fe9
 .restore:

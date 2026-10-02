@@ -102,35 +102,35 @@ Unused_1a_DrawPauseMenuSettingValues:
 	dec a ; $40b7
 	jr z, .countDone ; $40b8
 	ld l, $75 ; $40ba
-	lb de, $0a, $05 ; $40bc column, row
+	ld_cell de, $0a, $05 ; $40bc
 	call Unused_1a_QueueWindowTileWrite ; $40bf
 	ld l, $7f ; $40c2
-	lb de, $0b, $05 ; $40c4 column, row
+	ld_cell de, $0b, $05 ; $40c4
 	call Unused_1a_QueueWindowTileWrite ; $40c7
 	ld l, $72 ; $40ca
-	lb de, $0c, $05 ; $40cc column, row
+	ld_cell de, $0c, $05 ; $40cc
 	call Unused_1a_QueueWindowTileWrite ; $40cf
 	jr .checkMusic ; $40d2
 .countDone:
 	ld l, $8c ; $40d4
-	lb de, $0a, $05 ; $40d6 column, row
+	ld_cell de, $0a, $05 ; $40d6
 	call Unused_1a_QueueWindowTileWrite ; $40d9
 	ld l, $82 ; $40dc
-	lb de, $0b, $05 ; $40de column, row
+	ld_cell de, $0b, $05 ; $40de
 	call Unused_1a_QueueWindowTileWrite ; $40e1
 	ld l, $73 ; $40e4
-	lb de, $0c, $05 ; $40e6 column, row
+	ld_cell de, $0c, $05 ; $40e6
 	call Unused_1a_QueueWindowTileWrite ; $40e9
 	jr .checkMusic ; $40ec
 .maskClear:
 	ld l, $8a ; $40ee
-	lb de, $0a, $05 ; $40f0 column, row
+	ld_cell de, $0a, $05 ; $40f0
 	call Unused_1a_QueueWindowTileWrite ; $40f3
 	ld l, $94 ; $40f6
-	lb de, $0b, $05 ; $40f8 column, row
+	ld_cell de, $0b, $05 ; $40f8
 	call Unused_1a_QueueWindowTileWrite ; $40fb
 	ld l, $72 ; $40fe
-	lb de, $0c, $05 ; $4100 column, row
+	ld_cell de, $0c, $05 ; $4100
 	call Unused_1a_QueueWindowTileWrite ; $4103
 	jr .checkMusic ; $4106
 .checkMusic:
@@ -151,12 +151,12 @@ Unused_1a_DrawPauseMenuSettingValues:
 	and $01 ; $4121
 	jr nz, .maskSet ; $4123
 	ld l, $dd ; $4125
-	lb de, $0b, $07 ; $4127 column, row
+	ld_cell de, $0b, $07 ; $4127
 	call Unused_1a_QueueWindowTileWrite ; $412a
 	jr .restore ; $412d
 .maskSet:
 	ld l, $cc ; $412f
-	lb de, $0b, $07 ; $4131 column, row
+	ld_cell de, $0b, $07 ; $4131
 	call Unused_1a_QueueWindowTileWrite ; $4134
 .restore:
 	pop hl ; $4137

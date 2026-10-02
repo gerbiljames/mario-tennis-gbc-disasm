@@ -713,7 +713,7 @@ DrawRulesScreenCharacters:
 	inc h ; $74fc
 .readB:
 	ld b, [hl] ; $74fd
-	lb de, $7e, $68 ; $74fe x, y
+	ld_xy de, $7e, $68 ; $74fe
 	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $7501
 	call QueueSpriteTemplate ; $7504
 	pop bc ; $7507
@@ -728,7 +728,7 @@ DrawRulesScreenCharacters:
 	inc h ; $7516
 .read2:
 	ld b, [hl] ; $7517
-	lb de, $7e, $68 ; $7518 x, y
+	ld_xy de, $7e, $68 ; $7518
 	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $751b
 	call QueueSpriteTemplate ; $751e
 	pop_wram_bank ; $7521

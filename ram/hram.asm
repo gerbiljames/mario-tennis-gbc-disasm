@@ -301,10 +301,10 @@ hSndLoopReturnPtr:: dw
 hSndRestFlag:: db
 NEXTU
 ; sprite queue (bank 0, $2ced-$2d9f)
-; [8-bit] Screen Y origin of the multi-sprite block being queued (QueueSprite32x32)
-hSpriteBlitY:: db
-; [8-bit] Screen X origin of the multi-sprite block being queued
+; [8-bit] Screen X origin of the multi-sprite block being queued (QueueSprite32x32); QueueSpriteBlockPart adds d to it for the OAM X byte
 hSpriteBlitX:: db
+; [8-bit] Screen Y origin of the multi-sprite block being queued; QueueSpriteBlockPart adds e to it for the OAM Y byte
+hSpriteBlitY:: db
 NEXTU
 ; story actor engine (banks $04/$05/$0a)
 	ds 26

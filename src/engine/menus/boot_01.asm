@@ -63,7 +63,7 @@ InitAndRunGame:
 	farcall RunStoryModeOverworld ; $40af
 .loopB:
 	ld hl, BuildStamp ; $40b2
-	lb de, $05, $11 ; $40b5 column, row
+	ld_cell de, $05, $11 ; $40b5
 	call PrintString ; $40b8
 	ld a, $03 ; $40bb
 	ldh [hDebugStepMode], a ; $40bd
@@ -92,7 +92,7 @@ InitAndRunGame:
 	jp .loopB ; $40e9
 Unused_01_MenuRedraw:
 	ld hl, BuildStamp ; $40ec
-	lb de, $05, $11 ; $40ef column, row
+	ld_cell de, $05, $11 ; $40ef
 	call PrintString ; $40f2
 	ld a, $03 ; $40f5
 	ldh [hDebugStepMode], a ; $40f7
@@ -441,14 +441,14 @@ Unused_01_RunSoundTest:
 	push hl ; $6a70
 	push de ; $6a71
 	ld hl, SoundTestStrings_01 ; $6a72
-	lb de, $0d, $09 ; $6a75 column, row
+	ld_cell de, $0d, $09 ; $6a75
 	call PrintString ; $6a78
 	pop de ; $6a7b
 	pop hl ; $6a7c
 	push hl ; $6a7d
 	push de ; $6a7e
 	ld hl, SoundTestString0 ; $6a7f
-	lb de, $0d, $0b ; $6a82 column, row
+	ld_cell de, $0d, $0b ; $6a82
 	call PrintString ; $6a85
 	pop de ; $6a88
 	pop hl ; $6a89
@@ -515,14 +515,14 @@ Unused_01_RunSoundTest:
 	push hl ; $6ae1
 	push de ; $6ae2
 	ld hl, SoundTestString1 ; $6ae3
-	lb de, $0c, $09 ; $6ae6 column, row
+	ld_cell de, $0c, $09 ; $6ae6
 	call PrintString ; $6ae9
 	pop de ; $6aec
 	pop hl ; $6aed
 	push hl ; $6aee
 	push de ; $6aef
 	ld hl, SoundTestString2 ; $6af0
-	lb de, $0c, $0b ; $6af3 column, row
+	ld_cell de, $0c, $0b ; $6af3
 	call PrintString ; $6af6
 	pop de ; $6af9
 	pop hl ; $6afa
@@ -531,14 +531,14 @@ Unused_01_RunSoundTest:
 	push hl ; $6afd
 	push de ; $6afe
 	ld hl, SoundTestString1 ; $6aff
-	lb de, $0c, $0b ; $6b02 column, row
+	ld_cell de, $0c, $0b ; $6b02
 	call PrintString ; $6b05
 	pop de ; $6b08
 	pop hl ; $6b09
 	push hl ; $6b0a
 	push de ; $6b0b
 	ld hl, SoundTestString2 ; $6b0c
-	lb de, $0c, $09 ; $6b0f column, row
+	ld_cell de, $0c, $09 ; $6b0f
 	call PrintString ; $6b12
 	pop de ; $6b15
 	pop hl ; $6b16

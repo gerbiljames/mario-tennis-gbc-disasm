@@ -248,14 +248,14 @@ CharDataValuesSyncTask:
 	cp $20 ; $48f4
 	jr z, .eq20 ; $48f6
 	call GetCharDataDigitSprite ; $48f8
-	ld de, $5d88 ; $48fb
+	ld_xy de, $5d, $88 ; $48fb
 	ld hl, wCharDataValuesSlideX ; $48fe
 	call ApplySlideOffsetToSpriteX ; $4901
 	call QueueSprite ; $4904
 .eq20:
 	ld a, [wCharDataNumberBuffer + 1] ; $4907
 	call GetCharDataDigitSprite ; $490a
-	ld de, $6588 ; $490d
+	ld_xy de, $65, $88 ; $490d
 	ld hl, wCharDataValuesSlideX ; $4910
 	call ApplySlideOffsetToSpriteX ; $4913
 	call QueueSprite ; $4916
@@ -273,13 +273,13 @@ CharDataValuesSyncTask:
 	ld a, $30 ; $4930
 .getCharDataDigitSprite:
 	call GetCharDataDigitSprite ; $4932
-	ld de, $7488 ; $4935
+	ld_xy de, $74, $88 ; $4935
 	ld hl, wCharDataValuesSlideX ; $4938
 	call ApplySlideOffsetToSpriteX ; $493b
 	call QueueSprite ; $493e
 	ld a, [wCharDataNumberBuffer + 1] ; $4941
 	call GetCharDataDigitSprite ; $4944
-	ld de, $7c88 ; $4947
+	ld_xy de, $7c, $88 ; $4947
 	ld hl, wCharDataValuesSlideX ; $494a
 	call ApplySlideOffsetToSpriteX ; $494d
 	call QueueSprite ; $4950
@@ -288,7 +288,7 @@ CharDataValuesSyncTask:
 	cp $20 ; $495c
 	jr z, .eq203 ; $495e
 	call GetSummaryExpDigitSprite ; $4960
-	ld de, $0864 ; $4963
+	ld_xy de, $08, $64 ; $4963
 	ld hl, wCharDataValuesSlideX ; $4966
 	call ApplySlideOffsetToSpriteX ; $4969
 	call QueueSprite ; $496c
@@ -297,7 +297,7 @@ CharDataValuesSyncTask:
 	cp $20 ; $4972
 	jr z, .eq204 ; $4974
 	call GetSummaryExpDigitSprite ; $4976
-	ld de, $0d64 ; $4979
+	ld_xy de, $0d, $64 ; $4979
 	ld hl, wCharDataValuesSlideX ; $497c
 	call ApplySlideOffsetToSpriteX ; $497f
 	call QueueSprite ; $4982
@@ -306,7 +306,7 @@ CharDataValuesSyncTask:
 	cp $20 ; $4988
 	jr z, .eq205 ; $498a
 	call GetSummaryExpDigitSprite ; $498c
-	ld de, $1264 ; $498f
+	ld_xy de, $12, $64 ; $498f
 	ld hl, wCharDataValuesSlideX ; $4992
 	call ApplySlideOffsetToSpriteX ; $4995
 	call QueueSprite ; $4998
@@ -315,7 +315,7 @@ CharDataValuesSyncTask:
 	cp $20 ; $499e
 	jr z, .eq206 ; $49a0
 	call GetSummaryExpDigitSprite ; $49a2
-	ld de, $5864 ; $49a5
+	ld_xy de, $58, $64 ; $49a5
 	ld hl, wCharDataValuesSlideX ; $49a8
 	call ApplySlideOffsetToSpriteX ; $49ab
 	call QueueSprite ; $49ae
@@ -324,7 +324,7 @@ CharDataValuesSyncTask:
 	cp $20 ; $49b4
 	jr z, .eq207 ; $49b6
 	call GetSummaryExpDigitSprite ; $49b8
-	ld de, $5d64 ; $49bb
+	ld_xy de, $5d, $64 ; $49bb
 	ld hl, wCharDataValuesSlideX ; $49be
 	call ApplySlideOffsetToSpriteX ; $49c1
 	call QueueSprite ; $49c4
@@ -333,7 +333,7 @@ CharDataValuesSyncTask:
 	cp $20 ; $49ca
 	jr z, .checkEquippedRacket ; $49cc
 	call GetSummaryExpDigitSprite ; $49ce
-	ld de, $6264 ; $49d1
+	ld_xy de, $62, $64 ; $49d1
 	ld hl, wCharDataValuesSlideX ; $49d4
 	call ApplySlideOffsetToSpriteX ; $49d7
 	call QueueSprite ; $49da
@@ -344,7 +344,7 @@ CharDataValuesSyncTask:
 	jr z, .restore ; $49e3
 	ld b, $0e ; $49e5
 	ld c, $d6 ; $49e7
-	ld de, $303c ; $49e9
+	ld_xy de, $30, $3c ; $49e9
 	ld hl, wCharDataValuesSlideX ; $49ec
 	call ApplySlideOffsetToSpriteX ; $49ef
 	call QueueSprite ; $49f2
@@ -354,7 +354,7 @@ CharDataValuesSyncTask:
 	jr z, .done ; $49f8
 	ld b, $0e ; $49fa
 	ld c, $d8 ; $49fc
-	ld de, $383c ; $49fe
+	ld_xy de, $38, $3c ; $49fe
 	ld hl, wCharDataValuesSlideX ; $4a01
 	call ApplySlideOffsetToSpriteX ; $4a04
 	call QueueSprite ; $4a07

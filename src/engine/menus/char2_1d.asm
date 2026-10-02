@@ -108,7 +108,7 @@ DrawCharDataPageArrowsTask:
 	call QueueSpriteTemplate ; $4c2a
 	ret ; $4c2d
 .countDone:
-	ld de, $7f03 ; $4c2e
+	ld_xy de, $7f, $03 ; $4c2e
 	call BobArrowSpriteRight ; $4c31
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate3 ; $4c34
 	ld b, $0e ; $4c37
@@ -122,7 +122,7 @@ DrawCharDataPageArrowsTask:
 	ld b, $0e ; $4c48
 	ld c, $14 ; $4c4a
 	call QueueSpriteTemplate ; $4c4c
-	lb de, $68, $10 ; $4c4f x, y
+	ld_xy de, $68, $10 ; $4c4f
 	call BobArrowSpriteRight ; $4c52
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate1 ; $4c55
 	ld b, $0e ; $4c58

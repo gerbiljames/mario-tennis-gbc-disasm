@@ -18,13 +18,13 @@ Unused_02_DebugStoryStatsScreen:
 	jr z, .zero ; $4fcf
 	push de ; $4fd1
 	ld hl, MenuTilemaps_02 ; $4fd2
-	lb de, $08, $02 ; $4fd5 column, row
+	ld_cell de, $08, $02 ; $4fd5
 	call PrintString ; $4fd8
 	pop de ; $4fdb
 	jp .printString ; $4fdc
 .zero:
 	ld hl, DebugStoryStatsScreenString0 ; $4fdf
-	lb de, $08, $02 ; $4fe2 column, row
+	ld_cell de, $08, $02 ; $4fe2
 	call PrintString ; $4fe5
 	call Unused_02_ValidateN64TransferRecord ; $4fe8
 	or a ; $4feb
@@ -57,10 +57,10 @@ Unused_02_DebugStoryStatsScreen:
 .printString:
 	push de ; $5016
 	ld hl, DebugStoryStatsScreenString2 ; $5017
-	lb de, $02, $10 ; $501a column, row
+	ld_cell de, $02, $10 ; $501a
 	call PrintString ; $501d
 	ld hl, DebugStoryStatsScreenString2 ; $5020
-	lb de, $08, $10 ; $5023 column, row
+	ld_cell de, $08, $10 ; $5023
 	call PrintString ; $5026
 	pop de ; $5029
 .loopB:
@@ -293,7 +293,7 @@ Unused_02_DebugStoryStatsScreen:
 	sound SFX_MENU_SELECT ; $51e4
 	push de ; $51e6
 	ld hl, DebugStoryStatsScreenString1 ; $51e7
-	lb de, $08, $02 ; $51ea column, row
+	ld_cell de, $08, $02 ; $51ea
 	call PrintString ; $51ed
 	farcall SaveStorySlotWithTimer ; $51f0
 	pop de ; $51f3

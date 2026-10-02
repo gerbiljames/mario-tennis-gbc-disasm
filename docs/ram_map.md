@@ -465,7 +465,7 @@ already runs past those addresses is skipped, since it declares them already.
 | `$c780-$c784` | character select (bank `$1b`) | `wCharSelectChar`/`PrevChar`/`Col`/`Row` — cursor state over the roster grid at `$c7a0` |
 | `$ffd0-$ffef` | serial-link input slots (default) | `hLinkInput` (merged effective input, also the scripted-input feed), `hLinkRemoteInput`, `hLinkRemoteInputBuf` |
 | | sound driver (bank 0 `$3373-$3de0`) | full per-channel HRAM working set: `hSndScriptPtr`, `hSndVolume`, `hSndInstrument`, `hSndEnvRate/Length/Pos`, `hSndVolSlide*`, `hSndEcho*`, `hSndLoop*`, `hSndRestFlag`, … (28 fields) |
-| | sprite queue (bank 0 `$2ced-$2d9f`) | `hSpriteBlitY`, `hSpriteBlitX` |
+| | sprite queue (bank 0 `$2ced-$2d9f`) | `hSpriteBlitX`, `hSpriteBlitY` |
 | | story actor engine (banks `$04/$05/$0a`) | `hActorPtr` |
 | `$d100-$d219` | sound engine (`wram_bank $07`, + bank-0 `$2f00-$3de0`) | channel state blocks `wSndChannels`, loop stack `wSndLoopSlots`, per-pass globals `wSndActiveMask`/`wSndChannelType`/`wSndRegBase`/`wSndPanShadow`/… |
 | `$df00-$df96` | match char struct (`wram_bank $04/$05/$06/$07`, + match banks `$07`/`$08`) | per-character fields `wCharPosX`/`wCharState`/`wCharVel*`/`wCharSpriteSlot`/… (32); one name each, bank = character |

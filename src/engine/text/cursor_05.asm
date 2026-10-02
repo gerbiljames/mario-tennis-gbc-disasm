@@ -52,18 +52,18 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	jp .step3 ; $4cd3
 .isPauseOptionsMenuOpen:
 	ld l, $20 ; $4cd6
-	lb de, $0b, $01 ; $4cd8 column, row
+	ld_cell de, $0b, $01 ; $4cd8
 	farcall Unused_1a_QueueWindowTileWrite ; $4cdb
 	ld l, $20 ; $4cde
-	lb de, $0b, $03 ; $4ce0 column, row
+	ld_cell de, $0b, $03 ; $4ce0
 	farcall Unused_1a_QueueWindowTileWrite ; $4ce3
 	jr .step3 ; $4ce6
 .isMinigamePauseMenuOpen:
 	ld l, $20 ; $4ce8
-	lb de, $0d, $05 ; $4cea column, row
+	ld_cell de, $0d, $05 ; $4cea
 	farcall Unused_1a_QueueWindowTileWrite ; $4ced
 	ld l, $20 ; $4cf0
-	lb de, $0d, $07 ; $4cf2 column, row
+	ld_cell de, $0d, $07 ; $4cf2
 	farcall Unused_1a_QueueWindowTileWrite ; $4cf5
 	jr .step3 ; $4cf8
 .step3:
@@ -134,10 +134,10 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	jp .doneB ; $4d6a
 .isPauseOptionsMenuOpen2:
 	ld l, $20 ; $4d6d
-	lb de, $0b, $01 ; $4d6f column, row
+	ld_cell de, $0b, $01 ; $4d6f
 	farcall Unused_1a_QueueWindowTileWrite ; $4d72
 	ld l, $20 ; $4d75
-	lb de, $0b, $03 ; $4d77 column, row
+	ld_cell de, $0b, $03 ; $4d77
 	farcall Unused_1a_QueueWindowTileWrite ; $4d7a
 	ld a, [wMenuCursorRow] ; $4d7d
 	and a ; $4d80
@@ -147,10 +147,10 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld de, $0101 ; $4d87
 	jp z, .queueWindowTileWrite ; $4d8a
 	ld l, $0c ; $4d8d
-	lb de, $01, $01 ; $4d8f column, row
+	ld_cell de, $01, $01 ; $4d8f
 	farcall Unused_1a_QueueWindowTileWrite ; $4d92
 	ld l, $0d ; $4d95
-	lb de, $0b, $01 ; $4d97 column, row
+	ld_cell de, $0b, $01 ; $4d97
 	farcall Unused_1a_QueueWindowTileWrite ; $4d9a
 	jp .doneB ; $4d9d
 .getMenuCursorBlinkPhase:
@@ -159,18 +159,18 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld de, $0103 ; $4da4
 	jp z, .queueWindowTileWrite ; $4da7
 	ld l, $0c ; $4daa
-	lb de, $01, $03 ; $4dac column, row
+	ld_cell de, $01, $03 ; $4dac
 	farcall Unused_1a_QueueWindowTileWrite ; $4daf
 	ld l, $0d ; $4db2
-	lb de, $0b, $03 ; $4db4 column, row
+	ld_cell de, $0b, $03 ; $4db4
 	farcall Unused_1a_QueueWindowTileWrite ; $4db7
 	jp .doneB ; $4dba
 .isMinigamePauseMenuOpen2:
 	ld l, $20 ; $4dbd
-	lb de, $0d, $05 ; $4dbf column, row
+	ld_cell de, $0d, $05 ; $4dbf
 	farcall Unused_1a_QueueWindowTileWrite ; $4dc2
 	ld l, $20 ; $4dc5
-	lb de, $0d, $07 ; $4dc7 column, row
+	ld_cell de, $0d, $07 ; $4dc7
 	farcall Unused_1a_QueueWindowTileWrite ; $4dca
 	ld a, [wMenuCursorRow] ; $4dcd
 	cp $03 ; $4dd0
@@ -180,10 +180,10 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld de, $0105 ; $4dd8
 	jr z, .queueWindowTileWrite ; $4ddb
 	ld l, $0c ; $4ddd
-	lb de, $01, $05 ; $4ddf column, row
+	ld_cell de, $01, $05 ; $4ddf
 	farcall Unused_1a_QueueWindowTileWrite ; $4de2
 	ld l, $0d ; $4de5
-	lb de, $0d, $05 ; $4de7 column, row
+	ld_cell de, $0d, $05 ; $4de7
 	farcall Unused_1a_QueueWindowTileWrite ; $4dea
 	jr .doneB ; $4ded
 .getMenuCursorBlinkPhase2:
@@ -192,10 +192,10 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld de, $0107 ; $4df3
 	jr z, .queueWindowTileWrite ; $4df6
 	ld l, $0c ; $4df8
-	lb de, $01, $07 ; $4dfa column, row
+	ld_cell de, $01, $07 ; $4dfa
 	farcall Unused_1a_QueueWindowTileWrite ; $4dfd
 	ld l, $0d ; $4e00
-	lb de, $0d, $07 ; $4e02 column, row
+	ld_cell de, $0d, $07 ; $4e02
 	farcall Unused_1a_QueueWindowTileWrite ; $4e05
 	jr .doneB ; $4e08
 .queueWindowTileWrite:

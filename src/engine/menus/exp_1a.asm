@@ -20,7 +20,7 @@ Unused_1a_ExpScreenDrawTask:
 	ld bc, $0e00 ; $479e
 	ld hl, ExpScreenDrawTask_SpriteTemplate ; $47a1
 	lb bc, $09, $c0 ; $47a4 attr, tile
-	lb de, $70, $58 ; $47a7 x, y
+	ld_xy de, $70, $58 ; $47a7
 	call QueueSpriteTemplate ; $47aa
 	ld a, [wExpScreenFlags] ; $47ad
 	and $80 ; $47b0

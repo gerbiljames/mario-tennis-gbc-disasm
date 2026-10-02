@@ -14,13 +14,13 @@ DrawSavedDataTypeSelectCursor:
 DrawSavedDataCursorOption0:
 	ld c, $00 ; $72b8
 	ld b, $08 ; $72ba
-	ld de, $0c50 ; $72bc
+	ld_xy de, $0c, $50 ; $72bc
 	farcall ApplySpriteBobOffset ; $72bf
 	ld hl, DrawSavedDataCursorOption0_SpriteTemplate ; $72c2
 	call QueueSpriteTemplate ; $72c5
 	ld b, $08 ; $72c8
 	ld c, $70 ; $72ca
-	ld de, $2448 ; $72cc
+	ld_xy de, $24, $48 ; $72cc
 	farcall ApplySpriteBobOffset ; $72cf
 	ld hl, SpriteTemplate_1b ; $72d2
 	call QueueSpriteTemplate ; $72d5
@@ -28,13 +28,13 @@ DrawSavedDataCursorOption0:
 DrawSavedDataCursorOption1:
 	ld c, $10 ; $72d9
 	ld b, $08 ; $72db
-	ld de, $5050 ; $72dd
+	ld_xy de, $50, $50 ; $72dd
 	farcall ApplySpriteBobOffset ; $72e0
 	ld hl, DrawSavedDataCursorOption1_SpriteTemplate ; $72e3
 	call QueueSpriteTemplate ; $72e6
 	ld b, $08 ; $72e9
 	ld c, $70 ; $72eb
-	ld de, $6c48 ; $72ed
+	ld_xy de, $6c, $48 ; $72ed
 	farcall ApplySpriteBobOffset ; $72f0
 	ld hl, SpriteTemplate_1b ; $72f3
 	call QueueSpriteTemplate ; $72f6

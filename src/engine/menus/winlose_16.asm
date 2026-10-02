@@ -49,12 +49,12 @@ PrintMatchSetScores:
 	ld a, [wPlayer1SetsWon] ; $5fce
 	ld h, $00 ; $5fd1
 	ld l, a ; $5fd3
-	ld de, $1c48 ; $5fd4
+	ld_xy de, $1c, $48 ; $5fd4
 	farcall DrawDecimalNumberSprites_39 ; $5fd7
 	ld a, [wPlayer2SetsWon] ; $5fda
 	ld h, $00 ; $5fdd
 	ld l, a ; $5fdf
-	ld de, $8448 ; $5fe0
+	ld_xy de, $84, $48 ; $5fe0
 	farcall DrawDecimalNumberSprites_39 ; $5fe3
 	ret ; $5fe6
 LoadResultScreenPortraits:

@@ -524,10 +524,25 @@ MACRO palette
 ENDM
 
 ; lb pair, hi, lo -- load two bytes into a register pair with one 16-bit
-; immediate. Used where a callee reads the halves separately (QueueSprite's
-; x/y, LoadPaletteShadow's index/count, ...); the site comment says which.
+; immediate. Used where a callee reads the halves separately
+; (LoadPaletteShadow's index/count, ...); the site comment says which. A
+; screen position is ld_xy and a map cell ld_cell, below.
 MACRO lb
 	ld \1, ((\2) << 8) | (\3)
+ENDM
+
+; ld_xy pair, x, y -- a sprite's screen position as the sprite routines take
+; it: x in the high register, y in the low. QueueSprite writes e (+$0c) as
+; the OAM Y byte and d (+$04) as the X byte; every helper that offsets a
+; position on its way there follows the same order.
+MACRO ld_xy
+	lb \1, \2, \3
+ENDM
+
+; ld_cell pair, column, row -- a background-map cell as the text and window
+; routines take it: the column in the high register, the row in the low.
+MACRO ld_cell
+	lb \1, \2, \3
 ENDM
 
 ; ld_flag_id pair, FLAG_NAME -- the (byte << 8) | (bit << 5) form of a game

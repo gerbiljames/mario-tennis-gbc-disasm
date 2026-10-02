@@ -458,23 +458,23 @@ DrawExpToNextLevelTask:
 	cp $20 ; $7695
 	jr z, .eq20 ; $7697
 	call GetExpScreenDigitSprite ; $7699
-	lb de, $18, $2f ; $769c x, y
+	ld_xy de, $18, $2f ; $769c
 	call QueueSprite ; $769f
 .eq20:
 	ld a, [wCharDataNumberBuffer + 1] ; $76a2
 	cp $20 ; $76a5
 	jr z, .eq202 ; $76a7
 	call GetExpScreenDigitSprite ; $76a9
-	lb de, $1f, $2f ; $76ac x, y
+	ld_xy de, $1f, $2f ; $76ac
 	call QueueSprite ; $76af
 .eq202:
 	ld a, [wCharDataNumberBuffer + 2] ; $76b2
 	call GetExpScreenDigitSprite ; $76b5
-	lb de, $26, $2f ; $76b8 x, y
+	ld_xy de, $26, $2f ; $76b8
 	call QueueSprite ; $76bb
 	ld hl, DrawExpToNextLevelTask_SpriteTemplate0 ; $76be
 	lb bc, $0e, $2c ; $76c1 attr, tile
-	lb de, $14, $2e ; $76c4 x, y
+	ld_xy de, $14, $2e ; $76c4
 	call QueueSpriteTemplate ; $76c7
 	ret ; $76ca
 .nonZero:
@@ -493,23 +493,23 @@ DrawExpToNextLevelTask:
 	cp $20 ; $76e8
 	jr z, .eq203 ; $76ea
 	call GetExpScreenDigitSprite ; $76ec
-	lb de, $18, $62 ; $76ef x, y
+	ld_xy de, $18, $62 ; $76ef
 	call QueueSprite ; $76f2
 .eq203:
 	ld a, [wCharDataNumberBuffer + 1] ; $76f5
 	cp $20 ; $76f8
 	jr z, .eq204 ; $76fa
 	call GetExpScreenDigitSprite ; $76fc
-	lb de, $1f, $62 ; $76ff x, y
+	ld_xy de, $1f, $62 ; $76ff
 	call QueueSprite ; $7702
 .eq204:
 	ld a, [wCharDataNumberBuffer + 2] ; $7705
 	call GetExpScreenDigitSprite ; $7708
-	lb de, $26, $62 ; $770b x, y
+	ld_xy de, $26, $62 ; $770b
 	call QueueSprite ; $770e
 	ld hl, DrawExpToNextLevelTask_SpriteTemplate1 ; $7711
 	lb bc, $0e, $44 ; $7714 attr, tile
-	lb de, $14, $61 ; $7717 x, y
+	ld_xy de, $14, $61 ; $7717
 	call QueueSpriteTemplate ; $771a
 	ret ; $771d
 GetExpScreenDigitSprite:

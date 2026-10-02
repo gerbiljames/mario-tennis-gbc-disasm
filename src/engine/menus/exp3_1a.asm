@@ -369,22 +369,22 @@ Unused_1a_DrawCharViewerGridCursor:
 	jr z, .queueSprite ; $6ac6
 	ld b, $0a ; $6ac8
 	ld c, $86 ; $6aca
-	lb de, $96, $4a ; $6acc x, y
+	ld_xy de, $96, $4a ; $6acc
 	call QueueSprite ; $6acf
 	jr .checkVBlankCounter ; $6ad2
 	ld b, $0a ; $6ad4
 	ld c, $84 ; $6ad6
-	lb de, $0a, $4a ; $6ad8 x, y
+	ld_xy de, $0a, $4a ; $6ad8
 	call QueueSprite ; $6adb
 	ld b, $0a ; $6ade
 	ld c, $86 ; $6ae0
-	lb de, $96, $4a ; $6ae2 x, y
+	ld_xy de, $96, $4a ; $6ae2
 	call QueueSprite ; $6ae5
 	jr .checkVBlankCounter ; $6ae8
 .queueSprite:
 	ld b, $0a ; $6aea
 	ld c, $84 ; $6aec
-	lb de, $0a, $4a ; $6aee x, y
+	ld_xy de, $0a, $4a ; $6aee
 	call QueueSprite ; $6af1
 .checkVBlankCounter:
 	ldh a, [hVBlankCounter] ; $6af4

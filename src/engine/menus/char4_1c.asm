@@ -167,37 +167,37 @@ SelectCharDataConfirmSlot:
 DrawStatArrowIndicators:
 	wram_bank WRAM_SCENE ; $54f2
 	ld a, [wCharDataStatDeltas] ; $54f8
-	lb de, $4c, $24 ; $54fb x, y
+	ld_xy de, $4c, $24 ; $54fb
 	call QueueStatChangeArrow ; $54fe
 	ld a, [wCharDataStatDeltas + 1] ; $5501
-	lb de, $4c, $34 ; $5504 x, y
+	ld_xy de, $4c, $34 ; $5504
 	call QueueStatChangeArrow ; $5507
 	ld a, [wCharDataStatDeltas + 2] ; $550a
-	lb de, $4c, $4c ; $550d x, y
+	ld_xy de, $4c, $4c ; $550d
 	call QueueStatChangeArrow ; $5510
 	ld a, [wCharDataStatDeltas + 3] ; $5513
-	lb de, $4c, $5c ; $5516 x, y
+	ld_xy de, $4c, $5c ; $5516
 	call QueueStatChangeArrow ; $5519
 	ld a, [wCharDataStatDeltas + 4] ; $551c
-	lb de, $4c, $6c ; $551f x, y
+	ld_xy de, $4c, $6c ; $551f
 	call QueueStatChangeArrow ; $5522
 	ld a, [wCharDataStatDeltas + 5] ; $5525
-	lb de, $9c, $24 ; $5528 x, y
+	ld_xy de, $9c, $24 ; $5528
 	call QueueStatChangeArrow ; $552b
 	ld a, [wCharDataStatDeltas + 6] ; $552e
-	lb de, $9c, $34 ; $5531 x, y
+	ld_xy de, $9c, $34 ; $5531
 	call QueueStatChangeArrow ; $5534
 	ld a, [wCharDataStatDeltas + 7] ; $5537
-	lb de, $9c, $4c ; $553a x, y
+	ld_xy de, $9c, $4c ; $553a
 	call QueueStatChangeArrow ; $553d
 	ld a, [wCharDataStatDeltas + 8] ; $5540
-	lb de, $9c, $5c ; $5543 x, y
+	ld_xy de, $9c, $5c ; $5543
 	call QueueStatChangeArrow ; $5546
 	ld a, [wCharDataStatDeltas + 9] ; $5549
-	lb de, $9c, $6c ; $554c x, y
+	ld_xy de, $9c, $6c ; $554c
 	call QueueStatChangeArrow ; $554f
 	ld a, [wCharDataStatDeltas + 10] ; $5552
-	lb de, $9c, $7c ; $5555 x, y
+	ld_xy de, $9c, $7c ; $5555
 	call QueueStatChangeArrow ; $5558
 	ret ; $555b
 QueueStatChangeArrow:

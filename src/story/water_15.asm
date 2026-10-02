@@ -120,7 +120,7 @@ WaterSpriteSwingContestScene:
 	script_wait_frames $32 ; $56b5
 	ld l, $03 ; $56bc
 	ld h, $00 ; $56be
-	ld de, $502c ; $56c0
+	ld_xy de, $50, $2c ; $56c0
 .win:
 	sound SFX_CONTEST_WIN ; $56c3
 	ld b, $3c ; $56c5
@@ -208,13 +208,13 @@ DrawWaterSpriteMinigameCounters:
 	ld a, $00 ; $5793
 	ld e, $3c ; $5795
 	call DivAHLByE ; $5797
-	ld de, $2010 ; $579a
+	ld_xy de, $20, $10 ; $579a
 	farcall DrawDecimalNumberSprites_39 ; $579d
 	ld hl, wSwingContestSwings ; $57a0
 	ld a, [hl+] ; $57a3
 	ld h, [hl] ; $57a4
 	ld l, a ; $57a5
-	ld de, $8010 ; $57a6
+	ld_xy de, $80, $10 ; $57a6
 	farcall DrawDecimalNumberSprites_39 ; $57a9
 	ret ; $57ac
 QueueWaterSpriteMinigameTimerPanel_SpriteTemplate:

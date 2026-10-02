@@ -683,28 +683,28 @@ DrawExpTotalDigits:
 	cp $20 ; $5a6b
 	jr z, .eq20 ; $5a6d
 	call GetDigitSpriteTile ; $5a6f
-	lb de, $6b, $77 ; $5a72 x, y
+	ld_xy de, $6b, $77 ; $5a72
 	call QueueSprite ; $5a75
 .eq20:
 	ld a, [wTextBuffer + 1] ; $5a78
 	cp $20 ; $5a7b
 	jr z, .eq202 ; $5a7d
 	call GetDigitSpriteTile ; $5a7f
-	lb de, $73, $77 ; $5a82 x, y
+	ld_xy de, $73, $77 ; $5a82
 	call QueueSprite ; $5a85
 .eq202:
 	ld a, [wTextBuffer + 2] ; $5a88
 	cp $20 ; $5a8b
 	jr z, .eq203 ; $5a8d
 	call GetDigitSpriteTile ; $5a8f
-	lb de, $7b, $77 ; $5a92 x, y
+	ld_xy de, $7b, $77 ; $5a92
 	call QueueSprite ; $5a95
 .eq203:
 	ld a, [wTextBuffer + 3] ; $5a98
 	cp $20 ; $5a9b
 	jr z, .done ; $5a9d
 	call GetDigitSpriteTile ; $5a9f
-	lb de, $83, $77 ; $5aa2 x, y
+	ld_xy de, $83, $77 ; $5aa2
 	call QueueSprite ; $5aa5
 .done:
 	ret ; $5aa8
@@ -713,35 +713,35 @@ DrawExpTotalDigits:
 	cp $20 ; $5aac
 	jr z, .eq204 ; $5aae
 	call GetDigitSpriteTile ; $5ab0
-	lb de, $67, $77 ; $5ab3 x, y
+	ld_xy de, $67, $77 ; $5ab3
 	call QueueSprite ; $5ab6
 .eq204:
 	ld a, [wTextBuffer + 1] ; $5ab9
 	cp $20 ; $5abc
 	jr z, .eq205 ; $5abe
 	call GetDigitSpriteTile ; $5ac0
-	lb de, $6f, $77 ; $5ac3 x, y
+	ld_xy de, $6f, $77 ; $5ac3
 	call QueueSprite ; $5ac6
 .eq205:
 	ld a, [wTextBuffer + 2] ; $5ac9
 	cp $20 ; $5acc
 	jr z, .eq206 ; $5ace
 	call GetDigitSpriteTile ; $5ad0
-	lb de, $77, $77 ; $5ad3 x, y
+	ld_xy de, $77, $77 ; $5ad3
 	call QueueSprite ; $5ad6
 .eq206:
 	ld a, [wTextBuffer + 3] ; $5ad9
 	cp $20 ; $5adc
 	jr z, .eq207 ; $5ade
 	call GetDigitSpriteTile ; $5ae0
-	lb de, $7f, $77 ; $5ae3 x, y
+	ld_xy de, $7f, $77 ; $5ae3
 	call QueueSprite ; $5ae6
 .eq207:
 	ld a, [wTextBuffer + 4] ; $5ae9
 	cp $20 ; $5aec
 	jr z, .doneB ; $5aee
 	call GetDigitSpriteTile ; $5af0
-	lb de, $87, $77 ; $5af3 x, y
+	ld_xy de, $87, $77 ; $5af3
 	call QueueSprite ; $5af6
 .doneB:
 	ret ; $5af9

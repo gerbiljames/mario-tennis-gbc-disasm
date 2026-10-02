@@ -28,7 +28,11 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tpop_wram_bank"), 452)
         self.assertEqual(count(r"^\tld_hl_indexed "), 424)
         self.assertEqual(count(r"^\twait_frames "), 79)
-        self.assertEqual(count(r"^\tlb (de|bc|hl), "), 443)
+        self.assertEqual(count(r"^\tlb (de|bc|hl), "), 335)
+        self.assertEqual(count(r"^\tld_xy de, "), 163)
+        self.assertEqual(count(r"^\tld_cell de, "), 44)
+        self.assertEqual(count(r"^\tlb de, .*; \$[0-9a-f]{4} (x, y|y, x|column, row)$"), 0,
+                         "a position written with lb instead of ld_xy/ld_cell")
         self.assertEqual(count(r"^\tadd LOW\((?!ActorFieldTypeTable_04\))"), 0, "no split-base index left raw")
         self.assertEqual(count(r"inline arg$"), 0)
         self.assertEqual(count(r"^\tld_slot hl, "), 37)

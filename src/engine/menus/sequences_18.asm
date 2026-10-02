@@ -110,7 +110,7 @@ Screen1ObjPalette:
 	INCLUDE "data/bank_018/Screen1ObjPalette.asm" ; $78c5, 8 bytes (palettes)
 QueueScreen1Sprites:
 	ld hl, QueueScreen1Sprites_SpriteTemplate ; $78cd
-	lb de, $28, $3a ; $78d0 x, y
+	ld_xy de, $28, $3a ; $78d0
 	ld c, $00 ; $78d3
 	ld b, $00 ; $78d5
 	call QueueSpriteTemplate ; $78d7
@@ -266,7 +266,7 @@ Screen2ObjPalette:
 	INCLUDE "data/bank_018/Screen2ObjPalette.asm" ; $7a41, 8 bytes (palettes)
 QueueScreen2Sprites:
 	ld hl, QueueScreen2Sprites_SpriteTemplate ; $7a49
-	lb de, $28, $40 ; $7a4c x, y
+	ld_xy de, $28, $40 ; $7a4c
 	ld c, $00 ; $7a4f
 	ld b, $00 ; $7a51
 	call QueueSpriteTemplate ; $7a53

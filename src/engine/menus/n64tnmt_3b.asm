@@ -350,7 +350,7 @@ N64TnmtScrollArrowsTask:
 	ld a, [wDataScreenPage] ; $50e5
 	or a ; $50e8
 	jr nz, .applyCursorBounceX ; $50e9
-	ld de, $932f ; $50eb
+	ld_xy de, $93, $2f ; $50eb
 	ld c, $01 ; $50ee
 	call ApplyCursorBounceX ; $50f0
 	ld b, $08 ; $50f3
@@ -361,7 +361,7 @@ N64TnmtScrollArrowsTask:
 	ld a, [wDataScreenPage] ; $50fc
 	or a ; $50ff
 	jr z, .zero ; $5100
-	ld de, $202f ; $5102
+	ld_xy de, $20, $2f ; $5102
 	ld c, $00 ; $5105
 	call ApplyCursorBounceX ; $5107
 	ld b, $08 ; $510a
@@ -372,7 +372,7 @@ N64TnmtScrollArrowsTask:
 	ld a, [wDataScreenCursorRow] ; $5113
 	or a ; $5116
 	jr z, .zero2 ; $5117
-	ld de, $0c32 ; $5119
+	ld_xy de, $0c, $32 ; $5119
 	ld c, $01 ; $511c
 	call ApplyCursorBounceY ; $511e
 	ld b, $08 ; $5121
@@ -383,7 +383,7 @@ N64TnmtScrollArrowsTask:
 	ld a, [wDataScreenCursorRow] ; $512a
 	cp $0b ; $512d
 	jr z, .restore ; $512f
-	ld de, $0c88 ; $5131
+	ld_xy de, $0c, $88 ; $5131
 	ld c, $00 ; $5134
 	call ApplyCursorBounceY ; $5136
 	ld b, $08 ; $5139

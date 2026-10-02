@@ -420,7 +420,7 @@ MarioCastChartScrollArrowsTask:
 	ld a, [wMenuCursorX] ; $7a7c
 	cp $02 ; $7a7f
 	jr z, .checkMenuCursorX ; $7a81
-	ld de, $932f ; $7a83
+	ld_xy de, $93, $2f ; $7a83
 	ld c, $01 ; $7a86
 	call ApplyCursorBounceX ; $7a88
 	ld b, $08 ; $7a8b
@@ -431,7 +431,7 @@ MarioCastChartScrollArrowsTask:
 	ld a, [wMenuCursorX] ; $7a94
 	or a ; $7a97
 	jr z, .checkMenuCursorY ; $7a98
-	ld de, $082f ; $7a9a
+	ld_xy de, $08, $2f ; $7a9a
 	ld c, $00 ; $7a9d
 	call ApplyCursorBounceX ; $7a9f
 	ld b, $08 ; $7aa2
@@ -442,7 +442,7 @@ MarioCastChartScrollArrowsTask:
 	ld a, [wMenuCursorY] ; $7aab
 	or a ; $7aae
 	jr z, .checkMenuCursorY2 ; $7aaf
-	ld de, $0a20 ; $7ab1
+	ld_xy de, $0a, $20 ; $7ab1
 	ld c, $01 ; $7ab4
 	call ApplyCursorBounceY ; $7ab6
 	ld b, $08 ; $7ab9
@@ -453,7 +453,7 @@ MarioCastChartScrollArrowsTask:
 	ld a, [wMenuCursorY] ; $7ac2
 	cp $05 ; $7ac5
 	jr z, .eq05 ; $7ac7
-	ld de, $0a78 ; $7ac9
+	ld_xy de, $0a, $78 ; $7ac9
 	ld c, $00 ; $7acc
 	call ApplyCursorBounceY ; $7ace
 	ld b, $08 ; $7ad1
@@ -466,7 +466,7 @@ MarioCastChartScrollArrowsTask:
 	ld a, [wMenuCursorY] ; $7adc
 	or a ; $7adf
 	jr z, .checkMenuCursorY4 ; $7ae0
-	ld de, $1a20 ; $7ae2
+	ld_xy de, $1a, $20 ; $7ae2
 	ld c, $01 ; $7ae5
 	call ApplyCursorBounceY ; $7ae7
 	ld b, $08 ; $7aea
@@ -477,7 +477,7 @@ MarioCastChartScrollArrowsTask:
 	ld a, [wMenuCursorY] ; $7af3
 	cp $01 ; $7af6
 	jr z, .restore ; $7af8
-	ld de, $1a78 ; $7afa
+	ld_xy de, $1a, $78 ; $7afa
 	ld c, $00 ; $7afd
 	call ApplyCursorBounceY ; $7aff
 	ld b, $08 ; $7b02

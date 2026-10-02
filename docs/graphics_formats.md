@@ -282,13 +282,17 @@ routines take (`InitNumberSpriteGfx`, `CopyMugshotBufferToVram`, the result
 portraits' `ResultPortraitSlotTable`), and the map and tile bases added to an
 offset (`ld de, vBGMap0` / `add hl, de` at `$00:$223a`).
 
-The 22 words in `$8000`-`$9fff` that stay literal are not addresses, which
-is why a name is decided by what consumes the word rather than by its range:
-sprite positions for `QueueSprite`, `DrawMinigameScore` and
-`DrawDecimalNumberSprites_39` (`ld de, $932f` is y `$93`, x `$2f`), the
-packed attribute/tile pair `ld bc, $800d` for `WriteWindowCellTileAttr`, a
-clamped return value (`ld hl, $8001` in `GetTangent`, `$00:$1793`), and two `ld bc,
-$8000` arguments to `InitCa00RecordFromCharId` in `LoadStorySlot`.
+A word in `$8000`-`$9fff` is not always an address, which is why a name is
+decided by what consumes the word rather than by its range. Sprite screen
+positions are written `ld_xy de, x, y` (x in `d`, y in `e`, the order
+`QueueSprite` and every helper on the way to it take), so `ld_xy de, $93, $2f`
+is never mistaken for a tile address, and background-map cells handed to
+the text and window routines are `ld_cell de, column, row`
+(`include/macros.inc`). The few words in that range left as numbers are a
+packed attribute/tile pair (`ld bc, $800d` for `WriteWindowCellTileAttr`), a
+clamped return value (`ld hl, $8001` in `GetTangent`, `$00:$1793`), two
+`ld bc, $8000` arguments to `InitCa00RecordFromCharId` in `LoadStorySlot`,
+and three `map_script` flag conditions.
 
 ### 2.4 The two map planes
 

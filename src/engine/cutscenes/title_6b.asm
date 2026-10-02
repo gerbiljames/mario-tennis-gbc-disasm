@@ -161,7 +161,7 @@ QueueTitleSprite:
 	inc h ; $76d5
 .readB:
 	ld b, [hl] ; $76d6
-	lb de, $28, $58 ; $76d7 x, y
+	ld_xy de, $28, $58 ; $76d7
 	ld hl, QueueTitleSprite_SpriteTemplate ; $76da
 	call QueueSpriteTemplate ; $76dd
 	pop_wram_bank ; $76e0

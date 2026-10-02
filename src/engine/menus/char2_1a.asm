@@ -1,9 +1,9 @@
 Unused_1a_DrawCharViewerCharSprite:
 	lb bc, $07, $70 ; $7012 attr, tile
-	lb de, $46, $15 ; $7015 x, y
+	ld_xy de, $46, $15 ; $7015
 	call QueueSprite ; $7018
 	lb bc, $07, $72 ; $701b attr, tile
-	lb de, $4e, $15 ; $701e x, y
+	ld_xy de, $4e, $15 ; $701e
 	call QueueSprite ; $7021
 	wram_bank WRAM_CHAR0 ; $7024
 	ld hl, wCharPosX ; $702a
@@ -442,7 +442,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7c0e
 	ld a, [wCharDataStatDeltas] ; $7c0f
 	add l ; $7c12
-	ld de, $142c ; $7c13
+	ld_xy de, $14, $2c ; $7c13
 	call ComputeStatArrowSpriteX ; $7c16
 	push de ; $7c19
 	call QueueSprite ; $7c1a
@@ -464,7 +464,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7c3b
 	ld a, [wCharDataStatDeltas + 1] ; $7c3c
 	add l ; $7c3f
-	ld de, $143c ; $7c40
+	ld_xy de, $14, $3c ; $7c40
 	call ComputeStatArrowSpriteX ; $7c43
 	push de ; $7c46
 	call QueueSprite ; $7c47
@@ -486,7 +486,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7c68
 	ld a, [wCharDataStatDeltas + 2] ; $7c69
 	add l ; $7c6c
-	ld de, $1454 ; $7c6d
+	ld_xy de, $14, $54 ; $7c6d
 	call ComputeStatArrowSpriteX ; $7c70
 	push de ; $7c73
 	call QueueSprite ; $7c74
@@ -508,7 +508,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7c95
 	ld a, [wCharDataStatDeltas + 3] ; $7c96
 	add l ; $7c99
-	ld de, $1464 ; $7c9a
+	ld_xy de, $14, $64 ; $7c9a
 	call ComputeStatArrowSpriteX ; $7c9d
 	push de ; $7ca0
 	call QueueSprite ; $7ca1
@@ -530,7 +530,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7cc2
 	ld a, [wCharDataStatDeltas + 4] ; $7cc3
 	add l ; $7cc6
-	ld de, $1474 ; $7cc7
+	ld_xy de, $14, $74 ; $7cc7
 	call ComputeStatArrowSpriteX ; $7cca
 	push de ; $7ccd
 	call QueueSprite ; $7cce
@@ -552,7 +552,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7cef
 	ld a, [wCharDataStatDeltas + 5] ; $7cf0
 	add l ; $7cf3
-	ld de, $642c ; $7cf4
+	ld_xy de, $64, $2c ; $7cf4
 	call ComputeStatArrowSpriteX ; $7cf7
 	push de ; $7cfa
 	call QueueSprite ; $7cfb
@@ -574,7 +574,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7d1c
 	ld a, [wCharDataStatDeltas + 6] ; $7d1d
 	add l ; $7d20
-	ld de, $643c ; $7d21
+	ld_xy de, $64, $3c ; $7d21
 	call ComputeStatArrowSpriteX ; $7d24
 	push de ; $7d27
 	call QueueSprite ; $7d28
@@ -596,7 +596,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7d49
 	ld a, [wCharDataStatDeltas + 7] ; $7d4a
 	add l ; $7d4d
-	ld de, $6454 ; $7d4e
+	ld_xy de, $64, $54 ; $7d4e
 	call ComputeStatArrowSpriteX ; $7d51
 	push de ; $7d54
 	call QueueSprite ; $7d55
@@ -618,7 +618,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7d76
 	ld a, [wCharDataStatDeltas + 8] ; $7d77
 	add l ; $7d7a
-	ld de, $6464 ; $7d7b
+	ld_xy de, $64, $64 ; $7d7b
 	call ComputeStatArrowSpriteX ; $7d7e
 	push de ; $7d81
 	call QueueSprite ; $7d82
@@ -640,7 +640,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7da3
 	ld a, [wCharDataStatDeltas + 9] ; $7da4
 	add l ; $7da7
-	ld de, $6474 ; $7da8
+	ld_xy de, $64, $74 ; $7da8
 	call ComputeStatArrowSpriteX ; $7dab
 	push de ; $7dae
 	call QueueSprite ; $7daf
@@ -662,7 +662,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7dd0
 	ld a, [wCharDataStatDeltas + 10] ; $7dd1
 	add l ; $7dd4
-	ld de, $6484 ; $7dd5
+	ld_xy de, $64, $84 ; $7dd5
 	call ComputeStatArrowSpriteX ; $7dd8
 	push de ; $7ddb
 	call QueueSprite ; $7ddc

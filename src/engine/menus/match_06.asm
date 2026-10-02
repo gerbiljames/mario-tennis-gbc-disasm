@@ -339,7 +339,7 @@ ShowRulesPageSequence:
 .done:
 	ret ; $4372
 DrawRulesNextPageArrow_06:
-	ld de, $9080 ; $4373
+	ld_xy de, $90, $80 ; $4373
 	farcall AddBobbingOffsetY ; $4376
 	ld bc, $0a70 ; $4379
 	call QueueSprite16 ; $437c

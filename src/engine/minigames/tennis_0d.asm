@@ -257,7 +257,7 @@ UpdateMinigameHudAndBallTrail:
 	ld a, [wPointWinLoseFlag] ; $4abb
 	and a ; $4abe
 	jr nz, .trail ; $4abf
-	ld de, $8484 ; $4ac1
+	ld_xy de, $84, $84 ; $4ac1
 	call DrawMinigameScore ; $4ac4
 .trail:
 	push_wram_bank WRAM_ACTORS ; $4ac7

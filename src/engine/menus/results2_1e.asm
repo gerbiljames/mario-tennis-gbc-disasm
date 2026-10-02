@@ -357,10 +357,10 @@ DrawContinuePromptCursor:
 	ld a, [wContinuePromptRow] ; $4b4c
 	or a ; $4b4f
 	jr nz, .nonZero ; $4b50
-	lb de, $7a, $3c ; $4b52 x, y
+	ld_xy de, $7a, $3c ; $4b52
 	jr .queueSprite ; $4b55
 .nonZero:
-	lb de, $7a, $44 ; $4b57 x, y
+	ld_xy de, $7a, $44 ; $4b57
 .queueSprite:
 	lb bc, $08, $8e ; $4b5a attr, tile
 	call QueueSprite ; $4b5d

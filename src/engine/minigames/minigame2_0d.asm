@@ -313,7 +313,7 @@ StartMinigameMatch:
 	call PlayMinigameCountdown ; $46d3
 	ret ; $46d6
 DrawMinigameScoreHud:
-	ld de, $8403 ; $46d7
+	ld_xy de, $84, $03 ; $46d7
 	call DrawMinigameScore ; $46da
 	ld a, [wMinigameServeState] ; $46dd
 	and a ; $46e0

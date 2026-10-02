@@ -173,7 +173,7 @@ RankingCursorBobTask:
 	ld a, [wRankingBoardDoubles] ; $5a0d
 	or a ; $5a10
 	jr z, .applySpriteBobOffset ; $5a11
-	ld de, $3050 ; $5a13
+	ld_xy de, $30, $50 ; $5a13
 .applySpriteBobOffset:
 	farcall ApplySpriteBobOffset ; $5a16
 	ld hl, RankingCursorBobTask_SpriteTemplate ; $5a19
