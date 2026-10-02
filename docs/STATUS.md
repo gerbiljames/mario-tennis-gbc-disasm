@@ -152,6 +152,12 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-03 — save names, map patches, a save bug.** The save header,
+  directory fields and block ids have names (`sSaveHeader`, `SAVEDIR_*`,
+  `SAVEBLOCK_*`). 36 character-data streams named `*Gfx*` are tile and
+  attribute patches, renamed and (20 of them) given grids. In PyBoy, one
+  corrupted signature byte wipes the whole save: boot re-checksums the header
+  and copies it over its own backup before validating it (`docs/bugs.md`).
 * **2026-10-03 — sizes and positions.** Copy and clear lengths follow what
   they copy: a RAM object's exported size (`export_size`), a decompressed
   stream's `_SIZE`, or a named slice (`SCREEN_HEIGHT * TILEMAP_WIDTH`,
