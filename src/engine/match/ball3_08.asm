@@ -126,7 +126,7 @@ DrawSpecialHitEffect:
 	ld a, e ; $544a
 	add $08 ; $544b
 	ld e, a ; $544d
-	ld bc, $0974 ; $544e
+	ld_oam bc, OAM_BANK1 | 1, $74 ; $544e
 	call QueueSprite16 ; $5451
 	ld hl, wSpecialHitTimer ; $5454
 	call TickTimer ; $5457
@@ -162,7 +162,7 @@ DrawBallTouchCharEffect:
 	add $f8 ; $549b
 	ld e, a ; $549d
 	wram_bank WRAM_ACTORS ; $549e
-	ld bc, $0a78 ; $54a4
+	ld_oam bc, OAM_BANK1 | 2, $78 ; $54a4
 	call QueueSprite16 ; $54a7
 	ld hl, wBallTouchCharTimer ; $54aa
 	call TickTimer ; $54ad
@@ -192,7 +192,7 @@ Unused_08_DrawShotAimMarker:
 	ld l, a ; $54f8
 	call ProjectWorldToScreen_08 ; $54f9
 	call ApplyCameraProjection ; $54fc
-	lb bc, $09, $5e ; $54ff attr, tile
+	ld_oam bc, OAM_BANK1 | 1, $5e ; $54ff
 	call QueueSprite ; $5502
 	ret ; $5505
 UnusedDrawBallTargetMarker:
@@ -207,7 +207,7 @@ UnusedDrawBallTargetMarker:
 	ld l, a ; $5514
 	call ProjectWorldToScreen_08 ; $5515
 	call ApplyCameraProjection ; $5518
-	lb bc, $0c, $5e ; $551b attr, tile
+	ld_oam bc, OAM_BANK1 | 4, $5e ; $551b
 	call QueueSprite ; $551e
 	ret ; $5521
 DrawTargetZone:
@@ -226,7 +226,7 @@ DrawTargetZone:
 	call ProjectWorldToScreen_08 ; $5536
 	call ApplyCameraProjection ; $5539
 	ld hl, DrawTargetZone_SpriteTemplate0 ; $553c
-	lb bc, $09, $20 ; $553f attr, tile
+	ld_oam bc, OAM_BANK1 | 1, $20 ; $553f
 	call QueueSpriteTemplate ; $5542
 	ld hl, wTargetZoneDepth1 ; $5545
 	ld a, [hl+] ; $5548
@@ -240,7 +240,7 @@ DrawTargetZone:
 	call ProjectWorldToScreen_08 ; $5554
 	call ApplyCameraProjection ; $5557
 	ld hl, DrawTargetZone_SpriteTemplate1 ; $555a
-	lb bc, $09, $22 ; $555d attr, tile
+	ld_oam bc, OAM_BANK1 | 1, $22 ; $555d
 	call QueueSpriteTemplate ; $5560
 	ld hl, wTargetZoneDepth2 ; $5563
 	ld a, [hl+] ; $5566
@@ -254,7 +254,7 @@ DrawTargetZone:
 	call ProjectWorldToScreen_08 ; $5572
 	call ApplyCameraProjection ; $5575
 	ld hl, DrawTargetZone_SpriteTemplate2 ; $5578
-	lb bc, $09, $24 ; $557b attr, tile
+	ld_oam bc, OAM_BANK1 | 1, $24 ; $557b
 	call QueueSpriteTemplate ; $557e
 	ld hl, wTargetZoneDepth2 ; $5581
 	ld a, [hl+] ; $5584
@@ -268,7 +268,7 @@ DrawTargetZone:
 	call ProjectWorldToScreen_08 ; $5590
 	call ApplyCameraProjection ; $5593
 	ld hl, DrawTargetZone_SpriteTemplate3 ; $5596
-	lb bc, $09, $26 ; $5599 attr, tile
+	ld_oam bc, OAM_BANK1 | 1, $26 ; $5599
 	call QueueSpriteTemplate ; $559c
 	ret ; $559f
 DrawTargetZone_SpriteTemplate0:

@@ -315,7 +315,7 @@ DrawExpPromptCursor:
 	ldh a, [hVBlankCounter] ; $7568
 	and $08 ; $756a
 	ret z ; $756c
-	ld bc, $0816 ; $756d
+	ld_oam bc, OAM_BANK1, $16 ; $756d
 	ld de, $0c7f ; $7570
 	ld a, [wExpPromptCursorRow] ; $7573
 	or a ; $7576
@@ -473,7 +473,7 @@ DrawExpToNextLevelTask:
 	ld_xy de, $26, $2f ; $76b8
 	call QueueSprite ; $76bb
 	ld hl, DrawExpToNextLevelTask_SpriteTemplate0 ; $76be
-	lb bc, $0e, $2c ; $76c1 attr, tile
+	ld_oam bc, OAM_BANK1 | 6, $2c ; $76c1
 	ld_xy de, $14, $2e ; $76c4
 	call QueueSpriteTemplate ; $76c7
 	ret ; $76ca
@@ -508,7 +508,7 @@ DrawExpToNextLevelTask:
 	ld_xy de, $26, $62 ; $770b
 	call QueueSprite ; $770e
 	ld hl, DrawExpToNextLevelTask_SpriteTemplate1 ; $7711
-	lb bc, $0e, $44 ; $7714 attr, tile
+	ld_oam bc, OAM_BANK1 | 6, $44 ; $7714
 	ld_xy de, $14, $61 ; $7717
 	call QueueSpriteTemplate ; $771a
 	ret ; $771d
@@ -528,7 +528,7 @@ DrawExpCharCursorTask:
 	ld e, a ; $7739
 	ld d, $19 ; $773a
 	ld hl, DrawExpCharCursorTask_SpriteTemplate ; $773c
-	lb bc, $0e, $00 ; $773f attr, tile
+	ld_oam bc, OAM_BANK1 | 6, $00 ; $773f
 	call QueueSpriteTemplate ; $7742
 	ret ; $7745
 DrawExpCharCursorTaskTable:
@@ -542,14 +542,14 @@ DrawExpBarFillMarkersTask:
 	add d ; $776c
 	ld d, a ; $776d
 	ld hl, DrawExpBarFillMarkersTask_SpriteTemplate ; $776e
-	lb bc, $0f, $0c ; $7771 attr, tile
+	ld_oam bc, OAM_BANK1 | 7, $0c ; $7771
 	call QueueSpriteTemplate ; $7774
 	ld de, $3849 ; $7777
 	ld a, [wExpScreenCharStats + 18] ; $777a
 	add d ; $777d
 	ld d, a ; $777e
 	ld hl, DrawExpBarFillMarkersTask_SpriteTemplate ; $777f
-	lb bc, $0f, $0c ; $7782 attr, tile
+	ld_oam bc, OAM_BANK1 | 7, $0c ; $7782
 	call QueueSpriteTemplate ; $7785
 	ret ; $7788
 DrawExpBarSweepSpriteTask:
@@ -563,6 +563,6 @@ DrawExpBarSweepSpriteTask:
 	ld a, [wExpBarMarkerX] ; $7799
 	ld d, a ; $779c
 	ld hl, DrawExpBarSweepSpriteTask_SpriteTemplate ; $779d
-	lb bc, $0f, $10 ; $77a0 attr, tile
+	ld_oam bc, OAM_BANK1 | 7, $10 ; $77a0
 	call QueueSpriteTemplate ; $77a3
 	ret ; $77a6

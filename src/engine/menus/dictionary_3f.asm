@@ -686,14 +686,14 @@ UpdateTennisDictionarySprites:
 	add $0a ; $4fba
 	ld d, a ; $4fbc
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate1 ; $4fbd
-	lb bc, $0b, $28 ; $4fc0 attr, tile
+	ld_oam bc, OAM_BANK1 | 3, $28 ; $4fc0
 	call QueueSpriteTemplate ; $4fc3
 	ld a, [wTennisDictFlags] ; $4fc6
 	bit 2, a ; $4fc9
 	jr z, .checkTennisDictFlags2 ; $4fcb
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fcd
 	ld_xy de, $18, $10 ; $4fd0
-	lb bc, $0d, $34 ; $4fd3 attr, tile
+	ld_oam bc, OAM_BANK1 | 5, $34 ; $4fd3
 	call QueueSpriteTemplate ; $4fd6
 .checkTennisDictFlags2:
 	ld a, [wTennisDictFlags] ; $4fd9
@@ -701,7 +701,7 @@ UpdateTennisDictionarySprites:
 	jr z, .restore ; $4fde
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fe0
 	ld_xy de, $88, $10 ; $4fe3
-	lb bc, $0d, $3a ; $4fe6 attr, tile
+	ld_oam bc, OAM_BANK1 | 5, $3a ; $4fe6
 	call QueueSpriteTemplate ; $4fe9
 .restore:
 	pop hl ; $4fec

@@ -362,7 +362,7 @@ DrawContinuePromptCursor:
 .nonZero:
 	ld_xy de, $7a, $44 ; $4b57
 .queueSprite:
-	lb bc, $08, $8e ; $4b5a attr, tile
+	ld_oam bc, OAM_BANK1, $8e ; $4b5a
 	call QueueSprite ; $4b5d
 	ret ; $4b60
 .playSfx:

@@ -455,7 +455,7 @@ DrawLandingMarker:
 	ld a, e ; $5356
 	add $08 ; $5357
 	ld e, a ; $5359
-	ld bc, $097c ; $535a
+	ld_oam bc, OAM_BANK1 | 1, $7c ; $535a
 	call QueueSprite16 ; $535d
 	ldh a, [hMatchFrameCounter] ; $5360
 	and $0f ; $5362

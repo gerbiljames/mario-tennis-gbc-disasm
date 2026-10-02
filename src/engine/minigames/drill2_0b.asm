@@ -482,7 +482,7 @@ QueueDrillMarker1_0b:
 	farcall ProjectWorldToScreen_08 ; $46b4
 	farcall ApplyCameraProjection ; $46b7
 	ld hl, DrillSpriteTemplate_0b ; $46ba
-	lb bc, $09, $30 ; $46bd attr, tile
+	ld_oam bc, OAM_BANK1 | 1, $30 ; $46bd
 	call QueueSpriteTemplate ; $46c0
 	ret ; $46c3
 QueueDrillMarker2_0b:
@@ -502,7 +502,7 @@ QueueDrillSprite_0b:
 	farcall ProjectWorldToScreen_08 ; $46d8
 	farcall ApplyCameraProjection ; $46db
 	ld hl, DrillSpriteTemplate_0b ; $46de
-	lb bc, $09, $30 ; $46e1 attr, tile
+	ld_oam bc, OAM_BANK1 | 1, $30 ; $46e1
 	call QueueSpriteTemplate ; $46e4
 	ret ; $46e7
 DrillSpriteTemplate_0b:

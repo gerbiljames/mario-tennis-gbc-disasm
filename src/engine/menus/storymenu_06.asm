@@ -28,7 +28,7 @@ QueueMatchMenuCursorSprite:
 	ld d, a ; $69ba
 	call AdjustSpriteCoordsForScroll ; $69bb
 	ld hl, QueueMatchMenuCursorSprite_SpriteTemplate ; $69be
-	lb bc, $00, $00 ; $69c1 attr, tile
+	ld_oam bc, 0, $00 ; $69c1
 	call QueueSpriteTemplate ; $69c4
 	ret ; $69c7
 DrawScoreboardModeTitle:
@@ -45,7 +45,7 @@ DrawScoreboardModeTitle:
 	farcall AddBobbingOffsetYLarge ; $69d7
 	call AdjustSpriteCoordsForScroll ; $69da
 	ld hl, DrawScoreboardModeTitle_SpriteTemplate ; $69dd
-	lb bc, $00, $00 ; $69e0 attr, tile
+	ld_oam bc, 0, $00 ; $69e0
 	call QueueSpriteTemplate ; $69e3
 	ret ; $69e6
 QueueMatchMenuCursorSprite_SpriteTemplate:
@@ -295,12 +295,12 @@ Unused_06_QueueDebugStatsCursorSprites:
 	add a ; $6c1e
 	add e ; $6c1f
 	ld e, a ; $6c20
-	lb bc, $09, $42 ; $6c21 attr, tile
+	ld_oam bc, OAM_BANK1 | 1, $42 ; $6c21
 	call QueueSprite ; $6c24
 	ld a, d ; $6c27
 	add $40 ; $6c28
 	ld d, a ; $6c2a
-	lb bc, $09, $42 ; $6c2b attr, tile
+	ld_oam bc, OAM_BANK1 | 1, $42 ; $6c2b
 	call QueueSprite ; $6c2e
 	ret ; $6c31
 Unused_06_AdjustSelectedDebugStat:

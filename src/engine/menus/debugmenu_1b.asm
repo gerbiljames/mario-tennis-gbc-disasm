@@ -197,7 +197,7 @@ Unused_1b_UpdateBobbingDecorSprite:
 	ld de, $2cfa ; $6671
 	farcall Unused_18_ApplySpriteBobOffset ; $6674
 	ld hl, UnlockDebugNavGridTable ; $6677
-	lb bc, $00, $50 ; $667a attr, tile
+	ld_oam bc, 0, $50 ; $667a
 	call QueueSpriteTemplate ; $667d
 	ret ; $6680
 Unused_1b_StartUnlockDebugCursorTask:

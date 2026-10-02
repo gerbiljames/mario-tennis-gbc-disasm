@@ -1,8 +1,8 @@
 Unused_1a_DrawCharViewerCharSprite:
-	lb bc, $07, $70 ; $7012 attr, tile
+	ld_oam bc, 7, $70 ; $7012
 	ld_xy de, $46, $15 ; $7015
 	call QueueSprite ; $7018
-	lb bc, $07, $72 ; $701b attr, tile
+	ld_oam bc, 7, $72 ; $701b
 	ld_xy de, $4e, $15 ; $701e
 	call QueueSprite ; $7021
 	wram_bank WRAM_CHAR0 ; $7024

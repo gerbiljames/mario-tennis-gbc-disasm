@@ -251,7 +251,7 @@ Unused_18_RunTwoOptionSelect:
 .redraw:
 	call Unused_18_AddBobbingOffsetXY ; $544f
 	push bc ; $5452
-	ld bc, $0650 ; $5453
+	ld_oam bc, 6, $50 ; $5453
 	call QueueSprite16 ; $5456
 	pop bc ; $5459
 	call AdvanceFrame ; $545a
@@ -295,7 +295,7 @@ Unused_18_RunTwoOptionSelectB:
 .redraw:
 	call Unused_18_AddBobbingOffsetXY ; $5497
 	push bc ; $549a
-	ld bc, $0650 ; $549b
+	ld_oam bc, 6, $50 ; $549b
 	call QueueSprite16 ; $549e
 	pop bc ; $54a1
 	call AdvanceFrame ; $54a2

@@ -539,6 +539,15 @@ MACRO ld_xy
 	lb \1, \2, \3
 ENDM
 
+; ld_oam pair, attr, tile -- a sprite's OAM attribute byte and tile id as
+; QueueSprite and QueueSpriteTemplate take them: the attribute in the high
+; register (CGB palette in bits 0-2, plus OAM_BANK1 / OAM_XFLIP / OAM_YFLIP /
+; OAM_PRIO from hardware.inc), the tile in the low. QueueSpriteTemplate adds
+; both to every entry of the template, and bit 5 picks its mirrored copy.
+MACRO ld_oam
+	lb \1, \2, \3
+ENDM
+
 ; ld_bg_pals pair, first, count / ld_obj_pals pair, first, count -- a run of
 ; CGB palettes as LoadPaletteShadow and its siblings take it: the palette
 ; index in the high register (0-7 background, 8-15 objects; the loader tests

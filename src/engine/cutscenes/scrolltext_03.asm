@@ -290,7 +290,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate0 ; $5bdc
 	ld d, $fe ; $5bdf
 	ld e, $80 ; $5be1
-	lb bc, $03, $00 ; $5be3 attr, tile
+	ld_oam bc, 3, $00 ; $5be3
 	call QueueSpriteTemplate ; $5be6
 	ret ; $5be9
 .eq01:
@@ -305,7 +305,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate1 ; $5c04
 	ld d, $fe ; $5c07
 	ld e, $80 ; $5c09
-	lb bc, $03, $00 ; $5c0b attr, tile
+	ld_oam bc, 3, $00 ; $5c0b
 	call QueueSpriteTemplate ; $5c0e
 	ret ; $5c11
 .eq02:
@@ -320,7 +320,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate2 ; $5c2c
 	ld d, $fe ; $5c2f
 	ld e, $80 ; $5c31
-	lb bc, $03, $00 ; $5c33 attr, tile
+	ld_oam bc, 3, $00 ; $5c33
 	call QueueSpriteTemplate ; $5c36
 	ret ; $5c39
 .eq03:
@@ -335,7 +335,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate3 ; $5c54
 	ld d, $fe ; $5c57
 	ld e, $80 ; $5c59
-	lb bc, $03, $00 ; $5c5b attr, tile
+	ld_oam bc, 3, $00 ; $5c5b
 	call QueueSpriteTemplate ; $5c5e
 	ret ; $5c61
 .eq04:
@@ -350,7 +350,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate4 ; $5c7c
 	ld d, $fe ; $5c7f
 	ld e, $80 ; $5c81
-	lb bc, $03, $00 ; $5c83 attr, tile
+	ld_oam bc, 3, $00 ; $5c83
 	call QueueSpriteTemplate ; $5c86
 	ret ; $5c89
 .eq05:
@@ -365,7 +365,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate5 ; $5ca4
 	ld d, $fe ; $5ca7
 	ld e, $80 ; $5ca9
-	lb bc, $03, $00 ; $5cab attr, tile
+	ld_oam bc, 3, $00 ; $5cab
 	call QueueSpriteTemplate ; $5cae
 	ret ; $5cb1
 .eq06:
@@ -380,7 +380,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate6 ; $5ccc
 	ld d, $fe ; $5ccf
 	ld e, $80 ; $5cd1
-	lb bc, $03, $00 ; $5cd3 attr, tile
+	ld_oam bc, 3, $00 ; $5cd3
 	call QueueSpriteTemplate ; $5cd6
 	ret ; $5cd9
 .eq07:
@@ -395,7 +395,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate7 ; $5cf4
 	ld d, $fe ; $5cf7
 	ld e, $80 ; $5cf9
-	lb bc, $03, $00 ; $5cfb attr, tile
+	ld_oam bc, 3, $00 ; $5cfb
 	call QueueSpriteTemplate ; $5cfe
 	ret ; $5d01
 .eq08:
@@ -410,14 +410,14 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate8 ; $5d1c
 	ld d, $fe ; $5d1f
 	ld e, $80 ; $5d21
-	lb bc, $03, $00 ; $5d23 attr, tile
+	ld_oam bc, 3, $00 ; $5d23
 	call QueueSpriteTemplate ; $5d26
 	ret ; $5d29
 .queueSpriteTemplate:
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate8 ; $5d2a
 	ld d, $fe ; $5d2d
 	ld e, $80 ; $5d2f
-	lb bc, $03, $00 ; $5d31 attr, tile
+	ld_oam bc, 3, $00 ; $5d31
 	call QueueSpriteTemplate ; $5d34
 	ret ; $5d37
 LoadCutsceneAnimFrameGfx_09_11:
@@ -458,7 +458,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate0 ; $5d90
 	ld d, $0e ; $5d93
 	ld e, $80 ; $5d95
-	lb bc, $02, $04 ; $5d97 attr, tile
+	ld_oam bc, 2, $04 ; $5d97
 	call QueueSpriteTemplate ; $5d9a
 	ret ; $5d9d
 .eq0a:
@@ -473,7 +473,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate1 ; $5db8
 	ld d, $0e ; $5dbb
 	ld e, $80 ; $5dbd
-	lb bc, $02, $04 ; $5dbf attr, tile
+	ld_oam bc, 2, $04 ; $5dbf
 	call QueueSpriteTemplate ; $5dc2
 	ret ; $5dc5
 .eq0b:
@@ -488,7 +488,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate2 ; $5de0
 	ld d, $0e ; $5de3
 	ld e, $80 ; $5de5
-	lb bc, $02, $04 ; $5de7 attr, tile
+	ld_oam bc, 2, $04 ; $5de7
 	call QueueSpriteTemplate ; $5dea
 	ret ; $5ded
 .eq0c:
@@ -503,7 +503,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate3 ; $5e08
 	ld d, $0e ; $5e0b
 	ld e, $80 ; $5e0d
-	lb bc, $02, $04 ; $5e0f attr, tile
+	ld_oam bc, 2, $04 ; $5e0f
 	call QueueSpriteTemplate ; $5e12
 	ret ; $5e15
 .eq0d:
@@ -518,7 +518,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate4 ; $5e30
 	ld d, $0e ; $5e33
 	ld e, $80 ; $5e35
-	lb bc, $02, $04 ; $5e37 attr, tile
+	ld_oam bc, 2, $04 ; $5e37
 	call QueueSpriteTemplate ; $5e3a
 	ret ; $5e3d
 .eq0e:
@@ -533,7 +533,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate5 ; $5e58
 	ld d, $0e ; $5e5b
 	ld e, $80 ; $5e5d
-	lb bc, $02, $04 ; $5e5f attr, tile
+	ld_oam bc, 2, $04 ; $5e5f
 	call QueueSpriteTemplate ; $5e62
 	ret ; $5e65
 .eq0f:
@@ -548,7 +548,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate6 ; $5e80
 	ld d, $0e ; $5e83
 	ld e, $80 ; $5e85
-	lb bc, $02, $04 ; $5e87 attr, tile
+	ld_oam bc, 2, $04 ; $5e87
 	call QueueSpriteTemplate ; $5e8a
 	ret ; $5e8d
 .eq10:
@@ -563,7 +563,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate7 ; $5ea8
 	ld d, $0e ; $5eab
 	ld e, $80 ; $5ead
-	lb bc, $02, $04 ; $5eaf attr, tile
+	ld_oam bc, 2, $04 ; $5eaf
 	call QueueSpriteTemplate ; $5eb2
 	ret ; $5eb5
 .eq11:
@@ -578,14 +578,14 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate8 ; $5ed0
 	ld d, $0e ; $5ed3
 	ld e, $80 ; $5ed5
-	lb bc, $02, $04 ; $5ed7 attr, tile
+	ld_oam bc, 2, $04 ; $5ed7
 	call QueueSpriteTemplate ; $5eda
 	ret ; $5edd
 .queueSpriteTemplate:
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate8 ; $5ede
 	ld d, $0e ; $5ee1
 	ld e, $80 ; $5ee3
-	lb bc, $02, $04 ; $5ee5 attr, tile
+	ld_oam bc, 2, $04 ; $5ee5
 	call QueueSpriteTemplate ; $5ee8
 	ret ; $5eeb
 LoadCutsceneAnimFrameGfx_12_1A:
@@ -626,7 +626,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate0 ; $5f44
 	ld d, $1e ; $5f47
 	ld e, $80 ; $5f49
-	lb bc, $03, $08 ; $5f4b attr, tile
+	ld_oam bc, 3, $08 ; $5f4b
 	call QueueSpriteTemplate ; $5f4e
 	ret ; $5f51
 .eq13:
@@ -641,7 +641,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate1 ; $5f6c
 	ld d, $1e ; $5f6f
 	ld e, $80 ; $5f71
-	lb bc, $03, $08 ; $5f73 attr, tile
+	ld_oam bc, 3, $08 ; $5f73
 	call QueueSpriteTemplate ; $5f76
 	ret ; $5f79
 .eq14:
@@ -656,7 +656,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate2 ; $5f94
 	ld d, $1e ; $5f97
 	ld e, $80 ; $5f99
-	lb bc, $03, $08 ; $5f9b attr, tile
+	ld_oam bc, 3, $08 ; $5f9b
 	call QueueSpriteTemplate ; $5f9e
 	ret ; $5fa1
 .eq15:
@@ -671,7 +671,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate3 ; $5fbc
 	ld d, $1e ; $5fbf
 	ld e, $80 ; $5fc1
-	lb bc, $03, $08 ; $5fc3 attr, tile
+	ld_oam bc, 3, $08 ; $5fc3
 	call QueueSpriteTemplate ; $5fc6
 	ret ; $5fc9
 .eq16:
@@ -686,7 +686,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate4 ; $5fe4
 	ld d, $1e ; $5fe7
 	ld e, $80 ; $5fe9
-	lb bc, $03, $08 ; $5feb attr, tile
+	ld_oam bc, 3, $08 ; $5feb
 	call QueueSpriteTemplate ; $5fee
 	ret ; $5ff1
 .eq17:
@@ -701,7 +701,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate5 ; $600c
 	ld d, $1e ; $600f
 	ld e, $80 ; $6011
-	lb bc, $03, $08 ; $6013 attr, tile
+	ld_oam bc, 3, $08 ; $6013
 	call QueueSpriteTemplate ; $6016
 	ret ; $6019
 .eq18:
@@ -716,7 +716,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate6 ; $6034
 	ld d, $1e ; $6037
 	ld e, $80 ; $6039
-	lb bc, $03, $08 ; $603b attr, tile
+	ld_oam bc, 3, $08 ; $603b
 	call QueueSpriteTemplate ; $603e
 	ret ; $6041
 .eq19:
@@ -731,7 +731,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate7 ; $605c
 	ld d, $1e ; $605f
 	ld e, $80 ; $6061
-	lb bc, $03, $08 ; $6063 attr, tile
+	ld_oam bc, 3, $08 ; $6063
 	call QueueSpriteTemplate ; $6066
 	ret ; $6069
 .eq1a:
@@ -746,14 +746,14 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate8 ; $6084
 	ld d, $1e ; $6087
 	ld e, $80 ; $6089
-	lb bc, $03, $08 ; $608b attr, tile
+	ld_oam bc, 3, $08 ; $608b
 	call QueueSpriteTemplate ; $608e
 	ret ; $6091
 .queueSpriteTemplate:
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate8 ; $6092
 	ld d, $1e ; $6095
 	ld e, $80 ; $6097
-	lb bc, $03, $08 ; $6099 attr, tile
+	ld_oam bc, 3, $08 ; $6099
 	call QueueSpriteTemplate ; $609c
 	ret ; $609f
 LoadCutsceneAnimFrameGfx_1B_23:
@@ -794,7 +794,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate0 ; $60f8
 	ld d, $2e ; $60fb
 	ld e, $80 ; $60fd
-	lb bc, $03, $0c ; $60ff attr, tile
+	ld_oam bc, 3, $0c ; $60ff
 	call QueueSpriteTemplate ; $6102
 	ret ; $6105
 .eq1c:
@@ -809,7 +809,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate1 ; $6120
 	ld d, $2e ; $6123
 	ld e, $80 ; $6125
-	lb bc, $03, $0c ; $6127 attr, tile
+	ld_oam bc, 3, $0c ; $6127
 	call QueueSpriteTemplate ; $612a
 	ret ; $612d
 .eq1d:
@@ -824,7 +824,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate2 ; $6148
 	ld d, $2e ; $614b
 	ld e, $80 ; $614d
-	lb bc, $03, $0c ; $614f attr, tile
+	ld_oam bc, 3, $0c ; $614f
 	call QueueSpriteTemplate ; $6152
 	ret ; $6155
 .eq1e:
@@ -839,7 +839,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate3 ; $6170
 	ld d, $2e ; $6173
 	ld e, $80 ; $6175
-	lb bc, $03, $0c ; $6177 attr, tile
+	ld_oam bc, 3, $0c ; $6177
 	call QueueSpriteTemplate ; $617a
 	ret ; $617d
 .eq1f:
@@ -854,7 +854,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate4 ; $6198
 	ld d, $2e ; $619b
 	ld e, $80 ; $619d
-	lb bc, $03, $0c ; $619f attr, tile
+	ld_oam bc, 3, $0c ; $619f
 	call QueueSpriteTemplate ; $61a2
 	ret ; $61a5
 .eq20:
@@ -869,7 +869,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate5 ; $61c0
 	ld d, $2e ; $61c3
 	ld e, $80 ; $61c5
-	lb bc, $03, $0c ; $61c7 attr, tile
+	ld_oam bc, 3, $0c ; $61c7
 	call QueueSpriteTemplate ; $61ca
 	ret ; $61cd
 .eq21:
@@ -884,7 +884,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate6 ; $61e8
 	ld d, $2e ; $61eb
 	ld e, $80 ; $61ed
-	lb bc, $03, $0c ; $61ef attr, tile
+	ld_oam bc, 3, $0c ; $61ef
 	call QueueSpriteTemplate ; $61f2
 	ret ; $61f5
 .eq22:
@@ -899,7 +899,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate7 ; $6210
 	ld d, $2e ; $6213
 	ld e, $80 ; $6215
-	lb bc, $03, $0c ; $6217 attr, tile
+	ld_oam bc, 3, $0c ; $6217
 	call QueueSpriteTemplate ; $621a
 	ret ; $621d
 .eq23:
@@ -914,14 +914,14 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate8 ; $6238
 	ld d, $2e ; $623b
 	ld e, $80 ; $623d
-	lb bc, $03, $0c ; $623f attr, tile
+	ld_oam bc, 3, $0c ; $623f
 	call QueueSpriteTemplate ; $6242
 	ret ; $6245
 .queueSpriteTemplate:
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate8 ; $6246
 	ld d, $2e ; $6249
 	ld e, $80 ; $624b
-	lb bc, $03, $0c ; $624d attr, tile
+	ld_oam bc, 3, $0c ; $624d
 	call QueueSpriteTemplate ; $6250
 	ret ; $6253
 LoadCutsceneAnimFrameGfx_24_2C:
@@ -962,7 +962,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate0 ; $62ac
 	ld d, $36 ; $62af
 	ld e, $80 ; $62b1
-	lb bc, $02, $0e ; $62b3 attr, tile
+	ld_oam bc, 2, $0e ; $62b3
 	call QueueSpriteTemplate ; $62b6
 	ret ; $62b9
 .eq25:
@@ -977,7 +977,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate1 ; $62d4
 	ld d, $36 ; $62d7
 	ld e, $80 ; $62d9
-	lb bc, $02, $0e ; $62db attr, tile
+	ld_oam bc, 2, $0e ; $62db
 	call QueueSpriteTemplate ; $62de
 	ret ; $62e1
 .eq26:
@@ -992,7 +992,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate2 ; $62fc
 	ld d, $36 ; $62ff
 	ld e, $80 ; $6301
-	lb bc, $02, $0e ; $6303 attr, tile
+	ld_oam bc, 2, $0e ; $6303
 	call QueueSpriteTemplate ; $6306
 	ret ; $6309
 .eq27:
@@ -1007,7 +1007,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate3 ; $6324
 	ld d, $36 ; $6327
 	ld e, $80 ; $6329
-	lb bc, $02, $0e ; $632b attr, tile
+	ld_oam bc, 2, $0e ; $632b
 	call QueueSpriteTemplate ; $632e
 	ret ; $6331
 .eq28:
@@ -1022,7 +1022,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate4 ; $634c
 	ld d, $36 ; $634f
 	ld e, $80 ; $6351
-	lb bc, $02, $0e ; $6353 attr, tile
+	ld_oam bc, 2, $0e ; $6353
 	call QueueSpriteTemplate ; $6356
 	ret ; $6359
 .eq29:
@@ -1037,7 +1037,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate5 ; $6374
 	ld d, $36 ; $6377
 	ld e, $80 ; $6379
-	lb bc, $02, $0e ; $637b attr, tile
+	ld_oam bc, 2, $0e ; $637b
 	call QueueSpriteTemplate ; $637e
 	ret ; $6381
 .eq2a:
@@ -1052,7 +1052,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate6 ; $639c
 	ld d, $36 ; $639f
 	ld e, $80 ; $63a1
-	lb bc, $02, $0e ; $63a3 attr, tile
+	ld_oam bc, 2, $0e ; $63a3
 	call QueueSpriteTemplate ; $63a6
 	ret ; $63a9
 .eq2b:
@@ -1067,7 +1067,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate7 ; $63c4
 	ld d, $36 ; $63c7
 	ld e, $80 ; $63c9
-	lb bc, $02, $0e ; $63cb attr, tile
+	ld_oam bc, 2, $0e ; $63cb
 	call QueueSpriteTemplate ; $63ce
 	ret ; $63d1
 .eq2c:
@@ -1082,13 +1082,13 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate8 ; $63ec
 	ld d, $36 ; $63ef
 	ld e, $80 ; $63f1
-	lb bc, $02, $0e ; $63f3 attr, tile
+	ld_oam bc, 2, $0e ; $63f3
 	call QueueSpriteTemplate ; $63f6
 	ret ; $63f9
 .queueSpriteTemplate:
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate8 ; $63fa
 	ld d, $36 ; $63fd
 	ld e, $80 ; $63ff
-	lb bc, $02, $0e ; $6401 attr, tile
+	ld_oam bc, 2, $0e ; $6401
 	call QueueSpriteTemplate ; $6404
 	ret ; $6407

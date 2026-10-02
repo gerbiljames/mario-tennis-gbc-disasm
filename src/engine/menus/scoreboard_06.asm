@@ -448,7 +448,7 @@ DrawScoreboardSprites:
 	ld a, [hl+] ; $5086
 	ld h, [hl] ; $5087
 	ld l, a ; $5088
-	lb bc, $00, $00 ; $5089 attr, tile
+	ld_oam bc, 0, $00 ; $5089
 	call QueueSpriteTemplate ; $508c
 	pop de ; $508f
 	ld a, [wScoreboardLayout] ; $5090

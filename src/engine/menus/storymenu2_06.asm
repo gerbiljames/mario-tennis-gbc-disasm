@@ -274,7 +274,7 @@ QueueStoryMenuCursorSprite:
 	ld d, a ; $72d1
 	call AdjustSpriteCoordsForScroll ; $72d2
 	ld hl, QueueStoryMenuCursorSprite_SpriteTemplate ; $72d5
-	lb bc, $00, $00 ; $72d8 attr, tile
+	ld_oam bc, 0, $00 ; $72d8
 	call QueueSpriteTemplate ; $72db
 	ret ; $72de
 QueueStoryMenuCursorSprite_SpriteTemplate:

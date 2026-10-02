@@ -134,7 +134,7 @@ Unused_18_DrawCharSelectCursor:
 	ld a, [hl+] ; $59f4
 	ld h, [hl] ; $59f5
 	ld l, a ; $59f6
-	lb bc, $02, $40 ; $59f7 attr, tile
+	ld_oam bc, 2, $40 ; $59f7
 	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
 CharSelectCursorAnimTable:

@@ -244,11 +244,11 @@ Unused_03_SaveSlotDebugEditor:
 	and $78 ; $53e0
 	add $0c ; $53e2
 	ld e, a ; $53e4
-	lb bc, $00, $00 ; $53e5 attr, tile
+	ld_oam bc, 0, $00 ; $53e5
 	push de ; $53e8
 	call QueueSprite ; $53e9
 	pop de ; $53ec
-	lb bc, $00, $00 ; $53ed attr, tile
+	ld_oam bc, 0, $00 ; $53ed
 	ld a, d ; $53f0
 	add $08 ; $53f1
 	ld d, a ; $53f3

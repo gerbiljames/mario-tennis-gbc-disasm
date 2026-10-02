@@ -341,7 +341,7 @@ ShowRulesPageSequence:
 DrawRulesNextPageArrow_06:
 	ld_xy de, $90, $80 ; $4373
 	farcall AddBobbingOffsetY ; $4376
-	ld bc, $0a70 ; $4379
+	ld_oam bc, OAM_BANK1 | 2, $70 ; $4379
 	call QueueSprite16 ; $437c
 	ret ; $437f
 MatchPauseMenu_ReviewControls:
