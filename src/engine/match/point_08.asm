@@ -193,7 +193,7 @@ DelayAfterPointResolution:
 	ret ; $4e48
 .case1:
 	ld hl, $0174 ; $4e49
-	ld de, $0504 ; $4e4c
+	ld_cell de, $05, $04 ; $4e4c
 	ld bc, $0a07 ; $4e4f
 	farcall ShowMessageWindow ; $4e52
 	ld a, $0a ; $4e55
@@ -201,7 +201,7 @@ DelayAfterPointResolution:
 	ret ; $4e5a
 .case2:
 	ld hl, $0175 ; $4e5b
-	ld de, $0204 ; $4e5e
+	ld_cell de, $02, $04 ; $4e5e
 	ld bc, $0f07 ; $4e61
 	farcall ShowMessageWindow ; $4e64
 	ld a, $0a ; $4e67

@@ -181,7 +181,7 @@ RunMatchWinLoseScreen:
 	push de ; $44ff
 	push af ; $4500
 	ld a, a ; $4501
-	ld de, $0303 ; $4502
+	ld_cell de, $03, $03 ; $4502
 	call PrintDecimalByte ; $4505
 	pop af ; $4508
 	pop de ; $4509

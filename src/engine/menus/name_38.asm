@@ -208,7 +208,7 @@ RunNameEntryScreen:
 	push de ; $6e5e
 	push af ; $6e5f
 	ld a, a ; $6e60
-	ld de, $0303 ; $6e61
+	ld_cell de, $03, $03 ; $6e61
 	call PrintDecimalByte ; $6e64
 	pop af ; $6e67
 	pop de ; $6e68

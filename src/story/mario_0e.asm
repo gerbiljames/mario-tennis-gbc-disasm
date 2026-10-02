@@ -83,7 +83,7 @@ RepairCounterReopenServiceMenu:
 	script_fade_in $08 ; $50f8
 	call WaitFadeEnd ; $50fd
 	ld hl, Text_6e_236 ; $5100
-	ld de, $0101 ; $5103
+	ld_cell de, $01, $01 ; $5103
 	farcall RunMenuFromText ; $5106
 	ld [wMapScratch + 10], a ; $5109
 	cp $ff ; $510c

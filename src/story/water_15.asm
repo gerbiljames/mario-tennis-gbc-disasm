@@ -35,7 +35,7 @@ WaterSpriteSwingCountTask:
 	push de ; $560f
 	ld h, d ; $5610
 	ld l, e ; $5611
-	ld de, $0f04 ; $5612
+	ld_cell de, $0f, $04 ; $5612
 	call PrintHexWord ; $5615
 	pop de ; $5618
 	pop hl ; $5619

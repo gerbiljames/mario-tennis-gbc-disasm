@@ -306,9 +306,9 @@ ShowRulesPageSequence:
 	ld a, [hl+] ; $4330
 	ld h, [hl] ; $4331
 	ld l, a ; $4332
-	ld de, $0002 ; $4333
+	ld_cell de, $00, $02 ; $4333
 	call DrawMenuCaptionWindow ; $4336
-	ld de, $0005 ; $4339
+	ld_cell de, $00, $05 ; $4339
 	ld bc, $130b ; $433c
 	call DrawWindowFrameAt ; $433f
 	ld hl, wRulesFirstPageTextId ; $4342
@@ -321,7 +321,7 @@ ShowRulesPageSequence:
 	jr nc, .drawMenuTextLine ; $434b
 	inc h ; $434d
 .drawMenuTextLine:
-	ld de, $0106 ; $434e
+	ld_cell de, $01, $06 ; $434e
 	call DrawMenuTextLine ; $4351
 	farcall StepMatchFrame ; $4354
 	farcall UploadGlyphBuffer ; $4357
@@ -348,17 +348,17 @@ MatchPauseMenu_ReviewControls:
 	ld hl, DrawScoreboardSprites ; $4380
 	call UnregisterFrameTask ; $4383
 	call RestoreBgTilemap ; $4386
-	ld de, $0002 ; $4389
+	ld_cell de, $00, $02 ; $4389
 	ld bc, $130e ; $438c
 	call DrawWindowFrameAt ; $438f
 	farcall PrepareGlyphBuffer ; $4392
-	ld de, $0103 ; $4395
+	ld_cell de, $01, $03 ; $4395
 	ld hl, Text_30_343 ; $4398
 	call DrawMenuTextLine ; $439b
-	ld de, $060a ; $439e
+	ld_cell de, $06, $0a ; $439e
 	ld hl, Text_30_344 ; $43a1
 	call DrawMenuTextLine ; $43a4
-	ld de, $010c ; $43a7
+	ld_cell de, $01, $0c ; $43a7
 	ld hl, Text_30_345 ; $43aa
 	call DrawMenuTextLine ; $43ad
 	farcall UploadGlyphBuffer ; $43b0

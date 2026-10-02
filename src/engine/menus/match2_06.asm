@@ -318,7 +318,7 @@ RunMatchMenu:
 	adc $01 ; $4755
 	sub l ; $4757
 	ld h, a ; $4758
-	ld de, $000e ; $4759
+	ld_cell de, $00, $0e ; $4759
 	call DrawMenuCaptionWindow ; $475c
 	call DrawScoreboardCaption ; $475f
 	farcall UploadGlyphBuffer ; $4762

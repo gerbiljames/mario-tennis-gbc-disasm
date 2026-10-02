@@ -546,14 +546,14 @@ Unused_01_RunSoundTest:
 	push de ; $6b17
 	push af ; $6b18
 	ld a, d ; $6b19
-	ld de, $0e0a ; $6b1a
+	ld_cell de, $0e, $0a ; $6b1a
 	call PrintDecimalByte ; $6b1d
 	pop af ; $6b20
 	pop de ; $6b21
 	push de ; $6b22
 	push af ; $6b23
 	ld a, e ; $6b24
-	ld de, $0e0c ; $6b25
+	ld_cell de, $0e, $0c ; $6b25
 	call PrintDecimalByte ; $6b28
 	pop af ; $6b2b
 	pop de ; $6b2c

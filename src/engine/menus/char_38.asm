@@ -199,7 +199,7 @@ RunExhibitionCharSelectScreen:
 	push de ; $4ebb
 	push af ; $4ebc
 	ld a, a ; $4ebd
-	ld de, $0301 ; $4ebe
+	ld_cell de, $03, $01 ; $4ebe
 	call PrintDecimalByte ; $4ec1
 	pop af ; $4ec4
 	pop de ; $4ec5

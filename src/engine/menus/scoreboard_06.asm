@@ -83,14 +83,14 @@ DrawScoreboard:
 	dw RetStub ; $49d2 jumptable
 	ret ; $49d4
 DrawScoreboardDrillResultRows:
-	ld de, $0504 ; $49d5
+	ld_cell de, $05, $04 ; $49d5
 	ld c, $04 ; $49d8
 	call DrawScoreboardEmptyPips ; $49da
 	ld a, [wDrillShotResultBits + 1] ; $49dd
 	ld c, a ; $49e0
 	call DrawScoreboardPackedPips ; $49e1
 DrawScoreboardDrillResultRow:
-	ld de, $0502 ; $49e4
+	ld_cell de, $05, $02 ; $49e4
 	ld c, $04 ; $49e7
 	call DrawScoreboardEmptyPips ; $49e9
 	ld a, [wDrillShotResultBits] ; $49ec
@@ -98,13 +98,13 @@ DrawScoreboardDrillResultRow:
 	call DrawScoreboardPackedPips ; $49f0
 	ret ; $49f3
 DrawScoreboardPointPips:
-	ld de, $0302 ; $49f4
+	ld_cell de, $03, $02 ; $49f4
 	ld c, $05 ; $49f7
 	call DrawScoreboardEmptyPips ; $49f9
 	ld a, [wPlayer1PointsWon] ; $49fc
 	ld c, a ; $49ff
 	call DrawScoreboardFilledPips ; $4a00
-	ld de, $0304 ; $4a03
+	ld_cell de, $03, $04 ; $4a03
 	ld c, $05 ; $4a06
 	call DrawScoreboardEmptyPips ; $4a08
 	ld a, [wPlayer2PointsWon] ; $4a0b

@@ -210,14 +210,14 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	push de ; $6b56
 	push af ; $6b57
 	ld a, [wLinkCpuDifficulty] ; $6b58
-	ld de, $0303 ; $6b5b
+	ld_cell de, $03, $03 ; $6b5b
 	call PrintDecimalByte ; $6b5e
 	pop af ; $6b61
 	pop de ; $6b62
 	push de ; $6b63
 	push af ; $6b64
 	ld a, [wCpuDifficultyCursor] ; $6b65
-	ld de, $0304 ; $6b68
+	ld_cell de, $03, $04 ; $6b68
 	call PrintDecimalByte ; $6b6b
 	pop af ; $6b6e
 	pop de ; $6b6f

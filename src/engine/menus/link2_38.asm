@@ -400,14 +400,14 @@ ExchangeLinkCharSelection:
 	push de ; $757e
 	push af ; $757f
 	ld a, [wPlayer1CurrentMainCharacter] ; $7580
-	ld de, $0a01 ; $7583
+	ld_cell de, $0a, $01 ; $7583
 	call PrintHexByte ; $7586
 	pop af ; $7589
 	pop de ; $758a
 	push de ; $758b
 	push af ; $758c
 	ld a, [wPlayer2CurrentMainCharacter] ; $758d
-	ld de, $0a02 ; $7590
+	ld_cell de, $0a, $02 ; $7590
 	call PrintHexByte ; $7593
 	pop af ; $7596
 	pop de ; $7597
@@ -427,14 +427,14 @@ ExchangeLinkCharSelection:
 	push de ; $75a8
 	push af ; $75a9
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $75aa
-	ld de, $0a03 ; $75ad
+	ld_cell de, $0a, $03 ; $75ad
 	call PrintHexByte ; $75b0
 	pop af ; $75b3
 	pop de ; $75b4
 	push de ; $75b5
 	push af ; $75b6
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $75b7
-	ld de, $0a04 ; $75ba
+	ld_cell de, $0a, $04 ; $75ba
 	call PrintHexByte ; $75bd
 	pop af ; $75c0
 	pop de ; $75c1

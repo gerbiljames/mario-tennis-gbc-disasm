@@ -32,7 +32,7 @@ ReadBehaviorMapCell:
 	push de ; $5f65
 	push af ; $5f66
 	ld a, a ; $5f67
-	ld de, $0e0e ; $5f68
+	ld_cell de, $0e, $0e ; $5f68
 	call PrintHexByte ; $5f6b
 	pop af ; $5f6e
 	pop de ; $5f6f

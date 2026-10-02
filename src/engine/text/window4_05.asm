@@ -367,7 +367,7 @@ Unused_05_OpenCenteredDialogueWindow:
 	push hl ; $6352
 	push de ; $6353
 	push hl ; $6354
-	ld de, $0000 ; $6355
+	ld_cell de, $00, $00 ; $6355
 	ld b, $14 ; $6358
 	ld c, $07 ; $635a
 	call CreateDialogueWindow ; $635c
@@ -495,20 +495,20 @@ DebugDrawFlagsWindow1:
 	add a ; $6415
 	add a ; $6416
 	add a ; $6417
-	ld de, $0101 ; $6418
+	ld_cell de, $01, $01 ; $6418
 	call DebugDrawHexRowLabel ; $641b
-	ld de, $0401 ; $641e
+	ld_cell de, $04, $01 ; $641e
 	call DebugDrawFlagBitRow ; $6421
 	add $08 ; $6424
-	ld de, $0402 ; $6426
+	ld_cell de, $04, $02 ; $6426
 	call DebugDrawFlagBitRow ; $6429
 	add $08 ; $642c
-	ld de, $0104 ; $642e
+	ld_cell de, $01, $04 ; $642e
 	call DebugDrawHexRowLabel ; $6431
-	ld de, $0404 ; $6434
+	ld_cell de, $04, $04 ; $6434
 	call DebugDrawFlagBitRow ; $6437
 	add $08 ; $643a
-	ld de, $0405 ; $643c
+	ld_cell de, $04, $05 ; $643c
 	call DebugDrawFlagBitRow ; $643f
 	pop hl ; $6442
 	pop de ; $6443
@@ -530,20 +530,20 @@ DebugDrawFlagsWindow2:
 	add a ; $6456
 	add a ; $6457
 	add a ; $6458
-	ld de, $0101 ; $6459
+	ld_cell de, $01, $01 ; $6459
 	call DebugDrawHexRowLabel ; $645c
-	ld de, $0401 ; $645f
+	ld_cell de, $04, $01 ; $645f
 	call DebugDrawFlagBitRow ; $6462
 	add $08 ; $6465
-	ld de, $0402 ; $6467
+	ld_cell de, $04, $02 ; $6467
 	call DebugDrawFlagBitRow ; $646a
 	add $08 ; $646d
-	ld de, $0104 ; $646f
+	ld_cell de, $01, $04 ; $646f
 	call DebugDrawHexRowLabel ; $6472
-	ld de, $0404 ; $6475
+	ld_cell de, $04, $04 ; $6475
 	call DebugDrawFlagBitRow ; $6478
 	add $08 ; $647b
-	ld de, $0405 ; $647d
+	ld_cell de, $04, $05 ; $647d
 	call DebugDrawFlagBitRow ; $6480
 	pop hl ; $6483
 	pop de ; $6484

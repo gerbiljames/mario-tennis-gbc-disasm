@@ -10,11 +10,11 @@ DrawConfirmSelectionCursor_{TWIN}:
 	or a
 	jr nz, .nonZero
 	lb bc, $0f, $d4 ; attr, tile
-	lb de, $7a, $0c ; x, y
+	ld_xy de, $7a, $0c
 	call QueueSprite
 	ret
 .nonZero:
 	lb bc, $0f, $d4 ; attr, tile
-	lb de, $7a, $14 ; x, y
+	ld_xy de, $7a, $14
 	call QueueSprite
 	ret

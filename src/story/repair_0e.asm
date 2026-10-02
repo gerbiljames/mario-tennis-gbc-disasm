@@ -296,7 +296,7 @@ RepairCounterFarewell:
 	script_wait_frames $05 ; $4e5a
 RepairCounterServiceMenu:
 	ld hl, Text_6e_236 ; $4e61
-	ld de, $0101 ; $4e64
+	ld_cell de, $01, $01 ; $4e64
 	farcall RunMenuFromText ; $4e67
 .loop:
 	ld [wMapScratch + 10], a ; $4e6a

@@ -288,7 +288,7 @@ MachineExpertCounterMaxScene:
 	ld h, [hl] ; $490b
 	ld l, a ; $490c
 	pop_wram_bank ; $490d
-	ld de, $270f ; $4912
+	ld de, 9999 ; $4912
 	ld a, l ; $4915
 	sub e ; $4916
 	ld l, a ; $4917

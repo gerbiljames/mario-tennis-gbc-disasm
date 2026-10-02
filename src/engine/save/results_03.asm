@@ -219,10 +219,10 @@ Unused_03_SaveSlotDebugEditor:
 	ld a, [hl+] ; $53b5
 	ld h, [hl] ; $53b6
 	ld l, a ; $53b7
-	ld de, $1011 ; $53b8
+	ld_cell de, $10, $11 ; $53b8
 	call PrintHexWord ; $53bb
 	ld a, [wCurrentStorySlot] ; $53be
-	ld de, $0011 ; $53c1
+	ld_cell de, $00, $11 ; $53c1
 	call PrintDecimalByte ; $53c4
 	pop de ; $53c7
 .loop5:

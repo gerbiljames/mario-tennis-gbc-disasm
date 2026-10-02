@@ -256,7 +256,7 @@ Unused_05_OpenDialogueWindowCentered:
 	push hl ; $5ba3
 	push de ; $5ba4
 	push hl ; $5ba5
-	ld de, $0000 ; $5ba6
+	ld_cell de, $00, $00 ; $5ba6
 	ld b, $14 ; $5ba9
 	ld c, $07 ; $5bab
 	call CreateDialogueWindow ; $5bad

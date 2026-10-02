@@ -5,12 +5,12 @@ TextRectAttrs_06:
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 1
 	tilemap_end
 Unused_06_DrawMusicMenuRow:
-	ld de, $030a ; $698b
+	ld_cell de, $03, $0a ; $698b
 	call GetShadowTilemapAddr ; $698e
 	ld hl, Unused_06_DrawMusicMenuRowTextRect ; $6991
 	lb bc, $0c, $02 ; $6994 width, rows
 	call CopyTextRect ; $6997
-	ld de, $030a ; $699a
+	ld_cell de, $03, $0a ; $699a
 	call GetShadowAttrmapAddr ; $699d
 	ld hl, TextRectAttrs_06 ; $69a0
 	lb bc, $0c, $02 ; $69a3 width, rows
@@ -19,7 +19,7 @@ Unused_06_DrawMusicMenuRow:
 	and a ; $69ac
 	ret z ; $69ad
 	ld a, $05 ; $69ae
-	ld de, $090a ; $69b0
+	ld_cell de, $09, $0a ; $69b0
 	call DrawMatchMenuItem ; $69b3
 	ret ; $69b6
 QueueMatchMenuCursorSprite:
@@ -122,16 +122,16 @@ DebugStatName_Jump:
 DebugStatName_Dive:
 	INCLUDE "data/bank_006/DebugStatName_Dive.asm" ; $6ab4, 6 bytes
 Unused_06_DrawDebugStatsLabels:
-	ld de, $0000 ; $6aba
+	ld_cell de, $00, $00 ; $6aba
 	call GetShadowAttrmapAddr ; $6abd
 	ld c, e ; $6ac0
 	ld b, d ; $6ac1
-	ld de, $0000 ; $6ac2
+	ld_cell de, $00, $00 ; $6ac2
 	call GetShadowTilemapAddr ; $6ac5
 	ld hl, $0f11 ; $6ac8
 	call DrawWindowFrameNoPriority ; $6acb
 	ld c, $00 ; $6ace
-	ld de, $0101 ; $6ad0
+	ld_cell de, $01, $01 ; $6ad0
 .loop:
 	push bc ; $6ad3
 	push de ; $6ad4
@@ -154,7 +154,7 @@ Unused_06_DrawDebugStatsLabels:
 	jr nz, .loop ; $6af0
 	ret ; $6af2
 Unused_06_DrawDebugStatsValues:
-	ld de, $0a01 ; $6af3
+	ld_cell de, $0a, $01 ; $6af3
 	call GetShadowTilemapAddr ; $6af6
 	ld hl, wDebugStatWords ; $6af9
 	ld a, [hl+] ; $6afc
@@ -461,7 +461,7 @@ RunStoryMenu:
 	call LoadStoryMenuItemGfx ; $6d54
 	pop af ; $6d57
 	ld_hl_indexed Text_30_354 ; $6d58
-	ld de, $000e ; $6d5f
+	ld_cell de, $00, $0e ; $6d5f
 	call DrawStoryMenuCaption ; $6d62
 	call RedrawStoryTilemapRows ; $6d65
 .drawCursor:
@@ -701,7 +701,7 @@ UnusedStoryMenuRedrawReentry:
 	call LoadStoryMenuItemGfx ; $6f0a
 	ld a, [wMatchMenuSelection] ; $6f0d
 	ld_hl_indexed Text_30_354 ; $6f10
-	ld de, $000e ; $6f17
+	ld_cell de, $00, $0e ; $6f17
 	call DrawStoryMenuCaption ; $6f1a
 	call RedrawStoryTilemapRows ; $6f1d
 .checkMatchMenuSelection2:
@@ -843,7 +843,7 @@ StoryPauseMenu_MusicToggle:
 StoryPauseMenu_SaveQuit:
 	call RestoreStoryTilemapNoPriority ; $702f
 	ld hl, Text_30_370 ; $7032
-	ld de, $000e ; $7035
+	ld_cell de, $00, $0e ; $7035
 	call DrawStoryMenuCaption ; $7038
 	ld a, $02 ; $703b
 	ld [wMatchMenuSelection], a ; $703d

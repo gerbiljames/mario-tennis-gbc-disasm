@@ -55,7 +55,7 @@ DebugDrawColorComponents:
 	xor a ; $69a0
 	ld [wDebugColorDigitsEnd], a ; $69a1
 	ld hl, wDebugMenuWindowId ; $69a4
-	ld de, $0102 ; $69a7
+	ld_cell de, $01, $02 ; $69a7
 	ld a, [wDebugColorEditorWindowId] ; $69aa
 	call WriteStringToWindow ; $69ad
 	ld a, [wDebugColorEditorWindowId] ; $69b0
@@ -69,14 +69,14 @@ ColorEditorHeader_05:
 	; $69bb, 10 bytes (ascii)
 	db "--R--G--B", $00
 RunDebugColorEditor:
-	ld de, $0700 ; $69c5
+	ld_cell de, $07, $00 ; $69c5
 	ld bc, $0b04 ; $69c8
 	farcall CreateWindow ; $69cb
 	ld [wDebugColorEditorWindowId], a ; $69ce
 	call DrawTextWindowFrame ; $69d1
 	call RedrawWindowRows ; $69d4
 	ld hl, ColorEditorHeader_05 ; $69d7
-	ld de, $0101 ; $69da
+	ld_cell de, $01, $01 ; $69da
 	ld a, [wDebugColorEditorWindowId] ; $69dd
 	call WriteStringToWindow ; $69e0
 	ld e, $00 ; $69e3
@@ -153,7 +153,7 @@ RunDebugColorEditor:
 	ret ; $6a53
 RunDebugPaletteViewer:
 	wram_bank WRAM_TEXT ; $6a54
-	ld de, $0000 ; $6a5a
+	ld_cell de, $00, $00 ; $6a5a
 	ld bc, $0712 ; $6a5d
 	ld a, $00 ; $6a60
 	farcall CreateWindowWithAttr ; $6a62
@@ -161,7 +161,7 @@ RunDebugPaletteViewer:
 	ld a, [wDebugPaletteViewerWindowId] ; $6a68
 	call DrawTextWindowFrame ; $6a6b
 	ld h, $10 ; $6a6e
-	ld de, $0101 ; $6a70
+	ld_cell de, $01, $01 ; $6a70
 	ld bc, $0030 ; $6a73
 .loop:
 	call WriteWindowCellTileAttr ; $6a76

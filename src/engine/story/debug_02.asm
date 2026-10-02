@@ -34,13 +34,13 @@ Unused_02_DebugStoryStatsScreen:
 	ld a, [hl+] ; $4ff2
 	ld h, [hl] ; $4ff3
 	ld l, a ; $4ff4
-	ld de, $0210 ; $4ff5
+	ld_cell de, $02, $10 ; $4ff5
 	call Unused_00_PrintDecimalWord ; $4ff8
 	ld hl, wPendingExpTrophy ; $4ffb
 	ld a, [hl+] ; $4ffe
 	ld h, [hl] ; $4fff
 	ld l, a ; $5000
-	ld de, $0a10 ; $5001
+	ld_cell de, $0a, $10 ; $5001
 	call Unused_00_PrintDecimalWord ; $5004
 	pop de ; $5007
 	ld hl, wPendingExpStory ; $5008
@@ -67,132 +67,132 @@ Unused_02_DebugStoryStatsScreen:
 	push de ; $502a
 	ld bc, wStoryModeNameOfMainCharacter ; $502b
 	ld a, [wCurrentStorySlot] ; $502e
-	ld de, $0202 ; $5031
+	ld_cell de, $02, $02 ; $5031
 	call PrintDecimalByte ; $5034
 	ld hl, CHARREC_CHAR ; $5037
 	add hl, bc ; $503a
 	ld a, [hl] ; $503b
-	ld de, $0204 ; $503c
+	ld_cell de, $02, $04 ; $503c
 	call PrintDecimalByte ; $503f
 	ld hl, CHARREC_EXP_TIER ; $5042
 	add hl, bc ; $5045
 	ld a, [hl] ; $5046
-	ld de, $0206 ; $5047
+	ld_cell de, $02, $06 ; $5047
 	call PrintDecimalByte ; $504a
 	ld hl, CHARREC_SWING ; $504d
 	add hl, bc ; $5050
 	ld a, [hl+] ; $5051
 	ld h, [hl] ; $5052
 	ld l, a ; $5053
-	ld de, $0207 ; $5054
+	ld_cell de, $02, $07 ; $5054
 	call PrintHexWord ; $5057
 	ld hl, CHARREC_PHYSICS_TEMPLATE ; $505a
 	add hl, bc ; $505d
 	ld a, [hl+] ; $505e
 	ld h, [hl] ; $505f
 	ld l, a ; $5060
-	ld de, $0209 ; $5061
+	ld_cell de, $02, $09 ; $5061
 	call PrintHexWord ; $5064
 	ld hl, CHARREC_PHYSICS_TEMPLATE + 2 ; $5067
 	add hl, bc ; $506a
 	ld a, [hl+] ; $506b
 	ld h, [hl] ; $506c
 	ld l, a ; $506d
-	ld de, $020a ; $506e
+	ld_cell de, $02, $0a ; $506e
 	call PrintHexWord ; $5071
 	ld hl, CHARREC_PHYSICS_TEMPLATE + 4 ; $5074
 	add hl, bc ; $5077
 	ld a, [hl+] ; $5078
 	ld h, [hl] ; $5079
 	ld l, a ; $507a
-	ld de, $020b ; $507b
+	ld_cell de, $02, $0b ; $507b
 	call PrintHexWord ; $507e
 	ld hl, CHARREC_PHYSICS_TEMPLATE + 6 ; $5081
 	add hl, bc ; $5084
 	ld a, [hl+] ; $5085
 	ld h, [hl] ; $5086
 	ld l, a ; $5087
-	ld de, $020c ; $5088
+	ld_cell de, $02, $0c ; $5088
 	call PrintHexWord ; $508b
 	ld hl, CHARREC_LEFT_HANDED ; $508e
 	add hl, bc ; $5091
 	ld a, [hl] ; $5092
-	ld de, $020e ; $5093
+	ld_cell de, $02, $0e ; $5093
 	call PrintDecimalByte ; $5096
 	ld hl, CHARREC_TRAIN_LEVELS ; $5099
 	add hl, bc ; $509c
 	ld a, [hl] ; $509d
-	ld de, $0704 ; $509e
+	ld_cell de, $07, $04 ; $509e
 	call PrintDecimalByte ; $50a1
 	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $50a4
 	add hl, bc ; $50a7
 	ld a, [hl] ; $50a8
-	ld de, $0706 ; $50a9
+	ld_cell de, $07, $06 ; $50a9
 	call PrintDecimalByte ; $50ac
 	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $50af
 	add hl, bc ; $50b2
 	ld a, [hl] ; $50b3
-	ld de, $0709 ; $50b4
+	ld_cell de, $07, $09 ; $50b4
 	call PrintDecimalByte ; $50b7
 	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $50ba
 	add hl, bc ; $50bd
 	ld a, [hl] ; $50be
-	ld de, $070b ; $50bf
+	ld_cell de, $07, $0b ; $50bf
 	call PrintDecimalByte ; $50c2
 	ld hl, CHARREC_STAT_TOP ; $50c5
 	add hl, bc ; $50c8
 	ld a, [hl] ; $50c9
-	ld de, $0c04 ; $50ca
+	ld_cell de, $0c, $04 ; $50ca
 	call PrintDecimalByte ; $50cd
 	ld hl, CHARREC_STAT_SLICE ; $50d0
 	add hl, bc ; $50d3
 	ld a, [hl] ; $50d4
-	ld de, $0c05 ; $50d5
+	ld_cell de, $0c, $05 ; $50d5
 	call PrintDecimalByte ; $50d8
 	ld hl, CHARREC_STAT_SERVE ; $50db
 	add hl, bc ; $50de
 	ld a, [hl] ; $50df
-	ld de, $0c06 ; $50e0
+	ld_cell de, $0c, $06 ; $50e0
 	call PrintDecimalByte ; $50e3
 	ld hl, CHARREC_STAT_STROKE ; $50e6
 	add hl, bc ; $50e9
 	ld a, [hl] ; $50ea
-	ld de, $0c07 ; $50eb
+	ld_cell de, $0c, $07 ; $50eb
 	call PrintDecimalByte ; $50ee
 	ld hl, CHARREC_STAT_VOLLEY ; $50f1
 	add hl, bc ; $50f4
 	ld a, [hl] ; $50f5
-	ld de, $0c08 ; $50f6
+	ld_cell de, $0c, $08 ; $50f6
 	call PrintDecimalByte ; $50f9
 	ld hl, CHARREC_STAT_ANGLE ; $50fc
 	add hl, bc ; $50ff
 	ld a, [hl] ; $5100
-	ld de, $0c09 ; $5101
+	ld_cell de, $0c, $09 ; $5101
 	call PrintDecimalByte ; $5104
 	ld hl, CHARREC_STAT_PLACEMENT ; $5107
 	add hl, bc ; $510a
 	ld a, [hl] ; $510b
-	ld de, $0c0a ; $510c
+	ld_cell de, $0c, $0a ; $510c
 	call PrintDecimalByte ; $510f
 	ld hl, CHARREC_STAT_SPEED ; $5112
 	add hl, bc ; $5115
 	ld a, [hl] ; $5116
-	ld de, $0c0b ; $5117
+	ld_cell de, $0c, $0b ; $5117
 	call PrintDecimalByte ; $511a
 	ld hl, CHARREC_STAT_DASH ; $511d
 	add hl, bc ; $5120
 	ld a, [hl] ; $5121
-	ld de, $0c0c ; $5122
+	ld_cell de, $0c, $0c ; $5122
 	call PrintDecimalByte ; $5125
 	ld hl, CHARREC_STAT_REACTION ; $5128
 	add hl, bc ; $512b
 	ld a, [hl] ; $512c
-	ld de, $0c0d ; $512d
+	ld_cell de, $0c, $0d ; $512d
 	call PrintDecimalByte ; $5130
 	ld hl, CHARREC_STAT_STOP ; $5133
 	add hl, bc ; $5136
 	ld a, [hl] ; $5137
-	ld de, $0c0e ; $5138
+	ld_cell de, $0c, $0e ; $5138
 	call PrintDecimalByte ; $513b
 	pop de ; $513e
 .loop2:

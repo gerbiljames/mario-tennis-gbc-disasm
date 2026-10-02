@@ -139,10 +139,10 @@ Unused_1a_DrawPauseMenuSettingValues:
 	push bc ; $410b
 	push de ; $410c
 	push hl ; $410d
-	ld de, $0404 ; $410e
+	ld_cell de, $04, $04 ; $410e
 	call PrintHexByte ; $4111
 	ld a, [wSoundOptionBits] ; $4114
-	ld de, $0405 ; $4117
+	ld_cell de, $04, $05 ; $4117
 	call PrintHexByte ; $411a
 	pop hl ; $411d
 	pop de ; $411e
@@ -306,7 +306,7 @@ UnusedRunMusicSettingMenu:
 	ld [hl], $83 ; $424e
 	ld hl, $049b ; $4250
 	ld bc, MusicSettingPtrs ; $4253
-	ld de, $0305 ; $4256
+	ld_cell de, $03, $05 ; $4256
 	set_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4259
 	call Unused_1a_RunPauseMenuWindow ; $425c
 	call Unused_1a_ResetPauseMenuState ; $425f

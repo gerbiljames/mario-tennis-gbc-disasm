@@ -16,11 +16,11 @@ UnusedRunSaveQuitMenu:
 	jp RunStoryTwoOptionMenu ; $70c9
 RunStoryTwoOptionMenu:
 	ld a, [wStoryMenuFirstItem] ; $70cc
-	ld de, $050a ; $70cf
+	ld_cell de, $05, $0a ; $70cf
 	call DrawStoryMenuItem ; $70d2
 	ld a, [wStoryMenuFirstItem] ; $70d5
 	inc a ; $70d8
-	ld de, $0b0a ; $70d9
+	ld_cell de, $0b, $0a ; $70d9
 	call DrawStoryMenuItem ; $70dc
 	ld a, [wStoryMenuFirstItem] ; $70df
 	cp STORYMENUITEM_SAVE_GAME ; $70e2
@@ -33,7 +33,7 @@ RunStoryTwoOptionMenu:
 	jr nc, .drawStoryMenuCaption ; $70ef
 	inc h ; $70f1
 .drawStoryMenuCaption:
-	ld de, $000e ; $70f2
+	ld_cell de, $00, $0e ; $70f2
 	call DrawStoryMenuCaption ; $70f5
 .redrawStoryTilemapRows:
 	call RedrawStoryTilemapRows ; $70f8
@@ -76,7 +76,7 @@ RunStoryTwoOptionMenu:
 	jr nc, .drawStoryMenuCaption2 ; $7145
 	inc h ; $7147
 .drawStoryMenuCaption2:
-	ld de, $000e ; $7148
+	ld_cell de, $00, $0e ; $7148
 	call DrawStoryMenuCaption ; $714b
 	call RedrawStoryTilemapRows ; $714e
 .checkMatchMenuSelection:
@@ -104,16 +104,16 @@ StoryTwoOptionCursorPositions:
 RunStoryThreeOptionMenu:
 	call RestoreStoryTilemapNoPriority ; $717a
 	ld a, [wStoryMenuFirstItem] ; $717d
-	ld de, $030a ; $7180
+	ld_cell de, $03, $0a ; $7180
 	call DrawStoryMenuItem ; $7183
 	ld a, [wStoryMenuFirstItem] ; $7186
 	inc a ; $7189
-	ld de, $080a ; $718a
+	ld_cell de, $08, $0a ; $718a
 	call DrawStoryMenuItem ; $718d
 	ld a, [wStoryMenuFirstItem] ; $7190
 	inc a ; $7193
 	inc a ; $7194
-	ld de, $0d0a ; $7195
+	ld_cell de, $0d, $0a ; $7195
 	call DrawStoryMenuItem ; $7198
 	ld a, [wStoryMenuFirstItem] ; $719b
 	cp $06 ; $719e
@@ -125,7 +125,7 @@ RunStoryThreeOptionMenu:
 	jr nc, .drawStoryMenuCaption ; $71a9
 	inc h ; $71ab
 .drawStoryMenuCaption:
-	ld de, $000e ; $71ac
+	ld_cell de, $00, $0e ; $71ac
 	call DrawStoryMenuCaption ; $71af
 	call RedrawStoryTilemapRows ; $71b2
 	ld a, [wMatchMenuSelection] ; $71b5
@@ -166,7 +166,7 @@ RunStoryThreeOptionMenu:
 	jr nc, .drawStoryMenuCaption2 ; $71fd
 	inc h ; $71ff
 .drawStoryMenuCaption2:
-	ld de, $000e ; $7200
+	ld_cell de, $00, $0e ; $7200
 	call DrawStoryMenuCaption ; $7203
 	call RedrawStoryTilemapRows ; $7206
 	ld a, [wMatchMenuSelection] ; $7209
@@ -447,12 +447,12 @@ StoryMenuItemRowTextRect:
 	tilemap_row $59, $5a, $5b, $24, $25, $26, $27, $28, $29, $2a, $2b, $2c ; row 1
 	tilemap_end
 Unused_06_DrawStoryMenuItemRow:
-	ld de, $030a ; $7863
+	ld_cell de, $03, $0a ; $7863
 	call GetShadowTilemapAddr ; $7866
 	ld hl, StoryMenuItemRowTextRect ; $7869
 	ld bc, $0c02 ; $786c
 	call CopyTileRectToShadowTilemap ; $786f
-	ld de, $030a ; $7872
+	ld_cell de, $03, $0a ; $7872
 	call GetShadowAttrmapAddr ; $7875
 	ld hl, TextRectAttrs_06 ; $7878
 	ld bc, $0c02 ; $787b

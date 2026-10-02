@@ -16,7 +16,7 @@ Unused_1a_RunDebugExpEditor:
 	push de ; $43ac
 	push hl ; $43ad
 	push_wram_bank WRAM_TEXT ; $43ae
-	ld de, $0000 ; $43b7
+	ld_cell de, $00, $00 ; $43b7
 	ld bc, $1404 ; $43ba
 	farcall CreateWindow ; $43bd
 	ld [wPauseMenuWindowId], a ; $43c0
@@ -32,7 +32,7 @@ Unused_1a_RunDebugExpEditor:
 	ld de, wWindowShadowTilemap ; $43d3
 	call FormatDecimalNumber ; $43d6
 	ld hl, wWindowShadowTilemap ; $43d9
-	ld de, $0801 ; $43dc
+	ld_cell de, $08, $01 ; $43dc
 	ld a, [wPauseMenuWindowId] ; $43df
 	farcall WriteStringToWindow ; $43e2
 	ld hl, wStoryPartnerCharExp ; $43e5
@@ -43,7 +43,7 @@ Unused_1a_RunDebugExpEditor:
 	ld de, wWindowShadowTilemap ; $43ed
 	call FormatDecimalNumber ; $43f0
 	ld hl, wWindowShadowTilemap ; $43f3
-	ld de, $0802 ; $43f6
+	ld_cell de, $08, $02 ; $43f6
 	ld a, [wPauseMenuWindowId] ; $43f9
 	farcall WriteStringToWindow ; $43fc
 	farcall RestoreShadowTilemap ; $43ff

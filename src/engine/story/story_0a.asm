@@ -163,7 +163,7 @@ DrawPlayerPositionDebugOverlay:
 	push de ; $4f0e
 	ld h, h ; $4f0f
 	ld l, l ; $4f10
-	ld de, $1000 ; $4f11
+	ld_cell de, $10, $00 ; $4f11
 	call PrintHexWord ; $4f14
 	pop de ; $4f17
 	pop hl ; $4f18
@@ -175,7 +175,7 @@ DrawPlayerPositionDebugOverlay:
 	push de ; $4f20
 	ld h, h ; $4f21
 	ld l, l ; $4f22
-	ld de, $1001 ; $4f23
+	ld_cell de, $10, $01 ; $4f23
 	call PrintHexWord ; $4f26
 	pop de ; $4f29
 	pop hl ; $4f2a

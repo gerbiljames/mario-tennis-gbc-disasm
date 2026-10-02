@@ -184,23 +184,23 @@ RunDebugFlagEditor:
 	ld [wDebugFlagByte], a ; $65b2
 	ld [wDebugFlagPage], a ; $65b5
 .notDebugFlagEditorOpen:
-	ld de, $0000 ; $65b8
+	ld_cell de, $00, $00 ; $65b8
 	ld bc, $1404 ; $65bb
 	call CreateWindow ; $65be
 	ld [wDebugFlagHeaderWindowId], a ; $65c1
 	call DrawTextWindowFrame ; $65c4
 	ld hl, HexDigitHeaderRow0_05 ; $65c7
-	ld de, $0401 ; $65ca
+	ld_cell de, $04, $01 ; $65ca
 	call WriteStringToWindow ; $65cd
 	ld hl, HexDigitHeaderRow1_05 ; $65d0
-	ld de, $0402 ; $65d3
+	ld_cell de, $04, $02 ; $65d3
 	call WriteStringToWindow ; $65d6
-	ld de, $0004 ; $65d9
+	ld_cell de, $00, $04 ; $65d9
 	ld bc, $1407 ; $65dc
 	call CreateWindow ; $65df
 	ld [wDebugFlagWindow1Id], a ; $65e2
 	call DrawTextWindowFrame ; $65e5
-	ld de, $000b ; $65e8
+	ld_cell de, $00, $0b ; $65e8
 	ld bc, $1407 ; $65eb
 	call CreateWindow ; $65ee
 	ld [wDebugFlagWindow2Id], a ; $65f1
@@ -285,7 +285,7 @@ RunDebugMenu:
 	push hl ; $66a7
 .loop:
 	ld hl, Text_30_311 ; $66a8
-	ld de, $0a01 ; $66ab
+	ld_cell de, $0a, $01 ; $66ab
 	call CreateMenuWindowFromText ; $66ae
 	ld [wDebugMenuWindowId], a ; $66b1
 	farcall RestoreShadowTilemap ; $66b4
@@ -377,7 +377,7 @@ DebugDrawWarpMenu:
 	ld c, $01 ; $6759
 	call CopyMemoryFast ; $675b
 	ld hl, wDebugNumberEntryText ; $675e
-	ld de, $0104 ; $6761
+	ld_cell de, $01, $04 ; $6761
 	ld a, [wDebugWarpWindowId] ; $6764
 	call WriteStringToWindow ; $6767
 	ld de, wDebugNumberEntryText ; $676a
@@ -387,7 +387,7 @@ DebugDrawWarpMenu:
 	ld a, $02 ; $6773
 	call FormatDecimalNumber ; $6775
 	ld hl, wDebugNumberEntryText ; $6778
-	ld de, $1102 ; $677b
+	ld_cell de, $11, $02 ; $677b
 	ld a, [wDebugWarpWindowId] ; $677e
 	call WriteStringToWindow ; $6781
 	ld de, wDebugNumberEntryText ; $6784
@@ -397,7 +397,7 @@ DebugDrawWarpMenu:
 	ld a, $02 ; $678d
 	call FormatDecimalNumber ; $678f
 	ld hl, wDebugNumberEntryText ; $6792
-	ld de, $1104 ; $6795
+	ld_cell de, $11, $04 ; $6795
 	ld a, [wDebugWarpWindowId] ; $6798
 	call WriteStringToWindow ; $679b
 	ld d, $10 ; $679e
@@ -427,7 +427,7 @@ RunDebugWarpMenu:
 	ld [wDebugMenuWindowId], a ; $67d8
 	farcall GetStoryLocationCount ; $67db
 	ld [wDebugWarpLocationCount], a ; $67de
-	ld de, $0000 ; $67e1
+	ld_cell de, $00, $00 ; $67e1
 	ld bc, $1406 ; $67e4
 	call CreateWindow ; $67e7
 	ld [wDebugWarpWindowId], a ; $67ea

@@ -539,8 +539,9 @@ MACRO ld_xy
 	lb \1, \2, \3
 ENDM
 
-; ld_cell pair, column, row -- a background-map cell as the text and window
-; routines take it: the column in the high register, the row in the low.
+; ld_cell pair, column, row -- a tile cell as the text and window routines
+; take it, on the background map or inside a window: the column in the high
+; register, the row in the low.
 MACRO ld_cell
 	lb \1, \2, \3
 ENDM
