@@ -901,10 +901,10 @@ bank_01e/lz_GameProgressHeaderGfx_1e.bin 07b5a6 ec gfx
 bank_01e/lz_GameProgressHeaderTilemap_1e.bin 07b692 50 tilemap:32
 bank_01e/lz_GameProgressHeaderAttrmap_1e.bin 07b6e2 18 tilemap:32
 bank_01e/GameProgressScreenPalettes0.asm 07b700 10 palettes
-bank_01e/GameProgressScreenTiles0.asm 07b710 100 palettes
+bank_01e/GameProgressScreenTiles0.bin 07b710 100 gfx
 bank_01e/GameProgressScreenPalettes1.asm 07b810 10 palettes
-bank_01e/GameProgressScreenTiles1.asm 07b820 140 palettes
-bank_01e/GameProgressScreenTiles2.asm 07b960 80 palettes
+bank_01e/GameProgressScreenTiles1.bin 07b820 140 gfx
+bank_01e/GameProgressScreenTiles2.bin 07b960 80 gfx
 bank_01e/GameProgressScreenPalettes2.asm 07b9e0 8 palettes
 bank_01f/TextStrings_1f.asm 07c17e 390d text_pool
 bank_020/BallPosData_20.asm 08027d 3c00 traj:6:64

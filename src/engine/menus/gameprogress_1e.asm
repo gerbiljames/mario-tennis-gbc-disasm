@@ -460,14 +460,14 @@ GameProgressScreenPalettes0:
 	INCLUDE "data/bank_01e/GameProgressScreenPalettes0.asm" ; $7700, 16 bytes (palettes)
 	ds ALIGN[4]
 GameProgressScreenTiles0:
-	INCLUDE "data/bank_01e/GameProgressScreenTiles0.asm" ; $7710, 256 bytes (palettes)
+	INCBIN "data/bank_01e/GameProgressScreenTiles0.bin" ; $7710, 256 bytes
 GameProgressScreenPalettes1:
 	INCLUDE "data/bank_01e/GameProgressScreenPalettes1.asm" ; $7810, 16 bytes (palettes)
 	ds ALIGN[4]
 GameProgressScreenTiles1:
-	INCLUDE "data/bank_01e/GameProgressScreenTiles1.asm" ; $7820, 320 bytes (palettes)
+	INCBIN "data/bank_01e/GameProgressScreenTiles1.bin" ; $7820, 320 bytes
 	ds ALIGN[4]
 GameProgressScreenTiles2:
-	INCLUDE "data/bank_01e/GameProgressScreenTiles2.asm" ; $7960, 128 bytes (palettes)
+	INCBIN "data/bank_01e/GameProgressScreenTiles2.bin" ; $7960, 128 bytes
 GameProgressScreenPalettes2:
 	INCLUDE "data/bank_01e/GameProgressScreenPalettes2.asm" ; $79e0, 8 bytes (palettes)

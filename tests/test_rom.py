@@ -91,7 +91,7 @@ class Manifest(unittest.TestCase):
         self.assertEqual(len(lines), 4243)
         self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 839)
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2725)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2728)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1650)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
