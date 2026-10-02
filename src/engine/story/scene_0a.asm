@@ -15,7 +15,7 @@ RunFacingTileScript:
 	jr z, .done ; $5587
 	ld a, [wStoryLocationBank] ; $5589
 	ld de, wStoryMapRecord ; $558c
-	ld bc, $0008 ; $558f
+	ld bc, wStoryMapRecord_SIZE ; $558f
 	call FarCopyBytes ; $5592
 	ld hl, wStoryMapRecord + 4 ; $5595
 	ld a, [hl+] ; $5598
@@ -46,7 +46,7 @@ RunQueuedTriggerScript:
 	jr z, .done ; $55b8
 	ld a, [wStoryLocationBank] ; $55ba
 	ld de, wStoryMapRecord ; $55bd
-	ld bc, $0008 ; $55c0
+	ld bc, wStoryMapRecord_SIZE ; $55c0
 	call FarCopyBytes ; $55c3
 	ld a, [wStoryMapRecord + 6] ; $55c6
 	cp $01 ; $55c9
@@ -79,7 +79,7 @@ RunTileTriggerScript:
 	jr z, .done ; $55ed
 	ld a, [wStoryLocationBank] ; $55ef
 	ld de, wStoryMapRecord ; $55f2
-	ld bc, $0008 ; $55f5
+	ld bc, wStoryMapRecord_SIZE ; $55f5
 	call FarCopyBytes ; $55f8
 	ld hl, wStoryMapRecord + 4 ; $55fb
 	ld a, [hl+] ; $55fe
@@ -110,7 +110,7 @@ RunLocationExit:
 	jr z, .saveSlot ; $561e
 	ld a, [wStoryLocationBank] ; $5620
 	ld de, wStoryMapRecord ; $5623
-	ld bc, $0008 ; $5626
+	ld bc, wStoryMapRecord_SIZE ; $5626
 	call FarCopyBytes ; $5629
 	ld hl, wStoryMapRecord + 4 ; $562c
 	ld a, [hl+] ; $562f
@@ -417,7 +417,7 @@ LoadStorySceneGraphics:
 	wram_bank WRAM_SCENE ; $5902
 	pop hl ; $5908
 	ld de, wStorySceneRecord ; $5909
-	ld bc, $0088 ; $590c
+	ld bc, wStorySceneRecord_SIZE ; $590c
 	call CopyDataFromBank ; $590f
 	ld hl, wStorySceneRecord + 2 ; $5912
 	ld a, [hl+] ; $5915

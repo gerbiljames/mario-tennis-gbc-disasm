@@ -57,7 +57,7 @@ MatchSelectRunCharacterSelect:
 	call EnableLCD ; $40d1
 	ld hl, wStoryModePlayersXPosition ; $40d4
 	ld de, wStoryModeSpawnPosition ; $40d7
-	ld bc, $0005 ; $40da
+	ld bc, wStoryModeSpawnPosition_SIZE ; $40da
 	call CopyMemoryBC ; $40dd
 	ld a, STORYENTRY_NONE ; $40e0
 	ld [wStoryModeEntryPoint], a ; $40e2
@@ -126,7 +126,7 @@ RunSinglesMatchListMenu:
 	ld [wMapSceneStage], a ; $41a5
 	ld hl, wStoryModePlayersXPosition ; $41a8
 	ld de, wStoryModeSpawnPosition ; $41ab
-	ld bc, $0005 ; $41ae
+	ld bc, wStoryModeSpawnPosition_SIZE ; $41ae
 	call CopyMemoryBC ; $41b1
 	ld a, STORYENTRY_NONE ; $41b4
 	ld [wStoryModeEntryPoint], a ; $41b6
@@ -153,7 +153,7 @@ RunDoublesMatchListMenu:
 	ld [wMapSceneStage], a ; $41ea
 	ld hl, wStoryModePlayersXPosition ; $41ed
 	ld de, wStoryModeSpawnPosition ; $41f0
-	ld bc, $0005 ; $41f3
+	ld bc, wStoryModeSpawnPosition_SIZE ; $41f3
 	call CopyMemoryBC ; $41f6
 	ld a, STORYENTRY_NONE ; $41f9
 	ld [wStoryModeEntryPoint], a ; $41fb
@@ -323,7 +323,7 @@ RunDrillMatchListMenu:
 	push af ; $445d
 	ld hl, wStoryModePlayersXPosition ; $445e
 	ld de, wStoryModeSpawnPosition ; $4461
-	ld bc, $0005 ; $4464
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4464
 	call CopyMemoryBC ; $4467
 	ld a, STORYENTRY_NONE ; $446a
 	ld [wStoryModeEntryPoint], a ; $446c
@@ -346,7 +346,7 @@ MatchSelectCharDataOptionDisabled:
 Unused_10_RunCharDataScreen:
 	ld hl, wStoryModePlayersXPosition ; $4499
 	ld de, wStoryModeSpawnPosition ; $449c
-	ld bc, $0005 ; $449f
+	ld bc, wStoryModeSpawnPosition_SIZE ; $449f
 	call CopyMemoryBC ; $44a2
 	ld a, STORYENTRY_NONE ; $44a5
 	ld [wStoryModeEntryPoint], a ; $44a7
@@ -415,7 +415,7 @@ RunServiceLessonMenu:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $4536
 	ld hl, wStoryModePlayersXPosition ; $4539
 	ld de, wStoryModeSpawnPosition ; $453c
-	ld bc, $0005 ; $453f
+	ld bc, wStoryModeSpawnPosition_SIZE ; $453f
 	call CopyMemoryBC ; $4542
 	ld a, STORYENTRY_NONE ; $4545
 	ld [wStoryModeEntryPoint], a ; $4547
@@ -437,7 +437,7 @@ RunNetLessonMenu:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $456e
 	ld hl, wStoryModePlayersXPosition ; $4571
 	ld de, wStoryModeSpawnPosition ; $4574
-	ld bc, $0005 ; $4577
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4577
 	call CopyMemoryBC ; $457a
 	ld a, STORYENTRY_NONE ; $457d
 	ld [wStoryModeEntryPoint], a ; $457f

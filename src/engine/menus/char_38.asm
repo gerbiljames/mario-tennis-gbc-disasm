@@ -177,7 +177,7 @@ RunExhibitionCharSelectScreen:
 	xor a ; $4e7c
 	ld [wCharSelectRemoteSlot], a ; $4e7d
 	ld hl, wCharGridEntries ; $4e80
-	ld bc, $0080 ; $4e83
+	ld bc, wCharGridEntries_SIZE ; $4e83
 	call ClearBytes ; $4e86
 	call BuildCharUnlockFlags ; $4e89
 	call SetupCharGridScreen ; $4e8c

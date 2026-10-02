@@ -385,7 +385,7 @@ LoadCharacterRecordToCa80:
 	call LoadStorySlot ; $52b4
 	ld hl, wPlayer1MainName ; $52b7
 	ld de, wPlayer2MainName ; $52ba
-	ld c, $08 ; $52bd
+	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $52bd
 	call CopyMemoryFast ; $52bf
 	jr .restore ; $52c2
 .positive:

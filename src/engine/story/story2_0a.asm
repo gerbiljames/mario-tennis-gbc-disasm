@@ -124,7 +124,7 @@ SaveStoryReturnPoint:
 	ld [hl], $ff ; $529b
 	ld hl, wStoryModePlayersXPosition ; $529d
 	ld de, wStoryReturnPosition ; $52a0
-	ld bc, $0005 ; $52a3
+	ld bc, wStoryReturnPosition_SIZE ; $52a3
 	call CopyMemoryBC ; $52a6
 .done:
 	pop hl ; $52a9
@@ -151,7 +151,7 @@ RestoreStoryReturnPoint:
 .restorePosition:
 	ld hl, wStoryReturnPosition ; $52cf
 	ld de, wStoryModeSpawnPosition ; $52d2
-	ld bc, $0005 ; $52d5
+	ld bc, wStoryModeSpawnPosition_SIZE ; $52d5
 	call CopyMemoryBC ; $52d8
 	ld a, [wStoryReturnLocation] ; $52db
 	ld [wStoryModeCurrentLocation], a ; $52de
@@ -436,7 +436,7 @@ RunNpcInteraction:
 	jp z, .checkRespawn ; $54cd
 	ld a, [wStoryLocationBank] ; $54d0
 	ld de, wStoryMapRecord ; $54d3
-	ld bc, $0008 ; $54d6
+	ld bc, wStoryMapRecord_SIZE ; $54d6
 	call FarCopyBytes ; $54d9
 	ld hl, wStoryMapRecord + 6 ; $54dc
 	ld b, [hl] ; $54df

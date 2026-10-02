@@ -20,11 +20,11 @@ FetchText_{TWIN}:
 	or a
 	jr nz, .nonZero
 	ld de, wTextBuffer
-	ld c, $a0
+	ld c, wTextBuffer_SIZE
 	jr .loop
 .nonZero:
 	ld de, wShortTextBuffer
-	ld c, $10
+	ld c, wShortTextBuffer_SIZE
 .loop:
 	dec c
 	jr z, .countDone

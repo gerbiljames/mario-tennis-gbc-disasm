@@ -2,7 +2,7 @@ BuildN64ExhibColumnList:
 	wram_bank WRAM_SCREEN ; $4743
 	ld hl, N64ExhibColumn ; $4749
 	ld de, wChartColumnList ; $474c
-	ld bc, $0001 ; $474f
+	ld bc, wChartColumnList_SIZE / 16 ; $474f
 	call CopyMemoryFast ; $4752
 	ld hl, wN64RecordsBlock + 344 ; $4755
 	ld a, [hl] ; $4758
@@ -196,7 +196,7 @@ ExpandRowBytesToBits:
 	push hl ; $4873
 	push de ; $4874
 	ld hl, wExhibCellBits ; $4875
-	ld bc, $0004 ; $4878
+	ld bc, wExhibCellBits_SIZE / 16 ; $4878
 	call ClearMemory16 ; $487b
 	pop de ; $487e
 	ld hl, wExhibCellBits ; $487f
@@ -337,7 +337,7 @@ ReadN64RecordsSaveBlock:
 	push bc ; $493f
 	push_wram_bank WRAM_SCREEN ; $4940
 	ld hl, wN64RecordsBlock ; $4949
-	ld bc, $0020 ; $494c
+	ld bc, wN64RecordsBlock_SIZE / 16 ; $494c
 	call ClearMemory16 ; $494f
 	ld hl, wN64RecordsBlock ; $4952
 	ld b, $0b ; $4955

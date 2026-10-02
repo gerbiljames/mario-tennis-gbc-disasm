@@ -6,7 +6,18 @@
 ; whole banks from here, and SoftReset parks the stack at its lower edge,
 ; growing down into WRAM0.
 def WRAMX_BASE equ $d000
+def WRAMX_SIZE equ $1000
+def WRAMX_END  equ WRAMX_BASE + WRAMX_SIZE
 def STACK_TOP equ $d000
+
+; One VRAM bank: the three tile blocks and both maps.
+def VRAM_SIZE equ $2000
+
+; --- Character records ---
+; A character is a $40-byte record: the story pair at $c900/$c940 (main,
+; partner), their saved-slot mirror at $c800/$c840, and the four match
+; records at $ca00-$caff. The pairs are copied together, two records at once.
+def CHAR_RECORD_SIZE equ $40
 
 ; --- VRAM bank in a copy destination ---
 ; QueueVRAMCopy takes its destination in de and carries the VRAM bank in bit 13

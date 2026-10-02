@@ -109,7 +109,7 @@ Unused_10_DevelopmentMoveActorsAndExit:
 	script_wait_move $10 ; $4d53
 	ld hl, wStoryModePlayersXPosition ; $4d58
 	ld de, wStoryModeSpawnPosition ; $4d5b
-	ld bc, $0005 ; $4d5e
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4d5e
 	call CopyMemoryBC ; $4d61
 	ld a, STORYENTRY_NONE ; $4d64
 	ld [wStoryModeEntryPoint], a ; $4d66

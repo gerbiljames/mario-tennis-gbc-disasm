@@ -419,7 +419,7 @@ SeniorCourtNpc08_12:
 	script_wait_actor_script ACTOR_SENIOR_COURT_BETH ; $59f8
 	ld hl, wStoryModePlayersXPosition ; $59fd
 	ld de, wStoryModeSpawnPosition ; $5a00
-	ld bc, $0005 ; $5a03
+	ld bc, wStoryModeSpawnPosition_SIZE ; $5a03
 	call CopyMemoryBC ; $5a06
 	ld a, STORYENTRY_NONE ; $5a09
 	ld [wStoryModeEntryPoint], a ; $5a0b
@@ -533,7 +533,7 @@ SeniorCourtNpc0A_12:
 	script_wait_actor_script ACTOR_PLAYER ; $5b42
 	ld hl, wStoryModePlayersXPosition ; $5b47
 	ld de, wStoryModeSpawnPosition ; $5b4a
-	ld bc, $0005 ; $5b4d
+	ld bc, wStoryModeSpawnPosition_SIZE ; $5b4d
 	call CopyMemoryBC ; $5b50
 	ld a, STORYENTRY_NONE ; $5b53
 	ld [wStoryModeEntryPoint], a ; $5b55

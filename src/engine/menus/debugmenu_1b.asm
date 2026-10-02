@@ -150,7 +150,7 @@ Unused_1b_LoadUnlockDebugNavGrid:
 Unused_1b_LoadUnlockDebugRosterTable:
 	ld hl, UnlockDebugRosterTable ; $6609
 	ld de, wCharSelectRoster ; $660c
-	ld bc, $0080 ; $660f
+	ld bc, wCharSelectRoster_SIZE ; $660f
 	call CopyMemoryBC ; $6612
 	ret ; $6615
 	db $08 ; $6616

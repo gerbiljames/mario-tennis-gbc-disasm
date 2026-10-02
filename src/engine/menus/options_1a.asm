@@ -211,7 +211,7 @@ Unused_1a_MessageSpeedSettingHandler0:
 	farcall ShowCharDataScreen ; $4178
 	ld hl, wStoryModePlayersXPosition ; $417b
 	ld de, wStoryModeSpawnPosition ; $417e
-	ld bc, $0005 ; $4181
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4181
 	call CopyMemoryBC ; $4184
 	ld a, STORYENTRY_NONE ; $4187
 	ld [wStoryModeEntryPoint], a ; $4189
@@ -222,7 +222,7 @@ Unused_1a_ShowGameProgressScreenThunk:
 	farcall ShowGameProgressScreen ; $4195
 	ld hl, wStoryModePlayersXPosition ; $4198
 	ld de, wStoryModeSpawnPosition ; $419b
-	ld bc, $0005 ; $419e
+	ld bc, wStoryModeSpawnPosition_SIZE ; $419e
 	call CopyMemoryBC ; $41a1
 	ld a, STORYENTRY_NONE ; $41a4
 	ld [wStoryModeEntryPoint], a ; $41a6

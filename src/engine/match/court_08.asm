@@ -260,11 +260,11 @@ SnapshotCourtTilemaps:
 	wram_bank WRAM_COURT_PLANES ; $5e52
 	ld hl, wCourtTilemapSaved ; $5e58
 	ld de, wCourtTilemap ; $5e5b
-	ld c, $40 ; $5e5e
+	ld c, wCourtTilemap_SIZE / 16 ; $5e5e
 	call CopyMemoryFast ; $5e60
 	ld hl, wCourtAttrmapSaved ; $5e63
 	ld de, wCourtAttrmap ; $5e66
-	ld c, $40 ; $5e69
+	ld c, wCourtAttrmap_SIZE / 16 ; $5e69
 	call CopyMemoryFast ; $5e6b
 	ret ; $5e6e
 UploadCourtTilemap:

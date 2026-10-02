@@ -363,7 +363,7 @@ LoadActorObjectDef:
 	ld [de], a ; $4ae6
 	push bc ; $4ae7
 	ld de, wActorObjDef ; $4ae8
-	ld bc, $0010 ; $4aeb
+	ld bc, wActorObjDef_SIZE ; $4aeb
 	call CopyDataFromBank ; $4aee
 	pop bc ; $4af1
 	ld a, [wActorObjDef] ; $4af2
@@ -441,7 +441,7 @@ SetupCharSpriteFromObjectDef:
 	ld a, h ; $4b77
 	ld [wCharObjectBank], a ; $4b78
 	ld de, wActorObjDef ; $4b7b
-	ld bc, $0010 ; $4b7e
+	ld bc, wActorObjDef_SIZE ; $4b7e
 	call CopyDataFromBank ; $4b81
 	ld a, [wActorObjDef] ; $4b84
 	ld [wCharSpriteAttr], a ; $4b87

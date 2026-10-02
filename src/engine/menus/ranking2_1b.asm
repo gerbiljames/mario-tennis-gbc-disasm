@@ -322,7 +322,7 @@ RenderNameBottomRow:
 	ld bc, $0004 ; $56fb
 	add hl, bc ; $56fe
 	ld de, wRankingNameRowBuffer ; $56ff
-	ld bc, $0007 ; $5702
+	ld bc, wRankingNameRowBuffer_SIZE ; $5702
 	call CopyMemoryBC ; $5705
 	pop de ; $5708
 	ld hl, wRankingNameRowBuffer ; $5709

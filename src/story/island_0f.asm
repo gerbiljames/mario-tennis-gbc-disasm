@@ -108,7 +108,7 @@ TournamentFacing01_0f:
 	farcall ShowRankingBoard ; $618b
 	ld hl, wStoryModePlayersXPosition ; $618e
 	ld de, wStoryModeSpawnPosition ; $6191
-	ld bc, $0005 ; $6194
+	ld bc, wStoryModeSpawnPosition_SIZE ; $6194
 	call CopyMemoryBC ; $6197
 	ld a, STORYENTRY_NONE ; $619a
 	ld [wStoryModeEntryPoint], a ; $619c

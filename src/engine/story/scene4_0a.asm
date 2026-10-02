@@ -191,11 +191,11 @@ LoadCourtSceneGraphics:
 	wram_bank WRAM_ACTORS ; $634c
 	pop hl ; $6352
 	ld de, wScoreboardColumnAttrs ; $6353
-	ld bc, $0028 ; $6356
+	ld bc, wScoreboardColumnAttrs_SIZE ; $6356
 	call CopyDataFromBank ; $6359
 	pop hl ; $635c
 	ld de, wScoreboardColumnTiles ; $635d
-	ld bc, $0028 ; $6360
+	ld bc, wScoreboardColumnTiles_SIZE ; $6360
 	call CopyDataFromBank ; $6363
 	wram_bank WRAM_COURT_PLANES ; $6366
 	pop hl ; $636c
@@ -496,7 +496,7 @@ AdvanceSceneTileAnimation:
 	ld a, h ; $6529
 	ld h, $40 ; $652a
 	ld de, wSceneTileAnimSrcPtr ; $652c
-	ld bc, $0002 ; $652f
+	ld bc, wSceneTileAnimSrcPtr_SIZE ; $652f
 	call FarCopyBytes ; $6532
 	pop bc ; $6535
 	ld hl, wSceneTileAnimBufferPtr ; $6536

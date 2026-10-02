@@ -137,84 +137,84 @@ CharDataScreen_LoadScreen:
 	ld de, wDecompBuffer ; $7173
 	call DecompressData ; $7176
 	ld hl, wDecompBuffer ; $7179
-	ld bc, $0240 ; $717c
+	ld bc, CharDataScreenGfx1_1c_SIZE ; $717c
 	call CopyWram1ToWram3 ; $717f
 	wram_bank WRAM_STAGING ; $7182
 	ld hl, CharDataScreenGfx2_1c ; $7188
 	ld de, wDecompBuffer ; $718b
 	call DecompressData ; $718e
 	ld hl, wDecompBuffer ; $7191
-	ld bc, $0240 ; $7194
+	ld bc, CharDataScreenGfx2_1c_SIZE ; $7194
 	call CopyWram1ToWram2 ; $7197
 	wram_bank WRAM_STAGING ; $719a
 	ld hl, CharDataScreenGfx3_1c ; $71a0
 	ld de, wDecompBuffer + 36 * TILE_SIZE ; $71a3
 	call DecompressData ; $71a6
 	ld hl, wDecompBuffer + 36 * TILE_SIZE ; $71a9
-	ld bc, $0032 ; $71ac
+	ld bc, CharDataScreenGfx3_1c_SIZE ; $71ac
 	call CopyWram1ToWram3 ; $71af
 	wram_bank WRAM_STAGING ; $71b2
 	ld hl, CharDataScreenGfx4 ; $71b8
 	ld de, wDecompBuffer + 36 * TILE_SIZE ; $71bb
 	call DecompressData ; $71be
 	ld hl, wDecompBuffer + 36 * TILE_SIZE ; $71c1
-	ld bc, $0032 ; $71c4
+	ld bc, CharDataScreenGfx4_SIZE ; $71c4
 	call CopyWram1ToWram2 ; $71c7
 	wram_bank WRAM_STAGING ; $71ca
 	ld hl, CharDataScreenGfx5 ; $71d0
 	ld de, wDecompBuffer + 40 * TILE_SIZE ; $71d3
 	call DecompressData ; $71d6
 	ld hl, wDecompBuffer + 40 * TILE_SIZE ; $71d9
-	ld bc, $0046 ; $71dc
+	ld bc, CharDataScreenGfx5_SIZE ; $71dc
 	call CopyWram1ToWram3 ; $71df
 	wram_bank WRAM_STAGING ; $71e2
 	ld hl, CharDataScreenGfx6 ; $71e8
 	ld de, wDecompBuffer + 40 * TILE_SIZE ; $71eb
 	call DecompressData ; $71ee
 	ld hl, wDecompBuffer + 40 * TILE_SIZE ; $71f1
-	ld bc, $0046 ; $71f4
+	ld bc, CharDataScreenGfx6_SIZE ; $71f4
 	call CopyWram1ToWram2 ; $71f7
 	wram_bank WRAM_STAGING ; $71fa
 	ld hl, CharDataScreenGfx7 ; $7200
 	ld de, wDecompBuffer + 45 * TILE_SIZE ; $7203
 	call DecompressData ; $7206
 	ld hl, wDecompBuffer + 45 * TILE_SIZE ; $7209
-	ld bc, $0032 ; $720c
+	ld bc, CharDataScreenGfx7_SIZE ; $720c
 	call CopyWram1ToWram3 ; $720f
 	wram_bank WRAM_STAGING ; $7212
 	ld hl, CharDataScreenGfx8 ; $7218
 	ld de, wDecompBuffer + 45 * TILE_SIZE ; $721b
 	call DecompressData ; $721e
 	ld hl, wDecompBuffer + 45 * TILE_SIZE ; $7221
-	ld bc, $0032 ; $7224
+	ld bc, CharDataScreenGfx8_SIZE ; $7224
 	call CopyWram1ToWram2 ; $7227
 	wram_bank WRAM_STAGING ; $722a
 	ld hl, CharDataScreenGfx9 ; $7230
 	ld de, wDecompBuffer + 49 * TILE_SIZE ; $7233
 	call DecompressData ; $7236
 	ld hl, wDecompBuffer + 49 * TILE_SIZE ; $7239
-	ld bc, $005a ; $723c
+	ld bc, CharDataScreenGfx9_SIZE ; $723c
 	call CopyWram1ToWram3 ; $723f
 	wram_bank WRAM_STAGING ; $7242
 	ld hl, CharDataScreenGfx10 ; $7248
 	ld de, wDecompBuffer + 49 * TILE_SIZE ; $724b
 	call DecompressData ; $724e
 	ld hl, wDecompBuffer + 49 * TILE_SIZE ; $7251
-	ld bc, $005a ; $7254
+	ld bc, CharDataScreenGfx10_SIZE ; $7254
 	call CopyWram1ToWram2 ; $7257
 	wram_bank WRAM_STAGING ; $725a
 	ld hl, CharDataScreenGfx11 ; $7260
 	ld de, wDecompBuffer + 55 * TILE_SIZE ; $7263
 	call DecompressData ; $7266
 	ld hl, wDecompBuffer + 55 * TILE_SIZE ; $7269
-	ld bc, $0009 ; $726c
+	ld bc, CharDataScreenGfx11_SIZE ; $726c
 	call CopyWram1ToWram3 ; $726f
 	wram_bank WRAM_STAGING ; $7272
 	ld hl, CharDataScreenGfx12 ; $7278
 	ld de, wDecompBuffer + 55 * TILE_SIZE ; $727b
 	call DecompressData ; $727e
 	ld hl, wDecompBuffer + 55 * TILE_SIZE ; $7281
-	ld bc, $0009 ; $7284
+	ld bc, CharDataScreenGfx12_SIZE ; $7284
 	call CopyWram1ToWram2 ; $7287
 	ret ; $728a
 LoadCharDataScreenTilemaps:
@@ -223,28 +223,28 @@ LoadCharDataScreenTilemaps:
 	ld de, wDecompBuffer + 85 * TILE_SIZE ; $7294
 	call DecompressData ; $7297
 	ld hl, wDecompBuffer + 85 * TILE_SIZE ; $729a
-	ld bc, $0021 ; $729d
+	ld bc, CharDataScreenUIGraphicsGfx4_SIZE ; $729d
 	call CopyWram1ToWram3 ; $72a0
 	wram_bank WRAM_STAGING ; $72a3
 	ld hl, CharDataScreenUIGraphicsGfx5 ; $72a9
 	ld de, wDecompBuffer + 85 * TILE_SIZE ; $72ac
 	call DecompressData ; $72af
 	ld hl, wDecompBuffer + 85 * TILE_SIZE ; $72b2
-	ld bc, $0021 ; $72b5
+	ld bc, CharDataScreenUIGraphicsGfx5_SIZE ; $72b5
 	call CopyWram1ToWram2 ; $72b8
 	wram_bank WRAM_STAGING ; $72bb
 	ld hl, CharDataScreenUIGraphicsGfx6 ; $72c1
 	ld de, wDecompBuffer + 88 * TILE_SIZE ; $72c4
 	call DecompressData ; $72c7
 	ld hl, wDecompBuffer + 88 * TILE_SIZE ; $72ca
-	ld bc, $0018 ; $72cd
+	ld bc, CharDataScreenUIGraphicsGfx6_SIZE ; $72cd
 	call CopyWram1ToWram3 ; $72d0
 	wram_bank WRAM_STAGING ; $72d3
 	ld hl, CharDataScreenUIGraphicsGfx7 ; $72d9
 	ld de, wDecompBuffer + 88 * TILE_SIZE ; $72dc
 	call DecompressData ; $72df
 	ld hl, wDecompBuffer + 88 * TILE_SIZE ; $72e2
-	ld bc, $0018 ; $72e5
+	ld bc, CharDataScreenUIGraphicsGfx7_SIZE ; $72e5
 	call CopyWram1ToWram2 ; $72e8
 	ret ; $72eb
 StartCharDataScreenAnimTask:
@@ -263,22 +263,22 @@ BackupCharData:
 	wram_bank WRAM_SCENE ; $7300
 	ld hl, wCharDataPointsWorking ; $7306
 	ld de, wCharDataEditBackup ; $7309
-	ld bc, $0006 ; $730c
+	ld bc, wCharDataEditBackup_SIZE ; $730c
 	call CopyMemoryBC ; $730f
 	ld hl, wCharDataChoiceCount ; $7312
 	ld de, wCharDataChoiceBackup ; $7315
-	ld bc, $0065 ; $7318
+	ld bc, wCharDataChoiceBackup_SIZE ; $7318
 	call CopyMemoryBC ; $731b
 	ret ; $731e
 RestoreCharData:
 	wram_bank WRAM_SCENE ; $731f
 	ld hl, wCharDataEditBackup ; $7325
 	ld de, wCharDataPointsWorking ; $7328
-	ld bc, $0006 ; $732b
+	ld bc, wCharDataEditBackup_SIZE ; $732b
 	call CopyMemoryBC ; $732e
 	ld hl, wCharDataChoiceBackup ; $7331
 	ld de, wCharDataChoiceCount ; $7334
-	ld bc, $0065 ; $7337
+	ld bc, wCharDataChoiceBackup_SIZE ; $7337
 	call CopyMemoryBC ; $733a
 	ld a, $01 ; $733d
 	ld [wCharDataViewOnly], a ; $733f
@@ -429,14 +429,14 @@ LoadCharDataScreenBgAndPalettes:
 	ld de, wDecompBuffer ; $7465
 	call DecompressData ; $7468
 	ld hl, wDecompBuffer ; $746b
-	ld bc, $0240 ; $746e
+	ld bc, CharDataScreenBgAndPalettes1_SIZE ; $746e
 	call CopyWram1ToWram3 ; $7471
 	wram_bank WRAM_STAGING ; $7474
 	ld hl, CharDataScreenBgAndPalettes2 ; $747a
 	ld de, wDecompBuffer ; $747d
 	call DecompressData ; $7480
 	ld hl, wDecompBuffer ; $7483
-	ld bc, $0240 ; $7486
+	ld bc, CharDataScreenBgAndPalettes2_SIZE ; $7486
 	call CopyWram1ToWram2 ; $7489
 	ret ; $748c
 LoadCharDataScreenMugshots:
@@ -537,6 +537,8 @@ CharDataScreenBgAndPalettes0:
 	INCBIN "data/bank_01c/lz_CharDataScreenBgAndPalettes0.bin" ; $7581, 1886 bytes
 CharDataScreenBgAndPalettes1:
 	INCBIN "data/bank_01c/lz_CharDataScreenBgAndPalettes1.bin" ; $7cdf, 320 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBgAndPalettes1.inc" ; DEF CharDataScreenBgAndPalettes1_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBgAndPalettes2:
 	INCBIN "data/bank_01c/lz_CharDataScreenBgAndPalettes2.bin" ; $7e1f, 216 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenBgAndPalettes2.inc" ; DEF CharDataScreenBgAndPalettes2_SIZE EQU its decoded length, generated from the .bin by make
 	; $7ef7, 265 bytes fill to bank end (linker-padded)

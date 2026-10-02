@@ -197,24 +197,24 @@ BackupCharDataScreenRow:
 	wram_bank WRAM_SCREEN ; $48c9
 	ld hl, wShadowTilemap ; $48cf
 	ld de, wCharDataScreenBackup ; $48d2
-	ld c, $24 ; $48d5
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $48d5
 	call CopyMemoryFast ; $48d7
 	wram_bank WRAM_COURT_PLANES ; $48da
 	ld hl, wScreenAttrmap ; $48e0
 	ld de, wCharDataScreenBackup ; $48e3
-	ld c, $24 ; $48e6
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $48e6
 	call CopyMemoryFast ; $48e8
 	ret ; $48eb
 RestoreCharDataScreenRow:
 	wram_bank WRAM_SCREEN ; $48ec
 	ld hl, wCharDataScreenBackup ; $48f2
 	ld de, wShadowTilemap ; $48f5
-	ld c, $24 ; $48f8
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $48f8
 	call CopyMemoryFast ; $48fa
 	wram_bank WRAM_COURT_PLANES ; $48fd
 	ld hl, wCharDataScreenBackup ; $4903
 	ld de, wScreenAttrmap ; $4906
-	ld c, $24 ; $4909
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4909
 	call CopyMemoryFast ; $490b
 	ret ; $490e
 BlitTilemapRunsFromTable:

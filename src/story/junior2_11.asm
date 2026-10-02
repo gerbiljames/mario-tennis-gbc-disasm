@@ -155,7 +155,7 @@ JuniorClassCourtSinglesNpc08_11:
 	script_wait_frames $3c ; $6ab4
 	ld hl, wStoryModePlayersXPosition ; $6abb
 	ld de, wStoryModeSpawnPosition ; $6abe
-	ld bc, $0005 ; $6ac1
+	ld bc, wStoryModeSpawnPosition_SIZE ; $6ac1
 	call CopyMemoryBC ; $6ac4
 	ld a, STORYENTRY_NONE ; $6ac7
 	ld [wStoryModeEntryPoint], a ; $6ac9

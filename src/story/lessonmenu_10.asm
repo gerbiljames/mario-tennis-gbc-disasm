@@ -9,7 +9,7 @@ RunStrokeLessonMenu:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $45a6
 	ld hl, wStoryModePlayersXPosition ; $45a9
 	ld de, wStoryModeSpawnPosition ; $45ac
-	ld bc, $0005 ; $45af
+	ld bc, wStoryModeSpawnPosition_SIZE ; $45af
 	call CopyMemoryBC ; $45b2
 	ld a, STORYENTRY_NONE ; $45b5
 	ld [wStoryModeEntryPoint], a ; $45b7
@@ -23,7 +23,7 @@ RunStrokeLessonMenu:
 ShowRankingBoardSamples:
 	ld hl, wStoryModePlayersXPosition ; $45cc
 	ld de, wStoryModeSpawnPosition ; $45cf
-	ld bc, $0005 ; $45d2
+	ld bc, wStoryModeSpawnPosition_SIZE ; $45d2
 	call CopyMemoryBC ; $45d5
 	ld a, STORYENTRY_NONE ; $45d8
 	ld [wStoryModeEntryPoint], a ; $45da
@@ -93,7 +93,7 @@ RunMinigameSelectMenu:
 	farcall RunTrainingDrillByID ; $4669
 	ld hl, wStoryModePlayersXPosition ; $466c
 	ld de, wStoryModeSpawnPosition ; $466f
-	ld bc, $0005 ; $4672
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4672
 	call CopyMemoryBC ; $4675
 	ld a, STORYENTRY_NONE ; $4678
 	ld [wStoryModeEntryPoint], a ; $467a
@@ -149,7 +149,7 @@ Test2ExitTriggers_10:
 Unused_10_Test2Npc03:
 	ld hl, wStoryModePlayersXPosition ; $47cf
 	ld de, wStoryModeSpawnPosition ; $47d2
-	ld bc, $0005 ; $47d5
+	ld bc, wStoryModeSpawnPosition_SIZE ; $47d5
 	call CopyMemoryBC ; $47d8
 	ld a, STORYENTRY_NONE ; $47db
 	ld [wStoryModeEntryPoint], a ; $47dd
@@ -167,7 +167,7 @@ Unused_10_Test2Npc03:
 Unused_10_Test2Npc04:
 	ld hl, wStoryModePlayersXPosition ; $4800
 	ld de, wStoryModeSpawnPosition ; $4803
-	ld bc, $0005 ; $4806
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4806
 	call CopyMemoryBC ; $4809
 	ld a, STORYENTRY_NONE ; $480c
 	ld [wStoryModeEntryPoint], a ; $480e
@@ -185,7 +185,7 @@ Unused_10_Test2Npc04:
 Unused_10_Test2Npc05:
 	ld hl, wStoryModePlayersXPosition ; $4831
 	ld de, wStoryModeSpawnPosition ; $4834
-	ld bc, $0005 ; $4837
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4837
 	call CopyMemoryBC ; $483a
 	ld a, STORYENTRY_NONE ; $483d
 	ld [wStoryModeEntryPoint], a ; $483f
@@ -203,7 +203,7 @@ Unused_10_Test2Npc05:
 Unused_10_Test2Npc06:
 	ld hl, wStoryModePlayersXPosition ; $4862
 	ld de, wStoryModeSpawnPosition ; $4865
-	ld bc, $0005 ; $4868
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4868
 	call CopyMemoryBC ; $486b
 	ld a, STORYENTRY_NONE ; $486e
 	ld [wStoryModeEntryPoint], a ; $4870
@@ -221,7 +221,7 @@ Unused_10_Test2Npc06:
 Unused_10_Test2Npc07:
 	ld hl, wStoryModePlayersXPosition ; $4893
 	ld de, wStoryModeSpawnPosition ; $4896
-	ld bc, $0005 ; $4899
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4899
 	call CopyMemoryBC ; $489c
 	ld a, STORYENTRY_NONE ; $489f
 	ld [wStoryModeEntryPoint], a ; $48a1
@@ -239,7 +239,7 @@ Unused_10_Test2Npc07:
 Unused_10_Test2Npc08:
 	ld hl, wStoryModePlayersXPosition ; $48c4
 	ld de, wStoryModeSpawnPosition ; $48c7
-	ld bc, $0005 ; $48ca
+	ld bc, wStoryModeSpawnPosition_SIZE ; $48ca
 	call CopyMemoryBC ; $48cd
 	ld a, STORYENTRY_NONE ; $48d0
 	ld [wStoryModeEntryPoint], a ; $48d2
@@ -257,7 +257,7 @@ Unused_10_Test2Npc08:
 Unused_10_Test2Npc09:
 	ld hl, wStoryModePlayersXPosition ; $48f5
 	ld de, wStoryModeSpawnPosition ; $48f8
-	ld bc, $0005 ; $48fb
+	ld bc, wStoryModeSpawnPosition_SIZE ; $48fb
 	call CopyMemoryBC ; $48fe
 	ld a, STORYENTRY_NONE ; $4901
 	ld [wStoryModeEntryPoint], a ; $4903
@@ -275,7 +275,7 @@ Unused_10_Test2Npc09:
 Unused_10_Test2Npc0A:
 	ld hl, wStoryModePlayersXPosition ; $4926
 	ld de, wStoryModeSpawnPosition ; $4929
-	ld bc, $0005 ; $492c
+	ld bc, wStoryModeSpawnPosition_SIZE ; $492c
 	call CopyMemoryBC ; $492f
 	ld a, STORYENTRY_NONE ; $4932
 	ld [wStoryModeEntryPoint], a ; $4934
@@ -292,7 +292,7 @@ Unused_10_Test2Npc0A:
 Test2Npc0B_10:
 	ld hl, wStoryModePlayersXPosition ; $4957
 	ld de, wStoryModeSpawnPosition ; $495a
-	ld bc, $0005 ; $495d
+	ld bc, wStoryModeSpawnPosition_SIZE ; $495d
 	call CopyMemoryBC ; $4960
 	ld a, STORYENTRY_NONE ; $4963
 	ld [wStoryModeEntryPoint], a ; $4965
@@ -309,7 +309,7 @@ Test2Npc0B_10:
 Test2Npc0C_10:
 	ld hl, wStoryModePlayersXPosition ; $4988
 	ld de, wStoryModeSpawnPosition ; $498b
-	ld bc, $0005 ; $498e
+	ld bc, wStoryModeSpawnPosition_SIZE ; $498e
 	call CopyMemoryBC ; $4991
 	ld a, STORYENTRY_NONE ; $4994
 	ld [wStoryModeEntryPoint], a ; $4996
@@ -326,7 +326,7 @@ Test2Npc0C_10:
 Test2Npc0D_10:
 	ld hl, wStoryModePlayersXPosition ; $49b9
 	ld de, wStoryModeSpawnPosition ; $49bc
-	ld bc, $0005 ; $49bf
+	ld bc, wStoryModeSpawnPosition_SIZE ; $49bf
 	call CopyMemoryBC ; $49c2
 	ld a, STORYENTRY_NONE ; $49c5
 	ld [wStoryModeEntryPoint], a ; $49c7
@@ -343,7 +343,7 @@ Test2Npc0D_10:
 Test2Npc0E_10:
 	ld hl, wStoryModePlayersXPosition ; $49ea
 	ld de, wStoryModeSpawnPosition ; $49ed
-	ld bc, $0005 ; $49f0
+	ld bc, wStoryModeSpawnPosition_SIZE ; $49f0
 	call CopyMemoryBC ; $49f3
 	ld a, STORYENTRY_NONE ; $49f6
 	ld [wStoryModeEntryPoint], a ; $49f8
@@ -360,7 +360,7 @@ Test2Npc0E_10:
 Test2Npc0F_10:
 	ld hl, wStoryModePlayersXPosition ; $4a1b
 	ld de, wStoryModeSpawnPosition ; $4a1e
-	ld bc, $0005 ; $4a21
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4a21
 	call CopyMemoryBC ; $4a24
 	ld a, STORYENTRY_NONE ; $4a27
 	ld [wStoryModeEntryPoint], a ; $4a29
@@ -377,7 +377,7 @@ Test2Npc0F_10:
 Test2Npc10_10:
 	ld hl, wStoryModePlayersXPosition ; $4a4c
 	ld de, wStoryModeSpawnPosition ; $4a4f
-	ld bc, $0005 ; $4a52
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4a52
 	call CopyMemoryBC ; $4a55
 	ld a, STORYENTRY_NONE ; $4a58
 	ld [wStoryModeEntryPoint], a ; $4a5a
@@ -394,7 +394,7 @@ Test2Npc10_10:
 Test2Npc11_10:
 	ld hl, wStoryModePlayersXPosition ; $4a7d
 	ld de, wStoryModeSpawnPosition ; $4a80
-	ld bc, $0005 ; $4a83
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4a83
 	call CopyMemoryBC ; $4a86
 	ld a, STORYENTRY_NONE ; $4a89
 	ld [wStoryModeEntryPoint], a ; $4a8b
@@ -411,7 +411,7 @@ Test2Npc11_10:
 Test2Npc12_10:
 	ld hl, wStoryModePlayersXPosition ; $4aae
 	ld de, wStoryModeSpawnPosition ; $4ab1
-	ld bc, $0005 ; $4ab4
+	ld bc, wStoryModeSpawnPosition_SIZE ; $4ab4
 	call CopyMemoryBC ; $4ab7
 	ld a, STORYENTRY_NONE ; $4aba
 	ld [wStoryModeEntryPoint], a ; $4abc

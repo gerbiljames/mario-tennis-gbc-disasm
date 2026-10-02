@@ -744,7 +744,7 @@ StoryPauseMenu_PlayerData:
 StoryPauseMenu_CharPartnerData:
 	ld hl, wStoryModePlayersXPosition ; $6f66
 	ld de, wStoryModeSpawnPosition ; $6f69
-	ld bc, $0005 ; $6f6c
+	ld bc, wStoryModeSpawnPosition_SIZE ; $6f6c
 	call CopyMemoryBC ; $6f6f
 	ld a, STORYENTRY_NONE ; $6f72
 	ld [wStoryModeEntryPoint], a ; $6f74
@@ -757,7 +757,7 @@ StoryPauseMenu_CharPartnerData:
 StoryPauseMenu_Equipment:
 	ld hl, wStoryModePlayersXPosition ; $6f84
 	ld de, wStoryModeSpawnPosition ; $6f87
-	ld bc, $0005 ; $6f8a
+	ld bc, wStoryModeSpawnPosition_SIZE ; $6f8a
 	call CopyMemoryBC ; $6f8d
 	ld a, STORYENTRY_NONE ; $6f90
 	ld [wStoryModeEntryPoint], a ; $6f92
@@ -769,7 +769,7 @@ StoryPauseMenu_Equipment:
 StoryPauseMenu_GameProgress:
 	ld hl, wStoryModePlayersXPosition ; $6fa0
 	ld de, wStoryModeSpawnPosition ; $6fa3
-	ld bc, $0005 ; $6fa6
+	ld bc, wStoryModeSpawnPosition_SIZE ; $6fa6
 	call CopyMemoryBC ; $6fa9
 	ld a, STORYENTRY_NONE ; $6fac
 	ld [wStoryModeEntryPoint], a ; $6fae

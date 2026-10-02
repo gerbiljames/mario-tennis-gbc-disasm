@@ -146,7 +146,7 @@ RestoreShadowTilemapRow:
 	ld e, l ; $443c
 	ld hl, wTilemapRowStage ; $443d
 	wram_bank WRAM_TEXT ; $4440
-	ld bc, $0002 ; $4446
+	ld bc, wTilemapRowStage_SIZE / 16 ; $4446
 	call CopyMemoryFast ; $4449
 	pop de ; $444c
 	pop bc ; $444d
@@ -197,7 +197,7 @@ RestoreShadowTilemapRow:
 	ld e, l ; $4492
 	ld hl, wTilemapRowStage ; $4493
 	wram_bank WRAM_TEXT ; $4496
-	ld bc, $0002 ; $449c
+	ld bc, wTilemapRowStage_SIZE / 16 ; $449c
 	call CopyMemoryFast ; $449f
 	ret ; $44a2
 Unused_05_RefreshShadowTilemapFromMapBuffer:

@@ -316,7 +316,7 @@ LoadCharacterRecordToBuffer:
 	farcall LoadCharacterRecordToCa80 ; $450f
 	ld hl, wPlayer2MainName ; $4512
 	ld de, wCharRecordScratch ; $4515
-	ld c, $08 ; $4518
+	ld c, wCharRecordScratch_SIZE / 16 ; $4518
 	call CopyMemoryFast ; $451a
 	pop hl ; $451d
 	pop de ; $451e

@@ -265,7 +265,7 @@ SpawnActorsFromList:
 .spawnLoop:
 	push af ; $4d06
 	ld de, wActorTemplate ; $4d07
-	ld bc, $000e ; $4d0a
+	ld bc, wActorTemplate_SIZE ; $4d0a
 	call FarCopyBytes ; $4d0d
 	ld a, [wActorTemplate + 9] ; $4d10
 	inc a ; $4d13

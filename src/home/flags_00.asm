@@ -490,7 +490,7 @@ SoftReset:
 	call ClearVRAMCopyQueue ; $25ce
 	push_wram_bank WRAM_SOUND ; $25d1
 	ld hl, WRAMX_BASE ; $25da
-	ld c, $00 ; $25dd
+	ld c, WRAMX_SIZE / 16 ; $25dd
 	call ClearMemory16 ; $25df
 	call InitAudioEngine ; $25e2
 	pop_wram_bank ; $25e5

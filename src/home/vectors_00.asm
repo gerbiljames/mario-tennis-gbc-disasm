@@ -242,23 +242,23 @@ ClearBothVRAMBanks:
 	ld a, $01 ; $024e
 	ldh [rVBK], a ; $0250
 	ld hl, vTiles0 ; $0252
-	ld bc, $0200 ; $0255
+	ld bc, VRAM_SIZE / 16 ; $0255
 	call ClearMemoryBC16 ; $0258
 	xor a ; $025b
 	ldh [rVBK], a ; $025c
 	ld hl, vTiles0 ; $025e
-	ld bc, $0200 ; $0261
+	ld bc, VRAM_SIZE / 16 ; $0261
 	jp ClearMemoryBC16 ; $0264
 .loop:
 	ld a, $01 ; $0267
 	ldh [rVBK], a ; $0269
 	ld hl, vBGMap0 ; $026b
-	ld c, $80 ; $026e
+	ld c, (2 * TILEMAP_AREA) / 16 ; $026e
 	call ClearMemory16 ; $0270
 	xor a ; $0273
 	ldh [rVBK], a ; $0274
 	ld hl, vBGMap0 ; $0276
-	ld c, $80 ; $0279
+	ld c, (2 * TILEMAP_AREA) / 16 ; $0279
 	call ClearMemory16 ; $027b
 	ret ; $027e
 LoadBGPaletteData:
@@ -442,7 +442,7 @@ ClearVRAMBank:
 	and a ; $0385
 	jp nz, ClearBothVRAMBanks ; $0386
 	ld hl, vTiles0 ; $0389
-	ld bc, $0200 ; $038c
+	ld bc, VRAM_SIZE / 16 ; $038c
 	call ClearMemoryBC16 ; $038f
 	ret ; $0392
 Unused_00_ClearBGMap:

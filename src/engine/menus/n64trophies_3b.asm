@@ -404,11 +404,11 @@ BuildN64TnmtDataScreen:
 LoadN64TnmtDataRecords:
 	wram_bank WRAM_SCREEN ; $4dff
 	ld hl, wScreenScratch ; $4e05
-	ld bc, $0080 ; $4e08
+	ld bc, (WRAMX_END - wScreenScratch) / 16 ; $4e08
 	call ClearMemory16 ; $4e0b
 	ld hl, N64TnmtData ; $4e0e
 	ld de, wN64TnmtLayout ; $4e11
-	ld bc, $0010 ; $4e14
+	ld bc, wN64TnmtLayout_SIZE ; $4e14
 	call CopyMemoryBC ; $4e17
 	call ReadN64RecordsSaveBlock ; $4e1a
 	ld hl, wN64RecordsBlock + 344 ; $4e1d

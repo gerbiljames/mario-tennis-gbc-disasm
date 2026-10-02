@@ -227,7 +227,7 @@ AnimateEraseConfirmPalette:
 	push_wram_bank WRAM_SCREEN ; $4e34
 	ld hl, EraseConfirmPalette_3e ; $4e3d
 	ld de, wEraseConfirmPalette ; $4e40
-	ld bc, $0008 ; $4e43
+	ld bc, wEraseConfirmPalette_SIZE ; $4e43
 	call CopyMemoryBC ; $4e46
 	ldh a, [hVBlankCounter] ; $4e49
 	and $3c ; $4e4b

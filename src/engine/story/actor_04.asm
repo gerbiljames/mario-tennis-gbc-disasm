@@ -1,7 +1,7 @@
 ClearActorSlots:
 	wram_bank WRAM_ACTORS ; $4032
 	ld hl, wActors ; $4038
-	ld c, $60 ; $403b
+	ld c, wActors_SIZE / 16 ; $403b
 	call ClearMemory16 ; $403d
 	ret ; $4040
 InitActorEngine:

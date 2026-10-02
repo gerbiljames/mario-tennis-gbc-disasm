@@ -284,7 +284,7 @@ RunNameEntryScreen:
 	ld d, b ; $6f06
 	ld e, c ; $6f07
 	ld hl, wNameEntryBuffer ; $6f08
-	ld bc, $000b ; $6f0b
+	ld bc, wNameEntryBuffer_SIZE ; $6f0b
 	call CopyMemoryBC ; $6f0e
 	sound SFX_MENU_SELECT ; $6f11
 	ld c, $10 ; $6f13
@@ -301,13 +301,13 @@ RunNameEntryScreen:
 	ld h, b ; $6f2f
 	ld l, c ; $6f30
 	ld de, wNameEntryBuffer ; $6f31
-	ld bc, $000b ; $6f34
+	ld bc, wNameEntryBuffer_SIZE ; $6f34
 	call CopyMemoryBC ; $6f37
 	call GetActiveStoryNameBuffer ; $6f3a
 	ld d, b ; $6f3d
 	ld e, c ; $6f3e
 	ld hl, wNameEntryBuffer ; $6f3f
-	ld bc, $000b ; $6f42
+	ld bc, wNameEntryBuffer_SIZE ; $6f42
 	call CopyMemoryBC ; $6f45
 	call DrawEnteredName ; $6f48
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $6f4b
@@ -406,7 +406,7 @@ SetupNameEntryScreen:
 	ld h, b ; $704c
 	ld l, c ; $704d
 	ld de, wNameEntryBuffer ; $704e
-	ld bc, $000b ; $7051
+	ld bc, wNameEntryBuffer_SIZE ; $7051
 	call CopyMemoryBC ; $7054
 	pop_wram_bank ; $7057
 	call DrawEnteredName ; $705c

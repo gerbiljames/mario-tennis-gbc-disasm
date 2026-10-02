@@ -6,9 +6,11 @@ SECTION "WRAM0 $c000", WRAM0[$c000]
 
 ; [160 bytes] Shadow OAM: 40 x 4-byte entries [y, x, tile, attr], copied to $fe00 every frame by hOAMDMARoutine (which sources page $c0). Cleared as its own unit by the boot path (ld hl, $c000 / ld c, $0a / ClearMemory16); only ever written through pointers, never by a direct [$c0xx] operand
 wShadowOAM:: ds 160
+	export_size wShadowOAM
 
 ; [80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries, one per pending transfer. A slot is the five CGB VDMA registers plus the two banks needed to reach the source: [rom bank (0 = slot free), wram bank, src hi, src lo, vbk, dest hi, dest lo, length in 16-byte blocks - 1]. ProcessVRAMCopyQueues banks in the source, writes +$02..+$06 straight through to $ff51-$ff54 and rVBK, and writing +$07 to $ff55 starts the transfer; it clears +$00 as it consumes the slot
 wVRAMCopyQueue:: ds 80
+	export_size wVRAMCopyQueue
 
 ; [4 bytes] Play timer: frames (0-59), seconds, minutes, hours (caps at 99)
 wGameTimer:: ds 4
@@ -42,9 +44,11 @@ wTileWriteQueue:: ds 64
 
 ; [64 bytes] Frame task list: 4-byte records [id, ptr lo, ptr hi, rom bank] of banked callbacks run each frame (RegisterFrameTask / ClearFrameTasks)
 wFrameTasks:: ds 64
+	export_size wFrameTasks
 
 ; [128 bytes] Master palette copy (BG+OBJ); fades scale this into wBGPalettes/wOBJPalettes
 wMasterPalettes:: ds 128
+	export_size wMasterPalettes
 
 ; [8-bit] Story Mode - Current Location
 ;
@@ -117,6 +121,7 @@ wStoryModeEntryPoint:: db
 
 ; [5 bytes] Story Mode - player spawn/return buffer: X (16-bit), Y (16-bit), facing; filled from the matched entry-point record or backed up from wStoryModePlayersXPosition before a submode
 wStoryModeSpawnPosition:: ds 5
+	export_size wStoryModeSpawnPosition
 
 ; [8-bit] ROM bank of the current story location's header and script data: the high byte of the far pointer at $c282, taken by LoadStoryLocationHeader. Every consumer (LoadStoryEntryPointRecord, FindStoryScriptEntry, GetTileTriggerAtPlayer, RunNpcInteraction, RunLocationExit, ...) passes it to FarReadByte or a farcall
 wStoryLocationBank:: db
@@ -211,6 +216,7 @@ ENDU
 
 ; [8 bytes] Staging copy of one record from the loaded location's map tables, far-copied here out of wStoryLocationBank after FindStoryScriptEntry locates it. Both record shapes land in the same eight bytes, so the field meanings depend on which table was searched: a map_entry gives facing at +1, X and Y at +2 and +4, and the arrival_script at +6; a map_script gives the flag condition at +2, the handler at +4 and its two argument bytes at +6 and +7 (RunLocationExit reads those two as destination location and entry point)
 wStoryMapRecord:: ds 8
+	export_size wStoryMapRecord
 	ds 8
 
 ; [16-bit] Story Mode - Player's X Position
@@ -956,12 +962,15 @@ wShadowOAM2:: ds 160
 
 ; Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0. Also the save engine's staging area: MirrorSaveHeaderToBank1 ($03:$48a1) copies each 512-byte SRAM header region through $c600-$c7ff on its way to SRAM bank 1 (ld c, $20 = 32 blocks of 16), running over this buffer, wTilemapRowStage, wInlineTextBuffer and the debug-menu variables up to $c7ff; the directory entries its last copy leaves behind are what a RAM poison run found at $c6e0-$c75f
 wTextBuffer:: ds 160
+	export_size wTextBuffer
 
 ; [32 bytes] One tilemap row staged by RestoreShadowTilemapRow: it reads the row out of the map buffer, wrapping at the map edge, and writes it back into the shadow tilemap from here
 wTilemapRowStage:: ds 32
+	export_size wTilemapRowStage
 
 ; 32-byte staging buffer for inline text args (player name, arg strings, short texts) rendered via RenderInlineString
 wInlineTextBuffer:: ds 32
+	export_size wInlineTextBuffer
 	ds 32
 
 ; [8-bit] Window struct index of the debug menu's own window, from CreateMenuWindowFromText; RunDebugMenu passes it to RunMenuSelection and CloseWindow
@@ -1020,6 +1029,7 @@ wDebugFlagWindow2Id:: db
 
 ; [16 bytes] Text buffer the debug warp menu builds its number-entry prompt in -- the prompt string is copied here and FormatDecimalNumber overwrites the digits in place
 wDebugNumberEntryText:: ds 16
+	export_size wDebugNumberEntryText
 	ds 48
 
 ; [8 bytes] Four 16-bit values the debug stats page shows as words. Only +$00, +$04 and +$06 are drawn; +$02 is skipped
@@ -1205,6 +1215,7 @@ wMinigameTargetsActive:: db
 wMinigameLastHitCell:: db
 ; [24 bytes] The 3 x 8 target grid, one byte per cell. AreAllTargetsHit passes only when all 24 read 1; ResetTargetGrid clears it a row at a time (+$07, +$0f, +$17 are the row ends)
 wMinigameTargetGrid:: ds 24
+	export_size wMinigameTargetGrid
 NEXTU
 ; character select and new game (bank $1b)
 ; [8-bit] Cursor column carried in and out of RunCharacterSelectScreen, so the new-game roster loop resumes where the player left off
@@ -1455,6 +1466,7 @@ wStoryReturnEntryPoint:: db
 
 ; [5 bytes] Player X, Y and facing saved with the return point, in the wStoryModeSpawnPosition layout it is copied back into
 wStoryReturnPosition:: ds 5
+	export_size wStoryReturnPosition
 	ds 1
 
 ; [16-bit] EXP an exhibition match earned, parked here by AwardExhibitionMatchExp and applied by ApplyPendingExpAwards once the results screens are done
@@ -2500,9 +2512,11 @@ wUnlockedCourtMask:: db
 
 ; [4 bytes] The other Game Boy's packed unlock flags, filled by the ExchangeLinkDataBlock that sends wLinkUnlockFlagsSend. MergeLinkUnlockFlags folds the two together so both sides end up with the union of what each has unlocked
 wLinkUnlockFlagsRecv:: ds 4
+	export_size wLinkUnlockFlagsRecv
 
 ; [4 bytes] This side's unlock flags, packed one bit per character by PackUnlockFlagsForLink before the exchange
 wLinkUnlockFlagsSend:: ds 4
+	export_size wLinkUnlockFlagsSend
 
 ; [8-bit] One bit per Mario-cast grid slot, built by BuildMarioCastUnlockMask from six passes and read by GetUnlockedMarioCastCharAtGridSlot to skip locked slots
 wMarioCastUnlockMask:: db
@@ -2527,6 +2541,7 @@ wDebugCharViewerIndex:: db
 
 ; [7 bytes] Per-digit working bytes for the number-sprite drawer, cleared by InitNumberSpriteGfx alongside wDigitSpriteTileBase and wDigitSpriteAttr
 wDigitSpriteSlots:: ds 7
+	export_size wDigitSpriteSlots
 
 ; [8-bit] First tile of the loaded digit sprite set; DrawDigitSprite_39 forms the tile as digit * 2 + this, so the narrow and wide digit sets can share one drawer
 wDigitSpriteTileBase:: db
@@ -2574,6 +2589,7 @@ wCourtSceneGfxCursor:: db
 
 ; [576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active
 wDebugTextBuffer:: ds 576
+	export_size wDebugTextBuffer
 
 ; The top of WRAM0, shared by two things that never run together: the
 ; serial link's nibble staging and the character-select roster. Scoped to
@@ -2589,6 +2605,7 @@ NEXTU
 ; character select roster (bank $1b)
 ; [128 bytes] Copy of CharSelectRosterTable, the grid of character ids the select screen and the unlock-debug screen page through. FindCharSelectRosterEntry searches it and DrawCharSelectMugshots walks it
 wCharSelectRoster:: ds 128
+	export_size wCharSelectRoster
 ENDU
 
 
@@ -2630,6 +2647,7 @@ NEXTU
 wDecompBuffer:: ds 2048
 ; [2048 bytes] The other half, where DrawStringToTileBuffer renders a string as tile data rather than as tilemap cells -- the EXP screen's captions and bonus messages are built here and uploaded like any other graphics
 wTextTileBuffer:: ds 2048
+	export_size wTextTileBuffer
 ENDU
 
 
@@ -2686,8 +2704,10 @@ NEXTU
 ; match court planes (banks $08/$0d/$06/$0a)
 ; [1024 bytes] The court tilemap the match renders from; UploadCourtTilemap sends it to $9800 in VRAM bank 0. Held in WRAM bank $02 rather than the usual $03 because the match owns bank $03 for other things
 wCourtTilemap:: ds 1024
+	export_size wCourtTilemap
 ; [1024 bytes] Its CGB attribute plane, cell for cell, uploaded to $9800 in VRAM bank 1 by UploadCourtAttrmap
 wCourtAttrmap:: ds 1024
+	export_size wCourtAttrmap
 ; [1024 bytes] Copy of the court tilemap taken when the players change ends. SnapshotCourtTilemaps copies it back over wCourtTilemap to restore the un-flipped view
 wCourtTilemapSaved:: ds 1024
 ; [1024 bytes] The attribute half of the same snapshot
@@ -2703,12 +2723,14 @@ NEXTU
 ; screen attribute plane
 ; [1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03 -- the pair is what FlushCharDataTilemapChunk sends to $99e0 in VRAM banks 0 and 1. Seventeen ROM banks write cells here, which is why it is the default rather than a scoped variant. The page images the character-data screens patch from sit above it and keep their numeric addresses, being cells in two banks at once. The three bank $1e ranges are the EXP award screen's first argument to a plane writer that selects both banks itself -- FillTilemapRun stores the tile under WRAM bank $03 and the attribute under $02, WriteTextToTilemap and RenderProportionalTextAt likewise -- so at the head of DrawExpTotalPanel, DrawExpMessageWindow and the two message lines of DrawNextExpAwardMessage the live bank is the caller's ($06, or unprovable) and not the operand's. Each of those routines' later cells already render from a provable bank $02, only because FillTilemapRun happens to leave it selected on return
 wScreenAttrmap:: ds 1024
+	export_size wScreenAttrmap
 NEXTU
 ; character record scratch (banks $18/$1b/$3b)
 	ds 1408
 ; [128 bytes] The character record a menu is about to draw. LoadCharacterRecordToBuffer asks LoadCharacterRecordToCa80 to build the record and then copies 128 bytes of it here from wPlayer2MainName, so the fields line up with that block: +$0b is the character id (wPlayer2CurrentMainCharacter's offset), which is what CheckCharacterUnlocked tests against $ff and what the mugshot and portrait loaders take as their index. The `.fixedRecord` shortcut writes $3e straight into +$0b without loading anything.
 ; Scoped to instruction ranges rather than a WRAM bank because the bank is never selected at the reference: bank $3b's BuildSaveSlotSummaries is the one caller that says it out loud, running `wram_bank $02` on both sides of the call, and the reads have to be in the bank the write went to.
 wCharRecordScratch:: ds 128
+	export_size wCharRecordScratch
 ENDU
 
 
@@ -2771,17 +2793,21 @@ UNION
 ; link error flash palette (bank $3e)
 ; [8 bytes] One 4-colour palette AnimateLinkErrorPalette rebuilds each frame for the link-error screen, colour 1 (+2) replaced from a flash table indexed by the frame counter, then uploaded through LoadPaletteShadow as palette 3
 wLinkErrorPalette:: ds 8
+	export_size wLinkErrorPalette
 	ds 8
 NEXTU
 ; equipment select (bank $3e, $5400-$5c00)
 ; [8 bytes] Item ids the player owns, compacted by BuildOwnedItemList from wEquipOwnedMap; the cursor indexes this list
 wEquipItemList:: ds 8
+	export_size wEquipItemList
 ; [8 bytes] One byte per item slot: 0 not owned, 1 owned, 2 owned and equipped. MarkOwnedRackets / MarkOwnedShoes fill it from the save data
 wEquipOwnedMap:: ds 8
+	export_size wEquipOwnedMap
 NEXTU
 ; name entry (bank $38, $6e00-$7500)
 ; [11 bytes] Name being typed, terminated by $00; AppendCharToName / DeleteLastNameChar edit it and RunNameEntryScreen copies it into the character record on accept ($de is the blank-cell filler). Eleven bytes, not the eight the visible cells suggest: every copy in or out of it is `ld bc, $000b`, and TrimTrailingSpacesFromName starts its backwards scan at the last of them
 wNameEntryBuffer:: ds 11
+	export_size wNameEntryBuffer
 NEXTU
 ; match results (bank $16)
 ; [8-bit] 1 if the player won the match just played, 0 if not; written beside wResultScreenMode by RunMatchWinLoseScreen and used by LoadWinLoseScreenAssets / LoadResultScreenTileGraphics to pick the graphics set
@@ -2845,6 +2871,7 @@ UNION
 ; N64 tournament data screen (bank $3b)
 ; [16 bytes] Copy of N64TnmtData taken by LoadN64TnmtDataRecords. +$0e and +$0f are the singles and doubles column masks: forced to $10 when bit 0 / bit 1 of the records block's byte +344 is clear, i.e. when that half of the tournament has no data
 wN64TnmtLayout:: ds 16
+	export_size wN64TnmtLayout
 	ds 16
 ; [12 bytes] First of 16 rows of 12 cells, one row per character in N64CharTrophyRowPtrTable order, filled by BuildN64TnmtTrophyGrid from DecodeN64CharTrophyCounts; the rows run on to $d8ef. CheckN64TnmtSecondPage scans +2 and +5 of the first fourteen rows to decide whether a second page exists
 wN64TnmtTrophyCells:: ds 12
@@ -2853,6 +2880,7 @@ NEXTU
 ; erase-confirm flash palette (bank $3e)
 ; [8 bytes] One 4-colour palette AnimateEraseConfirmPalette rebuilds every frame from EraseConfirmPalette_3e and uploads as palette 4 through LoadPaletteShadow; colour 2 (+4) is replaced each frame from EraseConfirmFlashColors_3e indexed by hVBlankCounter -- the warning text flashing on the erase-confirm screen
 wEraseConfirmPalette:: ds 8
+	export_size wEraseConfirmPalette
 NEXTU
 ; drill briefings (bank $17)
 ; [8-bit] Drill-briefing diagram: player sprite X, queued by DrawBriefingPlayerSprite (d = X, e = Y in QueueSprite)
@@ -2920,6 +2948,7 @@ wBriefingAnimStep:: db
 	ds 1
 ; [8 bytes] Drill-briefing target palette scratch: CycleDiagramTargetPaletteData copied here, colour 2 ($d834) replaced with the cycling colour, then uploaded by LoadPaletteShadow
 wBriefingTargetPalette:: ds 8
+	export_size wBriefingTargetPalette
 NEXTU
 ; character-select grid (banks $38/$10)
 	ds 1
@@ -2988,6 +3017,7 @@ NEXTU
 	ds 2
 ; [9 bytes] One byte per list row, nonzero when that row's minigame has its level-2 clear flag. LoadMinigameStarFlags fills it from MinigameStarFlagsTable ($02a0/$0300/$0360/$03c0/$0520/$0580/$05e0/$0640/$06a0, the SAVEFLAG_CLEARED_*_2 run) exactly as wMinigameDataClearFlags is filled from the level-1 flags. DrawMinigameStarMarks draws mark 1 for each set row; DrawStarLegendMark copies the legend swatch onto the screen if any of the nine is set; and DrawMinigameHighScoreNumber returns early unless the row's byte here is set, so a row with no star shows no number
 wMinigameDataStarFlags:: ds 9
+	export_size wMinigameDataStarFlags
 ; [8 x 16-bit] The number shown on each of the first eight rows. LoadMinigameHighScores calls ReadMinigameRecord with the record id row + 2 -- records 2-9 of the block $38 minigame records, whose 16-bit value comes back in wMinigameRecordValue under WRAM bank $07 -- and stores it at row * 2. DrawMinigameHighScoreNumber skips row 8, which has no record: that slot holds wMinigameDataTwoOnOneCleared instead
 wMinigameDataHighScores:: ds 16
 ; [2 bytes] Row 8's slot in the high-score array, used as a flag pair rather than a number: LoadMinigameHighScores writes $01 into both bytes when SAVEFLAG_CLEARED_TWO_ON_ONE_3 is set, having cleared all 18 bytes from $d81b first. DrawMinigameSpecialMark reads the pair as a word and, once the list is scrolled to the bottom (wMenuCursorY = 4, so row 8 is the fifth visible row), draws mark 2 there
@@ -3012,6 +3042,7 @@ UNION
 ; character unlock flags (bank $38)
 ; [40 bytes] One byte per character, nonzero when unlocked. BuildCharUnlockFlags clears the array and walks CharUnlockFlagsTable0, marking a character either because its entry reads $ffff (always available) or because TestSaveFlag says so. PackUnlockFlagsForLink folds eight at a time into one bit each for the link exchange
 wCharUnlockFlags:: ds 40
+	export_size wCharUnlockFlags
 NEXTU
 ; ranking board (bank $1b)
 ; [4 x 16-bit] One pointer per animation channel to the ranking marker slot that channel moves, stored from hl by StartRankingMarkerAnim<N> (the callers get it from GetRankingMarkerSlot). UpdateScriptedOffsetChannel<N> reloads it each frame and adds the script's delta to the slot's +1 on channels 0 and 1 and to its +2 on channels 2 and 3 -- the X and Y DrawRankingMarkersTask hands to QueueSprite as d and e
@@ -3034,6 +3065,7 @@ wRankingBoardSilent:: db
 	ds 5
 ; [7 bytes] Where a ranking name too long for one row is split. RenderPlayerNameFitted measures the name with GetStringLength and, at six characters or more, calls RenderNameTwoRows: RenderNameTopRow copies the first four characters here and appends $2d ('-') and a terminator, RenderNameBottomRow copies the seven bytes from the fifth character on, and each row is then drawn from here by DrawNameWithDiacritics_1b
 wRankingNameRowBuffer:: ds 7
+	export_size wRankingNameRowBuffer
 ENDU
 
 	ds 152
@@ -3046,14 +3078,17 @@ UNION
 ; created characters and the character grid (bank $38)
 ; [$c0 bytes] Six $20-byte records for the player-created characters, built by BuildCreatedCharRecords from the save and walked by DrawCreatedCharStats (which seeks with a $20 stride). A record whose first byte is $ff ends the list
 wCreatedCharRecords:: ds 192
+	export_size wCreatedCharRecords
 	ds 64
 ; [$80 bytes] The character-select grid as 32 four-byte entries, cleared when the screen opens and filled by BuildCharUnlockFlags. AddCreatedCharsToCharGrid appends the created characters from $da24 on, four bytes per slot
 wCharGridEntries:: ds 128
+	export_size wCharGridEntries
 	ds 128
 NEXTU
 ; N64 transfer records (bank $3b)
 ; [512 bytes] Image of save block $0b, the N64 (Transfer Pak) records, read here by ReadN64RecordsSaveBlock for the trophies screen and the ring-shot and star-victory grids. Same block the bank $03 engine stages at wSaveBlockBuffer in WRAM bank $07 -- this is the screen's own copy
 wN64RecordsBlock:: ds 512
+	export_size wN64RecordsBlock
 NEXTU
 ; screen sequences (bank $18, past the dead confirm-label drawers)
 	ds 256
@@ -3097,6 +3132,7 @@ NEXTU
 	ds 1
 ; [16 bytes] Which column each chart row shows, one byte per row. BuildMarioCastChartColumnList fills it from MarioCastChartColumnTable, substituting $10 -- the blank column -- for any entry whose save flag is clear, so a locked character leaves a gap rather than shifting the chart
 wChartColumnList:: ds 16
+	export_size wChartColumnList
 	ds 1
 ; [8-bit] Page of the N64 exhibition-data screen; N64ExhibScrollArrowsTask picks the arrows from it
 wN64ExhibPage:: db
@@ -3115,11 +3151,13 @@ UNION
 ; exhibition victory grid bits (bank $3b)
 ; [64 bytes] The victory grid's row bytes expanded one bit per byte by ExpandRowBytesToBits (it clears 4 x 16 bytes first), which CombineExhibCellBits indexes by the low nibble of b to fold cells back into bits
 wExhibCellBits:: ds 64
+	export_size wExhibCellBits
 NEXTU
 ; ring-shot results (bank $3b)
 	ds 32
 ; [16 bytes] The ring-shot rows to show, copied from the N64RingShot table and then patched: an entry becomes $10 (the blank row) when the matching bit in the N64 records block is clear, so a course the player never transferred is left out
 wRingShotEntryList:: ds 16
+	export_size wRingShotEntryList
 ENDU
 
 	ds 416
@@ -3180,6 +3218,7 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ; overworld actors (WRAM bank $04)
 ; [24 x ACTOR_SIZE] Actor slots; the fields are the ACTORF_* offsets (include/constants.inc). A slot is free when ACTORF_SCRIPT + 1 is zero
 wActors:: ds 1536
+	export_size wActors
 
 	ds 1024
 
@@ -3200,9 +3239,11 @@ wNearbyActorList:: ds 50
 ; actor engine (bank $04)
 ; [14 bytes] One map_actor record, copied out of the ROM list by SpawnActorsFromList and handed to SpawnActorFromTemplate. +$09 (the obj_id byte) reads $ff on the entry that terminates the list
 wActorTemplate:: ds 14
+	export_size wActorTemplate
 	ds 2
 ; [16 bytes] The object-definition record LoadActorObjectDef copies in from the ObjectIdList_04 entry, then distributes into the slot: +$00 to +$37, +$01 to +$35, +$04/+$05 to +$24, +$06/+$07 to +$28, +$0a/+$0b to +$38, and +$08 as a far pointer to palette data when +$00 came out $63. The palette path reuses the first 8 bytes as the copy destination
 wActorObjDef:: ds 16
+	export_size wActorObjDef
 ; [16-bit] Negated camera X plus screen shake, recomputed each frame. DrawActorSprite adds it to an actor position to get a screen coordinate, which is why it is stored already negated
 wActorScreenOriginX:: dw
 ; [16-bit] The same for Y, from wCameraY and wScreenShakeOffsetY (plus the $cb02 offset while the ending credits run)
@@ -3262,12 +3303,14 @@ UNION
 ; +$0a projected screen X (16-bit), +$0c projected screen Y (16-bit),
 ; +$0e handler pointer.
 wMinigameActors:: ds 112
+	export_size wMinigameActors
 ; [16 bytes] The eighth record, same layout, left out of the
 ; ClearMinigameActors block. It is the object the minigame itself drives --
 ; the shot target, the Boo, the treasure box -- and the only record the
 ; code addresses by literal address rather than through bc, which is why
 ; its fields show up as wMinigameSceneActor + n.
 wMinigameSceneActor:: ds 16
+	export_size wMinigameSceneActor
 	ds 82
 NEXTU
 ; minigame targets (bank $0a)
@@ -3284,6 +3327,7 @@ ENDU
 ; minigame targets (bank $0a)
 ; [16 bytes] +$00 flags (bit 0 live, bit 1 moving toward the goal), +$02 delay counter the update ticks down, +$06/+$08 current position, +$0a/+$0c goal position. MoveMinigameTargetTowardGoal steps the current position toward the goal $10 units at a time
 wMinigameTargetWork:: ds 16
+	export_size wMinigameTargetWork
 
 ; Match ball-visuals history ring (WRAM bank 4 only); shared renderer
 ; state, so scoped by the selected WRAM bank plus the bank-$08 renderer.
@@ -3402,6 +3446,7 @@ wObjSlot4:: ds 16
 ;   +$0f anchor: 0 draws at the offsets as they stand, 1 adds the serving
 ;        character's wCharScreenX/Y first
 wObjSlotWork:: ds 16
+	export_size wObjSlotWork
 
 ; Match ball sprite slots (WRAM bank 4 only), alongside the per-character
 ; $df80+ slots; scoped by the selected WRAM bank plus the bank-$08 renderer.
@@ -3428,8 +3473,10 @@ wBallTrailSlots:: ds 20
 ; court scoreboard columns (banks $08/$0a)
 ; [40 bytes] Tile half of the scoreboard columns for a court played from the far side. RefreshCourtScoreboardFlipped copies it, and the row 30 bytes in ($de9e), into wCourtTilemapSaved; the middle offset $de94 is the second column it draws.
 wScoreboardColumnTiles:: ds 40
+	export_size wScoreboardColumnTiles
 ; [40 bytes] CGB attribute half of the same columns, laid out cell for cell with wScoreboardColumnTiles and copied into wCourtAttrmapSaved by the same routine.
 wScoreboardColumnAttrs:: ds 40
+	export_size wScoreboardColumnAttrs
 
 
 SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
@@ -3595,6 +3642,7 @@ wFitTextLineCount:: db
 ; short-text fetch (text banks)
 ; [16 bytes] Short string buffer: the text-bank fetch routines copy the string here instead of into wTextBuffer when called with a != 0
 wShortTextBuffer:: ds 16
+	export_size wShortTextBuffer
 
 	ds 32
 
@@ -3632,6 +3680,7 @@ wSceneTileAnimEntries:: ds 128
 wSceneTileAnimBufferPtr:: dw
 ; [16-bit] Far source pointer for the frame being staged, copied two bytes at a time out of the scene's slot 6 record by FarCopyBytes ($0a:$652c), then offset by the frame index before the tile data is fetched
 wSceneTileAnimSrcPtr:: dw
+	export_size wSceneTileAnimSrcPtr
 
 	ds 236
 
@@ -3835,6 +3884,7 @@ NEXTU
 wCharDataChoiceLog:: ds 100
 ; [6 bytes] Scratch the character-data and EXP screens format numbers into. FormatExp24BitDecimal puts the 24-bit value's top byte at +$00 and formats the low word to five places from +$01, which is what makes the buffer six wide
 wCharDataNumberBuffer:: ds 6
+	export_size wCharDataNumberBuffer
 	ds 11
 ; [8-bit] Cleared with the rest of the screen state by CharDataScreen_InitState and read by nothing else in the character-data banks -- the byte sits between wCharDataNumberBuffer and the working palette buffer, so whichever screen ran before is what left a value in it
 wCharDataRevealDone:: db
@@ -3846,8 +3896,10 @@ wCharDataRacketDeltas:: ds 11
 wCharDataViewOnly:: db
 ; [6 bytes] Copy of wCharDataEditState taken as the screen opens; RestoreCharData copies it back and sets wCharDataViewOnly, which is how cancelling out of a level-up returns everything unspent
 wCharDataEditBackup:: ds 6
+	export_size wCharDataEditBackup
 ; [101 bytes] The matching backup of wCharDataChoiceCount and the choice log behind it, so a cancelled visit forgets every level-up the player had provisionally taken
 wCharDataChoiceBackup:: ds 101
+	export_size wCharDataChoiceBackup
 NEXTU
 ; character-data and EXP screens (banks $1a/$1c/$1d)
 	ds 283
@@ -3899,6 +3951,7 @@ wCharStatPageMain:: ds 13
 wCharStatPagePartner:: ds 13
 ; [6 bytes] Whichever page is on screen, copied from +$04 of the main or partner record as the screen slides between them. DrawCharStatDigitsTask draws from here
 wCharStatPageShown:: ds 6
+	export_size wCharStatPageShown
 	ds 7
 ; [8-bit] Which pair CharDataValuesSyncTask pushes into the screen: zero takes wCharDataSyncValues, nonzero takes wGameTimer + 2
 wCharDataSyncSource:: db
@@ -4021,6 +4074,7 @@ wStorySceneUnusedBuffer:: ds 1024
 ; story scene load (bank $0a)
 ; [136 bytes] The current story scene's record, copied here from its slot with CopyDataFromBank. The loader reads four bytes at +2 straight back out into wMapScrollMinX, wMapScrollMinY, wMapWidthTiles and wMapHeightTiles, so the first fields are the map's scroll bounds and tile dimensions.
 wStorySceneRecord:: ds 136
+	export_size wStorySceneRecord
 
 
 SECTION "WRAMX bank 7", WRAMX[$d000], BANK[7]
@@ -4041,6 +4095,7 @@ SECTION "WRAMX bank 7", WRAMX[$d000], BANK[7]
 ; sound driver (bank 0)
 ; [32 bytes] Copy of $ffd0-$ffef taken by RunSoundEngine on entry and put back on exit. The driver keeps its channel state in that HRAM window, so context-switching it is what lets four other subsystems keep their own bytes there across an audio update -- see the $ffd0 union
 wSndHramSave:: ds 32
+	export_size wSndHramSave
 
 	ds 10
 

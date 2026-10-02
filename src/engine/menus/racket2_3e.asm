@@ -344,7 +344,7 @@ BuildOwnedItemList:
 	ld [wEquipEquippedIndex], a ; $5726
 	ld [wEquipItemCount], a ; $5729
 	ld hl, wEquipItemList ; $572c
-	ld bc, $0008 ; $572f
+	ld bc, wEquipItemList_SIZE ; $572f
 	call ClearBytes ; $5732
 	ld hl, wEquipOwnedMap ; $5735
 	ld de, wEquipItemList ; $5738
@@ -373,7 +373,7 @@ BuildOwnedItemList:
 	ret ; $5759
 MarkOwnedRackets:
 	ld hl, wEquipOwnedMap ; $575a
-	ld bc, $0008 ; $575d
+	ld bc, wEquipOwnedMap_SIZE ; $575d
 	call ClearBytes ; $5760
 	ld hl, wEquipOwnedMap ; $5763
 	ld a, $01 ; $5766
@@ -421,7 +421,7 @@ RacketItemTiles_3e:
 	db $61, $62, $63, $65, $64, $66 ; 0x00
 MarkOwnedShoes:
 	ld hl, wEquipOwnedMap ; $57a8
-	ld bc, $0008 ; $57ab
+	ld bc, wEquipOwnedMap_SIZE ; $57ab
 	call ClearBytes ; $57ae
 	ld hl, wEquipOwnedMap ; $57b1
 	ld a, $01 ; $57b4

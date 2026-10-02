@@ -251,6 +251,22 @@ chunk that lands at `$8e00` — the last of the four `$200`-byte slices that wou
 have covered `$8800`-`$8fff`, with the first three missing and the source label
 of the survivor wrong.
 
+### The SRAM text fetch copies more than its buffers hold
+
+The ROM text fetchers stop at the size of the buffer they fill: dialogue at
+`wTextBuffer_SIZE` (160 bytes), short text at `wShortTextBuffer_SIZE` (16).
+`FetchSRAMText` (`$05:$6d3b`), which fetches the player-entered strings for
+text ids with bit 15 set, copies a fixed length with `CopyMemoryBC` instead:
+`$180` bytes into `wTextBuffer` and `$20` into `wShortTextBuffer`, three and
+two times what they hold.
+
+The dialogue copy runs in play (`FetchDialogueTextFromSram`) and overwrites
+`$c6a0`-`$c77f` on every call: `wTilemapRowStage`, `wInlineTextBuffer` and the
+debug-menu variables at `$c700`. It does no harm. The two staging buffers are
+filled and consumed within one routine each, and the debug variables belong
+to screens nothing reaches. The short-text copy is reached only from
+`Unused_05_FetchSRAMShortText`.
+
 ### Boot loads five object palettes from VRAM
 
 `LoadMenuObjPalettes3To7` (`$01:$5188`), called once from the boot sequence

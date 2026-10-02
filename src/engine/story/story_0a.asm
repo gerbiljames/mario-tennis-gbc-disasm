@@ -527,7 +527,7 @@ LoadStoryEntryPointRecord:
 .copyRecord:
 	ld a, [wStoryLocationBank] ; $51a0
 	ld de, wStoryMapRecord ; $51a3
-	ld bc, $0008 ; $51a6
+	ld bc, wStoryMapRecord_SIZE ; $51a6
 	call FarCopyBytes ; $51a9
 	ld a, [wStoryMapRecord + 1] ; $51ac
 	ld [wStoryModeSpawnPosition + 4], a ; $51af

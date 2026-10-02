@@ -178,7 +178,7 @@ TextCmdPrintArgString:
 .copyMemoryBC:
 	push de ; $50d8
 	ld de, wInlineTextBuffer ; $50d9
-	ld bc, $0020 ; $50dc
+	ld bc, wInlineTextBuffer_SIZE ; $50dc
 	call CopyMemoryBC ; $50df
 	pop de ; $50e2
 	wram_bank WRAM_TEXT ; $50e3
@@ -394,7 +394,7 @@ MeasureNextArgStringWidth:
 .copyMemoryBC:
 	push de ; $5241
 	ld de, wInlineTextBuffer ; $5242
-	ld bc, $0020 ; $5245
+	ld bc, wInlineTextBuffer_SIZE ; $5245
 	call CopyMemoryBC ; $5248
 	pop de ; $524b
 	wram_bank WRAM_TEXT ; $524c

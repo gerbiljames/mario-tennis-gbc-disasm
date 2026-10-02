@@ -114,11 +114,11 @@ DrawMenuCaptionWindow:
 RestoreBgTilemap:
 	ld hl, wCourtTilemapSaved ; $45aa
 	ld de, wCourtTilemap ; $45ad
-	ld c, $40 ; $45b0
+	ld c, wCourtTilemap_SIZE / 16 ; $45b0
 	call CopyMemoryFast ; $45b2
 	ld hl, wCourtAttrmapSaved ; $45b5
 	ld de, wCourtAttrmap ; $45b8
-	ld c, $40 ; $45bb
+	ld c, wCourtAttrmap_SIZE / 16 ; $45bb
 	call CopyMemoryFast ; $45bd
 	ret ; $45c0
 RestoreBgTilemapRegion:
@@ -133,7 +133,7 @@ RestoreBgTilemapRegion:
 	ld d, h ; $45ce
 	ld hl, wCourtTilemapSaved ; $45cf
 	add hl, bc ; $45d2
-	ld c, $0e ; $45d3
+	ld c, (7 * TILEMAP_WIDTH) / 16 ; $45d3
 	call CopyMemoryFast ; $45d5
 	pop bc ; $45d8
 	ld hl, wCourtAttrmap ; $45d9
@@ -142,7 +142,7 @@ RestoreBgTilemapRegion:
 	ld d, h ; $45de
 	ld hl, wCourtAttrmapSaved ; $45df
 	add hl, bc ; $45e2
-	ld c, $0e ; $45e3
+	ld c, (7 * TILEMAP_WIDTH) / 16 ; $45e3
 	call CopyMemoryFast ; $45e5
 	ret ; $45e8
 ClearAttrPriorityRegion:

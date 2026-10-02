@@ -19,30 +19,30 @@ InitAndRunGame:
 	call DisableLCDSafely ; $4023
 	wram_bank WRAM_STAGING ; $4026
 	ld hl, wDecompBuffer ; $402c
-	ld c, $00 ; $402f
+	ld c, WRAMX_SIZE / 16 ; $402f
 	call ClearMemory16 ; $4031
 	wram_bank WRAM_COURT_PLANES ; $4034
 	ld hl, wScreenAttrmap ; $403a
-	ld c, $00 ; $403d
+	ld c, WRAMX_SIZE / 16 ; $403d
 	call ClearMemory16 ; $403f
 	wram_bank WRAM_SCREEN ; $4042
 	ld hl, wShadowTilemap ; $4048
-	ld c, $00 ; $404b
+	ld c, WRAMX_SIZE / 16 ; $404b
 	call ClearMemory16 ; $404d
 	wram_bank WRAM_ACTORS ; $4050
 	ld hl, wActors ; $4056
-	ld c, $00 ; $4059
+	ld c, WRAMX_SIZE / 16 ; $4059
 	call ClearMemory16 ; $405b
 	wram_bank WRAM_TEXT ; $405e
 	ld hl, wWindowShadowTilemap ; $4064
-	ld c, $00 ; $4067
+	ld c, WRAMX_SIZE / 16 ; $4067
 	call ClearMemory16 ; $4069
 	wram_bank WRAM_SCENE ; $406c
 	ld hl, WRAMX_BASE ; $4072
-	ld c, $00 ; $4075
+	ld c, WRAMX_SIZE / 16 ; $4075
 	call ClearMemory16 ; $4077
 	ld hl, wShadowOAM ; $407a
-	ld c, $0a ; $407d
+	ld c, wShadowOAM_SIZE / 16 ; $407d
 	call ClearMemory16 ; $407f
 	call ClearDebugTextBuffer ; $4082
 	call LoadMenuFontGfx ; $4085
@@ -399,14 +399,14 @@ ShowDmgLockoutScreen:
 	call CopyMemoryFast ; $6045
 	ld hl, wTextTileBuffer ; $6048
 	ld de, vTiles1 ; $604b
-	ld c, $80 ; $604e
+	ld c, wTextTileBuffer_SIZE / 16 ; $604e
 	call CopyMemoryFast ; $6050
 	ld hl, DmgLockoutTilemapLZ_01 ; $6053
 	ld de, wDecompBuffer ; $6056
 	call DecompressData ; $6059
 	ld hl, wDecompBuffer ; $605c
 	ld de, vBGMap0 ; $605f
-	ld c, $40 ; $6062
+	ld c, TILEMAP_AREA / 16 ; $6062
 	call CopyMemoryFast ; $6064
 	ld a, $e4 ; $6067
 	ldh [rBGP], a ; $6069

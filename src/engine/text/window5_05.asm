@@ -27,11 +27,11 @@ FetchSRAMText:
 	or a ; $6d4d
 	jr nz, .nonZero ; $6d4e
 	ld de, wTextBuffer ; $6d50
-	ld bc, $0180 ; $6d53
+	ld bc, $0180 ; $6d53 384 bytes into the 160-byte buffer (docs/bugs.md)
 	jr .copyMemoryBC ; $6d56
 .nonZero:
 	ld de, wShortTextBuffer ; $6d58
-	ld bc, $0020 ; $6d5b
+	ld bc, $0020 ; $6d5b 32 bytes into the 16-byte buffer
 .copyMemoryBC:
 	call CopyMemoryBC ; $6d5e
 	pop hl ; $6d61
@@ -127,10 +127,10 @@ ResetTextWindowState:
 	push hl ; $6e0c
 	wram_bank WRAM_TEXT ; $6e0d
 	ld hl, wWindowShadowTilemap ; $6e13
-	ld c, $80 ; $6e16
+	ld c, (2 * TILEMAP_AREA) / 16 ; $6e16
 	call ClearMemory16 ; $6e18
 	ld hl, wWindowFitTable ; $6e1b
-	ld c, $80 ; $6e1e
+	ld c, (WRAMX_END - wWindowFitTable) / 16 ; $6e1e
 	call ClearMemory16 ; $6e20
 	ld de, wWindowShadowTilemap ; $6e23
 	ld hl, wShadowTilemapPtr ; $6e26

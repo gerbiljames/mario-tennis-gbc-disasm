@@ -213,7 +213,7 @@ InitCharGridState:
 BuildCharUnlockFlags:
 	push_wram_bank WRAM_SCREEN ; $5a82
 	ld hl, wCharUnlockFlags ; $5a8b
-	ld bc, $0028 ; $5a8e
+	ld bc, wCharUnlockFlags_SIZE ; $5a8e
 	call ClearBytes ; $5a91
 	ld b, $00 ; $5a94
 .flagLoop:

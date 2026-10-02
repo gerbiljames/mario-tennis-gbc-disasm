@@ -330,7 +330,7 @@ TextSubcmdHandler1:
 	call WaitFadeEnd ; $66f0
 	ld hl, wStoryModePlayersXPosition ; $66f3
 	ld de, wStoryModeSpawnPosition ; $66f6
-	ld bc, $0005 ; $66f9
+	ld bc, wStoryModeSpawnPosition_SIZE ; $66f9
 	call CopyMemoryBC ; $66fc
 	ld a, STORYENTRY_NONE ; $66ff
 	ld [wStoryModeEntryPoint], a ; $6701
@@ -374,7 +374,7 @@ DebugDrawWarpMenu:
 	call WriteDialogueToWindow ; $6750
 	ld hl, EnterNumberPrompt_05 ; $6753
 	ld de, wDebugNumberEntryText ; $6756
-	ld c, $01 ; $6759
+	ld c, wDebugNumberEntryText_SIZE / 16 ; $6759
 	call CopyMemoryFast ; $675b
 	ld hl, wDebugNumberEntryText ; $675e
 	ld_cell de, $01, $04 ; $6761

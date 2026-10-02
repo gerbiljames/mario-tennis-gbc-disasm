@@ -24,7 +24,7 @@ RestorePalettesFromMaster:
 	push hl ; $05f7
 	ld hl, wMasterPalettes ; $05f8
 	ld de, wBGPalettes ; $05fb
-	ld c, $08 ; $05fe
+	ld c, wMasterPalettes_SIZE / 16 ; $05fe
 	call CopyMemoryFast ; $0600
 	ld hl, hPaletteDirtyFlags ; $0603
 	ld [hl], $03 ; $0606
@@ -547,7 +547,7 @@ Unused_00_CopyMapToScrollBuffers:
 	ld de, wMapScrollPlane1 ; $08ad
 	call Unused_00_CopyMapRows32To64 ; $08b0
 	ld hl, wMapScrollPlane1 ; $08b3
-	ld c, $80 ; $08b6
+	ld c, (WRAMX_END - wMapScrollPlane1) / 16 ; $08b6
 	call ClearMemory16 ; $08b8
 	wram_bank WRAM_STAGING ; $08bb
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $08c1
@@ -568,7 +568,7 @@ Unused_00_CopyMapToScrollBuffers:
 	ld de, wScreenScratch ; $08f5
 	call Unused_00_CopyMapRows32To64 ; $08f8
 	ld hl, wScreenScratch ; $08fb
-	ld c, $80 ; $08fe
+	ld c, (WRAMX_END - wScreenScratch) / 16 ; $08fe
 	call ClearMemory16 ; $0900
 	pop_wram_bank ; $0903
 	pop hl ; $0908

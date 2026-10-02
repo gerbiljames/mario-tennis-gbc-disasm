@@ -59,15 +59,22 @@ class Source(unittest.TestCase):
         self.assertLessEqual(count(r"^\tld (?:de|hl|bc), \$[89][0-9a-f]{3} ;"), 60)
 
     def test_copy_lengths_follow_their_blobs(self):
-        self.assertEqual(count(r"^\tld c, \(\w+ - \w+\) / 16 ;"), 34)
+        self.assertEqual(count(r"^\tld c, \((?!WRAMX_END)\w+ - \w+\) / 16 ;"), 34)
         n = count(r"^\tld c, (\w+)_SIZE / 16 ;")
         self.assertGreaterEqual(n, 90)
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob
         for name, text in SRC:
-            used = set(re.findall(r"\bld c, (\w+)_SIZE / 16", text))
+            used = set(re.findall(r"\bld c, (?![whs][A-Z]|(?:WRAMX|VRAM|CHAR_RECORD)_SIZE)(\w+)_SIZE / 16", text))
             have = set(re.findall(r'INCLUDE "data/bank_[0-9a-f]{3}/lz_(\w+)\.inc"', text))
             self.assertEqual(used - have, set(), name)
         self.assertGreaterEqual(count(r"^\tld c, \$[0-9a-f]{2} ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 25)
+
+    def test_copy_lengths_follow_their_ram(self):
+        # a copy or clear of one whole RAM object is written as its exported
+        # size (ram.asm export_size); the screen, bank and record geometry
+        # constants cover the copies of part of a larger buffer
+        self.assertGreaterEqual(count(r"^\tld (?:bc|c), [whs][A-Z]\w*_SIZE\b"), 120)
+        self.assertGreaterEqual(count(r"^\tld (?:bc|c), \(?(?:SCREEN_HEIGHT \* TILEMAP_WIDTH|\d \* TILEMAP_AREA|TILEMAP_AREA|WRAMX_SIZE|VRAM_SIZE|\d \* CHAR_RECORD_SIZE|CHAR_RECORD_SIZE|WRAMX_END - \w+|\d \* TILEMAP_WIDTH)\)?"), 45)
 
     def test_data_files_are_named_after_labels(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()

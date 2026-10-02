@@ -429,12 +429,12 @@ RunSoundEngine:
 	wram_bank WRAM_SOUND ; $3373
 	ld hl, hSndScriptPtr ; $3379
 	ld de, wSndHramSave ; $337c
-	ld c, $02 ; $337f
+	ld c, wSndHramSave_SIZE / 16 ; $337f
 	call CopyMemoryFast ; $3381
 	call UpdateSoundChannels ; $3384
 	ld hl, wSndHramSave ; $3387
 	ld de, hSndScriptPtr ; $338a
-	ld c, $02 ; $338d
+	ld c, wSndHramSave_SIZE / 16 ; $338d
 	jp CopyMemoryFast ; $338f
 UpdateSoundChannels:
 	ldh a, [hRomBank] ; $3392

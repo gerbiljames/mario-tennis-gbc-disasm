@@ -505,6 +505,6 @@ InitPlayerRecordFromTemplate:
 	call RecomputeCharacterStats ; $440c
 	ld hl, wStoryModeNameOfMainCharacter ; $440f
 	ld de, wStorySlotData ; $4412
-	ld c, $08 ; $4415
+	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $4415
 	call CopyMemoryFast ; $4417
 	ret ; $441a

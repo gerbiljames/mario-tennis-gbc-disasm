@@ -72,7 +72,7 @@ ShowMinigamePointResult:
 ClearMinigameActors:
 	wram_bank WRAM_ACTORS ; $4440
 	ld hl, wMinigameActors ; $4446
-	ld c, $07 ; $4449
+	ld c, wMinigameActors_SIZE / 16 ; $4449
 	call ClearMemory16 ; $444b
 	ret ; $444e
 SetMinigameActorHandler:
@@ -172,7 +172,7 @@ UpdateMinigameActor:
 	push hl ; $44d9
 	push hl ; $44da
 	ld de, wMinigameSceneActor ; $44db
-	ld c, $01 ; $44de
+	ld c, wMinigameSceneActor_SIZE / 16 ; $44de
 	call CopyMemoryFast ; $44e0
 	ld hl, wMinigameSceneActor + 14 ; $44e3
 	ld a, [hl+] ; $44e6
@@ -181,7 +181,7 @@ UpdateMinigameActor:
 	call JumpToHL ; $44e9
 	pop de ; $44ec
 	ld hl, wMinigameSceneActor ; $44ed
-	ld c, $01 ; $44f0
+	ld c, wMinigameSceneActor_SIZE / 16 ; $44f0
 	call CopyMemoryFast ; $44f2
 	pop hl ; $44f5
 	pop de ; $44f6

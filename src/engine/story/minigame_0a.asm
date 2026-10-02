@@ -43,7 +43,7 @@ UpdateMinigameTarget:
 	push hl ; $65de
 	push hl ; $65df
 	ld de, wMinigameTargetWork ; $65e0
-	ld c, $01 ; $65e3
+	ld c, wMinigameTargetWork_SIZE / 16 ; $65e3
 	call CopyMemoryFast ; $65e5
 	ld hl, wMinigameTargetWork + 2 ; $65e8
 	ld a, [hl] ; $65eb
@@ -67,7 +67,7 @@ UpdateMinigameTarget:
 .done:
 	pop de ; $6610
 	ld hl, wMinigameTargetWork ; $6611
-	ld c, $01 ; $6614
+	ld c, wMinigameTargetWork_SIZE / 16 ; $6614
 	call CopyMemoryFast ; $6616
 	pop hl ; $6619
 	pop de ; $661a

@@ -319,7 +319,7 @@ MinigameClearFlagsTable:
 	dw $0680 ; record 8
 LoadMinigameStarFlags:
 	ld hl, wMinigameDataStarFlags ; $751f
-	ld bc, $0009 ; $7522
+	ld bc, wMinigameDataStarFlags_SIZE ; $7522
 	call ClearBytes ; $7525
 	ld c, $00 ; $7528
 	ld hl, wMinigameDataStarFlags ; $752a

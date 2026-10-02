@@ -377,60 +377,60 @@ SaveWorkTilemapToPage:
 	wram_bank WRAM_SCREEN ; $4a1d
 	ld hl, wShadowTilemap ; $4a23
 	ld de, wCharDataPageSlot3 ; $4a26
-	ld c, $24 ; $4a29
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a29
 	call CopyMemoryFast ; $4a2b
 	wram_bank WRAM_COURT_PLANES ; $4a2e
 	ld hl, wScreenAttrmap ; $4a34
 	ld de, wCharDataPageSlot3 ; $4a37
-	ld c, $24 ; $4a3a
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a3a
 	call CopyMemoryFast ; $4a3c
 	ret ; $4a3f
 .page1:
 	wram_bank WRAM_SCREEN ; $4a40
 	ld hl, wShadowTilemap ; $4a46
 	ld de, wCharDataPageSlot2 ; $4a49
-	ld c, $24 ; $4a4c
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a4c
 	call CopyMemoryFast ; $4a4e
 	wram_bank WRAM_COURT_PLANES ; $4a51
 	ld hl, wScreenAttrmap ; $4a57
 	ld de, wCharDataPageSlot2 ; $4a5a
-	ld c, $24 ; $4a5d
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a5d
 	call CopyMemoryFast ; $4a5f
 	ret ; $4a62
 .page2:
 	wram_bank WRAM_SCREEN ; $4a63
 	ld hl, wShadowTilemap ; $4a69
 	ld de, wCharDataPageSlot1 ; $4a6c
-	ld c, $24 ; $4a6f
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a6f
 	call CopyMemoryFast ; $4a71
 	wram_bank WRAM_COURT_PLANES ; $4a74
 	ld hl, wScreenAttrmap ; $4a7a
 	ld de, wCharDataPageSlot1 ; $4a7d
-	ld c, $24 ; $4a80
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a80
 	call CopyMemoryFast ; $4a82
 	ret ; $4a85
 .page3:
 	wram_bank WRAM_SCREEN ; $4a86
 	ld hl, wShadowTilemap ; $4a8c
 	ld de, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4a8f
-	ld c, $24 ; $4a92
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a92
 	call CopyMemoryFast ; $4a94
 	wram_bank WRAM_COURT_PLANES ; $4a97
 	ld hl, wScreenAttrmap ; $4a9d
 	ld de, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4aa0
-	ld c, $24 ; $4aa3
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4aa3
 	call CopyMemoryFast ; $4aa5
 	ret ; $4aa8
 LoadBasePageIntoWorkTilemap:
 	wram_bank WRAM_SCREEN ; $4aa9
 	ld hl, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4aaf
 	ld de, wShadowTilemap ; $4ab2
-	ld c, $24 ; $4ab5
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4ab5
 	call CopyMemoryFast ; $4ab7
 	wram_bank WRAM_COURT_PLANES ; $4aba
 	ld hl, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4ac0
 	ld de, wScreenAttrmap ; $4ac3
-	ld c, $24 ; $4ac6
+	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4ac6
 	call CopyMemoryFast ; $4ac8
 	ret ; $4acb
 BuildCharDataSummaryPage:

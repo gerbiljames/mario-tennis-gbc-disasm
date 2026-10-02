@@ -247,7 +247,7 @@ VarsityCourtANpc05_13:
 	script_speak ACTOR_VARSITY_COURT_A_FAY ; $5f50
 	ld hl, wStoryModePlayersXPosition ; $5f55
 	ld de, wStoryModeSpawnPosition ; $5f58
-	ld bc, $0005 ; $5f5b
+	ld bc, wStoryModeSpawnPosition_SIZE ; $5f5b
 	call CopyMemoryBC ; $5f5e
 	ld a, STORYENTRY_NONE ; $5f61
 	ld [wStoryModeEntryPoint], a ; $5f63
@@ -296,7 +296,7 @@ VarsityCourtBNpc05_13:
 	script_speak ACTOR_VARSITY_COURT_B_FAY ; $6000
 	ld hl, wStoryModePlayersXPosition ; $6005
 	ld de, wStoryModeSpawnPosition ; $6008
-	ld bc, $0005 ; $600b
+	ld bc, wStoryModeSpawnPosition_SIZE ; $600b
 	call CopyMemoryBC ; $600e
 	ld a, STORYENTRY_NONE ; $6011
 	ld [wStoryModeEntryPoint], a ; $6013
@@ -380,7 +380,7 @@ CourtyardFacing01_13:
 	call ShowStoryTournamentBracket_13 ; $616d
 	ld hl, wStoryModePlayersXPosition ; $6170
 	ld de, wStoryModeSpawnPosition ; $6173
-	ld bc, $0005 ; $6176
+	ld bc, wStoryModeSpawnPosition_SIZE ; $6176
 	call CopyMemoryBC ; $6179
 	ld a, STORYENTRY_NONE ; $617c
 	ld [wStoryModeEntryPoint], a ; $617e

@@ -205,7 +205,7 @@ RunDrillResultInputLoop:
 	ld [wCharDataLevels + 3], a ; $4d12
 	ld hl, wCharStatPagePartner + 4 ; $4d15
 	ld de, wCharStatPageShown ; $4d18
-	ld bc, $0006 ; $4d1b
+	ld bc, wCharStatPageShown_SIZE ; $4d1b
 	call CopyMemoryBC ; $4d1e
 	call SlideToPartnerStatPage ; $4d21
 	wram_bank WRAM_SCENE ; $4d24
@@ -238,7 +238,7 @@ RunDrillResultInputLoop:
 	ld [wCharDataLevels + 3], a ; $4d73
 	ld hl, wCharStatPageMain + 4 ; $4d76
 	ld de, wCharStatPageShown ; $4d79
-	ld bc, $0006 ; $4d7c
+	ld bc, wCharStatPageShown_SIZE ; $4d7c
 	call CopyMemoryBC ; $4d7f
 	call SlideToMainCharStatPage ; $4d82
 	wram_bank WRAM_SCENE ; $4d85

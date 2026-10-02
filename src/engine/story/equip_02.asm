@@ -23,7 +23,7 @@ RefreshMainCharacterStats:
 	call RecomputeCharacterStats ; $4792
 	ld hl, wStoryModeNameOfMainCharacter ; $4795
 	ld de, wStorySlotData ; $4798
-	ld c, $08 ; $479b
+	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $479b
 	call CopyMemoryFast ; $479d
 	ld a, [wMainCharEquipmentBits] ; $47a0
 	ld b, a ; $47a3

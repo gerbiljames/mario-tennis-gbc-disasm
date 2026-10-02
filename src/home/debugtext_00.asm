@@ -1,6 +1,6 @@
 ClearDebugTextBuffer:
 	ld hl, wDebugTextBuffer ; $188b
-	ld c, $24 ; $188e
+	ld c, wDebugTextBuffer_SIZE / 16 ; $188e
 	jp ClearMemory16 ; $1890
 UpdateDebugOverlay:
 	xor a ; $1893
@@ -508,7 +508,7 @@ ClearFrameTasks:
 	xor a ; $1b38
 	ldh [hFrameTasksReady], a ; $1b39
 	ld hl, wFrameTasks ; $1b3b
-	ld c, $04 ; $1b3e
+	ld c, wFrameTasks_SIZE / 16 ; $1b3e
 	call ClearMemory16 ; $1b40
 	ld a, $01 ; $1b43
 	ldh [hFrameTasksReady], a ; $1b45

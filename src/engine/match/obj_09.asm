@@ -568,7 +568,7 @@ ProcessObjSlot:
 	ld h, b ; $46be
 	push hl ; $46bf
 	ld de, wObjSlotWork ; $46c0
-	ld c, $01 ; $46c3
+	ld c, wObjSlotWork_SIZE / 16 ; $46c3
 	call CopyMemoryFast ; $46c5
 	ld hl, DrawObjSlot ; $46c8
 	push hl ; $46cb
@@ -597,7 +597,7 @@ FinishObjSlotUpdate:
 	inc [hl] ; $46e5
 	pop de ; $46e6
 	ld hl, wObjSlotWork ; $46e7
-	ld c, $01 ; $46ea
+	ld c, wObjSlotWork_SIZE / 16 ; $46ea
 	call CopyMemoryFast ; $46ec
 	ret ; $46ef
 .drawAtOffset:

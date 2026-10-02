@@ -28,7 +28,7 @@ Unused_1b_LoadCharSelectNavGrid:
 Unused_1b_LoadCharSelectRosterTable:
 	ld hl, CharSelectRosterTable ; $5fe1
 	ld de, wCharSelectRoster ; $5fe4
-	ld bc, $0080 ; $5fe7
+	ld bc, wCharSelectRoster_SIZE ; $5fe7
 	call CopyMemoryBC ; $5fea
 	ret ; $5fed
 ; Unused_1b_LoadUnlockDebugScreenGfx with one more decompress and CharSelectNavGridTable as its source: the character-select variant of the same screen loader. Called only from Unused_1b_RunCharSelectLoop.
@@ -413,7 +413,7 @@ RunNewGameSetup:
 	ld [wStoryCharacterSlot], a ; $62e0
 	ld hl, wStoryModeNameOfMainCharacter ; $62e3
 	ld de, wStorySlotData ; $62e6
-	ld c, $08 ; $62e9
+	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $62e9
 	call CopyMemoryFast ; $62eb
 	xor a ; $62ee
 .beginFadeOut:

@@ -8,7 +8,7 @@ Unused_02:
 Unused_02_LoadMainCharacterFromRoster:
 	push de ; $443b
 	ld hl, wStoryModeNameOfMainCharacter ; $443c
-	ld c, $04 ; $443f
+	ld c, CHAR_RECORD_SIZE / 16 ; $443f
 	call ClearMemory16 ; $4441
 	pop de ; $4444
 	ld c, d ; $4445

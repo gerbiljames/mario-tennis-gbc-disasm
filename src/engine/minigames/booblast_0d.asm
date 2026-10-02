@@ -57,7 +57,7 @@ BananaBunchReflectBallAndRecordCell:
 CopyMinigameTilemapBlock:
 	wram_bank WRAM_COURT_PLANES ; $55b4
 	ld de, wMinigameTargetGrid ; $55ba
-	ld bc, $0018 ; $55bd
+	ld bc, wMinigameTargetGrid_SIZE ; $55bd
 	call CopyMemoryBC ; $55c0
 	call DrawMinigameGrid ; $55c3
 	farcall FlushTilemapToVram ; $55c6

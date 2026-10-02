@@ -220,7 +220,7 @@ RunLinkMatchSequence:
 .startMatch:
 	push_wram_bank WRAM_SCREEN ; $741b
 	ld hl, wCharGridEntries ; $7424
-	ld bc, $0080 ; $7427
+	ld bc, wCharGridEntries_SIZE ; $7427
 	call ClearBytes ; $742a
 	call BuildCharUnlockFlags ; $742d
 	call PackUnlockFlagsForLink ; $7430
@@ -560,10 +560,10 @@ StoreLinkMatchCharInfo:
 	ret ; $7685
 PackUnlockFlagsForLink:
 	ld hl, wLinkUnlockFlagsSend ; $7686
-	ld bc, $0004 ; $7689
+	ld bc, wLinkUnlockFlagsSend_SIZE ; $7689
 	call ClearBytes ; $768c
 	ld hl, wLinkUnlockFlagsRecv ; $768f
-	ld bc, $0004 ; $7692
+	ld bc, wLinkUnlockFlagsRecv_SIZE ; $7692
 	call ClearBytes ; $7695
 	ld c, $00 ; $7698
 	ld b, $01 ; $769a
@@ -633,7 +633,7 @@ PackUnlockFlagsForLink:
 	ret ; $76f9
 UnpackUnlockFlagsFromLink:
 	ld hl, wCharUnlockFlags ; $76fa
-	ld bc, $0028 ; $76fd
+	ld bc, wCharUnlockFlags_SIZE ; $76fd
 	call ClearBytes ; $7700
 	ld hl, wLinkUnlockFlagsSend ; $7703
 	ld b, $01 ; $7706

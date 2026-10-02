@@ -24,7 +24,7 @@ FetchShortTextToBuffer:
 Unused_05_ClearWindowGlyphPage:
 	push_wram_bank WRAM_TEXT ; $40be
 	ld hl, wWindowShadowTilemap ; $40c7
-	ld c, $80 ; $40ca
+	ld c, (2 * TILEMAP_AREA) / 16 ; $40ca
 	call ClearMemory16 ; $40cc
 	pop_wram_bank ; $40cf
 	ret ; $40d4

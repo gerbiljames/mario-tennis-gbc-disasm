@@ -366,7 +366,7 @@ AnimateLinkErrorPalette:
 	push_wram_bank WRAM_SCREEN ; $4b37
 	ld hl, LinkErrorPalette_3e ; $4b40
 	ld de, wLinkErrorPalette ; $4b43
-	ld bc, $0008 ; $4b46
+	ld bc, wLinkErrorPalette_SIZE ; $4b46
 	call CopyMemoryBC ; $4b49
 	ldh a, [hVBlankCounter] ; $4b4c
 	and $3c ; $4b4e

@@ -179,84 +179,84 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer + 56 * TILE_SIZE ; $41e6
 	call DecompressData ; $41e9
 	ld hl, wDecompBuffer + 56 * TILE_SIZE ; $41ec
-	ld bc, $0009 ; $41ef
+	ld bc, CharDataScreenPageGfx06_SIZE ; $41ef
 	call CopyWram1ToWram3CharData ; $41f2
 	wram_bank WRAM_STAGING ; $41f5
 	ld hl, CharDataScreenPageGfx07 ; $41fb
 	ld de, wDecompBuffer + 56 * TILE_SIZE ; $41fe
 	call DecompressData ; $4201
 	ld hl, wDecompBuffer + 56 * TILE_SIZE ; $4204
-	ld bc, $0009 ; $4207
+	ld bc, CharDataScreenPageGfx07_SIZE ; $4207
 	call CopyWram1ToWram2CharData ; $420a
 	wram_bank WRAM_STAGING ; $420d
 	ld hl, CharDataScreenPageGfx00 ; $4213
 	ld de, wDecompBuffer + 57 * TILE_SIZE ; $4216
 	call DecompressData ; $4219
 	ld hl, wDecompBuffer + 57 * TILE_SIZE ; $421c
-	ld bc, $0028 ; $421f
+	ld bc, CharDataScreenPageGfx00_SIZE ; $421f
 	call CopyWram1ToWram3CharData ; $4222
 	wram_bank WRAM_STAGING ; $4225
 	ld hl, CharDataScreenPageGfx01 ; $422b
 	ld de, wDecompBuffer + 57 * TILE_SIZE ; $422e
 	call DecompressData ; $4231
 	ld hl, wDecompBuffer + 57 * TILE_SIZE ; $4234
-	ld bc, $0028 ; $4237
+	ld bc, CharDataScreenPageGfx01_SIZE ; $4237
 	call CopyWram1ToWram2CharData ; $423a
 	wram_bank WRAM_STAGING ; $423d
 	ld hl, CharDataScreenPageGfx02 ; $4243
 	ld de, wDecompBuffer + 60 * TILE_SIZE ; $4246
 	call DecompressData ; $4249
 	ld hl, wDecompBuffer + 60 * TILE_SIZE ; $424c
-	ld bc, $0082 ; $424f
+	ld bc, CharDataScreenPageGfx02_SIZE ; $424f
 	call CopyWram1ToWram3CharData ; $4252
 	wram_bank WRAM_STAGING ; $4255
 	ld hl, CharDataScreenPageGfx03 ; $425b
 	ld de, wDecompBuffer + 60 * TILE_SIZE ; $425e
 	call DecompressData ; $4261
 	ld hl, wDecompBuffer + 60 * TILE_SIZE ; $4264
-	ld bc, $0082 ; $4267
+	ld bc, CharDataScreenPageGfx03_SIZE ; $4267
 	call CopyWram1ToWram2CharData ; $426a
 	wram_bank WRAM_STAGING ; $426d
 	ld hl, CharDataScreenPageGfx02 ; $4273
 	ld de, wDecompBuffer + 69 * TILE_SIZE ; $4276
 	call DecompressData ; $4279
 	ld hl, wDecompBuffer + 69 * TILE_SIZE ; $427c
-	ld bc, $0082 ; $427f
+	ld bc, CharDataScreenPageGfx02_SIZE ; $427f
 	call CopyWram1ToWram3CharData ; $4282
 	wram_bank WRAM_STAGING ; $4285
 	ld hl, CharDataScreenPageGfx03 ; $428b
 	ld de, wDecompBuffer + 69 * TILE_SIZE ; $428e
 	call DecompressData ; $4291
 	ld hl, wDecompBuffer + 69 * TILE_SIZE ; $4294
-	ld bc, $0082 ; $4297
+	ld bc, CharDataScreenPageGfx03_SIZE ; $4297
 	call CopyWram1ToWram2CharData ; $429a
 	wram_bank WRAM_STAGING ; $429d
 	ld hl, CharDataScreenPageGfx04 ; $42a3
 	ld de, wDecompBuffer + 78 * TILE_SIZE ; $42a6
 	call DecompressData ; $42a9
 	ld hl, wDecompBuffer + 78 * TILE_SIZE ; $42ac
-	ld bc, $001c ; $42af
+	ld bc, CharDataScreenPageGfx04_SIZE ; $42af
 	call CopyWram1ToWram3CharData ; $42b2
 	wram_bank WRAM_STAGING ; $42b5
 	ld hl, CharDataScreenPageGfx05 ; $42bb
 	ld de, wDecompBuffer + 78 * TILE_SIZE ; $42be
 	call DecompressData ; $42c1
 	ld hl, wDecompBuffer + 78 * TILE_SIZE ; $42c4
-	ld bc, $001c ; $42c7
+	ld bc, CharDataScreenPageGfx05_SIZE ; $42c7
 	call CopyWram1ToWram2CharData ; $42ca
 	wram_bank WRAM_STAGING ; $42cd
 	ld hl, CharDataScreenPageGfx08 ; $42d3
 	ld de, wDecompBuffer + 80 * TILE_SIZE ; $42d6
 	call DecompressData ; $42d9
 	ld hl, wDecompBuffer + 80 * TILE_SIZE ; $42dc
-	ld bc, $002a ; $42df
+	ld bc, CharDataScreenPageGfx08_SIZE ; $42df
 	call CopyWram1ToWram3CharData ; $42e2
 	wram_bank WRAM_STAGING ; $42e5
 	ld hl, CharDataScreenPageGfx09 ; $42eb
 	ld de, wDecompBuffer + 80 * TILE_SIZE ; $42ee
 	call DecompressData ; $42f1
 	ld hl, wDecompBuffer + 80 * TILE_SIZE ; $42f4
-	ld bc, $002a ; $42f7
+	ld bc, CharDataScreenPageGfx09_SIZE ; $42f7
 	call CopyWram1ToWram2CharData ; $42fa
 	wram_bank WRAM_STAGING ; $42fd
 	ld hl, CharDataScreenPageGfx10 ; $4303
@@ -278,14 +278,14 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer + 83 * TILE_SIZE ; $4334
 	call DecompressData ; $4337
 	ld hl, wDecompBuffer + 83 * TILE_SIZE ; $433a
-	ld bc, $001e ; $433d
+	ld bc, CharDataScreenPageGfx11_SIZE ; $433d
 	call CopyWram1ToWram3CharData ; $4340
 	wram_bank WRAM_STAGING ; $4343
 	ld hl, CharDataScreenPageGfx12 ; $4349
 	ld de, wDecompBuffer + 83 * TILE_SIZE ; $434c
 	call DecompressData ; $434f
 	ld hl, wDecompBuffer + 83 * TILE_SIZE ; $4352
-	ld bc, $001e ; $4355
+	ld bc, CharDataScreenPageGfx12_SIZE ; $4355
 	call CopyWram1ToWram2CharData ; $4358
 	xor a ; $435b
 	ld [wStoryCharacterSlot], a ; $435c
@@ -604,7 +604,7 @@ BuildCharDataSummaryFields:
 	ld a, [hl] ; $45c3
 	or a ; $45c4
 	jr nz, .nonZero ; $45c5
-	ld bc, $0006 ; $45c7
+	ld bc, wCharDataNumberBuffer_SIZE ; $45c7
 	call CopyMemoryBC ; $45ca
 	jr .storeStoryCharacterSlot ; $45cd
 .nonZero:
@@ -815,7 +815,7 @@ BuildCharDataSummaryFields:
 	ld a, [hl] ; $4759
 	or a ; $475a
 	jr nz, .nonZero2 ; $475b
-	ld bc, $0006 ; $475d
+	ld bc, wCharDataNumberBuffer_SIZE ; $475d
 	call CopyMemoryBC ; $4760
 	ret ; $4763
 .nonZero2:

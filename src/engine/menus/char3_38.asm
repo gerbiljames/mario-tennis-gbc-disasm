@@ -221,7 +221,7 @@ BuildCreatedCharRecords:
 	push hl ; $5d86
 	push_wram_bank WRAM_SCREEN ; $5d87
 	ld hl, wCreatedCharRecords ; $5d90
-	ld bc, $00c0 ; $5d93
+	ld bc, wCreatedCharRecords_SIZE ; $5d93
 	call ClearBytes ; $5d96
 	ld bc, wCreatedCharRecords ; $5d99
 	ld a, $80 ; $5d9c

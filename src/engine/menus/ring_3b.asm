@@ -40,7 +40,7 @@ LoadN64RingShotRecords:
 	call ReadN64RecordsSaveBlock ; $5244
 	ld hl, N64RingShot ; $5247
 	ld de, wRingShotEntryList ; $524a
-	ld bc, $0010 ; $524d
+	ld bc, wRingShotEntryList_SIZE ; $524d
 	call CopyMemoryBC ; $5250
 	ld hl, wN64RecordsBlock + 344 ; $5253
 	ld a, [hl] ; $5256

@@ -259,7 +259,7 @@ CycleDiagramTargetPalette:
 	push_wram_bank WRAM_SCREEN ; $4676
 	ld hl, CycleDiagramTargetPaletteData ; $467f
 	ld de, wBriefingTargetPalette ; $4682
-	ld bc, $0008 ; $4685
+	ld bc, wBriefingTargetPalette_SIZE ; $4685
 	call CopyMemoryBC ; $4688
 	ldh a, [hVBlankCounter] ; $468b
 	and $3c ; $468d

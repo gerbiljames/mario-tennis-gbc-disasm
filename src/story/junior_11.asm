@@ -217,7 +217,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	script_wait_actor_script ACTOR_PLAYER ; $5728
 	ld hl, wStoryModePlayersXPosition ; $572d
 	ld de, wStoryModeSpawnPosition ; $5730
-	ld bc, $0005 ; $5733
+	ld bc, wStoryModeSpawnPosition_SIZE ; $5733
 	call CopyMemoryBC ; $5736
 	ld a, STORYENTRY_NONE ; $5739
 	ld [wStoryModeEntryPoint], a ; $573b

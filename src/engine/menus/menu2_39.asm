@@ -171,7 +171,7 @@ InitNumberSpriteGfx:
 	push de ; $6ec2
 	push hl ; $6ec3
 	ld hl, wDigitSpriteSlots ; $6ec4
-	ld bc, $0007 ; $6ec7
+	ld bc, wDigitSpriteSlots_SIZE ; $6ec7
 	call ClearBytes ; $6eca
 	xor a ; $6ecd
 	ld [wDigitSpriteTileBase], a ; $6ece

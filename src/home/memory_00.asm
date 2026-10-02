@@ -183,7 +183,7 @@ Unused_00_FillMemoryCFast:
 	ret ; $0464
 ClearVRAMCopyQueue:
 	ld hl, wVRAMCopyQueue ; $0465
-	ld c, $05 ; $0468
+	ld c, wVRAMCopyQueue_SIZE / 16 ; $0468
 	jp ClearMemory16 ; $046a
 QueueVRAMCopyFromBank:
 	ldh a, [hRomBank] ; $046d

@@ -78,7 +78,7 @@ CharDataScreen_Show:
 	call WaitFadeEnd ; $40bb
 	ld hl, wStoryModeNameOfMainCharacter ; $40be
 	ld de, wStorySlotData ; $40c1
-	ld c, $08 ; $40c4
+	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $40c4
 	call CopyMemoryFast ; $40c6
 	ld hl, DrawStatValueSprites ; $40c9
 	call UnregisterFrameTask ; $40cc
@@ -247,56 +247,56 @@ CharDataScreen_LoadUIGraphics:
 	ld de, wDecompBuffer + 62 * TILE_SIZE ; $4214
 	call DecompressData ; $4217
 	ld hl, wDecompBuffer + 62 * TILE_SIZE ; $421a
-	ld bc, $0021 ; $421d
+	ld bc, CharDataScreenUIGraphicsGfx4_SIZE ; $421d
 	call CopyWram1ToWram3 ; $4220
 	wram_bank WRAM_STAGING ; $4223
 	ld hl, CharDataScreenUIGraphicsGfx5 ; $4229
 	ld de, wDecompBuffer + 62 * TILE_SIZE ; $422c
 	call DecompressData ; $422f
 	ld hl, wDecompBuffer + 62 * TILE_SIZE ; $4232
-	ld bc, $0021 ; $4235
+	ld bc, CharDataScreenUIGraphicsGfx5_SIZE ; $4235
 	call CopyWram1ToWram2 ; $4238
 	wram_bank WRAM_STAGING ; $423b
 	ld hl, CharDataScreenUIGraphicsGfx6 ; $4241
 	ld de, wDecompBuffer + 65 * TILE_SIZE ; $4244
 	call DecompressData ; $4247
 	ld hl, wDecompBuffer + 65 * TILE_SIZE ; $424a
-	ld bc, $0018 ; $424d
+	ld bc, CharDataScreenUIGraphicsGfx6_SIZE ; $424d
 	call CopyWram1ToWram3 ; $4250
 	wram_bank WRAM_STAGING ; $4253
 	ld hl, CharDataScreenUIGraphicsGfx7 ; $4259
 	ld de, wDecompBuffer + 65 * TILE_SIZE ; $425c
 	call DecompressData ; $425f
 	ld hl, wDecompBuffer + 65 * TILE_SIZE ; $4262
-	ld bc, $0018 ; $4265
+	ld bc, CharDataScreenUIGraphicsGfx7_SIZE ; $4265
 	call CopyWram1ToWram2 ; $4268
 	wram_bank WRAM_STAGING ; $426b
 	ld hl, CharDataScreenUIGraphicsGfx2 ; $4271
 	ld de, wDecompBuffer + 58 * TILE_SIZE ; $4274
 	call DecompressData ; $4277
 	ld hl, wDecompBuffer + 58 * TILE_SIZE ; $427a
-	ld bc, $0033 ; $427d
+	ld bc, CharDataScreenUIGraphicsGfx2_SIZE ; $427d
 	call CopyWram1ToWram3 ; $4280
 	wram_bank WRAM_STAGING ; $4283
 	ld hl, CharDataScreenUIGraphicsGfx3 ; $4289
 	ld de, wDecompBuffer + 58 * TILE_SIZE ; $428c
 	call DecompressData ; $428f
 	ld hl, wDecompBuffer + 58 * TILE_SIZE ; $4292
-	ld bc, $0033 ; $4295
+	ld bc, CharDataScreenUIGraphicsGfx3_SIZE ; $4295
 	call CopyWram1ToWram2 ; $4298
 	wram_bank WRAM_STAGING ; $429b
 	ld hl, CharDataScreenUIGraphicsGfx0 ; $42a1
 	ld de, wDecompBuffer + 56 * TILE_SIZE ; $42a4
 	call DecompressData ; $42a7
 	ld hl, wDecompBuffer + 56 * TILE_SIZE ; $42aa
-	ld bc, $001e ; $42ad
+	ld bc, CharDataScreenUIGraphicsGfx0_SIZE ; $42ad
 	call CopyWram1ToWram3 ; $42b0
 	wram_bank WRAM_STAGING ; $42b3
 	ld hl, CharDataScreenUIGraphicsGfx1 ; $42b9
 	ld de, wDecompBuffer + 56 * TILE_SIZE ; $42bc
 	call DecompressData ; $42bf
 	ld hl, wDecompBuffer + 56 * TILE_SIZE ; $42c2
-	ld bc, $001e ; $42c5
+	ld bc, CharDataScreenUIGraphicsGfx1_SIZE ; $42c5
 	call CopyWram1ToWram2 ; $42c8
 	ret ; $42cb
 CopyWram1ToWram3:

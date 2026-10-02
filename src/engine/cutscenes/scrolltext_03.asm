@@ -182,7 +182,7 @@ InitScrollingTextScreen:
 	ld c, $40 ; $5ad7
 	call QueueVRAMCopy ; $5ad9
 	wram_bank WRAM_SCREEN ; $5adc
-	ld bc, $0400 ; $5ae2
+	ld bc, wScreenAttrmap_SIZE ; $5ae2
 	ld d, $20 ; $5ae5
 	ld hl, wShadowTilemap ; $5ae7
 	call FillMemoryBC ; $5aea
