@@ -240,7 +240,7 @@ hLinkPhaseDelay:: db
 hMatchFrameCounter:: db
 	ds 6
 NEXTU
-; sound driver (bank 0, $3373-$3ddf)
+; sound driver (bank 0, $3373-$3dd3)
 ; [16-bit] Current channel's script/state pointer, copied from the channel struct each update (borrows the sprite-queue bytes; RunSoundEngine save/restores them)
 hSndScriptPtr:: dw
 ; [8-bit] Channel type in the low 2 bits (0=square1/sweep, 1=square2, 2=wave, 3=noise); high nibble carries the vibrato depth / note-length index

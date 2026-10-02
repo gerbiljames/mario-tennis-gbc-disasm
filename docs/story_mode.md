@@ -261,7 +261,8 @@ active:
   and every handler can leave behind, repeated until nothing new appears; a
   path that has written `wStoryModeExitTriggerRequest` ends the visit and
   leaves nothing (the Training Court, Academy Courts and Varsity Court tours,
-  the Tournament Site arrival and several ending scenes install their lists
+  the Tournament Courtyard's arrival scene `TournamentSiteArrivalScene`
+  (entry point `$0f`) and several ending scenes install their lists
   on such paths);
 * facing, tile and exit handlers and actor-script `as_call` routines run
   under any of those pairs, an `NpcScripts` handler only under the pairs

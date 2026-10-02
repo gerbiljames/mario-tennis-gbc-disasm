@@ -1,8 +1,8 @@
 # Sound Engine (bank 0)
 
-The music/SFX driver lives entirely in bank 0, `$3078`–`$3ddf`. It is a
-per-channel command interpreter: every song and sound effect is a script of
-two-byte commands — opcode, operand — that is stepped once per engine tick to
+The music/SFX driver lives entirely in bank 0: code at `$3078`–`$3dd3`, then
+its wave and envelope tables to `$3fc7`. It is a per-channel command
+interpreter: every song and sound effect is a script of two-byte commands — opcode, operand — that is stepped once per engine tick to
 drive the four Game Boy APU channels. The 315 channel scripts are extracted
 as editable source (`data/bank_07x/<Track>.asm`, one `snd_*` macro row per
 command; see "Script command set" and `tools/snd.py`).
@@ -25,7 +25,7 @@ working set at **`$ffd0`** (`hSndScriptPtr` … `hSndRestFlag`) so the inner loo
 can use fast `ldh`. `RunSoundEngine` (`$3373`) saves/restores the sprite-queue
 bytes that overlap `$ffd0`; the block is written back after each channel.
 The HRAM layout is the sound-driver variant of the shared `$ffd0` union in
-`ram/hram.asm` (its names apply in `$3373`–`$3de0`).
+`ram/hram.asm` (its names apply in `$3373`–`$3dd3`).
 
 ### HRAM channel working set (`$ffd0`–`$ffef`)
 

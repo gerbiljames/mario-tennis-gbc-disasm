@@ -274,13 +274,16 @@ def VRAM_BANK1 equ $2000        ; include/constants.inc:9
 real address (`$0486`-`$048d`). So a destination of `$b800` means `$9800` in
 VRAM bank 1, and the disassembly writes it as `vBGMap0 + VRAM_BANK1` rather than
 hiding the bank inside a literal (`include/constants.inc`). Every VRAM
-address a copy or loader consumes is written that way: `vTiles0`, `vTiles1`,
-`vTiles2` for the three 128-tile blocks plus `$NN * TILE_SIZE`, `vBGMap0` /
-`vBGMap1` for the maps plus `row * TILEMAP_WIDTH + col` -- 760 sites. The
-word is only renamed where one of the VRAM consumers (`QueueVRAMCopy`,
-`LoadCompressedTileBlock`, `DecompressData`, the tile loaders) takes it,
-because `$8000` is also a sign bit and `$932f` a coordinate pair; the 51
-that remain literal are those.
+address one of the VRAM consumers (`QueueVRAMCopy`,
+`LoadCompressedTileBlock`, `DecompressData`, the tile loaders) takes is
+written that way: `vTiles0`, `vTiles1`, `vTiles2` for the three 128-tile
+blocks plus `$NN * TILE_SIZE`, `vBGMap0` / `vBGMap1` for the maps plus
+`row * TILEMAP_WIDTH + col` -- 758 sites. Names go only where such a consumer
+takes the word, because `$8000` is also a sign bit and `$932f` a coordinate
+pair. The 91 words in `$8000`-`$9fff` that stay literal mix those with VRAM
+addresses handed to routines outside that list: 37 carry `+ VRAM_BANK1`
+(`InitNumberSpriteGfx`'s destinations, for one), and others are map bases
+added to an offset (`ld de, $9800` / `add hl, de` at `$00:$223a`).
 
 ### 2.4 The two map planes
 
@@ -309,9 +312,13 @@ Court and menu screens use the flat 32×32 form instead — `wShadowTilemap`
 
 ### 2.5 The `tilemap` spec
 
-70 regions carry the `tilemap` spec (the `(tilemap:W)` comment on the
-region's first line in the source). `render_tilemap` (`tools/extract.py:389`)
-emits
+Screen layouts are written as rows of cells in two places. The 213
+extracted blobs `data.manifest` tags `tilemap:W` (all `lz_*`
+streams, decompressed first) get a `.tilemap` text grid beside their `.bin`
+(`tools/tilemap.py`); the Makefile encodes an edited grid back into the blob
+and `make check` (`tilemap`) round-trips every one. The 70 small layouts
+written in the source itself carry a `(tilemap:W)` comment on their first
+line. Both use the same lines:
 
 ```asm
 	tilemap_begin <width>, <height>
@@ -320,12 +327,11 @@ emits
 	tilemap_end
 ```
 
-with the width from the spec parameter (`tilemap:20` etc., default 20). The
-macros assert the geometry at assembly time — `tilemap_row` checks the byte
-count against the declared width and `tilemap_end` checks both the row count
-and `@ - _TM_START == _TM_W * _TM_H` (`include/macros.inc:1012-1027`). A
-mis-declared width therefore fails the build rather than silently reflowing.
-A trailing partial row stays literal `db`.
+The macros assert the geometry at assembly time — `tilemap_row` checks the
+byte count against the declared width and `tilemap_end` checks both the row
+count and `@ - _TM_START == _TM_W * _TM_H` (`include/macros.inc:1012-1028`).
+A mis-declared width therefore fails the build rather than silently
+reflowing. A trailing partial row stays literal `db`.
 
 ---
 
@@ -774,24 +780,21 @@ So the fade is an **additive per-component offset with saturation**, not a
 multiply, and the delta is always in 0-31 because `srl c` twice
 (`$00:$1d8c`, `$1d8e`) is a *logical* shift.
 
-> **Confirmed on 2026-09-11, against the earlier narrative.** The 2026-07-29
-> entry in `docs/history.md` says "every fade in the game is a fade to black". The reachable arithmetic reads the
-> other way: the delta is non-negative, `AddClampColorComponent` **adds** it and
-> saturates at `$1f`, and during a fade-out the delta rises 0 → 31, so every
-> component ends at maximum. That is a fade to **white**. The `bit 7`
-> clamp-to-zero branch is unreachable from this caller, since a 0-31 component
-> plus a 0-31 delta never sets bit 7. STATUS is right that the `hFadeState`
-> bit-7 path (`Unused_00_ApplyWhiteFade`, `$00:$1dcc`) cannot be selected — its only
-> setter is an unreferenced fragment at `$00:$1d0f` preceded by an
-> unconditional `jr` — but `Unused_00_ApplyWhiteFade` is *also* additive-toward-`$1f`;
-> it differs by being cheaper (one 16-bit add per colour) and coarser
-> (saturating at `$1e`, because it pre-clears each field's low bit to make the
-> carry detectable). Seen live: four frames into the erase-menu fade-out
-> (`hFadeState` = 1, `hFadeCounter` `$2c`) `wBGPalettes` holds the master
-> colours plus 20 per component — palette 0's `$015f` had become `$53df`
-> and its black `$7fff` — and the screen is washing to white; the main
-> menu's fade-in likewise descends from white. The bank `$00` fade is a
-> fade to **white**; only the bank `$03` engine fades to black.
+The delta is non-negative, `AddClampColorComponent` **adds** it and
+saturates at `$1f`, and during a fade-out it rises 0 → 31, so every component
+ends at maximum: the bank `$00` fade goes to **white**, and a fade-in comes
+back down from white. The `bit 7` clamp-to-zero branch is unreachable from
+this caller, since a 0-31 component plus a 0-31 delta never sets bit 7. Seen
+live: four frames into the erase-menu fade-out (`hFadeState` = 1,
+`hFadeCounter` `$2c`) `wBGPalettes` holds the master colours plus 20 per
+component, and palette 0's `$015f` has become `$53df`.
+
+The `hFadeState` bit-7 path (`Unused_00_ApplyWhiteFade`, `$00:$1dcc`) cannot
+be selected: its only setter is `Unused_00_BeginWhiteFadeOut` (`$00:$1d0f`),
+which nothing references (`docs/bugs.md`). It is additive toward `$1f` as
+well, differing by being cheaper (one 16-bit add per colour) and coarser
+(saturating at `$1e`, because it pre-clears each field's low bit to make the
+carry detectable).
 
 A **second, independent** fade engine lives in bank `$03` with buffers in WRAM
 bank `$06` (`wPaletteFadeTarget` `$d0a0`, `wPaletteFadeLive` `$d140`,
@@ -806,7 +809,11 @@ frames, steps every masked palette of the *live* buffer with
 `StepPaletteColorsTowardTarget` (`$03:$7764`), uploads the live buffer, and
 repeats `wPaletteFadeAmount` times before `SnapPalettesToTarget`
 (`$03:$77e2`) copies the target over it. Public entry points are the farptr
-slots `$03:$4042` and `$03:$4044`. **This** is the engine that fades to black.
+slots `$03:$4040` (`InitGrayscalePaletteFade`), `$03:$4042`
+(`SetupPaletteFadeMask`) and `$03:$4044`. The live callers, `RunEndingCreditsSequence`
+(`$0a:$6ece`) and `PlayScreenSequence0` (`$18:$76dd`), all fade to
+grayscale; the fade-to-black setup, `Unused_03_InitBlackPaletteFade`
+(`$03:$75ca`), is unreachable, so nothing in the shipped game fades to black.
 
 ---
 

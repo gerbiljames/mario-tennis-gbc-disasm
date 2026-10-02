@@ -205,9 +205,11 @@ the ROM references. Bit 7 is therefore never set, `add a` never carries, and
 `Unused_00_ApplyWhiteFade` (`$00:$1dcc`) never runs even though it is reached by a live
 `call z`.
 
-Every fade in the game runs through `AdjustColorsBrightness`, which adds a
-clamped delta to each colour component, so the fades go through white
-(`docs/screens_and_ui.md` §6.3). The alternate curve and the routine that
+The live fade, `AdjustColorsBrightness`, adds a clamped delta to each colour
+component, so the screen fades through white (`docs/screens_and_ui.md` §6.3);
+the bank `$03` engine's live entry fades to grayscale, and its fade-to-black
+setup, `Unused_03_InitBlackPaletteFade`, is unreachable too
+(`docs/graphics_formats.md` §5.4). The alternate curve and the routine that
 would have armed it both shipped dead; `docs/screens_and_ui.md` records
 `Unused_00_ApplyWhiteFade` as unreachable, and the reason is a flag with no
 writer — the
@@ -731,23 +733,22 @@ consistent with it being deliberate; it is not proof of it, and a leading `ret`
 looks the same whether it was written as configuration or left behind by an
 edit. Nothing else in the ROM distinguishes the two.
 
-### The names were hiding some of them
+### Leading `ret`s in front of real bodies
 
-Six routines of this shape were named after the `ret` rather than the body, and
-two of those were drill judges — which is why the counts above were first
-written as thirteen drills and 52 judges instead of fifteen and 60. They are
-named for what they do now, with the leading `ret` recorded in the note:
+Six more routines open with a `ret` in front of a real body. Two are drill
+judges, counted above; all six are named for the body, with the leading `ret`
+recorded in the note:
 
-| was | is | body |
-| --- | --- | --- |
-| `StubNop_0b_5d63` | `NetGamePractice1JudgeOnRallyTick` | the drill's fourth judge |
-| `StubNop_0b_6ceb` | `StrokePractice1JudgeOnRallyTick` | the drill's fourth judge |
-| `StubLoadFontTiles` | `Unused_18_LoadFontTiles` | copies `FontTiles` to `$9000` |
-| `StubNop_1b_664a` | `Unused_1b_LoadUnlockDebugNavGridGfx` | decompresses and uploads debug-screen artwork |
-| `StubAlwaysNotZero` | `Unused_02_CheckExpAwardAllowed` | the EXP-award gate — see below |
-| `StubNop_05_49dc` | `Unused_05_PagedMenuFrameTask` | a live frame task whose body has no effect |
+| routine | body |
+| --- | --- |
+| `NetGamePractice1JudgeOnRallyTick` | the drill's fourth judge |
+| `StrokePractice1JudgeOnRallyTick` | the drill's fourth judge |
+| `Unused_18_LoadFontTiles` | copies `FontTiles` to `$9000` |
+| `Unused_1b_LoadUnlockDebugNavGridGfx` | decompresses and uploads debug-screen artwork |
+| `Unused_02_CheckExpAwardAllowed` | the EXP-award gate — see below |
+| `Unused_05_PagedMenuFrameTask` | a frame task whose body has no effect |
 
-The other 53 labels containing `StubNop` (most of them
+The 53 labels containing `StubNop` (most of them
 `Unused_<bank>_StubNop*`) have a bare `ret` for a body and keep the name,
 which for them is accurate.
 
