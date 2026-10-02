@@ -152,6 +152,13 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-02 — pair macros.** Every register pair a callee reads as two
+  bytes says which is which: `ld_xy` (sprite x, y), `ld_cell` (column, row),
+  `ld_size`, `ld_oam` (attribute with `OAM_*` flags, tile), `ld_tile_run`
+  and `ld_bg_pals`/`ld_obj_pals`, about 640 sites in all. Checking each
+  helper's register order found three pairs of swapped X/Y names
+  (`hSpriteBlit*`, `StarWarpPath*`, `OffsetStatSpriteY`). The 69 VRAM
+  addresses outside the copy consumers are named too.
 * **2026-10-02 — docs pass.** Every subsystem doc, the README and this
   page re-checked against the tree: names, addresses and counts current,
   generator-era wording gone. Two corrections came out of it: the game's
