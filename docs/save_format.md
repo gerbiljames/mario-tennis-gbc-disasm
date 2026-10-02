@@ -79,11 +79,16 @@ Two button codes call `ApplyUnlockEverythingCheat` (then
   times, Left 34 times, then Select+A.
 
 The whole header region `$a000-$a7ff` is mirrored verbatim into SRAM
-bank 1 by `MirrorSaveHeaderToBank1` after every write. On boot
+bank 1 by `MirrorSaveHeaderToBank1` after every block write, and every
+save-flag write (`UpdateSaveHeaderChecksum`) recomputes the master checksum
+and copies the first 64 bytes, `$a000-$a03f`, to bank 1. On boot
 `ValidateSaveRam` checks signature + master checksum; on failure it
-restores bank 1's mirror and re-checks — but the re-check compares the
-signature at `$a000` instead of `$a020` (bug), so a corrupt header
-always falls through to a full wipe + re-init.
+restores bank 1's mirror and re-checks. The mirror never helps, for two
+reasons (`docs/bugs.md`): boot clears a save flag before validating, which
+copies a damaged signature into the mirror and re-checksums damage
+elsewhere, and the re-check compares the signature at `$a000` instead of
+`$a020`. A header with a bad signature always ends in a full wipe +
+re-init.
 
 ## Block directory entry (16 bytes, at `$a060 + 16*i`)
 

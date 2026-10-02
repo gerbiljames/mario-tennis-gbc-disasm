@@ -80,6 +80,23 @@ The recovery path is therefore dead: a corrupt header always falls through to a
 full wipe and re-init, and the mirror it just restored is discarded. See
 `docs/save_format.md`.
 
+The mirror is spoiled before the check even runs. The first thing
+`InitAndRunGame` does is `ClearSaveFlag SAVEFLAG_DEBUG_TEST_MENU` (`$01:$401f`),
+ahead of `ValidateSaveRam`, and every save-flag write ends in
+`UpdateSaveHeaderChecksum` (`$03:$4866`): it recomputes the master checksum
+over whatever the bank-0 header holds and copies the header's first 64 bytes
+(`$a000-$a03f`: signature, checksum, version, the flags) over bank 1's. So at
+boot a damaged signature is copied into the mirror, and damage elsewhere in the
+checksummed region is blessed with a fresh checksum and passes.
+
+Played in PyBoy from `maxed-unlocked.sav` with one byte of the primary
+signature flipped: `WipeAllSaveRam` runs and the story slot, the exhibition
+block and the star grid are erased. With the boot `ClearSaveFlag` patched out
+the mirror survives, and the save is still wiped by the `$a000` compare; with
+that operand also patched to `$a020` the header is restored from the mirror and
+the save comes through byte for byte. Both defects have to be fixed for the
+mirror to do anything.
+
 ### The link-error check can never fire
 
 `AdvanceFrame` (ROM0, `$2635`) guards every frame with:

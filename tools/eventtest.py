@@ -699,7 +699,9 @@ def handler_setup(g, sym_path, row, extra, actions):
 
 
 def damaged_save(save, kind, out):
-    """A copy of `save` with one fault the boot code repairs."""
+    """A copy of `save` with one fault for the boot code to meet. The slot and
+    block faults are repaired from their backups; a header fault wipes the save
+    (docs/bugs.md, the save mirror re-check)."""
     import savetool as T
     sav = bytearray(Path(save).read_bytes())
 
