@@ -4,8 +4,7 @@ PromptChallengeRankingOpponent:
 	jr z, .prompt ; $7291
 	farcall AdvanceDialogueTextCursor ; $7293
 .prompt:
-	ld a, $03 ; $7296
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $7298
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00 ; $7296
 	farcall RunDialogueYesNoPrompt ; $729b
 	farcall ScriptCloseDialogueWindow ; $729e
 	script_wait_frames $05 ; $72a1
@@ -28,8 +27,7 @@ PromptChallengeRankingOpponent:
 	ret ; $72eb
 .done:
 	script_set_text Text_32_37 ; $72ec
-	ld a, $03 ; $72f2
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $72f4
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00 ; $72f2
 	farcall RunDialogueYesNoPrompt ; $72f7
 	farcall ScriptCloseDialogueWindow ; $72fa
 	script_wait_frames $05 ; $72fd
@@ -336,8 +334,7 @@ ActorScript_11_44:
 	as_halt
 OfferSinglesRankingMatch:
 	script_set_text Text_32_28 ; $7784
-	ld a, $03 ; $778a
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $778c
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $778a
 	farcall RunDialogueYesNoPrompt ; $778f
 	farcall ScriptCloseDialogueWindow ; $7792
 	script_wait_frames $05 ; $7795

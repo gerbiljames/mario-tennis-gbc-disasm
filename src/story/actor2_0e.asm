@@ -258,8 +258,7 @@ MarioWorldArrivalDoubles:
 	script_wait_frames $28 ; $6027
 	set_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $602e
 	farcall SaveStorySlotWithTimer ; $6031
-	ld a, $08 ; $6034
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6036
+	script_speak_restore ACTOR_MARIO_WORLD_PEACH ; $6034
 	farcall RunDialogueYesNoPrompt ; $6039
 	farcall ScriptCloseDialogueWindow ; $603c
 	script_wait_frames $05 ; $603f

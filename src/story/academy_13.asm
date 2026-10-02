@@ -8,8 +8,7 @@ RunPlayDoublesTodayPrompt:
 .altText:
 	script_set_text Text_31_304 ; $56ce
 .prompt:
-	ld a, $03 ; $56d4
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $56d6
+	script_speak_restore ACTOR_DORM_ROOM_KATE ; $56d4
 	farcall RunDialogueYesNoPrompt ; $56d9
 	farcall ScriptCloseDialogueWindow ; $56dc
 	script_wait_frames $05 ; $56df
@@ -67,8 +66,7 @@ RunPlayDoublesTodayPrompt:
 .acceptedAlt:
 	script_set_text Text_31_307 ; $578f
 .setUpDoubles:
-	ld a, $03 ; $5795
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5797
+	script_speak_restore ACTOR_DORM_ROOM_KATE ; $5795
 	farcall RunDialogueYesNoPrompt ; $579a
 	farcall ScriptCloseDialogueWindow ; $579d
 	script_wait_frames $05 ; $57a0
@@ -203,8 +201,7 @@ RunAcademyQuestionsMenu:
 	ld h, [hl] ; $590b
 	ld l, a ; $590c
 	farcall InitDialogueTextCursor ; $590d
-	ld a, $03 ; $5910
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5912
+	script_speak_restore ACTOR_DORM_ROOM_KATE ; $5910
 	farcall RunDialogueYesNoPrompt ; $5915
 	farcall ScriptCloseDialogueWindow ; $5918
 	script_wait_frames $05 ; $591b
@@ -390,7 +387,7 @@ ShowStoryNarration_13:
 	script_copy_scene_rect $00, $20, $00, $00, $16, $18 ; $5a4e
 	script_fade_in $08 ; $5a5d
 	script_wait_frames $04 ; $5a62
-	script_speak $85 ; $5a69
+	script_speak SPEAKER_NONE | 5 ; $5a69
 	script_wait_frames $04 ; $5a6e
 	ret ; $5a75
 .setText:

@@ -601,8 +601,7 @@ TrainingCourtNpc0B_15:
 	ld a, [wMapSceneStage] ; $4a51
 	cp STORYTIER_JUNIOR_CHAMP ; $4a54
 	jr z, .speak ; $4a56
-	ld a, $0b ; $4a58
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4a5a
+	script_speak_restore ACTOR_TRAINING_COURT_PAM ; $4a58
 	farcall RunDialogueYesNoPrompt ; $4a5d
 	farcall ScriptCloseDialogueWindow ; $4a60
 	script_wait_frames $05 ; $4a63
@@ -647,8 +646,7 @@ TrainingCourtNpc0F_15:
 	ld a, [wMapSceneStage] ; $4ab2
 	cp STORYTIER_JUNIOR_CHAMP ; $4ab5
 	jr nc, .speak ; $4ab7
-	ld a, $0f ; $4ab9
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4abb
+	script_speak_restore ACTOR_TRAINING_COURT_WALK_71_05_2 ; $4ab9
 	farcall RunDialogueYesNoPrompt ; $4abe
 	farcall ScriptCloseDialogueWindow ; $4ac1
 	script_wait_frames $05 ; $4ac4
@@ -676,8 +674,7 @@ TrainingCourtNpc10_15:
 	ld a, [wMapSceneStage] ; $4af2
 	cp STORYTIER_SENIOR_CHAMP ; $4af5
 	jr c, .speak ; $4af7
-	ld a, $10 ; $4af9
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4afb
+	script_speak_restore ACTOR_TRAINING_COURT_WALK_71_07_3 ; $4af9
 	farcall RunDialogueYesNoPrompt ; $4afe
 	farcall ScriptCloseDialogueWindow ; $4b01
 	script_wait_frames $05 ; $4b04
@@ -705,8 +702,7 @@ TrainingCourtNpc13_15:
 	add hl, de ; $4b37
 	ld [hl], a ; $4b38
 	script_set_text Text_36_671 ; $4b39
-	ld a, $13 ; $4b3f
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4b41
+	script_speak_restore ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4b3f
 	farcall RunDialogueYesNoPrompt ; $4b44
 	farcall ScriptCloseDialogueWindow ; $4b47
 	script_wait_frames $05 ; $4b4a

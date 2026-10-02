@@ -120,8 +120,7 @@ NetCoachIntroDialogue_15:
 NetCoachResultRetryPrompt:
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7728
 NetCoachRetryPrompt:
-	ld a, $12 ; $772d
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $772f
+	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $772d
 	farcall RunDialogueYesNoPrompt ; $7732
 	farcall ScriptCloseDialogueWindow ; $7735
 	script_wait_frames $05 ; $7738
@@ -312,8 +311,7 @@ ReturnCoachIntroDialogue_15:
 ReturnCoachResultRetryPrompt:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $799e
 ReturnCoachRetryPrompt:
-	ld a, $0d ; $79a3
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $79a5
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $79a3
 	farcall RunDialogueYesNoPrompt ; $79a8
 	farcall ScriptCloseDialogueWindow ; $79ab
 	script_wait_frames $05 ; $79ae

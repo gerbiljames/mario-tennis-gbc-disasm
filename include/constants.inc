@@ -94,6 +94,13 @@ def NO_BOX equ $0000
 ; number that ties an actor id to an address.
 def ACTOR_SIZE equ $40
 
+; --- Dialogue speaker (script_speak, script_speak_restore, ShowSpeakerDialogue) ---
+; The operand is the speaking actor's slot. With bit 7 set no actor speaks:
+; OpenSpeechBubble skips the actor lookup, the window is not anchored to
+; anyone, the voice is the fixed one ($08), and the low bits shifted left
+; land in wSpeechBubbleLowerHalf, so $80 opens in the upper half.
+def SPEAKER_NONE equ $80
+
 ; --- Overworld actor record fields ---
 ; Offsets into one wActors record, which the engine and the story scripts
 ; reach as `ld hl, ACTORF_* / add hl, bc` with the record in bc. Only fields

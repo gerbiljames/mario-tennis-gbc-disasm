@@ -159,7 +159,7 @@ Unused_10_Test2Npc03:
 	ld hl, $0001 ; $47e9
 	farcall PushTextArgNumber ; $47ec
 	script_set_text Text_30_353 ; $47ef
-	script_speak $80 ; $47f5
+	script_speak SPEAKER_NONE ; $47f5
 	ld a, MINIGAME_SERVICE_MATCH_2 ; $47fa
 	farcall RunTrainingDrillByID ; $47fc
 	ret ; $47ff
@@ -177,7 +177,7 @@ Unused_10_Test2Npc04:
 	ld hl, $0002 ; $481a
 	farcall PushTextArgNumber ; $481d
 	script_set_text Text_30_353 ; $4820
-	script_speak $80 ; $4826
+	script_speak SPEAKER_NONE ; $4826
 	ld a, MINIGAME_SERVICE_MATCH_3 ; $482b
 	farcall RunTrainingDrillByID ; $482d
 	ret ; $4830
@@ -195,7 +195,7 @@ Unused_10_Test2Npc05:
 	ld hl, $0003 ; $484b
 	farcall PushTextArgNumber ; $484e
 	script_set_text Text_30_353 ; $4851
-	script_speak $80 ; $4857
+	script_speak SPEAKER_NONE ; $4857
 	ld a, MINIGAME_SERVICE_PRACTICE_1 ; $485c
 	farcall RunTrainingDrillByID ; $485e
 	ret ; $4861
@@ -213,7 +213,7 @@ Unused_10_Test2Npc06:
 	ld hl, $0004 ; $487c
 	farcall PushTextArgNumber ; $487f
 	script_set_text Text_30_353 ; $4882
-	script_speak $80 ; $4888
+	script_speak SPEAKER_NONE ; $4888
 	ld a, MINIGAME_SERVICE_PRACTICE_2 ; $488d
 	farcall RunTrainingDrillByID ; $488f
 	ret ; $4892
@@ -231,7 +231,7 @@ Unused_10_Test2Npc07:
 	ld hl, $0005 ; $48ad
 	farcall PushTextArgNumber ; $48b0
 	script_set_text Text_30_353 ; $48b3
-	script_speak $80 ; $48b9
+	script_speak SPEAKER_NONE ; $48b9
 	ld a, MINIGAME_SERVICE_PRACTICE_3 ; $48be
 	farcall RunTrainingDrillByID ; $48c0
 	ret ; $48c3
@@ -249,7 +249,7 @@ Unused_10_Test2Npc08:
 	ld hl, $0006 ; $48de
 	farcall PushTextArgNumber ; $48e1
 	script_set_text Text_30_353 ; $48e4
-	script_speak $80 ; $48ea
+	script_speak SPEAKER_NONE ; $48ea
 	ld a, MINIGAME_NET_GAME_MATCH_1 ; $48ef
 	farcall RunTrainingDrillByID ; $48f1
 	ret ; $48f4
@@ -267,7 +267,7 @@ Unused_10_Test2Npc09:
 	ld hl, $0007 ; $490f
 	farcall PushTextArgNumber ; $4912
 	script_set_text Text_30_353 ; $4915
-	script_speak $80 ; $491b
+	script_speak SPEAKER_NONE ; $491b
 	ld a, MINIGAME_NET_GAME_MATCH_2 ; $4920
 	farcall RunTrainingDrillByID ; $4922
 	ret ; $4925
@@ -285,7 +285,7 @@ Unused_10_Test2Npc0A:
 	ld hl, $0008 ; $4940
 	farcall PushTextArgNumber ; $4943
 	script_set_text Text_30_353 ; $4946
-	script_speak $80 ; $494c
+	script_speak SPEAKER_NONE ; $494c
 	ld a, MINIGAME_NET_GAME_MATCH_3 ; $4951
 	farcall RunTrainingDrillByID ; $4953
 	ret ; $4956
@@ -302,7 +302,7 @@ Test2Npc0B_10:
 	ld hl, $0009 ; $4971
 	farcall PushTextArgNumber ; $4974
 	script_set_text Text_30_353 ; $4977
-	script_speak $80 ; $497d
+	script_speak SPEAKER_NONE ; $497d
 	ld a, MINIGAME_NET_GAME_PRACTICE_1 ; $4982
 	farcall RunTrainingDrillByID ; $4984
 	ret ; $4987
@@ -319,7 +319,7 @@ Test2Npc0C_10:
 	ld hl, $000a ; $49a2
 	farcall PushTextArgNumber ; $49a5
 	script_set_text Text_30_353 ; $49a8
-	script_speak $80 ; $49ae
+	script_speak SPEAKER_NONE ; $49ae
 	ld a, MINIGAME_NET_GAME_PRACTICE_2 ; $49b3
 	farcall RunTrainingDrillByID ; $49b5
 	ret ; $49b8
@@ -336,7 +336,7 @@ Test2Npc0D_10:
 	ld hl, $000b ; $49d3
 	farcall PushTextArgNumber ; $49d6
 	script_set_text Text_30_353 ; $49d9
-	script_speak $80 ; $49df
+	script_speak SPEAKER_NONE ; $49df
 	ld a, MINIGAME_NET_GAME_PRACTICE_3 ; $49e4
 	farcall RunTrainingDrillByID ; $49e6
 	ret ; $49e9
@@ -353,7 +353,7 @@ Test2Npc0E_10:
 	ld hl, $000c ; $4a04
 	farcall PushTextArgNumber ; $4a07
 	script_set_text Text_30_353 ; $4a0a
-	script_speak $80 ; $4a10
+	script_speak SPEAKER_NONE ; $4a10
 	ld a, MINIGAME_STROKE_MATCH_1 ; $4a15
 	farcall RunTrainingDrillByID ; $4a17
 	ret ; $4a1a
@@ -370,7 +370,7 @@ Test2Npc0F_10:
 	ld hl, $000d ; $4a35
 	farcall PushTextArgNumber ; $4a38
 	script_set_text Text_30_353 ; $4a3b
-	script_speak $80 ; $4a41
+	script_speak SPEAKER_NONE ; $4a41
 	ld a, MINIGAME_STROKE_MATCH_2 ; $4a46
 	farcall RunTrainingDrillByID ; $4a48
 	ret ; $4a4b
@@ -387,7 +387,7 @@ Test2Npc10_10:
 	ld hl, $000e ; $4a66
 	farcall PushTextArgNumber ; $4a69
 	script_set_text Text_30_353 ; $4a6c
-	script_speak $80 ; $4a72
+	script_speak SPEAKER_NONE ; $4a72
 	ld a, MINIGAME_STROKE_MATCH_3 ; $4a77
 	farcall RunTrainingDrillByID ; $4a79
 	ret ; $4a7c
@@ -404,7 +404,7 @@ Test2Npc11_10:
 	ld hl, $000f ; $4a97
 	farcall PushTextArgNumber ; $4a9a
 	script_set_text Text_30_353 ; $4a9d
-	script_speak $80 ; $4aa3
+	script_speak SPEAKER_NONE ; $4aa3
 	ld a, MINIGAME_STROKE_PRACTICE_1 ; $4aa8
 	farcall RunTrainingDrillByID ; $4aaa
 	ret ; $4aad
@@ -421,7 +421,7 @@ Test2Npc12_10:
 	ld hl, $0010 ; $4ac8
 	farcall PushTextArgNumber ; $4acb
 	script_set_text Text_30_353 ; $4ace
-	script_speak $80 ; $4ad4
+	script_speak SPEAKER_NONE ; $4ad4
 	ld a, MINIGAME_STROKE_PRACTICE_2 ; $4ad9
 	farcall RunTrainingDrillByID ; $4adb
 	ret ; $4ade

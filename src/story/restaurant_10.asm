@@ -213,8 +213,7 @@ CafeteriaNpc04_10:
 	ld a, [wMapSceneStage2] ; $58c5
 	cp STORYTIER_COMPLETE ; $58c8
 	jr z, .prompt ; $58ca
-	ld a, $04 ; $58cc
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $58ce
+	script_speak_restore ACTOR_CAFETERIA_WALK_71_03_2 ; $58cc
 	farcall RunDialogueYesNoPrompt ; $58d1
 	farcall ScriptCloseDialogueWindow ; $58d4
 	script_wait_frames $05 ; $58d7
@@ -230,8 +229,7 @@ CafeteriaNpc04_10:
 	jr nz, .askQuestion ; $58ef
 	farcall AdvanceDialogueTextCursor ; $58f1
 .askQuestion:
-	ld a, $04 ; $58f4
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $58f6
+	script_speak_restore ACTOR_CAFETERIA_WALK_71_03_2 ; $58f4
 	farcall RunDialogueYesNoPrompt ; $58f9
 	farcall ScriptCloseDialogueWindow ; $58fc
 	script_wait_frames $05 ; $58ff
@@ -262,8 +260,7 @@ CafeteriaNpc05_10:
 	ld a, [wMapSceneStage2] ; $593c
 	cp STORYTIER_JUNIOR_CHAMP ; $593f
 	jr nz, .speak ; $5941
-	ld a, $05 ; $5943
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5945
+	script_speak_restore ACTOR_CAFETERIA_WALK_72_03_1 ; $5943
 	farcall RunDialogueYesNoPrompt ; $5948
 	farcall ScriptCloseDialogueWindow ; $594b
 	script_wait_frames $05 ; $594e
@@ -684,8 +681,7 @@ RestaurantNpc09_10:
 	script_speak ACTOR_RESTAURANT_WALK_71_07 ; $5ea3
 	ret ; $5ea8
 .altText:
-	ld a, $09 ; $5ea9
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5eab
+	script_speak_restore ACTOR_RESTAURANT_WALK_71_07 ; $5ea9
 	farcall RunDialogueYesNoPrompt ; $5eae
 	farcall ScriptCloseDialogueWindow ; $5eb1
 	script_wait_frames $05 ; $5eb4
@@ -726,8 +722,7 @@ RestaurantNpc0A_10:
 	ld a, [wMapSceneStage] ; $5f0b
 	cp STORYRANK_SINGLES_ISLAND_OPEN ; $5f0e
 	jr nc, .speak ; $5f10
-	ld a, $0a ; $5f12
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f14
+	script_speak_restore ACTOR_RESTAURANT_WALK_71_03_2 ; $5f12
 	farcall RunDialogueYesNoPrompt ; $5f17
 	farcall ScriptCloseDialogueWindow ; $5f1a
 	script_wait_frames $05 ; $5f1d
@@ -784,8 +779,7 @@ RestaurantNpc0C_10:
 	jr z, .speak ; $5f85
 	cp $03 ; $5f87
 	jr nc, .ge03 ; $5f89
-	ld a, $0c ; $5f8b
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f8d
+	script_speak_restore ACTOR_RESTAURANT_WALK_71_06_2 ; $5f8b
 	farcall RunDialogueYesNoPrompt ; $5f90
 	farcall ScriptCloseDialogueWindow ; $5f93
 	script_wait_frames $05 ; $5f96
@@ -823,8 +817,7 @@ RestaurantNpc0D_10:
 	ld a, [wMapSceneStage2] ; $5fda
 	cp STORYTIER_ISLAND_OPEN ; $5fdd
 	jr nz, .advanceDialogueTextCursor ; $5fdf
-	ld a, $0d ; $5fe1
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5fe3
+	script_speak_restore ACTOR_RESTAURANT_WALK_72_05_1 ; $5fe1
 	farcall RunDialogueYesNoPrompt ; $5fe6
 	farcall ScriptCloseDialogueWindow ; $5fe9
 	script_wait_frames $05 ; $5fec

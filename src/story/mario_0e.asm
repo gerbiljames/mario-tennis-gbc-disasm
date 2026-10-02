@@ -26,8 +26,7 @@ RepairCounterCheckEquipChanged:
 .askRepair:
 	farcall InitDialogueTextCursor ; $5034
 	call PushEquipmentNameTextArg ; $5037
-	ld a, $0e ; $503a
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $503c
+	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $503a
 	farcall RunDialogueYesNoPrompt ; $503f
 	farcall ScriptCloseDialogueWindow ; $5042
 	script_wait_frames $05 ; $5045
@@ -48,8 +47,7 @@ RepairCounterCheckEquipChanged:
 	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $507b
 .noChange:
 	script_set_text Text_6e_242 ; $5080
-	ld a, $0e ; $5086
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5088
+	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $5086
 	farcall RunDialogueYesNoPrompt ; $508b
 	farcall ScriptCloseDialogueWindow ; $508e
 	script_wait_frames $05 ; $5091
@@ -97,8 +95,7 @@ RepairCounterReopenServiceMenu:
 	script_set_text Text_6e_232 ; $5121
 	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $5127
 	script_set_text Text_6e_242 ; $512c
-	ld a, $0e ; $5132
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5134
+	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $5132
 	farcall RunDialogueYesNoPrompt ; $5137
 	farcall ScriptCloseDialogueWindow ; $513a
 	script_wait_frames $05 ; $513d
@@ -124,7 +121,7 @@ ShowEquipChangeConfirmation:
 	script_set_anim ACTOR_PLAYER, ANIM_SWING_BACK ; $516d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5174
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_03 ; $517b
-	script_speak $8c ; $5186
+	script_speak SPEAKER_NONE | 12 ; $5186
 	script_null_script ACTOR_PLAYER ; $518b
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $5190
 	script_face_toward ACTOR_TRAINING_GYM_WALK_72_02_2, ACTOR_PLAYER ; $5197
@@ -133,7 +130,7 @@ ShowEquipChangeConfirmation:
 .handOver:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $51a3
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_04 ; $51aa
-	script_speak $8c ; $51b5
+	script_speak SPEAKER_NONE | 12 ; $51b5
 	script_null_script ACTOR_PLAYER ; $51ba
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $51bf
 	script_set_speed ACTOR_PLAYER, $0020 ; $51c6
@@ -547,8 +544,7 @@ MarioWorldArrivalSingles:
 	script_wait_frames $28 ; $590c
 	set_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5913
 	farcall SaveStorySlotWithTimer ; $5916
-	ld a, $08 ; $5919
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $591b
+	script_speak_restore ACTOR_MARIO_WORLD_PEACH ; $5919
 	farcall RunDialogueYesNoPrompt ; $591e
 	farcall ScriptCloseDialogueWindow ; $5921
 	script_wait_frames $05 ; $5924

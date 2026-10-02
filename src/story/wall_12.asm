@@ -189,8 +189,7 @@ DormEntranceEntry0FScene:
 	script_set_anim ACTOR_DORM_ENTRANCE_KATE, ANIM_NOD ; $4482
 	script_wait_idle ACTOR_DORM_ENTRANCE_KATE ; $4489
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ENTRANCE_KATE ; $448e
-	ld a, $04 ; $4496
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4498
+	script_speak_restore $04 ; $4496
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ENTRANCE_EMILY ; $449b
 	farcall RunDialogueYesNoPrompt ; $44a3
 	farcall ScriptCloseDialogueWindow ; $44a6
@@ -333,8 +332,7 @@ WallPracticeRoomNpc03_12:
 	dw WallPracticeRoomNpc03_12.done ; $473f jumptable
 	dw WallPracticeRoomNpc03_12.speak ; $4741 jumptable
 .altText:
-	ld a, $03 ; $4743
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4745
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_02 ; $4743
 	farcall RunDialogueYesNoPrompt ; $4748
 	farcall ScriptCloseDialogueWindow ; $474b
 	script_wait_frames $05 ; $474e
@@ -491,8 +489,7 @@ WallPracticeScoreRetryPrompt:
 	ld h, [hl] ; $48b9
 	ld l, a ; $48ba
 	farcall PushTextArgNumber ; $48bb
-	ld a, $07 ; $48be
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $48c0
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $48be
 	farcall RunDialogueYesNoPrompt ; $48c3
 	farcall ScriptCloseDialogueWindow ; $48c6
 	script_wait_frames $05 ; $48c9
@@ -523,8 +520,7 @@ WallPracticeNewRecordScript:
 	ld h, [hl] ; $4917
 	ld l, a ; $4918
 	farcall PushTextArgNumber ; $4919
-	ld a, $07 ; $491c
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $491e
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $491c
 	farcall RunDialogueYesNoPrompt ; $4921
 	farcall ScriptCloseDialogueWindow ; $4924
 	script_wait_frames $05 ; $4927
@@ -552,8 +548,7 @@ WallPracticeMaxScoreScript:
 	ld h, a ; $4962
 	jp c, RelaunchWallPracticeMasterLevel.carry ; $4963
 	script_set_text Text_36_43 ; $4966
-	ld a, $07 ; $496c
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $496e
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $496c
 	farcall RunDialogueYesNoPrompt ; $4971
 	farcall ScriptCloseDialogueWindow ; $4974
 	script_wait_frames $05 ; $4977

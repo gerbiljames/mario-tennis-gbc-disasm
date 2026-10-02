@@ -56,7 +56,7 @@ ROOT = Path(__file__).resolve().parent.parent
 ANY = "*"
 # (macro, argument index) of every script macro argument that is an actor slot
 ACTOR_ARGS = {
-    ("script_speak", 0), ("script_set_anim", 0), ("script_face", 0), ("script_wait_idle", 0),
+    ("script_speak", 0), ("script_speak_restore", 0), ("script_set_anim", 0), ("script_face", 0), ("script_wait_idle", 0),
     ("script_set_position", 0), ("script_move_target", 0), ("script_wait_move", 0),
     ("script_set_actor_script", 0), ("script_face_toward", 0), ("script_face_toward", 1),
     ("script_set_speed", 0), ("script_get_actor_state", 0), ("script_wait_actor_script", 0),

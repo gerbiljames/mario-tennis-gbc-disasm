@@ -52,8 +52,7 @@ SeniorSinglesRankOfferScene:
 	jr z, .prompt ; $5f59
 	farcall AdvanceDialogueTextCursor ; $5f5b
 .prompt:
-	ld a, $03 ; $5f5e
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f60
+	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $5f5e
 	farcall RunDialogueYesNoPrompt ; $5f63
 	farcall ScriptCloseDialogueWindow ; $5f66
 	script_wait_frames $05 ; $5f69
@@ -101,8 +100,7 @@ SeniorDoublesRankOfferScene:
 	jr z, .prompt ; $6029
 	farcall AdvanceDialogueTextCursor ; $602b
 .prompt:
-	ld a, $03 ; $602e
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6030
+	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $602e
 	farcall RunDialogueYesNoPrompt ; $6033
 	farcall ScriptCloseDialogueWindow ; $6036
 	script_wait_frames $05 ; $6039

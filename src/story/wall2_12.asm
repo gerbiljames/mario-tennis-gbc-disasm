@@ -93,8 +93,7 @@ WallPracticeLevelResultScript:
 	ld l, a ; $4afe
 	farcall InitDialogueTextCursor ; $4aff
 .speak:
-	ld a, $07 ; $4b02
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4b04
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4b02
 	farcall RunDialogueYesNoPrompt ; $4b07
 	farcall ScriptCloseDialogueWindow ; $4b0a
 	script_wait_frames $05 ; $4b0d
@@ -227,8 +226,7 @@ WallPracticeRoomTile02_12:
 	ret ; $4d28
 WallPracticeRoomTile03_12:
 	script_set_text Text_36_48 ; $4d29
-	ld a, $07 ; $4d2f
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4d31
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4d2f
 	farcall RunDialogueYesNoPrompt ; $4d34
 	farcall ScriptCloseDialogueWindow ; $4d37
 	script_wait_frames $05 ; $4d3a
@@ -259,8 +257,7 @@ WallPracticeRoomTile04_12:
 	test_flag FLAG_CLEARED_WALL_LEVEL_2 ; $4d98
 	jp z, WallPracticeLevelLockedScript ; $4d9b
 	script_set_text Text_36_49 ; $4d9e
-	ld a, $07 ; $4da4
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4da6
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4da4
 	farcall RunDialogueYesNoPrompt ; $4da9
 	farcall ScriptCloseDialogueWindow ; $4dac
 	script_wait_frames $05 ; $4daf
@@ -291,8 +288,7 @@ WallPracticeRoomTile05_12:
 	test_flag FLAG_CLEARED_WALL_LEVEL_3 ; $4e0d
 	jp z, WallPracticeLevelLockedScript ; $4e10
 	script_set_text Text_36_50 ; $4e13
-	ld a, $07 ; $4e19
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4e1b
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4e19
 	farcall RunDialogueYesNoPrompt ; $4e1e
 	farcall ScriptCloseDialogueWindow ; $4e21
 	script_wait_frames $05 ; $4e24
@@ -323,8 +319,7 @@ WallPracticeRoomTile06_12:
 	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $4e82
 	jp z, WallPracticeLevelLockedScript ; $4e85
 	script_set_text Text_36_51 ; $4e88
-	ld a, $07 ; $4e8e
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4e90
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4e8e
 	farcall RunDialogueYesNoPrompt ; $4e93
 	farcall ScriptCloseDialogueWindow ; $4e96
 	script_wait_frames $05 ; $4e99
@@ -421,8 +416,7 @@ WallPracticeRoomInitScript_12:
 	cp WINLOSE_WIN ; $4fd2
 	jr nz, .checkSession ; $4fd4
 	script_set_text Text_36_53 ; $4fd6
-	ld a, $07 ; $4fdc
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4fde
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4fdc
 	farcall RunDialogueYesNoPrompt ; $4fe1
 	farcall ScriptCloseDialogueWindow ; $4fe4
 	script_wait_frames $05 ; $4fe7
@@ -445,8 +439,7 @@ WallPracticeRoomInitScript_12:
 	ld l, a ; $5011
 	farcall InitDialogueTextCursor ; $5012
 .normalEntry:
-	ld a, $07 ; $5015
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5017
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5015
 	farcall RunDialogueYesNoPrompt ; $501a
 	farcall ScriptCloseDialogueWindow ; $501d
 	script_wait_frames $05 ; $5020
@@ -524,8 +517,7 @@ WallPracticeRoomNpc07_12:
 	pop_wram_bank ; $5109
 	farcall PushTextArgNumber ; $510e
 .prompt:
-	ld a, $07 ; $5111
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5113
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5111
 	farcall RunDialogueYesNoPrompt ; $5116
 	farcall ScriptCloseDialogueWindow ; $5119
 	script_wait_frames $05 ; $511c
@@ -538,8 +530,7 @@ WallPracticeRoomNpc07_12:
 	ld h, [hl] ; $5133
 	ld l, a ; $5134
 	farcall InitDialogueTextCursor ; $5135
-	ld a, $07 ; $5138
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $513a
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5138
 	farcall RunDialogueYesNoPrompt ; $513d
 	farcall ScriptCloseDialogueWindow ; $5140
 	script_wait_frames $05 ; $5143

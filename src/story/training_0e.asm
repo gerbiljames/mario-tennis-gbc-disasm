@@ -250,8 +250,7 @@ TrainingGymNpc07TextIds:
 	dw Text_35_223 ; record 4
 .speak:
 	script_set_text Text_35_210 ; $4471
-	ld a, $07 ; $4477
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4479
+	script_speak_restore ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1 ; $4477
 	farcall RunDialogueYesNoPrompt ; $447c
 	farcall ScriptCloseDialogueWindow ; $447f
 	script_wait_frames $05 ; $4482

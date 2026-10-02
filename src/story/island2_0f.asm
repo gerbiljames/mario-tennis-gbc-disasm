@@ -1,8 +1,7 @@
 ; Instruction-for-instruction the same as TournamentNpc0A_0f: the handler assembled a second time. Nothing points at this copy.
 UnusedTournamentNpc0A_0f:
 	script_set_text Text_1f_163 ; $6f18
-	ld a, $0b ; $6f1e
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6f20
+	script_speak_restore $0b ; $6f1e
 	farcall RunDialogueYesNoPrompt ; $6f23
 	farcall ScriptCloseDialogueWindow ; $6f26
 	script_wait_frames $05 ; $6f29
@@ -14,8 +13,7 @@ UnusedTournamentNpc0A_0f:
 	ret ; $6f3b
 TournamentNpc03_0f:
 	script_set_text Text_1f_172 ; $6f3c
-	ld a, $03 ; $6f42
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6f44
+	script_speak_restore ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_1 ; $6f42
 	farcall RunDialogueYesNoPrompt ; $6f47
 	farcall ScriptCloseDialogueWindow ; $6f4a
 	script_wait_frames $05 ; $6f4d

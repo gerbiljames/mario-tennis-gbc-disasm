@@ -19,8 +19,7 @@ MachinePracticeLevelPrompt:
 	ld h, $00 ; $4624
 	ld l, a ; $4626
 	farcall PushTextArgNumber ; $4627
-	ld a, $05 ; $462a
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $462c
+	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $462a
 	farcall RunDialogueYesNoPrompt ; $462f
 	farcall ScriptCloseDialogueWindow ; $4632
 	script_wait_frames $05 ; $4635
@@ -106,8 +105,7 @@ MachinePracticeResultScene:
 	ld l, a ; $472b
 	farcall PushTextArgNumber ; $472c
 	script_set_speed ACTOR_PLAYER, $0020 ; $472f
-	ld a, $05 ; $4737
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4739
+	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4737
 	farcall RunDialogueYesNoPrompt ; $473c
 	farcall ScriptCloseDialogueWindow ; $473f
 	script_wait_frames $05 ; $4742
@@ -116,8 +114,7 @@ MachinePracticeResultScene:
 .done:
 	ret ; $474d
 MachineCourtHandleRetryChoice:
-	ld a, $05 ; $474e
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4750
+	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $474e
 	farcall RunDialogueYesNoPrompt ; $4753
 	farcall ScriptCloseDialogueWindow ; $4756
 	script_wait_frames $05 ; $4759

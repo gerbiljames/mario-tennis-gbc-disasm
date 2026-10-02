@@ -61,8 +61,7 @@ CenterCourtNpc04_11:
 	jr .done ; $40c7
 .altText:
 	script_set_text Text_1f_81 ; $40c9
-	ld a, $04 ; $40cf
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $40d1
+	script_speak_restore ACTOR_CENTER_COURT_WALK_6F_07_2 ; $40cf
 	farcall RunDialogueYesNoPrompt ; $40d4
 	farcall ScriptCloseDialogueWindow ; $40d7
 	script_wait_frames $05 ; $40da
@@ -94,8 +93,7 @@ CenterCourtNpc05_11:
 	script_speak ACTOR_CENTER_COURT_WALK_72_02 ; $4118
 	ret ; $411d
 .eq03:
-	ld a, $05 ; $411e
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4120
+	script_speak_restore ACTOR_CENTER_COURT_WALK_72_02 ; $411e
 	farcall RunDialogueYesNoPrompt ; $4123
 	farcall ScriptCloseDialogueWindow ; $4126
 	script_wait_frames $05 ; $4129
@@ -350,8 +348,7 @@ AcademyArrivalNpc03_11:
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_71_03_1 ; $45bd
 	ret ; $45c2
 .speak:
-	ld a, $03 ; $45c3
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $45c5
+	script_speak_restore ACTOR_ACADEMY_ARRIVAL_WALK_71_03_1 ; $45c3
 	farcall RunDialogueYesNoPrompt ; $45c8
 	farcall ScriptCloseDialogueWindow ; $45cb
 	script_wait_frames $05 ; $45ce

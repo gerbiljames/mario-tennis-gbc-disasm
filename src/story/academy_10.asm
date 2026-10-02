@@ -51,8 +51,7 @@ AcademyWingNpc03_10:
 	jr z, .speak ; $6287
 	farcall AdvanceDialogueTextCursor ; $6289
 .speak:
-	ld a, $03 ; $628c
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $628e
+	script_speak_restore ACTOR_ACADEMY_WING_WALK_75_06 ; $628c
 	script_set_text Text_30_515 ; $6291
 	farcall RunDialogueYesNoPrompt ; $6297
 	farcall ScriptCloseDialogueWindow ; $629a
@@ -532,8 +531,7 @@ AcademyWingInitScript_10:
 	sound SFX_EMOTE ; $6d6c
 	script_wait_frames $50 ; $6d6e
 	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_MUSIC, 63.0, 63.0 ; $6d75
-	ld a, $06 ; $6d80
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d82
+	script_speak_restore ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6d80
 	farcall RunDialogueYesNoPrompt ; $6d85
 	farcall ScriptCloseDialogueWindow ; $6d88
 	script_wait_frames $05 ; $6d8b
@@ -579,8 +577,7 @@ AcademyWingInitScript_10:
 	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_SHAKE ; $6e87
 	script_wait_idle ACTOR_ACADEMY_WING_INIT0_EMILY ; $6e8e
 	script_set_text Text_30_491 ; $6e93
-	ld a, $09 ; $6e99
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6e9b
+	script_speak_restore ACTOR_ACADEMY_WING_INIT0_EMILY ; $6e99
 	farcall RunDialogueYesNoPrompt ; $6e9e
 	farcall ScriptCloseDialogueWindow ; $6ea1
 	script_wait_frames $05 ; $6ea4
@@ -730,8 +727,7 @@ AcademyWingInitActors0_10:
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_WALK_75_06, ANIM_NOD ; $71af
 	script_wait_idle ACTOR_ACADEMY_WING_INIT1_WALK_75_06 ; $71b6
 .loopB:
-	ld a, $03 ; $71bb
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $71bd
+	script_speak_restore ACTOR_ACADEMY_WING_INIT1_WALK_75_06 ; $71bb
 	farcall RunDialogueYesNoPrompt ; $71c0
 	farcall ScriptCloseDialogueWindow ; $71c3
 	script_wait_frames $05 ; $71c6

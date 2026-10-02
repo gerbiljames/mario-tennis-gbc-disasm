@@ -152,8 +152,7 @@ LateStudentCrashCutscene:
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4aef
 .loop:
 	script_set_text Text_36_87 ; $4af4
-	ld a, $11 ; $4afa
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4afc
+	script_speak_restore ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4afa
 	farcall RunDialogueYesNoPrompt ; $4aff
 	farcall ScriptCloseDialogueWindow ; $4b02
 	script_wait_frames $05 ; $4b05
@@ -327,8 +326,7 @@ AcademyArrivalGreetingScene:
 	script_wait_frames $0f ; $4eb6
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_EMILY, ANIM_BOUNCE ; $4ebd
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_EMILY ; $4ec4
-	ld a, $12 ; $4ec9
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4ecb
+	script_speak_restore ACTOR_ACADEMY_ARRIVAL_EMILY ; $4ec9
 	farcall RunDialogueYesNoPrompt ; $4ece
 	farcall ScriptCloseDialogueWindow ; $4ed1
 	script_wait_frames $05 ; $4ed4
@@ -336,8 +334,7 @@ AcademyArrivalGreetingScene:
 	jr z, .finish ; $4edc
 	farcall AdvanceDialogueTextCursor ; $4ede
 .finish:
-	ld a, $12 ; $4ee1
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4ee3
+	script_speak_restore ACTOR_ACADEMY_ARRIVAL_EMILY ; $4ee1
 	farcall RunDialogueYesNoPrompt ; $4ee6
 	farcall ScriptCloseDialogueWindow ; $4ee9
 	script_wait_frames $05 ; $4eec

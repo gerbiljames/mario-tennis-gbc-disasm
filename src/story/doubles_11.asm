@@ -239,8 +239,7 @@ JuniorClassCourtDoublesMatchReturn:
 	ret ; $629d
 OfferDoublesRankingMatch:
 	script_set_text Text_32_90 ; $629e
-	ld a, $03 ; $62a4
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $62a6
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00 ; $62a4
 	farcall RunDialogueYesNoPrompt ; $62a9
 	farcall ScriptCloseDialogueWindow ; $62ac
 	script_wait_frames $05 ; $62af

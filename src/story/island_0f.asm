@@ -63,8 +63,7 @@ TournamentExit_0f:
 	ret ; $60dd
 TournamentNpc0A_0f:
 	script_set_text Text_1f_163 ; $60de
-	ld a, $0b ; $60e4
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $60e6
+	script_speak_restore ACTOR_TOURNAMENT_ELDEN ; $60e4
 	farcall RunDialogueYesNoPrompt ; $60e9
 	farcall ScriptCloseDialogueWindow ; $60ec
 	script_wait_frames $05 ; $60ef
@@ -717,8 +716,7 @@ IslandOpenRound1NpcScriptsDoubles_0f:
 	db $ff
 IslandOpenRound1DoublesNpc0A_0f:
 	script_set_text Text_25_30 ; $6bda
-	ld a, $0a ; $6be0
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6be2
+	script_speak_restore ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_SAMMI ; $6be0
 	farcall RunDialogueYesNoPrompt ; $6be5
 	farcall ScriptCloseDialogueWindow ; $6be8
 	script_wait_frames $05 ; $6beb
@@ -731,8 +729,7 @@ IslandOpenRound1DoublesNpc0A_0f:
 ; Instruction-identical to IslandOpenFinalDoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0B_0f:
 	script_set_text Text_25_33 ; $6bfe
-	ld a, $0b ; $6c04
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c06
+	script_speak_restore ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_SEAN ; $6c04
 	farcall RunDialogueYesNoPrompt ; $6c09
 	farcall ScriptCloseDialogueWindow ; $6c0c
 	script_wait_frames $05 ; $6c0f
@@ -745,8 +742,7 @@ IslandOpenRound1DoublesNpc0B_0f:
 ; Instruction-identical to IslandOpenSemifinalDoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0D_0f:
 	script_set_text Text_25_37 ; $6c22
-	ld a, $0d ; $6c28
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c2a
+	script_speak_restore ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_B_COZ ; $6c28
 	farcall RunDialogueYesNoPrompt ; $6c2d
 	farcall ScriptCloseDialogueWindow ; $6c30
 	script_wait_frames $05 ; $6c33
@@ -789,8 +785,7 @@ IslandOpenSemifinalNpcScriptsDoubles_0f:
 	db $ff
 IslandOpenSemifinalDoublesNpc08_0f:
 	script_set_text Text_25_44 ; $6d67
-	ld a, $08 ; $6d6d
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d6f
+	script_speak_restore ACTOR_ISLAND_OPEN_SEMIFINAL_DOUBLES_SAMMI ; $6d6d
 	farcall RunDialogueYesNoPrompt ; $6d72
 	farcall ScriptCloseDialogueWindow ; $6d75
 	script_wait_frames $05 ; $6d78
@@ -803,8 +798,7 @@ IslandOpenSemifinalDoublesNpc08_0f:
 ; Instruction-identical to IslandOpenRound1DoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenSemifinalDoublesNpc0D_0f:
 	script_set_text Text_25_51 ; $6d8b
-	ld a, $0d ; $6d91
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d93
+	script_speak_restore ACTOR_ISLAND_OPEN_SEMIFINAL_DOUBLES_B_COZ ; $6d91
 	farcall RunDialogueYesNoPrompt ; $6d96
 	farcall ScriptCloseDialogueWindow ; $6d99
 	script_wait_frames $05 ; $6d9c
@@ -847,8 +841,7 @@ IslandOpenFinalNpcScriptsDoubles_0f:
 	db $ff
 IslandOpenFinalDoublesNpc0C_0f:
 	script_set_text Text_25_64 ; $6ed0
-	ld a, $0c ; $6ed6
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6ed8
+	script_speak_restore ACTOR_ISLAND_OPEN_FINAL_DOUBLES_SAMMI ; $6ed6
 	farcall RunDialogueYesNoPrompt ; $6edb
 	farcall ScriptCloseDialogueWindow ; $6ede
 	script_wait_frames $05 ; $6ee1
@@ -861,8 +854,7 @@ IslandOpenFinalDoublesNpc0C_0f:
 ; Instruction-identical to IslandOpenRound1DoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenFinalDoublesNpc0B_0f:
 	script_set_text Text_25_61 ; $6ef4
-	ld a, $0b ; $6efa
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6efc
+	script_speak_restore ACTOR_ISLAND_OPEN_FINAL_DOUBLES_B_COZ ; $6efa
 	farcall RunDialogueYesNoPrompt ; $6eff
 	farcall ScriptCloseDialogueWindow ; $6f02
 	script_wait_frames $05 ; $6f05

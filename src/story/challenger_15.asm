@@ -166,8 +166,7 @@ StrokeChallengerResultScene:
 	ld h, [hl] ; $5f0b
 	ld l, a ; $5f0c
 	farcall InitDialogueTextCursor ; $5f0d
-	ld a, [wMapSceneStage2] ; $5f10
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f13
+	script_speak_restore [wMapSceneStage2] ; $5f10
 	farcall RunDialogueYesNoPrompt ; $5f16
 	farcall ScriptCloseDialogueWindow ; $5f19
 	script_wait_frames $05 ; $5f1c
@@ -199,8 +198,7 @@ StrokeChallengerResultScene:
 	ld h, [hl] ; $5f5c
 	ld l, a ; $5f5d
 	farcall InitDialogueTextCursor ; $5f5e
-	ld a, [wMapSceneStage2] ; $5f61
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f64
+	script_speak_restore [wMapSceneStage2] ; $5f61
 	farcall RunDialogueYesNoPrompt ; $5f67
 	farcall ScriptCloseDialogueWindow ; $5f6a
 	script_wait_frames $05 ; $5f6d

@@ -12,12 +12,10 @@ ShowNpc03SinglesOrDoublesPrompt_10:
 	test_flag FLAG_DOUBLES ; $7405
 	jr z, .notDoubles ; $7408
 	farcall AdvanceDialogueTextCursor ; $740a
-	ld a, $03 ; $740d
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $740f
+	script_speak_restore ACTOR_ACADEMY_WING_INIT1_WALK_75_06 ; $740d
 	ret ; $7412
 .notDoubles:
-	ld a, $03 ; $7413
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $7415
+	script_speak_restore ACTOR_ACADEMY_WING_INIT1_WALK_75_06 ; $7413
 	farcall AdvanceDialogueTextCursor ; $7418
 	ret ; $741b
 ActorScript_10_0:
@@ -136,8 +134,7 @@ AcademyMainBldgNpc03_10:
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1 ; $7603
 	ret ; $7608
 .eq03:
-	ld a, $03 ; $7609
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $760b
+	script_speak_restore ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1 ; $7609
 	farcall RunDialogueYesNoPrompt ; $760e
 	farcall ScriptCloseDialogueWindow ; $7611
 	script_wait_frames $05 ; $7614

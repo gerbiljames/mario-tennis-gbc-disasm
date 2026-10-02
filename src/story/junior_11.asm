@@ -138,8 +138,7 @@ JuniorClassCourtDoublesNpc06_11:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $55f6
 	jr nz, .speak ; $55f9
 	farcall AdvanceDialogueTextCursor ; $55fb
-	ld a, $06 ; $55fe
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5600
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT ; $55fe
 	farcall RunDialogueYesNoPrompt ; $5603
 	farcall ScriptCloseDialogueWindow ; $5606
 	script_wait_frames $05 ; $5609
@@ -184,8 +183,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5674
 	jp nz, JuniorClassCourtDoublesNpc09_11.loop ; $5677
 	script_set_text Text_32_131 ; $567a
-	ld a, $0a ; $5680
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5682
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5680
 	farcall RunDialogueYesNoPrompt ; $5685
 	farcall ScriptCloseDialogueWindow ; $5688
 	script_wait_frames $05 ; $568b
@@ -193,8 +191,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $5693
 	farcall AdvanceDialogueTextCursor ; $5695
 	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $5698
-	ld a, $0a ; $56a0
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $56a2
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $56a0
 	farcall RunDialogueYesNoPrompt ; $56a5
 	farcall ScriptCloseDialogueWindow ; $56a8
 	script_wait_frames $05 ; $56ab
@@ -321,8 +318,7 @@ JuniorClassCourtDoublesNpcScriptsC_11:
 	db $ff
 JuniorClassCourtDoublesCNpc07_11:
 	script_set_text Text_32_186 ; $5946
-	ld a, $07 ; $594c
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $594e
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $594c
 	farcall RunDialogueYesNoPrompt ; $5951
 	farcall ScriptCloseDialogueWindow ; $5954
 	script_wait_frames $05 ; $5957
@@ -334,8 +330,7 @@ JuniorClassCourtDoublesCNpc07_11:
 	ret ; $596a
 JuniorClassCourtDoublesDNpc07_11:
 	script_set_text Text_33_24 ; $596b
-	ld a, $07 ; $5971
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5973
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $5971
 	farcall RunDialogueYesNoPrompt ; $5976
 	farcall ScriptCloseDialogueWindow ; $5979
 	script_wait_frames $05 ; $597c
@@ -370,8 +365,7 @@ JuniorClassCourtDoublesDNpc0A_11:
 	ret ; $59f8
 .setText:
 	script_set_text Text_33_30 ; $59f9
-	ld a, $0a ; $59ff
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5a01
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $59ff
 	farcall RunDialogueYesNoPrompt ; $5a04
 	farcall ScriptCloseDialogueWindow ; $5a07
 	script_wait_frames $05 ; $5a0a

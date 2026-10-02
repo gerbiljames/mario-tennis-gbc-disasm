@@ -1,24 +1,21 @@
 VolleyMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_BRIAN, ACTOR_PARTNER ; $688f
 	script_set_text Text_6e_64 ; $6897
-	ld a, $11 ; $689d
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $689f
+	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $689d
 	farcall RunDialogueYesNoPrompt ; $68a2
 	farcall ScriptCloseDialogueWindow ; $68a5
 	script_wait_frames $05 ; $68a8
 	and a ; $68af
 	jp nz, .done ; $68b0
 	farcall AdvanceDialogueTextCursor ; $68b3
-	ld a, $11 ; $68b6
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $68b8
+	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $68b6
 	farcall RunDialogueYesNoPrompt ; $68bb
 	farcall ScriptCloseDialogueWindow ; $68be
 	script_wait_frames $05 ; $68c1
 	and a ; $68c8
 	jp nz, .done ; $68c9
 	farcall AdvanceDialogueTextCursor ; $68cc
-	ld a, $11 ; $68cf
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $68d1
+	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $68cf
 	farcall RunDialogueYesNoPrompt ; $68d4
 	farcall ScriptCloseDialogueWindow ; $68d7
 	script_wait_frames $05 ; $68da
@@ -26,8 +23,7 @@ VolleyMatchChallengeScene:
 	jp z, .accepted ; $68e2
 .prompt:
 	script_set_text Text_6e_69 ; $68e5
-	ld a, $11 ; $68eb
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $68ed
+	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $68eb
 	farcall RunDialogueYesNoPrompt ; $68f0
 	farcall ScriptCloseDialogueWindow ; $68f3
 	script_wait_frames $05 ; $68f6
@@ -58,8 +54,7 @@ VolleyMatchChallengeScene:
 SmashMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_BRIAN, ACTOR_PARTNER ; $6963
 	script_set_text Text_6e_85 ; $696b
-	ld a, $11 ; $6971
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6973
+	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $6971
 	farcall RunDialogueYesNoPrompt ; $6976
 	farcall ScriptCloseDialogueWindow ; $6979
 	script_wait_frames $05 ; $697c
@@ -84,8 +79,7 @@ SmashMatchChallengeScene:
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $69e4
 	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $69e9
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $69f0
-	ld a, $11 ; $69f5
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $69f7
+	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $69f5
 	farcall RunDialogueYesNoPrompt ; $69fa
 	farcall ScriptCloseDialogueWindow ; $69fd
 	script_wait_frames $05 ; $6a00
@@ -105,8 +99,7 @@ SmashMatchChallengeScene:
 DropShotMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_BRIAN, ACTOR_PARTNER ; $6a2d
 	script_set_text Text_6e_98 ; $6a35
-	ld a, $11 ; $6a3b
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6a3d
+	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $6a3b
 	farcall RunDialogueYesNoPrompt ; $6a40
 	farcall ScriptCloseDialogueWindow ; $6a43
 	script_wait_frames $05 ; $6a46
@@ -131,8 +124,7 @@ DropShotMatchChallengeScene:
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $6aae
 	script_set_anim ACTOR_TRAINING_COURT_BRIAN, ANIM_NOD ; $6ab3
 	script_wait_idle ACTOR_TRAINING_COURT_BRIAN ; $6aba
-	ld a, $11 ; $6abf
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6ac1
+	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $6abf
 	farcall RunDialogueYesNoPrompt ; $6ac4
 	farcall ScriptCloseDialogueWindow ; $6ac7
 	script_wait_frames $05 ; $6aca
@@ -202,16 +194,14 @@ SpeakStrokeChallengerDeclineLine:
 StrokeMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_ALLIE, ACTOR_PARTNER ; $6b94
 	script_set_text Text_6e_111 ; $6b9c
-	ld a, $0c ; $6ba2
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6ba4
+	script_speak_restore ACTOR_TRAINING_COURT_ALLIE ; $6ba2
 	farcall RunDialogueYesNoPrompt ; $6ba7
 	farcall ScriptCloseDialogueWindow ; $6baa
 	script_wait_frames $05 ; $6bad
 	and a ; $6bb4
 	jp nz, SpeakStrokeChallengerDeclineLine ; $6bb5
 	farcall AdvanceDialogueTextCursor ; $6bb8
-	ld a, $0c ; $6bbb
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6bbd
+	script_speak_restore ACTOR_TRAINING_COURT_ALLIE ; $6bbb
 	farcall RunDialogueYesNoPrompt ; $6bc0
 	farcall ScriptCloseDialogueWindow ; $6bc3
 	script_wait_frames $05 ; $6bc6
@@ -241,16 +231,14 @@ StrokeMatchChallengeScene:
 LobMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_ALLIE, ACTOR_PARTNER ; $6c3c
 	script_set_text Text_6e_133 ; $6c44
-	ld a, $0c ; $6c4a
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c4c
+	script_speak_restore ACTOR_TRAINING_COURT_ALLIE ; $6c4a
 	farcall RunDialogueYesNoPrompt ; $6c4f
 	farcall ScriptCloseDialogueWindow ; $6c52
 	script_wait_frames $05 ; $6c55
 	and a ; $6c5c
 	jp nz, SpeakStrokeChallengerDeclineLine ; $6c5d
 	farcall AdvanceDialogueTextCursor ; $6c60
-	ld a, $0c ; $6c63
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c65
+	script_speak_restore ACTOR_TRAINING_COURT_ALLIE ; $6c63
 	farcall RunDialogueYesNoPrompt ; $6c68
 	farcall ScriptCloseDialogueWindow ; $6c6b
 	script_wait_frames $05 ; $6c6e
@@ -280,8 +268,7 @@ LobMatchChallengeScene:
 ReturnMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_ALLIE, ACTOR_PARTNER ; $6ce4
 	script_set_text Text_6e_149 ; $6cec
-	ld a, $0c ; $6cf2
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6cf4
+	script_speak_restore ACTOR_TRAINING_COURT_ALLIE ; $6cf2
 	farcall RunDialogueYesNoPrompt ; $6cf7
 	farcall ScriptCloseDialogueWindow ; $6cfa
 	script_wait_frames $05 ; $6cfd
@@ -289,8 +276,7 @@ ReturnMatchChallengeScene:
 	jp nz, SpeakStrokeChallengerDeclineLine ; $6d05
 	farcall AdvanceDialogueTextCursor ; $6d08
 	script_speak ACTOR_TRAINING_COURT_ALLIE ; $6d0b
-	ld a, $0c ; $6d10
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d12
+	script_speak_restore ACTOR_TRAINING_COURT_ALLIE ; $6d10
 	farcall RunDialogueYesNoPrompt ; $6d15
 	farcall ScriptCloseDialogueWindow ; $6d18
 	script_wait_frames $05 ; $6d1b
@@ -332,8 +318,7 @@ ReturnCoachReturnLessonScene:
 	farcall AdvanceDialogueTextCursor ; $6dbf
 .face:
 	script_face_toward ACTOR_TRAINING_COURT_BOB_2, ACTOR_PARTNER ; $6dc2
-	ld a, $0d ; $6dca
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6dcc
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6dca
 	script_set_text Text_37_198 ; $6dcf
 	farcall RunDialogueYesNoPrompt ; $6dd5
 	farcall ScriptCloseDialogueWindow ; $6dd8
@@ -341,8 +326,7 @@ ReturnCoachReturnLessonScene:
 	and a ; $6de2
 	jp nz, ReturnMatchChallengeScene.loop ; $6de3
 	farcall AdvanceDialogueTextCursor ; $6de6
-	ld a, $0d ; $6de9
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6deb
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6de9
 	farcall RunDialogueYesNoPrompt ; $6dee
 	farcall ScriptCloseDialogueWindow ; $6df1
 	script_wait_frames $05 ; $6df4
@@ -373,16 +357,14 @@ ReturnCoachReturnLessonScene:
 ReturnCoachLobLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_BOB_2, ACTOR_PARTNER ; $6e4b
 	script_set_text Text_37_227 ; $6e53
-	ld a, $0d ; $6e59
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6e5b
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6e59
 	farcall RunDialogueYesNoPrompt ; $6e5e
 	farcall ScriptCloseDialogueWindow ; $6e61
 	script_wait_frames $05 ; $6e64
 	and a ; $6e6b
 	jp nz, ReturnMatchChallengeScene.loop ; $6e6c
 	farcall AdvanceDialogueTextCursor ; $6e6f
-	ld a, $0d ; $6e72
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6e74
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6e72
 	farcall RunDialogueYesNoPrompt ; $6e77
 	farcall ScriptCloseDialogueWindow ; $6e7a
 	script_wait_frames $05 ; $6e7d
@@ -412,16 +394,14 @@ ReturnCoachLobLessonScene:
 ReturnCoachPassingShotLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_BOB_2, ACTOR_PARTNER ; $6ece
 	script_set_text Text_37_249 ; $6ed6
-	ld a, $0d ; $6edc
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6ede
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6edc
 	farcall RunDialogueYesNoPrompt ; $6ee1
 	farcall ScriptCloseDialogueWindow ; $6ee4
 	script_wait_frames $05 ; $6ee7
 	and a ; $6eee
 	jp nz, ReturnMatchChallengeScene.loop ; $6eef
 	farcall AdvanceDialogueTextCursor ; $6ef2
-	ld a, $0d ; $6ef5
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6ef7
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6ef5
 	farcall RunDialogueYesNoPrompt ; $6efa
 	farcall ScriptCloseDialogueWindow ; $6efd
 	script_wait_frames $05 ; $6f00

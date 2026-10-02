@@ -205,16 +205,14 @@ MovePlayerToLessonCourtSpot:
 ServiceAceMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_BOB_1, ACTOR_PARTNER ; $63e1
 	script_set_text Text_6e_20 ; $63e9
-	ld a, $06 ; $63ef
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $63f1
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $63ef
 	farcall RunDialogueYesNoPrompt ; $63f4
 	farcall ScriptCloseDialogueWindow ; $63f7
 	script_wait_frames $05 ; $63fa
 	and a ; $6401
 	jp nz, .loop ; $6402
 	farcall AdvanceDialogueTextCursor ; $6405
-	ld a, $06 ; $6408
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $640a
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $6408
 	farcall RunDialogueYesNoPrompt ; $640d
 	farcall ScriptCloseDialogueWindow ; $6410
 	script_wait_frames $05 ; $6413
@@ -255,16 +253,14 @@ ServiceAceMatchChallengeScene:
 CenterLineServeMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_BOB_1, ACTOR_PARTNER ; $64a8
 	script_set_text Text_6e_38 ; $64b0
-	ld a, $06 ; $64b6
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $64b8
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $64b6
 	farcall RunDialogueYesNoPrompt ; $64bb
 	farcall ScriptCloseDialogueWindow ; $64be
 	script_wait_frames $05 ; $64c1
 	and a ; $64c8
 	jp nz, ServiceAceMatchChallengeScene.loop ; $64c9
 	farcall AdvanceDialogueTextCursor ; $64cc
-	ld a, $06 ; $64cf
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $64d1
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $64cf
 	farcall RunDialogueYesNoPrompt ; $64d4
 	farcall ScriptCloseDialogueWindow ; $64d7
 	script_wait_frames $05 ; $64da
@@ -307,16 +303,14 @@ CenterLineServeMatchChallengeScene:
 AcademyRulesServeMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_BOB_1, ACTOR_PARTNER ; $6586
 	script_set_text Text_6e_52 ; $658e
-	ld a, $06 ; $6594
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6596
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $6594
 	farcall RunDialogueYesNoPrompt ; $6599
 	farcall ScriptCloseDialogueWindow ; $659c
 	script_wait_frames $05 ; $659f
 	and a ; $65a6
 	jp nz, ServiceAceMatchChallengeScene.loop ; $65a7
 	farcall AdvanceDialogueTextCursor ; $65aa
-	ld a, $06 ; $65ad
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $65af
+	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $65ad
 	farcall RunDialogueYesNoPrompt ; $65b2
 	farcall ScriptCloseDialogueWindow ; $65b5
 	script_wait_frames $05 ; $65b8
@@ -408,16 +402,14 @@ ServeCoachJuniorLessonScene:
 .setText:
 	script_set_text Text_37_22 ; $670a
 .scriptShowSpeakerDialogueRestoreBG:
-	ld a, $07 ; $6710
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6712
+	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $6710
 	farcall RunDialogueYesNoPrompt ; $6715
 	farcall ScriptCloseDialogueWindow ; $6718
 	script_wait_frames $05 ; $671b
 	and a ; $6722
 	jr nz, SpeakServeCoachDeclineLine ; $6723
 	farcall AdvanceDialogueTextCursor ; $6725
-	ld a, $07 ; $6728
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $672a
+	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $6728
 	farcall RunDialogueYesNoPrompt ; $672d
 	farcall ScriptCloseDialogueWindow ; $6730
 	script_wait_frames $05 ; $6733
@@ -446,16 +438,14 @@ ServeCoachJuniorLessonScene:
 ServeCoachSeniorLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_CURT, ACTOR_PARTNER ; $677e
 	script_set_text Text_37_36 ; $6786
-	ld a, $07 ; $678c
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $678e
+	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $678c
 	farcall RunDialogueYesNoPrompt ; $6791
 	farcall ScriptCloseDialogueWindow ; $6794
 	script_wait_frames $05 ; $6797
 	and a ; $679e
 	jp nz, SpeakServeCoachDeclineLine ; $679f
 	farcall AdvanceDialogueTextCursor ; $67a2
-	ld a, $07 ; $67a5
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $67a7
+	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $67a5
 	farcall RunDialogueYesNoPrompt ; $67aa
 	farcall ScriptCloseDialogueWindow ; $67ad
 	script_wait_frames $05 ; $67b0
@@ -484,16 +474,14 @@ ServeCoachSeniorLessonScene:
 ServeCoachVarsityLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_CURT, ACTOR_PARTNER ; $67fc
 	script_set_text Text_37_51 ; $6804
-	ld a, $07 ; $680a
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $680c
+	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $680a
 	farcall RunDialogueYesNoPrompt ; $680f
 	farcall ScriptCloseDialogueWindow ; $6812
 	script_wait_frames $05 ; $6815
 	and a ; $681c
 	jp nz, SpeakServeCoachDeclineLine ; $681d
 	farcall AdvanceDialogueTextCursor ; $6820
-	ld a, $07 ; $6823
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6825
+	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $6823
 	farcall RunDialogueYesNoPrompt ; $6828
 	farcall ScriptCloseDialogueWindow ; $682b
 	script_wait_frames $05 ; $682e

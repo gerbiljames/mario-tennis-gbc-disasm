@@ -962,6 +962,12 @@ MACRO script_speak
 	ld a, \1
 	farcall ScriptShowSpeakerDialogue
 ENDM
+; script_speak, then restores the background the speaker's window covered.
+; Usage: script_speak_restore actor
+MACRO script_speak_restore
+	ld a, \1
+	farcall ScriptShowSpeakerDialogueRestoreBG
+ENDM
 ; Usage: script_wait_idle actor
 MACRO script_wait_idle
 	ld a, \1

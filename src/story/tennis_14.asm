@@ -74,8 +74,7 @@ TennisMachineRoomNpc04_14:
 	jr z, .eq01 ; $40ca
 	jr .speak ; $40cc
 .eq01:
-	ld a, $04 ; $40ce
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $40d0
+	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_06_2 ; $40ce
 	farcall RunDialogueYesNoPrompt ; $40d3
 	farcall ScriptCloseDialogueWindow ; $40d6
 	script_wait_frames $05 ; $40d9
@@ -377,8 +376,7 @@ TennisMachineRoomNpc05_14:
 .prompt:
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4467
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $446e
-	ld a, $05 ; $4475
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4477
+	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4475
 	farcall RunDialogueYesNoPrompt ; $447a
 	farcall ScriptCloseDialogueWindow ; $447d
 	script_wait_frames $05 ; $4480
@@ -398,8 +396,7 @@ TennisMachineRoomNpc05_14:
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $44a9
 	jr z, .done ; $44ac
 	script_set_text Text_6e_222 ; $44ae
-	ld a, $05 ; $44b4
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $44b6
+	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $44b4
 	farcall RunDialogueYesNoPrompt ; $44b9
 	farcall ScriptCloseDialogueWindow ; $44bc
 	script_wait_frames $05 ; $44bf

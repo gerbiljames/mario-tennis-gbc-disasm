@@ -446,8 +446,7 @@ DormRoomNpc03_13:
 .altGreeting:
 	script_set_text Text_31_255 ; $52c5
 .prompt:
-	ld a, $03 ; $52cb
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $52cd
+	script_speak_restore ACTOR_DORM_ROOM_KATE ; $52cb
 	farcall RunDialogueYesNoPrompt ; $52d0
 	farcall ScriptCloseDialogueWindow ; $52d3
 	script_wait_frames $05 ; $52d6
@@ -531,8 +530,7 @@ DormRoomNpc03_13:
 	call WaitJingleEnd ; $53fa
 	sound BGM_DORM_ROOM ; $53fd
 	script_wait_frames $0a ; $53ff
-	ld a, $03 ; $5406
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5408
+	script_speak_restore ACTOR_DORM_ROOM_KATE ; $5406
 	farcall RunDialogueYesNoPrompt ; $540b
 	farcall ScriptCloseDialogueWindow ; $540e
 	script_wait_frames $05 ; $5411
@@ -559,8 +557,7 @@ DormRoomNpc03_13:
 	script_move_target ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $5473
 	script_wait_move ACTOR_DORM_ROOM_KATE ; $547e
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ROOM_KATE ; $5483
-	ld a, $03 ; $548b
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $548d
+	script_speak_restore ACTOR_DORM_ROOM_KATE ; $548b
 	farcall RunDialogueYesNoPrompt ; $5490
 	farcall ScriptCloseDialogueWindow ; $5493
 	script_wait_frames $05 ; $5496
@@ -583,8 +580,7 @@ DormRoomNpc03_13:
 	script_speak ACTOR_DORM_ROOM_KATE ; $54df
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $54e4
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $54eb
-	ld a, $03 ; $54f0
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $54f2
+	script_speak_restore ACTOR_DORM_ROOM_KATE ; $54f0
 	farcall RunDialogueYesNoPrompt ; $54f5
 	farcall ScriptCloseDialogueWindow ; $54f8
 	script_wait_frames $05 ; $54fb
@@ -684,8 +680,7 @@ DormRoomNpc03_13:
 	farcall InitDialogueTextCursor ; $561a
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_SHAKE ; $561d
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $5624
-	ld a, $03 ; $5629
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $562b
+	script_speak_restore ACTOR_DORM_ROOM_KATE ; $5629
 	farcall RunDialogueYesNoPrompt ; $562e
 	farcall ScriptCloseDialogueWindow ; $5631
 	script_wait_frames $05 ; $5634
@@ -733,8 +728,7 @@ DormRoomNpc03_13:
 	inc h ; $569b
 .finalSpeak:
 	farcall InitDialogueTextCursor ; $569c
-	ld a, $03 ; $569f
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $56a1
+	script_speak_restore ACTOR_DORM_ROOM_KATE ; $569f
 	farcall RunDialogueYesNoPrompt ; $56a4
 	farcall ScriptCloseDialogueWindow ; $56a7
 	script_wait_frames $05 ; $56aa

@@ -279,8 +279,7 @@ RunRepairCounterDialogue:
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e23
 .done:
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e26
-	ld a, $0e ; $4e2e
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4e30
+	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e2e
 	farcall RunDialogueYesNoPrompt ; $4e33
 	farcall ScriptCloseDialogueWindow ; $4e36
 	script_wait_frames $05 ; $4e39
@@ -311,8 +310,7 @@ RepairCounterServiceMenu:
 	script_set_text Text_6e_232 ; $4e82
 	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e88
 	script_set_text Text_6e_242 ; $4e8d
-	ld a, $0e ; $4e93
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $4e95
+	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e93
 	farcall RunDialogueYesNoPrompt ; $4e98
 	farcall ScriptCloseDialogueWindow ; $4e9b
 	script_wait_frames $05 ; $4e9e

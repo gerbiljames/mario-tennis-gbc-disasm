@@ -207,8 +207,7 @@ CourtyardNpc03_13:
 	jr z, .notDoubles ; $5eb3
 	script_set_text Text_30_529 ; $5eb5
 .notDoubles:
-	ld a, $03 ; $5ebb
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5ebd
+	script_speak_restore ACTOR_COURTYARD_KEVIN ; $5ebb
 	farcall RunDialogueYesNoPrompt ; $5ec0
 	farcall ScriptCloseDialogueWindow ; $5ec3
 	script_wait_frames $05 ; $5ec6
@@ -232,8 +231,7 @@ VarsityCourtANpc05_13:
 	script_null_script ACTOR_VARSITY_COURT_A_FAY ; $5f15
 	script_set_anim ACTOR_VARSITY_COURT_A_FAY, ANIM_WALK ; $5f1a
 	script_set_text Text_30_539 ; $5f21
-	ld a, $05 ; $5f27
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f29
+	script_speak_restore ACTOR_VARSITY_COURT_A_FAY ; $5f27
 	farcall RunDialogueYesNoPrompt ; $5f2c
 	farcall ScriptCloseDialogueWindow ; $5f2f
 	script_wait_frames $05 ; $5f32
@@ -266,8 +264,7 @@ VarsityCourtNpcScriptsA_13:
 	db $ff
 VarsityCourtBNpc09_13:
 	script_set_text Text_31_3 ; $5fa1
-	ld a, $09 ; $5fa7
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5fa9
+	script_speak_restore ACTOR_VARSITY_COURT_B_MARK ; $5fa7
 	farcall RunDialogueYesNoPrompt ; $5fac
 	farcall ScriptCloseDialogueWindow ; $5faf
 	script_wait_frames $05 ; $5fb2
@@ -281,8 +278,7 @@ VarsityCourtBNpc05_13:
 	script_null_script ACTOR_VARSITY_COURT_B_FAY ; $5fc5
 	script_set_anim ACTOR_VARSITY_COURT_B_FAY, ANIM_WALK ; $5fca
 	script_set_text Text_31_7 ; $5fd1
-	ld a, $05 ; $5fd7
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5fd9
+	script_speak_restore ACTOR_VARSITY_COURT_B_FAY ; $5fd7
 	farcall RunDialogueYesNoPrompt ; $5fdc
 	farcall ScriptCloseDialogueWindow ; $5fdf
 	script_wait_frames $05 ; $5fe2

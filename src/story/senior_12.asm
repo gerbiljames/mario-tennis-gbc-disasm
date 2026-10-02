@@ -123,8 +123,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 	test_flag FLAG_DOUBLES ; $5606
 	jp nz, SeniorCourtNpc03FaceUpFlag0840_12.checkFlag ; $5609
 	script_set_text Text_34_4 ; $560c
-	ld a, $03 ; $5612
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5614
+	script_speak_restore ACTOR_SENIOR_COURT_EMILY ; $5612
 	farcall RunDialogueYesNoPrompt ; $5617
 	farcall ScriptCloseDialogueWindow ; $561a
 	script_wait_frames $05 ; $561d
@@ -267,8 +266,7 @@ SeniorCourtNpc05_12:
 	script_speak ACTOR_SENIOR_COURT_ALLIE ; $5871
 	ret ; $5876
 .eq04:
-	ld a, $05 ; $5877
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5879
+	script_speak_restore ACTOR_SENIOR_COURT_A_ALLIE ; $5877
 	farcall RunDialogueYesNoPrompt ; $587c
 	farcall ScriptCloseDialogueWindow ; $587f
 	script_wait_frames $05 ; $5882
@@ -309,8 +307,7 @@ SeniorCourtNpc06_12:
 	script_speak ACTOR_ROLE_SENIOR_COURT_JOY ; $58cb
 	ret ; $58d0
 .eq06:
-	ld a, $06 ; $58d1
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $58d3
+	script_speak_restore ACTOR_SENIOR_COURT_B_JOY ; $58d1
 	farcall RunDialogueYesNoPrompt ; $58d6
 	farcall ScriptCloseDialogueWindow ; $58d9
 	script_wait_frames $05 ; $58dc
@@ -386,8 +383,7 @@ SeniorCourtNpc08_12:
 	script_speak ACTOR_SENIOR_COURT_BETH ; $5973
 	ret ; $5978
 .speak:
-	ld a, $08 ; $5979
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $597b
+	script_speak_restore ACTOR_SENIOR_COURT_A_BETH ; $5979
 	farcall RunDialogueYesNoPrompt ; $597e
 	farcall ScriptCloseDialogueWindow ; $5981
 	script_wait_frames $05 ; $5984
@@ -399,8 +395,7 @@ SeniorCourtNpc08_12:
 	farcall AdvanceDialogueTextCursor ; $5994
 	script_set_anim ACTOR_SENIOR_COURT_BETH, ANIM_BOUNCE ; $5997
 	script_wait_idle ACTOR_SENIOR_COURT_BETH ; $599e
-	ld a, $08 ; $59a3
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $59a5
+	script_speak_restore ACTOR_SENIOR_COURT_A_BETH ; $59a3
 	farcall RunDialogueYesNoPrompt ; $59a8
 	farcall ScriptCloseDialogueWindow ; $59ab
 	script_wait_frames $05 ; $59ae
@@ -493,8 +488,7 @@ SeniorCourtNpc0A_12:
 	script_speak ACTOR_ROLE_SENIOR_COURT_BOB ; $5aa4
 	ret ; $5aa9
 .altText:
-	ld a, $0a ; $5aaa
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5aac
+	script_speak_restore ACTOR_SENIOR_COURT_B_BOB ; $5aaa
 	farcall RunDialogueYesNoPrompt ; $5aaf
 	farcall ScriptCloseDialogueWindow ; $5ab2
 	script_wait_frames $05 ; $5ab5
@@ -504,8 +498,7 @@ SeniorCourtNpc0A_12:
 	ret ; $5ac4
 .speak:
 	farcall AdvanceDialogueTextCursor ; $5ac5
-	ld a, $0a ; $5ac8
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $5aca
+	script_speak_restore ACTOR_SENIOR_COURT_B_BOB ; $5ac8
 	farcall RunDialogueYesNoPrompt ; $5acd
 	farcall ScriptCloseDialogueWindow ; $5ad0
 	script_wait_frames $05 ; $5ad3

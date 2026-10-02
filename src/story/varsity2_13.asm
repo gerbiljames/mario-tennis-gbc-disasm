@@ -7,8 +7,7 @@ VarsityCourtANpc03FaceUp_13:
 	script_face ACTOR_PLAYER, FACE_UP ; $6c39
 VarsityCourtANpc03_13:
 	script_set_text Text_30_544 ; $6c40
-	ld a, $03 ; $6c46
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c48
+	script_speak_restore ACTOR_VARSITY_COURT_A_KEVIN ; $6c46
 	farcall RunDialogueYesNoPrompt ; $6c4b
 	farcall ScriptCloseDialogueWindow ; $6c4e
 	script_wait_frames $05 ; $6c51
@@ -43,8 +42,7 @@ VarsityCourtANpc03_13:
 	script_wait_frames $0f ; $6d0f
 	script_set_anim ACTOR_VARSITY_COURT_A_KEVIN, ANIM_BOUNCE ; $6d16
 	script_wait_idle ACTOR_VARSITY_COURT_A_KEVIN ; $6d1d
-	ld a, $03 ; $6d22
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d24
+	script_speak_restore ACTOR_VARSITY_COURT_A_KEVIN ; $6d22
 	farcall RunDialogueYesNoPrompt ; $6d27
 	farcall ScriptCloseDialogueWindow ; $6d2a
 	script_wait_frames $05 ; $6d2d
@@ -87,8 +85,7 @@ VarsityCourtANpc03_13:
 	ret ; $6dfa
 .speak:
 	farcall AdvanceDialogueTextCursor ; $6dfb
-	ld a, $03 ; $6dfe
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6e00
+	script_speak_restore ACTOR_VARSITY_COURT_A_KEVIN ; $6dfe
 	farcall RunDialogueYesNoPrompt ; $6e03
 	farcall ScriptCloseDialogueWindow ; $6e06
 	script_wait_frames $05 ; $6e09
@@ -110,8 +107,7 @@ VarsityCourtBNpc03FaceUp_13:
 VarsityCourtBNpc03_13:
 	script_null_script ACTOR_PARTNER ; $6e4d
 	script_set_text Text_31_12 ; $6e52
-	ld a, $03 ; $6e58
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6e5a
+	script_speak_restore ACTOR_VARSITY_COURT_B_KEVIN ; $6e58
 	farcall RunDialogueYesNoPrompt ; $6e5d
 	farcall ScriptCloseDialogueWindow ; $6e60
 	script_wait_frames $05 ; $6e63
@@ -158,8 +154,7 @@ VarsityCourtBNpc03_13:
 	script_wait_frames $0f ; $6f81
 	script_set_anim ACTOR_VARSITY_COURT_B_KEVIN, ANIM_BOUNCE ; $6f88
 	script_wait_idle ACTOR_VARSITY_COURT_B_KEVIN ; $6f8f
-	ld a, $03 ; $6f94
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6f96
+	script_speak_restore ACTOR_VARSITY_COURT_B_KEVIN ; $6f94
 	farcall RunDialogueYesNoPrompt ; $6f99
 	farcall ScriptCloseDialogueWindow ; $6f9c
 	script_wait_frames $05 ; $6f9f
@@ -209,8 +204,7 @@ VarsityCourtBNpc03_13:
 	ret ; $708f
 .speak:
 	farcall AdvanceDialogueTextCursor ; $7090
-	ld a, $03 ; $7093
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $7095
+	script_speak_restore ACTOR_VARSITY_COURT_B_KEVIN ; $7093
 	farcall RunDialogueYesNoPrompt ; $7098
 	farcall ScriptCloseDialogueWindow ; $709b
 	script_wait_frames $05 ; $709e

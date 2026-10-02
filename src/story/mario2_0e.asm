@@ -105,8 +105,7 @@ PromptExhibitionMatch:
 	ld h, [hl] ; $660f
 	ld l, a ; $6610
 	farcall InitDialogueTextCursor ; $6611
-	ld a, $08 ; $6614
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6616
+	script_speak_restore ACTOR_MARIO_WORLD_PEACH ; $6614
 	farcall RunDialogueYesNoPrompt ; $6619
 	farcall ScriptCloseDialogueWindow ; $661c
 	script_wait_frames $05 ; $661f

@@ -75,8 +75,7 @@ JuniorClassCourtSinglesNpc05_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $69a3
 	ret ; $69a8
 .speak:
-	ld a, $05 ; $69a9
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $69ab
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $69a9
 	farcall RunDialogueYesNoPrompt ; $69ae
 	farcall ScriptCloseDialogueWindow ; $69b1
 	script_wait_frames $05 ; $69b4
@@ -94,8 +93,7 @@ JuniorClassCourtSinglesNpc06_11:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $69d5
 	jr nz, .speak ; $69d8
 	farcall AdvanceDialogueTextCursor ; $69da
-	ld a, $06 ; $69dd
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $69df
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $69dd
 	farcall RunDialogueYesNoPrompt ; $69e2
 	farcall ScriptCloseDialogueWindow ; $69e5
 	script_wait_frames $05 ; $69e8
@@ -121,8 +119,7 @@ JuniorClassCourtSinglesNpc08_11:
 	ret ; $6a1f
 .altText:
 	script_set_text Text_32_77 ; $6a20
-	ld a, $08 ; $6a26
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6a28
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a26
 	farcall RunDialogueYesNoPrompt ; $6a2b
 	farcall ScriptCloseDialogueWindow ; $6a2e
 	script_wait_frames $05 ; $6a31
@@ -133,8 +130,7 @@ JuniorClassCourtSinglesNpc08_11:
 	ret ; $6a40
 .done:
 	farcall AdvanceDialogueTextCursor ; $6a41
-	ld a, $08 ; $6a44
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6a46
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a44
 	farcall RunDialogueYesNoPrompt ; $6a49
 	farcall ScriptCloseDialogueWindow ; $6a4c
 	script_wait_frames $05 ; $6a4f
@@ -191,8 +187,7 @@ JuniorClassCourtSinglesNpc0B_11:
 	ret ; $6b2f
 .setText:
 	script_set_text Text_32_83 ; $6b30
-	ld a, $0b ; $6b36
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6b38
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY ; $6b36
 	farcall RunDialogueYesNoPrompt ; $6b3b
 	farcall ScriptCloseDialogueWindow ; $6b3e
 	script_wait_frames $05 ; $6b41
@@ -267,8 +262,7 @@ JuniorClassCourtSinglesDNpc0A_11:
 	ret ; $6cb9
 .altText:
 	script_set_text Text_33_16 ; $6cba
-	ld a, $0a ; $6cc0
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6cc2
+	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cc0
 	farcall RunDialogueYesNoPrompt ; $6cc5
 	farcall ScriptCloseDialogueWindow ; $6cc8
 	script_wait_frames $05 ; $6ccb

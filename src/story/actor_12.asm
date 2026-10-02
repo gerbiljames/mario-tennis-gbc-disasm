@@ -49,8 +49,7 @@ SeniorSinglesMatchConfirm:
 	jr z, .prompt ; $6af1
 	farcall AdvanceDialogueTextCursor ; $6af3
 .prompt:
-	ld a, $03 ; $6af6
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6af8
+	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6af6
 	farcall RunDialogueYesNoPrompt ; $6afb
 	farcall ScriptCloseDialogueWindow ; $6afe
 	script_wait_frames $05 ; $6b01
@@ -79,8 +78,7 @@ SeniorSinglesMatchConfirm:
 	ret ; $6b56
 .done:
 	script_set_text Text_34_71 ; $6b57
-	ld a, $03 ; $6b5d
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6b5f
+	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6b5d
 	farcall RunDialogueYesNoPrompt ; $6b62
 	farcall ScriptCloseDialogueWindow ; $6b65
 	script_wait_frames $05 ; $6b68
@@ -94,8 +92,7 @@ SeniorDoublesMatchConfirm:
 	jr z, .prompt ; $6b7f
 	farcall AdvanceDialogueTextCursor ; $6b81
 .prompt:
-	ld a, $03 ; $6b84
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6b86
+	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6b84
 	farcall RunDialogueYesNoPrompt ; $6b89
 	farcall ScriptCloseDialogueWindow ; $6b8c
 	script_wait_frames $05 ; $6b8f
@@ -124,8 +121,7 @@ SeniorDoublesMatchConfirm:
 	ret ; $6be3
 .done:
 	script_set_text Text_34_119 ; $6be4
-	ld a, $03 ; $6bea
-	farcall ScriptShowSpeakerDialogueRestoreBG ; $6bec
+	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6bea
 	farcall RunDialogueYesNoPrompt ; $6bef
 	farcall ScriptCloseDialogueWindow ; $6bf2
 	script_wait_frames $05 ; $6bf5
