@@ -152,6 +152,12 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-02 — docs pass.** Every subsystem doc, the README and this
+  page re-checked against the tree: names, addresses and counts current,
+  generator-era wording gone. Two corrections came out of it: the game's
+  fades go through white, not black (`docs/bugs.md`), and the dialogue
+  window's width and height names were swapped. The three
+  `GameProgressScreenTiles` regions are graphics, not palettes.
 * **2026-10-01 — unreachable by data.** `tools/reach.py` finds calls and
   jumps decided by a variable that no visible store can make pass. Each is
   reviewed in `DATA_FLAGS`, and `make check` fails on any it has not seen.
