@@ -26,15 +26,16 @@ states plus 360 long sessions from the main menu's nine items, and
 `tools/coverage.py` listed the routines no run entered. Of those, 158 also
 had no reference anywhere in the source and could not be reached by falling
 through from the code above them. 90 were renamed `Unused_<bank>_…`: ROM0
-spares (`FarCallIndexed1`-`3`, `FarCopyIndexed`, `AngleFromVector`, …), the
-save-repair block helpers, per-bank map-script helpers no bank calls,
+spares (`Unused_00_FarCallIndexed1`-`3`, `Unused_00_FarCopyIndexed`,
+`Unused_00_AngleFromVector`, …), the save-repair block helpers, per-bank map-script helpers no bank calls,
 menu-cursor variants, and 19 `ret`-only stubs. The other 68 are copies in
 `src/twins` groups: the trajectory helpers in banks `$20`-`$2c`, and the
 menu-cursor and decimal-number copies. Their 19 templates now take their
 label from the bank (`twin_in <file>, <Label>, <bank>`), so each dead copy
 is `Unused_<bank>_…` like any other, with "Nothing calls this copy." above
-its line. No `Unused*` routine
-ran in those 19 million events.
+its line. No routine named `Unused*` ran in those 19 million events; the one
+apparent exception, `Unused_00_CopyTextString`, is the sweep artifact
+described below.
 
 ## Reachability (2026-09-29)
 
@@ -167,7 +168,7 @@ is live; `Unused_15_SetServeChallengerGameFlag`, `_SetNet…` and
 is not. `TestAndSetGridEntryTaken` is live, `Unused_38_TestAndClearGridEntryTaken`
 (95% the same opcodes) is not. The unused member is never the `Test`.
 
-**2. The same helper compiled into several banks.** Seven unused routines
+**2. The same helper compiled into several banks.** Eight unused routines
 are opcode-identical to a live routine in another bank, and their names say
 so: `Unused_0e_ComputeStoryRankTier`, `_0f_`, `_10_`, `_11_`, `_12_` and
 `_14_` are all the 24-instruction `ComputeStoryRankTier_13`, one copy per
@@ -175,11 +176,12 @@ story bank; `UnusedEvalFlagCondition_0a` is
 `EvalFlagCondition` from bank `$04`; `Unused_05_FetchSRAMShortText` is
 `FetchSRAMDialogueText`. This is what a shared include assembled into every
 story bank looks like: each bank got the whole set, and only the copy the
-bank's own scripts call survived as live code. `DrawAsciiDigitChar_1b` is the
-same idea where every copy *is* called.
+bank's own scripts call survived as live code. `Unused_16_DrawAsciiDigitChar`
+and its copies in banks `$17`, `$1b`, `$3b` and `$3e` are the same include
+with no live copy at all.
 
-**3. A ROM0 library with spare parts.** Bank `$00` carries 25 unused routines,
-all small, all siblings of live ones: `Unused_00_ForceFadeOut` is
+**3. A ROM0 library with spare parts.** Bank `$00` carries 59 unused routines,
+mostly small, all siblings of live ones: `Unused_00_ForceFadeOut` is
 `ForceFadeIn` with the other direction constant, `Unused_00_EnableSerialInterrupt`
 / `_EnableVBlankInterrupt` / two `SetInterrupts…` variants are the interrupt
 helpers the game never selects, `Unused_00_SwitchCPUSpeedSingle`,
@@ -199,19 +201,20 @@ the menu that would launch them is unreachable (the retail build never sets
 `hDebugStepMode`, see `docs/screens_and_ui.md`). The developer "Test" map
 (`docs/story_mode.md`) is the part of this tooling that *is* reachable.
 
-**5. Text-engine features nobody typed.** Bank `$05` has 23 unused routines,
+**5. Text-engine features nobody typed.** Bank `$05` has 52 unused routines,
 the text engine's unused API: `Unused_05_RenderInlineHexByte` / `HexWord` /
 `DecimalByte` (printf-style inline renderers, near twins of the live
 `Print*`), `Unused_05_SetTextVar`, the streamed tilemap writers
-(`WriteStringToTilemapStreamed`, `WriteDialogueToTilemapStreamed`) and the
+(`Unused_05_WriteStringToTilemapStreamed`,
+`Unused_05_WriteDialogueToTilemapStreamed`) and the
 whole-plane queue helpers. Same shape as pattern 3, one bank up.
 
 **6. Templates and stubs.** `Unused_10_Test2Npc04`-`0A` are seven identical
 NPC handlers on the "Test 2" debug map (its live NPCs `0B`-`0D` are the same
 template); three lone `ret`s in bank `$11` sit after list terminators
-(`Unused_11_NullScriptA`-`C`); `StubRet` pairs in `$17` and `$1b`; the
-`PushPopNop` and `WramBank3Nop` routines that do nothing but preserve
-registers — script slots that were filled and never wired.
+(`Unused_11_NullScriptA`-`C`); `Unused_17_StubRet`, `Unused_18_StubRet3`
+and the `Unused_1b_StubRet1`/`2` pair; `Unused_39_PushPopNop_1`/`_2` and
+`Unused_38_WramBank3Nop`, routines that do nothing but preserve registers — script slots that were filled and never wired.
 
 **7. Cut or never-finished features.** `UnusedShowExpAwardForN64` is
 opcode-identical to `ShowExpAwardForMinigame`: the EXP award screen has a
@@ -231,18 +234,18 @@ window tiles in bank `$01` (`UnusedJpFontTiles_01`, 3,136 bytes, and
 
 ## Where it sits
 
-| bank | unused routines | bytes | what |
-|---|---|---|---|
-| `$05` | 23 | 1,375 | text engine spares |
-| `$1b` | 20 | 1,220 | the debug save-data flow and its screens |
-| `$10` | 15 | 1,235 | Test 2 NPC templates, story helpers |
-| `$03` | 13 | 976 | the save editor and its block helpers |
-| `$00` | 25 | 470 | ROM0 library spares |
-| `$0b` | 13 | 312 | minigame hook spares |
+| bank | unused routines | what |
+|---|---|---|
+| `$1b` | 80 | the debug save-data flow and its screens |
+| `$1a` | 73 | minigame pause menu, EXP screen and editor, character viewer |
+| `$00` | 59 | ROM0 library spares |
+| `$05` | 52 | text engine spares |
+| `$18` | 43 | confirm and two-option screens, box and number drawers |
+| `$10` | 36 | Test 2 NPC templates, story helpers |
+| `$03` | 30 | the save editor and its block helpers |
 
-Sizes: 26 routines are eight bytes or fewer, 79 are 9-32, 78 are 33-128, and
-16 are larger. The long tail is stubs and one-off helpers; the bulk of the
-bytes is the debug tooling.
+The long tail is stubs and one-off helpers; the bulk of the bytes is the
+debug tooling.
 
 ## What this is good for
 

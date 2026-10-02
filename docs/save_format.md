@@ -1,6 +1,6 @@
 # Battery save format (32 KiB SRAM, MBC5)
 
-Engine: bank 3, `$47e9-$4dxx` (`InitSaveHeader`, `WriteSaveBlock`,
+Engine: bank 3, `$404a-$59b0` (`InitSaveHeader`, `WriteSaveBlock`,
 `SaveStorySlot`, ... — see labels). SRAM is 4 banks of 8 KiB; a `.sav`
 file is the four banks concatenated. Verified against a live save with
 `tools/savetool.py verify` (all checksums match).
@@ -18,17 +18,18 @@ file is the four banks concatenated. Verified against a live save with
 
 ### Global flag array (`$a040-$a05f`)
 
-Accessed by `TestSaveFlag` / set / clear (bank 3, `FarPtr_03_1c/1e/20`).
+Accessed by `TestSaveFlag` / set / clear (bank 3, `FarPtr_TestSaveFlag`/`FarPtr_SetSaveFlag`/`FarPtr_ClearSaveFlag`).
 A flag is addressed by two registers: `d` = byte index (0-0x1f into the
 array), `e` = bit selector = `bit << 5` (so `$0720` means byte 7, bit 1).
-The mask is `0x80 >> bit` (table 03:4d7e = `80 40 20 10 08 04 02 01`), and
+The mask is `0x80 >> bit` (`SaveFlagMaskTable_03`, 03:4d7e = `80 40 20 10 08 04 02 01`), and
 the referenced byte is `$a040 + d` (`sSaveFlags`). A flag's *number* is
 `byte * 8 + bit`; the `SAVEFLAG_*` constants in `include/constants.inc` hold
 the `de` id for each one, and every immediate call site renders by name.
 
 **Only bytes `$00`-`$07` are ever used** — 64 of the 256 bits. The rest
-(`sSaveFlagsUnused`, `$a048-$a05f`) is zeroed by `Unused_03_ClearSaveFlagsArea` and
-never read: every immediate id in the ROM is `$01xx`-`$07xx`, and the three
+(`sSaveFlagsUnused`, `$a048-$a05f`) is never read
+(`Unused_03_ClearSaveFlagsArea`, which would zero the whole 32-byte array,
+is unreachable): every immediate id in the ROM is `$01xx`-`$07xx`, and the three
 computed callers are bounded (character ids stop at `$1f`,
 `MinigameClearFlagTable_1e` at #54, `UnlockConditionFlagRows_03` at #54).
 
@@ -50,9 +51,12 @@ engine's bit `7 - N`) and agree entry for entry.
 
 These are *global* flags (not per-story-slot), so setting the whole array to
 `0xFF` unlocks every playable character and every mini-game.
-`ApplyUnlockEverythingCheat` (`$3b:$4b33`) is the engine's own batch unlock: it
-sets levels 1 and 2 of every minigame and skips level 3, so the level-3
-characters (Baby Mario, Yoshi, Peach) stay locked. Verified in-emulator: with
+`ApplyUnlockEverythingCheat` (`$3b:$4b33`) is the engine's own batch unlock.
+It sets the five court flags, `SAVEFLAG_UNLOCKED_FAY`-`_ELDEN`, and levels 1
+and 2 of every minigame, skipping level 3, so the level-3 characters (Baby
+Mario, Yoshi, Peach) stay locked. It also sets `FLAG_CHEAT_UNLOCK_0`-`_12`
+in every existing story slot and saves that slot, then calls
+`SetAllUnlockablesInSaveBlock`. Verified in-emulator: with
 the array forced to `0xFF` and the master checksum + bank-1 mirror fixed, the
 ROM boots clean and the Mario cast and all mini-games are selectable.
 `tools/savetool.py unlock` does exactly this. Per-story-slot progress is
@@ -111,7 +115,7 @@ than the game ever writes. Full layout (`b`=SRAM bank, `off` from
 | 0/2/4 | 0:`$0800/$0d00/$1200` | `$300` | story slot N primary: image of WRAM `$c800-$caff` |
 | 1/3/5 | 0:`$0b00/$1000/$1500` | `$200` | story slot N secondary block (written during play) |
 | 6 | 0:`$1700` | `$30` | small record; the only block preserved across a full save wipe (`ReinitSaveRamPreservingBlock6`) |
-| 7-10 | 0:`$1730+` | `$20/$10` | small records; accessors (`Unused_03_WriteBlock7WithBackup` ... `Unused_03_ReadBlock10`, 03:587b+) exist but no caller found — never valid in a real save |
+| 7-10 | 0:`$1730+` | `$20/$10` | small records; accessors (`Unused_03_WriteBlock7WithBackup` ... `Unused_03_ReadBlock10`, 03:587b+) are unreachable — never valid in a real save |
 | 11 (`$0b`) | 0:`$1800` | `$200` | N64 (Transfer Pak) records block, see below |
 | 12-26 | 0:`$1a00+` | `$20/$80` | defined, never written by GBC code |
 | 27-37 (`$1b-$25`) | 1: same off as 0-10 | same | bank-1 backups of blocks 0-10 (backup id = primary + `$1b`) |
@@ -128,7 +132,8 @@ than the game ever writes. Full layout (`b`=SRAM bank, `off` from
 | 104-112 | 6-14:`$0000` | `$1e00` | one whole-bank block per SRAM bank 6-14; the cart only has 4×8 KiB, so these (and banks 4-5 above) address SRAM that doesn't exist — presumably reserved headroom; MBC5 masks the bank number so they'd alias banks 0-3 if ever touched |
 
 `SaveStorySlot` writes block `2N` and its backup `2N+$1b` (slot from
-`$c36c`, 0-2); `Unused_03_InvalidateStorySlot` clears blocks `2N` and `2N+1`.
+`$c36c`, 0-2); the unreachable `Unused_03_InvalidateStorySlot` would clear
+blocks `2N` and `2N+1`.
 Verified against `maxed-unlocked.sav`: only blocks 0/1, 11, 27/28,
 54/55, and 56-62 have ever been valid.
 
@@ -158,10 +163,11 @@ resets just records 0-1 of the current slot (called from
 | off | contents |
 |---|---|
 | +0/+1 | data-present indicator (checked as `[+0]+[+1] != 0` by `CheckN64DataPresent` / `ApplyN64RecordsUnlockFlags`) |
-| +2..+7 | per-character unlock/toggle flags for characters `$1a-$1f`, flipped on the character-select screen by `Unused_1b_ToggleSelectedUnlockFlag` (1b:68a4); set by `UpdateUnlockablesSaveBlock` when the matching minigame record beats its default + save flag (mapping id→off: 2→+2, 9→+3, 6→+4, $0a→+5, 8→+6, 4→+7) |
+| +2..+7 | per-character unlock/toggle flags for characters `$1a-$1f`, flipped by `Unused_1b_ToggleSelectedUnlockFlag` (1b:68a4), whose only caller is the unreachable minigame-flags debug screen `Unused_1b_RunMinigameFlagsDebugScreen`; set by `UpdateUnlockablesSaveBlock` when the matching minigame record beats its default + save flag (mapping id→off: 2→+2, 9→+3, 6→+4, $0a→+5, 8→+6, 4→+7) |
 
-When present, `ApplyN64RecordsUnlockFlags` (03:56a8) sets global save
-flags `$07c0/$0140/$0160/$0180/$01a0` at boot.
+When present, `ApplyN64RecordsUnlockFlags` (03:56a8) sets
+`SAVEFLAG_N64_RECORDS_PRESENT` and `SAVEFLAG_UNLOCKED_FAY`/`_CURT`/`_MARK`/
+`_SEAN` at boot (`$01:$4091`).
 `SetAllUnlockablesInSaveBlock` (03:5787) force-sets all six flags
 (called from the bank $3b trophy/completion flow).
 
@@ -187,7 +193,7 @@ WRAM bank `$07` agreed, keeps the two apart. The rest stay numeric.
 |---|---|
 | WRAM1 `$d000` | generic block scratch: `RestoreStoryBlockFromBackup`/`RepairAllSaveSlots`, block-6 preserve, `$d400` = tag readback |
 | WRAM7 `$d480` `wMinigameRecordBlock` | minigame-record block image (blocks `$38-$3d`) |
-| WRAM7 `$d500` `wSaveBlockBuffer` | `$200`-byte record staging: N64 block, slot secondary blocks, debug save editor (block from `Unused_03_GetCurrentSlotBlockId` table 03:52af = `00 02 04 0b`) |
+| WRAM7 `$d500` `wSaveBlockBuffer` | `$200`-byte record staging: N64 block, slot secondary blocks, debug save editor (block from `StorySlotBlockIds_03`, 03:52af = `00 02 04 0b`) |
 | WRAM7 `$de00` `wMinigameRecordValue` | 16-bit minigame-record value in/out parameter |
 | WRAM6 `$d400` | N64 block staging in bank $1b char select |
 | WRAM3 `$d900` | N64 block and star victory grid staging in bank $3b; on the trophies screen, the unlock code's two press counters |
@@ -205,10 +211,11 @@ Character record (matches the `wStoryModeMainCharacter*` WRAM map):
 
 | off | field |
 |---|---|
-| +$00 | name, NUL-padded ASCII (12 bytes) |
+| +$00 | name: up to 7 ASCII characters, NUL-terminated and padded to +$0a (11 bytes) |
+| +$0b | character id |
 | +$18 | level (1-99) |
 | +$20 | eleven stats 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop |
-| +$2c | EXP, 16-bit little-endian |
+| +$2c | EXP, 3-byte little-endian accumulator, capped at 99999 |
 | +$38 | Spin / Power / Control / Speed levels (the four shown on character select) |
 
 ## Editing

@@ -227,7 +227,7 @@ FitWindowToText:
 	ld h, b ; $5719
 	ld l, c ; $571a
 	pop bc ; $571b
-	ld a, [wDialogueWindowHeight] ; $571c
+	ld a, [wDialogueWindowWidth] ; $571c
 	sub b ; $571f
 	srl a ; $5720
 	ld d, a ; $5722
@@ -235,7 +235,7 @@ FitWindowToText:
 WaitActorsIdleTimeout:
 	add d ; $5726
 	ld d, a ; $5727
-	ld a, [wDialogueWindowWidth] ; $5728
+	ld a, [wDialogueWindowHeight] ; $5728
 	sub c ; $572b
 	srl a ; $572c
 	ld e, a ; $572e

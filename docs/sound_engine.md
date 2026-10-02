@@ -16,9 +16,7 @@ Six logical channels share the four hardware channels. Each channel owns a
   (`$ffff` ⇒ channel idle). **Channels 0–1 carry sound effects and 2–5 carry
   music** — `CheckMusicChannelsIdle`/`StopMusic` walk four blocks from
   `wSndChannels + 64` (`$d140`, i.e. channel 2), while the effect half of
-  `PlaySound` clears blocks 0 and 1 before its table lookup. (This document said
-  the opposite until 2026-07-30, following two index-table labels that were
-  themselves swapped; see docs/history.md.)
+  `PlaySound` clears blocks 0 and 1 before its table lookup.
 - `wSndLoopSlots` (`$d1c0`) — per-channel loop bookkeeping resolved by
   `GetChannelLoopSlot`.
 
@@ -75,7 +73,7 @@ The HRAM layout is the sound-driver variant of the shared `$ffd0` union in
 | `$d20d` | `wSndRegBase` | APU register offset (type × 5); `WriteChannelReg` uses `$ff10`+this+reg |
 | `$d20e` | `wSndFrameCounter` | free-running counter; low nibble is the vibrato phase |
 | `$d20f` | `wSndChannelIndex` | index (0-5) of the channel being updated |
-| `$d212`–`$d214` | `wSndUpdateReqMask`/`Data`/`Ack` | deferred channel-reconfigure request |
+| `$d212`–`$d214` | `wSndUpdateReqMask`/`wSndUpdateReqData`/`wSndUpdateReqAck` | deferred channel-reconfigure request |
 | `$d215` | `wSndFirstChannel` | channel the pass starts from |
 | `$d217` | `wSndLoadedWaveId` | wave pattern currently in wave RAM (change detection) |
 | `$d218` | `wSndTranspose` | global transpose |
@@ -90,7 +88,7 @@ it expires, stepping the script via `RunSoundChannelScript`:
 
 - `TickVibrato` (`$39a7`) — pitch LFO; offsets `hSndPeriodLo` by `SoundPitchTable`.
 - `TickInstrumentEnvelope` (`$3a40`) — advances the `hSndInstrument`-selected
-  envelope sequence (pointer table at `$3ed6`, phased by `hSndEnvPos`/`hSndEnvLength`)
+  envelope sequence (`SoundEnvelopeTable`, `$3ed6`, phased by `hSndEnvPos`/`hSndEnvLength`)
   and writes the shaped volume via `ApplyChannelEnvelope`.
 - `TickVolumeSlide` (`$3968`) — periodic volume ramp driven by `hSndVolSlide`.
 
@@ -101,10 +99,11 @@ index** (`hSndScriptPtr`) and reads the command at `hSndDataPtr + index * 2`:
 every command is two bytes, opcode then operand, and the index steps by one
 per command. The one exception is `$ac`, four bytes, whose target word is the
 byte offset of a command from the track's start (`srl` halves it into an
-index). Loop points and the `$b0`-`$bf` loops work through sixteen per-channel
-**slots** (`GetChannelLoopSlot`, three bytes each: a counter and a saved
-index), so they carry no addresses. The macro on each row is what the
-extracted scripts are written with (`include/macros.inc`):
+index). Loop points and the `$b0`-`$bf` loops work through four 3-byte
+**slots** per channel (`GetChannelLoopSlot`: `wSndLoopSlots` + channel × 12 +
+slot × 3; a counter and a saved index; the shipped scripts use slots 0-3), so
+they carry no addresses. The macro on each row is what the extracted scripts
+are written with (`include/macros.inc`):
 
 | Opcode | Operand | Macro | Meaning |
 |---|---|---|---|
@@ -138,11 +137,12 @@ rather than a terminator and run on into the bytes that follow them; the
 rendering says so on its last line.
 
 **Editing a track.** `data/bank_07x/<Track>.asm` is generated at setup and
-`INCLUDE`d by the bank in place of the old `INCBIN`; edit it and `make`.
+`INCLUDE`d by `src/audio/sound_<bank>.asm`; edit it and `make`.
 Commands may be added or removed freely: `snd_call` targets are local labels
 and everything else is slot-relative, so nothing has to be renumbered. A new
-track is a new file plus a `SoundTable_7x` row (`snd_channel` + `dw`) and,
-for a new id, a `sound_entry` in the index table. `make check` (`sound`)
+track is a new file plus a `SoundTable_<bank>` row (banks `$78`-`$7f`, at
+`$4000`; `snd_channel` + `dw`) and, for a new id, a `sound_entry` in
+`MusicIndexTable` or `SfxIndexTable` (generated into `data/bank_000/`). `make check` (`sound`)
 proves the codec: every track decodes over exactly its extent and renders to
 rows that encode back to the same bytes. `tools/snd.py decode <file.bin>`
 renders any blob by hand.
@@ -155,13 +155,14 @@ renders any blob by hand.
 | `NoiseNoteTable` | `$3836` | 16 noise-channel `rAUD4POLY` values |
 | `SoundChannelMaskTable` | `$3b4d` | 16×16 volume-scaling matrix used to shape envelopes |
 | `SoundPitchTable` | `$3c4d` | vibrato pitch offsets |
-| `WavePatternTable` | `$3dd4` | wave-channel patterns **and** the instrument-envelope pointer table at `$3ed6` |
+| `WavePatternTable` | `$3dd4` | pointer to `WavePatterns` (`$3dd6`, 256 bytes of wave-channel patterns) |
+| `SoundEnvelopeTable` | `$3ed6` | pointer to `SoundEnvelopes` (`$3ed8`, 240 bytes of instrument-envelope sequences) |
 
 ## Entry points
 
 - `PlaySound` (`$3297`) / `PlaySoundManaged` (`$3024`) — start a sound/song by id.
 - `StopMusic` (`$3129`) — stops the four *music* channels only; effects keep
-  playing, and sound id `$50` is what silences those. `SetMusicMuted` (`$2f86`).
+  playing, and sound id `$50` (`SFX_STOP`) is what silences those. `SetMusicMuted` (`$2f86`).
 - `RunSoundEngine` (`$3373`) — per-tick driver (called from `UpdateSoundEngine`
   `$2f1a` and the timer handler when the LCD is off).
 
@@ -175,11 +176,11 @@ comment on each constant says where it plays -- because the emulator the
 project drives gives no audio, so what a cue sounds like is not established.
 A name has to hold at every site of its id, which is why the two cutscene
 pop sounds are `SFX_APPEAR1`/`SFX_APPEAR2` and `$a2` is `SFX_STORY_CUE`:
-the handler that plays it exists in every story bank and nothing names the
-map script that selects it. The ids that only tables carry were named on
+its only sites are the `Unused_<bank>_MapScriptPlaySoundA2` handler each
+story bank carries, and nothing reachable calls any of them. The ids that only tables carry were named on
 2026-09-12 from the rows that select them: the drill and lesson themes of
 the match-settings tables, the three story-location themes, the cues the
 on-court object templates play as a banner or the score digits appear
 (`SFX_BANNER_*`, `SFX_SCORE_DISPLAY`) and the two level jingles. The same
-rule renamed `SFX_RANKING_MARKER` to `SFX_MARKER` once the templates showed
-it landing the score digits too.
+rule makes `$78` `SFX_MARKER` rather than a ranking-board name: the templates
+also play it as the score digits land.

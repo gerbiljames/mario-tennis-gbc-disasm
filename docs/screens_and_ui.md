@@ -28,7 +28,7 @@ Every non-obvious claim below carries evidence: a `bank:addr`, a symbol, or a
 ### 1.1 `AdvanceFrame` — the barrier
 
 `AdvanceFrame` (`$00:$2631`, `src/home/flags_00.asm`) is the only frame barrier
-in the game and has 419 call sites. Every screen loop, every fade wait, every
+in the game and has 417 call sites. Every screen loop, every fade wait, every
 "wait n frames" helper goes through it. It is not a bare `halt`; per call it:
 
 1. Saves `af/bc/de/hl` and `rVBK`, clears `hVBlankOccurred` (`$2645`).
@@ -97,7 +97,10 @@ in which VBlank is not arriving.
 - `RegisterFrameTask` (`$00:$1b6a`) takes the id in `a` and the handler in
   `hl`, captures `hRomBank` itself, refuses to add a duplicate (it compares the
   three pointer bytes across all 16 slots via `Compare3Bytes`), then inserts
-  into the first slot whose pointer triple is zero and calls `SortFrameTasks`.
+  into the first slot whose pointer triple is zero (the insert loop runs 22
+  records, not 16 -- see
+  [bugs.md](bugs.md#registerframetask-inserts-six-records-past-the-end-of-its-table))
+  and calls `SortFrameTasks`.
 - `SortFrameTasks` (`$00:$1c3f`) sorts the 16 records ascending by the id byte,
   so **the id is a priority**.
 - `RunFrameTasks` (`$00:$1bff`) masks the caller's `a` with `$80` and runs only
@@ -112,7 +115,9 @@ in which VBlank is not arriving.
 therefore run in the *main* loop, immediately before the frame wait — not inside
 VBlank, despite some task names.
 
-Registered from banks `$06`, `$0a`, `$0e`, `$13`, `$1a`, `$1d`, `$39`, `$6b`.
+Registered from live code in banks `$03`-`$06`, `$0a`, `$0b`, `$0e`, `$0f`,
+`$10`, `$13`-`$18`, `$1b`-`$1e`, `$38`, `$3b`, `$3e`, `$3f` and `$6b`; the
+registrations in banks `$00`, `$1a` and `$6d` are all in `Unused_*` routines.
 Typical uses: blinking cursors and continue arrows, scroll-arrow animation,
 gauge fills, deferred tilemap copies.
 
@@ -149,7 +154,11 @@ second wait loop (`$268f`-`$26f1`): SELECT cycles `hDebugStepMode` through 1-3,
 START releases. While paused, `UpdateDebugOverlay` runs each VBlank. Debug step
 mode also makes two overflow conditions *audible* — a full VRAM copy queue plays
 sound `$6f` (`$00:$04e1`) and a truncated text fetch plays `$2c`
-(`$30:$7dc7`).
+(`$30:$7dc7`). Only `InitAndRunGame` sets `hDebugStepMode` nonzero in
+reachable code, to 3 at `.loopB` (`$01:$40bd`), which runs only if
+`RunStoryModeOverworld` returns; apart from `SoftReset`'s clear and the
+stepper's own cycling, every other writer is in an `Unused` debug screen
+([bugs.md](bugs.md#the-whole-developer-debug-harness-is-unreachable-and-its-unlock-flag-is-never-read)).
 
 ---
 
@@ -157,7 +166,7 @@ sound `$6f` (`$00:$04e1`) and a truncated text fetch plays `$2c`
 
 ### 2.1 `QueueVRAMCopy` is the only door
 
-`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`) has 613 call sites and
+`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`) has 610 call sites and
 there is not one direct `ld [$8xxx], a` in the ROM.
 
 ```
@@ -166,7 +175,7 @@ de = destination, with the VRAM bank in bit 13
 c  = length in 16-byte blocks
 ```
 
-`VRAM_BANK1 equ $2000` (`include/constants.inc:9`) is that bit 13. The routine
+`VRAM_BANK1 equ $2000` (`include/constants.inc:16`) is that bit 13. The routine
 tests it with `bit 5, d` and recovers the real address with `res 5, d`, so a
 destination of `$9800 + VRAM_BANK1` means `$9800` in VRAM bank 1. Writing it
 that way in the disassembly is a deliberate convention: the bank is visible
@@ -175,7 +184,8 @@ rather than hidden inside a literal.
 Two paths:
 
 - **LCD off** (`rLCDC` bit 7 clear): set `rVBK` and fall into
-  `StartVRAMDMAFromHL` (`$00:$18d7`/`$18f2`) immediately — a general-purpose
+  `StartVRAMDMAFromHL` (`$00:$18eb`, which jumps to `StartVRAMDMATransfer` at
+  `$18d7`) immediately — a general-purpose
   GDMA that stalls the CPU until done.
 - **LCD on**: fill a slot in `wVRAMCopyQueue` and set `hVRAMQueueDirty`.
 
@@ -241,7 +251,7 @@ and a parallel 32×32 CGB attribute plane in WRAM, then blits.
 `TILEMAP_WIDTH equ 32` and `TILE_SIZE equ 16` come from
 `include/hardware.inc:975,981` (not `constants.inc`). A cell is
 `base + row * TILEMAP_WIDTH + col`; the visible window is the top-left 20×18.
-The generated source writes cell addresses in exactly that form
+The source writes cell addresses in exactly that form
 (`wShadowTilemap + 11 * TILEMAP_WIDTH`, `$39:$4d03`) so the row and column are
 readable.
 
@@ -274,7 +284,7 @@ byte under one bank and the attribute byte under another.
 | `wShadowTilemap` (`$03`) / `wScreenAttrmap` (`$02`), both `$d000` | tiles `$03`, attrs `$02` | the character-data and EXP screens, and the overworld scroll buffers |
 | `wCharDataScreenCell` `$d000`, `wCharDataPagePlane` `$d400`, `wCharDataPageSlot1/2/3` | mirrored across `$02`/`$03` | see `include/ram_mirrored.inc` |
 
-`include/ram_mirrored.inc` is generated for exactly this case, and it explains
+`include/ram_mirrored.inc` exists for exactly this case, and it explains
 the payoff: because the two planes share an address, one loop can patch both.
 `ApplyTilemapPatchList` (`$1d:$4bb6`) does
 
@@ -312,13 +322,13 @@ the framework at large.
 | `CopyTextRect` | `$00:$2b46` | `hl` = packed row-major block, `de` = destination cell, `b` = width, `c` = height. Destination row stride `$20`; the source is *not* padded. |
 | `CopyTilemapRect` | `$39:$4530` | same arguments, but the **source** stride is also `$20` — it copies a rectangle out of another 32-wide map. |
 | `FillTilemapRect` | `$39:$4558` | fills with the tile id in `h`; `de`/`b`/`c` as above. |
-| `DrawWindowFrame` | `$00:$2b68` | `de` = tile destination, `bc` = attribute destination, `h` = width, `l` = height. Clears the interior to tile `$20` and `wWindowFrameAttr`, then draws the border. `DrawWindowFramePriority`/`NoPriority` (`$2b5c`/`$2b63`) preset that attribute to `$80` (BG-over-OBJ) or `$00`. |
+| `DrawWindowFrame` | `$00:$2b68` | `de` = tile destination, `bc` = attribute destination, `h` = width, `l` = height. Clears the interior to tile `$20` and `wWindowFrameAttr`, then draws the border. `DrawWindowFramePriority`/`DrawWindowFrameNoPriority` (`$2b5c`/`$2b63`) preset that attribute to `$80` (BG-over-OBJ) or `$00`. |
 | `ApplyTilemapPatchList` | `$1d:$4bb6` | see above. |
 
 `include/macros.inc` declares the data shapes these consume:
 `tilemap_begin`/`tilemap_row`/`tilemap_end` for a fixed-geometry block (rgbasm
 asserts the row count and total size, so a mis-carved width fails the build);
-`rect_pair` for a `CopyTextRectPair` descriptor (`$06:$47ce`); `rect_ptrs` for
+`rect_pair` for a `CopyTextRectPair` (`$06:$5045`) descriptor; `rect_ptrs` for
 a tile/attribute block pair whose geometry lives in the code; `tilemap_copy`
 and `tilemap_rect` for the two record formats driven through `CopyTilemapRect`
 (`$16:$4a71` and `$39:$4e11`).
@@ -338,8 +348,8 @@ font tileset reserves tiles `$02`-`$09` for the box:
 |---|---|---|
 | `QueueWram3MapToVRAM` | `$39:$4325` | the whole thing: `wShadowTilemap` → `$9800`, `wShadowAttrmap` → `$9800 + VRAM_BANK1`, `c = $40` (1024 bytes) each. Two queue slots, ~1 ms of VBlank. |
 | `FlushWram3MapRows` | `$39:$4cab` | selected row bands only, four layout variants in `b`, split across two frames with a `call AdvanceFrame` in the middle (`$4ce8`, `$4d4a`, `$4d95`, `$4dc6`). |
-| `QueueFullTilemapCopy` / `QueueFullAttrmapCopy` | `$05:$41c6` / `$41df` | `b` = WRAM bank; `$d000` → `$9800` and `$d400` → `$9800 + VRAM_BANK1`, `c = $40`. |
-| `CopyVisibleTilemapToVRAM` | `$05:$4146` | scroll-aware: 19 rows starting at `(wCameraY+1) & $1f`, split into two copies when the band wraps past row 32. Both planes. |
+| `Unused_05_QueueFullTilemapCopy` / `Unused_05_QueueFullAttrmapCopy` | `$05:$41c6` / `$41df` | `b` = WRAM bank; `$d000` → `$9800` and `$d400` → `$9800 + VRAM_BANK1`, `c = $40`. |
+| `Unused_05_CopyVisibleTilemapToVRAM` | `$05:$4146` | scroll-aware: 19 rows starting at `(wCameraY+1) & $1f`, split into two copies when the band wraps past row 32. Both planes. |
 | `CopyScrolledSceneTilemapToVram` | `$0a:$5c29` | the overworld's LCD-off blit — see below. |
 | `Unused_00_QueueDeferredTilemapCopy` | `$00:$2a2e` | stores `a` = WRAM bank, `c` = length, `hl` = tile source, `de` = attribute source, then registers `Unused_00_VBlankDeferredTilemapCopyTask` as a frame task with id `$05`. `wDeferredTilemapPending`'s low nibble owes the tile plane and the high nibble the attributes; the destination is hard-coded `$9800`. |
 | `FlushDirtyRowsPerFrame` | `$05:$711a` | the text engine's incremental flush — §7.6. |
@@ -407,7 +417,7 @@ covers, reading the row and height from its struct. This is the standard
 ### 4.1 `farptr` tables
 
 Every bank that exposes anything opens with a table of `farptr` entries at
-`$4000`. The `farcall` macro (`include/macros.inc:8`) emits `rst Rst18` plus two
+`$4000`. The `farcall` macro (`include/macros.inc:9`) emits `rst Rst18` plus two
 bytes — `LOW(FarPtr_x), BANK(FarPtr_x)` — and `FarCall` (`$00:$01b6`) switches
 banks, indexes the table, dispatches, and patches the return address past the
 operands. So a bank's `$4000` table *is* its public interface, and reading it
@@ -415,8 +425,8 @@ first is the fastest way to understand a screen bank.
 
 Asset banks use the same table for data: a slot holding `dw SomeBlob` is
 resolved by `CopyDataFromBank` (`$00:$021a`) or `DecompressDataFromBank`
-(`$00:$0234`). `FarPtr_*` and `DataPtr_*` labels are *derived* from their
-targets' names by the emitter, and `dslot` (`include/macros.inc:31`) writes a
+(`$00:$0234`). `FarPtr_*` and `DataPtr_*` labels are named after their
+targets, and `dslot` (`include/macros.inc:33`) writes a
 `(slot, bank)` word pair for tables whose loaders read the slot reference
 through RAM.
 
@@ -452,7 +462,7 @@ the caller's `de`/`c` to `QueueVRAMCopy`, restoring the WRAM bank around it.
 Both tables define their own indices: a `tileblock Name` row is the slot word
 for `DataPtr_Name` plus `TILEBLOCK_Name`, its position, and a `screen_asset
 Name, ...` row likewise defines `SCREENASSET_Name` (`include/macros.inc`).
-Every call site uses the name (`ld b, TILEBLOCK_MenuFontTiles_01`, `ld c,
+Every call site uses the name (`ld b, TILEBLOCK_SharedMenuGfx17Alias17`, `ld c,
 SCREENASSET_TitleScreen`), as do the bank `$18` id lists the story cutscenes
 index by scene, so a row inserted in either table renumbers what follows and
 every reference moves with it. To add a block: a `DataPtr_` slot in some
@@ -494,8 +504,8 @@ when full. `hSpriteQueueBase` (`$ff9c`) is a floor: `ClearUnusedSprites`
 (`$00:$1e22`) resets the index to the base and zeroes from there to `$a0`, so
 entries below the base would persist across frames. In practice they never do —
 `hSpriteQueueBase` is written in exactly two places, `ClearSpriteQueue`
-(`$00:$1e20`, `xor a`) and an unlabelled three-instruction routine at
-`$00:$1e50` that nothing calls. The feature is dead.
+(`$00:$1e20`, `xor a`) and `Unused_00_SetSpriteQueueBase` (`$00:$1e50`),
+which nothing calls. The feature is dead.
 
 ### 5.2 The builders
 
@@ -507,11 +517,11 @@ entries below the base would persist across frames. In practice they never do �
 | `QueueSpriteTemplate` | `$00:$1e9d` | walks an `oam_sprite` list, adding each record's `{dy, dx, tile, attr}` to the base in `e`/`d`/`c`/`b`; terminator is `dy == $80`. Mirrored variant (attribute bit 5) negates `dx` as `8 - dx` and ORs the attribute instead of adding it. |
 | `QueueSprite24x32`, `QueueSprite32x32`, `QueueSpriteBlockPart` | `$00:$2c2b`, `$2ced`, `$2d79` | fixed larger blocks, used by the court renderer |
 
-`include/macros.inc:626` documents the `oam_sprite` record and the
-`sprite_template` data spec that renders it; the spec appears in 21 banks.
+`include/macros.inc:1078` documents the `oam_sprite` record; lists of them
+(tagged `sprite_template` in their block comments) appear in 21 banks.
 Walk-sprite banks (`$6a`, `$6f`, `$70`-`$77`) hold object headers whose
 `dw .frames, <name>_AnimPtrs, .frames` triple points at a frame-pointer array and
-an animation-script pointer array (e.g. `src/data/sprites/walk_72.asm`-`23`); the scripts
+an animation-script pointer array (e.g. `WalkSprite_72_00`, `src/data/sprites/walk_72.asm:19`-`23`); the scripts
 render as `anim_*` macros (`docs/graphics_formats.md` §4.4).
 
 `Unused_00_PositionSpriteWorld` (`$00:$1f6b`) and `Unused_00_PositionSpriteWorld2` (`$00:$1fb1`) are
@@ -593,7 +603,8 @@ for the link case.
 increment to the packed BGR555 word with `add`/`adc` and then repairs the
 carries that leak across channel boundaries. It is reached only from the bit-7
 branch at `$1d7a`, and bit 7 of `hFadeState` is set in exactly one place —
-`$00:$1d19`, inside an **unlabelled and unreachable** routine at `$1d0f`. So
+`$00:$1d19`, inside `Unused_00_BeginWhiteFadeOut` (`$1d0f`), which nothing
+calls. So
 `Unused_00_ApplyWhiteFade` never runs in the shipped ROM.
 
 `ConvertColorToGrayscale` (`$1d:$7210`) has a shipped bug — see
@@ -604,7 +615,7 @@ branch at `$1d7a`, and bit 7 of `hFadeState` is set in exactly one place —
 ## 7. Text and windows
 
 Bank `$05` is the text and window engine. Its `$4000` table
-(`src/engine/text/slots_05.asm`-`$4095`, 76 slots) is the whole public API; every other
+(`src/engine/text/slots_05.asm`, `$4000`-`$4095`, 75 slots) is the whole public API; every other
 bank reaches it by `farcall`.
 
 ### 7.1 A text id is a coordinate, not an address
@@ -644,7 +655,7 @@ implemented the same decode and found sites by
 walking *consumers* of `hl` (`TEXT_ID_SINKS` = `FetchDialogueText`,
 `AddTextIdOffset`, `Unused_05_CreateWindowWithTextId`, grown through wrappers that forward
 `hl` untouched); `tools/strings.py --index --bank XX` dumps `bank:index → text`
-from the reader's own ROM.
+from the extracted pools in `data/bank_XXX/TextStrings_XX.asm`.
 
 ### 7.2 The interpreter
 
@@ -699,10 +710,10 @@ In the generated pools (`data/<bank>/TextStrings_*.asm`) these bytes are
 written as the `TX_*` names of `include/text_codes.inc` (`$01`/`$02`/`$03`
 as the `line`/`page`/`done` macros), with `TX_SHORT_TEXT`'s operand as the
 `CHAR_*` constant of the character whose roster name it prints
-(`TX_SHORT_TEXT, CHAR_EMILY` in "Oh, Coach Emily!"). The codes the retail strings use: `$07` (136
-times), `$0e` (40), `$06` (35), `$0b` (19), `$11` (17), `$09` (10), `$14`
-(10), `$0c` (6), `$1a` (5), `$04` (2), `$1d` (2); `$05`, `$08` and the
-dakuten pair never.
+(`TX_SHORT_TEXT, CHAR_EMILY` in "Oh, Coach Emily!"). The codes the strings in
+`data/bank_*/TextStrings_*.asm` use: `$07` (246 times), `$0e` (95), `$06`
+(67), `$0b` (41), `$09` (34), `$04` (11); no other code below `$20` apart
+from `$01`-`$03`, and never the dakuten pair.
 
 Two further 32-entry tables in the same bank reuse `DispatchControlCode` for
 different targets: `ProportionalTextCodeHandlers_05` (`$05:$5e39`, driven by
@@ -737,7 +748,7 @@ between them), `FlushGlyphRow` (`$05:$77a3`, queued or DMA depending on the LCD)
 speed reaches it like this:
 
 1. The pause-menu items `STORYMENUITEM_MSG_SLOW`/`NORMAL`/`FAST`
-   (`include/constants.inc:169`) are handled by `StoryPauseMenu_MessageSpeed`
+   (`include/constants.inc:315`) are handled by `StoryPauseMenu_MessageSpeed`
    (`$06:$6ff7`), which stores `2 - selection` into `wMessageSpeed` (`$c8a4`;
    0 = fast, 1 = normal, 2 = slow, bit 7 = a transient "instant" override).
 2. `ApplyMessageSpeed` (`$05:$57e7`) converts it to a frame count in
@@ -796,16 +807,12 @@ the bit.
 | `+$05` | unused: no live code addresses it. `FreeWindow`'s clear and the `wSavedWindowStruct` save/restore copy it with the rest of the record; the only code naming `$dc05` is the dead `Unused_05_WriteStringToTilemapStreamed`, which keeps a tilemap pointer at `$dc05`/`$dc06` and a flag at `$dc09` -- scratch from before the window structs lived here |
 | `+$06`/`+$07` | text id lo/hi | `SetWindowTextId` (`$05:$55d5`); `$03` in the high byte is the "no text" sentinel |
 
-> The width/height assignment above contradicts the note currently on
-> `wWindowStructs` in `ram/wram.asm` and the names
-> `wDialogueWindowHeight`/`wDialogueWindowWidth`. Three independent proofs that
-> `+$02` is the width: `ResetScreenAndTextWindows` builds the bottom text box
+> Three independent proofs that `+$02` is the width: `ResetScreenAndTextWindows` builds the bottom text box
 > with `b = $14, c = $03` (`$39:$4c27`) — 20 cannot be a row count on an
 > 18-row screen; `DrawTextWindowFrame` copies `+$02` into `e` and uses it as the
 > horizontal run length while `+$03` becomes the row counter
 > (`$05:$6f80`-`$6fae`); and `InitGlyphStreamForWindow` reads `+$02`, subtracts
-> 2, and stores it into `wTextRowWidth` (`$05:$7559`-`$756e`). See the report in
-> §10.
+> 2, and stores it into `wTextRowWidth` (`$05:$7559`-`$756e`).
 
 Creation entry points, all funnelling into `AllocWindowStruct` (`$05:$6e6d`):
 
@@ -844,11 +851,11 @@ copying each through `CopyDirtyRowSpanToVRAM` — tiles from `wShadowTilemapPtr`
 to `$9800`, attributes from `+$0400` to `$9800 + VRAM_BANK1` — and calling
 `AdvanceFrame` between runs while the LCD is on. `FlushDirtyRowsNow`
 (`$05:$7148`) is the same without the waits. `FLAG_VRAM_UPDATE_BUSY`
-(`include/flag_constants.inc:13`) is held for the duration.
+(`include/flag_constants.inc:16`) is held for the duration.
 
 ### 7.7 Menus over windows
 
-`RunMenuSelection` (`$05:$477f`) and `Unused_05_RunMenuSelectionShared` (`$05:$4b17`) run
+`RunMenuSelection` (`$05:$477f`) and `Unused_05_RunMenuSelectionShared` (`$05:$4aa8`) run
 the cursor loop over a text-derived menu window and return:
 
 | return | meaning |
@@ -861,7 +868,8 @@ the cursor loop over a text-derived menu window and return:
 A "paged text menu" is a menu whose items are consecutive text ids, four per
 page. `RunPagedTextMenu` (`$05:$4944`) takes `hl` = base text id, `de` = window
 column/row, `a` = page count, and returns `wMenuPage * 4 + row` or `$ff`
-(caller example: `$10:$4088`, `ld hl,$0484 / ld de,$0101 / ld a,$05`).
+(caller example: `RunSinglesMatchListMenu`, `$10:$4195`,
+`ld hl,Text_31_132 / ld de,$0101 / ld a,$05`).
 `Unused_05_RunPagedTextMenuAutoSize` (`$05:$49f6`) re-derives the column per page and
 registers `Unused_05_PagedMenuFrameTask` — and has no callers.
 
@@ -871,7 +879,8 @@ menus restore their cursor: `CreateMenuWindowFromText` writes the outgoing
 menu's `wMenuCursorRow` into the current frame before pushing a new one
 (`$05:$4707`-`$4738`).
 
-Bank `$1a` is the shared layer above this — the pause menus. `Unused_1a_RunPauseMenuWindow`
+Bank `$1a` holds a pause-menu layer above this that nothing reaches (all of
+its pause routines are `Unused_1a_*`). `Unused_1a_RunPauseMenuWindow`
 (`$1a:$402c`) shows the whole idiom:
 
 ```
@@ -906,8 +915,8 @@ row offset in `c` and a tile-strip base in `de`, builds a destination bit mask
 from `PixelMaskTable` (`$00:$2113`), and consumes two source bits per iteration
 to write both bitplanes. `Unused_00_RenderTextToTiles` (`$00:$20e5`) walks a NUL-terminated
 ASCII string, treats any byte below `$30` as a 6-pixel space, and advances by
-each glyph's own width — a proportional number font. `PrintString` (`$00:$1bd8`),
-`FormatHexWord` (`$00:$1935`), `FormatDecimalNumber` (`$00:$1961`) and
+each glyph's own width — a proportional number font. `PrintString` (`$00:$1906`),
+`FormatHexWord` (`$00:$1935`), `FormatDecimalNumber` (`$00:$1972`) and
 `Unused_00_CopyTextString` (`$00:$2aa6`) round out the debug text path, which draws into
 `wDebugTextBuffer` (`$cc00`) for the `$9c00`-page console.
 
@@ -953,7 +962,8 @@ end to end is the fastest way to see how the pieces bind:
    caller must have cleared);
 2. `LoadStadiumBgGraphics`;
 3. `ResetTextWindowState` (bank `$05`, §7.5);
-4. `LoadCompressedTileBlock(b = TILEBLOCK_MenuFontTiles_01, c = 16 tiles, de = $9000)` — the menu font;
+4. `LoadCompressedTileBlock(b = TILEBLOCK_SharedMenuGfx17Alias17,
+   c = SharedMenuGfx17_SIZE / 16 = 16 tiles, de = vTiles2)` — the menu font;
 5. `wram_bank $05`, then `wShadowTilemapBank = $03` and `wWindowTileAttr = $00`
    — **this is the line that points the window engine at the screen's own
    tilemap** rather than bank `$05`'s;
@@ -964,32 +974,34 @@ end to end is the fastest way to see how the pieces bind:
 ### 8.2 The menu tree pattern
 
 Banks `$0e`-`$15` are story-mode screen banks sharing one structure, described
-in full in `include/macros.inc:132`-`155` for the story-map case. A location or
+in full in `include/macros.inc:540`-`553` for the story-map case. A location or
 screen owns a **7-slot `dw` tree**; a bank-level directory at `$4000` may point
 at several trees (`$0f` has three, `$14` four). Slot roles for the story-map
 trees are: 0 entry points, 1 exit triggers, 2 actors, 3 NPC scripts, 4 facing
 scripts, 5 tile triggers, 6 an init-code entry. Slots with no table point at a
 shared `$ff`.
 
-The menu-screen variant uses the same 7-slot shape with 8-byte handler records
-`{id, $ff, $00, $00, dw handler, db, db}` terminated by `$ff`, and 14-byte entry
-records whose word at `+$02` points into the bank's resource-descriptor blob.
-Dispatch is computed inline:
+Menu screens use the same tree: the `map_script` record (8 bytes,
+`$ff`-terminated) is their NPC/handler table, and `map_actor` rows (14 bytes)
+whose word at `+$02` is the actor's `ActorScript_*` bytecode are their actor
+lists. Per-stage choices are indexed inline:
 
 ```
-ld a, [$c2b0] / add a, a / add a, LOW(table) / ld l, a
-adc a, HIGH(table) / sub l / ld h, a / ld a, [hl+] ...
+ld a, [wMapSceneStage] / ... / add a / ld_hl_indexed Table
+ld a, [hl+] / ld h, [hl] / ld l, a
 ```
 
 with the `dw` table sitting immediately after the function's `ret`.
 
 Bank `$10` (story match select) is the worked example. Its `$4000` table is an
-8-slot directory of sub-tables; slot 0 (`$4010`) is a 7-entry `dw` table plus
-`MatchSelectRecords_10`, and entry 3 leads to `MatchSelectHandlerTable_10`
-(`$10:$4145`), a 9-record table of `{db id, $ff, dw $0000, dw handler,
-dw $0000}` whose handlers are all carved. One of them,
-`LoadMatchSinglesJunior3Alias`, is named for what it does rather than its
-caption because slot 8 launches the wrong match — see
+8-slot directory of map trees; slot 0 is `MatchSelectMapScripts_10` (`$4010`),
+a 7-slot `map_tree` whose actor list is `MatchSelectActors_10` and whose slot
+3 (NpcScripts) is `MatchSelectHandlerTable_10` (`$10:$4145`): nine
+`map_script` records `{db actor, db FACEMASK_ANY, dw flag_cond, dw handler,
+db arg0, db arg1}` whose handlers are all carved. One of the singles list's
+handlers (`RunSinglesMatchListMenuTable`), `LoadMatchSinglesJunior3Alias`, is
+named for what it does rather than its caption because slot 8 launches the
+wrong match — see
 [bugs.md](bugs.md#match-select-slot-8-launches-the-wrong-match).
 
 ### 8.3 Cursor movement
@@ -1012,10 +1024,12 @@ ROM0 provides it as `MoveCursorHorizontal` (`$00:$2c0d`) and
 `Unused_00_MoveCursorVertical` (`$00:$2c04`) — `a` = current index, `b` = pad bits,
 `c` = item count, result in `a`. `Unused_00_MoveCursorVertical` tests UP/DOWN and jumps
 into the horizontal routine's tail, so the two share the arithmetic. Only bank
-`$06` calls them (7 sites).
+`$06` calls them: `MoveCursorHorizontal` from six sites,
+`Unused_00_MoveCursorVertical` from one, inside the unreachable
+`Unused_06_HandleDebugStatsInput` (`$06:$6bfe`).
 
 Every other screen bank inlines a 2-D version instead, and there are **five
-copies in the ROM, four variants each** (bank `$1b` has two of the four). The
+copies in the ROM, four variants each**. The
 bodies are the same 2-D walker over `wMenuCursorX`/`wMenuCursorY` with `b` =
 column count and `c` = row count, processing at most one direction per call
 (right > left > up > down) and returning `a = 1` if the cursor moved. What
@@ -1023,16 +1037,16 @@ differs is only the input source and which cursor pair is written:
 
 | bank | local pad (`wMenuInputPressed`) | link frame (`hLinkInput`) | remote, cursor 1 | remote, cursor 2 |
 |---|---|---|---|---|
-| `$16` | `Unused_16_MoveMenuCursorGrid` `$40cd` | `Unused_16_MoveMenuCursorGridFromLinkInput` `$414b` | `Unused_16_MoveMenuCursorGridRemote` `$41d5` | `Unused_16_MoveMenuCursor2GridRemote` `$42a0` |
-| `$1b` | `MoveMenuCursorGrid_1b` `$4107` | — | — | `Unused_1b_MoveMenuCursor2GridRemote` `$42da` |
-| `$38` | `MoveMenuCursorGrid_38` `$410a` | `Unused_38_MoveMenuCursorGridFromLinkInput` `$4188` | `Unused_38_MoveMenuCursorGridRemote` `$4212` | `Unused_38_MoveMenuCursor2GridRemote` `$42dd` |
+| `$16` | `Unused_16_MoveMenuCursorGrid` `$40f8` | `Unused_16_MoveMenuCursorGridFromLinkInput` `$4176` | `Unused_16_MoveMenuCursorGridRemote` `$41f3` | `Unused_16_MoveMenuCursor2GridRemote` `$42be` |
+| `$1b` | `MoveMenuCursorGrid_1b` `$4132` | `Unused_1b_MoveMenuCursorGridFromLinkInput` `$41b0` | `Unused_1b_MoveMenuCursorGridRemote` `$422d` | `Unused_1b_MoveMenuCursor2GridRemote` `$42f8` |
+| `$38` | `MoveMenuCursorGrid_38` `$410a` | `Unused_38_MoveMenuCursorGridFromLinkInput` `$4188` | `Unused_38_MoveMenuCursorGridRemote` `$4205` | `Unused_38_MoveMenuCursor2GridRemote` `$42d0` |
 | `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `Unused_3b_MoveMenuCursorRepeat` `$41a8` | `Unused_3b_MoveMenuCursorLinkLocal` `$4225` | `Unused_3b_MoveMenuCursorLinkRemote` `$42f0` |
-| `$3e` | `MoveMenuCursorGrid_3e` `$413a` | `Unused_3e_MoveMenuCursorGridFromLinkInput` `$41b8` | `Unused_3e_MoveMenuCursorGridRemote` `$4242` | `Unused_3e_MoveMenuCursor2GridRemote` `$430d` |
+| `$3e` | `MoveMenuCursorGrid_3e` `$413a` | `Unused_3e_MoveMenuCursorGridFromLinkInput` `$41b8` | `Unused_3e_MoveMenuCursorGridRemote` `$4235` | `Unused_3e_MoveMenuCursor2GridRemote` `$4300` |
 
 The "remote" variants choose between `hLinkRemoteInputBuf` and
 `hLinkRemoteInput` at run time on `hLinkState == $02` (e.g. `$38:$421a`,
 `$3b:$422d`), and the cursor-2 variants operate on `wMenuCursor2X`/`Y`. The
-naming is not consistent across the five banks; see §10.
+naming is not consistent across the five banks.
 
 Bank `$39` also carries a bespoke 3×2 walker, `MoveMinigameGridCursor`
 (`$39:$6df9`), whose second row is a two-position toggle rather than a 3-wide
@@ -1046,9 +1060,10 @@ confirmation runs.
 ### 8.4 Confirm dialogs
 
 The reusable path is a menu window over a text id: `CreateMenuWindowFromText`
-with the prompt's text id, then `Unused_05_RunMenuSelectionShared`, then `CloseWindow`
-(§7.7). Bank `$18` has a hand-built alternative: `Unused_18_InitConfirmScreen` builds the
-box, font, cursor and score panel, and `DrawYesNoLabels` writes two 3×2 tile
+with the prompt's text id, then `RunMenuSelection`, then `CloseWindow` (§7.7;
+e.g. `$0a:$4c0d`-`$4c1f`). Bank `$18` has a hand-built alternative that the
+shipped game never reaches: `Unused_18_InitConfirmScreen` builds the box,
+font, cursor and score panel, and `Unused_18_DrawYesNoLabels` writes two 3×2 tile
 words plus their attribute rows into fixed cells, with prompts at text ids
 `$046a`/`$046b`/`$046d`/`$0471` (bank `$31`, indices 106/107/109/113 — "Erase?",
 "Erase it? Really?", "Continue?", "Is this correct?").
@@ -1118,7 +1133,7 @@ The union variants in `ram/wram.asm` name these; `docs/ram_map.md` and
 | `$02` | `wScreenAttrmap` / `wCourtTilemap` / `wMapScrollPlane0` | `wCourtAttrmap` | `wMapScrollPlane1`, `wCourtTilemapSaved` |
 | `$03` | `wShadowTilemap` | `wShadowAttrmap` | `wScreenScratch` |
 | `$05` | `wWindowShadowTilemap` | `wWindowShadowAttrmap` | text/window engine state, `wWindowStructs` `$dc00`, `wTilemapRowDirty` `$dc40`, `wTilemapRowRuns` `$dc60`, `wWindowSlotMask` `$dc70` |
-| `$07` | | | `wGlyphTileBuffer` (2048 bytes) |
+| `$07` | `wGlyphTileBuffer` at `$d300` (2048 bytes, to `$daff`) | | |
 
 ### Framework flags
 
@@ -1150,7 +1165,7 @@ and match state, enables the LCD, fades in, and calls
 build-stamp screen at `.loopB` (`$01:$40b2`) appear, which waits for A or START
 and re-enters the overworld. So the routine is the game's boot manager first and
 a debug harness second -- and the harness half is unreachable, since the
-overworld call never returns. It was called `RunDebugTestMenu` until 2026-07-30.
+overworld call never returns.
 
 ### Things this document could not establish
 
@@ -1160,9 +1175,15 @@ overworld call never returns. It was called `RunDebugTestMenu` until 2026-07-30.
 - Whether `ControlCodeHandler16`-`19` (codes `$10`-`$13`) were ever meaningful.
   They are four *separate* one-byte `ret`s, which is suggestive of deleted
   handlers, but nothing proves it.
-- How the `or $80` on `wMessageSpeed` at `$1a:$427c`/`$4295` interacts with
-  `ApplyMessageSpeed`'s "bit 7 = instant" reading. `Unused_1a_RestoreMessageSpeed`
-  exists, but no call ordering was traced that guarantees the bit is cleared.
+- Whether `wMessageSpeed` bit 7 (`ApplyMessageSpeed`'s "instant") can stay set
+  after a cutscene. The `or $80` writes at `$1a:$427c`/`$4295` are in
+  `Unused_1a_AdjustMessageSpeedSetting` and never run, nor do
+  `Unused_1a_ForceInstantMessageSpeed`/`Unused_1a_RestoreMessageSpeed`. The
+  live bit-7 writers are `ToggleCutsceneFastForward` (`$0a:$40a4`: sets it
+  when START turns fast-forward off, clears it when turning it on), the tennis
+  dictionary's save/`$80`/restore around a redraw (`$3f:$566e`-`$5683`), and
+  `StoryPauseMenu_MessageSpeed`'s plain store; no ordering was traced that
+  guarantees the bit is cleared.
 - `wGlyphBufferHoldCount` (`$d822`) is read and decremented but raised
   nowhere in the ROM, by name or by address: see
   [bugs.md](bugs.md#the-glyph-buffers-keep-branch-is-unreachable).
@@ -1172,15 +1193,17 @@ overworld call never returns. It was called `RunDebugTestMenu` until 2026-07-30.
 
 ### Dead framework code, for the record
 
-Not defects, and not in [bugs.md](bugs.md); recorded here so a future reader
-does not re-derive them.
+Not defects; recorded here so a future reader does not re-derive them. The
+white fade, `Unused_00_CopyMapToScrollBuffers` and
+`Unused_05_PagedMenuFrameTask` also have entries in [bugs.md](bugs.md).
 
 - `Unused_00_ApplyWhiteFade` (`$00:$1dcc`) is unreachable: the only write that sets
-  `hFadeState` bit 7 is at `$00:$1d19`, inside an unlabelled routine at
-  `$1d0f` that nothing calls. The unlabelled `ForceFadeOut`-shaped entry at
-  `$1d09` is likewise unreferenced.
+  `hFadeState` bit 7 is at `$00:$1d19`, inside `Unused_00_BeginWhiteFadeOut`
+  (`$1d0f`), which nothing calls. `Unused_00_ForceFadeOut` (`$1d09`) is
+  likewise unreferenced.
 - The persistent-sprite floor `hSpriteQueueBase` is only ever set to 0; the
-  routine that would raise it (`$00:$1e50`) has no callers.
+  routine that would raise it, `Unused_00_SetSpriteQueueBase` (`$00:$1e50`),
+  has no callers.
 - `Unused_05_AllocWindowSlotBit` (`$05:$4627`) is a byte-identical duplicate of the live
   `AllocWindowId` (`$05:$6e96`) with no callers.
 - `Unused_05_DrawWindowGlyphRun` (`$05:$74de`) has no callers and is not in the `$4000`

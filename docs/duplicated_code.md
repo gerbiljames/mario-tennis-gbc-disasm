@@ -10,11 +10,7 @@ with a floor of ten instructions. `Unused*` routines are left to
 `docs/unused_code.md`, which covers the dead copies of the same families.
 
 The note above each member in `src/` names its twins, so the fact is visible
-where the routine is read; on 2026-09-11 the copies whose names had
-drifted apart (`MoveMenuCursorBox` / `MoveMenuCursor` / `MoveMenuCursorGrid_3e`,
-`PrintNumberString_3b` / `Unused_17_DrawDecimalNumber`, `ComputeSeniorCourtStageB` /
-`ComputeRankingProgressIndex`) were renamed to one base name plus bank suffix.
-Names that differ because the copies serve different screens or minigames
+where the routine is read. Names that differ because the copies serve different screens or minigames
 (`IsBallInMedallionMatchHitZone` / `IsBallInTreasureBoxHitZone`, the seven
 `*AwardPointToSide` minigame handlers) keep them; the note says they are the
 same code.
@@ -32,6 +28,14 @@ every bank. The shared bodies carry no per-instruction address comments; the
 `twin` line in each bank has the copy's start address, and each copy's note
 stays above its `twin` line. `tools/banksrc.py` expands the `twin` lines, so
 the tools and the tests still see every bank whole.
+
+A copy nothing reaches is named `Unused_<bank>_<Name>` (`twin_in`), so a
+file below can hold more copies than its live group in the next section.
+`draw_ascii_digit_char`, `draw_corner_brackets`,
+`compute_ranking_progress_index_13`, `get_cell_index_from_cursor_ptr`,
+`get_menu_cursor_index_from_ptr`, `set_menu_cursor_from_index_to_ptr`,
+`move_menu_cursor2_grid_remote`, `move_menu_cursor_grid_remote` and both
+`move_menu_cursor_grid_from_link_input` files have no live copy at all.
 
 `ShotBallPathSlice`/`ShotBallPathPowerSlice` and the topspin pair are the
 same code under different names *and* read their own bank's table, so they
@@ -109,19 +113,22 @@ and `{TWIN}`. Four copies stay separate: the Island Open NPC scripts
 ## The families
 
 * **Ball trajectory (banks `$20`-`$24`, `$29`-`$2c`).** Every shot-solver bank
-  carries the same fifteen helpers: the four `ApplyBallTrajectory*` shapes,
+  carries the same helpers: the five `ApplyBallTrajectory*` shapes,
   `SeekBallTrajEntry4/6`, `SetBallVelocityFromEntry4/6`, `BallTrajEntryPtr4/6`,
   the three `LookupBallPos*` and the two `SetBallTarget*`. The banks differ in
-  their shot tables, not their code (`docs/match_engine.md`).
+  their shot tables, not their code (`docs/match_engine.md`). Most copies are
+  `Unused`; the live ones are the groups below.
 * **Text fetch (thirteen text banks).** `FetchText_<bank>` is the same 40
   instructions in every bank that holds a string pool.
-* **Menu cursor and number drawing (banks `$16`, `$17`, `$1b`, `$38`, `$3b`,
-  `$3e`).** The grid-cursor mover in its local, link and remote forms, the
-  index/pointer converters, the corner-bracket drawer, the ASCII digit and
-  decimal printers and the diacritic-aware name drawer -- a UI library each
-  menu bank got a copy of. Two variants of the mover exist (`$17`/`$1b`
-  against `$38`/`$3b`/`$3e`); the groups below keep them apart.
-* **Story helpers (banks `$0e`-`$15`, `$27`).** `ComputeRankingProgressIndex`
+* **Menu cursor and name drawing (banks `$1b`, `$38`, `$3b`, `$3e`).** The
+  grid-cursor mover, the index converters and the diacritic-aware name
+  drawer -- a UI library each menu bank got a copy of. The link and remote
+  movers, the corner-bracket drawer and the ASCII digit printer were copied
+  too, but no copy of them is live, and of the decimal printer only
+  `DrawDecimalNumber` in bank `$38` is. Two variants of the mover exist
+  (`$17`/`$1b` against `$38`/`$3b`/`$3e`); only `MoveMenuCursorGrid_1b` of
+  the first is live.
+* **Story helpers (banks `$0e`-`$15`).** `ComputeRankingProgressIndex`
   and `ComputeStoryRankTier`, the shared-include pattern that also produced
   the dead copies in `docs/unused_code.md`; plus arrival walk scripts that
   several locations share verbatim.
@@ -134,61 +141,37 @@ and `{TWIN}`. Four copies stay separate: the Island Open NPC scripts
 | copies | instructions | banks | routines |
 |---|---|---|---|
 | 13 | 40 | $1f, $25, $26, $30, $31, $32, $33, $34, $35, $36, $37, $5e, $6e | `FetchText_*` |
-| 9 | 32 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `ApplyBallTrajectory4Capped_*` |
-| 9 | 25 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `ApplyBallTrajectory4_*` |
-| 9 | 32 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `ApplyBallTrajectory6Capped_*` |
-| 9 | 23 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `ApplyBallTrajectory6_*` |
-| 9 | 12 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `BallTrajEntryPtr4_*` |
-| 9 | 15 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `BallTrajEntryPtr6_*` |
 | 9 | 30 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `LookupBallPosByHeight_*` |
-| 9 | 22 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `SeekBallTrajEntry4_*` |
-| 9 | 22 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `SeekBallTrajEntry6_*` |
-| 9 | 79 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `SetBallTargetByPrediction_*` |
-| 9 | 30 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `SetBallTargetFromAim_*` |
-| 9 | 16 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `SetBallVelocityFromEntry4_*` |
-| 9 | 32 | $20, $21, $22, $23, $24, $29, $2a, $2b, $2c | `SetBallVelocityFromEntry6_*` |
-| 8 | 38 | $20, $21, $22, $23, $24, $2a, $2b, $2c | `ApplyBallTrajectoryCapped_*` |
 | 8 | 14 | $20, $21, $22, $23, $24, $29, $2a, $2b | `LookupBallPosByShotIndex_*` |
-| 7 | 31 | $20, $21, $22, $23, $29, $2a, $2b | `LookupBallPosByAim_*` |
 | 7 | 22 | $0b | `NetGameMatch1AwardPointToSide`, `NetGameMatch2AwardPointToSide`, `NetGameMatch3AwardPointToSide`, `ServiceMatch2AwardPointToSide`, `ServiceMatch3AwardPointToSide`, `StrokeMatch2AwardPointToSide`, `StrokeMatch3AwardPointToSide` |
+| 6 | 15 | $20, $21, $22, $23, $24, $2c | `BallTrajEntryPtr6_*` |
+| 6 | 30 | $20, $21, $22, $23, $24, $2c | `SetBallTargetFromAim_*` |
+| 6 | 32 | $20, $21, $22, $23, $24, $2c | `SetBallVelocityFromEntry6_*` |
 | 5 | 13 | $10, $11, $12, $13 | `AcademyMainBldgArrival01_10`, `RestaurantArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaArrival04_13` |
-| 5 | 15 | $16, $17, $1b, $3b, $3e | `DrawAsciiDigitChar_*` |
-| 5 | 12 | $16, $1b, $38, $3b, $3e | `GetMenuCursorIndex_*` |
-| 4 | 31 | $0e, $11, $12, $27 | `ComputeRankingProgressIndex_*` |
-| 4 | 43 | $1b, $38, $3b, $3e | `DrawCornerBrackets_*` |
-| 4 | 26 | $17, $1b, $3b, $3e | `DrawDecimalNumber_*` |
-| 4 | 11 | $16, $38, $3b, $3e | `SetMenuCursorFromIndex_*` |
+| 5 | 22 | $20, $21, $22, $23, $2c | `SeekBallTrajEntry6_*` |
+| 4 | 12 | $1b, $38, $3b, $3e | `GetMenuCursorIndex_*` |
 | 3 | 13 | $10, $11, $12 | `AcademyMainBldgArrival02_10`, `AcademyArrivalArrival01_11`, `DormEntranceArrival02_12` |
-| 3 | 31 | $13, $14, $15 | `ComputeRankingProgressIndex_*` |
+| 3 | 31 | $0e, $11, $12 | `ComputeRankingProgressIndex_*` |
 | 3 | 12 | $1a, $1c, $1d | `DrawConfirmSelectionCursor_*` |
-| 3 | 43 | $17, $1b, $3e | `DrawNameWithDiacritics_*` |
-| 3 | 14 | $16, $3b, $3e | `GetCellIndexFromCursorPtr_*` |
-| 3 | 74 | $16, $38, $3e | `MoveMenuCursorGridFromLinkInput_*` |
-| 3 | 113 | $16, $38, $3e | `MoveMenuCursorGridRemote_*` |
 | 3 | 74 | $38, $3b, $3e | `MoveMenuCursorGrid_*` |
 | 3 | 30 | $0b | `NetGamePractice1HandlePointEnd`, `NetGamePractice2HandlePointEnd`, `NetGamePractice3HandlePointEnd` |
-| 3 | 11 | $16, $38, $3e | `SetMenuCursorFromIndexToPtr_*` |
-| 2 | 20 | $16, $17 | `ApplySpriteWobbleX_*` |
-| 2 | 20 | $16, $17 | `ApplySpriteWobbleY_*` |
+| 3 | 79 | $29, $2a, $2b | `SetBallTargetByPrediction_*` |
+| 3 | 11 | $38, $3b, $3e | `SetMenuCursorFromIndex_*` |
+| 2 | 12 | $24, $2c | `BallTrajEntryPtr4_*` |
 | 2 | 24 | $13, $15 | `ComputeStoryRankTier_*` |
 | 2 | 43 | $38, $3b | `DrawNameWithDiacritics_*` |
 | 2 | 28 | $3b, $3e | `FlushMatchFormatRowToVram`, `FlushMatchRuleRowAttrs` |
-| 2 | 14 | $1b, $38 | `GetMenuCursorIndexFromPtr_*` |
 | 2 | 14 | $6b | `IntroCutsceneState00Update_6b`, `IntroCutsceneState19Update_6b` |
 | 2 | 72 | $0d | `IsBallInMedallionMatchHitZone`, `IsBallInTreasureBoxHitZone` |
-| 2 | 11 | $0f | `IslandOpenFinalDoublesNpc0B_0f`, `IslandOpenRound1DoublesNpc0B_0f` |
-| 2 | 11 | $0f | `IslandOpenRound1DoublesNpc0D_0f`, `IslandOpenSemifinalDoublesNpc0D_0f` |
 | 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04_0f`, `IslandOpenRoundSinglesNpc04_0f` |
 | 2 | 21 | $14, $15 | `LoadCourtPlayerPartnerObjDefs_14`, `SetPlayerPartnerActorSprites` |
-| 2 | 31 | $24, $2c | `LookupBallPosByAim_*` |
 | 2 | 27 | $3b, $3e | `MatchFormatSlideOut`, `CloseMatchRulesPanel` |
 | 2 | 12 | $0e, $15 | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` |
-| 2 | 112 | $16, $3e | `MoveMenuCursor2GridRemote_*` |
-| 2 | 74 | $17, $1b | `MoveMenuCursorGridFromLinkInput_*` |
-| 2 | 74 | $17, $1b | `MoveMenuCursorGrid_*` |
 | 2 | 14 | $0d | `ProjectMedallionMatchWorldPosition`, `ProjectTreasureBoxWorldPosition` |
 | 2 | 19 | $0f, $10 | `ReadSceneTilemapTile_*` |
 | 2 | 13 | $13, $14 | `RestaurantPlazaArrival06_13`, `Court2EntryWalkIn` |
+| 2 | 22 | $24, $2c | `SeekBallTrajEntry4_*` |
+| 2 | 16 | $24, $2c | `SetBallVelocityFromEntry4_*` |
 | 2 | 11 | $20, $21 | `ShotBallPathSlice`, `ShotBallPathPowerSlice` |
 | 2 | 11 | $22, $23 | `ShotBallPathTopspin`, `ShotBallPathPowerTopspin` |
 | 2 | 21 | $08, $0d | `SnapCameraTo`, `SnapCameraTo_0d` |

@@ -52,8 +52,8 @@ is the MBC5 cartridge-RAM gate, so the write sets the gate to the blue value's
 low nibble (usually disabling SRAM, since only `$xa` enables it). Nothing breaks
 because the save engine in bank `$03` always re-enables SRAM before touching it.
 
-Recorded earlier in STATUS's 2026-07-17 naming pass, which called the write a
-no-op; it is a RAM-gate write whose *effect* is benign. It renders as
+Recorded earlier in the 2026-07-17 bank `$00` naming pass (`docs/history.md`),
+which called the write a no-op; it is a RAM-gate write whose *effect* is benign. It renders as
 `ld [rRAMG + 2], a` since the MBC registers were named, which makes it visibly
 wrong rather than looking like an ordinary store to a low address.
 
@@ -104,7 +104,8 @@ it was never written.
 On the singles match-select menu, slot 8 ("Varsity-S Rank 4") dispatches to a
 duplicate of the Junior #3 launcher (`$0002`) rather than its own (`$000b`). The
 handler is named `LoadMatchSinglesJunior3Alias` in this disassembly rather than
-after its caption, because the caption is not what it does. See STATUS.
+after its caption, because the caption is not what it does. See
+`docs/screens_and_ui.md`.
 
 ### The screen shake only ever pushes one way
 
@@ -153,7 +154,7 @@ the sign (a bit of the random word, most likely) was never written.
 
 ### A collision-map read is discarded, so one terrain type never slows the player
 
-`UpdatePlayerControl` (bank `$04`, `$5170`) picks the player's walk speed. The
+`UpdatePlayerControl` (bank `$04`, `$516b`) picks the player's walk speed. The
 running branch sets `$0040`; the walking branch is meant to check the terrain
 under the player first:
 
@@ -192,21 +193,24 @@ The fade engine has two ways to scale a palette. `UpdateFadeOut` and
 .step2:
         ldh a, [hFadeState]
         add a
-        jr nc, .noCarry2         ; -> AdjustColorsBrightness (fade to black)
+        jr nc, .noCarry2         ; -> AdjustColorsBrightness
         ld a, c / and $04
         call z, Unused_00_ApplyWhiteFade
 ```
 
 `hFadeState` is written in five places: `$1d28` stores `$01`, `$1d36` stores
 `$02`, `$1d97` and `$261e` store `$00`, and only `$1d1b` sets bit 7 — with
-`or $80`, inside the unlabelled routine at `$00:$1d0f` that nothing in the ROM
-references. Bit 7 is therefore never set, `add a` never carries, and
+`or $80`, inside `Unused_00_BeginWhiteFadeOut` (`$00:$1d0f`), which nothing in
+the ROM references. Bit 7 is therefore never set, `add a` never carries, and
 `Unused_00_ApplyWhiteFade` (`$00:$1dcc`) never runs even though it is reached by a live
 `call z`.
 
-Every fade in the game is a fade to black. The white-fade code and the routine
-that would have armed it both shipped dead; `docs/screens_and_ui.md` records
-`Unused_00_ApplyWhiteFade` as unreachable, and the reason is a flag with no writer — the
+Every fade in the game runs through `AdjustColorsBrightness`, which adds a
+clamped delta to each colour component, so the fades go through white
+(`docs/screens_and_ui.md` §6.3). The alternate curve and the routine that
+would have armed it both shipped dead; `docs/screens_and_ui.md` records
+`Unused_00_ApplyWhiteFade` as unreachable, and the reason is a flag with no
+writer — the
 same shape as the link-error check above.
 
 ### `LoadMenuTilesBStaged` uploads palettes and code to VRAM as tiles
@@ -280,7 +284,7 @@ bank `$01` debug menus ever makes it nonzero.
 
 ### `ReadBehaviorMapCell` prints its result on every call
 
-`ReadBehaviorMapCell` (`$0a:$5f4e`) reads one behaviour-map cell and then, with
+`ReadBehaviorMapCell` (`$0a:$5f4f`) reads one behaviour-map cell and then, with
 no guard of any kind:
 
 ```
@@ -308,7 +312,7 @@ retail run the two hex digits are written to RAM forever and read by nobody.
 
 ### The glyph buffer's "keep" branch is unreachable
 
-`PrepareGlyphBuffer` (`$05:$72dd`) chooses between starting a fresh glyph run
+`PrepareGlyphBuffer` (`$05:$72dc`) chooses between starting a fresh glyph run
 and continuing the current one:
 
 ```
@@ -329,7 +333,7 @@ and continuing the current one:
 has no callers — it appears in the bank `$05` `$4000` directory only, as the
 `farptr Unused_05_DrawTileAttrRect` slot at `$05:$4020`, and there is no
 `farcall Unused_05_DrawTileAttrRect` anywhere in the ROM, and the only indexed slot references (`dslot`) are data pointers in
-banks `$0a` and `$039`. Nothing increments the count at all.
+banks `$0a` and `$39`. Nothing increments the count at all.
 
 So the count is whatever `ResetTextWindowState`'s block clear left, i.e. 0,
 forever; `PrepareGlyphBuffer` always clears and resets, and `.keepBuffer` is
@@ -382,7 +386,7 @@ that reaches it, and the target is the next instruction, so it is two dead bytes
 where the table-full handler was. Both halves of the overflow story are missing —
 the bound is wrong and there is nothing to run when the bound is hit.
 
-It is latent in practice. The heaviest user found is bank `$017`'s drill
+It is latent in practice. The heaviest user found is bank `$17`'s drill
 briefings (`DrillBriefing_SpinServe`, `$17:$5817`), which register five or six
 tasks per page and call `ClearFrameTasks` between pages, and the duplicate check
 stops a routine being registered twice, so no path found here gets near sixteen
@@ -411,7 +415,7 @@ always returns NZ.
 `inc h` / `dec h` / `ret z` is a house idiom in this bank, but everywhere else it
 is the *first* thing a routine does, guarding an `hl` handed in by the caller:
 `CheckActorScriptEnd` (`$0a:$438a`), `IsActorBusy` (`$0a:$476c`) and the
-unlabelled routine at `$0a:$4750` all open with it. `CheckActorScriptEnd` is the
+`UnusedSetActorMoveTarget` (`$0a:$4750`) all open with it. `CheckActorScriptEnd` is the
 control: it opens with the guard, and its answer is a `cp $00` at the end that
 only a `pop de` stands between and the `ret`, so it reaches its caller intact.
 `GetActorStateAddr` has the two halves in the opposite order — it computes `hl`
@@ -586,7 +590,7 @@ to pick the shot-placement row (`CHARREC_SPEED_BONUS`).
 | `hUnusedLinkByte`, `hUnusedLinkSlot` | serial init | cleared by both link init routines, read by nothing |
 | `hLinkLastRxMirror` | bank `$07` | written beside `hLinkLastRxByte`, never compared |
 | `hUnusedLinkSelectByte` | bank `$38` | written twice by `RunLinkCharSelectScreen` |
-| `wCharSwingHoldFrames` | bank `$08` | `CheckSwingRelease` increments it once per windup frame (`ld hl, $df4e` / `inc [hl]`) and zeroes it on release; no site reads the count, so the charge mechanic it fed is gone |
+| `wCharSwingHoldFrames` | bank `$08` | `CheckSwingRelease` increments it once per windup frame (`ld hl, wCharSwingHoldFrames` / `inc [hl]`) and zeroes it on release; no site reads the count, so the charge mechanic it fed is gone |
 | `wCharSwingHoldButton` | bank `$08` | written on three paths beside the frame count, consumed on none |
 | `wCharWalkTargetFlag` | bank `$08` | zeroed immediately after each write of `wCharWalkTargetX`/`Depth`, at `$69bc` and `$7c82` |
 
@@ -616,7 +620,8 @@ zeros before anything can read it. Per call that is 3072 bytes of copying
 discarded: two 512-byte staging copies plus two 1024-byte expansions.
 
 The clears themselves are load-bearing, which is why this is a dead store and
-not a broken screen. The only two callers are `Unused_1a_ShowExpGainScreen`
+not a broken screen. Both it and its callers are unreachable, so none of this
+runs in the shipped game. The only two callers are `Unused_1a_ShowExpGainScreen`
 (`$1a:$45d4`, `$1a:$475a`), and in WRAM banks `$02`/`$03` the cleared region
 `$d800`-`$dfff` is where the EXP screen keeps its caption rows —
 `Unused_1a_ExpScreenDrawTask` uploads `wCharDataPageSlot1 + 1 * TILEMAP_WIDTH` (`$d800`)
@@ -632,7 +637,7 @@ ROM.
 
 ### `ProjectBallSprite` reads the hit-streak table and throws the value away
 
-`ProjectBallSprite` (`$0d:$5843`) indexes `MinigameHitStreakValueTable_0d` by
+`ProjectBallSprite` (`$0d:$5848`) indexes `MinigameHitStreakValueTable_0d` by
 `wMinigameHitStreak` — the split-base `ld_hl_indexed`, so this is deliberate
 addressing, not an accident — loads the entry into `b`, and then immediately
 overwrites it:
@@ -680,15 +685,15 @@ It reads the two camera bytes into `hl` and writes exactly those values back, so
 past the guards the routine has no effect whatsoever. Whatever the write-back
 was meant to transform -- a shift, an add, a clamp -- is not there.
 
-Nothing calls it in any traced run, and no proven code takes its address, so it
-may simply be an abandoned edit rather than a live no-op. It is recorded here
+Nothing reaches it (`tools/reach.py`), so it is an abandoned edit, not a live
+no-op. It is recorded here
 because the shape is a bug's fingerprint: the read/write-back pair is what a
 read-modify-write looks like with the modify deleted. Found by seeding it as
 code, which is why it read as 30 bytes of data until 2026-07-29.
 
 ## Routines that return before their body
 
-Routines in the ROM that are *called* but begin with `ret`, so their bodies
+Routines in the ROM that begin with `ret`, so their bodies
 never run. Twenty of them are one family, and they are listed here rather than
 under Bugs because what they do is coherent — but the intent behind them is not
 something the code can settle, so this section claims only what is observable.
@@ -698,10 +703,10 @@ event code to that drill's `JudgePoint`:
 
 | routine | hook | event code |
 | --- | --- | --- |
-| `<Drill>JudgeOnPointEnd` | `Hook_PointEnd` | 0 |
-| `<Drill>JudgeOnBallHit` | `Hook_BallHit` | 1 |
-| `<Drill>JudgeOnBounce` | `Hook_Bounce` | 2 |
-| `<Drill>JudgeOnRallyTick` | `Hook_RallyTick` | 3 |
+| `<Drill>JudgeOnPointEnd` | `<Drill>Hook_PointEnd` | 0 |
+| `<Drill>JudgeOnBallHit` | `<Drill>Hook_BallHit` | 1 |
+| `<Drill>JudgeOnBounce` | `<Drill>Hook_Bounce` | 2 |
+| `<Drill>JudgeOnRallyTick` | `<Drill>Hook_RallyTick` | 3 |
 
 `JudgePoint` dispatches on `wRallyLength` and then on the event code, and
 returns early if `wDrillPointJudgement` is already set, so the first event to
@@ -710,8 +715,8 @@ judge a point wins.
 Fifteen drills, four judges each, 20 of the 60 beginning with `ret` — and
 **which** ones varies:
 
-* 9 drills disable `JudgeOnRallyTick` only (the stroke and net-game practice
-  drills);
+* 9 drills disable `JudgeOnRallyTick` only (`StrokeMatch1`-`3`,
+  `StrokePractice1`-`3`, `NetGamePractice1`-`3`);
 * 5 disable `JudgeOnBounce` and `JudgeOnRallyTick` (`ServiceMatch1`/`3`,
   `NetGameMatch1`/`2`/`3`);
 * 1 disables `JudgeOnBounce` while leaving `JudgeOnRallyTick` live
@@ -738,28 +743,31 @@ named for what they do now, with the leading `ret` recorded in the note:
 | `StubNop_0b_5d63` | `NetGamePractice1JudgeOnRallyTick` | the drill's fourth judge |
 | `StubNop_0b_6ceb` | `StrokePractice1JudgeOnRallyTick` | the drill's fourth judge |
 | `StubLoadFontTiles` | `Unused_18_LoadFontTiles` | copies `FontTiles` to `$9000` |
-| `StubNop_1b_664a` | `LoadUnlockDebugNavGridGfx` | decompresses and uploads debug-screen artwork |
+| `StubNop_1b_664a` | `Unused_1b_LoadUnlockDebugNavGridGfx` | decompresses and uploads debug-screen artwork |
 | `StubAlwaysNotZero` | `Unused_02_CheckExpAwardAllowed` | the EXP-award gate — see below |
 | `StubNop_05_49dc` | `Unused_05_PagedMenuFrameTask` | a live frame task whose body has no effect |
 
-The other 32 `StubNop_*` labels have a bare `ret` for a body and keep the
-name, which for them is accurate.
+The other 53 labels containing `StubNop` (most of them
+`Unused_<bank>_StubNop*`) have a bare `ret` for a body and keep the name,
+which for them is accurate.
 
 `Unused_02_CheckExpAwardAllowed` is worth its own line. `Unused_02_AddExpToCa00RecordChecked` calls
 it and returns on z, but it cannot return z: `xor a` / `dec a` sets the flags
 from `$ff` and the following `ld a, c` restores the caller's `a` without
-touching them. The gate always passes and the award always happens. Whatever
+touching them. The gate always passes, so the award would always happen, but
+`Unused_02_AddExpToCa00RecordChecked` is itself unreachable and never runs. Whatever
 condition it was meant to test is not in the ROM.
 
-`Unused_05_PagedMenuFrameTask` is the other interesting one: it is genuinely registered
-per frame by `Unused_05_RunPagedTextMenuAutoSize` and unregistered when the menu closes,
-so the plumbing around it is real — but the body reads `wMenuCursorRow` into `a`
-and then `pop af` discards it. The task runs and does nothing.
+`Unused_05_PagedMenuFrameTask` is the other interesting one:
+`Unused_05_RunPagedTextMenuAutoSize` registers it as a frame task and
+unregisters it when the menu closes, but that routine is unreachable too, so
+the task never runs. Its body reads `wMenuCursorRow` into `a` and then
+`pop af` discards it.
 
 ### The scene viewer indexes the slot table with the wrong stride
 
 `SceneGfxSlotTable` (`$0a:$59d9`) is 592 bytes = **37 records of eight slot
-words**, and `GetSceneSlotPtr` (`$0a:$5d0f`) walks it correctly — four
+words**, and `GetSceneSlotPtr` (`$0a:$5d0b`) walks it correctly — four
 `add hl, hl` for `16 * scene`, then `+ 2 * slot`:
 
 ```
@@ -796,10 +804,11 @@ scene's graphics entirely.
 
 **It has never been noticed because only debug code calls it.** Its one caller
 is `Unused_0a_LoadAndDisplayScene` (`$0a:$5de2`), and that routine's four callers are
-`Unused_0a_SceneViewerSelectScene`, `Unused_0a_InitSceneViewer` and `Unused_0a_InitSceneViewerDefault` — the
-scene viewer, which hangs off `Unused_0a_RunSceneSelectDebugMenu` and is reachable only
-through the in-game debug menu (itself gated on `hDebugStepMode`, which nothing
-in the retail build sets). No `farcall` to `Unused_0a_LoadAndDisplayScene` exists outside
+`Unused_0a_SceneViewerSelectScene`, `UnusedSceneViewerSelectSceneMenu`,
+`Unused_0a_InitSceneViewer` and `Unused_0a_InitSceneViewerDefault` — the scene
+viewer, which hangs off `Unused_0a_RunSceneSelectDebugMenu`. Only its slot row
+(`FarPtr_Unused_0a_RunSceneSelectDebugMenu`) names that routine, and no
+`farcall` of the slot exists, so nothing reaches it, the debug menu included. No `farcall` to `Unused_0a_LoadAndDisplayScene` exists outside
 bank `$0a`, despite its directory slot at `$4078`.
 
 
@@ -835,9 +844,9 @@ amount of play can prove them. They had been attributed to
 ### A confirm-screen suite in bank `$1b` that nothing can reach
 
 `$1b:$69d9`-`$6aa0` holds seven complete routines with no way in. They sit
-immediately after `Unused_1b_StubNop_1b_09` — three bare `ret`s that *are* legitimately
-used, registered as a no-op frame task around `Unused_18_RunTwoOptionSelectB`
-(`$1b:$69b9`/`$69c5`) — so the disassembler attributes the whole run to that
+immediately after `Unused_1b_StubNop_1b_09` — three bare `ret`s that
+`Unused_1b_RunStoryDataConfirmMenu` registers as a no-op frame task around
+`Unused_18_RunTwoOptionSelectB` (`$1b:$69b9`/`$69c5`), both unreachable as well — so the disassembler attributes the whole run to that
 label, which is why they read as part of a stub.
 
 They are a working screen: `Unused_1b_ShowHighScoreConfirmScreen` sets
@@ -905,7 +914,9 @@ entirely: `RunStoryLocation`'s frame loop calls `RunDebugMenu` (`$05:$66a0`)
 whenever `hDebugStepMode` is nonzero and no script or tile trigger is active
 (`$0a:$50b4`). That one is live, and its four handlers are a warp menu, a text
 subcommand, a palette editor and a game-flag editor. Since nothing in the retail
-build sets `hDebugStepMode` except the unreachable dispatcher above, it is
+build sets `hDebugStepMode` except `InitAndRunGame`, which sets it to 3 at
+`.loopB` (`$01:$40bd`) only if `RunStoryModeOverworld` returns, and the
+`Unused` debug screens, it is
 unreachable in practice too — but only by one byte, not by a missing jump.
 
 

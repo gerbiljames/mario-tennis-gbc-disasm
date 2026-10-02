@@ -3493,10 +3493,10 @@ wDialogueWindowId:: db
 wDialogueWindowCol:: db
 ; [8-bit] Dialogue window top-left tilemap row (wrapped to $1f)
 wDialogueWindowRow:: db
-; [8-bit] Dialogue window height in cells, from b at CreateDialogueWindow
-wDialogueWindowHeight:: db
-; [8-bit] Dialogue window width in cells, from c at CreateDialogueWindow
+; [8-bit] Dialogue window width in cells, from b at CreateDialogueWindow
 wDialogueWindowWidth:: db
+; [8-bit] Dialogue window height in cells, from c at CreateDialogueWindow
+wDialogueWindowHeight:: db
 ; [8-bit] Re-entrancy guard around RedrawActiveTextWindow: the delay/wait text commands only redraw while it is 0, and set it for the duration of their own redraw
 wTextRedrawGuard:: db
 ; [8-bit] Column of the text-drawing cursor, 0-31. RenderTextString seeds it from d masked to $1f alongside wTextCursorRow, and TextCmdNewline reloads it into d for the GetTilemapCellAddress call that re-points the write pointer -- d is the column there, e the row (the row counter is what steps hl by $0020).
@@ -3646,7 +3646,7 @@ wSceneTileAnimSrcPtr:: dw
 ; window system (bank $05)
 ; [64 bytes] Eight 8-byte window records, indexed by window id (GetWindowStructPtr masks the id to 3 bits and shifts left 3):
 ;   +$00 column, +$01 row (both wrapped to $1f by SetWindowRect)
-;   +$02 height in cells, +$03 width in cells
+;   +$02 width in cells, +$03 height in cells
 ;   +$04 state, read and written through GetWindowState / SetWindowState
 ;   +$06 text id (lo/hi), stored by SetWindowTextId; $03 in the high byte
 ;        is the "no text" sentinel RenderWindowText bails on

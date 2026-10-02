@@ -1,6 +1,6 @@
 # Bank 0 annotation notes
 
-Routines identified in `src/bank_000.asm`.
+Routines identified in bank 0 (`src/home/`, included by `src/bank_000.asm`).
 Bank 0 is the fixed home bank: it holds the reset vectors, all interrupt
 handlers, the far-call/bank-switch trampolines, core memory/VRAM/OAM
 helpers, the joypad driver, the sound engine, and the soft-reset routine
@@ -13,17 +13,21 @@ that the VBlank handler jumps to when it detects the reset button combo.
   points at a table of `dw` targets right after the `rst 0` call site),
   indexes it by `a * 2`, loads the target address, and falls into
   `JumpToHL` (`$06ce`, `jp hl`).
-- `Rst10` and `Rst18` both jump to `FarCall` (`$01b6`), the bank-switch
-  "far call" trampoline: it reads a bank:address operand encoded after
-  the `rst` call site, saves/restores the ROM bank shadow byte at
-  `$ff95` and the `$2000` MBC bank register, and calls through.
+- `Rst18` jumps to `FarCall` (`$01b6`), the bank-switch "far call"
+  trampoline (the `farcall` macro): it reads two inline bytes after the
+  `rst` -- a slot in the target bank's `$4000` pointer table, then the
+  bank -- saves/restores the ROM bank shadow byte at `$ff95` and the
+  `$2000` MBC bank register, and calls through that slot. The bytes at
+  `$0010` are also a `jp FarCall`, but they sit unlabelled inside the
+  padding under `Rst08` and nothing executes `rst $10`.
   `CopyDataFromBank` (`$021a`) and `DecompressDataFromBank` (`$0234`)
-  are the same bank-switch-then-call pattern, but driven from a pointer
-  table at `$4000` instead of an inline operand, used to fetch a
-  `CopyMemoryBC`/`DecompressData` routine's arguments from another bank.
-- `Rst08` reaches `$2fb3` (still auto-named), which parses an inline
-  byte stream after the call site and dispatches into the sound engine
-  (`PlaySound`) — the sound-effect/music trigger call.
+  are the same bank-switch-then-call pattern, but take the bank in `h`
+  and the `$4000`-table slot in `l` instead of inline bytes, used to
+  fetch a `CopyMemoryBC`/`DecompressData` routine's arguments from
+  another bank.
+- `Rst08` reaches `PlaySoundCmd` (`$2fb3`), which reads one inline
+  sound-id byte after the call site (the `sound` macro) and dispatches
+  into the sound engine — the sound-effect/music trigger call.
 - The three low interrupt vectors (`VBlankInterrupt` $0040,
   `LCDStatInterrupt` $0048, `TimerInterrupt` $0050) each just `jp` to
   their real handler bodies, which are now named `VBlankHandler`
@@ -43,7 +47,7 @@ that the VBlank handler jumps to when it detects the reset button combo.
 
 | Name | Address | Purpose |
 |---|---|---|
-| `FarCall` | `$01b6` | Bank-switch trampoline used by `rst $10`/`rst $18`; saves/restores the ROM bank via `$ff95`/`$2000` around a far call. |
+| `FarCall` | `$01b6` | Bank-switch trampoline used by `rst $18` (`farcall`); saves/restores the ROM bank via `$ff95`/`$2000` around a far call. |
 | `CopyDataFromBank` | `$021a` | Switches to bank `h`, looks up a pointer in a table at `$4000`, and memcpy's via `CopyMemoryBC`. |
 | `DecompressDataFromBank` | `$0234` | Same as above but decompresses via `DecompressData`. |
 | `ClearBothVRAMBanks` | `$024e` | Clears a full 8 KB VRAM bank (`$8000`-`$9fff`) in both GBC VRAM banks (VBK 1 then VBK 0). |

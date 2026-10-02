@@ -3,8 +3,7 @@
 Overworld/story actors (the entities placed by `map_actor` records) are driven
 by a small stack-less bytecode interpreter. Each actor's behaviour is a script:
 a variable-length blob of 1-byte opcodes, each followed by 0–4 operand bytes.
-These blobs were previously labelled `ActorObjDef_*` and dumped as `INCBIN`; they
-are now labelled `ActorScript_*` and rendered with the `as_*` macros
+These blobs are labelled `ActorScript_*` and written with the `as_*` macros
 (`include/macros.inc`).
 
 Note this is unrelated to the 16-byte *object definition* record selected by
@@ -21,7 +20,7 @@ field is a pointer to a script blob.
    free actor slot (24 slots of `$40` bytes from `$d000`, WRAM bank $04) and
    stores the script pointer into the slot: `+$00/+$01` = address, `+$02` =
    bank, `+$03` = wait counter (0).
-2. The per-frame actor loop (`$04:$41e7`) calls **`StepActorScript`**
+2. The per-frame actor loop `UpdateActors` (`$04:$41e7`) calls **`StepActorScript`**
    (`$04:$4229`) for each live slot, with the slot base in `bc` and its low
    byte cached in `hActorPtr` (`$ffea/$ffeb`).
 3. `StepActorScript` yields immediately if `+$05` bit0 is set (paused) or while
@@ -36,8 +35,7 @@ A script is really a **pool of fragments**, each ending in an `as_jump`
 back-edge that loops it forever. Different actors and animation states enter the
 same blob at different offsets, so a blob may begin with `as_halt` (an inert
 static prop) yet still contain a live movement loop that other entrants jump
-into. The disassembler emits a local label (`.L<off>`) at every in-blob jump
-target.
+into. Every in-blob jump target carries a local label (`.L<off>`).
 
 ## Opcode reference
 
@@ -105,50 +103,40 @@ for the move and 120 frames, repeat.
 - **`script_set_actor_script actor, addr`** — the macro for
   `ScriptSetActorScript`; `addr` is a script installed at runtime. Every such
   site's target is labelled `ActorScript_*`.
-- **`dw` selector tables** — e.g. `StoryCmdHandlersC_13` (`$13:$526a`), where an
-  index picks one of several entry points.
+- **`dw` selector tables** — e.g. `DormRoomNpc04IdleScripts_13` (`$13:$526a`),
+  which `SetRandomDormRoomNpc04Script_13` indexes with a random 0-7 to pick
+  one of four entry points.
 
 ## Multiple entry points
 
 A blob can be entered at several offsets — overlapping scripts that share a tail.
-`StoryCmdHandlersC_13` lands at offsets 0/24/34/44 inside one 95-byte blob (a
-wander loop, two one-shots, a patrol loop); the shared body at `$11:$5b14…$5d27`
+`DormRoomNpc04IdleScripts_13` lands at offsets 0/24/34/44 inside one 95-byte
+run (`ActorScript_13_00`…`_03`, `$13:$585f`-`$58bd`: a wander loop, two
+one-shots, a patrol loop); the shared body at `$11:$5b14…$5d27`
 has ~20 entry points. Each entry point gets its own `ActorScript_*` label, and
 the blob splits into one `actor_script` region per label. Execution flows from
 one labelled fragment into the next (fall-through) or jumps between them: an
 `as_jump` whose target is another entry point renders as that global label
-(`as_jump ActorScript_11_04`) rather than a local `.L`. `decode_actor_script`
-accepts a jump target that is a known script label even when it lands outside the
-current segment. (`StoryCmdHandlersC_13` was originally mis-seeded as code — its
-"handlers" are script fragments, not routines; likewise `$10:$741c`.)
+(`as_jump ActorScript_11_04`) rather than a local `.L`.
 
-## Blobs that decode as scripts but are unreferenced
+## Blobs that decode as scripts but have no outside reference
 
-Five story-bank blobs decode as clean looping scripts yet have **no** traceable
-reference — nothing installs, jumps to, calls, or points at them
-(`$0e:$7ca4`, `$13:$62db`, `$14:$78e7`, `$15:$7a23`, `$27:$4b41`). Decoding as a
-script is suggestive but not proof, so they are left `INCBIN` (unclassified)
-rather than labelled on shape alone. Candidates for a future pass if a reference
-turns up (e.g. a computed or cross-bank pointer).
+Five story-bank blobs decode as clean looping scripts yet have no reference
+from outside themselves. Two are rendered as scripts whose only reference is
+their own `as_jump`: `ActorScript_0e_23` (`$0e:$7ca4`) and `ActorScript_14_4`
+(`$14:$78e7`). The other three stay `db` rows, since decoding as a script is
+suggestive but not proof: `Table_13` (`$13:$62db`), `Table_15` (`$15:$7a23`)
+and `Unused_27_ActorLists` (`$27:$4b41`).
 
-## Blobs with an unclassified tail
+## What follows a script
 
-Five blobs are a script followed by a run of bytes that are **not** actor-script
-opcodes. What those tail bytes are has not been established — they were never hit
-in the available execution traces and nothing points at them — so they are left
-**unclassified** (`INCBIN`, tagged `unclassified tail`), *not* assumed to be
-code or data:
+A script ends at its last opcode, and the bytes after it are classified in
+the source. For five scripts, what follows is:
 
-| Blob | Script prefix | Tail |
-|------|---------------|------|
-| `ActorScript_0f_11` | 10 B | 572 B |
-| `ActorScript_12_44` | 123 B | 3 B |
-| `ActorScript_15_25` | 28 B | 71 B |
-| `ActorScript_27_05` | 25 B | 128 B |
-| `ActorScript_27_33` | 133 B | 120 B |
-
-The generator decoded the clean prefix and stopped at the first non-opcode
-byte, emitting the prefix as `as_*` macros and the remainder as the tail
-blob (`decode_actor_script` in `tools/disasmlib/datatables.py` at tag
-`generator-final`). Classifying the tails is future work, now done by hand
-in the source.
+| Script | Followed by |
+|--------|-------------|
+| `ActorScript_0f_11` | four `Unused_0f_MapScript*` routines, then `ActorScript_0f_12` |
+| `ActorScript_12_44` | more scripts (`ActorScript_12_45` onward) |
+| `ActorScript_15_25` | `Unused_15_ComputeRankingProgressIndex` and `ComputeStoryRankTier_15` |
+| `ActorScript_27_05` | `ActorScript_27_06`, then `Unused_27_Record` (16 bytes, contents not established) and palettes |
+| `ActorScript_27_33` | `Unused_27_ComputeRankingProgressIndex` and `Unused_27_SetStoryRankTier` |

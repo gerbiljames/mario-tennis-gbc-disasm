@@ -66,9 +66,9 @@ CreateWindow:
 CreateDialogueWindow:
 	push hl ; $4688
 	ld a, b ; $4689
-	ld [wDialogueWindowHeight], a ; $468a
+	ld [wDialogueWindowWidth], a ; $468a
 	ld a, c ; $468d
-	ld [wDialogueWindowWidth], a ; $468e
+	ld [wDialogueWindowHeight], a ; $468e
 	push de ; $4691
 	call CreateWindowFromScreenRect ; $4692
 	ld [wDialogueWindowId], a ; $4695

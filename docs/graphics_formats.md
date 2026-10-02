@@ -22,8 +22,8 @@ below).
 
 Every file under `data/` is named after its label in the source
 (`data/bank_040/AlexSpriteFrame00.bin`; an `lz_` prefix marks a compressed
-stream, `lz_MenuFontTiles_01.bin`; a blob nothing names keeps an address
-name, `d_4004.bin`). Every blob that is a whole number of 8x8 tiles — the
+stream, `lz_DmgLockoutTilesLZ_01.bin`; a blob nothing names keeps an
+address name, `d_000b.bin`). Every blob that is a whole number of 8x8 tiles — the
 manifest tags them `gfx` — is extracted to a PNG beside its `.bin`: the
 tiles in blob order, sixteen per row, as a four-colour indexed image with
 the tile count in the file. `make` re-encodes any blob whose PNG is newer
@@ -38,8 +38,9 @@ The copies that put a blob into VRAM follow its size where the source can
 say so: a whole copy of a raw blob is `ld c, (Next - Blob) / 16`, and a
 whole copy of a decompressed stream is `ld c, Blob_SIZE / 16`, with
 `Blob_SIZE` the decoded length in a `data/<bank>/lz_Blob.inc` that `make`
-derives from the `.bin` (`tools/lz.py --size-inc`) and the bank source
-INCLUDEs after the INCBIN. A partial copy keeps its literal count with a
+derives from the `.bin` (`tools/lz.py --size-inc`) and the source
+INCLUDEs after the INCBIN, or in the holder (`src/bank_XXX.asm`) of the
+bank that does the copy when that is another bank. A partial copy keeps its literal count with a
 comment naming the blob and the tiles it takes. The copies that remain
 plain literals decode through a helper the emitter cannot follow.
 
@@ -145,8 +146,8 @@ control byte plus the `$0000` reference); mid-group it consumes only the
 `$0000` and the third byte is never read.
 
 `tools/lz.py`'s `decompress()` counts that authored-but-unread byte so extents
-match the encoder's output. Its docstring records the census: **142 mid-group
-streams all pad with `$00`, 22 fresh-group streams have no pad.**
+match the encoder's output. Over the whole corpus, **697 mid-group streams
+all pad with `$00`, 142 fresh-group streams have no pad.**
 
 Because `d = 0x800 - distance`, a distance of exactly 2048 with the minimum
 length encodes as `$0000` — indistinguishable from the terminator. `lz.py`'s
@@ -164,35 +165,38 @@ length encodes as `$0000` — indistinguishable from the terminator. `lz.py`'s
 entry of the bank's word table at `$4000` and calls `DecompressData` on the
 result. So a **slot word** `bbss` means "bank `$bb`, entry `ss/2` of that
 bank's `$4000` directory". This is the same encoding `dslot` emits
-(`include/macros.inc:31`) and the same one `CopyDataFromBank` (`$00:$021a`)
+(`include/macros.inc:33`) and the same one `CopyDataFromBank` (`$00:$021a`)
 uses for uncompressed payloads.
 
-282 `call`/`jp` sites reach `DecompressData` or `DecompressDataFromBank`
-(counted over `src/bank_*.asm`).
+282 `call` sites reach `DecompressData` or `DecompressDataFromBank`
+(counted over `src/`).
 
 ### 1.5 The corpus, measured
 
-`data.manifest` declares **619** LZ streams (`grep -c /lz_ data.manifest`).
+`data.manifest` declares **839** LZ streams (`grep -c /lz_ data.manifest`).
 Running `python3 tools/check.py` at HEAD:
 
 ```
-lz           619 checked, 0 failed
-lz-labels    619 checked, 0 failed
+lz           839 checked, 0 failed
+lz-labels    839 checked, 0 failed
 ```
 
-`check_lz` (`tools/check.py:47`) requires each stream to decode using *exactly*
+`check_lz` (`tools/check.py:64`) requires each stream to decode using *exactly*
 its declared extent and to survive a re-encode round trip, so the format above
 is verified in both directions over the whole ROM, not inferred from a sample.
 
-Decompressing all 619 (via `tools/lz.py`'s `decompress`):
+Decompressing all 839 (via `tools/lz.py`'s `decompress`):
 
-* **264,869 compressed bytes → 684,416 decompressed** — 38.7%.
-* **Every one of the 619 decompresses to a multiple of 16 bytes.** No
-  exceptions. This is the strongest structural fact about the corpus: the
-  streams are sized in whole tiles or whole map planes.
-* Sizes: min 32, max 4096. The mode table is
-  1024 (×198), 256 (×78), 64 (×73), 4096 (×68), 320 (×48), 144 (×44),
-  240 (×40), 512 (×6).
+* **315,831 compressed bytes → 804,924 decompressed** — 39.2%.
+* **803 of the 839 decompress to a multiple of 16 bytes**: the streams are
+  sized in whole tiles or whole map planes. The 36 that are not are small
+  tilemap/attrmap rect streams in banks `$1a`-`$1e` (the
+  `CharDataScreen*` / `CharDataConfirmScreen*` streams and the
+  `Results*Tilemap_1e` / `ResultsPlayerPanelAttrmap_1e` streams), 9 to 90
+  bytes each.
+* Sizes: min 9, max 4096. The mode table is
+  1024 (×202), 256 (×109), 64 (×105), 4096 (×84), 320 (×71), 144 (×44),
+  32 (×40), 240 (×40), 576 (×13), 96 (×7).
 
 Two individual streams, decoded with `python3 tools/lz.py baserom.gbc <off>`:
 
@@ -236,7 +240,7 @@ at `$0a:$58f9`) rather than writing bare offsets.
 ### 2.2 `QueueVRAMCopy` counts tiles, not bytes
 
 `QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`) is **the only way
-anything reaches VRAM**: 613 `call`/`jp` sites, and not one direct
+anything reaches VRAM**: 610 `call` sites, and not one direct
 `ld [$8xxx], a` anywhere in the ROM (both counts re-derived by grep over
 `src/`).
 
@@ -306,7 +310,7 @@ Court and menu screens use the flat 32×32 form instead — `wShadowTilemap`
 ### 2.5 The `tilemap` spec
 
 70 regions carry the `tilemap` spec (the `(tilemap:W)` comment on the
-region's first line in the source). `render_tilemap` (`tools/extract.py:340`)
+region's first line in the source). `render_tilemap` (`tools/extract.py:389`)
 emits
 
 ```asm
@@ -319,7 +323,7 @@ emits
 with the width from the spec parameter (`tilemap:20` etc., default 20). The
 macros assert the geometry at assembly time — `tilemap_row` checks the byte
 count against the declared width and `tilemap_end` checks both the row count
-and `@ - _TM_START == _TM_W * _TM_H` (`include/macros.inc:572-581`). A
+and `@ - _TM_START == _TM_W * _TM_H` (`include/macros.inc:1012-1027`). A
 mis-declared width therefore fails the build rather than silently reflowing.
 A trailing partial row stays literal `db`.
 
@@ -492,7 +496,7 @@ A **sprite template** is a list of 4-byte OAM rows terminated by a single
 `$80` byte:
 
 ```asm
-	oam_sprite dy, dx, tile, attr      ; include/macros.inc:631
+	oam_sprite dy, dx, tile, attr      ; include/macros.inc:1078
 	...
 	oam_sprite_end                     ; $80
 ```
@@ -513,13 +517,10 @@ When `bit 5` of the base attr is set (OAM X-flip), a second loop runs
 (`$1ee0`-`$1f05`): X becomes `base_x + (8 - dx)` (`cpl` / `add $09`), and the
 attribute byte is combined with **`or`** rather than `add` (`$1f01`).
 
-`render_sprite_template` (`tools/extract.py:426`) emits the macro form.
-21 regions were declared `sprite_template` by hand when the source was
-generated; the rest were carved by the generator's template scan, which
-only matched opcode `$cd` (`call`) — so a template reached by
-`jp QueueSpriteTemplate` is missed and renders as `bytes:4`.
-`StandingShadowOamTemplate` (`$08:$6301`) is one such: a genuine template that
-does not use the macro in source.
+170 regions are sprite templates, written in the source as `oam_sprite`
+rows ending in `oam_sprite_end`. `StandingShadowOamTemplate` (`$08:$6301`)
+is the one reached by `jp QueueSpriteTemplate` (`DrawStandingShadowSlot`,
+`$08:$6534`); every other template is reached by `call`.
 
 ### 4.2 The sprite queue
 
@@ -556,8 +557,8 @@ The game names 31 of the walk sprites itself: `CharObjectIdTable`
 overworld object, so `OBJ_ALEX`, `OBJ_MARIO`, `OBJ_YOSHI` and the rest are
 those rows (the two unused roster slots share `OBJ_BALLOON_ELLIPSIS`). Ids
 `$56`-`$59` are `OBJ_ALEX_B`, `OBJ_NINA_B`, `OBJ_HARRY_B`, `OBJ_KATE_B`: the
-same four drawings with fewer frames, which `LoadCourtPlayerPartnerObjDefs`
-and the ending scenes load as `base + gender`, so each male/female pair sits
+same four drawings with fewer frames, which
+`LoadCourtPlayerPartnerObjDefs_14` and the ending scenes load as `base + gender`, so each male/female pair sits
 side by side. Twenty-two more are named from their graphics (2026-09-27): the eight
 speech balloons (`OBJ_BALLOON_EXCLAIM`, `_QUESTION`, `_ANGRY`, `_ELLIPSIS`,
 `_SCRIBBLE`, `_MUSIC`, `_SHOCK`, `_SWEAT` -- the unused roster slots' entry in
@@ -568,9 +569,9 @@ awards ceremony hands over by swapping object definitions), `OBJ_TOAD`,
 (`OBJ_WEIGHTLIFTER_A/B`, `OBJ_SITUPS_A/B`, `OBJ_JUMPING_JACKS_A/B`) and
 `OBJ_INVISIBLE`, whose graphics are all zero (the Tournament Courtyard's
 talk targets). A single-facing object (header byte 1 = 1) uses only the
-first 16x16 of each frame blob. The remaining 33 are the anonymous students
-and staff of `docs/story_mode.md`. Bank `$6a` holds eight more walk sprites
-no object id reaches.
+first 16x16 of each frame blob. The remaining 31 (`OBJ_WALK_<bank>_<slot>`)
+are the anonymous students and staff of `docs/story_mode.md`. Bank `$6a`
+holds five more walk sprites no object id reaches.
 
 `LoadActorObjectDef` (`$04:$4ac6`) copies the header to `wActorObjDef` and
 expands it into the actor struct; `SetupCharSpriteFromObjectDef` (`$04:$4b68`)
@@ -579,7 +580,7 @@ words:
 
 | off | actor field | char symbol | meaning |
 |---|---|---|---|
-| +0 | +$37 | `wCharSpriteAttr` / `wCharGfxBank` | OAM attribute / CGB OBJ palette. `$63` is a sentinel that reroutes word 2 to `LoadPalettesMasterOnly` (`$04:$4b2b`); no object in the table uses it |
+| +0 | +$37 | `wCharSpriteAttr` / `wCharGfxBank` | OAM attribute / CGB OBJ palette. `$63` is a sentinel (`cp $63` at `$04:$4b2b`): `LoadActorObjectDef` then stores attr `$02` and loads the 8-byte palette at +8 into OBJ palette 2 via `LoadPalettesMasterOnly` (`$00:$05e1`); no object in the table uses it |
 | +1 | +$35 | — | **facing count**. `UpdateActorFacingFromHeading` (`$04:$5673`, `$5687`) forces facing 0 when this is 1 |
 | +2,+3 | — | — | not read by either loader |
 | +4,+5 | +$24 | `wCharFrameTablePtr` | frame-pointer array |
@@ -593,13 +594,13 @@ then adds the `FACE_*` value (`$00`/`$40`/`$80`/`$c0`,
 `include/constants.inc`) as a **byte offset inside the frame**, and uploads
 `c = $04` tiles → a 16×16 metasprite drawn as two 8×16 objects.
 
-Word 1 is what `SetActorAnimation` (`$04:$4bbe`, body at `$4bde`) and
+The +6 word is what `SetActorAnimation` (`$04:$4bbe`, body at `$4bde`) and
 `SetCharAnimation` (`$08:$69ea`, body at `$69fc`) index by `animation id * 2`
 to reach the animation **script** pointer, and the walk-sprite banks name it
-that way: `WalkSprite_bb_ss_AnimPtrs` and the scripts it points at
-`..._AnimNN`, rendered as §4.4 `anim_*` macros. (They were `_OamPtrs` /
-`_OamNN` until 2026-09-10, and the header renderer commented byte 0 as a
-count; it now reads `OAM attr, facing count, unread, unread`.)
+that way: `WalkSprite_<bank>_<slot>_AnimPtrs` (e.g.
+`WalkSprite_6f_00_AnimPtrs`) and the scripts it points at `..._AnimNN`,
+rendered as §4.4 `anim_*` macros. The header's first row is commented
+`OAM attr, facing count, unread, unread`.
 
 ### 4.4 Animation scripts
 
@@ -612,9 +613,9 @@ its operand.
 | `ff dd` | `anim_loop dd` | restart at script base + `dd` |
 | `fe aa` | `anim_set aa` | switch to animation `aa` |
 | `fb mm` | `anim_flip mm` | `attr = (attr & $0f) ^ mm` — **bank `$08` only** |
-| `fd` (and any other `$f0`-`$fd`) | *no macro* | hold the current frame forever; **one byte** |
+| `fd` (and any other `$f0`-`$fd`) | `anim_hold $fd` | hold the current frame forever; **one byte** |
 
-The macros are `include/macros.inc:218-233`, whose own comment already records
+The macros are `include/macros.inc:644-666`, whose own comment already records
 the last row: "bank `$04` treats any unrecognised `$f0`-`$fd` command as 'hold
 this frame'." The interpreters write `$ff` to the delay field and never advance
 the script pointer (`$04:$55f3`, `$08:$77b6`).
@@ -624,13 +625,9 @@ loose: the code is `and $0f` *then* `xor d`, so it clears bits 4-7 first and
 `$fb mm` **replaces** the high nibble. With the operands that actually occur
 (`$20`, `$00`) the difference is invisible.
 
-The generator's `render_sprite_anim` (`tools/disasmlib/datatables.py` at tag
-`generator-final`) returned `None`
-for anything it could not account for, deliberately, so a mis-declared region
-falls back to plain `db` rather than rendering a lie. Every declared script
-renders (570 character-bank scripts; 635 walk-sprite scripts in banks `$6a`,
-`$6f`, `$70`-`$77`), and 34 of them end on a byte the macros cannot spell,
-which is written as a commented `db`:
+Every script is written with these macros (570 character-bank scripts;
+635 walk-sprite scripts in banks `$6a`, `$6f`, `$70`-`$77`), and 34 of them
+end on a byte the macros cannot spell, which is written as a commented `db`:
 
 - **An unread hold operand.** `SeanSpriteAnim04` (`$47:$7f67`) and six
   walk-sprite scripts were authored as byte pairs and end `$fd, $00`. The
@@ -656,9 +653,7 @@ which is written as a commented `db`:
 | frame change | stores to `+$33`, sets bit 6 of `+$30` | stores to `wCharAnimFrame`, sets bit 6 of `wCharSpriteDirty` |
 
 The frame is the **low** byte: `ld a, e` / `cp $f0`, then `ld a, d` /
-`ld [wCharAnimDelay], a`. (The `wCharAnimScriptPtr` comment in
-`include/ram_mirrored.inc` used to say `[delay, frame]`; corrected
-2026-09-10. The 2026-07 entry in `docs/history.md` still has it backwards.)
+`ld [wCharAnimDelay], a`.
 
 The character banks `$40`-`$5d` carry a third array, `*SpriteOam` (e.g.
 `AlexSpriteOam`, 580 bytes = 145 records × 4). It is read at
@@ -682,7 +677,7 @@ A colour is one **little-endian BGR555 word**:
 | 10-14 | blue |
 | 15 | unused |
 
-Three independent confirmations: `tools/extract.py:205` (`w & 0x1F`,
+Three independent confirmations: `tools/extract.py:250` (`w & 0x1F`,
 `(w >> 5) & 0x1F`, `(w >> 10) & 0x1F`), `tools/gfxdump.py:43` `pal_image()`,
 and the game's own `SplitColorComponents` / `CombineColorComponents`
 (`$00:$1c6a` / `$00:$1c83`), which are exact inverses.
@@ -691,25 +686,24 @@ A palette is 4 colours = 8 bytes. A full set is 8 palettes = **64 bytes**.
 
 ### 5.2 The `palettes` spec
 
-160 regions are declared `palettes`. The values are **not committed**: the
+157 regions are declared `palettes`. The values are **not committed**: the
 source holds an `INCLUDE "data/bank_XXX/<Label>.asm"` line and
 `render_palettes` (`tools/extract.py`) generates the file at setup, one
 `palette` macro per palette: four colours as 5-bit `r,g,b` components,
 which the macro (`include/macros.inc`) packs into the BGR555 words, with
 the decoded `#rrggbb` in a comment. So editing a colour is editing the
-component that means it. The five palettes in the ROM whose words set bit
-15 (three files in banks `$28` and `$39`) cannot be spelled by the macro
-and stay `dw`.
+component that means it. The nine palettes in the ROM whose words set bit
+15 (five files in banks `$17`, `$1c`, `$28` and `$39`) cannot be spelled by
+the macro and stay `dw`.
 
 The row stride is fixed at 8 (`render_palettes`), so an over-running region
 cannot render as 5-byte palettes.
 
-Sizes across the 160 regions (8,568 bytes): 86 are the full 64-byte set, 28 are
-a single palette, 3 are 32-byte half-sets, 6 are 128 bytes (a full BG+OBJ pair,
+Sizes across the 157 regions (7,864 bytes): 86 are the full 64-byte set, 28 are
+a single palette, 4 are 32-byte half-sets, 6 are 128 bytes (a full BG+OBJ pair,
 matching `wMasterPalettes`), and a scatter in between -- every one a whole
-number of 8-byte palettes. Three used to end mid-palette (129, 79 and 51
-bytes); they were over-declared and were trimmed on 2026-09-11, so the raw-`db`
-tail branch of `render_palettes` no longer fires.
+number of 8-byte palettes, so the raw-`db` tail branch of `render_palettes`
+never fires.
 
 ### 5.3 The live/master pair
 
@@ -722,8 +716,6 @@ All three buffers live in fixed WRAM (bank-independent `$c000`-`$cfff`):
 | `wMasterPalettes` | `$c200` | 128 | master copy of both; fades scale this into the live pair |
 | `hPaletteDirtyFlags` | `$ff9d` | 1 | bit 0 = BG dirty, bit 1 = OBJ dirty |
 | `hFadedOut` | `$ffbc` | 1 | |
-
-There is **no symbol named `wShadowPalettes`**; the pair is master ↔ live.
 
 `LoadPalettesImmediate` (`$00:$05b5`, `src/home/memory_00.asm`) takes
 `d` = palette index 0-15, `e` = palette count, `hl` = source, and writes each
@@ -815,9 +807,6 @@ frames, steps every masked palette of the *live* buffer with
 repeats `wPaletteFadeAmount` times before `SnapPalettesToTarget`
 (`$03:$77e2`) copies the target over it. Public entry points are the farptr
 slots `$03:$4042` and `$03:$4044`. **This** is the engine that fades to black.
-(Until 2026-09-10 the two buffers were named the other way round —
-`wWorkingPalettes` for the target and `wMasterPalettesBackup` for the live
-copy — and the frame delay was described as a per-component step.)
 
 ---
 
@@ -875,26 +864,23 @@ break inside a string.
 
 ### 6.3 The `.sN` anchors are not string indices
 
-`string_starts` (`tools/extract.py:127`) splits the pool on `$00` **or `$03`**.
+`string_starts` (`tools/extract.py:171`) splits the pool on `$00` **or `$03`**.
 `$03` is really the `WaitTextAdvanceInput` control code, not an engine
 terminator, so the `.sN` anchors `render_text_pool` emits are numbered over
 `$00`/`$03`-delimited *fragments*. `src/data/text/text_30.asm` shows the
 consequence directly: table index 2 → `.s3`, index 3 → `.s5`, index 4 → `.s7`.
 The comment after each `dw` carries the true game index; the label does not.
 
-`check_text` (`tools/check.py:77`) pins the pairing: each `text_offsets` region
-must be followed by a `text_pool` region, entry 0 must be `$0000` (it addresses
-the pool's first string in all 13 banks, so a table whose base slipped a word
-still fails), and every word must be a string start within the pool's
-*manifest* length — deliberately not a length derived from the entries, which a
-bogus entry could widen until it looked valid. `python3 tools/check.py` reports
-`text 13 checked, 0 failed`.
+Nothing checks the pairing automatically: each `text_offsets` table must be
+followed by its `text_pool`, entry 0 is `$0000` (it addresses the pool's first
+string in all 13 banks), and every word must land on a string start within the
+pool.
 
-`include/text_ids.inc` is generated: 1,101 `def Text_<bank>_<index> equ <raw
-id>` lines, an EQU whose value is the raw id so assembled bytes are unchanged.
-Sites are discovered by **consumer**, not by value — `textids.py:88` only names
-a `ld hl, n16` whose next few instructions reach a known sink, because the id
-encoding is far too permissive to judge by value.
+`include/text_ids.inc` is hand-maintained: 1,284 `def Text_<bank>_<index> equ
+<raw id>` lines, an EQU whose value is the raw id so assembled bytes are
+unchanged. A site is named by **consumer**, not by value — only where the id
+reaches a known text sink — because the id encoding is far too permissive to
+judge by value.
 
 ---
 
@@ -906,7 +892,9 @@ Every structured data region in the source was rendered from a **spec
 string** (`kind` or `kind:param`), and each region's first line still says
 which: `; $46ef, 112 bytes (bytes:16)`. The generator that applied them was
 retired on 2026-09-11 (git tag `generator-final` holds it and its
-`data_tables.json`, **2,751 declarations**), so a region is now edited as
+`data_tables.json`, **2,751 declarations**; the counts below are those
+declarations at the tag, not today's source, which has e.g. 170
+`sprite_template` and 262 `actor_script` regions), so a region is now edited as
 the macro rows it rendered to. `data.manifest` holds the extracted regions
 (`tools/check.py` → `regions N checked`).
 
@@ -941,11 +929,9 @@ the macro rows it rendered to. `data.manifest` holds the extracted regions
 | `menu_def` | 2 | menu definitions |
 | one each | | `cart_header`, `squares`, `story_locations`, `location_entries`, `minigame_configs`, `tilemap_scripts`, `gfx_ptr_table`, `lz_ptr_table`, `char_lz_ptr_table`, `mugshot_ptr_table`, `tilemap_dispatch` |
 
-Rendering is split: `tools/extract.py`'s `render_spec` (line 445) handles the
-kinds whose rows are literal ROM values and still runs at setup; the kinds
-whose rows are label arithmetic or macro calls were emitted inline by the
-generator (`tools/disasmlib/datatables.py` at tag `generator-final`) and are
-now simply source.
+Rendering is split: `tools/extract.py`'s `render_spec` (line 528) handles the
+kinds whose rows are literal ROM values and runs at setup; the kinds whose
+rows are label arithmetic or macro calls are written directly in the source.
 
 ### 7.2 No ROM values in the repository
 
@@ -981,9 +967,7 @@ rows that describe nothing. That mistake cost **2,359 bytes** of fake
 inside `records:2`/`bytes:14` tables and the progress metric counted them as
 proven structure (`docs/history.md:22-26`, `:8382-8388`).
 
-The generator's `_is_payload` (`tools/disasmlib/emit.py` at tag
-`generator-final`) separated the two, taking
-both proofs **from the consumer** rather than from the bytes looking plausible:
+The rule separates the two, taking both proofs **from the consumer** rather than from the bytes looking plausible:
 
 1. the stream **LZ-decodes using exactly its own extent** — so it is what
    `DecompressData` is given; or
@@ -998,33 +982,36 @@ a proof and is not accepted.
 
 `python3 tools/check.py` is the invariant suite over things `make compare`
 cannot see — a byte-perfect build proves the bytes come back, not that the
-structure the source claims is true. At HEAD, all five pass:
+structure the source claims is true. At HEAD, all thirteen pass:
 
 | check | count | what it asserts |
 |---|---|---|
-| `lz` | 619 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
-| `lz-labels` | 619 | no symbol lands inside a compressed stream |
-| `text` | 13 | every `text_offsets` word lands on a string start in its pool |
-| `regions` | 4863 | manifest regions stay inside their bank and do not overlap |
+| `lz` | 839 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
+| `lz-labels` | 839 | no symbol lands inside a compressed stream |
+| `regions` | 4243 | manifest regions stay inside their bank and do not overlap |
+| `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
+| `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
+| `scopes` | 0 | no global label covers both actor-script bytecode and CPU code |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
+| `literals` | 35808 | no ROM address is written as a number where the source moves |
+| `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
+| `gfx` | 2728 | every PNG encodes back to the blob it was decoded from |
+| `tilemap` | 213 | every tilemap grid encodes back to its blob |
+| `slots` | 4967 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
+| `reach` | 4754 | a routine is named `Unused` exactly when nothing reachable reaches it |
 
 ---
 
 ## 8. Not established
 
-Collected so future sessions do not have to re-derive them. The
-"discrepancies to resolve" this section used to carry — the `OamPtrs` name,
-the header-byte comments, the `[delay, frame]` order, the `$fd` fallback, the
-stale routine addresses in `docs/screens_and_ui.md`, the three palette-fade
-annotations, the `gfxdump.py` palette sheet and the `jp`-reached sprite
-templates — were all fixed on 2026-09-10 (the `jp` form, once accepted by
-`carve_sprite_templates`, carved nothing new: every template is reached by
-`call`). What remains is genuinely open:
+Collected so future sessions do not have to re-derive them. What remains
+open:
 
 * The `$63` sentinel branch in `LoadActorObjectDef` (`$04:$4b2b`) is dead for
-  all 117 dispatch entries, so word 2's use cannot be confirmed from data. What
-  it *would* do is clear — load the object's own palette from the pointer at
-  +8 — so the sentinel is a per-object-palette feature no shipped object uses.
+  all 117 dispatch entries, so the +8 palette pointer's use cannot be
+  confirmed from data. What it *would* do is clear — load the object's own
+  palette from that pointer — so the sentinel is a per-object-palette
+  feature no shipped object uses.
 * What the intended difference between `AdjustColorsBrightness` and
   `Unused_00_ApplyWhiteFade` was, given both add toward `$1f`. Only the developers could
   say; the cheaper 16-bit form is the one left unreachable.

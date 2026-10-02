@@ -1,4 +1,4 @@
-# Project status — 2026-09-30
+# Project status — 2026-10-02
 
 This is where the disassembly stands and what is still open. The dated
 working log that used to live here -- every session's findings in the order
@@ -16,11 +16,11 @@ per `data.manifest`.
 
 | | |
 |---|---|
-| proven code + structured source | 428,461 bytes, 20.4% of the 2 MiB ROM |
-| instructions disassembled | 160,919 |
+| proven code + structured source | 428,509 bytes, 20.4% of the 2 MiB ROM |
+| instructions disassembled | 160,940 |
 | banks containing code | 59 of 128 |
 | labels (counted 2026-09-12) | 21,979, of which 20,399 human-named and 1,580 derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
-| data blobs (`INCBIN`) | 4,218 — 838 LZ streams, the rest raw graphics, tilemaps, sprite frames and sound |
+| extracted data regions | 4,243 (3,685 `INCBIN`, 558 generated `INCLUDE`s) — 839 LZ streams, the rest raw graphics, tilemaps, sprite frames, text, palettes and sound |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator and its 174 coverage dumps and 2 hook captures are retired at tag `generator-final` |
 | bare banked-WRAM operands | 97, all `dead`: inside `Unused*` routines nothing references, so no trace can ever reach them. Zero in live code |
 
@@ -93,8 +93,7 @@ way.
 * `docs/graphics_formats.md` §8 holds two items, both about the developers'
   intent rather than the bytes: why the `$63` per-object-palette sentinel
   exists when no object uses it, and why there are two additive fades.
-* `docs/story_mode.md` "Oddities and open questions" keeps only
-  shipped-defect entries.
+* `docs/story_mode.md` "Oddities" keeps only shipped-defect entries.
 * The "not established" sentences in `docs/match_engine.md`.
 
 ## How to resume
@@ -118,8 +117,10 @@ the graphics streams and palette regions into gitignored `data/gfx/`;
 declarations change.
 
 The runtime tools (PyBoy, `make venv`):
-* `make event-test` plays two builds; `--targets`, `--handlers` and
-  `--free` add sessions beyond the story states.
+* `make event-test` plays two builds; run `tools/eventtest.py` directly
+  for `--targets`, `--handlers` and `--free` (sessions beyond the story
+  states) and `--coverage`/`--units` (the routines entered, for
+  `tools/coverage.py` and `tools/steer.py`).
 * `tools/linktest.py` plays two games over an emulated link cable.
 * `tools/steer.py` runs routines no session reaches.
 * `tools/actorslots.py --runtime` (`make slot-audit`) checks the actor-slot
@@ -142,14 +143,14 @@ nothing in the tree depends on it any more.
 stream that no longer decodes, an assembled symbol inside one, overlapping
 extracted regions, a routine stranded in an actor script's label scope, a
 new branch that decides nothing, a ROM address written as a number, an
-unaligned DMA source, a PNG or grid that no longer encodes to its blob, an
+unaligned DMA source, a PNG, grid, sound track or trajectory table that no longer encodes to its blob, an
 actor-slot name that does not hold where it is used, or a routine whose
 `Unused` name disagrees with reachability.
 
 ## Recent changes
 
-The full entries, newest first from 2026-08-07, are at the end of
-`docs/history.md`. In short:
+The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
+end of `docs/history.md`. In short:
 
 * **2026-10-01 — unreachable by data.** `tools/reach.py` finds calls and
   jumps decided by a variable that no visible store can make pass. Each is

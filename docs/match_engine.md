@@ -41,9 +41,9 @@ per-character struct), `save_format.md`, `bugs.md`.
 | `$04` | *Not* match AI, despite the overworld/actor code living there. Its one contribution to a match is `SetupCharSpriteFromObjectDef` (`src/engine/story/actor3_04.asm`), which fills a character's sprite/animation pointer fields. |
 
 Entry points are published through bank `$08`'s farptr header at `$08:$4000`
-(`src/engine/match/slots_08.asm`) — 45 slots, which is the engine's public API. The
+(`src/engine/match/slots_08.asm`) — 56 slots, which is the engine's public API. The
 outer callers are the exhibition and story menus (`$10`, `$0a`, `$0b`, `$38`,
-`$01`) plus a debug test match at `$07:$5e9d`.
+`$01`) plus `Unused_07_RunDebugTestMatch` (`$07:$5df9`), a debug test match nothing reaches.
 
 ## How a match runs
 
@@ -55,7 +55,7 @@ times. The call graph is the match structure.
 ```
 RunMatch                     $08:$4190   src/engine/match/match_08.asm
 ├─ InitMatchScene            $08:$4145   court data, chars, scoreboard, graphics
-├─ PlayCourtIntro            $08:$5fdd   camera pan + walk-on
+├─ PlayCourtIntro            $08:$6117   camera pan + walk-on
 ├─ RunMatchPlayLoop          $08:$4714   loop: PlaySet until wMatchWinLoseFlag
 │  └─ PlaySet                $08:$4737   loop: play a game until wSetWinLoseFlag
 │     ├─ CheckSetComplete.playGame  $08:$4758   normal game
@@ -136,8 +136,9 @@ match case.
 | 6 | `TickRallyTimers` `$08:$4270` | ball crossed the net |
 | 7 | `DrawActorsByDepth` `$08:$6425` | extra draw pass |
 
-`ModeHookTable_07` (`$07:$5efc`) is a worked example: the target-zone test mode
-implements 1, 2, 4 and 5 and stubs the rest.
+`ModeHookTable_07` (`$07:$5efc`) is a compact example, installed only by the
+unreachable `Unused_07_RunTargetZoneTestMode`: it implements 1, 2, 4 and 5 and
+stubs the rest.
 
 ### The minigame loop
 
@@ -175,7 +176,7 @@ the 24-bit velocity but not of the position units.
 ### World scale
 
 The geometry is a **real-dimension model at 105 world units per metre**. That
-is a derivation, not a comment in the source, but four independent constants
+is a derivation, not a comment in the source, but five independent constants
 agree on it:
 
 | Constant | Address | Value | Real tennis dimension | units/m |
@@ -198,7 +199,7 @@ than a documented fact.
 - **Depth** is signed with **0 at the net**; the two sides of the court have
   opposite signs. Each character's own depth carries the sign of its side, so
   most engine code compares absolute values and the AI mirrors through
-  `MirrorDepthForFarSide` (`$08:$7d9c`).
+  `MirrorDepthForFarSide` (`$08:$7c33`).
 - **Height is negative-up.** `GetBallHeightSign` (`$08:$4677`) returns `$ff`
   when the 32-bit height is negative, and that is the airborne case; gravity is
   a *positive* addend. `HandleBallNetCrossing` relies on this when it adds
@@ -206,8 +207,7 @@ than a documented fact.
   at or below the top of the net" (`$08:$5836-$583f`).
 - **Court limits are stored negated.** `wCourtLimitX` holds `-$1b0` (singles) or
   `-$240` (doubles); `wCourtLimitDepth` holds `-$4e0`. `CheckBallOutOfBounds`
-  (`$08:$463a`) takes `|wBallX|`, adds the stored negative and reads the carry
-  as "in bounds", so a single `add hl,bc` does the whole test. Results go to
+  (`$08:$463a`) takes `|wBallX|`, adds the stored negative and reads a carry as "out", so a single `add hl,bc` does the whole test. Results go to
   `wBallOutOfBoundsBits` (`$c4b1`): bit 0 = outside laterally, bit 1 = outside
   in depth.
 
@@ -227,9 +227,9 @@ The primitives are in ROM0 and go through bank `$2d`:
 | `DivBySin` / `DivByCos` | `$00:$13ce` / `$00:$13ca` | `hl / sin(bc)` via `CosecantTable` at `$2d:$5000`, same indexing, result scaled `<<2` |
 | `VectorLengthFromAngle` | `$00:$138f` | vector length given its angle and both legs — picks the numerically better axis (`sin` or `cos`) and divides |
 | `AngleFromVector16` | `$00:$1416` | `atan2`, quadrant by quadrant |
-| `VectorFromLengthAndAngleRaw` | `$00:$1928` | coarse polar→cartesian off `QuarterSineTable` in ROM0 (`$00:$2005`), used for character-scale motion |
+| `VectorFromLengthAndAngleRaw` | `$00:$0af8` | coarse polar→cartesian off `QuarterSineTable` in ROM0 (`$00:$0b5c`), used for character-scale motion |
 
-`ProjectWorldToScreen_08`/`ApplyCameraProjection` (`$08:$5b13`/`$5b15`) turn a
+`ProjectWorldToScreen_08`/`ApplyCameraProjection` (`$08:$59b8`/`$59bb`) turn a
 world `(X, depth, height)` into screen space; the camera offsets
 `wCameraOffsetX`/`Y` are added before a `<<3`.
 
@@ -248,7 +248,7 @@ parts that are banked (`ResetMatchState` clears `$c400`+`$0e` words at
 | `$c410`-`$c41b` | `wBallPrev*` | the whole 12-byte position block as of the start of the frame |
 | `$c41c`/`$c41e` | `wBallTopspin`/`wBallSideSpin` | spin coefficients |
 | `$c420`/`$c423`/`$c426` | `wBallVelocity{X,Depth,Height}Frac` | velocity, 24-bit |
-| `$c429`/`$c42c` | `wBallSpeedHorizontal`/`wBallSpeed3D` | derived magnitudes |
+| `$c42a`/`$c42c` | `wBallSpeedHorizontal`/`wBallSpeed3D` | derived magnitudes |
 
 ### The physics step
 
@@ -258,7 +258,7 @@ integrator, in order:
 1. clear `wBallBounceEvent`
 2. copy the 12-byte position block to `wBallPrev*` (`$08:$5774`)
 3. add each velocity to its position (`AddVel24ToPos32` ×3)
-4. `BounceBallOffCourtFences` (`$08:$5966`)
+4. `BounceBallOffCourtFences` (`$08:$5949`)
 5. `HandleBallNetCrossing` (`$08:$5814`)
 6. rebuild `wBallCourtQuadrant` from the two position sign bits — bit 1 = which
    side of the net, bit 0 = which lateral half (`$08:$5798-$57a9`)
@@ -326,7 +326,7 @@ landed in the correct box is a let. Two of its other readers
 (`TickRallyTimers` `$08:$4262` and `AiTrackBallPhase` `$08:$7d73`) also mean net
 contact, whatever the name suggests.
 
-**Fences.** `BounceBallOffCourtFences` (`$08:$5966`) is the outer-wall bounce;
+**Fences.** `BounceBallOffCourtFences` (`$08:$5949`) is the outer-wall bounce;
 it raises `wBallBounceEvent = 2` (distinct from a ground bounce) after applying
 the same court damping.
 
@@ -544,9 +544,9 @@ topspin on every court, and the per-court data is the two damping bytes in
 with a `; block N` separator every 64 rows where the height and placement
 offset tables index in 64-row blocks (the four stroke banks, neutral and
 reach) and a `; row N` marker every sixteen elsewhere; the bank `INCLUDE`s
-the file in place of the old `INCBIN`, and `make check` (`traj`) proves the
-rendering parses back to the bytes. Editing a row and running `make` is
-how a shot's reach or arc is tuned.
+the file, and `make check` (`traj`) proves the rendering parses back to the
+bytes. Editing a row and running `make` is how a shot's reach or arc is
+tuned; `tools/mods.py collect <baserom>` keeps the edit under `mods/`.
 
 **A row.** Rows are 6 bytes (or 4 in the tables that do not carry a lateral
 delta):
@@ -604,7 +604,7 @@ shot too weak to clear 3 m past the net becomes — and both
 
 ### The 15 shot types
 
-`wCurrentShotType` (`$c4a0`) is the `rst Rst00` index at `$07:$5445`. The button
+`wCurrentShotType` (`$c4a0`) is the `rst Rst00` index at `$07:$5444`. The button
 combinations come from `SelectRallyShotType`/`SelectServeShotType` — see
 [On-court characters](#on-court-characters).
 
@@ -636,9 +636,10 @@ Supporting gates:
   struck above roughly `$150` (≈ 3.2 m) counts as a power serve. That is the
   visible reward for timing the toss.
 
-`ApplyShotRecoil` (`$07:$546b`), pushed as `ExecuteShot`'s return address, is the
-post-hit kick: it damps the hitter's velocity from a variant table selected by
-one of the character's speed-stat bytes and clears `wCharSwingFrames`.
+`ShotRecoilFrameTask` (`$07:$5463`), pushed as `ExecuteShot`'s return address,
+is the post-hit kick: it calls `ApplyShotRecoil` (`$07:$546b`), which damps the
+hitter's velocity from a variant table selected by one of the character's
+speed-stat bytes, then clears `wCharSwingFrames`.
 
 ## On-court characters
 
@@ -679,7 +680,7 @@ match-relevant fields are:
 
 | Bit | Meaning | Read by |
 |---|---|---|
-| 0 | movement input suspended (`CHARB_RECOIL`) | `$08:$73d7` — kills steering. Its dominant writer is `ApplyShotRecoil` (`$07:$546e`), which runs after *every* stroke as `ExecuteShot`'s return address — not just on a body hit — and `CharRallyEndState` clearing it is what restores steering when the swing animation ends |
+| 0 | movement input suspended (`CHARB_RECOIL`) | `$08:$73d7` — kills steering. Its dominant writer is `ApplyShotRecoil` (`$07:$546e`), which runs after *every* stroke through `ShotRecoilFrameTask`, `ExecuteShot`'s pushed return address — not just on a body hit — and `CharRallyEndState` clearing it is what restores steering when the swing animation ends |
 | 1 | diving | widens the contact box (`$08:$6fc7`), flat brake (`$74b3`), freezes facing ease (`$75c3`), `-$0c00` shot speed (`$07:$53a2`), disables power strokes |
 | 2 | airborne | jump physics, shadow selection |
 | 4 | moving | run animation |
@@ -833,8 +834,9 @@ Three nested boxes, all rebuilt or tested each frame:
 | `CheckBallInSwingRange` | `$08:$702a` | `< $a0` | `< 1.5 × wCharReachX` | — | bit 0 — "you may start a swing" |
 | `CheckBallContactWindow` | `$08:$6fa7` | `< $60` | `< wCharReachX` (`1.25 ×` while diving) | `< 2 × wCharReachHeight` | bit 1 — "the racket connects" |
 
-Note that `CheckBallContactWindow`'s four-way animation-id test (`$08:$6fda`-`$6feb`) has **no effect**: all four `jr z` targets are `.checkX`, which is also the fall-through, so the contact box does not vary by animation state. See `docs/bugs.md`.
 | `CheckCharBallContact` | `$08:$6ec5` | `< $10` | `2 × |relX| < wCharReachX` | `< wCharReachHeight` | bit 2 — the ball hit your body |
+
+Note that `CheckBallContactWindow`'s four-way animation-id test (`$08:$6fda`-`$6feb`) has **no effect**: all four `jr z` targets are `.checkX`, which is also the fall-through, so the contact box does not vary by animation state. See `docs/bugs.md`.
 
 `CharSwingWindupPhase` waits on bit 0 before `StartCharSwing`;
 `CharSwingContactPhase` waits on bit 1 before `SelectRallyShotType` and
@@ -882,8 +884,7 @@ at the right-hand net post on the far side, and positive X is screen-right (a
 character placed at `X = +$300` beside the net is drawn at the right post).
 With the view flipped so the human stays at the bottom of the screen, the
 whole scene is drawn turned round and the chair appears at the *left* post on
-the near side -- which is where it first showed up in an emulated doubles
-match, and why it looked like the opposite corner. A CPU player takes the
+the near side. A CPU player takes the
 unclamped path and can walk through it.
 
 **Bit 6 of `wCharFlags` is never read anywhere in the ROM.** The sliding is a
@@ -912,7 +913,7 @@ The rest of the movement chain:
 - `MoveCharTowardTarget` (`$08:$7541`) is the scripted-walk path: a fixed
   `$1000`-magnitude step toward `wCharWalkTarget*`, snapping and zeroing the
   velocity once `CheckCharNearTarget` (`$08:$78be`) sees both deltas below `$18`.
-  It sets an unnamed latch at `$df56` which `UpdateCharVelocityFromInput` honours,
+  It sets `wCharScriptedMove` (`$df56`), which `UpdateCharVelocityFromInput` honours,
   so scripted walking and input-driven acceleration cannot fight over the same
   frame.
 - `StepCharJumpPhysics` (`$08:$72a6`) runs only while airborne and uses its own
@@ -1111,7 +1112,7 @@ judge. It is a fall-through ladder, evaluated in this order:
 body. `DetectServeAceOutcome` (`$08:$4326`), called from inside
 `HandleBallHitEvent` at the moment of the *second* hit of the point (and
 crucially *before* `wBallBounceCount` is cleared), produces the two codes that
-are not in `POINTOUTCOME_*`:
+are `POINTOUTCOME_SERVE_VOLLEYED` and `POINTOUTCOME_WRONG_RECEIVER`:
 
 - **7** — the receiver struck the serve with `wBallBounceCount == 0`. The popup
   is text `30:372`, *"Return the serve after it bounces."*
@@ -1120,7 +1121,7 @@ are not in `POINTOUTCOME_*`:
   the ball."*
 
 Both use side `$ff`, so the offending side loses the point, and neither has a
-court banner — which is why they sit outside the constant block.
+court banner.
 
 ### Which side won
 
@@ -1401,7 +1402,7 @@ ball's fractional coordinates, so both consoles stay in step.
 Bulk data — character selections, the court-unlock mask, EXP records — goes
 through a separate path that sends **one nibble per byte** with the tag in bits
 6-7 (`UnpackBytesToNibbles` `$07:$4656`, `PackNibblesToBytes` `$07:$49b0`,
-`ExchangeNibbleBlockMaster/Slave` `$07:$40b3`/`$41d9`). Nibbling frees `$c0`-`$cf`
+`ExchangeNibbleBlockMaster/Slave` `$07:$40b3`/`$41ef`). Nibbling frees `$c0`-`$cf`
 for in-band control tokens that payload can never collide with, the
 `LINKMSG_*` constants: `$c1`/`$c2` handshake probe and reply, `$c3`/`$c4`
 block sync, `$c5`/`$c6` end of block and its echo, `$cc` compare checksums,
@@ -1415,8 +1416,7 @@ disables the LCD, so it can never run inside a match frame.
 Per-frame exchanges have no checksum. Instead the master retries a malformed
 reply up to ten times and re-initialises on a duplicate; anything unrecoverable
 reaches `LinkErrorReset` (`$00:$284b`), which is **not** a recovery path — it
-shows the link-error screen and soft-resets. `ResyncLinkSession` (`$07:$4a29`
-region) exists but is only called from the link menus, never from inside
+shows the link-error screen and soft-resets. `ResyncLinkSession` (`$07:$4a51`) exists but is only called from the link menus, never from inside
 `RunMatchPlayLoop`: a cable fault during a point ends the session.
 
 Role election is first-come: `TryEstablishLink` (`$07:$4048`) reads
@@ -1566,7 +1566,7 @@ net-play strategy.
 | `$c4d5`-`$c4d7` | `wMatchPointFlag`, `wSetPointFlag`, `wGamePointFlag` | `$01`/`$ff`/`0`, from the dry run |
 | `$c4d8`/`$c4d9` | `wPointOutcome` / `wPointOutcomeSide` | 0 while the rally runs; side is *relative to the last hitter* |
 | `$c8c0`-`$c8df` | per-character stat records | 8 bytes each; `$c8cf` and `$c8df` are reused as `wPrevCourtPos` and `wMatchRngState` |
-| `$c8e0`-`$c8ed` | the 13-byte telemetry block | sets, games, points, deuce, tiebreak, then the four win/lose flags and two totals |
+| `$c8e0`-`$c8ed` | the 14-byte telemetry block | sets, games, points, deuce, tiebreak, then the four win/lose flags and two totals |
 | `$c8ee` | `wServeFaultFlag` | 1 after a first-serve fault |
 
 The telemetry block in full:
@@ -1604,9 +1604,7 @@ Things this document deliberately does not claim:
   constants and gravity agreeing to three figures. No comment in the ROM states
   it. The fixed-point *layouts* are proven from the arithmetic; the metric
   interpretation is not.
-- **The keep-out box in `StepCharMovement`** (`X ≥ $240` combined with far-side
-  depth between `-$2a0` and `-$100`) is real but unexplained; nothing in the
-  source says what occupies that corner.
+
 - **Bit 6 of `wCharFlags`** is set and cleared by `StepCharMovement` and read
   nowhere in the ROM.
 - **Placement-record bytes `+6`/`+7`** are zero in all fifteen tables and no
@@ -1624,11 +1622,15 @@ Things this document deliberately does not claim:
   on-court play.
 - **Link input ages.** The slave's decode path stages the local residue one frame
   deeper than the master's. The net input latency is probably equal on both
-  sides, but proving the frame alignment needs a live trace.
-- Several routines are unreachable as disassembled and are called out at their
-  sites above: `Unused_08_ComputeBallEtaToChar`'s only call site, the lob check before
-  `AiChoosePositionByStrategy`'s strategy-0 entry, the prologue of
-  `AiNetPlayerPoachCheck`, the `wSpecialShotFlag` block at `$07:$59ec`, and the
-  stranded stat-preset loader after `OverrideCharStatsForDebug`.
-- Everything here is static reading. Nothing in this document was confirmed by
-  running the game.
+  sides, but proving the frame alignment needs a frame trace under
+  `tools/linktest.py`, which has not been taken.
+- Several routines are unreachable: `Unused_08_ComputeBallEtaToChar` and its
+  only caller `UnusedComputeBallEtaToCharWrapper` (`$08:$70f1`), the lob check
+  after `AiChoosePositionByStrategy`'s jump table (`$08:$7d37`, which no slot
+  points at), the prologue of `AiNetPlayerPoachCheck`,
+  `Unused_07_SetSpecialShotFlagThreshold` (`$07:$59ec`), and
+  `Unused_07_ApplyCharStatPreset` (`$07:$5d1e`) after
+  `OverrideCharStatsForDebug`.
+- Apart from the umpire's-chair placement and the link handshake, both seen
+  under emulation (`tools/linktest.py` for the link), everything here is
+  static reading.

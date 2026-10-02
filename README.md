@@ -34,7 +34,8 @@ the layout, the names and the structure.
    The tools need Python 3 with Pillow; the runtime checks (`make
    event-test`, `make slot-audit`) also need PyBoy. `make venv` puts both,
    at the versions in `requirements.txt`, into `.venv`, which those targets
-   then use.
+   then use; they also start from a battery save (`SAVE=`, default
+   `maxed-unlocked.sav`, which `tools/savetool.py unlock` can prepare).
 
 ## What is here
 
@@ -46,8 +47,8 @@ graphics, audio, tilemaps and text.
 | instructions disassembled | 160,940, across every code bank |
 | proven code and structured source | 428,509 bytes, 20.4% of the ROM |
 | labels | 21,979 — 20,399 human-named, the rest derived from something already named (a bank's `$4000` slot table, a sound table) |
-| compressed graphics | 838 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 199 routines and 100 blobs nothing references, catalogued in `docs/unused_code.md` |
+| compressed graphics | 839 LZ streams, each named, sized by decoding it |
+| `Unused_` routines | 773 routines and 100 blobs nothing live reaches, catalogued in `docs/unused_code.md` |
 
 Everything that is not code was classified: every `INCBIN` is known to be
 graphics, audio, text, a resource descriptor, a record array or fill. The
@@ -70,7 +71,7 @@ restated:
 - **Code and data may change size.** Pointers are symbols, so inserting bytes
   moves what follows and every reference follows it. Each bank's section stops
   at its last real byte and `rgblink -p 0xff` pads the rest, so the trailing
-  space (186 KiB across 122 banks) is free for new code -- and a blob that
+  space (196 KiB across 124 banks) is free for new code -- and a blob that
   grows, an edited tilemap or PNG, has room, since even a labelled tail is
   left to the linker rather than restated as a fill.
 - **Text.** Edit the strings in `data/<bank>/TextStrings_<bank>.asm`; the
@@ -84,10 +85,10 @@ restated:
   is spelled `Text_<bank>_<index>` (`include/text_ids.inc`).
 - **Data files carry their names.** Everything extracted into `data/` is
   named after its label in the source: `data/bank_040/AlexSpriteFrame00.png`,
-  `data/bank_001/lz_MenuFontTiles_01.bin` (the `lz_` prefix marks a
-  compressed stream), `data/bank_017/MatchResultPalettes.asm`. Only a blob
+  `data/bank_001/lz_DmgLockoutTilesLZ_01.bin` (the `lz_` prefix marks a
+  compressed stream), `data/bank_016/MatchResultPalettes0.asm`. Only a blob
   nothing names keeps an address name (`d_4004.bin`).
-- **Graphics are images.** Every blob that is tile graphics (2,725 of
+- **Graphics are images.** Every blob that is tile graphics (2,728 of
   them: character and object frames, tile sets, icons, portraits, fonts) is
   extracted twice, as the `.bin` the source includes and as a PNG beside it
   in `data/` — a four-colour indexed image. Sprite frames are drawn
@@ -133,8 +134,8 @@ restated:
   written with the name. A family's header says which RAM symbol carries it.
 - **Assets are referenced by name.** The two screen-asset dispatchers take
   an index into a table in bank `$39`, and each table row defines its own:
-  `tileblock MenuFontTiles_01` is a row of `TileBlockPtrs_39` and defines
-  `TILEBLOCK_MenuFontTiles_01`, `screen_asset TitleScreen, ...` a row of
+  `tileblock CharacterSelectGfx` is a row of `TileBlockPtrs_39` and defines
+  `TILEBLOCK_CharacterSelectGfx`, `screen_asset TitleScreen, ...` a row of
   `ScreenAssetRecordTable` and `SCREENASSET_TitleScreen`. Call sites and the
   cutscene id lists use those names, so inserting a row renumbers what
   follows and every reference moves. A slot in a bank's `$4000` table is
@@ -254,7 +255,7 @@ deleted.
   `INCBIN` of a named blob. `tools/banksrc.py` reads a bank whole for the
   tools.
 - `ram/`, `include/` — RAM declarations; hardware, macro, constant, flag,
-  text-id and mirrored-RAM includes (`hardware.inc` is CC0).
+  text-id, text-code, actor-role and mirrored-RAM includes (`hardware.inc` is CC0).
 - `data.manifest` — offset/length/spec list `tools/extract.py` slices the
   base ROM by; `data.previews` — which planes, tiles and palettes make up
   each scene, for the preview pictures.
@@ -296,9 +297,11 @@ of the ROM was reached.
   extent and survives a re-encode, no assembled symbol sits inside a
   stream, the extracted regions do not overlap, no routine sits inside an
   actor script's label scope, no new conditional branch targets the
-  instruction after it, every PNG and tilemap grid encodes back to its
-  blob, and every actor-slot name holds its actor in each list that can be
-  active where it is used.
+  instruction after it, no ROM address is written as a number, every DMA
+  source is aligned, every PNG, tilemap grid, sound track and trajectory
+  table encodes back to its blob, every actor-slot name holds in each list
+  that can be active where it is used, and every `Unused` name agrees with
+  `tools/reach.py`.
 - `tools/linktest.py` — two copies of the game in PyBoy joined by a link
   cable made of hooks on each game's own serial code (PyBoy's port is
   unplugged), playing through the link handshake, rules and character
@@ -320,6 +323,25 @@ of the ROM was reached.
   (`docs/story_mode.md`, "map_actor"): reports the slot numbers it can
   settle and renames them with `--apply`; `--runtime` (`make slot-audit`)
   checks every name against the list active in a PyBoy sweep.
+- `tools/shifttest.py` (`make shift-test`) — builds a copy with every bank
+  padded and checks each changed byte is a label reference that moved;
+  `--out` keeps the padded ROM and its .sym.
+- `tools/eventtest.py` (`make event-test`) — plays the padded and original
+  builds through every story state and location under the same inputs;
+  `--free`, `--targets` and `--handlers` add main-menu, targeted-start and
+  per-handler sessions, and `--coverage` and `--units` record the routines
+  entered (read by `tools/coverage.py` and `tools/steer.py`).
+- `tools/coverage.py` — which routines an eventtest coverage file shows run
+  and never run.
+- `tools/playtest.py` — plays two ROMs side by side and reports where their
+  screens diverge.
+- `tools/runtime_audit.py` — checks the source's claims (`Unused` names,
+  actor-slot names, NpcScripts ids) in headless play.
+- `tools/mods.py` — copies `mods/` over `data/` and collects edited data
+  files into `mods/`.
+- `tools/snd.py` — the sound-script codec.
+- `tools/banksrc.py`, `tools/deps.py` — a bank's source read whole for the
+  tools; the build's dependency list.
 - `tests/` (`make test`) — the codecs, every idiom macro assembled and
   compared to the bytes it stands for, the extractor's `--keep`, and pins on
   the source (idiom, sound-id, VRAM-name and copy-length counts) that a

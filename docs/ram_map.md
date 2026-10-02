@@ -6,15 +6,15 @@ Game: Mario Tennis (Game Boy Color). Addresses are real GBC CPU addresses: cartr
 
 | Address | Region | Name | Note |
 |---|---|---|---|
-| `0xa042` | SRAM | `sMarioMinigameCompletionFlags1` | [Lower4] Mario Minigame Completion Flags (1/4)<br><br>Bit 3 - Boo Blast Level 1<br>Bit 2 - Boo Blast Level 2<br>Bit 1 - Boo Blast Level 3<br>Bit 0 - Shooting Star Level 1 |
-| `0xa043` | SRAM | `sMarioMinigameCompletionFlags2` | [8-bit] Mario Minigame Completion Flags (2/4)<br><br>Bit 7 - Shooting Star Level 2<br>Bit 6 - Shooting Star Level 3<br>Bit 5 - Perfect Shot Level 1<br>Bit 4 - Perfect Shot Level 2<br>Bit 3 - Perfect Shot Level 3<br>Bit 2 - Target Shot Level 1<br>Bit 1 - Target Shot Level 2<br>Bit 0 - Target Shot Level 3 |
-| `0xa045` | SRAM | `sMarioMinigameCompletionFlags3` | [8-bit] Mario Minigame Completion Flags (3/4)<br><br>Bit 7 - Fruit Fantasy Level 1<br>Bit 6 - Fruit Fantasy Level 2<br>Bit 5 - Fruit Fantasy Level 3<br>Bit 4 - Banana Bunch Level 1<br>Bit 3 - Banana Bunch Level 2<br>Bit 2 - Banana Bunch Level 3<br>Bit 1 - Treasure Box Level 1<br>Bit 0 - Treasure Box Level 2 |
-| `0xa046` | SRAM | `sMarioMinigameCompletionFlags4` | [8-bit] Mario Minigame Completion Flags (4/4)<br><br>Bit 7 - Treasure Box Level 3<br>Bit 6 - Medallion Match Level 1<br>Bit 5 - Medallion Match Level 2<br>Bit 4 - Medallion Match Level 3<br>Bit 3 - Two-On-One Level 1<br>Bit 2 - Two-On-One Level 2<br>Bit 1 - Two-On-One Level 3 |
-| `0xa047` | SRAM | `sCourtUnlockFlags` | [8-bit] Court Unlock Flags<br><br>Bit 6 - Star Court<br>Bit 5 - Castle Court<br>Bit 4 - Tropics Court<br>Bit 3 - Jungle Court<br>Bit 2 - Warehouse Court |
+| `0xa042` | SRAM | `sSaveFlags + 2` | [Lower4] Mario Minigame Completion Flags (1/4)<br><br>Bit 3 - Boo Blast Level 1<br>Bit 2 - Boo Blast Level 2<br>Bit 1 - Boo Blast Level 3<br>Bit 0 - Shooting Star Level 1 |
+| `0xa043` | SRAM | `sSaveFlags + 3` | [8-bit] Mario Minigame Completion Flags (2/4)<br><br>Bit 7 - Shooting Star Level 2<br>Bit 6 - Shooting Star Level 3<br>Bit 5 - Perfect Shot Level 1<br>Bit 4 - Perfect Shot Level 2<br>Bit 3 - Perfect Shot Level 3<br>Bit 2 - Target Shot Level 1<br>Bit 1 - Target Shot Level 2<br>Bit 0 - Target Shot Level 3 |
+| `0xa045` | SRAM | `sSaveFlags + 5` | [8-bit] Mario Minigame Completion Flags (3/4)<br><br>Bit 7 - Fruit Fantasy Level 1<br>Bit 6 - Fruit Fantasy Level 2<br>Bit 5 - Fruit Fantasy Level 3<br>Bit 4 - Banana Bunch Level 1<br>Bit 3 - Banana Bunch Level 2<br>Bit 2 - Banana Bunch Level 3<br>Bit 1 - Treasure Box Level 1<br>Bit 0 - Treasure Box Level 2 |
+| `0xa046` | SRAM | `sSaveFlags + 6` | [8-bit] Mario Minigame Completion Flags (4/4)<br><br>Bit 7 - Treasure Box Level 3<br>Bit 6 - Medallion Match Level 1<br>Bit 5 - Medallion Match Level 2<br>Bit 4 - Medallion Match Level 3<br>Bit 3 - Two-On-One Level 1<br>Bit 2 - Two-On-One Level 2<br>Bit 1 - Two-On-One Level 3 |
+| `0xa047` | SRAM | `sSaveFlags + 7` | [8-bit] Court Unlock Flags<br><br>Bit 6 - Star Court<br>Bit 5 - Castle Court<br>Bit 4 - Tropics Court<br>Bit 3 - Jungle Court<br>Bit 2 - Warehouse Court |
 | `0xc280` | WRAM | `wStoryModeCurrentLocation` | [8-bit] Story Mode - Current Location<br><br>0x00 - Not in Story Mode<br>0x05 - Academy Main Building<br>0x06 - Academy Wing<br>0x07 - Courtyard<br>0x08 - Restaurant Plaza<br>0x09 - Dorm Entrance<br>0x0a - Dormitory<br>0x0b, 0x0c - Junior Class Court<br>0x0d - Restaurant<br>0x0e - Cafeteria<br>0x0f - Training Court<br>0x10 - Senior Class Court<br>0x11 - Training Center<br>0x12 - Tennis Machine Room<br>0x13 - Wall Practice Room<br>0x14 - Academy Entrance<br>0x15 - Tournament Courtyard<br>0x16 - Court #1<br>0x17 - Court #2<br>0x18 - Center Court<br>0x19 - Tournament<br>0x1a - Awards Ceremony<br>0x1b - Plane Cutscene<br>0x1c - Castle Court<br>0x1d - Peach's Castle<br>0x1e-0x29 - Final Credits Sequence |
-| `0xc2b4` | WRAM | `wWaterSpriteMinigameTimer` | [16-bit] Water Sprite Minigame - Timer (Frames) |
-| `0xc2b6` | WRAM | `wWaterSpriteMinigameSwingCount` | [16-bit] Water Sprite Minigame - Swing Count |
-| `0xc2ba` | WRAM | `wWaterSpriteMinigameFlag` | [8-bit] Water Sprite Minigame Flag (0x17 when in minigame) |
+| `0xc2b4` | WRAM | `wSwingContestTimer` | [16-bit] Water Sprite Minigame - Timer (Frames) |
+| `0xc2b6` | WRAM | `wSwingContestSwings` | [16-bit] Water Sprite Minigame - Swing Count |
+| `0xc2ba` | WRAM | `wSwingContestHudMode` | [8-bit] Water Sprite Minigame Flag (0x17 when in minigame) |
 | `0xc2d0` | WRAM | `wStoryModePlayersXPosition` | [16-bit] Story Mode - Player's X Position |
 | `0xc2d2` | WRAM | `wStoryModePlayersYPosition` | [16-bit] Story Mode - Player's Y Position |
 | `0xc33e` | WRAM | `wCurrentBGM` | [8-bit] Current BGM<br><br>0x00 - Silence<br>0x01 - Intro Cutscene<br>0x02 - Title Screen<br>0x03 - Main Menu<br>0x04 - Status Screen<br>0x05 - Dictionary<br>0x06 - Exhibition Match<br>0x07 - Unused<br>0x08 - Mario Minigame Screen<br>0x09 - You Win<br>0x0a - You Lose<br>0x0b - Earning EXP<br>0x0c - Distributing EXP<br>0x0d - Distributing Stats<br>0x0e - Tiebreaker<br>0x0f - Set/Match Point<br>0x10 - Game Point<br>0x11 - Star Court<br>0x12 - Castle Court/Peach's Castle<br>0x13 - Tropic Court/Fruit Fantasy<br>0x14 - Warehouse Court/Treasure Box<br>0x15 - Two-on-One<br>0x16 - Jungle Court/Banana Bunch<br>0x17 - Unused<br>0x18 - Unused<br>0x19 - Shooting Star/Target Shot/Medallion Match<br>0x1a - Academy Main Building<br>0x1b - Story Mode Outdoors<br>0x1c - Dormitory<br>0x1d - Story Mode Indoors<br>0x1e - Tennis Machine<br>0x1f - Wall Practice<br>0x20 - Practice Match<br>0x21 - Junior Ranking Match<br>0x22 - Senior Ranking Match<br>0x23 - Varsity Ranking Match<br>0x24 - Training Court Match<br>0x25 - Training Court Practice<br>0x26 - Island Open Beginning Rounds<br>0x27 - Island Open Semifinals<br>0x28 - Island Open Finals<br>0x29 - Dream Match<br>0x2a - Unused<br>0x2b - Island Open Congratulations<br>0x2c - Credits<br>0x2d - The End<br>0x2e - Done For The Day<br>0x2f - Level Up<br>0x30 - High Score<br>0x31 - Exhibition Match Start<br>0x32 - Story Match Start |
@@ -430,18 +430,15 @@ bank to the very same word:
 ```
 
 No per-bank name is right for that operand, and requiring a provable bank
-leaves it numeric. A variant marked `"mirrored": true` names the whole set: it
-matches when the site's bank is any of the banks its scopes list **or when the
-bank cannot be proved at all**, and still loses to a bank proved to be outside
-the set — one ROM bank often drives several WRAM banks over the same addresses.
-Because the claim is that wide, every scope must carry a ROM `bank`, and at
-least two distinct `wram_bank`s must be named; `load_ram_unions` rejects both
-mistakes.
+leaves it numeric. A mirrored symbol names the whole set: one EQU in
+`include/ram_mirrored.inc`, whose `; in WRAM banks` line lists the banks that
+hold a copy (`tools/ram_free.py` reads it). It is used where the site's bank is
+any of those banks, or cannot be proved at all.
 
-A mirrored variant **allocates nothing**. Each of its banks already declares
+A mirrored symbol **allocates nothing**. Each of its banks already declares
 those bytes in its own union, so a second allocation would double-book the
-section. It is emitted instead as an EQU into the generated
-`include/ram_mirrored.inc`, which is preincluded for every bank — an EQU is
+section. It is an EQU in `include/ram_mirrored.inc`, which the Makefile
+preincludes (`-P`) for every bank -- an EQU is
 assembly-time only, so unlike an exported `::` label it has to be visible while
 each bank is assembled rather than at link time.
 
@@ -459,10 +456,9 @@ selected at run time.
 
 The tagged labels are what put the structure in `build/mariotennis.sym`: EQUs
 do not reach the symbol file, so this is what lets an emulator debugger resolve
-the right name for whichever bank it is stopped in — 328 correct entries rather
-than 82 registered against bank 4 alone. A bank whose own section already runs
-past those addresses is skipped, since it declares them already. (The `$dfxx` match-engine structs below predate this and
-stay documentation-only, but are a candidate for per-bank `wram_bank` scoping.)
+the right name for whichever bank it is stopped in — 416 entries (104 per bank)
+rather than 104 registered against bank 4 alone. A bank whose own section
+already runs past those addresses is skipped, since it declares them already.
 
 | range | variant (scope) | symbols |
 |---|---|---|
@@ -476,7 +472,7 @@ stay documentation-only, but are a candidate for per-bank `wram_bank` scoping.)
 | | text-arg fetch buffer (banks `$0e`/`$0f`/`$12`) | `wTextArgFetchBuffer` — `$df00` reused as a text-arg string scratch while the match is idle (higher priority than the char variant so those sites don't read as `wCharPosX`) |
 | `$dd00-$dd23` | match ball renderer (`wram_bank $04`, + bank `$08`) | `wBallHistory` — ball position-history ring (six 6-byte records) |
 | `$de00-$de1f` | match ball renderer (`wram_bank $04`, + bank `$08`) | `wNetBallSlot`, `wBallSlot`, `wBallShadowSlot`, `wBallTrailSlots` (4-byte sprite-slot records) |
-| `$a020-$a03f`, `$a060-$a76f` | save engine (bank `$03`) | `sSaveSignature`, `sSaveMasterChecksum`, `sSaveFormatVersion`, `sSaveBlockDirectory` |
+| `$a020-$a76f` | save engine (bank `$03`) | `sSaveSignature`, `sSaveMasterChecksum`, `sSaveFormatVersion`, `sSaveFlags`, `sSaveFlagsUnused`, `sSaveBlockDirectory` |
 
 Interior bytes of a multi-byte scoped field render as `name + k` (same
 expansion the global symbols get), so `$dd1e` reads `wBallHistory + 30` and
@@ -499,8 +495,9 @@ bank**, all at the same `$dfxx` addresses; code selects a character by writing
 | 7 | far-side partner | 3 (Two-On-One), 4 |
 
 Known fields (addresses valid only while a bank 4-7 is mapped). These are named
-via a union variant in `ram/wram.asm` (see "Union overlays" above): one `wChar*` name per field, rendered only where the WRAM bank is
-provably 4-7 or inside match banks `$07`/`$08`. Other WRAM banks reuse `$dfxx`
+by the untagged `wChar*` EQUs in `include/ram_mirrored.inc` (one name per field,
+used where the WRAM bank is 4-7 or inside match banks `$07`/`$08`), with
+bank-tagged copies `w4Char*`…`w7Char*` in `ram/wram.asm` for the symbol file. Other WRAM banks reuse `$dfxx`
 for unrelated data and stay numeric — e.g. bank `$38`'s non-char `$dfxx`
 accesses, and the text-arg scratch reuse of `$df00` in menu banks (named
 `wTextArgFetchBuffer` instead):
@@ -576,7 +573,7 @@ pairs already $200+ apart keep their positions. Singles skips this entirely
 
 ### Reading a bank at a glance
 
-Each banked `SECTION` in the generated `ram/*.asm` opens with a one-line-per-
+Each banked `SECTION` in `ram/*.asm` opens with a one-line-per-
 region summary. A bank is 4 KiB of overlapping claims — bank `$03` alone has 99
 symbols across 19 overlay variants — so the section body tells you what is there
 only once you have read all of it:
@@ -584,20 +581,20 @@ only once you have read all of it:
 ```
 ; WRAMX bank 2 at a glance (ram/wram.asm):
 ;
-;   $d000-$dfff  match court planes / overworld scroll buffers / screen attribute plane
+;   $d000-$dfff  5 overlays: N64 block presence probe / match court planes / overworld scroll buffers / +2 more
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 3]
 ```
 
-Overlay variants collapse to their `context` strings; a range with more than
-three lists the first three and a count. This is also the only place mirrored
+Overlays collapse to their owner descriptions; a range with more than three
+gives the count, the first three and "+N more". This is also the only place mirrored
 structures appear in the layout at all — they allocate nothing, so no symbol in
 either bank's section would otherwise mention them.
 
 ## Free RAM
 
 What a modder can take without displacing anything, measured two ways on
-2026-09-11. `tools/ram_free.py` walks the generated `ram/` the way the
+2026-09-11. `tools/ram_free.py` walks `ram/` the way the
 assembler does and lists every byte no symbol covers and no raw literal in
 `src/` addresses (the top 512 bytes of WRAM0 are the stack, which grows down
 from `STACK_TOP` `$d000` and has no symbol; the deepest reach seen is

@@ -54,7 +54,7 @@ destination out of the record:
 | --- | --- | --- |
 | `$01` | loc `$14` Academy Entrance, entry `$0f` | new game (`$10:$5081`) |
 | `$02` | loc `$0a` Dorm Room, entry `$01` | ordinary continue |
-| `$03` | loc `$04` "Test 2", entry `$01` | `FLAG_DEBUG_SKIP_LOCATION_EXIT` shortcut |
+| `$03` | loc `$04` "Test 2", entry `$01` | `FLAG_DEBUG_SKIP_LOCATION_EXIT` shortcut (Test 2 then runs the clear-status setup menu) |
 | `$04` | loc `$06` Academy Wing, entry `$0f` | Island Open final won, story not yet flagged complete |
 | `$05` | loc `$1d` Peach's Castle, entry `$0f` | story complete, Mario World not yet visited |
 
@@ -169,9 +169,9 @@ back from a menu screen does not. The ids `$00`-`$04` are developer/test locatio
 
 ### The `map_tree`
 
-The 14 bytes are seven words, copied to `$c286`, one per sub-table. The
-disassembler renders them with the `map_tree` spec and names the slots from
-`MAP_TREE_SLOTS`:
+The 14 bytes are seven words, copied to `$c286`, one per sub-table. In the
+source each tree is seven `dw` rows, each commented with its slot name
+(`include/macros.inc` lists them):
 
 | slot | WRAM ptr | content | consumer |
 | --- | --- | --- | --- |
@@ -270,10 +270,10 @@ active:
 * two locations pick their list from a stage number computed from story
   flags, and a branch on that stage also narrows the list: the Senior
   Court's lists each belong to a set of `wMapSceneStage2` stages, and the
-  Tournament Site's round lists to the `wMapSceneStage` round
+  Tournament's round lists to the `wMapSceneStage` round
   `LoadIslandOpenRoundNpcs` sets beside them (`STAGE_LISTS`). A table
   indexed by the stage dispatches each entry under its own stage's lists;
-* the Tournament Site's round-call tile triggers exist only once
+* the Tournament's round-call tile triggers exist only once
   `LoadIslandOpenRoundNpcs` has written their cells, so they run only
   under the round lists it installs -- singles for trigger `$0f`, doubles
   for `$0e` (`TILE_LISTS`).
@@ -398,7 +398,7 @@ and the scene table's row comments use them. Each scene's blob family (its
 `SceneConfig`, `Palettes`, `Tiles`, `Tilemap`, `Attrmap`, `CollisionMap` and
 `BehaviorMap` labels, and the `data/` files named after them) carries the
 same name in CamelCase, so `SCENE_RESTAURANT`'s tilemap is
-`lz_RestaurantTilemap.png`; the families were first named by looking at the
+`lz_RestaurantTilemap.tilemap`; the families were first named by looking at the
 pictures, and several of those guesses (a "spa resort" for the restaurant,
 a "ceremony hall" for Peach's Castle) were wrong.
 
@@ -461,7 +461,7 @@ dorm-room variant setup, for example, block-copies a rect of both maps with
 roughly centres a 20x18-tile viewport), then clamps each axis to
 `[wMapScrollMin*, wMapWidthTiles - $14]` / `[..., wMapHeightTiles - $12]` in
 whole tiles. `InitSceneScroll` / `UpdateSceneScroll` / `CopySceneTilemapRect`
-(`$0a:$5930`, `$5a67`, `$60a8`) stream new tilemap columns/rows out of
+(`$0a:$5930`, `$5976`, `$619e`) stream new tilemap columns/rows out of
 `wShadowTilemap` as the camera moves.
 
 ## NPCs and dialogue
@@ -482,7 +482,8 @@ their dialogue names them, which is why they are labelled `<Location>Npc<id>`.
 The named cast lives in a separate roster/name table at `$30:$466d`, used by the
 match and ranking screens rather than the overworld. Peach's Castle (location
 29, `MarioWorldMapScripts_0e`) is the exception: its NPCs are the Mario cast, each
-with one signature line in bank `$5e` (`$308e`-`$30a8`).
+with one signature line in bank `$5e` (`Text_5e_142`-`Text_5e_168`, ids
+`$308e`-`$30a8`).
 
 Dialogue itself belongs to bank `$05`. `ShowSpeakerDialogue` (`$05:$581f`) takes
 the text id in `hl` and the speaker actor in `a`, resets the three text-argument
@@ -522,10 +523,10 @@ farcall the screen. When it returns, the location loop's exit check fires, the
 `$ff` matches no exit record, and the location reloads with the player exactly
 where they were.
 
-* **STATUS → CHAR. DATA** — `ShowCharDataScreen` (`$1d:$4000`).
-* **STATUS → ITEMS** — `ShowEquipmentStatusScreen` (`$3e:$…`), the racket/shoe
+* **STATUS → CHAR. DATA** — `ShowCharDataScreen` (`$1d:$4016`).
+* **STATUS → ITEMS** — `ShowEquipmentStatusScreen` (`$3e:$5388`), the racket/shoe
   equip screen.
-* **CLEAR STATUS** — `ShowGameProgressScreen` (`$1e:$…`).
+* **CLEAR STATUS** — `ShowGameProgressScreen` (`$1e:$7263`).
 * **OPTIONS** — message speed (`wMessageSpeed`) and music on/off; the music
   choice is persisted with `SetStorySlotFlagA`.
 * **SAVE** — `SaveStoryReturnPoint` + `SaveStorySlotWithTimer`, then request loc
@@ -544,8 +545,8 @@ different, developer-facing thing — see below.
 | --- | --- | --- |
 | where | WRAM `$c9c0`-`$c9df` (32 bytes), inside the saved story-slot image | SRAM `$a040`-`$a05f` |
 | scope | per story slot | global, all slots |
-| accessors | `rst $20/$28/$30` → `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
-| names | 120 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants.inc` |
+| accessors | `rst $20/$28/$30` → `SetGameFlagCmd`/`ClearGameFlagCmd`/`TestGameFlagCmd` (`$00:$255e`/`$256b`/`$2551`, inline operand) over `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
+| names | 137 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants.inc` |
 
 Both use the same id encoding. A flag number is `byte * 8 + bit`; the inline
 operand form used by the macros is two bytes, `bit << 5` then the byte index,
@@ -565,7 +566,7 @@ The interesting `wGameFlags` regions:
 | `$06`-`$07` | Island Open bracket + Dream Match wins (doubles in `$06`, singles in `$07`) |
 | `$08`-`$0b` | class ranking-match wins (doubles `$08`/`$09`, singles `$0a`/`$0b`) |
 | `$0c`-`$0d` | equipment owned; ending-credits control bits |
-| `$14`-`$17` | `FLAG_REACHED_ISLAND_OPEN_*`, `FLAG_STORY_COMPLETE_*`, `FLAG_REACHED_MARIO_WORLD_*`, `FLAG_ISLAND_OPEN_IN_PROGRESS` |
+| `$14`-`$17` | `FLAG_CHEAT_UNLOCK_0`-`_12` (`$14`-`$15`, set in every slot by the unlock codes), `FLAG_REACHED_ISLAND_OPEN_*`, `FLAG_STORY_COMPLETE_*`, `FLAG_REACHED_MARIO_WORLD_*`, `FLAG_ISLAND_OPEN_IN_PROGRESS` |
 | `$18`-`$1b` | training-drill clears (Service / Net Game / Stroke match+practice, Tennis Machine, Wall) |
 
 `SAVEFLAG_*` covers what must survive a slot erase: character unlocks
@@ -589,7 +590,7 @@ progression flag exists in both flavours. The ladder is:
    `FLAG_WON_ISLAND_OPEN_*_{ROUND_1,ROUND_2,SEMIFINAL,FINAL}`, with
    `FLAG_ISLAND_OPEN_IN_PROGRESS` marking the bracket as live.
 4. Awards Ceremony (26) and the Island Sky departure scene (27), where
-   `FLAG_STORY_COMPLETE_*` is set (`$0e:$710c`).
+   `FLAG_STORY_COMPLETE_*` is set (`$14:$7117`/`$7121`).
 5. Peach's Castle (29) and Special Court (28), gated on
    `FLAG_REACHED_MARIO_WORLD_*`, hosting the Dream Match
    (`FLAG_WON_DREAM_MATCH_*`, which grants `SAVEFLAG_UNLOCKED_SAMMI`/`_ELDEN`).
@@ -598,14 +599,16 @@ Each stage reads back as scene variation rather than as a state machine:
 `InitTournamentSiteSceneVariant` (`$15:$4271`) and
 `SetupCenterCourtSceneVariant` (`$11:$41b6`) test the bracket flags in descending
 order to derive `wMapSceneStage`, and `TournamentInitScript_0f` (`$0f:$620f`)
-spawns the appropriate round's rival roster.
+derives the round with `ComputeIslandOpenRound` and installs that round's
+actor list and `NpcScripts` table with `LoadIslandOpenRoundNpcs`
+(`$0f:$6651`).
 
 Win flags are **not** written by any shared match-end routine. Each court's own
 post-match cutscene script checks `wMatchExitRequest` and `wMatchWinLoseFlag` and
-then sets the specific flag — e.g. `ActorScript_11_21.checkMatchExitRequest`
-(`$11:$5d38`) dispatches on `wCurrentMinigameStoryMatch + 1` to
-`set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`src/story/doubles_11.asm`,
-`1854`, `1896`). The arcade-minigame clears go the other way, through the SRAM
+then sets the specific flag — e.g. `JuniorClassCourtDoublesMatchReturn`
+(`$11:$5d38`) dispatches on `wCurrentMinigameStoryMatch + 1` (`$11:$5daa`) to
+`set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`src/story/doubles_11.asm`
+lines 41, 84, 126). The arcade-minigame clears go the other way, through the SRAM
 space: `SetMinigameClearFlag` (`$1e:$6edc`) indexes `MinigameClearFlagTable_1e`
 and calls `SetSaveFlag`.
 
@@ -670,7 +673,7 @@ The record is `$40` bytes and the same layout is used in four places:
 | `$ca00` + slot*`$40` | the four on-court match characters — `GetCa00RecordPtr` (`$02:$420e`) |
 | `StoryCharacterRecords_02` | the ROM attribute database, 29 bytes per character id, copied into a record at `+$0f`-`+$2b` |
 
-Fields (evidence in `src/bank_002.asm` unless noted):
+Fields (evidence in the `src/engine/story/*_02.asm` fragments unless noted):
 
 | off | field |
 | --- | --- |
@@ -708,7 +711,7 @@ The threshold tables are grouped per character archetype: `record[+$0b] & 3`
 picks one of four 113-byte tables through `StatArchetypePtrs_02`
 (`StatArchetype0_02`-`StatArchetype3_02`): a tier byte, the 12-byte template
 copied to `+$30`-`+$3b` when the record is built, then eleven
-`stat_thresholds` rows, one per stat. Level-to-stat
+`stat_thresholds` rows, one per stat, and a `$ff` end byte. Level-to-stat
 mapping:
 
 | trainable level | feeds |
@@ -738,7 +741,7 @@ bits (`wGameFlags` bytes `$0c`/`$0d`); the equip screen in bank `$3e`
 
 ### EXP and levelling
 
-`LevelUpPlayerRecord` (`$02:$4?`, `src/engine/story/equip_02.asm`) increments `+$18`
+`LevelUpPlayerRecord` (`$02:$49c1`, `src/engine/story/equip_02.asm`) increments `+$18`
 (capped at 99), bumps one of the four trainable levels chosen by `d` = 0-3, and
 recomputes the stats. `LevelUpPlayer` is the far entry point that resolves the
 record through `GetPlayerRecordPtr` first, and `ComputeLevelUpStatDeltas`
@@ -752,7 +755,7 @@ indexed by `(level-1)*3`; `GetExpRequiredForLevel`, `GetExpRemainingToNextLevel`
 `GetExpProgressInCurrentLevel` and `HasReachedNextLevelExp` all read it. Awards
 are staged per source (`wPendingExpStory`, `wPendingExpTrophy`,
 `wPendingExpExhibition`, `wPendingExpLinked`) and applied by
-`ApplyPendingExpAwards` (`$1e:$…`) on the next slot load;
+`ApplyPendingExpAwards` (`$1e:$6afd`) on the next slot load;
 `ScaleExpByPlayerLevel` averages the two story records' `+$18` and scales the
 award as the average crosses 10/20/30/40/50.
 
@@ -805,28 +808,27 @@ always visible), plus the actor array in bank `$04` and the two maps in bank
 | `$c800`-`$caff` | `wStorySlotData` | the saved story-slot image (records, flags, match settings) |
 | `$c9c0`-`$c9df` | `wGameFlags` | progression flags; `$1c`-`$1f` are `wGameFlagsTemp` |
 | `$d000`+ (bank `$04`) | `wActors` | 24 actor slots of `$40` bytes |
-| `$d000`/`$d400` (bank `$06`) | — | collision map / behaviour map, 32x32 each |
-| `$d?` (bank `$06`) | `wStorySceneRecord` | 136-byte scene config copy |
+| `$d000`/`$d400` (bank `$06`) | `wCollisionMap` / `wBehaviorMap` | collision map / behaviour map, 32x32 each |
+| `$dc08` (bank `$06`) | `wStorySceneRecord` | 136-byte scene config copy |
 
-## Oddities and open questions
+## Oddities
 
-Recorded here because a future reader will otherwise re-derive them. Items
-marked *resolved* were fixed in the source on 2026-09-10; the rest stand.
+Recorded here because a future reader will otherwise re-derive them.
 
-* **Scene slot 6 is never loaded.** `LoadStorySceneGraphics` (`$0a:$58bd`) pops
+* **Scene slot 6 is never loaded.** `LoadStorySceneGraphics` (at `$0a:$58bd`) pops
   slot 6 into `hl` and loads `de` with `wStorySceneUnusedBuffer`, then
   immediately pops slot 5 over `hl` and `$d400` over `de`. The intended
   destination has a WRAM label and no data ever arrives there; correspondingly,
   most scene records' slot 6 holds either an `*SceneUnusedSlot` filler pointer or
   a stray pointer to the *next* scene's config.
-* **`SceneGfxSlotTable` slots 4/5 — resolved.** The story loader decompresses
+* **`SceneGfxSlotTable` slots 4/5.** The story loader decompresses
   slot 4 to `wCollisionMap` (`$d000`) and slot 5 to `wBehaviorMap` (`$d400`) in
   WRAM bank `$06`, and the story-scene records are named `*CollisionMap` /
   `*BehaviorMap` accordingly. The 16 court-shaped records are read by the
   court loader instead (`docs/graphics_formats.md` §3.4): there slot 4 aliases
   slot 0 (40 raw bytes of scoreboard column tiles — still `*SceneConfig`,
   because under the story loader the same slot is the config/palette block)
-  and slot 5 is `*ScoreboardColumnAttrs` (renamed from `*SceneConfigB`).
+  and slot 5 is `*ScoreboardColumnAttrs`.
 * **`ReadBehaviorMapCell` still prints its result.** `$0a:$5f65`-`$5f6f`
   unconditionally calls `PrintHexByte` with `de = $0e0e` on every read.
   `PrintString` writes into the debug text buffer and only sets
@@ -839,22 +841,26 @@ marked *resolved* were fixed in the source on 2026-09-10; the rest stand.
   unreachable. The other two speeds (`$0040` running, `$0020` normal) work.
 * **A duplicate of `EvalFlagCondition`** sits at `$0a:$53a2`, between
   `GetTileTriggerAtPlayer`'s `ret` and `FacingMaskTable_0a`, labelled
-  `EvalFlagCondition_0a`. The live copy that `FindStoryScriptEntry` farcalls
-  is `$04:$4c49`; no caller of the bank-`$0a` copy was found.
-* **The clear-status flag writers were named for each other — resolved.**
-  `SetTrainingCourtClearFlags` (`$0a:$4da9`, was `SetRankingMatchClearFlags`)
+  `UnusedEvalFlagCondition_0a`. The live copy that `FindStoryScriptEntry`
+  farcalls is `$04:$4c49`; nothing calls the bank-`$0a` copy.
+* **The clear-status flag writers.**
+  `SetTrainingCourtClearFlags` (`$0a:$4da9`)
   clears the 28 `FLAG_CLEARED_*` drill flags from byte `$18` and re-sets the
   level-1 or level-1+2 subset from `TrainingCourtLevel1/2ClearFlags_0a`.
-  `SetSinglesRankingClearFlags` (`$0a:$4e0e`, was `SetMinigameClearFlags`)
+  `SetSinglesRankingClearFlags` (`$0a:$4e0e`)
   clears the nine singles `FLAG_WON_*_SINGLES_RANK_*` flags and sets as many
   of `SinglesRankingClearFlagList_0a` as the chosen class and rank imply;
-  `SetDoublesRankingClearFlags` (`$0a:$4e75`, was the `Alt`) does the same
+  `SetDoublesRankingClearFlags` (`$0a:$4e75`) does the same
   from `DoublesRankingClearFlagList_0a` — but its clear loop starts at byte
   `$0a` too, so it clears the *singles* wins and leaves stale doubles wins in
   place (`docs/bugs.md`). The lists render as `flag_id` rows. None of this
   touches the arcade minigames, whose real writer is `SetMinigameClearFlag`,
   singular, at `$1e:$6edc`, into the SRAM flag space.
-* **`RunClearStatusSetupMenu` is a developer tool.** `$0a:$4bac` walks a
+* **`RunClearStatusSetupMenu` is a developer tool.** It is reached through
+  location 4 "Test 2": `Test2InitScript_10` (`$10:$4b9b`), for any entry
+  point but `$0f`, farcalls `ClearStatusSetupMenuEntry` and leaves by the
+  exit id the menu returns (`Test2ExitTriggers_10`: the Training Court, the
+  Junior or Senior court, the Courtyard or the main menu). `$0a:$4bac` walks a
   Set/Continue → Mini-Game/Ranking-Match → level menu chain and then
   `ApplyClearStatusFlags` (`$0a:$4d80`) rewrites the progression flags wholesale;
   choosing "Continue" makes the whole thing a no-op. Its menu state lives in
@@ -864,23 +870,21 @@ marked *resolved* were fixed in the source on 2026-09-10; the rest stand.
   names stay out). `TrainingCourtClearFlagListPtrs_0a` (`$0a:$4dec`) parallels
   the branch structure but has no reader — dead data.
 * **The character-vs-level naming at record `+$18`.** `ram/wram.asm` names
-  `$c818` "Level (1-99)" and `$c918` "ExpTier" — the same offset in two records
-  with the same layout. For player characters the raw byte is a level;
-  `LookupExpTierForChar` (`$1e:$…`, `src/engine/menus/exp3_1e.asm`) is what derives a
+  `$c818` `wStoryModeMainCharacterLevel` and `$c918` `wStoryMainCharExpTier`
+  — the same offset in two records with the same layout. For player
+  characters the raw byte is a level; `LookupExpTierForChar` (`$1e:$693e`, `src/engine/menus/exp3_1e.asm`) is what derives a
   coarse 0-6 tier from it.
-* **EXP field width.** `ram/wram.asm` documents `$c92c`/`$c82c` as 16-bit, but
-  `AddExpCapped` maintains three bytes and caps at 99999, while
+* **EXP field width.** `$c82c`/`$c92c` are 3-byte little-endian
+  accumulators (`AddExpCapped` caps them at 99999), while
   `GetExpRemainingToNextLevel` / `GetExpProgressInCurrentLevel` read only the low
   two back out. In practice the level-99 requirement is well under 65536, so the
   truncation never bites.
 * **`ld a, [wStoryCharacterSlot]` doubles as the ending-scene index** in
   `RunEndingCreditsSequence`, and the list it indexes,
-  `EndingCutsceneLocationList`, holds (location, entry point) pairs -- it was
-  called `EndingCreditsSequenceTileList` until 2026-07-30 and holds no tiles.
-  The `byte0 == 0` branch at `$0a:$6ea4`-`$6eab` computes
+  `EndingCutsceneLocationList`, holds (location, entry point) pairs. The `byte0 == 0` branch at `$0a:$6ea4`-`$6eab` computes
   `sprite * 2` and then discards it by reloading `a`; no record in the table has
   a zero first byte, so the branch is unreachable.
-* **Story completion and the Star Court — resolved.** `FLAG_STORY_COMPLETE_*`
+* **Story completion and the Star Court.** `FLAG_STORY_COMPLETE_*`
   itself grants nothing permanent, but `CheckAllProgressComplete`
   (`$1e:$6f8d`, run from `ProcessMatchRewards` after every rewarded match)
   walks 36 game flags — `AllProgressFlagList_1e` (both Dream Matches, the
@@ -896,7 +900,7 @@ marked *resolved* were fixed in the source on 2026-09-10; the rest stand.
   under dead stores in `docs/bugs.md`. `+$2b`, once counted with them, is the
   speed bonus: a runtime poison of the story record's copy changed the match
   that followed, and `LoadCharacterAttributes` adds it to the Speed stat.
-* **The `$ff, $c9` list endings — resolved.** The `$c9` after the `$ff`
+* **The `$ff, $c9` list endings.** The `$c9` after the `$ff`
   terminator of `JuniorClassCourtSinglesEntryPoints_11`,
   `JuniorClassCourtDoublesFacingScripts_11` and `…TileTriggers_11` is a `ret`
   opcode: a one-byte empty script left after each list, which nothing in the
