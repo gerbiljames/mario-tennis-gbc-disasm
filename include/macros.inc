@@ -524,9 +524,9 @@ MACRO palette
 ENDM
 
 ; lb pair, hi, lo -- load two bytes into a register pair with one 16-bit
-; immediate. Used where a callee reads the halves separately
-; (LoadPaletteShadow's index/count, ...); the site comment says which. A
-; screen position is ld_xy and a map cell ld_cell, below.
+; immediate. The building block of the named pair macros below (ld_xy,
+; ld_cell, ld_oam, ld_size, ld_tile_run, ld_bg_pals/ld_obj_pals); a site whose
+; callee reads the halves separately uses the one that names them.
 MACRO lb
 	ld \1, ((\2) << 8) | (\3)
 ENDM
@@ -545,6 +545,19 @@ ENDM
 ; OAM_PRIO from hardware.inc), the tile in the low. QueueSpriteTemplate adds
 ; both to every entry of the template, and bit 5 picks its mirrored copy.
 MACRO ld_oam
+	lb \1, \2, \3
+ENDM
+
+; ld_size pair, width, height -- a rectangle in tile cells as the window and
+; text-rect routines take it (CreateWindow, CopyTextRect, ...): the width in
+; the high register, the height in the low.
+MACRO ld_size
+	lb \1, \2, \3
+ENDM
+
+; ld_tile_run pair, tile, count -- FillTilemapRun's arguments: the tile id it
+; writes to each cell in the high register, the number of cells in the low.
+MACRO ld_tile_run
 	lb \1, \2, \3
 ENDM
 

@@ -175,7 +175,7 @@ Unused_07_TargetZonePointStartHook:
 Unused_07_TargetZonePointEndHook:
 	ld hl, $013f ; $5f75
 	ld_cell de, $00, $0b ; $5f78
-	ld bc, $1305 ; $5f7b
+	ld_size bc, $13, $05 ; $5f7b
 	farcall ShowMessageWindow ; $5f7e
 	call Unused_07_ResolveTargetModePoint ; $5f81
 	ld a, [wCharacter1ServiceAces] ; $5f84

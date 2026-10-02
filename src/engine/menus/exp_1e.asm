@@ -261,39 +261,39 @@ DrawExpSinglesPlayerPanel:
 	ret ; $5692
 DrawExpDoublesPlayerPanel:
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $5693
-	lb bc, $02, $01 ; $5696 tile, count
+	ld_tile_run bc, $02, $01 ; $5696
 	call FillTilemapRun ; $5699
-	lb bc, $03, $07 ; $569c tile, count
+	ld_tile_run bc, $03, $07 ; $569c
 	call FillTilemapRun ; $569f
-	lb bc, $04, $01 ; $56a2 tile, count
+	ld_tile_run bc, $04, $01 ; $56a2
 	call FillTilemapRun ; $56a5
 	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH ; $56a8
-	lb bc, $05, $01 ; $56ab tile, count
+	ld_tile_run bc, $05, $01 ; $56ab
 	call FillTilemapRun ; $56ae
-	lb bc, $20, $07 ; $56b1 tile, count
+	ld_tile_run bc, $20, $07 ; $56b1
 	call FillTilemapRun ; $56b4
-	lb bc, $06, $01 ; $56b7 tile, count
+	ld_tile_run bc, $06, $01 ; $56b7
 	call FillTilemapRun ; $56ba
 	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH ; $56bd
-	lb bc, $05, $01 ; $56c0 tile, count
+	ld_tile_run bc, $05, $01 ; $56c0
 	call FillTilemapRun ; $56c3
-	lb bc, $20, $07 ; $56c6 tile, count
+	ld_tile_run bc, $20, $07 ; $56c6
 	call FillTilemapRun ; $56c9
-	lb bc, $06, $01 ; $56cc tile, count
+	ld_tile_run bc, $06, $01 ; $56cc
 	call FillTilemapRun ; $56cf
 	ld hl, wScreenAttrmap + 8 * TILEMAP_WIDTH ; $56d2
-	lb bc, $05, $01 ; $56d5 tile, count
+	ld_tile_run bc, $05, $01 ; $56d5
 	call FillTilemapRun ; $56d8
-	lb bc, $20, $07 ; $56db tile, count
+	ld_tile_run bc, $20, $07 ; $56db
 	call FillTilemapRun ; $56de
-	lb bc, $06, $01 ; $56e1 tile, count
+	ld_tile_run bc, $06, $01 ; $56e1
 	call FillTilemapRun ; $56e4
 	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $56e7
-	lb bc, $07, $01 ; $56ea tile, count
+	ld_tile_run bc, $07, $01 ; $56ea
 	call FillTilemapRun ; $56ed
-	lb bc, $08, $07 ; $56f0 tile, count
+	ld_tile_run bc, $08, $07 ; $56f0
 	call FillTilemapRun ; $56f3
-	lb bc, $09, $01 ; $56f6 tile, count
+	ld_tile_run bc, $09, $01 ; $56f6
 	call FillTilemapRun ; $56f9
 	ld a, [wGameMode] ; $56fc
 	or a ; $56ff
@@ -337,39 +337,39 @@ DrawExpDoublesPlayerPanel:
 	ret ; $5757
 DrawExpDoublesPartnerPanel:
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH + 11 ; $5758
-	lb bc, $02, $01 ; $575b tile, count
+	ld_tile_run bc, $02, $01 ; $575b
 	call FillTilemapRun ; $575e
-	lb bc, $03, $07 ; $5761 tile, count
+	ld_tile_run bc, $03, $07 ; $5761
 	call FillTilemapRun ; $5764
-	lb bc, $04, $01 ; $5767 tile, count
+	ld_tile_run bc, $04, $01 ; $5767
 	call FillTilemapRun ; $576a
 	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH + 11 ; $576d
-	lb bc, $05, $01 ; $5770 tile, count
+	ld_tile_run bc, $05, $01 ; $5770
 	call FillTilemapRun ; $5773
-	lb bc, $20, $07 ; $5776 tile, count
+	ld_tile_run bc, $20, $07 ; $5776
 	call FillTilemapRun ; $5779
-	lb bc, $06, $01 ; $577c tile, count
+	ld_tile_run bc, $06, $01 ; $577c
 	call FillTilemapRun ; $577f
 	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH + 11 ; $5782
-	lb bc, $05, $01 ; $5785 tile, count
+	ld_tile_run bc, $05, $01 ; $5785
 	call FillTilemapRun ; $5788
-	lb bc, $20, $07 ; $578b tile, count
+	ld_tile_run bc, $20, $07 ; $578b
 	call FillTilemapRun ; $578e
-	lb bc, $06, $01 ; $5791 tile, count
+	ld_tile_run bc, $06, $01 ; $5791
 	call FillTilemapRun ; $5794
 	ld hl, wScreenAttrmap + 8 * TILEMAP_WIDTH + 11 ; $5797
-	lb bc, $05, $01 ; $579a tile, count
+	ld_tile_run bc, $05, $01 ; $579a
 	call FillTilemapRun ; $579d
-	lb bc, $20, $07 ; $57a0 tile, count
+	ld_tile_run bc, $20, $07 ; $57a0
 	call FillTilemapRun ; $57a3
-	lb bc, $06, $01 ; $57a6 tile, count
+	ld_tile_run bc, $06, $01 ; $57a6
 	call FillTilemapRun ; $57a9
 	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH + 11 ; $57ac
-	lb bc, $07, $01 ; $57af tile, count
+	ld_tile_run bc, $07, $01 ; $57af
 	call FillTilemapRun ; $57b2
-	lb bc, $08, $07 ; $57b5 tile, count
+	ld_tile_run bc, $08, $07 ; $57b5
 	call FillTilemapRun ; $57b8
-	lb bc, $09, $01 ; $57bb tile, count
+	ld_tile_run bc, $09, $01 ; $57bb
 	call FillTilemapRun ; $57be
 	ld a, [wGameMode] ; $57c1
 	or a ; $57c4
@@ -410,43 +410,43 @@ DrawExpDoublesPartnerPanel:
 	ret ; $5813
 DrawExpTotalPanel:
 	ld hl, wScreenAttrmap + 14 * TILEMAP_WIDTH + 2 ; $5814
-	lb bc, $02, $01 ; $5817 tile, count
+	ld_tile_run bc, $02, $01 ; $5817
 	call FillTilemapRun ; $581a
-	lb bc, $03, $08 ; $581d tile, count
+	ld_tile_run bc, $03, $08 ; $581d
 	call FillTilemapRun ; $5820
-	lb bc, $04, $01 ; $5823 tile, count
+	ld_tile_run bc, $04, $01 ; $5823
 	call FillTilemapRun ; $5826
-	lb bc, $02, $01 ; $5829 tile, count
+	ld_tile_run bc, $02, $01 ; $5829
 	call FillTilemapRun ; $582c
-	lb bc, $03, $04 ; $582f tile, count
+	ld_tile_run bc, $03, $04 ; $582f
 	call FillTilemapRun ; $5832
-	lb bc, $04, $01 ; $5835 tile, count
+	ld_tile_run bc, $04, $01 ; $5835
 	call FillTilemapRun ; $5838
 	ld hl, wScreenAttrmap + 15 * TILEMAP_WIDTH + 2 ; $583b
-	lb bc, $05, $01 ; $583e tile, count
+	ld_tile_run bc, $05, $01 ; $583e
 	call FillTilemapRun ; $5841
-	lb bc, $20, $08 ; $5844 tile, count
+	ld_tile_run bc, $20, $08 ; $5844
 	call FillTilemapRun ; $5847
-	lb bc, $06, $01 ; $584a tile, count
+	ld_tile_run bc, $06, $01 ; $584a
 	call FillTilemapRun ; $584d
-	lb bc, $05, $01 ; $5850 tile, count
+	ld_tile_run bc, $05, $01 ; $5850
 	call FillTilemapRun ; $5853
-	lb bc, $20, $04 ; $5856 tile, count
+	ld_tile_run bc, $20, $04 ; $5856
 	call FillTilemapRun ; $5859
-	lb bc, $06, $01 ; $585c tile, count
+	ld_tile_run bc, $06, $01 ; $585c
 	call FillTilemapRun ; $585f
 	ld hl, wScreenAttrmap + 16 * TILEMAP_WIDTH + 2 ; $5862
-	lb bc, $07, $01 ; $5865 tile, count
+	ld_tile_run bc, $07, $01 ; $5865
 	call FillTilemapRun ; $5868
-	lb bc, $08, $08 ; $586b tile, count
+	ld_tile_run bc, $08, $08 ; $586b
 	call FillTilemapRun ; $586e
-	lb bc, $09, $01 ; $5871 tile, count
+	ld_tile_run bc, $09, $01 ; $5871
 	call FillTilemapRun ; $5874
-	lb bc, $07, $01 ; $5877 tile, count
+	ld_tile_run bc, $07, $01 ; $5877
 	call FillTilemapRun ; $587a
-	lb bc, $08, $04 ; $587d tile, count
+	ld_tile_run bc, $08, $04 ; $587d
 	call FillTilemapRun ; $5880
-	lb bc, $09, $01 ; $5883 tile, count
+	ld_tile_run bc, $09, $01 ; $5883
 	call FillTilemapRun ; $5886
 	ld hl, Text_31_231 ; $5889
 	ld de, wScreenAttrmap + 15 * TILEMAP_WIDTH + 3 ; $588c
@@ -455,39 +455,39 @@ DrawExpTotalPanel:
 	ret ; $5895
 DrawExpMessageWindow:
 	ld hl, wScreenAttrmap ; $5896
-	lb bc, $02, $01 ; $5899 tile, count
+	ld_tile_run bc, $02, $01 ; $5899
 	call FillTilemapRun ; $589c
-	lb bc, $03, $12 ; $589f tile, count
+	ld_tile_run bc, $03, $12 ; $589f
 	call FillTilemapRun ; $58a2
-	lb bc, $04, $01 ; $58a5 tile, count
+	ld_tile_run bc, $04, $01 ; $58a5
 	call FillTilemapRun ; $58a8
 	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH ; $58ab
-	lb bc, $05, $01 ; $58ae tile, count
+	ld_tile_run bc, $05, $01 ; $58ae
 	call FillTilemapRun ; $58b1
-	lb bc, $20, $12 ; $58b4 tile, count
+	ld_tile_run bc, $20, $12 ; $58b4
 	call FillTilemapRun ; $58b7
-	lb bc, $06, $01 ; $58ba tile, count
+	ld_tile_run bc, $06, $01 ; $58ba
 	call FillTilemapRun ; $58bd
 	ld hl, wScreenAttrmap + 2 * TILEMAP_WIDTH ; $58c0
-	lb bc, $05, $01 ; $58c3 tile, count
+	ld_tile_run bc, $05, $01 ; $58c3
 	call FillTilemapRun ; $58c6
-	lb bc, $20, $12 ; $58c9 tile, count
+	ld_tile_run bc, $20, $12 ; $58c9
 	call FillTilemapRun ; $58cc
-	lb bc, $06, $01 ; $58cf tile, count
+	ld_tile_run bc, $06, $01 ; $58cf
 	call FillTilemapRun ; $58d2
 	ld hl, wScreenAttrmap + 3 * TILEMAP_WIDTH ; $58d5
-	lb bc, $05, $01 ; $58d8 tile, count
+	ld_tile_run bc, $05, $01 ; $58d8
 	call FillTilemapRun ; $58db
-	lb bc, $20, $12 ; $58de tile, count
+	ld_tile_run bc, $20, $12 ; $58de
 	call FillTilemapRun ; $58e1
-	lb bc, $06, $01 ; $58e4 tile, count
+	ld_tile_run bc, $06, $01 ; $58e4
 	call FillTilemapRun ; $58e7
 	ld hl, wScreenAttrmap + 4 * TILEMAP_WIDTH ; $58ea
-	lb bc, $07, $01 ; $58ed tile, count
+	ld_tile_run bc, $07, $01 ; $58ed
 	call FillTilemapRun ; $58f0
-	lb bc, $08, $12 ; $58f3 tile, count
+	ld_tile_run bc, $08, $12 ; $58f3
 	call FillTilemapRun ; $58f6
-	lb bc, $09, $01 ; $58f9 tile, count
+	ld_tile_run bc, $09, $01 ; $58f9
 	call FillTilemapRun ; $58fc
 	ret ; $58ff
 FillTilemapRun:

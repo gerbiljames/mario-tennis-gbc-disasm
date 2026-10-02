@@ -203,7 +203,7 @@ DrawMatchMenuItem:
 	push hl ; $6810
 	call GetShadowTilemapAddr ; $6811
 	pop hl ; $6814
-	lb bc, $03, $02 ; $6815 width, rows
+	ld_size bc, $03, $02 ; $6815
 	call CopyTextRect ; $6818
 	pop de ; $681b
 	pop af ; $681c
@@ -216,7 +216,7 @@ DrawMatchMenuItem:
 	push hl ; $6829
 	call GetShadowAttrmapAddr ; $682a
 	pop hl ; $682d
-	lb bc, $03, $02 ; $682e width, rows
+	ld_size bc, $03, $02 ; $682e
 	call CopyTextRect ; $6831
 	ret ; $6834
 MatchMenuItemRectPointers:

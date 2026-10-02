@@ -209,13 +209,12 @@ deleted.
   `rst $18` cross-bank call, `wram_bank N` and `push_wram_bank N` /
   `pop_wram_bank` for the WRAM bank switch and the save-and-restore around
   it, `ld_hl_indexed Table` for the split-base table index (`hl = Table + a`),
-  `wait_frames N` for the frame-wait's inline argument, `lb rr, hi, lo` where
-  a callee reads a register pair as two bytes (the site comment names them),
-  `ld_xy de, x, y` for a sprite's screen position and `ld_cell de, column,
-  row` for a tile cell, `ld_bg_pals` / `ld_obj_pals de, first, count` for a
-  run of palettes, `ld_oam bc, attr, tile` for a sprite's OAM attribute and
-  tile,
-  `set_flag` / `test_flag` / `clear_flag` and `ld_flag_id` for the
+  `wait_frames N` for the frame-wait's inline argument, the pair macros
+  that name both halves of a register pair a callee reads as two bytes
+  (`ld_xy de, x, y` for a sprite's screen position, `ld_cell de, column, row`
+  for a tile cell, `ld_size bc, width, height`, `ld_oam bc, attr, tile`,
+  `ld_tile_run bc, tile, count`, `ld_bg_pals` / `ld_obj_pals de, first,
+  count`), `set_flag` / `test_flag` / `clear_flag` and `ld_flag_id` for the
   per-story-slot game flags (`include/flag_constants.inc`), `palette` for
   a CGB palette as four `r,g,b` triples, `sound` for the
   `rst $08` sound command, and the `script_*`, `as_*`, `anim_*`, `map_*`

@@ -309,7 +309,7 @@ ShowRulesPageSequence:
 	ld_cell de, $00, $02 ; $4333
 	call DrawMenuCaptionWindow ; $4336
 	ld_cell de, $00, $05 ; $4339
-	ld bc, $130b ; $433c
+	ld_size bc, $13, $0b ; $433c
 	call DrawWindowFrameAt ; $433f
 	ld hl, wRulesFirstPageTextId ; $4342
 	ld a, [hl+] ; $4345
@@ -349,7 +349,7 @@ MatchPauseMenu_ReviewControls:
 	call UnregisterFrameTask ; $4383
 	call RestoreBgTilemap ; $4386
 	ld_cell de, $00, $02 ; $4389
-	ld bc, $130e ; $438c
+	ld_size bc, $13, $0e ; $438c
 	call DrawWindowFrameAt ; $438f
 	farcall PrepareGlyphBuffer ; $4392
 	ld_cell de, $01, $03 ; $4395

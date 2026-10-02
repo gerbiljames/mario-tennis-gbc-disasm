@@ -70,7 +70,7 @@ ColorEditorHeader_05:
 	db "--R--G--B", $00
 RunDebugColorEditor:
 	ld_cell de, $07, $00 ; $69c5
-	ld bc, $0b04 ; $69c8
+	ld_size bc, $0b, $04 ; $69c8
 	farcall CreateWindow ; $69cb
 	ld [wDebugColorEditorWindowId], a ; $69ce
 	call DrawTextWindowFrame ; $69d1
@@ -154,7 +154,7 @@ RunDebugColorEditor:
 RunDebugPaletteViewer:
 	wram_bank WRAM_TEXT ; $6a54
 	ld_cell de, $00, $00 ; $6a5a
-	ld bc, $0712 ; $6a5d
+	ld_size bc, $07, $12 ; $6a5d
 	ld a, $00 ; $6a60
 	farcall CreateWindowWithAttr ; $6a62
 	ld [wDebugPaletteViewerWindowId], a ; $6a65

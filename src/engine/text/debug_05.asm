@@ -185,7 +185,7 @@ RunDebugFlagEditor:
 	ld [wDebugFlagPage], a ; $65b5
 .notDebugFlagEditorOpen:
 	ld_cell de, $00, $00 ; $65b8
-	ld bc, $1404 ; $65bb
+	ld_size bc, $14, $04 ; $65bb
 	call CreateWindow ; $65be
 	ld [wDebugFlagHeaderWindowId], a ; $65c1
 	call DrawTextWindowFrame ; $65c4
@@ -196,12 +196,12 @@ RunDebugFlagEditor:
 	ld_cell de, $04, $02 ; $65d3
 	call WriteStringToWindow ; $65d6
 	ld_cell de, $00, $04 ; $65d9
-	ld bc, $1407 ; $65dc
+	ld_size bc, $14, $07 ; $65dc
 	call CreateWindow ; $65df
 	ld [wDebugFlagWindow1Id], a ; $65e2
 	call DrawTextWindowFrame ; $65e5
 	ld_cell de, $00, $0b ; $65e8
-	ld bc, $1407 ; $65eb
+	ld_size bc, $14, $07 ; $65eb
 	call CreateWindow ; $65ee
 	ld [wDebugFlagWindow2Id], a ; $65f1
 	call DrawTextWindowFrame ; $65f4
@@ -428,7 +428,7 @@ RunDebugWarpMenu:
 	farcall GetStoryLocationCount ; $67db
 	ld [wDebugWarpLocationCount], a ; $67de
 	ld_cell de, $00, $00 ; $67e1
-	ld bc, $1406 ; $67e4
+	ld_size bc, $14, $06 ; $67e4
 	call CreateWindow ; $67e7
 	ld [wDebugWarpWindowId], a ; $67ea
 	call DebugDrawWarpMenu ; $67ed

@@ -423,7 +423,7 @@ DrawMinigameGridCell:
 	ld a, d ; $4340
 	add $d8 ; $4341
 	ld d, a ; $4343
-	lb bc, $02, $02 ; $4344 width, rows
+	ld_size bc, $02, $02 ; $4344
 	call CopyTextRect ; $4347
 	pop de ; $434a
 	pop hl ; $434b
@@ -431,7 +431,7 @@ DrawMinigameGridCell:
 	ld a, d ; $434d
 	add $d0 ; $434e
 	ld d, a ; $4350
-	lb bc, $02, $02 ; $4351 width, rows
+	ld_size bc, $02, $02 ; $4351
 	call CopyTextRect ; $4354
 	pop de ; $4357
 	pop hl ; $4358
@@ -439,7 +439,7 @@ DrawMinigameGridCell:
 	ld a, d ; $435a
 	add $dc ; $435b
 	ld d, a ; $435d
-	lb bc, $02, $02 ; $435e width, rows
+	ld_size bc, $02, $02 ; $435e
 	call CopyTextRect ; $4361
 	pop de ; $4364
 	pop hl ; $4365
@@ -447,7 +447,7 @@ DrawMinigameGridCell:
 	ld a, d ; $4367
 	add $d4 ; $4368
 	ld d, a ; $436a
-	lb bc, $02, $02 ; $436b width, rows
+	ld_size bc, $02, $02 ; $436b
 	call CopyTextRect ; $436e
 	pop de ; $4371
 	ret ; $4372

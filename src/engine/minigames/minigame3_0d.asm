@@ -14,19 +14,19 @@ LoadMatchUiCourtTilemap:
 	push hl ; $5110
 	pop hl ; $5111
 	ld de, wCourtTilemapSaved + 9 * TILEMAP_WIDTH + 11 ; $5112
-	lb bc, $0a, $05 ; $5115 width, rows
+	ld_size bc, $0a, $05 ; $5115
 	call CopyTextRect ; $5118
 	pop hl ; $511b
 	ld de, wCourtTilemap + 9 * TILEMAP_WIDTH + 11 ; $511c
-	lb bc, $0a, $05 ; $511f width, rows
+	ld_size bc, $0a, $05 ; $511f
 	call CopyTextRect ; $5122
 	pop hl ; $5125
 	ld de, wCourtAttrmapSaved + 9 * TILEMAP_WIDTH + 11 ; $5126
-	lb bc, $0a, $05 ; $5129 width, rows
+	ld_size bc, $0a, $05 ; $5129
 	call CopyTextRect ; $512c
 	pop hl ; $512f
 	ld de, wCourtAttrmap + 9 * TILEMAP_WIDTH + 11 ; $5130
-	lb bc, $0a, $05 ; $5133 width, rows
+	ld_size bc, $0a, $05 ; $5133
 	call CopyTextRect ; $5136
 	ret ; $5139
 TargetShotZoneOverlayOffsets:

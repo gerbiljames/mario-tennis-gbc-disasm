@@ -8,12 +8,12 @@ Unused_06_DrawMusicMenuRow:
 	ld_cell de, $03, $0a ; $698b
 	call GetShadowTilemapAddr ; $698e
 	ld hl, Unused_06_DrawMusicMenuRowTextRect ; $6991
-	lb bc, $0c, $02 ; $6994 width, rows
+	ld_size bc, $0c, $02 ; $6994
 	call CopyTextRect ; $6997
 	ld_cell de, $03, $0a ; $699a
 	call GetShadowAttrmapAddr ; $699d
 	ld hl, TextRectAttrs_06 ; $69a0
-	lb bc, $0c, $02 ; $69a3 width, rows
+	ld_size bc, $0c, $02 ; $69a3
 	call CopyTextRect ; $69a6
 	ld a, [wCourtViewLocked] ; $69a9
 	and a ; $69ac

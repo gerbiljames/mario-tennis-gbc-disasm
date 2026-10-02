@@ -17,7 +17,7 @@ Unused_1a_RunDebugExpEditor:
 	push hl ; $43ad
 	push_wram_bank WRAM_TEXT ; $43ae
 	ld_cell de, $00, $00 ; $43b7
-	ld bc, $1404 ; $43ba
+	ld_size bc, $14, $04 ; $43ba
 	farcall CreateWindow ; $43bd
 	ld [wPauseMenuWindowId], a ; $43c0
 	farcall RestoreShadowTilemap ; $43c3
