@@ -251,6 +251,15 @@ chunk that lands at `$8e00` — the last of the four `$200`-byte slices that wou
 have covered `$8800`-`$8fff`, with the first three missing and the source label
 of the survivor wrong.
 
+### The DMG lockout screen copies a whole map from an 18-row one
+
+`ShowDmgLockoutScreen` (`$01:$6030`) decompresses `DmgLockoutTilemapLZ_01`,
+576 bytes (18 rows of 32), then copies `TILEMAP_AREA` (1024 bytes) from the
+buffer to `vBGMap0`. Rows 18-31 of the map get the 448 bytes that follow in
+`wDecompBuffer`, which still hold the start of the lockout's decompressed
+tiles. Nothing shows them: the routine ends in an endless `AdvanceFrame`
+loop without touching the scroll, so only rows 0-17 are ever on screen.
+
 ### The SRAM text fetch copies more than its buffers hold
 
 The ROM text fetchers stop at the size of the buffer they fill: dialogue at
