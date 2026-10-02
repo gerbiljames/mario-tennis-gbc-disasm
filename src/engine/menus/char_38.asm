@@ -357,7 +357,7 @@ SetupCharGridScreen:
 	call DrawCharGridSlotPrompt ; $5038
 	call DrawCharGridSlotIcons ; $503b
 	farcall QueueWram3MapToVRAM ; $503e
-	ld de, $8000 + VRAM_BANK1 ; $5041
+	ld de, vTiles0 + VRAM_BANK1 ; $5041
 	farcall LoadFixedTileBlockAndPalette ; $5044
 	ld hl, CharGridScreenTable0 ; $5047
 	lb de, $0b, $05 ; $504a palette index, count

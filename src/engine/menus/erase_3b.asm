@@ -114,7 +114,7 @@ LoadEraseSavedDataGfx:
 	ld [wCurrentStorySlot], a ; $6d42
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $6d45
 	farcall LoadCharMugshotToBuffer ; $6d48
-	ld de, $9680 + VRAM_BANK1 ; $6d4b
+	ld de, vTiles2 + $68 * TILE_SIZE + VRAM_BANK1 ; $6d4b
 	farcall CopyMugshotBufferToVram ; $6d4e
 	call AdvanceFrame ; $6d51
 	wram_bank WRAM_SCREEN ; $6d54
@@ -122,7 +122,7 @@ LoadEraseSavedDataGfx:
 	ld [wCurrentStorySlot], a ; $6d5c
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $6d5f
 	farcall LoadCharMugshotToBuffer ; $6d62
-	ld de, $9710 + VRAM_BANK1 ; $6d65
+	ld de, vTiles2 + $71 * TILE_SIZE + VRAM_BANK1 ; $6d65
 	farcall CopyMugshotBufferToVram ; $6d68
 	call AdvanceFrame ; $6d6b
 	wram_bank WRAM_SCREEN ; $6d6e
@@ -130,7 +130,7 @@ LoadEraseSavedDataGfx:
 	ld [wCurrentStorySlot], a ; $6d76
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $6d79
 	farcall LoadCharMugshotToBuffer ; $6d7c
-	ld de, $8f00 + VRAM_BANK1 ; $6d7f
+	ld de, vTiles1 + $70 * TILE_SIZE + VRAM_BANK1 ; $6d7f
 	farcall CopyMugshotBufferToVram ; $6d82
 	call AdvanceFrame ; $6d85
 	wram_bank WRAM_STAGING ; $6d88

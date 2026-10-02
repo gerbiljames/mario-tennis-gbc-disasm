@@ -29,7 +29,7 @@ CopyScrolledSceneTilemapToVram:
 	add hl, hl ; $5c4e
 	add l ; $5c4f
 	ld l, a ; $5c50
-	ld de, $9800 ; $5c51
+	ld de, vBGMap0 ; $5c51
 	add hl, de ; $5c54
 	ld e, l ; $5c55
 	ld d, h ; $5c56

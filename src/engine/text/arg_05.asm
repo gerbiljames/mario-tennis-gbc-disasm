@@ -49,7 +49,7 @@ TextContinueArrowBlinkTask:
 	ld l, e ; $5000
 	ld de, $3000 ; $5001
 	add hl, de ; $5004
-	ld de, $9800 ; $5005
+	ld de, vBGMap0 ; $5005
 	add hl, de ; $5008
 	ld d, h ; $5009
 	ld e, l ; $500a

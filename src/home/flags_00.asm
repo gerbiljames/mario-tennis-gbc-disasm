@@ -29,7 +29,7 @@ Unused_00_BlitBGStrip:
 	add hl, hl ; $231e
 	add hl, hl ; $231f
 	add hl, hl ; $2320
-	ld de, $9800 ; $2321
+	ld de, vBGMap0 ; $2321
 	add hl, de ; $2324
 	ld a, l ; $2325
 	ld [wBGRowBlitDest], a ; $2326

@@ -222,8 +222,8 @@ into two transfers:
 
 ```
 LoadMenuTilesB:
-        ld hl, MenuFontTiles_01     / ld de, $9200 / ld c, $60 / call QueueVRAMCopy
-        ld hl, MenuFontFillTiles_01 / ld de, $8800 / ld c, $60 / call QueueVRAMCopy
+        ld hl, MenuFontTiles_01     / ld de, vTiles2 + $20 * TILE_SIZE / ld c, $60 / call QueueVRAMCopy
+        ld hl, MenuFontFillTiles_01 / ld de, vTiles1 / ld c, $60 / call QueueVRAMCopy
 ```
 
 The staged one (`$01:$5095`, reached from `LoadMenuFontGfxStaged`, which bank
@@ -233,7 +233,7 @@ then does this as its fourth chunk:
 
 ```
         ld hl, MenuFontPalettes_01   ; <- $5010, a 64-byte palette block
-        ld de, $8e00
+        ld de, vTiles1 + $60 * TILE_SIZE   ; $8e00
         ld c, $20                    ; 512 bytes
         call QueueVRAMCopy
 ```

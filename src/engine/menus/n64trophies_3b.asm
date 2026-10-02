@@ -389,7 +389,7 @@ BuildN64TnmtDataScreen:
 	ld [wDataScreenCursorRow], a ; $4dd3
 	call LoadN64TnmtDataRecords ; $4dd6
 	wram_bank WRAM_SCREEN ; $4dd9
-	ld de, $8ac0 + VRAM_BANK1 ; $4ddf
+	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $4ddf
 	call LoadChartWindowTiles ; $4de2
 	ld de, vTiles0 + VRAM_BANK1 ; $4de5
 	farcall LoadMenuArrowSpriteTiles ; $4de8

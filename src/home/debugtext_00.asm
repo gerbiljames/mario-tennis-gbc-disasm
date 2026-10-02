@@ -6,7 +6,7 @@ UpdateDebugOverlay:
 	xor a ; $1893
 	ldh [rVBK], a ; $1894
 	ld hl, wDebugPeakLYText ; $1896
-	ld de, $9d08 ; $1899
+	ld de, vBGMap1 + 8 * TILEMAP_WIDTH + 8 ; $1899
 	ld a, [hl+] ; $189c
 	ld [de], a ; $189d
 	inc de ; $189e

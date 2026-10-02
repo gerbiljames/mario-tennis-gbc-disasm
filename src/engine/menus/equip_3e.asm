@@ -10,7 +10,7 @@ LoadEquipSelectCommon:
 	wram_bank WRAM_TEXT ; $5801
 	call CreateEquipCaptionWindow ; $5807
 	call CreateEquipListWindow ; $580a
-	ld de, $8000 + VRAM_BANK1 ; $580d
+	ld de, vTiles0 + VRAM_BANK1 ; $580d
 	farcall LoadFixedTileBlockAndPalette ; $5810
 	ret ; $5813
 CreateEquipListWindow:

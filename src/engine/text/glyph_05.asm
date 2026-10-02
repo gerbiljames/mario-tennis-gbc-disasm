@@ -140,12 +140,12 @@ UploadGlyphBufferFull:
 	call AdvanceFrame ; $743d
 .lcdSettled:
 	pop af ; $7440
-	ld hl, $8c00 ; $7441
+	ld hl, vTiles1 + $40 * TILE_SIZE ; $7441
 	wram_bank WRAM_TEXT ; $7444
 	ld a, [wWindowTileAttr] ; $744a
 	bit 3, a ; $744d
 	jr z, .pushPageDests ; $744f
-	ld hl, $8c00 + VRAM_BANK1 ; $7451
+	ld hl, vTiles1 + $40 * TILE_SIZE + VRAM_BANK1 ; $7451
 .pushPageDests:
 	push hl ; $7454
 	ld de, $ff00 ; $7455

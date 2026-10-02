@@ -210,14 +210,14 @@ BuildMinigameDataScreen:
 	ld [wMenuCursorY], a ; $7452
 	wram_bank WRAM_SCREEN ; $7455
 	call LoadMinigameDataState ; $745b
-	ld de, $8ac0 + VRAM_BANK1 ; $745e
+	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $745e
 	farcall LoadChartWindowTiles ; $7461
 	ld de, vTiles0 + VRAM_BANK1 ; $7464
 	farcall LoadMenuArrowSpriteTiles ; $7467
 	ld b, $08 ; $746a
 	ld c, $0f ; $746c
 	farcall LoadIndexedPalette ; $746e
-	ld de, $8100 + VRAM_BANK1 ; $7471
+	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $7471
 	ld b, $09 ; $7474
 	ld c, $00 ; $7476
 	farcall InitNumberSpriteGfx ; $7478

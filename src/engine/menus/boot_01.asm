@@ -346,7 +346,7 @@ Unused_01_LoadMenuBgPalettes3To7:
 	push bc ; $5177
 	push de ; $5178
 	push hl ; $5179
-	ld hl, $87c8 ; $517a
+	ld hl, vTiles0 + $7c * TILE_SIZE + 8 ; $517a
 	lb de, $03, $05 ; $517d palette index, count
 	call LoadPaletteShadow ; $5180
 	pop hl ; $5183
@@ -359,7 +359,7 @@ LoadMenuObjPalettes3To7:
 	push bc ; $5189
 	push de ; $518a
 	push hl ; $518b
-	ld hl, $87c8 ; $518c
+	ld hl, vTiles0 + $7c * TILE_SIZE + 8 ; $518c
 	lb de, $0b, $05 ; $518f palette index, count
 	call LoadPaletteShadow ; $5192
 	pop hl ; $5195

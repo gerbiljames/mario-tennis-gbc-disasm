@@ -432,7 +432,7 @@ Unused_1a_SetupCharViewerScene:
 	farcall InitChar ; $6fb8
 	ld a, $07 ; $6fbb
 	ld [wCharSpriteAttr], a ; $6fbd
-	ld de, $8600 ; $6fc0
+	ld de, vTiles0 + $60 * TILE_SIZE ; $6fc0
 	ld hl, wCharFrameVramDest ; $6fc3
 	ld a, e ; $6fc6
 	ld [hl+], a ; $6fc7

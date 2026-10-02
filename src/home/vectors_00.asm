@@ -246,7 +246,7 @@ ClearBothVRAMBanks:
 	call ClearMemoryBC16 ; $0258
 	xor a ; $025b
 	ldh [rVBK], a ; $025c
-	ld hl, $8000 ; $025e
+	ld hl, vTiles0 ; $025e
 	ld bc, $0200 ; $0261
 	jp ClearMemoryBC16 ; $0264
 .loop:
@@ -449,7 +449,7 @@ Unused_00_ClearBGMap:
 	ldh a, [hIsCGB] ; $0393
 	and a ; $0395
 	jp nz, ClearBothVRAMBanks.loop ; $0396
-	ld hl, $9800 ; $0399
+	ld hl, vBGMap0 ; $0399
 	ld bc, $0400 ; $039c
 .loop:
 	xor a ; $039f

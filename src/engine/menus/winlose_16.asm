@@ -177,10 +177,10 @@ LoadResultPortraitSlot:
 	ret ; $60b6
 ResultPortraitSlotTable:
 	; $60b7, 9 bytes (records:2)
-	dw $8c00 ; record 0
-	dw $8d00 ; record 1
-	dw $8e00 ; record 2
-	dw $8f00 ; record 3
+	dw vTiles1 + $40 * TILE_SIZE ; record 0
+	dw vTiles1 + $50 * TILE_SIZE ; record 1
+	dw vTiles1 + $60 * TILE_SIZE ; record 2
+	dw vTiles1 + $70 * TILE_SIZE ; record 3
 	db $c9
 DecompressResultPortrait:
 	ld a, c ; $60c0

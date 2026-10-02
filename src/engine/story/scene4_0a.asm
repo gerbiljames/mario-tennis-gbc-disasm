@@ -102,7 +102,7 @@ UnusedStepCourtSceneGfxStream:
 	add hl, hl ; $62c5
 	add hl, hl ; $62c6
 	add hl, hl ; $62c7
-	ld de, $9000 + VRAM_BANK1 ; $62c8
+	ld de, vTiles2 + VRAM_BANK1 ; $62c8
 	add hl, de ; $62cb
 	push hl ; $62cc
 	ld l, b ; $62cd
@@ -477,7 +477,7 @@ AdvanceSceneTileAnimation:
 	add hl, hl ; $6510
 	add hl, hl ; $6511
 	add hl, hl ; $6512
-	ld de, $9000 + VRAM_BANK1 ; $6513
+	ld de, vTiles2 + VRAM_BANK1 ; $6513
 	add hl, de ; $6516
 	push hl ; $6517
 	ld l, a ; $6518

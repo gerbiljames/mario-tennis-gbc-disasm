@@ -206,7 +206,7 @@ Unused_0a_CopySceneTilemapToVram:
 	and $1f ; $5770
 	add l ; $5772
 	ld l, a ; $5773
-	ld de, $9800 ; $5774
+	ld de, vBGMap0 ; $5774
 	add hl, de ; $5777
 	push hl ; $5778
 	ld a, [wCameraY + 1] ; $5779

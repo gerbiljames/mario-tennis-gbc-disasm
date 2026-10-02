@@ -191,7 +191,7 @@ Unused_1a_GetTilemapBufferCellDest:
 	ld l, e ; $415d
 	ld de, $3000 ; $415e
 	add hl, de ; $4161
-	ld de, $9800 ; $4162
+	ld de, vBGMap0 ; $4162
 	add hl, de ; $4165
 	ld d, h ; $4166
 	ld e, l ; $4167

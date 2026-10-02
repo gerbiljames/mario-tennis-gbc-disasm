@@ -274,16 +274,21 @@ def VRAM_BANK1 equ $2000        ; include/constants.inc:9
 real address (`$0486`-`$048d`). So a destination of `$b800` means `$9800` in
 VRAM bank 1, and the disassembly writes it as `vBGMap0 + VRAM_BANK1` rather than
 hiding the bank inside a literal (`include/constants.inc`). Every VRAM
-address one of the VRAM consumers (`QueueVRAMCopy`,
-`LoadCompressedTileBlock`, `DecompressData`, the tile loaders) takes is
-written that way: `vTiles0`, `vTiles1`, `vTiles2` for the three 128-tile
-blocks plus `$NN * TILE_SIZE`, `vBGMap0` / `vBGMap1` for the maps plus
-`row * TILEMAP_WIDTH + col` -- 758 sites. Names go only where such a consumer
-takes the word, because `$8000` is also a sign bit and `$932f` a coordinate
-pair. The 91 words in `$8000`-`$9fff` that stay literal mix those with VRAM
-addresses handed to routines outside that list: 37 carry `+ VRAM_BANK1`
-(`InitNumberSpriteGfx`'s destinations, for one), and others are map bases
-added to an offset (`ld de, $9800` / `add hl, de` at `$00:$223a`).
+address in the code is written that way: `vTiles0`, `vTiles1`, `vTiles2` for
+the three 128-tile blocks plus `$NN * TILE_SIZE`, `vBGMap0` / `vBGMap1` for
+the maps plus `row * TILEMAP_WIDTH + col` -- 827 sites. That covers the
+addresses handed to the copy routines and loaders, the destinations other
+routines take (`InitNumberSpriteGfx`, `CopyMugshotBufferToVram`, the result
+portraits' `ResultPortraitSlotTable`), and the map and tile bases added to an
+offset (`ld de, vBGMap0` / `add hl, de` at `$00:$223a`).
+
+The 22 words in `$8000`-`$9fff` that stay literal are not addresses, which
+is why a name is decided by what consumes the word rather than by its range:
+sprite positions for `QueueSprite`, `DrawMinigameScore` and
+`DrawDecimalNumberSprites_39` (`ld de, $932f` is y `$93`, x `$2f`), the
+packed attribute/tile pair `ld bc, $800d` for `WriteWindowCellTileAttr`, a
+clamped return value (`ld hl, $8001` in `GetTangent`, `$00:$1793`), and two `ld bc,
+$8000` arguments to `InitCa00RecordFromCharId` in `LoadStorySlot`.
 
 ### 2.4 The two map planes
 

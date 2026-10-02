@@ -259,11 +259,11 @@ SetupCharacterSelectScreen:
 	farcall UploadGlyphBuffer ; $4a08
 	ld a, CHAR_ALEX ; $4a0b
 	farcall LoadCharMugshotToBuffer ; $4a0d
-	ld de, $9200 + VRAM_BANK1 ; $4a10
+	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $4a10
 	farcall CopyMugshotBufferToVram ; $4a13
 	ld a, CHAR_NINA ; $4a16
 	farcall LoadCharMugshotToBuffer ; $4a18
-	ld de, $9300 + VRAM_BANK1 ; $4a1b
+	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $4a1b
 	farcall CopyMugshotBufferToVram ; $4a1e
 	wram_bank WRAM_COURT_PLANES ; $4a21
 	ld a, [wCharSelectIsPartner] ; $4a27
@@ -271,11 +271,11 @@ SetupCharacterSelectScreen:
 	jr z, .secondRow ; $4a2b
 	ld a, CHAR_HARRY ; $4a2d
 	farcall LoadCharMugshotToBuffer ; $4a2f
-	ld de, $9200 + VRAM_BANK1 ; $4a32
+	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $4a32
 	farcall CopyMugshotBufferToVram ; $4a35
 	ld a, CHAR_KATE ; $4a38
 	farcall LoadCharMugshotToBuffer ; $4a3a
-	ld de, $9300 + VRAM_BANK1 ; $4a3d
+	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $4a3d
 	farcall CopyMugshotBufferToVram ; $4a40
 	wram_bank WRAM_SCREEN ; $4a43
 	ld b, $03 ; $4a49

@@ -84,7 +84,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld l, e ; $4d0d
 	ld de, $3000 ; $4d0e
 	add hl, de ; $4d11
-	ld de, $9800 ; $4d12
+	ld de, vBGMap0 ; $4d12
 	add hl, de ; $4d15
 	ld d, h ; $4d16
 	ld e, l ; $4d17

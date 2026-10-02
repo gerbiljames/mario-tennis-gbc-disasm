@@ -258,7 +258,7 @@ UploadGlyphBufferQueued:
 	ld hl, $0000 ; $780b
 	ld b, h ; $780e
 	ld c, l ; $780f
-	ld de, $8800 ; $7810
+	ld de, vTiles1 ; $7810
 	add hl, de ; $7813
 	push_wram_bank WRAM_TEXT ; $7814
 	ld a, [wWindowTileAttr] ; $781d
@@ -327,7 +327,7 @@ UploadGlyphBufferDMA:
 	jr .loop ; $7882
 .step:
 	ld hl, wGlyphTileBuffer ; $7884
-	ld de, $8800 ; $7887
+	ld de, vTiles1 ; $7887
 	ld c, $20 ; $788a
 .loopB:
 	push bc ; $788c
@@ -366,7 +366,7 @@ Unused_05_UploadGlyphTileRange:
 	add hl, hl ; $78c2
 	ld b, h ; $78c3
 	ld c, l ; $78c4
-	ld de, $8800 ; $78c5
+	ld de, vTiles1 ; $78c5
 	add hl, de ; $78c8
 	ld a, [wGlyphUploadVramBank] ; $78c9
 	or a ; $78cc

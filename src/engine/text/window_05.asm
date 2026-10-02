@@ -128,7 +128,7 @@ Unused_05_CopyVisibleTilemapToVRAM:
 	add hl, hl ; $415b
 	ld b, h ; $415c
 	ld c, l ; $415d
-	ld hl, $9800 ; $415e
+	ld hl, vBGMap0 ; $415e
 	add hl, bc ; $4161
 	ld d, h ; $4162
 	ld e, l ; $4163
@@ -150,13 +150,13 @@ Unused_05_CopyVisibleTilemapToVRAM:
 	call QueueVRAMCopy ; $417d
 	pop af ; $4180
 	ld hl, $d000 ; $4181
-	ld de, $9800 ; $4184
+	ld de, vBGMap0 ; $4184
 	ld c, a ; $4187
 	ld b, $00 ; $4188
 .queueVRAMCopy:
 	call QueueVRAMCopy ; $418a
 	pop bc ; $418d
-	ld hl, $9800 + VRAM_BANK1 ; $418e
+	ld hl, vBGMap0 + VRAM_BANK1 ; $418e
 	add hl, bc ; $4191
 	ld d, h ; $4192
 	ld e, l ; $4193
@@ -179,7 +179,7 @@ Unused_05_CopyVisibleTilemapToVRAM:
 	call QueueVRAMCopy ; $41b1
 	pop af ; $41b4
 	ld hl, $d400 ; $41b5
-	ld de, $9800 + VRAM_BANK1 ; $41b8
+	ld de, vBGMap0 + VRAM_BANK1 ; $41b8
 	ld c, a ; $41bb
 	ld b, $00 ; $41bc
 .queueVRAMCopy2:
@@ -239,7 +239,7 @@ Unused_05_CopyTilemapRowToVRAM:
 	rl b ; $4212
 	sla c ; $4214
 	rl b ; $4216
-	ld hl, $9800 ; $4218
+	ld hl, vBGMap0 ; $4218
 	add hl, bc ; $421b
 	ld d, h ; $421c
 	ld e, l ; $421d
@@ -282,7 +282,7 @@ Unused_05_CopyTilemapRowsToVRAM:
 	rl b ; $425a
 	sla c ; $425c
 	rl b ; $425e
-	ld hl, $9800 ; $4260
+	ld hl, vBGMap0 ; $4260
 	add hl, bc ; $4263
 	ld d, h ; $4264
 	ld e, l ; $4265
@@ -295,7 +295,7 @@ Unused_05_CopyTilemapRowsToVRAM:
 	call QueueVRAMCopy ; $426e
 	pop bc ; $4271
 	pop af ; $4272
-	ld hl, $9800 + VRAM_BANK1 ; $4273
+	ld hl, vBGMap0 + VRAM_BANK1 ; $4273
 	add hl, bc ; $4276
 	ld d, h ; $4277
 	ld e, l ; $4278

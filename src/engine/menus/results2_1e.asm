@@ -163,7 +163,7 @@ InitResultsScreenCharacters:
 	farcall InitChar ; $49cc
 	ld a, $0f ; $49cf
 	ld [wCharSpriteAttr], a ; $49d1
-	ld de, $8000 + VRAM_BANK1 ; $49d4
+	ld de, vTiles0 + VRAM_BANK1 ; $49d4
 	ld hl, wCharFrameVramDest ; $49d7
 	ld a, e ; $49da
 	ld [hl+], a ; $49db
@@ -221,7 +221,7 @@ InitResultsScreenCharacters:
 	farcall InitChar ; $4a47
 	ld a, $0e ; $4a4a
 	ld [wCharSpriteAttr], a ; $4a4c
-	ld de, $8100 + VRAM_BANK1 ; $4a4f
+	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4a4f
 	ld hl, wCharFrameVramDest ; $4a52
 	ld a, e ; $4a55
 	ld [hl+], a ; $4a56

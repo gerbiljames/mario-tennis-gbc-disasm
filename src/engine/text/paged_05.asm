@@ -289,7 +289,7 @@ Unused_05_RunMenuSelectionShared:
 	ld l, a ; $4b43
 	ld de, $3000 ; $4b44
 	add hl, de ; $4b47
-	ld de, $9800 ; $4b48
+	ld de, vBGMap0 ; $4b48
 	add hl, de ; $4b4b
 	ld d, h ; $4b4c
 	ld e, l ; $4b4d

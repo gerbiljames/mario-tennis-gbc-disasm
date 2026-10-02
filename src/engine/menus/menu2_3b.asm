@@ -169,7 +169,7 @@ LoadMainMenuGfx:
 	ld [wCurrentStorySlot], a ; $571b
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $571e
 	farcall LoadCharMugshotToBuffer ; $5721
-	ld de, $9680 + VRAM_BANK1 ; $5724
+	ld de, vTiles2 + $68 * TILE_SIZE + VRAM_BANK1 ; $5724
 	farcall CopyMugshotBufferToVram ; $5727
 	call AdvanceFrame ; $572a
 	wram_bank WRAM_SCREEN ; $572d
@@ -177,7 +177,7 @@ LoadMainMenuGfx:
 	ld [wCurrentStorySlot], a ; $5735
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $5738
 	farcall LoadCharMugshotToBuffer ; $573b
-	ld de, $9710 + VRAM_BANK1 ; $573e
+	ld de, vTiles2 + $71 * TILE_SIZE + VRAM_BANK1 ; $573e
 	farcall CopyMugshotBufferToVram ; $5741
 	call AdvanceFrame ; $5744
 	wram_bank WRAM_SCREEN ; $5747
@@ -185,7 +185,7 @@ LoadMainMenuGfx:
 	ld [wCurrentStorySlot], a ; $574f
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $5752
 	farcall LoadCharMugshotToBuffer ; $5755
-	ld de, $8f00 + VRAM_BANK1 ; $5758
+	ld de, vTiles1 + $70 * TILE_SIZE + VRAM_BANK1 ; $5758
 	farcall CopyMugshotBufferToVram ; $575b
 	call AdvanceFrame ; $575e
 	ld b, TILEBLOCK_MainMenuGfx0 ; $5761

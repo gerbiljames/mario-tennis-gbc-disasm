@@ -185,7 +185,7 @@ RunMatchStatsScreen:
 InitMatchStatsScreen:
 	ld c, SCREENASSET_MatchStats3 ; $5c8a
 	farcall LoadScreenAssetRecord ; $5c8c
-	ld de, $8000 + VRAM_BANK1 ; $5c8f
+	ld de, vTiles0 + VRAM_BANK1 ; $5c8f
 	ld c, $00 ; $5c92
 	ld b, $08 ; $5c94
 	farcall InitNumberSpriteGfx ; $5c96

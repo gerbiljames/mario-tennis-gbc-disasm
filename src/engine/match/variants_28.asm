@@ -361,10 +361,10 @@ LoadMatchStoryGfx:
 .restore4:
 	pop af ; $6141
 	ld hl, wTextTileBuffer ; $6142
-	ld de, $8800 ; $6145
+	ld de, vTiles1 ; $6145
 	ld c, $20 ; $6148
 	ld hl, wTextTileBuffer + 32 * TILE_SIZE ; $614a
-	ld de, $8a00 ; $614d
+	ld de, vTiles1 + $20 * TILE_SIZE ; $614d
 	ld c, $20 ; $6150
 	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $6152
 	ld de, vTiles1 + $40 * TILE_SIZE ; $6155

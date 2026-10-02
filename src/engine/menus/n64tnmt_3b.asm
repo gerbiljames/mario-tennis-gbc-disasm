@@ -447,14 +447,14 @@ BuildN64RingShotScreen:
 	wram_bank WRAM_SCREEN ; $51bf
 	call LoadN64RingShotRecords ; $51c5
 	wram_bank WRAM_SCREEN ; $51c8
-	ld de, $8ac0 + VRAM_BANK1 ; $51ce
+	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $51ce
 	call LoadChartWindowTiles ; $51d1
 	ld de, vTiles0 + VRAM_BANK1 ; $51d4
 	farcall LoadMenuArrowSpriteTiles ; $51d7
 	ld b, $08 ; $51da
 	ld c, $0f ; $51dc
 	farcall LoadIndexedPalette ; $51de
-	ld de, $8100 + VRAM_BANK1 ; $51e1
+	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $51e1
 	ld b, $09 ; $51e4
 	ld c, $00 ; $51e6
 	farcall InitNumberSpriteGfx ; $51e8

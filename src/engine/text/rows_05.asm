@@ -198,7 +198,7 @@ CopyDirtyRowSpanToVRAM:
 	ld l, a ; $7189
 	add hl, de ; $718a
 	push hl ; $718b
-	ld hl, $9800 ; $718c
+	ld hl, vBGMap0 ; $718c
 	add hl, de ; $718f
 	ld d, h ; $7190
 	ld e, l ; $7191

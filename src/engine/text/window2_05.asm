@@ -307,7 +307,7 @@ RunMenuSelection:
 	ld l, a ; $4811
 	ld de, $3000 ; $4812
 	add hl, de ; $4815
-	ld de, $9800 ; $4816
+	ld de, vBGMap0 ; $4816
 	add hl, de ; $4819
 	ld d, h ; $481a
 	ld e, l ; $481b
@@ -460,7 +460,7 @@ AnimateTextArrowTask:
 	ld l, e ; $490e
 	ld de, $3000 ; $490f
 	add hl, de ; $4912
-	ld de, $9800 ; $4913
+	ld de, vBGMap0 ; $4913
 	add hl, de ; $4916
 	ld d, h ; $4917
 	ld e, l ; $4918

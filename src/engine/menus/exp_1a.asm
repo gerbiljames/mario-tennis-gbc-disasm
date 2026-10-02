@@ -9,7 +9,7 @@ Unused_1a_ExpScreenDrawTask:
 	ld a, [wExpScreenFlags] ; $4787
 	or a ; $478a
 	jr nz, .checkStoryModeMainCharacterOverworldSprite ; $478b
-	ld de, $8000 + VRAM_BANK1 ; $478d
+	ld de, vTiles0 + VRAM_BANK1 ; $478d
 .checkStoryModeMainCharacterOverworldSprite:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4790
 	rlca ; $4793

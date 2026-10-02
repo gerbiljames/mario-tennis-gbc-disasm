@@ -494,7 +494,7 @@ BuildMarioCastExhibScreen:
 	ld [wN64ExhibPage], a ; $7b1b
 	ld c, SCREENASSET_ExhibitionMenu ; $7b1e
 	farcall LoadScreenAssetRecord ; $7b20
-	ld de, $8ac0 + VRAM_BANK1 ; $7b23
+	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $7b23
 	call LoadChartWindowTiles ; $7b26
 	ld de, vTiles0 + VRAM_BANK1 ; $7b29
 	farcall LoadMenuArrowSpriteTiles ; $7b2c

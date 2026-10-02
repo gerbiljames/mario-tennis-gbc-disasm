@@ -211,7 +211,7 @@ GetScrollTextRowVramAddr:
 	ld a, h ; $5b0f
 	and $03 ; $5b10
 	ld h, a ; $5b12
-	ld de, $9800 ; $5b13
+	ld de, vBGMap0 ; $5b13
 	add hl, de ; $5b16
 	ld d, h ; $5b17
 	ld e, l ; $5b18

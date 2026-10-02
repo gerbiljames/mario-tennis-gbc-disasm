@@ -69,7 +69,7 @@ WaterSpriteSwingCountTask:
 	ld [wSwingContestSwingState], a ; $5646
 	ret ; $5649
 WaterSpriteSwingContestScene:
-	ld de, $8100 + VRAM_BANK1 ; $564a
+	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $564a
 	ld b, $0a ; $564d
 	ld c, $01 ; $564f
 	farcall InitNumberSpriteGfx ; $5651

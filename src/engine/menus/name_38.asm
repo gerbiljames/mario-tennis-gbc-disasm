@@ -377,7 +377,7 @@ SetupNameEntryScreen:
 	push_wram_bank WRAM_COURT_PLANES ; $6fed
 	ld a, [wScreenAttrmap + 1] ; $6ff6
 	farcall LoadCharMugshotToBuffer ; $6ff9
-	ld de, $9200 + VRAM_BANK1 ; $6ffc
+	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $6ffc
 	farcall CopyMugshotBufferToVram ; $6fff
 	wram_bank WRAM_COURT_PLANES ; $7002
 	call GetActiveStoryNameBuffer ; $7008

@@ -371,7 +371,7 @@ BlitBGRowFrom64:
 	add hl, hl ; $2237
 	add hl, hl ; $2238
 	add hl, hl ; $2239
-	ld de, $9800 ; $223a
+	ld de, vBGMap0 ; $223a
 	add hl, de ; $223d
 	ld a, l ; $223e
 	ld [wBGRowBlitDest], a ; $223f

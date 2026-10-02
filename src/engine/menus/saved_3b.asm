@@ -302,7 +302,7 @@ LoadSavedDataSourceGfx:
 	ld [wCurrentStorySlot], a ; $68af
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $68b2
 	farcall LoadCharMugshotToBuffer ; $68b5
-	ld de, $9680 + VRAM_BANK1 ; $68b8
+	ld de, vTiles2 + $68 * TILE_SIZE + VRAM_BANK1 ; $68b8
 	farcall CopyMugshotBufferToVram ; $68bb
 	call AdvanceFrame ; $68be
 	wram_bank WRAM_SCREEN ; $68c1
@@ -310,7 +310,7 @@ LoadSavedDataSourceGfx:
 	ld [wCurrentStorySlot], a ; $68c9
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $68cc
 	farcall LoadCharMugshotToBuffer ; $68cf
-	ld de, $9710 + VRAM_BANK1 ; $68d2
+	ld de, vTiles2 + $71 * TILE_SIZE + VRAM_BANK1 ; $68d2
 	farcall CopyMugshotBufferToVram ; $68d5
 	call AdvanceFrame ; $68d8
 	wram_bank WRAM_SCREEN ; $68db
@@ -318,7 +318,7 @@ LoadSavedDataSourceGfx:
 	ld [wCurrentStorySlot], a ; $68e3
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $68e6
 	farcall LoadCharMugshotToBuffer ; $68e9
-	ld de, $8f00 + VRAM_BANK1 ; $68ec
+	ld de, vTiles1 + $70 * TILE_SIZE + VRAM_BANK1 ; $68ec
 	farcall CopyMugshotBufferToVram ; $68ef
 	call AdvanceFrame ; $68f2
 	ld b, TILEBLOCK_SavedDataSourceGfx0 ; $68f5

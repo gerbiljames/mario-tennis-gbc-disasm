@@ -189,7 +189,7 @@ Unused_13_DecompressVarsityCourtTourRecords:
 	call DecompressData ; $6698
 	pop af ; $669b
 	push af ; $669c
-	ld hl, $8000 + VRAM_BANK1 ; $669d
+	ld hl, vTiles0 + VRAM_BANK1 ; $669d
 	ld d, a ; $66a0
 	ld e, $00 ; $66a1
 	add hl, de ; $66a3
