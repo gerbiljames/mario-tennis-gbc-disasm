@@ -1,9 +1,12 @@
 # Battery save format (32 KiB SRAM, MBC5)
 
 Engine: bank 3, `$404a-$59b0` (`InitSaveHeader`, `WriteSaveBlock`,
-`SaveStorySlot`, ... — see labels). SRAM is 4 banks of 8 KiB; a `.sav`
-file is the four banks concatenated. Verified against a live save with
-`tools/savetool.py verify` (all checksums match).
+`SaveStorySlot`, ...). SRAM is 4 banks of 8 KiB; a `.sav` file is the four
+banks concatenated. `tools/savetool.py` verifies, dumps and edits saves
+(levels, stats, unlock flags), recomputing block checksums, the master
+checksum and the bank-1 mirror; editing the live WRAM struct (`$c818` level
+etc.) in an emulator and saving in-game works too, since the game recomputes
+everything itself.
 
 ## Header (SRAM bank 0)
 
@@ -18,13 +21,13 @@ file is the four banks concatenated. Verified against a live save with
 
 ### Global flag array (`$a040-$a05f`)
 
-Accessed by `TestSaveFlag` / set / clear (bank 3, `FarPtr_TestSaveFlag`/`FarPtr_SetSaveFlag`/`FarPtr_ClearSaveFlag`).
-A flag is addressed by two registers: `d` = byte index (0-0x1f into the
-array), `e` = bit selector = `bit << 5` (so `$0720` means byte 7, bit 1).
-The mask is `0x80 >> bit` (`SaveFlagMaskTable_03`, 03:4d7e = `80 40 20 10 08 04 02 01`), and
-the referenced byte is `$a040 + d` (`sSaveFlags`). A flag's *number* is
-`byte * 8 + bit`; the `SAVEFLAG_*` constants in `include/constants.inc` hold
-the `de` id for each one, and every immediate call site renders by name.
+Accessed by `TestSaveFlag` / `SetSaveFlag` / `ClearSaveFlag` (bank 3, via
+the `FarPtr_` slots) with `d` = byte index (0-`$1f`) and `e` = `bit << 5`
+(`$0720` is byte 7, bit 1); the mask is `$80 >> bit`
+(`SaveFlagMaskTable_03`, 03:4d7e) applied to `$a040 + d` (`sSaveFlags`). A
+flag's *number* is `byte * 8 + bit`; the `SAVEFLAG_*` constants in
+`include/constants.inc` hold each `de` id, and every immediate call site
+uses the name.
 
 **Only bytes `$00`-`$07` are ever used** — 64 of the 256 bits. The rest
 (`sSaveFlagsUnused`, `$a048-$a05f`) is never read
@@ -49,22 +52,20 @@ Code Notes for `$a042`/`$a043`/`$a045`/`$a046`/`$a047` describe the same bits
 with the opposite bit numbering (their "Bit N" is mask `1 << N`, i.e. this
 engine's bit `7 - N`) and agree entry for entry.
 
-These are *global* flags (not per-story-slot), so setting the whole array to
-`0xFF` unlocks every playable character and every mini-game.
-`ApplyUnlockEverythingCheat` (`$3b:$4b33`) is the engine's own batch unlock.
+These are *global* flags (not per-story-slot): the whole array set to `$ff`,
+with the master checksum and bank-1 mirror fixed, boots clean with every
+character and minigame selectable. `tools/savetool.py unlock` does exactly
+this; per-story-slot progress (the `wGameFlags` block at slot +`$1c0`) is
+left untouched. `ApplyUnlockEverythingCheat` (`$3b:$4b33`) is the engine's
+own batch unlock.
 It sets the five court flags, `SAVEFLAG_UNLOCKED_FAY`-`_ELDEN`, and levels 1
 and 2 of every minigame, skipping level 3, so the level-3 characters (Baby
 Mario, Yoshi, Peach) stay locked. It also sets `FLAG_CHEAT_UNLOCK_0`-`_12`
 in every existing story slot and saves that slot, then calls
-`SetAllUnlockablesInSaveBlock`. Verified in-emulator: with
-the array forced to `0xFF` and the master checksum + bank-1 mirror fixed, the
-ROM boots clean and the Mario cast and all mini-games are selectable.
-`tools/savetool.py unlock` does exactly this. Per-story-slot progress is
-separate (the `wGameFlags` block at slot +0x1c0) and is left untouched.
+`SetAllUnlockablesInSaveBlock`.
 
-Two button codes call `ApplyUnlockEverythingCheat` (then
-`SetAllUnlockablesInSaveBlock`); `eventtest` targets `menu-cheat` and
-`trophies-cheat` enter them and both were seen to run it:
+Two button codes call it (`eventtest` targets `menu-cheat` and
+`trophies-cheat` enter them):
 
 * **Main menu:** ↓ ↓ → → ↑ ↑ ← Select Select Select → ↓ ↓ ← ← ↑ ↑ →
   Select ← ↓ ↓ → → ↑ ↑ ← Select Select, then A. `UpdateCheatCodeEntry`
@@ -108,19 +109,17 @@ SAVEDIR_ENTRY_SIZE`, and the block ids the code passes are `SAVEBLOCK_*`
 | +6 | block checksum: 16-bit byte-sum of the data, little-endian |
 | +8 | tag word (stored high-then-low; `$0000` primary, `$c600` backup) |
 
-`WriteSaveBlock(b, hl=src, de=tag)` copies src → block `b`'s data,
-sums it, and fills in the entry. `ReadSaveBlock`/`VerifySaveBlock`
-check the flag and checksum on the way in. The "tag" word at entry +8
-is just the caller's `de` echoed into the directory: primary writes
-pass `$0000`, and the story/exhibition backup writes pass
-`ld de, wTextBuffer` — i.e. the observed backup tag `$c600` is
-literally the address of `wTextBuffer`, not a magic constant.
+`WriteSaveBlock(b, hl=src, de=tag)` copies src to block `b`'s data, sums
+it and fills in the entry; `ReadSaveBlock`/`VerifySaveBlock` check the flag
+and checksum on the way in. The tag is the caller's `de` echoed into the
+directory: primary writes pass `$0000`, and the story/exhibition backup
+writes pass `ld de, wTextBuffer`, so the backup tag `$c600` is the address
+of `wTextBuffer`, not a magic constant.
 
 ## Block directory (113 entries, from `InitSaveHeader`)
 
-The directory defined by `InitSaveHeader` (03:404a) covers far more
-than the game ever writes. Full layout (`b`=SRAM bank, `off` from
-`$a000`):
+`InitSaveHeader` (03:404a) defines far more than the game ever writes
+(`bank:off`, offset from `$a000`):
 
 | blocks | bank:off | len | contents |
 |---|---|---|---|
@@ -145,9 +144,8 @@ than the game ever writes. Full layout (`b`=SRAM bank, `off` from
 
 `SaveStorySlot` writes block `2N` and its backup `2N+$1b` (slot from
 `$c36c`, 0-2); the unreachable `Unused_03_InvalidateStorySlot` would clear
-blocks `2N` and `2N+1`.
-Verified against `maxed-unlocked.sav`: only blocks 0/1, 11, 27/28,
-54/55, and 56-62 have ever been valid.
+blocks `2N` and `2N+1`. In a fully played save (`maxed-unlocked.sav`) only
+blocks 0/1, 11, 27/28, 54/55 and 56-62 are valid.
 
 ## Minigame record blocks (`$38-$3d`)
 
@@ -157,8 +155,7 @@ value passed through WRAM7 `$de00`. Records 0-1 are per-story-slot
 (block `$38 + wCurrentStorySlot`); records 2-10 always live in block
 `$38`. Per-record defaults come from `FarPtr_GetDefaultMinigameRecordValue`
 (the debug helper `Unused_03_DebugTestMinigameRecords` seeds records 0/1 with
-9999/999). `UpdateMinigameRecord` writes
-the primary and its `+3` backup, both verified.
+9999/999). `UpdateMinigameRecord` writes the primary and its `+3` backup.
 `InitAllMinigameRecordBlocks` (03:519a) resets all six blocks to
 defaults on save init; `InitCurrentSlotMinigameRecords` (03:5141)
 resets just records 0-1 of the current slot (called from
@@ -194,13 +191,11 @@ drive the star-rank unlock logic after exhibition wins.
 
 ## WRAM staging buffers
 
-The save engine never reads/writes SRAM in place; every block moves
-through banked-WRAM scratch, all of it multiplexed with other uses. The
-three bank-`$07` buffers are named. `wMinigameRecordBlock` and
-`wSaveBlockBuffer` overlay `wGlyphTileBuffer`, the text engine's glyph
-tiles, as a union variant in `ram/wram.asm`, named only where *both* the
-referencing ROM bank and a provable WRAM bank `$07` agree, which keeps the
-two apart. The rest stay numeric.
+The save engine never reads or writes SRAM in place: every block moves
+through banked-WRAM scratch shared with other uses. The three bank-`$07`
+buffers are named (`wMinigameRecordBlock` and `wSaveBlockBuffer` are a union
+variant over the text engine's `wGlyphTileBuffer`, scoped to the save
+engine's bank and WRAM bank `$07`); the rest stay numeric.
 
 | buffer | used for |
 |---|---|
@@ -230,10 +225,3 @@ Character record (matches the `wStoryModeMainCharacter*` WRAM map):
 | +$20 | eleven stats 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop |
 | +$2c | EXP, 3-byte little-endian accumulator, capped at 99999 |
 | +$38 | Spin / Power / Control / Speed levels (the four shown on character select) |
-
-## Editing
-
-`tools/savetool.py` verifies, dumps, and edits saves, recomputing block
-checksums, the master checksum, and the bank-1 mirror. Alternatively,
-edit the live WRAM struct (`$c818` level etc.) in an emulator and save
-in-game — the game recomputes everything itself.

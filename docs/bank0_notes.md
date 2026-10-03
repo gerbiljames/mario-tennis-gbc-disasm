@@ -1,48 +1,36 @@
-# Bank 0 annotation notes
+# Bank 0 notes
 
-Routines identified in bank 0 (`src/home/`, with the sound driver in
-`src/audio/*_00.asm`, all included by `src/bank_000.asm`).
-Bank 0 is the fixed home bank: it holds the reset vectors, all interrupt
-handlers, the far-call/bank-switch trampolines, core memory/VRAM/OAM
-helpers, the joypad driver, the sound engine, and the soft-reset routine
-that the VBlank handler jumps to when it detects the reset button combo.
+Bank 0 is the fixed home bank (`src/home/`, with the sound driver in
+`src/audio/*_00.asm`, all included by `src/bank_000.asm`): the reset and
+interrupt vectors, the far-call trampolines, memory/VRAM/OAM helpers, the
+joypad driver, the sound engine ([sound_engine.md](sound_engine.md)) and
+the soft reset.
 
 ## Engine structure
 
-- `Rst00` (`$0000`) jumps to `JumpTableDispatch` (`$06c4`), a classic
-  `rst $00` jump-table dispatcher: it pops the return address (which
-  points at a table of `dw` targets right after the `rst 0` call site),
-  indexes it by `a * 2`, loads the target address, and falls into
-  `JumpToHL` (`$06ce`, `jp hl`).
-- `Rst18` jumps to `FarCall` (`$01b6`), the bank-switch "far call"
-  trampoline (the `farcall` macro): it reads two inline bytes after the
-  `rst` -- a slot in the target bank's `$4000` pointer table, then the
-  bank -- saves/restores the ROM bank shadow byte at `$ff95` and the
-  `$2000` MBC bank register, and calls through that slot. The bytes at
-  `$0010` are also a `jp FarCall`, but they sit unlabelled inside the
-  padding under `Rst08` and nothing executes `rst $10`.
-  `CopyDataFromBank` (`$021a`) and `DecompressDataFromBank` (`$0234`)
-  are the same bank-switch-then-call pattern, but take the bank in `h`
-  and the `$4000`-table slot in `l` instead of inline bytes, used to
-  fetch a `CopyMemoryBC`/`DecompressData` routine's arguments from
-  another bank.
-- `Rst08` reaches `PlaySoundCmd` (`$2fb3`), which reads one inline
-  sound-id byte after the call site (the `sound` macro) and dispatches
-  into the sound engine — the sound-effect/music trigger call.
-- The three low interrupt vectors (`VBlankInterrupt` $0040,
-  `LCDStatInterrupt` $0048, `TimerInterrupt` $0050) each just `jp` to
-  their real handler bodies, which are now named `VBlankHandler`
-  (`$2749`), `LCDStatHandler` (`$27f5`) and `TimerHandler` (`$27d7`).
-  `VBlankHandler` is the busiest: it applies scroll/window changes,
-  runs `ApplyPendingPaletteUpdates`, flushes queued VRAM DMA transfers,
-  polls the joypad (`ReadJoypad`), and — if the current buttons read
-  `$0f` — jumps to `SoftReset` (`$2582`), which reinitializes the
-  stack, LCD, HRAM/VRAM, OAM DMA stub, sound engine and interrupts from
-  scratch (this is the classic all-face-buttons soft-reset combo).
-- `SoftReset` calls `CopyOAMDMARoutineToHRAM` (`$06ac`), which copies a
-  10-byte OAM DMA stub into HRAM at `$ff80`; the VBlank handler later
-  does `call $ff80` to kick off sprite DMA every frame, since OAM DMA
-  code must execute from HRAM.
+- `Rst00` (`$0000`) jumps to `JumpTableDispatch` (`$06c4`): it pops the
+  return address, which points at a `dw` table right after the `rst 0`,
+  indexes it by `a * 2` and falls into `JumpToHL` (`$06ce`, `jp hl`).
+- `Rst18` jumps to `FarCall` (`$01b6`, the `farcall` macro): it reads two
+  inline bytes after the `rst` -- a slot in the target bank's `$4000` pointer
+  table, then the bank -- and calls through that slot, saving and restoring
+  the ROM bank shadow at `$ff95` and the `$2000` MBC register. The bytes at
+  `$0010` are also a `jp FarCall`, but they sit unlabelled in the padding
+  under `Rst08` and nothing executes `rst $10`. `CopyDataFromBank` and
+  `DecompressDataFromBank` are the same pattern with the bank in `h` and the
+  slot in `l` instead of inline bytes, fetching a `CopyMemoryBC` /
+  `DecompressData` routine's arguments from another bank.
+- `Rst08` reaches `PlaySoundCmd` (`$2fb3`), which reads one inline sound-id
+  byte (the `sound` macro) and dispatches into the sound engine.
+- The interrupt vectors (`VBlankInterrupt` `$0040`, `LCDStatInterrupt`
+  `$0048`, `TimerInterrupt` `$0050`) each `jp` to their handler body. The
+  VBlank handler applies scroll/window changes, runs
+  `ApplyPendingPaletteUpdates`, flushes queued VRAM DMA, reads the joypad,
+  calls the OAM DMA stub at `$ff80`, and jumps to `SoftReset` when the
+  buttons read `$0f` (the all-face-buttons combo).
+- `SoftReset` reinitialises the stack, LCD, HRAM/VRAM, sound engine and
+  interrupts, and calls `CopyOAMDMARoutineToHRAM` to put the 10-byte OAM DMA
+  stub at `$ff80`, since OAM DMA code must run from HRAM.
 
 ## Named routines
 
@@ -83,7 +71,3 @@ that the VBlank handler jumps to when it detects the reset button combo.
 | `RunSoundChannelScript` | `$3558` | Script interpreter — decodes one command opcode (`$00`-`$ef`) per note step. |
 | `SndTriggerNote` | `$3864` | Note-on: computes the APU period and keys the channel. |
 | `TickInstrumentEnvelope` | `$3a40` | Per-tick: advances the `hSndInstrument`-selected volume-envelope sequence. |
-
-The bank-0 music/SFX driver (`$3078`-`$3ddf`) is documented in full — channel
-state block, HRAM working set, per-pass globals, and the command set — in
-[docs/sound_engine.md](sound_engine.md).

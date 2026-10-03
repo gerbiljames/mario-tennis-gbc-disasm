@@ -52,7 +52,7 @@ regeneration.
 - **Match telemetry**: don't screenshot to track score — `read_memory` 13
   bytes at $c8e0 (System Bus): sets P1/P2, games P1/P2, points P1/P2 (0-3 =
   0/15/30/40), deuce, tiebreak, then match/set/game/point win-lose flags
-  ($01 win / $ff lose). Full map in `ram_map.json` / `docs/ram_map.md`.
+  ($01 win / $ff lose). Per-symbol notes in `ram/*.asm`.
   Poll in ≤400-frame chunks near game/match point or you'll overshoot the
   moment you wanted to trace (points resolve fast when idling).
 - **Serving** (tennis): A tap (4f) → 18 idle frames → A tap (4f) hits the

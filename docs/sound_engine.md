@@ -20,64 +20,17 @@ Six logical channels share the four hardware channels. Each channel owns a
 - `wSndLoopSlots` (`$d1c0`) — per-channel loop bookkeeping resolved by
   `GetChannelLoopSlot`.
 
-While a channel is being serviced its 32-byte block is copied into the HRAM
-working set at **`$ffd0`** (`hSndScriptPtr` … `hSndRestFlag`) so the inner loop
-can use fast `ldh`. `RunSoundEngine` (`$3373`) saves/restores the sprite-queue
-bytes that overlap `$ffd0`; the block is written back after each channel.
-The HRAM layout is the sound-driver variant of the shared `$ffd0` union in
-`ram/hram.asm` (its names apply in `$3373`–`$3dd3`).
-
-### HRAM channel working set (`$ffd0`–`$ffef`)
-
-| Addr | Symbol | Meaning |
-|------|--------|---------|
-| `$ffd0` | `hSndScriptPtr` | 16-bit script cursor (bit-addressed via `add hl,hl`) |
-| `$ffd2` | `hSndChannelType` | low 2 bits = channel type (0 sq1/sweep, 1 sq2, 2 wave, 3 noise); high nibble = vibrato/length index |
-| `$ffd3` | `hSndDataPtr` | 16-bit base pointer to the channel's note/command data |
-| `$ffd5` | `hSndDataBank` | ROM bank of that data |
-| `$ffd6` | `hSndToneCtrl` | duty (bits 6-7), flag (bit 4), note-length increment (low nibble) |
-| `$ffd7` | `hSndLengthAccum` | fractional note-length accumulator |
-| `$ffd8` | `hSndVolume` | volume/envelope (high nibble = level, steps by `$10`) |
-| `$ffd9` | `hSndNoteTimer` | portamento/glide countdown |
-| `$ffda` | `hSndWaveId` | wave-pattern id (wave ch) / note byte (others) |
-| `$ffdb` | `hSndNoteOffset` | signed detune applied at note-on (bit 7 = active) |
-| `$ffdc` | `hSndTranspose` | per-channel transpose |
-| `$ffdd` | `hSndEnvRate` | instrument-envelope sweep speed |
-| `$ffde` | `hSndEnvLength` | instrument-envelope length/target (note length on wave ch) |
-| `$ffdf` | `hSndEnvPos` | current instrument-envelope position |
-| `$ffe0` | `hSndVolSlide` | volume-slide state (bit 7 direction) |
-| `$ffe1` | `hSndVolSlideReload` | volume-slide period reload |
-| `$ffe2` | `hSndVolSlideTimer` | volume-slide countdown |
-| `$ffe3` | `hSndPeriodLo` | base period low, vibrato centre |
-| `$ffe4` | `hSndPeriodHi` | NRx4 shadow; bit 5 (`$20`) = software note-on marker |
-| `$ffe5` | `hSndEcho` | echo depth (low nibble) + saved volume (high nibble) |
-| `$ffe6` | `hSndPanMask` | this channel's rAUDTERM L/R bits |
-| `$ffe7` | `hSndNoteLenReload` | note-length reload |
-| `$ffe8` | `hSndNoteLenTimer` | note-length countdown (gates effects) |
-| `$ffe9` | `hSndInstrument` | high nibble = wave/envelope-table select, low nibble = envelope sequence |
-| `$ffea` | `hSndEchoTimer` | echo repeat counter |
-| `$ffeb` | `hSndEchoCtrl` | echo enable/count (high nibble) + note offset (low nibble) |
-| `$ffec` | `hSndLoopCount` | script loop counter |
-| `$ffed` | `hSndLoopReturnPtr` | 16-bit saved script pointer for the active loop |
-| `$ffef` | `hSndRestFlag` | non-zero ⇒ current step is a rest/tie (suppresses envelope) |
-
-### Per-pass globals (`$d208`–`$d219`)
-
-| Addr | Symbol | Meaning |
-|------|--------|---------|
-| `$d208` | `wSndActiveMask` | channels serviced/keyed this pass |
-| `$d209` | `wSndPanShadow` | rAUDTERM shadow (L/R enables) |
-| `$d20a` | `wSndChannelType` | current channel type (copy of `hSndChannelType` low bits): `SNDCHANTYPE_SQUARE1`/`SQUARE2`/`WAVE`/`NOISE` = the hardware channel, since `wSndRegBase` is type × 5 |
-| `$d20b` | `wSndChannelBits` | current channel's stereo bit-pair (`$11`/`$22`/`$44`/`$88`) |
-| `$d20c` | `wSndChannelPanMask` | same pair, masked with `hSndPanMask` into `wSndPanShadow` |
-| `$d20d` | `wSndRegBase` | APU register offset (type × 5); `WriteChannelReg` uses `$ff10`+this+reg |
-| `$d20e` | `wSndFrameCounter` | free-running counter; low nibble is the vibrato phase |
-| `$d20f` | `wSndChannelIndex` | index (0-5) of the channel being updated |
-| `$d212`–`$d214` | `wSndUpdateReqMask`/`wSndUpdateReqData`/`wSndUpdateReqAck` | deferred channel-reconfigure request |
-| `$d215` | `wSndFirstChannel` | channel the pass starts from |
-| `$d217` | `wSndLoadedWaveId` | wave pattern currently in wave RAM (change detection) |
-| `$d218` | `wSndTranspose` | global transpose |
-| `$d219` | `wSndWaveReloadPending` | force wave reload on next note |
+While a channel is serviced, its 32-byte block is copied into the HRAM
+working set at **`$ffd0`-`$ffef`** (`hSndScriptPtr` … `hSndRestFlag`) so the
+inner loop can use `ldh`, and written back afterwards. That layout is the
+sound-driver variant of the shared `$ffd0` union in `ram/hram.asm` (its names
+apply in `$3373`-`$3dd3`); `RunSoundEngine` (`$3373`) saves and restores the
+sprite-queue bytes it overlaps. The per-pass globals (`wSndActiveMask` …
+`wSndWaveReloadPending`, `$d208`-`$d219`) follow the channel blocks in
+`ram/wram.asm`. Each field's meaning is its declaration's comment there;
+`wSndChannelType` holds `SNDCHANTYPE_SQUARE1`/`SQUARE2`/`WAVE`/`NOISE`, which
+is the hardware channel, since `wSndRegBase` is type × 5 and
+`WriteChannelReg` writes `$ff10` + that + the register.
 
 ## Per-tick update
 
@@ -171,17 +124,15 @@ renders any blob by hand.
 
 Every `sound` site names its id with a `BGM_*` / `SFX_*` constant from
 `include/constants.inc`. The ids below `$80` that the sound test lists and
-the match engine use were named by what they accompany on screen; the rest
-(33 ids, 182 sites, 2026-09-11) are named from their call sites -- the
-comment on each constant says where it plays -- because the emulator the
-project drives gives no audio, so what a cue sounds like is not established.
-A name has to hold at every site of its id, which is why the two cutscene
-pop sounds are `SFX_APPEAR1`/`SFX_APPEAR2` and `$a2` is `SFX_STORY_CUE`:
-its only sites are the `Unused_<bank>_MapScriptPlaySoundA2` handler each
-story bank carries, and nothing reachable calls any of them. The ids that only tables carry were named on
-2026-09-12 from the rows that select them: the drill and lesson themes of
-the match-settings tables, the three story-location themes, the cues the
-on-court object templates play as a banner or the score digits appear
-(`SFX_BANNER_*`, `SFX_SCORE_DISPLAY`) and the two level jingles. The same
-rule makes `$78` `SFX_MARKER` rather than a ranking-board name: the templates
-also play it as the score digits land.
+the match engine use are named by what they accompany on screen. The rest
+are named from their call sites or from the table rows that select them (the
+drill and lesson themes of the match-settings tables, the three
+story-location themes, the cues the on-court object templates play as a
+banner or the score digits appear, `SFX_BANNER_*` and `SFX_SCORE_DISPLAY`,
+and the two level jingles), with the comment on each constant saying where it
+plays; what those cues sound like is not established. A name has to hold at
+every site of its id: hence `SFX_APPEAR1`/`SFX_APPEAR2` for the two cutscene
+pop sounds, `$a2` `SFX_STORY_CUE` (its only sites are the
+`Unused_<bank>_MapScriptPlaySoundA2` handler each story bank carries, which
+nothing reachable calls), and `$78` `SFX_MARKER` rather than a ranking-board
+name, since the templates also play it as the score digits land.

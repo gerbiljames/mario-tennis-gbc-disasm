@@ -269,7 +269,7 @@ hSndEnvRate:: db
 hSndEnvLength:: db
 ; [8-bit] Current instrument-envelope position, advanced toward hSndEnvLength each update
 hSndEnvPos:: db
-; [8-bit] Volume-slide state (bit 7 direction, remaining steps in the low bits); set by cmd $b0-$df, ticked by TickVolumeSlide
+; [8-bit] Volume-slide state (bit 7 direction, remaining steps in the low bits); set by cmds $d0-$ef (snd_volume_up/down), ticked by TickVolumeSlide
 hSndVolSlide:: db
 ; [8-bit] Volume-slide period reload value
 hSndVolSlideReload:: db

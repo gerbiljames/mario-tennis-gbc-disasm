@@ -1,54 +1,52 @@
 # Duplicated code: live routines with identical copies
 
-The ROM assembles the same routine into several banks and, in a few cases,
-several times into one bank. A modder fixing one copy has to fix them all,
-and nothing at the call sites says a twin exists. This page lists every
-group of live routines that are instruction-identical once the bank suffix
-on names is ignored (`FetchText_25` and `FetchText_26` call `FetchText`-shaped
-helpers of their own bank), measured by `tools/twins.py` over the source
-with a floor of ten instructions. `Unused*` routines are left to
-`docs/unused_code.md`, which covers the dead copies of the same families.
-
-The note above each member in `src/` names its twins, so the fact is visible
-where the routine is read. Names that differ because the copies serve different screens or minigames
+The ROM assembles some routines into several banks, and a few several times
+into one bank. A fix to one copy has to reach them all. This page lists
+every group of live routines that are instruction-identical once the bank
+suffix on names is ignored (`FetchText_25` and `FetchText_26` call
+`FetchText`-shaped helpers of their own bank): the output of
+`tools/twins.py`, with a floor of ten instructions. Dead copies are in
+`docs/unused_code.md`. The note above each member in `src/` names its twins;
+copies that serve different screens or minigames keep their own names
 (`IsBallInMedallionMatchHitZone` / `IsBallInTreasureBoxHitZone`, the seven
-`*AwardPointToSide` minigame handlers) keep them; the note says they are the
-same code.
+`*AwardPointToSide` minigame handlers), and the note says they are the same
+code.
 
 ## Shared files
 
-Since 2026-09-11 a family is one file under `src/twins/`, assembled into every
-member bank where its copy sits: `twin fetch_text, 25` includes
-`src/twins/fetch_text.asm` with `{TWIN}` = `25`, so `FetchText_{TWIN}:` and
-every bank-local reference in the body (`FetchTextTable_{TWIN}`) become that
-bank's, and `twin_named file, Label` includes a file whose first line is
-`{TWIN_LABEL}:` for the copies that carry different names. The bytes are the
-copies' own — `make compare` holds — and a fix in the shared file lands in
-every bank. The shared bodies carry no per-instruction address comments; the
-`twin` line in each bank has the copy's start address, and each copy's note
-stays above its `twin` line. `tools/banksrc.py` expands the `twin` lines, so
-the tools and the tests still see every bank whole.
+A family is one file under `src/twins/`, assembled into each bank where a
+copy sits, so a fix lands in every bank while the bytes stay each copy's own
+(`make compare` holds). Three forms:
 
-A copy nothing reaches is named `Unused_<bank>_<Name>` (`twin_in`), so a
-file below can hold more copies than its live group in the next section.
-`apply_sprite_wobble_x`, `draw_ascii_digit_char`, `draw_corner_brackets`,
-`draw_decimal_number`, `compute_ranking_progress_index_13`, `get_cell_index_from_cursor_ptr`,
+* `twin fetch_text, 25` includes `src/twins/fetch_text.asm` with `{TWIN}` =
+  `25`, so `FetchText_{TWIN}:` and every bank-local reference in the body
+  (`FetchTextTable_{TWIN}`) become that bank's;
+* `twin_named file, Label` includes a file whose first line is
+  `{TWIN_LABEL}:`, for copies with different names;
+* `twin_in file, Label, bank` sets both, for copies with different names
+  that read their own bank's table (`ShotBallPathSlice`/`ShotBallPathPowerSlice`,
+  the topspin pair), and names a dead copy `Unused_<bank>_<Name>`.
+
+The shared bodies carry no per-instruction address comments; the `twin` line
+has the copy's start address, and each copy's note stays above it.
+`tools/banksrc.py` expands the `twin` lines, so the tools and tests see every
+bank whole.
+
+A file can hold more copies than its live group below, since dead copies are
+included too. `apply_sprite_wobble_x`, `draw_ascii_digit_char`,
+`draw_corner_brackets`, `draw_decimal_number`,
+`compute_ranking_progress_index_13`, `get_cell_index_from_cursor_ptr`,
 `get_menu_cursor_index_from_ptr`, `set_menu_cursor_from_index_to_ptr`,
 `move_menu_cursor2_grid_remote`, `move_menu_cursor_grid_remote` and both
 `move_menu_cursor_grid_from_link_input` files have no live copy at all.
 
-`ShotBallPathSlice`/`ShotBallPathPowerSlice` and the topspin pair are the
-same code under different names *and* read their own bank's table, so they
-use the third form, `twin_in file, Label, bank`, which sets both `{TWIN_LABEL}`
-and `{TWIN}`. Four copies stay separate: the Island Open NPC scripts
-(`IslandOpenFinalDoublesNpc0B_0f` / `IslandOpenRound1DoublesNpc0B_0f`, and the
-`Npc0D` pair) differ in the text id they set; `twins.py` had read the id's
-`_61` as a bank suffix, and no longer does.
-
 Three live copies are not assembled from a shared file:
 `SetPlayerAndPartnerObjectDefs_11` is a third copy of
 `load_court_player_partner_obj_defs`, and `DormRoomEntry08Scene` /
-`DormRoomEntry0aScene` in bank `$13` are the same scene twice.
+`DormRoomEntry0aScene` in bank `$13` are the same scene twice. Four
+look-alikes stay separate because they differ: the Island Open NPC scripts
+`IslandOpenFinalDoublesNpc0B_0f` / `IslandOpenRound1DoublesNpc0B_0f`, and
+the `Npc0D` pair, set different text ids.
 
 | file | routine | banks |
 |---|---|---|

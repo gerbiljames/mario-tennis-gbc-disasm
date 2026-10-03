@@ -818,7 +818,7 @@ ENDM
 ; wCurrentMinigameStoryMatch ($c8f6/$c8f7), then load that match's settings via
 ; FarPtr_LoadMatchSettingsFromTable. The high byte is the category
 ; (0 singles, 1 doubles, 2 minigame/practice) and the low byte the match; see
-; the wCurrentMinigameStoryMatch id table in docs/ram_map.md. The standalone
+; the wCurrentMinigameStoryMatch note in ram/wram.asm. The standalone
 ; launcher stubs follow it with a ret; some callers continue with more setup.
 ; Usage: load_match_settings MATCHLIST_*, STORYMATCH_* (or one 16-bit id)
 MACRO load_match_settings

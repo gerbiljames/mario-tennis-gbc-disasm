@@ -1,47 +1,33 @@
 # Actor-Script Bytecode
 
-Overworld/story actors (the entities placed by `map_actor` records) are driven
-by a small stack-less bytecode interpreter. Each actor's behaviour is a script:
-a variable-length blob of 1-byte opcodes, each followed by 0–4 operand bytes.
-These blobs are labelled `ActorScript_*` and written with the `as_*` macros
+Overworld/story actors (placed by `map_actor` records) run a small stack-less
+bytecode: 1-byte opcodes, each followed by 0–4 operand bytes. Script blobs are
+labelled `ActorScript_*` and written with the `as_*` macros
 (`include/macros.inc`).
 
-Note this is unrelated to the 16-byte *object definition* record selected by
-`map_actor`'s `obj_id` field via the `$04:$4f75` table (`LoadActorObjectDef`,
-`$04:$4ac6`) — that one carries the sprite/animation/palette pointers. The
-blobs a `map_actor` record *points at* (its `objdef` field) are scripts.
+This is unrelated to the 16-byte *object definition* selected by
+`map_actor`'s `obj_id` via the `$04:$4f75` table (`LoadActorObjectDef`,
+`$04:$4ac6`), which carries sprite/animation/palette pointers. The blob a
+`map_actor` *points at* (its `objdef` field) is a script.
 
 ## Installation and execution
 
-`map_actor cond, objdef, x, y, facing, obj_id, anim, palette` — the `objdef`
-field is a pointer to a script blob.
-
-1. `SpawnActorFromTemplate` (`$04:$4c60`) → `SpawnActor` (`$04:$4055`) finds a
-   free actor slot (24 slots of `$40` bytes from `$d000`, WRAM bank $04) and
-   stores the script pointer into the slot: `+$00/+$01` = address, `+$02` =
-   bank, `+$03` = wait counter (0).
-2. The per-frame actor loop `UpdateActors` (`$04:$41e7`) calls **`StepActorScript`**
-   (`$04:$4229`) for each live slot, with the slot base in `bc` and also
-   cached in `hActorPtr` (`$ffea/$ffeb`).
-3. `StepActorScript` yields immediately if `+$05` bit0 is set (paused) or while
-   the `+$03` wait counter is nonzero (decrementing it). Otherwise it reads the
-   opcode at the script pointer and dispatches through the 22-entry handler
-   table at **`$04:$447d`** (the `as_*` macros in `include/macros.inc`, one per opcode).
-4. Each handler advances the script pointer past its own operands and returns
-   `a`: **0** = stop stepping this frame (yield), **nonzero** = run the next
-   opcode immediately. The updated pointer is written back to `+$00/+$01`.
-
-A script is really a **pool of fragments**, each ending in an `as_jump`
-back-edge that loops it forever. Different actors and animation states enter the
-same blob at different offsets, so a blob may begin with `as_halt` (an inert
-static prop) yet still contain a live movement loop that other entrants jump
-into. Every in-blob jump target carries a local label (`.L<off>`).
+1. `SpawnActorFromTemplate` (`$04:$4c60`) → `SpawnActor` (`$04:$4055`) takes
+   a free slot (24 of `$40` bytes from `$d000`, WRAM bank $04) and stores the
+   script pointer: `+$00/+$01` address, `+$02` bank, `+$03` wait counter (0).
+2. `UpdateActors` (`$04:$41e7`) calls **`StepActorScript`** (`$04:$4229`) per
+   live slot, slot base in `bc` and in `hActorPtr` (`$ffea/$ffeb`).
+3. `StepActorScript` yields if `+$05` bit0 is set (paused) or while the
+   `+$03` counter is nonzero (decrementing it); otherwise it dispatches the
+   opcode through the 22-entry table at **`$04:$447d`**.
+4. Each handler advances past its operands and returns `a`: **0** = yield
+   for this frame, **nonzero** = run the next opcode now. The pointer is
+   written back to `+$00/+$01`.
 
 ## Opcode reference
 
-Handler addresses are in bank `$04`. "Size" is the whole instruction
-(opcode + operands). "Cont?" is the `a` return: *yield* stops stepping for the
-frame, *cont* runs the next opcode immediately, *cond* depends on state.
+Handlers are in bank `$04`. "Size" includes the opcode. "Cont?": *yield*
+stops for the frame, *cont* runs the next opcode, *cond* depends on state.
 
 | Op | Macro | Size | Cont? | Handler | Meaning |
 |----|-------|------|-------|---------|---------|
@@ -68,17 +54,16 @@ frame, *cont* runs the next opcode immediately, *cond* depends on state.
 | `$14` | `as_wait_move2` | 1 | yield | `$4949` | Once the move has finished (`+$05` bit7 clear), set a 40-frame wait and advance; while moving, advance with a 10-frame wait only if `+$05` bit6 is set |
 | `$15` | `as_flag mode, field, bit` | 4 | cont | `$49de` | Set (`mode=$01`) or clear bit `bit` of state field `field`; `bit` indexes the mask table `$4a1f` |
 
-\* `$00`/`$05`/`$0f` return `a = 0` **without** advancing the pointer, so the
-actor re-reads the same opcode every frame — a permanent idle.
+\* Returns `a = 0` **without** advancing, so the opcode is re-read every
+frame: a permanent idle.
 
-Coordinates are written in tiles with a point and stored as little-endian
-words in 1/256 tile (`as_set_target 39.0, 19.0` emits `$2700, $1300`).
-`as_jump`'s operand is `target - operand_address`; the macro emits
-`dw target - @`.
+Coordinates are written in tiles with a point (`map_pos`) and stored as
+little-endian words in 1/256 tile: `39.0` → `$2700`, `17.5` → `$1180`.
+`as_jump` emits `dw target - @`.
 
 ## Example
 
-`ActorScript_0f_08` — a two-point patrol:
+`ActorScript_0f_08`, a two-point patrol:
 
 ```
 ActorScript_0f_08:
@@ -94,46 +79,42 @@ ActorScript_0f_08:
 	as_jump .L8
 ```
 
-The two `as_flag`/`as_set_field` lines run once, then the body loops: move to
-tile `(39, 19)`, wait for the move and 75 frames, move to `(41, 19)`, wait for
-the move and 120 frames, repeat. Positions are written in tiles with a point
-(`map_pos` in `include/macros.inc`); the game stores them as words in 1/256
-tile, so `39.0` assembles to `$2700` and `17.5` to `$1180`.
+The first two lines run once; the body loops between `(39, 19)` and
+`(41, 19)`, waiting 75 and 120 frames after each move.
 
 ## Where script pointers come from
 
-- **`map_actor`** — the `objdef` field (an actor's initial script).
-- **`script_set_actor_script actor, addr`** — the macro for
-  `ScriptSetActorScript`; `addr` is a script installed at runtime. Every such
-  site's target is labelled `ActorScript_*`.
-- **`dw` selector tables** — e.g. `DormRoomNpc04IdleScripts_13` (`$13:$526a`),
-  which `SetRandomDormRoomNpc04Script_13` indexes with a random 0-7 to pick
-  one of four entry points.
+- **`map_actor`** — the `objdef` field (initial script).
+- **`script_set_actor_script actor, addr`** (`ScriptSetActorScript`) — a
+  script installed at runtime; every target is labelled `ActorScript_*`.
+- **`dw` selector tables** — e.g. `DormRoomNpc04IdleScripts_13`
+  (`$13:$526a`), indexed by `SetRandomDormRoomNpc04Script_13` with a random
+  0-7 to pick one of four entry points.
 
-## Multiple entry points
+## Fragments and multiple entry points
 
-A blob can be entered at several offsets — overlapping scripts that share a tail.
-`DormRoomNpc04IdleScripts_13` lands at offsets 0/24/34/44 inside one 95-byte
-run (`ActorScript_13_00`…`_03`, `$13:$585f`-`$58bd`: a wander loop, two
-one-shots, a patrol loop); the shared body at `$11:$5b14…$5d27`
-has 19 entry points. Each entry point gets its own `ActorScript_*` label.
-Execution flows from one labelled fragment into the next (fall-through) or
-jumps between them: an `as_jump` whose target is another entry point names
-that global label (`as_jump ActorScript_11_02`) rather than a local `.L`.
+A blob is a pool of fragments, each ending in an `as_jump` back-edge
+that loops forever. Actors and animation states enter one blob at different
+offsets, so a blob may start with `as_halt` (an inert prop) yet hold a live
+loop others jump into. Each entry point gets an `ActorScript_*` label; other
+in-blob jump targets get `.L<off>` locals. Fragments fall through or jump
+into each other, and a jump to another entry point names its global label
+(`as_jump ActorScript_11_02`).
 
-## Blobs that decode as scripts but have no outside reference
+`DormRoomNpc04IdleScripts_13` lands at offsets 0/24/34/44 of one 95-byte run
+(`ActorScript_13_00`…`_03`, `$13:$585f`-`$58bd`: a wander loop, two
+one-shots, a patrol loop); the shared body at `$11:$5b14…$5d27` has 19 entry
+points.
 
-Five story-bank blobs decode as clean looping scripts yet have no reference
-from outside themselves. Two are rendered as scripts whose only reference is
-their own `as_jump`: `ActorScript_0e_23` (`$0e:$7ca4`) and `ActorScript_14_4`
-(`$14:$78e7`). The other three stay `db` rows, since decoding as a script is
-suggestive but not proof: `Table_13` (`$13:$62db`), `Table_15` (`$15:$7a23`)
-and `Unused_27_ActorLists` (`$27:$4b41`).
+## Unreferenced script-shaped blobs
+
+Five story-bank blobs decode as clean looping scripts with no outside
+reference. Two are rendered as scripts, referenced only by their own
+`as_jump`: `ActorScript_0e_23` (`$0e:$7ca4`) and `ActorScript_14_4`
+(`$14:$78e7`). Three stay `db` rows: `Table_13` (`$13:$62db`), `Table_15`
+(`$15:$7a23`), `Unused_27_ActorLists` (`$27:$4b41`).
 
 ## What follows a script
-
-A script ends at its last opcode, and the bytes after it are classified in
-the source. For five scripts, what follows is:
 
 | Script | Followed by |
 |--------|-------------|

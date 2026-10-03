@@ -4109,7 +4109,7 @@ wSndHramSave:: ds 32
 ; same offsets are its channel state in that bank.
 ; sound engine (bank 0)
 	ds 214
-; [192 bytes] Six 32-byte channel state blocks (channels 0-1 music, 2-5 SFX); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)
+; [192 bytes] Six 32-byte channel state blocks (channels 0-1 sound effects, 2-5 music: StopMusic clears the four from +64); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)
 wSndChannels:: ds 192
 ; [72 bytes] Per-channel loop bookkeeping (counter + return pointer per loop level); base resolved by GetChannelLoopSlot
 wSndLoopSlots:: ds 72
