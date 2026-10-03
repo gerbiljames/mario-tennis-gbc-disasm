@@ -223,6 +223,7 @@ TennisMachineRoomTile01_14:
 	ld de, wActors ; $4269
 	farcall AttachActorStepMover ; $426c
 	ret ; $426f
+Unused_14_TableAfterTennisMachineRoomTile01:
 	; $4270, 8 bytes (bytes:16)
 	db $12, $13, $14, $15, $1a, $1a, $1a, $1a ; 0x00
 TennisMachineRoomInitScript_14:

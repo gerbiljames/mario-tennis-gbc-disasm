@@ -231,6 +231,7 @@ LoadMinigameSelectGfx:
 	farcall LoadIndexedPalette ; $63df
 	pop_wram_bank ; $63e2
 	ret ; $63e7
+Unused_3b_TableAfterLoadMinigameSelectGfx:
 	; $63e8, 14 bytes (bytes:2)
 	db $62, $3c ; 0x00
 	db $64, $3c ; 0x02

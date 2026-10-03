@@ -315,8 +315,8 @@ ReadExhibitionSaveBlock:
 	ld hl, wStorySlotData ; $4ff0
 	call ReadSaveBlock ; $4ff3
 	jr .restore ; $4ff6
-	db $3e ; $4ff8
-	db $fe ; $4ff9
+.unreachable:
+	ld a, $fe ; $4ff8
 .restore:
 	pop hl ; $4ffa
 	pop de ; $4ffb

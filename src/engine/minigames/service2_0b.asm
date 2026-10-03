@@ -235,7 +235,8 @@ ServiceMatch3Cases2:
 	ld b, $06 ; $4dc5
 	call QueueDrillResultMessage ; $4dc7
 	jr UnusedStoreMatchAbortFlag_3.storeMatchAbortFlag ; $4dca
-	db $af ; $4dcc
+.unreachable:
+	xor a ; $4dcc
 	ret ; $4dcd
 .returnZero:
 	xor a ; $4dce
@@ -430,8 +431,8 @@ ServicePractice1QueueOutcomeMessage:
 	call QueueDrillResultMessage ; $4f50
 	ld a, $ff ; $4f53
 	ret ; $4f55
-	db $18 ; $4f56
-	db $07 ; $4f57
+.unreachable:
+	jr .zero ; $4f56
 .step2:
 	ld hl, wDrillCounters ; $4f58
 	inc [hl] ; $4f5b

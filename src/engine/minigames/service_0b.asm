@@ -377,7 +377,8 @@ ServiceMatch1Cases2:
 	ld b, $06 ; $49aa
 	call QueueDrillResultMessage ; $49ac
 	jr UnusedStoreMatchAbortFlag_1.storeMatchAbortFlag ; $49af
-	db $af ; $49b1
+.unreachable:
+	xor a ; $49b1
 	ret ; $49b2
 .returnZero:
 	xor a ; $49b3
@@ -669,7 +670,8 @@ ServiceMatch2Cases2:
 	ld b, $06 ; $4bf6
 	call QueueDrillResultMessage ; $4bf8
 	jr UnusedStoreMatchAbortFlag_2.storeMatchAbortFlag ; $4bfb
-	db $af ; $4bfd
+.unreachable:
+	xor a ; $4bfd
 	ret ; $4bfe
 .returnZero:
 	xor a ; $4bff

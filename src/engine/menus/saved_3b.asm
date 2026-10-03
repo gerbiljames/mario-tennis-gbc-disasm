@@ -361,6 +361,7 @@ LoadSavedDataSourceGfx:
 	farcall LoadIndexedPalette ; $6954
 	pop_wram_bank ; $6957
 	ret ; $695c
+Unused_3b_TableAfterLoadSavedDataSourceGfx:
 	; $695d, 28 bytes (bytes:2)
 	db $62, $3c ; 0x00
 	db $64, $3c ; 0x02

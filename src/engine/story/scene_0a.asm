@@ -186,7 +186,8 @@ GetStoryLocationRecordPtr:
 	add a ; $5751
 	ld_hl_indexed StoryLocationTable_0a ; $5752
 	ret ; $5759
-	db $ff ; $575a
+.unreachable:
+	rst $38 ; $575a
 	ret ; $575b
 Unused_0a_CopySceneTilemapToVram:
 	push af ; $575c
