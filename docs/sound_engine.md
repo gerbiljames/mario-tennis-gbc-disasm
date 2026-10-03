@@ -163,8 +163,9 @@ renders any blob by hand.
 - `PlaySound` (`$3297`) / `PlaySoundManaged` (`$3024`) — start a sound/song by id.
 - `StopMusic` (`$3129`) — stops the four *music* channels only; effects keep
   playing, and sound id `$50` (`SFX_STOP`) is what silences those. `SetMusicMuted` (`$2f86`).
-- `RunSoundEngine` (`$3373`) — per-tick driver (called from `UpdateSoundEngine`
-  `$2f1a` and the timer handler when the LCD is off).
+- `RunSoundEngine` (`$3373`) — per-tick driver, reached through `UpdateSoundEngine`
+  (`$2f1a`), which the VBlank handler calls and, when the LCD is off, the timer
+  handler.
 
 ## Sound ids in the source
 

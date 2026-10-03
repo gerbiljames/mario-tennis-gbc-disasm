@@ -59,7 +59,7 @@ encoding back is exact.
 | layout | blobs | what a frame is |
 |---|---|---|
 | `2x2` | the 570 walk-sprite `_GfxNN` blobs (banks `$6a`, `$6f`, `$70`-`$77`) | one 16x16 facing, two 8x16 objects (`QueueSprite16`); a 256-byte blob is the four facings side by side |
-| `3x4+3` | the 240-byte character frames of banks `$40`-`$5d`, and each bank's `SpriteFramesUnused` run | the 24x32 body as three 4-tile columns (`QueueSprite24x32`, `$00:$2c2b`), then the three standing-shadow tiles that replace each column's bottom tile in VRAM when `wStandingShadowsEnabled` is set (`$00:$2ee8`) |
+| `3x4+3` | the 240-byte character frames of banks `$40`-`$5d`, and each bank's `SpriteFramesUnused` run | the 24x32 body as three 4-tile columns (`QueueSprite24x32`, `$00:$2c2b`), then the three standing-shadow tiles that replace each column's bottom tile in VRAM when `wStandingShadowsEnabled` is set (`QueueCharFrameTiles`, `$00:$2ead`) |
 | `4x4+4` | the 60 320-byte character frames (the `01 10` per-slot OAM records, §4.3) | the same at 32x32 with four columns and four shadow tiles |
 
 Every other graphics blob is plain: tiles in blob order, sixteen per row.
@@ -195,7 +195,7 @@ Decompressing all 839 (via `tools/lz.py`'s `decompress`):
   sized in whole tiles or whole map planes. The 36 that are not are small
   tilemap/attrmap rect streams in banks `$1a`-`$1e` (the
   `CharDataScreen*` / `CharDataConfirmScreen*` streams and the
-  `Results*Tilemap_1e` / `ResultsPlayerPanelAttrmap_1e` streams), 9 to 90
+  `Results*Tilemap_1e` / `ResultsPlayerPanelAttrmap_1e` streams), 9 to 130
   bytes each.
 * Sizes: min 9, max 4096. The mode table is
   1024 (×202), 256 (×109), 64 (×105), 4096 (×84), 320 (×71), 144 (×44),
@@ -279,7 +279,7 @@ VRAM bank 1, and the disassembly writes it as `vBGMap0 + VRAM_BANK1` rather than
 hiding the bank inside a literal (`include/constants.inc`). Every VRAM
 address in the code is written that way: `vTiles0`, `vTiles1`, `vTiles2` for
 the three 128-tile blocks plus `$NN * TILE_SIZE`, `vBGMap0` / `vBGMap1` for
-the maps plus `row * TILEMAP_WIDTH + col` -- 827 sites. That covers the
+the maps plus `row * TILEMAP_WIDTH + col` -- 828 sites. That covers the
 addresses handed to the copy routines and loaders, the destinations other
 routines take (`InitNumberSpriteGfx`, `CopyMugshotBufferToVram`, the result
 portraits' `ResultPortraitSlotTable`), and the map and tile bases added to an
@@ -362,8 +362,8 @@ The table is a dense enumeration, which is independent confirmation of the
 16-byte stride. Reading the raw words out of `baserom.gbc`, record 0 is
 bank `$5f` entries `$00`-`$0e`, record 1 is `$5f` entries `$10`-`$1e`, record 2
 is `$60` entries `$00`-`$0e`, and so on without a gap through record 36 =
-bank `$69` entries `$20`-`$2e`. The nine banks `$5f`-`$69` supply 8, 4×8, 4×8,
-4×8, 3×8, 4×8, 3×8, 3×8 and 3×8 entries respectively. The bytes immediately
+bank `$69` entries `$20`-`$2e`. The eleven banks `$5f`-`$69` supply 2×8, 4×8,
+4×8, 4×8, 4×8, 3×8, 3×8, 4×8, 3×8, 3×8 and 3×8 entries respectively. The bytes immediately
 after record 36 are `CopyScrolledSceneTilemapToVram`'s prologue, so 592 is the
 whole table.
 
@@ -378,7 +378,7 @@ because four of the pops land on payloads already named `*Palettes`,
 
 | slot | destination | how | addr |
 |---|---|---|---|
-| 0 | `wStorySceneRecord` | raw copy, `bc = $0088` (136 bytes) | `$590f` |
+| 0 | `wStorySceneRecord` | raw copy, `bc = wStorySceneRecord_SIZE` (136 bytes) | `$590f` |
 | 1 | `wDecompBuffer` → `LoadPaletteShadow` | raw copy, `bc = $0040` | `$58f6` |
 | 2 | `wShadowTilemap` (WRAM `$03`) | LZ | `$58e6` |
 | 3 | `wScreenAttrmap` (WRAM `$02`) | LZ | `$58d9` |
@@ -391,12 +391,12 @@ Slot 6 is a fossil: `$58bd` pops it into `hl` and `$58be` sets
 `de = wStorySceneUnusedBuffer`, but the next two instructions overwrite both
 before any call. Nothing is ever loaded from it.
 
-Slot 7's tiles go to `$9000 + VRAM_BANK1`, `c = $80` (128 tiles), and
-`wTextTileBuffer` is pushed to `$8800 + VRAM_BANK1`, also 128 tiles
-(`$58a4`-`$58b4`) — together the 256-tile block `$8800`-`$97ff` of VRAM bank 1.
+Slot 7's tiles go to `vTiles2 + VRAM_BANK1`, `c = 128`, and
+`wTextTileBuffer` is pushed to `vTiles1 + VRAM_BANK1`, `c = wTextTileBuffer_SIZE / 16`,
+also 128 tiles (`$58a4`-`$58b4`) — together the 256-tile block `$8800`-`$97ff` of VRAM bank 1.
 
 Slot 1's 64 bytes become **BG palettes 2-7**: `hl = wDecompBuffer + 1*TILE_SIZE`
-(byte 16) with `de = $0206`, i.e. index 2, count 6 (`$58ff`). The first two
+(byte 16) with `ld_bg_pals de, 2, 6`, i.e. index 2, count 6 (`$58ff`). The first two
 palettes of the block are skipped, which is what reserves BG 0/1 for the text
 window.
 
@@ -446,8 +446,8 @@ different roles:
 | 1 | `wScreenAttrmap` (as scratch) → palettes | raw copy, `bc = $0040` | `$6381` |
 | 2 | `wCourtTilemapSaved` | LZ | `$6377` |
 | 3 | `wCourtAttrmapSaved` | LZ | `$6370` |
-| 4 | `wScoreboardColumnTiles` | raw copy, `bc = $0028` (40 bytes) | `$6363` |
-| 5 | `wScoreboardColumnAttrs` | raw copy, `bc = $0028` | `$6359` |
+| 4 | `wScoreboardColumnTiles` | raw copy, `bc = wScoreboardColumnTiles_SIZE` (40 bytes) | `$6363` |
+| 5 | `wScoreboardColumnAttrs` | raw copy, `bc = wScoreboardColumnAttrs_SIZE` | `$6359` |
 | 6 | — | skipped | `$6325` |
 | 7 | `wDecompBuffer` → VRAM | LZ | `$6333` |
 
@@ -459,7 +459,7 @@ slot 4's target equals slot 0's target in **all 16**, and slot 5's target is
 slot 0 + 40 in **all 16**. Slot 6, where it is not the neighbouring record's
 slot 0 or slot 1, is slot 0 + 80.
 
-(`docs/history.md:9338-9346` describes the Clubhouse and Courtyard records
+(`docs/history.md:9340-9347` describes the Clubhouse and Courtyard records
 specifically, because those two were the ones *renamed* in that pass; the other
 14 already carried `*SceneConfig` names. All 16 share the shape.)
 
@@ -481,8 +481,8 @@ reads nine words per record.
 
 This cannot be right for a 592-byte table: 592 is `37 * 16` and is not a
 multiple of 18, and the record contents (§3.1) are a dense 8-per-scene
-enumeration. Its sibling `GetSceneSlotPtr` twenty bytes earlier
-(`$0a:$5d0c`) does the same job correctly with four `add hl, hl` and `+ 2*slot`.
+enumeration. Its sibling `GetSceneSlotPtr` immediately before it
+(`$0a:$5d0b`) does the same job correctly with four `add hl, hl` and `+ 2*slot`.
 
 Two more consumers agree with the 18: `Unused_0a_InitSceneViewer` (`$0a:$601c`) and
 `Unused_0a_InitSceneViewerDefault` (`$0a:$6076`) both count words to the first zero word
@@ -495,7 +495,7 @@ scene count, 37, is hardcoded elsewhere as `ld a, $25` (`$0a:$5934`).
 
 **This is already written up as a bug** — [bugs.md, "The scene viewer
 indexes the slot table with the wrong stride"](bugs.md#the-scene-viewer-indexes-the-slot-table-with-the-wrong-stride)
-and `docs/history.md:9776-9796` — with the finding that the only caller of
+and `docs/history.md:9777-9799` — with the finding that the only caller of
 `Unused_0a_LoadSceneGraphicsDirect` is `Unused_0a_LoadAndDisplayScene`, whose four callers are all
 the scene viewer hanging off the debug menu, which nothing in the retail build
 opens. Flagging it here rather than restating it: **if you write a new consumer
@@ -504,7 +504,7 @@ as a second interpretation of the table.**
 
 One more difference between the two paths, which supports "bug" over "second
 interpretation": `Unused_0a_LoadSceneGraphicsDirect` loads palettes as *7 palettes at
-index 1 starting at byte 8* (`ld de, $0107`, `$5dd7`) where both working
+index 1 starting at byte 8* (`ld_bg_pals de, 1, 7`, `$5dd7`) where both working
 loaders use *6 at index 2 starting at byte 16*. Two loaders that disagree about
 the same 64-byte block cannot both be reading it correctly.
 
@@ -527,9 +527,9 @@ A **sprite template** is a list of 4-byte OAM rows terminated by a single
 `hl` = template and a base in `e` (Y), `d` (X), `c` (tile), `b` (attr), and for
 each row emits `byte0 + e`, `byte1 + d`, `byte2 + c`, `byte3 + b` into the
 sprite buffer — hardware OAM order, all four adds mod 256. The terminator is
-tested on the **dy** byte only (`cp $80` at `$1eba`), so `$80` is the one dy
+tested on the **dy** byte only (`cp $80` at `$1ebb`), so `$80` is the one dy
 value a template can never use. The copy stops at 160 bytes / 40 entries
-(`cp $a0`, `$1eb5`).
+(`cp $a0`, `$1eb6`).
 
 Offsets are unsigned bytes added mod 256, not sign-extended, so `$fc` is "4 to
 the left" purely by wraparound. `QueueSpriteTemplate` applies **no** bias of
@@ -571,7 +571,7 @@ which defines `OBJ_NAME` as the row's index:
 
 | ids | objects | names |
 |---|---|---|
-| `$00`-`$1d` | the character banks `$40`-`$5d`, one match sprite each | `OBJ_MATCH_ALEX` ... `OBJ_MATCH_BALL_MACHINE` |
+| `$00`-`$1d` | the character banks `$40`-`$5d`, one match sprite each | `OBJ_MATCH_ALEX` ... `OBJ_MATCH_BABY_MARIO` |
 | `$1e`-`$74` | the walk-sprite banks `$6f`-`$77` | `OBJ_WALK_<bank>_<slot>`, or the character's name where the game says who it is |
 
 The game names 31 of the walk sprites itself: `CharObjectIdTable`
@@ -763,7 +763,7 @@ documents call BCPS/BCPD and OCPS/OCPD.)
 The bank-`$00` fade is a per-frame state machine — `hFadeState` (`$ffa2`),
 `hFadeSpeed` (`$ffa3`), `hFadeCounter` (`$ffa4`, starts `$7c`) — ticked from
 VBlank by `UpdateFadeOut` (`$00:$1d5e`) and `UpdateFadeIn` (`$00:$1d48`)
-(`src/home/vblank_00.asm`). Entry points: `BeginFadeOut` (`$00:$1d20`),
+(`src/home/colorfade_00.asm`, called from `src/home/vblank_00.asm`). Entry points: `BeginFadeOut` (`$00:$1d20`),
 `BeginFadeIn` (`$00:$1d2e`), `ForceFadeIn` (`$00:$1d0c`); `c` = speed.
 
 Each tick:
@@ -826,7 +826,7 @@ frames, steps every masked palette of the *live* buffer with
 repeats `wPaletteFadeAmount` times before `SnapPalettesToTarget`
 (`$03:$77e2`) copies the target over it. Public entry points are the farptr
 slots `$03:$4040` (`InitGrayscalePaletteFade`), `$03:$4042`
-(`SetupPaletteFadeMask`) and `$03:$4044`. The live callers, `RunEndingCreditsSequence`
+(`SetupPaletteFadeMask`) and `$03:$4044` (`AnimatePaletteFadeToTarget`). The live callers, `RunEndingCreditsSequence`
 (`$0a:$6ece`) and `PlayScreenSequence0` (`$18:$76dd`), all fade to
 grayscale; the fade-to-black setup, `Unused_03_InitBlackPaletteFade`
 (`$03:$75ca`), is unreachable, so nothing in the shipped game fades to black.
@@ -899,7 +899,7 @@ followed by its `text_pool`, entry 0 is `$0000` (it addresses the pool's first
 string in all 13 banks), and every word must land on a string start within the
 pool.
 
-`include/text_ids.inc` is hand-maintained: 1,284 `def Text_<bank>_<index> equ
+`include/text_ids.inc` is hand-maintained: 1,392 `def Text_<bank>_<index> equ
 <raw id>` lines, an EQU whose value is the raw id so assembled bytes are
 unchanged. A site is named by **consumer**, not by value — only where the id
 reaches a known text sink — because the id encoding is far too permissive to
@@ -997,7 +997,8 @@ The rule separates the two, taking both proofs **from the consumer** rather than
 2. the bank sizes it with **`(next - name) / 16`** — the 16-byte tile count
    `QueueVRAMCopy` takes (§2.2), so it is a raw tile stream.
 
-Payloads passing either test are not reported as truncated at all. Note that
+The generator (retired, §7.1) did not report payloads passing either test as
+truncated. Note that
 both tests are consumer-shaped by design: "these bytes look like tiles" is not
 a proof and is not accepted.
 
@@ -1005,7 +1006,7 @@ a proof and is not accepted.
 
 `python3 tools/check.py` is the invariant suite over things `make compare`
 cannot see — a byte-perfect build proves the bytes come back, not that the
-structure the source claims is true. At HEAD, all thirteen pass:
+structure the source claims is true. At HEAD, all fourteen pass:
 
 | check | count | what it asserts |
 |---|---|---|
@@ -1015,13 +1016,14 @@ structure the source claims is true. At HEAD, all thirteen pass:
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `scopes` | 0 | no global label covers both actor-script bytecode and CPU code |
+| `labels` | 13743 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
-| `literals` | 35808 | no ROM address is written as a number where the source moves |
+| `literals` | 35616 | no ROM address is written as a number where the source moves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
 | `gfx` | 2728 | every PNG encodes back to the blob it was decoded from |
 | `tilemap` | 231 | every tilemap grid encodes back to its blob |
-| `slots` | 4967 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
-| `reach` | 4754 | a routine is named `Unused` exactly when nothing reachable reaches it |
+| `slots` | 5124 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
+| `reach` | 4873 | a routine is named `Unused` exactly when nothing reachable reaches it |
 
 ---
 
