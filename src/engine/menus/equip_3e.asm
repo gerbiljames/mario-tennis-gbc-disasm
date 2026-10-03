@@ -74,15 +74,15 @@ ClearEquipSelectTextRows:
 FlushEquipSelectTextRows:
 	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH ; $5899
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $589c
-	ld c, $10 ; $589f
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $589f
 	call QueueVRAMCopy ; $58a1
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $58a4
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH ; $58a7
-	ld c, $08 ; $58aa
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $58aa
 	call QueueVRAMCopy ; $58ac
 	ld hl, wShadowAttrmap + 5 * TILEMAP_WIDTH ; $58af
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH + VRAM_BANK1 ; $58b2
-	ld c, $04 ; $58b5
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $58b5
 	call QueueVRAMCopy ; $58b7
 	ret ; $58ba
 ; GetItemStatModListPtr over two other tables ($58d6/$58e4 in place of $5a5f/$5a6d): the same two-level pointer lookup. Nothing calls it.

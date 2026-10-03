@@ -269,29 +269,29 @@ RedrawN64ExhibDataWindow:
 	call DrawChartCellRows ; $4674
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $4677
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH ; $467a
-	ld c, $08 ; $467d
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $467d
 	call QueueVRAMCopy ; $467f
 	ld hl, wShadowAttrmap + 5 * TILEMAP_WIDTH ; $4682
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH + VRAM_BANK1 ; $4685
-	ld c, $08 ; $4688
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4688
 	call QueueVRAMCopy ; $468a
 	call AdvanceFrame ; $468d
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $4690
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $4693
-	ld c, $08 ; $4696
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4696
 	call QueueVRAMCopy ; $4698
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $469b
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $469e
-	ld c, $08 ; $46a1
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $46a1
 	call QueueVRAMCopy ; $46a3
 	call AdvanceFrame ; $46a6
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $46a9
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH ; $46ac
-	ld c, $04 ; $46af
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $46af
 	call QueueVRAMCopy ; $46b1
 	ld hl, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $46b4
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH + VRAM_BANK1 ; $46b7
-	ld c, $04 ; $46ba
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $46ba
 	call QueueVRAMCopy ; $46bc
 	ret ; $46bf
 DrawChartIconColumn:

@@ -517,15 +517,15 @@ RedrawCourtSelect4Menu:
 	call DrawCourtNameTiles ; $5f88
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $5f8b
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $5f8e
-	ld c, $06 ; $5f91
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $5f91
 	call QueueVRAMCopy ; $5f93
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $5f96
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $5f99
-	ld c, $06 ; $5f9c
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $5f9c
 	call QueueVRAMCopy ; $5f9e
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $5fa1
 	ld de, vBGMap0 + 16 * TILEMAP_WIDTH ; $5fa4
-	ld c, $02 ; $5fa7
+	ld c, TILEMAP_WIDTH / 16 ; $5fa7
 	call QueueVRAMCopy ; $5fa9
 	ret ; $5fac
 SetCourtSelect4TabAttrRect:

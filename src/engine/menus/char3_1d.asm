@@ -270,12 +270,12 @@ BuildCharDataConfirmScreen:
 	wram_bank WRAM_SCREEN ; $5bc0
 	ld hl, wShadowTilemap ; $5bc6
 	ld de, vBGMap0 ; $5bc9
-	ld c, $24 ; $5bcc
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $5bcc
 	call QueueVRAMCopy ; $5bce
 	wram_bank WRAM_COURT_PLANES ; $5bd1
 	ld hl, wScreenAttrmap ; $5bd7
 	ld de, vBGMap0 + VRAM_BANK1 ; $5bda
-	ld c, $24 ; $5bdd
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $5bdd
 	call QueueVRAMCopy ; $5bdf
 	ret ; $5be2
 InitCharDataScreenVideo:

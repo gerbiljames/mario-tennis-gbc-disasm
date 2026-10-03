@@ -87,7 +87,7 @@ RunCpuDifficultySubmenu:
 	call DrawCharGridSlotPrompt ; $62b4
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $62b7
 	ld de, vBGMap0 + 2 * TILEMAP_WIDTH ; $62ba
-	ld c, $04 ; $62bd
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $62bd
 	call QueueVRAMCopy ; $62bf
 .done:
 	pop_wram_bank ; $62c2
@@ -114,11 +114,11 @@ CloseCpuDifficultyPanel:
 	call RefreshCharInfoPanel ; $62f5
 	ld hl, wShadowTilemap + 17 * TILEMAP_WIDTH ; $62f8
 	ld de, vBGMap0 + 17 * TILEMAP_WIDTH ; $62fb
-	ld c, $02 ; $62fe
+	ld c, TILEMAP_WIDTH / 16 ; $62fe
 	call QueueVRAMCopy ; $6300
 	ld hl, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $6303
 	ld de, vBGMap0 + 14 * TILEMAP_WIDTH + VRAM_BANK1 ; $6306
-	ld c, $08 ; $6309
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $6309
 	call QueueVRAMCopy ; $630b
 	ret ; $630e
 HandleCpuDifficultyInput:
@@ -200,11 +200,11 @@ QueueCpuDifficultyPanelToVram:
 	push_wram_bank WRAM_SCREEN ; $6396
 	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH ; $639f
 	ld de, vBGMap0 + 14 * TILEMAP_WIDTH ; $63a2
-	ld c, $08 ; $63a5
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $63a5
 	call QueueVRAMCopy ; $63a7
 	ld hl, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $63aa
 	ld de, vBGMap0 + 14 * TILEMAP_WIDTH + VRAM_BANK1 ; $63ad
-	ld c, $08 ; $63b0
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $63b0
 	call QueueVRAMCopy ; $63b2
 	pop_wram_bank ; $63b5
 	ret ; $63ba

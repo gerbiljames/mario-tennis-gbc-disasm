@@ -376,7 +376,7 @@ BlitCutsceneTextWindow:
 	wram_bank WRAM_TEXT ; $74d4
 	ld hl, wWindowShadowTilemap ; $74da
 	ld de, vBGMap1 ; $74dd
-	ld c, $10 ; $74e0
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $74e0
 	call QueueVRAMCopy ; $74e2
 	call AdvanceFrame ; $74e5
 	pop_wram_bank ; $74e8
@@ -441,12 +441,12 @@ ShowStoryResultScreen:
 	wram_bank WRAM_COURT_PLANES ; $755f
 	ld hl, wScreenAttrmap ; $7565
 	ld de, $b800 ; $7568
-	ld c, $24 ; $756b
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $756b
 	call QueueVRAMCopy ; $756d
 	wram_bank WRAM_SCREEN ; $7570
 	ld hl, wShadowTilemap ; $7576
 	ld de, vBGMap0 ; $7579
-	ld c, $24 ; $757c
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $757c
 	call QueueVRAMCopy ; $757e
 	xor a ; $7581
 	ldh [hScrollX], a ; $7582

@@ -186,7 +186,7 @@ LoadCourtSceneGraphics:
 	call QueueVRAMCopy ; $633e
 	ld hl, wTextTileBuffer ; $6341
 	ld de, vTiles1 + VRAM_BANK1 ; $6344
-	ld c, $80 ; $6347
+	ld c, wTextTileBuffer_SIZE / 16 ; $6347
 	call QueueVRAMCopy ; $6349
 	wram_bank WRAM_ACTORS ; $634c
 	pop hl ; $6352

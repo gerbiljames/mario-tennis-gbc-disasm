@@ -447,7 +447,7 @@ DrawMinigameSelectCaption:
 	call RenderMinigameNameText ; $6591
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6594
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $6597
-	ld c, $04 ; $659a
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $659a
 	call QueueVRAMCopy ; $659c
 	ret ; $659f
 RenderMinigameNameText:
@@ -518,15 +518,15 @@ DrawMinigameSelectGrid9:
 	call LoadMinigameCharPalette ; $6610
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $6613
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $6616
-	ld c, $06 ; $6619
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $6619
 	call QueueVRAMCopy ; $661b
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $661e
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $6621
-	ld c, $06 ; $6624
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $6624
 	call QueueVRAMCopy ; $6626
 	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $6629
 	ld de, vBGMap0 + 11 * TILEMAP_WIDTH + VRAM_BANK1 ; $662c
-	ld c, $06 ; $662f
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $662f
 	call QueueVRAMCopy ; $6631
 	ret ; $6634
 FillMinigameSelectCell:

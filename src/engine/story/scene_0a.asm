@@ -387,7 +387,7 @@ LoadStorySceneGraphics:
 	call QueueVRAMCopy ; $58a9
 	ld hl, wTextTileBuffer ; $58ac
 	ld de, vTiles1 + VRAM_BANK1 ; $58af
-	ld c, $80 ; $58b2
+	ld c, wTextTileBuffer_SIZE / 16 ; $58b2
 	call QueueVRAMCopy ; $58b4
 	wram_bank WRAM_SCENE ; $58b7
 	pop hl ; $58bd

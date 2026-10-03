@@ -115,7 +115,7 @@ RunScrollingTextScreen:
 	push de ; $5a4f
 	wram_bank WRAM_SCREEN ; $5a50
 	ld hl, wShadowTilemap ; $5a56
-	ld c, $02 ; $5a59
+	ld c, TILEMAP_WIDTH / 16 ; $5a59
 	call QueueVRAMCopy ; $5a5b
 	pop de ; $5a5e
 	wram_bank WRAM_SCENE ; $5a5f
@@ -179,7 +179,7 @@ InitScrollingTextScreen:
 	call FillMemoryBC ; $5ace
 	ld hl, wScreenAttrmap ; $5ad1
 	ld de, $b800 ; $5ad4
-	ld c, $40 ; $5ad7
+	ld c, TILEMAP_AREA / 16 ; $5ad7
 	call QueueVRAMCopy ; $5ad9
 	wram_bank WRAM_SCREEN ; $5adc
 	ld bc, wScreenAttrmap_SIZE ; $5ae2
@@ -188,7 +188,7 @@ InitScrollingTextScreen:
 	call FillMemoryBC ; $5aea
 	ld hl, wShadowTilemap ; $5aed
 	ld de, vBGMap0 ; $5af0
-	ld c, $40 ; $5af3
+	ld c, TILEMAP_AREA / 16 ; $5af3
 	call QueueVRAMCopy ; $5af5
 	ret ; $5af8
 FillMemoryBC:

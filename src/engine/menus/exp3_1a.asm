@@ -111,7 +111,7 @@ Unused_1a_RunCharViewerSelectGrid:
 	call QueueVRAMCopy ; $689c
 	ld hl, wTextTileBuffer ; $689f
 	ld de, vTiles1 + VRAM_BANK1 ; $68a2
-	ld c, $80 ; $68a5
+	ld c, wTextTileBuffer_SIZE / 16 ; $68a5
 	call QueueVRAMCopy ; $68a7
 	call Unused_1a_LoadCharViewerGridTilemap ; $68aa
 	ld a, [wDebugCharViewerPage] ; $68ad
@@ -119,12 +119,12 @@ Unused_1a_RunCharViewerSelectGrid:
 	wram_bank WRAM_SCREEN ; $68b3
 	ld hl, wShadowTilemap ; $68b9
 	ld de, vBGMap0 ; $68bc
-	ld c, $24 ; $68bf
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $68bf
 	call QueueVRAMCopy ; $68c1
 	wram_bank WRAM_COURT_PLANES ; $68c4
 	ld hl, wScreenAttrmap ; $68ca
 	ld de, vBGMap0 + VRAM_BANK1 ; $68cd
-	ld c, $24 ; $68d0
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $68d0
 	call QueueVRAMCopy ; $68d2
 	call EnableLCD ; $68d5
 	ld a, $01 ; $68d8
@@ -237,7 +237,7 @@ Unused_1a_RunCharViewerSelectGrid:
 	wram_bank WRAM_SCREEN ; $69b1
 	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $69b7
 	ld de, vBGMap0 + 1 * TILEMAP_WIDTH ; $69ba
-	ld c, $20 ; $69bd
+	ld c, 16 * TILEMAP_WIDTH / 16 ; $69bd
 	call QueueVRAMCopy ; $69bf
 	call AdvanceFrame ; $69c2
 	jp .loop ; $69c5
@@ -409,12 +409,12 @@ Unused_1a_LoadCharViewerScreen:
 	wram_bank WRAM_SCREEN ; $6b32
 	ld hl, wShadowTilemap ; $6b38
 	ld de, vBGMap0 ; $6b3b
-	ld c, $24 ; $6b3e
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $6b3e
 	call QueueVRAMCopy ; $6b40
 	wram_bank WRAM_COURT_PLANES ; $6b43
 	ld hl, wScreenAttrmap ; $6b49
 	ld de, vBGMap0 + VRAM_BANK1 ; $6b4c
-	ld c, $24 ; $6b4f
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $6b4f
 	call QueueVRAMCopy ; $6b51
 	ret ; $6b54
 Unused_1a_LoadCharViewerScreenGfx:
@@ -431,7 +431,7 @@ Unused_1a_LoadCharViewerScreenGfx:
 	call QueueVRAMCopy ; $6b75
 	ld hl, wTextTileBuffer ; $6b78
 	ld de, vTiles1 + VRAM_BANK1 ; $6b7b
-	ld c, $80 ; $6b7e
+	ld c, wTextTileBuffer_SIZE / 16 ; $6b7e
 	call QueueVRAMCopy ; $6b80
 	wram_bank WRAM_STAGING ; $6b83
 	ld hl, CharViewerScreenGfx1 ; $6b89

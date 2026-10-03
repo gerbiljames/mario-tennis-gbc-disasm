@@ -271,7 +271,7 @@ ConfirmLinkGridSelection:
 	call DrawCharGridSlotPrompt ; $67f1
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $67f4
 	ld de, vBGMap0 + 2 * TILEMAP_WIDTH ; $67f7
-	ld c, $04 ; $67fa
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $67fa
 	call QueueVRAMCopy ; $67fc
 	pop_wram_bank ; $67ff
 	ret ; $6804
@@ -341,7 +341,7 @@ CancelLinkGridSelection:
 	call DrawCharGridSlotPrompt ; $6879
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $687c
 	ld de, vBGMap0 + 2 * TILEMAP_WIDTH ; $687f
-	ld c, $04 ; $6882
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6882
 	call QueueVRAMCopy ; $6884
 	pop_wram_bank ; $6887
 	ret ; $688c
@@ -369,21 +369,21 @@ DrawRemoteSlotPortrait:
 	jr z, .slot0 ; $68b6
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $68b8
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $68bb
-	ld c, $04 ; $68be
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $68be
 	call QueueVRAMCopy ; $68c0
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $68c3
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $68c6
-	ld c, $04 ; $68c9
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $68c9
 	call QueueVRAMCopy ; $68cb
 	jr .done ; $68ce
 .slot0:
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $68d0
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $68d3
-	ld c, $04 ; $68d6
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $68d6
 	call QueueVRAMCopy ; $68d8
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $68db
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $68de
-	ld c, $04 ; $68e1
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $68e1
 	call QueueVRAMCopy ; $68e3
 .done:
 	pop_wram_bank ; $68e6
@@ -474,21 +474,21 @@ ClearRemoteSlotPortrait:
 	jr z, .slot0 ; $6974
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $6976
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $6979
-	ld c, $04 ; $697c
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $697c
 	call QueueVRAMCopy ; $697e
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $6981
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $6984
-	ld c, $04 ; $6987
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6987
 	call QueueVRAMCopy ; $6989
 	jr .done ; $698c
 .slot0:
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $698e
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $6991
-	ld c, $04 ; $6994
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6994
 	call QueueVRAMCopy ; $6996
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $6999
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $699c
-	ld c, $04 ; $699f
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $699f
 	call QueueVRAMCopy ; $69a1
 .done:
 	ret ; $69a4

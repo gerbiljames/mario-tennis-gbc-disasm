@@ -368,12 +368,12 @@ BuildExpDistributionScreen:
 	wram_bank WRAM_SCREEN ; $6a81
 	ld hl, wShadowTilemap ; $6a87
 	ld de, vBGMap0 ; $6a8a
-	ld c, $24 ; $6a8d
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $6a8d
 	call QueueVRAMCopy ; $6a8f
 	wram_bank WRAM_COURT_PLANES ; $6a92
 	ld hl, wScreenAttrmap ; $6a98
 	ld de, vBGMap0 + VRAM_BANK1 ; $6a9b
-	ld c, $24 ; $6a9e
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $6a9e
 	call QueueVRAMCopy ; $6aa0
 	ret ; $6aa3
 CopyWram1ToWram3ExpScreen:

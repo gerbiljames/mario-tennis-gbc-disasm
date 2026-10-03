@@ -405,19 +405,19 @@ RedrawCourtSelect9Menu:
 	call DrawCourtNameTiles ; $685b
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $685e
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $6861
-	ld c, $06 ; $6864
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $6864
 	call QueueVRAMCopy ; $6866
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $6869
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $686c
-	ld c, $06 ; $686f
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $686f
 	call QueueVRAMCopy ; $6871
 	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $6874
 	ld de, vBGMap0 + 11 * TILEMAP_WIDTH + VRAM_BANK1 ; $6877
-	ld c, $06 ; $687a
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $687a
 	call QueueVRAMCopy ; $687c
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $687f
 	ld de, vBGMap0 + 16 * TILEMAP_WIDTH ; $6882
-	ld c, $02 ; $6885
+	ld c, TILEMAP_WIDTH / 16 ; $6885
 	call QueueVRAMCopy ; $6887
 	ret ; $688a
 SetCourtSelect9TabAttrRect:

@@ -129,12 +129,12 @@ RunCharDataConfirmScreen:
 	wram_bank WRAM_SCREEN ; $7987
 	ld hl, wShadowTilemap ; $798d
 	ld de, vBGMap0 ; $7990
-	ld c, $24 ; $7993
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $7993
 	call QueueVRAMCopy ; $7995
 	wram_bank WRAM_COURT_PLANES ; $7998
 	ld hl, wScreenAttrmap ; $799e
 	ld de, vBGMap0 + VRAM_BANK1 ; $79a1
-	ld c, $24 ; $79a4
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $79a4
 	call QueueVRAMCopy ; $79a6
 	call EnableLCD ; $79a9
 	call AdvanceFrame ; $79ac

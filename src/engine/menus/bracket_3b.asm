@@ -675,29 +675,29 @@ RedrawMarioCastChartWindow:
 FlushMarioCastChartWindowToVram:
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $7c81
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH ; $7c84
-	ld c, $08 ; $7c87
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $7c87
 	call QueueVRAMCopy ; $7c89
 	ld hl, wShadowAttrmap + 5 * TILEMAP_WIDTH ; $7c8c
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH + VRAM_BANK1 ; $7c8f
-	ld c, $08 ; $7c92
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $7c92
 	call QueueVRAMCopy ; $7c94
 	call AdvanceFrame ; $7c97
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $7c9a
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $7c9d
-	ld c, $08 ; $7ca0
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $7ca0
 	call QueueVRAMCopy ; $7ca2
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $7ca5
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $7ca8
-	ld c, $08 ; $7cab
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $7cab
 	call QueueVRAMCopy ; $7cad
 	call AdvanceFrame ; $7cb0
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $7cb3
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH ; $7cb6
-	ld c, $04 ; $7cb9
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $7cb9
 	call QueueVRAMCopy ; $7cbb
 	ld hl, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $7cbe
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH + VRAM_BANK1 ; $7cc1
-	ld c, $04 ; $7cc4
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $7cc4
 	call QueueVRAMCopy ; $7cc6
 	ret ; $7cc9
 BuildMarioCastChartColumnList:

@@ -686,7 +686,7 @@ ConfirmCharGridSelection:
 	call DrawCharGridSlotPrompt ; $539c
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $539f
 	ld de, vBGMap0 + 2 * TILEMAP_WIDTH ; $53a2
-	ld c, $04 ; $53a5
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $53a5
 	call QueueVRAMCopy ; $53a7
 	pop_wram_bank ; $53aa
 	ret ; $53af
@@ -747,7 +747,7 @@ CancelCharGridSelection:
 	call DrawCharGridSlotPrompt ; $5410
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $5413
 	ld de, vBGMap0 + 2 * TILEMAP_WIDTH ; $5416
-	ld c, $04 ; $5419
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $5419
 	call QueueVRAMCopy ; $541b
 	pop_wram_bank ; $541e
 	ret ; $5423

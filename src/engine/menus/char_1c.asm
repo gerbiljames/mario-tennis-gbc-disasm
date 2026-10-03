@@ -232,12 +232,12 @@ CharDataScreen_BuildTilemap:
 	wram_bank WRAM_SCREEN ; $41e5
 	ld hl, wShadowTilemap ; $41eb
 	ld de, vBGMap0 ; $41ee
-	ld c, $24 ; $41f1
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $41f1
 	call QueueVRAMCopy ; $41f3
 	wram_bank WRAM_COURT_PLANES ; $41f6
 	ld hl, wScreenAttrmap ; $41fc
 	ld de, vBGMap0 + VRAM_BANK1 ; $41ff
-	ld c, $24 ; $4202
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4202
 	call QueueVRAMCopy ; $4204
 	ret ; $4207
 CharDataScreen_LoadUIGraphics:

@@ -133,12 +133,12 @@ BuildCharDataScreenPages:
 	wram_bank WRAM_SCREEN ; $4152
 	ld hl, wShadowTilemap ; $4158
 	ld de, vBGMap0 ; $415b
-	ld c, $24 ; $415e
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $415e
 	call QueueVRAMCopy ; $4160
 	wram_bank WRAM_COURT_PLANES ; $4163
 	ld hl, wScreenAttrmap ; $4169
 	ld de, vBGMap0 + VRAM_BANK1 ; $416c
-	ld c, $24 ; $416f
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $416f
 	call QueueVRAMCopy ; $4171
 	ret ; $4174
 LoadCharDataScreenPageGraphics:

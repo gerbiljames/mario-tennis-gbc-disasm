@@ -415,11 +415,11 @@ DrawN64RecordTypeGrid:
 	call DrawN64RecordTypeCaption ; $740e
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $7411
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $7414
-	ld c, $06 ; $7417
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $7417
 	call QueueVRAMCopy ; $7419
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $741c
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $741f
-	ld c, $04 ; $7422
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $7422
 	call QueueVRAMCopy ; $7424
 	ret ; $7427
 FillN64RecordTypeCell:
@@ -716,15 +716,15 @@ DrawN64TransferItemGrid:
 	call DrawN64TransferItemCaption ; $765b
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $765e
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $7661
-	ld c, $06 ; $7664
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $7664
 	call QueueVRAMCopy ; $7666
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $7669
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $766c
-	ld c, $06 ; $766f
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $766f
 	call QueueVRAMCopy ; $7671
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $7674
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $7677
-	ld c, $04 ; $767a
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $767a
 	call QueueVRAMCopy ; $767c
 	ret ; $767f
 LoadN64TransferItemCellPalette:

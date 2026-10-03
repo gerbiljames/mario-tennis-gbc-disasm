@@ -480,10 +480,10 @@ MinigameGridCellTilemapOffsets:
 QueueMinigameHudVRAMCopy:
 	ld hl, wCourtTilemap + 9 * TILEMAP_WIDTH ; $43a3
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $43a6
-	ld c, $0a ; $43a9
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $43a9
 	call QueueVRAMCopy ; $43ab
 	ld hl, wCourtAttrmap + 9 * TILEMAP_WIDTH ; $43ae
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $43b1
-	ld c, $0a ; $43b4
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $43b4
 	call QueueVRAMCopy ; $43b6
 	ret ; $43b9

@@ -344,11 +344,11 @@ RedrawPlayAlonePartnerMenu:
 	call DrawPlayAlonePartnerCaption ; $5306
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $5309
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $530c
-	ld c, $06 ; $530f
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $530f
 	call QueueVRAMCopy ; $5311
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $5314
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $5317
-	ld c, $04 ; $531a
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $531a
 	call QueueVRAMCopy ; $531c
 	ret ; $531f
 SetPlayAlonePartnerPalette:

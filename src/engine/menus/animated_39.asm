@@ -21,7 +21,7 @@ LoadScreenAssetRecord:
 	call QueueVRAMCopy ; $40a8
 	ld hl, wTextTileBuffer ; $40ab
 	ld de, vTiles1 + VRAM_BANK1 ; $40ae
-	ld c, $80 ; $40b1
+	ld c, wTextTileBuffer_SIZE / 16 ; $40b1
 	call QueueVRAMCopy ; $40b3
 	pop hl ; $40b6
 	inc hl ; $40b7
@@ -132,11 +132,11 @@ QueueWram3MapToVRAM:
 	wram_bank WRAM_SCREEN ; $4325
 	ld hl, wShadowTilemap ; $432b
 	ld de, vBGMap0 ; $432e
-	ld c, $40 ; $4331
+	ld c, TILEMAP_AREA / 16 ; $4331
 	call QueueVRAMCopy ; $4333
 	ld hl, wShadowAttrmap ; $4336
 	ld de, vBGMap0 + VRAM_BANK1 ; $4339
-	ld c, $40 ; $433c
+	ld c, TILEMAP_AREA / 16 ; $433c
 	call QueueVRAMCopy ; $433e
 	ret ; $4341
 UpdateAnimatedTiles:

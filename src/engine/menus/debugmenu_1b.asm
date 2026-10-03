@@ -91,12 +91,12 @@ Unused_1b_ClearScreenMaps:
 	wram_bank WRAM_SCREEN ; $6543
 	ld hl, wShadowTilemap ; $6549
 	ld de, vBGMap0 ; $654c
-	ld c, $24 ; $654f
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $654f
 	call QueueVRAMCopy ; $6551
 	wram_bank WRAM_COURT_PLANES ; $6554
 	ld hl, wScreenAttrmap ; $655a
 	ld de, vBGMap0 + VRAM_BANK1 ; $655d
-	ld c, $24 ; $6560
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $6560
 	call QueueVRAMCopy ; $6562
 	call EnableLCD ; $6565
 	ret ; $6568
@@ -162,7 +162,7 @@ Unused_1b_LoadUnlockDebugScreenGfx:
 	call QueueVRAMCopy ; $6620
 	ld hl, wTextTileBuffer ; $6623
 	ld de, vTiles1 + VRAM_BANK1 ; $6626
-	ld c, $80 ; $6629
+	ld c, wTextTileBuffer_SIZE / 16 ; $6629
 	call QueueVRAMCopy ; $662b
 	ld hl, UnlockDebugNavGridTable ; $662e
 	ld de, wTextTileBuffer + 64 * TILE_SIZE ; $6631

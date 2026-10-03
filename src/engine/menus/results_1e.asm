@@ -94,12 +94,12 @@ BuildResultsScreenTilemap:
 	wram_bank WRAM_SCREEN ; $40df
 	ld hl, wShadowTilemap ; $40e5
 	ld de, vBGMap0 ; $40e8
-	ld c, $24 ; $40eb
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $40eb
 	call QueueVRAMCopy ; $40ed
 	wram_bank WRAM_COURT_PLANES ; $40f0
 	ld hl, wScreenAttrmap ; $40f6
 	ld de, vBGMap0 + VRAM_BANK1 ; $40f9
-	ld c, $24 ; $40fc
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $40fc
 	call QueueVRAMCopy ; $40fe
 	farcall UploadGlyphBuffer ; $4101
 	ret ; $4104
@@ -120,7 +120,7 @@ LoadResultsScreenGraphics:
 	call QueueVRAMCopy ; $412e
 	ld hl, wTextTileBuffer ; $4131
 	ld de, vTiles1 + VRAM_BANK1 ; $4134
-	ld c, $80 ; $4137
+	ld c, wTextTileBuffer_SIZE / 16 ; $4137
 	call QueueVRAMCopy ; $4139
 	wram_bank WRAM_STAGING ; $413c
 	ld hl, ResultsScreenTilemap_1e ; $4142

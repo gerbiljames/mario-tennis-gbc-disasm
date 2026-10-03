@@ -162,7 +162,8 @@ restated:
   size `ram.asm`'s `export_size` exports beside its declaration
   (`ld bc, wInlineTextBuffer_SIZE`), and a copy of part of a larger buffer
   says which part (`SCREEN_HEIGHT * TILEMAP_WIDTH`, `2 * CHAR_RECORD_SIZE`,
-  `WRAMX_END - wScreenScratch`).
+  `WRAMX_END - wScreenScratch`). A VRAM copy of whole map rows counts them
+  (`ld c, 3 * TILEMAP_WIDTH / 16`).
 - **The header is fixed up.** `make` runs `rgbfix -v`, so editing the title or
   cart type cannot leave a header checksum the CGB boot ROM rejects. It changes
   nothing in the unmodified build, which is why `make compare` still holds.

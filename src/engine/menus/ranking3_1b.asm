@@ -85,29 +85,29 @@ DrawDoublesRankingMarker6:
 PushRankingBoardTilemapRows:
 	ld hl, wShadowTilemap ; $58c5
 	ld de, vBGMap0 ; $58c8
-	ld c, $10 ; $58cb
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $58cb
 	call QueueVRAMCopy ; $58cd
 	ld hl, wShadowAttrmap ; $58d0
 	ld de, vBGMap0 + VRAM_BANK1 ; $58d3
-	ld c, $10 ; $58d6
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $58d6
 	call QueueVRAMCopy ; $58d8
 	call AdvanceFrame ; $58db
 	ld hl, wShadowTilemap + 8 * TILEMAP_WIDTH ; $58de
 	ld de, vBGMap0 + 8 * TILEMAP_WIDTH ; $58e1
-	ld c, $10 ; $58e4
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $58e4
 	call QueueVRAMCopy ; $58e6
 	ld hl, wShadowAttrmap + 8 * TILEMAP_WIDTH ; $58e9
 	ld de, vBGMap0 + 8 * TILEMAP_WIDTH + VRAM_BANK1 ; $58ec
-	ld c, $10 ; $58ef
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $58ef
 	call QueueVRAMCopy ; $58f1
 	call AdvanceFrame ; $58f4
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $58f7
 	ld de, vBGMap0 + 16 * TILEMAP_WIDTH ; $58fa
-	ld c, $08 ; $58fd
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $58fd
 	call QueueVRAMCopy ; $58ff
 	ld hl, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $5902
 	ld de, vBGMap0 + 16 * TILEMAP_WIDTH + VRAM_BANK1 ; $5905
-	ld c, $08 ; $5908
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $5908
 	call QueueVRAMCopy ; $590a
 	call AdvanceFrame ; $590d
 	ret ; $5910

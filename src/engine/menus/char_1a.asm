@@ -307,7 +307,7 @@ Unused_1a_RefreshCharViewerSelection:
 	ld [hl], a ; $6e94
 	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $6e95
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $6e98
-	ld c, $04 ; $6e9b
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6e9b
 	call QueueVRAMCopy ; $6e9d
 	wram_bank WRAM_SCENE ; $6ea0
 	ld a, [wCharViewerPalette] ; $6ea6
@@ -321,7 +321,7 @@ Unused_1a_RefreshCharViewerSelection:
 	ld [hl], a ; $6eb8
 	ld hl, wScreenAttrmap + 14 * TILEMAP_WIDTH ; $6eb9
 	ld de, vBGMap0 + 14 * TILEMAP_WIDTH + VRAM_BANK1 ; $6ebc
-	ld c, $02 ; $6ebf
+	ld c, TILEMAP_WIDTH / 16 ; $6ebf
 	call QueueVRAMCopy ; $6ec1
 	wram_bank WRAM_SCREEN ; $6ec4
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH + 1 ; $6eca
@@ -385,7 +385,7 @@ Unused_1a_RefreshCharViewerSelection:
 	wram_bank WRAM_SCREEN ; $6f2b
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6f31
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $6f34
-	ld c, $04 ; $6f37
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6f37
 	call QueueVRAMCopy ; $6f39
 	ret ; $6f3c
 Unused_1a_SetupCharViewerScene:

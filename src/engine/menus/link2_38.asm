@@ -72,7 +72,7 @@ AppendCharToName:
 	call DrawEnteredName ; $7312
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $7315
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH ; $7318
-	ld c, $04 ; $731b
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $731b
 	call QueueVRAMCopy ; $731d
 	sound SFX_MENU_SELECT ; $7320
 	call GetEnteredNameLength ; $7322
@@ -112,7 +112,7 @@ DeleteLastNameChar:
 	call DrawEnteredName ; $7365
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $7368
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH ; $736b
-	ld c, $04 ; $736e
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $736e
 	call QueueVRAMCopy ; $7370
 .done:
 	pop_wram_bank ; $7373

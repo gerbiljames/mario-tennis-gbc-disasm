@@ -2,11 +2,11 @@ FlushLevelSelectTextRows:
 	push_wram_bank WRAM_SCREEN ; $6dc6
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $6dcf
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $6dd2
-	ld c, $06 ; $6dd5
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $6dd5
 	call QueueVRAMCopy ; $6dd7
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6dda
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $6ddd
-	ld c, $04 ; $6de0
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6de0
 	call QueueVRAMCopy ; $6de2
 	pop_wram_bank ; $6de5
 	ret ; $6dea

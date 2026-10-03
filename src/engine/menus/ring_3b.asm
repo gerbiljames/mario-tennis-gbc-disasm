@@ -314,24 +314,24 @@ RingShotModeTabTable:
 FlushRingShotWindowToVram:
 	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $5456
 	ld de, vBGMap0 + 1 * TILEMAP_WIDTH ; $5459
-	ld c, $04 ; $545c
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $545c
 	call QueueVRAMCopy ; $545e
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $5461
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $5464
-	ld c, $08 ; $5467
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $5467
 	call QueueVRAMCopy ; $5469
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $546c
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $546f
-	ld c, $08 ; $5472
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $5472
 	call QueueVRAMCopy ; $5474
 	call AdvanceFrame ; $5477
 	ld hl, wShadowTilemap + 10 * TILEMAP_WIDTH ; $547a
 	ld de, vBGMap0 + 10 * TILEMAP_WIDTH ; $547d
-	ld c, $0c ; $5480
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $5480
 	call QueueVRAMCopy ; $5482
 	ld hl, wShadowAttrmap + 10 * TILEMAP_WIDTH ; $5485
 	ld de, vBGMap0 + 10 * TILEMAP_WIDTH + VRAM_BANK1 ; $5488
-	ld c, $0c ; $548b
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $548b
 	call QueueVRAMCopy ; $548d
 	ret ; $5490
 RingShotScrollArrowsTask:

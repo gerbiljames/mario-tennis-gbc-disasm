@@ -317,7 +317,7 @@ IntroCutsceneState01Init_6b:
 	call QueueVRAMCopy ; $4279
 	ld hl, wTextTileBuffer ; $427c
 	ld de, vTiles1 ; $427f
-	ld c, $80 ; $4282
+	ld c, wTextTileBuffer_SIZE / 16 ; $4282
 	call QueueVRAMCopy ; $4284
 	wram_bank WRAM_SCREEN ; $4287
 	ld_slot hl, DataPtr_IntroSwingTilemap ; $428d
@@ -362,20 +362,20 @@ IntroCutsceneState02Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4326
 	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $432f
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $4332
-	ld c, $0a ; $4335
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $4335
 	call QueueVRAMCopy ; $4337
 	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $433a
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $433d
-	ld c, $0a ; $4340
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $4340
 	call QueueVRAMCopy ; $4342
 	call AdvanceFrame ; $4345
 	ld hl, wIntroCharactersTilemap + 9 * TILEMAP_WIDTH ; $4348
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $434b
-	ld c, $0a ; $434e
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $434e
 	call QueueVRAMCopy ; $4350
 	ld hl, wIntroCharactersAttrmap + 9 * TILEMAP_WIDTH ; $4353
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $4356
-	ld c, $0a ; $4359
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $4359
 	call QueueVRAMCopy ; $435b
 	pop_wram_bank ; $435e
 	ld hl, IntroCutsceneState02InitPalette_6b ; $4363
@@ -422,7 +422,7 @@ IntroCutsceneState03Init_6b:
 	call QueueVRAMCopy ; $440b
 	ld hl, wTextTileBuffer ; $440e
 	ld de, vTiles1 ; $4411
-	ld c, $80 ; $4414
+	ld c, wTextTileBuffer_SIZE / 16 ; $4414
 	call QueueVRAMCopy ; $4416
 	wram_bank WRAM_SCREEN ; $4419
 	ld_slot hl, DataPtr_IntroCloseupTilemap ; $441f
@@ -470,20 +470,20 @@ IntroCutsceneState04Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4487
 	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4490
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $4493
-	ld c, $0a ; $4496
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $4496
 	call QueueVRAMCopy ; $4498
 	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $449b
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $449e
-	ld c, $0a ; $44a1
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $44a1
 	call QueueVRAMCopy ; $44a3
 	call AdvanceFrame ; $44a6
 	ld hl, wIntroCharactersTilemap + 9 * TILEMAP_WIDTH ; $44a9
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $44ac
-	ld c, $0a ; $44af
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $44af
 	call QueueVRAMCopy ; $44b1
 	ld hl, wIntroCharactersAttrmap + 9 * TILEMAP_WIDTH ; $44b4
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $44b7
-	ld c, $0a ; $44ba
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $44ba
 	call QueueVRAMCopy ; $44bc
 	pop_wram_bank ; $44bf
 	ld hl, IntroCutsceneState04InitPalettes ; $44c4
@@ -562,11 +562,11 @@ IntroCutsceneState05Exit_6b:
 	push_wram_bank WRAM_SCREEN ; $45ba
 	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $45c3
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $45c6
-	ld c, $0c ; $45c9
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $45c9
 	call QueueVRAMCopy ; $45cb
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $45ce
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $45d1
-	ld c, $0c ; $45d4
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $45d4
 	call QueueVRAMCopy ; $45d6
 	pop_wram_bank ; $45d9
 	ld hl, QueueCutsceneSpriteGroupA ; $45de
@@ -579,11 +579,11 @@ IntroCutsceneState05Exit_6b:
 	push_wram_bank WRAM_SCREEN ; $45f0
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $45f9
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $45fc
-	ld c, $0c ; $45ff
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $45ff
 	call QueueVRAMCopy ; $4601
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $4604
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $4607
-	ld c, $0c ; $460a
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $460a
 	call QueueVRAMCopy ; $460c
 	pop_wram_bank ; $460f
 	ld hl, QueueCutsceneSpriteGroupB ; $4614
@@ -688,20 +688,20 @@ IntroCutsceneState13Init_6b:
 	call LoadPaletteShadow ; $46fc
 	ld hl, wWindowShadowTilemap + 6 * TILEMAP_WIDTH ; $46ff
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $4702
-	ld c, $10 ; $4705
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4705
 	call QueueVRAMCopy ; $4707
 	ld hl, wWindowShadowAttrmap + 6 * TILEMAP_WIDTH ; $470a
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $470d
-	ld c, $10 ; $4710
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4710
 	call QueueVRAMCopy ; $4712
 	call AdvanceFrame ; $4715
 	ld hl, wWindowShadowTilemap + 4 * TILEMAP_WIDTH ; $4718
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $471b
-	ld c, $04 ; $471e
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $471e
 	call QueueVRAMCopy ; $4720
 	ld hl, wWindowShadowAttrmap + 4 * TILEMAP_WIDTH ; $4723
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $4726
-	ld c, $04 ; $4729
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $4729
 	call QueueVRAMCopy ; $472b
 	call AdvanceFrame ; $472e
 	pop_wram_bank ; $4731
@@ -832,11 +832,11 @@ Unused_6b_IntroCutsceneState11Init:
 	wram_bank WRAM_SCREEN ; $4896
 	ld hl, wShadowTilemap ; $489c
 	ld de, vBGMap1 ; $489f
-	ld c, $40 ; $48a2
+	ld c, TILEMAP_AREA / 16 ; $48a2
 	call QueueVRAMCopy ; $48a4
 	ld hl, wShadowAttrmap ; $48a7
 	ld de, vBGMap1 + VRAM_BANK1 ; $48aa
-	ld c, $40 ; $48ad
+	ld c, TILEMAP_AREA / 16 ; $48ad
 	call QueueVRAMCopy ; $48af
 	call Unused_6b_InitCutsceneSceneB ; $48b2
 	call LoadIntroTilesAndPalette ; $48b5
@@ -933,7 +933,7 @@ IntroCutsceneState16Init_6b:
 	call QueueVRAMCopy ; $4989
 	ld hl, wTextTileBuffer ; $498c
 	ld de, vTiles1 ; $498f
-	ld c, $80 ; $4992
+	ld c, wTextTileBuffer_SIZE / 16 ; $4992
 	call QueueVRAMCopy ; $4994
 	ld_slot hl, DataPtr_IntroGreatestPlayerTilemap ; $4997
 	ld de, wDecompBuffer ; $499a
@@ -962,7 +962,7 @@ IntroCutsceneState16Init_6b:
 	call QueueVRAMCopy ; $49df
 	ld hl, wTextTileBuffer ; $49e2
 	ld de, vTiles1 + VRAM_BANK1 ; $49e5
-	ld c, $80 ; $49e8
+	ld c, wTextTileBuffer_SIZE / 16 ; $49e8
 	call QueueVRAMCopy ; $49ea
 	wram_bank WRAM_ACTORS ; $49ed
 	ld_slot hl, DataPtr_IntroCharactersTilemap ; $49f3

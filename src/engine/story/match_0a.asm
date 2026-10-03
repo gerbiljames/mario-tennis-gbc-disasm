@@ -485,12 +485,12 @@ ClearBgTilemaps:
 	wram_bank WRAM_SCREEN ; $4d51
 	ld hl, wShadowTilemap ; $4d57
 	ld de, vBGMap0 ; $4d5a
-	ld c, $24 ; $4d5d
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4d5d
 	call QueueVRAMCopy ; $4d5f
 	wram_bank WRAM_COURT_PLANES ; $4d62
 	ld hl, wScreenAttrmap ; $4d68
 	ld de, vBGMap0 + VRAM_BANK1 ; $4d6b
-	ld c, $24 ; $4d6e
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4d6e
 	call QueueVRAMCopy ; $4d70
 	call EnableLCD ; $4d73
 	ret ; $4d76

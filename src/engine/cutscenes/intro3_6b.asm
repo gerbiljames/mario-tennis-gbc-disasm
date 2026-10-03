@@ -19,7 +19,7 @@ InitCutsceneSceneA:
 	call QueueVRAMCopy ; $541c
 	ld hl, wTextTileBuffer ; $541f
 	ld de, vTiles1 ; $5422
-	ld c, $80 ; $5425
+	ld c, wTextTileBuffer_SIZE / 16 ; $5425
 	call QueueVRAMCopy ; $5427
 	wram_bank WRAM_COURT_PLANES ; $542a
 	ld hl, CutsceneSceneAGfx1 ; $5430
@@ -53,7 +53,7 @@ Unused_6b_InitCutsceneSceneB:
 	call QueueVRAMCopy ; $547e
 	ld hl, wTextTileBuffer ; $5481
 	ld de, vTiles1 ; $5484
-	ld c, $80 ; $5487
+	ld c, wTextTileBuffer_SIZE / 16 ; $5487
 	call QueueVRAMCopy ; $5489
 	wram_bank WRAM_COURT_PLANES ; $548c
 	ld hl, CutsceneSceneBGfx1 ; $5492
@@ -84,7 +84,7 @@ InitCutsceneSceneC:
 	call QueueVRAMCopy ; $54d9
 	ld hl, wTextTileBuffer ; $54dc
 	ld de, vTiles1 ; $54df
-	ld c, $80 ; $54e2
+	ld c, wTextTileBuffer_SIZE / 16 ; $54e2
 	call QueueVRAMCopy ; $54e4
 	wram_bank WRAM_COURT_PLANES ; $54e7
 	ld hl, CutsceneSceneBGfx1 ; $54ed
@@ -269,7 +269,7 @@ InitTitleSceneGraphics:
 	call QueueVRAMCopy ; $619c
 	ld hl, wTextTileBuffer ; $619f
 	ld de, vTiles1 + VRAM_BANK1 ; $61a2
-	ld c, $80 ; $61a5
+	ld c, wTextTileBuffer_SIZE / 16 ; $61a5
 	call QueueVRAMCopy ; $61a7
 	wram_bank WRAM_COURT_PLANES ; $61aa
 	ld hl, TitleSceneGraphicsGfx2 ; $61b0

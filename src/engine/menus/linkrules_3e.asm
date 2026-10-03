@@ -179,7 +179,7 @@ DrawMatchRulesCaption:
 	farcall RenderMatchFormatOptionText ; $49aa
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $49ad
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $49b0
-	ld c, $04 ; $49b3
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $49b3
 	call QueueVRAMCopy ; $49b5
 	ret ; $49b8
 Unused_3e_DrawMatchRulesCaptionText:
@@ -458,6 +458,6 @@ ClearLinkMessageWindow:
 FlushLinkMessageRows:
 	ld hl, wShadowTilemap + 11 * TILEMAP_WIDTH ; $4c06
 	ld de, vBGMap0 + 11 * TILEMAP_WIDTH ; $4c09
-	ld c, $0c ; $4c0c
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $4c0c
 	call QueueVRAMCopy ; $4c0e
 	ret ; $4c11

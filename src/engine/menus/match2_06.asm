@@ -172,7 +172,7 @@ FlushTilemapToVram:
 	ld d, h ; $4609
 	ld hl, wCourtTilemap ; $460a
 	add hl, bc ; $460d
-	ld c, $22 ; $460e
+	ld c, 17 * TILEMAP_WIDTH / 16 ; $460e
 	call QueueVRAMCopy ; $4610
 	pop bc ; $4613
 	ld hl, vBGMap0 + VRAM_BANK1 ; $4614
@@ -181,7 +181,7 @@ FlushTilemapToVram:
 	ld d, h ; $4619
 	ld hl, wCourtAttrmap ; $461a
 	add hl, bc ; $461d
-	ld c, $22 ; $461e
+	ld c, 17 * TILEMAP_WIDTH / 16 ; $461e
 	call QueueVRAMCopy ; $4620
 	ret ; $4623
 GetShadowTilemapAddr:

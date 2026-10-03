@@ -436,28 +436,28 @@ QueueRulesPageToVRAM:
 	jr nz, .nonZero ; $7251
 	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH ; $7253
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $7256
-	ld c, $0a ; $7259
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $7259
 	call QueueVRAMCopy ; $725b
 	jr .queueVRAMCopy ; $725e
 .nonZero:
 	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $7260
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $7263
-	ld c, $0a ; $7266
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $7266
 	call QueueVRAMCopy ; $7268
 .queueVRAMCopy:
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $726b
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $726e
-	ld c, $02 ; $7271
+	ld c, TILEMAP_WIDTH / 16 ; $7271
 	call QueueVRAMCopy ; $7273
 	call AdvanceFrame ; $7276
 	ld hl, wShadowTilemap + 8 * TILEMAP_WIDTH ; $7279
 	ld de, vBGMap0 + 8 * TILEMAP_WIDTH ; $727c
-	ld c, $0a ; $727f
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $727f
 	call QueueVRAMCopy ; $7281
 	call AdvanceFrame ; $7284
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $7287
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH ; $728a
-	ld c, $08 ; $728d
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $728d
 	call QueueVRAMCopy ; $728f
 	ret ; $7292
 LoadRulesBorderAnimTiles:

@@ -174,11 +174,11 @@ DrawMinigameSelectGrid6:
 	call LoadMinigameCharPalette ; $6787
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $678a
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $678d
-	ld c, $06 ; $6790
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $6790
 	call QueueVRAMCopy ; $6792
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $6795
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $6798
-	ld c, $06 ; $679b
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $679b
 	call QueueVRAMCopy ; $679d
 	ret ; $67a0
 RunSavedDataSourceSelect:
@@ -559,15 +559,15 @@ DrawSavedDataSourceGrid:
 	call DrawSavedDataSourceCaption ; $6ae9
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $6aec
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $6aef
-	ld c, $06 ; $6af2
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $6af2
 	call QueueVRAMCopy ; $6af4
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $6af7
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $6afa
-	ld c, $06 ; $6afd
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $6afd
 	call QueueVRAMCopy ; $6aff
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6b02
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $6b05
-	ld c, $04 ; $6b08
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6b08
 	call QueueVRAMCopy ; $6b0a
 	ret ; $6b0d
 FillSavedDataSourceCell:

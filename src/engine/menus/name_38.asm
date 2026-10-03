@@ -312,7 +312,7 @@ RunNameEntryScreen:
 	call DrawEnteredName ; $6f48
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $6f4b
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH ; $6f4e
-	ld c, $04 ; $6f51
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6f51
 	call QueueVRAMCopy ; $6f53
 	call AdvanceFrame ; $6f56
 	sound SFX_MENU_SELECT ; $6f59

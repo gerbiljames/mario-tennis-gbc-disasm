@@ -872,7 +872,7 @@ DrawMatchFormatCaption:
 	call RenderMatchFormatOptionText ; $618c
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $618f
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $6192
-	ld c, $04 ; $6195
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6195
 	call QueueVRAMCopy ; $6197
 	ret ; $619a
 RenderMatchFormatOptionText:

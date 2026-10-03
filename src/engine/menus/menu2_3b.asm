@@ -490,19 +490,19 @@ DrawMainMenuSelection:
 	call DrawMainMenuCaption ; $59d9
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $59dc
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $59df
-	ld c, $06 ; $59e2
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $59e2
 	call QueueVRAMCopy ; $59e4
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $59e7
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $59ea
-	ld c, $06 ; $59ed
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $59ed
 	call QueueVRAMCopy ; $59ef
 	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $59f2
 	ld de, vBGMap0 + 11 * TILEMAP_WIDTH + VRAM_BANK1 ; $59f5
-	ld c, $06 ; $59f8
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $59f8
 	call QueueVRAMCopy ; $59fa
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $59fd
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $5a00
-	ld c, $04 ; $5a03
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $5a03
 	call QueueVRAMCopy ; $5a05
 	ret ; $5a08
 FillMainMenuCellHighlight:

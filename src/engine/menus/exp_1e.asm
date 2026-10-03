@@ -103,12 +103,12 @@ BuildExpAwardScreenTilemap:
 	wram_bank WRAM_SCREEN ; $54fb
 	ld hl, wShadowTilemap ; $5501
 	ld de, vBGMap0 ; $5504
-	ld c, $24 ; $5507
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $5507
 	call QueueVRAMCopy ; $5509
 	wram_bank WRAM_COURT_PLANES ; $550c
 	ld hl, wScreenAttrmap ; $5512
 	ld de, vBGMap0 + VRAM_BANK1 ; $5515
-	ld c, $24 ; $5518
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $5518
 	call QueueVRAMCopy ; $551a
 	ret ; $551d
 LoadExpAwardScreenGraphics:
@@ -125,7 +125,7 @@ LoadExpAwardScreenGraphics:
 	call QueueVRAMCopy ; $553e
 	ld hl, wTextTileBuffer ; $5541
 	ld de, vTiles1 + VRAM_BANK1 ; $5544
-	ld c, $80 ; $5547
+	ld c, wTextTileBuffer_SIZE / 16 ; $5547
 	call QueueVRAMCopy ; $5549
 	wram_bank WRAM_STAGING ; $554c
 	ld hl, ExpAwardScreenTilemap_1e ; $5552

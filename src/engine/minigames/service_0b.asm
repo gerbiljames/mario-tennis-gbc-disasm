@@ -126,12 +126,12 @@ ClearBGForDrillResult:
 	wram_bank WRAM_SCREEN ; $47fd
 	ld hl, wShadowTilemap ; $4803
 	ld de, vBGMap0 ; $4806
-	ld c, $24 ; $4809
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4809
 	call QueueVRAMCopy ; $480b
 	wram_bank WRAM_COURT_PLANES ; $480e
 	ld hl, wScreenAttrmap ; $4814
 	ld de, vBGMap0 + VRAM_BANK1 ; $4817
-	ld c, $24 ; $481a
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $481a
 	call QueueVRAMCopy ; $481c
 	call EnableLCD ; $481f
 	ret ; $4822

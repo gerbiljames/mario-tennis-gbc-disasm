@@ -86,7 +86,7 @@ LoadMatchGraphics:
 	call QueueVRAMCopy ; $5ee4
 	ld hl, wTextTileBuffer ; $5ee7
 	ld de, vTiles1 ; $5eea
-	ld c, $80 ; $5eed
+	ld c, wTextTileBuffer_SIZE / 16 ; $5eed
 	call QueueVRAMCopy ; $5eef
 	ld a, [wMatchContext] ; $5ef2
 	cp MATCHCONTEXT_MINIGAME ; $5ef5

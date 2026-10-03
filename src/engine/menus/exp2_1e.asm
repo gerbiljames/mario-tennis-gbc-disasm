@@ -33,12 +33,12 @@ BeginNextExpAward:
 	wram_bank WRAM_SCREEN ; $5b3b
 	ld hl, wShadowTilemap ; $5b41
 	ld de, vBGMap0 ; $5b44
-	ld c, $08 ; $5b47
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $5b47
 	call QueueVRAMCopy ; $5b49
 	wram_bank WRAM_COURT_PLANES ; $5b4c
 	ld hl, wScreenAttrmap ; $5b52
 	ld de, vBGMap0 + VRAM_BANK1 ; $5b55
-	ld c, $08 ; $5b58
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $5b58
 	call QueueVRAMCopy ; $5b5a
 	ld a, $01 ; $5b5d
 	ret ; $5b5f

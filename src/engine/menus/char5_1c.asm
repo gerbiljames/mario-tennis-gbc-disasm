@@ -130,7 +130,7 @@ CharDataScreen_LoadScreen:
 	call QueueVRAMCopy ; $715c
 	ld hl, wTextTileBuffer ; $715f
 	ld de, vTiles1 + VRAM_BANK1 ; $7162
-	ld c, $80 ; $7165
+	ld c, wTextTileBuffer_SIZE / 16 ; $7165
 	call QueueVRAMCopy ; $7167
 	wram_bank WRAM_STAGING ; $716a
 	ld hl, CharDataScreenTilemap_1c ; $7170
@@ -422,7 +422,7 @@ LoadCharDataScreenBgAndPalettes:
 	call QueueVRAMCopy ; $744e
 	ld hl, wTextTileBuffer ; $7451
 	ld de, vTiles1 + VRAM_BANK1 ; $7454
-	ld c, $80 ; $7457
+	ld c, wTextTileBuffer_SIZE / 16 ; $7457
 	call QueueVRAMCopy ; $7459
 	wram_bank WRAM_STAGING ; $745c
 	ld hl, CharDataScreenBgTilemap ; $7462

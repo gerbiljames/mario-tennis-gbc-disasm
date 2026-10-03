@@ -326,7 +326,7 @@ Unused_38_RunLinkCpuDifficultySubmenu:
 	call DrawCharGridSlotPrompt ; $6c23
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $6c26
 	ld de, vBGMap0 + 2 * TILEMAP_WIDTH ; $6c29
-	ld c, $04 ; $6c2c
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $6c2c
 	call QueueVRAMCopy ; $6c2e
 .done:
 	pop_wram_bank ; $6c31

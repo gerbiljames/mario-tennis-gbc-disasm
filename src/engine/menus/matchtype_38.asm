@@ -327,7 +327,7 @@ Unused_38_RefreshMatchTypeLabelRow:
 	call Unused_38_DrawMatchTypeOptionLabel ; $4686
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4689
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $468c
-	ld c, $04 ; $468f
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $468f
 	call QueueVRAMCopy ; $4691
 	ret ; $4694
 MatchTypeLabelSpriteLayouts:

@@ -15,20 +15,20 @@ IntroCutsceneState17Init_6b:
 	wram_bank WRAM_ACTORS ; $4a98
 	ld hl, wIntroCharactersTilemap + 6 * TILEMAP_WIDTH ; $4a9e
 	ld de, vBGMap1 + 6 * TILEMAP_WIDTH ; $4aa1
-	ld c, $10 ; $4aa4
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4aa4
 	call QueueVRAMCopy ; $4aa6
 	ld hl, wIntroCharactersAttrmap + 6 * TILEMAP_WIDTH ; $4aa9
 	ld de, vBGMap1 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $4aac
-	ld c, $10 ; $4aaf
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4aaf
 	call QueueVRAMCopy ; $4ab1
 	call AdvanceFrame ; $4ab4
 	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4ab7
 	ld de, vBGMap1 + 4 * TILEMAP_WIDTH ; $4aba
-	ld c, $04 ; $4abd
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $4abd
 	call QueueVRAMCopy ; $4abf
 	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $4ac2
 	ld de, vBGMap1 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $4ac5
-	ld c, $04 ; $4ac8
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $4ac8
 	call QueueVRAMCopy ; $4aca
 	call AdvanceFrame ; $4acd
 	ld hl, Palettes_6b_03 ; $4ad0
@@ -53,20 +53,20 @@ IntroCutsceneState18Init_6b:
 	wram_bank WRAM_TEXT ; $4afb
 	ld hl, wWindowShadowTilemap + 19 * TILEMAP_WIDTH ; $4b01
 	ld de, vBGMap1 + 19 * TILEMAP_WIDTH ; $4b04
-	ld c, $10 ; $4b07
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4b07
 	call QueueVRAMCopy ; $4b09
 	ld hl, wWindowShadowAttrmap + 19 * TILEMAP_WIDTH ; $4b0c
 	ld de, vBGMap1 + 19 * TILEMAP_WIDTH + VRAM_BANK1 ; $4b0f
-	ld c, $10 ; $4b12
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4b12
 	call QueueVRAMCopy ; $4b14
 	call AdvanceFrame ; $4b17
 	ld hl, wWindowShadowTilemap + 11 * TILEMAP_WIDTH ; $4b1a
 	ld de, vBGMap1 + 11 * TILEMAP_WIDTH ; $4b1d
-	ld c, $10 ; $4b20
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4b20
 	call QueueVRAMCopy ; $4b22
 	ld hl, wWindowShadowAttrmap + 11 * TILEMAP_WIDTH ; $4b25
 	ld de, vBGMap1 + 11 * TILEMAP_WIDTH + VRAM_BANK1 ; $4b28
-	ld c, $10 ; $4b2b
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4b2b
 	call QueueVRAMCopy ; $4b2d
 	call AdvanceFrame ; $4b30
 	ld a, $48 ; $4b33
@@ -77,20 +77,20 @@ IntroCutsceneState18Init_6b:
 	call RegisterFrameTask ; $4b3f
 	ld hl, wWindowShadowTilemap + 3 * TILEMAP_WIDTH ; $4b42
 	ld de, vBGMap1 + 3 * TILEMAP_WIDTH ; $4b45
-	ld c, $10 ; $4b48
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4b48
 	call QueueVRAMCopy ; $4b4a
 	ld hl, wWindowShadowAttrmap + 3 * TILEMAP_WIDTH ; $4b4d
 	ld de, vBGMap1 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $4b50
-	ld c, $10 ; $4b53
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $4b53
 	call QueueVRAMCopy ; $4b55
 	call AdvanceFrame ; $4b58
 	ld hl, wWindowShadowTilemap ; $4b5b
 	ld de, vBGMap1 ; $4b5e
-	ld c, $08 ; $4b61
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4b61
 	call QueueVRAMCopy ; $4b63
 	ld hl, wWindowShadowAttrmap ; $4b66
 	ld de, vBGMap1 + VRAM_BANK1 ; $4b69
-	ld c, $08 ; $4b6c
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4b6c
 	call QueueVRAMCopy ; $4b6e
 	ld hl, Palettes_6b_03 ; $4b71
 	ld_bg_pals de, 1, 7 ; $4b74

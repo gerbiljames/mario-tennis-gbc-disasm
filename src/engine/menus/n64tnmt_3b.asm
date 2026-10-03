@@ -317,29 +317,29 @@ DrawEmptyTrophyCell:
 FlushN64TnmtWindowToVram:
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $508d
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH ; $5090
-	ld c, $08 ; $5093
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $5093
 	call QueueVRAMCopy ; $5095
 	ld hl, wShadowAttrmap + 5 * TILEMAP_WIDTH ; $5098
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH + VRAM_BANK1 ; $509b
-	ld c, $08 ; $509e
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $509e
 	call QueueVRAMCopy ; $50a0
 	call AdvanceFrame ; $50a3
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $50a6
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $50a9
-	ld c, $08 ; $50ac
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $50ac
 	call QueueVRAMCopy ; $50ae
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $50b1
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $50b4
-	ld c, $08 ; $50b7
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $50b7
 	call QueueVRAMCopy ; $50b9
 	call AdvanceFrame ; $50bc
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $50bf
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH ; $50c2
-	ld c, $08 ; $50c5
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $50c5
 	call QueueVRAMCopy ; $50c7
 	ld hl, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $50ca
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH + VRAM_BANK1 ; $50cd
-	ld c, $08 ; $50d0
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $50d0
 	call QueueVRAMCopy ; $50d2
 	ret ; $50d5
 N64TnmtScrollArrowsTask:

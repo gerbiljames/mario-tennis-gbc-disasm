@@ -86,11 +86,11 @@ UploadExpScreenTilemapRows:
 	wram_bank WRAM_SCREEN ; $734b
 	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $7351
 	ld de, vBGMap0 + 1 * TILEMAP_WIDTH ; $7354
-	ld c, $16 ; $7357
+	ld c, 11 * TILEMAP_WIDTH / 16 ; $7357
 	call QueueVRAMCopy ; $7359
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $735c
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH ; $735f
-	ld c, $04 ; $7362
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $7362
 	call QueueVRAMCopy ; $7364
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $7367
 	ld de, vBGMap0 + 16 * TILEMAP_WIDTH ; $736a

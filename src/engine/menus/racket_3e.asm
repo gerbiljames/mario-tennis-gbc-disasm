@@ -458,11 +458,11 @@ RedrawRacketShoesChoiceMenu:
 	call DrawRacketShoesChoiceCaption ; $501e
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $5021
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $5024
-	ld c, $06 ; $5027
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $5027
 	call QueueVRAMCopy ; $5029
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $502c
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $502f
-	ld c, $04 ; $5032
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $5032
 	call QueueVRAMCopy ; $5034
 	ret ; $5037
 SetRacketShoesChoicePalette:

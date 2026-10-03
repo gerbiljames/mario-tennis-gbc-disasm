@@ -27,21 +27,21 @@ ClearPlayerSlotPortrait:
 	jr nc, .slot0 ; $55d9
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $55db
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $55de
-	ld c, $04 ; $55e1
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $55e1
 	call QueueVRAMCopy ; $55e3
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $55e6
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $55e9
-	ld c, $04 ; $55ec
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $55ec
 	call QueueVRAMCopy ; $55ee
 	jr .done ; $55f1
 .slot0:
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $55f3
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $55f6
-	ld c, $04 ; $55f9
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $55f9
 	call QueueVRAMCopy ; $55fb
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $55fe
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $5601
-	ld c, $04 ; $5604
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $5604
 	call QueueVRAMCopy ; $5606
 .done:
 	ret ; $5609
@@ -102,21 +102,21 @@ DrawPlayerSlotPortrait:
 	jr nc, .slot0 ; $5641
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $5643
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $5646
-	ld c, $04 ; $5649
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $5649
 	call QueueVRAMCopy ; $564b
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $564e
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $5651
-	ld c, $04 ; $5654
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $5654
 	call QueueVRAMCopy ; $5656
 	jr .done ; $5659
 .slot0:
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $565b
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $565e
-	ld c, $04 ; $5661
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $5661
 	call QueueVRAMCopy ; $5663
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $5666
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $5669
-	ld c, $04 ; $566c
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $566c
 	call QueueVRAMCopy ; $566e
 .done:
 	ret ; $5671
@@ -360,11 +360,11 @@ RefreshCharInfoPanel:
 .done:
 	ld hl, wShadowTilemap + 12 * TILEMAP_WIDTH ; $57b7
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $57ba
-	ld c, $0a ; $57bd
+	ld c, 5 * TILEMAP_WIDTH / 16 ; $57bd
 	call QueueVRAMCopy ; $57bf
 	ld hl, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $57c2
 	ld de, vBGMap0 + 16 * TILEMAP_WIDTH + VRAM_BANK1 ; $57c5
-	ld c, $02 ; $57c8
+	ld c, TILEMAP_WIDTH / 16 ; $57c8
 	call QueueVRAMCopy ; $57ca
 	pop_wram_bank ; $57cd
 	pop hl ; $57d2

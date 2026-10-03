@@ -97,7 +97,7 @@ Unused_18_InitConfirmScreen:
 	call QueueVRAMCopy ; $5302
 	ld hl, wTextTileBuffer ; $5305
 	ld de, vTiles1 + VRAM_BANK1 ; $5308
-	ld c, $80 ; $530b
+	ld c, wTextTileBuffer_SIZE / 16 ; $530b
 	call QueueVRAMCopy ; $530d
 	ld hl, ConfirmScreenPalette0 ; $5310
 	ld_bg_pals de, 0, 8 ; $5313

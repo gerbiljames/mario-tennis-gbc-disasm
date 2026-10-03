@@ -412,29 +412,29 @@ RedrawMinigameDataRows:
 FlushMinigameDataRowsToVram:
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $75b8
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $75bb
-	ld c, $08 ; $75be
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $75be
 	call QueueVRAMCopy ; $75c0
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $75c3
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $75c6
-	ld c, $08 ; $75c9
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $75c9
 	call QueueVRAMCopy ; $75cb
 	call AdvanceFrame ; $75ce
 	ld hl, wShadowTilemap + 10 * TILEMAP_WIDTH ; $75d1
 	ld de, vBGMap0 + 10 * TILEMAP_WIDTH ; $75d4
-	ld c, $08 ; $75d7
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $75d7
 	call QueueVRAMCopy ; $75d9
 	ld hl, wShadowAttrmap + 10 * TILEMAP_WIDTH ; $75dc
 	ld de, vBGMap0 + 10 * TILEMAP_WIDTH + VRAM_BANK1 ; $75df
-	ld c, $08 ; $75e2
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $75e2
 	call QueueVRAMCopy ; $75e4
 	call AdvanceFrame ; $75e7
 	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH ; $75ea
 	ld de, vBGMap0 + 14 * TILEMAP_WIDTH ; $75ed
-	ld c, $04 ; $75f0
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $75f0
 	call QueueVRAMCopy ; $75f2
 	ld hl, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $75f5
 	ld de, vBGMap0 + 14 * TILEMAP_WIDTH + VRAM_BANK1 ; $75f8
-	ld c, $04 ; $75fb
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $75fb
 	call QueueVRAMCopy ; $75fd
 	call AdvanceFrame ; $7600
 	ret ; $7603

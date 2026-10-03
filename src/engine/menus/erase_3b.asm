@@ -504,15 +504,15 @@ DrawEraseSavedDataGrid:
 	call DrawEraseSavedDataCaption ; $7066
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $7069
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $706c
-	ld c, $06 ; $706f
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $706f
 	call QueueVRAMCopy ; $7071
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $7074
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $7077
-	ld c, $06 ; $707a
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $707a
 	call QueueVRAMCopy ; $707c
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $707f
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $7082
-	ld c, $04 ; $7085
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $7085
 	call QueueVRAMCopy ; $7087
 	ret ; $708a
 FillEraseSavedDataCell:

@@ -218,7 +218,7 @@ ClearBriefingCaptionTilemap:
 QueueCaptionRowToVRAM:
 	ld hl, wShadowTilemap + 11 * TILEMAP_WIDTH ; $49f9
 	ld de, vBGMap0 + 11 * TILEMAP_WIDTH ; $49fc
-	ld c, $0c ; $49ff
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $49ff
 	call QueueVRAMCopy ; $4a01
 	ret ; $4a04
 Unused_17_StubRet:
@@ -269,7 +269,7 @@ RestoreDiagramServiceBoxes:
 QueueDiagramServiceBoxesToVRAM:
 	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $4a48
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $4a4b
-	ld c, $0c ; $4a4e
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $4a4e
 	call QueueVRAMCopy ; $4a50
 	ret ; $4a53
 DrawDiagramTargetPatch:
