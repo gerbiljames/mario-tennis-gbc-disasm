@@ -639,16 +639,26 @@ A type below `$1e` takes `bit 7, a / jr nz, .done`, which jumps past the
 pop de / pop bc` each take the wrong word, and `ret` jumps to the value `bc` held
 on entry. `ShowSpeakerDialogue` loads `b` with `$08` just before the call, so
 control lands somewhere in ROM0 `$08xx`, inside `Unused_00_CopyMapToScrollBuffers`, and runs
-on from there. In the shipped layout that wild path happens to unwind back into
-the dialogue, so the line is spoken normally. A build whose ROM0 has moved even
-three bytes crashes instead. Seen when the partner speaks in the awards
-ceremony (location `$1a`, entry 11).
+on from there. Seen when the partner speaks in the awards ceremony (location
+`$1a`, entry 11), where `bc` is `$0880`: the operand of a `ld c, $20`, which
+runs as `jr nz` into `Unused_00_CopyMapRows32To64`'s fill. From there each
+`ret` pops one of `ShowSpeakerDialogue`'s saved registers as an address
+(`$0520`, `$0297`, `$0280`, `$0220`, `$2897`): fragments of
+`QueueBGTileWrite`, `LoadOBJPaletteData`, `LoadBGPaletteData`,
+`CopyDataFromBank` and `SerialHandler`. On the way the code writes the MBC's
+RAM-enable and ROM-bank registers and one byte of BG palette RAM, then the
+`SerialHandler` tail unwinds the stack past `ShowSpeakerDialogue`. Played
+without breakpoints next to the fixed build, the original never opens the
+dialogue box. The partner's "Way to go, Alex! Congratulations" is skipped,
+and the scene carries on. A build whose ROM0 has moved even three bytes
+crashes instead.
 
 **Fix** (`make FIXES=1`): the early exit jumps to a `.restoreBank` label
 before `pop_wram_bank`, so the stack is balanced on every path. The event test played the
 fixed build against the original over every story state and location: the
 original took the wild return at the awards ceremony (location `$1a`, entry
-11) in 19 states, and the fixed build ran every one of them through.
+11) in 19 states, and the fixed build ran every one of them through and
+showed the line.
 
 ### Map reads off the edge have no bounds check
 

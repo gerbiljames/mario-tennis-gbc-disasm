@@ -388,14 +388,16 @@ class Game:
             self.pb.tick(1, False)
             ticks += 1
             self.progress += 1
+            # before the crash check: PC parked past a breakpoint can sit on
+            # an operand byte that reads as an illegal opcode
+            if self.pc_fix is not None:
+                self.rf.PC, self.pc_fix, self.refire = self.pc_fix, None, (None, 0)
             crash = crashed(self)
             if crash:
                 self.crash = crash
                 break
             while pending and self.lf >= pending[0][0]:
                 pending.pop(0)[1]()
-            if self.pc_fix is not None:
-                self.rf.PC, self.pc_fix, self.refire = self.pc_fix, None, (None, 0)
             for point in self.spent:
                 self.pb.hook_deregister(*point)
             self.removed += self.spent
