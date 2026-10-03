@@ -4029,7 +4029,7 @@ w4ClearStatusResultCode:: db
 	ds 144
 NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
-; [bank 5] Buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
+; [NUL-terminated string] Bank 5 buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
 w4TextArgFetchBuffer:: db
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
@@ -4267,7 +4267,7 @@ w5ClearStatusResultCode:: db
 	ds 144
 NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
-; [bank 5] Buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
+; [NUL-terminated string] Bank 5 buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
 w5TextArgFetchBuffer:: db
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
@@ -4505,7 +4505,7 @@ w6ClearStatusResultCode:: db
 	ds 144
 NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
-; [bank 5] Buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
+; [NUL-terminated string] Bank 5 buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
 w6TextArgFetchBuffer:: db
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
@@ -4743,7 +4743,7 @@ w7ClearStatusResultCode:: db
 	ds 144
 NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
-; [bank 5] Buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
+; [NUL-terminated string] Bank 5 buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
 w7TextArgFetchBuffer:: db
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)

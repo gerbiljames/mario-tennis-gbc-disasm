@@ -271,9 +271,10 @@ buffer to VRAM. The court-select screen (`$3e:$5d6e`-`$5dc8`) asks for 18 tiles
 of 16-tile streams (20 of Gfx4's 18), the minigame menu (`$3b:$63b9`) 18 of
 `SharedMenuGfx111`'s 16, and the intro (`$6b:$60b3`) 4 of `IntroGfx6`'s 2, so
 each copy brings two stale tiles from the buffer. In the court-select chain
-the next load overwrites them; the last loads leave them at tiles `$72`-`$73`
-(VRAM bank 1) and `$50`-`$51`, the minigame menu at `$60`-`$61`, the intro at
-`$4a`-`$4b`. Each copy's source note gives the counts.
+later loads overwrite them except at `$50`-`$51`; the minigame menu leaves them
+at `$60`-`$61`, the intro at `$4a`-`$4b` (VRAM bank 1). Nothing draws those
+tiles while they hold the stale data (checked in play), so it is harmless.
+Each copy's source note gives the counts.
 
 ### The SRAM text fetch copies more than its buffers hold
 

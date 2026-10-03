@@ -69,7 +69,7 @@ def wCharPosX equ $df00
 ; [8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled; Continue and cancel skip to the result code. The menu's state lives in WRAM bank $05 over the idle far-P1 character struct, cleared on entry
 def wClearStatusMode equ $df00
 
-; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
+; [NUL-terminated string] Bank 5 scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 def wTextArgFetchBuffer equ $df00
 
 ; [8-bit] 0 singles, 1 doubles, copied from FLAG_DOUBLES when Set is chosen; picks the rank list and result-code row

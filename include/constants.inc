@@ -957,9 +957,9 @@ def BGM_WALL_PRACTICE        equ $1f ; the Wall Practice Room's drill_defs
 def BGM_PRACTICE_MATCH       equ $20 ; the story practice matches (GAMEMODE_PRACTICE_MATCH rows of the match settings tables)
 def BGM_JUNIOR_RANKING       equ $21 ; the Junior class ranking matches (hard court)
 def BGM_SENIOR_RANKING       equ $22 ; MatchSettingsTable records 6-9; reused by the intro character showcase and the trophy cheat screen
+def BGM_VARSITY_RANKING      equ $23 ; the Varsity ranking matches (composition court)
 def BGM_DRILL_MATCH          equ $24 ; the match drills' drill_def (COURT_TRAINING_MATCH)
 def BGM_DRILL_PRACTICE       equ $25 ; the practice drills' drill_def (COURT_TRAINING_PRACTICE)
-def BGM_VARSITY_RANKING      equ $23 ; the Varsity ranking matches (composition court)
 def BGM_ISLAND_OPEN          equ $26 ; the Island Open's early rounds
 def BGM_ISLAND_OPEN_SEMIFINAL equ $27
 def BGM_ISLAND_OPEN_FINAL    equ $28 ; on the Center Court
