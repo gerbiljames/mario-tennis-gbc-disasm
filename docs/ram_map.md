@@ -1,7 +1,7 @@
 # RAM map
 
 Cartridge SRAM is `$a000`-`$bfff`, WRAM `$c000`-`$dfff` (banks 1-7 at
-`$d000`), HRAM `$ff80`-`$fffe`. Every symbol is declared in `ram/wram.asm`,
+`$d000`), HRAM `$ff80`-`$fffe`. Every symbol is declared in `ram/wram/`,
 `ram/hram.asm` or `ram/sram.asm`, or as an EQU in `include/ram_mirrored.inc`,
 and its comment there is the per-address note: size, meaning, writers and
 readers, and the value lists (locations, BGM ids, game modes, courts,
@@ -101,7 +101,7 @@ summary, since a bank is 4 KiB of overlapping claims (bank `$03` alone has
 117 symbols across 28 variants):
 
 ```
-; WRAMX bank 2 at a glance (ram/wram.asm):
+; WRAMX bank 2 at a glance (ram/wram/):
 ;
 ;   $d000-$dfff  5 overlays: N64 block presence probe / match court planes / overworld scroll buffers / +2 more
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]
@@ -129,7 +129,7 @@ ladders at `$6063`/`$4ff5` indexed by `wOnCourtCharCountMinus1`:
 
 The fields are the untagged `wChar*` EQUs in `include/ram_mirrored.inc`
 (used where the WRAM bank is 4-7 or inside match banks `$07`/`$08`), with
-`w4Char*`...`w7Char*` in `ram/wram.asm` for the symbol file;
+`w4Char*`...`w7Char*` in `ram/wram/` for the symbol file;
 `docs/match_engine.md` describes them. Other WRAM banks reuse `$dfxx` for
 unrelated data (bank `$38`'s non-char accesses stay numeric; the menu banks'
 text-arg scratch at `$df00` is `wTextArgFetchBuffer`). The main fields:

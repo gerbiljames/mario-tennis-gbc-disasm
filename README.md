@@ -76,8 +76,8 @@ strings, the 315 sound-channel scripts) stays in `data/`.
   include order, so fragments can be edited, split or moved without touching
   the bytes. Data is structured source, a generated `INCLUDE` from `data/`
   (text, palettes, sound tables), or an `INCBIN` of a named blob.
-- `ram/` -- RAM declarations (`wram.asm`, `hram.asm`, `sram.asm`), with a
-  note on every symbol.
+- `ram/` -- RAM declarations, with a note on every symbol: `wram/` (one file
+  per WRAMX bank, WRAM0 split by address range), `hram.asm`, `sram.asm`.
 - `include/` -- hardware (`hardware.inc`, CC0), macros, constants, flags,
   text ids and codes, actor roles, mirrored RAM.
 - `data.manifest` -- the offset/length/spec list `tools/extract.py` slices

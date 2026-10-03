@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Which RAM bytes nothing names or addresses.
 
-Walks `ram/wram.asm` and `ram/hram.asm` the way the assembler does --
+Walks `ram/wram.asm` (and the per-bank files it includes) and `ram/hram.asm` the way the assembler does --
 sections, unions, every `db`/`dw`/`ds` -- and reports the bytes no symbol
 covers (an anonymous `ds` gap, or the tail of a bank after its last
 declaration), minus any address a raw literal in `src/` still refers to.
@@ -38,6 +38,15 @@ def _num(s):
     return int(s[1:], 16) if s.startswith("$") else int(s)
 
 
+def _expand(path):
+    """The file's lines with its `INCLUDE "ram/..."` lines expanded in place."""
+    out = []
+    for line in path.read_text().splitlines():
+        m = re.match(r'^INCLUDE "(ram/[^"]+)"', line)
+        out += _expand(ROOT / m.group(1)) if m else [line]
+    return out
+
+
 def named_bytes():
     """{(space, bank): set(addresses a symbol covers)}; space 'w' or 'h'."""
     named = {}
@@ -45,7 +54,7 @@ def named_bytes():
         space = bank = base = None
         addr = 0
         union = []          # stack of (start, max_end)
-        for line in (ROOT / "ram" / fn).read_text().splitlines():
+        for line in _expand(ROOT / "ram" / fn):
             line = line.rstrip()
             m = _SECTION_RE.match(line)
             if m:

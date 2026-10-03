@@ -16,7 +16,7 @@ ROM     := mariotennis.gbc
 ASDEFS  :=
 endif
 OBJS    := $(BUILD)/main.o $(BUILD)/ram.o
-RAM_SRCS := ram.asm $(wildcard ram/*.asm)
+RAM_SRCS := ram.asm $(wildcard ram/*.asm ram/*/*.asm)
 
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 

@@ -585,7 +585,7 @@ everything in both arcs, granted on the completing match;
 A story match writes a big-endian id to `wCurrentMinigameStoryMatch`
 (`$c8f6`) and calls `LoadMatchSettingsFromTable` (the `load_match_settings`
 macro). High byte = category (0 singles, 1 doubles, 2 minigame/training), low
-byte = match; the `wCurrentMinigameStoryMatch` note in `ram/wram.asm` lists them all.
+byte = match; the `wCurrentMinigameStoryMatch` note in `ram/wram/` lists them all.
 
 `LoadMatchSettingsFromTable` (`$0a:$4a5c`) indexes
 `SinglesMatchSettingsTable_0a` (`$0a:$4ab2`) or `DoublesMatchSettingsTable_0a`
@@ -658,7 +658,7 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$3c | equipment: low nibble racket, high nibble shoes |
 | +$3d-$3f | never written or read |
 
-`ram/wram.asm` names `+$18` `wStoryModeMainCharacterLevel` at `$c818` but
+`ram/wram/` names `+$18` `wStoryModeMainCharacterLevel` at `$c818` but
 `wStoryMainCharExpTier` at `$c918`; for player characters the byte is a
 level, and `LookupExpTierForChar` (`$1e:$693e`,
 `src/engine/menus/exp/award_calc_1e.asm`) derives the coarse 0-6 tier from it.
@@ -744,7 +744,7 @@ The image `$c800`-`$caff` is saved as block `2N` for slot *N* plus a backup at
 The working set is `$c280`-`$c2ff` (WRAM bank 0), plus the actor array (bank
 `$04`) and the two maps (bank `$06`). `$c280`-`$c285` is the copied location
 header and `$c286`-`$c293` the `map_tree` pointers (above). Per-address
-notes are in `ram/wram.asm`.
+notes are in `ram/wram/`.
 
 Other addresses: `$c295` `wStoryModeEntryPoint`, `$c296`
 `wStoryModeSpawnPosition` (5 bytes), `$c29c` `wStoryArrivalScript`, `$c2c0`

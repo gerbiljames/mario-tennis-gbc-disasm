@@ -1341,7 +1341,7 @@ near-perfect AI: 4-frame reaction delays, zero tracking latency, aim-away chance
 
 ## WRAM state you will need
 
-Per-address detail is in `ram/wram.asm`; the per-character struct is
+Per-address detail is in `ram/wram/`; the per-character struct is
 [above](#one-struct-per-wram-bank) and in `include/ram_mirrored.inc`. Working
 set, less addresses already given in the text:
 

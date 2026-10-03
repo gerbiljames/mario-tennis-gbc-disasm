@@ -27,7 +27,7 @@ sound-driver variant of the shared `$ffd0` union in `ram/hram.asm` (its names
 apply in `$3373`-`$3dd3`); `RunSoundEngine` (`$3373`) saves and restores the
 sprite-queue bytes it overlaps. The per-pass globals (`wSndActiveMask` …
 `wSndWaveReloadPending`, `$d208`-`$d219`) follow the channel blocks in
-`ram/wram.asm`. Each field's meaning is its declaration's comment there;
+`ram/wram/`. Each field's meaning is its declaration's comment there;
 `wSndChannelType` holds `SNDCHANTYPE_SQUARE1`/`SQUARE2`/`WAVE`/`NOISE`, which
 is the hardware channel, since `wSndRegBase` is type × 5 and
 `WriteChannelReg` writes `$ff10` + that + the register.

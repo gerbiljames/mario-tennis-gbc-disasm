@@ -1,5 +1,5 @@
 ; --- Match object slot fields ---
-; Offsets into one 16-byte wObjSlot record (ram/wram.asm has the full
+; Offsets into one 16-byte wObjSlot record (ram/wram/ has the full
 ; description), which the bank $09 object engine reaches with the slot in bc.
 def OBJSLOT_SIZE            equ $10
 def OBJSLOT_ID              equ $00 ; $ff = free

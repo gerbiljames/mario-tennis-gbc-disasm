@@ -330,7 +330,7 @@ decompressed 32-wide map: four 512-byte chunks from `wDecompBuffer` (WRAM bank
 (`$00:$07dd`, 32 source bytes then 32 zeros per row, 16 rows per call). The
 second and fourth expansions are immediately cleared — `ClearMemory16`,
 `c = $80`, over `wMapScrollPlane1` (`$08b3`) and `wScreenScratch` (`$08fb`) — so
-two of the four are wasted (noted on `wMapScrollPlane1` in `ram/wram.asm`).
+two of the four are wasted (noted on `wMapScrollPlane1` in `ram/wram/`).
 
 ### 3.6 Undoing a draw
 
@@ -942,7 +942,7 @@ Framework-wide addresses not given above; `ram/*.asm` is authoritative.
 | `$cb01`-`$cb03` | `wRasterScrollX`, `wRasterScrollStartLY`, `wRasterScrollEndLY` | LCD-STAT split scroll |
 | `$cb04`-`$cb08` | `wMenuCursorX/Y`, `wMenuCursor2X/Y`, `wMenuCursorLockFlags` | menu cursors |
 
-Banked WRAM (union variants in `ram/wram.asm`; detail in
+Banked WRAM (union variants in `ram/wram/`; detail in
 its notes and `include/ram_mirrored.inc`):
 
 | bank | `$d000` | `$d400` | `$d800`+ |

@@ -81,7 +81,7 @@ def vBGMap1 equ $9c00
 ; Nothing checks the fetched address: the code relies on never selecting it.
 def NO_BOX equ $0000
 
-; --- WRAM banks (wram_bank / push_wram_bank; the "at a glance" notes in ram/wram.asm) ---
+; --- WRAM banks (wram_bank / push_wram_bank; the "at a glance" notes in ram/wram/) ---
 ; Banks 1-3 and 5-7 each have one main owner; 4-7 also hold the four
 ; on-court character structs at $df00, one per wCharIndex, which the match
 ; engine selects with WRAM_CHARn. Same numbers, different use.
