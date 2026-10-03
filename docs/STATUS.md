@@ -84,19 +84,16 @@ reviewed verdict (`docs/unused_code.md`). Nothing the analysis can reach is
 
 **Behaviour.** The event test compares a shifted build with the original
 over every story state and location, the menu sessions and every target
-without a difference (2026-10-03: 11.25 million events, 16 at a different
-logic frame). It counts crashes separately from differences and groups them by
-location: 31 crash in both builds (12 at Test2, 19 at the awards ceremony)
-and one in the padded build only, all of two kinds, neither a layout fault: the Test2 debug screens' glyph underrun, and
-`GetSpeakerVoice`'s wild return at the awards ceremony (location `$1a`,
-entry 11), which the test cuts at its taint but which then crashes under
-the test's breakpoints in one or both builds, and which `make FIXES=1`
-removes. The game enters that scene only in doubles, where the original
-rejoins the dialogue; the test's 19 crashes there come from singles states
-forced into the doubles-only entry, where the original skips the line, turns
-later dialogue boxes red and crashes about 650 frames on. The illegal opcode once reported at End8 Sr. Court was the test's
-own: it checked for a crash while a breakpoint workaround had PC parked on
-an operand byte. `docs/bugs.md` lists the shipped defects found along the way.
+without a difference (2026-10-03: 11.2 million events, none at a different
+logic frame). It sets apart the entry points it enters in a mode the game
+never uses there (`FORCED` in `tools/eventtest.py`: the awards ceremony's
+singles and doubles entries): 36 such runs, 20 of them crashing at the
+doubles-only entry from a singles state, where `GetSpeakerVoice`'s wild
+return goes off the rails instead of rejoining the dialogue as it does in
+doubles; `make FIXES=1` removes it. Of the rest, the only crashes are 12 on
+the Test2 debug screens, the glyph underrun. The illegal opcode once
+reported at End8 Sr. Court was the test's own: it checked for a crash while
+a breakpoint workaround had PC parked on an operand byte. `docs/bugs.md` lists the shipped defects found along the way.
 
 **Named in the docs as not established.**
 * `docs/graphics_formats.md` §8 holds two items, both about the developers'

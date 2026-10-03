@@ -82,6 +82,12 @@ BUTTONS = {"a": 0x01, "b": 0x02, "select": 0x04, "start": 0x08, "right": 0x10, "
 # AdvanceRandomSeed call.
 # Original-game paths whose outcome depends on where code sits (docs/bugs.md):
 # a run that takes one logs a taint and is compared only up to it.
+# (location, entry) -> (doubles, why): entry points the game only uses in
+# singles (False) or doubles (True). The sweep still enters them from every
+# state, but what happens there in the other mode is reported apart, as a
+# combination the game never makes.
+FORCED = {(0x1a, 0x0a): (False, "IslandSkyInitScript_14 sends singles here"),
+          (0x1a, 0x0b): (True, "IslandSkyInitScript_14 sends doubles here")}
 TAINTS = [("GetSpeakerVoice", 0x60b1, lambda g: g.rf.A & 0x80, "GetSpeakerVoice stack slip"),
           ("CourtyardEntryWalkIn_13", 0x62ff,
            lambda g: g.mem[g.sym["wStoryModeEntryPoint"][1]] > 6, "Courtyard walk-in over-read"),
@@ -1013,7 +1019,7 @@ def main():
                 f"location {locs[b][0]:#04x} entry {entry}")
 
     bad, unsure, crashes, events, shifted, tainted, dropouts, both = [], [], [], 0, 0, 0, 0, 0
-    shared = {}
+    shared, forced, forced_ran = {}, [], 0
 
     def crash_text(c):
         return "ran" if not c else (f"crashed ({c['why']}, PC ${c['pc']:04x}, SP ${c['sp']:04x}) "
@@ -1025,6 +1031,14 @@ def main():
                                            f"rom {b if isinstance(b, str) else 'ran'}"))
                 continue
             for x, y in zip(a, b):
+                rule = FORCED.get((locs[unit[2]][0], x["entry"])) if unit[0] == "story" else None
+                if rule and rule[0] != bool(states()[unit[1]][0]):
+                    if x.get("crash") or y.get("crash"):
+                        forced.append((unit, x["entry"], f"base {crash_text(x.get('crash'))}, "
+                                                         f"rom {crash_text(y.get('crash'))} ({rule[1]})"))
+                    else:
+                        forced_ran += 1
+                    continue
                 if x.get("crash") or y.get("crash"):
                     # the game itself went wrong: expected of both builds, a
                     # finding (not a layout fault) when only one does
@@ -1050,10 +1064,14 @@ def main():
           f"{shifted} at a different logic frame, {dropouts} hook dropouts stepped over, "
           f"{tainted} entries cut at a known "
           f"layout-dependent path, {both} entries where the game crashed in both builds, "
-          f"{len(crashes)} where it crashed in one, {len(unsure)} chunks inconclusive (PyBoy wedged)")
+          f"{len(crashes)} where it crashed in one, {len(unsure)} chunks inconclusive (PyBoy wedged); "
+          f"{forced_ran + len(forced)} entries in a combination the game never makes (FORCED), "
+          f"{len(forced)} of them crashing, set apart")
     for label, rows in (("differs", bad), ("crashed", crashes), ("inconclusive", unsure)):
         for unit, entry, what in rows:
             print(f"    {label}: {where(unit, entry)}: {what}")
+    if forced:
+        print(f"    forced, crashed: {len(forced)}x, e.g. {where(forced[0][0], forced[0][1])}: {forced[0][2]}")
     for key, rows in sorted(shared.items(), key=lambda kv: -len(kv[1])):
         whys = sorted({f"{c['why']} at ${c['pc']:04x}" for _, _, c in rows})
         print(f"    crashed in both, {len(rows)}x at {where(rows[0][0], rows[0][1]).split(', ', 1)[-1]}: "
