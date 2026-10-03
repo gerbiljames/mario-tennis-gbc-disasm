@@ -41,7 +41,9 @@ Timing-only differences are counted, not failed. A run where the game
 itself crashes -- the stack leaves RAM, or it runs RAM or an opcode the CPU
 does not have, caught after a frame or by a watchdog when PyBoy stops
 returning -- is counted when both builds crash and listed when only one
-does, and its events are kept out of the coverage.
+does, and its events are kept out of the coverage. An entry point the game
+only uses in singles or in doubles (FORCED) is still entered from every
+state, but what it does in the other mode is reported apart.
 """
 import argparse
 import atexit

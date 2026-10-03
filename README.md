@@ -352,7 +352,8 @@ of the ROM was reached.
   padded and checks each changed byte is a label reference that moved;
   `--out` keeps the padded ROM and its .sym.
 - `tools/eventtest.py` (`make event-test`) — plays the padded and original
-  builds through every story state and location under the same inputs;
+  builds through every story state and location under the same inputs,
+  reporting apart the entry points it enters in a mode the game never uses;
   `--free`, `--targets` and `--handlers` add main-menu, targeted-start and
   per-handler sessions, and `--coverage` and `--units` record the routines
   entered (read by `tools/coverage.py` and `tools/steer.py`).
