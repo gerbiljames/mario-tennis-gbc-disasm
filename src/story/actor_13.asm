@@ -18,7 +18,7 @@ CourtyardEntryWalkIn_13:
 	jp z, .done ; $6304
 	test_flag FLAG_DOUBLES ; $6307
 	jr z, .walkOff ; $630a
-	script_set_speed ACTOR_PARTNER, $00ff ; $630c
+	script_set_speed ACTOR_PARTNER, 7.96875 ; $630c
 	ld a, [wStoryModeEntryPoint] ; $6314
 	dec a ; $6317
 	ld_hl_indexed CourtyardEntryWalkInFacings_13 + 3 ; $6318
@@ -35,9 +35,9 @@ CourtyardEntryWalkIn_13:
 	ld a, $02 ; $633a
 	ld b, b ; $633c
 	farcall SetActorFacing ; $633d
-	script_set_speed ACTOR_PARTNER, $0010 ; $6340
+	script_set_speed ACTOR_PARTNER, 0.5 ; $6340
 .walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $6348
+	script_set_speed ACTOR_PLAYER, 0.5 ; $6348
 	ld a, [wStoryModeEntryPoint] ; $6350
 	dec a ; $6353
 	ld_hl_indexed CourtyardEntryWalkInFacings_13 ; $6354
@@ -81,10 +81,10 @@ VarsityCourtTourCutscene:
 	script_set_text Text_30_518 ; $6425
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $642b
 	script_wait_frames 15 ; $6430
-	script_player_speed $0040 ; $6437
+	script_player_speed 2.0 ; $6437
 	script_move_player 34.0, 29.0 ; $643d
 	farcall WaitPlayerMoveDone ; $6447
-	script_player_speed $0020 ; $644a
+	script_player_speed 1.0 ; $644a
 	script_set_position ACTOR_VARSITY_COURT_TOUR_BALLOON_QUESTION, 33.0, 29.0 ; $6450
 	sound SFX_EMOTE ; $645b
 	script_wait_frames 50 ; $645d
@@ -98,10 +98,10 @@ VarsityCourtTourCutscene:
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6495
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_LEFT ; $649a
 	script_wait_frames 15 ; $64a1
-	script_player_speed $0040 ; $64a8
+	script_player_speed 2.0 ; $64a8
 	script_move_player 12.0, 22.0 ; $64ae
 	farcall WaitPlayerMoveDone ; $64b8
-	script_player_speed $0020 ; $64bb
+	script_player_speed 1.0 ; $64bb
 	script_wait_frames 60 ; $64c1
 	script_move_player 12.0, 34.0 ; $64c8
 	farcall WaitPlayerMoveDone ; $64d2
@@ -110,10 +110,10 @@ VarsityCourtTourCutscene:
 	farcall WaitPlayerMoveDone ; $64e6
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $64e9
 	script_wait_frames 15 ; $64ee
-	script_player_speed $0040 ; $64f5
+	script_player_speed 2.0 ; $64f5
 	script_move_player 34.0, 29.0 ; $64fb
 	farcall WaitPlayerMoveDone ; $6505
-	script_player_speed $0020 ; $6508
+	script_player_speed 1.0 ; $6508
 	script_wait_frames 30 ; $650e
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_RIGHT ; $6515
 	script_wait_frames 15 ; $651c
@@ -126,10 +126,10 @@ VarsityCourtTourCutscene:
 	farcall WaitPlayerMoveDone ; $654d
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6550
 	script_wait_frames 15 ; $6555
-	script_player_speed $0040 ; $655c
+	script_player_speed 2.0 ; $655c
 	script_move_player 34.0, 29.0 ; $6562
 	farcall WaitPlayerMoveDone ; $656c
-	script_player_speed $0020 ; $656f
+	script_player_speed 1.0 ; $656f
 	script_wait_frames 15 ; $6575
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_DOWN ; $657c
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6583
@@ -317,7 +317,7 @@ SetupStoryMinigameMatch0:
 	script_null_script ACTOR_VARSITY_COURT_A_FAY ; $6a10
 	script_set_anim ACTOR_VARSITY_COURT_A_FAY, ANIM_WALK ; $6a15
 	script_null_script ACTOR_VARSITY_COURT_A_BETH ; $6a1c
-	script_set_speed ACTOR_VARSITY_COURT_A_BETH, $0018 ; $6a21
+	script_set_speed ACTOR_VARSITY_COURT_A_BETH, 0.75 ; $6a21
 	script_set_actor_script ACTOR_VARSITY_COURT_A_KEVIN, ActorScript_13_04 ; $6a29
 	script_set_actor_script ACTOR_VARSITY_COURT_A_CURT, ActorScript_13_06 ; $6a34
 	script_set_actor_script ACTOR_VARSITY_COURT_A_BETH, ActorScript_13_08 ; $6a3f
@@ -334,7 +334,7 @@ SetupStoryMinigameMatch0:
 SetupVarsityCourtDoublesMatch_13:
 	script_null_script ACTOR_VARSITY_COURT_B_FAY ; $6a89
 	script_null_script ACTOR_VARSITY_COURT_B_BETH ; $6a8e
-	script_set_speed ACTOR_VARSITY_COURT_B_BETH, $0018 ; $6a93
+	script_set_speed ACTOR_VARSITY_COURT_B_BETH, 0.75 ; $6a93
 	script_set_anim ACTOR_VARSITY_COURT_B_FAY, ANIM_WALK ; $6a9b
 	script_set_anim ACTOR_VARSITY_COURT_B_FAY, ANIM_NOD ; $6aa2
 	script_wait_idle ACTOR_VARSITY_COURT_B_FAY ; $6aa9

@@ -87,7 +87,7 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_07, 21.0, 21.0 ; $77ba
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_74_08, 27.0, 21.0 ; $77c5
 	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_74_08 ; $77d0
-	script_player_speed $0020 ; $77d5
+	script_player_speed 1.0 ; $77d5
 	script_move_player 24.0, 47.0 ; $77db
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_2, 24.0, 25.0 ; $77e5
 	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_2 ; $77f0

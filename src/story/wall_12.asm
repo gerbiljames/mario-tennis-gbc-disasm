@@ -48,7 +48,7 @@ DormEntranceTile01_12:
 	script_set_active ACTOR_PLAYER, $00 ; $411f
 	script_move_target ACTOR_PLAYER, 22.0, 9.0 ; $4126
 	script_wait_move ACTOR_PLAYER ; $4131
-	script_player_speed $0010 ; $4136
+	script_player_speed 0.5 ; $4136
 	script_move_player 22.0, 8.0 ; $413c
 	script_wait_frames 15 ; $4146
 	ld c, $04 ; $414d
@@ -73,10 +73,10 @@ DormEntranceInitScript_12:
 	call z, DormEntranceEntry0FScene ; $4175
 	ret ; $4178
 DormEntranceEntry0FScene:
-	script_set_speed ACTOR_DORM_ENTRANCE_EMILY, $0010 ; $4179
-	script_set_speed ACTOR_DORM_ENTRANCE_KATE, $0010 ; $4181
-	script_set_speed ACTOR_PLAYER, $0010 ; $4189
-	script_player_speed $0010 ; $4191
+	script_set_speed ACTOR_DORM_ENTRANCE_EMILY, 0.5 ; $4179
+	script_set_speed ACTOR_DORM_ENTRANCE_KATE, 0.5 ; $4181
+	script_set_speed ACTOR_PLAYER, 0.5 ; $4189
+	script_player_speed 0.5 ; $4191
 	script_set_position ACTOR_PLAYER, 22.0, 31.0 ; $4197
 	script_set_position ACTOR_DORM_ENTRANCE_EMILY, 22.0, 29.0 ; $41a2
 	script_face ACTOR_DORM_ENTRANCE_EMILY, FACE_UP ; $41ad
@@ -98,7 +98,7 @@ DormEntranceEntry0FScene:
 	script_wait_idle ACTOR_DORM_ENTRANCE_EMILY ; $4226
 	script_speak ACTOR_DORM_ENTRANCE_EMILY ; $422b
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4230
-	script_player_speed $0018 ; $4237
+	script_player_speed 0.75 ; $4237
 	script_move_player 22.0, 11.0 ; $423d
 	farcall WaitPlayerMoveDone ; $4247
 	script_wait_frames 20 ; $424a
@@ -115,7 +115,7 @@ DormEntranceEntry0FScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4297
 	script_wait_idle ACTOR_PLAYER ; $429e
 	script_wait_frames 20 ; $42a3
-	script_player_speed $0010 ; $42aa
+	script_player_speed 0.5 ; $42aa
 	script_set_position ACTOR_DORM_ENTRANCE_BALLOON_EXCLAIM, 23.5, 15.0 ; $42b0
 	sound SFX_CHIME ; $42bb
 	script_set_anim ACTOR_DORM_ENTRANCE_EMILY, ANIM_BOUNCE ; $42bd
@@ -554,7 +554,7 @@ WallPracticeMaxScoreScript:
 	script_wait_frames 5 ; $4977
 	and a ; $497e
 	jr z, RelaunchWallPracticeMasterLevel ; $497f
-	script_set_speed ACTOR_PLAYER, $0020 ; $4981
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4981
 	script_move_target ACTOR_PLAYER, 5.0, 49.0 ; $4989
 	script_wait_move ACTOR_PLAYER ; $4994
 	script_move_player 5.0, 55.0 ; $4999

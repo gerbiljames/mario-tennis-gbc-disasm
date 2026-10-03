@@ -99,7 +99,7 @@ AwardsCeremonyEntry0aScene:
 	script_face ACTOR_AWARDS_CEREMONY_A_COZ, FACE_UP ; $5795
 	ld a, 20 ; $579c
 	call DelayFrames ; $579e
-	script_player_speed $0018 ; $57a1
+	script_player_speed 0.75 ; $57a1
 	script_move_player 12.0, 19.0 ; $57a7
 	farcall WaitPlayerMoveDone ; $57b1
 	ld a, 30 ; $57b4
@@ -207,7 +207,7 @@ AwardsCeremonyEntry0bScene:
 	script_face ACTOR_AWARDS_CEREMONY_B_COZ, FACE_UP ; $59c2
 	ld a, 20 ; $59c9
 	call DelayFrames ; $59cb
-	script_player_speed $0018 ; $59ce
+	script_player_speed 0.75 ; $59ce
 	script_move_player 12.0, 19.0 ; $59d4
 	farcall WaitPlayerMoveDone ; $59de
 	ld a, 30 ; $59e1
@@ -288,7 +288,7 @@ AwardsCeremonyNpcScriptsDoubles_0f:
 	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_WALK_74_06, FACEMASK_ANY, $0000, Text_25_176, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 AwardsCeremonyArrivalIntro:
-	script_player_speed $00ff ; $5b4d
+	script_player_speed 7.96875 ; $5b4d
 	script_move_player 12.0, 11.0 ; $5b53
 	farcall WaitPlayerMoveDone ; $5b5d
 	xor a ; $5b60
@@ -301,7 +301,7 @@ AwardsCeremonyArrivalIntro:
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, ANIM_WALK ; $5b8b
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 7.0, 1.0 ; $5b92
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 15.0, 1.0 ; $5b9d
-	script_set_speed ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, $0020 ; $5ba8
+	script_set_speed ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 1.0 ; $5ba8
 	script_move_target ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 7.0, 5.0 ; $5bb0
 	script_wait_move ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5bbb
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, ANIM_SHAKE ; $5bc0
@@ -309,12 +309,12 @@ AwardsCeremonyArrivalIntro:
 	script_jump_velocity ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, $ff80 ; $5bcc
 	ld a, $13 ; $5bd4
 	farcall ScriptWaitActorJumpDone ; $5bd6
-	script_set_speed ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, $0020 ; $5bd9
+	script_set_speed ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 1.0 ; $5bd9
 	script_move_target ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 15.0, 7.5 ; $5be1
 	script_wait_move ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT ; $5bec
 	script_jump_velocity ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, $ff80 ; $5bf1
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, ANIM_BOUNCE ; $5bf9
-	script_player_speed $0010 ; $5c00
+	script_player_speed 0.5 ; $5c00
 	script_move_player_to_actor ACTOR_PLAYER ; $5c06
 	farcall WaitPlayerMoveDone ; $5c0d
 	ld a, 30 ; $5c10
@@ -441,7 +441,7 @@ AwardsCeremonySwapActors_0f:
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, 17.0, 19.0 ; $5f1b
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $5f26
 	script_unlock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $5f2b
-	script_set_speed ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, $0020 ; $5f32
+	script_set_speed ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, 1.0 ; $5f32
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, 17.0, 22.0 ; $5f3a
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_2 ; $5f45
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_2, FACE_UP ; $5f4a

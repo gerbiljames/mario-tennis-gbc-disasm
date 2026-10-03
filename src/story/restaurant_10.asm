@@ -627,7 +627,7 @@ RestaurantNpc08_10:
 	ld l, a ; $5dfb
 	farcall InitDialogueTextCursor ; $5dfc
 	script_speak ACTOR_RESTAURANT_WALK_71_06_1 ; $5dff
-	script_set_speed ACTOR_RESTAURANT_WALK_71_06_1, $0010 ; $5e04
+	script_set_speed ACTOR_RESTAURANT_WALK_71_06_1, 0.5 ; $5e04
 	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e0c
 	jr z, .altText ; $5e0f
 	script_jump_velocity ACTOR_PLAYER, $ff80 ; $5e11

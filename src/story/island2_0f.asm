@@ -102,7 +102,7 @@ IslandOpenRoundCallCutscene:
 	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_WALK_6F_07_2 ; $70c7
 	test_flag FLAG_DOUBLES ; $70cc
 	jp nz, .afterMatch ; $70cf
-	script_set_speed ACTOR_PLAYER, $0020 ; $70d2
+	script_set_speed ACTOR_PLAYER, 1.0 ; $70d2
 	script_face_pair ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ACTOR_PLAYER ; $70da
 	script_wait_frames 30 ; $70e2
 	script_face ACTOR_PLAYER, FACE_DOWN ; $70e9
@@ -170,8 +170,8 @@ IslandOpenRoundCallCutscene:
 	ret ; $722e
 .afterMatch:
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $722f
-	script_set_speed ACTOR_PLAYER, $0020 ; $7237
-	script_set_speed ACTOR_PARTNER, $0020 ; $723f
+	script_set_speed ACTOR_PLAYER, 1.0 ; $7237
+	script_set_speed ACTOR_PARTNER, 1.0 ; $723f
 	script_wait_frames 20 ; $7247
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $724e
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7255

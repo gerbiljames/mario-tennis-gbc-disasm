@@ -15,7 +15,7 @@ NetChallengerResultScene:
 	script_null_script ACTOR_PARTNER ; $5da3
 	script_set_position ACTOR_PARTNER, 45.0, 45.0 ; $5da8
 	script_face ACTOR_PARTNER, FACE_LEFT ; $5db3
-	script_player_speed $00f0 ; $5dba
+	script_player_speed 7.5 ; $5dba
 	script_move_player 40.0, 41.0 ; $5dc0
 	farcall WaitPlayerMoveDone ; $5dca
 	script_fade_in $08 ; $5dcd
@@ -55,7 +55,7 @@ StrokeChallengerResultScene:
 	script_null_script ACTOR_PARTNER ; $5e22
 	script_set_position ACTOR_PARTNER, 19.0, 45.0 ; $5e27
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5e32
-	script_player_speed $00f0 ; $5e39
+	script_player_speed 7.5 ; $5e39
 	script_move_player 24.0, 40.0 ; $5e3f
 	farcall WaitPlayerMoveDone ; $5e49
 	script_fade_in $08 ; $5e4c

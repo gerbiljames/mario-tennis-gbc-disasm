@@ -103,7 +103,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld [wStoryModeShowLocationName], a ; $6517
 	script_fade_in $04 ; $651a
 	call WaitFadeEnd ; $651f
-	script_player_speed $0006 ; $6522
+	script_player_speed 0.1875 ; $6522
 	script_move_player 5.0, 35.0 ; $6528
 	farcall WaitPlayerMoveDone ; $6532
 	script_wait_frames 50 ; $6535
@@ -395,7 +395,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wMapSceneStage], a ; $702f
 	dec h ; $7032
 	jr nz, .descend ; $7033
-	script_player_speed $0012 ; $7035
+	script_player_speed 0.5625 ; $7035
 	script_move_player 11.0, 24.0 ; $703b
 	ld h, $18 ; $7045
 .land:

@@ -262,7 +262,7 @@ MachineCourtResultScene:
 	script_fade_in $06 ; $42e5
 	call WaitFadeEnd ; $42ea
 	script_wait_frames 40 ; $42ed
-	script_set_speed ACTOR_PLAYER, $0020 ; $42f4
+	script_set_speed ACTOR_PLAYER, 1.0 ; $42f4
 	test_flag FLAG_DOUBLES ; $42fc
 	jr z, .clearShowLocationName ; $42ff
 .clearShowLocationName:
@@ -424,7 +424,7 @@ MachineCourtStartLevelScene:
 	script_null_script ACTOR_PARTNER ; $4505
 	script_set_actor_script ACTOR_PARTNER, ActorScript_14_0 ; $450a
 .walkOff:
-	script_set_speed ACTOR_PLAYER, $0020 ; $4515
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4515
 	script_move_player 56.0, 51.0 ; $451d
 	script_move_target ACTOR_PLAYER, 51.0, 43.0 ; $4527
 	script_wait_move ACTOR_PLAYER ; $4532
@@ -464,7 +464,7 @@ MachineCourtStartLevelScene:
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $45b9
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $45be
 	script_null_script ACTOR_PARTNER ; $45c5
-	script_set_speed ACTOR_PLAYER, $0020 ; $45ca
+	script_set_speed ACTOR_PLAYER, 1.0 ; $45ca
 	script_set_actor_script ACTOR_PARTNER, ActorScript_14_0 ; $45d2
 	script_move_target ACTOR_PLAYER, 49.0, 43.0 ; $45dd
 	script_wait_move ACTOR_PLAYER ; $45e8

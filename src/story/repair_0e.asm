@@ -459,7 +459,7 @@ RepairCounterReturnB:
 	ld a, $0c ; $4fdb
 	ld [wMapSceneStage2], a ; $4fdd
 	farcall WaitPlayerMoveDone ; $4fe0
-	script_player_speed $00f0 ; $4fe3
+	script_player_speed 7.5 ; $4fe3
 	script_move_player 13.0, 17.0 ; $4fe9
 	farcall WaitPlayerMoveDone ; $4ff3
 	script_set_position ACTOR_PARTNER, 19.0, 19.0 ; $4ff6

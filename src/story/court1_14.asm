@@ -159,13 +159,13 @@ Court1EntryWalkIn:
 	jp z, .done ; $51a9
 	test_flag FLAG_DOUBLES ; $51ac
 	jr z, .walkOff ; $51af
-	script_set_speed ACTOR_PARTNER, $00ff ; $51b1
+	script_set_speed ACTOR_PARTNER, 7.96875 ; $51b1
 	script_move_angle ACTOR_PARTNER, FACE_LEFT, $0200 ; $51b9
 	script_wait_move ACTOR_PARTNER ; $51c3
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $51c8
-	script_set_speed ACTOR_PARTNER, $0010 ; $51cf
+	script_set_speed ACTOR_PARTNER, 0.5 ; $51cf
 .walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $51d7
+	script_set_speed ACTOR_PLAYER, 0.5 ; $51d7
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $51df
 .done:
 	ret ; $51e9
@@ -323,7 +323,7 @@ IslandSkyInitScript_14:
 	ld [wMapSceneStage2], a ; $540b
 	dec h ; $540e
 	jr nz, .checkStage ; $540f
-	script_player_speed $0012 ; $5411
+	script_player_speed 0.5625 ; $5411
 	script_move_player_to_actor ACTOR_PLAYER ; $5417
 	ld h, $1c ; $541e
 .descend:

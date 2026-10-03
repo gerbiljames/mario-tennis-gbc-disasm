@@ -77,7 +77,7 @@ AcademyWingFacing02_10:
 	cp ACADEMYWINGSTAGE_SENIOR_CHAMP ; $62d3
 	jr nz, AcademyWingFacing01_10 ; $62d5
 	farcall BeginCutsceneScriptMode ; $62d7
-	script_player_speed $0020 ; $62da
+	script_player_speed 1.0 ; $62da
 	script_move_player 33.0, 51.0 ; $62e0
 	script_set_text Text_30_449 ; $62ea
 	script_face ACTOR_ACADEMY_WING_WALK_75_06, FACE_DOWN ; $62f0
@@ -89,7 +89,7 @@ AcademyWingFacing02_10:
 	script_wait_idle ACTOR_PLAYER ; $6318
 	script_set_anim ACTOR_ACADEMY_WING_WALK_75_06, ANIM_SHAKE ; $631d
 	script_wait_idle ACTOR_ACADEMY_WING_WALK_75_06 ; $6324
-	script_player_speed $0018 ; $6329
+	script_player_speed 0.75 ; $6329
 	script_speak $04 ; $632f
 	script_face ACTOR_ACADEMY_WING_WALK_75_06, FACE_RIGHT ; $6334
 	script_move_player 33.0, 59.0 ; $633b
@@ -107,7 +107,7 @@ AcademyWingTileTriggers_10:
 	map_script $02, FACEMASK_DOWN, $0000, AcademyWingTile02_10, $00, $00
 	db $ff
 AcademyWingTile01_10:
-	script_set_speed ACTOR_PLAYER, $0014 ; $6372
+	script_set_speed ACTOR_PLAYER, 0.625 ; $6372
 	script_face ACTOR_PLAYER, FACE_UP ; $637a
 	call AcademyWingOpenDoor_10 ; $6381
 	test_flag FLAG_DOUBLES ; $6384
@@ -128,7 +128,7 @@ AcademyWingTile01_10:
 	ret ; $63df
 AcademyWingTile02_10:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $63e0
-	script_set_speed ACTOR_PLAYER, $0010 ; $63e7
+	script_set_speed ACTOR_PLAYER, 0.5 ; $63e7
 	call AcademyWingOpenDoor_10 ; $63ef
 	script_move_target ACTOR_PARTNER, 33.0, 53.0 ; $63f2
 	test_flag FLAG_DOUBLES ; $63fd
@@ -211,7 +211,7 @@ AcademyWingInitScript_10:
 	jr nz, .done ; $6505
 	script_set_position ACTOR_ACADEMY_WING_INIT0_TROPHY_2, 1.0, 1.0 ; $6507
 .done:
-	script_player_speed $00f0 ; $6512
+	script_player_speed 7.5 ; $6512
 	script_move_player 31.0, 59.0 ; $6518
 	farcall WaitPlayerMoveDone ; $6522
 	script_set_position ACTOR_PLAYER, 53.0, 59.0 ; $6525
@@ -709,7 +709,7 @@ AcademyWingInitActors0_10:
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_WALK_75_06, ANIM_NOD ; $7138
 	script_wait_idle ACTOR_ACADEMY_WING_INIT1_WALK_75_06 ; $713f
 	script_speak ACTOR_ACADEMY_WING_INIT1_WALK_75_06 ; $7144
-	script_set_speed ACTOR_ACADEMY_WING_INIT1_WALK_75_06, $0010 ; $7149
+	script_set_speed ACTOR_ACADEMY_WING_INIT1_WALK_75_06, 0.5 ; $7149
 	script_move_target ACTOR_ACADEMY_WING_INIT1_WALK_75_06, 34.0, 48.0 ; $7151
 	script_wait_move ACTOR_ACADEMY_WING_INIT1_WALK_75_06 ; $715c
 	script_wait_frames 40 ; $7161

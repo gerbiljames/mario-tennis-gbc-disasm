@@ -24,7 +24,7 @@ ActorScript_15_18:
 	as_halt
 ReturnCoachWalkToCourtAndStartLesson:
 	script_null_script ACTOR_PARTNER ; $7bc9
-	script_player_speed $0020 ; $7bce
+	script_player_speed 1.0 ; $7bce
 	script_set_actor_script ACTOR_TRAINING_COURT_BOB_2, ActorScript_15_19 ; $7bd4
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_20 ; $7bdf
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_21 ; $7bea
@@ -69,8 +69,8 @@ ActorScript_15_21:
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 MovePartyToServeCoachSpot:
-	script_set_speed ACTOR_PLAYER, $0010 ; $7c62
-	script_set_speed ACTOR_PARTNER, $0010 ; $7c6a
+	script_set_speed ACTOR_PLAYER, 0.5 ; $7c62
+	script_set_speed ACTOR_PARTNER, 0.5 ; $7c6a
 	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $7c72
 	test_flag FLAG_DOUBLES ; $7c7d
 	jr z, .waitPlayer ; $7c80
@@ -81,12 +81,12 @@ MovePartyToServeCoachSpot:
 	script_wait_move ACTOR_PLAYER ; $7c97
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7c9c
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $7ca3
-	script_set_speed ACTOR_PLAYER, $0020 ; $7caa
-	script_set_speed ACTOR_PARTNER, $0020 ; $7cb2
+	script_set_speed ACTOR_PLAYER, 1.0 ; $7caa
+	script_set_speed ACTOR_PARTNER, 1.0 ; $7cb2
 	ret ; $7cba
 MovePartyToNetCoachSpot:
-	script_set_speed ACTOR_PLAYER, $0010 ; $7cbb
-	script_set_speed ACTOR_PARTNER, $0010 ; $7cc3
+	script_set_speed ACTOR_PLAYER, 0.5 ; $7cbb
+	script_set_speed ACTOR_PARTNER, 0.5 ; $7cc3
 	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $7ccb
 	test_flag FLAG_DOUBLES ; $7cd6
 	jr z, .wait ; $7cd9
@@ -97,12 +97,12 @@ MovePartyToNetCoachSpot:
 	script_wait_move ACTOR_PLAYER ; $7cf0
 	script_face ACTOR_PLAYER, FACE_LEFT ; $7cf5
 	script_face ACTOR_PARTNER, FACE_LEFT ; $7cfc
-	script_set_speed ACTOR_PLAYER, $0020 ; $7d03
-	script_set_speed ACTOR_PARTNER, $0020 ; $7d0b
+	script_set_speed ACTOR_PLAYER, 1.0 ; $7d03
+	script_set_speed ACTOR_PARTNER, 1.0 ; $7d0b
 	ret ; $7d13
 MovePartyToReturnCoachSpot:
-	script_set_speed ACTOR_PLAYER, $0010 ; $7d14
-	script_set_speed ACTOR_PARTNER, $0010 ; $7d1c
+	script_set_speed ACTOR_PLAYER, 0.5 ; $7d14
+	script_set_speed ACTOR_PARTNER, 0.5 ; $7d1c
 	script_move_target ACTOR_PLAYER, 19.0, 43.0 ; $7d24
 	test_flag FLAG_DOUBLES ; $7d2f
 	jr z, .wait ; $7d32
@@ -113,8 +113,8 @@ MovePartyToReturnCoachSpot:
 	script_wait_move ACTOR_PLAYER ; $7d49
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7d4e
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $7d55
-	script_set_speed ACTOR_PLAYER, $0020 ; $7d5c
-	script_set_speed ACTOR_PARTNER, $0020 ; $7d64
+	script_set_speed ACTOR_PLAYER, 1.0 ; $7d5c
+	script_set_speed ACTOR_PARTNER, 1.0 ; $7d64
 	ret ; $7d6c
 ActorScript_15_22:
 	; $7d6d, 10 bytes (actor_script)

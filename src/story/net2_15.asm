@@ -135,7 +135,7 @@ NetCoachRetryPrompt:
 InitNetCoachScene:
 	xor a ; $7752
 	ld [wStoryModeShowLocationName], a ; $7753
-	script_player_speed $00f0 ; $7756
+	script_player_speed 7.5 ; $7756
 	script_set_position ACTOR_PLAYER, 45.0, 43.0 ; $775c
 	script_set_position ACTOR_PARTNER, 47.0, 43.0 ; $7767
 	script_move_player 45.0, 43.0 ; $7772
@@ -327,7 +327,7 @@ ReturnCoachRetryPrompt:
 InitReturnCoachScene:
 	xor a ; $79cb
 	ld [wStoryModeShowLocationName], a ; $79cc
-	script_player_speed $00f0 ; $79cf
+	script_player_speed 7.5 ; $79cf
 	script_set_position ACTOR_PLAYER, 19.0, 43.0 ; $79d5
 	script_set_position ACTOR_PARTNER, 17.0, 43.0 ; $79e0
 	script_move_player 19.0, 43.0 ; $79eb
@@ -382,7 +382,7 @@ StartPendingLessonScene:
 	ret ; $7a95
 ServeCoachWalkToCourtAndStartLesson:
 	script_null_script ACTOR_PARTNER ; $7a96
-	script_player_speed $0020 ; $7a9b
+	script_player_speed 1.0 ; $7a9b
 	script_wait_frames 20 ; $7aa1
 	script_set_actor_script ACTOR_TRAINING_COURT_CURT, ActorScript_15_13 ; $7aa8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_14 ; $7ab3
@@ -426,7 +426,7 @@ ActorScript_15_15:
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 NetCoachWalkToCourtAndStartLesson:
-	script_player_speed $0020 ; $7b30
+	script_player_speed 1.0 ; $7b30
 	script_null_script ACTOR_PARTNER ; $7b36
 	script_set_actor_script ACTOR_TRAINING_COURT_BETH, ActorScript_15_16 ; $7b3b
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_17 ; $7b46

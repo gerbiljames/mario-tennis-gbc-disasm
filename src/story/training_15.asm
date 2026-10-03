@@ -258,7 +258,7 @@ TournamentSiteArrivalScene:
 	farcall ScriptRespawnLocationActors ; $4452
 	farcall BeginCutsceneScriptMode ; $4455
 	call SetupTournamentSitePartnerActor ; $4458
-	script_player_speed $00ff ; $445b
+	script_player_speed 7.96875 ; $445b
 	script_move_player 18.0, 41.0 ; $4461
 	farcall WaitPlayerMoveDone ; $446b
 	script_fade_in $04 ; $446e
@@ -269,7 +269,7 @@ TournamentSiteArrivalScene:
 	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, 19.0, 44.0 ; $4497
 	script_move_target ACTOR_PLAYER, 17.0, 46.0 ; $44a2
 	script_wait_move ACTOR_PLAYER ; $44ad
-	script_player_speed $0020 ; $44b2
+	script_player_speed 1.0 ; $44b2
 	script_move_player 18.0, 16.0 ; $44b8
 	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, 18.0, 16.0 ; $44c2
 	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_06, 17.0, 19.0 ; $44cd
@@ -379,7 +379,7 @@ TournamentSiteEntryWalkIn:
 	jp z, .done ; $46f5
 	test_flag FLAG_DOUBLES ; $46f8
 	jr z, .walkOff ; $46fb
-	script_set_speed ACTOR_PARTNER, $00ff ; $46fd
+	script_set_speed ACTOR_PARTNER, 7.96875 ; $46fd
 	ld a, [wStoryModeEntryPoint] ; $4705
 	dec a ; $4708
 	ld_hl_indexed TournamentSiteEntryWalkInFacings + 4 ; $4709
@@ -396,9 +396,9 @@ TournamentSiteEntryWalkIn:
 	ld a, $02 ; $472b
 	ld b, b ; $472d
 	farcall SetActorFacing ; $472e
-	script_set_speed ACTOR_PARTNER, $0010 ; $4731
+	script_set_speed ACTOR_PARTNER, 0.5 ; $4731
 .walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $4739
+	script_set_speed ACTOR_PLAYER, 0.5 ; $4739
 	ld a, [wStoryModeEntryPoint] ; $4741
 	dec a ; $4744
 	ld_hl_indexed TournamentSiteEntryWalkInFacings ; $4745
@@ -464,13 +464,13 @@ TrainingCourtArrival01_15:
 	call ClearTrainingCourtNpcFlags ; $4915
 	test_flag FLAG_DOUBLES ; $4918
 	jr z, .walkOff ; $491b
-	script_set_speed ACTOR_PARTNER, $00ff ; $491d
+	script_set_speed ACTOR_PARTNER, 7.96875 ; $491d
 	script_move_angle ACTOR_PARTNER, FACE_LEFT, $0200 ; $4925
 	script_wait_move ACTOR_PARTNER ; $492f
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4934
-	script_set_speed ACTOR_PARTNER, $0010 ; $493b
+	script_set_speed ACTOR_PARTNER, 0.5 ; $493b
 .walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $4943
+	script_set_speed ACTOR_PLAYER, 0.5 ; $4943
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $494b
 .done:
 	ret ; $4955
@@ -739,7 +739,7 @@ TrainingCourtNpc13_15:
 	sound SFX_APPEAR1 ; $4bc3
 	farcall AdvanceDialogueTextCursor ; $4bc5
 	script_speak ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4bc8
-	script_set_speed ACTOR_PLAYER, $0012 ; $4bcd
+	script_set_speed ACTOR_PLAYER, 0.5625 ; $4bcd
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4bd5
 	script_wait_idle ACTOR_PLAYER ; $4bdc
 	script_move_target ACTOR_PLAYER, 51.0, 15.0 ; $4be1
@@ -761,7 +761,7 @@ TrainingCourtNpc13_15:
 	script_wait_frames 1 ; $4c53
 	script_speak ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4c5a
 	script_wait_frames 30 ; $4c5f
-	script_set_speed ACTOR_PLAYER, $0020 ; $4c66
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4c66
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4c6e
 	script_wait_frames 1 ; $4c75
 	script_lock_facing ACTOR_PLAYER ; $4c7c

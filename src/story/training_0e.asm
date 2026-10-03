@@ -44,13 +44,13 @@ TrainingGymArrival01_0e:
 	jp z, .done ; $4104
 	test_flag FLAG_DOUBLES ; $4107
 	jr z, .walkUp ; $410a
-	script_set_speed ACTOR_PARTNER, $00ff ; $410c
+	script_set_speed ACTOR_PARTNER, 7.96875 ; $410c
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $4114
 	script_wait_move ACTOR_PARTNER ; $411e
 	script_face ACTOR_PARTNER, FACE_UP ; $4123
-	script_set_speed ACTOR_PARTNER, $0010 ; $412a
+	script_set_speed ACTOR_PARTNER, 0.5 ; $412a
 .walkUp:
-	script_set_speed ACTOR_PLAYER, $0010 ; $4132
+	script_set_speed ACTOR_PLAYER, 0.5 ; $4132
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $413a
 .done:
 	ret ; $4144
@@ -58,8 +58,8 @@ TrainingGymArrival02_0e:
 	ld a, [wStoryModeEntryPoint] ; $4145
 	cp STORYENTRY_NONE ; $4148
 	jp z, .done ; $414a
-	script_set_speed ACTOR_PLAYER, $0010 ; $414d
-	script_set_speed ACTOR_PARTNER, $0010 ; $4155
+	script_set_speed ACTOR_PLAYER, 0.5 ; $414d
+	script_set_speed ACTOR_PARTNER, 0.5 ; $4155
 	farcall WaitPlayerMoveDone ; $415d
 	script_copy_scene_rect 10, 10, 61, 12, 2, 2 ; $4160
 	script_copy_scene_rect 61, 10, 10, 10, 2, 2 ; $416f
@@ -81,8 +81,8 @@ TrainingGymArrival03_0e:
 	ld a, [wStoryModeEntryPoint] ; $41e2
 	cp STORYENTRY_NONE ; $41e5
 	jr z, TrainingGymArrival02_0e.done ; $41e7
-	script_set_speed ACTOR_PLAYER, $0010 ; $41e9
-	script_set_speed ACTOR_PARTNER, $0010 ; $41f1
+	script_set_speed ACTOR_PLAYER, 0.5 ; $41e9
+	script_set_speed ACTOR_PARTNER, 0.5 ; $41f1
 	farcall WaitPlayerMoveDone ; $41f9
 	script_copy_scene_rect 10, 10, 61, 12, 2, 2 ; $41fc
 	script_copy_scene_rect 61, 10, 20, 10, 2, 2 ; $420b
@@ -107,7 +107,7 @@ TrainingGymExitTriggers_0e:
 TrainingGymExit02_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $4290
 	script_lock_facing ACTOR_PLAYER ; $4297
-	script_set_speed ACTOR_PLAYER, $0018 ; $429e
+	script_set_speed ACTOR_PLAYER, 0.75 ; $429e
 	script_move_target ACTOR_PLAYER, 11.0, 13.0 ; $42a6
 	script_wait_move ACTOR_PLAYER ; $42b1
 	farcall WaitPlayerMoveDone ; $42b6
@@ -127,7 +127,7 @@ TrainingGymExit02_0e:
 TrainingGymExit03_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $431b
 	script_lock_facing ACTOR_PLAYER ; $4322
-	script_set_speed ACTOR_PLAYER, $0018 ; $4329
+	script_set_speed ACTOR_PLAYER, 0.75 ; $4329
 	script_move_target ACTOR_PLAYER, 21.0, 13.0 ; $4331
 	script_wait_move ACTOR_PLAYER ; $433c
 	farcall WaitPlayerMoveDone ; $4341
@@ -380,7 +380,7 @@ TrainingGymFacingScripts_0e:
 TrainingGymFacing01_0e:
 	ld a, $0b ; $45be
 	ld [wMapSceneStage2], a ; $45c0
-	script_player_speed $0040 ; $45c3
+	script_player_speed 2.0 ; $45c3
 	script_move_player 13.0, 19.0 ; $45c9
 	farcall WaitPlayerMoveDone ; $45d3
 	call RunRepairCounterDialogue ; $45d6
@@ -388,7 +388,7 @@ TrainingGymFacing01_0e:
 TrainingGymFacing02_0e:
 	ld a, $0c ; $45da
 	ld [wMapSceneStage2], a ; $45dc
-	script_player_speed $0040 ; $45df
+	script_player_speed 2.0 ; $45df
 	script_move_player 13.0, 19.0 ; $45e5
 	farcall WaitPlayerMoveDone ; $45ef
 	call RunRepairCounterDialogue ; $45f2

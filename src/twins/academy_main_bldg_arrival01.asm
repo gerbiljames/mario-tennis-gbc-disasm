@@ -9,13 +9,13 @@
 	jp z, .done
 	test_flag FLAG_DOUBLES
 	jr z, .walkOff
-	script_set_speed ACTOR_PARTNER, $00ff
+	script_set_speed ACTOR_PARTNER, 7.96875
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200
 	script_wait_move ACTOR_PARTNER
 	script_face ACTOR_PARTNER, FACE_UP
-	script_set_speed ACTOR_PARTNER, $0010
+	script_set_speed ACTOR_PARTNER, 0.5
 .walkOff:
-	script_set_speed ACTOR_PLAYER, $0010
+	script_set_speed ACTOR_PLAYER, 0.5
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0200
 .done:
 	ret

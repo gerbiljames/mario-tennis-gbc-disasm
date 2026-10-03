@@ -43,7 +43,7 @@ JuniorClassCourtSinglesExitTriggers_11:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $0f
 	db $ff
 JuniorClassCourtSinglesNpc03FaceUp_11:
-	script_set_speed ACTOR_PLAYER, $0008 ; $693d
+	script_set_speed ACTOR_PLAYER, 0.25 ; $693d
 	script_lock_facing ACTOR_PLAYER ; $6945
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $694c
 	script_wait_move ACTOR_PLAYER ; $6957
@@ -413,7 +413,7 @@ JuniorClassCourtSinglesMatchReturn:
 	cp WINLOSE_WIN ; $6e5d
 	jp z, JuniorClassCourtSinglesEntry0eScene ; $6e5f
 .eq01:
-	script_player_speed $0040 ; $6e62
+	script_player_speed 2.0 ; $6e62
 	script_move_player 19.0, 21.0 ; $6e68
 	script_set_position ACTOR_PLAYER, 19.0, 21.0 ; $6e72
 	script_face ACTOR_PLAYER, FACE_UP ; $6e7d
@@ -442,7 +442,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	dw JuniorClassCourtSinglesEntry0dScene.waitPlayerMoveDone ; $6eaf jumptable
 .parkMiddleCourtPracticePair:
 	call ParkMiddleCourtPracticePair ; $6eb1
-	script_player_speed $0040 ; $6eb4
+	script_player_speed 2.0 ; $6eb4
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, 26.0, 9.0 ; $6eba
 	script_set_position ACTOR_PLAYER, 26.0, 20.0 ; $6ec5
 	script_move_player 26.0, 15.0 ; $6ed0
@@ -467,7 +467,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	ret ; $6f43
 .parkLeftCourtPracticePairRightSide:
 	call ParkLeftCourtPracticePairRightSide ; $6f44
-	script_player_speed $0040 ; $6f47
+	script_player_speed 2.0 ; $6f47
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, 9.0, 9.0 ; $6f4d
 	script_set_position ACTOR_PLAYER, 11.0, 20.0 ; $6f58
 	script_move_player 11.0, 15.0 ; $6f63
@@ -493,7 +493,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	ret ; $6fdc
 .parkLeftCourtPracticePairRightSide2:
 	call ParkLeftCourtPracticePairRightSide ; $6fdd
-	script_player_speed $0040 ; $6fe0
+	script_player_speed 2.0 ; $6fe0
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, 9.0, 9.0 ; $6fe6
 	script_set_position ACTOR_PLAYER, 11.0, 20.0 ; $6ff1
 	script_move_player 11.0, 15.0 ; $6ffc
@@ -518,7 +518,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, FACE_DOWN ; $706e
 	ret ; $7075
 .waitPlayerMoveDone:
-	script_player_speed $0040 ; $7076
+	script_player_speed 2.0 ; $7076
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, 19.0, 31.0 ; $707c
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 26.0, 11.0 ; $7087
 	script_set_position ACTOR_PLAYER, 26.0, 20.0 ; $7092
@@ -541,8 +541,8 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_BOUNCE ; $70ff
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7106
 	script_face ACTOR_PLAYER, FACE_DOWN ; $710d
-	script_player_speed $0010 ; $7114
-	script_set_speed ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $0010 ; $711a
+	script_player_speed 0.5 ; $7114
+	script_set_speed ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, 0.5 ; $711a
 	script_move_player 19.0, 25.0 ; $7122
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, 19.0, 27.0 ; $712c
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7137

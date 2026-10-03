@@ -28,7 +28,7 @@ RunTravelingTeamBracketIfWon_13:
 	farcall BeginCutsceneScriptMode ; $79c3
 	script_fade_in $04 ; $79c6
 	call WaitFadeEnd ; $79cb
-	script_player_speed $0018 ; $79ce
+	script_player_speed 0.75 ; $79ce
 	script_move_player 9.0, 19.0 ; $79d4
 	farcall WaitPlayerMoveDone ; $79de
 	call ShowStoryTournamentBracket_13 ; $79e1
@@ -41,7 +41,7 @@ RunTravelingTeamBracketIfWon_13:
 	call ApplyPartnerCharacterVariant_13 ; $79f0
 	script_null_script ACTOR_PARTNER ; $79f3
 	script_null_script ACTOR_PLAYER_SHADOW ; $79f8
-	script_player_speed $0040 ; $79fd
+	script_player_speed 2.0 ; $79fd
 	script_set_position ACTOR_PLAYER, 11.0, 29.0 ; $7a03
 	script_set_position ACTOR_PARTNER, 13.0, 35.0 ; $7a0e
 	script_face ACTOR_PLAYER, FACE_UP ; $7a19

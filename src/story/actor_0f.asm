@@ -130,7 +130,7 @@ WalkActorsInFromEntryPoint_0f:
 	jp z, .done ; $7ab4
 	test_flag FLAG_DOUBLES ; $7ab7
 	jr z, .walkOff ; $7aba
-	script_set_speed ACTOR_PARTNER, $00ff ; $7abc
+	script_set_speed ACTOR_PARTNER, 7.96875 ; $7abc
 	ld a, [wStoryModeEntryPoint] ; $7ac4
 	dec a ; $7ac7
 	ld_hl_indexed WalkActorsInFromEntryPointFacings_0f + 5 ; $7ac8
@@ -147,9 +147,9 @@ WalkActorsInFromEntryPoint_0f:
 	ld a, $02 ; $7aea
 	ld b, b ; $7aec
 	farcall SetActorFacing ; $7aed
-	script_set_speed ACTOR_PARTNER, $0010 ; $7af0
+	script_set_speed ACTOR_PARTNER, 0.5 ; $7af0
 .walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $7af8
+	script_set_speed ACTOR_PLAYER, 0.5 ; $7af8
 	ld a, [wStoryModeEntryPoint] ; $7b00
 	dec a ; $7b03
 	ld_hl_indexed WalkActorsInFromEntryPointFacings_0f ; $7b04

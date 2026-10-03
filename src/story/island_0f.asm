@@ -381,12 +381,12 @@ IslandOpenArrivalCutscene:
 	farcall WriteStoryStateWord ; $6437
 	farcall BeginCutsceneScriptMode ; $643a
 	call ReplacePartnerWithStandInActor ; $643d
-	script_player_speed $00ff ; $6440
+	script_player_speed 7.96875 ; $6440
 	script_move_player 28.0, 37.0 ; $6446
 	farcall WaitPlayerMoveDone ; $6450
 	script_fade_in $04 ; $6453
 	call WaitFadeEnd ; $6458
-	script_player_speed $0018 ; $645b
+	script_player_speed 0.75 ; $645b
 	script_move_player 28.0, 27.0 ; $6461
 	script_move_target ACTOR_ISLAND_OPEN_ROUND_WALK_74_08, 28.0, 28.0 ; $646b
 	script_move_target ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, 28.0, 31.0 ; $6476
@@ -444,7 +444,7 @@ IslandOpenArrivalCutscene:
 	farcall AttachActorStepMover ; $65a0
 	set_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $65a3
 .walkOn:
-	script_player_speed $0018 ; $65a6
+	script_player_speed 0.75 ; $65a6
 	script_move_player 28.0, 29.0 ; $65ac
 	farcall WaitPlayerMoveDone ; $65b6
 	ld a, ISLANDOPENROUND_ROUND1 ; $65b9

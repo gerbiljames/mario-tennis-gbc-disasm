@@ -213,7 +213,7 @@ IslandSkyEntry0eScene:
 	jr nz, .fadeIn ; $775f
 	ld hl, QueueDistantPlaneSprite_14 ; $7761
 	call UnregisterFrameTask ; $7764
-	script_player_speed $0012 ; $7767
+	script_player_speed 0.5625 ; $7767
 	script_move_player 11.0, 24.0 ; $776d
 	ld h, $3c ; $7777
 .burst:

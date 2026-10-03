@@ -46,7 +46,7 @@ WaterSpriteRacketRewardScene:
 	script_wait_frames 60 ; $4de1
 	script_set_position ACTOR_TRAINING_COURT_WALK_76_06, 51.0, 7.0 ; $4de8
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4df3
-	script_player_speed $0010 ; $4dfa
+	script_player_speed 0.5 ; $4dfa
 	script_move_player_to_actor ACTOR_TRAINING_COURT_WALK_76_06 ; $4e00
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4e07
 	ld_bg_pals de, 2, 6 ; $4e0a
@@ -127,7 +127,7 @@ WaterSpriteRacketRewardScene:
 	call WaitFadeEnd ; $4f2b
 	script_wait_frames 60 ; $4f2e
 	sound SFX_WATER_SPRITE_FLY ; $4f35
-	script_set_speed ACTOR_TRAINING_COURT_RACKET, $0005 ; $4f37
+	script_set_speed ACTOR_TRAINING_COURT_RACKET, 0.15625 ; $4f37
 	script_move_target ACTOR_TRAINING_COURT_RACKET, 51.0, 13.0 ; $4f3f
 	script_wait_move ACTOR_TRAINING_COURT_RACKET ; $4f4a
 	script_wait_frames 60 ; $4f4f
@@ -219,7 +219,7 @@ TrainingCourtNpc06_15:
 	call AcademyRulesServeMatchChallengeScene ; $510e
 	ret ; $5111
 TrainingCourtNpc07FaceDown_15:
-	script_set_speed ACTOR_PLAYER, $0008 ; $5112
+	script_set_speed ACTOR_PLAYER, 0.25 ; $5112
 	script_lock_facing ACTOR_PLAYER ; $511a
 	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $5121
 	script_wait_move ACTOR_PLAYER ; $512c
@@ -282,7 +282,7 @@ TrainingCourtNpc11_15:
 	call DropShotMatchChallengeScene ; $51ba
 	ret ; $51bd
 TrainingCourtNpc12FaceUp_15:
-	script_set_speed ACTOR_PLAYER, $0008 ; $51be
+	script_set_speed ACTOR_PLAYER, 0.25 ; $51be
 	script_lock_facing ACTOR_PLAYER ; $51c6
 	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $51cd
 	script_wait_move ACTOR_PLAYER ; $51d8
@@ -345,7 +345,7 @@ TrainingCourtNpc0C_15:
 	call ReturnMatchChallengeScene ; $5266
 	ret ; $5269
 TrainingCourtNpc0DFaceUp_15:
-	script_set_speed ACTOR_PLAYER, $0008 ; $526a
+	script_set_speed ACTOR_PLAYER, 0.25 ; $526a
 	script_lock_facing ACTOR_PLAYER ; $5272
 	script_move_target ACTOR_PLAYER, 19.0, 43.0 ; $5279
 	script_wait_move ACTOR_PLAYER ; $5284
@@ -512,7 +512,7 @@ TrainingCourtReentryDispatch:
 	script_null_script ACTOR_PARTNER ; $5401
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5406
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5411
-	script_player_speed $00f0 ; $5418
+	script_player_speed 7.5 ; $5418
 	script_move_player 24.0, 15.0 ; $541e
 	farcall WaitPlayerMoveDone ; $5428
 	script_fade_in $08 ; $542b
@@ -522,7 +522,7 @@ TrainingCourtReentryDispatch:
 .netCourt:
 	xor a ; $5437
 	ld [wStoryModeShowLocationName], a ; $5438
-	script_player_speed $00f0 ; $543b
+	script_player_speed 7.5 ; $543b
 	script_set_position ACTOR_PLAYER, 19.0, 19.0 ; $5441
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $544c
 	script_move_player 19.0, 19.0 ; $5457
@@ -550,7 +550,7 @@ TrainingCourtReentryDispatch:
 	script_null_script ACTOR_PARTNER ; $54b1
 	script_set_position ACTOR_PARTNER, 45.0, 45.0 ; $54b6
 	script_face ACTOR_PARTNER, FACE_LEFT ; $54c1
-	script_player_speed $00f0 ; $54c8
+	script_player_speed 7.5 ; $54c8
 	script_move_player 40.0, 41.0 ; $54ce
 	farcall WaitPlayerMoveDone ; $54d8
 	script_fade_in $08 ; $54db
@@ -560,7 +560,7 @@ TrainingCourtReentryDispatch:
 .serveCourtDoubles:
 	xor a ; $54e7
 	ld [wStoryModeShowLocationName], a ; $54e8
-	script_player_speed $00f0 ; $54eb
+	script_player_speed 7.5 ; $54eb
 	script_set_position ACTOR_PLAYER, 45.0, 43.0 ; $54f1
 	script_set_position ACTOR_PARTNER, 47.0, 43.0 ; $54fc
 	script_move_player 45.0, 43.0 ; $5507
@@ -588,7 +588,7 @@ TrainingCourtReentryDispatch:
 	script_null_script ACTOR_PARTNER ; $5561
 	script_set_position ACTOR_PARTNER, 19.0, 45.0 ; $5566
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5571
-	script_player_speed $00f0 ; $5578
+	script_player_speed 7.5 ; $5578
 	script_move_player 24.0, 40.0 ; $557e
 	farcall WaitPlayerMoveDone ; $5588
 	script_fade_in $08 ; $558b
@@ -598,7 +598,7 @@ TrainingCourtReentryDispatch:
 .strokeCourtDoubles:
 	xor a ; $5597
 	ld [wStoryModeShowLocationName], a ; $5598
-	script_player_speed $00f0 ; $559b
+	script_player_speed 7.5 ; $559b
 	script_set_position ACTOR_PLAYER, 19.0, 43.0 ; $55a1
 	script_set_position ACTOR_PARTNER, 17.0, 43.0 ; $55ac
 	script_move_player 19.0, 43.0 ; $55b7

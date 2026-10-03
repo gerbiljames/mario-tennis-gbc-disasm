@@ -16,24 +16,24 @@ SeniorCourtWalkPlayersOntoCourt:
 	jp nz, .done ; $5eb0
 	test_flag FLAG_DOUBLES ; $5eb3
 	jr z, .walkOff ; $5eb6
-	script_set_speed ACTOR_PARTNER, $00ff ; $5eb8
+	script_set_speed ACTOR_PARTNER, 7.96875 ; $5eb8
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $5ec0
 	script_wait_move ACTOR_PARTNER ; $5eca
 	script_face ACTOR_PARTNER, FACE_UP ; $5ecf
-	script_set_speed ACTOR_PARTNER, $0010 ; $5ed6
+	script_set_speed ACTOR_PARTNER, 0.5 ; $5ed6
 .walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $5ede
+	script_set_speed ACTOR_PLAYER, 0.5 ; $5ede
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $5ee6
 .done:
 	ret ; $5ef0
 SeniorRankOfferScenePrep:
-	script_set_speed ACTOR_PLAYER, $0010 ; $5ef1
+	script_set_speed ACTOR_PLAYER, 0.5 ; $5ef1
 	test_flag FLAG_DOUBLES ; $5ef9
 	jp z, SeniorSinglesRankOfferScene ; $5efc
 	call SeniorDoublesRankOfferScene ; $5eff
 	ret ; $5f02
 SeniorRankOfferScenePrepFacingUp:
-	script_set_speed ACTOR_PLAYER, $0008 ; $5f03
+	script_set_speed ACTOR_PLAYER, 0.25 ; $5f03
 	script_face ACTOR_PLAYER, FACE_UP ; $5f0b
 	script_lock_facing ACTOR_PLAYER ; $5f12
 	test_flag FLAG_DOUBLES ; $5f19
@@ -133,8 +133,8 @@ SeniorDoublesRankOfferScene:
 	farcall AttachActorStepMover ; $609c
 	ret ; $609f
 StartSeniorRankingMatch:
-	script_set_speed ACTOR_PLAYER, $0020 ; $60a0
-	script_set_speed ACTOR_PARTNER, $0020 ; $60a8
+	script_set_speed ACTOR_PLAYER, 1.0 ; $60a0
+	script_set_speed ACTOR_PARTNER, 1.0 ; $60a8
 	ld a, [wMapSceneStage2] ; $60b0
 	sub SENIORCOURTSTAGE_SINGLES_RANK4 ; $60b3
 	rst Rst00 ; $60b5
@@ -355,7 +355,7 @@ SeniorDoublesRank3Intro:
 	script_face_toward ACTOR_SENIOR_COURT_B_CURT, ACTOR_PLAYER ; $6516
 	script_face_toward ACTOR_SENIOR_COURT_B_CURT, ACTOR_PARTNER ; $651e
 	script_wait_frames 30 ; $6526
-	script_player_speed $0020 ; $652d
+	script_player_speed 1.0 ; $652d
 	script_move_player_to_actor ACTOR_SENIOR_COURT_B_CURT ; $6533
 	farcall WaitPlayerMoveDone ; $653a
 	ld bc, wActors + 1 * ACTOR_SIZE ; $653d
@@ -395,7 +395,7 @@ SeniorDoublesRank2Intro:
 	script_face_toward ACTOR_SENIOR_COURT_A_BRIAN, ACTOR_PLAYER ; $65ff
 	script_face_toward ACTOR_SENIOR_COURT_B_JOY, ACTOR_PARTNER ; $6607
 	script_wait_frames 30 ; $660f
-	script_player_speed $0020 ; $6616
+	script_player_speed 1.0 ; $6616
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_BRIAN ; $661c
 	farcall WaitPlayerMoveDone ; $6623
 	ld bc, wActors + 1 * ACTOR_SIZE ; $6626
@@ -432,7 +432,7 @@ SeniorDoublesRank1Intro:
 	script_null_script ACTOR_SENIOR_COURT_B_FAY ; $66d5
 	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_WALK ; $66da
 	script_wait_frames 30 ; $66e1
-	script_player_speed $0020 ; $66e8
+	script_player_speed 1.0 ; $66e8
 	script_null_script ACTOR_SENIOR_COURT_B_FAY ; $66ee
 	script_face ACTOR_SENIOR_COURT_B_FAY, FACE_DOWN ; $66f3
 	script_move_target ACTOR_SENIOR_COURT_A_ALLIE, 43.0, 17.0 ; $66fa
@@ -466,7 +466,7 @@ SeniorSinglesRank4Intro:
 	script_wait_frames 30 ; $67b0
 	script_face_toward ACTOR_SENIOR_COURT_A_BRIAN, ACTOR_PLAYER ; $67b7
 	script_wait_frames 30 ; $67bf
-	script_player_speed $0020 ; $67c6
+	script_player_speed 1.0 ; $67c6
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_BRIAN ; $67cc
 	farcall WaitPlayerMoveDone ; $67d3
 	ld bc, wActors + 1 * ACTOR_SIZE ; $67d6
@@ -494,7 +494,7 @@ SeniorSinglesRank3Intro:
 	script_wait_frames 30 ; $684a
 	script_face_toward ACTOR_SENIOR_COURT_A_JOY, ACTOR_PLAYER ; $6851
 	script_wait_frames 30 ; $6859
-	script_player_speed $0020 ; $6860
+	script_player_speed 1.0 ; $6860
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_JOY ; $6866
 	farcall WaitPlayerMoveDone ; $686d
 	ld bc, wActors + 1 * ACTOR_SIZE ; $6870
@@ -527,7 +527,7 @@ SeniorSinglesRank2Intro:
 	script_wait_frames 30 ; $6902
 	script_face_toward ACTOR_SENIOR_COURT_A_ALLIE, ACTOR_PLAYER ; $6909
 	script_wait_frames 30 ; $6911
-	script_player_speed $0020 ; $6918
+	script_player_speed 1.0 ; $6918
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_ALLIE ; $691e
 	farcall WaitPlayerMoveDone ; $6925
 	ld bc, wActors + 1 * ACTOR_SIZE ; $6928
@@ -560,7 +560,7 @@ SeniorSinglesRank1Intro:
 	script_wait_frames 30 ; $69b8
 	script_face_toward ACTOR_SENIOR_COURT_A_FAY, ACTOR_PLAYER ; $69bf
 	script_wait_frames 30 ; $69c7
-	script_player_speed $0020 ; $69ce
+	script_player_speed 1.0 ; $69ce
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_FAY ; $69d4
 	farcall WaitPlayerMoveDone ; $69db
 	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_A_FAY ; $69de

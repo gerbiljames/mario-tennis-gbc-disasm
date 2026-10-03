@@ -19,7 +19,7 @@ IslandOpenDoublesVictory:
 	script_face ACTOR_PLAYER, FACE_UP ; $70f8
 	script_set_position ACTOR_PARTNER, 35.0, 27.0 ; $70ff
 	script_face ACTOR_PARTNER, FACE_UP ; $710a
-	script_player_speed $0040 ; $7111
+	script_player_speed 2.0 ; $7111
 	script_move_player 36.0, 21.0 ; $7117
 	farcall WaitPlayerMoveDone ; $7121
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_LEFT ; $7124
@@ -45,8 +45,8 @@ IslandOpenDoublesVictory:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $71a0
 	script_face ACTOR_PARTNER, FACE_DOWN ; $71a7
 	script_face ACTOR_SENIOR_COURT_B_FAY, FACE_DOWN ; $71ae
-	script_player_speed $0010 ; $71b5
-	script_set_speed ACTOR_SENIOR_COURT_A_EMILY, $0010 ; $71bb
+	script_player_speed 0.5 ; $71b5
+	script_set_speed ACTOR_SENIOR_COURT_A_EMILY, 0.5 ; $71bb
 	script_move_player 43.0, 32.0 ; $71c3
 	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 43.0, 32.0 ; $71cd
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $71d8
@@ -196,8 +196,8 @@ SeniorSinglesRank1Victory:
 	farcall EndCutsceneScriptMode ; $7526
 	ret ; $7529
 SeniorSharedVictoryScene:
-	script_player_speed $0040 ; $752a
-	script_set_speed ACTOR_ROLE_SENIOR_COURT_FAY, $0018 ; $7530
+	script_player_speed 2.0 ; $752a
+	script_set_speed ACTOR_ROLE_SENIOR_COURT_FAY, 0.75 ; $7530
 	script_set_position ACTOR_SENIOR_COURT_A_EMILY, 43.0, 39.0 ; $7538
 	script_set_position ACTOR_ROLE_SENIOR_COURT_FAY, 34.0, 15.0 ; $7543
 	script_set_position ACTOR_PLAYER, 36.0, 27.0 ; $754e
@@ -220,8 +220,8 @@ SeniorSharedVictoryScene:
 	script_set_anim ACTOR_ROLE_SENIOR_COURT_FAY, ANIM_BOUNCE ; $75bb
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $75c2
 	script_face ACTOR_PLAYER, FACE_DOWN ; $75c9
-	script_player_speed $0010 ; $75d0
-	script_set_speed ACTOR_SENIOR_COURT_A_EMILY, $0010 ; $75d6
+	script_player_speed 0.5 ; $75d0
+	script_set_speed ACTOR_SENIOR_COURT_A_EMILY, 0.5 ; $75d6
 	script_move_player 43.0, 32.0 ; $75de
 	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 43.0, 31.0 ; $75e8
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $75f3
@@ -338,7 +338,7 @@ ComputeSeniorCourtStage:
 	ret ; $77c1
 FadeInSeniorCourtNearPairA:
 	call PlaceSeniorCourtPairA ; $77c2
-	script_player_speed $0040 ; $77c5
+	script_player_speed 2.0 ; $77c5
 	script_set_position ACTOR_PLAYER, 36.0, 27.0 ; $77cb
 	script_move_player 36.0, 21.0 ; $77d6
 	farcall WaitPlayerMoveDone ; $77e0
@@ -350,7 +350,7 @@ FadeInSeniorCourtNearPairA:
 	ret ; $77fc
 FadeInSeniorCourtNearPairB:
 	call PlaceSeniorCourtPairB ; $77fd
-	script_player_speed $0040 ; $7800
+	script_player_speed 2.0 ; $7800
 	script_move_player 53.0, 21.0 ; $7806
 	farcall WaitPlayerMoveDone ; $7810
 	script_face ACTOR_PLAYER, FACE_UP ; $7813

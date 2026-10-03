@@ -890,10 +890,18 @@ MACRO script_move_angle
 	ld de, \3
 	farcall MoveActorByAngle
 ENDM
-; Usage: script_set_speed actor, speed
+; px_speed speed -- assert a move speed is written in pixels per frame with a
+; point (1.0, 0.75). The actor mover steps the position (1/256 tile) by the
+; speed every update, so 1 px is $20; the macros store `speed >> 11` of the
+; Q16.16 literal, which needs a multiple of 1/32 px.
+MACRO px_speed
+	ASSERT (\1) % 2048 == 0 && (\1) >= 0 && (\1) < 2048.0, "speed \1: write pixels per frame with a point, in 1/32 px"
+ENDM
+; Usage: script_set_speed actor, speed (pixels per frame)
 MACRO script_set_speed
+	px_speed \2
 	ld a, \1
-	ld bc, \2
+	ld bc, (\2) >> 11
 	farcall ScriptSetActorMoveSpeed
 ENDM
 ; Sets an actor's jump velocity (de, signed 16-bit).
@@ -911,9 +919,10 @@ MACRO script_move_player
 	ld de, (\2) >> 8
 	farcall MovePlayerToPosition
 ENDM
-; Usage: script_player_speed speed
+; Usage: script_player_speed speed (pixels per frame)
 MACRO script_player_speed
-	ld bc, \1
+	px_speed \1
+	ld bc, (\1) >> 11
 	farcall SetPlayerMoveSpeed
 ENDM
 ; Usage: script_set_text text_id (sets the next dialogue's text)

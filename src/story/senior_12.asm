@@ -138,8 +138,8 @@ SeniorCourtNpc03FaceRight_12:
 	jr z, SeniorCourtNpc03_12 ; $5633
 	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5635
 	jp nz, SeniorCourtNpc03FaceUpFlag0840_12.setText ; $5638
-	script_set_speed ACTOR_PLAYER, $0010 ; $563b
-	script_set_speed ACTOR_PARTNER, $0010 ; $5643
+	script_set_speed ACTOR_PLAYER, 0.5 ; $563b
+	script_set_speed ACTOR_PARTNER, 0.5 ; $5643
 	script_null_script ACTOR_PARTNER ; $564b
 	script_move_target ACTOR_PLAYER, 41.0, 27.0 ; $5650
 	script_move_target ACTOR_PARTNER, 39.0, 29.0 ; $565b
@@ -156,8 +156,8 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	jp z, SeniorCourtNpc03FaceUpFlag0000_12 ; $569e
 	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $56a1
 	jp nz, .setText ; $56a4
-	script_set_speed ACTOR_PARTNER, $0010 ; $56a7
-	script_set_speed ACTOR_PLAYER, $0008 ; $56af
+	script_set_speed ACTOR_PARTNER, 0.5 ; $56a7
+	script_set_speed ACTOR_PLAYER, 0.25 ; $56af
 	script_face ACTOR_PLAYER, FACE_UP ; $56b7
 	script_lock_facing ACTOR_PLAYER ; $56be
 	script_null_script ACTOR_PARTNER ; $56c5
@@ -172,8 +172,8 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 .checkFlag:
 	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5704
 	jp nz, .setText ; $5707
-	script_set_speed ACTOR_PLAYER, $0010 ; $570a
-	script_set_speed ACTOR_PARTNER, $0010 ; $5712
+	script_set_speed ACTOR_PLAYER, 0.5 ; $570a
+	script_set_speed ACTOR_PARTNER, 0.5 ; $5712
 	script_null_script ACTOR_PARTNER ; $571a
 	script_move_target ACTOR_PLAYER, 41.0, 27.0 ; $571f
 	script_move_target ACTOR_PARTNER, 43.0, 25.0 ; $572a
@@ -204,8 +204,8 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $57b3
 	script_wait_idle ACTOR_PARTNER ; $57ba
 	script_speak ACTOR_PARTNER ; $57bf
-	script_set_speed ACTOR_PLAYER, $0018 ; $57c4
-	script_set_speed ACTOR_PARTNER, $0018 ; $57cc
+	script_set_speed ACTOR_PLAYER, 0.75 ; $57c4
+	script_set_speed ACTOR_PARTNER, 0.75 ; $57cc
 	script_move_target ACTOR_PARTNER, 43.0, 27.0 ; $57d4
 	script_wait_move ACTOR_PARTNER ; $57df
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $57e4
@@ -514,8 +514,8 @@ SeniorCourtNpc0A_12:
 	add hl, de ; $5aed
 	res 0, [hl] ; $5aee
 	res 1, [hl] ; $5af0
-	script_set_speed ACTOR_PLAYER, $0020 ; $5af2
-	script_set_speed ACTOR_PARTNER, $0020 ; $5afa
+	script_set_speed ACTOR_PLAYER, 1.0 ; $5af2
+	script_set_speed ACTOR_PARTNER, 1.0 ; $5afa
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_47 ; $5b02
 	script_wait_frames 32 ; $5b0d
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_48 ; $5b14

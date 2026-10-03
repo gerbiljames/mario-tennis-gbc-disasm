@@ -17,8 +17,8 @@ ActorScript_0e_13:
 	as_wait 30
 	as_halt
 MarioWorldNpc08FaceRight_0e:
-	script_set_speed ACTOR_PLAYER, $0018 ; $64a4
-	script_set_speed ACTOR_PARTNER, $0018 ; $64ac
+	script_set_speed ACTOR_PLAYER, 0.75 ; $64a4
+	script_set_speed ACTOR_PARTNER, 0.75 ; $64ac
 	test_flag FLAG_DOUBLES ; $64b4
 	jr nz, .doubles ; $64b7
 	script_move_target ACTOR_PLAYER, 16.0, 13.0 ; $64b9
@@ -57,8 +57,8 @@ ActorScript_0e_15:
 	as_wait 30
 	as_halt
 MarioWorldNpc08FaceLeft_0e:
-	script_set_speed ACTOR_PLAYER, $0018 ; $654f
-	script_set_speed ACTOR_PARTNER, $0018 ; $6557
+	script_set_speed ACTOR_PLAYER, 0.75 ; $654f
+	script_set_speed ACTOR_PARTNER, 0.75 ; $6557
 	test_flag FLAG_DOUBLES ; $655f
 	jr nz, .doubles ; $6562
 	script_move_target ACTOR_PLAYER, 20.0, 13.0 ; $6564
@@ -80,7 +80,7 @@ MarioWorldNpc08FaceLeft_0e:
 	jp PromptExhibitionMatch ; $65d1
 PromptExhibitionMatch:
 	farcall BeginCutsceneScriptMode ; $65d4
-	script_player_speed $0018 ; $65d7
+	script_player_speed 0.75 ; $65d7
 	script_move_player 18.0, 13.0 ; $65dd
 	farcall WaitPlayerMoveDone ; $65e7
 	ld a, $02 ; $65ea
@@ -176,21 +176,21 @@ PromptExhibitionMatch:
 	script_set_anim ACTOR_MARIO_WORLD_DK, ANIM_NOD ; $670f
 	script_set_anim ACTOR_MARIO_WORLD_TOAD, ANIM_NOD ; $6716
 	script_wait_idle ACTOR_MARIO_WORLD_TOAD ; $671d
-	script_player_speed $0018 ; $6722
+	script_player_speed 0.75 ; $6722
 	script_move_player 21.0, 13.0 ; $6728
-	script_set_speed ACTOR_MARIO_WORLD_PEACH, $0020 ; $6732
-	script_set_speed ACTOR_MARIO_WORLD_BOWSER, $0020 ; $673a
-	script_set_speed ACTOR_MARIO_WORLD_WARIO, $0020 ; $6742
-	script_set_speed ACTOR_MARIO_WORLD_WALUIGI, $0020 ; $674a
-	script_set_speed ACTOR_MARIO_WORLD_WALK_77_05, $0020 ; $6752
-	script_set_speed ACTOR_MARIO_WORLD_MARIO, $0020 ; $675a
-	script_set_speed ACTOR_MARIO_WORLD_LUIGI, $0020 ; $6762
-	script_set_speed ACTOR_MARIO_WORLD_BABY_MARIO, $0020 ; $676a
-	script_set_speed ACTOR_MARIO_WORLD_YOSHI, $0020 ; $6772
-	script_set_speed ACTOR_MARIO_WORLD_BOO, $0020 ; $677a
-	script_set_speed ACTOR_MARIO_WORLD_DK, $0020 ; $6782
-	script_set_speed ACTOR_MARIO_WORLD_TOAD, $0020 ; $678a
-	script_set_speed ACTOR_PLAYER, $0020 ; $6792
+	script_set_speed ACTOR_MARIO_WORLD_PEACH, 1.0 ; $6732
+	script_set_speed ACTOR_MARIO_WORLD_BOWSER, 1.0 ; $673a
+	script_set_speed ACTOR_MARIO_WORLD_WARIO, 1.0 ; $6742
+	script_set_speed ACTOR_MARIO_WORLD_WALUIGI, 1.0 ; $674a
+	script_set_speed ACTOR_MARIO_WORLD_WALK_77_05, 1.0 ; $6752
+	script_set_speed ACTOR_MARIO_WORLD_MARIO, 1.0 ; $675a
+	script_set_speed ACTOR_MARIO_WORLD_LUIGI, 1.0 ; $6762
+	script_set_speed ACTOR_MARIO_WORLD_BABY_MARIO, 1.0 ; $676a
+	script_set_speed ACTOR_MARIO_WORLD_YOSHI, 1.0 ; $6772
+	script_set_speed ACTOR_MARIO_WORLD_BOO, 1.0 ; $677a
+	script_set_speed ACTOR_MARIO_WORLD_DK, 1.0 ; $6782
+	script_set_speed ACTOR_MARIO_WORLD_TOAD, 1.0 ; $678a
+	script_set_speed ACTOR_PLAYER, 1.0 ; $6792
 	script_face ACTOR_MARIO_WORLD_MARIO, FACE_RIGHT ; $679a
 	script_wait_frames 10 ; $67a1
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_RIGHT ; $67a8
@@ -208,7 +208,7 @@ PromptExhibitionMatch:
 	script_move_target ACTOR_PLAYER, 18.0, 9.0 ; $67ff
 	jr .crowdFollows ; $680a
 .doublesWalk:
-	script_set_speed ACTOR_PARTNER, $0020 ; $680c
+	script_set_speed ACTOR_PARTNER, 1.0 ; $680c
 	script_move_target ACTOR_PLAYER, 17.0, 9.0 ; $6814
 	script_move_target ACTOR_PARTNER, 19.0, 9.0 ; $681f
 .crowdFollows:
@@ -302,7 +302,7 @@ MarioWorldEntry0eScene:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $69c5
 	ret z ; $69c8
 	farcall BeginCutsceneScriptMode ; $69c9
-	script_player_speed $0010 ; $69cc
+	script_player_speed 0.5 ; $69cc
 	script_move_player 17.0, 15.0 ; $69d2
 	farcall WaitPlayerMoveDone ; $69dc
 	script_set_position ACTOR_PLAYER, 17.0, 15.0 ; $69df
@@ -323,11 +323,11 @@ MarioWorldEntry0eScene:
 	script_face ACTOR_MARIO_WORLD_TOAD, FACE_RIGHT ; $6a49
 	ret ; $6a50
 MarioWorldArrivalIntroCutscene:
-	script_player_speed $0020 ; $6a51
+	script_player_speed 1.0 ; $6a51
 	script_move_player 18.0, 15.0 ; $6a57
 	farcall WaitPlayerMoveDone ; $6a61
 	script_wait_frames 40 ; $6a64
-	script_player_speed $0040 ; $6a6b
+	script_player_speed 2.0 ; $6a6b
 	script_move_player 18.0, 25.0 ; $6a71
 	farcall WaitPlayerMoveDone ; $6a7b
 	sound SFX_CHIME ; $6a7e
@@ -337,7 +337,7 @@ MarioWorldArrivalIntroCutscene:
 	script_jump_velocity ACTOR_MARIO_WORLD_BALLOON_EXCLAIM, $ff80 ; $6a9a
 	script_wait_frames 30 ; $6aa2
 	script_set_position ACTOR_MARIO_WORLD_BALLOON_EXCLAIM, 63.0, 63.0 ; $6aa9
-	script_set_speed ACTOR_MARIO_WORLD_TOAD, $0040 ; $6ab4
+	script_set_speed ACTOR_MARIO_WORLD_TOAD, 2.0 ; $6ab4
 	ld a, $13 ; $6abc
 	ld bc, $0300 ; $6abe
 	ld de, rJOYP ; $6ac1
@@ -474,7 +474,7 @@ MarioWorldLuigiDefendsChampCutscene:
 	script_wait_frames 4 ; $6e2b
 	script_face ACTOR_MARIO_WORLD_WALK_77_05, FACE_RIGHT ; $6e32
 	script_face ACTOR_MARIO_WORLD_YOSHI, FACE_UP ; $6e39
-	script_set_speed ACTOR_MARIO_WORLD_LUIGI, $0020 ; $6e40
+	script_set_speed ACTOR_MARIO_WORLD_LUIGI, 1.0 ; $6e40
 	script_move_target ACTOR_MARIO_WORLD_LUIGI, 22.0, 13.0 ; $6e48
 	script_wait_move ACTOR_MARIO_WORLD_LUIGI ; $6e53
 	script_wait_frames 10 ; $6e58

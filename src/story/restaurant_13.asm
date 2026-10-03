@@ -35,9 +35,9 @@ RestaurantPlazaArrival01_13:
 	ld a, [wStoryModeEntryPoint] ; $40eb
 	cp STORYENTRY_NONE ; $40ee
 	jp z, RestaurantPlazaArrivalWalkIn_13.done ; $40f0
-	script_set_speed ACTOR_PLAYER, $0018 ; $40f3
+	script_set_speed ACTOR_PLAYER, 0.75 ; $40f3
 	script_set_anim ACTOR_PLAYER, ANIM_DISTANT ; $40fb
-	script_set_speed ACTOR_PARTNER, $0018 ; $4102
+	script_set_speed ACTOR_PARTNER, 0.75 ; $4102
 	script_set_anim ACTOR_PARTNER, ANIM_DISTANT ; $410a
 	script_fade_in $08 ; $4111
 	script_wait_frames 20 ; $4116
@@ -57,7 +57,7 @@ RestaurantPlazaArrival02_13:
 	jp z, RestaurantPlazaArrivalWalkIn_13.done ; $4168
 	script_copy_scene_rect 20, 8, 6, 21, 2, 2 ; $416b
 	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $417a
-	script_set_speed ACTOR_PLAYER, $0018 ; $4189
+	script_set_speed ACTOR_PLAYER, 0.75 ; $4189
 	script_fade_in $08 ; $4191
 	call WaitFadeEnd ; $4196
 	script_wait_frames 5 ; $4199
@@ -75,9 +75,9 @@ RestaurantPlazaArrivalWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $41cf
 	cp STORYENTRY_NONE ; $41d2
 	jr z, .done ; $41d4
-	script_set_speed ACTOR_PLAYER, $000c ; $41d6
+	script_set_speed ACTOR_PLAYER, 0.375 ; $41d6
 	script_set_anim ACTOR_PLAYER, ANIM_DISTANT ; $41de
-	script_set_speed ACTOR_PARTNER, $000c ; $41e5
+	script_set_speed ACTOR_PARTNER, 0.375 ; $41e5
 	script_set_anim ACTOR_PARTNER, ANIM_DISTANT ; $41ed
 	script_fade_in $08 ; $41f4
 	script_wait_frames 10 ; $41f9
@@ -127,7 +127,7 @@ RestaurantPlazaTileTriggers_13:
 	db $ff
 RestaurantPlazaTile01_13:
 	script_move_target ACTOR_PARTNER, 7.0, 13.0 ; $42de
-	script_set_speed ACTOR_PLAYER, $0010 ; $42e9
+	script_set_speed ACTOR_PLAYER, 0.5 ; $42e9
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $42f1
 	script_wait_move ACTOR_PLAYER ; $42fb
 	call StoryActorsWalkOffAndFadeOut_13 ; $4300
@@ -136,7 +136,7 @@ RestaurantPlazaTile01_13:
 	ld [wStoryModeExitTriggerRequest], a ; $4308
 	ret ; $430b
 RestaurantPlazaTile02_13:
-	script_set_speed ACTOR_PLAYER, $0010 ; $430c
+	script_set_speed ACTOR_PLAYER, 0.5 ; $430c
 	script_move_target ACTOR_PARTNER, 21.0, 13.0 ; $4314
 	script_move_angle ACTOR_PLAYER, $c2, $0200 ; $431f
 	script_wait_move ACTOR_PLAYER ; $4329
@@ -151,10 +151,10 @@ RestaurantPlazaTile02_13:
 	ld [wStoryModeExitTriggerRequest], a ; $4353
 	ret ; $4356
 RestaurantPlazaTile03_13:
-	script_set_speed ACTOR_PARTNER, $0040 ; $4357
+	script_set_speed ACTOR_PARTNER, 2.0 ; $4357
 	script_move_target ACTOR_PARTNER, 37.0, 13.0 ; $435f
-	script_set_speed ACTOR_PLAYER, $0010 ; $436a
-	script_set_speed ACTOR_PARTNER, $0010 ; $4372
+	script_set_speed ACTOR_PLAYER, 0.5 ; $436a
+	script_set_speed ACTOR_PARTNER, 0.5 ; $4372
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $437a
 	script_wait_move ACTOR_PLAYER ; $4384
 	call StoryActorsWalkOffAndFadeOut_13 ; $4389
@@ -167,8 +167,8 @@ RestaurantPlazaTile03_13:
 	ret ; $43a0
 RestaurantPlazaTile05_13:
 	script_move_target ACTOR_PARTNER, 55.0, 13.0 ; $43a1
-	script_set_speed ACTOR_PLAYER, $0010 ; $43ac
-	script_set_speed ACTOR_PARTNER, $0010 ; $43b4
+	script_set_speed ACTOR_PLAYER, 0.5 ; $43ac
+	script_set_speed ACTOR_PARTNER, 0.5 ; $43b4
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0080 ; $43bc
 	call StoryActorsWalkOffAndFadeOut_13 ; $43c6
 	test_flag FLAG_DOUBLES ; $43c9
@@ -182,7 +182,7 @@ RestaurantPlazaTile05_13:
 .done:
 	ret ; $43de
 RestaurantPlazaTile06_13:
-	script_set_speed ACTOR_PLAYER, $0020 ; $43df
+	script_set_speed ACTOR_PLAYER, 1.0 ; $43df
 	script_move_target ACTOR_PARTNER, 59.0, 13.0 ; $43e7
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0600 ; $43f2
 	script_wait_frames 60 ; $43fc
@@ -203,7 +203,7 @@ StoryActorsWalkOffAndFadeOut_13:
 	jr nz, StoryActorsWalkOffAndFadeOutDoubles_13 ; $4428
 	script_face ACTOR_PLAYER, FACE_UP ; $442a
 	script_move_angle ACTOR_PLAYER, $c8, $0400 ; $4431
-	script_set_speed ACTOR_PLAYER, $0010 ; $443b
+	script_set_speed ACTOR_PLAYER, 0.5 ; $443b
 	script_wait_frames 40 ; $4443
 	script_set_anim ACTOR_PLAYER, ANIM_DISTANT ; $444a
 	ld c, $08 ; $4451
@@ -215,8 +215,8 @@ StoryActorsWalkOffAndFadeOut_13:
 StoryActorsWalkOffAndFadeOutDoubles_13:
 	script_wait_move ACTOR_PARTNER ; $446a
 	script_move_angle ACTOR_PLAYER, $c8, $0280 ; $446f
-	script_set_speed ACTOR_PLAYER, $0010 ; $4479
-	script_set_speed ACTOR_PARTNER, $0010 ; $4481
+	script_set_speed ACTOR_PLAYER, 0.5 ; $4479
+	script_set_speed ACTOR_PARTNER, 0.5 ; $4481
 	script_wait_frames 10 ; $4489
 	script_move_angle ACTOR_PARTNER, $ca, $0500 ; $4490
 	script_wait_move ACTOR_PLAYER ; $449a
@@ -393,13 +393,13 @@ ServiceAceCoachIntroCutscene:
 	script_wait_frames 15 ; $488f
 	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_MARK, 21.0, 9.5 ; $4896
 	script_wait_frames 15 ; $48a1
-	script_set_speed ACTOR_SERVICE_ACE_COACH_INTRO_MARK, $0010 ; $48a8
+	script_set_speed ACTOR_SERVICE_ACE_COACH_INTRO_MARK, 0.5 ; $48a8
 	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_MARK, 21.0, 13.0 ; $48b0
 	script_wait_move ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $48bb
 	script_face ACTOR_SERVICE_ACE_COACH_INTRO_MARK, FACE_RIGHT ; $48c0
 	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, 21.0, 9.0 ; $48c7
 	script_wait_frames 15 ; $48d2
-	script_set_speed ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, $0010 ; $48d9
+	script_set_speed ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, 0.5 ; $48d9
 	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, 21.0, 11.0 ; $48e1
 	script_wait_move ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $48ec
 	call AnimateDoorClose_13 ; $48f1
@@ -441,13 +441,13 @@ ServiceAceCoachIntroCutscene:
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $49c1
 	script_set_text Text_31_62 ; $49c6
 	script_wait_frames 15 ; $49cc
-	script_set_speed ACTOR_PLAYER, $0018 ; $49d3
+	script_set_speed ACTOR_PLAYER, 0.75 ; $49d3
 	script_move_target ACTOR_PLAYER, 29.0, 12.0 ; $49db
 	script_wait_move ACTOR_PLAYER ; $49e6
 	script_move_target ACTOR_PLAYER, 27.0, 11.0 ; $49eb
 	script_wait_move ACTOR_PLAYER ; $49f6
 	script_face ACTOR_PLAYER, FACE_LEFT ; $49fb
-	script_set_speed ACTOR_PLAYER, $0020 ; $4a02
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4a02
 	script_wait_frames 15 ; $4a0a
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a11
 	script_wait_idle ACTOR_PLAYER ; $4a18
@@ -517,12 +517,12 @@ ServiceAceCoachIntroCutscene:
 	script_wait_move ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4bed
 	script_face ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, FACE_UP ; $4bf2
 	script_move_angle ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, FACE_UP, $0500 ; $4bf9
-	script_set_speed ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, $000b ; $4c03
+	script_set_speed ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, 0.34375 ; $4c03
 	script_wait_frames 10 ; $4c0b
 	script_wait_move ACTOR_PLAYER ; $4c12
 	script_face ACTOR_PLAYER, FACE_UP ; $4c17
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0500 ; $4c1e
-	script_set_speed ACTOR_PLAYER, $000b ; $4c28
+	script_set_speed ACTOR_PLAYER, 0.34375 ; $4c28
 	script_wait_move ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4c30
 	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ANIM_DISTANT ; $4c35
 	script_move_angle ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, FACE_UP, $0100 ; $4c3c

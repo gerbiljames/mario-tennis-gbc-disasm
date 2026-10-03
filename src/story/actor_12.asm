@@ -330,7 +330,7 @@ SeniorCourtPostMatchReturn:
 	cp WINLOSE_WIN ; $6db0
 	jp z, SeniorMatchVictorySceneDispatch ; $6db2
 .eq01:
-	script_player_speed $0040 ; $6db5
+	script_player_speed 2.0 ; $6db5
 	script_move_player 45.0, 27.0 ; $6dbb
 	script_set_position ACTOR_PLAYER, 45.0, 27.0 ; $6dc5
 	script_face ACTOR_PLAYER, FACE_UP ; $6dd0
@@ -376,7 +376,7 @@ SeniorDoublesRank2Victory:
 	script_set_position ACTOR_PARTNER, 35.0, 27.0 ; $6e65
 	script_face ACTOR_PLAYER, FACE_UP ; $6e70
 	script_face ACTOR_PARTNER, FACE_UP ; $6e77
-	script_player_speed $0040 ; $6e7e
+	script_player_speed 2.0 ; $6e7e
 	script_move_player 38.0, 23.0 ; $6e84
 	farcall WaitPlayerMoveDone ; $6e8e
 	script_fade_in $08 ; $6e91

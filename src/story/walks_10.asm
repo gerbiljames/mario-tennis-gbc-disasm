@@ -1,8 +1,8 @@
 ; Instruction-identical to ReadSceneTilemapTile_0f (one copy per bank); a change here belongs in every copy.
 	twin read_scene_tilemap_tile, 10 ; $7ac8 ReadSceneTilemapTile_10
 MapExitWalkCurveRight_10:
-	script_set_speed ACTOR_PLAYER, $0010 ; $7ae6
-	script_set_speed ACTOR_PARTNER, $0010 ; $7aee
+	script_set_speed ACTOR_PLAYER, 0.5 ; $7ae6
+	script_set_speed ACTOR_PARTNER, 0.5 ; $7aee
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $7af6
 	script_wait_move ACTOR_PLAYER ; $7b00
 	script_move_angle ACTOR_PLAYER, $e0, $0080 ; $7b05
@@ -13,8 +13,8 @@ MapExitWalkCurveLeft_10:
 	ld a, [wStoryModeEntryPoint] ; $7b1f
 	cp STORYENTRY_NONE ; $7b22
 	jr z, .done ; $7b24
-	script_set_speed ACTOR_PARTNER, $0010 ; $7b26
-	script_set_speed ACTOR_PLAYER, $0010 ; $7b2e
+	script_set_speed ACTOR_PARTNER, 0.5 ; $7b26
+	script_set_speed ACTOR_PLAYER, 0.5 ; $7b2e
 	script_move_angle ACTOR_PLAYER, FACE_UP, $00c0 ; $7b36
 	script_wait_move ACTOR_PLAYER ; $7b40
 	script_move_angle ACTOR_PLAYER, $a0, $0080 ; $7b45
@@ -26,8 +26,8 @@ MapArrivalWalkPair_10:
 	ld a, [wStoryModeEntryPoint] ; $7b5f
 	cp STORYENTRY_NONE ; $7b62
 	jr z, .done ; $7b64
-	script_set_speed ACTOR_PLAYER, $0010 ; $7b66
-	script_set_speed ACTOR_PARTNER, $0010 ; $7b6e
+	script_set_speed ACTOR_PLAYER, 0.5 ; $7b66
+	script_set_speed ACTOR_PARTNER, 0.5 ; $7b6e
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0280 ; $7b76
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $7b80
 .done:

@@ -472,7 +472,7 @@ ServeCoachTwoStageRetryPrompt:
 InitServeCoachScene:
 	xor a ; $74e1
 	ld [wStoryModeShowLocationName], a ; $74e2
-	script_player_speed $00f0 ; $74e5
+	script_player_speed 7.5 ; $74e5
 	script_set_position ACTOR_PLAYER, 19.0, 19.0 ; $74eb
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $74f6
 	script_move_player 19.0, 19.0 ; $7501

@@ -87,7 +87,7 @@ End10VarsityCourtEntry01Scene:
 	ld hl, End10VarsityCourtActorsAlt_27 ; $5653
 	farcall ScriptRespawnLocationActors ; $5656
 	script_null_script ACTOR_PLAYER_SHADOW ; $5659
-	script_player_speed $00f0 ; $565e
+	script_player_speed 7.5 ; $565e
 	call SetPartnerObjDefByGender_27 ; $5664
 	script_set_position ACTOR_PLAYER, 11.0, 29.0 ; $5667
 	script_set_position ACTOR_PARTNER, 13.0, 35.0 ; $5672
@@ -96,7 +96,7 @@ End10VarsityCourtEntry01Scene:
 	script_move_player 11.0, 17.0 ; $568b
 	farcall WaitPlayerMoveDone ; $5695
 	script_fade_in $04 ; $5698
-	script_player_speed $0020 ; $569d
+	script_player_speed 1.0 ; $569d
 	script_move_player 11.0, 23.0 ; $56a3
 	farcall WaitPlayerMoveDone ; $56ad
 	script_move_target ACTOR_END10_VARSITY_COURT_ALT_BOB, 11.0, 23.0 ; $56b0
@@ -168,7 +168,7 @@ End10VarsityCourtEntry01Scene:
 	call SetPartnerObjDefByGender_27 ; $5837
 	script_null_script ACTOR_PARTNER ; $583a
 	script_null_script ACTOR_PLAYER_SHADOW ; $583f
-	script_player_speed $00f0 ; $5844
+	script_player_speed 7.5 ; $5844
 	script_set_position ACTOR_PLAYER, 11.0, 29.0 ; $584a
 	ld a, $02 ; $5855
 	ld bc, $0d00 ; $5857
@@ -180,7 +180,7 @@ SceneSharedData_27:
 	script_move_player 11.0, 17.0 ; $586e
 	farcall WaitPlayerMoveDone ; $5878
 	script_fade_in $04 ; $587b
-	script_player_speed $0020 ; $5880
+	script_player_speed 1.0 ; $5880
 	script_move_player 11.0, 23.0 ; $5886
 	farcall WaitPlayerMoveDone ; $5890
 	script_move_target ACTOR_PARTNER, 13.0, 29.0 ; $5893
@@ -504,12 +504,12 @@ End8SrCourtInitScript_27:
 	script_face ACTOR_PARTNER, FACE_DOWN ; $5f84
 	script_face ACTOR_END8_SR_COURT_ALT_FAY, FACE_DOWN ; $5f8b
 	script_delay 30 ; $5f92
-	script_player_speed $0030 ; $5f97
-	script_set_speed ACTOR_END8_SR_COURT_ALT_EMILY, $0010 ; $5f9d
+	script_player_speed 1.5 ; $5f97
+	script_set_speed ACTOR_END8_SR_COURT_ALT_EMILY, 0.5 ; $5f9d
 	script_move_player 43.0, 31.0 ; $5fa5
 	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 43.0, 32.0 ; $5faf
 	script_delay 90 ; $5fba
-	script_player_speed $0010 ; $5fbf
+	script_player_speed 0.5 ; $5fbf
 	script_move_player 36.0, 27.0 ; $5fc5
 	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 37.0, 31.0 ; $5fcf
 	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $5fda
@@ -540,7 +540,7 @@ End8SrCourtInitScript_27:
 	ld [wStoryModeExitTriggerRequest], a ; $6071
 	ret ; $6074
 .notDoubles:
-	script_set_speed ACTOR_END8_SR_COURT_ALT_FAY, $0018 ; $6075
+	script_set_speed ACTOR_END8_SR_COURT_ALT_FAY, 0.75 ; $6075
 	script_set_position ACTOR_PLAYER, 36.0, 27.0 ; $607d
 	script_face ACTOR_PLAYER, FACE_UP ; $6088
 	xor a ; $608f
@@ -555,12 +555,12 @@ End8SrCourtInitScript_27:
 	script_wait_idle ACTOR_PLAYER ; $60c0
 	script_face ACTOR_PLAYER, FACE_DOWN ; $60c5
 	script_delay 30 ; $60cc
-	script_player_speed $0030 ; $60d1
-	script_set_speed ACTOR_END8_SR_COURT_ALT_EMILY, $0010 ; $60d7
+	script_player_speed 1.5 ; $60d1
+	script_set_speed ACTOR_END8_SR_COURT_ALT_EMILY, 0.5 ; $60d7
 	script_move_player 43.0, 31.0 ; $60df
 	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 43.0, 31.0 ; $60e9
 	script_delay 90 ; $60f4
-	script_player_speed $0010 ; $60f9
+	script_player_speed 0.5 ; $60f9
 	script_move_player 36.0, 27.0 ; $60ff
 	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $6109
 	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 36.0, 31.0 ; $610e

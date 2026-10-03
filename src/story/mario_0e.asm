@@ -64,7 +64,7 @@ RepairCounterChangedReturnB:
 	ld a, $0c ; $50b3
 	ld [wMapSceneStage2], a ; $50b5
 	farcall WaitPlayerMoveDone ; $50b8
-	script_player_speed $00f0 ; $50bb
+	script_player_speed 7.5 ; $50bb
 	script_move_player 13.0, 19.0 ; $50c1
 	farcall WaitPlayerMoveDone ; $50cb
 	script_set_position ACTOR_PARTNER, 19.0, 19.0 ; $50ce
@@ -133,7 +133,7 @@ ShowEquipChangeConfirmation:
 	script_speak SPEAKER_NONE | 12 ; $51b5
 	script_null_script ACTOR_PLAYER ; $51ba
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $51bf
-	script_set_speed ACTOR_PLAYER, $0020 ; $51c6
+	script_set_speed ACTOR_PLAYER, 1.0 ; $51c6
 	script_face_toward ACTOR_TRAINING_GYM_WALK_72_02_2, ACTOR_PLAYER ; $51ce
 	ret ; $51d6
 ActorScript_0e_03:
@@ -349,7 +349,7 @@ MarioWorldInitScript_0e:
 	ld a, [wStoryModeEntryPoint] ; $54f0
 	inc a ; $54f3
 	jr z, .doubles ; $54f4
-	script_set_speed ACTOR_PLAYER, $0014 ; $54f6
+	script_set_speed ACTOR_PLAYER, 0.625 ; $54f6
 	script_move_target ACTOR_PLAYER, 18.0, 29.0 ; $54fe
 .doubles:
 	jp MarioWorldEntry0eScene.placeActors ; $5509
@@ -359,7 +359,7 @@ MarioWorldInitScript_0e:
 	ld a, [wStoryModeEntryPoint] ; $5510
 	inc a ; $5513
 	jr z, .done ; $5514
-	script_set_speed ACTOR_PLAYER, $0014 ; $5516
+	script_set_speed ACTOR_PLAYER, 0.625 ; $5516
 	script_move_target ACTOR_PLAYER, 18.0, 29.0 ; $551e
 .done:
 	jp MarioWorldEntry0eScene.placeActors ; $5529
@@ -415,9 +415,9 @@ MarioWorldArrivalSingles:
 	script_wait_frames 40 ; $559d
 	call MarioWorldArrivalIntroCutscene ; $55a4
 	script_set_position ACTOR_PLAYER, 18.0, 37.0 ; $55a7
-	script_set_speed ACTOR_PLAYER, $0010 ; $55b2
+	script_set_speed ACTOR_PLAYER, 0.5 ; $55b2
 	script_move_target ACTOR_PLAYER, 18.0, 32.5 ; $55ba
-	script_player_speed $0010 ; $55c5
+	script_player_speed 0.5 ; $55c5
 	script_move_player 18.0, 27.0 ; $55cb
 	script_wait_frames 80 ; $55d5
 	script_face ACTOR_MARIO_WORLD_TOAD, FACE_UP ; $55dc
@@ -428,7 +428,7 @@ MarioWorldArrivalSingles:
 	script_speak ACTOR_MARIO_WORLD_TOAD ; $55f5
 	script_speak ACTOR_MARIO_WORLD_TOAD ; $55fa
 .walkIn:
-	script_player_speed $0020 ; $55ff
+	script_player_speed 1.0 ; $55ff
 	script_move_player 18.0, 24.0 ; $5605
 	farcall WaitPlayerMoveDone ; $560f
 	script_wait_frames 10 ; $5612
@@ -438,10 +438,10 @@ MarioWorldArrivalSingles:
 	jr nz, .approach ; $5628
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $562a
 .approach:
-	script_player_speed $0014 ; $562f
-	script_set_speed ACTOR_PLAYER, $0014 ; $5635
-	script_set_speed ACTOR_MARIO_WORLD_TOAD, $0014 ; $563d
-	script_set_speed ACTOR_MARIO_WORLD_PEACH, $0014 ; $5645
+	script_player_speed 0.625 ; $562f
+	script_set_speed ACTOR_PLAYER, 0.625 ; $5635
+	script_set_speed ACTOR_MARIO_WORLD_TOAD, 0.625 ; $563d
+	script_set_speed ACTOR_MARIO_WORLD_PEACH, 0.625 ; $5645
 	script_move_target ACTOR_PLAYER, 18.0, 17.0 ; $564d
 	script_move_target ACTOR_MARIO_WORLD_TOAD, 18.0, 23.0 ; $5658
 	script_wait_frames 40 ; $5663
@@ -462,8 +462,8 @@ MarioWorldArrivalSingles:
 	ret ; $56bf
 .done:
 	call MarioWorldWelcomeCutscene ; $56c0
-	script_set_speed ACTOR_MARIO_WORLD_BOWSER, $0020 ; $56c3
-	script_set_speed ACTOR_MARIO_WORLD_BALLOON_ANGRY, $0020 ; $56cb
+	script_set_speed ACTOR_MARIO_WORLD_BOWSER, 1.0 ; $56c3
+	script_set_speed ACTOR_MARIO_WORLD_BALLOON_ANGRY, 1.0 ; $56cb
 	script_wait_frames 40 ; $56d3
 	script_set_anim ACTOR_MARIO_WORLD_BOWSER, ANIM_BOUNCE ; $56da
 	script_wait_idle ACTOR_MARIO_WORLD_BOWSER ; $56e1
@@ -475,8 +475,8 @@ MarioWorldArrivalSingles:
 	script_wait_frames 20 ; $5713
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $571a
 	script_wait_frames 20 ; $571f
-	script_set_speed ACTOR_MARIO_WORLD_WARIO, $0020 ; $5726
-	script_set_speed ACTOR_MARIO_WORLD_WALUIGI, $0020 ; $572e
+	script_set_speed ACTOR_MARIO_WORLD_WARIO, 1.0 ; $5726
+	script_set_speed ACTOR_MARIO_WORLD_WALUIGI, 1.0 ; $572e
 	script_move_target ACTOR_MARIO_WORLD_BOWSER, 16.0, 13.0 ; $5736
 	script_wait_move ACTOR_MARIO_WORLD_BOWSER ; $5741
 	script_wait_frames 10 ; $5746
@@ -526,7 +526,7 @@ MarioWorldArrivalSingles:
 	script_wait_frames 10 ; $587a
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_DOWN ; $5881
 	script_wait_frames 10 ; $5888
-	script_set_speed ACTOR_MARIO_WORLD_PEACH, $0020 ; $588f
+	script_set_speed ACTOR_MARIO_WORLD_PEACH, 1.0 ; $588f
 	script_move_target ACTOR_MARIO_WORLD_PEACH, 18.0, 11.0 ; $5897
 	script_wait_move ACTOR_MARIO_WORLD_PEACH ; $58a2
 	script_face ACTOR_MARIO_WORLD_WALK_77_05, FACE_DOWN ; $58a7

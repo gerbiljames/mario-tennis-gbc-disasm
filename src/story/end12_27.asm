@@ -412,7 +412,7 @@ End11TrainingCourtInitScript_27:
 	script_delay 60 ; $5342
 	script_set_position ACTOR_END11_TRAINING_COURT_WALK_76_06, 51.0, 7.0 ; $5347
 	script_set_active ACTOR_END11_TRAINING_COURT_WALK_76_06, $00 ; $5352
-	script_player_speed $0010 ; $5359
+	script_player_speed 0.5 ; $5359
 	script_move_player_to_actor ACTOR_END11_TRAINING_COURT_WALK_76_06 ; $535f
 	ld hl, End11TrainingCourtInitScriptPalette0_27 ; $5366
 	ld_bg_pals de, 2, 6 ; $5369
@@ -479,7 +479,7 @@ End11TrainingCourtInitScript_27:
 	script_set_anim ACTOR_END11_TRAINING_COURT_ALT_BOB, ANIM_BOUNCE ; $5493
 	script_wait_idle ACTOR_END11_TRAINING_COURT_ALT_BOB ; $549a
 	script_unlock_facing ACTOR_END11_TRAINING_COURT_ALT_BOB ; $549f
-	script_set_speed ACTOR_END11_TRAINING_COURT_ALT_BOB, $0030 ; $54a6
+	script_set_speed ACTOR_END11_TRAINING_COURT_ALT_BOB, 1.5 ; $54a6
 	script_get_actor_state ACTOR_END11_TRAINING_COURT_ALT_BOB ; $54ae
 	ld a, $04 ; $54b3
 	ld e, l ; $54b5

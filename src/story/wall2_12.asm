@@ -22,7 +22,7 @@ RelaunchWallPracticeMasterLevel:
 	ld a, $00 ; $49fa
 	farcall UpdateMinigameRecord ; $49fc
 	pop_wram_bank ; $49ff
-	script_set_speed ACTOR_PLAYER, $0020 ; $4a04
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4a04
 	script_move_target ACTOR_PLAYER, 5.0, 49.0 ; $4a0c
 	script_wait_move ACTOR_PLAYER ; $4a17
 	script_move_player 5.0, 55.0 ; $4a1c
@@ -106,7 +106,7 @@ WallPracticeLevelResultScript:
 WallPracticeExitCourtScript:
 	script_set_text Text_35_251 ; $4b2e
 	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4b34
-	script_set_speed ACTOR_PLAYER, $0020 ; $4b39
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4b39
 	script_move_target ACTOR_PLAYER, 5.0, 49.0 ; $4b41
 	script_wait_move ACTOR_PLAYER ; $4b4c
 	script_move_player 5.0, 55.0 ; $4b51
@@ -162,7 +162,7 @@ WallPracticeLevelResultScript.speakAndLeave:
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4bfc
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c03
 	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c08
-	script_set_speed ACTOR_PLAYER, $0020 ; $4c0d
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4c0d
 	script_move_target ACTOR_PLAYER, 5.0, 49.0 ; $4c15
 	script_wait_move ACTOR_PLAYER ; $4c20
 	script_move_player 5.0, 55.0 ; $4c25
@@ -234,7 +234,7 @@ WallPracticeRoomTile03_12:
 	jr nz, .done ; $4d42
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4d44
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4d4b
-	script_set_speed ACTOR_PLAYER, $0020 ; $4d52
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4d52
 	script_move_target ACTOR_PLAYER, 3.0, 49.0 ; $4d5a
 	script_wait_move ACTOR_PLAYER ; $4d65
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4d6a
@@ -265,7 +265,7 @@ WallPracticeRoomTile04_12:
 	jr nz, .done ; $4db7
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4db9
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4dc0
-	script_set_speed ACTOR_PLAYER, $0020 ; $4dc7
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4dc7
 	script_move_target ACTOR_PLAYER, 7.0, 49.0 ; $4dcf
 	script_wait_move ACTOR_PLAYER ; $4dda
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4ddf
@@ -296,7 +296,7 @@ WallPracticeRoomTile05_12:
 	jr nz, .done ; $4e2c
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4e2e
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4e35
-	script_set_speed ACTOR_PLAYER, $0020 ; $4e3c
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4e3c
 	script_move_target ACTOR_PLAYER, 17.0, 49.0 ; $4e44
 	script_wait_move ACTOR_PLAYER ; $4e4f
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4e54
@@ -327,7 +327,7 @@ WallPracticeRoomTile06_12:
 	jr nz, .done ; $4ea1
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4ea3
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4eaa
-	script_set_speed ACTOR_PLAYER, $0020 ; $4eb1
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4eb1
 	script_move_target ACTOR_PLAYER, 21.0, 49.0 ; $4eb9
 	script_wait_move ACTOR_PLAYER ; $4ec4
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4ec9
@@ -550,7 +550,7 @@ WallPracticeRoomNpc07_12:
 	script_wait_move ACTOR_PARTNER ; $5186
 	script_face ACTOR_PARTNER, FACE_UP ; $518b
 .walkToCourt:
-	script_set_speed ACTOR_PLAYER, $0020 ; $5192
+	script_set_speed ACTOR_PLAYER, 1.0 ; $5192
 	script_move_target ACTOR_PLAYER, 5.0, 53.0 ; $519a
 	script_wait_move ACTOR_PLAYER ; $51a5
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $51aa
@@ -581,7 +581,7 @@ WallPracticeRoomNpc07_12:
 	script_wait_idle ACTOR_PARTNER ; $5220
 	script_wait_frames 20 ; $5225
 .done:
-	script_set_speed ACTOR_PLAYER, $0020 ; $522c
+	script_set_speed ACTOR_PLAYER, 1.0 ; $522c
 	script_move_target ACTOR_PLAYER, 5.0, 55.0 ; $5234
 	script_wait_move ACTOR_PLAYER ; $523f
 	script_move_target ACTOR_PLAYER, 5.0, 49.0 ; $5244

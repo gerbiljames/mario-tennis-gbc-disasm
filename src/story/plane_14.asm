@@ -390,7 +390,7 @@ IslandSkyEntry02Scene:
 	call AdvancePlaneFrameCounter_14 ; $634a
 	dec h ; $634d
 	jr nz, .descend ; $634e
-	script_player_speed $0012 ; $6350
+	script_player_speed 0.5625 ; $6350
 	script_move_player_to_actor ACTOR_PLAYER ; $6356
 	ld h, $1c ; $635d
 .land:

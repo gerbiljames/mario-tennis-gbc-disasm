@@ -92,7 +92,7 @@ End7TrainingCtrEntry01Scene:
 	script_wait_move ACTOR_END7_TRAINING_CTR_WALK_72_07 ; $6306
 	script_face ACTOR_END7_TRAINING_CTR_WALK_72_07, FACE_DOWN ; $630b
 	script_null_script ACTOR_PARTNER ; $6312
-	script_set_speed ACTOR_PLAYER, $0020 ; $6317
+	script_set_speed ACTOR_PLAYER, 1.0 ; $6317
 	script_move_player 56.0, 51.0 ; $631f
 	script_move_target ACTOR_PLAYER, 51.0, 43.0 ; $6329
 	script_wait_move ACTOR_PLAYER ; $6334
@@ -108,9 +108,9 @@ End7TrainingCtrEntry01Scene:
 	ret ; $636f
 End7TrainingCtrEntry02Scene:
 	script_set_position ACTOR_PARTNER, 22.0, 26.0 ; $6370
-	script_set_speed ACTOR_PARTNER, $0010 ; $637b
-	script_set_speed ACTOR_PLAYER, $0010 ; $6383
-	script_player_speed $0018 ; $638b
+	script_set_speed ACTOR_PARTNER, 0.5 ; $637b
+	script_set_speed ACTOR_PLAYER, 0.5 ; $6383
+	script_player_speed 0.75 ; $638b
 	script_fade_in $04 ; $6391
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0400 ; $6396
 	script_wait_move ACTOR_PLAYER ; $63a0
@@ -128,7 +128,7 @@ End7TrainingCtrEntry02Scene:
 	script_wait_frames 120 ; $63f8
 	script_null_script ACTOR_PLAYER ; $63ff
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $6404
-	script_set_speed ACTOR_PLAYER, $0020 ; $640b
+	script_set_speed ACTOR_PLAYER, 1.0 ; $640b
 	script_face_toward ACTOR_END7_TRAINING_CTR_WALK_72_02_2, ACTOR_PLAYER ; $6413
 	ld a, $01 ; $641b
 	ld [wUnusedExitTriggerIdMirror], a ; $641d
@@ -190,17 +190,17 @@ End5ServiceAceExitTriggers_27:
 	db $ff
 End5ServiceAceCutscene_27:
 	farcall BeginCutsceneScriptMode ; $656f
-	script_player_speed $0010 ; $6572
+	script_player_speed 0.5 ; $6572
 	script_move_player 15.0, 17.0 ; $6578
 	script_fade_in $08 ; $6582
-	script_set_speed ACTOR_PLAYER, $0018 ; $6587
+	script_set_speed ACTOR_PLAYER, 0.75 ; $6587
 	script_move_target ACTOR_PLAYER, 13.0, 23.0 ; $658f
 	script_wait_move ACTOR_PLAYER ; $659a
 	script_move_target ACTOR_PLAYER, 15.0, 23.0 ; $659f
 	script_wait_move ACTOR_PLAYER ; $65aa
 	script_move_target ACTOR_PLAYER, 15.0, 17.0 ; $65af
 	script_wait_move ACTOR_PLAYER ; $65ba
-	script_player_speed $0018 ; $65bf
+	script_player_speed 0.75 ; $65bf
 	script_move_player 25.0, 17.0 ; $65c5
 	script_move_target ACTOR_PLAYER, 25.0, 17.0 ; $65cf
 	script_wait_move ACTOR_PLAYER ; $65da
@@ -340,7 +340,7 @@ End4JrCourtApproachSingles_27:
 	script_wait_frames 10 ; $6875
 	script_face_toward ACTOR_END4_JR_COURT_ALT_PAM, ACTOR_PLAYER ; $687c
 	script_wait_frames 30 ; $6884
-	script_player_speed $0020 ; $688b
+	script_player_speed 1.0 ; $688b
 	script_move_player_to_actor ACTOR_END4_JR_COURT_ALT_PAM ; $6891
 	farcall WaitPlayerMoveDone ; $6898
 	script_face_toward ACTOR_END4_JR_COURT_ALT_WALK_72_00, ACTOR_END4_JR_COURT_ALT_PAM ; $689b
@@ -444,7 +444,7 @@ End4JrCourtSceneSingles_27:
 	call End4JrCourtSceneSingles_27 ; $6a79
 	ret ; $6a7c
 End4JrCourtApproachDoubles_27:
-	script_player_speed $0020 ; $6a7d
+	script_player_speed 1.0 ; $6a7d
 	script_face ACTOR_END4_JR_COURT_ALT_WALK_72_00, FACE_RIGHT ; $6a83
 	script_move_player_to_actor ACTOR_END4_JR_COURT_ALT_BRIAN ; $6a8a
 	farcall WaitPlayerMoveDone ; $6a91

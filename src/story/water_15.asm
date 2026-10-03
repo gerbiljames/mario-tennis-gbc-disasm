@@ -319,7 +319,7 @@ TrainingCourtIntroTourScene:
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_DOWN ; $5a7d
 	script_wait_frames 60 ; $5a84
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_RIGHT ; $5a8b
-	script_player_speed $0040 ; $5a92
+	script_player_speed 2.0 ; $5a92
 	script_set_text Text_36_627 ; $5a98
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5a9e
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5aa3
@@ -358,7 +358,7 @@ TrainingCourtIntroTourScene:
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b6f
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5b74
 	script_wait_idle ACTOR_PLAYER ; $5b7b
-	script_player_speed $0020 ; $5b80
+	script_player_speed 1.0 ; $5b80
 	script_face ACTOR_PLAYER, FACE_LEFT ; $5b86
 	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 30.0, 43.0 ; $5b8d
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b98
@@ -419,7 +419,7 @@ ServeChallengerResultScene:
 	script_null_script ACTOR_PARTNER ; $5d22
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5d27
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5d32
-	script_player_speed $00f0 ; $5d39
+	script_player_speed 7.5 ; $5d39
 	script_move_player 24.0, 15.0 ; $5d3f
 	farcall WaitPlayerMoveDone ; $5d49
 	script_fade_in $08 ; $5d4c

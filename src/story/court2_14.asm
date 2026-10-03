@@ -26,7 +26,7 @@ MachinePracticeLevelPrompt:
 	and a ; $463c
 	jr nz, .done ; $463d
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_UP ; $463f
-	script_set_speed ACTOR_PLAYER, $0020 ; $4646
+	script_set_speed ACTOR_PLAYER, 1.0 ; $4646
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $464e
 	script_wait_move ACTOR_PLAYER ; $4658
 	script_move_target ACTOR_PLAYER, 53.0, 53.0 ; $465d
@@ -104,7 +104,7 @@ MachinePracticeResultScene:
 	ld h, [hl] ; $472a
 	ld l, a ; $472b
 	farcall PushTextArgNumber ; $472c
-	script_set_speed ACTOR_PLAYER, $0020 ; $472f
+	script_set_speed ACTOR_PLAYER, 1.0 ; $472f
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4737
 	farcall RunDialogueYesNoPrompt ; $473c
 	farcall ScriptCloseDialogueWindow ; $473f

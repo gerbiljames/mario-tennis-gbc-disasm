@@ -12,7 +12,7 @@ ActorList_11_0:
 	ld hl, ActorList_11_1 ; $53dd
 	farcall ScriptRespawnLocationActors ; $53e0
 	farcall BeginCutsceneScriptMode ; $53e3
-	script_player_speed $00ff ; $53e6
+	script_player_speed 7.96875 ; $53e6
 	script_move_player 24.0, 47.0 ; $53ec
 	farcall WaitPlayerMoveDone ; $53f6
 	test_flag FLAG_DOUBLES ; $53f9
@@ -197,8 +197,8 @@ JuniorClassCourtDoublesNpc0A_11:
 	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $56b3
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $56b5
 	script_null_script ACTOR_PARTNER ; $56bc
-	script_set_speed ACTOR_PARTNER, $0020 ; $56c1
-	script_set_speed ACTOR_PLAYER, $0020 ; $56c9
+	script_set_speed ACTOR_PARTNER, 1.0 ; $56c1
+	script_set_speed ACTOR_PLAYER, 1.0 ; $56c9
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_11 ; $56d1
 	script_wait_frames 20 ; $56dc
 	script_set_actor_script ACTOR_PARTNER, ActorScript_11_12 ; $56e3
@@ -256,7 +256,7 @@ JuniorClassCourtDoublesANpc0A_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $57e3
 	ret ; $57e8
 JuniorClassCourtDoublesNpc03FaceUp_11:
-	script_set_speed ACTOR_PLAYER, $0008 ; $57e9
+	script_set_speed ACTOR_PLAYER, 0.25 ; $57e9
 	script_lock_facing ACTOR_PLAYER ; $57f1
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $57f8
 	script_wait_move ACTOR_PLAYER ; $5803

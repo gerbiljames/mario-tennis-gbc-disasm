@@ -1,5 +1,5 @@
 VarsityCourtANpc03FaceUp_13:
-	script_set_speed ACTOR_PLAYER, $0008 ; $6c13
+	script_set_speed ACTOR_PLAYER, 0.25 ; $6c13
 	script_lock_facing ACTOR_PLAYER ; $6c1b
 	script_move_target ACTOR_PLAYER, 13.0, 31.0 ; $6c22
 	script_wait_move ACTOR_PLAYER ; $6c2d
@@ -14,20 +14,20 @@ VarsityCourtANpc03_13:
 	and a ; $6c58
 	jp nz, .stage3 ; $6c59
 	farcall AdvanceDialogueTextCursor ; $6c5c
-	script_set_speed ACTOR_PLAYER, $0010 ; $6c5f
+	script_set_speed ACTOR_PLAYER, 0.5 ; $6c5f
 	script_move_target ACTOR_PLAYER, 13.0, 31.0 ; $6c67
 	script_wait_move ACTOR_PLAYER ; $6c72
 	script_face_toward ACTOR_VARSITY_COURT_A_KEVIN, ACTOR_PLAYER ; $6c77
 	script_wait_frames 30 ; $6c7f
 	script_face_toward ACTOR_PLAYER, ACTOR_VARSITY_COURT_A_KEVIN ; $6c86
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6c8e
-	script_set_speed ACTOR_PLAYER, $0020 ; $6c93
+	script_set_speed ACTOR_PLAYER, 1.0 ; $6c93
 	script_wait_frames 15 ; $6c9b
 	script_face_toward ACTOR_VARSITY_COURT_A_BOB, ACTOR_VARSITY_COURT_A_KEVIN ; $6ca2
 	script_wait_frames 30 ; $6caa
 	script_face_toward ACTOR_VARSITY_COURT_A_BOB, ACTOR_PLAYER ; $6cb1
 	script_wait_frames 30 ; $6cb9
-	script_player_speed $0020 ; $6cc0
+	script_player_speed 1.0 ; $6cc0
 	script_move_player_to_actor ACTOR_VARSITY_COURT_A_BOB ; $6cc6
 	farcall WaitPlayerMoveDone ; $6ccd
 	script_set_anim ACTOR_VARSITY_COURT_A_BOB, ANIM_NOD ; $6cd0
@@ -63,9 +63,9 @@ VarsityCourtANpc03_13:
 	ld [wUnusedExitTriggerIdMirror], a ; $6d67
 	ld [wStoryModeExitTriggerRequest], a ; $6d6a
 	script_null_script ACTOR_VARSITY_COURT_A_BETH ; $6d6d
-	script_set_speed ACTOR_PLAYER, $0020 ; $6d72
-	script_set_speed ACTOR_PARTNER, $0020 ; $6d7a
-	script_set_speed ACTOR_VARSITY_COURT_A_BETH, $0018 ; $6d82
+	script_set_speed ACTOR_PLAYER, 1.0 ; $6d72
+	script_set_speed ACTOR_PARTNER, 1.0 ; $6d7a
+	script_set_speed ACTOR_VARSITY_COURT_A_BETH, 0.75 ; $6d82
 	script_set_actor_script ACTOR_VARSITY_COURT_A_BOB, ActorScript_13_12 ; $6d8a
 	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $6d95
 	script_set_actor_script ACTOR_VARSITY_COURT_A_BETH, ActorScript_13_08 ; $6da0
@@ -98,7 +98,7 @@ VarsityCourtANpc03_13:
 	call ReturnVarsityCourtANpc04ToSpawn_13 ; $6e1c
 	ret ; $6e1f
 VarsityCourtBNpc03FaceUp_13:
-	script_set_speed ACTOR_PLAYER, $0008 ; $6e20
+	script_set_speed ACTOR_PLAYER, 0.25 ; $6e20
 	script_lock_facing ACTOR_PLAYER ; $6e28
 	script_move_target ACTOR_PLAYER, 13.0, 31.0 ; $6e2f
 	script_wait_move ACTOR_PLAYER ; $6e3a
@@ -114,8 +114,8 @@ VarsityCourtBNpc03_13:
 	and a ; $6e6a
 	jp nz, .stage3 ; $6e6b
 	farcall AdvanceDialogueTextCursor ; $6e6e
-	script_set_speed ACTOR_PLAYER, $0010 ; $6e71
-	script_set_speed ACTOR_PARTNER, $0010 ; $6e79
+	script_set_speed ACTOR_PLAYER, 0.5 ; $6e71
+	script_set_speed ACTOR_PARTNER, 0.5 ; $6e79
 	script_move_target ACTOR_PARTNER, 13.0, 33.0 ; $6e81
 	script_move_target ACTOR_PLAYER, 13.0, 31.0 ; $6e8c
 	script_wait_move ACTOR_PLAYER ; $6e97
@@ -123,8 +123,8 @@ VarsityCourtBNpc03_13:
 	script_wait_move ACTOR_PARTNER ; $6ea4
 	script_face_toward ACTOR_VARSITY_COURT_B_KEVIN, ACTOR_PARTNER ; $6ea9
 	script_wait_frames 30 ; $6eb1
-	script_set_speed ACTOR_PLAYER, $0020 ; $6eb8
-	script_set_speed ACTOR_PARTNER, $0020 ; $6ec0
+	script_set_speed ACTOR_PLAYER, 1.0 ; $6eb8
+	script_set_speed ACTOR_PARTNER, 1.0 ; $6ec0
 	script_face_toward ACTOR_PLAYER, ACTOR_VARSITY_COURT_B_KEVIN ; $6ec8
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $6ed0
 	script_wait_frames 15 ; $6ed5
@@ -133,7 +133,7 @@ VarsityCourtBNpc03_13:
 	script_face_toward ACTOR_VARSITY_COURT_B_MARK, ACTOR_PLAYER ; $6eeb
 	script_face_toward ACTOR_VARSITY_COURT_B_BOB, ACTOR_PARTNER ; $6ef3
 	script_wait_frames 30 ; $6efb
-	script_player_speed $0020 ; $6f02
+	script_player_speed 1.0 ; $6f02
 	script_move_player_to_actor ACTOR_VARSITY_COURT_B_BOB ; $6f08
 	farcall WaitPlayerMoveDone ; $6f0f
 	script_face_toward ACTOR_PLAYER, ACTOR_VARSITY_COURT_B_BOB ; $6f12
@@ -174,14 +174,14 @@ VarsityCourtBNpc03_13:
 	ld a, $ff ; $6fd7
 	ld [wUnusedExitTriggerIdMirror], a ; $6fd9
 	ld [wStoryModeExitTriggerRequest], a ; $6fdc
-	script_set_speed ACTOR_PLAYER, $0020 ; $6fdf
-	script_set_speed ACTOR_PARTNER, $0020 ; $6fe7
+	script_set_speed ACTOR_PLAYER, 1.0 ; $6fdf
+	script_set_speed ACTOR_PARTNER, 1.0 ; $6fe7
 	script_set_actor_script ACTOR_VARSITY_COURT_B_BOB, ActorScript_13_13 ; $6fef
 	script_set_actor_script ACTOR_VARSITY_COURT_B_MARK, ActorScript_13_14 ; $6ffa
 	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $7005
 	script_set_actor_script ACTOR_PARTNER, ActorScript_13_15 ; $7010
 	script_null_script ACTOR_VARSITY_COURT_B_BETH ; $701b
-	script_set_speed ACTOR_VARSITY_COURT_B_BETH, $0018 ; $7020
+	script_set_speed ACTOR_VARSITY_COURT_B_BETH, 0.75 ; $7020
 	script_set_actor_script ACTOR_VARSITY_COURT_B_KEVIN, ActorScript_13_04 ; $7028
 	script_set_actor_script ACTOR_VARSITY_COURT_B_FAY, ActorScript_13_05 ; $7033
 	script_set_actor_script ACTOR_VARSITY_COURT_B_CURT, ActorScript_13_07 ; $703e
@@ -241,7 +241,7 @@ SinglesTravelingTeamVictoryCutscene:
 	ld hl, SinglesTravelingTeamActors_13 ; $7103
 	farcall ScriptRespawnLocationActors ; $7106
 	script_null_script ACTOR_PLAYER_SHADOW ; $7109
-	script_player_speed $0040 ; $710e
+	script_player_speed 2.0 ; $710e
 	call ApplyPartnerCharacterVariant_13 ; $7114
 	script_set_position ACTOR_PLAYER, 11.0, 29.0 ; $7117
 	script_set_position ACTOR_PARTNER, 13.0, 35.0 ; $7122
@@ -253,7 +253,7 @@ SinglesTravelingTeamVictoryCutscene:
 	call WaitFadeEnd ; $714d
 	script_wait_frames 60 ; $7150
 	script_set_text Text_30_554 ; $7157
-	script_player_speed $0020 ; $715d
+	script_player_speed 1.0 ; $715d
 	script_move_player 11.0, 23.0 ; $7163
 	farcall WaitPlayerMoveDone ; $716d
 	script_move_target ACTOR_SINGLES_TRAVELING_TEAM_BOB, 11.0, 23.0 ; $7170
@@ -385,7 +385,7 @@ DoublesTravelingTeamVictoryCutscene:
 	call ApplyPartnerCharacterVariant_13 ; $7460
 	script_null_script ACTOR_PARTNER ; $7463
 	script_null_script ACTOR_PLAYER_SHADOW ; $7468
-	script_player_speed $0040 ; $746d
+	script_player_speed 2.0 ; $746d
 	script_set_position ACTOR_PLAYER, 11.0, 29.0 ; $7473
 	script_set_position ACTOR_PARTNER, 13.0, 35.0 ; $747e
 	script_face ACTOR_PLAYER, FACE_UP ; $7489
@@ -395,7 +395,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_fade_in $04 ; $74a4
 	call WaitFadeEnd ; $74a9
 	script_wait_frames 60 ; $74ac
-	script_player_speed $0020 ; $74b3
+	script_player_speed 1.0 ; $74b3
 	script_move_player 11.0, 23.0 ; $74b9
 	farcall WaitPlayerMoveDone ; $74c3
 	script_move_target ACTOR_PARTNER, 13.0, 29.0 ; $74c6

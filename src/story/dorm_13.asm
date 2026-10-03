@@ -151,7 +151,7 @@ DormRoomTile0F_13:
 	script_speak ACTOR_DORM_ROOM_KATE ; $4f7e
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4f83
 	script_wait_idle ACTOR_PLAYER ; $4f8a
-	script_set_speed ACTOR_PLAYER, $0030 ; $4f8f
+	script_set_speed ACTOR_PLAYER, 1.5 ; $4f8f
 	script_move_target ACTOR_PLAYER, 11.0, 20.0 ; $4f97
 	script_wait_frames 10 ; $4fa2
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ROOM_KATE ; $4fa9
@@ -176,7 +176,7 @@ DormRoomTile0F_13:
 	ld b, h ; $4fea
 	ld de, wActors ; $4feb
 	farcall AttachActorStepMover ; $4fee
-	script_set_speed ACTOR_PLAYER, $0030 ; $4ff1
+	script_set_speed ACTOR_PLAYER, 1.5 ; $4ff1
 	script_move_target ACTOR_PLAYER, 11.0, 20.0 ; $4ff9
 	script_wait_frames 10 ; $5004
 	ld a, STORYLOC_ACADEMY_WING ; $500b
@@ -492,8 +492,8 @@ DormRoomEntry01Scene:
 	ret ; $53a0
 DormRoomEntry0fScene:
 	sound JINGLE_DONE_FOR_THE_DAY ; $53a1
-	script_set_speed ACTOR_PLAYER, $0010 ; $53a3
-	script_player_speed $0040 ; $53ab
+	script_set_speed ACTOR_PLAYER, 0.5 ; $53a3
+	script_player_speed 2.0 ; $53ab
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $53b1
 	jr z, .altBedText ; $53b4
 	script_set_text Text_31_278 ; $53b6
@@ -525,7 +525,7 @@ DormRoomEntry0fScene:
 	script_speak ACTOR_DORM_ROOM_KATE ; $5428
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $542d
 .roommateWalks:
-	script_set_speed ACTOR_DORM_ROOM_KATE, $0010 ; $5430
+	script_set_speed ACTOR_DORM_ROOM_KATE, 0.5 ; $5430
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $5438
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $543f
 	script_speak ACTOR_DORM_ROOM_KATE ; $5444
