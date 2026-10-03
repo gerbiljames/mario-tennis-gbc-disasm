@@ -352,7 +352,7 @@ PlayMinigamePoint:
 	ld a, [wPointOutcome] ; $664c
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $664f
 	jr nz, .settle ; $6651
-	ld a, $28 ; $6653
+	ld a, 40 ; $6653
 	call StepMatchFrames ; $6655
 .settle:
 	call EndPointBallEffects ; $6658

@@ -307,7 +307,7 @@ Unused_1a_ShowExpGainScreen:
 	and PADF_A | PADF_B ; $461e
 	jr nz, .gaugeFull ; $4620
 	sound SFX_MENU_MOVE ; $4622
-	wait_frames $04 ; $4624
+	wait_frames 4 ; $4624
 	jr .fillLoop ; $4628
 .gaugeFull:
 	ld a, $01 ; $462a
@@ -381,7 +381,7 @@ Unused_1a_ShowExpGainScreen:
 	pop af ; $46af
 	call Unused_1a_DrawExpBonusMessage ; $46b0
 	sound SFX_MENU_SELECT ; $46b3
-	wait_frames $14 ; $46b5
+	wait_frames 20 ; $46b5
 	wram_bank WRAM_SCENE ; $46b9
 	ld hl, wExpBonusAmount ; $46bf
 	ld a, [hl+] ; $46c2

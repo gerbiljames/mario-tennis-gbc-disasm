@@ -210,7 +210,7 @@ CourtyardNpc03_13:
 	script_speak_restore ACTOR_COURTYARD_KEVIN ; $5ebb
 	farcall RunDialogueYesNoPrompt ; $5ec0
 	farcall ScriptCloseDialogueWindow ; $5ec3
-	script_wait_frames $05 ; $5ec6
+	script_wait_frames 5 ; $5ec6
 	and a ; $5ecd
 	jr nz, .speak ; $5ece
 	script_set_text Text_30_531 ; $5ed0
@@ -234,7 +234,7 @@ VarsityCourtANpc05_13:
 	script_speak_restore ACTOR_VARSITY_COURT_A_FAY ; $5f27
 	farcall RunDialogueYesNoPrompt ; $5f2c
 	farcall ScriptCloseDialogueWindow ; $5f2f
-	script_wait_frames $05 ; $5f32
+	script_wait_frames 5 ; $5f32
 	and a ; $5f39
 	jr z, .advanceText ; $5f3a
 	script_speak ACTOR_VARSITY_COURT_A_FAY ; $5f3c
@@ -267,7 +267,7 @@ VarsityCourtBNpc09_13:
 	script_speak_restore ACTOR_VARSITY_COURT_B_MARK ; $5fa7
 	farcall RunDialogueYesNoPrompt ; $5fac
 	farcall ScriptCloseDialogueWindow ; $5faf
-	script_wait_frames $05 ; $5fb2
+	script_wait_frames 5 ; $5fb2
 	and a ; $5fb9
 	jr z, .speak ; $5fba
 	farcall AdvanceDialogueTextCursor ; $5fbc
@@ -281,7 +281,7 @@ VarsityCourtBNpc05_13:
 	script_speak_restore ACTOR_VARSITY_COURT_B_FAY ; $5fd7
 	farcall RunDialogueYesNoPrompt ; $5fdc
 	farcall ScriptCloseDialogueWindow ; $5fdf
-	script_wait_frames $05 ; $5fe2
+	script_wait_frames 5 ; $5fe2
 	and a ; $5fe9
 	jr z, .advanceText ; $5fea
 	script_speak ACTOR_VARSITY_COURT_B_FAY ; $5fec

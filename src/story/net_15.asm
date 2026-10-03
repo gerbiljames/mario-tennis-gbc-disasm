@@ -50,14 +50,14 @@ NetCoachVolleyLessonScene:
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $6fea
 	farcall RunDialogueYesNoPrompt ; $6fef
 	farcall ScriptCloseDialogueWindow ; $6ff2
-	script_wait_frames $05 ; $6ff5
+	script_wait_frames 5 ; $6ff5
 	and a ; $6ffc
 	jr nz, .loop ; $6ffd
 	farcall AdvanceDialogueTextCursor ; $6fff
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $7002
 	farcall RunDialogueYesNoPrompt ; $7007
 	farcall ScriptCloseDialogueWindow ; $700a
-	script_wait_frames $05 ; $700d
+	script_wait_frames 5 ; $700d
 	and a ; $7014
 	jr nz, .loop ; $7015
 	farcall AdvanceDialogueTextCursor ; $7017
@@ -92,21 +92,21 @@ NetCoachSmashLessonScene:
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $707c
 	farcall RunDialogueYesNoPrompt ; $7081
 	farcall ScriptCloseDialogueWindow ; $7084
-	script_wait_frames $05 ; $7087
+	script_wait_frames 5 ; $7087
 	and a ; $708e
 	jr nz, NetCoachVolleyLessonScene.loop ; $708f
 	farcall AdvanceDialogueTextCursor ; $7091
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $7094
 	farcall RunDialogueYesNoPrompt ; $7099
 	farcall ScriptCloseDialogueWindow ; $709c
-	script_wait_frames $05 ; $709f
+	script_wait_frames 5 ; $709f
 	and a ; $70a6
 	jr nz, NetCoachVolleyLessonScene.loop ; $70a7
 	farcall AdvanceDialogueTextCursor ; $70a9
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $70ac
 	farcall RunDialogueYesNoPrompt ; $70b1
 	farcall ScriptCloseDialogueWindow ; $70b4
-	script_wait_frames $05 ; $70b7
+	script_wait_frames 5 ; $70b7
 	and a ; $70be
 	jr nz, NetCoachVolleyLessonScene.loop ; $70bf
 	farcall AdvanceDialogueTextCursor ; $70c1
@@ -140,21 +140,21 @@ NetCoachDropShotLessonScene:
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $712b
 	farcall RunDialogueYesNoPrompt ; $7130
 	farcall ScriptCloseDialogueWindow ; $7133
-	script_wait_frames $05 ; $7136
+	script_wait_frames 5 ; $7136
 	and a ; $713d
 	jp nz, NetCoachVolleyLessonScene.loop ; $713e
 	farcall AdvanceDialogueTextCursor ; $7141
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $7144
 	farcall RunDialogueYesNoPrompt ; $7149
 	farcall ScriptCloseDialogueWindow ; $714c
-	script_wait_frames $05 ; $714f
+	script_wait_frames 5 ; $714f
 	and a ; $7156
 	jp nz, NetCoachVolleyLessonScene.loop ; $7157
 	farcall AdvanceDialogueTextCursor ; $715a
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $715d
 	farcall RunDialogueYesNoPrompt ; $7162
 	farcall ScriptCloseDialogueWindow ; $7165
-	script_wait_frames $05 ; $7168
+	script_wait_frames 5 ; $7168
 	and a ; $716f
 	jp nz, NetCoachVolleyLessonScene.loop ; $7170
 	farcall AdvanceDialogueTextCursor ; $7173
@@ -365,7 +365,7 @@ ServeCoachIntroDialogue_15:
 	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $7380
 	script_speak ACTOR_TRAINING_COURT_CURT ; $7385
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $738a
-	script_wait_frames $05 ; $7391
+	script_wait_frames 5 ; $7391
 	set_flag FLAG_SERVE_COACH_GREETED ; $7398
 	ret ; $739b
 .lesson2:
@@ -434,7 +434,7 @@ ServeCoachChainedRetryPrompt:
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $7465
 	farcall RunDialogueYesNoPrompt ; $746a
 	farcall ScriptCloseDialogueWindow ; $746d
-	script_wait_frames $05 ; $7470
+	script_wait_frames 5 ; $7470
 	and a ; $7477
 	jp nz, InitServeCoachScene.speak ; $7478
 	farcall AdvanceDialogueTextCursor ; $747b
@@ -442,7 +442,7 @@ ServeCoachRetryPrompt:
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $747e
 	farcall RunDialogueYesNoPrompt ; $7483
 	farcall ScriptCloseDialogueWindow ; $7486
-	script_wait_frames $05 ; $7489
+	script_wait_frames 5 ; $7489
 	and a ; $7490
 	jp z, ServeCoachTwoStageRetryPrompt.setText ; $7491
 	farcall AdvanceDialogueTextCursor ; $7494
@@ -451,7 +451,7 @@ ServeCoachTwoStageRetryPrompt:
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $749a
 	farcall RunDialogueYesNoPrompt ; $749f
 	farcall ScriptCloseDialogueWindow ; $74a2
-	script_wait_frames $05 ; $74a5
+	script_wait_frames 5 ; $74a5
 	and a ; $74ac
 	jp nz, .nonZero ; $74ad
 	farcall AdvanceDialogueTextCursor ; $74b0
@@ -459,7 +459,7 @@ ServeCoachTwoStageRetryPrompt:
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $74b3
 	farcall RunDialogueYesNoPrompt ; $74b8
 	farcall ScriptCloseDialogueWindow ; $74bb
-	script_wait_frames $05 ; $74be
+	script_wait_frames 5 ; $74be
 	and a ; $74c5
 	jp z, .setText ; $74c6
 	script_set_text Text_37_71 ; $74c9

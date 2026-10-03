@@ -47,7 +47,7 @@ ShowMessageWindow:
 	farcall RenderProportionalTextAt ; $4535
 	farcall UploadGlyphBuffer ; $4538
 	call FlushTilemapToVram ; $453b
-	ld a, $1e ; $453e
+	ld a, 30 ; $453e
 	farcall StepMatchFrames ; $4540
 .waitInput:
 	farcall StepMatchFrame ; $4543

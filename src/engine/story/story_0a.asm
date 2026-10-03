@@ -271,7 +271,7 @@ RunStoryLocation:
 	call ShowLocationNamePopup ; $4fec
 	jr .frameLoop ; $4fef
 .noNamePopup:
-	wait_frames $04 ; $4ff1
+	wait_frames 4 ; $4ff1
 .frameLoop:
 	wram_bank WRAM_ACTORS ; $4ff5
 	call CheckStoryEventRequests ; $4ffb

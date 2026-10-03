@@ -9,10 +9,10 @@ ShowPointOutcomeBanner:
 	ld a, [wPointOutcome] ; $43c9
 	add $00 ; $43cc
 	farcall ShowCourtBanner ; $43ce
-	ld a, $1e ; $43d1
+	ld a, 30 ; $43d1
 	farcall StepMatchFrames ; $43d3
 	farcall HideCourtBanner ; $43d6
-	ld a, $0a ; $43d9
+	ld a, 10 ; $43d9
 	farcall StepMatchFrames ; $43db
 .done:
 	ret ; $43de
@@ -58,13 +58,13 @@ ShowMinigamePointResult:
 	farcall StepMatchFrame ; $441e
 	ld a, d ; $4421
 	farcall ShowCourtBanner ; $4422
-	ld a, $0a ; $4425
+	ld a, 10 ; $4425
 	farcall StepMatchFrames ; $4427
 	ld a, $2d ; $442a
 	farcall StepMatchFramesSkippable ; $442c
 	farcall RunMatchFramesUntilInput ; $442f
 	farcall HideCourtBanner ; $4432
-	ld a, $0f ; $4435
+	ld a, 15 ; $4435
 	farcall StepMatchFrames ; $4437
 	ld a, MATCHABORT_MATCH ; $443a
 	ld [wMatchAbortFlag], a ; $443c
@@ -348,7 +348,7 @@ LaunchMinigameServe:
 	ld a, [wMinigameServeState] ; $4722
 	and a ; $4725
 	jr z, .launch ; $4726
-	ld a, $0f ; $4728
+	ld a, 15 ; $4728
 	farcall StepMatchFrames ; $472a
 .launch:
 	ld hl, wMinigameServeCount ; $472d

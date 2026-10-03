@@ -85,7 +85,7 @@ TennisDictionaryScreen:
 	res 0, a ; $413a
 	ld [wTennisDictFlags], a ; $413c
 	call EndTennisDictionaryAnim ; $413f
-	wait_frames $01 ; $4142
+	wait_frames 1 ; $4142
 	ld a, $02 ; $4146
 	jr .loop ; $4148
 .checkTennisDictFlags:

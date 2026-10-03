@@ -64,7 +64,7 @@ CenterCourtNpc04_11:
 	script_speak_restore ACTOR_CENTER_COURT_WALK_6F_07_2 ; $40cf
 	farcall RunDialogueYesNoPrompt ; $40d4
 	farcall ScriptCloseDialogueWindow ; $40d7
-	script_wait_frames $05 ; $40da
+	script_wait_frames 5 ; $40da
 	and a ; $40e1
 	jr z, .speak ; $40e2
 	farcall AdvanceDialogueTextCursor ; $40e4
@@ -96,7 +96,7 @@ CenterCourtNpc05_11:
 	script_speak_restore ACTOR_CENTER_COURT_WALK_72_02 ; $411e
 	farcall RunDialogueYesNoPrompt ; $4123
 	farcall ScriptCloseDialogueWindow ; $4126
-	script_wait_frames $05 ; $4129
+	script_wait_frames 5 ; $4129
 	and a ; $4130
 	jr z, .speak ; $4131
 	farcall AdvanceDialogueTextCursor ; $4133
@@ -259,14 +259,14 @@ SetPlayerAndPartnerObjectDefs_11:
 	ld [wStoryModeShowLocationName], a ; $4396
 	script_fade_in $04 ; $4399
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_00 ; $439e
-	script_wait_frames $50 ; $43a9
+	script_wait_frames 80 ; $43a9
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $43b0
 	script_wait_idle ACTOR_PLAYER ; $43b7
-	script_wait_frames $1e ; $43bc
+	script_wait_frames 30 ; $43bc
 	script_wait_actor_script ACTOR_PLAYER ; $43c3
 	script_move_player 35.0, 36.0 ; $43c8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_01 ; $43d2
-	script_wait_frames $f0 ; $43dd
+	script_wait_frames 240 ; $43dd
 	ld a, $01 ; $43e4
 	ld [wUnusedExitTriggerIdMirror], a ; $43e6
 	ld [wStoryModeExitTriggerRequest], a ; $43e9
@@ -351,7 +351,7 @@ AcademyArrivalNpc03_11:
 	script_speak_restore ACTOR_ACADEMY_ARRIVAL_WALK_71_03_1 ; $45c3
 	farcall RunDialogueYesNoPrompt ; $45c8
 	farcall ScriptCloseDialogueWindow ; $45cb
-	script_wait_frames $05 ; $45ce
+	script_wait_frames 5 ; $45ce
 	and a ; $45d5
 	jr z, .done ; $45d6
 	farcall AdvanceDialogueTextCursor ; $45d8

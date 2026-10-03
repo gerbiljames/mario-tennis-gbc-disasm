@@ -169,7 +169,7 @@ StrokeChallengerResultScene:
 	script_speak_restore [wMapSceneStage2] ; $5f10
 	farcall RunDialogueYesNoPrompt ; $5f16
 	farcall ScriptCloseDialogueWindow ; $5f19
-	script_wait_frames $05 ; $5f1c
+	script_wait_frames 5 ; $5f1c
 	and a ; $5f23
 	jr nz, .loseSpeak ; $5f24
 	ld a, [wMapSceneStage2] ; $5f26
@@ -201,7 +201,7 @@ StrokeChallengerResultScene:
 	script_speak_restore [wMapSceneStage2] ; $5f61
 	farcall RunDialogueYesNoPrompt ; $5f67
 	farcall ScriptCloseDialogueWindow ; $5f6a
-	script_wait_frames $05 ; $5f6d
+	script_wait_frames 5 ; $5f6d
 	and a ; $5f74
 	jr nz, .finishDoubles ; $5f75
 	ld hl, wChallengerFollowupTextId ; $5f77
@@ -259,7 +259,7 @@ StrokeChallengerResultScene:
 	farcall MoveActorByAngle ; $5fef
 	ld a, [wMapSceneStage2] ; $5ff2
 	farcall ScriptWaitActorMoveDone ; $5ff5
-	script_wait_frames $28 ; $5ff8
+	script_wait_frames 40 ; $5ff8
 	ld a, [wMapSceneStage2] ; $5fff
 	ld b, $c0 ; $6002
 	ld de, $0100 ; $6004
@@ -439,7 +439,7 @@ WalkChallengerOntoCourt:
 	ld bc, $1300 ; $61d8
 	ld de, $0b00 ; $61db
 	farcall ScriptSetActorMoveTarget ; $61de
-	script_wait_frames $1e ; $61e1
+	script_wait_frames 30 ; $61e1
 	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $61e8
 	script_wait_move ACTOR_PLAYER ; $61f3
 	script_get_actor_state ACTOR_PARTNER ; $61f8
@@ -458,7 +458,7 @@ WalkChallengerOntoCourt:
 	ld bc, $2d00 ; $6217
 	ld de, $2100 ; $621a
 	farcall ScriptSetActorMoveTarget ; $621d
-	script_wait_frames $1e ; $6220
+	script_wait_frames 30 ; $6220
 	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $6227
 	script_wait_move ACTOR_PLAYER ; $6232
 	script_get_actor_state ACTOR_PARTNER ; $6237

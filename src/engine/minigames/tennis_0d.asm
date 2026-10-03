@@ -12,7 +12,7 @@ PlayMinigameCountdown:
 	ld a, [wCurrentBGM] ; $48d8
 	push af ; $48db
 	sound BGM_NONE ; $48dc
-	ld a, $14 ; $48de
+	ld a, 20 ; $48de
 	farcall StepMatchFrames ; $48e0
 	ld a, $03 ; $48e3
 .loop:
@@ -27,7 +27,7 @@ PlayMinigameCountdown:
 .nonZero:
 	ld a, $11 ; $48f6
 	farcall SpawnCourtBannerObj ; $48f8
-	ld a, $28 ; $48fb
+	ld a, 40 ; $48fb
 	farcall StepMatchFrames ; $48fd
 	pop af ; $4900
 	dec a ; $4901
@@ -39,7 +39,7 @@ PlayMinigameCountdown:
 .nonZero2:
 	ld a, $10 ; $490c
 	farcall ShowCourtBanner ; $490e
-	ld a, $28 ; $4911
+	ld a, 40 ; $4911
 	farcall StepMatchFrames ; $4913
 	farcall HideCourtBanner ; $4916
 	pop af ; $4919

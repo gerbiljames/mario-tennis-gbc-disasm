@@ -80,9 +80,9 @@ End17AwardCeremonyInitScript_27:
 	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, $0010 ; $4205
 	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, $0010 ; $420d
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, FACE_DOWN ; $4215
-	script_delay $1e ; $421c
+	script_delay 30 ; $421c
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 15.5, 22.0 ; $4221
-	script_delay $1e ; $422c
+	script_delay 30 ; $422c
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, 63.0, 63.0 ; $4231
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, 15.0, 22.0 ; $423c
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 15.0, 21.0 ; $4247
@@ -107,7 +107,7 @@ End17AwardCeremonyInitScript_27:
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, 12.0, 17.0 ; $42ec
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 12.0, 16.0 ; $42f7
 	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY ; $4302
-	script_delay $50 ; $4307
+	script_delay 80 ; $4307
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, 12.0, 15.5 ; $430c
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 12.0, 14.25 ; $4317
 	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY ; $4322
@@ -118,10 +118,10 @@ End17AwardCeremonyInitScript_27:
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, FACE_UP ; $4345
 	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3, ANIM_BOUNCE ; $434c
 	script_wait_idle ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3 ; $4353
-	script_delay $32 ; $4358
+	script_delay 50 ; $4358
 	script_face $07, FACE_LEFT ; $435d
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_A_COZ, FACE_RIGHT ; $4364
-	script_delay $3c ; $436b
+	script_delay 60 ; $436b
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 11.25, 12.25 ; $4370
 .loop:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $437b
@@ -138,7 +138,7 @@ End17AwardCeremonyInitScript_27:
 	script_player_speed $0006 ; $43a1
 	script_move_player 12.0, 13.0 ; $43a7
 	farcall WaitPlayerMoveDone ; $43b1
-	script_delay $32 ; $43b4
+	script_delay 50 ; $43b4
 	ld a, $01 ; $43b9
 	ld [wUnusedExitTriggerIdMirror], a ; $43bb
 	ld [wStoryModeExitTriggerRequest], a ; $43be
@@ -151,9 +151,9 @@ End17AwardCeremonyInitScript_27:
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, 15.0, 22.0 ; $43e2
 	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2 ; $43ed
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, FACE_DOWN ; $43f2
-	script_delay $14 ; $43f9
+	script_delay 20 ; $43f9
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 15.5, 22.0 ; $43fe
-	script_delay $14 ; $4409
+	script_delay 20 ; $4409
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_2, 63.0, 63.0 ; $440e
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_1, 15.0, 22.0 ; $4419
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 15.0, 21.0 ; $4424
@@ -174,25 +174,25 @@ End17AwardCeremonyInitScript_27:
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, 15.0, 17.0 ; $44a3
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 15.75, 17.0 ; $44ae
 	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY ; $44b9
-	script_delay $3c ; $44be
+	script_delay 60 ; $44be
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $44c3
 	script_wait_idle ACTOR_PARTNER ; $44ca
 	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, ANIM_NOD ; $44cf
 	script_wait_idle ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06 ; $44d6
-	script_delay $3c ; $44db
+	script_delay 60 ; $44db
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 14.25, 17.0 ; $44e0
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, 13.0, 17.0 ; $44eb
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 12.25, 17.0 ; $44f6
 	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY ; $4501
-	script_delay $04 ; $4506
+	script_delay 4 ; $4506
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, FACE_UP ; $450b
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 13.0, 16.0 ; $4512
 	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY ; $451d
-	script_delay $32 ; $4522
+	script_delay 50 ; $4522
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, 13.0, 16.0 ; $4527
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 13.0, 14.5 ; $4532
 	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY ; $453d
-	script_delay $05 ; $4542
+	script_delay 5 ; $4542
 	script_lock_facing ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06 ; $4547
 	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, 13.0, 17.0 ; $454e
 	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06 ; $4559
@@ -200,15 +200,15 @@ End17AwardCeremonyInitScript_27:
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_WALK_75_06, FACE_UP ; $4565
 	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3, ANIM_BOUNCE ; $456c
 	script_wait_idle ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3 ; $4573
-	script_delay $1e ; $4578
+	script_delay 30 ; $4578
 	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, ANIM_NOD ; $457d
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4584
 	script_wait_idle ACTOR_PARTNER ; $458b
-	script_delay $1e ; $4590
+	script_delay 30 ; $4590
 	script_face ACTOR_PARTNER, FACE_LEFT ; $4595
 	script_face $07, FACE_RIGHT ; $459c
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_A_COZ, FACE_RIGHT ; $45a3
-	script_delay $3c ; $45aa
+	script_delay 60 ; $45aa
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 12.25, 12.375 ; $45af
 	jp .loop ; $45ba
 	ret ; $45bd
@@ -391,7 +391,7 @@ End16BeforeFinalsCutscene_27:
 	jp nz, .face ; $49ea
 	script_set_speed ACTOR_PLAYER, $0020 ; $49ed
 	script_face_pair ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ACTOR_PLAYER ; $49f5
-	script_wait_frames $1e ; $49fd
+	script_wait_frames 30 ; $49fd
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4a04
 	script_face ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, FACE_DOWN ; $4a0b
 	script_set_anim ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ANIM_NOD ; $4a12
@@ -400,14 +400,14 @@ End16BeforeFinalsCutscene_27:
 	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, 19.0, 23.0 ; $4a25
 	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $4a30
 	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, ActorScript_27_02 ; $4a35
-	script_wait_frames $14 ; $4a40
+	script_wait_frames 20 ; $4a40
 	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ActorScript_27_02 ; $4a47
-	script_wait_frames $14 ; $4a52
+	script_wait_frames 20 ; $4a52
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_02 ; $4a59
-	script_wait_frames $14 ; $4a64
+	script_wait_frames 20 ; $4a64
 	script_move_player 17.0, 13.0 ; $4a6b
 	farcall WaitPlayerMoveDone ; $4a75
-	script_wait_frames $1e ; $4a78
+	script_wait_frames 30 ; $4a78
 	ld a, $01 ; $4a7f
 	ld [wUnusedExitTriggerIdMirror], a ; $4a81
 	ld [wStoryModeExitTriggerRequest], a ; $4a84
@@ -416,7 +416,7 @@ End16BeforeFinalsCutscene_27:
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4a88
 	script_set_speed ACTOR_PLAYER, $0020 ; $4a90
 	script_set_speed ACTOR_PARTNER, $0020 ; $4a98
-	script_wait_frames $14 ; $4aa0
+	script_wait_frames 20 ; $4aa0
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4aa7
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4aae
 	script_wait_idle ACTOR_PLAYER ; $4ab5
@@ -425,13 +425,13 @@ End16BeforeFinalsCutscene_27:
 	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, 19.0, 23.0 ; $4ac8
 	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3 ; $4ad3
 	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_WALK_6F_07_3, ActorScript_27_02 ; $4ad8
-	script_wait_frames $14 ; $4ae3
+	script_wait_frames 20 ; $4ae3
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_02 ; $4aea
-	script_wait_frames $14 ; $4af5
+	script_wait_frames 20 ; $4af5
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_02 ; $4afc
-	script_wait_frames $3c ; $4b07
+	script_wait_frames 60 ; $4b07
 	script_set_actor_script $0b, ActorScript_27_03 ; $4b0e
-	script_wait_frames $14 ; $4b19
+	script_wait_frames 20 ; $4b19
 	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ActorScript_27_03 ; $4b20
 	script_move_player 17.0, 13.0 ; $4b2b
 	farcall WaitPlayerMoveDone ; $4b35

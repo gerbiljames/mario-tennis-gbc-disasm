@@ -77,7 +77,7 @@ TennisMachineRoomNpc04_14:
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_06_2 ; $40ce
 	farcall RunDialogueYesNoPrompt ; $40d3
 	farcall ScriptCloseDialogueWindow ; $40d6
-	script_wait_frames $05 ; $40d9
+	script_wait_frames 5 ; $40d9
 	and a ; $40e0
 	jr z, .speak ; $40e1
 	farcall AdvanceDialogueTextCursor ; $40e3
@@ -214,7 +214,7 @@ TennisMachineRoomTile01_14:
 	script_wait_move ACTOR_PLAYER ; $4238
 	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 43.0 ; $423d
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4248
-	script_wait_frames $05 ; $424d
+	script_wait_frames 5 ; $424d
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $4254
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $425b
 	script_get_actor_state ACTOR_PARTNER ; $4262
@@ -252,7 +252,7 @@ MachineCourtResultScene:
 	test_flag FLAG_DOUBLES ; $42b0
 	jr z, .win ; $42b3
 	script_null_script ACTOR_PARTNER ; $42b5
-	script_wait_frames $0a ; $42ba
+	script_wait_frames 10 ; $42ba
 	script_set_position ACTOR_PARTNER, 41.0, 43.0 ; $42c1
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $42cc
 .win:
@@ -260,7 +260,7 @@ MachineCourtResultScene:
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $42de
 	script_fade_in $06 ; $42e5
 	call WaitFadeEnd ; $42ea
-	script_wait_frames $28 ; $42ed
+	script_wait_frames 40 ; $42ed
 	script_set_speed ACTOR_PLAYER, $0020 ; $42f4
 	test_flag FLAG_DOUBLES ; $42fc
 	jr z, .clearShowLocationName ; $42ff
@@ -379,7 +379,7 @@ TennisMachineRoomNpc05_14:
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4475
 	farcall RunDialogueYesNoPrompt ; $447a
 	farcall ScriptCloseDialogueWindow ; $447d
-	script_wait_frames $05 ; $4480
+	script_wait_frames 5 ; $4480
 	and a ; $4487
 	jr nz, .accepted ; $4488
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $448a
@@ -399,7 +399,7 @@ TennisMachineRoomNpc05_14:
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $44b4
 	farcall RunDialogueYesNoPrompt ; $44b9
 	farcall ScriptCloseDialogueWindow ; $44bc
-	script_wait_frames $05 ; $44bf
+	script_wait_frames 5 ; $44bf
 	and a ; $44c6
 	jp z, MachineCourtStartLevelScene.speak ; $44c7
 .done:
@@ -432,7 +432,7 @@ MachineCourtStartLevelScene:
 	script_move_target ACTOR_PLAYER, 56.0, 53.0 ; $4547
 	script_wait_move ACTOR_PLAYER ; $4552
 	script_face ACTOR_PLAYER, FACE_UP ; $4557
-	script_wait_frames $0a ; $455e
+	script_wait_frames 10 ; $455e
 	ld a, [wMapSceneStage] ; $4565
 	cp MACHINECOURTSTAGE_MASTER ; $4568
 	jr c, .lt04 ; $456a

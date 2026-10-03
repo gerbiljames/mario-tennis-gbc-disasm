@@ -106,7 +106,7 @@ UpdateFirework1_14Table:
 	script_player_speed $0006 ; $6522
 	script_move_player 5.0, 35.0 ; $6528
 	farcall WaitPlayerMoveDone ; $6532
-	script_wait_frames $32 ; $6535
+	script_wait_frames 50 ; $6535
 	ld a, $50 ; $653c
 	ld [wCutsceneObjX + 1], a ; $653e
 	ld a, $28 ; $6541
@@ -118,7 +118,7 @@ UpdateFirework1_14Table:
 	ld a, $01 ; $6550
 	ld hl, UpdateFirework1_14 ; $6552
 	call RegisterFrameTask ; $6555
-	script_wait_frames $50 ; $6558
+	script_wait_frames 80 ; $6558
 	ld a, $40 ; $655f
 	ld [wCutsceneObjX], a ; $6561
 	ld a, $20 ; $6564
@@ -130,7 +130,7 @@ UpdateFirework1_14Table:
 	ld a, $01 ; $6573
 	ld hl, UpdateFirework0_14 ; $6575
 	call RegisterFrameTask ; $6578
-	script_wait_frames $50 ; $657b
+	script_wait_frames 80 ; $657b
 	ld a, $48 ; $6582
 	ld [wCutsceneObjX + 1], a ; $6584
 	ld a, $28 ; $6587
@@ -139,7 +139,7 @@ UpdateFirework1_14Table:
 	ld [wCutsceneObjPhase + 1], a ; $658e
 	ld a, $1e ; $6591
 	ld [wCutsceneObjTimer + 1], a ; $6593
-	script_wait_frames $28 ; $6596
+	script_wait_frames 40 ; $6596
 	ld a, $38 ; $659d
 	ld [wCutsceneObjX], a ; $659f
 	ld a, $20 ; $65a2
@@ -148,7 +148,7 @@ UpdateFirework1_14Table:
 	ld [wCutsceneObjPhase], a ; $65a9
 	ld a, $1e ; $65ac
 	ld [wCutsceneObjTimer], a ; $65ae
-	script_wait_frames $28 ; $65b1
+	script_wait_frames 40 ; $65b1
 	ld a, $50 ; $65b8
 	ld [wCutsceneObjX + 1], a ; $65ba
 	ld a, $28 ; $65bd
@@ -157,7 +157,7 @@ UpdateFirework1_14Table:
 	ld [wCutsceneObjPhase + 1], a ; $65c4
 	ld a, $19 ; $65c7
 	ld [wCutsceneObjTimer + 1], a ; $65c9
-	script_wait_frames $28 ; $65cc
+	script_wait_frames 40 ; $65cc
 	ld a, $38 ; $65d3
 	ld [wCutsceneObjX], a ; $65d5
 	ld a, $20 ; $65d8
@@ -166,7 +166,7 @@ UpdateFirework1_14Table:
 	ld [wCutsceneObjPhase], a ; $65df
 	ld a, $1a ; $65e2
 	ld [wCutsceneObjTimer], a ; $65e4
-	script_wait_frames $28 ; $65e7
+	script_wait_frames 40 ; $65e7
 	ld a, $58 ; $65ee
 	ld [wCutsceneObjX + 1], a ; $65f0
 	ld a, $28 ; $65f3
@@ -175,7 +175,7 @@ UpdateFirework1_14Table:
 	ld [wCutsceneObjPhase + 1], a ; $65fa
 	ld a, $1c ; $65fd
 	ld [wCutsceneObjTimer + 1], a ; $65ff
-	script_wait_frames $28 ; $6602
+	script_wait_frames 40 ; $6602
 	ld a, $40 ; $6609
 	ld [wCutsceneObjX], a ; $660b
 	ld a, $20 ; $660e
@@ -184,7 +184,7 @@ UpdateFirework1_14Table:
 	ld [wCutsceneObjPhase], a ; $6615
 	ld a, $16 ; $6618
 	ld [wCutsceneObjTimer], a ; $661a
-	script_wait_frames $32 ; $661d
+	script_wait_frames 50 ; $661d
 	ld a, $48 ; $6624
 	ld [wCutsceneObjX + 1], a ; $6626
 	ld a, $28 ; $6629
@@ -193,7 +193,7 @@ UpdateFirework1_14Table:
 	ld [wCutsceneObjPhase + 1], a ; $6630
 	ld a, $1c ; $6633
 	ld [wCutsceneObjTimer + 1], a ; $6635
-	script_wait_frames $48 ; $6638
+	script_wait_frames 72 ; $6638
 	ld c, $04 ; $663f
 	call BeginFadeOut ; $6641
 	call WaitFadeEnd ; $6644
@@ -359,10 +359,10 @@ AdvanceFirework1Ascent_14:
 	script_fade_in $06 ; $6fd1
 	call WaitFadeEnd ; $6fd6
 	sound SFX_FIREWORK_LAUNCH ; $6fd9
-	script_wait_frames $3c ; $6fdb
+	script_wait_frames 60 ; $6fdb
 	ld h, $08 ; $6fe2
 .planeLoop:
-	script_wait_frames $06 ; $6fe4
+	script_wait_frames 6 ; $6fe4
 	call PlayPlaneMoveSfx_14 ; $6feb
 	ld a, [wMapSceneStage2] ; $6fee
 	inc a ; $6ff1
@@ -371,7 +371,7 @@ AdvanceFirework1Ascent_14:
 	jr nz, .planeLoop ; $6ff6
 	ld h, $08 ; $6ff8
 .planeArrived:
-	script_wait_frames $04 ; $6ffa
+	script_wait_frames 4 ; $6ffa
 	call PlayPlaneMoveSfx_14 ; $7001
 	ld a, [wMapSceneStage2] ; $7004
 	inc a ; $7007
@@ -385,7 +385,7 @@ AdvanceFirework1Ascent_14:
 	jr nz, .planeArrived ; $7016
 	ld h, $18 ; $7018
 .descend:
-	script_wait_frames $03 ; $701a
+	script_wait_frames 3 ; $701a
 	call PlayPlaneMoveSfx_14 ; $7021
 	ld a, [wMapSceneStage2] ; $7024
 	inc a ; $7027
@@ -399,7 +399,7 @@ AdvanceFirework1Ascent_14:
 	script_move_player 11.0, 24.0 ; $703b
 	ld h, $18 ; $7045
 .land:
-	script_wait_frames $02 ; $7047
+	script_wait_frames 2 ; $7047
 	call PlayPlaneMoveSfx_14 ; $704e
 	ld a, [wMapSceneStage] ; $7051
 	inc a ; $7054
@@ -413,7 +413,7 @@ AdvanceFirework1Ascent_14:
 	jr nz, .land ; $7063
 	ld h, $20 ; $7065
 .disembark:
-	script_wait_frames $02 ; $7067
+	script_wait_frames 2 ; $7067
 	call PlayPlaneMoveSfx_14 ; $706e
 	ld a, [wMapSceneStage] ; $7071
 	inc a ; $7074
@@ -431,7 +431,7 @@ AdvanceFirework1Ascent_14:
 	call UnregisterFrameTask ; $708b
 	ld h, $1e ; $708e
 .doublesWalkOff:
-	script_wait_frames $02 ; $7090
+	script_wait_frames 2 ; $7090
 	call PlayPlaneMoveSfx_14 ; $7097
 	dec h ; $709a
 	jr nz, .doublesWalkOff ; $709b
@@ -446,7 +446,7 @@ AdvanceFirework1Ascent_14:
 	call RegisterFrameTask ; $70b9
 	ld h, $50 ; $70bc
 .speak:
-	script_wait_frames $02 ; $70be
+	script_wait_frames 2 ; $70be
 	call PlayPlaneMoveSfx_14 ; $70c5
 	ld a, [wMapSceneStage2] ; $70c8
 	dec a ; $70cb
@@ -466,7 +466,7 @@ AdvanceFirework1Ascent_14:
 	call UnregisterFrameTask ; $70e6
 	call LoadTwinkleObjGfx_14 ; $70e9
 	call PlayTwinkleAnimation_14 ; $70ec
-	script_wait_frames $46 ; $70ef
+	script_wait_frames 70 ; $70ef
 	ld a, [wStoryModeEntryPoint] ; $70f6
 	cp $0d ; $70f9
 	jp nz, .fadeOut ; $70fb

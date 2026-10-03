@@ -8,7 +8,7 @@ ActorScript_15_02:
 ActorScript_15_03:
 	; $55e9, 7 bytes (actor_script)
 	as_anim ANIM_OVERHEAD_SWING
-	as_wait $3c
+	as_wait 60
 	as_jump ActorScript_15_03
 WaterSpriteSwingCountTask:
 	ldh a, [hInputRisingEdge] ; $55f0
@@ -98,7 +98,7 @@ WaterSpriteSwingContestScene:
 	ld a, $74 ; $5686
 	add b ; $5688
 	ld [wSwingContestHudPage], a ; $5689
-	script_wait_frames $01 ; $568c
+	script_wait_frames 1 ; $568c
 	dec b ; $5693
 	jp nz, .contest ; $5694
 	ld de, $0258 ; $5697
@@ -117,7 +117,7 @@ WaterSpriteSwingContestScene:
 	ld a, $01 ; $56ad
 	ld hl, DrawWaterSpriteMinigameCounters ; $56af
 	call RegisterFrameTask ; $56b2
-	script_wait_frames $32 ; $56b5
+	script_wait_frames 50 ; $56b5
 	ld l, $03 ; $56bc
 	ld h, $00 ; $56be
 	ld_xy de, $50, $2c ; $56c0
@@ -126,7 +126,7 @@ WaterSpriteSwingContestScene:
 	ld b, $3c ; $56c5
 .lose:
 	farcall DrawDecimalNumberSprites_39 ; $56c7
-	script_wait_frames $01 ; $56ca
+	script_wait_frames 1 ; $56ca
 	dec b ; $56d1
 	jp nz, .lose ; $56d2
 	dec l ; $56d5
@@ -158,7 +158,7 @@ WaterSpriteSwingContestScene:
 	sound SFX_CONTEST_FINISH ; $5708
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $570a
 	script_wait_idle ACTOR_PLAYER ; $5711
-	script_wait_frames $3c ; $5716
+	script_wait_frames 60 ; $5716
 	call TogglePlayerSpriteXFlip ; $571d
 	ld hl, DrawWaterSpriteMinigameCounters ; $5720
 	call UnregisterFrameTask ; $5723
@@ -184,12 +184,12 @@ WaterSpriteSwingContestScene:
 	ld a, $a4 ; $5747
 	sub b ; $5749
 	ld [wSwingContestHudPage], a ; $574a
-	script_wait_frames $01 ; $574d
+	script_wait_frames 1 ; $574d
 	dec b ; $5754
 	jp nz, .done ; $5755
 	ld hl, QueueWaterSpriteMinigameHudPanels ; $5758
 	call UnregisterFrameTask ; $575b
-	wait_frames $3c ; $575e
+	wait_frames 60 ; $575e
 	script_set_text Text_36_676 ; $5762
 	ld hl, wSwingContestSwings ; $5768
 	ld a, [hl+] ; $576b
@@ -298,7 +298,7 @@ TrainingCourtIntroTourScene:
 	script_set_position ACTOR_TRAINING_COURT_TOUR_EMILY, 63.0, 63.0 ; $59da
 	script_set_position ACTOR_TRAINING_COURT_TOUR_EMILY, 7.0, 54.75 ; $59e5
 	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 31.0, 54.75 ; $59f0
-	script_wait_frames $0a ; $59fb
+	script_wait_frames 10 ; $59fb
 	script_set_position ACTOR_PLAYER, 5.0, 55.0 ; $5a02
 	script_move_target ACTOR_PLAYER, 31.0, 55.0 ; $5a0d
 	script_move_player 31.0, 55.0 ; $5a18
@@ -311,13 +311,13 @@ TrainingCourtIntroTourScene:
 	farcall WaitPlayerMoveDone ; $5a4a
 	script_move_player 31.0, 45.0 ; $5a4d
 	farcall WaitPlayerMoveDone ; $5a57
-	script_wait_frames $3c ; $5a5a
+	script_wait_frames 60 ; $5a5a
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_RIGHT ; $5a61
-	script_wait_frames $3c ; $5a68
+	script_wait_frames 60 ; $5a68
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_LEFT ; $5a6f
-	script_wait_frames $3c ; $5a76
+	script_wait_frames 60 ; $5a76
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_DOWN ; $5a7d
-	script_wait_frames $3c ; $5a84
+	script_wait_frames 60 ; $5a84
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_RIGHT ; $5a8b
 	script_player_speed $0040 ; $5a92
 	script_set_text Text_36_627 ; $5a98
@@ -328,19 +328,19 @@ TrainingCourtIntroTourScene:
 	script_move_player 45.0, 41.0 ; $5ab6
 	farcall WaitPlayerMoveDone ; $5ac0
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5ac3
-	script_wait_frames $3c ; $5ac8
+	script_wait_frames 60 ; $5ac8
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_TOUR_EMILY ; $5acf
 	script_move_player 31.0, 45.0 ; $5ad7
 	farcall WaitPlayerMoveDone ; $5ae1
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5ae4
 	script_wait_idle ACTOR_PLAYER ; $5aeb
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_LEFT ; $5af0
-	script_wait_frames $28 ; $5af7
+	script_wait_frames 40 ; $5af7
 	script_face ACTOR_PLAYER, FACE_LEFT ; $5afe
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b05
 	script_move_player_to_actor ACTOR_TRAINING_COURT_TOUR_BOB ; $5b0a
 	farcall WaitPlayerMoveDone ; $5b11
-	script_wait_frames $3c ; $5b14
+	script_wait_frames 60 ; $5b14
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b1b
 	script_move_player_to_actor ACTOR_TRAINING_COURT_TOUR_EMILY ; $5b23
 	farcall WaitPlayerMoveDone ; $5b2a
@@ -379,10 +379,10 @@ TrainingCourtIntroTourScene:
 	script_move_player 9.0, 55.0 ; $5c16
 	script_wait_move ACTOR_PLAYER ; $5c20
 	script_move_target ACTOR_PLAYER, 3.0, 55.0 ; $5c25
-	script_wait_frames $5a ; $5c30
+	script_wait_frames 90 ; $5c30
 	ld c, $08 ; $5c37
 	call BeginFadeOut ; $5c39
-	script_wait_frames $14 ; $5c3c
+	script_wait_frames 20 ; $5c3c
 	ld a, $0f ; $5c43
 	ld [wUnusedExitTriggerIdMirror], a ; $5c45
 	ld [wStoryModeExitTriggerRequest], a ; $5c48

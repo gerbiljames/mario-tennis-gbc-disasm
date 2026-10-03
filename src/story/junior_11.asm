@@ -26,7 +26,7 @@ ActorList_11_0:
 	ld [wStoryModeShowLocationName], a ; $542c
 	script_fade_in $04 ; $542f
 	call WaitFadeEnd ; $5434
-	script_wait_frames $3c ; $5437
+	script_wait_frames 60 ; $5437
 	script_set_anim ACTOR_LIST_11_1_WALK_71_03, ANIM_NOD ; $543e
 	script_wait_idle ACTOR_LIST_11_1_WALK_71_03 ; $5445
 	script_wait_move ACTOR_PLAYER ; $544a
@@ -139,7 +139,7 @@ JuniorClassCourtDoublesNpc06_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT ; $55fe
 	farcall RunDialogueYesNoPrompt ; $5603
 	farcall ScriptCloseDialogueWindow ; $5606
-	script_wait_frames $05 ; $5609
+	script_wait_frames 5 ; $5609
 	and a ; $5610
 	jr z, .speak ; $5611
 	farcall AdvanceDialogueTextCursor ; $5613
@@ -184,7 +184,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5680
 	farcall RunDialogueYesNoPrompt ; $5685
 	farcall ScriptCloseDialogueWindow ; $5688
-	script_wait_frames $05 ; $568b
+	script_wait_frames 5 ; $568b
 	and a ; $5692
 	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $5693
 	farcall AdvanceDialogueTextCursor ; $5695
@@ -192,7 +192,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $56a0
 	farcall RunDialogueYesNoPrompt ; $56a5
 	farcall ScriptCloseDialogueWindow ; $56a8
-	script_wait_frames $05 ; $56ab
+	script_wait_frames 5 ; $56ab
 	and a ; $56b2
 	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $56b3
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $56b5
@@ -200,9 +200,9 @@ JuniorClassCourtDoublesNpc0A_11:
 	script_set_speed ACTOR_PARTNER, $0020 ; $56c1
 	script_set_speed ACTOR_PLAYER, $0020 ; $56c9
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_11 ; $56d1
-	script_wait_frames $14 ; $56dc
+	script_wait_frames 20 ; $56dc
 	script_set_actor_script ACTOR_PARTNER, ActorScript_11_12 ; $56e3
-	script_wait_frames $1e ; $56ee
+	script_wait_frames 30 ; $56ee
 	script_move_player 53.0, 17.0 ; $56f5
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, 55.0, 13.0 ; $56ff
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, 53.0, 9.0 ; $570a
@@ -319,7 +319,7 @@ JuniorClassCourtDoublesCNpc07_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $594c
 	farcall RunDialogueYesNoPrompt ; $5951
 	farcall ScriptCloseDialogueWindow ; $5954
-	script_wait_frames $05 ; $5957
+	script_wait_frames 5 ; $5957
 	and a ; $595e
 	jp z, .speak ; $595f
 	farcall AdvanceDialogueTextCursor ; $5962
@@ -331,7 +331,7 @@ JuniorClassCourtDoublesDNpc07_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $5971
 	farcall RunDialogueYesNoPrompt ; $5976
 	farcall ScriptCloseDialogueWindow ; $5979
-	script_wait_frames $05 ; $597c
+	script_wait_frames 5 ; $597c
 	and a ; $5983
 	jp z, .speak ; $5984
 	farcall AdvanceDialogueTextCursor ; $5987
@@ -366,7 +366,7 @@ JuniorClassCourtDoublesDNpc0A_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $59ff
 	farcall RunDialogueYesNoPrompt ; $5a04
 	farcall ScriptCloseDialogueWindow ; $5a07
-	script_wait_frames $05 ; $5a0a
+	script_wait_frames 5 ; $5a0a
 	and a ; $5a11
 	jp z, .speak ; $5a12
 	farcall AdvanceDialogueTextCursor ; $5a15

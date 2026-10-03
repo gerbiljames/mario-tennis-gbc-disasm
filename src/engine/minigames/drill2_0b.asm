@@ -74,26 +74,26 @@ PlayDrillPointEndSequence:
 	add $00 ; $43ca
 	farcall ShowCourtBanner ; $43cc
 .waitBanner:
-	ld a, $1e ; $43cf
+	ld a, 30 ; $43cf
 	farcall StepMatchFrames ; $43d1
 	farcall HideCourtBanner ; $43d4
-	ld a, $0f ; $43d7
+	ld a, 15 ; $43d7
 	farcall StepMatchFrames ; $43d9
 .showScore:
 	farcall SpawnGameScoreDisplayObjs ; $43dc
-	ld a, $0a ; $43df
+	ld a, 10 ; $43df
 	farcall StepMatchFrames ; $43e1
 	ld a, $0a ; $43e4
 	farcall StepMatchFramesSkippable ; $43e6
 	farcall UpdateScorePanelDisplay ; $43e9
-	ld a, $0a ; $43ec
+	ld a, 10 ; $43ec
 	farcall StepMatchFrames ; $43ee
 	ld a, $1e ; $43f1
 	farcall StepMatchFramesSkippable ; $43f3
 	farcall DismissGameScoreDisplayObjs ; $43f6
 	ld a, $46 ; $43f9
 	farcall StepMatchFramesSkippable ; $43fb
-	ld a, $08 ; $43fe
+	ld a, 8 ; $43fe
 	farcall StepMatchFrames ; $4400
 	ret ; $4403
 LoadDrillOpponentChar:

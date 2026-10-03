@@ -135,7 +135,7 @@ AcademyMainBldgNpc03_10:
 	script_speak_restore ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1 ; $7609
 	farcall RunDialogueYesNoPrompt ; $760e
 	farcall ScriptCloseDialogueWindow ; $7611
-	script_wait_frames $05 ; $7614
+	script_wait_frames 5 ; $7614
 	and a ; $761b
 	jr z, .speak ; $761c
 	farcall AdvanceDialogueTextCursor ; $761e
@@ -183,7 +183,7 @@ AcademyMainBldgNpc05_10:
 	ld l, a ; $767f
 	farcall InitDialogueTextCursor ; $7680
 .loop:
-	script_wait_frames $14 ; $7683
+	script_wait_frames 20 ; $7683
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $768a
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $7692
 	ret ; $7697
@@ -196,7 +196,7 @@ AcademyMainBldgNpc05TextIds:
 	dw Text_30_468 ; record 4
 .setText:
 	script_set_text Text_30_469 ; $76a2
-	script_wait_frames $14 ; $76a8
+	script_wait_frames 20 ; $76a8
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $76af
 	call GetDoublesProgressStage_10 ; $76b4
 	add a ; $76b7
@@ -267,38 +267,38 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_set_position ACTOR_PLAYER, 34.0, 37.5 ; $774c
 	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, 34.0, 36.0 ; $7757
 	script_fade_in $04 ; $7762
-	script_wait_frames $1e ; $7767
+	script_wait_frames 30 ; $7767
 	script_face ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, FACE_UP ; $776e
-	script_wait_frames $0a ; $7775
+	script_wait_frames 10 ; $7775
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_BOUNCE ; $777c
-	script_wait_frames $1e ; $7783
+	script_wait_frames 30 ; $7783
 	script_move_target ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, 34.0, 23.0 ; $778a
 	script_move_player 34.0, 23.0 ; $7795
-	script_wait_frames $0a ; $779f
+	script_wait_frames 10 ; $779f
 	script_move_target ACTOR_PLAYER, 34.0, 25.0 ; $77a6
 	script_face ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, FACE_RIGHT ; $77b1
 	farcall WaitPlayerMoveDone ; $77b8
 	script_set_text Text_30_430 ; $77bb
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $77c1
 	script_wait_move ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $77c6
-	script_wait_frames $0a ; $77cb
+	script_wait_frames 10 ; $77cb
 	script_move_player 29.0, 25.0 ; $77d2
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $77dc
-	script_wait_frames $1e ; $77e4
+	script_wait_frames 30 ; $77e4
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_PLAYER ; $77eb
-	script_wait_frames $1e ; $77f3
+	script_wait_frames 30 ; $77f3
 	farcall WaitPlayerMoveDone ; $77fa
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_NOD ; $77fd
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $7804
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $7809
-	script_wait_frames $0a ; $780e
+	script_wait_frames 10 ; $780e
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, ANIM_NOD ; $7815
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $781c
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $7821
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $7826
-	script_wait_frames $32 ; $782e
+	script_wait_frames 50 ; $782e
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $7835
-	script_wait_frames $1e ; $783d
+	script_wait_frames 30 ; $783d
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7844
 	or a ; $7847
 	jr z, .speak ; $7848
@@ -310,44 +310,44 @@ AcademyMainBldgNewStudentCutscene_10:
 	jr nz, .wait ; $7856
 	farcall AdvanceDialogueTextCursor ; $7858
 .wait:
-	script_wait_frames $0f ; $785b
+	script_wait_frames 15 ; $785b
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_NOD ; $7862
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $7869
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $786e
-	script_wait_frames $0f ; $7873
+	script_wait_frames 15 ; $7873
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $787a
 	script_wait_idle ACTOR_PLAYER ; $7881
-	script_wait_frames $0f ; $7886
+	script_wait_frames 15 ; $7886
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_NOD ; $788d
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $7894
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $7899
-	script_wait_frames $0f ; $789e
+	script_wait_frames 15 ; $789e
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, ANIM_BOUNCE ; $78a5
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $78ac
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $78b1
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, ACTOR_PLAYER ; $78b6
 	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_QUESTION, 35.0, 23.0 ; $78be
 	sound SFX_EMOTE ; $78c9
-	script_wait_frames $3c ; $78cb
+	script_wait_frames 60 ; $78cb
 	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_QUESTION, 63.0, 63.0 ; $78d2
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_NOD ; $78dd
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $78e4
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $78e9
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $78ee
 	script_wait_idle ACTOR_PLAYER ; $78f5
-	script_wait_frames $0a ; $78fa
+	script_wait_frames 10 ; $78fa
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_PLAYER ; $7901
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7909
 	script_wait_idle ACTOR_PLAYER ; $7910
-	script_wait_frames $0f ; $7915
+	script_wait_frames 15 ; $7915
 	script_face_pair ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $791c
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, ANIM_NOD ; $7924
 	script_set_anim ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ANIM_NOD ; $792b
 	script_wait_idle ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08 ; $7932
 	script_move_player 34.0, 23.0 ; $7937
-	script_wait_frames $28 ; $7941
+	script_wait_frames 40 ; $7941
 	script_move_target ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, 34.0, 3.0 ; $7948
-	script_wait_frames $0a ; $7953
+	script_wait_frames 10 ; $7953
 	script_move_player 34.0, 3.0 ; $795a
 	script_move_target ACTOR_PLAYER, 34.0, 3.0 ; $7964
 	script_wait_move ACTOR_PLAYER ; $796f

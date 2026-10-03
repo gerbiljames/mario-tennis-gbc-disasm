@@ -66,7 +66,7 @@ TournamentNpc0A_0f:
 	script_speak_restore ACTOR_TOURNAMENT_ELDEN ; $60e4
 	farcall RunDialogueYesNoPrompt ; $60e9
 	farcall ScriptCloseDialogueWindow ; $60ec
-	script_wait_frames $05 ; $60ef
+	script_wait_frames 5 ; $60ef
 	and a ; $60f6
 	jr z, .speak ; $60f7
 	farcall AdvanceDialogueTextCursor ; $60f9
@@ -393,30 +393,30 @@ IslandOpenArrivalCutscene:
 	script_move_target ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, 29.0, 33.0 ; $6481
 	script_move_target ACTOR_PLAYER, 27.0, 33.0 ; $648c
 	script_wait_move ACTOR_PLAYER ; $6497
-	script_wait_frames $28 ; $649c
+	script_wait_frames 40 ; $649c
 	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_08, FACE_DOWN ; $64a3
 	script_set_text Text_1f_21 ; $64aa
 	script_face ACTOR_PLAYER, FACE_DOWN ; $64b0
-	script_wait_frames $28 ; $64b7
+	script_wait_frames 40 ; $64b7
 	script_face ACTOR_PLAYER, FACE_LEFT ; $64be
-	script_wait_frames $28 ; $64c5
+	script_wait_frames 40 ; $64c5
 	script_face ACTOR_PLAYER, FACE_UP ; $64cc
-	script_wait_frames $28 ; $64d3
+	script_wait_frames 40 ; $64d3
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $64da
-	script_wait_frames $28 ; $64e1
+	script_wait_frames 40 ; $64e1
 	script_face ACTOR_PLAYER, FACE_DOWN ; $64e8
-	script_wait_frames $28 ; $64ef
+	script_wait_frames 40 ; $64ef
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $64f6
 	script_wait_idle ACTOR_PLAYER ; $64fd
 	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, FACE_RIGHT ; $6502
 	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, FACE_DOWN ; $6509
 	script_face ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, FACE_LEFT ; $6510
-	script_wait_frames $14 ; $6517
+	script_wait_frames 20 ; $6517
 	script_set_anim ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, ANIM_SHAKE ; $651e
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_WALK_74_06 ; $6525
 	script_speak ACTOR_ISLAND_OPEN_ROUND_WALK_74_06 ; $652a
 	script_face ACTOR_PLAYER, FACE_UP ; $652f
-	script_wait_frames $28 ; $6536
+	script_wait_frames 40 ; $6536
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $653d
 	script_wait_idle ACTOR_PLAYER ; $6544
 	script_set_anim ACTOR_ISLAND_OPEN_ROUND_WALK_74_08, ANIM_BOUNCE ; $6549
@@ -716,7 +716,7 @@ IslandOpenRound1DoublesNpc0A_0f:
 	script_speak_restore ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_SAMMI ; $6be0
 	farcall RunDialogueYesNoPrompt ; $6be5
 	farcall ScriptCloseDialogueWindow ; $6be8
-	script_wait_frames $05 ; $6beb
+	script_wait_frames 5 ; $6beb
 	and a ; $6bf2
 	jr z, .speak ; $6bf3
 	farcall AdvanceDialogueTextCursor ; $6bf5
@@ -729,7 +729,7 @@ IslandOpenRound1DoublesNpc0B_0f:
 	script_speak_restore ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_SEAN ; $6c04
 	farcall RunDialogueYesNoPrompt ; $6c09
 	farcall ScriptCloseDialogueWindow ; $6c0c
-	script_wait_frames $05 ; $6c0f
+	script_wait_frames 5 ; $6c0f
 	and a ; $6c16
 	jr z, .speak ; $6c17
 	farcall AdvanceDialogueTextCursor ; $6c19
@@ -742,7 +742,7 @@ IslandOpenRound1DoublesNpc0D_0f:
 	script_speak_restore ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_B_COZ ; $6c28
 	farcall RunDialogueYesNoPrompt ; $6c2d
 	farcall ScriptCloseDialogueWindow ; $6c30
-	script_wait_frames $05 ; $6c33
+	script_wait_frames 5 ; $6c33
 	and a ; $6c3a
 	jr z, .speak ; $6c3b
 	farcall AdvanceDialogueTextCursor ; $6c3d
@@ -785,7 +785,7 @@ IslandOpenSemifinalDoublesNpc08_0f:
 	script_speak_restore ACTOR_ISLAND_OPEN_SEMIFINAL_DOUBLES_SAMMI ; $6d6d
 	farcall RunDialogueYesNoPrompt ; $6d72
 	farcall ScriptCloseDialogueWindow ; $6d75
-	script_wait_frames $05 ; $6d78
+	script_wait_frames 5 ; $6d78
 	and a ; $6d7f
 	jr z, .speak ; $6d80
 	farcall AdvanceDialogueTextCursor ; $6d82
@@ -798,7 +798,7 @@ IslandOpenSemifinalDoublesNpc0D_0f:
 	script_speak_restore ACTOR_ISLAND_OPEN_SEMIFINAL_DOUBLES_B_COZ ; $6d91
 	farcall RunDialogueYesNoPrompt ; $6d96
 	farcall ScriptCloseDialogueWindow ; $6d99
-	script_wait_frames $05 ; $6d9c
+	script_wait_frames 5 ; $6d9c
 	and a ; $6da3
 	jr z, .speak ; $6da4
 	farcall AdvanceDialogueTextCursor ; $6da6
@@ -841,7 +841,7 @@ IslandOpenFinalDoublesNpc0C_0f:
 	script_speak_restore ACTOR_ISLAND_OPEN_FINAL_DOUBLES_SAMMI ; $6ed6
 	farcall RunDialogueYesNoPrompt ; $6edb
 	farcall ScriptCloseDialogueWindow ; $6ede
-	script_wait_frames $05 ; $6ee1
+	script_wait_frames 5 ; $6ee1
 	and a ; $6ee8
 	jr z, .speak ; $6ee9
 	farcall AdvanceDialogueTextCursor ; $6eeb
@@ -854,7 +854,7 @@ IslandOpenFinalDoublesNpc0B_0f:
 	script_speak_restore ACTOR_ISLAND_OPEN_FINAL_DOUBLES_B_COZ ; $6efa
 	farcall RunDialogueYesNoPrompt ; $6eff
 	farcall ScriptCloseDialogueWindow ; $6f02
-	script_wait_frames $05 ; $6f05
+	script_wait_frames 5 ; $6f05
 	and a ; $6f0c
 	jr z, .speak ; $6f0d
 	farcall AdvanceDialogueTextCursor ; $6f0f

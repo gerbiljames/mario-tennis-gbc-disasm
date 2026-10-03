@@ -43,6 +43,8 @@ class Source(unittest.TestCase):
         for mac, n in (("rect_size", 198), ("rect_cell", 24), ("map_cell", 38), ("sprite_xy", 60),
                        ("sprite_attr_tile", 27), ("sprite_tile_attr", 82)):
             self.assertEqual(count(rf"^\t{mac} "), n, mac)
+        # frame counts are decimal
+        self.assertEqual(count(r"^\t(?:wait_frames|script_wait_frames|script_delay|as_wait) \$"), 0)
         # VRAM copies of whole tilemap rows count rows
         self.assertGreaterEqual(count(r"^\tld c, (?:\d+ \* |SCREEN_HEIGHT \* )?TILEMAP_(?:WIDTH|AREA) / 16"), 220)
         # an OAM attribute loaded alone for QueueSprite*: palette plus OAM_* flags

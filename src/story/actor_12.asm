@@ -52,7 +52,7 @@ SeniorSinglesMatchConfirm:
 	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6af6
 	farcall RunDialogueYesNoPrompt ; $6afb
 	farcall ScriptCloseDialogueWindow ; $6afe
-	script_wait_frames $05 ; $6b01
+	script_wait_frames 5 ; $6b01
 	and a ; $6b08
 	jp nz, .done ; $6b09
 	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $6b0c
@@ -73,7 +73,7 @@ SeniorSinglesMatchConfirm:
 .startMatch:
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $6b44
 	call ResumeSeniorOpponentScripts ; $6b49
-	script_wait_frames $1e ; $6b4c
+	script_wait_frames 30 ; $6b4c
 	farcall EndCutsceneScriptMode ; $6b53
 	ret ; $6b56
 .done:
@@ -81,7 +81,7 @@ SeniorSinglesMatchConfirm:
 	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6b5d
 	farcall RunDialogueYesNoPrompt ; $6b62
 	farcall ScriptCloseDialogueWindow ; $6b65
-	script_wait_frames $05 ; $6b68
+	script_wait_frames 5 ; $6b68
 	and a ; $6b6f
 	jr z, .accepted ; $6b70
 	jp .declined ; $6b72
@@ -95,7 +95,7 @@ SeniorDoublesMatchConfirm:
 	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6b84
 	farcall RunDialogueYesNoPrompt ; $6b89
 	farcall ScriptCloseDialogueWindow ; $6b8c
-	script_wait_frames $05 ; $6b8f
+	script_wait_frames 5 ; $6b8f
 	and a ; $6b96
 	jp nz, .done ; $6b97
 	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $6b9a
@@ -111,7 +111,7 @@ SeniorDoublesMatchConfirm:
 .accepted:
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $6bc4
 	call ResumeSeniorOpponentScripts ; $6bc9
-	script_wait_frames $1e ; $6bcc
+	script_wait_frames 30 ; $6bcc
 	script_get_actor_state ACTOR_PARTNER ; $6bd3
 	ld c, l ; $6bd8
 	ld b, h ; $6bd9
@@ -124,7 +124,7 @@ SeniorDoublesMatchConfirm:
 	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6bea
 	farcall RunDialogueYesNoPrompt ; $6bef
 	farcall ScriptCloseDialogueWindow ; $6bf2
-	script_wait_frames $05 ; $6bf5
+	script_wait_frames 5 ; $6bf5
 	and a ; $6bfc
 	jr z, .accepted ; $6bfd
 	script_set_text Text_34_121 ; $6bff
@@ -270,7 +270,7 @@ ActorScript_12_16:
 ActorScript_12_17:
 	; $6d30, 15 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 41.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
@@ -278,7 +278,7 @@ ActorScript_12_17:
 ActorScript_12_18:
 	; $6d3f, 15 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 41.0, 25.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
@@ -286,7 +286,7 @@ ActorScript_12_18:
 ActorScript_12_19:
 	; $6d4e, 15 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 57.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
@@ -294,19 +294,19 @@ ActorScript_12_19:
 ActorScript_12_20:
 	; $6d5d, 45 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 57.0, 25.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_halt
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 5.0, 11.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 5.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
@@ -381,14 +381,14 @@ SeniorDoublesRank2Victory:
 	farcall WaitPlayerMoveDone ; $6e8e
 	script_fade_in $08 ; $6e91
 	call WaitFadeEnd ; $6e96
-	script_wait_frames $3c ; $6e99
+	script_wait_frames 60 ; $6e99
 	script_move_target ACTOR_SENIOR_COURT_B_CURT, 35.0, 19.0 ; $6ea0
 	script_wait_move ACTOR_SENIOR_COURT_B_CURT ; $6eab
 	script_face_pair ACTOR_SENIOR_COURT_B_CURT, ACTOR_SENIOR_COURT_A_BETH ; $6eb0
-	script_wait_frames $14 ; $6eb8
+	script_wait_frames 20 ; $6eb8
 	script_set_position ACTOR_SENIOR_COURT_B_BALLOON_SWEAT, 36.0, 17.5 ; $6ebf
 	sound SFX_APPEAR2 ; $6eca
-	script_wait_frames $1e ; $6ecc
+	script_wait_frames 30 ; $6ecc
 	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_SHAKE ; $6ed3
 	script_wait_idle ACTOR_SENIOR_COURT_A_BETH ; $6eda
 	script_set_position ACTOR_SENIOR_COURT_B_BALLOON_SWEAT, 63.0, 63.0 ; $6edf
@@ -398,12 +398,12 @@ SeniorDoublesRank2Victory:
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $6ef7
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BETH, ActorScript_12_28 ; $6efc
 	script_set_actor_script ACTOR_SENIOR_COURT_B_CURT, ActorScript_12_24 ; $6f07
-	script_wait_frames $3c ; $6f12
+	script_wait_frames 60 ; $6f12
 	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 45.0, 25.0 ; $6f19
 	script_move_player 45.0, 27.0 ; $6f24
 	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $6f2e
 	script_move_target ACTOR_PARTNER, 45.0, 29.0 ; $6f39
-	script_wait_frames $3c ; $6f44
+	script_wait_frames 60 ; $6f44
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_DOWN ; $6f4b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6f52
 	script_get_actor_state ACTOR_PARTNER ; $6f59
@@ -426,10 +426,10 @@ SeniorDoublesRank1Victory:
 	script_face ACTOR_PARTNER, FACE_UP ; $6fb7
 	call FadeInSeniorCourtNearPairB ; $6fbe
 	script_set_text Text_34_129 ; $6fc1
-	script_wait_frames $28 ; $6fc7
+	script_wait_frames 40 ; $6fc7
 	script_set_anim ACTOR_SENIOR_COURT_A_BRIAN, ANIM_BOUNCE ; $6fce
 	script_wait_idle ACTOR_SENIOR_COURT_A_BRIAN ; $6fd5
-	script_wait_frames $14 ; $6fda
+	script_wait_frames 20 ; $6fda
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, $ff80 ; $6fe1
 	ld a, $03 ; $6fe9
 	farcall ScriptWaitActorJumpDone ; $6feb
@@ -437,7 +437,7 @@ SeniorDoublesRank1Victory:
 	ld a, $03 ; $6ff6
 	farcall ScriptWaitActorJumpDone ; $6ff8
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $6ffb
-	script_wait_frames $3c ; $7000
+	script_wait_frames 60 ; $7000
 	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 45.0, 25.0 ; $7007
 	script_move_player 45.0, 27.0 ; $7012
 	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $701c

@@ -123,7 +123,7 @@ NetCoachRetryPrompt:
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $772d
 	farcall RunDialogueYesNoPrompt ; $7732
 	farcall ScriptCloseDialogueWindow ; $7735
-	script_wait_frames $05 ; $7738
+	script_wait_frames 5 ; $7738
 	and a ; $773f
 	jp z, .retry ; $7740
 	farcall AdvanceDialogueTextCursor ; $7743
@@ -314,7 +314,7 @@ ReturnCoachRetryPrompt:
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $79a3
 	farcall RunDialogueYesNoPrompt ; $79a8
 	farcall ScriptCloseDialogueWindow ; $79ab
-	script_wait_frames $05 ; $79ae
+	script_wait_frames 5 ; $79ae
 	and a ; $79b5
 	jp z, .retry ; $79b6
 	jp InitReturnCoachScene.speak ; $79b9
@@ -383,7 +383,7 @@ StartPendingLessonScene:
 ServeCoachWalkToCourtAndStartLesson:
 	script_null_script ACTOR_PARTNER ; $7a96
 	script_player_speed $0020 ; $7a9b
-	script_wait_frames $14 ; $7aa1
+	script_wait_frames 20 ; $7aa1
 	script_set_actor_script ACTOR_TRAINING_COURT_CURT, ActorScript_15_13 ; $7aa8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_15_14 ; $7ab3
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_15 ; $7abe
@@ -391,7 +391,7 @@ ServeCoachWalkToCourtAndStartLesson:
 	script_wait_actor_script ACTOR_PLAYER ; $7ad3
 	farcall WaitPlayerMoveDone ; $7ad8
 	script_wait_actor_script ACTOR_TRAINING_COURT_CURT ; $7adb
-	script_wait_frames $05 ; $7ae0
+	script_wait_frames 5 ; $7ae0
 	call PlayerPartnerGestureCutscene ; $7ae7
 	ld a, STORYLOC_TRAINING_COURT ; $7aea
 	ld [wStoryModeCurrentLocation], a ; $7aec
@@ -435,7 +435,7 @@ NetCoachWalkToCourtAndStartLesson:
 	script_wait_actor_script ACTOR_PLAYER ; $7b66
 	farcall WaitPlayerMoveDone ; $7b6b
 	script_wait_actor_script ACTOR_TRAINING_COURT_BETH ; $7b6e
-	script_wait_frames $05 ; $7b73
+	script_wait_frames 5 ; $7b73
 	call PlayerPartnerGestureCutscene ; $7b7a
 	ld a, STORYLOC_TRAINING_COURT ; $7b7d
 	ld [wStoryModeCurrentLocation], a ; $7b7f

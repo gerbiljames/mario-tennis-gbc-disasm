@@ -348,11 +348,11 @@ QueuePlaneSpriteByFrameCounter_14:
 	script_fade_in $06 ; $62d6
 	call WaitFadeEnd ; $62db
 	sound SFX_FIREWORK_LAUNCH ; $62de
-	script_wait_frames $3c ; $62e0
+	script_wait_frames 60 ; $62e0
 	script_set_position ACTOR_PLAYER, 12.0, 19.0 ; $62e7
 	ld h, $08 ; $62f2
 .planeLoop:
-	script_wait_frames $06 ; $62f4
+	script_wait_frames 6 ; $62f4
 	call PlayPlaneMoveSfx_14 ; $62fb
 	ld a, [wMapSceneStage2] ; $62fe
 	dec a ; $6301
@@ -362,7 +362,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	jr nz, .planeLoop ; $6309
 	ld h, $08 ; $630b
 .planeLoop2:
-	script_wait_frames $05 ; $630d
+	script_wait_frames 5 ; $630d
 	call PlayPlaneMoveSfx_14 ; $6314
 	ld a, h ; $6317
 	and $01 ; $6318
@@ -379,7 +379,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	jr nz, .planeLoop2 ; $632e
 	ld h, $08 ; $6330
 .descend:
-	script_wait_frames $04 ; $6332
+	script_wait_frames 4 ; $6332
 	call PlayPlaneMoveSfx_14 ; $6339
 	ld a, [wMapSceneStage] ; $633c
 	inc a ; $633f
@@ -394,7 +394,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	script_move_player_to_actor ACTOR_PLAYER ; $6356
 	ld h, $1c ; $635d
 .land:
-	script_wait_frames $03 ; $635f
+	script_wait_frames 3 ; $635f
 	call PlayPlaneMoveSfx_14 ; $6366
 	ld a, h ; $6369
 	and $01 ; $636a
@@ -411,7 +411,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	jr nz, .land ; $6380
 	ld h, $00 ; $6382
 .walkOff:
-	script_wait_frames $03 ; $6384
+	script_wait_frames 3 ; $6384
 	inc h ; $638b
 	call PlayPlaneMoveSfx_14 ; $638c
 	ld a, [wMapSceneStage2] ; $638f
@@ -430,7 +430,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	jr nz, .walkOff ; $63ab
 	ld h, $08 ; $63ad
 .speakDoubles:
-	script_wait_frames $04 ; $63af
+	script_wait_frames 4 ; $63af
 	call PlayPlaneMoveSfx_14 ; $63b6
 	ld a, [wMapSceneStage2] ; $63b9
 	dec a ; $63bc
@@ -440,7 +440,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	jr nz, .speakDoubles ; $63c4
 	ld h, $08 ; $63c6
 .fadeOut:
-	script_wait_frames $06 ; $63c8
+	script_wait_frames 6 ; $63c8
 	call PlayPlaneMoveSfx_14 ; $63cf
 	ld a, [wMapSceneStage2] ; $63d2
 	dec a ; $63d5
@@ -450,7 +450,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	jr nz, .fadeOut ; $63dd
 	ld h, $08 ; $63df
 .done:
-	script_wait_frames $08 ; $63e1
+	script_wait_frames 8 ; $63e1
 	call PlayPlaneMoveSfx_14 ; $63e8
 	ld a, [wMapSceneStage2] ; $63eb
 	dec a ; $63ee
@@ -459,7 +459,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	dec h ; $63f5
 	jr nz, .done ; $63f6
 	sound SFX_FIREWORK_SPARKLE ; $63f8
-	script_wait_frames $32 ; $63fa
+	script_wait_frames 50 ; $63fa
 	ld c, $04 ; $6401
 	call BeginFadeOut ; $6403
 	call WaitFadeEnd ; $6406

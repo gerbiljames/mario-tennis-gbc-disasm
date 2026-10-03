@@ -62,99 +62,99 @@ VarsityCourtTourCutscene:
 	call WaitFadeEnd ; $6392
 	script_set_position ACTOR_VARSITY_COURT_TOUR_EMILY, 34.0, 51.0 ; $6395
 	script_move_target ACTOR_VARSITY_COURT_TOUR_EMILY, 34.0, 29.0 ; $63a0
-	script_wait_frames $0f ; $63ab
+	script_wait_frames 15 ; $63ab
 	script_move_player 34.0, 29.0 ; $63b2
 	script_set_position ACTOR_PLAYER, 34.0, 51.0 ; $63bc
 	script_move_target ACTOR_PLAYER, 34.0, 33.0 ; $63c7
 	script_wait_move ACTOR_PLAYER ; $63d2
-	script_wait_frames $0f ; $63d7
+	script_wait_frames 15 ; $63d7
 	script_move_target ACTOR_PLAYER, 32.0, 31.0 ; $63de
 	script_wait_move ACTOR_PLAYER ; $63e9
-	script_wait_frames $1e ; $63ee
+	script_wait_frames 30 ; $63ee
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_LEFT ; $63f5
-	script_wait_frames $1e ; $63fc
+	script_wait_frames 30 ; $63fc
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6403
-	script_wait_frames $1e ; $640a
+	script_wait_frames 30 ; $640a
 	script_move_player 12.0, 27.0 ; $6411
 	farcall WaitPlayerMoveDone ; $641b
-	script_wait_frames $1e ; $641e
+	script_wait_frames 30 ; $641e
 	script_set_text Text_30_518 ; $6425
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $642b
-	script_wait_frames $0f ; $6430
+	script_wait_frames 15 ; $6430
 	script_player_speed $0040 ; $6437
 	script_move_player 34.0, 29.0 ; $643d
 	farcall WaitPlayerMoveDone ; $6447
 	script_player_speed $0020 ; $644a
 	script_set_position ACTOR_VARSITY_COURT_TOUR_BALLOON_QUESTION, 33.0, 29.0 ; $6450
 	sound SFX_EMOTE ; $645b
-	script_wait_frames $32 ; $645d
+	script_wait_frames 50 ; $645d
 	script_set_position ACTOR_VARSITY_COURT_TOUR_BALLOON_QUESTION, 63.0, 63.0 ; $6464
 	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, ANIM_BOUNCE ; $646f
 	script_wait_idle ACTOR_VARSITY_COURT_TOUR_EMILY ; $6476
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $647b
-	script_wait_frames $1e ; $6480
+	script_wait_frames 30 ; $6480
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_DOWN ; $6487
-	script_wait_frames $0f ; $648e
+	script_wait_frames 15 ; $648e
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6495
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_LEFT ; $649a
-	script_wait_frames $0f ; $64a1
+	script_wait_frames 15 ; $64a1
 	script_player_speed $0040 ; $64a8
 	script_move_player 12.0, 22.0 ; $64ae
 	farcall WaitPlayerMoveDone ; $64b8
 	script_player_speed $0020 ; $64bb
-	script_wait_frames $3c ; $64c1
+	script_wait_frames 60 ; $64c1
 	script_move_player 12.0, 34.0 ; $64c8
 	farcall WaitPlayerMoveDone ; $64d2
-	script_wait_frames $3c ; $64d5
+	script_wait_frames 60 ; $64d5
 	script_move_player 12.0, 27.0 ; $64dc
 	farcall WaitPlayerMoveDone ; $64e6
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $64e9
-	script_wait_frames $0f ; $64ee
+	script_wait_frames 15 ; $64ee
 	script_player_speed $0040 ; $64f5
 	script_move_player 34.0, 29.0 ; $64fb
 	farcall WaitPlayerMoveDone ; $6505
 	script_player_speed $0020 ; $6508
-	script_wait_frames $1e ; $650e
+	script_wait_frames 30 ; $650e
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_RIGHT ; $6515
-	script_wait_frames $0f ; $651c
+	script_wait_frames 15 ; $651c
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6523
 	script_move_player 48.0, 38.0 ; $652a
 	farcall WaitPlayerMoveDone ; $6534
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6537
-	script_wait_frames $0f ; $653c
+	script_wait_frames 15 ; $653c
 	script_move_player 54.0, 16.0 ; $6543
 	farcall WaitPlayerMoveDone ; $654d
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6550
-	script_wait_frames $0f ; $6555
+	script_wait_frames 15 ; $6555
 	script_player_speed $0040 ; $655c
 	script_move_player 34.0, 29.0 ; $6562
 	farcall WaitPlayerMoveDone ; $656c
 	script_player_speed $0020 ; $656f
-	script_wait_frames $0f ; $6575
+	script_wait_frames 15 ; $6575
 	script_face ACTOR_VARSITY_COURT_TOUR_EMILY, FACE_DOWN ; $657c
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $6583
-	script_wait_frames $1e ; $6588
+	script_wait_frames 30 ; $6588
 	script_face ACTOR_PLAYER, FACE_UP ; $658f
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6596
 	script_wait_idle ACTOR_PLAYER ; $659d
-	script_wait_frames $0f ; $65a2
+	script_wait_frames 15 ; $65a2
 	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, ANIM_BOUNCE ; $65a9
 	script_wait_idle ACTOR_VARSITY_COURT_TOUR_EMILY ; $65b0
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $65b5
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $65ba
 	script_wait_idle ACTOR_PLAYER ; $65c1
-	script_wait_frames $1e ; $65c6
+	script_wait_frames 30 ; $65c6
 	script_set_anim ACTOR_VARSITY_COURT_TOUR_EMILY, ANIM_NOD ; $65cd
 	script_wait_idle ACTOR_VARSITY_COURT_TOUR_EMILY ; $65d4
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $65d9
 	script_move_target ACTOR_PLAYER, 34.0, 31.0 ; $65de
 	script_wait_move ACTOR_PLAYER ; $65e9
 	script_face ACTOR_PLAYER, FACE_UP ; $65ee
-	script_wait_frames $0f ; $65f5
+	script_wait_frames 15 ; $65f5
 	script_move_target ACTOR_VARSITY_COURT_TOUR_EMILY, 34.0, 7.0 ; $65fc
-	script_wait_frames $05 ; $6607
+	script_wait_frames 5 ; $6607
 	script_move_target ACTOR_PLAYER, 34.0, 7.0 ; $660e
-	script_wait_frames $0a ; $6619
+	script_wait_frames 10 ; $6619
 	script_move_player 34.0, 13.0 ; $6620
 	script_wait_move ACTOR_PLAYER ; $662a
 	ld a, $0f ; $662f

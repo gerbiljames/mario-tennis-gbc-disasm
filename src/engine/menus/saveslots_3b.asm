@@ -313,7 +313,7 @@ TryMainMenuLinkHandshake:
 	pop af ; $5cd4
 	jr .done ; $5cd5
 .waitFramesCmd:
-	wait_frames $06 ; $5cd7
+	wait_frames 6 ; $5cd7
 	farcall TryEstablishLink ; $5cdb
 	jr c, .loop ; $5cde
 .done:

@@ -383,7 +383,7 @@ Unused_1a_RestoreMessageSpeed:
 	script_speak_restore SPEAKER_NONE ; $42d7
 	farcall RunDialogueYesNoPrompt ; $42dc
 	farcall ScriptCloseDialogueWindow ; $42df
-	script_wait_frames $05 ; $42e2
+	script_wait_frames 5 ; $42e2
 	and a ; $42e9
 	jr nz, .compare ; $42ea
 	ld a, $01 ; $42ec
@@ -422,7 +422,7 @@ Unused_1a_RestoreMessageSpeed:
 	ld [wMenuInitialRow], a ; $433e
 	farcall RunDialogueYesNoPrompt ; $4341
 	farcall ScriptCloseDialogueWindow ; $4344
-	script_wait_frames $05 ; $4347
+	script_wait_frames 5 ; $4347
 	and a ; $434e
 	jr nz, .buildMinigameModePauseMenu ; $434f
 	ld a, STORYLOC_MAIN_MENU ; $4351

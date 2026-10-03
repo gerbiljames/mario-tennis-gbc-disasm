@@ -86,10 +86,10 @@ ActorScript_0f_08:
 .L8:
 	as_set_target 39.0, 19.0
 	as_wait_move
-	as_wait $4b
+	as_wait 75
 	as_set_target 41.0, 19.0
 	as_wait_move
-	as_wait $78
+	as_wait 120
 	as_jump .L8
 ```
 

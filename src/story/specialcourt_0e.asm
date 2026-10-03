@@ -1,31 +1,31 @@
 ExhibitionDeclinedCutscene:
-	script_wait_frames $0a ; $7082
+	script_wait_frames 10 ; $7082
 	sound SFX_APPEAR1 ; $7089
 	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, 20.0, 13.0 ; $708b
-	script_wait_frames $28 ; $7096
+	script_wait_frames 40 ; $7096
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $709d
-	script_wait_frames $14 ; $70a2
+	script_wait_frames 20 ; $70a2
 	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, 63.0, 63.0 ; $70a9
 	script_set_anim ACTOR_MARIO_WORLD_PEACH, ANIM_BOUNCE ; $70b4
 	script_wait_idle ACTOR_MARIO_WORLD_PEACH ; $70bb
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $70c0
-	script_wait_frames $0a ; $70c5
+	script_wait_frames 10 ; $70c5
 	script_set_anim ACTOR_MARIO_WORLD_PEACH, ANIM_NOD ; $70cc
 	script_wait_idle ACTOR_MARIO_WORLD_PEACH ; $70d3
-	script_wait_frames $0a ; $70d8
+	script_wait_frames 10 ; $70d8
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $70df
 	script_jump_velocity ACTOR_MARIO_WORLD_BOWSER, $ff80 ; $70e4
-	script_wait_frames $14 ; $70ec
+	script_wait_frames 20 ; $70ec
 	sound SFX_IMPACT ; $70f3
 	ld a, $04 ; $70f5
 	farcall SetScreenShake ; $70f7
-	script_wait_frames $0a ; $70fa
+	script_wait_frames 10 ; $70fa
 	ld a, $00 ; $7101
 	farcall SetScreenShake ; $7103
-	script_wait_frames $1e ; $7106
+	script_wait_frames 30 ; $7106
 	script_move_target ACTOR_MARIO_WORLD_WARIO, 12.0, 13.0 ; $710d
 	script_move_target ACTOR_MARIO_WORLD_WALUIGI, 12.0, 17.0 ; $7118
-	script_wait_frames $14 ; $7123
+	script_wait_frames 20 ; $7123
 	script_move_target ACTOR_MARIO_WORLD_BOWSER, 12.0, 15.0 ; $712a
 	script_wait_move ACTOR_MARIO_WORLD_BOWSER ; $7135
 	script_face ACTOR_MARIO_WORLD_WARIO, FACE_RIGHT ; $713a
@@ -360,17 +360,17 @@ ExhibitionMatchIntroCutscene:
 	script_move_target ACTOR_PLAYER, 5.0, 31.0 ; $7786
 	script_wait_move ACTOR_PLAYER ; $7791
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_16 ; $7796
-	script_wait_frames $5a ; $77a1
+	script_wait_frames 90 ; $77a1
 	script_move_player 14.0, 23.0 ; $77a8
 	script_wait_actor_script ACTOR_SPECIAL_COURT_TOAD ; $77b2
 	script_set_speed ACTOR_SPECIAL_COURT_TOAD, $0020 ; $77b7
 	script_set_actor_script ACTOR_SPECIAL_COURT_TOAD, ActorScript_0e_17 ; $77bf
 	script_wait_actor_script ACTOR_SPECIAL_COURT_TOAD ; $77ca
-	script_wait_frames $3c ; $77cf
+	script_wait_frames 60 ; $77cf
 	script_set_anim ACTOR_SPECIAL_COURT_MARIO, ANIM_NOD ; $77d6
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $77dd
 	script_wait_idle ACTOR_PLAYER ; $77e4
-	script_wait_frames $14 ; $77e9
+	script_wait_frames 20 ; $77e9
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $77f0
 	jr z, .doubles ; $77f3
 	ld a, $01 ; $77f5
@@ -383,11 +383,11 @@ ExhibitionMatchIntroCutscene:
 	script_move_target ACTOR_PLAYER, 15.0, 23.0 ; $780e
 	script_wait_move ACTOR_PLAYER ; $7819
 	script_face ACTOR_SPECIAL_COURT_MARIO, FACE_UP ; $781e
-	script_wait_frames $14 ; $7825
+	script_wait_frames 20 ; $7825
 	script_player_speed $0020 ; $782c
 	script_move_player 14.0, 9.0 ; $7832
 	farcall WaitPlayerMoveDone ; $783c
-	script_wait_frames $14 ; $783f
+	script_wait_frames 20 ; $783f
 	script_set_speed ACTOR_SPECIAL_COURT_PEACH, $0014 ; $7846
 	script_move_target ACTOR_SPECIAL_COURT_PEACH, 15.0, 7.0 ; $784e
 	script_wait_move ACTOR_SPECIAL_COURT_PEACH ; $7859
@@ -398,14 +398,14 @@ ExhibitionMatchIntroCutscene:
 	script_player_speed $0040 ; $7875
 	script_move_player 14.0, 20.0 ; $787b
 	farcall WaitPlayerMoveDone ; $7885
-	script_wait_frames $14 ; $7888
+	script_wait_frames 20 ; $7888
 	script_face ACTOR_SPECIAL_COURT_MARIO, FACE_RIGHT ; $788f
 	script_face ACTOR_PLAYER, FACE_LEFT ; $7896
-	script_wait_frames $28 ; $789d
+	script_wait_frames 40 ; $789d
 	script_set_anim ACTOR_SPECIAL_COURT_MARIO, ANIM_NOD ; $78a4
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $78ab
 	script_wait_idle ACTOR_PLAYER ; $78b2
-	script_wait_frames $14 ; $78b7
+	script_wait_frames 20 ; $78b7
 	script_set_speed ACTOR_PLAYER, $0020 ; $78be
 	script_set_speed ACTOR_SPECIAL_COURT_MARIO, $0020 ; $78c6
 	script_move_target ACTOR_PLAYER, 15.0, 29.0 ; $78ce
@@ -418,7 +418,7 @@ ExhibitionMatchIntroCutscene:
 	script_move_target ACTOR_SPECIAL_COURT_MARIO, 13.0, 13.0 ; $7905
 	script_wait_move ACTOR_SPECIAL_COURT_MARIO ; $7910
 	script_face ACTOR_SPECIAL_COURT_MARIO, FACE_DOWN ; $7915
-	script_wait_frames $28 ; $791c
+	script_wait_frames 40 ; $791c
 	call PrepareStoryMatch ; $7923
 	ret ; $7926
 .startMatch:
@@ -446,7 +446,7 @@ ExhibitionMatchIntroCutscene:
 	script_move_target ACTOR_PARTNER, 5.0, 31.0 ; $79df
 	script_wait_move ACTOR_PARTNER ; $79ea
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_16 ; $79ef
-	script_wait_frames $5a ; $79fa
+	script_wait_frames 90 ; $79fa
 	script_move_player 14.0, 23.0 ; $7a01
 	script_wait_actor_script ACTOR_SPECIAL_COURT_TOAD ; $7a0b
 	script_set_speed ACTOR_SPECIAL_COURT_TOAD, $0020 ; $7a10
@@ -454,10 +454,10 @@ ExhibitionMatchIntroCutscene:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $7a23
 	script_move_target ACTOR_PARTNER, 15.0, 27.0 ; $7a2e
 	script_wait_actor_script ACTOR_SPECIAL_COURT_TOAD ; $7a39
-	script_wait_frames $3c ; $7a3e
+	script_wait_frames 60 ; $7a3e
 	script_set_anim ACTOR_SPECIAL_COURT_PEACH, ANIM_NOD ; $7a45
 	script_wait_idle ACTOR_SPECIAL_COURT_PEACH ; $7a4c
-	script_wait_frames $14 ; $7a51
+	script_wait_frames 20 ; $7a51
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $7a58
 	jr z, .done ; $7a5b
 	ld a, $01 ; $7a5d
@@ -467,13 +467,13 @@ ExhibitionMatchIntroCutscene:
 .done:
 	script_set_text Text_5e_170 ; $7a66
 	script_speak ACTOR_SPECIAL_COURT_PEACH ; $7a6c
-	script_wait_frames $14 ; $7a71
+	script_wait_frames 20 ; $7a71
 	script_set_anim ACTOR_SPECIAL_COURT_MARIO, ANIM_NOD ; $7a78
 	script_set_anim ACTOR_SPECIAL_COURT_PEACH, ANIM_NOD ; $7a7f
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $7a86
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7a8d
 	script_wait_idle ACTOR_PLAYER ; $7a94
-	script_wait_frames $14 ; $7a99
+	script_wait_frames 20 ; $7a99
 	script_player_speed $0020 ; $7aa0
 	script_move_player 14.0, 20.0 ; $7aa6
 	script_set_speed ACTOR_PLAYER, $0020 ; $7ab0
@@ -486,6 +486,6 @@ ExhibitionMatchIntroCutscene:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_21 ; $7af1
 	script_wait_actor_script ACTOR_SPECIAL_COURT_MARIO ; $7afc
 	script_wait_actor_script ACTOR_SPECIAL_COURT_PEACH ; $7b01
-	script_wait_frames $3c ; $7b06
+	script_wait_frames 60 ; $7b06
 	call PrepareStoryMatch ; $7b0d
 	ret ; $7b10

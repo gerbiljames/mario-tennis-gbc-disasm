@@ -13,7 +13,7 @@ ShowTournamentBracket:
 	ld hl, BracketHighlightBlinkTask ; $777e
 	call RegisterFrameTask ; $7781
 	sound SFX_MARKER ; $7784
-	wait_frames $78 ; $7786
+	wait_frames 120 ; $7786
 .loop:
 	ldh a, [hInputPressed] ; $778a
 	bit PADB_A, a ; $778c

@@ -216,7 +216,7 @@ CafeteriaNpc04_10:
 	script_speak_restore ACTOR_CAFETERIA_WALK_71_03_2 ; $58cc
 	farcall RunDialogueYesNoPrompt ; $58d1
 	farcall ScriptCloseDialogueWindow ; $58d4
-	script_wait_frames $05 ; $58d7
+	script_wait_frames 5 ; $58d7
 	and a ; $58de
 	jr z, .speak ; $58df
 	farcall AdvanceDialogueTextCursor ; $58e1
@@ -232,7 +232,7 @@ CafeteriaNpc04_10:
 	script_speak_restore ACTOR_CAFETERIA_WALK_71_03_2 ; $58f4
 	farcall RunDialogueYesNoPrompt ; $58f9
 	farcall ScriptCloseDialogueWindow ; $58fc
-	script_wait_frames $05 ; $58ff
+	script_wait_frames 5 ; $58ff
 	and a ; $5906
 	jr z, .declined ; $5907
 	script_set_text Text_33_222 ; $5909
@@ -263,7 +263,7 @@ CafeteriaNpc05_10:
 	script_speak_restore ACTOR_CAFETERIA_WALK_72_03_1 ; $5943
 	farcall RunDialogueYesNoPrompt ; $5948
 	farcall ScriptCloseDialogueWindow ; $594b
-	script_wait_frames $05 ; $594e
+	script_wait_frames 5 ; $594e
 	and a ; $5955
 	jr z, .speak ; $5956
 	farcall AdvanceDialogueTextCursor ; $5958
@@ -499,7 +499,7 @@ RestaurantNpc05_10:
 	script_set_anim ACTOR_RESTAURANT_WALK_71_03_1, ANIM_SHAKE ; $5c7c
 	script_wait_idle ACTOR_RESTAURANT_WALK_71_03_1 ; $5c83
 	script_speak ACTOR_RESTAURANT_WALK_71_03_1 ; $5c88
-	script_wait_frames $14 ; $5c8d
+	script_wait_frames 20 ; $5c8d
 	script_face ACTOR_RESTAURANT_WALK_71_03_1, FACE_DOWN ; $5c94
 	ret ; $5c9b
 RestaurantNpc05TextIds:
@@ -564,11 +564,11 @@ RestaurantNpc12_10:
 	script_set_position ACTOR_RESTAURANT_BALLOON_EXCLAIM, 28.0, 17.0 ; $5d35
 	sound SFX_CHIME ; $5d40
 	script_set_anim ACTOR_RESTAURANT_WALK_72_03_2, ANIM_BOUNCE ; $5d42
-	script_wait_frames $28 ; $5d49
+	script_wait_frames 40 ; $5d49
 	script_set_position ACTOR_RESTAURANT_BALLOON_EXCLAIM, 63.0, 63.0 ; $5d50
 	script_speak ACTOR_RESTAURANT_WALK_72_03_2 ; $5d5b
 	script_face ACTOR_RESTAURANT_WALK_72_03_2, FACE_DOWN ; $5d60
-	script_wait_frames $14 ; $5d67
+	script_wait_frames 20 ; $5d67
 	script_lock_facing ACTOR_RESTAURANT_WALK_72_03_2 ; $5d6e
 	script_move_angle ACTOR_RESTAURANT_WALK_72_03_2, FACE_UP, $0100 ; $5d75
 	call SetRestaurantNpc12StageFlag_10 ; $5d7f
@@ -637,7 +637,7 @@ RestaurantNpc08_10:
 .altText:
 	script_move_target ACTOR_RESTAURANT_WALK_71_06_1, 33.25, 15.0 ; $5e30
 	script_wait_move ACTOR_RESTAURANT_WALK_71_06_1 ; $5e3b
-	script_wait_frames $0a ; $5e40
+	script_wait_frames 10 ; $5e40
 	script_set_anim ACTOR_RESTAURANT_WALK_71_06_1, ANIM_BOUNCE ; $5e47
 	script_face ACTOR_RESTAURANT_WALK_71_06_1, FACE_RIGHT ; $5e4e
 	set_flag FLAG_RESTAURANT_NPC08_MOVED ; $5e55
@@ -684,7 +684,7 @@ RestaurantNpc09_10:
 	script_speak_restore ACTOR_RESTAURANT_WALK_71_07 ; $5ea9
 	farcall RunDialogueYesNoPrompt ; $5eae
 	farcall ScriptCloseDialogueWindow ; $5eb1
-	script_wait_frames $05 ; $5eb4
+	script_wait_frames 5 ; $5eb4
 	and a ; $5ebb
 	jr nz, .done ; $5ebc
 	script_set_text Text_33_169 ; $5ebe
@@ -725,7 +725,7 @@ RestaurantNpc0A_10:
 	script_speak_restore ACTOR_RESTAURANT_WALK_71_03_2 ; $5f12
 	farcall RunDialogueYesNoPrompt ; $5f17
 	farcall ScriptCloseDialogueWindow ; $5f1a
-	script_wait_frames $05 ; $5f1d
+	script_wait_frames 5 ; $5f1d
 	and a ; $5f24
 	jr z, .speak ; $5f25
 	farcall AdvanceDialogueTextCursor ; $5f27
@@ -782,7 +782,7 @@ RestaurantNpc0C_10:
 	script_speak_restore ACTOR_RESTAURANT_WALK_71_06_2 ; $5f8b
 	farcall RunDialogueYesNoPrompt ; $5f90
 	farcall ScriptCloseDialogueWindow ; $5f93
-	script_wait_frames $05 ; $5f96
+	script_wait_frames 5 ; $5f96
 	and a ; $5f9d
 	jr z, .speak ; $5f9e
 	farcall AdvanceDialogueTextCursor ; $5fa0
@@ -820,7 +820,7 @@ RestaurantNpc0D_10:
 	script_speak_restore ACTOR_RESTAURANT_WALK_72_05_1 ; $5fe1
 	farcall RunDialogueYesNoPrompt ; $5fe6
 	farcall ScriptCloseDialogueWindow ; $5fe9
-	script_wait_frames $05 ; $5fec
+	script_wait_frames 5 ; $5fec
 	and a ; $5ff3
 	jr z, .advanceDialogueTextCursor ; $5ff4
 	farcall AdvanceDialogueTextCursor ; $5ff6
@@ -999,6 +999,6 @@ RestaurantShowActor11NearPlayer_10:
 	ld e, a ; $6198
 	ld a, $11 ; $6199
 	farcall ScriptSetActorPosition ; $619b
-	script_wait_frames $46 ; $619e
+	script_wait_frames 70 ; $619e
 	script_set_position ACTOR_RESTAURANT_BALLOON_ELLIPSIS, 63.0, 63.0 ; $61a5
 	ret ; $61b0

@@ -63,17 +63,17 @@ TrainingGymArrival02_0e:
 	farcall WaitPlayerMoveDone ; $415d
 	script_copy_scene_rect $0a, $0a, $3d, $0c, $02, $02 ; $4160
 	script_copy_scene_rect $3d, $0a, $0a, $0a, $02, $02 ; $416f
-	script_wait_frames $02 ; $417e
+	script_wait_frames 2 ; $417e
 	script_fade_in $08 ; $4185
 	call WaitFadeEnd ; $418a
 	script_move_target ACTOR_PLAYER, 11.0, 14.0 ; $418d
 	script_wait_move ACTOR_PLAYER ; $4198
 	sound SFX_DOOR ; $419d
-	script_wait_frames $02 ; $419f
+	script_wait_frames 2 ; $419f
 	script_copy_scene_rect $3a, $0a, $0a, $0a, $02, $02 ; $41a6
-	script_wait_frames $02 ; $41b5
+	script_wait_frames 2 ; $41b5
 	script_copy_scene_rect $37, $0a, $0a, $0a, $02, $02 ; $41bc
-	script_wait_frames $02 ; $41cb
+	script_wait_frames 2 ; $41cb
 	script_copy_scene_rect $3d, $0c, $0a, $0a, $02, $02 ; $41d2
 .done:
 	ret ; $41e1
@@ -91,11 +91,11 @@ TrainingGymArrival03_0e:
 	script_move_target ACTOR_PLAYER, 21.0, 14.0 ; $4222
 	script_wait_move ACTOR_PLAYER ; $422d
 	sound SFX_DOOR ; $4232
-	script_wait_frames $02 ; $4234
+	script_wait_frames 2 ; $4234
 	script_copy_scene_rect $3a, $0a, $14, $0a, $02, $02 ; $423b
-	script_wait_frames $02 ; $424a
+	script_wait_frames 2 ; $424a
 	script_copy_scene_rect $37, $0a, $14, $0a, $02, $02 ; $4251
-	script_wait_frames $02 ; $4260
+	script_wait_frames 2 ; $4260
 	script_copy_scene_rect $3d, $0c, $14, $0a, $02, $02 ; $4267
 	ret ; $4276
 TrainingGymExitTriggers_0e:
@@ -113,16 +113,16 @@ TrainingGymExit02_0e:
 	farcall WaitPlayerMoveDone ; $42b6
 	sound SFX_DOOR ; $42b9
 	script_copy_scene_rect $37, $0a, $0a, $0a, $02, $02 ; $42bb
-	script_wait_frames $02 ; $42ca
+	script_wait_frames 2 ; $42ca
 	script_copy_scene_rect $3a, $0a, $0a, $0a, $02, $02 ; $42d1
-	script_wait_frames $02 ; $42e0
+	script_wait_frames 2 ; $42e0
 	script_copy_scene_rect $3d, $0a, $0a, $0a, $02, $02 ; $42e7
-	script_wait_frames $02 ; $42f6
+	script_wait_frames 2 ; $42f6
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $42fd
 	ld c, $08 ; $4307
 	call BeginFadeOut ; $4309
 	script_unlock_facing ACTOR_PLAYER ; $430c
-	script_wait_frames $0a ; $4313
+	script_wait_frames 10 ; $4313
 	ret ; $431a
 TrainingGymExit03_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $431b
@@ -133,16 +133,16 @@ TrainingGymExit03_0e:
 	farcall WaitPlayerMoveDone ; $4341
 	sound SFX_DOOR ; $4344
 	script_copy_scene_rect $37, $0a, $14, $0a, $02, $02 ; $4346
-	script_wait_frames $02 ; $4355
+	script_wait_frames 2 ; $4355
 	script_copy_scene_rect $3a, $0a, $14, $0a, $02, $02 ; $435c
-	script_wait_frames $02 ; $436b
+	script_wait_frames 2 ; $436b
 	script_copy_scene_rect $3d, $0a, $14, $0a, $02, $02 ; $4372
-	script_wait_frames $02 ; $4381
+	script_wait_frames 2 ; $4381
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $4388
 	ld c, $08 ; $4392
 	call BeginFadeOut ; $4394
 	script_unlock_facing ACTOR_PLAYER ; $4397
-	script_wait_frames $0a ; $439e
+	script_wait_frames 10 ; $439e
 	ret ; $43a5
 TrainingGymNpc03_0e:
 	ld a, [wMapSceneStage] ; $43a6
@@ -253,7 +253,7 @@ TrainingGymNpc07TextIds:
 	script_speak_restore ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1 ; $4477
 	farcall RunDialogueYesNoPrompt ; $447c
 	farcall ScriptCloseDialogueWindow ; $447f
-	script_wait_frames $05 ; $4482
+	script_wait_frames 5 ; $4482
 	and a ; $4489
 	jr z, .speakLine ; $448a
 	farcall AdvanceDialogueTextCursor ; $448c

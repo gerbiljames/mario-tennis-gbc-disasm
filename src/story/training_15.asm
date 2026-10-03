@@ -113,10 +113,10 @@ ActorScript_15_00:
 	; $41ba, 19 bytes (actor_script)
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_anim ANIM_SHAKE
-	as_wait $78
+	as_wait 120
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SHAKE
-	as_wait $78
+	as_wait 120
 	as_jump ActorScript_15_00
 TournamentSiteRespawnActors_15:
 	; $41cd, 164 bytes (map_actors)
@@ -277,7 +277,7 @@ TournamentSiteArrivalScene:
 	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, 19.0, 19.0 ; $44e3
 	script_move_target ACTOR_PLAYER, 17.0, 21.0 ; $44ee
 	script_wait_move ACTOR_PLAYER ; $44f9
-	script_wait_frames $28 ; $44fe
+	script_wait_frames 40 ; $44fe
 	script_face ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, FACE_DOWN ; $4505
 	script_set_text Text_1f_13 ; $450c
 	script_speak ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06 ; $4512
@@ -311,21 +311,21 @@ TournamentSiteArrivalScene:
 	script_set_anim ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, ANIM_NOD ; $45b8
 	script_wait_idle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06 ; $45bf
 	script_face ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, FACE_RIGHT ; $45c4
-	script_wait_frames $05 ; $45cb
+	script_wait_frames 5 ; $45cb
 	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, FACE_UP, $0800 ; $45d2
-	script_wait_frames $3c ; $45dc
+	script_wait_frames 60 ; $45dc
 	script_face ACTOR_PLAYER, FACE_LEFT ; $45e3
-	script_wait_frames $28 ; $45ea
+	script_wait_frames 40 ; $45ea
 	script_face ACTOR_PLAYER, FACE_DOWN ; $45f1
-	script_wait_frames $28 ; $45f8
+	script_wait_frames 40 ; $45f8
 	script_face ACTOR_PLAYER, FACE_LEFT ; $45ff
-	script_wait_frames $28 ; $4606
+	script_wait_frames 40 ; $4606
 	script_face ACTOR_PLAYER, FACE_UP ; $460d
-	script_wait_frames $28 ; $4614
+	script_wait_frames 40 ; $4614
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $461b
-	script_wait_frames $28 ; $4622
+	script_wait_frames 40 ; $4622
 	script_face ACTOR_PLAYER, FACE_UP ; $4629
-	script_wait_frames $28 ; $4630
+	script_wait_frames 40 ; $4630
 	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, 18.0, 16.0 ; $4637
 	script_wait_move ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08 ; $4642
 	script_face ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, FACE_DOWN ; $4647
@@ -345,7 +345,7 @@ TournamentSiteArrivalScene:
 	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07, FACE_UP, $0a00 ; $4689
 	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, FACE_UP, $0a00 ; $4693
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0a00 ; $469d
-	script_wait_frames $1e ; $46a7
+	script_wait_frames 30 ; $46a7
 	ld c, $08 ; $46ae
 	call BeginFadeOut ; $46b0
 	call WaitFadeEnd ; $46b3
@@ -603,7 +603,7 @@ TrainingCourtNpc0B_15:
 	script_speak_restore ACTOR_TRAINING_COURT_PAM ; $4a58
 	farcall RunDialogueYesNoPrompt ; $4a5d
 	farcall ScriptCloseDialogueWindow ; $4a60
-	script_wait_frames $05 ; $4a63
+	script_wait_frames 5 ; $4a63
 	and a ; $4a6a
 	jr z, .speak ; $4a6b
 	farcall AdvanceDialogueTextCursor ; $4a6d
@@ -648,7 +648,7 @@ TrainingCourtNpc0F_15:
 	script_speak_restore ACTOR_TRAINING_COURT_WALK_71_05_2 ; $4ab9
 	farcall RunDialogueYesNoPrompt ; $4abe
 	farcall ScriptCloseDialogueWindow ; $4ac1
-	script_wait_frames $05 ; $4ac4
+	script_wait_frames 5 ; $4ac4
 	and a ; $4acb
 	jr z, .speak ; $4acc
 	farcall AdvanceDialogueTextCursor ; $4ace
@@ -676,7 +676,7 @@ TrainingCourtNpc10_15:
 	script_speak_restore ACTOR_TRAINING_COURT_WALK_71_07_3 ; $4af9
 	farcall RunDialogueYesNoPrompt ; $4afe
 	farcall ScriptCloseDialogueWindow ; $4b01
-	script_wait_frames $05 ; $4b04
+	script_wait_frames 5 ; $4b04
 	and a ; $4b0b
 	jr z, .speak ; $4b0c
 	farcall AdvanceDialogueTextCursor ; $4b0e
@@ -704,13 +704,13 @@ TrainingCourtNpc13_15:
 	script_speak_restore ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4b3f
 	farcall RunDialogueYesNoPrompt ; $4b44
 	farcall ScriptCloseDialogueWindow ; $4b47
-	script_wait_frames $05 ; $4b4a
+	script_wait_frames 5 ; $4b4a
 	and a ; $4b51
 	jp nz, .setFlag ; $4b52
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4b55
 	script_wait_idle ACTOR_PLAYER ; $4b5c
 	script_speak ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4b61
-	script_wait_frames $0a ; $4b66
+	script_wait_frames 10 ; $4b66
 	ret ; $4b6d
 .setFlag:
 	set_flag FLAG_SWING_PRACTICE_KID_PLACED ; $4b6e
@@ -745,25 +745,25 @@ TrainingCourtNpc13_15:
 	script_move_target ACTOR_PLAYER, 51.0, 15.0 ; $4be1
 	script_wait_move ACTOR_PLAYER ; $4bec
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4bf1
-	script_wait_frames $0a ; $4bf8
+	script_wait_frames 10 ; $4bf8
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4bff
-	script_wait_frames $14 ; $4c0a
+	script_wait_frames 20 ; $4c0a
 	script_set_anim ACTOR_PLAYER, ANIM_SWING_LOOP ; $4c11
-	script_wait_frames $b4 ; $4c18
+	script_wait_frames 180 ; $4c18
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $4c1f
 	script_wait_idle ACTOR_PLAYER ; $4c26
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $4c2b
 	script_face ACTOR_TRAINING_COURT_WALK_71_06_3, FACE_DOWN ; $4c32
-	script_wait_frames $01 ; $4c39
+	script_wait_frames 1 ; $4c39
 	script_set_anim ACTOR_TRAINING_COURT_WALK_71_06_3, ANIM_SHAKE ; $4c40
 	script_wait_idle ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4c47
 	script_face ACTOR_TRAINING_COURT_WALK_71_06_3, FACE_LEFT ; $4c4c
-	script_wait_frames $01 ; $4c53
+	script_wait_frames 1 ; $4c53
 	script_speak ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4c5a
-	script_wait_frames $1e ; $4c5f
+	script_wait_frames 30 ; $4c5f
 	script_set_speed ACTOR_PLAYER, $0020 ; $4c66
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4c6e
-	script_wait_frames $01 ; $4c75
+	script_wait_frames 1 ; $4c75
 	script_lock_facing ACTOR_PLAYER ; $4c7c
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4c83
 	script_move_target ACTOR_PLAYER, 51.0, 13.0 ; $4c8a
@@ -786,4 +786,4 @@ TrainingCourtNpc13_15:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4cec
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 52.5, 11.5 ; $4cf3
 	sound SFX_APPEAR1 ; $4cfe
-	script_wait_frames $50 ; $4d00
+	script_wait_frames 80 ; $4d00

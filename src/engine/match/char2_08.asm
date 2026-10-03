@@ -34,7 +34,7 @@ WalkCharsOffCourt:
 	call CheckAllCharsPhaseDone ; $602f
 	jr z, .waitLoop ; $6032
 .settle:
-	ld a, $14 ; $6034
+	ld a, 20 ; $6034
 	call StepMatchFrames ; $6036
 	call GetServeCameraTarget ; $6039
 	call SnapCameraTo ; $603c
@@ -190,7 +190,7 @@ PlayCourtIntro:
 	ldh [hScrollX], a ; $6137
 	ld a, e ; $6139
 	ldh [hScrollY], a ; $613a
-	ld a, $05 ; $613c
+	ld a, 5 ; $613c
 	call StepMatchFrames ; $613e
 	ld b, $30 ; $6141
 	ld hl, $0200 ; $6143

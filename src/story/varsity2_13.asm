@@ -10,7 +10,7 @@ VarsityCourtANpc03_13:
 	script_speak_restore ACTOR_VARSITY_COURT_A_KEVIN ; $6c46
 	farcall RunDialogueYesNoPrompt ; $6c4b
 	farcall ScriptCloseDialogueWindow ; $6c4e
-	script_wait_frames $05 ; $6c51
+	script_wait_frames 5 ; $6c51
 	and a ; $6c58
 	jp nz, .stage3 ; $6c59
 	farcall AdvanceDialogueTextCursor ; $6c5c
@@ -18,15 +18,15 @@ VarsityCourtANpc03_13:
 	script_move_target ACTOR_PLAYER, 13.0, 31.0 ; $6c67
 	script_wait_move ACTOR_PLAYER ; $6c72
 	script_face_toward ACTOR_VARSITY_COURT_A_KEVIN, ACTOR_PLAYER ; $6c77
-	script_wait_frames $1e ; $6c7f
+	script_wait_frames 30 ; $6c7f
 	script_face_toward ACTOR_PLAYER, ACTOR_VARSITY_COURT_A_KEVIN ; $6c86
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6c8e
 	script_set_speed ACTOR_PLAYER, $0020 ; $6c93
-	script_wait_frames $0f ; $6c9b
+	script_wait_frames 15 ; $6c9b
 	script_face_toward ACTOR_VARSITY_COURT_A_BOB, ACTOR_VARSITY_COURT_A_KEVIN ; $6ca2
-	script_wait_frames $1e ; $6caa
+	script_wait_frames 30 ; $6caa
 	script_face_toward ACTOR_VARSITY_COURT_A_BOB, ACTOR_PLAYER ; $6cb1
-	script_wait_frames $1e ; $6cb9
+	script_wait_frames 30 ; $6cb9
 	script_player_speed $0020 ; $6cc0
 	script_move_player_to_actor ACTOR_VARSITY_COURT_A_BOB ; $6cc6
 	farcall WaitPlayerMoveDone ; $6ccd
@@ -36,16 +36,16 @@ VarsityCourtANpc03_13:
 	script_move_player_to_actor ACTOR_PLAYER ; $6ce7
 	script_wait_move ACTOR_VARSITY_COURT_A_BOB ; $6cee
 	script_face ACTOR_VARSITY_COURT_A_KEVIN, FACE_DOWN ; $6cf3
-	script_wait_frames $0f ; $6cfa
+	script_wait_frames 15 ; $6cfa
 	script_face ACTOR_VARSITY_COURT_A_BOB, FACE_UP ; $6d01
 	script_face ACTOR_PLAYER, FACE_UP ; $6d08
-	script_wait_frames $0f ; $6d0f
+	script_wait_frames 15 ; $6d0f
 	script_set_anim ACTOR_VARSITY_COURT_A_KEVIN, ANIM_BOUNCE ; $6d16
 	script_wait_idle ACTOR_VARSITY_COURT_A_KEVIN ; $6d1d
 	script_speak_restore ACTOR_VARSITY_COURT_A_KEVIN ; $6d22
 	farcall RunDialogueYesNoPrompt ; $6d27
 	farcall ScriptCloseDialogueWindow ; $6d2a
-	script_wait_frames $05 ; $6d2d
+	script_wait_frames 5 ; $6d2d
 	and a ; $6d34
 	jp nz, .speak ; $6d35
 	script_set_anim ACTOR_VARSITY_COURT_A_KEVIN, ANIM_NOD ; $6d38
@@ -88,7 +88,7 @@ VarsityCourtANpc03_13:
 	script_speak_restore ACTOR_VARSITY_COURT_A_KEVIN ; $6dfe
 	farcall RunDialogueYesNoPrompt ; $6e03
 	farcall ScriptCloseDialogueWindow ; $6e06
-	script_wait_frames $05 ; $6e09
+	script_wait_frames 5 ; $6e09
 	and a ; $6e10
 	jr z, .done ; $6e11
 	jp .stage2 ; $6e13
@@ -110,7 +110,7 @@ VarsityCourtBNpc03_13:
 	script_speak_restore ACTOR_VARSITY_COURT_B_KEVIN ; $6e58
 	farcall RunDialogueYesNoPrompt ; $6e5d
 	farcall ScriptCloseDialogueWindow ; $6e60
-	script_wait_frames $05 ; $6e63
+	script_wait_frames 5 ; $6e63
 	and a ; $6e6a
 	jp nz, .stage3 ; $6e6b
 	farcall AdvanceDialogueTextCursor ; $6e6e
@@ -122,17 +122,17 @@ VarsityCourtBNpc03_13:
 	script_face_toward ACTOR_VARSITY_COURT_B_KEVIN, ACTOR_PLAYER ; $6e9c
 	script_wait_move ACTOR_PARTNER ; $6ea4
 	script_face_toward ACTOR_VARSITY_COURT_B_KEVIN, ACTOR_PARTNER ; $6ea9
-	script_wait_frames $1e ; $6eb1
+	script_wait_frames 30 ; $6eb1
 	script_set_speed ACTOR_PLAYER, $0020 ; $6eb8
 	script_set_speed ACTOR_PARTNER, $0020 ; $6ec0
 	script_face_toward ACTOR_PLAYER, ACTOR_VARSITY_COURT_B_KEVIN ; $6ec8
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $6ed0
-	script_wait_frames $0f ; $6ed5
+	script_wait_frames 15 ; $6ed5
 	script_face_toward ACTOR_VARSITY_COURT_B_BOB, ACTOR_VARSITY_COURT_B_KEVIN ; $6edc
-	script_wait_frames $1e ; $6ee4
+	script_wait_frames 30 ; $6ee4
 	script_face_toward ACTOR_VARSITY_COURT_B_MARK, ACTOR_PLAYER ; $6eeb
 	script_face_toward ACTOR_VARSITY_COURT_B_BOB, ACTOR_PARTNER ; $6ef3
-	script_wait_frames $1e ; $6efb
+	script_wait_frames 30 ; $6efb
 	script_player_speed $0020 ; $6f02
 	script_move_player_to_actor ACTOR_VARSITY_COURT_B_BOB ; $6f08
 	farcall WaitPlayerMoveDone ; $6f0f
@@ -143,21 +143,21 @@ VarsityCourtBNpc03_13:
 	script_move_target ACTOR_VARSITY_COURT_B_BOB, 11.0, 33.0 ; $6f2e
 	script_move_target ACTOR_VARSITY_COURT_B_MARK, 11.0, 31.0 ; $6f39
 	script_move_player_to_actor ACTOR_PLAYER ; $6f44
-	script_wait_frames $0f ; $6f4b
+	script_wait_frames 15 ; $6f4b
 	script_face ACTOR_VARSITY_COURT_B_KEVIN, FACE_DOWN ; $6f52
-	script_wait_frames $0f ; $6f59
+	script_wait_frames 15 ; $6f59
 	script_wait_move ACTOR_VARSITY_COURT_B_BOB ; $6f60
 	script_face ACTOR_VARSITY_COURT_B_BOB, FACE_UP ; $6f65
 	script_face ACTOR_VARSITY_COURT_B_MARK, FACE_UP ; $6f6c
 	script_face ACTOR_PLAYER, FACE_UP ; $6f73
 	script_face ACTOR_PARTNER, FACE_UP ; $6f7a
-	script_wait_frames $0f ; $6f81
+	script_wait_frames 15 ; $6f81
 	script_set_anim ACTOR_VARSITY_COURT_B_KEVIN, ANIM_BOUNCE ; $6f88
 	script_wait_idle ACTOR_VARSITY_COURT_B_KEVIN ; $6f8f
 	script_speak_restore ACTOR_VARSITY_COURT_B_KEVIN ; $6f94
 	farcall RunDialogueYesNoPrompt ; $6f99
 	farcall ScriptCloseDialogueWindow ; $6f9c
-	script_wait_frames $05 ; $6f9f
+	script_wait_frames 5 ; $6f9f
 	and a ; $6fa6
 	jp nz, .speak ; $6fa7
 	script_set_anim ACTOR_VARSITY_COURT_B_KEVIN, ANIM_NOD ; $6faa
@@ -207,7 +207,7 @@ VarsityCourtBNpc03_13:
 	script_speak_restore ACTOR_VARSITY_COURT_B_KEVIN ; $7093
 	farcall RunDialogueYesNoPrompt ; $7098
 	farcall ScriptCloseDialogueWindow ; $709b
-	script_wait_frames $05 ; $709e
+	script_wait_frames 5 ; $709e
 	and a ; $70a5
 	jr z, .done ; $70a6
 	jp .stage2 ; $70a8
@@ -215,7 +215,7 @@ VarsityCourtBNpc03_13:
 .done:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $70ac
 	call ReturnVarsityCourtBNpcsToSpawn_13 ; $70b1
-	script_wait_frames $3c ; $70b4
+	script_wait_frames 60 ; $70b4
 	script_get_actor_state ACTOR_PARTNER ; $70bb
 	ld c, l ; $70c0
 	ld b, h ; $70c1
@@ -251,7 +251,7 @@ SinglesTravelingTeamVictoryCutscene:
 	farcall WaitPlayerMoveDone ; $7145
 	script_fade_in $04 ; $7148
 	call WaitFadeEnd ; $714d
-	script_wait_frames $3c ; $7150
+	script_wait_frames 60 ; $7150
 	script_set_text Text_30_554 ; $7157
 	script_player_speed $0020 ; $715d
 	script_move_player 11.0, 23.0 ; $7163
@@ -264,17 +264,17 @@ SinglesTravelingTeamVictoryCutscene:
 	script_speak ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $7191
 	script_set_position ACTOR_SINGLES_TRAVELING_TEAM_BALLOON_QUESTION, 12.25, 27.75 ; $7196
 	sound SFX_EMOTE ; $71a1
-	script_wait_frames $28 ; $71a3
+	script_wait_frames 40 ; $71a3
 	script_set_position ACTOR_SINGLES_TRAVELING_TEAM_BALLOON_QUESTION, 63.0, 63.0 ; $71aa
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $71b5
 	script_move_player_to_actor ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $71bc
 	farcall WaitPlayerMoveDone ; $71c3
-	script_wait_frames $28 ; $71c6
+	script_wait_frames 40 ; $71c6
 	script_move_player_to_actor ACTOR_PLAYER ; $71cd
 	script_set_actor_script ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ActorScript_13_21 ; $71d4
 	script_set_actor_script ACTOR_SINGLES_TRAVELING_TEAM_MARK, ActorScript_13_25 ; $71df
 	script_set_actor_script ACTOR_SINGLES_TRAVELING_TEAM_KATE, ActorScript_13_24 ; $71ea
-	script_wait_frames $0a ; $71f5
+	script_wait_frames 10 ; $71f5
 	script_set_actor_script ACTOR_SINGLES_TRAVELING_TEAM_KEVIN, ActorScript_13_23 ; $71fc
 	farcall WaitPlayerMoveDone ; $7207
 	script_wait_actor_script ACTOR_SINGLES_TRAVELING_TEAM_KEVIN ; $720a
@@ -308,20 +308,20 @@ SinglesTravelingTeamVictoryCutscene:
 	script_speak ACTOR_SINGLES_TRAVELING_TEAM_MARK ; $729e
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $72a3
 	script_wait_idle ACTOR_PLAYER ; $72aa
-	script_wait_frames $14 ; $72af
+	script_wait_frames 20 ; $72af
 	script_move_target ACTOR_SINGLES_TRAVELING_TEAM_EMILY, 10.0, 31.0 ; $72b6
 	script_wait_move ACTOR_SINGLES_TRAVELING_TEAM_EMILY ; $72c1
-	script_wait_frames $14 ; $72c6
+	script_wait_frames 20 ; $72c6
 	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ACTOR_PLAYER ; $72cd
 	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $72d5
-	script_wait_frames $14 ; $72dd
+	script_wait_frames 20 ; $72dd
 	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ANIM_NOD ; $72e4
 	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_EMILY ; $72eb
 	script_speak ACTOR_SINGLES_TRAVELING_TEAM_EMILY ; $72f0
-	script_wait_frames $14 ; $72f5
+	script_wait_frames 20 ; $72f5
 	script_move_target ACTOR_SINGLES_TRAVELING_TEAM_KEVIN, 12.0, 31.0 ; $72fc
 	script_wait_move ACTOR_SINGLES_TRAVELING_TEAM_KEVIN ; $7307
-	script_wait_frames $14 ; $730c
+	script_wait_frames 20 ; $730c
 	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_KEVIN, ANIM_BOUNCE ; $7313
 	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_KEVIN ; $731a
 	script_speak ACTOR_SINGLES_TRAVELING_TEAM_KEVIN ; $731f
@@ -336,9 +336,9 @@ SinglesTravelingTeamVictoryCutscene:
 	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_KATE, ACTOR_PLAYER ; $7345
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $734d
 	script_wait_idle ACTOR_PLAYER ; $7354
-	script_wait_frames $0a ; $7359
+	script_wait_frames 10 ; $7359
 	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ACTOR_PLAYER ; $7360
-	script_wait_frames $0a ; $7368
+	script_wait_frames 10 ; $7368
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $736f
 	ld c, $02 ; $7376
 	call BeginFadeOut ; $7378
@@ -394,7 +394,7 @@ DoublesTravelingTeamVictoryCutscene:
 	farcall WaitPlayerMoveDone ; $74a1
 	script_fade_in $04 ; $74a4
 	call WaitFadeEnd ; $74a9
-	script_wait_frames $3c ; $74ac
+	script_wait_frames 60 ; $74ac
 	script_player_speed $0020 ; $74b3
 	script_move_player 11.0, 23.0 ; $74b9
 	farcall WaitPlayerMoveDone ; $74c3
@@ -411,7 +411,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $750a
 	script_wait_idle ACTOR_PLAYER ; $7511
 	script_face_toward ACTOR_PLAYER, ACTOR_PARTNER ; $7516
-	script_wait_frames $1e ; $751e
+	script_wait_frames 30 ; $751e
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $7525
 	script_wait_idle ACTOR_PARTNER ; $752c
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7531
@@ -426,12 +426,12 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7562
 	script_set_position ACTOR_DOUBLES_TRAVELING_TEAM_BALLOON_SWEAT, 12.0, 27.5 ; $7569
 	sound SFX_APPEAR2 ; $7574
-	script_wait_frames $28 ; $7576
+	script_wait_frames 40 ; $7576
 	script_set_position ACTOR_DOUBLES_TRAVELING_TEAM_BALLOON_SWEAT, 63.0, 63.0 ; $757d
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7588
-	script_wait_frames $0a ; $7590
+	script_wait_frames 10 ; $7590
 	script_lock_facing ACTOR_PLAYER ; $7597
-	script_wait_frames $0a ; $759e
+	script_wait_frames 10 ; $759e
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $75a5
 	script_wait_move ACTOR_PLAYER ; $75af
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $75b4
@@ -462,10 +462,10 @@ DoublesTravelingTeamVictoryCutscene:
 	add hl, de ; $763f
 	ld [hl], $01 ; $7640
 	script_face ACTOR_PARTNER, FACE_LEFT ; $7642
-	script_wait_frames $14 ; $7649
+	script_wait_frames 20 ; $7649
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $7650
 	script_wait_idle ACTOR_PARTNER ; $7657
-	script_wait_frames $14 ; $765c
+	script_wait_frames 20 ; $765c
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7663
 	script_wait_idle ACTOR_PLAYER ; $766a
 	jp .celebrate ; $766f
@@ -478,11 +478,11 @@ DoublesTravelingTeamVictoryCutscene:
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $768e
 	script_set_position ACTOR_DOUBLES_TRAVELING_TEAM_BALLOON_SWEAT, 12.0, 27.5 ; $7696
 	sound SFX_APPEAR2 ; $76a1
-	script_wait_frames $28 ; $76a3
+	script_wait_frames 40 ; $76a3
 	script_set_position ACTOR_DOUBLES_TRAVELING_TEAM_BALLOON_SWEAT, 63.0, 63.0 ; $76aa
-	script_wait_frames $0a ; $76b5
+	script_wait_frames 10 ; $76b5
 	script_lock_facing ACTOR_PLAYER ; $76bc
-	script_wait_frames $0a ; $76c3
+	script_wait_frames 10 ; $76c3
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $76ca
 	script_wait_move ACTOR_PLAYER ; $76d4
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $76d9
@@ -498,7 +498,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_face ACTOR_PARTNER, FACE_DOWN ; $770b
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $7712
 	script_wait_idle ACTOR_PARTNER ; $7719
-	script_wait_frames $28 ; $771e
+	script_wait_frames 40 ; $771e
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $7725
 	script_wait_idle ACTOR_PARTNER ; $772c
 	script_get_actor_state ACTOR_PARTNER ; $7731
@@ -506,22 +506,22 @@ DoublesTravelingTeamVictoryCutscene:
 	add hl, de ; $7739
 	ld [hl], $01 ; $773a
 	script_face ACTOR_PARTNER, FACE_LEFT ; $773c
-	script_wait_frames $14 ; $7743
+	script_wait_frames 20 ; $7743
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $774a
 	script_wait_idle ACTOR_PARTNER ; $7751
-	script_wait_frames $14 ; $7756
+	script_wait_frames 20 ; $7756
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $775d
 	script_wait_idle ACTOR_PLAYER ; $7764
 .celebrate:
 	script_set_text Text_31_28 ; $7769
-	script_wait_frames $14 ; $776f
+	script_wait_frames 20 ; $776f
 	script_speak ACTOR_DOUBLES_TRAVELING_TEAM_EMILY ; $7776
 	script_unlock_facing ACTOR_PLAYER ; $777b
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7782
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $7789
 	script_set_actor_script ACTOR_DOUBLES_TRAVELING_TEAM_EMILY, ActorScript_13_21 ; $7790
 	script_set_actor_script ACTOR_DOUBLES_TRAVELING_TEAM_KEVIN, ActorScript_13_22 ; $779b
-	script_wait_frames $14 ; $77a6
+	script_wait_frames 20 ; $77a6
 	script_set_actor_script ACTOR_DOUBLES_TRAVELING_TEAM_MARK, ActorScript_13_26 ; $77ad
 	script_move_player 11.0, 29.0 ; $77b8
 	farcall WaitPlayerMoveDone ; $77c2
@@ -555,10 +555,10 @@ DoublesTravelingTeamVictoryCutscene:
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7866
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $786e
 	script_wait_idle ACTOR_PLAYER ; $7875
-	script_wait_frames $0a ; $787a
+	script_wait_frames 10 ; $787a
 	script_face_toward ACTOR_DOUBLES_TRAVELING_TEAM_EMILY, ACTOR_PLAYER ; $7881
 	script_face_toward ACTOR_DOUBLES_TRAVELING_TEAM_KEVIN, ACTOR_PARTNER ; $7889
-	script_wait_frames $0a ; $7891
+	script_wait_frames 10 ; $7891
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7898
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $789f
 	ld c, $02 ; $78a6

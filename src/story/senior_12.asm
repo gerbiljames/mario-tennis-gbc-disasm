@@ -74,7 +74,7 @@ SeniorCourtExit01_12:
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $559e
 	ld c, $10 ; $55a8
 	call BeginFadeOut ; $55aa
-	script_wait_frames $1e ; $55ad
+	script_wait_frames 30 ; $55ad
 	ret ; $55b4
 .loop:
 	ld a, [wMapSceneStage2] ; $55b5
@@ -126,7 +126,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 	script_speak_restore ACTOR_SENIOR_COURT_EMILY ; $5612
 	farcall RunDialogueYesNoPrompt ; $5617
 	farcall ScriptCloseDialogueWindow ; $561a
-	script_wait_frames $05 ; $561d
+	script_wait_frames 5 ; $561d
 	and a ; $5624
 	jr z, .speak ; $5625
 	farcall AdvanceDialogueTextCursor ; $5627
@@ -185,7 +185,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_EMILY ; $574f
 	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $5757
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $575e
-	script_wait_frames $1e ; $5763
+	script_wait_frames 30 ; $5763
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $576a
 	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $5772
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $5779
@@ -269,7 +269,7 @@ SeniorCourtNpc05_12:
 	script_speak_restore ACTOR_SENIOR_COURT_A_ALLIE ; $5877
 	farcall RunDialogueYesNoPrompt ; $587c
 	farcall ScriptCloseDialogueWindow ; $587f
-	script_wait_frames $05 ; $5882
+	script_wait_frames 5 ; $5882
 	and a ; $5889
 	jr z, .speak ; $588a
 	farcall AdvanceDialogueTextCursor ; $588c
@@ -310,7 +310,7 @@ SeniorCourtNpc06_12:
 	script_speak_restore ACTOR_SENIOR_COURT_B_JOY ; $58d1
 	farcall RunDialogueYesNoPrompt ; $58d6
 	farcall ScriptCloseDialogueWindow ; $58d9
-	script_wait_frames $05 ; $58dc
+	script_wait_frames 5 ; $58dc
 	and a ; $58e3
 	jr z, .speak ; $58e4
 	farcall AdvanceDialogueTextCursor ; $58e6
@@ -386,7 +386,7 @@ SeniorCourtNpc08_12:
 	script_speak_restore ACTOR_SENIOR_COURT_A_BETH ; $5979
 	farcall RunDialogueYesNoPrompt ; $597e
 	farcall ScriptCloseDialogueWindow ; $5981
-	script_wait_frames $05 ; $5984
+	script_wait_frames 5 ; $5984
 	and a ; $598b
 	jr z, .doublesLine ; $598c
 	script_speak ACTOR_SENIOR_COURT_BETH ; $598e
@@ -398,13 +398,13 @@ SeniorCourtNpc08_12:
 	script_speak_restore ACTOR_SENIOR_COURT_A_BETH ; $59a3
 	farcall RunDialogueYesNoPrompt ; $59a8
 	farcall ScriptCloseDialogueWindow ; $59ab
-	script_wait_frames $05 ; $59ae
+	script_wait_frames 5 ; $59ae
 	and a ; $59b5
 	jr z, .done ; $59b6
 	script_speak ACTOR_SENIOR_COURT_BETH ; $59b8
 	ret ; $59bd
 .done:
-	script_wait_frames $0a ; $59be
+	script_wait_frames 10 ; $59be
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_50 ; $59c5
 	script_move_target ACTOR_SENIOR_COURT_BETH, 12.0, 21.0 ; $59d0
 	script_wait_move ACTOR_SENIOR_COURT_BETH ; $59db
@@ -491,7 +491,7 @@ SeniorCourtNpc0A_12:
 	script_speak_restore ACTOR_SENIOR_COURT_B_BOB ; $5aaa
 	farcall RunDialogueYesNoPrompt ; $5aaf
 	farcall ScriptCloseDialogueWindow ; $5ab2
-	script_wait_frames $05 ; $5ab5
+	script_wait_frames 5 ; $5ab5
 	and a ; $5abc
 	jr z, .speak ; $5abd
 	script_speak ACTOR_SENIOR_COURT_B_BOB ; $5abf
@@ -501,7 +501,7 @@ SeniorCourtNpc0A_12:
 	script_speak_restore ACTOR_SENIOR_COURT_B_BOB ; $5ac8
 	farcall RunDialogueYesNoPrompt ; $5acd
 	farcall ScriptCloseDialogueWindow ; $5ad0
-	script_wait_frames $05 ; $5ad3
+	script_wait_frames 5 ; $5ad3
 	and a ; $5ada
 	jr z, .done ; $5adb
 	script_speak ACTOR_SENIOR_COURT_B_BOB ; $5add
@@ -517,7 +517,7 @@ SeniorCourtNpc0A_12:
 	script_set_speed ACTOR_PLAYER, $0020 ; $5af2
 	script_set_speed ACTOR_PARTNER, $0020 ; $5afa
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_47 ; $5b02
-	script_wait_frames $20 ; $5b0d
+	script_wait_frames 32 ; $5b0d
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_48 ; $5b14
 	script_set_actor_script ACTOR_SENIOR_COURT_B_BOB, ActorScript_12_45 ; $5b1f
 	script_set_actor_script ACTOR_SENIOR_COURT_B_PAM, ActorScript_12_46 ; $5b2a

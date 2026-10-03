@@ -32,16 +32,16 @@ RelaunchWallPracticeMasterLevel:
 	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4a41
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4a46
 	script_face ACTOR_PLAYER, FACE_UP ; $4a4d
-	script_wait_frames $32 ; $4a54
+	script_wait_frames 50 ; $4a54
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4a5b
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4a62
 	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4a67
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $4a6c
 	jr z, .done ; $4a6f
-	script_wait_frames $28 ; $4a71
+	script_wait_frames 40 ; $4a71
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4a78
-	script_wait_frames $1e ; $4a80
+	script_wait_frames 30 ; $4a80
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a87
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4a8e
 	script_wait_idle ACTOR_PARTNER ; $4a95
@@ -50,7 +50,7 @@ RelaunchWallPracticeMasterLevel:
 	ld b, h ; $4aa0
 	ld de, wActors ; $4aa1
 	farcall AttachActorStepMover ; $4aa4
-	script_wait_frames $28 ; $4aa7
+	script_wait_frames 40 ; $4aa7
 .done:
 	ret ; $4aae
 WallPracticeScoreRetryPromptTextIds:
@@ -96,7 +96,7 @@ WallPracticeLevelResultScript:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4b02
 	farcall RunDialogueYesNoPrompt ; $4b07
 	farcall ScriptCloseDialogueWindow ; $4b0a
-	script_wait_frames $05 ; $4b0d
+	script_wait_frames 5 ; $4b0d
 	and a ; $4b14
 	jp nz, WallPracticeExitCourtScript ; $4b15
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4b18
@@ -123,7 +123,7 @@ WallPracticeExitCourtScript:
 	ld de, wActors ; $4b8e
 	farcall AttachActorStepMover ; $4b91
 .done:
-	script_wait_frames $0a ; $4b94
+	script_wait_frames 10 ; $4b94
 	ret ; $4b9b
 WallPracticeLevelResultScriptTextIds:
 	; $4b9c, 6 bytes (text_ids)
@@ -173,9 +173,9 @@ WallPracticeLevelResultScriptTextIds:
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4c4f
 	test_flag FLAG_DOUBLES ; $4c56
 	jr z, .wait ; $4c59
-	script_wait_frames $1e ; $4c5b
+	script_wait_frames 30 ; $4c5b
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4c62
-	script_wait_frames $1e ; $4c6a
+	script_wait_frames 30 ; $4c6a
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4c71
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4c78
 	script_wait_idle ACTOR_PARTNER ; $4c7f
@@ -184,9 +184,9 @@ WallPracticeLevelResultScriptTextIds:
 	ld b, h ; $4c8a
 	ld de, wActors ; $4c8b
 	farcall AttachActorStepMover ; $4c8e
-	script_wait_frames $14 ; $4c91
+	script_wait_frames 20 ; $4c91
 .wait:
-	script_wait_frames $0a ; $4c98
+	script_wait_frames 10 ; $4c98
 	ret ; $4c9f
 WallPracticeRoomFacingScripts_12:
 	; $4ca0, 9 bytes (map_scripts)
@@ -229,7 +229,7 @@ WallPracticeRoomTile03_12:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4d2f
 	farcall RunDialogueYesNoPrompt ; $4d34
 	farcall ScriptCloseDialogueWindow ; $4d37
-	script_wait_frames $05 ; $4d3a
+	script_wait_frames 5 ; $4d3a
 	and a ; $4d41
 	jr nz, .done ; $4d42
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4d44
@@ -260,7 +260,7 @@ WallPracticeRoomTile04_12:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4da4
 	farcall RunDialogueYesNoPrompt ; $4da9
 	farcall ScriptCloseDialogueWindow ; $4dac
-	script_wait_frames $05 ; $4daf
+	script_wait_frames 5 ; $4daf
 	and a ; $4db6
 	jr nz, .done ; $4db7
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4db9
@@ -291,7 +291,7 @@ WallPracticeRoomTile05_12:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4e19
 	farcall RunDialogueYesNoPrompt ; $4e1e
 	farcall ScriptCloseDialogueWindow ; $4e21
-	script_wait_frames $05 ; $4e24
+	script_wait_frames 5 ; $4e24
 	and a ; $4e2b
 	jr nz, .done ; $4e2c
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4e2e
@@ -322,7 +322,7 @@ WallPracticeRoomTile06_12:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4e8e
 	farcall RunDialogueYesNoPrompt ; $4e93
 	farcall ScriptCloseDialogueWindow ; $4e96
-	script_wait_frames $05 ; $4e99
+	script_wait_frames 5 ; $4e99
 	and a ; $4ea0
 	jr nz, .done ; $4ea1
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4ea3
@@ -419,7 +419,7 @@ WallPracticeRoomInitScript_12:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4fdc
 	farcall RunDialogueYesNoPrompt ; $4fe1
 	farcall ScriptCloseDialogueWindow ; $4fe4
-	script_wait_frames $05 ; $4fe7
+	script_wait_frames 5 ; $4fe7
 	and a ; $4fee
 	jr nz, .done ; $4fef
 	jr .placeActors ; $4ff1
@@ -442,7 +442,7 @@ WallPracticeRoomInitScript_12:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5015
 	farcall RunDialogueYesNoPrompt ; $501a
 	farcall ScriptCloseDialogueWindow ; $501d
-	script_wait_frames $05 ; $5020
+	script_wait_frames 5 ; $5020
 	and a ; $5027
 	jp nz, .done ; $5028
 .placeActors:
@@ -520,7 +520,7 @@ WallPracticeRoomNpc07_12:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5111
 	farcall RunDialogueYesNoPrompt ; $5116
 	farcall ScriptCloseDialogueWindow ; $5119
-	script_wait_frames $05 ; $511c
+	script_wait_frames 5 ; $511c
 	and a ; $5123
 	jp z, .doublesDeclined ; $5124
 	ld a, [wMapSceneStage] ; $5127
@@ -533,7 +533,7 @@ WallPracticeRoomNpc07_12:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5138
 	farcall RunDialogueYesNoPrompt ; $513d
 	farcall ScriptCloseDialogueWindow ; $5140
-	script_wait_frames $05 ; $5143
+	script_wait_frames 5 ; $5143
 	and a ; $514a
 	jp nz, .declined ; $514b
 	ld a, [wMapSceneStage] ; $514e
@@ -570,16 +570,16 @@ WallPracticeRoomNpc07_12:
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_RIGHT ; $51db
 	test_flag FLAG_DOUBLES ; $51e2
 	jr z, .done ; $51e5
-	script_wait_frames $14 ; $51e7
+	script_wait_frames 20 ; $51e7
 	script_null_script ACTOR_PARTNER ; $51ee
 	script_move_target ACTOR_PARTNER, 7.0, 57.0 ; $51f3
 	script_wait_move ACTOR_PARTNER ; $51fe
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $5203
-	script_wait_frames $1e ; $520b
+	script_wait_frames 30 ; $520b
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5212
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5219
 	script_wait_idle ACTOR_PARTNER ; $5220
-	script_wait_frames $14 ; $5225
+	script_wait_frames 20 ; $5225
 .done:
 	script_set_speed ACTOR_PLAYER, $0020 ; $522c
 	script_move_target ACTOR_PLAYER, 5.0, 55.0 ; $5234

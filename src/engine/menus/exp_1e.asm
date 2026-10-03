@@ -52,7 +52,7 @@ ShowExpAwardScreen:
 	call RegisterFrameTask ; $5488
 	script_fade_in $10 ; $548b
 	call WaitFadeEnd ; $5490
-	wait_frames $14 ; $5493
+	wait_frames 20 ; $5493
 	call RunExpAwardSequence ; $5497
 	ld c, $10 ; $549a
 	call BeginFadeOut ; $549c

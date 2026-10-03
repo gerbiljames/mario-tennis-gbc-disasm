@@ -101,7 +101,7 @@ ResetTargetGrid:
 	ld [wMinigameTargetGrid + 23], a ; $5987
 	ret ; $598a
 AnimateTargetGridClear:
-	ld a, $02 ; $598b
+	ld a, 2 ; $598b
 	farcall StepMatchFrames ; $598d
 	ld hl, PerfectShotTargetGridLayout ; $5990
 	ld b, $18 ; $5993
@@ -117,7 +117,7 @@ AnimateTargetGridClear:
 	call DrawMinigameGridCell ; $59a0
 	farcall FlushTilemapToVram ; $59a3
 	sound SFX_GRID_CLEAR ; $59a6
-	ld a, $08 ; $59a8
+	ld a, 8 ; $59a8
 	farcall StepMatchFrames ; $59aa
 	pop hl ; $59ad
 	pop bc ; $59ae

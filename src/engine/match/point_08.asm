@@ -55,7 +55,7 @@ PlayPoint:
 	ld a, [wPointOutcome] ; $4d36
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4d39
 	jr nz, .pointOver ; $4d3b
-	ld a, $28 ; $4d3d
+	ld a, 40 ; $4d3d
 	call StepMatchFrames ; $4d3f
 .pointOver:
 	call EndPointBallEffects ; $4d42
@@ -138,12 +138,12 @@ AnnouncePointSituation:
 .placeObj:
 	ld bc, wObjSlot3 ; $4ddb
 	farcall SetObjPosition ; $4dde
-	ld a, $0a ; $4de1
+	ld a, 10 ; $4de1
 	call StepMatchFrames ; $4de3
 	ld a, $1e ; $4de6
 	call StepMatchFramesSkippable ; $4de8
 	farcall HideCourtBanner ; $4deb
-	ld a, $0a ; $4dee
+	ld a, 10 ; $4dee
 	call StepMatchFrames ; $4df0
 .done:
 	ret ; $4df3
@@ -188,7 +188,7 @@ ResolvePointResultSequence:
 DelayAfterPointResolution:
 	ld a, $46 ; $4e3e
 	call StepMatchFramesSkippable ; $4e40
-	ld a, $0a ; $4e43
+	ld a, 10 ; $4e43
 	call StepMatchFrames ; $4e45
 	ret ; $4e48
 .case1:
@@ -196,7 +196,7 @@ DelayAfterPointResolution:
 	ld_cell de, $05, $04 ; $4e4c
 	ld_size bc, $0a, $07 ; $4e4f
 	farcall ShowMessageWindow ; $4e52
-	ld a, $0a ; $4e55
+	ld a, 10 ; $4e55
 	call StepMatchFrames ; $4e57
 	ret ; $4e5a
 .case2:
@@ -204,7 +204,7 @@ DelayAfterPointResolution:
 	ld_cell de, $02, $04 ; $4e5e
 	ld_size bc, $0f, $07 ; $4e61
 	farcall ShowMessageWindow ; $4e64
-	ld a, $0a ; $4e67
+	ld a, 10 ; $4e67
 	call StepMatchFrames ; $4e69
 	ret ; $4e6c
 .case3:
@@ -214,22 +214,22 @@ DelayAfterPointResolution:
 	ld a, [wPointWinnerShotType] ; $4e72
 	add $17 ; $4e75
 	farcall ShowCourtBanner ; $4e77
-	ld a, $0a ; $4e7a
+	ld a, 10 ; $4e7a
 	call StepMatchFrames ; $4e7c
 	ld a, $1e ; $4e7f
 	call StepMatchFramesSkippable ; $4e81
 	farcall HideCourtBanner ; $4e84
-	ld a, $0a ; $4e87
+	ld a, 10 ; $4e87
 	call StepMatchFrames ; $4e89
 	ret ; $4e8c
 .case4:
 	ld a, [wPointOutcome] ; $4e8d
 	add $00 ; $4e90
 	farcall ShowCourtBanner ; $4e92
-	ld a, $1e ; $4e95
+	ld a, 30 ; $4e95
 	call StepMatchFrames ; $4e97
 	farcall HideCourtBanner ; $4e9a
-	ld a, $0a ; $4e9d
+	ld a, 10 ; $4e9d
 	call StepMatchFrames ; $4e9f
 	ret ; $4ea2
 .case5:
@@ -237,7 +237,7 @@ DelayAfterPointResolution:
 	and a ; $4ea6
 	ret z ; $4ea7
 	farcall SpawnGameScoreDisplayObjs ; $4ea8
-	ld a, $0a ; $4eab
+	ld a, 10 ; $4eab
 	call StepMatchFrames ; $4ead
 	ld a, $0a ; $4eb0
 	call StepMatchFramesSkippable ; $4eb2
@@ -248,7 +248,7 @@ DelayAfterPointResolution:
 	call StepMatchFrame ; $4ebd
 .case6:
 	farcall UpdateScorePanelDisplay ; $4ec0
-	ld a, $0a ; $4ec3
+	ld a, 10 ; $4ec3
 	call StepMatchFrames ; $4ec5
 	ld a, $1e ; $4ec8
 	call StepMatchFramesSkippable ; $4eca
@@ -273,11 +273,11 @@ DelayAfterPointResolution:
 .case9:
 	ld a, $0d ; $4eee
 	farcall ShowCourtBanner ; $4ef0
-	ld a, $0a ; $4ef3
+	ld a, 10 ; $4ef3
 	call StepMatchFrames ; $4ef5
 	ld a, [wGameWinLoseFlag] ; $4ef8
 	farcall SpawnWinLoseResultObj ; $4efb
-	ld a, $0a ; $4efe
+	ld a, 10 ; $4efe
 	call StepMatchFrames ; $4f00
 	ld a, $2d ; $4f03
 	call StepMatchFramesSkippable ; $4f05
@@ -306,19 +306,19 @@ DelayAfterPointResolution:
 	call StepMatchFrame ; $4f37
 	ld a, d ; $4f3a
 	farcall ShowCourtBanner ; $4f3b
-	ld a, $0a ; $4f3e
+	ld a, 10 ; $4f3e
 	call StepMatchFrames ; $4f40
 	ld a, [wGameWinLoseFlag] ; $4f43
 	farcall SpawnWinLoseResultObj ; $4f46
-	ld a, $0a ; $4f49
+	ld a, 10 ; $4f49
 	call StepMatchFrames ; $4f4b
 	ld a, $28 ; $4f4e
 	call StepMatchFramesSkippable ; $4f50
 	farcall DismissWinLoseResultObj ; $4f53
-	ld a, $0a ; $4f56
+	ld a, 10 ; $4f56
 	call StepMatchFrames ; $4f58
 	farcall SpawnGameResultObj ; $4f5b
-	ld a, $0a ; $4f5e
+	ld a, 10 ; $4f5e
 	call StepMatchFrames ; $4f60
 	ld a, $28 ; $4f63
 	call StepMatchFramesSkippable ; $4f65
@@ -369,7 +369,7 @@ StartPointEndReactions:
 	ld hl, CharPointEndReaction ; $4fb8
 	call ForEachCharBank ; $4fbb
 	call SpreadTeammateTargets ; $4fbe
-	ld a, $0a ; $4fc1
+	ld a, 10 ; $4fc1
 	call StepMatchFrames ; $4fc3
 	ret ; $4fc6
 CharPointEndReaction:

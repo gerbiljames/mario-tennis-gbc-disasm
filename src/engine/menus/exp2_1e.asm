@@ -43,7 +43,7 @@ BeginNextExpAward:
 	ld a, $01 ; $5b5d
 	ret ; $5b5f
 .waitFramesCmd:
-	wait_frames $0a ; $5b60
+	wait_frames 10 ; $5b60
 	xor a ; $5b64
 	ret ; $5b65
 CountUpExpTotal:

@@ -66,7 +66,7 @@ Unused_05_RunDebugWindowDemo:
 	script_fade_in $7f ; $6d8f
 	call WaitFadeEnd ; $6d94
 	call RestoreShadowTilemap ; $6d97
-	wait_frames $1e ; $6d9a
+	wait_frames 30 ; $6d9a
 	call DisableLCDSafely ; $6d9e
 	call ResetTextWindowState ; $6da1
 	ld de, $d000 ; $6da4

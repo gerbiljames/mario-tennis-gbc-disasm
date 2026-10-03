@@ -458,7 +458,7 @@ ShowStoryResultScreen:
 	call AdvanceFrame ; $7592
 	script_fade_in $04 ; $7595
 	call WaitFadeEnd ; $759a
-	wait_frames $78 ; $759d
+	wait_frames 120 ; $759d
 	pop_wram_bank ; $75a1
 	pop hl ; $75a6
 	pop de ; $75a7

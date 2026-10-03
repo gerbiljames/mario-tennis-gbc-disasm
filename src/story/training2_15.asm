@@ -25,25 +25,25 @@ RunWaterSpriteSwingContestAndReward:
 .done:
 	ret ; $4d5c
 WaterSpriteRacketRewardScene:
-	script_wait_frames $3c ; $4d5d
+	script_wait_frames 60 ; $4d5d
 	script_set_text Text_36_677 ; $4d64
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4d6a
-	script_wait_frames $1e ; $4d6f
+	script_wait_frames 30 ; $4d6f
 	script_face ACTOR_PLAYER, FACE_LEFT ; $4d76
-	script_wait_frames $1e ; $4d7d
+	script_wait_frames 30 ; $4d7d
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $4d84
-	script_wait_frames $1e ; $4d8b
+	script_wait_frames 30 ; $4d8b
 	script_face ACTOR_PLAYER, FACE_LEFT ; $4d92
-	script_wait_frames $1e ; $4d99
+	script_wait_frames 30 ; $4d99
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $4da0
-	script_wait_frames $1e ; $4da7
+	script_wait_frames 30 ; $4da7
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4dae
-	script_wait_frames $1e ; $4db5
+	script_wait_frames 30 ; $4db5
 	script_set_objdef OBJ_BALLOON_QUESTION, ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE ; $4dbc
 	script_set_objdef OBJ_BALLOON_EXCLAIM, ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4dc8
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 52.5, 11.5 ; $4dd4
 	sound SFX_EMOTE ; $4ddf
-	script_wait_frames $3c ; $4de1
+	script_wait_frames 60 ; $4de1
 	script_set_position ACTOR_TRAINING_COURT_WALK_76_06, 51.0, 7.0 ; $4de8
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4df3
 	script_player_speed $0010 ; $4dfa
@@ -51,7 +51,7 @@ WaterSpriteRacketRewardScene:
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4e07
 	ld_bg_pals de, 2, 6 ; $4e0a
 	call LoadPalettesImmediate ; $4e0d
-	script_wait_frames $1e ; $4e10
+	script_wait_frames 30 ; $4e10
 	ld hl, WaterSpriteRacketRewardScenePalettes2 ; $4e17
 	ld_bg_pals de, 2, 6 ; $4e1a
 	call LoadPalettesImmediate ; $4e1d
@@ -60,7 +60,7 @@ WaterSpriteRacketRewardScene:
 .handOver:
 	ld d, a ; $4e24
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $02 ; $4e25
-	script_wait_frames $04 ; $4e2c
+	script_wait_frames 4 ; $4e2c
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4e33
 	push af ; $4e3a
 	ld a, d ; $4e3b
@@ -70,13 +70,13 @@ WaterSpriteRacketRewardScene:
 	sub $02 ; $4e41
 	jp nz, .handOver ; $4e43
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $02 ; $4e46
-	script_wait_frames $3c ; $4e4d
+	script_wait_frames 60 ; $4e4d
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4e54
 	script_face ACTOR_PLAYER, FACE_UP ; $4e5f
-	script_wait_frames $1e ; $4e66
+	script_wait_frames 30 ; $4e66
 	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, 52.5, 11.5 ; $4e6d
 	sound SFX_CHIME ; $4e78
-	script_wait_frames $14 ; $4e7a
+	script_wait_frames 20 ; $4e7a
 	script_jump_velocity ACTOR_TRAINING_COURT_WALK_71_06_3, $ff40 ; $4e81
 	script_jump_velocity ACTOR_PLAYER, $ff40 ; $4e89
 	ld a, $00 ; $4e91
@@ -116,37 +116,37 @@ WaterSpriteRacketRewardScene:
 	or b ; $4efa
 	ld [wEquippedRacket], a ; $4efb
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4efe
-	script_wait_frames $0a ; $4f03
+	script_wait_frames 10 ; $4f03
 	ld c, $03 ; $4f0a
 	call BeginFadeOut ; $4f0c
 	call WaitFadeEnd ; $4f0f
 	sound SFX_WATER_SPRITE_APPEAR ; $4f12
 	script_set_position ACTOR_TRAINING_COURT_RACKET, 51.0, 9.0 ; $4f14
-	script_wait_frames $1e ; $4f1f
+	script_wait_frames 30 ; $4f1f
 	script_fade_in $03 ; $4f26
 	call WaitFadeEnd ; $4f2b
-	script_wait_frames $3c ; $4f2e
+	script_wait_frames 60 ; $4f2e
 	sound SFX_WATER_SPRITE_FLY ; $4f35
 	script_set_speed ACTOR_TRAINING_COURT_RACKET, $0005 ; $4f37
 	script_move_target ACTOR_TRAINING_COURT_RACKET, 51.0, 13.0 ; $4f3f
 	script_wait_move ACTOR_TRAINING_COURT_RACKET ; $4f4a
-	script_wait_frames $3c ; $4f4f
+	script_wait_frames 60 ; $4f4f
 	farcall AdvanceDialogueTextCursor ; $4f56
 	script_speak ACTOR_PLAYER ; $4f59
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SWEAT, 52.5, 11.5 ; $4f5e
 	sound SFX_APPEAR2 ; $4f69
-	script_wait_frames $78 ; $4f6b
+	script_wait_frames 120 ; $4f6b
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SWEAT, 63.0, 63.0 ; $4f72
 	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4f7d
 	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4f84
 	script_set_text Text_36_683 ; $4f89
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4f8f
-	script_wait_frames $32 ; $4f94
+	script_wait_frames 50 ; $4f94
 	sound SFX_RACKET_GET ; $4f9b
 	ld d, $10 ; $4f9d
 .done:
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4f9f
-	script_wait_frames $04 ; $4fa6
+	script_wait_frames 4 ; $4fa6
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $02 ; $4fad
 	push af ; $4fb4
 	ld a, d ; $4fb5
@@ -157,30 +157,30 @@ WaterSpriteRacketRewardScene:
 	ld d, a ; $4fbd
 	jp nz, .done ; $4fbe
 	script_set_active ACTOR_TRAINING_COURT_WALK_76_06, $00 ; $4fc1
-	script_wait_frames $1e ; $4fc8
+	script_wait_frames 30 ; $4fc8
 	script_set_position ACTOR_TRAINING_COURT_WALK_76_06, 51.0, 11.0 ; $4fcf
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4fda
 	script_set_position ACTOR_TRAINING_COURT_RACKET, 63.0, 63.0 ; $4fdf
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4fea
 	ld_bg_pals de, 2, 6 ; $4fed
 	call LoadPalettesImmediate ; $4ff0
-	script_wait_frames $1e ; $4ff3
+	script_wait_frames 30 ; $4ff3
 	ld hl, WaterSpriteRacketRewardScenePalettes0 ; $4ffa
 	ld_bg_pals de, 2, 6 ; $4ffd
 	call LoadPalettesImmediate ; $5000
-	script_wait_frames $1e ; $5003
+	script_wait_frames 30 ; $5003
 	script_face ACTOR_PLAYER, FACE_LEFT ; $500a
-	script_wait_frames $14 ; $5011
+	script_wait_frames 20 ; $5011
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5018
-	script_wait_frames $14 ; $501f
+	script_wait_frames 20 ; $501f
 	script_face ACTOR_PLAYER, FACE_LEFT ; $5026
-	script_wait_frames $14 ; $502d
+	script_wait_frames 20 ; $502d
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5034
-	script_wait_frames $14 ; $503b
+	script_wait_frames 20 ; $503b
 	script_face ACTOR_PLAYER, FACE_UP ; $5042
 	script_move_player_to_actor ACTOR_PLAYER ; $5049
 	farcall WaitPlayerMoveDone ; $5050
-	script_wait_frames $1e ; $5053
+	script_wait_frames 30 ; $5053
 	ret ; $505a
 TrainingCourtNpcScripts_15:
 	; $505b, 161 bytes (map_scripts)

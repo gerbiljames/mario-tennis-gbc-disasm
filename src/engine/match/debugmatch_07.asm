@@ -121,7 +121,7 @@ Unused_07_TargetZoneHitStopHook:
 	ret z ; $5f10
 	ld a, $01 ; $5f11
 	ld [wMatchSimFrozen], a ; $5f13
-	ld a, $14 ; $5f16
+	ld a, 20 ; $5f16
 	farcall StepMatchFrames ; $5f18
 	ld a, $00 ; $5f1b
 	ld [wMatchSimFrozen], a ; $5f1d

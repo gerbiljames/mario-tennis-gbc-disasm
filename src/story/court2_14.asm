@@ -22,7 +22,7 @@ MachinePracticeLevelPrompt:
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $462a
 	farcall RunDialogueYesNoPrompt ; $462f
 	farcall ScriptCloseDialogueWindow ; $4632
-	script_wait_frames $05 ; $4635
+	script_wait_frames 5 ; $4635
 	and a ; $463c
 	jr nz, .done ; $463d
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_UP ; $463f
@@ -83,13 +83,13 @@ MachinePracticeResultScene:
 	script_null_script ACTOR_PARTNER ; $46d1
 	script_set_position ACTOR_PARTNER, 41.0, 43.0 ; $46d6
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $46e1
-	script_wait_frames $0a ; $46e8
+	script_wait_frames 10 ; $46e8
 .placeActors:
 	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $46ef
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $46fa
 	script_fade_in $06 ; $4701
 	call WaitFadeEnd ; $4706
-	script_wait_frames $28 ; $4709
+	script_wait_frames 40 ; $4709
 	ld a, [wMatchExitRequest] ; $4710
 	and a ; $4713
 	jp nz, .done ; $4714
@@ -108,7 +108,7 @@ MachinePracticeResultScene:
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4737
 	farcall RunDialogueYesNoPrompt ; $473c
 	farcall ScriptCloseDialogueWindow ; $473f
-	script_wait_frames $05 ; $4742
+	script_wait_frames 5 ; $4742
 	and a ; $4749
 	jp z, MachineCourtRestartLevel ; $474a
 .done:
@@ -117,7 +117,7 @@ MachineCourtHandleRetryChoice:
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $474e
 	farcall RunDialogueYesNoPrompt ; $4753
 	farcall ScriptCloseDialogueWindow ; $4756
-	script_wait_frames $05 ; $4759
+	script_wait_frames 5 ; $4759
 	and a ; $4760
 	jr z, MachineCourtRestartLevel ; $4761
 	script_set_text Text_6e_220 ; $4763
@@ -367,7 +367,7 @@ MachineCourtWalkToAttendantCutscene:
 	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $4a08
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $4a13
 	script_null_script ACTOR_PARTNER ; $4a1a
-	script_wait_frames $01 ; $4a1f
+	script_wait_frames 1 ; $4a1f
 	script_set_position ACTOR_PARTNER, 41.0, 43.0 ; $4a26
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4a31
 .done:
@@ -496,7 +496,7 @@ Court2SpectatorChat_14:
 	script_speak ACTOR_COURT2_WALK_72_02_3 ; $4c12
 	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 12.5, 33.5 ; $4c17
 	sound SFX_CHIME ; $4c22
-	script_wait_frames $14 ; $4c24
+	script_wait_frames 20 ; $4c24
 	script_speak ACTOR_COURT2_WALK_72_03_1 ; $4c2b
 	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 63.0, 63.0 ; $4c30
 	script_set_anim ACTOR_COURT2_WALK_72_02_3, ANIM_NOD ; $4c3b
@@ -506,33 +506,33 @@ Court2SpectatorChat_14:
 	script_wait_idle ACTOR_COURT2_WALK_72_03_1 ; $4c53
 	script_speak ACTOR_COURT2_WALK_72_03_1 ; $4c58
 	script_face_toward ACTOR_PLAYER, ACTOR_COURT2_WALK_72_02_3 ; $4c5d
-	script_wait_frames $14 ; $4c65
+	script_wait_frames 20 ; $4c65
 	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 10.5, 33.5 ; $4c6c
 	sound SFX_CHIME ; $4c77
 	script_set_anim ACTOR_COURT2_WALK_72_02_3, ANIM_BOUNCE ; $4c79
 	script_wait_idle ACTOR_COURT2_WALK_72_02_3 ; $4c80
 	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 63.0, 63.0 ; $4c85
-	script_wait_frames $0a ; $4c90
+	script_wait_frames 10 ; $4c90
 	script_set_position ACTOR_COURT2_BALLOON_SWEAT, 10.5, 33.5 ; $4c97
 	sound SFX_APPEAR2 ; $4ca2
-	script_wait_frames $14 ; $4ca4
+	script_wait_frames 20 ; $4ca4
 	script_speak ACTOR_COURT2_WALK_72_02_3 ; $4cab
 	script_set_position ACTOR_COURT2_BALLOON_SWEAT, 63.0, 63.0 ; $4cb0
 	script_set_position ACTOR_COURT2_BALLOON_QUESTION, 12.5, 33.5 ; $4cbb
 	sound SFX_EMOTE ; $4cc6
-	script_wait_frames $3c ; $4cc8
+	script_wait_frames 60 ; $4cc8
 	script_set_position ACTOR_COURT2_BALLOON_QUESTION, 63.0, 63.0 ; $4ccf
 	script_face_toward ACTOR_PLAYER, ACTOR_COURT2_WALK_72_03_1 ; $4cda
-	script_wait_frames $14 ; $4ce2
+	script_wait_frames 20 ; $4ce2
 	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 12.5, 33.5 ; $4ce9
 	sound SFX_CHIME ; $4cf4
 	script_set_anim ACTOR_COURT2_WALK_72_03_1, ANIM_BOUNCE ; $4cf6
 	script_wait_idle ACTOR_COURT2_WALK_72_03_1 ; $4cfd
 	script_set_position ACTOR_COURT2_BALLOON_EXCLAIM, 63.0, 63.0 ; $4d02
-	script_wait_frames $0a ; $4d0d
+	script_wait_frames 10 ; $4d0d
 	script_set_position ACTOR_COURT2_BALLOON_SWEAT, 12.5, 33.5 ; $4d14
 	sound SFX_APPEAR2 ; $4d1f
-	script_wait_frames $14 ; $4d21
+	script_wait_frames 20 ; $4d21
 	script_speak ACTOR_COURT2_WALK_72_03_1 ; $4d28
 	script_set_position ACTOR_COURT2_BALLOON_SWEAT, 63.0, 63.0 ; $4d2d
 	script_set_anim ACTOR_COURT2_WALK_72_02_3, ANIM_NOD ; $4d38

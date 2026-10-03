@@ -66,10 +66,10 @@ CheckSetComplete:
 	sound BGM_TIEBREAK ; $478f
 	ld a, $0f ; $4791
 	farcall ShowCourtBanner ; $4793
-	ld a, $50 ; $4796
+	ld a, 80 ; $4796
 	call StepMatchFrames ; $4798
 	farcall HideCourtBanner ; $479b
-	ld a, $0f ; $479e
+	ld a, 15 ; $479e
 	call StepMatchFrames ; $47a0
 .tiebreakChangeover:
 	call AssignCourtPositions ; $47a3

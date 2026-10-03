@@ -243,32 +243,32 @@ CheckExpLevelDown:
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $749b
 	call ApplyTilemapPatchListExpScreen ; $749e
 	call UploadExpPromptWindowRows ; $74a1
-	wait_frames $02 ; $74a4
+	wait_frames 2 ; $74a4
 	ld hl, ExpLevelDownTilemapPatch3 ; $74a8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74ab
 	call ApplyTilemapPatchListExpScreen ; $74ae
 	call UploadExpPromptWindowRows ; $74b1
-	wait_frames $02 ; $74b4
+	wait_frames 2 ; $74b4
 	ld hl, ExpLevelDownTilemapPatch2 ; $74b8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74bb
 	call ApplyTilemapPatchListExpScreen ; $74be
 	call UploadExpPromptWindowRows ; $74c1
-	wait_frames $02 ; $74c4
+	wait_frames 2 ; $74c4
 	ld hl, ExpLevelDownTilemapPatch1 ; $74c8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74cb
 	call ApplyTilemapPatchListExpScreen ; $74ce
 	call UploadExpPromptWindowRows ; $74d1
-	wait_frames $02 ; $74d4
+	wait_frames 2 ; $74d4
 	ld hl, ExpLevelDownTilemapPatch0 ; $74d8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74db
 	call ApplyTilemapPatchListExpScreen ; $74de
 	call UploadExpPromptWindowRows ; $74e1
-	wait_frames $02 ; $74e4
+	wait_frames 2 ; $74e4
 	ld hl, ExpPromptWindowFrame_1d ; $74e8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74eb
 	call ApplyTilemapPatchListExpScreen ; $74ee
 	call UploadExpPromptWindowRows ; $74f1
-	wait_frames $0c ; $74f4
+	wait_frames 12 ; $74f4
 	wram_bank WRAM_SCENE ; $74f8
 	ld a, $01 ; $74fe
 	ld [wExpPromptCursorRow], a ; $7500
@@ -343,34 +343,34 @@ DrawExpPromptCursor:
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $759c
 	call ApplyTilemapPatchListExpScreen ; $759f
 	call UploadExpPromptWindowRowsClosing ; $75a2
-	wait_frames $02 ; $75a5
+	wait_frames 2 ; $75a5
 	farcall RestoreCharDataScreenRow ; $75a9
 	ld hl, ExpLevelDownTilemapPatch1 ; $75ac
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75af
 	call ApplyTilemapPatchListExpScreen ; $75b2
 	call UploadExpPromptWindowRowsClosing ; $75b5
-	wait_frames $02 ; $75b8
+	wait_frames 2 ; $75b8
 	farcall RestoreCharDataScreenRow ; $75bc
 	ld hl, ExpLevelDownTilemapPatch2 ; $75bf
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75c2
 	call ApplyTilemapPatchListExpScreen ; $75c5
 	call UploadExpPromptWindowRowsClosing ; $75c8
-	wait_frames $02 ; $75cb
+	wait_frames 2 ; $75cb
 	farcall RestoreCharDataScreenRow ; $75cf
 	ld hl, ExpLevelDownTilemapPatch3 ; $75d2
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75d5
 	call ApplyTilemapPatchListExpScreen ; $75d8
 	call UploadExpPromptWindowRowsClosing ; $75db
-	wait_frames $02 ; $75de
+	wait_frames 2 ; $75de
 	farcall RestoreCharDataScreenRow ; $75e2
 	ld hl, ExpLevelDownTilemapPatch4 ; $75e5
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75e8
 	call ApplyTilemapPatchListExpScreen ; $75eb
 	call UploadExpPromptWindowRowsClosing ; $75ee
-	wait_frames $02 ; $75f1
+	wait_frames 2 ; $75f1
 	farcall RestoreCharDataScreenRow ; $75f5
 	call UploadExpPromptWindowRowsClosing ; $75f8
-	wait_frames $02 ; $75fb
+	wait_frames 2 ; $75fb
 	wram_bank WRAM_SCENE ; $75ff
 	ld hl, wExpCursorChar ; $7605
 	res 2, [hl] ; $7608

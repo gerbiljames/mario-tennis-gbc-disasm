@@ -78,7 +78,7 @@ JuniorClassCourtSinglesNpc05_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $69a9
 	farcall RunDialogueYesNoPrompt ; $69ae
 	farcall ScriptCloseDialogueWindow ; $69b1
-	script_wait_frames $05 ; $69b4
+	script_wait_frames 5 ; $69b4
 	and a ; $69bb
 	jr z, .done ; $69bc
 	farcall AdvanceDialogueTextCursor ; $69be
@@ -96,7 +96,7 @@ JuniorClassCourtSinglesNpc06_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $69dd
 	farcall RunDialogueYesNoPrompt ; $69e2
 	farcall ScriptCloseDialogueWindow ; $69e5
-	script_wait_frames $05 ; $69e8
+	script_wait_frames 5 ; $69e8
 	and a ; $69ef
 	jr z, .speak ; $69f0
 	farcall AdvanceDialogueTextCursor ; $69f2
@@ -122,7 +122,7 @@ JuniorClassCourtSinglesNpc08_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a26
 	farcall RunDialogueYesNoPrompt ; $6a2b
 	farcall ScriptCloseDialogueWindow ; $6a2e
-	script_wait_frames $05 ; $6a31
+	script_wait_frames 5 ; $6a31
 	and a ; $6a38
 	jr z, .done ; $6a39
 .speak:
@@ -133,14 +133,14 @@ JuniorClassCourtSinglesNpc08_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a44
 	farcall RunDialogueYesNoPrompt ; $6a49
 	farcall ScriptCloseDialogueWindow ; $6a4c
-	script_wait_frames $05 ; $6a4f
+	script_wait_frames 5 ; $6a4f
 	and a ; $6a56
 	jr nz, .speak ; $6a57
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6a59
 	script_wait_idle ACTOR_PLAYER ; $6a60
 	script_move_player 43.0, 17.0 ; $6a65
 	script_move_target ACTOR_PLAYER, 39.0, 25.0 ; $6a6f
-	script_wait_frames $1e ; $6a7a
+	script_wait_frames 30 ; $6a7a
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN, 43.0, 9.0 ; $6a81
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a8c
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN, FACE_DOWN ; $6a91
@@ -148,7 +148,7 @@ JuniorClassCourtSinglesNpc08_11:
 	script_move_target ACTOR_PLAYER, 45.0, 25.0 ; $6a9d
 	script_wait_move ACTOR_PLAYER ; $6aa8
 	script_face ACTOR_PLAYER, FACE_UP ; $6aad
-	script_wait_frames $3c ; $6ab4
+	script_wait_frames 60 ; $6ab4
 	ld hl, wStoryModePlayersXPosition ; $6abb
 	ld de, wStoryModeSpawnPosition ; $6abe
 	ld bc, wStoryModeSpawnPosition_SIZE ; $6ac1
@@ -190,7 +190,7 @@ JuniorClassCourtSinglesNpc0B_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY ; $6b36
 	farcall RunDialogueYesNoPrompt ; $6b3b
 	farcall ScriptCloseDialogueWindow ; $6b3e
-	script_wait_frames $05 ; $6b41
+	script_wait_frames 5 ; $6b41
 	and a ; $6b48
 	jr z, .speak ; $6b49
 	farcall AdvanceDialogueTextCursor ; $6b4b
@@ -265,7 +265,7 @@ JuniorClassCourtSinglesDNpc0A_11:
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cc0
 	farcall RunDialogueYesNoPrompt ; $6cc5
 	farcall ScriptCloseDialogueWindow ; $6cc8
-	script_wait_frames $05 ; $6ccb
+	script_wait_frames 5 ; $6ccb
 	and a ; $6cd2
 	jp z, .speak ; $6cd3
 	farcall AdvanceDialogueTextCursor ; $6cd6
@@ -337,7 +337,7 @@ JuniorClassCourtSinglesInitScript_11:
 ActorScript_11_23:
 	; $6dbc, 15 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 31.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
@@ -345,7 +345,7 @@ ActorScript_11_23:
 ActorScript_11_24:
 	; $6dcb, 15 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 31.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
@@ -353,7 +353,7 @@ ActorScript_11_24:
 ActorScript_11_25:
 	; $6dda, 15 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 15.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
@@ -361,7 +361,7 @@ ActorScript_11_25:
 ActorScript_11_26:
 	; $6de9, 15 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 15.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_LEFT
@@ -369,7 +369,7 @@ ActorScript_11_26:
 ActorScript_11_27:
 	; $6df8, 15 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 5.0, 13.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
@@ -377,7 +377,7 @@ ActorScript_11_27:
 ActorScript_11_28:
 	; $6e07, 15 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_wait $0a
+	as_wait 10
 	as_set_target 5.0, 19.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
@@ -390,19 +390,19 @@ ActorScript_11_29:
 	as_set_target 45.0, 7.0
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_wait $c8
-	as_wait $f0
+	as_wait 200
+	as_wait 240
 	as_set_target 51.0, 7.0
 	as_wait_move2
-	as_wait $3c
+	as_wait 60
 	as_set_target 45.0, 7.0
 	as_wait_move2
-	as_wait $3c
+	as_wait 60
 	as_set_target 51.0, 7.0
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_wait $f0
-	as_wait $f0
+	as_wait 240
+	as_wait 240
 	as_jump .L8
 JuniorClassCourtSinglesMatchReturn:
 	wram_bank WRAM_ACTORS ; $6e4d
@@ -530,7 +530,7 @@ JuniorClassCourtSinglesMatchReturn:
 	call ParkMiddleCourtPracticePair ; $70bf
 	script_fade_in $04 ; $70c2
 	call WaitFadeEnd ; $70c7
-	script_wait_frames $3c ; $70ca
+	script_wait_frames 60 ; $70ca
 	script_set_text Text_32_55 ; $70d1
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 26.0, 13.0 ; $70d7
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $70e2
@@ -563,7 +563,7 @@ JuniorClassCourtSinglesMatchReturn:
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7199
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_BOUNCE ; $719e
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $71a5
-	script_wait_frames $1e ; $71aa
+	script_wait_frames 30 ; $71aa
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_NOD ; $71b1
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $71b8
 	script_wait_idle ACTOR_PLAYER ; $71bf
@@ -580,9 +580,9 @@ JuniorClassCourtSinglesMatchReturn:
 	script_face ACTOR_PLAYER, FACE_UP ; $71fe
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BALLOON_SWEAT, 27.5, 18.5 ; $7205
 	sound SFX_APPEAR2 ; $7210
-	script_wait_frames $28 ; $7212
+	script_wait_frames 40 ; $7212
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_BOUNCE ; $7219
-	script_wait_frames $28 ; $7220
+	script_wait_frames 40 ; $7220
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 26.0, 14.0 ; $7227
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $7232
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BALLOON_SWEAT, 63.0, 63.0 ; $7237
@@ -596,10 +596,10 @@ JuniorClassCourtSinglesMatchReturn:
 	ld [wStoryModeExitTriggerRequest], a ; $7256
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_NOD ; $7259
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7260
-	script_wait_frames $28 ; $7265
+	script_wait_frames 40 ; $7265
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $726c
 	script_wait_idle ACTOR_PLAYER ; $7273
-	script_wait_frames $28 ; $7278
+	script_wait_frames 40 ; $7278
 	ld c, $04 ; $727f
 	call BeginFadeOut ; $7281
 	call WaitFadeEnd ; $7284

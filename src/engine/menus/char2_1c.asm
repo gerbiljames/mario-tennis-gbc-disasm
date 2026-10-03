@@ -122,7 +122,7 @@ AnimateCharDataStatsReveal:
 	xor a ; $47f3
 	ld [wCharDataRevealTimer], a ; $47f4
 	call FlushCharDataTilemaps ; $47f7
-	wait_frames $06 ; $47fa
+	wait_frames 6 ; $47fa
 	ld hl, CharDataBand4RunsStep1_1c ; $47fe
 	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $4801
 	call BlitTilemapRunsFromTable ; $4804

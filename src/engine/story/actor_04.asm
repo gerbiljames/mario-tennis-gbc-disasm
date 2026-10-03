@@ -295,7 +295,7 @@ ActorScript_FollowWaypoints:
 ActorScript_StepToTarget:
 	; $41dc, 6 bytes (actor_script)
 	as_step
-	as_wait $01
+	as_wait 1
 	as_jump ActorScript_StepToTarget
 ActorScript_Deactivate:
 	; $41e2, 5 bytes (actor_script)

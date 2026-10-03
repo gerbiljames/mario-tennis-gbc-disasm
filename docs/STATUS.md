@@ -152,6 +152,13 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-03 — split pairs, behaviour, drill messages, frames.** Pairs
+  loaded with two instructions are named (`rect_size`, `rect_cell`,
+  `map_cell`, `sprite_xy`, `sprite_*_attr`, 357 sites); behaviour-map
+  values and kinds are `BEHAVIOR_*`; the drills' result messages are
+  `DRILLMSG_*` named after their text, and their table is `Text_*` names;
+  1,931 frame counts are decimal. Found: fifteen drill messages point past
+  text bank `$25`, and Stroke Match 2 shows them (`docs/bugs.md`).
 * **2026-10-03 — speakers and VRAM rows.** `script_speak_restore` lets the
   actor-slot resolver name 155 more speakers (5,122 names, all agreeing in
   play), with `SPEAKER_NONE` for the no-actor case; 243 VRAM copy counts

@@ -68,7 +68,7 @@ MatchSelectRunCharacterSelect:
 MatchSelectPlayEpilogueScene:
 	farcall BeginCutsceneScriptMode ; $40ef
 	farcall RunScrollingTextScreen ; $40f2
-	wait_frames $3c ; $40f5
+	wait_frames 60 ; $40f5
 	call EnableLCD ; $40f9
 	farcall SetupSceneAnimationPalettes ; $40fc
 	script_fade_in $04 ; $40ff
@@ -77,13 +77,13 @@ MatchSelectPlayEpilogueScene:
 	ld a, $01 ; $4109
 	ld hl, SceneAnimationFrameTask_10 ; $410b
 	call RegisterFrameTask ; $410e
-	wait_frames $78 ; $4111
-	wait_frames $ff ; $4115
-	wait_frames $ff ; $4119
-	wait_frames $ff ; $411d
-	wait_frames $ff ; $4121
-	wait_frames $ff ; $4125
-	wait_frames $ff ; $4129
+	wait_frames 120 ; $4111
+	wait_frames 255 ; $4115
+	wait_frames 255 ; $4119
+	wait_frames 255 ; $411d
+	wait_frames 255 ; $4121
+	wait_frames 255 ; $4125
+	wait_frames 255 ; $4129
 	ld hl, SceneAnimationFrameTask_10 ; $412d
 	call UnregisterFrameTask ; $4130
 	farcall EndCutsceneScriptMode ; $4133

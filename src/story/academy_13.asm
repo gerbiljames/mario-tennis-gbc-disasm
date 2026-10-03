@@ -11,7 +11,7 @@ RunPlayDoublesTodayPrompt:
 	script_speak_restore ACTOR_DORM_ROOM_KATE ; $56d4
 	farcall RunDialogueYesNoPrompt ; $56d9
 	farcall ScriptCloseDialogueWindow ; $56dc
-	script_wait_frames $05 ; $56df
+	script_wait_frames 5 ; $56df
 	and a ; $56e6
 	jr nz, .declined ; $56e7
 	set_flag FLAG_DOUBLES ; $56e9
@@ -19,13 +19,13 @@ RunPlayDoublesTodayPrompt:
 	script_speak ACTOR_DORM_ROOM_KATE ; $56ef
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $56f4
 	script_wait_idle ACTOR_PLAYER ; $56fb
-	script_wait_frames $05 ; $5700
+	script_wait_frames 5 ; $5700
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5707
 	wram_bank WRAM_ACTORS ; $570e
 	ld a, $01 ; $5714
 	ld [wMatchIsDoubles], a ; $5716
 	call SetDormRoomEventTriggerCells_13 ; $5719
-	script_wait_frames $05 ; $571c
+	script_wait_frames 5 ; $571c
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5723
 	ld c, l ; $5728
 	ld b, h ; $5729
@@ -37,7 +37,7 @@ RunPlayDoublesTodayPrompt:
 	ld hl, ACTORF_FLAGS ; $5737
 	add hl, bc ; $573a
 	set ACTORFLAGB_TALKABLE, [hl] ; $573b
-	script_wait_frames $05 ; $573d
+	script_wait_frames 5 ; $573d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5744
 	ret ; $574b
 .declined:
@@ -69,7 +69,7 @@ RunPlayDoublesTodayPrompt:
 	script_speak_restore ACTOR_DORM_ROOM_KATE ; $5795
 	farcall RunDialogueYesNoPrompt ; $579a
 	farcall ScriptCloseDialogueWindow ; $579d
-	script_wait_frames $05 ; $57a0
+	script_wait_frames 5 ; $57a0
 	and a ; $57a7
 	jr nz, .done ; $57a8
 	call SetRoommateSinglesYesReplyText_13 ; $57aa
@@ -81,9 +81,9 @@ RunPlayDoublesTodayPrompt:
 	ld [wMatchIsDoubles], a ; $57c2
 	script_move_target ACTOR_DORM_ROOM_KATE, 11.0, 9.0 ; $57c5
 	script_wait_move ACTOR_DORM_ROOM_KATE ; $57d0
-	script_wait_frames $05 ; $57d5
+	script_wait_frames 5 ; $57d5
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $57dc
-	script_wait_frames $05 ; $57e3
+	script_wait_frames 5 ; $57e3
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $57ea
 	ld c, l ; $57ef
 	ld b, h ; $57f0
@@ -101,7 +101,7 @@ RunPlayDoublesTodayPrompt:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5812
 	script_wait_idle ACTOR_PLAYER ; $5819
 	script_face ACTOR_PLAYER, FACE_DOWN ; $581e
-	script_wait_frames $05 ; $5825
+	script_wait_frames 5 ; $5825
 	wram_bank WRAM_ACTORS ; $582c
 	ld a, $01 ; $5832
 	ld [wMatchIsDoubles], a ; $5834
@@ -127,11 +127,11 @@ ActorScript_13_00:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_wait $b4
+	as_wait 180
 	as_rand_box $02, $02
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_wait $b4
+	as_wait 180
 	as_jump .L1
 ActorScript_13_01:
 	; $5877, 10 bytes (actor_script)
@@ -150,18 +150,18 @@ ActorScript_13_03:
 	as_begin_path
 .La:
 	as_set_field ACTORF_HEADING, FACE_DOWN
-	as_wait $b4
+	as_wait 180
 	as_set_target 3.0, 8.0
 	as_wait_move2
-	as_wait $50
+	as_wait 80
 	as_set_field ACTORF_HEADING, FACE_RIGHT
-	as_wait $12
+	as_wait 18
 	as_set_target 3.0, 7.0
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_wait $f0
+	as_wait 240
 	as_set_field ACTORF_HEADING, FACE_RIGHT
-	as_wait $12
+	as_wait 18
 	as_jump .La
 RunAcademyQuestionsMenu:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58be
@@ -204,7 +204,7 @@ RunAcademyQuestionsMenu:
 	script_speak_restore ACTOR_DORM_ROOM_KATE ; $5910
 	farcall RunDialogueYesNoPrompt ; $5915
 	farcall ScriptCloseDialogueWindow ; $5918
-	script_wait_frames $05 ; $591b
+	script_wait_frames 5 ; $591b
 	and a ; $5922
 	jr nz, .done ; $5923
 	jr .menuLoop ; $5925
@@ -386,9 +386,9 @@ ShowStoryNarration_13:
 	script_set_active ACTOR_PARTNER, $00 ; $5a47
 	script_copy_scene_rect $00, $20, $00, $00, $16, $18 ; $5a4e
 	script_fade_in $08 ; $5a5d
-	script_wait_frames $04 ; $5a62
+	script_wait_frames 4 ; $5a62
 	script_speak SPEAKER_NONE | 5 ; $5a69
-	script_wait_frames $04 ; $5a6e
+	script_wait_frames 4 ; $5a6e
 	ret ; $5a75
 .setText:
 	script_set_text Text_30_496 ; $5a76
@@ -468,7 +468,7 @@ DormRoomArrivalCutscene_13:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5b44
 	script_wait_idle ACTOR_PLAYER ; $5b4b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5b50
-	script_wait_frames $05 ; $5b57
+	script_wait_frames 5 ; $5b57
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5b5e
 	ld c, l ; $5b63
 	ld b, h ; $5b64

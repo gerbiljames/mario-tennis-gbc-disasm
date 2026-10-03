@@ -874,7 +874,7 @@ StoryPauseMenu_SaveQuit:
 	ld a, $01 ; $7082
 	jr StoryPauseMenu_ReturnToMainMenu.done ; $7084
 StoryPauseMenu_ReturnToMainMenu:
-	wait_frames $08 ; $7086
+	wait_frames 8 ; $7086
 	ld a, $01 ; $708a
 	ld [wMatchExitRequest], a ; $708c
 	ld a, MATCHABORT_ALL ; $708f

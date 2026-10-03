@@ -282,7 +282,7 @@ RunRepairCounterDialogue:
 	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e2e
 	farcall RunDialogueYesNoPrompt ; $4e33
 	farcall ScriptCloseDialogueWindow ; $4e36
-	script_wait_frames $05 ; $4e39
+	script_wait_frames 5 ; $4e39
 	and a ; $4e40
 	jr z, RepairCounterFarewell.altLine ; $4e41
 RepairCounterFarewell:
@@ -292,7 +292,7 @@ RepairCounterFarewell:
 .altLine:
 	script_set_text Text_6e_235 ; $4e4f
 	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e55
-	script_wait_frames $05 ; $4e5a
+	script_wait_frames 5 ; $4e5a
 RepairCounterServiceMenu:
 	ld hl, Text_6e_236 ; $4e61
 	ld_cell de, $01, $01 ; $4e64
@@ -313,7 +313,7 @@ RepairCounterServiceMenu:
 	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e93
 	farcall RunDialogueYesNoPrompt ; $4e98
 	farcall ScriptCloseDialogueWindow ; $4e9b
-	script_wait_frames $05 ; $4e9e
+	script_wait_frames 5 ; $4e9e
 	and a ; $4ea5
 	jr z, RepairCounterServiceMenu ; $4ea6
 	jr RepairCounterFarewell ; $4ea8

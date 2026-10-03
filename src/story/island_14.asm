@@ -180,9 +180,9 @@ QueueTwinkleSprite_14:
 	ld [wStoryModeShowLocationName], a ; $7704
 	script_fade_in $06 ; $7707
 	call WaitFadeEnd ; $770c
-	script_wait_frames $3c ; $770f
+	script_wait_frames 60 ; $770f
 	call PlayTwinkleAnimation_14 ; $7716
-	script_wait_frames $1e ; $7719
+	script_wait_frames 30 ; $7719
 	call LoadDistantPlaneObjGfx_14 ; $7720
 	ld a, $08 ; $7723
 	ld [wCutsceneObjPhase], a ; $7725
@@ -195,7 +195,7 @@ QueueTwinkleSprite_14:
 	call RegisterFrameTask ; $7737
 	ld h, $4b ; $773a
 .fadeIn:
-	script_wait_frames $02 ; $773c
+	script_wait_frames 2 ; $773c
 	call PlayPlaneMoveSfx_14 ; $7743
 	ld a, [wMapSceneStage2] ; $7746
 	inc a ; $7749
@@ -217,7 +217,7 @@ QueueTwinkleSprite_14:
 	script_move_player 11.0, 24.0 ; $776d
 	ld h, $3c ; $7777
 .burst:
-	script_wait_frames $02 ; $7779
+	script_wait_frames 2 ; $7779
 	call PlayPlaneMoveSfx_14 ; $7780
 	dec h ; $7783
 	jr nz, .burst ; $7784
@@ -233,7 +233,7 @@ QueueTwinkleSprite_14:
 	call RegisterFrameTask ; $779d
 	ld h, $20 ; $77a0
 .nextBurst:
-	script_wait_frames $02 ; $77a2
+	script_wait_frames 2 ; $77a2
 	call PlayPlaneMoveSfx_14 ; $77a9
 	ld a, [wMapSceneStage] ; $77ac
 	dec a ; $77af
@@ -250,7 +250,7 @@ QueueTwinkleSprite_14:
 	jr nz, .nextBurst ; $77c4
 	ld h, $18 ; $77c6
 .finaleLoop:
-	script_wait_frames $02 ; $77c8
+	script_wait_frames 2 ; $77c8
 	call PlayPlaneMoveSfx_14 ; $77cf
 	ld a, [wMapSceneStage] ; $77d2
 	dec a ; $77d5
@@ -266,7 +266,7 @@ QueueTwinkleSprite_14:
 	script_move_player 11.0, 18.0 ; $77e9
 	ld h, $18 ; $77f3
 .speak:
-	script_wait_frames $03 ; $77f5
+	script_wait_frames 3 ; $77f5
 	call PlayPlaneMoveSfx_14 ; $77fc
 	ld a, [wMapSceneStage2] ; $77ff
 	dec a ; $7802
@@ -279,7 +279,7 @@ QueueTwinkleSprite_14:
 	jr nz, .speak ; $7811
 	ld h, $08 ; $7813
 .fadeOut:
-	script_wait_frames $04 ; $7815
+	script_wait_frames 4 ; $7815
 	call PlayPlaneMoveSfx_14 ; $781c
 	ld a, [wMapSceneStage2] ; $781f
 	dec a ; $7822
@@ -294,7 +294,7 @@ QueueTwinkleSprite_14:
 	jr nz, .fadeOut ; $7834
 	ld h, $0c ; $7836
 .done:
-	script_wait_frames $06 ; $7838
+	script_wait_frames 6 ; $7838
 	call PlayPlaneMoveSfx_14 ; $783f
 	ld a, [wMapSceneStage2] ; $7842
 	dec a ; $7845
@@ -303,7 +303,7 @@ QueueTwinkleSprite_14:
 	dec h ; $784c
 	jr nz, .done ; $784d
 	sound SFX_FIREWORK_SPARKLE ; $784f
-	script_wait_frames $46 ; $7851
+	script_wait_frames 70 ; $7851
 	ld c, $04 ; $7858
 	call BeginFadeOut ; $785a
 	call WaitFadeEnd ; $785d
@@ -330,7 +330,7 @@ PlayTwinkleAnimation_14:
 	sound SFX_TWINKLE ; $788a
 	ld h, $04 ; $788c
 .loop:
-	script_wait_frames $04 ; $788e
+	script_wait_frames 4 ; $788e
 	ld a, [wCutsceneObjPhase] ; $7895
 	add $04 ; $7898
 	ld [wCutsceneObjPhase], a ; $789a
@@ -354,7 +354,7 @@ ActorScript_14_2:
 	as_halt
 .L4:
 	as_step
-	as_wait $01
+	as_wait 1
 	as_jump .L4
 ActorScript_14_3:
 	; $78bb, 30 bytes (actor_script)
@@ -362,19 +362,19 @@ ActorScript_14_3:
 .L1:
 	as_rand_box $02, $02
 	as_wait_move2
-	as_wait $28
+	as_wait 40
 	as_jump .L1
 	as_begin_path
 .Lb:
 	as_rand_box $01, $02
 	as_wait_move2
-	as_wait $28
+	as_wait 40
 	as_jump .Lb
 	as_begin_path
 .L15:
 	as_rand_box $01, $01
 	as_wait_move2
-	as_wait $28
+	as_wait 40
 	as_jump .L15
 MapScriptNop_14:
 	ret ; $78d9
@@ -396,172 +396,172 @@ ActorScript_14_4:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_jump ActorScript_14_4
 	as_anim ANIM_STILL
-	as_wait $3c
+	as_wait 60
 .L67:
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_jump .L67
 	as_anim ANIM_STILL
-	as_wait $1e
+	as_wait 30
 .Lce:
 	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_jump .Lce
 	as_anim ANIM_STILL
-	as_wait $1e
-	as_wait $3c
+	as_wait 30
+	as_wait 60
 .L137:
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $fe00
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0200
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $fc00, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_anim ANIM_WALK
 	as_target_rel $0400, $0000
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
-	as_wait $4b
+	as_wait 75
 	as_jump .L137
 .L19a:
-	as_wait $f0
+	as_wait 240
 	as_anim ANIM_NOD
-	as_wait $50
+	as_wait 80
 	as_anim ANIM_NOD
-	as_wait $3c
+	as_wait 60
 	as_jump .L19a
 .L1a7:
-	as_wait $8c
+	as_wait 140
 	as_anim ANIM_SHAKE
-	as_wait $8c
+	as_wait 140
 	as_anim ANIM_SHAKE
-	as_wait $8c
+	as_wait 140
 	as_anim ANIM_NOD
 	as_jump .L1a7
 ; Instruction-identical to Unused_13_ComputeRankingProgressIndex and Unused_15_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.

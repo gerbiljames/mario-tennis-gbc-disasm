@@ -283,11 +283,11 @@ IslandSkyInitScript_14:
 	script_fade_in $06 ; $53a0
 	call WaitFadeEnd ; $53a5
 	sound SFX_FIREWORK_LAUNCH ; $53a8
-	script_wait_frames $3c ; $53aa
+	script_wait_frames 60 ; $53aa
 	script_set_position ACTOR_PLAYER, 6.0, 39.0 ; $53b1
 	ld h, $08 ; $53bc
 .planeLoop:
-	script_wait_frames $06 ; $53be
+	script_wait_frames 6 ; $53be
 	call PlayPlaneMoveSfx_14 ; $53c5
 	ld a, [wMapSceneStage2] ; $53c8
 	inc a ; $53cb
@@ -296,7 +296,7 @@ IslandSkyInitScript_14:
 	jr nz, .planeLoop ; $53d0
 	ld h, $08 ; $53d2
 .planeLoop2:
-	script_wait_frames $05 ; $53d4
+	script_wait_frames 5 ; $53d4
 	call PlayPlaneMoveSfx_14 ; $53db
 	ld a, h ; $53de
 	and $01 ; $53df
@@ -312,7 +312,7 @@ IslandSkyInitScript_14:
 	jr nz, .planeLoop2 ; $53f2
 	ld h, $08 ; $53f4
 .checkStage:
-	script_wait_frames $04 ; $53f6
+	script_wait_frames 4 ; $53f6
 	call PlayPlaneMoveSfx_14 ; $53fd
 	ld a, [wMapSceneStage] ; $5400
 	dec a ; $5403
@@ -326,7 +326,7 @@ IslandSkyInitScript_14:
 	script_move_player_to_actor ACTOR_PLAYER ; $5417
 	ld h, $1c ; $541e
 .descend:
-	script_wait_frames $03 ; $5420
+	script_wait_frames 3 ; $5420
 	call PlayPlaneMoveSfx_14 ; $5427
 	ld a, h ; $542a
 	and $01 ; $542b
@@ -343,7 +343,7 @@ IslandSkyInitScript_14:
 .afterFlight:
 	ld h, $00 ; $5440
 .placeActors:
-	script_wait_frames $03 ; $5442
+	script_wait_frames 3 ; $5442
 	inc h ; $5449
 	call PlayPlaneMoveSfx_14 ; $544a
 	ld a, [wMapSceneStage2] ; $544d
@@ -361,7 +361,7 @@ IslandSkyInitScript_14:
 	jr nz, .placeActors ; $5466
 	ld h, $08 ; $5468
 .walkOff:
-	script_wait_frames $04 ; $546a
+	script_wait_frames 4 ; $546a
 	call PlayPlaneMoveSfx_14 ; $5471
 	ld a, [wMapSceneStage2] ; $5474
 	inc a ; $5477
@@ -371,7 +371,7 @@ IslandSkyInitScript_14:
 	sound SFX_PLANE ; $547e
 	ld h, $08 ; $5480
 .speak:
-	script_wait_frames $06 ; $5482
+	script_wait_frames 6 ; $5482
 	ld a, [wMapSceneStage2] ; $5489
 	inc a ; $548c
 	ld [wMapSceneStage2], a ; $548d
@@ -380,7 +380,7 @@ IslandSkyInitScript_14:
 	sound SFX_FIREWORK_SPARKLE ; $5493
 	ld h, $04 ; $5495
 .speakDoubles:
-	script_wait_frames $08 ; $5497
+	script_wait_frames 8 ; $5497
 	ld a, [wMapSceneStage2] ; $549e
 	inc a ; $54a1
 	ld [wMapSceneStage2], a ; $54a2
@@ -424,7 +424,7 @@ IslandSkyInitScript_14:
 	ld a, $01 ; $54f7
 	ld hl, UpdateWaterSplash0_14 ; $54f9
 	call RegisterFrameTask ; $54fc
-	script_wait_frames $0a ; $54ff
+	script_wait_frames 10 ; $54ff
 	ld a, $50 ; $5506
 	ld [wCutsceneObjX + 1], a ; $5508
 	ld a, $02 ; $550b
@@ -438,27 +438,27 @@ IslandSkyInitScript_14:
 	ld a, $01 ; $551e
 	ld hl, UpdateWaterSplash1_14 ; $5520
 	call RegisterFrameTask ; $5523
-	script_wait_frames $50 ; $5526
+	script_wait_frames 80 ; $5526
 	script_set_position ACTOR_ISLAND_SKY_WALK_75_06, 6.0, 41.0 ; $552d
 	script_set_position ACTOR_ISLAND_SKY_WALK_74_08, 6.0, 41.0 ; $5538
 	script_set_position ACTOR_ISLAND_SKY_WALK_74_07, 6.0, 41.0 ; $5543
 	script_set_position ACTOR_ISLAND_SKY_WALK_74_06, 6.0, 41.0 ; $554e
 	script_set_actor_script ACTOR_ISLAND_SKY_WALK_75_06, ActorScript_14_1 ; $5559
-	script_wait_frames $1e ; $5564
+	script_wait_frames 30 ; $5564
 	script_set_actor_script ACTOR_ISLAND_SKY_WALK_74_08, ActorScript_14_1 ; $556b
-	script_wait_frames $1e ; $5576
+	script_wait_frames 30 ; $5576
 	script_set_actor_script ACTOR_ISLAND_SKY_WALK_74_07, ActorScript_14_1 ; $557d
-	script_wait_frames $1e ; $5588
+	script_wait_frames 30 ; $5588
 	script_set_actor_script ACTOR_ISLAND_SKY_WALK_74_06, ActorScript_14_1 ; $558f
-	script_wait_frames $50 ; $559a
+	script_wait_frames 80 ; $559a
 	script_set_position ACTOR_PLAYER, 6.0, 41.0 ; $55a1
 	script_set_active ACTOR_PLAYER, $02 ; $55ac
 	script_face ACTOR_PLAYER, FACE_DOWN ; $55b3
-	script_wait_frames $1e ; $55ba
+	script_wait_frames 30 ; $55ba
 	script_move_target ACTOR_PLAYER, 11.0, 41.0 ; $55c1
 	script_wait_move ACTOR_PLAYER ; $55cc
 	script_face ACTOR_PLAYER, FACE_UP ; $55d1
-	script_wait_frames $1e ; $55d8
+	script_wait_frames 30 ; $55d8
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $55df
 	script_wait_idle ACTOR_PLAYER ; $55e6
 	ld a, [wStoryModeEntryPoint] ; $55eb
