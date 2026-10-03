@@ -79,7 +79,8 @@ reviewed verdict (`docs/unused_code.md`). Nothing the analysis can reach is
   that mean one thing in every candidate list have role names
   (`include/actor_roles.inc`, `docs/story_mode.md`).
 * Free RAM: 4,360 bytes, poison-checked at runtime over every flow the
-  tools can drive, link play and the N64 screens included
+  tools can drive, link play and the N64 screens included (re-checked
+  2026-10-03 over 237 flows: nothing reads them)
   (`docs/ram_map.md`).
 
 **Behaviour.** The event test compares a shifted build with the original
