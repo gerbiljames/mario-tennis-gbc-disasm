@@ -2358,7 +2358,7 @@ Split bank `$24`'s data blobs into 12 named per-shot tables so the five entries'
 `BallPosBlockOffsetsDrop_24`; `BallPosDataNeutral_24` +
 `BallPosHeightOffsetsNeutral_24`; `BallPosDataReach_24` +
 `BallPosHeightOffsetsReach_24`; the shared-fallback `BallPosDataFallback_24` +
-`BallPosFallbackOffsets_24`; and `SmashVelocityBySpeed_24` (smash indexes it by
+`BallPosFallbackOffsets_24`; and `SmashElevationBySpeed_24` (smash indexes it by
 `wSmashServeSpeedIndex`). The `BlockOffsets` tables are 4 bytes each — the
 lob/drop placement index is just 0/1. Carve is label-driven: `disasm.py`
 rewrites `data.manifest` from the curated labels, so the split needs no manual
@@ -6604,7 +6604,7 @@ arithmetic folds back to the same word.
 Counting `dw` words that land in a RAM range found 247 across 49 tables, and the
 first lesson was that **two thirds of the regions were not RAM at all**. Every
 `$ffxx` hit — `ActorMoveVectors_04`, `DPadMoveVectors_0a`,
-`MinigameBallLaunchHeights`, `SmashVelocityBySpeed_24`, `CourtSideOffsets_07_*`
+`MinigameBallLaunchHeights`, `SmashElevationBySpeed_24`, `CourtSideOffsets_07_*`
 — is a *negative 16-bit number*: `$ffc0` is −64, not an HRAM address. That is
 the `RAM_IMM_NEVER` hazard in a new operand position, and it is why the spec is
 opt-in per table rather than a blanket fallback on `records:2`.

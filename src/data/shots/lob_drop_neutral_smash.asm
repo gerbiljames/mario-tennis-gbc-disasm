@@ -192,7 +192,7 @@ ShotBallPathSmash:
 	call AngleFromVector16 ; $66c6
 	ld a, [wSmashServeSpeedIndex] ; $66c9
 	add a ; $66cc
-	ld_hl_indexed SmashVelocityBySpeed_24 ; $66cd
+	ld_hl_indexed SmashElevationBySpeed_24 ; $66cd
 	ld a, [hl+] ; $66d4
 	ld h, [hl] ; $66d5
 	ld l, a ; $66d6
@@ -213,7 +213,7 @@ ShotBallPathSmash:
 	add hl, de ; $66ed
 	call SetBallTargetFromAim_24 ; $66ee
 	ret ; $66f1
-SmashVelocityBySpeed_24:
+SmashElevationBySpeed_24:
 	; $66f2, 20 bytes (records:2)
 	dw $fa60 ; record 0
 	dw $faf0 ; record 1

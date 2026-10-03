@@ -715,7 +715,7 @@ HandleBallNetCrossing:
 	ld hl, $005a ; $5874
 	add hl, de ; $5877
 	bit 7, h ; $5878
-	jr nz, .clearSpin ; $587a
+	jr nz, .bounceOffNetTop ; $587a
 	ld hl, $0058 ; $587c
 	add hl, de ; $587f
 	bit 7, h ; $5880
@@ -801,7 +801,7 @@ HandleBallNetCrossing:
 	ld [hl+], a ; $58f2
 	ld [hl], d ; $58f3
 	ret ; $58f4
-.clearSpin:
+.bounceOffNetTop:
 	ld hl, wBallHeightFrac ; $58f5
 	xor a ; $58f8
 	ld [hl+], a ; $58f9

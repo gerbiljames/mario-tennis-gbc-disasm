@@ -240,7 +240,7 @@ AiBaselinerShadowPartner:
 	call CharIndexToWramBank ; $7e2c
 	ld a, a ; $7e2f
 	wram_bank ; $7e30
-	ld hl, rLCDC ; $7e34
+	ld hl, -$c0 ; $7e34
 	ld a, [wCharWalkTargetX + 1] ; $7e37
 	bit 7, a ; $7e3a
 	jr z, .setTarget ; $7e3c

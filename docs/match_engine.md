@@ -314,7 +314,7 @@ the depth position — and from there three bands decide what happens next
 
 | Contact height | Result |
 |---|---|
-| above `$5a` (within 6 units of the net top) | the ball is set to the net top (height `-$60`), kicked upward by `|depth velocity|/8` plus a random 0-`$3fc`, and carries on forward at ¼ depth speed — the net-cord dribbler (no spin is touched, whatever the `.clearSpin` label says) |
+| above `$5a` (within 6 units of the net top) | the ball is set to the net top (height `-$60`), kicked upward by `|depth velocity|/8` plus a random 0-`$3fc`, and carries on forward at ¼ depth speed — the net-cord dribbler |
 | `$58`-`$5a` | the same upward kick from the current height, but the depth velocity is negated and cut to ⅛ — the ball pops back |
 | below `$58` | the depth velocity is negated and cut to ⅛ — the ball drops back on the hitter's side |
 
@@ -577,7 +577,7 @@ The drop-shot table adds a third axis keyed on the ball's distance from the cour
 origin (`LookupBallPosByAim_24`, `$24:$422d`), and the smash has no table at all
 — `ShotBallPathSmash` (`$24:$6696`) takes the magnitude straight from
 `ComputeShotPlacement` and computes its elevation directly, as the angle to the
-landing point plus a 10-entry offset table (`SmashVelocityBySpeed_24`) indexed
+landing point plus a 10-entry offset table (`SmashElevationBySpeed_24`) indexed
 by `wSmashServeSpeedIndex`.
 
 **The row search.** `BallTrajEntryPtr6_20` (`$20:$4002`) computes
@@ -1519,7 +1519,7 @@ The results live in the saved story record (`$c920`-`$c92a` for the eleven bars,
 |---|---|---|---|
 | `+$20` | Top | `wTopspinPlacementIndex` `$df6e` | placement row for topspin, power topspin and serve-topspin — chooses the spin pair *and* the trajectory block, i.e. the shot's lateral angle deltas |
 | `+$21` | Slice | `wSlicePlacementIndex` `$df6f` | same for slice, power slice and serve-slice |
-| `+$22` | Serve | `wSmashServeSpeedIndex` `$df6c` | speed row for the smash and all three serves; also indexes the smash's elevation-offset table (`SmashVelocityBySpeed_24`) |
+| `+$22` | Serve | `wSmashServeSpeedIndex` `$df6c` | speed row for the smash and all three serves; also indexes the smash's elevation-offset table (`SmashElevationBySpeed_24`) |
 | `+$23` | Stroke | `wGroundStrokeSpeedIndex` `$df6b` | speed row for topspin, slice, their power variants and neutral |
 | `+$24` | Volley | `wReachSpeedIndex` `$df6d` | speed row for the reach (stretch) shots |
 | `+$25` | Angle | `wCharAimOffsetScale` `$df69` | fraction of the aim spread actually applied — how far a directed shot can be pushed off centre |
