@@ -730,7 +730,7 @@ slot points at. `SetCharState` (`$08:$6a1c`) zeroes `wCharStatePhase`,
 |---|---|---|
 | 0 | (bare `ret`) | inert — set by `InitChar` and by a body hit |
 | 1 | `CharRallyState` `$08:$6bea` | `CharRallyEndState`, `CharRallyReadyPhase`, `CharSwingWindupPhase`, `CharSwingContactPhase` |
-| 2 | `CharServeStrikePhase.dispatch` `$08:$6bd9` | post-hit recovery: finish the swing, then movement only |
+| 2 | `CharRecoverState` `$08:$6bd9` | post-hit recovery: finish the swing, then movement only |
 | 3 | `CharServeState` `$08:$6ae2` | init, wait-anim, `CharServeTossPhase`, `CharServeSwingWindowPhase`, `CharServeStrikePhase` |
 | 4 | `CharAwaitServeState` `$08:$6cc8` | end-state, start-serve, check-input |
 | 5 | `CharStandbyState` `$08:$6cbe` | end-state, then shares state 4's check-input |

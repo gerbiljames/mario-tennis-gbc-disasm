@@ -1198,7 +1198,7 @@ def CHARANIM_SMASH_QUICK     equ $0c ; only ResetSwingAnimation and the debug vi
 def CHARANIM_FOREHAND_READY  equ $0d
 def CHARANIM_BACKHAND_READY  equ $0e
 def CHARANIM_OVERHEAD_READY  equ $0f ; also the serve toss pose (CharServeTossPhase, $08:$6b83)
-def CHARANIM_SERVE_READY     equ $10 ; held serve stance; CharServeInitPhase.waitAnim and AiServeWalkToSpot both block until it is current
+def CHARANIM_SERVE_READY     equ $10 ; held serve stance; CharServeWaitAnimPhase and AiServeWalkToSpot both block until it is current
 def CHARANIM_SERVE_PREP      equ $11 ; the pre-serve flourish, which ends in an anim_set to $10
 def CHARANIM_DIVE            equ $12 ; StartCharSwing.dive ($08:$6df7)
 
@@ -1215,7 +1215,7 @@ def CHARANIM_DIVE            equ $12 ; StartCharSwing.dive ($08:$6df7)
 ; remapped through on every strike ($00 $02 $01 $02 $02 $01 $06 $07).
 def CHARSTATE_INERT          equ 0 ; slot points at the shared `ret` -- InitChar, ResetCharForPoint, and a character the ball hits
 def CHARSTATE_RALLY          equ 1 ; CharRallyState: ready -> windup -> contact
-def CHARSTATE_RECOVER        equ 2 ; CharServeStrikePhase.dispatch: let the swing finish, then movement only. Whoever struck the ball is put here
+def CHARSTATE_RECOVER        equ 2 ; CharRecoverState: let the swing finish, then movement only. Whoever struck the ball is put here
 def CHARSTATE_SERVE          equ 3 ; CharServeState: indicator, toss, swing window, strike
 def CHARSTATE_AWAIT_SERVE    equ 4 ; CharAwaitServeState
 def CHARSTATE_STANDBY        equ 5 ; CharStandbyState: end-state, then state 4's movement phase

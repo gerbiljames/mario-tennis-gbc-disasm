@@ -438,8 +438,8 @@ ServeChallengerResultScene:
 .dispatch:
 	ld a, a ; $5d69
 	rst Rst00 ; $5d6a
-	dw ServiceMatch3ResultScene.finish ; $5d6b jumptable
-	dw ServiceMatch3ResultScene.lose ; $5d6d jumptable
-	dw ServiceMatch3ResultScene.draw ; $5d6f jumptable
-	dw StrokeChallengerResultScene.jumpForJoy ; $5d71 jumptable
+	dw ChallengerResultFinish ; $5d6b jumptable
+	dw ChallengerResultLose ; $5d6d jumptable
+	dw ChallengerResultDraw ; $5d6f jumptable
+	dw ChallengerResultJumpForJoy ; $5d71 jumptable
 	ret ; $5d73

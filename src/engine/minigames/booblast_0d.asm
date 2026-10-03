@@ -241,25 +241,25 @@ UpdateBooBlastHitStreak:
 BooBlastControllerActorHandler:
 	ld a, [wMinigameSceneActor + 2] ; $5719
 	rst Rst00 ; $571c
-	dw AdvanceMinigameScriptState.advanceMinigameScriptState ; $571d jumptable
-	dw AdvanceMinigameScriptState.drawBooBlastTargetSprite ; $571f jumptable
-	dw AdvanceMinigameScriptState.drawBooBlastHitBurst ; $5721 jumptable
-	dw AdvanceMinigameScriptState.drawBooBlastTargetSprite2 ; $5723 jumptable
+	dw BooBlastControllerState0 ; $571d jumptable
+	dw BooBlastControllerState1 ; $571f jumptable
+	dw BooBlastControllerState2 ; $5721 jumptable
+	dw BooBlastControllerState3 ; $5723 jumptable
 	dw RetStub ; $5725 jumptable
 AdvanceMinigameScriptState:
 	ld hl, wMinigameSceneActor + 2 ; $5727
 	inc [hl] ; $572a
 	ret ; $572b
-.advanceMinigameScriptState:
+BooBlastControllerState0:
 	call AdvanceMinigameScriptState ; $572c
-.drawBooBlastTargetSprite:
+BooBlastControllerState1:
 	call DrawBooBlastTargetSprite ; $572f
 	call IsBallWithinTargetZone ; $5732
 	and a ; $5735
 	ret z ; $5736
 	call ScoreBallHit ; $5737
 	jp AdvanceMinigameScriptState ; $573a
-.drawBooBlastHitBurst:
+BooBlastControllerState2:
 	call DrawBooBlastHitBurst ; $573d
 	ld hl, wMinigameSceneActor + 3 ; $5740
 	dec [hl] ; $5743
@@ -275,7 +275,7 @@ AdvanceMinigameScriptState:
 	ld de, $0000 ; $5752
 	call SetMinigameActorWorldPos ; $5755
 	jp AdvanceMinigameScriptState ; $5758
-.drawBooBlastTargetSprite2:
+BooBlastControllerState3:
 	call DrawBooBlastTargetSprite ; $575b
 	ret ; $575e
 IsBallWithinTargetZone:

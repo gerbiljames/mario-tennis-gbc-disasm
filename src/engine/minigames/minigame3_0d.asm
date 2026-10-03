@@ -143,16 +143,16 @@ ResetTargetHitState:
 ShootingStarTargetActorHandler:
 	ld a, [wMinigameSceneActor + 2] ; $5231
 	rst Rst00 ; $5234
-	dw AdvanceTargetActorState.advanceMatchRng ; $5235 jumptable
-	dw AdvanceTargetActorState.drawTargetReticleSprite ; $5237 jumptable
-	dw AdvanceTargetActorState.drawTargetHitCountdown ; $5239 jumptable
-	dw AdvanceTargetActorState.drawTargetReticleSprite2 ; $523b jumptable
+	dw ShootingStarTargetState0 ; $5235 jumptable
+	dw ShootingStarTargetState1 ; $5237 jumptable
+	dw ShootingStarTargetState2 ; $5239 jumptable
+	dw ShootingStarTargetState3 ; $523b jumptable
 	dw RetStub ; $523d jumptable
 AdvanceTargetActorState:
 	ld hl, wMinigameSceneActor + 2 ; $523f
 	inc [hl] ; $5242
 	ret ; $5243
-.advanceMatchRng:
+ShootingStarTargetState0:
 	ld a, [wMinigameSceneActor + 3] ; $5244
 	and a ; $5247
 	jr z, .zero ; $5248
@@ -168,14 +168,14 @@ AdvanceTargetActorState:
 	xor a ; $525b
 	ld [wMinigameSceneActor + 3], a ; $525c
 	call AdvanceTargetActorState ; $525f
-.drawTargetReticleSprite:
+ShootingStarTargetState1:
 	call DrawTargetReticleSprite ; $5262
 	call IsBallInHitZone ; $5265
 	and a ; $5268
 	ret z ; $5269
 	call AwardHitScore ; $526a
 	jp AdvanceTargetActorState ; $526d
-.drawTargetHitCountdown:
+ShootingStarTargetState2:
 	call DrawTargetHitCountdown ; $5270
 	ld hl, wMinigameSceneActor + 3 ; $5273
 	dec [hl] ; $5276
@@ -191,7 +191,7 @@ AdvanceTargetActorState:
 	ld de, $fdc0 ; $5285
 	call SetMinigameActorWorldPos ; $5288
 	jp AdvanceTargetActorState ; $528b
-.drawTargetReticleSprite2:
+ShootingStarTargetState3:
 	call DrawTargetReticleSprite ; $528e
 	ret ; $5291
 IsBallInHitZone:

@@ -34,9 +34,9 @@ NetChallengerResultScene:
 .dispatch:
 	ld a, a ; $5dea
 	rst Rst00 ; $5deb
-	dw ServiceMatch3ResultScene.finish ; $5dec jumptable
-	dw ServiceMatch3ResultScene.lose ; $5dee jumptable
-	dw ServiceMatch3ResultScene.draw ; $5df0 jumptable
+	dw ChallengerResultFinish ; $5dec jumptable
+	dw ChallengerResultLose ; $5dee jumptable
+	dw ChallengerResultDraw ; $5df0 jumptable
 	ret ; $5df2
 StrokeChallengerResultScene:
 	xor a ; $5df3
@@ -74,16 +74,16 @@ StrokeChallengerResultScene:
 .dispatch:
 	ld a, a ; $5e69
 	rst Rst00 ; $5e6a
-	dw ServiceMatch3ResultScene.finish ; $5e6b jumptable
-	dw ServiceMatch3ResultScene.lose ; $5e6d jumptable
-	dw ServiceMatch3ResultScene.draw ; $5e6f jumptable
-	dw StrokeChallengerResultScene.jumpForJoy ; $5e71 jumptable
+	dw ChallengerResultFinish ; $5e6b jumptable
+	dw ChallengerResultLose ; $5e6d jumptable
+	dw ChallengerResultDraw ; $5e6f jumptable
+	dw ChallengerResultJumpForJoy ; $5e71 jumptable
 	ret ; $5e73
-.jumpForJoy:
+ChallengerResultJumpForJoy:
 	script_jump_velocity ACTOR_PLAYER, $ff40 ; $5e74
 	ld a, $00 ; $5e7c
 	farcall ScriptWaitActorJumpDone ; $5e7e
-	jp ServiceMatch3ResultScene.finish ; $5e81
+	jp ChallengerResultFinish ; $5e81
 	ret ; $5e84
 ServiceMatch1ResultScene:
 	ld hl, wChallengerFollowupTextId ; $5e85
@@ -160,7 +160,7 @@ ServiceMatch3ResultScene:
 	ld [hl], d ; $5f02
 	call ServeChallengerResultScene ; $5f03
 	ret ; $5f06
-.lose:
+ChallengerResultLose:
 	ld hl, wChallengerLoseTextId ; $5f07
 	ld a, [hl+] ; $5f0a
 	ld h, [hl] ; $5f0b
@@ -192,7 +192,7 @@ ServiceMatch3ResultScene:
 	call WalkChallengerOntoCourt ; $5f51
 	farcall EndCutsceneScriptMode ; $5f54
 	ret ; $5f57
-.finish:
+ChallengerResultFinish:
 	ld hl, wChallengerWinTextId ; $5f58
 	ld a, [hl+] ; $5f5b
 	ld h, [hl] ; $5f5c
@@ -237,7 +237,7 @@ ServiceMatch3ResultScene:
 	call WalkChallengerOntoCourt ; $5fbb
 	farcall EndCutsceneScriptMode ; $5fbe
 	ret ; $5fc1
-.draw:
+ChallengerResultDraw:
 	ld a, [wMapSceneStage2] ; $5fc2
 	ld d, ANIM_BOUNCE ; $5fc5
 	farcall ScriptSetActorAnimation ; $5fc7

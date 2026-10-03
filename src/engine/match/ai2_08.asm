@@ -258,8 +258,8 @@ AiBaselinerShadowPartner:
 AiRallyStateNetPlayer:
 	ld a, [wAiPhase] ; $7e52
 	rst Rst00 ; $7e55
-	dw AiRallyStateBaseliner.checkRally ; $7e56 jumptable
-	dw AiRallyStateBaseliner.predictLanding ; $7e58 jumptable
+	dw AiNetPlayerCheckRally ; $7e56 jumptable
+	dw AiNetPlayerPredictLanding ; $7e58 jumptable
 	dw AiDoublesTrackBallPhase ; $7e5a jumptable
 	dw AiWaitThenPickShot ; $7e5c jumptable
 	dw AiSwingControlDoubles ; $7e5e jumptable
@@ -270,8 +270,8 @@ AiRallyStateNetPlayer:
 AiRallyStateBaseliner:
 	ld a, [wAiPhase] ; $7e68
 	rst Rst00 ; $7e6b
-	dw AiRallyStateBaseliner.setTarget ; $7e6c jumptable
-	dw AiRallyStateBaseliner.done ; $7e6e jumptable
+	dw AiBaselinerSetTarget ; $7e6c jumptable
+	dw AiBaselinerDone ; $7e6e jumptable
 	dw AiDoublesTrackBallPhase ; $7e70 jumptable
 	dw AiWaitThenPickShot ; $7e72 jumptable
 	dw AiSwingControlDoubles ; $7e74 jumptable
@@ -279,7 +279,7 @@ AiRallyStateBaseliner:
 	dw AiPhaseNoop ; $7e78 jumptable
 	dw AiPhaseNoop ; $7e7a jumptable
 	dw AiNetPlayerPoachCheck ; $7e7c jumptable
-.checkRally:
+AiNetPlayerCheckRally:
 	ld a, [wRallyLength] ; $7e7e
 	cp $02 ; $7e81
 	ret c ; $7e83
@@ -291,7 +291,7 @@ AiRallyStateBaseliner:
 	ld a, [wAiTrackingParam] ; $7e90
 	ld [wAiTrackingCountdown], a ; $7e93
 	jp AiAdvancePhase ; $7e96
-.predictLanding:
+AiNetPlayerPredictLanding:
 	ld de, $0180 ; $7e99
 	call MirrorDepthForFarSide ; $7e9c
 	call PredictBallXAtDepth ; $7e9f
@@ -300,14 +300,14 @@ AiRallyStateBaseliner:
 	ld a, [wAiTrackingParam] ; $7ea8
 	ld [wAiTrackingCountdown], a ; $7eab
 	jp AiAdvancePhase ; $7eae
-.setTarget:
+AiBaselinerSetTarget:
 	call AdvanceMatchRng ; $7eb1
 	and $03 ; $7eb4
 	ld hl, wAiReactionDelayFar ; $7eb6
 	add [hl] ; $7eb9
 	ld [wAiActionTimer], a ; $7eba
 	jp AiAdvancePhase ; $7ebd
-.done:
+AiBaselinerDone:
 	ld de, $0460 ; $7ec0
 	call MirrorDepthForFarSide ; $7ec3
 	call PredictBallXAtDepth ; $7ec6

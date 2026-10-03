@@ -273,16 +273,16 @@ StubNop_0d_3:
 TreasureBoxTargetActorHandler:
 	ld a, [wMinigameSceneActor + 2] ; $5acc
 	rst Rst00 ; $5acf
-	dw AdvanceTreasureBoxActorState.step ; $5ad0 jumptable
-	dw AdvanceTreasureBoxActorState.drawTreasureBoxSprite ; $5ad2 jumptable
-	dw AdvanceTreasureBoxActorState.drawTreasureBoxHitCountdown ; $5ad4 jumptable
-	dw AdvanceTreasureBoxActorState.done ; $5ad6 jumptable
+	dw TreasureBoxTargetState0 ; $5ad0 jumptable
+	dw TreasureBoxTargetState1 ; $5ad2 jumptable
+	dw TreasureBoxTargetState2 ; $5ad4 jumptable
+	dw TreasureBoxTargetState3 ; $5ad6 jumptable
 	dw RetStub ; $5ad8 jumptable
 AdvanceTreasureBoxActorState:
 	ld hl, wMinigameSceneActor + 2 ; $5ada
 	inc [hl] ; $5add
 	ret ; $5ade
-.step:
+TreasureBoxTargetState0:
 	xor a ; $5adf
 	ld [wTreasureBoxState], a ; $5ae0
 	ld hl, wMinigameServeCount ; $5ae3
@@ -332,14 +332,14 @@ AdvanceTreasureBoxActorState:
 	ld h, b ; $5b28
 	call SetMinigameActorWorldPos ; $5b29
 	call AdvanceTreasureBoxActorState ; $5b2c
-.drawTreasureBoxSprite:
+TreasureBoxTargetState1:
 	call DrawTreasureBoxSprite ; $5b2f
 	call IsBallInTreasureBoxHitZone ; $5b32
 	and a ; $5b35
 	ret z ; $5b36
 	call AwardTreasureBoxHitScore ; $5b37
 	jp AdvanceTreasureBoxActorState ; $5b3a
-.drawTreasureBoxHitCountdown:
+TreasureBoxTargetState2:
 	call DrawTreasureBoxHitCountdown ; $5b3d
 	ld hl, wMinigameSceneActor + 3 ; $5b40
 	dec [hl] ; $5b43
@@ -347,7 +347,7 @@ AdvanceTreasureBoxActorState:
 	and a ; $5b45
 	ret nz ; $5b46
 	jp AdvanceTreasureBoxActorState ; $5b47
-.done:
+TreasureBoxTargetState3:
 	ret ; $5b4a
 TreasureBoxTypePoolLate:
 	; $5b4b, 16 bytes (bytes:16)

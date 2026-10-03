@@ -163,35 +163,35 @@ ResolvePointOutcome:
 	ld a, [wPointOutcome] ; $4e0a
 	rst Rst00 ; $4e0d
 	dw RetStub ; $4e0e jumptable
-	dw DelayAfterPointResolution.case4 ; $4e10 jumptable
-	dw DelayAfterPointResolution.case4 ; $4e12 jumptable
-	dw DelayAfterPointResolution.case4 ; $4e14 jumptable
-	dw DelayAfterPointResolution.case4 ; $4e16 jumptable
-	dw DelayAfterPointResolution.case4 ; $4e18 jumptable
-	dw DelayAfterPointResolution.case3 ; $4e1a jumptable
-	dw DelayAfterPointResolution.case1 ; $4e1c jumptable
-	dw DelayAfterPointResolution.case2 ; $4e1e jumptable
+	dw ResolveCalledPoint ; $4e10 jumptable
+	dw ResolveCalledPoint ; $4e12 jumptable
+	dw ResolveCalledPoint ; $4e14 jumptable
+	dw ResolveCalledPoint ; $4e16 jumptable
+	dw ResolveCalledPoint ; $4e18 jumptable
+	dw ResolveWinnerPoint ; $4e1a jumptable
+	dw ResolveServeVolleyedPoint ; $4e1c jumptable
+	dw ResolveWrongReceiverPoint ; $4e1e jumptable
 	dw RetStub ; $4e20 jumptable
 ResolvePointResultSequence:
 	ld hl, DelayAfterPointResolution ; $4e22
 	push hl ; $4e25
 	ld a, [wMatchWinLoseFlag] ; $4e26
 	and a ; $4e29
-	jp nz, DelayAfterPointResolution.case7 ; $4e2a
+	jp nz, ResolveCalledPoint.case7 ; $4e2a
 	ld a, [wSetWinLoseFlag] ; $4e2d
 	and a ; $4e30
-	jp nz, DelayAfterPointResolution.case10 ; $4e31
+	jp nz, ResolveCalledPoint.case10 ; $4e31
 	ld a, [wGameWinLoseFlag] ; $4e34
 	and a ; $4e37
-	jp nz, DelayAfterPointResolution.case11 ; $4e38
-	jp DelayAfterPointResolution.case5 ; $4e3b
+	jp nz, ResolveCalledPoint.case11 ; $4e38
+	jp ResolveCalledPoint.case5 ; $4e3b
 DelayAfterPointResolution:
 	ld a, $46 ; $4e3e
 	call StepMatchFramesSkippable ; $4e40
 	ld a, 10 ; $4e43
 	call StepMatchFrames ; $4e45
 	ret ; $4e48
-.case1:
+ResolveServeVolleyedPoint:
 	ld hl, $0174 ; $4e49
 	ld_cell de, $05, $04 ; $4e4c
 	ld_size bc, $0a, $07 ; $4e4f
@@ -199,7 +199,7 @@ DelayAfterPointResolution:
 	ld a, 10 ; $4e55
 	call StepMatchFrames ; $4e57
 	ret ; $4e5a
-.case2:
+ResolveWrongReceiverPoint:
 	ld hl, $0175 ; $4e5b
 	ld_cell de, $02, $04 ; $4e5e
 	ld_size bc, $0f, $07 ; $4e61
@@ -207,7 +207,7 @@ DelayAfterPointResolution:
 	ld a, 10 ; $4e67
 	call StepMatchFrames ; $4e69
 	ret ; $4e6c
-.case3:
+ResolveWinnerPoint:
 	ld a, [wPointWinnerShotType] ; $4e6d
 	and a ; $4e70
 	ret z ; $4e71
@@ -222,7 +222,7 @@ DelayAfterPointResolution:
 	ld a, 10 ; $4e87
 	call StepMatchFrames ; $4e89
 	ret ; $4e8c
-.case4:
+ResolveCalledPoint:
 	ld a, [wPointOutcome] ; $4e8d
 	add $00 ; $4e90
 	farcall ShowCourtBanner ; $4e92

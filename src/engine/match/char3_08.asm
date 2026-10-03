@@ -490,7 +490,7 @@ UpdateCharStateMachine:
 	rst Rst00 ; $6a7a
 	dw AdvanceCharStatePhase.done ; $6a7b jumptable
 	dw CharRallyState ; $6a7d jumptable
-	dw CharServeStrikePhase.dispatch ; $6a7f jumptable
+	dw CharRecoverState ; $6a7f jumptable
 	dw CharServeState ; $6a81 jumptable
 	dw CharAwaitServeState ; $6a83 jumptable
 	dw CharStandbyState ; $6a85 jumptable
@@ -544,7 +544,7 @@ CharServeState:
 	ld a, [wCharStatePhase] ; $6ae2
 	rst Rst00 ; $6ae5
 	dw CharServeInitPhase ; $6ae6 jumptable
-	dw CharServeInitPhase.waitAnim ; $6ae8 jumptable
+	dw CharServeWaitAnimPhase ; $6ae8 jumptable
 	dw CharServeTossPhase ; $6aea jumptable
 	dw CharServeSwingWindowPhase ; $6aec jumptable
 	dw CharServeStrikePhase ; $6aee jumptable
@@ -576,7 +576,7 @@ CharServeInitPhase:
 	ld hl, wCharStatePhase ; $6b2e
 	inc [hl] ; $6b31
 	ret ; $6b32
-.waitAnim:
+CharServeWaitAnimPhase:
 	ld a, [wCharAnimId] ; $6b33
 	cp CHARANIM_SERVE_READY ; $6b36
 	jr nz, .done ; $6b38
@@ -659,13 +659,13 @@ CharServeStrikePhase:
 	inc [hl] ; $6bd7
 .done:
 	ret ; $6bd8
-.dispatch:
+CharRecoverState:
 	ld a, [wCharStatePhase] ; $6bd9
 	rst Rst00 ; $6bdc
 	dw CharRallyEndState ; $6bdd jumptable
-	dw CharServeStrikePhase.runMovement ; $6bdf jumptable
+	dw CharRecoverMovementPhase ; $6bdf jumptable
 	dw AdvanceCharStatePhase.done ; $6be1 jumptable
-.runMovement:
+CharRecoverMovementPhase:
 	call ApplyCharMovementInput ; $6be3
 	call UpdateCharRunAnimation ; $6be6
 	ret ; $6be9

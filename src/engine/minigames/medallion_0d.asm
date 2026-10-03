@@ -203,25 +203,25 @@ ResetMedallionMatchHitState:
 MedallionMatchTargetActorHandler:
 	ld a, [wMinigameSceneActor + 2] ; $5dee
 	rst Rst00 ; $5df1
-	dw AdvanceMedallionMatchActorState.advanceMedallionMatchActorState ; $5df2 jumptable
-	dw AdvanceMedallionMatchActorState.drawMedallionMatchSprite ; $5df4 jumptable
-	dw AdvanceMedallionMatchActorState.drawMedallionMatchHitCountdown ; $5df6 jumptable
-	dw AdvanceMedallionMatchActorState.drawMedallionMatchSprite2 ; $5df8 jumptable
+	dw MedallionMatchTargetState0 ; $5df2 jumptable
+	dw MedallionMatchTargetState1 ; $5df4 jumptable
+	dw MedallionMatchTargetState2 ; $5df6 jumptable
+	dw MedallionMatchTargetState3 ; $5df8 jumptable
 	dw RetStub ; $5dfa jumptable
 AdvanceMedallionMatchActorState:
 	ld hl, wMinigameSceneActor + 2 ; $5dfc
 	inc [hl] ; $5dff
 	ret ; $5e00
-.advanceMedallionMatchActorState:
+MedallionMatchTargetState0:
 	call AdvanceMedallionMatchActorState ; $5e01
-.drawMedallionMatchSprite:
+MedallionMatchTargetState1:
 	call DrawMedallionMatchSprite ; $5e04
 	call IsBallInMedallionMatchHitZone ; $5e07
 	and a ; $5e0a
 	ret z ; $5e0b
 	call AwardMedallionMatchHitScore ; $5e0c
 	jp AdvanceMedallionMatchActorState ; $5e0f
-.drawMedallionMatchHitCountdown:
+MedallionMatchTargetState2:
 	call DrawMedallionMatchHitCountdown ; $5e12
 	ld hl, wMinigameSceneActor + 3 ; $5e15
 	dec [hl] ; $5e18
@@ -240,7 +240,7 @@ AdvanceMedallionMatchActorState:
 	add hl, bc ; $5e2c
 	call SetMinigameActorWorldPos ; $5e2d
 	jp AdvanceMedallionMatchActorState ; $5e30
-.drawMedallionMatchSprite2:
+MedallionMatchTargetState3:
 	call DrawMedallionMatchSprite ; $5e33
 	ret ; $5e36
 ; Instruction-identical to IsBallInTreasureBoxHitZone (in this bank); a change here belongs in every copy.
