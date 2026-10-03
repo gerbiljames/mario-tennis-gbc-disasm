@@ -1,10 +1,7 @@
 # Project status — 2026-10-02
 
-This is where the disassembly stands and what is still open. The dated
-working log that used to live here -- every session's findings in the order
-they were found, 2026-07-09 to 2026-08-08, then the "Recent changes"
-entries to 2026-09-30 -- is `docs/history.md`, kept verbatim. The subsystem
-docs under `docs/` are the reader-facing writeups.
+This is where the disassembly stands and what is still open. The subsystem
+docs under `docs/` are the reader-facing writeups; the git log has the rest.
 
 ## Where things stand
 
@@ -157,8 +154,7 @@ actor-slot name that does not hold where it is used, or a routine whose
 
 ## Recent changes
 
-The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
-end of `docs/history.md`. In short:
+Newest first; older work is in the git log.
 
 * **2026-10-03 — routing, reviews, re-checks.** Every doc, bugs.md last,
   was reviewed against the source (~150 corrections). A routing scan of what

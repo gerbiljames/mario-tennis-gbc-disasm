@@ -7,9 +7,7 @@ branch, pointer table, macro body, fall-through or farcall. A `farptr` row
 in a bank's slot table defines a slot and does not count: a routine only its
 slot names, with no `farcall` of that slot anywhere, is unreachable.
 `tools/reach.py` computes this, and `make check` (`reach`) fails if a
-routine's name and its reachability disagree in either direction. The
-naming passes that found them are in `docs/history.md`;
-this file is what they have in common. Measured 2026-09-10 by fingerprinting
+routine's name and its reachability disagree in either direction. This file is what the naming passes that found them have in common. Measured 2026-09-10 by fingerprinting
 each unused routine's opcode sequence against every live routine
 (the 97 raw `$dxxx` operands left in the source are all inside them). Where
 an unused routine has a live twin, the exact difference is in the comment

@@ -63,8 +63,7 @@ templates and animation scripts, flag-id lists, text ids, packed call
 arguments — while the content those structures point at (tiles, palettes,
 strings, the 315 sound-channel scripts) stays in `data/`.
 
-`docs/STATUS.md` is the current state of the project and what is still open;
-`docs/history.md` is the dated log of how it was done.
+`docs/STATUS.md` is the current state of the project and what is still open.
 
 ## Modding
 
@@ -283,8 +282,7 @@ deleted.
 - `data.manifest` — offset/length/spec list `tools/extract.py` slices the
   base ROM by; `data.previews` — which planes, tiles and palettes make up
   each scene, for the preview pictures.
-- `docs/` — `STATUS.md` (current state), `history.md` (the dated log),
-  `match_engine.md`, `story_mode.md`, `screens_and_ui.md`,
+- `docs/` — `STATUS.md` (current state), `match_engine.md`, `story_mode.md`, `screens_and_ui.md`,
   `graphics_formats.md`, `actor_script.md`, `sound_engine.md`,
   `save_format.md`, `ram_map.md`, `bank0_notes.md` (one subsystem each),
   `bugs.md` (defects in the game, with dead stores and stubbed routines kept
@@ -311,8 +309,7 @@ the game, a conservative recursive descent, and JSON inputs holding every
 name, note, union scope and data-region spec — that was retired on
 2026-09-11 once nothing anonymous remained. Its last output is this
 source. The generator, its inputs and the coverage captures are kept at
-the git tag `generator-final`, and `docs/history.md` records how each part
-of the ROM was reached.
+the git tag `generator-final`.
 
 ## Tools
 

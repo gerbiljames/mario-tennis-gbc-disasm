@@ -17,9 +17,6 @@ only the first is one:
   left behind by an edit generally is not, so they are recorded rather than
   judged.
 
-Cross-references point at `docs/history.md` where a find is written up in more
-detail.
-
 A bug with a **Fix** paragraph is fixed in `make FIXES=1`, which builds
 `mariotennis-fixes.gbc` from the `IF DEF(FIXES)` blocks in the source. Played
 against the original by the event test over every story state and, on
@@ -63,7 +60,7 @@ is the MBC5 cartridge-RAM gate, so the write sets the gate to the blue value's
 low nibble (usually disabling SRAM, since only `$xa` enables it). Nothing breaks
 because the save engine in bank `$03` always re-enables SRAM before touching it.
 
-Recorded earlier in the 2026-07-17 naming pass (round 4) (`docs/history.md`),
+Recorded earlier in the 2026-07-17 naming pass (round 4),
 which called the write a no-op; it is a RAM-gate write whose *effect* is benign. It renders as
 `ld [rRAMG + 2], a` since the MBC registers were named, which makes it visibly
 wrong rather than looking like an ordinary store to a low address.

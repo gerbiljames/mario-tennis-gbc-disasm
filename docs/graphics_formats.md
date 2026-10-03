@@ -459,9 +459,8 @@ slot 4's target equals slot 0's target in **all 16**, and slot 5's target is
 slot 0 + 40 in **all 16**. Slot 6, where it is not the neighbouring record's
 slot 0 or slot 1, is slot 0 + 80.
 
-(`docs/history.md:9340-9347` describes the Clubhouse and Courtyard records
-specifically, because those two were the ones *renamed* in that pass; the other
-14 already carried `*SceneConfig` names. All 16 share the shape.)
+(The Clubhouse and Courtyard records were the ones *renamed* in that pass;
+the other 14 already carried `*SceneConfig` names. All 16 share the shape.)
 
 The court palette load has a quirk worth knowing before editing a court's
 64-byte palette block. `$638a` loads 6 palettes at index 2 from byte 16
@@ -495,10 +494,9 @@ scene count, 37, is hardcoded elsewhere as `ld a, $25` (`$0a:$5934`).
 
 **This is already written up as a bug** — [bugs.md, "The scene viewer
 indexes the slot table with the wrong stride"](bugs.md#the-scene-viewer-indexes-the-slot-table-with-the-wrong-stride)
-and `docs/history.md:9777-9799` — with the finding that the only caller of
+— with the finding that the only caller of
 `Unused_0a_LoadSceneGraphicsDirect` is `Unused_0a_LoadAndDisplayScene`, whose four callers are all
-the scene viewer hanging off the debug menu, which nothing in the retail build
-opens. Flagging it here rather than restating it: **if you write a new consumer
+the scene viewer, which nothing in the retail build reaches. Flagging it here rather than restating it: **if you write a new consumer
 of `SceneGfxSlotTable`, use stride 16, and do not take the debug path's shape
 as a second interpretation of the table.**
 
@@ -988,7 +986,7 @@ rendering**, and a `records:`/`bytes:` declaration over it produces `dw`/`db`
 rows that describe nothing. That mistake cost **2,359 bytes** of fake
 "structured source" in bank `$06` on 2026-07-22, where two LZ payloads sat
 inside `records:2`/`bytes:14` tables and the progress metric counted them as
-proven structure (`docs/history.md:22-26`, `:8382-8388`).
+proven structure.
 
 The rule separates the two, taking both proofs **from the consumer** rather than from the bytes looking plausible:
 
