@@ -457,7 +457,7 @@ AcademyArrivalInitScript_11:
 	cp $0a ; $46bd
 	jp z, AcademyArrivalInitScript_11.scriptRespawnLocationActors ; $46bf
 	cp $0c ; $46c2
-	jp z, ActorList_11_0.scriptRespawnLocationActors2 ; $46c4
+	jp z, AcademyArrivalEntry0cScene ; $46c4
 	cp $0f ; $46c7
 	jr nz, .done ; $46c9
 	call LateStudentCrashCutscene ; $46cb

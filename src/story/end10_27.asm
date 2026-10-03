@@ -170,11 +170,7 @@ End10VarsityCourtEntry01Scene:
 	script_null_script ACTOR_PLAYER_SHADOW ; $583f
 	script_player_speed 7.5 ; $5844
 	script_set_position ACTOR_PLAYER, 11.0, 29.0 ; $584a
-	ld a, $02 ; $5855
-	ld bc, $0d00 ; $5857
-	ld de, $2300 ; $585a
-SceneSharedData_27:
-	farcall ScriptSetActorPosition ; $585d
+	script_set_position ACTOR_PARTNER, 13.0, 35.0 ; $5855
 	script_face ACTOR_PLAYER, FACE_UP ; $5860
 	script_face ACTOR_PARTNER, FACE_UP ; $5867
 	script_move_player 11.0, 17.0 ; $586e

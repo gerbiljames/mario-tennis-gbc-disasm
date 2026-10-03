@@ -194,7 +194,7 @@ AcademyWingInitScript_10:
 	cp $0d ; $64d2
 	jp z, .stage6 ; $64d4
 	cp $0f ; $64d7
-	jp z, AcademyWingInitActors0_10.eq0f ; $64d9
+	jp z, AcademyWingEntry0fScene ; $64d9
 	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
 .stage6:
@@ -630,7 +630,7 @@ AcademyWingInitActors0_10:
 	map_actor $0000, ActorScript_10_2, 39.0, 50.25, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_INIT0_TROPHY_1
 	map_actor $0000, ActorScript_10_2, 39.0, 48.75, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_INIT0_TROPHY_2
 	map_actor_end
-.eq0f:
+AcademyWingEntry0fScene:
 	ldh a, [hRomBank] ; $6fcd
 	ld hl, AcademyWingInitActors1_10 ; $6fcf
 	farcall ScriptRespawnLocationActors ; $6fd2

@@ -7,7 +7,7 @@ ActorList_11_0:
 	map_actor $0000, ActorScript_11_45, 1.0, 25.0, FACE_UP, OBJ_MARK, ANIM_WALK, $00, LIST_11_0_MARK
 	map_actor $0000, ActorScript_11_45, 21.0, 47.0, FACE_RIGHT, OBJ_WALK_71_03, ANIM_WALK, $03, LIST_11_0_WALK_71_03
 	map_actor_end
-.scriptRespawnLocationActors2:
+AcademyArrivalEntry0cScene:
 	ldh a, [hRomBank] ; $53db
 	ld hl, ActorList_11_1 ; $53dd
 	farcall ScriptRespawnLocationActors ; $53e0
