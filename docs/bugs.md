@@ -647,25 +647,29 @@ runs as `jr nz` into `Unused_00_CopyMapRows32To64`'s fill. From there each
 RAM-enable and ROM-bank registers and one byte of BG palette RAM, then the
 `SerialHandler` tail unwinds the stack past `ShowSpeakerDialogue`.
 
-Played without breakpoints next to the fixed build, with the event test's
-story states (flags set per ladder step, seeded input), the original never
-opens that dialogue box: the partner's "Way to go, Alex! Congratulations" is
-skipped. The scene takes the wild return twice. In the singles states the
-second one leaves BG palette 0's colour 3 changed, so every dialogue box
-after it is red instead of cream. About 650 frames later, in 19 of the 20
-singles states, a return through the unbalanced stack lands in ROM bank
-`$d1` and the game crashes (`rst $38`, stack out of RAM). The doubles states
-take the same wild returns with neither effect. The fixed build shows the
-lines in cream and runs on in all 36. Whether a real playthrough reaches
-the scene with the same registers is not established. A build whose ROM0
-has moved even three bytes crashes at the first wild return instead.
+The game reaches that entry only in doubles: the firework scene before the
+ceremony (`$14:$664a`) sends a doubles player to entry `$0b` and a singles
+player to `$0a`. Played without breakpoints next to the fixed build in the
+event test's doubles story states, the original takes the wild return each
+time the partner speaks and still comes back into the dialogue: both builds
+show the same lines, the original's text a character or two behind, since
+the voice value it returns differs. A build whose ROM0 has moved even three
+bytes crashes at the first wild return instead.
+
+Forced into entry `$0b` from a singles state, which the game never does, the
+same path goes worse: the partner's "Way to go, Alex! Congratulations" is
+skipped, the second wild return leaves BG palette 0's colour 3 changed so
+later dialogue boxes are red, and in 19 of the 20 singles states a return
+through the unbalanced stack lands in ROM bank `$d1` about 650 frames later
+and the game crashes (`rst $38`, stack out of RAM). These are the event
+test's 19 awards-ceremony crashes.
 
 **Fix** (`make FIXES=1`): the early exit jumps to a `.restoreBank` label
 before `pop_wram_bank`, so the stack is balanced on every path. The event test played the
 fixed build against the original over every story state and location: the
 original took the wild return at the awards ceremony (location `$1a`, entry
-11) in all 36 states, and the fixed build ran every one of them through and
-showed the lines.
+11) in all 36 states, and the fixed build ran every one of them through,
+singles states included, and showed the lines.
 
 ### Map reads off the edge have no bounds check
 

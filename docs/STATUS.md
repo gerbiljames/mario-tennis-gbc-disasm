@@ -91,9 +91,10 @@ and one in the padded build only, all of two kinds, neither a layout fault: the 
 `GetSpeakerVoice`'s wild return at the awards ceremony (location `$1a`,
 entry 11), which the test cuts at its taint but which then crashes under
 the test's breakpoints in one or both builds, and which `make FIXES=1`
-removes. Played without breakpoints, the original skips the partner's line
-there, turns the later dialogue boxes red and, in 19 of 20 singles states,
-crashes about 650 frames on. The illegal opcode once reported at End8 Sr. Court was the test's
+removes. The game enters that scene only in doubles, where the original
+rejoins the dialogue; the test's 19 crashes there come from singles states
+forced into the doubles-only entry, where the original skips the line, turns
+later dialogue boxes red and crashes about 650 frames on. The illegal opcode once reported at End8 Sr. Court was the test's
 own: it checked for a crash while a breakpoint workaround had PC parked on
 an operand byte. `docs/bugs.md` lists the shipped defects found along the way.
 
@@ -164,8 +165,10 @@ end of `docs/history.md`. In short:
 * **2026-10-03 — docs drift, two crashes settled, units.** Doc references
   checked against the symbols: three addresses credited to the wrong
   routine and ten drifting line references fixed. The End8 Sr. Court crash
-  was the event test's own; `GetSpeakerVoice`'s wild return, replayed
-  without breakpoints, skips the partner's line (`docs/bugs.md` corrected).
+  was the event test's own. `GetSpeakerVoice`'s wild return, replayed
+  without breakpoints, rejoins the dialogue in doubles, the only way the
+  game enters that scene; the event test's crashes there are singles states
+  forced into the doubles-only entry (`docs/bugs.md`).
   Jump velocities read in pixels per frame (`ACTORF_HEIGHT`,
   `ACTORF_JUMP_VEL`); every `QueueVRAMCopy` count is a stream size, a row
   count or a decimal tile count; `anim_flip` replaces the attribute nibble.
