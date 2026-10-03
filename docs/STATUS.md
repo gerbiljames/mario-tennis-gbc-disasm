@@ -16,10 +16,10 @@ per `data.manifest`.
 
 | | |
 |---|---|
-| proven code + structured source | 428,509 bytes, 20.4% of the 2 MiB ROM |
-| instructions disassembled | 160,940 |
+| source-spelled bytes (`tools/stats.py`) | 848,059, 40.4% of the 2 MiB ROM; 1,044,693 `INCBIN`, 200,809 free |
+| instruction and code-macro lines | 133,293 |
 | banks containing code | 59 of 128 |
-| labels (counted 2026-09-12) | 21,979, of which 20,399 human-named and 1,580 derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
+| labels | 30,436: ROM 14,408 global + 14,416 local, RAM 1,612; 0 state only an address |
 | extracted data regions | 4,243 (3,685 `INCBIN`, 558 generated `INCLUDE`s) — 839 LZ streams, the rest raw graphics, tilemaps, sprite frames, text, palettes and sound |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator and its 174 coverage dumps and 2 hook captures are retired at tag `generator-final` |
 | bare banked-WRAM operands | 97, all `dead`: inside `Unused*` routines nothing references, so no trace can ever reach them. Zero in live code |

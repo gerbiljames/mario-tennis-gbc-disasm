@@ -49,9 +49,9 @@ graphics, audio, tilemaps and text.
 
 | | |
 |---|---|
-| instructions disassembled | 160,940, across every code bank |
-| proven code and structured source | 428,509 bytes, 20.4% of the ROM |
-| labels | 21,979 — 20,399 human-named, the rest derived from something already named (a bank's `$4000` slot table, a sound table) |
+| instructions | 133,293 source lines of instructions and code macros (`tools/stats.py`) |
+| source-spelled bytes | 848,059 bytes, 40.4% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
+| labels | 30,436: 14,408 routines and tables and 14,416 locals in ROM, 1,612 RAM names |
 | compressed graphics | 839 LZ streams, each named, sized by decoding it |
 | `Unused_` routines | 779 routines and 103 blobs nothing live reaches, catalogued in `docs/unused_code.md` |
 
@@ -358,6 +358,8 @@ of the ROM was reached.
   entered (read by `tools/coverage.py` and `tools/steer.py`).
 - `tools/coverage.py` — which routines an eventtest coverage file shows run
   and never run.
+- `tools/stats.py` — the headline counts above (labels, instruction lines,
+  bytes the source spells out), from the built `.sym` and `.map`.
 - `tools/playtest.py` — plays two ROMs side by side and reports where their
   screens diverge.
 - `tools/runtime_audit.py` — checks the source's claims (`Unused` names,
