@@ -1168,4 +1168,6 @@ per column, and the buffer is uploaded to `vTiles1`, so column `c` is BG tile
 column `$80` has no tile to draw into whichever way the shift goes: `sra`
 writes below the buffer, `srl` would write past its end. Both screens simply
 run out of glyph tiles, and what they should do instead -- start a new
-window's columns from 0, or reuse the first page's -- is not in the ROM.
+window's columns from 0, or reuse the first page's -- is not in the ROM. Masking the offset to the buffer would stop the crash, but would also move
+the lesson menu's five stray tiles into columns `$7b`-`$7f`, uploaded over BG
+tiles `$fb`-`$ff` on a screen the retail game shows, so it is not applied.
