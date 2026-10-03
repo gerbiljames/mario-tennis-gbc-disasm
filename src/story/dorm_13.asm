@@ -78,9 +78,9 @@ DormRoomEntryPoints_13:
 	; $4e62, 49 bytes (map_entries)
 	map_entry $01, FACE_UP, 11.0, 13.0, $0000
 	map_entry $02, FACE_UP, 11.0, 19.0, $0000
-	map_entry $03, FACE_UP, 11.0, 13.0, $0000
-	map_entry $04, FACE_UP, 11.0, 13.0, $0000
-	map_entry $0e, FACE_UP, 11.0, 13.0, $0000
+	map_entry $03, FACE_UP, 11.0, 13.0, $0000 ; debug warp only
+	map_entry $04, FACE_UP, 11.0, 13.0, $0000 ; debug warp only
+	map_entry $0e, FACE_UP, 11.0, 13.0, $0000 ; debug warp only
 	map_entry $0f, FACE_UP, 11.0, 13.0, $0000
 	db $ff
 DormRoomExitTriggers_13:

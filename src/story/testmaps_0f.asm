@@ -30,7 +30,7 @@ SmallCharTestActors_0f:
 	map_actor_end
 SmallCharTestEntryPoints_0f:
 	; $40c6, 9 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 11.0, 11.0, $0000
+	map_entry $01, FACE_DOWN, 11.0, 11.0, $0000 ; debug warp only
 	db $ff
 SmallCharTestExitTriggers_0f:
 	ds 1, $ff ; $40cf, fill
@@ -207,7 +207,7 @@ AwardsCeremonyActorsDoubles_0f:
 	map_actor_end
 AwardsCeremonyEntryPoints_0f:
 	; $442d, 25 bytes (map_entries)
-	map_entry $01, FACE_UP, 12.0, 41.0, $0000
+	map_entry $01, FACE_UP, 12.0, 41.0, $0000 ; debug warp only
 	map_entry $0a, FACE_UP, 12.0, 41.0, $0000
 	map_entry $0b, FACE_UP, 11.0, 41.0, $0000
 	db $ff

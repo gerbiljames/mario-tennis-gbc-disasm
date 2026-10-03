@@ -1,278 +1,68 @@
-# Project status — 2026-10-02
+# Project status — 2026-10-03
 
-This is where the disassembly stands and what is still open. The subsystem
-docs under `docs/` are the reader-facing writeups; the git log has the rest.
+Where the disassembly stands and what is still open. The subsystem docs under
+`docs/` are the writeups; the git log has the history.
 
 ## Where things stand
 
-The ROM rebuilds byte-perfect (`make compare` → `mariotennis.gbc: OK` against
-SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`) and `make check` passes every
-structural class. The repo holds no ROM bytes: `./setup.sh` extracts every
-data blob, string pool, palette and sound table from the user's `baserom.gbc`
-per `data.manifest`.
+The ROM rebuilds byte-perfect (`make compare` against SHA-1
+`414ba58340a27fc27b127bc01455b32764151ff0`), `make check` passes every class,
+and the repo holds no ROM bytes: `./setup.sh` extracts the data from the
+user's `baserom.gbc` per `data.manifest`.
 
 | | |
 |---|---|
 | source-spelled bytes (`tools/stats.py`) | 848,059, 40.4% of the 2 MiB ROM; 1,044,693 `INCBIN`, 200,809 free |
 | instruction and code-macro lines | 133,293 |
-| banks containing code | 59 of 128 |
-| labels | 30,436: ROM 14,408 global + 14,416 local, RAM 1,612; 0 state only an address |
-| extracted data regions | 4,243 (3,685 `INCBIN`, 558 generated `INCLUDE`s) — 839 LZ streams, the rest raw graphics, tilemaps, sprite frames, text, palettes and sound |
-| source of truth | `src/`, `ram/`, `include/`, edited directly; the generator and its 174 coverage dumps and 2 hook captures are retired at tag `generator-final` |
-| bare banked-WRAM operands | 97, all `dead`: inside `Unused*` routines nothing references, so no trace can ever reach them. Zero in live code |
+| labels | 30,436: ROM 14,408 global + 14,416 local, RAM 1,612; none state only an address |
+| extracted data regions | 4,243 (3,685 `INCBIN`, 558 generated `INCLUDE`s), 839 of them LZ streams |
+| source of truth | `src/`, `ram/`, `include/`, edited directly; the generator is retired at tag `generator-final` |
 
-Everything that was ever anonymous has been classified. Every `INCBIN` is
-known to be graphics, audio, text, a resource descriptor, a record array or
-fill; a ROM-wide code-shape screen plus a twin-bank diff of the near-identical
-shot banks found the last stranded routines, and the 247 seed offsets that
-had no label were each traced to a verdict. The interesting structure is
-rendered rather than binary: farcall slot tables, `rst` pseudo-ops, the
-three idioms the code is built from (`push_wram_bank`/`pop_wram_bank`,
-`ld_hl_indexed`, `wait_frames`), story map trees and actor bytecode, mode-hook tables, sprite templates and
-animation scripts, flag-id lists, text ids, packed bank/slot selectors,
-record tables with embedded pointers, and 3,949 local labels inside
-functions. What stays out of the repository is content — tiles, tilemaps,
-palettes, strings and the 315 sound-channel scripts — extracted into
-`data/` at setup as PNGs, grids, text, palette rows and `snd_*` script
-rows, all editable, with a fork's edits committed under `mods/`.
-
-### What each document covers
+Everything once anonymous is classified, and the structure is rendered
+rather than binary: farcall slots, `rst` pseudo-ops, story map trees, actor
+bytecode, mode hooks, sprite templates, animation scripts, text and flag
+ids, record tables. Content — tiles, tilemaps, palettes, strings, sound
+scripts — is extracted into `data/` as editable PNGs, grids, text and rows,
+with a fork's edits under `mods/`.
 
 | doc | subject |
 |---|---|
-| `docs/match_engine.md` | bank `$08`'s match/set/point loops, physics, the shot solver, the CPU AI, doubles, link play |
-| `docs/story_mode.md` | the story RPG: maps, scenes, flags, ranking ladders, the EXP screens, the developer clear-status tool |
-| `docs/screens_and_ui.md` | the menu shell, window system, text engine, sprite queue, fades |
-| `docs/graphics_formats.md` | the LZ format, scene/court records, object headers and animation scripts, palettes; §8 is its open list |
-| `docs/actor_script.md` | the overworld actor bytecode VM and its opcodes |
-| `docs/sound_engine.md` | the driver, sound-id indexing, channel scripts |
-| `docs/save_format.md` | the battery save layout and `tools/savetool.py` |
-| `docs/ram_map.md` | the WRAM/HRAM symbol map, the union overlays, free RAM |
-| `docs/bugs.md` | defects in the *game* — bugs, dead stores, stubbed routines |
-| `docs/unused_code.md` | the 773 routines and 100 blobs nothing live reaches, the patterns they fall into, and how every reachable routine was made to run |
+| `docs/match_engine.md` | match loops, physics, the shot solver, the CPU AI, doubles, link play |
+| `docs/story_mode.md` | the story RPG: maps, scenes, entry points, flags, ladders, EXP |
+| `docs/screens_and_ui.md` | menus, windows, the text engine, the sprite queue, fades |
+| `docs/graphics_formats.md` | the LZ format, scene and court records, objects, palettes |
+| `docs/actor_script.md` | the overworld actor bytecode |
+| `docs/sound_engine.md` | the sound driver and its scripts |
+| `docs/save_format.md` | the battery save and `tools/savetool.py` |
+| `docs/ram_map.md` | WRAM/HRAM, union overlays, free RAM |
+| `docs/bugs.md` | defects in the game, and the nine `make FIXES=1` fixes |
+| `docs/unused_code.md` | the 779 routines and 103 blobs nothing live reaches |
 | `docs/bank0_notes.md` | the ROM0 helpers |
 
 ## What is still open
 
-**Code.** Every routine is proven code or data, and every routine
-`tools/reach.py` can reach from the vectors has run: in play and in targeted
-sessions, and under `tools/steer.py` for the ones behind conditions no
-session meets. The two it cannot run, `Unused_00_ApplyWhiteFade` and
-`Unused_00_TickSecondaryTimer`, sit behind flags nothing in the ROM ever
-sets. `reach.py` now proves that too: it finds calls decided by a variable
-no store can make pass, and `make check` holds each such variable to a
-reviewed verdict (`docs/unused_code.md`). Nothing the analysis can reach is
-`Unused`, and nothing it cannot reach is anything else.
-
-**Names.**
-* Banked-WRAM operands: none left in live code. A `$dxxx` literal whose
-  WRAM bank no static dataflow or trace has pinned renders as a raw number,
-  because a name in the wrong bank is worse than none. The 97 that remain
-  all sit in `Unused*` routines, left raw on purpose.
-* Actor slots: 105 script operands and 17 `NpcScripts` ids are still
-  numbers. Each is a slot with no single part across the lists that can
-  be active there, a slot past the end of every list, a line in a shared
-  twin file, or a table of a location the player never controls. Slots
-  that mean one thing in every candidate list have role names
-  (`include/actor_roles.inc`, `docs/story_mode.md`).
-* Free RAM: 4,360 bytes, poison-checked at runtime over every flow the
-  tools can drive, link play and the N64 screens included (re-checked
-  2026-10-03 over 237 flows: nothing reads them)
-  (`docs/ram_map.md`).
-
-**Behaviour.** The event test compares a shifted build with the original
-over every story state and location, the menu sessions and every target
-without a difference (2026-10-03: 11.2 million events, none at a different
-logic frame). It sets apart the entry points it enters in a mode the game
-never uses there (`FORCED` in `tools/eventtest.py`: the awards ceremony's
-singles and doubles entries): 36 such runs, 20 of them crashing at the
-doubles-only entry from a singles state, where `GetSpeakerVoice`'s wild
-return goes off the rails instead of rejoining the dialogue as it does in
-doubles; `make FIXES=1` removes it. Of the rest, the only crashes are 12 on
-the Test2 debug screens, the glyph underrun. The illegal opcode once
-reported at End8 Sr. Court was the test's own: it checked for a crash while
-a breakpoint workaround had PC parked on an operand byte. `docs/bugs.md` lists the shipped defects found along the way.
-
-**Named in the docs as not established.**
-* `docs/graphics_formats.md` §8 holds two items, both about the developers'
-  intent rather than the bytes: why the `$63` per-object-palette sentinel
-  exists when no object uses it, and why there are two additive fades.
-* `docs/story_mode.md` "Oddities" keeps only shipped-defect entries.
-* The "not established" sentences in `docs/match_engine.md`.
+* **Banked-WRAM operands:** 97 stay raw numbers, all inside `Unused*`
+  routines no trace can reach.
+* **Actor slots:** 22 operands on reached code stay numbers, each a slot that
+  holds different actors in the lists possible there (`docs/story_mode.md`).
+* **Behaviour:** the event test finds no difference between a shifted build
+  and the original. Its only crashes are the Test2 debug screens' glyph
+  underrun and, set apart as `FORCED`, singles states sent to the awards
+  ceremony's doubles-only entry.
+* **Developer intent, not bytes:** `docs/graphics_formats.md` §8 (the unused
+  `$63` palette sentinel, the two additive fades) and the "not established"
+  sentences in `docs/match_engine.md`.
 
 ## How to resume
-
-The source is edited directly: a name, a note, a union variant, a table
-layout or an instruction is changed in `src/`, `ram/` or `include/`, and
 
 ```
 make clean && make -j compare && make check && make test
 ```
 
-is the whole pipeline (`compare` holds until the first deliberate change to
-the bytes; `check` and `test` hold after it). `make shift-test` builds a
-copy with every bank padded, and `make event-test` (needs PyBoy) plays that
-copy and the original through every story state and compares what the game
-does. `tools/strings.py --index
---bank <bank>` reads a text id; `tools/gfxdump.py` draws contact sheets of
-the graphics streams and palette regions into gitignored `data/gfx/`;
-`tools/twins.py` lists the routines a fix has to land in more than once;
-`tools/ram_free.py` recomputes the free-RAM inventory after the RAM
-declarations change.
-
-The runtime tools (PyBoy, `make venv`):
-* `make event-test` plays two builds; run `tools/eventtest.py` directly
-  for `--targets`, `--handlers` and `--free` (sessions beyond the story
-  states) and `--coverage`/`--units` (the routines entered, for
-  `tools/coverage.py` and `tools/steer.py`).
-* `tools/linktest.py` plays two games over an emulated link cable.
-* `tools/steer.py` runs routines no session reaches.
-* `tools/actorslots.py --runtime` (`make slot-audit`) checks the actor-slot
-  names in play.
-* `tools/ramaudit.py` poisons the free RAM, or finds a byte's first writer.
-
-`tools/reach.py` is the static half: which routines the vectors can reach
-at all.
-
-The generator that produced the tree — `tools/disasm.py`, its `disasmlib`
-package, the JSON inputs (`labels.json`, `data_tables.json`, `ram_map.json`,
-`ram_unions.json`, `constants.json`, `flags.json`), the `coverage/` traces
-and `hooks/` captures, and the tests that exercised them — was retired on
-2026-09-11, when a final run reproduced the committed source exactly. It is
-kept whole at the git tag `generator-final` (`git show generator-final:tools/disasm.py`)
-for anyone who wants to see how a name or a union scope was established;
-nothing in the tree depends on it any more.
-
-`make check` is what catches the mistakes a byte-perfect build cannot: an LZ
-stream that no longer decodes, an assembled symbol inside one, overlapping
-extracted regions, a routine stranded in an actor script's label scope,
-code left under the wrong label (a table's, or another routine's), a new
-branch that decides nothing, a ROM address written as a number, an
-unaligned DMA source, a PNG, grid, sound track or trajectory table that no longer encodes to its blob, an
-actor-slot name that does not hold where it is used, or a routine whose
-`Unused` name disagrees with reachability.
-
-## Recent changes
-
-Newest first; older work is in the git log.
-
-* **2026-10-03 — routing, reviews, re-checks.** Every doc, bugs.md last,
-  was reviewed against the source (~150 corrections). A routing scan of what
-  sets each entry point finds 15 `map_entry` rows only the debug warp can
-  reach (Courtyard `$0a` among them, so its walk-in bug is latent) and one
-  singles/doubles split, which the event test now sets apart as FORCED. The
-  fixed build differs from the original only where a fix applies; free RAM
-  re-checked over 237 flows; `tools/stats.py` gives the headline counts.
-* **2026-10-03 — docs drift, two crashes settled, units.** Doc references
-  checked against the symbols: three addresses credited to the wrong
-  routine and ten drifting line references fixed. The End8 Sr. Court crash
-  was the event test's own. `GetSpeakerVoice`'s wild return, replayed
-  without breakpoints, rejoins the dialogue in doubles, the only way the
-  game enters that scene; the event test's crashes there are singles states
-  forced into the doubles-only entry (`docs/bugs.md`).
-  Jump velocities read in pixels per frame (`ACTORF_HEIGHT`,
-  `ACTORF_JUMP_VEL`); every `QueueVRAMCopy` count is a stream size, a row
-  count or a decimal tile count; `anim_flip` replaces the attribute nibble.
-* **2026-10-03 — labels audit.** Code that sat under the wrong name is
-  fixed: routine tails after a table are `Routine.local` again; 68 jump-table
-  cases and 23 entry-point scenes hidden as other routines' locals are routines
-  named for what dispatches them (`ServicePractice1Result2`,
-  `IslandSkyEntry02Scene`, `ShowMatchEndSequence`, `CharRecoverState`); stray
-  and orphan code and tables are `Unused`/`.unreachable`, and four labels that
-  split a routine are gone. Move speeds read in pixels per frame.
-* **2026-10-03 — `make FIXES=1`.** Nine shipped bugs with a known fix are
-  fixed in an opt-in build (`mariotennis-fixes.gbc`, `build-fixes/`), each
-  with its **Fix** paragraph in `docs/bugs.md`. Verified in PyBoy: a save with
-  a damaged header now survives, and the event test runs the fixed build
-  over every story state with no crash of its own. Animation delays, scene
-  rects and relative actor moves read as numbers.
-* **2026-10-03 — split pairs, behaviour, drill messages, frames.** Pairs
-  loaded with two instructions are named (`rect_size`, `rect_cell`,
-  `map_cell`, `sprite_xy`, `sprite_*_attr`, 357 sites); behaviour-map
-  values and kinds are `BEHAVIOR_*`; the drills' result messages are
-  `DRILLMSG_*` named after their text, and their table is `Text_*` names;
-  1,931 frame counts are decimal. Found: fifteen drill messages point past
-  text bank `$25`, and Stroke Match 2 shows them (`docs/bugs.md`).
-* **2026-10-03 — speakers and VRAM rows.** `script_speak_restore` lets the
-  actor-slot resolver name 155 more speakers (5,122 names, all agreeing in
-  play), with `SPEAKER_NONE` for the no-actor case; 243 VRAM copy counts
-  count tilemap rows or the glyph buffer.
-* **2026-10-03 — save names, map patches, a save bug.** The save header,
-  directory fields and block ids have names (`sSaveHeader`, `SAVEDIR_*`,
-  `SAVEBLOCK_*`). 36 character-data streams named `*Gfx*` are tile and
-  attribute patches, renamed and (20 of them) given grids. In PyBoy, one
-  corrupted signature byte wipes the whole save: boot re-checksums the header
-  and copies it over its own backup before validating it (`docs/bugs.md`).
-* **2026-10-03 — sizes and positions.** Copy and clear lengths follow what
-  they copy: a RAM object's exported size (`export_size`), a decompressed
-  stream's `_SIZE`, or a named slice (`SCREEN_HEIGHT * TILEMAP_WIDTH`,
-  `WRAMX_SIZE`, `2 * CHAR_RECORD_SIZE`). Map positions in `map_entry`,
-  `map_actor`, the `script_*` moves and `as_set_*` are tiles with a point
-  (`18.0`, `17.5`), 3,054 lines. Lone sprite attributes in `b` name their
-  `OAM_*` flags. Found on the way: `FetchSRAMText` copies past both text
-  buffers (harmless, `docs/bugs.md`).
-* **2026-10-02 — pair macros.** Every register pair a callee reads as two
-  bytes says which is which: `ld_xy` (sprite x, y), `ld_cell` (column, row),
-  `ld_size`, `ld_oam` (attribute with `OAM_*` flags, tile), `ld_tile_run`
-  and `ld_bg_pals`/`ld_obj_pals`, about 640 sites in all. Checking each
-  helper's register order found three pairs of swapped X/Y names
-  (`hSpriteBlit*`, `StarWarpPath*`, `OffsetStatSpriteY`). The 69 VRAM
-  addresses outside the copy consumers are named too.
-* **2026-10-02 — docs pass.** Every subsystem doc, the README and this
-  page re-checked against the tree: names, addresses and counts current,
-  generator-era wording gone. Two corrections came out of it: the game's
-  fades go through white, not black (`docs/bugs.md`), and the dialogue
-  window's width and height names were swapped. The three
-  `GameProgressScreenTiles` regions are graphics, not palettes.
-* **2026-10-01 — unreachable by data.** `tools/reach.py` finds calls and
-  jumps decided by a variable that no visible store can make pass. Each is
-  reviewed in `DATA_FLAGS`, and `make check` fails on any it has not seen.
-  The four dead ones drop their edges, so `ApplyWhiteFade` and
-  `TickSecondaryTimer` are now `Unused_00_*` (773 in all).
-* **2026-09-30 — coverage finished.** Every routine `tools/reach.py` says
-  the vectors can reach has now run, except two that wait on flags nothing
-  sets (`Unused_00_ApplyWhiteFade`, `Unused_00_TickSecondaryTimer`). Several routes were added:
-  * link play over an emulated cable (`tools/linktest.py`, which can also
-    pull the cable or play from a locked save);
-  * story handlers called on demand, including the tables scripts install;
-  * the N64 record screens, with forged records;
-  * the minigames and drills from the menu;
-  * `tools/steer.py` for the rest. It replays a session and forces only the
-    branches on the way down to a routine; that proves the routine can run,
-    kept apart from what play reaches.
-
-  Two undocumented unlock-everything button codes turned up on the way
-  (`docs/save_format.md`). `docs/unused_code.md` has the account.
-* **2026-09-30 — the event test is clean.**
-  * A PyBoy bug had hung runs whenever a breakpoint landed on the cycle a
-    frame ended; `eventtest` now steps past it.
-  * Match-return entries now start from a lost match, instead of a stale
-    win that sent Wall Practice's result script through a jump table past
-    its end.
-  * Game crashes are counted apart from hangs. The only one left is the
-    Test2 debug screens'.
-
-  A full sweep compares the shifted build clean.
-* **2026-09-30 — bugs.** The glyph underrun in `docs/bugs.md` is worse than
-  recorded. The line-break code seeds the pen from the row's tile column
-  with a signed shift, so rows past column `$80` draw below the buffer, and
-  on the Test2 debug screens the writes reach the stack.
-* **2026-09-29/30 — names.**
-  * Actor slots come from following control flow, then from stage and tile
-    modelling at the Senior Court and the Island Open, then role names
-    (`include/actor_roles.inc`). 4,781 row names and 48 role names; 105
-    operands stay numbers, each with no single part.
-  * The 21 raw text ids left are named.
-  * 404 more routines nothing live reaches are named `Unused` (771 in
-    all), among them the dead copies inside shared twin templates and the
-    in-match stats editor behind a hotkey check that returns at once.
-  * `make check` gains `slots` and `reach`.
-* **2026-09-30 — RAM.** The free-RAM poison check covers every flow the
-  tools can drive. No free byte is a live variable. `tools/ramaudit.py`
-  reruns it and finds a byte's first writer.
-* **2026-09-29 — edited builds.** A first real mod, on a throwaway branch,
-  found the tools' dependence on original addresses; all fixed on main
-  (see "How to resume" above).
-* **2026-09-27/28 — the runtime tools.** `tools/runtime_audit.py`, the
-  padded ROM playing through every story state (`make event-test`), and
-  actor slots named by row.
+is the pipeline; `make -j FIXES=1` builds the fixed ROM. Runtime tools need
+PyBoy (`make venv`): `make event-test` (and `tools/eventtest.py --targets
+--handlers --free`), `tools/linktest.py`, `tools/steer.py`, `make slot-audit`,
+`tools/ramaudit.py`. Static: `tools/reach.py` (what can run),
+`tools/routes.py` (which entry points can be entered), `tools/twins.py`,
+`tools/ram_free.py`, `tools/stats.py`. `make check` is what catches what a
+byte-perfect build cannot.

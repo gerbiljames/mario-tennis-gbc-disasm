@@ -51,6 +51,7 @@ from banksrc import bank_lines, bank_of, holders
 from lz import compress, decompress
 import actorslots
 import reach
+import routes
 
 ROOT = BANK = None
 BANK_SIZE = 0x4000
@@ -673,6 +674,7 @@ def main():
         "tilemap": check_tilemaps(manifest, fail),
         "slots": actorslots.check(fail),
         "reach": reach.check(fail),
+        "entries": routes.check(fail),
     }
     by_check = {}
     for check, msg in failures:

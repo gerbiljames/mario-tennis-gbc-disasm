@@ -100,8 +100,8 @@ AcademyMainBldgEntryPoints_10:
 	map_entry $02, FACE_DOWN, 34.0, 7.0, AcademyMainBldgArrival02_10
 	map_entry $03, FACE_DOWN, 53.0, 25.0, MapArrivalWalkPair_10
 	map_entry $04, FACE_DOWN, 59.0, 57.0, MapArrivalWalkPair_10
-	map_entry $0d, FACE_UP, 33.0, 59.0, $0000
-	map_entry $0e, FACE_UP, 34.0, 19.0, $0000
+	map_entry $0d, FACE_UP, 33.0, 59.0, $0000 ; debug warp only
+	map_entry $0e, FACE_UP, 34.0, 19.0, $0000 ; debug warp only
 	map_entry $0f, FACE_UP, 34.0, 29.0, $0000
 	db $ff
 ; Instruction-identical to AcademyArrivalArrival01_11 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy.

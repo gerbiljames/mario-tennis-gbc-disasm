@@ -181,7 +181,7 @@ End5ServiceAceActors_27:
 End5ServiceAceEntryPoints_27:
 	; $654d, 17 bytes (map_entries)
 	map_entry $01, FACE_RIGHT, 13.0, 29.0, $0000
-	map_entry $02, FACE_DOWN, 5.0, 23.0, $0000
+	map_entry $02, FACE_DOWN, 5.0, 23.0, $0000 ; debug warp only
 	db $ff
 End5ServiceAceExitTriggers_27:
 	; $655e, 17 bytes (map_scripts:exit)

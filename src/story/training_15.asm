@@ -450,7 +450,7 @@ TrainingCourtActors_15:
 TrainingCourtEntryPoints_15:
 	; $48d4, 57 bytes (map_entries)
 	map_entry $01, FACE_RIGHT, 9.0, 55.0, TrainingCourtArrival01_15
-	map_entry $02, FACE_DOWN, 19.0, 19.0, $0000
+	map_entry $02, FACE_DOWN, 19.0, 19.0, $0000 ; debug warp only
 	map_entry $09, FACE_DOWN, 19.0, 19.0, $0000
 	map_entry $0a, FACE_UP, 19.0, 19.0, $0000
 	map_entry $0b, FACE_DOWN, 19.0, 19.0, $0000

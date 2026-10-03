@@ -212,7 +212,7 @@ MarioWorldActors_0e:
 MarioWorldEntryPoints_0e:
 	; $535c, 41 bytes (map_entries)
 	map_entry $01, FACE_UP, 18.0, 33.0, $0000
-	map_entry $02, FACE_DOWN, 27.0, 11.0, $0000
+	map_entry $02, FACE_DOWN, 27.0, 11.0, $0000 ; debug warp only
 	map_entry $0a, FACE_UP, 18.0, 8.0, $0000
 	map_entry $0e, FACE_UP, 18.0, 15.0, $0000
 	map_entry $0f, FACE_UP, 18.0, 8.0, $0000

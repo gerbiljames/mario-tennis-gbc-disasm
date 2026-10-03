@@ -698,9 +698,7 @@ three-entry halves for entries 1-3. `CourtyardEntryPoints_13` also lists `$0a`,
 after the table. Entry `$0a` takes the low byte of
 `ld hl, VarsityCourtTourActors_13` as its angle, so the walk-in direction on that
 entry would depend on where that label happens to sit. Nothing in retail
-enters the Courtyard at `$0a` -- no exit, warp, table or return point names
-it (`docs/story_mode.md`, `map_entry`) -- so only the debug warp menu could
-show it.
+enters the Courtyard at `$0a` (its row is `; debug warp only`).
 
 ## Dead stores
 

@@ -187,7 +187,7 @@ CourtyardEntryPoints_13:
 	map_entry $01, FACE_DOWN, 54.0, 22.0, $0000
 	map_entry $02, FACE_DOWN, 34.0, 11.0, $0000
 	map_entry $03, FACE_UP, 34.0, 49.0, $0000
-	map_entry $0a, FACE_UP, 17.0, 29.0, $0000
+	map_entry $0a, FACE_UP, 17.0, 29.0, $0000 ; debug warp only
 	map_entry $0d, FACE_UP, 13.0, 31.0, $0000
 	map_entry $0e, FACE_UP, 15.0, 31.0, $0000
 	map_entry $0f, FACE_UP, 34.0, 47.0, $0000

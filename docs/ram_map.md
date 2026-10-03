@@ -615,13 +615,8 @@ not padding.) The written bytes were then checked against every saved state
 of the session: a byte that was written but is zero in all of them was only
 ever *cleared*.
 
-Re-checked 2026-10-03 against the current tree with `tools/ramaudit.py free`
-over 237 PyBoy flows (every eventtest target, every location in four story
-states, two link sessions): no flow read a poisoned byte, and the only free
-bytes left holding data were the save-header staging copy at `$c6e0`-`$c75f`
-and the glyph underrun at WRAM7 `$d2b0`-`$d2ff`, both in the written class
-below. Every untouched range in the table is still in `tools/ram_free.py`'s
-list (4,360 bytes in all).
+Re-checked 2026-10-03 with `tools/ramaudit.py free` over 237 PyBoy flows: no
+reads, and no untouched range below written.
 
 Three classes came out of the 4,404 bytes the static pass lists once the
 tile-animation buffer, the second shadow-OAM page, the character records'

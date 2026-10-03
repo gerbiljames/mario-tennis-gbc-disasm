@@ -81,8 +81,8 @@ End3DormEntActors_27:
 End3DormEntEntryPoints_27:
 	; $6c68, 25 bytes (map_entries)
 	map_entry $01, FACE_UP, 22.0, 27.0, $0000
-	map_entry $02, FACE_DOWN, 22.0, 13.0, $0000
-	map_entry $0f, FACE_UP, 22.0, 27.0, $0000
+	map_entry $02, FACE_DOWN, 22.0, 13.0, $0000 ; debug warp only
+	map_entry $0f, FACE_UP, 22.0, 27.0, $0000 ; debug warp only
 	db $ff
 End3DormEntExitTriggers_27:
 	ds 1, $ff ; $6c81, fill
@@ -347,7 +347,7 @@ End1MainBldgEntryPoints_27:
 	; $72b7, 25 bytes (map_entries)
 	map_entry $01, FACE_DOWN, 24.0, 17.0, $0000
 	map_entry $02, FACE_UP, 24.0, 17.0, $0000
-	map_entry $0f, FACE_UP, 24.0, 47.0, $0000
+	map_entry $0f, FACE_UP, 24.0, 47.0, $0000 ; debug warp only
 	db $ff
 End1MainBldgExitTriggers_27:
 	; $72d0, 41 bytes (map_scripts:exit)

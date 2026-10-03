@@ -239,32 +239,14 @@ init script runs a whole scene for an entry, the scene is named for it,
 | MarioWorld | `MarioWorldEntry0eScene` |
 | TennisMachineRoom | `TennisMachineRoomNoEntryScene` |
 
-What sets the entry point: an `ExitTriggers` record's `arg1`, a code warp
-(`ld a, STORYLOC_* / ld [wStoryModeCurrentLocation], a / ld a, $nn / ld
-[wStoryModeEntryPoint], a`), the ending's (location, entry) table, the return
-point `SaveStoryReturnPoint` stores, the Training Center's
-`wMapSceneStage2` (`$0b`/`$0c`, plus 2 after the equipment screens), and
-`STORYENTRY_NONE` (`$ff`: keep the saved position, no record). Some writes
-name an entry with no `map_entry` row at all; the location's init script
-reads it as a scene selector (the `Entry<id>Scene`s above). Only the awards
-ceremony's two entries depend on the mode: the firework scene
-(`$14:$664a`) sends doubles to `$0b` and singles to `$0a`.
-
-A static scan of all of those finds no way in to 15 of the 126 `map_entry`
-rows; only the debug warp menu, which retail cannot open, could select them:
-
-| location | entries |
-| --- | --- |
-| Small Char. Test, Test (debug maps) | `$01` each |
-| Academy Main Bldg. | `$0d`, `$0e` |
-| Courtyard | `$0a` |
-| Dorm Room | `$03`, `$04`, `$0e` |
-| Training Court | `$02` |
-| Awards Ceremony | `$01` |
-| Peach's Castle | `$02` |
-| End1 Main Bldg. | `$0f` |
-| End3 Dorm Ent. | `$02`, `$0f` |
-| End5 Service Ace | `$02` |
+The entry point is set by an exit's `arg1`, a code warp, the ending's
+(location, entry) table, the return point, or a RAM value (the Training
+Center's `wMapSceneStage2`); `STORYENTRY_NONE` (`$ff`) keeps the saved
+position, and an id with no `map_entry` row is a scene selector for the init
+script. Only the awards ceremony splits by mode: doubles enters at `$0b`,
+singles at `$0a`. Fifteen rows have no way in but the debug warp menu and are
+marked `; debug warp only`; `tools/routes.py` finds them and `make check`
+(`entries`) keeps the marks true.
 
 ### `map_actor` — spawn templates (14 bytes, list ends on a `$ff` sentinel)
 

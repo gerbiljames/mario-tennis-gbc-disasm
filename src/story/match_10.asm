@@ -37,7 +37,7 @@ MatchSelectActors_10:
 	map_actor_end
 MatchSelectEntryPoints_10:
 	; $40a6, 9 bytes (map_entries)
-	map_entry $01, FACE_UP, 10.0, 9.0, $0000
+	map_entry $01, FACE_UP, 10.0, 9.0, $0000 ; debug warp only
 	db $ff
 MatchSelectExitTriggers_10:
 	ds 1, $ff ; $40af, fill

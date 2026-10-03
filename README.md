@@ -322,8 +322,9 @@ the git tag `generator-final`.
   instruction after it, no ROM address is written as a number, every DMA
   source is aligned, every PNG, tilemap grid, sound track and trajectory
   table encodes back to its blob, every actor-slot name holds in each list
-  that can be active where it is used, and every `Unused` name agrees with
-  `tools/reach.py`.
+  that can be active where it is used, every `Unused` name agrees with
+  `tools/reach.py`, and every `; debug warp only` entry point agrees with
+  `tools/routes.py`.
 - `tools/linktest.py` — two copies of the game in PyBoy joined by a link
   cable made of hooks on each game's own serial code (PyBoy's port is
   unplugged), playing through the link handshake, rules and character
@@ -356,6 +357,8 @@ the git tag `generator-final`.
   entered (read by `tools/coverage.py` and `tools/steer.py`).
 - `tools/coverage.py` — which routines an eventtest coverage file shows run
   and never run.
+- `tools/routes.py` — which `map_entry` rows anything in retail can send the
+  player to.
 - `tools/stats.py` — the headline counts above (labels, instruction lines,
   bytes the source spells out), from the built `.sym` and `.map`.
 - `tools/playtest.py` — plays two ROMs side by side and reports where their
