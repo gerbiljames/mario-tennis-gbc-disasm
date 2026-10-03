@@ -889,7 +889,8 @@ The bounds are hardcoded immediates in this routine and are *not*
 The corner rule carves an asymmetric keep-out box out of one side of the far
 court: `X >= $240`, between the net and depth `-$2a0`, for a human-controlled
 player only. That is the **umpire's chair**. Every court tilemap that has one
-(Clay, Grass, Hard, Training, Center, Composition, Tropics, Castle) stands it
+(Clay, Grass, Hard, Training, Center, Composition, Tropics, Castle, Star,
+Warehouse, Jungle; not the Minigame, Target Shot, Machine or Bowser courts) stands it
 at the right-hand net post on the far side, and positive X is screen-right (a
 character placed at `X = +$300` beside the net is drawn at the right post).
 With the view flipped so the human stays at the bottom of the screen, the
