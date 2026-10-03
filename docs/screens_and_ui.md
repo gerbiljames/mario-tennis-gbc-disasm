@@ -140,7 +140,7 @@ previously-repeating set fires immediately, records itself in
 `hInputRepeatDelay`. Menus read `hInputPressed`, so held directions scroll.
 
 If `hPlayerInputFlags == $0f` (all four face buttons) VBlank jumps straight to
-`SoftReset` (`$00:$27bd`).
+`SoftReset` (`$00:$2582`; the `jp z` is at `$27bd`).
 
 Menu code generally works from `wMenuInputPressed` (`$cb0d`), a per-loop copy of
 `hInputPressed` taken by each screen (e.g. `$16:$450c`, `$3e:$452a`), which lets
@@ -175,7 +175,7 @@ de = destination, with the VRAM bank in bit 13
 c  = length in 16-byte blocks
 ```
 
-`VRAM_BANK1 equ $2000` (`include/constants.inc:16`) is that bit 13. The routine
+`VRAM_BANK1 equ $2000` (`include/constants.inc`) is that bit 13. The routine
 tests it with `bit 5, d` and recovers the real address with `res 5, d`, so a
 destination of `$9800 + VRAM_BANK1` means `$9800` in VRAM bank 1. Writing it
 that way in the disassembly is a deliberate convention: the bank is visible
@@ -517,7 +517,7 @@ which nothing calls. The feature is dead.
 | `QueueSpriteTemplate` | `$00:$1e9d` | walks an `oam_sprite` list, adding each record's `{dy, dx, tile, attr}` to the base in `e`/`d`/`c`/`b`; terminator is `dy == $80`. Mirrored variant (attribute bit 5) negates `dx` as `8 - dx` and ORs the attribute instead of adding it. |
 | `QueueSprite24x32`, `QueueSprite32x32`, `QueueSpriteBlockPart` | `$00:$2c2b`, `$2ced`, `$2d79` | fixed larger blocks, used by the court renderer |
 
-`include/macros.inc:1078` documents the `oam_sprite` record; lists of them
+`oam_sprite` in `include/macros.inc` documents the record; lists of them
 (tagged `sprite_template` in their block comments) appear in 21 banks.
 Walk-sprite banks (`$6a`, `$6f`, `$70`-`$77`) hold object headers whose
 `dw .frames, <name>_AnimPtrs, .frames` triple points at a frame-pointer array and
@@ -748,7 +748,7 @@ between them), `FlushGlyphRow` (`$05:$77a3`, queued or DMA depending on the LCD)
 speed reaches it like this:
 
 1. The pause-menu items `STORYMENUITEM_MSG_SLOW`/`NORMAL`/`FAST`
-   (`include/constants.inc:315`) are handled by `StoryPauseMenu_MessageSpeed`
+   (`include/constants.inc`) are handled by `StoryPauseMenu_MessageSpeed`
    (`$06:$6ff7`), which stores `2 - selection` into `wMessageSpeed` (`$c8a4`;
    0 = fast, 1 = normal, 2 = slow, bit 7 = a transient "instant" override).
 2. `ApplyMessageSpeed` (`$05:$57e7`) converts it to a frame count in
@@ -899,7 +899,7 @@ clear_flag FLAG_VRAM_UPDATE_BUSY
 `wMenuKeepOpenRowMask` (`$cb29`) is a per-row bitmask (bit 7 = present, rotated
 by the row index) of rows that must not close the window — the mechanism behind
 setting rows that stay put after a change. The menu contents themselves are
-`menu_def` records (`include/macros.inc:599`): four item ids plus a count the
+`menu_def` records (`include/macros.inc`): four item ids plus a count the
 macro derives from its own argument list, so a menu cannot disagree with its
 own length. Item ids are the `MATCHMENUITEM_*` / `STORYMENUITEM_*` constants,
 which simultaneously index the item's word art, its 3×2 label rect, and its
@@ -974,7 +974,7 @@ end to end is the fastest way to see how the pieces bind:
 ### 8.2 The menu tree pattern
 
 Banks `$0e`-`$15` are story-mode screen banks sharing one structure, described
-in full in `include/macros.inc:540`-`553` for the story-map case. A location or
+in full in the story-mode map-script comment in `include/macros.inc`. A location or
 screen owns a **7-slot `dw` tree**; a bank-level directory at `$4000` may point
 at several trees (`$0f` has three, `$14` four). Slot roles for the story-map
 trees are: 0 entry points, 1 exit triggers, 2 actors, 3 NPC scripts, 4 facing

@@ -966,8 +966,8 @@ amount of play can prove them. They had been attributed to
 
 `$1b:$69d9`-`$6aa0` holds seven complete routines with no way in. They sit
 immediately after `Unused_1b_StubNop_1b_09` — three bare `ret`s that
-`Unused_1b_RunStoryDataConfirmMenu` registers as a no-op frame task around
-`Unused_18_RunTwoOptionSelectB` (`$1b:$69b9`/`$69c5`), both unreachable as well — so the disassembler attributes the whole run to that
+`Unused_1b_RunStoryDataConfirmMenu` registers as a no-op frame task (`$1b:$69b9`/`$69c5`) around
+`Unused_18_RunTwoOptionSelectB`, both unreachable as well — so the disassembler attributes the whole run to that
 label, which is why they read as part of a stub.
 
 They are a working screen: `Unused_1b_ShowHighScoreConfirmScreen` sets

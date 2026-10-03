@@ -476,7 +476,7 @@ The maps are not purely static: location init scripts patch them. `bank $13`'s
 dorm-room variant setup, for example, block-copies a rect of both maps with
 `CopyCollisionMapRect` / `CopyBehaviorMapRect` (`$0a:$5f90`/`$5fd6`, which copy
 *within* the map, not from ROM) and then rewrites individual cells with
-`WriteBehaviorMapCell` (`$13:$5092` onwards) to open or close a door.
+`WriteBehaviorMapCell` (called from `$13:$5092` onwards) to open or close a door.
 
 ### Camera and scroll
 

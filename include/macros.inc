@@ -745,7 +745,7 @@ ENDM
 MACRO anim_set       ; $fe switch to animation \1
 	db $fe, \1
 ENDM
-MACRO anim_flip      ; $fb XOR the sprite's flip bits with \1 (match characters only)
+MACRO anim_flip      ; $fb replace the sprite's attribute high nibble (flip/priority bits) with \1 (match characters only)
 	db $fb, \1
 ENDM
 ; $f0-$fd (except $fb): set the frame delay to $ff and keep the current frame,

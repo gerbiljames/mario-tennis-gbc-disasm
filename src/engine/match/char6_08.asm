@@ -224,7 +224,7 @@ StepCharAnimation:
 	cp $fe ; $77ae
 	jr z, .setAnimation ; $77b0
 	cp $fb ; $77b2
-	jr z, .toggleFlip ; $77b4
+	jr z, .setFlip ; $77b4
 	ld a, $ff ; $77b6
 	ld [wCharAnimDelay], a ; $77b8
 	jr .keepFrame ; $77bb
@@ -240,7 +240,7 @@ StepCharAnimation:
 .setAnimation:
 	call SetCharAnimation ; $77cd
 	jr .nextCommand ; $77d0
-.toggleFlip:
+.setFlip:
 	ld hl, wCharSpriteAttr ; $77d2
 	ld a, [hl] ; $77d5
 	and $0f ; $77d6

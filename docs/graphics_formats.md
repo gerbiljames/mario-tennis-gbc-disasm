@@ -181,7 +181,7 @@ lz           839 checked, 0 failed
 lz-labels    839 checked, 0 failed
 ```
 
-`check_lz` (`tools/check.py:64`) requires each stream to decode using *exactly*
+`check_lz` (`tools/check.py`) requires each stream to decode using *exactly*
 its declared extent and to survive a re-encode round trip, so the format above
 is verified in both directions over the whole ROM, not inferred from a sample.
 
@@ -267,7 +267,7 @@ bank and destination, so a queued copy is bank-safe.
 ### 2.3 The VRAM bank rides in bit 13 of the destination
 
 ```asm
-def VRAM_BANK1 equ $2000        ; include/constants.inc:9
+def VRAM_BANK1 equ $2000        ; include/constants.inc
 ```
 
 `QueueVRAMCopy` does `bit 5, d` to select `rVBK` and `res 5, d` to recover the
@@ -342,7 +342,7 @@ line. Both use the same lines:
 
 The macros assert the geometry at assembly time — `tilemap_row` checks the
 byte count against the declared width and `tilemap_end` checks both the row
-count and `@ - _TM_START == _TM_W * _TM_H` (`include/macros.inc:1012-1028`).
+count and `@ - _TM_START == _TM_W * _TM_H` (`include/macros.inc`).
 A mis-declared width therefore fails the build rather than silently
 reflowing. A trailing partial row stays literal `db`.
 
@@ -515,7 +515,7 @@ A **sprite template** is a list of 4-byte OAM rows terminated by a single
 `$80` byte:
 
 ```asm
-	oam_sprite dy, dx, tile, attr      ; include/macros.inc:1078
+	oam_sprite dy, dx, tile, attr      ; include/macros.inc
 	...
 	oam_sprite_end                     ; $80
 ```
@@ -634,14 +634,14 @@ its operand.
 | `fb mm` | `anim_flip mm` | `attr = (attr & $0f) ^ mm` — **bank `$08` only** |
 | `fd` (and any other `$f0`-`$fd`) | `anim_hold $fd` | hold the current frame forever; **one byte** |
 
-The macros are `include/macros.inc:644-666`, whose own comment already records
-the last row: "bank `$04` treats any unrecognised `$f0`-`$fd` command as 'hold
-this frame'." The interpreters write `$ff` to the delay field and never advance
+The macros are `anim_*` in `include/macros.inc`; `anim_hold`'s comment records
+the last row: `$f0`-`$fd` (except `$fb`) "set the frame delay to `$ff` and keep
+the current frame". The interpreters write `$ff` to the delay field and never advance
 the script pointer (`$04:$55f3`, `$08:$77b6`).
 
-`anim_flip`'s comment says "XOR the sprite's flip bits with `mm`", which is
-loose: the code is `and $0f` *then* `xor d`, so it clears bits 4-7 first and
-`$fb mm` **replaces** the high nibble. With the operands that actually occur
+`anim_flip` is not a toggle: the code is `and $0f` *then* `xor d`
+(`$08:$77d6`), so it clears bits 4-7 first and `$fb mm` **replaces** the
+attribute's high nibble. With the operands that actually occur
 (`$20`, `$00`) the difference is invisible.
 
 Every script is written with these macros (570 character-bank scripts;
