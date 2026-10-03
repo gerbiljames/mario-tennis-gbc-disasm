@@ -232,7 +232,7 @@ TrainingGymNpc07_0e:
 	ld a, [wMapSceneStage] ; $444a
 	sra a ; $444d
 	cp STORYTIER_ISLAND_OPEN ; $444f
-	jr z, TrainingGymNpc07TextIds.speak ; $4451
+	jr z, TrainingGymNpc07_0e.speak ; $4451
 	add a ; $4453
 	ld_hl_indexed TrainingGymNpc07TextIds ; $4454
 	ld a, [hl+] ; $445b
@@ -248,16 +248,16 @@ TrainingGymNpc07TextIds:
 	dw Text_35_195 ; record 2
 	dw Text_35_210 ; record 3
 	dw Text_35_223 ; record 4
-.speak:
+TrainingGymNpc07_0e.speak:
 	script_set_text Text_35_210 ; $4471
 	script_speak_restore ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1 ; $4477
 	farcall RunDialogueYesNoPrompt ; $447c
 	farcall ScriptCloseDialogueWindow ; $447f
 	script_wait_frames 5 ; $4482
 	and a ; $4489
-	jr z, .speakLine ; $448a
+	jr z, TrainingGymNpc07_0e.speakLine ; $448a
 	farcall AdvanceDialogueTextCursor ; $448c
-.speakLine:
+TrainingGymNpc07_0e.speakLine:
 	script_speak ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1 ; $448f
 	ret ; $4494
 TrainingGymNpc08_0e:

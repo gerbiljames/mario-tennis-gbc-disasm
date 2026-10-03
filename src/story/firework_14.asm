@@ -85,7 +85,7 @@ UpdateFirework0_14Table:
 	INCBIN "data/bank_014/UpdateFirework0_14Table.bin" ; $64d9, 4 bytes
 UpdateFirework1_14Table:
 	INCBIN "data/bank_014/UpdateFirework1_14Table.bin" ; $64dd, 4 bytes
-.scriptRespawnLocationActors:
+IslandSkyInitScript_14.scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $64e1
 	ld hl, FireworkMapActors_14 ; $64e3
 	farcall ScriptRespawnLocationActors ; $64e6
@@ -94,10 +94,10 @@ UpdateFirework1_14Table:
 	call LoadFireworkObjGfx_14 ; $64ef
 	call EnableLCD ; $64f2
 	test_flag FLAG_DOUBLES ; $64f5
-	jp z, .placeActors ; $64f8
+	jp z, IslandSkyInitScript_14.placeActors2 ; $64f8
 	script_null_script ACTOR_PARTNER ; $64fb
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $6500
-.placeActors:
+IslandSkyInitScript_14.placeActors2:
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $650b
 	xor a ; $6516
 	ld [wStoryModeShowLocationName], a ; $6517
@@ -199,7 +199,7 @@ UpdateFirework1_14Table:
 	call WaitFadeEnd ; $6644
 	call ClearFrameTasks ; $6647
 	test_flag FLAG_DOUBLES ; $664a
-	jr z, .notDoubles ; $664d
+	jr z, IslandSkyInitScript_14.notDoubles ; $664d
 	ld a, STORYLOC_AWARDS_CEREMONY ; $664f
 	ld [wStoryModeCurrentLocation], a ; $6651
 	ld a, $0b ; $6654
@@ -208,7 +208,7 @@ UpdateFirework1_14Table:
 	ld [wUnusedExitTriggerIdMirror], a ; $665b
 	ld [wStoryModeExitTriggerRequest], a ; $665e
 	ret ; $6661
-.notDoubles:
+IslandSkyInitScript_14.notDoubles:
 	ld a, STORYLOC_AWARDS_CEREMONY ; $6662
 	ld [wStoryModeCurrentLocation], a ; $6664
 	ld a, $0a ; $6667

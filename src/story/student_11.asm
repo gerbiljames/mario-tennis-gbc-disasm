@@ -396,13 +396,13 @@ FollowGuideIntoAcademy:
 AcademyArrivalInitScriptActorListEnd_11:
 	; $4fc5, 10 bytes (bytes:10)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x00
-.scriptRespawnLocationActors:
+AcademyArrivalInitScript_11.scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $4fcf
 	ld hl, ActorList_11_0 ; $4fd1
 	farcall ScriptRespawnLocationActors ; $4fd4
 	farcall BeginCutsceneScriptMode ; $4fd7
 	test_flag FLAG_DOUBLES ; $4fda
-	jp z, .notDoubles ; $4fdd
+	jp z, AcademyArrivalInitScript_11.notDoubles ; $4fdd
 	script_null_script ACTOR_PARTNER ; $4fe0
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $4fe5
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4ff0
@@ -416,7 +416,7 @@ AcademyArrivalInitScriptActorListEnd_11:
 	script_set_anim ACTOR_LIST_11_0_WALK_74_07, ANIM_WALK ; $5001
 	script_set_position ACTOR_LIST_11_0_MARK, 26.0, 17.0 ; $5008
 	script_face ACTOR_LIST_11_0_MARK, FACE_DOWN ; $5013
-.notDoubles:
+AcademyArrivalInitScript_11.notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $501a
 	ld d, OBJ_ALEX_B ; $501d
 	add d ; $501f
@@ -436,7 +436,7 @@ AcademyArrivalInitScriptActorListEnd_11:
 	script_set_text Text_30_493 ; $505d
 	script_speak ACTOR_LIST_11_0_WALK_75_06 ; $5063
 	test_flag FLAG_DOUBLES ; $5068
-	jp z, .animate ; $506b
+	jp z, AcademyArrivalInitScript_11.animate ; $506b
 	script_set_anim ACTOR_LIST_11_0_WALK_74_08, ANIM_NOD ; $506e
 	script_set_anim ACTOR_LIST_11_0_WALK_74_06, ANIM_NOD ; $5075
 	script_wait_idle ACTOR_LIST_11_0_WALK_74_06 ; $507c
@@ -472,8 +472,8 @@ AcademyArrivalInitScriptActorListEnd_11:
 	script_face ACTOR_LIST_11_0_MARK, FACE_DOWN ; $5140
 	script_face ACTOR_LIST_11_0_WALK_75_06, FACE_DOWN ; $5147
 	script_wait_frames 30 ; $514e
-	jp .speak ; $5155
-.animate:
+	jp AcademyArrivalInitScript_11.speak ; $5155
+AcademyArrivalInitScript_11.animate:
 	script_set_anim ACTOR_LIST_11_0_WALK_74_08, ANIM_NOD ; $5158
 	script_set_anim ACTOR_LIST_11_0_WALK_74_07, ANIM_NOD ; $515f
 	script_wait_idle ACTOR_LIST_11_0_WALK_74_07 ; $5166
@@ -494,7 +494,7 @@ AcademyArrivalInitScriptActorListEnd_11:
 	script_set_anim ACTOR_LIST_11_0_WALK_75_06, ANIM_NOD ; $51ca
 	script_wait_idle ACTOR_LIST_11_0_WALK_75_06 ; $51d1
 	farcall AdvanceDialogueTextCursor ; $51d6
-.speak:
+AcademyArrivalInitScript_11.speak:
 	script_speak ACTOR_LIST_11_0_WALK_75_06 ; $51d9
 	script_wait_frames 30 ; $51de
 	script_set_anim ACTOR_LIST_11_0_WALK_74_08, ANIM_NOD ; $51e5

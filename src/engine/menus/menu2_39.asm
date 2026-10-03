@@ -357,6 +357,7 @@ CharGridGfx2:
 	INCBIN "data/bank_039/lz_CharGridGfx2.bin" ; $725d, 241 bytes
 DigitFontTiles:
 	INCBIN "data/bank_039/lz_DigitFontTiles.bin" ; $734e, 249 bytes
+Unused_39_StubNop:
 	ret ; $7447
 Unused_39_PushPopNop_1:
 	push af ; $7448

@@ -15,12 +15,12 @@ PlaySoundCmd:
 	ld [hl], d ; $2fc1
 .loop:
 	cp $50 ; $2fc2
-	jr nc, JingleSoundIds.ge50 ; $2fc4
+	jr nc, PlaySoundCmd.ge50 ; $2fc4
 	cp $40 ; $2fc6
-	jr c, JingleSoundIds.lt40 ; $2fc8
+	jr c, PlaySoundCmd.lt40 ; $2fc8
 	ld hl, hMusic ; $2fca
 	bit 0, [hl] ; $2fcd
-	jr nz, JingleSoundIds.restore ; $2fcf
+	jr nz, PlaySoundCmd.restore ; $2fcf
 	ldh [hActiveJingle], a ; $2fd1
 	sub $40 ; $2fd3
 	ld hl, JingleSoundIds ; $2fd5
@@ -30,43 +30,43 @@ PlaySoundCmd:
 	inc h ; $2fdc
 .read:
 	ld a, [hl] ; $2fdd
-	jr JingleSoundIds.step3 ; $2fde
+	jr PlaySoundCmd.step3 ; $2fde
 JingleSoundIds:
 	INCLUDE "data/bank_000/JingleSoundIds.asm" ; $2fe0, 6 bytes (sound_data)
-.lt40:
+PlaySoundCmd.lt40:
 	ld d, a ; $2fe6
 	ldh a, [hActiveJingle] ; $2fe7
 	or a ; $2fe9
 	ld a, d ; $2fea
-	jr z, .zero ; $2feb
+	jr z, PlaySoundCmd.zero ; $2feb
 	ld hl, wCurrentBGM ; $2fed
 	ld [hl], a ; $2ff0
-	jr .restore ; $2ff1
-.zero:
+	jr PlaySoundCmd.restore ; $2ff1
+PlaySoundCmd.zero:
 	ld hl, wCurrentBGM ; $2ff3
 	cp [hl] ; $2ff6
-	jr z, .restore ; $2ff7
+	jr z, PlaySoundCmd.restore ; $2ff7
 	ld [hl], a ; $2ff9
-.step3:
+PlaySoundCmd.step3:
 	ld hl, hMusic ; $2ffa
 	bit 0, [hl] ; $2ffd
-	jr nz, .restore ; $2fff
+	jr nz, PlaySoundCmd.restore ; $2fff
 	ld h, a ; $3001
 	ldh a, [hWramBank] ; $3002
 	push af ; $3004
 	ld a, h ; $3005
 	call PlaySound ; $3006
 	pop_wram_bank ; $3009
-	jr .restore ; $300e
-.ge50:
+	jr PlaySoundCmd.restore ; $300e
+PlaySoundCmd.ge50:
 	ld h, a ; $3010
 	ldh a, [hWramBank] ; $3011
 	push af ; $3013
 	ld a, h ; $3014
 	call PlaySound ; $3015
 	pop_wram_bank ; $3018
-	jr .restore ; $301d
-.restore:
+	jr PlaySoundCmd.restore ; $301d
+PlaySoundCmd.restore:
 	pop hl ; $301f
 	pop de ; $3020
 	pop bc ; $3021

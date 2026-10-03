@@ -109,6 +109,7 @@ MapMainMenuCursorToItemIdTable:
 	db $03, $04, $05 ; 0x00
 	db $00, $01, $02 ; 0x03
 	db $06, $07, $08 ; 0x06
+Unused_3b_StubNop_56c3:
 	ret ; $56c3
 LoadMainMenuGfx:
 	push_wram_bank WRAM_STAGING ; $56c4

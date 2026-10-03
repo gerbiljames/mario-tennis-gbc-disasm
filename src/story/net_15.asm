@@ -287,7 +287,7 @@ TestStrokeChallengerGameFlagTable:
 	dw $00ce ; record 3
 	dw $00ce ; record 4
 	dw $00ce ; record 5
-.dispatchStage:
+TrainingCourtResultDispatch.dispatchStage:
 	ld a, [wDrillLessonResult] ; $7290
 	ld a, a ; $7293
 	rst Rst00 ; $7294
@@ -296,7 +296,7 @@ TestStrokeChallengerGameFlagTable:
 	dw ServeCoachIntroDialogue_15.lesson4 ; $7299 jumptable
 	dw ServeCoachIntroDialogue_15.lesson5 ; $729b jumptable
 	dw ServeCoachIntroDialogue_15.lesson3 ; $729d jumptable
-.dispatchStage2:
+TrainingCourtResultDispatch.dispatchStage2:
 	ld a, [wDrillLessonResult] ; $729f
 	ld a, a ; $72a2
 	rst Rst00 ; $72a3
@@ -308,7 +308,7 @@ TestStrokeChallengerGameFlagTable:
 	dw ServeCoachIntroDialogue_15.lesson8 ; $72ae jumptable
 	dw ServeCoachIntroDialogue_15.lesson9 ; $72b0 jumptable
 	dw ServeCoachIntroDialogue_15.lesson3 ; $72b2 jumptable
-.dispatchStage3:
+TrainingCourtResultDispatch.dispatchStage3:
 	ld a, [wDrillLessonResult] ; $72b4
 	ld a, a ; $72b7
 	rst Rst00 ; $72b8

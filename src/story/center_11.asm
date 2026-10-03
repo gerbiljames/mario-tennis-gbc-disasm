@@ -455,7 +455,7 @@ AcademyArrivalInitScript_11:
 	call MoveCampusGateGuardAside ; $46b7
 	ld a, [wStoryModeEntryPoint] ; $46ba
 	cp $0a ; $46bd
-	jp z, AcademyArrivalInitScriptActorListEnd_11.scriptRespawnLocationActors ; $46bf
+	jp z, AcademyArrivalInitScript_11.scriptRespawnLocationActors ; $46bf
 	cp $0c ; $46c2
 	jp z, ActorList_11_0.scriptRespawnLocationActors2 ; $46c4
 	cp $0f ; $46c7

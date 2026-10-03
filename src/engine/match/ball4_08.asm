@@ -166,7 +166,7 @@ SelectRallyShotType:
 	ld d, $00 ; $7089
 	ld hl, wCharBallReachFlags ; $708b
 	bit 4, [hl] ; $708e
-	jr z, RallyShotTypeTable0.neutralTable ; $7090
+	jr z, SelectRallyShotType.neutralTable ; $7090
 	ld hl, RallyShotTypeTable0 ; $7092
 	add hl, de ; $7095
 	ld a, [hl] ; $7096
@@ -178,7 +178,7 @@ RallyShotTypeTable0:
 	db SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_POWER_TOPSPIN, SHOTTYPE_DROP, SHOTTYPE_NEUTRAL ; 0x04
 	db SHOTTYPE_REACH_BASIC, SHOTTYPE_LOB, SHOTTYPE_REACH_POWER_SLICE, SHOTTYPE_NEUTRAL ; 0x08
 	db SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL ; 0x0c
-.neutralTable:
+SelectRallyShotType.neutralTable:
 	ld hl, RallyShotTypeTable1 ; $70ab
 	add hl, de ; $70ae
 	ld a, [hl] ; $70af

@@ -331,6 +331,7 @@ MarioWorldFacingScripts_0e:
 	ds 1, $ff ; $54cf, fill
 MarioWorldTileTriggers_0e:
 	db $ff ; $54d0
+Unused_0e_StubNop:
 	ret ; $54d1
 MarioWorldInitScript_0e:
 	call ComputeMarioWorldProgressIndex ; $54d2

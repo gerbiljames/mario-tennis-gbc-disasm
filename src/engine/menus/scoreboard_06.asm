@@ -453,9 +453,9 @@ DrawScoreboardSprites:
 	pop de ; $508f
 	ld a, [wScoreboardLayout] ; $5090
 	cp $06 ; $5093
-	jr z, ScoreboardSpriteTemplatePointers.adjustSpriteCoordsForScroll ; $5095
+	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5095
 	cp $07 ; $5097
-	jr z, ScoreboardSpriteTemplatePointers.adjustSpriteCoordsForScroll ; $5099
+	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5099
 	ret ; $509b
 ScoreboardSpriteTemplatePointers:
 	; $509c, 16 bytes (records:2)
@@ -467,7 +467,7 @@ ScoreboardSpriteTemplatePointers:
 	dw ScoreboardSpriteTemplate4 ; record 5
 	dw ScoreboardSpriteTemplate6 ; record 6
 	dw ScoreboardSpriteTemplate6 ; record 7
-.adjustSpriteCoordsForScroll:
+DrawScoreboardSprites.adjustSpriteCoordsForScroll:
 	ld hl, $4c0c ; $50ac
 	add hl, de ; $50af
 	ld e, l ; $50b0
@@ -489,9 +489,9 @@ ScoreboardSpriteTemplatePointers:
 	ld a, [wMinigameHighScoreMode] ; $50cb
 	and a ; $50ce
 	ld hl, wMinigameHighScore ; $50cf
-	jr nz, .read ; $50d2
+	jr nz, DrawScoreboardSprites.read ; $50d2
 	ld hl, wMinigamesTargetScore ; $50d4
-.read:
+DrawScoreboardSprites.read:
 	ld a, [hl+] ; $50d7
 	ld h, [hl] ; $50d8
 	ld l, a ; $50d9

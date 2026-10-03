@@ -68,10 +68,10 @@ WallPracticeLevelResultScript:
 	sub $01 ; $4ac4
 	ld a, a ; $4ac6
 	rst Rst00 ; $4ac7
-	dw WallPracticeLevelResultScriptTextIds.variant4 ; $4ac8 jumptable
-	dw WallPracticeLevelResultScriptTextIds.variant3 ; $4aca jumptable
-	dw WallPracticeLevelResultScriptTextIds.variant2 ; $4acc jumptable
-	dw WallPracticeLevelResultScriptTextIds.variant1 ; $4ace jumptable
+	dw WallPracticeLevelResultScript.variant4 ; $4ac8 jumptable
+	dw WallPracticeLevelResultScript.variant3 ; $4aca jumptable
+	dw WallPracticeLevelResultScript.variant2 ; $4acc jumptable
+	dw WallPracticeLevelResultScript.variant1 ; $4ace jumptable
 .checkLevel:
 	ld a, [wMapSceneStage] ; $4ad0
 	cp WALLPRACTICESTAGE_MASTER ; $4ad3
@@ -130,12 +130,12 @@ WallPracticeLevelResultScriptTextIds:
 	dw Text_35_243 ; record 0
 	dw Text_35_244 ; record 1
 	dw Text_35_245 ; record 2
-.variant1:
+WallPracticeLevelResultScript.variant1:
 	script_set_text Text_35_255 ; $4ba2
 	script_fade_in $06 ; $4ba8
 	call WaitFadeEnd ; $4bad
-	jr .speakAndLeave ; $4bb0
-.variant2:
+	jr WallPracticeLevelResultScript.speakAndLeave ; $4bb0
+WallPracticeLevelResultScript.variant2:
 	push_wram_bank WRAM_SOUND ; $4bb2
 	ld de, $0032 ; $4bbb
 	ld hl, wMinigameRecordValue ; $4bbe
@@ -148,17 +148,17 @@ WallPracticeLevelResultScriptTextIds:
 	script_set_text Text_35_254 ; $4bce
 	script_fade_in $06 ; $4bd4
 	call WaitFadeEnd ; $4bd9
-	jr .speakAndLeave ; $4bdc
-.variant3:
+	jr WallPracticeLevelResultScript.speakAndLeave ; $4bdc
+WallPracticeLevelResultScript.variant3:
 	script_set_text Text_35_253 ; $4bde
 	script_fade_in $06 ; $4be4
 	call WaitFadeEnd ; $4be9
-	jr .speakAndLeave ; $4bec
-.variant4:
+	jr WallPracticeLevelResultScript.speakAndLeave ; $4bec
+WallPracticeLevelResultScript.variant4:
 	script_set_text Text_35_252 ; $4bee
 	script_fade_in $06 ; $4bf4
 	call WaitFadeEnd ; $4bf9
-.speakAndLeave:
+WallPracticeLevelResultScript.speakAndLeave:
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4bfc
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c03
 	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c08
@@ -172,7 +172,7 @@ WallPracticeLevelResultScriptTextIds:
 	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c4a
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4c4f
 	test_flag FLAG_DOUBLES ; $4c56
-	jr z, .wait ; $4c59
+	jr z, WallPracticeLevelResultScript.wait ; $4c59
 	script_wait_frames 30 ; $4c5b
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4c62
 	script_wait_frames 30 ; $4c6a
@@ -185,7 +185,7 @@ WallPracticeLevelResultScriptTextIds:
 	ld de, wActors ; $4c8b
 	farcall AttachActorStepMover ; $4c8e
 	script_wait_frames 20 ; $4c91
-.wait:
+WallPracticeLevelResultScript.wait:
 	script_wait_frames 10 ; $4c98
 	ret ; $4c9f
 WallPracticeRoomFacingScripts_12:

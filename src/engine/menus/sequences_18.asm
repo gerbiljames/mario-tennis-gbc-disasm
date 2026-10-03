@@ -282,6 +282,7 @@ QueueScreen2Sprites_SpriteTemplate:
 	oam_sprite $10, $48, $10, $00
 	oam_sprite $10, $50, $12, $00
 	oam_sprite_end
+Unused_18_StubNop_7a80:
 	ret ; $7a80
 TaskFadeInPalette_18:
 	push_wram_bank WRAM_SCREEN ; $7a81

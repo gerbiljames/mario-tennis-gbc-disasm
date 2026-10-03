@@ -70,7 +70,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 	ld [hl], $00 ; $55d0
 	ld a, [wMinigameHitTargetType] ; $55d2
 	cp $ff ; $55d5
-	jr z, MinigameTargetTypeScores.eqff ; $55d7
+	jr z, ScoreMinigameTargetHitOrDeflectBall.eqff ; $55d7
 	ld a, [wMinigameHitTargetType] ; $55d9
 	ld_hl_indexed MinigameTargetTypeScores ; $55dc
 	ld e, [hl] ; $55e3
@@ -87,7 +87,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 MinigameTargetTypeScores:
 	; $55f9, 4 bytes (bytes:4)
 	db $01, $03, $05, $03 ; 0x00
-.eqff:
+ScoreMinigameTargetHitOrDeflectBall.eqff:
 	ld a, [wMinigameLastHitCell] ; $55fd
 	cp $ff ; $5600
 	ret z ; $5602

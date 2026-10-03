@@ -458,9 +458,9 @@ TrainingCourtResultDispatch:
 	dw StrokeChallengerResultScene.celebrate ; $5385 jumptable
 	dw StrokeChallengerResultScene.speakWin ; $5387 jumptable
 	dw StrokeChallengerResultScene.partnerJoins ; $5389 jumptable
-	dw TestStrokeChallengerGameFlagTable.dispatchStage ; $538b jumptable
-	dw TestStrokeChallengerGameFlagTable.dispatchStage2 ; $538d jumptable
-	dw TestStrokeChallengerGameFlagTable.dispatchStage3 ; $538f jumptable
+	dw TrainingCourtResultDispatch.dispatchStage ; $538b jumptable
+	dw TrainingCourtResultDispatch.dispatchStage2 ; $538d jumptable
+	dw TrainingCourtResultDispatch.dispatchStage3 ; $538f jumptable
 	dw MovePlayerToLessonCourtSpot.netResultText ; $5391 jumptable
 	dw MovePlayerToLessonCourtSpot.netResultDoubles ; $5393 jumptable
 	dw MovePlayerToLessonCourtSpot.serveResultText ; $5395 jumptable

@@ -102,6 +102,7 @@ RestaurantPlazaExitTriggers_13:
 	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, $0f
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_TRAINING_COURT, $0f
 	db $ff
+Unused_13_PlayerSpeaksText35_48:
 	script_set_text Text_35_48 ; $427f
 	script_speak ACTOR_PLAYER ; $4285
 	ret ; $428a

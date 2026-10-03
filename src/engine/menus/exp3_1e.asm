@@ -199,7 +199,7 @@ LookupExpTierForChar:
 	ld c, a ; $6941
 	ld a, [wCharId] ; $6942
 	cp $04 ; $6945
-	jr nc, LookupExpTierForCharTable.ge04 ; $6947
+	jr nc, LookupExpTierForChar.ge04 ; $6947
 	ld l, c ; $6949
 	xor a ; $694a
 	ld h, a ; $694b
@@ -212,7 +212,7 @@ LookupExpTierForChar:
 LookupExpTierForCharTable:
 	; $695b, 10 bytes (bytes:10)
 	db $00, $01, $02, $03, $04, $04, $05, $05, $06, $06 ; 0x00
-.ge04:
+LookupExpTierForChar.ge04:
 	dec c ; $6965
 	ret ; $6966
 AwardExhibitionMatchExp:

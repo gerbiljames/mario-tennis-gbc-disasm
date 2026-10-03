@@ -344,7 +344,7 @@ PlaceDormRoomArrivalActors_13:
 	jr z, .stage2 ; $51b9
 	wram_bank WRAM_ACTORS ; $51bb
 	test_flag FLAG_DOUBLES ; $51c1
-	jp nz, DormRoomNpc04IdleScripts_13.isDoubles ; $51c4
+	jp nz, PlaceDormRoomArrivalActors_13.isDoubles ; $51c4
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $51c7
 	ret ; $51d2
 .stage2:
@@ -409,7 +409,7 @@ DormRoomNpc04IdleScripts_13:
 	dw ActorScript_13_00 ; record 5
 	dw ActorScript_13_03 ; record 6
 	dw ActorScript_13_03 ; record 7
-.isDoubles:
+PlaceDormRoomArrivalActors_13.isDoubles:
 	script_null_script ACTOR_PARTNER ; $527a
 	script_set_position ACTOR_PARTNER, 21.0, 31.0 ; $527f
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 16.0 ; $528a

@@ -200,6 +200,7 @@ IslandSkyExitTriggers_14:
 	; $52a2, 9 bytes (map_scripts:exit)
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_RESTAURANT_PLAZA, $06
 	db $ff
+Unused_14_StubNop:
 	ret ; $52ab
 IslandSkyNpcScripts_14:
 	; $52ac, 9 bytes (map_scripts)
@@ -218,7 +219,7 @@ IslandSkyInitScript_14:
 	cp $02 ; $52e6
 	jp z, QueuePlaneSpriteByFrameCounter_14.loadScene ; $52e8
 	cp $08 ; $52eb
-	jp z, UpdateFirework1_14Table.scriptRespawnLocationActors ; $52ed
+	jp z, IslandSkyInitScript_14.scriptRespawnLocationActors ; $52ed
 	cp $0e ; $52f0
 	jp z, QueueTwinkleSprite_14.queue ; $52f2
 	cp $0f ; $52f5

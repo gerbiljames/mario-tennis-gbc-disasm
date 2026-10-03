@@ -172,7 +172,7 @@ AcademyMainBldgNpc05_10:
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $765a
 	script_face ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2, FACE_DOWN ; $765f
 	test_flag FLAG_DOUBLES ; $7666
-	jr nz, AcademyMainBldgNpc05TextIds.setText ; $7669
+	jr nz, AcademyMainBldgNpc05_10.setText ; $7669
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $766b
 	ld a, [wMapSceneStage] ; $7670
 	sra a ; $7673
@@ -194,7 +194,7 @@ AcademyMainBldgNpc05TextIds:
 	dw Text_30_466 ; record 2
 	dw Text_30_467 ; record 3
 	dw Text_30_468 ; record 4
-.setText:
+AcademyMainBldgNpc05_10.setText:
 	script_set_text Text_30_469 ; $76a2
 	script_wait_frames 20 ; $76a8
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $76af

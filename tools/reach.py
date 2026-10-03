@@ -71,6 +71,9 @@ DATA_FLAGS = {
 }
 GLOBAL = re.compile(r"^([A-Za-z_]\w*):")
 LOCAL = re.compile(r"^(\.\w+):")
+# a local label defined away from its routine, after data that sits inside it
+# (`Routine.tail:` past a table): the code from there on is Routine's again
+QUALIFIED = re.compile(r"^([A-Za-z_]\w*)(\.\w+):")
 TERMINAL = re.compile(r"^(reti?|jp|jr)\b")
 CONDITIONAL = re.compile(r"^(ret (nz|z|nc|c)$|(jp|jr) (nz|z|nc|c),)")
 
@@ -144,7 +147,13 @@ class Graph:
             glob = seg = None
             last, dead = "", False
             for i, line in enumerate(lines):
-                g, lo = GLOBAL.match(line), LOCAL.match(line)
+                g, lo, q = GLOBAL.match(line), LOCAL.match(line), QUALIFIED.match(line)
+                if q:
+                    if seg and self.is_code(last) and not (TERMINAL.match(last) and not CONDITIONAL.match(last)):
+                        self.out[seg].add((q.group(1), q.group(2)))
+                    glob = q.group(1)
+                    seg, last, dead = (q.group(1), q.group(2)), "", False
+                    continue
                 if g or lo:
                     new = (g.group(1), "") if g else (glob, lo.group(1))
                     if seg and self.is_code(last) and not (TERMINAL.match(last) and not CONDITIONAL.match(last)):

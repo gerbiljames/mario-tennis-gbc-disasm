@@ -33,7 +33,7 @@ JoypadInterrupt:
 	ds 157, $ff ; $0063, fill
 EntryPoint:
 	nop ; $0100
-	jp NintendoLogo.start ; $0101
+	jp EntryPoint.start ; $0101
 NintendoLogo:
 	INCBIN "data/bank_000/NintendoLogo.bin" ; $0104, 48 bytes
 	; $0134, 28 bytes (cart_header)
@@ -50,7 +50,7 @@ NintendoLogo:
 	db $00               ; $014c mask ROM version
 	db $a5               ; $014d header checksum
 	db $64, $e3          ; $014e global checksum
-.start:
+EntryPoint.start:
 	jp Start ; $0150
 BuildStamp:
 	; $0153, 11 bytes (ascii)
