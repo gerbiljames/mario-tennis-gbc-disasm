@@ -25,6 +25,12 @@ after a real defect broke it:
             a jp/call target, a macro argument that elsewhere always takes a
             label, or an ld rr/dw literal equal to a label in the same bank
             (96 as_calls once reached two unlabelled routines by number)
+  labels    code lives under the name of the routine it belongs to: a
+            data-named label's scope does not run on into code (a routine's
+            tail after a table is `Routine.local:`), a dw table does not
+            dispatch to another routine's local that starts after a ret/jp
+            (a case is a routine of its own), and no unreferenced label sits
+            where code falls into it (it would split a routine in two)
   reach     a routine is named Unused exactly when nothing reachable from
             the reset, interrupt and rst vectors reaches it (tools/reach.py)
   slots     every ACTOR_<list>_<object> name a story script uses holds that
@@ -189,6 +195,86 @@ def check_stranded_scopes(fail):
                        "from KNOWN_STRANDED_IN_SCRIPT")
     return len(found)
 
+
+
+_CODE_PREFIXES = ("script_", "farcall", "push_wram_bank", "pop_wram_bank", "wram_bank",
+                  "ld_", "rect_", "sprite_", "map_cell", "test_flag", "set_flag",
+                  "clear_flag", "sound", "wait_frames", "lb ")
+_DATA_PREFIXES = ("db", "dw", "INCBIN", "map_actor", "map_actor_end", "map_entry",
+                  "map_script", "map_tree", "as_", "anim_", "tilemap_", "oam_",
+                  "palette", "snd_", "drill_", "court_", "story_location")
+_UNCOND_RE = re.compile(r"^	(ret|reti|jp hl|jp [A-Za-z_$][\w.$+ ]*|jr [A-Za-z_.][\w.]*)\s*(;.*)?$")
+_QUAL_DEF_RE = re.compile(r"^([A-Za-z_]\w*)\.(\w+):")
+_LOCAL_DEF_RE = re.compile(r"^\.(\w+):")
+
+
+def _line_kind(line):
+    s = line.split(";")[0].strip()
+    if not s or not line.startswith("\t"):
+        return None
+    w = s.split()[0]
+    if w in _MNEMONICS or s.startswith(_CODE_PREFIXES):
+        return "code"
+    if s.startswith(_DATA_PREFIXES):
+        return "data"
+    return None
+
+
+def check_label_scopes(fail):
+    """Code sits under the name of the routine it belongs to (see the module
+    docstring's `labels`)."""
+    texts = {h: bank_lines(h)[0] for h in holders()}
+    words = set()
+    for lines in texts.values():
+        for line in lines:
+            if _GLOBAL_RE.match(line):
+                continue
+            words.update(re.findall(r"\b([A-Za-z_]\w*)\b", line.split(";")[0]))
+    for inc in (ROOT / "include").glob("*.inc"):
+        words.update(re.findall(r"\b([A-Za-z_]\w*)\b", inc.read_text()))
+    n = 0
+    for h, lines in texts.items():
+        bank = bank_of(h)
+        glob_, first, owner_shift, last = None, None, False, ""
+        after_term = {}                       # (global, local) -> starts after ret/jp
+        dw_refs = []                          # (table global, target global, local)
+        for line in lines:
+            m = _GLOBAL_RE.match(line)
+            if m:
+                name = m.group(1)
+                if (last and _line_kind(last) == "code" and not _UNCOND_RE.match(last)
+                        and name not in words and not name.startswith("Unused")):
+                    fail("labels", f"bank ${bank:02x}: {name} is referenced nowhere and code "
+                                   "falls into it -- it splits a routine")
+                glob_, first, owner_shift, last = name, None, False, ""
+                n += 1
+                continue
+            q = _QUAL_DEF_RE.match(line)
+            if q:
+                owner_shift, last = True, ""
+                continue
+            lo = _LOCAL_DEF_RE.match(line)
+            if lo and glob_:
+                after_term[(glob_, lo.group(1))] = bool(_UNCOND_RE.match(last))
+                continue
+            k = _line_kind(line)
+            if k is None or glob_ is None:
+                continue
+            if first is None:
+                first = k
+            elif first == "data" and k == "code" and not owner_shift:
+                fail("labels", f"bank ${bank:02x}: {glob_} is data but its scope runs on into "
+                               f"code -- define the tail as Routine.local: ({line.strip()[:40]})")
+                first = "reported"
+            md = re.match(r"^\tdw ([A-Za-z_]\w*)\.(\w+)\b", line)
+            if md:
+                dw_refs.append((glob_, md.group(1), md.group(2)))
+            last = line
+        for table, g, l in dw_refs:
+            if g != table and after_term.get((g, l)) and not re.search(r"Cases\d$", g):
+                fail("labels", f"bank ${bank:02x}: {table} dispatches to {g}.{l}, a case that "
+                               "starts after a ret/jp -- give it its own label")
+    return n
 
 def check_sound(rom, manifest, fail):
     """Every snd_script track decodes to whole commands over exactly its
@@ -579,6 +665,7 @@ def main():
         "sound": check_sound(rom, manifest, fail),
         "traj": check_traj(rom, manifest, fail),
         "scopes": check_stranded_scopes(fail),
+        "labels": check_label_scopes(fail),
         "branches": check_collapsed_branches(fail),
         "literals": check_literal_pointers(fail) + check_blob_pointers(rom, manifest, fail),
         "dma": check_dma_alignment(fail),

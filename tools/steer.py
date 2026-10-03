@@ -42,13 +42,13 @@ from banksrc import bank_lines, bank_of, build_addresses, holders  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 GLOBAL = re.compile(r"^([A-Za-z_]\w*):")
-LOCAL = re.compile(r"^\.(\w+):")
+LOCAL = re.compile(r"^(?:[A-Za-z_]\w*)?\.(\w+):")  # `.x:`, or `Routine.x:` after a table
 COND = re.compile(r"^(jr|jp) (nz|z|nc|c), (\S+)$")
 RETCC = re.compile(r"^ret (nz|z|nc|c)$")
 JUMP = re.compile(r"^(jr|jp) (\S+)$")
 INDIRECT = re.compile(r"^(jp hl|call JumpToHL|jp JumpToHL|call CallHLInBankA|jp CallHLInBankA)$")
 FLAG = {"z": (0x80, True), "nz": (0x80, False), "c": (0x10, True), "nc": (0x10, False)}
-DATA = re.compile(r"(db|dw|dn|ds|map_\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|"
+DATA = re.compile(r"(db|dw|dn|ds|map_(?!cell\b)\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|"
                   r"story_location|obj_template)\b")
 
 

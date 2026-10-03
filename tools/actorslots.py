@@ -111,10 +111,12 @@ def stage_filter(st, var, ok):
     """Keep the states whose list is not bound to var's stage, or has a stage ok() accepts."""
     return frozenset(x for x in st if STAGE_LISTS.get(x[0], (None,))[0] != var
                      or any(ok(v) for v in STAGE_LISTS[x[0]][1]))
-DATA = re.compile(r"\t(db|dw|dn|ds|map_\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|"
+DATA = re.compile(r"\t(db|dw|dn|ds|map_(?!cell\b)\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|"
                   r"story_location|obj_template)\b")
 GLOBAL = re.compile(r"^([A-Za-z_]\w*):")
 LOCAL = re.compile(r"^\.(\w+):")
+# `Routine.local:` defined away from its routine (after a table inside it)
+QUALIFIED = re.compile(r"^([A-Za-z_]\w*)\.(\w+):")
 
 
 class Source:
@@ -129,6 +131,9 @@ class Source:
                     g = m.group(1)
                     self.lab_at[(b, g)] = i
                     starts.append((i, g))
+                elif QUALIFIED.match(line):
+                    q = QUALIFIED.match(line)
+                    self.lab_at[(b, q.group(1) + "." + q.group(2))] = i
                 else:
                     m = LOCAL.match(line)
                     if m and g:
