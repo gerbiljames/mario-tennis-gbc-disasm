@@ -84,15 +84,16 @@ reviewed verdict (`docs/unused_code.md`). Nothing the analysis can reach is
 
 **Behaviour.** The event test compares a shifted build with the original
 over every story state and location, the menu sessions and every target
-without a difference (2026-10-03: 11.2 million events, 16 at a different
-logic frame). It counts crashes separately from differences, and three
-kinds remain, none a layout fault: the Test2 debug screens' glyph underrun;
+without a difference (2026-10-03: 11.25 million events, 16 at a different
+logic frame). It counts crashes separately from differences, and two kinds
+remain, neither a layout fault: the Test2 debug screens' glyph underrun, and
 `GetSpeakerVoice`'s wild return at the awards ceremony (location `$1a`,
 entry 11), which the test cuts at its taint but which then crashes under
 the test's breakpoints in one or both builds, and which `make FIXES=1`
-removes; and an illegal opcode in the original at the ending's End8
-Sr. Court (`$24`) when the test enters it in story state 5, which is not yet
-explained. `docs/bugs.md` lists the shipped defects found along the way.
+removes. Played without breakpoints, the original skips the partner's line
+there. The illegal opcode once reported at End8 Sr. Court was the test's
+own: it checked for a crash while a breakpoint workaround had PC parked on
+an operand byte. `docs/bugs.md` lists the shipped defects found along the way.
 
 **Named in the docs as not established.**
 * `docs/graphics_formats.md` §8 holds two items, both about the developers'
@@ -158,6 +159,14 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-03 — docs drift, two crashes settled, units.** Doc references
+  checked against the symbols: three addresses credited to the wrong
+  routine and ten drifting line references fixed. The End8 Sr. Court crash
+  was the event test's own; `GetSpeakerVoice`'s wild return, replayed
+  without breakpoints, skips the partner's line (`docs/bugs.md` corrected).
+  Jump velocities read in pixels per frame (`ACTORF_HEIGHT`,
+  `ACTORF_JUMP_VEL`); every `QueueVRAMCopy` count is a stream size, a row
+  count or a decimal tile count; `anim_flip` replaces the attribute nibble.
 * **2026-10-03 — labels audit.** Code that sat under the wrong name is
   fixed: routine tails after a table are `Routine.local` again; 68 jump-table
   cases and 23 entry-point scenes hidden as other routines' locals are routines
