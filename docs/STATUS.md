@@ -91,7 +91,8 @@ remain, neither a layout fault: the Test2 debug screens' glyph underrun, and
 entry 11), which the test cuts at its taint but which then crashes under
 the test's breakpoints in one or both builds, and which `make FIXES=1`
 removes. Played without breakpoints, the original skips the partner's line
-there. The illegal opcode once reported at End8 Sr. Court was the test's
+there, turns the later dialogue boxes red and, in 19 of 20 singles states,
+crashes about 650 frames on. The illegal opcode once reported at End8 Sr. Court was the test's
 own: it checked for a crash while a breakpoint workaround had PC parked on
 an operand byte. `docs/bugs.md` lists the shipped defects found along the way.
 

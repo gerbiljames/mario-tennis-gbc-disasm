@@ -647,18 +647,27 @@ runs as `jr nz` into `Unused_00_CopyMapRows32To64`'s fill. From there each
 `QueueBGTileWrite`, `LoadOBJPaletteData`, `LoadBGPaletteData`,
 `CopyDataFromBank` and `SerialHandler`. On the way the code writes the MBC's
 RAM-enable and ROM-bank registers and one byte of BG palette RAM, then the
-`SerialHandler` tail unwinds the stack past `ShowSpeakerDialogue`. Played
-without breakpoints next to the fixed build, the original never opens the
-dialogue box. The partner's "Way to go, Alex! Congratulations" is skipped,
-and the scene carries on. A build whose ROM0 has moved even three bytes
-crashes instead.
+`SerialHandler` tail unwinds the stack past `ShowSpeakerDialogue`.
+
+Played without breakpoints next to the fixed build, with the event test's
+story states (flags set per ladder step, seeded input), the original never
+opens that dialogue box: the partner's "Way to go, Alex! Congratulations" is
+skipped. The scene takes the wild return twice. In the singles states the
+second one leaves BG palette 0's colour 3 changed, so every dialogue box
+after it is red instead of cream. About 650 frames later, in 19 of the 20
+singles states, a return through the unbalanced stack lands in ROM bank
+`$d1` and the game crashes (`rst $38`, stack out of RAM). The doubles states
+take the same wild returns with neither effect. The fixed build shows the
+lines in cream and runs on in all 36. Whether a real playthrough reaches
+the scene with the same registers is not established. A build whose ROM0
+has moved even three bytes crashes at the first wild return instead.
 
 **Fix** (`make FIXES=1`): the early exit jumps to a `.restoreBank` label
 before `pop_wram_bank`, so the stack is balanced on every path. The event test played the
 fixed build against the original over every story state and location: the
 original took the wild return at the awards ceremony (location `$1a`, entry
-11) in 19 states, and the fixed build ran every one of them through and
-showed the line.
+11) in all 36 states, and the fixed build ran every one of them through and
+showed the lines.
 
 ### Map reads off the edge have no bounds check
 
