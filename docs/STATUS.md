@@ -152,6 +152,10 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-03 — speakers and VRAM rows.** `script_speak_restore` lets the
+  actor-slot resolver name 155 more speakers (5,122 names, all agreeing in
+  play), with `SPEAKER_NONE` for the no-actor case; 243 VRAM copy counts
+  count tilemap rows or the glyph buffer.
 * **2026-10-03 — save names, map patches, a save bug.** The save header,
   directory fields and block ids have names (`sSaveHeader`, `SAVEDIR_*`,
   `SAVEBLOCK_*`). 36 character-data streams named `*Gfx*` are tile and
