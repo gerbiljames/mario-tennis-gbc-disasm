@@ -141,8 +141,9 @@ nothing in the tree depends on it any more.
 
 `make check` is what catches the mistakes a byte-perfect build cannot: an LZ
 stream that no longer decodes, an assembled symbol inside one, overlapping
-extracted regions, a routine stranded in an actor script's label scope, a
-new branch that decides nothing, a ROM address written as a number, an
+extracted regions, a routine stranded in an actor script's label scope,
+code left under the wrong label (a table's, or another routine's), a new
+branch that decides nothing, a ROM address written as a number, an
 unaligned DMA source, a PNG, grid, sound track or trajectory table that no longer encodes to its blob, an
 actor-slot name that does not hold where it is used, or a routine whose
 `Unused` name disagrees with reachability.

@@ -215,6 +215,29 @@ the epilogue locations. Distribution, cross-referenced from
 splits it into `wStoryModeSpawnPosition` (X, Y at +0..+3, facing at +4) and
 `wStoryArrivalScript`.
 
+The source writes X and Y in tiles with a point (`map_entry $03, FACE_DOWN,
+18.0, 13.0, ...`; `map_pos` in `include/macros.inc` checks the form). An
+entry id means something only inside its own location: `$0f` returns from a
+match at the Junior Class courts and runs a firework scene at Island Sky. Where a location's
+init script runs a whole scene for an entry, the scene is named for it,
+`<Location>Entry<id>Scene`:
+
+| location | scenes |
+| --- | --- |
+| AcademyArrival | `AcademyArrivalEntry0cScene` |
+| AcademyWing | `AcademyWingEntry0fScene` |
+| AwardsCeremony | `AwardsCeremonyEntry0aScene`, `AwardsCeremonyEntry0bScene` |
+| CenterCourt | `CenterCourtEntry0fScene` |
+| DormEntrance | `DormEntranceEntry0fScene` |
+| DormRoom | `DormRoomEntry01Scene`, `DormRoomEntry02Scene`, `DormRoomEntry08Scene`, `DormRoomEntry09Scene`, `DormRoomEntry0aScene`, `DormRoomEntry0fScene` |
+| End10VarsityCourt | `End10VarsityCourtEntry01Scene` |
+| End7TrainingCtr | `End7TrainingCtrEntry01Scene`, `End7TrainingCtrEntry02Scene` |
+| IslandSky | `IslandSkyEntry02Scene`, `IslandSkyEntry0eScene`, `IslandSkyEntry0fAnd0dScene` |
+| JuniorClassCourtDoubles | `JuniorClassCourtDoublesEntry0dScene`, `JuniorClassCourtDoublesEntry0eScene` |
+| JuniorClassCourtSingles | `JuniorClassCourtSinglesEntry0dScene`, `JuniorClassCourtSinglesEntry0eScene` |
+| MarioWorld | `MarioWorldEntry0eScene` |
+| TennisMachineRoom | `TennisMachineRoomNoEntryScene` |
+
 ### `map_actor` — spawn templates (14 bytes, list ends on a `$ff` sentinel)
 
 | off | field |

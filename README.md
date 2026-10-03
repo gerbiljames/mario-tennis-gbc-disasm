@@ -212,7 +212,14 @@ deleted.
 - **Every instruction line ends with its address**, `; $5db3`, so a reference
   in the docs (`$05:$5db3`) is greppable.
 - **Local labels** (`.loop`, `.done`) are jump targets inside a routine;
-  from another routine they are spelled `Parent.done`.
+  from another routine they are spelled `Parent.done`. A routine with a table in the
+  middle of it picks up again after the table with `Routine.local:`, so the
+  code stays under its own name rather than the table's.
+- **Every entry point is a global label.** A case a jump table dispatches to,
+  or a scene an init script jumps to, is a routine of its own, named for
+  what selects it: `<Drill>Result<k>` for the training coaches' per-result
+  scenes, `<Location>Entry<id>Scene` for the scene a location runs on
+  arriving at entry `id`. `make check` (`labels`) keeps it that way.
 - **Notes** above a routine (a comment block) say what the address and the
   name cannot: what it does, what its arguments mean, what is wrong with it.
 - **Macros** (`include/macros.inc`) stand for the idioms the code is built
@@ -312,7 +319,8 @@ of the ROM was reached.
   build cannot make: every LZ stream in the manifest decodes inside its
   extent and survives a re-encode, no assembled symbol sits inside a
   stream, the extracted regions do not overlap, no routine sits inside an
-  actor script's label scope, no new conditional branch targets the
+  actor script's label scope or under a table's or another routine's
+  label, no new conditional branch targets the
   instruction after it, no ROM address is written as a number, every DMA
   source is aligned, every PNG, tilemap grid, sound track and trajectory
   table encodes back to its blob, every actor-slot name holds in each list
