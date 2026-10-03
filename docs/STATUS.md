@@ -85,8 +85,9 @@ reviewed verdict (`docs/unused_code.md`). Nothing the analysis can reach is
 **Behaviour.** The event test compares a shifted build with the original
 over every story state and location, the menu sessions and every target
 without a difference (2026-10-03: 11.25 million events, 16 at a different
-logic frame). It counts crashes separately from differences, and two kinds
-remain, neither a layout fault: the Test2 debug screens' glyph underrun, and
+logic frame). It counts crashes separately from differences and groups them by
+location: 31 crash in both builds (12 at Test2, 19 at the awards ceremony)
+and one in the padded build only, all of two kinds, neither a layout fault: the Test2 debug screens' glyph underrun, and
 `GetSpeakerVoice`'s wild return at the awards ceremony (location `$1a`,
 entry 11), which the test cuts at its taint but which then crashes under
 the test's breakpoints in one or both builds, and which `make FIXES=1`

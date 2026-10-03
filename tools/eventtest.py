@@ -1013,6 +1013,7 @@ def main():
                 f"location {locs[b][0]:#04x} entry {entry}")
 
     bad, unsure, crashes, events, shifted, tainted, dropouts, both = [], [], [], 0, 0, 0, 0, 0
+    shared = {}
 
     def crash_text(c):
         return "ran" if not c else (f"crashed ({c['why']}, PC ${c['pc']:04x}, SP ${c['sp']:04x}) "
@@ -1029,6 +1030,8 @@ def main():
                     # finding (not a layout fault) when only one does
                     if x.get("crash") and y.get("crash"):
                         both += 1
+                        where_ = (unit[2], x["entry"]) if unit[0] == "story" else (unit[1], None)
+                        shared.setdefault(where_, []).append((unit, x["entry"], x["crash"]))
                     else:
                         crashes.append((unit, x["entry"], f"base {crash_text(x.get('crash'))}, "
                                                           f"rom {crash_text(y.get('crash'))}"))
@@ -1051,6 +1054,10 @@ def main():
     for label, rows in (("differs", bad), ("crashed", crashes), ("inconclusive", unsure)):
         for unit, entry, what in rows:
             print(f"    {label}: {where(unit, entry)}: {what}")
+    for key, rows in sorted(shared.items(), key=lambda kv: -len(kv[1])):
+        whys = sorted({f"{c['why']} at ${c['pc']:04x}" for _, _, c in rows})
+        print(f"    crashed in both, {len(rows)}x at {where(rows[0][0], rows[0][1]).split(', ', 1)[-1]}: "
+              f"{'; '.join(whys)}")
     return 1 if bad else 0
 
 
