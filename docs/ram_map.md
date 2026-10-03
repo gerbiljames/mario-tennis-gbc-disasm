@@ -6,7 +6,7 @@ Cartridge SRAM is `$a000`-`$bfff`, WRAM `$c000`-`$dfff` (banks 1-7 at
 and its comment there is the per-address note: size, meaning, writers and
 readers, and the value lists (locations, BGM ids, game modes, courts,
 character ids, the `wCurrentMinigameStoryMatch` match ids). The save-flag
-bits are on the `SAVEFLAG_*` constants (`include/constants.inc`, see
+bits are on the `SAVEFLAG_*` constants (`include/constants/`, see
 `docs/save_format.md`). Where the
 [RetroAchievements Code Notes](https://retroachievements.org/game/5043) named
 an address, the symbol keeps that name; the rest are named from the code.

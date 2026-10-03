@@ -6,7 +6,7 @@ index and reads the command at base + index * 2. One command is four bytes:
 `$ac count, target` (snd_call), whose target word is the byte offset of a
 command from the track's start. `decode` turns a track's bytes into
 commands and refuses anything that does not fit exactly; `render` writes
-them as `snd_*` macro rows (include/macros.inc) that assemble back to the
+them as `snd_*` macro rows (include/macros/) that assemble back to the
 same bytes; `encode` reads such rows back, which is what `make check` uses
 to prove the round trip.
 

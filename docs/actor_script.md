@@ -3,7 +3,7 @@
 Overworld/story actors (placed by `map_actor` records) run a small stack-less
 bytecode: 1-byte opcodes, each followed by 0–4 operand bytes. Script blobs are
 labelled `ActorScript_*` and written with the `as_*` macros
-(`include/macros.inc`).
+(`include/macros/`).
 
 This is unrelated to the 16-byte *object definition* selected by
 `map_actor`'s `obj_id` via the `$04:$4f75` table (`LoadActorObjectDef`,

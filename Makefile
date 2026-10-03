@@ -44,7 +44,7 @@ $(ROM): $(OBJS)
 # of main.asm.
 PRELUDE := include/hardware.inc include/macros.inc include/constants.inc include/text_ids.inc include/flag_constants.inc include/text_codes.inc include/ram_mirrored.inc include/actor_roles.inc
 
-$(BUILD)/main.o: main.asm $(PRELUDE) | $(BUILD)/rgbdscheck.o
+$(BUILD)/main.o: main.asm $(PRELUDE) $(wildcard include/*/*.inc) | $(BUILD)/rgbdscheck.o
 	$(RGBASM) -E $(ASDEFS) -I include $(PRELUDE:%=-P %) -o $@ $<
 
 $(BUILD)/ram.o: $(RAM_SRCS) | $(BUILD)/rgbdscheck.o

@@ -147,7 +147,7 @@ developer/test locations.
 ### The `map_tree`
 
 Seven words copied to `$c286`, one per sub-table; in the source, seven `dw`
-rows commented with their slot names (`include/macros.inc`):
+rows commented with their slot names (`include/macros/`):
 
 | slot | WRAM ptr | content | consumer |
 | --- | --- | --- | --- |
@@ -222,7 +222,7 @@ slot may hold several back-to-back lists: scene variants swapped in by
 `ScriptRespawnLocationActors` (`$0a:$4152`, which re-runs
 `InitLocationActors` with another list pointer).
 
-Slots are fixed (`include/constants.inc`): `$00` `ACTOR_PLAYER`, `$01`
+Slots are fixed (`include/constants/`): `$00` `ACTOR_PLAYER`, `$01`
 `ACTOR_PLAYER_SHADOW`, `$02` `ACTOR_PARTNER`, list entry *i* in slot `3+i`;
 24 slots of `$40` bytes from `$d000`, WRAM bank `$04`.
 
@@ -509,7 +509,7 @@ player in place.
 | where | WRAM `$c9c0`-`$c9df` (32 bytes), in the saved story-slot image | SRAM `$a040`-`$a05f` |
 | scope | per story slot | global |
 | accessors | `rst $20/$28/$30` → `SetGameFlagCmd`/`ClearGameFlagCmd`/`TestGameFlagCmd` (`$00:$255e`/`$256b`/`$2551`, inline operand) over `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$2509`/`$2523`/`$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
-| names | 137 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants.inc` |
+| names | 137 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants/` |
 
 Both use one encoding: flag number = `byte * 8 + bit`; the inline operand is
 `bit << 5` then the byte index; the mask is `$80 >> bit`. `test_flag` leaves

@@ -25,7 +25,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
-# The stack grows down from STACK_TOP ($d000, include/constants.inc) and has
+# The stack grows down from STACK_TOP ($d000, include/constants/) and has
 # no symbol; the deepest reach observed (a doubles match, the overworld) is
 # $cf34, so the top 512 bytes of WRAM0 are reserved for it, not free.
 STACK_ZONE = 0xCE00

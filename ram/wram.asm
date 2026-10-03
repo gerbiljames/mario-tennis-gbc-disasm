@@ -79,7 +79,7 @@ wMasterPalettes:: ds 128
 ; 0x1d - Peach's Castle
 ; 0x1e-0x29 - Final Credits Sequence
 ;
-; 0x01-0x04 are debug maps (STORYLOC_* in include/constants.inc has every id; one StoryLocationTable_0a record each). The location popup's text id is $0179 + id (LoadStoryLocationHeader)
+; 0x01-0x04 are debug maps (STORYLOC_* in include/constants/ has every id; one StoryLocationTable_0a record each). The location popup's text id is $0179 + id (LoadStoryLocationHeader)
 wStoryModeCurrentLocation:: db
 
 ; [8-bit] Scene id of the loaded story location (story_location byte 1); passed to LoadStorySceneGraphics, which indexes SceneGfxSlotTable with it
@@ -1435,7 +1435,7 @@ wSaveAndQuitRequest:: db
 ; 0x09 - Link-cable Versus Match
 ; 0x0a - Story Mode - Dream Match
 ;
-; See GAMEMODE_* in include/constants.inc. Bank $38 sets 0x09 right after RunLinkCharSelectScreen. SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers index it unguarded, 11 entries each
+; See GAMEMODE_* in include/constants/. Bank $38 sets 0x09 right after RunLinkCharSelectScreen. SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers index it unguarded, 11 entries each
 wGameMode:: db
 
 ; [8-bit] Nonzero makes ResetMatchState keep the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps them); cleared after use
@@ -3150,7 +3150,7 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ; Fields are ACTORF_* offsets (`ld hl, ACTORF_* / add hl, bc`); the
 ; field-size table the script opcodes use is ActorFieldTypeTable_04.
 ; overworld actors (WRAM bank $04)
-; [24 x ACTOR_SIZE] Actor slots; fields are the ACTORF_* offsets (include/constants.inc). A slot is free when ACTORF_SCRIPT + 1 is zero
+; [24 x ACTOR_SIZE] Actor slots; fields are the ACTORF_* offsets (include/constants/). A slot is free when ACTORF_SCRIPT + 1 is zero
 wActors:: ds 1536
 	export_size wActors
 

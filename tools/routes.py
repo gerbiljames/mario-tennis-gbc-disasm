@@ -26,7 +26,7 @@ DEBUG = {"RunDebugWarpMenu"}
 def scan():
     """(rows, ways): rows = [(loc, entry, file, line, marked)], ways = {(loc, entry or None)}."""
     locs = {m.group(1): int(m.group(2), 16) for m in re.finditer(
-        r"^def (STORYLOC_\w+)\s+equ \$([0-9a-f]+)", (ROOT / "include" / "constants.inc").read_text(), re.M)}
+        r"^def (STORYLOC_\w+)\s+equ \$([0-9a-f]+)", "\n".join(f.read_text() for f in sorted((ROOT / "include" / "constants").glob("*.inc"))), re.M)}
     lines, origin = [], []
     for h in holders():
         L, O = bank_lines(h)

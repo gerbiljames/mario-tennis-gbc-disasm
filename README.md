@@ -109,7 +109,7 @@ strings, the 315 sound-channel scripts) stays in `data/`.
   enforces it.
 - **Notes** above a routine say what the name cannot: what it does, its
   arguments, what is wrong with it.
-- **Macros** (`include/macros.inc`) stand for the idioms the code is built
+- **Macros** (`include/macros/`) stand for the idioms the code is built
   from and expand to the original bytes: `farcall` (`rst $18`), `sound`
   (`rst $08`), `wram_bank` / `push_wram_bank` / `pop_wram_bank`,
   `ld_hl_indexed` (`hl = Table + a`), `wait_frames`, the register-pair
@@ -187,7 +187,7 @@ because the layout is recomputed rather than restated:
   `court_positions` and `score_rule`.
 - **Ids are constants** (characters, courts, scenes, game modes, story
   locations and stages, minigames, shot types, sounds, menu items, link
-  roles and tokens), in families in `include/constants.inc` whose headers
+  roles and tokens), in families in `include/constants/` whose headers
   name the RAM symbol that carries them.
 - **Assets are referenced by name.** A `tileblock` or `screen_asset` row in
   bank `$39` defines its `TILEBLOCK_*` / `SCREENASSET_*` index, so inserting

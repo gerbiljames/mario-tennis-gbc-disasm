@@ -59,12 +59,12 @@ TEXT_CODES.update({c: f"TX_NEWLINE_{c:02X}" for c in range(0x14, 0x1E)})
 
 
 def _char_names():
-    """The CHAR_* roster ids of include/constants.inc, by value: the operand
+    """The CHAR_* roster ids of include/constants/, by value: the operand
     of TX_SHORT_TEXT is a character id (short text $1b + id is the roster
     name), so the pools spell it with the character's name."""
     names = {}
     try:
-        for line in (ROOT / "include" / "constants.inc").read_text().splitlines():
+        for line in "\n".join(f.read_text() for f in sorted((ROOT / "include" / "constants").glob("*.inc"))).splitlines():
             m = re.match(r"def (CHAR_\w+)\s+equ \$([0-9a-f]{2})\b", line)
             if m and int(m.group(2), 16) < 0x20:
                 names.setdefault(int(m.group(2), 16), m.group(1))
@@ -77,7 +77,7 @@ CHAR_NAMES = _char_names()
 
 
 def render_string(chunk: bytes) -> list:
-    """Render one string as text/line/page macro lines (see macros.inc).
+    """Render one string as text/line/page macro lines (see include/macros/).
     Segments are split on the $01/$02 control bytes; the other control codes
     are written by name (TEXT_CODES), TX_SHORT_TEXT keeps its operand byte
     numeric, and anything else stays a numeric arg, so any input reassembles
@@ -241,7 +241,7 @@ def render_palettes(data: bytes) -> str:
     colours as 5-bit r,g,b components, the decoded RGB in a comment -- or as
     raw `dw` words when a colour uses bit 15, which the macro cannot spell.
     Reassembles identically."""
-    out = ["; GBC palettes, 4 colors each as 5-bit r,g,b (include/macros.inc palette)"]
+    out = ["; GBC palettes, 4 colors each as 5-bit r,g,b (include/macros/ palette)"]
     for pi in range(len(data) // 8):
         words = [data[pi * 8 + c * 2] | (data[pi * 8 + c * 2 + 1] << 8)
                  for c in range(4)]
@@ -446,7 +446,7 @@ def render_squares(data: bytes) -> str:
 
 def render_sound_index(data: bytes) -> str:
     """Render a PlaySound index table as `sound_entry bank, voices, record`
-    macro calls (see include/macros.inc). First byte packs voice count (high
+    macro calls (see include/macros/). First byte packs voice count (high
     nibble) and bank low nibble (bank = $70 | nibble); second byte is the
     first channel-record index into that bank's SoundTable_*."""
     out = []

@@ -81,7 +81,7 @@ CONDITIONAL = re.compile(r"^(ret (nz|z|nc|c)$|(jp|jr) (nz|z|nc|c),)")
 def macros():
     """name -> (names its body mentions, whether its body is code)."""
     refs, is_code = collections.defaultdict(set), {}
-    for inc in (ROOT / "include").glob("*.inc"):
+    for inc in (ROOT / "include").rglob("*.inc"):
         mac = None
         for line in inc.read_text().split("\n"):
             m = re.match(r"\s*MACRO (\w+)", line)
@@ -100,7 +100,7 @@ def macros():
                     refs[mac].add(t)
     # a macro made of code macros is code
     for _ in range(4):
-        for inc in (ROOT / "include").glob("*.inc"):
+        for inc in (ROOT / "include").rglob("*.inc"):
             mac = None
             for line in inc.read_text().split("\n"):
                 m = re.match(r"\s*MACRO (\w+)", line)
@@ -275,7 +275,7 @@ class Graph:
 
 def constants():
     out = {}
-    for inc in (ROOT / "include").glob("*.inc"):
+    for inc in (ROOT / "include").rglob("*.inc"):
         for m in re.finditer(r"^def (\w+)\s+equ \$([0-9a-f]+)", inc.read_text(), re.M | re.I):
             out[m.group(1)] = int(m.group(2), 16)
     return out

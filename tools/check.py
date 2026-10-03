@@ -231,7 +231,7 @@ def check_label_scopes(fail):
             if _GLOBAL_RE.match(line):
                 continue
             words.update(re.findall(r"\b([A-Za-z_]\w*)\b", line.split(";")[0]))
-    for inc in (ROOT / "include").glob("*.inc"):
+    for inc in (ROOT / "include").rglob("*.inc"):
         words.update(re.findall(r"\b([A-Za-z_]\w*)\b", inc.read_text()))
     n = 0
     for h, lines in texts.items():

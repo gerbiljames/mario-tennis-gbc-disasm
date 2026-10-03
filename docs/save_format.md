@@ -26,7 +26,7 @@ the `FarPtr_` slots) with `d` = byte index (0-`$1f`) and `e` = `bit << 5`
 (`$0720` is byte 7, bit 1); the mask is `$80 >> bit`
 (`SaveFlagMaskTable_03`, 03:4d7e) applied to `$a040 + d` (`sSaveFlags`). A
 flag's *number* is `byte * 8 + bit`; the `SAVEFLAG_*` constants in
-`include/constants.inc` hold each `de` id, and every immediate call site
+`include/constants/` hold each `de` id, and every immediate call site
 uses the name.
 
 **Only bytes `$00`-`$07` are ever used** — 64 of the 256 bits. The rest
@@ -96,7 +96,7 @@ re-init.
 ## Block directory entry (16 bytes, at `$a060 + 16*i`)
 
 In the source the fields are `SAVEDIR_VALID` ... `SAVEDIR_TAG`
-(`include/constants.inc`), an entry is `sSaveBlockDirectory + id *
+(`include/constants/`), an entry is `sSaveBlockDirectory + id *
 SAVEDIR_ENTRY_SIZE`, and the block ids the code passes are `SAVEBLOCK_*`
 (a bank-1 backup is `id + SAVEBLOCK_BACKUP`).
 

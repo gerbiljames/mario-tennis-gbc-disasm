@@ -124,7 +124,7 @@ A distance of 2048 at minimum length would encode as `$0000`, the terminator;
 `DecompressDataFromBank` (`src/home/vectors_00.asm`) banks in `h`, reads the
 word at `$40:l` and calls `DecompressData` on it. A **slot word** `bbss` thus
 means "bank `$bb`, entry `ss/2` of its `$4000` directory": the encoding `dslot`
-emits (`include/macros.inc`) and `CopyDataFromBank` (`$00:$021a`) uses for
+emits (`include/macros/`) and `CopyDataFromBank` (`$00:$021a`) uses for
 uncompressed payloads. 282 `call` sites in `src/` reach one of the two.
 
 ### 1.5 The corpus
@@ -195,7 +195,7 @@ VRAM bank and destination, so a queued copy is bank-safe.
 ### 2.3 The VRAM bank rides in bit 13 of the destination
 
 ```asm
-def VRAM_BANK1 equ $2000        ; include/constants.inc
+def VRAM_BANK1 equ $2000        ; include/constants/
 ```
 
 `QueueVRAMCopy` does `bit 5, d` to select `rVBK` and `res 5, d` to recover the
@@ -210,7 +210,7 @@ other routines take (`InitNumberSpriteGfx`, `CopyMugshotBufferToVram`,
 A word in `$8000`-`$9fff` is named by what consumes it, not its range. Sprite
 positions are `ld_xy de, x, y` (x in `d`, y in `e`, as `QueueSprite` takes
 them); BG cells handed to text and window routines are `ld_cell de, column,
-row` (`include/macros.inc`). Left as numbers: a packed attribute/tile pair
+row` (`include/macros/`). Left as numbers: a packed attribute/tile pair
 (`ld bc, $800d` for `WriteWindowCellTileAttr`), a clamped return value
 (`ld hl, $8001` in `GetTangent`, `$00:$1793`), two `ld bc, $8000` arguments
 to `InitCa00RecordFromCharId` in `LoadStorySlot`, and three `map_script` flag
@@ -256,7 +256,7 @@ source carry a `(tilemap:W)` comment on their first line. Both use:
 ```
 
 `tilemap_row` asserts the byte count against the width and `tilemap_end` the
-row count and total size (`include/macros.inc`), so a mis-declared width fails
+row count and total size (`include/macros/`), so a mis-declared width fails
 the build. A trailing partial row stays literal `db`.
 
 ---
@@ -377,7 +377,7 @@ path is not a second interpretation of the table.
 A **sprite template** is a list of 4-byte OAM rows ended by a single `$80`:
 
 ```asm
-	oam_sprite dy, dx, tile, attr      ; include/macros.inc
+	oam_sprite dy, dx, tile, attr      ; include/macros/
 	...
 	oam_sprite_end                     ; $80
 ```

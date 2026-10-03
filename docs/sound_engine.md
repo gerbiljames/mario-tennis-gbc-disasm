@@ -56,7 +56,7 @@ index). Loop points and the `$b0`-`$bf` loops work through four 3-byte
 **slots** per channel (`GetChannelLoopSlot`: `wSndLoopSlots` + channel × 12 +
 slot × 3; a counter and a saved index; the shipped scripts use slots 0-3), so
 they carry no addresses. The macro on each row is what the extracted scripts
-are written with (`include/macros.inc`):
+are written with (`include/macros/`):
 
 | Opcode | Operand | Macro | Meaning |
 |---|---|---|---|
@@ -123,7 +123,7 @@ renders any blob by hand.
 ## Sound ids in the source
 
 Every `sound` site names its id with a `BGM_*` / `SFX_*` constant from
-`include/constants.inc`. The ids below `$80` that the sound test lists and
+`include/constants/`. The ids below `$80` that the sound test lists and
 the match engine use are named by what they accompany on screen. The rest
 are named from their call sites or from the table rows that select them (the
 drill and lesson themes of the match-settings tables, the three

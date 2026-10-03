@@ -5,7 +5,7 @@
 time as a `.tilemap` text file beside its `.bin`: one `tilemap_row` line per
 row of W cells, hex per cell, bracketed by `tilemap_begin W, H` and
 `tilemap_end` -- the same lines the `tilemap` spec renders inline for raw
-regions, so the file assembles with include/macros.inc too. The Makefile
+regions, so the file assembles with include/macros/ too. The Makefile
 encodes an edited `.tilemap` back into its `.bin` (compressing again if the
 blob is an `lz_*` stream) and `make check` round-trips every grid.
 

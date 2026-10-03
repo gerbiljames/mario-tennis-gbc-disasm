@@ -152,7 +152,7 @@ de = destination, with the VRAM bank in bit 13
 c  = length in 16-byte blocks
 ```
 
-Bit 13 is `VRAM_BANK1 equ $2000` (`include/constants.inc`), tested with
+Bit 13 is `VRAM_BANK1 equ $2000` (`include/constants/`), tested with
 `bit 5, d` and stripped with `res 5, d`; the source writes `$9800 + VRAM_BANK1`
 for `$9800` in VRAM bank 1.
 
@@ -269,7 +269,7 @@ mechanism belongs to the character-data screens only.
 | `DrawWindowFrame` | `$00:$2b68` | `de` = tile destination, `bc` = attribute destination, `h` = width, `l` = height. Clears the interior to tile `$20` and `wWindowFrameAttr`, then draws the border. `DrawWindowFramePriority`/`DrawWindowFrameNoPriority` (`$2b5c`/`$2b63`) preset that attribute to `$80` (BG-over-OBJ) or `$00`. |
 | `ApplyTilemapPatchList` | `$1d:$4bb6` | §3.2. |
 
-The data shapes these consume are macros in `include/macros.inc`:
+The data shapes these consume are macros in `include/macros/`:
 `tilemap_begin`/`tilemap_row`/`tilemap_end`, `rect_pair` (for
 `CopyTextRectPair`, `$06:$5045`), `rect_ptrs`, and `tilemap_copy`/`tilemap_rect`
 (the two `CopyTilemapRect` record formats, driven at `$16:$4a71` and `$39:$4e11`).
@@ -350,7 +350,7 @@ scenery back" path.
 ### 4.1 `farptr` tables
 
 Every bank that exposes anything opens with a `farptr` table at `$4000`. The
-`farcall` macro (`include/macros.inc:9`) emits `rst Rst18` plus
+`farcall` macro (`include/macros/:9`) emits `rst Rst18` plus
 `LOW(FarPtr_x), BANK(FarPtr_x)`; `FarCall` (`$00:$01b6`) switches banks, indexes
 the table, dispatches, and returns past the operands. A bank's `$4000` table is
 its public interface — read it first.
@@ -358,7 +358,7 @@ its public interface — read it first.
 Asset banks use the same table for data: a `dw SomeBlob` slot is resolved by
 `CopyDataFromBank` (`$00:$021a`) or `DecompressDataFromBank` (`$00:$0234`).
 `FarPtr_*`/`DataPtr_*` labels are named after their targets; `dslot`
-(`include/macros.inc:33`) writes a `(slot, bank)` word pair for tables whose
+(`include/macros/:33`) writes a `(slot, bank)` word pair for tables whose
 loaders read the slot reference through RAM.
 
 ### 4.2 Bank `$39` is the shared screen library
@@ -387,7 +387,7 @@ palettes (`$40e5`-`$40f1`).
 caller's `de`/`c` to `QueueVRAMCopy`, restoring the WRAM bank around it.
 
 The `tileblock`/`screen_asset` macros define `TILEBLOCK_Name`/`SCREENASSET_Name`
-by row position (`include/macros.inc`); call sites and the bank `$18` per-scene
+by row position (`include/macros/`); call sites and the bank `$18` per-scene
 id lists use the names, so inserting a row renumbers consistently. To add a
 block: a `DataPtr_` slot in some bank's `$4000` table, a `tileblock` row, and
 the name at the call site.
@@ -777,7 +777,7 @@ then a loop of `Unused_1a_DrawPauseMenuSettingValues`,
 `Unused_05_RunMenuSelectionShared` and `CloseWindow` unless the chosen row's bit
 is set in `wMenuKeepOpenRowMask` (`$cb29`; bit 7 = present, rotated by the row
 index) — the rows that keep the window open after a change. Menu
-contents are `menu_def` records (`include/macros.inc`). Item ids are the
+contents are `menu_def` records (`include/macros/`). Item ids are the
 `MATCHMENUITEM_*` / `STORYMENUITEM_*` constants, which index the item's word
 art, its 3×2 label rect and its caption text id alike.
 
@@ -832,7 +832,7 @@ blits) happens with the LCD off, where `QueueVRAMCopy` transfers immediately.
 ### 8.2 The menu tree pattern
 
 Banks `$0e`-`$15` are story-mode screen banks sharing one structure, documented
-in the story-mode map-script comment in `include/macros.inc`. A location or
+in the story-mode map-script comment in `include/macros/`. A location or
 screen owns a **7-slot `dw` tree**; a bank-level `$4000` directory may point at
 several (`$0f` has three, `$14` four). Story-map slot roles: 0 entry points,
 1 exit triggers, 2 actors, 3 NPC scripts, 4 facing scripts, 5 tile triggers,

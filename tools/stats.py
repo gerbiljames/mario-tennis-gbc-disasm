@@ -39,9 +39,9 @@ def labels():
 
 
 def code_macros():
-    """Macros (include/macros.inc) whose body has a CPU instruction or uses another code macro."""
+    """Macros (include/macros/*.inc) whose body has a CPU instruction or uses another code macro."""
     bodies = {m.group(1).lower(): m.group(2) for m in re.finditer(
-        r"^MACRO (\w+)[^\n]*\n(.*?)^ENDM", (ROOT / "include" / "macros.inc").read_text(), re.M | re.S)}
+        r"^MACRO (\w+)[^\n]*\n(.*?)^ENDM", "\n".join(f.read_text() for f in sorted((ROOT / "include" / "macros").glob("*.inc"))), re.M | re.S)}
     ops = {n: {w.lower() for w in re.findall(r"^\s+(\w+)", b, re.M)}
            for n, b in bodies.items()}
     code = {n for n, o in ops.items() if o & MNEMONICS}
