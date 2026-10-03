@@ -255,7 +255,7 @@ NetGameMatch1Cases2DrillShotTable:
 	; $55ad, 10 bytes (drill_outcomes)
 	drill_outcomes $ff, $ff, $ff, $ff, $1d, $1d, $14, $ff, $ff, $14
 NetGameMatch1Cases3:
-	ld a, $1b ; $55b7
+	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE ; $55b7
 	ld b, $0d ; $55b9
 	call QueueDrillResultMessage ; $55bb
 	ld a, [wTotalPointsScoredInCurrentGame] ; $55be
@@ -263,7 +263,7 @@ NetGameMatch1Cases3:
 	call TestCharStateBit4 ; $55c3
 	or a ; $55c6
 	jp z, UnusedStoreMatchAbortFlag_4.storeMatchAbortFlag ; $55c7
-	ld a, $1f ; $55ca
+	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_THE_BALL_SO_YOU_FAIL ; $55ca
 	ld b, $0d ; $55cc
 	call QueueDrillResultMessage ; $55ce
 	ld a, [wShotRecoilVariant] ; $55d1
@@ -330,7 +330,7 @@ NetGameMatch1Cases4:
 	xor a ; $5624
 	ret ; $5625
 .queueDrillResultMessage:
-	ld a, $1d ; $5626
+	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $5626
 	ld b, $0d ; $5628
 	call QueueDrillResultMessage ; $562a
 	jp UnusedStoreMatchAbortFlag_4.storeMatchAbortFlag ; $562d
@@ -579,7 +579,7 @@ NetGameMatch2Cases2:
 	ld a, [wBallBounceCount] ; $57f7
 	or a ; $57fa
 	ret z ; $57fb
-	ld a, $18 ; $57fc
+	ld a, DRILLMSG_I_DIDNT_LOB_THE_BALL_SO_YOU_GET_A_POINT ; $57fc
 	ld b, $0d ; $57fe
 	call QueueDrillResultMessage ; $5800
 	ld a, [wCurrentShotType] ; $5803
@@ -626,7 +626,7 @@ NetGameMatch2Cases2DrillShotTable:
 	; $583b, 10 bytes (drill_outcomes)
 	drill_outcomes $ff, $ff, $ff, $ff, $1d, $1d, $15, $ff, $ff, $15
 NetGameMatch2Cases3:
-	ld a, $1c ; $5845
+	ld a, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_SO_YOU_FAIL ; $5845
 	ld b, $0d ; $5847
 	call QueueDrillResultMessage ; $5849
 	ld a, [wShotRecoilVariant] ; $584c
@@ -693,7 +693,7 @@ NetGameMatch2Cases4:
 	xor a ; $589f
 	ret ; $58a0
 .queueDrillResultMessage:
-	ld a, $1d ; $58a1
+	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $58a1
 	ld b, $0d ; $58a3
 	call QueueDrillResultMessage ; $58a5
 	jp .storeMatchAbortFlag2 ; $58a8
@@ -849,18 +849,18 @@ NetGameMatch3HandlePointEndTable:
 	dw NetGameMatch3HandlePointEndTable.queueDrillResultMessage2 ; $59b8 jumptable
 	dw NetGameMatch3HandlePointEndTable.queueDrillResultMessage4 ; $59ba jumptable
 .queueDrillResultMessage:
-	ld a, $17 ; $59bc
+	ld a, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT ; $59bc
 	ld b, $0d ; $59be
 	call QueueDrillResultMessage ; $59c0
 	ld a, [wPointOutcome] ; $59c3
 	cp POINTOUTCOME_WINNER ; $59c6
 	jr z, .checkTotalPointsScoredInCurrentGame ; $59c8
-	ld a, $19 ; $59ca
+	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_3 ; $59ca
 	ld b, $0d ; $59cc
 	call QueueDrillResultMessage ; $59ce
 	jp .checkTotalPointsScoredInCurrentGame2 ; $59d1
 .queueDrillResultMessage2:
-	ld a, $1b ; $59d4
+	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE ; $59d4
 	ld b, $0d ; $59d6
 	call QueueDrillResultMessage ; $59d8
 	ld a, [wTotalPointsScoredInCurrentGame] ; $59db
@@ -874,7 +874,7 @@ NetGameMatch3HandlePointEndTable:
 	ld a, [hl] ; $59e8
 	or a ; $59e9
 	jr z, .checkTotalPointsScoredInCurrentGame2 ; $59ea
-	ld a, $16 ; $59ec
+	ld a, DRILLMSG_WAY_TO_PLAY_THE_NET_YOU_GET_A_POINT ; $59ec
 	ld b, $0d ; $59ee
 	call QueueDrillResultMessage ; $59f0
 	ld a, [wPointOutcome] ; $59f3
@@ -882,31 +882,31 @@ NetGameMatch3HandlePointEndTable:
 	jr z, .checkTotalPointsScoredInCurrentGame ; $59f8
 	jr .checkTotalPointsScoredInCurrentGame2 ; $59fa
 .queueDrillResultMessage3:
-	ld a, $1d ; $59fc
+	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $59fc
 	ld b, $0d ; $59fe
 	call QueueDrillResultMessage ; $5a00
 	ld a, [wPointOutcome] ; $5a03
 	cp POINTOUTCOME_WINNER ; $5a06
 	jr z, .checkTotalPointsScoredInCurrentGame2 ; $5a08
 	push af ; $5a0a
-	ld a, $1e ; $5a0b
+	ld a, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET_2 ; $5a0b
 	ld b, $0d ; $5a0d
 	call QueueDrillResultMessage ; $5a0f
 	pop af ; $5a12
 	cp $07 ; $5a13
 	jr z, .checkTotalPointsScoredInCurrentGame ; $5a15
-	ld a, $17 ; $5a17
+	ld a, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT ; $5a17
 	ld b, $0d ; $5a19
 	call QueueDrillResultMessage ; $5a1b
 	jr .checkTotalPointsScoredInCurrentGame ; $5a1e
 .queueDrillResultMessage4:
-	ld a, $17 ; $5a20
+	ld a, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT ; $5a20
 	ld b, $0d ; $5a22
 	call QueueDrillResultMessage ; $5a24
 	ld a, [wPointOutcome] ; $5a27
 	or a ; $5a2a
 	jr nz, .checkTotalPointsScoredInCurrentGame ; $5a2b
-	ld a, $1d ; $5a2d
+	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $5a2d
 	ld b, $0d ; $5a2f
 	call QueueDrillResultMessage ; $5a31
 	jr .checkTotalPointsScoredInCurrentGame2 ; $5a34
@@ -924,7 +924,7 @@ NetGameMatch3HandlePointEndTable:
 	dec a ; $5a46
 	ret ; $5a47
 .checkPointWinLoseFlag:
-	ld a, $ff ; $5a48
+	ld a, DRILLMSG_HIDE ; $5a48
 	ld [wDrillMessageId], a ; $5a4a
 	xor a ; $5a4d
 	ret ; $5a4e

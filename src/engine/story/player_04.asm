@@ -259,9 +259,9 @@ CheckTileTriggerAtPoint:
 	farcall ReadBehaviorMapCell ; $5145
 	ld d, a ; $5148
 	and $0f ; $5149
-	cp $01 ; $514b
+	cp BEHAVIOR_TRIGGER ; $514b
 	jr z, .scriptTrigger ; $514d
-	cp $03 ; $514f
+	cp BEHAVIOR_EXIT ; $514f
 	jr z, .exitTrigger ; $5151
 	xor a ; $5153
 	jr .done ; $5154

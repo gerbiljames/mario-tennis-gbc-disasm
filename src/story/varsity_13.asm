@@ -411,11 +411,11 @@ SetupVarsityCourtSceneVariant:
 	ld hl, VarsityCourtNpcScriptsD_13 ; $61b3
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61b6
 	farcall WriteStoryStateWord ; $61b9
-	ld a, $18 ; $61bc
-	map_cell $08, $10 ; $61be
+	ld a, BEHAVIOR_ACTION | 1 << 4 ; $61bc
+	map_cell 8, 16 ; $61be
 	farcall WriteBehaviorMapCell ; $61c2
-	ld a, $18 ; $61c5
-	map_cell $06, $10 ; $61c7
+	ld a, BEHAVIOR_ACTION | 1 << 4 ; $61c5
+	map_cell 6, 16 ; $61c7
 	farcall WriteBehaviorMapCell ; $61cb
 	script_set_position ACTOR_COURTYARD_CURT, 5.0, 21.0 ; $61ce
 	script_face ACTOR_COURTYARD_CURT, FACE_RIGHT ; $61d9
@@ -429,11 +429,11 @@ SetupVarsityCourtSceneVariant:
 	ld hl, VarsityCourtNpcScriptsC_13 ; $61ee
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61f1
 	farcall WriteStoryStateWord ; $61f4
-	ld a, $18 ; $61f7
-	map_cell $08, $10 ; $61f9
+	ld a, BEHAVIOR_ACTION | 1 << 4 ; $61f7
+	map_cell 8, 16 ; $61f9
 	farcall WriteBehaviorMapCell ; $61fd
-	ld a, $18 ; $6200
-	map_cell $06, $10 ; $6202
+	ld a, BEHAVIOR_ACTION | 1 << 4 ; $6200
+	map_cell 6, 16 ; $6202
 	farcall WriteBehaviorMapCell ; $6206
 	ret ; $6209
 .stage2:
@@ -458,11 +458,11 @@ SetupVarsityCourtSceneVariant:
 	script_set_position ACTOR_VARSITY_COURT_B_MARK, 63.0, 63.0 ; $6238
 	script_face ACTOR_VARSITY_COURT_B_BOB, FACE_RIGHT ; $6243
 	script_set_actor_script ACTOR_VARSITY_COURT_B_CURT, ActorScript_13_30 ; $624a
-	ld a, $18 ; $6255
-	map_cell $08, $10 ; $6257
+	ld a, BEHAVIOR_ACTION | 1 << 4 ; $6255
+	map_cell 8, 16 ; $6257
 	farcall WriteBehaviorMapCell ; $625b
-	ld a, $18 ; $625e
-	map_cell $06, $10 ; $6260
+	ld a, BEHAVIOR_ACTION | 1 << 4 ; $625e
+	map_cell 6, 16 ; $6260
 	farcall WriteBehaviorMapCell ; $6264
 	script_set_position ACTOR_VARSITY_COURT_B_BETH, 15.0, 23.0 ; $6267
 	script_set_actor_script ACTOR_VARSITY_COURT_B_BETH, ActorScript_13_28 ; $6272
@@ -476,11 +476,11 @@ SetupVarsityCourtSceneVariant:
 	ld hl, VarsityCourtNpcScriptsC_13 ; $628b
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $628e
 	farcall WriteStoryStateWord ; $6291
-	ld a, $18 ; $6294
-	map_cell $08, $10 ; $6296
+	ld a, BEHAVIOR_ACTION | 1 << 4 ; $6294
+	map_cell 8, 16 ; $6296
 	farcall WriteBehaviorMapCell ; $629a
-	ld a, $18 ; $629d
-	map_cell $06, $10 ; $629f
+	ld a, BEHAVIOR_ACTION | 1 << 4 ; $629d
+	map_cell 6, 16 ; $629f
 	farcall WriteBehaviorMapCell ; $62a3
 	ret ; $62a6
 .stage5:

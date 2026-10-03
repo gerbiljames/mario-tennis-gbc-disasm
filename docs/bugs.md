@@ -269,6 +269,26 @@ chunk that lands at `$8e00` — the last of the four `$200`-byte slices that wou
 have covered `$8800`-`$8fff`, with the first three missing and the source label
 of the survivor wrong.
 
+### Fifteen drill messages point past their text bank
+
+`DrillMessageTextIds_0b` (`$0b:$45c4`) maps a drill message id to a text id.
+Ids 72-86 are the computer's side of messages 57-71 -- "Your lob didn't
+reach my court, so you fail." becomes "My lob didn't reach your court, so I
+fail." -- and the strings for them exist: text bank `$26`, strings 0-14,
+right before the ones ids 87-108 use. But the fifteen table entries carry
+bank `$25`'s selector (`$290b`-`$2919`, strings 267-281), and bank `$25` has
+only 267 strings. `FetchText_25` reads the word past the end of its offset
+table, which is string data, and fetches from wherever that points: id 74
+shows "ear.", 77 "this!", 80 "Empire team!", and the other twelve point
+outside the bank, into cartridge RAM at `$a788`-`$b692`. Bank `$26`'s strings
+0-14 are never shown.
+
+The drills reach them. `QueueDrillResultMessage` and `SetDrillMessageByServer`
+add an offset in `b` to the id when the other side served, and Stroke Match 2
+passes `b = 13` with ids 61-70 (`StrokeMatch2Cases2`, `$0b:$6892`, passes
+64, for one). Played in PyBoy, random rallies in Stroke Match 2 showed
+id 74 twice in six sessions.
+
 ### The DMG lockout screen copies a whole map from an 18-row one
 
 `ShowDmgLockoutScreen` (`$01:$6030`) decompresses `DmgLockoutTilemapLZ_01`,

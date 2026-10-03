@@ -450,7 +450,7 @@ StrokePractice2Cases2:
 	ld a, [wBallBounceCount] ; $6fbb
 	or a ; $6fbe
 	ret z ; $6fbf
-	ld a, $5b ; $6fc0
+	ld a, DRILLMSG_YOU_DIDNT_HIT_A_LOB_SO_YOU_FAIL ; $6fc0
 	ld b, $00 ; $6fc2
 	call QueueDrillResultMessage ; $6fc4
 	ld a, [wCurrentShotType] ; $6fc7
@@ -465,14 +465,14 @@ StrokePractice2Cases2:
 	cp $01 ; $6fd8
 	ld a, $00 ; $6fda
 	ret nz ; $6fdc
-	ld a, $58 ; $6fdd
+	ld a, DRILLMSG_NICE_LOB_YOU_DID_IT ; $6fdd
 	ld b, $00 ; $6fdf
 	call QueueDrillResultMessage ; $6fe1
 	call RecordDrillTargetZoneHit ; $6fe4
 	call CheckDrillTargetZoneMissed ; $6fe7
 	or a ; $6fea
 	jp nz, .nonZero ; $6feb
-	ld a, $5a ; $6fee
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3 ; $6fee
 	ld b, $00 ; $6ff0
 	call QueueDrillResultMessage ; $6ff2
 	ld hl, wDrillCounters + 3 ; $6ff5

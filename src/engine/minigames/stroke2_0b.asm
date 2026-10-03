@@ -258,7 +258,7 @@ StrokeMatch2Cases2:
 	ld a, [wBallBounceCount] ; $6892
 	or a ; $6895
 	ret z ; $6896
-	ld a, $40 ; $6897
+	ld a, DRILLMSG_YOU_DIDNT_RETURN_MY_SERVE_WITH_A_LOB_SO_YOU ; $6897
 	ld b, $0d ; $6899
 	call SetDrillMessageByServer ; $689b
 	ld a, [wCurrentShotType] ; $689e
@@ -305,7 +305,7 @@ StrokeMatch2Cases2DrillShotTable:
 	; $68d6, 10 bytes (drill_outcomes)
 	drill_outcomes $ff, $ff, $ff, $ff, $3d, $3d, $43, $ff, $ff, $43
 StrokeMatch2Cases3:
-	ld a, $46 ; $68e0
+	ld a, DRILLMSG_I_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $68e0
 	ld b, $0d ; $68e2
 	call SetDrillMessageByServer ; $68e4
 	ld a, [wTotalPointsScoredInCurrentGame] ; $68e7
@@ -334,7 +334,7 @@ StrokeMatch2Cases3:
 	xor a ; $6906
 	ret ; $6907
 .setDrillMessageByServer:
-	ld a, $43 ; $6908
+	ld a, DRILLMSG_I_PLAYED_THE_NET_SO_YOU_FAIL ; $6908
 	ld b, $0d ; $690a
 	call SetDrillMessageByServer ; $690c
 	jp .storeMatchAbortFlag ; $690f
@@ -623,7 +623,7 @@ StrokeMatch3Cases2DrillShotTable:
 	; $6b0d, 10 bytes (drill_outcomes)
 	drill_outcomes $ff, $ff, $ff, $ff, $3e, $3e, $43, $ff, $ff, $43
 StrokeMatch3Cases3:
-	ld a, $46 ; $6b17
+	ld a, DRILLMSG_I_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $6b17
 	ld b, $0d ; $6b19
 	call SetDrillMessageByServer ; $6b1b
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6b1e
@@ -652,7 +652,7 @@ StrokeMatch3Cases3:
 	xor a ; $6b3d
 	ret ; $6b3e
 .setDrillMessageByServer:
-	ld a, $43 ; $6b3f
+	ld a, DRILLMSG_I_PLAYED_THE_NET_SO_YOU_FAIL ; $6b3f
 	ld b, $0d ; $6b41
 	call SetDrillMessageByServer ; $6b43
 	jp .storeMatchAbortFlag ; $6b46

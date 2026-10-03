@@ -225,7 +225,7 @@ NetGamePractice3Cases1:
 	cp POINTOUTCOME_OUT ; $6340
 	ld a, $00 ; $6342
 	ret z ; $6344
-	ld a, $3b ; $6345
+	ld a, DRILLMSG_YOU_DIDNT_HIT_A_LONG_DEEP_SERVE_SO_YOU_FAIL ; $6345
 	ld b, $00 ; $6347
 	call QueueDrillResultMessage ; $6349
 	call RecordDrillTargetZoneHit ; $634c
@@ -311,14 +311,14 @@ NetGamePractice3Cases2DrillShotTable:
 	; $63be, 10 bytes (drill_outcomes)
 	drill_outcomes $ff, $ff, $ff, $ff, $3c, $3c, $30, $ff, $ff, $30
 NetGamePractice3Cases3:
-	ld a, $35 ; $63c8
+	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $63c8
 	ld b, $00 ; $63ca
 	call QueueDrillResultMessage ; $63cc
 	xor a ; $63cf
 	call TestCharStateBit4 ; $63d0
 	or a ; $63d3
 	jp z, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $63d4
-	ld a, $39 ; $63d7
+	ld a, DRILLMSG_YOU_DIDNT_HIT_A_DROP_SHOT_SO_YOU_FAIL ; $63d7
 	ld b, $00 ; $63d9
 	call QueueDrillResultMessage ; $63db
 	ld a, [wCurrentShotType] ; $63de

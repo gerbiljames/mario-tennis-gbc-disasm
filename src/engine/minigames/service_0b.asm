@@ -373,7 +373,7 @@ ServiceMatch1Cases2:
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $49a3
 	ld a, $00 ; $49a5
 	ret z ; $49a7
-	ld a, $04 ; $49a8
+	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $49a8
 	ld b, $06 ; $49aa
 	call QueueDrillResultMessage ; $49ac
 	jr UnusedStoreMatchAbortFlag_1.storeMatchAbortFlag ; $49af
@@ -617,7 +617,7 @@ ServiceMatch2Cases1:
 	or a ; $4b9e
 	ld a, $00 ; $4b9f
 	ret nz ; $4ba1
-	ld a, $03 ; $4ba2
+	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAILED ; $4ba2
 	ld b, $06 ; $4ba4
 	call QueueDrillResultMessage ; $4ba6
 	farcall DidBallCrossGate ; $4ba9
@@ -665,7 +665,7 @@ ServiceMatch2Cases2:
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $4bef
 	ld a, $00 ; $4bf1
 	ret z ; $4bf3
-	ld a, $04 ; $4bf4
+	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4bf4
 	ld b, $06 ; $4bf6
 	call QueueDrillResultMessage ; $4bf8
 	jr UnusedStoreMatchAbortFlag_2.storeMatchAbortFlag ; $4bfb

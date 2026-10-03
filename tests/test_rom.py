@@ -55,7 +55,9 @@ class Source(unittest.TestCase):
 
     def test_named_ids(self):
         self.assertEqual(count(r"ld hl, Text_[0-9a-f]+_\d+ ;"), 257)
-        self.assertEqual(count(r"^\tdw Text_[0-9a-f]+_\d+"), 628)
+        self.assertEqual(count(r"^\tdw Text_[0-9a-f]+_\d+"), 722)
+        self.assertGreaterEqual(count(r"\bDRILLMSG_\w+"), 65)
+        self.assertGreaterEqual(count(r"\bBEHAVIOR_\w+"), 43)
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n\.clearLoop:\n\tpush de ; \$[0-9a-f]{4}\n\tcall ClearGameFlag "),
                          3, "only the three loop bases pass a raw game-flag id")
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n\t(?:far)?call (Set|Clear|Test)GameFlag "),

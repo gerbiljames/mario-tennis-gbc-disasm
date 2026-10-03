@@ -504,8 +504,8 @@ LoadIslandOpenRoundNpcs:
 	ld [wMapSceneStage], a ; $6653
 	test_flag FLAG_DOUBLES ; $6656
 	jr nz, LoadIslandOpenRoundNpcsDoubles ; $6659
-	ld a, $f1 ; $665b
-	map_cell $0e, $14 ; $665d
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $665b
+	map_cell 14, 20 ; $665d
 	farcall WriteBehaviorMapCell ; $6661
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6664
 	jr z, .round2 ; $6667
@@ -544,11 +544,11 @@ LoadIslandOpenRoundNpcs:
 .done:
 	ret ; $66b7
 LoadIslandOpenRoundNpcsDoubles:
-	ld a, $e1 ; $66b8
-	map_cell $0e, $14 ; $66ba
+	ld a, BEHAVIOR_TRIGGER | 14 << 4 ; $66b8
+	map_cell 14, 20 ; $66ba
 	farcall WriteBehaviorMapCell ; $66be
-	ld a, $e1 ; $66c1
-	map_cell $10, $14 ; $66c3
+	ld a, BEHAVIOR_TRIGGER | 14 << 4 ; $66c1
+	map_cell 16, 20 ; $66c3
 	farcall WriteBehaviorMapCell ; $66c7
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $66ca
 	jr z, .round2 ; $66cd

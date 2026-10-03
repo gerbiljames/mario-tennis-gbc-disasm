@@ -49,7 +49,7 @@ GetFacingTileInteractionId:
 	ld d, a ; $5213
 	ld e, $00 ; $5214
 	and $0f ; $5216
-	cp $08 ; $5218
+	cp BEHAVIOR_ACTION ; $5218
 	jr nz, .done ; $521a
 	ld a, d ; $521c
 	swap a ; $521d
@@ -77,7 +77,7 @@ FindActorFacingPlayer:
 	farcall ReadBehaviorMapCell ; $5241
 	and $0f ; $5244
 	pop de ; $5246
-	cp $0c ; $5247
+	cp BEHAVIOR_TALK_REACH ; $5247
 	jr nz, .query ; $5249
 	ld hl, wActors ; $524b
 	ld de, $03c0 ; $524e
@@ -222,7 +222,7 @@ GetTileTriggerAtPlayer:
 	ld e, a ; $537c
 	ld d, $00 ; $537d
 	and $0f ; $537f
-	cp $01 ; $5381
+	cp BEHAVIOR_TRIGGER ; $5381
 	jr nz, .done ; $5383
 	ld a, e ; $5385
 	swap a ; $5386

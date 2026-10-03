@@ -238,61 +238,61 @@ SetDormRoomEventTriggerCells_13:
 	jr .clearTriggers ; $5089
 	ret ; $508b
 .enableTriggers:
-	ld a, $f1 ; $508c
-	map_cell $08, $0e ; $508e
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $508c
+	map_cell 8, 14 ; $508e
 	farcall WriteBehaviorMapCell ; $5092
-	ld a, $f1 ; $5095
-	map_cell $0a, $0e ; $5097
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $5095
+	map_cell 10, 14 ; $5097
 	farcall WriteBehaviorMapCell ; $509b
-	ld a, $f1 ; $509e
-	map_cell $0c, $0e ; $50a0
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $509e
+	map_cell 12, 14 ; $50a0
 	farcall WriteBehaviorMapCell ; $50a4
-	ld a, $f1 ; $50a7
-	map_cell $08, $10 ; $50a9
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $50a7
+	map_cell 8, 16 ; $50a9
 	farcall WriteBehaviorMapCell ; $50ad
-	ld a, $f1 ; $50b0
-	map_cell $0a, $10 ; $50b2
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $50b0
+	map_cell 10, 16 ; $50b2
 	farcall WriteBehaviorMapCell ; $50b6
-	ld a, $f1 ; $50b9
-	map_cell $0c, $10 ; $50bb
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $50b9
+	map_cell 12, 16 ; $50bb
 	farcall WriteBehaviorMapCell ; $50bf
-	ld a, $f1 ; $50c2
-	map_cell $08, $12 ; $50c4
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $50c2
+	map_cell 8, 18 ; $50c4
 	farcall WriteBehaviorMapCell ; $50c8
-	ld a, $f1 ; $50cb
-	map_cell $0a, $12 ; $50cd
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $50cb
+	map_cell 10, 18 ; $50cd
 	farcall WriteBehaviorMapCell ; $50d1
-	ld a, $f1 ; $50d4
-	map_cell $0c, $12 ; $50d6
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $50d4
+	map_cell 12, 18 ; $50d6
 	farcall WriteBehaviorMapCell ; $50da
 	ret ; $50dd
 .clearTriggers:
-	ld a, $00 ; $50de
-	map_cell $08, $0e ; $50e0
+	ld a, BEHAVIOR_NONE ; $50de
+	map_cell 8, 14 ; $50e0
 	farcall WriteBehaviorMapCell ; $50e4
-	ld a, $00 ; $50e7
-	map_cell $0a, $0e ; $50e9
+	ld a, BEHAVIOR_NONE ; $50e7
+	map_cell 10, 14 ; $50e9
 	farcall WriteBehaviorMapCell ; $50ed
-	ld a, $00 ; $50f0
-	map_cell $0c, $0e ; $50f2
+	ld a, BEHAVIOR_NONE ; $50f0
+	map_cell 12, 14 ; $50f2
 	farcall WriteBehaviorMapCell ; $50f6
-	ld a, $00 ; $50f9
-	map_cell $08, $10 ; $50fb
+	ld a, BEHAVIOR_NONE ; $50f9
+	map_cell 8, 16 ; $50fb
 	farcall WriteBehaviorMapCell ; $50ff
-	ld a, $00 ; $5102
-	map_cell $0a, $10 ; $5104
+	ld a, BEHAVIOR_NONE ; $5102
+	map_cell 10, 16 ; $5104
 	farcall WriteBehaviorMapCell ; $5108
-	ld a, $00 ; $510b
-	map_cell $0c, $10 ; $510d
+	ld a, BEHAVIOR_NONE ; $510b
+	map_cell 12, 16 ; $510d
 	farcall WriteBehaviorMapCell ; $5111
-	ld a, $00 ; $5114
-	map_cell $08, $12 ; $5116
+	ld a, BEHAVIOR_NONE ; $5114
+	map_cell 8, 18 ; $5116
 	farcall WriteBehaviorMapCell ; $511a
-	ld a, $00 ; $511d
-	map_cell $0a, $12 ; $511f
+	ld a, BEHAVIOR_NONE ; $511d
+	map_cell 10, 18 ; $511f
 	farcall WriteBehaviorMapCell ; $5123
-	ld a, $00 ; $5126
-	map_cell $0c, $12 ; $5128
+	ld a, BEHAVIOR_NONE ; $5126
+	map_cell 12, 18 ; $5128
 	farcall WriteBehaviorMapCell ; $512c
 	ret ; $512f
 SetupDormRoomSceneVariant:

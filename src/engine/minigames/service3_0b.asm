@@ -128,12 +128,12 @@ ServicePractice2QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $514c
 	cp POINTOUTCOME_DOUBLE_FAULT ; $514f
 	jr nz, .ne02 ; $5151
-	ld a, $0e ; $5153
+	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $5153
 	ld b, $00 ; $5155
 	call QueueDrillResultMessage ; $5157
 	jr .notFound ; $515a
 .ne02:
-	ld a, $11 ; $515c
+	ld a, DRILLMSG_YOU_DIDNT_USE_TOPSPIN_TO_BOUNCE_IT_OUT_OF_BOUNDS ; $515c
 	ld b, $00 ; $515e
 	call QueueDrillResultMessage ; $5160
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5163
@@ -164,19 +164,19 @@ ServicePractice2QueueOutcomeMessage:
 	ld a, [wDrillCounters + 3] ; $518d
 	cp b ; $5190
 	jr nz, .notFound ; $5191
-	ld a, $10 ; $5193
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $5193
 	ld b, $00 ; $5195
 	call QueueDrillResultMessage ; $5197
 	call CheckDrillTargetZoneMissed ; $519a
 	or a ; $519d
 	jr z, .notFound ; $519e
-	ld a, $0d ; $51a0
+	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $51a0
 	ld b, $00 ; $51a2
 	call QueueDrillResultMessage ; $51a4
 	ld a, [wPointOutcome] ; $51a7
 	cp POINTOUTCOME_WINNER ; $51aa
 	jr z, .eq06 ; $51ac
-	ld a, $0e ; $51ae
+	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $51ae
 	ld b, $00 ; $51b0
 	call QueueDrillResultMessage ; $51b2
 	jr .notFound ; $51b5
@@ -189,7 +189,7 @@ ServicePractice2QueueOutcomeMessage:
 	ld a, $ff ; $51be
 	ret ; $51c0
 .step4:
-	ld a, $ff ; $51c1
+	ld a, DRILLMSG_HIDE ; $51c1
 	ld [wDrillMessageId], a ; $51c3
 	xor a ; $51c6
 	ret ; $51c7
@@ -335,7 +335,7 @@ ServicePractice3SetupShotTarget:
 	ld a, [wSpecialShotFlag] ; $52cf
 	or a ; $52d2
 	jr nz, .nonZero ; $52d3
-	ld a, $13 ; $52d5
+	ld a, DRILLMSG_YOU_DIDNT_SERVE_WITH_NICE_TIMING_SO_YOU_FAIL ; $52d5
 	ld [wDrillMessageId], a ; $52d7
 	ret ; $52da
 .nonZero:
@@ -400,31 +400,31 @@ ServicePractice3QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $5388
 	cp POINTOUTCOME_DOUBLE_FAULT ; $538b
 	jr z, .eq02 ; $538d
-	ld a, $13 ; $538f
+	ld a, DRILLMSG_YOU_DIDNT_SERVE_WITH_NICE_TIMING_SO_YOU_FAIL ; $538f
 	ld b, $00 ; $5391
 	call QueueDrillResultMessage ; $5393
 	ld a, [wSpecialShotFlag] ; $5396
 	or a ; $5399
 	jr z, .notFound ; $539a
-	ld a, $0f ; $539c
+	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAIL ; $539c
 	ld b, $00 ; $539e
 	call QueueDrillResultMessage ; $53a0
 	call CountDrillResultBitsThisGame ; $53a3
 	jr z, .notFound ; $53a6
-	ld a, $10 ; $53a8
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $53a8
 	ld b, $00 ; $53aa
 	call QueueDrillResultMessage ; $53ac
 	call CheckDrillTargetZoneMissed ; $53af
 	or a ; $53b2
 	jr z, .notFound ; $53b3
-	ld a, $0d ; $53b5
+	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $53b5
 	ld b, $00 ; $53b7
 	call QueueDrillResultMessage ; $53b9
 	ld a, [wPointOutcome] ; $53bc
 	cp POINTOUTCOME_WINNER ; $53bf
 	jr z, .eq06 ; $53c1
 .eq02:
-	ld a, $0e ; $53c3
+	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $53c3
 	ld b, $00 ; $53c5
 	call QueueDrillResultMessage ; $53c7
 	jr .notFound ; $53ca
@@ -437,7 +437,7 @@ ServicePractice3QueueOutcomeMessage:
 	ld a, $ff ; $53d3
 	ret ; $53d5
 .step4:
-	ld a, $ff ; $53d6
+	ld a, DRILLMSG_HIDE ; $53d6
 	ld [wDrillMessageId], a ; $53d8
 	xor a ; $53db
 	ret ; $53dc

@@ -231,7 +231,7 @@ ServiceMatch3Cases2:
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $4dbe
 	ld a, $00 ; $4dc0
 	ret z ; $4dc2
-	ld a, $04 ; $4dc3
+	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4dc3
 	ld b, $06 ; $4dc5
 	call QueueDrillResultMessage ; $4dc7
 	jr UnusedStoreMatchAbortFlag_3.storeMatchAbortFlag ; $4dca
@@ -414,18 +414,18 @@ ServicePractice1QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $4f2f
 	cp POINTOUTCOME_DOUBLE_FAULT ; $4f32
 	jr z, .eq02 ; $4f34
-	ld a, $10 ; $4f36
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4f36
 	ld b, $00 ; $4f38
 	call QueueDrillResultMessage ; $4f3a
 	call CheckDrillTargetZoneMissed ; $4f3d
 	or a ; $4f40
 	jr z, .zero ; $4f41
-	ld a, $0d ; $4f43
+	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $4f43
 	ld b, $00 ; $4f45
 	call QueueDrillResultMessage ; $4f47
 	jr .step2 ; $4f4a
 .eq02:
-	ld a, $0e ; $4f4c
+	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $4f4c
 	ld b, $00 ; $4f4e
 	call QueueDrillResultMessage ; $4f50
 	ld a, $ff ; $4f53
@@ -441,7 +441,7 @@ ServicePractice1QueueOutcomeMessage:
 	ld a, $ff ; $4f5f
 	ret ; $4f61
 .step4:
-	ld a, $ff ; $4f62
+	ld a, DRILLMSG_HIDE ; $4f62
 	ld [wDrillMessageId], a ; $4f64
 	xor a ; $4f67
 	ret ; $4f68

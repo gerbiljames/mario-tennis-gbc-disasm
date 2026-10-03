@@ -217,7 +217,7 @@ UnusedQueueDrillOutcomeMessage:
 	ld [wDrillMessageId], a ; $44e8
 	ret ; $44eb
 .checkPointOutcome2:
-	ld a, $ff ; $44ec
+	ld a, DRILLMSG_HIDE ; $44ec
 	ld [wDrillMessageId], a ; $44ee
 	ret ; $44f1
 QueueDrillOutcomeMessage:
@@ -256,11 +256,11 @@ QueueDrillOutcomeMessage:
 	ld [wDrillMessageId], a ; $452a
 	ret ; $452d
 .step3:
-	ld a, $ff ; $452e
+	ld a, DRILLMSG_HIDE ; $452e
 	ld [wDrillMessageId], a ; $4530
 	ret ; $4533
 QueueDrillResultMessage:
-	cp $ff ; $4534
+	cp DRILLMSG_HIDE ; $4534
 	jr z, .store ; $4536
 	ld c, a ; $4538
 	ld a, [wCurrentServingPlayer] ; $4539
@@ -273,7 +273,7 @@ QueueDrillResultMessage:
 	ld [wDrillMessageId], a ; $4541
 	ret ; $4544
 SetDrillMessageByServer:
-	cp $ff ; $4545
+	cp DRILLMSG_HIDE ; $4545
 	jr z, .store ; $4547
 	ld c, a ; $4549
 	ld a, [wCurrentServingPlayer] ; $454a
@@ -309,13 +309,13 @@ ShowQueuedDrillMessage:
 	ld a, [wDrillMessageId] ; $4574
 	or a ; $4577
 	jr nz, .show ; $4578
-	ld a, $6c ; $457a
+	ld a, DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE ; $457a
 	ld [wDrillMessageId], a ; $457c
 .show:
 	call ShowDrillMessageByIndex ; $457f
 	ret ; $4582
 ShowDrillMessageByIndex:
-	cp $ff ; $4583
+	cp DRILLMSG_HIDE ; $4583
 	ret z ; $4585
 	ld h, $00 ; $4586
 	ld l, a ; $4588
@@ -354,115 +354,115 @@ ShowDrillMessageByIndex:
 	ret ; $45c3
 DrillMessageTextIds_0b:
 	; $45c4, 218 bytes (records:2)
-	dw $28c4 ; record 0
-	dw $28c4 ; record 1
-	dw $28c5 ; record 2
-	dw $28c6 ; record 3
-	dw $28c7 ; record 4
-	dw $28c8 ; record 5
-	dw $28c9 ; record 6
-	dw $28ca ; record 7
-	dw $28cb ; record 8
-	dw $28cc ; record 9
-	dw $28cd ; record 10
-	dw $28ce ; record 11
-	dw $28cf ; record 12
-	dw $28d0 ; record 13
-	dw $28d1 ; record 14
-	dw $28d2 ; record 15
-	dw $28d3 ; record 16
-	dw $28d4 ; record 17
-	dw $28d5 ; record 18
-	dw $28d6 ; record 19
-	dw $28d7 ; record 20
-	dw $28d8 ; record 21
-	dw $28d9 ; record 22
-	dw $28da ; record 23
-	dw $28db ; record 24
-	dw $28dc ; record 25
-	dw $28dd ; record 26
-	dw $28de ; record 27
-	dw $28df ; record 28
-	dw $28e0 ; record 29
-	dw $28e1 ; record 30
-	dw $28e2 ; record 31
-	dw $28e3 ; record 32
-	dw $28e4 ; record 33
-	dw $28e5 ; record 34
-	dw $28e6 ; record 35
-	dw $28e7 ; record 36
-	dw $28e8 ; record 37
-	dw $28e9 ; record 38
-	dw $28ea ; record 39
-	dw $28eb ; record 40
-	dw $28ec ; record 41
-	dw $28ed ; record 42
-	dw $28ee ; record 43
-	dw $28ef ; record 44
-	dw $28f0 ; record 45
-	dw $28f1 ; record 46
-	dw $28f2 ; record 47
-	dw $28f3 ; record 48
-	dw $28f4 ; record 49
-	dw $28f5 ; record 50
-	dw $28f6 ; record 51
-	dw $28f7 ; record 52
-	dw $28f8 ; record 53
-	dw $28f9 ; record 54
-	dw $28fa ; record 55
-	dw $28fb ; record 56
-	dw $28fc ; record 57
-	dw $28fd ; record 58
-	dw $28fe ; record 59
-	dw $28ff ; record 60
-	dw $2900 ; record 61
-	dw $2901 ; record 62
-	dw $2902 ; record 63
-	dw $2903 ; record 64
-	dw $2904 ; record 65
-	dw $2905 ; record 66
-	dw $2906 ; record 67
-	dw $2907 ; record 68
-	dw $2908 ; record 69
-	dw $2909 ; record 70
-	dw $290a ; record 71
-	dw $290b ; record 72
-	dw $290c ; record 73
-	dw $290d ; record 74
-	dw $290e ; record 75
-	dw $290f ; record 76
-	dw $2910 ; record 77
-	dw $2911 ; record 78
-	dw $2912 ; record 79
-	dw $2913 ; record 80
-	dw $2914 ; record 81
-	dw $2915 ; record 82
-	dw $2916 ; record 83
-	dw $2917 ; record 84
-	dw $2918 ; record 85
-	dw $2919 ; record 86
-	dw $2c0f ; record 87
-	dw $2c10 ; record 88
-	dw $2c11 ; record 89
-	dw $2c12 ; record 90
-	dw $2c13 ; record 91
-	dw $2c14 ; record 92
-	dw $2c15 ; record 93
-	dw $2c16 ; record 94
-	dw $2c17 ; record 95
-	dw $2c18 ; record 96
-	dw $2c19 ; record 97
-	dw $2c1a ; record 98
-	dw $2c1b ; record 99
-	dw $2c1c ; record 100
-	dw $2c1d ; record 101
-	dw $2c1e ; record 102
-	dw $2c1f ; record 103
-	dw $2c20 ; record 104
-	dw $2c21 ; record 105
-	dw $2c22 ; record 106
-	dw $2c23 ; record 107
-	dw $2c24 ; record 108
+	dw Text_25_196 ; record 0
+	dw Text_25_196 ; record 1
+	dw Text_25_197 ; record 2
+	dw Text_25_198 ; record 3
+	dw Text_25_199 ; record 4
+	dw Text_25_200 ; record 5
+	dw Text_25_201 ; record 6
+	dw Text_25_202 ; record 7
+	dw Text_25_203 ; record 8
+	dw Text_25_204 ; record 9
+	dw Text_25_205 ; record 10
+	dw Text_25_206 ; record 11
+	dw Text_25_207 ; record 12
+	dw Text_25_208 ; record 13
+	dw Text_25_209 ; record 14
+	dw Text_25_210 ; record 15
+	dw Text_25_211 ; record 16
+	dw Text_25_212 ; record 17
+	dw Text_25_213 ; record 18
+	dw Text_25_214 ; record 19
+	dw Text_25_215 ; record 20
+	dw Text_25_216 ; record 21
+	dw Text_25_217 ; record 22
+	dw Text_25_218 ; record 23
+	dw Text_25_219 ; record 24
+	dw Text_25_220 ; record 25
+	dw Text_25_221 ; record 26
+	dw Text_25_222 ; record 27
+	dw Text_25_223 ; record 28
+	dw Text_25_224 ; record 29
+	dw Text_25_225 ; record 30
+	dw Text_25_226 ; record 31
+	dw Text_25_227 ; record 32
+	dw Text_25_228 ; record 33
+	dw Text_25_229 ; record 34
+	dw Text_25_230 ; record 35
+	dw Text_25_231 ; record 36
+	dw Text_25_232 ; record 37
+	dw Text_25_233 ; record 38
+	dw Text_25_234 ; record 39
+	dw Text_25_235 ; record 40
+	dw Text_25_236 ; record 41
+	dw Text_25_237 ; record 42
+	dw Text_25_238 ; record 43
+	dw Text_25_239 ; record 44
+	dw Text_25_240 ; record 45
+	dw Text_25_241 ; record 46
+	dw Text_25_242 ; record 47
+	dw Text_25_243 ; record 48
+	dw Text_25_244 ; record 49
+	dw Text_25_245 ; record 50
+	dw Text_25_246 ; record 51
+	dw Text_25_247 ; record 52
+	dw Text_25_248 ; record 53
+	dw Text_25_249 ; record 54
+	dw Text_25_250 ; record 55
+	dw Text_25_251 ; record 56
+	dw Text_25_252 ; record 57
+	dw Text_25_253 ; record 58
+	dw Text_25_254 ; record 59
+	dw Text_25_255 ; record 60
+	dw Text_25_256 ; record 61
+	dw Text_25_257 ; record 62
+	dw Text_25_258 ; record 63
+	dw Text_25_259 ; record 64
+	dw Text_25_260 ; record 65
+	dw Text_25_261 ; record 66
+	dw Text_25_262 ; record 67
+	dw Text_25_263 ; record 68
+	dw Text_25_264 ; record 69
+	dw Text_25_265 ; record 70
+	dw Text_25_266 ; record 71
+	dw $290b ; record 72, past text bank $25's table (docs/bugs.md)
+	dw $290c ; record 73, past text bank $25's table (docs/bugs.md)
+	dw $290d ; record 74, past text bank $25's table (docs/bugs.md)
+	dw $290e ; record 75, past text bank $25's table (docs/bugs.md)
+	dw $290f ; record 76, past text bank $25's table (docs/bugs.md)
+	dw $2910 ; record 77, past text bank $25's table (docs/bugs.md)
+	dw $2911 ; record 78, past text bank $25's table (docs/bugs.md)
+	dw $2912 ; record 79, past text bank $25's table (docs/bugs.md)
+	dw $2913 ; record 80, past text bank $25's table (docs/bugs.md)
+	dw $2914 ; record 81, past text bank $25's table (docs/bugs.md)
+	dw $2915 ; record 82, past text bank $25's table (docs/bugs.md)
+	dw $2916 ; record 83, past text bank $25's table (docs/bugs.md)
+	dw $2917 ; record 84, past text bank $25's table (docs/bugs.md)
+	dw $2918 ; record 85, past text bank $25's table (docs/bugs.md)
+	dw $2919 ; record 86, past text bank $25's table (docs/bugs.md)
+	dw Text_26_15 ; record 87
+	dw Text_26_16 ; record 88
+	dw Text_26_17 ; record 89
+	dw Text_26_18 ; record 90
+	dw Text_26_19 ; record 91
+	dw Text_26_20 ; record 92
+	dw Text_26_21 ; record 93
+	dw Text_26_22 ; record 94
+	dw Text_26_23 ; record 95
+	dw Text_26_24 ; record 96
+	dw Text_26_25 ; record 97
+	dw Text_26_26 ; record 98
+	dw Text_26_27 ; record 99
+	dw Text_26_28 ; record 100
+	dw Text_26_29 ; record 101
+	dw Text_26_30 ; record 102
+	dw Text_26_31 ; record 103
+	dw Text_26_32 ; record 104
+	dw Text_26_33 ; record 105
+	dw Text_26_34 ; record 106
+	dw Text_26_35 ; record 107
+	dw Text_26_36 ; record 108
 Unused_0b_1:
 	; $469e, 2 bytes (bytes:2)
 	db $00, $02 ; 0x00

@@ -353,17 +353,17 @@ AcademyArrivalGreetingScene:
 	call FollowGuideIntoAcademy ; $4f17
 	ret ; $4f1a
 ArmAcademyEntranceTileTrigger:
-	ld a, $f1 ; $4f1b
-	map_cell $16, $10 ; $4f1d
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $4f1b
+	map_cell 22, 16 ; $4f1d
 	farcall WriteBehaviorMapCell ; $4f21
-	ld a, $f1 ; $4f24
-	map_cell $18, $10 ; $4f26
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $4f24
+	map_cell 24, 16 ; $4f26
 	farcall WriteBehaviorMapCell ; $4f2a
-	ld a, $f1 ; $4f2d
-	map_cell $16, $12 ; $4f2f
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $4f2d
+	map_cell 22, 18 ; $4f2f
 	farcall WriteBehaviorMapCell ; $4f33
-	ld a, $f1 ; $4f36
-	map_cell $18, $12 ; $4f38
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $4f36
+	map_cell 24, 18 ; $4f38
 	farcall WriteBehaviorMapCell ; $4f3c
 	ret ; $4f3f
 ResumeAcademyGuideTour:

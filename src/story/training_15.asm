@@ -137,8 +137,8 @@ InitTournamentSiteSceneVariant:
 	ld [wMapSceneStage], a ; $4273
 	test_flag FLAG_DOUBLES ; $4276
 	jr nz, .doubles ; $4279
-	ld a, $f1 ; $427b
-	map_cell $0e, $14 ; $427d
+	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $427b
+	map_cell 14, 20 ; $427d
 	farcall WriteBehaviorMapCell ; $4281
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4284
 	jr z, .stage1 ; $4287

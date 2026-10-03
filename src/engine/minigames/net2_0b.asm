@@ -149,7 +149,7 @@ NetGameMatch3Cases2DrillShotTable:
 	; $5b52, 10 bytes (drill_outcomes)
 	drill_outcomes $ff, $ff, $ff, $ff, $1d, $1d, $16, $ff, $ff, $16
 NetGameMatch3Cases3:
-	ld a, $1b ; $5b5c
+	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE ; $5b5c
 	ld b, $0d ; $5b5e
 	call QueueDrillResultMessage ; $5b60
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5b63
@@ -218,7 +218,7 @@ NetGameMatch3Cases4:
 	xor a ; $5bba
 	ret ; $5bbb
 .queueDrillResultMessage:
-	ld a, $1d ; $5bbc
+	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $5bbc
 	ld b, $0d ; $5bbe
 	call QueueDrillResultMessage ; $5bc0
 	jp UnusedStoreMatchAbortFlag_5.storeMatchAbortFlag ; $5bc3
@@ -548,14 +548,14 @@ NetGamePractice1Cases2SignedTable1:
 	; $5e27, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $38, $38, $38, $ff, $ff, $38 ; 0x00
 NetGamePractice1Cases3:
-	ld a, $35 ; $5e31
+	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $5e31
 	ld b, $00 ; $5e33
 	call QueueDrillResultMessage ; $5e35
 	xor a ; $5e38
 	call TestCharStateBit4 ; $5e39
 	or a ; $5e3c
 	jp z, .storeMatchAbortFlag ; $5e3d
-	ld a, $3a ; $5e40
+	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_SO_YOU_FAIL ; $5e40
 	ld b, $00 ; $5e42
 	call QueueDrillResultMessage ; $5e44
 	ld a, [wShotRecoilVariant] ; $5e47
@@ -573,7 +573,7 @@ NetGamePractice1Cases3:
 	ld a, [wPointOutcome] ; $5e5d
 	cp POINTOUTCOME_NET ; $5e60
 	jr z, .eq04 ; $5e62
-	ld a, $2e ; $5e64
+	ld a, DRILLMSG_NICE_VOLLEY_YOU_DID_IT ; $5e64
 	ld b, $00 ; $5e66
 	call QueueDrillResultMessage ; $5e68
 	call RecordDrillTargetZoneHit ; $5e6b
@@ -581,7 +581,7 @@ NetGamePractice1Cases3:
 	or a ; $5e71
 	jp nz, .nonZero ; $5e72
 .eq04:
-	ld a, $38 ; $5e75
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2 ; $5e75
 	ld b, $00 ; $5e77
 	call QueueDrillResultMessage ; $5e79
 	ld hl, wDrillCounters + 3 ; $5e7c
@@ -827,7 +827,7 @@ NetGamePractice2Cases1:
 	cp POINTOUTCOME_DOUBLE_FAULT ; $6089
 	ld a, $00 ; $608b
 	ret z ; $608d
-	ld a, $3b ; $608e
+	ld a, DRILLMSG_YOU_DIDNT_HIT_A_LONG_DEEP_SERVE_SO_YOU_FAIL ; $608e
 	ld b, $00 ; $6090
 	call QueueDrillResultMessage ; $6092
 	call RecordDrillTargetZoneHit ; $6095
@@ -875,7 +875,7 @@ NetGamePractice2Cases2:
 	ld a, [wBallBounceCount] ; $60d7
 	or a ; $60da
 	ret z ; $60db
-	ld a, $32 ; $60dc
+	ld a, DRILLMSG_I_DIDNT_HIT_A_LOB_SO_YOU_SUCCEED ; $60dc
 	ld b, $00 ; $60de
 	call QueueDrillResultMessage ; $60e0
 	ld a, [wCurrentShotType] ; $60e3
@@ -922,7 +922,7 @@ NetGamePractice2Cases2DrillShotTable:
 	; $611b, 10 bytes (drill_outcomes)
 	drill_outcomes $ff, $ff, $ff, $ff, $37, $37, $2f, $ff, $ff, $2f
 NetGamePractice2Cases3:
-	ld a, $36 ; $6125
+	ld a, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_SO_YOU_FAIL_2 ; $6125
 	ld b, $00 ; $6127
 	call QueueDrillResultMessage ; $6129
 	ld a, [wCurrentShotType] ; $612c

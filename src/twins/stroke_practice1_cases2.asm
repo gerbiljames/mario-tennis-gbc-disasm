@@ -11,14 +11,14 @@
 	cp $01
 	ld a, $00
 	ret nz
-	ld a, $57
+	ld a, DRILLMSG_NICE_RETURN_YOU_DID_IT
 	ld b, $00
 	call QueueDrillResultMessage
 	call RecordDrillTargetZoneHit
 	call CheckDrillTargetZoneMissed
 	or a
 	jp nz, .nonZero
-	ld a, $5a
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3
 	ld b, $00
 	call QueueDrillResultMessage
 	ld hl, wDrillCounters + 3
