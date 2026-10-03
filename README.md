@@ -263,3 +263,9 @@ nothing.
 - `tools/playtest.py` -- plays two ROMs side by side and reports where their screens diverge.
 
 Each tool's docstring has its full usage.
+
+## License
+
+MIT (`LICENSE`), except `include/hardware.inc` (CC0). The license covers this
+repository's code, names and documentation, not the game's content, which
+setup extracts from your own ROM.
