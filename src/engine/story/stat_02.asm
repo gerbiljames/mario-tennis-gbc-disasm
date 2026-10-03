@@ -54,10 +54,10 @@ Unused_02_Copy64Bytes:
 	ret ; $4484
 RefreshPlayerStatsAndGetPtr:
 	call GetPlayerRecordPtr ; $4485
-	ld hl, CHARREC_EXP_TIER ; $4488
+	ld hl, CHARREC_LEVEL ; $4488
 	add hl, bc ; $448b
 	call RecomputeCharacterStats ; $448c
-	ld hl, CHARREC_EXP_TIER ; $448f
+	ld hl, CHARREC_LEVEL ; $448f
 	add hl, bc ; $4492
 	ret ; $4493
 LookupStatBarLevel:
@@ -94,7 +94,7 @@ ScaleStatForBarLevel:
 	ld h, $00 ; $44b8
 	call MulHLByA ; $44ba
 	push hl ; $44bd
-	ld hl, CHARREC_EXP_TIER ; $44be
+	ld hl, CHARREC_LEVEL ; $44be
 	add hl, bc ; $44c1
 	ld e, [hl] ; $44c2
 	ld d, $00 ; $44c3
@@ -313,7 +313,7 @@ RecomputeCharacterStats:
 	add hl, bc ; $4622
 	ld [hl], e ; $4623
 	pop de ; $4624
-	ld hl, CHARREC_EXP_TIER ; $4625
+	ld hl, CHARREC_LEVEL ; $4625
 	add hl, bc ; $4628
 	ld a, [hl] ; $4629
 	ld hl, $0070 ; $462a

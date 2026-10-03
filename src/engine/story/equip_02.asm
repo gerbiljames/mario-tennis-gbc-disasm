@@ -140,7 +140,7 @@ StatArchetype3_02:
 LevelUpPlayer:
 	call GetPlayerRecordPtr ; $49be
 LevelUpPlayerRecord:
-	ld hl, CHARREC_EXP_TIER ; $49c1
+	ld hl, CHARREC_LEVEL ; $49c1
 	add hl, bc ; $49c4
 	ld a, [hl] ; $49c5
 	cp $63 ; $49c6
@@ -174,7 +174,7 @@ LevelUpPlayerRecord:
 	inc [hl] ; $49f4
 	jr .recomputeCharacterStats ; $49f5
 .recomputeCharacterStats:
-	ld hl, CHARREC_EXP_TIER ; $49f7
+	ld hl, CHARREC_LEVEL ; $49f7
 	add hl, bc ; $49fa
 	inc [hl] ; $49fb
 	call RecomputeCharacterStats ; $49fc
@@ -534,7 +534,7 @@ Unused_02_ListForEach:
 	ld a, [hl+] ; $4bf3
 	ld d, [hl] ; $4bf4
 	ld e, a ; $4bf5
-	ld hl, CHARREC_EXP_TIER ; $4bf6
+	ld hl, CHARREC_LEVEL ; $4bf6
 	add hl, bc ; $4bf9
 	ld a, [hl] ; $4bfa
 	cp $01 ; $4bfb

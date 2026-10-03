@@ -246,7 +246,7 @@ DrawExpSinglesPlayerPanel:
 	ld bc, $0020 ; $566f
 	call FetchAndDrawDialogueText ; $5672
 	pop bc ; $5675
-	ld hl, CHARREC_EXP_TIER ; $5676
+	ld hl, CHARREC_LEVEL ; $5676
 	add hl, bc ; $5679
 	ld a, [hl] ; $567a
 	ld h, $00 ; $567b
@@ -321,7 +321,7 @@ DrawExpDoublesPlayerPanel:
 	ld bc, $0020 ; $5731
 	call FetchAndDrawDialogueText ; $5734
 	pop bc ; $5737
-	ld hl, CHARREC_EXP_TIER ; $5738
+	ld hl, CHARREC_LEVEL ; $5738
 	add hl, bc ; $573b
 	ld a, [hl] ; $573c
 	ld h, $00 ; $573d
@@ -395,7 +395,7 @@ DrawExpDoublesPartnerPanel:
 	ld bc, $0020 ; $57f0
 	call FetchAndDrawDialogueText ; $57f3
 	pop bc ; $57f6
-	ld hl, CHARREC_EXP_TIER ; $57f7
+	ld hl, CHARREC_LEVEL ; $57f7
 	add hl, bc ; $57fa
 	ld a, [hl] ; $57fb
 	ld h, $00 ; $57fc

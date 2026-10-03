@@ -486,7 +486,7 @@ InitPlayerRecordFromTemplate:
 	ld l, a ; $43f5
 	ld a, [hl+] ; $43f6
 	push hl ; $43f7
-	ld hl, CHARREC_EXP_TIER ; $43f8
+	ld hl, CHARREC_LEVEL ; $43f8
 	add hl, bc ; $43fb
 	ld [hl], a ; $43fc
 	pop hl ; $43fd

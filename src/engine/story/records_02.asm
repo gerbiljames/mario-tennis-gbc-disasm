@@ -175,7 +175,7 @@ AddPlayerExp:
 	jp AddExpCapped ; $4d96
 HasReachedNextLevelExp:
 	call GetPlayerRecordPtr ; $4d99
-	ld hl, CHARREC_EXP_TIER ; $4d9c
+	ld hl, CHARREC_LEVEL ; $4d9c
 	add hl, bc ; $4d9f
 	ld a, [hl] ; $4da0
 	cp $63 ; $4da1
@@ -210,7 +210,7 @@ HasReachedNextLevelExp:
 	ret ; $4dc7
 GetExpRemainingToNextLevel:
 	call GetPlayerRecordPtr ; $4dc8
-	ld hl, CHARREC_EXP_TIER ; $4dcb
+	ld hl, CHARREC_LEVEL ; $4dcb
 	add hl, bc ; $4dce
 	ld a, [hl] ; $4dcf
 	cp $63 ; $4dd0
@@ -256,7 +256,7 @@ GetExpRemainingToNextLevel:
 	ret ; $4e01
 GetExpProgressInCurrentLevel:
 	call GetPlayerRecordPtr ; $4e02
-	ld hl, CHARREC_EXP_TIER ; $4e05
+	ld hl, CHARREC_LEVEL ; $4e05
 	add hl, bc ; $4e08
 	ld a, [hl] ; $4e09
 	cp $63 ; $4e0a

@@ -1502,7 +1502,8 @@ of the CPU slots with a difficulty row, as described in [The AI](#the-ai).
 `RecomputeCharacterStats` (`$02:$44e9`) runs at level-up and on equipment change,
 never at match time. For each of eleven stats it computes
 `5 * L_i - (level - 1)` — where `L_i` is one of the four allocation levels (Spin,
-Power, Control, Speed) and `level - 1` is their sum — clamps it signed
+Power, Control, Speed) and `level - 1` is their sum, since each level-up
+(`LevelUpPlayerRecord`) raises the level and exactly one of the four — clamps it signed
 (`ScaleStatForBarLevel`, `$02:$44b7`), and looks it up in a **9-entry ascending
 signed threshold table** to produce a 0-9 bar (`LookupStatBarLevel`, `$02:$4494`).
 So a bar measures how *unevenly* the character's level-ups were spent, not the

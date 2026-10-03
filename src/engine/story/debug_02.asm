@@ -74,7 +74,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld a, [hl] ; $503b
 	ld_cell de, $02, $04 ; $503c
 	call PrintDecimalByte ; $503f
-	ld hl, CHARREC_EXP_TIER ; $5042
+	ld hl, CHARREC_LEVEL ; $5042
 	add hl, bc ; $5045
 	ld a, [hl] ; $5046
 	ld_cell de, $02, $06 ; $5047

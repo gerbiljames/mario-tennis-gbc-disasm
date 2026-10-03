@@ -292,7 +292,7 @@ def CHARREC_GENDER           equ $0d ; 0 male, 1 female
 def CHARREC_LEFT_HANDED      equ $0e ; becomes the OAM X-flip on court
 def CHARREC_PHYSICS          equ $0f
 def CHARREC_REACH            equ $10 ; 8 bytes: the reach box
-def CHARREC_EXP_TIER         equ $18
+def CHARREC_LEVEL            equ $18 ; 1-99; each level-up also raises one of CHARREC_TRAIN_LEVELS
 def CHARREC_SWING            equ $19 ; word
 def CHARREC_AI_PARAMS        equ $1b ; 5 bytes
 def CHARREC_STAT_TOP         equ $20 ; the eleven 0-9 stats, in this order

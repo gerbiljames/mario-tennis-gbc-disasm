@@ -165,7 +165,7 @@ LoadCharacterAttributes:
 	ld a, c ; $5b0b
 	ld [hl+], a ; $5b0c
 	ld [hl], b ; $5b0d
-	ld hl, CHARREC_EXP_TIER ; $5b0e
+	ld hl, CHARREC_LEVEL ; $5b0e
 	add hl, de ; $5b11
 	ld a, [hl] ; $5b12
 	ld [wCharExpTier], a ; $5b13
