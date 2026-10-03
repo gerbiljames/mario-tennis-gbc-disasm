@@ -1107,3 +1107,11 @@ A row that starts at column `$80` or above therefore gets a negative pen,
   addresses turn into glyph pixels and the game jumps into the stack (seen
   as `PC=$cf7b`). Found through the event test, whose runs at that location
   kept hanging (2026-09-30). It is only reachable from the debug warp menu.
+
+There is no **Fix**. The pen is a column of the glyph tile buffer, 16 bytes
+per column, and the buffer is uploaded to `vTiles1`, so column `c` is BG tile
+`$80 + c` and the buffer has room for 128 columns. A row that starts at
+column `$80` has no tile to draw into whichever way the shift goes: `sra`
+writes below the buffer, `srl` would write past its end. Both screens simply
+run out of glyph tiles, and what they should do instead -- start a new
+window's columns from 0, or reuse the first page's -- is not in the ROM.
