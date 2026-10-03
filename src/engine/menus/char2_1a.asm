@@ -77,7 +77,7 @@ Unused_1a_LoadCharViewerMugshot:
 	farcall DecompressCharMugshot ; $70b1
 	ld hl, wDecompBuffer ; $70b4
 	ld de, vTiles2 + $10 * TILE_SIZE + VRAM_BANK1 ; $70b7
-	ld c, $09 ; $70ba
+	ld c, 9 ; $70ba
 	call QueueVRAMCopy ; $70bc
 	ret ; $70bf
 Unused_1a_ApplyCharViewerPalette:

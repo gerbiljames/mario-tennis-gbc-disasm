@@ -221,7 +221,7 @@ Unused_17_DrawSecondCaptionRow:
 	farcall RenderProportionalTextAt ; $4a0c
 	ld hl, $d1a0 ; $4a0f
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH ; $4a12
-	ld c, $0c ; $4a15
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $4a15
 	call QueueVRAMCopy ; $4a17
 	ret ; $4a1a
 ; Queues the two-sprite template at $4a29 through QueueSpriteTemplate at

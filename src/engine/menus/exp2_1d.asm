@@ -94,7 +94,7 @@ UploadExpScreenTilemapRows:
 	call QueueVRAMCopy ; $7364
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $7367
 	ld de, vBGMap0 + 16 * TILEMAP_WIDTH ; $736a
-	ld c, $01 ; $736d
+	ld c, 1 ; $736d
 	call QueueVRAMCopy ; $736f
 	ret ; $7372
 RefreshExpScreenReadouts:
@@ -277,12 +277,12 @@ UploadExpPromptWindowRows:
 	wram_bank WRAM_SCREEN ; $7505
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $750b
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $750e
-	ld c, $0c ; $7511
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $7511
 	call QueueVRAMCopy ; $7513
 	wram_bank WRAM_COURT_PLANES ; $7516
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $751c
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH + VRAM_BANK1 ; $751f
-	ld c, $0c ; $7522
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $7522
 	call QueueVRAMCopy ; $7524
 	ret ; $7527
 .loop:
@@ -303,12 +303,12 @@ UploadExpPromptWindowRowsClosing:
 	wram_bank WRAM_SCREEN ; $7545
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $754b
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $754e
-	ld c, $0c ; $7551
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $7551
 	call QueueVRAMCopy ; $7553
 	wram_bank WRAM_COURT_PLANES ; $7556
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $755c
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH + VRAM_BANK1 ; $755f
-	ld c, $0c ; $7562
+	ld c, 6 * TILEMAP_WIDTH / 16 ; $7562
 	call QueueVRAMCopy ; $7564
 	ret ; $7567
 DrawExpPromptCursor:

@@ -116,7 +116,7 @@ LoadResultsScreenGraphics:
 	call DecompressData ; $4123
 	ld hl, wDecompBuffer ; $4126
 	ld de, vTiles2 + VRAM_BANK1 ; $4129
-	ld c, $80 ; $412c -- 128 of ResultsScreenGfx_1e's 176 tiles
+	ld c, 128 ; $412c -- 128 of ResultsScreenGfx_1e's 176 tiles
 	call QueueVRAMCopy ; $412e
 	ld hl, wTextTileBuffer ; $4131
 	ld de, vTiles1 + VRAM_BANK1 ; $4134

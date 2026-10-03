@@ -82,14 +82,26 @@ class Source(unittest.TestCase):
 
     def test_copy_lengths_follow_their_blobs(self):
         self.assertEqual(count(r"^\tld c, \((?!WRAMX_END|[whs][A-Z])\w+ - \w+\) / 16 ;"), 34)
-        n = count(r"^\tld c, (\w+)_SIZE / 16 ;")
-        self.assertGreaterEqual(n, 90)
+        n = count(r"^\tld b?c, (\w+)_SIZE / 16 ;")
+        self.assertGreaterEqual(n, 299)
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob
         for name, text in SRC:
-            used = set(re.findall(r"\bld c, (?![whs][A-Z]|(?:WRAMX|VRAM|CHAR_RECORD)_SIZE)(\w+)_SIZE / 16", text))
+            used = set(re.findall(r"\bld b?c, (?![whs][A-Z]|(?:WRAMX|VRAM|CHAR_RECORD)_SIZE)(\w+)_SIZE / 16", text))
             have = set(re.findall(r'INCLUDE "data/bank_[0-9a-f]{3}/lz_(\w+)\.inc"', text))
             self.assertEqual(used - have, set(), name)
-        self.assertGreaterEqual(count(r"^\tld c, \$[0-9a-f]{2} ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 25)
+        self.assertGreaterEqual(count(r"^\tld c, \d+ ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 39)
+        # a VRAM copy's count is a size, a row count or a decimal tile count
+        for name, text in SRC:
+            lines = text.split("\n")
+            for i, line in enumerate(lines):
+                if not re.match(r"\tcall QueueVRAMCopy\b", line):
+                    continue
+                for prev in reversed(lines[max(0, i - 12):i]):
+                    if re.match(r"[A-Za-z.]|\t(call|jp|jr|ret|farcall)\b", prev):
+                        break
+                    if re.match(r"\tld b?c, ", prev):
+                        self.assertNotRegex(prev, r"\tld b?c, \$", name)
+                        break
 
     def test_copy_lengths_follow_their_ram(self):
         # a copy or clear of one whole RAM object is written as its exported

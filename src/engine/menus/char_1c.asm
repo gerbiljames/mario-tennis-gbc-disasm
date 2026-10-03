@@ -674,15 +674,15 @@ CharDataScreen_DrawPortrait:
 	farcall DecompressCharMugshot ; $45d5
 	ld hl, wDecompBuffer ; $45d8
 	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $45db
-	ld c, $03 ; $45de
+	ld c, 3 ; $45de
 	call QueueVRAMCopy ; $45e0
 	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $45e3
 	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $45e6
-	ld c, $03 ; $45e9
+	ld c, 3 ; $45e9
 	call QueueVRAMCopy ; $45eb
 	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $45ee
 	ld de, vTiles2 + $40 * TILE_SIZE + VRAM_BANK1 ; $45f1
-	ld c, $03 ; $45f4
+	ld c, 3 ; $45f4
 	call QueueVRAMCopy ; $45f6
 	ret ; $45f9
 CharDataScreenAnimTask:
@@ -707,7 +707,7 @@ CharDataScreenAnimTask:
 	ld l, a ; $4628
 	push hl ; $4629
 	ld de, vTiles2 + $2e * TILE_SIZE + VRAM_BANK1 ; $462a
-	ld c, $02 ; $462d
+	ld c, 2 ; $462d
 	call QueueVRAMCopy ; $462f
 	pop hl ; $4632
 	ld a, $20 ; $4633
@@ -717,7 +717,7 @@ CharDataScreenAnimTask:
 	inc h ; $4639
 .queueVRAMCopy:
 	ld de, vTiles2 + $3e * TILE_SIZE + VRAM_BANK1 ; $463a
-	ld c, $02 ; $463d
+	ld c, 2 ; $463d
 	call QueueVRAMCopy ; $463f
 	pop af ; $4642
 	ld_hl_indexed CharDataScreenAnimTask_CharDataFlushChunkTable ; $4643
@@ -726,7 +726,7 @@ CharDataScreenAnimTask:
 	ld l, a ; $464c
 	push hl ; $464d
 	ld de, vTiles2 + $4e * TILE_SIZE + VRAM_BANK1 ; $464e
-	ld c, $02 ; $4651
+	ld c, 2 ; $4651
 	call QueueVRAMCopy ; $4653
 	pop hl ; $4656
 	ld a, $20 ; $4657
@@ -736,7 +736,7 @@ CharDataScreenAnimTask:
 	inc h ; $465d
 .queueVRAMCopy2:
 	ld de, vTiles2 + $5e * TILE_SIZE + VRAM_BANK1 ; $465e
-	ld c, $02 ; $4661
+	ld c, 2 ; $4661
 	call QueueVRAMCopy ; $4663
 .nonZero:
 	wram_bank WRAM_SCENE ; $4666

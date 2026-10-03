@@ -107,7 +107,7 @@ Unused_1a_RunCharViewerSelectGrid:
 	call DecompressData ; $6891
 	ld hl, wDecompBuffer ; $6894
 	ld de, vTiles2 + VRAM_BANK1 ; $6897
-	ld c, $80 ; $689a -- 128 of CharViewerScreenGfx0's 256 tiles
+	ld c, 128 ; $689a -- 128 of CharViewerScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $689c
 	ld hl, wTextTileBuffer ; $689f
 	ld de, vTiles1 + VRAM_BANK1 ; $68a2
@@ -426,7 +426,7 @@ Unused_1a_LoadCharViewerScreenGfx:
 	call DecompressData ; $6b6a
 	ld hl, wDecompBuffer ; $6b6d
 	ld de, vTiles2 + VRAM_BANK1 ; $6b70
-	ld c, $80 ; $6b73 -- 128 of CharViewerScreenGfx0's 256 tiles
+	ld c, 128 ; $6b73 -- 128 of CharViewerScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $6b75
 	ld hl, wTextTileBuffer ; $6b78
 	ld de, vTiles1 + VRAM_BANK1 ; $6b7b

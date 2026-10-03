@@ -276,7 +276,7 @@ LoadMenuTilesA:
 	push hl ; $5065
 	ld hl, MenuWindowTiles_01 ; $5066
 	ld de, vTiles2 ; $5069
-	ld c, $10 ; $506c
+	ld c, 16 ; $506c
 	call QueueVRAMCopy ; $506e
 	pop hl ; $5071
 	pop de ; $5072
@@ -290,11 +290,11 @@ LoadMenuTilesB:
 	push hl ; $5079
 	ld hl, MenuFontTiles_01 ; $507a
 	ld de, vTiles2 + $20 * TILE_SIZE ; $507d
-	ld c, $60 ; $5080
+	ld c, 96 ; $5080
 	call QueueVRAMCopy ; $5082
 	ld hl, MenuFontFillTiles_01 ; $5085
 	ld de, vTiles1 ; $5088
-	ld c, $60 ; $508b
+	ld c, 96 ; $508b
 	call QueueVRAMCopy ; $508d
 	pop hl ; $5090
 	pop de ; $5091
@@ -323,7 +323,7 @@ LoadMenuTilesBStaged:
 	call AdvanceFrame ; $50c0
 	ld hl, MenuFontPalettes_01 ; $50c3
 	ld de, vTiles1 + $60 * TILE_SIZE ; $50c6
-	ld c, $20 ; $50c9
+	ld c, 32 ; $50c9
 	call QueueVRAMCopy ; $50cb
 	call AdvanceFrame ; $50ce
 	pop hl ; $50d1
@@ -403,7 +403,7 @@ ShowDmgLockoutScreen:
 	call DecompressData ; $603a
 	ld hl, wDecompBuffer ; $603d
 	ld de, vTiles2 ; $6040
-	ld c, $80 ; $6043 -- 128 of DmgLockoutTilesLZ_01's 256 tiles
+	ld c, 128 ; $6043 -- 128 of DmgLockoutTilesLZ_01's 256 tiles
 	call CopyMemoryFast ; $6045
 	ld hl, wTextTileBuffer ; $6048
 	ld de, vTiles1 ; $604b

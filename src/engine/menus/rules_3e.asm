@@ -234,7 +234,7 @@ LoadMatchRulesMenuGraphics:
 	push bc ; $463e
 	push de ; $463f
 	push hl ; $4640
-	ld bc, $0010 ; $4641
+	ld bc, 16 ; $4641
 	call QueueVRAMCopy ; $4644
 	pop hl ; $4647
 	pop de ; $4648

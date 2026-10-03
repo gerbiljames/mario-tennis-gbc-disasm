@@ -246,7 +246,7 @@ LoadStoryMenuItemGfx:
 	call DecompressData ; $729a
 	ld hl, wDecompBuffer ; $729d
 	ld de, vTiles0 + $70 * TILE_SIZE ; $72a0
-	ld c, $10 ; $72a3
+	ld c, 16 ; $72a3
 	call QueueVRAMCopy ; $72a5
 	pop_wram_bank ; $72a8
 	ret ; $72ad

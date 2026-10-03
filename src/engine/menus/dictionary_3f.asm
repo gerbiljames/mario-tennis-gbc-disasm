@@ -218,7 +218,7 @@ LoadTennisDictionaryAssetsDefault:
 	call DecompressDataFromBank ; $426b
 	ld hl, wDecompBuffer ; $426e
 	ld de, vTiles2 + VRAM_BANK1 ; $4271
-	ld c, $80 ; $4274
+	ld c, 128 ; $4274
 	call QueueVRAMCopy ; $4276
 	ld hl, wTextTileBuffer ; $4279
 	ld de, vTiles1 + VRAM_BANK1 ; $427c
@@ -240,7 +240,7 @@ LoadTennisDictionaryAssetsChar6:
 	call DecompressDataFromBank ; $42ac
 	ld hl, wDecompBuffer ; $42af
 	ld de, vTiles2 + VRAM_BANK1 ; $42b2
-	ld c, $80 ; $42b5
+	ld c, 128 ; $42b5
 	call QueueVRAMCopy ; $42b7
 	ld hl, wTextTileBuffer ; $42ba
 	ld de, vTiles1 + VRAM_BANK1 ; $42bd

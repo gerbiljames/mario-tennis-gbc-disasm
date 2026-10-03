@@ -460,130 +460,130 @@ LoadRulesBorderAnimTiles:
 	call DecompressData ; $729f
 	ld hl, wDecompBuffer ; $72a2
 	ld de, vTiles0 ; $72a5
-	ld bc, $0012 ; $72a8
+	ld bc, RulesBorderAnimTiles0_SIZE / 16 ; $72a8
 	call QueueVRAMCopy ; $72ab
 	ld hl, wDecompBuffer ; $72ae
 	ld de, vTiles0 + $24 * TILE_SIZE ; $72b1
-	ld bc, $0012 ; $72b4
+	ld bc, RulesBorderAnimTiles0_SIZE / 16 ; $72b4
 	call QueueVRAMCopy ; $72b7
 	ld hl, wDecompBuffer ; $72ba
 	ld de, vTiles0 + $48 * TILE_SIZE ; $72bd
-	ld bc, $0012 ; $72c0
+	ld bc, RulesBorderAnimTiles0_SIZE / 16 ; $72c0
 	call QueueVRAMCopy ; $72c3
 	ld hl, wDecompBuffer ; $72c6
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $72c9
-	ld bc, $0012 ; $72cc
+	ld bc, 18 ; $72cc
 	call QueueVRAMCopy ; $72cf
 	ld hl, wDecompBuffer ; $72d2
 	ld de, vTiles0 + $34 * TILE_SIZE + VRAM_BANK1 ; $72d5
-	ld bc, $0012 ; $72d8
+	ld bc, 18 ; $72d8
 	call QueueVRAMCopy ; $72db
 	ld hl, wDecompBuffer ; $72de
 	ld de, vTiles0 + $58 * TILE_SIZE + VRAM_BANK1 ; $72e1
-	ld bc, $0012 ; $72e4
+	ld bc, 18 ; $72e4
 	call QueueVRAMCopy ; $72e7
 	ld hl, RulesBorderAnimTiles1 ; $72ea
 	ld de, wDecompBuffer ; $72ed
 	call DecompressData ; $72f0
 	ld hl, wDecompBuffer ; $72f3
 	ld de, vTiles0 + $4a * TILE_SIZE ; $72f6
-	ld bc, $0002 ; $72f9
+	ld bc, RulesBorderAnimTiles1_SIZE / 16 ; $72f9
 	call QueueVRAMCopy ; $72fc
 	ld hl, wDecompBuffer ; $72ff
 	ld de, vTiles0 + $12 * TILE_SIZE + VRAM_BANK1 ; $7302
-	ld bc, $0002 ; $7305
+	ld bc, RulesBorderAnimTiles1_SIZE / 16 ; $7305
 	call QueueVRAMCopy ; $7308
 	ld hl, wDecompBuffer ; $730b
 	ld de, vTiles0 + $36 * TILE_SIZE + VRAM_BANK1 ; $730e
-	ld bc, $0002 ; $7311
+	ld bc, RulesBorderAnimTiles1_SIZE / 16 ; $7311
 	call QueueVRAMCopy ; $7314
 	ld hl, wDecompBuffer ; $7317
 	ld de, vTiles0 + $5a * TILE_SIZE + VRAM_BANK1 ; $731a
-	ld bc, $0002 ; $731d
+	ld bc, 2 ; $731d
 	call QueueVRAMCopy ; $7320
 	ld hl, RulesBorderAnimTiles2 ; $7323
 	ld de, wDecompBuffer ; $7326
 	call DecompressData ; $7329
 	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $732c
 	ld de, vTiles0 + $2c * TILE_SIZE ; $732f
-	ld bc, $0001 ; $7332
+	ld bc, 1 ; $7332
 	call QueueVRAMCopy ; $7335
 	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $7338
 	ld de, vTiles0 + $18 * TILE_SIZE + VRAM_BANK1 ; $733b
-	ld bc, $0001 ; $733e
+	ld bc, 1 ; $733e
 	call QueueVRAMCopy ; $7341
 	ld hl, wDecompBuffer ; $7344
 	ld de, vTiles0 + $3c * TILE_SIZE + VRAM_BANK1 ; $7347
-	ld bc, $0001 ; $734a
+	ld bc, 1 ; $734a
 	call QueueVRAMCopy ; $734d
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $7350
 	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $7353
-	ld bc, $0001 ; $7356
+	ld bc, 1 ; $7356
 	call QueueVRAMCopy ; $7359
 	ld hl, RulesBorderAnimTiles3 ; $735c
 	ld de, wDecompBuffer ; $735f
 	call DecompressData ; $7362
 	ld hl, wDecompBuffer ; $7365
 	ld de, vTiles0 + $12 * TILE_SIZE ; $7368
-	ld bc, $0012 ; $736b
+	ld bc, RulesBorderAnimTiles3_SIZE / 16 ; $736b
 	call QueueVRAMCopy ; $736e
 	ld hl, wDecompBuffer ; $7371
 	ld de, vTiles0 + $36 * TILE_SIZE ; $7374
-	ld bc, $0012 ; $7377
+	ld bc, RulesBorderAnimTiles3_SIZE / 16 ; $7377
 	call QueueVRAMCopy ; $737a
 	ld hl, wDecompBuffer ; $737d
 	ld de, vTiles0 + $5a * TILE_SIZE ; $7380
-	ld bc, $0012 ; $7383
+	ld bc, RulesBorderAnimTiles3_SIZE / 16 ; $7383
 	call QueueVRAMCopy ; $7386
 	ld hl, wDecompBuffer ; $7389
 	ld de, vTiles0 + $22 * TILE_SIZE + VRAM_BANK1 ; $738c
-	ld bc, $0012 ; $738f
+	ld bc, 18 ; $738f
 	call QueueVRAMCopy ; $7392
 	ld hl, wDecompBuffer ; $7395
 	ld de, vTiles0 + $46 * TILE_SIZE + VRAM_BANK1 ; $7398
-	ld bc, $0012 ; $739b
+	ld bc, 18 ; $739b
 	call QueueVRAMCopy ; $739e
 	ld hl, wDecompBuffer ; $73a1
 	ld de, vTiles0 + $6a * TILE_SIZE + VRAM_BANK1 ; $73a4
-	ld bc, $0012 ; $73a7
+	ld bc, 18 ; $73a7
 	call QueueVRAMCopy ; $73aa
 	ld hl, RulesBorderAnimTiles4 ; $73ad
 	ld de, wDecompBuffer ; $73b0
 	call DecompressData ; $73b3
 	ld hl, wDecompBuffer ; $73b6
 	ld de, vTiles0 + $5c * TILE_SIZE ; $73b9
-	ld bc, $0002 ; $73bc
+	ld bc, RulesBorderAnimTiles4_SIZE / 16 ; $73bc
 	call QueueVRAMCopy ; $73bf
 	ld hl, wDecompBuffer ; $73c2
 	ld de, vTiles0 + $24 * TILE_SIZE + VRAM_BANK1 ; $73c5
-	ld bc, $0002 ; $73c8
+	ld bc, RulesBorderAnimTiles4_SIZE / 16 ; $73c8
 	call QueueVRAMCopy ; $73cb
 	ld hl, wDecompBuffer ; $73ce
 	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $73d1
-	ld bc, $0002 ; $73d4
+	ld bc, RulesBorderAnimTiles4_SIZE / 16 ; $73d4
 	call QueueVRAMCopy ; $73d7
 	ld hl, wDecompBuffer ; $73da
 	ld de, vTiles0 + $6c * TILE_SIZE + VRAM_BANK1 ; $73dd
-	ld bc, $0002 ; $73e0
+	ld bc, 2 ; $73e0
 	call QueueVRAMCopy ; $73e3
 	ld hl, RulesBorderAnimTiles5 ; $73e6
 	ld de, wDecompBuffer ; $73e9
 	call DecompressData ; $73ec
 	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $73ef
 	ld de, vTiles0 + $3e * TILE_SIZE ; $73f2
-	ld bc, $0001 ; $73f5
+	ld bc, 1 ; $73f5
 	call QueueVRAMCopy ; $73f8
 	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $73fb
 	ld de, vTiles0 + $2a * TILE_SIZE + VRAM_BANK1 ; $73fe
-	ld bc, $0001 ; $7401
+	ld bc, 1 ; $7401
 	call QueueVRAMCopy ; $7404
 	ld hl, wDecompBuffer ; $7407
 	ld de, vTiles0 + $4e * TILE_SIZE + VRAM_BANK1 ; $740a
-	ld bc, $0001 ; $740d
+	ld bc, 1 ; $740d
 	call QueueVRAMCopy ; $7410
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $7413
 	ld de, vTiles0 + $72 * TILE_SIZE + VRAM_BANK1 ; $7416
-	ld bc, $0001 ; $7419
+	ld bc, 1 ; $7419
 	call QueueVRAMCopy ; $741c
 	ret ; $741f
 AdvanceRulesScreenAnimFrame:
@@ -766,14 +766,18 @@ RulesScreenPalettes:
 	INCLUDE "data/bank_017/RulesScreenPalettes.asm" ; $78fc, 64 bytes (palettes)
 RulesBorderAnimTiles0:
 	INCBIN "data/bank_017/lz_RulesBorderAnimTiles0.bin" ; $793c, 204 bytes
+	INCLUDE "data/bank_017/lz_RulesBorderAnimTiles0.inc" ; DEF RulesBorderAnimTiles0_SIZE EQU its decoded length, generated from the .bin by make
 RulesBorderAnimTiles1:
 	INCBIN "data/bank_017/lz_RulesBorderAnimTiles1.bin" ; $7a08, 39 bytes
+	INCLUDE "data/bank_017/lz_RulesBorderAnimTiles1.inc" ; DEF RulesBorderAnimTiles1_SIZE EQU its decoded length, generated from the .bin by make
 RulesBorderAnimTiles2:
 	INCBIN "data/bank_017/lz_RulesBorderAnimTiles2.bin" ; $7a2f, 39 bytes
 RulesBorderAnimTiles3:
 	INCBIN "data/bank_017/lz_RulesBorderAnimTiles3.bin" ; $7a56, 162 bytes
+	INCLUDE "data/bank_017/lz_RulesBorderAnimTiles3.inc" ; DEF RulesBorderAnimTiles3_SIZE EQU its decoded length, generated from the .bin by make
 RulesBorderAnimTiles4:
 	INCBIN "data/bank_017/lz_RulesBorderAnimTiles4.bin" ; $7af8, 32 bytes
+	INCLUDE "data/bank_017/lz_RulesBorderAnimTiles4.inc" ; DEF RulesBorderAnimTiles4_SIZE EQU its decoded length, generated from the .bin by make
 RulesBorderAnimTiles5:
 	INCBIN "data/bank_017/lz_RulesBorderAnimTiles5.bin" ; $7b18, 33 bytes
 RulesScreenPalette:

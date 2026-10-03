@@ -221,7 +221,7 @@ Unused_1b_DrawGameTimerRow:
 Unused_1b_QueueStoryInfoRowToVram:
 	ld hl, $da00 ; $6aa1
 	ld de, vBGMap0 + 16 * TILEMAP_WIDTH ; $6aa4
-	ld c, $01 ; $6aa7
+	ld c, 1 ; $6aa7
 	call QueueVRAMCopy ; $6aa9
 	ret ; $6aac
 Unused_1b_StubNop_1b_10:
@@ -513,7 +513,7 @@ LoadMinigameLevelSelectGfx:
 	push bc ; $6c90
 	push de ; $6c91
 	push hl ; $6c92
-	ld bc, $0010 ; $6c93
+	ld bc, 16 ; $6c93
 	call QueueVRAMCopy ; $6c96
 	pop hl ; $6c99
 	pop de ; $6c9a

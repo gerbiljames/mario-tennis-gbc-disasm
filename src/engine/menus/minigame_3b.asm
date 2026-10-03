@@ -150,7 +150,7 @@ LoadMinigameSelectGfx:
 	ld d, [hl] ; $6312
 	ld e, a ; $6313
 	ld hl, wDecompBuffer ; $6314
-	ld c, $09 ; $6317
+	ld c, 9 ; $6317
 	call QueueVRAMCopy ; $6319
 	pop bc ; $631c
 	call AdvanceFrame ; $631d
@@ -194,14 +194,14 @@ LoadMinigameSelectGfx:
 	call DecompressDataFromBank ; $637b
 	ld hl, wDecompBuffer ; $637e
 	ld de, vTiles0 + $20 * TILE_SIZE ; $6381
-	ld c, $10 ; $6384
+	ld c, 16 ; $6384
 	call QueueVRAMCopy ; $6386
 	ld_slot hl, DataPtr_MinigameSelectIconGfx1 ; $6389
 	ld de, wDecompBuffer + 64 * TILE_SIZE ; $638c
 	call DecompressDataFromBank ; $638f
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $6392
 	ld de, vTiles0 + $30 * TILE_SIZE ; $6395
-	ld c, $10 ; $6398
+	ld c, 16 ; $6398
 	call QueueVRAMCopy ; $639a
 	call AdvanceFrame ; $639d
 	ld_slot hl, DataPtr_MinigameSelectIconGfx2 ; $63a0
@@ -209,11 +209,11 @@ LoadMinigameSelectGfx:
 	call DecompressDataFromBank ; $63a6
 	ld hl, wDecompBuffer ; $63a9
 	ld de, vTiles0 + $40 * TILE_SIZE ; $63ac
-	ld c, $10 ; $63af
+	ld c, 16 ; $63af
 	call QueueVRAMCopy ; $63b1
 	call AdvanceFrame ; $63b4
 	ld b, TILEBLOCK_SharedMenuGfx111 ; $63b7
-	ld c, $12 ; $63b9 -- 18 of SharedMenuGfx111's 16 tiles
+	ld c, 18 ; $63b9 -- 18 of SharedMenuGfx111's 16 tiles
 	ld de, vTiles0 + $50 * TILE_SIZE ; $63bb
 	farcall LoadCompressedTileBlock ; $63be
 	call AdvanceFrame ; $63c1

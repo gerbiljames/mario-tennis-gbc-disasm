@@ -312,7 +312,7 @@ IntroCutsceneState01Init_6b:
 	call DecompressDataFromBank ; $426e
 	ld hl, wDecompBuffer ; $4271
 	ld de, vTiles2 ; $4274
-	ld c, $80 ; $4277
+	ld c, 128 ; $4277
 	call QueueVRAMCopy ; $4279
 	ld hl, wTextTileBuffer ; $427c
 	ld de, vTiles1 ; $427f
@@ -416,7 +416,7 @@ IntroCutsceneState03Init_6b:
 	call DecompressDataFromBank ; $4400
 	ld hl, wDecompBuffer ; $4403
 	ld de, vTiles2 ; $4406
-	ld c, $80 ; $4409
+	ld c, 128 ; $4409
 	call QueueVRAMCopy ; $440b
 	ld hl, wTextTileBuffer ; $440e
 	ld de, vTiles1 ; $4411
@@ -925,7 +925,7 @@ IntroCutsceneState16Init_6b:
 	call DecompressDataFromBank ; $497e
 	ld hl, wDecompBuffer ; $4981
 	ld de, vTiles2 ; $4984
-	ld c, $80 ; $4987
+	ld c, 128 ; $4987
 	call QueueVRAMCopy ; $4989
 	ld hl, wTextTileBuffer ; $498c
 	ld de, vTiles1 ; $498f
@@ -939,11 +939,11 @@ IntroCutsceneState16Init_6b:
 	call DecompressDataFromBank ; $49a6
 	ld hl, wDecompBuffer ; $49a9
 	ld de, vBGMap1 ; $49ac
-	ld c, $40 ; $49af
+	ld c, TILEMAP_AREA / 16 ; $49af
 	call QueueVRAMCopy ; $49b1
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $49b4
 	ld de, vBGMap1 + VRAM_BANK1 ; $49b7
-	ld c, $40 ; $49ba
+	ld c, TILEMAP_AREA / 16 ; $49ba
 	call QueueVRAMCopy ; $49bc
 	ld hl, IntroCutsceneState16InitPalettes_6b ; $49bf
 	ld_bg_pals de, 0, 8 ; $49c2
@@ -954,7 +954,7 @@ IntroCutsceneState16Init_6b:
 	call DecompressDataFromBank ; $49d4
 	ld hl, wDecompBuffer ; $49d7
 	ld de, vTiles2 + VRAM_BANK1 ; $49da
-	ld c, $80 ; $49dd
+	ld c, 128 ; $49dd
 	call QueueVRAMCopy ; $49df
 	ld hl, wTextTileBuffer ; $49e2
 	ld de, vTiles1 + VRAM_BANK1 ; $49e5

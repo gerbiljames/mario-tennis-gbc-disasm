@@ -286,7 +286,7 @@ LoadSavedDataSourceGfx:
 	call DecompressDataFromBank ; $687d
 	ld hl, wDecompBuffer ; $6880
 	ld de, vTiles1 + VRAM_BANK1 ; $6883
-	ld bc, $0010 ; $6886
+	ld bc, 16 ; $6886
 	call QueueVRAMCopy ; $6889
 	call AdvanceFrame ; $688c
 	ld_slot hl, DataPtr_ModeSelectLabelTiles7 ; $688f
@@ -294,7 +294,7 @@ LoadSavedDataSourceGfx:
 	call DecompressDataFromBank ; $6895
 	ld hl, wDecompBuffer ; $6898
 	ld de, vTiles1 + $10 * TILE_SIZE + VRAM_BANK1 ; $689b
-	ld bc, $0010 ; $689e
+	ld bc, 16 ; $689e
 	call QueueVRAMCopy ; $68a1
 	call AdvanceFrame ; $68a4
 	wram_bank WRAM_SCREEN ; $68a7

@@ -152,7 +152,7 @@ LoadMainMenuGfx:
 	push bc ; $56fb
 	push de ; $56fc
 	push hl ; $56fd
-	ld bc, $0010 ; $56fe
+	ld bc, 16 ; $56fe
 	call QueueVRAMCopy ; $5701
 	pop hl ; $5704
 	pop de ; $5705

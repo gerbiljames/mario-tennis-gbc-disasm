@@ -229,7 +229,7 @@ UploadGlyphTilesPartial:
 	push_wram_bank WRAM_SOUND ; $622e
 	ld hl, wGlyphTileBuffer ; $6237
 	ld de, vTiles1 ; $623a
-	ld c, $1b ; $623d
+	ld c, 27 ; $623d
 	call QueueVRAMCopy ; $623f
 	push af ; $6242
 	ldh a, [rLCDC] ; $6243
@@ -240,7 +240,7 @@ UploadGlyphTilesPartial:
 	pop af ; $624c
 	ld hl, wGlyphTileBuffer + 27 * TILE_SIZE ; $624d
 	ld de, vTiles1 + $1b * TILE_SIZE ; $6250
-	ld c, $1b ; $6253
+	ld c, 27 ; $6253
 	call QueueVRAMCopy ; $6255
 	push af ; $6258
 	ldh a, [rLCDC] ; $6259

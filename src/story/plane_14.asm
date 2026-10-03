@@ -32,7 +32,7 @@ LoadPlaneObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $5e79
 	ld hl, PlaneObjTiles_14 ; $5e82
 	ld de, vTiles0 + VRAM_BANK1 ; $5e85
-	ld c, $60 ; $5e88
+	ld c, 96 ; $5e88
 	call QueueVRAMCopy ; $5e8a
 	ld hl, IslandObjPalette_14 ; $5e8d
 	ld_obj_pals de, 0, 1 ; $5e90
@@ -290,7 +290,7 @@ LoadPlaneObjGfx2_14:
 	push_wram_bank WRAM_STAGING ; $6238
 	ld hl, IslandObjTiles_14 ; $6241
 	ld de, vTiles0 + VRAM_BANK1 ; $6244
-	ld c, $60 ; $6247
+	ld c, 96 ; $6247
 	call QueueVRAMCopy ; $6249
 	ld hl, IslandObjPalette_14 ; $624c
 	ld_obj_pals de, 0, 1 ; $624f

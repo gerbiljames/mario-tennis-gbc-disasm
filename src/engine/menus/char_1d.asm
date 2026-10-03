@@ -172,7 +172,7 @@ LoadCharDataScreenPageGraphics:
 	call DecompressData ; $41cf
 	ld hl, wDecompBuffer ; $41d2
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $41d5
-	ld c, $08 ; $41d8
+	ld c, 8 ; $41d8
 	call QueueVRAMCopy ; $41da
 	wram_bank WRAM_STAGING ; $41dd
 	ld hl, CharDataScreenPagePatch3Tilemap ; $41e3
@@ -326,15 +326,15 @@ LoadCharDataScreenPageGraphics:
 	farcall DecompressCharMugshot ; $439a
 	ld hl, wDecompBuffer ; $439d
 	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $43a0
-	ld c, $03 ; $43a3
+	ld c, 3 ; $43a3
 	call QueueVRAMCopy ; $43a5
 	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $43a8
 	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $43ab
-	ld c, $03 ; $43ae
+	ld c, 3 ; $43ae
 	call QueueVRAMCopy ; $43b0
 	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $43b3
 	ld de, vTiles2 + $40 * TILE_SIZE + VRAM_BANK1 ; $43b6
-	ld c, $03 ; $43b9
+	ld c, 3 ; $43b9
 	call QueueVRAMCopy ; $43bb
 	ld a, $01 ; $43be
 	ld [wStoryCharacterSlot], a ; $43c0
@@ -375,15 +375,15 @@ LoadCharDataScreenPageGraphics:
 	farcall DecompressCharMugshot ; $43fe
 	ld hl, wDecompBuffer ; $4401
 	ld de, vTiles2 + $23 * TILE_SIZE + VRAM_BANK1 ; $4404
-	ld c, $03 ; $4407
+	ld c, 3 ; $4407
 	call QueueVRAMCopy ; $4409
 	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $440c
 	ld de, vTiles2 + $33 * TILE_SIZE + VRAM_BANK1 ; $440f
-	ld c, $03 ; $4412
+	ld c, 3 ; $4412
 	call QueueVRAMCopy ; $4414
 	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $4417
 	ld de, vTiles2 + $43 * TILE_SIZE + VRAM_BANK1 ; $441a
-	ld c, $03 ; $441d
+	ld c, 3 ; $441d
 	call QueueVRAMCopy ; $441f
 	ret ; $4422
 CopyWram1ToWram3CharData:

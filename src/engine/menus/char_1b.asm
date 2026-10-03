@@ -38,11 +38,11 @@ Unused_1b_LoadCharSelectScreenGfx:
 	call DecompressData ; $5ff4
 	ld hl, $d000 ; $5ff7
 	ld de, vTiles2 + VRAM_BANK1 ; $5ffa
-	ld c, $80 ; $5ffd
+	ld c, 128 ; $5ffd
 	call QueueVRAMCopy ; $5fff
 	ld hl, $d800 ; $6002
 	ld de, vTiles1 + VRAM_BANK1 ; $6005
-	ld c, $80 ; $6008
+	ld c, 128 ; $6008
 	call QueueVRAMCopy ; $600a
 	ld hl, CharSelectNavGridTable ; $600d
 	ld de, $dc00 ; $6010
@@ -70,7 +70,7 @@ Unused_1b_UpdateCharSelectCursorTask:
 Unused_1b_DrawCharSelectPrompt:
 	ld hl, $d000 ; $6045
 	ld de, vTiles2 ; $6048
-	ld c, $10 ; $604b
+	ld c, 16 ; $604b
 	call QueueVRAMCopy ; $604d
 	ld hl, $d9e0 ; $6050
 	ld de, $dde0 ; $6053
@@ -151,11 +151,11 @@ Unused_1b_RunCharSelectLoop:
 	call Unused_1b_DrawCharSelectPrompt ; $60f2
 	ld hl, $dc00 ; $60f5
 	ld de, vBGMap0 + VRAM_BANK1 ; $60f8
-	ld c, $24 ; $60fb
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $60fb
 	call QueueVRAMCopy ; $60fd
 	ld hl, $d800 ; $6100
 	ld de, vBGMap0 ; $6103
-	ld c, $24 ; $6106
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $6106
 	call QueueVRAMCopy ; $6108
 	call EnableLCD ; $610b
 	script_fade_in 32 ; $610e

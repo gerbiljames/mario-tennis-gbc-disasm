@@ -473,7 +473,7 @@ LoadMatchFormatGfx:
 	push bc ; $5e23
 	push de ; $5e24
 	push hl ; $5e25
-	ld bc, $0010 ; $5e26
+	ld bc, 16 ; $5e26
 	call QueueVRAMCopy ; $5e29
 	pop hl ; $5e2c
 	pop de ; $5e2d

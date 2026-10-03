@@ -5,7 +5,7 @@ DecompressIntroTitleTiles:
 	call DecompressDataFromBank ; $7401
 	ld hl, wDecompBuffer ; $7404
 	ld de, vTiles2 ; $7407
-	ld c, $80 ; $740a
+	ld c, 128 ; $740a
 	call QueueVRAMCopy ; $740c
 	ld hl, wTextTileBuffer ; $740f
 	ld de, vTiles1 ; $7412

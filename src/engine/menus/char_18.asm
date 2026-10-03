@@ -63,7 +63,7 @@ Unused_18_LoadConfirmScreenSpriteGfx:
 	call DecompressData ; $561b
 	ld hl, wDecompBuffer ; $561e
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5621
-	ld c, $0c ; $5624
+	ld c, 12 ; $5624
 	call QueueVRAMCopy ; $5626
 	ld hl, ConfirmScreenSpritePalette1 ; $5629
 	ld_obj_pals de, 0, 1 ; $562c
@@ -111,7 +111,7 @@ CharSelectCursorPalette:
 Unused_18_LoadCharSelectCursorGfx:
 	ld hl, CharSelectCursorGfx ; $59c1
 	ld de, vTiles0 + $40 * TILE_SIZE ; $59c4
-	ld c, $0c ; $59c7 -- 12 of CharSelectCursorGfx's 13 tiles
+	ld c, 12 ; $59c7 -- 12 of CharSelectCursorGfx's 13 tiles
 	call QueueVRAMCopy ; $59c9
 	ld hl, CharSelectCursorPalette ; $59cc
 	ld_obj_pals de, 2, 1 ; $59cf
@@ -196,7 +196,7 @@ LoadOnCourtCharTilesA:
 	rr l ; $5ac2
 	ld bc, OnCourtCharTilesAGfx ; $5ac4
 	add hl, bc ; $5ac7
-	ld c, $04 ; $5ac8
+	ld c, 4 ; $5ac8
 	call QueueVRAMCopy ; $5aca
 	ret ; $5acd
 LoadOnCourtCharTilesB:
@@ -210,7 +210,7 @@ LoadOnCourtCharTilesB:
 	rr l ; $5adb
 	ld bc, OnCourtCharTilesBGfx ; $5add
 	add hl, bc ; $5ae0
-	ld c, $04 ; $5ae1
+	ld c, 4 ; $5ae1
 	call QueueVRAMCopy ; $5ae3
 	ret ; $5ae6
 LoadOnCourtCharTilesFallback:

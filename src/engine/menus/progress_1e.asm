@@ -53,7 +53,7 @@ FillProgressListRowAttrs:
 UnusedCopyProgressListTilemap:
 	ld hl, $d060 ; $7a30
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $7a33
-	ld c, $1e ; $7a36
+	ld c, 15 * TILEMAP_WIDTH / 16 ; $7a36
 	call QueueVRAMCopy ; $7a38
 	ret ; $7a3b
 DrawProgressEntryDefaultIcon:

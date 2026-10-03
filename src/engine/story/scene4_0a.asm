@@ -182,7 +182,7 @@ LoadCourtSceneGraphics:
 	call DecompressDataFromBank ; $6333
 	ld hl, wDecompBuffer ; $6336
 	ld de, vTiles2 + VRAM_BANK1 ; $6339
-	ld c, $80 ; $633c
+	ld c, 128 ; $633c
 	call QueueVRAMCopy ; $633e
 	ld hl, wTextTileBuffer ; $6341
 	ld de, vTiles1 + VRAM_BANK1 ; $6344

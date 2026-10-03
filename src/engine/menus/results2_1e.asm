@@ -427,7 +427,7 @@ RefreshContinuePromptText:
 	call DrawContinuePromptText ; $4bda
 	ld hl, wContinuePromptKind ; $4bdd
 	ld de, vBGMap0 ; $4be0
-	ld c, $08 ; $4be3
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4be3
 	call QueueVRAMCopy ; $4be5
 	wram_bank WRAM_SCENE ; $4be8
 	ret ; $4bee
@@ -441,7 +441,7 @@ RefreshContinuePromptText:
 	call DrawSaveWarningTextLine2 ; $4c00
 	ld hl, wContinuePromptKind ; $4c03
 	ld de, vBGMap0 ; $4c06
-	ld c, $08 ; $4c09
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4c09
 	call QueueVRAMCopy ; $4c0b
 	wram_bank WRAM_SCENE ; $4c0e
 	ret ; $4c14

@@ -18,15 +18,15 @@ PlayScrollingStoryCutscene:
 	push af ; $7000
 	ld hl, WindowSolidTile_03 ; $7001
 	ld de, vTiles1 + $7f * TILE_SIZE ; $7004
-	ld c, $01 ; $7007
+	ld c, 1 ; $7007
 	call QueueVRAMCopy ; $7009
 	ld hl, WindowAttrMap_03 ; $700c
-	ld de, $bc00 ; $700f
-	ld c, $10 ; $7012
+	ld de, vBGMap1 + VRAM_BANK1 ; $700f
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $7012
 	call QueueVRAMCopy ; $7014
 	ld hl, WindowTileMap_03 ; $7017
 	ld de, vBGMap1 ; $701a
-	ld c, $10 ; $701d
+	ld c, 8 * TILEMAP_WIDTH / 16 ; $701d
 	call QueueVRAMCopy ; $701f
 	call AdvanceFrame ; $7022
 	farcall StopSceneScrollTask ; $7025

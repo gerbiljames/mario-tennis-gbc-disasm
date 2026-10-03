@@ -139,7 +139,7 @@ LoadEraseSavedDataGfx:
 	call DecompressDataFromBank ; $6d94
 	ld hl, wDecompBuffer ; $6d97
 	ld de, vTiles1 + VRAM_BANK1 ; $6d9a
-	ld c, $10 ; $6d9d
+	ld c, 16 ; $6d9d
 	call QueueVRAMCopy ; $6d9f
 	call AdvanceFrame ; $6da2
 	ld_slot hl, DataPtr_N64TransferLabelTiles1 ; $6da5
@@ -147,7 +147,7 @@ LoadEraseSavedDataGfx:
 	call DecompressDataFromBank ; $6dab
 	ld hl, wDecompBuffer ; $6dae
 	ld de, vTiles1 + $10 * TILE_SIZE + VRAM_BANK1 ; $6db1
-	ld c, $10 ; $6db4
+	ld c, 16 ; $6db4
 	call QueueVRAMCopy ; $6db6
 	call AdvanceFrame ; $6db9
 	ld b, TILEBLOCK_EraseSavedDataGfx0 ; $6dbc

@@ -264,7 +264,7 @@ LoadPlayAlonePartnerGraphics:
 	push bc ; $5260
 	push de ; $5261
 	push hl ; $5262
-	ld bc, $0010 ; $5263
+	ld bc, 16 ; $5263
 	call QueueVRAMCopy ; $5266
 	pop hl ; $5269
 	pop de ; $526a

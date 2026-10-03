@@ -126,7 +126,7 @@ CharDataScreen_LoadScreen:
 	call DecompressData ; $7151
 	ld hl, wDecompBuffer ; $7154
 	ld de, vTiles2 + VRAM_BANK1 ; $7157
-	ld c, $80 ; $715a -- 128 of CharDataScreenGfx0_1c's 256 tiles
+	ld c, 128 ; $715a -- 128 of CharDataScreenGfx0_1c's 256 tiles
 	call QueueVRAMCopy ; $715c
 	ld hl, wTextTileBuffer ; $715f
 	ld de, vTiles1 + VRAM_BANK1 ; $7162
@@ -418,7 +418,7 @@ LoadCharDataScreenBgAndPalettes:
 	call DecompressData ; $7443
 	ld hl, wDecompBuffer ; $7446
 	ld de, vTiles2 + VRAM_BANK1 ; $7449
-	ld c, $80 ; $744c -- 128 of CharDataScreenBgAndPalettes0's 256 tiles
+	ld c, 128 ; $744c -- 128 of CharDataScreenBgAndPalettes0's 256 tiles
 	call QueueVRAMCopy ; $744e
 	ld hl, wTextTileBuffer ; $7451
 	ld de, vTiles1 + VRAM_BANK1 ; $7454
@@ -479,7 +479,7 @@ LoadCharDataScreenMugshots:
 	farcall DecompressCharMugshot ; $74cc
 	ld hl, wDecompBuffer ; $74cf
 	ld de, vTiles1 + $30 * TILE_SIZE + VRAM_BANK1 ; $74d2
-	ld c, $09 ; $74d5
+	ld c, 9 ; $74d5
 	call QueueVRAMCopy ; $74d7
 	ld a, $01 ; $74da
 	ld [wStoryCharacterSlot], a ; $74dc
@@ -520,7 +520,7 @@ LoadCharDataScreenMugshots:
 	farcall DecompressCharMugshot ; $751a
 	ld hl, wDecompBuffer ; $751d
 	ld de, vTiles1 + $40 * TILE_SIZE + VRAM_BANK1 ; $7520
-	ld c, $09 ; $7523
+	ld c, 9 ; $7523
 	call QueueVRAMCopy ; $7525
 	ld hl, wMasterPalettes + 16 ; $7528
 	farcall GrayscalePaletteColorInPlace ; $752b

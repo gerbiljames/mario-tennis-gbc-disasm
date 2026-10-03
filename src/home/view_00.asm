@@ -358,7 +358,7 @@ QueueCharFrameTiles:
 	call QueueTileCopyAdvance ; $2f07
 	jr .loop ; $2f0a
 QueueTileCopyAdvance:
-	ld c, $01 ; $2f0c
+	ld c, 1 ; $2f0c
 	push de ; $2f0e
 	push hl ; $2f0f
 	call QueueVRAMCopy ; $2f10

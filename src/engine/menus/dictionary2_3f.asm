@@ -54,7 +54,7 @@ DrawTennisDictionaryLetterLabels:
 .loopB:
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 16 ; $538a
 	ld de, vBGMap0 + 1 * TILEMAP_WIDTH + 16 ; $538d
-	ld c, $01 ; $5390
+	ld c, 1 ; $5390
 	call QueueVRAMCopy ; $5392
 	or a ; $5395
 	jr nz, .done ; $5396
@@ -229,7 +229,7 @@ DrawTennisDictionaryIndexCursor:
 .nextVramRow:
 	dec b ; $551a
 	jr nz, .vramRowLoop ; $551b
-	ld c, $01 ; $551d
+	ld c, 1 ; $551d
 	push de ; $551f
 	push hl ; $5520
 	call QueueVRAMCopy ; $5521
@@ -247,7 +247,7 @@ DrawTennisDictionaryIndexCursor:
 	jr nc, .queueSecond ; $5531
 	inc d ; $5533
 .queueSecond:
-	ld c, $01 ; $5534
+	ld c, 1 ; $5534
 	call QueueVRAMCopy ; $5536
 	wram_bank WRAM_SCENE ; $5539
 	ret ; $553f
@@ -497,7 +497,7 @@ QueueTennisDictionaryGlyphTiles:
 	push_wram_bank WRAM_SOUND ; $5749
 	ld hl, wGlyphTileBuffer + 54 * TILE_SIZE ; $5752
 	ld de, vTiles1 + $36 * TILE_SIZE ; $5755
-	ld c, $18 ; $5758
+	ld c, 24 ; $5758
 	call QueueVRAMCopy ; $575a
 	push af ; $575d
 	ldh a, [rLCDC] ; $575e
@@ -508,7 +508,7 @@ QueueTennisDictionaryGlyphTiles:
 	pop af ; $5767
 	ld hl, wGlyphTileBuffer + 78 * TILE_SIZE ; $5768
 	ld de, vTiles1 + $4e * TILE_SIZE ; $576b
-	ld c, $18 ; $576e
+	ld c, 24 ; $576e
 	call QueueVRAMCopy ; $5770
 	push af ; $5773
 	ldh a, [rLCDC] ; $5774
@@ -519,7 +519,7 @@ QueueTennisDictionaryGlyphTiles:
 	pop af ; $577d
 	ld hl, wGlyphTileBuffer + 102 * TILE_SIZE ; $577e
 	ld de, vTiles1 + $66 * TILE_SIZE ; $5781
-	ld c, $18 ; $5784
+	ld c, 24 ; $5784
 	call QueueVRAMCopy ; $5786
 	pop_wram_bank ; $5789
 	ret ; $578e
@@ -527,27 +527,27 @@ QueueTennisDictionaryListRows:
 	push_wram_bank WRAM_TEXT ; $578f
 	ld hl, wWindowShadowTilemap + 5 * TILEMAP_WIDTH + 16 ; $5798
 	ld de, vBGMap0 + 5 * TILEMAP_WIDTH + 16 ; $579b
-	ld c, $01 ; $579e
+	ld c, 1 ; $579e
 	call QueueVRAMCopy ; $57a0
 	ld hl, wWindowShadowTilemap + 7 * TILEMAP_WIDTH + 16 ; $57a3
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + 16 ; $57a6
-	ld c, $01 ; $57a9
+	ld c, 1 ; $57a9
 	call QueueVRAMCopy ; $57ab
 	ld hl, wWindowShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; $57ae
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + 16 ; $57b1
-	ld c, $01 ; $57b4
+	ld c, 1 ; $57b4
 	call QueueVRAMCopy ; $57b6
 	ld hl, wWindowShadowTilemap + 11 * TILEMAP_WIDTH + 16 ; $57b9
 	ld de, vBGMap0 + 11 * TILEMAP_WIDTH + 16 ; $57bc
-	ld c, $01 ; $57bf
+	ld c, 1 ; $57bf
 	call QueueVRAMCopy ; $57c1
 	ld hl, wWindowShadowTilemap + 13 * TILEMAP_WIDTH + 16 ; $57c4
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH + 16 ; $57c7
-	ld c, $01 ; $57ca
+	ld c, 1 ; $57ca
 	call QueueVRAMCopy ; $57cc
 	ld hl, wWindowShadowTilemap + 15 * TILEMAP_WIDTH + 16 ; $57cf
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH + 16 ; $57d2
-	ld c, $01 ; $57d5
+	ld c, 1 ; $57d5
 	call QueueVRAMCopy ; $57d7
 	push af ; $57da
 	ldh a, [rLCDC] ; $57db

@@ -17,7 +17,7 @@ LoadScreenAssetRecord:
 	call DecompressDataFromBank ; $409d
 	ld hl, wDecompBuffer ; $40a0
 	ld de, vTiles2 + VRAM_BANK1 ; $40a3
-	ld c, $80 ; $40a6
+	ld c, 128 ; $40a6
 	call QueueVRAMCopy ; $40a8
 	ld hl, wTextTileBuffer ; $40ab
 	ld de, vTiles1 + VRAM_BANK1 ; $40ae
@@ -205,11 +205,11 @@ UpdateAnimatedTiles:
 	call DecompressDataFromBank ; $43a2
 	ld hl, wDecompBuffer ; $43a5
 	ld de, vTiles2 + $2e * TILE_SIZE + VRAM_BANK1 ; $43a8
-	ld c, $02 ; $43ab
+	ld c, 2 ; $43ab
 	call QueueVRAMCopy ; $43ad
 	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $43b0
 	ld de, vTiles2 + $3e * TILE_SIZE + VRAM_BANK1 ; $43b3
-	ld c, $02 ; $43b6
+	ld c, 2 ; $43b6
 	call QueueVRAMCopy ; $43b8
 .frameB:
 	ld a, [wAnimatedTileSet] ; $43bb
@@ -243,11 +243,11 @@ UpdateAnimatedTiles:
 	call DecompressDataFromBank ; $43e0
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $43e3
 	ld de, vTiles2 + $4e * TILE_SIZE + VRAM_BANK1 ; $43e6
-	ld c, $02 ; $43e9
+	ld c, 2 ; $43e9
 	call QueueVRAMCopy ; $43eb
 	ld hl, wDecompBuffer + 18 * TILE_SIZE ; $43ee
 	ld de, vTiles2 + $5e * TILE_SIZE + VRAM_BANK1 ; $43f1
-	ld c, $02 ; $43f4
+	ld c, 2 ; $43f4
 	call QueueVRAMCopy ; $43f6
 .done:
 	pop_wram_bank ; $43f9

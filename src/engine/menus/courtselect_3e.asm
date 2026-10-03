@@ -223,7 +223,7 @@ LoadCourtSelectGraphics:
 	push bc ; $5d57
 	push de ; $5d58
 	push hl ; $5d59
-	ld bc, $0010 ; $5d5a
+	ld bc, 16 ; $5d5a
 	call QueueVRAMCopy ; $5d5d
 	pop hl ; $5d60
 	pop de ; $5d61
@@ -236,43 +236,43 @@ LoadCourtSelectGraphics:
 	cp $09 ; $5d68
 	jr nz, .loop ; $5d6a
 	ld b, TILEBLOCK_CourtSelectGfx1 ; $5d6c
-	ld c, $12 ; $5d6e -- 18 of CourtSelectGfx1's 16 tiles
+	ld c, 18 ; $5d6e -- 18 of CourtSelectGfx1's 16 tiles
 	ld de, vTiles0 + VRAM_BANK1 ; $5d70
 	farcall LoadCompressedTileBlock ; $5d73
 	ld b, TILEBLOCK_CourtSelectGfx2 ; $5d76
-	ld c, $12 ; $5d78 -- 18 of CourtSelectGfx2's 16 tiles
+	ld c, 18 ; $5d78 -- 18 of CourtSelectGfx2's 16 tiles
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5d7a
 	farcall LoadCompressedTileBlock ; $5d7d
 	ld b, TILEBLOCK_CourtSelectGfx3 ; $5d80
-	ld c, $12 ; $5d82 -- 18 of CourtSelectGfx3's 16 tiles
+	ld c, 18 ; $5d82 -- 18 of CourtSelectGfx3's 16 tiles
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5d84
 	farcall LoadCompressedTileBlock ; $5d87
 	ld b, TILEBLOCK_CourtSelectGfx4 ; $5d8a
-	ld c, $14 ; $5d8c -- 20 of CourtSelectGfx4's 18 tiles
+	ld c, 20 ; $5d8c -- 20 of CourtSelectGfx4's 18 tiles
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $5d8e
 	farcall LoadCompressedTileBlock ; $5d91
 	ld b, TILEBLOCK_CourtSelectGfx5Alias16 ; $5d94
-	ld c, $12 ; $5d96 -- 18 of CourtSelectGfx5's 16 tiles
+	ld c, 18 ; $5d96 -- 18 of CourtSelectGfx5's 16 tiles
 	ld de, vTiles0 + $42 * TILE_SIZE + VRAM_BANK1 ; $5d98
 	farcall LoadCompressedTileBlock ; $5d9b
 	ld b, TILEBLOCK_CourtSelectGfx6 ; $5d9e
-	ld c, $12 ; $5da0 -- 18 of CourtSelectGfx6's 16 tiles
+	ld c, 18 ; $5da0 -- 18 of CourtSelectGfx6's 16 tiles
 	ld de, vTiles0 + $52 * TILE_SIZE + VRAM_BANK1 ; $5da2
 	farcall LoadCompressedTileBlock ; $5da5
 	ld b, TILEBLOCK_CourtSelectGfx7 ; $5da8
-	ld c, $12 ; $5daa -- 18 of CourtSelectGfx7's 16 tiles
+	ld c, 18 ; $5daa -- 18 of CourtSelectGfx7's 16 tiles
 	ld de, vTiles0 + $62 * TILE_SIZE + VRAM_BANK1 ; $5dac
 	farcall LoadCompressedTileBlock ; $5daf
 	ld b, TILEBLOCK_CourtSelectGfx8 ; $5db2
-	ld c, $12 ; $5db4 -- 18 of CourtSelectGfx8's 16 tiles
+	ld c, 18 ; $5db4 -- 18 of CourtSelectGfx8's 16 tiles
 	ld de, vTiles0 + $20 * TILE_SIZE ; $5db6
 	farcall LoadCompressedTileBlock ; $5db9
 	ld b, TILEBLOCK_CourtSelectGfx9 ; $5dbc
-	ld c, $12 ; $5dbe -- 18 of CourtSelectGfx9's 16 tiles
+	ld c, 18 ; $5dbe -- 18 of CourtSelectGfx9's 16 tiles
 	ld de, vTiles0 + $30 * TILE_SIZE ; $5dc0
 	farcall LoadCompressedTileBlock ; $5dc3
 	ld b, TILEBLOCK_SharedMenuGfx111 ; $5dc6
-	ld c, $12 ; $5dc8 -- 18 of SharedMenuGfx111's 16 tiles
+	ld c, 18 ; $5dc8 -- 18 of SharedMenuGfx111's 16 tiles
 	ld de, vTiles0 + $40 * TILE_SIZE ; $5dca
 	farcall LoadCompressedTileBlock ; $5dcd
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $5dd0
@@ -694,7 +694,7 @@ FlushCourtSelectTitleRow:
 	push_wram_bank WRAM_SCREEN ; $615f
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6168
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $616b
-	ld bc, $0006 ; $616e
+	ld bc, 3 * TILEMAP_WIDTH / 16 ; $616e
 	call QueueVRAMCopy ; $6171
 	pop_wram_bank ; $6174
 	ret ; $6179
@@ -711,7 +711,7 @@ LoadCourtSelectTitleTiles:
 	call DecompressData ; $6198
 	ld hl, wDecompBuffer ; $619b
 	ld de, vTiles2 + $30 * TILE_SIZE ; $619e
-	ld bc, $000c ; $61a1
+	ld bc, CourtSelectTitleTiles_SIZE / 16 ; $61a1
 	call QueueVRAMCopy ; $61a4
 	ret ; $61a7
 LoadCourtSelectTitleTiles2:
@@ -720,7 +720,7 @@ LoadCourtSelectTitleTiles2:
 	call DecompressData ; $61ae
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $61b1
 	ld de, vTiles2 + $40 * TILE_SIZE ; $61b4
-	ld bc, $0005 ; $61b7
+	ld bc, 5 ; $61b7
 	call QueueVRAMCopy ; $61ba
 	ret ; $61bd
 LoadCourtSelectPanelTiles:
@@ -729,11 +729,12 @@ LoadCourtSelectPanelTiles:
 	call DecompressData ; $61c4
 	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $61c7
 	ld de, vTiles1 ; $61ca
-	ld bc, $0037 ; $61cd
+	ld bc, 55 ; $61cd
 	call QueueVRAMCopy ; $61d0
 	ret ; $61d3
 CourtSelectTitleTiles:
 	INCBIN "data/bank_03e/lz_CourtSelectTitleTiles.bin" ; $61d4, 159 bytes
+	INCLUDE "data/bank_03e/lz_CourtSelectTitleTiles.inc" ; DEF CourtSelectTitleTiles_SIZE EQU its decoded length, generated from the .bin by make
 CourtSelectTitleTiles2Gfx:
 	INCBIN "data/bank_03e/lz_CourtSelectTitleTiles2Gfx.bin" ; $6273, 83 bytes
 CourtSelectPanelTiles:

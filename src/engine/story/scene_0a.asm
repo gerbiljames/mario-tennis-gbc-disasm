@@ -384,7 +384,7 @@ LoadStorySceneGraphics:
 	call DecompressDataFromBank ; $589e
 	ld hl, wDecompBuffer ; $58a1
 	ld de, vTiles2 + VRAM_BANK1 ; $58a4
-	ld c, $80 ; $58a7
+	ld c, 128 ; $58a7
 	call QueueVRAMCopy ; $58a9
 	ld hl, wTextTileBuffer ; $58ac
 	ld de, vTiles1 + VRAM_BANK1 ; $58af

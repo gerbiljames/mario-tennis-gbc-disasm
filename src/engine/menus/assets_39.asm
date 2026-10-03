@@ -7,7 +7,7 @@ FlushWram3MapRows:
 	ld a, b ; $4cb8
 	or a ; $4cb9
 	jr nz, .mode1 ; $4cba
-	ld c, $04 ; $4cbc
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $4cbc
 	ld hl, wShadowTilemap ; $4cbe
 	ld de, vBGMap0 ; $4cc1
 	call QueueVRAMCopy ; $4cc4
@@ -44,7 +44,7 @@ FlushWram3MapRows:
 .mode1:
 	cp $01 ; $4d1a
 	jr nz, .mode2 ; $4d1c
-	ld c, $04 ; $4d1e
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $4d1e
 	ld hl, wShadowTilemap ; $4d20
 	ld de, vBGMap0 ; $4d23
 	call QueueVRAMCopy ; $4d26
@@ -73,7 +73,7 @@ FlushWram3MapRows:
 .mode2:
 	cp $02 ; $4d65
 	jr nz, .mode3 ; $4d67
-	ld c, $04 ; $4d69
+	ld c, 2 * TILEMAP_WIDTH / 16 ; $4d69
 	ld hl, wShadowTilemap ; $4d6b
 	ld de, vBGMap0 ; $4d6e
 	call QueueVRAMCopy ; $4d71

@@ -416,7 +416,7 @@ LoadGameProgressScreenTiles:
 	jr nz, .loop ; $7556
 	ld hl, wDecompBuffer ; $7558
 	ld de, vBGMap0 + VRAM_BANK1 ; $755b
-	ld c, $06 ; $755e
+	ld c, 3 * TILEMAP_WIDTH / 16 ; $755e
 	call QueueVRAMCopy ; $7560
 	ld hl, GameProgressScreenPalettes0 ; $7563
 	ld d, $00 ; $7566
@@ -429,7 +429,7 @@ LoadGameProgressScreenTiles:
 	call QueueVRAMCopy ; $757a
 	ld hl, GameProgressScreenTiles2 ; $757d
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $7580
-	ld c, $04 ; $7583 -- 4 of GameProgressScreenTiles2's 8 tiles
+	ld c, 4 ; $7583 -- 4 of GameProgressScreenTiles2's 8 tiles
 	call QueueVRAMCopy ; $7585
 	ld hl, GameProgressScreenTiles1 ; $7588
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $758b

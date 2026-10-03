@@ -421,7 +421,7 @@ LoadStadiumBgGraphics:
 	call DecompressDataFromBank ; $4c47
 	ld hl, wDecompBuffer ; $4c4a
 	ld de, vTiles2 + VRAM_BANK1 ; $4c4d
-	ld c, $80 ; $4c50
+	ld c, 128 ; $4c50
 	call QueueVRAMCopy ; $4c52
 	ld hl, wTextTileBuffer ; $4c55
 	ld de, vTiles1 + VRAM_BANK1 ; $4c58

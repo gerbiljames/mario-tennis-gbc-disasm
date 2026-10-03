@@ -47,7 +47,7 @@ Unused_18_FlushBgMapShadowToVram:
 	jr z, .attrPlane ; $4358
 	ld hl, wTextTileBuffer ; $435a
 	ld de, vBGMap0 ; $435d
-	ld c, $24 ; $4360
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4360
 	call QueueVRAMCopy ; $4362
 .attrPlane:
 	ld a, [wBgMapShadowDirty] ; $4365
@@ -55,7 +55,7 @@ Unused_18_FlushBgMapShadowToVram:
 	jr z, .done ; $436a
 	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $436c
 	ld de, vBGMap0 + VRAM_BANK1 ; $436f
-	ld c, $24 ; $4372
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4372
 	call QueueVRAMCopy ; $4374
 .done:
 	xor a ; $4377
@@ -77,7 +77,7 @@ Unused_18_LoadFontTiles:
 	ret ; $438d
 	ld hl, FontTiles ; $438e
 	ld de, vTiles2 ; $4391
-	ld c, $10 ; $4394 -- 16 of FontTiles's 32 tiles
+	ld c, 16 ; $4394 -- 16 of FontTiles's 32 tiles
 	call QueueVRAMCopy ; $4396
 	ret ; $4399
 Unused_18_RenderProportionalTextAt32:

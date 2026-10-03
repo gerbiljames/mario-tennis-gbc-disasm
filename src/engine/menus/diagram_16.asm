@@ -265,14 +265,14 @@ InitMatchWinLoseScreen:
 	call DecompressData ; $45ca
 	ld hl, wDecompBuffer ; $45cd
 	ld de, vTiles0 + VRAM_BANK1 ; $45d0
-	ld c, $20 ; $45d3
+	ld c, 32 ; $45d3
 	call QueueVRAMCopy ; $45d5
 	ld hl, MatchWinLoseScreenGfx1 ; $45d8
 	ld de, wDecompBuffer ; $45db
 	call DecompressData ; $45de
 	ld hl, wDecompBuffer ; $45e1
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $45e4
-	ld c, $20 ; $45e7
+	ld c, 32 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
 	ld_obj_pals de, 0, 3 ; $45ef

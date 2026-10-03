@@ -18,11 +18,11 @@ UnusedDrawExpScreenMessage_1:
 	wram_bank WRAM_STAGING ; $4dd0
 	ld hl, wDecompBuffer ; $4dd6
 	ld de, vBGMap0 + VRAM_BANK1 ; $4dd9
-	ld c, $08 ; $4ddc
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4ddc
 	call QueueVRAMCopy ; $4dde
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $4de1
 	ld de, vBGMap0 ; $4de4
-	ld c, $08 ; $4de7
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4de7
 	call QueueVRAMCopy ; $4de9
 	call AdvanceFrame ; $4dec
 	wram_bank WRAM_SCENE ; $4def
@@ -53,11 +53,11 @@ UnusedDrawExpScreenMessage_2:
 	wram_bank WRAM_STAGING ; $4e2e
 	ld hl, wDecompBuffer ; $4e34
 	ld de, vBGMap0 + VRAM_BANK1 ; $4e37
-	ld c, $08 ; $4e3a
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4e3a
 	call QueueVRAMCopy ; $4e3c
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $4e3f
 	ld de, vBGMap0 ; $4e42
-	ld c, $08 ; $4e45
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $4e45
 	call QueueVRAMCopy ; $4e47
 	call AdvanceFrame ; $4e4a
 	wram_bank WRAM_SCENE ; $4e4d
@@ -760,11 +760,11 @@ Unused_1a_DrawExpBonusMessage:
 	wram_bank WRAM_STAGING ; $54f5
 	ld hl, wDecompBuffer ; $54fb
 	ld de, vBGMap0 + VRAM_BANK1 ; $54fe
-	ld c, $08 ; $5501
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $5501
 	call QueueVRAMCopy ; $5503
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $5506
 	ld de, vBGMap0 ; $5509
-	ld c, $08 ; $550c
+	ld c, 4 * TILEMAP_WIDTH / 16 ; $550c
 	call QueueVRAMCopy ; $550e
 	call AdvanceFrame ; $5511
 	wram_bank WRAM_SCENE ; $5514

@@ -196,7 +196,7 @@ Unused_13_DecompressVarsityCourtTourRecords:
 	ld d, h ; $66a4
 	ld e, l ; $66a5
 	ld hl, wDecompBuffer ; $66a6
-	ld c, $10 ; $66a9
+	ld c, 16 ; $66a9
 	call QueueVRAMCopy ; $66ab
 	pop af ; $66ae
 	pop bc ; $66af

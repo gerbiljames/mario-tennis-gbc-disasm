@@ -192,7 +192,7 @@ CopyMugshotBufferToVram:
 	push de ; $4e48
 	push hl ; $4e49
 	ld hl, wMugshotBuffer ; $4e4a
-	ld c, $09 ; $4e4d
+	ld c, 9 ; $4e4d
 	call QueueVRAMCopy ; $4e4f
 	pop hl ; $4e52
 	pop de ; $4e53
@@ -344,21 +344,21 @@ LoadRankingBoardTiles:
 	call DecompressDataFromBank ; $4fb5
 	ld hl, wDecompBuffer ; $4fb8
 	ld de, vTiles0 + VRAM_BANK1 ; $4fbb
-	ld c, $10 ; $4fbe
+	ld c, 16 ; $4fbe
 	call QueueVRAMCopy ; $4fc0
 	ld_slot hl, DataPtr_BracketCharIcon01 ; $4fc3
 	ld de, wDecompBuffer ; $4fc6
 	call DecompressDataFromBank ; $4fc9
 	ld hl, wDecompBuffer ; $4fcc
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4fcf
-	ld c, $10 ; $4fd2
+	ld c, 16 ; $4fd2
 	call QueueVRAMCopy ; $4fd4
 	ld_slot hl, DataPtr_BracketCharIcon02 ; $4fd7
 	ld de, wDecompBuffer ; $4fda
 	call DecompressDataFromBank ; $4fdd
 	ld hl, wDecompBuffer ; $4fe0
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $4fe3
-	ld c, $10 ; $4fe6
+	ld c, 16 ; $4fe6
 	call QueueVRAMCopy ; $4fe8
 	pop_wram_bank ; $4feb
 	ret ; $4ff0

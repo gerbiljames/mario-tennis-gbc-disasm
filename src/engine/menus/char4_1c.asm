@@ -236,12 +236,12 @@ SetupCharDataScreen:
 	wram_bank WRAM_SCREEN ; $55ae
 	ld hl, wCharDataScreenCell ; $55b4
 	ld de, vBGMap0 ; $55b7
-	ld c, $24 ; $55ba
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $55ba
 	call QueueVRAMCopy ; $55bc
 	wram_bank WRAM_COURT_PLANES ; $55bf
 	ld hl, wCharDataScreenCell ; $55c5
 	ld de, vBGMap0 + VRAM_BANK1 ; $55c8
-	ld c, $24 ; $55cb
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $55cb
 	call QueueVRAMCopy ; $55cd
 	wram_bank WRAM_SCENE ; $55d0
 	ld a, $03 ; $55d6

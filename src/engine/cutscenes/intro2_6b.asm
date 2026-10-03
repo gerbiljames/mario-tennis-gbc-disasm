@@ -99,27 +99,27 @@ IntroCutsceneState18Init_6b:
 	wram_bank WRAM_STAGING ; $4b7d
 	ld hl, wDecompBuffer ; $4b83
 	ld de, vTiles2 ; $4b86
-	ld c, $20 ; $4b89
+	ld c, 32 ; $4b89
 	call QueueVRAMCopy ; $4b8b
 	call AdvanceFrame ; $4b8e
 	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $4b91
 	ld de, vTiles2 + $20 * TILE_SIZE ; $4b94
-	ld c, $20 ; $4b97
+	ld c, 32 ; $4b97
 	call QueueVRAMCopy ; $4b99
 	call AdvanceFrame ; $4b9c
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $4b9f
 	ld de, vTiles2 + $40 * TILE_SIZE ; $4ba2
-	ld c, $20 ; $4ba5
+	ld c, 32 ; $4ba5
 	call QueueVRAMCopy ; $4ba7
 	call AdvanceFrame ; $4baa
 	ld hl, wDecompBuffer + 96 * TILE_SIZE ; $4bad
 	ld de, vTiles2 + $60 * TILE_SIZE ; $4bb0
-	ld c, $20 ; $4bb3
+	ld c, 32 ; $4bb3
 	call QueueVRAMCopy ; $4bb5
 	call AdvanceFrame ; $4bb8
 	ld hl, wTextTileBuffer ; $4bbb
 	ld de, vTiles1 ; $4bbe
-	ld c, $20 ; $4bc1
+	ld c, 32 ; $4bc1
 	call QueueVRAMCopy ; $4bc3
 	call AdvanceFrame ; $4bc6
 	xor a ; $4bc9

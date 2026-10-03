@@ -198,7 +198,7 @@ Unused_05_QueueFullTilemapCopy:
 	wram_bank ; $41cb
 	ld hl, $d000 ; $41cf
 	ld de, vBGMap0 ; $41d2
-	ld c, $40 ; $41d5
+	ld c, TILEMAP_AREA / 16 ; $41d5
 	call QueueVRAMCopy ; $41d7
 	pop hl ; $41da
 	pop de ; $41db
@@ -214,7 +214,7 @@ Unused_05_QueueFullAttrmapCopy:
 	wram_bank ; $41e4
 	ld hl, $d400 ; $41e8
 	ld de, vBGMap0 + VRAM_BANK1 ; $41eb
-	ld c, $40 ; $41ee
+	ld c, TILEMAP_AREA / 16 ; $41ee
 	call QueueVRAMCopy ; $41f0
 	pop hl ; $41f3
 	pop de ; $41f4
@@ -246,7 +246,7 @@ Unused_05_CopyTilemapRowToVRAM:
 	ld hl, $d000 ; $421e
 	add hl, bc ; $4221
 	push bc ; $4222
-	ld c, $02 ; $4223
+	ld c, 2 ; $4223
 	call QueueVRAMCopy ; $4225
 	pop bc ; $4228
 	ld hl, vBGMap0 + VRAM_BANK1 ; $4229
@@ -255,7 +255,7 @@ Unused_05_CopyTilemapRowToVRAM:
 	ld e, l ; $422e
 	ld hl, $d400 ; $422f
 	add hl, bc ; $4232
-	ld c, $02 ; $4233
+	ld c, 2 ; $4233
 	call QueueVRAMCopy ; $4235
 	ret ; $4238
 Unused_05_CopyTilemapRowsToVRAM:

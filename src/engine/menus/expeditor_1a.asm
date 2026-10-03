@@ -264,11 +264,11 @@ Unused_1a_ShowExpGainScreen:
 	wram_bank WRAM_STAGING ; $45b8
 	ld hl, wDecompBuffer ; $45be
 	ld de, vBGMap0 + VRAM_BANK1 ; $45c1
-	ld c, $24 ; $45c4
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $45c4
 	call QueueVRAMCopy ; $45c6
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $45c9
 	ld de, vBGMap0 ; $45cc
-	ld c, $24 ; $45cf
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $45cf
 	call QueueVRAMCopy ; $45d1
 	call Unused_00_CopyMapToScrollBuffers ; $45d4
 	ld a, $0f ; $45d7
@@ -456,11 +456,11 @@ Unused_1a_ShowExpGainScreen:
 	wram_bank WRAM_STAGING ; $473e
 	ld hl, wDecompBuffer ; $4744
 	ld de, vBGMap0 + VRAM_BANK1 ; $4747
-	ld c, $24 ; $474a
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $474a
 	call QueueVRAMCopy ; $474c
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $474f
 	ld de, vBGMap0 ; $4752
-	ld c, $24 ; $4755
+	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4755
 	call QueueVRAMCopy ; $4757
 	call Unused_00_CopyMapToScrollBuffers ; $475a
 	ld a, $0f ; $475d

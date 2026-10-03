@@ -71,7 +71,7 @@ ClearGlyphBuffer:
 	ld b, $80 ; $73d2
 .glyphLoop:
 	ld hl, FontGlyphs ; $73d4
-	ld c, $01 ; $73d7 -- 1 of FontGlyphs's 102 tiles
+	ld c, 1 ; $73d7 -- 1 of FontGlyphs's 102 tiles
 	call CopyMemoryFast ; $73d9
 	dec b ; $73dc
 	jr nz, .glyphLoop ; $73dd
@@ -116,7 +116,7 @@ ClearWindowGlyphTiles:
 	wram_bank WRAM_SOUND ; $7416
 .loop:
 	ld hl, FontGlyphs ; $741c
-	ld c, $01 ; $741f -- 1 of FontGlyphs's 102 tiles
+	ld c, 1 ; $741f -- 1 of FontGlyphs's 102 tiles
 	call CopyMemoryFast ; $7421
 	dec b ; $7424
 	jr nz, .loop ; $7425
@@ -160,7 +160,7 @@ UploadGlyphBufferFull:
 	ld e, l ; $7460
 	wram_bank WRAM_SOUND ; $7461
 	ld hl, wGlyphTileBuffer ; $7467
-	ld c, $10 ; $746a
+	ld c, 16 ; $746a
 	call QueueVRAMCopy ; $746c
 	push af ; $746f
 	ldh a, [rLCDC] ; $7470
@@ -171,7 +171,7 @@ UploadGlyphBufferFull:
 	pop af ; $7479
 	ld hl, wGlyphTileBuffer + 16 * TILE_SIZE ; $747a
 	pop de ; $747d
-	ld c, $10 ; $747e
+	ld c, 16 ; $747e
 	call QueueVRAMCopy ; $7480
 	push af ; $7483
 	ldh a, [rLCDC] ; $7484
@@ -182,7 +182,7 @@ UploadGlyphBufferFull:
 	pop af ; $748d
 	ld hl, wGlyphTileBuffer + 32 * TILE_SIZE ; $748e
 	pop de ; $7491
-	ld c, $10 ; $7492
+	ld c, 16 ; $7492
 	call QueueVRAMCopy ; $7494
 	push af ; $7497
 	ldh a, [rLCDC] ; $7498
@@ -193,7 +193,7 @@ UploadGlyphBufferFull:
 	pop af ; $74a1
 	ld hl, wGlyphTileBuffer + 48 * TILE_SIZE ; $74a2
 	pop de ; $74a5
-	ld c, $10 ; $74a6
+	ld c, 16 ; $74a6
 	call QueueVRAMCopy ; $74a8
 	push af ; $74ab
 	ldh a, [rLCDC] ; $74ac
@@ -473,7 +473,7 @@ UploadLastGlyphTiles:
 	ld d, h ; $766f
 	ld e, l ; $7670
 	pop hl ; $7671
-	ld c, $02 ; $7672
+	ld c, 2 ; $7672
 	call QueueVRAMCopy ; $7674
 .restore2:
 	pop_wram_bank ; $7677

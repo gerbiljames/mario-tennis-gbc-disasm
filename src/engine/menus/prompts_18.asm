@@ -93,7 +93,7 @@ Unused_18_InitConfirmScreen:
 	call DecompressData ; $52f7
 	ld hl, wDecompBuffer ; $52fa
 	ld de, vTiles2 + VRAM_BANK1 ; $52fd
-	ld c, $80 ; $5300 -- 128 of ConfirmScreenGfx0's 256 tiles
+	ld c, 128 ; $5300 -- 128 of ConfirmScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $5302
 	ld hl, wTextTileBuffer ; $5305
 	ld de, vTiles1 + VRAM_BANK1 ; $5308

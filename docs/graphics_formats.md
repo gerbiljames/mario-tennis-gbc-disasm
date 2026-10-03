@@ -40,9 +40,12 @@ whole copy of a decompressed stream is `ld c, Blob_SIZE / 16`, with
 `Blob_SIZE` the decoded length in a `data/<bank>/lz_Blob.inc` that `make`
 derives from the `.bin` (`tools/lz.py --size-inc`) and the source
 INCLUDEs after the INCBIN, or in the holder (`src/bank_XXX.asm`) of the
-bank that does the copy when that is another bank. A partial copy keeps its literal count with a
-comment naming the blob and the tiles it takes. The copies that remain
-plain literals decode through a helper the emitter cannot follow.
+bank that does the copy when that is another bank. A partial copy keeps a
+decimal tile count with a comment naming the blob and the tiles it takes. A
+copy into a BG map counts rows (`SCREEN_HEIGHT * TILEMAP_WIDTH / 16`,
+`4 * TILEMAP_WIDTH / 16`, `TILEMAP_AREA / 16`), and any other count is a
+decimal number of tiles. `make test` fails on a hex count before a
+`QueueVRAMCopy`.
 
 A blob that is a run of sprite frames carries a **layout** (`gfx:2x2`,
 `gfx:3x4+3`, `gfx:4x4+4` in the manifest; `layout=` in the PNG) so each

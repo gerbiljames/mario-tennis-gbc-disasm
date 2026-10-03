@@ -281,7 +281,7 @@ Unused_3b_FillN64RecordsPalettes:
 	ret ; $48f1
 LoadChartWindowTiles:
 	ld b, TILEBLOCK_MugshotTiles ; $48f2
-	ld c, $44 ; $48f4 -- 68 of MugshotTiles's 96 tiles
+	ld c, 68 ; $48f4 -- 68 of MugshotTiles's 96 tiles
 	farcall LoadCompressedTileBlock ; $48f6
 	ret ; $48f9
 DrawChartCharIcon:

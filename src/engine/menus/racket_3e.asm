@@ -368,7 +368,7 @@ LoadRacketShoesChoiceGraphics:
 	push bc ; $4f6a
 	push de ; $4f6b
 	push hl ; $4f6c
-	ld bc, $0010 ; $4f6d
+	ld bc, 16 ; $4f6d
 	call QueueVRAMCopy ; $4f70
 	pop hl ; $4f73
 	pop de ; $4f74

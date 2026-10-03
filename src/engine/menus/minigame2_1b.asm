@@ -534,7 +534,7 @@ LoadSavedDataTypeSelectGfx:
 	push bc ; $7241
 	push de ; $7242
 	push hl ; $7243
-	ld bc, $0010 ; $7244
+	ld bc, 16 ; $7244
 	call QueueVRAMCopy ; $7247
 	pop hl ; $724a
 	pop de ; $724b

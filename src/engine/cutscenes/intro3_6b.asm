@@ -15,7 +15,7 @@ InitCutsceneSceneA:
 	call DecompressData ; $5411
 	ld hl, wDecompBuffer ; $5414
 	ld de, vTiles2 ; $5417
-	ld c, $80 ; $541a -- 128 of CutsceneSceneAGfx0's 144 tiles
+	ld c, 128 ; $541a -- 128 of CutsceneSceneAGfx0's 144 tiles
 	call QueueVRAMCopy ; $541c
 	ld hl, wTextTileBuffer ; $541f
 	ld de, vTiles1 ; $5422
@@ -49,7 +49,7 @@ Unused_6b_InitCutsceneSceneB:
 	call DecompressData ; $5473
 	ld hl, wDecompBuffer ; $5476
 	ld de, vTiles2 ; $5479
-	ld c, $80 ; $547c -- 128 of CutsceneSceneAGfx0's 144 tiles
+	ld c, 128 ; $547c -- 128 of CutsceneSceneAGfx0's 144 tiles
 	call QueueVRAMCopy ; $547e
 	ld hl, wTextTileBuffer ; $5481
 	ld de, vTiles1 ; $5484
@@ -80,7 +80,7 @@ InitCutsceneSceneC:
 	call DecompressData ; $54ce
 	ld hl, wDecompBuffer ; $54d1
 	ld de, vTiles2 ; $54d4
-	ld c, $80 ; $54d7 -- 128 of CutsceneSceneAGfx0's 144 tiles
+	ld c, 128 ; $54d7 -- 128 of CutsceneSceneAGfx0's 144 tiles
 	call QueueVRAMCopy ; $54d9
 	ld hl, wTextTileBuffer ; $54dc
 	ld de, vTiles1 ; $54df
@@ -142,7 +142,7 @@ LoadIntroTilesAndPalette:
 	ld de, vTiles0 + $44 * TILE_SIZE + VRAM_BANK1 ; $60ab
 	farcall LoadCompressedTileBlock ; $60ae
 	ld b, TILEBLOCK_IntroGfx6 ; $60b1
-	ld c, $04 ; $60b3 -- 4 of IntroGfx6's 2 tiles
+	ld c, 4 ; $60b3 -- 4 of IntroGfx6's 2 tiles
 	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $60b5
 	farcall LoadCompressedTileBlock ; $60b8
 	ld hl, IntroPalettes ; $60bb
@@ -265,7 +265,7 @@ InitTitleSceneGraphics:
 	call DecompressData ; $6191
 	ld hl, wDecompBuffer ; $6194
 	ld de, vTiles2 + VRAM_BANK1 ; $6197
-	ld c, $80 ; $619a -- 128 of TitleSceneGraphicsGfx0's 241 tiles
+	ld c, 128 ; $619a -- 128 of TitleSceneGraphicsGfx0's 241 tiles
 	call QueueVRAMCopy ; $619c
 	ld hl, wTextTileBuffer ; $619f
 	ld de, vTiles1 + VRAM_BANK1 ; $61a2

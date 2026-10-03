@@ -203,7 +203,7 @@ LoadN64RecordTypeGfx:
 	push bc ; $727a
 	push de ; $727b
 	push hl ; $727c
-	ld bc, $0010 ; $727d
+	ld bc, 16 ; $727d
 	call QueueVRAMCopy ; $7280
 	pop hl ; $7283
 	pop de ; $7284
@@ -615,7 +615,7 @@ LoadN64TransferItemGfx:
 	push bc ; $7589
 	push de ; $758a
 	push hl ; $758b
-	ld bc, $0010 ; $758c
+	ld bc, 16 ; $758c
 	call QueueVRAMCopy ; $758f
 	pop hl ; $7592
 	pop de ; $7593
