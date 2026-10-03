@@ -1536,7 +1536,7 @@ wCharacter3LobShotWinners:: db
 wCharacter3DropShotWinners:: db
 
 ; [8-bit] Character 3 Faults (sixth byte of the stat block; the label repeats DropShotWinners)
-wCharacter3DropShotWinners2:: db
+wCharacter3Faults:: db
 
 ; [8-bit] Character 3 Double Faults
 wCharacter3DoubleFaults:: db
@@ -1552,7 +1552,7 @@ wCharacter4ReturnAces:: db
 wCharacter4SmashAces:: db
 
 ; [8-bit] Player 4 Lob Shot Winners
-wPlayer4LobShotWinners:: db
+wCharacter4LobShotWinners:: db
 
 ; [8-bit] Character 4 Drop Shot Winners
 wCharacter4DropShotWinners:: db
@@ -3127,12 +3127,12 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ;
 ;   $d000-$d5ff  overworld actors
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 3]
-;   $d800-$dbff  wIntroCharactersTilemap  [mirrored with bank ]
+;   $d800-$dbff  wIntroCharactersTilemap
 ;   $da00-$da31  actor engine
 ;   $dac0-$dae9  actor engine
 ;   $daea-$daf7  actor engine
 ;   $dc00-$dcd1  minigames / minigame targets
-;   $dc00-$dfff  wIntroCharactersAttrmap  [mirrored with bank ]
+;   $dc00-$dfff  wIntroCharactersAttrmap
 ;   $dcf0-$dcff  minigame targets
 ;   $dd00-$dd23  match ball history ring
 ;   $dd80-$ddcf  match object slots
@@ -3549,11 +3549,11 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 ; WRAMX bank 6 at a glance:
 ;
 ;   $d000-$d029  9 overlays: scrolling story cutscene slide flag / scene animation frame counter / star warp transition / +6 more
-;   $d000-$d3ff  wCollisionMap  [mirrored with bank ]
+;   $d000-$d3ff  wCollisionMap
 ;   $d02a-$d219  10 overlays: results continue prompt rows / star warp transition / trophy EXP awards / +7 more
 ;   $d230-$d259  scrolling text screen / EXP award screen
 ;   $d400-$d5ff  story slot signatures / unlock flags block
-;   $d400-$d7ff  wBehaviorMap  [mirrored with bank ]
+;   $d400-$d7ff  wBehaviorMap
 ;   $d800-$dbff  story scene load
 ;   $dc08-$dc8f  story scene load
 ;   $df00-$df96  match character struct  [one copy per bank 4-7]

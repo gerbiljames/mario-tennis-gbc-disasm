@@ -264,6 +264,17 @@ twice in six Stroke Match 2 sessions.
 `$240`-`$3ff` of the lockout's decompressed tiles. Nothing shows them: the
 routine ends in an endless `AdvanceFrame` loop without touching the scroll.
 
+### Some tile-block loads copy two tiles past their stream
+
+`LoadCompressedTileBlock` decompresses a stream and copies `c` tiles of the
+buffer to VRAM. The court-select screen (`$3e:$5d6e`-`$5dc8`) asks for 18 tiles
+of 16-tile streams (20 of Gfx4's 18), the minigame menu (`$3b:$63b9`) 18 of
+`SharedMenuGfx111`'s 16, and the intro (`$6b:$60b3`) 4 of `IntroGfx6`'s 2, so
+each copy brings two stale tiles from the buffer. In the court-select chain
+the next load overwrites them; the last loads leave them at tiles `$72`-`$73`
+(VRAM bank 1) and `$50`-`$51`, the minigame menu at `$60`-`$61`, the intro at
+`$4a`-`$4b`. Each copy's source note gives the counts.
+
 ### The SRAM text fetch copies more than its buffers hold
 
 The ROM text fetchers stop at their buffer's size: dialogue at

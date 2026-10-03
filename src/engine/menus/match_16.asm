@@ -458,7 +458,7 @@ PrintDoublesMatchStats:
 	ld bc, wStatsPrintBuffer ; $5f2a
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 18 ; $5f2d
 	farcall PrintNumberRightAligned ; $5f30
-	ld a, [wPlayer4LobShotWinners] ; $5f33
+	ld a, [wCharacter4LobShotWinners] ; $5f33
 	ld h, $00 ; $5f36
 	ld l, a ; $5f38
 	ld bc, wStatsPrintBuffer ; $5f39
