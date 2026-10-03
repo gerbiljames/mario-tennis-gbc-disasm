@@ -1,10 +1,11 @@
 """The source of one ROM bank, across its fragment files.
 
-`src/bank_XXX.asm` holds the bank's SECTION line and an ordered list of
-`INCLUDE "src/<subsystem>/<topic>_XX.asm"` lines; the code and data live in
-those fragments. Tools that read a bank as text use `bank_lines`, which
-expands the INCLUDEs in place so line-based analyses see the bank whole, and
-`bank_files` to know which files that was."""
+`main.asm` holds one `SECTION "ROM Bank $XX"` per bank, each followed by the
+bank's ordered `INCLUDE "src/<subsystem>/<topic>_XX.asm"` lines; the code and
+data live in those fragments. `holders()` gives one `Bank` per SECTION. Tools
+that read a bank as text use `bank_lines`, which expands the INCLUDEs in place
+so line-based analyses see the bank whole, and `bank_files` to know which
+files that was."""
 import re
 from pathlib import Path
 
@@ -38,19 +39,43 @@ def _twin_lines(kind, name, arg, arg2=None, equs=None):
     return out
 
 
+MAIN = ROOT / "main.asm"
+_SECTION_RE = re.compile(r'^SECTION "ROM Bank \$([0-9a-f]{2})"')
+
+
+class Bank:
+    """One bank's part of main.asm: its SECTION line and what follows, up to
+    the next bank's."""
+
+    def __init__(self, bank, lines, start):
+        self.bank, self.lines, self.start = bank, lines, start
+        self.name = f"main.asm bank ${bank:02x}"
+
+    def __repr__(self):
+        return f"<{self.name}>"
+
+
 def holders():
-    """The 128 holder files, in bank order."""
-    return sorted((ROOT / "src").glob("bank_*.asm"))
+    """The 128 banks of main.asm, in bank order (the list index is the bank)."""
+    out, cur = [], None
+    for i, line in enumerate(MAIN.read_text().split("\n")):
+        m = _SECTION_RE.match(line)
+        if m:
+            cur = Bank(int(m.group(1), 16), [], i + 1)
+            out.append(cur)
+        if cur:
+            cur.lines.append(line)
+    return sorted(out, key=lambda b: b.bank)
 
 
 def bank_of(holder):
-    return int(Path(holder).stem.split("_")[1], 16)
+    return holder.bank
 
 
 def bank_files(holder):
-    """[holder, fragment, fragment, ...] as Paths, in include order."""
-    out = [Path(holder)]
-    for line in Path(holder).read_text().split("\n"):
+    """[main.asm, fragment, fragment, ...] as Paths, in include order."""
+    out = [MAIN]
+    for line in holder.lines:
         m = _FRAG_RE.match(line)
         if m:
             out.append(ROOT / m.group(1))
@@ -62,7 +87,7 @@ def bank_lines(holder):
     and, per line, the (file, line number) it came from."""
     lines, origin = [], []
     equs = {}
-    for line in Path(holder).read_text().split("\n"):
+    for n, line in enumerate(holder.lines):
         e = _EQUS_RE.match(line)
         if e:
             equs[e.group(1)] = e.group(2)
@@ -80,7 +105,7 @@ def bank_lines(holder):
                 origin.append((frag, k + 1))
         else:
             lines.append(line)
-            origin.append((Path(holder), len(lines)))
+            origin.append((MAIN, holder.start + n))
     return lines, origin
 
 

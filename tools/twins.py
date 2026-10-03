@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """List the live routines that are instruction-identical copies of each other.
 
-Reads `src/bank_*.asm`, takes every global label's run of
+Reads every bank of `main.asm`, takes every global label's run of
 instructions up to the next global label, and normalises each line by
 dropping the address comment and the two-hex-digit bank suffix on names
 (`FetchText_25` -> `FetchText`), so copies of one routine assembled into

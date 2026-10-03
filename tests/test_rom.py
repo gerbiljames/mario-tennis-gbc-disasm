@@ -85,10 +85,10 @@ class Source(unittest.TestCase):
         n = count(r"^\tld b?c, (\w+)_SIZE / 16 ;")
         self.assertGreaterEqual(n, 299)
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob
-        for name, text in SRC:
-            used = set(re.findall(r"\bld b?c, (?![whs][A-Z]|(?:WRAMX|VRAM|CHAR_RECORD)_SIZE)(\w+)_SIZE / 16", text))
-            have = set(re.findall(r'INCLUDE "data/bank_[0-9a-f]{3}/lz_(\w+)\.inc"', text))
-            self.assertEqual(used - have, set(), name)
+        whole = (ROOT / "main.asm").read_text() + "\n".join(text for _, text in SRC)
+        used = set(re.findall(r"\bld b?c, (?![whs][A-Z]|(?:WRAMX|VRAM|CHAR_RECORD)_SIZE)(\w+)_SIZE / 16", whole))
+        have = set(re.findall(r'INCLUDE "data/bank_[0-9a-f]{3}/lz_(\w+)\.inc"', whole))
+        self.assertEqual(used - have, set())
         self.assertGreaterEqual(count(r"^\tld c, \d+ ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 39)
         # a VRAM copy's count is a size, a row count or a decimal tile count
         for name, text in SRC:

@@ -65,8 +65,8 @@ strings, the 315 sound-channel scripts) stays in `data/`.
 
 ## Layout
 
-- `src/bank_XXX.asm` -- one holder per ROM bank: its `SECTION`, any
-  decoded-length includes, and the ordered `INCLUDE` list of its fragments.
+- `main.asm` -- every ROM bank: one `SECTION` each with the ordered
+  `INCLUDE` list of its fragments, after the decoded-length includes.
   Fragments live by subsystem, named `<topic>_<bank>.asm`: `src/home/`
   (bank `$00`), `src/engine/{match,story,minigames,text,menus,cutscenes,save}/`,
   `src/story/` (location scripts), `src/audio/` (sound engine and banks),

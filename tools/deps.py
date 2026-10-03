@@ -1,33 +1,30 @@
-"""Make dependencies for the bank objects: each build/bank_XXX.o depends on its
-holder, its fragment files, the top-of-file includes, and every data file the
-bank INCBINs or INCLUDEs. Written to build/deps.mk by the Makefile."""
+"""Make dependencies for main.o: main.asm, the fragment files its banks
+INCLUDE, the shared templates they pull in, and every data file INCBINed or
+INCLUDEd. Written to <build>/deps.mk by the Makefile."""
 import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from banksrc import bank_files, holders  # noqa: E402
+from banksrc import MAIN, bank_files, holders  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
 
 def main():
     out = sys.argv[1] if len(sys.argv) > 1 else "build"
-    for h in holders():
-        deps = []
-        for f in bank_files(h):
-            deps.append(f.relative_to(ROOT).as_posix())
-            for line in f.read_text().split("\n"):
-                m = re.match(r'^INCLUDE "([^"]+)"', line)
-                if m and not m.group(1).startswith("src/"):
-                    deps.append("include/" + m.group(1))
-                m = re.match(r'^\s+(?:INCBIN|INCLUDE) "([^"]+)"', line)
-                if m:
-                    deps.append(m.group(1))
-                m = re.match(r"^\t(?:twin|twin_named|twin_in) (\w+),", line)
-                if m:
-                    deps.append(f"src/twins/{m.group(1)}.asm")
-        print(f"{out}/{h.stem}.o: " + " ".join(dict.fromkeys(deps)))
+    files = [MAIN] + [f for h in holders() for f in bank_files(h)[1:]]
+    deps = []
+    for f in dict.fromkeys(files):
+        deps.append(f.relative_to(ROOT).as_posix())
+        for line in f.read_text().split("\n"):
+            m = re.match(r'^\s*(?:INCBIN|INCLUDE) "((?!src/)[^"]+)"', line)
+            if m:
+                deps.append(m.group(1))
+            m = re.match(r"^\t(?:twin|twin_named|twin_in) (\w+),", line)
+            if m:
+                deps.append(f"src/twins/{m.group(1)}.asm")
+    print(f"{out}/main.o: " + " ".join(dict.fromkeys(deps)))
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 # Bank 0 notes
 
 Bank 0 is the fixed home bank (`src/home/`, with the sound driver in
-`src/audio/*_00.asm`, all included by `src/bank_000.asm`): the reset and
+`src/audio/*_00.asm`, all included by bank `$00`'s section of `main.asm`): the reset and
 interrupt vectors, the far-call trampolines, memory/VRAM/OAM helpers, the
 joypad driver, the sound engine ([sound_engine.md](sound_engine.md)) and
 the soft reset.

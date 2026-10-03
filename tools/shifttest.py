@@ -48,19 +48,25 @@ def free_bytes(map_path):
     return free
 
 
-def pinned(holder):
-    first = re.search(r'^INCLUDE "([^"]+)"', holder.read_text(), re.M)
+def pinned(tree, lines):
+    """A bank whose first fragment opens with an ASSERT is pinned in place."""
+    first = next((m.group(1) for m in map(re.compile(r'^INCLUDE "([^"]+)"').match, lines) if m), None)
     if not first:
         return False
-    head = (holder.parent.parent / first.group(1)).read_text().splitlines()[:3]
+    head = (tree / first).read_text().splitlines()[:3]
     return any(line.strip().startswith("ASSERT") for line in head)
 
 
 def pad_tree(tree, pad, free, only=None):
     padded = set()
-    for holder in sorted((tree / "src").glob("bank_*.asm")):
-        bank = int(holder.stem.split("_")[1], 16)
-        if bank and pinned(holder):
+    main = tree / "main.asm"
+    lines = main.read_text().split("\n")
+    sections = [(i, int(m.group(1), 16)) for i, m in
+                ((i, re.match(r'^SECTION "ROM Bank \$([0-9a-f]{2})"', l)) for i, l in enumerate(lines)) if m]
+    ends = [i for i, _ in sections[1:]] + [len(lines)]
+    inserts = []
+    for (i, bank), end in zip(sections, ends):
+        if bank and pinned(tree, lines[i:end]):
             continue
         # a shifted bank's first ALIGN 4 can take up to 15 more bytes
         if free.get(bank, 0) < pad + 15 or (only is not None and bank not in only):
@@ -70,9 +76,11 @@ def pad_tree(tree, pad, free, only=None):
             f.write_text(f.read_text().replace(
                 ROM0_PAD_BEFORE, f"\tds {pad}, $00\n{ROM0_PAD_BEFORE}", 1))
         else:
-            head, rest = holder.read_text().split("\n", 1)
-            holder.write_text(f"{head}\n\tds {pad}, $00\n{rest}")
+            inserts.append(i + 1)
         padded.add(bank)
+    for i in reversed(inserts):
+        lines.insert(i, f"\tds {pad}, $00")
+    main.write_text("\n".join(lines))
     return padded
 
 

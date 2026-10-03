@@ -15,8 +15,7 @@ BUILD   := build
 ROM     := mariotennis.gbc
 ASDEFS  :=
 endif
-SRCS    := $(wildcard src/bank_*.asm)
-OBJS    := $(SRCS:src/%.asm=$(BUILD)/%.o) $(BUILD)/ram.o
+OBJS    := $(BUILD)/main.o $(BUILD)/ram.o
 RAM_SRCS := ram.asm $(wildcard ram/*.asm)
 
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
@@ -41,11 +40,11 @@ $(ROM): $(OBJS)
 	$(RGBLINK) -p 0xff -o $@ -m $(BUILD)/$(ROM:.gbc=.map) -n $(BUILD)/$(ROM:.gbc=.sym) $(OBJS)
 	$(RGBFIX) -Wno-overwrite -v $@
 
-# hardware.inc + macros.inc are preincluded for every bank via -P instead of a
-# repeated INCLUDE at the top of each source file.
+# The include/ files are preincluded via -P instead of an INCLUDE at the top
+# of main.asm.
 PRELUDE := include/hardware.inc include/macros.inc include/constants.inc include/text_ids.inc include/flag_constants.inc include/text_codes.inc include/ram_mirrored.inc include/actor_roles.inc
 
-$(BUILD)/%.o: src/%.asm $(PRELUDE) | $(BUILD)/rgbdscheck.o
+$(BUILD)/main.o: main.asm $(PRELUDE) | $(BUILD)/rgbdscheck.o
 	$(RGBASM) -E $(ASDEFS) -I include $(PRELUDE:%=-P %) -o $@ $<
 
 $(BUILD)/ram.o: $(RAM_SRCS) | $(BUILD)/rgbdscheck.o
@@ -73,12 +72,12 @@ data/%.inc: data/%.bin
 $(BUILD)/rgbdscheck.o: rgbdscheck.asm | $(BUILD)
 	$(RGBASM) -o $@ $<
 
-# A bank object depends on its holder, the fragment files the holder INCLUDEs
-# (src/<subsystem>/<topic>_XX.asm), the top-of-file includes and every data
-# file the bank INCBINs or INCLUDEs; tools/deps.py lists them.
+# main.o depends on main.asm, the fragment files it INCLUDEs
+# (src/<subsystem>/<topic>_XX.asm), the shared templates, and every data file
+# they INCBIN or INCLUDE; tools/deps.py lists them.
 FRAGMENTS := $(shell find src -mindepth 2 -name '*.asm')
 
-$(BUILD)/deps.mk: $(SRCS) $(FRAGMENTS) tools/deps.py tools/banksrc.py | $(BUILD)
+$(BUILD)/deps.mk: main.asm $(FRAGMENTS) tools/deps.py tools/banksrc.py | $(BUILD)
 	python3 tools/deps.py $(BUILD) > $@
 
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
