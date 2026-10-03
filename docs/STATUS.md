@@ -152,6 +152,13 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-03 — labels audit.** Code that sat under the wrong name is
+  fixed: routine tails after a table are `Routine.local` again; 68 jump-table
+  cases and 23 entry-point scenes hidden as other routines' locals are routines
+  named for what dispatches them (`ServicePractice1Result2`,
+  `IslandSkyEntry02Scene`, `ShowMatchEndSequence`, `CharRecoverState`); stray
+  and orphan code and tables are `Unused`/`.unreachable`, and four labels that
+  split a routine are gone. Move speeds read in pixels per frame.
 * **2026-10-03 — `make FIXES=1`.** Nine shipped bugs with a known fix are
   fixed in an opt-in build (`mariotennis-fixes.gbc`, `build-fixes/`), each
   with its **Fix** paragraph in `docs/bugs.md`. Verified in PyBoy: a save with
