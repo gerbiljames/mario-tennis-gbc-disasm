@@ -160,6 +160,13 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-03 — routing, reviews, re-checks.** Every doc, bugs.md last,
+  was reviewed against the source (~150 corrections). A routing scan of what
+  sets each entry point finds 15 `map_entry` rows only the debug warp can
+  reach (Courtyard `$0a` among them, so its walk-in bug is latent) and one
+  singles/doubles split, which the event test now sets apart as FORCED. The
+  fixed build differs from the original only where a fix applies; free RAM
+  re-checked over 237 flows; `tools/stats.py` gives the headline counts.
 * **2026-10-03 — docs drift, two crashes settled, units.** Doc references
   checked against the symbols: three addresses credited to the wrong
   routine and ten drifting line references fixed. The End8 Sr. Court crash

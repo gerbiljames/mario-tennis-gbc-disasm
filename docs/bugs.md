@@ -21,7 +21,11 @@ Cross-references point at `docs/history.md` where a find is written up in more
 detail.
 
 A bug with a **Fix** paragraph is fixed in `make FIXES=1`, which builds
-`mariotennis-fixes.gbc` from the `IF DEF(FIXES)` blocks in the source. The rest
+`mariotennis-fixes.gbc` from the `IF DEF(FIXES)` blocks in the source. Played
+against the original by the event test over every story state and, on
+2026-10-03, every targeted session, story handler and nine main-menu sessions,
+it differs only where a fix applies (the damaged-save target, the slot-8 match,
+the awards ceremony) and crashes only where the original does (Test2). The rest
 are left as they are: the fix would change behaviour nobody has checked
 (`GetActorStateAddr`'s guards), the intended values are not known (the
 Courtyard walk-in table, the map-edge clamp, the glyph pen's range), or the
