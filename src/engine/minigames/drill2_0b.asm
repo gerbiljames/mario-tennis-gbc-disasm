@@ -556,7 +556,6 @@ QueueDrillMarker2_0b:
 	ld e, a ; $46d1
 	ld hl, wDrillGate2 ; $46d2
 	ld a, [hl+] ; $46d5
-QueueDrillSprite_0b:
 	ld h, [hl] ; $46d6
 	ld l, a ; $46d7
 	farcall ProjectWorldToScreen_08 ; $46d8

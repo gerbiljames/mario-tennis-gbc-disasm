@@ -351,7 +351,6 @@ RenderMenuWindowText:
 	inc d ; $725b
 	inc d ; $725c
 	ld a, d ; $725d
-RenderTextAtWindowCell:
 	and $1f ; $725e
 	ld d, a ; $7260
 	inc e ; $7261

@@ -232,7 +232,6 @@ FitWindowToText:
 	srl a ; $5720
 	ld d, a ; $5722
 	ld a, [wDialogueWindowCol] ; $5723
-WaitActorsIdleTimeout:
 	add d ; $5726
 	ld d, a ; $5727
 	ld a, [wDialogueWindowHeight] ; $5728
