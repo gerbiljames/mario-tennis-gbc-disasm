@@ -160,9 +160,9 @@ MarioWorldArrivalDoubles:
 	script_wait_frames 40 ; $5d5e
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $5d65
 	script_wait_frames 20 ; $5d6a
-	script_jump_velocity ACTOR_MARIO_WORLD_BOO, $ff80 ; $5d71
+	script_jump_velocity ACTOR_MARIO_WORLD_BOO, -2.0 ; $5d71
 	script_wait_frames 20 ; $5d79
-	script_jump_velocity ACTOR_MARIO_WORLD_BOO, $ff80 ; $5d80
+	script_jump_velocity ACTOR_MARIO_WORLD_BOO, -2.0 ; $5d80
 	script_wait_frames 40 ; $5d88
 	sound SFX_THUD ; $5d8f
 	script_speak ACTOR_MARIO_WORLD_BOO ; $5d91

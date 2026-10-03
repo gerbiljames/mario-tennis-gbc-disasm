@@ -429,7 +429,7 @@ DrawActorSprite:
 	ld a, [hl+] ; $554b
 	ld d, [hl] ; $554c
 	ld e, a ; $554d
-	ld hl, $0010 ; $554e
+	ld hl, ACTORF_HEIGHT ; $554e
 	add hl, bc ; $5551
 	ld a, [hl+] ; $5552
 	ld h, [hl] ; $5553
@@ -741,12 +741,12 @@ IsActorJumping:
 	wram_bank WRAM_ACTORS ; $5709
 	ld c, l ; $570f
 	ld b, h ; $5710
-	ld hl, $0012 ; $5711
+	ld hl, ACTORF_JUMP_VEL ; $5711
 	add hl, bc ; $5714
 	ld a, [hl+] ; $5715
 	ld d, [hl] ; $5716
 	ld e, a ; $5717
-	ld hl, $0010 ; $5718
+	ld hl, ACTORF_HEIGHT ; $5718
 	add hl, bc ; $571b
 	ld a, [hl+] ; $571c
 	ld h, [hl] ; $571d

@@ -442,8 +442,8 @@ End11TrainingCourtInitScript_27:
 	sound SFX_CHIME ; $53c4
 	script_set_position ACTOR_END11_TRAINING_COURT_BALLOON_EXCLAIM, 52.5, 11.5 ; $53c6
 	script_delay 20 ; $53d1
-	script_jump_velocity ACTOR_END11_TRAINING_COURT_BALLOON_EXCLAIM, $ff40 ; $53d6
-	script_jump_velocity ACTOR_PLAYER, $ff40 ; $53de
+	script_jump_velocity ACTOR_END11_TRAINING_COURT_BALLOON_EXCLAIM, -3.0 ; $53d6
+	script_jump_velocity ACTOR_PLAYER, -3.0 ; $53de
 	ld a, $00 ; $53e6
 	farcall ScriptWaitActorJumpDone ; $53e8
 	script_delay 30 ; $53eb

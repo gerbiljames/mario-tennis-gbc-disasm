@@ -227,6 +227,8 @@ def ACTORF_TARGET_X     equ $08 ; word: where the actor is walking to
 def ACTORF_TARGET_Y     equ $0a ; word
 def ACTORF_X            equ $0c ; word: world position (1/256 tile)
 def ACTORF_Y            equ $0e ; word
+def ACTORF_HEIGHT       equ $10 ; word: height above the ground, negative = up (64 = 1 px)
+def ACTORF_JUMP_VEL     equ $12 ; word: added to ACTORF_HEIGHT each update; gravity adds $10
 def ACTORF_HEADING      equ $14 ; movement direction, a full angle byte
 def ACTORF_MODE         equ $20 ; SetActorMode / script_set_active
 def ACTORF_OBJECT       equ $21 ; OBJ_* id (LoadActorObjectDef)

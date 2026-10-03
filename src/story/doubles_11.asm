@@ -62,7 +62,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN ; $5e49
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, ANIM_SHAKE ; $5e4e
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY ; $5e55
-	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, $ff80 ; $5e5a
+	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, -2.0 ; $5e5a
 	ld a, $03 ; $5e62
 	farcall ScriptWaitActorJumpDone ; $5e64
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00 ; $5e67
@@ -103,7 +103,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, ANIM_SHAKE ; $5f42
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH ; $5f49
 	script_set_text Text_32_104 ; $5f4e
-	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, $ff80 ; $5f54
+	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, -2.0 ; $5f54
 	ld a, $03 ; $5f5c
 	farcall ScriptWaitActorJumpDone ; $5f5e
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00 ; $5f61

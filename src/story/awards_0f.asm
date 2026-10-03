@@ -35,7 +35,7 @@ DelayFrames:
 	pop af ; $567d
 	ret ; $567e
 CutsceneStompScreenShake:
-	script_jump_velocity ACTOR_AWARDS_CEREMONY_SPIKE, $ff80 ; $567f
+	script_jump_velocity ACTOR_AWARDS_CEREMONY_SPIKE, -2.0 ; $567f
 	ld a, $08 ; $5687
 	farcall ScriptWaitActorJumpDone ; $5689
 	sound SFX_STOMP ; $568c
@@ -306,13 +306,13 @@ AwardsCeremonyArrivalIntro:
 	script_wait_move ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5bbb
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, ANIM_SHAKE ; $5bc0
 	script_wait_idle ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5bc7
-	script_jump_velocity ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, $ff80 ; $5bcc
+	script_jump_velocity ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, -2.0 ; $5bcc
 	ld a, $13 ; $5bd4
 	farcall ScriptWaitActorJumpDone ; $5bd6
 	script_set_speed ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 1.0 ; $5bd9
 	script_move_target ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 15.0, 7.5 ; $5be1
 	script_wait_move ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT ; $5bec
-	script_jump_velocity ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, $ff80 ; $5bf1
+	script_jump_velocity ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, -2.0 ; $5bf1
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, ANIM_BOUNCE ; $5bf9
 	script_player_speed 0.5 ; $5c00
 	script_move_player_to_actor ACTOR_PLAYER ; $5c06

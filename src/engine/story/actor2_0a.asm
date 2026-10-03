@@ -127,7 +127,7 @@ ScriptSetActorJumpVelocity:
 	call GetActorStateAddr ; $4719
 	ret z ; $471c
 	wram_bank WRAM_ACTORS ; $471d
-	ld a, $12 ; $4723
+	ld a, ACTORF_JUMP_VEL ; $4723
 	add l ; $4725
 	ld l, a ; $4726
 	jr nc, .read ; $4727

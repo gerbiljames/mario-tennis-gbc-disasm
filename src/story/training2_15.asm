@@ -77,8 +77,8 @@ WaterSpriteRacketRewardScene:
 	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, 52.5, 11.5 ; $4e6d
 	sound SFX_CHIME ; $4e78
 	script_wait_frames 20 ; $4e7a
-	script_jump_velocity ACTOR_TRAINING_COURT_WALK_71_06_3, $ff40 ; $4e81
-	script_jump_velocity ACTOR_PLAYER, $ff40 ; $4e89
+	script_jump_velocity ACTOR_TRAINING_COURT_WALK_71_06_3, -3.0 ; $4e81
+	script_jump_velocity ACTOR_PLAYER, -3.0 ; $4e89
 	ld a, $00 ; $4e91
 	farcall ScriptWaitActorJumpDone ; $4e93
 	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, 63.0, 63.0 ; $4e96

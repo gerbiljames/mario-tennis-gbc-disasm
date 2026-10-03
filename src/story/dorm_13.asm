@@ -128,7 +128,7 @@ DormRoomTile0F_13:
 	jr z, .notTempSceneVariantA ; $4f04
 	script_set_text Text_31_328 ; $4f06
 .notTempSceneVariantA:
-	script_jump_velocity ACTOR_DORM_ROOM_KATE, $ff80 ; $4f0c
+	script_jump_velocity ACTOR_DORM_ROOM_KATE, -2.0 ; $4f0c
 	ld a, $03 ; $4f14
 	call ComputeEmoteActorPosition_13 ; $4f16
 	call PlaceEmoteActorAtComputedPosition_13 ; $4f19
@@ -143,7 +143,7 @@ DormRoomTile0F_13:
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $4f57
 	script_set_position $06, 63.0, 63.0 ; $4f5c
 	script_speak ACTOR_DORM_ROOM_KATE ; $4f67
-	script_jump_velocity ACTOR_PLAYER, $ff80 ; $4f6c
+	script_jump_velocity ACTOR_PLAYER, -2.0 ; $4f6c
 	ld a, $00 ; $4f74
 	farcall ScriptWaitActorJumpDone ; $4f76
 	test_flag FLAG_DOUBLES ; $4f79

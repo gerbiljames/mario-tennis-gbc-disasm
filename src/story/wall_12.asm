@@ -143,7 +143,7 @@ DormEntranceEntry0fScene:
 	script_set_position ACTOR_DORM_ENTRANCE_EMILY, 23.0, 25.0 ; $435b
 	script_speak ACTOR_DORM_ENTRANCE_EMILY ; $4366
 	script_move_target ACTOR_PLAYER, 22.5, 18.0 ; $436b
-	script_jump_velocity ACTOR_PLAYER, $ff80 ; $4376
+	script_jump_velocity ACTOR_PLAYER, -2.0 ; $4376
 	ld a, $00 ; $437e
 	farcall ScriptWaitActorJumpDone ; $4380
 	script_face ACTOR_PLAYER, FACE_UP ; $4383

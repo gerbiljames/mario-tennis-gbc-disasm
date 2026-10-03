@@ -405,7 +405,7 @@ End1MainBldgInitScript_27:
 	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $73ef
 	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 1.0 ; $73f4
 	script_face ACTOR_END1_MAIN_BLDG_WALK_75_06_1, FACE_DOWN ; $73fc
-	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $ff80 ; $7403
+	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, -2.0 ; $7403
 	ld a, $06 ; $740b
 	farcall ScriptWaitActorJumpDone ; $740d
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 23.0 ; $7410
@@ -427,7 +427,7 @@ End1MainBldgInitScript_27:
 	script_wait_frames 20 ; $748e
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_EXCLAIM, 63.0, 63.0 ; $7495
 	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 1.0 ; $74a0
-	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, $ff80 ; $74a8
+	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, -2.0 ; $74a8
 	ld a, $06 ; $74b0
 	farcall ScriptWaitActorJumpDone ; $74b2
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 32.0 ; $74b5
@@ -477,7 +477,7 @@ End1MainBldgKnockdown_27:
 	script_set_speed ACTOR_PLAYER, 2.0 ; $75ad
 	script_move_player 24.0, 36.0 ; $75b5
 	script_move_target ACTOR_PLAYER, 23.0, 36.0 ; $75bf
-	script_jump_velocity ACTOR_PLAYER, $ff00 ; $75ca
+	script_jump_velocity ACTOR_PLAYER, -4.0 ; $75ca
 	script_get_actor_state ACTOR_PLAYER ; $75d2
 	ld c, l ; $75d7
 	ld b, h ; $75d8

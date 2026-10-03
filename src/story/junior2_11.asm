@@ -454,7 +454,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	call WaitFadeEnd ; $6ef7
 	script_set_text Text_32_51 ; $6efa
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $6f00
-	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $ff80 ; $6f05
+	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, -2.0 ; $6f05
 	ld a, $03 ; $6f0d
 	farcall ScriptWaitActorJumpDone ; $6f0f
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $6f12
@@ -479,7 +479,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	call WaitFadeEnd ; $6f8a
 	script_set_text Text_32_70 ; $6f8d
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $6f93
-	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $ff80 ; $6f98
+	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, -2.0 ; $6f98
 	ld a, $03 ; $6fa0
 	farcall ScriptWaitActorJumpDone ; $6fa2
 	script_set_text Text_32_53 ; $6fa5
@@ -505,7 +505,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	call WaitFadeEnd ; $7023
 	script_set_text Text_32_65 ; $7026
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $702c
-	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, $ff80 ; $7031
+	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, -2.0 ; $7031
 	ld a, $03 ; $7039
 	farcall ScriptWaitActorJumpDone ; $703b
 	script_set_text Text_32_54 ; $703e

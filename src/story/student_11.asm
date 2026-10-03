@@ -48,7 +48,7 @@ LateStudentCrashCutscene:
 	script_set_speed ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 1.0 ; $481c
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4824
 	script_face ACTOR_ACADEMY_ARRIVAL_WALK_75_06, FACE_DOWN ; $4829
-	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $ff80 ; $4830
+	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4830
 	ld a, $11 ; $4838
 	farcall ScriptWaitActorJumpDone ; $483a
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 23.0 ; $483d
@@ -72,7 +72,7 @@ LateStudentCrashCutscene:
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $48c7
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, 63.0, 63.0 ; $48cc
 	script_set_speed ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 1.0 ; $48d7
-	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $ff80 ; $48df
+	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $48df
 	ld a, $11 ; $48e7
 	farcall ScriptWaitActorJumpDone ; $48e9
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 32.0 ; $48ec
@@ -130,7 +130,7 @@ LateStudentCrashCutscene:
 	script_lock_facing ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4a56
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_WALK_75_06, ANIM_HOP ; $4a5d
 	script_wait_frames 20 ; $4a64
-	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $ff80 ; $4a6b
+	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4a6b
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 27.0, 36.0 ; $4a73
 	script_wait_frames 20 ; $4a7e
 	script_face_toward ACTOR_ACADEMY_ARRIVAL_WALK_75_06, ACTOR_PLAYER ; $4a85
@@ -182,7 +182,7 @@ LateStudentCrashCutscene:
 	script_wait_frames 60 ; $4b97
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, 26.5, 33.75 ; $4b9e
 	sound SFX_CHIME ; $4ba9
-	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $ff80 ; $4bab
+	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4bab
 	ld a, $11 ; $4bb3
 	farcall ScriptWaitActorJumpDone ; $4bb5
 	script_wait_frames 10 ; $4bb8
@@ -225,7 +225,7 @@ LateStudentCrashCutscene:
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4cb4
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4cb9
 	script_wait_idle ACTOR_PLAYER ; $4cc0
-	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, $ff80 ; $4cc5
+	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4cc5
 	ld a, $11 ; $4ccd
 	farcall ScriptWaitActorJumpDone ; $4ccf
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 51.0 ; $4cd2
@@ -245,7 +245,7 @@ LateStudentCrashImpact:
 	script_set_speed ACTOR_PLAYER, 2.0 ; $4d0e
 	script_move_player 24.0, 36.0 ; $4d16
 	script_move_target ACTOR_PLAYER, 23.0, 36.0 ; $4d20
-	script_jump_velocity ACTOR_PLAYER, $ff00 ; $4d2b
+	script_jump_velocity ACTOR_PLAYER, -4.0 ; $4d2b
 	script_get_actor_state ACTOR_PLAYER ; $4d33
 	ld c, l ; $4d38
 	ld b, h ; $4d39
@@ -263,7 +263,7 @@ LateStudentCrashImpact:
 KnockPlayerAirborneFlipped_11:
 	script_null_script ACTOR_PLAYER ; $4d68
 	script_set_speed ACTOR_PLAYER, 0.5 ; $4d6d
-	script_jump_velocity ACTOR_PLAYER, $ff80 ; $4d75
+	script_jump_velocity ACTOR_PLAYER, -2.0 ; $4d75
 	script_get_actor_state ACTOR_PLAYER ; $4d7d
 	ld c, l ; $4d82
 	ld b, h ; $4d83

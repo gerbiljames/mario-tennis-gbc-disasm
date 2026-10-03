@@ -80,7 +80,7 @@ StrokeChallengerResultScene:
 	dw ChallengerResultJumpForJoy ; $5e71 jumptable
 	ret ; $5e73
 ChallengerResultJumpForJoy:
-	script_jump_velocity ACTOR_PLAYER, $ff40 ; $5e74
+	script_jump_velocity ACTOR_PLAYER, -3.0 ; $5e74
 	ld a, $00 ; $5e7c
 	farcall ScriptWaitActorJumpDone ; $5e7e
 	jp ChallengerResultFinish ; $5e81

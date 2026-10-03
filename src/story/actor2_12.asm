@@ -136,7 +136,7 @@ SeniorSinglesRank4And3Victory:
 	call FadeInSeniorCourtNearPairA ; $73c4
 	script_set_text Text_34_74 ; $73c7
 	script_speak ACTOR_SENIOR_COURT_A_BRIAN ; $73cd
-	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, $ff80 ; $73d2
+	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $73d2
 	ld a, $03 ; $73da
 	farcall ScriptWaitActorJumpDone ; $73dc
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $73df
@@ -162,7 +162,7 @@ SeniorSinglesRank2Victory:
 	script_set_position ACTOR_PLAYER, 52.0, 27.0 ; $7461
 	script_set_text Text_34_35 ; $746c
 	script_speak ACTOR_SENIOR_COURT_A_JOY ; $7472
-	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, $ff80 ; $7477
+	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $7477
 	ld a, $03 ; $747f
 	farcall ScriptWaitActorJumpDone ; $7481
 	script_set_text Text_34_76 ; $7484
@@ -183,7 +183,7 @@ SeniorSinglesRank1Victory:
 	script_set_position ACTOR_PLAYER, 52.0, 27.0 ; $74d3
 	script_set_text Text_34_32 ; $74de
 	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $74e4
-	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, $ff80 ; $74e9
+	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $74e9
 	ld a, $03 ; $74f1
 	farcall ScriptWaitActorJumpDone ; $74f3
 	script_set_text Text_34_77 ; $74f6

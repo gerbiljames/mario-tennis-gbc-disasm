@@ -14,7 +14,7 @@ ExhibitionDeclinedCutscene:
 	script_wait_idle ACTOR_MARIO_WORLD_PEACH ; $70d3
 	script_wait_frames 10 ; $70d8
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $70df
-	script_jump_velocity ACTOR_MARIO_WORLD_BOWSER, $ff80 ; $70e4
+	script_jump_velocity ACTOR_MARIO_WORLD_BOWSER, -2.0 ; $70e4
 	script_wait_frames 20 ; $70ec
 	sound SFX_IMPACT ; $70f3
 	ld a, $04 ; $70f5

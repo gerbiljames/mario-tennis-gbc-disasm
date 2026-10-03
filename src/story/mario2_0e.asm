@@ -333,8 +333,8 @@ MarioWorldArrivalIntroCutscene:
 	sound SFX_CHIME ; $6a7e
 	script_set_position ACTOR_MARIO_WORLD_BALLOON_EXCLAIM, 16.0, 29.0 ; $6a80
 	script_wait_frames 10 ; $6a8b
-	script_jump_velocity ACTOR_MARIO_WORLD_TOAD, $ff80 ; $6a92
-	script_jump_velocity ACTOR_MARIO_WORLD_BALLOON_EXCLAIM, $ff80 ; $6a9a
+	script_jump_velocity ACTOR_MARIO_WORLD_TOAD, -2.0 ; $6a92
+	script_jump_velocity ACTOR_MARIO_WORLD_BALLOON_EXCLAIM, -2.0 ; $6a9a
 	script_wait_frames 30 ; $6aa2
 	script_set_position ACTOR_MARIO_WORLD_BALLOON_EXCLAIM, 63.0, 63.0 ; $6aa9
 	script_set_speed ACTOR_MARIO_WORLD_TOAD, 2.0 ; $6ab4
@@ -401,14 +401,14 @@ MarioWorldWelcomeCutscene:
 	script_wait_frames 30 ; $6c32
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $6c39
 	script_wait_frames 20 ; $6c3e
-	script_jump_velocity ACTOR_MARIO_WORLD_WARIO, $ff80 ; $6c45
+	script_jump_velocity ACTOR_MARIO_WORLD_WARIO, -2.0 ; $6c45
 	script_wait_frames 20 ; $6c4d
 	script_face ACTOR_MARIO_WORLD_WARIO, FACE_UP ; $6c54
 	script_set_anim ACTOR_MARIO_WORLD_WARIO, ANIM_BOUNCE ; $6c5b
 	script_wait_idle ACTOR_MARIO_WORLD_WARIO ; $6c62
 	script_speak ACTOR_MARIO_WORLD_WARIO ; $6c67
 	script_wait_frames 10 ; $6c6c
-	script_jump_velocity ACTOR_MARIO_WORLD_WALUIGI, $ff40 ; $6c73
+	script_jump_velocity ACTOR_MARIO_WORLD_WALUIGI, -3.0 ; $6c73
 	script_wait_frames 40 ; $6c7b
 	script_face ACTOR_MARIO_WORLD_WALUIGI, FACE_UP ; $6c82
 	script_set_anim ACTOR_MARIO_WORLD_WALUIGI, ANIM_BOUNCE ; $6c89
@@ -456,7 +456,7 @@ MarioWorldWelcomeCutscene:
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $6db1
 	ret ; $6db6
 MarioWorldLuigiDefendsChampCutscene:
-	script_jump_velocity ACTOR_MARIO_WORLD_LUIGI, $ff80 ; $6db7
+	script_jump_velocity ACTOR_MARIO_WORLD_LUIGI, -2.0 ; $6db7
 	script_wait_frames 20 ; $6dbf
 	script_speak ACTOR_MARIO_WORLD_LUIGI ; $6dc6
 	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_1, 63.0, 63.0 ; $6dcb
@@ -524,7 +524,7 @@ MarioWorldExhibitionDemandCutscene:
 	script_wait_frames 4 ; $6f82
 	script_face ACTOR_MARIO_WORLD_WALUIGI, FACE_UP ; $6f89
 	script_wait_frames 10 ; $6f90
-	script_jump_velocity ACTOR_MARIO_WORLD_WALUIGI, $ff40 ; $6f97
+	script_jump_velocity ACTOR_MARIO_WORLD_WALUIGI, -3.0 ; $6f97
 	script_wait_frames 40 ; $6f9f
 	script_speak ACTOR_MARIO_WORLD_WALUIGI ; $6fa6
 	script_wait_frames 10 ; $6fab
@@ -553,7 +553,7 @@ MarioWorldExhibitionDemandCutscene:
 	script_set_anim ACTOR_MARIO_WORLD_WALUIGI, ANIM_NOD ; $7053
 	script_wait_idle ACTOR_MARIO_WORLD_WALUIGI ; $705a
 	script_wait_frames 20 ; $705f
-	script_jump_velocity ACTOR_MARIO_WORLD_WARIO, $ff80 ; $7066
+	script_jump_velocity ACTOR_MARIO_WORLD_WARIO, -2.0 ; $7066
 	script_wait_frames 40 ; $706e
 	script_speak ACTOR_MARIO_WORLD_WARIO ; $7075
 	script_wait_frames 10 ; $707a

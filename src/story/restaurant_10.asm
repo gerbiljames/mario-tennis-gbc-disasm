@@ -630,7 +630,7 @@ RestaurantNpc08_10:
 	script_set_speed ACTOR_RESTAURANT_WALK_71_06_1, 0.5 ; $5e04
 	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e0c
 	jr z, .altText ; $5e0f
-	script_jump_velocity ACTOR_PLAYER, $ff80 ; $5e11
+	script_jump_velocity ACTOR_PLAYER, -2.0 ; $5e11
 	script_move_target ACTOR_PLAYER, 31.0, 15.0 ; $5e19
 	script_wait_move ACTOR_PLAYER ; $5e24
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5e29

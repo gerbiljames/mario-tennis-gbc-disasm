@@ -464,7 +464,7 @@ IslandOpenRoundSinglesNpc05_0f:
 	ld h, [hl] ; $7679
 	ld l, a ; $767a
 	farcall InitDialogueTextCursor ; $767b
-	script_jump_velocity ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, $ff80 ; $767e
+	script_jump_velocity ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, -2.0 ; $767e
 	ld a, $05 ; $7686
 	farcall ScriptWaitActorJumpDone ; $7688
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07 ; $768b
@@ -549,7 +549,7 @@ IslandOpenDoublesMatchReturn:
 	xor $20 ; $776f
 	ld [hl], a ; $7771
 	script_face_toward ACTOR_PLAYER, ACTOR_PARTNER ; $7772
-	script_jump_velocity ACTOR_PARTNER, $ff80 ; $777a
+	script_jump_velocity ACTOR_PARTNER, -2.0 ; $777a
 	ld a, $02 ; $7782
 	farcall ScriptWaitActorJumpDone ; $7784
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7787

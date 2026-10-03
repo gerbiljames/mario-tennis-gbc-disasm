@@ -906,11 +906,14 @@ MACRO script_set_speed
 	ld bc, (\2) >> 11
 	farcall ScriptSetActorMoveSpeed
 ENDM
-; Sets an actor's jump velocity (de, signed 16-bit).
+; Starts an actor's jump: velocity in pixels per frame, negative = up. Height
+; is 64 units to the pixel and gravity adds 1/4 px per frame every frame, so
+; -2.0 rises 8 px and lands 16 frames later.
 ; Usage: script_jump_velocity actor, velocity
 MACRO script_jump_velocity
+	ASSERT (\2) % 1024 == 0 && (\2) >= -512.0 && (\2) < 512.0, "jump velocity \2: write pixels per frame with a point, in 1/64 px"
 	ld a, \1
-	ld de, \2
+	ld de, ((\2) >> 10) & $ffff
 	farcall ScriptSetActorJumpVelocity
 ENDM
 ; Usage: script_move_player x, y (moves actor $00, the player)

@@ -385,12 +385,12 @@ ActorScriptOpcodeReturn:
 	pop bc ; $426c
 	ret ; $426d
 UpdateActorJumpPhysics:
-	ld hl, $0012 ; $426e
+	ld hl, ACTORF_JUMP_VEL ; $426e
 	add hl, bc ; $4271
 	ld a, [hl+] ; $4272
 	ld d, [hl] ; $4273
 	ld e, a ; $4274
-	ld hl, $0010 ; $4275
+	ld hl, ACTORF_HEIGHT ; $4275
 	add hl, bc ; $4278
 	ld a, [hl+] ; $4279
 	ld h, [hl] ; $427a
@@ -400,7 +400,7 @@ UpdateActorJumpPhysics:
 	or e ; $427e
 	jr z, .done ; $427f
 	push hl ; $4281
-	ld hl, $0010 ; $4282
+	ld hl, ACTORF_HEIGHT ; $4282
 	add hl, de ; $4285
 	ld e, l ; $4286
 	ld d, h ; $4287
@@ -409,24 +409,24 @@ UpdateActorJumpPhysics:
 	bit 7, h ; $428a
 	jr nz, .storeVelocity ; $428c
 	xor a ; $428e
-	ld hl, $0010 ; $428f
+	ld hl, ACTORF_HEIGHT ; $428f
 	add hl, bc ; $4292
 	ld [hl+], a ; $4293
 	ld [hl+], a ; $4294
-	ld hl, $0012 ; $4295
+	ld hl, ACTORF_JUMP_VEL ; $4295
 	add hl, bc ; $4298
 	ld [hl+], a ; $4299
 	ld [hl+], a ; $429a
 	jr .done ; $429b
 .storeVelocity:
 	push hl ; $429d
-	ld hl, $0012 ; $429e
+	ld hl, ACTORF_JUMP_VEL ; $429e
 	add hl, bc ; $42a1
 	ld a, e ; $42a2
 	ld [hl+], a ; $42a3
 	ld [hl], d ; $42a4
 	pop de ; $42a5
-	ld hl, $0010 ; $42a6
+	ld hl, ACTORF_HEIGHT ; $42a6
 	add hl, bc ; $42a9
 	ld a, e ; $42aa
 	ld [hl+], a ; $42ab
