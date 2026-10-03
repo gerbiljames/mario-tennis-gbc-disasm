@@ -84,10 +84,15 @@ reviewed verdict (`docs/unused_code.md`). Nothing the analysis can reach is
 
 **Behaviour.** The event test compares a shifted build with the original
 over every story state and location, the menu sessions and every target
-without a difference. Its one known game crash, the Test2 debug screens'
-glyph underrun, happens in both builds, and it counts crashes separately
-from differences. `docs/bugs.md` lists the shipped defects found along the
-way.
+without a difference (2026-10-03: 11.2 million events, 16 at a different
+logic frame). It counts crashes separately from differences, and three
+kinds remain, none a layout fault: the Test2 debug screens' glyph underrun;
+`GetSpeakerVoice`'s wild return at the awards ceremony (location `$1a`,
+entry 11), which the test cuts at its taint but which then crashes under
+the test's breakpoints in one or both builds, and which `make FIXES=1`
+removes; and an illegal opcode in the original at the ending's End8
+Sr. Court (`$24`) when the test enters it in story state 5, which is not yet
+explained. `docs/bugs.md` lists the shipped defects found along the way.
 
 **Named in the docs as not established.**
 * `docs/graphics_formats.md` §8 holds two items, both about the developers'
