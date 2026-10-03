@@ -21,13 +21,13 @@ wSecondaryTimerMode:: db
 ; [3 bytes] Second clock alongside wGameTimer, ticked by Unused_00_TickSecondaryTimer: frames (0-59), seconds, minutes. It saturates at 9:59 rather than wrapping (minutes reaching $0a is undone and seconds pinned to $3b). The stranded countdown at $00:$240a runs the same three bytes downwards, one sound $af per second and sound $b0 at zero
 wSecondaryTimer:: ds 3
 
-; [8-bit] Width in pixels of the glyph RenderGlyphToTiles is drawing, read from the glyph's first byte. It is the inner loop count, one iteration per pixel column, and the caller re-reads the same byte after the call to advance the pen
+; [8-bit] Width in pixels of the glyph Unused_00_RenderGlyphToTiles is drawing, read from the glyph's first byte. It is the inner loop count, one iteration per pixel column, and the caller re-reads the same byte after the call to advance the pen
 wGlyphBlitWidth:: db
 
-; [8-bit] Rows still to draw in RenderGlyphToTiles, seeded from the glyph's second byte and decremented once per row
+; [8-bit] Rows still to draw in Unused_00_RenderGlyphToTiles, seeded from the glyph's second byte and decremented once per row
 wGlyphBlitRowsLeft:: db
 
-; [8-bit] Destination bit mask for RenderGlyphToTiles, PixelMaskTable[penX & 7]. It is rotated right once per pixel; the wrap from $01 back to $80 is what advances the destination to the next tile column
+; [8-bit] Destination bit mask for Unused_00_RenderGlyphToTiles, PixelMaskTable[penX & 7]. It is rotated right once per pixel; the wrap from $01 back to $80 is what advances the destination to the next tile column
 wGlyphBlitDestMask:: db
 
 ; [5 bytes] Peak LY of the last frame as four hex digits, written by AdvanceFrame with FormatHexWord and copied to $9d08 by UpdateDebugOverlay
@@ -319,7 +319,7 @@ wMapHeightTiles:: db
 ; [8-bit] Number of entries in the scrolling list a side-scrolling menu is showing; both RunMenuSelection and the scene viewer turn it into a page count with `dec a / srl a / srl a` (four entries a page). InitSceneScroll sets it to $25
 wScrollListLength:: db
 
-; [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations
+; [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives Unused_0a_LoadAndDisplayScene / InitSceneTileAnimations
 wCurrentScene:: db
 	ds 1
 
@@ -436,19 +436,19 @@ wMinigameLevel:: db
 ; [32 bytes] One tilemap column of CGB attributes, blitted to VRAM bank 1 at wBGColumnBlitX by ProcessBGBlitQueue when hBGColumnBlitPending is set. The tile plane it pairs with is wBGColumnBlitTiles
 wBGColumnBlitAttrs:: ds 32
 
-; [16-bit] Tile-plane source address for QueueDeferredTilemapCopy's pending copy to $9800
+; [16-bit] Tile-plane source address for Unused_00_QueueDeferredTilemapCopy's pending copy to $9800
 wDeferredTilemapSrc:: dw
 
 ; [16-bit] Attribute-plane source address for the same copy, sent to $9800 in VRAM bank 1
 wDeferredTilemapAttrSrc:: dw
 
-; [8-bit] WRAM bank the two source pointers live in; VBlankDeferredTilemapCopyTask selects it before queueing either half and restores the previous bank afterwards
+; [8-bit] WRAM bank the two source pointers live in; Unused_00_VBlankDeferredTilemapCopyTask selects it before queueing either half and restores the previous bank afterwards
 wDeferredTilemapWramBank:: db
 
 ; [8-bit] Length of the deferred tilemap copy in 16-byte blocks, passed to QueueVRAMCopy in c for both planes
 wDeferredTilemapLength:: db
 
-; [8-bit] Which halves of the deferred tilemap copy are still owed: low nibble the tile plane, high nibble the attribute plane. QueueDeferredTilemapCopy clears it, the frame task acts on whichever nibbles are set and clears it again, so the copy only happens once something else marks the planes dirty
+; [8-bit] Which halves of the deferred tilemap copy are still owed: low nibble the tile plane, high nibble the attribute plane. Unused_00_QueueDeferredTilemapCopy clears it, the frame task acts on whichever nibbles are set and clears it again, so the copy only happens once something else marks the planes dirty
 wDeferredTilemapPending:: db
 
 ; [8-bit] High byte of current OAM shadow buffer ($c0/$c5); toggled each frame, OAM DMA source
@@ -458,7 +458,7 @@ wSpriteBufferPage:: db
 ; [8-bit] Character id (see 0xca0b values) assigned to court slot 0 (player's main character) during match setup; also used for portraits/sprites
 wMatchPlayerChar:: db
 
-; [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup ($ff = none); set via SetStoryMatchOpponent
+; [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup ($ff = none); set via Unused_0a_SetStoryMatchOpponent
 wMatchOpponentChar:: db
 
 ; [8-bit] BG attribute written for window-frame cells ($80 = BG priority)
@@ -488,13 +488,13 @@ wGlyphRowStartCol:: db
 ; [8-bit] Tilemap cell column already flushed out of the glyph buffer; StampGlyphTileAtPen subtracts it from the pen's column to find how far the write pointer has to advance
 wGlyphFlushedCol:: db
 
-; [8-bit] Number of glyph tiles UploadGlyphTileRange should send, capped at $20 -- one QueueVRAMCopy is 32 tiles
+; [8-bit] Number of glyph tiles Unused_05_UploadGlyphTileRange should send, capped at $20 -- one QueueVRAMCopy is 32 tiles
 wGlyphUploadCount:: db
 
 ; [8-bit] First glyph tile of the range to upload; the source is wGlyphTileBuffer + n * TILE_SIZE and the destination $8800 + n * TILE_SIZE
 wGlyphUploadFirstTile:: db
 
-; [8-bit] Nonzero to send the range to VRAM bank 1 instead of bank 0 (UploadGlyphTileRange adds $2000 to the destination)
+; [8-bit] Nonzero to send the range to VRAM bank 1 instead of bank 0 (Unused_05_UploadGlyphTileRange adds $2000 to the destination)
 wGlyphUploadVramBank:: db
 
 ; [32 bytes] The tile plane of the same column blit, sent to VRAM bank 0
@@ -543,10 +543,10 @@ wBallPrevHeightFrac:: dw
 ; [16-bit] Ball height at the start of the frame (integer part)
 wBallPrevHeight:: dw
 
-; [16-bit] Ball physics - top/backspin coefficient (rotation about the lateral axis). Set from bc by SetBallSpinComponents ($08:$45de). ApplyBallSpin ($08:$56a9-$5765): while nonzero it multiplies wBallVelocityHeight by it and adds the (negated) product along wBallHeadingAngle into the X/depth velocities ($c420/$c423), and multiplies wBallSpeedHorizontal by it and adds that into the height velocity ($c426) - i.e. a Magnus rotation of the (horizontal, vertical) velocity pair. Decayed by 3/256 per frame at $08:$574a-$5765.
+; [16-bit] Ball physics - top/backspin coefficient (rotation about the lateral axis). Set from bc by Unused_08_SetBallSpinComponents ($08:$45de). ApplyBallSpin ($08:$56a9-$5765): while nonzero it multiplies wBallVelocityHeight by it and adds the (negated) product along wBallHeadingAngle into the X/depth velocities ($c420/$c423), and multiplies wBallSpeedHorizontal by it and adds that into the height velocity ($c426) - i.e. a Magnus rotation of the (horizontal, vertical) velocity pair. Decayed by 3/256 per frame at $08:$574a-$5765.
 wBallTopspin:: dw
 
-; [16-bit] Ball physics - sidespin/curve coefficient (rotation about the vertical axis). Set from de by SetBallSpinComponents ($08:$45d8). ApplyBallSpin ($08:$5613-$56a8): while nonzero it adds +k*wBallVelocityDepth to the X velocity ($c420) and -k*wBallVelocityX to the depth velocity ($c423), curving the ball laterally; then decays itself by 3/256 per frame ($08:$568d-$56a8).
+; [16-bit] Ball physics - sidespin/curve coefficient (rotation about the vertical axis). Set from de by Unused_08_SetBallSpinComponents ($08:$45d8). ApplyBallSpin ($08:$5613-$56a8): while nonzero it adds +k*wBallVelocityDepth to the X velocity ($c420) and -k*wBallVelocityX to the depth velocity ($c423), curving the ball laterally; then decays itself by 3/256 per frame ($08:$568d-$56a8).
 wBallSideSpin:: dw
 
 ; [8-bit] Fraction byte of wBallVelocityX. The three velocity components are 24-bit fixed point (8.16), each written as a zero fraction plus a 16-bit integer by SetBallVelocityPolar
@@ -612,7 +612,7 @@ wMatchCameraTargetY:: dw
 ; [16-bit] Ball X minus the current character's X (wBallX - wCharPosX+1), signed. Written by UpdateCharBallGeometry ($08:$6e6a-$6e75) for whichever character bank is mapped; read by AiSteerTowardBall ($08:$7944) as the de leg of AngleFromVectorCoarse and by the swing/contact range checks at $08:$6ef2/$6fed/$704e.
 wBallRelCharX:: dw
 
-; [16-bit] Ball depth minus the current character's depth, signed (same struct as wBallRelCharX). Read by CheckBallContactWindow ($08:$6fa7), CheckBallInSwingRange ($08:$702a), ComputeBallEtaToChar ($08:$70ca-$70e7, divided by wBallVelocityDepth to get frames-to-arrival), PredictBallLateralOffset ($08:$70fb) and the AI at $08:$7b99.
+; [16-bit] Ball depth minus the current character's depth, signed (same struct as wBallRelCharX). Read by CheckBallContactWindow ($08:$6fa7), CheckBallInSwingRange ($08:$702a), Unused_08_ComputeBallEtaToChar ($08:$70ca-$70e7, divided by wBallVelocityDepth to get frames-to-arrival), PredictBallLateralOffset ($08:$70fb) and the AI at $08:$7b99.
 wBallRelCharDepth:: dw
 
 ; [16-bit] Ball height minus the current character's height, signed (third word of the same struct). Read by the reach/height gates at $08:$6f12 and $08:$700d, each comparing |value| against the character's reach field $df70.
@@ -675,7 +675,7 @@ wBallVelocityPolarLength:: dw
 ; [16-bit] First word of the shot-table entry SetBallTargetByPrediction_* is acting on, stored before the aim delta is applied. Every shot bank writes it and nothing reads it
 wShotPredictionEntry:: dw
 
-; [16-bit] Camera X offset added before the <<3 screen projection (Func_08_59bb)
+; [16-bit] Camera X offset added before the <<3 screen projection (ApplyCameraProjection)
 wCameraOffsetX:: dw
 
 ; [16-bit] Camera Y offset added before the <<3 screen projection
@@ -726,11 +726,11 @@ wMatchFramesAbort:: db
 ; [8-bit] hLinkState as it stood when RunMatchPlayLoop returned, taken just before EndLinkSession tears the session down. Write-only
 wMatchEndLinkState:: db
 
-; [8-bit] Scoreboard layout/caption style code, 0-7. Chosen by Func_08_454b ($08:$454b) from wOnCourtCharCount (singles/doubles) or, for minigames ($c8f5 == 2), from $c7ba/$c7bb as 3/4/7. Used as an rst00 jumptable index by DrawScoreboardCaption ($06:$477a) and DrawScoreboard ($06:$49c0), as a table index at $06:$49ae and $06:$507b, and checked against 3 by the bank $09 serve-indicator spawner ($09:$4133, $09:$425a).
+; [8-bit] Scoreboard layout/caption style code, 0-7. Chosen by SelectScoreboardLayout ($08:$454b) from wOnCourtCharCount (singles/doubles) or, for minigames ($c8f5 == 2), from $c7ba/$c7bb as 3/4/7. Used as an rst00 jumptable index by DrawScoreboardCaption ($06:$477a) and DrawScoreboard ($06:$49c0), as a table index at $06:$49ae and $06:$507b, and checked against 3 by the bank $09 serve-indicator spawner ($09:$4133, $09:$425a).
 wScoreboardLayout:: db
 	ds 11
 
-; [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot)
+; [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAceStat/RecordLobWinnerStat/RecordDropShotWinnerStat)
 wCurrentShotType:: db
 
 ; [8-bit] Recoil kind for the shot in flight: ApplyShotTypePresets stores it from the ShotTypePresets_07 record and ApplyShotRecoil indexes ShotRecoilVarPtrs_07 with it
@@ -931,7 +931,7 @@ wStoryMenuFirstItem:: db
 ; [8-bit] Nonzero means the shadow tilemap needs flushing to VRAM. Unused_06_FlushTilemapToVramIfDirty ($06:$45f3) returns when it is 0 and FlushTilemapToVram clears it at $06:$45f9; set to 1 by the debug stats editor after redrawing ($06:$6c0f).
 wTilemapDirtyFlag:: db
 
-; [16-bit] Packed base position of the match scoreboard layout (low byte $c4e3, high byte $c4e4), added to the fixed offsets of each element. Set by PrepareScoreboardGfx ($06:$4917/$491c, to $0002 or $0202 depending on wScoreboardLayout) and to 5 in the low byte by ShowMatchScoreboardScreen ($06:$48bb). Read as a coordinate pair by all four ScoreboardCaption_* handlers ($06:$478e, $47a1, $47b4, $47df), by DrawScoreboard ($06:$49a8), by the pip drawers ($06:$4a13, $4a3d, $4a57) and, as h/l shifted left 3, by the sprite helpers Func_06_506a ($06:$506a) and Func_06_69c8 ($06:$69ca).
+; [16-bit] Packed base position of the match scoreboard layout (low byte $c4e3, high byte $c4e4), added to the fixed offsets of each element. Set by PrepareScoreboardGfx ($06:$4917/$491c, to $0002 or $0202 depending on wScoreboardLayout) and to 5 in the low byte by ShowMatchScoreboardScreen ($06:$48bb). Read as a coordinate pair by all four ScoreboardCaption_* handlers ($06:$478e, $47a1, $47b4, $47df), by DrawScoreboard ($06:$49a8), by the pip drawers ($06:$4a13, $4a3d, $4a57) and, as h/l shifted left 3, by the sprite helpers DrawScoreboardSprites ($06:$506a) and DrawScoreboardModeTitle ($06:$69ca).
 wScoreboardOrigin:: dw
 
 ; [8-bit] Which rules/description page list to display. Set by ShowMatchRulesPages ($06:$413c, from wRulesSetsIndex/wRulesGamesIndex), ShowTrainingRulesPages ($06:$4180, from wCurrentMinigameStoryMatch+1) and the minigame variant at $06:$422a (drill id * 3 + wMinigameLevel). Each of those then indexes a 4-byte-per-record page list (MatchRulesPageLists at $06:$4165 and its siblings) with it.
@@ -952,7 +952,7 @@ wRulesTitleTextId:: dw
 ; [16-bit] The saved best score for the current minigame, copied out of the record ReadMinigameRecord returns in WRAM bank 7 at $de00 ($0d:$4107). $06:$50cf draws it instead of wMinigamesTargetScore when $c7bc marks a high-score attempt, and $0d:$41fc compares the current score against it.
 wMinigameHighScore:: dw
 
-; [8-bit] Flag byte for the built-in debug test match; set to $fe by RunDebugTestMatch ($07:$5e9a). Bit 1 makes the character setup call OverrideCharStatsForDebug ($07:$5c35); bit 0 makes the frame-stepping loop at $08:$4447 ignore the input wait.
+; [8-bit] Flag byte for the built-in debug test match; set to $fe by Unused_07_RunDebugTestMatch ($07:$5e9a). Bit 1 makes the character setup call OverrideCharStatsForDebug ($07:$5c35); bit 0 makes the frame-stepping loop at $08:$4447 ignore the input wait.
 wDebugMatchFlags:: db
 	ds 17
 
@@ -1054,7 +1054,7 @@ wModeScratch::
 UNION
 ; character select (bank $1b)
 	ds 1
-; [8-bit] Character id under the char-select cursor, looked up from the roster grid at $c7a0 by UpdateCharSelectSelection
+; [8-bit] Character id under the char-select cursor, looked up from the roster grid at $c7a0 by Unused_1b_UpdateCharSelectSelection
 wCharSelectChar:: db
 ; [8-bit] Character id selected on the previous frame (change detection)
 wCharSelectPrevChar:: db
@@ -1090,15 +1090,15 @@ NEXTU
 wDrillGateActive:: db
 NEXTU
 ; scoreboard (bank $18)
-; [8-bit] Cleared by InitConfirmScreen; DrawScoreNumbersTask compares it against 3 every frame and, on a match, raises wScorePanelBobActive for that frame's score digits. Nothing reachable ever advances it: the confirm screen's only caller is Unused_1b_ShowHighScoreConfirmScreen, so the whole bob is dead code (its ramp table is likewise UnusedBobRamp_18)
+; [8-bit] Cleared by Unused_18_InitConfirmScreen; Unused_18_DrawScoreNumbersTask compares it against 3 every frame and, on a match, raises wScorePanelBobActive for that frame's score digits. Nothing reachable ever advances it: the confirm screen's only caller is Unused_1b_ShowHighScoreConfirmScreen, so the whole bob is dead code (its ramp table is likewise UnusedBobRamp_18)
 wScorePanelBobStep:: db
 	ds 2
-; [8-bit] Transient flag DrawScoreNumbersTask raises while drawing the wScorePanelScore digits and clears immediately after; DrawGlyphSprite reads it to add a per-glyph Y offset from UnusedBobRamp_18
+; [8-bit] Transient flag Unused_18_DrawScoreNumbersTask raises while drawing the wScorePanelScore digits and clears immediately after; Unused_18_DrawGlyphSprite reads it to add a per-glyph Y offset from UnusedBobRamp_18
 wScorePanelBobActive:: db
 	ds 6
-; [8-bit] wStoryMainCharExpTier as LoadScorePanelValue copied it for the scoreboard, so DrawScoreNumbersTask draws from a snapshot rather than the live value
+; [8-bit] wStoryMainCharExpTier as Unused_18_LoadScorePanelValue copied it for the scoreboard, so Unused_18_DrawScoreNumbersTask draws from a snapshot rather than the live value
 wScorePanelExpTier:: db
-; [8-bit named; read as a 16-bit word] DrawScoreNumbersTask loads hl from $c78b-$c78c and draws it as a 3-digit sprite number beside the wScorePanelExpTier draw. No writer exists in bank $18 (LoadScorePanelValue fills only the exp tier), and the high byte is wTargetZoneEnabled -- the dead high-score confirm screen predates the target-zone layout, so on any real entry the value is whatever the mode-page clear left (0)
+; [8-bit named; read as a 16-bit word] Unused_18_DrawScoreNumbersTask loads hl from $c78b-$c78c and draws it as a 3-digit sprite number beside the wScorePanelExpTier draw. No writer exists in bank $18 (Unused_18_LoadScorePanelValue fills only the exp tier), and the high byte is wTargetZoneEnabled -- the dead high-score confirm screen predates the target-zone layout, so on any real entry the value is whatever the mode-page clear left (0)
 wScorePanelScore:: db
 ENDU
 
@@ -1117,7 +1117,7 @@ wMinigameHitPending:: db
 	ds 1
 NEXTU
 ; scoreboard (bank $18)
-; [3 bytes] Three values SetupScoreboardDisplay draws as 6x2 tile blocks, each fetched through GetTextSlotPointer. The minigame code uses the first two of the same bytes for its hit bookkeeping
+; [3 bytes] Three values Unused_18_SetupScoreboardDisplay draws as 6x2 tile blocks, each fetched through Unused_18_GetTextSlotPointer. The minigame code uses the first two of the same bytes for its hit bookkeeping
 wScorePanelValues:: ds 3
 ENDU
 
@@ -1147,7 +1147,7 @@ wDrillGate2:: ds 4
 ; the 32-byte extent lives in its note.
 UNION
 ; menu-shell nav grid (bank $1b)
-; [8-bit] Base of the 32-byte 4x8 grid of character/menu-cell ids the menu shell's grid cursor walks -- the buffer runs past this union into the named minigame block, so only the base byte carries the symbol. LoadCharSelectNavGrid copies CharSelectNavGridTable here and the unlock-debug screen copies UnlockDebugNavGridTable ($ff = empty cell, $fe/$fd = wrap sentinels). MoveGridCursor takes hl = this base, and the selection readers index it split-base with row*8+col
+; [8-bit] Base of the 32-byte 4x8 grid of character/menu-cell ids the menu shell's grid cursor walks -- the buffer runs past this union into the named minigame block, so only the base byte carries the symbol. Unused_1b_LoadCharSelectNavGrid copies CharSelectNavGridTable here and the unlock-debug screen copies UnlockDebugNavGridTable ($ff = empty cell, $fe/$fd = wrap sentinels). Unused_18_MoveGridCursor takes hl = this base, and the selection readers index it split-base with row*8+col
 wNavGridBuffer:: db
 	ds 4
 NEXTU
@@ -1180,7 +1180,7 @@ wModeHookTable:: dw
 ; [8-bit] ROM bank of the mode callback table (0 = no hooks registered)
 wModeHookBank:: db
 
-; [8-bit] Aim AiApplyServeAim must use for the next serve; $ff (set by RunMatch) means pick one at random from Data_08_7b0b. The drill point-start hooks write a specific aim so a lesson always serves where the script needs it
+; [8-bit] Aim AiApplyServeAim must use for the next serve; $ff (set by RunMatch) means pick one at random from AiApplyServeAimTable. The drill point-start hooks write a specific aim so a lesson always serves where the script needs it
 wAiServeAimOverride:: db
 
 ; [16-bit] Spot the serving CPU is walking to. Zero means "not chosen yet", which is what makes AiServeWalkToSpot roll a new one; the drill runner clears it before each match
@@ -1224,7 +1224,7 @@ wCharSelectCursorCol:: db
 wCharSelectCursorRow:: db
 ; [8 bytes] Two bytes per starting character (wCharRecordBuffer + 14 and + 12), collected by RunNewGameSetup before the roster is offered
 wNewGameRosterFields:: ds 8
-; [8-bit] Cleared by RunStoryDataConfirmMenu as the prompt opens
+; [8-bit] Cleared by Unused_1b_RunStoryDataConfirmMenu as the prompt opens
 wStoryDataPromptFlag:: db
 ENDU
 
@@ -1422,7 +1422,7 @@ wSavedGameTimer:: dw
 wCharDataSyncValues:: dw
 	ds 17
 
-; [8-bit] Sound options from the pause menu. Bit 0 is music on/off: ToggleMusicSetting flips just that bit and SyncBGMEnableFlag mirrors it into hMusic bit 0, stopping the BGM when it goes clear. The remaining bits are preserved by both
+; [8-bit] Sound options from the pause menu. Bit 0 is music on/off: Unused_1a_ToggleMusicSetting flips just that bit and Unused_00_SyncBGMEnableFlag mirrors it into hMusic bit 0, stopping the BGM when it goes clear. The remaining bits are preserved by both
 wSoundOptionBits:: db
 
 ; [8-bit] Message Speed
@@ -1901,10 +1901,10 @@ wStoryPartnerCharSpeedLevel:: db
 ; [16-bit] EXP a story match earned, the third of the pending awards alongside wPendingExpExhibition and wPendingExpLinked. ApplyPendingExpAwards adds it to wPendingExpTrophy, scales the total by the player level and folds in the trophy awards
 wPendingExpStory:: dw
 
-; [16-bit] The trophy half of the same pending award, summed with wPendingExpStory before scaling. ValidateN64TransferRecord and the debug stats screen address the pair as the head of the N64 transfer record that wN64TransferMarker ends
+; [16-bit] The trophy half of the same pending award, summed with wPendingExpStory before scaling. Unused_02_ValidateN64TransferRecord and the debug stats screen address the pair as the head of the N64 transfer record that wN64TransferMarker ends
 wPendingExpTrophy:: dw
 
-; [8-bit] Marker byte of the N64 transfer record at $c9b0: ValidateN64TransferRecord ($02:$4044) rejects the record unless it reads exactly $64, then checksums the bytes around it
+; [8-bit] Marker byte of the N64 transfer record at $c9b0: Unused_02_ValidateN64TransferRecord ($02:$4044) rejects the record unless it reads exactly $64, then checksums the bytes around it
 wN64TransferMarker:: db
 
 ; [2 bytes] Trophies transferred from the N64 game, packed two bits per trophy (0-3) for eight trophies. DecodeTrophyCounts ($3b:$4c53) unpacks all eight into the trophy screen's cells, and the EXP award path walks the same two bytes tier by tier to pick a TrophyExpForGroupTable row
@@ -2349,10 +2349,10 @@ wMenuBgScrollY:: dw
 ; [8-bit] X shared by both lanes (passed in e to QueueSpriteTemplate)
 wMenuBgScrollX:: db
 
-; [2 bytes] Per-lane tile argument (c) for SpriteTemplate_39_4bbf
+; [2 bytes] Per-lane tile argument (c) for TickMenuBgScroll_SpriteTemplate
 wMenuBgScrollTile:: dw
 
-; [2 bytes] Per-lane attribute argument (b) for SpriteTemplate_39_4bbf
+; [2 bytes] Per-lane attribute argument (b) for TickMenuBgScroll_SpriteTemplate
 wMenuBgScrollAttr:: dw
 
 ; [8-bit] Which lane TickMenuBgScroll queues this tick; it alternates 0/1
@@ -2373,7 +2373,7 @@ wN64TransferMenuCursor:: db
 ; [8-bit] Saved cursor cell shared by the N64 record-type menu and the two court-select menus in bank $3e
 wSubMenuCursor:: db
 
-; [8-bit] Selected entry on the minigame-flags debug screen, passed to UpdateUnlockDebugSelection by address
+; [8-bit] Selected entry on the minigame-flags debug screen, passed to Unused_1b_UpdateUnlockDebugSelection by address
 wUnlockDebugSelection:: db
 
 ; [8-bit] Minigame chosen on the minigame-select screen; RunMinigameModeFlow turns it into the config-table row (index * 3 + wMinigameLevel) and RunMinigameRulesPages picks the rules pages from it
@@ -2390,34 +2390,34 @@ wRacketShoesTabIndex:: db
 ; [8-bit] The same for the saved-data type select
 wSavedDataTypeTabIndex:: db
 
-; [8-bit] Window handle owned by bank $1a's menu code. Stored from the return value of CreateMenuWindowFromText ($1a:$403c) and CreateWindow ($1a:$43c0), then passed in a to RunMenuSelectionShared ($1a:$404b), CloseWindow ($1a:$4070, $1a:$444d), WriteStringToWindow ($1a:$43df/$43f9) and GetWindowStructPtr ($1a:$4149).
+; [8-bit] Window handle owned by bank $1a's menu code. Stored from the return value of CreateMenuWindowFromText ($1a:$403c) and CreateWindow ($1a:$43c0), then passed in a to Unused_05_RunMenuSelectionShared ($1a:$404b), CloseWindow ($1a:$4070, $1a:$444d), WriteStringToWindow ($1a:$43df/$43f9) and GetWindowStructPtr ($1a:$4149).
 wPauseMenuWindowId:: db
 
-; [8-bit] Preset cursor row for the next RunMenuSelectionShared ($05:$4aa8) call: at menu open it is copied into the live row variable ($d830, WRAM bank $05) and then cleared to 0 ($05:$4ad1-$4ad8), so it defaults to row 0. Bank $1a writes the last selected row here ($1a:$41b8/$41ca/$4203/$4232) before rebuilding the pause menu so re-entry restores the cursor; $1a:$4093 clears it when the menu closes for good.
+; [8-bit] Preset cursor row for the next Unused_05_RunMenuSelectionShared ($05:$4aa8) call: at menu open it is copied into the live row variable ($d830, WRAM bank $05) and then cleared to 0 ($05:$4ad1-$4ad8), so it defaults to row 0. Bank $1a writes the last selected row here ($1a:$41b8/$41ca/$4203/$4232) before rebuilding the pause menu so re-entry restores the cursor; $1a:$4093 clears it when the menu closes for good.
 wMenuInitialRow:: db
 
-; [8-bit] Per-row mask of menu rows on which LEFT/RIGHT act as a value adjust: bit 7 = mask present, bits 0-6 = one bit per row (tested by rotating right ($d830)+1 times, $05:$4c77-$4c8e and $05:$4ca3-$4cba). Gates the LEFT/RIGHT branch of the menu driver (Func_05_4c76, called at $05:$4bd5) and makes AnimateMenuScrollArrowsTask draw the left/right arrows on that row. Set by bank $1a: $83 (rows 0-1) for the pause menu at $1a:$4249, $8c (rows 2-3) for the minigame pause menu at $1a:$4386; cleared at $1a:$4096.
+; [8-bit] Per-row mask of menu rows on which LEFT/RIGHT act as a value adjust: bit 7 = mask present, bits 0-6 = one bit per row (tested by rotating right ($d830)+1 times, $05:$4c77-$4c8e and $05:$4ca3-$4cba). Gates the LEFT/RIGHT branch of the menu driver (Unused_05_IsCursorOnAdjustRow, called at $05:$4bd5) and makes Unused_05_AnimateMenuScrollArrowsTask draw the left/right arrows on that row. Set by bank $1a: $83 (rows 0-1) for the pause menu at $1a:$4249, $8c (rows 2-3) for the minigame pause menu at $1a:$4386; cleared at $1a:$4096.
 wMenuAdjustRowMask:: db
 
-; [8-bit] Per-row mask (same bit7-present + rotate-by-row encoding as $cb28) of menu rows that must NOT close the menu window when chosen: after RunMenuSelectionShared returns, $1a:$4057-$406e tests the bit for the chosen row and jumps past the CloseWindow call at $1a:$4070 when set. Written with the same values as $cb28 ($83 at $1a:$424e, $8c at $1a:$4389); cleared at $1a:$409c.
+; [8-bit] Per-row mask (same bit7-present + rotate-by-row encoding as $cb28) of menu rows that must NOT close the menu window when chosen: after Unused_05_RunMenuSelectionShared returns, $1a:$4057-$406e tests the bit for the chosen row and jumps past the CloseWindow call at $1a:$4070 when set. Written with the same values as $cb28 ($83 at $1a:$424e, $8c at $1a:$4389); cleared at $1a:$409c.
 wMenuKeepOpenRowMask:: db
 
-; [8-bit] Pause-menu options state: the low nibble holds the per-option toggle bits the music/sound rows flip, bit 5 gates DrawPauseMenuSettingValues, and bits 6-7 are set once a row has been visited. Cleared by ResetPauseMenuState
+; [8-bit] Pause-menu options state: the low nibble holds the per-option toggle bits the music/sound rows flip, bit 5 gates Unused_1a_DrawPauseMenuSettingValues, and bits 6-7 are set once a row has been visited. Cleared by Unused_1a_ResetPauseMenuState
 wPauseMenuOptionBits:: db
 
-; [8-bit] Written as the pause menu opens and read by RunMinigameModePauseMenu, which is how the shared window knows which pause menu it is running
+; [8-bit] Written as the pause menu opens and read by Unused_1a_RunMinigameModePauseMenu, which is how the shared window knows which pause menu it is running
 wPauseMenuIsMinigame:: db
 
 ; [8-bit] When nonzero the minigame pause menu is built without setting FLAG_MINIGAME_PAUSE_MENU_OPEN, which is what keeps the scroll-arrow task off that variant
 wSuppressMinigamePauseFlag:: db
 
-; [8-bit] Study Vocabulary / Tennis Dictionary screen (bank $3f): index of the first entry shown in the 6-row scrolling term list. Absolute entry = ($cb2d + $cb2e) mod $cb2f (Func_3f_517b, $3f:$5181). Advanced/wrapped against $cb2f when the cursor runs off the top/bottom ($3f:$56d6-$56e2, $3f:$5700-$570c), recomputed by the page-jump helpers Func_3f_5192/Func_3f_520f, and used as the render start in Func_3f_5261 ($3f:$528d). Cleared on screen entry at $3f:$40c8.
+; [8-bit] Study Vocabulary / Tennis Dictionary screen (bank $3f): index of the first entry shown in the 6-row scrolling term list. Absolute entry = ($cb2d + $cb2e) mod $cb2f (GetTennisDictionarySelectedIndex, $3f:$5181). Advanced/wrapped against $cb2f when the cursor runs off the top/bottom ($3f:$56d6-$56e2, $3f:$5700-$570c), recomputed by the page-jump helpers ScrollTennisDictionaryToPrevLetter/ScrollTennisDictionaryToNextLetter, and used as the render start in DrawTennisDictionaryList ($3f:$528d). Cleared on screen entry at $3f:$40c8.
 wTennisDictScrollTop:: db
 
-; [8-bit] Study Vocabulary screen (bank $3f): cursor row within the visible page. On the scrolling term list it is clamped to 0-5 ($3f:$56c6-$56f8) and scrolls $cb2d past those limits; on the 9-cell category index page it is clamped to 0-8 ($3f:$55b0-$55de). Drives the highlight row (stride $80 = 4 tilemap rows, Func_3f_54c8) and the hand-cursor sprite Y (stride $10 px, $3f:$4f9a-$4fab). Cleared at $3f:$40cb and reset to 0 by the page-jump helpers ($3f:$51a2, $3f:$522c, $3f:$5495).
+; [8-bit] Study Vocabulary screen (bank $3f): cursor row within the visible page. On the scrolling term list it is clamped to 0-5 ($3f:$56c6-$56f8) and scrolls $cb2d past those limits; on the 9-cell category index page it is clamped to 0-8 ($3f:$55b0-$55de). Drives the highlight row (stride $80 = 4 tilemap rows, DrawTennisDictionaryIndexCursor) and the hand-cursor sprite Y (stride $10 px, $3f:$4f9a-$4fab). Cleared at $3f:$40cb and reset to 0 by the page-jump helpers ($3f:$51a2, $3f:$522c, $3f:$5495).
 wTennisDictCursorRow:: db
 
-; [8-bit] Study Vocabulary screen (bank $3f): number of list entries that pass the current category filter. Computed by Func_3f_50f7 ($3f:$5102-$5116) by counting bytes of SelectionMaskGrid_3f that AND with $cb32 (up to the $40 terminator), and used as the wrap modulus for the scroll offset ($3f:$5181, $3f:$5700, $3f:$51ac).
+; [8-bit] Study Vocabulary screen (bank $3f): number of list entries that pass the current category filter. Computed by CountTennisDictionaryEntries ($3f:$5102-$5116) by counting bytes of SelectionMaskGrid_3f that AND with $cb32 (up to the $40 terminator), and used as the wrap modulus for the scroll offset ($3f:$5181, $3f:$5700, $3f:$51ac).
 wTennisDictEntryCount:: db
 
 ; [16-bit] Address of the $40 terminator FindTennisDictionaryListEnd found in the selection grid, stored **high byte first** -- +$00 is h and +$01 is l. WrapTennisDictionaryScanToEnd reads it back the same way to wrap a scan round to the last entry
@@ -2433,7 +2433,7 @@ wTennisDictSingleEntry:: db
 wTennisDictMode:: db
 	ds 2
 
-; [8-bit] Study Vocabulary screen (bank $3f) display flags, cleared at $3f:$40c5. bit 0 = a description window is open: set at $3f:$5620 before CreateDialogueWindow, cleared at $3f:$5699/$413a, and freezes the hand-cursor animation counter $cb3e ($3f:$4f8c). bit 1 = the scrolling term list is on screen (set $3f:$414d/$41d0, cleared $3f:$421a for the index page); gates drawing of the cursor sprites ($3f:$4f85) and shifts the index-page sprites by $10 px ($3f:$4f1f/$4f3a/$4f55/$4f70). bit 2 / bit 3 = flash the left / right page arrow this frame - set on LEFT ($3f:$571b) and RIGHT ($3f:$5731), drawn from SpriteTemplate_3f_5006 at X $18 / $88 ($3f:$4fc9/$4fdc), and both cleared at the top of every input tick ($3f:$560a).
+; [8-bit] Study Vocabulary screen (bank $3f) display flags, cleared at $3f:$40c5. bit 0 = a description window is open: set at $3f:$5620 before CreateDialogueWindow, cleared at $3f:$5699/$413a, and freezes the hand-cursor animation counter $cb3e ($3f:$4f8c). bit 1 = the scrolling term list is on screen (set $3f:$414d/$41d0, cleared $3f:$421a for the index page); gates drawing of the cursor sprites ($3f:$4f85) and shifts the index-page sprites by $10 px ($3f:$4f1f/$4f3a/$4f55/$4f70). bit 2 / bit 3 = flash the left / right page arrow this frame - set on LEFT ($3f:$571b) and RIGHT ($3f:$5731), drawn from UpdateTennisDictionarySprites_SpriteTemplate0 at X $18 / $88 ($3f:$4fc9/$4fdc), and both cleared at the top of every input tick ($3f:$560a).
 wTennisDictFlags:: db
 
 ; [8-bit] Animation state of the tennis-dictionary mascot: 3 and 4 alternate on a wTennisDictAnimTimer expiry, and StartTennisDictionaryAnim restarts it from the VBlank counter's low bits so the pose varies
@@ -2495,7 +2495,7 @@ wCutsceneSpriteAnimTick:: db
 ; [8-bit] Idle-animation state of the character-select portrait, cleared everywhere wCharSelectIdleTimer and wCharSelectHandedness are (screen setup, page reload, and after a fresh animation is set) and stepped by TickCharSelectIdleAnim when the timer expires
 wCharSelectIdleAnimState:: db
 
-; [8-bit] Story-mode character-select screen (bank $38): handedness toggle, 0 = default, 1 = mirrored (left-handed). Cleared on entry ($38:$4815, $38:$4984, $38:$4a82) and flipped by START ($38:$48fc `xor $01`) - the on-screen prompt for that row is text 30:118 'START: Change Hands' ($38:$4b0c). When non-zero, Func_38_4bac sets bit 5 (OAM X-flip) in wCharSpriteSlot+1 for all four displayed characters ($38:$4c6f-$4ca6), and Func_38_4e23 draws the marker sprite with tile base $00 instead of $02 ($38:$4e3c). The chosen value is written into the story character record at +$0e ($38:$48ba).
+; [8-bit] Story-mode character-select screen (bank $38): handedness toggle, 0 = default, 1 = mirrored (left-handed). Cleared on entry ($38:$4815, $38:$4984, $38:$4a82) and flipped by START ($38:$48fc `xor $01`) - the on-screen prompt for that row is text 30:118 'START: Change Hands' ($38:$4b0c). When non-zero, DrawCharacterSelectChars sets bit 5 (OAM X-flip) in wCharSpriteSlot+1 for all four displayed characters ($38:$4c6f-$4ca6), and DrawCharacterSelectCursor draws the marker sprite with tile base $00 instead of $02 ($38:$4e3c). The chosen value is written into the story character record at +$0e ($38:$48ba).
 wCharSelectHandedness:: db
 
 ; [8-bit] Frames until the character-select portrait plays its idle animation: TickCharSelectIdleAnim counts to $0f, then switches the shown character from animation 5 to 7 and starts again
@@ -2530,13 +2530,13 @@ wOverworldEnterFlag:: db
 ; [8-bit] Frame counter of bank $03's scrolling story cutscene. AnimateWindowSlideUpTask increments it and drives rWY from $90 minus its low 6 bits, sliding the window up; UpdateSceneAnimation takes its low 2 bits as the gate that steps the cutscene's animation frame
 wCutsceneSlideTimer:: db
 
-; Dirty flags for the bank $18 BG map shadow buffers: low nibble set -> queue $d800->$9800 tilemap copy, high nibble -> $dc00->VRAM1 $9800 attrmap copy (FlushBgMapShadowToVram clears it).
+; Dirty flags for the bank $18 BG map shadow buffers: low nibble set -> queue $d800->$9800 tilemap copy, high nibble -> $dc00->VRAM1 $9800 attrmap copy (Unused_18_FlushBgMapShadowToVram clears it).
 wBgMapShadowDirty:: db
 
-; [8-bit] Debug character viewer (Func_1a_67d4, reachable only from the unused debug path at $01:$41bf/$41fd with hDebugStepMode set): page of the 2x16 character grid, 0 or 1. Cleared at $1a:$67d5, incremented/decremented when the cursor wraps off the bottom/top row ($1a:$695f, $1a:$698f), and combined into the selected character id as ($cb62 << 4) + $cb63 -> $d002 ($1a:$69d0-$69dc), which is then fed to LoadOnCourtCharTilesA ($1a:$6837).
+; [8-bit] Debug character viewer (Unused_1a_RunDebugCharViewer, reachable only from the unused debug path at $01:$41bf/$41fd with hDebugStepMode set): page of the 2x16 character grid, 0 or 1. Cleared at $1a:$67d5, incremented/decremented when the cursor wraps off the bottom/top row ($1a:$695f, $1a:$698f), and combined into the selected character id as ($cb62 << 4) + $cb63 -> $d002 ($1a:$69d0-$69dc), which is then fed to LoadOnCourtCharTilesA ($1a:$6837).
 wDebugCharViewerPage:: db
 
-; [8-bit] Debug character viewer (Func_1a_67d4): cursor index 0-15 within the current page - LEFT/RIGHT step by 1 and wrap inside the current row of 8 ($1a:$691b-$692d, $1a:$6934-$6945), UP/DOWN step by 8 and roll into $cb62 ($1a:$694c, $1a:$6979). Selected character id = ($cb62 << 4) + $cb63 ($1a:$69d8). Also indexes the cursor-sprite position table at $1a:$6b0f ($1a:$6af9).
+; [8-bit] Debug character viewer (Unused_1a_RunDebugCharViewer): cursor index 0-15 within the current page - LEFT/RIGHT step by 1 and wrap inside the current row of 8 ($1a:$691b-$692d, $1a:$6934-$6945), UP/DOWN step by 8 and roll into $cb62 ($1a:$694c, $1a:$6979). Selected character id = ($cb62 << 4) + $cb63 ($1a:$69d8). Also indexes the cursor-sprite position table at $1a:$6b0f ($1a:$6af9).
 wDebugCharViewerIndex:: db
 
 ; [7 bytes] Per-digit working bytes for the number-sprite drawer, cleared by InitNumberSpriteGfx alongside wDigitSpriteTileBase and wDigitSpriteAttr
@@ -2603,7 +2603,7 @@ wLinkByteBuffer:: ds 48
 	ds 48
 NEXTU
 ; character select roster (bank $1b)
-; [128 bytes] Copy of CharSelectRosterTable, the grid of character ids the select screen and the unlock-debug screen page through. FindCharSelectRosterEntry searches it and DrawCharSelectMugshots walks it
+; [128 bytes] Copy of CharSelectRosterTable, the grid of character ids the select screen and the unlock-debug screen page through. Unused_1b_FindCharSelectRosterEntry searches it and Unused_1b_DrawCharSelectMugshots walks it
 wCharSelectRoster:: ds 128
 	export_size wCharSelectRoster
 ENDU
@@ -2643,9 +2643,9 @@ NEXTU
 wCharRecordBuffer:: ds 128
 NEXTU
 ; VRAM staging (WRAM bank $01)
-; [2048 bytes] Where DecompressData lands and QueueVRAMCopy reads from. A screen may slice it several ways at once -- the cutscene frame loaders keep six frames at tiles 0, 4, 8, 12, 14 and 16, while the EXP screen puts a tilemap plane at tile 0 and its attributes at tile 64. CopyMapToScrollBuffers reads the map planes back out of it to expand them into WRAM bank $02
+; [2048 bytes] Where DecompressData lands and QueueVRAMCopy reads from. A screen may slice it several ways at once -- the cutscene frame loaders keep six frames at tiles 0, 4, 8, 12, 14 and 16, while the EXP screen puts a tilemap plane at tile 0 and its attributes at tile 64. Unused_00_CopyMapToScrollBuffers reads the map planes back out of it to expand them into WRAM bank $02
 wDecompBuffer:: ds 2048
-; [2048 bytes] The other half, where DrawStringToTileBuffer renders a string as tile data rather than as tilemap cells -- the EXP screen's captions and bonus messages are built here and uploaded like any other graphics
+; [2048 bytes] The other half, where Unused_1a_DrawStringToTileBuffer renders a string as tile data rather than as tilemap cells -- the EXP screen's captions and bonus messages are built here and uploaded like any other graphics
 wTextTileBuffer:: ds 2048
 	export_size wTextTileBuffer
 ENDU
@@ -2714,7 +2714,7 @@ wCourtTilemapSaved:: ds 1024
 wCourtAttrmapSaved:: ds 1024
 NEXTU
 ; overworld scroll buffers (bank 0)
-; [1024 bytes] One of the four 64-wide planes CopyMapToScrollBuffers expands the map into, 16 rows of 64 cells. The narrow source comes from wDecompBuffer in WRAM bank $01 through wTextBuffer, a row block at a time
+; [1024 bytes] One of the four 64-wide planes Unused_00_CopyMapToScrollBuffers expands the map into, 16 rows of 64 cells. The narrow source comes from wDecompBuffer in WRAM bank $01 through wTextBuffer, a row block at a time
 wMapScrollPlane0:: ds 1024
 	ds 1024
 ; [1024 bytes] The second plane, built the same way and then immediately cleared -- 2048 bytes of it, twice what was written. wScreenScratch in WRAM bank $03 gets the same treatment, so two of the four planes are assembled and thrown away
@@ -2994,7 +2994,7 @@ wCharSelectSlotDifficulty:: ds 4
 wCharSelectSlotLeftHanded:: ds 4
 ; [8-bit] Link character-select: result byte ProcessLinkSelectCommand leaves for commands $24-$27
 wLinkSelectCmdResult:: db
-; [8-bit] Link character-select: CPU difficulty for the link match, stepped by HandleLinkCpuDifficultyInput
+; [8-bit] Link character-select: CPU difficulty for the link match, stepped by Unused_38_HandleLinkCpuDifficultyInput
 wLinkCpuDifficulty:: db
 NEXTU
 ; equipment select (bank $3e, $5400-$5c00)
@@ -3529,9 +3529,9 @@ wWindowFitTable:: ds 16
 	ds 16
 ; [8-bit] Window struct index AllocWindowStruct handed out for the window being built, $ff when none was free; CreateMenuWindowFromText passes it to SetWindowTextId / SetWindowState and returns it
 wWindowId:: db
-; [8-bit] Window struct index the glyph stream is rendering into, set by RedrawWindowText / RenderWindowTextToCompletion. InitGlyphStreamForWindow, DrawWindowGlyphRun, FlushGlyphRow and UploadLastGlyphTiles all resolve the window through it
+; [8-bit] Window struct index the glyph stream is rendering into, set by RedrawWindowText / Unused_05_RenderWindowTextToCompletion. InitGlyphStreamForWindow, Unused_05_DrawWindowGlyphRun, FlushGlyphRow and UploadLastGlyphTiles all resolve the window through it
 wGlyphWindowId:: db
-; [8-bit] While nonzero the glyph buffer survives: PrepareGlyphBuffer only calls ClearGlyphBuffer and ResetGlyphStream when it reads 0, and DrawTileAttrRect decrements it as it tears a window down. No site in bank $05 ever increments it, so whatever raises the count does so from another engine's variant of this byte.
+; [8-bit] While nonzero the glyph buffer survives: PrepareGlyphBuffer only calls ClearGlyphBuffer and ResetGlyphStream when it reads 0, and Unused_05_DrawTileAttrRect decrements it as it tears a window down. No site in bank $05 ever increments it, so whatever raises the count does so from another engine's variant of this byte.
 wGlyphBufferHoldCount:: db
 	ds 1
 ; [8-bit] Window struct index of the dialogue window currently on screen, stored by CreateDialogueWindow. RedrawActiveTextWindow, RenderActiveWindowText, CloseActiveDialogueWindow and the speaker-dialogue helpers all address the window through it
@@ -3578,7 +3578,7 @@ wMenuDepth:: db
 wTextArrowBlinkCounter:: db
 ; [16-bit] Shadow-tilemap address of the cell the cursor arrow sits in. AnimateTextArrowTask turns it into a VRAM address (+ $3000 + $9800) and blinks the arrow there; RunMenuSelection primes it to $ffff and rewrites it every time the cursor moves
 wTextArrowCell:: dw
-; [16-bit] VRAM address of the cell the arrow just left, handed to the blink task to overwrite with tile $20. The task clears it once erased, so a zero here is also how it knows nothing is pending -- AnimateTextArrowTask tests the low byte, AnimateMenuScrollArrowsTask the high one
+; [16-bit] VRAM address of the cell the arrow just left, handed to the blink task to overwrite with tile $20. The task clears it once erased, so a zero here is also how it knows nothing is pending -- AnimateTextArrowTask tests the low byte, Unused_05_AnimateMenuScrollArrowsTask the high one
 wTextArrowEraseAddr:: dw
 ; [8-bit] Page RunPagedTextMenu is showing; left/right step it and wrap against the page count. The entry it returns is wMenuPage * 4 + the row picked, so each page holds four rows
 wMenuPage:: db
@@ -3586,7 +3586,7 @@ wMenuPage:: db
 wTextArgStringWriteIndex:: db
 ; [8-bit] The same cursor for wTextArgNumberQueue, shared by PushTextArgNumber and TextCmdPrintArgNumber
 wTextArgNumberWriteIndex:: db
-; [8-bit] The same cursor for wTextArgShortTextQueue, written by PushTextArgShortTextId
+; [8-bit] The same cursor for wTextArgShortTextQueue, written by Unused_05_PushTextArgShortTextId
 wTextArgShortTextWriteIndex:: db
 ; [8-bit] How many string args were pushed. Kept in step with wTextArgStringWriteIndex while queuing and left alone when the cursor is reset, which is what makes it the limit the print command stops at
 wTextArgStringCount:: db
@@ -3606,7 +3606,7 @@ wScriptDialogueTextId:: dw
 ; [8-bit] Widest line of the measured text, rounded up to whole cells -- FitWindowToText writes it, MeasureDialogueWidthTiles returns it
 wFitTextWidthCells:: db
 	ds 7
-; [8-bit] 1 when OpenSpeechBubble / OpenCenteredDialogueWindow put the window on the lower half of the screen because the speaking actor is near the top, 0 otherwise. Written by both, read by nothing
+; [8-bit] 1 when OpenSpeechBubble / Unused_05_OpenCenteredDialogueWindow put the window on the lower half of the screen because the speaking actor is near the top, 0 otherwise. Written by both, read by nothing
 wSpeechBubbleLowerHalf:: db
 ; [8-bit] The byte Unused_05_SetTextVar stores. Nothing reads it
 wUnusedTextByte:: db
@@ -3616,7 +3616,7 @@ wWindowTextEmpty:: db
 	ds 2
 ; [8-bit] Speaker voice for the per-character text blip: DelayTextCharacter plays sound $9a + voice * 4 + (glyph & 3) as each glyph lands. GetSpeakerVoice supplies it, and $08 means silent -- which is also what a negative message speed forces
 wDialogueVoice:: db
-; [8-bit] Window SetFixedMenuWindowTextId built, so RunFixedTextMenu can close it alongside the menu window. Both are exported through the bank $05 farptr table and neither is called, which is just as well: SetFixedMenuWindowTextId loads hWramBank into b before calling SetWindowTextId, so the "window id" both routines pass around is really the WRAM bank number
+; [8-bit] Window Unused_05_SetFixedMenuWindowTextId built, so Unused_05_RunFixedTextMenu can close it alongside the menu window. Both are exported through the bank $05 farptr table and neither is called, which is just as well: Unused_05_SetFixedMenuWindowTextId loads hWramBank into b before calling SetWindowTextId, so the "window id" both routines pass around is really the WRAM bank number
 wFixedMenuWindowId:: db
 ; [16-bit] Current VRAM destination address for glyph tiles (lo/hi)
 wGlyphVramDest:: dw
@@ -3656,7 +3656,7 @@ wShortTextBuffer:: ds 16
 wTextArgStringQueue:: ds 32
 ; 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber
 wTextArgNumberQueue:: ds 32
-; 16 x 1-byte short-text ids queued by PushTextArgShortTextId; the $08 control code pops one and prints the string it names
+; 16 x 1-byte short-text ids queued by Unused_05_PushTextArgShortTextId; GetNextArgShortTextLength measures them, but the $08 control code that would print one is a bare ret (TextCmdNop2)
 wTextArgShortTextQueue:: ds 16
 
 ; Staging buffer UpdateSceneTileAnimations ($0a:$6460) assembles the scene's
@@ -3687,7 +3687,7 @@ wSceneTileAnimSrcPtr:: dw
 ; Window bookkeeping (WRAM bank $05), owned by the bank $05 window system:
 ; the window struct array, the dirty-row flags that drive the shadow
 ; tilemap flush, and the allocator mask above them. Scoped to bank $05
-; in two ranges rather than one, because WriteStringToTilemapStreamed at
+; in two ranges rather than one, because Unused_05_WriteStringToTilemapStreamed at
 ; $6bf0-$6c4f keeps its own cursor at $dc05-$dc0a in *the caller's* WRAM
 ; bank -- it writes glyphs straight to a tilemap the caller selected --
 ; so those bytes are not windows and stay numeric. Banks $0d and $17/$3b
@@ -3706,10 +3706,10 @@ wWindowStructs:: ds 64
 wTilemapRowDirty:: ds 32
 ; [16 bytes] Run list BuildDirtyRowRuns folds wTilemapRowDirty into: (first row, run length) pairs terminated by $ff, with runs capped at 7 rows so one FlushDirtyRowsPerFrame pass fits in a VBlank. The flusher copies each run and waits a frame between them
 wTilemapRowRuns:: ds 16
-; [8-bit] One bit per window struct, set while the slot is in use. AllocWindowSlotBit scans for a clear bit and claims it; FreeWindow clears it again
+; [8-bit] One bit per window struct, set while the slot is in use. Unused_05_AllocWindowSlotBit scans for a clear bit and claims it; FreeWindow clears it again
 wWindowSlotMask:: db
 	ds 5
-; [16-bit] Byte offset added to wShadowTilemapPtr by RefreshShadowTilemapFromMapBuffer when it copies rows back to the shadow tilemap. Nothing ever writes it, so it stays at the 0 ResetTextWindowState leaves behind
+; [16-bit] Byte offset added to wShadowTilemapPtr by Unused_05_RefreshShadowTilemapFromMapBuffer when it copies rows back to the shadow tilemap. Nothing ever writes it, so it stays at the 0 ResetTextWindowState leaves behind
 wShadowTilemapReadOffset:: dw
 ; [8 bytes] Scratch copy of one window record. SaveWindowStruct parks the struct here so a routine can rewrite the live one and still compare against where the window started -- OpenSpeechBubble walks the bubble outward one cell at a time against the saved column
 wSavedWindowStruct:: ds 8
@@ -3763,13 +3763,13 @@ NEXTU
 wCharViewerRow:: db
 ; [8-bit] Cursor index within the current row; up/down step it by $0b, the grid width
 wCharViewerCursor:: db
-; [8-bit] Character the viewer is showing, chosen by RunCharViewerSelectGrid and turned into wCharViewerPalette by GetCharPaletteIndex
+; [8-bit] Character the viewer is showing, chosen by Unused_1a_RunCharViewerSelectGrid and turned into wCharViewerPalette by GetCharPaletteIndex
 wCharViewerCharId:: db
 ; [8-bit] Grid cursor saved while the palette row has focus, so switching rows comes back to the same character
 wCharViewerSavedCursor:: db
 ; [8-bit] Palette index the debug character viewer is showing, from GetCharPaletteIndex
 wCharViewerPalette:: db
-; [8-bit] Animation/pose index the debug character viewer is showing, stepped by RunCharViewerInputLoop
+; [8-bit] Animation/pose index the debug character viewer is showing, stepped by Unused_1a_RunCharViewerInputLoop
 wCharViewerPose:: db
 NEXTU
 ; results continue prompt (bank $1e)
@@ -3913,7 +3913,7 @@ wExpScreenCharStats:: ds 30
 NEXTU
 ; palette fade engine (bank $03)
 	ds 118
-; [128 bytes] The fade's endpoint: 16 palettes of four 16-bit colours. CopyMasterPalettesToFadeBuffers seeds it from wMasterPalettes, then the caller rewrites it -- ClearFadeTargetPalettes zeroes all 64 colours (fade to black), DesaturateFadeTargetPalettes greys each one through SplitColorComponents. StepPaletteColorsTowardTarget reads it and SnapPalettesToTarget copies it over wPaletteFadeLive; AdvanceToPaletteEntry walks it 8 bytes at a time
+; [128 bytes] The fade's endpoint: 16 palettes of four 16-bit colours. CopyMasterPalettesToFadeBuffers seeds it from wMasterPalettes, then the caller rewrites it -- Unused_03_ClearFadeTargetPalettes zeroes all 64 colours (fade to black), DesaturateFadeTargetPalettes greys each one through SplitColorComponents. StepPaletteColorsTowardTarget reads it and SnapPalettesToTarget copies it over wPaletteFadeLive; AdvanceToPaletteEntry walks it 8 bytes at a time
 wPaletteFadeTarget:: ds 128
 	ds 32
 ; [128 bytes] The buffer the fade animates and shows: seeded from wMasterPalettes at the same moment, then every AnimatePaletteFadeToTarget pass steps each masked palette's components +/-1 toward wPaletteFadeTarget (StepPaletteColorsTowardTarget writes back here) and LoadPalettesImmediate uploads all 16 palettes from it
@@ -3989,7 +3989,7 @@ wPendingExpAwardVariants:: ds 5
 NEXTU
 ; EXP award screen (bank $1a)
 	ds 295
-; [8-bit] Bit flags the EXP award screen runs on: ExpScreenNumberTask sets bit 7 once the EXP-to-next figure has reached zero, ExpScreenDrawTask branches on it each frame, and SignExtendModifierByte rewrites it as it works. Bank $1d keeps the high half of wExpPoolTotal over the same byte, which is why this variant is scoped to bank $1a
+; [8-bit] Bit flags the EXP award screen runs on: Unused_1a_ExpScreenNumberTask sets bit 7 once the EXP-to-next figure has reached zero, Unused_1a_ExpScreenDrawTask branches on it each frame, and Unused_1a_SignExtendModifierByte rewrites it as it works. Bank $1d keeps the high half of wExpPoolTotal over the same byte, which is why this variant is scoped to bank $1a
 wExpScreenFlags:: db
 ENDU
 
@@ -4015,7 +4015,7 @@ NEXTU
 ; EXP award screen (bank $1a)
 ; [16-bit] EXP being awarded, the target the gauge counts up to
 wExpAwardTotal:: dw
-; [16-bit] EXP counted so far. AdvanceExpGaugeFill increments it once per tick and sets wExpCountDone when it reaches wExpAwardTotal
+; [16-bit] EXP counted so far. Unused_1a_AdvanceExpGaugeFill increments it once per tick and sets wExpCountDone when it reaches wExpAwardTotal
 wExpAwardCounted:: dw
 ; [4 bytes] How the counted number is drawn: +$00 X, +$01 Y, +$02 first digit tile ("0"; a digit adds its value * 2), +$03 OAM attribute
 wExpCountedSprite:: ds 4
@@ -4023,7 +4023,7 @@ wExpCountedSprite:: ds 4
 wExpCountDone:: db
 ; [8-bit] Set when the player presses A or B during the count, which switches the gauge to the fast path
 wExpCountFastForward:: db
-; [8-bit] Added to the X of every digit QueueNumberSpritesShifted draws, which is how the counted number slides while the gauge fills
+; [8-bit] Added to the X of every digit Unused_1a_QueueNumberSpritesShifted draws, which is how the counted number slides while the gauge fills
 wExpNumberSpriteShiftX:: db
 ; [8-bit] Latched once the EXP-to-next-level figure reaches zero, so the level-up is requested exactly once
 wExpLevelUpQueued:: db
@@ -4056,7 +4056,7 @@ wStorySlotSignatures:: ds 12
 	ds 500
 NEXTU
 ; unlock flags block (bank $1b)
-; [512 bytes] Image of save block $0b read by ReadUnlockFlagsSaveBlock for the minigame-flags debug screen -- the same block bank $3b stages at wN64RecordsBlock in WRAM bank $03 and the bank $03 engine at wSaveBlockBuffer in bank $07
+; [512 bytes] Image of save block $0b read by Unused_1b_ReadUnlockFlagsSaveBlock for the minigame-flags debug screen -- the same block bank $3b stages at wN64RecordsBlock in WRAM bank $03 and the bank $03 engine at wSaveBlockBuffer in bank $07
 wUnlockFlagsBlock:: ds 512
 ENDU
 
@@ -4162,18 +4162,18 @@ wSndWaveReloadPending:: db
 ; region from there, one byte at a time under a cursor, so that literal is a
 ; window base rather than a variable and is left numeric. (Its "wipe the
 ; block" branch clears from $d300 and its slot-3 branch edits $d300+, both
-; $200 short of where ReadCurrentSlotBlock actually puts the block.)
+; $200 short of where Unused_03_ReadCurrentSlotBlock actually puts the block.)
 UNION
 ; text glyph tiles (banks $05/$3f)
-; [2048 bytes] 128 proportional-font glyph tiles, laid out 1:1 against VRAM $8800 so tile n is at + n * TILE_SIZE and uploads to $8800 + n * TILE_SIZE. PlotGlyphRow adds the pen position to this base with a signed shift (sra d / rr e), so a negative pen writes below it: the lesson menu's second page puts five glyph tiles at $d2b0-$d2ff, harmless because bank $07 is unused there (docs/bugs.md). ClearGlyphBuffer fills all 128 with the blank glyph; UploadGlyphBufferFull sends the first 80 as five 256-byte pages, and UploadGlyphTilesPartial / UploadGlyphTileRange send narrower runs
+; [2048 bytes] 128 proportional-font glyph tiles, laid out 1:1 against VRAM $8800 so tile n is at + n * TILE_SIZE and uploads to $8800 + n * TILE_SIZE. PlotGlyphRow adds the pen position to this base with a signed shift (sra d / rr e), so a negative pen writes below it: the lesson menu's second page puts five glyph tiles at $d2b0-$d2ff, harmless because bank $07 is unused there (docs/bugs.md). ClearGlyphBuffer fills all 128 with the blank glyph; UploadGlyphBufferFull sends the first 80 as five 256-byte pages, and UploadGlyphTilesPartial / Unused_05_UploadGlyphTileRange send narrower runs
 wGlyphTileBuffer:: ds 2048
 NEXTU
 ; save-block staging (bank $03)
 	ds 384
-; [32 bytes] Image of a minigame-record save block ($38 + story slot): 16 16-bit records indexed by record id. ReadMinigameRecord zeroes it, reads the block over it and hands record b back through wMinigameRecordValue; WriteMinigameRecord does the reverse and verifies the block afterwards
+; [32 bytes] Image of a minigame-record save block ($38 + story slot): 16 16-bit records indexed by record id. ReadMinigameRecord zeroes it, reads the block over it and hands record b back through wMinigameRecordValue; UpdateMinigameRecord does the reverse and verifies the block afterwards
 wMinigameRecordBlock:: ds 32
 	ds 96
-; [512 bytes] Image of whichever $200-byte block the save engine is working on: the story slot block for ReadCurrentSlotBlock / WriteCurrentSlotBlock (ids from StorySlotBlockIds_03), and block $0b for the N64 transfer records. ApplyN64RecordsUnlockFlags and UpdateUnlockablesSaveBlock address the unlock bytes at +$00-$07 directly
+; [512 bytes] Image of whichever $200-byte block the save engine is working on: the story slot block for Unused_03_ReadCurrentSlotBlock / Unused_03_WriteCurrentSlotBlock (ids from StorySlotBlockIds_03), and block $0b for the N64 transfer records. ApplyN64RecordsUnlockFlags and UpdateUnlockablesSaveBlock address the unlock bytes at +$00-$07 directly
 wSaveBlockBuffer:: ds 512
 ENDU
 
@@ -4181,7 +4181,7 @@ ENDU
 
 ; State for a frame task that was stubbed out (WRAM bank $07).
 ; story-data confirm menu (bank $1b)
-; [2 bytes] RunStoryDataConfirmMenu selects WRAM bank $07, clears +$00, sets +$01 to $0c and registers StubNop_1b_09 as a per-frame task. That task's body is a bare ret, so nothing ever reads either byte -- the register/unregister pair around the prompt is real, only the work is missing
+; [2 bytes] Unused_1b_RunStoryDataConfirmMenu selects WRAM bank $07, clears +$00, sets +$01 to $0c and registers StubNop_1b_09 as a per-frame task. That task's body is a bare ret, so nothing ever reads either byte -- the register/unregister pair around the prompt is real, only the work is missing
 wStubbedPromptTaskState:: dw
 
 	ds 728
@@ -4191,7 +4191,7 @@ wStubbedPromptTaskState:: dw
 ; The bank $03 save engine passes minigame records through the same address
 ; in WRAM bank $07, which is a different variable in a different bank.
 ; minigame record parameter (WRAM bank $07)
-; [16-bit] In/out parameter of ReadMinigameRecord / WriteMinigameRecord: the high score for one record, pulled out of wMinigameRecordBlock or written into it. Every caller selects WRAM bank $07 around the two bytes, which is how the bank is provable at sites in banks $03/$0d/$12/$14/$17/$1b/$1e
+; [16-bit] In/out parameter of ReadMinigameRecord / UpdateMinigameRecord: the high score for one record, pulled out of wMinigameRecordBlock or written into it. Every caller selects WRAM bank $07 around the two bytes, which is how the bank is provable at sites in banks $03/$0d/$12/$14/$17/$1b/$1e
 wMinigameRecordValue:: dw
 	ds 30
 
@@ -4418,7 +4418,7 @@ w4CharSpriteSetId:: db
 w4AiPositionStrategy:: db
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 w4CharSpriteSlot:: ds 4
-; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: Unused_1a_DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
 w4CharSpriteSlotFrame:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
 w4CharAirShadowSlot:: ds 4
@@ -4661,7 +4661,7 @@ w5CharSpriteSetId:: db
 w5AiPositionStrategy:: db
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 w5CharSpriteSlot:: ds 4
-; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: Unused_1a_DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
 w5CharSpriteSlotFrame:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
 w5CharAirShadowSlot:: ds 4
@@ -4904,7 +4904,7 @@ w6CharSpriteSetId:: db
 w6AiPositionStrategy:: db
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 w6CharSpriteSlot:: ds 4
-; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: Unused_1a_DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
 w6CharSpriteSlotFrame:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
 w6CharAirShadowSlot:: ds 4
@@ -5147,7 +5147,7 @@ w7CharSpriteSetId:: db
 w7AiPositionStrategy:: db
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 w7CharSpriteSlot:: ds 4
-; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: Unused_1a_DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
 w7CharSpriteSlotFrame:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
 w7CharAirShadowSlot:: ds 4

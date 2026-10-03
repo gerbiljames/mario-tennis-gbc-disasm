@@ -438,12 +438,10 @@ and continuing the current one:
         ld [wGlyphFlushedCol], a
 ```
 
-`wGlyphBufferHoldCount` (`$d822`, WRAM bank `$05`) has exactly one producer:
-`Unused_05_DrawTileAttrRect` (`$05:$4552`) decrements it at `$45d3`. `Unused_05_DrawTileAttrRect`
-has no callers — it appears in the bank `$05` `$4000` directory only, as the
-`farptr Unused_05_DrawTileAttrRect` slot at `$05:$4020`, and there is no
-`farcall Unused_05_DrawTileAttrRect` anywhere in the ROM, and the only indexed slot references (`dslot`) are data pointers in
-banks `$0a` and `$39`. Nothing increments the count at all.
+`wGlyphBufferHoldCount` (`$d822`, WRAM bank `$05`) has exactly one writer:
+`Unused_05_CloseMenuWindow` (`$05:$45ba`) decrements it at `$45d3`-`$45d7`.
+Nothing in the ROM refers to `Unused_05_CloseMenuWindow` -- no call, no
+`farptr` directory slot, no pointer. Nothing increments the count at all.
 
 So the count is whatever `ResetTextWindowState`'s block clear left, i.e. 0,
 forever; `PrepareGlyphBuffer` always clears and resets, and `.keepBuffer` is
@@ -808,6 +806,15 @@ Callback B ends the identical sequence with `ld [hl], d` (`$7ec4`): the
 combined value sits in `a`, but the store writes `d` — the new low nibble
 alone — so the field's high nibble is zeroed every time the path runs. The A
 copy proves the intent.
+
+### The text interpreter's column-32 wrap is popped away
+
+After drawing a printable glyph, the text interpreter (`$05:$4eba`) steps the
+cell pointer in `de` and, when its column wraps to 0, computes `de - $20` to
+bring it back to the start of the row -- then `pop de` (`$4ecb`) restores the
+stepped pointer over it, so the cell runs on into the next tilemap row.
+Text rows end with explicit newlines; whether any shipped text runs a row
+as far as column 32 is not established.
 
 ## A routine whose body is a no-op
 

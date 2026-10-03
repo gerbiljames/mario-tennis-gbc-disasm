@@ -7,7 +7,7 @@ header signature at 0x20, a master 16-bit byte-sum of 0x38-0x76f stored at
 length, block checksum, tag), and a full mirror of 0x000-0x7ff in SRAM bank 1
 (file offset 0x2000). Story slot N lives in block 2N (a 0x300 image of WRAM
 c800-caff) with a backup in block 2N+27; character records are 0x40 bytes
-(name, +0x18 level, +0x20 eleven 0-9 stats, +0x2c 16-bit EXP, +0x38
+(name, +0x18 level, +0x20 eleven 0-9 stats, +0x2c 24-bit EXP (capped at 99999), +0x38
 spin/power/control/speed levels); the wGameFlags array sits at +0x1c0.
 
 usage: savetool.py file.sav verify
@@ -97,7 +97,7 @@ def verify(sav):
 
 def char_fields(sav, base):
     name = bytes(sav[base:base + 12]).split(b"\0")[0].decode("ascii", "replace")
-    f = {"name": name, "level": sav[base + 0x18], "exp": rd16(sav, base + 0x2c)}
+    f = {"name": name, "level": sav[base + 0x18], "exp": rd16(sav, base + 0x2c) | sav[base + 0x2e] << 16}
     for k, s in enumerate(STATS):
         f[s] = sav[base + 0x20 + k]
     for k, s in enumerate(LEVELS):
@@ -158,7 +158,9 @@ def main():
                 assert 1 <= val <= 0x63
                 sav[base + 0x18] = val
             elif field == "exp":
+                assert 0 <= val <= 99999
                 wr16(sav, base + 0x2c, val)
+                sav[base + 0x2e] = val >> 16
             elif field in STATS:
                 assert 0 <= val <= 9
                 sav[base + 0x20 + STATS.index(field)] = val

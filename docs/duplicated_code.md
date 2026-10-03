@@ -31,8 +31,8 @@ the tools and the tests still see every bank whole.
 
 A copy nothing reaches is named `Unused_<bank>_<Name>` (`twin_in`), so a
 file below can hold more copies than its live group in the next section.
-`draw_ascii_digit_char`, `draw_corner_brackets`,
-`compute_ranking_progress_index_13`, `get_cell_index_from_cursor_ptr`,
+`apply_sprite_wobble_x`, `draw_ascii_digit_char`, `draw_corner_brackets`,
+`draw_decimal_number`, `compute_ranking_progress_index_13`, `get_cell_index_from_cursor_ptr`,
 `get_menu_cursor_index_from_ptr`, `set_menu_cursor_from_index_to_ptr`,
 `move_menu_cursor2_grid_remote`, `move_menu_cursor_grid_remote` and both
 `move_menu_cursor_grid_from_link_input` files have no live copy at all.
@@ -44,6 +44,11 @@ and `{TWIN}`. Four copies stay separate: the Island Open NPC scripts
 (`IslandOpenFinalDoublesNpc0B_0f` / `IslandOpenRound1DoublesNpc0B_0f`, and the
 `Npc0D` pair) differ in the text id they set; `twins.py` had read the id's
 `_61` as a bank suffix, and no longer does.
+
+Three live copies are not assembled from a shared file:
+`SetPlayerAndPartnerObjectDefs_11` is a third copy of
+`load_court_player_partner_obj_defs`, and `DormRoomEntry08Scene` /
+`DormRoomEntry0aScene` in bank `$13` are the same scene twice.
 
 | file | routine | banks |
 |---|---|---|
@@ -161,10 +166,11 @@ and `{TWIN}`. Four copies stay separate: the Island Open NPC scripts
 | 2 | 24 | $13, $15 | `ComputeStoryRankTier_*` |
 | 2 | 43 | $38, $3b | `DrawNameWithDiacritics_*` |
 | 2 | 28 | $3b, $3e | `FlushMatchFormatRowToVram`, `FlushMatchRuleRowAttrs` |
+| 2 | 10 | $13 | `DormRoomEntry08Scene`, `DormRoomEntry0aScene` |
 | 2 | 14 | $6b | `IntroCutsceneState00Update_6b`, `IntroCutsceneState19Update_6b` |
 | 2 | 72 | $0d | `IsBallInMedallionMatchHitZone`, `IsBallInTreasureBoxHitZone` |
 | 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04_0f`, `IslandOpenRoundSinglesNpc04_0f` |
-| 2 | 21 | $14, $15 | `LoadCourtPlayerPartnerObjDefs_14`, `SetPlayerPartnerActorSprites` |
+| 3 | 21 | $11, $14, $15 | `SetPlayerAndPartnerObjectDefs_11`, `LoadCourtPlayerPartnerObjDefs_14`, `SetPlayerPartnerActorSprites` |
 | 2 | 27 | $3b, $3e | `MatchFormatSlideOut`, `CloseMatchRulesPanel` |
 | 2 | 12 | $0e, $15 | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` |
 | 2 | 14 | $0d | `ProjectMedallionMatchWorldPosition`, `ProjectTreasureBoxWorldPosition` |

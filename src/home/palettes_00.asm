@@ -157,7 +157,7 @@ CopyOAMDMARoutineToHRAM:
 	jr nz, .loop ; $06b7
 	ret ; $06b9
 OAMDMARoutine:
-	ld a, LINKMSG_NONE ; $06ba
+	ld a, HIGH(wShadowOAM) ; $06ba
 	ldh [rDMA], a ; $06bc
 	ld a, $28 ; $06be
 .loopB:

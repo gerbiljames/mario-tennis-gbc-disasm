@@ -369,11 +369,11 @@ GetSummaryExpDigitSprite:
 	ret ; $4a13
 SaveWorkTilemapToPage:
 	or a ; $4a14
-	jr z, .page3 ; $4a15
+	jr z, .toPlane ; $4a15
 	dec a ; $4a17
-	jr z, .page2 ; $4a18
+	jr z, .toSlot1 ; $4a18
 	dec a ; $4a1a
-	jr z, .page1 ; $4a1b
+	jr z, .toSlot2 ; $4a1b
 	wram_bank WRAM_SCREEN ; $4a1d
 	ld hl, wShadowTilemap ; $4a23
 	ld de, wCharDataPageSlot3 ; $4a26
@@ -385,7 +385,7 @@ SaveWorkTilemapToPage:
 	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a3a
 	call CopyMemoryFast ; $4a3c
 	ret ; $4a3f
-.page1:
+.toSlot2:
 	wram_bank WRAM_SCREEN ; $4a40
 	ld hl, wShadowTilemap ; $4a46
 	ld de, wCharDataPageSlot2 ; $4a49
@@ -397,7 +397,7 @@ SaveWorkTilemapToPage:
 	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a5d
 	call CopyMemoryFast ; $4a5f
 	ret ; $4a62
-.page2:
+.toSlot1:
 	wram_bank WRAM_SCREEN ; $4a63
 	ld hl, wShadowTilemap ; $4a69
 	ld de, wCharDataPageSlot1 ; $4a6c
@@ -409,7 +409,7 @@ SaveWorkTilemapToPage:
 	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $4a80
 	call CopyMemoryFast ; $4a82
 	ret ; $4a85
-.page3:
+.toPlane:
 	wram_bank WRAM_SCREEN ; $4a86
 	ld hl, wShadowTilemap ; $4a8c
 	ld de, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4a8f

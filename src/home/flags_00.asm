@@ -526,7 +526,7 @@ SoftReset:
 	ldh [hFadeState], a ; $261e
 	ldh [hFadeSpeed], a ; $2620
 	ldh [hFadeCounter], a ; $2622
-	ld a, LINKMSG_NONE ; $2624
+	ld a, HIGH(wShadowOAM) ; $2624
 	ld [wSpriteBufferPage], a ; $2626
 	call InitSerialLink ; $2629
 	farcall InitAndRunGame ; $262c

@@ -128,16 +128,16 @@ hStatDeltaOutPtr:: dw
 hStatDeltaRecordCopy:: dw
 NEXTU
 ; save-slot debug editor (bank $03)
-; [16-bit] SaveSlotDebugEditor: byte offset of the edit cursor into the $d300 save-block buffer, wrapped to $400 by masking the high byte with $03; moved by Func_03_524f, which takes the signed cursor step in c and the value step applied on A in b
+; [16-bit] Unused_03_SaveSlotDebugEditor: byte offset of the edit cursor into the $d300 save-block buffer, wrapped to $400 by masking the high byte with $03; moved by Unused_03_MoveSaveEditorCursor, which takes the signed cursor step in c and the value step applied on A in b
 hSaveEditorCursor:: dw
 ENDU
 
 	ds 4
 
-; [8-bit] Nonzero = row in wBGRowBlitBuffer awaits VBlank blit
+; [8-bit] Nonzero = row in wBGRowBlitTiles/Attrs awaits VBlank blit
 hBGRowBlitPending:: db
 
-; [8-bit] Nonzero = column in wBGColumnBlitBuffer awaits VBlank blit
+; [8-bit] Nonzero = column in wBGColumnBlitTiles/Attrs awaits VBlank blit
 hBGColumnBlitPending:: db
 
 ; [8-bit] Set when the slow column blit ran this VBlank (skips VRAM queue)
@@ -204,7 +204,7 @@ hLinkRemoteInputBuf:: db
 hLinkTxInput:: db
 ; [8-bit] Set to 1 by SerialHandler when a byte completes; WaitSerialTransfer spins on it and AdvanceFrame's link wait clears it after pairing it with hVBlankOccurred
 hLinkTransferDone:: db
-; [8-bit] Non-zero while a serial block exchange runs (UpdateLinkSession, ResyncLinkSession, ExchangeLinkBlockToWram5 set it; the link menus clear it when done). AdvanceFrame skips the SELECT+START debug single-step while it is set
+; [8-bit] Non-zero while a serial block exchange runs (UpdateLinkSession, ResyncLinkSession, Unused_07_ExchangeLinkBlockToWram5 set it; the link menus clear it when done). AdvanceFrame skips the SELECT+START debug single-step while it is set
 hLinkExchangeActive:: db
 ; [8-bit] Cleared by InitSerialLink and ResetSerialState; no other serial-path site touches it (the sound driver owns the same byte as hSndNoteTimer)
 hUnusedLinkSlot:: db
@@ -224,7 +224,7 @@ hLinkAckRequired:: db
 hLinkTxPending:: db
 ; [8-bit] Bit queue SerialHandler shifts left once per serial interrupt. A set top bit on entry means the byte that just arrived is not payload, so rSB is not latched into hLinkRxByte; a bit shifted out suppresses hLinkTransferDone for that interrupt. Seeded with $40 when a transfer is queued
 hLinkShiftQueue:: db
-; [8-bit] Players currently joined to the link session. AdvanceLinkPlayerCount steps it against wMatchIsDoubles + 1 as peers join and leave
+; [8-bit] Players currently joined to the link session. Unused_07_AdvanceLinkPlayerCount steps it against wMatchIsDoubles + 1 as peers join and leave
 hLinkPlayerCount:: db
 ; [8-bit] Remote player's cursor page in the link character grid, written beside wMenuCursor2X/Y and read by GetGridSlotFromLinkCursor and the MoveLinkCursor* handlers
 hLinkCursorPage:: db
@@ -234,7 +234,7 @@ hUnusedLinkSelectByte:: db
 hLinkBlockChecksum:: dw
 ; [8-bit] Nonzero makes VBlankHandler return immediately, doing no palette, OAM or tilemap work. The link resync sets it while it busy-waits on the serial line and clears it when the session is back in step
 hVBlankSuppressed:: db
-; [8-bit] Backoff counter in DelayByLinkPhase: decremented each call and reset to $0f when it goes negative, so repeated retries spin for a varying number of frames instead of locking in step with the peer
+; [8-bit] Backoff counter in Unused_07_DelayByLinkPhase: decremented each call and reset to $0f when it goes negative, so repeated retries spin for a varying number of frames instead of locking in step with the peer
 hLinkPhaseDelay:: db
 ; [8-bit] Frames the match has simulated. Incremented once per frame by the local driver (bank $08, after AdvanceFrame + UpdateMatchFrame) and by all three link frame drivers (SyncLinkFrame, RunLinkMatchFrame, RunLinkInputFrame), so it counts the same either way; cleared by ResetMatchState and by InitSerialLink / ResetSerialState. Read only for cheap periodic effects: `and $0f` cycles the landing marker's 16-frame animation, and `and $01` draws the ground shadow and the offscreen-character arrow on alternate frames -- the usual Game Boy way to fake a translucent sprite
 hMatchFrameCounter:: db

@@ -35,7 +35,7 @@ in the game and has 417 call sites. Every screen loop, every fade wait, every
 2. Calls `RunFrameTasks` with `a = 0` (`$2647`) — see §1.3.
 3. Flips the OAM build page: `wSpriteBufferPage = (page & $cf) ^ $05`
    (`$264b`), alternating `$c0`/`$c5`. See §5.1.
-4. Switches to WRAM bank `$07` and calls `ResumeBGMAfterJingle` (`$2658`).
+4. Switches to WRAM bank `$07` and calls `ResumeBGMAfterJingle` (`$265e`).
 5. Tracks the frame's peak `rLY` in `hPeakLY`/`hPeakLYFrames` and formats it as
    hex into `wDebugPeakLYText` (`$2666`-`$2681`) — a permanently-installed CPU
    load meter.
@@ -60,7 +60,7 @@ because several of these steps compete for the same ~1.09 ms.
 |---|---|---|---|
 | 0 | bail if `hVBlankSuppressed` | `$274a` | whole handler skipped |
 | 1 | `ApplyPendingPaletteUpdates` | `$2756` | uploads palettes *before* anything else |
-| 2 | scroll / BG map select | `$2763` | only on the first VBlank of a wait (`hVBlankOccurred == 0`) |
+| 2 | scroll / BG map select | `$2763` | only on the first VBlank of a wait (`hVBlankOccurred == 0`); a later VBlank skips steps 2-7 (`$275c`) |
 | 3 | OAM DMA | `$2795` | `call hOAMDMARoutine` with the source page patched in |
 | 4 | `ProcessBGBlitQueue` | `$2798` | one BG row + one BG column (§2.4) |
 | 5 | `ProcessVRAMCopyQueues` | `$279e` | **skipped** when step 4 returns nonzero |
@@ -86,8 +86,8 @@ next frame.
 `wRasterScrollStartLY` and `wRasterScrollEndLY` it writes `wRasterScrollX` to
 `rSCX`, then zeroes it. That is how the results and cutscene screens get a
 horizontally offset band. `TimerHandler` (`$00:$27d7`) only services sound, and
-only while the LCD is off or a serial transfer is pending — the two situations
-in which VBlank is not arriving.
+only while the LCD is off — the situation in which VBlank is not arriving; on
+the link slave it also stands aside while a serial interrupt is pending.
 
 ### 1.3 Frame tasks
 
@@ -304,7 +304,7 @@ The patch-list record is 4 bytes, `$ff`-terminated:
 
 | off | field |
 |---|---|
-| `+$00`/`+$01` | destination offset word, added to `wCharDataScreenCell` |
+| `+$00`/`+$01` | destination offset word (high byte first), added to `wCharDataScreenCell` |
 | `+$02` | source offset byte, added to `bc` |
 | `+$03` | length in cells |
 
@@ -403,8 +403,8 @@ are thrown away. The note on `wMapScrollPlane1` in `ram/wram.asm` records this.
 
 `RestoreShadowTilemapRow` (`$05:$43d2`, `a` = map row) re-fetches one row of 32
 cells from the 64-wide map buffer at `$d000`, starting at the camera column and
-wrapping at 64, into `wTilemapRowStage`, then writes it into `wShadowTilemap` at
-row `a & $1f`. `RestoreAllShadowTilemapRows` (`$05:$4383`) does 4 batches of 5
+wrapping at 64, into `wTilemapRowStage`, then writes it into `wWindowShadowTilemap`
+(WRAM bank `$05`) at row `a & $1f`. `RestoreAllShadowTilemapRows` (`$05:$4383`) does 4 batches of 5
 rows with an `AdvanceFrame` between batches when the LCD is on;
 `RestoreTilemapUnderWindow` (`$05:$43a8`) restores just the rows a given window
 covers, reading the row and height from its struct. This is the standard
@@ -673,8 +673,9 @@ Per byte (`$4e75`-`$4ecd`):
   dispatch as code `$0e`. This is the only code with an operand.
 - `< $20` → dispatch as a control code, then `RedrawActiveTextWindow`.
 - `>= $20` → printable: `WrapTextCellPointer`, `DrawStreamGlyph`,
-  `UploadLastGlyphTiles`, `DelayTextCharacter`, advance the cell with a `-$20`
-  wrap at column 32.
+  `UploadLastGlyphTiles`, `DelayTextCharacter`, advance the cell. At column 32
+  it computes a `-$20` wrap but then pops the old `de` over the result
+  (`$4ec1`-`$4ecc`), so the cell simply runs on into the next row.
 
 It also returns early when `wTextPageBreakRequest` is set, saving `hl` into
 `wTextResumePtr` — that is how a page break suspends and resumes mid-string.
@@ -715,8 +716,8 @@ as the `line`/`page`/`done` macros), with `TX_SHORT_TEXT`'s operand as the
 (67), `$0b` (41), `$09` (34), `$04` (11); no other code below `$20` apart
 from `$01`-`$03`, and never the dakuten pair.
 
-Two further 32-entry tables in the same bank reuse `DispatchControlCode` for
-different targets: `ProportionalTextCodeHandlers_05` (`$05:$5e39`, driven by
+Two further 16-entry tables in the same bank, each indexed by its own inline
+`jp hl` dispatch, serve different targets: `ProportionalTextCodeHandlers_05` (`$05:$5e39`, driven by
 `RenderProportionalTextAt` — a text id rendered at an arbitrary cell with no
 window and no delays) and `TextControlCodeHandlers_05` (`$05:$5f94`, driven by
 `RenderTextToBuffer64`, which stores characters into a 64-column buffer instead
@@ -737,7 +738,8 @@ boundaries; `wGlyphPenX` (`$c3b7`) is the fixed-point pen, `$80` per whole cell.
 `StampGlyphTileAtPen` (`$05:$5f0d`) writes tile id `(pen >> 7) + $80` into the
 shadow tilemap, skipping cells that already hold `$06` (the right border).
 
-So a window's interior text cells hold tile ids `$80 + column`
+So a window's interior text cells hold consecutive tile ids from
+`$80 + wGlyphRowStartCol`, carried on from one text row to the next
 (`DrawTextWindowFrame`, `$05:$6fc1`), and the engine keeps rewriting the VRAM
 tiles under them. Upload paths: `UploadLastGlyphTiles` (`$05:$7607`, the
 typewriter — just the 2 tiles at the pen), `Unused_05_UploadGlyphTileRange` (`$05:$78ad`),
@@ -1012,7 +1014,7 @@ The wrap-and-clamp step is one idiom, repeated everywhere:
     inc a           ; or dec a
     add a           ; carry iff the value was >= $80, i.e. it went negative
     jr nc, .check
-    ld a, c / dec a ; wrapped below 0 -> last item
+    ld a, c / dec a / jr .done ; wrapped below 0 -> last item
 .check:
     rra             ; undo the doubling
     cp c
@@ -1026,7 +1028,7 @@ ROM0 provides it as `MoveCursorHorizontal` (`$00:$2c0d`) and
 into the horizontal routine's tail, so the two share the arithmetic. Only bank
 `$06` calls them: `MoveCursorHorizontal` from six sites,
 `Unused_00_MoveCursorVertical` from one, inside the unreachable
-`Unused_06_HandleDebugStatsInput` (`$06:$6bfe`).
+`Unused_06_HandleDebugStatsInput` (call at `$06:$6bfe`).
 
 Every other screen bank inlines a 2-D version instead, and there are **five
 copies in the ROM, four variants each**. The
@@ -1044,7 +1046,7 @@ differs is only the input source and which cursor pair is written:
 | `$3e` | `MoveMenuCursorGrid_3e` `$413a` | `Unused_3e_MoveMenuCursorGridFromLinkInput` `$41b8` | `Unused_3e_MoveMenuCursorGridRemote` `$4235` | `Unused_3e_MoveMenuCursor2GridRemote` `$4300` |
 
 The "remote" variants choose between `hLinkRemoteInputBuf` and
-`hLinkRemoteInput` at run time on `hLinkState == $02` (e.g. `$38:$421a`,
+`hLinkRemoteInput` at run time on `hLinkState == $02` (e.g. `$38:$420d`,
 `$3b:$422d`), and the cursor-2 variants operate on `wMenuCursor2X`/`Y`. The
 naming is not consistent across the five banks.
 
@@ -1064,7 +1066,8 @@ with the prompt's text id, then `RunMenuSelection`, then `CloseWindow` (§7.7;
 e.g. `$0a:$4c0d`-`$4c1f`). Bank `$18` has a hand-built alternative that the
 shipped game never reaches: `Unused_18_InitConfirmScreen` builds the box,
 font, cursor and score panel, and `Unused_18_DrawYesNoLabels` writes two 3×2 tile
-words plus their attribute rows into fixed cells, with prompts at text ids
+words plus their attribute rows into fixed cells; bank `$1b`'s equally dead
+`Unused_1b_Draw*Prompt` routines pair it with prompts at text ids
 `$046a`/`$046b`/`$046d`/`$0471` (bank `$31`, indices 106/107/109/113 — "Erase?",
 "Erase it? Really?", "Continue?", "Is this correct?").
 
@@ -1169,9 +1172,9 @@ overworld call never returns.
 
 ### Things this document could not establish
 
-- `wShadowTilemapReadOffset` (`$dc76`) is read by
-  `PrepareGlyphBuffer`'s keep branch and written nowhere in the ROM, by name
-  or by address, so it stays 0 -- and that branch never runs anyway (below).
+- `wShadowTilemapReadOffset` (`$dc76`) is read only by the dead
+  `Unused_05_RefreshShadowTilemapFromMapBuffer` (`$05:$44ba`) and written
+  nowhere in the ROM, by name or by address, so it stays 0.
 - Whether `ControlCodeHandler16`-`19` (codes `$10`-`$13`) were ever meaningful.
   They are four *separate* one-byte `ret`s, which is suggestive of deleted
   handlers, but nothing proves it.

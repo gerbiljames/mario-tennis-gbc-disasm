@@ -43,21 +43,21 @@ def wCharDataScreenBackup equ $d430
 ; in WRAM banks $02, $03, $04
 def wMugshotBuffer equ $d600
 
-; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 2, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
+; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 1, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot1 equ $d7e0
 
 ; [1024 bytes] Tile plane of the intro cutscene's character artwork, decompressed here from DataPtr_IntroCharactersTilemap. Rows are TILEMAP_WIDTH apart; the state inits QueueVRAMCopy slices of it ($d880 and $d8c0, 4 and 6 rows in) to $9c80/$9cc0 in VRAM bank 0, pairing each with the same offset of wIntroCharactersAttrmap into VRAM bank 1.
 ; in WRAM banks $04
 def wIntroCharactersTilemap equ $d800
 
-; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 1, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
+; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 2, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot2 equ $da20
 
 ; [1024 bytes] CGB attribute plane for wIntroCharactersTilemap, cell for cell, from DataPtr_IntroCharactersAttrmap. Every copy out of it targets VRAM bank 1 at the address its tile-plane twin goes to in bank 0.
 ; in WRAM banks $04
 def wIntroCharactersAttrmap equ $dc00
 
-; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 0 or 3+, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
+; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 3 or more (0 saves into wCharDataPagePlane + 13 * TILEMAP_WIDTH), once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot3 equ $dc60
 
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)

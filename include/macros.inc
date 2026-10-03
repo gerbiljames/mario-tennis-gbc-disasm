@@ -370,7 +370,7 @@ ENDM
 ; One $4000 pointer-table entry: defines the FarPtr_<suffix> label and the dw
 ; slot that farcall's operand bytes index. One arg when the target symbol is
 ; the suffix (farptr RunMatch -> FarPtr_RunMatch: dw RunMatch); two when they
-; differ (farptr 24_0a, Func_24_6706).
+; differ (farptr 24_0a, Unused_24_StubNop).
 MACRO farptr
 IF _NARG == 1
 FarPtr_\1: dw \1
@@ -784,7 +784,7 @@ ENDM
 MACRO as_wait_move2  ; $14 wait for the move to finish / countdown
 	db $14
 ENDM
-MACRO as_flag        ; $15 set or clear a state flag bit (field, mode, bit index)
+MACRO as_flag        ; $15 set or clear a state flag bit (mode: $01 set, else clear; field offset; bit index)
 	db $15, \1, \2, \3
 ENDM
 

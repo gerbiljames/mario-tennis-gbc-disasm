@@ -358,7 +358,7 @@ def FACE_UP      equ $c0
 ; ACTOR_PARTNER both run the $04:$41d1 follower script.
 def ACTOR_PLAYER        equ $00 ; the main character sprite
 def ACTOR_PLAYER_SHADOW equ $01 ; player's paired follower actor ($41d1)
-def ACTOR_PARTNER       equ $02 ; companion/doubles partner (Func_04_4f10)
+def ACTOR_PARTNER       equ $02 ; companion/doubles partner (SpawnCompanionActor)
 
 ; --- Story-script facing mask (map_script `facing_mask`) ---
 ; The direction an actor must face for FindStoryScriptEntry ($0a:$53e4) to run

@@ -1,6 +1,7 @@
 # Bank 0 annotation notes
 
-Routines identified in bank 0 (`src/home/`, included by `src/bank_000.asm`).
+Routines identified in bank 0 (`src/home/`, with the sound driver in
+`src/audio/*_00.asm`, all included by `src/bank_000.asm`).
 Bank 0 is the fixed home bank: it holds the reset vectors, all interrupt
 handlers, the far-call/bank-switch trampolines, core memory/VRAM/OAM
 helpers, the joypad driver, the sound engine, and the soft-reset routine
@@ -56,8 +57,8 @@ that the VBlank handler jumps to when it detects the reset button combo.
 | `SwitchCPUSpeed` | `$02a3` | The standard GBC double-speed switch sequence: check `rSPD` bit 7, arm the switch, disable interrupts/joypad matrix, `stop`. |
 | `ReadJoypad` | `$02eb` | Polls `rJOYP` with the `$20`/`$10` nibble selects, combines D-pad/buttons, and updates held/pressed/repeat state bytes. |
 | `DisableLCDSafely` | `$0346` | Waits for `rLY == $91`, then clears `rLCDC` bit 7, following the documented safe-LCD-off procedure. |
-| `EnableLCD` | `$0376` | Sets `rLCDC` bit 7 and resets the OAM slot cursor. |
-| `ClearVRAMBank` | `$0383` | Clears the currently-active 8 KB VRAM bank only. |
+| `EnableLCD` | `$0376` | Sets `rLCDC` bit 7, hides the unused OAM slots (`ClearUnusedSprites`) and clears `hVBlankOccurred`. |
+| `ClearVRAMBank` | `$0383` | Clears the 8 KB of VRAM; on CGB (`hIsCGB`) it clears both banks via `ClearBothVRAMBanks`. |
 | `ClearBytes` | `$03a7` | Simple `bc`-counted byte-at-a-time zero-fill loop. |
 | `ClearMemory16` | `$03af` | Zero-fill loop, unrolled 16x per iteration, counted by `c` (chunks of 16 bytes). |
 | `ClearMemoryBC16` | `$03c4` | Same unrolled zero-fill body but counted by 16-bit `bc`; used to clear a full VRAM bank. |

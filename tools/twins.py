@@ -33,7 +33,9 @@ _CODE_WORDS = frozenset(
     "adc add and bit call ccf cp cpl daa dec di ei halt inc jp jr ld ldd ldh ldi nop or pop "
     "push res ret reti rl rla rlc rlca rr rra rrc rrca rst sbc scf set sla sra srl stop sub "
     "swap xor farcall push_wram_bank pop_wram_bank wram_bank ld_hl_indexed wait_frames lb "
-    "set_flag clear_flag test_flag ld_flag_id sound".split())
+    "set_flag clear_flag test_flag ld_flag_id sound ld_slot ld_de_indexed ld_bc_indexed ld_xy ld_oam "
+    "ld_size ld_tile_run rect_size rect_cell map_cell sprite_xy sprite_attr_tile sprite_tile_attr "
+    "ld_bg_pals ld_obj_pals ld_cell rect_ptrs rect_pair".split())
 _SUFFIX_RE = re.compile(r"\b([A-Za-z]\w*?)_[0-9a-f]{2}\b")
 
 

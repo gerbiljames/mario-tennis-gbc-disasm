@@ -21,8 +21,8 @@ field is a pointer to a script blob.
    stores the script pointer into the slot: `+$00/+$01` = address, `+$02` =
    bank, `+$03` = wait counter (0).
 2. The per-frame actor loop `UpdateActors` (`$04:$41e7`) calls **`StepActorScript`**
-   (`$04:$4229`) for each live slot, with the slot base in `bc` and its low
-   byte cached in `hActorPtr` (`$ffea/$ffeb`).
+   (`$04:$4229`) for each live slot, with the slot base in `bc` and also
+   cached in `hActorPtr` (`$ffea/$ffeb`).
 3. `StepActorScript` yields immediately if `+$05` bit0 is set (paused) or while
    the `+$03` wait counter is nonzero (decrementing it). Otherwise it reads the
    opcode at the script pointer and dispatches through the 22-entry handler
@@ -53,8 +53,8 @@ frame, *cont* runs the next opcode immediately, *cond* depends on state.
 | `$05` | `as_halt5` | 1 | yield* | `$460a` | Inert (handler alias of `$00`) |
 | `$06` | `as_target_rel dx, dy` | 5 | cont | `$45a0` | Offset the move target by (dx, dy), both signed words |
 | `$07` | `as_move angle, dist` | 4 | cont | `$44df` | Move by angle (byte) + distance (word), absolute angle |
-| `$08` | `as_move_rel angle, dist` | 4 | cont | `$44eb` | Move by angle + distance, angle relative to facing |
-| `$09` | `as_rand_box p0, p1` | 3 | cont | `$4886` | Pick a random reachable point in a box, gated on `+$30` bit7 |
+| `$08` | `as_move_rel angle, dist` | 4 | cont | `$44eb` | Move by angle + distance, angle relative to the heading (`+$14`) |
+| `$09` | `as_rand_box p0, p1` | 3 | cond | `$4886` | Pick a random reachable point in a box (half-width `p0`, half-depth `p1`), gated on `+$30` bit7; yields if four tries all fail |
 | `$0a` | `as_step` | 1 | yield | `$46b0` | Step one tick toward the target waypoint (`+$16`), then yield |
 | `$0b` | `as_follow_wp` | 1 | yield | `$4623` | Advance along the waypoint list at `+$16`, then yield |
 | `$0c` | `as_jump target` | 3 | cont | `$44d0` | Jump: signed rel16 added to the operand's own address |
@@ -65,14 +65,15 @@ frame, *cont* runs the next opcode immediately, *cond* depends on state.
 | `$11` | `as_sound id` | 2 | cont | `$483d` | Play sound id (`PlaySoundManaged`) |
 | `$12` | `as_call fn` | 3 | cond | `$44a9` | Call a same-bank function (actor state in `bc`); yield+retry if it reports busy |
 | `$13` | `as_begin_path` | 1 | yield | `$484e` | Seed the path target `+$16` from the current position, set path flags |
-| `$14` | `as_wait_move2` | 1 | cond | `$4949` | Wait for the move to finish / run a countdown |
-| `$15` | `as_flag field, mode, bit` | 4 | cont | `$49de` | Set (`mode=$01`) or clear an actor flag bit; `bit` indexes the mask table `$4a1f` |
+| `$14` | `as_wait_move2` | 1 | yield | `$4949` | Once the move has finished (`+$05` bit7 clear), set a 40-frame wait and advance; while moving, advance with a 10-frame wait only if `+$05` bit6 is set |
+| `$15` | `as_flag mode, field, bit` | 4 | cont | `$49de` | Set (`mode=$01`) or clear bit `bit` of state field `field`; `bit` indexes the mask table `$4a1f` |
 
 \* `$00`/`$05`/`$0f` return `a = 0` **without** advancing the pointer, so the
 actor re-reads the same opcode every frame — a permanent idle.
 
-Coordinates are 16-bit fixed-point map units, little-endian (`as_set_target
-$2700, $1300`). `as_jump`'s operand is `target - operand_address`; the macro emits
+Coordinates are written in tiles with a point and stored as little-endian
+words in 1/256 tile (`as_set_target 39.0, 19.0` emits `$2700, $1300`).
+`as_jump`'s operand is `target - operand_address`; the macro emits
 `dw target - @`.
 
 ## Example
@@ -115,11 +116,10 @@ A blob can be entered at several offsets — overlapping scripts that share a ta
 `DormRoomNpc04IdleScripts_13` lands at offsets 0/24/34/44 inside one 95-byte
 run (`ActorScript_13_00`…`_03`, `$13:$585f`-`$58bd`: a wander loop, two
 one-shots, a patrol loop); the shared body at `$11:$5b14…$5d27`
-has ~20 entry points. Each entry point gets its own `ActorScript_*` label, and
-the blob splits into one `actor_script` region per label. Execution flows from
-one labelled fragment into the next (fall-through) or jumps between them: an
-`as_jump` whose target is another entry point renders as that global label
-(`as_jump ActorScript_11_04`) rather than a local `.L`.
+has 19 entry points. Each entry point gets its own `ActorScript_*` label.
+Execution flows from one labelled fragment into the next (fall-through) or
+jumps between them: an `as_jump` whose target is another entry point names
+that global label (`as_jump ActorScript_11_02`) rather than a local `.L`.
 
 ## Blobs that decode as scripts but have no outside reference
 

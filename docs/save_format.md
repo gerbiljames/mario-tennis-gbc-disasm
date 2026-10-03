@@ -9,7 +9,7 @@ file is the four banks concatenated. Verified against a live save with
 
 | range | contents |
 |---|---|
-| `$a000-$a01f` | zeros |
+| `$a000-$a01f` | zeros (`sSaveHeader`, the start of the mirrored header region) |
 | `$a020-$a02f` | signature `"CAMELOTGBTENNIS\0"` (`sSaveSignature`; ROM copy at `SaveSignature`, 03:47e9) |
 | `$a030-$a031` | master checksum (`sSaveMasterChecksum`): 16-bit little-endian byte-sum of `$a038-$a76f` |
 | `$a038`       | save layout version byte, always `$71` (`sSaveFormatVersion`) |
@@ -196,10 +196,11 @@ drive the star-rank unlock logic after exhibition wins.
 
 The save engine never reads/writes SRAM in place; every block moves
 through banked-WRAM scratch, all of it multiplexed with other uses. The
-three bank-`$07` buffers are named now — they overlay `wGlyphTileBuffer`,
-the text engine's glyph tiles, and a union variant in `ram/wram.asm`, whose
-names were applied only where *both* the referencing ROM bank and a provable
-WRAM bank `$07` agreed, keeps the two apart. The rest stay numeric.
+three bank-`$07` buffers are named. `wMinigameRecordBlock` and
+`wSaveBlockBuffer` overlay `wGlyphTileBuffer`, the text engine's glyph
+tiles, as a union variant in `ram/wram.asm`, named only where *both* the
+referencing ROM bank and a provable WRAM bank `$07` agree, which keeps the
+two apart. The rest stay numeric.
 
 | buffer | used for |
 |---|---|

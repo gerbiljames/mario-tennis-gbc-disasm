@@ -53,7 +53,7 @@ graphics, audio, tilemaps and text.
 | proven code and structured source | 428,509 bytes, 20.4% of the ROM |
 | labels | 21,979 — 20,399 human-named, the rest derived from something already named (a bank's `$4000` slot table, a sound table) |
 | compressed graphics | 839 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 773 routines and 100 blobs nothing live reaches, catalogued in `docs/unused_code.md` |
+| `Unused_` routines | 779 routines and 103 blobs nothing live reaches, catalogued in `docs/unused_code.md` |
 
 Everything that is not code was classified: every `INCBIN` is known to be
 graphics, audio, text, a resource descriptor, a record array or fill. The
@@ -106,8 +106,8 @@ restated:
   and draw past the last tile. `make check` confirms every PNG still encodes back to
   its blob. `tools/gfx.py`, `tools/tilemap.py` and `tools/lz.py` are the converters
   if you need them by hand.
-- **Screen layouts are text.** Every tile plane and attribute plane (213
-  blobs, most of them LZ streams) is extracted a second time as a
+- **Screen layouts are text.** Every tile plane and attribute plane (231
+  blobs, all of them LZ streams) is extracted a second time as a
   `.tilemap` file beside its `.bin`: one `tilemap_row` of hex cells per
   row, at the width the loader uses. Edit it and `make` re-encodes the
   blob, compressing it again if it is an `lz_*` stream; `make check`
@@ -155,7 +155,7 @@ restated:
   are extracted to `data/bank_07x/<Track>.asm`, one `snd_*` row per command
   (`snd_note C#, 3, 8`, `snd_loop_point 0`, `snd_call 2, .call0`, ...), with
   the command set in `docs/sound_engine.md`. Edit a track and `make`; add
-  one with a file and a `SoundTable` row. `make check` proves every track
+  one with a file and a `SoundTable_<bank>` row. `make check` proves every track
   round-trips through the codec (`tools/snd.py`).
 - **Copy counts follow their source.** A VRAM copy of a whole blob is
   written `ld c, (Next - Blob) / 16`, and a whole copy of a decompressed
@@ -251,15 +251,16 @@ deleted.
   holds the structures that exist identically in several banks.
 - **`Unused_` routines** are proven unreferenced. Where one is a copy or a
   sibling of a live routine, its note says which and how it differs.
-- **Twins.** 279 live routines are instruction-identical copies of one
+- **Twins.** 139 live routines are instruction-identical copies of one
   another, mostly one per bank (`FetchText_25` / `FetchText_26`, the shot
-  solver's helpers in every court bank, the menu-cursor library). 275 of
-  them are assembled from one shared file under `src/twins/`: a bank says
+  solver's helpers in every court bank, the menu-cursor library). All but
+  three are assembled from one of 62 shared files under `src/twins/` (275
+  copies, dead ones included): a bank says
   `twin fetch_text, 25` where its copy sits, and the file's
   `FetchText_{TWIN}:` and bank-local references become that bank's, so a
   fix has one home. The shared bodies carry no per-instruction addresses;
   the `twin` line has the copy's start. `docs/duplicated_code.md` lists the
-  families and the four copies that stay separate.
+  families and the three copies that stay separate.
 
 ## Layout
 

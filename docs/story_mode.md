@@ -15,7 +15,7 @@ Where the pieces live:
 | `$04` | actor engine: spawning, per-frame stepping, player control, the actor-script VM |
 | `$0e`-`$15` | location script data + hand-written location code for the 30 playable locations |
 | `$27` | the same, for the 12 epilogue ("End1".."End17") locations |
-| `$5f`-`$66` and neighbours | scene assets (tiles, tilemaps, attribute maps, collision/behaviour maps) reached through `$4000` slot directories |
+| `$63`-`$69` | scene assets (tiles, tilemaps, attribute maps, collision/behaviour maps) reached through `$4000` slot directories |
 | `$02` | character records, the stat pipeline, EXP/level, save signatures |
 | `$03` | save engine, `SAVEFLAG_*` accessors, the scrolling-text/credits cutscene renderer |
 | `$05` | text engine and dialogue windows (control-code interpreter at `$05:$4e5d`) |
@@ -43,7 +43,7 @@ repeat. Every location change is therefore a *return* from `RunStoryLocation`
 followed by a fresh load — there is no location-to-location transition path.
 
 Location `$00` is "Main Menu". Its `InitScript` (`MainMenuInitScript_10`,
-`$10:$4eb9`) parks the player actor off-map at `($3f00,$3f00)` and calls
+`$10:$4eb9`) parks the player actor off-map at tile `(63.0, 63.0)` and calls
 `RunTitleAndMainMenuLoop` (`$10:$4f0d`), which runs the logo, intro cutscene,
 title screen and main menu, and does not return until the player has committed
 to something. To *leave* the menu it writes `wStoryModeExitTriggerRequest`; the
@@ -67,8 +67,9 @@ doubles arc. So "where you resume" is derived from flags, not stored.
 location + entry point + 5-byte position (`wStoryReturnLocation`,
 `wStoryReturnEntryPoint`, `wStoryReturnPosition`). Called with `b = $ff` it
 snapshots the live position and stores entry point `$ff` (meaning "no door —
-restore the exact position"); the save/quit path calls it with an explicit
-`b`/`c` pair (`$06:$706a` uses `b=$0a, c=$01`, the dorm room).
+restore the exact position"), which is what the pause menu's save does
+(`$06:$706a`); the main menu's continue path passes an explicit `b`/`c` pair
+(`$10:$50df` uses `b=$0a, c=$01`, the dorm room).
 
 ## The location loop
 
@@ -112,7 +113,7 @@ fixed order:
 | 1 | `wStoryModeTriggerScript` (`$c2a0`) | `RunQueuedTriggerScript` — a step-on trigger queued by the movement code |
 | 2 | `wStoryModeExitTriggerRequest` (`$c2a1`) | `RunLocationExit`, then return (reload) |
 | 3 | `wStoryModeMenuRequest` (`$c2a5`) | wait for the player to stop, then `RunStoryModeMenu` unless `FLAG_STORY_MENU_LOCKED` |
-| 4 | auto-interact arming (`$c2a2`) | if the player has been walking into the same direction for `>= $1e` frames, raise an interact request itself |
+| 4 | auto-interact arming (`$c2a2`) | if the player has been walking into the same direction for at least 30 frames, raise an interact request itself |
 | 5 | `wStoryModeInteractRequest` (`$c2a4`) | `FindActorFacingPlayer` → `RunNpcInteraction`; if no script ran, `GetFacingTileInteractionId` → `RunFacingTileScript`; if still nothing, `GetTileTriggerAtPlayer` → `RunTileTriggerScript` |
 | 6 | debug menu | if `hDebugStepMode` is nonzero and the interact was not auto-fired, `RunDebugMenu` |
 
@@ -129,7 +130,7 @@ sustained push against that obstacle into an interact request, recording
 Player input is read in `UpdatePlayerControl` (`$04:$516b`): A raises
 `wStoryModeInteractRequest` **and** probes the tile under the player
 (`CheckTileTriggerAtPoint`), Start raises `wStoryModeMenuRequest`, holding B sets
-`FLAG_PLAYER_RUNNING` (which selects walk speed `$0040` instead of `$0020`), and
+`FLAG_PLAYER_RUNNING` (which selects walk speed 2.0 pixels per frame instead of 1.0), and
 the D-pad direction becomes `wPlayerMoveAngle` via `DpadMaskToAngleTable_04`.
 
 ## Location data
@@ -165,7 +166,7 @@ The location name popup is not stored in the record: `LoadStoryLocationHeader`
 computes text id `$0179 + location` (`$0a:$5142`) into
 `wStoryModeLocationNameTextId`, and sets `wStoryModeShowLocationName` from
 `wStoryModeEntryPoint != $ff` — arriving through a door names the room, coming
-back from a menu screen does not. The ids `$00`-`$04` are developer/test locations.
+back from a menu screen does not. The ids `$01`-`$04` are developer/test locations.
 
 ### The `map_tree`
 
@@ -310,14 +311,15 @@ Court slots in all three of its lists. Or it can hold whoever plays that
 part: the Island Open's slot `$0a` is this round's opponent, Spike in one
 round and A. Coz in another. These get *role* names,
 `ACTOR_ROLE_<location>_<role>`, declared with the lists they hold for in
-`include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`). Ten
-roles cover 48 operands and 7 `NpcScripts` ids.
+`include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`). Eleven
+roles cover 49 operands and 7 `NpcScripts` ids.
 
-In all, 4,781 script operands and 436 `NpcScripts` ids have row names, and
-105 and 17 stay numbers. These are:
+In all, the sites `tools/actorslots.py` reaches carry 5,124 slot names
+(row and role names, script operands and `NpcScripts` ids), and 22 keep a
+number; code it never reaches keeps more. These are:
 * slots with no single part: a trophy in one list and an exclamation
-  balloon in another, the Coz twins waiting while the Island Open's pairs
-  change;
+  balloon in another, the Coz twins in most Island Open rounds but Sean or
+  Elden in the final;
 * slots past the end of every candidate list (actors spawned by script);
 * the lines inside shared twin files;
 * tables of locations the player never controls.
@@ -405,7 +407,7 @@ speaker/actor id in `a`:
 registers `ToggleCutsceneFastForward`, so Start-to-fast-forward a cutscene is a
 debug-build feature. `EndCutsceneScriptMode` re-attaches the follower
 (`AttachActorWaypointFollower` with slot 1 following slot 0) and copies the
-player actor's facing back into `wPlayerMoveAngle`.
+player actor's heading (`+$14`) back into `wPlayerMoveAngle`.
 
 The speaker id for an NPC handler is the *actor slot index* that
 `FindActorFacingPlayer` returned, which is also the record's `id` field — the
@@ -442,15 +444,15 @@ this order:
 
 Only four bytes of the scene config are ever read: `+2..+5` become
 `wMapScrollMinX`, `wMapScrollMinY`, `wMapWidthTiles`, `wMapHeightTiles`
-(`$0a:$5912`). The fixed `$88`-byte copy over-reads the config blob (the carved
-blobs are 27-42 bytes), which is harmless.
+(`$0a:$5912`). The fixed `$88`-byte copy over-reads the config blob (the story
+scenes' blobs are 9-42 bytes), which is harmless.
 
 ### The two 32x32 maps
 
 `GetCollisionMapCellAddr` (`$0a:$5edd`) and `GetBehaviorMapCellAddr` (`$0a:$5f31`)
 take `d` = X high byte, `e` = Y high byte and compute
 `base + (Y & ~1) * 16 + (X >> 1)` — i.e. a 32x32 byte grid whose cells are two
-map units on a side, with a 32-byte row stride. Collision base is `$d000`,
+tiles on a side, with a 32-byte row stride. Collision base is `$d000`,
 behaviour base `$d400`, both in WRAM bank `$06`.
 
 **Collision** is read by `IsTerrainBlockedAtPoint` (`$04:$534b`), and only the
@@ -472,11 +474,12 @@ movement too.
 `TileTriggers` table before reporting it, so a behaviour cell with no matching
 record is silently inert.
 
-The maps are not purely static: location init scripts patch them. `bank $13`'s
-dorm-room variant setup, for example, block-copies a rect of both maps with
+The maps are not purely static: location init scripts patch them. In bank
+`$13`, `SetupDormRoomSceneVariant` block-copies a rect of both maps with
 `CopyCollisionMapRect` / `CopyBehaviorMapRect` (`$0a:$5f90`/`$5fd6`, which copy
-*within* the map, not from ROM) and then rewrites individual cells with
-`WriteBehaviorMapCell` (called from `$13:$5092` onwards) to open or close a door.
+*within* the map, not from ROM), and `SetDormRoomEventTriggerCells_13` writes
+or clears nine step-on trigger cells (id `$0f`) with `WriteBehaviorMapCell`
+(called from `$13:$5092` onwards), depending on story progress.
 
 ### Camera and scroll
 
@@ -493,7 +496,7 @@ whole tiles. `InitSceneScroll` / `UpdateSceneScroll` / `CopySceneTilemapRect`
 Overworld NPCs are actors: a `map_actor` record gives them a position, sprite and
 actor script, and an `NpcScripts` record keyed on their actor slot gives them
 something to say. The handler is usually a tiny same-bank routine that indexes a
-per-NPC `records:2` text-id table with `wMapSceneStage` (`$c2b0`) and then calls
+per-NPC table of text-id words with `wMapSceneStage` (`$c2b0`) and then calls
 `script_speak`. `wMapSceneStage` is *not* a global chapter counter: each
 location's init script derives it from the save flags
 (`SetupCenterCourtSceneVariant`, `InitTournamentSiteSceneVariant`,
@@ -513,9 +516,9 @@ Dialogue itself belongs to bank `$05`. `ShowSpeakerDialogue` (`$05:$581f`) takes
 the text id in `hl` and the speaker actor in `a`, resets the three text-argument
 queues, applies `wMessageSpeed`, picks a voice, and opens a bubble over that
 actor. The only interpreter involved is the text control-code engine at
-`$05:$4e5d`. The location-name popup reuses the same path
-(`ShowLocationNamePopup`, `$0a:$52f5`, speaker `$83`, auto-closing after `$50`
-frames or on any input).
+`$05:$4e5d`. The location-name popup goes through the same engine
+(`ShowLocationNamePopup`, `$0a:$52f5`, calling `ShowSpeakerDialogueRestoreBG`
+with speaker `$83`, auto-closing after 80 frames or on any input).
 
 **There is no story bytecode VM.** Story flow is native code: hand-written
 routines in the location banks, with the `script_*` macros collapsing the fixed
@@ -569,7 +572,7 @@ different, developer-facing thing — see below.
 | --- | --- | --- |
 | where | WRAM `$c9c0`-`$c9df` (32 bytes), inside the saved story-slot image | SRAM `$a040`-`$a05f` |
 | scope | per story slot | global, all slots |
-| accessors | `rst $20/$28/$30` → `SetGameFlagCmd`/`ClearGameFlagCmd`/`TestGameFlagCmd` (`$00:$255e`/`$256b`/`$2551`, inline operand) over `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
+| accessors | `rst $20/$28/$30` → `SetGameFlagCmd`/`ClearGameFlagCmd`/`TestGameFlagCmd` (`$00:$255e`/`$256b`/`$2551`, inline operand) over `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$2509`/`$2523`/`$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
 | names | 137 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants.inc` |
 
 Both use the same id encoding. A flag number is `byte * 8 + bit`; the inline
@@ -611,7 +614,7 @@ progression flag exists in both flavours. The ladder is:
    `FLAG_CLEARED_*`.
 3. The Island Open, staged from Tournament Courtyard (21) through Court #1/#2
    (22/23), Center Court (24) and Tournament (25) —
-   `FLAG_WON_ISLAND_OPEN_*_{ROUND_1,ROUND_2,SEMIFINAL,FINAL}`, with
+   `FLAG_WON_ISLAND_OPEN_*_{ROUND_1,ROUND_2,SEMIFINAL,FINAL}` (`ROUND_2` singles only), with
    `FLAG_ISLAND_OPEN_IN_PROGRESS` marking the bracket as live.
 4. Awards Ceremony (26) and the Island Sky departure scene (27), where
    `FLAG_STORY_COMPLETE_*` is set (`$14:$7117`/`$7121`).
@@ -629,8 +632,10 @@ actor list and `NpcScripts` table with `LoadIslandOpenRoundNpcs`
 
 Win flags are **not** written by any shared match-end routine. Each court's own
 post-match cutscene script checks `wMatchExitRequest` and `wMatchWinLoseFlag` and
-then sets the specific flag — e.g. `JuniorClassCourtDoublesMatchReturn`
-(`$11:$5d38`) dispatches on `wCurrentMinigameStoryMatch + 1` (`$11:$5daa`) to
+then sets the specific flag — e.g. on a win `JuniorClassCourtDoublesMatchReturn`
+(`$11:$5d38`) reloads the court at entry `$0d`, and
+`JuniorClassCourtDoublesEntry0dScene` dispatches on the match id's low byte,
+`wCurrentMinigameStoryMatch + 1` (`$11:$5daa`), to
 `set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`src/story/doubles_11.asm`
 lines 41, 84, 126). The arcade-minigame clears go the other way, through the SRAM
 space: `SetMinigameClearFlag` (`$1e:$6edc`) indexes `MinigameClearFlagTable_1e`
@@ -649,8 +654,8 @@ them by name.
 `SinglesMatchSettingsTable_0a` (`$0a:$4ab2`) or `DoublesMatchSettingsTable_0a`
 (`$0a:$4b2f`) by `low byte * 5` and unpacks a 5-byte record: `wGameMode`,
 `wMatchOpponentChar`, `wCurrentlyUsedCourt`, a packed sets/games byte, and
-`wMatchBGM`. `FLAG_DEBUG_KEEP_MATCH_SETTINGS` diverts the sets/games and BGM
-reads. Both tables are 125 bytes / 25 records.
+`wMatchBGM`. `FLAG_DEBUG_KEEP_MATCH_SETTINGS` skips the sets/games byte and
+uses one set of two games instead. Both tables are 125 bytes / 25 records.
 
 `RunStoryMatch` (`$0a:$4962`) then fades out, calls
 `AssignStoryMatchCharacters` (`$0a:$49aa`) and `RunMatch`; on return, a
@@ -693,7 +698,7 @@ The record is `$40` bytes and the same layout is used in four places:
 | base | what |
 | --- | --- |
 | `$c900` / `$c940` | the live story main character / partner — `GetPlayerRecordPtr` (`$02:$4206`) returns `$c900` for selector 0 and `$c940` otherwise |
-| `$c800` / `$c840` | a mirror of the above pair, kept in step by a 128-byte copy and its own `RecomputeCharacterStats` call (`$02:$4795`-`$47c2`); this is the front of the saved slot image |
+| `$c800` / `$c840` | a mirror of the above pair, kept in step by a 128-byte copy and its own `RecomputeCharacterStats` call (`$02:$4795`-`$47c2`), after an Iron racket or Iron shoes are dropped from the mirror's `+$3c`; this is the front of the saved slot image |
 | `$ca00` + slot*`$40` | the four on-court match characters — `GetCa00RecordPtr` (`$02:$420e`) |
 | `StoryCharacterRecords_02` | the ROM attribute database, 29 bytes per character id, copied into a record at `+$0f`-`+$2b` |
 
@@ -861,15 +866,16 @@ Recorded here because a future reader will otherwise re-derive them.
 * **A terrain check in `UpdatePlayerControl` can never fire.** At `$04:$5215`
   the code farcalls `ReadCollisionMapCell` and then executes `ld a, $00` before
   `and $0f` / `cp $0b`, so the returned nibble is discarded and the
-  `$0b` branch (which would set walk speed `$0010` and probe range 2) is
-  unreachable. The other two speeds (`$0040` running, `$0020` normal) work.
+  `$0b` branch (which would set walk speed 0.5 pixels per frame and probe
+  range 2) is unreachable. The other two speeds (2.0 running, 1.0 normal) work.
 * **A duplicate of `EvalFlagCondition`** sits at `$0a:$53a2`, between
   `GetTileTriggerAtPlayer`'s `ret` and `FacingMaskTable_0a`, labelled
   `UnusedEvalFlagCondition_0a`. The live copy that `FindStoryScriptEntry`
   farcalls is `$04:$4c49`; nothing calls the bank-`$0a` copy.
 * **The clear-status flag writers.**
   `SetTrainingCourtClearFlags` (`$0a:$4da9`)
-  clears the 28 `FLAG_CLEARED_*` drill flags from byte `$18` and re-sets the
+  clears 28 flags from byte `$18` (every `FLAG_CLEARED_*` but the two
+  `_EXPERT` ones) and re-sets the
   level-1 or level-1+2 subset from `TrainingCourtLevel1/2ClearFlags_0a`.
   `SetSinglesRankingClearFlags` (`$0a:$4e0e`)
   clears the nine singles `FLAG_WON_*_SINGLES_RANK_*` flags and sets as many
@@ -929,8 +935,8 @@ Recorded here because a future reader will otherwise re-derive them.
   `JuniorClassCourtDoublesFacingScripts_11` and `…TileTriggers_11` is a `ret`
   opcode: a one-byte empty script left after each list, which nothing in the
   bank points at (a search of every word in bank `$11` finds no reference).
-  They are carved as `Unused_11_NullScriptA`-`C`, and the lists are the
-  terminator alone. `FireworkMapActors_14` (`$14:$6675`) and the bank `$1a`
+  They are carved as `Unused_11_NullScriptA`-`C`, so each list ends at its
+  `$ff`. `FireworkMapActors_14` (`$14:$6675`) and the bank `$1a`
   table that shares the shape each carry one `$00` past `map_actor_end`; the
   byte before a 2 KiB tile blob is padding, and is rendered as the `db $00`
   it is.

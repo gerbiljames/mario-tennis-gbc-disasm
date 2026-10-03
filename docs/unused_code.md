@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-873 labels carry an `Unused` prefix: 773 routines and 100 data blobs. "Unused" is a proof, not a guess:
+882 labels carry an `Unused` prefix: 779 routines and 103 data blobs. "Unused" is a proof, not a guess:
 nothing reachable from the game's entry points -- the reset vector, the
 interrupt vectors and the `rst` vectors -- reaches the label, by call, jump,
 branch, pointer table, macro body, fall-through or farcall. A `farptr` row
@@ -226,7 +226,7 @@ nothing loads) are the largest bodies with no live twin at all.
 `UnusedDrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
-**8. Data that came along.** The 100 unused blobs are mostly two things:
+**8. Data that came along.** The 103 unused blobs are mostly two things:
 bank `$0c`, an entire sound bank of 36 channel scripts that the sound-id
 tables never index (`docs/sound_engine.md`), and the Japanese font and
 window tiles in bank `$01` (`UnusedJpFontTiles_01`, 3,136 bytes, and
@@ -240,7 +240,7 @@ window tiles in bank `$01` (`UnusedJpFontTiles_01`, 3,136 bytes, and
 | `$1a` | 73 | minigame pause menu, EXP screen and editor, character viewer |
 | `$00` | 59 | ROM0 library spares |
 | `$05` | 52 | text engine spares |
-| `$18` | 43 | confirm and two-option screens, box and number drawers |
+| `$18` | 44 | confirm and two-option screens, box and number drawers |
 | `$10` | 36 | Test 2 NPC templates, story helpers |
 | `$03` | 30 | the save editor and its block helpers |
 
