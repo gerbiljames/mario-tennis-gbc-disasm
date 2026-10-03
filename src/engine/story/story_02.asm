@@ -73,7 +73,7 @@ InitCa00RecordFromCharId:
 	ld h, d ; $40ab
 	ld l, e ; $40ac
 	pop de ; $40ad
-	ld hl, $002f ; $40ae
+	ld hl, CHARREC_BUILD_KIND ; $40ae
 	add hl, de ; $40b1
 	ld [hl], $03 ; $40b2
 	ret ; $40b4
@@ -143,7 +143,7 @@ InitCa00RecordFromCharId:
 	pop af ; $410f
 	bit 6, a ; $4110
 	ret z ; $4112
-	ld hl, $002f ; $4113
+	ld hl, CHARREC_BUILD_KIND ; $4113
 	add hl, de ; $4116
 	ld [hl], $02 ; $4117
 	push_wram_bank WRAM_SCENE ; $4119

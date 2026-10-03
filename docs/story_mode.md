@@ -928,7 +928,8 @@ Recorded here because a future reader will otherwise re-derive them.
   exhibition unlock for finishing *everything* in story mode, singles and
   doubles, and it is granted on the match that completes the set.
 * **Record fields `+$2f` and `+$3d`-`+$3f` are dead stores.** `+$2f`
-  is written `$00`/`$02`/`$03` by the three record-init paths and nothing
+  is written `$03` or `$02` by `InitCa00RecordFromCharId` (and `$00` by an
+  unreachable loader) and nothing
   reads it; `+$3d`-`+$3f` are neither written by the game nor read. Listed
   under dead stores in `docs/bugs.md`. `+$2b`, once counted with them, is the
   speed bonus: a runtime poison of the story record's copy changed the match

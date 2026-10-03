@@ -26,7 +26,7 @@ Unused_02_LoadMainCharacterFromRoster:
 	ld hl, $000c ; $445c
 	add hl, de ; $445f
 	ld [hl], a ; $4460
-	ld hl, $002f ; $4461
+	ld hl, CHARREC_BUILD_KIND ; $4461
 	add hl, de ; $4464
 	ld [hl], $00 ; $4465
 	ld hl, $000b ; $4467

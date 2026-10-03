@@ -389,18 +389,18 @@ CourtyardInitScript_13:
 	call SetupVarsityCourtSceneVariant ; $6189
 	ld a, [wStoryModeEntryPoint] ; $618c
 	cp $0f ; $618f
-	jr nz, .doubles ; $6191
+	jr nz, .notTour ; $6191
 	jp VarsityCourtTourCutscene ; $6193
-.doubles:
+.notTour:
 	cp $0d ; $6196
-	jr nz, .placeActors ; $6198
+	jr nz, .notBracket ; $6198
 	call RunTravelingTeamBracketIfWon_13 ; $619a
 	ret ; $619d
-.placeActors:
+.notBracket:
 	cp $0e ; $619e
-	jr nz, .done ; $61a0
+	jr nz, .walkIn ; $61a0
 	jp RunTravelingTeamVictoryCutscene_13 ; $61a2
-.done:
+.walkIn:
 	call CourtyardEntryWalkIn_13 ; $61a5
 	ret ; $61a8
 SetupVarsityCourtSceneVariant:

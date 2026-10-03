@@ -3531,7 +3531,7 @@ wWindowFitTable:: ds 16
 wWindowId:: db
 ; [8-bit] Window struct index the glyph stream is rendering into, set by RedrawWindowText / Unused_05_RenderWindowTextToCompletion. InitGlyphStreamForWindow, Unused_05_DrawWindowGlyphRun, FlushGlyphRow and UploadLastGlyphTiles all resolve the window through it
 wGlyphWindowId:: db
-; [8-bit] While nonzero the glyph buffer survives: PrepareGlyphBuffer only calls ClearGlyphBuffer and ResetGlyphStream when it reads 0, and Unused_05_DrawTileAttrRect decrements it as it tears a window down. No site in bank $05 ever increments it, so whatever raises the count does so from another engine's variant of this byte.
+; [8-bit] While nonzero the glyph buffer survives: PrepareGlyphBuffer only calls ClearGlyphBuffer and ResetGlyphStream when it reads 0, and Unused_05_CloseMenuWindow, which nothing calls, decrements it. Nothing in the ROM increments it, so it stays 0 and the keep branch never runs (docs/bugs.md).
 wGlyphBufferHoldCount:: db
 	ds 1
 ; [8-bit] Window struct index of the dialogue window currently on screen, stored by CreateDialogueWindow. RedrawActiveTextWindow, RenderActiveWindowText, CloseActiveDialogueWindow and the speaker-dialogue helpers all address the window through it

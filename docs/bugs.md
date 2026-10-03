@@ -36,13 +36,13 @@ three components, then averages them:
 
 ```
         ld a, e / and $1f            ; red
-        ld [$d000], a
+        ld [wDecompBuffer], a
         ...                          ; green
-        ld [$d001], a
+        ld [wDecompBuffer + 1], a
         ld a, d / and $7c / rrca / rrca   ; blue
         ld [rRAMG + 2], a            ; <- should be [$d002]
-        ld a, [$d000]
-        ld hl, $d001
+        ld a, [wDecompBuffer]
+        ld hl, wDecompBuffer + 1
         add [hl]
         inc hl                       ; -> $d002
         add [hl]
@@ -59,7 +59,7 @@ is the MBC5 cartridge-RAM gate, so the write sets the gate to the blue value's
 low nibble (usually disabling SRAM, since only `$xa` enables it). Nothing breaks
 because the save engine in bank `$03` always re-enables SRAM before touching it.
 
-Recorded earlier in the 2026-07-17 bank `$00` naming pass (`docs/history.md`),
+Recorded earlier in the 2026-07-17 naming pass (round 4) (`docs/history.md`),
 which called the write a no-op; it is a RAM-gate write whose *effect* is benign. It renders as
 `ld [rRAMG + 2], a` since the MBC registers were named, which makes it visibly
 wrong rather than looking like an ordinary store to a low address.
@@ -69,7 +69,7 @@ shifted left *twice*, landing on bits 2-3 where they overlap the three low
 bits instead of bits 3-4, so green never exceeds 15. And the "average" is
 `srl a` -- the sum halved, not divided by three -- masked to five bits, so
 restoring the blue store alone would make white (31, 31, 31) come out as
-93 / 2 = 46, masked to 14: dark grey. Run in the emulator on the shipped
+(31 + 15 + 31) / 2 = 38, masked to 6: dark grey. Run in the emulator on the shipped
 routine, white gives 23, pure red 15, pure green 7 and pure blue 0. A fix
 that holds needs all three changes: the store to `$d002`, a third `rlca` for
 green, and a weighting that cannot overflow -- `(r + 2g + b) / 4`, green
@@ -93,7 +93,7 @@ full wipe and re-init, and the mirror it just restored is discarded. See
 `docs/save_format.md`.
 
 The mirror is spoiled before the check even runs. The first thing
-`InitAndRunGame` does is `ClearSaveFlag SAVEFLAG_DEBUG_TEST_MENU` (`$01:$401f`),
+`InitAndRunGame` does after `call InitSerialLink` is `ClearSaveFlag SAVEFLAG_DEBUG_TEST_MENU` (`$01:$401f`),
 ahead of `ValidateSaveRam`, and every save-flag write ends in
 `UpdateSaveHeaderChecksum` (`$03:$4866`): it recomputes the master checksum
 over whatever the bank-0 header holds and copies the header's first 64 bytes
@@ -117,7 +117,7 @@ the fixed build restores the header from the mirror and keeps every block.
 
 ### The link-error check can never fire
 
-`AdvanceFrame` (ROM0, `$2635`) guards every frame with:
+`AdvanceFrame` (ROM0, `$2631`) guards every frame with:
 
 ```
         ldh a, [hLinkCounter]
@@ -178,7 +178,7 @@ jumps and both `cpl` / `inc a` pairs are unreachable. The pairs are a
 two's-complement negation, and the surrounding code is unambiguous about what
 they were for: both consumers read the offsets as *signed* bytes.
 `ComputeSpriteScrollOffset` (`$04:$4a2d`, `$4a61`) sign-extends each one with
-`bit 7, l` / `ld h, $ff`, and `$0a:$59b2` adds them to `hScrollX`/`hScrollY`.
+`bit 7, l` / `ld h, $ff`, and `UpdateSceneScroll` (`$0a:$59c0`, `$59d5`) adds them to `hScrollY`/`hScrollX`.
 
 So the offsets are always `0..mask` and never negative: the shake displaces the
 view in one direction only, by 0-1, 0-3 or 0-7 pixels for magnitude 1, 2 or 3,
@@ -202,8 +202,8 @@ under the player first:
 
 ```
 .checkBlocked:
-        ld hl, $000d / add hl, bc / ld d, [hl]
-        ld hl, $000f / add hl, bc / ld e, [hl]
+        ld hl, ACTORF_X + 1 / add hl, bc / ld d, [hl]
+        ld hl, ACTORF_Y + 1 / add hl, bc / ld e, [hl]
         farcall ReadCollisionMapCell
         ld a, $00                ; <- discards the returned cell
         and $0f
@@ -286,8 +286,8 @@ then does this as its fourth chunk:
 
 `MenuFontPalettes_01` is a palette — `LoadMenuFontPalette` hands the same label
 to `LoadPaletteShadow`. Copying `$20` tiles from it puts 64 bytes of palette
-data followed by 448 bytes of the routines at `$5050`-`$520f` (including
-`LoadMenuTilesBStaged` itself) into VRAM at `$8e00`-`$8fff`, i.e. tiles `$f0`-`$ff`
+data followed by 448 bytes of what follows at `$5050`-`$520f` (the bank's loaders, `DebugMenuPalettes_01` at `$50f6`, the start of `UnusedJpWindowTiles_01` at `$51b0`, and including
+`LoadMenuTilesBStaged` itself) into VRAM at `$8e00`-`$8fff`, i.e. tiles `$e0`-`$ff`
 of the `$8800` block.
 
 The staged path also never uploads `MenuFontFillTiles_01` at all, so
@@ -312,7 +312,7 @@ outside the bank, into cartridge RAM at `$a788`-`$b692`. Bank `$26`'s strings
 0-14 are never shown.
 
 The drills reach them. `QueueDrillResultMessage` and `SetDrillMessageByServer`
-add an offset in `b` to the id when the other side served, and Stroke Match 2
+add an offset in `b` to the id depending on who served (`QueueDrillResultMessage` when `wCurrentServingPlayer` is nonzero, `SetDrillMessageByServer` when it is zero), and Stroke Match 2
 passes `b = 13` with ids 61-70 (`StrokeMatch2Cases2`, `$0b:$6892`, passes
 64, for one). Played in PyBoy, random rallies in Stroke Match 2 showed
 id 74 twice in six sessions.
@@ -324,7 +324,7 @@ id 74 twice in six sessions.
 `ShowDmgLockoutScreen` (`$01:$6030`) decompresses `DmgLockoutTilemapLZ_01`,
 576 bytes (18 rows of 32), then copies `TILEMAP_AREA` (1024 bytes) from the
 buffer to `vBGMap0`. Rows 18-31 of the map get the 448 bytes that follow in
-`wDecompBuffer`, which still hold the start of the lockout's decompressed
+`wDecompBuffer`, which still hold bytes `$240`-`$3ff` of the lockout's decompressed
 tiles. Nothing shows them: the routine ends in an endless `AdvanceFrame`
 loop without touching the scroll, so only rows 0-17 are ever on screen.
 
@@ -334,7 +334,7 @@ The ROM text fetchers stop at the size of the buffer they fill: dialogue at
 `wTextBuffer_SIZE` (160 bytes), short text at `wShortTextBuffer_SIZE` (16).
 `FetchSRAMText` (`$05:$6d3b`), which fetches the player-entered strings for
 text ids with bit 15 set, copies a fixed length with `CopyMemoryBC` instead:
-`$180` bytes into `wTextBuffer` and `$20` into `wShortTextBuffer`, three and
+`$180` bytes into `wTextBuffer` and `$20` into `wShortTextBuffer`, 2.4 and
 two times what they hold.
 
 The dialogue copy runs in play (`FetchDialogueTextFromSram`) and overwrites
@@ -402,7 +402,7 @@ no guard of any kind:
         push de
         push af
         ld a, a                  ; no-op
-        ld de, $0e0e
+        ld_cell de, $0e, $0e
         call PrintHexByte
         pop af
         pop de
@@ -410,7 +410,7 @@ no guard of any kind:
 
 `PrintHexByte` formats the byte and `PrintString` writes it into
 `wDebugTextBuffer` at row 14, column 14, then sets `hDebugTextDirty`. Debug
-instrumentation that shipped in the cartridge: five call sites reach it,
+instrumentation that shipped in the cartridge: four call sites reach it,
 including `$04:$5145` on the overworld movement path, so every behaviour-map
 lookup pays a hex format plus a string print.
 
@@ -429,7 +429,7 @@ and continuing the current one:
         ld a, [wGlyphBufferHoldCount]
         or a
         jr nz, .keepBuffer
-        wram_bank $07
+        wram_bank WRAM_SOUND
         call ClearGlyphBuffer
         call ResetGlyphStream
         jr .done
@@ -445,10 +445,10 @@ Nothing in the ROM refers to `Unused_05_CloseMenuWindow` -- no call, no
 
 So the count is whatever `ResetTextWindowState`'s block clear left, i.e. 0,
 forever; `PrepareGlyphBuffer` always clears and resets, and `.keepBuffer` is
-dead. This answers the open question in `docs/screens_and_ui.md` about what
+dead. This is the answer `docs/screens_and_ui.md` links to for what
 raises the hold count: nothing does, and the routine that would have consumed it
 is not called either. `wShadowTilemapReadOffset` (`$dc76`) is the same shape with
-the halves reversed — `Unused_05_RefreshShadowTilemapFromMapBuffer` (`$05:$44ba`) adds it
+the halves reversed — `Unused_05_RefreshShadowTilemapFromMapBuffer` (`$05:$44a3`) adds it
 to the shadow-tilemap pointer and no instruction in the ROM writes it, so it is
 always 0.
 
@@ -483,19 +483,20 @@ duplicate check (`ld bc, $0010` at `$1b80`), and then twenty-two for the insert:
 
 With all sixteen slots occupied the loop keeps going into `$c200`, which is
 `wMasterPalettes` — the master BG+OBJ palette copy that every fade scales into
-`wBGPalettes`/`wOBJPalettes`. The seventeenth registration writes its record over
-the first two colours of BG palette 0, the eighteenth over the next two, and so
-on for six records (24 bytes, BG palettes 0-2). The task itself never runs, since
+`wBGPalettes`/`wOBJPalettes`. The free-slot test is `Check3BytesZero` on bytes 1-3 of each record, so past
+the end a registration lands in the first of six palette "records" (24 bytes,
+BG palettes 0-2) whose bytes 1-3 happen to be zero -- a black colour -- and
+overwrites it; where there is none, the task is dropped. The task itself never runs, since
 the runner stops at sixteen, and `UnregisterFrameTask` cannot remove it either.
 
 The trailing `ld a, b` / `or a` / `jr nz, .done` is the fossil that leads here:
 it is a copy of the duplicate-check idiom at `$1b96`, but `b` is 0 on every path
-that reaches it, and the target is the next instruction, so it is two dead bytes
+that reaches it, and the target is the next instruction, so it is four dead bytes
 where the table-full handler was. Both halves of the overflow story are missing —
 the bound is wrong and there is nothing to run when the bound is hit.
 
 It is latent in practice. The heaviest user found is bank `$17`'s drill
-briefings (`DrillBriefing_SpinServe`, `$17:$5817`), which register five or six
+briefings (`DrillBriefing_SpinServe`, `$17:$5817`), which register five to seven
 tasks per page and call `ClearFrameTasks` between pages, and the duplicate check
 stops a routine being registered twice, so no path found here gets near sixteen
 live tasks.
@@ -524,8 +525,8 @@ straight to `.haveAddr` with `hl = wActors`). It is never zero, so the routine
 always returns NZ.
 
 `inc h` / `dec h` / `ret z` is a house idiom in this bank, but everywhere else it
-is the *first* thing a routine does, guarding an `hl` handed in by the caller:
-`CheckActorScriptEnd` (`$0a:$438a`), `IsActorBusy` (`$0a:$476c`) and the
+guards an `hl` the caller handed in:
+`CheckActorScriptEnd` (`$0a:$438a`), `IsActorBusy` (`$0a:$476c`, after an `xor a`) and
 `UnusedSetActorMoveTarget` (`$0a:$4750`) all open with it. `CheckActorScriptEnd` is the
 control: it opens with the guard, and its answer is a `cp $00` at the end that
 only a `pop de` stands between and the `ret`, so it reaches its caller intact.
@@ -556,7 +557,7 @@ and then picks a modifier:
 
 ```
         ld a, [wCharFlags]
-        bit 1, a
+        bit CHARB_DIVING, a
         jr z, .checkState
         ...                      ; de = reach * 1.25
         jr .checkX
@@ -675,26 +676,33 @@ singles states included, and showed the lines.
 
 `GetCollisionMapCellAddr` (`$0a:$5edd`) and `GetBehaviorMapCellAddr`
 (`$0a:$5f31`) turn a tile position (`d` = x, `e` = y, the high bytes of an
-actor's coordinates) into an address in the 32 × 64-tile `wCollisionMap` /
+actor's coordinates) into an address in the 32 × 32-cell `wCollisionMap` /
 `wBehaviorMap` without clamping it. An actor off the map, which the Test map's
 open star field allows by simply walking off its top edge, indexes far past the
-`$400`-byte maps into echo RAM. Echo RAM mirrors bank-0 WRAM: the stack and
-stored ROM pointers. Collision and tile triggers there are whatever those bytes
+`$400`-byte maps: an offset of up to `$10df` puts `wBehaviorMap` reads in echo
+RAM up to `$e4df`, a mirror of bank-0 WRAM `$c000`-`$c4df` (`wFrameTasks`'
+stored ROM pointers among it), and `wCollisionMap` reads mostly in the top of
+WRAM bank `$06`. Collision and tile triggers there are whatever those bytes
 say, so one layout lets the player wander on and another fires an exit.
 
-### Courtyard entries past 6 read their walk-in direction from code
+### Courtyard entry `$0a` reads its walk-in direction from code
 
 `CourtyardEntryWalkIn_13` (`$13:$62ff`) walks the player (and the partner in
 doubles) in from the entry point using `CourtyardEntryWalkInFacings_13[entry -
-1]`, a six-byte table. The Courtyard also has entry points `$0a`, `$0d`, `$0e`
-and `$0f`, which index bytes 9, 12, 13 and 14: instruction bytes of
-`VarsityCourtTourCutscene` after the table. Entry `$0a` takes the low byte of
+1]` (the partner's walk uses `[entry + 2]`), a six-byte table of two
+three-entry halves for entries 1-3. `CourtyardEntryPoints_13` also lists `$0a`,
+`$0d`, `$0e` and `$0f`, but `CourtyardInitScript_13` sends `$0d`, `$0e` and
+`$0f` to their own scenes first, so only `$0a` gets here. It indexes byte 9
+(byte 12 for the partner): instruction bytes of `VarsityCourtTourCutscene`
+after the table. Entry `$0a` takes the low byte of
 `ld hl, VarsityCourtTourActors_13` as its angle, so the walk-in direction on that
 entry depends on where that label happens to sit.
 
 ## Dead stores
 
-Values written and never read. None of these change behaviour; they are listed
+Values written and never read, and one table written past its end (the menu
+stack, the only entry here that can change behaviour, and only when menus
+nest deeper than play ever does). The rest change nothing; they are listed
 because each one is a loose end that a future reader will otherwise re-derive,
 and because the class is worth watching — the grayscale bug above is a dead
 store with a missing counterpart.
@@ -714,10 +722,11 @@ seventh menu leaves the stack as it was and at worst unwinds one level early.
 
 ### Story character record `+$2f`
 
-The three record-init paths (`InitCa00RecordFromCharId` and the story
-main/partner initialisers, `docs/story_mode.md`) each write a constant into
-byte `+$2f` of the `$40`-byte character record — `$00`, `$02` or `$03`
-depending on which path built the record. No code reads `+$2f` (nor
+Three writes put a constant into byte `+$2f` of the `$40`-byte character
+record: `InitCa00RecordFromCharId` writes `$03` on its main-character path
+(`$02:$40b2`) and `$02` on its roster path when bit 6 of the id is set
+(`$4117`), and the unreachable `Unused_02_LoadMainCharacterFromRoster` writes
+`$00` (`$4465`). No code reads `+$2f` (nor
 `+$3d`-`+$3f`) in any bank, and poisoning it in a runtime audit changed
 nothing; the field is a record-type tag that nothing consults (`CHARREC_BUILD_KIND`).
 `+$2b`, once listed here too, is live: `InitCa00RecordFromCharId` copies it
@@ -731,7 +740,7 @@ to pick the shot-placement row (`CHARREC_SPEED_BONUS`).
 | `wUnusedExitTriggerIdMirror` | story engine | write-only mirror of `wStoryModeExitTriggerRequest` |
 | `wCharObjectDefId` | bank `$04` | the object-def id `SetupCharSpriteFromObjectDef` was handed |
 | `hUnusedLinkByte`, `hUnusedLinkSlot` | serial init | cleared by both link init routines, read by nothing |
-| `hLinkLastRxMirror` | bank `$07` | written beside `hLinkLastRxByte`, never compared |
+| `hLinkLastRxMirror` | serial init, bank `$07` | written beside `hLinkLastRxByte`, never compared |
 | `hUnusedLinkSelectByte` | bank `$38` | written twice by `RunLinkCharSelectScreen` |
 | `wCharSwingHoldFrames` | bank `$08` | `CheckSwingRelease` increments it once per windup frame (`ld hl, wCharSwingHoldFrames` / `inc [hl]`) and zeroes it on release; no site reads the count, so the charge mechanic it fed is gone |
 | `wCharSwingHoldButton` | bank `$08` | written on three paths beside the frame count, consumed on none |
@@ -816,9 +825,10 @@ copy proves the intent.
 After drawing a printable glyph, the text interpreter (`$05:$4eba`) steps the
 cell pointer in `de` and, when its column wraps to 0, computes `de - $20` to
 bring it back to the start of the row -- then `pop de` (`$4ecb`) restores the
-stepped pointer over it, so the cell runs on into the next tilemap row.
-Text rows end with explicit newlines; whether any shipped text runs a row
-as far as column 32 is not established.
+stepped pointer over it. The wrap happens anyway: before the next glyph,
+`WrapTextCellPointer` (`$05:$5413`) finds the pointer's row differs from
+`wTextCursorRow` and subtracts `$20` itself, and `TextCmdNewline` recomputes
+`de` from the row and column.
 
 ## A routine whose body is a no-op
 
@@ -885,8 +895,9 @@ edit. Nothing else in the ROM distinguishes the two.
 
 ### Leading `ret`s in front of real bodies
 
-Six more routines open with a `ret` in front of a real body. Two are drill
-judges, counted above; all six are named for the body, with the leading `ret`
+Four more routines open with a `ret` in front of a real body, and two more
+have a body with no effect. Two of the four are drill judges, counted above;
+all six are named for the body, with the leading `ret`
 recorded in the note:
 
 | routine | body |
@@ -898,7 +909,7 @@ recorded in the note:
 | `Unused_02_CheckExpAwardAllowed` | the EXP-award gate — see below |
 | `Unused_05_PagedMenuFrameTask` | a frame task whose body has no effect |
 
-The 53 labels containing `StubNop` (most of them
+The 58 routines named `StubNop` (most of them
 `Unused_<bank>_StubNop*`) have a bare `ret` for a body and keep the name,
 which for them is accurate.
 
@@ -957,9 +968,13 @@ scene's graphics entirely.
 is `Unused_0a_LoadAndDisplayScene` (`$0a:$5de2`), and that routine's four callers are
 `Unused_0a_SceneViewerSelectScene`, `UnusedSceneViewerSelectSceneMenu`,
 `Unused_0a_InitSceneViewer` and `Unused_0a_InitSceneViewerDefault` — the scene
-viewer, which hangs off `Unused_0a_RunSceneSelectDebugMenu`. Only its slot row
-(`FarPtr_Unused_0a_RunSceneSelectDebugMenu`) names that routine, and no
-`farcall` of the slot exists, so nothing reaches it, the debug menu included. No `farcall` to `Unused_0a_LoadAndDisplayScene` exists outside
+viewer. Its entries are `UnusedSceneViewerMainLoop` (which calls
+`Unused_0a_InitSceneViewerDefault` and `Unused_0a_SceneViewerSelectScene`),
+`UnusedSceneViewerSelectSceneMenu` and `Unused_0a_InitSceneViewer`. The first
+two are referenced nowhere, and the third only by its directory slot
+(`$0a:$4072`), which no `farcall` uses, so nothing reaches it.
+(`Unused_0a_RunSceneSelectDebugMenu` is a separate scene picker that calls
+`LoadStorySceneGraphics` directly.) No `farcall` to `Unused_0a_LoadAndDisplayScene` exists outside
 bank `$0a`, despite its directory slot at `$4078`.
 
 
@@ -995,9 +1010,10 @@ amount of play can prove them. They had been attributed to
 ### A confirm-screen suite in bank `$1b` that nothing can reach
 
 `$1b:$69d9`-`$6aa0` holds seven complete routines with no way in. They sit
-immediately after `Unused_1b_StubNop_1b_09` — three bare `ret`s that
+immediately after three bare `ret`s, `Unused_1b_StubNop_1b_09`,
+`Unused_1b_StubRet1` and `Unused_1b_StubRet2`, the first of which
 `Unused_1b_RunStoryDataConfirmMenu` registers as a no-op frame task (`$1b:$69b9`/`$69c5`) around
-`Unused_18_RunTwoOptionSelectB`, both unreachable as well — so the disassembler attributes the whole run to that
+`Unused_18_RunTwoOptionSelectB`, both unreachable as well — so the disassembler once attributed the whole run to that
 label, which is why they read as part of a stub.
 
 They are a working screen: `Unused_1b_ShowHighScoreConfirmScreen` sets
@@ -1024,14 +1040,16 @@ does not run.
 ### The whole developer debug harness is unreachable, and its unlock flag is never read
 
 `InitAndRunGame` (`$01:$4018`) is the retail boot routine: `SoftReset` farcalls it
-unconditionally (`$00:$262c`, followed by `stop`), and it clears every WRAM bank,
+unconditionally (`$00:$262c`, followed by `stop`), and it clears WRAM banks 1-6,
 validates and repairs SRAM, applies the unlock flags, initialises story state and
 match settings, enables the LCD, and then at `.loop` (`$40a5`) sets
 `wStoryModeCurrentLocation` to `STORYLOC_MAIN_MENU` and calls
 `RunStoryModeOverworld` — which is the entire game.
 
-Immediately after that call sits a **complete debug dispatcher** (`$01:$40ec`
-onward) that polls `hInputPressed` and launches a different subsystem per button:
+Past that call is `.loopB` (`$40b2`-`$40eb`), a small loop that prints the build
+stamp, sets `hDebugStepMode` to 3, sets the save flag on A and reruns the
+overworld on START, ending in `jp .loopB`. After it sits a **complete debug
+dispatcher** (`$01:$40ec` onward) that polls `hInputPressed` and launches a different subsystem per button:
 
 | bit | button | what it runs |
 | --- | --- | --- |
@@ -1044,21 +1062,25 @@ onward) that polls `hInputPressed` and launches a different subsystem per button
 | 4 | RIGHT | the overworld at `STORYLOC_TEST` |
 | 5 | LEFT | `Unused_1a_RunDebugCharViewer` |
 
-with a further block (`$419e`) for `ShowEquipmentStatusScreen`,
+with a further block (`$419e`), which the dispatcher itself never enters (the
+UP branch loops forever before it, and the bit-6-clear branch jumps past it to
+`$41c2`), for `ShowEquipmentStatusScreen`,
 `RunMatchStatsScreen`, `ShowLinkErrorScreen`, `ShowLinkMessageScreen`,
 `RunShoesSelectScreen`, `RunRacketSelectScreen` and the character viewer.
 
-**Nothing reaches any of it.** No instruction jumps to `$40ec`; it can only be
-entered by falling out of the `farcall RunStoryModeOverworld` above it, and that
-call never returns in normal play — the overworld loop is the game. The blocks are
+**Nothing reaches any of it.** No instruction jumps to `$40ec`, and nothing falls into it: the code above
+ends `jp .loopB` (`$40e9`). Even `.loopB` runs only if the `farcall
+RunStoryModeOverworld` at `$40af` returns, and that call never returns in normal
+play — the overworld loop is the game. The blocks are
 named `Unused_01_*` for that reason.
 
 The accompanying save flag is the visible half. `SAVEFLAG_DEBUG_TEST_MENU`
 (#63) has exactly two references in the ROM, both inside this routine: it is
 **cleared** unconditionally at boot (`$401c`) and **set** if A is held at
 `$40c6` — and no instruction anywhere tests it. So the "hold A to enable the test
-menu next boot" gesture works, stores its bit in battery-backed SRAM, and is
-read by nothing.
+menu next boot" gesture would store its bit in battery-backed SRAM, but it
+lives in `.loopB`, which runs only if `RunStoryModeOverworld` returns, and the
+bit is read by nothing.
 
 What survives is the *in-game* debug menu, which is reached by a different route
 entirely: `RunStoryLocation`'s frame loop calls `RunDebugMenu` (`$05:$66a0`)
