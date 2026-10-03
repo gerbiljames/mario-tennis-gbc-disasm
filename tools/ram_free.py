@@ -104,7 +104,7 @@ def literal_refs():
     refs = set()
     rx = re.compile(r"\$([cd][0-9a-f]{3}|ff[89a-f][0-9a-f])\b")
     for f in (ROOT / "src").rglob("*.asm"):
-        for line in open(f):
+        for line in f.read_text().splitlines(True):
             if not line.startswith("\t") or line.startswith(("\tdb", "\tdw", "\t;")):
                 continue
             for m in rx.finditer(line.split(" ; ")[0]):
