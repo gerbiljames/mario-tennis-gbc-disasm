@@ -645,7 +645,10 @@ three bytes crashes instead. Seen when the partner speaks in the awards
 ceremony (location `$1a`, entry 11).
 
 **Fix** (`make FIXES=1`): the early exit jumps to a `.restoreBank` label
-before `pop_wram_bank`, so the stack is balanced on every path.
+before `pop_wram_bank`, so the stack is balanced on every path. The event test played the
+fixed build against the original over every story state and location: the
+original took the wild return at the awards ceremony (location `$1a`, entry
+11) in 19 states, and the fixed build ran every one of them through.
 
 ### Map reads off the edge have no bounds check
 

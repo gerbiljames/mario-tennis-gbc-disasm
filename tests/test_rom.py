@@ -43,6 +43,10 @@ class Source(unittest.TestCase):
         for mac, n in (("rect_size", 198), ("rect_cell", 24), ("map_cell", 38), ("sprite_xy", 60),
                        ("sprite_attr_tile", 27), ("sprite_tile_attr", 82)):
             self.assertEqual(count(rf"^\t{mac} "), n, mac)
+        # animation delays, scene-rect copies and relative moves read as numbers
+        self.assertEqual(count(r"^\tanim_frame [^,\n]+, \$"), 0)
+        self.assertEqual(count(r"^\tscript_copy_scene_rect \$"), 0)
+        self.assertEqual(count(r"^\tas_target_rel \$"), 0)
         # frame counts are decimal
         self.assertEqual(count(r"^\t(?:wait_frames|script_wait_frames|script_delay|as_wait) \$"), 0)
         # VRAM copies of whole tilemap rows count rows
