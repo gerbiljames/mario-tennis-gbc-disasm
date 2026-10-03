@@ -180,8 +180,8 @@ because the layout is recomputed rather than restated:
   `char_record` (attributes and eleven stat bars per character,
   `src/engine/story/debug_02.asm`), `equip_stat_deltas`, `stat_thresholds`,
   `exp_threshold`, `AISHOT_*`, `cpu_difficulty`
-  (`src/engine/menus/cpu_38.asm`), `shot_preset`
-  (`src/engine/match/shot2_07.asm`), `court_scene`
+  (`src/engine/menus/char_select/cpu_params_38.asm`), `shot_preset`
+  (`src/engine/match/shot_power_07.asm`), `court_scene`
   (`src/engine/match/court_08.asm`), `match_settings` (every story and
   minigame match, `src/engine/story/match_0a.asm`), `drill_outcomes`,
   `court_positions` and `score_rule`.

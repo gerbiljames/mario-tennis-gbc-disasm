@@ -661,7 +661,7 @@ Fields (code in `src/engine/story/*_02.asm`):
 `ram/wram.asm` names `+$18` `wStoryModeMainCharacterLevel` at `$c818` but
 `wStoryMainCharExpTier` at `$c918`; for player characters the byte is a
 level, and `LookupExpTierForChar` (`$1e:$693e`,
-`src/engine/menus/exp3_1e.asm`) derives the coarse 0-6 tier from it.
+`src/engine/menus/exp/award_calc_1e.asm`) derives the coarse 0-6 tier from it.
 
 `InitCa00RecordFromCharId` (`$02:$4066`) zeroes the 64 bytes, then by
 selector: `$ff` empty (`+$0b = $ff`); `$90` the "main character" placeholder;

@@ -583,7 +583,7 @@ def handler_rows():
     index, entry, kind, table, id, facing mask, flag condition, handler)."""
     import actorslots
     from runtime_audit import targets
-    scene = (ROOT / "src" / "engine" / "story" / "scene_0a.asm").read_text()
+    scene = "\n".join(bank_lines(holders()[0x0a])[0])
     trees = re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)
     text = "\n".join("\n".join(bank_lines(h)[0]) for h in holders())
     locs = dict(targets(symbols(ROOT / "build" / "mariotennis.sym"))[5])

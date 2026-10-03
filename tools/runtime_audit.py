@@ -86,7 +86,7 @@ def targets(sym):
                 for const in re.findall(r"\b(ACTOR_\w+)", m.group(2)):
                     if const in defs:
                         named.append((bank, placed[i], const))
-    scene = (ROOT / "src" / "engine" / "story" / "scene_0a.asm").read_text()
+    scene = "\n".join(bank_lines(holders()[0x0a])[0])
     text = "\n".join("\n".join(l) for _, l in banks)
     for i, tree in enumerate(re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)):
         m = re.search(rf"^{tree}:\n(?:\t;[^\n]*\n)?\tdw (\w+) ; slot 0 EntryPoints", text, re.M)

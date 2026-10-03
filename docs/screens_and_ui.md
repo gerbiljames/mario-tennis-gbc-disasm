@@ -363,7 +363,7 @@ loaders read the slot reference through RAM.
 
 ### 4.2 Bank `$39` is the shared screen library
 
-Its `$4000` table (`src/engine/menus/slots_39.asm`, to `$407c`) indexes the
+Its `$4000` table (`src/engine/menus/common/slots_39.asm`, to `$407c`) indexes the
 framework: asset loading, tilemap rects, palettes, sprite helpers, the menu
 background scroll, animated tiles and screen reset.
 

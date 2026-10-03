@@ -374,7 +374,7 @@ def main():
     E.boot(a.rom, a.sym, a.save, state["story"])
     E.boot(a.rom, a.sym, a.save, state["menu"], menu=True)
     cost = {"target": 0, "story": 1, "free": 2}
-    scene = (ROOT / "src" / "engine" / "story" / "scene_0a.asm").read_text()
+    scene = "\n".join(bank_lines(holders()[0x0a])[0])
     trees = re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)
     locs = E.targets(E.symbols(a.sym))[5]
     handler_k = {row[7]: k for k, row in enumerate(E.handlers())}

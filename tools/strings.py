@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
-from banksrc import bank_text  # noqa: E402
+from banksrc import bank_text, holders  # noqa: E402
 
 BANK_SIZE = 0x4000
 
@@ -62,7 +62,7 @@ def dump_indexed(want_bank, min_len, pat):
             pool[label] = txt
         table = re.findall(r"\tdw TextStrings_%02x\.s(\d+) - TextStrings_%02x ; (\d+)"
                            % (bank, bank),
-                           bank_text(ROOT / "src" / f"bank_{bank:03x}.asm"))
+                           bank_text(holders()[bank]))
         for s, index in table:
             text = pool.get(int(s), "")
             if len(text) >= min_len and (pat is None or pat.search(text)):

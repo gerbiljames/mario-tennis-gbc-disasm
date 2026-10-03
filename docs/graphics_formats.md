@@ -222,7 +222,7 @@ A CGB BG cell is a **tile index** in VRAM bank 0 and an **attribute byte**
 (palette, tile VRAM bank, flips, priority) in bank 1 at the same address. The
 game keeps them as two WRAM planes and blits each separately.
 
-`CopyScrolledSceneTilemapToVram` (`$0a:$5c29`, `src/engine/story/scene2_0a.asm`):
+`CopyScrolledSceneTilemapToVram` (`$0a:$5c29`, `src/engine/story/scene_collision_0a.asm`):
 the attribute half (`$5c6b`-`$5cb6`, `rVBK = 1`) walks `wMapBuffer64` (4096
 bytes, WRAM bank `$02`) and writes 21 rows × 23 columns into `$9800`, source
 and destination wrapping independently:
@@ -265,7 +265,7 @@ the build. A trailing partial row stays literal `db`.
 
 ### 3.1 Geometry
 
-`SceneGfxSlotTable` (`$0a:$59d9`, `src/engine/story/scene_0a.asm`) is **592
+`SceneGfxSlotTable` (`$0a:$59d9`, `src/engine/story/scene_triggers_0a.asm`) is **592
 bytes = 37 records × 8 slot words** (`dslot`, §1.4). It enumerates densely:
 record 0 is bank `$5f` entries `$00`-`$0e`, record 1 `$5f` `$10`-`$1e`,
 record 2 `$60` `$00`-`$0e`, … record 36 bank `$69` `$20`-`$2e`. Banks
@@ -274,7 +274,7 @@ directly by `CopyScrolledSceneTilemapToVram`.
 
 ### 3.2 Slot roles under the story loader
 
-`LoadStorySceneGraphics` (`$0a:$585d`, `src/engine/story/scene_0a.asm`) takes
+`LoadStorySceneGraphics` (`$0a:$585d`, `src/engine/story/scene_triggers_0a.asm`) takes
 the scene id in `a`, computes `SceneGfxSlotTable + 16*a`, pushes slots 0-6
 (`$586f`-`$5891`), reads slot 7 inline, then pops in reverse:
 
@@ -323,7 +323,7 @@ cell is (`X / 2`, `Y / 2`).
 
 ### 3.4 The same slots mean something else to the court loader
 
-`LoadCourtSceneGraphics` (`$0a:$62f8`, `src/engine/story/scene4_0a.asm`) loads
+`LoadCourtSceneGraphics` (`$0a:$62f8`, `src/engine/story/scene_tileanim_0a.asm`) loads
 the court backdrops with the **same 16-byte stride**, skipping slot 0 (`$630a`)
 and slot 6 (`$6325`), pushing 1-5 and reading 7 inline:
 
@@ -349,7 +349,7 @@ eight bytes are both; changing one changes the other.
 
 ### 3.5 The stride-18 readers (a debug-path bug)
 
-`Unused_0a_LoadSceneGraphicsDirect` (`$0a:$5d2a`, `src/engine/story/scene2_0a.asm`)
+`Unused_0a_LoadSceneGraphicsDirect` (`$0a:$5d2a`, `src/engine/story/scene_collision_0a.asm`)
 indexes the table with stride **18** (`$5d31`-`$5d37`), skips 2 bytes and reads
 nine words per record; `GetSceneSlotPtr` (`$0a:$5d0b`) does it correctly with
 stride 16. `Unused_0a_InitSceneViewer` (`$0a:$601c`) and
@@ -508,7 +508,7 @@ a commented `db`:
 
 | | `AdvanceActorAnimation` | `StepCharAnimation` |
 |---|---|---|
-| addr | **`$04:$55c1`** (`src/engine/story/actor4_04.asm`) | **`$08:$7791`** (`src/engine/match/char6_08.asm`) |
+| addr | **`$04:$55c1`** (`src/engine/story/actor_queries_04.asm`) | **`$08:$7791`** (`src/engine/match/char_input_08.asm`) |
 | scope | overworld actors — struct in `bc`, WRAM bank `$04` | on-court characters — fixed `$df00` struct |
 | far read | `FarReadWord`, bank from actor `+$22` | `FarReadWordDI`, bank from `wCharObjectBank` |
 | `$fb` | **not implemented** (falls into "hold") | implemented (`$08:$77b2`) |

@@ -35,7 +35,7 @@ Companion documents: `ram/*.asm` (per-address RAM notes), `save_format.md`,
 | `$2d` | `SineTable` (`$2d:$4000`) and `CosecantTable` (`$2d:$5000`), 4 KiB each. |
 | `$28` | Match graphics loaders (`LoadMatchGraphics`, effect tiles). |
 | `$0d`, `$0b`, `$0a` | Minigame/drill drivers that reuse the engine through its mode hooks. |
-| `$04` | Not match AI. Its only match contribution is `SetupCharSpriteFromObjectDef` (`src/engine/story/actor3_04.asm`), which fills a character's sprite/animation pointers. |
+| `$04` | Not match AI. Its only match contribution is `SetupCharSpriteFromObjectDef` (`src/engine/story/actor_objdefs_04.asm`), which fills a character's sprite/animation pointers. |
 
 The engine's public API is bank `$08`'s 56-slot farptr header at `$08:$4000`
 (`src/engine/match/slots_08.asm`). Callers are the exhibition and story menus
@@ -227,7 +227,7 @@ there (`$08:$40ab`).
 
 ### The physics step
 
-`StepBallPhysics` (`$08:$5767`, `src/engine/match/ball3_08.asm`), in order:
+`StepBallPhysics` (`$08:$5767`, `src/engine/match/ball_effects_08.asm`), in order:
 
 1. clear `wBallBounceEvent`
 2. copy the position block to `wBallPrev*` (`$08:$5774`)
@@ -339,7 +339,7 @@ used.
 
 ### The chain
 
-`ExecuteShot` (`$07:$53b0`, `src/engine/match/shot2_07.asm`) is farcalled by the
+`ExecuteShot` (`$07:$53b0`, `src/engine/match/shot_power_07.asm`) is farcalled by the
 character state machine at the contact frame (`$08:$6bd1` serve, `$08:$6c91`
 rally shot).
 
