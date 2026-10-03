@@ -152,6 +152,12 @@ actor-slot name that does not hold where it is used, or a routine whose
 The full entries from 2026-08-07 to 2026-09-30, newest first, are at the
 end of `docs/history.md`. In short:
 
+* **2026-10-03 — `make FIXES=1`.** Nine shipped bugs with a known fix are
+  fixed in an opt-in build (`mariotennis-fixes.gbc`, `build-fixes/`), each
+  with its **Fix** paragraph in `docs/bugs.md`. Verified in PyBoy: a save with
+  a damaged header now survives, and the event test runs the fixed build
+  over every story state with no crash of its own. Animation delays, scene
+  rects and relative actor moves read as numbers.
 * **2026-10-03 — split pairs, behaviour, drill messages, frames.** Pairs
   loaded with two instructions are named (`rect_size`, `rect_cell`,
   `map_cell`, `sprite_xy`, `sprite_*_attr`, 357 sites); behaviour-map
