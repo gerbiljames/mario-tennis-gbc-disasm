@@ -25,3 +25,6 @@
 ; Who it is changes every round.
 	actor_role ISLAND_OPEN_OPPONENT, $0a, TournamentActors_0f, IslandOpenRound2Actors_0f, IslandOpenSemifinalActors_0f, IslandOpenFinalActors_0f, IslandOpenRound1ActorsDoubles_0f, IslandOpenSemifinalActorsDoubles_0f, IslandOpenFinalActorsDoubles_0f
 	actor_role ISLAND_OPEN_OPPONENT_PARTNER, $0b, TournamentActors_0f, IslandOpenRound2Actors_0f, IslandOpenSemifinalActors_0f, IslandOpenFinalActors_0f, IslandOpenRound1ActorsDoubles_0f, IslandOpenSemifinalActorsDoubles_0f, IslandOpenFinalActorsDoubles_0f
+; The Island Open between-round lists: B. Coz, drawn with walk sprite 74_06
+; ("Grrr! I'm Factory's B. Coz...").
+	actor_role ISLAND_OPEN_ROUND_B_COZ, $04, IslandOpenRoundActorsSingles_0f, IslandOpenRoundActorsDoubles_0f

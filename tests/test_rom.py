@@ -159,7 +159,7 @@ class Tools(unittest.TestCase):
         # a tool that stops parsing part of the source passes vacuously: hold
         # the actor-slot resolver to the script sites it reaches today
         m = re.search(r"^slots\s+(\d+) checked", r.stdout, re.M)
-        self.assertGreaterEqual(int(m.group(1)), 5122, "the slot resolver reaches fewer script sites")
+        self.assertGreaterEqual(int(m.group(1)), 5124, "the slot resolver reaches fewer script sites")
 
 
 if __name__ == "__main__":

@@ -14,5 +14,5 @@
 	inc h
 .queue:
 	call QueueShortText
-	script_speak $04
+	script_speak ACTOR_ROLE_ISLAND_OPEN_ROUND_B_COZ
 	ret
