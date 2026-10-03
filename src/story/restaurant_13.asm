@@ -55,8 +55,8 @@ RestaurantPlazaArrival02_13:
 	ld a, [wStoryModeEntryPoint] ; $4163
 	cp STORYENTRY_NONE ; $4166
 	jp z, RestaurantPlazaArrivalWalkIn_13.done ; $4168
-	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $416b
-	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $417a
+	script_copy_scene_rect 20, 8, 6, 21, 2, 2 ; $416b
+	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $417a
 	script_set_speed ACTOR_PLAYER, $0018 ; $4189
 	script_fade_in $08 ; $4191
 	call WaitFadeEnd ; $4196

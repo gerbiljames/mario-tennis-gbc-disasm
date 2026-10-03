@@ -23,11 +23,11 @@ ActorScript_27_03:
 	as_flag $01, $05, $02
 	as_set_field $06, $0010
 .L21:
-	as_target_rel $fe00, $0000
+	as_target_rel -2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 75
-	as_target_rel $0200, $0000
+	as_target_rel 2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 75
@@ -299,16 +299,16 @@ End12PrincipalsOfficeInitScript_27:
 OpenPrincipalsOfficeDoor_27:
 	script_wait_frames 10 ; $516b
 	sound SFX_DOOR_ALT ; $5172
-	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $5174
+	script_copy_scene_rect 7, 56, 32, 56, 2, 2 ; $5174
 	script_wait_frames 2 ; $5183
-	script_copy_scene_rect $0b, $38, $20, $38, $02, $02 ; $518a
+	script_copy_scene_rect 11, 56, 32, 56, 2, 2 ; $518a
 	script_wait_frames 4 ; $5199
 	ret ; $51a0
 ClosePrincipalsOfficeDoor_27:
 	sound SFX_DOOR_ALT ; $51a1
-	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $51a3
+	script_copy_scene_rect 7, 56, 32, 56, 2, 2 ; $51a3
 	script_wait_frames 2 ; $51b2
-	script_copy_scene_rect $03, $38, $20, $38, $02, $02 ; $51b9
+	script_copy_scene_rect 3, 56, 32, 56, 2, 2 ; $51b9
 	script_wait_frames 4 ; $51c8
 	ret ; $51cf
 ActorScript_27_04:

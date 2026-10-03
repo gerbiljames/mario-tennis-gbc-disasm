@@ -965,7 +965,7 @@ AwardsCeremonyInitScript_0f:
 	ld hl, AwardsCeremonyNpcScriptsDoubles_0f ; $558e
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5591
 	farcall WriteStoryStateWord ; $5594
-	script_copy_scene_rect $1a, $0d, $08, $0d, $08, $03 ; $5597
+	script_copy_scene_rect 26, 13, 8, 13, 8, 3 ; $5597
 	farcall BeginCutsceneScriptMode ; $55a6
 .setAnims:
 	script_set_anim ACTOR_AWARDS_CEREMONY_DOUBLES_TROPHY_2, ANIM_TROPHY_SMALL ; $55a9

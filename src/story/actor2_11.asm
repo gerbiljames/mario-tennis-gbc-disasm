@@ -93,37 +93,37 @@ Unused_11_MapScriptHideLocationName:
 ActorScript_11_48:
 	; $7bdf, 99 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0200
+	as_target_rel 4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0000
+	as_target_rel -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $fe00
+	as_target_rel 4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0000
+	as_target_rel -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0000
+	as_target_rel 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0000
+	as_target_rel -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
@@ -135,37 +135,37 @@ ActorScript_11_49:
 	as_wait 60
 .L4:
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0000
+	as_target_rel -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0000
+	as_target_rel 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $fe00
+	as_target_rel -4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0000
+	as_target_rel 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0200
+	as_target_rel -4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0000
+	as_target_rel 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
@@ -177,37 +177,37 @@ ActorScript_11_50:
 	as_wait 30
 .L4:
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0000
+	as_target_rel 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0000
+	as_target_rel -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0200
+	as_target_rel 4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0000
+	as_target_rel -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $fe00
+	as_target_rel 4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0000
+	as_target_rel -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
@@ -220,37 +220,37 @@ ActorScript_11_51:
 	as_wait 60
 .L6:
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $fe00
+	as_target_rel -4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0000
+	as_target_rel 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0200
+	as_target_rel -4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0000
+	as_target_rel 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $fc00, $0000
+	as_target_rel -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel $0400, $0000
+	as_target_rel 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING

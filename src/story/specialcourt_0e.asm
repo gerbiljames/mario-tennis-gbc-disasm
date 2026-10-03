@@ -70,9 +70,9 @@ PlayStarWarpTransition:
 	ld [hl+], a ; $718f
 	ld [hl+], a ; $7190
 	ld [hl+], a ; $7191
-	script_copy_scene_rect $00, $2b, $1a, $0c, $04, $02 ; $7192
-	script_copy_scene_rect $04, $2d, $14, $14, $06, $02 ; $71a1
-	script_copy_scene_rect $0a, $2b, $1a, $12, $06, $02 ; $71b0
+	script_copy_scene_rect 0, 43, 26, 12, 4, 2 ; $7192
+	script_copy_scene_rect 4, 45, 20, 20, 6, 2 ; $71a1
+	script_copy_scene_rect 10, 43, 26, 18, 6, 2 ; $71b0
 	sound BGM_WIN ; $71bf
 	ld a, $01 ; $71c1
 	ld hl, UpdateStarWarpSprite ; $71c3

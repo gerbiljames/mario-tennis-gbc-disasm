@@ -203,6 +203,11 @@ def DRILLMSG_DOUBLE_FAULT_YOUR_POINT equ $6a
 def DRILLMSG_I_RETURNED_YOUR_SERVE_BEFORE_IT_BOUNCED_YOUR_POINT equ $6b
 def DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE equ $6c
 
+; --- Animation scripts (anim_frame, docs/graphics_formats.md) ---
+; An anim_frame delay of $ff never runs out: the frame is held for good, the
+; same state anim_hold leaves behind.
+def ANIM_FOREVER equ $ff
+
 ; --- Dialogue speaker (script_speak, script_speak_restore, ShowSpeakerDialogue) ---
 ; The operand is the speaking actor's slot. With bit 7 set no actor speaks:
 ; OpenSpeechBubble skips the actor lookup, the window is not anchored to

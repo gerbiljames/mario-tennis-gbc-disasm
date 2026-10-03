@@ -346,97 +346,97 @@ WaluigiSpriteAnims:
 	dw WaluigiSpriteAnim18 ; $7f48
 WaluigiSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	anim_frame $00, $ff
+	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
 WaluigiSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
-	anim_frame $02, $0c
-	anim_frame $04, $06
-	anim_frame $03, $0c
-	anim_frame $04, $07
+	anim_frame $02, 12
+	anim_frame $04, 6
+	anim_frame $03, 12
+	anim_frame $04, 7
 	anim_loop $00
 WaluigiSpriteAnim02:
 	; $7f57, 6 bytes (sprite_anim)
-	anim_frame $00, $0a
-	anim_frame $01, $0a
+	anim_frame $00, 10
+	anim_frame $01, 10
 	anim_loop $00
 WaluigiSpriteAnim03:
 	; $7f5d, 10 bytes (sprite_anim)
-	anim_frame $17, $0f
-	anim_frame $19, $0f
-	anim_frame $18, $0f
-	anim_frame $19, $0f
+	anim_frame $17, 15
+	anim_frame $19, 15
+	anim_frame $18, 15
+	anim_frame $19, 15
 	anim_loop $00
 WaluigiSpriteAnim04:
 	; $7f67, 8 bytes (sprite_anim)
-	anim_frame $1a, $14
-	anim_frame $1b, $0f
-	anim_frame $1c, $0f
+	anim_frame $1a, 20
+	anim_frame $1b, 15
+	anim_frame $1c, 15
 	anim_loop $02
 WaluigiSpriteAnim05:
 	; $7f6f, 6 bytes (sprite_anim)
-	anim_frame $06, $04
-	anim_frame $07, $17
+	anim_frame $06, 4
+	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
 WaluigiSpriteAnim06:
 	; $7f75, 6 bytes (sprite_anim)
-	anim_frame $09, $04
-	anim_frame $0a, $17
+	anim_frame $09, 4
+	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
 WaluigiSpriteAnim07:
 	; $7f7b, 6 bytes (sprite_anim)
-	anim_frame $0c, $04
-	anim_frame $0d, $14
+	anim_frame $0c, 4
+	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
 WaluigiSpriteAnim08:
 	; $7f81, 5 bytes (sprite_anim)
-	anim_frame $15, $04
-	anim_frame $16, $14
+	anim_frame $15, 4
+	anim_frame $16, 20
 	anim_hold $fd
 WaluigiSpriteAnim09:
 	; $7f86, 4 bytes (sprite_anim)
-	anim_frame $06, $19
+	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
 WaluigiSpriteAnim10:
 	; $7f8a, 4 bytes (sprite_anim)
-	anim_frame $09, $19
+	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
 WaluigiSpriteAnim11:
 	; $7f8e, 4 bytes (sprite_anim)
-	anim_frame $0c, $19
+	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
 WaluigiSpriteAnim12:
 	; $7f92, 3 bytes (sprite_anim)
-	anim_frame $15, $18
+	anim_frame $15, 24
 	anim_hold $fd
 WaluigiSpriteAnim13:
 	; $7f95, 3 bytes (sprite_anim)
-	anim_frame $05, $ff
+	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
 WaluigiSpriteAnim14:
 	; $7f98, 3 bytes (sprite_anim)
-	anim_frame $08, $ff
+	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
 WaluigiSpriteAnim15:
 	; $7f9b, 3 bytes (sprite_anim)
-	anim_frame $0b, $ff
+	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
 WaluigiSpriteAnim16:
 	; $7f9e, 3 bytes (sprite_anim)
-	anim_frame $0e, $ff
+	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
 WaluigiSpriteAnim17:
 	; $7fa1, 12 bytes (sprite_anim)
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
 WaluigiSpriteAnim18:
 	; $7fad, 8 bytes (sprite_anim)
-	anim_frame $11, $12
-	anim_frame $12, $14
-	anim_frame $13, $16
+	anim_frame $11, 18
+	anim_frame $12, 20
+	anim_frame $13, 22
 	anim_set CHARANIM_IDLE
 	; $7fb5, 75 bytes fill to bank end (linker-padded)

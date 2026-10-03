@@ -802,16 +802,16 @@ AcademyWingInitActors0_10:
 AcademyWingOpenDoor_10:
 	script_wait_frames 10 ; $7339
 	sound SFX_DOOR_ALT ; $7340
-	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $7342
+	script_copy_scene_rect 7, 56, 32, 56, 2, 2 ; $7342
 	script_wait_frames 2 ; $7351
-	script_copy_scene_rect $0b, $38, $20, $38, $02, $02 ; $7358
+	script_copy_scene_rect 11, 56, 32, 56, 2, 2 ; $7358
 	script_wait_frames 4 ; $7367
 	ret ; $736e
 AcademyWingCloseDoor_10:
 	sound SFX_DOOR_ALT ; $736f
-	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $7371
+	script_copy_scene_rect 7, 56, 32, 56, 2, 2 ; $7371
 	script_wait_frames 2 ; $7380
-	script_copy_scene_rect $03, $38, $20, $38, $02, $02 ; $7387
+	script_copy_scene_rect 3, 56, 32, 56, 2, 2 ; $7387
 	script_wait_frames 4 ; $7396
 	ret ; $739d
 AcademyWingInitActors1_10:

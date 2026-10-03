@@ -41,23 +41,23 @@ TourPointerPalette_13:
 	INCLUDE "data/bank_013/TourPointerPalette_13.asm" ; $4d70, 8 bytes (palettes)
 AnimateDoorOpen_13:
 	sound SFX_DOOR ; $4d78
-	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $4d7a
-	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $4d89
+	script_copy_scene_rect 20, 8, 6, 21, 2, 2 ; $4d7a
+	script_copy_scene_rect 0, 21, 20, 8, 2, 2 ; $4d89
 	script_wait_frames 2 ; $4d98
-	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $4d9f
+	script_copy_scene_rect 2, 21, 20, 8, 2, 2 ; $4d9f
 	script_wait_frames 2 ; $4dae
-	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $4db5
+	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $4db5
 	script_wait_frames 2 ; $4dc4
 	ret ; $4dcb
 AnimateDoorClose_13:
 	sound SFX_DOOR ; $4dcc
-	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $4dce
+	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $4dce
 	script_wait_frames 1 ; $4ddd
-	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $4de4
+	script_copy_scene_rect 2, 21, 20, 8, 2, 2 ; $4de4
 	script_wait_frames 1 ; $4df3
-	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $4dfa
+	script_copy_scene_rect 0, 21, 20, 8, 2, 2 ; $4dfa
 	script_wait_frames 1 ; $4e09
-	script_copy_scene_rect $06, $15, $14, $08, $02, $02 ; $4e10
+	script_copy_scene_rect 6, 21, 20, 8, 2, 2 ; $4e10
 	ret ; $4e1f
 DormRoomMapScripts_13:
 	; $4e20, 14 bytes (map_tree)
@@ -314,7 +314,7 @@ SetupDormRoomSceneVariant:
 	ld h, $16 ; $5150
 	ld l, $16 ; $5152
 	farcall CopyBehaviorMapRect ; $5154
-	script_copy_scene_rect $20, $00, $00, $00, $16, $18 ; $5157
+	script_copy_scene_rect 32, 0, 0, 0, 22, 24 ; $5157
 	script_set_objdef OBJ_HARRY, ACTOR_DORM_ROOM_KATE ; $5166
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_WALK ; $5172
 	script_set_position ACTOR_DORM_ROOM_CAT, 31.0, 21.0 ; $5179

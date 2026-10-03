@@ -57,7 +57,7 @@ End17AwardCeremonyInitScript_27:
 	ldh a, [hRomBank] ; $41a4
 	ld hl, End17AwardCeremonyActorsAlt_27 ; $41a6
 	farcall ScriptRespawnLocationActors ; $41a9
-	script_copy_scene_rect $1a, $0d, $08, $0d, $08, $03 ; $41ac
+	script_copy_scene_rect 26, 13, 8, 13, 8, 3 ; $41ac
 	farcall BeginCutsceneScriptMode ; $41bb
 	jr .setEnd17CeremonyObjectDefs ; $41be
 .animate:

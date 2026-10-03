@@ -318,19 +318,19 @@ ComputeMachineCourtProgress:
 	ld a, MACHINECOURTSTAGE_LEVEL1 ; $43a4
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $43a6
 	jp z, .machineCourtStartLevelScene ; $43a9
-	script_copy_scene_rect $1e, $2c, $30, $2c, $02, $02 ; $43ac
+	script_copy_scene_rect 30, 44, 48, 44, 2, 2 ; $43ac
 	ld a, MACHINECOURTSTAGE_LEVEL2 ; $43bb
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_2 ; $43bd
 	jp z, .machineCourtStartLevelScene ; $43c0
-	script_copy_scene_rect $1e, $30, $30, $30, $02, $02 ; $43c3
+	script_copy_scene_rect 30, 48, 48, 48, 2, 2 ; $43c3
 	ld a, MACHINECOURTSTAGE_LEVEL3 ; $43d2
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_3 ; $43d4
 	jr z, .machineCourtStartLevelScene ; $43d7
-	script_copy_scene_rect $1e, $34, $30, $34, $02, $02 ; $43d9
+	script_copy_scene_rect 30, 52, 48, 52, 2, 2 ; $43d9
 	ld a, MACHINECOURTSTAGE_LEVEL4 ; $43e8
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $43ea
 	jr z, .machineCourtStartLevelScene ; $43ed
-	script_copy_scene_rect $1e, $38, $30, $38, $02, $02 ; $43ef
+	script_copy_scene_rect 30, 56, 48, 56, 2, 2 ; $43ef
 	ld a, MACHINECOURTSTAGE_MASTER ; $43fe
 	ld b, a ; $4400
 	ld a, $01 ; $4401

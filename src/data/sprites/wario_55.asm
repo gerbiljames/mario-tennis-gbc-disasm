@@ -346,96 +346,96 @@ WarioSpriteAnims:
 	dw WarioSpriteAnim18 ; $7f48
 WarioSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	anim_frame $00, $ff
+	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
 WarioSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
-	anim_frame $02, $0c
-	anim_frame $04, $06
-	anim_frame $03, $0c
-	anim_frame $04, $07
+	anim_frame $02, 12
+	anim_frame $04, 6
+	anim_frame $03, 12
+	anim_frame $04, 7
 	anim_loop $00
 WarioSpriteAnim02:
 	; $7f57, 6 bytes (sprite_anim)
-	anim_frame $00, $0a
-	anim_frame $01, $0a
+	anim_frame $00, 10
+	anim_frame $01, 10
 	anim_loop $00
 WarioSpriteAnim03:
 	; $7f5d, 8 bytes (sprite_anim)
-	anim_frame $17, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $14
+	anim_frame $17, 10
+	anim_frame $18, 10
+	anim_frame $19, 20
 	anim_loop $00
 WarioSpriteAnim04:
 	; $7f65, 8 bytes (sprite_anim)
-	anim_frame $1a, $0a
-	anim_frame $1b, $0a
-	anim_frame $1c, $14
+	anim_frame $1a, 10
+	anim_frame $1b, 10
+	anim_frame $1c, 20
 	anim_loop $00
 WarioSpriteAnim05:
 	; $7f6d, 6 bytes (sprite_anim)
-	anim_frame $06, $04
-	anim_frame $07, $17
+	anim_frame $06, 4
+	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
 WarioSpriteAnim06:
 	; $7f73, 6 bytes (sprite_anim)
-	anim_frame $09, $04
-	anim_frame $0a, $17
+	anim_frame $09, 4
+	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
 WarioSpriteAnim07:
 	; $7f79, 6 bytes (sprite_anim)
-	anim_frame $0c, $04
-	anim_frame $0d, $14
+	anim_frame $0c, 4
+	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
 WarioSpriteAnim08:
 	; $7f7f, 5 bytes (sprite_anim)
-	anim_frame $15, $04
-	anim_frame $16, $14
+	anim_frame $15, 4
+	anim_frame $16, 20
 	anim_hold $fd
 WarioSpriteAnim09:
 	; $7f84, 4 bytes (sprite_anim)
-	anim_frame $06, $19
+	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
 WarioSpriteAnim10:
 	; $7f88, 4 bytes (sprite_anim)
-	anim_frame $09, $19
+	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
 WarioSpriteAnim11:
 	; $7f8c, 4 bytes (sprite_anim)
-	anim_frame $0c, $19
+	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
 WarioSpriteAnim12:
 	; $7f90, 3 bytes (sprite_anim)
-	anim_frame $15, $18
+	anim_frame $15, 24
 	anim_hold $fd
 WarioSpriteAnim13:
 	; $7f93, 3 bytes (sprite_anim)
-	anim_frame $05, $ff
+	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
 WarioSpriteAnim14:
 	; $7f96, 3 bytes (sprite_anim)
-	anim_frame $08, $ff
+	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
 WarioSpriteAnim15:
 	; $7f99, 3 bytes (sprite_anim)
-	anim_frame $0b, $ff
+	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
 WarioSpriteAnim16:
 	; $7f9c, 3 bytes (sprite_anim)
-	anim_frame $0e, $ff
+	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
 WarioSpriteAnim17:
 	; $7f9f, 12 bytes (sprite_anim)
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
 WarioSpriteAnim18:
 	; $7fab, 8 bytes (sprite_anim)
-	anim_frame $11, $12
-	anim_frame $12, $14
-	anim_frame $13, $16
+	anim_frame $11, 18
+	anim_frame $12, 20
+	anim_frame $13, 22
 	anim_set CHARANIM_IDLE
 	; $7fb3, 77 bytes fill to bank end (linker-padded)

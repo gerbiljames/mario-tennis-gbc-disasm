@@ -170,11 +170,11 @@ ActorScript_0e_05:
 	as_flag $01, $05, $02
 	as_set_field $06, $0010
 .L8:
-	as_target_rel $fe00, $0000
+	as_target_rel -2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 75
-	as_target_rel $0200, $0000
+	as_target_rel 2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait 75

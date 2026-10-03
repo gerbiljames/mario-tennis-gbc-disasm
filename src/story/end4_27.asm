@@ -42,19 +42,19 @@ ComputeMachineCourtProgress_27:
 	ld a, $00 ; $620f
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $6211
 	jp z, .store ; $6214
-	script_copy_scene_rect $1e, $2c, $30, $2c, $02, $02 ; $6217
+	script_copy_scene_rect 30, 44, 48, 44, 2, 2 ; $6217
 	ld a, $01 ; $6226
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_2 ; $6228
 	jp z, .store ; $622b
-	script_copy_scene_rect $1e, $30, $30, $30, $02, $02 ; $622e
+	script_copy_scene_rect 30, 48, 48, 48, 2, 2 ; $622e
 	ld a, $02 ; $623d
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_3 ; $623f
 	jr z, .store ; $6242
-	script_copy_scene_rect $1e, $34, $30, $34, $02, $02 ; $6244
+	script_copy_scene_rect 30, 52, 48, 52, 2, 2 ; $6244
 	ld a, $03 ; $6253
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $6255
 	jr z, .store ; $6258
-	script_copy_scene_rect $1e, $38, $30, $38, $02, $02 ; $625a
+	script_copy_scene_rect 30, 56, 48, 56, 2, 2 ; $625a
 	ld a, $04 ; $6269
 	ld b, a ; $626b
 .store:

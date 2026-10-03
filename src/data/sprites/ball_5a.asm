@@ -346,19 +346,19 @@ BallMachineSpriteAnims:
 	dw BallMachineSpriteAnim18 ; $7f48
 BallMachineSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	anim_frame $00, $ff
+	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
 BallMachineSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
-	anim_frame $02, $05
-	anim_frame $03, $05
-	anim_frame $04, $05
-	anim_frame $03, $05
+	anim_frame $02, 5
+	anim_frame $03, 5
+	anim_frame $04, 5
+	anim_frame $03, 5
 	anim_loop $00
 BallMachineSpriteAnim02:
 	; $7f57, 6 bytes (sprite_anim)
-	anim_frame $00, $0a
-	anim_frame $01, $0a
+	anim_frame $00, 10
+	anim_frame $01, 10
 	anim_loop $00
 BallMachineSpriteAnim03:
 	; $7f5d, 2 bytes (sprite_anim)
@@ -368,69 +368,69 @@ BallMachineSpriteAnim04:
 	anim_set CHARANIM_IDLE
 BallMachineSpriteAnim05:
 	; $7f61, 8 bytes (sprite_anim)
-	anim_frame $05, $0a
-	anim_frame $06, $05
-	anim_frame $07, $0f
+	anim_frame $05, 10
+	anim_frame $06, 5
+	anim_frame $07, 15
 	anim_set CHARANIM_IDLE
 BallMachineSpriteAnim06:
 	; $7f69, 6 bytes (sprite_anim)
-	anim_frame $09, $04
-	anim_frame $0a, $17
+	anim_frame $09, 4
+	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
 BallMachineSpriteAnim07:
 	; $7f6f, 6 bytes (sprite_anim)
-	anim_frame $0c, $04
-	anim_frame $0d, $14
+	anim_frame $0c, 4
+	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
 BallMachineSpriteAnim08:
 	; $7f75, 5 bytes (sprite_anim)
-	anim_frame $15, $04
-	anim_frame $16, $14
+	anim_frame $15, 4
+	anim_frame $16, 20
 	anim_hold $fd
 BallMachineSpriteAnim09:
 	; $7f7a, 4 bytes (sprite_anim)
-	anim_frame $06, $19
+	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
 BallMachineSpriteAnim10:
 	; $7f7e, 4 bytes (sprite_anim)
-	anim_frame $09, $19
+	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
 BallMachineSpriteAnim11:
 	; $7f82, 4 bytes (sprite_anim)
-	anim_frame $0c, $19
+	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
 BallMachineSpriteAnim12:
 	; $7f86, 3 bytes (sprite_anim)
-	anim_frame $15, $18
+	anim_frame $15, 24
 	anim_hold $fd
 BallMachineSpriteAnim13:
 	; $7f89, 3 bytes (sprite_anim)
-	anim_frame $05, $ff
+	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
 BallMachineSpriteAnim14:
 	; $7f8c, 3 bytes (sprite_anim)
-	anim_frame $08, $ff
+	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
 BallMachineSpriteAnim15:
 	; $7f8f, 3 bytes (sprite_anim)
-	anim_frame $0b, $ff
+	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
 BallMachineSpriteAnim16:
 	; $7f92, 3 bytes (sprite_anim)
-	anim_frame $0e, $ff
+	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
 BallMachineSpriteAnim17:
 	; $7f95, 12 bytes (sprite_anim)
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
 BallMachineSpriteAnim18:
 	; $7fa1, 8 bytes (sprite_anim)
-	anim_frame $11, $12
-	anim_frame $12, $14
-	anim_frame $13, $16
+	anim_frame $11, 18
+	anim_frame $12, 20
+	anim_frame $13, 22
 	anim_set CHARANIM_IDLE
 	; $7fa9, 87 bytes fill to bank end (linker-padded)

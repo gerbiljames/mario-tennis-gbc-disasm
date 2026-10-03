@@ -709,9 +709,10 @@ ENDM
 MACRO as_halt5       ; $05 inert (handler alias of $00)
 	db $05
 ENDM
-MACRO as_target_rel  ; $06 offset the move target by (dx, dy)
+MACRO as_target_rel  ; $06 offset the move target by (dx, dy), in tiles with a point (4.0, -2.0)
+	map_offset \1, \2
 	db $06
-	dw \1, \2
+	dw (\1) >> 8, (\2) >> 8
 ENDM
 MACRO as_move        ; $07 move by angle (byte) + distance (word), absolute
 	db $07, \1
@@ -854,6 +855,11 @@ ENDM
 MACRO map_pos
 	ASSERT (\1) % 256 == 0 && (\1) < 256.0, "map position \1: write tiles with a point, e.g. 18.0"
 	ASSERT (\2) % 256 == 0 && (\2) < 256.0, "map position \2: write tiles with a point, e.g. 18.0"
+ENDM
+; map_offset dx, dy -- the same for a signed move in tiles (-4.0, 2.0).
+MACRO map_offset
+	ASSERT (\1) % 256 == 0 && (\1) >= -128.0 && (\1) < 128.0, "map offset \1: write tiles with a point, e.g. -4.0"
+	ASSERT (\2) % 256 == 0 && (\2) >= -128.0 && (\2) < 128.0, "map offset \2: write tiles with a point, e.g. -4.0"
 ENDM
 
 ; Cutscene script commands. Story cutscenes are hand-written native code: fixed

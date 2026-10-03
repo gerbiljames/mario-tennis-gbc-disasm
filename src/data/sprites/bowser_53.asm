@@ -346,102 +346,102 @@ BowserSpriteAnims:
 	dw BowserSpriteAnim18 ; $7f48
 BowserSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	anim_frame $00, $ff
+	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
 BowserSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
-	anim_frame $02, $0c
-	anim_frame $04, $06
-	anim_frame $03, $0c
-	anim_frame $04, $07
+	anim_frame $02, 12
+	anim_frame $04, 6
+	anim_frame $03, 12
+	anim_frame $04, 7
 	anim_loop $00
 BowserSpriteAnim02:
 	; $7f57, 6 bytes (sprite_anim)
-	anim_frame $00, $0a
-	anim_frame $01, $0a
+	anim_frame $00, 10
+	anim_frame $01, 10
 	anim_loop $00
 BowserSpriteAnim03:
 	; $7f5d, 18 bytes (sprite_anim)
 	anim_flip $00
-	anim_frame $18, $08
-	anim_frame $19, $0c
-	anim_frame $17, $24
+	anim_frame $18, 8
+	anim_frame $19, 12
+	anim_frame $17, 36
 	anim_flip $20
-	anim_frame $18, $08
-	anim_frame $19, $0c
-	anim_frame $17, $24
+	anim_frame $18, 8
+	anim_frame $19, 12
+	anim_frame $17, 36
 	anim_loop $00
 BowserSpriteAnim04:
 	; $7f6f, 10 bytes (sprite_anim)
-	anim_frame $1a, $06
-	anim_frame $1b, $06
-	anim_frame $1c, $06
-	anim_frame $1b, $06
+	anim_frame $1a, 6
+	anim_frame $1b, 6
+	anim_frame $1c, 6
+	anim_frame $1b, 6
 	anim_loop $00
 BowserSpriteAnim05:
 	; $7f79, 6 bytes (sprite_anim)
-	anim_frame $06, $04
-	anim_frame $07, $17
+	anim_frame $06, 4
+	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
 BowserSpriteAnim06:
 	; $7f7f, 6 bytes (sprite_anim)
-	anim_frame $09, $04
-	anim_frame $0a, $17
+	anim_frame $09, 4
+	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
 BowserSpriteAnim07:
 	; $7f85, 6 bytes (sprite_anim)
-	anim_frame $0c, $04
-	anim_frame $0d, $14
+	anim_frame $0c, 4
+	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
 BowserSpriteAnim08:
 	; $7f8b, 5 bytes (sprite_anim)
-	anim_frame $15, $04
-	anim_frame $16, $14
+	anim_frame $15, 4
+	anim_frame $16, 20
 	anim_hold $fd
 BowserSpriteAnim09:
 	; $7f90, 4 bytes (sprite_anim)
-	anim_frame $06, $19
+	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
 BowserSpriteAnim10:
 	; $7f94, 4 bytes (sprite_anim)
-	anim_frame $09, $19
+	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
 BowserSpriteAnim11:
 	; $7f98, 4 bytes (sprite_anim)
-	anim_frame $0c, $19
+	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
 BowserSpriteAnim12:
 	; $7f9c, 3 bytes (sprite_anim)
-	anim_frame $15, $18
+	anim_frame $15, 24
 	anim_hold $fd
 BowserSpriteAnim13:
 	; $7f9f, 3 bytes (sprite_anim)
-	anim_frame $05, $ff
+	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
 BowserSpriteAnim14:
 	; $7fa2, 3 bytes (sprite_anim)
-	anim_frame $08, $ff
+	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
 BowserSpriteAnim15:
 	; $7fa5, 3 bytes (sprite_anim)
-	anim_frame $0b, $ff
+	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
 BowserSpriteAnim16:
 	; $7fa8, 3 bytes (sprite_anim)
-	anim_frame $0e, $ff
+	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
 BowserSpriteAnim17:
 	; $7fab, 12 bytes (sprite_anim)
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
 BowserSpriteAnim18:
 	; $7fb7, 8 bytes (sprite_anim)
-	anim_frame $11, $12
-	anim_frame $12, $14
-	anim_frame $13, $16
+	anim_frame $11, 18
+	anim_frame $12, 20
+	anim_frame $13, 22
 	anim_set CHARANIM_IDLE
 	; $7fbf, 65 bytes fill to bank end (linker-padded)

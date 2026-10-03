@@ -346,116 +346,116 @@ PeachSpriteAnims:
 	dw PeachSpriteAnim18 ; $7f48
 PeachSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	anim_frame $00, $ff
+	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
 PeachSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
-	anim_frame $02, $0c
-	anim_frame $04, $06
-	anim_frame $03, $0c
-	anim_frame $04, $07
+	anim_frame $02, 12
+	anim_frame $04, 6
+	anim_frame $03, 12
+	anim_frame $04, 7
 	anim_loop $00
 PeachSpriteAnim02:
 	; $7f57, 6 bytes (sprite_anim)
-	anim_frame $00, $0a
-	anim_frame $01, $0a
+	anim_frame $00, 10
+	anim_frame $01, 10
 	anim_loop $00
 PeachSpriteAnim03:
 	; $7f5d, 38 bytes (sprite_anim)
 	anim_flip $20
-	anim_frame $18, $0a
-	anim_frame $19, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
+	anim_frame $18, 10
+	anim_frame $19, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
 	anim_flip $00
-	anim_frame $18, $0a
-	anim_frame $19, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
+	anim_frame $18, 10
+	anim_frame $19, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
 	anim_loop $00
 PeachSpriteAnim04:
 	; $7f83, 18 bytes (sprite_anim)
-	anim_frame $1a, $14
-	anim_frame $1b, $14
+	anim_frame $1a, 20
+	anim_frame $1b, 20
 	anim_flip $20
-	anim_frame $1c, $0a
-	anim_frame $1b, $0a
+	anim_frame $1c, 10
+	anim_frame $1b, 10
 	anim_flip $00
-	anim_frame $1c, $0a
-	anim_frame $1b, $0a
+	anim_frame $1c, 10
+	anim_frame $1b, 10
 	anim_loop $04
 PeachSpriteAnim05:
 	; $7f95, 6 bytes (sprite_anim)
-	anim_frame $06, $04
-	anim_frame $07, $17
+	anim_frame $06, 4
+	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
 PeachSpriteAnim06:
 	; $7f9b, 6 bytes (sprite_anim)
-	anim_frame $09, $04
-	anim_frame $0a, $17
+	anim_frame $09, 4
+	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
 PeachSpriteAnim07:
 	; $7fa1, 6 bytes (sprite_anim)
-	anim_frame $0c, $04
-	anim_frame $0d, $14
+	anim_frame $0c, 4
+	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
 PeachSpriteAnim08:
 	; $7fa7, 5 bytes (sprite_anim)
-	anim_frame $15, $04
-	anim_frame $16, $14
+	anim_frame $15, 4
+	anim_frame $16, 20
 	anim_hold $fd
 PeachSpriteAnim09:
 	; $7fac, 4 bytes (sprite_anim)
-	anim_frame $06, $19
+	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
 PeachSpriteAnim10:
 	; $7fb0, 4 bytes (sprite_anim)
-	anim_frame $09, $19
+	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
 PeachSpriteAnim11:
 	; $7fb4, 4 bytes (sprite_anim)
-	anim_frame $0c, $19
+	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
 PeachSpriteAnim12:
 	; $7fb8, 3 bytes (sprite_anim)
-	anim_frame $15, $18
+	anim_frame $15, 24
 	anim_hold $fd
 PeachSpriteAnim13:
 	; $7fbb, 3 bytes (sprite_anim)
-	anim_frame $05, $ff
+	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
 PeachSpriteAnim14:
 	; $7fbe, 3 bytes (sprite_anim)
-	anim_frame $08, $ff
+	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
 PeachSpriteAnim15:
 	; $7fc1, 3 bytes (sprite_anim)
-	anim_frame $0b, $ff
+	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
 PeachSpriteAnim16:
 	; $7fc4, 3 bytes (sprite_anim)
-	anim_frame $0e, $ff
+	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
 PeachSpriteAnim17:
 	; $7fc7, 12 bytes (sprite_anim)
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
 PeachSpriteAnim18:
 	; $7fd3, 8 bytes (sprite_anim)
-	anim_frame $11, $12
-	anim_frame $12, $14
-	anim_frame $13, $16
+	anim_frame $11, 18
+	anim_frame $12, 20
+	anim_frame $13, 22
 	anim_set CHARANIM_IDLE
 	; $7fdb, 37 bytes fill to bank end (linker-padded)

@@ -346,107 +346,107 @@ MarioSpriteAnims:
 	dw MarioSpriteAnim18 ; $7f48
 MarioSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	anim_frame $00, $ff
+	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
 MarioSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
-	anim_frame $02, $0c
-	anim_frame $04, $06
-	anim_frame $03, $0c
-	anim_frame $04, $07
+	anim_frame $02, 12
+	anim_frame $04, 6
+	anim_frame $03, 12
+	anim_frame $04, 7
 	anim_loop $00
 MarioSpriteAnim02:
 	; $7f57, 6 bytes (sprite_anim)
-	anim_frame $00, $0a
-	anim_frame $01, $0a
+	anim_frame $00, 10
+	anim_frame $01, 10
 	anim_loop $00
 MarioSpriteAnim03:
 	; $7f5d, 30 bytes (sprite_anim)
 	anim_flip $20
-	anim_frame $17, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
-	anim_frame $17, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
+	anim_frame $17, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
+	anim_frame $17, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
 	anim_flip $00
-	anim_frame $17, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
-	anim_frame $17, $0a
-	anim_frame $18, $0a
-	anim_frame $19, $0a
+	anim_frame $17, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
+	anim_frame $17, 10
+	anim_frame $18, 10
+	anim_frame $19, 10
 	anim_loop $00
 MarioSpriteAnim04:
 	; $7f7b, 8 bytes (sprite_anim)
-	anim_frame $1a, $14
-	anim_frame $1b, $08
-	anim_frame $1c, $3c
+	anim_frame $1a, 20
+	anim_frame $1b, 8
+	anim_frame $1c, 60
 	anim_loop $00
 MarioSpriteAnim05:
 	; $7f83, 6 bytes (sprite_anim)
-	anim_frame $06, $04
-	anim_frame $07, $17
+	anim_frame $06, 4
+	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
 MarioSpriteAnim06:
 	; $7f89, 6 bytes (sprite_anim)
-	anim_frame $09, $04
-	anim_frame $0a, $17
+	anim_frame $09, 4
+	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
 MarioSpriteAnim07:
 	; $7f8f, 6 bytes (sprite_anim)
-	anim_frame $0c, $04
-	anim_frame $0d, $14
+	anim_frame $0c, 4
+	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
 MarioSpriteAnim08:
 	; $7f95, 5 bytes (sprite_anim)
-	anim_frame $15, $04
-	anim_frame $16, $14
+	anim_frame $15, 4
+	anim_frame $16, 20
 	anim_hold $fd
 MarioSpriteAnim09:
 	; $7f9a, 4 bytes (sprite_anim)
-	anim_frame $06, $19
+	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
 MarioSpriteAnim10:
 	; $7f9e, 4 bytes (sprite_anim)
-	anim_frame $09, $19
+	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
 MarioSpriteAnim11:
 	; $7fa2, 4 bytes (sprite_anim)
-	anim_frame $0c, $19
+	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
 MarioSpriteAnim12:
 	; $7fa6, 3 bytes (sprite_anim)
-	anim_frame $15, $18
+	anim_frame $15, 24
 	anim_hold $fd
 MarioSpriteAnim13:
 	; $7fa9, 3 bytes (sprite_anim)
-	anim_frame $05, $ff
+	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
 MarioSpriteAnim14:
 	; $7fac, 3 bytes (sprite_anim)
-	anim_frame $08, $ff
+	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
 MarioSpriteAnim15:
 	; $7faf, 3 bytes (sprite_anim)
-	anim_frame $0b, $ff
+	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
 MarioSpriteAnim16:
 	; $7fb2, 3 bytes (sprite_anim)
-	anim_frame $0e, $ff
+	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
 MarioSpriteAnim17:
 	; $7fb5, 12 bytes (sprite_anim)
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
-	anim_frame $10, $07
-	anim_frame $0f, $07
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
+	anim_frame $10, 7
+	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
 MarioSpriteAnim18:
 	; $7fc1, 8 bytes (sprite_anim)
-	anim_frame $11, $12
-	anim_frame $12, $14
-	anim_frame $13, $16
+	anim_frame $11, 18
+	anim_frame $12, 20
+	anim_frame $13, 22
 	anim_set CHARANIM_IDLE
 	; $7fc9, 55 bytes fill to bank end (linker-padded)

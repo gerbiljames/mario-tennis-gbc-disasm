@@ -303,23 +303,23 @@ EndRestaurantEntActorsAlt_27:
 	map_actor_end
 OpenRestaurantEntDoor_27:
 	sound SFX_DOOR ; $716b
-	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $716d
-	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $717c
+	script_copy_scene_rect 20, 8, 6, 21, 2, 2 ; $716d
+	script_copy_scene_rect 0, 21, 20, 8, 2, 2 ; $717c
 	script_wait_frames 2 ; $718b
-	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $7192
+	script_copy_scene_rect 2, 21, 20, 8, 2, 2 ; $7192
 	script_wait_frames 2 ; $71a1
-	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $71a8
+	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $71a8
 	script_wait_frames 2 ; $71b7
 	ret ; $71be
 CloseRestaurantEntDoor_27:
 	sound SFX_DOOR ; $71bf
-	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $71c1
+	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $71c1
 	script_wait_frames 1 ; $71d0
-	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $71d7
+	script_copy_scene_rect 2, 21, 20, 8, 2, 2 ; $71d7
 	script_wait_frames 1 ; $71e6
-	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $71ed
+	script_copy_scene_rect 0, 21, 20, 8, 2, 2 ; $71ed
 	script_wait_frames 1 ; $71fc
-	script_copy_scene_rect $06, $15, $14, $08, $02, $02 ; $7203
+	script_copy_scene_rect 6, 21, 20, 8, 2, 2 ; $7203
 	ret ; $7212
 End1MainBldgMapScripts_27:
 	; $7213, 14 bytes (map_tree)

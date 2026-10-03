@@ -61,8 +61,8 @@ TrainingGymArrival02_0e:
 	script_set_speed ACTOR_PLAYER, $0010 ; $414d
 	script_set_speed ACTOR_PARTNER, $0010 ; $4155
 	farcall WaitPlayerMoveDone ; $415d
-	script_copy_scene_rect $0a, $0a, $3d, $0c, $02, $02 ; $4160
-	script_copy_scene_rect $3d, $0a, $0a, $0a, $02, $02 ; $416f
+	script_copy_scene_rect 10, 10, 61, 12, 2, 2 ; $4160
+	script_copy_scene_rect 61, 10, 10, 10, 2, 2 ; $416f
 	script_wait_frames 2 ; $417e
 	script_fade_in $08 ; $4185
 	call WaitFadeEnd ; $418a
@@ -70,11 +70,11 @@ TrainingGymArrival02_0e:
 	script_wait_move ACTOR_PLAYER ; $4198
 	sound SFX_DOOR ; $419d
 	script_wait_frames 2 ; $419f
-	script_copy_scene_rect $3a, $0a, $0a, $0a, $02, $02 ; $41a6
+	script_copy_scene_rect 58, 10, 10, 10, 2, 2 ; $41a6
 	script_wait_frames 2 ; $41b5
-	script_copy_scene_rect $37, $0a, $0a, $0a, $02, $02 ; $41bc
+	script_copy_scene_rect 55, 10, 10, 10, 2, 2 ; $41bc
 	script_wait_frames 2 ; $41cb
-	script_copy_scene_rect $3d, $0c, $0a, $0a, $02, $02 ; $41d2
+	script_copy_scene_rect 61, 12, 10, 10, 2, 2 ; $41d2
 .done:
 	ret ; $41e1
 TrainingGymArrival03_0e:
@@ -84,19 +84,19 @@ TrainingGymArrival03_0e:
 	script_set_speed ACTOR_PLAYER, $0010 ; $41e9
 	script_set_speed ACTOR_PARTNER, $0010 ; $41f1
 	farcall WaitPlayerMoveDone ; $41f9
-	script_copy_scene_rect $0a, $0a, $3d, $0c, $02, $02 ; $41fc
-	script_copy_scene_rect $3d, $0a, $14, $0a, $02, $02 ; $420b
+	script_copy_scene_rect 10, 10, 61, 12, 2, 2 ; $41fc
+	script_copy_scene_rect 61, 10, 20, 10, 2, 2 ; $420b
 	script_fade_in $08 ; $421a
 	call WaitFadeEnd ; $421f
 	script_move_target ACTOR_PLAYER, 21.0, 14.0 ; $4222
 	script_wait_move ACTOR_PLAYER ; $422d
 	sound SFX_DOOR ; $4232
 	script_wait_frames 2 ; $4234
-	script_copy_scene_rect $3a, $0a, $14, $0a, $02, $02 ; $423b
+	script_copy_scene_rect 58, 10, 20, 10, 2, 2 ; $423b
 	script_wait_frames 2 ; $424a
-	script_copy_scene_rect $37, $0a, $14, $0a, $02, $02 ; $4251
+	script_copy_scene_rect 55, 10, 20, 10, 2, 2 ; $4251
 	script_wait_frames 2 ; $4260
-	script_copy_scene_rect $3d, $0c, $14, $0a, $02, $02 ; $4267
+	script_copy_scene_rect 61, 12, 20, 10, 2, 2 ; $4267
 	ret ; $4276
 TrainingGymExitTriggers_0e:
 	; $4277, 25 bytes (map_scripts:exit)
@@ -112,11 +112,11 @@ TrainingGymExit02_0e:
 	script_wait_move ACTOR_PLAYER ; $42b1
 	farcall WaitPlayerMoveDone ; $42b6
 	sound SFX_DOOR ; $42b9
-	script_copy_scene_rect $37, $0a, $0a, $0a, $02, $02 ; $42bb
+	script_copy_scene_rect 55, 10, 10, 10, 2, 2 ; $42bb
 	script_wait_frames 2 ; $42ca
-	script_copy_scene_rect $3a, $0a, $0a, $0a, $02, $02 ; $42d1
+	script_copy_scene_rect 58, 10, 10, 10, 2, 2 ; $42d1
 	script_wait_frames 2 ; $42e0
-	script_copy_scene_rect $3d, $0a, $0a, $0a, $02, $02 ; $42e7
+	script_copy_scene_rect 61, 10, 10, 10, 2, 2 ; $42e7
 	script_wait_frames 2 ; $42f6
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $42fd
 	ld c, $08 ; $4307
@@ -132,11 +132,11 @@ TrainingGymExit03_0e:
 	script_wait_move ACTOR_PLAYER ; $433c
 	farcall WaitPlayerMoveDone ; $4341
 	sound SFX_DOOR ; $4344
-	script_copy_scene_rect $37, $0a, $14, $0a, $02, $02 ; $4346
+	script_copy_scene_rect 55, 10, 20, 10, 2, 2 ; $4346
 	script_wait_frames 2 ; $4355
-	script_copy_scene_rect $3a, $0a, $14, $0a, $02, $02 ; $435c
+	script_copy_scene_rect 58, 10, 20, 10, 2, 2 ; $435c
 	script_wait_frames 2 ; $436b
-	script_copy_scene_rect $3d, $0a, $14, $0a, $02, $02 ; $4372
+	script_copy_scene_rect 61, 10, 20, 10, 2, 2 ; $4372
 	script_wait_frames 2 ; $4381
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $4388
 	ld c, $08 ; $4392

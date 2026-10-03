@@ -467,19 +467,19 @@ SetupWallPracticeLevelSigns:
 	ld a, WALLPRACTICESTAGE_LEVEL1 ; $505f
 	test_flag FLAG_CLEARED_WALL_LEVEL_1 ; $5061
 	jp z, .step ; $5064
-	script_copy_scene_rect $1e, $2c, $02, $2c, $02, $02 ; $5067
+	script_copy_scene_rect 30, 44, 2, 44, 2, 2 ; $5067
 	ld a, WALLPRACTICESTAGE_LEVEL2 ; $5076
 	test_flag FLAG_CLEARED_WALL_LEVEL_2 ; $5078
 	jr z, .step ; $507b
-	script_copy_scene_rect $1e, $30, $06, $2c, $02, $02 ; $507d
+	script_copy_scene_rect 30, 48, 6, 44, 2, 2 ; $507d
 	ld a, WALLPRACTICESTAGE_LEVEL3 ; $508c
 	test_flag FLAG_CLEARED_WALL_LEVEL_3 ; $508e
 	jr z, .step ; $5091
-	script_copy_scene_rect $1e, $34, $10, $2c, $02, $02 ; $5093
+	script_copy_scene_rect 30, 52, 16, 44, 2, 2 ; $5093
 	ld a, WALLPRACTICESTAGE_LEVEL4 ; $50a2
 	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $50a4
 	jr z, .step ; $50a7
-	script_copy_scene_rect $1e, $38, $14, $2c, $02, $02 ; $50a9
+	script_copy_scene_rect 30, 56, 20, 44, 2, 2 ; $50a9
 	ld a, WALLPRACTICESTAGE_MASTER ; $50b8
 	test_flag FLAG_CLEARED_WALL_MASTER ; $50ba
 	jr z, .step ; $50bd
