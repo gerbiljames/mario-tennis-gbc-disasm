@@ -319,7 +319,10 @@ In all, the sites `tools/actorslots.py` reaches carry 5,124 slot names
 number; code it never reaches keeps more. These are:
 * slots with no single part: a trophy in one list and an exclamation
   balloon in another, the Coz twins in most Island Open rounds but Sean or
-  Elden in the final;
+  Elden in the final, B. Coz in the doubles ending's lists but a spectator
+  in the singles ones (`End16BeforeFinalsCutscene_27` hands slot `$0b` the
+  walk to the court in both; in singles the spectator gets it and stays
+  put);
 * slots past the end of every candidate list (actors spawned by script);
 * the lines inside shared twin files;
 * tables of locations the player never controls.
