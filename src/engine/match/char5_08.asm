@@ -597,7 +597,7 @@ ReloadCharFacingTiles:
 	add hl, hl ; $763d
 	ld e, l ; $763e
 	ld d, h ; $763f
-	jp GetPerspectiveScale.checkRomBank ; $7640
+	jp QueueCharFrameTiles ; $7640
 ReloadCharFacingTilesTable:
 	; $7643, 8 bytes (bytes:8)
 	db $02, $03, $04, $03, $02, $01, $00, $01 ; 0x00

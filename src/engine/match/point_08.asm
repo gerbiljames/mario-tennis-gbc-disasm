@@ -177,14 +177,14 @@ ResolvePointResultSequence:
 	push hl ; $4e25
 	ld a, [wMatchWinLoseFlag] ; $4e26
 	and a ; $4e29
-	jp nz, ResolveCalledPoint.case7 ; $4e2a
+	jp nz, ShowMatchEndSequence ; $4e2a
 	ld a, [wSetWinLoseFlag] ; $4e2d
 	and a ; $4e30
-	jp nz, ResolveCalledPoint.case10 ; $4e31
+	jp nz, ShowSetEndSequence ; $4e31
 	ld a, [wGameWinLoseFlag] ; $4e34
 	and a ; $4e37
-	jp nz, ResolveCalledPoint.case11 ; $4e38
-	jp ResolveCalledPoint.case5 ; $4e3b
+	jp nz, ShowGameEndSequence ; $4e38
+	jp ShowPointScoreSequence ; $4e3b
 DelayAfterPointResolution:
 	ld a, $46 ; $4e3e
 	call StepMatchFramesSkippable ; $4e40
@@ -232,7 +232,7 @@ ResolveCalledPoint:
 	ld a, 10 ; $4e9d
 	call StepMatchFrames ; $4e9f
 	ret ; $4ea2
-.case5:
+ShowPointScoreSequence:
 	ld a, [wPointWinLoseFlag] ; $4ea3
 	and a ; $4ea6
 	ret z ; $4ea7
@@ -254,7 +254,7 @@ ResolveCalledPoint:
 	call StepMatchFramesSkippable ; $4eca
 	farcall DismissGameScoreDisplayObjs ; $4ecd
 	ret ; $4ed0
-.case7:
+ShowMatchEndSequence:
 	ld a, [wGameMode] ; $4ed1
 	cp GAMEMODE_MARIO_MINIGAME ; $4ed4
 	jr nz, .case9 ; $4ed6
@@ -284,7 +284,7 @@ ResolveCalledPoint:
 	farcall DismissWinLoseResultObj ; $4f08
 	farcall HideCourtBanner ; $4f0b
 	ret ; $4f0e
-.case10:
+ShowSetEndSequence:
 	ld a, [wPlayer1SetsWon] ; $4f0f
 	ld b, $01 ; $4f12
 	farcall LoadPlayer1ScoreDigitGfx ; $4f14
@@ -292,8 +292,8 @@ ResolveCalledPoint:
 	ld b, $01 ; $4f1a
 	farcall LoadPlayer2ScoreDigitGfx ; $4f1c
 	ld d, $0c ; $4f1f
-	jr .done ; $4f21
-.case11:
+	jr ShowGameEndSequence.done ; $4f21
+ShowGameEndSequence:
 	ld a, [wPlayer1GamesWon] ; $4f23
 	ld b, $01 ; $4f26
 	farcall LoadPlayer1ScoreDigitGfx ; $4f28

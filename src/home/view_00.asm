@@ -252,7 +252,7 @@ GetPerspectiveScale:
 	set 6, h ; $2e67
 	ld d, [hl] ; $2e69
 	ret ; $2e6a
-.checkRomBank:
+QueueCharFrameTiles:
 	ldh a, [hRomBank] ; $2e6b
 	push af ; $2e6d
 	ld a, [wCharObjectBank] ; $2e6e
