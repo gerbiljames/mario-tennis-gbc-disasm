@@ -339,7 +339,7 @@ MarioWorldInitScript_0e:
 	cp $0a ; $54d8
 	jp z, MarioWorldArrivalSingles ; $54da
 	cp $0e ; $54dd
-	jp z, MoveDoublesPartnerToPlayer.checkDoubles ; $54df
+	jp z, MarioWorldEntry0eScene ; $54df
 	cp $0f ; $54e2
 	jp z, MarioWorldArrivalSingles ; $54e4
 	test_flag FLAG_DOUBLES ; $54e7
@@ -352,7 +352,7 @@ MarioWorldInitScript_0e:
 	script_set_speed ACTOR_PLAYER, $0014 ; $54f6
 	script_move_target ACTOR_PLAYER, 18.0, 29.0 ; $54fe
 .doubles:
-	jp MoveDoublesPartnerToPlayer.placeActors ; $5509
+	jp MarioWorldEntry0eScene.placeActors ; $5509
 .placeActors:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $550c
 	ret z ; $550f
@@ -362,7 +362,7 @@ MarioWorldInitScript_0e:
 	script_set_speed ACTOR_PLAYER, $0014 ; $5516
 	script_move_target ACTOR_PLAYER, 18.0, 29.0 ; $551e
 .done:
-	jp MoveDoublesPartnerToPlayer.placeActors ; $5529
+	jp MarioWorldEntry0eScene.placeActors ; $5529
 	ret ; $552c
 ActorScript_0e_06:
 	; $552d, 24 bytes (actor_script)
@@ -407,7 +407,7 @@ MarioWorldArrivalSingles:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $557f
 	jr nz, .arrive ; $5582
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5584
-	jp nz, MoveDoublesPartnerToPlayer.singles ; $5587
+	jp nz, MarioWorldEntry0eScene.singles ; $5587
 .arrive:
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $558a
 	script_fade_in $04 ; $5595

@@ -290,7 +290,7 @@ MoveDoublesPartnerToPlayer:
 	farcall ScriptSetActorMoveTarget ; $69a4
 	script_wait_move ACTOR_PARTNER ; $69a7
 	ret ; $69ac
-.checkDoubles:
+MarioWorldEntry0eScene:
 	test_flag FLAG_DOUBLES ; $69ad
 	jp nz, .doubles ; $69b0
 .singles:

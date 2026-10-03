@@ -294,9 +294,9 @@ JuniorClassCourtSinglesInitScript_11:
 	cp $0f ; $6d18
 	jp z, JuniorClassCourtSinglesMatchReturn ; $6d1a
 	cp $0e ; $6d1d
-	jp z, JuniorClassCourtSinglesMatchReturn.eq012 ; $6d1f
+	jp z, JuniorClassCourtSinglesEntry0eScene ; $6d1f
 	cp $0d ; $6d22
-	jp z, JuniorClassCourtSinglesMatchReturn.storeStoryModeShowLocationName ; $6d24
+	jp z, JuniorClassCourtSinglesEntry0dScene ; $6d24
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $6d27
 	jr nz, .stage3 ; $6d2a
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $6d2c
@@ -411,7 +411,7 @@ JuniorClassCourtSinglesMatchReturn:
 	jr z, .eq01 ; $6e58
 	ld a, [wMatchWinLoseFlag] ; $6e5a
 	cp WINLOSE_WIN ; $6e5d
-	jp z, .eq012 ; $6e5f
+	jp z, JuniorClassCourtSinglesEntry0eScene ; $6e5f
 .eq01:
 	script_player_speed $0040 ; $6e62
 	script_move_player 19.0, 21.0 ; $6e68
@@ -419,7 +419,7 @@ JuniorClassCourtSinglesMatchReturn:
 	script_face ACTOR_PLAYER, FACE_UP ; $6e7d
 	farcall WaitPlayerMoveDone ; $6e84
 	ret ; $6e87
-.eq012:
+JuniorClassCourtSinglesEntry0eScene:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $6e88
 	ld [wStoryModeCurrentLocation], a ; $6e8a
 	ld a, $0d ; $6e8d
@@ -429,17 +429,17 @@ JuniorClassCourtSinglesMatchReturn:
 	ld [wStoryModeExitTriggerRequest], a ; $6e97
 	farcall StubNop_1e ; $6e9a
 	ret ; $6e9d
-.storeStoryModeShowLocationName:
+JuniorClassCourtSinglesEntry0dScene:
 	xor a ; $6e9e
 	ld [wStoryModeShowLocationName], a ; $6e9f
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6ea2
 	sub $01 ; $6ea5
 	ld a, a ; $6ea7
 	rst Rst00 ; $6ea8
-	dw JuniorClassCourtSinglesMatchReturn.parkMiddleCourtPracticePair ; $6ea9 jumptable
-	dw JuniorClassCourtSinglesMatchReturn.parkLeftCourtPracticePairRightSide ; $6eab jumptable
-	dw JuniorClassCourtSinglesMatchReturn.parkLeftCourtPracticePairRightSide2 ; $6ead jumptable
-	dw JuniorClassCourtSinglesMatchReturn.waitPlayerMoveDone ; $6eaf jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.parkMiddleCourtPracticePair ; $6ea9 jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.parkLeftCourtPracticePairRightSide ; $6eab jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.parkLeftCourtPracticePairRightSide2 ; $6ead jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.waitPlayerMoveDone ; $6eaf jumptable
 .parkMiddleCourtPracticePair:
 	call ParkMiddleCourtPracticePair ; $6eb1
 	script_player_speed $0040 ; $6eb4

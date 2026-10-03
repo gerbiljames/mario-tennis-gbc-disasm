@@ -92,7 +92,7 @@ MarioWorldArrivalDoubles:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5bba
 	jr nz, .arrive ; $5bbd
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $5bbf
-	jp nz, MoveDoublesPartnerToPlayer.doubles ; $5bc2
+	jp nz, MarioWorldEntry0eScene.doubles ; $5bc2
 .arrive:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $5bc5
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $5bd0

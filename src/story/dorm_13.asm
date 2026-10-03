@@ -195,24 +195,24 @@ DormRoomInitScript_13:
 	ld [wStoryModeShowLocationName], a ; $502b
 	ld a, [wStoryModeEntryPoint] ; $502e
 	cp $0a ; $5031
-	jp z, ShowStoryNarration_13.setText ; $5033
+	jp z, DormRoomEntry0aScene ; $5033
 	cp $09 ; $5036
-	jp z, ShowStoryNarration_13.setText2 ; $5038
+	jp z, DormRoomEntry09Scene ; $5038
 	cp $08 ; $503b
-	jp z, ShowStoryNarration_13.setText3 ; $503d
+	jp z, DormRoomEntry08Scene ; $503d
 	call ComputeStoryRankTier_13 ; $5040
 	call SetupDormRoomSceneVariant ; $5043
 	call PlaceDormRoomArrivalActors_13 ; $5046
 	call SetDormRoomEventTriggerCells_13 ; $5049
 	ld a, [wStoryModeEntryPoint] ; $504c
 	cp $0f ; $504f
-	jp z, DormRoomNpc03_13.walkToBed ; $5051
+	jp z, DormRoomEntry0fScene ; $5051
 	sound BGM_DORM_ROOM ; $5054
 	ld a, [wStoryModeEntryPoint] ; $5056
 	cp $01 ; $5059
-	jp z, DormRoomNpc03_13.byStage ; $505b
+	jp z, DormRoomEntry01Scene ; $505b
 	cp $02 ; $505e
-	jp z, DormRoomNpc03_13.morningDoubles ; $5060
+	jp z, DormRoomEntry02Scene ; $5060
 	farcall EndCutsceneScriptMode ; $5063
 	ret ; $5066
 SetDormRoomEventTriggerCells_13:
@@ -437,7 +437,7 @@ DormRoomNpc03_13:
 .doublesPrompt:
 	call RunPlayDoublesTodayPrompt ; $52e3
 	ret ; $52e6
-.byStage:
+DormRoomEntry01Scene:
 	call GetDormRoomStoryStage_13 ; $52e7
 	cp $01 ; $52ea
 	jp z, DormRoomArrivalCutscene_13 ; $52ec
@@ -490,7 +490,7 @@ DormRoomNpc03_13:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5394
 	script_wait_idle ACTOR_PLAYER ; $539b
 	ret ; $53a0
-.walkToBed:
+DormRoomEntry0fScene:
 	sound JINGLE_DONE_FOR_THE_DAY ; $53a1
 	script_set_speed ACTOR_PLAYER, $0010 ; $53a3
 	script_player_speed $0040 ; $53ab
@@ -602,7 +602,7 @@ DormRoomNpc03_13:
 	script_set_text Text_31_290 ; $5587
 	script_speak ACTOR_DORM_ROOM_KATE ; $558d
 	ret ; $5592
-.morningDoubles:
+DormRoomEntry02Scene:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5593
 	jr z, .morningAlt ; $5596
 	ld hl, wMapScratch ; $5598

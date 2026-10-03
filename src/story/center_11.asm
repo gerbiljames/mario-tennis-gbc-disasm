@@ -155,7 +155,7 @@ CenterCourtInitScript_11:
 	call SetPlayerAndPartnerObjectDefs_11 ; $41a7
 	ld a, [wStoryModeEntryPoint] ; $41aa
 	cp $0f ; $41ad
-	jp z, SetPlayerAndPartnerObjectDefs_11.placeActors ; $41af
+	jp z, CenterCourtEntry0fScene ; $41af
 	call MapArrivalWalk_11 ; $41b2
 	ret ; $41b5
 SetupCenterCourtSceneVariant:
@@ -249,7 +249,7 @@ SetPlayerAndPartnerObjectDefs_11:
 	farcall LoadActorObjectDefIfValid ; $436f
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $4372
 	ret ; $4379
-.placeActors:
+CenterCourtEntry0fScene:
 	script_set_position $0a, 37.0, 36.0 ; $437a
 	test_flag FLAG_DOUBLES ; $4385
 	jr z, .notDoubles2 ; $4388

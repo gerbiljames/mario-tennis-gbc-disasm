@@ -329,7 +329,7 @@ AdvanceFirework1Ascent_14:
 	sub b ; $6f76
 	ld [wCutsceneObjY + 1], a ; $6f77
 	ret ; $6f7a
-.loadScene:
+IslandSkyEntry0fAnd0dScene:
 	call DisableLCDSafely ; $6f7b
 	call LoadPlaneObjGfx_14 ; $6f7e
 	call LoadIslandSkyEffectObjGfx_14 ; $6f81

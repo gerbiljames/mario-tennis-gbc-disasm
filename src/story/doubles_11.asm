@@ -5,7 +5,7 @@ JuniorClassCourtDoublesMatchReturn:
 	jr z, .eq01 ; $5d43
 	ld a, [wMatchWinLoseFlag] ; $5d45
 	cp WINLOSE_WIN ; $5d48
-	jp z, .eq012 ; $5d4a
+	jp z, JuniorClassCourtDoublesEntry0eScene ; $5d4a
 .eq01:
 	script_player_speed $0040 ; $5d4d
 	script_move_player 19.0, 21.0 ; $5d53
@@ -15,7 +15,7 @@ JuniorClassCourtDoublesMatchReturn:
 	script_face ACTOR_PARTNER, FACE_UP ; $5d7a
 	farcall WaitPlayerMoveDone ; $5d81
 	ret ; $5d84
-.eq012:
+JuniorClassCourtDoublesEntry0eScene:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $5d85
 	ld [wStoryModeCurrentLocation], a ; $5d87
 	ld a, $0d ; $5d8a
@@ -25,7 +25,7 @@ JuniorClassCourtDoublesMatchReturn:
 	ld [wStoryModeExitTriggerRequest], a ; $5d94
 	farcall StubNop_1e ; $5d97
 	ret ; $5d9a
-.storeStoryModeShowLocationName:
+JuniorClassCourtDoublesEntry0dScene:
 	xor a ; $5d9b
 	ld [wStoryModeShowLocationName], a ; $5d9c
 	script_null_script ACTOR_PARTNER ; $5d9f
@@ -34,9 +34,9 @@ JuniorClassCourtDoublesMatchReturn:
 	sub $02 ; $5dad
 	ld a, a ; $5daf
 	rst Rst00 ; $5db0
-	dw JuniorClassCourtDoublesMatchReturn.setFlag ; $5db1 jumptable
-	dw JuniorClassCourtDoublesMatchReturn.setFlag2 ; $5db3 jumptable
-	dw JuniorClassCourtDoublesMatchReturn.setFlag3 ; $5db5 jumptable
+	dw JuniorClassCourtDoublesEntry0dScene.setFlag ; $5db1 jumptable
+	dw JuniorClassCourtDoublesEntry0dScene.setFlag2 ; $5db3 jumptable
+	dw JuniorClassCourtDoublesEntry0dScene.setFlag3 ; $5db5 jumptable
 .setFlag:
 	set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5db7
 	script_player_speed $0040 ; $5dba

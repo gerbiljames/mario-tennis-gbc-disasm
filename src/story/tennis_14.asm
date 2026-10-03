@@ -247,7 +247,7 @@ TennisMachineRoomInitScript_14:
 	cp $07 ; $42a5
 	jp z, MachinePracticeResultScene ; $42a7
 	cp STORYENTRY_NONE ; $42aa
-	jp z, MachineCourtWalkToAttendantCutscene.practiceRoom ; $42ac
+	jp z, TennisMachineRoomNoEntryScene ; $42ac
 	ret ; $42af
 MachineCourtResultScene:
 	test_flag FLAG_DOUBLES ; $42b0

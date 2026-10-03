@@ -407,7 +407,7 @@ MatchSelectHandlersBHandler0:
 	ld a, [wKeepMatchStatsFlag] ; $5027
 	or a ; $502a
 	jr z, .restoreReturnPoint ; $502b
-	jp EraseSavedDataFlowHandler4_10.runMatch ; $502d
+	jp MatchSelectRunMatch ; $502d
 .restoreReturnPoint:
 	farcall RestoreStoryReturnPoint ; $5030
 	ld b, STORYLOC_DORM_ROOM ; $5033

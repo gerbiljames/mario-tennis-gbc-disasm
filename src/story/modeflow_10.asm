@@ -377,7 +377,7 @@ EraseSavedDataFlowHandler4_10:
 	ld [wSelectedMinigame], a ; $55af
 	jp RunEraseSavedDataFlow ; $55b2
 	ret ; $55b5
-.runMatch:
+MatchSelectRunMatch:
 	farcall RunMatch ; $55b6
 	ld a, [wSaveAndQuitRequest] ; $55b9
 	or a ; $55bc

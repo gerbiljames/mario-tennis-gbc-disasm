@@ -397,9 +397,9 @@ JuniorClassCourtDoublesInitScript_11:
 	cp $0f ; $5a69
 	jp z, JuniorClassCourtDoublesMatchReturn ; $5a6b
 	cp $0e ; $5a6e
-	jp z, JuniorClassCourtDoublesMatchReturn.eq012 ; $5a70
+	jp z, JuniorClassCourtDoublesEntry0eScene ; $5a70
 	cp $0d ; $5a73
-	jp z, JuniorClassCourtDoublesMatchReturn.storeStoryModeShowLocationName ; $5a75
+	jp z, JuniorClassCourtDoublesEntry0dScene ; $5a75
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5a78
 	jr nz, .stage3 ; $5a7b
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5a7d

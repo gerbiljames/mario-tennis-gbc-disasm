@@ -390,7 +390,7 @@ ShowStoryNarration_13:
 	script_speak SPEAKER_NONE | 5 ; $5a69
 	script_wait_frames 4 ; $5a6e
 	ret ; $5a75
-.setText:
+DormRoomEntry0aScene:
 	script_set_text Text_30_496 ; $5a76
 	call ShowStoryNarration_13 ; $5a7c
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $5a7f
@@ -401,7 +401,7 @@ ShowStoryNarration_13:
 	ld [wUnusedExitTriggerIdMirror], a ; $5a8b
 	ld [wStoryModeExitTriggerRequest], a ; $5a8e
 	ret ; $5a91
-.setText2:
+DormRoomEntry09Scene:
 	script_set_text Text_30_497 ; $5a92
 	call ShowStoryNarration_13 ; $5a98
 	ld a, STORYLOC_TOURNAMENT_COURTYARD ; $5a9b
@@ -412,7 +412,7 @@ ShowStoryNarration_13:
 	ld [wUnusedExitTriggerIdMirror], a ; $5aa7
 	ld [wStoryModeExitTriggerRequest], a ; $5aaa
 	ret ; $5aad
-.setText3:
+DormRoomEntry08Scene:
 	script_set_text Text_30_496 ; $5aae
 	call ShowStoryNarration_13 ; $5ab4
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $5ab7

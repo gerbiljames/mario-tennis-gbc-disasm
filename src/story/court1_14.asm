@@ -217,15 +217,15 @@ IslandSkyInitScript_14:
 	script_set_position ACTOR_ISLAND_SKY_WALK_74_06, 63.0, 63.0 ; $52d8
 	ld a, [wStoryModeEntryPoint] ; $52e3
 	cp $02 ; $52e6
-	jp z, QueuePlaneSpriteByFrameCounter_14.loadScene ; $52e8
+	jp z, IslandSkyEntry02Scene ; $52e8
 	cp $08 ; $52eb
 	jp z, IslandSkyInitScript_14.scriptRespawnLocationActors ; $52ed
 	cp $0e ; $52f0
-	jp z, QueueTwinkleSprite_14.queue ; $52f2
+	jp z, IslandSkyEntry0eScene ; $52f2
 	cp $0f ; $52f5
-	jp z, AdvanceFirework1Ascent_14.loadScene ; $52f7
+	jp z, IslandSkyEntry0fAnd0dScene ; $52f7
 	cp $0d ; $52fa
-	jp z, AdvanceFirework1Ascent_14.loadScene ; $52fc
+	jp z, IslandSkyEntry0fAnd0dScene ; $52fc
 	jp .loadScene ; $52ff
 	ret ; $5302
 .loadScene:

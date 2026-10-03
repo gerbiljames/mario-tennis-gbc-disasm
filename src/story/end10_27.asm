@@ -66,7 +66,7 @@ End10VarsityCourtTileTriggers_27:
 End10VarsityCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $561d
 	cp $01 ; $5620
-	jp z, SetPartnerObjDefByGender_27.checkDoubles ; $5622
+	jp z, End10VarsityCourtEntry01Scene ; $5622
 	ret ; $5625
 SetPartnerObjDefByGender_27:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5626
@@ -77,7 +77,7 @@ SetPartnerObjDefByGender_27:
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $563f
 .done:
 	ret ; $5642
-.checkDoubles:
+End10VarsityCourtEntry01Scene:
 	test_flag FLAG_DOUBLES ; $5643
 	jr z, .notDoubles ; $5646
 	jp .scriptRespawnLocationActors ; $5648

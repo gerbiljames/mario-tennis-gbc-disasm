@@ -977,9 +977,9 @@ AwardsCeremonyInitScript_0f:
 	call SetPlayerAndPartnerObjectDefs ; $55c3
 	ld a, [wStoryModeEntryPoint] ; $55c6
 	cp $0a ; $55c9
-	jp z, CutsceneStompScreenShake.arrival ; $55cb
+	jp z, AwardsCeremonyEntry0aScene ; $55cb
 	cp $0b ; $55ce
-	jp z, CutsceneStompScreenShake.doubles ; $55d0
+	jp z, AwardsCeremonyEntry0bScene ; $55d0
 	call CheckAwardsCeremonyRivalSceneDone ; $55d3
 	and $01 ; $55d6
 	jr z, .checkDoubles ; $55d8

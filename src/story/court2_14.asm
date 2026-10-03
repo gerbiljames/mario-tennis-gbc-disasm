@@ -360,7 +360,7 @@ MachineCourtWalkToAttendantCutscene:
 	script_wait_move ACTOR_PLAYER ; $49f3
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $49f8
 	ret ; $49ff
-.practiceRoom:
+TennisMachineRoomNoEntryScene:
 	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4a00
 	jr z, .done ; $4a03
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $4a05

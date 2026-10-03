@@ -50,7 +50,7 @@ CutsceneStompScreenShake:
 	ld a, $00 ; $56a2
 	farcall SetScreenShake ; $56a4
 	ret ; $56a7
-.arrival:
+AwardsCeremonyEntry0aScene:
 	call AwardsCeremonyArrivalIntro ; $56a8
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_74_08, ANIM_BOUNCE ; $56ab
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $56b2
@@ -145,7 +145,7 @@ CutsceneStompScreenShake:
 	ld de, wActors ; $5882
 	farcall AttachActorStepMover ; $5885
 	ret ; $5888
-.doubles:
+AwardsCeremonyEntry0bScene:
 	script_null_script ACTOR_PARTNER ; $5889
 	script_set_position ACTOR_PARTNER, 11.0, 39.0 ; $588e
 	script_face ACTOR_PARTNER, FACE_UP ; $5899

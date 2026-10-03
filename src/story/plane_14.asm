@@ -322,7 +322,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld b, OAM_BANK1 ; $6285
 	call QueueSpriteTemplate ; $6287
 	ret ; $628a
-.loadScene:
+IslandSkyEntry02Scene:
 	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $628b
 	call DisableLCDSafely ; $628e
 	call LoadPlaneObjGfx2_14 ; $6291

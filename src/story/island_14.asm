@@ -159,7 +159,7 @@ QueueTwinkleSprite_14:
 	ld b, OAM_BANK1 ; $76c0
 	call QueueSpriteTemplate ; $76c2
 	ret ; $76c5
-.queue:
+IslandSkyEntry0eScene:
 	call DisableLCDSafely ; $76c6
 	call LoadIslandSkyEffectObjGfx_14 ; $76c9
 	call LoadTwinkleObjGfx_14 ; $76cc

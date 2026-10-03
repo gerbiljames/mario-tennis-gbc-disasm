@@ -34,9 +34,9 @@ End7TrainingCtrTileTriggers_27:
 End7TrainingCtrInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6202
 	cp $01 ; $6205
-	jr z, ComputeMachineCourtProgress_27.eq01 ; $6207
+	jr z, End7TrainingCtrEntry01Scene ; $6207
 	cp $02 ; $6209
-	jp z, ComputeMachineCourtProgress_27.placeActors ; $620b
+	jp z, End7TrainingCtrEntry02Scene ; $620b
 	ret ; $620e
 ComputeMachineCourtProgress_27:
 	ld a, $00 ; $620f
@@ -60,7 +60,7 @@ ComputeMachineCourtProgress_27:
 .store:
 	ld [wMapSceneStage], a ; $626c
 	ret ; $626f
-.eq01:
+End7TrainingCtrEntry01Scene:
 	ld a, $26 ; $6270
 	ld [wMapScrollMinX], a ; $6272
 	ld a, $23 ; $6275
@@ -106,7 +106,7 @@ ComputeMachineCourtProgress_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $6369
 	ld [wStoryModeExitTriggerRequest], a ; $636c
 	ret ; $636f
-.placeActors:
+End7TrainingCtrEntry02Scene:
 	script_set_position ACTOR_PARTNER, 22.0, 26.0 ; $6370
 	script_set_speed ACTOR_PARTNER, $0010 ; $637b
 	script_set_speed ACTOR_PLAYER, $0010 ; $6383
