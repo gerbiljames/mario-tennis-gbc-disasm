@@ -685,7 +685,7 @@ stored ROM pointers among it), and `wCollisionMap` reads mostly in the top of
 WRAM bank `$06`. Collision and tile triggers there are whatever those bytes
 say, so one layout lets the player wander on and another fires an exit.
 
-### Courtyard entry `$0a` reads its walk-in direction from code
+### Courtyard entry `$0a` would read its walk-in direction from code
 
 `CourtyardEntryWalkIn_13` (`$13:$62ff`) walks the player (and the partner in
 doubles) in from the entry point using `CourtyardEntryWalkInFacings_13[entry -
@@ -696,7 +696,10 @@ three-entry halves for entries 1-3. `CourtyardEntryPoints_13` also lists `$0a`,
 (byte 12 for the partner): instruction bytes of `VarsityCourtTourCutscene`
 after the table. Entry `$0a` takes the low byte of
 `ld hl, VarsityCourtTourActors_13` as its angle, so the walk-in direction on that
-entry depends on where that label happens to sit.
+entry would depend on where that label happens to sit. Nothing in retail
+enters the Courtyard at `$0a` -- no exit, warp, table or return point names
+it (`docs/story_mode.md`, `map_entry`) -- so only the debug warp menu could
+show it.
 
 ## Dead stores
 

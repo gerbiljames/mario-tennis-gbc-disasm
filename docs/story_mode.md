@@ -239,6 +239,33 @@ init script runs a whole scene for an entry, the scene is named for it,
 | MarioWorld | `MarioWorldEntry0eScene` |
 | TennisMachineRoom | `TennisMachineRoomNoEntryScene` |
 
+What sets the entry point: an `ExitTriggers` record's `arg1`, a code warp
+(`ld a, STORYLOC_* / ld [wStoryModeCurrentLocation], a / ld a, $nn / ld
+[wStoryModeEntryPoint], a`), the ending's (location, entry) table, the return
+point `SaveStoryReturnPoint` stores, the Training Center's
+`wMapSceneStage2` (`$0b`/`$0c`, plus 2 after the equipment screens), and
+`STORYENTRY_NONE` (`$ff`: keep the saved position, no record). Some writes
+name an entry with no `map_entry` row at all; the location's init script
+reads it as a scene selector (the `Entry<id>Scene`s above). Only the awards
+ceremony's two entries depend on the mode: the firework scene
+(`$14:$664a`) sends doubles to `$0b` and singles to `$0a`.
+
+A static scan of all of those finds no way in to 15 of the 126 `map_entry`
+rows; only the debug warp menu, which retail cannot open, could select them:
+
+| location | entries |
+| --- | --- |
+| Small Char. Test, Test (debug maps) | `$01` each |
+| Academy Main Bldg. | `$0d`, `$0e` |
+| Courtyard | `$0a` |
+| Dorm Room | `$03`, `$04`, `$0e` |
+| Training Court | `$02` |
+| Awards Ceremony | `$01` |
+| Peach's Castle | `$02` |
+| End1 Main Bldg. | `$0f` |
+| End3 Dorm Ent. | `$02`, `$0f` |
+| End5 Service Ace | `$02` |
+
 ### `map_actor` — spawn templates (14 bytes, list ends on a `$ff` sentinel)
 
 | off | field |
