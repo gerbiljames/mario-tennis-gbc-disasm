@@ -236,17 +236,13 @@ SetupCharacterSelectScreen:
 	ld [wShadowTilemapBank], a ; $49cc
 	ld a, $00 ; $49cf
 	ld [wWindowTileAttr], a ; $49d1
-	ld d, $00 ; $49d4
-	ld e, $0f ; $49d6
-	ld b, $14 ; $49d8
-	ld c, $03 ; $49da
+	rect_cell $00, $0f ; $49d4
+	rect_size $14, $03 ; $49d8
 	farcall CreateWindowFromScreenRect ; $49dc
 	farcall DrawTextWindowFrame ; $49df
 	farcall RedrawWindowRows ; $49e2
-	ld d, $00 ; $49e5
-	ld e, $02 ; $49e7
-	ld b, $14 ; $49e9
-	ld c, $03 ; $49eb
+	rect_cell $00, $02 ; $49e5
+	rect_size $14, $03 ; $49e9
 	farcall CreateWindowFromScreenRect ; $49ed
 	farcall DrawTextWindowFrame ; $49f0
 	farcall RedrawWindowRows ; $49f3

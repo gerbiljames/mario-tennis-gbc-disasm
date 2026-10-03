@@ -352,8 +352,7 @@ N64RecordTypeCursorSpriteTask:
 	ld d, h ; $737f
 	ld e, l ; $7380
 	ld hl, N64RecordTypeCursorSpriteTask_SpriteTemplate1 ; $7381
-	ld b, OAM_BANK1 ; $7384
-	ld c, $70 ; $7386
+	sprite_attr_tile OAM_BANK1, $70 ; $7384
 	call QueueSpriteTemplate ; $7388
 	ret ; $738b
 N64RecordTypeCursorSpriteTask_SpriteTemplate0:
@@ -399,8 +398,7 @@ DrawN64RecordTypeGrid:
 	call LoadN64RecordTypeCellPalette ; $73e3
 	wram_bank WRAM_SCREEN ; $73e6
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $73ec
-	ld b, $14 ; $73ef
-	ld c, $01 ; $73f1
+	rect_size $14, $01 ; $73ef
 	ld h, $03 ; $73f3
 	farcall FillTilemapRect ; $73f5
 	ld a, $02 ; $73f8
@@ -408,8 +406,7 @@ DrawN64RecordTypeGrid:
 	ld a, $04 ; $73fd
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $73ff
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $7402
-	ld b, $12 ; $7405
-	ld c, $01 ; $7407
+	rect_size $12, $01 ; $7405
 	ld h, $20 ; $7409
 	farcall FillTilemapRect ; $740b
 	call DrawN64RecordTypeCaption ; $740e
@@ -448,8 +445,7 @@ FillN64RecordTypeCell:
 	ld d, [hl] ; $7442
 	ld e, a ; $7443
 	pop hl ; $7444
-	ld b, $05 ; $7445
-	ld c, $03 ; $7447
+	rect_size $05, $03 ; $7445
 	farcall FillTilemapRect ; $7449
 	pop hl ; $744c
 	pop de ; $744d
@@ -700,8 +696,7 @@ DrawN64TransferItemGrid:
 	call LoadN64TransferItemCellPalette ; $7630
 	wram_bank WRAM_SCREEN ; $7633
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $7639
-	ld b, $14 ; $763c
-	ld c, $01 ; $763e
+	rect_size $14, $01 ; $763c
 	ld h, $03 ; $7640
 	farcall FillTilemapRect ; $7642
 	ld a, $02 ; $7645
@@ -709,8 +704,7 @@ DrawN64TransferItemGrid:
 	ld a, $04 ; $764a
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $764c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $764f
-	ld b, $12 ; $7652
-	ld c, $01 ; $7654
+	rect_size $12, $01 ; $7652
 	ld h, $20 ; $7656
 	farcall FillTilemapRect ; $7658
 	call DrawN64TransferItemCaption ; $765b
@@ -814,8 +808,7 @@ N64TransferItemCursorSpriteTask:
 	ld d, h ; $771a
 	ld e, l ; $771b
 	ld hl, N64TransferItemCursorSpriteTask_SpriteTemplate1 ; $771c
-	ld b, OAM_BANK1 ; $771f
-	ld c, $70 ; $7721
+	sprite_attr_tile OAM_BANK1, $70 ; $771f
 	call QueueSpriteTemplate ; $7723
 	ret ; $7726
 N64TransferItemCursorSpriteTask_SpriteTemplate0:

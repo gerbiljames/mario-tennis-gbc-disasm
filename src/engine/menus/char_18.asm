@@ -455,8 +455,7 @@ Screen0Palette:
 QueueScreen0Sprites:
 	ld hl, QueueScreen0Sprites_SpriteTemplate ; $775c
 	ld_xy de, $28, $3a ; $775f
-	ld c, $00 ; $7762
-	ld b, 0 ; $7764
+	sprite_tile_attr $00, 0 ; $7762
 	call QueueSpriteTemplate ; $7766
 	ret ; $7769
 QueueScreen0Sprites_SpriteTemplate:

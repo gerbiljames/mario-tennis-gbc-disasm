@@ -374,8 +374,7 @@ MainMenuCursorSpriteTask:
 	add d ; $58ad
 	ld d, a ; $58ae
 	ld hl, MainMenuCursorSpriteTask_SpriteTemplate ; $58af
-	ld b, OAM_BANK1 ; $58b2
-	ld c, $72 ; $58b4
+	sprite_attr_tile OAM_BANK1, $72 ; $58b2
 	call QueueSpriteTemplate ; $58b6
 	ret ; $58b9
 MainMenuCursorSpriteTaskPtrs:
@@ -474,8 +473,7 @@ DrawMainMenuSelection:
 .fillTilemapRect:
 	wram_bank WRAM_SCREEN ; $59b1
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $59b7
-	ld b, $14 ; $59ba
-	ld c, $01 ; $59bc
+	rect_size $14, $01 ; $59ba
 	ld h, $03 ; $59be
 	farcall FillTilemapRect ; $59c0
 	ld a, $02 ; $59c3
@@ -483,8 +481,7 @@ DrawMainMenuSelection:
 	ld a, $04 ; $59c8
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $59ca
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $59cd
-	ld b, $12 ; $59d0
-	ld c, $01 ; $59d2
+	rect_size $12, $01 ; $59d0
 	ld h, $20 ; $59d4
 	farcall FillTilemapRect ; $59d6
 	call DrawMainMenuCaption ; $59d9

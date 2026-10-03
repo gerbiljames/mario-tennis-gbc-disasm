@@ -30,12 +30,10 @@ AcademyWingInstallDoorTriggers_10:
 	cp ACADEMYWINGSTAGE_COMPLETE ; $742c
 	jr nz, .done ; $742e
 	ld a, $11 ; $7430
-	ld d, $20 ; $7432
-	ld e, $3a ; $7434
+	map_cell $20, $3a ; $7432
 	farcall WriteBehaviorMapCell ; $7436
 	ld a, $21 ; $7439
-	ld d, $20 ; $743b
-	ld e, $36 ; $743d
+	map_cell $20, $36 ; $743b
 	farcall WriteBehaviorMapCell ; $743f
 .done:
 	ret ; $7442

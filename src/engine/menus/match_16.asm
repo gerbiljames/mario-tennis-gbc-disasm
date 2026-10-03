@@ -205,8 +205,7 @@ InitMatchStatsScreen:
 	call CopyMatchStatsHeaderRects ; $5cbb
 	call LoadResultScreenTileGraphics ; $5cbe
 	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $5cc1
-	ld b, $14 ; $5cc4
-	ld c, $02 ; $5cc6
+	rect_size $14, $02 ; $5cc4
 	ld h, $08 ; $5cc8
 	farcall FillTilemapRect ; $5cca
 	call SetMatchStatsPortraitPaletteAttrs ; $5ccd
@@ -220,35 +219,29 @@ SetMatchStatsPortraitPaletteAttrs:
 	call TestGameFlagByNumber ; $5cdf
 	jr z, .fillTilemapRect ; $5ce2
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 1 ; $5ce4
-	ld b, $03 ; $5ce7
-	ld c, $03 ; $5ce9
+	rect_size $03, $03 ; $5ce7
 	ld h, $0c ; $5ceb
 	farcall FillTilemapRect ; $5ced
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 4 ; $5cf0
-	ld b, $03 ; $5cf3
-	ld c, $03 ; $5cf5
+	rect_size $03, $03 ; $5cf3
 	ld h, $0d ; $5cf7
 	farcall FillTilemapRect ; $5cf9
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 13 ; $5cfc
-	ld b, $03 ; $5cff
-	ld c, $03 ; $5d01
+	rect_size $03, $03 ; $5cff
 	ld h, $0e ; $5d03
 	farcall FillTilemapRect ; $5d05
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 16 ; $5d08
-	ld b, $03 ; $5d0b
-	ld c, $03 ; $5d0d
+	rect_size $03, $03 ; $5d0b
 	ld h, $0f ; $5d0f
 	farcall FillTilemapRect ; $5d11
 	jr .done ; $5d14
 .fillTilemapRect:
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; $5d16
-	ld b, $03 ; $5d19
-	ld c, $03 ; $5d1b
+	rect_size $03, $03 ; $5d19
 	ld h, $0c ; $5d1d
 	farcall FillTilemapRect ; $5d1f
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 14 ; $5d22
-	ld b, $03 ; $5d25
-	ld c, $03 ; $5d27
+	rect_size $03, $03 ; $5d25
 	ld h, $0e ; $5d29
 	farcall FillTilemapRect ; $5d2b
 .done:

@@ -168,13 +168,11 @@ ApplyMarioCastChartReducedLayout:
 CopyMarioCastChartReducedTilemap:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 1 ; $7e69
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 1 ; $7e6c
-	ld b, $12 ; $7e6f
-	ld c, $0c ; $7e71
+	rect_size $12, $0c ; $7e6f
 	farcall CopyTilemapRect ; $7e73
 	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH + 1 ; $7e76
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 1 ; $7e79
-	ld b, $12 ; $7e7c
-	ld c, $0c ; $7e7e
+	rect_size $12, $0c ; $7e7c
 	farcall CopyTilemapRect ; $7e80
 	ret ; $7e83
 FixupMarioCastChartHeaderRow:

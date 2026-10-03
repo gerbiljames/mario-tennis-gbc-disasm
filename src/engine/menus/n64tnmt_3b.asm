@@ -167,45 +167,37 @@ DrawN64TnmtPageLabels:
 	jr nz, .nonZero ; $4f8e
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4f90
 	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 5 ; $4f93
-	ld b, $06 ; $4f96
-	ld c, $02 ; $4f98
+	rect_size $06, $02 ; $4f96
 	farcall CopyTilemapRect ; $4f9a
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4f9d
 	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 12 ; $4fa0
-	ld b, $06 ; $4fa3
-	ld c, $02 ; $4fa5
+	rect_size $06, $02 ; $4fa3
 	farcall CopyTilemapRect ; $4fa7
 	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH ; $4faa
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 5 ; $4fad
-	ld b, $06 ; $4fb0
-	ld c, $02 ; $4fb2
+	rect_size $06, $02 ; $4fb0
 	farcall CopyTilemapRect ; $4fb4
 	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH ; $4fb7
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 12 ; $4fba
-	ld b, $06 ; $4fbd
-	ld c, $02 ; $4fbf
+	rect_size $06, $02 ; $4fbd
 	farcall CopyTilemapRect ; $4fc1
 	jr .restore ; $4fc4
 .nonZero:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 6 ; $4fc6
 	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 5 ; $4fc9
-	ld b, $06 ; $4fcc
-	ld c, $02 ; $4fce
+	rect_size $06, $02 ; $4fcc
 	farcall CopyTilemapRect ; $4fd0
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 6 ; $4fd3
 	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 12 ; $4fd6
-	ld b, $06 ; $4fd9
-	ld c, $02 ; $4fdb
+	rect_size $06, $02 ; $4fd9
 	farcall CopyTilemapRect ; $4fdd
 	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH + 6 ; $4fe0
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 5 ; $4fe3
-	ld b, $06 ; $4fe6
-	ld c, $02 ; $4fe8
+	rect_size $06, $02 ; $4fe6
 	farcall CopyTilemapRect ; $4fea
 	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH + 6 ; $4fed
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 12 ; $4ff0
-	ld b, $06 ; $4ff3
-	ld c, $02 ; $4ff5
+	rect_size $06, $02 ; $4ff3
 	farcall CopyTilemapRect ; $4ff7
 .restore:
 	pop_wram_bank ; $4ffa
@@ -306,8 +298,7 @@ DrawEmptyTrophyCell:
 	push de ; $507c
 	push hl ; $507d
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 12 ; $507e
-	ld b, $02 ; $5081
-	ld c, $02 ; $5083
+	rect_size $02, $02 ; $5081
 	farcall CopyTilemapRect ; $5085
 	pop hl ; $5088
 	pop de ; $5089

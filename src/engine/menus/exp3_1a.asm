@@ -396,8 +396,7 @@ Unused_1a_DrawCharViewerGridCursor:
 	ld a, [hl+] ; $6b04
 	ld d, [hl] ; $6b05
 	ld e, a ; $6b06
-	ld b, OAM_BANK1 ; $6b07
-	ld c, $88 ; $6b09
+	sprite_attr_tile OAM_BANK1, $88 ; $6b07
 	call QueueSprite ; $6b0b
 	ret ; $6b0e
 DrawCharViewerGridCursorTable:

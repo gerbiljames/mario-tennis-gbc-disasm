@@ -39,10 +39,14 @@ class Source(unittest.TestCase):
         # map positions are tiles with a point (map_pos), never raw 1/256-tile words
         self.assertEqual(count(r"^\t(?:map_entry|map_actor|script_move_target|script_set_position|script_move_player|as_set_target|as_set_pos) [^;\n]*\b\d+\.\d+"), 3054)
         self.assertEqual(count(r"^\t(?:map_entry \S+, \S+,|map_actor \S+, \S+,|script_move_target \S+,|script_set_position \S+,|script_move_player|as_set_target|as_set_pos) \$[0-9a-f]{4}\b"), 0)
+        # register pairs loaded with two instructions, named by the split-pair macros
+        for mac, n in (("rect_size", 198), ("rect_cell", 24), ("map_cell", 38), ("sprite_xy", 60),
+                       ("sprite_attr_tile", 27), ("sprite_tile_attr", 82)):
+            self.assertEqual(count(rf"^\t{mac} "), n, mac)
         # VRAM copies of whole tilemap rows count rows
         self.assertGreaterEqual(count(r"^\tld c, (?:\d+ \* |SCREEN_HEIGHT \* )?TILEMAP_(?:WIDTH|AREA) / 16"), 220)
         # an OAM attribute loaded alone for QueueSprite*: palette plus OAM_* flags
-        self.assertGreaterEqual(count(r"^\tld b, (?:OAM_\w+ \| )*(?:OAM_\w+|[0-7])(?: ;|$)"), 139)
+        self.assertGreaterEqual(count(r"^\tld b, (?:OAM_\w+ \| )*(?:OAM_\w+|[0-7])(?: ;|$)"), 42)
         self.assertEqual(count(r"^\tadd LOW\((?!ActorFieldTypeTable_04\))"), 0, "no split-base index left raw")
         self.assertEqual(count(r"inline arg$"), 0)
         self.assertEqual(count(r"^\tld_slot hl, "), 37)

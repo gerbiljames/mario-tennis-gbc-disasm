@@ -377,8 +377,7 @@ LoadRulesScreen:
 ClearRulesScreenTextArea:
 	push_wram_bank WRAM_SCREEN ; $71bd
 	ld de, wShadowAttrmap + 3 * TILEMAP_WIDTH + 2 ; $71c6
-	ld b, $10 ; $71c9
-	ld c, $0e ; $71cb
+	rect_size $10, $0e ; $71c9
 	ld h, $00 ; $71cd
 	farcall FillTilemapRect ; $71cf
 	call ClearRulesPageRows ; $71d2
@@ -387,13 +386,11 @@ ClearRulesScreenTextArea:
 ClearRulesPageRows:
 	push_wram_bank WRAM_SCREEN ; $71db
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $71e4
-	ld b, $10 ; $71e7
-	ld c, $01 ; $71e9
+	rect_size $10, $01 ; $71e7
 	ld h, $03 ; $71eb
 	farcall FillTilemapRect ; $71ed
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 2 ; $71f0
-	ld b, $10 ; $71f3
-	ld c, $0d ; $71f5
+	rect_size $10, $0d ; $71f3
 	ld h, $20 ; $71f7
 	farcall FillTilemapRect ; $71f9
 	pop_wram_bank ; $71fc
@@ -401,13 +398,11 @@ ClearRulesPageRows:
 PrepareRulesPageTilemap:
 	push_wram_bank WRAM_SCREEN ; $7202
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $720b
-	ld b, $10 ; $720e
-	ld c, $01 ; $7210
+	rect_size $10, $01 ; $720e
 	ld h, $03 ; $7212
 	farcall FillTilemapRect ; $7214
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 2 ; $7217
-	ld b, $10 ; $721a
-	ld c, $0d ; $721c
+	rect_size $10, $0d ; $721a
 	ld h, $20 ; $721e
 	farcall FillTilemapRect ; $7220
 	ld a, [wRulesIsMinigame] ; $7223
@@ -417,14 +412,12 @@ PrepareRulesPageTilemap:
 	add $03 ; $722c
 	ld h, a ; $722e
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; $722f
-	ld b, $10 ; $7232
-	ld c, $01 ; $7234
+	rect_size $10, $01 ; $7232
 	farcall FillTilemapRect ; $7236
 	jr .restore ; $7239
 .nonZero:
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; $723b
-	ld b, $10 ; $723e
-	ld c, $01 ; $7240
+	rect_size $10, $01 ; $723e
 	ld h, $00 ; $7242
 	farcall FillTilemapRect ; $7244
 .restore:

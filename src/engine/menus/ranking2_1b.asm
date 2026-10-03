@@ -93,8 +93,7 @@ ClearSinglesRankingNameRects:
 .loop:
 	push bc ; $5597
 	ld h, $00 ; $5598
-	ld b, $05 ; $559a
-	ld c, $02 ; $559c
+	rect_size $05, $02 ; $559a
 	farcall FillTilemapRect ; $559e
 	ld hl, $0060 ; $55a1
 	add hl, de ; $55a4
@@ -111,8 +110,7 @@ ClearSinglesRankingNameRects:
 .loopB:
 	push bc ; $55b4
 	ld h, $01 ; $55b5
-	ld b, $05 ; $55b7
-	ld c, $02 ; $55b9
+	rect_size $05, $02 ; $55b7
 	farcall FillTilemapRect ; $55bb
 	ld hl, $0060 ; $55be
 	add hl, de ; $55c1
@@ -222,8 +220,7 @@ ClearDoublesRankingNameRects:
 .loop:
 	push bc ; $5662
 	ld h, $00 ; $5663
-	ld b, $05 ; $5665
-	ld c, $04 ; $5667
+	rect_size $05, $04 ; $5665
 	farcall FillTilemapRect ; $5669
 	ld hl, $00a0 ; $566c
 	add hl, de ; $566f
@@ -240,8 +237,7 @@ ClearDoublesRankingNameRects:
 .loopB:
 	push bc ; $567f
 	ld h, $01 ; $5680
-	ld b, $05 ; $5682
-	ld c, $04 ; $5684
+	rect_size $05, $04 ; $5682
 	farcall FillTilemapRect ; $5686
 	ld hl, $00a0 ; $5689
 	add hl, de ; $568c
@@ -394,77 +390,66 @@ RankingRowDrawHandlers_1b:
 DrawRankingRow0:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $5779
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $577c
-	ld b, $05 ; $577f
-	ld c, $02 ; $5781
+	rect_size $05, $02 ; $577f
 	farcall CopyTilemapRect ; $5783
 	jp StubNop_1b_07 ; $5786
 DrawRankingRow2:
 	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH ; $5789
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 6 ; $578c
-	ld b, $04 ; $578f
-	ld c, $02 ; $5791
+	rect_size $04, $02 ; $578f
 	farcall CopyTilemapRect ; $5793
 	jp StubNop_1b_07 ; $5796
 DrawRankingRow3:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 4 ; $5799
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 10 ; $579c
-	ld b, $04 ; $579f
-	ld c, $02 ; $57a1
+	rect_size $04, $02 ; $579f
 	farcall CopyTilemapRect ; $57a3
 	jp StubNop_1b_07 ; $57a6
 DrawRankingRow4:
 	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH + 4 ; $57a9
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 10 ; $57ac
-	ld b, $04 ; $57af
-	ld c, $02 ; $57b1
+	rect_size $04, $02 ; $57af
 	farcall CopyTilemapRect ; $57b3
 	jp StubNop_1b_07 ; $57b6
 DrawRankingRow5:
 	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH ; $57b9
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $57bc
-	ld b, $04 ; $57bf
-	ld c, $07 ; $57c1
+	rect_size $04, $07 ; $57bf
 	farcall CopyTilemapRect ; $57c3
 	jp StubNop_1b_07 ; $57c6
 DrawRankingRow6:
 	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH + 8 ; $57c9
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 6 ; $57cc
-	ld b, $04 ; $57cf
-	ld c, $07 ; $57d1
+	rect_size $04, $07 ; $57cf
 	farcall CopyTilemapRect ; $57d3
 	jp StubNop_1b_07 ; $57d6
 DrawRankingRow7:
 	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH + 4 ; $57d9
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 10 ; $57dc
-	ld b, $04 ; $57df
-	ld c, $07 ; $57e1
+	rect_size $04, $07 ; $57df
 	farcall CopyTilemapRect ; $57e3
 	jp StubNop_1b_07 ; $57e6
 DrawRankingRow8:
 	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH + 12 ; $57e9
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 10 ; $57ec
-	ld b, $04 ; $57ef
-	ld c, $07 ; $57f1
+	rect_size $04, $07 ; $57ef
 	farcall CopyTilemapRect ; $57f3
 	jp StubNop_1b_07 ; $57f6
 DrawRankingRow9:
 	ld hl, wShadowTilemap + 20 ; $57f9
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $57fc
-	ld b, $04 ; $57ff
-	ld c, $10 ; $5801
+	rect_size $04, $10 ; $57ff
 	farcall CopyTilemapRect ; $5803
 	jp StubNop_1b_07 ; $5806
 DrawRankingRow10:
 	ld hl, wShadowTilemap + 24 ; $5809
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 10 ; $580c
-	ld b, $04 ; $580f
-	ld c, $10 ; $5811
+	rect_size $04, $10 ; $580f
 	farcall CopyTilemapRect ; $5813
 	jp StubNop_1b_07 ; $5816
 DrawRankingRow11:
 	ld hl, wShadowTilemap + 20 ; $5819
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $581c
-	ld b, $08 ; $581f
-	ld c, $10 ; $5821
+	rect_size $08, $10 ; $581f
 	farcall CopyTilemapRect ; $5823
 	jp StubNop_1b_07 ; $5826

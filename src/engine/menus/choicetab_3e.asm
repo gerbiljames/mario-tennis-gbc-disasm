@@ -94,8 +94,7 @@ ChoiceTabCursorSpriteTask:
 	ld d, h ; $5125
 	ld e, l ; $5126
 	ld hl, ChoiceTabCursorSpriteTask_SpriteTemplate1 ; $5127
-	ld b, OAM_BANK1 ; $512a
-	ld c, $70 ; $512c
+	sprite_attr_tile OAM_BANK1, $70 ; $512a
 	call QueueSpriteTemplate ; $512e
 	ret ; $5131
 ChoiceTabCursorSpriteTask_SpriteTemplate0:
@@ -146,8 +145,7 @@ SetChoiceTabAttrRect:
 	ld d, [hl] ; $517f
 	ld e, a ; $5180
 	pop hl ; $5181
-	ld b, $05 ; $5182
-	ld c, $03 ; $5184
+	rect_size $05, $03 ; $5182
 	farcall FillTilemapRect ; $5186
 	pop hl ; $5189
 	pop de ; $518a
@@ -328,8 +326,7 @@ RedrawPlayAlonePartnerMenu:
 	call SetPlayAlonePartnerPalette ; $52db
 	wram_bank WRAM_SCREEN ; $52de
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $52e4
-	ld b, $14 ; $52e7
-	ld c, $01 ; $52e9
+	rect_size $14, $01 ; $52e7
 	ld h, $03 ; $52eb
 	farcall FillTilemapRect ; $52ed
 	ld a, $02 ; $52f0
@@ -337,8 +334,7 @@ RedrawPlayAlonePartnerMenu:
 	ld a, $04 ; $52f5
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $52f7
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $52fa
-	ld b, $12 ; $52fd
-	ld c, $01 ; $52ff
+	rect_size $12, $01 ; $52fd
 	ld h, $20 ; $5301
 	farcall FillTilemapRect ; $5303
 	call DrawPlayAlonePartnerCaption ; $5306
@@ -465,17 +461,13 @@ LoadEquipmentStatusWindows:
 	ld [wShadowTilemapBank], a ; $540b
 	ld a, $00 ; $540e
 	ld [wWindowTileAttr], a ; $5410
-	ld d, $00 ; $5413
-	ld e, $00 ; $5415
-	ld b, $14 ; $5417
-	ld c, $09 ; $5419
+	rect_cell $00, $00 ; $5413
+	rect_size $14, $09 ; $5417
 	farcall CreateWindowFromScreenRect ; $541b
 	farcall DrawTextWindowFrame ; $541e
 	farcall RedrawWindowRows ; $5421
-	ld d, $00 ; $5424
-	ld e, $09 ; $5426
-	ld b, $14 ; $5428
-	ld c, $09 ; $542a
+	rect_cell $00, $09 ; $5424
+	rect_size $14, $09 ; $5428
 	farcall CreateWindowFromScreenRect ; $542c
 	farcall DrawTextWindowFrame ; $542f
 	farcall RedrawWindowRows ; $5432
@@ -484,13 +476,11 @@ LoadEquipmentStatusWindows:
 SetEquipmentStatusAttrRects:
 	wram_bank WRAM_SCREEN ; $5439
 	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 1 ; $543f
-	ld b, $12 ; $5442
-	ld c, $05 ; $5444
+	rect_size $12, $05 ; $5442
 	ld h, $08 ; $5446
 	farcall FillTilemapRect ; $5448
 	ld de, wShadowAttrmap + 3 * TILEMAP_WIDTH + 1 ; $544b
-	ld b, $12 ; $544e
-	ld c, $05 ; $5450
+	rect_size $12, $05 ; $544e
 	ld h, $08 ; $5452
 	farcall FillTilemapRect ; $5454
 	ret ; $5457

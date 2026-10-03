@@ -447,8 +447,7 @@ CourtSelect4CursorSpriteTask:
 	ld d, h ; $5edd
 	ld e, l ; $5ede
 	ld hl, CourtSelect4CursorSpriteTask_SpriteTemplate ; $5edf
-	ld b, OAM_BANK1 ; $5ee2
-	ld c, $72 ; $5ee4
+	sprite_attr_tile OAM_BANK1, $72 ; $5ee2
 	call QueueSpriteTemplate ; $5ee6
 	ret ; $5ee9
 CourtSelect4CursorSpriteTaskPtrs:
@@ -554,8 +553,7 @@ SetCourtSelect4TabAttrRect:
 	ld d, [hl] ; $5fc7
 	ld e, a ; $5fc8
 	pop hl ; $5fc9
-	ld b, $05 ; $5fca
-	ld c, $03 ; $5fcc
+	rect_size $05, $03 ; $5fca
 	farcall FillTilemapRect ; $5fce
 	pop hl ; $5fd1
 	pop de ; $5fd2

@@ -78,17 +78,13 @@ Unused_05_RunDebugWindowDemo:
 	ld [wShadowTilemapBank], a ; $6daf
 	ld a, TILEATTR_PRIORITY ; $6db2
 	ld [wWindowTileAttr], a ; $6db4
-	ld d, $00 ; $6db7
-	ld e, $02 ; $6db9
-	ld b, $10 ; $6dbb
-	ld c, $07 ; $6dbd
+	rect_cell $00, $02 ; $6db7
+	rect_size $10, $07 ; $6dbb
 	call CreateWindowFromScreenRect ; $6dbf
 	call DrawTextWindowFrame ; $6dc2
 	call RedrawWindowRows ; $6dc5
-	ld d, $02 ; $6dc8
-	ld e, $04 ; $6dca
-	ld b, $08 ; $6dcc
-	ld c, $0c ; $6dce
+	rect_cell $02, $04 ; $6dc8
+	rect_size $08, $0c ; $6dcc
 	call CreateWindowFromScreenRect ; $6dd0
 	call DrawTextWindowFrame ; $6dd3
 	call RedrawWindowRows ; $6dd6

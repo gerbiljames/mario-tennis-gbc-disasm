@@ -34,8 +34,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld c, CutsceneAnimFrameLZ_2d_SIZE / 16 ; $645b
 	call QueueVRAMCopy ; $645d
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate0 ; $6460
-	ld d, $3e ; $6463
-	ld e, $80 ; $6465
+	sprite_xy $3e, $80 ; $6463
 	ld_oam bc, 3, $10 ; $6467
 	call QueueSpriteTemplate ; $646a
 	ret ; $646d
@@ -49,8 +48,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld c, CutsceneAnimFrameLZ_2e_SIZE / 16 ; $6483
 	call QueueVRAMCopy ; $6485
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate1 ; $6488
-	ld d, $3e ; $648b
-	ld e, $80 ; $648d
+	sprite_xy $3e, $80 ; $648b
 	ld_oam bc, 3, $10 ; $648f
 	call QueueSpriteTemplate ; $6492
 	ret ; $6495
@@ -64,8 +62,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld c, CutsceneAnimFrameLZ_2f_SIZE / 16 ; $64ab
 	call QueueVRAMCopy ; $64ad
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate2 ; $64b0
-	ld d, $3e ; $64b3
-	ld e, $80 ; $64b5
+	sprite_xy $3e, $80 ; $64b3
 	ld_oam bc, 3, $10 ; $64b7
 	call QueueSpriteTemplate ; $64ba
 	ret ; $64bd
@@ -79,8 +76,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld c, CutsceneAnimFrameLZ_30_SIZE / 16 ; $64d3
 	call QueueVRAMCopy ; $64d5
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate3 ; $64d8
-	ld d, $3e ; $64db
-	ld e, $80 ; $64dd
+	sprite_xy $3e, $80 ; $64db
 	ld_oam bc, 3, $10 ; $64df
 	call QueueSpriteTemplate ; $64e2
 	ret ; $64e5
@@ -94,8 +90,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld c, CutsceneAnimFrameLZ_31_SIZE / 16 ; $64fb
 	call QueueVRAMCopy ; $64fd
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate4 ; $6500
-	ld d, $3e ; $6503
-	ld e, $80 ; $6505
+	sprite_xy $3e, $80 ; $6503
 	ld_oam bc, 3, $10 ; $6507
 	call QueueSpriteTemplate ; $650a
 	ret ; $650d
@@ -109,8 +104,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld c, CutsceneAnimFrameLZ_32_SIZE / 16 ; $6523
 	call QueueVRAMCopy ; $6525
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate5 ; $6528
-	ld d, $3e ; $652b
-	ld e, $80 ; $652d
+	sprite_xy $3e, $80 ; $652b
 	ld_oam bc, 3, $10 ; $652f
 	call QueueSpriteTemplate ; $6532
 	ret ; $6535
@@ -124,8 +118,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld c, CutsceneAnimFrameLZ_33_SIZE / 16 ; $654b
 	call QueueVRAMCopy ; $654d
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate6 ; $6550
-	ld d, $3e ; $6553
-	ld e, $80 ; $6555
+	sprite_xy $3e, $80 ; $6553
 	ld_oam bc, 3, $10 ; $6557
 	call QueueSpriteTemplate ; $655a
 	ret ; $655d
@@ -139,8 +132,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld c, CutsceneAnimFrameLZ_34_SIZE / 16 ; $6573
 	call QueueVRAMCopy ; $6575
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate7 ; $6578
-	ld d, $3e ; $657b
-	ld e, $80 ; $657d
+	sprite_xy $3e, $80 ; $657b
 	ld_oam bc, 3, $10 ; $657f
 	call QueueSpriteTemplate ; $6582
 	ret ; $6585
@@ -154,15 +146,13 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld c, CutsceneAnimFrameLZ_35_SIZE / 16 ; $659b
 	call QueueVRAMCopy ; $659d
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate8 ; $65a0
-	ld d, $3e ; $65a3
-	ld e, $80 ; $65a5
+	sprite_xy $3e, $80 ; $65a3
 	ld_oam bc, 3, $10 ; $65a7
 	call QueueSpriteTemplate ; $65aa
 	ret ; $65ad
 .queueSpriteTemplate:
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate8 ; $65ae
-	ld d, $3e ; $65b1
-	ld e, $80 ; $65b3
+	sprite_xy $3e, $80 ; $65b1
 	ld_oam bc, 3, $10 ; $65b5
 	call QueueSpriteTemplate ; $65b8
 	ret ; $65bb

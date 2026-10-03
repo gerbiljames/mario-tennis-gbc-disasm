@@ -283,8 +283,7 @@ WriteCharPortraitTiles:
 	ld d, h ; $573b
 	ld e, l ; $573c
 	ld h, c ; $573d
-	ld b, $02 ; $573e
-	ld c, $02 ; $5740
+	rect_size $02, $02 ; $573e
 	farcall FillTilemapRect ; $5742
 	ret ; $5745
 LoadAllCharPortraitTiles:
@@ -314,13 +313,11 @@ RefreshCharInfoPanel:
 	push hl ; $5761
 	push_wram_bank WRAM_SCREEN ; $5762
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $576b
-	ld b, $12 ; $576e
-	ld c, $01 ; $5770
+	rect_size $12, $01 ; $576e
 	ld h, $03 ; $5772
 	farcall FillTilemapRect ; $5774
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $5777
-	ld b, $12 ; $577a
-	ld c, $04 ; $577c
+	rect_size $12, $04 ; $577a
 	ld h, $20 ; $577e
 	farcall FillTilemapRect ; $5780
 	ld a, [wCharSelectSlot] ; $5783
@@ -492,8 +489,7 @@ DrawCreatedCharStats:
 .drawName:
 	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH + 1 ; $58b7
 	ld h, $00 ; $58ba
-	ld b, $12 ; $58bc
-	ld c, $01 ; $58be
+	rect_size $12, $01 ; $58bc
 	farcall FillTilemapRect ; $58c0
 	pop_wram_bank ; $58c3
 	pop hl ; $58c8

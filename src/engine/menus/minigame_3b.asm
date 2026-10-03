@@ -356,8 +356,7 @@ MinigameSelectCursorSpriteTask:
 	ld d, h ; $64a9
 	ld e, l ; $64aa
 	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate1 ; $64ab
-	ld b, OAM_BANK1 ; $64ae
-	ld c, $70 ; $64b0
+	sprite_attr_tile OAM_BANK1, $70 ; $64ae
 	call QueueSpriteTemplate ; $64b2
 	ret ; $64b5
 GetMinigameCursorPosTable:
@@ -431,8 +430,7 @@ OverrideMinigameCursorIfLocked:
 DrawMinigameSelectCaption:
 	wram_bank WRAM_SCREEN ; $6569
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $656f
-	ld b, $14 ; $6572
-	ld c, $01 ; $6574
+	rect_size $14, $01 ; $6572
 	ld h, $03 ; $6576
 	farcall FillTilemapRect ; $6578
 	ld a, $02 ; $657b
@@ -440,8 +438,7 @@ DrawMinigameSelectCaption:
 	ld a, $04 ; $6580
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $6582
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6585
-	ld b, $12 ; $6588
-	ld c, $01 ; $658a
+	rect_size $12, $01 ; $6588
 	ld h, $20 ; $658c
 	farcall FillTilemapRect ; $658e
 	call RenderMinigameNameText ; $6591

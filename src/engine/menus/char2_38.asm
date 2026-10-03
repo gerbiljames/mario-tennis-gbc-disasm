@@ -42,13 +42,11 @@ DrawCharSelectSlotLabel:
 	jr nz, .slot2 ; $5926
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5928
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $592b
-	ld b, $05 ; $592e
-	ld c, $01 ; $5930
+	rect_size $05, $01 ; $592e
 	farcall CopyTilemapRect ; $5932
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH + 10 ; $5935
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5938
-	ld b, $05 ; $593b
-	ld c, $01 ; $593d
+	rect_size $05, $01 ; $593b
 	farcall CopyTilemapRect ; $593f
 	jr .drawName ; $5942
 .slot2:
@@ -56,31 +54,26 @@ DrawCharSelectSlotLabel:
 	jr nz, .slot3 ; $5946
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5948
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $594b
-	ld b, $05 ; $594e
-	ld c, $01 ; $5950
+	rect_size $05, $01 ; $594e
 	farcall CopyTilemapRect ; $5952
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH + 5 ; $5955
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5958
-	ld b, $05 ; $595b
-	ld c, $01 ; $595d
+	rect_size $05, $01 ; $595b
 	farcall CopyTilemapRect ; $595f
 	jr .drawName ; $5962
 .slot3:
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5964
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $5967
-	ld b, $05 ; $596a
-	ld c, $01 ; $596c
+	rect_size $05, $01 ; $596a
 	farcall CopyTilemapRect ; $596e
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH + 15 ; $5971
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5974
-	ld b, $08 ; $5977
-	ld c, $01 ; $5979
+	rect_size $08, $01 ; $5977
 	farcall CopyTilemapRect ; $597b
 .drawName:
 	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH + 1 ; $597e
 	ld h, $08 ; $5981
-	ld b, $12 ; $5983
-	ld c, $01 ; $5985
+	rect_size $12, $01 ; $5983
 	farcall FillTilemapRect ; $5987
 	ret ; $598a
 DrawCharGridSlotIcons:

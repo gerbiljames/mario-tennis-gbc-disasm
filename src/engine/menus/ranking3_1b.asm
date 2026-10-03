@@ -43,43 +43,37 @@ RankingMarkerHandlers_1b:
 DrawDoublesRankingMarker0:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $5865
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $5868
-	ld b, $04 ; $586b
-	ld c, $04 ; $586d
+	rect_size $04, $04 ; $586b
 	farcall CopyTilemapRect ; $586f
 	jp StubNop_1b_08 ; $5872
 DrawDoublesRankingMarker2:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 4 ; $5875
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 10 ; $5878
-	ld b, $04 ; $587b
-	ld c, $04 ; $587d
+	rect_size $04, $04 ; $587b
 	farcall CopyTilemapRect ; $587f
 	jp StubNop_1b_08 ; $5882
 DrawDoublesRankingMarker3:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 8 ; $5885
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $5888
-	ld b, $04 ; $588b
-	ld c, $07 ; $588d
+	rect_size $04, $07 ; $588b
 	farcall CopyTilemapRect ; $588f
 	jp StubNop_1b_08 ; $5892
 DrawDoublesRankingMarker4:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 12 ; $5895
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 10 ; $5898
-	ld b, $04 ; $589b
-	ld c, $07 ; $589d
+	rect_size $04, $07 ; $589b
 	farcall CopyTilemapRect ; $589f
 	jp StubNop_1b_08 ; $58a2
 DrawDoublesRankingMarker5:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 8 ; $58a5
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $58a8
-	ld b, $08 ; $58ab
-	ld c, $07 ; $58ad
+	rect_size $08, $07 ; $58ab
 	farcall CopyTilemapRect ; $58af
 	jp StubNop_1b_08 ; $58b2
 DrawDoublesRankingMarker6:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 16 ; $58b5
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $58b8
-	ld b, $08 ; $58bb
-	ld c, $07 ; $58bd
+	rect_size $08, $07 ; $58bb
 	farcall CopyTilemapRect ; $58bf
 	jp StubNop_1b_08 ; $58c2
 PushRankingBoardTilemapRows:
@@ -139,8 +133,7 @@ RankingBoardAnimTask_1b:
 .zero:
 	ld a, [wRankingBannerX] ; $593d
 	ld d, a ; $5940
-	ld c, $10 ; $5941
-	ld b, OAM_BANK1 | 4 ; $5943
+	sprite_tile_attr $10, OAM_BANK1 | 4 ; $5941
 	call QueueSpriteTemplate ; $5945
 	ld a, [wRankingBannerAnimFrame] ; $5948
 	inc a ; $594b
@@ -177,8 +170,7 @@ RankingCursorBobTask:
 .applySpriteBobOffset:
 	farcall ApplySpriteBobOffset ; $5a16
 	ld hl, RankingCursorBobTask_SpriteTemplate ; $5a19
-	ld c, $20 ; $5a1c
-	ld b, OAM_BANK1 | 5 ; $5a1e
+	sprite_tile_attr $20, OAM_BANK1 | 5 ; $5a1c
 	call QueueSpriteTemplate ; $5a20
 	ret ; $5a23
 RankingCursorBobTask_SpriteTemplate:

@@ -561,6 +561,41 @@ MACRO ld_tile_run
 	lb \1, \2, \3
 ENDM
 
+; The same pairs where the code loads the halves with two instructions
+; instead of one: the macro names the order it emits them in.
+; rect_size width, height -- ld b, width / ld c, height (FillTilemapRect,
+; CopyTilemapRect, CreateWindowFromScreenRect: the width is the inner loop)
+MACRO rect_size
+	ld b, \1
+	ld c, \2
+ENDM
+; rect_cell column, row -- ld d, column / ld e, row: a screen-rect origin
+MACRO rect_cell
+	ld d, \1
+	ld e, \2
+ENDM
+; map_cell x, y -- ld d, x / ld e, y: a story-map tile, the high byte of a
+; map position (WriteBehaviorMapCell halves both for the 16-pixel cells)
+MACRO map_cell
+	ld d, \1
+	ld e, \2
+ENDM
+; sprite_xy x, y -- ld d, x / ld e, y (QueueSprite and friends)
+MACRO sprite_xy
+	ld d, \1
+	ld e, \2
+ENDM
+; sprite_attr_tile attr, tile -- ld b, attr / ld c, tile
+MACRO sprite_attr_tile
+	ld b, \1
+	ld c, \2
+ENDM
+; sprite_tile_attr tile, attr -- ld c, tile / ld b, attr
+MACRO sprite_tile_attr
+	ld c, \1
+	ld b, \2
+ENDM
+
 ; ld_bg_pals pair, first, count / ld_obj_pals pair, first, count -- a run of
 ; CGB palettes as LoadPaletteShadow and its siblings take it: the palette
 ; index in the high register (0-7 background, 8-15 objects; the loader tests

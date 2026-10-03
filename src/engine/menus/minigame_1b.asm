@@ -81,8 +81,7 @@ UnlockDebugFlagSprites:
 Unused_1b_QueueBobbingFlagSprite:
 	push hl ; $6974
 	farcall Unused_18_ApplySpriteBobOffset ; $6975
-	ld c, $50 ; $6978
-	ld b, 0 ; $697a
+	sprite_tile_attr $50, 0 ; $6978
 	call QueueSprite ; $697c
 	pop hl ; $697f
 	ret ; $6980

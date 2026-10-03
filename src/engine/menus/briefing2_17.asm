@@ -69,8 +69,7 @@ DrawBriefingTargetBrackets:
 	jr z, .maskClear2 ; $48dd
 	inc e ; $48df
 .maskClear2:
-	ld c, $6c ; $48e0
-	ld b, OAM_BANK1 | 2 ; $48e2
+	sprite_tile_attr $6c, OAM_BANK1 | 2 ; $48e0
 	call QueueSprite ; $48e4
 	ld a, [wBriefingBracketWidth] ; $48e7
 	add $03 ; $48ea
@@ -90,8 +89,7 @@ DrawBriefingTargetBrackets:
 	jr z, .maskClear4 ; $4901
 	inc e ; $4903
 .maskClear4:
-	ld c, $6c ; $4904
-	ld b, OAM_BANK1 | OAM_XFLIP | 2 ; $4906
+	sprite_tile_attr $6c, OAM_BANK1 | OAM_XFLIP | 2 ; $4904
 	call QueueSprite ; $4908
 	ld a, [wBriefingBracketWidth] ; $490b
 	add $03 ; $490e
@@ -115,8 +113,7 @@ DrawBriefingTargetBrackets:
 	jr z, .maskClear6 ; $492c
 	dec e ; $492e
 .maskClear6:
-	ld c, $6c ; $492f
-	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 2 ; $4931
+	sprite_tile_attr $6c, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 2 ; $492f
 	call QueueSprite ; $4933
 	ld a, [wBriefingBracketX] ; $4936
 	ld d, a ; $4939
@@ -136,8 +133,7 @@ DrawBriefingTargetBrackets:
 	jr z, .maskClear8 ; $4950
 	dec e ; $4952
 .maskClear8:
-	ld c, $6c ; $4953
-	ld b, OAM_BANK1 | OAM_YFLIP | 2 ; $4955
+	sprite_tile_attr $6c, OAM_BANK1 | OAM_YFLIP | 2 ; $4953
 	call QueueSprite ; $4957
 	pop_wram_bank ; $495a
 	ret ; $495f
@@ -183,10 +179,8 @@ InitCourtDiagramTextWindow:
 	ld [wShadowTilemapBank], a ; $49b4
 	ld a, $00 ; $49b7
 	ld [wWindowTileAttr], a ; $49b9
-	ld d, $00 ; $49bc
-	ld e, $0b ; $49be
-	ld b, $14 ; $49c0
-	ld c, $07 ; $49c2
+	rect_cell $00, $0b ; $49bc
+	rect_size $14, $07 ; $49c0
 	farcall CreateWindowFromScreenRect ; $49c4
 	farcall DrawTextWindowFrame ; $49c7
 	farcall RedrawWindowRows ; $49ca
@@ -197,8 +191,7 @@ ClearBriefingCaptionTilemap:
 	push de ; $49d0
 	push hl ; $49d1
 	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH ; $49d2
-	ld b, $14 ; $49d5
-	ld c, $01 ; $49d7
+	rect_size $14, $01 ; $49d5
 	ld h, $03 ; $49d9
 	farcall FillTilemapRect ; $49db
 	ld a, $02 ; $49de
@@ -206,8 +199,7 @@ ClearBriefingCaptionTilemap:
 	ld a, $04 ; $49e3
 	ld [wShadowTilemap + 11 * TILEMAP_WIDTH + 19], a ; $49e5
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $49e8
-	ld b, $12 ; $49eb
-	ld c, $05 ; $49ed
+	rect_size $12, $05 ; $49eb
 	ld h, $20 ; $49ef
 	farcall FillTilemapRect ; $49f1
 	pop hl ; $49f4

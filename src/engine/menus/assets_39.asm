@@ -136,13 +136,11 @@ RestoreMenuBgAndDrawPanel:
 	push hl ; $4df2
 	ld hl, wScreenScratch ; $4df3
 	ld de, wShadowTilemap ; $4df6
-	ld b, $14 ; $4df9
-	ld c, $10 ; $4dfb
+	rect_size $14, $10 ; $4df9
 	call CopyTilemapRect ; $4dfd
 	ld hl, wRulesScreenAnimFrame ; $4e00
 	ld de, wShadowAttrmap ; $4e03
-	ld b, $14 ; $4e06
-	ld c, $10 ; $4e08
+	rect_size $14, $10 ; $4e06
 	call CopyTilemapRect ; $4e0a
 	pop hl ; $4e0d
 	pop de ; $4e0e

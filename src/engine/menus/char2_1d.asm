@@ -103,30 +103,26 @@ DrawCharDataPageArrowsTask:
 	ld de, $0103 ; $4c1d
 	call BobArrowSpriteLeft ; $4c20
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate2 ; $4c23
-	ld b, OAM_BANK1 | 6 ; $4c26
-	ld c, $28 ; $4c28
+	sprite_attr_tile OAM_BANK1 | 6, $28 ; $4c26
 	call QueueSpriteTemplate ; $4c2a
 	ret ; $4c2d
 .countDone:
 	ld_xy de, $7f, $03 ; $4c2e
 	call BobArrowSpriteRight ; $4c31
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate3 ; $4c34
-	ld b, OAM_BANK1 | 6 ; $4c37
-	ld c, $30 ; $4c39
+	sprite_attr_tile OAM_BANK1 | 6, $30 ; $4c37
 	call QueueSpriteTemplate ; $4c3b
 	ret ; $4c3e
 .zero:
 	ld de, $1010 ; $4c3f
 	call BobArrowSpriteLeft ; $4c42
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate0 ; $4c45
-	ld b, OAM_BANK1 | 6 ; $4c48
-	ld c, $14 ; $4c4a
+	sprite_attr_tile OAM_BANK1 | 6, $14 ; $4c48
 	call QueueSpriteTemplate ; $4c4c
 	ld_xy de, $68, $10 ; $4c4f
 	call BobArrowSpriteRight ; $4c52
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate1 ; $4c55
-	ld b, OAM_BANK1 | 6 ; $4c58
-	ld c, $1e ; $4c5a
+	sprite_attr_tile OAM_BANK1 | 6, $1e ; $4c58
 	call QueueSpriteTemplate ; $4c5c
 	ret ; $4c5f
 BobArrowSpriteLeft:

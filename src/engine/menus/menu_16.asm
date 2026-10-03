@@ -8,8 +8,7 @@ Unused_16_DrawWobblingCornerBrackets:
 	call Unused_16_ApplySpriteWobbleX ; $400a
 	ld c, $00 ; $400d
 	call Unused_16_ApplySpriteWobbleY ; $400f
-	ld c, $00 ; $4012
-	ld b, OAM_BANK1 ; $4014
+	sprite_tile_attr $00, OAM_BANK1 ; $4012
 	call QueueSprite ; $4016
 	pop bc ; $4019
 	pop de ; $401a
@@ -23,8 +22,7 @@ Unused_16_DrawWobblingCornerBrackets:
 	call Unused_16_ApplySpriteWobbleX ; $4023
 	ld c, $00 ; $4026
 	call Unused_16_ApplySpriteWobbleY ; $4028
-	ld c, $00 ; $402b
-	ld b, OAM_BANK1 | OAM_XFLIP ; $402d
+	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP ; $402b
 	call QueueSprite ; $402f
 	pop de ; $4032
 	pop bc ; $4033
@@ -42,8 +40,7 @@ Unused_16_DrawWobblingCornerBrackets:
 	call Unused_16_ApplySpriteWobbleX ; $4040
 	ld c, $01 ; $4043
 	call Unused_16_ApplySpriteWobbleY ; $4045
-	ld c, $00 ; $4048
-	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $404a
+	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $4048
 	call QueueSprite ; $404c
 	pop de ; $404f
 	pop bc ; $4050
@@ -56,8 +53,7 @@ Unused_16_DrawWobblingCornerBrackets:
 	call Unused_16_ApplySpriteWobbleX ; $4058
 	ld c, $01 ; $405b
 	call Unused_16_ApplySpriteWobbleY ; $405d
-	ld c, $00 ; $4060
-	ld b, OAM_BANK1 | OAM_YFLIP ; $4062
+	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP ; $4060
 	call QueueSprite ; $4064
 	pop de ; $4067
 	ret ; $4068
@@ -74,8 +70,7 @@ SpriteWobbleYTable_16:
 	db $d5, $c5, $0e, $00, $06, $09, $cd, $51, $1f, $c1, $d1, $d5, $c5, $78, $82, $57 ; 0x10
 Unused_16_DrawCornerBrackets:
 	push de ; $40cd
-	ld c, $00 ; $40ce
-	ld b, OAM_BANK1 | OAM_XFLIP | 1 ; $40d0
+	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | 1 ; $40ce
 	call QueueSprite ; $40d2
 	pop de ; $40d5
 	pop bc ; $40d6
@@ -89,8 +84,7 @@ Unused_16_DrawCornerBrackets:
 	add d ; $40de
 	ld d, a ; $40df
 	push de ; $40e0
-	ld c, $00 ; $40e1
-	ld b, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 1 ; $40e3
+	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 1 ; $40e1
 	call QueueSprite ; $40e5
 	pop de ; $40e8
 	pop bc ; $40e9
@@ -99,8 +93,7 @@ Unused_16_DrawCornerBrackets:
 	add c ; $40ec
 	ld e, a ; $40ed
 	push de ; $40ee
-	ld c, $00 ; $40ef
-	ld b, OAM_BANK1 | OAM_YFLIP | 1 ; $40f1
+	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP | 1 ; $40ef
 	call QueueSprite ; $40f3
 	pop de ; $40f6
 	ret ; $40f7

@@ -57,12 +57,10 @@ EnableAcademyCampusExit:
 	ret ; $5492
 .writeBehaviorMapCell:
 	ld a, $33 ; $5493
-	ld d, $16 ; $5495
-	ld e, $34 ; $5497
+	map_cell $16, $34 ; $5495
 	farcall WriteBehaviorMapCell ; $5499
 	ld a, $33 ; $549c
-	ld d, $18 ; $549e
-	ld e, $34 ; $54a0
+	map_cell $18, $34 ; $549e
 	farcall WriteBehaviorMapCell ; $54a2
 	ret ; $54a5
 MoveCampusGateGuardAside:

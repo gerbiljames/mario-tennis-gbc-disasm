@@ -87,8 +87,7 @@ DrawTrophiesCharSprite:
 	ld d, h ; $4b0e
 	ld e, l ; $4b0f
 	pop hl ; $4b10
-	ld b, $02 ; $4b11
-	ld c, $02 ; $4b13
+	rect_size $02, $02 ; $4b11
 	farcall CopyTilemapRect ; $4b15
 	ret ; $4b18
 CheckTrophiesCheatCode:

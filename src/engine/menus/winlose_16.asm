@@ -1,22 +1,18 @@
 ClearMatchStatsNumberArea:
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; $5f61
-	ld b, $05 ; $5f64
-	ld c, $06 ; $5f66
+	rect_size $05, $06 ; $5f64
 	ld h, $00 ; $5f68
 	farcall FillTilemapRect ; $5f6a
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH + 14 ; $5f6d
-	ld b, $05 ; $5f70
-	ld c, $06 ; $5f72
+	rect_size $05, $06 ; $5f70
 	ld h, $00 ; $5f74
 	farcall FillTilemapRect ; $5f76
 	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; $5f79
-	ld b, $05 ; $5f7c
-	ld c, $06 ; $5f7e
+	rect_size $05, $06 ; $5f7c
 	ld h, $20 ; $5f80
 	farcall FillTilemapRect ; $5f82
 	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 14 ; $5f85
-	ld b, $05 ; $5f88
-	ld c, $06 ; $5f8a
+	rect_size $05, $06 ; $5f88
 	ld h, $20 ; $5f8c
 	farcall FillTilemapRect ; $5f8e
 	ret ; $5f91
@@ -26,23 +22,19 @@ CopyMatchStatsHeaderRects:
 	ret nz ; $5f98
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $5f99
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH ; $5f9c
-	ld b, $08 ; $5f9f
-	ld c, $04 ; $5fa1
+	rect_size $08, $04 ; $5f9f
 	farcall CopyTilemapRect ; $5fa3
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 12 ; $5fa6
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 12 ; $5fa9
-	ld b, $08 ; $5fac
-	ld c, $04 ; $5fae
+	rect_size $08, $04 ; $5fac
 	farcall CopyTilemapRect ; $5fb0
 	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH ; $5fb3
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $5fb6
-	ld b, $08 ; $5fb9
-	ld c, $04 ; $5fbb
+	rect_size $08, $04 ; $5fb9
 	farcall CopyTilemapRect ; $5fbd
 	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH + 12 ; $5fc0
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 12 ; $5fc3
-	ld b, $08 ; $5fc6
-	ld c, $04 ; $5fc8
+	rect_size $08, $04 ; $5fc6
 	farcall CopyTilemapRect ; $5fca
 	ret ; $5fcd
 PrintMatchSetScores:

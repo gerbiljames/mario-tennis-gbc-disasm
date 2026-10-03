@@ -31,8 +31,7 @@ AdjustResultTilemapForLoss:
 	jr nz, .done ; $4a5b
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4a5d
 	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH ; $4a60
-	ld b, $20 ; $4a63
-	ld c, $02 ; $4a65
+	rect_size $20, $02 ; $4a63
 	farcall CopyTilemapRect ; $4a67
 	ld a, $06 ; $4a6a
 	ld [wAnimatedTilePeriod], a ; $4a6c
@@ -79,15 +78,13 @@ Unused_16_BuildMatchResultTilemap:
 	jr nz, .ne01 ; $4a9e
 	ld hl, $d3c7 ; $4aa0
 	ld de, $d200 ; $4aa3
-	ld b, $06 ; $4aa6
-	ld c, $02 ; $4aa8
+	rect_size $06, $02 ; $4aa6
 	farcall CopyTilemapRect ; $4aaa
 	jr .done ; $4aad
 .ne01:
 	ld hl, $d3c0 ; $4aaf
 	ld de, $d200 ; $4ab2
-	ld b, $07 ; $4ab5
-	ld c, $02 ; $4ab7
+	rect_size $07, $02 ; $4ab5
 	farcall CopyTilemapRect ; $4ab9
 .done:
 	ret ; $4abc
@@ -295,8 +292,7 @@ QueueResultPortraitBottom:
 	call GetResultSpriteWobbleOffset ; $4d45
 	add d ; $4d48
 	ld d, a ; $4d49
-	ld c, $20 ; $4d4a
-	ld b, OAM_BANK1 | 1 ; $4d4c
+	sprite_tile_attr $20, OAM_BANK1 | 1 ; $4d4a
 	ld hl, ResultSpriteTemplateRight_16 ; $4d4e
 	call QueueSpriteTemplate ; $4d51
 	ret ; $4d54
@@ -338,16 +334,14 @@ QueueLoserMarkerForOpponent:
 	call GetResultSpriteWobbleOffset ; $4dad
 	add d ; $4db0
 	ld d, a ; $4db1
-	ld c, $42 ; $4db2
-	ld b, OAM_BANK1 | 1 ; $4db4
+	sprite_tile_attr $42, OAM_BANK1 | 1 ; $4db2
 	call QueueSprite ; $4db6
 	ret ; $4db9
 QueueWinnerMarkerForOpponent:
 	call GetResultSpriteWobbleOffset ; $4dba
 	add d ; $4dbd
 	ld d, a ; $4dbe
-	ld c, $40 ; $4dbf
-	ld b, OAM_BANK1 | 1 ; $4dc1
+	sprite_tile_attr $40, OAM_BANK1 | 1 ; $4dbf
 	call QueueSprite ; $4dc3
 	ret ; $4dc6
 QueueLoserMarkerForPlayer:
@@ -382,13 +376,11 @@ ResultSpriteWobbleOffsetTable:
 	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
 LoadResultScreenTileGraphics:
 	ld de, wShadowAttrmap ; $4dfe
-	ld b, $14 ; $4e01
-	ld c, $02 ; $4e03
+	rect_size $14, $02 ; $4e01
 	ld h, $0b ; $4e05
 	farcall FillTilemapRect ; $4e07
 	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $4e0a
-	ld b, $14 ; $4e0d
-	ld c, $02 ; $4e0f
+	rect_size $14, $02 ; $4e0d
 	ld h, $0b ; $4e11
 	farcall FillTilemapRect ; $4e13
 	ld de, FLAG_DOUBLES ; $4e16

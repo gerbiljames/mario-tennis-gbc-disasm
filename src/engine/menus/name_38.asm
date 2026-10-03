@@ -347,24 +347,18 @@ SetupNameEntryScreen:
 	ld [wShadowTilemapBank], a ; $6fa2
 	ld a, $00 ; $6fa5
 	ld [wWindowTileAttr], a ; $6fa7
-	ld d, $00 ; $6faa
-	ld e, $02 ; $6fac
-	ld b, $14 ; $6fae
-	ld c, $03 ; $6fb0
+	rect_cell $00, $02 ; $6faa
+	rect_size $14, $03 ; $6fae
 	farcall CreateWindowFromScreenRect ; $6fb2
 	farcall DrawTextWindowFrame ; $6fb5
 	farcall RedrawWindowRows ; $6fb8
-	ld d, $00 ; $6fbb
-	ld e, $08 ; $6fbd
-	ld b, $14 ; $6fbf
-	ld c, $09 ; $6fc1
+	rect_cell $00, $08 ; $6fbb
+	rect_size $14, $09 ; $6fbf
 	farcall CreateWindowFromScreenRect ; $6fc3
 	farcall DrawTextWindowFrame ; $6fc6
 	farcall RedrawWindowRows ; $6fc9
-	ld d, $06 ; $6fcc
-	ld e, $05 ; $6fce
-	ld b, $09 ; $6fd0
-	ld c, $03 ; $6fd2
+	rect_cell $06, $05 ; $6fcc
+	rect_size $09, $03 ; $6fd0
 	farcall CreateWindowFromScreenRect ; $6fd4
 	farcall DrawTextWindowFrame ; $6fd7
 	farcall RedrawWindowRows ; $6fda
@@ -560,7 +554,6 @@ QueueNameEntryCursorSprites:
 	ld a, $08 ; $7283
 	add d ; $7285
 	ld d, a ; $7286
-	ld c, $02 ; $7287
-	ld b, OAM_BANK1 ; $7289
+	sprite_tile_attr $02, OAM_BANK1 ; $7287
 	call QueueSprite ; $728b
 	ret ; $728e

@@ -98,17 +98,14 @@ CloseCpuDifficultyPanel:
 	ld [wCpuDifficultyPrompt], a ; $62cc
 	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH ; $62cf
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH ; $62d2
-	ld b, $14 ; $62d5
-	ld c, $04 ; $62d7
+	rect_size $14, $04 ; $62d5
 	farcall CopyTilemapRect ; $62d9
 	ld hl, wShadowAttrmap + 22 * TILEMAP_WIDTH ; $62dc
 	ld de, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $62df
-	ld b, $14 ; $62e2
-	ld c, $04 ; $62e4
+	rect_size $14, $04 ; $62e2
 	farcall CopyTilemapRect ; $62e6
 	ld de, wShadowAttrmap + 14 * TILEMAP_WIDTH + 1 ; $62e9
-	ld b, $12 ; $62ec
-	ld c, $03 ; $62ee
+	rect_size $12, $03 ; $62ec
 	ld h, $00 ; $62f0
 	farcall FillTilemapRect ; $62f2
 	call RefreshCharInfoPanel ; $62f5
@@ -186,13 +183,11 @@ OpenCpuDifficultyPanel:
 	push_wram_bank WRAM_SCREEN ; $636d
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $6376
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH ; $6379
-	ld b, $14 ; $637c
-	ld c, $04 ; $637e
+	rect_size $14, $04 ; $637c
 	farcall CopyTilemapRect ; $6380
 	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH ; $6383
 	ld de, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $6386
-	ld b, $14 ; $6389
-	ld c, $04 ; $638b
+	rect_size $14, $04 ; $6389
 	farcall CopyTilemapRect ; $638d
 	pop_wram_bank ; $6390
 	ret ; $6395

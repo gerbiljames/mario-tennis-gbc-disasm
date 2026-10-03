@@ -251,8 +251,7 @@ QueueCutsceneAnimatedSprites:
 	ld d, [hl] ; $4e42
 	ld e, a ; $4e43
 	call ApplyCutsceneScrollToSpriteX ; $4e44
-	ld c, $40 ; $4e47
-	ld b, OAM_BANK1 | 1 ; $4e49
+	sprite_tile_attr $40, OAM_BANK1 | 1 ; $4e47
 	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate0 ; $4e4b
 	call QueueSpriteTemplate ; $4e4e
 	ld a, [wCutsceneStepTimer] ; $4e51
@@ -268,8 +267,7 @@ QueueCutsceneAnimatedSprites:
 	ld d, [hl] ; $4e60
 	ld e, a ; $4e61
 	call ApplyCutsceneScrollToSpriteX ; $4e62
-	ld c, $44 ; $4e65
-	ld b, OAM_BANK1 | 1 ; $4e67
+	sprite_tile_attr $44, OAM_BANK1 | 1 ; $4e65
 	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate1 ; $4e69
 	call QueueSpriteTemplate ; $4e6c
 	ld a, [wCutsceneStepTimer] ; $4e6f
@@ -285,8 +283,7 @@ QueueCutsceneAnimatedSprites:
 	ld d, [hl] ; $4e7e
 	ld e, a ; $4e7f
 	call ApplyCutsceneScrollToSpriteX ; $4e80
-	ld c, $48 ; $4e83
-	ld b, OAM_BANK1 | 1 ; $4e85
+	sprite_tile_attr $48, OAM_BANK1 | 1 ; $4e83
 	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate2 ; $4e87
 	call QueueSpriteTemplate ; $4e8a
 	ret ; $4e8d
@@ -429,8 +426,7 @@ QueueCutsceneSpriteGroupA:
 	ld a, [wCutsceneSpriteAY] ; $5274
 	ld e, a ; $5277
 	call ApplyCutsceneBobOffset ; $5278
-	ld c, $00 ; $527b
-	ld b, OAM_BANK1 ; $527d
+	sprite_tile_attr $00, OAM_BANK1 ; $527b
 	call QueueSpriteTemplate ; $527f
 	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate1 ; $5282
 	ld a, [wCutsceneSpriteAX] ; $5285
@@ -442,8 +438,7 @@ QueueCutsceneSpriteGroupA:
 	add e ; $5291
 	ld e, a ; $5292
 	call ApplyCutsceneBobOffset ; $5293
-	ld c, $06 ; $5296
-	ld b, OAM_BANK1 ; $5298
+	sprite_tile_attr $06, OAM_BANK1 ; $5296
 	call QueueSpriteTemplate ; $529a
 	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate2 ; $529d
 	ld a, [wCutsceneSpriteAX] ; $52a0
@@ -453,8 +448,7 @@ QueueCutsceneSpriteGroupA:
 	add e ; $52a9
 	ld e, a ; $52aa
 	call ApplyCutsceneBobOffset ; $52ab
-	ld c, $10 ; $52ae
-	ld b, OAM_BANK1 ; $52b0
+	sprite_tile_attr $10, OAM_BANK1 ; $52ae
 	call QueueSpriteTemplate ; $52b2
 	ret ; $52b5
 QueueCutsceneSpriteGroupA_SpriteTemplate0:
@@ -491,8 +485,7 @@ QueueCutsceneSpriteGroupB:
 	ld a, [wCutsceneSpriteBY] ; $5303
 	ld e, a ; $5306
 	call ApplyCutsceneBobOffset ; $5307
-	ld c, $20 ; $530a
-	ld b, OAM_BANK1 | 1 ; $530c
+	sprite_tile_attr $20, OAM_BANK1 | 1 ; $530a
 	call QueueSpriteTemplate ; $530e
 	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate1 ; $5311
 	ld a, [wCutsceneSpriteBX] ; $5314
@@ -504,8 +497,7 @@ QueueCutsceneSpriteGroupB:
 	add e ; $5320
 	ld e, a ; $5321
 	call ApplyCutsceneBobOffset ; $5322
-	ld c, $26 ; $5325
-	ld b, OAM_BANK1 | 1 ; $5327
+	sprite_tile_attr $26, OAM_BANK1 | 1 ; $5325
 	call QueueSpriteTemplate ; $5329
 	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate2 ; $532c
 	ld a, [wCutsceneSpriteBX] ; $532f
@@ -515,8 +507,7 @@ QueueCutsceneSpriteGroupB:
 	add e ; $5338
 	ld e, a ; $5339
 	call ApplyCutsceneBobOffset ; $533a
-	ld c, $38 ; $533d
-	ld b, OAM_BANK1 | 1 ; $533f
+	sprite_tile_attr $38, OAM_BANK1 | 1 ; $533d
 	call QueueSpriteTemplate ; $5341
 	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate3 ; $5344
 	ld a, [wCutsceneSpriteBX] ; $5347
@@ -528,8 +519,7 @@ QueueCutsceneSpriteGroupB:
 	add e ; $5353
 	ld e, a ; $5354
 	call ApplyCutsceneBobOffset ; $5355
-	ld c, $48 ; $5358
-	ld b, OAM_BANK1 | 1 ; $535a
+	sprite_tile_attr $48, OAM_BANK1 | 1 ; $5358
 	call QueueSpriteTemplate ; $535c
 	ret ; $535f
 QueueCutsceneSpriteGroupB_SpriteTemplate0:

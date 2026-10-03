@@ -319,8 +319,7 @@ DrawBriefingPlayerSprite:
 	ld a, [wBriefingPlayerY] ; $46ef
 	ld e, a ; $46f2
 	ld hl, DrawBriefingPlayerSprite_SpriteTemplate ; $46f3
-	ld b, OAM_BANK1 ; $46f6
-	ld c, $00 ; $46f8
+	sprite_attr_tile OAM_BANK1, $00 ; $46f6
 	call QueueSpriteTemplate ; $46fa
 	pop_wram_bank ; $46fd
 	ret ; $4702
@@ -336,8 +335,7 @@ DrawBriefingOpponentSprite:
 	ld a, [wBriefingOpponentY] ; $4719
 	ld e, a ; $471c
 	ld hl, DrawBriefingOpponentSprite_SpriteTemplate ; $471d
-	ld b, OAM_BANK1 ; $4720
-	ld c, $04 ; $4722
+	sprite_attr_tile OAM_BANK1, $04 ; $4720
 	call QueueSpriteTemplate ; $4724
 	pop_wram_bank ; $4727
 	ret ; $472c
@@ -352,8 +350,7 @@ DrawBriefingBallSprite:
 	ld d, a ; $4742
 	ld a, [wBriefingBallY] ; $4743
 	ld e, a ; $4746
-	ld c, $6e ; $4747
-	ld b, OAM_BANK1 | 1 ; $4749
+	sprite_tile_attr $6e, OAM_BANK1 | 1 ; $4747
 	call QueueSprite ; $474b
 	pop_wram_bank ; $474e
 	ret ; $4753
@@ -428,15 +425,13 @@ DrawBriefingPoleSprites:
 	ld d, a ; $47fb
 	ld a, [wBriefingPole1Y] ; $47fc
 	ld e, a ; $47ff
-	ld c, $6a ; $4800
-	ld b, OAM_BANK1 | 1 ; $4802
+	sprite_tile_attr $6a, OAM_BANK1 | 1 ; $4800
 	call QueueSprite ; $4804
 	ld a, [wBriefingPole2X] ; $4807
 	ld d, a ; $480a
 	ld a, [wBriefingPole2Y] ; $480b
 	ld e, a ; $480e
-	ld c, $6a ; $480f
-	ld b, OAM_BANK1 | 1 ; $4811
+	sprite_tile_attr $6a, OAM_BANK1 | 1 ; $480f
 	call QueueSprite ; $4813
 	pop_wram_bank ; $4816
 	ret ; $481b

@@ -147,8 +147,7 @@ DrawMinigameMarkTile:
 	ld e, a ; $7766
 	push de ; $7767
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 21 ; $7768
-	ld b, $02 ; $776b
-	ld c, $02 ; $776d
+	rect_size $02, $02 ; $776b
 	farcall CopyTilemapRect ; $776f
 	pop de ; $7772
 	ld hl, $0400 ; $7773
@@ -156,8 +155,7 @@ DrawMinigameMarkTile:
 	ld d, h ; $7777
 	ld e, l ; $7778
 	ld hl, wShadowAttrmap + 2 * TILEMAP_WIDTH + 21 ; $7779
-	ld b, $02 ; $777c
-	ld c, $02 ; $777e
+	rect_size $02, $02 ; $777c
 	farcall CopyTilemapRect ; $7780
 	pop hl ; $7783
 	pop de ; $7784
@@ -193,33 +191,27 @@ MinigameStarRow2:
 ClearMinigameMarkColumns:
 	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 21 ; $77ac
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 6 ; $77af
-	ld b, $02 ; $77b2
-	ld c, $0a ; $77b4
+	rect_size $02, $0a ; $77b2
 	farcall CopyTilemapRect ; $77b6
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH + 21 ; $77b9
 	ld de, wShadowAttrmap + 6 * TILEMAP_WIDTH + 6 ; $77bc
-	ld b, $02 ; $77bf
-	ld c, $0a ; $77c1
+	rect_size $02, $0a ; $77bf
 	farcall CopyTilemapRect ; $77c3
 	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 21 ; $77c6
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 10 ; $77c9
-	ld b, $02 ; $77cc
-	ld c, $0a ; $77ce
+	rect_size $02, $0a ; $77cc
 	farcall CopyTilemapRect ; $77d0
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH + 21 ; $77d3
 	ld de, wShadowAttrmap + 6 * TILEMAP_WIDTH + 10 ; $77d6
-	ld b, $02 ; $77d9
-	ld c, $0a ; $77db
+	rect_size $02, $0a ; $77d9
 	farcall CopyTilemapRect ; $77dd
 	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 21 ; $77e0
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; $77e3
-	ld b, $02 ; $77e6
-	ld c, $0a ; $77e8
+	rect_size $02, $0a ; $77e6
 	farcall CopyTilemapRect ; $77ea
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH + 21 ; $77ed
 	ld de, wShadowAttrmap + 6 * TILEMAP_WIDTH + 14 ; $77f0
-	ld b, $02 ; $77f3
-	ld c, $0a ; $77f5
+	rect_size $02, $0a ; $77f3
 	farcall CopyTilemapRect ; $77f7
 	ret ; $77fa
 DrawStarLegendMark:
@@ -238,13 +230,11 @@ DrawStarLegendMark:
 .nonZero:
 	ld hl, wShadowTilemap + 22 ; $780c
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 14 ; $780f
-	ld b, $02 ; $7812
-	ld c, $02 ; $7814
+	rect_size $02, $02 ; $7812
 	farcall CopyTilemapRect ; $7816
 	ld hl, wShadowAttrmap + 22 ; $7819
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 14 ; $781c
-	ld b, $02 ; $781f
-	ld c, $02 ; $7821
+	rect_size $02, $02 ; $781f
 	farcall CopyTilemapRect ; $7823
 	ret ; $7826
 DrawMinigameHighScoreNumbers:

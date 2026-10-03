@@ -407,10 +407,8 @@ ResetScreenAndTextWindows:
 	ld [wShadowTilemapBank], a ; $4c1b
 	ld a, $00 ; $4c1e
 	ld [wWindowTileAttr], a ; $4c20
-	ld d, $00 ; $4c23
-	ld e, $0f ; $4c25
-	ld b, $14 ; $4c27
-	ld c, $03 ; $4c29
+	rect_cell $00, $0f ; $4c23
+	rect_size $14, $03 ; $4c27
 	farcall CreateWindowFromScreenRect ; $4c2b
 	farcall DrawTextWindowFrame ; $4c2e
 	farcall RedrawWindowRows ; $4c31

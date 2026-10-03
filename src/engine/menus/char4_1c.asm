@@ -205,13 +205,11 @@ QueueStatChangeArrow:
 	ret z ; $555d
 	bit 7, a ; $555e
 	jr nz, .arrowDown ; $5560
-	ld b, OAM_BANK1 | 6 ; $5562
-	ld c, $d0 ; $5564
+	sprite_attr_tile OAM_BANK1 | 6, $d0 ; $5562
 	call QueueSprite ; $5566
 	ret ; $5569
 .arrowDown:
-	ld b, OAM_BANK1 | 7 ; $556a
-	ld c, $d2 ; $556c
+	sprite_attr_tile OAM_BANK1 | 7, $d2 ; $556a
 	call QueueSprite ; $556e
 	ret ; $5571
 SetupCharDataScreen:

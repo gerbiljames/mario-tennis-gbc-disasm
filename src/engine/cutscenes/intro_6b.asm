@@ -302,8 +302,7 @@ IntroCutsceneState01Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4245
 	ld h, $8a ; $424e
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $4250
-	ld b, $20 ; $4253
-	ld c, $01 ; $4255
+	rect_size $20, $01 ; $4253
 	farcall FillTilemapRect ; $4257
 	pop_wram_bank ; $425a
 	farcall QueueWram3MapToVRAM ; $425f
@@ -407,8 +406,7 @@ IntroCutsceneState03Init_6b:
 	push_wram_bank WRAM_SCREEN ; $43d7
 	ld h, $8a ; $43e0
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $43e2
-	ld b, $20 ; $43e5
-	ld c, $01 ; $43e7
+	rect_size $20, $01 ; $43e5
 	farcall FillTilemapRect ; $43e9
 	pop_wram_bank ; $43ec
 	farcall QueueWram3MapToVRAM ; $43f1
@@ -513,13 +511,11 @@ IntroCutsceneState05Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4536
 	ld h, $8a ; $453f
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH ; $4541
-	ld b, $20 ; $4544
-	ld c, $01 ; $4546
+	rect_size $20, $01 ; $4544
 	farcall FillTilemapRect ; $4548
 	ld h, $8a ; $454b
 	ld de, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $454d
-	ld b, $20 ; $4550
-	ld c, $01 ; $4552
+	rect_size $20, $01 ; $4550
 	farcall FillTilemapRect ; $4554
 	pop_wram_bank ; $4557
 	farcall QueueWram3MapToVRAM ; $455c

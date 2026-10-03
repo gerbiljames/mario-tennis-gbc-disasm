@@ -412,12 +412,10 @@ SetupVarsityCourtSceneVariant:
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61b6
 	farcall WriteStoryStateWord ; $61b9
 	ld a, $18 ; $61bc
-	ld d, $08 ; $61be
-	ld e, $10 ; $61c0
+	map_cell $08, $10 ; $61be
 	farcall WriteBehaviorMapCell ; $61c2
 	ld a, $18 ; $61c5
-	ld d, $06 ; $61c7
-	ld e, $10 ; $61c9
+	map_cell $06, $10 ; $61c7
 	farcall WriteBehaviorMapCell ; $61cb
 	script_set_position ACTOR_COURTYARD_CURT, 5.0, 21.0 ; $61ce
 	script_face ACTOR_COURTYARD_CURT, FACE_RIGHT ; $61d9
@@ -432,12 +430,10 @@ SetupVarsityCourtSceneVariant:
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61f1
 	farcall WriteStoryStateWord ; $61f4
 	ld a, $18 ; $61f7
-	ld d, $08 ; $61f9
-	ld e, $10 ; $61fb
+	map_cell $08, $10 ; $61f9
 	farcall WriteBehaviorMapCell ; $61fd
 	ld a, $18 ; $6200
-	ld d, $06 ; $6202
-	ld e, $10 ; $6204
+	map_cell $06, $10 ; $6202
 	farcall WriteBehaviorMapCell ; $6206
 	ret ; $6209
 .stage2:
@@ -463,12 +459,10 @@ SetupVarsityCourtSceneVariant:
 	script_face ACTOR_VARSITY_COURT_B_BOB, FACE_RIGHT ; $6243
 	script_set_actor_script ACTOR_VARSITY_COURT_B_CURT, ActorScript_13_30 ; $624a
 	ld a, $18 ; $6255
-	ld d, $08 ; $6257
-	ld e, $10 ; $6259
+	map_cell $08, $10 ; $6257
 	farcall WriteBehaviorMapCell ; $625b
 	ld a, $18 ; $625e
-	ld d, $06 ; $6260
-	ld e, $10 ; $6262
+	map_cell $06, $10 ; $6260
 	farcall WriteBehaviorMapCell ; $6264
 	script_set_position ACTOR_VARSITY_COURT_B_BETH, 15.0, 23.0 ; $6267
 	script_set_actor_script ACTOR_VARSITY_COURT_B_BETH, ActorScript_13_28 ; $6272
@@ -483,12 +477,10 @@ SetupVarsityCourtSceneVariant:
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $628e
 	farcall WriteStoryStateWord ; $6291
 	ld a, $18 ; $6294
-	ld d, $08 ; $6296
-	ld e, $10 ; $6298
+	map_cell $08, $10 ; $6296
 	farcall WriteBehaviorMapCell ; $629a
 	ld a, $18 ; $629d
-	ld d, $06 ; $629f
-	ld e, $10 ; $62a1
+	map_cell $06, $10 ; $629f
 	farcall WriteBehaviorMapCell ; $62a3
 	ret ; $62a6
 .stage5:

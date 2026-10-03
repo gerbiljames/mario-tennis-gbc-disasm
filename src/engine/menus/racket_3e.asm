@@ -80,13 +80,11 @@ LoadEraseDataConfirmScreen:
 	farcall LoadScreenAssetRecord ; $4ccb
 	wram_bank WRAM_SCREEN ; $4cce
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 3 ; $4cd4
-	ld b, $0e ; $4cd7
-	ld c, $06 ; $4cd9
+	rect_size $0e, $06 ; $4cd7
 	ld h, $00 ; $4cdb
 	farcall FillTilemapRect ; $4cdd
 	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 3 ; $4ce0
-	ld b, $0e ; $4ce3
-	ld c, $06 ; $4ce5
+	rect_size $0e, $06 ; $4ce3
 	ld h, $20 ; $4ce7
 	farcall FillTilemapRect ; $4ce9
 	farcall ResetTextWindowState ; $4cec
@@ -99,17 +97,13 @@ LoadEraseDataConfirmScreen:
 	ld [wShadowTilemapBank], a ; $4d01
 	ld a, $00 ; $4d04
 	ld [wWindowTileAttr], a ; $4d06
-	ld d, $00 ; $4d09
-	ld e, $0d ; $4d0b
-	ld b, $0f ; $4d0d
-	ld c, $05 ; $4d0f
+	rect_cell $00, $0d ; $4d09
+	rect_size $0f, $05 ; $4d0d
 	farcall CreateWindowFromScreenRect ; $4d11
 	farcall DrawTextWindowFrame ; $4d14
 	farcall RedrawWindowRows ; $4d17
-	ld d, $0f ; $4d1a
-	ld e, $0d ; $4d1c
-	ld b, $05 ; $4d1e
-	ld c, $05 ; $4d20
+	rect_cell $0f, $0d ; $4d1a
+	rect_size $05, $05 ; $4d1e
 	farcall CreateWindowFromScreenRect ; $4d22
 	farcall DrawTextWindowFrame ; $4d25
 	farcall RedrawWindowRows ; $4d28
@@ -218,8 +212,7 @@ QueueEraseConfirmCursorSprites:
 	ld a, $08 ; $4e25
 	add d ; $4e27
 	ld d, a ; $4e28
-	ld c, $02 ; $4e29
-	ld b, OAM_BANK1 ; $4e2b
+	sprite_tile_attr $02, OAM_BANK1 ; $4e29
 	call QueueSprite ; $4e2d
 	farcall TickMenuBgScroll ; $4e30
 	ret ; $4e33
@@ -442,8 +435,7 @@ RedrawRacketShoesChoiceMenu:
 	call SetRacketShoesChoicePalette ; $4ff3
 	wram_bank WRAM_SCREEN ; $4ff6
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4ffc
-	ld b, $14 ; $4fff
-	ld c, $01 ; $5001
+	rect_size $14, $01 ; $4fff
 	ld h, $03 ; $5003
 	farcall FillTilemapRect ; $5005
 	ld a, $02 ; $5008
@@ -451,8 +443,7 @@ RedrawRacketShoesChoiceMenu:
 	ld a, $04 ; $500d
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $500f
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5012
-	ld b, $12 ; $5015
-	ld c, $01 ; $5017
+	rect_size $12, $01 ; $5015
 	ld h, $20 ; $5019
 	farcall FillTilemapRect ; $501b
 	call DrawRacketShoesChoiceCaption ; $501e

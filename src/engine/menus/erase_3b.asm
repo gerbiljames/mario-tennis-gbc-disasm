@@ -419,8 +419,7 @@ EraseSavedDataCursorSpriteTask:
 	ld d, h ; $6f8b
 	ld e, l ; $6f8c
 	ld hl, EraseSavedDataCursorSpriteTask_SpriteTemplate1 ; $6f8d
-	ld b, OAM_BANK1 ; $6f90
-	ld c, $70 ; $6f92
+	sprite_attr_tile OAM_BANK1, $70 ; $6f90
 	call QueueSpriteTemplate ; $6f94
 	ret ; $6f97
 EraseSavedDataCursorSpriteTask_SpriteTemplate0:
@@ -488,8 +487,7 @@ DrawEraseSavedDataGrid:
 .fillTilemapRect:
 	wram_bank WRAM_SCREEN ; $703e
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $7044
-	ld b, $14 ; $7047
-	ld c, $01 ; $7049
+	rect_size $14, $01 ; $7047
 	ld h, $03 ; $704b
 	farcall FillTilemapRect ; $704d
 	ld a, $02 ; $7050
@@ -497,8 +495,7 @@ DrawEraseSavedDataGrid:
 	ld a, $04 ; $7055
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $7057
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $705a
-	ld b, $12 ; $705d
-	ld c, $01 ; $705f
+	rect_size $12, $01 ; $705d
 	ld h, $20 ; $7061
 	farcall FillTilemapRect ; $7063
 	call DrawEraseSavedDataCaption ; $7066

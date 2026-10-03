@@ -238,8 +238,7 @@ InitMatchWinLoseScreen:
 	call LoadWinLoseScreenAssets ; $4579
 	wram_bank WRAM_SCREEN ; $457c
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $4582
-	ld b, $14 ; $4585
-	ld c, $05 ; $4587
+	rect_size $14, $05 ; $4585
 	ld h, $0a ; $4589
 	farcall FillTilemapRect ; $458b
 	ld a, $00 ; $458e
@@ -327,23 +326,19 @@ LoadWinLoseScreenAssets:
 	wram_bank WRAM_SCREEN ; $4928
 	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH ; $492e
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 11 ; $4931
-	ld b, $09 ; $4934
-	ld c, $05 ; $4936
+	rect_size $09, $05 ; $4934
 	farcall CopyTilemapRect ; $4938
 	ld hl, wShadowAttrmap + 20 * TILEMAP_WIDTH ; $493b
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 11 ; $493e
-	ld b, $09 ; $4941
-	ld c, $05 ; $4943
+	rect_size $09, $05 ; $4941
 	farcall CopyTilemapRect ; $4945
 	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH + 9 ; $4948
 	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; $494b
-	ld b, $08 ; $494e
-	ld c, $05 ; $4950
+	rect_size $08, $05 ; $494e
 	farcall CopyTilemapRect ; $4952
 	ld hl, wShadowAttrmap + 20 * TILEMAP_WIDTH + 9 ; $4955
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; $4958
-	ld b, $08 ; $495b
-	ld c, $05 ; $495d
+	rect_size $08, $05 ; $495b
 	farcall CopyTilemapRect ; $495f
 .done:
 	ret ; $4962
@@ -355,35 +350,29 @@ SetWinLosePortraitPaletteAttrs:
 	call TestGameFlagByNumber ; $496c
 	jr z, .zero ; $496f
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 11 ; $4971
-	ld b, $04 ; $4974
-	ld c, $04 ; $4976
+	rect_size $04, $04 ; $4974
 	ld h, $0c ; $4978
 	farcall FillTilemapRect ; $497a
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 15 ; $497d
-	ld b, $04 ; $4980
-	ld c, $04 ; $4982
+	rect_size $04, $04 ; $4980
 	ld h, $0d ; $4984
 	farcall FillTilemapRect ; $4986
 	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 2 ; $4989
-	ld b, $03 ; $498c
-	ld c, $03 ; $498e
+	rect_size $03, $03 ; $498c
 	ld h, $0e ; $4990
 	farcall FillTilemapRect ; $4992
 	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 5 ; $4995
-	ld b, $03 ; $4998
-	ld c, $03 ; $499a
+	rect_size $03, $03 ; $4998
 	ld h, $0f ; $499c
 	farcall FillTilemapRect ; $499e
 	jr .done ; $49a1
 .zero:
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 13 ; $49a3
-	ld b, $04 ; $49a6
-	ld c, $04 ; $49a8
+	rect_size $04, $04 ; $49a6
 	ld h, $0c ; $49aa
 	farcall FillTilemapRect ; $49ac
 	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 3 ; $49af
-	ld b, $03 ; $49b2
-	ld c, $03 ; $49b4
+	rect_size $03, $03 ; $49b2
 	ld h, $0e ; $49b6
 	farcall FillTilemapRect ; $49b8
 .done:
@@ -393,35 +382,29 @@ SetWinLosePortraitPaletteAttrs:
 	call TestGameFlagByNumber ; $49bf
 	jr z, .fillTilemapRect ; $49c2
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 12 ; $49c4
-	ld b, $03 ; $49c7
-	ld c, $03 ; $49c9
+	rect_size $03, $03 ; $49c7
 	ld h, $0c ; $49cb
 	farcall FillTilemapRect ; $49cd
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 15 ; $49d0
-	ld b, $03 ; $49d3
-	ld c, $03 ; $49d5
+	rect_size $03, $03 ; $49d3
 	ld h, $0d ; $49d7
 	farcall FillTilemapRect ; $49d9
 	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 2 ; $49dc
-	ld b, $03 ; $49df
-	ld c, $03 ; $49e1
+	rect_size $03, $03 ; $49df
 	ld h, $0e ; $49e3
 	farcall FillTilemapRect ; $49e5
 	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 5 ; $49e8
-	ld b, $03 ; $49eb
-	ld c, $03 ; $49ed
+	rect_size $03, $03 ; $49eb
 	ld h, $0f ; $49ef
 	farcall FillTilemapRect ; $49f1
 	jr .doneB ; $49f4
 .fillTilemapRect:
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 13 ; $49f6
-	ld b, $03 ; $49f9
-	ld c, $03 ; $49fb
+	rect_size $03, $03 ; $49f9
 	ld h, $0c ; $49fd
 	farcall FillTilemapRect ; $49ff
 	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 3 ; $4a02
-	ld b, $03 ; $4a05
-	ld c, $03 ; $4a07
+	rect_size $03, $03 ; $4a05
 	ld h, $0e ; $4a09
 	farcall FillTilemapRect ; $4a0b
 .doneB:

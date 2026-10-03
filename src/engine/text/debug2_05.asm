@@ -271,8 +271,7 @@ DrawPaletteCursorSprites:
 	add $18 ; $6b29
 	sub l ; $6b2b
 	ld e, a ; $6b2c
-	ld b, 1 ; $6b2d
-	ld c, $60 ; $6b2f
+	sprite_attr_tile 1, $60 ; $6b2d
 	push hl ; $6b31
 	call QueueSprite16 ; $6b32
 	pop hl ; $6b35

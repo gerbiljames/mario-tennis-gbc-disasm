@@ -354,20 +354,16 @@ AcademyArrivalGreetingScene:
 	ret ; $4f1a
 ArmAcademyEntranceTileTrigger:
 	ld a, $f1 ; $4f1b
-	ld d, $16 ; $4f1d
-	ld e, $10 ; $4f1f
+	map_cell $16, $10 ; $4f1d
 	farcall WriteBehaviorMapCell ; $4f21
 	ld a, $f1 ; $4f24
-	ld d, $18 ; $4f26
-	ld e, $10 ; $4f28
+	map_cell $18, $10 ; $4f26
 	farcall WriteBehaviorMapCell ; $4f2a
 	ld a, $f1 ; $4f2d
-	ld d, $16 ; $4f2f
-	ld e, $12 ; $4f31
+	map_cell $16, $12 ; $4f2f
 	farcall WriteBehaviorMapCell ; $4f33
 	ld a, $f1 ; $4f36
-	ld d, $18 ; $4f38
-	ld e, $12 ; $4f3a
+	map_cell $18, $12 ; $4f38
 	farcall WriteBehaviorMapCell ; $4f3c
 	ret ; $4f3f
 ResumeAcademyGuideTour:

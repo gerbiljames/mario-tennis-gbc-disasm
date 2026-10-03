@@ -293,10 +293,8 @@ Unused_38_SetupMatchTypeMenuScreen:
 	ld [wShadowTilemapBank], a ; $4632
 	ld a, $00 ; $4635
 	ld [wWindowTileAttr], a ; $4637
-	ld d, $00 ; $463a
-	ld e, $0f ; $463c
-	ld b, $14 ; $463e
-	ld c, $03 ; $4640
+	rect_cell $00, $0f ; $463a
+	rect_size $14, $03 ; $463e
 	farcall CreateWindowFromScreenRect ; $4642
 	farcall DrawTextWindowFrame ; $4645
 	farcall RedrawWindowRows ; $4648
@@ -315,13 +313,11 @@ Unused_38_RefreshMatchTypeLabelRow:
 	sound SFX_MENU_MOVE ; $4666
 	wram_bank WRAM_SCREEN ; $4668
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 1 ; $466e
-	ld b, $12 ; $4671
-	ld c, $01 ; $4673
+	rect_size $12, $01 ; $4671
 	ld h, $03 ; $4675
 	farcall FillTilemapRect ; $4677
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $467a
-	ld b, $12 ; $467d
-	ld c, $01 ; $467f
+	rect_size $12, $01 ; $467d
 	ld h, $20 ; $4681
 	farcall FillTilemapRect ; $4683
 	call Unused_38_DrawMatchTypeOptionLabel ; $4686

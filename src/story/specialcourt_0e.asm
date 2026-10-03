@@ -221,8 +221,7 @@ UpdateStarWarpTrailSparkles:
 	ld a, [hl+] ; $72b7
 	ld d, [hl] ; $72b8
 	ld e, a ; $72b9
-	ld b, OAM_BANK1 | 1 ; $72ba
-	ld c, $18 ; $72bc
+	sprite_attr_tile OAM_BANK1 | 1, $18 ; $72ba
 	call QueueSprite ; $72be
 .nextSparkle:
 	pop hl ; $72c1

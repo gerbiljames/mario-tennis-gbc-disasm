@@ -601,10 +601,8 @@ RunStoryModeMenu:
 	set_flag FLAG_HIDE_OVERWORLD_ACTORS ; $6e35
 	farcall LoadMatchStoryGfx ; $6e38
 	call RestoreStoryTilemapNoPriority ; $6e3b
-	ld d, $00 ; $6e3e
-	ld e, $0e ; $6e40
-	ld b, $13 ; $6e42
-	ld c, $03 ; $6e44
+	rect_cell $00, $0e ; $6e3e
+	rect_size $13, $03 ; $6e42
 	farcall CreateWindowFromScreenRect ; $6e46
 	call AdvanceFrame ; $6e49
 	wram_bank WRAM_TEXT ; $6e4c

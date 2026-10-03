@@ -111,8 +111,7 @@ Screen1ObjPalette:
 QueueScreen1Sprites:
 	ld hl, QueueScreen1Sprites_SpriteTemplate ; $78cd
 	ld_xy de, $28, $3a ; $78d0
-	ld c, $00 ; $78d3
-	ld b, 0 ; $78d5
+	sprite_tile_attr $00, 0 ; $78d3
 	call QueueSpriteTemplate ; $78d7
 	ret ; $78da
 QueueScreen1Sprites_SpriteTemplate:
@@ -267,8 +266,7 @@ Screen2ObjPalette:
 QueueScreen2Sprites:
 	ld hl, QueueScreen2Sprites_SpriteTemplate ; $7a49
 	ld_xy de, $28, $40 ; $7a4c
-	ld c, $00 ; $7a4f
-	ld b, 0 ; $7a51
+	sprite_tile_attr $00, 0 ; $7a4f
 	call QueueSpriteTemplate ; $7a53
 	ret ; $7a56
 QueueScreen2Sprites_SpriteTemplate:

@@ -300,8 +300,7 @@ DrawRingShotModeTab:
 	ld h, [hl] ; $543c
 	ld l, a ; $543d
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $543e
-	ld b, $08 ; $5441
-	ld c, $02 ; $5443
+	rect_size $08, $02 ; $5441
 	farcall CopyTilemapRect ; $5445
 	pop_wram_bank ; $5448
 	ret ; $544d
@@ -486,8 +485,7 @@ DrawRingShotMarkCell:
 	ld a, [hl+] ; $557c
 	ld h, [hl] ; $557d
 	ld l, a ; $557e
-	ld b, $02 ; $557f
-	ld c, $02 ; $5581
+	rect_size $02, $02 ; $557f
 	farcall CopyTilemapRect ; $5583
 	pop hl ; $5586
 	pop de ; $5587

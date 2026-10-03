@@ -325,10 +325,8 @@ RunClearStatusSetupMenu:
 	call ClearMemory16 ; $4bc9
 	farcall ResetTextWindowState ; $4bcc
 	call ClearBgTilemaps ; $4bcf
-	ld d, $00 ; $4bd2
-	ld e, $0b ; $4bd4
-	ld b, $14 ; $4bd6
-	ld c, $07 ; $4bd8
+	rect_cell $00, $0b ; $4bd2
+	rect_size $14, $07 ; $4bd6
 	farcall CreateWindowFromScreenRect ; $4bda
 	ld [wClearStatusWindowId], a ; $4bdd
 	farcall DrawTextWindowFrame ; $4be0

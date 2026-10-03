@@ -756,8 +756,7 @@ FillMatchFormatOptionCell:
 	ld a, [hl] ; $6072
 	ld h, a ; $6073
 .fill:
-	ld b, $05 ; $6074
-	ld c, $03 ; $6076
+	rect_size $05, $03 ; $6074
 	farcall FillTilemapRect ; $6078
 	pop_wram_bank ; $607b
 	pop hl ; $6080
@@ -827,8 +826,7 @@ MatchFormatCursorSpriteTask:
 	ld d, h ; $6118
 	ld e, l ; $6119
 	ld hl, MatchFormatCursorSpriteTask_SpriteTemplate1 ; $611a
-	ld b, OAM_BANK1 ; $611d
-	ld c, $70 ; $611f
+	sprite_attr_tile OAM_BANK1, $70 ; $611d
 	call QueueSpriteTemplate ; $6121
 	ret ; $6124
 MatchFormatCursorSpriteTask_SpriteTemplate0:
@@ -856,8 +854,7 @@ MatchFormatCursorSpriteTaskTable1:
 DrawMatchFormatCaption:
 	wram_bank WRAM_SCREEN ; $6164
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $616a
-	ld b, $14 ; $616d
-	ld c, $01 ; $616f
+	rect_size $14, $01 ; $616d
 	ld h, $03 ; $6171
 	farcall FillTilemapRect ; $6173
 	ld a, $02 ; $6176
@@ -865,8 +862,7 @@ DrawMatchFormatCaption:
 	ld a, $04 ; $617b
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $617d
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6180
-	ld b, $12 ; $6183
-	ld c, $01 ; $6185
+	rect_size $12, $01 ; $6183
 	ld h, $20 ; $6187
 	farcall FillTilemapRect ; $6189
 	call RenderMatchFormatOptionText ; $618c

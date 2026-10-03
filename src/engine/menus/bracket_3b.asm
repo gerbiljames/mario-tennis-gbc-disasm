@@ -62,8 +62,7 @@ BuildTournamentBracketScreen:
 	ret ; $77f6
 ClearTournamentBracketAttrs:
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH + 9 ; $77f7
-	ld b, $07 ; $77fa
-	ld c, $08 ; $77fc
+	rect_size $07, $08 ; $77fa
 	ld h, $00 ; $77fe
 	farcall FillTilemapRect ; $7800
 	ret ; $7803
@@ -72,45 +71,37 @@ DrawTournamentBracketNameBoxes:
 	or a ; $7807
 	jr nz, .nonZero ; $7808
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 9 ; $780a
-	ld b, $07 ; $780d
-	ld c, $08 ; $780f
+	rect_size $07, $08 ; $780d
 	ld h, $20 ; $7811
 	farcall FillTilemapRect ; $7813
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 9 ; $7816
-	ld b, $07 ; $7819
-	ld c, $01 ; $781b
+	rect_size $07, $01 ; $7819
 	ld h, $03 ; $781d
 	farcall FillTilemapRect ; $781f
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 9 ; $7822
-	ld b, $07 ; $7825
-	ld c, $01 ; $7827
+	rect_size $07, $01 ; $7825
 	ld h, $03 ; $7829
 	farcall FillTilemapRect ; $782b
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 9 ; $782e
-	ld b, $07 ; $7831
-	ld c, $01 ; $7833
+	rect_size $07, $01 ; $7831
 	ld h, $03 ; $7835
 	farcall FillTilemapRect ; $7837
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 9 ; $783a
-	ld b, $07 ; $783d
-	ld c, $01 ; $783f
+	rect_size $07, $01 ; $783d
 	ld h, $03 ; $7841
 	farcall FillTilemapRect ; $7843
 	ret ; $7846
 .nonZero:
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 9 ; $7847
-	ld b, $07 ; $784a
-	ld c, $08 ; $784c
+	rect_size $07, $08 ; $784a
 	ld h, $20 ; $784e
 	farcall FillTilemapRect ; $7850
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 9 ; $7853
-	ld b, $07 ; $7856
-	ld c, $01 ; $7858
+	rect_size $07, $01 ; $7856
 	ld h, $03 ; $785a
 	farcall FillTilemapRect ; $785c
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 9 ; $785f
-	ld b, $07 ; $7862
-	ld c, $01 ; $7864
+	rect_size $07, $01 ; $7862
 	ld h, $03 ; $7866
 	farcall FillTilemapRect ; $7868
 	ret ; $786b
@@ -264,8 +255,7 @@ HighlightBracketPlayerRow:
 	ld a, [hl+] ; $7957
 	ld d, [hl] ; $7958
 	ld e, a ; $7959
-	ld b, $07 ; $795a
-	ld c, $02 ; $795c
+	rect_size $07, $02 ; $795a
 	ld h, $05 ; $795e
 	farcall FillTilemapRect ; $7960
 	ld a, [wDataScreenPage] ; $7963
@@ -301,8 +291,7 @@ HighlightBracketPlayerRow:
 	ld a, [hl+] ; $7991
 	ld d, [hl] ; $7992
 	ld e, a ; $7993
-	ld b, $07 ; $7994
-	ld c, $04 ; $7996
+	rect_size $07, $04 ; $7994
 	ld h, $05 ; $7998
 	farcall FillTilemapRect ; $799a
 	ld a, [wDataScreenPage] ; $799d
@@ -316,8 +305,7 @@ HighlightBracketPlayerRow:
 	ld a, [hl+] ; $79a9
 	ld d, [hl] ; $79aa
 	ld e, a ; $79ab
-	ld b, $02 ; $79ac
-	ld c, $03 ; $79ae
+	rect_size $02, $03 ; $79ac
 	ld h, $0d ; $79b0
 	farcall FillTilemapRect ; $79b2
 	ret ; $79b5

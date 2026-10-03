@@ -474,8 +474,7 @@ SavedDataSourceCursorSpriteTask:
 	ld d, h ; $6a0c
 	ld e, l ; $6a0d
 	ld hl, SavedDataSourceCursorSpriteTask_SpriteTemplate1 ; $6a0e
-	ld b, OAM_BANK1 ; $6a11
-	ld c, $70 ; $6a13
+	sprite_attr_tile OAM_BANK1, $70 ; $6a11
 	call QueueSpriteTemplate ; $6a15
 	ret ; $6a18
 SavedDataSourceCursorSpriteTask_SpriteTemplate0:
@@ -543,8 +542,7 @@ DrawSavedDataSourceGrid:
 .fillTilemapRect:
 	wram_bank WRAM_SCREEN ; $6ac1
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6ac7
-	ld b, $14 ; $6aca
-	ld c, $01 ; $6acc
+	rect_size $14, $01 ; $6aca
 	ld h, $03 ; $6ace
 	farcall FillTilemapRect ; $6ad0
 	ld a, $02 ; $6ad3
@@ -552,8 +550,7 @@ DrawSavedDataSourceGrid:
 	ld a, $04 ; $6ad8
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $6ada
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6add
-	ld b, $12 ; $6ae0
-	ld c, $01 ; $6ae2
+	rect_size $12, $01 ; $6ae0
 	ld h, $20 ; $6ae4
 	farcall FillTilemapRect ; $6ae6
 	call DrawSavedDataSourceCaption ; $6ae9

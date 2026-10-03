@@ -327,8 +327,7 @@ CourtSelect9CursorSpriteTask:
 	ld d, h ; $676e
 	ld e, l ; $676f
 	ld hl, CourtSelect9CursorSpriteTask_SpriteTemplate ; $6770
-	ld b, OAM_BANK1 ; $6773
-	ld c, $72 ; $6775
+	sprite_attr_tile OAM_BANK1, $72 ; $6773
 	call QueueSpriteTemplate ; $6777
 	ret ; $677a
 CourtSelect9CursorTemplatePtrs_3e:
@@ -446,8 +445,7 @@ SetCourtSelect9TabAttrRect:
 	ld d, [hl] ; $68a5
 	ld e, a ; $68a6
 	pop hl ; $68a7
-	ld b, $05 ; $68a8
-	ld c, $03 ; $68aa
+	rect_size $05, $03 ; $68a8
 	farcall FillTilemapRect ; $68ac
 	pop hl ; $68af
 	pop de ; $68b0

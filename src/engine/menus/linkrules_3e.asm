@@ -70,8 +70,7 @@ SetMatchRuleOptionAttrRect:
 	ld a, [hl] ; $4893
 	ld h, a ; $4894
 .fill:
-	ld b, $05 ; $4895
-	ld c, $03 ; $4897
+	rect_size $05, $03 ; $4895
 	farcall FillTilemapRect ; $4899
 	pop_wram_bank ; $489c
 	pop hl ; $48a1
@@ -134,8 +133,7 @@ MatchRulesCursorSpriteTask:
 	ld d, h ; $4936
 	ld e, l ; $4937
 	ld hl, MatchRulesCursorSpriteTask_SpriteTemplate1 ; $4938
-	ld b, OAM_BANK1 ; $493b
-	ld c, $70 ; $493d
+	sprite_attr_tile OAM_BANK1, $70 ; $493b
 	call QueueSpriteTemplate ; $493f
 	ret ; $4942
 MatchRulesCursorSpriteTask_SpriteTemplate0:
@@ -163,8 +161,7 @@ MatchRulesCursorTiles_3e:
 DrawMatchRulesCaption:
 	wram_bank WRAM_SCREEN ; $4982
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4988
-	ld b, $14 ; $498b
-	ld c, $01 ; $498d
+	rect_size $14, $01 ; $498b
 	ld h, $03 ; $498f
 	farcall FillTilemapRect ; $4991
 	ld a, $02 ; $4994
@@ -172,8 +169,7 @@ DrawMatchRulesCaption:
 	ld a, $04 ; $4999
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $499b
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $499e
-	ld b, $12 ; $49a1
-	ld c, $01 ; $49a3
+	rect_size $12, $01 ; $49a1
 	ld h, $20 ; $49a5
 	farcall FillTilemapRect ; $49a7
 	farcall RenderMatchFormatOptionText ; $49aa
@@ -246,10 +242,8 @@ LoadLinkMessageScreen:
 	ld [wShadowTilemapBank], a ; $4a2e
 	ld a, $00 ; $4a31
 	ld [wWindowTileAttr], a ; $4a33
-	ld d, $00 ; $4a36
-	ld e, $0b ; $4a38
-	ld b, $14 ; $4a3a
-	ld c, $07 ; $4a3c
+	rect_cell $00, $0b ; $4a36
+	rect_size $14, $07 ; $4a3a
 	farcall CreateWindowFromScreenRect ; $4a3e
 	farcall DrawTextWindowFrame ; $4a41
 	farcall RedrawWindowRows ; $4a44
@@ -342,10 +336,8 @@ LoadLinkErrorScreen:
 	ld [wShadowTilemapBank], a ; $4af8
 	ld a, $00 ; $4afb
 	ld [wWindowTileAttr], a ; $4afd
-	ld d, $00 ; $4b00
-	ld e, $0d ; $4b02
-	ld b, $14 ; $4b04
-	ld c, $05 ; $4b06
+	rect_cell $00, $0d ; $4b00
+	rect_size $14, $05 ; $4b04
 	farcall CreateWindowFromScreenRect ; $4b08
 	farcall DrawTextWindowFrame ; $4b0b
 	farcall RedrawWindowRows ; $4b0e
@@ -445,13 +437,11 @@ ShowLinkStatusMessage:
 	ret ; $4bec
 ClearLinkMessageWindow:
 	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; $4bed
-	ld b, $12 ; $4bf0
-	ld c, $01 ; $4bf2
+	rect_size $12, $01 ; $4bf0
 	ld h, $03 ; $4bf4
 	farcall FillTilemapRect ; $4bf6
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bf9
-	ld b, $12 ; $4bfc
-	ld c, $05 ; $4bfe
+	rect_size $12, $05 ; $4bfc
 	ld h, $20 ; $4c00
 	farcall FillTilemapRect ; $4c02
 	ret ; $4c05

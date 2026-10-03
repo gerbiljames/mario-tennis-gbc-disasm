@@ -13,8 +13,7 @@ FlushLevelSelectTextRows:
 ClearMinigameLevelDescriptionRow:
 	push_wram_bank WRAM_SCREEN ; $6deb
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6df4
-	ld b, $14 ; $6df7
-	ld c, $01 ; $6df9
+	rect_size $14, $01 ; $6df7
 	ld h, $03 ; $6dfb
 	farcall FillTilemapRect ; $6dfd
 	ld a, $02 ; $6e00
@@ -22,8 +21,7 @@ ClearMinigameLevelDescriptionRow:
 	ld a, $04 ; $6e05
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $6e07
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6e0a
-	ld b, $12 ; $6e0d
-	ld c, $01 ; $6e0f
+	rect_size $12, $01 ; $6e0d
 	ld h, $20 ; $6e11
 	farcall FillTilemapRect ; $6e13
 	pop_wram_bank ; $6e16
@@ -167,8 +165,7 @@ SetSelectPanelAttrRect:
 	ld d, [hl] ; $6f4f
 	ld e, a ; $6f50
 	pop hl ; $6f51
-	ld b, $05 ; $6f52
-	ld c, $03 ; $6f54
+	rect_size $05, $03 ; $6f52
 	farcall FillTilemapRect ; $6f56
 	pop hl ; $6f59
 	pop de ; $6f5a
@@ -212,8 +209,7 @@ DrawMinigameLevelSelect2Cursor:
 	ld d, h ; $6f92
 	ld e, l ; $6f93
 	ld hl, DrawMinigameLevelSelect2Cursor_SpriteTemplate1 ; $6f94
-	ld b, OAM_BANK1 ; $6f97
-	ld c, $70 ; $6f99
+	sprite_attr_tile OAM_BANK1, $70 ; $6f97
 	call QueueSpriteTemplate ; $6f9b
 	ret ; $6f9e
 DrawMinigameLevelSelect2Cursor_SpriteTemplate0:
@@ -358,8 +354,7 @@ SetSelectPanelAttrRect3:
 	ld d, [hl] ; $70d8
 	ld e, a ; $70d9
 	pop hl ; $70da
-	ld b, $05 ; $70db
-	ld c, $03 ; $70dd
+	rect_size $05, $03 ; $70db
 	farcall FillTilemapRect ; $70df
 	pop hl ; $70e2
 	pop de ; $70e3
@@ -403,8 +398,7 @@ DrawMinigameLevelSelect3Cursor:
 	ld d, h ; $711d
 	ld e, l ; $711e
 	ld hl, DrawMinigameLevelSelect3Cursor_SpriteTemplate1 ; $711f
-	ld b, OAM_BANK1 ; $7122
-	ld c, $70 ; $7124
+	sprite_attr_tile OAM_BANK1, $70 ; $7122
 	call QueueSpriteTemplate ; $7126
 	ret ; $7129
 DrawMinigameLevelSelect3Cursor_SpriteTemplate0:

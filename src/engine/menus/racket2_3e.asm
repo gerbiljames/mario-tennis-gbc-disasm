@@ -143,8 +143,7 @@ DrawItemIcon2x2:
 	jr nc, .copy ; $558e
 	inc h ; $5590
 .copy:
-	ld b, $02 ; $5591
-	ld c, $02 ; $5593
+	rect_size $02, $02 ; $5591
 	farcall CopyTilemapRect ; $5595
 	ld bc, $0400 ; $5598
 	add hl, bc ; $559b
@@ -155,8 +154,7 @@ DrawItemIcon2x2:
 	ld d, h ; $55a0
 	ld e, l ; $55a1
 	pop hl ; $55a2
-	ld b, $02 ; $55a3
-	ld c, $02 ; $55a5
+	rect_size $02, $02 ; $55a3
 	farcall CopyTilemapRect ; $55a7
 	pop hl ; $55aa
 	pop de ; $55ab
@@ -291,13 +289,11 @@ LoadShoesSelectScreen:
 	wram_bank WRAM_SCREEN ; $56a1
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $56a7
 	ld de, wShadowTilemap ; $56aa
-	ld b, $14 ; $56ad
-	ld c, $04 ; $56af
+	rect_size $14, $04 ; $56ad
 	farcall CopyTilemapRect ; $56b1
 	ld hl, wShadowAttrmap + 26 * TILEMAP_WIDTH ; $56b4
 	ld de, wShadowAttrmap ; $56b7
-	ld b, $14 ; $56ba
-	ld c, $04 ; $56bc
+	rect_size $14, $04 ; $56ba
 	farcall CopyTilemapRect ; $56be
 	ld c, $00 ; $56c1
 	ld b, $07 ; $56c3

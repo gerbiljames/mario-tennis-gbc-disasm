@@ -14,17 +14,14 @@ LoadEquipSelectCommon:
 	farcall LoadFixedTileBlockAndPalette ; $5810
 	ret ; $5813
 CreateEquipListWindow:
-	ld d, $00 ; $5814
-	ld e, $04 ; $5816
-	ld b, $14 ; $5818
-	ld c, $09 ; $581a
+	rect_cell $00, $04 ; $5814
+	rect_size $14, $09 ; $5818
 	farcall CreateWindowFromScreenRect ; $581c
 	farcall DrawTextWindowFrame ; $581f
 	farcall RedrawWindowRows ; $5822
 	wram_bank WRAM_SCREEN ; $5825
 	ld de, wShadowAttrmap + 7 * TILEMAP_WIDTH + 1 ; $582b
-	ld b, $12 ; $582e
-	ld c, $05 ; $5830
+	rect_size $12, $05 ; $582e
 	ld h, $08 ; $5832
 	farcall FillTilemapRect ; $5834
 	ret ; $5837
@@ -33,18 +30,15 @@ CreateEquipCaptionWindow:
 	ld [wShadowTilemapBank], a ; $583a
 	ld a, $00 ; $583d
 	ld [wWindowTileAttr], a ; $583f
-	ld d, $00 ; $5842
-	ld e, $0d ; $5844
-	ld b, $14 ; $5846
-	ld c, $05 ; $5848
+	rect_cell $00, $0d ; $5842
+	rect_size $14, $05 ; $5846
 	farcall CreateWindowFromScreenRect ; $584a
 	farcall DrawTextWindowFrame ; $584d
 	farcall RedrawWindowRows ; $5850
 	ret ; $5853
 ClearEquipSelectTextRows:
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH ; $5854
-	ld b, $14 ; $5857
-	ld c, $01 ; $5859
+	rect_size $14, $01 ; $5857
 	ld h, $03 ; $585b
 	farcall FillTilemapRect ; $585d
 	ld a, $02 ; $5860
@@ -52,13 +46,11 @@ ClearEquipSelectTextRows:
 	ld a, $04 ; $5865
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 19], a ; $5867
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $586a
-	ld b, $12 ; $586d
-	ld c, $03 ; $586f
+	rect_size $12, $03 ; $586d
 	ld h, $20 ; $5871
 	farcall FillTilemapRect ; $5873
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH ; $5876
-	ld b, $14 ; $5879
-	ld c, $01 ; $587b
+	rect_size $14, $01 ; $5879
 	ld h, $03 ; $587d
 	farcall FillTilemapRect ; $587f
 	ld a, $02 ; $5882
@@ -66,8 +58,7 @@ ClearEquipSelectTextRows:
 	ld a, $04 ; $5887
 	ld [wShadowTilemap + 4 * TILEMAP_WIDTH + 19], a ; $5889
 	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 1 ; $588c
-	ld b, $12 ; $588f
-	ld c, $07 ; $5891
+	rect_size $12, $07 ; $588f
 	ld h, $20 ; $5893
 	farcall FillTilemapRect ; $5895
 	ret ; $5898
@@ -234,8 +225,7 @@ EquippedItemMarkerSpriteTask:
 .read:
 	ld d, [hl] ; $59ff
 	ld e, $18 ; $5a00
-	ld b, OAM_BANK1 | 1 ; $5a02
-	ld c, $20 ; $5a04
+	sprite_attr_tile OAM_BANK1 | 1, $20 ; $5a02
 	call QueueSprite ; $5a06
 	pop_wram_bank ; $5a09
 	ret ; $5a0e

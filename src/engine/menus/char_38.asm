@@ -319,17 +319,13 @@ SetupCharGridScreen:
 	ld [wShadowTilemapBank], a ; $4fd7
 	ld a, $00 ; $4fda
 	ld [wWindowTileAttr], a ; $4fdc
-	ld d, $00 ; $4fdf
-	ld e, $02 ; $4fe1
-	ld b, $14 ; $4fe3
-	ld c, $03 ; $4fe5
+	rect_cell $00, $02 ; $4fdf
+	rect_size $14, $03 ; $4fe3
 	farcall CreateWindowFromScreenRect ; $4fe7
 	farcall DrawTextWindowFrame ; $4fea
 	farcall RedrawWindowRows ; $4fed
-	ld d, $00 ; $4ff0
-	ld e, $0c ; $4ff2
-	ld b, $14 ; $4ff4
-	ld c, $06 ; $4ff6
+	rect_cell $00, $0c ; $4ff0
+	rect_size $14, $06 ; $4ff4
 	farcall CreateWindowFromScreenRect ; $4ff8
 	farcall DrawTextWindowFrame ; $4ffb
 	farcall RedrawWindowRows ; $4ffe
@@ -758,13 +754,11 @@ DrawCharGridSlotPrompt:
 	ret z ; $542f
 	wram_bank WRAM_SCREEN ; $5430
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $5436
-	ld b, $12 ; $5439
-	ld c, $01 ; $543b
+	rect_size $12, $01 ; $5439
 	ld h, $03 ; $543d
 	farcall FillTilemapRect ; $543f
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $5442
-	ld b, $12 ; $5445
-	ld c, $01 ; $5447
+	rect_size $12, $01 ; $5445
 	ld h, $20 ; $5449
 	farcall FillTilemapRect ; $544b
 	ld a, [wCpuDifficultyPrompt] ; $544e
@@ -831,14 +825,12 @@ DrawCharGridScrollArrows:
 	ld de, $0245 ; $54dc
 	ld c, $01 ; $54df
 	call ApplySpriteBobOffsetX ; $54e1
-	ld c, $10 ; $54e4
-	ld b, OAM_BANK1 | 7 ; $54e6
+	sprite_tile_attr $10, OAM_BANK1 | 7 ; $54e4
 	call QueueSprite ; $54e8
 	ld de, $5045 ; $54eb
 	ld c, $00 ; $54ee
 	call ApplySpriteBobOffsetX ; $54f0
-	ld c, $12 ; $54f3
-	ld b, OAM_BANK1 | 7 ; $54f5
+	sprite_tile_attr $12, OAM_BANK1 | 7 ; $54f3
 	call QueueSprite ; $54f7
 	ld a, [wCharGridPage] ; $54fa
 	or a ; $54fd
@@ -848,8 +840,7 @@ DrawCharGridScrollArrows:
 	ld de, $2a25 ; $5504
 	ld c, $01 ; $5507
 	call ApplySpriteBobOffsetY ; $5509
-	ld c, $14 ; $550c
-	ld b, OAM_BANK1 | 7 ; $550e
+	sprite_tile_attr $14, OAM_BANK1 | 7 ; $550c
 	call QueueSprite ; $5510
 .checkUpArrow:
 	ld a, [wCharGridPage] ; $5513
@@ -871,8 +862,7 @@ DrawCharGridScrollArrows:
 	ld de, $2a63 ; $5530
 	ld c, $00 ; $5533
 	call ApplySpriteBobOffsetY ; $5535
-	ld c, $16 ; $5538
-	ld b, OAM_BANK1 | 7 ; $553a
+	sprite_tile_attr $16, OAM_BANK1 | 7 ; $5538
 	call QueueSprite ; $553c
 .done:
 	pop_wram_bank ; $553f
