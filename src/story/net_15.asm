@@ -287,38 +287,38 @@ TestStrokeChallengerGameFlagTable:
 	dw $00ce ; record 3
 	dw $00ce ; record 4
 	dw $00ce ; record 5
-TrainingCourtResultDispatch.dispatchStage:
+ServicePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $7290
 	ld a, a ; $7293
 	rst Rst00 ; $7294
 	dw ServeCoachIntroDialogue_15 ; $7295 jumptable
-	dw ServeCoachIntroDialogue_15.lesson3 ; $7297 jumptable
-	dw ServeCoachIntroDialogue_15.lesson4 ; $7299 jumptable
-	dw ServeCoachIntroDialogue_15.lesson5 ; $729b jumptable
-	dw ServeCoachIntroDialogue_15.lesson3 ; $729d jumptable
-TrainingCourtResultDispatch.dispatchStage2:
+	dw ServicePractice1Result1 ; $7297 jumptable
+	dw ServicePractice1Result2 ; $7299 jumptable
+	dw ServicePractice1Result3 ; $729b jumptable
+	dw ServicePractice1Result1 ; $729d jumptable
+ServicePractice2ResultScene:
 	ld a, [wDrillLessonResult] ; $729f
 	ld a, a ; $72a2
 	rst Rst00 ; $72a3
-	dw ServeCoachIntroDialogue_15.lesson1 ; $72a4 jumptable
-	dw ServeCoachIntroDialogue_15.lesson3 ; $72a6 jumptable
-	dw ServeCoachIntroDialogue_15.lesson4 ; $72a8 jumptable
-	dw ServeCoachIntroDialogue_15.lesson6 ; $72aa jumptable
-	dw ServeCoachIntroDialogue_15.lesson7 ; $72ac jumptable
-	dw ServeCoachIntroDialogue_15.lesson8 ; $72ae jumptable
-	dw ServeCoachIntroDialogue_15.lesson9 ; $72b0 jumptable
-	dw ServeCoachIntroDialogue_15.lesson3 ; $72b2 jumptable
-TrainingCourtResultDispatch.dispatchStage3:
+	dw ServicePractice2Result0 ; $72a4 jumptable
+	dw ServicePractice1Result1 ; $72a6 jumptable
+	dw ServicePractice1Result2 ; $72a8 jumptable
+	dw ServicePractice2Result3 ; $72aa jumptable
+	dw ServicePractice2Result4 ; $72ac jumptable
+	dw ServicePractice2Result5 ; $72ae jumptable
+	dw ServicePractice2Result6 ; $72b0 jumptable
+	dw ServicePractice1Result1 ; $72b2 jumptable
+ServicePractice3ResultScene:
 	ld a, [wDrillLessonResult] ; $72b4
 	ld a, a ; $72b7
 	rst Rst00 ; $72b8
-	dw ServeCoachIntroDialogue_15.lesson2 ; $72b9 jumptable
-	dw ServeCoachIntroDialogue_15.lesson3 ; $72bb jumptable
-	dw ServeCoachIntroDialogue_15.lesson4 ; $72bd jumptable
-	dw ServeCoachIntroDialogue_15.lesson6 ; $72bf jumptable
-	dw ServeCoachIntroDialogue_15.lesson10 ; $72c1 jumptable
-	dw ServeCoachIntroDialogue_15.done ; $72c3 jumptable
-	dw ServeCoachIntroDialogue_15.lesson3 ; $72c5 jumptable
+	dw ServicePractice3Result0 ; $72b9 jumptable
+	dw ServicePractice1Result1 ; $72bb jumptable
+	dw ServicePractice1Result2 ; $72bd jumptable
+	dw ServicePractice2Result3 ; $72bf jumptable
+	dw ServicePractice3Result4 ; $72c1 jumptable
+	dw ServicePractice3Result5 ; $72c3 jumptable
+	dw ServicePractice1Result1 ; $72c5 jumptable
 ServeCoachIntroDialogue_15:
 	call InitServeCoachScene ; $72c7
 	script_set_text Text_37_28 ; $72ca
@@ -346,7 +346,7 @@ ServeCoachIntroDialogue_15:
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $732b
 	set_flag FLAG_SERVE_COACH_GREETED ; $7332
 	ret ; $7335
-.lesson1:
+ServicePractice2Result0:
 	call InitServeCoachScene ; $7336
 	script_set_text Text_37_42 ; $7339
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $733f
@@ -368,7 +368,7 @@ ServeCoachIntroDialogue_15:
 	script_wait_frames 5 ; $7391
 	set_flag FLAG_SERVE_COACH_GREETED ; $7398
 	ret ; $739b
-.lesson2:
+ServicePractice3Result0:
 	call InitServeCoachScene ; $739c
 	script_set_text Text_37_57 ; $739f
 	script_speak ACTOR_TRAINING_COURT_CURT ; $73a5
@@ -385,47 +385,47 @@ ServeCoachIntroDialogue_15:
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $73e5
 	set_flag FLAG_SERVE_COACH_GREETED ; $73ec
 	ret ; $73ef
-.lesson3:
+ServicePractice1Result1:
 	call InitServeCoachScene ; $73f0
 	script_set_text Text_37_62 ; $73f3
 	call ServeCoachChainedRetryPrompt ; $73f9
 	ret ; $73fc
-.lesson4:
+ServicePractice1Result2:
 	call InitServeCoachScene ; $73fd
 	script_set_text Text_37_67 ; $7400
 	call ServeCoachTwoStageRetryPrompt ; $7406
 	ret ; $7409
-.lesson5:
+ServicePractice1Result3:
 	call InitServeCoachScene ; $740a
 	script_set_text Text_37_72 ; $740d
 	call ServeCoachRetryPrompt ; $7413
 	ret ; $7416
-.lesson6:
+ServicePractice2Result3:
 	call InitServeCoachScene ; $7417
 	script_set_text Text_37_75 ; $741a
 	call ServeCoachRetryPrompt ; $7420
 	ret ; $7423
-.lesson7:
+ServicePractice2Result4:
 	call InitServeCoachScene ; $7424
 	script_set_text Text_37_78 ; $7427
 	call ServeCoachRetryPrompt ; $742d
 	ret ; $7430
-.lesson8:
+ServicePractice2Result5:
 	call InitServeCoachScene ; $7431
 	script_set_text Text_37_81 ; $7434
 	call ServeCoachRetryPrompt ; $743a
 	ret ; $743d
-.lesson9:
+ServicePractice2Result6:
 	call InitServeCoachScene ; $743e
 	script_set_text Text_37_84 ; $7441
 	call ServeCoachRetryPrompt ; $7447
 	ret ; $744a
-.lesson10:
+ServicePractice3Result4:
 	call InitServeCoachScene ; $744b
 	script_set_text Text_37_87 ; $744e
 	call ServeCoachRetryPrompt ; $7454
 	ret ; $7457
-.done:
+ServicePractice3Result5:
 	call InitServeCoachScene ; $7458
 	script_set_text Text_37_90 ; $745b
 	call ServeCoachRetryPrompt ; $7461
@@ -487,40 +487,40 @@ InitServeCoachScene:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $752c
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $7531
 	ret ; $7538
-.dispatchStage:
+NetGamePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $7539
 	ld a, a ; $753c
 	rst Rst00 ; $753d
 	dw NetCoachIntroDialogue_15 ; $753e jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $7540 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene4 ; $7542 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene5 ; $7544 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene6 ; $7546 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene7 ; $7548 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $754a jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $754c jumptable
-.dispatchStage2:
+	dw NetGamePractice1Result1 ; $7540 jumptable
+	dw NetGamePractice1Result2 ; $7542 jumptable
+	dw NetGamePractice1Result3 ; $7544 jumptable
+	dw NetGamePractice1Result4 ; $7546 jumptable
+	dw NetGamePractice1Result5 ; $7548 jumptable
+	dw NetGamePractice1Result1 ; $754a jumptable
+	dw NetGamePractice1Result1 ; $754c jumptable
+NetGamePractice2ResultScene:
 	ld a, [wDrillLessonResult] ; $754e
 	ld a, a ; $7551
 	rst Rst00 ; $7552
-	dw NetCoachIntroDialogue_15.initNetCoachScene ; $7553 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $7555 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene4 ; $7557 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene8 ; $7559 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene13 ; $755b jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene9 ; $755d jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene7 ; $755f jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $7561 jumptable
-.dispatchStage3:
+	dw NetGamePractice2Result0 ; $7553 jumptable
+	dw NetGamePractice1Result1 ; $7555 jumptable
+	dw NetGamePractice1Result2 ; $7557 jumptable
+	dw NetGamePractice2Result3 ; $7559 jumptable
+	dw NetGamePractice2Result4 ; $755b jumptable
+	dw NetGamePractice2Result5 ; $755d jumptable
+	dw NetGamePractice1Result5 ; $755f jumptable
+	dw NetGamePractice1Result1 ; $7561 jumptable
+NetGamePractice3ResultScene:
 	ld a, [wDrillLessonResult] ; $7563
 	ld a, a ; $7566
 	rst Rst00 ; $7567
-	dw NetCoachIntroDialogue_15.initNetCoachScene2 ; $7568 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $756a jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene4 ; $756c jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene10 ; $756e jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene11 ; $7570 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene14 ; $7572 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene12 ; $7574 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene7 ; $7576 jumptable
-	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $7578 jumptable
+	dw NetGamePractice3Result0 ; $7568 jumptable
+	dw NetGamePractice1Result1 ; $756a jumptable
+	dw NetGamePractice1Result2 ; $756c jumptable
+	dw NetGamePractice3Result3 ; $756e jumptable
+	dw NetGamePractice3Result4 ; $7570 jumptable
+	dw NetGamePractice3Result5 ; $7572 jumptable
+	dw NetGamePractice3Result6 ; $7574 jumptable
+	dw NetGamePractice1Result5 ; $7576 jumptable
+	dw NetGamePractice1Result1 ; $7578 jumptable

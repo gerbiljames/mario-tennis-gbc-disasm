@@ -34,7 +34,7 @@ MovePlayerToLessonCourtSpot:
 	ld de, wActors ; $62b8
 	farcall AttachActorStepMover ; $62bb
 	ret ; $62be
-.netResultText:
+NetGameMatch1ResultScene:
 	ld hl, wChallengerFollowupTextId ; $62bf
 	ld de, Text_6e_77 ; $62c2
 	ld a, e ; $62c5
@@ -72,7 +72,7 @@ MovePlayerToLessonCourtSpot:
 .netResult:
 	call NetChallengerResultScene ; $62fc
 	ret ; $62ff
-.netResultDoubles:
+NetGameMatch2ResultScene:
 	ld hl, wChallengerFollowupTextId ; $6300
 	ld de, Text_6e_77 ; $6303
 	ld a, e ; $6306
@@ -95,7 +95,7 @@ MovePlayerToLessonCourtSpot:
 	ld [hl], d ; $6323
 	call NetChallengerResultScene ; $6324
 	ret ; $6327
-.serveResultText:
+NetGameMatch3ResultScene:
 	ld hl, wChallengerFollowupTextId ; $6328
 	ld de, Text_6e_77 ; $632b
 	ld a, e ; $632e
@@ -118,7 +118,7 @@ MovePlayerToLessonCourtSpot:
 	ld [hl], d ; $634b
 	call NetChallengerResultScene ; $634c
 	ret ; $634f
-.serveResultTextAlt:
+StrokeMatch1ResultScene:
 	ld hl, wChallengerFollowupTextId ; $6350
 	ld de, Text_6e_123 ; $6353
 	ld a, e ; $6356
@@ -156,7 +156,7 @@ MovePlayerToLessonCourtSpot:
 .serveResultDoubles:
 	call StrokeChallengerResultScene ; $638d
 	ret ; $6390
-.strokeResultText:
+StrokeMatch2ResultScene:
 	ld hl, wChallengerFollowupTextId ; $6391
 	ld de, Text_6e_123 ; $6394
 	ld a, e ; $6397
@@ -179,7 +179,7 @@ MovePlayerToLessonCourtSpot:
 	ld [hl], d ; $63b4
 	call StrokeChallengerResultScene ; $63b5
 	ret ; $63b8
-.strokeResult:
+StrokeMatch3ResultScene:
 	ld hl, wChallengerFollowupTextId ; $63b9
 	ld de, Text_6e_123 ; $63bc
 	ld a, e ; $63bf

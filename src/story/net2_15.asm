@@ -19,7 +19,7 @@ NetCoachIntroDialogue_15:
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $75ce
 	set_flag FLAG_NET_COACH_GREETED ; $75d5
 	ret ; $75d8
-.initNetCoachScene:
+NetGamePractice2Result0:
 	call InitNetCoachScene ; $75d9
 	script_set_text Text_37_151 ; $75dc
 	script_speak ACTOR_TRAINING_COURT_BETH ; $75e2
@@ -40,7 +40,7 @@ NetCoachIntroDialogue_15:
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $762d
 	set_flag FLAG_NET_COACH_GREETED ; $7634
 	ret ; $7637
-.initNetCoachScene2:
+NetGamePractice3Result0:
 	call InitNetCoachScene ; $7638
 	script_set_text Text_37_183 ; $763b
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7641
@@ -57,62 +57,62 @@ NetCoachIntroDialogue_15:
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $7681
 	set_flag FLAG_NET_COACH_GREETED ; $7688
 	ret ; $768b
-.initNetCoachScene3:
+NetGamePractice1Result1:
 	call InitNetCoachScene ; $768c
 	script_set_text Text_37_107 ; $768f
 	call NetCoachResultRetryPrompt ; $7695
 	ret ; $7698
-.initNetCoachScene4:
+NetGamePractice1Result2:
 	call InitNetCoachScene ; $7699
 	script_set_text Text_37_111 ; $769c
 	call NetCoachResultRetryPrompt ; $76a2
 	ret ; $76a5
-.initNetCoachScene5:
+NetGamePractice1Result3:
 	call InitNetCoachScene ; $76a6
 	script_set_text Text_37_115 ; $76a9
 	call NetCoachResultRetryPrompt ; $76af
 	ret ; $76b2
-.initNetCoachScene6:
+NetGamePractice1Result4:
 	call InitNetCoachScene ; $76b3
 	script_set_text Text_37_119 ; $76b6
 	call NetCoachResultRetryPrompt ; $76bc
 	ret ; $76bf
-.initNetCoachScene7:
+NetGamePractice1Result5:
 	call InitNetCoachScene ; $76c0
 	script_set_text Text_37_123 ; $76c3
 	call NetCoachRetryPrompt ; $76c9
 	ret ; $76cc
-.initNetCoachScene8:
+NetGamePractice2Result3:
 	call InitNetCoachScene ; $76cd
 	script_set_text Text_37_144 ; $76d0
 	call NetCoachResultRetryPrompt ; $76d6
 	ret ; $76d9
-.initNetCoachScene9:
+NetGamePractice2Result5:
 	call InitNetCoachScene ; $76da
 	script_set_text Text_37_148 ; $76dd
 	call NetCoachRetryPrompt ; $76e3
 	ret ; $76e6
-.initNetCoachScene10:
+NetGamePractice3Result3:
 	call InitNetCoachScene ; $76e7
 	script_set_text Text_37_172 ; $76ea
 	call NetCoachResultRetryPrompt ; $76f0
 	ret ; $76f3
-.initNetCoachScene11:
+NetGamePractice3Result4:
 	call InitNetCoachScene ; $76f4
 	script_set_text Text_37_176 ; $76f7
 	call NetCoachResultRetryPrompt ; $76fd
 	ret ; $7700
-.initNetCoachScene12:
+NetGamePractice3Result6:
 	call InitNetCoachScene ; $7701
 	script_set_text Text_37_180 ; $7704
 	call NetCoachRetryPrompt ; $770a
 	ret ; $770d
-.initNetCoachScene13:
+NetGamePractice2Result4:
 	call InitNetCoachScene ; $770e
 	script_set_text Text_37_188 ; $7711
 	call NetCoachResultRetryPrompt ; $7717
 	ret ; $771a
-.initNetCoachScene14:
+NetGamePractice3Result5:
 	call InitNetCoachScene ; $771b
 	script_set_text Text_37_192 ; $771e
 	call NetCoachResultRetryPrompt ; $7724
@@ -150,39 +150,39 @@ InitNetCoachScene:
 	script_speak ACTOR_TRAINING_COURT_BETH ; $779d
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $77a2
 	ret ; $77a9
-.dispatchStage:
+StrokePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $77aa
 	ld a, a ; $77ad
 	rst Rst00 ; $77ae
 	dw ReturnCoachIntroDialogue_15 ; $77af jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene3 ; $77b1 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene4 ; $77b3 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene5 ; $77b5 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene6 ; $77b7 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77b9 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77bb jumptable
-.dispatchStage2:
+	dw StrokePractice1Result1 ; $77b1 jumptable
+	dw StrokePractice1Result2 ; $77b3 jumptable
+	dw StrokePractice1Result3 ; $77b5 jumptable
+	dw StrokePractice1Result4 ; $77b7 jumptable
+	dw StrokePractice1Result5 ; $77b9 jumptable
+	dw StrokePractice1Result5 ; $77bb jumptable
+StrokePractice2ResultScene:
 	ld a, [wDrillLessonResult] ; $77bd
 	ld a, a ; $77c0
 	rst Rst00 ; $77c1
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene ; $77c2 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene8 ; $77c4 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene9 ; $77c6 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene10 ; $77c8 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene11 ; $77ca jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77cc jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene3 ; $77ce jumptable
-.dispatchStage3:
+	dw StrokePractice2Result0 ; $77c2 jumptable
+	dw StrokePractice2Result1 ; $77c4 jumptable
+	dw StrokePractice2Result2 ; $77c6 jumptable
+	dw StrokePractice2Result3 ; $77c8 jumptable
+	dw StrokePractice2Result4 ; $77ca jumptable
+	dw StrokePractice1Result5 ; $77cc jumptable
+	dw StrokePractice1Result1 ; $77ce jumptable
+StrokePractice3ResultScene:
 	ld a, [wDrillLessonResult] ; $77d0
 	ld a, a ; $77d3
 	rst Rst00 ; $77d4
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene2 ; $77d5 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene12 ; $77d7 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene13 ; $77d9 jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene14 ; $77db jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene15 ; $77dd jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77df jumptable
-	dw ReturnCoachIntroDialogue_15.initReturnCoachScene3 ; $77e1 jumptable
+	dw StrokePractice3Result0 ; $77d5 jumptable
+	dw StrokePractice3Result1 ; $77d7 jumptable
+	dw StrokePractice3Result2 ; $77d9 jumptable
+	dw StrokePractice3Result3 ; $77db jumptable
+	dw StrokePractice3Result4 ; $77dd jumptable
+	dw StrokePractice1Result5 ; $77df jumptable
+	dw StrokePractice1Result1 ; $77e1 jumptable
 ReturnCoachIntroDialogue_15:
 	call InitReturnCoachScene ; $77e3
 	script_set_text Text_37_221 ; $77e6
@@ -209,7 +209,7 @@ ReturnCoachIntroDialogue_15:
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7842
 	set_flag FLAG_RETURN_COACH_GREETED ; $7849
 	ret ; $784c
-.initReturnCoachScene:
+StrokePractice2Result0:
 	call InitReturnCoachScene ; $784d
 	script_set_text Text_37_245 ; $7850
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7856
@@ -226,7 +226,7 @@ ReturnCoachIntroDialogue_15:
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7896
 	set_flag FLAG_RETURN_COACH_GREETED ; $789d
 	ret ; $78a0
-.initReturnCoachScene2:
+StrokePractice3Result0:
 	call InitReturnCoachScene ; $78a1
 	script_set_text Text_6e_15 ; $78a4
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $78aa
@@ -243,67 +243,67 @@ ReturnCoachIntroDialogue_15:
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $78ea
 	set_flag FLAG_RETURN_COACH_GREETED ; $78f1
 	ret ; $78f4
-.initReturnCoachScene3:
+StrokePractice1Result1:
 	call InitReturnCoachScene ; $78f5
 	script_set_text Text_37_203 ; $78f8
 	call ReturnCoachResultRetryPrompt ; $78fe
 	ret ; $7901
-.initReturnCoachScene4:
+StrokePractice1Result2:
 	call InitReturnCoachScene ; $7902
 	script_set_text Text_37_207 ; $7905
 	call ReturnCoachResultRetryPrompt ; $790b
 	ret ; $790e
-.initReturnCoachScene5:
+StrokePractice1Result3:
 	call InitReturnCoachScene ; $790f
 	script_set_text Text_37_211 ; $7912
 	call ReturnCoachResultRetryPrompt ; $7918
 	ret ; $791b
-.initReturnCoachScene6:
+StrokePractice1Result4:
 	call InitReturnCoachScene ; $791c
 	script_set_text Text_37_215 ; $791f
 	call ReturnCoachRetryPrompt ; $7925
 	ret ; $7928
-.initReturnCoachScene7:
+StrokePractice1Result5:
 	call InitReturnCoachScene ; $7929
 	script_set_text Text_37_218 ; $792c
 	call ReturnCoachRetryPrompt ; $7932
 	ret ; $7935
-.initReturnCoachScene8:
+StrokePractice2Result1:
 	call InitReturnCoachScene ; $7936
 	script_set_text Text_37_233 ; $7939
 	call ReturnCoachRetryPrompt ; $793f
 	ret ; $7942
-.initReturnCoachScene9:
+StrokePractice2Result2:
 	call InitReturnCoachScene ; $7943
 	script_set_text Text_37_236 ; $7946
 	call ReturnCoachRetryPrompt ; $794c
 	ret ; $794f
-.initReturnCoachScene10:
+StrokePractice2Result3:
 	call InitReturnCoachScene ; $7950
 	script_set_text Text_37_239 ; $7953
 	call ReturnCoachRetryPrompt ; $7959
 	ret ; $795c
-.initReturnCoachScene11:
+StrokePractice2Result4:
 	call InitReturnCoachScene ; $795d
 	script_set_text Text_37_242 ; $7960
 	call ReturnCoachRetryPrompt ; $7966
 	ret ; $7969
-.initReturnCoachScene12:
+StrokePractice3Result1:
 	call InitReturnCoachScene ; $796a
 	script_set_text Text_37_255 ; $796d
 	call ReturnCoachResultRetryPrompt ; $7973
 	ret ; $7976
-.initReturnCoachScene13:
+StrokePractice3Result2:
 	call InitReturnCoachScene ; $7977
 	script_set_text Text_6e_3 ; $797a
 	call ReturnCoachResultRetryPrompt ; $7980
 	ret ; $7983
-.initReturnCoachScene14:
+StrokePractice3Result3:
 	call InitReturnCoachScene ; $7984
 	script_set_text Text_6e_7 ; $7987
 	call ReturnCoachResultRetryPrompt ; $798d
 	ret ; $7990
-.initReturnCoachScene15:
+StrokePractice3Result4:
 	call InitReturnCoachScene ; $7991
 	script_set_text Text_6e_11 ; $7994
 	call ReturnCoachResultRetryPrompt ; $799a

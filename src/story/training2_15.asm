@@ -455,24 +455,24 @@ TrainingCourtResultDispatch:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
 	ld a, a ; $5383
 	rst Rst00 ; $5384
-	dw StrokeChallengerResultScene.celebrate ; $5385 jumptable
-	dw StrokeChallengerResultScene.speakWin ; $5387 jumptable
-	dw StrokeChallengerResultScene.partnerJoins ; $5389 jumptable
-	dw TrainingCourtResultDispatch.dispatchStage ; $538b jumptable
-	dw TrainingCourtResultDispatch.dispatchStage2 ; $538d jumptable
-	dw TrainingCourtResultDispatch.dispatchStage3 ; $538f jumptable
-	dw MovePlayerToLessonCourtSpot.netResultText ; $5391 jumptable
-	dw MovePlayerToLessonCourtSpot.netResultDoubles ; $5393 jumptable
-	dw MovePlayerToLessonCourtSpot.serveResultText ; $5395 jumptable
-	dw InitServeCoachScene.dispatchStage ; $5397 jumptable
-	dw InitServeCoachScene.dispatchStage2 ; $5399 jumptable
-	dw InitServeCoachScene.dispatchStage3 ; $539b jumptable
-	dw MovePlayerToLessonCourtSpot.serveResultTextAlt ; $539d jumptable
-	dw MovePlayerToLessonCourtSpot.strokeResultText ; $539f jumptable
-	dw MovePlayerToLessonCourtSpot.strokeResult ; $53a1 jumptable
-	dw InitNetCoachScene.dispatchStage ; $53a3 jumptable
-	dw InitNetCoachScene.dispatchStage2 ; $53a5 jumptable
-	dw InitNetCoachScene.dispatchStage3 ; $53a7 jumptable
+	dw ServiceMatch1ResultScene ; $5385 jumptable
+	dw ServiceMatch2ResultScene ; $5387 jumptable
+	dw ServiceMatch3ResultScene ; $5389 jumptable
+	dw ServicePractice1ResultScene ; $538b jumptable
+	dw ServicePractice2ResultScene ; $538d jumptable
+	dw ServicePractice3ResultScene ; $538f jumptable
+	dw NetGameMatch1ResultScene ; $5391 jumptable
+	dw NetGameMatch2ResultScene ; $5393 jumptable
+	dw NetGameMatch3ResultScene ; $5395 jumptable
+	dw NetGamePractice1ResultScene ; $5397 jumptable
+	dw NetGamePractice2ResultScene ; $5399 jumptable
+	dw NetGamePractice3ResultScene ; $539b jumptable
+	dw StrokeMatch1ResultScene ; $539d jumptable
+	dw StrokeMatch2ResultScene ; $539f jumptable
+	dw StrokeMatch3ResultScene ; $53a1 jumptable
+	dw StrokePractice1ResultScene ; $53a3 jumptable
+	dw StrokePractice2ResultScene ; $53a5 jumptable
+	dw StrokePractice3ResultScene ; $53a7 jumptable
 TrainingCourtReentryDispatch:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $53a9
 	ld a, a ; $53ac

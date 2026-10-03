@@ -34,9 +34,9 @@ NetChallengerResultScene:
 .dispatch:
 	ld a, a ; $5dea
 	rst Rst00 ; $5deb
-	dw StrokeChallengerResultScene.finish ; $5dec jumptable
-	dw StrokeChallengerResultScene.lose ; $5dee jumptable
-	dw StrokeChallengerResultScene.draw ; $5df0 jumptable
+	dw ServiceMatch3ResultScene.finish ; $5dec jumptable
+	dw ServiceMatch3ResultScene.lose ; $5dee jumptable
+	dw ServiceMatch3ResultScene.draw ; $5df0 jumptable
 	ret ; $5df2
 StrokeChallengerResultScene:
 	xor a ; $5df3
@@ -74,18 +74,18 @@ StrokeChallengerResultScene:
 .dispatch:
 	ld a, a ; $5e69
 	rst Rst00 ; $5e6a
-	dw StrokeChallengerResultScene.finish ; $5e6b jumptable
-	dw StrokeChallengerResultScene.lose ; $5e6d jumptable
-	dw StrokeChallengerResultScene.draw ; $5e6f jumptable
+	dw ServiceMatch3ResultScene.finish ; $5e6b jumptable
+	dw ServiceMatch3ResultScene.lose ; $5e6d jumptable
+	dw ServiceMatch3ResultScene.draw ; $5e6f jumptable
 	dw StrokeChallengerResultScene.jumpForJoy ; $5e71 jumptable
 	ret ; $5e73
 .jumpForJoy:
 	script_jump_velocity ACTOR_PLAYER, $ff40 ; $5e74
 	ld a, $00 ; $5e7c
 	farcall ScriptWaitActorJumpDone ; $5e7e
-	jp .finish ; $5e81
+	jp ServiceMatch3ResultScene.finish ; $5e81
 	ret ; $5e84
-.celebrate:
+ServiceMatch1ResultScene:
 	ld hl, wChallengerFollowupTextId ; $5e85
 	ld de, Text_6e_32 ; $5e88
 	ld a, e ; $5e8b
@@ -114,7 +114,7 @@ StrokeChallengerResultScene:
 	ld [hl], d ; $5eb2
 	call ServeChallengerResultScene ; $5eb3
 	ret ; $5eb6
-.speakWin:
+ServiceMatch2ResultScene:
 	ld hl, wChallengerFollowupTextId ; $5eb7
 	ld de, Text_6e_32 ; $5eba
 	ld a, e ; $5ebd
@@ -137,7 +137,7 @@ StrokeChallengerResultScene:
 	ld [hl], d ; $5eda
 	call ServeChallengerResultScene ; $5edb
 	ret ; $5ede
-.partnerJoins:
+ServiceMatch3ResultScene:
 	ld hl, wChallengerFollowupTextId ; $5edf
 	ld de, Text_6e_32 ; $5ee2
 	ld a, e ; $5ee5
