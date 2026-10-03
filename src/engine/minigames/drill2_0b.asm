@@ -426,21 +426,81 @@ DrillMessageTextIds_0b:
 	dw Text_25_264 ; record 69
 	dw Text_25_265 ; record 70
 	dw Text_25_266 ; record 71
+IF DEF(FIXES)
+	dw Text_26_0
+ELSE
 	dw $290b ; record 72, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_1
+ELSE
 	dw $290c ; record 73, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_2
+ELSE
 	dw $290d ; record 74, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_3
+ELSE
 	dw $290e ; record 75, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_4
+ELSE
 	dw $290f ; record 76, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_5
+ELSE
 	dw $2910 ; record 77, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_6
+ELSE
 	dw $2911 ; record 78, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_7
+ELSE
 	dw $2912 ; record 79, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_8
+ELSE
 	dw $2913 ; record 80, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_9
+ELSE
 	dw $2914 ; record 81, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_10
+ELSE
 	dw $2915 ; record 82, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_11
+ELSE
 	dw $2916 ; record 83, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_12
+ELSE
 	dw $2917 ; record 84, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_13
+ELSE
 	dw $2918 ; record 85, past text bank $25's table (docs/bugs.md)
+ENDC
+IF DEF(FIXES)
+	dw Text_26_14
+ELSE
 	dw $2919 ; record 86, past text bank $25's table (docs/bugs.md)
+ENDC
 	dw Text_26_15 ; record 87
 	dw Text_26_16 ; record 88
 	dw Text_26_17 ; record 89

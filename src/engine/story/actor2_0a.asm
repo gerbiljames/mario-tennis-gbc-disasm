@@ -466,14 +466,24 @@ UpdateScreenShake:
 	call AdvanceRandomSeed ; $4917
 	ld a, h ; $491a
 	and c ; $491b
+IF DEF(FIXES)
+	bit 7, h
+	jr z, .negate
+ELSE
 	jr nc, .negate ; $491c
+ENDC
 	cpl ; $491e
 	inc a ; $491f
 .negate:
 	ld [wScreenShakeOffsetX], a ; $4920
 	ld a, l ; $4923
 	and c ; $4924
+IF DEF(FIXES)
+	bit 7, l
+	jr z, .store
+ELSE
 	jr nc, .store ; $4925
+ENDC
 	cpl ; $4927
 	inc a ; $4928
 .store:

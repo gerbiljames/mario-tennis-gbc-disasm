@@ -67,7 +67,11 @@ SinglesRankingClearFlagList_0a:
 	dw $ffff ; 20: end
 SetDoublesRankingClearFlags:
 	ld c, $09 ; $4e75
+IF DEF(FIXES)
+	ld_flag_id de, FLAG_WON_JUNIOR_DOUBLES_RANK_3
+ELSE
 	ld de, $0a00 ; $4e77
+ENDC
 .clearLoop:
 	push de ; $4e7a
 	call ClearGameFlag ; $4e7b

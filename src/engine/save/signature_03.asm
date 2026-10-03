@@ -289,7 +289,11 @@ ValidateSaveRam:
 	ld de, sSaveHeader + 3 * SAVE_HEADER_CHUNK ; $4a08
 	ld c, SAVE_HEADER_CHUNK / 16 ; $4a0b
 	call CopyMemoryFast ; $4a0d
+IF DEF(FIXES)
+	ld hl, sSaveSignature
+ELSE
 	ld hl, sSaveHeader ; $4a10 the signature is at sSaveSignature (docs/bugs.md)
+ENDC
 	ld de, SaveSignature ; $4a13
 	call CompareSaveSignature ; $4a16
 	jr nz, .wipeAllSaveRam ; $4a19

@@ -3,9 +3,20 @@ RGBASM  := $(RGBDS)rgbasm
 RGBLINK := $(RGBDS)rgblink
 RGBFIX  := $(RGBDS)rgbfix
 
+# `make FIXES=1` builds the game with the shipped bugs in docs/bugs.md that
+# have a "Fix:" fixed (IF DEF(FIXES) in the source), into its own build
+# directory and ROM so it never mixes with the byte-perfect build.
+ifeq ($(FIXES),1)
+BUILD   := build-fixes
+ROM     := mariotennis-fixes.gbc
+ASDEFS  := -D FIXES
+else
+BUILD   := build
 ROM     := mariotennis.gbc
+ASDEFS  :=
+endif
 SRCS    := $(wildcard src/bank_*.asm)
-OBJS    := $(SRCS:src/%.asm=build/%.o) build/ram.o
+OBJS    := $(SRCS:src/%.asm=$(BUILD)/%.o) $(BUILD)/ram.o
 RAM_SRCS := ram.asm $(wildcard ram/*.asm)
 
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
@@ -27,18 +38,18 @@ all: $(ROM)
 # it is here for edited builds, where a wrong header checksum makes the CGB
 # boot ROM refuse the cart -- changing one character of the title is enough.
 $(ROM): $(OBJS)
-	$(RGBLINK) -p 0xff -o $@ -m build/$(ROM:.gbc=.map) -n build/$(ROM:.gbc=.sym) $(OBJS)
+	$(RGBLINK) -p 0xff -o $@ -m $(BUILD)/$(ROM:.gbc=.map) -n $(BUILD)/$(ROM:.gbc=.sym) $(OBJS)
 	$(RGBFIX) -Wno-overwrite -v $@
 
 # hardware.inc + macros.inc are preincluded for every bank via -P instead of a
 # repeated INCLUDE at the top of each source file.
 PRELUDE := include/hardware.inc include/macros.inc include/constants.inc include/text_ids.inc include/flag_constants.inc include/text_codes.inc include/ram_mirrored.inc include/actor_roles.inc
 
-build/%.o: src/%.asm $(PRELUDE) | build/rgbdscheck.o
-	$(RGBASM) -E -I include $(PRELUDE:%=-P %) -o $@ $<
+$(BUILD)/%.o: src/%.asm $(PRELUDE) | $(BUILD)/rgbdscheck.o
+	$(RGBASM) -E $(ASDEFS) -I include $(PRELUDE:%=-P %) -o $@ $<
 
-build/ram.o: $(RAM_SRCS) | build/rgbdscheck.o
-	$(RGBASM) -E -I include -I . -o $@ ram.asm
+$(BUILD)/ram.o: $(RAM_SRCS) | $(BUILD)/rgbdscheck.o
+	$(RGBASM) -E $(ASDEFS) -I include -I . -o $@ ram.asm
 
 # A graphics blob whose PNG (written by extract.py beside it) is newer is
 # re-encoded from the image -- and re-compressed if it is an LZ stream. The
@@ -59,7 +70,7 @@ data/%.bin: data/%.tilemap
 data/%.inc: data/%.bin
 	python3 tools/lz.py --size-inc $< > $@
 
-build/rgbdscheck.o: rgbdscheck.asm | build
+$(BUILD)/rgbdscheck.o: rgbdscheck.asm | $(BUILD)
 	$(RGBASM) -o $@ $<
 
 # A bank object depends on its holder, the fragment files the holder INCLUDEs
@@ -67,15 +78,15 @@ build/rgbdscheck.o: rgbdscheck.asm | build
 # file the bank INCBINs or INCLUDEs; tools/deps.py lists them.
 FRAGMENTS := $(shell find src -mindepth 2 -name '*.asm')
 
-build/deps.mk: $(SRCS) $(FRAGMENTS) tools/deps.py tools/banksrc.py | build
-	python3 tools/deps.py > $@
+$(BUILD)/deps.mk: $(SRCS) $(FRAGMENTS) tools/deps.py tools/banksrc.py | $(BUILD)
+	python3 tools/deps.py $(BUILD) > $@
 
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
--include build/deps.mk
+-include $(BUILD)/deps.mk
 endif
 
-build:
-	mkdir -p build
+$(BUILD):
+	mkdir -p $@
 
 compare: $(ROM)
 	@echo "$(BASEROM_SHA1)  $(ROM)" | sha1sum -c
@@ -124,4 +135,4 @@ venv:
 	.venv/bin/pip install -r requirements.txt
 
 clean:
-	rm -rf build $(ROM)
+	rm -rf build build-fixes mariotennis.gbc mariotennis-fixes.gbc

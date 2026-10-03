@@ -373,7 +373,9 @@ UpdatePlayerControl:
 	add hl, bc ; $5213
 	ld e, [hl] ; $5214
 	farcall ReadCollisionMapCell ; $5215
+IF !DEF(FIXES)
 	ld a, $00 ; $5218
+ENDC
 	and $0f ; $521a
 	cp $0b ; $521c
 	jr nz, .slideX ; $521e

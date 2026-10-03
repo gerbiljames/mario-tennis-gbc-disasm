@@ -29,7 +29,12 @@ the layout, the names and the structure.
    make compare                 # confirms SHA-1 matches the original
    make check                   # structural checks the byte compare cannot make
    make test                    # codecs, macros and source pins (ROM optional)
+   make FIXES=1                 # mariotennis-fixes.gbc: the shipped bugs fixed
    ```
+
+   `make FIXES=1` assembles the `IF DEF(FIXES)` blocks instead of the
+   original code: the bugs in `docs/bugs.md` that carry a **Fix** paragraph,
+   built into `build-fixes/` so the byte-perfect build is untouched.
 
    The tools need Python 3 with Pillow; the runtime checks (`make
    event-test`, `make slot-audit`) also need PyBoy. `make venv` puts both,

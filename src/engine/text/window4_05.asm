@@ -22,7 +22,11 @@ GetSpeakerVoice:
 	sub $1e ; $60af
 	bit 7, a ; $60b1
 	ld b, $08 ; $60b3
+IF DEF(FIXES)
+	jr nz, .restoreBank
+ELSE
 	jr nz, .done ; $60b5
+ENDC
 	ld l, a ; $60b7
 	ld h, $00 ; $60b8
 	add hl, hl ; $60ba
@@ -30,6 +34,9 @@ GetSpeakerVoice:
 	add hl, de ; $60be
 	inc hl ; $60bf
 	ld b, [hl] ; $60c0
+IF DEF(FIXES)
+.restoreBank:
+ENDC
 	pop_wram_bank ; $60c1
 .done:
 	ld a, b ; $60c6

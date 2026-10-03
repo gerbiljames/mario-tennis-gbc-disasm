@@ -279,7 +279,11 @@ LoadMatchSinglesSeniorPractice:
 	load_match_settings MATCHLIST_SINGLES, STORYMATCH_SENIOR_PRACTICE ; $439a
 	ret ; $43a7
 LoadMatchSinglesJunior3Alias:
+IF DEF(FIXES)
+	load_match_settings MATCHLIST_SINGLES, STORYMATCH_VARSITY_4
+ELSE
 	load_match_settings MATCHLIST_SINGLES, STORYMATCH_JUNIOR_3 ; $43a8
+ENDC
 	ret ; $43b5
 LoadMatchSinglesVarsityPractice:
 	load_match_settings MATCHLIST_SINGLES, STORYMATCH_VARSITY_PRACTICE ; $43b6

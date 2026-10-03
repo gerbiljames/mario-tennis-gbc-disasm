@@ -12,34 +12,36 @@
 	farptr Unused_01_RunSoundTest ; $4016
 InitAndRunGame:
 	call InitSerialLink ; $4018
+IF !DEF(FIXES)
 	push de ; $401b
 	ld de, SAVEFLAG_DEBUG_TEST_MENU ; $401c
 	farcall ClearSaveFlag ; $401f
 	pop de ; $4022
+ENDC
 	call DisableLCDSafely ; $4023
 	wram_bank WRAM_STAGING ; $4026
 	ld hl, wDecompBuffer ; $402c
-	ld c, WRAMX_SIZE / 16 ; $402f
+	ld c, LOW(WRAMX_SIZE / 16) ; $402f
 	call ClearMemory16 ; $4031
 	wram_bank WRAM_COURT_PLANES ; $4034
 	ld hl, wScreenAttrmap ; $403a
-	ld c, WRAMX_SIZE / 16 ; $403d
+	ld c, LOW(WRAMX_SIZE / 16) ; $403d
 	call ClearMemory16 ; $403f
 	wram_bank WRAM_SCREEN ; $4042
 	ld hl, wShadowTilemap ; $4048
-	ld c, WRAMX_SIZE / 16 ; $404b
+	ld c, LOW(WRAMX_SIZE / 16) ; $404b
 	call ClearMemory16 ; $404d
 	wram_bank WRAM_ACTORS ; $4050
 	ld hl, wActors ; $4056
-	ld c, WRAMX_SIZE / 16 ; $4059
+	ld c, LOW(WRAMX_SIZE / 16) ; $4059
 	call ClearMemory16 ; $405b
 	wram_bank WRAM_TEXT ; $405e
 	ld hl, wWindowShadowTilemap ; $4064
-	ld c, WRAMX_SIZE / 16 ; $4067
+	ld c, LOW(WRAMX_SIZE / 16) ; $4067
 	call ClearMemory16 ; $4069
 	wram_bank WRAM_SCENE ; $406c
 	ld hl, WRAMX_BASE ; $4072
-	ld c, WRAMX_SIZE / 16 ; $4075
+	ld c, LOW(WRAMX_SIZE / 16) ; $4075
 	call ClearMemory16 ; $4077
 	ld hl, wShadowOAM ; $407a
 	ld c, wShadowOAM_SIZE / 16 ; $407d
@@ -48,6 +50,12 @@ InitAndRunGame:
 	call LoadMenuFontGfx ; $4085
 	call LoadMenuObjPalettes3To7 ; $4088
 	farcall ValidateSaveRam ; $408b
+IF DEF(FIXES)
+	push de
+	ld de, SAVEFLAG_DEBUG_TEST_MENU
+	farcall ClearSaveFlag
+	pop de
+ENDC
 	farcall RepairAllSaveSlots ; $408e
 	farcall ApplyN64RecordsUnlockFlags ; $4091
 	farcall UpdateUnlockablesSaveBlock ; $4094

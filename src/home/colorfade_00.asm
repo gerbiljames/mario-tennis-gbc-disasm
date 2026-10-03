@@ -68,7 +68,11 @@ RegisterFrameTask:
 	ld a, b ; $1b96
 	or a ; $1b97
 	jr nz, .done ; $1b98
+IF DEF(FIXES)
+	ld c, $10
+ELSE
 	ld c, $16 ; $1b9a
+ENDC
 	ld hl, wFrameTasks ; $1b9c
 .insertLoop:
 	inc hl ; $1b9f

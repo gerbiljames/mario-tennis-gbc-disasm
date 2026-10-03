@@ -20,6 +20,13 @@ only the first is one:
 Cross-references point at `docs/history.md` where a find is written up in more
 detail.
 
+A bug with a **Fix** paragraph is fixed in `make FIXES=1`, which builds
+`mariotennis-fixes.gbc` from the `IF DEF(FIXES)` blocks in the source. The rest
+are left as they are: the fix would change behaviour nobody has checked
+(`GetActorStateAddr`'s guards), the intended values are not known (the
+Courtyard walk-in table, the map-edge clamp, the glyph pen's range), or the
+defect does nothing (the over-reads and dead stores).
+
 ## Bugs
 
 ### Grayscale conversion drops the blue channel
@@ -69,6 +76,11 @@ green, and a weighting that cannot overflow -- `(r + 2g + b) / 4`, green
 added twice and the sum shifted right twice, which keeps white at 31 and
 every grey at itself.
 
+**Fix** (`make FIXES=1`): blue is stored to `wDecompBuffer + 2`, green's
+high bits get the third `rlca`, and the average is `(r + 2g + b) / 4` -- green
+added twice, the sum shifted right twice -- so white stays 31 and every grey
+stays itself.
+
 ### The save mirror re-check compares the wrong signature
 
 The header region `$a000-$a7ff` is mirrored into SRAM bank 1 after every write.
@@ -98,6 +110,11 @@ that operand also patched to `$a020` the header is restored from the mirror and
 the save comes through byte for byte. Both defects have to be fixed for the
 mirror to do anything.
 
+**Fix** (`make FIXES=1`): `InitAndRunGame` clears `SAVEFLAG_DEBUG_TEST_MENU`
+after `ValidateSaveRam` instead of before it, and the re-check reads
+`sSaveSignature`. Played in PyBoy from a save with one signature byte flipped,
+the fixed build restores the header from the mirror and keeps every block.
+
 ### The link-error check can never fire
 
 `AdvanceFrame` (ROM0, `$2635`) guards every frame with:
@@ -124,6 +141,9 @@ duplicate of the Junior #3 launcher (`$0002`) rather than its own (`$000b`). The
 handler is named `LoadMatchSinglesJunior3Alias` in this disassembly rather than
 after its caption, because the caption is not what it does. See
 `docs/screens_and_ui.md`.
+
+**Fix** (`make FIXES=1`): `LoadMatchSinglesJunior3Alias` loads
+`STORYMATCH_VARSITY_4`.
 
 ### The screen shake only ever pushes one way
 
@@ -170,6 +190,10 @@ The sign decision cannot be repaired in place — `and` fixes carry at 0, so no
 ordering of these instructions makes the `jr nc` conditional. Whatever produced
 the sign (a bit of the random word, most likely) was never written.
 
+**Fix** (`make FIXES=1`): the sign comes from bit 7 of each random byte
+(`bit 7, h` / `jr z`), which the mask never uses, so each offset is negated
+half the time and the shake centres on the camera.
+
 ### A collision-map read is discarded, so one terrain type never slows the player
 
 `UpdatePlayerControl` (bank `$04`, `$516b`) picks the player's walk speed. The
@@ -201,6 +225,10 @@ The player therefore always walks at `$0020` with probe range 0, and the
 half-speed terrain the map format can express has no effect anywhere in story
 mode. Recorded as an open question in `docs/story_mode.md`; the discarding of
 the return value is what makes it a bug rather than a mystery.
+
+**Fix** (`make FIXES=1`): the `ld a, $00` goes, so the walk speed tests the
+cell `ReadCollisionMapCell` returns. No shipped collision map has a `$0b`
+cell, so the fix only shows on an edited map.
 
 ### The white fade can never be selected
 
@@ -288,6 +316,8 @@ add an offset in `b` to the id when the other side served, and Stroke Match 2
 passes `b = 13` with ids 61-70 (`StrokeMatch2Cases2`, `$0b:$6892`, passes
 64, for one). Played in PyBoy, random rallies in Stroke Match 2 showed
 id 74 twice in six sessions.
+
+**Fix** (`make FIXES=1`): entries 72-86 are `Text_26_0`-`Text_26_14`.
 
 ### The DMG lockout screen copies a whole map from an 18-row one
 
@@ -472,6 +502,9 @@ tasks per page and call `ClearFrameTasks` between pages, and the duplicate check
 stops a routine being registered twice, so no path found here gets near sixteen
 live tasks.
 
+**Fix** (`make FIXES=1`): the insert loop runs sixteen records, `ld c, $10`.
+A full table still drops the new task silently, as it always did in effect.
+
 ### `GetActorStateAddr` destroys the answer it was asked for
 
 `GetActorStateAddr` (`$0a:$4312`) maps an actor id to its `$40`-byte state
@@ -594,6 +627,9 @@ block at bytes `$08`/`$09` is never cleared, so a doubles "Set" leaves any
 higher doubles wins already in the save in place and wipes the singles ladder.
 Reachable only through the developer menu.
 
+**Fix** (`make FIXES=1`): the clear starts at
+`FLAG_WON_JUNIOR_DOUBLES_RANK_3`, nine flags over the doubles block.
+
 ### `GetSpeakerVoice` returns through the wrong stack slot
 
 `GetSpeakerVoice` (`$05:$608a`) pushes `bc`, `de` and `hl`, then
@@ -607,6 +643,9 @@ on from there. In the shipped layout that wild path happens to unwind back into
 the dialogue, so the line is spoken normally. A build whose ROM0 has moved even
 three bytes crashes instead. Seen when the partner speaks in the awards
 ceremony (location `$1a`, entry 11).
+
+**Fix** (`make FIXES=1`): the early exit jumps to a `.restoreBank` label
+before `pop_wram_bank`, so the stack is balanced on every path.
 
 ### Map reads off the edge have no bounds check
 

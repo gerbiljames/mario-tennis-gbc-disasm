@@ -8,3 +8,4 @@ tools/rgbds/
 !*.sym
 __pycache__/
 .venv/
+build-fixes/

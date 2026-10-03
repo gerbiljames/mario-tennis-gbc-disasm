@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def main():
+    out = sys.argv[1] if len(sys.argv) > 1 else "build"
     for h in holders():
         deps = []
         for f in bank_files(h):
@@ -26,7 +27,7 @@ def main():
                 m = re.match(r"^\t(?:twin|twin_named|twin_in) (\w+),", line)
                 if m:
                     deps.append(f"src/twins/{m.group(1)}.asm")
-        print(f"build/{h.stem}.o: " + " ".join(dict.fromkeys(deps)))
+        print(f"{out}/{h.stem}.o: " + " ".join(dict.fromkeys(deps)))
 
 
 if __name__ == "__main__":

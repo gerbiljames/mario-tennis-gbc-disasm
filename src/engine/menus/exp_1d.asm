@@ -336,6 +336,9 @@ ConvertColorToGrayscale:
 	and $03 ; $7221
 	rlca ; $7223
 	rlca ; $7224
+IF DEF(FIXES)
+	rlca
+ENDC
 	ld [wDecompBuffer + 1], a ; $7225
 	ld a, e ; $7228
 	and $e0 ; $7229
@@ -350,13 +353,23 @@ ConvertColorToGrayscale:
 	and $7c ; $7237
 	rrca ; $7239
 	rrca ; $723a
+IF DEF(FIXES)
+	ld [wDecompBuffer + 2], a
+ELSE
 	ld [rRAMG + 2], a ; $723b
+ENDC
 	ld a, [wDecompBuffer] ; $723e
 	ld hl, wDecompBuffer + 1 ; $7241
 	add [hl] ; $7244
+IF DEF(FIXES)
+	add [hl]
+ENDC
 	inc hl ; $7245
 	add [hl] ; $7246
 	srl a ; $7247
+IF DEF(FIXES)
+	srl a
+ENDC
 	and $1f ; $7249
 	ld [wDecompBuffer + 3], a ; $724b
 	ld e, a ; $724e
