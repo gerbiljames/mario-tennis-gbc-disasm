@@ -264,7 +264,7 @@ ShowRankingBoard:
 	call DisableLCDSafely ; $4eb5
 	call BuildRankingBoardScreen ; $4eb8
 	call EnableLCD ; $4ebb
-	script_fade_in $04 ; $4ebe
+	script_fade_in 4 ; $4ebe
 	call WaitFadeEnd ; $4ec3
 	wram_bank WRAM_SCREEN ; $4ec6
 	call DispatchRankingBoardAnim ; $4ecc
@@ -278,7 +278,7 @@ ShowRankingBoard:
 	or a ; $4ee1
 	jr nz, .fadeOut ; $4ee2
 	sound SFX_RANKING_BOARD ; $4ee4
-	ld c, $02 ; $4ee6
+	ld c, 2 ; $4ee6
 .fadeOut:
 	call BeginFadeOut ; $4ee8
 	call WaitFadeEnd ; $4eeb

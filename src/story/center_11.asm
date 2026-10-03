@@ -257,7 +257,7 @@ CenterCourtEntry0fScene:
 .notDoubles2:
 	xor a ; $4395
 	ld [wStoryModeShowLocationName], a ; $4396
-	script_fade_in $04 ; $4399
+	script_fade_in 4 ; $4399
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_00 ; $439e
 	script_wait_frames 80 ; $43a9
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $43b0

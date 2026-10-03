@@ -15,7 +15,7 @@ RunStrokeLessonMenu:
 	ld [wStoryModeEntryPoint], a ; $45b7
 	ld [wUnusedExitTriggerIdMirror], a ; $45ba
 	ld [wStoryModeExitTriggerRequest], a ; $45bd
-	ld c, $10 ; $45c0
+	ld c, 16 ; $45c0
 	call BeginFadeOut ; $45c2
 	call WaitFadeEnd ; $45c5
 	farcall ShowDrillBriefingScreen ; $45c8
@@ -29,7 +29,7 @@ ShowRankingBoardSamples:
 	ld [wStoryModeEntryPoint], a ; $45da
 	ld [wUnusedExitTriggerIdMirror], a ; $45dd
 	ld [wStoryModeExitTriggerRequest], a ; $45e0
-	ld c, $10 ; $45e3
+	ld c, 16 ; $45e3
 	call BeginFadeOut ; $45e5
 	call WaitFadeEnd ; $45e8
 	call ClearFrameTasks ; $45eb
@@ -450,7 +450,7 @@ Test2FacingScripts_10:
 	db $ff
 Test2Facing01_10:
 	farcall BeginCutsceneScriptMode ; $4b69
-	script_fade_in $10 ; $4b6c
+	script_fade_in 16 ; $4b6c
 	script_set_text Text_31_131 ; $4b71
 	script_speak ACTOR_PLAYER ; $4b77
 	farcall EndCutsceneScriptMode ; $4b7c

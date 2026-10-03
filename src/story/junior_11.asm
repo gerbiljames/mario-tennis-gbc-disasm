@@ -24,13 +24,13 @@ AcademyArrivalEntry0cScene:
 	script_move_target ACTOR_PLAYER, 24.0, 59.0 ; $5420
 	xor a ; $542b
 	ld [wStoryModeShowLocationName], a ; $542c
-	script_fade_in $04 ; $542f
+	script_fade_in 4 ; $542f
 	call WaitFadeEnd ; $5434
 	script_wait_frames 60 ; $5437
 	script_set_anim ACTOR_LIST_11_1_WALK_71_03, ANIM_NOD ; $543e
 	script_wait_idle ACTOR_LIST_11_1_WALK_71_03 ; $5445
 	script_wait_move ACTOR_PLAYER ; $544a
-	ld c, $04 ; $544f
+	ld c, 4 ; $544f
 	call BeginFadeOut ; $5451
 	call WaitFadeEnd ; $5454
 	ld a, STORYLOC_ISLAND_SKY ; $5457

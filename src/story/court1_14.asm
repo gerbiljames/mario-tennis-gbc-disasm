@@ -160,13 +160,13 @@ Court1EntryWalkIn:
 	test_flag FLAG_DOUBLES ; $51ac
 	jr z, .walkOff ; $51af
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $51b1
-	script_move_angle ACTOR_PARTNER, FACE_LEFT, $0200 ; $51b9
+	script_move_angle ACTOR_PARTNER, FACE_LEFT, 2.0 ; $51b9
 	script_wait_move ACTOR_PARTNER ; $51c3
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $51c8
 	script_set_speed ACTOR_PARTNER, 0.5 ; $51cf
 .walkOff:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $51d7
-	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $51df
+	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 2.0 ; $51df
 .done:
 	ret ; $51e9
 ; Instruction-identical to SetPlayerPartnerActorSprites (one copy per bank); a change here belongs in every copy.
@@ -271,7 +271,7 @@ IslandSkyInitScript_14:
 	script_set_position ACTOR_PLAYER, 6.0, 39.0 ; $5378
 	xor a ; $5383
 	ld [wStoryModeShowLocationName], a ; $5384
-	script_fade_in $04 ; $5387
+	script_fade_in 4 ; $5387
 	call WaitFadeEnd ; $538c
 	ld a, $3b ; $538f
 	ld [wMapSceneStage], a ; $5391
@@ -281,7 +281,7 @@ IslandSkyInitScript_14:
 .fadeIn:
 	xor a ; $539c
 	ld [wStoryModeShowLocationName], a ; $539d
-	script_fade_in $06 ; $53a0
+	script_fade_in 6 ; $53a0
 	call WaitFadeEnd ; $53a5
 	sound SFX_FIREWORK_LAUNCH ; $53a8
 	script_wait_frames 60 ; $53aa
@@ -399,7 +399,7 @@ IslandSkyInitScript_14:
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $54bc
 	jr z, .setLocation ; $54bf
 .transition:
-	ld c, $04 ; $54c1
+	ld c, 4 ; $54c1
 	call BeginFadeOut ; $54c3
 	call WaitFadeEnd ; $54c6
 	call ClearFrameTasks ; $54c9
@@ -476,7 +476,7 @@ IslandSkyInitScript_14:
 	script_move_target ACTOR_PLAYER, 11.0, 39.0 ; $5603
 	script_wait_move ACTOR_PLAYER ; $560e
 	script_set_active ACTOR_PLAYER, $00 ; $5613
-	ld c, $04 ; $561a
+	ld c, 4 ; $561a
 	call BeginFadeOut ; $561c
 	call WaitFadeEnd ; $561f
 	call WaitFadeEnd ; $5622

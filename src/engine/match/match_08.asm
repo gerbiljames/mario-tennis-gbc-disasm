@@ -124,7 +124,7 @@ InitMatchScene:
 	wram_bank WRAM_CHAR0 ; $4189
 	ret ; $418f
 RunMatch:
-	ld c, $20 ; $4190
+	ld c, 32 ; $4190
 	call BeginFadeOut ; $4192
 	call WaitFadeEnd ; $4195
 	call AdvanceFrame ; $4198
@@ -139,7 +139,7 @@ RunMatch:
 	call ClearMemory16 ; $41b2
 	ld a, $ff ; $41b5
 	ld [wAiServeAimOverride], a ; $41b7
-	script_fade_in $20 ; $41ba
+	script_fade_in 32 ; $41ba
 	wram_bank WRAM_ACTORS ; $41bf
 	call PlayCourtIntro ; $41c5
 	xor a ; $41c8
@@ -151,7 +151,7 @@ RunMatch:
 	ld a, [wGameMode] ; $41d7
 	cp GAMEMODE_MARIO_MINIGAME ; $41da
 	call z, ShowMatchResultScreens ; $41dc
-	ld c, $20 ; $41df
+	ld c, 32 ; $41df
 	call BeginFadeOut ; $41e1
 	call WaitFadeEnd ; $41e4
 	call AdvanceFrame ; $41e7

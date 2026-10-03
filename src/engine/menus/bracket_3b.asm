@@ -7,7 +7,7 @@ ShowTournamentBracket:
 	call DisableLCDSafely ; $776b
 	call BuildTournamentBracketScreen ; $776e
 	call EnableLCD ; $7771
-	script_fade_in $10 ; $7774
+	script_fade_in 16 ; $7774
 	call WaitFadeEnd ; $7779
 	ld a, $01 ; $777c
 	ld hl, BracketHighlightBlinkTask ; $777e
@@ -25,7 +25,7 @@ ShowTournamentBracket:
 .playSfx:
 	sound SFX_MENU_SELECT ; $7799
 	call ClearFrameTasks ; $779b
-	ld c, $10 ; $779e
+	ld c, 16 ; $779e
 	call BeginFadeOut ; $77a0
 	call WaitFadeEnd ; $77a3
 	ret ; $77a6
@@ -364,7 +364,7 @@ RunMarioCastExhibResults:
 	ld hl, MarioCastChartScrollArrowsTask ; $7a15
 	call RegisterFrameTask ; $7a18
 	call EnableLCD ; $7a1b
-	script_fade_in $10 ; $7a1e
+	script_fade_in 16 ; $7a1e
 	call WaitFadeEnd ; $7a23
 	wram_bank WRAM_SCREEN ; $7a26
 .loop:
@@ -387,14 +387,14 @@ RunMarioCastExhibResults:
 	jr .loop ; $7a4d
 .playSfx:
 	sound SFX_MENU_SELECT ; $7a4f
-	ld c, $10 ; $7a51
+	ld c, 16 ; $7a51
 	call BeginFadeOut ; $7a53
 	call WaitFadeEnd ; $7a56
 	call ClearFrameTasks ; $7a59
 	ret ; $7a5c
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $7a5d
-	ld c, $10 ; $7a5f
+	ld c, 16 ; $7a5f
 	call BeginFadeOut ; $7a61
 	call WaitFadeEnd ; $7a64
 	call ClearFrameTasks ; $7a67

@@ -266,7 +266,7 @@ AcademyMainBldgNewStudentCutscene_10:
 	farcall BeginCutsceneScriptMode ; $7749
 	script_set_position ACTOR_PLAYER, 34.0, 37.5 ; $774c
 	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, 34.0, 36.0 ; $7757
-	script_fade_in $04 ; $7762
+	script_fade_in 4 ; $7762
 	script_wait_frames 30 ; $7767
 	script_face ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, FACE_UP ; $776e
 	script_wait_frames 10 ; $7775

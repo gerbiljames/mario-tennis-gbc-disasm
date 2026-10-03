@@ -178,7 +178,7 @@ IslandSkyEntry0eScene:
 .loadScene:
 	xor a ; $7703
 	ld [wStoryModeShowLocationName], a ; $7704
-	script_fade_in $06 ; $7707
+	script_fade_in 6 ; $7707
 	call WaitFadeEnd ; $770c
 	script_wait_frames 60 ; $770f
 	call PlayTwinkleAnimation_14 ; $7716
@@ -304,7 +304,7 @@ IslandSkyEntry0eScene:
 	jr nz, .done ; $784d
 	sound SFX_FIREWORK_SPARKLE ; $784f
 	script_wait_frames 70 ; $7851
-	ld c, $04 ; $7858
+	ld c, 4 ; $7858
 	call BeginFadeOut ; $785a
 	call WaitFadeEnd ; $785d
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7860

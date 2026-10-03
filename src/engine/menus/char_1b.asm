@@ -142,7 +142,7 @@ Unused_1b_RunCharSelectLoop:
 	farcall Unused_1b_UpdateCharSelectSelection ; $60d8
 	ld a, [wCharSelectChar] ; $60db
 	ld [wCharSelectPrevChar], a ; $60de
-	ld c, $20 ; $60e1
+	ld c, 32 ; $60e1
 	call BeginFadeOut ; $60e3
 	call WaitFadeEnd ; $60e6
 	call DisableLCDSafely ; $60e9
@@ -158,7 +158,7 @@ Unused_1b_RunCharSelectLoop:
 	ld c, $24 ; $6106
 	call QueueVRAMCopy ; $6108
 	call EnableLCD ; $610b
-	script_fade_in $20 ; $610e
+	script_fade_in 32 ; $610e
 	call WaitFadeEnd ; $6113
 	call Unused_1b_StartCharSelectCursorTask ; $6116
 .loopB:
@@ -417,7 +417,7 @@ RunNewGameSetup:
 	call CopyMemoryFast ; $62eb
 	xor a ; $62ee
 .beginFadeOut:
-	ld c, $20 ; $62ef
+	ld c, 32 ; $62ef
 	call BeginFadeOut ; $62f1
 	call WaitFadeEnd ; $62f4
 	ret ; $62f7

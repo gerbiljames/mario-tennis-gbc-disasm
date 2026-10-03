@@ -293,7 +293,7 @@ AwardsCeremonyArrivalIntro:
 	farcall WaitPlayerMoveDone ; $5b5d
 	xor a ; $5b60
 	ld [wStoryModeShowLocationName], a ; $5b61
-	script_fade_in $04 ; $5b64
+	script_fade_in 4 ; $5b64
 	call WaitFadeEnd ; $5b69
 	script_set_objdef OBJ_WALK_71_03, ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5b6c
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, ANIM_WALK ; $5b78

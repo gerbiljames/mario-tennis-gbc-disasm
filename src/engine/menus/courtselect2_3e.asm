@@ -1,6 +1,6 @@
 FadeOutAndResetMenuScreen:
 	push_wram_bank WRAM_SCREEN ; $64f8
-	ld c, $10 ; $6501
+	ld c, 16 ; $6501
 	call BeginFadeOut ; $6503
 	call WaitFadeEnd ; $6506
 	call DisableLCDSafely ; $6509
@@ -192,7 +192,7 @@ RunLinkCourtSelect9Menu:
 	call CloseCourtSelect9Panel ; $6698
 	ld a, MENUSLIDE_BACK ; $669b
 	ld [wMenuSlideDirection], a ; $669d
-	ld c, $10 ; $66a0
+	ld c, 16 ; $66a0
 	call BeginFadeOut ; $66a2
 	call WaitFadeEnd ; $66a5
 	ld a, $ff ; $66a8

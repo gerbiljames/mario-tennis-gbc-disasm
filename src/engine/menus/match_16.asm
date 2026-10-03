@@ -157,7 +157,7 @@ RunMatchStatsScreen:
 	ld hl, UpdateResultScreenAnimatedTilesTask ; $5c4e
 	call RegisterFrameTask ; $5c51
 	call EnableLCD ; $5c54
-	script_fade_in $10 ; $5c57
+	script_fade_in 16 ; $5c57
 	call WaitFadeEnd ; $5c5c
 .loop:
 	call PrintMatchSetScores ; $5c5f
@@ -171,13 +171,13 @@ RunMatchStatsScreen:
 	call AdvanceFrame ; $5c70
 	jr .loop ; $5c73
 .beginFadeOut:
-	ld c, $40 ; $5c75
+	ld c, 64 ; $5c75
 	call BeginFadeOut ; $5c77
 	call WaitFadeEnd ; $5c7a
 	xor a ; $5c7d
 	ret ; $5c7e
 .beginFadeOut2:
-	ld c, $20 ; $5c7f
+	ld c, 32 ; $5c7f
 	call BeginFadeOut ; $5c81
 	call WaitFadeEnd ; $5c84
 	ld a, $ff ; $5c87

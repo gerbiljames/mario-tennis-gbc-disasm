@@ -154,7 +154,7 @@ RunScrollingTextScreen:
 	jr nz, .loopB ; $5a95
 	jp .loop ; $5a97
 .maskSet:
-	ld c, $01 ; $5a9a
+	ld c, 1 ; $5a9a
 	call BeginFadeOut ; $5a9c
 	call WaitFadeEnd ; $5a9f
 	call ClearFrameTasks ; $5aa2

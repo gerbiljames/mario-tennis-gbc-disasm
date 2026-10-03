@@ -62,7 +62,7 @@ ENDC
 	farcall InitStoryModeState ; $4097
 	farcall InitDefaultMatchSettings ; $409a
 	call EnableLCD ; $409d
-	script_fade_in $7f ; $40a0
+	script_fade_in 127 ; $40a0
 .loop:
 	ld hl, wStoryModeCurrentLocation ; $40a5
 	ld [hl], STORYLOC_MAIN_MENU ; $40a8

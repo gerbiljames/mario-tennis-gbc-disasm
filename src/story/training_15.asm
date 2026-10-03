@@ -261,7 +261,7 @@ TournamentSiteArrivalScene:
 	script_player_speed 7.96875 ; $445b
 	script_move_player 18.0, 41.0 ; $4461
 	farcall WaitPlayerMoveDone ; $446b
-	script_fade_in $04 ; $446e
+	script_fade_in 4 ; $446e
 	call WaitFadeEnd ; $4473
 	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, 18.0, 41.0 ; $4476
 	script_move_target ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_06, 17.0, 44.0 ; $4481
@@ -312,7 +312,7 @@ TournamentSiteArrivalScene:
 	script_wait_idle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06 ; $45bf
 	script_face ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, FACE_RIGHT ; $45c4
 	script_wait_frames 5 ; $45cb
-	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, FACE_UP, $0800 ; $45d2
+	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_75_06, FACE_UP, 8.0 ; $45d2
 	script_wait_frames 60 ; $45dc
 	script_face ACTOR_PLAYER, FACE_LEFT ; $45e3
 	script_wait_frames 40 ; $45ea
@@ -341,12 +341,12 @@ TournamentSiteArrivalScene:
 	ld a, $ff ; $4677
 	ld [wUnusedExitTriggerIdMirror], a ; $4679
 	ld [wStoryModeExitTriggerRequest], a ; $467c
-	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_06, FACE_UP, $0a00 ; $467f
-	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07, FACE_UP, $0a00 ; $4689
-	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, FACE_UP, $0a00 ; $4693
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0a00 ; $469d
+	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_06, FACE_UP, 10.0 ; $467f
+	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_07, FACE_UP, 10.0 ; $4689
+	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, FACE_UP, 10.0 ; $4693
+	script_move_angle ACTOR_PLAYER, FACE_UP, 10.0 ; $469d
 	script_wait_frames 30 ; $46a7
-	ld c, $08 ; $46ae
+	ld c, 8 ; $46ae
 	call BeginFadeOut ; $46b0
 	call WaitFadeEnd ; $46b3
 	ret ; $46b6
@@ -465,13 +465,13 @@ TrainingCourtArrival01_15:
 	test_flag FLAG_DOUBLES ; $4918
 	jr z, .walkOff ; $491b
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $491d
-	script_move_angle ACTOR_PARTNER, FACE_LEFT, $0200 ; $4925
+	script_move_angle ACTOR_PARTNER, FACE_LEFT, 2.0 ; $4925
 	script_wait_move ACTOR_PARTNER ; $492f
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4934
 	script_set_speed ACTOR_PARTNER, 0.5 ; $493b
 .walkOff:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $4943
-	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $494b
+	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 2.0 ; $494b
 .done:
 	ret ; $4955
 TrainingCourtExitTriggers_15:

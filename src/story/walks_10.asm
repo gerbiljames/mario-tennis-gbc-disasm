@@ -3,11 +3,11 @@
 MapExitWalkCurveRight_10:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $7ae6
 	script_set_speed ACTOR_PARTNER, 0.5 ; $7aee
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $7af6
+	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $7af6
 	script_wait_move ACTOR_PLAYER ; $7b00
-	script_move_angle ACTOR_PLAYER, $e0, $0080 ; $7b05
+	script_move_angle ACTOR_PLAYER, $e0, 0.5 ; $7b05
 	script_wait_move ACTOR_PLAYER ; $7b0f
-	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $00c0 ; $7b14
+	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 0.75 ; $7b14
 	ret ; $7b1e
 MapExitWalkCurveLeft_10:
 	ld a, [wStoryModeEntryPoint] ; $7b1f
@@ -15,11 +15,11 @@ MapExitWalkCurveLeft_10:
 	jr z, .done ; $7b24
 	script_set_speed ACTOR_PARTNER, 0.5 ; $7b26
 	script_set_speed ACTOR_PLAYER, 0.5 ; $7b2e
-	script_move_angle ACTOR_PLAYER, FACE_UP, $00c0 ; $7b36
+	script_move_angle ACTOR_PLAYER, FACE_UP, 0.75 ; $7b36
 	script_wait_move ACTOR_PLAYER ; $7b40
-	script_move_angle ACTOR_PLAYER, $a0, $0080 ; $7b45
+	script_move_angle ACTOR_PLAYER, $a0, 0.5 ; $7b45
 	script_wait_move ACTOR_PLAYER ; $7b4f
-	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0080 ; $7b54
+	script_move_angle ACTOR_PLAYER, FACE_LEFT, 0.5 ; $7b54
 .done:
 	ret ; $7b5e
 MapArrivalWalkPair_10:
@@ -28,8 +28,8 @@ MapArrivalWalkPair_10:
 	jr z, .done ; $7b64
 	script_set_speed ACTOR_PLAYER, 0.5 ; $7b66
 	script_set_speed ACTOR_PARTNER, 0.5 ; $7b6e
-	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0280 ; $7b76
-	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $7b80
+	script_move_angle ACTOR_PLAYER, FACE_DOWN, 2.5 ; $7b76
+	script_move_angle ACTOR_PARTNER, FACE_DOWN, 2.0 ; $7b80
 .done:
 	ret ; $7b8a
 ActorScript_10_1:

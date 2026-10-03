@@ -320,7 +320,7 @@ RunStorySceneByMode:
 	ret ; $7631
 FadeOutAndResetScreen:
 	call EnableLCD ; $7632
-	ld c, $10 ; $7635
+	ld c, 16 ; $7635
 	call BeginFadeOut ; $7637
 	call WaitFadeEnd ; $763a
 	call DisableLCDSafely ; $763d
@@ -350,7 +350,7 @@ Unused_18_DebugScreenAssetViewer:
 .loadScreen:
 	ld c, [hl] ; $7668
 	push bc ; $7669
-	ld c, $10 ; $766a
+	ld c, 16 ; $766a
 	call BeginFadeOut ; $766c
 	call WaitFadeEnd ; $766f
 	call DisableLCDSafely ; $7672
@@ -358,7 +358,7 @@ Unused_18_DebugScreenAssetViewer:
 	farcall LoadScreenAssetRecord ; $7676
 	farcall QueueWram3MapToVRAM ; $7679
 	call EnableLCD ; $767c
-	script_fade_in $10 ; $767f
+	script_fade_in 16 ; $767f
 	call WaitFadeEnd ; $7684
 .inputLoop:
 	call AdvanceFrame ; $7687
@@ -382,7 +382,7 @@ PlayScreenSequence0:
 	call SetupScreen0Assets ; $76b4
 	call LoadScreen0TilesAndPalette ; $76b7
 	call EnableLCD ; $76ba
-	script_fade_in $02 ; $76bd
+	script_fade_in 2 ; $76bd
 	call WaitFadeEnd ; $76c2
 	wram_bank WRAM_SCREEN ; $76c5
 	xor a ; $76cb
@@ -405,13 +405,13 @@ PlayScreenSequence0:
 	ldh a, [hInputPressed] ; $76ef
 	and PADF_A | PADF_B ; $76f1
 	jr z, .waitInput ; $76f3
-	ld c, $10 ; $76f5
+	ld c, 16 ; $76f5
 	call BeginFadeOut ; $76f7
 	call WaitFadeEnd ; $76fa
 	call DisableLCDSafely ; $76fd
 	call FillAllBgPalettes ; $7700
 	call EnableLCD ; $7703
-	script_fade_in $10 ; $7706
+	script_fade_in 16 ; $7706
 	call WaitFadeEnd ; $770b
 	ld a, $01 ; $770e
 	ld hl, QueueScreen0Sprites ; $7710

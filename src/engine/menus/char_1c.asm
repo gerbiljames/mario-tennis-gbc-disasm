@@ -53,7 +53,7 @@ CharDataScreen_Show:
 	ld a, $01 ; $407a
 	ld hl, DrawRemainingPointsSprite ; $407c
 	call RegisterFrameTask ; $407f
-	script_fade_in $10 ; $4082
+	script_fade_in 16 ; $4082
 	call WaitFadeEnd ; $4087
 	ld a, $01 ; $408a
 	ld hl, CharDataScreenAnimTask ; $408c
@@ -73,7 +73,7 @@ CharDataScreen_Show:
 .runInputLoop:
 	call CharDataScreen_InputLoop ; $40b2
 	push af ; $40b5
-	ld c, $10 ; $40b6
+	ld c, 16 ; $40b6
 	call BeginFadeOut ; $40b8
 	call WaitFadeEnd ; $40bb
 	ld hl, wStoryModeNameOfMainCharacter ; $40be

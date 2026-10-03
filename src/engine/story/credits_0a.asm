@@ -75,7 +75,7 @@ EndingCutsceneLocationList:
 EndingCreditsSequencePalette:
 	INCLUDE "data/bank_00a/EndingCreditsSequencePalette.asm" ; $6e6c, 8 bytes (palettes)
 RunEndingCreditsSequence:
-	ld c, $04 ; $6e74
+	ld c, 4 ; $6e74
 	call BeginFadeOut ; $6e76
 	call WaitFadeEnd ; $6e79
 	set_flag FLAG_ENDING_CREDITS_RUNNING ; $6e7c
@@ -123,7 +123,7 @@ RunEndingCreditsSequence:
 	farcall PlayScrollingStoryCutscene ; $6ee0
 .fadeOut:
 	clear_flag FLAG_ENDING_CREDITS_PENDING ; $6ee3
-	ld c, $04 ; $6ee6
+	ld c, 4 ; $6ee6
 	call BeginFadeOut ; $6ee8
 	call WaitFadeEnd ; $6eeb
 	ld a, $90 ; $6eee
@@ -140,7 +140,7 @@ RunEndingCreditsSequence:
 	jr .sceneLoop ; $6f01
 .done:
 	farcall ShowStoryResultScreen ; $6f03
-	ld c, $08 ; $6f06
+	ld c, 8 ; $6f06
 	call BeginFadeOut ; $6f08
 	call WaitFadeEnd ; $6f0b
 	xor a ; $6f0e

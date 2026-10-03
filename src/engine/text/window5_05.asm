@@ -63,7 +63,7 @@ Unused_05_RunDebugWindowDemo:
 	ld a, $02 ; $6d89
 	ldh [hScrollX], a ; $6d8b
 	ldh [hScrollY], a ; $6d8d
-	script_fade_in $7f ; $6d8f
+	script_fade_in 127 ; $6d8f
 	call WaitFadeEnd ; $6d94
 	call RestoreShadowTilemap ; $6d97
 	wait_frames 30 ; $6d9a

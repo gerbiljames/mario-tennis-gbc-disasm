@@ -88,7 +88,7 @@ PlayStarWarpTransition:
 	pop_wram_bank ; $71dc
 	ret ; $71e1
 .startFade:
-	ld c, $03 ; $71e2
+	ld c, 3 ; $71e2
 	call BeginFadeOut ; $71e4
 	jr .waitLoop ; $71e7
 UpdateStarWarpSprite:
@@ -353,7 +353,7 @@ ExhibitionMatchIntroCutscene:
 	script_move_target ACTOR_PARTNER, 5.0, 35.0 ; $7753
 	script_player_speed 0.625 ; $775e
 	script_move_player 14.0, 27.0 ; $7764
-	script_fade_in $04 ; $776e
+	script_fade_in 4 ; $776e
 	call WaitFadeEnd ; $7773
 	script_wait_move ACTOR_SPECIAL_COURT_TOAD ; $7776
 	script_set_actor_script ACTOR_SPECIAL_COURT_TOAD, ActorScript_0e_16 ; $777b
@@ -435,7 +435,7 @@ ExhibitionMatchIntroCutscene:
 	script_move_target ACTOR_PARTNER, 5.0, 35.0 ; $7986
 	script_player_speed 0.625 ; $7991
 	script_move_player 14.0, 27.0 ; $7997
-	script_fade_in $04 ; $79a1
+	script_fade_in 4 ; $79a1
 	call WaitFadeEnd ; $79a6
 	script_wait_move ACTOR_SPECIAL_COURT_TOAD ; $79a9
 	script_set_actor_script ACTOR_SPECIAL_COURT_TOAD, ActorScript_0e_16 ; $79ae

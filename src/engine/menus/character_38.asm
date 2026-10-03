@@ -39,7 +39,7 @@ RunCharacterSelectScreen:
 	ld hl, DrawCharacterSelectCursor ; $4839
 	call RegisterFrameTask ; $483c
 	call EnableLCD ; $483f
-	script_fade_in $08 ; $4842
+	script_fade_in 8 ; $4842
 	call WaitFadeEnd ; $4847
 	ld hl, rIE ; $484a
 	res 2, [hl] ; $484d
@@ -67,7 +67,7 @@ RunCharacterSelectScreen:
 	jr .redraw ; $487a
 .confirm:
 	sound SFX_MENU_SELECT ; $487c
-	ld c, $10 ; $487e
+	ld c, 16 ; $487e
 	call BeginFadeOut ; $4880
 	call WaitFadeEnd ; $4883
 	ld c, $02 ; $4886
@@ -113,7 +113,7 @@ RunCharacterSelectScreen:
 	ret ; $48d2
 .cancel:
 	sound SFX_MENU_CANCEL ; $48d3
-	ld c, $10 ; $48d5
+	ld c, 16 ; $48d5
 	call BeginFadeOut ; $48d7
 	call WaitFadeEnd ; $48da
 	call ClearFrameTasks ; $48dd

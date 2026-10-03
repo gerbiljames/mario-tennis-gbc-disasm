@@ -385,7 +385,7 @@ ShowStoryNarration_13:
 	script_set_active ACTOR_PLAYER, $00 ; $5a40
 	script_set_active ACTOR_PARTNER, $00 ; $5a47
 	script_copy_scene_rect 0, 32, 0, 0, 22, 24 ; $5a4e
-	script_fade_in $08 ; $5a5d
+	script_fade_in 8 ; $5a5d
 	script_wait_frames 4 ; $5a62
 	script_speak SPEAKER_NONE | 5 ; $5a69
 	script_wait_frames 4 ; $5a6e
@@ -458,7 +458,7 @@ DormRoomArrivalCutscene_13:
 	script_face ACTOR_PARTNER, FACE_DOWN ; $5b11
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $5b18
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $5b23
-	script_fade_in $04 ; $5b2a
+	script_fade_in 4 ; $5b2a
 	call WaitFadeEnd ; $5b2f
 	test_flag FLAG_DOUBLES ; $5b32
 	jr z, .singles ; $5b35

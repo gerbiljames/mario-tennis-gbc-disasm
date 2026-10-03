@@ -9,7 +9,7 @@ LateStudentCrashCutscene:
 	script_face ACTOR_ACADEMY_ARRIVAL_WALK_71_03_1, FACE_RIGHT ; $4707
 	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_71_05, 51.0, 21.0 ; $470e
 	script_set_position ACTOR_ACADEMY_ARRIVAL_WALK_72_02, 51.0, 21.0 ; $4719
-	script_fade_in $04 ; $4724
+	script_fade_in 4 ; $4724
 	call WaitFadeEnd ; $4729
 	script_move_target ACTOR_PLAYER, 24.0, 45.0 ; $472c
 	script_wait_move ACTOR_PLAYER ; $4737
@@ -171,7 +171,7 @@ LateStudentCrashCutscene:
 	sound SFX_EMOTE ; $4b46
 	script_wait_frames 40 ; $4b48
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, 63.0, 63.0 ; $4b4f
-	script_move_angle ACTOR_ACADEMY_ARRIVAL_WALK_75_06, FACE_LEFT, $0100 ; $4b5a
+	script_move_angle ACTOR_ACADEMY_ARRIVAL_WALK_75_06, FACE_LEFT, 1.0 ; $4b5a
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4b64
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4b69
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4b6e
@@ -389,7 +389,7 @@ FollowGuideIntoAcademy:
 	ld a, $0f ; $4fb4
 	ld [wUnusedExitTriggerIdMirror], a ; $4fb6
 	ld [wStoryModeExitTriggerRequest], a ; $4fb9
-	ld c, $04 ; $4fbc
+	ld c, 4 ; $4fbc
 	call BeginFadeOut ; $4fbe
 	call WaitFadeEnd ; $4fc1
 	ret ; $4fc4
@@ -430,7 +430,7 @@ AcademyArrivalInitScript_11.notDoubles:
 	script_face ACTOR_PLAYER, FACE_UP ; $503d
 	script_move_player_to_actor ACTOR_LIST_11_0_WALK_75_06 ; $5044
 	farcall WaitPlayerMoveDone ; $504b
-	script_fade_in $08 ; $504e
+	script_fade_in 8 ; $504e
 	call WaitFadeEnd ; $5053
 	script_wait_frames 60 ; $5056
 	script_set_text Text_30_493 ; $505d
@@ -541,7 +541,7 @@ AcademyArrivalInitScript_11.speak:
 	script_move_target ACTOR_LIST_11_0_WALK_74_08, 25.0, 57.0 ; $5347
 	script_move_target ACTOR_LIST_11_0_WALK_75_06, 24.0, 61.0 ; $5352
 	script_wait_move ACTOR_LIST_11_0_WALK_75_06 ; $535d
-	ld c, $04 ; $5362
+	ld c, 4 ; $5362
 	call BeginFadeOut ; $5364
 	call WaitFadeEnd ; $5367
 	ld a, STORYLOC_ISLAND_SKY ; $536a

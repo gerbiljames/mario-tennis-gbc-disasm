@@ -46,11 +46,11 @@ RunTitleScreen:
 	ld [wTitleSpriteTimer], a ; $75c3
 	ld a, $98 ; $75c6
 	ld [wScreenScratch], a ; $75c8
-	ld c, $7f ; $75cb
+	ld c, 127 ; $75cb
 	call BeginFadeOut ; $75cd
 	call WaitFadeEnd ; $75d0
 	call DisableLCDSafely ; $75d3
-	ld c, $7f ; $75d6
+	ld c, 127 ; $75d6
 	call BeginFadeOut ; $75d8
 	call WaitFadeEnd ; $75db
 	ld c, SCREENASSET_TitleScreen ; $75de
@@ -96,7 +96,7 @@ RunTitleScreen:
 	call RegisterFrameTask ; $7644
 	sound BGM_TITLE_SCREEN ; $7647
 	call EnableLCD ; $7649
-	script_fade_in $04 ; $764c
+	script_fade_in 4 ; $764c
 	call WaitFadeEnd ; $7651
 	wram_bank WRAM_SCREEN ; $7654
 	ld a, $9f ; $765a
@@ -121,14 +121,14 @@ RunTitleScreen:
 	sound BGM_NONE ; $7680
 	sound SFX_MENU_DECIDE ; $7682
 	call ClearFrameTasks ; $7684
-	ld c, $10 ; $7687
+	ld c, 16 ; $7687
 	call BeginFadeOut ; $7689
 	call WaitFadeEnd ; $768c
 	xor a ; $768f
 	ret ; $7690
 	sound BGM_NONE ; $7691
 	call ClearFrameTasks ; $7693
-	ld c, $20 ; $7696
+	ld c, 32 ; $7696
 	call BeginFadeOut ; $7698
 	call WaitFadeEnd ; $769b
 	ld hl, rIE ; $769e
@@ -138,7 +138,7 @@ RunTitleScreen:
 .playSfx2:
 	sound BGM_NONE ; $76a6
 	call ClearFrameTasks ; $76a8
-	ld c, $08 ; $76ab
+	ld c, 8 ; $76ab
 	call BeginFadeOut ; $76ad
 	call WaitFadeEnd ; $76b0
 	ld a, $ff ; $76b3

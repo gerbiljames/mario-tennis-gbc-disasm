@@ -74,7 +74,7 @@ ShowDrillBriefingScreen:
 	call RegisterFrameTask ; $44ae
 	ld a, $03 ; $44b1
 	ld [wAnimatedTilePeriod], a ; $44b3
-	script_fade_in $10 ; $44b6
+	script_fade_in 16 ; $44b6
 	call WaitFadeEnd ; $44bb
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $44be
 	cp MINIGAME_TENNIS_MACHINE_1 ; $44c1
@@ -112,7 +112,7 @@ Unused_17_ShowCourtDiagramTestScreen:
 	call RegisterFrameTask ; $44fd
 	ld a, $03 ; $4500
 	ld [wAnimatedTilePeriod], a ; $4502
-	script_fade_in $10 ; $4505
+	script_fade_in 16 ; $4505
 	call WaitFadeEnd ; $450a
 	ld a, $50 ; $450d
 	ld [wBriefingPlayerX], a ; $450f

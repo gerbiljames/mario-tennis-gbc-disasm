@@ -174,7 +174,7 @@ IntroCutsceneState19Init_6b:
 	ld [hl], d ; $4c6a
 	jp DispatchCutsceneStateInit.loop ; $4c6b
 IntroCutsceneState19Exit_6b:
-	ld c, $04 ; $4c6e
+	ld c, 4 ; $4c6e
 	call BeginFadeOut ; $4c70
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.loop2 ; $4c76
@@ -349,7 +349,7 @@ ShowIntroLogoScreen:
 	ldh [hScrollY], a ; $51c3
 	sound SFX_LOGO_JINGLE ; $51c5
 	call EnableLCD ; $51c7
-	script_fade_in $20 ; $51ca
+	script_fade_in 32 ; $51ca
 	call WaitFadeEnd ; $51cf
 .loop:
 	call AdvanceFrame ; $51d2
@@ -375,7 +375,7 @@ ScrollOutIntroLogo:
 	jr z, .eq3e ; $51f7
 	jr .loop ; $51f9
 .eq3e:
-	ld c, $10 ; $51fb
+	ld c, 16 ; $51fb
 	call BeginFadeOut ; $51fd
 	call WaitFadeEnd ; $5200
 	call DisableLCDSafely ; $5203

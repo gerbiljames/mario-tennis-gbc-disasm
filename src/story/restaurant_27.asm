@@ -112,7 +112,7 @@ End3DormEntCutscene_27:
 	script_set_position ACTOR_PLAYER, 22.0, 31.0 ; $6ccd
 	script_set_position ACTOR_END3_DORM_ENT_EMILY, 22.0, 29.0 ; $6cd8
 	script_face ACTOR_END3_DORM_ENT_EMILY, FACE_UP ; $6ce3
-	script_fade_in $20 ; $6cea
+	script_fade_in 32 ; $6cea
 	script_move_target ACTOR_END3_DORM_ENT_EMILY, 22.0, 17.0 ; $6cef
 	script_move_player 22.0, 15.0 ; $6cfa
 	script_move_target ACTOR_PLAYER, 22.0, 20.0 ; $6d04
@@ -241,7 +241,7 @@ EndRestaurantEntCutscene_27:
 	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_EMILY, 63.0, 63.0 ; $6f88
 	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_MARK, 63.0, 63.0 ; $6f93
 	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_KEVIN, 63.0, 63.0 ; $6f9e
-	script_fade_in $04 ; $6fa9
+	script_fade_in 4 ; $6fa9
 	script_set_position ACTOR_END_RESTAURANT_ENT_ALT_EMILY, 65.0, 13.0 ; $6fae
 	script_move_target ACTOR_END_RESTAURANT_ENT_ALT_EMILY, 27.0, 13.0 ; $6fb9
 	script_set_position ACTOR_PLAYER, 67.0, 13.0 ; $6fc4
@@ -389,7 +389,7 @@ End1MainBldgInitScript_27:
 	script_player_speed 2.0 ; $737e
 	script_move_player 24.0, 18.0 ; $7384
 	farcall WaitPlayerMoveDone ; $738e
-	script_fade_in $04 ; $7391
+	script_fade_in 4 ; $7391
 	call WaitFadeEnd ; $7396
 	script_move_target ACTOR_PLAYER, 24.0, 33.0 ; $7399
 	script_wait_frames 20 ; $73a4

@@ -70,7 +70,7 @@ RunN64ExhibData:
 	ld hl, N64ExhibScrollArrowsTask ; $44c0
 	call RegisterFrameTask ; $44c3
 	call EnableLCD ; $44c6
-	script_fade_in $10 ; $44c9
+	script_fade_in 16 ; $44c9
 	call WaitFadeEnd ; $44ce
 	wram_bank WRAM_SCREEN ; $44d1
 .loop:
@@ -86,14 +86,14 @@ RunN64ExhibData:
 	jr .loop ; $44ed
 .playSfx:
 	sound SFX_MENU_SELECT ; $44ef
-	ld c, $10 ; $44f1
+	ld c, 16 ; $44f1
 	call BeginFadeOut ; $44f3
 	call WaitFadeEnd ; $44f6
 	call ClearFrameTasks ; $44f9
 	ret ; $44fc
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $44fd
-	ld c, $10 ; $44ff
+	ld c, 16 ; $44ff
 	call BeginFadeOut ; $4501
 	call WaitFadeEnd ; $4504
 	call ClearFrameTasks ; $4507

@@ -379,7 +379,7 @@ SeniorDoublesRank2Victory:
 	script_player_speed 2.0 ; $6e7e
 	script_move_player 38.0, 23.0 ; $6e84
 	farcall WaitPlayerMoveDone ; $6e8e
-	script_fade_in $08 ; $6e91
+	script_fade_in 8 ; $6e91
 	call WaitFadeEnd ; $6e96
 	script_wait_frames 60 ; $6e99
 	script_move_target ACTOR_SENIOR_COURT_B_CURT, 35.0, 19.0 ; $6ea0

@@ -384,7 +384,7 @@ IslandOpenArrivalCutscene:
 	script_player_speed 7.96875 ; $6440
 	script_move_player 28.0, 37.0 ; $6446
 	farcall WaitPlayerMoveDone ; $6450
-	script_fade_in $04 ; $6453
+	script_fade_in 4 ; $6453
 	call WaitFadeEnd ; $6458
 	script_player_speed 0.75 ; $645b
 	script_move_player 28.0, 27.0 ; $6461

@@ -360,7 +360,7 @@ RunTrophiesScreen:
 	ld [wN64RecordsBlock + 1], a ; $4979
 	ld [wN64RecordsBlock], a ; $497c
 	call EnableLCD ; $497f
-	script_fade_in $10 ; $4982
+	script_fade_in 16 ; $4982
 	call WaitFadeEnd ; $4987
 	wram_bank WRAM_SCREEN ; $498a
 .loop:
@@ -393,14 +393,14 @@ RunTrophiesScreen:
 	call CheckTrophiesCheatCode ; $49c3
 .playSfx:
 	sound SFX_MENU_SELECT ; $49c6
-	ld c, $10 ; $49c8
+	ld c, 16 ; $49c8
 	call BeginFadeOut ; $49ca
 	call WaitFadeEnd ; $49cd
 	call ClearFrameTasks ; $49d0
 	ret ; $49d3
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $49d4
-	ld c, $10 ; $49d6
+	ld c, 16 ; $49d6
 	call BeginFadeOut ; $49d8
 	call WaitFadeEnd ; $49db
 	call ClearFrameTasks ; $49de

@@ -45,13 +45,13 @@ TrainingGymArrival01_0e:
 	test_flag FLAG_DOUBLES ; $4107
 	jr z, .walkUp ; $410a
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $410c
-	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $4114
+	script_move_angle ACTOR_PARTNER, FACE_DOWN, 2.0 ; $4114
 	script_wait_move ACTOR_PARTNER ; $411e
 	script_face ACTOR_PARTNER, FACE_UP ; $4123
 	script_set_speed ACTOR_PARTNER, 0.5 ; $412a
 .walkUp:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $4132
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $413a
+	script_move_angle ACTOR_PLAYER, FACE_UP, 2.0 ; $413a
 .done:
 	ret ; $4144
 TrainingGymArrival02_0e:
@@ -64,7 +64,7 @@ TrainingGymArrival02_0e:
 	script_copy_scene_rect 10, 10, 61, 12, 2, 2 ; $4160
 	script_copy_scene_rect 61, 10, 10, 10, 2, 2 ; $416f
 	script_wait_frames 2 ; $417e
-	script_fade_in $08 ; $4185
+	script_fade_in 8 ; $4185
 	call WaitFadeEnd ; $418a
 	script_move_target ACTOR_PLAYER, 11.0, 14.0 ; $418d
 	script_wait_move ACTOR_PLAYER ; $4198
@@ -86,7 +86,7 @@ TrainingGymArrival03_0e:
 	farcall WaitPlayerMoveDone ; $41f9
 	script_copy_scene_rect 10, 10, 61, 12, 2, 2 ; $41fc
 	script_copy_scene_rect 61, 10, 20, 10, 2, 2 ; $420b
-	script_fade_in $08 ; $421a
+	script_fade_in 8 ; $421a
 	call WaitFadeEnd ; $421f
 	script_move_target ACTOR_PLAYER, 21.0, 14.0 ; $4222
 	script_wait_move ACTOR_PLAYER ; $422d
@@ -118,8 +118,8 @@ TrainingGymExit02_0e:
 	script_wait_frames 2 ; $42e0
 	script_copy_scene_rect 61, 10, 10, 10, 2, 2 ; $42e7
 	script_wait_frames 2 ; $42f6
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $42fd
-	ld c, $08 ; $4307
+	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $42fd
+	ld c, 8 ; $4307
 	call BeginFadeOut ; $4309
 	script_unlock_facing ACTOR_PLAYER ; $430c
 	script_wait_frames 10 ; $4313
@@ -138,8 +138,8 @@ TrainingGymExit03_0e:
 	script_wait_frames 2 ; $436b
 	script_copy_scene_rect 61, 10, 20, 10, 2, 2 ; $4372
 	script_wait_frames 2 ; $4381
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $4388
-	ld c, $08 ; $4392
+	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $4388
+	ld c, 8 ; $4392
 	call BeginFadeOut ; $4394
 	script_unlock_facing ACTOR_PLAYER ; $4397
 	script_wait_frames 10 ; $439e

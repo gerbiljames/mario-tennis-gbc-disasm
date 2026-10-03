@@ -151,7 +151,7 @@ PromptCharDataConfirm:
 	call EnableLCD ; $5a89
 	call AdvanceFrame ; $5a8c
 	farcall StartCharDataScreenAnimTask ; $5a8f
-	script_fade_in $10 ; $5a92
+	script_fade_in 16 ; $5a92
 	call WaitFadeEnd ; $5a97
 	wram_bank WRAM_SCENE ; $5a9a
 	ld a, $01 ; $5aa0
@@ -184,7 +184,7 @@ PromptCharDataConfirm:
 	ld [wCharDataConfirmState], a ; $5add
 	sound SFX_MENU_CANCEL ; $5ae0
 .beginFadeOut:
-	ld c, $10 ; $5ae2
+	ld c, 16 ; $5ae2
 	call BeginFadeOut ; $5ae4
 	call WaitFadeEnd ; $5ae7
 	farcall StopCharDataScreenAnimTask ; $5aea

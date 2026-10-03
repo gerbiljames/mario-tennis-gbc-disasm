@@ -27,11 +27,11 @@ MachinePracticeLevelPrompt:
 	jr nz, .done ; $463d
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_UP ; $463f
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4646
-	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $464e
+	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 2.0 ; $464e
 	script_wait_move ACTOR_PLAYER ; $4658
 	script_move_target ACTOR_PLAYER, 53.0, 53.0 ; $465d
 	script_wait_move ACTOR_PLAYER ; $4668
-	ld c, $08 ; $466d
+	ld c, 8 ; $466d
 	call BeginFadeOut ; $466f
 	call WaitFadeEnd ; $4672
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4675
@@ -87,7 +87,7 @@ MachinePracticeResultScene:
 .placeActors:
 	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $46ef
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $46fa
-	script_fade_in $06 ; $4701
+	script_fade_in 6 ; $4701
 	call WaitFadeEnd ; $4706
 	script_wait_frames 40 ; $4709
 	ld a, [wMatchExitRequest] ; $4710

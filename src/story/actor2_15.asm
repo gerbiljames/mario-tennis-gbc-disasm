@@ -349,7 +349,7 @@ ReturnCoachReturnLessonScene:
 	ld a, $ff ; $6e37
 	ld [wUnusedExitTriggerIdMirror], a ; $6e39
 	ld [wStoryModeExitTriggerRequest], a ; $6e3c
-	ld c, $10 ; $6e3f
+	ld c, 16 ; $6e3f
 	call BeginFadeOut ; $6e41
 	call WaitFadeEnd ; $6e44
 	farcall ShowDrillBriefingScreen ; $6e47
@@ -386,7 +386,7 @@ ReturnCoachLobLessonScene:
 	ld a, $ff ; $6eba
 	ld [wUnusedExitTriggerIdMirror], a ; $6ebc
 	ld [wStoryModeExitTriggerRequest], a ; $6ebf
-	ld c, $10 ; $6ec2
+	ld c, 16 ; $6ec2
 	call BeginFadeOut ; $6ec4
 	call WaitFadeEnd ; $6ec7
 	farcall ShowDrillBriefingScreen ; $6eca
@@ -423,7 +423,7 @@ ReturnCoachPassingShotLessonScene:
 	ld a, $ff ; $6f3d
 	ld [wUnusedExitTriggerIdMirror], a ; $6f3f
 	ld [wStoryModeExitTriggerRequest], a ; $6f42
-	ld c, $10 ; $6f45
+	ld c, 16 ; $6f45
 	call BeginFadeOut ; $6f47
 	call WaitFadeEnd ; $6f4a
 	farcall ShowDrillBriefingScreen ; $6f4d

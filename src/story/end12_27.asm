@@ -90,7 +90,7 @@ End12PrincipalsOfficeInitScript_27:
 	ld [wStoryModeShowLocationName], a ; $4c8d
 	script_set_position ACTOR_PLAYER, 43.0, 59.0 ; $4c90
 	script_set_position ACTOR_PARTNER, 43.0, 59.0 ; $4c9b
-	script_fade_in $04 ; $4ca6
+	script_fade_in 4 ; $4ca6
 	script_delay 20 ; $4cab
 	script_move_target ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, 30.0, 47.0 ; $4cb0
 	script_wait_move ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06 ; $4cbb
@@ -247,7 +247,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_face ACTOR_PLAYER, FACE_UP ; $5057
 	xor a ; $505e
 	ld [wStoryModeShowLocationName], a ; $505f
-	script_fade_in $04 ; $5062
+	script_fade_in 4 ; $5062
 	call WaitFadeEnd ; $5067
 	test_flag FLAG_DOUBLES ; $506a
 	jp z, .animate ; $506d
@@ -289,7 +289,7 @@ End12PrincipalsOfficeInitScript_27:
 	call ClosePrincipalsOfficeDoor_27 ; $514f
 	script_delay 60 ; $5152
 	set_flag FLAG_ENDING_CREDITS_PENDING ; $5157
-	ld c, $04 ; $515a
+	ld c, 4 ; $515a
 	call BeginFadeOut ; $515c
 	call WaitFadeEnd ; $515f
 	ld a, $01 ; $5162
@@ -383,7 +383,7 @@ End11TrainingCourtInitScript_27:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_06 ; $52b5
 	xor a ; $52c0
 	ld [wStoryModeShowLocationName], a ; $52c1
-	script_fade_in $04 ; $52c4
+	script_fade_in 4 ; $52c4
 	script_delay 120 ; $52c9
 	script_get_actor_state ACTOR_PLAYER ; $52ce
 	ld a, $01 ; $52d3
@@ -465,16 +465,16 @@ End11TrainingCourtInitScript_27:
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5438
 	script_move_player 24.0, 15.0 ; $543f
 	farcall WaitPlayerMoveDone ; $5449
-	script_fade_in $08 ; $544c
+	script_fade_in 8 ; $544c
 	call WaitFadeEnd ; $5451
 	script_wait_frames 30 ; $5454
 	script_set_anim ACTOR_END11_TRAINING_COURT_ALT_BOB, ANIM_BOUNCE ; $545b
 	script_wait_idle ACTOR_END11_TRAINING_COURT_ALT_BOB ; $5462
 	script_lock_facing ACTOR_END11_TRAINING_COURT_ALT_BOB ; $5467
-	script_move_angle ACTOR_END11_TRAINING_COURT_ALT_BOB, FACE_UP, $0100 ; $546e
+	script_move_angle ACTOR_END11_TRAINING_COURT_ALT_BOB, FACE_UP, 1.0 ; $546e
 	script_wait_move ACTOR_END11_TRAINING_COURT_ALT_BOB ; $5478
 	script_wait_frames 40 ; $547d
-	script_move_angle ACTOR_END11_TRAINING_COURT_ALT_BOB, FACE_UP, $0100 ; $5484
+	script_move_angle ACTOR_END11_TRAINING_COURT_ALT_BOB, FACE_UP, 1.0 ; $5484
 	script_wait_move ACTOR_END11_TRAINING_COURT_ALT_BOB ; $548e
 	script_set_anim ACTOR_END11_TRAINING_COURT_ALT_BOB, ANIM_BOUNCE ; $5493
 	script_wait_idle ACTOR_END11_TRAINING_COURT_ALT_BOB ; $549a

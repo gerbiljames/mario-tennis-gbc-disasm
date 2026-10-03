@@ -58,7 +58,7 @@ Unused_1a_RunDebugCharViewer:
 	call Unused_1a_RunCharViewerSelectGrid ; $6802
 	cp $ff ; $6805
 	jr z, .eqff ; $6807
-	ld c, $40 ; $6809
+	ld c, 64 ; $6809
 	call BeginFadeOut ; $680b
 	call WaitFadeEnd ; $680e
 	call DisableLCDSafely ; $6811
@@ -77,13 +77,13 @@ Unused_1a_RunDebugCharViewer:
 	ld de, vTiles0 + $70 * TILE_SIZE ; $683a
 	farcall LoadOnCourtCharTilesA ; $683d
 	call AdvanceFrame ; $6840
-	script_fade_in $10 ; $6843
+	script_fade_in 16 ; $6843
 	call WaitFadeEnd ; $6848
 	call Unused_1a_RunCharViewerInputLoop ; $684b
 	ld hl, Unused_1a_DrawCharViewerCursorSprite ; $684e
 	call UnregisterFrameTask ; $6851
 .eqff:
-	ld c, $10 ; $6854
+	ld c, 16 ; $6854
 	call BeginFadeOut ; $6856
 	call WaitFadeEnd ; $6859
 	call DisableLCDSafely ; $685c
@@ -130,7 +130,7 @@ Unused_1a_RunCharViewerSelectGrid:
 	ld a, $01 ; $68d8
 	ld hl, Unused_1a_DrawCharViewerGridCursor ; $68da
 	call RegisterFrameTask ; $68dd
-	script_fade_in $10 ; $68e0
+	script_fade_in 16 ; $68e0
 	call WaitFadeEnd ; $68e5
 .loop:
 	wram_bank WRAM_SCENE ; $68e8
@@ -149,7 +149,7 @@ Unused_1a_RunCharViewerSelectGrid:
 	bit 1, a ; $6908
 	jp nz, .bit1Set ; $690a
 	jr .loop ; $690d
-	ld c, $10 ; $690f
+	ld c, 16 ; $690f
 	call BeginFadeOut ; $6911
 	call WaitFadeEnd ; $6914
 	call DisableLCDSafely ; $6917

@@ -143,7 +143,7 @@ InitNetCoachScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $777f
 	script_face ACTOR_PARTNER, FACE_UP ; $7786
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_DOWN ; $778d
-	script_fade_in $04 ; $7794
+	script_fade_in 4 ; $7794
 	call WaitFadeEnd ; $7799
 	ret ; $779c
 .speak:
@@ -335,7 +335,7 @@ InitReturnCoachScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $79f8
 	script_face ACTOR_PARTNER, FACE_UP ; $79ff
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_DOWN ; $7a06
-	script_fade_in $04 ; $7a0d
+	script_fade_in 4 ; $7a0d
 	call WaitFadeEnd ; $7a12
 	ret ; $7a15
 .speak:

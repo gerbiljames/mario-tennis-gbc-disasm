@@ -214,7 +214,7 @@ RunLinkMatchSequence:
 	farcall RunLinkMatchRulesMenu ; $740b
 	cp $ff ; $740e
 	jp z, .done ; $7410
-	ld c, $10 ; $7413
+	ld c, 16 ; $7413
 	call BeginFadeOut ; $7415
 	call WaitFadeEnd ; $7418
 .startMatch:
@@ -250,7 +250,7 @@ RunLinkMatchSequence:
 	farcall ResetScreenAndTextWindows ; $746d
 	farcall LoadCourtSelectGraphics ; $7470
 	call EnableLCD ; $7473
-	script_fade_in $10 ; $7476
+	script_fade_in 16 ; $7476
 	xor a ; $747b
 	ldh [hLinkExchangeActive], a ; $747c
 	call ResetSerialState ; $747e
@@ -274,7 +274,7 @@ RunLinkMatchSequence:
 	ld d, a ; $74a4
 	ld a, d ; $74a5
 	ld [wCurrentlyUsedCourt], a ; $74a6
-	ld c, $10 ; $74a9
+	ld c, 16 ; $74a9
 	call BeginFadeOut ; $74ab
 	call WaitFadeEnd ; $74ae
 	ld a, CHAR_NINA ; $74b1

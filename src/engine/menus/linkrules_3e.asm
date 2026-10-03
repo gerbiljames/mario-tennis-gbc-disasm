@@ -221,7 +221,7 @@ ShowLinkMessageScreen:
 	ld a, $03 ; $49fa
 	ld [wAnimatedTilePeriod], a ; $49fc
 	call EnableLCD ; $49ff
-	script_fade_in $08 ; $4a02
+	script_fade_in 8 ; $4a02
 	call WaitFadeEnd ; $4a07
 	pop_wram_bank ; $4a0a
 	pop hl ; $4a0f
@@ -313,7 +313,7 @@ ShowLinkErrorScreen:
 	ld a, $05 ; $4abf
 	ld [wAnimatedTilePeriod], a ; $4ac1
 	call EnableLCD ; $4ac4
-	script_fade_in $08 ; $4ac7
+	script_fade_in 8 ; $4ac7
 	call WaitFadeEnd ; $4acc
 .loop:
 	call AdvanceFrame ; $4acf

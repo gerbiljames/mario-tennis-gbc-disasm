@@ -407,7 +407,7 @@ PlayAlonePartnerCaptionDests_3e:
 	db $01, $d2, $01, $d2 ; 0x00
 ShowEquipmentStatusScreen:
 	call ClearFrameTasks ; $5388
-	ld c, $10 ; $538b
+	ld c, 16 ; $538b
 	call BeginFadeOut ; $538d
 	call WaitFadeEnd ; $5390
 	call AdvanceFrame ; $5393
@@ -419,7 +419,7 @@ ShowEquipmentStatusScreen:
 	ldh [hScrollY], a ; $53a2
 	call DrawEquipmentStatusScreen ; $53a4
 	call EnableLCD ; $53a7
-	script_fade_in $10 ; $53aa
+	script_fade_in 16 ; $53aa
 	call WaitFadeEnd ; $53af
 .inputLoop:
 	ldh a, [hInputPressed] ; $53b2
@@ -432,7 +432,7 @@ ShowEquipmentStatusScreen:
 .exit:
 	sound SFX_MENU_SELECT ; $53c1
 	call ClearFrameTasks ; $53c3
-	ld c, $10 ; $53c6
+	ld c, 16 ; $53c6
 	call BeginFadeOut ; $53c8
 	call WaitFadeEnd ; $53cb
 	ret ; $53ce

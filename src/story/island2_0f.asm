@@ -136,7 +136,7 @@ IslandOpenRoundCallCutscene:
 	farcall WaitPlayerMoveDone ; $71b5
 	script_wait_frames 60 ; $71b8
 .startMatch:
-	ld c, $10 ; $71bf
+	ld c, 16 ; $71bf
 	call BeginFadeOut ; $71c1
 	call WaitFadeEnd ; $71c4
 	call ShowTournamentRankingBoard_0f ; $71c7
@@ -210,7 +210,7 @@ IslandOpenRoundCallCutscene:
 	farcall WaitPlayerMoveDone ; $7355
 	script_wait_frames 60 ; $7358
 .walkOff:
-	ld c, $10 ; $735f
+	ld c, 16 ; $735f
 	call BeginFadeOut ; $7361
 	call WaitFadeEnd ; $7364
 	call ShowTournamentRankingBoard_0f ; $7367
@@ -379,7 +379,7 @@ IslandOpenSinglesMatchReturn:
 	ld a, [hl] ; $74d5
 	xor $20 ; $74d6
 	ld [hl], a ; $74d8
-	script_fade_in $04 ; $74d9
+	script_fade_in 4 ; $74d9
 	call WaitFadeEnd ; $74de
 	ld a, [wMapSceneStage] ; $74e1
 	add a ; $74e4
@@ -419,7 +419,7 @@ IslandOpenSinglesMatchReturn:
 	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, FACE_RIGHT ; $757b
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, ACTOR_PLAYER ; $7582
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06 ; $758a
-	script_move_angle ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACE_RIGHT, $0200 ; $758f
+	script_move_angle ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACE_RIGHT, 2.0 ; $758f
 	script_wait_move ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06 ; $7599
 	script_wait_frames 10 ; $759e
 	script_wait_frames 10 ; $75a5
@@ -518,12 +518,12 @@ IslandOpenDoublesMatchReturn:
 	script_null_script ACTOR_PARTNER ; $770d
 	script_set_position ACTOR_PARTNER, 37.0, 17.0 ; $7712
 	script_face ACTOR_PARTNER, FACE_UP ; $771d
-	script_fade_in $04 ; $7724
+	script_fade_in 4 ; $7724
 	call WaitFadeEnd ; $7729
 	call ComputeIslandOpenRound ; $772c
 	farcall BeginCutsceneScriptMode ; $772f
 	script_face_toward ACTOR_PLAYER, ACTOR_PARTNER ; $7732
-	script_fade_in $04 ; $773a
+	script_fade_in 4 ; $773a
 	call WaitFadeEnd ; $773f
 	ld a, [wMapSceneStage] ; $7742
 	dec a ; $7745

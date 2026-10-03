@@ -254,7 +254,7 @@ SetupCharDataScreen:
 	ld a, $01 ; $55e9
 	ld hl, DrawStatValueSprites ; $55eb
 	call RegisterFrameTask ; $55ee
-	script_fade_in $10 ; $55f1
+	script_fade_in 16 ; $55f1
 	call WaitFadeEnd ; $55f6
 	ld a, $01 ; $55f9
 	ld hl, CharDataScreenAnimTask ; $55fb

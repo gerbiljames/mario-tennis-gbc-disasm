@@ -24,7 +24,7 @@ IslandOpenDoublesVictory:
 	farcall WaitPlayerMoveDone ; $7121
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_LEFT ; $7124
 	farcall WaitPlayerMoveDone ; $712b
-	script_fade_in $20 ; $712e
+	script_fade_in 32 ; $712e
 	call WaitFadeEnd ; $7133
 	script_set_text Text_34_130 ; $7136
 	script_move_target ACTOR_SENIOR_COURT_B_FAY, 37.0, 19.0 ; $713c
@@ -125,7 +125,7 @@ IslandOpenDoublesVictory:
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $7393
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $739a
 	script_wait_frames 30 ; $739f
-	ld c, $08 ; $73a6
+	ld c, 8 ; $73a6
 	call BeginFadeOut ; $73a8
 	call WaitFadeEnd ; $73ab
 	farcall EndCutsceneScriptMode ; $73ae
@@ -207,7 +207,7 @@ SeniorSharedVictoryScene:
 	script_face ACTOR_ROLE_SENIOR_COURT_FAY, FACE_DOWN ; $756d
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_UP ; $7574
 	call PlaceSeniorCourtPairA ; $757b
-	script_fade_in $08 ; $757e
+	script_fade_in 8 ; $757e
 	call WaitFadeEnd ; $7583
 	script_wait_frames 30 ; $7586
 	script_set_text Text_34_78 ; $758d
@@ -281,7 +281,7 @@ SeniorSharedVictoryScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7737
 	script_wait_idle ACTOR_PLAYER ; $773e
 	script_wait_frames 30 ; $7743
-	ld c, $08 ; $774a
+	ld c, 8 ; $774a
 	call BeginFadeOut ; $774c
 	call WaitFadeEnd ; $774f
 	farcall EndCutsceneScriptMode ; $7752
@@ -345,7 +345,7 @@ FadeInSeniorCourtNearPairA:
 	script_face ACTOR_PLAYER, FACE_UP ; $77e3
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_LEFT ; $77ea
 	farcall WaitPlayerMoveDone ; $77f1
-	script_fade_in $20 ; $77f4
+	script_fade_in 32 ; $77f4
 	call WaitFadeEnd ; $77f9
 	ret ; $77fc
 FadeInSeniorCourtNearPairB:
@@ -356,7 +356,7 @@ FadeInSeniorCourtNearPairB:
 	script_face ACTOR_PLAYER, FACE_UP ; $7813
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_RIGHT ; $781a
 	farcall WaitPlayerMoveDone ; $7821
-	script_fade_in $20 ; $7824
+	script_fade_in 32 ; $7824
 	call WaitFadeEnd ; $7829
 	ret ; $782c
 ActorScript_12_21:

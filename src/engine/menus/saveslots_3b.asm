@@ -302,13 +302,13 @@ TryMainMenuLinkHandshake:
 	or e ; $5cb8
 	jr nz, .loopB ; $5cb9
 .beginFadeOut:
-	ld c, $40 ; $5cbb
+	ld c, 64 ; $5cbb
 	call BeginFadeOut ; $5cbd
 	call WaitFadeEnd ; $5cc0
 	call DisableLCDSafely ; $5cc3
 	farcall ResetScreenAndTextWindows ; $5cc6
 	call EnableLCD ; $5cc9
-	script_fade_in $40 ; $5ccc
+	script_fade_in 64 ; $5ccc
 	call WaitFadeEnd ; $5cd1
 	pop af ; $5cd4
 	jr .done ; $5cd5
@@ -323,7 +323,7 @@ Unused_3b_RestoreScreenAfterLinkAttempt:
 	farcall LoadMenuFontGfx ; $5ce4
 	farcall ResetScreenAndTextWindows ; $5ce7
 	call EnableLCD ; $5cea
-	script_fade_in $10 ; $5ced
+	script_fade_in 16 ; $5ced
 	ret ; $5cf2
 RunMatchFormatSelect:
 	ld hl, rIE ; $5cf3

@@ -12,7 +12,7 @@ CompareEquippedRacketToMinigameFlag:
 RepairCounterCheckEquipChanged:
 	xor a ; $5015
 	ld [wStoryModeShowLocationName], a ; $5016
-	script_fade_in $08 ; $5019
+	script_fade_in 8 ; $5019
 	call WaitFadeEnd ; $501e
 	call CompareEquippedRacketToMinigameFlag ; $5021
 	cp $ff ; $5024
@@ -78,7 +78,7 @@ RepairCounterReopenServiceMenu:
 	call FetchAndPushShortTextArg ; $50ea
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $50ed
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $50f0
-	script_fade_in $08 ; $50f8
+	script_fade_in 8 ; $50f8
 	call WaitFadeEnd ; $50fd
 	ld hl, Text_6e_236 ; $5100
 	ld_cell de, $01, $01 ; $5103
@@ -410,7 +410,7 @@ MarioWorldArrivalSingles:
 	jp nz, MarioWorldEntry0eScene.singles ; $5587
 .arrive:
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $558a
-	script_fade_in $04 ; $5595
+	script_fade_in 4 ; $5595
 	call WaitFadeEnd ; $559a
 	script_wait_frames 40 ; $559d
 	call MarioWorldArrivalIntroCutscene ; $55a4

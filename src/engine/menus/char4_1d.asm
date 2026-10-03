@@ -232,7 +232,7 @@ ShowExpDistributionScreen:
 	call RegisterFrameTask ; $68f1
 	xor a ; $68f4
 	ld [wStoryCharacterSlot], a ; $68f5
-	script_fade_in $10 ; $68f8
+	script_fade_in 16 ; $68f8
 	call WaitFadeEnd ; $68fd
 	wram_bank WRAM_SCENE ; $6900
 	xor a ; $6906
@@ -240,7 +240,7 @@ ShowExpDistributionScreen:
 	call UpdateExpScreenSelectionPalettes ; $690a
 	call AdvanceFrame ; $690d
 	call RunExpDistributionLoop ; $6910
-	ld c, $10 ; $6913
+	ld c, 16 ; $6913
 	call BeginFadeOut ; $6915
 	call WaitFadeEnd ; $6918
 	ld hl, DrawExpCharCursorTask ; $691b

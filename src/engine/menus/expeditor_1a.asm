@@ -145,7 +145,7 @@ Unused_1a_ShowExpGainScreen:
 	ldh a, [hWramBank] ; $44e2
 	push af ; $44e4
 	push hl ; $44e5
-	ld c, $10 ; $44e6
+	ld c, 16 ; $44e6
 	call BeginFadeOut ; $44e8
 	call WaitFadeEnd ; $44eb
 	call ClearFrameTasks ; $44ee
@@ -275,7 +275,7 @@ Unused_1a_ShowExpGainScreen:
 	ld hl, Unused_1a_ExpScreenDrawTask ; $45d9
 	call RegisterFrameTask ; $45dc
 	call EnableLCD ; $45df
-	script_fade_in $10 ; $45e2
+	script_fade_in 16 ; $45e2
 	call WaitFadeEnd ; $45e7
 	ld a, $0f ; $45ea
 	ld hl, Unused_1a_ExpScreenNumberTask ; $45ec
@@ -429,7 +429,7 @@ Unused_1a_ShowExpGainScreen:
 	or a ; $4706
 	jr z, .finalWaitLoop ; $4707
 .fadeOut:
-	ld c, $10 ; $4709
+	ld c, 16 ; $4709
 	call BeginFadeOut ; $470b
 	call WaitFadeEnd ; $470e
 	ld hl, Unused_1a_ExpScreenDrawTask ; $4711
@@ -467,7 +467,7 @@ Unused_1a_ShowExpGainScreen:
 	ld hl, Unused_1a_ExpScreenDrawTask ; $475f
 	call RegisterFrameTask ; $4762
 	call EnableLCD ; $4765
-	script_fade_in $10 ; $4768
+	script_fade_in 16 ; $4768
 	call WaitFadeEnd ; $476d
 	pop_wram_bank ; $4770
 	pop hl ; $4775

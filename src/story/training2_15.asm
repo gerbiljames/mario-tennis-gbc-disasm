@@ -117,13 +117,13 @@ WaterSpriteRacketRewardScene:
 	ld [wEquippedRacket], a ; $4efb
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4efe
 	script_wait_frames 10 ; $4f03
-	ld c, $03 ; $4f0a
+	ld c, 3 ; $4f0a
 	call BeginFadeOut ; $4f0c
 	call WaitFadeEnd ; $4f0f
 	sound SFX_WATER_SPRITE_APPEAR ; $4f12
 	script_set_position ACTOR_TRAINING_COURT_RACKET, 51.0, 9.0 ; $4f14
 	script_wait_frames 30 ; $4f1f
-	script_fade_in $03 ; $4f26
+	script_fade_in 3 ; $4f26
 	call WaitFadeEnd ; $4f2b
 	script_wait_frames 60 ; $4f2e
 	sound SFX_WATER_SPRITE_FLY ; $4f35
@@ -515,7 +515,7 @@ TrainingCourtReentryDispatch:
 	script_player_speed 7.5 ; $5418
 	script_move_player 24.0, 15.0 ; $541e
 	farcall WaitPlayerMoveDone ; $5428
-	script_fade_in $08 ; $542b
+	script_fade_in 8 ; $542b
 	call WaitFadeEnd ; $5430
 	call WalkChallengerOntoCourt ; $5433
 	ret ; $5436
@@ -530,7 +530,7 @@ TrainingCourtReentryDispatch:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5464
 	script_face ACTOR_PARTNER, FACE_DOWN ; $546b
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $5472
-	script_fade_in $04 ; $5479
+	script_fade_in 4 ; $5479
 	call WaitFadeEnd ; $547e
 	ret ; $5481
 .strokeCourt:
@@ -553,7 +553,7 @@ TrainingCourtReentryDispatch:
 	script_player_speed 7.5 ; $54c8
 	script_move_player 40.0, 41.0 ; $54ce
 	farcall WaitPlayerMoveDone ; $54d8
-	script_fade_in $08 ; $54db
+	script_fade_in 8 ; $54db
 	call WaitFadeEnd ; $54e0
 	call WalkChallengerOntoCourt ; $54e3
 	ret ; $54e6
@@ -568,7 +568,7 @@ TrainingCourtReentryDispatch:
 	script_face ACTOR_PLAYER, FACE_UP ; $5514
 	script_face ACTOR_PARTNER, FACE_UP ; $551b
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $5522
-	script_fade_in $04 ; $5529
+	script_fade_in 4 ; $5529
 	call WaitFadeEnd ; $552e
 	ret ; $5531
 .netCourtDoubles:
@@ -591,7 +591,7 @@ TrainingCourtReentryDispatch:
 	script_player_speed 7.5 ; $5578
 	script_move_player 24.0, 40.0 ; $557e
 	farcall WaitPlayerMoveDone ; $5588
-	script_fade_in $08 ; $558b
+	script_fade_in 8 ; $558b
 	call WaitFadeEnd ; $5590
 	call WalkChallengerOntoCourt ; $5593
 	ret ; $5596
@@ -606,6 +606,6 @@ TrainingCourtReentryDispatch:
 	script_face ACTOR_PLAYER, FACE_UP ; $55c4
 	script_face ACTOR_PARTNER, FACE_UP ; $55cb
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $55d2
-	script_fade_in $04 ; $55d9
+	script_fade_in 4 ; $55d9
 	call WaitFadeEnd ; $55de
 	ret ; $55e1

@@ -173,7 +173,7 @@ ShowMinigameDataScreen:
 	ld hl, DrawMinigameHighScoreNumbers ; $73fc
 	call RegisterFrameTask ; $73ff
 	call EnableLCD ; $7402
-	script_fade_in $10 ; $7405
+	script_fade_in 16 ; $7405
 	call WaitFadeEnd ; $740a
 	wram_bank WRAM_SCREEN ; $740d
 .loop:
@@ -189,14 +189,14 @@ ShowMinigameDataScreen:
 	jr .loop ; $7429
 .playSfx:
 	sound SFX_MENU_SELECT ; $742b
-	ld c, $10 ; $742d
+	ld c, 16 ; $742d
 	call BeginFadeOut ; $742f
 	call WaitFadeEnd ; $7432
 	call ClearFrameTasks ; $7435
 	ret ; $7438
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $7439
-	ld c, $10 ; $743b
+	ld c, 16 ; $743b
 	call BeginFadeOut ; $743d
 	call WaitFadeEnd ; $7440
 	call ClearFrameTasks ; $7443

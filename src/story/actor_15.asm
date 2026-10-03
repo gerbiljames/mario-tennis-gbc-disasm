@@ -430,7 +430,7 @@ ServeCoachJuniorLessonScene:
 	ld a, $ff ; $676a
 	ld [wUnusedExitTriggerIdMirror], a ; $676c
 	ld [wStoryModeExitTriggerRequest], a ; $676f
-	ld c, $10 ; $6772
+	ld c, 16 ; $6772
 	call BeginFadeOut ; $6774
 	call WaitFadeEnd ; $6777
 	farcall ShowDrillBriefingScreen ; $677a
@@ -466,7 +466,7 @@ ServeCoachSeniorLessonScene:
 	ld a, $ff ; $67e8
 	ld [wUnusedExitTriggerIdMirror], a ; $67ea
 	ld [wStoryModeExitTriggerRequest], a ; $67ed
-	ld c, $10 ; $67f0
+	ld c, 16 ; $67f0
 	call BeginFadeOut ; $67f2
 	call WaitFadeEnd ; $67f5
 	farcall ShowDrillBriefingScreen ; $67f8
@@ -502,7 +502,7 @@ ServeCoachVarsityLessonScene:
 	ld a, $ff ; $6866
 	ld [wUnusedExitTriggerIdMirror], a ; $6868
 	ld [wStoryModeExitTriggerRequest], a ; $686b
-	ld c, $10 ; $686e
+	ld c, 16 ; $686e
 	call BeginFadeOut ; $6870
 	call WaitFadeEnd ; $6873
 	farcall ShowDrillBriefingScreen ; $6876

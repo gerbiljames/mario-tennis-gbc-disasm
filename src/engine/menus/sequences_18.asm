@@ -9,7 +9,7 @@ PlayScreenSequence1:
 	call RegisterFrameTask ; $77ce
 	sound BGM_CREDITS ; $77d1
 	call EnableLCD ; $77d3
-	script_fade_in $02 ; $77d6
+	script_fade_in 2 ; $77d6
 	call WaitFadeEnd ; $77db
 	wram_bank WRAM_SCREEN ; $77de
 	xor a ; $77e4
@@ -24,7 +24,7 @@ PlayScreenSequence1:
 	ld [wScreenSequenceTimer], a ; $77f5
 	cp $af ; $77f8
 	jr nz, .scrollLoop ; $77fa
-	ld c, $01 ; $77fc
+	ld c, 1 ; $77fc
 	call BeginFadeOut ; $77fe
 	call WaitFadeEnd ; $7801
 	call ClearFrameTasks ; $7804
@@ -37,7 +37,7 @@ PlayScreenSequence1:
 	ld hl, QueueScreen1Sprites ; $7818
 	call RegisterFrameTask ; $781b
 	call EnableLCD ; $781e
-	script_fade_in $40 ; $7821
+	script_fade_in 64 ; $7821
 	call WaitFadeEnd ; $7826
 	sound BGM_THE_END ; $7829
 .waitInput:
@@ -151,14 +151,14 @@ PlayScreenSequence2:
 	ld hl, TaskUpdateObjects_18 ; $7947
 	call RegisterFrameTask ; $794a
 	call EnableLCD ; $794d
-	script_fade_in $01 ; $7950
+	script_fade_in 1 ; $7950
 	call WaitFadeEnd ; $7955
 .scene1:
 	call AdvanceFrame ; $7958
 	ldh a, [hInputPressed] ; $795b
 	and PADF_A | PADF_B ; $795d
 	jr z, .scene1 ; $795f
-	ld c, $02 ; $7961
+	ld c, 2 ; $7961
 	call BeginFadeOut ; $7963
 	call WaitFadeEnd ; $7966
 	ld_flag_id de, FLAG_DOUBLES ; $7969
@@ -188,7 +188,7 @@ PlayScreenSequence2:
 	farcall QueueWram3MapToVRAM ; $79a3
 	call LoadScreen2ObjTiles ; $79a6
 	call EnableLCD ; $79a9
-	script_fade_in $02 ; $79ac
+	script_fade_in 2 ; $79ac
 	call WaitFadeEnd ; $79b1
 	wram_bank WRAM_SCREEN ; $79b4
 	xor a ; $79ba

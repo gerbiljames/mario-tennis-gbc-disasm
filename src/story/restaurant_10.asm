@@ -570,7 +570,7 @@ RestaurantNpc12_10:
 	script_face ACTOR_RESTAURANT_WALK_72_03_2, FACE_DOWN ; $5d60
 	script_wait_frames 20 ; $5d67
 	script_lock_facing ACTOR_RESTAURANT_WALK_72_03_2 ; $5d6e
-	script_move_angle ACTOR_RESTAURANT_WALK_72_03_2, FACE_UP, $0100 ; $5d75
+	script_move_angle ACTOR_RESTAURANT_WALK_72_03_2, FACE_UP, 1.0 ; $5d75
 	call SetRestaurantNpc12StageFlag_10 ; $5d7f
 	script_face_toward ACTOR_PLAYER, ACTOR_RESTAURANT_WALK_72_03_2 ; $5d82
 	ld a, [wMapSceneStage2] ; $5d8a

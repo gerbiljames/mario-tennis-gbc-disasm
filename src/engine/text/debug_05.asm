@@ -325,7 +325,7 @@ RunDebugWarpMenuThunk:
 	call RunDebugWarpMenu ; $66e6
 	jr RunDebugMenu.loop ; $66e9
 TextSubcmdHandler1:
-	ld c, $10 ; $66eb
+	ld c, 16 ; $66eb
 	call BeginFadeOut ; $66ed
 	call WaitFadeEnd ; $66f0
 	ld hl, wStoryModePlayersXPosition ; $66f3

@@ -86,7 +86,7 @@ Unused_38_RunMatchTypeMenu:
 	ld hl, UpdateAnimatedTilesTask_38 ; $449c
 	call RegisterFrameTask ; $449f
 	call EnableLCD ; $44a2
-	script_fade_in $10 ; $44a5
+	script_fade_in 16 ; $44a5
 	call WaitFadeEnd ; $44aa
 .inputLoop:
 	ldh a, [hInputPressed] ; $44ad
@@ -108,7 +108,7 @@ Unused_38_RunMatchTypeMenu:
 	jr .inputLoop ; $44d0
 .confirm:
 	sound SFX_MENU_SELECT ; $44d2
-	ld c, $10 ; $44d4
+	ld c, 16 ; $44d4
 	call BeginFadeOut ; $44d6
 	call WaitFadeEnd ; $44d9
 	call ClearFrameTasks ; $44dc
@@ -116,7 +116,7 @@ Unused_38_RunMatchTypeMenu:
 	ret ; $44e0
 .done:
 	sound SFX_MENU_CANCEL ; $44e1
-	ld c, $10 ; $44e3
+	ld c, 16 ; $44e3
 	call BeginFadeOut ; $44e5
 	call WaitFadeEnd ; $44e8
 	call ClearFrameTasks ; $44eb
@@ -136,7 +136,7 @@ Unused_38_RunMatchTypeMenuLink:
 	call RegisterFrameTask ; $450a
 	call EnableLCD ; $450d
 	farcall ResyncLinkSession ; $4510
-	script_fade_in $10 ; $4513
+	script_fade_in 16 ; $4513
 	push af ; $4518
 	farcall RunLinkInputFrame ; $4519
 	pop af ; $451c
@@ -175,7 +175,7 @@ Unused_38_RunMatchTypeMenuLink:
 	xor a ; $4557
 	ldh [hLinkExchangeActive], a ; $4558
 	call ResetSerialState ; $455a
-	ld c, $10 ; $455d
+	ld c, 16 ; $455d
 	call BeginFadeOut ; $455f
 	call WaitFadeEnd ; $4562
 	sound BGM_NONE ; $4565
@@ -191,7 +191,7 @@ Unused_38_RunMatchTypeMenuLink:
 	xor a ; $4575
 	ldh [hLinkExchangeActive], a ; $4576
 	call ResetSerialState ; $4578
-	ld c, $10 ; $457b
+	ld c, 16 ; $457b
 	call BeginFadeOut ; $457d
 	call WaitFadeEnd ; $4580
 	sound BGM_NONE ; $4583

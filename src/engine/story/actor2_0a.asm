@@ -271,7 +271,7 @@ MovePlayerToPosition:
 	push bc ; $47e1
 	push de ; $47e2
 	push hl ; $47e3
-	ld c, $7f ; $47e4
+	ld c, 127 ; $47e4
 	call BeginFadeOut ; $47e6
 	call WaitFadeEnd ; $47e9
 	pop hl ; $47ec
@@ -287,7 +287,7 @@ MovePlayerToPosition:
 	farcall RestoreShadowTilemap ; $47fc
 	ld b, $05 ; $47ff
 	call AdvanceFrame ; $4801
-	script_fade_in $7f ; $4804
+	script_fade_in 127 ; $4804
 	call WaitFadeEnd ; $4809
 .done:
 	add sp, 4 ; $480c
@@ -353,7 +353,7 @@ MovePlayerToActor:
 	push bc ; $4860
 	push de ; $4861
 	push hl ; $4862
-	ld c, $7f ; $4863
+	ld c, 127 ; $4863
 	call BeginFadeOut ; $4865
 	call WaitFadeEnd ; $4868
 	pop hl ; $486b
@@ -369,7 +369,7 @@ MovePlayerToActor:
 	farcall RestoreShadowTilemap ; $487b
 	ld b, $05 ; $487e
 	call AdvanceFrame ; $4880
-	script_fade_in $7f ; $4883
+	script_fade_in 127 ; $4883
 	call WaitFadeEnd ; $4888
 .done:
 	add sp, 4 ; $488b

@@ -43,12 +43,12 @@ MatchSelectExitTriggers_10:
 	ds 1, $ff ; $40af, fill
 MatchSelectRunCharacterSelect:
 	farcall BeginCutsceneScriptMode ; $40b0
-	ld c, $10 ; $40b3
+	ld c, 16 ; $40b3
 	call BeginFadeOut ; $40b5
 	call WaitFadeEnd ; $40b8
 	ld b, $00 ; $40bb
 	farcall RunCharacterSelectScreen ; $40bd
-	ld c, $10 ; $40c0
+	ld c, 16 ; $40c0
 	call BeginFadeOut ; $40c2
 	call WaitFadeEnd ; $40c5
 	farcall LoadStoryObjPalettes ; $40c8
@@ -71,7 +71,7 @@ MatchSelectPlayEpilogueScene:
 	wait_frames 60 ; $40f5
 	call EnableLCD ; $40f9
 	farcall SetupSceneAnimationPalettes ; $40fc
-	script_fade_in $04 ; $40ff
+	script_fade_in 4 ; $40ff
 	call WaitFadeEnd ; $4104
 	sound BGM_COURT_WAREHOUSE ; $4107
 	ld a, $01 ; $4109
@@ -425,7 +425,7 @@ RunServiceLessonMenu:
 	ld [wStoryModeEntryPoint], a ; $4547
 	ld [wUnusedExitTriggerIdMirror], a ; $454a
 	ld [wStoryModeExitTriggerRequest], a ; $454d
-	ld c, $10 ; $4550
+	ld c, 16 ; $4550
 	call BeginFadeOut ; $4552
 	call WaitFadeEnd ; $4555
 	farcall ShowDrillBriefingScreen ; $4558
@@ -447,7 +447,7 @@ RunNetLessonMenu:
 	ld [wStoryModeEntryPoint], a ; $457f
 	ld [wUnusedExitTriggerIdMirror], a ; $4582
 	ld [wStoryModeExitTriggerRequest], a ; $4585
-	ld c, $10 ; $4588
+	ld c, 16 ; $4588
 	call BeginFadeOut ; $458a
 	call WaitFadeEnd ; $458d
 	farcall ShowDrillBriefingScreen ; $4590

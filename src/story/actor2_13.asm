@@ -26,7 +26,7 @@ RunTravelingTeamBracketIfWon_13:
 	ld hl, SinglesTravelingTeamActors_13 ; $79bd
 	farcall ScriptRespawnLocationActors ; $79c0
 	farcall BeginCutsceneScriptMode ; $79c3
-	script_fade_in $04 ; $79c6
+	script_fade_in 4 ; $79c6
 	call WaitFadeEnd ; $79cb
 	script_player_speed 0.75 ; $79ce
 	script_move_player 9.0, 19.0 ; $79d4
@@ -46,7 +46,7 @@ RunTravelingTeamBracketIfWon_13:
 	script_set_position ACTOR_PARTNER, 13.0, 35.0 ; $7a0e
 	script_face ACTOR_PLAYER, FACE_UP ; $7a19
 	script_face ACTOR_PARTNER, FACE_UP ; $7a20
-	script_fade_in $04 ; $7a27
+	script_fade_in 4 ; $7a27
 	call WaitFadeEnd ; $7a2c
 	script_move_player 9.0, 19.0 ; $7a2f
 	farcall WaitPlayerMoveDone ; $7a39
@@ -123,7 +123,7 @@ ActorScript_13_26:
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ShowStoryTournamentBracket_13:
-	ld c, $08 ; $7ae0
+	ld c, 8 ; $7ae0
 	call BeginFadeOut ; $7ae2
 	call WaitFadeEnd ; $7ae5
 	xor a ; $7ae8

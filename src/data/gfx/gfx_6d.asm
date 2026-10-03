@@ -200,14 +200,14 @@ Unused_6d_ShowIntroCharacterScreen:
 	ld hl, Unused_6d_IntroCharacterScreenFrameTask ; $6a99
 	call RegisterFrameTask ; $6a9c
 	call EnableLCD ; $6a9f
-	script_fade_in $10 ; $6aa2
+	script_fade_in 16 ; $6aa2
 	call WaitFadeEnd ; $6aa7
 .loop:
 	call AdvanceFrame ; $6aaa
 	ldh a, [hInputPressed] ; $6aad
 	and PADF_A | PADF_B ; $6aaf
 	jr z, .loop ; $6ab1
-	ld c, $01 ; $6ab3
+	ld c, 1 ; $6ab3
 	call BeginFadeOut ; $6ab5
 	call WaitFadeEnd ; $6ab8
 	call ClearFrameTasks ; $6abb

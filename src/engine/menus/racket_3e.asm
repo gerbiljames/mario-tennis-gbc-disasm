@@ -17,7 +17,7 @@ RunEraseDataConfirmMenu:
 	call RegisterFrameTask ; $4c3b
 	call AnimateEraseConfirmPalette ; $4c3e
 	call EnableLCD ; $4c41
-	script_fade_in $08 ; $4c44
+	script_fade_in 8 ; $4c44
 	call WaitFadeEnd ; $4c49
 	ld a, $01 ; $4c4c
 	ld hl, AnimateEraseConfirmPalette ; $4c4e
@@ -50,7 +50,7 @@ RunEraseDataConfirmMenu:
 	ld hl, rIE ; $4c88
 	set 2, [hl] ; $4c8b
 	call ClearFrameTasks ; $4c8d
-	ld c, $10 ; $4c90
+	ld c, 16 ; $4c90
 	call BeginFadeOut ; $4c92
 	call WaitFadeEnd ; $4c95
 	ld a, $01 ; $4c98
@@ -60,7 +60,7 @@ RunEraseDataConfirmMenu:
 	ld hl, rIE ; $4c9d
 	set 2, [hl] ; $4ca0
 	call ClearFrameTasks ; $4ca2
-	ld c, $10 ; $4ca5
+	ld c, 16 ; $4ca5
 	call BeginFadeOut ; $4ca7
 	call WaitFadeEnd ; $4caa
 	xor a ; $4cad

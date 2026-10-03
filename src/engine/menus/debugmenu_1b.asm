@@ -17,11 +17,11 @@ Unused_1b_RunLevelUpStatusTrophiesMenu:
 	farcall CreateMenuWindowFromText ; $648c
 	farcall RestoreShadowTilemap ; $648f
 	farcall RenderMenuWindowText ; $6492
-	script_fade_in $20 ; $6495
+	script_fade_in 32 ; $6495
 	call WaitFadeEnd ; $649a
 	farcall RunMenuSelection ; $649d
 	ld b, a ; $64a0
-	ld c, $20 ; $64a1
+	ld c, 32 ; $64a1
 	call BeginFadeOut ; $64a3
 	call WaitFadeEnd ; $64a6
 	ld a, [wMenuWindowId] ; $64a9
@@ -61,11 +61,11 @@ Unused_1b_RunDebugSaveDataMenu:
 	farcall CreateMenuWindowFromText ; $64f1
 	farcall RestoreShadowTilemap ; $64f4
 	farcall RenderMenuWindowText ; $64f7
-	script_fade_in $20 ; $64fa
+	script_fade_in 32 ; $64fa
 	call WaitFadeEnd ; $64ff
 	farcall RunMenuSelection ; $6502
 	ld b, a ; $6505
-	ld c, $20 ; $6506
+	ld c, 32 ; $6506
 	call BeginFadeOut ; $6508
 	call WaitFadeEnd ; $650b
 	ld a, [wMenuWindowId] ; $650e
@@ -289,7 +289,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	ld a, [wCharSelectChar] ; $6731
 	ld [wCharSelectPrevChar], a ; $6734
 	call Unused_1b_ReadUnlockFlagsSaveBlock ; $6737
-	ld c, $20 ; $673a
+	ld c, 32 ; $673a
 	call BeginFadeOut ; $673c
 	call WaitFadeEnd ; $673f
 	call DisableLCDSafely ; $6742
@@ -308,7 +308,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	call QueueVRAMCopy ; $6767
 	call Unused_1b_LoadUnlockDebugCursorGfx ; $676a
 	call EnableLCD ; $676d
-	script_fade_in $20 ; $6770
+	script_fade_in 32 ; $6770
 	call WaitFadeEnd ; $6775
 .loop:
 	wram_bank WRAM_STAGING ; $6778
@@ -352,7 +352,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	call AdvanceFrame ; $67c1
 	jr .loop ; $67c4
 .beginFadeOut:
-	ld c, $08 ; $67c6
+	ld c, 8 ; $67c6
 	call BeginFadeOut ; $67c8
 	call WaitFadeEnd ; $67cb
 	call Unused_1b_WriteUnlockFlagsSaveBlock ; $67ce

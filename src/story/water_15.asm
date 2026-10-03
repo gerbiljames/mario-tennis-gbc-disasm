@@ -302,7 +302,7 @@ TrainingCourtIntroTourScene:
 	script_set_position ACTOR_PLAYER, 5.0, 55.0 ; $5a02
 	script_move_target ACTOR_PLAYER, 31.0, 55.0 ; $5a0d
 	script_move_player 31.0, 55.0 ; $5a18
-	script_fade_in $04 ; $5a22
+	script_fade_in 4 ; $5a22
 	call WaitFadeEnd ; $5a27
 	script_wait_move ACTOR_TRAINING_COURT_TOUR_EMILY ; $5a2a
 	script_move_target ACTOR_TRAINING_COURT_TOUR_EMILY, 31.0, 43.0 ; $5a2f
@@ -380,7 +380,7 @@ TrainingCourtIntroTourScene:
 	script_wait_move ACTOR_PLAYER ; $5c20
 	script_move_target ACTOR_PLAYER, 3.0, 55.0 ; $5c25
 	script_wait_frames 90 ; $5c30
-	ld c, $08 ; $5c37
+	ld c, 8 ; $5c37
 	call BeginFadeOut ; $5c39
 	script_wait_frames 20 ; $5c3c
 	ld a, $0f ; $5c43
@@ -422,7 +422,7 @@ ServeChallengerResultScene:
 	script_player_speed 7.5 ; $5d39
 	script_move_player 24.0, 15.0 ; $5d3f
 	farcall WaitPlayerMoveDone ; $5d49
-	script_fade_in $08 ; $5d4c
+	script_fade_in 8 ; $5d4c
 	call WaitFadeEnd ; $5d51
 	ld a, [wPointWinLoseFlag] ; $5d54
 	inc a ; $5d57

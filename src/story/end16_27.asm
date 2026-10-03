@@ -71,7 +71,7 @@ End17AwardCeremonyInitScript_27:
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $41d8
 	xor a ; $41e3
 	ld [wStoryModeShowLocationName], a ; $41e4
-	script_fade_in $04 ; $41e7
+	script_fade_in 4 ; $41e7
 	call WaitFadeEnd ; $41ec
 	test_flag FLAG_DOUBLES ; $41ef
 	jp nz, .isDoubles ; $41f2
@@ -355,7 +355,7 @@ SetEnd16BeforeFinalsDoublesWalkScripts_27:
 	script_wait_actor_script ACTOR_PLAYER ; $4906
 	ret ; $490b
 End16BeforeFinalsCutscene_27:
-	script_fade_in $08 ; $490c
+	script_fade_in 8 ; $490c
 	call WaitFadeEnd ; $4911
 	call End16BeforeFinalsScriptBody_27 ; $4914
 	farcall BeginCutsceneScriptMode ; $4917

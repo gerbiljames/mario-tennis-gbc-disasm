@@ -400,7 +400,7 @@ RunN64RingShotData:
 	ld hl, RingShotScoreDrawTask ; $5166
 	call RegisterFrameTask ; $5169
 	call EnableLCD ; $516c
-	script_fade_in $10 ; $516f
+	script_fade_in 16 ; $516f
 	call WaitFadeEnd ; $5174
 	wram_bank WRAM_SCREEN ; $5177
 .loop:
@@ -416,14 +416,14 @@ RunN64RingShotData:
 	jr .loop ; $5193
 .playSfx:
 	sound SFX_MENU_SELECT ; $5195
-	ld c, $10 ; $5197
+	ld c, 16 ; $5197
 	call BeginFadeOut ; $5199
 	call WaitFadeEnd ; $519c
 	call ClearFrameTasks ; $519f
 	ret ; $51a2
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $51a3
-	ld c, $10 ; $51a5
+	ld c, 16 ; $51a5
 	call BeginFadeOut ; $51a7
 	call WaitFadeEnd ; $51aa
 	call ClearFrameTasks ; $51ad

@@ -297,7 +297,7 @@ RunN64TnmtData:
 	ld hl, N64TnmtScrollArrowsTask ; $4d10
 	call RegisterFrameTask ; $4d13
 	call EnableLCD ; $4d16
-	script_fade_in $10 ; $4d19
+	script_fade_in 16 ; $4d19
 	call WaitFadeEnd ; $4d1e
 	wram_bank WRAM_SCREEN ; $4d21
 .loop:
@@ -313,14 +313,14 @@ RunN64TnmtData:
 	jr .loop ; $4d3d
 .playSfx:
 	sound SFX_MENU_SELECT ; $4d3f
-	ld c, $10 ; $4d41
+	ld c, 16 ; $4d41
 	call BeginFadeOut ; $4d43
 	call WaitFadeEnd ; $4d46
 	call ClearFrameTasks ; $4d49
 	ret ; $4d4c
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $4d4d
-	ld c, $10 ; $4d4f
+	ld c, 16 ; $4d4f
 	call BeginFadeOut ; $4d51
 	call WaitFadeEnd ; $4d54
 	call ClearFrameTasks ; $4d57

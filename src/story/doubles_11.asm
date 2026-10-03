@@ -55,7 +55,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACE_DOWN ; $5e23
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, FACE_RIGHT ; $5e2a
 	farcall WaitPlayerMoveDone ; $5e31
-	script_fade_in $04 ; $5e34
+	script_fade_in 4 ; $5e34
 	call WaitFadeEnd ; $5e39
 	script_set_text Text_32_101 ; $5e3c
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, ANIM_BOUNCE ; $5e42
@@ -95,7 +95,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, FACE_DOWN ; $5f17
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, FACE_LEFT ; $5f1e
 	farcall WaitPlayerMoveDone ; $5f25
-	script_fade_in $04 ; $5f28
+	script_fade_in 4 ; $5f28
 	call WaitFadeEnd ; $5f2d
 	script_set_text Text_32_101 ; $5f30
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, ANIM_BOUNCE ; $5f36
@@ -142,7 +142,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, FACE_DOWN ; $604b
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_WALK_72_00, FACE_UP ; $6052
 	farcall WaitPlayerMoveDone ; $6059
-	script_fade_in $04 ; $605c
+	script_fade_in 4 ; $605c
 	call WaitFadeEnd ; $6061
 	script_wait_frames 30 ; $6064
 	script_set_text Text_32_113 ; $606b
@@ -232,7 +232,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	ld [wUnusedExitTriggerIdMirror], a ; $6281
 	ld [wStoryModeExitTriggerRequest], a ; $6284
 	script_wait_frames 60 ; $6287
-	ld c, $04 ; $628e
+	ld c, 4 ; $628e
 	call BeginFadeOut ; $6290
 	call WaitFadeEnd ; $6293
 	script_wait_frames 30 ; $6296

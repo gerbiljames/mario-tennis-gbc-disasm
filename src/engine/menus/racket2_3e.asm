@@ -49,7 +49,7 @@ RunRacketSelectScreen:
 	ld hl, EquippedItemMarkerSpriteTask ; $54cd
 	call RegisterFrameTask ; $54d0
 	call EnableLCD ; $54d3
-	script_fade_in $10 ; $54d6
+	script_fade_in 16 ; $54d6
 	call WaitFadeEnd ; $54db
 .loop:
 	call HandleEquipSelectInput ; $54de
@@ -65,7 +65,7 @@ RunRacketSelectScreen:
 	jr .loop ; $54f2
 .ge14:
 	push af ; $54f4
-	ld c, $10 ; $54f5
+	ld c, 16 ; $54f5
 	call BeginFadeOut ; $54f7
 	call WaitFadeEnd ; $54fa
 	call ClearFrameTasks ; $54fd
@@ -251,7 +251,7 @@ RunShoesSelectScreen:
 	ld hl, EquippedItemMarkerSpriteTask ; $5655
 	call RegisterFrameTask ; $5658
 	call EnableLCD ; $565b
-	script_fade_in $10 ; $565e
+	script_fade_in 16 ; $565e
 	call WaitFadeEnd ; $5663
 .loop:
 	call HandleEquipSelectInput ; $5666
@@ -267,7 +267,7 @@ RunShoesSelectScreen:
 	jr .loop ; $567a
 .ge14:
 	push af ; $567c
-	ld c, $10 ; $567d
+	ld c, 16 ; $567d
 	call BeginFadeOut ; $567f
 	call WaitFadeEnd ; $5682
 	call ClearFrameTasks ; $5685

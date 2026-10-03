@@ -883,11 +883,13 @@ MACRO script_set_position
 	ld de, (\3) >> 8
 	farcall ScriptSetActorPosition
 ENDM
-; Usage: script_move_angle actor, angle, distance  (angle is a FACE_* cardinal)
+; Usage: script_move_angle actor, angle, distance  (angle is a FACE_* cardinal;
+; distance in tiles with a point, like a map position)
 MACRO script_move_angle
+	ASSERT (\3) % 256 == 0 && (\3) >= 0 && (\3) < 256.0, "distance \3: write tiles with a point, e.g. 2.0"
 	ld a, \1
 	ld b, \2
-	ld de, \3
+	ld de, (\3) >> 8
 	farcall MoveActorByAngle
 ENDM
 ; px_speed speed -- assert a move speed is written in pixels per frame with a

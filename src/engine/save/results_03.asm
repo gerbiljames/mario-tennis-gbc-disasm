@@ -137,9 +137,9 @@ Unused_03_SaveSlotDebugEditor:
 	ldh [hSaveEditorCursor + 1], a ; $532c
 	farcall InitTextWindows ; $532e
 	call EnableLCD ; $5331
-	ld c, $7f ; $5334
+	ld c, 127 ; $5334
 	call BeginFadeOut ; $5336
-	script_fade_in $7f ; $5339
+	script_fade_in 127 ; $5339
 	farcall InitStoryModeState ; $533e
 	ld de, $0000 ; $5341
 .loop:

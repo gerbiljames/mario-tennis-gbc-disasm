@@ -32,7 +32,7 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $766a
 	script_set_position ACTOR_PLAYER, 23.0, 23.0 ; $7671
 	script_face ACTOR_PLAYER, FACE_UP ; $767c
-	script_fade_in $04 ; $7683
+	script_fade_in 4 ; $7683
 	call WaitFadeEnd ; $7688
 	script_delay 60 ; $768b
 	test_flag FLAG_DOUBLES ; $7690

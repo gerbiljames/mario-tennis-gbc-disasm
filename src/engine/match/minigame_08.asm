@@ -236,7 +236,7 @@ InitMinigameMatchSettings:
 	ld [wAiServeAimOverride], a ; $6553
 	ret ; $6556
 RunMinigameMatch:
-	ld c, $20 ; $6557
+	ld c, 32 ; $6557
 	call BeginFadeOut ; $6559
 	call WaitFadeEnd ; $655c
 	call AdvanceFrame ; $655f
@@ -245,12 +245,12 @@ RunMinigameMatch:
 	call EnableLCD ; $6568
 	ld a, [wMatchBGM] ; $656b
 	call PlaySoundManaged ; $656e
-	script_fade_in $20 ; $6571
+	script_fade_in 32 ; $6571
 	xor a ; $6576
 	ld [wMatchSimFrozen], a ; $6577
 	call RunMinigamePointLoop ; $657a
 	call ShowMatchResultScreens ; $657d
-	ld c, $20 ; $6580
+	ld c, 32 ; $6580
 	call BeginFadeOut ; $6582
 	call WaitFadeEnd ; $6585
 	call AdvanceFrame ; $6588

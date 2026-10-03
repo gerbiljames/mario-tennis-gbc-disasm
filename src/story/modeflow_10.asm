@@ -34,7 +34,7 @@ RunMinigameModeFlow:
 	farcall LoadMenuFontGfx ; $5259
 	farcall ResetScreenAndTextWindows ; $525c
 	call EnableLCD ; $525f
-	script_fade_in $10 ; $5262
+	script_fade_in 16 ; $5262
 	ld a, MENUSLIDE_BACK ; $5267
 	ld [wMenuSlideDirection], a ; $5269
 	jr .levelMenu ; $526c
@@ -48,7 +48,7 @@ RunMinigameModeFlow:
 	farcall LoadMenuFontGfx ; $527f
 	farcall ResetScreenAndTextWindows ; $5282
 	call EnableLCD ; $5285
-	script_fade_in $10 ; $5288
+	script_fade_in 16 ; $5288
 	call WaitFadeEnd ; $528d
 	ld a, [wMatchSelectNewLevelRequest] ; $5290
 	or a ; $5293
@@ -74,7 +74,7 @@ MatchSelectHandlersBHandler5:
 	farcall LoadMenuFontGfx ; $52c0
 	farcall ResetScreenAndTextWindows ; $52c3
 	call EnableLCD ; $52c6
-	script_fade_in $10 ; $52c9
+	script_fade_in 16 ; $52c9
 	jp RunTitleAndMainMenuLoop.menuLoop ; $52ce
 RunSavedDataMenuFlow:
 	farcall RunSavedDataSourceSelect ; $52d1
@@ -90,7 +90,7 @@ RunSavedDataMenuFlow:
 	jp z, RunSavedDataMenuFlow ; $52e9
 	or a ; $52ec
 	jr nz, .transferOption1 ; $52ed
-	ld c, $10 ; $52ef
+	ld c, 16 ; $52ef
 	call BeginFadeOut ; $52f1
 	call WaitFadeEnd ; $52f4
 	ld a, $00 ; $52f7
@@ -99,32 +99,32 @@ RunSavedDataMenuFlow:
 	farcall LoadMenuFontGfx ; $52ff
 	farcall ResetScreenAndTextWindows ; $5302
 	call EnableLCD ; $5305
-	script_fade_in $10 ; $5308
+	script_fade_in 16 ; $5308
 	ld a, MENUSLIDE_BACK ; $530d
 	ld [wMenuSlideDirection], a ; $530f
 	jp .transferMenu ; $5312
 .transferOption1:
 	cp $01 ; $5315
 	jr nz, .transferOption2 ; $5317
-	ld c, $10 ; $5319
+	ld c, 16 ; $5319
 	call BeginFadeOut ; $531b
 	call WaitFadeEnd ; $531e
 	farcall ShowGameProgressScreen ; $5321
-	ld c, $10 ; $5324
+	ld c, 16 ; $5324
 	call BeginFadeOut ; $5326
 	call WaitFadeEnd ; $5329
 	call DisableLCDSafely ; $532c
 	farcall LoadMenuFontGfx ; $532f
 	farcall ResetScreenAndTextWindows ; $5332
 	call EnableLCD ; $5335
-	script_fade_in $10 ; $5338
+	script_fade_in 16 ; $5338
 	ld a, MENUSLIDE_BACK ; $533d
 	ld [wMenuSlideDirection], a ; $533f
 	jp .transferMenu ; $5342
 .transferOption2:
 	cp $02 ; $5345
 	jr nz, .equipmentMenu ; $5347
-	ld c, $10 ; $5349
+	ld c, 16 ; $5349
 	call BeginFadeOut ; $534b
 	call WaitFadeEnd ; $534e
 	farcall RunTrophiesScreen ; $5351
@@ -132,7 +132,7 @@ RunSavedDataMenuFlow:
 	farcall LoadMenuFontGfx ; $5357
 	farcall ResetScreenAndTextWindows ; $535a
 	call EnableLCD ; $535d
-	script_fade_in $10 ; $5360
+	script_fade_in 16 ; $5360
 	ld a, MENUSLIDE_BACK ; $5365
 	ld [wMenuSlideDirection], a ; $5367
 	jp .transferMenu ; $536a
@@ -146,7 +146,7 @@ RunSavedDataMenuFlow:
 	ld [wMenuSlideDirection], a ; $537a
 	jp .transferMenu ; $537d
 .racketSelect:
-	ld c, $10 ; $5380
+	ld c, 16 ; $5380
 	call BeginFadeOut ; $5382
 	call WaitFadeEnd ; $5385
 	farcall RunRacketSelectScreen ; $5388
@@ -156,12 +156,12 @@ RunSavedDataMenuFlow:
 	farcall LoadMenuFontGfx ; $5394
 	farcall ResetScreenAndTextWindows ; $5397
 	call EnableLCD ; $539a
-	script_fade_in $10 ; $539d
+	script_fade_in 16 ; $539d
 	ld a, MENUSLIDE_BACK ; $53a2
 	ld [wMenuSlideDirection], a ; $53a4
 	jp .equipmentMenu ; $53a7
 .shoesSelect:
-	ld c, $10 ; $53aa
+	ld c, 16 ; $53aa
 	call BeginFadeOut ; $53ac
 	call WaitFadeEnd ; $53af
 	farcall RunShoesSelectScreen ; $53b2
@@ -171,7 +171,7 @@ RunSavedDataMenuFlow:
 	farcall LoadMenuFontGfx ; $53be
 	farcall ResetScreenAndTextWindows ; $53c1
 	call EnableLCD ; $53c4
-	script_fade_in $10 ; $53c7
+	script_fade_in 16 ; $53c7
 	ld a, MENUSLIDE_BACK ; $53cc
 	ld [wMenuSlideDirection], a ; $53ce
 	jp .equipmentMenu ; $53d1
@@ -186,34 +186,34 @@ RunSavedDataMenuFlow:
 .savedDataOption:
 	or a ; $53e2
 	jr nz, .minigameData ; $53e3
-	ld c, $10 ; $53e5
+	ld c, 16 ; $53e5
 	call BeginFadeOut ; $53e7
 	call WaitFadeEnd ; $53ea
 	farcall RunMarioCastExhibResults ; $53ed
-	ld c, $10 ; $53f0
+	ld c, 16 ; $53f0
 	call BeginFadeOut ; $53f2
 	call WaitFadeEnd ; $53f5
 	call DisableLCDSafely ; $53f8
 	farcall LoadMenuFontGfx ; $53fb
 	farcall ResetScreenAndTextWindows ; $53fe
 	call EnableLCD ; $5401
-	script_fade_in $10 ; $5404
+	script_fade_in 16 ; $5404
 	ld a, MENUSLIDE_BACK ; $5409
 	ld [wMenuSlideDirection], a ; $540b
 	jp .savedDataMenu ; $540e
 .minigameData:
-	ld c, $10 ; $5411
+	ld c, 16 ; $5411
 	call BeginFadeOut ; $5413
 	call WaitFadeEnd ; $5416
 	farcall ShowMinigameDataScreen ; $5419
-	ld c, $10 ; $541c
+	ld c, 16 ; $541c
 	call BeginFadeOut ; $541e
 	call WaitFadeEnd ; $5421
 	call DisableLCDSafely ; $5424
 	farcall LoadMenuFontGfx ; $5427
 	farcall ResetScreenAndTextWindows ; $542a
 	call EnableLCD ; $542d
-	script_fade_in $10 ; $5430
+	script_fade_in 16 ; $5430
 	ld a, MENUSLIDE_BACK ; $5435
 	ld [wMenuSlideDirection], a ; $5437
 	jp .savedDataMenu ; $543a
@@ -223,7 +223,7 @@ RunSavedDataMenuFlow:
 	jp z, RunSavedDataMenuFlow ; $5442
 	or a ; $5445
 	jr nz, .n64RecordOption1 ; $5446
-	ld c, $10 ; $5448
+	ld c, 16 ; $5448
 	call BeginFadeOut ; $544a
 	call WaitFadeEnd ; $544d
 	farcall RunN64TnmtData ; $5450
@@ -231,14 +231,14 @@ RunSavedDataMenuFlow:
 	farcall LoadMenuFontGfx ; $5456
 	farcall ResetScreenAndTextWindows ; $5459
 	call EnableLCD ; $545c
-	script_fade_in $10 ; $545f
+	script_fade_in 16 ; $545f
 	ld a, MENUSLIDE_BACK ; $5464
 	ld [wMenuSlideDirection], a ; $5466
 	jp .checkSavedData ; $5469
 .n64RecordOption1:
 	cp $01 ; $546c
 	jr nz, .done ; $546e
-	ld c, $10 ; $5470
+	ld c, 16 ; $5470
 	call BeginFadeOut ; $5472
 	call WaitFadeEnd ; $5475
 	farcall RunN64ExhibDataAlias1 ; $5478
@@ -246,7 +246,7 @@ RunSavedDataMenuFlow:
 	farcall LoadMenuFontGfx ; $547e
 	farcall ResetScreenAndTextWindows ; $5481
 	call EnableLCD ; $5484
-	script_fade_in $10 ; $5487
+	script_fade_in 16 ; $5487
 	ld a, MENUSLIDE_BACK ; $548c
 	ld [wMenuSlideDirection], a ; $548e
 	jp .checkSavedData ; $5491
@@ -256,12 +256,12 @@ RunSavedDataMenuFlow:
 	farcall LoadMenuFontGfx ; $549a
 	farcall ResetScreenAndTextWindows ; $549d
 	call EnableLCD ; $54a0
-	script_fade_in $10 ; $54a3
+	script_fade_in 16 ; $54a3
 	ld a, MENUSLIDE_BACK ; $54a8
 	ld [wMenuSlideDirection], a ; $54aa
 	jp .checkSavedData ; $54ad
 MatchSelectHandlersBHandler7:
-	ld c, $10 ; $54b0
+	ld c, 16 ; $54b0
 	call BeginFadeOut ; $54b2
 	call WaitFadeEnd ; $54b5
 	ld a, $06 ; $54b8
@@ -270,7 +270,7 @@ MatchSelectHandlersBHandler7:
 	farcall LoadMenuFontGfx ; $54c0
 	farcall ResetScreenAndTextWindows ; $54c3
 	call EnableLCD ; $54c6
-	script_fade_in $10 ; $54c9
+	script_fade_in 16 ; $54c9
 	ld a, MENUSLIDE_BACK ; $54ce
 	ld [wMenuSlideDirection], a ; $54d0
 	jp RunTitleAndMainMenuLoop.menuLoop ; $54d3
@@ -302,7 +302,7 @@ EraseSavedDataFlowHandler0_10:
 	ld [wCurrentStorySlot], a ; $54f7
 	farcall CheckStorySlot ; $54fa
 	push bc ; $54fd
-	ld c, $10 ; $54fe
+	ld c, 16 ; $54fe
 	call BeginFadeOut ; $5500
 	call WaitFadeEnd ; $5503
 	farcall RunCharDataConfirmScreen ; $5506
@@ -323,12 +323,12 @@ EraseSavedDataFlowHandler0_10:
 	farcall LoadMenuFontGfx ; $5523
 	farcall ResetScreenAndTextWindows ; $5526
 	call EnableLCD ; $5529
-	script_fade_in $10 ; $552c
+	script_fade_in 16 ; $552c
 	ld a, MENUSLIDE_BACK ; $5531
 	ld [wMenuSlideDirection], a ; $5533
 	jp RunEraseSavedDataFlow ; $5536
 EraseSavedDataFlowHandler3_10:
-	ld c, $10 ; $5539
+	ld c, 16 ; $5539
 	call BeginFadeOut ; $553b
 	call WaitFadeEnd ; $553e
 	ld b, $01 ; $5541
@@ -341,12 +341,12 @@ EraseSavedDataFlowHandler3_10:
 	farcall LoadMenuFontGfx ; $554f
 	farcall ResetScreenAndTextWindows ; $5552
 	call EnableLCD ; $5555
-	script_fade_in $10 ; $5558
+	script_fade_in 16 ; $5558
 	ld a, MENUSLIDE_BACK ; $555d
 	ld [wMenuSlideDirection], a ; $555f
 	jp RunEraseSavedDataFlow ; $5562
 EraseSavedDataFlowHandler4_10:
-	ld c, $10 ; $5565
+	ld c, 16 ; $5565
 	call BeginFadeOut ; $5567
 	call WaitFadeEnd ; $556a
 	ld b, $00 ; $556d
@@ -357,7 +357,7 @@ EraseSavedDataFlowHandler4_10:
 	farcall LoadMenuFontGfx ; $5578
 	farcall ResetScreenAndTextWindows ; $557b
 	call EnableLCD ; $557e
-	script_fade_in $10 ; $5581
+	script_fade_in 16 ; $5581
 	ld a, MENUSLIDE_BACK ; $5586
 	ld [wMenuSlideDirection], a ; $5588
 	xor a ; $558b
@@ -369,7 +369,7 @@ EraseSavedDataFlowHandler4_10:
 	farcall LoadMenuFontGfx ; $5598
 	farcall ResetScreenAndTextWindows ; $559b
 	call EnableLCD ; $559e
-	script_fade_in $10 ; $55a1
+	script_fade_in 16 ; $55a1
 	ld a, MENUSLIDE_BACK ; $55a6
 	ld [wMenuSlideDirection], a ; $55a8
 	xor a ; $55ab

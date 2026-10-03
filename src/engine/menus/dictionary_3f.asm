@@ -71,7 +71,7 @@ TennisDictionaryScreen:
 	call EnableLCD ; $410c
 	sound BGM_DICTIONARY ; $410f
 	call AdvanceFrame ; $4111
-	script_fade_in $10 ; $4114
+	script_fade_in 16 ; $4114
 	call WaitFadeEnd ; $4119
 	ld a, $1d ; $411c
 	ld hl, UpdateTennisDictionarySprites ; $411e
@@ -116,7 +116,7 @@ TennisDictionaryScreen:
 	cp $01 ; $417b
 	jp nz, .loop ; $417d
 	push af ; $4180
-	ld c, $10 ; $4181
+	ld c, 16 ; $4181
 	call BeginFadeOut ; $4183
 	call WaitFadeEnd ; $4186
 	pop af ; $4189
@@ -125,7 +125,7 @@ TennisDictionaryScreen:
 	call UnregisterFrameTask ; $4190
 	ret ; $4193
 ShowTennisDictionaryPageDefault:
-	ld c, $10 ; $4194
+	ld c, 16 ; $4194
 	call BeginFadeOut ; $4196
 	call WaitFadeEnd ; $4199
 	ld a, $0d ; $419c
@@ -149,12 +149,12 @@ ShowTennisDictionaryPageDefault:
 	ld a, [wTennisDictFlags] ; $41cd
 	set 1, a ; $41d0
 	ld [wTennisDictFlags], a ; $41d2
-	script_fade_in $10 ; $41d5
+	script_fade_in 16 ; $41d5
 	call WaitFadeEnd ; $41da
 	ld a, $08 ; $41dd
 	ret ; $41df
 ShowTennisDictionaryPageChar6:
-	ld c, $10 ; $41e0
+	ld c, 16 ; $41e0
 	call BeginFadeOut ; $41e2
 	call WaitFadeEnd ; $41e5
 	ld a, $21 ; $41e8
@@ -177,7 +177,7 @@ ShowTennisDictionaryPageChar6:
 	ld a, [wTennisDictFlags] ; $4217
 	res 1, a ; $421a
 	ld [wTennisDictFlags], a ; $421c
-	script_fade_in $10 ; $421f
+	script_fade_in 16 ; $421f
 	call WaitFadeEnd ; $4224
 	ld a, $02 ; $4227
 	ret ; $4229

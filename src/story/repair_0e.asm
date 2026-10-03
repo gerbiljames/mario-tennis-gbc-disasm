@@ -329,7 +329,7 @@ PrepareEquipmentSelectScreen:
 	ld a, $ff ; $4ec3
 	ld [wUnusedExitTriggerIdMirror], a ; $4ec5
 	ld [wStoryModeExitTriggerRequest], a ; $4ec8
-	ld c, $10 ; $4ecb
+	ld c, 16 ; $4ecb
 	call BeginFadeOut ; $4ecd
 	call WaitFadeEnd ; $4ed0
 	call ClearFrameTasks ; $4ed3

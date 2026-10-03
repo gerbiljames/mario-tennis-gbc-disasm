@@ -50,11 +50,11 @@ ShowExpAwardScreen:
 	ld a, $01 ; $5483
 	ld hl, DrawExpTotalDigits ; $5485
 	call RegisterFrameTask ; $5488
-	script_fade_in $10 ; $548b
+	script_fade_in 16 ; $548b
 	call WaitFadeEnd ; $5490
 	wait_frames 20 ; $5493
 	call RunExpAwardSequence ; $5497
-	ld c, $10 ; $549a
+	ld c, 16 ; $549a
 	call BeginFadeOut ; $549c
 	call WaitFadeEnd ; $549f
 	ld hl, DrawExpScreenCharSprites ; $54a2

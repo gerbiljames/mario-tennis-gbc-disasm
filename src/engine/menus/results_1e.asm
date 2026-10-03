@@ -24,7 +24,7 @@ ShowMatchResultsScreen:
 	jr z, .showResults ; $402c
 	jp ShowExpAwardScreen ; $402e
 .showResults:
-	ld c, $10 ; $4031
+	ld c, 16 ; $4031
 	call BeginFadeOut ; $4033
 	call WaitFadeEnd ; $4036
 	sound BGM_MENU ; $4039
@@ -55,10 +55,10 @@ ShowMatchResultsScreen:
 	ld a, $01 ; $4078
 	ld hl, DrawResultsCharSprites ; $407a
 	call RegisterFrameTask ; $407d
-	script_fade_in $10 ; $4080
+	script_fade_in 16 ; $4080
 	call WaitFadeEnd ; $4085
 	call RunContinuePrompt ; $4088
-	ld c, $10 ; $408b
+	ld c, 16 ; $408b
 	call BeginFadeOut ; $408d
 	call WaitFadeEnd ; $4090
 	ld hl, DrawResultsCharSprites ; $4093

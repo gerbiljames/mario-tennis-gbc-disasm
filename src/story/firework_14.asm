@@ -101,7 +101,7 @@ IslandSkyInitScript_14.placeActors2:
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $650b
 	xor a ; $6516
 	ld [wStoryModeShowLocationName], a ; $6517
-	script_fade_in $04 ; $651a
+	script_fade_in 4 ; $651a
 	call WaitFadeEnd ; $651f
 	script_player_speed 0.1875 ; $6522
 	script_move_player 5.0, 35.0 ; $6528
@@ -194,7 +194,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld a, $1c ; $6633
 	ld [wCutsceneObjTimer + 1], a ; $6635
 	script_wait_frames 72 ; $6638
-	ld c, $04 ; $663f
+	ld c, 4 ; $663f
 	call BeginFadeOut ; $6641
 	call WaitFadeEnd ; $6644
 	call ClearFrameTasks ; $6647
@@ -356,7 +356,7 @@ IslandSkyEntry0fAnd0dScene:
 .fadeIn:
 	xor a ; $6fcd
 	ld [wStoryModeShowLocationName], a ; $6fce
-	script_fade_in $06 ; $6fd1
+	script_fade_in 6 ; $6fd1
 	call WaitFadeEnd ; $6fd6
 	sound SFX_FIREWORK_LAUNCH ; $6fd9
 	script_wait_frames 60 ; $6fdb
@@ -492,7 +492,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld c, $0f ; $7126
 	farcall SaveStoryReturnPoint ; $7128
 	farcall SaveStorySlotWithTimer ; $712b
-	ld c, $01 ; $712e
+	ld c, 1 ; $712e
 	call BeginFadeOut ; $7130
 	call WaitFadeEnd ; $7133
 	ld a, STORYLOC_MAIN_MENU ; $7136
@@ -511,7 +511,7 @@ IslandSkyEntry0fAnd0dScene:
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $7150
 	jr z, .done ; $7153
 .finish:
-	ld c, $04 ; $7155
+	ld c, 4 ; $7155
 	call BeginFadeOut ; $7157
 	call WaitFadeEnd ; $715a
 	ld a, STORYLOC_PEACHS_CASTLE ; $715d
@@ -523,7 +523,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wStoryModeExitTriggerRequest], a ; $716c
 	ret ; $716f
 .done:
-	ld c, $04 ; $7170
+	ld c, 4 ; $7170
 	call BeginFadeOut ; $7172
 	call WaitFadeEnd ; $7175
 	ld a, STORYLOC_PEACHS_CASTLE ; $7178

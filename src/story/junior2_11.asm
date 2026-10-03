@@ -450,7 +450,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $6edd
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACE_DOWN ; $6ee4
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, FACE_RIGHT ; $6eeb
-	script_fade_in $04 ; $6ef2
+	script_fade_in 4 ; $6ef2
 	call WaitFadeEnd ; $6ef7
 	script_set_text Text_32_51 ; $6efa
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $6f00
@@ -475,7 +475,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $6f70
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACE_DOWN ; $6f77
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, FACE_LEFT ; $6f7e
-	script_fade_in $04 ; $6f85
+	script_fade_in 4 ; $6f85
 	call WaitFadeEnd ; $6f8a
 	script_set_text Text_32_70 ; $6f8d
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $6f93
@@ -501,7 +501,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $7009
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACE_DOWN ; $7010
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, FACE_LEFT ; $7017
-	script_fade_in $04 ; $701e
+	script_fade_in 4 ; $701e
 	call WaitFadeEnd ; $7023
 	script_set_text Text_32_65 ; $7026
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $702c
@@ -528,7 +528,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, FACE_DOWN ; $70b1
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, FACE_UP ; $70b8
 	call ParkMiddleCourtPracticePair ; $70bf
-	script_fade_in $04 ; $70c2
+	script_fade_in 4 ; $70c2
 	call WaitFadeEnd ; $70c7
 	script_wait_frames 60 ; $70ca
 	script_set_text Text_32_55 ; $70d1
@@ -600,7 +600,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $726c
 	script_wait_idle ACTOR_PLAYER ; $7273
 	script_wait_frames 40 ; $7278
-	ld c, $04 ; $727f
+	ld c, 4 ; $727f
 	call BeginFadeOut ; $7281
 	call WaitFadeEnd ; $7284
 	ret ; $7287

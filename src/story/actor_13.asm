@@ -58,7 +58,7 @@ VarsityCourtTourCutscene:
 	farcall BeginCutsceneScriptMode ; $6374
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $6377
 	script_set_position ACTOR_VARSITY_COURT_TOUR_EMILY, 63.0, 63.0 ; $6382
-	script_fade_in $04 ; $638d
+	script_fade_in 4 ; $638d
 	call WaitFadeEnd ; $6392
 	script_set_position ACTOR_VARSITY_COURT_TOUR_EMILY, 34.0, 51.0 ; $6395
 	script_move_target ACTOR_VARSITY_COURT_TOUR_EMILY, 34.0, 29.0 ; $63a0

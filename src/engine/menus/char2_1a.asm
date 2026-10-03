@@ -140,7 +140,7 @@ RunCharDataConfirmScreen:
 	call AdvanceFrame ; $79ac
 	farcall StartCharDataScreenAnimTask ; $79af
 	farcall StartCharDataValuesSyncTask ; $79b2
-	script_fade_in $10 ; $79b5
+	script_fade_in 16 ; $79b5
 	call WaitFadeEnd ; $79ba
 	wram_bank WRAM_SCENE ; $79bd
 	ld a, $01 ; $79c3
@@ -173,7 +173,7 @@ RunCharDataConfirmScreen:
 	ld [wCharDataConfirmState], a ; $7a00
 	sound SFX_MENU_CANCEL ; $7a03
 .beginFadeOut:
-	ld c, $10 ; $7a05
+	ld c, 16 ; $7a05
 	call BeginFadeOut ; $7a07
 	call WaitFadeEnd ; $7a0a
 	farcall StopCharDataValuesSyncTask ; $7a0d

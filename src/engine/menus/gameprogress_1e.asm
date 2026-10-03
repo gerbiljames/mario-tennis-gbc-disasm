@@ -39,7 +39,7 @@ InitGameProgressScreen:
 	ret ; $72ae
 BuildGameProgressScreen:
 	push_wram_bank WRAM_TEXT ; $72af
-	ld c, $10 ; $72b8
+	ld c, 16 ; $72b8
 	call BeginFadeOut ; $72ba
 	call WaitFadeEnd ; $72bd
 	call DisableLCDSafely ; $72c0
@@ -105,7 +105,7 @@ BuildGameProgressScreen:
 	ld a, $01 ; $7343
 	ld hl, DrawProgressScreenSprites ; $7345
 	call RegisterFrameTask ; $7348
-	script_fade_in $10 ; $734b
+	script_fade_in 16 ; $734b
 	call WaitFadeEnd ; $7350
 .loop:
 	call AdvanceFrame ; $7353

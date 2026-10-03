@@ -182,7 +182,7 @@ RunExhibitionCharSelectScreen:
 	call BuildCharUnlockFlags ; $4e89
 	call SetupCharGridScreen ; $4e8c
 	call EnableLCD ; $4e8f
-	script_fade_in $10 ; $4e92
+	script_fade_in 16 ; $4e92
 	call WaitFadeEnd ; $4e97
 	ld hl, rIE ; $4e9a
 	res 2, [hl] ; $4e9d
@@ -238,7 +238,7 @@ RunExhibitionCharSelectScreen:
 	jr z, .done ; $4f11
 	jr .frameLoop ; $4f13
 .finish:
-	ld c, $08 ; $4f15
+	ld c, 8 ; $4f15
 	call BeginFadeOut ; $4f17
 	call WaitFadeEnd ; $4f1a
 	call ResolveSelectedCharIds ; $4f1d
@@ -253,7 +253,7 @@ RunExhibitionCharSelectScreen:
 	ret ; $4f35
 .done:
 	sound SFX_MENU_CANCEL ; $4f36
-	ld c, $10 ; $4f38
+	ld c, 16 ; $4f38
 	call BeginFadeOut ; $4f3a
 	call WaitFadeEnd ; $4f3d
 	call ClearFrameTasks ; $4f40

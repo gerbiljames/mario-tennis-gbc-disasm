@@ -111,7 +111,7 @@ DormRoomFacingScripts_13:
 	db $ff
 DormRoomFacing01_13:
 	farcall BeginCutsceneScriptMode ; $4ed4
-	script_fade_in $10 ; $4ed7
+	script_fade_in 16 ; $4ed7
 	script_set_text Text_31_131 ; $4edc
 	script_speak ACTOR_PLAYER ; $4ee2
 	farcall EndCutsceneScriptMode ; $4ee7
@@ -162,7 +162,7 @@ DormRoomTile0F_13:
 	ld a, $ff ; $4fbb
 	ld [wUnusedExitTriggerIdMirror], a ; $4fbd
 	ld [wStoryModeExitTriggerRequest], a ; $4fc0
-	ld c, $04 ; $4fc3
+	ld c, 4 ; $4fc3
 	call BeginFadeOut ; $4fc5
 	script_wait_frames 20 ; $4fc8
 	ret ; $4fcf
@@ -186,7 +186,7 @@ DormRoomTile0F_13:
 	ld a, $ff ; $5015
 	ld [wUnusedExitTriggerIdMirror], a ; $5017
 	ld [wStoryModeExitTriggerRequest], a ; $501a
-	ld c, $04 ; $501d
+	ld c, 4 ; $501d
 	call BeginFadeOut ; $501f
 	script_wait_frames 20 ; $5022
 	ret ; $5029
@@ -414,7 +414,7 @@ PlaceDormRoomArrivalActors_13.isDoubles:
 	script_set_position ACTOR_PARTNER, 21.0, 31.0 ; $527f
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 16.0 ; $528a
 	script_face ACTOR_DORM_ROOM_KATE, FACE_UP ; $5295
-	script_fade_in $04 ; $529c
+	script_fade_in 4 ; $529c
 	call WaitFadeEnd ; $52a1
 	script_move_target ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $52a4
 	ret ; $52af
@@ -453,7 +453,7 @@ DormRoomEntry01Scene:
 	script_face ACTOR_PARTNER, FACE_DOWN ; $5312
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $5319
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $5324
-	script_fade_in $04 ; $532b
+	script_fade_in 4 ; $532b
 	call WaitFadeEnd ; $5330
 	test_flag FLAG_DOUBLES ; $5333
 	jr z, .speakShort ; $5336
@@ -507,7 +507,7 @@ DormRoomEntry0fScene:
 	farcall WaitPlayerMoveDone ; $53e4
 	script_wait_frames 120 ; $53e7
 	script_wait_frames 180 ; $53ee
-	script_fade_in $04 ; $53f5
+	script_fade_in 4 ; $53f5
 	call WaitJingleEnd ; $53fa
 	sound BGM_DORM_ROOM ; $53fd
 	script_wait_frames 10 ; $53ff
@@ -629,7 +629,7 @@ DormRoomEntry02Scene:
 .dayStart:
 	script_wait_frames 30 ; $55bd
 	script_move_target ACTOR_PLAYER, 11.0, 14.0 ; $55c4
-	script_fade_in $04 ; $55cf
+	script_fade_in 4 ; $55cf
 	call WaitFadeEnd ; $55d4
 	script_move_player 11.0, 12.25 ; $55d7
 	farcall WaitPlayerMoveDone ; $55e1
@@ -686,7 +686,7 @@ DormRoomEntry02Scene:
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $5665
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $566c
 	call WaitJingleEnd ; $5671
-	ld c, $04 ; $5674
+	ld c, 4 ; $5674
 	call BeginFadeOut ; $5676
 	call WaitFadeEnd ; $5679
 	ld a, $02 ; $567c

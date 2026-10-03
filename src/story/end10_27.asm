@@ -95,7 +95,7 @@ End10VarsityCourtEntry01Scene:
 	script_face ACTOR_PARTNER, FACE_UP ; $5684
 	script_move_player 11.0, 17.0 ; $568b
 	farcall WaitPlayerMoveDone ; $5695
-	script_fade_in $04 ; $5698
+	script_fade_in 4 ; $5698
 	script_player_speed 1.0 ; $569d
 	script_move_player 11.0, 23.0 ; $56a3
 	farcall WaitPlayerMoveDone ; $56ad
@@ -175,7 +175,7 @@ End10VarsityCourtEntry01Scene:
 	script_face ACTOR_PARTNER, FACE_UP ; $5867
 	script_move_player 11.0, 17.0 ; $586e
 	farcall WaitPlayerMoveDone ; $5878
-	script_fade_in $04 ; $587b
+	script_fade_in 4 ; $587b
 	script_player_speed 1.0 ; $5880
 	script_move_player 11.0, 23.0 ; $5886
 	farcall WaitPlayerMoveDone ; $5890
@@ -208,11 +208,11 @@ End10VarsityCourtEntry01Scene:
 	script_wait_frames 10 ; $5943
 	script_lock_facing ACTOR_PLAYER ; $594a
 	script_wait_frames 10 ; $5951
-	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $5958
+	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 1.0 ; $5958
 	script_wait_move ACTOR_PLAYER ; $5962
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $5967
 	script_wait_idle ACTOR_PLAYER ; $596e
-	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0100 ; $5973
+	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $5973
 	script_wait_move ACTOR_PLAYER ; $597d
 	script_get_actor_state ACTOR_PARTNER ; $5982
 	ld de, $0018 ; $5987
@@ -256,11 +256,11 @@ CeremonyDoublesReaction_27:
 	script_wait_frames 10 ; $5a58
 	script_lock_facing ACTOR_PLAYER ; $5a5f
 	script_wait_frames 10 ; $5a66
-	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $5a6d
+	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 1.0 ; $5a6d
 	script_wait_move ACTOR_PLAYER ; $5a77
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $5a7c
 	script_wait_idle ACTOR_PLAYER ; $5a83
-	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0100 ; $5a88
+	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $5a88
 	script_wait_move ACTOR_PLAYER ; $5a92
 	script_get_actor_state ACTOR_PARTNER ; $5a97
 	ld de, $0018 ; $5a9c
@@ -482,7 +482,7 @@ End8SrCourtInitScript_27:
 	script_face ACTOR_END8_SR_COURT_ALT_EMILY, FACE_LEFT ; $5f15
 	xor a ; $5f1c
 	ld [wStoryModeShowLocationName], a ; $5f1d
-	script_fade_in $04 ; $5f20
+	script_fade_in 4 ; $5f20
 	script_move_target ACTOR_END8_SR_COURT_ALT_FAY, 37.0, 19.0 ; $5f25
 	script_wait_move ACTOR_END8_SR_COURT_ALT_FAY ; $5f30
 	script_face_pair ACTOR_END8_SR_COURT_ALT_ALLIE, ACTOR_END8_SR_COURT_ALT_FAY ; $5f35
@@ -541,7 +541,7 @@ End8SrCourtInitScript_27:
 	script_face ACTOR_PLAYER, FACE_UP ; $6088
 	xor a ; $608f
 	ld [wStoryModeShowLocationName], a ; $6090
-	script_fade_in $04 ; $6093
+	script_fade_in 4 ; $6093
 	script_move_target ACTOR_END8_SR_COURT_ALT_FAY, 36.0, 19.0 ; $6098
 	script_wait_move ACTOR_END8_SR_COURT_ALT_FAY ; $60a3
 	script_delay 20 ; $60a8

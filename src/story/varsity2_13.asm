@@ -249,7 +249,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_face ACTOR_PARTNER, FACE_UP ; $7134
 	script_move_player 11.0, 17.0 ; $713b
 	farcall WaitPlayerMoveDone ; $7145
-	script_fade_in $04 ; $7148
+	script_fade_in 4 ; $7148
 	call WaitFadeEnd ; $714d
 	script_wait_frames 60 ; $7150
 	script_set_text Text_30_554 ; $7157
@@ -340,7 +340,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ACTOR_PLAYER ; $7360
 	script_wait_frames 10 ; $7368
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $736f
-	ld c, $02 ; $7376
+	ld c, 2 ; $7376
 	call BeginFadeOut ; $7378
 	call WaitFadeEnd ; $737b
 	ld b, $00 ; $737e
@@ -392,7 +392,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_face ACTOR_PARTNER, FACE_UP ; $7490
 	script_move_player 11.0, 17.0 ; $7497
 	farcall WaitPlayerMoveDone ; $74a1
-	script_fade_in $04 ; $74a4
+	script_fade_in 4 ; $74a4
 	call WaitFadeEnd ; $74a9
 	script_wait_frames 60 ; $74ac
 	script_player_speed 1.0 ; $74b3
@@ -432,11 +432,11 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_frames 10 ; $7590
 	script_lock_facing ACTOR_PLAYER ; $7597
 	script_wait_frames 10 ; $759e
-	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $75a5
+	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 1.0 ; $75a5
 	script_wait_move ACTOR_PLAYER ; $75af
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $75b4
 	script_wait_idle ACTOR_PLAYER ; $75bb
-	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0100 ; $75c0
+	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $75c0
 	script_wait_move ACTOR_PLAYER ; $75ca
 	script_get_actor_state ACTOR_PARTNER ; $75cf
 	ld de, $0018 ; $75d4
@@ -483,11 +483,11 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_frames 10 ; $76b5
 	script_lock_facing ACTOR_PLAYER ; $76bc
 	script_wait_frames 10 ; $76c3
-	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0100 ; $76ca
+	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 1.0 ; $76ca
 	script_wait_move ACTOR_PLAYER ; $76d4
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $76d9
 	script_wait_idle ACTOR_PLAYER ; $76e0
-	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0100 ; $76e5
+	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $76e5
 	script_wait_move ACTOR_PLAYER ; $76ef
 	script_get_actor_state ACTOR_PARTNER ; $76f4
 	ld de, $0018 ; $76f9
@@ -561,7 +561,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_frames 10 ; $7891
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7898
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $789f
-	ld c, $02 ; $78a6
+	ld c, 2 ; $78a6
 	call BeginFadeOut ; $78a8
 	call WaitFadeEnd ; $78ab
 	call PlayDoublesTravelingTeamScreenSequence_13 ; $78ae

@@ -64,7 +64,7 @@ RunTrainingDrillByID:
 	call ClearBGForDrillResult ; $4772
 	farcall LoadMenuFontGfx ; $4775
 	call EnableLCD ; $4778
-	script_fade_in $08 ; $477b
+	script_fade_in 8 ; $477b
 	call WaitFadeEnd ; $4780
 	ld a, [wDrillLessonResult] ; $4783
 	ld l, a ; $4786
@@ -81,7 +81,7 @@ RunTrainingDrillByID:
 .showSpeakerDialogue:
 	ld a, $80 ; $479a
 	farcall ShowSpeakerDialogue ; $479c
-	ld c, $10 ; $479f
+	ld c, 16 ; $479f
 	call BeginFadeOut ; $47a1
 	call WaitFadeEnd ; $47a4
 .finish:

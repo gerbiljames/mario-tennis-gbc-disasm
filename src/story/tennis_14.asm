@@ -259,7 +259,7 @@ MachineCourtResultScene:
 .win:
 	script_set_position ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $42d3
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_DOWN ; $42de
-	script_fade_in $06 ; $42e5
+	script_fade_in 6 ; $42e5
 	call WaitFadeEnd ; $42ea
 	script_wait_frames 40 ; $42ed
 	script_set_speed ACTOR_PLAYER, 1.0 ; $42f4
@@ -440,7 +440,7 @@ MachineCourtStartLevelScene:
 	script_set_text Text_6e_204 ; $456c
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4572
 .lt04:
-	ld c, $06 ; $4577
+	ld c, 6 ; $4577
 	call BeginFadeOut ; $4579
 	call WaitFadeEnd ; $457c
 	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $457f

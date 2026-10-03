@@ -17,7 +17,7 @@ ShowCharDataScreen:
 	sound BGM_STATUS_SCREEN ; $4021
 	farcall RefreshMainCharacterStats ; $4023
 	call EnableLCD ; $4026
-	ld c, $7f ; $4029
+	ld c, 127 ; $4029
 	call BeginFadeOut ; $402b
 	call WaitFadeEnd ; $402e
 	call InitCharDataScreenVideo ; $4031
@@ -58,12 +58,12 @@ ShowCharDataScreen:
 	ld hl, CharDataValuesSyncTask ; $4092
 	call RegisterFrameTask ; $4095
 	farcall StartCharDataScreenAnimTask ; $4098
-	script_fade_in $10 ; $409b
+	script_fade_in 16 ; $409b
 	call WaitFadeEnd ; $40a0
 	call RunDrillResultInputLoop ; $40a3
 	ld hl, rIE ; $40a6
 	set 2, [hl] ; $40a9
-	ld c, $10 ; $40ab
+	ld c, 16 ; $40ab
 	call BeginFadeOut ; $40ad
 	call WaitFadeEnd ; $40b0
 	ld hl, DrawCharDataPageArrowsTask ; $40b3

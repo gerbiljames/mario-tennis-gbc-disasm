@@ -50,7 +50,7 @@ RestoreMenuScreenAndFadeIn:
 	farcall LoadMenuFontGfx ; $44bc
 	farcall ResetScreenAndTextWindows ; $44bf
 	call EnableLCD ; $44c2
-	script_fade_in $10 ; $44c5
+	script_fade_in 16 ; $44c5
 	ret ; $44ca
 RunLinkMatchRulesMenu:
 	call EnableTimerInterrupt ; $44cb

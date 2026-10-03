@@ -77,7 +77,7 @@ End7TrainingCtrEntry01Scene:
 	farcall WaitPlayerMoveDone ; $6292
 	script_set_position ACTOR_PLAYER, 41.0, 55.0 ; $6295
 	script_set_position ACTOR_PARTNER, 41.0, 55.0 ; $62a0
-	script_fade_in $04 ; $62ab
+	script_fade_in 4 ; $62ab
 	script_move_player 41.0, 43.0 ; $62b0
 	script_move_target ACTOR_PLAYER, 41.0, 43.0 ; $62ba
 	script_wait_move ACTOR_PLAYER ; $62c5
@@ -111,8 +111,8 @@ End7TrainingCtrEntry02Scene:
 	script_set_speed ACTOR_PARTNER, 0.5 ; $637b
 	script_set_speed ACTOR_PLAYER, 0.5 ; $6383
 	script_player_speed 0.75 ; $638b
-	script_fade_in $04 ; $6391
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0400 ; $6396
+	script_fade_in 4 ; $6391
+	script_move_angle ACTOR_PLAYER, FACE_UP, 4.0 ; $6396
 	script_wait_move ACTOR_PLAYER ; $63a0
 	script_move_player 15.0, 19.0 ; $63a5
 	script_move_target ACTOR_PLAYER, 17.0, 19.0 ; $63af
@@ -192,7 +192,7 @@ End5ServiceAceCutscene_27:
 	farcall BeginCutsceneScriptMode ; $656f
 	script_player_speed 0.5 ; $6572
 	script_move_player 15.0, 17.0 ; $6578
-	script_fade_in $08 ; $6582
+	script_fade_in 8 ; $6582
 	script_set_speed ACTOR_PLAYER, 0.75 ; $6587
 	script_move_target ACTOR_PLAYER, 13.0, 23.0 ; $658f
 	script_wait_move ACTOR_PLAYER ; $659a
@@ -436,7 +436,7 @@ End4JrCourtSceneSingles_27:
 	ret ; $6a53
 .walkPlayer:
 	script_move_player 19.0, 21.0 ; $6a54
-	script_fade_in $04 ; $6a5e
+	script_fade_in 4 ; $6a5e
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $6a63
 	script_wait_move ACTOR_PLAYER ; $6a6e
 	test_flag FLAG_DOUBLES ; $6a73

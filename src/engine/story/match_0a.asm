@@ -20,7 +20,7 @@ InitStoryMatchSettings:
 	ld [wMatchContext], a ; $495e
 	ret ; $4961
 RunStoryMatch:
-	ld c, $10 ; $4962
+	ld c, 16 ; $4962
 	call BeginFadeOut ; $4964
 	call WaitFadeEnd ; $4967
 	call AssignStoryMatchCharacters ; $496a
@@ -42,7 +42,7 @@ RunStoryMatch:
 	ld [wKeepMatchStatsFlag], a ; $498d
 	ret ; $4990
 RestoreOverworldAfterMatch:
-	ld c, $10 ; $4991
+	ld c, 16 ; $4991
 	call BeginFadeOut ; $4993
 	call WaitFadeEnd ; $4996
 	farcall LoadStoryObjPalettes ; $4999
@@ -330,7 +330,7 @@ RunClearStatusSetupMenu:
 	farcall CreateWindowFromScreenRect ; $4bda
 	ld [wClearStatusWindowId], a ; $4bdd
 	farcall DrawTextWindowFrame ; $4be0
-	script_fade_in $10 ; $4be3
+	script_fade_in 16 ; $4be3
 	call WaitFadeEnd ; $4be8
 	wram_bank WRAM_CHAR1 ; $4beb
 .modeMenu:

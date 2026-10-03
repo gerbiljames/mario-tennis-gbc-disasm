@@ -97,7 +97,7 @@ MarioWorldArrivalDoubles:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $5bc5
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $5bd0
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $5bdb
-	script_fade_in $04 ; $5be6
+	script_fade_in 4 ; $5be6
 	call WaitFadeEnd ; $5beb
 	script_wait_frames 40 ; $5bee
 	call MarioWorldArrivalIntroCutscene ; $5bf5

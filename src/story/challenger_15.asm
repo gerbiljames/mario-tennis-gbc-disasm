@@ -18,7 +18,7 @@ NetChallengerResultScene:
 	script_player_speed 7.5 ; $5dba
 	script_move_player 40.0, 41.0 ; $5dc0
 	farcall WaitPlayerMoveDone ; $5dca
-	script_fade_in $08 ; $5dcd
+	script_fade_in 8 ; $5dcd
 	call WaitFadeEnd ; $5dd2
 	ld a, [wPointWinLoseFlag] ; $5dd5
 	inc a ; $5dd8
@@ -58,7 +58,7 @@ StrokeChallengerResultScene:
 	script_player_speed 7.5 ; $5e39
 	script_move_player 24.0, 40.0 ; $5e3f
 	farcall WaitPlayerMoveDone ; $5e49
-	script_fade_in $08 ; $5e4c
+	script_fade_in 8 ; $5e4c
 	call WaitFadeEnd ; $5e51
 	ld a, [wPointWinLoseFlag] ; $5e54
 	inc a ; $5e57

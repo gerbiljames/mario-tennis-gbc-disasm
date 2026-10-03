@@ -345,7 +345,7 @@ IslandSkyEntry02Scene:
 .fadeIn:
 	xor a ; $62d2
 	ld [wStoryModeShowLocationName], a ; $62d3
-	script_fade_in $06 ; $62d6
+	script_fade_in 6 ; $62d6
 	call WaitFadeEnd ; $62db
 	sound SFX_FIREWORK_LAUNCH ; $62de
 	script_wait_frames 60 ; $62e0
@@ -460,7 +460,7 @@ IslandSkyEntry02Scene:
 	jr nz, .done ; $63f6
 	sound SFX_FIREWORK_SPARKLE ; $63f8
 	script_wait_frames 50 ; $63fa
-	ld c, $04 ; $6401
+	ld c, 4 ; $6401
 	call BeginFadeOut ; $6403
 	call WaitFadeEnd ; $6406
 	call ClearFrameTasks ; $6409

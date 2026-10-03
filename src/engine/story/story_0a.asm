@@ -200,7 +200,7 @@ RunStoryLocation:
 	push bc ; $4f41
 	push de ; $4f42
 	push hl ; $4f43
-	ld c, $0c ; $4f44
+	ld c, 12 ; $4f44
 	call BeginFadeOut ; $4f46
 	call ClearTemporaryStoryFlags ; $4f49
 	call ClearStoryEventRequests ; $4f4c
@@ -263,7 +263,7 @@ RunStoryLocation:
 	call RunLocationExit ; $4fd0
 	jp .done ; $4fd3
 .fadeIn:
-	script_fade_in $08 ; $4fd6
+	script_fade_in 8 ; $4fd6
 	call WaitFadeEnd ; $4fdb
 	ld a, [wStoryModeShowLocationName] ; $4fde
 	and a ; $4fe1

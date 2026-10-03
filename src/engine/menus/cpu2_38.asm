@@ -262,7 +262,7 @@ RunLinkCharSelectScreen:
 	ld [wMatchTypeNumberOfSets], a ; $6429
 	call EnableLCD ; $642c
 	farcall ResyncLinkSession ; $642f
-	script_fade_in $10 ; $6432
+	script_fade_in 16 ; $6432
 	push af ; $6437
 	farcall RunLinkCommandFrame ; $6438
 	pop af ; $643b
@@ -347,7 +347,7 @@ RunLinkCharSelectScreen:
 	jr nz, .finish ; $64f1
 	call WaitVBlank ; $64f3
 .finish:
-	ld c, $08 ; $64f6
+	ld c, 8 ; $64f6
 	call BeginFadeOut ; $64f8
 	call WaitFadeEnd ; $64fb
 	ld hl, rIE ; $64fe
@@ -363,7 +363,7 @@ RunLinkCharSelectScreen:
 	xor a ; $650f
 	ldh [hLinkExchangeActive], a ; $6510
 	call ResetSerialState ; $6512
-	ld c, $10 ; $6515
+	ld c, 16 ; $6515
 	call BeginFadeOut ; $6517
 	call WaitFadeEnd ; $651a
 	call ClearFrameTasks ; $651d

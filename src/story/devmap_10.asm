@@ -89,13 +89,13 @@ DevelopmentExitTriggers_10:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_DEVELOPMENT, $01
 	db $ff
 DevelopmentRespawnActors_10:
-	ld c, $10 ; $4cff
+	ld c, 16 ; $4cff
 	call BeginFadeOut ; $4d01
 	call WaitFadeEnd ; $4d04
 	ldh a, [hRomBank] ; $4d07
 	ld hl, DevelopmentRespawnActorList_10 ; $4d09
 	farcall ScriptRespawnLocationActors ; $4d0c
-	script_fade_in $10 ; $4d0f
+	script_fade_in 16 ; $4d0f
 	call WaitFadeEnd ; $4d14
 	ret ; $4d17
 Unused_10_DevelopmentMoveActorsAndExit:
@@ -117,13 +117,13 @@ Unused_10_DevelopmentMoveActorsAndExit:
 	ld [wStoryModeExitTriggerRequest], a ; $4d6c
 	ret ; $4d6f
 DevelopmentRespawnActorsAlt_10:
-	ld c, $10 ; $4d70
+	ld c, 16 ; $4d70
 	call BeginFadeOut ; $4d72
 	call WaitFadeEnd ; $4d75
 	ldh a, [hRomBank] ; $4d78
 	ld hl, DevelopmentActors_10 ; $4d7a
 	farcall ScriptRespawnLocationActors ; $4d7d
-	script_fade_in $10 ; $4d80
+	script_fade_in 16 ; $4d80
 	call WaitFadeEnd ; $4d85
 	ret ; $4d88
 Unused_10_SpeakCheckedChest:
@@ -184,7 +184,7 @@ DevelopmentFacingScripts_10:
 	db $ff
 DevelopmentFacing01_10:
 	farcall BeginCutsceneScriptMode ; $4e39
-	script_fade_in $10 ; $4e3c
+	script_fade_in 16 ; $4e3c
 	script_set_text Text_31_131 ; $4e41
 	script_speak ACTOR_PLAYER ; $4e47
 	farcall EndCutsceneScriptMode ; $4e4c
@@ -309,7 +309,7 @@ RunTitleAndMainMenuLoop:
 	ld [wMatchFormatGames], a ; $4f4f
 	ld [wMatchFormatSets], a ; $4f52
 	call EnableLCD ; $4f55
-	ld c, $7f ; $4f58
+	ld c, 127 ; $4f58
 	call BeginFadeOut ; $4f5a
 	call WaitFadeEnd ; $4f5d
 	call DisableLCDSafely ; $4f60
@@ -320,7 +320,7 @@ RunTitleAndMainMenuLoop:
 	farcall LoadMenuFontGfx ; $4f6b
 	farcall ResetScreenAndTextWindows ; $4f6e
 	call EnableLCD ; $4f71
-	script_fade_in $10 ; $4f74
+	script_fade_in 16 ; $4f74
 	call WaitFadeEnd ; $4f79
 .menuLoop:
 	xor a ; $4f7c
@@ -386,7 +386,7 @@ MatchSelectHandlersBHandler0:
 	ld a, [wSaveAndQuitRequest] ; $4ff8
 	or a ; $4ffb
 	jr nz, .checkMatchResult ; $4ffc
-	script_fade_in $10 ; $4ffe
+	script_fade_in 16 ; $4ffe
 	call WaitFadeEnd ; $5003
 .checkMatchResult:
 	ld a, [wSaveAndQuitRequest] ; $5006
@@ -419,7 +419,7 @@ MatchSelectHandlersBHandler0:
 .backToTitle:
 	ld a, $03 ; $5041
 	ld [wAnimatedTilePeriod], a ; $5043
-	ld c, $10 ; $5046
+	ld c, 16 ; $5046
 	call BeginFadeOut ; $5048
 	call WaitFadeEnd ; $504b
 	ld a, e ; $504e
@@ -433,7 +433,7 @@ MatchSelectHandlersBHandler0:
 	farcall LoadMenuFontGfx ; $5062
 	farcall ResetScreenAndTextWindows ; $5065
 	call EnableLCD ; $5068
-	script_fade_in $10 ; $506b
+	script_fade_in 16 ; $506b
 	jp RunTitleAndMainMenuLoop.menuLoop ; $5070
 .newStorySlot:
 	call ResetGameTimer ; $5073
@@ -454,7 +454,7 @@ MatchSelectHandlersBHandler0:
 	call DisableLCDSafely ; $5093
 	farcall ResetScreenAndTextWindows ; $5096
 	call EnableLCD ; $5099
-	script_fade_in $10 ; $509c
+	script_fade_in 16 ; $509c
 	call WaitFadeEnd ; $50a1
 .clearMatchState:
 	xor a ; $50a4
@@ -518,7 +518,7 @@ MatchSelectHandlersBHandler3:
 	farcall ResetScreenAndTextWindows ; $5127
 	call EnableLCD ; $512a
 	push af ; $512d
-	script_fade_in $10 ; $512e
+	script_fade_in 16 ; $512e
 	call WaitFadeEnd ; $5133
 	pop af ; $5136
 .noSlot:
@@ -533,7 +533,7 @@ MatchSelectHandlersBHandler3:
 	farcall RunMatchFormatSelect ; $5149
 	cp $ff ; $514c
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $514e
-	ld c, $10 ; $5151
+	ld c, 16 ; $5151
 	call BeginFadeOut ; $5153
 	call WaitFadeEnd ; $5156
 .savedDataFlow:
@@ -555,7 +555,7 @@ MatchSelectHandlersBHandler3:
 	cp $ff ; $517e
 	jr nz, .minigameFlow ; $5180
 	call EnableLCD ; $5182
-	script_fade_in $10 ; $5185
+	script_fade_in 16 ; $5185
 	ld a, MENUSLIDE_BACK ; $518a
 	ld [wMenuSlideDirection], a ; $518c
 	jr .eraseFlow ; $518f
@@ -567,7 +567,7 @@ MatchSelectHandlersBHandler3:
 	or a ; $519c
 	jr z, .exhibitionFlow ; $519d
 	call EnableLCD ; $519f
-	script_fade_in $10 ; $51a2
+	script_fade_in 16 ; $51a2
 	farcall RunCourtSelect9Menu ; $51a7
 	cp $ff ; $51aa
 	jr nz, .linkFlow ; $51ac
@@ -576,7 +576,7 @@ MatchSelectHandlersBHandler3:
 	jp z, .savedDataFlow ; $51b3
 .exhibitionFlow:
 	call EnableLCD ; $51b6
-	script_fade_in $10 ; $51b9
+	script_fade_in 16 ; $51b9
 	farcall RunCourtSelect4Menu ; $51be
 	cp $ff ; $51c1
 	jr nz, .linkFlow ; $51c3
@@ -611,5 +611,5 @@ MatchSelectHandlersBHandler3:
 	farcall LoadMenuFontGfx ; $5205
 	farcall ResetScreenAndTextWindows ; $5208
 	call EnableLCD ; $520b
-	script_fade_in $10 ; $520e
+	script_fade_in 16 ; $520e
 	jp RunTitleAndMainMenuLoop.menuLoop ; $5213

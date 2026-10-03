@@ -51,7 +51,7 @@ DormEntranceTile01_12:
 	script_player_speed 0.5 ; $4136
 	script_move_player 22.0, 8.0 ; $413c
 	script_wait_frames 15 ; $4146
-	ld c, $04 ; $414d
+	ld c, 4 ; $414d
 	call BeginFadeOut ; $414f
 	farcall WaitPlayerMoveDone ; $4152
 	call WaitFadeEnd ; $4155
@@ -70,9 +70,9 @@ DormEntranceTile01_12:
 DormEntranceInitScript_12:
 	ld a, [wStoryModeEntryPoint] ; $4170
 	cp $0f ; $4173
-	call z, DormEntranceEntry0FScene ; $4175
+	call z, DormEntranceEntry0fScene ; $4175
 	ret ; $4178
-DormEntranceEntry0FScene:
+DormEntranceEntry0fScene:
 	script_set_speed ACTOR_DORM_ENTRANCE_EMILY, 0.5 ; $4179
 	script_set_speed ACTOR_DORM_ENTRANCE_KATE, 0.5 ; $4181
 	script_set_speed ACTOR_PLAYER, 0.5 ; $4189
@@ -80,7 +80,7 @@ DormEntranceEntry0FScene:
 	script_set_position ACTOR_PLAYER, 22.0, 31.0 ; $4197
 	script_set_position ACTOR_DORM_ENTRANCE_EMILY, 22.0, 29.0 ; $41a2
 	script_face ACTOR_DORM_ENTRANCE_EMILY, FACE_UP ; $41ad
-	script_fade_in $20 ; $41b4
+	script_fade_in 32 ; $41b4
 	script_wait_frames 20 ; $41b9
 	script_move_target ACTOR_DORM_ENTRANCE_EMILY, 22.0, 17.0 ; $41c0
 	script_move_player 22.0, 15.0 ; $41cb
@@ -268,7 +268,7 @@ DormEntranceEntry0FScene:
 	farcall EraseStorySlotSaveData ; $4663
 	farcall SaveStorySlotWithTimer ; $4666
 	sound BGM_NONE ; $4669
-	ld c, $04 ; $466b
+	ld c, 4 ; $466b
 	call BeginFadeOut ; $466d
 	call WaitFadeEnd ; $4670
 	ld a, $0f ; $4673
@@ -432,7 +432,7 @@ WallPracticeRoomNpcScripts_12:
 	map_script ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACEMASK_ANY, $0000, WallPracticeRoomNpc07_12, NPC_FACE_PLAYER, $00
 	db $ff
 WallPracticeMasterResultScript:
-	script_fade_in $06 ; $4841
+	script_fade_in 6 ; $4841
 	call WaitFadeEnd ; $4846
 	xor a ; $4849
 	ld [wStoryModeShowLocationName], a ; $484a
@@ -443,7 +443,7 @@ WallPracticeMasterResultScript:
 	jr nz, WallPracticeScoreRetryPrompt ; $4857
 	jp WallPracticeMaxScoreScript ; $4859
 WallPracticeScoreRetryPrompt:
-	script_fade_in $06 ; $485c
+	script_fade_in 6 ; $485c
 	call WaitFadeEnd ; $4861
 	xor a ; $4864
 	ld [wStoryModeShowLocationName], a ; $4865

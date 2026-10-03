@@ -118,9 +118,9 @@ AcademyWingTile01_10:
 	script_move_target ACTOR_PLAYER, 33.0, 57.0 ; $6399
 	script_wait_move ACTOR_PLAYER ; $63a4
 	script_wait_frames 2 ; $63a9
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $63b0
+	script_move_angle ACTOR_PLAYER, FACE_UP, 2.0 ; $63b0
 	script_wait_move ACTOR_PLAYER ; $63ba
-	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0200 ; $63bf
+	script_move_angle ACTOR_PLAYER, FACE_LEFT, 2.0 ; $63bf
 	script_wait_move ACTOR_PLAYER ; $63c9
 	script_wait_frames 10 ; $63ce
 	script_face ACTOR_PLAYER, FACE_UP ; $63d5
@@ -136,9 +136,9 @@ AcademyWingTile02_10:
 .walkPlayer:
 	script_move_target ACTOR_PLAYER, 33.0, 57.0 ; $6402
 	script_wait_move ACTOR_PLAYER ; $640d
-	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0200 ; $6412
+	script_move_angle ACTOR_PLAYER, FACE_DOWN, 2.0 ; $6412
 	script_wait_move ACTOR_PLAYER ; $641c
-	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $6421
+	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 2.0 ; $6421
 	script_wait_move ACTOR_PLAYER ; $642b
 	script_wait_frames 5 ; $6430
 	call AcademyWingCloseDoor_10 ; $6437
@@ -218,7 +218,7 @@ AcademyWingInitScript_10:
 	xor a ; $6530
 	ld [wStoryModeShowLocationName], a ; $6531
 	script_set_position ACTOR_PLAYER, 43.0, 59.0 ; $6534
-	script_fade_in $08 ; $653f
+	script_fade_in 8 ; $653f
 	call WaitFadeEnd ; $6544
 	script_wait_frames 60 ; $6547
 	script_set_anim ACTOR_ACADEMY_WING_INIT0_WALK_75_06, ANIM_BOUNCE ; $654e
@@ -606,7 +606,7 @@ AcademyWingInitScript_10:
 	script_wait_idle ACTOR_PLAYER ; $6f13
 	script_set_text Text_30_492 ; $6f18
 	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6f1e
-	ld c, $04 ; $6f23
+	ld c, 4 ; $6f23
 	call BeginFadeOut ; $6f25
 	call WaitFadeEnd ; $6f28
 	script_wait_frames 50 ; $6f2b
@@ -654,7 +654,7 @@ AcademyWingEntry0fScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $7029
 	xor a ; $7030
 	ld [wStoryModeShowLocationName], a ; $7031
-	script_fade_in $04 ; $7034
+	script_fade_in 4 ; $7034
 	call WaitFadeEnd ; $7039
 	script_wait_frames 60 ; $703c
 	script_set_text Text_30_498 ; $7043
@@ -788,7 +788,7 @@ AcademyWingEntry0fScene:
 .academyWingCloseDoor2:
 	call AcademyWingCloseDoor_10 ; $7314
 	script_wait_frames 60 ; $7317
-	ld c, $02 ; $731e
+	ld c, 2 ; $731e
 	call BeginFadeOut ; $7320
 	call WaitFadeEnd ; $7323
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7326
