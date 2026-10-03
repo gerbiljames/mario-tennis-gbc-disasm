@@ -13,14 +13,15 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def main():
     out = sys.argv[1] if len(sys.argv) > 1 else "build"
-    files = [MAIN] + [f for h in holders() for f in bank_files(h)[1:]]
+    files = [MAIN, ROOT / "include" / "lz_sizes.inc"] + [f for h in holders() for f in bank_files(h)[1:]]
     deps = []
     for f in dict.fromkeys(files):
         deps.append(f.relative_to(ROOT).as_posix())
         for line in f.read_text().split("\n"):
             m = re.match(r'^\s*(?:INCBIN|INCLUDE) "((?!src/)[^"]+)"', line)
             if m:
-                deps.append(m.group(1))
+                path = m.group(1)
+                deps.append(path if (ROOT / path).exists() or path.startswith("data/") else f"include/{path}")
             m = re.match(r"^\t(?:twin|twin_named|twin_in) (\w+),", line)
             if m:
                 deps.append(f"src/twins/{m.group(1)}.asm")

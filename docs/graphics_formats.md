@@ -32,8 +32,7 @@ Copy sizes follow the blob where the source can say so:
 * whole raw blob: `ld c, (Next - Blob) / 16`;
 * whole decompressed stream: `ld c, Blob_SIZE / 16`, with `Blob_SIZE` in
   `data/<bank>/lz_Blob.inc` (derived by `tools/lz.py --size-inc`), INCLUDEd
-  after the INCBIN, or at the top of `main.asm` when the copying bank is
-  another;
+  after the INCBIN or else in `include/lz_sizes.inc`;
 * partial copy: a decimal tile count with a comment naming the blob and the
   tiles it takes;
 * BG map copy: rows (`SCREEN_HEIGHT * TILEMAP_WIDTH / 16`,

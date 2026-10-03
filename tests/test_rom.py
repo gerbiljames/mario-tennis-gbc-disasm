@@ -85,7 +85,7 @@ class Source(unittest.TestCase):
         n = count(r"^\tld b?c, (\w+)_SIZE / 16 ;")
         self.assertGreaterEqual(n, 299)
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob
-        whole = (ROOT / "main.asm").read_text() + "\n".join(text for _, text in SRC)
+        whole = (ROOT / "include" / "lz_sizes.inc").read_text() + "\n".join(text for _, text in SRC)
         used = set(re.findall(r"\bld b?c, (?![whs][A-Z]|(?:WRAMX|VRAM|CHAR_RECORD)_SIZE)(\w+)_SIZE / 16", whole))
         have = set(re.findall(r'INCLUDE "data/bank_[0-9a-f]{3}/lz_(\w+)\.inc"', whole))
         self.assertEqual(used - have, set())
