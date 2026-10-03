@@ -441,15 +441,9 @@ End16BeforeFinalsCutscene_27:
 	ret ; $4b40
 ; Two lists of three 6-byte records, each terminated by a $00 byte, in
 ; the shape of this bank's actor lists. The two differ in one byte
-; (record 0 field 4 is $15 in the first list, $13 in the second), so
-; they look like two variants of the same scene population.
-;
-; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
-; HIGH split base, no 8-bit register pair, and no dw word -- searched over
-; the raw ROM (so unproven code inside blobs counts) for every address
-; inside it, not just its start, with cross-bank byte coincidences filtered
-; out. Driving the character-select and CPU-difficulty screens under a
-; trace added no coverage here either.
+; (record 0 field 4 is $15 in the first list, $13 in the second): two
+; variants of the same scene population.
+; Nothing reads it.
 Unused_27_ActorLists:
 	; $4b41, 38 bytes (bytes:6)
 	db $04, $00, $13, $00, $15, $02 ; 0x00

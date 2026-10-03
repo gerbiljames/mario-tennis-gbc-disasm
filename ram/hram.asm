@@ -1,9 +1,9 @@
 ; HRAM layout. Each symbol's note gives its size and what reads and writes
-; it (docs/ram_map.md). Hand-maintained.
+; it (docs/ram_map.md).
 
 SECTION "HRAM $ff80", HRAM[$ff80]
 
-; [10 bytes] OAM DMA trampoline, copied here from ROM0 $06ba by CopyOAMDMARoutineToHRAM: ld a, $c0 / ldh [rDMA], a / 40-iteration wait / ret. Must live in HRAM because the bus is unusable during the transfer
+; [10 bytes] OAM DMA routine, copied here by CopyOAMDMARoutineToHRAM. Must live in HRAM: the bus is unusable during the transfer
 hOAMDMARoutine:: ds 10
 
 ; [8-bit] SCY shadow, applied in VBlank
@@ -63,7 +63,7 @@ hShowDebugConsole:: db
 ; [8-bit] Nonzero = VRAM copy / tile-write queues have pending entries
 hVRAMQueueDirty:: db
 
-; [8-bit] Nonzero while the debug stepper is holding the frame. AdvanceFrame sets it when SELECT+START are held (only once hDebugStepMode has enabled stepping at all) and spins in its step loop until START clears it; SELECT while paused cycles hDebugStepMode 1-3 rather than resuming
+; [8-bit] Nonzero while the debug stepper holds the frame. AdvanceFrame sets it on SELECT+START (only when hDebugStepMode is nonzero) and spins until START clears it; SELECT while paused cycles hDebugStepMode 1-3
 hDebugStepPaused:: db
 
 ; [8-bit] Write offset into the OAM shadow buffer (max $a0)
@@ -78,7 +78,7 @@ hPaletteDirtyFlags:: db
 ; [8-bit] Debug pause/frame-step mode (0 = off, 1-3)
 hDebugStepMode:: db
 
-; [8-bit] rIE saved across DisableLCDSafely's VBlank wait: it masks the VBlank interrupt off, spins until rLY hits $91, turns the LCD off and restores rIE from here
+; [8-bit] rIE saved by DisableLCDSafely while it masks VBlank off, waits for LY $91 and turns the LCD off
 hSavedIE:: db
 
 ; [8-bit] Peak LY at end-of-frame (frame time meter shown on debug console)
@@ -117,18 +117,17 @@ hDivQuotientHi:: db
 	ds 1
 
 ; HRAM pointer scratch ($ffb0-$ffb3): two 16-bit slots each caller uses for
-; its own purpose, so only proven consumers are named. Sites outside these
-; scopes stay numeric -- note that banks $0f/$10 load $ffb0 as the immediate
-; constant -80, not as an address.
+; its own purpose. Sites outside these scopes stay numeric; banks $0f/$10
+; load $ffb0 as the constant -80, not as an address.
 UNION
 ; level-up stat deltas (bank $02)
-; [16-bit] ComputeLevelUpStatDeltas: caller-supplied destination the per-stat deltas are written to (hl on entry, spilled at $02:$4a02)
+; [16-bit] ComputeLevelUpStatDeltas: destination for the per-stat deltas (hl on entry)
 hStatDeltaOutPtr:: dw
-; [16-bit] ComputeLevelUpStatDeltas: pointer to the 64-byte stack buffer (add sp, -64 at $02:$4a07) holding the player record copied before LevelUpPlayerRecord, which each stat is then differenced against
+; [16-bit] ComputeLevelUpStatDeltas: pointer to a 64-byte stack copy of the player record taken before LevelUpPlayerRecord; each stat is differenced against it
 hStatDeltaRecordCopy:: dw
 NEXTU
 ; save-slot debug editor (bank $03)
-; [16-bit] Unused_03_SaveSlotDebugEditor: byte offset of the edit cursor into the $d300 save-block buffer, wrapped to $400 by masking the high byte with $03; moved by Unused_03_MoveSaveEditorCursor, which takes the signed cursor step in c and the value step applied on A in b
+; [16-bit] Unused_03_SaveSlotDebugEditor: edit-cursor offset into the $d300 save-block buffer, wrapped at $400; moved by Unused_03_MoveSaveEditorCursor (c = signed cursor step, b = value step applied on A)
 hSaveEditorCursor:: dw
 ENDU
 
@@ -157,10 +156,10 @@ hLinkTxByte:: db
 ; [8-bit] Serial link state/role (0 = idle, 1/2 = connected roles); gates the encode/decode paths
 hLinkState:: db
 
-; [8-bit] Link error flags beside hLinkState. AdvanceFrame tests the top three bits while hLinkCounter is nonzero and jumps to LinkErrorReset if any is set -- but nothing in the ROM ever sets them, so the check never fires; InitSerialLink and ResetSerialState only clear it
+; [8-bit] Link error flags. AdvanceFrame jumps to LinkErrorReset if any of the top three bits is set while hLinkCounter is nonzero, but nothing sets them, so the check never fires; InitSerialLink and ResetSerialState clear it
 hLinkErrorFlags:: db
 
-; [8-bit] Cleared by InitSerialLink and ResetSerialState and read by nothing else
+; [8-bit] Cleared by InitSerialLink and ResetSerialState; read by nothing
 hUnusedLinkByte:: db
 	ds 1
 
@@ -181,18 +180,15 @@ hActiveJingle:: db
 hMusic:: db
 	ds 1
 
-; Shared HRAM scratch pool: the serial-link input path, the bank-0
-; sound driver, the sprite queue and the story actor engine reuse the same
-; bytes. They do not run concurrently, and the sound driver goes further --
-; RunSoundEngine copies all 32 bytes out to $d000 in WRAM bank $07 on entry
-; and copies them back on exit, so a value living here survives an audio
-; update untouched. That is what lets hMatchFrameCounter be a counter at all.
-; Only proven consumers are named; sites outside every variant's scope keep
-; the numeric address.
+; Shared HRAM scratch pool: the serial-link input path, the bank-0 sound
+; driver, the sprite queue and the story actor engine reuse the same bytes.
+; RunSoundEngine copies all 32 bytes to $d000 in WRAM bank $07 on entry and
+; back on exit, so values here survive an audio update (which is what lets
+; hMatchFrameCounter count). Sites outside every variant's scope stay numeric.
 UNION
 ; serial-link input slots (default: link-aware match/menu code in many banks)
 	ds 2
-; [8-bit] Re-entrancy guard around RunSoundEngine: UpdateSoundEngine returns immediately if it is already set, sets it, runs the engine and clears it. It survives the run because RunSoundEngine saves and restores the whole pool -- inside the engine this same byte is hSndChannelType
+; [8-bit] Re-entrancy guard: UpdateSoundEngine returns if set, else sets it around RunSoundEngine. Inside the engine this byte is hSndChannelType (the pool is saved and restored)
 hSoundEngineBusy:: db
 ; [8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role); also the scripted-input feed for demo/CPU-driven characters
 hLinkInput:: db
@@ -200,21 +196,21 @@ hLinkInput:: db
 hLinkRemoteInput:: db
 ; [8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)
 hLinkRemoteInputBuf:: db
-; [8-bit] Local input byte queued for transmission. PrepareLinkInputPayload loads it from hInputPressed and PrepareLinkStatePayload from ComposeLinkStateByte; SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores the remainder back, so a burst of presses is sent over several frames
+; [8-bit] Local input byte queued for transmission, loaded by PrepareLinkInputPayload (hInputPressed) or PrepareLinkStatePayload (ComposeLinkStateByte). SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores the remainder back
 hLinkTxInput:: db
 ; [8-bit] Set to 1 by SerialHandler when a byte completes; WaitSerialTransfer spins on it and AdvanceFrame's link wait clears it after pairing it with hVBlankOccurred
 hLinkTransferDone:: db
-; [8-bit] Non-zero while a serial block exchange runs (UpdateLinkSession, ResyncLinkSession, Unused_07_ExchangeLinkBlockToWram5 set it; the link menus clear it when done). AdvanceFrame skips the SELECT+START debug single-step while it is set
+; [8-bit] Nonzero while a serial block exchange runs (set by UpdateLinkSession, ResyncLinkSession, Unused_07_ExchangeLinkBlockToWram5; cleared by the link menus). AdvanceFrame skips the debug single-step while set
 hLinkExchangeActive:: db
-; [8-bit] Cleared by InitSerialLink and ResetSerialState; no other serial-path site touches it (the sound driver owns the same byte as hSndNoteTimer)
+; [8-bit] Cleared by InitSerialLink and ResetSerialState; otherwise unused on the serial path (the sound driver's hSndNoteTimer)
 hUnusedLinkSlot:: db
 ; [8-bit] Written with hLinkLastRxByte by both ExchangeLinkFrameByte routines and read by nothing
 hLinkLastRxMirror:: db
 ; [8-bit] Previous frame byte received. ExchangeLinkFrameByteMaster/Slave compare the new byte against it: equal means the peer retransmitted, which steps hLinkCounter and re-inits the link on the second repeat
 hLinkLastRxByte:: db
-; [8-bit] Top two bits of the last transmitted byte, inverted (`and $c0 / xor $c0`) by PrepareLinkStatePayload and PrepareLinkInputPayload and OR'd into every byte SerialEncodeInput sends. Alternating them is what lets the peer tell a fresh frame from a repeat
+; [8-bit] Sequence bits: top two bits of the last transmitted byte, inverted by PrepareLinkStatePayload/PrepareLinkInputPayload and OR'd into every byte SerialEncodeInput sends, so the peer can tell a fresh frame from a repeat
 hLinkTxSeqBits:: db
-; [8-bit] Which record of LinkStateBytePtrs_07 ComposeLinkStateByte builds the transmitted state byte from; the match and story pause menus and ResetMatchState set it as the screen changes, so the link sends the payload the current screen expects
+; [8-bit] Record of LinkStateBytePtrs_07 that ComposeLinkStateByte builds the transmitted state byte from; set per screen by the match and story pause menus and ResetMatchState
 hLinkPayloadKind:: db
 ; [8-bit] One-deep history of hLinkRemoteInputBuf on the slave decode path: SerialDecodeInput swaps the two so a dropped frame can fall back to the previous remote input
 hLinkRemoteInputPrev:: db
@@ -222,26 +218,26 @@ hLinkRemoteInputPrev:: db
 hLinkAckRequired:: db
 ; [8-bit] The byte handed to the serial port, held until SerialHandler sees the transfer finish and clears it; the slave's ack wait spins on it
 hLinkTxPending:: db
-; [8-bit] Bit queue SerialHandler shifts left once per serial interrupt. A set top bit on entry means the byte that just arrived is not payload, so rSB is not latched into hLinkRxByte; a bit shifted out suppresses hLinkTransferDone for that interrupt. Seeded with $40 when a transfer is queued
+; [8-bit] Bit queue SerialHandler shifts left per serial interrupt. Top bit set on entry = arrived byte is not payload (rSB not latched into hLinkRxByte); a bit shifted out suppresses hLinkTransferDone. Seeded with $40 when a transfer is queued
 hLinkShiftQueue:: db
 ; [8-bit] Players currently joined to the link session. Unused_07_AdvanceLinkPlayerCount steps it against wMatchIsDoubles + 1 as peers join and leave
 hLinkPlayerCount:: db
 ; [8-bit] Remote player's cursor page in the link character grid, written beside wMenuCursor2X/Y and read by GetGridSlotFromLinkCursor and the MoveLinkCursor* handlers
 hLinkCursorPage:: db
-; [8-bit] Written twice by RunLinkCharSelectScreen and read by nothing. The sound driver owns the byte as hSndPeriodHi, but the pool is saved and restored around the engine, so the write neither survives nor disturbs anything
+; [8-bit] Written by RunLinkCharSelectScreen, read by nothing (the sound driver's hSndPeriodHi)
 hUnusedLinkSelectByte:: db
 ; [16-bit] Checksum ComputeNibbleBufferChecksum leaves for the block just transferred; both ends compare it after the last nibble and retry the block if it differs
 hLinkBlockChecksum:: dw
-; [8-bit] Nonzero makes VBlankHandler return immediately, doing no palette, OAM or tilemap work. The link resync sets it while it busy-waits on the serial line and clears it when the session is back in step
+; [8-bit] Nonzero makes VBlankHandler return immediately (no palette, OAM or tilemap work); set by the link resync while it busy-waits on the serial line
 hVBlankSuppressed:: db
-; [8-bit] Backoff counter in Unused_07_DelayByLinkPhase: decremented each call and reset to $0f when it goes negative, so repeated retries spin for a varying number of frames instead of locking in step with the peer
+; [8-bit] Backoff counter in Unused_07_DelayByLinkPhase: decremented each call, reset to $0f when negative, so retries vary in length instead of locking in step with the peer
 hLinkPhaseDelay:: db
-; [8-bit] Frames the match has simulated. Incremented once per frame by the local driver (bank $08, after AdvanceFrame + UpdateMatchFrame) and by all three link frame drivers (SyncLinkFrame, RunLinkMatchFrame, RunLinkInputFrame), so it counts the same either way; cleared by ResetMatchState and by InitSerialLink / ResetSerialState. Read only for cheap periodic effects: `and $0f` cycles the landing marker's 16-frame animation, and `and $01` draws the ground shadow and the offscreen-character arrow on alternate frames -- the usual Game Boy way to fake a translucent sprite
+; [8-bit] Frames the match has simulated. Incremented by the local driver (bank $08) and the link frame drivers (SyncLinkFrame, RunLinkMatchFrame, RunLinkInputFrame); cleared by ResetMatchState, InitSerialLink and ResetSerialState. Read for periodic effects: `and $0f` cycles the landing marker's animation, `and $01` flickers the ground shadow and offscreen-character arrow
 hMatchFrameCounter:: db
 	ds 6
 NEXTU
 ; sound driver (bank 0, $3373-$3dd3)
-; [16-bit] Current channel's script/state pointer, copied from the channel struct each update (borrows the sprite-queue bytes; RunSoundEngine save/restores them)
+; [16-bit] Current channel's script/state pointer, copied from the channel struct each update
 hSndScriptPtr:: dw
 ; [8-bit] Channel type in the low 2 bits (0=square1/sweep, 1=square2, 2=wave, 3=noise); high nibble carries the vibrato depth / note-length index
 hSndChannelType:: db
@@ -289,7 +285,7 @@ hSndNoteLenReload:: db
 hSndNoteLenTimer:: db
 ; [8-bit] Instrument selector: high nibble picks the wave pattern / envelope-pointer table, low nibble the envelope sequence; set by cmd $a8
 hSndInstrument:: db
-; [8-bit] Echo repeat counter (cmd $aa); note this HRAM byte is hActorPtr under the story-actor variant
+; [8-bit] Echo repeat counter (cmd $aa)
 hSndEchoTimer:: db
 ; [8-bit] Echo control: high nibble enable/count, low nibble note offset
 hSndEchoCtrl:: db

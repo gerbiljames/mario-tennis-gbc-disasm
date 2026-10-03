@@ -1,4 +1,4 @@
-; Game-flag names (docs/story_mode.md). Hand-maintained.
+; Game-flag names (docs/story_mode.md).
 ; FLAG_* = a bit of the per-story-slot wGameFlags array ($c9c0, 32 bytes).
 ; The value is the flag number: byte * 8 + bit, where the handlers apply
 ; mask $80 >> bit to wGameFlags[byte]. Pass it to `set_flag`/`clear_flag`/

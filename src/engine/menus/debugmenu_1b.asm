@@ -175,8 +175,7 @@ Unused_1b_LoadUnlockDebugScreenGfx:
 	call LoadPaletteShadow ; $6646
 	ret ; $6649
 ; Decompresses UnlockDebugNavGridTable to $d000, uploads it to $8500 and loads
-; its palette. The leading `ret` means it never runs -- this is debug-screen
-; artwork, so the screen presumably renders without it.
+; its palette. The leading `ret` means it never runs.
 Unused_1b_LoadUnlockDebugNavGridGfx:
 	ret ; $664a
 	ld hl, UnlockDebugNavGridTable ; $664b

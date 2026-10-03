@@ -189,14 +189,7 @@ LoadHighlightedCharPalette:
 ; select slots. Sits between LoadHighlightedCharPalette and
 ; SetupCharacterSelectScreen; the palette routine computes its own
 ; index arithmetically (cursor index + partner flag, then + 4) and
-; never consults a table.
-;
-; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
-; HIGH split base, no 8-bit register pair, and no dw word -- searched over
-; the raw ROM (so unproven code inside blobs counts) for every address
-; inside it, not just its start, with cross-bank byte coincidences filtered
-; out. Driving the character-select and CPU-difficulty screens under a
-; trace added no coverage here either.
+; never consults a table. Nothing references it.
 Unused_38_SlotIndexOrder:
 	; $4971, 4 bytes (bytes:4)
 	db $03, $01, $02, $00 ; 0x00

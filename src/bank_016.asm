@@ -6,8 +6,9 @@ DEF ApplySpriteWobbleX_16_NAME EQUS "Unused_16_ApplySpriteWobbleX"
 DEF ApplySpriteWobbleY_16_NAME EQUS "Unused_16_ApplySpriteWobbleY"
 DEF DrawAsciiDigitChar_16_NAME EQUS "Unused_16_DrawAsciiDigitChar"
 
-; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
-	INCLUDE "data/bank_018/lz_MatchWinLoseGfx.inc" ; DEF MatchWinLoseGfx_SIZE EQU its decoded length, generated from the .bin by make
+; <Label>_SIZE: decoded length of each tile block this bank copies whole through
+; LoadCompressedTileBlock (each .inc is generated from its .bin by make)
+	INCLUDE "data/bank_018/lz_MatchWinLoseGfx.inc"
 
 INCLUDE "src/engine/menus/menu_16.asm"
 INCLUDE "src/engine/menus/diagram_16.asm"

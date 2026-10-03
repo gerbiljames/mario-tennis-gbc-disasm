@@ -92,10 +92,9 @@ ApplyCpuDifficultyToCharRecords:
 ; wExhibitionMode*CharacterDifficulty, and an EXP tier read only for
 ; characters that are not created ones.
 ;
-; Records 1-4 ramp monotonically -- reaction delays 28/18/10/2, tracking
-; 60/120/190/230, difficulty 0/1/2/3, tier 1/3/5/7 -- which is what
-; identifies them as EASY/NORMAL/HARD/INTENSE. Slot 0 duplicates
-; INTENSE and is what an unset difficulty selects.
+; Records 1-4 are EASY/NORMAL/HARD/INTENSE: reaction delays 28/18/10/2,
+; tracking 60/120/190/230, difficulty 0/1/2/3, tier 1/3/5/7. Slot 0
+; duplicates INTENSE and is what an unset difficulty selects.
 CpuDifficultyParamPtrs_38:
 	; $5feb, 10 bytes (records:2)
 	dw CpuDifficultyParamsUnset ; record 0
@@ -438,10 +437,9 @@ NeedsCpuDifficultyPrompt:
 .notMarioCast:
 	xor a ; $6206
 	ret ; $6207
-; Returns 1 for character ids $17-$1f. Those are the nine Mario-series
-; characters: id = bank $30 string index - 27 puts them at indices 50-58,
-; Luigi through Peach, and GetMarioCastIndex ($3b:$7de1) does `sub $17` into a
-; nine-entry table, so the block is exactly those ids and nothing else.
+; Returns 1 for character ids $17-$1f, the nine Mario-series characters
+; (Luigi through Peach; GetMarioCastIndex ($3b:$7de1) indexes its nine-entry
+; table with id - $17).
 ;
 ; What it gates is handedness. Both character grids reach their .toggleHandedness
 ; branch on `bit 3` (START) and refuse the toggle unless this returns 1, so only

@@ -1,5 +1,5 @@
-; Game constants. Hand-maintained (not generated). Preincluded for every bank
-; via the Makefile PRELUDE, alongside hardware.inc / macros.inc.
+; Game constants, preincluded for every bank via the Makefile PRELUDE,
+; alongside hardware.inc / macros.inc.
 
 ; --- WRAM layout ---
 ; The switchable bank at $d000-$dfff. SoftReset and InitAndRunGame clear
@@ -56,9 +56,8 @@ def CHAR_RECORD_SIZE equ $40
 
 ; --- VRAM bank in a copy destination ---
 ; QueueVRAMCopy takes its destination in de and carries the VRAM bank in bit 13
-; of it: `bit 5, d` selects rVBK, and `res 5, d` recovers the real address. So a
-; destination of $b800 means $9800 in VRAM bank 1, and the disassembly writes
-; that as `$9800 + VRAM_BANK1` rather than hiding the bank inside a literal.
+; of it: `bit 5, d` selects rVBK, and `res 5, d` recovers the real address. So
+; `$9800 + VRAM_BANK1` ($b800) means $9800 in VRAM bank 1.
 def VRAM_BANK1 equ $2000
 
 ; --- $4000 slot tables ---
@@ -82,16 +81,13 @@ def vBGMap1 equ $9c00
 ; --- Absent cell in a table of tilemap addresses ---
 ; The character-select PlayerSlotBoxAddrs* tables hold one shadow-tilemap cell
 ; per player slot, and a layout that does not show a slot stores zero for it.
-; Nothing checks the fetched address, so the zero is a placeholder the code
-; relies on never selecting rather than a guard value -- which is exactly why
-; it wants a name instead of a bare $0000.
+; Nothing checks the fetched address: the code relies on never selecting it.
 def NO_BOX equ $0000
 
 ; --- Overworld actor slot stride ---
 ; wActors is 24 records of this size in WRAM bank $04. The engine walks them
 ; with `ld de, $0040 / add hl, de`, and SpawnActor turns an actor id into a
-; slot with two `srl h / rra` pairs -- id * 64 -- so the stride is the one
-; number that ties an actor id to an address.
+; slot with two `srl h / rra` pairs (id * 64).
 def ACTOR_SIZE equ $40
 
 ; --- Story-map behaviour cells (wBehaviorMap, docs/story_mode.md) ---
@@ -217,8 +213,7 @@ def SPEAKER_NONE equ $80
 
 ; --- Overworld actor record fields ---
 ; Offsets into one wActors record, which the engine and the story scripts
-; reach as `ld hl, ACTORF_* / add hl, bc` with the record in bc. Only fields
-; whose reader and writer agree are named; the rest stay offsets.
+; reach as `ld hl, ACTORF_* / add hl, bc` with the record in bc.
 def ACTORF_SCRIPT       equ $00 ; word: the actor script's next opcode
 def ACTORF_SCRIPT_BANK  equ $02
 def ACTORF_WAIT         equ $03 ; as_wait counter
@@ -337,11 +332,10 @@ def PADB_DOWN    equ 7
 
 ; --- Overworld actor facing (map_actor `facing`, map_entry `sprite`) ---
 ; The facing byte stored in an actor's state ($daXX). Its top 2 bits are a
-; direction index (0-3); CheckTriggerFacingMask ($0a:$53bd) shifts them out and
-; looks them up in a table -> PADF bit to test against a FACEMASK_* below. The
-; byte doubles as the movement angle fed to as_move (0/64/128/192 on a 256-unit
-; circle). These are the NPC/overworld facings, deliberately distinct from the
-; PADF_* joypad masks even where the value coincides.
+; direction index (0-3); CheckTriggerFacingMask shifts them out and looks them
+; up in a table -> PADF bit to test against a FACEMASK_* below. The byte
+; doubles as the movement angle fed to as_move (0/64/128/192 on a 256-unit
+; circle). Distinct from the PADF_* joypad masks even where the value coincides.
 def FACE_RIGHT   equ $00
 def FACE_DOWN    equ $40
 def FACE_LEFT    equ $80
@@ -349,20 +343,19 @@ def FACE_UP      equ $c0
 
 ; --- Cutscene actor slots ---
 ; The actor an overworld/cutscene `script_*` command targets (index into the
-; actor state array at $d000, stride $40). Slots are filled in a fixed order
-; when a story location loads (InitLocationActors, $0a:$5485): the player and
-; two paired system actors first, then the location's `map_actor` list in order
-; (SpawnActor always takes the first free slot, so list entry i -> slot 3+i).
-; Only the three reserved system slots have a stable name; the rest are
-; scene-local (see the per-scene actor ids). ACTOR_PLAYER_SHADOW and
-; ACTOR_PARTNER both run the $04:$41d1 follower script.
+; actor state array at $d000, stride $40). InitLocationActors fills slots in a
+; fixed order: the player and two paired system actors first, then the
+; location's `map_actor` list (SpawnActor takes the first free slot, so list
+; entry i -> slot 3+i). Only the three system slots have a stable name; the
+; rest are scene-local. ACTOR_PLAYER_SHADOW and ACTOR_PARTNER both run the
+; $04:$41d1 follower script.
 def ACTOR_PLAYER        equ $00 ; the main character sprite
 def ACTOR_PLAYER_SHADOW equ $01 ; player's paired follower actor ($41d1)
 def ACTOR_PARTNER       equ $02 ; companion/doubles partner (SpawnCompanionActor)
 
 ; --- Story-script facing mask (map_script `facing_mask`) ---
-; The direction an actor must face for FindStoryScriptEntry ($0a:$53e4) to run
-; the record. PADF-layout bits (matched against the facing->PADF table lookup);
+; The direction an actor must face for FindStoryScriptEntry to run the record.
+; PADF-layout bits (matched against the facing->PADF table lookup);
 ; FACEMASK_ANY ($ff) matches every facing.
 def FACEMASK_ANY   equ $ff
 def FACEMASK_RIGHT equ $10
@@ -371,7 +364,7 @@ def FACEMASK_UP    equ $40
 def FACEMASK_DOWN  equ $80
 
 ; --- NPC talk behaviour (arg0 of an NpcScripts map_script record) ---
-; RunNpcInteraction ($0a:$54b5) applies these around the handler.
+; RunNpcInteraction applies these around the handler.
 def NPC_FACE_PLAYER    equ $01 ; turn the actor toward the player first
 def NPC_RESTORE_FACING equ $02 ; and back to its old facing afterwards
 def NPC_IDLE_ANIM      equ $08 ; hold animation 1 while the handler runs
@@ -384,15 +377,14 @@ DEF NPCB_RESTORE_FACING EQU 1
 ; this, so the tile only acts on a deliberate A press.
 def TILETRIGGER_PRESS_ONLY equ $01
 
-; --- Shot types (wCurrentShotType, $c4a0) ---
+; --- Shot types (wCurrentShotType) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
-; SelectServeShotType ($08:$707e/$706b), which index the button (df16) x
-; second-button (df17) tables. Base strokes: A = topspin, B = slice,
-; A->B = lob, B->A = drop, A+B = smash; doubling a button gives its "power"
-; variant. When the ball is in smash range (df50 bit 4) the ground strokes are
-; swapped for their "reach" variants ($06/$07/$08, dispatched to bank $2c's
-; ProjectShotPlacement0-2). Serves mirror the ground strokes by first button:
-; A -> topspin serve, B -> slice serve, A+B -> flat serve (SelectServeShotType).
+; SelectServeShotType, which index wCharShotButton1 x wCharShotButton2 tables.
+; Base strokes: A = topspin, B = slice, A->B = lob, B->A = drop, A+B = smash;
+; doubling a button gives its "power" variant. When the ball is in smash range
+; (wCharBallReachFlags bit 4) the ground strokes are swapped for their "reach"
+; variants ($06/$07/$08, dispatched to bank $2c's ProjectShotPlacement0-2).
+; Serves by first button: A -> topspin, B -> slice, A+B -> flat.
 def SHOTTYPE_TOPSPIN            equ $00 ; A
 def SHOTTYPE_POWER_TOPSPIN      equ $01 ; A -> A
 def SHOTTYPE_SLICE              equ $02 ; B
@@ -410,7 +402,7 @@ def SHOTTYPE_SERVE_SLICE       equ $0d ; serve, B
 def SHOTTYPE_SERVE_FLAT        equ $0e ; serve, A+B
 
 ; AI shot habits (CharGroupTable_02, one 16-entry row per serve style;
-; AiPickShotButtons $08 draws one by AdvanceMatchRng & $0f): the stroke's two
+; AiPickShotButtons draws one by AdvanceMatchRng & $0f): the stroke's two
 ; button presses as nibbles, first press high -- 1 = A, 2 = B, 3 = A+B.
 def AISHOT_TOPSPIN             equ $10 ; A
 def AISHOT_POWER_TOPSPIN       equ $11 ; A -> A
@@ -420,11 +412,10 @@ def AISHOT_DROP                equ $21 ; B -> A
 def AISHOT_POWER_SLICE         equ $22 ; B -> B
 def AISHOT_NEUTRAL             equ $30 ; A+B, a smash when the ball is in range
 
-; --- Point outcome (wPointOutcome, $c4d8) — MATCH context ---
-; ResolvePointOutcome ($08:$4df4) dispatches `rst Rst00` on wPointOutcome:
-; 1-5 -> ShowCourtBanner(wPointOutcome) (banner id == the value), 6 -> the
-; winner banner ShowCourtBanner(wPointWinnerShotType+$17), 7/8 -> text popups.
-; So the low banner tileset ids equal these codes.
+; --- Point outcome (wPointOutcome) — MATCH context ---
+; ResolvePointOutcome dispatches `rst Rst00` on wPointOutcome: 1-5 ->
+; ShowCourtBanner(wPointOutcome) (banner id == the value), 6 -> the winner
+; banner ShowCourtBanner(wPointWinnerShotType + $17), 7/8 -> text popups.
 def POINTOUTCOME_FAULT          equ 1
 def POINTOUTCOME_DOUBLE_FAULT   equ 2
 def POINTOUTCOME_LET            equ 3
@@ -432,21 +423,21 @@ def POINTOUTCOME_NET            equ 4
 def POINTOUTCOME_OUT            equ 5
 def POINTOUTCOME_WINNER         equ 6
 
-; --- Winning-shot type (wPointWinnerShotType, $c491) ---
-; Set by the Record*Stat functions ($08:$5c5f+); the winner court banner is
-; ShowCourtBanner(value + $17) -> banner ids 24-28. Confirmed in-game.
+; --- Winning-shot type (wPointWinnerShotType) ---
+; Set by the Record*Stat functions; the winner court banner is
+; ShowCourtBanner(value + $17) -> banner ids 24-28.
 def POINTWINNER_SERVICE_ACE     equ 1
 def POINTWINNER_RETURN_ACE      equ 2
 def POINTWINNER_SMASH_ACE       equ 3
 def POINTWINNER_LOB             equ 4
 def POINTWINNER_DROP_SHOT       equ 5
 
-; --- Match pause-menu item ids (MatchMenuDefs $06:$466f) ---
+; --- Match pause-menu item ids (MatchMenuDefs) ---
 ; GetMatchMenuItemId returns one of these; they index MatchMenuItemGfxPointers
 ; (the selected item's word art), MatchMenuItemRectPointers (its 3x2 label in
 ; the list) and the item caption at text id $013f + id (bank $30, 319+id).
-; The names follow those captions; the comment gives the word art when it
-; differs, and several ids deliberately share one graphic.
+; Names follow the captions; the comment gives the word art, which several
+; ids share.
 def MATCHMENUITEM_RULES              equ $00 ; "RULES"
 def MATCHMENUITEM_CONTROLS           equ $01 ; "CONTROLS"
 def MATCHMENUITEM_OPTIONS            equ $02 ; "OPTIONS"
@@ -472,7 +463,7 @@ def MATCHMENUITEM_QUIT_PRACTICE      equ $15 ; "QUIT MINI-GAME"
 def MATCHMENUITEM_QUIT_MACHINE       equ $16 ; "QUIT MINI-GAME"
 def MATCHMENUITEM_QUIT_PRACTICE_ALT  equ $17 ; "QUIT MINI-GAME"
 
-; --- Story pause-menu item ids (StoryMenuDefs $06:$6ce0) ---
+; --- Story pause-menu item ids (StoryMenuDefs) ---
 ; Same shape for the story-mode pause menu: StoryMenuItemGfxPointers,
 ; StoryMenuItemRectPointers, caption at text id $0162 + id (bank $30, 354+id).
 def STORYMENUITEM_STATUS        equ $00 ; "STATUS"
@@ -494,12 +485,11 @@ def STORYMENUITEM_ITEMS         equ $0f ; "ITEMS"
 
 ; --- Global save flags (SRAM $a040-$a05f, 256 bits) ---
 ; Test/Set/ClearSaveFlag (bank $03) take the id in de: high byte = array byte
-; index, low byte = bit << 5, and the mask is $80 >> bit -- the same encoding
-; the wGameFlags rst vectors use, but a different, *global* array (see
-; docs/save_format.md). Flag number = byte * 8 + bit is quoted per line.
-; Numbers 0-31 double as the character-unlock bits: CheckCharacterUnlocked
-; ($18:$452a) tests flag number = character id, so the event that sets a bit
-; and the character it unlocks are the same bit (ids 0-3 are always unlocked).
+; index, low byte = bit << 5, and the mask is $80 >> bit -- the wGameFlags
+; encoding, but a separate global array (docs/save_format.md). Flag number =
+; byte * 8 + bit is quoted per line. Numbers 0-31 double as the
+; character-unlock bits: CheckCharacterUnlocked tests flag number = character
+; id (ids 0-3 always unlocked).
 
 def SAVEFLAG_OPENING_SEEN                equ $0120 ; #9; set when the title/opening sequence finishes
 def SAVEFLAG_UNLOCKED_FAY                equ $0140 ; #10 = char id $0a; granted by N64 transfer records
@@ -549,24 +539,14 @@ def SAVEFLAG_COURT_WAREHOUSE             equ $07a0 ; #61
 def SAVEFLAG_N64_RECORDS_PRESENT         equ $07c0 ; #62; set when save block $0b holds N64 transfer data
 def SAVEFLAG_DEBUG_TEST_MENU             equ $07e0 ; #63; toggled by bank $01's debug menu
 
-; --- Story locations (wStoryModeCurrentLocation $c280, wStoryReturnLocation) ---
-; A location id indexes StoryLocationTable_0a ($0a:$4ab2), 42 six-byte records
-; (GetStoryLocationCount returns $2a), so the id space is exactly $00-$29 and
-; the record at index i describes location i. Each id also names itself: the
-; popup LoadStoryLocationHeader ($0a:$5142) queues is text id $0179 + id
-; (`add $79 / adc $01`, string bank $30 index 377 + id), and the names below are
-; those strings turned into identifiers -- so they are the game's own wording,
-; not a guess. wStoryReturnLocation holds one of the same ids and is fed to the
-; same $0179 + id lookup by DrawStoryResultsHeader ($1e:$448c).
-;
-; Two of the strings need judgement. Ids $0b/$0c are both spelled "Junior Class
-; Court": they are the singles and doubles variants of one room, so they take
-; the _SINGLES/_DOUBLES suffix already used by their map_scripts labels. Ids
-; $1e-$29 are the ending cutscene's re-dressed locations and their strings carry
-; the cutscene's own scene numbers ("End1 Main Bldg", "End10 Varsity Court");
-; those numbers are kept, and id $1f keeps the unnumbered "End Restaurant Ent."
-; spelling the string actually uses. Ids $01-$04 are development leftovers whose
-; strings are what they are; only $03 is still reached, by bank $01's debug menu.
+; --- Story locations (wStoryModeCurrentLocation, wStoryReturnLocation) ---
+; A location id indexes StoryLocationTable_0a, 42 six-byte records ($00-$29).
+; Its name popup (LoadStoryLocationHeader, DrawStoryResultsHeader) is text id
+; $0179 + id (string bank $30 index 377 + id); the names below are those
+; strings. Ids $0b/$0c share "Junior Class Court" (singles and doubles maps).
+; Ids $1e-$29 are the ending cutscene's re-dressed locations and keep the
+; strings' scene numbers. Ids $01-$04 are development leftovers; only $03 is
+; still reached, by bank $01's debug menu.
 def STORYLOC_MAIN_MENU                  equ $00 ; no location loaded (title/main menu)
 def STORYLOC_DEVELOPMENT                equ $01 ; "Development"
 def STORYLOC_SMALL_CHAR_TEST            equ $02 ; "Small Char. Test"
@@ -610,22 +590,13 @@ def STORYLOC_END12_PRINCIPALS_OFFICE    equ $27 ; "End12 Principal's Office"
 def STORYLOC_END16_BEFORE_FINALS        equ $28 ; "End16 Before Finals"
 def STORYLOC_END17_AWARD_CEREMONY       equ $29 ; "End17 Award Ceremony"
 
-; --- Game mode (wGameMode, $c8a6) ---
-; What kind of tennis is being played. The id space is closed at $00-$0a by
-; SaveQuitMenuIdByGameMode ($06:$44f3), an 11-byte table the pause menu indexes
-; with wGameMode unguarded, and by ScoreboardModeGfxPointers ($06:$5cc9), 11
-; words of scoreboard word art indexed the same way -- and that word art is what
-; proves each id, because it spells the mode out on screen: RankingMatch,
-; IslandOpen, PracticeMatch, Exhibition, MiniGames, TennisMachine, WallPractice,
-; MarioMiniGames, LinkedMatch. The six results-screen headers dispatched at
-; $1e:$4319 agree, as does a third, independent source: the mode byte is field 0
-; of Singles/DoublesMatchSettingsTable ($0a:$4ab2/$4b2f) and field 3 of the
-; drill and minigame configs ($0b:$4002/$0d:$4006), and RewardFlagListMode0_1e
-; ($1e:$6d1c) hands the same 25 match indices their completion flags -- the
-; mode-$01 rows get FLAG_WON_*_RANK_*, the mode-$02 rows FLAG_WON_ISLAND_OPEN_*,
-; and the three mode-$0a rows FLAG_WON_DREAM_MATCH_SINGLES/DOUBLES.
-; wGameMode lives inside wStorySlotData, so it is saved with the story slot and
-; the mode a results screen reopened from the main menu renders is the saved one.
+; --- Game mode (wGameMode) ---
+; What kind of tennis is being played, $00-$0a. Indexes
+; SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers (whose word art spells
+; each mode out) unguarded; it is field 0 of Singles/DoublesMatchSettingsTable
+; and field 3 of the drill and minigame configs. wGameMode lives inside
+; wStorySlotData, so it is saved with the story slot and a results screen
+; reopened from the main menu renders the saved mode.
 def GAMEMODE_NONE           equ $00 ; no match; the story overworld (RunStoryLocation clears it)
 def GAMEMODE_RANKING_MATCH  equ $01 ; story class-ranking match (Junior/Senior/Varsity)
 def GAMEMODE_ISLAND_OPEN    equ $02 ; story Island Open tournament match
@@ -640,14 +611,11 @@ def GAMEMODE_DREAM_MATCH    equ $0a ; story Dream Match against the Mario cast
 
 ; --- Character ids (character record byte +$0b, wMatchPlayerChar/OpponentChar) ---
 ; The 32-entry roster, in the order every character-indexed table takes:
-; CharSpriteSetTable ($07:$5a50), CharPaletteIndexTable ($02:$417e),
-; CharacterPortraitTable_16 and the bank $1b menu mugshots. The name is text id
-; $001b + id (bank $30 strings from index $1b), fetched two instructions after
-; InitCa00RecordFromCharId ($02:$4066) stores it at record +$0b -- so the names are
-; the ROM's own, with punctuation dropped to make identifiers. Ids 0-3 are
-; always unlocked; for 4-31 CheckCharacterUnlocked ($18:$452a) tests *save flag
-; number = character id*, which is why the SAVEFLAG_UNLOCKED_*/_CLEARED_* block
-; above names the same characters.
+; CharSpriteSetTable, CharPaletteIndexTable, CharacterPortraitTable_16 and the
+; bank $1b menu mugshots. The name is text id $001b + id (bank $30 strings
+; from index $1b). Ids 0-3 are always unlocked; for 4-31
+; CheckCharacterUnlocked tests save flag number = character id, so the
+; SAVEFLAG_UNLOCKED_*/_CLEARED_* block above names the same characters.
 def CHAR_ALEX       equ $00
 def CHAR_NINA       equ $01
 def CHAR_HARRY      equ $02
@@ -685,11 +653,9 @@ def CHAR_PEACH      equ $1f
 ; Records $20-$35 of StoryCharacterRecords_02 continue the roster's name pool
 ; (bank $30 string id + 27): "Ranker 32" to "Ranker 47", then six named
 ; opponents. On screen RemapExtendedCharId shows each as a roster character
-; (NameTextRemap_02), so these names are the records' own, not what the player
-; reads. Records $36 and up have no name in the pool. $36, $49-$53, $57 and
-; $5a are named nowhere below because nothing loads them: no match settings
-; row, drill_def, partner table entry or code site holds those ids, and their
-; stats are all zero.
+; (NameTextRemap_02). Records $36 and up have no name in the pool. $36,
+; $49-$53, $57 and $5a are unnamed because nothing loads them; their stats are
+; all zero.
 def CHAR_RANKER_32     equ $20
 def CHAR_RANKER_33     equ $21
 def CHAR_RANKER_34     equ $22
@@ -718,8 +684,8 @@ def CHAR_EDGAR       equ $35
 def CHAR_DRILL_NET_GAME_MATCH_1_SERVING   equ $54
 def CHAR_DRILL_NET_GAME_MATCH_2_SERVING   equ $55
 def CHAR_DRILL_NET_GAME_MATCH_3_SERVING   equ $56
-; $57, between them, would be Stroke Match 1's: its stats are all zero and
-; that drill loads no second record.
+; $57 would be Stroke Match 1's: its stats are all zero and that drill loads
+; no second record.
 def CHAR_DRILL_STROKE_MATCH_2_RECEIVING   equ $58
 def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 ; Records $5b-$60 are the Dream Match opponents' records, in the match
@@ -757,40 +723,25 @@ def CHAR_DRILL_STROKE_PRACTICE_2  equ $47
 def CHAR_DRILL_STROKE_PRACTICE_3  equ $48
 
 ; --- Character-id sentinels (values outside the roster) ---
-; InitCa00RecordFromCharId ($02:$4066) branches on the id before using it as a
-; roster index: $ff clears the slot and stamps $ff at record +$0b, and any id
-; with bit 7 set names a *story* character record instead of a roster entry --
-; bit 0 selects $c900 (main) or $c940 (partner). Roster ids $20 and up are the
-; story-mode opponents and are remapped back into 4-31 by RemapExtendedCharId
-; ($02:$4c58) for their name and portrait (their constants are above).
+; InitCa00RecordFromCharId branches on the id before using it as a roster
+; index: $ff clears the slot and stamps $ff at record +$0b, and any id with
+; bit 7 set names a story character record instead -- bit 0 selects $c900
+; (main) or $c940 (partner). Ids $20 and up are remapped into 4-31 by
+; RemapExtendedCharId for their name and portrait.
 ; CHAR_UNUSED_15 doubles as a "no visible opponent / locked" marker: it is the
 ; opponent of every Tennis Machine config and of Shooting Star, and
-; GetUnlockedMarioCastCharAtGridSlot ($3b:$66b5) returns it for a Mario-cast
-; grid slot whose character is still locked.
+; GetUnlockedMarioCastCharAtGridSlot returns it for a locked Mario-cast slot.
 def CHAR_NONE          equ $ff ; empty court slot
 def CHAR_STORY_MAIN    equ $80 ; the story slot's own character ($c900 record)
 def CHAR_STORY_PARTNER equ $81 ; its doubles partner ($c940 record)
 
-; --- Court ids (wCurrentlyUsedCourt, $c8f4) ---
-; The one index the match setup passes to pick a court. Its only reader is
-; LoadCourtSceneData ($08:$5e28), which multiplies it by 4 into the 25-row
-; LoadCourtSceneDataTable ($08:$5dc4) and takes the row's surface friction,
-; surface restitution and court-scene graphics id -- so a court id is exactly
-; "one row of bounce/friction/scene", and ids that only differ in scene are
-; skins of the same surface ($0d is $02's row byte for byte).
-; Proof of the names, in order of strength:
-; ids 4-8 -- ComputeUnlockedCourtFlags ($3e:$69a0) builds wUnlockedCourtMask
-; from CourtUnlockFlagIds_3e, StoreCourtUnlockBits explodes it one byte per
-; court and IsCourtUnlocked ($3e:$697b) reads byte (id - 4), which pins
-; SAVEFLAG_COURT_STAR/_CASTLE/_TROPICS/_JUNGLE/_WAREHOUSE onto 4/5/6/7/8;
-; ids $09/$0a/$0b/$18 -- every drill definition in bank $0b carries court $18
-; (Match) or $09 (Practice), and the Tennis Machine / Wall Practice configs in
-; bank $0d carry $0a / $0b;
-; ids $0f-$17 -- each Mario minigame's bank $0d config names its own court;
-; ids $00-$03 -- the four always-available courts of the exhibition court
-; select (IsCourtUnlocked returns "unlocked" below 4); the surface names follow
-; the community RAM map and are consistent with the friction/restitution pairs
-; (clay slowest, composition fastest).
+; --- Court ids (wCurrentlyUsedCourt) ---
+; Read only by LoadCourtSceneData, which takes row (id * 4) of the 25-row
+; LoadCourtSceneDataTable: surface friction, surface restitution and
+; court-scene graphics id. Ids that differ only in scene are skins of the same
+; surface ($0d is $02's row byte for byte). IsCourtUnlocked reads byte
+; (id - 4) of the unlock bits, so ids 4-8 are SAVEFLAG_COURT_STAR..._WAREHOUSE;
+; ids $00-$03 are always available.
 def COURT_HARD              equ $00
 def COURT_CLAY              equ $01
 def COURT_GRASS             equ $02
@@ -818,11 +769,9 @@ def COURT_TWO_ON_ONE        equ $17
 def COURT_TRAINING_MATCH    equ $18 ; Training Court, Match drills
 
 ; --- Match-list category (wCurrentMinigameStoryMatch high byte, $c8f6) ---
-; The 16-bit selector at $c8f6 is (category, index). The category decides which
-; list the index means: 0/1 pick a row of SinglesMatchSettingsTable_0a /
-; DoublesMatchSettingsTable_0a ($0a:$4ab2/$4b2f, chosen by `cp $01` at
-; $0a:$4a62), 2 means the index is a MINIGAME_* id below. Every drill and
-; minigame setup path writes 2 here ($0b:$4022, $0d:$4026).
+; The 16-bit selector at $c8f6 is (category, index). 0/1: the index is a row of
+; SinglesMatchSettingsTable_0a / DoublesMatchSettingsTable_0a; 2: the index is
+; a MINIGAME_* id (written by every drill and minigame setup path).
 def MATCHLIST_SINGLES  equ $00
 def MATCHLIST_DOUBLES  equ $01
 def MATCHLIST_TRAINING equ $02
@@ -855,27 +804,19 @@ def STORYMATCH_DREAM_INTENSE         equ $17
 def STORYMATCH_DREAM_HARD            equ $18
 
 ; --- Training/minigame ids (wCurrentMinigameStoryMatch low byte, $c8f7) ---
-; The argument of RunTrainingDrillByID ($0b:$4705), which is the single entry
-; point for everything in MATCHLIST_TRAINING: below $12 it indexes
-; DrillDefinitionPtrs ($0b:$47b4), otherwise it hands the id to
-; StartMinigameByID ($0d:$407f), which indexes MinigameConfigTable as id - $12
-; ($24 is special-cased into RunDoublesDrillMatch, $0b:$7258).
-; The 18 drill names come from the debug drill list (text 31:141-31:147, four
-; items per string, item order == id) and are corroborated three ways: the
-; Match drills all run on COURT_TRAINING_MATCH and the Practice drills on
+; The argument of RunTrainingDrillByID, the single entry point for
+; MATCHLIST_TRAINING: below $12 it indexes DrillDefinitionPtrs, otherwise
+; StartMinigameByID indexes MinigameConfigTable with id - $12 ($24 is
+; special-cased into RunDoublesDrillMatch).
+; The 18 drill names come from the debug drill list (text 31:141-31:147, item
+; order == id). Match drills run on COURT_TRAINING_MATCH, Practice drills on
 ; COURT_TRAINING_PRACTICE; the story lesson menus add $03/$09/$0f to a 0-2
-; menu pick ($10:$4534/$456c/$45a4); and bank $15's Match challenge scenes pass
-; exactly 0-2, 6-8 and $0c-$0e. (The ROM's own menu string for id 3 reads
-; "Service Match 1" where 4 and 5 read "Service Practice 2/3" -- a typo.)
+; pick. (The ROM's menu string for id 3 reads "Service Match 1", a typo for
+; "Service Practice 1".)
 ; $12-$1b are the Tennis Machine and Wall Practice levels plus their two
-; high-score ("Master Lvl") variants, from the same menu and from the tables
-; MachineCourtStartLevelSceneTable ($14:$45f8) and
-; LaunchWallPracticeMinigameTable ($12:$52b9).
-; $1c-$24 are the nine Mario minigames. SetMinigameClearFlag ($1e:$6edc)
-; indexes MinigameClearFlagTable_1e by (id - $1c) * 3 + level, tying each id to
-; its three SAVEFLAG_CLEARED_* bits, and independently each id's bank $0d
-; config carries the player character that the Mario-minigame select grid shows
-; in the matching slot (MarioCastCharAtGridSlotTable, $3b:$66e9).
+; high-score ("Master Lvl") variants.
+; $1c-$24 are the nine Mario minigames; SetMinigameClearFlag indexes
+; MinigameClearFlagTable_1e by (id - $1c) * 3 + level.
 def MINIGAME_SERVICE_MATCH_1           equ $00
 def MINIGAME_SERVICE_MATCH_2           equ $01
 def MINIGAME_SERVICE_MATCH_3           equ $02
@@ -914,13 +855,12 @@ def MINIGAME_TREASURE_BOX              equ $22
 def MINIGAME_MEDALLION_MATCH           equ $23
 def MINIGAME_TWO_ON_ONE                equ $24
 
-; --- Mario-minigame select slot (wSelectedMinigame, $cb20) ---
-; A second, smaller space: the cell index of the 3x3 Mario-minigame grid
-; ($3b:$62c7 stores it, $10:$5271 turns it into a MINIGAME_* id through
-; MinigameDrillIdTable). The same index picks the character shown in the cell
-; (MarioCastCharAtGridSlotTable, $3b:$66e9) and the rules page (slot * 3 +
-; wMinigameLevel), and CheckMinigameGridExpanded ($3b:$66f2) asks whether slot
-; 6 is unlocked to decide between the 6-cell and 9-cell grids.
+; --- Mario-minigame select slot (wSelectedMinigame) ---
+; The cell index of the 3x3 Mario-minigame grid, turned into a MINIGAME_* id
+; through MinigameDrillIdTable. The same index picks the character shown in
+; the cell (MarioCastCharAtGridSlotTable) and the rules page (slot * 3 +
+; wMinigameLevel); CheckMinigameGridExpanded asks whether slot 6 is unlocked
+; to choose between the 6-cell and 9-cell grids.
 def MARIOGAME_BOO_BLAST       equ $00 ; Mario
 def MARIOGAME_SHOOTING_STAR   equ $01 ; Luigi
 def MARIOGAME_PERFECT_SHOT    equ $02 ; Peach
@@ -934,8 +874,7 @@ def MARIOGAME_TWO_ON_ONE      equ $08 ; Bowser
 ; --- WRAM banks (wram_bank / push_wram_bank; the "at a glance" notes in ram/wram.asm) ---
 ; Banks 1-3 and 5-7 each have one main owner; 4-7 also hold the four
 ; on-court character structs at $df00, one per wCharIndex, which the match
-; engine selects with WRAM_CHARn. The two spellings are the same number: the
-; name at a site says which use the code is reaching for.
+; engine selects with WRAM_CHARn. Same numbers, different use.
 def WRAM_STAGING      equ 1 ; VRAM staging: wDecompBuffer, which every screen decompresses into
 def WRAM_COURT_PLANES equ 2 ; the court's tile and attribute planes; the overworld scroll buffer's attribute half; the char-data screen's attribute pages
 def WRAM_SCREEN       equ 3 ; wShadowTilemap, the full-screen UIs' tile plane; the scroll buffer's tile half; the char-data screen's tile pages
@@ -965,39 +904,38 @@ def A_ equ 9
 def A# equ 10
 def B_ equ 11
 
-; --- Sound ids (a to PlaySound $3297 / PlaySoundManaged $3024 / `sound`) ---
-; One 8-bit id space covers both music and sound effects; the routine splits it
-; at $50. PlaySound reads $3151 + (id - 1) * 2 for id < $50 and $31b5 +
-; (id - $50 - 1) * 2 above, so ids $01-$32 are the 50 entries of the first index
+; --- Sound ids (a to PlaySound / PlaySoundManaged / `sound`) ---
+; One 8-bit id space covers both music and sound effects, split at $50.
+; PlaySound reads $3151 + (id - 1) * 2 for id < $50 and $31b5 +
+; (id - $50 - 1) * 2 above: ids $01-$32 are the 50 entries of the first index
 ; table and $51-$c1 the 113 of the second. Each entry names a voice count and a
 ; row in bank ($70 | nibble)'s SoundTable_*; the first table's entries are 3-4
 ; voices on channels 2-5 (songs), the second's 1-2 voices on channels 0-1
-; (effects) -- which is why id $00 stops the music (`jp z, StopAllSound` clears
-; channels 2-5) and id $50 stops the effects (clears channels 0-1 and returns
-; before the lookup). Ids $33-$4f index past the end of the first table into the
-; second; nothing reaches them, because the `sound` macro's handler ($2fb3)
-; claims $40-$4f as jingles first. That handler also latches every id below $40
-; into wCurrentBGM, so the wCurrentBGM values are exactly these BGM_* ids.
-; The sound test (Unused_01_RunSoundTest, $01:$6a5b) lists the same two spaces: ids
-; $00-$32 plus the five jingles on one axis, $50-$c1 on the other.
+; (effects). Id $00 stops the music (StopAllSound clears channels 2-5) and id
+; $50 the effects (clears channels 0-1). Ids $33-$4f would index past the
+; first table, but the `sound` macro's handler ($2fb3) claims $40-$4f as
+; jingles first. That handler also latches every id below $40 into
+; wCurrentBGM, so wCurrentBGM holds these BGM_* ids.
+; Unused_01_RunSoundTest lists ids $00-$32 plus the five jingles on one axis,
+; $50-$c1 on the other.
 
-; Music. Proven per id from the tables that select one: CourtSelectBgmIds_3e
-; (court-select index -> wMatchBGM), the story_location records' BGM field,
-; MinigameConfigTable's records (+5 -> wMatchBGM), DrillDefinitionPtrs' records,
-; Singles/DoublesMatchSettingsTable_0a (+4), and SetPointSituationBgm.
+; Music. Selected by CourtSelectBgmIds_3e (court-select index -> wMatchBGM),
+; the story_location records' BGM field, MinigameConfigTable's records (+5),
+; DrillDefinitionPtrs' records, Singles/DoublesMatchSettingsTable_0a (+4) and
+; SetPointSituationBgm.
 def BGM_NONE                 equ $00 ; silence: stops the four music channels
 def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing (the location loop skips the start)
-def BGM_INTRO                equ $01 ; RunIntroCutscene ($6b:$4041)
-def BGM_TITLE_SCREEN         equ $02 ; RunTitleScreen ($6b:$7647)
+def BGM_INTRO                equ $01 ; RunIntroCutscene
+def BGM_TITLE_SCREEN         equ $02 ; RunTitleScreen
 def BGM_MENU                 equ $03 ; shared theme of ~20 menu screens (main menu, character/court/format select, save and N64 flows)
 def BGM_STATUS_SCREEN        equ $04 ; character/minigame data, game progress, trophies, N64 record screens
-def BGM_DICTIONARY           equ $05 ; TennisDictionaryScreen ($3f:$410f)
+def BGM_DICTIONARY           equ $05 ; TennisDictionaryScreen
 def BGM_EXHIBITION_MATCH     equ $06 ; CourtSelectBgmIds_3e rows 0-3: the four standard courts
 def BGM_EXHIBITION_MATCH_LINK equ $07 ; the same four rows of CourtSelectBgmIdsLink_3e (link play)
 def BGM_MARIO_MINIGAME       equ $08 ; Special Court story_location + the minigame select/level menus
 def BGM_WIN                  equ $09 ; match/point won (ShowMinigamePointResult, RunMatchWinLoseScreen)
 def BGM_LOSE                 equ $0a ; the .lostPoint branch of the same two
-def BGM_EXP_AWARD            equ $0b ; BeginNextExpAward ($1e:$5b22)
+def BGM_EXP_AWARD            equ $0b ; BeginNextExpAward
 def BGM_EXP_DISTRIBUTION     equ $0c ; ShowExpDistributionScreen, TickLevelUpJingle
 def BGM_STAT_DISTRIBUTION    equ $0d ; AnimateCharDataStatsReveal, SetupCharDataScreen
 def BGM_TIEBREAK             equ $0e ; SetPointSituationBgm, wTiebreakerIndicator set
@@ -1007,7 +945,7 @@ def BGM_COURT_STAR           equ $11 ; CourtSelectBgmIds_3e row 4; also Boo Blas
 def BGM_COURT_CASTLE         equ $12 ; row 5; the Peach's Castle story_location and Perfect Shot use it
 def BGM_COURT_TROPIC         equ $13 ; row 6; MinigameConfig_FruitFantasy
 def BGM_COURT_WAREHOUSE      equ $14 ; row 8; MinigameConfig_TreasureBox
-def BGM_TWO_ON_ONE           equ $15 ; RunDoublesDrillMatch ($0b:$726b -> wMatchBGM)
+def BGM_TWO_ON_ONE           equ $15 ; RunDoublesDrillMatch
 def BGM_COURT_JUNGLE         equ $16 ; row 7; MinigameConfig_BananaBunch
 def BGM_TARGET_MINIGAMES     equ $19 ; the drill_defs of Medallion Match, Shooting Star and Target Shot
 def BGM_ACADEMY_BUILDING     equ $1a ; story_location: the Academy Main Building and the Academy Wing
@@ -1030,7 +968,7 @@ def BGM_ISLAND_OPEN_LOSE     equ $2a ; ShowRankingBoard with wRankingBoardMode 2
 def BGM_ISLAND_OPEN_WIN      equ $2b ; the same board with mode 1 (match won)
 def BGM_CREDITS              equ $2c ; RunEndingCreditsSequence, the End1 story_location, and the debug text-overflow alarm
 def BGM_THE_END              equ $2d ; the still screen after each credit scroll (PlayScreenSequence1/2)
-def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle ($1d:$77c5)
+def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle
 
 ; Jingles ($40-$45, PlaySoundManaged only). The handler stores the id in
 ; hActiveJingle, plays JingleSoundIds[id - $40] (a music id) and leaves
@@ -1040,23 +978,19 @@ def JINGLE_LEVEL_CLEARED     equ $42 ; the LEVEL n CLEARED court banners (CourtB
 def JINGLE_HIGH_SCORE        equ $43 ; the HIGH SCORE court banner (row 22)
 def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomNpc03_13) and the save-slot debug editor
 
-; Sound effects. Named from the event the call site plays them for.
+; Sound effects, named for the event they play for.
 def SFX_STOP                 equ $50 ; silences the two effect channels
 ; The racket-contact sounds, one per shot type in ShotTypePresets_07
-; (ApplyShotTypePresets $07 plays the row's first byte at contact). Named for
-; the stroke family that uses each; the smash shares the slice sound.
+; (ApplyShotTypePresets plays the row's first byte at contact), named for the
+; stroke family that uses each; the smash shares the slice sound.
 def SFX_HIT_TOPSPIN          equ $51 ; topspin, power topspin, neutral and the reach strokes
 def SFX_HIT_DROP             equ $52
 def SFX_HIT_LOB              equ $53
 def SFX_HIT_SERVE            equ $54 ; all three serves
 def SFX_HIT_SLICE            equ $57 ; slice, power slice and the smash
-def SFX_BALL_BOUNCE          equ $5b ; HandleBallBounceEvent ($08:$435e)
-; The next two were confirmed on the emulator rather than from the call sites,
-; by hooking PlaySound.startChannels ($32dc) -- `hl` there is the index-table
-; entry, so it survives the hook's register dedup where the id in `a` does not --
-; and then performing one identifiable action at a time.
-def SFX_SWING                equ $5c ; racket swing: both sites are in StartCharSwing ($08:$6df1, $6e29), captured mid-rally under ROM bank $08
-def SFX_BALL_CONTACT         equ $77 ; the ball connecting with a scoring object: HandleBallTouchCharEvent ($08:$43dc), HandleMinigameTargetHit ($0a:$671f), MinigameTargetTypeScores ($0d:$5612); captured as a Medallion Match deflect
+def SFX_BALL_BOUNCE          equ $5b ; HandleBallBounceEvent
+def SFX_SWING                equ $5c ; racket swing (StartCharSwing)
+def SFX_BALL_CONTACT         equ $77 ; the ball connecting with a scoring object: HandleBallTouchCharEvent, HandleMinigameTargetHit, MinigameTargetTypeScores
 def SFX_MENU_MOVE            equ $5e ; every menu's "the cursor moved" branch
 def SFX_MENU_SELECT          equ $5f ; A accepted, menu continues
 def SFX_MENU_DECIDE          equ $60 ; A accepted the screen's final choice (fades out after it)
@@ -1084,8 +1018,7 @@ def SFX_SCORE_STEP5          equ $bc
 def SFX_SCORE_STEP6          equ $bb
 def SFX_SCORE_STEP7          equ $ba
 
-; Effects named from their call sites on 2026-09-11 (the emulator gives no
-; audio, so these say where a sound plays, not what it sounds like).
+; Effects named for where they play, not what they sound like.
 def SFX_SPECIAL_HIT            equ $55 ; the special-shot hit spark (StartHitEffect $08)
 def SFX_SWING_CHARGE           equ $59 ; a character starting a swing windup (CharSwingWindupPhase $08)
 def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNetCrossing $08)
@@ -1126,12 +1059,12 @@ def SFX_CHIME                  equ $97 ; a minigame target hit / score popup, an
 def SFX_EMOTE                  equ $98 ; an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)
 def SFX_APPEAR1                equ $99 ; the first of the two pop sounds cutscenes alternate as actors are placed one by one; also after a stomp
 def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_MusicSettingHandler0/1 $1a)
-def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries; which map script selects it is not established
+def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries
 
 ; --- Overworld walk-sprite animations (script_set_anim, as_anim, map_actor) ---
-; Animation ids 0-4 mean the same in every walk sprite's AnimPtrs table
-; (frames identified from the sprite graphics; ids 5 and up differ by sprite:
-; a racket swing for the racket holders, another bounce for the rest).
+; Animation ids 0-4 mean the same in every walk sprite's AnimPtrs table; ids
+; 5 and up differ by sprite (a racket swing for the racket holders, another
+; bounce for the rest).
 def ANIM_STILL  equ $00 ; frame 0, held
 def ANIM_WALK   equ $01 ; frames 0 and 1, the stepping loop (also the idle shuffle)
 def ANIM_BOUNCE equ $02 ; stand, crouch, stand, crouch, then back to ANIM_WALK
@@ -1159,62 +1092,52 @@ def ANIM_SWING_BACK     equ $09 ; the twelve-animation sprites: the backswing po
 def ANIM_SWING_THROUGH  equ $0a ; the twelve-animation sprites: the follow-through pose, held
 def ANIM_SIDESTEP       equ $0b ; Alex and Nina: a lean to the side, twice, then held
 
-; --- On-court character animation ids (wCharAnimId $df2e, wCharSwingAnim $df15) ---
-; One id space, not two. SetCharAnimation ($08:$69ea) stores its argument in
-; wCharAnimId and indexes wCharAnimTablePtr by it; that table is the 19-entry
-; <Char>SpriteAnims list every character bank ($40-$5d) opens with, so an id is
-; a direct index into <Char>SpriteAnim00-18 and the space is exactly $00-$12.
-; wCharSwingAnim is not a separate encoding -- it is the id of the swing being
-; built, copied into wCharAnimId by CharSwingWindupPhase ($08:$6c4a). The debug
-; character viewer confirms the range: CharViewerInputLoopTable ($1a:$792f)
-; feeds SetCharAnimation an identity list $00..$12.
+; --- On-court character animation ids (wCharAnimId, wCharSwingAnim) ---
+; SetCharAnimation stores its argument in wCharAnimId and indexes
+; wCharAnimTablePtr by it: the 19-entry <Char>SpriteAnims list every character
+; bank ($40-$5d) opens with, so the space is $00-$12. wCharSwingAnim holds an
+; id from the same space, copied into wCharAnimId by CharSwingWindupPhase.
 ;
-; Two structural rules generate most of the table, and both are visible in the
-; scripts themselves (Alex's, but every character bank is laid out identically):
-;   swing + $08 = the held "ready" pose  -- CharRallyReadyPhase ($08:$6c0f)
-;                 plays `wCharSwingAnim + $08` while the button is down, and
-;                 SpriteAnim0d/0e/0f are each a single frame, held with delay
-;                 $ff, that is the frame immediately before SpriteAnim05/06/07.
+; Two rules generate most of the table (every character bank is laid out alike):
+;   swing + $08 = the held "ready" pose -- CharRallyReadyPhase plays
+;                 `wCharSwingAnim + $08` while the button is down;
+;                 SpriteAnim0d/0e/0f are each the single held frame just
+;                 before SpriteAnim05/06/07.
 ;   swing + $04 = the quick (uncharged) variant -- StartCharSwing.startSwing
-;                 ($08:$6e37) adds 4 when fewer than 5 windup frames elapsed,
-;                 and SpriteAnim09/0a/0b/0c are each the *first* frame of
+;                 adds 4 when fewer than 5 windup frames elapsed;
+;                 SpriteAnim09/0a/0b/0c are the first frame of
 ;                 SpriteAnim05/06/07/08 alone before chaining back to idle.
-; That is why CharRallyEndState ($08:$6a90) tests the seven-value set
-; $05 $06 $07 $09 $0a $0b $12: it is "a ground swing or a dive is still
-; playing", i.e. all four strokes in both their charged and quick forms, plus
-; the dive. The smash is missing from the set only because the airborne bit
-; ($df0f bit 2) is tested on the next line and covers it.
+; CharRallyEndState tests the set $05 $06 $07 $09 $0a $0b $12: a ground
+; swing (charged or quick) or a dive still playing. The smash is covered by
+; the airborne bit (wCharFlags bit 2) tested on the next line.
 def CHARANIM_STAND           equ $00 ; frame 0, held; the parked pose on the character-select screen
 def CHARANIM_IDLE            equ $01 ; the ready bob; UpdateCharRunAnimation's not-moving case, and what every swing chains back to
 def CHARANIM_RUN             equ $02 ; UpdateCharRunAnimation's moving case (wCharFlags bit 4)
-def CHARANIM_CELEBRATE       equ $03 ; CharPointReactionPhase, wCharPointResult >= 0; also both characters on the results screen ($1e:$49e5)
+def CHARANIM_CELEBRATE       equ $03 ; CharPointReactionPhase, wCharPointResult >= 0; also both characters on the results screen
 def CHARANIM_DEJECTED        equ $04 ; CharPointReactionPhase, wCharPointResult < 0
-def CHARANIM_FOREHAND        equ $05 ; SelectForehandBackhand ($08:$6e58)
-def CHARANIM_BACKHAND        equ $06 ; SelectForehandBackhand ($08:$6e5e); ExecuteShot counts it toward wShotAimMirror
-def CHARANIM_OVERHEAD        equ $07 ; the high ground stroke ($08:$6dd1) and the serve swing ($08:$6baf)
-def CHARANIM_SMASH           equ $08 ; the jumping smash ($08:$6def); the script holds its last frame until the character lands
+def CHARANIM_FOREHAND        equ $05 ; SelectForehandBackhand
+def CHARANIM_BACKHAND        equ $06 ; SelectForehandBackhand; ExecuteShot counts it toward wShotAimMirror
+def CHARANIM_OVERHEAD        equ $07 ; the high ground stroke and the serve swing
+def CHARANIM_SMASH           equ $08 ; the jumping smash; the script holds its last frame until the character lands
 def CHARANIM_FOREHAND_QUICK  equ $09
 def CHARANIM_BACKHAND_QUICK  equ $0a ; counted toward wShotAimMirror alongside $06
 def CHARANIM_OVERHEAD_QUICK  equ $0b
 def CHARANIM_SMASH_QUICK     equ $0c ; only ResetSwingAnimation and the debug viewer reach it -- StartCharSwing returns before the +$04 step on the smash path
 def CHARANIM_FOREHAND_READY  equ $0d
 def CHARANIM_BACKHAND_READY  equ $0e
-def CHARANIM_OVERHEAD_READY  equ $0f ; also the serve toss pose (CharServeTossPhase, $08:$6b83)
+def CHARANIM_OVERHEAD_READY  equ $0f ; also the serve toss pose (CharServeTossPhase)
 def CHARANIM_SERVE_READY     equ $10 ; held serve stance; CharServeWaitAnimPhase and AiServeWalkToSpot both block until it is current
 def CHARANIM_SERVE_PREP      equ $11 ; the pre-serve flourish, which ends in an anim_set to $10
-def CHARANIM_DIVE            equ $12 ; StartCharSwing.dive ($08:$6df7)
+def CHARANIM_DIVE            equ $12 ; StartCharSwing.dive
 
-; --- On-court character state (wCharState, $df18) ---
-; The index UpdateCharStateMachine ($08:$6a62) dispatches on through the
-; 8-entry jumptable at $08:$6a7b; SetCharState ($08:$6a1c) is the only writer
-; and zeroes wCharStatePhase/wAiPhase with it. The names are the handler labels
-; that jumptable points at. The AI's three parallel tables ($08:$7886/$789a/
-; $78ae) index the same value and only implement slots 1, 2 and 3.
-; Two data tables map into this space and cannot carry the names, being `db`
-; rows rather than instructions: ServeRoleCharStateTable_08 ($08:$4fa0) is
-; serve role -> state at the start of a point ($03 $05 $04 $05), and
-; SetCharStateOnBallHitTable ($08:$431e) is the state every character is
-; remapped through on every strike ($00 $02 $01 $02 $02 $01 $06 $07).
+; --- On-court character state (wCharState) ---
+; The index UpdateCharStateMachine dispatches on through the 8-entry
+; jumptable at $08:$6a7b; SetCharState is the only writer and zeroes
+; wCharStatePhase/wAiPhase with it. Names are the handler labels. The AI's
+; three parallel tables ($08:$7886/$789a/$78ae) implement only slots 1-3.
+; Two `db` tables map into this space: ServeRoleCharStateTable_08 (serve role
+; -> state at the start of a point) and SetCharStateOnBallHitTable (the state
+; every character is remapped through on every strike).
 def CHARSTATE_INERT          equ 0 ; slot points at the shared `ret` -- InitChar, ResetCharForPoint, and a character the ball hits
 def CHARSTATE_RALLY          equ 1 ; CharRallyState: ready -> windup -> contact
 def CHARSTATE_RECOVER        equ 2 ; CharRecoverState: let the swing finish, then movement only. Whoever struck the ball is put here
@@ -1224,78 +1147,64 @@ def CHARSTATE_STANDBY        equ 5 ; CharStandbyState: end-state, then state 4's
 def CHARSTATE_WALK           equ 6 ; CharWalkState: the scripted changeover and walk-off walks
 def CHARSTATE_POINT_END      equ 7 ; CharPointEndState: walk to target, then the win/lose reaction
 
-; --- On-court character flags (wCharFlags, $df0f) ---
-; Bit indices only: every one of the 40 sites is a `bit`/`res`/`set`, so the
-; masks would have no user. Bits 3 and 7 are never touched.
-def CHARB_RECOIL             equ 0 ; set by ApplyShotRecoil ($07:$546e) after every stroke and by CheckCharBallContact on a body hit; UpdateCharVelocityFromInput ($08:$73d7) is the only reader and drops the steering intent
+; --- On-court character flags (wCharFlags) ---
+; Bit indices only (every site is a `bit`/`res`/`set`). Bits 3 and 7 are
+; never touched.
+def CHARB_RECOIL             equ 0 ; set by ApplyShotRecoil after every stroke and by CheckCharBallContact on a body hit; UpdateCharVelocityFromInput drops the steering intent
 def CHARB_DIVING             equ 1 ; StartCharSwing.dive sets it. Widens the contact window to 1.25x wCharReachX, flattens the brake, freezes the facing ease, costs -$0c00 shot speed, and turns both power strokes back into their base shots
 def CHARB_AIRBORNE           equ 2 ; set for the smash jump, cleared by StepCharJumpPhysics on landing; also picks the airborne shadow over the ground one
 def CHARB_MOVING             equ 4 ; the velocity came out nonzero this frame (or MoveCharTowardTarget stepped); UpdateCharRunAnimation reads it to choose run over idle
-def CHARB_CHARGING           equ 5 ; a swing is winding up: StepCharMovement ($08:$72ed) shifts both velocities right 3, so speed / 8
-def CHARB_MOVE_BLOCKED       equ 6 ; StepCharMovement refused an axis at the court bound instead of clamping it. Written at four sites and read at none
+def CHARB_CHARGING           equ 5 ; a swing is winding up: StepCharMovement divides both velocities by 8
+def CHARB_MOVE_BLOCKED       equ 6 ; StepCharMovement refused an axis at the court bound instead of clamping it. Never read
 
-; --- Match abort flag (wMatchAbortFlag, $c4c3) ---
-; Two independent bits rather than a code, which is why the masks and not the
-; values are what the code tests: every reader is an `and` (or one `bit 7`),
-; and the two bits break different loops. docs/match_engine.md describes the
-; same split. Note that the quit-menu writes $ff, not $81 -- it sets every bit
-; rather than the two defined ones, so that value needs a name of its own.
-def MATCHABORT_POINT         equ $01 ; give up the current rally: tested `and $01` by PlayPoint.rallyLoop ($08:$4d2c) and PlayMinigamePoint.rallyLoop
-def MATCHABORT_MATCH         equ $80 ; break out of the point/game/set/match loops: tested `and $80` in RunMatchPlayLoop, CheckSetComplete and RunMinigameLoop
+; --- Match abort flag (wMatchAbortFlag) ---
+; Two independent bits rather than a code: every reader is an `and` (or one
+; `bit 7`), and the two bits break different loops. The quit paths write $ff,
+; every bit.
+def MATCHABORT_POINT         equ $01 ; give up the current rally: tested by PlayPoint.rallyLoop and PlayMinigamePoint.rallyLoop
+def MATCHABORT_MATCH         equ $80 ; break out of the point/game/set/match loops: tested in RunMatchPlayLoop, CheckSetComplete and RunMinigameLoop
 def MATCHABORT_ALL           equ $ff ; every bit set, written by the four MatchQuitMenu_* actions, StoryPauseMenu_ReturnToMainMenu and Unused_07_TargetZonePointEndHook
-def MATCHABORTB_MATCH        equ 7   ; bit-index form of MATCHABORT_MATCH, for the one `bit 7, a` consumer ($16:$447a)
+def MATCHABORTB_MATCH        equ 7   ; bit-index form of MATCHABORT_MATCH
 
-; --- Story save slot (wCurrentStorySlot, $c8a5) ---
-; Slots 0-2 are the three story files; the byte doubles as an index
-; (Unused_03_GetCurrentSlotBlockId $03:$529d reads StorySlotBlockIds_03[slot], and a slot
-; saves as block 2N with its backup at +$1b), so the real ids stay numeric. The
-; out-of-range value is the one worth naming: it means "not a story file at
-; all" -- exhibition, link, mini-game and the two debug screens set it, and
-; StorySlotBlockIds_03[3] is the exhibition block. It shares its value with the
-; slot count, which is the bound in the same `cp $03` guard, so both names
-; exist and each site takes the one that says what that site is doing.
+; --- Story save slot (wCurrentStorySlot) ---
+; Slots 0-2 are the three story files; the byte doubles as an index into
+; StorySlotBlockIds_03 (a slot saves as block 2N, backup at +$1b), so the real
+; ids stay numeric. Value 3 means "not a story file" -- exhibition, link,
+; mini-game and the two debug screens set it, and StorySlotBlockIds_03[3] is
+; the exhibition block. It equals the slot count, the bound in the same
+; `cp $03` guard, so both names exist.
 def STORYSLOT_NONE           equ $03 ; not a story file: set by exhibition, link, mini-game and debug setup, and mapped to the exhibition save block
 def NUM_STORY_SLOTS          equ $03 ; the three story files, as a bound: `cp $03 / ret nc` in SaveStorySlot/CheckStorySlot, and the debug stats screen's page wrap
 
-; --- Story entry point sentinel (wStoryModeEntryPoint, $c295) ---
-; The entry point is *location-scoped*, not a global id space: each location's
-; map_tree carries its own `map_entry` table (8-byte records keyed by their
-; first byte), and LoadStoryEntryPointRecord ($0a:$516f) linearly searches that
-; table, falling back to its first record on no match. So the same $0f means
-; one door at the Senior Class Court and another at the Junior one -- the ids
-; belong to the tables, which already name themselves, and only the sentinel is
-; engine-wide.
-def STORYENTRY_NONE          equ $ff ; no entry point: keep the saved position (LoadStoryEntryPointRecord returns early), suppress the location-name popup ($0a:$5154), and terminate a map_entry table
+; --- Story entry point sentinel (wStoryModeEntryPoint) ---
+; Entry point ids are location-scoped: each location's map_tree carries its
+; own `map_entry` table (8-byte records keyed by their first byte), which
+; LoadStoryEntryPointRecord searches, falling back to its first record. Only
+; the sentinel is engine-wide.
+def STORYENTRY_NONE          equ $ff ; no entry point: keep the saved position (LoadStoryEntryPointRecord returns early), suppress the location-name popup, and terminate a map_entry table
 
 ; --- Point outcome, continued: the codes above 6 ---
-; The same wPointOutcome space as the block near the top of this file. The
-; ResolvePointOutcome jumptable ($08:$4e0e) is ten entries, so the space is
-; $00-$09, and slots 7 and 8 are the two that show a text popup rather than a
-; court banner -- which is what names them. $0b is minigame-only and never
+; The ResolvePointOutcome jumptable has ten entries ($00-$09); 7 and 8 show a
+; text popup rather than a court banner. $0b is minigame-only and never
 ; reaches that jumptable.
 def POINTOUTCOME_SERVE_VOLLEYED equ 7  ; the receiver hit the serve before it bounced; text id $0174 "Return the serve after it bounces."
 def POINTOUTCOME_WRONG_RECEIVER equ 8  ; the wrong player of a doubles pair returned; text id $0175 "Only the receiving player may return the ball."
-def POINTOUTCOME_BALL_HIT_PLAYER equ 9 ; the ball reached a character's body (ApplyBallTouchOutcome $08:$43e5)
+def POINTOUTCOME_BALL_HIT_PLAYER equ 9 ; the ball reached a character's body (ApplyBallTouchOutcome)
 def POINTOUTCOME_MINIGAME_CLEARED equ $0b ; bank $0d only, set right after IsMinigameTargetReached; DetermineMinigamePointResult turns it into a WINLOSE_WIN
 
-; --- Win/lose sign (wPointWinLoseFlag $c8eb, wMatchWinLoseFlag $c8e8) ---
-; One tri-state sign shared by both flags, and by the set/game-level ones that
-; are not tagged here. AwardPoint ($08:$5c14) is the proof: `add a / ret z /
-; jr nc` credits nobody on $00, the player-1 side when the doubled value does
-; not carry, and the player-2 side when it does -- so the space is a signed
-; -1/0/+1 rather than three ids, and $ff has to be spelled as the negative.
+; --- Win/lose sign (wPointWinLoseFlag, wMatchWinLoseFlag) ---
+; A signed -1/0/+1 shared by both flags and the set/game-level ones: AwardPoint
+; (`add a / ret z / jr nc`) credits nobody on $00, the player-1 side on +1 and
+; the player-2 side on -1.
 def WINLOSE_NONE             equ $00 ; nothing decided yet
 def WINLOSE_WIN              equ $01 ; the player-1 side took it
 def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 
-; --- Character-select mode (wCharSelectMode, $d813 in WRAM bank 3) ---
-; Six modes, indexing four parallel 6-record tables (CharSelectSlotRing0-5 and
-; friends). There is no immediate store for modes 0-1 because
-; RunExhibitionCharSelectScreen ($38:$4e65) takes the value in b and its only
-; caller ($10:$515d) passes wMatchFormatDoubles; the link modes are stored
-; outright by RunLinkCharSelectScreen ($38:$63e9-$63fb), which picks on
-; wMatchIsDoubles and hLinkState. The P1/P2 split shows up in the slot rings:
-; the P2 modes start the cursor at seat 2 ($38:$5a50).
+; --- Character-select mode (wCharSelectMode) ---
+; Six modes, indexing four parallel 6-record tables (CharSelectSlotRing0-5
+; and friends). RunExhibitionCharSelectScreen takes modes 0-1 in b from
+; wMatchFormatDoubles; RunLinkCharSelectScreen stores the link modes from
+; wMatchIsDoubles and hLinkState. The P2 modes start the cursor at seat 2.
 def CHARSELECTMODE_EXHIBITION_SINGLES equ $00
 def CHARSELECTMODE_EXHIBITION_DOUBLES equ $01
 def CHARSELECTMODE_LINK_SINGLES_P1    equ $02
@@ -1304,12 +1213,11 @@ def CHARSELECTMODE_LINK_DOUBLES_P1    equ $04
 def CHARSELECTMODE_LINK_DOUBLES_P2    equ $05
 
 ; --- Story progress rank (wMapSceneStage in the story locations) ---
-; $c2b0-$c2bf is per-location scratch, so what its first byte means depends on
-; the location's init script. This family is the one nine locations share:
-; ComputeRankingProgressIndex ($11:$7d95, and eight byte-identical copies) walks
+; $c2b0-$c2bf is per-location scratch; this is the family nine locations
+; share. ComputeRankingProgressIndex (and eight byte-identical copies) walks
 ; the ranking flags from the top down and stores 2 * tier + isDoubles, so the
-; singles and doubles ladders interleave. Every consumer is a 10-entry text-id
-; table, which is what bounds the space at $00-$09.
+; singles and doubles ladders interleave. Consumers are 10-entry text-id
+; tables.
 def STORYRANK_SINGLES_ACADEMY      equ $00 ; no junior title yet
 def STORYRANK_DOUBLES_ACADEMY      equ $01
 def STORYRANK_SINGLES_JUNIOR_CHAMP equ $02 ; FLAG_WON_JUNIOR_SINGLES_RANK_1
@@ -1322,13 +1230,10 @@ def STORYRANK_SINGLES_COMPLETE     equ $08 ; FLAG_STORY_COMPLETE_SINGLES
 def STORYRANK_DOUBLES_COMPLETE     equ $09
 
 ; --- Story tier (STORYRANK_* >> 1) ---
-; The Cafeteria and Restaurant init scripts do `ld a, [wMapSceneStage] / sra a /
-; ld [wMapSceneStage2], a`, i.e. the STORYRANK_* above with the singles/doubles
-; bit shifted out, giving a format-independent tier for NPCs whose line does not
-; depend on which ladder the player is on. The Training Gym and Academy main
-; building do the same shift at each reader instead (`sra a` between the
-; wMapSceneStage load and the cp), and ComputeTrainingCourtProgressIndex
-; ($15:$7fa0) writes the tier directly by counting the same four flags.
+; STORYRANK_* with the singles/doubles bit shifted out (`sra a`): a
+; format-independent tier. The Cafeteria and Restaurant init scripts store it
+; in wMapSceneStage2; the Training Gym and Academy main building shift at each
+; reader; ComputeTrainingCourtProgressIndex writes it directly.
 def STORYTIER_ACADEMY        equ $00
 def STORYTIER_JUNIOR_CHAMP   equ $01
 def STORYTIER_SENIOR_CHAMP   equ $02
@@ -1336,13 +1241,10 @@ def STORYTIER_ISLAND_OPEN    equ $03
 def STORYTIER_COMPLETE       equ $04
 
 ; --- Senior Class Court stage (wMapSceneStage2 in bank $12) ---
-; ComputeSeniorCourtStage ($12:$7756) writes fifteen values, and the run
-; $02-$08 is pinned exactly: StartSeniorRankingMatch does `sub $02` into a
-; seven-entry `rst Rst00` jump table, one slot per senior ranking match (four
-; singles ranks, three doubles). SeniorCourtExit01_12 does `sub $09` before
-; indexing its text-id table, which pins $09 as the base of the post-champion
-; block. The names say which opponent is next, because that is what the
-; jumptable slot starts.
+; Written by ComputeSeniorCourtStage. StartSeniorRankingMatch does `sub $02`
+; into a seven-entry jumptable, one slot per senior ranking match (four
+; singles, three doubles); SeniorCourtExit01_12 does `sub $09` before indexing
+; its text-id table. The names say which opponent is next.
 def SENIORCOURTSTAGE_SINGLES_PRE_JUNIOR   equ $00 ; not junior champion yet
 def SENIORCOURTSTAGE_DOUBLES_PRE_JUNIOR   equ $01
 def SENIORCOURTSTAGE_SINGLES_RANK4        equ $02 ; jumptable slot 0
@@ -1360,7 +1262,7 @@ def SENIORCOURTSTAGE_SINGLES_COMPLETE     equ $0d
 def SENIORCOURTSTAGE_DOUBLES_COMPLETE     equ $0e
 
 ; --- Wall Practice stage (wMapSceneStage in the Wall Practice Room) ---
-; SetupWallPracticeLevelSigns ($12:$505f) is the only writer: it walks the
+; SetupWallPracticeLevelSigns is the only writer: it walks the
 ; FLAG_CLEARED_WALL_* flags upward, drawing one cleared-level sign per step, so
 ; the value names the next challenge. Readers: WallPracticeRoomNpc05/Npc07,
 ; WallPracticeLevelResultScript, WallPracticeRoomInitScript_12.
@@ -1373,10 +1275,9 @@ def WALLPRACTICESTAGE_EXPERT   equ $05 ; FLAG_CLEARED_WALL_MASTER; Npc07 shows t
 def WALLPRACTICESTAGE_COMPLETE equ $06 ; FLAG_CLEARED_WALL_EXPERT
 
 ; --- Machine Court stage (wMapSceneStage in the Tennis Machine Room) ---
-; ComputeMachineCourtProgress ($14:$43a4) is the only writer, the machine-room
-; twin of SetupWallPracticeLevelSigns: it walks FLAG_CLEARED_MACHINE_* upward
-; drawing one sign per cleared level, so the value names the next challenge.
-; Readers: TennisMachineRoomNpc04/Npc05, MachineCourtStartLevelScene.
+; ComputeMachineCourtProgress is the only writer, the machine-room twin of
+; SetupWallPracticeLevelSigns; the value names the next challenge. Readers:
+; TennisMachineRoomNpc04/Npc05, MachineCourtStartLevelScene.
 def MACHINECOURTSTAGE_LEVEL1   equ $00 ; level 1 not cleared yet
 def MACHINECOURTSTAGE_LEVEL2   equ $01 ; FLAG_CLEARED_MACHINE_LEVEL_1
 def MACHINECOURTSTAGE_LEVEL3   equ $02
@@ -1386,13 +1287,10 @@ def MACHINECOURTSTAGE_EXPERT   equ $05 ; FLAG_CLEARED_MACHINE_MASTER; Npc05 show
 def MACHINECOURTSTAGE_COMPLETE equ $06 ; FLAG_CLEARED_MACHINE_EXPERT
 
 ; --- Island Open bracket position ---
-; Two locations track how far the tournament has got, both by counting the
-; bracket flags that are set, and both name the match that comes *next* -- which
-; is what the NPCs at that stage talk about. ISLANDOPENSTAGE_* is Center Court's
-; (bank $11), where singles and doubles share one space; ISLANDOPENROUND_* is
-; the tournament site's (bank $0f), where the format is already known from
-; FLAG_DOUBLES so the two ladders reuse the same four values. Doubles has no
-; second round, which is why its stage numbering skips one.
+; Both count the bracket flags that are set and name the match that comes
+; next. ISLANDOPENSTAGE_* is Center Court's (bank $11), singles and doubles in
+; one space; ISLANDOPENROUND_* is the tournament site's (bank $0f), where
+; FLAG_DOUBLES already gives the format. Doubles has no second round.
 def ISLANDOPENSTAGE_SINGLES_ROUND1    equ $00 ; no bracket flag set yet
 def ISLANDOPENSTAGE_SINGLES_ROUND2    equ $01 ; FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1
 def ISLANDOPENSTAGE_SINGLES_SEMIFINAL equ $02
@@ -1406,63 +1304,49 @@ def ISLANDOPENROUND_SEMIFINAL         equ $02
 def ISLANDOPENROUND_FINAL             equ $03
 
 ; --- Academy Wing stage (wMapSceneStage in the Academy Wing) ---
-; The Academy Wing runs its own four-value ladder, not the ten-value
-; STORYRANK_* one: SetAcademyWingDialogueStage_10 ($10:$7472) is the region's
-; only writer, and it walks the same flags on both the singles and the doubles
-; side to the *same* four values, so the format drops out. It starts at the
-; senior title rather than the junior one, which is what makes it a separate
-; space from STORYTIER_*.
+; SetAcademyWingDialogueStage_10 is the only writer; it maps the singles and
+; doubles flags to the same four values, starting at the senior title (unlike
+; STORYTIER_*).
 def ACADEMYWINGSTAGE_PRE_SENIOR_CHAMP equ $00 ; senior rank 1 not won yet
 def ACADEMYWINGSTAGE_SENIOR_CHAMP     equ $01 ; FLAG_WON_{SINGLES,DOUBLES}_SENIOR_RANK_1
 def ACADEMYWINGSTAGE_ISLAND_OPEN      equ $02 ; FLAG_REACHED_ISLAND_OPEN_*
 def ACADEMYWINGSTAGE_COMPLETE         equ $03 ; FLAG_STORY_COMPLETE_*
 
-; --- Sound channel type (wSndChannelType, $c31c) ---
-; `hSndChannelType & 3`, latched by RunSoundChannelScript ($33be) together with
-; `wSndRegBase = type * 5` -- the stride of the Game Boy's four sound-register
-; blocks ($ff10, $ff15, $ff1a, $ff1f). So the type *is* the hardware channel,
-; and every site that tests it is doing something only that channel needs:
-; loading wave RAM and poking rAUD3ENA for the wave channel (which has no
-; envelope generator, so it also skips duty, volume slide and instrument
-; envelope), and sending the note through NoiseNoteTable for the noise channel
-; (which has no period, so vibrato returns early).
+; --- Sound channel type (wSndChannelType) ---
+; `hSndChannelType & 3`, latched by RunSoundChannelScript with
+; `wSndRegBase = type * 5` (the stride of the four sound-register blocks), so
+; the type is the hardware channel. The wave channel loads wave RAM and skips
+; duty, volume slide and instrument envelope; the noise channel sends the note
+; through NoiseNoteTable and skips vibrato.
 def SNDCHANTYPE_SQUARE1      equ $00 ; $ff10 block -- the only one with a sweep unit (NR10)
-def SNDCHANTYPE_SQUARE2      equ $01 ; $ff15 block. No site of its own: it takes every default path
+def SNDCHANTYPE_SQUARE2      equ $01 ; $ff15 block; takes every default path
 def SNDCHANTYPE_WAVE         equ $02 ; $ff1a block
 def SNDCHANTYPE_NOISE        equ $03 ; $ff1f block
 
-; --- Menu selection sentinel (wMatchMenuSelection, $c4e0) ---
-; The byte is a *row* in whatever menu is up -- the match pause menu, the story
-; pause menu and the debug stats screen all use it -- and a row is not an item
-; id: GetMatchMenuItemId ($06:$480a) is what turns one into the other, reading
-; `MatchMenuDefs + wPauseMenuId * 8 + row`. So the rows stay numeric and only
-; the out-of-band value has a name, written by every B-pressed branch.
+; --- Menu selection sentinel (wMatchMenuSelection) ---
+; A row in whatever menu is up (match pause, story pause, debug stats), not an
+; item id: GetMatchMenuItemId maps it via `MatchMenuDefs + wPauseMenuId * 8 +
+; row`. Only the B-pressed value is named.
 def MATCHMENUSEL_CANCELLED   equ $ff ; B pressed: no row chosen
 
-; --- Background tile attribute (wWindowTileAttr, $d81c in WRAM bank $05) ---
+; --- Background tile attribute (wWindowTileAttr) ---
 ; A CGB background attribute byte, stamped into the attribute plane of a text
-; window's rect by DrawTextWindowFrame ($05:$7051, which reaches the plane by
-; adding $0400 to the cell pointer) and read for its bank bit by both glyph
-; uploaders (`bit 3, a` then +$2000 on the VRAM destination). Only the two bits
-; the game actually composes are named; `include/hardware.inc` spells the same
-; layout as BG_PRIO/BG_PALETTE, but this project keeps its own names in this
-; file the way VRAM_BANK1 above does.
+; window's rect by DrawTextWindowFrame and read for its bank bit by both glyph
+; uploaders (`bit 3, a` then +$2000 on the VRAM destination). Same layout as
+; hardware.inc's BG_PRIO/BG_PALETTE.
 def TILEATTR_PAL1            equ $01 ; BG palette 1
 def TILEATTR_PRIORITY        equ $80 ; BG colours 1-3 draw above sprites
 
 ; --- Dialogue window sentinel (wDialogueWindowId, WRAM bank $05) ---
-; The real values are window-struct indices handed out by
-; CreateWindowFromScreenRect (stored from a at $05:$4695, never an immediate),
-; so only the no-window sentinel is literal: the speaker-dialogue helpers test
-; it before opening a window (FitWindowToText substitutes window 0), and store
-; it back after CloseWindow tears the window down.
+; Real values are window-struct indices from CreateWindowFromScreenRect; the
+; speaker-dialogue helpers test this sentinel before opening a window
+; (FitWindowToText substitutes window 0) and store it after CloseWindow.
 def DIALOGUEWIN_NONE         equ $ff ; no dialogue window open
 
-; --- Link role (hLinkState $ffc2, wLinkMatchRole, wLinkState) ---
-; Role election is first-come (TryEstablishLink $07:$4048): the console that
-; finds the peer's probe already waiting becomes the slave, the other the
-; master. The master drives character 0, the slave character 1
-; (docs/match_engine.md "Two players over the link cable").
+; --- Link role (hLinkState, wLinkMatchRole, wLinkState) ---
+; Role election is first-come (TryEstablishLink): the console that finds the
+; peer's probe already waiting becomes the slave. The master drives character
+; 0, the slave character 1 (docs/match_engine.md).
 def LINKSTATE_IDLE           equ $00
 def LINKSTATE_MASTER         equ $01
 def LINKSTATE_SLAVE          equ $02
@@ -1482,7 +1366,7 @@ def LINKMSG_CHECKSUM_BAD     equ $cb ; checksums differ: retransmit the whole bl
 def LINKMSG_CHECKSUM         equ $cc ; compare checksums now
 def LINKMSG_BLOCK_OK         equ $cd ; block accepted
 
-; --- Match context (wMatchContext, $c8f5) ---
+; --- Match context (wMatchContext) ---
 def MATCHCONTEXT_EXHIBITION  equ $00 ; cleared by RestoreOverworldAfterMatch
 def MATCHCONTEXT_STORY       equ $01 ; InitStoryMatchSettings
 def MATCHCONTEXT_MINIGAME    equ $02 ; InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
@@ -1491,12 +1375,11 @@ def MATCHCONTEXT_MINIGAME    equ $02 ; InitMinigameMatchSettings, RunDoublesDril
 def MENUSLIDE_BACK           equ $00
 def MENUSLIDE_FORWARD        equ $01 ; into a submenu
 
-; --- Scene ids (SceneGfxSlotTable $0a:$59d9; wCurrentScene, wStoryLocationScene) ---
-; The index of a scene's eight-slot record. 0-15 are the match courts, which
-; CourtSceneDataTable selects by court id; 16-36 the overworld, which the
-; story_location records select. Named for what loads them, and each scene's
-; blob family (its SceneConfig, Palettes, Tiles, Tilemap, Attrmap, ... labels
-; and data/ files) carries the same name in CamelCase: SCENE_RESTAURANT's
+; --- Scene ids (SceneGfxSlotTable; wCurrentScene, wStoryLocationScene) ---
+; The index of a scene's eight-slot record. 0-15 are the match courts,
+; selected by CourtSceneDataTable; 16-36 the overworld, selected by the
+; story_location records. Each scene's blob family (SceneConfig, Palettes,
+; Tiles, Tilemap, ...) carries the same name in CamelCase: SCENE_RESTAURANT's
 ; tilemap is RestaurantTilemap.
 def SCENE_MINIGAME_COURT     equ $00 ; Banana Bunch, Perfect Shot, Fruit Fantasy, and the unused court $0e
 def SCENE_TARGET_SHOT_COURT  equ $01

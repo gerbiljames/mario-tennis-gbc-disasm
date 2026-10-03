@@ -536,9 +536,8 @@ SoftReset:
 ; routine spins in a second frame-wait until START releases it, SELECT cycling
 ; hDebugStepMode 1-3 while paused.
 ;
-; The link-error check at the top is dead. Nothing in the ROM ever sets the top
-; bits of hLinkErrorFlags -- both writes to it are `xor a` clears -- so the
-; `jp nz, LinkErrorReset` is unreachable. See docs/bugs.md.
+; The link-error check at the top is dead: hLinkErrorFlags is only ever
+; cleared, so `jp nz, LinkErrorReset` is unreachable (docs/bugs.md).
 AdvanceFrame:
 	push af ; $2631
 	push bc ; $2632

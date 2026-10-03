@@ -1,21 +1,17 @@
-; The idioms the code is built from, each expanding to the original bytes
-; (README "Reading the source"). Hand-maintained.
+; The idioms the code is built from (README "Reading the source").
 
-; Bank-switched call through the FarCall trampoline ($01b6, vectored from
-; rst $18): two inline operand bytes select a dw entry in the target bank's
-; pointer table at $4000 (FarPtr_* labels). The trampoline switches banks,
-; dispatches through the table, and patches the return address past the
-; operands.
+; Bank-switched call through rst $18 (FarCall, $01b6): two inline operand
+; bytes select a FarPtr_* entry in the target bank's $4000 pointer table; the
+; trampoline returns past the operands.
 MACRO farcall
 	rst Rst18
 	db LOW(FarPtr_\1), BANK(FarPtr_\1)
 	ASSERT HIGH(FarPtr_\1) == SLOT_TABLE_PAGE, "FarPtr_\1 is outside its bank's $4000 slot table"
 ENDM
 
-; A SoundTable entry's first word: which sound-engine channel struct the
-; track drives (StartSoundChannel indexes wSndChannels by the low byte, which
-; is always $20-aligned) and the byte it stores into that struct. Written as
-; the decoded fields so the row is derived structure, not a ROM value.
+; A SoundTable entry's first word: which channel struct the track drives
+; (StartSoundChannel indexes wSndChannels by the low byte, $20 per channel)
+; and the byte it stores into that struct.
 MACRO snd_channel
 	db (\1) * $20, \2
 ENDM
@@ -26,10 +22,9 @@ MACRO sound
 	db \1
 ENDM
 
-; One (slot, bank) word per argument, referencing a $4000-table slot by its
-; FarPtr_*/DataPtr_* label -- the same encoding as farcall's operand bytes.
-; Used by slot-record tables (e.g. ScreenAssetRecordTable) whose loaders
-; read the words through RAM.
+; One (slot, bank) word per argument, naming a $4000-table slot by its
+; FarPtr_*/DataPtr_* label -- farcall's operand encoding. Used by slot-record
+; tables such as ScreenAssetRecordTable.
 MACRO dslot
 	REPT _NARG
 	db LOW(\1), BANK(\1)
@@ -39,10 +34,8 @@ MACRO dslot
 ENDM
 
 ; One row of TileBlockPtrs_39, the table LoadCompressedTileBlock indexes with
-; b: the slot word for DataPtr_<name>, and TILEBLOCK_<name>, its index,
-; exported so a call site reads `ld b, TILEBLOCK_MatchWinLoseGfx`. The index
-; is the row's position, so inserting a row renumbers everything after it
-; and every site follows.
+; b: the slot word for DataPtr_<name>, and TILEBLOCK_<name>, its index (`ld b,
+; TILEBLOCK_MatchWinLoseGfx`). Inserting a row renumbers the rows after it.
 MACRO tileblock
 DEF TILEBLOCK_\1 EQU (@ - TileBlockPtrs_39) / 2
 EXPORT TILEBLOCK_\1
@@ -51,8 +44,7 @@ ENDM
 
 ; One row of ScreenAssetRecordTable, the table LoadScreenAssetRecord indexes
 ; with c: `screen_asset Name, tiles, tilemap, attrmap, palettes` writes the
-; four slot words and SCREENASSET_Name, the record's index, exported so a
-; call site reads `ld c, SCREENASSET_TitleScreen`.
+; four slot words and SCREENASSET_Name, the record's index.
 MACRO screen_asset
 DEF SCREENASSET_\1 EQU (@ - ScreenAssetRecordTable) / 8
 EXPORT SCREENASSET_\1
@@ -61,8 +53,8 @@ ENDM
 
 ; --- Shot-solver trajectory rows (data/bank_02x/<Table>.asm, generated at setup) ---
 ; One row of a ballistic-solution table (docs/match_engine.md "The trajectory
-; tables"): the launch speed magnitude, which the row search keys on and
-; which rises with the row, the launch elevation angle, and, in the six-byte
+; tables"): the launch speed (the row search key, rising with the row), the
+; launch elevation angle, and, in the six-byte
 ; tables, the lateral aim delta added to wShotAimAngle. Rows are 64 units of
 ; distance apart; a block is one contact-height band or placement variant.
 MACRO traj_row ; speed, elevation, lateral delta
@@ -75,11 +67,11 @@ ENDM
 
 ; --- Sound channel scripts (data/bank_07x/<Track>.asm, generated at setup) ---
 ; Every command is two bytes, opcode then operand, and the driver steps them
-; by command index (RunSoundChannelScript $00:$3558; docs/sound_engine.md
-; "Script command set"). snd_call is the one four-byte command: its target
-; word is the byte offset of a command from the track's start, which
-; snd_track supplies. Note names C_ .. B_ are in constants.inc; the octave
-; is how many times the driver halves the table period.
+; by command index (RunSoundChannelScript; docs/sound_engine.md "Script
+; command set"). snd_call is the one four-byte command: its target word is a
+; byte offset from the track start that snd_track names. Note names C_ .. B_
+; are in constants.inc; the octave is how many times the driver halves the
+; table period.
 MACRO snd_track ; the track label the snd_call offsets are relative to
 REDEF _snd_track EQUS "\1"
 ENDM
@@ -186,12 +178,11 @@ MACRO snd_end
 ENDM
 
 ; --- Shared routine families (src/twins/) ---
-; The ROM assembles the same routine into several banks. Each such family is
-; one file under src/twins/, and every bank that holds a copy assembles it
-; here: `twin file, 25` includes src/twins/file.asm with {TWIN} = "25", so
-; `FetchText_{TWIN}:` and the bank-local references in the body become that
-; bank's; `twin_named file, Label` includes it with {TWIN_LABEL} = Label for
-; the copies that carry different names. The bytes are the copies' own.
+; One routine copied into several banks lives once under src/twins/.
+; `twin file, 25` includes src/twins/file.asm with {TWIN} = "25", so
+; `FetchText_{TWIN}:` and the bank-local references become that bank's;
+; `twin_named file, Label` sets {TWIN_LABEL} = Label for copies with
+; different names.
 MACRO twin
 DEF TWIN EQUS "\2"
 	INCLUDE "src/twins/\1.asm"
@@ -218,8 +209,8 @@ ENDM
 
 ; One StoryCharacterRecords_02 row: the 29 bytes InitCa00RecordFromCharId
 ; copies into a character record at +$0f-+$2b and LoadCharacterAttributes
-; turns into the wChar*/wAi* struct fields (docs/match_engine.md "Character
-; stats into the engine"). Words are little-endian.
+; turns into the wChar*/wAi* fields (docs/match_engine.md "Character stats
+; into the engine").
 ;   char_record strategy, reach_h, reach_x, smash_jump, dive, tier, swing,
 ;               delay_near, delay_far, tracking, aim_away, serve_style,
 ;               Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed,
@@ -274,8 +265,8 @@ MACRO exp_threshold
 ENDM
 
 ; One story match's settings (Singles/DoublesMatchSettingsTable_0a, indexed
-; by the STORYMATCH_* id; LoadMatchSettingsFromTable): the game mode,
-; the opponent (a CHAR_* id, extended ones included), the court, sets and games (one packed byte), and the music.
+; by STORYMATCH_* id; LoadMatchSettingsFromTable): the game mode, the opponent
+; (a CHAR_* id), the court, sets and games (one packed byte), and the music.
 ;   match_settings mode, opponent, court, sets, games, bgm
 MACRO match_settings
 	db \1, \2, \3, ((\4) << 4) | (\5), \6
@@ -292,7 +283,7 @@ ENDM
 
 ; One court-position record (GamePosition*, TiebreakPosition*; LoadPositionRecord),
 ; and one point of a minigame point table (*PointTable; LoadMinigamePointLayout
-; installs it and stops at a record whose first byte is $ff): the
+; installs it, stopping at a first byte of $ff): the
 ; court-position code (wCharCourtPos: bit 1 = which end, bit 0 = which
 ; lateral half) for characters 0-3, then their serve/side role codes
 ; (wCharServeRole: 0 server, 1 receiver, 2/3 partners, $09 unused slot).
@@ -379,10 +370,9 @@ FarPtr_\1: dw \2
 ENDC
 ENDM
 
-; Game text (see the generated data/bank_XXX/text_*.asm): a string is db
-; segments joined by control bytes -- $01 starts a new on-screen line, $02 a
-; new page, $03 terminates. `text` opens a string (or continues an
-; overlong segment), `line`/`page` emit the control byte plus the segment.
+; Game text (data/bank_XXX/text_*.asm): db segments joined by control bytes
+; -- $01 new line, $02 new page, $03 end. `text` opens a string (or continues
+; an overlong segment); `line`/`page` emit the control byte plus the segment.
 MACRO text
 	db \#
 ENDM
@@ -399,13 +389,12 @@ MACRO done
 	db $03
 ENDM
 
-; rst $20/$28/$30 ($255e/$256b/$2551): set/clear/test a bit in the
-; wGameFlags array ($c9c0+). Two inline operand bytes: the bit selector in
-; the top 3 bits of the first (the handlers apply mask $80 >> bit to
-; wGameFlags[byte]), the flag byte index in the second.
+; rst $20/$28/$30: set/clear/test a bit of wGameFlags. Two inline operand
+; bytes: the bit in the top 3 bits of the first (mask $80 >> bit), the flag
+; byte index in the second.
 ; Usage: `set_flag FLAG_NAME` (flag number, flag_constants.inc) or
 ; `set_flag byte_index, bit` where the flag has no name yet. A flag number
-; is byte * 8 + bit, the same numbering *GameFlagByNumber ($24ef) takes.
+; is byte * 8 + bit, the numbering *GameFlagByNumber takes.
 MACRO set_flag
 	rst Rst20
 IF _NARG == 1
@@ -444,21 +433,19 @@ ELSE
 ENDC
 ENDM
 
-; Sound/music index entry (PlaySound, $3297): selects one sound. The first
-; byte packs the voice count (high nibble) and the data-bank low nibble
-; (bank = $70 | nibble, i.e. $78-$7f); the second is the first channel
-; record's index into that bank's SoundTable_* ((length, pointer) records,
-; one per voice, `voices` consecutive records per sound).
+; Sound/music index entry (PlaySound): the first byte packs the voice count
+; (high nibble) and the data bank's low nibble (bank = $70 | nibble); the
+; second is the first of `voices` consecutive records in that bank's
+; SoundTable_*.
 ; Usage: sound_entry bank, voices, record
 MACRO sound_entry
 	db ((\2) << 4) | ((\1) & $0f), \3
 ENDM
 
-; WRAM bank switch: writes rWBK (rSVBK) plus its HRAM shadow hWramBank.
-; With an argument the bank id is loaded into a first -- a WRAM_* constant
-; (constants.inc): the bank's owner (WRAM_TEXT, WRAM_SCENE, ...) or, in the
-; match engine, the on-court character whose struct lives there (WRAM_CHAR0-3
-; are banks 4-7). The bare form switches to the bank already in a.
+; WRAM bank switch: writes rWBK and its shadow hWramBank. The argument, if
+; given, is loaded into a first -- a WRAM_* constant (constants.inc), e.g.
+; WRAM_TEXT or WRAM_CHAR0-3 (banks 4-7, one per on-court character). The
+; bare form switches to the bank already in a.
 MACRO wram_bank
 	IF _NARG == 1
 	ld a, \1
@@ -467,9 +454,8 @@ MACRO wram_bank
 	ldh [rWBK], a
 ENDM
 
-; Save the current WRAM bank on the stack and select another: the prologue
-; nearly every banked routine opens with (`ldh a, [hWramBank] / push af /
-; wram_bank N`). pop_wram_bank is the matching epilogue (`pop af / wram_bank`).
+; Save the current WRAM bank on the stack and select another;
+; pop_wram_bank restores it.
 MACRO push_wram_bank
 	ldh a, [hWramBank]
 	push af
@@ -481,10 +467,8 @@ MACRO pop_wram_bank
 	wram_bank
 ENDM
 
-; hl =  + a. The split-base table index the game uses everywhere: the two
-; halves of the address are 8-bit immediates, added with carry propagation
-; (`sub l` recovers the carry from the low add), so the pair assembles to
-; exactly the five instructions it replaces.
+; hl = \1 + a: the split-base table index, the address added as two 8-bit
+; immediates (`sub l` recovers the carry from the low add).
 MACRO ld_hl_indexed
 	add LOW(\1)
 	ld l, a
@@ -493,7 +477,7 @@ MACRO ld_hl_indexed
 	ld h, a
 ENDM
 
-; de / bc = \1 + a: the same split-base index, landing in the other pairs.
+; de / bc = \1 + a.
 MACRO ld_de_indexed
 	add LOW(\1)
 	ld e, a
@@ -509,41 +493,38 @@ MACRO ld_bc_indexed
 	ld b, a
 ENDM
 
-; WaitFramesCmd takes its frame count as an inline byte after the call and
-; returns past it; the byte is an argument, not the next instruction.
+; WaitFramesCmd takes its frame count as an inline byte after the call.
 MACRO wait_frames
 	call WaitFramesCmd
 	db \1
 ENDM
 
 ; palette r,g,b, r,g,b, r,g,b, r,g,b -- one CGB palette, four colours of
-; 5-bit components, assembled to the BGR555 words the hardware takes. A
-; palette whose words use bit 15 (five in the ROM) stays a plain dw.
+; 5-bit components, as BGR555 words. A palette whose words use bit 15 stays
+; a plain dw.
 MACRO palette
 	dw (\1) | ((\2) << 5) | ((\3) << 10), (\4) | ((\5) << 5) | ((\6) << 10), (\7) | ((\8) << 5) | ((\9) << 10), (\<10>) | ((\<11>) << 5) | ((\<12>) << 10)
 ENDM
 
 ; lb pair, hi, lo -- load two bytes into a register pair with one 16-bit
-; immediate. The building block of the named pair macros below (ld_xy,
-; ld_cell, ld_oam, ld_size, ld_tile_run, ld_bg_pals/ld_obj_pals); a site whose
-; callee reads the halves separately uses the one that names them.
+; immediate. Sites whose callee reads the halves separately use the named
+; forms below (ld_xy, ld_cell, ld_oam, ld_size, ld_tile_run, ld_*_pals).
 MACRO lb
 	ld \1, ((\2) << 8) | (\3)
 ENDM
 
 ; ld_xy pair, x, y -- a sprite's screen position as the sprite routines take
-; it: x in the high register, y in the low. QueueSprite writes e (+$0c) as
-; the OAM Y byte and d (+$04) as the X byte; every helper that offsets a
-; position on its way there follows the same order.
+; it: x in the high register, y in the low (QueueSprite writes d as OAM X and
+; e as OAM Y).
 MACRO ld_xy
 	lb \1, \2, \3
 ENDM
 
 ; ld_oam pair, attr, tile -- a sprite's OAM attribute byte and tile id as
 ; QueueSprite and QueueSpriteTemplate take them: the attribute in the high
-; register (CGB palette in bits 0-2, plus OAM_BANK1 / OAM_XFLIP / OAM_YFLIP /
-; OAM_PRIO from hardware.inc), the tile in the low. QueueSpriteTemplate adds
-; both to every entry of the template, and bit 5 picks its mirrored copy.
+; register (CGB palette in bits 0-2, plus OAM_* flags from hardware.inc), the
+; tile in the low. QueueSpriteTemplate adds both to every template entry, and
+; bit 5 picks its mirrored copy.
 MACRO ld_oam
 	lb \1, \2, \3
 ENDM
@@ -561,8 +542,7 @@ MACRO ld_tile_run
 	lb \1, \2, \3
 ENDM
 
-; The same pairs where the code loads the halves with two instructions
-; instead of one: the macro names the order it emits them in.
+; Two-instruction forms of the same pairs, named in the order they emit.
 ; rect_size width, height -- ld b, width / ld c, height (FillTilemapRect,
 ; CopyTilemapRect, CreateWindowFromScreenRect: the width is the inner loop)
 MACRO rect_size
@@ -624,9 +604,8 @@ MACRO ld_flag_id
 ENDM
 
 ; --- Story-mode map-script tables (banks $0e-$15) ---
-; Each story location owns a 7-word directory (a map_tree) copied to $c286.
-; The words point at the location's sub-tables, one per slot, consumed by the
-; bank $0a overworld engine:
+; Each story location owns a 7-word directory (a map_tree) copied to $c286,
+; one sub-table per slot, consumed by the bank $0a overworld engine:
 ;   0 EntryPoints (map_entry)    - spawn record per entry point / warp id
 ;   1 ExitTriggers (map_script)  - RunLocationExit
 ;   2 Actors (map_actor)         - the location's NPC/prop actor list
@@ -637,16 +616,15 @@ ENDM
 ; Slots with no table point at a shared $ff (an empty list) or at slot 6's
 ; init code.
 
-; Actor spawn template (14 bytes, list terminated by a $ff sentinel byte).
-; SpawnActorFromTemplate ($04:$4c60) spawns `objdef` unless `cond` is met,
+; Actor spawn template (14 bytes, list ended by map_actor_end).
+; SpawnActorFromTemplate spawns `objdef` unless `cond` is met,
 ; then seeds the actor's position, facing, object id, animation, and (if
 ; nonzero) a palette override. `facing` is a FACE_* constant (constants.inc).
 ; Usage: map_actor cond, objdef, x, y, facing, obj_id, anim, palette[, NAME]
-; InitLocationActors spawns the player, its shadow and the companion into
-; slots 0-2 and then the list in order, a row whose cond fails still taking
-; its slot as an idle actor, so row n is actor slot 3 + n. NAME defines
-; ACTOR_NAME as that slot, and the scripts address the actor by it: inserting
-; or reordering rows renumbers them.
+; InitLocationActors fills slots 0-2 with the player, its shadow and the
+; companion, then the list in order (a row whose cond fails still takes its
+; slot), so row n is actor slot 3 + n. NAME defines ACTOR_NAME as that slot;
+; inserting or reordering rows renumbers them.
 MACRO map_actor
 IF !DEF(_MAP_ACTOR_ROW)
 DEF _MAP_ACTOR_ROW = 0
@@ -661,32 +639,29 @@ DEF _MAP_ACTOR_ROW += 1
 	db \5, $00, \6, \7, \8, $00
 ENDM
 
-; Names an actor slot by what it is for in a scene, where the lists that can
-; be active there hold different actors (or the same character under different
-; scripts) in it: `actor_role ISLAND_OPEN_OPPONENT, $0a, List, List...` defines
-; ACTOR_ROLE_ISLAND_OPEN_OPPONENT = $0a. The lists are not assembled;
-; tools/actorslots.py holds every use to them (include/actor_roles.inc).
+; Names an actor slot by its role in a scene whose possible lists put
+; different actors in it: `actor_role ISLAND_OPEN_OPPONENT, $0a, List, List...`
+; defines ACTOR_ROLE_ISLAND_OPEN_OPPONENT = $0a. The lists are not assembled;
+; tools/actorslots.py checks every use against them (include/actor_roles.inc).
 MACRO actor_role
 DEF ACTOR_ROLE_\1 EQU \2
 ENDM
 
 ; Terminates a map_actor list: nine $00 bytes then the $ff sentinel that
-; SpawnActorsFromList ($04:$4cf7) stops on (it reads template byte 9).
+; SpawnActorsFromList stops on (template byte 9).
 MACRO map_actor_end
 DEF _MAP_ACTOR_ROW = 0
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff
 ENDM
 
 ; --- Actor-script bytecode (the `objdef` blobs a map_actor points at) ---
-; SpawnActor ($04:$4055) installs the blob as the actor's script pointer
-; (state +$00/+$01 = address, +$02 = bank). StepActorScript ($04:$4229) runs it
-; each frame: it reads a 1-byte opcode and dispatches through the 22-entry
-; handler table at $04:$447d. Each opcode advances the script pointer past its
-; operands; a handler returns 0 to yield for this frame or nonzero to run the
-; next opcode immediately. A script is a pool of fragments, each ending in an
-; as_jump back-edge (an infinite loop); different actors/states enter at
-; different offsets. Coordinates are 16-bit fixed-point map units. See
-; docs/actor_script.md for the full opcode reference.
+; SpawnActor installs the blob as the actor's script pointer (state
+; +$00/+$01 = address, +$02 = bank). StepActorScript runs it each frame,
+; dispatching 1-byte opcodes through a 22-entry handler table; a handler
+; returns 0 to yield for the frame or nonzero to run the next opcode. A script
+; is a pool of fragments, each ending in an as_jump loop, entered at different
+; offsets. Coordinates are 16-bit fixed-point map units. Full opcode reference:
+; docs/actor_script.md.
 MACRO as_halt        ; $00 inert: yield forever (no pointer advance)
 	db $00
 ENDM
@@ -799,11 +774,11 @@ MACRO map_entry
 ENDM
 
 ; Story-script record (8 bytes, table terminated by $ff). FindStoryScriptEntry
-; ($0a:$53e4) matches `id` (and `facing_mask`, a FACEMASK_* constant in
+; matches `id` (and `facing_mask`, a FACEMASK_* constant in
 ; constants.inc, against the actor's facing), checks `flag_cond`, then runs
 ; `handler` with the two arg bytes. What the args mean belongs to the map_tree
 ; slot the table sits in, not to the record: in an ExitTriggers table (slot 1)
-; RunLocationExit ($0a:$5637) copies `arg0` into wStoryModeCurrentLocation --
+; RunLocationExit copies `arg0` into wStoryModeCurrentLocation --
 ; a STORYLOC_* id -- and `arg1` into wStoryModeEntryPoint, which indexes the
 ; destination's own map_entry list. In the other three slots they are whatever
 ; the handler reads them as.
@@ -815,11 +790,9 @@ MACRO map_script
 ENDM
 
 ; Story match launcher: store the 16-bit big-endian match id into
-; wCurrentMinigameStoryMatch ($c8f6/$c8f7), then load that match's settings via
-; FarPtr_LoadMatchSettingsFromTable. The high byte is the category
-; (0 singles, 1 doubles, 2 minigame/practice) and the low byte the match; see
-; the wCurrentMinigameStoryMatch note in ram/wram.asm. The standalone
-; launcher stubs follow it with a ret; some callers continue with more setup.
+; wCurrentMinigameStoryMatch, then farcall LoadMatchSettingsFromTable. The
+; high byte is the category (0 singles, 1 doubles, 2 minigame/practice), the
+; low byte the match.
 ; Usage: load_match_settings MATCHLIST_*, STORYMATCH_* (or one 16-bit id)
 MACRO load_match_settings
 IF _NARG == 2
@@ -849,9 +822,8 @@ MACRO story_location
 ENDM
 
 ; map_pos x, y -- assert that a map position is written in tiles with a
-; point (18.0, 17.5): the game keeps positions in 1/256 tile (ACTORF_X), and
-; the macros below store `x >> 8` of the Q16.16 literal, so an integer would
-; silently land 256 times too close to the origin.
+; point (18.0, 17.5): positions are in 1/256 tile and the macros store `x >> 8`
+; of the Q16.16 literal, so a plain integer would land 256 times too close.
 MACRO map_pos
 	ASSERT (\1) % 256 == 0 && (\1) < 256.0, "map position \1: write tiles with a point, e.g. 18.0"
 	ASSERT (\2) % 256 == 0 && (\2) < 256.0, "map position \2: write tiles with a point, e.g. 18.0"
@@ -862,10 +834,9 @@ MACRO map_offset
 	ASSERT (\2) % 256 == 0 && (\2) >= -128.0 && (\2) < 128.0, "map offset \2: write tiles with a point, e.g. -4.0"
 ENDM
 
-; Cutscene script commands. Story cutscenes are hand-written native code: fixed
-; register setups feeding farcalls into the script engine (FarPtr_Script*, bank
-; $0a). Each macro collapses one setup+farcall; the disassembler emits them via
-; script_cmd_seq. `actor` is the target actor slot (ACTOR_PLAYER = the player).
+; Cutscene script commands. Story cutscenes are native code: register setups
+; feeding farcalls into the bank $0a script engine. Each macro is one
+; setup+farcall. `actor` is the target actor slot (ACTOR_PLAYER = the player).
 ; Usage: script_move_target actor, x, y
 MACRO script_move_target
 	map_pos \2, \3
@@ -893,9 +864,8 @@ MACRO script_move_angle
 	farcall MoveActorByAngle
 ENDM
 ; px_speed speed -- assert a move speed is written in pixels per frame with a
-; point (1.0, 0.75). The actor mover steps the position (1/256 tile) by the
-; speed every update, so 1 px is $20; the macros store `speed >> 11` of the
-; Q16.16 literal, which needs a multiple of 1/32 px.
+; point (1.0, 0.75). 1 px is $20 in position units (1/256 tile); the macros
+; store `speed >> 11` of the Q16.16 literal, so it must be a multiple of 1/32 px.
 MACRO px_speed
 	ASSERT (\1) % 2048 == 0 && (\1) >= 0 && (\1) < 2048.0, "speed \1: write pixels per frame with a point, in 1/32 px"
 ENDM
@@ -952,9 +922,7 @@ MACRO script_set_objdef
 	ld b, h
 	farcall LoadActorObjectDefIfValid
 ENDM
-; Fetch `actor`'s state-struct address ($d000 + actor*$40) into hl. Callers
-; then copy it into bc/de to read or write state fields. GetActorStateAddr
-; ($0a:$4311).
+; Fetch `actor`'s state-struct address ($d000 + actor*$40) into hl.
 ; Usage: script_get_actor_state actor
 MACRO script_get_actor_state
 	ld a, \1
@@ -1034,16 +1002,14 @@ MACRO script_wait_move
 	farcall ScriptWaitActorMoveDone
 ENDM
 ; Blocks the cutscene until `actor`'s script finishes (CheckActorScriptEnd),
-; advancing a frame each poll, with a ~600-frame timeout. WaitActorScriptDone
-; ($0a:$4372).
+; advancing a frame each poll, with a ~600-frame timeout.
 ; Usage: script_wait_actor_script actor
 MACRO script_wait_actor_script
 	ld a, \1
 	farcall WaitActorScriptDone
 ENDM
-; Detaches `actor`'s script: installs the shared null/idle script ($0a:$4766)
-; via SetActorScript so the actor stops running its own bytecode and the
-; cutscene can drive it directly. SetActorNullScript ($0a:$4364).
+; Detaches `actor`'s script: installs the shared idle script so the cutscene
+; can drive the actor directly.
 ; Usage: script_null_script actor
 MACRO script_null_script
 	ld a, \1
@@ -1060,9 +1026,8 @@ MACRO script_wait_frames
 ENDM
 
 ; Copy a width x height tile rectangle between two scene-tilemap cells
-; (CopySceneTilemapRect, $0a:$619e -- CopyMemoryBC of `width` tiles per row for
-; `height` rows). Source cell is (src_col, src_row), dest cell (dst_col,
-; dst_row); addresses via GetSceneTilemapAddr ($d000 + col + row*$40).
+; (CopySceneTilemapRect). Cells are (col, row) on the scene tilemap at
+; $d000 + col + row*$40.
 ; Usage: script_copy_scene_rect src_col, src_row, dst_col, dst_row, width, height
 MACRO script_copy_scene_rect
 	ld b, \1
@@ -1074,23 +1039,22 @@ MACRO script_copy_scene_rect
 	farcall CopySceneTilemapRect
 ENDM
 
-; Wait `frames` frames through WaitScriptFramesSaveA ($27:$7856), the
-; af-preserving subroutine wrapper around FarPtr_WaitScriptFrames.
+; Wait `frames` frames through WaitScriptFramesSaveA (preserves af).
 ; Usage: script_delay frames
 MACRO script_delay
 	ld a, \1
 	call WaitScriptFramesSaveA
 ENDM
 
-; Start a screen fade-in at speed `speed` (BeginFadeIn, $00:$1d2e; speed 0 is
-; treated as 1). Usage: script_fade_in speed
+; Start a screen fade-in (BeginFadeIn; speed 0 is treated as 1).
+; Usage: script_fade_in speed
 MACRO script_fade_in
 	ld c, \1
 	call BeginFadeIn
 ENDM
 
 ; Set actor `actor`'s script to `script`, a code pointer in the current bank
-; (captured through hRomBank into b). ScriptSetActorScript ($0a:$434f).
+; (bank taken from hRomBank).
 ; Usage: script_set_actor_script actor, script
 MACRO script_set_actor_script
 	ldh a, [hRomBank]
@@ -1100,7 +1064,7 @@ MACRO script_set_actor_script
 	farcall ScriptSetActorScript
 ENDM
 
-; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):
+; Match-result tilemap-copy record (CopyTilemapRect):
 ; copy a `rows`-tall, 2-tile-wide rectangle from `src` to `dest` in the BG
 ; tilemap shadow. Lists live in MatchResultTilemapScripts_16, one per result
 ; layout, and end with a tilemap_copy_end sentinel.
@@ -1110,13 +1074,12 @@ MACRO tilemap_copy
 	db \3
 ENDM
 
-; Terminates a tilemap_copy list: an all-zero record (the routine stops when a
-; record's dest word is $0000; the remaining record bytes are unread).
+; Terminates a tilemap_copy list: the routine stops on a dest word of $0000.
 MACRO tilemap_copy_end
 	ds 5, $00
 ENDM
 
-; Tilemap-assembly record (dispatch at $39:$4e11, via CopyTilemapRect): copy a
+; Tilemap-assembly record (bank $39, via CopyTilemapRect): copy a
 ; `height`x`width` rectangle from `src` to `dest` in the tilemap shadow (and
 ; again at a +$0400 buffer offset). Lists end with tilemap_rect_end (a record
 ; whose height byte is 0, which the loop stops on).
@@ -1134,8 +1097,7 @@ ENDM
 ; copied by CopyTextRect/CopyTextRectPair. `tilemap_begin` declares the
 ; geometry, one `tilemap_row` follows per row (rgbasm checks that its argument
 ; count matches the declared width), and `tilemap_end` checks the row count and
-; the total size -- so a mis-carved width fails the build instead of quietly
-; rendering ragged rows.
+; the total size.
 ; Usage: tilemap_begin width, height / tilemap_row ... / tilemap_end
 MACRO tilemap_begin
 DEF _TM_W = \1
@@ -1155,7 +1117,7 @@ MACRO tilemap_end
 	ASSERT @ - _TM_START == _TM_W * _TM_H, "tilemap_end: size mismatch"
 ENDM
 
-; One rules screen's page list (ShowRulesPageSequence $06:$4316): the page
+; One rules screen's page list (ShowRulesPageSequence): the page
 ; offsets, added to the screen's base text id, that it walks until the $ff
 ; terminator. The lists sit in a fixed-stride array, so `rules_pages_stride`
 ; declares the stride once and `rules_pages` pads each list out to it with the
@@ -1172,9 +1134,9 @@ MACRO rules_pages
 ENDM
 
 ; One menu of the match/story pause menu system: the item ids it lists, in
-; display order. The 8-byte record is {id0..id3, count, $00 x3} -- the count is
-; derived from the argument list (GetMatchMenuItemCount/GetStoryMenuItemCount
-; read it at +4), so a menu cannot disagree with its own length.
+; display order. The 8-byte record is {id0..id3, count, $00 x3}; the count
+; (read at +4 by GetMatchMenuItemCount/GetStoryMenuItemCount) is derived from
+; the arguments.
 ; Usage: menu_def item, ... (1-4 items)
 MACRO menu_def
 	db \#
@@ -1199,7 +1161,7 @@ MACRO rect_pair
 	dw \3, \4
 ENDM
 
-; QueueSpriteTemplate ($1e9d) sprite record: one hardware sprite as {dy, dx,
+; QueueSpriteTemplate sprite record: one hardware sprite as {dy, dx,
 ; tile, attr} deltas added to the base position/tile/attr passed in the call.
 ; A list ends with oam_sprite_end (a $80 dy byte, which the loader stops on).
 ; Usage: oam_sprite dy, dx, tile, attr
@@ -1211,7 +1173,7 @@ MACRO oam_sprite_end
 	db $80
 ENDM
 
-; Match-result graphics set (loader $16:$4e54): three LZ tile streams
+; Match-result graphics set (bank $16 loader): three LZ tile streams
 ; decompressed to VRAM $8900, $8a40, $9140 (20 tiles each). Records live in
 ; GfxSetPointerTable_16 and are selected by the remapped match gfx index.
 ; Usage: gfx_set tiles_lo, tiles_mid, tiles_hi

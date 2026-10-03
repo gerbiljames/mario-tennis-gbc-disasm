@@ -6,8 +6,9 @@ DEF ApplySpriteWobbleX_17_NAME EQUS "Unused_17_ApplySpriteWobbleX"
 DEF ApplySpriteWobbleY_17_NAME EQUS "ApplySpriteWobbleY_17"
 DEF DrawAsciiDigitChar_17_NAME EQUS "Unused_17_DrawAsciiDigitChar"
 
-; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
-	INCLUDE "data/bank_039/lz_SharedMenuGfx17.inc" ; DEF SharedMenuGfx17_SIZE EQU its decoded length, generated from the .bin by make
+; <Label>_SIZE: decoded length of each tile block this bank copies whole through
+; LoadCompressedTileBlock (each .inc is generated from its .bin by make)
+	INCLUDE "data/bank_039/lz_SharedMenuGfx17.inc"
 
 INCLUDE "src/engine/menus/slots_17.asm"
 INCLUDE "src/engine/menus/menu_17.asm"

@@ -231,13 +231,8 @@ QueueIntroSpriteBlock_SpriteTemplate:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 ; Returns unless wCutsceneStepTimer >= $14 and [$c323] is nonzero, then
-; loads h from [$c323] and l from [$c322] and writes both straight
-; back unchanged. **After the two guards it does nothing** -- the
-; write-back is the value just read, so the routine has no effect at
-; all. $c322 is wCameraY, so the pair reads as a 16-bit camera Y.
-;
-; Was 30 bytes of data with no proven caller; seeded as code because it
-; decodes as one complete routine ending in ret.
+; reads the 16-bit camera Y at $c322 (wCameraY) and writes it back
+; unchanged, so the routine has no effect. Nothing calls it.
 Unused_6b_RewriteCutsceneCameraY:
 	ld a, [wCutsceneStepTimer] ; $615e
 	cp $14 ; $6161

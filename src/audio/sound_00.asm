@@ -419,12 +419,10 @@ StartSoundChannel:
 	ld [hl+], a ; $3370
 	ld [hl+], a ; $3371
 	ret ; $3372
-; Runs the sound driver over a 32-byte window of HRAM ($ffd0-$ffef) that four
-; other subsystems also use. It copies the whole window out to $d000 in WRAM
-; bank $07 on entry and copies it back on exit, so the pool is context-switched
-; rather than merely time-shared: a value living there survives an audio update
-; untouched. That is what lets hMatchFrameCounter and hSoundEngineBusy share
-; bytes with the driver's channel state.
+; Runs the sound driver over HRAM $ffd0-$ffef, a window four other subsystems
+; also use. The window is saved to $d000 in WRAM bank $07 on entry and restored
+; on exit, so values there (hMatchFrameCounter, hSoundEngineBusy) survive an
+; audio update while sharing bytes with the driver's channel state.
 RunSoundEngine:
 	wram_bank WRAM_SOUND ; $3373
 	ld hl, hSndScriptPtr ; $3379

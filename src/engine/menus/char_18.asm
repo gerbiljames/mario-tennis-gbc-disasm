@@ -72,7 +72,7 @@ Unused_18_LoadConfirmScreenSpriteGfx:
 ConfirmScreenSpriteGfx0:
 	INCBIN "data/bank_018/lz_ConfirmScreenSpriteGfx0.bin" ; $5633, 449 bytes
 	INCLUDE "data/bank_018/lz_ConfirmScreenSpriteGfx0.inc" ; DEF ConfirmScreenSpriteGfx0_SIZE EQU its decoded length, generated from the .bin by make
-; A QueueSpriteTemplate list: 14 records of (dy $10, dx $08+8n, tile 2n, attr 0) then the $80 terminator -- one horizontal strip of 14 sprites. It sat inside ConfirmScreenSpriteGfx0's blob until that stream was sized by decoding it; nothing references it, which is why the sprite-template carve never saw it
+; A QueueSpriteTemplate list: 14 records of (dy $10, dx $08+8n, tile 2n, attr 0) then the $80 terminator -- one horizontal strip of 14 sprites. Nothing references it.
 ConfirmScreenSpriteTemplate:
 	; $57f4, 57 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

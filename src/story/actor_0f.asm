@@ -439,7 +439,7 @@ Unused_0f_ComputeRankingProgressIndex:
 	jr z, .loop ; $7d84
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7d86
 	jr .loop ; $7d88
-; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
+; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_0f_ComputeStoryRankTier:
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c

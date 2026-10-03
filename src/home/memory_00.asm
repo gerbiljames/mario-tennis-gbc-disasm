@@ -196,16 +196,14 @@ QueueVRAMCopyFromBank:
 	ldh [hRomBank], a ; $047a
 	ld [rROMB0], a ; $047c
 	ret ; $047f
-; The only way anything reaches VRAM: 613 call sites, and not one direct
-; `ld [$8xxx], a` in the ROM. hl = source, de = destination, c = length in
-; 16-byte blocks.
+; The game's only path to VRAM (no code writes $8xxx directly). hl = source,
+; de = destination, c = length in 16-byte blocks.
 ;
-; The VRAM bank rides in bit 13 of the destination -- `bit 5, d` selects it and
-; `res 5, d` recovers the address -- so a destination of $9800 + VRAM_BANK1 is
-; $9800 in bank 1. With the LCD off the transfer starts immediately as a GDMA;
-; with it on the request goes into wVRAMCopyQueue for ProcessVRAMCopyQueues to
-; run in VBlank. Ten slots; on overflow it sets hVRAMQueueDirty and, in debug
-; step mode, plays a sound so an overrun is audible.
+; The VRAM bank rides in bit 13 of the destination, so $9800 + VRAM_BANK1 is
+; $9800 in bank 1. With the LCD off the transfer runs at once as a GDMA; with
+; it on the request goes into wVRAMCopyQueue (ten slots) for
+; ProcessVRAMCopyQueues to run in VBlank. On overflow it sets hVRAMQueueDirty
+; and, in debug step mode, plays a sound.
 QueueVRAMCopy:
 	ldh a, [rLCDC] ; $0480
 	add a ; $0482
@@ -335,11 +333,9 @@ QueueBGTileWrite:
 	ld a, $01 ; $0529
 	ldh [hVRAMQueueDirty], a ; $052b
 	ret ; $052d
-; Drains wVRAMCopyQueue in VBlank. A slot is the five CGB VDMA registers plus
-; the two banks needed to reach the source, so the body is mostly a straight
-; copy into $ff51-$ff55; writing the length to $ff55 is what starts each
-; transfer. Slot +$00 doubles as the in-use flag and is cleared as the slot is
-; consumed.
+; Drains wVRAMCopyQueue in VBlank. A slot is the five CGB VDMA register values
+; ($ff51-$ff55; the $ff55 write starts the transfer) plus the source's banks.
+; Slot +$00 doubles as the in-use flag and is cleared as the slot is consumed.
 ProcessVRAMCopyQueues:
 	ldh a, [hVRAMQueueDirty] ; $052e
 	or a ; $0530

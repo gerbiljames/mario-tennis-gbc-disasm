@@ -70,14 +70,7 @@ SpriteTemplate_1b:
 ; Three $50/$0c, $50/$54, $50/$5c byte pairs -- one row, three columns
 ; -- followed by $00 $10 $20, in front of RedrawSavedDataTypeSelect.
 ; Reads as three cursor positions plus three tile ids for that screen's
-; three options, but nothing consults it.
-;
-; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
-; HIGH split base, no 8-bit register pair, and no dw word -- searched over
-; the raw ROM (so unproven code inside blobs counts) for every address
-; inside it, not just its start, with cross-bank byte coincidences filtered
-; out. Driving the character-select and CPU-difficulty screens under a
-; trace added no coverage here either.
+; three options, but nothing references it.
 Unused_1b_SavedDataCursorCells:
 	; $7349, 9 bytes (bytes:9)
 	db $50, $0c, $50, $54, $50, $5c, $00, $10, $20 ; 0x00

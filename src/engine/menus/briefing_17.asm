@@ -1,6 +1,6 @@
 ; Same divide as Unused_17_SetMenuCursorFromLinearIndex (c / b), but stores the
 ; remainder and quotient through the caller's hl rather than into the
-; menu cursor. Also had no proven caller.
+; menu cursor. Nothing calls it.
 Unused_17_WriteGridPosFromLinearIndex:
 	ld d, $00 ; $43cb
 	ld a, c ; $43cd

@@ -268,10 +268,8 @@ ServiceMatch1JudgeOnBallHit:
 ; RallyTick, passing 0-3 to its JudgePoint as the event code. 18 of the 52 in
 ; this bank start with `ret`, and which ones varies by drill -- most disable
 ; only RallyTick, the serve and net drills also disable Bounce, and
-; ServiceMatch2 disables Bounce while leaving RallyTick live. So the effect is
-; a per-drill choice of which events can score a point. Whether each `ret` was
-; written as that choice or left behind by an edit is not something the code
-; can settle. See docs/bugs.md.
+; ServiceMatch2 disables Bounce while leaving RallyTick live, so each drill
+; scores on its own subset of events. See docs/bugs.md.
 ServiceMatch1JudgeOnBounce:
 	ret ; $490e
 	ld a, $02 ; $490f

@@ -109,9 +109,7 @@ DrawCharGridSlotIcons:
 ; Indexed by wCharSelectMode * 2 in DrawCharGridSlotIcons, then
 ; dereferenced: each target is a $00-terminated list of 4-byte icon
 ; records (count, flag, then a shadow-tilemap address) fed to
-; WriteSlotIconTiles. The targets are data; they used to render as four
-; SubHandler* functions because hand-authored static-code seeds pointed
-; at them.
+; WriteSlotIconTiles.
 CharGridSlotIconListPtrs_38:
 	; $59ba, 12 bytes (records:2)
 	dw CharGridSlotIconList0 ; record 0
@@ -347,11 +345,7 @@ BuildCharGridFromUnlockFlags:
 ; reads through hl -- one byte per grid slot, nonzero meaning unlocked --
 ; sitting immediately in front of that routine's own
 ; CharGridFromUnlockFlagsTable. Slots $09-$0e are zero and the rest are
-; $01.
-;
-; Named for its format, not its purpose: no proven code loads this
-; address, so which caller passes it (and whether the zeroed slots are a
-; default roster or a debug one) is not established.
+; $01. Nothing loads its address.
 CharGridUnlockMask_38:
 	; $5b6f, 36 bytes (bytes:16)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01 ; 0x00

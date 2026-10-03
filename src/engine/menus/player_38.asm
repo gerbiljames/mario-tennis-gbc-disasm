@@ -46,22 +46,11 @@ ClearPlayerSlotPortrait:
 .done:
 	ret ; $5609
 ; Four shadow-tilemap cell addresses -- rows 6 and 9, columns 14 and
-; 16, i.e. the four player slots -- sitting immediately behind
-; ClearPlayerSlotPortrait, which instead reaches its cells through
-; unrolled per-slot branches with the addresses written out longhand.
-; Byte-identical to Unused_38_PortraitCellAddrs1 behind
-; DrawPlayerSlotPortrait, which is itself evidence of copy-paste.
-;
-; The live equivalent is the PlayerSlotBoxAddrs0-5 family, which uses
-; columns 13 and 17 and pads unused slots with NO_BOX. These two read
-; as the superseded version.
-;
-; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
-; HIGH split base, no 8-bit register pair, and no dw word -- searched over
-; the raw ROM (so unproven code inside blobs counts) for every address
-; inside it, not just its start, with cross-bank byte coincidences filtered
-; out. Driving the character-select and CPU-difficulty screens under a
-; trace added no coverage here either.
+; 16, the four player slots -- behind ClearPlayerSlotPortrait, which
+; writes its cell addresses out longhand instead. Byte-identical to
+; Unused_38_PortraitCellAddrs1. The live equivalent is the
+; PlayerSlotBoxAddrs0-5 family (columns 13 and 17, NO_BOX for unused
+; slots). Nothing references it.
 Unused_38_PortraitCellAddrs0:
 	; $560a, 8 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; record 0
@@ -121,14 +110,7 @@ DrawPlayerSlotPortrait:
 .done:
 	ret ; $5671
 ; Byte-identical twin of Unused_38_PortraitCellAddrs0, behind
-; DrawPlayerSlotPortrait. See that label for the full argument.
-;
-; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
-; HIGH split base, no 8-bit register pair, and no dw word -- searched over
-; the raw ROM (so unproven code inside blobs counts) for every address
-; inside it, not just its start, with cross-bank byte coincidences filtered
-; out. Driving the character-select and CPU-difficulty screens under a
-; trace added no coverage here either.
+; DrawPlayerSlotPortrait. Nothing references it.
 Unused_38_PortraitCellAddrs1:
 	; $5672, 8 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; record 0
@@ -371,14 +353,7 @@ RefreshCharInfoPanel:
 	ret ; $57d6
 ; Six bytes, $00 $02 $04 $01 $03 $05 -- the six stat rows in
 ; column-major order, sitting immediately in front of
-; DrawCreatedCharStats.
-;
-; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
-; HIGH split base, no 8-bit register pair, and no dw word -- searched over
-; the raw ROM (so unproven code inside blobs counts) for every address
-; inside it, not just its start, with cross-bank byte coincidences filtered
-; out. Driving the character-select and CPU-difficulty screens under a
-; trace added no coverage here either.
+; DrawCreatedCharStats. Nothing references it.
 Unused_38_StatDrawOrder:
 	; $57d7, 6 bytes (bytes:6)
 	db $00, $02, $04, $01, $03, $05 ; 0x00

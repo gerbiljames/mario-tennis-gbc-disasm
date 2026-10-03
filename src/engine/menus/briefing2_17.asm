@@ -227,10 +227,7 @@ Unused_17_DrawSecondCaptionRow:
 ; Queues the two-sprite template at $4a29 through QueueSpriteTemplate at
 ; screen position de = $2020, with c = $04 (tile base) and b = $09
 ; (flags; bit 5 would mirror it).
-;
-; No proven caller, so what it draws is not established -- it sits
-; between QueueCaptionRowToVRAM and RestoreDiagramServiceBoxes in the
-; court-diagram code. Named for what it does, not what it is for.
+; Nothing calls it, so what it draws is unknown.
 Unused_17_QueueSpritePair:
 	ld c, $04 ; $4a1b
 	ld b, OAM_BANK1 | 1 ; $4a1d

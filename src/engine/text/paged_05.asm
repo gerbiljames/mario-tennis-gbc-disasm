@@ -84,9 +84,7 @@ RunPagedTextMenu:
 	ret ; $49db
 ; Registered as a per-frame task by Unused_05_RunPagedTextMenuAutoSize and unregistered
 ; when the menu closes, so it does run every frame -- but its body reads
-; wMenuCursorRow into a and then `pop af` discards it, leaving no effect. Not
-; a bare `ret` stub: the register/unregister pair around it is real, only the
-; work is missing.
+; wMenuCursorRow into a and then `pop af` discards it, leaving no effect.
 Unused_05_PagedMenuFrameTask:
 	push af ; $49dc
 	push bc ; $49dd

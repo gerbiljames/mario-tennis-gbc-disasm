@@ -2,7 +2,6 @@
 ; ControlCodeHandlers_05 ($05:$548f) instead of printing (docs/screens_and_ui.md
 ; 7.2). $01 / $02 / $03 are spelled by the line / page / done macros; the rest
 ; appear in the generated data/<bank>/TextStrings_*.asm pools as these names.
-; Hand-maintained; the values are the engine's, not extracted content.
 def TX_ARG_STRING     equ $04 ; pop the string-argument queue into the text (PushTextArgString)
 def TX_DELAY_30       equ $05 ; wait 30 frames, not skippable
 def TX_DELAY_15       equ $06 ; wait 15 frames, aborts on input

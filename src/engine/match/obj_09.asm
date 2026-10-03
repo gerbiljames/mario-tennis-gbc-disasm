@@ -554,10 +554,8 @@ UpdateAllObjSprites:
 ; Runs one match object slot. It copies the slot into wObjSlotWork, pushes
 ; DrawObjSlot as the return address and `jp`s to the slot's handler at +$08;
 ; FinishObjSlotUpdate then copies the working record back.
-;
-; That indirection is why every handler addresses one fixed record instead of
-; indexing bc, and why the subsystem reads as a pile of absolute addresses. A
-; slot whose +$00 is $ff is free.
+; Every handler therefore addresses that one fixed record rather than
+; indexing bc. A slot whose +$00 is $ff is free.
 ProcessObjSlot:
 	ld hl, OBJSLOT_ID ; $46b5
 	add hl, bc ; $46b8

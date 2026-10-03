@@ -116,14 +116,8 @@ Unused_1b_RunStoryDataConfirmMenu:
 	ret ; $69cc
 ; A lone $c9 (ret) followed by the byte pair $ff $36 four times, wedged
 ; between the end of a two-option-select wrapper and the run of ret
-; bytes named Unused_1b_StubNop_1b_09. Reads as a stub return plus filler.
-;
-; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
-; HIGH split base, no 8-bit register pair, and no dw word -- searched over
-; the raw ROM (so unproven code inside blobs counts) for every address
-; inside it, not just its start, with cross-bank byte coincidences filtered
-; out. Driving the character-select and CPU-difficulty screens under a
-; trace added no coverage here either.
+; bytes named Unused_1b_StubNop_1b_09: a stub return plus filler. Nothing
+; references it.
 Unused_1b_StubRetAndFill:
 	; $69cd, 9 bytes (bytes:9)
 	db $c9, $ff, $36, $ff, $36, $ff, $36, $ff, $36 ; 0x00

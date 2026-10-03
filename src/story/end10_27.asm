@@ -22,14 +22,8 @@ ActorScript_27_06:
 ; Sixteen bytes: $0080, $5520, $7ea0, $4460, then $2508 four times, read
 ; as words. Three of those look like bank-$27 addresses but each lands
 ; mid-object rather than on any labelled start, so it is not a pointer
-; record. Named for its shape only -- what it holds is not established.
-;
-; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
-; HIGH split base, no 8-bit register pair, and no dw word -- searched over
-; the raw ROM (so unproven code inside blobs counts) for every address
-; inside it, not just its start, with cross-bank byte coincidences filtered
-; out. Driving the character-select and CPU-difficulty screens under a
-; trace added no coverage here either.
+; record. Contents unknown.
+; Nothing reads it.
 Unused_27_Record:
 	; $5570, 16 bytes (bytes:16)
 	db $80, $00, $20, $55, $a0, $7e, $60, $44, $08, $25, $08, $25, $08, $25, $08, $25 ; 0x00

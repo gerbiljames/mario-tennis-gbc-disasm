@@ -4,15 +4,16 @@ SECTION "ROM Bank $38", ROMX[$4000], BANK[$38]
 ; that call one another (src/twins): a copy nothing reaches is Unused_<bank>_...
 DEF DrawCornerBrackets_38_NAME EQUS "Unused_38_DrawCornerBrackets"
 
-; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
-	INCLUDE "data/bank_039/lz_CharGridGfx2.inc" ; DEF CharGridGfx2_SIZE EQU its decoded length, generated from the .bin by make
-	INCLUDE "data/bank_039/lz_CharacterSelectGfx.inc" ; DEF CharacterSelectGfx_SIZE EQU its decoded length, generated from the .bin by make
-	INCLUDE "data/bank_039/lz_DigitFontTiles.inc" ; DEF DigitFontTiles_SIZE EQU its decoded length, generated from the .bin by make
-	INCLUDE "data/bank_039/lz_NameEntryGfx.inc" ; DEF NameEntryGfx_SIZE EQU its decoded length, generated from the .bin by make
-	INCLUDE "data/bank_039/lz_SharedMenuGfx17.inc" ; DEF SharedMenuGfx17_SIZE EQU its decoded length, generated from the .bin by make
-	INCLUDE "data/bank_039/lz_StatLabelTiles.inc" ; DEF StatLabelTiles_SIZE EQU its decoded length, generated from the .bin by make
-	INCLUDE "data/bank_03d/lz_CharGridGfx1.inc" ; DEF CharGridGfx1_SIZE EQU its decoded length, generated from the .bin by make
-	INCLUDE "data/bank_03d/lz_SharedMenuGfx72.inc" ; DEF SharedMenuGfx72_SIZE EQU its decoded length, generated from the .bin by make
+; <Label>_SIZE: decoded length of each tile block this bank copies whole through
+; LoadCompressedTileBlock (each .inc is generated from its .bin by make)
+	INCLUDE "data/bank_039/lz_CharGridGfx2.inc"
+	INCLUDE "data/bank_039/lz_CharacterSelectGfx.inc"
+	INCLUDE "data/bank_039/lz_DigitFontTiles.inc"
+	INCLUDE "data/bank_039/lz_NameEntryGfx.inc"
+	INCLUDE "data/bank_039/lz_SharedMenuGfx17.inc"
+	INCLUDE "data/bank_039/lz_StatLabelTiles.inc"
+	INCLUDE "data/bank_03d/lz_CharGridGfx1.inc"
+	INCLUDE "data/bank_03d/lz_SharedMenuGfx72.inc"
 
 INCLUDE "src/engine/menus/menu_38.asm"
 INCLUDE "src/engine/menus/matchtype_38.asm"

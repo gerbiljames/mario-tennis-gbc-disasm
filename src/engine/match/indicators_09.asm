@@ -262,7 +262,7 @@ ServeGfx3_09:
 	INCBIN "data/bank_009/ServeGfx3_09.bin" ; $6f80, 256 bytes
 ; A column of up to eight 8x16 objects one tile apart, tiles $0e down to $00;
 ; an object template enters it part-way to draw fewer (the entry labels
-; say how many rows remain). ServeGfxPtrTable_09 used to swallow its head.
+; say how many rows remain).
 ObjColumn8SpriteTemplate_09:
 	; $7080, 33 bytes (sprite_template)
 	oam_sprite $10, $40, $0e, $00

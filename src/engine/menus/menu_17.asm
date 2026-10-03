@@ -356,10 +356,7 @@ Unused_17_GetMenuCursorLinearIndexFromPtr:
 ; Divides the linear index in c by the row width in b: remainder ->
 ; wMenuCursorX, quotient -> wMenuCursorY. Twin of
 ; Unused_17_WriteGridPosFromLinearIndex, which writes through hl instead.
-;
-; No proven caller: the two-instruction prologue was never executed in
-; any trace, so only the loop from $43bc was proven and these 3 bytes
-; read as data until they were seeded as code.
+; Nothing calls it.
 Unused_17_SetMenuCursorFromLinearIndex:
 	ld d, $00 ; $43b9
 	ld a, c ; $43bb

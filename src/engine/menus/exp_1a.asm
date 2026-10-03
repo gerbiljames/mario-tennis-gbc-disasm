@@ -414,12 +414,8 @@ TileBufferBlockCells_1a:
 ; Fills a 4-row by 8-column block of the tile buffer from
 ; TileBufferBlockCells_1a, the 32-word table immediately above it:
 ; c counts rows $0b-$0e, b counts columns $01-$08, and each iteration
-; reads one word into de and calls Unused_1a_WriteTileBufferCell. 4 x 8 is
-; exactly the table's 32 entries.
-;
-; Was 43 bytes of INCBIN with no proven caller; seeded as code because
-; it decodes as one complete push/pop-balanced routine and its
-; `ld hl, $4ab4` lands exactly on that table.
+; reads one word into de and calls Unused_1a_WriteTileBufferCell. Nothing
+; calls it.
 Unused_1a_FillTileBufferBlockFromTable:
 	push af ; $4af4
 	push bc ; $4af5

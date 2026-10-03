@@ -90,8 +90,7 @@ TestStorySlotFlagA:
 ; The gate on awarding EXP: Unused_02_AddExpToCa00RecordChecked calls it and returns on
 ; z. It cannot return z -- `xor a` / `dec a` sets the flags from $ff and the
 ; following `ld a, c` restores the caller's a without touching them -- so the
-; gate always passes and the award always happens. Whatever condition it was
-; meant to test is not in the ROM.
+; gate always passes and the award always happens.
 Unused_02_CheckExpAwardAllowed:
 	push bc ; $4d29
 	ld c, a ; $4d2a

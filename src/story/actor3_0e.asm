@@ -365,7 +365,7 @@ ActorScript_0e_28:
 	as_jump ActorScript_0e_28
 ; Instruction-identical to ComputeRankingProgressIndex_11, ComputeRankingProgressIndex_12 and Unused_27_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
 	twin_in compute_ranking_progress_index, ComputeRankingProgressIndex_0e, 0e ; $7e5a ComputeRankingProgressIndex_0e
-; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
+; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_0e_ComputeStoryRankTier:
 	ld a, $00 ; $7ea1
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ea3

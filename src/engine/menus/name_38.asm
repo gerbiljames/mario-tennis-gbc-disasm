@@ -410,14 +410,8 @@ SetupNameEntryScreen:
 ; ten $3f bytes and a $00 -- eleven bytes, exactly the size of
 ; wNameEntryBuffer and the length SetupNameEntryScreen copies with
 ; `ld bc, $000b`. It reads as a blank-name template, but that routine
-; takes its eleven bytes from GetActiveStoryNameBuffer, not from here.
-;
-; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
-; HIGH split base, no 8-bit register pair, and no dw word -- searched over
-; the raw ROM (so unproven code inside blobs counts) for every address
-; inside it, not just its start, with cross-bank byte coincidences filtered
-; out. Driving the character-select and CPU-difficulty screens under a
-; trace added no coverage here either.
+; takes its eleven bytes from GetActiveStoryNameBuffer. Nothing references
+; it.
 Unused_38_NameEntryBlank:
 	; $7063, 15 bytes (bytes:15)
 	db $01, $03, $02, $00, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $00 ; 0x00
