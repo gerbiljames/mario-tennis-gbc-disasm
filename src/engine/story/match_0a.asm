@@ -233,6 +233,7 @@ LoadMatchSettingsFromTable:
 	jr nz, .minigameDefaults ; $4a8c
 	ld a, [hl+] ; $4a8e
 	ld e, a ; $4a8f
+	call ApOverrideMatchLength
 	and $0f ; $4a90
 	ld [wMatchTypeNumberOfGames], a ; $4a92
 	ld a, e ; $4a95

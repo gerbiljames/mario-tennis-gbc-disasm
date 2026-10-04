@@ -391,6 +391,27 @@ minigame_gates.tokens = lambda c: {"ApOptMinigames": b"\x01",
                                    ("ApStartInventory", c["ITEM_TARGET_SHOT"]): b"\x02"}
 
 
+def match_length(g):
+    return g.mem[g.addr("wMatchTypeNumberOfSets")], g.mem[g.addr("wMatchTypeNumberOfGames")]
+
+
+@test
+def match_length_vanilla(g, c):
+    g.wram("wCurrentMinigameStoryMatch", 0, 19)
+    g.call("LoadMatchSettingsFromTable")
+    assert match_length(g) != (1, 2), match_length(g)
+
+
+@test
+def match_length_override(g, c):
+    g.wram("wCurrentMinigameStoryMatch", 0, 19)
+    g.call("LoadMatchSettingsFromTable")
+    assert match_length(g) == (1, 2), match_length(g)
+
+
+match_length_override.tokens = lambda c: {"ApOptMatchSets": b"\x01", "ApOptMatchGames": b"\x02"}
+
+
 def names(c, loc, item, player):
     off = c[loc] * 50
     return {("ApLocationNames", off): item.encode() + b"\0", ("ApLocationNames", off + 25): player.encode() + b"\0"}

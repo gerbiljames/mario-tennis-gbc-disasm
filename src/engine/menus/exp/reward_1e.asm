@@ -1,4 +1,5 @@
 ApplyStatGapProgressFlag:
+	ret
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6c62
 	jr nz, .isWonSeniorSinglesRank1 ; $6c65
 	ret ; $6c67
@@ -15,14 +16,14 @@ ApplyStatGapProgressFlag:
 .setFlag:
 	set_flag FLAG_HAVE_DRIVE_RACKET ; $6c78
 	ret ; $6c7b
-ApplyClassProgressRule1:
+Unused_1e_ApplyClassProgressRule1:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6c7c
 	jr nz, .setFlag ; $6c7f
 	ret ; $6c81
 .setFlag:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $6c82
 	ret ; $6c85
-ApplyClassProgressRule2:
+Unused_1e_ApplyClassProgressRule2:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6c86
 	jr nz, .setFlag ; $6c89
 	ret ; $6c8b
@@ -30,7 +31,7 @@ ApplyClassProgressRule2:
 	set_flag FLAG_HAVE_SMALL_RACKET ; $6c8c
 	set_flag FLAG_HAVE_LIGHT_SHOES ; $6c8f
 	ret ; $6c92
-ApplyClassProgressRule3:
+Unused_1e_ApplyClassProgressRule3:
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $6c93
 	jr nz, .setFlag ; $6c96
 	ret ; $6c98
@@ -39,9 +40,10 @@ ApplyClassProgressRule3:
 	set_flag FLAG_HAVE_IRON_SHOES ; $6c9c
 	ret ; $6c9f
 ApplyClassProgressFlags:
-	call ApplyClassProgressRule1 ; $6ca0
-	call ApplyClassProgressRule2 ; $6ca3
-	call ApplyClassProgressRule3 ; $6ca6
+	ret
+	call Unused_1e_ApplyClassProgressRule1 ; $6ca0
+	call Unused_1e_ApplyClassProgressRule2 ; $6ca3
+	call Unused_1e_ApplyClassProgressRule3 ; $6ca6
 	ret ; $6ca9
 SetRewardGameFlag:
 	push af ; $6caa

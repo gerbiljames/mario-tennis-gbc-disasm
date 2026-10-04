@@ -30,3 +30,28 @@ ApStoryIdle:
 .none:
 	xor a
 	ret
+
+; e = a story match's packed length (sets << 4 | games) -> e and a with the
+; story_match_sets / story_match_games option bytes in place of nonzero ones
+ApOverrideMatchLength:
+	ld a, [ApOptMatchGames]
+	and a
+	jr z, .sets
+	ld d, a
+	ld a, e
+	and $f0
+	or d
+	ld e, a
+.sets:
+	ld a, [ApOptMatchSets]
+	and a
+	jr z, .done
+	swap a
+	ld d, a
+	ld a, e
+	and $0f
+	or d
+	ld e, a
+.done:
+	ld a, e
+	ret
