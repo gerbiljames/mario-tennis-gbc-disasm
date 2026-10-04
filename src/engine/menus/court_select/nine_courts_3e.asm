@@ -583,12 +583,12 @@ ComputeUnlockedCourtFlags:
 	ld [wUnlockedCourtMask], a ; $69c6
 	ret ; $69c9
 CourtUnlockFlagIds_3e:
-	; $69ca, 10 bytes (flag_ids)
-	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; 0
-	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 1
-	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 2
-	dw $0740 ; 3: flag $07, 2
-	dw $0720 ; 4: flag $07, 1
+	; $69ca, 10 bytes (save_flag_ids)
+	dw SAVEFLAG_COURT_WAREHOUSE ; 0
+	dw SAVEFLAG_COURT_JUNGLE ; 1
+	dw SAVEFLAG_COURT_TROPICS ; 2
+	dw SAVEFLAG_COURT_CASTLE ; 3
+	dw SAVEFLAG_COURT_STAR ; 4
 StubNop_3e:
 	ret ; $69d4
 AwardCeremonyTiles:

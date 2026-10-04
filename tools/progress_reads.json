@@ -1,7 +1,4 @@
 {
- "src/engine/menus/court_select/nine_courts_3e.asm|CourtUnlockFlagIds_3e|flag_id FLAG_WON_DREAM_MATCH_SINGLES|1": "record",
- "src/engine/menus/court_select/nine_courts_3e.asm|CourtUnlockFlagIds_3e|flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL|1": "record",
- "src/engine/menus/court_select/nine_courts_3e.asm|CourtUnlockFlagIds_3e|flag_id FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL|1": "record",
  "src/engine/menus/exp/award_sequence_1e.asm|ProcessMatchRewards|test_flag FLAG_CLEARED_MACHINE_MASTER|1": "record",
  "src/engine/menus/exp/award_sequence_1e.asm|ProcessMatchRewards|test_flag FLAG_CLEARED_WALL_MASTER|1": "record",
  "src/engine/menus/exp/award_sequence_1e.asm|ProcessMatchRewards|test_flag FLAG_WON_DREAM_MATCH_DOUBLES|1": "record",
