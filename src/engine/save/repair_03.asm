@@ -150,7 +150,7 @@ UpdateUnlockablesSaveBlock:
 	pop bc ; $5784
 	pop af ; $5785
 	ret ; $5786
-SetAllUnlockablesInSaveBlock:
+Unused_03_SetAllUnlockablesInSaveBlock:
 	push af ; $5787
 	push bc ; $5788
 	push de ; $5789

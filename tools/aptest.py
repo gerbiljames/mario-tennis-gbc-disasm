@@ -55,6 +55,7 @@ class Game:
         self.pb.set_emulation_speed(0)
         self.rf, self.mem = self.pb.register_file, self.pb.memory
         self.pending, self.idle = [], 0
+        self.awaiting, self.result = False, None
         b, a = self.sym["RunStoryLocation.eventWaitLoop"]
         self.pb.hook_register(b, a, self.on_idle, None)
 
@@ -64,6 +65,10 @@ class Game:
 
     def on_idle(self, _):
         self.idle += 1
+        if self.awaiting:
+            r = self.rf
+            self.result = {"A": r.A, "B": r.B, "C": r.C, "D": r.D, "E": r.E, "HL": r.HL}
+            self.awaiting = False
         if not self.pending:
             return
         label, regs = self.pending.pop(0)
@@ -76,6 +81,7 @@ class Game:
             setattr(r, k, v)
         r.A, r.HL = bank, addr
         r.PC = self.sym["CallHLInBankA"][1]
+        self.awaiting = True
 
     def tick(self, n=1):
         for _ in range(n):
@@ -103,7 +109,9 @@ class Game:
         raise AssertionError("never reached the overworld idle loop")
 
     def call(self, label, **regs):
-        """Run `label` (any bank) from the idle loop, with these registers."""
+        """Run `label` (any bank) from the idle loop, with these registers;
+        self.result then holds the registers it returned (once the loop is
+        back)."""
         self.pending.append((label, regs))
         for i in range(1200):
             self.tick()
@@ -359,6 +367,28 @@ def goal_completionist_and_absent(g, c):
 goal_completionist_and_absent.tokens = lambda c: {
     "ApOptGoal": b"\x02", "ApOptLocationCount": b"\x03",
     ("ApPlacements", c["LOC_JUNIOR_SINGLES_RANK_4"]): b"\xff"}
+
+
+@test
+def minigame_gates(g, c):
+    char = {}
+    for game in range(9):
+        g.call("GetUnlockedMarioCastCharAtGridSlot", C=game)
+        g.tick(30)
+        char[game] = g.result["A"]
+    assert char[3] == 0x19, char
+    assert all(char[k] == 0x15 for k in char if k != 3), char
+    g.call("CheckMinigameGridExpanded")
+    g.tick(30)
+    assert g.result["A"] == 1
+    for game, cleared, want in ((3, 0, 1), (3, 2, 1), (0, 2, 0)):
+        g.call("ApMinigameLevels", E=game, D=cleared)
+        g.tick(30)
+        assert g.result["A"] == want, (game, cleared, g.result["A"])
+
+
+minigame_gates.tokens = lambda c: {"ApOptMinigames": b"\x01",
+                                   ("ApStartInventory", c["ITEM_TARGET_SHOT"]): b"\x02"}
 
 
 def names(c, loc, item, player):

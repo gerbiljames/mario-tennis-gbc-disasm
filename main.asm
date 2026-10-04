@@ -536,6 +536,7 @@ INCLUDE "src/ap/tables_2d.asm"
 INCLUDE "src/ap/ledger_2d.asm"
 INCLUDE "src/ap/checks_2d.asm"
 INCLUDE "src/ap/items_2d.asm"
+INCLUDE "src/ap/gates_2d.asm"
 
 SECTION "ROM Bank $2e", ROMX[$4000], BANK[$2e]
 

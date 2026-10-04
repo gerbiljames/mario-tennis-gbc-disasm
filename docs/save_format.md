@@ -62,7 +62,7 @@ It sets the five court flags, `SAVEFLAG_UNLOCKED_FAY`-`_ELDEN`, and levels 1
 and 2 of every minigame, skipping level 3, so the level-3 characters (Baby
 Mario, Yoshi, Peach) stay locked. It also sets `FLAG_CHEAT_UNLOCK_0`-`_12`
 in every existing story slot and saves that slot, then calls
-`SetAllUnlockablesInSaveBlock`.
+`Unused_03_SetAllUnlockablesInSaveBlock`.
 
 Two button codes call it (`eventtest` targets `menu-cheat` and
 `trophies-cheat` enter them):
@@ -177,7 +177,7 @@ resets just records 0-1 of the current slot (called from
 When present, `ApplyN64RecordsUnlockFlags` (03:56a8) sets
 `SAVEFLAG_N64_RECORDS_PRESENT` and `SAVEFLAG_UNLOCKED_FAY`/`_CURT`/`_MARK`/
 `_SEAN` at boot (`$01:$4091`).
-`SetAllUnlockablesInSaveBlock` (03:5787) force-sets all six flags
+`Unused_03_SetAllUnlockablesInSaveBlock` (03:5787) force-sets all six flags
 (called from the bank $3b trophy/completion flow).
 
 ## Star victory grid block (`$3e`)

@@ -9,6 +9,8 @@ LoadN64RecordsToWram2:
 	pop_wram_bank ; $6c57
 	ret ; $6c5c
 CheckN64DataPresent:
+	xor a
+	ret
 	push_wram_bank WRAM_COURT_PLANES ; $6c5d
 	ld a, [wN64BlockProbe] ; $6c66
 	ld b, a ; $6c69

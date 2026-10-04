@@ -395,7 +395,10 @@ CountClearedMinigameLevels:
 	jr z, .countDone ; $6bf7
 	inc c ; $6bf9
 .countDone:
-	ld a, c ; $6bfa
+	ld a, [wScreenAttrmap]
+	ld e, a
+	ld d, c
+	apcall ApMinigameLevels
 	ld [wScreenAttrmap + 1], a ; $6bfb
 	ld a, [wScreenAttrmap + 1] ; $6bfe
 	ld hl, CountClearedMinigameLevelsTable ; $6c01

@@ -39,6 +39,18 @@ MarioCastUnlockMaskTable:
 	dw $0140 ; record 4
 	dw $01c0 ; record 5
 GetUnlockedMarioCastCharAtGridSlot:
+	ld a, [ApOptMinigames]
+	and a
+	jr z, .vanilla
+	ld e, c
+	push bc
+	apcall ApMinigameUnlocked
+	pop bc
+	and a
+	ld a, CHAR_UNUSED_15
+	ret z
+	jr GetMarioCastCharAtGridSlot
+.vanilla:
 	call GetMarioCastCharAtGridSlot ; $66b5
 	cp CHAR_LUIGI ; $66b8
 	ret z ; $66ba
@@ -82,6 +94,10 @@ MarioCastCharAtGridSlotTable:
 	db $19, $1c, $18 ; 0x03
 	db $1e, $1b, $1d ; 0x06
 CheckMinigameGridExpanded:
+	ld a, [ApOptMinigames]
+	and a
+	ld a, $01
+	ret nz
 	ld c, MARIOGAME_TREASURE_BOX ; $66f2
 	call GetUnlockedMarioCastCharAtGridSlot ; $66f4
 	cp CHAR_UNUSED_15 ; $66f7

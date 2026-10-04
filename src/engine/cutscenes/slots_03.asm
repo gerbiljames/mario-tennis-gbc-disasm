@@ -33,5 +33,5 @@
 	farptr InitGrayscalePaletteFade ; $4040
 	farptr SetupPaletteFadeMask ; $4042
 	farptr AnimatePaletteFadeToTarget ; $4044
-	farptr SetAllUnlockablesInSaveBlock ; $4046
+	farptr Unused_03_SetAllUnlockablesInSaveBlock ; $4046
 	farptr SaveStorySlot ; $4048

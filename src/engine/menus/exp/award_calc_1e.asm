@@ -467,6 +467,7 @@ UnusedShowExpAwardForN64:
 	pop af ; $6afb
 	ret ; $6afc
 ApplyPendingExpAwards:
+	apcall ApClearN64Transfer
 	push af ; $6afd
 	push bc ; $6afe
 	push de ; $6aff

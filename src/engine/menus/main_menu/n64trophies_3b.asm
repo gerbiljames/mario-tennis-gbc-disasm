@@ -104,6 +104,7 @@ CheckTrophiesCheatCode:
 	xor a ; $4b31
 	ret ; $4b32
 ApplyUnlockEverythingCheat:
+	ret
 	ld de, SAVEFLAG_COURT_STAR ; $4b33
 	farcall SetSaveFlag ; $4b36
 	ld de, SAVEFLAG_COURT_CASTLE ; $4b39
@@ -207,7 +208,7 @@ ApplyUnlockEverythingCheat:
 	jr nz, .loop ; $4c49
 	pop af ; $4c4b
 	ld [wCurrentStorySlot], a ; $4c4c
-	farcall SetAllUnlockablesInSaveBlock ; $4c4f
+	farcall Unused_03_SetAllUnlockablesInSaveBlock ; $4c4f
 	ret ; $4c52
 DecodeTrophyCounts:
 	wram_bank WRAM_SCREEN ; $4c53
