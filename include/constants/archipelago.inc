@@ -28,6 +28,17 @@ ENDC
 ENDM
 
 DEF AP_ITEM_NONE EQU 0
+; in ApPlacements: a location this seed's options leave out
+DEF AP_ITEM_ABSENT EQU $ff
+
+; ApOptGoal
+DEF AP_GOAL_ISLAND_OPEN EQU 0
+DEF AP_GOAL_DREAM_MATCH EQU 1
+DEF AP_GOAL_COMPLETIONIST EQU 2
+; ApOptStoryArcs
+DEF AP_ARCS_BOTH EQU 0
+DEF AP_ARCS_SINGLES EQU 1
+DEF AP_ARCS_DOUBLES EQU 2
 
 ; apcall Routine -- calls an AP-bank routine from any bank through ApFarCall;
 ; clobbers hl, passes bc and de

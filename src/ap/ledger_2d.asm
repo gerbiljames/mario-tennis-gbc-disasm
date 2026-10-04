@@ -84,6 +84,35 @@ ApBootLedger:
 ApLedgerMagic:
 	db "MTAP"
 
+; e = location id -> nz if its done bit is set
+ApTestLocationDone:
+	call ApOpenLedger
+	ld hl, sApDoneBits
+	call ApLocationBit
+	and [hl]
+	jp ApCloseLedger
+
+; -> a = how many done bits are set
+ApCountDone:
+	call ApOpenLedger
+	ld hl, sApDoneBits
+	ld c, AP_LOCATION_BYTES
+	ld b, 0
+.byte:
+	ld a, [hl+]
+.bit:
+	and a
+	jr z, .next
+	srl a
+	jr nc, .bit
+	inc b
+	jr .bit
+.next:
+	dec c
+	jr nz, .byte
+	ld a, b
+	jp ApCloseLedger
+
 ; e = location id: sets its done bit. a = 0 if it was set already, else 1.
 ApSetLocationDone:
 	call ApOpenLedger

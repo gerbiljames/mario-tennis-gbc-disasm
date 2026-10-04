@@ -315,6 +315,52 @@ def messages(g, c):
     assert g.message() is None
 
 
+def goal(g):
+    return g.sram("sApGoal")[0]
+
+
+@test
+def goal_island_open_both_arcs(g, c):
+    g.wram("wCurrentMinigameStoryMatch", 0, 19)
+    g.call("SetRewardGameFlag")
+    assert not goal(g), "one arc's final is not the goal under both"
+    g.wram("wCurrentMinigameStoryMatch", 1, 19)
+    g.call("SetRewardGameFlag")
+    assert goal(g)
+
+
+@test
+def goal_dream_match_singles(g, c):
+    g.wram("wCurrentMinigameStoryMatch", 0, 19)
+    g.call("SetRewardGameFlag")
+    assert not goal(g)
+    g.wram("wCurrentMinigameStoryMatch", 0, 24)
+    g.call("SetRewardGameFlag")
+    assert goal(g)
+
+
+goal_dream_match_singles.tokens = lambda c: {"ApOptGoal": b"\x01", "ApOptStoryArcs": b"\x01"}
+
+
+@test
+def goal_completionist_and_absent(g, c):
+    g.wram("wCurrentMinigameStoryMatch", 0, 1)
+    g.call("SetRewardGameFlag")
+    assert not g.done(c["LOC_JUNIOR_SINGLES_RANK_4"]), "an absent location was marked done"
+    for index in (2, 3):
+        g.wram("wCurrentMinigameStoryMatch", 0, index)
+        g.call("SetRewardGameFlag")
+        assert not goal(g)
+    g.wram("wCurrentMinigameStoryMatch", 0, 4)
+    g.call("SetRewardGameFlag")
+    assert goal(g)
+
+
+goal_completionist_and_absent.tokens = lambda c: {
+    "ApOptGoal": b"\x02", "ApOptLocationCount": b"\x03",
+    ("ApPlacements", c["LOC_JUNIOR_SINGLES_RANK_4"]): b"\xff"}
+
+
 def names(c, loc, item, player):
     off = c[loc] * 50
     return {("ApLocationNames", off): item.encode() + b"\0", ("ApLocationNames", off + 25): player.encode() + b"\0"}

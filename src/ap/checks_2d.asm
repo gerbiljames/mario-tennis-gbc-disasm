@@ -104,21 +104,66 @@ ApCheckSwingContest:
 	ret
 
 ; e = location id: marks it done; the first time, grants this world's item
-; placed there
+; placed there and tests the goal. A location the options left out does
+; nothing.
 ApCheckLocation:
-	push de
-	call ApSetLocationDone
-	pop de
-	and a
-	ret z
 	ld d, 0
 	ld hl, ApPlacements
 	add hl, de
 	ld a, [hl]
-	and a
+	cp AP_ITEM_ABSENT
 	ret z
+	push af
+	call ApSetLocationDone
+	and a
+	jr z, .old
+	pop af
+	and a
+	jr z, ApCheckGoal
 	ld e, a
-	jp ApGrantItem
+	call ApGrantItem
+	jr ApCheckGoal
+.old:
+	pop af
+	ret
+
+; Sets sApGoal once the goal option holds, in the arcs story_arcs plays.
+ApCheckGoal:
+	ld a, [ApOptGoal]
+	cp AP_GOAL_COMPLETIONIST
+	jr z, .completionist
+	ld bc, LOC_ISLAND_OPEN_SINGLES_FINAL << 8 | LOC_ISLAND_OPEN_DOUBLES_FINAL
+	and a
+	jr z, .arcs
+	ld bc, LOC_DREAM_MATCH_SINGLES << 8 | LOC_DREAM_MATCH_DOUBLES
+.arcs:
+	ld a, [ApOptStoryArcs]
+	cp AP_ARCS_DOUBLES
+	jr z, .doubles
+	push bc
+	ld e, b
+	call ApTestLocationDone
+	pop bc
+	ret z
+	ld a, [ApOptStoryArcs]
+	cp AP_ARCS_SINGLES
+	jr z, .reached
+.doubles:
+	ld e, c
+	call ApTestLocationDone
+	ret z
+	jr .reached
+.completionist:
+	call ApCountDone
+	ld hl, ApOptLocationCount
+	cp [hl]
+	ret c
+.reached:
+	call ApOpenLedger
+	ld a, 1
+	ld [sApGoal], a
+	call ApCommitGameRegion
+	jp ApCloseLedger
 
 ; per reward list, the location of each index (AP_NO_LOCATION for none)
 ApRewardLocations:
