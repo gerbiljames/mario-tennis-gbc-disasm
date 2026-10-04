@@ -1,0 +1,13 @@
+; Archipelago: the ROM0 free tail. Every option byte defaults to 0, vanilla;
+; the patch's tokens write them (rom_addresses.py).
+
+ApOptSkipIntro:: db 0
+ApOptStoryArcs:: db 0
+ApOptMinigames:: db 0
+ApOptRemoteItems:: db 0
+ApOptGoal:: db 0
+ApOptMatchSets:: db 0
+ApOptMatchGames:: db 0
+ApOptSwingLow:: db 0
+ApOptSwingHigh:: db 0
+ApOptLocationCount:: db 0

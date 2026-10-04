@@ -28,7 +28,7 @@ ifeq (,$(filter clean,$(MAKECMDGOALS)))
 $(info $(shell python3 tools/mods.py apply))
 endif
 
-.PHONY: all compare check test shift-test event-test slot-audit venv previews clean
+.PHONY: all compare check test shift-test event-test slot-audit ap-export venv previews clean
 
 all: $(ROM)
 
@@ -127,6 +127,11 @@ event-test: $(ROM)
 # every story state and location (tools/actorslots.py --runtime).
 slot-audit: $(ROM)
 	$(PYTHON) tools/actorslots.py --runtime --save $(SAVE)
+
+# Stamp the basepatch id and write the base patch, rom_addresses.py and ids.py
+# into the apworld (tools/ap_export.py).
+ap-export: $(ROM)
+	$(PYTHON) tools/ap_export.py
 
 # A virtualenv with the packages in requirements.txt; PYTHON uses it.
 venv:

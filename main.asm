@@ -28,6 +28,12 @@ INCLUDE "src/audio/sound_00.asm"
 INCLUDE "src/audio/note_00.asm"
 INCLUDE "src/audio/tables_00.asm"
 
+SECTION "AP Home", ROM0[$3fc8]
+INCLUDE "src/ap/home_00.asm"
+
+SECTION "AP Basepatch Id", ROM0[$3ff8]
+INCLUDE "src/ap/basepatch_id_00.asm"
+
 SECTION "ROM Bank $01", ROMX[$4000], BANK[$01]
 
 INCLUDE "src/engine/menus/main_menu/boot_01.asm"
@@ -522,6 +528,10 @@ INCLUDE "src/data/shots/reach.asm"
 SECTION "ROM Bank $2d", ROMX[$4000], BANK[$2d]
 
 INCLUDE "src/data/shots/tables_2d.asm"
+
+SECTION "AP Code", ROMX[$6000], BANK[$2d]
+ApCode::
+INCLUDE "src/ap/tables_2d.asm"
 
 SECTION "ROM Bank $2e", ROMX[$4000], BANK[$2e]
 

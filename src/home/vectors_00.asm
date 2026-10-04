@@ -37,7 +37,7 @@ EntryPoint:
 NintendoLogo:
 	INCBIN "data/bank_000/NintendoLogo.bin" ; $0104, 48 bytes
 	; $0134, 28 bytes (cart_header)
-	db "CGBTENNIS ", $00 ; $0134 title
+	db "CGBTENNISAP"      ; $0134 title
 	db "BM8E"            ; $013f manufacturer code
 	db $c0               ; $0143 CGB flag: CGB only
 	db "01"              ; $0144 new licensee
