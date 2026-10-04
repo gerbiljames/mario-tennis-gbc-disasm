@@ -32,7 +32,7 @@ WipeAllSaveRam:
 	jr nz, .loopB ; $481c
 	inc e ; $481e
 	ld a, e ; $481f
-	cp BANK(sApHeader) ; $4820 the Archipelago ledger's bank is kept
+	cp BANK(sApHeader) ; $4820
 	jr c, .loop ; $4822
 	ret ; $4824
 Unused_03_ClearSaveFlagsArea:

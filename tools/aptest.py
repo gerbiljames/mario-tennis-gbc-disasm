@@ -38,8 +38,36 @@ def constants():
     return out
 
 
+def with_ledger(save, sym, auth=bytes(16)):
+    """The battery save with an empty, valid ledger for this auth in SRAM
+    bank 3, so the patched game takes the cart as this seed's and keeps its
+    story files (a cart without one is erased at boot)."""
+    syms = read_syms(sym)
+    data = bytearray(save)
+    data += bytes(max(0, 0x8000 - len(data)))
+
+    def off(label):
+        b, a = syms[label]
+        return b * 0x2000 + a - 0xa000
+
+    def seal(start, end):
+        lo, hi = off(start), off(end)
+        data[hi:hi + 2] = ((0xa55a + sum(data[lo:hi])) & 0xffff).to_bytes(2, "little")
+
+    lo = off("sApHeader")
+    data[lo:off("sApClientRegionEnd")] = bytes(off("sApClientRegionEnd") - lo)
+    data[off("sApMagic"):off("sApMagic") + 4] = b"MTAP"
+    data[off("sApAuth"):off("sApAuth") + 16] = auth
+    seal("sApHeader", "sApHeaderChecksum")
+    seal("sApGameRegion", "sApGameChecksum")
+    n = off("sApGameRegionEnd") - off("sApGameRegion")
+    data[off("sApGameBackup"):off("sApGameBackup") + n] = data[off("sApGameRegion"):off("sApGameRegionEnd")]
+    seal("sApClientRegion", "sApClientChecksum")
+    return bytes(data)
+
+
 class Game:
-    def __init__(self, rom, sym, save, tokens=None):
+    def __init__(self, rom, sym, save, tokens=None, ledger=True):
         from pyboy import PyBoy
         self.sym = read_syms(sym)
         self.tmp = Path(tempfile.mkdtemp(prefix="aptest-"))
@@ -50,7 +78,9 @@ class Game:
         copy = self.tmp / "rom.gbc"
         copy.write_bytes(data)
         if save:
-            shutil.copy(save, str(copy) + ".ram")
+            auth = data[rom_offset(*self.sym["ApSlotAuth"]):][:16]
+            raw = Path(save).read_bytes()
+            Path(str(copy) + ".ram").write_bytes(with_ledger(raw, sym, bytes(auth)) if ledger else raw)
         self.pb = PyBoy(str(copy), window="null", sound_emulated=False, log_level="ERROR")
         self.pb.set_emulation_speed(0)
         self.rf, self.mem = self.pb.register_file, self.pb.memory
@@ -242,9 +272,13 @@ def check_reward_lists(g, c):
     g.call("SetRewardGameFlag")
     assert g.done(c["LOC_STROKE_MATCH_2"])
     assert g.game_items(c["ITEM_EXP_BUNDLE"]) == 1
+    # a first Master clear: the reward sets the Master flag, which must not
+    # turn the same run into Expert
+    master = g.addr("wGameFlags") + 219 // 8
+    g.mem[master] &= ~(0x80 >> 219 % 8) & 0xff
     g.wram("wCurrentMinigameStoryMatch", 2, c["MINIGAME_WALL_PRACTICE_HIGH_SCORE"])
     g.call("SetRewardGameFlag")
-    assert not g.done(c["LOC_WALL_PRACTICE_MASTER"]), "the save has Master cleared: this was Expert"
+    assert g.done(c["LOC_WALL_PRACTICE_MASTER"]), "a first Master clear missed its location"
 
 
 check_reward_lists.tokens = lambda c: placements(c, {
@@ -488,6 +522,16 @@ def exp_bundles_at_char_data(g, c):
 exp_bundles_at_char_data.tokens = lambda c: {("ApStartInventory", c["ITEM_EXP_BUNDLE"]): b"\x03"}
 
 
+def boot_without_ledger(rom, sym, save):
+    """A cart whose save has no ledger: -> (header magic, save flags) after boot."""
+    g = Game(rom, sym, save, ledger=False)
+    try:
+        g.tick(400)
+        return g.sram("sApMagic", 4), g.sram("sSaveFlags", 8)
+    finally:
+        g.close()
+
+
 def names(c, loc, item, player):
     off = c[loc] * 50
     return {("ApLocationNames", off): item.encode() + b"\0", ("ApLocationNames", off + 25): player.encode() + b"\0"}
@@ -525,11 +569,17 @@ def main():
         full = {"ITEM_SINGLES_PASS": 4, "ITEM_DOUBLES_PASS": 4, "ITEM_WALL_PRACTICE": 4, "ITEM_TENNIS_MACHINE": 4}
         full.update({f"ITEM_{d}_{k}": 2 for d in ("SERVICE", "NET_GAME", "STROKE") for k in ("MATCH", "LESSON")})
         write_rom(args.rom, args.sym, args.write_rom, full)
+        Path(args.write_rom).with_suffix(".sav").write_bytes(with_ledger(Path(args.save).read_bytes(), args.sym))
         return
     global SHOTS
     SHOTS = args.shots
     c = constants()
     failed = 0
+    if not args.k or args.k in "erases_a_save_without_ledger":
+        magic, flags = boot_without_ledger(args.rom, args.sym, args.save)
+        ok = magic == b"MTAP" and not any(flags)
+        print(f"{'ok  ' if ok else 'FAIL'}  erases_a_save_without_ledger")
+        failed += not ok
     for name, fn in TESTS.items():
         if args.k and args.k not in name:
             continue

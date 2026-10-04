@@ -72,7 +72,8 @@ sApReceivedCount:: dw
 ; a count per item id, from the server
 sApClientItems:: ds AP_ITEM_SLOTS
 ; the last AP_RECENT_ITEMS received, item n at entry n % AP_RECENT_ITEMS:
-; the item id, then the sender's name (a 16-character line, NUL-terminated)
+; the item id, then the sender's name (AP_NAME_LENGTH characters at most,
+; NUL-terminated)
 sApRecentItems:: ds AP_RECENT_ITEMS * AP_RECENT_ITEM_SIZE
 sApClientChecksum:: dw
 sApClientRegionEnd::

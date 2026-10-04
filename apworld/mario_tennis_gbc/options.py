@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
+from Options import Choice, OptionGroup, PerGameCommonOptions, Toggle
 
 
 class StoryArcs(Choice):
@@ -41,20 +41,23 @@ class Minigames(Choice):
     default = option_progressive
 
 
-class StoryMatchSets(Range):
-    """Sets in every story match. 0 keeps each match's own length."""
+class StoryMatchSets(Choice):
+    """Sets in every story match (best of). Vanilla keeps each match's own length."""
     display_name = "Story Match Sets"
-    range_start = 0
-    range_end = 3
-    default = 0
+    option_vanilla = 0
+    option_one = 1
+    option_three = 3
+    option_five = 5
+    default = option_vanilla
 
 
-class StoryMatchGames(Range):
-    """Games per set in every story match. 0 keeps each match's own length."""
+class StoryMatchGames(Choice):
+    """Games per set in every story match. Vanilla keeps each match's own length."""
     display_name = "Story Match Games"
-    range_start = 0
-    range_end = 6
-    default = 0
+    option_vanilla = 0
+    option_two = 2
+    option_six = 6
+    default = option_vanilla
 
 
 class SkipIntro(Toggle):

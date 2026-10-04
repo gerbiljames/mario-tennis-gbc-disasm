@@ -67,11 +67,7 @@ GetStoryContinueDestination:
 	jr z, .done ; $5763
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5765
 	jr nz, .dormSingles
-	push de
-	push hl
 	ap_pass AP_ARC_SINGLES, 4
-	pop hl
-	pop de
 	ld a, $05 ; $5768
 	jr nz, .done
 .dormSingles:
@@ -86,11 +82,7 @@ GetStoryContinueDestination:
 	jr z, .done ; $577c
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $577e
 	jr nz, .dormDoubles
-	push de
-	push hl
 	ap_pass AP_ARC_DOUBLES, 4
-	pop hl
-	pop de
 	ld a, $05 ; $5781
 	jr nz, .done
 .dormDoubles:

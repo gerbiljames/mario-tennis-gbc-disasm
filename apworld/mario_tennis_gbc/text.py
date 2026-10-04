@@ -1,5 +1,7 @@
 """Names in the game's dialogue font: GlyphWidths_05 ($05:$7f80) for ASCII $20-$7a, in pixels."""
 
+from .rom_addresses import constants
+
 WIDTHS = bytes([
     5, 4, 6, 6, 6, 6, 7, 4, 4, 4, 6, 6, 4, 6, 4, 6,
     6, 4, 6, 6, 6, 6, 6, 6, 6, 6, 4, 4, 5, 6, 5, 6,
@@ -9,7 +11,7 @@ WIDTHS = bytes([
     6, 6, 5, 6, 4, 6, 6, 8, 6, 6, 6,
 ])
 LINE_WIDTH = 144
-NAME_LENGTH = 24
+NAME_LENGTH = constants["AP_NAME_LENGTH"]
 _MAP = {"`": "'", "{": "(", "}": ")", "|": "/", "~": "-"}
 
 

@@ -73,33 +73,50 @@ ApCatchUpSlot:
 ; last AP_RECENT_ITEMS are kept).
 ApNextMessage:
 	call ApOpenLedger
+	ld hl, sApDoneBits
 	ld e, 0
 .location:
-	push de
-	ld hl, sApDoneBits
-	call ApLocationBit
+	ld a, [hl]
+	push hl
+	ld bc, sApMessagedBits - sApDoneBits
+	add hl, bc
 	ld b, a
-	and [hl]
-	jr z, .nextLocation
-	ld de, sApMessagedBits - sApDoneBits
-	add hl, de
+	ld a, [hl]
+	cpl
+	and b
+	jr nz, .unmessaged
+	pop hl
+	inc hl
+	ld a, e
+	add 8
+	ld e, a
+	cp AP_LOCATION_BYTES * 8
+	jr c, .location
+	jr .client
+; a = this byte's done bits not yet messaged, hl = its messaged byte, e = the
+; location id of its bit 0
+.unmessaged:
+	pop bc
+	ld b, a
+	ld c, 1
+.bit:
 	ld a, b
-	and [hl]
-	jr nz, .nextLocation
-	ld a, b
-	or [hl]
+	and c
+	jr nz, .mark
+	sla c
+	inc e
+	jr .bit
+.mark:
+	ld a, [hl]
+	or c
 	ld [hl], a
+	push de
 	call ApCommitGameRegion
 	call ApCloseLedger
 	pop de
 	jp ApComposeLocationMessage
-.nextLocation:
-	pop de
-	inc e
-	ld a, e
-	cp AP_NUM_LOCATIONS
-	jr c, .location
 
+.client:
 	ld hl, sApReceivedCount
 	ld a, [hl+]
 	ld c, a

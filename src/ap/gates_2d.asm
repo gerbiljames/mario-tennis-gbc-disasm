@@ -1,5 +1,29 @@
 ; Gates: what the effective inventory opens.
 
+; Through ApTestInline: reads its two argument bytes, returns past them, and
+; tests an item count (ap_has) or, with AP_TEST_PASS, a class pass (ap_pass).
+ApTestInlineFar:
+	; .restoreBank, the bank, ApTestInline's return, hl, de, bc, the args
+	ld hl, sp + 12
+	ld e, [hl]
+	inc hl
+	ld d, [hl]
+	ld a, [de]
+	ld b, a
+	inc de
+	ld a, [de]
+	ld c, a
+	inc de
+	ld [hl], d
+	dec hl
+	ld [hl], e
+	ld d, b
+	ld e, c
+	bit 7, d
+	jr z, ApItemAtLeast
+	res 7, d
+	jr ApPassAtLeast
+
 ; d = item id, e = a count -> nz if the player holds at least that many
 ApItemAtLeast:
 	push de

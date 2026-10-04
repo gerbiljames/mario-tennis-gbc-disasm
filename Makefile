@@ -141,8 +141,8 @@ ap-test: $(ROM)
 # and drill item, so each story state has the passes ahead of its wins: what
 # it reports is a crash or a lockup in some state (tools/eventtest.py).
 ap-event-test: $(ROM)
-	$(PYTHON) tools/aptest.py --write-rom build/ap-passes.gbc
-	$(PYTHON) tools/eventtest.py build/ap-passes.gbc --base build/ap-passes.gbc --save $(SAVE)
+	$(PYTHON) tools/aptest.py --write-rom build/ap-passes.gbc --save $(SAVE)
+	$(PYTHON) tools/eventtest.py build/ap-passes.gbc --base build/ap-passes.gbc --save build/ap-passes.sav
 
 # The apworld's BizHawk client against the game in PyBoy
 # (tools/apclienttest.py). AP is an Archipelago 0.6.8 checkout whose

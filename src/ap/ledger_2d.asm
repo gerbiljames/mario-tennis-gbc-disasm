@@ -3,32 +3,33 @@
 ; as the save engine does.
 
 ; Called at boot, after ValidateSaveRam. A missing or corrupt header (a new
-; cart reads all zero) starts a fresh ledger; one from another seed erases
-; the whole save first, as "erase all data" does. A corrupt game region is
-; restored from its backup, or cleared if that is bad too; a corrupt client
-; region is cleared, and the client resends every item.
+; cart, or a save made without this ledger) or one from another seed erases
+; the whole save, as "erase all data" does, and starts a fresh ledger: no
+; story progress from outside this seed can hide a check. A corrupt game
+; region is restored from its backup, or cleared if that is bad too; a
+; corrupt client region is cleared, and the client resends every item.
 ApBootLedger:
 	call ApOpenLedger
 	ld hl, sApHeader
 	ld bc, sApHeaderChecksum - sApHeader
 	call ApVerify
-	jr nz, .newLedger
+	jr nz, .erase
 	ld hl, sApMagic
 	ld de, ApLedgerMagic
 	ld c, 4
 	call ApCompare
-	jr nz, .newLedger
+	jr nz, .erase
 	ld hl, sApAuth
 	ld de, ApSlotAuth
 	ld c, 16
 	call ApCompare
 	jr z, .checkGameRegion
+.erase:
 	call ApCloseLedger
 	ld a, BANK(ReinitSaveRamPreservingBlock6)
 	ld hl, ReinitSaveRamPreservingBlock6
 	call CallHLInBankA
 	call ApOpenLedger
-.newLedger:
 	ld hl, sApHeader
 	ld bc, sApClientRegionEnd - sApHeader
 	call ApClear

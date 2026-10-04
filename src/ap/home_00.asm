@@ -6,16 +6,17 @@ ApFarCall:
 	ld a, BANK(ApCode)
 	jp CallHLInBankA
 
-; ap_has: the item and count follow the call
-ApHasInline:
-	pop hl
-	ld d, [hl]
-	inc hl
-	ld e, [hl]
-	inc hl
+; ap_has and ap_pass: two argument bytes follow the call
+ApTestInline:
+	push bc
+	push de
 	push hl
-	ld hl, ApItemAtLeast
-	jp ApFarCall
+	ld hl, ApTestInlineFar
+	call ApFarCall
+	pop hl
+	pop de
+	pop bc
+	ret
 
 ApOptSkipIntro: db 0
 ApOptStoryArcs: db 0

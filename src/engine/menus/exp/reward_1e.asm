@@ -71,12 +71,14 @@ SetRewardGameFlag:
 	ld a, [hl+] ; $6cc6
 	ld d, [hl] ; $6cc7
 	ld e, a ; $6cc8
-	call SetGameFlag ; $6cc9
+	push de
 	ld a, [wCurrentMinigameStoryMatch]
 	ld d, a
 	call GetRewardTableIndex
 	ld e, a
 	apcall ApCheckReward
+	pop de
+	call SetGameFlag ; $6cc9
 	pop hl ; $6ccc
 	pop de ; $6ccd
 	pop bc ; $6cce

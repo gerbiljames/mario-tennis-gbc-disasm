@@ -46,19 +46,20 @@ DEF AP_ARCS_DOUBLES EQU 2
 
 ; ap_pass ARC, N -- nz if the arc's class pass count is at least N (ARC:
 ; AP_ARC_SINGLES, AP_ARC_DOUBLES or AP_ARC_ACTIVE, the one FLAG_DOUBLES
-; picks); clobbers a, de and hl
+; picks); like test_flag, keeps every register but af
 DEF AP_ARC_SINGLES EQU 0
 DEF AP_ARC_DOUBLES EQU 1
 DEF AP_ARC_ACTIVE EQU 2
+DEF AP_TEST_PASS EQU $80
 MACRO ap_pass
-	ld de, (\1) << 8 | (\2)
-	apcall ApPassAtLeast
+	call ApTestInline
+	db AP_TEST_PASS | (\1), \2
 ENDM
 
 ; ap_has ITEM, N -- nz if the effective inventory holds at least N of ITEM;
-; clobbers a, de and hl
+; like test_flag, keeps every register but af
 MACRO ap_has
-	call ApHasInline
+	call ApTestInline
 	db \1, \2
 ENDM
 

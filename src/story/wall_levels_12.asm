@@ -614,7 +614,10 @@ LaunchWallPracticeMinigame:
 	ld e, a
 	ld d, ITEM_WALL_PRACTICE
 	apcall ApStageLocked
-	jp nz, WallPracticeLevelLockedScript
+	jr z, .launch
+	call WallPracticeLevelLockedScript
+	jp WallPracticeExitCourtScript
+.launch:
 	ld c, 4 ; $528d
 	call BeginFadeOut ; $528f
 	call WaitFadeEnd ; $5292
