@@ -3,7 +3,7 @@ NetCoachIntroDialogue_15:
 	call InitNetCoachScene ; $7580
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7583
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BETH ; $7588
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7590
+	ap_has ITEM_NET_GAME_LESSON, 1
 	jr z, .animate ; $7593
 	script_set_text Text_37_130 ; $7595
 .animate:
@@ -26,7 +26,7 @@ NetGamePractice2Result0:
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_BETH ; $75e7
 	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_NOD ; $75ef
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $75f6
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $75fb
+	ap_has ITEM_NET_GAME_LESSON, 2
 	jr z, .speak ; $75fe
 	script_set_text Text_37_155 ; $7600
 .speak:
@@ -193,7 +193,7 @@ ReturnCoachIntroDialogue_15:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7805
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $780a
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $7811
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7816
+	ap_has ITEM_STROKE_LESSON, 1
 	jr z, .speak ; $7819
 	farcall AdvanceDialogueTextCursor ; $781b
 .speak:
@@ -201,7 +201,7 @@ ReturnCoachIntroDialogue_15:
 	script_set_text Text_37_225 ; $7823
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_SHAKE ; $7829
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $7830
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7835
+	ap_has ITEM_STROKE_LESSON, 1
 	jr z, .speak2 ; $7838
 	farcall AdvanceDialogueTextCursor ; $783a
 .speak2:
@@ -347,8 +347,6 @@ Table_15:
 	db $03, $00, $2f, $00, $01, $01, $03, $03, $00, $2f, $00, $07, $01, $03, $0c, $f1, $ff ; 0x00
 	db $03, $00, $2f, $00, $01, $01, $05, $03, $00, $2f, $00, $07, $01, $05, $0c, $f1, $ff ; 0x11
 PlaceSwingPracticeKidActor:
-	test_flag FLAG_DOUBLES ; $7a45
-	jp nz, .done ; $7a48
 	ld a, [wEquippedRacket] ; $7a4b
 	and $0f ; $7a4e
 	cp $03 ; $7a50

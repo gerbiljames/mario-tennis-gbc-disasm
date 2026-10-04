@@ -11,8 +11,13 @@ TennisMachineRoomNpc05TextIds:
 	dw Text_6e_216 ; record 8
 MachinePracticeLevelPrompt:
 	ld [wMapScratch + 6], a ; $4612
-	call TestMachineLevelClearedFlag ; $4615
+	and a
+	jr z, .open
+	ld e, a
+	ld d, ITEM_TENNIS_MACHINE
+	apcall ApItemAtLeast
 	jr z, MachineLevelNotClearedMessage ; $4618
+.open:
 	script_set_text Text_6e_224 ; $461a
 	ld a, [wMapScratch + 6] ; $4620
 	inc a ; $4623

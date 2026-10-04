@@ -254,7 +254,7 @@ WallPracticeRoomTile03_12:
 .done:
 	ret ; $4d97
 WallPracticeRoomTile04_12:
-	test_flag FLAG_CLEARED_WALL_LEVEL_2 ; $4d98
+	ap_has ITEM_WALL_PRACTICE, 1
 	jp z, WallPracticeLevelLockedScript ; $4d9b
 	script_set_text Text_36_49 ; $4d9e
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4da4
@@ -285,7 +285,7 @@ WallPracticeRoomTile04_12:
 .done:
 	ret ; $4e0c
 WallPracticeRoomTile05_12:
-	test_flag FLAG_CLEARED_WALL_LEVEL_3 ; $4e0d
+	ap_has ITEM_WALL_PRACTICE, 2
 	jp z, WallPracticeLevelLockedScript ; $4e10
 	script_set_text Text_36_50 ; $4e13
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4e19
@@ -316,7 +316,7 @@ WallPracticeRoomTile05_12:
 .done:
 	ret ; $4e81
 WallPracticeRoomTile06_12:
-	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $4e82
+	ap_has ITEM_WALL_PRACTICE, 3
 	jp z, WallPracticeLevelLockedScript ; $4e85
 	script_set_text Text_36_51 ; $4e88
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4e8e
@@ -610,6 +610,11 @@ WallPracticeRoomNpc07TextIds2:
 	dw Text_36_32 ; record 5
 	dw Text_36_37 ; record 6
 LaunchWallPracticeMinigame:
+	ld a, [wMapSceneStage]
+	ld e, a
+	ld d, ITEM_WALL_PRACTICE
+	apcall ApStageLocked
+	jp nz, WallPracticeLevelLockedScript
 	ld c, 4 ; $528d
 	call BeginFadeOut ; $528f
 	call WaitFadeEnd ; $5292

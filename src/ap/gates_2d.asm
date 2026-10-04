@@ -1,5 +1,19 @@
 ; Gates: what the effective inventory opens.
 
+; d = item id, e = a count -> nz if the player holds at least that many
+ApItemAtLeast:
+	push de
+	ld e, d
+	call ApItemCount
+	pop de
+	cp e
+	jr c, .no
+	or 1
+	ret
+.no:
+	xor a
+	ret
+
 ; d = AP_ARC_*, e = a count -> nz if that arc's class pass count reaches it
 ApPassAtLeast:
 	ld a, d
@@ -82,4 +96,57 @@ ApRankingProgressIndex:
 	ld a, e
 	sub ITEM_SINGLES_PASS
 	add b
+	ret
+
+; b = a drill's match item, c = the drill's FLAG_CLEARED_*_MATCH_1 -> nz if
+; its coach has no match to offer: the first match not cleared is past the
+; item count + 1
+ApDrillMatchLocked:
+	ld d, 0
+	ld e, c
+	ld c, 0
+.count:
+	push bc
+	push de
+	call TestGameFlagByNumber
+	pop de
+	pop bc
+	jr z, .found
+	inc e
+	inc c
+	ld a, c
+	cp 3
+	jr c, .count
+.found:
+	push bc
+	ld e, b
+	call ApItemCount
+	pop bc
+	cp c
+	jr c, .locked
+	xor a
+	ret
+.locked:
+	or 1
+	ret
+
+; d = a Wall Practice or Tennis Machine item, e = the room's stage (its first
+; level not cleared) -> nz if the items do not reach it: level n needs n - 1
+; items, Master and the high-score levels all four
+ApStageLocked:
+	ld a, e
+	cp 4
+	jr c, .count
+	ld e, 4
+.count:
+	push de
+	ld e, d
+	call ApItemCount
+	pop de
+	cp e
+	jr c, .locked
+	xor a
+	ret
+.locked:
+	or 1
 	ret

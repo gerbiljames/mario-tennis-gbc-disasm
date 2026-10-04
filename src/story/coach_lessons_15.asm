@@ -189,14 +189,9 @@ HideServeChallengerActor:
 .done:
 	ret ; $71d3
 TestServeChallengerGameFlag:
-	ld a, [wMapSceneStage] ; $71d4
-	add a ; $71d7
-	ld_hl_indexed TestServeChallengerGameFlagTable ; $71d8
-	ld a, [hl+] ; $71df
-	ld d, [hl] ; $71e0
-	ld e, a ; $71e1
-	call TestGameFlagByNumber ; $71e2
-	ret ; $71e5
+	ld bc, ITEM_SERVICE_MATCH << 8 | FLAG_CLEARED_SERVICE_MATCH_1
+	ld hl, ApDrillMatchLocked
+	jp ApFarCall
 ; TestServeChallengerGameFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same table: the Set member of the pair. Nothing calls it.
 Unused_15_SetServeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $71e6
@@ -225,14 +220,9 @@ HideNetChallengerActor:
 .done:
 	ret ; $7219
 TestNetChallengerGameFlag:
-	ld a, [wMapSceneStage] ; $721a
-	add a ; $721d
-	ld_hl_indexed TestNetChallengerGameFlagTable ; $721e
-	ld a, [hl+] ; $7225
-	ld d, [hl] ; $7226
-	ld e, a ; $7227
-	call TestGameFlagByNumber ; $7228
-	ret ; $722b
+	ld bc, ITEM_NET_GAME_MATCH << 8 | FLAG_CLEARED_NET_GAME_MATCH_1
+	ld hl, ApDrillMatchLocked
+	jp ApFarCall
 ; TestNetChallengerGameFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same table: the Set member of the pair. Nothing calls it.
 Unused_15_SetNetChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $722c
@@ -261,14 +251,9 @@ HideStrokeChallengerActor:
 .done:
 	ret ; $725f
 TestStrokeChallengerGameFlag:
-	ld a, [wMapSceneStage] ; $7260
-	add a ; $7263
-	ld_hl_indexed TestStrokeChallengerGameFlagTable ; $7264
-	ld a, [hl+] ; $726b
-	ld d, [hl] ; $726c
-	ld e, a ; $726d
-	call TestGameFlagByNumber ; $726e
-	ret ; $7271
+	ld bc, ITEM_STROKE_MATCH << 8 | FLAG_CLEARED_STROKE_MATCH_1
+	ld hl, ApDrillMatchLocked
+	jp ApFarCall
 ; TestStrokeChallengerGameFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same table: the Set member of the pair. Nothing calls it.
 Unused_15_SetStrokeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $7272

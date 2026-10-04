@@ -90,7 +90,9 @@ RepairCounterReopenServiceMenu:
 	jp z, RepairCounterFarewell ; $5113
 	cp $00 ; $5116
 	jp z, RepairCounterChangeRackets ; $5118
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $511b
+	test_flag FLAG_HAVE_LIGHT_SHOES
+	jp nz, RepairCounterChangeShoes
+	test_flag FLAG_HAVE_IRON_SHOES
 	jp nz, RepairCounterChangeShoes ; $511e
 	script_set_text Text_6e_232 ; $5121
 	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $5127

@@ -415,6 +415,11 @@ TennisMachineRoomNpc05_14:
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $44de
 	ret ; $44e3
 MachineCourtStartLevelScene:
+	ld a, [wMapSceneStage]
+	ld e, a
+	ld d, ITEM_TENNIS_MACHINE
+	apcall ApStageLocked
+	jp nz, MachineLevelNotClearedMessage
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $44e4
 	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 41.0 ; $44e9
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $44f4

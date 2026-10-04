@@ -225,12 +225,6 @@ TrainingGymRunnerCheckClearance:
 	ret ; $4d87
 RunRepairCounterDialogue:
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4d88
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4d90
-	jp z, .greeting ; $4d93
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4d96
-	jp z, .noRepair ; $4d99
-	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $4d9c
-	jp z, .repairMenu ; $4d9f
 	jp .repairMenu ; $4da2
 .greeting:
 	test_flag FLAG_DOUBLES ; $4da5
@@ -256,9 +250,6 @@ RunRepairCounterDialogue:
 	set_flag FLAG_REPAIR_COUNTER_GREETED ; $4de0
 	jr .speak ; $4de3
 .repairMenu:
-	set_flag FLAG_HAVE_LARGE_RACKET ; $4de5
-	set_flag FLAG_HAVE_SMALL_RACKET ; $4de8
-	set_flag FLAG_HAVE_LIGHT_SHOES ; $4deb
 	script_set_text Text_6e_233 ; $4dee
 	jr .done ; $4df4
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4df6
@@ -305,7 +296,9 @@ RepairCounterServiceMenu:
 	jp z, RepairCounterFarewell ; $4e74
 	cp $00 ; $4e77
 	jp z, RepairCounterChangeRackets ; $4e79
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4e7c
+	test_flag FLAG_HAVE_LIGHT_SHOES
+	jp nz, RepairCounterChangeShoes
+	test_flag FLAG_HAVE_IRON_SHOES
 	jp nz, RepairCounterChangeShoes ; $4e7f
 	script_set_text Text_6e_232 ; $4e82
 	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $4e88

@@ -15,17 +15,8 @@ RunWaterSpriteSwingContestAndReward:
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4d37
 	call WaterSpriteSwingContestScene ; $4d42
 	apcall ApCheckSwingContest
-	test_flag FLAG_HAVE_SILVER_RACKET ; $4d45
-	jp nz, .done ; $4d48
-	test_flag FLAG_HAVE_GOLD_RACKET ; $4d4b
-	jp nz, .done ; $4d4e
-	ld a, [wSwingContestSwings] ; $4d51
-	cp $64 ; $4d54
-	jp c, .done ; $4d56
-	call WaterSpriteRacketRewardScene ; $4d59
-.done:
 	ret ; $4d5c
-WaterSpriteRacketRewardScene:
+Unused_15_WaterSpriteRacketRewardScene:
 	script_wait_frames 60 ; $4d5d
 	script_set_text Text_36_677 ; $4d64
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4d6a
@@ -236,13 +227,13 @@ TrainingCourtNpc07_15:
 	jr nz, .lesson3 ; $514b
 	test_flag FLAG_SERVE_COACH_GREETED ; $514d
 	jr nz, .lesson2Line ; $5150
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5152
+	ap_has ITEM_SERVICE_LESSON, 1
 	jr z, .lesson2Line ; $5155
 	call ServeCoachSeniorLessonScene ; $5157
 	ret ; $515a
 .lesson2Line:
 	script_set_text Text_37_33 ; $515b
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5161
+	ap_has ITEM_SERVICE_LESSON, 1
 	jr z, .speak ; $5164
 	script_set_text Text_37_34 ; $5166
 .speak:
@@ -253,13 +244,13 @@ TrainingCourtNpc07_15:
 	jr nz, .done ; $5175
 	test_flag FLAG_SERVE_COACH_GREETED ; $5177
 	jr nz, .lesson3Line ; $517a
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $517c
+	ap_has ITEM_SERVICE_LESSON, 2
 	jr z, .lesson3Line ; $517f
 	call ServeCoachVarsityLessonScene ; $5181
 	ret ; $5184
 .lesson3Line:
 	script_set_text Text_37_50 ; $5185
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $518b
+	ap_has ITEM_SERVICE_LESSON, 2
 	jr z, .speakLesson3 ; $518e
 	script_set_text Text_37_34 ; $5190
 .speakLesson3:
@@ -299,13 +290,13 @@ TrainingCourtNpc12_15:
 	jr nz, .lesson3 ; $51f7
 	test_flag FLAG_NET_COACH_GREETED ; $51f9
 	jr nz, .lesson2Line ; $51fc
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $51fe
+	ap_has ITEM_NET_GAME_LESSON, 1
 	jr z, .lesson2Line ; $5201
 	call NetCoachSmashLessonScene ; $5203
 	ret ; $5206
 .lesson2Line:
 	script_set_text Text_37_128 ; $5207
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $520d
+	ap_has ITEM_NET_GAME_LESSON, 1
 	jr z, .speak ; $5210
 	script_set_text Text_37_131 ; $5212
 .speak:
@@ -316,13 +307,13 @@ TrainingCourtNpc12_15:
 	jr nz, .done ; $5221
 	test_flag FLAG_NET_COACH_GREETED ; $5223
 	jr nz, .lesson3Line ; $5226
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5228
+	ap_has ITEM_NET_GAME_LESSON, 2
 	jr z, .lesson3Line ; $522b
 	call NetCoachDropShotLessonScene ; $522d
 	ret ; $5230
 .lesson3Line:
 	script_set_text Text_37_158 ; $5231
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5237
+	ap_has ITEM_NET_GAME_LESSON, 2
 	jr z, .speakLesson3 ; $523a
 	script_set_text Text_37_156 ; $523c
 .speakLesson3:
@@ -362,16 +353,16 @@ TrainingCourtNpc0D_15:
 	jr nz, .lesson3 ; $52a3
 	test_flag FLAG_RETURN_COACH_GREETED ; $52a5
 	jr nz, .lesson2Line ; $52a8
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $52aa
+	ap_has ITEM_STROKE_LESSON, 1
 	jr z, .lesson2Line ; $52ad
 	call ReturnCoachLobLessonScene ; $52af
 	ret ; $52b2
 .lesson2Line:
 	script_set_text Text_37_225 ; $52b3
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $52b9
+	ap_has ITEM_STROKE_LESSON, 1
 	jr z, .speak ; $52bc
 	script_set_text Text_37_226 ; $52be
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $52c4
+	ap_has ITEM_STROKE_LESSON, 1
 	jr z, .speak ; $52c7
 	script_set_text Text_37_226 ; $52c9
 .speak:
@@ -382,7 +373,7 @@ TrainingCourtNpc0D_15:
 	jr nz, .done ; $52d8
 	test_flag FLAG_RETURN_COACH_GREETED ; $52da
 	jr nz, .lesson3Line ; $52dd
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $52df
+	ap_has ITEM_STROKE_LESSON, 2
 	jr z, .lesson3Line ; $52e2
 	call ReturnCoachPassingShotLessonScene ; $52e4
 	ret ; $52e7

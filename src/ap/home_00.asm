@@ -6,6 +6,17 @@ ApFarCall:
 	ld a, BANK(ApCode)
 	jp CallHLInBankA
 
+; ap_has: the item and count follow the call
+ApHasInline:
+	pop hl
+	ld d, [hl]
+	inc hl
+	ld e, [hl]
+	inc hl
+	push hl
+	ld hl, ApItemAtLeast
+	jp ApFarCall
+
 ApOptSkipIntro: db 0
 ApOptStoryArcs: db 0
 ApOptMinigames: db 0

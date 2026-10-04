@@ -55,6 +55,13 @@ MACRO ap_pass
 	apcall ApPassAtLeast
 ENDM
 
+; ap_has ITEM, N -- nz if the effective inventory holds at least N of ITEM;
+; clobbers a, de and hl
+MACRO ap_has
+	call ApHasInline
+	db \1, \2
+ENDM
+
 ; apcall Routine -- calls an AP-bank routine from any bank through ApFarCall;
 ; clobbers hl, passes bc and de
 MACRO apcall

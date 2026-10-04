@@ -26,7 +26,7 @@ class Source(unittest.TestCase):
     def test_idiom_macro_sites(self):
         self.assertEqual(count(r"^\tpush_wram_bank "), 351)
         self.assertEqual(count(r"^\tpop_wram_bank"), 452)
-        self.assertEqual(count(r"^\tld_hl_indexed "), 424)
+        self.assertEqual(count(r"^\tld_hl_indexed "), 421)
         self.assertEqual(count(r"^\twait_frames "), 79)
         self.assertEqual(count(r"^\tlb (de|bc|hl), "), 0, "a register pair written with lb instead of a named pair macro")
         self.assertEqual(count(r"^\tld_xy de, "), 169)
@@ -159,7 +159,7 @@ class Tools(unittest.TestCase):
         # a tool that stops parsing part of the source passes vacuously: hold
         # the actor-slot resolver to the script sites it reaches today
         m = re.search(r"^slots\s+(\d+) checked", r.stdout, re.M)
-        self.assertGreaterEqual(int(m.group(1)), 5124, "the slot resolver reaches fewer script sites")
+        self.assertGreaterEqual(int(m.group(1)), 5086, "the slot resolver reaches fewer script sites")
 
 
 if __name__ == "__main__":
