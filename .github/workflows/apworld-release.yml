@@ -1,0 +1,14 @@
+name: Release APWorld
+on:
+  push:
+    tags:
+      - 'apworld-v*'
+
+jobs:
+  release:
+    uses: Eijebong/ap-actions/.github/workflows/release-apworld.yml@main
+    with:
+      apworld-path: apworld/mario_tennis_gbc
+      ap-version: '0.6.8'
+      python-version: '3.13'
+      prerelease: ${{ contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-rc') }}

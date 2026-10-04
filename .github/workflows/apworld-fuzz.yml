@@ -1,0 +1,20 @@
+name: Fuzz APWorld
+on:
+  push:
+    branches: [ archipelago ]
+    paths: [ "apworld/**", ".github/workflows/apworld-*.yml" ]
+  pull_request:
+    branches: [ archipelago ]
+    paths: [ "apworld/**", ".github/workflows/apworld-*.yml" ]
+
+jobs:
+  fuzz:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Eijebong/ap-actions/fuzz@main
+        with:
+          apworld-path: apworld/mario_tennis_gbc
+          ap-version: '0.6.8'
+          python-version: '3.13'
+          # the action's default fuzzer predates Generate.py's allow_quantity (0.6.8)
+          fuzzer-commit: 53686ba34f9e8852cbe1970666a5f56fd6abf75a

@@ -76,6 +76,15 @@ def read_ids():
     return locations, items
 
 
+def read_constants():
+    """The plain-number AP_* constants of archipelago.inc."""
+    out = {}
+    for m in re.finditer(r"^DEF (AP_\w+) EQU (\$[0-9a-f]+|\d+)$", IDS_INC.read_text(), re.M | re.I):
+        v = m.group(2)
+        out[m.group(1)] = int(v[1:], 16) if v.startswith("$") else int(v)
+    return out
+
+
 def write_rom_addresses(path, ident, syms):
     rom = {n: rom_offset(b, a) for n, (b, a) in syms.items() if re.fullmatch(r"Ap[A-Z]\w*", n) and a < 0x8000}
     ram = {n: ram_domain(b, a) for n, (b, a) in syms.items()
@@ -86,6 +95,8 @@ def write_rom_addresses(path, ident, syms):
     lines += [f'    "{n}": 0x{o:05x},' for n, o in sorted(rom.items(), key=lambda kv: (kv[1], kv[0]))]
     lines += ["}", "", "# (memory domain, offset)", "ram_addresses = {"]
     lines += [f'    "{n}": ("{d}", 0x{o:04x}),' for n, (d, o) in sorted(ram.items(), key=lambda kv: (kv[1], kv[0]))]
+    lines += ["}", "", "# include/constants/archipelago.inc", "constants = {"]
+    lines += [f'    "{n}": {v},' for n, v in sorted(read_constants().items())]
     lines += ["}", ""]
     path.write_text("\n".join(lines))
 

@@ -1,0 +1,32 @@
+name: Test APWorld
+on:
+  push:
+    branches: [ archipelago ]
+    paths: [ "apworld/**", ".github/workflows/apworld-*.yml" ]
+  pull_request:
+    branches: [ archipelago ]
+    paths: [ "apworld/**", ".github/workflows/apworld-*.yml" ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Eijebong/ap-actions/setup-ap@main
+        with:
+          version: '0.6.8'
+          python-version: '3.13'
+
+      - uses: Eijebong/ap-actions/copy-apworld-source@main
+        with:
+          apworld-path: apworld/mario_tennis_gbc
+
+      - name: Run tests
+        working-directory: archipelago
+        env:
+          AP_TEST_WORLDS: mario_tennis_gbc
+        run: |
+          uv pip install pytest pytest-subtests
+          uv run python ModuleUpdate.py --yes --force --append WebHostLib/requirements.txt
+          uv run pytest
