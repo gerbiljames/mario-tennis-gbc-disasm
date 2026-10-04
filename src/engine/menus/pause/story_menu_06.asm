@@ -748,6 +748,7 @@ StoryPauseMenu_CharPartnerData:
 	ld [wStoryModeEntryPoint], a ; $6f74
 	ld [wUnusedExitTriggerIdMirror], a ; $6f77
 	ld [wStoryModeExitTriggerRequest], a ; $6f7a
+	farcall ApplyPendingExpAwards
 	ld a, $01 ; $6f7d
 	farcall ShowCharDataScreen ; $6f7f
 	xor a ; $6f82

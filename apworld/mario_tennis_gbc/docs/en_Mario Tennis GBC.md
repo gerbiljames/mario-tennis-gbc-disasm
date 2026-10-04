@@ -24,3 +24,6 @@ Winning the Island Open final, winning the Dream Match, or checking every locati
 
 Items are applied the next time you are walking around in a story file, with a short message. Items found in your
 own world are given at once, offline too.
+
+EXP Bundles are saved up on the story file. Open Char/Partner Data from the pause menu to receive them and level up
+straight away; any still saved up are awarded the next time you continue that file.

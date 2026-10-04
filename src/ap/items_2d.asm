@@ -2,7 +2,10 @@
 ; moment (ApStoryIdle).
 
 ; Applies to the loaded slot whatever it has not had applied yet: the
-; equipment flags and EXP bundles. wApApplied counts what was applied.
+; equipment flags, and EXP bundles into the slot's pending story EXP
+; (wPendingExpStory), awarded with the EXP screens when the player opens
+; Char/Partner Data or next continues the slot. wApApplied counts what was
+; applied.
 ApCatchUpSlot:
 	ld c, ITEM_LARGE_RACKET
 .equipment:
@@ -50,12 +53,19 @@ ApCatchUpSlot:
 	ret z
 	ret c
 	inc [hl]
-	xor a
+	ld hl, wPendingExpStory
+	ld a, [hl+]
+	ld h, [hl]
+	ld l, a
 	ld de, AP_EXP_BUNDLE
-	farcall AddPlayerExp
-	ld a, 1
-	ld de, AP_EXP_BUNDLE
-	farcall AddPlayerExp
+	add hl, de
+	jr nc, .store
+	ld hl, $ffff
+.store:
+	ld a, l
+	ld [wPendingExpStory], a
+	ld a, h
+	ld [wPendingExpStory + 1], a
 	jr .exp
 
 ; -> a = 1 with wApMessage composed if a message is waiting, else 0. A done

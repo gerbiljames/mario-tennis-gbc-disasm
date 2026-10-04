@@ -666,7 +666,7 @@ DrawNextExpAwardMessage:
 	ret ; $5a43
 DrawNextExpAwardMessageTable:
 	; $5a44, 10 bytes (bytes:10)
-	db $c9, $04, $ca, $04, $cb, $04, $cc, $04, $d1, $04 ; 0x00
+	db LOW(AP_MESSAGE_TEXT), HIGH(AP_MESSAGE_TEXT), $ca, $04, $cb, $04, $cc, $04, $d1, $04 ; 0x00
 DrawExpTotalDigits:
 	wram_bank WRAM_SCENE ; $5a4e
 	ld hl, wExpAwardRunningTotal ; $5a54

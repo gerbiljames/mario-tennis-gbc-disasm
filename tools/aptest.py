@@ -447,6 +447,47 @@ def no_skip_intro(g, c):
     assert g.warp(STORYLOC_ACADEMY_ENTRANCE, 0x0f, frames=600) != STORYLOC_DORM_ROOM
 
 
+CHARREC_EXP = 0x2c
+
+
+def word(g, label):
+    a = g.addr(label)
+    return g.mem[a] | g.mem[a + 1] << 8
+
+
+def total_exp(g):
+    """The main character's and the partner's EXP together."""
+    rec = g.addr("wStoryModeNameOfMainCharacter")
+    return sum(g.mem[rec + slot * 0x40 + CHARREC_EXP + i] << 8 * i for slot in (0, 1) for i in range(3))
+
+
+@test
+def exp_bundles_at_char_data(g, c):
+    g.tick(30)
+    assert word(g, "wPendingExpStory") == 300, word(g, "wPendingExpStory")
+    before = total_exp(g)
+    g.pending.append(("StoryPauseMenu_CharPartnerData", {}))
+    g.tick(150)
+    for _ in range(4):
+        g.press("a", wait=60)
+    # hold A to hand out every point, then OK? Yes, then leave the stats
+    g.pb.button_press("a")
+    g.tick(1500)
+    g.pb.button_release("a")
+    start = g.idle
+    for i in range(12):
+        g.press("up" if i == 0 else "a", wait=90)
+        if g.idle > start + 30:
+            break
+    else:
+        raise AssertionError("never came back from Char/Partner Data")
+    assert word(g, "wPendingExpStory") == 0, "the pending EXP was not awarded"
+    assert total_exp(g) > before, (before, total_exp(g))
+
+
+exp_bundles_at_char_data.tokens = lambda c: {("ApStartInventory", c["ITEM_EXP_BUNDLE"]): b"\x03"}
+
+
 def names(c, loc, item, player):
     off = c[loc] * 50
     return {("ApLocationNames", off): item.encode() + b"\0", ("ApLocationNames", off + 25): player.encode() + b"\0"}

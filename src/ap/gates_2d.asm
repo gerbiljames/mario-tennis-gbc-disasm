@@ -66,17 +66,30 @@ ApMinigameLevels:
 	ld a, 2
 	ret
 
-; Empties the N64 transfer record the slot carries (EXP and trophy counts
-; the N64 game writes into the cart), so slot entry awards nothing from it.
-ApClearN64Transfer:
-	ld hl, wPendingExpStory
-	ld c, wN64TrophyCounts + 2 - wPendingExpStory
+; Before ApplyPendingExpAwards: empties the N64 transfer record the slot
+; carries (trophy EXP and counts the N64 game writes into the cart), so
+; nothing is awarded from it, and names the story-EXP award, where EXP
+; bundles collect (wPendingExpStory), in its message line (text record 13).
+ApPrepareExpAwards:
+	ld hl, wPendingExpTrophy
+	ld c, wN64TrophyCounts + 2 - wPendingExpTrophy
 	xor a
 .clear:
 	ld [hl+], a
 	dec c
 	jr nz, .clear
+	ld hl, ApTextExpAward
+	ld de, wApMessage
+.copy:
+	ld a, [hl+]
+	ld [de], a
+	inc de
+	and a
+	jr nz, .copy
 	ret
+
+ApTextExpAward:
+	db "Archipelago items.", 0
 
 ; -> a = the STORYRANK_* the active arc's class pass presents: 2 * the pass
 ; count (at most 4), plus 1 in doubles
