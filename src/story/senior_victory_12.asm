@@ -289,8 +289,8 @@ SeniorSharedVictoryScene:
 ComputeSeniorCourtStage:
 	test_flag FLAG_DOUBLES ; $7756
 	jp nz, .isDoubles ; $7759
+	ap_pass AP_ARC_SINGLES, 1
 	ld a, SENIORCOURTSTAGE_SINGLES_PRE_JUNIOR ; $775c
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $775e
 	jr z, .loop ; $7761
 	ld a, SENIORCOURTSTAGE_SINGLES_RANK4 ; $7763
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $7765
@@ -315,8 +315,8 @@ ComputeSeniorCourtStage:
 	ld [wMapSceneStage2], a ; $778f
 	ret ; $7792
 .isDoubles:
+	ap_pass AP_ARC_DOUBLES, 1
 	ld a, SENIORCOURTSTAGE_DOUBLES_PRE_JUNIOR ; $7793
-	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7795
 	jr z, .loop ; $7798
 	ld a, SENIORCOURTSTAGE_DOUBLES_RANK3 ; $779a
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $779c

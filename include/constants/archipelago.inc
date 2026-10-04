@@ -44,6 +44,17 @@ DEF AP_ARCS_BOTH EQU 0
 DEF AP_ARCS_SINGLES EQU 1
 DEF AP_ARCS_DOUBLES EQU 2
 
+; ap_pass ARC, N -- nz if the arc's class pass count is at least N (ARC:
+; AP_ARC_SINGLES, AP_ARC_DOUBLES or AP_ARC_ACTIVE, the one FLAG_DOUBLES
+; picks); clobbers a, de and hl
+DEF AP_ARC_SINGLES EQU 0
+DEF AP_ARC_DOUBLES EQU 1
+DEF AP_ARC_ACTIVE EQU 2
+MACRO ap_pass
+	ld de, (\1) << 8 | (\2)
+	apcall ApPassAtLeast
+ENDM
+
 ; apcall Routine -- calls an AP-bank routine from any bank through ApFarCall;
 ; clobbers hl, passes bc and de
 MACRO apcall

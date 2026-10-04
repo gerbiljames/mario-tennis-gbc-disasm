@@ -405,8 +405,10 @@ CourtyardInitScript_13:
 	ret ; $61a8
 SetupVarsityCourtSceneVariant:
 	test_flag FLAG_DOUBLES ; $61a9
-	jr nz, .stage3 ; $61ac
-	test_flag FLAG_STORY_COMPLETE_SINGLES ; $61ae
+	jp nz, .stage3 ; $61ac
+	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4
+	jr z, .stage2
+	ap_pass AP_ARC_SINGLES, 4
 	jr z, .stage1 ; $61b1
 	ld hl, VarsityCourtNpcScriptsD_13 ; $61b3
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61b6
@@ -421,7 +423,7 @@ SetupVarsityCourtSceneVariant:
 	script_face ACTOR_COURTYARD_CURT, FACE_RIGHT ; $61d9
 	ret ; $61e0
 .stage1:
-	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $61e1
+	ap_pass AP_ARC_SINGLES, 3
 	jr z, .stage2 ; $61e4
 	ldh a, [hRomBank] ; $61e6
 	ld hl, VarsityCourtActorsC_13 ; $61e8
@@ -437,7 +439,7 @@ SetupVarsityCourtSceneVariant:
 	farcall WriteBehaviorMapCell ; $6206
 	ret ; $6209
 .stage2:
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $620a
+	ap_pass AP_ARC_SINGLES, 2
 	jp z, .done ; $620d
 	ldh a, [hRomBank] ; $6210
 	ld hl, VarsityCourtActorsA_13 ; $6212
@@ -447,7 +449,9 @@ SetupVarsityCourtSceneVariant:
 	farcall WriteStoryStateWord ; $621e
 	ret ; $6221
 .stage3:
-	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $6222
+	test_flag FLAG_WON_VARSITY_DOUBLES_RANK_2
+	jp z, .stage5
+	ap_pass AP_ARC_DOUBLES, 4
 	jr z, .stage4 ; $6225
 	ldh a, [hRomBank] ; $6227
 	ld hl, VarsityCourtActorsB_13 ; $6229
@@ -468,7 +472,7 @@ SetupVarsityCourtSceneVariant:
 	script_set_actor_script ACTOR_VARSITY_COURT_B_BETH, ActorScript_13_28 ; $6272
 	ret ; $627d
 .stage4:
-	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $627e
+	ap_pass AP_ARC_DOUBLES, 3
 	jr z, .stage5 ; $6281
 	ldh a, [hRomBank] ; $6283
 	ld hl, VarsityCourtActorsD_13 ; $6285
@@ -484,7 +488,7 @@ SetupVarsityCourtSceneVariant:
 	farcall WriteBehaviorMapCell ; $62a3
 	ret ; $62a6
 .stage5:
-	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $62a7
+	ap_pass AP_ARC_DOUBLES, 2
 	jr z, .done ; $62aa
 	ldh a, [hRomBank] ; $62ac
 	ld hl, VarsityCourtActorsB_13 ; $62ae

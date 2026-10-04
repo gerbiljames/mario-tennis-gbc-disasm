@@ -48,11 +48,11 @@ ActorList_11_1:
 EnableAcademyCampusExit:
 	test_flag FLAG_DOUBLES ; $5482
 	jr nz, .checkFlag ; $5485
-	test_flag FLAG_STORY_COMPLETE_SINGLES ; $5487
+	ap_pass AP_ARC_SINGLES, 4
 	jr nz, .writeBehaviorMapCell ; $548a
 	ret ; $548c
 .checkFlag:
-	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $548d
+	ap_pass AP_ARC_DOUBLES, 4
 	jr nz, .writeBehaviorMapCell ; $5490
 	ret ; $5492
 .writeBehaviorMapCell:
@@ -400,15 +400,15 @@ JuniorClassCourtDoublesInitScript_11:
 	jp z, JuniorClassCourtDoublesEntry0eScene ; $5a70
 	cp $0d ; $5a73
 	jp z, JuniorClassCourtDoublesEntry0dScene ; $5a75
-	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5a78
-	jr nz, .stage3 ; $5a7b
-	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5a7d
-	jr nz, .stage4 ; $5a80
-	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $5a82
-	jr nz, .placeActors ; $5a85
-	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5a87
-	jr nz, .done ; $5a8a
-	ret ; $5a8c
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1
+	ret z
+	ap_pass AP_ARC_DOUBLES, 4
+	jr nz, .stage3
+	ap_pass AP_ARC_DOUBLES, 3
+	jr nz, .stage4
+	ap_pass AP_ARC_DOUBLES, 2
+	jr nz, .placeActors
+	jr .done
 .stage3:
 	ld hl, JuniorClassCourtDoublesNpcScriptsD_11 ; $5a8d
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5a90

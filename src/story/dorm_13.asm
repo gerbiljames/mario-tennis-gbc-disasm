@@ -218,7 +218,7 @@ DormRoomInitScript_13:
 SetDormRoomEventTriggerCells_13:
 	test_flag FLAG_DOUBLES ; $5067
 	jr nz, .doubles ; $506a
-	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $506c
+	ap_pass AP_ARC_SINGLES, 3
 	jr nz, .checkIslandSingles ; $506f
 	jr .clearTriggers ; $5071
 	ret ; $5073
@@ -228,7 +228,7 @@ SetDormRoomEventTriggerCells_13:
 	jr .clearTriggers ; $5079
 	ret ; $507b
 .doubles:
-	test_flag FLAG_WON_VARSITY_DOUBLES_RANK_2 ; $507c
+	ap_pass AP_ARC_DOUBLES, 3
 	jr nz, .checkIslandDoubles ; $507f
 	jr .clearTriggers ; $5081
 	ret ; $5083

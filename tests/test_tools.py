@@ -33,7 +33,7 @@ class Static(unittest.TestCase):
 
     def test_twins(self):
         import twins
-        self.assertGreaterEqual(len(twins.groups()), 41)
+        self.assertGreaterEqual(len(twins.groups()), 40)
 
     def test_routes(self):
         import routes

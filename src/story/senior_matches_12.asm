@@ -343,6 +343,7 @@ SeniorMatchVictorySceneDispatch:
 	ld [wStoryModeShowLocationName], a ; $6dee
 	script_null_script ACTOR_PLAYER_SHADOW ; $6df1
 	ld a, [wMapSceneStage2] ; $6df6
+	call ApFoldSeniorVictoryStage
 	sub SENIORCOURTSTAGE_SINGLES_RANK4 ; $6df9
 	add a ; $6dfb
 	ld_hl_indexed SeniorMatchVictorySceneDispatchPtrs ; $6dfc

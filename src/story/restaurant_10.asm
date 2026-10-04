@@ -66,8 +66,15 @@ GetStoryContinueDestination:
 	ld a, $04 ; $5761
 	jr z, .done ; $5763
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5765
+	jr nz, .dormSingles
+	push de
+	push hl
+	ap_pass AP_ARC_SINGLES, 4
+	pop hl
+	pop de
 	ld a, $05 ; $5768
-	jr z, .done ; $576a
+	jr nz, .done
+.dormSingles:
 	ld a, $02 ; $576c
 	jr .done ; $576e
 .checkFlag:
@@ -78,8 +85,15 @@ GetStoryContinueDestination:
 	ld a, $04 ; $577a
 	jr z, .done ; $577c
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $577e
+	jr nz, .dormDoubles
+	push de
+	push hl
+	ap_pass AP_ARC_DOUBLES, 4
+	pop hl
+	pop de
 	ld a, $05 ; $5781
-	jr z, .done ; $5783
+	jr nz, .done
+.dormDoubles:
 	ld a, $02 ; $5785
 	jr .done ; $5787
 .done:

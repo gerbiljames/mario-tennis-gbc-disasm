@@ -297,15 +297,15 @@ JuniorClassCourtSinglesInitScript_11:
 	jp z, JuniorClassCourtSinglesEntry0eScene ; $6d1f
 	cp $0d ; $6d22
 	jp z, JuniorClassCourtSinglesEntry0dScene ; $6d24
-	test_flag FLAG_STORY_COMPLETE_SINGLES ; $6d27
-	jr nz, .stage3 ; $6d2a
-	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $6d2c
-	jr nz, .stage4 ; $6d2f
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6d31
-	jr nz, .placeActors ; $6d34
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6d36
-	jr nz, .done ; $6d39
-	ret ; $6d3b
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1
+	ret z
+	ap_pass AP_ARC_SINGLES, 4
+	jr nz, .stage3
+	ap_pass AP_ARC_SINGLES, 3
+	jr nz, .stage4
+	ap_pass AP_ARC_SINGLES, 2
+	jr nz, .placeActors
+	jr .done
 .stage3:
 	ld hl, JuniorClassCourtSinglesNpcScriptsD_11 ; $6d3c
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6d3f

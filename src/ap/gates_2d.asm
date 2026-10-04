@@ -1,5 +1,28 @@
 ; Gates: what the effective inventory opens.
 
+; d = AP_ARC_*, e = a count -> nz if that arc's class pass count reaches it
+ApPassAtLeast:
+	ld a, d
+	cp AP_ARC_ACTIVE
+	jr nz, .arc
+	test_flag FLAG_DOUBLES
+	ld a, AP_ARC_SINGLES
+	jr z, .arc
+	ld a, AP_ARC_DOUBLES
+.arc:
+	push de
+	add ITEM_SINGLES_PASS
+	ld e, a
+	call ApItemCount
+	pop de
+	cp e
+	jr c, .no
+	or 1
+	ret
+.no:
+	xor a
+	ret
+
 ; e = MARIOGAME_* -> a = nonzero if its grid cell is open
 ApMinigameUnlocked:
 	ld a, [ApOptMinigames]
@@ -39,4 +62,24 @@ ApClearN64Transfer:
 	ld [hl+], a
 	dec c
 	jr nz, .clear
+	ret
+
+; -> a = the STORYRANK_* the active arc's class pass presents: 2 * the pass
+; count (at most 4), plus 1 in doubles
+ApRankingProgressIndex:
+	test_flag FLAG_DOUBLES
+	ld e, ITEM_SINGLES_PASS
+	jr z, .count
+	ld e, ITEM_DOUBLES_PASS
+.count:
+	call ApItemCount
+	cp 5
+	jr c, .tier
+	ld a, 4
+.tier:
+	add a
+	ld b, a
+	ld a, e
+	sub ITEM_SINGLES_PASS
+	add b
 	ret

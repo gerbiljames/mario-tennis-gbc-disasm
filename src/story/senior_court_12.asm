@@ -696,7 +696,7 @@ SeniorCourtInitScript_12:
 .fromMatch:
 	test_flag FLAG_DOUBLES ; $5d7b
 	jr nz, .done ; $5d7e
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5d80
+	ap_pass AP_ARC_SINGLES, 1
 	jr z, .placeActors ; $5d83
 	ldh a, [hRomBank] ; $5d85
 	ld hl, SeniorCourtActorsA_12 ; $5d87
@@ -716,7 +716,7 @@ SeniorCourtInitScript_12:
 	call SeniorCourtWalkPlayersOntoCourt ; $5dab
 	ret ; $5dae
 .done:
-	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5daf
+	ap_pass AP_ARC_DOUBLES, 1
 	jr z, .placeActors ; $5db2
 	ldh a, [hRomBank] ; $5db4
 	ld hl, SeniorCourtActorsB_12 ; $5db6

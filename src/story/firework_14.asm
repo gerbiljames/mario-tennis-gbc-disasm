@@ -481,11 +481,15 @@ IslandSkyEntry0fAnd0dScene:
 	jp z, .transition ; $710f
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7112
 	jr nz, .doublesLocation ; $7115
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL
+	jr z, .doublesLocation
 	set_flag FLAG_STORY_COMPLETE_DOUBLES ; $7117
 	jr .setLocation ; $711a
 .transition:
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $711c
 	jr nz, .storeLocation ; $711f
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL
+	jr z, .storeLocation
 	set_flag FLAG_STORY_COMPLETE_SINGLES ; $7121
 .setLocation:
 	ld b, STORYLOC_PEACHS_CASTLE ; $7124

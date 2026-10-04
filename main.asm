@@ -241,6 +241,7 @@ INCLUDE "src/story/senior_intros_12.asm"
 INCLUDE "src/story/senior_matches_12.asm"
 INCLUDE "src/story/senior_victory_12.asm"
 INCLUDE "src/story/map_stubs_12.asm"
+INCLUDE "src/ap/senior_12.asm"
 
 SECTION "ROM Bank $13", ROMX[$4000], BANK[$13]
 
