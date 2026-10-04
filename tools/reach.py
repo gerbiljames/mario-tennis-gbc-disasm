@@ -69,6 +69,8 @@ DATA_FLAGS = {
     "wCurrentMinigameStoryMatch": ("live", "the match launchers store the (list, index) word through "
                                            "a pointer; the doubles lists are odd"),
 }
+# option bytes in ROM that the Archipelago patch writes per seed
+PATCHED_PREFIX = "ApOpt"
 GLOBAL = re.compile(r"^([A-Za-z_]\w*):")
 LOCAL = re.compile(r"^(\.\w+):")
 # a local label defined away from its routine, after data that sits inside it
@@ -236,7 +238,7 @@ class Graph:
                     continue
                 var, pred = test
                 vals = values.get(var, {0})
-                if vals is None or var in taken or var.startswith("r") or any(pred(v) for v in vals):
+                if vals is None or var in taken or var.startswith(("r", PATCHED_PREFIX)) or any(pred(v) for v in vals):
                     verdicts.append(False)
                     continue
                 if not seg[0].startswith("Unused"):

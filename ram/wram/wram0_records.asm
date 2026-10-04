@@ -666,7 +666,14 @@ wStoryPartnerCharControlLevel:: db
 
 ; [8-bit] Speed level, the record's +$3b
 wStoryPartnerCharSpeedLevel:: db
-	ds 52
+	ds 4
+
+; [32 bytes] Per Archipelago item id, how many the slot has had applied
+; (ApCatchUpSlot): saved with the slot, so an unsaved reload rolls it back
+; with what it counted
+wApApplied:: ds 32
+	ASSERT AP_ITEM_SLOTS == 32
+	ds 16
 
 ; [16-bit] EXP a story match earned, pending like wPendingExpExhibition / wPendingExpLinked. ApplyPendingExpAwards adds it to wPendingExpTrophy, scales the total by player level and folds in the trophy awards
 wPendingExpStory:: dw

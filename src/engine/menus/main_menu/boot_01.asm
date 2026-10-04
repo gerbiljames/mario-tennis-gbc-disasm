@@ -50,6 +50,7 @@ ENDC
 	call LoadMenuFontGfx ; $4085
 	call LoadMenuObjPalettes3To7 ; $4088
 	farcall ValidateSaveRam ; $408b
+	apcall ApBootLedger
 IF DEF(FIXES)
 	push de
 	ld de, SAVEFLAG_DEBUG_TEST_MENU

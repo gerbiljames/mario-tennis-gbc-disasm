@@ -16,13 +16,25 @@ MACRO ap_location
 	REDEF AP_NUM_LOCATIONS = AP_NUM_LOCATIONS + 1
 ENDM
 
-; ap_item ITEM_NAME, "Name"
+; ap_item ITEM_NAME, "Name"[, "name in game messages"]
 MACRO ap_item
 	DEF \1 EQU AP_NUM_ITEMS
+IF _NARG > 2
+	DEF AP_ITEM_TEXT_{d:AP_NUM_ITEMS} EQUS \3
+ELSE
+	DEF AP_ITEM_TEXT_{d:AP_NUM_ITEMS} EQUS \2
+ENDC
 	REDEF AP_NUM_ITEMS = AP_NUM_ITEMS + 1
 ENDM
 
 DEF AP_ITEM_NONE EQU 0
+
+; apcall Routine -- calls an AP-bank routine from any bank through ApFarCall;
+; clobbers hl, passes bc and de
+MACRO apcall
+	ld hl, \1
+	call ApFarCall
+ENDM
 
 	ap_location LOC_JUNIOR_SINGLES_RANK_4, "Junior Singles Rank 4"
 	ap_location LOC_JUNIOR_SINGLES_RANK_3, "Junior Singles Rank 3"
@@ -117,17 +129,17 @@ DEF AP_ITEM_NONE EQU 0
 	ap_location LOC_TARGET_SHOT_RECORD, "Target Shot Record"
 	ap_location LOC_BANANA_BUNCH_RECORD, "Banana Bunch Record"
 
-	ap_item ITEM_SINGLES_PASS, "Progressive Singles Pass"
-	ap_item ITEM_DOUBLES_PASS, "Progressive Doubles Pass"
+	ap_item ITEM_SINGLES_PASS, "Progressive Singles Pass", "Singles Pass"
+	ap_item ITEM_DOUBLES_PASS, "Progressive Doubles Pass", "Doubles Pass"
 
-	ap_item ITEM_SERVICE_MATCH, "Progressive Service Match"
-	ap_item ITEM_SERVICE_LESSON, "Progressive Service Lesson"
-	ap_item ITEM_NET_GAME_MATCH, "Progressive Net Game Match"
-	ap_item ITEM_NET_GAME_LESSON, "Progressive Net Game Lesson"
-	ap_item ITEM_STROKE_MATCH, "Progressive Stroke Match"
-	ap_item ITEM_STROKE_LESSON, "Progressive Stroke Lesson"
-	ap_item ITEM_TENNIS_MACHINE, "Progressive Tennis Machine"
-	ap_item ITEM_WALL_PRACTICE, "Progressive Wall Practice"
+	ap_item ITEM_SERVICE_MATCH, "Progressive Service Match", "Service Match"
+	ap_item ITEM_SERVICE_LESSON, "Progressive Service Lesson", "Service Lesson"
+	ap_item ITEM_NET_GAME_MATCH, "Progressive Net Game Match", "Net Game Match"
+	ap_item ITEM_NET_GAME_LESSON, "Progressive Net Game Lesson", "Net Game Lesson"
+	ap_item ITEM_STROKE_MATCH, "Progressive Stroke Match", "Stroke Match"
+	ap_item ITEM_STROKE_LESSON, "Progressive Stroke Lesson", "Stroke Lesson"
+	ap_item ITEM_TENNIS_MACHINE, "Progressive Tennis Machine", "Tennis Machine"
+	ap_item ITEM_WALL_PRACTICE, "Progressive Wall Practice", "Wall Practice"
 
 ; mini-games, in MinigameClearFlagTable_1e game order
 	ap_item ITEM_BOO_BLAST, "Boo Blast"
@@ -151,5 +163,28 @@ DEF AP_ITEM_NONE EQU 0
 	ap_item ITEM_LIGHT_SHOES, "Light Shoes"
 
 	ap_item ITEM_EXP_BUNDLE, "EXP Bundle"
+
+DEF AP_NO_LOCATION EQU $ff
+DEF AP_REWARD_LIST_SIZE EQU 32
+DEF NUM_MARIO_MINIGAMES EQU 9
+DEF SWING_CONTEST_LOW EQU 100
+DEF SWING_CONTEST_HIGH EQU 150
+
+; the ledger (ram/sram.asm)
+DEF AP_LOCATION_BYTES EQU 16
+DEF AP_ITEM_SLOTS EQU 32
+DEF AP_RECENT_ITEMS EQU 8
+DEF AP_NAME_LENGTH EQU 24
+DEF AP_RECENT_ITEM_SIZE EQU 1 + AP_NAME_LENGTH + 1
+DEF AP_CHECKSUM_SEED EQU $a55a
+DEF AP_ITEM_NAME_SIZE EQU 24
+DEF AP_MESSAGE_TEXT EQU $3400
+DEF AP_EXP_BUNDLE EQU 100
+DEF AP_TEXT_LINE EQU $01
+DEF AP_TEXT_DONE EQU $03
+ASSERT AP_ITEM_NAME_SIZE == AP_NAME_LENGTH
+DEF AP_LOCATION_NAMES_SIZE EQU 2 * (AP_NAME_LENGTH + 1)
+ASSERT AP_NUM_LOCATIONS <= AP_LOCATION_BYTES * 8
+ASSERT AP_NUM_ITEMS <= AP_ITEM_SLOTS
 
 ENDC

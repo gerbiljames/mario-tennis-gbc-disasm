@@ -367,7 +367,7 @@ DialogueTextFetchers_05:
 	dw FetchDialogueText_25Thunk ; record 10
 	dw FetchDialogueText_26Thunk ; record 11
 	dw FetchDialogueText_5eThunk ; record 12
-	dw FetchDialogueTextBank30 ; record 13
+	dw FetchDialogueTextAp ; record 13
 	dw FetchDialogueTextBank30 ; record 14
 	dw FetchDialogueTextBank30 ; record 15
 FetchDialogueTextBank30:
@@ -420,6 +420,16 @@ FetchDialogueTextDone:
 	pop bc ; $5ca5
 	pop af ; $5ca6
 	ret ; $5ca7
+FetchDialogueTextAp:
+	ld hl, wApMessage
+	ld de, wTextBuffer
+.copy:
+	ld a, [hl+]
+	ld [de], a
+	inc de
+	and a
+	jr nz, .copy
+	jr FetchDialogueTextDone
 FetchShortText:
 	push af ; $5ca8
 	push bc ; $5ca9
@@ -612,3 +622,4 @@ AddTextIdOffsetWordLookupTable:
 	dw $010b ; record 10
 	dw $00f9 ; record 11
 	dw $0143 ; record 12
+	dw 1 ; record 13: AP_MESSAGE_TEXT

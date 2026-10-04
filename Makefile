@@ -28,7 +28,7 @@ ifeq (,$(filter clean,$(MAKECMDGOALS)))
 $(info $(shell python3 tools/mods.py apply))
 endif
 
-.PHONY: all compare check test shift-test event-test slot-audit ap-export venv previews clean
+.PHONY: all compare check test shift-test event-test slot-audit ap-export ap-test venv previews clean
 
 all: $(ROM)
 
@@ -132,6 +132,10 @@ slot-audit: $(ROM)
 # into the apworld (tools/ap_export.py).
 ap-export: $(ROM)
 	$(PYTHON) tools/ap_export.py
+
+# The Archipelago game-side tests, in PyBoy (tools/aptest.py).
+ap-test: $(ROM)
+	$(PYTHON) tools/aptest.py --save $(SAVE)
 
 # A virtualenv with the packages in requirements.txt; PYTHON uses it.
 venv:

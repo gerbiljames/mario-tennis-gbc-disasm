@@ -388,6 +388,8 @@ RunStoryLocation:
 	call AdvanceFrame ; $50d3
 	call CheckStoryEventRequests ; $50d6
 	and a ; $50d9
+	jp nz, .frameLoop
+	call ApStoryIdle
 	jr z, .eventWaitLoop ; $50da
 	jp .frameLoop ; $50dc
 .done:

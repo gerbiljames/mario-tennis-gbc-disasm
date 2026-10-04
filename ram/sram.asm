@@ -30,3 +30,49 @@ sSaveFlagsUnused:: ds 24
 ; Save block directory (docs/save_format.md), owned by the bank $03 save engine
 ; [113 x 16 bytes] block directory; +0 valid, +1 SRAM bank, +2 offset word, +4 length word, +6 checksum word, +8 tag (hi,lo)
 sSaveBlockDirectory:: ds 1808
+
+INCLUDE "constants/archipelago.inc"
+
+; The Archipelago ledger (docs/archipelago.md): global, not tied to a story
+; slot. WipeAllSaveRam stops below bank 3, so vanilla erases leave it alone;
+; ApBootLedger validates it instead. Each region has one writer and its own
+; checksum (ApChecksum: the byte sum plus AP_CHECKSUM_SEED, so an all-zero
+; region is invalid).
+SECTION "SRAM bank 3", SRAM[$a000], BANK[3]
+
+sApHeader::
+; "MTAP"
+sApMagic:: ds 4
+; a copy of ApSlotAuth: a ledger from another seed erases the whole save
+sApAuth:: ds 16
+sApHeaderChecksum:: dw
+sApHeaderEnd::
+
+; Written by the game, then copied whole to sApGameBackup.
+sApGameRegion::
+; one bit per location id, bit (id & 7) of byte id / 8
+sApDoneBits:: ds AP_LOCATION_BYTES
+; the done locations whose "Got X"/"Sent X to Y" message has been shown
+sApMessagedBits:: ds AP_LOCATION_BYTES
+; nonzero once the goal holds
+sApGoal:: db
+; how many of the client's items have had their message shown
+sApClientShown:: dw
+; a count per item id, granted by the game's own checks
+sApGameItems:: ds AP_ITEM_SLOTS
+sApGameChecksum:: dw
+sApGameRegionEnd::
+
+sApGameBackup:: ds sApGameRegionEnd - sApGameRegion
+
+; Written by the client only.
+sApClientRegion::
+; how many items the server has sent that are counted below
+sApReceivedCount:: dw
+; a count per item id, from the server
+sApClientItems:: ds AP_ITEM_SLOTS
+; the last AP_RECENT_ITEMS received, item n at entry n % AP_RECENT_ITEMS:
+; the item id, then the sender's name (a 16-character line, NUL-terminated)
+sApRecentItems:: ds AP_RECENT_ITEMS * AP_RECENT_ITEM_SIZE
+sApClientChecksum:: dw
+sApClientRegionEnd::

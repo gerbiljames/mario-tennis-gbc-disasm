@@ -28,7 +28,7 @@ INCLUDE "src/audio/sound_00.asm"
 INCLUDE "src/audio/note_00.asm"
 INCLUDE "src/audio/tables_00.asm"
 
-SECTION "AP Home", ROM0[$3fc8]
+SECTION "AP Home", ROM0
 INCLUDE "src/ap/home_00.asm"
 
 SECTION "AP Basepatch Id", ROM0[$3ff8]
@@ -156,6 +156,7 @@ INCLUDE "src/engine/story/scene_viewer_0a.asm"
 INCLUDE "src/engine/story/scene_tileanim_0a.asm"
 INCLUDE "src/engine/story/minigame_0a.asm"
 INCLUDE "src/engine/story/credits_0a.asm"
+INCLUDE "src/ap/story_0a.asm"
 
 SECTION "ROM Bank $0b", ROMX[$4000], BANK[$0b]
 
@@ -532,6 +533,9 @@ INCLUDE "src/data/shots/tables_2d.asm"
 SECTION "AP Code", ROMX[$6000], BANK[$2d]
 ApCode::
 INCLUDE "src/ap/tables_2d.asm"
+INCLUDE "src/ap/ledger_2d.asm"
+INCLUDE "src/ap/checks_2d.asm"
+INCLUDE "src/ap/items_2d.asm"
 
 SECTION "ROM Bank $2e", ROMX[$4000], BANK[$2e]
 

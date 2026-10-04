@@ -2,7 +2,11 @@
 
 ; [160 bytes] Second shadow OAM page: hOAMDMARoutine sources $c0 or $c5 as wSpriteBufferPage toggles, so this is built while wShadowOAM is copied (and vice versa). Only reached through pointers, with wSpriteBufferPage as the high byte
 wShadowOAM2:: ds 160
-	ds 96
+
+; [96 bytes] The Archipelago message on show: composed by ApNextMessage,
+; NUL-terminated, and copied to wTextBuffer by its text fetcher (text id
+; AP_MESSAGE_TEXT)
+wApMessage:: ds 96
 
 ; Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0. Also the save engine's staging area: MirrorSaveHeaderToBank1 copies each 512-byte SRAM header region through $c600-$c7ff on its way to SRAM bank 1, overwriting this buffer, wTilemapRowStage, wInlineTextBuffer and the debug-menu variables
 wTextBuffer:: ds 160

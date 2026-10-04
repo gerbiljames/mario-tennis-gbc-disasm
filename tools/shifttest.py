@@ -121,6 +121,10 @@ def compare(a, b, padded, steps, rom0_start):
             j = i + d
             if j >= bank * BANK + BANK:
                 break
+            # fill before a label that moved less (a pinned section) is
+            # what the padding used up
+            if k < len(table) and j + base >= table[k][0] + table[k][1]:
+                continue
             if a[i] == b[j]:
                 continue
             if (b[j] - a[i]) & 0xff in shifts:

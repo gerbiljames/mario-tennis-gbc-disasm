@@ -70,6 +70,11 @@ SetRewardGameFlag:
 	ld d, [hl] ; $6cc7
 	ld e, a ; $6cc8
 	call SetGameFlag ; $6cc9
+	ld a, [wCurrentMinigameStoryMatch]
+	ld d, a
+	call GetRewardTableIndex
+	ld e, a
+	apcall ApCheckReward
 	pop hl ; $6ccc
 	pop de ; $6ccd
 	pop bc ; $6cce
@@ -363,6 +368,7 @@ SetMinigameRecordSaveFlag:
 .done:
 	ret ; $6edb
 SetMinigameClearFlag:
+	apcall ApCheckMinigameClear
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6edc
 	sub MINIGAME_BOO_BLAST ; $6edf
 	bit 7, a ; $6ee1
@@ -420,6 +426,7 @@ MinigameClearFlagTable_1e:
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; 25
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; 26
 UpdateMinigameBestScore:
+	apcall ApCheckMinigameRecord
 	ldh a, [hWramBank] ; $6f38
 	push af ; $6f3a
 	ld a, [wMinigameLevel] ; $6f3b

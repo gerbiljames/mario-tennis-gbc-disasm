@@ -14,6 +14,7 @@ RunWaterSpriteSwingContestAndReward:
 	script_speak ACTOR_PLAYER ; $4d32
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4d37
 	call WaterSpriteSwingContestScene ; $4d42
+	apcall ApCheckSwingContest
 	test_flag FLAG_HAVE_SILVER_RACKET ; $4d45
 	jp nz, .done ; $4d48
 	test_flag FLAG_HAVE_GOLD_RACKET ; $4d4b
