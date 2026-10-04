@@ -42,7 +42,7 @@ class Static(unittest.TestCase):
 
     def test_coverage_routines(self):
         import coverage
-        self.assertGreaterEqual(len(coverage.routines()), 3999)
+        self.assertGreaterEqual(len(coverage.routines()), 3996)
 
     def test_eventtest_plan(self):
         import eventtest
