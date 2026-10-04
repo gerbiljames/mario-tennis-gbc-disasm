@@ -37,6 +37,9 @@ after a real defect broke it:
             actor in every map_actor list tools/actorslots.py finds can be
             active at that line (a name is a row number, so reordering or
             retargeting a list keeps the bytes and changes the actor)
+  progress  every story progress-flag reference still in the source has its
+            Archipelago role in tools/progress_reads.json (record, setter,
+            cosmetic, dead), and every entry still matches a reference
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -51,6 +54,7 @@ from banksrc import bank_lines, bank_of, holders
 from lz import compress, decompress
 import actorslots
 import reach
+import progress_reads
 import routes
 
 ROOT = BANK = None
@@ -675,6 +679,7 @@ def main():
         "slots": actorslots.check(fail),
         "reach": reach.check(fail),
         "entries": routes.check(fail),
+        "progress": progress_reads.check(fail),
     }
     by_check = {}
     for check, msg in failures:

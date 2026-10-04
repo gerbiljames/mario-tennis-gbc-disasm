@@ -457,6 +457,19 @@ messages.tokens = lambda c: {**placements(c, {"LOC_JUNIOR_SINGLES_RANK_4": "ITEM
 SHOTS = None
 
 
+def write_rom(rom, sym, out, inventory):
+    """A copy of the ROM with this start inventory ({ITEM_*: count}), for
+    runs outside these tests (make ap-event-test)."""
+    c, syms = constants(), read_syms(sym)
+    data = bytearray(Path(rom).read_bytes())
+    base = rom_offset(*syms["ApStartInventory"])
+    for name, count in inventory.items():
+        data[base + c[name]] = count
+    Path(out).write_bytes(data)
+    if Path(str(sym)).exists():
+        shutil.copy(sym, Path(out).with_suffix(".sym"))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--rom", default=ROOT / "mariotennis.gbc")
@@ -464,7 +477,14 @@ def main():
     ap.add_argument("--save", default=ROOT / "maxed-unlocked.sav")
     ap.add_argument("-k", help="run only the tests whose name contains this")
     ap.add_argument("--shots", type=Path, help="save screenshots of the messages here")
+    ap.add_argument("--write-rom", type=Path, metavar="OUT",
+                    help="only write a copy of the ROM holding every class pass and drill item")
     args = ap.parse_args()
+    if args.write_rom:
+        full = {"ITEM_SINGLES_PASS": 4, "ITEM_DOUBLES_PASS": 4, "ITEM_WALL_PRACTICE": 4, "ITEM_TENNIS_MACHINE": 4}
+        full.update({f"ITEM_{d}_{k}": 2 for d in ("SERVICE", "NET_GAME", "STROKE") for k in ("MATCH", "LESSON")})
+        write_rom(args.rom, args.sym, args.write_rom, full)
+        return
     global SHOTS
     SHOTS = args.shots
     c = constants()

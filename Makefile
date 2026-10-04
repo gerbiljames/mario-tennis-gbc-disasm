@@ -28,7 +28,7 @@ ifeq (,$(filter clean,$(MAKECMDGOALS)))
 $(info $(shell python3 tools/mods.py apply))
 endif
 
-.PHONY: all compare check test shift-test event-test slot-audit ap-export ap-test venv previews clean
+.PHONY: all compare check test shift-test event-test slot-audit ap-export ap-test ap-event-test venv previews clean
 
 all: $(ROM)
 
@@ -136,6 +136,13 @@ ap-export: $(ROM)
 # The Archipelago game-side tests, in PyBoy (tools/aptest.py).
 ap-test: $(ROM)
 	$(PYTHON) tools/aptest.py --save $(SAVE)
+
+# The event test on one build whose start inventory holds every class pass
+# and drill item, so each story state has the passes ahead of its wins: what
+# it reports is a crash or a lockup in some state (tools/eventtest.py).
+ap-event-test: $(ROM)
+	$(PYTHON) tools/aptest.py --write-rom build/ap-passes.gbc
+	$(PYTHON) tools/eventtest.py build/ap-passes.gbc --base build/ap-passes.gbc --save $(SAVE)
 
 # A virtualenv with the packages in requirements.txt; PYTHON uses it.
 venv:
