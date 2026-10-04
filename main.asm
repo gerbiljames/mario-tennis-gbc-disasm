@@ -229,6 +229,7 @@ INCLUDE "src/story/doubles_11.asm"
 INCLUDE "src/story/junior_singles_11.asm"
 INCLUDE "src/story/ranking_challenge_11.asm"
 INCLUDE "src/story/court_practice_11.asm"
+INCLUDE "src/ap/intro_11.asm"
 
 SECTION "ROM Bank $12", ROMX[$4000], BANK[$12]
 

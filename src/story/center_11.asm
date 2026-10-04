@@ -460,6 +460,8 @@ AcademyArrivalInitScript_11:
 	jp z, AcademyArrivalEntry0cScene ; $46c4
 	cp $0f ; $46c7
 	jr nz, .done ; $46c9
+	apcall ApStartNewGame
+	jp nz, ApSkipIntro
 	call LateStudentCrashCutscene ; $46cb
 .done:
 	ret ; $46ce

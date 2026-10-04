@@ -466,6 +466,12 @@ MatchSelectHandlersBHandler0:
 	ld [wMatchSelectSubState], a ; $50b4
 	cp $04 ; $50b7
 	jr z, .continueStory ; $50b9
+	ld a, [ApOptStoryArcs]
+	and a
+	jr z, .pickArc
+	apcall ApForceStoryArc
+	jr .continueStory
+.pickArc:
 	farcall RunPlayAlonePartnerMenu ; $50bb
 	cp $ff ; $50be
 	jr nz, .continueStory ; $50c0

@@ -150,3 +150,23 @@ ApStageLocked:
 .locked:
 	or 1
 	ret
+
+; Sets FLAG_DOUBLES as story_arcs forces it (nothing under both).
+ApForceStoryArc:
+	ld a, [ApOptStoryArcs]
+	cp AP_ARCS_SINGLES
+	jr z, .singles
+	cp AP_ARCS_DOUBLES
+	ret nz
+	set_flag FLAG_DOUBLES
+	ret
+.singles:
+	clear_flag FLAG_DOUBLES
+	ret
+
+; A new game's first location: forces the arc. -> nz if skip_intro is on.
+ApStartNewGame:
+	call ApForceStoryArc
+	ld a, [ApOptSkipIntro]
+	and a
+	ret

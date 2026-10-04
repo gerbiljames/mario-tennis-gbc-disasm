@@ -8,12 +8,18 @@ RunPlayDoublesTodayPrompt:
 .altText:
 	script_set_text Text_31_304 ; $56ce
 .prompt:
+	ld a, [ApOptStoryArcs]
+	cp AP_ARCS_SINGLES
+	jp z, .declined
+	cp AP_ARCS_DOUBLES
+	jr z, .accept
 	script_speak_restore ACTOR_DORM_ROOM_KATE ; $56d4
 	farcall RunDialogueYesNoPrompt ; $56d9
 	farcall ScriptCloseDialogueWindow ; $56dc
 	script_wait_frames 5 ; $56df
 	and a ; $56e6
 	jr nz, .declined ; $56e7
+.accept:
 	set_flag FLAG_DOUBLES ; $56e9
 	call SetRoommateDoublesYesReplyText_13 ; $56ec
 	script_speak ACTOR_DORM_ROOM_KATE ; $56ef

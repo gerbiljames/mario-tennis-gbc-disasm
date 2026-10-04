@@ -122,6 +122,22 @@ class Game:
                 self.press("a")
         raise AssertionError(f"{label} was never called")
 
+    def warp(self, location, entry, frames=1500):
+        """Send the player to a location's entry point, as a scripted warp
+        does, from the idle loop; -> the location the idle loop runs in
+        next (after a cutscene, if it plays out)."""
+        self.wram("wStoryModeCurrentLocation", location)
+        self.wram("wStoryModeEntryPoint", entry)
+        self.wram("wStoryModeExitTriggerRequest", 0xff)
+        start = self.idle
+        for i in range(frames):
+            self.tick()
+            if self.idle > start + 30:
+                return self.mem[self.addr("wStoryModeCurrentLocation")]
+            if i % 90 == 89:
+                self.press("a")
+        return None
+
     def addr(self, label):
         return self.sym[label][1]
 
@@ -410,6 +426,25 @@ def match_length_override(g, c):
 
 
 match_length_override.tokens = lambda c: {"ApOptMatchSets": b"\x01", "ApOptMatchGames": b"\x02"}
+
+
+STORYLOC_ACADEMY_ENTRANCE, STORYLOC_DORM_ROOM = 0x14, 0x0a
+
+
+@test
+def skip_intro(g, c):
+    g.warp(STORYLOC_ACADEMY_ENTRANCE, 0x0f, frames=600)
+    where = g.mem[g.addr("wStoryModeCurrentLocation")], g.mem[g.addr("wStoryModeEntryPoint")]
+    assert where == (STORYLOC_DORM_ROOM, 0x0f), where
+    assert g.mem[g.addr("wGameFlags") + 47 // 8] & (0x80 >> 47 % 8), "story_arcs: doubles did not set FLAG_DOUBLES"
+
+
+skip_intro.tokens = lambda c: {"ApOptSkipIntro": b"\x01", "ApOptStoryArcs": b"\x02"}
+
+
+@test
+def no_skip_intro(g, c):
+    assert g.warp(STORYLOC_ACADEMY_ENTRANCE, 0x0f, frames=600) != STORYLOC_DORM_ROOM
 
 
 def names(c, loc, item, player):
