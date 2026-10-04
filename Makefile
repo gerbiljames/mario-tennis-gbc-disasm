@@ -28,7 +28,7 @@ ifeq (,$(filter clean,$(MAKECMDGOALS)))
 $(info $(shell python3 tools/mods.py apply))
 endif
 
-.PHONY: all compare check test shift-test event-test slot-audit ap-export ap-test ap-event-test venv previews clean
+.PHONY: all compare check test shift-test event-test slot-audit ap-export ap-test ap-event-test ap-client-test venv previews clean
 
 all: $(ROM)
 
@@ -143,6 +143,13 @@ ap-test: $(ROM)
 ap-event-test: $(ROM)
 	$(PYTHON) tools/aptest.py --write-rom build/ap-passes.gbc
 	$(PYTHON) tools/eventtest.py build/ap-passes.gbc --base build/ap-passes.gbc --save $(SAVE)
+
+# The apworld's BizHawk client against the game in PyBoy
+# (tools/apclienttest.py). AP is an Archipelago 0.6.8 checkout whose
+# virtualenv has PyBoy.
+AP ?= ../Archipelago
+ap-client-test: ap-export
+	$(AP)/.venv/bin/python tools/apclienttest.py --ap $(AP)
 
 # A virtualenv with the packages in requirements.txt; PYTHON uses it.
 venv:
