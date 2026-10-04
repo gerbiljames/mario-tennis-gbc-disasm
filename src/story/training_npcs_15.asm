@@ -91,7 +91,7 @@ WaterSpriteRacketRewardScene:
 	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4ec5
 	ld a, [wSwingContestSwings] ; $4eca
 	cp $96 ; $4ecd
-	jp nc, .alreadyOwned ; $4ecf
+	jp nc, .goldRacket ; $4ecf
 	farcall AdvanceDialogueTextCursor ; $4ed2
 	script_get_actor_state ACTOR_TRAINING_COURT_RACKET ; $4ed5
 	ld c, l ; $4eda
@@ -106,7 +106,7 @@ WaterSpriteRacketRewardScene:
 	ld a, $05 ; $4ee9
 	ld b, a ; $4eeb
 	jp .speak ; $4eec
-.alreadyOwned:
+.goldRacket:
 	set_flag FLAG_HAVE_GOLD_RACKET ; $4eef
 	ld a, $04 ; $4ef2
 	ld b, a ; $4ef4

@@ -345,7 +345,7 @@ SetMinigameRecordSaveFlag:
 	pop de ; $6ebf
 	ret ; $6ec0
 .compare:
-	cp $1f ; $6ec1
+	cp MINIGAME_TARGET_SHOT ; $6ec1
 	jr nz, .compare2 ; $6ec3
 	push de ; $6ec5
 	ld de, SAVEFLAG_COURT_TROPICS ; $6ec6
@@ -353,7 +353,7 @@ SetMinigameRecordSaveFlag:
 	pop de ; $6ecc
 	ret ; $6ecd
 .compare2:
-	cp $21 ; $6ece
+	cp MINIGAME_BANANA_BUNCH ; $6ece
 	jr nz, .done ; $6ed0
 	push de ; $6ed2
 	ld de, SAVEFLAG_COURT_JUNGLE ; $6ed3
