@@ -25,7 +25,7 @@ class Source(unittest.TestCase):
 
     def test_idiom_macro_sites(self):
         self.assertEqual(count(r"^\tpush_wram_bank "), 351)
-        self.assertEqual(count(r"^\tpop_wram_bank"), 452)
+        self.assertEqual(count(r"^\tpop_wram_bank"), 453)
         self.assertEqual(count(r"^\tld_hl_indexed "), 421)
         self.assertEqual(count(r"^\twait_frames "), 79)
         self.assertEqual(count(r"^\tlb (de|bc|hl), "), 0, "a register pair written with lb instead of a named pair macro")
