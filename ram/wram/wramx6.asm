@@ -150,7 +150,7 @@ wTrophyExpByGroup:: ds 10
 wTrophyExpGroupAccum:: dw
 ; [16-bit] The sum of all six groups, which ApplyPendingExpAwards adds to the match award
 wTrophyExpTotal:: dw
-; [8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects GetTrophyExpValue's row
+; [8-bit] Character group being totalled; indexes TrophyExpGroupThresholds, TrophyExpGroupMasks and TrophyExpTierFlags, and selects GetTrophyExpValue's row
 wTrophyExpGroup:: db
 NEXTU
 ; character-data screen (bank $1a)

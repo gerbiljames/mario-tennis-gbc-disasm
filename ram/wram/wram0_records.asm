@@ -677,7 +677,7 @@ wPendingExpTrophy:: dw
 ; [8-bit] Marker byte of the N64 transfer record at $c9b0: Unused_02_ValidateN64TransferRecord rejects the record unless it is $64, then checksums the bytes around it
 wN64TransferMarker:: db
 
-; [2 bytes] Trophies transferred from the N64 game, two bits per trophy (0-3) for eight trophies. DecodeTrophyCounts unpacks them into the trophy screen's cells; the EXP award path walks them tier by tier to pick a TrophyExpForGroupTable row
+; [2 bytes] Trophies transferred from the N64 game, two bits per trophy (0-3) for eight trophies. DecodeTrophyCounts unpacks them into the trophy screen's cells; the EXP award path walks them tier by tier to pick a TrophyExpTierFlags row
 wN64TrophyCounts:: dw
 	ds 9
 
@@ -758,7 +758,7 @@ wStoryModeEquipmentFlags2:: db
 ; [3 bytes] wGameFlags bytes $0e-$10 (flags 112-135): NPC talked/moved/turned and scene-seen flags (FLAG_*_TALKED_*, FLAG_*_MOVED, FLAG_REPAIR_COUNTER_*, FLAG_AWARDS_CEREMONY_SEEN_*, ...; include/flag_constants.inc)
 wStoryModeNpcEventFlags:: ds 3
 
-; [3 bytes] wGameFlags bytes $11-$13 (flags 136-159): no FLAG_* uses them; saved with the slot, never used
+; [3 bytes] wGameFlags bytes $11-$13 (flags 136-159): FLAG_TROPHY_EXP_GROUP_*_TIER_*, the once-only N64 trophy-EXP tiers ComputeTrophyExpForGroup awards (TrophyExpTierFlags)
 wGameFlagsSpare:: ds 3
 
 ; [2 bytes] wGameFlags bytes $14-$15 (flags 160-175): FLAG_CHEAT_UNLOCK_0-12 (set by the unlock-everything cheat, never read), then FLAG_REACHED_ISLAND_OPEN_SINGLES/DOUBLES

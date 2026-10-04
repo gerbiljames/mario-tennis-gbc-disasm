@@ -245,7 +245,7 @@ ComputeTrophyExpForGroup:
 	push_wram_bank WRAM_SCENE ; $7102
 	ld a, c ; $710b
 	ld [wTrophyExpGroup], a ; $710c
-	ld hl, TrophyExpForGroupTable4 ; $710f
+	ld hl, TrophyExpGroupThresholds ; $710f
 	add l ; $7112
 	ld l, a ; $7113
 	jr nc, .readThreshold ; $7114
@@ -253,7 +253,7 @@ ComputeTrophyExpForGroup:
 .readThreshold:
 	ld b, [hl] ; $7117
 	ld a, c ; $7118
-	ld hl, TrophyExpForGroupTable5 ; $7119
+	ld hl, TrophyExpGroupMasks ; $7119
 	add l ; $711c
 	ld l, a ; $711d
 	jr nc, .readMask ; $711e
@@ -272,7 +272,7 @@ ComputeTrophyExpForGroup:
 	add a ; $7132
 	add a ; $7133
 	add a ; $7134
-	ld hl, TrophyExpForGroupTable0 ; $7135
+	ld hl, TrophyExpTierFlags ; $7135
 	add l ; $7138
 	ld l, a ; $7139
 	jr nc, .readFlag1 ; $713a
@@ -312,7 +312,7 @@ ComputeTrophyExpForGroup:
 	add a ; $716f
 	add a ; $7170
 	add a ; $7171
-	ld hl, TrophyExpForGroupTable1 ; $7172
+	ld hl, TrophyExpTierFlags + 2 ; $7172
 	add l ; $7175
 	ld l, a ; $7176
 	jr nc, .readFlag2 ; $7177
@@ -351,7 +351,7 @@ ComputeTrophyExpForGroup:
 	add a ; $71aa
 	add a ; $71ab
 	add a ; $71ac
-	ld hl, TrophyExpForGroupTable2 ; $71ad
+	ld hl, TrophyExpTierFlags + 4 ; $71ad
 	add l ; $71b0
 	ld l, a ; $71b1
 	jr nc, .readFlag3 ; $71b2
@@ -391,7 +391,7 @@ ComputeTrophyExpForGroup:
 	add a ; $71e7
 	add a ; $71e8
 	add a ; $71e9
-	ld hl, TrophyExpForGroupTable3 ; $71ea
+	ld hl, TrophyExpTierFlags + 6 ; $71ea
 	add l ; $71ed
 	ld l, a ; $71ee
 	jr nc, .readFlag4 ; $71ef
@@ -431,23 +431,35 @@ ComputeTrophyExpForGroup:
 	pop de ; $7224
 	pop af ; $7225
 	ret ; $7226
-TrophyExpForGroupTable0:
-	; $7227, 2 bytes (bytes:2)
-	db $00, $11 ; 0x00
-TrophyExpForGroupTable1:
-	; $7229, 2 bytes (bytes:2)
-	db $20, $11 ; 0x00
-TrophyExpForGroupTable2:
-	; $722b, 2 bytes (bytes:2)
-	db $40, $11 ; 0x00
-TrophyExpForGroupTable3:
-	; $722d, 42 bytes (bytes:16)
-	db $60, $11, $80, $11, $a0, $11, $c0, $11, $e0, $11, $00, $12, $20, $12, $40, $12 ; 0x00
-	db $60, $12, $80, $12, $a0, $12, $c0, $12, $e0, $12, $00, $13, $20, $13, $40, $13 ; 0x10
-	db $60, $13, $80, $13, $a0, $13, $c0, $13, $e0, $13 ; 0x20
-TrophyExpForGroupTable4:
+TrophyExpTierFlags:
+	; $7227, 48 bytes (flag_ids): one row of tiers 1-4 per trophy group
+	flag_id FLAG_TROPHY_EXP_GROUP_0_TIER_1 ; group 0
+	flag_id FLAG_TROPHY_EXP_GROUP_0_TIER_2
+	flag_id FLAG_TROPHY_EXP_GROUP_0_TIER_3
+	flag_id FLAG_TROPHY_EXP_GROUP_0_TIER_4
+	flag_id FLAG_TROPHY_EXP_GROUP_1_TIER_1 ; group 1
+	flag_id FLAG_TROPHY_EXP_GROUP_1_TIER_2
+	flag_id FLAG_TROPHY_EXP_GROUP_1_TIER_3
+	flag_id FLAG_TROPHY_EXP_GROUP_1_TIER_4
+	flag_id FLAG_TROPHY_EXP_GROUP_2_TIER_1 ; group 2
+	flag_id FLAG_TROPHY_EXP_GROUP_2_TIER_2
+	flag_id FLAG_TROPHY_EXP_GROUP_2_TIER_3
+	flag_id FLAG_TROPHY_EXP_GROUP_2_TIER_4
+	flag_id FLAG_TROPHY_EXP_GROUP_3_TIER_1 ; group 3
+	flag_id FLAG_TROPHY_EXP_GROUP_3_TIER_2
+	flag_id FLAG_TROPHY_EXP_GROUP_3_TIER_3
+	flag_id FLAG_TROPHY_EXP_GROUP_3_TIER_4
+	flag_id FLAG_TROPHY_EXP_GROUP_4_TIER_1 ; group 4
+	flag_id FLAG_TROPHY_EXP_GROUP_4_TIER_2
+	flag_id FLAG_TROPHY_EXP_GROUP_4_TIER_3
+	flag_id FLAG_TROPHY_EXP_GROUP_4_TIER_4
+	flag_id FLAG_TROPHY_EXP_GROUP_5_TIER_1 ; group 5
+	flag_id FLAG_TROPHY_EXP_GROUP_5_TIER_2
+	flag_id FLAG_TROPHY_EXP_GROUP_5_TIER_3
+	flag_id FLAG_TROPHY_EXP_GROUP_5_TIER_4
+TrophyExpGroupThresholds:
 	; $7257, 6 bytes (bytes:6)
 	db $01, $02, $03, $04, $08, $0c ; 0x00
-TrophyExpForGroupTable5:
+TrophyExpGroupMasks:
 	; $725d, 6 bytes (bytes:6)
 	db $03, $03, $03, $0c, $0c, $0c ; 0x00

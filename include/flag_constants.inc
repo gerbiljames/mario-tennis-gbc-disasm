@@ -77,12 +77,17 @@ def FLAG_ENDING_CREDITS_PENDING equ 109 ; wGameFlags byte $0d bit 5
 def FLAG_ENDING_CREDITS_RUNNING equ 110 ; wGameFlags byte $0d bit 6
 def FLAG_ACTORS_FROZEN equ 111 ; wGameFlags byte $0d bit 7
 
+def FLAG_RESTAURANT_NPC12_MOVED_STAGE_0 equ 112 ; wGameFlags byte $0e bit 0
+def FLAG_RESTAURANT_NPC12_MOVED_STAGE_1 equ 113 ; wGameFlags byte $0e bit 1
+def FLAG_RESTAURANT_NPC12_MOVED_STAGE_2 equ 114 ; wGameFlags byte $0e bit 2
+def FLAG_RESTAURANT_NPC12_MOVED_STAGE_3 equ 115 ; wGameFlags byte $0e bit 3
 def FLAG_SENIOR_COURT_NPC03_TURNED equ 116 ; wGameFlags byte $0e bit 4
 def FLAG_TOURNAMENT_NPC05_TALKED_SINGLES equ 118 ; wGameFlags byte $0e bit 6
 def FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES equ 119 ; wGameFlags byte $0e bit 7
 
 def FLAG_COURT2_SPECTATORS_TALKED_SINGLES equ 120 ; wGameFlags byte $0f bit 0
 def FLAG_COURT2_SPECTATORS_TALKED_DOUBLES equ 121 ; wGameFlags byte $0f bit 1
+def FLAG_RESTAURANT_NPC12_MOVED_STAGE_4 equ 122 ; wGameFlags byte $0f bit 2
 def FLAG_RESTAURANT_NPC08_MOVED equ 123 ; wGameFlags byte $0f bit 3
 def FLAG_SENIOR_COURT_TILE01_TRIGGERED equ 124 ; wGameFlags byte $0f bit 4
 def FLAG_PRACTICE_ROOM_SESSION_ACTIVE equ 125 ; wGameFlags byte $0f bit 5
@@ -93,6 +98,31 @@ def FLAG_SWING_PRACTICE_KID_PLACED equ 128 ; wGameFlags byte $10 bit 0
 def FLAG_JUNIOR_COURT_NPC0A_TALKED equ 130 ; wGameFlags byte $10 bit 2
 def FLAG_AWARDS_CEREMONY_SEEN_SINGLES equ 131 ; wGameFlags byte $10 bit 3
 def FLAG_AWARDS_CEREMONY_SEEN_DOUBLES equ 132 ; wGameFlags byte $10 bit 4
+
+def FLAG_TROPHY_EXP_GROUP_0_TIER_1 equ 136 ; wGameFlags byte $11 bit 0
+def FLAG_TROPHY_EXP_GROUP_0_TIER_2 equ 137 ; wGameFlags byte $11 bit 1
+def FLAG_TROPHY_EXP_GROUP_0_TIER_3 equ 138 ; wGameFlags byte $11 bit 2
+def FLAG_TROPHY_EXP_GROUP_0_TIER_4 equ 139 ; wGameFlags byte $11 bit 3
+def FLAG_TROPHY_EXP_GROUP_1_TIER_1 equ 140 ; wGameFlags byte $11 bit 4
+def FLAG_TROPHY_EXP_GROUP_1_TIER_2 equ 141 ; wGameFlags byte $11 bit 5
+def FLAG_TROPHY_EXP_GROUP_1_TIER_3 equ 142 ; wGameFlags byte $11 bit 6
+def FLAG_TROPHY_EXP_GROUP_1_TIER_4 equ 143 ; wGameFlags byte $11 bit 7
+def FLAG_TROPHY_EXP_GROUP_2_TIER_1 equ 144 ; wGameFlags byte $12 bit 0
+def FLAG_TROPHY_EXP_GROUP_2_TIER_2 equ 145 ; wGameFlags byte $12 bit 1
+def FLAG_TROPHY_EXP_GROUP_2_TIER_3 equ 146 ; wGameFlags byte $12 bit 2
+def FLAG_TROPHY_EXP_GROUP_2_TIER_4 equ 147 ; wGameFlags byte $12 bit 3
+def FLAG_TROPHY_EXP_GROUP_3_TIER_1 equ 148 ; wGameFlags byte $12 bit 4
+def FLAG_TROPHY_EXP_GROUP_3_TIER_2 equ 149 ; wGameFlags byte $12 bit 5
+def FLAG_TROPHY_EXP_GROUP_3_TIER_3 equ 150 ; wGameFlags byte $12 bit 6
+def FLAG_TROPHY_EXP_GROUP_3_TIER_4 equ 151 ; wGameFlags byte $12 bit 7
+def FLAG_TROPHY_EXP_GROUP_4_TIER_1 equ 152 ; wGameFlags byte $13 bit 0
+def FLAG_TROPHY_EXP_GROUP_4_TIER_2 equ 153 ; wGameFlags byte $13 bit 1
+def FLAG_TROPHY_EXP_GROUP_4_TIER_3 equ 154 ; wGameFlags byte $13 bit 2
+def FLAG_TROPHY_EXP_GROUP_4_TIER_4 equ 155 ; wGameFlags byte $13 bit 3
+def FLAG_TROPHY_EXP_GROUP_5_TIER_1 equ 156 ; wGameFlags byte $13 bit 4
+def FLAG_TROPHY_EXP_GROUP_5_TIER_2 equ 157 ; wGameFlags byte $13 bit 5
+def FLAG_TROPHY_EXP_GROUP_5_TIER_3 equ 158 ; wGameFlags byte $13 bit 6
+def FLAG_TROPHY_EXP_GROUP_5_TIER_4 equ 159 ; wGameFlags byte $13 bit 7
 
 def FLAG_CHEAT_UNLOCK_0 equ 160 ; wGameFlags byte $14 bit 0
 def FLAG_CHEAT_UNLOCK_1 equ 161 ; wGameFlags byte $14 bit 1

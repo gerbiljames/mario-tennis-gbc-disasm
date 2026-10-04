@@ -952,12 +952,12 @@ SetRestaurantNpc12StageFlag_10:
 	call SetGameFlagByNumber ; $614c
 	ret ; $614f
 RestaurantNpc12StageFlagTable_10:
-	; $6150, 10 bytes (flag_ids)
-	dw $0070 ; 0: flag $00, 3
-	dw $0071 ; 1: flag $00, 3
-	dw $0072 ; 2: flag $00, 3
-	dw $0073 ; 3: flag $00, 3
-	dw $007a ; 4: flag $00, 3
+	; $6150, 10 bytes (flag numbers, for *GameFlagByNumber)
+	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_0 ; 0
+	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_1 ; 1
+	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_2 ; 2
+	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_3 ; 3
+	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_4 ; 4
 RestaurantShowActor11NearPlayer_10:
 	wram_bank WRAM_ACTORS ; $615a
 	script_get_actor_state ACTOR_PLAYER ; $6160
