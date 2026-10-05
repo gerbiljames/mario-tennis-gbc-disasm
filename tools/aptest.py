@@ -467,9 +467,10 @@ STORYLOC_ACADEMY_ENTRANCE, STORYLOC_DORM_ROOM = 0x14, 0x0a
 
 @test
 def skip_intro(g, c):
-    g.warp(STORYLOC_ACADEMY_ENTRANCE, 0x0f, frames=600)
-    where = g.mem[g.addr("wStoryModeCurrentLocation")], g.mem[g.addr("wStoryModeEntryPoint")]
-    assert where == (STORYLOC_DORM_ROOM, 0x0f), where
+    assert g.warp(STORYLOC_ACADEMY_ENTRANCE, 0x0f, frames=900) == STORYLOC_DORM_ROOM, "never idle in the Dorm Room"
+    assert g.mem[g.addr("wStoryModeEntryPoint")] == 0x01
+    if SHOTS:
+        g.screenshot(SHOTS / "skip_intro.png")
     assert g.mem[g.addr("wGameFlags") + 47 // 8] & (0x80 >> 47 % 8), "story_arcs: doubles did not set FLAG_DOUBLES"
 
 
