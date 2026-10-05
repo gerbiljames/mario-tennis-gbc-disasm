@@ -9,3 +9,4 @@ tools/rgbds/
 __pycache__/
 .venv/
 build-fixes/
+.claude/
