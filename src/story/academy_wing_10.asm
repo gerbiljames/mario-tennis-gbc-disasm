@@ -791,6 +791,8 @@ AcademyWingEntry0fScene:
 	ld c, 2 ; $731e
 	call BeginFadeOut ; $7320
 	call WaitFadeEnd ; $7323
+	ap_pass AP_ARC_ACTIVE, 4
+	jp z, ApStayAfterCeremony_10
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7326
 	ld [wStoryModeCurrentLocation], a ; $7328
 	ld a, $0c ; $732b

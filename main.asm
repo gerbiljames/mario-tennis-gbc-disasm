@@ -217,6 +217,7 @@ INCLUDE "src/story/restaurant_10.asm"
 INCLUDE "src/story/academy_wing_10.asm"
 INCLUDE "src/story/academy_main_10.asm"
 INCLUDE "src/story/walks_10.asm"
+INCLUDE "src/ap/ending_10.asm"
 
 SECTION "ROM Bank $11", ROMX[$4000], BANK[$11]
 

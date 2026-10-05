@@ -1,4 +1,6 @@
 {
+ "src/ap/ending_10.asm|ApStayAfterCeremony_10|set_flag FLAG_STORY_COMPLETE_DOUBLES|1": "setter",
+ "src/ap/ending_10.asm|ApStayAfterCeremony_10|set_flag FLAG_STORY_COMPLETE_SINGLES|1": "setter",
  "src/engine/menus/exp/award_sequence_1e.asm|ProcessMatchRewards|test_flag FLAG_CLEARED_MACHINE_MASTER|1": "record",
  "src/engine/menus/exp/award_sequence_1e.asm|ProcessMatchRewards|test_flag FLAG_CLEARED_WALL_MASTER|1": "record",
  "src/engine/menus/exp/award_sequence_1e.asm|ProcessMatchRewards|test_flag FLAG_WON_DREAM_MATCH_DOUBLES|1": "record",

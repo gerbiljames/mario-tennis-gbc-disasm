@@ -717,6 +717,40 @@ def front_gate_island_open_only(g, c):
 front_gate_island_open_only.tokens = island_open_by_the_front_gate.tokens
 
 
+STORYLOC_ACADEMY_WING = 0x06
+FLAG_WON_ISLAND_OPEN_SINGLES_FINAL, FLAG_STORY_COMPLETE_SINGLES, FLAG_REACHED_MARIO_WORLD_SINGLES = 60, 176, 178
+
+
+def after_the_principal(g):
+    """Play the principal's congratulations after a singles Island Open win
+    -> (where the player ends up, whether the arc is marked complete)."""
+    set_flag(g, FLAG_DOUBLES, False)
+    set_flag(g, FLAG_WON_ISLAND_OPEN_SINGLES_FINAL, True)
+    set_flag(g, FLAG_STORY_COMPLETE_SINGLES, False)
+    set_flag(g, FLAG_REACHED_MARIO_WORLD_SINGLES, False)
+    where = g.warp(STORYLOC_ACADEMY_WING, 0x0f, frames=6000)
+    flags = g.addr("wGameFlags")
+    done = bool(g.mem[flags + FLAG_STORY_COMPLETE_SINGLES // 8] & (0x80 >> FLAG_STORY_COMPLETE_SINGLES % 8))
+    return where, done
+
+
+@test
+def no_castle_flight_while_locked(g, c):
+    assert after_the_principal(g) == (STORYLOC_ACADEMY_WING, True), "the ceremony still flew to the castle"
+
+
+no_castle_flight_while_locked.tokens = island_open_by_the_front_gate.tokens
+
+
+@test
+def castle_flight_once_open(g, c):
+    where, _ = after_the_principal(g)
+    assert where != STORYLOC_ACADEMY_WING, "the ceremony stayed at the Academy with the castle open"
+
+
+castle_flight_once_open.tokens = front_gate_asks_with_both_open.tokens
+
+
 @test
 def gate_guard_tiers(g, c):
     set_flag(g, 47, False)
