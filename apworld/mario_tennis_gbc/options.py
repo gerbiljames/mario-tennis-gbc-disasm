@@ -123,9 +123,10 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
 
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames]),
-    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, SkipIntro, DefaultTextSpeed, DefaultCameraMode,
-                             ItemMessages, NerfSwingContest, RemoteItems]),
+    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest]),
+    OptionGroup("Quality of Life", [SkipIntro, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
+    OptionGroup("Multiworld", [RemoteItems]),
 ]
 
 # options that shape regions, locations or rules: sent in slot data for Universal Tracker
-LOGIC_OPTIONS = ("story_arcs", "goal", "minigames", "nerf_swing_contest")
+LOGIC_OPTIONS = ("story_arcs", "goal", "minigames")
