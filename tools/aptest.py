@@ -592,6 +592,36 @@ def varsity_opens_at_two_passes(g, c):
 varsity_opens_at_two_passes.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x02"}
 
 
+STORYLOC_TOURNAMENT_COURTYARD, STORYLOC_TOURNAMENT, STORYLOC_ISLAND_SKY = 0x15, 0x19, 0x1b
+FLAG_REACHED_ISLAND_OPEN_SINGLES, FLAG_ISLAND_OPEN_ROUNDS = 174, (60, 61, 62, 63)
+
+
+@test
+def island_open_by_the_front_gate(g, c):
+    set_flag(g, 47, False)
+    for n in (FLAG_REACHED_ISLAND_OPEN_SINGLES, 176, *FLAG_ISLAND_OPEN_ROUNDS):
+        set_flag(g, n, False)
+    assert g.warp(STORYLOC_ISLAND_SKY, 0x01, frames=2400) == STORYLOC_TOURNAMENT_COURTYARD, \
+        "Island Sky did not lead straight to the Tournament Courtyard"
+    flags = g.addr("wGameFlags")
+    assert g.mem[flags + 174 // 8] & (0x80 >> 174 % 8), "the first visit did not mark the Island Open reached"
+    assert g.warp(STORYLOC_TOURNAMENT, 0x05, frames=2400) == STORYLOC_TOURNAMENT, "the Tournament did not load"
+
+
+island_open_by_the_front_gate.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x03"}
+
+
+@test
+def gate_guard_tiers(g, c):
+    set_flag(g, 47, False)
+    for passes, tier in ((2, 4), (3, 6), (4, 8)):
+        g.sram_write("sApClientItems", bytes([passes]), offset=c["ITEM_SINGLES_PASS"])
+        g.seal("sApClientRegion", "sApClientChecksum")
+        g.call("ApRankingProgressIndex")
+        g.tick(10)
+        assert g.result["A"] == tier, (passes, g.result["A"])
+
+
 def inline_test(g, first, count):
     """Run `call ApTestInline / db first, count / ret` from WRAM (wApMessage's
     bytes) and -> whether it returned nz, with every register but af kept."""

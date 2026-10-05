@@ -216,27 +216,7 @@ DormRoomInitScript_13:
 	farcall EndCutsceneScriptMode ; $5063
 	ret ; $5066
 SetDormRoomEventTriggerCells_13:
-	test_flag FLAG_DOUBLES ; $5067
-	jr nz, .doubles ; $506a
-	ap_pass AP_ARC_SINGLES, 3
-	jr nz, .checkIslandSingles ; $506f
-	jr .clearTriggers ; $5071
-	ret ; $5073
-.checkIslandSingles:
-	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $5074
-	jr z, .enableTriggers ; $5077
-	jr .clearTriggers ; $5079
-	ret ; $507b
-.doubles:
-	ap_pass AP_ARC_DOUBLES, 3
-	jr nz, .checkIslandDoubles ; $507f
-	jr .clearTriggers ; $5081
-	ret ; $5083
-.checkIslandDoubles:
-	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5084
-	jr z, .enableTriggers ; $5087
-	jr .clearTriggers ; $5089
-	ret ; $508b
+	jr .clearTriggers
 .enableTriggers:
 	ld a, BEHAVIOR_TRIGGER | 15 << 4 ; $508c
 	map_cell 8, 14 ; $508e

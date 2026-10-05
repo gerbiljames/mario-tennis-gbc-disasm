@@ -392,12 +392,10 @@ IslandSkyInitScript_14:
 	jr z, .setLocation ; $54ad
 	test_flag FLAG_DOUBLES ; $54af
 	jr z, .fadeOut ; $54b2
-	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $54b4
-	jp z, .setLocation ; $54b7
+	set_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES
 	jr .transition ; $54ba
 .fadeOut:
-	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $54bc
-	jr z, .setLocation ; $54bf
+	set_flag FLAG_REACHED_ISLAND_OPEN_SINGLES
 .transition:
 	ld c, 4 ; $54c1
 	call BeginFadeOut ; $54c3

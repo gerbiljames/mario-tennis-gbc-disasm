@@ -8,9 +8,6 @@ RunTravelingTeamVictoryCutscene_13:
 	ret ; $7994
 RunTravelingTeamBracketIfWon_13:
 	wram_bank WRAM_ACTORS ; $7995
-	ld a, [wMatchWinLoseFlag] ; $799b
-	cp WINLOSE_WIN ; $799e
-	jp z, .eq01 ; $79a0
 	ret ; $79a3
 .eq01:
 	ld a, STORYLOC_COURTYARD ; $79a4
