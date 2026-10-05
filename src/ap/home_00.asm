@@ -6,11 +6,14 @@ ApFarCall:
 	ld a, BANK(ApCode)
 	jp CallHLInBankA
 
-; ap_has and ap_pass: two argument bytes follow the call
+; ap_has and ap_pass: two argument bytes follow the call, read here while
+; the caller's bank is still mapped
 ApTestInline:
 	push bc
 	push de
 	push hl
+	ld hl, sp + 6
+	call FetchInlineWordOperand
 	ld hl, ApTestInlineFar
 	call ApFarCall
 	pop hl

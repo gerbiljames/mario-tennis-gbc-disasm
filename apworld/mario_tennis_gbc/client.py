@@ -64,10 +64,6 @@ class MarioTennisGBCClient(BizHawkClient):
     system = "GBC"
     patch_suffix = ".apmtgbc"
 
-    def __init__(self) -> None:
-        super().__init__()
-        self.goal_sent = False
-
     async def validate_rom(self, ctx: BizHawkClientContext) -> bool:
         title, ident, remote = await read(ctx.bizhawk_ctx, [
             (0x134, len(TITLE), "ROM"),
@@ -87,7 +83,6 @@ class MarioTennisGBCClient(BizHawkClient):
             return False
         ctx.game = self.game
         ctx.items_handling = 0b111 if remote[0] else 0b001
-        ctx.want_slot_data = True
         return True
 
     async def set_auth(self, ctx: BizHawkClientContext) -> None:
@@ -109,12 +104,10 @@ class MarioTennisGBCClient(BizHawkClient):
         if not valid(header) or header[:4] != LEDGER_MAGIC or header[4:20] != auth:
             return  # the game has not validated this cart's ledger yet
         if valid(game):
-            done = done_locations(game) - ctx.checked_locations
-            if done:
-                await ctx.send_msgs([{"cmd": "LocationChecks", "locations": sorted(done)}])
-            if game[ram("sApGoal") - ram("sApGameRegion")] and not self.goal_sent:
+            await ctx.check_locations(done_locations(game))
+            if game[ram("sApGoal") - ram("sApGameRegion")] and not ctx.finished_game:
                 await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
-                self.goal_sent = True
+                ctx.finished_game = True
         received = int.from_bytes(client[:2], "little") if valid(client) else 0
         if received < len(ctx.items_received) or not valid(client):
             items = [(item.item, "" if item.player == ctx.slot else ctx.player_names[item.player])

@@ -97,12 +97,12 @@ class Game:
         self.idle += 1
         if self.awaiting:
             r = self.rf
-            self.result = {"A": r.A, "B": r.B, "C": r.C, "D": r.D, "E": r.E, "HL": r.HL}
+            self.result = {"A": r.A, "F": r.F, "B": r.B, "C": r.C, "D": r.D, "E": r.E, "HL": r.HL}
             self.awaiting = False
         if not self.pending:
             return
         label, regs = self.pending.pop(0)
-        bank, addr = self.sym[label]
+        bank, addr = self.sym[label] if isinstance(label, str) else label
         r, m = self.rf, self.mem
         sp = (r.SP - 2) & 0xffff
         m[sp], m[sp + 1] = r.PC & 0xff, r.PC >> 8
@@ -562,6 +562,60 @@ def default_camera_mode_vanilla(g, c):
     g.call("TestStorySlotFlagB")
     g.tick(30)
     assert g.result["A"] == 0
+
+
+def set_flag(g, n, on):
+    a, bit = g.addr("wGameFlags") + n // 8, 0x80 >> (n % 8)
+    g.mem[a] = (g.mem[a] | bit) if on else (g.mem[a] & ~bit & 0xff)
+
+
+def varsity_table(g):
+    """The NpcScripts table SetupVarsityCourtSceneVariant leaves for singles before the Varsity win."""
+    set_flag(g, 47, False)
+    set_flag(g, 88, False)
+    p = g.addr("wMapNpcScriptsPtr")
+    g.mem[p] = g.mem[p + 1] = 0
+    g.call("SetupVarsityCourtSceneVariant")
+    return g.mem[p] | g.mem[p + 1] << 8
+
+
+@test
+def varsity_needs_two_passes(g, c):
+    assert varsity_table(g) != g.addr("VarsityCourtNpcScriptsA_13"), "Kevin's match without the passes"
+
+
+@test
+def varsity_opens_at_two_passes(g, c):
+    assert varsity_table(g) == g.addr("VarsityCourtNpcScriptsA_13"), "no Kevin's match with two passes"
+
+
+varsity_opens_at_two_passes.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x02"}
+
+
+def inline_test(g, first, count):
+    """Run `call ApTestInline / db first, count / ret` from WRAM (wApMessage's
+    bytes) and -> whether it returned nz, with every register but af kept."""
+    code = bytes([0xcd]) + g.addr("ApTestInline").to_bytes(2, "little") + bytes([first, count, 0xc9])
+    g.wram("wApMessage", *code)
+    g.call((0, g.addr("wApMessage")), B=0x12, C=0x34, D=0x56, E=0x78)
+    g.tick(30)
+    r = g.result
+    assert (r["B"], r["C"], r["D"], r["E"]) == (0x12, 0x34, 0x56, 0x78), "ap_has clobbered a register"
+    return not r["F"] & 0x80
+
+
+@test
+def ap_has_inline(g, c):
+    lesson = c["ITEM_SERVICE_LESSON"]
+    assert inline_test(g, lesson, 1), "2 Service Lessons held, ap_has 1 said no"
+    assert inline_test(g, lesson, 2)
+    assert not inline_test(g, lesson, 3), "ap_has 3 said yes with 2 held"
+    assert not inline_test(g, c["ITEM_WALL_PRACTICE"], 1)
+    assert inline_test(g, 0x80 | 0, 0), "ap_pass 0 said no"
+    assert not inline_test(g, 0x80 | 0, 1), "ap_pass 1 said yes with no passes"
+
+
+ap_has_inline.tokens = lambda c: {("ApStartInventory", c["ITEM_SERVICE_LESSON"]): b"\x02"}
 
 
 def names(c, loc, item, player):

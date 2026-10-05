@@ -40,16 +40,25 @@ class Context:
         self.server, self.slot = object(), ME
         self.auth = None
         self.checked_locations = set()
+        self.missing_locations = set(range(1, 129))
+        self.finished_game = False
         self.items_received = []
         self.player_names = {ME: "Me", ALICE: "Alice"}
         self.sent = []
-        self.game = self.items_handling = self.want_slot_data = None
+        self.game = self.items_handling = None
+
+    async def check_locations(self, locations):
+        locations = set(locations) & self.missing_locations
+        if locations:
+            await self.send_msgs([{"cmd": "LocationChecks", "locations": tuple(locations)}])
+        return locations
 
     async def send_msgs(self, msgs):
         for m in msgs:
             self.sent.append(m)
             if m["cmd"] == "LocationChecks":
                 self.checked_locations |= set(m["locations"])
+                self.missing_locations -= set(m["locations"])
 
     def checks(self):
         return {loc for m in self.sent if m["cmd"] == "LocationChecks" for loc in m["locations"]}
