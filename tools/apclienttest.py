@@ -4,7 +4,7 @@
     <ap>/.venv/bin/python tools/apclienttest.py --ap <Archipelago 0.6.8 checkout>
 
 The client (apworld/mario_tennis_gbc/client.py) talks to BizHawk through
-worlds._bizhawk's read, guarded_write and get_cores. Here those read and
+worlds._bizhawk's read and guarded_write. Here those read and
 write PyBoy's memory instead (the ROM file, cart RAM by bank), and a stand-in
 context plays the server: it records what the client sends and hands it
 received items. The game runs from tools/aptest.py's harness, so each test
@@ -64,7 +64,7 @@ class Context:
         return {loc for m in self.sent if m["cmd"] == "LocationChecks" for loc in m["locations"]}
 
 
-def connect(client_module, game, rom_bytes, core="Gambatte"):
+def connect(client_module, game, rom_bytes):
     """Point the client module's BizHawk calls at this game."""
     def cart(off):
         return off // 0x2000, 0xa000 + off % 0x2000
@@ -91,10 +91,7 @@ def connect(client_module, game, rom_bytes, core="Gambatte"):
                 game.mem[cart(addr + i)] = v
         return True
 
-    async def get_cores(_):
-        return {"GBC": core}
-
-    client_module.read, client_module.guarded_write, client_module.get_cores = read, guarded_write, get_cores
+    client_module.read, client_module.guarded_write = read, guarded_write
 
 
 def poll(client, ctx):
@@ -118,9 +115,7 @@ def validate_and_auth(t):
 
 
 @test
-def refuses_other_cores_and_builds(t):
-    t.mod_connect(core="SameBoy")
-    assert not asyncio.run(t.client.validate_rom(t.ctx)), "a non-Gambatte core was accepted"
+def refuses_other_builds(t):
     t.mod_connect(rom=t.rom_bytes[:0x3ffc] + b"\x00\x00\x00\x00" + t.rom_bytes[0x4000:])
     assert not asyncio.run(t.client.validate_rom(t.ctx)), "another build's id was accepted"
     t.mod_connect(rom=t.rom_bytes[:0x134] + b"CGBTENNIS \x00" + t.rom_bytes[0x13f:])
@@ -221,8 +216,8 @@ class Run:
         self.ctx.auth = base64.b64encode(AUTH).decode()
         self.mod_connect()
 
-    def mod_connect(self, core="Gambatte", rom=None):
-        connect(self.module, self.game, rom if rom is not None else self.rom_bytes, core)
+    def mod_connect(self, rom=None):
+        connect(self.module, self.game, rom if rom is not None else self.rom_bytes)
 
 
 def main():

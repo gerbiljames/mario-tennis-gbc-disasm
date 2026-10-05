@@ -3,8 +3,7 @@
 ## Required software
 
 - [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) 0.6.8 or later
-- [BizHawk](https://tasvideos.org/BizHawk/ReleaseHistory), with the Gambatte core selected for GBC
-  (Config > Preferred Cores > GB in GBC)
+- [BizHawk](https://tasvideos.org/BizHawk/ReleaseHistory)
 - Your own Mario Tennis (USA) Game Boy Color ROM
 
 ## Playing

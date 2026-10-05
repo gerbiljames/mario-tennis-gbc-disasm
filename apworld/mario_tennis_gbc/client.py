@@ -5,7 +5,7 @@ import logging
 from typing import TYPE_CHECKING
 
 from NetUtils import ClientStatus
-from worlds._bizhawk import get_cores, guarded_write, read
+from worlds._bizhawk import guarded_write, read
 from worlds._bizhawk.client import BizHawkClient
 
 from .items import GAME
@@ -76,10 +76,6 @@ class MarioTennisGBCClient(BizHawkClient):
             return False
         if ident[:4] != ID_MAGIC or ident[4:] != BASEPATCH_ID:
             logger.info("This ROM was patched by a different version of the Mario Tennis GBC apworld.")
-            return False
-        core = (await get_cores(ctx.bizhawk_ctx)).get("GBC")
-        if core not in (None, "Gambatte"):
-            logger.info(f"Mario Tennis GBC needs BizHawk's Gambatte core for GBC (it is set to {core}).")
             return False
         ctx.game = self.game
         ctx.items_handling = 0b111 if remote[0] else 0b001
