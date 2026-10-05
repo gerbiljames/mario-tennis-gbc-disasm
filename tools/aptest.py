@@ -611,6 +611,61 @@ def island_open_by_the_front_gate(g, c):
 island_open_by_the_front_gate.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x03"}
 
 
+STORYLOC_ACADEMY_ENTRANCE, STORYLOC_PEACHS_CASTLE = 0x14, 0x1d
+
+
+def out_the_front_gate(g, answer):
+    """Walk south from inside the Academy Entrance until the map changes,
+    answering the gate's question with `answer` -> (asked, where the player
+    ends up)."""
+    assert g.warp(STORYLOC_ACADEMY_ENTRANCE, 0x01) == STORYLOC_ACADEMY_ENTRANCE
+    g.wram("wApMessage", 0)
+    asked = False
+    for _ in range(60):
+        start = g.idle
+        g.press("down", hold=20)
+        if g.mem[g.addr("wApMessage")] == ord("F"):
+            asked = True
+            g.tick(150)
+            if answer == "no":
+                g.press("down", wait=10)
+            g.press("a")
+            break
+        if g.mem[g.addr("wStoryModeCurrentLocation")] != STORYLOC_ACADEMY_ENTRANCE:
+            break
+        if g.idle == start:
+            g.press("a", wait=20)  # someone wandered over to chat
+    start = g.idle
+    for _ in range(2400):
+        g.tick()
+        if g.mem[g.addr("wStoryModeCurrentLocation")] != STORYLOC_ACADEMY_ENTRANCE and g.idle > start + 30:
+            break
+        if g.idle == start:
+            continue
+        start = g.idle
+    return asked, g.mem[g.addr("wStoryModeCurrentLocation")]
+
+
+@test
+def front_gate_asks_with_both_open(g, c):
+    set_flag(g, 47, False)
+    assert out_the_front_gate(g, "yes") == (True, STORYLOC_TOURNAMENT_COURTYARD)
+    r = out_the_front_gate(g, "no")
+    assert r == (True, STORYLOC_PEACHS_CASTLE), r
+
+
+front_gate_asks_with_both_open.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x04"}
+
+
+@test
+def front_gate_island_open_only(g, c):
+    set_flag(g, 47, False)
+    assert out_the_front_gate(g, "yes") == (False, STORYLOC_TOURNAMENT_COURTYARD)
+
+
+front_gate_island_open_only.tokens = island_open_by_the_front_gate.tokens
+
+
 @test
 def gate_guard_tiers(g, c):
     set_flag(g, 47, False)

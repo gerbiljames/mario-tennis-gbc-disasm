@@ -56,10 +56,10 @@ EnableAcademyCampusExit:
 	jr nz, .writeBehaviorMapCell ; $5490
 	ret ; $5492
 .writeBehaviorMapCell:
-	ld a, BEHAVIOR_EXIT | 3 << 4 ; $5493
+	ld a, BEHAVIOR_TRIGGER | AP_GATE_TRIGGER << 4
 	map_cell 22, 52 ; $5495
 	farcall WriteBehaviorMapCell ; $5499
-	ld a, BEHAVIOR_EXIT | 3 << 4 ; $549c
+	ld a, BEHAVIOR_TRIGGER | AP_GATE_TRIGGER << 4
 	map_cell 24, 52 ; $549e
 	farcall WriteBehaviorMapCell ; $54a2
 	ret ; $54a5

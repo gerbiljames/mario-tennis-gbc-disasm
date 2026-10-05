@@ -214,3 +214,18 @@ ApLoadAwardFont:
 	call DisableLCDSafely
 	farcall LoadMenuFontGfx
 	jp EnableLCD
+
+; The front gate's question, in wApMessage for AP_MESSAGE_TEXT
+ApComposeGatePrompt:
+	ld hl, ApTextGatePrompt
+	ld de, wApMessage
+.copy:
+	ld a, [hl+]
+	ld [de], a
+	inc de
+	and a
+	jr nz, .copy
+	ret
+
+ApTextGatePrompt:
+	db "Fly to the", AP_TEXT_LINE, "Island Open?", 0

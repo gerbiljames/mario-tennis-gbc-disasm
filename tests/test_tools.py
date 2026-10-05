@@ -47,7 +47,7 @@ class Static(unittest.TestCase):
     def test_eventtest_plan(self):
         import eventtest
         self.assertEqual(len(eventtest.states()), 36)
-        self.assertEqual(len(eventtest.handlers()), 245)
+        self.assertEqual(len(eventtest.handlers()), 246)
         self.assertGreater(len(eventtest.code_labels()), 3000)
 
     def test_deps_resolve(self):

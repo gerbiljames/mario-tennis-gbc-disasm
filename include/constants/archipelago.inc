@@ -28,6 +28,8 @@ ENDC
 ENDM
 
 DEF AP_ITEM_NONE EQU 0
+; the Academy Entrance tile trigger that asks where the front gate leads
+DEF AP_GATE_TRIGGER EQU $0e
 ; in ApPlacements: a location this seed's options leave out
 DEF AP_ITEM_ABSENT EQU $ff
 

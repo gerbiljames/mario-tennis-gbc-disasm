@@ -445,6 +445,7 @@ AcademyArrivalFacingScripts_11:
 AcademyArrivalTileTriggers_11:
 	; $46a4, 9 bytes (map_scripts)
 	map_script $0f, FACEMASK_ANY, $0000, AcademyArrivalTile0F_11, $00, $00
+	map_script AP_GATE_TRIGGER, FACEMASK_ANY, $0000, ApFrontGateTile_11, $00, $00
 	db $ff
 AcademyArrivalTile0F_11:
 	call ResumeAcademyGuideTour ; $46ad
