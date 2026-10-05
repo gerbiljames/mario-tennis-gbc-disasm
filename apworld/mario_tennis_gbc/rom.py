@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import os
 import pkgutil
 from typing import TYPE_CHECKING
@@ -16,6 +17,10 @@ if TYPE_CHECKING:
     from .world import MarioTennisGBCWorld
 
 BASE_MD5 = "50af67f7321d84bd052f0e793ee0613c"
+# Mario Tennis (Europe): the USA ROM with region code P and its header checksum
+EUROPE_MD5 = "a320f9de83767bb1bc1bbbc6fbd96011"
+REGION_CODE = 0x142
+HEADER_CHECKSUM = 0x14d
 NAME_SIZE = constants["AP_NAME_LENGTH"] + 1
 NAMES_SIZE = 2 * NAME_SIZE
 
@@ -43,7 +48,20 @@ class MarioTennisGBCProcedurePatch(APProcedurePatch, APTokenMixin):
 def get_base_rom_bytes() -> bytes:
     # the settings group checks the file against RomFile.md5s and asks for it if missing
     with open(settings.get_settings()["mario_tennis_gbc_options"]["rom_file"], "rb") as f:
-        return f.read()
+        return as_usa(f.read())
+
+
+def as_usa(rom: bytes) -> bytes:
+    """The USA ROM, from either release."""
+    if hashlib.md5(rom).hexdigest() != EUROPE_MD5:
+        return rom
+    data = bytearray(rom)
+    data[REGION_CODE] = ord("E")
+    checksum = 0
+    for b in data[0x134:HEADER_CHECKSUM]:
+        checksum = (checksum - b - 1) & 0xff
+    data[HEADER_CHECKSUM] = checksum
+    return bytes(data)
 
 
 def option_bytes(world: MarioTennisGBCWorld) -> dict[str, int]:

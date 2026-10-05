@@ -14,10 +14,10 @@ from .rom import MarioTennisGBCProcedurePatch
 
 class MarioTennisGBCSettings(settings.Group):
     class RomFile(settings.UserFilePath):
-        """File name of the Mario Tennis (USA) Game Boy Color ROM"""
-        description = "Mario Tennis (USA) GBC ROM File"
+        """File name of the Mario Tennis (USA or Europe) Game Boy Color ROM"""
+        description = "Mario Tennis (USA or Europe) GBC ROM File"
         copy_to = "Mario Tennis (USA).gbc"
-        md5s = [MarioTennisGBCProcedurePatch.hash]
+        md5s = [MarioTennisGBCProcedurePatch.hash, rom.EUROPE_MD5]
 
     rom_file: RomFile = RomFile(RomFile.copy_to)
 
