@@ -28,3 +28,5 @@ ApOptMatchGames: db 0
 ApOptSwingLow: db 0
 ApOptSwingHigh: db 0
 ApOptLocationCount: db 0
+; a new game's message speed + 1 (0: Normal, the vanilla default)
+ApOptTextSpeed: db 0

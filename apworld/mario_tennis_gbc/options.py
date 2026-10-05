@@ -65,6 +65,15 @@ class SkipIntro(Toggle):
     display_name = "Skip Intro"
 
 
+class DefaultTextSpeed(Choice):
+    """The message speed a new story file starts with. It can still be changed in the game's Options."""
+    display_name = "Default Text Speed"
+    option_normal = 0
+    option_fast = 1
+    option_slow = 2
+    default = option_normal
+
+
 class NerfSwingContest(Toggle):
     """Lowers the swing contest's thresholds from 100 and 150 swings to 60 and 90."""
     display_name = "Nerf Swing Contest"
@@ -86,13 +95,15 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     story_match_sets: StoryMatchSets
     story_match_games: StoryMatchGames
     skip_intro: SkipIntro
+    default_text_speed: DefaultTextSpeed
     nerf_swing_contest: NerfSwingContest
     remote_items: RemoteItems
 
 
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames]),
-    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, SkipIntro, NerfSwingContest, RemoteItems]),
+    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, SkipIntro, DefaultTextSpeed, NerfSwingContest,
+                             RemoteItems]),
 ]
 
 # options that shape regions, locations or rules: sent in slot data for Universal Tracker

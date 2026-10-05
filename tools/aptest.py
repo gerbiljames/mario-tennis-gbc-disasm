@@ -525,6 +525,16 @@ def exp_bundles_at_char_data(g, c):
 exp_bundles_at_char_data.tokens = lambda c: {("ApStartInventory", c["ITEM_EXP_BUNDLE"]): b"\x03"}
 
 
+def boot_message_speed(rom, sym, save, tokens):
+    """-> wMessageSpeed once the boot has set up story mode (a new game's default)."""
+    g = Game(rom, sym, save, tokens)
+    try:
+        g.tick(400)
+        return g.mem[g.addr("wMessageSpeed")]
+    finally:
+        g.close()
+
+
 def boot_without_ledger(rom, sym, save):
     """A cart whose save has no ledger: -> (header magic, save flags) after boot."""
     g = Game(rom, sym, save, ledger=False)
@@ -582,6 +592,11 @@ def main():
         magic, flags = boot_without_ledger(args.rom, args.sym, args.save)
         ok = magic == b"MTAP" and not any(flags)
         print(f"{'ok  ' if ok else 'FAIL'}  erases_a_save_without_ledger")
+        failed += not ok
+    if not args.k or args.k in "default_text_speed":
+        speeds = [boot_message_speed(args.rom, args.sym, args.save, {"ApOptTextSpeed": bytes([b])}) for b in (0, 1, 3)]
+        ok = speeds == [1, 0, 2]
+        print(f"{'ok  ' if ok else 'FAIL'}  default_text_speed {speeds}")
         failed += not ok
     for name, fn in TESTS.items():
         if args.k and args.k not in name:

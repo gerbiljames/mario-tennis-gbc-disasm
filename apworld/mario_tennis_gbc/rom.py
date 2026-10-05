@@ -59,6 +59,9 @@ def option_bytes(world: MarioTennisGBCWorld) -> dict[str, int]:
         "ApOptSwingLow": 60 if o.nerf_swing_contest else 0,
         "ApOptSwingHigh": 90 if o.nerf_swing_contest else 0,
         "ApOptLocationCount": len(active_location_names(world)),
+        # the game's wMessageSpeed (Fast 0, Normal 1, Slow 2) + 1
+        "ApOptTextSpeed": {o.default_text_speed.option_fast: 1, o.default_text_speed.option_normal: 2,
+                           o.default_text_speed.option_slow: 3}[o.default_text_speed.value],
     }
 
 
