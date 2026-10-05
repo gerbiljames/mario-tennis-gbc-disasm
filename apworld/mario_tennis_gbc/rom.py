@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import hashlib
 import os
 import pkgutil
 from typing import TYPE_CHECKING
 
 import settings
-import Utils
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
 
 from .items import ITEM_NAME_TO_ID, GAME
@@ -43,14 +41,9 @@ class MarioTennisGBCProcedurePatch(APProcedurePatch, APTokenMixin):
 
 
 def get_base_rom_bytes() -> bytes:
-    path = settings.get_settings()["mario_tennis_gbc_options"]["rom_file"]
-    if not os.path.exists(path):
-        path = Utils.user_path(path)
-    with open(path, "rb") as f:
-        data = f.read()
-    if hashlib.md5(data).hexdigest() != BASE_MD5:
-        raise Exception("The supplied ROM is not Mario Tennis (USA) for the Game Boy Color.")
-    return data
+    # the settings group checks the file against RomFile.md5s and asks for it if missing
+    with open(settings.get_settings()["mario_tennis_gbc_options"]["rom_file"], "rb") as f:
+        return f.read()
 
 
 def option_bytes(world: MarioTennisGBCWorld) -> dict[str, int]:
