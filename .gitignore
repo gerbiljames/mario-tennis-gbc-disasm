@@ -9,4 +9,6 @@ tools/rgbds/
 __pycache__/
 .venv/
 build-fixes/
+build-eur/
+build-fixes-eur/
 .claude/

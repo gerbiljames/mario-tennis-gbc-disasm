@@ -1,6 +1,6 @@
 # Mario Tennis (GBC) disassembly
 
-A disassembly of **Mario Tennis (USA)** for the Game Boy Color, built with
+A disassembly of **Mario Tennis (USA and Europe)** for the Game Boy Color, built with
 [RGBDS](https://rgbds.gbdev.io/). It rebuilds the retail ROM byte for byte,
 every routine and variable carries a human-assigned name, and the game's
 systems are written up under `docs/`.
@@ -12,9 +12,11 @@ the layout, the names and the structure.
 
 ## Building
 
-1. Obtain a legal copy of Mario Tennis (USA): SHA-1
-   `414ba58340a27fc27b127bc01455b32764151ff0`, 2,097,152 bytes, `CGBTENNIS`,
-   MBC5+RAM+BATTERY.
+1. Obtain a legal copy of Mario Tennis (USA), SHA-1
+   `414ba58340a27fc27b127bc01455b32764151ff0`, or (Europe), SHA-1
+   `550dcc99d0a56bbb13ae3abb2a4193b830e54970`: 2,097,152 bytes, `CGBTENNIS`,
+   MBC5+RAM+BATTERY. The two differ only in the header's region code
+   (`BM8E`/`BM8P`) and header checksum, so either one builds both.
 2. Install [RGBDS](https://rgbds.gbdev.io/install) v1.0.0 or newer, or put
    its binaries in `tools/rgbds/` (the Makefile's default; override with
    `make RGBDS=`). `.rgbds-version` records the version the byte-perfect
@@ -29,11 +31,14 @@ the layout, the names and the structure.
    make check                   # structural checks the byte compare cannot make
    make test                    # codecs, macros and source pins (ROM optional)
    make FIXES=1                 # mariotennis-fixes.gbc: the shipped bugs fixed
+   make EUROPE=1                # mariotennis-eur.gbc: the European release
    ```
 
    `make FIXES=1` assembles the `IF DEF(FIXES)` blocks -- the bugs in
    `docs/bugs.md` that carry a **Fix** paragraph -- into `build-fixes/`,
-   leaving the byte-perfect build untouched.
+   leaving the byte-perfect build untouched. `EUROPE=1` (combinable with
+   `FIXES=1`) builds into `build-eur/`, and `make EUROPE=1 compare` checks the
+   European SHA-1.
 
 The tools need Python 3 with Pillow; the runtime checks (`make event-test`,
 `make slot-audit`) also need PyBoy. `make venv` installs both, at the

@@ -15,10 +15,22 @@ BUILD   := build
 ROM     := mariotennis.gbc
 ASDEFS  :=
 endif
+
+# `make EUROPE=1` builds Mario Tennis (Europe), the same game with region
+# code P in its header, into its own build directory and ROM.
+ifeq ($(EUROPE),1)
+BUILD   := $(BUILD)-eur
+ROM     := $(ROM:.gbc=-eur.gbc)
+ASDEFS  += -D EUROPE
+endif
 OBJS    := $(BUILD)/main.o $(BUILD)/ram.o
 RAM_SRCS := ram.asm $(wildcard ram/*.asm ram/*/*.asm)
 
+ifeq ($(EUROPE),1)
+BASEROM_SHA1 := 550dcc99d0a56bbb13ae3abb2a4193b830e54970
+else
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
+endif
 
 # The mods/ overlay: edited data files a fork commits (mods/README.md) are
 # copied over data/ before anything is built, at parse time so no target can

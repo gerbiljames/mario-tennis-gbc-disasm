@@ -1,4 +1,4 @@
-# Project status — 2026-10-03
+# Project status — 2026-10-05
 
 Where the disassembly stands and what is still open. The subsystem docs under
 `docs/` are the writeups; the git log has the history.
@@ -6,7 +6,8 @@ Where the disassembly stands and what is still open. The subsystem docs under
 ## Where things stand
 
 The ROM rebuilds byte-perfect (`make compare` against SHA-1
-`414ba58340a27fc27b127bc01455b32764151ff0`), `make check` passes every class,
+`414ba58340a27fc27b127bc01455b32764151ff0`; the European release with
+`make EUROPE=1 compare`), `make check` passes every class,
 and the repo holds no ROM bytes: `./setup.sh` extracts the data from the
 user's `baserom.gbc` per `data.manifest`.
 

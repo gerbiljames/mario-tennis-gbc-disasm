@@ -38,7 +38,11 @@ NintendoLogo:
 	INCBIN "data/bank_000/NintendoLogo.bin" ; $0104, 48 bytes
 	; $0134, 28 bytes (cart_header)
 	db "CGBTENNIS ", $00 ; $0134 title
+IF DEF(EUROPE)
+	db "BM8P"            ; $013f manufacturer code
+ELSE
 	db "BM8E"            ; $013f manufacturer code
+ENDC
 	db $c0               ; $0143 CGB flag: CGB only
 	db "01"              ; $0144 new licensee
 	db $00               ; $0146 SGB flag
@@ -48,7 +52,11 @@ NintendoLogo:
 	db $01               ; $014a destination: non-Japanese
 	db $33               ; $014b old licensee
 	db $00               ; $014c mask ROM version
+IF DEF(EUROPE)
+	db $9a               ; $014d header checksum
+ELSE
 	db $a5               ; $014d header checksum
+ENDC
 	db $64, $e3          ; $014e global checksum
 EntryPoint.start:
 	jp Start ; $0150
