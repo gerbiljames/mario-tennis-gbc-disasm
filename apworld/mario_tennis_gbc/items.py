@@ -26,6 +26,7 @@ DRILL_COPIES = {**{name: 2 for name in DRILL_MATCHES + DRILL_LESSONS}, WALL: 4, 
 
 MINIGAMES = ["Boo Blast", "Shooting Star", "Perfect Shot", "Target Shot", "Fruit Fantasy", "Banana Bunch",
              "Treasure Box", "Medallion Match", "Two-on-One"]
+MINIGAME_ITEMS = {game: f"Progressive {game}" for game in MINIGAMES}
 RACKETS = ["Large Racket", "Small Racket", "Iron Racket", "Silver Racket", "Gold Racket", "Drive Racket"]
 SHOES = ["Iron Shoes", "Light Shoes"]
 FILLER = "EXP Bundle"
@@ -36,13 +37,13 @@ ITEM_NAME_GROUPS = {
     "Drill Matches": set(DRILL_MATCHES),
     "Drill Lessons": set(DRILL_LESSONS),
     "Wall and Machine": {WALL, MACHINE},
-    "Mini-Games": set(MINIGAMES),
+    "Mini-Games": set(MINIGAME_ITEMS.values()),
     "Rackets": set(RACKETS),
     "Shoes": set(SHOES),
     "Equipment": set(RACKETS + SHOES),
 }
 
-PROGRESSION = {SINGLES_PASS, DOUBLES_PASS, *DRILL_COPIES, *MINIGAMES, "Iron Racket"}
+PROGRESSION = {SINGLES_PASS, DOUBLES_PASS, *DRILL_COPIES, *MINIGAME_ITEMS.values(), "Iron Racket"}
 
 
 class MarioTennisGBCItem(Item):
@@ -71,9 +72,9 @@ def item_counts(world: MarioTennisGBCWorld) -> dict[str, int]:
     counts.update(DRILL_COPIES)
     minigames = world.options.minigames
     if minigames == minigames.option_progressive:
-        counts.update({name: 3 for name in MINIGAMES})
+        counts.update({name: 3 for name in MINIGAME_ITEMS.values()})
     elif minigames == minigames.option_vanilla:
-        counts.update({name: 1 for name in MINIGAMES})
+        counts.update({name: 1 for name in MINIGAME_ITEMS.values()})
     counts.update({name: 1 for name in RACKETS + SHOES})
     return counts
 

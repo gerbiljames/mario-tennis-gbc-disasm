@@ -176,15 +176,15 @@ ENDM
 	ap_item ITEM_WALL_PRACTICE, "Progressive Wall Practice", "Wall Practice"
 
 ; mini-games, in MinigameClearFlagTable_1e game order
-	ap_item ITEM_BOO_BLAST, "Boo Blast"
-	ap_item ITEM_SHOOTING_STAR, "Shooting Star"
-	ap_item ITEM_PERFECT_SHOT, "Perfect Shot"
-	ap_item ITEM_TARGET_SHOT, "Target Shot"
-	ap_item ITEM_FRUIT_FANTASY, "Fruit Fantasy"
-	ap_item ITEM_BANANA_BUNCH, "Banana Bunch"
-	ap_item ITEM_TREASURE_BOX, "Treasure Box"
-	ap_item ITEM_MEDALLION_MATCH, "Medallion Match"
-	ap_item ITEM_TWO_ON_ONE, "Two-on-One"
+	ap_item ITEM_BOO_BLAST, "Progressive Boo Blast", "Boo Blast"
+	ap_item ITEM_SHOOTING_STAR, "Progressive Shooting Star", "Shooting Star"
+	ap_item ITEM_PERFECT_SHOT, "Progressive Perfect Shot", "Perfect Shot"
+	ap_item ITEM_TARGET_SHOT, "Progressive Target Shot", "Target Shot"
+	ap_item ITEM_FRUIT_FANTASY, "Progressive Fruit Fantasy", "Fruit Fantasy"
+	ap_item ITEM_BANANA_BUNCH, "Progressive Banana Bunch", "Banana Bunch"
+	ap_item ITEM_TREASURE_BOX, "Progressive Treasure Box", "Treasure Box"
+	ap_item ITEM_MEDALLION_MATCH, "Progressive Medallion Match", "Medallion Match"
+	ap_item ITEM_TWO_ON_ONE, "Progressive Two-on-One", "Two-on-One"
 
 ; equipment, in FLAG_HAVE_* order
 	ap_item ITEM_LARGE_RACKET, "Large Racket"

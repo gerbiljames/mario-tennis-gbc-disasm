@@ -500,8 +500,10 @@ def exp_bundles_at_char_data(g, c):
     g.tick(30)
     assert word(g, "wPendingExpStory") == 300, word(g, "wPendingExpStory")
     before = total_exp(g)
-    g.pending.append(("StoryPauseMenu_CharPartnerData", {}))
-    g.tick(150)
+    # the pause menu: Status, then Char Data
+    g.press("start", wait=60)
+    g.press("a", wait=60)
+    g.press("a", wait=150)
     for _ in range(4):
         g.press("a", wait=60)
     # hold A to hand out every point, then OK? Yes, then leave the stats

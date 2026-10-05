@@ -207,3 +207,23 @@ ApStartNewGame:
 	ld a, [ApOptSkipIntro]
 	and a
 	ret
+
+; Before the pause menu's ApplyPendingExpAwards: when there is EXP to award,
+; reloads the menu font the award screens draw with, which the pause menu's
+; graphics overwrite.
+ApLoadAwardFont:
+	ld hl, wPendingExpStory
+	ld a, [hl+]
+	or [hl]
+	ld hl, wPendingExpExhibition
+	or [hl]
+	inc hl
+	or [hl]
+	ld hl, wPendingExpLinked
+	or [hl]
+	inc hl
+	or [hl]
+	ret z
+	call DisableLCDSafely
+	farcall LoadMenuFontGfx
+	jp EnableLCD

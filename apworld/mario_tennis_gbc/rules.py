@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from rule_builder.rules import And, CanReachLocation, Has, Rule
 
-from .items import DRILL_LESSONS, DRILL_MATCHES, MACHINE, MINIGAMES, WALL
+from .items import DRILL_LESSONS, DRILL_MATCHES, MACHINE, MINIGAME_ITEMS, MINIGAMES, WALL
 from .locations import DREAM_MATCHES, DRILL_TYPES, FINALS, active_location_names
 
 if TYPE_CHECKING:
@@ -28,15 +28,15 @@ def location_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
     if minigames == minigames.option_progressive:
         for game in MINIGAMES:
             for n in (1, 2, 3):
-                rules[f"{game} Level {n}"] = Has(game, count=n)
+                rules[f"{game} Level {n}"] = Has(MINIGAME_ITEMS[game], count=n)
         for game in ("Shooting Star", "Target Shot", "Banana Bunch"):
-            rules[f"{game} Record"] = Has(game, count=3)
+            rules[f"{game} Record"] = Has(MINIGAME_ITEMS[game], count=3)
     elif minigames == minigames.option_vanilla:
         for game in MINIGAMES:
             for n in (1, 2, 3):
-                rules[f"{game} Level {n}"] = Has(game)
+                rules[f"{game} Level {n}"] = Has(MINIGAME_ITEMS[game])
         for game in ("Shooting Star", "Target Shot", "Banana Bunch"):
-            rules[f"{game} Record"] = Has(game)
+            rules[f"{game} Record"] = Has(MINIGAME_ITEMS[game])
     return rules
 
 
