@@ -373,6 +373,21 @@ def messages(g, c):
     assert g.message() is None
 
 
+@test
+def messages_hidden(g, c):
+    g.wram("wCurrentMinigameStoryMatch", 0, 1)
+    g.call("SetRewardGameFlag")
+    assert g.message() is None, "a found item's message showed with item_messages off"
+    assert g.mem[g.addr("wApApplied") + c["ITEM_IRON_RACKET"]] == 1, "Iron Racket not applied to the slot"
+    g.receive([(c["ITEM_SMALL_RACKET"], "Alice")])
+    assert g.message() is None, "a received item's message showed with item_messages off"
+    assert g.mem[g.addr("wApApplied") + c["ITEM_SMALL_RACKET"]] == 1, "Small Racket not applied to the slot"
+
+
+messages_hidden.tokens = lambda c: {"ApOptHideMessages": b"\x01",
+                                    **placements(c, {"LOC_JUNIOR_SINGLES_RANK_4": "ITEM_IRON_RACKET"})}
+
+
 def goal(g):
     return g.sram("sApGoal")[0]
 

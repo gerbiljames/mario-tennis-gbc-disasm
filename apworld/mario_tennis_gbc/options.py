@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from Options import Choice, OptionGroup, PerGameCommonOptions, Toggle
+from Options import Choice, DefaultOnToggle, OptionGroup, PerGameCommonOptions, Toggle
 
 
 class StoryArcs(Choice):
@@ -85,6 +85,14 @@ class DefaultCameraMode(Choice):
     default = option_normal
 
 
+class ItemMessages(DefaultOnToggle):
+    """
+    Shows a message in the overworld for each item you find, send or receive. Turned off, items still arrive as
+    normal, just silently.
+    """
+    display_name = "Item Messages"
+
+
 class NerfSwingContest(Toggle):
     """Lowers the swing contest's thresholds from 100 and 150 swings to 60 and 90."""
     display_name = "Nerf Swing Contest"
@@ -108,6 +116,7 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     skip_intro: SkipIntro
     default_text_speed: DefaultTextSpeed
     default_camera_mode: DefaultCameraMode
+    item_messages: ItemMessages
     nerf_swing_contest: NerfSwingContest
     remote_items: RemoteItems
 
@@ -115,7 +124,7 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames]),
     OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, SkipIntro, DefaultTextSpeed, DefaultCameraMode,
-                             NerfSwingContest, RemoteItems]),
+                             ItemMessages, NerfSwingContest, RemoteItems]),
 ]
 
 # options that shape regions, locations or rules: sent in slot data for Universal Tracker

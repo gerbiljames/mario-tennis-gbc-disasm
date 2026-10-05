@@ -35,3 +35,5 @@ ApOptLocationCount: db 0
 ApOptTextSpeed: db 0
 ; nonzero: a new story file's matches use the PLAYER camera (wCourtViewOption)
 ApOptCameraMode: db 0
+; nonzero: no item messages in the overworld
+ApOptHideMessages: db 0

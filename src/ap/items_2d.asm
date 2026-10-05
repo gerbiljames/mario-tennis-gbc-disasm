@@ -72,6 +72,10 @@ ApCatchUpSlot:
 ; location's message comes first, then the client's received items (only the
 ; last AP_RECENT_ITEMS are kept).
 ApNextMessage:
+	ld a, [ApOptHideMessages]
+	and a
+	ld a, 0
+	ret nz
 	call ApOpenLedger
 	ld hl, sApDoneBits
 	ld e, 0
