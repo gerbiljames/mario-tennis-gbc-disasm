@@ -156,6 +156,7 @@ def Text_30_543 equ $021f
 def Text_30_544 equ $0220
 def Text_30_548 equ $0224
 def Text_30_554 equ $022a
+def Text_31_0 equ $0400
 def Text_31_3 equ $0403
 def Text_31_4 equ $0404
 def Text_31_6 equ $0406
@@ -168,6 +169,8 @@ def Text_31_22 equ $0416
 def Text_31_24 equ $0418
 def Text_31_26 equ $041a
 def Text_31_28 equ $041c
+def Text_31_29 equ $041d
+def Text_31_31 equ $041f
 def Text_31_34 equ $0422
 def Text_31_35 equ $0423
 def Text_31_36 equ $0424

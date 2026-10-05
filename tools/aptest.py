@@ -592,6 +592,42 @@ def varsity_opens_at_two_passes(g, c):
 varsity_opens_at_two_passes.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x02"}
 
 
+STORYLOC_COURTYARD = 0x07
+FLAG_DOUBLES, FLAG_WON_VARSITY_DOUBLES, FLAG_WON_VARSITY_SINGLES = 47, 72, 88
+
+
+def varsity_won_table(g, doubles):
+    """The NpcScripts table once the arc's Varsity match is won."""
+    set_flag(g, FLAG_DOUBLES, doubles)
+    set_flag(g, FLAG_WON_VARSITY_DOUBLES, True)
+    set_flag(g, FLAG_WON_VARSITY_SINGLES, True)
+    p = g.addr("wMapNpcScriptsPtr")
+    g.mem[p] = g.mem[p + 1] = 0
+    g.call("SetupVarsityCourtSceneVariant")
+    return g.mem[p] | g.mem[p + 1] << 8
+
+
+@test
+def varsity_won_no_rematch(g, c):
+    assert varsity_won_table(g, False) == g.addr("ApVarsityWonNpcScriptsA_13"), "Kevin offers his match again"
+    assert varsity_won_table(g, True) == g.addr("ApVarsityWonNpcScriptsB_13"), "Kevin offers the doubles match again"
+
+
+varsity_won_no_rematch.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x02",
+                                           ("ApStartInventory", c["ITEM_DOUBLES_PASS"]): b"\x02"}
+
+
+@test
+def varsity_victory_returns_to_courtyard(g, c):
+    set_flag(g, FLAG_DOUBLES, False)
+    set_flag(g, FLAG_WON_VARSITY_SINGLES, True)
+    assert g.warp(STORYLOC_COURTYARD, 0x0e, frames=6000) == STORYLOC_COURTYARD, \
+        "the victory cutscene did not end in the Courtyard"
+
+
+varsity_victory_returns_to_courtyard.tokens = varsity_opens_at_two_passes.tokens
+
+
 STORYLOC_TOURNAMENT_COURTYARD, STORYLOC_TOURNAMENT, STORYLOC_ISLAND_SKY = 0x15, 0x19, 0x1b
 FLAG_REACHED_ISLAND_OPEN_SINGLES, FLAG_ISLAND_OPEN_ROUNDS = 174, (60, 61, 62, 63)
 

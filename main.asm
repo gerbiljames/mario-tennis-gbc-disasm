@@ -255,6 +255,7 @@ INCLUDE "src/story/varsity_courtyard_13.asm"
 INCLUDE "src/story/varsity_tour_13.asm"
 INCLUDE "src/story/varsity_team_13.asm"
 INCLUDE "src/story/team_bracket_13.asm"
+INCLUDE "src/ap/varsity_13.asm"
 
 SECTION "ROM Bank $14", ROMX[$4000], BANK[$14]
 

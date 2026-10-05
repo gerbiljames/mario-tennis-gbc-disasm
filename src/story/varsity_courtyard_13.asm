@@ -424,7 +424,7 @@ SetupVarsityCourtSceneVariant:
 	ret ; $61e0
 .stage1:
 	ap_pass AP_ARC_SINGLES, 3
-	jr z, .stage2 ; $61e4
+	jp z, ApVarsityWonSingles_13
 	ldh a, [hRomBank] ; $61e6
 	ld hl, VarsityCourtActorsC_13 ; $61e8
 	farcall ScriptRespawnLocationActors ; $61eb
@@ -473,7 +473,7 @@ SetupVarsityCourtSceneVariant:
 	ret ; $627d
 .stage4:
 	ap_pass AP_ARC_DOUBLES, 3
-	jr z, .stage5 ; $6281
+	jp z, ApVarsityWonDoubles_13
 	ldh a, [hRomBank] ; $6283
 	ld hl, VarsityCourtActorsD_13 ; $6285
 	farcall ScriptRespawnLocationActors ; $6288

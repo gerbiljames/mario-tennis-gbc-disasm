@@ -348,14 +348,7 @@ SinglesTravelingTeamVictoryCutscene:
 	add $04 ; $7383
 	ld c, a ; $7385
 	farcall RunStorySceneByMode ; $7386
-	ld a, STORYLOC_MAIN_MENU ; $7389
-	ld [wStoryModeCurrentLocation], a ; $738b
-	ld a, $0a ; $738e
-	ld [wStoryModeEntryPoint], a ; $7390
-	ld a, $ff ; $7393
-	ld [wUnusedExitTriggerIdMirror], a ; $7395
-	ld [wStoryModeExitTriggerRequest], a ; $7398
-	ret ; $739b
+	jp ApReturnToCourtyard_13
 SinglesTravelingTeamActors_13:
 	; $739c, 164 bytes (map_actors)
 	map_actor $0000, ActorScript_13_27, 25.0, 31.0, FACE_LEFT, OBJ_KEVIN, ANIM_WALK, $00, SINGLES_TRAVELING_TEAM_KEVIN
@@ -565,14 +558,7 @@ DoublesTravelingTeamVictoryCutscene:
 	call BeginFadeOut ; $78a8
 	call WaitFadeEnd ; $78ab
 	call PlayDoublesTravelingTeamScreenSequence_13 ; $78ae
-	ld a, STORYLOC_MAIN_MENU ; $78b1
-	ld [wStoryModeCurrentLocation], a ; $78b3
-	ld a, $0a ; $78b6
-	ld [wStoryModeEntryPoint], a ; $78b8
-	ld a, $ff ; $78bb
-	ld [wUnusedExitTriggerIdMirror], a ; $78bd
-	ld [wStoryModeExitTriggerRequest], a ; $78c0
-	ret ; $78c3
+	jp ApReturnToCourtyard_13
 PlayDoublesTravelingTeamScreenSequence_13:
 	ld b, $00 ; $78c4
 	ld a, [wStoryModeGenderOfMainCharacter] ; $78c6
