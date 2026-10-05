@@ -74,6 +74,17 @@ class DefaultTextSpeed(Choice):
     default = option_normal
 
 
+class DefaultCameraMode(Choice):
+    """
+    The match camera a new story file starts with: normal, or player (the court turned so you are always on the near
+    side). It can still be changed from the match pause menu.
+    """
+    display_name = "Default Camera Mode"
+    option_normal = 0
+    option_player = 1
+    default = option_normal
+
+
 class NerfSwingContest(Toggle):
     """Lowers the swing contest's thresholds from 100 and 150 swings to 60 and 90."""
     display_name = "Nerf Swing Contest"
@@ -96,14 +107,15 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     story_match_games: StoryMatchGames
     skip_intro: SkipIntro
     default_text_speed: DefaultTextSpeed
+    default_camera_mode: DefaultCameraMode
     nerf_swing_contest: NerfSwingContest
     remote_items: RemoteItems
 
 
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames]),
-    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, SkipIntro, DefaultTextSpeed, NerfSwingContest,
-                             RemoteItems]),
+    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, SkipIntro, DefaultTextSpeed, DefaultCameraMode,
+                             NerfSwingContest, RemoteItems]),
 ]
 
 # options that shape regions, locations or rules: sent in slot data for Universal Tracker

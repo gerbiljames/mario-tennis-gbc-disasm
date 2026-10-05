@@ -545,6 +545,25 @@ def boot_without_ledger(rom, sym, save):
         g.close()
 
 
+@test
+def default_camera_mode(g, c):
+    g.call("EraseStorySlotSaveData")
+    g.call("TestStorySlotFlagB")
+    g.tick(30)
+    assert g.result["A"] == 1, "a new file did not start with the PLAYER camera"
+
+
+default_camera_mode.tokens = lambda c: {"ApOptCameraMode": b"\x01"}
+
+
+@test
+def default_camera_mode_vanilla(g, c):
+    g.call("EraseStorySlotSaveData")
+    g.call("TestStorySlotFlagB")
+    g.tick(30)
+    assert g.result["A"] == 0
+
+
 def names(c, loc, item, player):
     off = c[loc] * 50
     return {("ApLocationNames", off): item.encode() + b"\0", ("ApLocationNames", off + 25): player.encode() + b"\0"}

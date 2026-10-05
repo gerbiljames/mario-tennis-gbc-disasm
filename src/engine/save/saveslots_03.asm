@@ -61,6 +61,11 @@ EraseStorySlotSaveData:
 	farcall ClearSaveFlag ; $4e83
 	pop de ; $4e86
 .ok:
+	ld a, [ApOptCameraMode]
+	and a
+	jr z, .cameraNormal
+	farcall SetStorySlotFlagB
+.cameraNormal:
 	xor a ; $4e87
 	jr .done ; $4e88
 .badSlot:
