@@ -717,35 +717,64 @@ def front_gate_island_open_only(g, c):
 front_gate_island_open_only.tokens = island_open_by_the_front_gate.tokens
 
 
-STORYLOC_ACADEMY_WING = 0x06
-FLAG_WON_ISLAND_OPEN_SINGLES_FINAL, FLAG_STORY_COMPLETE_SINGLES, FLAG_REACHED_MARIO_WORLD_SINGLES = 60, 176, 178
+STORYLOC_MAIN_MENU, STORYLOC_ACADEMY_WING = 0x00, 0x06
+# per arc: Senior rank 1, Island Open reached, the final, story complete, castle reached
+ARC_FLAGS = {False: (87, 174, 60, 176, 178), True: (70, 175, 53, 177, 179)}
 
 
-def after_the_principal(g):
-    """Play the principal's congratulations after a singles Island Open win
-    -> (where the player ends up, whether the arc is marked complete)."""
-    set_flag(g, FLAG_DOUBLES, False)
-    set_flag(g, FLAG_WON_ISLAND_OPEN_SINGLES_FINAL, True)
-    set_flag(g, FLAG_STORY_COMPLETE_SINGLES, False)
-    set_flag(g, FLAG_REACHED_MARIO_WORLD_SINGLES, False)
-    where = g.warp(STORYLOC_ACADEMY_WING, 0x0f, frames=6000)
-    flags = g.addr("wGameFlags")
-    done = bool(g.mem[flags + FLAG_STORY_COMPLETE_SINGLES // 8] & (0x80 >> FLAG_STORY_COMPLETE_SINGLES % 8))
-    return where, done
+def after_the_principal(g, doubles):
+    """Play the principal's congratulations after an Island Open win, pressing
+    A through its dialogue -> the locations the game passes through, until it
+    settles in a story location or breaks to the main menu."""
+    senior, reached, final, complete, castle = ARC_FLAGS[doubles]
+    set_flag(g, FLAG_DOUBLES, doubles)
+    for n in (senior, reached, final):
+        set_flag(g, n, True)
+    for n in (complete, castle):
+        set_flag(g, n, False)
+    g.wram("wStoryModeCurrentLocation", STORYLOC_ACADEMY_WING)
+    g.wram("wStoryModeEntryPoint", 0x0f)
+    g.wram("wStoryModeExitTriggerRequest", 0xff)
+    seen, start = [STORYLOC_ACADEMY_WING], g.idle
+    for i in range(6000):
+        g.tick()
+        where = g.mem[g.addr("wStoryModeCurrentLocation")]
+        if where != seen[-1]:
+            seen.append(where)
+        if where == STORYLOC_MAIN_MENU:
+            return seen
+        if g.idle > start + 30:
+            return seen
+        if i % 90 == 89:
+            g.press("a")
+    raise AssertionError(f"the ending never settled: {seen}")
+
+
+def arc_complete(g, doubles):
+    n = ARC_FLAGS[doubles][3]
+    return bool(g.mem[g.addr("wGameFlags") + n // 8] & (0x80 >> n % 8))
 
 
 @test
 def no_castle_flight_while_locked(g, c):
-    assert after_the_principal(g) == (STORYLOC_ACADEMY_WING, True), "the ceremony still flew to the castle"
+    for doubles in (False, True):
+        seen = after_the_principal(g, doubles)
+        assert seen == [STORYLOC_ACADEMY_WING], f"the ceremony went on to {seen}"
+        assert arc_complete(g, doubles), "the arc was not marked complete"
+        g.call("GetStoryContinueDestination")
+        assert g.result["A"] == 0x02, f"Continue goes to {g.result['A']:#x}, not the dorm"
 
 
-no_castle_flight_while_locked.tokens = island_open_by_the_front_gate.tokens
+no_castle_flight_while_locked.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x03",
+                                                  ("ApStartInventory", c["ITEM_DOUBLES_PASS"]): b"\x03"}
 
 
 @test
 def castle_flight_once_open(g, c):
-    where, _ = after_the_principal(g)
-    assert where != STORYLOC_ACADEMY_WING, "the ceremony stayed at the Academy with the castle open"
+    seen = after_the_principal(g, False)
+    assert seen == [STORYLOC_ACADEMY_WING, STORYLOC_ACADEMY_ENTRANCE, STORYLOC_ISLAND_SKY, STORYLOC_MAIN_MENU], \
+        f"the ending went {seen}, not out the gate and on the plane"
+    assert arc_complete(g, False), "the arc was not marked complete"
 
 
 castle_flight_once_open.tokens = front_gate_asks_with_both_open.tokens
