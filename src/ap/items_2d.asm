@@ -28,16 +28,9 @@ ApCatchUpSlot:
 	ld a, c
 	add FLAG_HAVE_LARGE_RACKET - ITEM_LARGE_RACKET
 	ld e, a
-	and 7
-	swap a
-	add a
-	ld d, e
-	srl d
-	srl d
-	srl d
-	ld e, a
+	ld d, 0
 	push bc
-	call SetGameFlag
+	call SetGameFlagByNumber
 	pop bc
 .nextEquipment:
 	inc c

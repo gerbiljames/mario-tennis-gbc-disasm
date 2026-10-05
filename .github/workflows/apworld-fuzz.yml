@@ -11,7 +11,7 @@ jobs:
   fuzz:
     runs-on: ubuntu-latest
     steps:
-      - uses: Eijebong/ap-actions/fuzz@main
+      - uses: Eijebong/ap-actions/fuzz@7f1641d73c59edfbcbb564c9c0f24fd59033cbd8 # main as of 2026-10-05
         with:
           apworld-path: apworld/mario_tennis_gbc
           ap-version: '0.6.8'

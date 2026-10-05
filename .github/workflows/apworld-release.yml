@@ -6,7 +6,9 @@ on:
 
 jobs:
   release:
-    uses: Eijebong/ap-actions/.github/workflows/release-apworld.yml@main
+    permissions:
+      contents: write
+    uses: Eijebong/ap-actions/.github/workflows/release-apworld.yml@7f1641d73c59edfbcbb564c9c0f24fd59033cbd8 # main as of 2026-10-05
     with:
       apworld-path: apworld/mario_tennis_gbc
       ap-version: '0.6.8'
