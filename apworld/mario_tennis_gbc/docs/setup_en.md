@@ -2,7 +2,7 @@
 
 ## Required Software
 
-- [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) 0.6.8 or later
+- [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) 0.6.7 or later
 - [BizHawk](https://tasvideos.org/BizHawk/ReleaseHistory) 2.9 or later
 - Your own Mario Tennis (USA or Europe) Game Boy Color ROM. The Archipelago community cannot provide this.
 
