@@ -22,8 +22,10 @@ Winning the Island Open final, winning the Dream Match, or checking every locati
 
 ## Received items
 
-Items are applied the next time you are walking around in a story file, with a short message. Items found in your
-own world are given at once, offline too.
+Passes, drills and mini-games count as soon as they arrive, in story mode or not: a mini-game received from the main
+menu opens on its grid right away (re-enter the grid if it is already on screen). Equipment is applied the next time
+you are walking around in a story file. That is also when the short item messages show, unless `item_messages` is
+off. Items found in your own world are given at once, offline too.
 
 EXP Bundles are saved up on the story file. Open Char/Partner Data from the pause menu to receive them and level up
 straight away; any still saved up are awarded the next time you continue that file.
