@@ -321,7 +321,14 @@ JoySpriteFrame55:
 	INCBIN "data/sprites/JoySpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 JoySpriteFramesUnused:
-	INCBIN "data/sprites/JoySpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/JoySpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/JoySpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/JoySpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/JoySpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/JoySpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/JoySpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/JoySpriteFrame06.bin" ; $7bf0, 240 bytes
 JoySpriteOam:
 	INCBIN "data/sprites/JoySpriteOam.bin" ; $7ce0, 580 bytes
 JoySpriteAnims:

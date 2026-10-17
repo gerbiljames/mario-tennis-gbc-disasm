@@ -321,7 +321,14 @@ HarrySpriteFrame55:
 	INCBIN "data/sprites/HarrySpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 HarrySpriteFramesUnused:
-	INCBIN "data/sprites/HarrySpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/HarrySpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/HarrySpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/HarrySpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/HarrySpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/HarrySpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/HarrySpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/HarrySpriteFrame06.bin" ; $7bf0, 240 bytes
 HarrySpriteOam:
 	INCBIN "data/sprites/HarrySpriteOam.bin" ; $7ce0, 580 bytes
 HarrySpriteAnims:

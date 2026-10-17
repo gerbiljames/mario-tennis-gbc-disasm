@@ -321,7 +321,14 @@ AlexSpriteFrame55:
 	INCBIN "data/sprites/AlexSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 AlexSpriteFramesUnused:
-	INCBIN "data/sprites/AlexSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/AlexSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/AlexSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/AlexSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/AlexSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/AlexSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/AlexSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/AlexSpriteFrame06.bin" ; $7bf0, 240 bytes
 AlexSpriteOam:
 	INCBIN "data/sprites/AlexSpriteOam.bin" ; $7ce0, 580 bytes
 AlexSpriteAnims:

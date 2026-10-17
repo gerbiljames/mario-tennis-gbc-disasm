@@ -321,7 +321,14 @@ BobSpriteFrame55:
 	INCBIN "data/sprites/BobSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 BobSpriteFramesUnused:
-	INCBIN "data/sprites/BobSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/BobSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/BobSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/BobSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/BobSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/BobSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/BobSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/BobSpriteFrame06.bin" ; $7bf0, 240 bytes
 BobSpriteOam:
 	INCBIN "data/sprites/BobSpriteOam.bin" ; $7ce0, 580 bytes
 BobSpriteAnims:

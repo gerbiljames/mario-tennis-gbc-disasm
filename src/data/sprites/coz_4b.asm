@@ -321,7 +321,14 @@ BCozSpriteFrame55:
 	INCBIN "data/sprites/BCozSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 BCozSpriteFramesUnused:
-	INCBIN "data/sprites/BCozSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/BCozSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/BCozSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/BCozSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/BCozSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/BCozSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/BCozSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/BCozSpriteFrame06.bin" ; $7bf0, 240 bytes
 BCozSpriteOam:
 	INCBIN "data/sprites/BCozSpriteOam.bin" ; $7ce0, 580 bytes
 BCozSpriteAnims:

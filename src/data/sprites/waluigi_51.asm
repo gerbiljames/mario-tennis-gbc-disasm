@@ -321,7 +321,14 @@ WaluigiSpriteFrame55:
 	INCBIN "data/sprites/WaluigiSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 WaluigiSpriteFramesUnused:
-	INCBIN "data/sprites/WaluigiSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/WaluigiSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/WaluigiSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/WaluigiSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/WaluigiSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/WaluigiSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/WaluigiSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/WaluigiSpriteFrame06.bin" ; $7bf0, 240 bytes
 WaluigiSpriteOam:
 	INCBIN "data/sprites/WaluigiSpriteOam.bin" ; $7ce0, 580 bytes
 WaluigiSpriteAnims:

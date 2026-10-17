@@ -1273,7 +1273,6 @@ sprites/AlexSpriteFrame52.bin 103290 f0 gfx:3x4+3
 sprites/AlexSpriteFrame53.bin 103380 f0 gfx:3x4+3
 sprites/AlexSpriteFrame54.bin 103470 f0 gfx:3x4+3
 sprites/AlexSpriteFrame55.bin 103560 f0 gfx:3x4+3
-sprites/AlexSpriteFramesUnused.bin 103650 690 gfx:3x4+3
 sprites/AlexSpriteOam.bin 103ce0 244
 sprites/NinaSpriteFrame00.bin 104130 f0 gfx:3x4+3
 sprites/NinaSpriteFrame01.bin 104220 f0 gfx:3x4+3
@@ -1331,7 +1330,6 @@ sprites/NinaSpriteFrame52.bin 107290 f0 gfx:3x4+3
 sprites/NinaSpriteFrame53.bin 107380 f0 gfx:3x4+3
 sprites/NinaSpriteFrame54.bin 107470 f0 gfx:3x4+3
 sprites/NinaSpriteFrame55.bin 107560 f0 gfx:3x4+3
-sprites/NinaSpriteFramesUnused.bin 107650 690 gfx:3x4+3
 sprites/NinaSpriteOam.bin 107ce0 244
 sprites/KateSpriteFrame00.bin 108130 f0 gfx:3x4+3
 sprites/KateSpriteFrame01.bin 108220 f0 gfx:3x4+3
@@ -1389,7 +1387,6 @@ sprites/KateSpriteFrame52.bin 10b290 f0 gfx:3x4+3
 sprites/KateSpriteFrame53.bin 10b380 f0 gfx:3x4+3
 sprites/KateSpriteFrame54.bin 10b470 f0 gfx:3x4+3
 sprites/KateSpriteFrame55.bin 10b560 f0 gfx:3x4+3
-sprites/KateSpriteFramesUnused.bin 10b650 690 gfx:3x4+3
 sprites/KateSpriteOam.bin 10bce0 244
 sprites/HarrySpriteFrame00.bin 10c130 f0 gfx:3x4+3
 sprites/HarrySpriteFrame01.bin 10c220 f0 gfx:3x4+3
@@ -1447,7 +1444,6 @@ sprites/HarrySpriteFrame52.bin 10f290 f0 gfx:3x4+3
 sprites/HarrySpriteFrame53.bin 10f380 f0 gfx:3x4+3
 sprites/HarrySpriteFrame54.bin 10f470 f0 gfx:3x4+3
 sprites/HarrySpriteFrame55.bin 10f560 f0 gfx:3x4+3
-sprites/HarrySpriteFramesUnused.bin 10f650 690 gfx:3x4+3
 sprites/HarrySpriteOam.bin 10fce0 244
 sprites/EmilySpriteFrame00.bin 110130 f0 gfx:3x4+3
 sprites/EmilySpriteFrame01.bin 110220 f0 gfx:3x4+3
@@ -1505,7 +1501,6 @@ sprites/EmilySpriteFrame52.bin 113290 f0 gfx:3x4+3
 sprites/EmilySpriteFrame53.bin 113380 f0 gfx:3x4+3
 sprites/EmilySpriteFrame54.bin 113470 f0 gfx:3x4+3
 sprites/EmilySpriteFrame55.bin 113560 f0 gfx:3x4+3
-sprites/EmilySpriteFramesUnused.bin 113650 690 gfx:3x4+3
 sprites/EmilySpriteOam.bin 113ce0 244
 sprites/MarkSpriteFrame00.bin 114130 f0 gfx:3x4+3
 sprites/MarkSpriteFrame01.bin 114220 f0 gfx:3x4+3
@@ -1563,7 +1558,6 @@ sprites/MarkSpriteFrame52.bin 117290 f0 gfx:3x4+3
 sprites/MarkSpriteFrame53.bin 117380 f0 gfx:3x4+3
 sprites/MarkSpriteFrame54.bin 117470 f0 gfx:3x4+3
 sprites/MarkSpriteFrame55.bin 117560 f0 gfx:3x4+3
-sprites/MarkSpriteFramesUnused.bin 117650 690 gfx:3x4+3
 sprites/MarkSpriteOam.bin 117ce0 244
 sprites/SammiSpriteFrame00.bin 118130 f0 gfx:3x4+3
 sprites/SammiSpriteFrame01.bin 118220 f0 gfx:3x4+3
@@ -1621,7 +1615,6 @@ sprites/SammiSpriteFrame52.bin 11b290 f0 gfx:3x4+3
 sprites/SammiSpriteFrame53.bin 11b380 f0 gfx:3x4+3
 sprites/SammiSpriteFrame54.bin 11b470 f0 gfx:3x4+3
 sprites/SammiSpriteFrame55.bin 11b560 f0 gfx:3x4+3
-sprites/SammiSpriteFramesUnused.bin 11b650 690 gfx:3x4+3
 sprites/SammiSpriteOam.bin 11bce0 244
 sprites/SeanSpriteFrame00.bin 11c130 f0 gfx:3x4+3
 sprites/SeanSpriteFrame01.bin 11c220 f0 gfx:3x4+3
@@ -1679,7 +1672,6 @@ sprites/SeanSpriteFrame52.bin 11f290 f0 gfx:3x4+3
 sprites/SeanSpriteFrame53.bin 11f380 f0 gfx:3x4+3
 sprites/SeanSpriteFrame54.bin 11f470 f0 gfx:3x4+3
 sprites/SeanSpriteFrame55.bin 11f560 f0 gfx:3x4+3
-sprites/SeanSpriteFramesUnused.bin 11f650 690 gfx:3x4+3
 sprites/SeanSpriteOam.bin 11fce0 244
 sprites/SpikeSpriteFrame00.bin 120130 f0 gfx:3x4+3
 sprites/SpikeSpriteFrame01.bin 120220 f0 gfx:3x4+3
@@ -1737,7 +1729,6 @@ sprites/SpikeSpriteFrame52.bin 123290 f0 gfx:3x4+3
 sprites/SpikeSpriteFrame53.bin 123380 f0 gfx:3x4+3
 sprites/SpikeSpriteFrame54.bin 123470 f0 gfx:3x4+3
 sprites/SpikeSpriteFrame55.bin 123560 f0 gfx:3x4+3
-sprites/SpikeSpriteFramesUnused.bin 123650 690 gfx:3x4+3
 sprites/SpikeSpriteOam.bin 123ce0 244
 sprites/EldenSpriteFrame00.bin 124130 f0 gfx:3x4+3
 sprites/EldenSpriteFrame01.bin 124220 f0 gfx:3x4+3
@@ -1795,7 +1786,6 @@ sprites/EldenSpriteFrame52.bin 127290 f0 gfx:3x4+3
 sprites/EldenSpriteFrame53.bin 127380 f0 gfx:3x4+3
 sprites/EldenSpriteFrame54.bin 127470 f0 gfx:3x4+3
 sprites/EldenSpriteFrame55.bin 127560 f0 gfx:3x4+3
-sprites/EldenSpriteFramesUnused.bin 127650 690 gfx:3x4+3
 sprites/EldenSpriteOam.bin 127ce0 244
 sprites/ACozSpriteFrame00.bin 128130 f0 gfx:3x4+3
 sprites/ACozSpriteFrame01.bin 128220 f0 gfx:3x4+3
@@ -1853,7 +1843,6 @@ sprites/ACozSpriteFrame52.bin 12b290 f0 gfx:3x4+3
 sprites/ACozSpriteFrame53.bin 12b380 f0 gfx:3x4+3
 sprites/ACozSpriteFrame54.bin 12b470 f0 gfx:3x4+3
 sprites/ACozSpriteFrame55.bin 12b560 f0 gfx:3x4+3
-sprites/ACozSpriteFramesUnused.bin 12b650 690 gfx:3x4+3
 sprites/ACozSpriteOam.bin 12bce0 244
 sprites/BCozSpriteFrame00.bin 12c130 f0 gfx:3x4+3
 sprites/BCozSpriteFrame01.bin 12c220 f0 gfx:3x4+3
@@ -1911,7 +1900,6 @@ sprites/BCozSpriteFrame52.bin 12f290 f0 gfx:3x4+3
 sprites/BCozSpriteFrame53.bin 12f380 f0 gfx:3x4+3
 sprites/BCozSpriteFrame54.bin 12f470 f0 gfx:3x4+3
 sprites/BCozSpriteFrame55.bin 12f560 f0 gfx:3x4+3
-sprites/BCozSpriteFramesUnused.bin 12f650 690 gfx:3x4+3
 sprites/BCozSpriteOam.bin 12fce0 244
 sprites/AllieSpriteFrame00.bin 130130 f0 gfx:3x4+3
 sprites/AllieSpriteFrame01.bin 130220 f0 gfx:3x4+3
@@ -1969,7 +1957,6 @@ sprites/AllieSpriteFrame52.bin 133290 f0 gfx:3x4+3
 sprites/AllieSpriteFrame53.bin 133380 f0 gfx:3x4+3
 sprites/AllieSpriteFrame54.bin 133470 f0 gfx:3x4+3
 sprites/AllieSpriteFrame55.bin 133560 f0 gfx:3x4+3
-sprites/AllieSpriteFramesUnused.bin 133650 690 gfx:3x4+3
 sprites/AllieSpriteOam.bin 133ce0 244
 sprites/BrianSpriteFrame00.bin 134130 f0 gfx:3x4+3
 sprites/BrianSpriteFrame01.bin 134220 f0 gfx:3x4+3
@@ -2027,7 +2014,6 @@ sprites/BrianSpriteFrame52.bin 137290 f0 gfx:3x4+3
 sprites/BrianSpriteFrame53.bin 137380 f0 gfx:3x4+3
 sprites/BrianSpriteFrame54.bin 137470 f0 gfx:3x4+3
 sprites/BrianSpriteFrame55.bin 137560 f0 gfx:3x4+3
-sprites/BrianSpriteFramesUnused.bin 137650 690 gfx:3x4+3
 sprites/BrianSpriteOam.bin 137ce0 244
 sprites/CurtSpriteFrame00.bin 138130 f0 gfx:3x4+3
 sprites/CurtSpriteFrame01.bin 138220 f0 gfx:3x4+3
@@ -2085,7 +2071,6 @@ sprites/CurtSpriteFrame52.bin 13b290 f0 gfx:3x4+3
 sprites/CurtSpriteFrame53.bin 13b380 f0 gfx:3x4+3
 sprites/CurtSpriteFrame54.bin 13b470 f0 gfx:3x4+3
 sprites/CurtSpriteFrame55.bin 13b560 f0 gfx:3x4+3
-sprites/CurtSpriteFramesUnused.bin 13b650 690 gfx:3x4+3
 sprites/CurtSpriteOam.bin 13bce0 244
 sprites/BobSpriteFrame00.bin 13c130 f0 gfx:3x4+3
 sprites/BobSpriteFrame01.bin 13c220 f0 gfx:3x4+3
@@ -2143,7 +2128,6 @@ sprites/BobSpriteFrame52.bin 13f290 f0 gfx:3x4+3
 sprites/BobSpriteFrame53.bin 13f380 f0 gfx:3x4+3
 sprites/BobSpriteFrame54.bin 13f470 f0 gfx:3x4+3
 sprites/BobSpriteFrame55.bin 13f560 f0 gfx:3x4+3
-sprites/BobSpriteFramesUnused.bin 13f650 690 gfx:3x4+3
 sprites/BobSpriteOam.bin 13fce0 244
 sprites/MarioSpriteFrame00.bin 140130 f0 gfx:3x4+3
 sprites/MarioSpriteFrame01.bin 140220 f0 gfx:3x4+3
@@ -2201,7 +2185,6 @@ sprites/MarioSpriteFrame52.bin 143290 f0 gfx:3x4+3
 sprites/MarioSpriteFrame53.bin 143380 f0 gfx:3x4+3
 sprites/MarioSpriteFrame54.bin 143470 f0 gfx:3x4+3
 sprites/MarioSpriteFrame55.bin 143560 f0 gfx:3x4+3
-sprites/MarioSpriteFramesUnused.bin 143650 690 gfx:3x4+3
 sprites/MarioSpriteOam.bin 143ce0 244
 sprites/WaluigiSpriteFrame00.bin 144130 f0 gfx:3x4+3
 sprites/WaluigiSpriteFrame01.bin 144220 f0 gfx:3x4+3
@@ -2259,7 +2242,6 @@ sprites/WaluigiSpriteFrame52.bin 147290 f0 gfx:3x4+3
 sprites/WaluigiSpriteFrame53.bin 147380 f0 gfx:3x4+3
 sprites/WaluigiSpriteFrame54.bin 147470 f0 gfx:3x4+3
 sprites/WaluigiSpriteFrame55.bin 147560 f0 gfx:3x4+3
-sprites/WaluigiSpriteFramesUnused.bin 147650 690 gfx:3x4+3
 sprites/WaluigiSpriteOam.bin 147ce0 244
 sprites/YoshiSpriteFrame00.bin 148130 f0 gfx:3x4+3
 sprites/YoshiSpriteFrame01.bin 148220 f0 gfx:3x4+3
@@ -2317,7 +2299,6 @@ sprites/YoshiSpriteFrame52.bin 14b290 f0 gfx:3x4+3
 sprites/YoshiSpriteFrame53.bin 14b380 f0 gfx:3x4+3
 sprites/YoshiSpriteFrame54.bin 14b470 f0 gfx:3x4+3
 sprites/YoshiSpriteFrame55.bin 14b560 f0 gfx:3x4+3
-sprites/YoshiSpriteFramesUnused.bin 14b650 690 gfx:3x4+3
 sprites/YoshiSpriteOam.bin 14bce0 244
 sprites/BowserSpriteFrame00.bin 14c130 f0 gfx:3x4+3
 sprites/BowserSpriteFrame01.bin 14c220 f0 gfx:3x4+3
@@ -2375,7 +2356,6 @@ sprites/BowserSpriteFrame52.bin 14f290 f0 gfx:3x4+3
 sprites/BowserSpriteFrame53.bin 14f380 f0 gfx:3x4+3
 sprites/BowserSpriteFrame54.bin 14f470 f0 gfx:3x4+3
 sprites/BowserSpriteFrame55.bin 14f560 f0 gfx:3x4+3
-sprites/BowserSpriteFramesUnused.bin 14f650 690 gfx:3x4+3
 sprites/BowserSpriteOam.bin 14fce0 244
 sprites/PeachSpriteFrame00.bin 150130 f0 gfx:3x4+3
 sprites/PeachSpriteFrame01.bin 150220 f0 gfx:3x4+3
@@ -2433,7 +2413,6 @@ sprites/PeachSpriteFrame52.bin 153290 f0 gfx:3x4+3
 sprites/PeachSpriteFrame53.bin 153380 f0 gfx:3x4+3
 sprites/PeachSpriteFrame54.bin 153470 f0 gfx:3x4+3
 sprites/PeachSpriteFrame55.bin 153560 f0 gfx:3x4+3
-sprites/PeachSpriteFramesUnused.bin 153650 690 gfx:3x4+3
 sprites/PeachSpriteOam.bin 153ce0 244
 sprites/WarioSpriteFrame00.bin 154130 f0 gfx:3x4+3
 sprites/WarioSpriteFrame01.bin 154220 f0 gfx:3x4+3
@@ -2491,7 +2470,6 @@ sprites/WarioSpriteFrame52.bin 157290 f0 gfx:3x4+3
 sprites/WarioSpriteFrame53.bin 157380 f0 gfx:3x4+3
 sprites/WarioSpriteFrame54.bin 157470 f0 gfx:3x4+3
 sprites/WarioSpriteFrame55.bin 157560 f0 gfx:3x4+3
-sprites/WarioSpriteFramesUnused.bin 157650 690 gfx:3x4+3
 sprites/WarioSpriteOam.bin 157ce0 244
 sprites/JoySpriteFrame00.bin 158130 f0 gfx:3x4+3
 sprites/JoySpriteFrame01.bin 158220 f0 gfx:3x4+3
@@ -2549,7 +2527,6 @@ sprites/JoySpriteFrame52.bin 15b290 f0 gfx:3x4+3
 sprites/JoySpriteFrame53.bin 15b380 f0 gfx:3x4+3
 sprites/JoySpriteFrame54.bin 15b470 f0 gfx:3x4+3
 sprites/JoySpriteFrame55.bin 15b560 f0 gfx:3x4+3
-sprites/JoySpriteFramesUnused.bin 15b650 690 gfx:3x4+3
 sprites/JoySpriteOam.bin 15bce0 244
 sprites/PamSpriteFrame00.bin 15c130 f0 gfx:3x4+3
 sprites/PamSpriteFrame01.bin 15c220 f0 gfx:3x4+3
@@ -2607,7 +2584,6 @@ sprites/PamSpriteFrame52.bin 15f290 f0 gfx:3x4+3
 sprites/PamSpriteFrame53.bin 15f380 f0 gfx:3x4+3
 sprites/PamSpriteFrame54.bin 15f470 f0 gfx:3x4+3
 sprites/PamSpriteFrame55.bin 15f560 f0 gfx:3x4+3
-sprites/PamSpriteFramesUnused.bin 15f650 690 gfx:3x4+3
 sprites/PamSpriteOam.bin 15fce0 244
 sprites/BethSpriteFrame00.bin 160130 f0 gfx:3x4+3
 sprites/BethSpriteFrame01.bin 160220 f0 gfx:3x4+3
@@ -2665,7 +2641,6 @@ sprites/BethSpriteFrame52.bin 163290 f0 gfx:3x4+3
 sprites/BethSpriteFrame53.bin 163380 f0 gfx:3x4+3
 sprites/BethSpriteFrame54.bin 163470 f0 gfx:3x4+3
 sprites/BethSpriteFrame55.bin 163560 f0 gfx:3x4+3
-sprites/BethSpriteFramesUnused.bin 163650 690 gfx:3x4+3
 sprites/BethSpriteOam.bin 163ce0 244
 sprites/FaySpriteFrame00.bin 164130 f0 gfx:3x4+3
 sprites/FaySpriteFrame01.bin 164220 f0 gfx:3x4+3
@@ -2723,7 +2698,6 @@ sprites/FaySpriteFrame52.bin 167290 f0 gfx:3x4+3
 sprites/FaySpriteFrame53.bin 167380 f0 gfx:3x4+3
 sprites/FaySpriteFrame54.bin 167470 f0 gfx:3x4+3
 sprites/FaySpriteFrame55.bin 167560 f0 gfx:3x4+3
-sprites/FaySpriteFramesUnused.bin 167650 690 gfx:3x4+3
 sprites/FaySpriteOam.bin 167ce0 244
 sprites/BallMachineSpriteFrame00.bin 168130 f0 gfx:3x4+3
 sprites/BallMachineSpriteFrame01.bin 168220 f0 gfx:3x4+3
@@ -2781,7 +2755,6 @@ sprites/BallMachineSpriteFrame52.bin 16b290 f0 gfx:3x4+3
 sprites/BallMachineSpriteFrame53.bin 16b380 f0 gfx:3x4+3
 sprites/BallMachineSpriteFrame54.bin 16b470 f0 gfx:3x4+3
 sprites/BallMachineSpriteFrame55.bin 16b560 f0 gfx:3x4+3
-sprites/BallMachineSpriteFramesUnused.bin 16b650 690 gfx:3x4+3
 sprites/BallMachineSpriteOam.bin 16bce0 244
 sprites/LuigiSpriteFrame00.bin 16c130 f0 gfx:3x4+3
 sprites/LuigiSpriteFrame01.bin 16c220 f0 gfx:3x4+3
@@ -2839,7 +2812,6 @@ sprites/LuigiSpriteFrame52.bin 16f290 f0 gfx:3x4+3
 sprites/LuigiSpriteFrame53.bin 16f380 f0 gfx:3x4+3
 sprites/LuigiSpriteFrame54.bin 16f470 f0 gfx:3x4+3
 sprites/LuigiSpriteFrame55.bin 16f560 f0 gfx:3x4+3
-sprites/LuigiSpriteFramesUnused.bin 16f650 690 gfx:3x4+3
 sprites/LuigiSpriteOam.bin 16fce0 244
 sprites/DKSpriteFrame00.bin 170130 f0 gfx:3x4+3
 sprites/DKSpriteFrame01.bin 170220 f0 gfx:3x4+3
@@ -2897,7 +2869,6 @@ sprites/DKSpriteFrame52.bin 173290 f0 gfx:3x4+3
 sprites/DKSpriteFrame53.bin 173380 f0 gfx:3x4+3
 sprites/DKSpriteFrame54.bin 173470 f0 gfx:3x4+3
 sprites/DKSpriteFrame55.bin 173560 f0 gfx:3x4+3
-sprites/DKSpriteFramesUnused.bin 173650 690 gfx:3x4+3
 sprites/DKSpriteOam.bin 173ce0 244
 sprites/BabyMarioSpriteFrame00.bin 174130 f0 gfx:3x4+3
 sprites/BabyMarioSpriteFrame01.bin 174220 f0 gfx:3x4+3
@@ -2955,7 +2926,6 @@ sprites/BabyMarioSpriteFrame52.bin 177290 f0 gfx:3x4+3
 sprites/BabyMarioSpriteFrame53.bin 177380 f0 gfx:3x4+3
 sprites/BabyMarioSpriteFrame54.bin 177470 f0 gfx:3x4+3
 sprites/BabyMarioSpriteFrame55.bin 177560 f0 gfx:3x4+3
-sprites/BabyMarioSpriteFramesUnused.bin 177650 690 gfx:3x4+3
 sprites/BabyMarioSpriteOam.bin 177ce0 244
 text/TextStrings_5e.asm 17828a 2c05 text_pool
 scenes/MinigameCourtPalettes.asm 17c020 40 palettes
