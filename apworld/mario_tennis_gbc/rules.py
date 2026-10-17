@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from rule_builder.rules import And, CanReachLocation, Has, HasAny, HasFromList, Or, Rule
 
 from .items import DRILL_LESSONS, DRILL_MATCHES, DROP_SHOT, LOB, MACHINE, MINIGAME_ITEMS, MINIGAMES, SERVES, \
-    SHOT_COPIES, STROKES, WALL
+    SHOT_COPIES, STROKES, UT_GLITCH, WALL
 from .locations import DREAM_MATCHES, DRILL_TYPES, FINALS, active_location_names, story_regions
 
 if TYPE_CHECKING:
@@ -67,10 +67,12 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
     if world.options.minigames != world.options.minigames.option_excluded:
         for name in ("Target Shot Level 2", "Target Shot Level 3", "Target Shot Record"):
             rules[name] = And(Has(LOB), Has(DROP_SHOT))
+    # a story match can be won with fewer shots, just not reliably: out of logic, and Universal Tracker says so
     for region, names in story_regions(world).items():
         tier = next((t for t in TIER_SHOTS if region.startswith(t)), None)
         if tier:
-            rules.update({name: HasFromList(*SHOT_COPIES, count=TIER_SHOTS[tier]) for name in names})
+            rule = Or(HasFromList(*SHOT_COPIES, count=TIER_SHOTS[tier]), Has(UT_GLITCH))
+            rules.update({name: rule for name in names})
     return rules
 
 

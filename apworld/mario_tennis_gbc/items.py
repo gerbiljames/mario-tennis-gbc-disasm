@@ -30,6 +30,8 @@ MINIGAME_ITEMS = {game: f"Progressive {game}" for game in MINIGAMES}
 RACKETS = ["Large Racket", "Small Racket", "Iron Racket", "Silver Racket", "Gold Racket", "Drive Racket"]
 SHOES = ["Iron Shoes", "Light Shoes"]
 FILLER = "EXP Bundle"
+# Universal Tracker collects this to show what is possible but out of logic; it is never in the pool
+UT_GLITCH = "ut_glitch"
 STROKES = ["Progressive Topspin", "Progressive Slice", "Progressive Flat Shot"]
 LOB, DROP_SHOT = "Lob", "Drop Shot"
 SERVES = ["Progressive Topspin Serve", "Progressive Slice Serve", "Progressive Flat Serve"]
@@ -67,6 +69,8 @@ def classification(name: str) -> ItemClassification:
 
 
 def create_item(world: MarioTennisGBCWorld, name: str) -> MarioTennisGBCItem:
+    if name == UT_GLITCH:
+        return MarioTennisGBCItem(name, ItemClassification.progression, None, world.player)
     return MarioTennisGBCItem(name, classification(name), ITEM_NAME_TO_ID[name], world.player)
 
 

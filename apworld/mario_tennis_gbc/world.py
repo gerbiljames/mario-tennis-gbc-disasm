@@ -39,6 +39,7 @@ class MarioTennisGBCWorld(World):
     location_name_groups = locations.LOCATION_NAME_GROUPS
     origin_region_name = regions.ORIGIN
     ut_can_gen_without_yaml = True
+    glitches_item_name = items.UT_GLITCH
 
     auth: bytes
     starting_shots: list[str]
