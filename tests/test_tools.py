@@ -75,8 +75,7 @@ class Built(unittest.TestCase):
 
     def test_eventtest_locations(self):
         import eventtest
-        from runtime_audit import targets
-        self.assertEqual(len(targets(eventtest.symbols(SYM))[5]), 42)
+        self.assertEqual(len(eventtest.locations()), 42)
         self.assertGreater(len(eventtest.handler_rows()), 200)
 
     def test_linktest_serial_sites(self):

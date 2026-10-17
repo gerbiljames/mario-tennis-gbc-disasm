@@ -263,9 +263,7 @@ nothing.
 - `tools/steer.py` -- runs a routine no session entered by replaying a session and forcing each branch and table jump on the way down to it.
 - `tools/linktest.py` -- two PyBoy games joined by a link cable made of hooks on the games' serial code, through to a link match; `--keys` (random presses), `--unplug-after` (pull the cable), `--steer`, `--coverage`.
 - `tools/actorslots.py` -- names the `map_actor` slot a story script addresses by following control flow (`--apply`); `--runtime` (`make slot-audit`) checks the names in PyBoy.
-- `tools/runtime_audit.py` -- checks `Unused` names, actor-slot names and NpcScripts ids in headless play.
 - `tools/ramaudit.py` -- `free` poison-tests the free-RAM list over played flows; `writer` names the routine that first writes a byte.
-- `tools/playtest.py` -- plays two ROMs side by side and reports where their screens diverge.
 
 Each tool's docstring has its full usage.
 

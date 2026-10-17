@@ -376,7 +376,7 @@ def main():
     cost = {"target": 0, "story": 1, "free": 2}
     scene = "\n".join(bank_lines(holders()[0x0a])[0])
     trees = re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)
-    locs = E.targets(E.symbols(a.sym))[5]
+    locs = E.locations()
     handler_k = {row[7]: k for k, row in enumerate(E.handlers())}
     code = Code(E.symbols(a.sym))
     jobs = []
