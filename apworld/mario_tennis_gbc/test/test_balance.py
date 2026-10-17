@@ -77,13 +77,14 @@ class TestShotItems(MarioTennisGBCTestBase):
         self.collect_by_name("Drop Shot")
         self.assertTrue(self.can_reach_location("Senior Singles Rank 4"))
 
-    def test_story_tiers_glitched_for_universal_tracker(self) -> None:
+    def test_possible_without_shots_glitched_for_universal_tracker(self) -> None:
         self.collect_by_name("Progressive Singles Pass")
         self.assertFalse(self.can_reach_location("Senior Singles Rank 4"))
         self.collect(self.world.create_item(self.world.glitches_item_name))
         self.assertTrue(self.can_reach_location("Senior Singles Rank 4"))
-        self.collect_by_name("Progressive Stroke Lesson")
-        self.assertFalse(self.can_reach_location("Stroke Lesson 2"), "a drill's shot rule went glitched")
+        self.collect_by_name(["Progressive Stroke Lesson", "Progressive Net Game Lesson"])
+        self.assertFalse(self.can_reach_location("Stroke Lesson 2"), "a strict shot rule went glitched")
+        self.assertTrue(self.can_reach_location("Net Game Lesson 3"))
 
 
 class TestShotItemsOff(MarioTennisGBCTestBase):
