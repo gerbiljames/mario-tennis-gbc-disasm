@@ -77,6 +77,19 @@ class TileImages(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.gfx.parse_layout("3x")
 
+    def test_logo_round_trip(self):
+        rng = random.Random(5)
+        data = bytes(rng.getrandbits(8) for _ in range(self.gfx.LOGO_SIZE))
+        img = self.gfx.logo_to_image(data)
+        self.assertEqual(img.size, (48, 8))
+        self.assertEqual(self.gfx.image_to_logo(img), data)
+        # byte 0 is the top two rows of the first 4x4 cell, byte 24 the
+        # first cell of the bottom half
+        img = self.gfx.logo_to_image(b"\xf0" + bytes(23) + b"\x0f" + bytes(23))
+        px = img.load()
+        self.assertEqual([px[x, 0] for x in range(5)], [3, 3, 3, 3, 0])
+        self.assertEqual([px[0, y] for y in (1, 4, 5)], [0, 0, 3])
+
     def test_tilemap_grid_round_trip(self):
         import tilemap
         rng = random.Random(7)
