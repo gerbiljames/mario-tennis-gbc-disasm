@@ -1,12 +1,7 @@
-; Archipelago: the three serves' ball paths, with wBallHeight held below the
-; nice-serve band for the lookup and the flag when the serve's item lacks
-; its second copy (ApClampServeHeight), then put back.
+; Archipelago: the three serves' ball paths. When the serve's item lacks its
+; second copy, ApClampServeHeight first lowers the ball below the nice-serve
+; band, so the path, the flag and the ball agree on a band-20 contact.
 ApServeBallPath:
-	ld hl, wBallHeight
-	ld a, [hl+]
-	ld h, [hl]
-	ld l, a
-	push hl
 	apcall ApClampServeHeight
 	ld a, [wCurrentShotType]
 	cp SHOTTYPE_SERVE_SLICE
@@ -14,17 +9,10 @@ ApServeBallPath:
 	cp SHOTTYPE_SERVE_FLAT
 	jr z, .flat
 	farcall ShotBallPathServeTopspin
-	jr .flag
+	jp SetSpecialShotFlagFromBallHeight
 .slice:
 	farcall ShotBallPathServeSlice
-	jr .flag
+	jp SetSpecialShotFlagFromBallHeight
 .flat:
 	farcall ShotBallPathServeFlat
-.flag:
-	call SetSpecialShotFlagFromBallHeight
-	pop hl
-	ld a, l
-	ld [wBallHeight], a
-	ld a, h
-	ld [wBallHeight + 1], a
-	ret
+	jp SetSpecialShotFlagFromBallHeight

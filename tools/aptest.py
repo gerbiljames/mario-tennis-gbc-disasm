@@ -885,6 +885,123 @@ def shots_ungated_by_default(g, c):
     assert g.result["F"] & 0x80, "shots gated with ApOptShotItems 0"
 
 
+WRAM_CHAR0, CHAR_INPUT_SOURCE, CHAR_SHOT_BUTTONS = 4, 0xdf1e, 0xdf16
+SHOTTYPE_TOPSPIN, SHOTTYPE_NEUTRAL, SHOTTYPE_REACH, SHOTTYPE_SERVE_TOPSPIN = 0x00, 0x04, 0x05, 0x0c
+POINTOUTCOME_FAULT, POINTOUTCOME_DOUBLE_FAULT = 1, 2
+
+
+def play_match(g, frames, peak_toss=False):
+    """Play a short Junior Rank 4 match with the CPU driving character 0, which
+    the shot gates still take for the player (input source 0 while they ask);
+    character 0 presses every button pair and serve in turn. -> the shots
+    (character, wCurrentShotType, wLastShotButtons, wSpecialShotFlag) and the
+    faults seen. peak_toss serves every ball from the top of the toss."""
+    m = g.mem
+    shots, faults = [], []
+    pairs, n = [(1, 1), (2, 2), (1, 2), (2, 1), (3, 0), (1, 0), (2, 0)], [0, 0]
+
+    def char0():
+        return m[0xff70] & 7 == WRAM_CHAR0
+
+    def read_input(_):
+        if char0():
+            m[CHAR_INPUT_SOURCE] = 1
+
+    def gated(_):
+        if char0():
+            m[CHAR_INPUT_SOURCE] = 0
+
+    def rally(_):
+        if char0():
+            m[CHAR_SHOT_BUTTONS], m[CHAR_SHOT_BUTTONS + 1] = pairs[n[0] % len(pairs)]
+            n[0] += 1
+
+    def serve(_):
+        if char0():
+            m[CHAR_SHOT_BUTTONS] = 1 + n[1] % 3
+            n[1] += 1
+
+    def serve_path(_):
+        if peak_toss:
+            g.wram("wBallHeight", 0x80, 0xfe)  # -$180
+
+    def hit(_):
+        shots.append((m[g.addr("wLastShotCharIndex")], m[g.addr("wCurrentShotType")],
+                      m[g.addr("wLastShotButtons")], m[g.addr("wSpecialShotFlag")]))
+
+    for label, fn, off in (("ReadCharInput", read_input, 0), ("ApShotsGated", gated, 0),
+                           ("SelectRallyShotType", rally, 0), ("SelectServeShotType", serve, 0),
+                           ("ApServeBallPath", serve_path, 0), ("HandleBallHitEvent", hit, 5)):
+        b, a = g.sym[label]
+        g.pb.hook_register(b, a + off, fn, None)
+    g.call("InitStoryMatchSettings")
+    g.wram("wCurrentMinigameStoryMatch", 0, 1)
+    g.call("LoadMatchSettingsFromTable")
+    g.pending.append(("RunStoryMatch", {}))
+    last = 0
+    for _ in range(frames):
+        g.tick()
+        outcome = m[g.addr("wPointOutcome")]
+        if outcome != last and outcome in (POINTOUTCOME_FAULT, POINTOUTCOME_DOUBLE_FAULT):
+            faults.append(outcome)
+        last = outcome
+    return shots, faults
+
+
+def match_tokens(c, **items):
+    t = {"ApOptShotItems": b"\x01", "ApOptMatchSets": b"\x01", "ApOptMatchGames": b"\x06"}
+    t.update({("ApStartInventory", c["ITEM_" + k]): bytes([v]) for k, v in items.items()})
+    return t
+
+
+@test
+def shots_topspin_only_in_a_match(g, c):
+    shots, _ = play_match(g, 60000)
+    mine = {(t, b) for ci, t, b, _ in shots if ci == 0}
+    assert len(mine) > 0 and len([s for s in shots if s[0] == 0]) > 50, "the player hardly hit the ball"
+    assert {t for t, _ in mine} <= {SHOTTYPE_TOPSPIN, SHOTTYPE_REACH, SHOTTYPE_SERVE_TOPSPIN}, mine
+    assert {b for _, b in mine} == {0x10}, mine
+    assert {t for ci, t, *_ in shots if ci} - {SHOTTYPE_TOPSPIN, SHOTTYPE_SERVE_TOPSPIN}, "the CPU was gated"
+
+
+shots_topspin_only_in_a_match.tokens = lambda c: match_tokens(c, TOPSPIN=1, TOPSPIN_SERVE=1)
+
+
+@test
+def shots_flat_only_in_a_match(g, c):
+    shots, _ = play_match(g, 60000)
+    mine = {(t, b) for ci, t, b, _ in shots if ci == 0}
+    assert mine <= {(SHOTTYPE_NEUTRAL, 0x33), (SHOTTYPE_NEUTRAL, 0x30), (SHOTTYPE_SERVE_SLICE, 0x20)}, mine
+    assert (SHOTTYPE_NEUTRAL, 0x33) in mine, "no fallback swing"
+
+
+shots_flat_only_in_a_match.tokens = lambda c: match_tokens(c, FLAT_SHOT=1, SLICE_SERVE=1)
+
+
+@test
+def nice_serve_needs_its_second_copy(g, c):
+    shots, faults = play_match(g, 30000, peak_toss=True)
+    serves = [nice for ci, t, _, nice in shots if ci == 0 and t >= SHOTTYPE_SERVE_TOPSPIN]
+    assert serves and not any(serves), "a nice serve with one copy"
+    assert not faults, "a lowered peak-toss serve faulted"
+
+
+nice_serve_needs_its_second_copy.tokens = lambda c: match_tokens(c, TOPSPIN=1, TOPSPIN_SERVE=1, SLICE_SERVE=1,
+                                                                FLAT_SERVE=1)
+
+
+@test
+def everything_owned_plays_as_vanilla(g, c):
+    shots, _ = play_match(g, 30000, peak_toss=True)
+    mine = [s for s in shots if s[0] == 0]
+    assert {t for _, t, *_ in mine} > {SHOTTYPE_TOPSPIN, SHOTTYPE_NEUTRAL, SHOTTYPE_SERVE_TOPSPIN}, mine
+    assert all(nice for _, t, _, nice in mine if t >= SHOTTYPE_SERVE_TOPSPIN), "a peak-toss serve was not nice"
+
+
+everything_owned_plays_as_vanilla.tokens = lambda c: match_tokens(
+    c, TOPSPIN=2, SLICE=2, FLAT_SHOT=2, LOB=1, DROP_SHOT=1, TOPSPIN_SERVE=2, SLICE_SERVE=2, FLAT_SERVE=2)
+
+
 def names(c, loc, item, player):
     off = c[loc] * 50
     return {("ApLocationNames", off): item.encode() + b"\0", ("ApLocationNames", off + 25): player.encode() + b"\0"}

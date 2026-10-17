@@ -158,8 +158,8 @@ ApFilterServeButtonFor:
 	ld b, 1
 	ret
 
-; From ApServeBallPath: without the serve's second copy, wBallHeight is held
-; below the nice-serve band for the path lookup and the flag
+; From ApServeBallPath: without the serve's second copy, a ball struck in the
+; nice-serve band is lowered to the top of band 20
 ApClampServeHeight:
 	call ApShotsGated
 	ret z
