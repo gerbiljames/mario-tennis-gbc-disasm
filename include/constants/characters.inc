@@ -96,9 +96,9 @@ def CHAR_RANKER_47     equ $2f
 def CHAR_KEVIN_2     equ $30 ; shown as Kevin
 def CHAR_EMILY_2     equ $31 ; shown as Emily
 def CHAR_MARK_2      equ $32 ; shown as Mark
-def CHAR_ELLIS       equ $33
-def CHAR_FRANK       equ $34
-def CHAR_EDGAR       equ $35
+def CHAR_BOB_2       equ $33 ; shown as Bob (bank $30 name pool: "Ellis")
+def CHAR_FAY_2       equ $34 ; shown as Fay (name pool: "Frank")
+def CHAR_CURT_2      equ $35 ; shown as Curt (name pool: "Edgar")
 ; Two match drills swap their opponent's record by server at each point
 ; (LoadDrillOpponentBySide): the net-game matches use these on the points the
 ; opponent serves, the stroke matches on the points the player serves.
