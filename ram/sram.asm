@@ -33,7 +33,7 @@ sSaveBlockDirectory:: ds 1808
 
 INCLUDE "constants/archipelago.inc"
 
-; The Archipelago ledger (docs/archipelago.md): global, not tied to a story
+; The Archipelago ledger: global, not tied to a story
 ; slot. WipeAllSaveRam stops below bank 3, so vanilla erases leave it alone;
 ; ApBootLedger validates it instead. Each region has one writer and its own
 ; checksum (ApChecksum: the byte sum plus AP_CHECKSUM_SEED, so an all-zero

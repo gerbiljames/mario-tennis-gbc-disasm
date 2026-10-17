@@ -41,12 +41,16 @@ class MarioTennisGBCWorld(World):
     ut_can_gen_without_yaml = True
 
     auth: bytes
+    starting_shots: list[str]
 
     def generate_early(self) -> None:
         passthrough = getattr(self.multiworld, "re_gen_passthrough", {}).get(self.game)
         if passthrough:
             for name in mtgbc_options.LOGIC_OPTIONS:
                 getattr(self.options, name).value = passthrough[name]
+            self.starting_shots = passthrough["starting_shots"]
+        else:
+            self.starting_shots = items.starting_shots(self)
 
     @staticmethod
     def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
@@ -91,6 +95,6 @@ class MarioTennisGBCWorld(World):
             multidata["connect_names"][self.player_name]
 
     def fill_slot_data(self) -> Mapping[str, Any]:
-        return self.options.as_dict(*mtgbc_options.LOGIC_OPTIONS)
+        return {**self.options.as_dict(*mtgbc_options.LOGIC_OPTIONS), "starting_shots": self.starting_shots}
 
 

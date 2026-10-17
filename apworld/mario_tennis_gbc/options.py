@@ -98,6 +98,15 @@ class NerfSwingContest(Toggle):
     display_name = "Nerf Swing Contest"
 
 
+class ShotItems(DefaultOnToggle):
+    """
+    Your shots are items: topspin, slice and the flat shot (the second copy of each adds its power shot, or the
+    smash), the lob and drop shot, and the topspin, slice and flat serves (the second copy adds the nice serve).
+    You start with one random stroke and one random serve; a locked shot plays the first stroke or serve you own.
+    """
+    display_name = "Shot Items"
+
+
 class RemoteItems(Toggle):
     """
     Every item, this world's own and the starting inventory included, comes from the server. Needed for co-op or
@@ -118,15 +127,16 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     default_camera_mode: DefaultCameraMode
     item_messages: ItemMessages
     nerf_swing_contest: NerfSwingContest
+    shot_items: ShotItems
     remote_items: RemoteItems
 
 
 option_groups = [
-    OptionGroup("Logic", [StoryArcs, Goal, Minigames]),
+    OptionGroup("Logic", [StoryArcs, Goal, Minigames, ShotItems]),
     OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest]),
     OptionGroup("Quality of Life", [SkipIntro, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
     OptionGroup("Multiworld", [RemoteItems]),
 ]
 
 # options that shape regions, locations or rules: sent in slot data for Universal Tracker
-LOGIC_OPTIONS = ("story_arcs", "goal", "minigames")
+LOGIC_OPTIONS = ("story_arcs", "goal", "minigames", "shot_items")

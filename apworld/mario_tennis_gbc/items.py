@@ -30,6 +30,11 @@ MINIGAME_ITEMS = {game: f"Progressive {game}" for game in MINIGAMES}
 RACKETS = ["Large Racket", "Small Racket", "Iron Racket", "Silver Racket", "Gold Racket", "Drive Racket"]
 SHOES = ["Iron Shoes", "Light Shoes"]
 FILLER = "EXP Bundle"
+STROKES = ["Progressive Topspin", "Progressive Slice", "Progressive Flat Shot"]
+LOB, DROP_SHOT = "Lob", "Drop Shot"
+SERVES = ["Progressive Topspin Serve", "Progressive Slice Serve", "Progressive Flat Serve"]
+# each copy is one shot: the stroke or serve, then its power shot, smash or nice serve
+SHOT_COPIES = {**{name: 2 for name in STROKES}, LOB: 1, DROP_SHOT: 1, **{name: 2 for name in SERVES}}
 
 ITEM_NAME_GROUPS = {
     "Class Passes": {SINGLES_PASS, DOUBLES_PASS},
@@ -41,9 +46,12 @@ ITEM_NAME_GROUPS = {
     "Rackets": set(RACKETS),
     "Shoes": set(SHOES),
     "Equipment": set(RACKETS + SHOES),
+    "Shots": set(SHOT_COPIES),
+    "Strokes": set(STROKES),
+    "Serves": set(SERVES),
 }
 
-PROGRESSION = {SINGLES_PASS, DOUBLES_PASS, *DRILL_COPIES, *MINIGAME_ITEMS.values(), "Iron Racket"}
+PROGRESSION = {SINGLES_PASS, DOUBLES_PASS, *DRILL_COPIES, *MINIGAME_ITEMS.values(), "Iron Racket", *SHOT_COPIES}
 
 
 class MarioTennisGBCItem(Item):
@@ -62,6 +70,13 @@ def create_item(world: MarioTennisGBCWorld, name: str) -> MarioTennisGBCItem:
     return MarioTennisGBCItem(name, classification(name), ITEM_NAME_TO_ID[name], world.player)
 
 
+def starting_shots(world: MarioTennisGBCWorld) -> list[str]:
+    """One random stroke and one random serve, or none without shot items."""
+    if not world.options.shot_items:
+        return []
+    return [world.random.choice(STROKES), world.random.choice(SERVES)]
+
+
 def item_counts(world: MarioTennisGBCWorld) -> dict[str, int]:
     """The pool before filler, under the world's options."""
     counts = {}
@@ -76,11 +91,33 @@ def item_counts(world: MarioTennisGBCWorld) -> dict[str, int]:
     elif minigames == minigames.option_vanilla:
         counts.update({name: 1 for name in MINIGAME_ITEMS.values()})
     counts.update({name: 1 for name in RACKETS + SHOES})
+    if world.options.shot_items:
+        counts.update(SHOT_COPIES)
+        for name in world.starting_shots:
+            counts[name] -= 1
     return counts
 
 
+def overflow(world: MarioTennisGBCWorld, counts: dict[str, int], locations: int) -> list[str]:
+    """The items that go to the start inventory because the pool outgrows the locations: random non-progression
+    ones (doubles with mini-games excluded is 3 short)."""
+    surplus = sum(counts.values()) - locations
+    if surplus <= 0:
+        return []
+    spare = sorted(name for name, n in counts.items() if name not in PROGRESSION for _ in range(n))
+    if surplus > len(spare):
+        raise Exception(f"{world.player_name}: {surplus} more items than locations, {len(spare)} can start")
+    return world.random.sample(spare, surplus)
+
+
 def create_all_items(world: MarioTennisGBCWorld) -> None:
-    pool = [create_item(world, name) for name, n in item_counts(world).items() for _ in range(n)]
+    counts = item_counts(world)
     locations = len(world.multiworld.get_unfilled_locations(world.player))
+    spare = overflow(world, counts, locations)
+    for name in spare:
+        counts[name] -= 1
+    for name in world.starting_shots + spare:
+        world.multiworld.push_precollected(create_item(world, name))
+    pool = [create_item(world, name) for name, n in counts.items() for _ in range(n)]
     pool += [create_item(world, FILLER) for _ in range(locations - len(pool))]
     world.multiworld.itempool += pool

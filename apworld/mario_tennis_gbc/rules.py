@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from rule_builder.rules import And, CanReachLocation, Has, Rule
+from rule_builder.rules import And, CanReachLocation, Has, HasAny, HasFromList, Or, Rule
 
-from .items import DRILL_LESSONS, DRILL_MATCHES, MACHINE, MINIGAME_ITEMS, MINIGAMES, WALL
-from .locations import DREAM_MATCHES, DRILL_TYPES, FINALS, active_location_names
+from .items import DRILL_LESSONS, DRILL_MATCHES, DROP_SHOT, LOB, MACHINE, MINIGAME_ITEMS, MINIGAMES, SERVES, \
+    SHOT_COPIES, STROKES, WALL
+from .locations import DREAM_MATCHES, DRILL_TYPES, FINALS, active_location_names, story_regions
 
 if TYPE_CHECKING:
     from .world import MarioTennisGBCWorld
@@ -37,6 +38,39 @@ def location_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
                 rules[f"{game} Level {n}"] = Has(MINIGAME_ITEMS[game])
         for game in ("Shooting Star", "Target Shot", "Banana Bunch"):
             rules[f"{game} Record"] = Has(MINIGAME_ITEMS[game])
+    if world.options.shot_items:
+        for name, rule in shot_rules(world).items():
+            rules[name] = And(rules[name], rule) if name in rules else rule
+    return rules
+
+
+TOPSPIN, SLICE, FLAT_SHOT = STROKES
+TOPSPIN_SERVE, SLICE_SERVE, FLAT_SERVE = SERVES
+# shots (copies of the shot items, the starting two included) a story tier wants; placeholders to tune in play
+TIER_SHOTS = {"Senior": 3, "Varsity": 5, "Island Open": 8, "Peach's Castle": 11}
+
+
+def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
+    """What the shot items add: drills that judge a shot, Target Shot's combos, and a shot count per story tier."""
+    volley = HasAny(TOPSPIN, SLICE)
+    rules = {
+        "Net Game Match 1": volley,
+        "Net Game Lesson 1": volley,
+        "Net Game Match 2": And(Has(FLAT_SHOT, count=2), Has(LOB)),
+        "Net Game Lesson 2": Has(FLAT_SHOT, count=2),
+        "Net Game Lesson 3": Has(DROP_SHOT),
+        "Stroke Match 2": Has(LOB),
+        "Stroke Lesson 2": Has(LOB),
+        "Service Lesson 2": And(Has(TOPSPIN_SERVE), Has(SLICE_SERVE)),
+        "Service Lesson 3": Or(*(Has(serve, count=2) for serve in SERVES)),
+    }
+    if world.options.minigames != world.options.minigames.option_excluded:
+        for name in ("Target Shot Level 2", "Target Shot Level 3", "Target Shot Record"):
+            rules[name] = And(Has(LOB), Has(DROP_SHOT))
+    for region, names in story_regions(world).items():
+        tier = next((t for t in TIER_SHOTS if region.startswith(t)), None)
+        if tier:
+            rules.update({name: HasFromList(*SHOT_COPIES, count=TIER_SHOTS[tier]) for name in names})
     return rules
 
 
