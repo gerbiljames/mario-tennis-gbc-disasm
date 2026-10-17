@@ -82,9 +82,9 @@ Table_14:
 	; $64d5, 4 bytes (bytes:4)
 	db $00, $0c, $0e, $10 ; 0x00
 UpdateFirework0_14Table:
-	INCBIN "data/bank_014/UpdateFirework0_14Table.bin" ; $64d9, 4 bytes
+	INCBIN "data/story/UpdateFirework0_14Table.bin" ; $64d9, 4 bytes
 UpdateFirework1_14Table:
-	INCBIN "data/bank_014/UpdateFirework1_14Table.bin" ; $64dd, 4 bytes
+	INCBIN "data/story/UpdateFirework1_14Table.bin" ; $64dd, 4 bytes
 IslandSkyInitScript_14.scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $64e1
 	ld hl, FireworkMapActors_14 ; $64e3
@@ -223,7 +223,7 @@ FireworkMapActors_14:
 	db $00 ; padding after the list end
 	ds ALIGN[4]
 FireworkObjTiles_14:
-	INCBIN "data/bank_014/FireworkObjTiles_14.bin" ; $6680, 2048 bytes
+	INCBIN "data/story/FireworkObjTiles_14.bin" ; $6680, 2048 bytes
 SpriteTemplate_14_2:
 	; $6e80, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -236,7 +236,7 @@ SpriteTemplate_14_2:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 FireworkObjPalettes_14:
-	INCLUDE "data/bank_014/FireworkObjPalettes_14.asm" ; $6ea1, 32 bytes (palettes)
+	INCLUDE "data/story/FireworkObjPalettes_14.asm" ; $6ea1, 32 bytes (palettes)
 ; Sits after FireworkObjPalettes_14's four palettes, unreferenced: when hInputRisingEdge bit 1 is newly pressed it resets both cutscene firework objects -- X $40/$68, Y $30/$38, phase 0, timer $1e each -- and returns. Nothing calls or jumps to it; UpdateFirework1_14, which follows, is the live routine.
 Unused_14_ResetFireworkObjOnButton:
 	ldh a, [hInputRisingEdge] ; $6ec1

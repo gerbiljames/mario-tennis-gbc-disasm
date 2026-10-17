@@ -97,99 +97,99 @@ SoundTable_7b:
 	snd_channel 0, $00 ; $40bc
 	dw Music9b_Trk0 ; $40be
 Sfx16_Trk0:
-	INCLUDE "data/bank_07b/Sfx16_Trk0.asm" ; $40c0, 438 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx16_Trk0.asm" ; $40c0, 438 bytes (snd_script:pulse)
 Sfx16_Trk1:
-	INCLUDE "data/bank_07b/Sfx16_Trk1.asm" ; $4276, 456 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx16_Trk1.asm" ; $4276, 456 bytes (snd_script:pulse)
 Sfx16_Trk2:
-	INCLUDE "data/bank_07b/Sfx16_Trk2.asm" ; $443e, 344 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx16_Trk2.asm" ; $443e, 344 bytes (snd_script:wave)
 Sfx16_Trk3:
-	INCLUDE "data/bank_07b/Sfx16_Trk3.asm" ; $4596, 598 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx16_Trk3.asm" ; $4596, 598 bytes (snd_script:noise)
 Sfx17_Trk0:
-	INCLUDE "data/bank_07b/Sfx17_Trk0.asm" ; $47ec, 264 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx17_Trk0.asm" ; $47ec, 264 bytes (snd_script:pulse)
 Sfx17_Trk1:
-	INCLUDE "data/bank_07b/Sfx17_Trk1.asm" ; $48f4, 196 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx17_Trk1.asm" ; $48f4, 196 bytes (snd_script:pulse)
 Sfx17_Trk2:
-	INCLUDE "data/bank_07b/Sfx17_Trk2.asm" ; $49b8, 158 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx17_Trk2.asm" ; $49b8, 158 bytes (snd_script:wave)
 Sfx17_Trk3:
-	INCLUDE "data/bank_07b/Sfx17_Trk3.asm" ; $4a56, 82 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx17_Trk3.asm" ; $4a56, 82 bytes (snd_script:noise)
 Sfx18_Trk0:
-	INCLUDE "data/bank_07b/Sfx18_Trk0.asm" ; $4aa8, 302 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx18_Trk0.asm" ; $4aa8, 302 bytes (snd_script:pulse)
 Sfx18_Trk1:
-	INCLUDE "data/bank_07b/Sfx18_Trk1.asm" ; $4bd6, 302 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx18_Trk1.asm" ; $4bd6, 302 bytes (snd_script:pulse)
 Sfx18_Trk2:
-	INCLUDE "data/bank_07b/Sfx18_Trk2.asm" ; $4d04, 148 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx18_Trk2.asm" ; $4d04, 148 bytes (snd_script:wave)
 Sfx18_Trk3:
-	INCLUDE "data/bank_07b/Sfx18_Trk3.asm" ; $4d98, 986 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx18_Trk3.asm" ; $4d98, 986 bytes (snd_script:noise)
 Sfx19_Trk0:
-	INCLUDE "data/bank_07b/Sfx19_Trk0.asm" ; $5172, 500 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx19_Trk0.asm" ; $5172, 500 bytes (snd_script:pulse)
 Sfx19_Trk1:
-	INCLUDE "data/bank_07b/Sfx19_Trk1.asm" ; $5366, 446 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx19_Trk1.asm" ; $5366, 446 bytes (snd_script:pulse)
 Sfx19_Trk2:
-	INCLUDE "data/bank_07b/Sfx19_Trk2.asm" ; $5524, 716 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx19_Trk2.asm" ; $5524, 716 bytes (snd_script:wave)
 Sfx19_Trk3:
-	INCLUDE "data/bank_07b/Sfx19_Trk3.asm" ; $57f0, 154 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx19_Trk3.asm" ; $57f0, 154 bytes (snd_script:noise)
 Sfx1a_Trk0:
-	INCLUDE "data/bank_07b/Sfx1a_Trk0.asm" ; $588a, 218 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1a_Trk0.asm" ; $588a, 218 bytes (snd_script:pulse)
 Sfx1a_Trk1:
-	INCLUDE "data/bank_07b/Sfx1a_Trk1.asm" ; $5964, 222 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1a_Trk1.asm" ; $5964, 222 bytes (snd_script:pulse)
 Sfx1a_Trk2:
-	INCLUDE "data/bank_07b/Sfx1a_Trk2.asm" ; $5a42, 124 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx1a_Trk2.asm" ; $5a42, 124 bytes (snd_script:wave)
 Sfx1b_Trk0:
-	INCLUDE "data/bank_07b/Sfx1b_Trk0.asm" ; $5abe, 184 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1b_Trk0.asm" ; $5abe, 184 bytes (snd_script:pulse)
 Sfx1b_Trk1:
-	INCLUDE "data/bank_07b/Sfx1b_Trk1.asm" ; $5b76, 186 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1b_Trk1.asm" ; $5b76, 186 bytes (snd_script:pulse)
 Sfx1b_Trk2:
-	INCLUDE "data/bank_07b/Sfx1b_Trk2.asm" ; $5c30, 208 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx1b_Trk2.asm" ; $5c30, 208 bytes (snd_script:wave)
 Sfx1b_Trk3:
-	INCLUDE "data/bank_07b/Sfx1b_Trk3.asm" ; $5d00, 338 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx1b_Trk3.asm" ; $5d00, 338 bytes (snd_script:noise)
 Sfx1c_Trk0:
-	INCLUDE "data/bank_07b/Sfx1c_Trk0.asm" ; $5e52, 132 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1c_Trk0.asm" ; $5e52, 132 bytes (snd_script:pulse)
 Sfx1c_Trk1:
-	INCLUDE "data/bank_07b/Sfx1c_Trk1.asm" ; $5ed6, 234 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1c_Trk1.asm" ; $5ed6, 234 bytes (snd_script:pulse)
 Sfx1c_Trk2:
-	INCLUDE "data/bank_07b/Sfx1c_Trk2.asm" ; $5fc0, 396 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx1c_Trk2.asm" ; $5fc0, 396 bytes (snd_script:wave)
 Sfx1c_Trk3:
-	INCLUDE "data/bank_07b/Sfx1c_Trk3.asm" ; $614c, 412 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx1c_Trk3.asm" ; $614c, 412 bytes (snd_script:noise)
 Sfx1d_Trk0:
-	INCLUDE "data/bank_07b/Sfx1d_Trk0.asm" ; $62e8, 302 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1d_Trk0.asm" ; $62e8, 302 bytes (snd_script:pulse)
 Sfx1d_Trk1:
-	INCLUDE "data/bank_07b/Sfx1d_Trk1.asm" ; $6416, 448 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1d_Trk1.asm" ; $6416, 448 bytes (snd_script:pulse)
 Sfx1d_Trk2:
-	INCLUDE "data/bank_07b/Sfx1d_Trk2.asm" ; $65d6, 240 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx1d_Trk2.asm" ; $65d6, 240 bytes (snd_script:wave)
 Sfx1d_Trk3:
-	INCLUDE "data/bank_07b/Sfx1d_Trk3.asm" ; $66c6, 96 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx1d_Trk3.asm" ; $66c6, 96 bytes (snd_script:noise)
 Sfx1e_Trk0:
-	INCLUDE "data/bank_07b/Sfx1e_Trk0.asm" ; $6726, 724 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1e_Trk0.asm" ; $6726, 724 bytes (snd_script:pulse)
 Sfx1e_Trk1:
-	INCLUDE "data/bank_07b/Sfx1e_Trk1.asm" ; $69fa, 1078 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1e_Trk1.asm" ; $69fa, 1078 bytes (snd_script:pulse)
 Sfx1e_Trk2:
-	INCLUDE "data/bank_07b/Sfx1e_Trk2.asm" ; $6e30, 1196 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx1e_Trk2.asm" ; $6e30, 1196 bytes (snd_script:wave)
 Sfx1e_Trk3:
-	INCLUDE "data/bank_07b/Sfx1e_Trk3.asm" ; $72dc, 1726 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx1e_Trk3.asm" ; $72dc, 1726 bytes (snd_script:noise)
 Sfx1f_Trk0:
-	INCLUDE "data/bank_07b/Sfx1f_Trk0.asm" ; $799a, 212 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1f_Trk0.asm" ; $799a, 212 bytes (snd_script:pulse)
 Sfx1f_Trk1:
-	INCLUDE "data/bank_07b/Sfx1f_Trk1.asm" ; $7a6e, 216 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx1f_Trk1.asm" ; $7a6e, 216 bytes (snd_script:pulse)
 Sfx1f_Trk2:
-	INCLUDE "data/bank_07b/Sfx1f_Trk2.asm" ; $7b46, 450 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx1f_Trk2.asm" ; $7b46, 450 bytes (snd_script:wave)
 Sfx1f_Trk3:
-	INCLUDE "data/bank_07b/Sfx1f_Trk3.asm" ; $7d08, 340 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx1f_Trk3.asm" ; $7d08, 340 bytes (snd_script:noise)
 Sfx2f_Trk0:
-	INCLUDE "data/bank_07b/Sfx2f_Trk0.asm" ; $7e5c, 28 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx2f_Trk0.asm" ; $7e5c, 28 bytes (snd_script:pulse)
 Sfx2f_Trk1:
-	INCLUDE "data/bank_07b/Sfx2f_Trk1.asm" ; $7e78, 28 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx2f_Trk1.asm" ; $7e78, 28 bytes (snd_script:pulse)
 Sfx2f_Trk2:
-	INCLUDE "data/bank_07b/Sfx2f_Trk2.asm" ; $7e94, 22 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx2f_Trk2.asm" ; $7e94, 22 bytes (snd_script:wave)
 Sfx2f_Trk3:
-	INCLUDE "data/bank_07b/Sfx2f_Trk3.asm" ; $7eaa, 76 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx2f_Trk3.asm" ; $7eaa, 76 bytes (snd_script:noise)
 Sfx31_Trk0:
-	INCLUDE "data/bank_07b/Sfx31_Trk0.asm" ; $7ef6, 38 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx31_Trk0.asm" ; $7ef6, 38 bytes (snd_script:pulse)
 Sfx31_Trk1:
-	INCLUDE "data/bank_07b/Sfx31_Trk1.asm" ; $7f1c, 38 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Sfx31_Trk1.asm" ; $7f1c, 38 bytes (snd_script:pulse)
 Sfx31_Trk2:
-	INCLUDE "data/bank_07b/Sfx31_Trk2.asm" ; $7f42, 34 bytes (snd_script:wave)
+	INCLUDE "data/audio/Sfx31_Trk2.asm" ; $7f42, 34 bytes (snd_script:wave)
 Sfx31_Trk3:
-	INCLUDE "data/bank_07b/Sfx31_Trk3.asm" ; $7f64, 130 bytes (snd_script:noise)
+	INCLUDE "data/audio/Sfx31_Trk3.asm" ; $7f64, 130 bytes (snd_script:noise)
 Music9b_Trk0:
-	INCLUDE "data/bank_07b/Music9b_Trk0.asm" ; $7fe6, 10 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Music9b_Trk0.asm" ; $7fe6, 10 bytes (snd_script:pulse)
 	; $7ff0, 16 bytes fill to bank end (linker-padded)

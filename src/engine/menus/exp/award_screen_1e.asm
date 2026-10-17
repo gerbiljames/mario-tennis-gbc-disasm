@@ -1,22 +1,22 @@
 ResultsScreenPalettes:
-	INCLUDE "data/bank_01e/ResultsScreenPalettes.asm" ; $4c40, 48 bytes (palettes)
+	INCLUDE "data/engine/menus/exp/ResultsScreenPalettes.asm" ; $4c40, 48 bytes (palettes)
 ResultsScreenGfx_1e:
-	INCBIN "data/bank_01e/lz_ResultsScreenGfx_1e.bin" ; $4c70, 1455 bytes
+	INCBIN "data/engine/menus/exp/lz_ResultsScreenGfx_1e.bin" ; $4c70, 1455 bytes
 ResultsScreenTilemap_1e:
-	INCBIN "data/bank_01e/lz_ResultsScreenTilemap_1e.bin" ; $521f, 205 bytes
+	INCBIN "data/engine/menus/exp/lz_ResultsScreenTilemap_1e.bin" ; $521f, 205 bytes
 ResultsScreenAttrmap_1e:
-	INCBIN "data/bank_01e/lz_ResultsScreenAttrmap_1e.bin" ; $52ec, 87 bytes
+	INCBIN "data/engine/menus/exp/lz_ResultsScreenAttrmap_1e.bin" ; $52ec, 87 bytes
 PanelFrameGfx_1e:
-	INCBIN "data/bank_01e/lz_PanelFrameGfx_1e.bin" ; $5343, 156 bytes
-	INCLUDE "data/bank_01e/lz_PanelFrameGfx_1e.inc" ; DEF PanelFrameGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_PanelFrameGfx_1e.bin" ; $5343, 156 bytes
+	INCLUDE "data/engine/menus/exp/lz_PanelFrameGfx_1e.inc" ; DEF PanelFrameGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
 ResultsSinglesLabelTilemap_1e:
-	INCBIN "data/bank_01e/lz_ResultsSinglesLabelTilemap_1e.bin" ; $53df, 19 bytes
+	INCBIN "data/engine/menus/exp/lz_ResultsSinglesLabelTilemap_1e.bin" ; $53df, 19 bytes
 ResultsDoublesLabelTilemap_1e:
-	INCBIN "data/bank_01e/lz_ResultsDoublesLabelTilemap_1e.bin" ; $53f2, 19 bytes
+	INCBIN "data/engine/menus/exp/lz_ResultsDoublesLabelTilemap_1e.bin" ; $53f2, 19 bytes
 ResultsPlayerPanelTilemap_1e:
-	INCBIN "data/bank_01e/lz_ResultsPlayerPanelTilemap_1e.bin" ; $5405, 28 bytes
+	INCBIN "data/engine/menus/exp/lz_ResultsPlayerPanelTilemap_1e.bin" ; $5405, 28 bytes
 ResultsPlayerPanelAttrmap_1e:
-	INCBIN "data/bank_01e/lz_ResultsPlayerPanelAttrmap_1e.bin" ; $5421, 23 bytes
+	INCBIN "data/engine/menus/exp/lz_ResultsPlayerPanelAttrmap_1e.bin" ; $5421, 23 bytes
 ShowExpAwardScreen:
 	call HasPendingExpAwards ; $5438
 	or a ; $543b

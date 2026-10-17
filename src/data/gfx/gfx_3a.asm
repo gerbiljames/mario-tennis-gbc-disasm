@@ -89,69 +89,69 @@ DataPtr_LinkErrorPalettes:
 DataPtr_LinkErrorLabelTiles:
 	dw LinkErrorLabelTiles ; $4058
 TennisDictionaryTiles:
-	INCBIN "data/bank_03a/lz_TennisDictionaryTiles.bin" ; $405a, 2621 bytes
+	INCBIN "data/gfx/lz_TennisDictionaryTiles.bin" ; $405a, 2621 bytes
 TennisDictionaryListTiles:
-	INCBIN "data/bank_03a/lz_TennisDictionaryListTiles.bin" ; $4a97, 2404 bytes
+	INCBIN "data/gfx/lz_TennisDictionaryListTiles.bin" ; $4a97, 2404 bytes
 NameEntryTilemap:
-	INCBIN "data/bank_03a/lz_NameEntryTilemap.bin" ; $53fb, 109 bytes
+	INCBIN "data/gfx/lz_NameEntryTilemap.bin" ; $53fb, 109 bytes
 NameEntryAttrmap:
-	INCBIN "data/bank_03a/lz_NameEntryAttrmap.bin" ; $5468, 112 bytes
+	INCBIN "data/gfx/lz_NameEntryAttrmap.bin" ; $5468, 112 bytes
 CharSelectAltTilemap:
-	INCBIN "data/bank_03a/lz_CharSelectAltTilemap.bin" ; $54d8, 109 bytes
+	INCBIN "data/gfx/lz_CharSelectAltTilemap.bin" ; $54d8, 109 bytes
 CharSelectAltAttrmap:
-	INCBIN "data/bank_03a/lz_CharSelectAltAttrmap.bin" ; $5545, 106 bytes
+	INCBIN "data/gfx/lz_CharSelectAltAttrmap.bin" ; $5545, 106 bytes
 ExhibitionSetupTiles:
-	INCBIN "data/bank_03a/lz_ExhibitionSetupTiles.bin" ; $55af, 1138 bytes
+	INCBIN "data/gfx/lz_ExhibitionSetupTiles.bin" ; $55af, 1138 bytes
 ExhibitionSetupTilemap:
-	INCBIN "data/bank_03a/lz_ExhibitionSetupTilemap.bin" ; $5a21, 217 bytes
+	INCBIN "data/gfx/lz_ExhibitionSetupTilemap.bin" ; $5a21, 217 bytes
 ExhibitionSetupAttrmap:
-	INCBIN "data/bank_03a/lz_ExhibitionSetupAttrmap.bin" ; $5afa, 109 bytes
+	INCBIN "data/gfx/lz_ExhibitionSetupAttrmap.bin" ; $5afa, 109 bytes
 ExhibitionSetupPalettes:
-	INCLUDE "data/bank_03a/ExhibitionSetupPalettes.asm" ; $5b67, 64 bytes (palettes)
+	INCLUDE "data/gfx/ExhibitionSetupPalettes.asm" ; $5b67, 64 bytes (palettes)
 ExhibitionMenuTiles:
-	INCBIN "data/bank_03a/lz_ExhibitionMenuTiles.bin" ; $5ba7, 1698 bytes
+	INCBIN "data/gfx/lz_ExhibitionMenuTiles.bin" ; $5ba7, 1698 bytes
 ExhibitionMenuTilemap:
-	INCBIN "data/bank_03a/lz_ExhibitionMenuTilemap.bin" ; $6249, 255 bytes
+	INCBIN "data/gfx/lz_ExhibitionMenuTilemap.bin" ; $6249, 255 bytes
 ExhibitionMenuAttrmap:
-	INCBIN "data/bank_03a/lz_ExhibitionMenuAttrmap.bin" ; $6348, 119 bytes
+	INCBIN "data/gfx/lz_ExhibitionMenuAttrmap.bin" ; $6348, 119 bytes
 ExhibitionMenuPalettes:
-	INCLUDE "data/bank_03a/ExhibitionMenuPalettes.asm" ; $63bf, 64 bytes (palettes)
+	INCLUDE "data/gfx/ExhibitionMenuPalettes.asm" ; $63bf, 64 bytes (palettes)
 N64TournamentTiles:
-	INCBIN "data/bank_03a/lz_N64TournamentTiles.bin" ; $63ff, 1650 bytes
+	INCBIN "data/gfx/lz_N64TournamentTiles.bin" ; $63ff, 1650 bytes
 N64TournamentTilemap:
-	INCBIN "data/bank_03a/lz_N64TournamentTilemap.bin" ; $6a71, 268 bytes
+	INCBIN "data/gfx/lz_N64TournamentTilemap.bin" ; $6a71, 268 bytes
 N64TournamentAttrmap:
-	INCBIN "data/bank_03a/lz_N64TournamentAttrmap.bin" ; $6b7d, 121 bytes
+	INCBIN "data/gfx/lz_N64TournamentAttrmap.bin" ; $6b7d, 121 bytes
 N64TournamentPalettes:
-	INCLUDE "data/bank_03a/N64TournamentPalettes.asm" ; $6bf6, 64 bytes (palettes)
+	INCLUDE "data/gfx/N64TournamentPalettes.asm" ; $6bf6, 64 bytes (palettes)
 N64TournamentTilemap2:
-	INCBIN "data/bank_03a/lz_N64TournamentTilemap2.bin" ; $6c36, 268 bytes
+	INCBIN "data/gfx/lz_N64TournamentTilemap2.bin" ; $6c36, 268 bytes
 N64TournamentAttrmap2:
-	INCBIN "data/bank_03a/lz_N64TournamentAttrmap2.bin" ; $6d42, 123 bytes
+	INCBIN "data/gfx/lz_N64TournamentAttrmap2.bin" ; $6d42, 123 bytes
 WarningScreenTiles:
-	INCBIN "data/bank_03a/lz_WarningScreenTiles.bin" ; $6dbd, 631 bytes
+	INCBIN "data/gfx/lz_WarningScreenTiles.bin" ; $6dbd, 631 bytes
 WarningScreenTilemap:
-	INCBIN "data/bank_03a/lz_WarningScreenTilemap.bin" ; $7034, 149 bytes
+	INCBIN "data/gfx/lz_WarningScreenTilemap.bin" ; $7034, 149 bytes
 WarningScreenAttrmap:
-	INCBIN "data/bank_03a/lz_WarningScreenAttrmap.bin" ; $70c9, 107 bytes
+	INCBIN "data/gfx/lz_WarningScreenAttrmap.bin" ; $70c9, 107 bytes
 WarningScreenPalettes:
-	INCLUDE "data/bank_03a/WarningScreenPalettes.asm" ; $7134, 64 bytes (palettes)
+	INCLUDE "data/gfx/WarningScreenPalettes.asm" ; $7134, 64 bytes (palettes)
 JapanesePlayModeTiles:
-	INCBIN "data/bank_03a/lz_JapanesePlayModeTiles.bin" ; $7174, 1067 bytes
+	INCBIN "data/gfx/lz_JapanesePlayModeTiles.bin" ; $7174, 1067 bytes
 JapanesePlayModeTilemap:
-	INCBIN "data/bank_03a/lz_JapanesePlayModeTilemap.bin" ; $759f, 166 bytes
+	INCBIN "data/gfx/lz_JapanesePlayModeTilemap.bin" ; $759f, 166 bytes
 JapanesePlayModeAttrmap:
-	INCBIN "data/bank_03a/lz_JapanesePlayModeAttrmap.bin" ; $7645, 138 bytes
+	INCBIN "data/gfx/lz_JapanesePlayModeAttrmap.bin" ; $7645, 138 bytes
 JapanesePlayModePalettes:
-	INCLUDE "data/bank_03a/JapanesePlayModePalettes.asm" ; $76cf, 64 bytes (palettes)
+	INCLUDE "data/gfx/JapanesePlayModePalettes.asm" ; $76cf, 64 bytes (palettes)
 LinkErrorTiles:
-	INCBIN "data/bank_03a/lz_LinkErrorTiles.bin" ; $770f, 1376 bytes
+	INCBIN "data/gfx/lz_LinkErrorTiles.bin" ; $770f, 1376 bytes
 LinkErrorTilemap:
-	INCBIN "data/bank_03a/lz_LinkErrorTilemap.bin" ; $7c6f, 239 bytes
+	INCBIN "data/gfx/lz_LinkErrorTilemap.bin" ; $7c6f, 239 bytes
 LinkErrorAttrmap:
-	INCBIN "data/bank_03a/lz_LinkErrorAttrmap.bin" ; $7d5e, 92 bytes
+	INCBIN "data/gfx/lz_LinkErrorAttrmap.bin" ; $7d5e, 92 bytes
 LinkErrorPalettes:
-	INCLUDE "data/bank_03a/LinkErrorPalettes.asm" ; $7dba, 64 bytes (palettes)
+	INCLUDE "data/gfx/LinkErrorPalettes.asm" ; $7dba, 64 bytes (palettes)
 LinkErrorLabelTiles:
-	INCBIN "data/bank_03a/lz_LinkErrorLabelTiles.bin" ; $7dfa, 227 bytes
+	INCBIN "data/gfx/lz_LinkErrorLabelTiles.bin" ; $7dfa, 227 bytes
 	; $7edd, 291 bytes fill to bank end (linker-padded)

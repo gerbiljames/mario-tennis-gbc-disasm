@@ -383,13 +383,13 @@ CharGridScreenTable0:
 	db $5f, $01, $ff, $6b, $df, $01, $00, $00, $5f, $01, $ff, $6b, $1f, $00, $00, $00 ; 0x10
 	db $5f, $01, $ff, $6b, $4a, $7d, $00, $00 ; 0x20
 CharGridScreenGfx1:
-	INCBIN "data/bank_038/lz_CharGridScreenGfx1.bin" ; $50a7, 74 bytes
-	INCLUDE "data/bank_038/lz_CharGridScreenGfx1.inc" ; DEF CharGridScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx1.bin" ; $50a7, 74 bytes
+	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx1.inc" ; DEF CharGridScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
 CharGridScreenGfx2:
-	INCBIN "data/bank_038/CharGridScreenGfx2.bin" ; $50f1, 8 bytes
+	INCBIN "data/engine/menus/char_select/CharGridScreenGfx2.bin" ; $50f1, 8 bytes
 CharGridScreenGfx3:
-	INCBIN "data/bank_038/lz_CharGridScreenGfx3.bin" ; $50f9, 156 bytes
-	INCLUDE "data/bank_038/lz_CharGridScreenGfx3.inc" ; DEF CharGridScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx3.bin" ; $50f9, 156 bytes
+	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx3.inc" ; DEF CharGridScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
 HandleCharGridDpad:
 	push_wram_bank WRAM_SCREEN ; $5195
 	ld a, [wCharSelectSlot] ; $519e

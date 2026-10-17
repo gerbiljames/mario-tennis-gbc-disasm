@@ -1,5 +1,5 @@
 SaveSignature:
-	INCLUDE "data/bank_003/SaveSignature.asm" ; $47e9, 16 bytes
+	INCLUDE "data/engine/save/SaveSignature.asm" ; $47e9, 16 bytes
 WipeAllSaveRam:
 	ld e, $00 ; $47f9
 .loop:

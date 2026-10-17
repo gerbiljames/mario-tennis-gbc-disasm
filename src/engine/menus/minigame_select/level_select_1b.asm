@@ -40,12 +40,12 @@ Unused_1b_LoadUnlockDebugCursorGfx:
 	call RegisterFrameTask ; $6906
 	ret ; $6909
 UnlockDebugCursorGfx:
-	INCBIN "data/bank_01b/lz_UnlockDebugCursorGfx.bin" ; $690a, 29 bytes
-	INCLUDE "data/bank_01b/lz_UnlockDebugCursorGfx.inc" ; DEF UnlockDebugCursorGfx_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/minigame_select/lz_UnlockDebugCursorGfx.bin" ; $690a, 29 bytes
+	INCLUDE "data/engine/menus/minigame_select/lz_UnlockDebugCursorGfx.inc" ; DEF UnlockDebugCursorGfx_SIZE EQU its decoded length, generated from the .bin by make
 	; $6927, 9 bytes (fill)
 	ds 9, $00
 UnlockDebugCursorPalette:
-	INCLUDE "data/bank_01b/UnlockDebugCursorPalette.asm" ; $6930, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/minigame_select/UnlockDebugCursorPalette.asm" ; $6930, 8 bytes (palettes)
 Unused_1b_DrawUnlockDebugFlagSprites:
 	push_wram_bank WRAM_SCENE ; $6938
 	ld hl, wUnlockFlagsBlock + 2 ; $6941

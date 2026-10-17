@@ -104,7 +104,7 @@ ApplySelectionBoxWobbleY:
 	ld e, a ; $40ed
 	ret ; $40ee
 SelectionBoxWobbleYTable_3e:
-	INCBIN "data/bank_03e/SelectionBoxWobbleYTable_3e.bin" ; $40ef, 16 bytes
+	INCBIN "data/engine/menus/common/SelectionBoxWobbleYTable_3e.bin" ; $40ef, 16 bytes
 ; Instruction-identical to Unused_1b_DrawCornerBrackets, Unused_38_DrawCornerBrackets and Unused_3b_DrawCornerBrackets (one copy per bank); a change here belongs in every copy.
 	twin_in draw_corner_brackets, Unused_3e_DrawCornerBrackets, 3e ; $40ff Unused_3e_DrawCornerBrackets
 ; Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3b (one copy per bank); a change here belongs in every copy.

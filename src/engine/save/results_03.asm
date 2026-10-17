@@ -119,7 +119,7 @@ Unused_03_InvalidateCurrentSlotBlock:
 	ds 13, $00
 	ds ALIGN[4]
 SaveEditorCursorTiles_03:
-	INCBIN "data/bank_003/SaveEditorCursorTiles_03.bin" ; $52f0, 32 bytes
+	INCBIN "data/engine/save/SaveEditorCursorTiles_03.bin" ; $52f0, 32 bytes
 Unused_03_SaveSlotDebugEditor:
 	ld hl, SaveEditorCursorTiles_03 ; $5310
 	ld de, vTiles0 ; $5313

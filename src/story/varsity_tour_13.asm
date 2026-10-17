@@ -304,15 +304,15 @@ VarsityCourtTourLzPtrs_13:
 	dw VarsityCourtTourLz2_13 ; record 2
 	dw VarsityCourtTourLz3_13 ; record 3
 VarsityCourtTourLz0_13:
-	INCBIN "data/bank_013/lz_VarsityCourtTourLz0_13.bin" ; $6793, 158 bytes
+	INCBIN "data/story/lz_VarsityCourtTourLz0_13.bin" ; $6793, 158 bytes
 VarsityCourtTourLz1_13:
-	INCBIN "data/bank_013/lz_VarsityCourtTourLz1_13.bin" ; $6831, 157 bytes
+	INCBIN "data/story/lz_VarsityCourtTourLz1_13.bin" ; $6831, 157 bytes
 VarsityCourtTourLz2_13:
-	INCBIN "data/bank_013/lz_VarsityCourtTourLz2_13.bin" ; $68ce, 161 bytes
+	INCBIN "data/story/lz_VarsityCourtTourLz2_13.bin" ; $68ce, 161 bytes
 VarsityCourtTourLz3_13:
-	INCBIN "data/bank_013/lz_VarsityCourtTourLz3_13.bin" ; $696f, 153 bytes
+	INCBIN "data/story/lz_VarsityCourtTourLz3_13.bin" ; $696f, 153 bytes
 VarsityCourtTourPalette_13:
-	INCBIN "data/bank_013/VarsityCourtTourPalette_13.bin" ; $6a08, 8 bytes
+	INCBIN "data/story/VarsityCourtTourPalette_13.bin" ; $6a08, 8 bytes
 SetupStoryMinigameMatch0:
 	script_null_script ACTOR_VARSITY_COURT_A_FAY ; $6a10
 	script_set_anim ACTOR_VARSITY_COURT_A_FAY, ANIM_WALK ; $6a15

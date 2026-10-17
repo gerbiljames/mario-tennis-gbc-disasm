@@ -239,24 +239,24 @@ Unused_01:
 	db $00 ; $420f
 	ds ALIGN[4]
 MenuWindowTiles_01:
-	INCBIN "data/bank_001/MenuWindowTiles_01.bin" ; $4210, 256 bytes
+	INCBIN "data/engine/menus/main_menu/MenuWindowTiles_01.bin" ; $4210, 256 bytes
 	ds 256, $00 ; $4310, fill
 	ds ALIGN[4]
 MenuFontTiles_01:
-	INCBIN "data/bank_001/MenuFontTiles_01.bin" ; $4410, 512 bytes
+	INCBIN "data/engine/menus/main_menu/MenuFontTiles_01.bin" ; $4410, 512 bytes
 	ds ALIGN[4]
 MenuTilesBStagedTiles0:
-	INCBIN "data/bank_001/MenuTilesBStagedTiles0.bin" ; $4610, 512 bytes
+	INCBIN "data/engine/menus/main_menu/MenuTilesBStagedTiles0.bin" ; $4610, 512 bytes
 	ds ALIGN[4]
 MenuTilesBStagedTiles1:
-	INCBIN "data/bank_001/MenuTilesBStagedTiles1.bin" ; $4810, 512 bytes
+	INCBIN "data/engine/menus/main_menu/MenuTilesBStagedTiles1.bin" ; $4810, 512 bytes
 	ds ALIGN[4]
 MenuFontFillTiles_01:
 	; $4a10, 1536 bytes (pattern)
 	ds 1536, $ff, $00
 	ds ALIGN[4]
 MenuFontPalettes_01:
-	INCLUDE "data/bank_001/MenuFontPalettes_01.asm" ; $5010, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/main_menu/MenuFontPalettes_01.asm" ; $5010, 64 bytes (palettes)
 LoadMenuFontPalette:
 	push af ; $5050
 	push bc ; $5051
@@ -349,7 +349,7 @@ LoadMenuFontGfxStaged:
 	call LoadMenuTilesBStaged ; $50f2
 	ret ; $50f5
 DebugMenuPalettes_01:
-	INCLUDE "data/bank_001/DebugMenuPalettes_01.asm" ; $50f6, 128 bytes (palettes)
+	INCLUDE "data/engine/menus/main_menu/DebugMenuPalettes_01.asm" ; $50f6, 128 bytes (palettes)
 Unused_01_LoadMenuBgPalettes3To7:
 	push af ; $5176
 	push bc ; $5177
@@ -389,13 +389,13 @@ LoadDebugMenuPalette:
 	ds 5, $00
 	ds ALIGN[4]
 UnusedJpWindowTiles_01:
-	INCBIN "data/bank_001/UnusedJpWindowTiles_01.bin" ; $51b0, 256 bytes
+	INCBIN "data/engine/menus/main_menu/UnusedJpWindowTiles_01.bin" ; $51b0, 256 bytes
 	ds 256, $00 ; $52b0, fill
 	ds ALIGN[4]
 UnusedJpFontTiles_01:
-	INCBIN "data/bank_001/UnusedJpFontTiles_01.bin" ; $53b0, 3136 bytes
+	INCBIN "data/engine/menus/main_menu/UnusedJpFontTiles_01.bin" ; $53b0, 3136 bytes
 UnusedJpFontPalettes_01:
-	INCLUDE "data/bank_001/UnusedJpFontPalettes_01.asm" ; $5ff0, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/main_menu/UnusedJpFontPalettes_01.asm" ; $5ff0, 64 bytes (palettes)
 ShowDmgLockoutScreen:
 	ld a, $00 ; $6030
 	ldh [rLCDC], a ; $6032
@@ -430,9 +430,9 @@ ShowDmgLockoutScreen:
 	call AdvanceFrame ; $6077
 	jr .loop ; $607a
 DmgLockoutTilesLZ_01:
-	INCBIN "data/bank_001/lz_DmgLockoutTilesLZ_01.bin" ; $607c, 2183 bytes
+	INCBIN "data/engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin" ; $607c, 2183 bytes
 DmgLockoutTilemapLZ_01:
-	INCBIN "data/bank_001/lz_DmgLockoutTilemapLZ_01.bin" ; $6903, 344 bytes
+	INCBIN "data/engine/menus/main_menu/lz_DmgLockoutTilemapLZ_01.bin" ; $6903, 344 bytes
 Unused_01_RunSoundTest:
 	push af ; $6a5b
 	push bc ; $6a5c
@@ -600,9 +600,9 @@ Unused_01_RunSoundTest:
 .continueLoop:
 	jp .loop ; $6b61
 SoundTestStrings_01:
-	INCLUDE "data/bank_001/SoundTestStrings_01.asm" ; $6b64, 6 bytes (sound_data)
+	INCLUDE "data/engine/menus/main_menu/SoundTestStrings_01.asm" ; $6b64, 6 bytes (sound_data)
 SoundTestString0:
-	INCLUDE "data/bank_001/SoundTestString0.asm" ; $6b6a, 7 bytes
+	INCLUDE "data/engine/menus/main_menu/SoundTestString0.asm" ; $6b6a, 7 bytes
 SoundTestString1:
 	db $3e ; $6b71
 	db $00 ; $6b72
@@ -610,7 +610,7 @@ SoundTestString2:
 	db $20 ; $6b73
 	db $00 ; $6b74
 SoundTestSoundsA_01:
-	INCLUDE "data/bank_001/SoundTestSoundsA_01.asm" ; $6b75, 63 bytes (sound_data)
+	INCLUDE "data/engine/menus/main_menu/SoundTestSoundsA_01.asm" ; $6b75, 63 bytes (sound_data)
 SoundTestSoundsB_01:
-	INCLUDE "data/bank_001/SoundTestSoundsB_01.asm" ; $6bb4, 114 bytes (sound_data)
+	INCLUDE "data/engine/menus/main_menu/SoundTestSoundsB_01.asm" ; $6bb4, 114 bytes (sound_data)
 	; $6c26, 5082 bytes fill to bank end (linker-padded)

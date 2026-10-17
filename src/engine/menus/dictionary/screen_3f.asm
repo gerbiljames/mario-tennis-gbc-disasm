@@ -453,37 +453,37 @@ TennisDictionaryClearList2:
 	dw $d050, $0001 ; record 12
 	dw $d05e, $0001 ; record 13
 TennisDictionaryListDataChar6:
-	INCBIN "data/bank_03f/lz_TennisDictionaryListDataChar6.bin" ; $44bf, 130 bytes
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListDataChar6.bin" ; $44bf, 130 bytes
 TennisDictionaryListDataDefault:
-	INCBIN "data/bank_03f/lz_TennisDictionaryListDataDefault.bin" ; $4541, 91 bytes
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListDataDefault.bin" ; $4541, 91 bytes
 TennisDictionaryListData:
-	INCBIN "data/bank_03f/lz_TennisDictionaryListData.bin" ; $459c, 367 bytes
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListData.bin" ; $459c, 367 bytes
 TennisDictionaryListDataAlt:
-	INCBIN "data/bank_03f/lz_TennisDictionaryListDataAlt.bin" ; $470b, 163 bytes
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListDataAlt.bin" ; $470b, 163 bytes
 TennisDictionaryPalettesChar6:
-	INCLUDE "data/bank_03f/TennisDictionaryPalettesChar6.asm" ; $47ae, 72 bytes (palettes)
+	INCLUDE "data/engine/menus/dictionary/TennisDictionaryPalettesChar6.asm" ; $47ae, 72 bytes (palettes)
 TennisDictionaryPalettesDefault:
-	INCLUDE "data/bank_03f/TennisDictionaryPalettesDefault.asm" ; $47f6, 72 bytes (palettes)
+	INCLUDE "data/engine/menus/dictionary/TennisDictionaryPalettesDefault.asm" ; $47f6, 72 bytes (palettes)
 TennisDictionaryTiles8000:
-	INCBIN "data/bank_03f/lz_TennisDictionaryTiles8000.bin" ; $483e, 287 bytes
-	INCLUDE "data/bank_03f/lz_TennisDictionaryTiles8000.inc" ; DEF TennisDictionaryTiles8000_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTiles8000.bin" ; $483e, 287 bytes
+	INCLUDE "data/engine/menus/dictionary/lz_TennisDictionaryTiles8000.inc" ; DEF TennisDictionaryTiles8000_SIZE EQU its decoded length, generated from the .bin by make
 TennisDictionaryTiles8200:
-	INCBIN "data/bank_03f/lz_TennisDictionaryTiles8200.bin" ; $495d, 322 bytes
-	INCLUDE "data/bank_03f/lz_TennisDictionaryTiles8200.inc" ; DEF TennisDictionaryTiles8200_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTiles8200.bin" ; $495d, 322 bytes
+	INCLUDE "data/engine/menus/dictionary/lz_TennisDictionaryTiles8200.inc" ; DEF TennisDictionaryTiles8200_SIZE EQU its decoded length, generated from the .bin by make
 TennisDictionaryTiles8400:
-	INCBIN "data/bank_03f/lz_TennisDictionaryTiles8400.bin" ; $4a9f, 310 bytes
-	INCLUDE "data/bank_03f/lz_TennisDictionaryTiles8400.inc" ; DEF TennisDictionaryTiles8400_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTiles8400.bin" ; $4a9f, 310 bytes
+	INCLUDE "data/engine/menus/dictionary/lz_TennisDictionaryTiles8400.inc" ; DEF TennisDictionaryTiles8400_SIZE EQU its decoded length, generated from the .bin by make
 TennisDictionaryTilesA000:
-	INCBIN "data/bank_03f/lz_TennisDictionaryTilesA000.bin" ; $4bd5, 180 bytes
-	INCLUDE "data/bank_03f/lz_TennisDictionaryTilesA000.inc" ; DEF TennisDictionaryTilesA000_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTilesA000.bin" ; $4bd5, 180 bytes
+	INCLUDE "data/engine/menus/dictionary/lz_TennisDictionaryTilesA000.inc" ; DEF TennisDictionaryTilesA000_SIZE EQU its decoded length, generated from the .bin by make
 TennisDictionaryTilesA200:
-	INCBIN "data/bank_03f/lz_TennisDictionaryTilesA200.bin" ; $4c89, 258 bytes
-	INCLUDE "data/bank_03f/lz_TennisDictionaryTilesA200.inc" ; DEF TennisDictionaryTilesA200_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTilesA200.bin" ; $4c89, 258 bytes
+	INCLUDE "data/engine/menus/dictionary/lz_TennisDictionaryTilesA200.inc" ; DEF TennisDictionaryTilesA200_SIZE EQU its decoded length, generated from the .bin by make
 TennisDictionaryTilesA400:
-	INCBIN "data/bank_03f/lz_TennisDictionaryTilesA400.bin" ; $4d8b, 174 bytes
-	INCLUDE "data/bank_03f/lz_TennisDictionaryTilesA400.inc" ; DEF TennisDictionaryTilesA400_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTilesA400.bin" ; $4d8b, 174 bytes
+	INCLUDE "data/engine/menus/dictionary/lz_TennisDictionaryTilesA400.inc" ; DEF TennisDictionaryTilesA400_SIZE EQU its decoded length, generated from the .bin by make
 TennisDictionaryPalettes:
-	INCLUDE "data/bank_03f/TennisDictionaryPalettes.asm" ; $4e39, 48 bytes (palettes)
+	INCLUDE "data/engine/menus/dictionary/TennisDictionaryPalettes.asm" ; $4e39, 48 bytes (palettes)
 EndTennisDictionaryAnim:
 	ld a, [wTennisDictAnimState] ; $4e69
 	cp $03 ; $4e6c
@@ -728,9 +728,9 @@ UpdateTennisDictionarySprites_SpriteTemplate1:
 	oam_sprite $00, $08, $02, $00
 	oam_sprite_end
 TennisDictionarySprites1:
-	INCBIN "data/bank_03f/TennisDictionarySprites1.bin" ; $5028, 80 bytes
+	INCBIN "data/engine/menus/dictionary/TennisDictionarySprites1.bin" ; $5028, 80 bytes
 TennisDictionarySprites2:
-	INCBIN "data/bank_03f/TennisDictionarySprites2.bin" ; $5078, 88 bytes
+	INCBIN "data/engine/menus/dictionary/TennisDictionarySprites2.bin" ; $5078, 88 bytes
 UpdateTennisDictionarySprites_SpriteTemplate2:
 	; $50d0, 9 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00

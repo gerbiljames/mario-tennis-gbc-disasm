@@ -424,7 +424,7 @@ Unused_05_DrawGlyphString:
 	ds 10, $00
 	ds ALIGN[4]
 FontGlyphs:
-	INCBIN "data/bank_005/FontGlyphs.bin" ; $7920, 1632 bytes
+	INCBIN "data/engine/text/FontGlyphs.bin" ; $7920, 1632 bytes
 GlyphWidths_05:
 	; $7f80, 96 bytes (bytes:16)
 	db $05, $04, $06, $06, $06, $06, $07, $04, $04, $04, $06, $06, $04, $06, $04, $06 ; 0x00

@@ -47,48 +47,48 @@ DataPtr_PeachsCastleSceneUnusedSlot:
 DataPtr_PeachsCastleTiles:
 	dw PeachsCastleTiles ; $402e
 Court2SceneConfig:
-	INCBIN "data/bank_068/Court2SceneConfig.bin" ; $4030, 42 bytes
+	INCBIN "data/scenes/Court2SceneConfig.bin" ; $4030, 42 bytes
 Court2Palettes:
-	INCLUDE "data/bank_068/Court2Palettes.asm" ; $405a, 64 bytes (palettes)
+	INCLUDE "data/scenes/Court2Palettes.asm" ; $405a, 64 bytes (palettes)
 Court2Tiles:
-	INCBIN "data/bank_068/lz_Court2Tiles.bin" ; $409a, 3032 bytes
+	INCBIN "data/scenes/lz_Court2Tiles.bin" ; $409a, 3032 bytes
 Court2Tilemap:
-	INCBIN "data/bank_068/lz_Court2Tilemap.bin" ; $4c72, 1173 bytes
+	INCBIN "data/scenes/lz_Court2Tilemap.bin" ; $4c72, 1173 bytes
 Court2Attrmap:
-	INCBIN "data/bank_068/lz_Court2Attrmap.bin" ; $5107, 702 bytes
+	INCBIN "data/scenes/lz_Court2Attrmap.bin" ; $5107, 702 bytes
 Court2CollisionMap:
-	INCBIN "data/bank_068/lz_Court2CollisionMap.bin" ; $53c5, 108 bytes
+	INCBIN "data/scenes/lz_Court2CollisionMap.bin" ; $53c5, 108 bytes
 Court2BehaviorMap:
-	INCBIN "data/bank_068/lz_Court2BehaviorMap.bin" ; $5431, 74 bytes
+	INCBIN "data/scenes/lz_Court2BehaviorMap.bin" ; $5431, 74 bytes
 CenterCourtMapSceneConfig:
-	INCBIN "data/bank_068/CenterCourtMapSceneConfig.bin" ; $547b, 42 bytes
+	INCBIN "data/scenes/CenterCourtMapSceneConfig.bin" ; $547b, 42 bytes
 CenterCourtMapPalettes:
-	INCLUDE "data/bank_068/CenterCourtMapPalettes.asm" ; $54a5, 64 bytes (palettes)
+	INCLUDE "data/scenes/CenterCourtMapPalettes.asm" ; $54a5, 64 bytes (palettes)
 CenterCourtMapTiles:
-	INCBIN "data/bank_068/lz_CenterCourtMapTiles.bin" ; $54e5, 2108 bytes
+	INCBIN "data/scenes/lz_CenterCourtMapTiles.bin" ; $54e5, 2108 bytes
 CenterCourtMapTilemap:
-	INCBIN "data/bank_068/lz_CenterCourtMapTilemap.bin" ; $5d21, 1091 bytes
+	INCBIN "data/scenes/lz_CenterCourtMapTilemap.bin" ; $5d21, 1091 bytes
 CenterCourtMapAttrmap:
-	INCBIN "data/bank_068/lz_CenterCourtMapAttrmap.bin" ; $6164, 620 bytes
+	INCBIN "data/scenes/lz_CenterCourtMapAttrmap.bin" ; $6164, 620 bytes
 CenterCourtMapCollisionMap:
-	INCBIN "data/bank_068/lz_CenterCourtMapCollisionMap.bin" ; $63d0, 101 bytes
+	INCBIN "data/scenes/lz_CenterCourtMapCollisionMap.bin" ; $63d0, 101 bytes
 CenterCourtMapBehaviorMap:
-	INCBIN "data/bank_068/lz_CenterCourtMapBehaviorMap.bin" ; $6435, 75 bytes
+	INCBIN "data/scenes/lz_CenterCourtMapBehaviorMap.bin" ; $6435, 75 bytes
 PeachsCastleSceneConfig:
-	INCBIN "data/bank_068/PeachsCastleSceneConfig.bin" ; $6480, 23 bytes
+	INCBIN "data/scenes/PeachsCastleSceneConfig.bin" ; $6480, 23 bytes
 PeachsCastlePalettes:
-	INCLUDE "data/bank_068/PeachsCastlePalettes.asm" ; $6497, 64 bytes (palettes)
+	INCLUDE "data/scenes/PeachsCastlePalettes.asm" ; $6497, 64 bytes (palettes)
 PeachsCastleTiles:
-	INCBIN "data/bank_068/lz_PeachsCastleTiles.bin" ; $64d7, 2325 bytes
+	INCBIN "data/scenes/lz_PeachsCastleTiles.bin" ; $64d7, 2325 bytes
 PeachsCastleTilemap:
-	INCBIN "data/bank_068/lz_PeachsCastleTilemap.bin" ; $6dec, 849 bytes
+	INCBIN "data/scenes/lz_PeachsCastleTilemap.bin" ; $6dec, 849 bytes
 PeachsCastleAttrmap:
-	INCBIN "data/bank_068/lz_PeachsCastleAttrmap.bin" ; $713d, 595 bytes
+	INCBIN "data/scenes/lz_PeachsCastleAttrmap.bin" ; $713d, 595 bytes
 PeachsCastleCollisionMap:
-	INCBIN "data/bank_068/lz_PeachsCastleCollisionMap.bin" ; $7390, 103 bytes
+	INCBIN "data/scenes/lz_PeachsCastleCollisionMap.bin" ; $7390, 103 bytes
 PeachsCastleBehaviorMap:
-	INCBIN "data/bank_068/lz_PeachsCastleBehaviorMap.bin" ; $73f7, 74 bytes
+	INCBIN "data/scenes/lz_PeachsCastleBehaviorMap.bin" ; $73f7, 74 bytes
 	; $7441, 15 bytes (fill)
 	ds 15, $00
 PeachsCastleSceneUnusedSlot:
-	INCBIN "data/bank_068/PeachsCastleSceneUnusedSlot.bin" ; $7450, 2992 bytes
+	INCBIN "data/scenes/PeachsCastleSceneUnusedSlot.bin" ; $7450, 2992 bytes

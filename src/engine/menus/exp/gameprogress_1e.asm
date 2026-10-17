@@ -443,27 +443,27 @@ LoadGameProgressScreenTiles:
 	call LoadPaletteShadow ; $75a2
 	ret ; $75a5
 GameProgressHeaderGfx_1e:
-	INCBIN "data/bank_01e/lz_GameProgressHeaderGfx_1e.bin" ; $75a6, 236 bytes
-	INCLUDE "data/bank_01e/lz_GameProgressHeaderGfx_1e.inc" ; DEF GameProgressHeaderGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_GameProgressHeaderGfx_1e.bin" ; $75a6, 236 bytes
+	INCLUDE "data/engine/menus/exp/lz_GameProgressHeaderGfx_1e.inc" ; DEF GameProgressHeaderGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
 GameProgressHeaderTilemap_1e:
-	INCBIN "data/bank_01e/lz_GameProgressHeaderTilemap_1e.bin" ; $7692, 80 bytes
-	INCLUDE "data/bank_01e/lz_GameProgressHeaderTilemap_1e.inc" ; DEF GameProgressHeaderTilemap_1e_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_GameProgressHeaderTilemap_1e.bin" ; $7692, 80 bytes
+	INCLUDE "data/engine/menus/exp/lz_GameProgressHeaderTilemap_1e.inc" ; DEF GameProgressHeaderTilemap_1e_SIZE EQU its decoded length, generated from the .bin by make
 GameProgressHeaderAttrmap_1e:
-	INCBIN "data/bank_01e/lz_GameProgressHeaderAttrmap_1e.bin" ; $76e2, 24 bytes
+	INCBIN "data/engine/menus/exp/lz_GameProgressHeaderAttrmap_1e.bin" ; $76e2, 24 bytes
 	; $76fa, 6 bytes (fill)
 	ds 6, $00
 GameProgressScreenPalettes0:
-	INCLUDE "data/bank_01e/GameProgressScreenPalettes0.asm" ; $7700, 16 bytes (palettes)
+	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes0.asm" ; $7700, 16 bytes (palettes)
 	ds ALIGN[4]
 GameProgressScreenTiles0:
-	INCBIN "data/bank_01e/GameProgressScreenTiles0.bin" ; $7710, 256 bytes
+	INCBIN "data/engine/menus/exp/GameProgressScreenTiles0.bin" ; $7710, 256 bytes
 GameProgressScreenPalettes1:
-	INCLUDE "data/bank_01e/GameProgressScreenPalettes1.asm" ; $7810, 16 bytes (palettes)
+	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes1.asm" ; $7810, 16 bytes (palettes)
 	ds ALIGN[4]
 GameProgressScreenTiles1:
-	INCBIN "data/bank_01e/GameProgressScreenTiles1.bin" ; $7820, 320 bytes
+	INCBIN "data/engine/menus/exp/GameProgressScreenTiles1.bin" ; $7820, 320 bytes
 	ds ALIGN[4]
 GameProgressScreenTiles2:
-	INCBIN "data/bank_01e/GameProgressScreenTiles2.bin" ; $7960, 128 bytes
+	INCBIN "data/engine/menus/exp/GameProgressScreenTiles2.bin" ; $7960, 128 bytes
 GameProgressScreenPalettes2:
-	INCLUDE "data/bank_01e/GameProgressScreenPalettes2.asm" ; $79e0, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes2.asm" ; $79e0, 8 bytes (palettes)

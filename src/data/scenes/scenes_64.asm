@@ -47,48 +47,48 @@ DataPtr_CourtyardSceneUnusedSlot:
 DataPtr_CourtyardTiles:
 	dw CourtyardTiles ; $402e
 DormRoomSceneConfig:
-	INCBIN "data/bank_064/DormRoomSceneConfig.bin" ; $4030, 42 bytes
+	INCBIN "data/scenes/DormRoomSceneConfig.bin" ; $4030, 42 bytes
 DormRoomPalettes:
-	INCLUDE "data/bank_064/DormRoomPalettes.asm" ; $405a, 64 bytes (palettes)
+	INCLUDE "data/scenes/DormRoomPalettes.asm" ; $405a, 64 bytes (palettes)
 DormRoomTiles:
-	INCBIN "data/bank_064/lz_DormRoomTiles.bin" ; $409a, 2307 bytes
+	INCBIN "data/scenes/lz_DormRoomTiles.bin" ; $409a, 2307 bytes
 DormRoomTilemap:
-	INCBIN "data/bank_064/lz_DormRoomTilemap.bin" ; $499d, 706 bytes
+	INCBIN "data/scenes/lz_DormRoomTilemap.bin" ; $499d, 706 bytes
 DormRoomAttrmap:
-	INCBIN "data/bank_064/lz_DormRoomAttrmap.bin" ; $4c5f, 511 bytes
+	INCBIN "data/scenes/lz_DormRoomAttrmap.bin" ; $4c5f, 511 bytes
 DormRoomCollisionMap:
-	INCBIN "data/bank_064/lz_DormRoomCollisionMap.bin" ; $4e5e, 118 bytes
+	INCBIN "data/scenes/lz_DormRoomCollisionMap.bin" ; $4e5e, 118 bytes
 DormRoomBehaviorMap:
-	INCBIN "data/bank_064/lz_DormRoomBehaviorMap.bin" ; $4ed4, 72 bytes
+	INCBIN "data/scenes/lz_DormRoomBehaviorMap.bin" ; $4ed4, 72 bytes
 RestaurantPlazaSceneConfig:
-	INCBIN "data/bank_064/RestaurantPlazaSceneConfig.bin" ; $4f1c, 42 bytes
+	INCBIN "data/scenes/RestaurantPlazaSceneConfig.bin" ; $4f1c, 42 bytes
 RestaurantPlazaPalettes:
-	INCLUDE "data/bank_064/RestaurantPlazaPalettes.asm" ; $4f46, 64 bytes (palettes)
+	INCLUDE "data/scenes/RestaurantPlazaPalettes.asm" ; $4f46, 64 bytes (palettes)
 RestaurantPlazaTiles:
-	INCBIN "data/bank_064/lz_RestaurantPlazaTiles.bin" ; $4f86, 3238 bytes
+	INCBIN "data/scenes/lz_RestaurantPlazaTiles.bin" ; $4f86, 3238 bytes
 RestaurantPlazaTilemap:
-	INCBIN "data/bank_064/lz_RestaurantPlazaTilemap.bin" ; $5c2c, 802 bytes
+	INCBIN "data/scenes/lz_RestaurantPlazaTilemap.bin" ; $5c2c, 802 bytes
 RestaurantPlazaAttrmap:
-	INCBIN "data/bank_064/lz_RestaurantPlazaAttrmap.bin" ; $5f4e, 411 bytes
+	INCBIN "data/scenes/lz_RestaurantPlazaAttrmap.bin" ; $5f4e, 411 bytes
 RestaurantPlazaCollisionMap:
-	INCBIN "data/bank_064/lz_RestaurantPlazaCollisionMap.bin" ; $60e9, 80 bytes
+	INCBIN "data/scenes/lz_RestaurantPlazaCollisionMap.bin" ; $60e9, 80 bytes
 RestaurantPlazaBehaviorMap:
-	INCBIN "data/bank_064/lz_RestaurantPlazaBehaviorMap.bin" ; $6139, 90 bytes
+	INCBIN "data/scenes/lz_RestaurantPlazaBehaviorMap.bin" ; $6139, 90 bytes
 CourtyardSceneConfig:
-	INCBIN "data/bank_064/CourtyardSceneConfig.bin" ; $6193, 27 bytes
+	INCBIN "data/scenes/CourtyardSceneConfig.bin" ; $6193, 27 bytes
 CourtyardPalettes:
-	INCLUDE "data/bank_064/CourtyardPalettes.asm" ; $61ae, 64 bytes (palettes)
+	INCLUDE "data/scenes/CourtyardPalettes.asm" ; $61ae, 64 bytes (palettes)
 CourtyardTiles:
-	INCBIN "data/bank_064/lz_CourtyardTiles.bin" ; $61ee, 3100 bytes
+	INCBIN "data/scenes/lz_CourtyardTiles.bin" ; $61ee, 3100 bytes
 CourtyardTilemap:
-	INCBIN "data/bank_064/lz_CourtyardTilemap.bin" ; $6e0a, 1429 bytes
+	INCBIN "data/scenes/lz_CourtyardTilemap.bin" ; $6e0a, 1429 bytes
 CourtyardAttrmap:
-	INCBIN "data/bank_064/lz_CourtyardAttrmap.bin" ; $739f, 679 bytes
+	INCBIN "data/scenes/lz_CourtyardAttrmap.bin" ; $739f, 679 bytes
 CourtyardCollisionMap:
-	INCBIN "data/bank_064/lz_CourtyardCollisionMap.bin" ; $7646, 147 bytes
+	INCBIN "data/scenes/lz_CourtyardCollisionMap.bin" ; $7646, 147 bytes
 CourtyardBehaviorMap:
-	INCBIN "data/bank_064/lz_CourtyardBehaviorMap.bin" ; $76d9, 79 bytes
+	INCBIN "data/scenes/lz_CourtyardBehaviorMap.bin" ; $76d9, 79 bytes
 	; $7728, 8 bytes (fill)
 	ds 8, $00
 CourtyardSceneUnusedSlot:
-	INCBIN "data/bank_064/CourtyardSceneUnusedSlot.bin" ; $7730, 2256 bytes
+	INCBIN "data/scenes/CourtyardSceneUnusedSlot.bin" ; $7730, 2256 bytes

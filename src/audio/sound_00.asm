@@ -32,7 +32,7 @@ PlaySoundCmd:
 	ld a, [hl] ; $2fdd
 	jr PlaySoundCmd.step3 ; $2fde
 JingleSoundIds:
-	INCLUDE "data/bank_000/JingleSoundIds.asm" ; $2fe0, 6 bytes (sound_data)
+	INCLUDE "data/audio/JingleSoundIds.asm" ; $2fe0, 6 bytes (sound_data)
 PlaySoundCmd.lt40:
 	ld d, a ; $2fe6
 	ldh a, [hActiveJingle] ; $2fe7
@@ -259,9 +259,9 @@ StopMusic:
 	pop af ; $314f
 	ret ; $3150
 MusicIndexTable:
-	INCLUDE "data/bank_000/MusicIndexTable.asm" ; $3151, 100 bytes (sound_index)
+	INCLUDE "data/audio/MusicIndexTable.asm" ; $3151, 100 bytes (sound_index)
 SfxIndexTable:
-	INCLUDE "data/bank_000/SfxIndexTable.asm" ; $31b5, 226 bytes (sound_index)
+	INCLUDE "data/audio/SfxIndexTable.asm" ; $31b5, 226 bytes (sound_index)
 PlaySound:
 	and a ; $3297
 	jp z, StopMusic ; $3298

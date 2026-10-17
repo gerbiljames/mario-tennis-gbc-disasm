@@ -136,18 +136,18 @@ HasPendingExpAwards:
 	ld a, $01 ; $5bde
 	ret ; $5be0
 ExpAwardScreenPalettes0:
-	INCLUDE "data/bank_01e/ExpAwardScreenPalettes0.asm" ; $5be1, 24 bytes (palettes)
+	INCLUDE "data/engine/menus/exp/ExpAwardScreenPalettes0.asm" ; $5be1, 24 bytes (palettes)
 ExpAwardScreenGfx_1e:
-	INCBIN "data/bank_01e/lz_ExpAwardScreenGfx_1e.bin" ; $5bf9, 1745 bytes
+	INCBIN "data/engine/menus/exp/lz_ExpAwardScreenGfx_1e.bin" ; $5bf9, 1745 bytes
 ExpAwardScreenTilemap_1e:
-	INCBIN "data/bank_01e/lz_ExpAwardScreenTilemap_1e.bin" ; $62ca, 389 bytes
+	INCBIN "data/engine/menus/exp/lz_ExpAwardScreenTilemap_1e.bin" ; $62ca, 389 bytes
 ExpAwardScreenAttrmap_1e:
-	INCBIN "data/bank_01e/lz_ExpAwardScreenAttrmap_1e.bin" ; $644f, 70 bytes
+	INCBIN "data/engine/menus/exp/lz_ExpAwardScreenAttrmap_1e.bin" ; $644f, 70 bytes
 ExpAwardScreenPalettes1:
-	INCLUDE "data/bank_01e/ExpAwardScreenPalettes1.asm" ; $6495, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/exp/ExpAwardScreenPalettes1.asm" ; $6495, 8 bytes (palettes)
 ExpDigitSpriteGfx_1e:
-	INCBIN "data/bank_01e/lz_ExpDigitSpriteGfx_1e.bin" ; $649d, 150 bytes
-	INCLUDE "data/bank_01e/lz_ExpDigitSpriteGfx_1e.inc" ; DEF ExpDigitSpriteGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDigitSpriteGfx_1e.bin" ; $649d, 150 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDigitSpriteGfx_1e.inc" ; DEF ExpDigitSpriteGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
 StubNop_1e:
 	ret ; $6533
 ProcessMatchRewards:

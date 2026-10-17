@@ -206,7 +206,7 @@ LoadStoryObjPalettes:
 	call LoadPaletteShadow ; $533d
 	ret ; $5340
 StoryObjPalettes:
-	INCLUDE "data/bank_00a/StoryObjPalettes.asm" ; $5341, 40 bytes (palettes)
+	INCLUDE "data/engine/story/StoryObjPalettes.asm" ; $5341, 40 bytes (palettes)
 GetTileTriggerAtPlayer:
 	push bc ; $5369
 	push de ; $536a

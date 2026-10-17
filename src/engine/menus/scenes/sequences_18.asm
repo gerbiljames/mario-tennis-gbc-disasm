@@ -96,7 +96,7 @@ FillAllBgPalettes:
 	farcall QueueWram3MapToVRAM ; $78a5
 	ret ; $78a8
 AllBgPalettes:
-	INCLUDE "data/bank_018/AllBgPalettes.asm" ; $78a9, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/AllBgPalettes.asm" ; $78a9, 8 bytes (palettes)
 LoadScreen1ObjTiles:
 	ld b, TILEBLOCK_Screen1ObjGfx ; $78b1
 	ld c, Screen1ObjGfx_SIZE / 16 ; $78b3
@@ -107,7 +107,7 @@ LoadScreen1ObjTiles:
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
 Screen1ObjPalette:
-	INCLUDE "data/bank_018/Screen1ObjPalette.asm" ; $78c5, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/Screen1ObjPalette.asm" ; $78c5, 8 bytes (palettes)
 QueueScreen1Sprites:
 	ld hl, QueueScreen1Sprites_SpriteTemplate ; $78cd
 	ld_xy de, $28, $3a ; $78d0
@@ -262,7 +262,7 @@ LoadScreen2ObjTiles:
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
 Screen2ObjPalette:
-	INCLUDE "data/bank_018/Screen2ObjPalette.asm" ; $7a41, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/Screen2ObjPalette.asm" ; $7a41, 8 bytes (palettes)
 QueueScreen2Sprites:
 	ld hl, QueueScreen2Sprites_SpriteTemplate ; $7a49
 	ld_xy de, $28, $40 ; $7a4c
@@ -310,7 +310,7 @@ TaskFadeInPalette_18:
 	pop_wram_bank ; $7aaf
 	ret ; $7ab4
 PaletteFadeTable_18:
-	INCLUDE "data/bank_018/PaletteFadeTable_18.asm" ; $7ab5, 128 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/PaletteFadeTable_18.asm" ; $7ab5, 128 bytes (palettes)
 Unused_18_StubRet3:
 	ret ; $7b35
 TaskDrawObjectSprites_18:

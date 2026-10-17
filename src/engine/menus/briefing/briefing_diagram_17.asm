@@ -359,57 +359,57 @@ LoadCourtDiagramObjPalettes:
 	call LoadPaletteShadow ; $4b13
 	ret ; $4b16
 CourtDiagramTiles:
-	INCBIN "data/bank_017/lz_CourtDiagramTiles.bin" ; $4b17, 590 bytes
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramTiles.bin" ; $4b17, 590 bytes
 CourtDiagramTilemap:
-	INCBIN "data/bank_017/lz_CourtDiagramTilemap.bin" ; $4d65, 221 bytes
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramTilemap.bin" ; $4d65, 221 bytes
 CourtDiagramAttrmap:
-	INCBIN "data/bank_017/lz_CourtDiagramAttrmap.bin" ; $4e42, 128 bytes
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramAttrmap.bin" ; $4e42, 128 bytes
 CourtDiagramPalettes:
-	INCLUDE "data/bank_017/CourtDiagramPalettes.asm" ; $4ec2, 16 bytes (palettes)
+	INCLUDE "data/engine/menus/briefing/CourtDiagramPalettes.asm" ; $4ec2, 16 bytes (palettes)
 CycleDiagramTargetPaletteData:
-	INCLUDE "data/bank_017/CycleDiagramTargetPaletteData.asm" ; $4ed2, 48 bytes (palettes)
+	INCLUDE "data/engine/menus/briefing/CycleDiagramTargetPaletteData.asm" ; $4ed2, 48 bytes (palettes)
 CourtDiagramGfx0:
-	INCBIN "data/bank_017/CourtDiagramGfx0.bin" ; $4f02, 59 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx0.bin" ; $4f02, 59 bytes
 CourtDiagramGfx1:
-	INCBIN "data/bank_017/CourtDiagramGfx1.bin" ; $4f3d, 63 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx1.bin" ; $4f3d, 63 bytes
 CourtDiagramGfx2:
-	INCBIN "data/bank_017/CourtDiagramGfx2.bin" ; $4f7c, 143 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx2.bin" ; $4f7c, 143 bytes
 CourtDiagramGfx3:
-	INCBIN "data/bank_017/CourtDiagramGfx3.bin" ; $500b, 143 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx3.bin" ; $500b, 143 bytes
 CourtDiagramGfx4:
-	INCBIN "data/bank_017/CourtDiagramGfx4.bin" ; $509a, 147 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx4.bin" ; $509a, 147 bytes
 CourtDiagramGfx5:
-	INCBIN "data/bank_017/CourtDiagramGfx5.bin" ; $512d, 98 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx5.bin" ; $512d, 98 bytes
 CourtDiagramGfx6:
-	INCBIN "data/bank_017/CourtDiagramGfx6.bin" ; $518f, 98 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx6.bin" ; $518f, 98 bytes
 CourtDiagramGfx7:
-	INCBIN "data/bank_017/CourtDiagramGfx7.bin" ; $51f1, 143 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx7.bin" ; $51f1, 143 bytes
 CourtDiagramGfx8:
-	INCBIN "data/bank_017/CourtDiagramGfx8.bin" ; $5280, 143 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx8.bin" ; $5280, 143 bytes
 CourtDiagramGfx9:
-	INCBIN "data/bank_017/CourtDiagramGfx9.bin" ; $530f, 145 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx9.bin" ; $530f, 145 bytes
 CourtDiagramGfx10:
-	INCBIN "data/bank_017/CourtDiagramGfx10.bin" ; $53a0, 105 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx10.bin" ; $53a0, 105 bytes
 CourtDiagramGfx11:
-	INCBIN "data/bank_017/CourtDiagramGfx11.bin" ; $5409, 100 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx11.bin" ; $5409, 100 bytes
 CourtDiagramGfx12:
-	INCBIN "data/bank_017/CourtDiagramGfx12.bin" ; $546d, 74 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx12.bin" ; $546d, 74 bytes
 CourtDiagramGfx13:
-	INCBIN "data/bank_017/lz_CourtDiagramGfx13.bin" ; $54b7, 33 bytes
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx13.bin" ; $54b7, 33 bytes
 CourtDiagramGfx14:
-	INCBIN "data/bank_017/CourtDiagramGfx14.bin" ; $54d8, 39 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx14.bin" ; $54d8, 39 bytes
 CourtDiagramGfx15:
-	INCBIN "data/bank_017/CourtDiagramGfx15.bin" ; $54ff, 18 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx15.bin" ; $54ff, 18 bytes
 CourtDiagramGfx16:
-	INCBIN "data/bank_017/CourtDiagramGfx16.bin" ; $5511, 18 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx16.bin" ; $5511, 18 bytes
 CourtDiagramGfx17:
-	INCBIN "data/bank_017/CourtDiagramGfx17.bin" ; $5523, 19 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx17.bin" ; $5523, 19 bytes
 CourtDiagramGfx18:
-	INCBIN "data/bank_017/CourtDiagramGfx18.bin" ; $5536, 24 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx18.bin" ; $5536, 24 bytes
 CourtDiagramGfx19:
-	INCBIN "data/bank_017/CourtDiagramGfx19.bin" ; $554e, 25 bytes
+	INCBIN "data/engine/menus/briefing/CourtDiagramGfx19.bin" ; $554e, 25 bytes
 CourtDiagramObjPalettes:
-	INCLUDE "data/bank_017/CourtDiagramObjPalettes.asm" ; $5567, 24 bytes (palettes)
+	INCLUDE "data/engine/menus/briefing/CourtDiagramObjPalettes.asm" ; $5567, 24 bytes (palettes)
 DrillBriefing_ServeToTargets:
 	ld a, $03 ; $557f
 	ld [wBriefingAnimStep], a ; $5581

@@ -81,47 +81,47 @@ GfxSetPointerTable_16:
 .rec20:
 	gfx_set MatchResultGfxA2, MatchResultGfxB4, MatchResultGfxC9
 MatchResultGfxA0:
-	INCBIN "data/bank_016/lz_MatchResultGfxA0.bin" ; $4f4d, 199 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxA0.bin" ; $4f4d, 199 bytes
 MatchResultGfxB0:
-	INCBIN "data/bank_016/lz_MatchResultGfxB0.bin" ; $5014, 127 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxB0.bin" ; $5014, 127 bytes
 MatchResultGfxA1:
-	INCBIN "data/bank_016/lz_MatchResultGfxA1.bin" ; $5093, 205 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxA1.bin" ; $5093, 205 bytes
 MatchResultGfxB1:
-	INCBIN "data/bank_016/lz_MatchResultGfxB1.bin" ; $5160, 178 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxB1.bin" ; $5160, 178 bytes
 MatchResultGfxB2:
-	INCBIN "data/bank_016/lz_MatchResultGfxB2.bin" ; $5212, 171 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxB2.bin" ; $5212, 171 bytes
 MatchResultGfxB3:
-	INCBIN "data/bank_016/lz_MatchResultGfxB3.bin" ; $52bd, 154 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxB3.bin" ; $52bd, 154 bytes
 MatchResultGfxA2:
-	INCBIN "data/bank_016/lz_MatchResultGfxA2.bin" ; $5357, 106 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxA2.bin" ; $5357, 106 bytes
 MatchResultGfxB4:
-	INCBIN "data/bank_016/lz_MatchResultGfxB4.bin" ; $53c1, 109 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxB4.bin" ; $53c1, 109 bytes
 MatchResultTitleGfx:
-	INCBIN "data/bank_016/lz_MatchResultTitleGfx.bin" ; $542e, 143 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultTitleGfx.bin" ; $542e, 143 bytes
 MatchResultTitleGfxAlt:
-	INCBIN "data/bank_016/lz_MatchResultTitleGfxAlt.bin" ; $54bd, 132 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultTitleGfxAlt.bin" ; $54bd, 132 bytes
 MatchResultGfxC0:
-	INCBIN "data/bank_016/lz_MatchResultGfxC0.bin" ; $5541, 93 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC0.bin" ; $5541, 93 bytes
 MatchResultGfxC1:
-	INCBIN "data/bank_016/lz_MatchResultGfxC1.bin" ; $559e, 164 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC1.bin" ; $559e, 164 bytes
 MatchResultGfxC2:
-	INCBIN "data/bank_016/lz_MatchResultGfxC2.bin" ; $5642, 176 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC2.bin" ; $5642, 176 bytes
 MatchResultGfxC3:
-	INCBIN "data/bank_016/lz_MatchResultGfxC3.bin" ; $56f2, 186 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC3.bin" ; $56f2, 186 bytes
 MatchResultGfxC4:
-	INCBIN "data/bank_016/lz_MatchResultGfxC4.bin" ; $57ac, 161 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC4.bin" ; $57ac, 161 bytes
 MatchResultGfxC5:
-	INCBIN "data/bank_016/lz_MatchResultGfxC5.bin" ; $584d, 173 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC5.bin" ; $584d, 173 bytes
 MatchResultGfxC6:
-	INCBIN "data/bank_016/lz_MatchResultGfxC6.bin" ; $58fa, 172 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC6.bin" ; $58fa, 172 bytes
 MatchResultGfxC7:
-	INCBIN "data/bank_016/lz_MatchResultGfxC7.bin" ; $59a6, 169 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC7.bin" ; $59a6, 169 bytes
 MatchResultGfxC8:
-	INCBIN "data/bank_016/lz_MatchResultGfxC8.bin" ; $5a4f, 192 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC8.bin" ; $5a4f, 192 bytes
 MatchResultGfxCUnused:
-	INCBIN "data/bank_016/lz_MatchResultGfxCUnused.bin" ; $5b0f, 230 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxCUnused.bin" ; $5b0f, 230 bytes
 MatchResultGfxC9:
-	INCBIN "data/bank_016/lz_MatchResultGfxC9.bin" ; $5bf5, 28 bytes
+	INCBIN "data/engine/menus/results/lz_MatchResultGfxC9.bin" ; $5bf5, 28 bytes
 ApplyLinkRoleToWinLoseFlag:
 	ld a, [wGameMode] ; $5c11
 	cp GAMEMODE_LINK_MATCH ; $5c14

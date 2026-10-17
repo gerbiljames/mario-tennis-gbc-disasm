@@ -21,9 +21,9 @@ DecompressIntroTitleTiles:
 	pop_wram_bank ; $7432
 	ret ; $7437
 DecompressIntroTitleTiles1:
-	INCBIN "data/bank_06b/lz_DecompressIntroTitleTiles1.bin" ; $7438, 221 bytes
+	INCBIN "data/engine/cutscenes/lz_DecompressIntroTitleTiles1.bin" ; $7438, 221 bytes
 DecompressIntroTitleTiles2:
-	INCBIN "data/bank_06b/lz_DecompressIntroTitleTiles2.bin" ; $7515, 76 bytes
+	INCBIN "data/engine/cutscenes/lz_DecompressIntroTitleTiles2.bin" ; $7515, 76 bytes
 Unused_6b_IncrementCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $7561
 	inc a ; $7564
@@ -34,7 +34,7 @@ ApplyScrollYFromWram:
 	ldh [hScrollY], a ; $756c
 	ret ; $756e
 IntroCutsceneState18InitPalettes_6b:
-	INCLUDE "data/bank_06b/IntroCutsceneState18InitPalettes_6b.asm" ; $756f, 64 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState18InitPalettes_6b.asm" ; $756f, 64 bytes (palettes)
 RunTitleScreen:
 	call ClearFrameTasks ; $75af
 	wram_bank WRAM_SCREEN ; $75b2
@@ -213,27 +213,27 @@ StepTitleSpriteAnimation:
 	ret ; $774c
 	ret ; $774d
 TitleScreenTilemap:
-	INCBIN "data/bank_06b/lz_TitleScreenTilemap.bin" ; $774e, 292 bytes
+	INCBIN "data/engine/cutscenes/lz_TitleScreenTilemap.bin" ; $774e, 292 bytes
 TitleScreenAttrmap:
-	INCBIN "data/bank_06b/lz_TitleScreenAttrmap.bin" ; $7872, 157 bytes
+	INCBIN "data/engine/cutscenes/lz_TitleScreenAttrmap.bin" ; $7872, 157 bytes
 TitleScreenPalettes:
-	INCLUDE "data/bank_06b/TitleScreenPalettes.asm" ; $790f, 64 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/TitleScreenPalettes.asm" ; $790f, 64 bytes (palettes)
 Palettes_6b_11:
-	INCLUDE "data/bank_06b/Palettes_6b_11.asm" ; $794f, 8 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/Palettes_6b_11.asm" ; $794f, 8 bytes (palettes)
 AwardCeremonyTilemap:
-	INCBIN "data/bank_06b/lz_AwardCeremonyTilemap.bin" ; $7957, 293 bytes
+	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap.bin" ; $7957, 293 bytes
 AwardCeremonyAttrmap:
-	INCBIN "data/bank_06b/lz_AwardCeremonyAttrmap.bin" ; $7a7c, 114 bytes
+	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap.bin" ; $7a7c, 114 bytes
 AwardCeremonyTilemap2:
-	INCBIN "data/bank_06b/lz_AwardCeremonyTilemap2.bin" ; $7aee, 292 bytes
+	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap2.bin" ; $7aee, 292 bytes
 AwardCeremonyAttrmap2:
-	INCBIN "data/bank_06b/lz_AwardCeremonyAttrmap2.bin" ; $7c12, 125 bytes
+	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap2.bin" ; $7c12, 125 bytes
 AwardCeremonyTilemap3:
-	INCBIN "data/bank_06b/lz_AwardCeremonyTilemap3.bin" ; $7c8f, 296 bytes
+	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap3.bin" ; $7c8f, 296 bytes
 AwardCeremonyAttrmap3:
-	INCBIN "data/bank_06b/lz_AwardCeremonyAttrmap3.bin" ; $7db7, 120 bytes
+	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap3.bin" ; $7db7, 120 bytes
 AwardCeremonyTilemap4:
-	INCBIN "data/bank_06b/lz_AwardCeremonyTilemap4.bin" ; $7e2f, 296 bytes
+	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap4.bin" ; $7e2f, 296 bytes
 AwardCeremonyAttrmap4:
-	INCBIN "data/bank_06b/lz_AwardCeremonyAttrmap4.bin" ; $7f57, 129 bytes
+	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap4.bin" ; $7f57, 129 bytes
 	; $7fd8, 40 bytes fill to bank end (linker-padded)

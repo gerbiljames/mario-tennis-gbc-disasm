@@ -223,21 +223,21 @@ WinLosePortraitVariantTable_16:
 	dw WinLosePortrait6 ; 6
 	dw WinLosePortrait7 ; 7
 WinLosePortrait0:
-	INCBIN "data/bank_016/lz_WinLosePortrait0.bin" ; $6101, 275 bytes
+	INCBIN "data/engine/menus/results/lz_WinLosePortrait0.bin" ; $6101, 275 bytes
 WinLosePortrait1:
-	INCBIN "data/bank_016/lz_WinLosePortrait1.bin" ; $6214, 257 bytes
+	INCBIN "data/engine/menus/results/lz_WinLosePortrait1.bin" ; $6214, 257 bytes
 WinLosePortrait2:
-	INCBIN "data/bank_016/lz_WinLosePortrait2.bin" ; $6315, 269 bytes
+	INCBIN "data/engine/menus/results/lz_WinLosePortrait2.bin" ; $6315, 269 bytes
 WinLosePortrait3:
-	INCBIN "data/bank_016/lz_WinLosePortrait3.bin" ; $6422, 276 bytes
+	INCBIN "data/engine/menus/results/lz_WinLosePortrait3.bin" ; $6422, 276 bytes
 WinLosePortrait4:
-	INCBIN "data/bank_016/lz_WinLosePortrait4.bin" ; $6536, 254 bytes
+	INCBIN "data/engine/menus/results/lz_WinLosePortrait4.bin" ; $6536, 254 bytes
 WinLosePortrait5:
-	INCBIN "data/bank_016/lz_WinLosePortrait5.bin" ; $6634, 243 bytes
+	INCBIN "data/engine/menus/results/lz_WinLosePortrait5.bin" ; $6634, 243 bytes
 WinLosePortrait6:
-	INCBIN "data/bank_016/lz_WinLosePortrait6.bin" ; $6727, 291 bytes
+	INCBIN "data/engine/menus/results/lz_WinLosePortrait6.bin" ; $6727, 291 bytes
 WinLosePortrait7:
-	INCBIN "data/bank_016/lz_WinLosePortrait7.bin" ; $684a, 267 bytes
+	INCBIN "data/engine/menus/results/lz_WinLosePortrait7.bin" ; $684a, 267 bytes
 DecompressCharacterPortrait:
 	ld a, b ; $6955
 	and $1f ; $6956
@@ -288,63 +288,63 @@ CharacterPortraitTable_16:
 	dw PortraitGfxWario_16 ; $1e Wario
 	dw PortraitGfxPeach_16 ; $1f Peach
 PortraitGfxAlex_16:
-	INCBIN "data/bank_016/lz_PortraitGfxAlex_16.bin" ; $69a8, 158 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxAlex_16.bin" ; $69a8, 158 bytes
 PortraitGfxNina_16:
-	INCBIN "data/bank_016/lz_PortraitGfxNina_16.bin" ; $6a46, 163 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxNina_16.bin" ; $6a46, 163 bytes
 PortraitGfxHarry_16:
-	INCBIN "data/bank_016/lz_PortraitGfxHarry_16.bin" ; $6ae9, 146 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxHarry_16.bin" ; $6ae9, 146 bytes
 PortraitGfxKate_16:
-	INCBIN "data/bank_016/lz_PortraitGfxKate_16.bin" ; $6b7b, 165 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxKate_16.bin" ; $6b7b, 165 bytes
 PortraitGfxAllie_16:
-	INCBIN "data/bank_016/lz_PortraitGfxAllie_16.bin" ; $6c20, 134 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxAllie_16.bin" ; $6c20, 134 bytes
 PortraitGfxJoy_16:
-	INCBIN "data/bank_016/lz_PortraitGfxJoy_16.bin" ; $6ca6, 148 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxJoy_16.bin" ; $6ca6, 148 bytes
 PortraitGfxBrian_16:
-	INCBIN "data/bank_016/lz_PortraitGfxBrian_16.bin" ; $6d3a, 144 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxBrian_16.bin" ; $6d3a, 144 bytes
 PortraitGfxPam_16:
-	INCBIN "data/bank_016/lz_PortraitGfxPam_16.bin" ; $6dca, 137 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxPam_16.bin" ; $6dca, 137 bytes
 PortraitGfxBob_16:
-	INCBIN "data/bank_016/lz_PortraitGfxBob_16.bin" ; $6e53, 141 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxBob_16.bin" ; $6e53, 141 bytes
 PortraitGfxBeth_16:
-	INCBIN "data/bank_016/lz_PortraitGfxBeth_16.bin" ; $6ee0, 147 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxBeth_16.bin" ; $6ee0, 147 bytes
 PortraitGfxFay_16:
-	INCBIN "data/bank_016/lz_PortraitGfxFay_16.bin" ; $6f73, 147 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxFay_16.bin" ; $6f73, 147 bytes
 PortraitGfxCurt_16:
-	INCBIN "data/bank_016/lz_PortraitGfxCurt_16.bin" ; $7006, 161 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxCurt_16.bin" ; $7006, 161 bytes
 PortraitGfxMark_16:
-	INCBIN "data/bank_016/lz_PortraitGfxMark_16.bin" ; $70a7, 161 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxMark_16.bin" ; $70a7, 161 bytes
 PortraitGfxSean_16:
-	INCBIN "data/bank_016/lz_PortraitGfxSean_16.bin" ; $7148, 157 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxSean_16.bin" ; $7148, 157 bytes
 PortraitGfxSammi_16:
-	INCBIN "data/bank_016/lz_PortraitGfxSammi_16.bin" ; $71e5, 150 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxSammi_16.bin" ; $71e5, 150 bytes
 PortraitGfxElden_16:
-	INCBIN "data/bank_016/lz_PortraitGfxElden_16.bin" ; $727b, 149 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxElden_16.bin" ; $727b, 149 bytes
 PortraitGfxSpike_16:
-	INCBIN "data/bank_016/lz_PortraitGfxSpike_16.bin" ; $7310, 162 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxSpike_16.bin" ; $7310, 162 bytes
 PortraitGfxEmily_16:
-	INCBIN "data/bank_016/lz_PortraitGfxEmily_16.bin" ; $73b2, 151 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxEmily_16.bin" ; $73b2, 151 bytes
 PortraitGfxBCoz_16:
-	INCBIN "data/bank_016/lz_PortraitGfxBCoz_16.bin" ; $7449, 147 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxBCoz_16.bin" ; $7449, 147 bytes
 PortraitGfxACoz_16:
-	INCBIN "data/bank_016/lz_PortraitGfxACoz_16.bin" ; $74dc, 121 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxACoz_16.bin" ; $74dc, 121 bytes
 PortraitGfxPlaceholder_16:
-	INCBIN "data/bank_016/lz_PortraitGfxPlaceholder_16.bin" ; $7555, 126 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxPlaceholder_16.bin" ; $7555, 126 bytes
 PortraitGfxLuigi_16:
-	INCBIN "data/bank_016/lz_PortraitGfxLuigi_16.bin" ; $75d3, 154 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxLuigi_16.bin" ; $75d3, 154 bytes
 PortraitGfxDK_16:
-	INCBIN "data/bank_016/lz_PortraitGfxDK_16.bin" ; $766d, 156 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxDK_16.bin" ; $766d, 156 bytes
 PortraitGfxBabyMario_16:
-	INCBIN "data/bank_016/lz_PortraitGfxBabyMario_16.bin" ; $7709, 155 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxBabyMario_16.bin" ; $7709, 155 bytes
 PortraitGfxMario_16:
-	INCBIN "data/bank_016/lz_PortraitGfxMario_16.bin" ; $77a4, 162 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxMario_16.bin" ; $77a4, 162 bytes
 PortraitGfxWaluigi_16:
-	INCBIN "data/bank_016/lz_PortraitGfxWaluigi_16.bin" ; $7846, 158 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxWaluigi_16.bin" ; $7846, 158 bytes
 PortraitGfxYoshi_16:
-	INCBIN "data/bank_016/lz_PortraitGfxYoshi_16.bin" ; $78e4, 139 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxYoshi_16.bin" ; $78e4, 139 bytes
 PortraitGfxBowser_16:
-	INCBIN "data/bank_016/lz_PortraitGfxBowser_16.bin" ; $796f, 165 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxBowser_16.bin" ; $796f, 165 bytes
 PortraitGfxWario_16:
-	INCBIN "data/bank_016/lz_PortraitGfxWario_16.bin" ; $7a14, 162 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxWario_16.bin" ; $7a14, 162 bytes
 PortraitGfxPeach_16:
-	INCBIN "data/bank_016/lz_PortraitGfxPeach_16.bin" ; $7ab6, 153 bytes
+	INCBIN "data/engine/menus/results/lz_PortraitGfxPeach_16.bin" ; $7ab6, 153 bytes
 	; $7b4f, 1201 bytes fill to bank end (linker-padded)

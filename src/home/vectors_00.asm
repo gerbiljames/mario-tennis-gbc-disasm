@@ -3,7 +3,7 @@ Rst00:
 	ds 5, $ff ; $0003, fill
 Rst08:
 	jp PlaySoundCmd ; $0008
-	INCBIN "data/bank_000/d_000b.bin" ; $000b, 13 bytes
+	INCBIN "data/home/d_000b.bin" ; $000b, 13 bytes
 Rst18:
 	jp FarCall ; $0018
 	ds 5, $ff ; $001b, fill
@@ -35,7 +35,7 @@ EntryPoint:
 	nop ; $0100
 	jp EntryPoint.start ; $0101
 NintendoLogo:
-	INCBIN "data/bank_000/NintendoLogo.bin" ; $0104, 48 bytes
+	INCBIN "data/home/NintendoLogo.bin" ; $0104, 48 bytes
 	; $0134, 28 bytes (cart_header)
 	db "CGBTENNISAP"      ; $0134 title
 IF DEF(EUROPE)

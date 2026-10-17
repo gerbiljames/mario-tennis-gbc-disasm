@@ -332,7 +332,7 @@ IntroCutsceneState01Init_6b:
 	script_fade_in 64 ; $42aa
 	jp DispatchCutsceneStateInit.loop ; $42af
 Palettes_6b_00:
-	INCLUDE "data/bank_06b/Palettes_6b_00.asm" ; $42b2, 64 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/Palettes_6b_00.asm" ; $42b2, 64 bytes (palettes)
 IntroCutsceneState01Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupA ; $42f2
 	call UnregisterFrameTask ; $42f5
@@ -382,7 +382,7 @@ IntroCutsceneState02Init_6b:
 	call LoadPalettesImmediate ; $4369
 	jp DispatchCutsceneStateInit.loop ; $436c
 IntroCutsceneState02InitPalette_6b:
-	INCLUDE "data/bank_06b/IntroCutsceneState02InitPalette_6b.asm" ; $436f, 64 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState02InitPalette_6b.asm" ; $436f, 64 bytes (palettes)
 IntroCutsceneState02Exit_6b:
 	ld c, 6 ; $43af
 	call BeginFadeOut ; $43b1
@@ -489,7 +489,7 @@ IntroCutsceneState04Init_6b:
 	call LoadPalettesImmediate ; $44ca
 	jp DispatchCutsceneStateInit.loop ; $44cd
 IntroCutsceneState04InitPalettes:
-	INCLUDE "data/bank_06b/IntroCutsceneState04InitPalettes.asm" ; $44d0, 64 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState04InitPalettes.asm" ; $44d0, 64 bytes (palettes)
 IntroCutsceneState04Exit_6b:
 	ld c, 6 ; $4510
 	call BeginFadeOut ; $4512
@@ -718,7 +718,7 @@ IntroCutsceneState13Update_6b:
 	jp z, DispatchCutsceneStateInit.loopB ; $4754
 	jp DispatchCutsceneStateInit.loop ; $4757
 IntroCutsceneState13InitPalettes_6b:
-	INCLUDE "data/bank_06b/IntroCutsceneState13InitPalettes_6b.asm" ; $475a, 64 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm" ; $475a, 64 bytes (palettes)
 IntroCutsceneState08Init_6b:
 	call DisableLCDSafely ; $479a
 	ld c, SCREENASSET_IntroWave ; $479d

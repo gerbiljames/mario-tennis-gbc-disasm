@@ -293,21 +293,21 @@ QueueStoryMenuCursorSprite_SpriteTemplate:
 	; $7308, 8 bytes (bytes:8)
 	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 StoryMenuItemGfx_Status:
-	INCBIN "data/bank_006/lz_StoryMenuItemGfx_Status.bin" ; $7310, 160 bytes
+	INCBIN "data/engine/menus/pause/lz_StoryMenuItemGfx_Status.bin" ; $7310, 160 bytes
 StoryMenuItemGfx_ClearStatus:
-	INCBIN "data/bank_006/lz_StoryMenuItemGfx_ClearStatus.bin" ; $73b0, 183 bytes
+	INCBIN "data/engine/menus/pause/lz_StoryMenuItemGfx_ClearStatus.bin" ; $73b0, 183 bytes
 StoryMenuItemGfx_Messages:
-	INCBIN "data/bank_006/lz_StoryMenuItemGfx_Messages.bin" ; $7467, 171 bytes
+	INCBIN "data/engine/menus/pause/lz_StoryMenuItemGfx_Messages.bin" ; $7467, 171 bytes
 StoryMenuItemGfx_Slow:
-	INCBIN "data/bank_006/lz_StoryMenuItemGfx_Slow.bin" ; $7512, 118 bytes
+	INCBIN "data/engine/menus/pause/lz_StoryMenuItemGfx_Slow.bin" ; $7512, 118 bytes
 StoryMenuItemGfx_Fast:
-	INCBIN "data/bank_006/lz_StoryMenuItemGfx_Fast.bin" ; $7588, 121 bytes
+	INCBIN "data/engine/menus/pause/lz_StoryMenuItemGfx_Fast.bin" ; $7588, 121 bytes
 StoryMenuItemGfx_CharData:
-	INCBIN "data/bank_006/lz_StoryMenuItemGfx_CharData.bin" ; $7601, 175 bytes
+	INCBIN "data/engine/menus/pause/lz_StoryMenuItemGfx_CharData.bin" ; $7601, 175 bytes
 StoryMenuItemGfx_Items:
-	INCBIN "data/bank_006/lz_StoryMenuItemGfx_Items.bin" ; $76b0, 125 bytes
+	INCBIN "data/engine/menus/pause/lz_StoryMenuItemGfx_Items.bin" ; $76b0, 125 bytes
 StoryMenuItemGfx_Normal:
-	INCBIN "data/bank_006/lz_StoryMenuItemGfx_Normal.bin" ; $772d, 121 bytes
+	INCBIN "data/engine/menus/pause/lz_StoryMenuItemGfx_Normal.bin" ; $772d, 121 bytes
 DrawStoryMenuItem:
 	push de ; $77a6
 	add a ; $77a7

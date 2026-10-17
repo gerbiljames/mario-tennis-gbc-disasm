@@ -1,4 +1,4 @@
-; Sound channel scripts (data/bank_07x/<Track>.asm, generated at setup).
+; Sound channel scripts (data/audio/<Track>.asm, generated at setup).
 
 ; A SoundTable entry's first word: which channel struct the track drives
 ; (StartSoundChannel indexes wSndChannels by the low byte, $20 per channel)

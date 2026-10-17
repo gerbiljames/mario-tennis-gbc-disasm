@@ -63,52 +63,52 @@ DataPtr_HardCourtSceneUnusedSlot:
 DataPtr_HardCourtTiles:
 	dw HardCourtTiles ; $403e
 GrassCourtPalettes:
-	INCLUDE "data/bank_060/GrassCourtPalettes.asm" ; $4040, 64 bytes (palettes)
+	INCLUDE "data/scenes/GrassCourtPalettes.asm" ; $4040, 64 bytes (palettes)
 GrassCourtTiles:
-	INCBIN "data/bank_060/lz_GrassCourtTiles.bin" ; $4080, 3233 bytes
+	INCBIN "data/scenes/lz_GrassCourtTiles.bin" ; $4080, 3233 bytes
 GrassCourtTilemap:
-	INCBIN "data/bank_060/lz_GrassCourtTilemap.bin" ; $4d21, 604 bytes
+	INCBIN "data/scenes/lz_GrassCourtTilemap.bin" ; $4d21, 604 bytes
 GrassCourtAttrmap:
-	INCBIN "data/bank_060/lz_GrassCourtAttrmap.bin" ; $4f7d, 268 bytes
+	INCBIN "data/scenes/lz_GrassCourtAttrmap.bin" ; $4f7d, 268 bytes
 GrassCourtSceneConfig:
-	INCBIN "data/bank_060/GrassCourtSceneConfig.bin" ; $5089, 40 bytes
+	INCBIN "data/scenes/GrassCourtSceneConfig.bin" ; $5089, 40 bytes
 GrassCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_060/GrassCourtScoreboardColumnAttrs.bin" ; $50b1, 40 bytes
+	INCBIN "data/scenes/GrassCourtScoreboardColumnAttrs.bin" ; $50b1, 40 bytes
 TrainingCourtPalettes:
-	INCLUDE "data/bank_060/TrainingCourtPalettes.asm" ; $50d9, 64 bytes (palettes)
+	INCLUDE "data/scenes/TrainingCourtPalettes.asm" ; $50d9, 64 bytes (palettes)
 TrainingCourtTiles:
-	INCBIN "data/bank_060/lz_TrainingCourtTiles.bin" ; $5119, 2352 bytes
+	INCBIN "data/scenes/lz_TrainingCourtTiles.bin" ; $5119, 2352 bytes
 TrainingCourtTilemap:
-	INCBIN "data/bank_060/lz_TrainingCourtTilemap.bin" ; $5a49, 637 bytes
+	INCBIN "data/scenes/lz_TrainingCourtTilemap.bin" ; $5a49, 637 bytes
 TrainingCourtAttrmap:
-	INCBIN "data/bank_060/lz_TrainingCourtAttrmap.bin" ; $5cc6, 155 bytes
+	INCBIN "data/scenes/lz_TrainingCourtAttrmap.bin" ; $5cc6, 155 bytes
 TrainingCourtSceneConfig:
-	INCBIN "data/bank_060/TrainingCourtSceneConfig.bin" ; $5d61, 40 bytes
+	INCBIN "data/scenes/TrainingCourtSceneConfig.bin" ; $5d61, 40 bytes
 TrainingCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_060/TrainingCourtScoreboardColumnAttrs.bin" ; $5d89, 40 bytes
+	INCBIN "data/scenes/TrainingCourtScoreboardColumnAttrs.bin" ; $5d89, 40 bytes
 ClayCourtPalettes:
-	INCLUDE "data/bank_060/ClayCourtPalettes.asm" ; $5db1, 64 bytes (palettes)
+	INCLUDE "data/scenes/ClayCourtPalettes.asm" ; $5db1, 64 bytes (palettes)
 ClayCourtTiles:
-	INCBIN "data/bank_060/lz_ClayCourtTiles.bin" ; $5df1, 2993 bytes
+	INCBIN "data/scenes/lz_ClayCourtTiles.bin" ; $5df1, 2993 bytes
 ClayCourtTilemap:
-	INCBIN "data/bank_060/lz_ClayCourtTilemap.bin" ; $69a2, 582 bytes
+	INCBIN "data/scenes/lz_ClayCourtTilemap.bin" ; $69a2, 582 bytes
 ClayCourtAttrmap:
-	INCBIN "data/bank_060/lz_ClayCourtAttrmap.bin" ; $6be8, 166 bytes
+	INCBIN "data/scenes/lz_ClayCourtAttrmap.bin" ; $6be8, 166 bytes
 ClayCourtSceneConfig:
-	INCBIN "data/bank_060/ClayCourtSceneConfig.bin" ; $6c8e, 40 bytes
+	INCBIN "data/scenes/ClayCourtSceneConfig.bin" ; $6c8e, 40 bytes
 ClayCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_060/ClayCourtScoreboardColumnAttrs.bin" ; $6cb6, 40 bytes
+	INCBIN "data/scenes/ClayCourtScoreboardColumnAttrs.bin" ; $6cb6, 40 bytes
 HardCourtPalettes:
-	INCLUDE "data/bank_060/HardCourtPalettes.asm" ; $6cde, 64 bytes (palettes)
+	INCLUDE "data/scenes/HardCourtPalettes.asm" ; $6cde, 64 bytes (palettes)
 HardCourtTiles:
-	INCBIN "data/bank_060/lz_HardCourtTiles.bin" ; $6d1e, 2994 bytes
+	INCBIN "data/scenes/lz_HardCourtTiles.bin" ; $6d1e, 2994 bytes
 HardCourtTilemap:
-	INCBIN "data/bank_060/lz_HardCourtTilemap.bin" ; $78d0, 573 bytes
+	INCBIN "data/scenes/lz_HardCourtTilemap.bin" ; $78d0, 573 bytes
 HardCourtAttrmap:
-	INCBIN "data/bank_060/lz_HardCourtAttrmap.bin" ; $7b0d, 160 bytes
+	INCBIN "data/scenes/lz_HardCourtAttrmap.bin" ; $7b0d, 160 bytes
 HardCourtSceneConfig:
-	INCBIN "data/bank_060/HardCourtSceneConfig.bin" ; $7bad, 40 bytes
+	INCBIN "data/scenes/HardCourtSceneConfig.bin" ; $7bad, 40 bytes
 HardCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_060/HardCourtScoreboardColumnAttrs.bin" ; $7bd5, 40 bytes
+	INCBIN "data/scenes/HardCourtScoreboardColumnAttrs.bin" ; $7bd5, 40 bytes
 HardCourtSceneUnusedSlot:
 	; $7bfd, 1027 bytes fill to bank end (linker-padded)

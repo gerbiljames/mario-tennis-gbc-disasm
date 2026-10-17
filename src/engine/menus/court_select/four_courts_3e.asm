@@ -733,12 +733,12 @@ LoadCourtSelectPanelTiles:
 	call QueueVRAMCopy ; $61d0
 	ret ; $61d3
 CourtSelectTitleTiles:
-	INCBIN "data/bank_03e/lz_CourtSelectTitleTiles.bin" ; $61d4, 159 bytes
-	INCLUDE "data/bank_03e/lz_CourtSelectTitleTiles.inc" ; DEF CourtSelectTitleTiles_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/court_select/lz_CourtSelectTitleTiles.bin" ; $61d4, 159 bytes
+	INCLUDE "data/engine/menus/court_select/lz_CourtSelectTitleTiles.inc" ; DEF CourtSelectTitleTiles_SIZE EQU its decoded length, generated from the .bin by make
 CourtSelectTitleTiles2Gfx:
-	INCBIN "data/bank_03e/lz_CourtSelectTitleTiles2Gfx.bin" ; $6273, 83 bytes
+	INCBIN "data/engine/menus/court_select/lz_CourtSelectTitleTiles2Gfx.bin" ; $6273, 83 bytes
 CourtSelectPanelTiles:
-	INCBIN "data/bank_03e/lz_CourtSelectPanelTiles.bin" ; $62c6, 457 bytes
+	INCBIN "data/engine/menus/court_select/lz_CourtSelectPanelTiles.bin" ; $62c6, 457 bytes
 DrawCourtNameTiles:
 	push_wram_bank WRAM_SCREEN ; $648f
 	push bc ; $6498

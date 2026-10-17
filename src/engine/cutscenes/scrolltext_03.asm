@@ -221,7 +221,7 @@ TestTextEndMarker:
 	sub $23 ; $5b1d
 	ret ; $5b1f
 ScrollTextPalette_03:
-	INCLUDE "data/bank_003/ScrollTextPalette_03.asm" ; $5b20, 8 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/ScrollTextPalette_03.asm" ; $5b20, 8 bytes (palettes)
 SetupSceneAnimationPalettes:
 	push_wram_bank WRAM_SCENE ; $5b28
 	xor a ; $5b31

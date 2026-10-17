@@ -87,7 +87,7 @@ class Source(unittest.TestCase):
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob
         whole = (ROOT / "include" / "lz_sizes.inc").read_text() + "\n".join(text for _, text in SRC)
         used = set(re.findall(r"\bld b?c, (?![whs][A-Z]|(?:WRAMX|VRAM|CHAR_RECORD)_SIZE)(\w+)_SIZE / 16", whole))
-        have = set(re.findall(r'INCLUDE "data/bank_[0-9a-f]{3}/lz_(\w+)\.inc"', whole))
+        have = set(re.findall(r'INCLUDE "data/(?:\w+/)+lz_(\w+)\.inc"', whole))
         self.assertEqual(used - have, set())
         self.assertGreaterEqual(count(r"^\tld c, \d+ ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 39)
         # a VRAM copy's count is a size, a row count or a decimal tile count
@@ -113,9 +113,9 @@ class Source(unittest.TestCase):
     def test_data_files_are_named_after_labels(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
-        by_addr = sum(1 for f in lines if re.fullmatch(r"bank_[0-9a-f]{3}/(d|lz|text|\w+)_[0-9a-f]{4}\.\w+", f[0]))
+        by_addr = sum(1 for f in lines if re.fullmatch(r"(?:\w+/)*(d|lz|text|\w+)_[0-9a-f]{4}\.\w+", f[0]))
         self.assertLess(by_addr, 700, "most data files carry their label's name")
-        self.assertTrue(any(f[0] == "bank_040/AlexSpriteFrame00.bin" for f in lines))
+        self.assertTrue(any(f[0] == "sprites/AlexSpriteFrame00.bin" for f in lines))
         self.assertTrue(any(f[0].endswith("/lz_CutsceneAnimFrameLZ_00.bin") for f in lines))
 
     def test_structured_regions_render(self):

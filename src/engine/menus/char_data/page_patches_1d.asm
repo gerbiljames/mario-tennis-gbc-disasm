@@ -1,87 +1,87 @@
 PartnerStatPageTilemapPatch14:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch14.bin" ; $6198, 33 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch14.bin" ; $6198, 33 bytes
 PartnerStatPageTilemapPatch15:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch15.bin" ; $61b9, 33 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch15.bin" ; $61b9, 33 bytes
 PartnerStatPageTilemapPatch16:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch16.bin" ; $61da, 9 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch16.bin" ; $61da, 9 bytes
 PartnerStatPageTilemapPatch17:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch17.bin" ; $61e3, 33 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch17.bin" ; $61e3, 33 bytes
 PartnerStatPageTilemapPatch18:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch18.bin" ; $6204, 33 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch18.bin" ; $6204, 33 bytes
 PartnerStatPageTilemapPatch19:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch19.bin" ; $6225, 9 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch19.bin" ; $6225, 9 bytes
 PartnerStatPageTilemapPatch20:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch20.bin" ; $622e, 33 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch20.bin" ; $622e, 33 bytes
 PartnerStatPageTilemapPatch21:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch21.bin" ; $624f, 33 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch21.bin" ; $624f, 33 bytes
 PartnerStatPageTilemapPatch22:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch22.bin" ; $6270, 9 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch22.bin" ; $6270, 9 bytes
 PartnerStatPageTilemapPatch23:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch23.bin" ; $6279, 33 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch23.bin" ; $6279, 33 bytes
 PartnerStatPageTilemapPatch24:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch24.bin" ; $629a, 33 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch24.bin" ; $629a, 33 bytes
 PartnerStatPageTilemapPatch25:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch25.bin" ; $62bb, 9 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch25.bin" ; $62bb, 9 bytes
 PartnerStatPageTilemapPatch26:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch26.bin" ; $62c4, 21 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch26.bin" ; $62c4, 21 bytes
 PartnerStatPageTilemapPatch27:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch27.bin" ; $62d9, 33 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch27.bin" ; $62d9, 33 bytes
 PartnerStatPageTilemapPatch28:
-	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch28.bin" ; $62fa, 9 bytes
+	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch28.bin" ; $62fa, 9 bytes
 CharDataConfirmScreenTilemapPatch5:
-	INCBIN "data/bank_01d/CharDataConfirmScreenTilemapPatch5.bin" ; $6303, 13 bytes
+	INCBIN "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch5.bin" ; $6303, 13 bytes
 CharDataConfirmPromptTilemapPatch:
-	INCBIN "data/bank_01d/CharDataConfirmPromptTilemapPatch.bin" ; $6310, 17 bytes
+	INCBIN "data/engine/menus/char_data/CharDataConfirmPromptTilemapPatch.bin" ; $6310, 17 bytes
 CharDataScreenPagePatch0Tilemap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch0Tilemap.bin" ; $6321, 10 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch0Tilemap.inc" ; DEF CharDataScreenPagePatch0Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Tilemap.bin" ; $6321, 10 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Tilemap.inc" ; DEF CharDataScreenPagePatch0Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch0Attrmap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch0Attrmap.bin" ; $632b, 9 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch0Attrmap.inc" ; DEF CharDataScreenPagePatch0Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Attrmap.bin" ; $632b, 9 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Attrmap.inc" ; DEF CharDataScreenPagePatch0Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPalettes:
-	INCBIN "data/bank_01d/CharDataScreenPalettes.bin" ; $6334, 8 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenPalettes.bin" ; $6334, 8 bytes
 CharDataScreenGfx14:
-	INCBIN "data/bank_01d/lz_CharDataScreenGfx14.bin" ; $633c, 184 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenGfx14.inc" ; DEF CharDataScreenGfx14_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx14.bin" ; $633c, 184 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx14.inc" ; DEF CharDataScreenGfx14_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch1Tilemap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch1Tilemap.bin" ; $63f4, 85 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch1Tilemap.inc" ; DEF CharDataScreenPagePatch1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch1Tilemap.bin" ; $63f4, 85 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch1Tilemap.inc" ; DEF CharDataScreenPagePatch1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch1Attrmap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch1Attrmap.bin" ; $6449, 18 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch1Attrmap.inc" ; DEF CharDataScreenPagePatch1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch1Attrmap.bin" ; $6449, 18 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch1Attrmap.inc" ; DEF CharDataScreenPagePatch1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch2Tilemap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch2Tilemap.bin" ; $645b, 35 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch2Tilemap.inc" ; DEF CharDataScreenPagePatch2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch2Tilemap.bin" ; $645b, 35 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch2Tilemap.inc" ; DEF CharDataScreenPagePatch2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch2Attrmap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch2Attrmap.bin" ; $647e, 7 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch2Attrmap.inc" ; DEF CharDataScreenPagePatch2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch2Attrmap.bin" ; $647e, 7 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch2Attrmap.inc" ; DEF CharDataScreenPagePatch2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch3Tilemap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch3Tilemap.bin" ; $6485, 14 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch3Tilemap.inc" ; DEF CharDataScreenPagePatch3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch3Tilemap.bin" ; $6485, 14 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch3Tilemap.inc" ; DEF CharDataScreenPagePatch3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch3Attrmap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch3Attrmap.bin" ; $6493, 7 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch3Attrmap.inc" ; DEF CharDataScreenPagePatch3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch3Attrmap.bin" ; $6493, 7 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch3Attrmap.inc" ; DEF CharDataScreenPagePatch3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch4Tilemap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch4Tilemap.bin" ; $649a, 24 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch4Tilemap.inc" ; DEF CharDataScreenPagePatch4Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch4Tilemap.bin" ; $649a, 24 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch4Tilemap.inc" ; DEF CharDataScreenPagePatch4Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch4Attrmap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch4Attrmap.bin" ; $64b2, 9 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch4Attrmap.inc" ; DEF CharDataScreenPagePatch4Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch4Attrmap.bin" ; $64b2, 9 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch4Attrmap.inc" ; DEF CharDataScreenPagePatch4Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPageGfx10:
-	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx10.bin" ; $64bb, 149 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPageGfx10.inc" ; DEF CharDataScreenPageGfx10_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGfx10.bin" ; $64bb, 149 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGfx10.inc" ; DEF CharDataScreenPageGfx10_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch5Tilemap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch5Tilemap.bin" ; $6550, 24 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch5Tilemap.inc" ; DEF CharDataScreenPagePatch5Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch5Tilemap.bin" ; $6550, 24 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch5Tilemap.inc" ; DEF CharDataScreenPagePatch5Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch5Attrmap:
-	INCBIN "data/bank_01d/lz_CharDataScreenPagePatch5Attrmap.bin" ; $6568, 7 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPagePatch5Attrmap.inc" ; DEF CharDataScreenPagePatch5Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch5Attrmap.bin" ; $6568, 7 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch5Attrmap.inc" ; DEF CharDataScreenPagePatch5Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPageGfx13:
-	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx13.bin" ; $656f, 117 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPageGfx13.inc" ; DEF CharDataScreenPageGfx13_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGfx13.bin" ; $656f, 117 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGfx13.inc" ; DEF CharDataScreenPageGfx13_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPageGfx14:
-	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx14.bin" ; $65e4, 134 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPageGfx14.inc" ; DEF CharDataScreenPageGfx14_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGfx14.bin" ; $65e4, 134 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGfx14.inc" ; DEF CharDataScreenPageGfx14_SIZE EQU its decoded length, generated from the .bin by make
 DrawCharDataPageArrowsTask_SpriteTemplate0:
 	; $666a, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -91,8 +91,8 @@ DrawCharDataPageArrowsTask_SpriteTemplate0:
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx0:
-	INCBIN "data/bank_01d/lz_CharDataScreenPageGraphicsGfx0.bin" ; $667f, 141 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPageGraphicsGfx0.inc" ; DEF CharDataScreenPageGraphicsGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx0.bin" ; $667f, 141 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx0.inc" ; DEF CharDataScreenPageGraphicsGfx0_SIZE EQU its decoded length, generated from the .bin by make
 DrawCharDataPageArrowsTask_SpriteTemplate1:
 	; $670c, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -102,8 +102,8 @@ DrawCharDataPageArrowsTask_SpriteTemplate1:
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx1:
-	INCBIN "data/bank_01d/lz_CharDataScreenPageGraphicsGfx1.bin" ; $6721, 121 bytes
-	INCLUDE "data/bank_01d/lz_CharDataScreenPageGraphicsGfx1.inc" ; DEF CharDataScreenPageGraphicsGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx1.bin" ; $6721, 121 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx1.inc" ; DEF CharDataScreenPageGraphicsGfx1_SIZE EQU its decoded length, generated from the .bin by make
 DrawCharDataPageArrowsTask_SpriteTemplate2:
 	; $679a, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -112,7 +112,7 @@ DrawCharDataPageArrowsTask_SpriteTemplate2:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx2:
-	INCBIN "data/bank_01d/CharDataScreenPageGraphicsGfx2.bin" ; $67ab, 101 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenPageGraphicsGfx2.bin" ; $67ab, 101 bytes
 CharDataPageArrowsTaskSpriteTemplate:
 	; $6810, 11 bytes (sprite_template)
 	oam_sprite $7f, $90, $c0, $20

@@ -36,9 +36,9 @@ QueueTourPointerSprite_13_SpriteTemplate:
 	ds 7, $00
 	ds ALIGN[4]
 TourPointerTiles_13:
-	INCBIN "data/bank_013/TourPointerTiles_13.bin" ; $4d30, 64 bytes
+	INCBIN "data/story/TourPointerTiles_13.bin" ; $4d30, 64 bytes
 TourPointerPalette_13:
-	INCLUDE "data/bank_013/TourPointerPalette_13.asm" ; $4d70, 8 bytes (palettes)
+	INCLUDE "data/story/TourPointerPalette_13.asm" ; $4d70, 8 bytes (palettes)
 AnimateDoorOpen_13:
 	sound SFX_DOOR ; $4d78
 	script_copy_scene_rect 20, 8, 6, 21, 2, 2 ; $4d7a

@@ -498,144 +498,144 @@ CharDataBand8RunsStep1_1c:
 	db $00, $14, $00, $01, $00, $34, $06, $01, $00, $54, $0c, $01, $00, $74, $12, $01 ; 0x00
 	db $ff ; 0x10
 CharDataScreen_LoadScreenPalette:
-	INCLUDE "data/bank_01c/CharDataScreen_LoadScreenPalette.asm" ; $598c, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/char_data/CharDataScreen_LoadScreenPalette.asm" ; $598c, 64 bytes (palettes)
 CharDataScreenGfx0_1c:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx0_1c.bin" ; $59cc, 2618 bytes
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx0_1c.bin" ; $59cc, 2618 bytes
 CharDataScreenTilemap_1c:
-	INCBIN "data/bank_01c/lz_CharDataScreenTilemap_1c.bin" ; $6406, 99 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenTilemap_1c.inc" ; DEF CharDataScreenTilemap_1c_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenTilemap_1c.bin" ; $6406, 99 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenTilemap_1c.inc" ; DEF CharDataScreenTilemap_1c_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenAttrmap_1c:
-	INCBIN "data/bank_01c/lz_CharDataScreenAttrmap_1c.bin" ; $6469, 59 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenAttrmap_1c.inc" ; DEF CharDataScreenAttrmap_1c_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenAttrmap_1c.bin" ; $6469, 59 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenAttrmap_1c.inc" ; DEF CharDataScreenAttrmap_1c_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenStatBar00:
-	INCBIN "data/bank_01c/CharDataScreenStatBar00.bin" ; $64a4, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar00.bin" ; $64a4, 5 bytes
 CharDataScreenStatBar01:
-	INCBIN "data/bank_01c/CharDataScreenStatBar01.bin" ; $64a9, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar01.bin" ; $64a9, 5 bytes
 CharDataScreenStatBar02:
-	INCBIN "data/bank_01c/CharDataScreenStatBar02.bin" ; $64ae, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar02.bin" ; $64ae, 5 bytes
 CharDataScreenStatBar03:
-	INCBIN "data/bank_01c/CharDataScreenStatBar03.bin" ; $64b3, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar03.bin" ; $64b3, 5 bytes
 CharDataScreenStatBar04:
-	INCBIN "data/bank_01c/CharDataScreenStatBar04.bin" ; $64b8, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar04.bin" ; $64b8, 5 bytes
 CharDataScreenStatBar05:
-	INCBIN "data/bank_01c/CharDataScreenStatBar05.bin" ; $64bd, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar05.bin" ; $64bd, 5 bytes
 CharDataScreenStatBar06:
-	INCBIN "data/bank_01c/CharDataScreenStatBar06.bin" ; $64c2, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar06.bin" ; $64c2, 5 bytes
 CharDataScreenStatBar07:
-	INCBIN "data/bank_01c/CharDataScreenStatBar07.bin" ; $64c7, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar07.bin" ; $64c7, 5 bytes
 CharDataScreenStatBar08:
-	INCBIN "data/bank_01c/CharDataScreenStatBar08.bin" ; $64cc, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar08.bin" ; $64cc, 5 bytes
 CharDataScreenStatBar09:
-	INCBIN "data/bank_01c/CharDataScreenStatBar09.bin" ; $64d1, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar09.bin" ; $64d1, 5 bytes
 CharDataScreenStatBar10:
-	INCBIN "data/bank_01c/CharDataScreenStatBar10.bin" ; $64d6, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar10.bin" ; $64d6, 5 bytes
 CharDataScreenStatBar11:
-	INCBIN "data/bank_01c/CharDataScreenStatBar11.bin" ; $64db, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar11.bin" ; $64db, 5 bytes
 CharDataScreenStatBar12:
-	INCBIN "data/bank_01c/CharDataScreenStatBar12.bin" ; $64e0, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar12.bin" ; $64e0, 5 bytes
 CharDataScreenStatBar13:
-	INCBIN "data/bank_01c/CharDataScreenStatBar13.bin" ; $64e5, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar13.bin" ; $64e5, 5 bytes
 CharDataScreenStatBar14:
-	INCBIN "data/bank_01c/CharDataScreenStatBar14.bin" ; $64ea, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar14.bin" ; $64ea, 5 bytes
 CharDataScreenStatBar15:
-	INCBIN "data/bank_01c/CharDataScreenStatBar15.bin" ; $64ef, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar15.bin" ; $64ef, 5 bytes
 CharDataScreenStatBar16:
-	INCBIN "data/bank_01c/CharDataScreenStatBar16.bin" ; $64f4, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar16.bin" ; $64f4, 5 bytes
 CharDataScreenStatBar17:
-	INCBIN "data/bank_01c/CharDataScreenStatBar17.bin" ; $64f9, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar17.bin" ; $64f9, 5 bytes
 CharDataScreenStatBar18:
-	INCBIN "data/bank_01c/CharDataScreenStatBar18.bin" ; $64fe, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar18.bin" ; $64fe, 5 bytes
 CharDataScreenStatBar19:
-	INCBIN "data/bank_01c/CharDataScreenStatBar19.bin" ; $6503, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar19.bin" ; $6503, 5 bytes
 CharDataScreenStatBar20:
-	INCBIN "data/bank_01c/CharDataScreenStatBar20.bin" ; $6508, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar20.bin" ; $6508, 5 bytes
 CharDataScreenStatBar21:
-	INCBIN "data/bank_01c/CharDataScreenStatBar21.bin" ; $650d, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar21.bin" ; $650d, 5 bytes
 CharDataScreenStatBar22:
-	INCBIN "data/bank_01c/CharDataScreenStatBar22.bin" ; $6512, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar22.bin" ; $6512, 5 bytes
 CharDataScreenStatBar23:
-	INCBIN "data/bank_01c/CharDataScreenStatBar23.bin" ; $6517, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar23.bin" ; $6517, 5 bytes
 CharDataScreenStatBar24:
-	INCBIN "data/bank_01c/CharDataScreenStatBar24.bin" ; $651c, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar24.bin" ; $651c, 5 bytes
 CharDataScreenStatBar25:
-	INCBIN "data/bank_01c/CharDataScreenStatBar25.bin" ; $6521, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar25.bin" ; $6521, 5 bytes
 CharDataScreenStatBar26:
-	INCBIN "data/bank_01c/CharDataScreenStatBar26.bin" ; $6526, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar26.bin" ; $6526, 5 bytes
 CharDataScreenStatBar27:
-	INCBIN "data/bank_01c/CharDataScreenStatBar27.bin" ; $652b, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar27.bin" ; $652b, 5 bytes
 CharDataScreenStatBar28:
-	INCBIN "data/bank_01c/CharDataScreenStatBar28.bin" ; $6530, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar28.bin" ; $6530, 5 bytes
 CharDataScreenStatBar29:
-	INCBIN "data/bank_01c/CharDataScreenStatBar29.bin" ; $6535, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar29.bin" ; $6535, 5 bytes
 CharDataScreenStatBar30:
-	INCBIN "data/bank_01c/CharDataScreenStatBar30.bin" ; $653a, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar30.bin" ; $653a, 5 bytes
 CharDataScreenStatBar31:
-	INCBIN "data/bank_01c/CharDataScreenStatBar31.bin" ; $653f, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar31.bin" ; $653f, 5 bytes
 CharDataScreenStatBar32:
-	INCBIN "data/bank_01c/CharDataScreenStatBar32.bin" ; $6544, 5 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar32.bin" ; $6544, 5 bytes
 CharDataScreenBand1Tilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand1Tilemap.bin" ; $6549, 54 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand1Tilemap.inc" ; DEF CharDataScreenBand1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand1Tilemap.bin" ; $6549, 54 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand1Tilemap.inc" ; DEF CharDataScreenBand1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand1Attrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand1Attrmap.bin" ; $657f, 23 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand1Attrmap.inc" ; DEF CharDataScreenBand1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand1Attrmap.bin" ; $657f, 23 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand1Attrmap.inc" ; DEF CharDataScreenBand1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage0Columns:
-	INCBIN "data/bank_01c/CharDataScreenPage0Columns.bin" ; $6596, 50 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenPage0Columns.bin" ; $6596, 50 bytes
 CharDataScreenBand2Tilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand2Tilemap.bin" ; $65c8, 67 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand2Tilemap.inc" ; DEF CharDataScreenBand2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand2Tilemap.bin" ; $65c8, 67 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand2Tilemap.inc" ; DEF CharDataScreenBand2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand2Attrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand2Attrmap.bin" ; $660b, 23 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand2Attrmap.inc" ; DEF CharDataScreenBand2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand2Attrmap.bin" ; $660b, 23 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand2Attrmap.inc" ; DEF CharDataScreenBand2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage1Columns:
-	INCBIN "data/bank_01c/CharDataScreenPage1Columns.bin" ; $6622, 70 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenPage1Columns.bin" ; $6622, 70 bytes
 CharDataScreenBand3Tilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand3Tilemap.bin" ; $6668, 58 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand3Tilemap.inc" ; DEF CharDataScreenBand3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand3Tilemap.bin" ; $6668, 58 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand3Tilemap.inc" ; DEF CharDataScreenBand3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand3Attrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand3Attrmap.bin" ; $66a2, 24 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand3Attrmap.inc" ; DEF CharDataScreenBand3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand3Attrmap.bin" ; $66a2, 24 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand3Attrmap.inc" ; DEF CharDataScreenBand3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage2Columns:
-	INCBIN "data/bank_01c/CharDataScreenPage2Columns.bin" ; $66ba, 50 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenPage2Columns.bin" ; $66ba, 50 bytes
 CharDataScreenBand4Tilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand4Tilemap.bin" ; $66ec, 72 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand4Tilemap.inc" ; DEF CharDataScreenBand4Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand4Tilemap.bin" ; $66ec, 72 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand4Tilemap.inc" ; DEF CharDataScreenBand4Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand4Attrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand4Attrmap.bin" ; $6734, 25 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand4Attrmap.inc" ; DEF CharDataScreenBand4Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand4Attrmap.bin" ; $6734, 25 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand4Attrmap.inc" ; DEF CharDataScreenBand4Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage3Columns:
-	INCBIN "data/bank_01c/CharDataScreenPage3Columns.bin" ; $674d, 90 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenPage3Columns.bin" ; $674d, 90 bytes
 CharDataScreenPage4Columns:
-	INCBIN "data/bank_01c/CharDataScreenPage4Columns.bin" ; $67a7, 30 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenPage4Columns.bin" ; $67a7, 30 bytes
 CharDataScreenBand5Tilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand5Tilemap.bin" ; $67c5, 14 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand5Tilemap.inc" ; DEF CharDataScreenBand5Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand5Tilemap.bin" ; $67c5, 14 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand5Tilemap.inc" ; DEF CharDataScreenBand5Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand5Attrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBand5Attrmap.bin" ; $67d3, 7 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBand5Attrmap.inc" ; DEF CharDataScreenBand5Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand5Attrmap.bin" ; $67d3, 7 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand5Attrmap.inc" ; DEF CharDataScreenBand5Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenUIPatch0Tilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch0Tilemap.bin" ; $67da, 24 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch0Tilemap.inc" ; DEF CharDataScreenUIPatch0Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenUIPatch0Tilemap.bin" ; $67da, 24 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenUIPatch0Tilemap.inc" ; DEF CharDataScreenUIPatch0Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenUIPatch0Attrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch0Attrmap.bin" ; $67f2, 12 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch0Attrmap.inc" ; DEF CharDataScreenUIPatch0Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenUIPatch0Attrmap.bin" ; $67f2, 12 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenUIPatch0Attrmap.inc" ; DEF CharDataScreenUIPatch0Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenUIPatch1Tilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch1Tilemap.bin" ; $67fe, 39 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch1Tilemap.inc" ; DEF CharDataScreenUIPatch1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenUIPatch1Tilemap.bin" ; $67fe, 39 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenUIPatch1Tilemap.inc" ; DEF CharDataScreenUIPatch1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenUIPatch1Attrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch1Attrmap.bin" ; $6825, 9 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch1Attrmap.inc" ; DEF CharDataScreenUIPatch1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenUIPatch1Attrmap.bin" ; $6825, 9 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenUIPatch1Attrmap.inc" ; DEF CharDataScreenUIPatch1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenUIPatch2Tilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch2Tilemap.bin" ; $682e, 26 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch2Tilemap.inc" ; DEF CharDataScreenUIPatch2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenUIPatch2Tilemap.bin" ; $682e, 26 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenUIPatch2Tilemap.inc" ; DEF CharDataScreenUIPatch2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenUIPatch2Attrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch2Attrmap.bin" ; $6848, 7 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch2Attrmap.inc" ; DEF CharDataScreenUIPatch2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenUIPatch2Attrmap.bin" ; $6848, 7 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenUIPatch2Attrmap.inc" ; DEF CharDataScreenUIPatch2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenUIPatch3Tilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch3Tilemap.bin" ; $684f, 28 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch3Tilemap.inc" ; DEF CharDataScreenUIPatch3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenUIPatch3Tilemap.bin" ; $684f, 28 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenUIPatch3Tilemap.inc" ; DEF CharDataScreenUIPatch3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenUIPatch3Attrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenUIPatch3Attrmap.bin" ; $686b, 7 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenUIPatch3Attrmap.inc" ; DEF CharDataScreenUIPatch3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenUIPatch3Attrmap.bin" ; $686b, 7 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenUIPatch3Attrmap.inc" ; DEF CharDataScreenUIPatch3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 	; $6872, 14 bytes (fill)
 	ds 14, $00

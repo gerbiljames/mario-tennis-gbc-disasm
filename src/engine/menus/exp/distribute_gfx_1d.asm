@@ -17,31 +17,31 @@ TickLevelUpJingle:
 	sound BGM_LEVEL_UP ; $77c5
 	ret ; $77c7
 ExpPromptWindowFrame_1d:
-	INCBIN "data/bank_01d/ExpPromptWindowFrame_1d.bin" ; $77c8, 25 bytes
+	INCBIN "data/engine/menus/exp/ExpPromptWindowFrame_1d.bin" ; $77c8, 25 bytes
 ExpLevelDownTilemapPatch0:
-	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch0.bin" ; $77e1, 21 bytes
+	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch0.bin" ; $77e1, 21 bytes
 ExpLevelDownTilemapPatch1:
-	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch1.bin" ; $77f6, 17 bytes
+	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch1.bin" ; $77f6, 17 bytes
 ExpLevelDownTilemapPatch2:
-	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch2.bin" ; $7807, 13 bytes
+	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch2.bin" ; $7807, 13 bytes
 ExpLevelDownTilemapPatch3:
-	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch3.bin" ; $7814, 9 bytes
+	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch3.bin" ; $7814, 9 bytes
 ExpLevelDownTilemapPatch4:
-	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch4.bin" ; $781d, 5 bytes
+	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch4.bin" ; $781d, 5 bytes
 ExpDistributionScreenPatchTilemap:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenPatchTilemap.bin" ; $7822, 47 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenPatchTilemap.inc" ; DEF ExpDistributionScreenPatchTilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.bin" ; $7822, 47 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.inc" ; DEF ExpDistributionScreenPatchTilemap_SIZE EQU its decoded length, generated from the .bin by make
 ExpDistributionScreenPatchAttrmap:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenPatchAttrmap.bin" ; $7851, 37 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenPatchAttrmap.inc" ; DEF ExpDistributionScreenPatchAttrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenPatchAttrmap.bin" ; $7851, 37 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenPatchAttrmap.inc" ; DEF ExpDistributionScreenPatchAttrmap_SIZE EQU its decoded length, generated from the .bin by make
 ExpDistributionScreenGfx7:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx7.bin" ; $7876, 25 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx7.inc" ; DEF ExpDistributionScreenGfx7_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenGfx7.bin" ; $7876, 25 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenGfx7.inc" ; DEF ExpDistributionScreenGfx7_SIZE EQU its decoded length, generated from the .bin by make
 ExpDistributionScreenPalettes:
-	INCBIN "data/bank_01d/ExpDistributionScreenPalettes.bin" ; $788f, 24 bytes
+	INCBIN "data/engine/menus/exp/ExpDistributionScreenPalettes.bin" ; $788f, 24 bytes
 ExpDistributionScreenGfx8:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx8.bin" ; $78a7, 137 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx8.inc" ; DEF ExpDistributionScreenGfx8_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenGfx8.bin" ; $78a7, 137 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenGfx8.inc" ; DEF ExpDistributionScreenGfx8_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpCharCursorTask_SpriteTemplate:
 	; $7930, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -52,16 +52,16 @@ DrawExpCharCursorTask_SpriteTemplate:
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
 ExpDistributionScreenGfx0:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx0.bin" ; $7949, 49 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx0.inc" ; DEF ExpDistributionScreenGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenGfx0.bin" ; $7949, 49 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenGfx0.inc" ; DEF ExpDistributionScreenGfx0_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpBarFillMarkersTask_SpriteTemplate:
 	; $797a, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 ExpDistributionScreenGfx1:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx1.bin" ; $7983, 49 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx1.inc" ; DEF ExpDistributionScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenGfx1.bin" ; $7983, 49 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenGfx1.inc" ; DEF ExpDistributionScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpBarSweepSpriteTask_SpriteTemplate:
 	; $79b4, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -69,11 +69,11 @@ DrawExpBarSweepSpriteTask_SpriteTemplate:
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
 ExpDistributionScreenGfx2:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx2.bin" ; $79c1, 162 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx2.inc" ; DEF ExpDistributionScreenGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenGfx2.bin" ; $79c1, 162 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenGfx2.inc" ; DEF ExpDistributionScreenGfx2_SIZE EQU its decoded length, generated from the .bin by make
 ExpDistributionScreenGfx3:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx3.bin" ; $7a63, 246 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx3.inc" ; DEF ExpDistributionScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenGfx3.bin" ; $7a63, 246 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenGfx3.inc" ; DEF ExpDistributionScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpToNextLevelTask_SpriteTemplate0:
 	; $7b59, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -90,8 +90,8 @@ DrawExpToNextLevelTask_SpriteTemplate0:
 	oam_sprite $20, $30, $16, $00
 	oam_sprite_end
 ExpDistributionScreenGfx4:
-	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx4.bin" ; $7b8a, 243 bytes
-	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx4.inc" ; DEF ExpDistributionScreenGfx4_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenGfx4.bin" ; $7b8a, 243 bytes
+	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenGfx4.inc" ; DEF ExpDistributionScreenGfx4_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpToNextLevelTask_SpriteTemplate1:
 	; $7c7d, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

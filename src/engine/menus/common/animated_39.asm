@@ -387,17 +387,17 @@ LoadFixedTileBlockAndPalette:
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
 FixedTileBlockAndPalette:
-	INCBIN "data/bank_039/lz_FixedTileBlockAndPalette.bin" ; $44f6, 32 bytes
-	INCLUDE "data/bank_039/lz_FixedTileBlockAndPalette.inc" ; DEF FixedTileBlockAndPalette_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/common/lz_FixedTileBlockAndPalette.bin" ; $44f6, 32 bytes
+	INCLUDE "data/engine/menus/common/lz_FixedTileBlockAndPalette.inc" ; DEF FixedTileBlockAndPalette_SIZE EQU its decoded length, generated from the .bin by make
 FixedTileBlockPalette:
-	INCLUDE "data/bank_039/FixedTileBlockPalette.asm" ; $4516, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/common/FixedTileBlockPalette.asm" ; $4516, 8 bytes (palettes)
 Unused_39_LoadFixedBgPalette0:
 	ld_bg_pals de, 0, 1 ; $451e
 	ld hl, FixedBgPalette0Palette ; $4521
 	call LoadPaletteShadow ; $4524
 	ret ; $4527
 FixedBgPalette0Palette:
-	INCLUDE "data/bank_039/FixedBgPalette0Palette.asm" ; $4528, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/common/FixedBgPalette0Palette.asm" ; $4528, 8 bytes (palettes)
 CopyTilemapRect:
 	push af ; $4530
 	push bc ; $4531

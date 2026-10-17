@@ -53,11 +53,11 @@ Unused_2c_LookupBallPosByShotIndex:
 	add hl, de ; $427f
 	ret ; $4280
 ShotPlacementData0_2c:
-	INCLUDE "data/bank_02c/ShotPlacementData0_2c.asm" ; $4281, 3072 bytes (traj:4)
+	INCLUDE "data/shots/ShotPlacementData0_2c.asm" ; $4281, 3072 bytes (traj:4)
 ShotPlacementData1_2c:
-	INCLUDE "data/bank_02c/ShotPlacementData1_2c.asm" ; $4e81, 4608 bytes (traj:6)
+	INCLUDE "data/shots/ShotPlacementData1_2c.asm" ; $4e81, 4608 bytes (traj:6)
 ShotPlacementData2_2c:
-	INCLUDE "data/bank_02c/ShotPlacementData2_2c.asm" ; $6081, 4608 bytes (traj:6)
+	INCLUDE "data/shots/ShotPlacementData2_2c.asm" ; $6081, 4608 bytes (traj:6)
 ProjectShotPlacement0:
 	farcall ComputeShotPlacement ; $7281
 	push bc ; $7284

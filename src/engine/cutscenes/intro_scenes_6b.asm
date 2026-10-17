@@ -105,17 +105,17 @@ InitCutsceneSceneC:
 	farcall CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
 CutsceneSceneAGfx0:
-	INCBIN "data/bank_06b/lz_CutsceneSceneAGfx0.bin" ; $551d, 1210 bytes
+	INCBIN "data/engine/cutscenes/lz_CutsceneSceneAGfx0.bin" ; $551d, 1210 bytes
 CutsceneSceneBGfx0:
-	INCBIN "data/bank_06b/lz_CutsceneSceneBGfx0.bin" ; $59d7, 512 bytes
+	INCBIN "data/engine/cutscenes/lz_CutsceneSceneBGfx0.bin" ; $59d7, 512 bytes
 CutsceneSceneBGfx1:
-	INCBIN "data/bank_06b/lz_CutsceneSceneBGfx1.bin" ; $5bd7, 334 bytes
+	INCBIN "data/engine/cutscenes/lz_CutsceneSceneBGfx1.bin" ; $5bd7, 334 bytes
 Palette_6b_1:
-	INCLUDE "data/bank_06b/Palette_6b_1.asm" ; $5d25, 64 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/Palette_6b_1.asm" ; $5d25, 64 bytes (palettes)
 CutsceneSceneAGfx1:
-	INCBIN "data/bank_06b/lz_CutsceneSceneAGfx1.bin" ; $5d65, 323 bytes
+	INCBIN "data/engine/cutscenes/lz_CutsceneSceneAGfx1.bin" ; $5d65, 323 bytes
 CutsceneSceneAGfx2:
-	INCBIN "data/bank_06b/lz_CutsceneSceneAGfx2.bin" ; $5ea8, 461 bytes
+	INCBIN "data/engine/cutscenes/lz_CutsceneSceneAGfx2.bin" ; $5ea8, 461 bytes
 LoadIntroTilesAndPalette:
 	ld b, TILEBLOCK_IntroGfx0 ; $6075
 	ld c, IntroGfx0_SIZE / 16 ; $6077
@@ -150,7 +150,7 @@ LoadIntroTilesAndPalette:
 	call LoadPaletteShadow ; $60c1
 	ret ; $60c4
 IntroPalettes:
-	INCLUDE "data/bank_06b/IntroPalettes.asm" ; $60c5, 16 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/IntroPalettes.asm" ; $60c5, 16 bytes (palettes)
 SetCameraYFromScrollPos:
 	ld hl, wIntroCutsceneScrollY ; $60d5
 	ld a, [hl+] ; $60d8
@@ -287,13 +287,13 @@ InitTitleSceneGraphics:
 	farcall CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
 TitleSceneGraphicsGfx0:
-	INCBIN "data/bank_06b/lz_TitleSceneGraphicsGfx0.bin" ; $61e6, 2774 bytes
+	INCBIN "data/engine/cutscenes/lz_TitleSceneGraphicsGfx0.bin" ; $61e6, 2774 bytes
 TitleSceneGraphicsGfx1:
-	INCBIN "data/bank_06b/lz_TitleSceneGraphicsGfx1.bin" ; $6cbc, 595 bytes
+	INCBIN "data/engine/cutscenes/lz_TitleSceneGraphicsGfx1.bin" ; $6cbc, 595 bytes
 TitleSceneGraphicsGfx2:
-	INCBIN "data/bank_06b/lz_TitleSceneGraphicsGfx2.bin" ; $6f0f, 308 bytes
+	INCBIN "data/engine/cutscenes/lz_TitleSceneGraphicsGfx2.bin" ; $6f0f, 308 bytes
 TitleScenePalette:
-	INCLUDE "data/bank_06b/TitleScenePalette.asm" ; $7043, 64 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/TitleScenePalette.asm" ; $7043, 64 bytes (palettes)
 IntroSequenceTimerTask:
 	ld a, [wCutsceneSpriteAX] ; $7083
 	inc a ; $7086
@@ -318,13 +318,13 @@ IntroSequenceTimerTask:
 .done:
 	ret ; $70ae
 BgPalette1TaskPalettes:
-	INCLUDE "data/bank_06b/BgPalette1TaskPalettes.asm" ; $70af, 128 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/BgPalette1TaskPalettes.asm" ; $70af, 128 bytes (palettes)
 BgPalettes2And3TaskPalettes0:
-	INCLUDE "data/bank_06b/BgPalettes2And3TaskPalettes0.asm" ; $712f, 128 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/BgPalettes2And3TaskPalettes0.asm" ; $712f, 128 bytes (palettes)
 BgPalettes2And3TaskPalettes1:
-	INCLUDE "data/bank_06b/BgPalettes2And3TaskPalettes1.asm" ; $71af, 128 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/BgPalettes2And3TaskPalettes1.asm" ; $71af, 128 bytes (palettes)
 BgPalettes4To7TaskPalettes:
-	INCLUDE "data/bank_06b/BgPalettes4To7TaskPalettes.asm" ; $722f, 128 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/BgPalettes4To7TaskPalettes.asm" ; $722f, 128 bytes (palettes)
 AnimateBgPalette1Task:
 	ldh a, [hVBlankCounter] ; $72af
 	and $03 ; $72b1

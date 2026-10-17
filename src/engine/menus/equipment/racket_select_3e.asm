@@ -108,7 +108,7 @@ LoadRacketSelectScreen:
 	farcall QueueWram3MapToVRAM ; $5557
 	ret ; $555a
 Palette_3e:
-	INCLUDE "data/bank_03e/Palette_3e.asm" ; $555b, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/equipment/Palette_3e.asm" ; $555b, 8 bytes (palettes)
 DrawOwnedItemIcons:
 	ld hl, wEquipItemList ; $5563
 	ld a, [wEquipItemCount] ; $5566

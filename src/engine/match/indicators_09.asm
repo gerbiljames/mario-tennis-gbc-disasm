@@ -49,37 +49,37 @@ MoveCurveTable_09:
 	dw MoveCurve14_09 ; $47ca
 	dw MoveCurve15_09 ; $47cc
 MoveCurve00_09:
-	INCBIN "data/bank_009/MoveCurve00_09.bin" ; $47ce, 13 bytes
+	INCBIN "data/engine/match/MoveCurve00_09.bin" ; $47ce, 13 bytes
 MoveCurve01_09:
-	INCBIN "data/bank_009/MoveCurve01_09.bin" ; $47db, 13 bytes
+	INCBIN "data/engine/match/MoveCurve01_09.bin" ; $47db, 13 bytes
 MoveCurve02_09:
-	INCBIN "data/bank_009/MoveCurve02_09.bin" ; $47e8, 13 bytes
+	INCBIN "data/engine/match/MoveCurve02_09.bin" ; $47e8, 13 bytes
 MoveCurve03_09:
-	INCBIN "data/bank_009/MoveCurve03_09.bin" ; $47f5, 13 bytes
+	INCBIN "data/engine/match/MoveCurve03_09.bin" ; $47f5, 13 bytes
 MoveCurve04_09:
-	INCBIN "data/bank_009/MoveCurve04_09.bin" ; $4802, 9 bytes
+	INCBIN "data/engine/match/MoveCurve04_09.bin" ; $4802, 9 bytes
 MoveCurve05_09:
-	INCBIN "data/bank_009/MoveCurve05_09.bin" ; $480b, 9 bytes
+	INCBIN "data/engine/match/MoveCurve05_09.bin" ; $480b, 9 bytes
 MoveCurve06_09:
-	INCBIN "data/bank_009/MoveCurve06_09.bin" ; $4814, 9 bytes
+	INCBIN "data/engine/match/MoveCurve06_09.bin" ; $4814, 9 bytes
 MoveCurve07_09:
-	INCBIN "data/bank_009/MoveCurve07_09.bin" ; $481d, 9 bytes
+	INCBIN "data/engine/match/MoveCurve07_09.bin" ; $481d, 9 bytes
 MoveCurve08_09:
-	INCBIN "data/bank_009/MoveCurve08_09.bin" ; $4826, 9 bytes
+	INCBIN "data/engine/match/MoveCurve08_09.bin" ; $4826, 9 bytes
 MoveCurve09_09:
-	INCBIN "data/bank_009/MoveCurve09_09.bin" ; $482f, 9 bytes
+	INCBIN "data/engine/match/MoveCurve09_09.bin" ; $482f, 9 bytes
 MoveCurve10_09:
-	INCBIN "data/bank_009/MoveCurve10_09.bin" ; $4838, 9 bytes
+	INCBIN "data/engine/match/MoveCurve10_09.bin" ; $4838, 9 bytes
 MoveCurve11_09:
-	INCBIN "data/bank_009/MoveCurve11_09.bin" ; $4841, 9 bytes
+	INCBIN "data/engine/match/MoveCurve11_09.bin" ; $4841, 9 bytes
 MoveCurve15_09:
-	INCBIN "data/bank_009/MoveCurve15_09.bin" ; $484a, 10 bytes
+	INCBIN "data/engine/match/MoveCurve15_09.bin" ; $484a, 10 bytes
 MoveCurve14_09:
-	INCBIN "data/bank_009/MoveCurve14_09.bin" ; $4854, 10 bytes
+	INCBIN "data/engine/match/MoveCurve14_09.bin" ; $4854, 10 bytes
 MoveCurve13_09:
-	INCBIN "data/bank_009/MoveCurve13_09.bin" ; $485e, 10 bytes
+	INCBIN "data/engine/match/MoveCurve13_09.bin" ; $485e, 10 bytes
 MoveCurve12_09:
-	INCBIN "data/bank_009/MoveCurve12_09.bin" ; $4868, 11 bytes
+	INCBIN "data/engine/match/MoveCurve12_09.bin" ; $4868, 11 bytes
 LoadTilesetGfx:
 	add a ; $4873
 	add a ; $4874
@@ -129,7 +129,7 @@ VramTileset_09:
 	db $00, $00
 	ds ALIGN[4]
 TilesetTiles_09:
-	INCBIN "data/bank_009/TilesetTiles_09.bin" ; $4900, 6144 bytes
+	INCBIN "data/engine/match/TilesetTiles_09.bin" ; $4900, 6144 bytes
 LoadScoreDigitGfx:
 	ld hl, VramGfxPtrTable_09 ; $6100
 	call GetGfxSourcePtr ; $6103
@@ -199,25 +199,25 @@ Player2ScoreDigitGfxSource:
 	dw Player2ScoreDigitGfx0_09, Player2ScoreDigitGfx1_09 ; $6175
 	ds ALIGN[4]
 PointsDigitGfx0_09:
-	INCBIN "data/bank_009/PointsDigitGfx0_09.bin" ; $6180, 384 bytes
+	INCBIN "data/engine/match/PointsDigitGfx0_09.bin" ; $6180, 384 bytes
 	ds ALIGN[4]
 PointsDigitGfx1_09:
-	INCBIN "data/bank_009/PointsDigitGfx1_09.bin" ; $6300, 576 bytes
+	INCBIN "data/engine/match/PointsDigitGfx1_09.bin" ; $6300, 576 bytes
 	ds ALIGN[4]
 Player1ScoreDigitGfx0_09:
-	INCBIN "data/bank_009/Player1ScoreDigitGfx0_09.bin" ; $6540, 320 bytes
+	INCBIN "data/engine/match/Player1ScoreDigitGfx0_09.bin" ; $6540, 320 bytes
 	ds ALIGN[4]
 Player1ScoreDigitGfx1_09:
-	INCBIN "data/bank_009/Player1ScoreDigitGfx1_09.bin" ; $6680, 512 bytes
+	INCBIN "data/engine/match/Player1ScoreDigitGfx1_09.bin" ; $6680, 512 bytes
 	ds ALIGN[4]
 Player2ScoreDigitGfx0_09:
-	INCBIN "data/bank_009/Player2ScoreDigitGfx0_09.bin" ; $6880, 320 bytes
+	INCBIN "data/engine/match/Player2ScoreDigitGfx0_09.bin" ; $6880, 320 bytes
 	ds ALIGN[4]
 Player2ScoreDigitGfx1_09:
-	INCBIN "data/bank_009/Player2ScoreDigitGfx1_09.bin" ; $69c0, 512 bytes
+	INCBIN "data/engine/match/Player2ScoreDigitGfx1_09.bin" ; $69c0, 512 bytes
 	ds ALIGN[4]
 DeuceAdvantageTiles:
-	INCBIN "data/bank_009/DeuceAdvantageTiles.bin" ; $6bc0, 128 bytes
+	INCBIN "data/engine/match/DeuceAdvantageTiles.bin" ; $6bc0, 128 bytes
 LoadServeGfx:
 	ld a, [wCurrentServingPlayer] ; $6c40
 	add a ; $6c43
@@ -250,16 +250,16 @@ ServeGfxPtrTable_09:
 	dw ServeGfx0_09, ServeGfx1_09, ServeGfx2_09, ServeGfx3_09 ; $6c6e
 	ds ALIGN[4]
 ServeGfx0_09:
-	INCBIN "data/bank_009/ServeGfx0_09.bin" ; $6c80, 256 bytes
+	INCBIN "data/engine/match/ServeGfx0_09.bin" ; $6c80, 256 bytes
 	ds ALIGN[4]
 ServeGfx1_09:
-	INCBIN "data/bank_009/ServeGfx1_09.bin" ; $6d80, 256 bytes
+	INCBIN "data/engine/match/ServeGfx1_09.bin" ; $6d80, 256 bytes
 	ds ALIGN[4]
 ServeGfx2_09:
-	INCBIN "data/bank_009/ServeGfx2_09.bin" ; $6e80, 256 bytes
+	INCBIN "data/engine/match/ServeGfx2_09.bin" ; $6e80, 256 bytes
 	ds ALIGN[4]
 ServeGfx3_09:
-	INCBIN "data/bank_009/ServeGfx3_09.bin" ; $6f80, 256 bytes
+	INCBIN "data/engine/match/ServeGfx3_09.bin" ; $6f80, 256 bytes
 ; A column of up to eight 8x16 objects one tile apart, tiles $0e down to $00;
 ; an object template enters it part-way to draw fewer (the entry labels
 ; say how many rows remain).

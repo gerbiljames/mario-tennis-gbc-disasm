@@ -11,10 +11,10 @@ ActorScript_14_1:
 	as_halt
 	ds ALIGN[4]
 PlaneObjTiles_14:
-	INCBIN "data/bank_014/PlaneObjTiles_14.bin" ; $5650, 1024 bytes
+	INCBIN "data/story/PlaneObjTiles_14.bin" ; $5650, 1024 bytes
 	ds ALIGN[4]
 IslandObjTiles_14:
-	INCBIN "data/bank_014/IslandObjTiles_14.bin" ; $5a50, 1024 bytes
+	INCBIN "data/story/IslandObjTiles_14.bin" ; $5a50, 1024 bytes
 SpriteTemplate_14_0:
 	; $5e50, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -27,7 +27,7 @@ SpriteTemplate_14_0:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 IslandObjPalette_14:
-	INCLUDE "data/bank_014/IslandObjPalette_14.asm" ; $5e71, 8 bytes (palettes)
+	INCLUDE "data/story/IslandObjPalette_14.asm" ; $5e71, 8 bytes (palettes)
 LoadPlaneObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $5e79
 	ld hl, PlaneObjTiles_14 ; $5e82
@@ -69,14 +69,14 @@ QueuePlaneSpriteByHeight_14:
 	ds 2, $00
 	ds ALIGN[4]
 WaterSplashObjGfx:
-	INCBIN "data/bank_014/WaterSplashObjGfx.bin" ; $5ed0, 448 bytes
+	INCBIN "data/story/WaterSplashObjGfx.bin" ; $5ed0, 448 bytes
 SpriteTemplate_14_1:
 	; $6090, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 WaterSplashObjPalette_14:
-	INCLUDE "data/bank_014/WaterSplashObjPalette_14.asm" ; $6099, 8 bytes (palettes)
+	INCLUDE "data/story/WaterSplashObjPalette_14.asm" ; $6099, 8 bytes (palettes)
 LoadWaterSplashObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $60a1
 	ld hl, WaterSplashObjGfx ; $60aa

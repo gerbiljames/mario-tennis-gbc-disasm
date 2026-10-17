@@ -85,87 +85,87 @@ SoundTable_7f:
 	snd_channel 0, $00 ; $40a4
 	dw Musicc1_Trk0 ; $40a6
 Music96_Trk0:
-	INCLUDE "data/bank_07f/Music96_Trk0.asm" ; $40a8, 36 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Music96_Trk0.asm" ; $40a8, 36 bytes (snd_script:pulse)
 Music96_Trk1:
-	INCLUDE "data/bank_07f/Music96_Trk1.asm" ; $40cc, 44 bytes (snd_script:wave)
+	INCLUDE "data/audio/Music96_Trk1.asm" ; $40cc, 44 bytes (snd_script:wave)
 Music97_Trk0:
-	INCLUDE "data/bank_07f/Music97_Trk0.asm" ; $40f8, 72 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Music97_Trk0.asm" ; $40f8, 72 bytes (snd_script:pulse)
 Music98_Trk0:
-	INCLUDE "data/bank_07f/Music98_Trk0.asm" ; $4140, 72 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Music98_Trk0.asm" ; $4140, 72 bytes (snd_script:pulse)
 Music99_Trk0:
-	INCLUDE "data/bank_07f/Music99_Trk0.asm" ; $4188, 26 bytes (snd_script:noise)
+	INCLUDE "data/audio/Music99_Trk0.asm" ; $4188, 26 bytes (snd_script:noise)
 Music9d_Trk0:
-	INCLUDE "data/bank_07f/Music9d_Trk0.asm" ; $41a2, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Music9d_Trk0.asm" ; $41a2, 12 bytes (snd_script:pulse)
 Music9e_Trk0:
-	INCLUDE "data/bank_07f/Music9e_Trk0.asm" ; $41ae, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Music9e_Trk0.asm" ; $41ae, 12 bytes (snd_script:pulse)
 Music9f_Trk0:
-	INCLUDE "data/bank_07f/Music9f_Trk0.asm" ; $41ba, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Music9f_Trk0.asm" ; $41ba, 12 bytes (snd_script:pulse)
 Musica0_Trk0:
-	INCLUDE "data/bank_07f/Musica0_Trk0.asm" ; $41c6, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica0_Trk0.asm" ; $41c6, 12 bytes (snd_script:pulse)
 Musica1_Trk0:
-	INCLUDE "data/bank_07f/Musica1_Trk0.asm" ; $41d2, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica1_Trk0.asm" ; $41d2, 12 bytes (snd_script:pulse)
 Musica2_Trk0:
-	INCLUDE "data/bank_07f/Musica2_Trk0.asm" ; $41de, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica2_Trk0.asm" ; $41de, 12 bytes (snd_script:pulse)
 Musica3_Trk0:
-	INCLUDE "data/bank_07f/Musica3_Trk0.asm" ; $41ea, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica3_Trk0.asm" ; $41ea, 12 bytes (snd_script:pulse)
 Musica4_Trk0:
-	INCLUDE "data/bank_07f/Musica4_Trk0.asm" ; $41f6, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica4_Trk0.asm" ; $41f6, 12 bytes (snd_script:pulse)
 Musica5_Trk0:
-	INCLUDE "data/bank_07f/Musica5_Trk0.asm" ; $4202, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica5_Trk0.asm" ; $4202, 12 bytes (snd_script:pulse)
 Musica6_Trk0:
-	INCLUDE "data/bank_07f/Musica6_Trk0.asm" ; $420e, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica6_Trk0.asm" ; $420e, 12 bytes (snd_script:pulse)
 Musica7_Trk0:
-	INCLUDE "data/bank_07f/Musica7_Trk0.asm" ; $421a, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica7_Trk0.asm" ; $421a, 12 bytes (snd_script:pulse)
 Musica8_Trk0:
-	INCLUDE "data/bank_07f/Musica8_Trk0.asm" ; $4226, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica8_Trk0.asm" ; $4226, 12 bytes (snd_script:pulse)
 Musica9_Trk0:
-	INCLUDE "data/bank_07f/Musica9_Trk0.asm" ; $4232, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musica9_Trk0.asm" ; $4232, 12 bytes (snd_script:pulse)
 Musicaa_Trk0:
-	INCLUDE "data/bank_07f/Musicaa_Trk0.asm" ; $423e, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicaa_Trk0.asm" ; $423e, 12 bytes (snd_script:pulse)
 Musicab_Trk0:
-	INCLUDE "data/bank_07f/Musicab_Trk0.asm" ; $424a, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicab_Trk0.asm" ; $424a, 12 bytes (snd_script:pulse)
 Musicac_Trk0:
-	INCLUDE "data/bank_07f/Musicac_Trk0.asm" ; $4256, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicac_Trk0.asm" ; $4256, 12 bytes (snd_script:pulse)
 Musicad_Trk0:
-	INCLUDE "data/bank_07f/Musicad_Trk0.asm" ; $4262, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicad_Trk0.asm" ; $4262, 12 bytes (snd_script:pulse)
 Musicae_Trk0:
-	INCLUDE "data/bank_07f/Musicae_Trk0.asm" ; $426e, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicae_Trk0.asm" ; $426e, 12 bytes (snd_script:pulse)
 Musicaf_Trk0:
-	INCLUDE "data/bank_07f/Musicaf_Trk0.asm" ; $427a, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicaf_Trk0.asm" ; $427a, 12 bytes (snd_script:pulse)
 Musicb0_Trk0:
-	INCLUDE "data/bank_07f/Musicb0_Trk0.asm" ; $4286, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb0_Trk0.asm" ; $4286, 12 bytes (snd_script:pulse)
 Musicb1_Trk0:
-	INCLUDE "data/bank_07f/Musicb1_Trk0.asm" ; $4292, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb1_Trk0.asm" ; $4292, 12 bytes (snd_script:pulse)
 Musicb2_Trk0:
-	INCLUDE "data/bank_07f/Musicb2_Trk0.asm" ; $429e, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb2_Trk0.asm" ; $429e, 12 bytes (snd_script:pulse)
 Musicb3_Trk0:
-	INCLUDE "data/bank_07f/Musicb3_Trk0.asm" ; $42aa, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb3_Trk0.asm" ; $42aa, 12 bytes (snd_script:pulse)
 Musicb4_Trk0:
-	INCLUDE "data/bank_07f/Musicb4_Trk0.asm" ; $42b6, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb4_Trk0.asm" ; $42b6, 12 bytes (snd_script:pulse)
 Musicb5_Trk0:
-	INCLUDE "data/bank_07f/Musicb5_Trk0.asm" ; $42c2, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb5_Trk0.asm" ; $42c2, 12 bytes (snd_script:pulse)
 Musicb6_Trk0:
-	INCLUDE "data/bank_07f/Musicb6_Trk0.asm" ; $42ce, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb6_Trk0.asm" ; $42ce, 12 bytes (snd_script:pulse)
 Musicb7_Trk0:
-	INCLUDE "data/bank_07f/Musicb7_Trk0.asm" ; $42da, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb7_Trk0.asm" ; $42da, 12 bytes (snd_script:pulse)
 Musicb8_Trk0:
-	INCLUDE "data/bank_07f/Musicb8_Trk0.asm" ; $42e6, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb8_Trk0.asm" ; $42e6, 12 bytes (snd_script:pulse)
 Musicb9_Trk0:
-	INCLUDE "data/bank_07f/Musicb9_Trk0.asm" ; $42f2, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicb9_Trk0.asm" ; $42f2, 12 bytes (snd_script:pulse)
 Musicba_Trk0:
-	INCLUDE "data/bank_07f/Musicba_Trk0.asm" ; $42fe, 72 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicba_Trk0.asm" ; $42fe, 72 bytes (snd_script:pulse)
 Musicbb_Trk0:
-	INCLUDE "data/bank_07f/Musicbb_Trk0.asm" ; $4346, 72 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicbb_Trk0.asm" ; $4346, 72 bytes (snd_script:pulse)
 Musicbc_Trk0:
-	INCLUDE "data/bank_07f/Musicbc_Trk0.asm" ; $438e, 72 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicbc_Trk0.asm" ; $438e, 72 bytes (snd_script:pulse)
 Musicbd_Trk0:
-	INCLUDE "data/bank_07f/Musicbd_Trk0.asm" ; $43d6, 72 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicbd_Trk0.asm" ; $43d6, 72 bytes (snd_script:pulse)
 Musicbe_Trk0:
-	INCLUDE "data/bank_07f/Musicbe_Trk0.asm" ; $441e, 72 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicbe_Trk0.asm" ; $441e, 72 bytes (snd_script:pulse)
 Musicbf_Trk0:
-	INCLUDE "data/bank_07f/Musicbf_Trk0.asm" ; $4466, 72 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicbf_Trk0.asm" ; $4466, 72 bytes (snd_script:pulse)
 Musicc0_Trk0:
-	INCLUDE "data/bank_07f/Musicc0_Trk0.asm" ; $44ae, 72 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicc0_Trk0.asm" ; $44ae, 72 bytes (snd_script:pulse)
 Musicc1_Trk0:
-	INCLUDE "data/bank_07f/Musicc1_Trk0.asm" ; $44f6, 12 bytes (snd_script:pulse)
+	INCLUDE "data/audio/Musicc1_Trk0.asm" ; $44f6, 12 bytes (snd_script:pulse)
 	; $4502, 15102 bytes fill to bank end (linker-padded)

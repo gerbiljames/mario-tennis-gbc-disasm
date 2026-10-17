@@ -325,21 +325,21 @@ CompactMinigameDataRows:
 	pop_wram_bank ; $78b7
 	ret ; $78bc
 ObjectSceneAGfx0:
-	INCBIN "data/bank_01b/lz_ObjectSceneAGfx0.bin" ; $78bd, 179 bytes
+	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneAGfx0.bin" ; $78bd, 179 bytes
 ObjectSceneAGfx1:
-	INCBIN "data/bank_01b/lz_ObjectSceneAGfx1.bin" ; $7970, 80 bytes
+	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneAGfx1.bin" ; $7970, 80 bytes
 ObjectSceneAGfx2:
-	INCBIN "data/bank_01b/lz_ObjectSceneAGfx2.bin" ; $79c0, 184 bytes
+	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneAGfx2.bin" ; $79c0, 184 bytes
 ObjectSceneBGfx0:
-	INCBIN "data/bank_01b/lz_ObjectSceneBGfx0.bin" ; $7a78, 61 bytes
+	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneBGfx0.bin" ; $7a78, 61 bytes
 ObjectSceneBGfx1:
-	INCBIN "data/bank_01b/lz_ObjectSceneBGfx1.bin" ; $7ab5, 65 bytes
+	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneBGfx1.bin" ; $7ab5, 65 bytes
 ObjectSceneBGfx2:
-	INCBIN "data/bank_01b/lz_ObjectSceneBGfx2.bin" ; $7af6, 65 bytes
+	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneBGfx2.bin" ; $7af6, 65 bytes
 Screen0Gfx:
-	INCBIN "data/bank_01b/lz_Screen0Gfx.bin" ; $7b37, 503 bytes
+	INCBIN "data/engine/menus/minigame_select/lz_Screen0Gfx.bin" ; $7b37, 503 bytes
 Screen1ObjGfx:
-	INCBIN "data/bank_01b/lz_Screen1ObjGfx.bin" ; $7d2e, 321 bytes
+	INCBIN "data/engine/menus/minigame_select/lz_Screen1ObjGfx.bin" ; $7d2e, 321 bytes
 Screen2ObjGfx:
-	INCBIN "data/bank_01b/lz_Screen2ObjGfx.bin" ; $7e6f, 323 bytes
+	INCBIN "data/engine/menus/minigame_select/lz_Screen2ObjGfx.bin" ; $7e6f, 323 bytes
 	; $7fb2, 78 bytes fill to bank end (linker-padded)

@@ -473,7 +473,7 @@ relocated.
 These are not per-court: the per-court data is only the two damping bytes in
 `CourtSceneDataTable`.
 
-**The files.** Each table is `data/bank_02x/<Table>.asm`, one
+**The files.** Each table is `data/shots/<Table>.asm`, one
 `traj_row speed, elevation, delta` (or `traj_row4 speed, elevation`) per row,
 with `; block N` every 64 rows where tables are indexed in 64-row blocks (the
 four stroke banks, neutral, reach) and `; row N` every sixteen elsewhere.

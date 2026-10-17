@@ -91,7 +91,7 @@ LoadObjectSceneBTiles:
 	call LoadPaletteShadow ; $7d40
 	ret ; $7d43
 ObjectSceneBPalette:
-	INCLUDE "data/bank_018/ObjectSceneBPalette.asm" ; $7d44, 24 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/ObjectSceneBPalette.asm" ; $7d44, 24 bytes (palettes)
 PopulateObjectArrayB:
 	ld c, $00 ; $7d5c
 	ld hl, ObjectArrayBSpawnTable ; $7d5e
@@ -193,7 +193,7 @@ ObjectArrayAUpdateCallback_18:
 .done:
 	jp ObjectUpdateLoopTail_18 ; $7e66
 ObjectArrayAWaveTable_18:
-	INCBIN "data/bank_018/ObjectArrayAWaveTable_18.bin" ; $7e69, 32 bytes
+	INCBIN "data/engine/menus/scenes/ObjectArrayAWaveTable_18.bin" ; $7e69, 32 bytes
 ObjectArrayBUpdateCallback_18:
 	ldh a, [hVBlankCounter] ; $7e89
 	add c ; $7e8b
@@ -238,5 +238,5 @@ ObjectArrayBUpdateCallback_18:
 .done:
 	jp ObjectUpdateLoopTail_18 ; $7ec5
 ObjectArrayBDriftTable_18:
-	INCBIN "data/bank_018/ObjectArrayBDriftTable_18.bin" ; $7ec8, 45 bytes
+	INCBIN "data/engine/menus/scenes/ObjectArrayBDriftTable_18.bin" ; $7ec8, 45 bytes
 	; $7ef5, 267 bytes fill to bank end (linker-padded)

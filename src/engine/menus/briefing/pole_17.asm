@@ -294,25 +294,25 @@ DrillBriefing_ServeThroughPolesTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 PoleServeBriefing_AdvanceAnim2_PlayerPosTable:
-	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim2_PlayerPosTable.asm" ; $5f16, 16 bytes
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_PlayerPosTable.asm" ; $5f16, 16 bytes
 PoleServeBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5f26, 16 bytes
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5f26, 16 bytes
 PoleServeBriefing_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/PoleServeBriefing_HMarkerUnflippedTable.bin" ; $5f36, 4 bytes
+	INCBIN "data/engine/menus/briefing/PoleServeBriefing_HMarkerUnflippedTable.bin" ; $5f36, 4 bytes
 PoleServeBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5f3a, 16 bytes
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5f3a, 16 bytes
 PoleServeBriefing_AdvanceAnim2_HMarkerPosTable:
-	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim2_HMarkerPosTable.asm" ; $5f4a, 16 bytes
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_HMarkerPosTable.asm" ; $5f4a, 16 bytes
 PoleServeBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/bank_017/PoleServeBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $5f5a, 4 bytes
+	INCBIN "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $5f5a, 4 bytes
 PoleServeBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/PoleServeBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $5f5e, 16 bytes
+	INCBIN "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $5f5e, 16 bytes
 PoleServeBriefing_TargetOverlayTable:
-	INCBIN "data/bank_017/PoleServeBriefing_TargetOverlayTable.bin" ; $5f6e, 4 bytes
+	INCBIN "data/engine/menus/briefing/PoleServeBriefing_TargetOverlayTable.bin" ; $5f6e, 4 bytes
 PoleServeBriefing_AdvanceAnim2_BracketPosTable:
-	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim2_BracketPosTable.asm" ; $5f72, 16 bytes
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_BracketPosTable.asm" ; $5f72, 16 bytes
 PoleServeBriefing_AdvanceAnim2_PolePosTable:
-	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim2_PolePosTable.asm" ; $5f82, 16 bytes
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_PolePosTable.asm" ; $5f82, 16 bytes
 DrillBriefing_ServeAndVolley:
 	ld a, $52 ; $5f92
 	ld [wBriefingPlayerX], a ; $5f94
@@ -552,20 +552,20 @@ ServeAndVolleyBriefing_AdvanceAnimTable:
 	dw $0052 ; record 6
 	dw $0018 ; record 7
 ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable:
-	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable.bin" ; $61c4, 16 bytes
+	INCBIN "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable.bin" ; $61c4, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_BallPosTable:
-	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_BallPosTable.bin" ; $61d4, 16 bytes
+	INCBIN "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_BallPosTable.bin" ; $61d4, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $61e4, 4 bytes
+	INCBIN "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $61e4, 4 bytes
 ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $61e8, 16 bytes
+	INCBIN "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $61e8, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $61f8, 4 bytes
+	INCBIN "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $61f8, 4 bytes
 ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $61fc, 16 bytes
+	INCBIN "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $61fc, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable:
-	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable.bin" ; $620c, 4 bytes
+	INCBIN "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable.bin" ; $620c, 4 bytes
 ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable:
-	INCLUDE "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable.asm" ; $6210, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable.asm" ; $6210, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable.bin" ; $6220, 16 bytes
+	INCBIN "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable.bin" ; $6220, 16 bytes
