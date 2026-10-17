@@ -147,6 +147,7 @@ CheckBallInSwingRange:
 	set 0, [hl] ; $7068
 	ret ; $706a
 SelectServeShotType:
+	apcall ApGateServeButton
 	ld a, [wCharShotButton1] ; $706b
 	ld_hl_indexed SelectServeShotType_CharShotTypeTable ; $706e
 	ld a, [hl] ; $7075
@@ -156,6 +157,7 @@ SelectServeShotType_CharShotTypeTable:
 	; $707a, 4 bytes (enum:SHOTTYPE:4)
 	db SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_FLAT ; 0x00
 SelectRallyShotType:
+	apcall ApGateRallyButtons
 	ld a, [wCharShotButton2] ; $707e
 	add a ; $7081
 	add a ; $7082

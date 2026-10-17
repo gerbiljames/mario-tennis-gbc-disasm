@@ -200,6 +200,17 @@ ENDM
 
 	ap_item ITEM_EXP_BUNDLE, "EXP Bundle"
 
+; shots: strokes (copy 2: the double-tap power shot, or the smash), then serves
+; (copy 2: the nice serve), each in topspin, slice, flat order
+	ap_item ITEM_TOPSPIN, "Progressive Topspin", "Topspin"
+	ap_item ITEM_SLICE, "Progressive Slice", "Slice"
+	ap_item ITEM_FLAT_SHOT, "Progressive Flat Shot", "Flat Shot"
+	ap_item ITEM_LOB, "Lob"
+	ap_item ITEM_DROP_SHOT, "Drop Shot"
+	ap_item ITEM_TOPSPIN_SERVE, "Progressive Topspin Serve", "Topspin Serve"
+	ap_item ITEM_SLICE_SERVE, "Progressive Slice Serve", "Slice Serve"
+	ap_item ITEM_FLAT_SERVE, "Progressive Flat Serve", "Flat Serve"
+
 DEF AP_NO_LOCATION EQU $ff
 DEF AP_REWARD_LIST_SIZE EQU 32
 DEF NUM_MARIO_MINIGAMES EQU 9
@@ -208,7 +219,7 @@ DEF SWING_CONTEST_HIGH EQU 150
 
 ; the ledger (ram/sram.asm)
 DEF AP_LOCATION_BYTES EQU 16
-DEF AP_ITEM_SLOTS EQU 32
+DEF AP_ITEM_SLOTS EQU 64
 DEF AP_RECENT_ITEMS EQU 8
 DEF AP_NAME_LENGTH EQU 24
 DEF AP_RECENT_ITEM_SIZE EQU 1 + AP_NAME_LENGTH + 1

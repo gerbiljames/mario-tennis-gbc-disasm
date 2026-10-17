@@ -195,7 +195,7 @@ class Game:
         """Act as the client: append (item id, sender) pairs to the client region."""
         count = int.from_bytes(self.sram("sApReceivedCount", 2), "little")
         for item, sender in items:
-            counts = bytearray(self.sram("sApClientItems", 32))
+            counts = bytearray(self.sram("sApClientItems", self.addr("sApRecentItems") - self.addr("sApClientItems")))
             counts[item] += 1
             self.sram_write("sApClientItems", counts)
             entry = bytes([item]) + sender.encode() + bytes(25 - len(sender))
@@ -672,7 +672,7 @@ def out_the_front_gate(g, answer):
     assert g.warp(STORYLOC_ACADEMY_ENTRANCE, 0x01) == STORYLOC_ACADEMY_ENTRANCE
     g.wram("wApMessage", 0)
     asked = False
-    for _ in range(60):
+    for i in range(60):
         start = g.idle
         g.press("down", hold=20)
         if g.mem[g.addr("wApMessage")] == ord("F"):
@@ -685,7 +685,9 @@ def out_the_front_gate(g, answer):
         if g.mem[g.addr("wStoryModeCurrentLocation")] != STORYLOC_ACADEMY_ENTRANCE:
             break
         if g.idle == start:
-            g.press("a", wait=20)  # someone wandered over to chat
+            # someone wandered into the path to chat: answer, then step round them
+            g.press("a", wait=20)
+            g.press("left" if i % 2 else "right", hold=12)
     start = g.idle
     for _ in range(2400):
         g.tick()
@@ -815,6 +817,72 @@ def ap_has_inline(g, c):
 
 
 ap_has_inline.tokens = lambda c: {("ApStartInventory", c["ITEM_SERVICE_LESSON"]): b"\x02"}
+
+
+def rally(g, b, c):
+    g.call("ApFilterRallyButtonsFor", B=b, C=c)
+    return g.result["B"], g.result["C"]
+
+
+def serve(g, b):
+    g.call("ApFilterServeButtonFor", B=b)
+    return g.result["B"]
+
+
+def smash_allowed(g, buttons):
+    g.call("ApSmashAllowedFor", B=buttons)
+    return not g.result["F"] & 0x80
+
+
+SHOTTYPE_SERVE_SLICE = 0x0d
+
+
+def serve_height(g, height):
+    g.call("ApClampServeHeightFor", C=SHOTTYPE_SERVE_SLICE, D=(height >> 8) & 0xff, E=height & 0xff)
+    return g.result["D"] << 8 | g.result["E"]
+
+
+@test
+def shot_filters(g, c):
+    def get(*names):
+        g.receive([(c[n], "") for n in names])
+
+    assert rally(g, 1, 2) == (1, 0), "nothing owned: a lob falls back to topspin"
+    assert serve(g, 2) == 1
+    assert not smash_allowed(g, 0x30)
+    get("ITEM_FLAT_SHOT")
+    assert rally(g, 1, 0) == (3, 3), "flat only: topspin falls back to the flat fallback"
+    assert rally(g, 3, 0) == (3, 0)
+    assert not smash_allowed(g, 0x30), "smash with one Flat Shot"
+    get("ITEM_SLICE")
+    assert rally(g, 1, 2) == (2, 0), "slice comes before flat in the fallback"
+    assert rally(g, 2, 2) == (2, 0), "power slice with one Slice"
+    get("ITEM_TOPSPIN")
+    assert rally(g, 1, 1) == (1, 0)
+    get("ITEM_TOPSPIN", "ITEM_LOB", "ITEM_DROP_SHOT", "ITEM_FLAT_SHOT")
+    assert rally(g, 1, 1) == (1, 1)
+    assert rally(g, 1, 2) == (1, 2)
+    assert rally(g, 2, 1) == (2, 1)
+    assert smash_allowed(g, 0x30)
+    assert not smash_allowed(g, 0x33), "a fallback swing smashed"
+    get("ITEM_SLICE_SERVE")
+    assert [serve(g, b) for b in (0, 1, 2, 3)] == [2, 2, 2, 2]
+    get("ITEM_FLAT_SERVE")
+    assert [serve(g, b) for b in (1, 2, 3)] == [2, 2, 3]
+    assert serve_height(g, -0x180) == -0x14f & 0xffff, "nice slice serve with one copy"
+    assert serve_height(g, -0x120) == -0x120 & 0xffff
+    assert serve_height(g, -0x250) == -0x250 & 0xffff
+    get("ITEM_SLICE_SERVE")
+    assert serve_height(g, -0x180) == -0x180 & 0xffff, "clamped a nice slice serve with two copies"
+
+
+shot_filters.tokens = lambda c: {"ApOptShotItems": b"\x01"}
+
+
+@test
+def shots_ungated_by_default(g, c):
+    g.call("ApShotsGated")
+    assert g.result["F"] & 0x80, "shots gated with ApOptShotItems 0"
 
 
 def names(c, loc, item, player):

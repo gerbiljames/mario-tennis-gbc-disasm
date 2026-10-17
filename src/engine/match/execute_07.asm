@@ -481,6 +481,8 @@ ExecuteShotSmash:
 ExecuteShotNeutral:
 	call CheckBallInSmashRange ; $59a8
 	jr z, .neutralShot ; $59ab
+	apcall ApGateSmash
+	jr z, .neutralShot
 	ld a, [wCharSwingAnim] ; $59ad
 	cp CHARANIM_OVERHEAD ; $59b0
 	jr z, ExecuteShotSmash ; $59b2
@@ -495,21 +497,15 @@ ExecuteShotNeutral:
 ExecuteShotServeTopspin:
 	call ApplyShotTypePresets ; $59c5
 	call ComputeShotTrajectory ; $59c8
-	farcall ShotBallPathServeTopspin ; $59cb
-	call SetSpecialShotFlagFromBallHeight ; $59ce
-	ret ; $59d1
+	jp ApServeBallPath
 ExecuteShotServeSlice:
 	call ApplyShotTypePresets ; $59d2
 	call ComputeShotTrajectory ; $59d5
-	farcall ShotBallPathServeSlice ; $59d8
-	call SetSpecialShotFlagFromBallHeight ; $59db
-	ret ; $59de
+	jp ApServeBallPath
 ExecuteShotServeFlat:
 	call ApplyShotTypePresets ; $59df
 	call ComputeShotTrajectory ; $59e2
-	farcall ShotBallPathServeFlat ; $59e5
-	call SetSpecialShotFlagFromBallHeight ; $59e8
-	ret ; $59eb
+	jp ApServeBallPath
 Unused_07_SetSpecialShotFlagThreshold:
 	ld hl, wBallHeight ; $59ec
 	ld a, [hl+] ; $59ef

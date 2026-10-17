@@ -114,6 +114,7 @@ INCLUDE "src/engine/match/shot_power_07.asm"
 INCLUDE "src/engine/match/execute_07.asm"
 INCLUDE "src/engine/match/char_07.asm"
 INCLUDE "src/engine/match/debugmatch_07.asm"
+INCLUDE "src/ap/serve_07.asm"
 
 SECTION "ROM Bank $08", ROMX[$4000], BANK[$08]
 
@@ -542,6 +543,7 @@ INCLUDE "src/ap/ledger_2d.asm"
 INCLUDE "src/ap/checks_2d.asm"
 INCLUDE "src/ap/items_2d.asm"
 INCLUDE "src/ap/gates_2d.asm"
+INCLUDE "src/ap/shots_2d.asm"
 
 SECTION "ROM Bank $2e", ROMX[$4000], BANK[$2e]
 

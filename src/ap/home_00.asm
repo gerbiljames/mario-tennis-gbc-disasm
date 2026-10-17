@@ -37,3 +37,5 @@ ApOptTextSpeed: db 0
 ApOptCameraMode: db 0
 ; nonzero: no item messages in the overworld
 ApOptHideMessages: db 0
+; nonzero: the player's shots are items (src/ap/shots_2d.asm)
+ApOptShotItems: db 0

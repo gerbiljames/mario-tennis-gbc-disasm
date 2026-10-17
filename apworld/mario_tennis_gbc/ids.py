@@ -119,4 +119,12 @@ ITEMS = [
     (26, "ITEM_IRON_SHOES", "Iron Shoes"),
     (27, "ITEM_LIGHT_SHOES", "Light Shoes"),
     (28, "ITEM_EXP_BUNDLE", "EXP Bundle"),
+    (29, "ITEM_TOPSPIN", "Progressive Topspin"),
+    (30, "ITEM_SLICE", "Progressive Slice"),
+    (31, "ITEM_FLAT_SHOT", "Progressive Flat Shot"),
+    (32, "ITEM_LOB", "Lob"),
+    (33, "ITEM_DROP_SHOT", "Drop Shot"),
+    (34, "ITEM_TOPSPIN_SERVE", "Progressive Topspin Serve"),
+    (35, "ITEM_SLICE_SERVE", "Progressive Slice Serve"),
+    (36, "ITEM_FLAT_SERVE", "Progressive Flat Serve"),
 ]
