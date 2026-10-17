@@ -86,7 +86,8 @@ strings, the 315 sound-channel scripts) stays in `data/`.
 - `include/` -- hardware (`hardware.inc`, CC0), macros, constants, flags,
   text ids and codes, actor roles, mirrored RAM.
 - `data.manifest` -- the offset/length/spec list `tools/extract.py` slices
-  the ROM by; `data.previews` -- which planes, tiles and palettes make each
+  the ROM by, into a `data/` that mirrors `src/`'s folders (a file sits
+  beside the fragment that uses it, `src/data/X/` in `data/X/`); `data.previews` -- which planes, tiles and palettes make each
   scene preview.
 - `mods/` -- a fork's edited data files (below).
 - `docs/` -- one subsystem each: `match_engine.md`, `story_mode.md`,
@@ -157,7 +158,7 @@ because the layout is recomputed rather than restated:
   `rgblink -p 0xff` pads the rest, leaving 196 KiB free across 124 banks and
   room for a blob, tilemap or PNG to grow (even a labelled tail is left to
   the linker).
-- **Text** is `data/<bank>/TextStrings_<bank>.asm`; offsets are
+- **Text** is `data/text/TextStrings_<bank>.asm`; offsets are
   `dw Pool.sN - Pool`, so the assembler recomputes them. Breaks are `line` /
   `page` / `done`, the other control codes are named
   (`include/text_codes.inc`), and a roster name in a string is
@@ -165,8 +166,8 @@ because the layout is recomputed rather than restated:
   <bank>` finds a string; a text id in code is `Text_<bank>_<index>`
   (`include/text_ids.inc`).
 - **Data files are named after their labels**
-  (`data/bank_040/AlexSpriteFrame00.png`,
-  `data/bank_001/lz_DmgLockoutTilesLZ_01.bin`, `lz_` marking a compressed
+  (`data/sprites/AlexSpriteFrame00.png`,
+  `data/engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin`, `lz_` marking a compressed
   stream); only a blob nothing names keeps an address name (`d_4004.bin`).
 - **Graphics are PNGs.** Each of the 2,728 tile-graphics blobs is also
   extracted as a four-colour indexed PNG: character frames as the 24x32 body
@@ -200,10 +201,10 @@ because the layout is recomputed rather than restated:
   label used as `BANK(...)` / `LOW(...)` or through `dslot`.
 - **Shot physics are source**: the fifteen trajectory tables
   (`docs/match_engine.md` "The trajectory tables") are
-  `data/bank_02x/<Table>.asm`, `traj_row speed, elevation, delta` rows
+  `data/shots/<Table>.asm`, `traj_row speed, elevation, delta` rows
   blocked by contact-height band and placement variant.
 - **Sound is source**: the 315 channel scripts are
-  `data/bank_07x/<Track>.asm`, one `snd_*` row per command
+  `data/audio/<Track>.asm`, one `snd_*` row per command
   (`docs/sound_engine.md`); a new track is a file plus a `SoundTable_<bank>`
   row.
 - **Copy counts follow their source.** A whole-blob VRAM copy is
@@ -226,7 +227,7 @@ because the layout is recomputed rather than restated:
 
 **A fork commits its data edits in `mods/`.** `data/` is ROM content and is
 never committed; an edited file lives at the same path under `mods/`
-(`mods/bank_040/AlexSpriteFrame00.png`) and is copied over `data/` before
+(`mods/sprites/AlexSpriteFrame00.png`) and is copied over `data/` before
 every `make` and after every extraction (`mods/README.md`). End to end, on a
 branch: change `src/` and `data/`, run `python3 tools/mods.py collect
 baserom.gbc` to copy changed data files into `mods/`, `make`. `make check`
@@ -250,7 +251,7 @@ nothing.
 - `tools/lz.py`, `tools/gfx.py`, `tools/tilemap.py`, `tools/snd.py` -- the LZ, PNG, tilemap-grid and sound-script codecs.
 - `tools/strings.py` -- game text by bank and index, or a string scan of a ROM.
 - `tools/savetool.py` -- battery save inspector and editor.
-- `tools/gfxdump.py` -- PNG contact sheets of graphics streams and palettes, in gitignored `data/gfx/`.
+- `tools/gfxdump.py` -- PNG contact sheets of graphics streams and palettes, in `build/gfxdump/`.
 - `tools/stats.py` -- the headline counts above, from the built `.sym` and `.map`.
 - `tools/banksrc.py`, `tools/deps.py` -- a bank's source read whole; the build's dependency list.
 - `tools/reach.py` -- which routines can run at all, from the reset, interrupt and `rst` vectors; `--coverage` splits never-entered routines into unreachable and not yet reached.

@@ -632,7 +632,7 @@ SeniorCourtNpc0CTextIds:
 	dw Text_34_184 ; record 13
 	dw Text_34_186 ; record 14
 SeniorCourtNpc0C_12Table:
-	INCBIN "data/bank_012/SeniorCourtNpc0C_12Table.bin" ; $5c2f, 30 bytes
+	INCBIN "data/story/SeniorCourtNpc0C_12Table.bin" ; $5c2f, 30 bytes
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)
 	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_RIGHT, $0840, SeniorCourtNpc03FaceRight_12, NPC_FACE_PLAYER, $00

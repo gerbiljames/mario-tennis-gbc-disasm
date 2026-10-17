@@ -557,7 +557,7 @@ text banks** using per-bank string counts (`AddTextIdOffsetWordLookupTable`,
 
 `include/text_ids.inc` defines `Text_<bank>_<index> equ <raw id>` for operands;
 `tools/strings.py --index --bank XX` dumps `bank:index → text` from
-`data/bank_XXX/TextStrings_XX.asm`.
+`data/text/TextStrings_XX.asm`.
 
 ### 7.2 The interpreter
 
@@ -607,7 +607,7 @@ return address, indexes `ControlCodeHandlers_05` (`$05:$548f`, 32 records, codes
 | `$1e` (`$de`) | `TextCmdApplyDakuten` | adds a voiced-sound mark to the *previous* cell |
 | `$1f` (`$df`) | `TextCmdApplyHandakuten` | same, semi-voiced mark |
 
-The string pools (`data/bank_*/TextStrings_*.asm`) spell these with the `TX_*`
+The string pools (`data/text/TextStrings_*.asm`) spell these with the `TX_*`
 names of `include/text_codes.inc` (`$01`/`$02`/`$03` as `line`/`page`/`done`),
 with `TX_SHORT_TEXT`'s operand as a `CHAR_*` constant
 (`TX_SHORT_TEXT, CHAR_EMILY` in "Oh, Coach Emily!"). Codes used: `$07` (246

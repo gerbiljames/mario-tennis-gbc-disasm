@@ -449,7 +449,7 @@ DrawNameEntryCursor:
 	call QueueNameEntryCursorSprites ; $70a1
 	ret ; $70a4
 NameEntryCursorTable:
-	INCBIN "data/bank_038/NameEntryCursorTable.bin" ; $70a5, 180 bytes
+	INCBIN "data/engine/menus/char_select/NameEntryCursorTable.bin" ; $70a5, 180 bytes
 DrawEnterNameLabel:
 	push_wram_bank WRAM_SCREEN ; $7159
 	ld hl, EnterNameText_38 ; $7162
@@ -458,7 +458,7 @@ DrawEnterNameLabel:
 	pop_wram_bank ; $716b
 	ret ; $7170
 EnterNameText_38:
-	INCLUDE "data/bank_038/EnterNameText_38.asm" ; $7171, 11 bytes
+	INCLUDE "data/engine/menus/char_select/EnterNameText_38.asm" ; $7171, 11 bytes
 DrawNameEntryCharGrid:
 	push_wram_bank WRAM_SCREEN ; $717c
 	ld c, $05 ; $7185
@@ -497,7 +497,7 @@ DrawNameEntryCharGrid:
 	pop_wram_bank ; $71b0
 	ret ; $71b5
 NameEntryCharset_38:
-	INCLUDE "data/bank_038/NameEntryCharset_38.asm" ; $71b6, 106 bytes
+	INCLUDE "data/engine/menus/char_select/NameEntryCharset_38.asm" ; $71b6, 106 bytes
 GetNameEntryBottomRowAction:
 	ld hl, NameEntryBottomRowActionTable ; $7220
 	ld a, [wMenuCursorX] ; $7223

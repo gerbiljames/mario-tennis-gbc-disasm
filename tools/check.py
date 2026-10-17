@@ -12,6 +12,8 @@ after a real defect broke it:
             compressed stream (a name once truncated two streams by 29 and
             160 bytes)
   regions   manifest regions stay inside their bank and do not overlap
+  layout    data/ mirrors src/: a manifest file sits in the folder of the
+            source file that INCBINs or INCLUDEs it
   scopes    no global label covers both actor-script bytecode and CPU code
             (a routine emitted after a script with nothing naming its entry)
   branches  no conditional branch targets the instruction that follows it --
@@ -368,6 +370,25 @@ _ADDR_RE = re.compile(r"; \$([0-9a-f]{4})\s*$")
 _BRANCH_RE = re.compile(r"^\t(jr|jp) (nz|z|nc|c), ([.A-Za-z_][\w.]*) ; \$([0-9a-f]{4})$")
 
 
+def check_layout(manifest, fail):
+    """data/ mirrors src/: each manifest file sits in the folder of the one
+    source file that INCBINs or INCLUDEs it (src/data/X/ files in data/X/)."""
+    owners = {}
+    for f in [ROOT / "main.asm"] + sorted((ROOT / "src").rglob("*.asm")):
+        for m in re.finditer(r'(?:INCBIN|INCLUDE)\s+"data/([^"]+)"', f.read_text()):
+            owners.setdefault(m.group(1), []).append(f.relative_to(ROOT))
+    for path, off, length, spec in manifest:
+        found = owners.get(path, [])
+        if len(found) != 1:
+            fail("layout", f"{path}: referenced from {len(found)} source files, not one")
+            continue
+        parts = found[0].parent.parts[1:]
+        want = "/".join(parts[1:] if parts[:1] == ("data",) else parts)
+        if str(Path(path).parent) != want:
+            fail("layout", f"{path}: belongs in data/{want}/ beside {found[0]}")
+    return len(manifest)
+
+
 def check_gfx(manifest, fail):
     """Every gfx-tagged blob with a PNG beside it encodes back to the bytes
     the PNG was decoded from: the image is a faithful, editable copy."""
@@ -663,6 +684,7 @@ def main():
         "lz": check_lz(manifest, fail),
         "lz-labels": check_lz_labels(labels, manifest, fail),
         "regions": check_regions(manifest, fail),
+        "layout": check_layout(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
         "traj": check_traj(rom, manifest, fail),
         "scopes": check_stranded_scopes(fail),

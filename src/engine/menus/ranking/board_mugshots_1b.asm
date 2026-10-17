@@ -37,33 +37,33 @@ Unused_1b_DrawAsciiDigitString:
 ; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_17_DrawAsciiDigitChar, Unused_3b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
 	twin_in draw_ascii_digit_char, Unused_1b_DrawAsciiDigitChar, 1b ; $4498 Unused_1b_DrawAsciiDigitChar
 MugshotGfxAlex_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxAlex_1b.bin" ; $44b1, 158 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxAlex_1b.bin" ; $44b1, 158 bytes
 MugshotGfxNina_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxNina_1b.bin" ; $454f, 163 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxNina_1b.bin" ; $454f, 163 bytes
 MugshotGfxHarry_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxHarry_1b.bin" ; $45f2, 146 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxHarry_1b.bin" ; $45f2, 146 bytes
 MugshotGfxKate_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxKate_1b.bin" ; $4684, 165 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxKate_1b.bin" ; $4684, 165 bytes
 MugshotGfxMario_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxMario_1b.bin" ; $4729, 162 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxMario_1b.bin" ; $4729, 162 bytes
 MugshotGfxWaluigi_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxWaluigi_1b.bin" ; $47cb, 158 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxWaluigi_1b.bin" ; $47cb, 158 bytes
 MugshotGfxYoshi_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxYoshi_1b.bin" ; $4869, 139 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxYoshi_1b.bin" ; $4869, 139 bytes
 MugshotGfxBowser_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxBowser_1b.bin" ; $48f4, 165 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxBowser_1b.bin" ; $48f4, 165 bytes
 MugshotGfxWario_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxWario_1b.bin" ; $4999, 162 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxWario_1b.bin" ; $4999, 162 bytes
 MugshotGfxPeach_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxPeach_1b.bin" ; $4a3b, 153 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxPeach_1b.bin" ; $4a3b, 153 bytes
 MugshotGfxStorySlot1_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxStorySlot1_1b.bin" ; $4ad4, 110 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxStorySlot1_1b.bin" ; $4ad4, 110 bytes
 MugshotGfxStorySlot2_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxStorySlot2_1b.bin" ; $4b42, 147 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxStorySlot2_1b.bin" ; $4b42, 147 bytes
 MugshotGfxStorySlot3_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxStorySlot3_1b.bin" ; $4bd5, 153 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxStorySlot3_1b.bin" ; $4bd5, 153 bytes
 MugshotGfxPlaceholder_1b:
-	INCBIN "data/bank_01b/lz_MugshotGfxPlaceholder_1b.bin" ; $4c6e, 126 bytes
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxPlaceholder_1b.bin" ; $4c6e, 126 bytes
 CharMugshotGfxPointers:
 	; $4cec, 288 bytes (mugshot_ptr_table)
 	dw MugshotGfxAlex_1b, .unused ; $00 Alex
@@ -336,7 +336,7 @@ BuildRankingBoardScreen:
 	farcall QueueWram3MapToVRAM ; $4f72
 	ret ; $4f75
 RankingBoardScreenPalettes:
-	INCLUDE "data/bank_01b/RankingBoardScreenPalettes.asm" ; $4f76, 48 bytes (palettes)
+	INCLUDE "data/engine/menus/ranking/RankingBoardScreenPalettes.asm" ; $4f76, 48 bytes (palettes)
 LoadRankingBoardTiles:
 	push_wram_bank WRAM_STAGING ; $4fa6
 	ld_slot hl, DataPtr_BracketCharIcon00 ; $4faf

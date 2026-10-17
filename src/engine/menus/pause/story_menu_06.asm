@@ -92,35 +92,35 @@ DebugStatNamePointers:
 	dw DebugStatName_Jump ; record 13
 	dw DebugStatName_Dive ; record 14
 DebugStatName_Speed:
-	INCLUDE "data/bank_006/DebugStatName_Speed.asm" ; $6a57, 7 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Speed.asm" ; $6a57, 7 bytes
 DebugStatName_Add:
-	INCLUDE "data/bank_006/DebugStatName_Add.asm" ; $6a5e, 5 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Add.asm" ; $6a5e, 5 bytes
 DebugStatName_Brake:
-	INCLUDE "data/bank_006/DebugStatName_Brake.asm" ; $6a63, 7 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Brake.asm" ; $6a63, 7 bytes
 DebugStatName_Turn:
-	INCLUDE "data/bank_006/DebugStatName_Turn.asm" ; $6a6a, 6 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Turn.asm" ; $6a6a, 6 bytes
 DebugStatName_Angle:
-	INCLUDE "data/bank_006/DebugStatName_Angle.asm" ; $6a70, 7 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Angle.asm" ; $6a70, 7 bytes
 DebugStatName_Place:
-	INCLUDE "data/bank_006/DebugStatName_Place.asm" ; $6a77, 7 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Place.asm" ; $6a77, 7 bytes
 DebugStatName_Stroke:
-	INCLUDE "data/bank_006/DebugStatName_Stroke.asm" ; $6a7e, 8 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Stroke.asm" ; $6a7e, 8 bytes
 DebugStatName_Serve:
-	INCLUDE "data/bank_006/DebugStatName_Serve.asm" ; $6a86, 7 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Serve.asm" ; $6a86, 7 bytes
 DebugStatName_Volley:
-	INCLUDE "data/bank_006/DebugStatName_Volley.asm" ; $6a8d, 8 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Volley.asm" ; $6a8d, 8 bytes
 DebugStatName_Top:
-	INCLUDE "data/bank_006/DebugStatName_Top.asm" ; $6a95, 5 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Top.asm" ; $6a95, 5 bytes
 DebugStatName_Slice:
-	INCLUDE "data/bank_006/DebugStatName_Slice.asm" ; $6a9a, 7 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Slice.asm" ; $6a9a, 7 bytes
 DebugStatName_High:
-	INCLUDE "data/bank_006/DebugStatName_High.asm" ; $6aa1, 6 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_High.asm" ; $6aa1, 6 bytes
 DebugStatName_Reach:
-	INCLUDE "data/bank_006/DebugStatName_Reach.asm" ; $6aa7, 7 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Reach.asm" ; $6aa7, 7 bytes
 DebugStatName_Jump:
-	INCLUDE "data/bank_006/DebugStatName_Jump.asm" ; $6aae, 6 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Jump.asm" ; $6aae, 6 bytes
 DebugStatName_Dive:
-	INCLUDE "data/bank_006/DebugStatName_Dive.asm" ; $6ab4, 6 bytes
+	INCLUDE "data/engine/menus/pause/DebugStatName_Dive.asm" ; $6ab4, 6 bytes
 Unused_06_DrawDebugStatsLabels:
 	ld_cell de, $00, $00 ; $6aba
 	call GetShadowAttrmapAddr ; $6abd

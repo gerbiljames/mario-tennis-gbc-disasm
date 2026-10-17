@@ -90,17 +90,17 @@ Unused_1a_ApplyCharViewerPalette:
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
 Palette_1a_0:
-	INCLUDE "data/bank_01a/Palette_1a_0.asm" ; $70d9, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/char_data/Palette_1a_0.asm" ; $70d9, 64 bytes (palettes)
 CharViewerScreenGfx0:
-	INCBIN "data/bank_01a/lz_CharViewerScreenGfx0.bin" ; $7119, 1636 bytes
+	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx0.bin" ; $7119, 1636 bytes
 CharViewerScreenGfx1:
-	INCBIN "data/bank_01a/lz_CharViewerScreenGfx1.bin" ; $777d, 180 bytes
+	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx1.bin" ; $777d, 180 bytes
 CharViewerScreenGfx2:
-	INCBIN "data/bank_01a/lz_CharViewerScreenGfx2.bin" ; $7831, 129 bytes
+	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx2.bin" ; $7831, 129 bytes
 CharViewerGridTilemap0:
-	INCBIN "data/bank_01a/lz_CharViewerGridTilemap0.bin" ; $78b2, 58 bytes
+	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap0.bin" ; $78b2, 58 bytes
 CharViewerGridTilemap1:
-	INCBIN "data/bank_01a/lz_CharViewerGridTilemap1.bin" ; $78ec, 67 bytes
+	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap1.bin" ; $78ec, 67 bytes
 CharViewerInputLoopTable:
 	; $792f, 22 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
@@ -746,21 +746,21 @@ CharDataConfirmScreenTable0:
 	; $7e46, 13 bytes (bytes:13)
 	db $00, $00, $00, $0e, $00, $20, $0e, $0e, $00, $40, $1c, $0e, $ff ; 0x00
 CharDataConfirmScreenGfx1:
-	INCBIN "data/bank_01a/lz_CharDataConfirmScreenGfx1.bin" ; $7e53, 34 bytes
+	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenGfx1.bin" ; $7e53, 34 bytes
 CharDataConfirmScreenGfx2:
-	INCBIN "data/bank_01a/lz_CharDataConfirmScreenGfx2.bin" ; $7e75, 9 bytes
+	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenGfx2.bin" ; $7e75, 9 bytes
 CharDataScreen_LoadPalette:
-	INCLUDE "data/bank_01a/CharDataScreen_LoadPalette.asm" ; $7e7e, 16 bytes (palettes)
+	INCLUDE "data/engine/menus/char_data/CharDataScreen_LoadPalette.asm" ; $7e7e, 16 bytes (palettes)
 CharDataScreenGfx0:
-	INCBIN "data/bank_01a/lz_CharDataScreenGfx0.bin" ; $7e8e, 11 bytes
-	INCLUDE "data/bank_01a/lz_CharDataScreenGfx0.inc" ; DEF CharDataScreenGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx0.bin" ; $7e8e, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx0.inc" ; DEF CharDataScreenGfx0_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenGfx1:
-	INCBIN "data/bank_01a/lz_CharDataScreenGfx1.bin" ; $7e99, 11 bytes
-	INCLUDE "data/bank_01a/lz_CharDataScreenGfx1.inc" ; DEF CharDataScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx1.bin" ; $7e99, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx1.inc" ; DEF CharDataScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenGfx2:
-	INCBIN "data/bank_01a/lz_CharDataScreenGfx2.bin" ; $7ea4, 11 bytes
-	INCLUDE "data/bank_01a/lz_CharDataScreenGfx2.inc" ; DEF CharDataScreenGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx2.bin" ; $7ea4, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx2.inc" ; DEF CharDataScreenGfx2_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenGfx3:
-	INCBIN "data/bank_01a/lz_CharDataScreenGfx3.bin" ; $7eaf, 11 bytes
-	INCLUDE "data/bank_01a/lz_CharDataScreenGfx3.inc" ; DEF CharDataScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx3.bin" ; $7eaf, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx3.inc" ; DEF CharDataScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
 	; $7eba, 326 bytes fill to bank end (linker-padded)

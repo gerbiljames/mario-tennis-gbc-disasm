@@ -285,29 +285,29 @@ InitMatchWinLoseScreen:
 	farcall QueueWram3MapToVRAM ; $4604
 	ret ; $4607
 MatchWinLoseScreenGfx:
-	INCBIN "data/bank_016/MatchWinLoseScreenGfx.bin" ; $4608, 110 bytes
+	INCBIN "data/engine/menus/results/MatchWinLoseScreenGfx.bin" ; $4608, 110 bytes
 DiagramHighlightPaletteTask:
-	INCBIN "data/bank_016/DiagramHighlightPaletteTask.bin" ; $4676, 108 bytes
+	INCBIN "data/engine/menus/results/DiagramHighlightPaletteTask.bin" ; $4676, 108 bytes
 DiagramNearFigureSpriteTask:
-	INCBIN "data/bank_016/DiagramNearFigureSpriteTask.bin" ; $46e2, 42 bytes
+	INCBIN "data/engine/menus/results/DiagramNearFigureSpriteTask.bin" ; $46e2, 42 bytes
 DiagramFarFigureSpriteTask:
-	INCBIN "data/bank_016/DiagramFarFigureSpriteTask.bin" ; $470c, 42 bytes
+	INCBIN "data/engine/menus/results/DiagramFarFigureSpriteTask.bin" ; $470c, 42 bytes
 DiagramMarkerSpriteTask:
-	INCBIN "data/bank_016/DiagramMarkerSpriteTask.bin" ; $4736, 30 bytes
+	INCBIN "data/engine/menus/results/DiagramMarkerSpriteTask.bin" ; $4736, 30 bytes
 DiagramBallSpriteTask:
-	INCBIN "data/bank_016/DiagramBallSpriteTask.bin" ; $4754, 48 bytes
+	INCBIN "data/engine/menus/results/DiagramBallSpriteTask.bin" ; $4754, 48 bytes
 MatchWinLoseScreenGfx1:
-	INCBIN "data/bank_016/MatchWinLoseScreenGfx1.bin" ; $4784, 10 bytes
+	INCBIN "data/engine/menus/results/MatchWinLoseScreenGfx1.bin" ; $4784, 10 bytes
 DiagramSwingFigureSpriteTask:
-	INCBIN "data/bank_016/DiagramSwingFigureSpriteTask.bin" ; $478e, 97 bytes
+	INCBIN "data/engine/menus/results/DiagramSwingFigureSpriteTask.bin" ; $478e, 97 bytes
 DiagramPolePairSpriteTask:
-	INCBIN "data/bank_016/DiagramPolePairSpriteTask.bin" ; $47ef, 135 bytes
+	INCBIN "data/engine/menus/results/DiagramPolePairSpriteTask.bin" ; $47ef, 135 bytes
 DiagramSpotMarkerSpriteTask:
-	INCBIN "data/bank_016/DiagramSpotMarkerSpriteTask.bin" ; $4876, 75 bytes
+	INCBIN "data/engine/menus/results/DiagramSpotMarkerSpriteTask.bin" ; $4876, 75 bytes
 DiagramTargetBracketsSpriteTask:
-	INCBIN "data/bank_016/DiagramTargetBracketsSpriteTask.bin" ; $48c1, 51 bytes
+	INCBIN "data/engine/menus/results/DiagramTargetBracketsSpriteTask.bin" ; $48c1, 51 bytes
 MatchWinLoseScreenPalettes:
-	INCBIN "data/bank_016/MatchWinLoseScreenPalettes.bin" ; $48f4, 24 bytes
+	INCBIN "data/engine/menus/results/MatchWinLoseScreenPalettes.bin" ; $48f4, 24 bytes
 LoadWinLoseScreenAssets:
 	ld a, [wResultScreenWon] ; $490c
 	or a ; $490f

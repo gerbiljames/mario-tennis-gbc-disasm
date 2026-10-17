@@ -43,41 +43,41 @@ MatchMenuItemGfxPointers:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	ds ALIGN[4]
 ScoreboardModeGfxTail:
-	INCBIN "data/bank_006/ScoreboardModeGfxTail.bin" ; $5280, 64 bytes
+	INCBIN "data/engine/menus/pause/ScoreboardModeGfxTail.bin" ; $5280, 64 bytes
 MatchMenuItemGfx_Rules:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_Rules.bin" ; $52c0, 130 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Rules.bin" ; $52c0, 130 bytes
 MatchMenuItemGfx_Controls:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_Controls.bin" ; $5342, 192 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Controls.bin" ; $5342, 192 bytes
 MatchMenuItemGfx_Options:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_Options.bin" ; $5402, 147 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Options.bin" ; $5402, 147 bytes
 MatchMenuItemGfx_Save:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_Save.bin" ; $5495, 132 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Save.bin" ; $5495, 132 bytes
 MatchMenuItemGfx_CameraMode:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_CameraMode.bin" ; $5519, 172 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_CameraMode.bin" ; $5519, 172 bytes
 MatchMenuItemGfx_Music:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_Music.bin" ; $55c5, 131 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Music.bin" ; $55c5, 131 bytes
 MatchMenuItemGfx_Normal:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_Normal.bin" ; $5648, 121 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Normal.bin" ; $5648, 121 bytes
 MatchMenuItemGfx_Player:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_Player.bin" ; $56c1, 132 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Player.bin" ; $56c1, 132 bytes
 MatchMenuItemGfx_On:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_On.bin" ; $5745, 124 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_On.bin" ; $5745, 124 bytes
 MatchMenuItemGfx_Off:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_Off.bin" ; $57c1, 131 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Off.bin" ; $57c1, 131 bytes
 MatchMenuItemGfx_Cancel:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_Cancel.bin" ; $5844, 129 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Cancel.bin" ; $5844, 129 bytes
 MatchMenuItemGfx_SaveNarrow:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_SaveNarrow.bin" ; $58c5, 115 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_SaveNarrow.bin" ; $58c5, 115 bytes
 MatchMenuItemGfx_ToMainMenu:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_ToMainMenu.bin" ; $5938, 176 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_ToMainMenu.bin" ; $5938, 176 bytes
 MatchMenuItemGfx_ToLevelSelect:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_ToLevelSelect.bin" ; $59e8, 178 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_ToLevelSelect.bin" ; $59e8, 178 bytes
 MatchMenuItemGfx_TryAgain:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_TryAgain.bin" ; $5a9a, 155 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_TryAgain.bin" ; $5a9a, 155 bytes
 MatchMenuItemGfx_QuitMatch:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_QuitMatch.bin" ; $5b35, 165 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_QuitMatch.bin" ; $5b35, 165 bytes
 MatchMenuItemGfx_QuitMinigame:
-	INCBIN "data/bank_006/lz_MatchMenuItemGfx_QuitMinigame.bin" ; $5bda, 176 bytes
+	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_QuitMinigame.bin" ; $5bda, 176 bytes
 LoadScoreboardModeGfx:
 	ld a, [wGameMode] ; $5c8a
 	cp GAMEMODE_TRAINING_DRILL ; $5c8d
@@ -162,35 +162,35 @@ ScoreboardMinigameGfxPointers:
 	; $5d33, 13 bytes (bytes:13)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 ScoreboardModeGfx_RankingMatch:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_RankingMatch.bin" ; $5d40, 181 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_RankingMatch.bin" ; $5d40, 181 bytes
 ScoreboardModeGfx_IslandOpen:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_IslandOpen.bin" ; $5df5, 188 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_IslandOpen.bin" ; $5df5, 188 bytes
 ScoreboardModeGfx_PracticeMatch:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_PracticeMatch.bin" ; $5eb1, 197 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_PracticeMatch.bin" ; $5eb1, 197 bytes
 ScoreboardModeGfx_Exhibition:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_Exhibition.bin" ; $5f76, 129 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_Exhibition.bin" ; $5f76, 129 bytes
 ScoreboardModeGfx_MiniGames:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_MiniGames.bin" ; $5ff7, 148 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_MiniGames.bin" ; $5ff7, 148 bytes
 ScoreboardModeGfx_TennisMachine:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_TennisMachine.bin" ; $608b, 179 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_TennisMachine.bin" ; $608b, 179 bytes
 ScoreboardModeGfx_WallPractice:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_WallPractice.bin" ; $613e, 184 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_WallPractice.bin" ; $613e, 184 bytes
 ScoreboardModeGfx_MarioMiniGames:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_MarioMiniGames.bin" ; $61f6, 197 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_MarioMiniGames.bin" ; $61f6, 197 bytes
 ScoreboardModeGfx_LinkedMatch:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_LinkedMatch.bin" ; $62bb, 170 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_LinkedMatch.bin" ; $62bb, 170 bytes
 ScoreboardModeGfx_ServiceMatch:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_ServiceMatch.bin" ; $6365, 173 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_ServiceMatch.bin" ; $6365, 173 bytes
 ScoreboardModeGfx_ServicePractice:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_ServicePractice.bin" ; $6412, 202 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_ServicePractice.bin" ; $6412, 202 bytes
 ScoreboardModeGfx_NetPlayMatch:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_NetPlayMatch.bin" ; $64dc, 211 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_NetPlayMatch.bin" ; $64dc, 211 bytes
 ScoreboardModeGfx_NetPlayPractice:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_NetPlayPractice.bin" ; $65af, 216 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_NetPlayPractice.bin" ; $65af, 216 bytes
 ScoreboardModeGfx_StrokeMatch:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_StrokeMatch.bin" ; $6687, 173 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_StrokeMatch.bin" ; $6687, 173 bytes
 ScoreboardModeGfx_StrokePractice:
-	INCBIN "data/bank_006/lz_ScoreboardModeGfx_StrokePractice.bin" ; $6734, 206 bytes
+	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_StrokePractice.bin" ; $6734, 206 bytes
 DrawMatchMenuItem:
 	push af ; $6802
 	push de ; $6803

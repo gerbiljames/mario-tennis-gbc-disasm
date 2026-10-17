@@ -16,7 +16,7 @@ Cross-references: `docs/bank0_notes.md` (ROM0 helpers), `docs/ram_map.md`
 ## 0. Editing graphics
 
 Every file under `data/` is named after its label in the source
-(`data/bank_040/AlexSpriteFrame00.bin`; an `lz_` prefix marks a compressed
+(`data/sprites/AlexSpriteFrame00.bin`; an `lz_` prefix marks a compressed
 stream, `lz_DmgLockoutTilesLZ_01.bin`; a blob nothing names keeps an
 address name, `d_000b.bin`). Every blob the manifest tags `gfx` (a whole
 number of 8x8 tiles) is extracted to a PNG beside its `.bin`: tiles in blob
@@ -148,8 +148,8 @@ requires each to decode using exactly its declared extent and to round-trip.
 `lz.py -c infile outfile` encodes: greedy longest-match LZ77 over the 2 KiB
 window, verified to decode back before writing. A re-encoded stream need not
 match the original bytes, only decode to the same data, provided the bank has
-room. Streams live at `data/<bank_XXX>/lz_<Label>.bin` (gitignored, extracted
-by `setup.sh`).
+room. Streams live at `data/<folder>/lz_<Label>.bin`, beside the `src/` fragment
+that uses them (gitignored, extracted by `setup.sh`).
 
 **Never name an offset inside an `lz_*` extent**: a label there silently
 truncates the stream. `check.py`'s `lz-labels` catches it.
@@ -543,7 +543,7 @@ The game's `SplitColorComponents` / `CombineColorComponents` (`$00:$1c6a` /
 ### 5.2 The `palettes` spec
 
 157 regions are `palettes`. Their values are **not committed**: the source
-`INCLUDE`s `data/bank_XXX/<Label>.asm`, generated at setup by
+`INCLUDE`s `data/<folder>/<Label>.asm`, generated at setup by
 `render_palettes` (`tools/extract.py`) with one `palette` macro per palette
 (four colours as 5-bit `r,g,b`, packed by the macro, `#rrggbb` in a comment).
 The nine palettes whose words set bit 15 (five files in banks `$17`, `$1c`,

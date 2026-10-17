@@ -63,56 +63,56 @@ DataPtr_AcademyMainBldgSceneUnusedSlot:
 DataPtr_AcademyMainBldgTiles:
 	dw AcademyMainBldgTiles ; $403e
 WallPracticeCourtPalettes:
-	INCLUDE "data/bank_063/WallPracticeCourtPalettes.asm" ; $4040, 64 bytes (palettes)
+	INCLUDE "data/scenes/WallPracticeCourtPalettes.asm" ; $4040, 64 bytes (palettes)
 WallPracticeCourtTiles:
-	INCBIN "data/bank_063/lz_WallPracticeCourtTiles.bin" ; $4080, 2042 bytes
+	INCBIN "data/scenes/lz_WallPracticeCourtTiles.bin" ; $4080, 2042 bytes
 WallPracticeCourtTilemap:
-	INCBIN "data/bank_063/lz_WallPracticeCourtTilemap.bin" ; $487a, 635 bytes
+	INCBIN "data/scenes/lz_WallPracticeCourtTilemap.bin" ; $487a, 635 bytes
 WallPracticeCourtAttrmap:
-	INCBIN "data/bank_063/lz_WallPracticeCourtAttrmap.bin" ; $4af5, 185 bytes
+	INCBIN "data/scenes/lz_WallPracticeCourtAttrmap.bin" ; $4af5, 185 bytes
 WallPracticeCourtSceneConfig:
-	INCBIN "data/bank_063/WallPracticeCourtSceneConfig.bin" ; $4bae, 40 bytes
+	INCBIN "data/scenes/WallPracticeCourtSceneConfig.bin" ; $4bae, 40 bytes
 WallPracticeCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_063/WallPracticeCourtScoreboardColumnAttrs.bin" ; $4bd6, 40 bytes
+	INCBIN "data/scenes/WallPracticeCourtScoreboardColumnAttrs.bin" ; $4bd6, 40 bytes
 JungleCourtPalettes:
-	INCLUDE "data/bank_063/JungleCourtPalettes.asm" ; $4bfe, 64 bytes (palettes)
+	INCLUDE "data/scenes/JungleCourtPalettes.asm" ; $4bfe, 64 bytes (palettes)
 JungleCourtTiles:
-	INCBIN "data/bank_063/lz_JungleCourtTiles.bin" ; $4c3e, 3291 bytes
+	INCBIN "data/scenes/lz_JungleCourtTiles.bin" ; $4c3e, 3291 bytes
 JungleCourtTilemap:
-	INCBIN "data/bank_063/lz_JungleCourtTilemap.bin" ; $5919, 713 bytes
+	INCBIN "data/scenes/lz_JungleCourtTilemap.bin" ; $5919, 713 bytes
 JungleCourtAttrmap:
-	INCBIN "data/bank_063/lz_JungleCourtAttrmap.bin" ; $5be2, 323 bytes
+	INCBIN "data/scenes/lz_JungleCourtAttrmap.bin" ; $5be2, 323 bytes
 JungleCourtSceneConfig:
-	INCBIN "data/bank_063/JungleCourtSceneConfig.bin" ; $5d25, 40 bytes
+	INCBIN "data/scenes/JungleCourtSceneConfig.bin" ; $5d25, 40 bytes
 JungleCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_063/JungleCourtScoreboardColumnAttrs.bin" ; $5d4d, 40 bytes
+	INCBIN "data/scenes/JungleCourtScoreboardColumnAttrs.bin" ; $5d4d, 40 bytes
 StarPatternBgSceneConfig:
-	INCBIN "data/bank_063/StarPatternBgSceneConfig.bin" ; $5d75, 42 bytes
+	INCBIN "data/scenes/StarPatternBgSceneConfig.bin" ; $5d75, 42 bytes
 StarPatternBgPalettes:
-	INCLUDE "data/bank_063/StarPatternBgPalettes.asm" ; $5d9f, 64 bytes (palettes)
+	INCLUDE "data/scenes/StarPatternBgPalettes.asm" ; $5d9f, 64 bytes (palettes)
 StarPatternBgTiles:
-	INCBIN "data/bank_063/lz_StarPatternBgTiles.bin" ; $5ddf, 685 bytes
+	INCBIN "data/scenes/lz_StarPatternBgTiles.bin" ; $5ddf, 685 bytes
 StarPatternBgTilemap:
-	INCBIN "data/bank_063/lz_StarPatternBgTilemap.bin" ; $608c, 274 bytes
+	INCBIN "data/scenes/lz_StarPatternBgTilemap.bin" ; $608c, 274 bytes
 StarPatternBgAttrmap:
-	INCBIN "data/bank_063/lz_StarPatternBgAttrmap.bin" ; $619e, 263 bytes
+	INCBIN "data/scenes/lz_StarPatternBgAttrmap.bin" ; $619e, 263 bytes
 StarPatternBgCollisionMap:
-	INCBIN "data/bank_063/lz_StarPatternBgCollisionMap.bin" ; $62a5, 70 bytes
+	INCBIN "data/scenes/lz_StarPatternBgCollisionMap.bin" ; $62a5, 70 bytes
 StarPatternBgBehaviorMap:
-	INCBIN "data/bank_063/lz_StarPatternBgBehaviorMap.bin" ; $62eb, 70 bytes
+	INCBIN "data/scenes/lz_StarPatternBgBehaviorMap.bin" ; $62eb, 70 bytes
 AcademyMainBldgSceneConfig:
-	INCBIN "data/bank_063/AcademyMainBldgSceneConfig.bin" ; $6331, 42 bytes
+	INCBIN "data/scenes/AcademyMainBldgSceneConfig.bin" ; $6331, 42 bytes
 AcademyMainBldgPalettes:
-	INCLUDE "data/bank_063/AcademyMainBldgPalettes.asm" ; $635b, 64 bytes (palettes)
+	INCLUDE "data/scenes/AcademyMainBldgPalettes.asm" ; $635b, 64 bytes (palettes)
 AcademyMainBldgTiles:
-	INCBIN "data/bank_063/lz_AcademyMainBldgTiles.bin" ; $639b, 3510 bytes
+	INCBIN "data/scenes/lz_AcademyMainBldgTiles.bin" ; $639b, 3510 bytes
 AcademyMainBldgTilemap:
-	INCBIN "data/bank_063/lz_AcademyMainBldgTilemap.bin" ; $7151, 1470 bytes
+	INCBIN "data/scenes/lz_AcademyMainBldgTilemap.bin" ; $7151, 1470 bytes
 AcademyMainBldgAttrmap:
-	INCBIN "data/bank_063/lz_AcademyMainBldgAttrmap.bin" ; $770f, 769 bytes
+	INCBIN "data/scenes/lz_AcademyMainBldgAttrmap.bin" ; $770f, 769 bytes
 AcademyMainBldgCollisionMap:
-	INCBIN "data/bank_063/lz_AcademyMainBldgCollisionMap.bin" ; $7a10, 147 bytes
+	INCBIN "data/scenes/lz_AcademyMainBldgCollisionMap.bin" ; $7a10, 147 bytes
 AcademyMainBldgBehaviorMap:
-	INCBIN "data/bank_063/lz_AcademyMainBldgBehaviorMap.bin" ; $7aa3, 94 bytes
+	INCBIN "data/scenes/lz_AcademyMainBldgBehaviorMap.bin" ; $7aa3, 94 bytes
 AcademyMainBldgSceneUnusedSlot:
 	; $7b01, 1279 bytes fill to bank end (linker-padded)

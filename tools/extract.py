@@ -712,20 +712,22 @@ def main() -> int:
                 print(f"composed {n} scene previews")
         except Exception as e:  # a preview is a convenience, never a failure
             print(f"note: scene previews not composed: {e}", file=sys.stderr)
-    # data/bank_*/ is generated in full from the manifest, so a file there the
-    # manifest no longer lists is a leftover from an older carve. Leaving them
-    # is actively misleading: a stale text_*.asm reads as if a region were
-    # decoded as game text when the current source renders it as a table.
-    # data/gfx/ is gfxdump.py's contact sheets, not ours to remove.
+    # data/ is generated in full from the manifest, so a file there the
+    # manifest no longer lists is a leftover from an older carve (or layout).
+    # Leaving them is actively misleading: a stale text_*.asm reads as if a
+    # region were decoded as game text when the current source renders it as
+    # a table.
     # (a .inc is make's, derived from the .bin beside it: stale only with it)
-    stale = [f for d in sorted(outdir.glob("bank_*")) if d.is_dir()
-             for f in sorted(d.rglob("*"))
+    stale = [f for f in sorted(outdir.rglob("*"))
              if f.is_file() and str(f.relative_to(outdir)) not in written
              and not (f.suffix in (".inc", ".tilemap")
                       and str(f.with_suffix(".bin").relative_to(outdir)) in written)]
     if not keep:
         for f in stale:
             f.unlink()
+        for d in sorted((d for d in outdir.rglob("*") if d.is_dir()), reverse=True):
+            if not any(d.iterdir()):
+                d.rmdir()
     note = (f", {'left' if keep else 'removed'} {len(stale)} stale"
             if stale else "")
     if kept:

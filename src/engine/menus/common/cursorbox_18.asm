@@ -3,14 +3,14 @@ Padding_18:
 	ds 10, $00
 	ds ALIGN[4]
 FontTiles:
-	INCBIN "data/bank_018/FontTiles.bin" ; $40a0, 512 bytes
+	INCBIN "data/engine/menus/common/FontTiles.bin" ; $40a0, 512 bytes
 	ds ALIGN[4]
 MenuHandCursorGfx:
-	INCBIN "data/bank_018/MenuHandCursorGfx.bin" ; $42a0, 64 bytes
+	INCBIN "data/engine/menus/common/MenuHandCursorGfx.bin" ; $42a0, 64 bytes
 MenuHandCursorPalette:
-	INCLUDE "data/bank_018/MenuHandCursorPalette.asm" ; $42e0, 32 bytes (palettes)
+	INCLUDE "data/engine/menus/common/MenuHandCursorPalette.asm" ; $42e0, 32 bytes (palettes)
 AllIndexedPalettes_18:
-	INCLUDE "data/bank_018/AllIndexedPalettes_18.asm" ; $4300, 40 bytes (palettes)
+	INCLUDE "data/engine/menus/common/AllIndexedPalettes_18.asm" ; $4300, 40 bytes (palettes)
 Unused_18_LoadAllIndexedPalettes:
 	push af ; $4328
 	push bc ; $4329

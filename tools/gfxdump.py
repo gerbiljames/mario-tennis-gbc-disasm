@@ -4,7 +4,7 @@ identification. Reads the manifest for stream locations, decompresses each,
 and draws 2bpp tile views (plus BGR555 swatches for the manifest's `palettes`
 regions and optional tilemap-over-tilesheet composites for pairing maps with graphics).
 
-Output contains ROM-derived imagery, so it belongs under gitignored data/
+Output contains ROM-derived imagery, so it belongs under gitignored build/
 (the default) or another uncommitted location. Requires Pillow.
 
 usage: gfxdump.py rom [outdir] [--composites]
@@ -92,7 +92,7 @@ def composite(sheet_data, tmap, signed):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("rom")
-    ap.add_argument("outdir", nargs="?", default="data/gfx")
+    ap.add_argument("outdir", nargs="?", default="build/gfxdump")
     ap.add_argument("--manifest", default="data.manifest")
     ap.add_argument("--composites", action="store_true",
                     help="also render tilemap-over-tilesheet composites")

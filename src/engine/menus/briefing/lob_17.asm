@@ -94,19 +94,19 @@ ReturnToTargetBriefing_AdvanceAnimTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable:
-	INCLUDE "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6a1b, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6a1b, 16 bytes
 ReturnToTargetBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_BallPosTable.asm" ; $6a2b, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_BallPosTable.asm" ; $6a2b, 16 bytes
 ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6a3b, 4 bytes
+	INCBIN "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6a3b, 4 bytes
 ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6a3f, 16 bytes
+	INCBIN "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6a3f, 16 bytes
 ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $6a4f, 4 bytes
+	INCBIN "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $6a4f, 4 bytes
 ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $6a53, 16 bytes
+	INCBIN "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $6a53, 16 bytes
 ReturnToTargetBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_BracketPosTable.bin" ; $6a63, 16 bytes
+	INCBIN "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_BracketPosTable.bin" ; $6a63, 16 bytes
 DrillBriefing_ReturnLob:
 	ld a, $55 ; $6a73
 	ld [wBriefingPlayerX], a ; $6a75
@@ -331,23 +331,23 @@ ReturnLobBriefing_AdvanceAnimTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 ReturnLobBriefing_AdvanceAnim_OpponentPosTable:
-	INCLUDE "data/bank_017/ReturnLobBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6c7e, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6c7e, 16 bytes
 ReturnLobBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/ReturnLobBriefing_AdvanceAnim_BallPosTable.asm" ; $6c8e, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_BallPosTable.asm" ; $6c8e, 16 bytes
 ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6c9e, 4 bytes
+	INCBIN "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6c9e, 4 bytes
 ReturnLobBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6ca2, 16 bytes
+	INCBIN "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6ca2, 16 bytes
 ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $6cb2, 4 bytes
+	INCBIN "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $6cb2, 4 bytes
 ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $6cb6, 16 bytes
+	INCBIN "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $6cb6, 16 bytes
 ReturnLobBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_BracketPosTable.bin" ; $6cc6, 16 bytes
+	INCBIN "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_BracketPosTable.bin" ; $6cc6, 16 bytes
 ReturnLobBriefing_AdvanceAnim_SwingFrameTable:
-	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_SwingFrameTable.bin" ; $6cd6, 4 bytes
+	INCBIN "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_SwingFrameTable.bin" ; $6cd6, 4 bytes
 ReturnLobBriefing_AdvanceAnim_SwingPosTable:
-	INCLUDE "data/bank_017/ReturnLobBriefing_AdvanceAnim_SwingPosTable.asm" ; $6cda, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_SwingPosTable.asm" ; $6cda, 16 bytes
 DrillBriefing_ReturnDownLine:
 	ld a, $55 ; $6cea
 	ld [wBriefingPlayerX], a ; $6cec

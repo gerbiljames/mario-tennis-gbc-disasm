@@ -3,10 +3,10 @@
 Edited data files, at the path they have under `data/`:
 
 ```
-mods/bank_040/AlexSpriteFrame00.png      an edited sprite frame
-mods/bank_025/TextStrings_25.asm         edited dialogue
-mods/bank_060/lz_GrassCourtTilemap.tilemap
-mods/bank_07e/Music5d_Trk0.asm           an edited track
+mods/sprites/AlexSpriteFrame00.png       an edited sprite frame
+mods/text/TextStrings_25.asm             edited dialogue
+mods/scenes/lz_GrassCourtTilemap.tilemap
+mods/audio/Music5d_Trk0.asm              an edited track
 ```
 
 `data/` is extracted from the ROM and is not committed; this directory is.

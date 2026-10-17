@@ -44,25 +44,25 @@ Unused_18_InitPlayerRecordForCharacter:
 	ld [hl], a ; $4678
 	ret ; $4679
 ConfirmScreenGfx0:
-	INCBIN "data/bank_018/lz_ConfirmScreenGfx0.bin" ; $467a, 2233 bytes
+	INCBIN "data/engine/menus/common/lz_ConfirmScreenGfx0.bin" ; $467a, 2233 bytes
 ConfirmScreenPalette0:
-	INCLUDE "data/bank_018/ConfirmScreenPalette0.asm" ; $4f33, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/common/ConfirmScreenPalette0.asm" ; $4f33, 64 bytes (palettes)
 ConfirmScreenGfx1:
-	INCBIN "data/bank_018/lz_ConfirmScreenGfx1.bin" ; $4f73, 347 bytes
+	INCBIN "data/engine/menus/common/lz_ConfirmScreenGfx1.bin" ; $4f73, 347 bytes
 ConfirmScreenGfx2:
-	INCBIN "data/bank_018/lz_ConfirmScreenGfx2.bin" ; $50ce, 138 bytes
+	INCBIN "data/engine/menus/common/lz_ConfirmScreenGfx2.bin" ; $50ce, 138 bytes
 ThreeOptionLabelsData0:
-	INCBIN "data/bank_018/ThreeOptionLabelsData0.bin" ; $5158, 16 bytes
+	INCBIN "data/engine/menus/common/ThreeOptionLabelsData0.bin" ; $5158, 16 bytes
 ThreeOptionLabelsData1:
-	INCBIN "data/bank_018/ThreeOptionLabelsData1.bin" ; $5168, 16 bytes
+	INCBIN "data/engine/menus/common/ThreeOptionLabelsData1.bin" ; $5168, 16 bytes
 ThreeOptionLabelsData2:
-	INCBIN "data/bank_018/ThreeOptionLabelsData2.bin" ; $5178, 16 bytes
+	INCBIN "data/engine/menus/common/ThreeOptionLabelsData2.bin" ; $5178, 16 bytes
 ThreeOptionLabelsData3:
-	INCBIN "data/bank_018/ThreeOptionLabelsData3.bin" ; $5188, 16 bytes
+	INCBIN "data/engine/menus/common/ThreeOptionLabelsData3.bin" ; $5188, 16 bytes
 ThreeOptionLabelsData4:
-	INCBIN "data/bank_018/ThreeOptionLabelsData4.bin" ; $5198, 16 bytes
+	INCBIN "data/engine/menus/common/ThreeOptionLabelsData4.bin" ; $5198, 16 bytes
 ThreeOptionLabelsData5:
-	INCBIN "data/bank_018/ThreeOptionLabelsData5.bin" ; $51a8, 16 bytes
+	INCBIN "data/engine/menus/common/ThreeOptionLabelsData5.bin" ; $51a8, 16 bytes
 YesNoLabels0:
 	; $51b8, 16 bytes (bytes:16)
 	db $8b, $8b, $dd, $de, $df, $8b, $8b, $bd, $be, $bf, $8b, $8b, $ff, $ff, $ff, $ff ; 0x00
@@ -76,10 +76,10 @@ YesNoLabels3:
 	; $51e8, 16 bytes (bytes:16)
 	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
 ConfirmScreenGfx3:
-	INCBIN "data/bank_018/lz_ConfirmScreenGfx3.bin" ; $51f8, 206 bytes
-	INCLUDE "data/bank_018/lz_ConfirmScreenGfx3.inc" ; DEF ConfirmScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/common/lz_ConfirmScreenGfx3.bin" ; $51f8, 206 bytes
+	INCLUDE "data/engine/menus/common/lz_ConfirmScreenGfx3.inc" ; DEF ConfirmScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
 ConfirmScreenPalette1:
-	INCLUDE "data/bank_018/ConfirmScreenPalette1.asm" ; $52c6, 24 bytes (palettes)
+	INCLUDE "data/engine/menus/common/ConfirmScreenPalette1.asm" ; $52c6, 24 bytes (palettes)
 Unused_18_InitConfirmScreen:
 	call ClearFrameTasks ; $52de
 	call ClearSpriteQueue ; $52e1
@@ -373,7 +373,7 @@ Unused_18_DrawGlyphSprite:
 	ld d, a ; $5505
 	ret ; $5506
 UnusedBobRamp_18:
-	INCBIN "data/bank_018/UnusedBobRamp_18.bin" ; $5507, 32 bytes
+	INCBIN "data/engine/menus/common/UnusedBobRamp_18.bin" ; $5507, 32 bytes
 Unused_18_DrawThreeOptionLabels:
 	call Unused_18_DrawConfirmScreenBox ; $5527
 	ld hl, ThreeOptionLabelsData3 ; $552a

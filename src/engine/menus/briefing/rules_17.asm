@@ -94,19 +94,19 @@ ReturnDownLineBriefing_AdvanceAnimTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable:
-	INCLUDE "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6ec3, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6ec3, 16 bytes
 ReturnDownLineBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm" ; $6ed3, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm" ; $6ed3, 16 bytes
 ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6ee3, 4 bytes
+	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6ee3, 4 bytes
 ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6ee7, 16 bytes
+	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6ee7, 16 bytes
 ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable:
-	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.bin" ; $6ef7, 4 bytes
+	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.bin" ; $6ef7, 4 bytes
 ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable:
-	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.bin" ; $6efb, 16 bytes
+	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.bin" ; $6efb, 16 bytes
 ReturnDownLineBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.bin" ; $6f0b, 16 bytes
+	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.bin" ; $6f0b, 16 bytes
 ShowRulesScreen:
 	push af ; $6f1b
 	wram_bank WRAM_SCREEN ; $6f1c
@@ -757,29 +757,29 @@ DrawRulesNextPageArrow:
 	farcall QueueStackedSpritePair ; $756c
 	ret ; $756f
 RulesScreenTiles:
-	INCBIN "data/bank_017/lz_RulesScreenTiles.bin" ; $7570, 512 bytes
+	INCBIN "data/engine/menus/briefing/lz_RulesScreenTiles.bin" ; $7570, 512 bytes
 RulesScreenTilemap:
-	INCBIN "data/bank_017/lz_RulesScreenTilemap.bin" ; $7770, 309 bytes
+	INCBIN "data/engine/menus/briefing/lz_RulesScreenTilemap.bin" ; $7770, 309 bytes
 RulesScreenAttrmap:
-	INCBIN "data/bank_017/lz_RulesScreenAttrmap.bin" ; $78a5, 87 bytes
+	INCBIN "data/engine/menus/briefing/lz_RulesScreenAttrmap.bin" ; $78a5, 87 bytes
 RulesScreenPalettes:
-	INCLUDE "data/bank_017/RulesScreenPalettes.asm" ; $78fc, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/briefing/RulesScreenPalettes.asm" ; $78fc, 64 bytes (palettes)
 RulesBorderAnimTiles0:
-	INCBIN "data/bank_017/lz_RulesBorderAnimTiles0.bin" ; $793c, 204 bytes
-	INCLUDE "data/bank_017/lz_RulesBorderAnimTiles0.inc" ; DEF RulesBorderAnimTiles0_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles0.bin" ; $793c, 204 bytes
+	INCLUDE "data/engine/menus/briefing/lz_RulesBorderAnimTiles0.inc" ; DEF RulesBorderAnimTiles0_SIZE EQU its decoded length, generated from the .bin by make
 RulesBorderAnimTiles1:
-	INCBIN "data/bank_017/lz_RulesBorderAnimTiles1.bin" ; $7a08, 39 bytes
-	INCLUDE "data/bank_017/lz_RulesBorderAnimTiles1.inc" ; DEF RulesBorderAnimTiles1_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles1.bin" ; $7a08, 39 bytes
+	INCLUDE "data/engine/menus/briefing/lz_RulesBorderAnimTiles1.inc" ; DEF RulesBorderAnimTiles1_SIZE EQU its decoded length, generated from the .bin by make
 RulesBorderAnimTiles2:
-	INCBIN "data/bank_017/lz_RulesBorderAnimTiles2.bin" ; $7a2f, 39 bytes
+	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles2.bin" ; $7a2f, 39 bytes
 RulesBorderAnimTiles3:
-	INCBIN "data/bank_017/lz_RulesBorderAnimTiles3.bin" ; $7a56, 162 bytes
-	INCLUDE "data/bank_017/lz_RulesBorderAnimTiles3.inc" ; DEF RulesBorderAnimTiles3_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles3.bin" ; $7a56, 162 bytes
+	INCLUDE "data/engine/menus/briefing/lz_RulesBorderAnimTiles3.inc" ; DEF RulesBorderAnimTiles3_SIZE EQU its decoded length, generated from the .bin by make
 RulesBorderAnimTiles4:
-	INCBIN "data/bank_017/lz_RulesBorderAnimTiles4.bin" ; $7af8, 32 bytes
-	INCLUDE "data/bank_017/lz_RulesBorderAnimTiles4.inc" ; DEF RulesBorderAnimTiles4_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles4.bin" ; $7af8, 32 bytes
+	INCLUDE "data/engine/menus/briefing/lz_RulesBorderAnimTiles4.inc" ; DEF RulesBorderAnimTiles4_SIZE EQU its decoded length, generated from the .bin by make
 RulesBorderAnimTiles5:
-	INCBIN "data/bank_017/lz_RulesBorderAnimTiles5.bin" ; $7b18, 33 bytes
+	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles5.bin" ; $7b18, 33 bytes
 RulesScreenPalette:
-	INCLUDE "data/bank_017/RulesScreenPalette.asm" ; $7b39, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/briefing/RulesScreenPalette.asm" ; $7b39, 64 bytes (palettes)
 	; $7b79, 1159 bytes fill to bank end (linker-padded)

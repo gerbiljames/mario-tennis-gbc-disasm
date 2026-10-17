@@ -1,5 +1,5 @@
 HexDigitChars_05:
-	INCBIN "data/bank_005/HexDigitChars_05.bin" ; $6488, 16 bytes
+	INCBIN "data/engine/text/HexDigitChars_05.bin" ; $6488, 16 bytes
 DebugDrawHexRowLabel:
 	push af ; $6498
 	push bc ; $6499

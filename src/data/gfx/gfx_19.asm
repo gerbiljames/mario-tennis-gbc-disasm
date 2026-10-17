@@ -75,79 +75,79 @@ DataPtr_ChampionMedalTilemap4:
 DataPtr_ChampionMedalAttrmap4:
 	dw ChampionMedalAttrmap4 ; $404a
 VictoryCutsceneTiles:
-	INCBIN "data/bank_019/lz_VictoryCutsceneTiles.bin" ; $404c, 3118 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneTiles.bin" ; $404c, 3118 bytes
 VictoryCutscenePalettes:
-	INCLUDE "data/bank_019/VictoryCutscenePalettes.asm" ; $4c7a, 64 bytes (palettes)
+	INCLUDE "data/gfx/VictoryCutscenePalettes.asm" ; $4c7a, 64 bytes (palettes)
 VictoryCutsceneTilemap:
-	INCBIN "data/bank_019/lz_VictoryCutsceneTilemap.bin" ; $4cba, 265 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneTilemap.bin" ; $4cba, 265 bytes
 VictoryCutsceneAttrmap:
-	INCBIN "data/bank_019/lz_VictoryCutsceneAttrmap.bin" ; $4dc3, 99 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneAttrmap.bin" ; $4dc3, 99 bytes
 VictoryCutsceneTilemap2:
-	INCBIN "data/bank_019/lz_VictoryCutsceneTilemap2.bin" ; $4e26, 258 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneTilemap2.bin" ; $4e26, 258 bytes
 VictoryCutsceneAttrmap2:
-	INCBIN "data/bank_019/lz_VictoryCutsceneAttrmap2.bin" ; $4f28, 123 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneAttrmap2.bin" ; $4f28, 123 bytes
 VictoryCutsceneTilemap3:
-	INCBIN "data/bank_019/lz_VictoryCutsceneTilemap3.bin" ; $4fa3, 271 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneTilemap3.bin" ; $4fa3, 271 bytes
 VictoryCutsceneAttrmap3:
-	INCBIN "data/bank_019/lz_VictoryCutsceneAttrmap3.bin" ; $50b2, 84 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneAttrmap3.bin" ; $50b2, 84 bytes
 VictoryCutsceneTilemap4:
-	INCBIN "data/bank_019/lz_VictoryCutsceneTilemap4.bin" ; $5106, 259 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneTilemap4.bin" ; $5106, 259 bytes
 VictoryCutsceneAttrmap4:
-	INCBIN "data/bank_019/lz_VictoryCutsceneAttrmap4.bin" ; $5209, 106 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneAttrmap4.bin" ; $5209, 106 bytes
 VictoryCutsceneTilemap5:
-	INCBIN "data/bank_019/lz_VictoryCutsceneTilemap5.bin" ; $5273, 209 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneTilemap5.bin" ; $5273, 209 bytes
 VictoryCutsceneAttrmap5:
-	INCBIN "data/bank_019/lz_VictoryCutsceneAttrmap5.bin" ; $5344, 140 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneAttrmap5.bin" ; $5344, 140 bytes
 VictoryCutsceneTilemap6:
-	INCBIN "data/bank_019/lz_VictoryCutsceneTilemap6.bin" ; $53d0, 221 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneTilemap6.bin" ; $53d0, 221 bytes
 VictoryCutsceneAttrmap6:
-	INCBIN "data/bank_019/lz_VictoryCutsceneAttrmap6.bin" ; $54ad, 114 bytes
+	INCBIN "data/gfx/lz_VictoryCutsceneAttrmap6.bin" ; $54ad, 114 bytes
 ShopCutsceneTiles:
-	INCBIN "data/bank_019/lz_ShopCutsceneTiles.bin" ; $551f, 3077 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneTiles.bin" ; $551f, 3077 bytes
 ShopCutscenePalettes:
-	INCLUDE "data/bank_019/ShopCutscenePalettes.asm" ; $6124, 64 bytes (palettes)
+	INCLUDE "data/gfx/ShopCutscenePalettes.asm" ; $6124, 64 bytes (palettes)
 ShopCutsceneTilemap:
-	INCBIN "data/bank_019/lz_ShopCutsceneTilemap.bin" ; $6164, 257 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneTilemap.bin" ; $6164, 257 bytes
 ShopCutsceneAttrmap:
-	INCBIN "data/bank_019/lz_ShopCutsceneAttrmap.bin" ; $6265, 129 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneAttrmap.bin" ; $6265, 129 bytes
 ShopCutsceneTilemap2:
-	INCBIN "data/bank_019/lz_ShopCutsceneTilemap2.bin" ; $62e6, 250 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneTilemap2.bin" ; $62e6, 250 bytes
 ShopCutsceneAttrmap2:
-	INCBIN "data/bank_019/lz_ShopCutsceneAttrmap2.bin" ; $63e0, 110 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneAttrmap2.bin" ; $63e0, 110 bytes
 ShopCutsceneTilemap3:
-	INCBIN "data/bank_019/lz_ShopCutsceneTilemap3.bin" ; $644e, 271 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneTilemap3.bin" ; $644e, 271 bytes
 ShopCutsceneAttrmap3:
-	INCBIN "data/bank_019/lz_ShopCutsceneAttrmap3.bin" ; $655d, 132 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneAttrmap3.bin" ; $655d, 132 bytes
 ShopCutsceneTilemap4:
-	INCBIN "data/bank_019/lz_ShopCutsceneTilemap4.bin" ; $65e1, 264 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneTilemap4.bin" ; $65e1, 264 bytes
 ShopCutsceneAttrmap4:
-	INCBIN "data/bank_019/lz_ShopCutsceneAttrmap4.bin" ; $66e9, 132 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneAttrmap4.bin" ; $66e9, 132 bytes
 ShopCutsceneTilemap5:
-	INCBIN "data/bank_019/lz_ShopCutsceneTilemap5.bin" ; $676d, 215 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneTilemap5.bin" ; $676d, 215 bytes
 ShopCutsceneAttrmap5:
-	INCBIN "data/bank_019/lz_ShopCutsceneAttrmap5.bin" ; $6844, 109 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneAttrmap5.bin" ; $6844, 109 bytes
 ShopCutsceneTilemap6:
-	INCBIN "data/bank_019/lz_ShopCutsceneTilemap6.bin" ; $68b1, 226 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneTilemap6.bin" ; $68b1, 226 bytes
 ShopCutsceneAttrmap6:
-	INCBIN "data/bank_019/lz_ShopCutsceneAttrmap6.bin" ; $6993, 125 bytes
+	INCBIN "data/gfx/lz_ShopCutsceneAttrmap6.bin" ; $6993, 125 bytes
 ChampionMedalTiles:
-	INCBIN "data/bank_019/lz_ChampionMedalTiles.bin" ; $6a10, 3355 bytes
+	INCBIN "data/gfx/lz_ChampionMedalTiles.bin" ; $6a10, 3355 bytes
 ChampionMedalPalettes:
-	INCLUDE "data/bank_019/ChampionMedalPalettes.asm" ; $772b, 64 bytes (palettes)
+	INCLUDE "data/gfx/ChampionMedalPalettes.asm" ; $772b, 64 bytes (palettes)
 ChampionMedalTilemap:
-	INCBIN "data/bank_019/lz_ChampionMedalTilemap.bin" ; $776b, 275 bytes
+	INCBIN "data/gfx/lz_ChampionMedalTilemap.bin" ; $776b, 275 bytes
 ChampionMedalAttrmap:
-	INCBIN "data/bank_019/lz_ChampionMedalAttrmap.bin" ; $787e, 128 bytes
+	INCBIN "data/gfx/lz_ChampionMedalAttrmap.bin" ; $787e, 128 bytes
 ChampionMedalTilemap2:
-	INCBIN "data/bank_019/lz_ChampionMedalTilemap2.bin" ; $78fe, 275 bytes
+	INCBIN "data/gfx/lz_ChampionMedalTilemap2.bin" ; $78fe, 275 bytes
 ChampionMedalAttrmap2:
-	INCBIN "data/bank_019/lz_ChampionMedalAttrmap2.bin" ; $7a11, 125 bytes
+	INCBIN "data/gfx/lz_ChampionMedalAttrmap2.bin" ; $7a11, 125 bytes
 ChampionMedalTilemap3:
-	INCBIN "data/bank_019/lz_ChampionMedalTilemap3.bin" ; $7a8e, 275 bytes
+	INCBIN "data/gfx/lz_ChampionMedalTilemap3.bin" ; $7a8e, 275 bytes
 ChampionMedalAttrmap3:
-	INCBIN "data/bank_019/lz_ChampionMedalAttrmap3.bin" ; $7ba1, 147 bytes
+	INCBIN "data/gfx/lz_ChampionMedalAttrmap3.bin" ; $7ba1, 147 bytes
 ChampionMedalTilemap4:
-	INCBIN "data/bank_019/lz_ChampionMedalTilemap4.bin" ; $7c34, 275 bytes
+	INCBIN "data/gfx/lz_ChampionMedalTilemap4.bin" ; $7c34, 275 bytes
 ChampionMedalAttrmap4:
-	INCBIN "data/bank_019/lz_ChampionMedalAttrmap4.bin" ; $7d47, 144 bytes
+	INCBIN "data/gfx/lz_ChampionMedalAttrmap4.bin" ; $7d47, 144 bytes
 	; $7dd7, 553 bytes fill to bank end (linker-padded)

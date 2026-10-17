@@ -63,60 +63,60 @@ DataPtr_DormEntranceSceneUnusedSlot:
 DataPtr_DormEntranceTiles:
 	dw DormEntranceTiles ; $403e
 JuniorClassCourtSceneConfig:
-	INCBIN "data/bank_066/JuniorClassCourtSceneConfig.bin" ; $4040, 42 bytes
+	INCBIN "data/scenes/JuniorClassCourtSceneConfig.bin" ; $4040, 42 bytes
 JuniorClassCourtPalettes:
-	INCLUDE "data/bank_066/JuniorClassCourtPalettes.asm" ; $406a, 64 bytes (palettes)
+	INCLUDE "data/scenes/JuniorClassCourtPalettes.asm" ; $406a, 64 bytes (palettes)
 JuniorClassCourtTiles:
-	INCBIN "data/bank_066/lz_JuniorClassCourtTiles.bin" ; $40aa, 1292 bytes
+	INCBIN "data/scenes/lz_JuniorClassCourtTiles.bin" ; $40aa, 1292 bytes
 JuniorClassCourtTilemap:
-	INCBIN "data/bank_066/lz_JuniorClassCourtTilemap.bin" ; $45b6, 1012 bytes
+	INCBIN "data/scenes/lz_JuniorClassCourtTilemap.bin" ; $45b6, 1012 bytes
 JuniorClassCourtAttrmap:
-	INCBIN "data/bank_066/lz_JuniorClassCourtAttrmap.bin" ; $49aa, 760 bytes
+	INCBIN "data/scenes/lz_JuniorClassCourtAttrmap.bin" ; $49aa, 760 bytes
 JuniorClassCourtCollisionMap:
-	INCBIN "data/bank_066/lz_JuniorClassCourtCollisionMap.bin" ; $4ca2, 101 bytes
+	INCBIN "data/scenes/lz_JuniorClassCourtCollisionMap.bin" ; $4ca2, 101 bytes
 JuniorClassCourtBehaviorMap:
-	INCBIN "data/bank_066/lz_JuniorClassCourtBehaviorMap.bin" ; $4d07, 72 bytes
+	INCBIN "data/scenes/lz_JuniorClassCourtBehaviorMap.bin" ; $4d07, 72 bytes
 RestaurantSceneConfig:
-	INCBIN "data/bank_066/RestaurantSceneConfig.bin" ; $4d4f, 42 bytes
+	INCBIN "data/scenes/RestaurantSceneConfig.bin" ; $4d4f, 42 bytes
 RestaurantPalettes:
-	INCLUDE "data/bank_066/RestaurantPalettes.asm" ; $4d79, 64 bytes (palettes)
+	INCLUDE "data/scenes/RestaurantPalettes.asm" ; $4d79, 64 bytes (palettes)
 RestaurantTiles:
-	INCBIN "data/bank_066/lz_RestaurantTiles.bin" ; $4db9, 2034 bytes
+	INCBIN "data/scenes/lz_RestaurantTiles.bin" ; $4db9, 2034 bytes
 RestaurantTilemap:
-	INCBIN "data/bank_066/lz_RestaurantTilemap.bin" ; $55ab, 1086 bytes
+	INCBIN "data/scenes/lz_RestaurantTilemap.bin" ; $55ab, 1086 bytes
 RestaurantAttrmap:
-	INCBIN "data/bank_066/lz_RestaurantAttrmap.bin" ; $59e9, 675 bytes
+	INCBIN "data/scenes/lz_RestaurantAttrmap.bin" ; $59e9, 675 bytes
 RestaurantCollisionMap:
-	INCBIN "data/bank_066/lz_RestaurantCollisionMap.bin" ; $5c8c, 118 bytes
+	INCBIN "data/scenes/lz_RestaurantCollisionMap.bin" ; $5c8c, 118 bytes
 RestaurantBehaviorMap:
-	INCBIN "data/bank_066/lz_RestaurantBehaviorMap.bin" ; $5d02, 128 bytes
+	INCBIN "data/scenes/lz_RestaurantBehaviorMap.bin" ; $5d02, 128 bytes
 AcademyEntranceSceneConfig:
-	INCBIN "data/bank_066/AcademyEntranceSceneConfig.bin" ; $5d82, 9 bytes
+	INCBIN "data/scenes/AcademyEntranceSceneConfig.bin" ; $5d82, 9 bytes
 AcademyEntrancePalettes:
-	INCLUDE "data/bank_066/AcademyEntrancePalettes.asm" ; $5d8b, 64 bytes (palettes)
+	INCLUDE "data/scenes/AcademyEntrancePalettes.asm" ; $5d8b, 64 bytes (palettes)
 AcademyEntranceTiles:
-	INCBIN "data/bank_066/lz_AcademyEntranceTiles.bin" ; $5dcb, 2301 bytes
+	INCBIN "data/scenes/lz_AcademyEntranceTiles.bin" ; $5dcb, 2301 bytes
 AcademyEntranceTilemap:
-	INCBIN "data/bank_066/lz_AcademyEntranceTilemap.bin" ; $66c8, 1096 bytes
+	INCBIN "data/scenes/lz_AcademyEntranceTilemap.bin" ; $66c8, 1096 bytes
 AcademyEntranceAttrmap:
-	INCBIN "data/bank_066/lz_AcademyEntranceAttrmap.bin" ; $6b10, 572 bytes
+	INCBIN "data/scenes/lz_AcademyEntranceAttrmap.bin" ; $6b10, 572 bytes
 AcademyEntranceCollisionMap:
-	INCBIN "data/bank_066/lz_AcademyEntranceCollisionMap.bin" ; $6d4c, 97 bytes
+	INCBIN "data/scenes/lz_AcademyEntranceCollisionMap.bin" ; $6d4c, 97 bytes
 AcademyEntranceBehaviorMap:
-	INCBIN "data/bank_066/lz_AcademyEntranceBehaviorMap.bin" ; $6dad, 75 bytes
+	INCBIN "data/scenes/lz_AcademyEntranceBehaviorMap.bin" ; $6dad, 75 bytes
 DormEntranceSceneConfig:
-	INCBIN "data/bank_066/DormEntranceSceneConfig.bin" ; $6df8, 42 bytes
+	INCBIN "data/scenes/DormEntranceSceneConfig.bin" ; $6df8, 42 bytes
 DormEntrancePalettes:
-	INCLUDE "data/bank_066/DormEntrancePalettes.asm" ; $6e22, 64 bytes (palettes)
+	INCLUDE "data/scenes/DormEntrancePalettes.asm" ; $6e22, 64 bytes (palettes)
 DormEntranceTiles:
-	INCBIN "data/bank_066/lz_DormEntranceTiles.bin" ; $6e62, 1916 bytes
+	INCBIN "data/scenes/lz_DormEntranceTiles.bin" ; $6e62, 1916 bytes
 DormEntranceTilemap:
-	INCBIN "data/bank_066/lz_DormEntranceTilemap.bin" ; $75de, 971 bytes
+	INCBIN "data/scenes/lz_DormEntranceTilemap.bin" ; $75de, 971 bytes
 DormEntranceAttrmap:
-	INCBIN "data/bank_066/lz_DormEntranceAttrmap.bin" ; $79a9, 474 bytes
+	INCBIN "data/scenes/lz_DormEntranceAttrmap.bin" ; $79a9, 474 bytes
 DormEntranceCollisionMap:
-	INCBIN "data/bank_066/lz_DormEntranceCollisionMap.bin" ; $7b83, 95 bytes
+	INCBIN "data/scenes/lz_DormEntranceCollisionMap.bin" ; $7b83, 95 bytes
 DormEntranceBehaviorMap:
-	INCBIN "data/bank_066/lz_DormEntranceBehaviorMap.bin" ; $7be2, 75 bytes
+	INCBIN "data/scenes/lz_DormEntranceBehaviorMap.bin" ; $7be2, 75 bytes
 DormEntranceSceneUnusedSlot:
 	; $7c2d, 979 bytes fill to bank end (linker-padded)

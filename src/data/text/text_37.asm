@@ -259,7 +259,7 @@ FetchTextTable_37:
 	dw TextStrings_37.s433 - TextStrings_37 ; 254
 	dw TextStrings_37.s435 - TextStrings_37 ; 255
 TextStrings_37:
-	INCLUDE "data/bank_037/TextStrings_37.asm" ; $4204, 14618 bytes (text_pool)
+	INCLUDE "data/text/TextStrings_37.asm" ; $4204, 14618 bytes (text_pool)
 FetchDialogueText_37:
 	push af ; $7b1e
 	ld a, $00 ; $7b1f

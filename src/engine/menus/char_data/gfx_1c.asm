@@ -1,80 +1,80 @@
 	ds ALIGN[4]
 UnusedShiftGfx00:
-	INCBIN "data/bank_01c/UnusedShiftGfx00.bin" ; $6880, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx00.bin" ; $6880, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx01:
-	INCBIN "data/bank_01c/UnusedShiftGfx01.bin" ; $68c0, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx01.bin" ; $68c0, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx02:
-	INCBIN "data/bank_01c/UnusedShiftGfx02.bin" ; $6900, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx02.bin" ; $6900, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx03:
-	INCBIN "data/bank_01c/UnusedShiftGfx03.bin" ; $6940, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx03.bin" ; $6940, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx04:
-	INCBIN "data/bank_01c/UnusedShiftGfx04.bin" ; $6980, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx04.bin" ; $6980, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx05:
-	INCBIN "data/bank_01c/UnusedShiftGfx05.bin" ; $69c0, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx05.bin" ; $69c0, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx06:
-	INCBIN "data/bank_01c/UnusedShiftGfx06.bin" ; $6a00, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx06.bin" ; $6a00, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx07:
-	INCBIN "data/bank_01c/UnusedShiftGfx07.bin" ; $6a40, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx07.bin" ; $6a40, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx08:
-	INCBIN "data/bank_01c/UnusedShiftGfx08.bin" ; $6a80, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx08.bin" ; $6a80, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx09:
-	INCBIN "data/bank_01c/UnusedShiftGfx09.bin" ; $6ac0, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx09.bin" ; $6ac0, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx10:
-	INCBIN "data/bank_01c/UnusedShiftGfx10.bin" ; $6b00, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx10.bin" ; $6b00, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx11:
-	INCBIN "data/bank_01c/UnusedShiftGfx11.bin" ; $6b40, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx11.bin" ; $6b40, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx12:
-	INCBIN "data/bank_01c/UnusedShiftGfx12.bin" ; $6b80, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx12.bin" ; $6b80, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx13:
-	INCBIN "data/bank_01c/UnusedShiftGfx13.bin" ; $6bc0, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx13.bin" ; $6bc0, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx14:
-	INCBIN "data/bank_01c/UnusedShiftGfx14.bin" ; $6c00, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx14.bin" ; $6c00, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx15:
-	INCBIN "data/bank_01c/UnusedShiftGfx15.bin" ; $6c40, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx15.bin" ; $6c40, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx16:
-	INCBIN "data/bank_01c/UnusedShiftGfx16.bin" ; $6c80, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx16.bin" ; $6c80, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx17:
-	INCBIN "data/bank_01c/UnusedShiftGfx17.bin" ; $6cc0, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx17.bin" ; $6cc0, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx18:
-	INCBIN "data/bank_01c/UnusedShiftGfx18.bin" ; $6d00, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx18.bin" ; $6d00, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx19:
-	INCBIN "data/bank_01c/UnusedShiftGfx19.bin" ; $6d40, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx19.bin" ; $6d40, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx20:
-	INCBIN "data/bank_01c/UnusedShiftGfx20.bin" ; $6d80, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx20.bin" ; $6d80, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx21:
-	INCBIN "data/bank_01c/UnusedShiftGfx21.bin" ; $6dc0, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx21.bin" ; $6dc0, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx22:
-	INCBIN "data/bank_01c/UnusedShiftGfx22.bin" ; $6e00, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx22.bin" ; $6e00, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx23:
-	INCBIN "data/bank_01c/UnusedShiftGfx23.bin" ; $6e40, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx23.bin" ; $6e40, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx24:
-	INCBIN "data/bank_01c/UnusedShiftGfx24.bin" ; $6e80, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx24.bin" ; $6e80, 64 bytes
 UnusedShiftGfx25:
-	INCBIN "data/bank_01c/UnusedShiftGfx25.bin" ; $6ec0, 47 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx25.bin" ; $6ec0, 47 bytes
 Unused_1c_1:
 	; $6eef, 17 bytes (bytes:16)
 	db $ec, $00, $00, $00, $00, $08, $07, $20, $1f, $44, $38, $0a, $71, $84, $73, $10 ; 0x00
@@ -85,25 +85,25 @@ UnusedShiftGfx26:
 	db $20, $cf, $10, $cf, $40, $9f, $a0, $1f, $42, $3c, $09, $f0, $94, $63, $48, $27 ; 0x10
 	db $80, $00, $00, $00, $00, $00, $80, $00, $20, $c0 ; 0x20
 CharDataScreenTiles_1c:
-	INCBIN "data/bank_01c/CharDataScreenTiles_1c.bin" ; $6f2a, 22 bytes
+	INCBIN "data/engine/menus/char_data/CharDataScreenTiles_1c.bin" ; $6f2a, 22 bytes
 	ds ALIGN[4]
 UnusedShiftGfx27:
-	INCBIN "data/bank_01c/UnusedShiftGfx27.bin" ; $6f40, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx27.bin" ; $6f40, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx28:
-	INCBIN "data/bank_01c/UnusedShiftGfx28.bin" ; $6f80, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx28.bin" ; $6f80, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx29:
-	INCBIN "data/bank_01c/UnusedShiftGfx29.bin" ; $6fc0, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx29.bin" ; $6fc0, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx30:
-	INCBIN "data/bank_01c/UnusedShiftGfx30.bin" ; $7000, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx30.bin" ; $7000, 64 bytes
 	ds ALIGN[4]
 UnusedShiftGfx31:
-	INCBIN "data/bank_01c/UnusedShiftGfx31.bin" ; $7040, 64 bytes
+	INCBIN "data/engine/menus/char_data/UnusedShiftGfx31.bin" ; $7040, 64 bytes
 CharDataScreenGfx13:
-	INCBIN "data/bank_01c/lz_CharDataScreenGfx13.bin" ; $7080, 150 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenGfx13.inc" ; DEF CharDataScreenGfx13_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx13.bin" ; $7080, 150 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx13.inc" ; DEF CharDataScreenGfx13_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreen_LoadScreen:
 	ld hl, CharDataScreen_LoadScreenPalette ; $7116
 	ld_bg_pals de, 0, 8 ; $7119
@@ -532,13 +532,13 @@ LoadCharDataScreenMugshots:
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
 CharDataScreenBgAndPalettes:
-	INCLUDE "data/bank_01c/CharDataScreenBgAndPalettes.asm" ; $7541, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/char_data/CharDataScreenBgAndPalettes.asm" ; $7541, 64 bytes (palettes)
 CharDataScreenBgAndPalettes0:
-	INCBIN "data/bank_01c/lz_CharDataScreenBgAndPalettes0.bin" ; $7581, 1886 bytes
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgAndPalettes0.bin" ; $7581, 1886 bytes
 CharDataScreenBgTilemap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBgTilemap.bin" ; $7cdf, 320 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBgTilemap.inc" ; DEF CharDataScreenBgTilemap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgTilemap.bin" ; $7cdf, 320 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBgTilemap.inc" ; DEF CharDataScreenBgTilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBgAttrmap:
-	INCBIN "data/bank_01c/lz_CharDataScreenBgAttrmap.bin" ; $7e1f, 216 bytes
-	INCLUDE "data/bank_01c/lz_CharDataScreenBgAttrmap.inc" ; DEF CharDataScreenBgAttrmap_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgAttrmap.bin" ; $7e1f, 216 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBgAttrmap.inc" ; DEF CharDataScreenBgAttrmap_SIZE EQU its decoded length, generated from the .bin by make
 	; $7ef7, 265 bytes fill to bank end (linker-padded)

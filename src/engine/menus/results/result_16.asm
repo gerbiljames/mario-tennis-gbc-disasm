@@ -22,9 +22,9 @@ LoadMatchResultPalettes:
 	call LoadPaletteShadow ; $4a42
 	ret ; $4a45
 MatchResultPalettes0:
-	INCLUDE "data/bank_016/MatchResultPalettes0.asm" ; $4a46, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/results/MatchResultPalettes0.asm" ; $4a46, 8 bytes (palettes)
 MatchResultPalettes1:
-	INCLUDE "data/bank_016/MatchResultPalettes1.asm" ; $4a4e, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/results/MatchResultPalettes1.asm" ; $4a4e, 8 bytes (palettes)
 AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
 	cp WINLOSE_LOSE ; $4a59

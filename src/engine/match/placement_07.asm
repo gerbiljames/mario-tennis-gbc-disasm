@@ -84,37 +84,37 @@ ComposeLinkStateByte:
 	pop bc ; $4d1f
 	ret ; $4d20
 LinkStateBytePtrs_07:
-	INCBIN "data/bank_007/LinkStateBytePtrs_07.bin" ; $4d21, 16 bytes
+	INCBIN "data/engine/match/LinkStateBytePtrs_07.bin" ; $4d21, 16 bytes
 ShotPlacementDataTopspin_07:
-	INCBIN "data/bank_007/ShotPlacementDataTopspin_07.bin" ; $4d31, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataTopspin_07.bin" ; $4d31, 80 bytes
 ShotPlacementDataPowerTopspin_07:
-	INCBIN "data/bank_007/ShotPlacementDataPowerTopspin_07.bin" ; $4d81, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataPowerTopspin_07.bin" ; $4d81, 80 bytes
 ShotPlacementDataSlice_07:
-	INCBIN "data/bank_007/ShotPlacementDataSlice_07.bin" ; $4dd1, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataSlice_07.bin" ; $4dd1, 80 bytes
 ShotPlacementDataPowerSlice_07:
-	INCBIN "data/bank_007/ShotPlacementDataPowerSlice_07.bin" ; $4e21, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataPowerSlice_07.bin" ; $4e21, 80 bytes
 ShotPlacementDataNeutral_07:
-	INCBIN "data/bank_007/ShotPlacementDataNeutral_07.bin" ; $4e71, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataNeutral_07.bin" ; $4e71, 80 bytes
 ShotPlacementDataSmash_07:
-	INCBIN "data/bank_007/ShotPlacementDataSmash_07.bin" ; $4ec1, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataSmash_07.bin" ; $4ec1, 80 bytes
 ShotPlacementDataReachBasic_07:
-	INCBIN "data/bank_007/ShotPlacementDataReachBasic_07.bin" ; $4f11, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataReachBasic_07.bin" ; $4f11, 80 bytes
 ShotPlacementDataReachPowerTopspin_07:
-	INCBIN "data/bank_007/ShotPlacementDataReachPowerTopspin_07.bin" ; $4f61, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataReachPowerTopspin_07.bin" ; $4f61, 80 bytes
 ShotPlacementDataReachPowerSlice_07:
-	INCBIN "data/bank_007/ShotPlacementDataReachPowerSlice_07.bin" ; $4fb1, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataReachPowerSlice_07.bin" ; $4fb1, 80 bytes
 ShotPlacementDataReach_07:
-	INCBIN "data/bank_007/ShotPlacementDataReach_07.bin" ; $5001, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataReach_07.bin" ; $5001, 80 bytes
 ShotPlacementDataLob_07:
-	INCBIN "data/bank_007/ShotPlacementDataLob_07.bin" ; $5051, 16 bytes
+	INCBIN "data/engine/match/ShotPlacementDataLob_07.bin" ; $5051, 16 bytes
 ShotPlacementDataDrop_07:
-	INCBIN "data/bank_007/ShotPlacementDataDrop_07.bin" ; $5061, 16 bytes
+	INCBIN "data/engine/match/ShotPlacementDataDrop_07.bin" ; $5061, 16 bytes
 ShotPlacementDataServeTopspin_07:
-	INCBIN "data/bank_007/ShotPlacementDataServeTopspin_07.bin" ; $5071, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataServeTopspin_07.bin" ; $5071, 80 bytes
 ShotPlacementDataServeSlice_07:
-	INCBIN "data/bank_007/ShotPlacementDataServeSlice_07.bin" ; $50c1, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataServeSlice_07.bin" ; $50c1, 80 bytes
 ShotPlacementDataServeFlat_07:
-	INCBIN "data/bank_007/ShotPlacementDataServeFlat_07.bin" ; $5111, 80 bytes
+	INCBIN "data/engine/match/ShotPlacementDataServeFlat_07.bin" ; $5111, 80 bytes
 ComputeShotPlacement:
 	ld a, [wCurrentShotType] ; $5161
 	rst Rst00 ; $5164

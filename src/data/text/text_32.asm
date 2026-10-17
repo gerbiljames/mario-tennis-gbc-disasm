@@ -190,7 +190,7 @@ FetchTextTable_32:
 	dw TextStrings_32.s354 - TextStrings_32 ; 185
 	dw TextStrings_32.s356 - TextStrings_32 ; 186
 TextStrings_32:
-	INCLUDE "data/bank_032/TextStrings_32.asm" ; $417a, 14637 bytes (text_pool)
+	INCLUDE "data/text/TextStrings_32.asm" ; $417a, 14637 bytes (text_pool)
 FetchDialogueText_32:
 	push af ; $7aa7
 	ld a, $00 ; $7aa8

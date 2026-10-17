@@ -276,15 +276,15 @@ DrillBriefing_ServeAndSmashTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 DrillBriefing_ServeAndSmash_OpponentPosTable:
-	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash_OpponentPosTable.bin" ; $64cd, 16 bytes
+	INCBIN "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_OpponentPosTable.bin" ; $64cd, 16 bytes
 DrillBriefing_ServeAndSmash_BallPosTable:
-	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash_BallPosTable.bin" ; $64dd, 36 bytes
+	INCBIN "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_BallPosTable.bin" ; $64dd, 36 bytes
 DrillBriefing_ServeAndSmash_RotMarkerDirTable:
-	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash_RotMarkerDirTable.bin" ; $6501, 4 bytes
+	INCBIN "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerDirTable.bin" ; $6501, 4 bytes
 DrillBriefing_ServeAndSmash_RotMarkerPosTable:
-	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash_RotMarkerPosTable.bin" ; $6505, 36 bytes
+	INCBIN "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerPosTable.bin" ; $6505, 36 bytes
 DrillBriefing_ServeAndSmash_BracketPosTable:
-	INCLUDE "data/bank_017/DrillBriefing_ServeAndSmash_BracketPosTable.asm" ; $6529, 16 bytes
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_BracketPosTable.asm" ; $6529, 16 bytes
 DrillBriefing_ServeAndSmash2:
 	ld a, $55 ; $6539
 	ld [wBriefingPlayerX], a ; $653b
@@ -563,15 +563,15 @@ DrillBriefing_ServeAndSmash2Table:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 DrillBriefing_ServeAndSmash2_OpponentPosTable:
-	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash2_OpponentPosTable.bin" ; $67d6, 16 bytes
+	INCBIN "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_OpponentPosTable.bin" ; $67d6, 16 bytes
 DrillBriefing_ServeAndSmash2_BallPosTable:
-	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash2_BallPosTable.bin" ; $67e6, 36 bytes
+	INCBIN "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_BallPosTable.bin" ; $67e6, 36 bytes
 DrillBriefing_ServeAndSmash2_RotMarkerDirTable:
-	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash2_RotMarkerDirTable.bin" ; $680a, 4 bytes
+	INCBIN "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerDirTable.bin" ; $680a, 4 bytes
 DrillBriefing_ServeAndSmash2_RotMarkerPosTable:
-	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.bin" ; $680e, 36 bytes
+	INCBIN "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.bin" ; $680e, 36 bytes
 DrillBriefing_ServeAndSmash2_BracketPosTable:
-	INCLUDE "data/bank_017/DrillBriefing_ServeAndSmash2_BracketPosTable.asm" ; $6832, 16 bytes
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_BracketPosTable.asm" ; $6832, 16 bytes
 DrillBriefing_ReturnToTarget:
 	ld a, $55 ; $6842
 	ld [wBriefingPlayerX], a ; $6844

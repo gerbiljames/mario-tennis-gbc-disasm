@@ -4,7 +4,7 @@ The music/SFX driver lives entirely in bank 0: code at `$3078`–`$3dd3`, then
 its wave and envelope tables to `$3fc7`. It is a per-channel command
 interpreter: every song and sound effect is a script of two-byte commands — opcode, operand — that is stepped once per engine tick to
 drive the four Game Boy APU channels. The 315 channel scripts are extracted
-as editable source (`data/bank_07x/<Track>.asm`, one `snd_*` macro row per
+as editable source (`data/audio/<Track>.asm`, one `snd_*` macro row per
 command; see "Script command set" and `tools/snd.py`).
 
 ## Channels and state blocks
@@ -89,13 +89,13 @@ operand; the renderer writes them as raw `db` rows. Eight tracks end on a note
 rather than a terminator and run on into the bytes that follow them; the
 rendering says so on its last line.
 
-**Editing a track.** `data/bank_07x/<Track>.asm` is generated at setup and
+**Editing a track.** `data/audio/<Track>.asm` is generated at setup and
 `INCLUDE`d by `src/audio/sound_<bank>.asm`; edit it and `make`.
 Commands may be added or removed freely: `snd_call` targets are local labels
 and everything else is slot-relative, so nothing has to be renumbered. A new
 track is a new file plus a `SoundTable_<bank>` row (banks `$78`-`$7f`, at
 `$4000`; `snd_channel` + `dw`) and, for a new id, a `sound_entry` in
-`MusicIndexTable` or `SfxIndexTable` (generated into `data/bank_000/`). `make check` (`sound`)
+`MusicIndexTable` or `SfxIndexTable` (generated into `data/audio/`). `make check` (`sound`)
 proves the codec: every track decodes over exactly its extent and renders to
 rows that encode back to the same bytes. `tools/snd.py decode <file.bin>`
 renders any blob by hand.

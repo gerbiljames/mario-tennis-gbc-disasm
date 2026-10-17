@@ -333,9 +333,9 @@ CourtSelect9CursorSpriteTask:
 CourtSelect9CursorTemplatePtrs_3e:
 	dw CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate1_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e ; $677b
 CourtSelect9CursorTemplate0_3e:
-	INCBIN "data/bank_03e/CourtSelect9CursorTemplate0_3e.bin" ; $678d, 33 bytes
+	INCBIN "data/engine/menus/court_select/CourtSelect9CursorTemplate0_3e.bin" ; $678d, 33 bytes
 CourtSelect9CursorTemplate1_3e:
-	INCBIN "data/bank_03e/CourtSelect9CursorTemplate1_3e.bin" ; $67ae, 37 bytes
+	INCBIN "data/engine/menus/court_select/CourtSelect9CursorTemplate1_3e.bin" ; $67ae, 37 bytes
 CourtSelect9CursorSpriteTask_SpriteTemplate:
 	; $67d3, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -592,17 +592,17 @@ CourtUnlockFlagIds_3e:
 StubNop_3e:
 	ret ; $69d4
 AwardCeremonyTiles:
-	INCBIN "data/bank_03e/lz_AwardCeremonyTiles.bin" ; $69d5, 2641 bytes
+	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyTiles.bin" ; $69d5, 2641 bytes
 AwardCeremonyPalettes:
-	INCLUDE "data/bank_03e/AwardCeremonyPalettes.asm" ; $7426, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/court_select/AwardCeremonyPalettes.asm" ; $7426, 64 bytes (palettes)
 AwardCeremonyTilemap5:
-	INCBIN "data/bank_03e/lz_AwardCeremonyTilemap5.bin" ; $7466, 279 bytes
+	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyTilemap5.bin" ; $7466, 279 bytes
 AwardCeremonyAttrmap5:
-	INCBIN "data/bank_03e/lz_AwardCeremonyAttrmap5.bin" ; $757d, 107 bytes
+	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyAttrmap5.bin" ; $757d, 107 bytes
 N64TransferItemGfx4:
-	INCBIN "data/bank_03e/lz_N64TransferItemGfx4.bin" ; $75e8, 179 bytes
+	INCBIN "data/engine/menus/court_select/lz_N64TransferItemGfx4.bin" ; $75e8, 179 bytes
 N64TransferItemGfx5:
-	INCBIN "data/bank_03e/lz_N64TransferItemGfx5.bin" ; $769b, 183 bytes
+	INCBIN "data/engine/menus/court_select/lz_N64TransferItemGfx5.bin" ; $769b, 183 bytes
 SavedDataSourceGfx5:
-	INCBIN "data/bank_03e/lz_SavedDataSourceGfx5.bin" ; $7752, 179 bytes
+	INCBIN "data/engine/menus/court_select/lz_SavedDataSourceGfx5.bin" ; $7752, 179 bytes
 	; $7805, 2043 bytes fill to bank end (linker-padded)

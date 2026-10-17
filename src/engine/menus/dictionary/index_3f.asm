@@ -63,7 +63,7 @@ DrawTennisDictionaryLetterLabels:
 .done:
 	ret ; $539d
 SelectionMaskGrid_3f:
-	INCBIN "data/bank_03f/SelectionMaskGrid_3f.bin" ; $539e, 121 bytes
+	INCBIN "data/engine/menus/dictionary/SelectionMaskGrid_3f.bin" ; $539e, 121 bytes
 SetTennisDictionaryListFromIndexRow:
 	wram_bank WRAM_SCENE ; $5417
 	ld c, $00 ; $541d
@@ -559,91 +559,91 @@ QueueTennisDictionaryListRows:
 	pop_wram_bank ; $57e5
 	ret ; $57ea
 HardCourtLabelTiles:
-	INCBIN "data/bank_03f/lz_HardCourtLabelTiles.bin" ; $57eb, 193 bytes
+	INCBIN "data/engine/menus/dictionary/lz_HardCourtLabelTiles.bin" ; $57eb, 193 bytes
 ClayCourtLabelTiles:
-	INCBIN "data/bank_03f/lz_ClayCourtLabelTiles.bin" ; $58ac, 200 bytes
+	INCBIN "data/engine/menus/dictionary/lz_ClayCourtLabelTiles.bin" ; $58ac, 200 bytes
 GrassCourtLabelTiles:
-	INCBIN "data/bank_03f/lz_GrassCourtLabelTiles.bin" ; $5974, 195 bytes
+	INCBIN "data/engine/menus/dictionary/lz_GrassCourtLabelTiles.bin" ; $5974, 195 bytes
 CompositionCourtLabelTiles:
-	INCBIN "data/bank_03f/lz_CompositionCourtLabelTiles.bin" ; $5a37, 190 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CompositionCourtLabelTiles.bin" ; $5a37, 190 bytes
 CourtNameLabelTiles0:
-	INCBIN "data/bank_03f/lz_CourtNameLabelTiles0.bin" ; $5af5, 210 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles0.bin" ; $5af5, 210 bytes
 CourtNameLabelTiles1:
-	INCBIN "data/bank_03f/lz_CourtNameLabelTiles1.bin" ; $5bc7, 222 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles1.bin" ; $5bc7, 222 bytes
 CourtNameLabelTiles2:
-	INCBIN "data/bank_03f/lz_CourtNameLabelTiles2.bin" ; $5ca5, 251 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles2.bin" ; $5ca5, 251 bytes
 CourtNameLabelTiles3:
-	INCBIN "data/bank_03f/lz_CourtNameLabelTiles3.bin" ; $5da0, 242 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles3.bin" ; $5da0, 242 bytes
 CourtNameLabelTiles4:
-	INCBIN "data/bank_03f/lz_CourtNameLabelTiles4.bin" ; $5e92, 235 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles4.bin" ; $5e92, 235 bytes
 CourtNameLabelTiles5:
-	INCBIN "data/bank_03f/lz_CourtNameLabelTiles5.bin" ; $5f7d, 183 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles5.bin" ; $5f7d, 183 bytes
 CourtSelectGfx1:
-	INCBIN "data/bank_03f/lz_CourtSelectGfx1.bin" ; $6034, 151 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx1.bin" ; $6034, 151 bytes
 CourtSelectGfx2:
-	INCBIN "data/bank_03f/lz_CourtSelectGfx2.bin" ; $60cb, 164 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx2.bin" ; $60cb, 164 bytes
 CourtSelectGfx3:
-	INCBIN "data/bank_03f/lz_CourtSelectGfx3.bin" ; $616f, 170 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx3.bin" ; $616f, 170 bytes
 CourtSelectGfx4:
-	INCBIN "data/bank_03f/lz_CourtSelectGfx4.bin" ; $6219, 196 bytes
+	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx4.bin" ; $6219, 196 bytes
 VarsityTeamChartTiles:
-	INCBIN "data/bank_03f/lz_VarsityTeamChartTiles.bin" ; $62dd, 1314 bytes
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTiles.bin" ; $62dd, 1314 bytes
 VarsityTeamChartTilemap:
-	INCBIN "data/bank_03f/lz_VarsityTeamChartTilemap.bin" ; $67ff, 325 bytes
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTilemap.bin" ; $67ff, 325 bytes
 VarsityTeamChartAttrmap:
-	INCBIN "data/bank_03f/lz_VarsityTeamChartAttrmap.bin" ; $6944, 141 bytes
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartAttrmap.bin" ; $6944, 141 bytes
 VarsityTeamChartPalettes:
-	INCLUDE "data/bank_03f/VarsityTeamChartPalettes.asm" ; $69d1, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/dictionary/VarsityTeamChartPalettes.asm" ; $69d1, 64 bytes (palettes)
 VarsityTeamChartTilemap2:
-	INCBIN "data/bank_03f/lz_VarsityTeamChartTilemap2.bin" ; $6a11, 317 bytes
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTilemap2.bin" ; $6a11, 317 bytes
 VarsityTeamChartAttrmap2:
-	INCBIN "data/bank_03f/lz_VarsityTeamChartAttrmap2.bin" ; $6b4e, 143 bytes
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartAttrmap2.bin" ; $6b4e, 143 bytes
 TournamentBracketGfx:
-	INCBIN "data/bank_03f/lz_TournamentBracketGfx.bin" ; $6bdd, 38 bytes
+	INCBIN "data/engine/menus/dictionary/lz_TournamentBracketGfx.bin" ; $6bdd, 38 bytes
 MugshotTiles:
-	INCBIN "data/bank_03f/lz_MugshotTiles.bin" ; $6c03, 1000 bytes
+	INCBIN "data/engine/menus/dictionary/lz_MugshotTiles.bin" ; $6c03, 1000 bytes
 TournamentBracketTiles:
-	INCBIN "data/bank_03f/lz_TournamentBracketTiles.bin" ; $6feb, 1224 bytes
+	INCBIN "data/engine/menus/dictionary/lz_TournamentBracketTiles.bin" ; $6feb, 1224 bytes
 BracketCharIcon00:
-	INCBIN "data/bank_03f/lz_BracketCharIcon00.bin" ; $74b3, 31 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon00.bin" ; $74b3, 31 bytes
 BracketCharIcon01:
-	INCBIN "data/bank_03f/lz_BracketCharIcon01.bin" ; $74d2, 210 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon01.bin" ; $74d2, 210 bytes
 BracketCharIcon02:
-	INCBIN "data/bank_03f/lz_BracketCharIcon02.bin" ; $75a4, 213 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon02.bin" ; $75a4, 213 bytes
 BracketCharIcon03:
-	INCBIN "data/bank_03f/lz_BracketCharIcon03.bin" ; $7679, 74 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon03.bin" ; $7679, 74 bytes
 BracketCharIcon04:
-	INCBIN "data/bank_03f/lz_BracketCharIcon04.bin" ; $76c3, 75 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon04.bin" ; $76c3, 75 bytes
 BracketCharIcon05:
-	INCBIN "data/bank_03f/lz_BracketCharIcon05.bin" ; $770e, 73 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon05.bin" ; $770e, 73 bytes
 BracketCharIcon06:
-	INCBIN "data/bank_03f/lz_BracketCharIcon06.bin" ; $7757, 70 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon06.bin" ; $7757, 70 bytes
 BracketCharIcon07:
-	INCBIN "data/bank_03f/lz_BracketCharIcon07.bin" ; $779d, 67 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon07.bin" ; $779d, 67 bytes
 BracketCharIcon08:
-	INCBIN "data/bank_03f/lz_BracketCharIcon08.bin" ; $77e0, 70 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon08.bin" ; $77e0, 70 bytes
 BracketCharIcon09:
-	INCBIN "data/bank_03f/lz_BracketCharIcon09.bin" ; $7826, 74 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon09.bin" ; $7826, 74 bytes
 BracketCharIcon10:
-	INCBIN "data/bank_03f/lz_BracketCharIcon10.bin" ; $7870, 74 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon10.bin" ; $7870, 74 bytes
 BracketCharIcon11:
-	INCBIN "data/bank_03f/lz_BracketCharIcon11.bin" ; $78ba, 74 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon11.bin" ; $78ba, 74 bytes
 BracketCharIcon12:
-	INCBIN "data/bank_03f/lz_BracketCharIcon12.bin" ; $7904, 75 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon12.bin" ; $7904, 75 bytes
 BracketCharIcon13:
-	INCBIN "data/bank_03f/lz_BracketCharIcon13.bin" ; $794f, 73 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon13.bin" ; $794f, 73 bytes
 BracketCharIcon14:
-	INCBIN "data/bank_03f/lz_BracketCharIcon14.bin" ; $7998, 67 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon14.bin" ; $7998, 67 bytes
 BracketCharIcon15:
-	INCBIN "data/bank_03f/lz_BracketCharIcon15.bin" ; $79db, 66 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon15.bin" ; $79db, 66 bytes
 BracketExtraIcon0:
-	INCBIN "data/bank_03f/lz_BracketExtraIcon0.bin" ; $7a1d, 70 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon0.bin" ; $7a1d, 70 bytes
 BracketExtraIcon1:
-	INCBIN "data/bank_03f/lz_BracketExtraIcon1.bin" ; $7a63, 74 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon1.bin" ; $7a63, 74 bytes
 BracketExtraIcon2:
-	INCBIN "data/bank_03f/lz_BracketExtraIcon2.bin" ; $7aad, 74 bytes
+	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon2.bin" ; $7aad, 74 bytes
 MinigameLevelSelectGfx2:
-	INCBIN "data/bank_03f/lz_MinigameLevelSelectGfx2.bin" ; $7af7, 153 bytes
+	INCBIN "data/engine/menus/dictionary/lz_MinigameLevelSelectGfx2.bin" ; $7af7, 153 bytes
 SavedDataTypeSelectGfx:
-	INCBIN "data/bank_03f/lz_SavedDataTypeSelectGfx.bin" ; $7b90, 185 bytes
+	INCBIN "data/engine/menus/dictionary/lz_SavedDataTypeSelectGfx.bin" ; $7b90, 185 bytes
 	; $7c49, 951 bytes fill to bank end (linker-padded)

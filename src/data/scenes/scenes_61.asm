@@ -63,52 +63,52 @@ DataPtr_TropicsCourtSceneUnusedSlot:
 DataPtr_TropicsCourtTiles:
 	dw TropicsCourtTiles ; $403e
 MachineCourtPalettes:
-	INCLUDE "data/bank_061/MachineCourtPalettes.asm" ; $4040, 64 bytes (palettes)
+	INCLUDE "data/scenes/MachineCourtPalettes.asm" ; $4040, 64 bytes (palettes)
 MachineCourtTiles:
-	INCBIN "data/bank_061/lz_MachineCourtTiles.bin" ; $4080, 2350 bytes
+	INCBIN "data/scenes/lz_MachineCourtTiles.bin" ; $4080, 2350 bytes
 MachineCourtTilemap:
-	INCBIN "data/bank_061/lz_MachineCourtTilemap.bin" ; $49ae, 461 bytes
+	INCBIN "data/scenes/lz_MachineCourtTilemap.bin" ; $49ae, 461 bytes
 MachineCourtAttrmap:
-	INCBIN "data/bank_061/lz_MachineCourtAttrmap.bin" ; $4b7b, 158 bytes
+	INCBIN "data/scenes/lz_MachineCourtAttrmap.bin" ; $4b7b, 158 bytes
 MachineCourtSceneConfig:
-	INCBIN "data/bank_061/MachineCourtSceneConfig.bin" ; $4c19, 40 bytes
+	INCBIN "data/scenes/MachineCourtSceneConfig.bin" ; $4c19, 40 bytes
 MachineCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_061/MachineCourtScoreboardColumnAttrs.bin" ; $4c41, 40 bytes
+	INCBIN "data/scenes/MachineCourtScoreboardColumnAttrs.bin" ; $4c41, 40 bytes
 CenterCourtPalettes:
-	INCLUDE "data/bank_061/CenterCourtPalettes.asm" ; $4c69, 64 bytes (palettes)
+	INCLUDE "data/scenes/CenterCourtPalettes.asm" ; $4c69, 64 bytes (palettes)
 CenterCourtTiles:
-	INCBIN "data/bank_061/lz_CenterCourtTiles.bin" ; $4ca9, 3057 bytes
+	INCBIN "data/scenes/lz_CenterCourtTiles.bin" ; $4ca9, 3057 bytes
 CenterCourtTilemap:
-	INCBIN "data/bank_061/lz_CenterCourtTilemap.bin" ; $589a, 596 bytes
+	INCBIN "data/scenes/lz_CenterCourtTilemap.bin" ; $589a, 596 bytes
 CenterCourtAttrmap:
-	INCBIN "data/bank_061/lz_CenterCourtAttrmap.bin" ; $5aee, 269 bytes
+	INCBIN "data/scenes/lz_CenterCourtAttrmap.bin" ; $5aee, 269 bytes
 CenterCourtSceneConfig:
-	INCBIN "data/bank_061/CenterCourtSceneConfig.bin" ; $5bfb, 40 bytes
+	INCBIN "data/scenes/CenterCourtSceneConfig.bin" ; $5bfb, 40 bytes
 CenterCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_061/CenterCourtScoreboardColumnAttrs.bin" ; $5c23, 40 bytes
+	INCBIN "data/scenes/CenterCourtScoreboardColumnAttrs.bin" ; $5c23, 40 bytes
 CompositionCourtPalettes:
-	INCLUDE "data/bank_061/CompositionCourtPalettes.asm" ; $5c4b, 64 bytes (palettes)
+	INCLUDE "data/scenes/CompositionCourtPalettes.asm" ; $5c4b, 64 bytes (palettes)
 CompositionCourtTiles:
-	INCBIN "data/bank_061/lz_CompositionCourtTiles.bin" ; $5c8b, 2761 bytes
+	INCBIN "data/scenes/lz_CompositionCourtTiles.bin" ; $5c8b, 2761 bytes
 CompositionCourtTilemap:
-	INCBIN "data/bank_061/lz_CompositionCourtTilemap.bin" ; $6754, 547 bytes
+	INCBIN "data/scenes/lz_CompositionCourtTilemap.bin" ; $6754, 547 bytes
 CompositionCourtAttrmap:
-	INCBIN "data/bank_061/lz_CompositionCourtAttrmap.bin" ; $6977, 132 bytes
+	INCBIN "data/scenes/lz_CompositionCourtAttrmap.bin" ; $6977, 132 bytes
 CompositionCourtSceneConfig:
-	INCBIN "data/bank_061/CompositionCourtSceneConfig.bin" ; $69fb, 40 bytes
+	INCBIN "data/scenes/CompositionCourtSceneConfig.bin" ; $69fb, 40 bytes
 CompositionCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_061/CompositionCourtScoreboardColumnAttrs.bin" ; $6a23, 40 bytes
+	INCBIN "data/scenes/CompositionCourtScoreboardColumnAttrs.bin" ; $6a23, 40 bytes
 TropicsCourtPalettes:
-	INCLUDE "data/bank_061/TropicsCourtPalettes.asm" ; $6a4b, 64 bytes (palettes)
+	INCLUDE "data/scenes/TropicsCourtPalettes.asm" ; $6a4b, 64 bytes (palettes)
 TropicsCourtTiles:
-	INCBIN "data/bank_061/lz_TropicsCourtTiles.bin" ; $6a8b, 3003 bytes
+	INCBIN "data/scenes/lz_TropicsCourtTiles.bin" ; $6a8b, 3003 bytes
 TropicsCourtTilemap:
-	INCBIN "data/bank_061/lz_TropicsCourtTilemap.bin" ; $7646, 708 bytes
+	INCBIN "data/scenes/lz_TropicsCourtTilemap.bin" ; $7646, 708 bytes
 TropicsCourtAttrmap:
-	INCBIN "data/bank_061/lz_TropicsCourtAttrmap.bin" ; $790a, 317 bytes
+	INCBIN "data/scenes/lz_TropicsCourtAttrmap.bin" ; $790a, 317 bytes
 TropicsCourtSceneConfig:
-	INCBIN "data/bank_061/TropicsCourtSceneConfig.bin" ; $7a47, 40 bytes
+	INCBIN "data/scenes/TropicsCourtSceneConfig.bin" ; $7a47, 40 bytes
 TropicsCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_061/TropicsCourtScoreboardColumnAttrs.bin" ; $7a6f, 40 bytes
+	INCBIN "data/scenes/TropicsCourtScoreboardColumnAttrs.bin" ; $7a6f, 40 bytes
 TropicsCourtSceneUnusedSlot:
 	; $7a97, 1385 bytes fill to bank end (linker-padded)

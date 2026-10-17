@@ -14,14 +14,14 @@ LoadIndexedPalette:
 	call LoadPaletteShadow ; $4595
 	ret ; $4598
 IndexedPalettes:
-	INCLUDE "data/bank_039/IndexedPalettes.asm" ; $4599, 200 bytes (palettes)
+	INCLUDE "data/engine/menus/common/IndexedPalettes.asm" ; $4599, 200 bytes (palettes)
 Unused_39_LoadFixedPaletteSet:
 	ld hl, FixedPaletteSetPalettes ; $4661
 	ld_obj_pals de, 1, 4 ; $4664
 	call LoadPaletteShadow ; $4667
 	ret ; $466a
 FixedPaletteSetPalettes:
-	INCLUDE "data/bank_039/FixedPaletteSetPalettes.asm" ; $466b, 32 bytes (palettes)
+	INCLUDE "data/engine/menus/common/FixedPaletteSetPalettes.asm" ; $466b, 32 bytes (palettes)
 LoadCompressedTileBlock:
 	ldh a, [hWramBank] ; $468b
 	push af ; $468d
@@ -172,15 +172,15 @@ TileBlockPtrs_39:
 	tileblock SavedDataTypeSelectGfx ; record 120
 	tileblock DigitFontTiles ; record 121
 SharedMenuGfx17:
-	INCBIN "data/bank_039/lz_SharedMenuGfx17.bin" ; $47ab, 79 bytes
+	INCBIN "data/engine/menus/common/lz_SharedMenuGfx17.bin" ; $47ab, 79 bytes
 NameEntryGfx:
-	INCBIN "data/bank_039/lz_NameEntryGfx.bin" ; $47fa, 15 bytes
+	INCBIN "data/engine/menus/common/lz_NameEntryGfx.bin" ; $47fa, 15 bytes
 CharacterSelectGfx:
-	INCBIN "data/bank_039/lz_CharacterSelectGfx.bin" ; $4809, 42 bytes
+	INCBIN "data/engine/menus/common/lz_CharacterSelectGfx.bin" ; $4809, 42 bytes
 NumberSpriteGfxWideGfx:
-	INCBIN "data/bank_039/lz_NumberSpriteGfxWideGfx.bin" ; $4833, 240 bytes
+	INCBIN "data/engine/menus/common/lz_NumberSpriteGfxWideGfx.bin" ; $4833, 240 bytes
 StatLabelTiles:
-	INCBIN "data/bank_039/lz_StatLabelTiles.bin" ; $4923, 243 bytes
+	INCBIN "data/engine/menus/common/lz_StatLabelTiles.bin" ; $4923, 243 bytes
 LoadMenuArrowSpriteTiles:
 	ld c, $04 ; $4a16
 	ld b, $17 ; $4a18

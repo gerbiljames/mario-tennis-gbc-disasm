@@ -1,4 +1,4 @@
-; Shot-solver trajectory rows (data/bank_02x/<Table>.asm, generated at setup).
+; Shot-solver trajectory rows (data/shots/<Table>.asm, generated at setup).
 
 ; One row of a ballistic-solution table (docs/match_engine.md "The trajectory
 ; tables"): the launch speed (the row search key, rising with the row), the

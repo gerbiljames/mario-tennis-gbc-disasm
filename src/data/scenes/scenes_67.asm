@@ -47,50 +47,50 @@ DataPtr_TrainingCourtMapSceneUnusedSlot:
 DataPtr_TrainingCourtMapTiles:
 	dw TrainingCourtMapTiles ; $402e
 TournamentCourtyardSceneConfig:
-	INCBIN "data/bank_067/TournamentCourtyardSceneConfig.bin" ; $4030, 27 bytes
+	INCBIN "data/scenes/TournamentCourtyardSceneConfig.bin" ; $4030, 27 bytes
 TournamentCourtyardPalettes:
-	INCLUDE "data/bank_067/TournamentCourtyardPalettes.asm" ; $404b, 64 bytes (palettes)
+	INCLUDE "data/scenes/TournamentCourtyardPalettes.asm" ; $404b, 64 bytes (palettes)
 TournamentCourtyardTiles:
-	INCBIN "data/bank_067/lz_TournamentCourtyardTiles.bin" ; $408b, 3052 bytes
+	INCBIN "data/scenes/lz_TournamentCourtyardTiles.bin" ; $408b, 3052 bytes
 TournamentCourtyardTilemap:
-	INCBIN "data/bank_067/lz_TournamentCourtyardTilemap.bin" ; $4c77, 1101 bytes
+	INCBIN "data/scenes/lz_TournamentCourtyardTilemap.bin" ; $4c77, 1101 bytes
 TournamentCourtyardAttrmap:
-	INCBIN "data/bank_067/lz_TournamentCourtyardAttrmap.bin" ; $50c4, 689 bytes
+	INCBIN "data/scenes/lz_TournamentCourtyardAttrmap.bin" ; $50c4, 689 bytes
 TournamentCourtyardCollisionMap:
-	INCBIN "data/bank_067/lz_TournamentCourtyardCollisionMap.bin" ; $5375, 106 bytes
+	INCBIN "data/scenes/lz_TournamentCourtyardCollisionMap.bin" ; $5375, 106 bytes
 TournamentCourtyardBehaviorMap:
-	INCBIN "data/bank_067/lz_TournamentCourtyardBehaviorMap.bin" ; $53df, 83 bytes
+	INCBIN "data/scenes/lz_TournamentCourtyardBehaviorMap.bin" ; $53df, 83 bytes
 	; $5432, 14 bytes (fill)
 	ds 14, $00
 TournamentCourtyardSceneUnusedSlot:
-	INCBIN "data/bank_067/TournamentCourtyardSceneUnusedSlot.bin" ; $5440, 1536 bytes
+	INCBIN "data/scenes/TournamentCourtyardSceneUnusedSlot.bin" ; $5440, 1536 bytes
 Court1SceneConfig:
-	INCBIN "data/bank_067/Court1SceneConfig.bin" ; $5a40, 42 bytes
+	INCBIN "data/scenes/Court1SceneConfig.bin" ; $5a40, 42 bytes
 Court1Palettes:
-	INCLUDE "data/bank_067/Court1Palettes.asm" ; $5a6a, 64 bytes (palettes)
+	INCLUDE "data/scenes/Court1Palettes.asm" ; $5a6a, 64 bytes (palettes)
 Court1Tiles:
-	INCBIN "data/bank_067/lz_Court1Tiles.bin" ; $5aaa, 2357 bytes
+	INCBIN "data/scenes/lz_Court1Tiles.bin" ; $5aaa, 2357 bytes
 Court1Tilemap:
-	INCBIN "data/bank_067/lz_Court1Tilemap.bin" ; $63df, 922 bytes
+	INCBIN "data/scenes/lz_Court1Tilemap.bin" ; $63df, 922 bytes
 Court1Attrmap:
-	INCBIN "data/bank_067/lz_Court1Attrmap.bin" ; $6779, 569 bytes
+	INCBIN "data/scenes/lz_Court1Attrmap.bin" ; $6779, 569 bytes
 Court1CollisionMap:
-	INCBIN "data/bank_067/lz_Court1CollisionMap.bin" ; $69b2, 103 bytes
+	INCBIN "data/scenes/lz_Court1CollisionMap.bin" ; $69b2, 103 bytes
 Court1BehaviorMap:
-	INCBIN "data/bank_067/lz_Court1BehaviorMap.bin" ; $6a19, 75 bytes
+	INCBIN "data/scenes/lz_Court1BehaviorMap.bin" ; $6a19, 75 bytes
 TrainingCourtMapSceneConfig:
-	INCBIN "data/bank_067/TrainingCourtMapSceneConfig.bin" ; $6a64, 42 bytes
+	INCBIN "data/scenes/TrainingCourtMapSceneConfig.bin" ; $6a64, 42 bytes
 TrainingCourtMapPalettes:
-	INCLUDE "data/bank_067/TrainingCourtMapPalettes.asm" ; $6a8e, 64 bytes (palettes)
+	INCLUDE "data/scenes/TrainingCourtMapPalettes.asm" ; $6a8e, 64 bytes (palettes)
 TrainingCourtMapTiles:
-	INCBIN "data/bank_067/lz_TrainingCourtMapTiles.bin" ; $6ace, 2316 bytes
+	INCBIN "data/scenes/lz_TrainingCourtMapTiles.bin" ; $6ace, 2316 bytes
 TrainingCourtMapTilemap:
-	INCBIN "data/bank_067/lz_TrainingCourtMapTilemap.bin" ; $73da, 1330 bytes
+	INCBIN "data/scenes/lz_TrainingCourtMapTilemap.bin" ; $73da, 1330 bytes
 TrainingCourtMapAttrmap:
-	INCBIN "data/bank_067/lz_TrainingCourtMapAttrmap.bin" ; $790c, 710 bytes
+	INCBIN "data/scenes/lz_TrainingCourtMapAttrmap.bin" ; $790c, 710 bytes
 TrainingCourtMapCollisionMap:
-	INCBIN "data/bank_067/lz_TrainingCourtMapCollisionMap.bin" ; $7bd2, 128 bytes
+	INCBIN "data/scenes/lz_TrainingCourtMapCollisionMap.bin" ; $7bd2, 128 bytes
 TrainingCourtMapBehaviorMap:
-	INCBIN "data/bank_067/lz_TrainingCourtMapBehaviorMap.bin" ; $7c52, 76 bytes
+	INCBIN "data/scenes/lz_TrainingCourtMapBehaviorMap.bin" ; $7c52, 76 bytes
 TrainingCourtMapSceneUnusedSlot:
 	; $7c9e, 866 bytes fill to bank end (linker-padded)

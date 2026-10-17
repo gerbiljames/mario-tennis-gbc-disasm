@@ -1,11 +1,11 @@
 	ds ALIGN[4]
 IslandSkyTilesA_14:
-	INCBIN "data/bank_014/IslandSkyTilesA_14.bin" ; $7190, 256 bytes
+	INCBIN "data/story/IslandSkyTilesA_14.bin" ; $7190, 256 bytes
 	ds ALIGN[4]
 IslandSkyTilesB_14:
-	INCBIN "data/bank_014/IslandSkyTilesB_14.bin" ; $7290, 192 bytes
+	INCBIN "data/story/IslandSkyTilesB_14.bin" ; $7290, 192 bytes
 IslandSkySpriteData_14:
-	INCBIN "data/bank_014/IslandSkySpriteData_14.bin" ; $7350, 33 bytes
+	INCBIN "data/story/IslandSkySpriteData_14.bin" ; $7350, 33 bytes
 AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 	; $7371, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -16,7 +16,7 @@ AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
 IslandSkyPalettes_14:
-	INCLUDE "data/bank_014/IslandSkyPalettes_14.asm" ; $738a, 32 bytes (palettes)
+	INCLUDE "data/story/IslandSkyPalettes_14.asm" ; $738a, 32 bytes (palettes)
 LoadIslandSkyEffectObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $73aa
 	ld hl, IslandSkyTilesA_14 ; $73b3
@@ -86,7 +86,7 @@ AnimateIslandSkyEffectSprites_14:
 	ds 3, $00
 	ds ALIGN[4]
 DistantPlaneObjGfx:
-	INCBIN "data/bank_014/DistantPlaneObjGfx.bin" ; $7430, 256 bytes
+	INCBIN "data/story/DistantPlaneObjGfx.bin" ; $7430, 256 bytes
 SpriteTemplate_14_3:
 	; $7530, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -128,9 +128,9 @@ GetSceneObjectScreenPos_14:
 	ds 2, $00
 	ds ALIGN[4]
 TwinkleObjGfx:
-	INCBIN "data/bank_014/TwinkleObjGfx.bin" ; $7580, 256 bytes
+	INCBIN "data/story/TwinkleObjGfx.bin" ; $7580, 256 bytes
 TwinkleObjPalette_14:
-	INCLUDE "data/bank_014/TwinkleObjPalette_14.asm" ; $7680, 8 bytes (palettes)
+	INCLUDE "data/story/TwinkleObjPalette_14.asm" ; $7680, 8 bytes (palettes)
 LoadTwinkleObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $7688
 	ld hl, TwinkleObjGfx ; $7691

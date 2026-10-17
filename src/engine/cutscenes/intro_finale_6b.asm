@@ -10,7 +10,7 @@ IntroCutsceneState16Exit_6b:
 	ld [wCutsceneStepTimer], a ; $4a52
 	jp DispatchCutsceneStateInit.loop2 ; $4a55
 IntroCutsceneState16InitPalettes_6b:
-	INCLUDE "data/bank_06b/IntroCutsceneState16InitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState16InitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
 IntroCutsceneState17Init_6b:
 	wram_bank WRAM_ACTORS ; $4a98
 	ld hl, wIntroCharactersTilemap + 6 * TILEMAP_WIDTH ; $4a9e
@@ -147,7 +147,7 @@ IntroCutsceneState18Exit_6b:
 	ldh [hShowDebugConsole], a ; $4bfb
 	jp DispatchCutsceneStateInit.loop2 ; $4bfd
 Palettes_6b_03:
-	INCLUDE "data/bank_06b/Palettes_6b_03.asm" ; $4c00, 56 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/Palettes_6b_03.asm" ; $4c00, 56 bytes (palettes)
 IntroCutsceneState19Init_6b:
 	ld hl, Palette_6b_1 ; $4c38
 	ld_bg_pals de, 0, 8 ; $4c3b
@@ -206,7 +206,7 @@ UpdateCutsceneScrollX:
 	ld [wIntroCutsceneScrollY], a ; $4cbd
 	ret ; $4cc0
 CutsceneScrollXTable:
-	INCBIN "data/bank_06b/CutsceneScrollXTable.bin" ; $4cc1, 160 bytes
+	INCBIN "data/engine/cutscenes/CutsceneScrollXTable.bin" ; $4cc1, 160 bytes
 UpdateCutsceneScrollY:
 	ld a, [wCutsceneStepTimer] ; $4d61
 	ld hl, CutsceneScrollYTable ; $4d64
@@ -233,7 +233,7 @@ UpdateCutsceneScrollY:
 	ld [wCutsceneScrollAccum], a ; $4d80
 	ret ; $4d83
 CutsceneScrollYTable:
-	INCBIN "data/bank_06b/CutsceneScrollYTable.bin" ; $4d84, 169 bytes
+	INCBIN "data/engine/cutscenes/CutsceneScrollYTable.bin" ; $4d84, 169 bytes
 QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e2d
 	cp $20 ; $4e30
@@ -302,11 +302,11 @@ QueueCutsceneAnimatedSprites_SpriteTemplate2:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
 CutsceneAnimatedSprites0:
-	INCBIN "data/bank_06b/CutsceneAnimatedSprites0.bin" ; $4ea5, 240 bytes
+	INCBIN "data/engine/cutscenes/CutsceneAnimatedSprites0.bin" ; $4ea5, 240 bytes
 CutsceneAnimatedSprites1:
-	INCBIN "data/bank_06b/CutsceneAnimatedSprites1.bin" ; $4f95, 216 bytes
+	INCBIN "data/engine/cutscenes/CutsceneAnimatedSprites1.bin" ; $4f95, 216 bytes
 CutsceneAnimatedSprites2:
-	INCBIN "data/bank_06b/CutsceneAnimatedSprites2.bin" ; $506d, 288 bytes
+	INCBIN "data/engine/cutscenes/CutsceneAnimatedSprites2.bin" ; $506d, 288 bytes
 ApplyCutsceneScrollToSpriteX:
 	push bc ; $518d
 	push hl ; $518e
@@ -416,7 +416,7 @@ LoadCutsceneTileset:
 	call LoadPaletteShadow ; $5256
 	ret ; $5259
 CutsceneTilesetPalettes:
-	INCLUDE "data/bank_06b/CutsceneTilesetPalettes.asm" ; $525a, 16 bytes (palettes)
+	INCLUDE "data/engine/cutscenes/CutsceneTilesetPalettes.asm" ; $525a, 16 bytes (palettes)
 QueueCutsceneSpriteGroupA:
 	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate0 ; $526a
 	ld a, [wCutsceneSpriteAX] ; $526d

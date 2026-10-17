@@ -73,7 +73,7 @@ EndingCutsceneLocationList:
 	db STORYLOC_SPECIAL_COURT, $01 ; 20
 	db $ff, $ff ; list end
 EndingCreditsSequencePalette:
-	INCLUDE "data/bank_00a/EndingCreditsSequencePalette.asm" ; $6e6c, 8 bytes (palettes)
+	INCLUDE "data/engine/story/EndingCreditsSequencePalette.asm" ; $6e6c, 8 bytes (palettes)
 RunEndingCreditsSequence:
 	ld c, 4 ; $6e74
 	call BeginFadeOut ; $6e76

@@ -153,177 +153,177 @@ BrianSpriteFrames:
 	dw BrianSpriteFrame55 ; $412e
 	ds ALIGN[4]
 BrianSpriteFrame00:
-	INCBIN "data/bank_04d/BrianSpriteFrame00.bin" ; $4130, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame00.bin" ; $4130, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame01:
-	INCBIN "data/bank_04d/BrianSpriteFrame01.bin" ; $4220, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame01.bin" ; $4220, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame02:
-	INCBIN "data/bank_04d/BrianSpriteFrame02.bin" ; $4310, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame02.bin" ; $4310, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame03:
-	INCBIN "data/bank_04d/BrianSpriteFrame03.bin" ; $4400, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame03.bin" ; $4400, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame04:
-	INCBIN "data/bank_04d/BrianSpriteFrame04.bin" ; $44f0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame04.bin" ; $44f0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame05:
-	INCBIN "data/bank_04d/BrianSpriteFrame05.bin" ; $45e0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame05.bin" ; $45e0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame06:
-	INCBIN "data/bank_04d/BrianSpriteFrame06.bin" ; $46d0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame06.bin" ; $46d0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame07:
-	INCBIN "data/bank_04d/BrianSpriteFrame07.bin" ; $47c0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame07.bin" ; $47c0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame08:
-	INCBIN "data/bank_04d/BrianSpriteFrame08.bin" ; $48b0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame08.bin" ; $48b0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame09:
-	INCBIN "data/bank_04d/BrianSpriteFrame09.bin" ; $49a0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame09.bin" ; $49a0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame10:
-	INCBIN "data/bank_04d/BrianSpriteFrame10.bin" ; $4a90, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame10.bin" ; $4a90, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame11:
-	INCBIN "data/bank_04d/BrianSpriteFrame11.bin" ; $4b80, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame11.bin" ; $4b80, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame12:
-	INCBIN "data/bank_04d/BrianSpriteFrame12.bin" ; $4c70, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame12.bin" ; $4c70, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame13:
-	INCBIN "data/bank_04d/BrianSpriteFrame13.bin" ; $4d60, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame13.bin" ; $4d60, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame14:
-	INCBIN "data/bank_04d/BrianSpriteFrame14.bin" ; $4e50, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame14.bin" ; $4e50, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame15:
-	INCBIN "data/bank_04d/BrianSpriteFrame15.bin" ; $4f40, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame15.bin" ; $4f40, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame16:
-	INCBIN "data/bank_04d/BrianSpriteFrame16.bin" ; $5030, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame16.bin" ; $5030, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame17:
-	INCBIN "data/bank_04d/BrianSpriteFrame17.bin" ; $5120, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame17.bin" ; $5120, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame18:
-	INCBIN "data/bank_04d/BrianSpriteFrame18.bin" ; $5210, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame18.bin" ; $5210, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame19:
-	INCBIN "data/bank_04d/BrianSpriteFrame19.bin" ; $5300, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame19.bin" ; $5300, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame20:
-	INCBIN "data/bank_04d/BrianSpriteFrame20.bin" ; $53f0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame20.bin" ; $53f0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame21:
-	INCBIN "data/bank_04d/BrianSpriteFrame21.bin" ; $54e0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame21.bin" ; $54e0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame22:
-	INCBIN "data/bank_04d/BrianSpriteFrame22.bin" ; $55d0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame22.bin" ; $55d0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame23:
-	INCBIN "data/bank_04d/BrianSpriteFrame23.bin" ; $56c0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame23.bin" ; $56c0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame24:
-	INCBIN "data/bank_04d/BrianSpriteFrame24.bin" ; $57b0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame24.bin" ; $57b0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame25:
-	INCBIN "data/bank_04d/BrianSpriteFrame25.bin" ; $58a0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame25.bin" ; $58a0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame26:
-	INCBIN "data/bank_04d/BrianSpriteFrame26.bin" ; $5990, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame26.bin" ; $5990, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame27:
-	INCBIN "data/bank_04d/BrianSpriteFrame27.bin" ; $5a80, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame27.bin" ; $5a80, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame28:
-	INCBIN "data/bank_04d/BrianSpriteFrame28.bin" ; $5b70, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame28.bin" ; $5b70, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame29:
-	INCBIN "data/bank_04d/BrianSpriteFrame29.bin" ; $5c60, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame29.bin" ; $5c60, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame30:
-	INCBIN "data/bank_04d/BrianSpriteFrame30.bin" ; $5d50, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame30.bin" ; $5d50, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame31:
-	INCBIN "data/bank_04d/BrianSpriteFrame31.bin" ; $5e40, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame31.bin" ; $5e40, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame32:
-	INCBIN "data/bank_04d/BrianSpriteFrame32.bin" ; $5f30, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame32.bin" ; $5f30, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame33:
-	INCBIN "data/bank_04d/BrianSpriteFrame33.bin" ; $6020, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame33.bin" ; $6020, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame34:
-	INCBIN "data/bank_04d/BrianSpriteFrame34.bin" ; $6110, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame34.bin" ; $6110, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame35:
-	INCBIN "data/bank_04d/BrianSpriteFrame35.bin" ; $6200, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame35.bin" ; $6200, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame36:
-	INCBIN "data/bank_04d/BrianSpriteFrame36.bin" ; $62f0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame36.bin" ; $62f0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame37:
-	INCBIN "data/bank_04d/BrianSpriteFrame37.bin" ; $63e0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame37.bin" ; $63e0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame38:
-	INCBIN "data/bank_04d/BrianSpriteFrame38.bin" ; $64d0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame38.bin" ; $64d0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame39:
-	INCBIN "data/bank_04d/BrianSpriteFrame39.bin" ; $65c0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame39.bin" ; $65c0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame40:
-	INCBIN "data/bank_04d/BrianSpriteFrame40.bin" ; $66b0, 320 bytes
+	INCBIN "data/sprites/BrianSpriteFrame40.bin" ; $66b0, 320 bytes
 	ds ALIGN[4]
 BrianSpriteFrame41:
-	INCBIN "data/bank_04d/BrianSpriteFrame41.bin" ; $67f0, 320 bytes
+	INCBIN "data/sprites/BrianSpriteFrame41.bin" ; $67f0, 320 bytes
 	ds ALIGN[4]
 BrianSpriteFrame42:
-	INCBIN "data/bank_04d/BrianSpriteFrame42.bin" ; $6930, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame42.bin" ; $6930, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame43:
-	INCBIN "data/bank_04d/BrianSpriteFrame43.bin" ; $6a20, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame43.bin" ; $6a20, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame44:
-	INCBIN "data/bank_04d/BrianSpriteFrame44.bin" ; $6b10, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame44.bin" ; $6b10, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame45:
-	INCBIN "data/bank_04d/BrianSpriteFrame45.bin" ; $6c00, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame45.bin" ; $6c00, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame46:
-	INCBIN "data/bank_04d/BrianSpriteFrame46.bin" ; $6cf0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame46.bin" ; $6cf0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame47:
-	INCBIN "data/bank_04d/BrianSpriteFrame47.bin" ; $6de0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame47.bin" ; $6de0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame48:
-	INCBIN "data/bank_04d/BrianSpriteFrame48.bin" ; $6ed0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame48.bin" ; $6ed0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame49:
-	INCBIN "data/bank_04d/BrianSpriteFrame49.bin" ; $6fc0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame49.bin" ; $6fc0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame50:
-	INCBIN "data/bank_04d/BrianSpriteFrame50.bin" ; $70b0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame50.bin" ; $70b0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame51:
-	INCBIN "data/bank_04d/BrianSpriteFrame51.bin" ; $71a0, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame51.bin" ; $71a0, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame52:
-	INCBIN "data/bank_04d/BrianSpriteFrame52.bin" ; $7290, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame52.bin" ; $7290, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame53:
-	INCBIN "data/bank_04d/BrianSpriteFrame53.bin" ; $7380, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame53.bin" ; $7380, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame54:
-	INCBIN "data/bank_04d/BrianSpriteFrame54.bin" ; $7470, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame54.bin" ; $7470, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFrame55:
-	INCBIN "data/bank_04d/BrianSpriteFrame55.bin" ; $7560, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFramesUnused:
-	INCBIN "data/bank_04d/BrianSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	INCBIN "data/sprites/BrianSpriteFramesUnused.bin" ; $7650, 1680 bytes
 BrianSpriteOam:
-	INCBIN "data/bank_04d/BrianSpriteOam.bin" ; $7ce0, 580 bytes
+	INCBIN "data/sprites/BrianSpriteOam.bin" ; $7ce0, 580 bytes
 BrianSpriteAnims:
 	dw BrianSpriteAnim00 ; $7f24
 	dw BrianSpriteAnim01 ; $7f26

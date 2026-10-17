@@ -327,7 +327,7 @@ Unused_38_RefreshMatchTypeLabelRow:
 	call QueueVRAMCopy ; $4691
 	ret ; $4694
 MatchTypeLabelSpriteLayouts:
-	INCBIN "data/bank_038/MatchTypeLabelSpriteLayouts.bin" ; $4695, 141 bytes
+	INCBIN "data/engine/menus/char_select/MatchTypeLabelSpriteLayouts.bin" ; $4695, 141 bytes
 Unused_38_DrawMatchTypeOptionLabel:
 	wram_bank WRAM_SCREEN ; $4722
 	ld c, $01 ; $4728

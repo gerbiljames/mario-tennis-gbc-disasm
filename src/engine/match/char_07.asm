@@ -97,7 +97,7 @@ CharFrameGfxDest_07:
 	dw $a200 ; record 2
 	dw $a300 ; record 3
 SetupCharacterSprite_CharTileBaseTable:
-	INCBIN "data/bank_007/SetupCharacterSprite_CharTileBaseTable.bin" ; $5aaf, 4 bytes
+	INCBIN "data/engine/match/SetupCharacterSprite_CharTileBaseTable.bin" ; $5aaf, 4 bytes
 ; Copies one character's attribute record into the per-character struct: the
 ; reach box CheckCharBallContact tests against, the jump-smash and dive speeds,
 ; and the six AI parameters at record +$0f and +$1b-$1f -- home-position

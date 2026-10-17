@@ -563,7 +563,7 @@ FetchTextTable_30:
 	dw TextStrings_30.s701 - TextStrings_30 ; 558
 	dw TextStrings_30.s703 - TextStrings_30 ; 559
 TextStrings_30:
-	INCLUDE "data/bank_030/TextStrings_30.asm" ; $4464, 14622 bytes (text_pool)
+	INCLUDE "data/text/TextStrings_30.asm" ; $4464, 14622 bytes (text_pool)
 FetchDialogueText_30:
 	push af ; $7d82
 	ld a, $00 ; $7d83

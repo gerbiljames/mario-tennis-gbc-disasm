@@ -2,7 +2,7 @@
 
 data/ is extracted from the ROM and never committed. A modder's edited
 PNG, tilemap grid, text file or sound track lives at the same relative path
-under mods/ (mods/bank_040/AlexSpriteFrame00.png), which is tracked, and is
+under mods/ (mods/sprites/AlexSpriteFrame00.png), which is tracked, and is
 copied over data/ before every build and after every extraction. Only the
 files under mods/ are the fork's own work, so a fork commits its changes
 without committing ROM content.

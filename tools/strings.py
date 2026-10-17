@@ -7,7 +7,7 @@ repository ships no text), so run it after setup.sh.
 
 With --index, strings are listed by their game-facing coordinates instead:
 bank and string-table index, read from the extracted text source
-(`data/bank_XXX/TextStrings_XX.asm`, one `.sN` label per string), so an
+(`data/text/TextStrings_XX.asm`, one `.sN` label per string), so an
 edited string shows as edited. A text id in the code, `Text_<bank>_<index>`,
 is the same pair.
 
@@ -41,8 +41,8 @@ def dump_indexed(want_bank, min_len, pat):
     (`dw TextStrings_XX.sN - TextStrings_XX ; id` rows in src/), which does
     not follow the pool's `.sN` order; the pool label only says where the
     bytes sit."""
-    for path in sorted((ROOT / "data").glob("bank_*/TextStrings_*.asm")):
-        bank = int(path.parent.name.split("_")[1], 16)
+    for path in sorted((ROOT / "data").rglob("TextStrings_*.asm")):
+        bank = int(path.stem.split("_")[1], 16)
         if want_bank is not None and bank != want_bank:
             continue
         pool = {}

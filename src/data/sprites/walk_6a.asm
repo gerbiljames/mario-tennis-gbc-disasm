@@ -25,22 +25,22 @@ Padding_6a:
 	ds 8, $00
 	ds ALIGN[4]
 WalkSprite_6a_00_Gfx00:
-	INCBIN "data/bank_06a/WalkSprite_6a_00_Gfx00.bin" ; $4030, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_00_Gfx00.bin" ; $4030, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_00_Gfx01:
-	INCBIN "data/bank_06a/WalkSprite_6a_00_Gfx01.bin" ; $4130, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_00_Gfx01.bin" ; $4130, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_00_Gfx02:
-	INCBIN "data/bank_06a/WalkSprite_6a_00_Gfx02.bin" ; $4230, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_00_Gfx02.bin" ; $4230, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_00_Gfx03:
-	INCBIN "data/bank_06a/WalkSprite_6a_00_Gfx03.bin" ; $4330, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_00_Gfx03.bin" ; $4330, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_00_Gfx04:
-	INCBIN "data/bank_06a/WalkSprite_6a_00_Gfx04.bin" ; $4430, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_00_Gfx04.bin" ; $4430, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_00_Gfx05:
-	INCBIN "data/bank_06a/WalkSprite_6a_00_Gfx05.bin" ; $4530, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_00_Gfx05.bin" ; $4530, 256 bytes
 WalkSprite_6a_00_AnimPtrs:
 	dw WalkSprite_6a_00_Anim00 ; $4630
 	dw WalkSprite_6a_00_Anim01 ; $4632
@@ -138,22 +138,22 @@ WalkSprite_6a_01:
 	db $00 ; $46bf
 	ds ALIGN[4]
 WalkSprite_6a_01_Gfx00:
-	INCBIN "data/bank_06a/WalkSprite_6a_01_Gfx00.bin" ; $46c0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_01_Gfx00.bin" ; $46c0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_01_Gfx01:
-	INCBIN "data/bank_06a/WalkSprite_6a_01_Gfx01.bin" ; $47c0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_01_Gfx01.bin" ; $47c0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_01_Gfx02:
-	INCBIN "data/bank_06a/WalkSprite_6a_01_Gfx02.bin" ; $48c0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_01_Gfx02.bin" ; $48c0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_01_Gfx03:
-	INCBIN "data/bank_06a/WalkSprite_6a_01_Gfx03.bin" ; $49c0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_01_Gfx03.bin" ; $49c0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_01_Gfx04:
-	INCBIN "data/bank_06a/WalkSprite_6a_01_Gfx04.bin" ; $4ac0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_01_Gfx04.bin" ; $4ac0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_01_Gfx05:
-	INCBIN "data/bank_06a/WalkSprite_6a_01_Gfx05.bin" ; $4bc0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_01_Gfx05.bin" ; $4bc0, 256 bytes
 WalkSprite_6a_01_AnimPtrs:
 	dw WalkSprite_6a_01_Anim00 ; $4cc0
 	dw WalkSprite_6a_01_Anim01 ; $4cc2
@@ -251,22 +251,22 @@ WalkSprite_6a_02:
 	db $00 ; $4d4f
 	ds ALIGN[4]
 WalkSprite_6a_02_Gfx00:
-	INCBIN "data/bank_06a/WalkSprite_6a_02_Gfx00.bin" ; $4d50, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_02_Gfx00.bin" ; $4d50, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_02_Gfx01:
-	INCBIN "data/bank_06a/WalkSprite_6a_02_Gfx01.bin" ; $4e50, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_02_Gfx01.bin" ; $4e50, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_02_Gfx02:
-	INCBIN "data/bank_06a/WalkSprite_6a_02_Gfx02.bin" ; $4f50, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_02_Gfx02.bin" ; $4f50, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_02_Gfx03:
-	INCBIN "data/bank_06a/WalkSprite_6a_02_Gfx03.bin" ; $5050, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_02_Gfx03.bin" ; $5050, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_02_Gfx04:
-	INCBIN "data/bank_06a/WalkSprite_6a_02_Gfx04.bin" ; $5150, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_02_Gfx04.bin" ; $5150, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_02_Gfx05:
-	INCBIN "data/bank_06a/WalkSprite_6a_02_Gfx05.bin" ; $5250, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_02_Gfx05.bin" ; $5250, 256 bytes
 WalkSprite_6a_02_AnimPtrs:
 	dw WalkSprite_6a_02_Anim00 ; $5350
 	dw WalkSprite_6a_02_Anim01 ; $5352
@@ -364,22 +364,22 @@ WalkSprite_6a_03:
 	db $00 ; $53df
 	ds ALIGN[4]
 WalkSprite_6a_03_Gfx00:
-	INCBIN "data/bank_06a/WalkSprite_6a_03_Gfx00.bin" ; $53e0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_03_Gfx00.bin" ; $53e0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_03_Gfx01:
-	INCBIN "data/bank_06a/WalkSprite_6a_03_Gfx01.bin" ; $54e0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_03_Gfx01.bin" ; $54e0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_03_Gfx02:
-	INCBIN "data/bank_06a/WalkSprite_6a_03_Gfx02.bin" ; $55e0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_03_Gfx02.bin" ; $55e0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_03_Gfx03:
-	INCBIN "data/bank_06a/WalkSprite_6a_03_Gfx03.bin" ; $56e0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_03_Gfx03.bin" ; $56e0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_03_Gfx04:
-	INCBIN "data/bank_06a/WalkSprite_6a_03_Gfx04.bin" ; $57e0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_03_Gfx04.bin" ; $57e0, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_03_Gfx05:
-	INCBIN "data/bank_06a/WalkSprite_6a_03_Gfx05.bin" ; $58e0, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_03_Gfx05.bin" ; $58e0, 256 bytes
 WalkSprite_6a_03_AnimPtrs:
 	dw WalkSprite_6a_03_Anim00 ; $59e0
 	dw WalkSprite_6a_03_Anim01 ; $59e2
@@ -477,22 +477,22 @@ WalkSprite_6a_04:
 	db $00 ; $5a6f
 	ds ALIGN[4]
 WalkSprite_6a_04_Gfx00:
-	INCBIN "data/bank_06a/WalkSprite_6a_04_Gfx00.bin" ; $5a70, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_04_Gfx00.bin" ; $5a70, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_04_Gfx01:
-	INCBIN "data/bank_06a/WalkSprite_6a_04_Gfx01.bin" ; $5b70, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_04_Gfx01.bin" ; $5b70, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_04_Gfx02:
-	INCBIN "data/bank_06a/WalkSprite_6a_04_Gfx02.bin" ; $5c70, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_04_Gfx02.bin" ; $5c70, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_04_Gfx03:
-	INCBIN "data/bank_06a/WalkSprite_6a_04_Gfx03.bin" ; $5d70, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_04_Gfx03.bin" ; $5d70, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_04_Gfx04:
-	INCBIN "data/bank_06a/WalkSprite_6a_04_Gfx04.bin" ; $5e70, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_04_Gfx04.bin" ; $5e70, 256 bytes
 	ds ALIGN[4]
 WalkSprite_6a_04_Gfx05:
-	INCBIN "data/bank_06a/WalkSprite_6a_04_Gfx05.bin" ; $5f70, 256 bytes
+	INCBIN "data/sprites/WalkSprite_6a_04_Gfx05.bin" ; $5f70, 256 bytes
 WalkSprite_6a_04_AnimPtrs:
 	dw WalkSprite_6a_04_Anim00 ; $6070
 	dw WalkSprite_6a_04_Anim01 ; $6072

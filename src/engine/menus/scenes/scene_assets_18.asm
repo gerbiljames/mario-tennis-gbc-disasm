@@ -70,8 +70,8 @@ Unused_18_LoadConfirmScreenSpriteGfx:
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
 ConfirmScreenSpriteGfx0:
-	INCBIN "data/bank_018/lz_ConfirmScreenSpriteGfx0.bin" ; $5633, 449 bytes
-	INCLUDE "data/bank_018/lz_ConfirmScreenSpriteGfx0.inc" ; DEF ConfirmScreenSpriteGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCBIN "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.bin" ; $5633, 449 bytes
+	INCLUDE "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.inc" ; DEF ConfirmScreenSpriteGfx0_SIZE EQU its decoded length, generated from the .bin by make
 ; A QueueSpriteTemplate list: 14 records of (dy $10, dx $08+8n, tile 2n, attr 0) then the $80 terminator -- one horizontal strip of 14 sprites. Nothing references it.
 ConfirmScreenSpriteTemplate:
 	; $57f4, 57 bytes (sprite_template)
@@ -91,23 +91,23 @@ ConfirmScreenSpriteTemplate:
 	oam_sprite $10, $70, $1a, $00
 	oam_sprite_end
 ConfirmScreenSpritePalette0:
-	INCLUDE "data/bank_018/ConfirmScreenSpritePalette0.asm" ; $582d, 24 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/ConfirmScreenSpritePalette0.asm" ; $582d, 24 bytes (palettes)
 ConfirmScreenSpriteGfx1:
-	INCBIN "data/bank_018/ConfirmScreenSpriteGfx1.bin" ; $5845, 77 bytes
+	INCBIN "data/engine/menus/scenes/ConfirmScreenSpriteGfx1.bin" ; $5845, 77 bytes
 TwoOptionSelectBTable:
 	; $5892, 27 bytes (bytes:16)
 	db $92, $ec, $e1, $10, $6c, $7c, $d5, $e2, $92, $e8, $e7, $00, $de, $e5, $b4, $e3 ; 0x00
 	db $88, $e3, $c8, $e9, $da, $ef, $ff, $eb, $00, $00, $00 ; 0x10
 ConfirmScreenSpritePalette1:
-	INCLUDE "data/bank_018/ConfirmScreenSpritePalette1.asm" ; $58ad, 48 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/ConfirmScreenSpritePalette1.asm" ; $58ad, 48 bytes (palettes)
 ConfirmScreenSpritePalette1Pad:
 	; $58dd, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
 CharSelectCursorGfx:
-	INCBIN "data/bank_018/CharSelectCursorGfx.bin" ; $58e0, 217 bytes
+	INCBIN "data/engine/menus/scenes/CharSelectCursorGfx.bin" ; $58e0, 217 bytes
 CharSelectCursorPalette:
-	INCLUDE "data/bank_018/CharSelectCursorPalette.asm" ; $59b9, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/CharSelectCursorPalette.asm" ; $59b9, 8 bytes (palettes)
 Unused_18_LoadCharSelectCursorGfx:
 	ld hl, CharSelectCursorGfx ; $59c1
 	ld de, vTiles0 + $40 * TILE_SIZE ; $59c4
@@ -138,7 +138,7 @@ Unused_18_DrawCharSelectCursor:
 	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
 CharSelectCursorAnimTable:
-	INCBIN "data/bank_018/CharSelectCursorAnimTable.bin" ; $59fe, 32 bytes
+	INCBIN "data/engine/menus/scenes/CharSelectCursorAnimTable.bin" ; $59fe, 32 bytes
 CharSelectCursorTemplatePtrs:
 	; $5a1e, 8 bytes (records:2)
 	dw CharSelectCursorTemplate0 ; record 0
@@ -220,87 +220,87 @@ LoadOnCourtCharTilesFallback:
 	ret ; $5aef
 	ds ALIGN[4]
 OnCourtCharTilesAGfx:
-	INCBIN "data/bank_018/OnCourtCharTilesAGfx.bin" ; $5af0, 2048 bytes
+	INCBIN "data/engine/menus/scenes/OnCourtCharTilesAGfx.bin" ; $5af0, 2048 bytes
 	ds ALIGN[4]
 OnCourtCharTilesBGfx:
-	INCBIN "data/bank_018/OnCourtCharTilesBGfx.bin" ; $62f0, 2048 bytes
+	INCBIN "data/engine/menus/scenes/OnCourtCharTilesBGfx.bin" ; $62f0, 2048 bytes
 	ds ALIGN[4]
 OnCourtCharTilesFallbackGfx:
-	INCBIN "data/bank_018/OnCourtCharTilesFallbackGfx.bin" ; $6af0, 64 bytes
+	INCBIN "data/engine/menus/scenes/OnCourtCharTilesFallbackGfx.bin" ; $6af0, 64 bytes
 CharRosterIcon00:
-	INCBIN "data/bank_018/lz_CharRosterIcon00.bin" ; $6b30, 67 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon00.bin" ; $6b30, 67 bytes
 CharRosterIcon01:
-	INCBIN "data/bank_018/lz_CharRosterIcon01.bin" ; $6b73, 66 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon01.bin" ; $6b73, 66 bytes
 CharRosterIcon02:
-	INCBIN "data/bank_018/lz_CharRosterIcon02.bin" ; $6bb5, 62 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon02.bin" ; $6bb5, 62 bytes
 CharRosterIcon03:
-	INCBIN "data/bank_018/lz_CharRosterIcon03.bin" ; $6bf3, 48 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon03.bin" ; $6bf3, 48 bytes
 CharRosterIcon04:
-	INCBIN "data/bank_018/lz_CharRosterIcon04.bin" ; $6c23, 44 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon04.bin" ; $6c23, 44 bytes
 CharRosterIcon05:
-	INCBIN "data/bank_018/lz_CharRosterIcon05.bin" ; $6c4f, 46 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon05.bin" ; $6c4f, 46 bytes
 CharRosterIcon06:
-	INCBIN "data/bank_018/lz_CharRosterIcon06.bin" ; $6c7d, 59 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon06.bin" ; $6c7d, 59 bytes
 CharRosterIcon07:
-	INCBIN "data/bank_018/lz_CharRosterIcon07.bin" ; $6cb8, 65 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon07.bin" ; $6cb8, 65 bytes
 CharRosterIcon08:
-	INCBIN "data/bank_018/lz_CharRosterIcon08.bin" ; $6cf9, 67 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon08.bin" ; $6cf9, 67 bytes
 CharRosterIcon09:
-	INCBIN "data/bank_018/lz_CharRosterIcon09.bin" ; $6d3c, 65 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon09.bin" ; $6d3c, 65 bytes
 CharRosterIcon10:
-	INCBIN "data/bank_018/lz_CharRosterIcon10.bin" ; $6d7d, 60 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon10.bin" ; $6d7d, 60 bytes
 CharRosterIcon11:
-	INCBIN "data/bank_018/lz_CharRosterIcon11.bin" ; $6db9, 50 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon11.bin" ; $6db9, 50 bytes
 CharRosterIcon12:
-	INCBIN "data/bank_018/lz_CharRosterIcon12.bin" ; $6deb, 45 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon12.bin" ; $6deb, 45 bytes
 CharRosterIcon13:
-	INCBIN "data/bank_018/lz_CharRosterIcon13.bin" ; $6e18, 51 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon13.bin" ; $6e18, 51 bytes
 CharRosterIcon14:
-	INCBIN "data/bank_018/lz_CharRosterIcon14.bin" ; $6e4b, 61 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon14.bin" ; $6e4b, 61 bytes
 CharRosterIcon15:
-	INCBIN "data/bank_018/lz_CharRosterIcon15.bin" ; $6e88, 66 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon15.bin" ; $6e88, 66 bytes
 CharRosterIcon16:
-	INCBIN "data/bank_018/lz_CharRosterIcon16.bin" ; $6eca, 73 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon16.bin" ; $6eca, 73 bytes
 CharRosterIcon17:
-	INCBIN "data/bank_018/lz_CharRosterIcon17.bin" ; $6f13, 68 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon17.bin" ; $6f13, 68 bytes
 CharRosterIcon18:
-	INCBIN "data/bank_018/lz_CharRosterIcon18.bin" ; $6f57, 64 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon18.bin" ; $6f57, 64 bytes
 CharRosterIcon19:
-	INCBIN "data/bank_018/lz_CharRosterIcon19.bin" ; $6f97, 59 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon19.bin" ; $6f97, 59 bytes
 CharRosterIcon20:
-	INCBIN "data/bank_018/lz_CharRosterIcon20.bin" ; $6fd2, 53 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon20.bin" ; $6fd2, 53 bytes
 CharRosterIcon21:
-	INCBIN "data/bank_018/lz_CharRosterIcon21.bin" ; $7007, 57 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon21.bin" ; $7007, 57 bytes
 CharRosterIcon22:
-	INCBIN "data/bank_018/lz_CharRosterIcon22.bin" ; $7040, 66 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon22.bin" ; $7040, 66 bytes
 CharRosterIcon23:
-	INCBIN "data/bank_018/lz_CharRosterIcon23.bin" ; $7082, 73 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon23.bin" ; $7082, 73 bytes
 CharRosterIcon24:
-	INCBIN "data/bank_018/lz_CharRosterIcon24.bin" ; $70cb, 71 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon24.bin" ; $70cb, 71 bytes
 CharRosterIcon25:
-	INCBIN "data/bank_018/lz_CharRosterIcon25.bin" ; $7112, 68 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon25.bin" ; $7112, 68 bytes
 CharRosterIcon26:
-	INCBIN "data/bank_018/lz_CharRosterIcon26.bin" ; $7156, 66 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon26.bin" ; $7156, 66 bytes
 CharRosterIcon27:
-	INCBIN "data/bank_018/lz_CharRosterIcon27.bin" ; $7198, 64 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon27.bin" ; $7198, 64 bytes
 CharRosterIcon28:
-	INCBIN "data/bank_018/lz_CharRosterIcon28.bin" ; $71d8, 58 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon28.bin" ; $71d8, 58 bytes
 CharRosterIcon29:
-	INCBIN "data/bank_018/lz_CharRosterIcon29.bin" ; $7212, 60 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon29.bin" ; $7212, 60 bytes
 CharRosterIcon30:
-	INCBIN "data/bank_018/lz_CharRosterIcon30.bin" ; $724e, 68 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon30.bin" ; $724e, 68 bytes
 CharRosterIcon31:
-	INCBIN "data/bank_018/lz_CharRosterIcon31.bin" ; $7292, 73 bytes
+	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon31.bin" ; $7292, 73 bytes
 MarioMiniGamesTilemap:
-	INCBIN "data/bank_018/lz_MarioMiniGamesTilemap.bin" ; $72db, 304 bytes
+	INCBIN "data/engine/menus/scenes/lz_MarioMiniGamesTilemap.bin" ; $72db, 304 bytes
 MarioMiniGamesAttrmap:
-	INCBIN "data/bank_018/lz_MarioMiniGamesAttrmap.bin" ; $740b, 214 bytes
+	INCBIN "data/engine/menus/scenes/lz_MarioMiniGamesAttrmap.bin" ; $740b, 214 bytes
 MarioMiniGamesPalettes:
-	INCLUDE "data/bank_018/MarioMiniGamesPalettes.asm" ; $74e1, 64 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/MarioMiniGamesPalettes.asm" ; $74e1, 64 bytes (palettes)
 MatchWinLoseGfx:
-	INCBIN "data/bank_018/lz_MatchWinLoseGfx.bin" ; $7521, 71 bytes
+	INCBIN "data/engine/menus/scenes/lz_MatchWinLoseGfx.bin" ; $7521, 71 bytes
 UnusedJpCourtStatLabelTiles_18:
-	INCBIN "data/bank_018/lz_UnusedJpCourtStatLabelTiles_18.bin" ; $7568, 175 bytes
+	INCBIN "data/engine/menus/scenes/lz_UnusedJpCourtStatLabelTiles_18.bin" ; $7568, 175 bytes
 RunStorySceneByMode:
 	ld a, c ; $7617
 	ld [wStorySceneAssetIndex], a ; $7618
@@ -451,7 +451,7 @@ LoadScreen0TilesAndPalette:
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
 Screen0Palette:
-	INCLUDE "data/bank_018/Screen0Palette.asm" ; $7754, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/scenes/Screen0Palette.asm" ; $7754, 8 bytes (palettes)
 QueueScreen0Sprites:
 	ld hl, QueueScreen0Sprites_SpriteTemplate ; $775c
 	ld_xy de, $28, $3a ; $775f

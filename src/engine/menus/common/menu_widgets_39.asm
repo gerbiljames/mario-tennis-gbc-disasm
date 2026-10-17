@@ -207,7 +207,7 @@ InitNumberSpriteGfxWide:
 	farcall LoadIndexedPalette ; $6f04
 	ret ; $6f07
 NumberSpritePalette:
-	INCLUDE "data/bank_039/NumberSpritePalette.asm" ; $6f08, 8 bytes (palettes)
+	INCLUDE "data/engine/menus/common/NumberSpritePalette.asm" ; $6f08, 8 bytes (palettes)
 DrawDecimalNumberSprites_39:
 	push af ; $6f10
 	push bc ; $6f11
@@ -342,21 +342,21 @@ TriggerCheatUnlock:
 	farcall ApplyUnlockEverythingCheat ; $7005
 	ret ; $7008
 RacketShoesChoiceGfx0:
-	INCBIN "data/bank_039/lz_RacketShoesChoiceGfx0.bin" ; $7009, 178 bytes
+	INCBIN "data/engine/menus/common/lz_RacketShoesChoiceGfx0.bin" ; $7009, 178 bytes
 RacketShoesChoiceGfx1:
-	INCBIN "data/bank_039/lz_RacketShoesChoiceGfx1.bin" ; $70bb, 194 bytes
+	INCBIN "data/engine/menus/common/lz_RacketShoesChoiceGfx1.bin" ; $70bb, 194 bytes
 MenuArrowGfx0:
-	INCBIN "data/bank_039/lz_MenuArrowGfx0.bin" ; $717d, 57 bytes
+	INCBIN "data/engine/menus/common/lz_MenuArrowGfx0.bin" ; $717d, 57 bytes
 MenuArrowGfx1:
-	INCBIN "data/bank_039/lz_MenuArrowGfx1.bin" ; $71b6, 50 bytes
+	INCBIN "data/engine/menus/common/lz_MenuArrowGfx1.bin" ; $71b6, 50 bytes
 MenuArrowGfx2:
-	INCBIN "data/bank_039/lz_MenuArrowGfx2.bin" ; $71e8, 59 bytes
+	INCBIN "data/engine/menus/common/lz_MenuArrowGfx2.bin" ; $71e8, 59 bytes
 MenuArrowGfx3:
-	INCBIN "data/bank_039/lz_MenuArrowGfx3.bin" ; $7223, 58 bytes
+	INCBIN "data/engine/menus/common/lz_MenuArrowGfx3.bin" ; $7223, 58 bytes
 CharGridGfx2:
-	INCBIN "data/bank_039/lz_CharGridGfx2.bin" ; $725d, 241 bytes
+	INCBIN "data/engine/menus/common/lz_CharGridGfx2.bin" ; $725d, 241 bytes
 DigitFontTiles:
-	INCBIN "data/bank_039/lz_DigitFontTiles.bin" ; $734e, 249 bytes
+	INCBIN "data/engine/menus/common/lz_DigitFontTiles.bin" ; $734e, 249 bytes
 Unused_39_StubNop:
 	ret ; $7447
 Unused_39_PushPopNop_1:
