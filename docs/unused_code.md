@@ -67,10 +67,9 @@ match id word, all written through pointers.
 
 ## Checked at run time
 
-No `Unused` routine runs in play (one sweep artifact below): not in `tools/runtime_audit.py`'s 3.5
-million frames from a save, nor in the `tools/eventtest.py --coverage`
-sweeps (every story location under 36 story states, main-menu and targeted
-sessions, link play, damaged-save, drill-id and handler targets). The
+No `Unused` routine runs in play (one sweep artifact below) in the
+`tools/eventtest.py --coverage` sweeps (every story location under 36 story
+states, main-menu and targeted sessions, link play, damaged-save, drill-id and handler targets). The
 reverse holds too: every reachable routine has been entered, by play or, for
 the 158 nothing played into, by `tools/steer.py` forcing the branches on a
 call chain down from a routine some session entered (`docs/STATUS.md` lists

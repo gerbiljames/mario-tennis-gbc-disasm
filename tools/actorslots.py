@@ -774,14 +774,13 @@ def runtime_job(sym_path, save, state, si, li, frames):
 def runtime(save, jobs, frames, timeout):
     import concurrent.futures
     import eventtest as E
-    from runtime_audit import targets
     sym = ROOT / "build" / "mariotennis.sym"
     tmp = Path(tempfile.mkdtemp(prefix="actorslots-"))
     os.environ["EVENTTEST_TMP"] = str(tmp)
     atexit.register(shutil.rmtree, tmp, True)
     state = tmp / "story.state"
     E.boot(str(ROOT / "mariotennis.gbc"), str(sym), save, str(state))
-    nloc = len(targets(E.symbols(sym))[5])
+    nloc = len(E.locations())
     work = [(si, li) for si in range(len(E.states())) for li in range(nloc)]
 
     def one(job):

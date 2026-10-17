@@ -24,7 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from banksrc import bank_lines, holders
-from runtime_audit import MNEMONICS
+from reach import MNEMONICS
 
 ROOT = Path(__file__).resolve().parent.parent
 

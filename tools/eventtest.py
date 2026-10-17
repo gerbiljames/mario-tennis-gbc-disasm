@@ -63,7 +63,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from banksrc import bank_lines, build_addresses, holders, placed_original
-from runtime_audit import MNEMONICS, targets
+from reach import MNEMONICS
 
 ROOT = Path(__file__).resolve().parent.parent
 SINGLES = [80, 81, 82, 83, 84, 85, 86, 87, 88, 174, 63, 62, 61, 60, 185, 176, 183, 178, 59]
@@ -133,6 +133,22 @@ def code_labels():
                     and m.group(1) not in NOT_HOOKED and m.group(1) not in audio:
                 out.append(m.group(1))
     return out
+
+
+def locations():
+    """(location index, its map_entry entry points) for every story location."""
+    scene = "\n".join(bank_lines(holders()[0x0a])[0])
+    text = "\n".join("\n".join(bank_lines(h)[0]) for h in holders())
+    locs = []
+    for i, tree in enumerate(re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)):
+        m = re.search(rf"^{tree}:\n(?:\t;[^\n]*\n)?\tdw (\w+) ; slot 0 EntryPoints", text, re.M)
+        ents = []
+        if m:
+            t = re.search(rf"^{m.group(1)}:\n((?:\t[^\n]*\n)+?)(?=^\S)", text, re.M)
+            if t:
+                ents = [int(x, 16) for x in re.findall(r"map_entry \$([0-9a-f]{2}),", t.group(1))]
+        locs.append((i, ents or [1]))
+    return locs
 
 
 def states():
@@ -224,7 +240,7 @@ class Game:
         for label, addr, cond, reason in TAINTS:
             add(at(label, addr), lambda c=cond, r=reason: c(self) and self.log("taint", r))
 
-        self.locs = targets(self.sym)[5]
+        self.locs = locations()
         by_bank = {}
         for n, (b, a) in self.sym.items():
             if a < 0x8000 and "." not in n:
@@ -582,11 +598,10 @@ def handler_rows():
     NpcScripts tables its scripts install (tools/actorslots.py): (location
     index, entry, kind, table, id, facing mask, flag condition, handler)."""
     import actorslots
-    from runtime_audit import targets
     scene = "\n".join(bank_lines(holders()[0x0a])[0])
     trees = re.findall(r"story_location [^,]+, \w+, DataPtr_(\w+)", scene)
     text = "\n".join("\n".join(bank_lines(h)[0]) for h in holders())
-    locs = dict(targets(symbols(ROOT / "build" / "mariotennis.sym"))[5])
+    locs = dict(locations())
     rows, installed = [], []
     flow = actorslots.Flow(actorslots.Source())
     flow.analyse()
@@ -967,7 +982,7 @@ def main():
     skip.write_text(json.dumps(sorted({n for key in builds for kind, _ in boots
                                        for n in json.loads((tmp / f"{key}.{kind}.irq").read_text())})))
 
-    locs = targets(symbols(builds["base"][1]))[5]
+    locs = locations()
     units = [("story", si, li) for si in picked for li in range(len(locs))]
     units += [("free", seed, None) for seed in range(args.free)]
     units += [("target", name, seed) for seed in range(args.targets) for name in TARGETS]
