@@ -25,6 +25,11 @@ left to right, 128 pixels per row; tiles left over after the last whole
 frame follow as a plain row. The layout is a fixed permutation of the
 tiles, so encoding is exact and needs no knowledge of the game.
 
+`gfx:logo` is the cartridge header's Nintendo logo, which is not 2bpp tiles:
+48x8 one-bit pixels in 4x4 cells, 12 across in two rows, each byte two
+4-pixel rows (high nibble first). It is drawn as a 48x8 image in colours 0
+and 3; anything darker than mid-gray encodes as a set pixel.
+
 usage: gfx.py decode <bin> <png> [layout]   (lz_* stems are decompressed first)
        gfx.py encode <png> <bin>            (lz_* stems are compressed again)
 """
@@ -38,6 +43,35 @@ import lz  # noqa: E402
 TILES_PER_ROW = 16
 LEVELS = (255, 170, 85, 0)      # colour index -> gray, index 3 darkest
 PALETTE = [v for g in LEVELS for v in (g, g, g)]
+
+
+LOGO_SIZE = 48
+
+
+def logo_to_image(data):
+    """The header logo's 48 bytes -> a 48x8 Pillow image."""
+    from PIL import Image
+    img = Image.new("P", (48, 8), 0)
+    img.putpalette(PALETTE + [0] * (768 - len(PALETTE)))
+    px = img.load()
+    for i, b in enumerate(data):
+        cx, cy = (i // 2 % 12) * 4, (i // 24) * 4 + (i % 2) * 2
+        for x in range(8):
+            if b >> (7 - x) & 1:
+                px[cx + x % 4, cy + x // 4] = 3
+    return img
+
+
+def image_to_logo(img):
+    """A 48x8 image -> the header logo's 48 bytes."""
+    gray = img.convert("L").load()
+    out = bytearray(LOGO_SIZE)
+    for i in range(LOGO_SIZE):
+        cx, cy = (i // 2 % 12) * 4, (i // 24) * 4 + (i % 2) * 2
+        for x in range(8):
+            if gray[cx + x % 4, cy + x // 4] < 128:
+                out[i] |= 0x80 >> x
+    return bytes(out)
 
 
 def is_lz(path):
@@ -155,9 +189,14 @@ def decode(bin_path, png_path, layout=None):
     from PIL.PngImagePlugin import PngInfo
     raw = Path(bin_path).read_bytes()
     data = lz.decompress(raw, 0)[0] if is_lz(bin_path) else raw
-    if not data or len(data) % 16:
+    if layout == "logo":
+        if len(data) != LOGO_SIZE:
+            return None
+        img, ntiles = logo_to_image(data), LOGO_SIZE // 16
+    elif not data or len(data) % 16:
         return None
-    img, ntiles = tiles_to_image(data, layout=layout)
+    else:
+        img, ntiles = tiles_to_image(data, layout=layout)
     info = PngInfo()
     info.add_text("tiles", str(ntiles))
     if layout:
@@ -177,6 +216,8 @@ def image_file_to_tiles(png_path):
     img = Image.open(png_path)
     ntiles = int(img.text.get("tiles", 0)) or None
     layout = img.text.get("layout") or None
+    if layout == "logo":
+        return image_to_logo(img)
     if ntiles and not layout:
         total = (img.width // 8) * (img.height // 8)
         if total > ntiles:

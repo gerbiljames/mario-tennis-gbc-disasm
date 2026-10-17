@@ -1,6 +1,6 @@
 # path  rom_offset(hex)  length(hex)  [render-spec] — consumed by tools/extract.py
 bank_000/d_000b.bin 00000b d
-bank_000/NintendoLogo.bin 000104 30 gfx
+bank_000/NintendoLogo.bin 000104 30 gfx:logo
 bank_000/JingleSoundIds.asm 002fe0 6 sound_data
 bank_000/MusicIndexTable.asm 003151 64 sound_index
 bank_000/SfxIndexTable.asm 0031b5 e2 sound_index
