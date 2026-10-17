@@ -98,7 +98,7 @@ class NerfSwingContest(Toggle):
     display_name = "Nerf Swing Contest"
 
 
-class ShotItems(DefaultOnToggle):
+class ShotItems(Toggle):
     """
     Your shots are items: topspin, slice and the flat shot (the second copy of each adds its power shot, or the
     smash), the lob and drop shot, and the topspin, slice and flat serves (the second copy adds the nice serve).

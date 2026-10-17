@@ -56,7 +56,7 @@ class TestRemoteItems(MarioTennisGBCTestBase):
 
 
 class TestShotItems(MarioTennisGBCTestBase):
-    options = {"story_arcs": "singles"}
+    options = {"story_arcs": "singles", "shot_items": True}
 
     def test_starts_with_one_stroke_and_one_serve(self) -> None:
         start = [i.name for i in self.multiworld.precollected_items[self.player]]
@@ -79,7 +79,6 @@ class TestShotItems(MarioTennisGBCTestBase):
 
 
 class TestShotItemsOff(MarioTennisGBCTestBase):
-    options = {"shot_items": False}
 
     def test_no_shot_items(self) -> None:
         names = {i.name for i in self.multiworld.itempool} | \
@@ -88,7 +87,7 @@ class TestShotItemsOff(MarioTennisGBCTestBase):
 
 
 class TestDoublesExcluded(MarioTennisGBCTestBase):
-    options = {"story_arcs": "doubles", "minigames": "excluded"}
+    options = {"story_arcs": "doubles", "minigames": "excluded", "shot_items": True}
 
     def test_overflow_starts_with_equipment(self) -> None:
         start = [i.name for i in self.multiworld.precollected_items[self.player]]
