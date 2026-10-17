@@ -321,7 +321,14 @@ BrianSpriteFrame55:
 	INCBIN "data/sprites/BrianSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 BrianSpriteFramesUnused:
-	INCBIN "data/sprites/BrianSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/BrianSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/BrianSpriteFrame06.bin" ; $7bf0, 240 bytes
 BrianSpriteOam:
 	INCBIN "data/sprites/BrianSpriteOam.bin" ; $7ce0, 580 bytes
 BrianSpriteAnims:

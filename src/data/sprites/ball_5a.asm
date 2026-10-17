@@ -321,7 +321,14 @@ BallMachineSpriteFrame55:
 	INCBIN "data/sprites/BallMachineSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 BallMachineSpriteFramesUnused:
-	INCBIN "data/sprites/BallMachineSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/BallMachineSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/BallMachineSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/BallMachineSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/BallMachineSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/BallMachineSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/BallMachineSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/BallMachineSpriteFrame06.bin" ; $7bf0, 240 bytes
 BallMachineSpriteOam:
 	INCBIN "data/sprites/BallMachineSpriteOam.bin" ; $7ce0, 580 bytes
 BallMachineSpriteAnims:

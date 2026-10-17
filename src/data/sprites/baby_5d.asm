@@ -321,7 +321,14 @@ BabyMarioSpriteFrame55:
 	INCBIN "data/sprites/BabyMarioSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 BabyMarioSpriteFramesUnused:
-	INCBIN "data/sprites/BabyMarioSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/BabyMarioSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/BabyMarioSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/BabyMarioSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/BabyMarioSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/BabyMarioSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/BabyMarioSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/BabyMarioSpriteFrame06.bin" ; $7bf0, 240 bytes
 BabyMarioSpriteOam:
 	INCBIN "data/sprites/BabyMarioSpriteOam.bin" ; $7ce0, 580 bytes
 BabyMarioSpriteAnims:

@@ -321,7 +321,14 @@ BethSpriteFrame55:
 	INCBIN "data/sprites/BethSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 BethSpriteFramesUnused:
-	INCBIN "data/sprites/BethSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/BethSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/BethSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/BethSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/BethSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/BethSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/BethSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/BethSpriteFrame06.bin" ; $7bf0, 240 bytes
 BethSpriteOam:
 	INCBIN "data/sprites/BethSpriteOam.bin" ; $7ce0, 580 bytes
 BethSpriteAnims:

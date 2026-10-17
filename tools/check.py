@@ -376,9 +376,9 @@ def check_layout(manifest, fail):
     owners = {}
     for f in [ROOT / "main.asm"] + sorted((ROOT / "src").rglob("*.asm")):
         for m in re.finditer(r'(?:INCBIN|INCLUDE)\s+"data/([^"]+)"', f.read_text()):
-            owners.setdefault(m.group(1), []).append(f.relative_to(ROOT))
+            owners.setdefault(m.group(1), set()).add(f.relative_to(ROOT))
     for path, off, length, spec in manifest:
-        found = owners.get(path, [])
+        found = sorted(owners.get(path, ()))
         if len(found) != 1:
             fail("layout", f"{path}: referenced from {len(found)} source files, not one")
             continue

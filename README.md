@@ -169,7 +169,7 @@ because the layout is recomputed rather than restated:
   (`data/sprites/AlexSpriteFrame00.png`,
   `data/engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin`, `lz_` marking a compressed
   stream); only a blob nothing names keeps an address name (`d_4004.bin`).
-- **Graphics are PNGs.** Each of the 2,728 tile-graphics blobs is also
+- **Graphics are PNGs.** Each of the 2,698 tile-graphics blobs is also
   extracted as a four-colour indexed PNG: character frames as the 24x32 body
   with its standing shadow, walk sprites as four facings side by side
   (`docs/graphics_formats.md` §0), everything else as tiles in blob order,

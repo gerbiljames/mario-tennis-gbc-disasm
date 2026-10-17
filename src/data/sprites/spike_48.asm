@@ -321,7 +321,14 @@ SpikeSpriteFrame55:
 	INCBIN "data/sprites/SpikeSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 SpikeSpriteFramesUnused:
-	INCBIN "data/sprites/SpikeSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/SpikeSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/SpikeSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/SpikeSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/SpikeSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/SpikeSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/SpikeSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/SpikeSpriteFrame06.bin" ; $7bf0, 240 bytes
 SpikeSpriteOam:
 	INCBIN "data/sprites/SpikeSpriteOam.bin" ; $7ce0, 580 bytes
 SpikeSpriteAnims:

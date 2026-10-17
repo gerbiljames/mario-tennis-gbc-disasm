@@ -50,7 +50,7 @@ fixed permutation, so encoding back is exact.
 | layout | blobs | what a frame is |
 |---|---|---|
 | `2x2` | the 570 walk-sprite `_GfxNN` blobs (banks `$6a`, `$6f`, `$70`-`$77`) | one 16x16 facing, two 8x16 objects (`QueueSprite16`); a 256-byte blob is the four facings side by side |
-| `3x4+3` | the 240-byte character frames of banks `$40`-`$5d`, and each bank's `SpriteFramesUnused` run | the 24x32 body as three 4-tile columns (`QueueSprite24x32`, `$00:$2c2b`), then the three standing-shadow tiles that replace each column's bottom tile in VRAM when `wStandingShadowsEnabled` is set (`QueueCharFrameTiles`, `$00:$2ead`) |
+| `3x4+3` | the 240-byte character frames of banks `$40`-`$5d` | the 24x32 body as three 4-tile columns (`QueueSprite24x32`, `$00:$2c2b`), then the three standing-shadow tiles that replace each column's bottom tile in VRAM when `wStandingShadowsEnabled` is set (`QueueCharFrameTiles`, `$00:$2ead`) |
 | `4x4+4` | the 60 320-byte character frames (the `01 10` per-slot OAM records, §4.3) | the same at 32x32 with four columns and four shadow tiles |
 
 Every other graphics blob is plain. A blob drawn only through
@@ -521,6 +521,12 @@ The character banks `$40`-`$5d` also carry `*SpriteOam` (e.g. `AlexSpriteOam`,
 `$00:$2e7e`-`$2e8a`. `DrawCharSprite` (`$08:$650a`) dispatches on the size flag
 to `QueueSprite24x32` (0) or `QueueSprite32x32`.
 
+Each character bank's 145-slot frame table points only at `SpriteFrame00`-`55`.
+The seven 240-byte frames after `Frame55` (`$7650`-`$7cdf`,
+`<Char>SpriteFramesUnused`) are byte-identical copies of frames 00-06 in all 30
+banks, and no pointer in the ROM reaches them. The source `INCBIN`s frames 00-06
+again in their place.
+
 ---
 
 ## 5. Palettes
@@ -781,25 +787,27 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All fourteen
+the source claims is true, not just that the bytes come back. All sixteen
 pass:
 
 | check | count | what it asserts |
 |---|---|---|
 | `lz` | 839 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
 | `lz-labels` | 839 | no symbol lands inside a compressed stream |
-| `regions` | 4243 | manifest regions stay inside their bank and do not overlap |
+| `regions` | 4213 | manifest regions stay inside their bank and do not overlap |
+| `layout` | 4213 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `scopes` | 0 | no global label covers both actor-script bytecode and CPU code |
-| `labels` | 13743 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `labels` | 13736 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
-| `literals` | 35616 | no ROM address is written as a number where the source moves |
+| `literals` | 35590 | no ROM address is written as a number where the source moves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
-| `gfx` | 2728 | every PNG encodes back to the blob it was decoded from |
+| `gfx` | 2698 | every PNG encodes back to the blob it was decoded from |
 | `tilemap` | 231 | every tilemap grid encodes back to its blob |
 | `slots` | 5124 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
-| `reach` | 4873 | a routine is named `Unused` exactly when nothing reachable reaches it |
+| `reach` | 4870 | a routine is named `Unused` exactly when nothing reachable reaches it |
+| `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
 
 ---
 

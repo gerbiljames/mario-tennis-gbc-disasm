@@ -321,7 +321,14 @@ DKSpriteFrame55:
 	INCBIN "data/sprites/DKSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
 DKSpriteFramesUnused:
-	INCBIN "data/sprites/DKSpriteFramesUnused.bin" ; $7650, 1680 bytes
+	; an unreferenced copy of frames 00-06
+	INCBIN "data/sprites/DKSpriteFrame00.bin" ; $7650, 240 bytes
+	INCBIN "data/sprites/DKSpriteFrame01.bin" ; $7740, 240 bytes
+	INCBIN "data/sprites/DKSpriteFrame02.bin" ; $7830, 240 bytes
+	INCBIN "data/sprites/DKSpriteFrame03.bin" ; $7920, 240 bytes
+	INCBIN "data/sprites/DKSpriteFrame04.bin" ; $7a10, 240 bytes
+	INCBIN "data/sprites/DKSpriteFrame05.bin" ; $7b00, 240 bytes
+	INCBIN "data/sprites/DKSpriteFrame06.bin" ; $7bf0, 240 bytes
 DKSpriteOam:
 	INCBIN "data/sprites/DKSpriteOam.bin" ; $7ce0, 580 bytes
 DKSpriteAnims:
