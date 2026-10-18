@@ -49,3 +49,17 @@ ApVarsityWonNpcScriptsB_13:
 	map_script ACTOR_VARSITY_COURT_B_BETH, FACEMASK_ANY, $0000, Text_31_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	map_script ACTOR_VARSITY_COURT_B_MARK, FACEMASK_ANY, $0000, Text_31_29, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
+
+; court C is the post-Island-Open court of both arcs
+ApVarsityPracticeC_13:
+	test_flag FLAG_DOUBLES
+	jr nz, .doubles
+	ap_varsity_practice_offer ACTOR_VARSITY_COURT_C_FAY, Text_30_539, LOC_VARSITY_SINGLES_PRACTICE, MATCHLIST_SINGLES
+.doubles:
+	ap_varsity_practice_offer ACTOR_VARSITY_COURT_C_FAY, Text_31_7, LOC_VARSITY_DOUBLES_PRACTICE, MATCHLIST_DOUBLES
+
+ApVarsityPracticeD_13:
+	ap_varsity_practice_offer ACTOR_COURTYARD_FAY, Text_30_539, LOC_VARSITY_SINGLES_PRACTICE, MATCHLIST_SINGLES
+
+ApVarsityPracticeE_13:
+	ap_varsity_practice_offer ACTOR_VARSITY_COURT_B_FAY, Text_31_7, LOC_VARSITY_DOUBLES_PRACTICE, MATCHLIST_DOUBLES

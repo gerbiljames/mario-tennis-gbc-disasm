@@ -179,7 +179,10 @@ JuniorClassCourtDoublesNpc09_11:
 JuniorClassCourtDoublesNpc0A_11:
 	script_set_text Text_32_135 ; $566e
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5674
-	jp nz, JuniorClassCourtDoublesNpc09_11.loop ; $5677
+	jr z, .offer
+	ap_open LOC_JUNIOR_DOUBLES_PRACTICE
+	jp z, JuniorClassCourtDoublesNpc09_11.loop ; $5677
+.offer:
 	script_set_text Text_32_131 ; $567a
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5680
 	farcall RunDialogueYesNoPrompt ; $5685
@@ -249,6 +252,8 @@ Unused_11_JuniorClassCourtDoublesNpcSpeech:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $57c6
 	ret ; $57cb
 JuniorClassCourtDoublesANpc0A_11:
+	ap_open LOC_JUNIOR_DOUBLES_PRACTICE
+	jp nz, JuniorClassCourtDoublesNpc0A_11
 	script_set_text Text_32_151 ; $57cc
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $57d2
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, ANIM_SHAKE ; $57d7
@@ -299,7 +304,7 @@ JuniorClassCourtDoublesNpcScriptsB_11:
 	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, FACEMASK_ANY, $0000, Text_32_166, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACEMASK_ANY, $0000, Text_32_167, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
 	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACEMASK_ANY, $0000, Text_32_168, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACEMASK_ANY, $0000, Text_32_169, NPC_FACE_PLAYER, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, FACEMASK_ANY, $0000, ApJuniorDoublesAllieB_11, NPC_FACE_PLAYER, $00
 	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACEMASK_ANY, $0000, Text_32_170, NPC_FACE_PLAYER, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsC_11:
@@ -339,6 +344,8 @@ JuniorClassCourtDoublesDNpc07_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $598a
 	ret ; $598f
 JuniorClassCourtDoublesCNpc0A_11:
+	ap_open LOC_JUNIOR_DOUBLES_PRACTICE
+	jp nz, JuniorClassCourtDoublesNpc0A_11
 	script_set_text Text_32_191 ; $5990
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5996
 	set_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $599b
@@ -356,6 +363,8 @@ JuniorClassCourtDoublesNpcScriptsD_11:
 	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACEMASK_ANY, $0000, Text_33_29, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 JuniorClassCourtDoublesDNpc0A_11:
+	ap_open LOC_JUNIOR_DOUBLES_PRACTICE
+	jp nz, JuniorClassCourtDoublesNpc0A_11
 	test_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $59e8
 	jr nz, .setText ; $59eb
 	script_set_text Text_33_15 ; $59ed

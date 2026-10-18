@@ -14,17 +14,17 @@ LOCATION_NAME_TO_ID = {name: loc_id for loc_id, _, name in LOCATIONS}
 LOCATION_CONSTANT = {name: const for _, const, name in LOCATIONS}
 
 SINGLES = {
-    "Junior Singles": [f"Junior Singles Rank {n}" for n in (4, 3, 2, 1)],
-    "Senior Singles": [f"Senior Singles Rank {n}" for n in (4, 3, 2, 1)],
-    "Varsity Singles": ["Varsity Singles Rank 4"],
+    "Junior Singles": ["Junior Singles Practice"] + [f"Junior Singles Rank {n}" for n in (4, 3, 2, 1)],
+    "Senior Singles": ["Senior Singles Practice"] + [f"Senior Singles Rank {n}" for n in (4, 3, 2, 1)],
+    "Varsity Singles": ["Varsity Singles Practice", "Varsity Singles Rank 4"],
     "Island Open Singles": ["Island Open Singles Round 1", "Island Open Singles Round 2",
                             "Island Open Singles Semifinal", "Island Open Singles Final"],
     "Peach's Castle Singles": ["Singles Dream Match"],
 }
 DOUBLES = {
-    "Junior Doubles": [f"Junior Doubles Rank {n}" for n in (3, 2, 1)],
-    "Senior Doubles": [f"Senior Doubles Rank {n}" for n in (3, 2, 1)],
-    "Varsity Doubles": ["Varsity Doubles Rank 2"],
+    "Junior Doubles": ["Junior Doubles Practice"] + [f"Junior Doubles Rank {n}" for n in (3, 2, 1)],
+    "Senior Doubles": ["Senior Doubles Practice"] + [f"Senior Doubles Rank {n}" for n in (3, 2, 1)],
+    "Varsity Doubles": ["Varsity Doubles Practice", "Varsity Doubles Rank 2"],
     "Island Open Doubles": ["Island Open Doubles Round 1", "Island Open Doubles Semifinal",
                             "Island Open Doubles Final"],
     "Peach's Castle Doubles": ["Doubles Dream Match"],
@@ -74,7 +74,9 @@ def _groups() -> dict[str, set[str]]:
         "Singles": {n for names in SINGLES.values() for n in names},
         "Doubles": {n for names in DOUBLES.values() for n in names},
         "Ranking Matches": {n for region in (SINGLES, DOUBLES) for k, names in region.items()
-                            if k.split()[0] in ("Junior", "Senior", "Varsity") for n in names},
+                            if k.split()[0] in ("Junior", "Senior", "Varsity") for n in names if " Rank " in n},
+        "Practice Matches": {n for region in (SINGLES, DOUBLES) for names in region.values() for n in names
+                             if n.endswith(" Practice")},
         "Island Open": set(SINGLES["Island Open Singles"] + DOUBLES["Island Open Doubles"]),
         "Dream Match": set(DREAM_MATCHES.values()),
         "Drills": set(DRILLS),

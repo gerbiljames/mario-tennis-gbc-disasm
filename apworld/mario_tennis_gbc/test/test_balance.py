@@ -19,7 +19,7 @@ class TestBalance(MarioTennisGBCTestBase):
                 spare = overflow(world, counts, locations)
                 self.assertLessEqual(sum(counts.values()) - len(spare), locations)
                 self.assertFalse(PROGRESSION & set(spare), "progression moved to the start inventory")
-                self.assertEqual(len(spare), 3 if (arcs, minigames, shots) in ((2, 1, 1), (2, 3, 1)) else 0)
+                self.assertEqual(len(spare), 0)
 
 
 class TestSinglesExcluded(MarioTennisGBCTestBase):
@@ -134,7 +134,13 @@ class TestShotItemsOff(MarioTennisGBCTestBase):
 class TestDoublesExcluded(MarioTennisGBCTestBase):
     options = {"story_arcs": "doubles", "minigames": "excluded", "shot_items": True}
 
-    def test_overflow_starts_with_equipment(self) -> None:
+    def test_tightest_case_fits_without_overflow(self) -> None:
         start = [i.name for i in self.multiworld.precollected_items[self.player]]
-        self.assertEqual(len(start), 2 + 3)
+        self.assertEqual(len(start), 2)
         self.assertEqual(len(self.multiworld.itempool), len(self.multiworld.get_locations(self.player)))
+
+    def test_practices_need_their_class_pass(self) -> None:
+        self.assertTrue(self.can_reach_location("Junior Doubles Practice"))
+        self.assertFalse(self.can_reach_location("Senior Doubles Practice"))
+        self.collect_by_name("Progressive Doubles Pass")
+        self.assertFalse(self.can_reach_location("Varsity Doubles Practice"))

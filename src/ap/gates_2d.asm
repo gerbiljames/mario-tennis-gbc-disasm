@@ -1,15 +1,34 @@
 ; Gates: what the effective inventory opens.
 
 ; Through ApTestInline: e = its first argument byte, d = its second. Tests
-; an item count (ap_has) or, with AP_TEST_PASS, a class pass (ap_pass).
+; an item count (ap_has), with AP_TEST_PASS a class pass (ap_pass), or with
+; AP_TEST_OPEN a location not done yet (ap_open).
 ApTestInlineFar:
 	ld a, e
 	ld e, d
 	ld d, a
+	bit 6, d
+	jr nz, ApLocationOpen
 	bit 7, d
 	jr z, ApItemAtLeast
 	res 7, d
 	jr ApPassAtLeast
+
+; e = location id -> nz if this seed has it (ApPlacements) and it is not done
+ApLocationOpen:
+	ld d, 0
+	ld hl, ApPlacements
+	add hl, de
+	ld a, [hl]
+	cp AP_ITEM_ABSENT
+	jr z, .no
+	call ApTestLocationDone
+	jr nz, .no
+	or 1
+	ret
+.no:
+	xor a
+	ret
 
 ; d = item id, e = a count -> nz if the player holds at least that many
 ApItemAtLeast:
@@ -229,3 +248,38 @@ ApComposeGatePrompt:
 
 ApTextGatePrompt:
 	db "Fly to the", AP_TEXT_LINE, "Island Open?", 0
+
+; For the Senior court's practice offers (Beth in singles, Bob in doubles):
+; -> a = wMapSceneStage2, or the arc's first ranking stage, where they offer
+; the practice, while that location is open past it. Below it (no pass) the
+; stage is kept, so the practice still needs the class's pass.
+ApSeniorBethStage:
+	test_flag FLAG_DOUBLES
+	ld a, [wMapSceneStage2]
+	ret nz
+	ld de, SENIORCOURTSTAGE_SINGLES_RANK4 << 8 | LOC_SENIOR_SINGLES_PRACTICE
+	jr ApSeniorPracticeStage
+
+ApSeniorBobStage:
+	test_flag FLAG_DOUBLES
+	ld a, [wMapSceneStage2]
+	ret z
+	ld de, SENIORCOURTSTAGE_DOUBLES_RANK3 << 8 | LOC_SENIOR_DOUBLES_PRACTICE
+	; fallthrough
+
+; a = the stage, d = the arc's first ranking stage, e = its practice location
+ApSeniorPracticeStage:
+	cp d
+	ret c
+	ret z
+	push af
+	push de
+	call ApLocationOpen
+	pop de
+	jr z, .keep
+	pop af
+	ld a, d
+	ret
+.keep:
+	pop af
+	ret

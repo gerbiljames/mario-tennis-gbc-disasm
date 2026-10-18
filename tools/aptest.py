@@ -281,6 +281,100 @@ def check_reward_lists(g, c):
     assert g.done(c["LOC_WALL_PRACTICE_MASTER"]), "a first Master clear missed its location"
 
 
+PRACTICES = [("SINGLES", 0, 0, "JUNIOR"), ("SINGLES", 0, 5, "SENIOR"), ("SINGLES", 0, 10, "VARSITY"),
+             ("DOUBLES", 1, 0, "JUNIOR"), ("DOUBLES", 1, 5, "SENIOR"), ("DOUBLES", 1, 10, "VARSITY")]
+
+
+@test
+def practice_matches_are_locations(g, c):
+    for arc, matchlist, index, tier in PRACTICES:
+        loc = c[f"LOC_{tier}_{arc}_PRACTICE"]
+        assert inline_test(g, 0x40, loc), f"{tier} {arc} practice not open before its win"
+        g.wram("wCurrentMinigameStoryMatch", matchlist, index)
+        g.call("SetRewardGameFlag")
+        assert g.done(loc), f"{tier} {arc} practice win not marked done"
+        assert not inline_test(g, 0x40, loc), f"{tier} {arc} practice still open once done"
+
+
+@test
+def ap_open_absent(g, c):
+    assert not inline_test(g, 0x40, c["LOC_JUNIOR_SINGLES_PRACTICE"]), "an absent location read as open"
+
+
+ap_open_absent.tokens = lambda c: {("ApPlacements", c["LOC_JUNIOR_SINGLES_PRACTICE"]): b"\xff"}
+
+STORYLOC_COURTYARD_ = 0x07
+STORYLOC_JUNIOR_SINGLES, STORYLOC_JUNIOR_DOUBLES, STORYLOC_SENIOR = 0x0b, 0x0c, 0x10
+FLAG_DOUBLES = 47
+# the practice NPC's script on each court once every win is in and every pass held
+LATE_PRACTICE_NPCS = [
+    (False, STORYLOC_JUNIOR_SINGLES, "ApJuniorSinglesBrianD_11", (0, 0), "LOC_JUNIOR_SINGLES_PRACTICE"),
+    (False, STORYLOC_SENIOR, "SeniorCourtNpc08_12", (0, 5), "LOC_SENIOR_SINGLES_PRACTICE"),
+    (False, STORYLOC_COURTYARD_, "VarsityCourtDNpc05_13", (0, 10), "LOC_VARSITY_SINGLES_PRACTICE"),
+    (True, STORYLOC_JUNIOR_DOUBLES, "JuniorClassCourtDoublesDNpc0A_11", (1, 0), "LOC_JUNIOR_DOUBLES_PRACTICE"),
+    (True, STORYLOC_SENIOR, "SeniorCourtNpc0A_12", (1, 5), "LOC_SENIOR_DOUBLES_PRACTICE"),
+    (True, STORYLOC_COURTYARD_, "VarsityCourtENpc05_13", (1, 10), "LOC_VARSITY_DOUBLES_PRACTICE"),
+]
+
+
+WIN_FLAGS = list(range(64, 73)) + list(range(80, 89))
+
+
+def practice_offered(g, location, handler):
+    """Warp to `location`, run an NPC `handler` answering yes -> the
+    (match list, match) a story match was set up for, or None."""
+    assert g.warp(location, 0x01) == location, f"warp to {location:#x} failed"
+    seen = []
+    b, a = g.sym["LoadMatchSettingsFromTable"]
+    g.pb.hook_register(b, a, lambda _: seen.append(tuple(g.mem[g.addr("wCurrentMinigameStoryMatch") + i]
+                                                         for i in range(2))), None)
+    g.pending.append((handler, {}))
+    for i in range(900):
+        g.tick()
+        if seen:
+            break
+        if i % 40 == 39:
+            g.press("a")
+    g.pb.hook_deregister(b, a)
+    return seen[0] if seen else None
+
+
+def set_done(g, loc, on):
+    byte = bytearray(g.sram("sApDoneBits", offset=loc // 8))
+    byte[0] = byte[0] | (1 << loc % 8) if on else byte[0] & ~(1 << loc % 8) & 0xff
+    g.sram_write("sApDoneBits", bytes(byte), offset=loc // 8)
+    g.seal("sApGameRegion", "sApGameChecksum")
+
+
+def practice_late_test(doubles, location, handler, match, loc):
+    """Every ranking match won and every pass held, so each court is past
+    its vanilla practice window: the NPC offers the practice only while
+    its location is open."""
+    def fn(g, c):
+        for flag in WIN_FLAGS:
+            set_flag(g, flag, True)
+        set_flag(g, FLAG_DOUBLES, doubles)
+        set_done(g, c[loc], True)
+        assert practice_offered(g, location, handler) is None, f"{handler} offered a done practice"
+        set_done(g, c[loc], False)
+        assert practice_offered(g, location, handler) == match, f"{handler} did not offer the practice"
+    fn.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x04",
+                           ("ApStartInventory", c["ITEM_DOUBLES_PASS"]): b"\x04"}
+    return fn
+
+
+for _case in LATE_PRACTICE_NPCS:
+    TESTS[f"practice_late_{_case[2]}"] = practice_late_test(*_case)
+
+
+@test
+def senior_practice_needs_a_pass(g, c):
+    for flag in WIN_FLAGS:
+        set_flag(g, flag, True)
+    set_flag(g, FLAG_DOUBLES, False)
+    assert practice_offered(g, STORYLOC_SENIOR, "SeniorCourtNpc08_12") is None, "Senior practice without a pass"
+
+
 check_reward_lists.tokens = lambda c: placements(c, {
     "LOC_JUNIOR_SINGLES_RANK_4": "ITEM_IRON_RACKET",
     "LOC_VARSITY_DOUBLES_RANK_2": "ITEM_DOUBLES_PASS",

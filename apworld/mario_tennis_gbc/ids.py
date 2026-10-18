@@ -84,6 +84,12 @@ LOCATIONS = [
     (80, "LOC_TWO_ON_ONE_1", "Two-on-One Level 1"),
     (81, "LOC_TWO_ON_ONE_2", "Two-on-One Level 2"),
     (82, "LOC_TWO_ON_ONE_3", "Two-on-One Level 3"),
+    (83, "LOC_JUNIOR_SINGLES_PRACTICE", "Junior Singles Practice"),
+    (84, "LOC_SENIOR_SINGLES_PRACTICE", "Senior Singles Practice"),
+    (85, "LOC_VARSITY_SINGLES_PRACTICE", "Varsity Singles Practice"),
+    (86, "LOC_JUNIOR_DOUBLES_PRACTICE", "Junior Doubles Practice"),
+    (87, "LOC_SENIOR_DOUBLES_PRACTICE", "Senior Doubles Practice"),
+    (88, "LOC_VARSITY_DOUBLES_PRACTICE", "Varsity Doubles Practice"),
 ]
 
 # (Archipelago id = ledger counter, game constant, name)

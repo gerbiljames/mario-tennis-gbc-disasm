@@ -65,6 +65,15 @@ MACRO ap_has
 	db \1, \2
 ENDM
 
+; ap_open LOC -- nz if this seed has the location and it is not done yet;
+; like test_flag, keeps every register but af
+DEF AP_TEST_OPEN EQU $40
+	ASSERT AP_ITEM_SLOTS <= AP_TEST_OPEN
+MACRO ap_open
+	call ApTestInline
+	db AP_TEST_OPEN, \1
+ENDM
+
 ; apcall Routine -- calls an AP-bank routine from any bank through ApFarCall;
 ; clobbers hl, passes bc and de
 MACRO apcall
@@ -160,6 +169,14 @@ ENDM
 	ap_location LOC_TWO_ON_ONE_1, "Two-on-One Level 1"
 	ap_location LOC_TWO_ON_ONE_2, "Two-on-One Level 2"
 	ap_location LOC_TWO_ON_ONE_3, "Two-on-One Level 3"
+
+; each class's practice match, singles then doubles
+	ap_location LOC_JUNIOR_SINGLES_PRACTICE, "Junior Singles Practice"
+	ap_location LOC_SENIOR_SINGLES_PRACTICE, "Senior Singles Practice"
+	ap_location LOC_VARSITY_SINGLES_PRACTICE, "Varsity Singles Practice"
+	ap_location LOC_JUNIOR_DOUBLES_PRACTICE, "Junior Doubles Practice"
+	ap_location LOC_SENIOR_DOUBLES_PRACTICE, "Senior Doubles Practice"
+	ap_location LOC_VARSITY_DOUBLES_PRACTICE, "Varsity Doubles Practice"
 
 	ap_item ITEM_SINGLES_PASS, "Progressive Singles Pass", "Singles Pass"
 	ap_item ITEM_DOUBLES_PASS, "Progressive Doubles Pass", "Doubles Pass"

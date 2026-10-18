@@ -366,14 +366,14 @@ SeniorCourtNpc07TextIds:
 	dw Text_34_179 ; record 13
 	dw Text_34_188 ; record 14
 SeniorCourtNpc08_12:
-	ld a, [wMapSceneStage2] ; $594b
+	apcall ApSeniorBethStage
 	add a ; $594e
 	ld_hl_indexed SeniorCourtNpc08TextIds ; $594f
 	ld a, [hl+] ; $5956
 	ld h, [hl] ; $5957
 	ld l, a ; $5958
 	farcall InitDialogueTextCursor ; $5959
-	ld a, [wMapSceneStage2] ; $595c
+	apcall ApSeniorBethStage
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $595f
 	jr z, .speak ; $5961
 	jr nc, .altText ; $5963
@@ -475,39 +475,39 @@ SeniorCourtNpc09TextIds:
 	dw Text_34_181 ; record 13
 	dw Text_34_190 ; record 14
 SeniorCourtNpc0A_12:
-	ld a, [wMapSceneStage2] ; $5a8c
+	apcall ApSeniorBobStage
 	add a ; $5a8f
 	ld_hl_indexed SeniorCourtNpc0ATextIds ; $5a90
 	ld a, [hl+] ; $5a97
 	ld h, [hl] ; $5a98
 	ld l, a ; $5a99
 	farcall InitDialogueTextCursor ; $5a9a
-	ld a, [wMapSceneStage2] ; $5a9d
+	apcall ApSeniorBobStage
 	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $5aa0
 	jr z, .altText ; $5aa2
 	script_speak ACTOR_ROLE_SENIOR_COURT_BOB ; $5aa4
 	ret ; $5aa9
 .altText:
-	script_speak_restore ACTOR_SENIOR_COURT_B_BOB ; $5aaa
+	script_speak_restore ACTOR_ROLE_SENIOR_COURT_BOB ; $5aaa
 	farcall RunDialogueYesNoPrompt ; $5aaf
 	farcall ScriptCloseDialogueWindow ; $5ab2
 	script_wait_frames 5 ; $5ab5
 	and a ; $5abc
 	jr z, .speak ; $5abd
-	script_speak ACTOR_SENIOR_COURT_B_BOB ; $5abf
+	script_speak ACTOR_ROLE_SENIOR_COURT_BOB ; $5abf
 	ret ; $5ac4
 .speak:
 	farcall AdvanceDialogueTextCursor ; $5ac5
-	script_speak_restore ACTOR_SENIOR_COURT_B_BOB ; $5ac8
+	script_speak_restore ACTOR_ROLE_SENIOR_COURT_BOB ; $5ac8
 	farcall RunDialogueYesNoPrompt ; $5acd
 	farcall ScriptCloseDialogueWindow ; $5ad0
 	script_wait_frames 5 ; $5ad3
 	and a ; $5ada
 	jr z, .done ; $5adb
-	script_speak ACTOR_SENIOR_COURT_B_BOB ; $5add
+	script_speak ACTOR_ROLE_SENIOR_COURT_BOB ; $5add
 	ret ; $5ae2
 .done:
-	script_get_actor_state ACTOR_SENIOR_COURT_B_BOB ; $5ae3
+	script_get_actor_state ACTOR_ROLE_SENIOR_COURT_BOB ; $5ae3
 	ld e, l ; $5ae8
 	ld d, h ; $5ae9
 	ld hl, $0005 ; $5aea
@@ -519,8 +519,8 @@ SeniorCourtNpc0A_12:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_47 ; $5b02
 	script_wait_frames 32 ; $5b0d
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_48 ; $5b14
-	script_set_actor_script ACTOR_SENIOR_COURT_B_BOB, ActorScript_12_45 ; $5b1f
-	script_set_actor_script ACTOR_SENIOR_COURT_B_PAM, ActorScript_12_46 ; $5b2a
+	script_set_actor_script ACTOR_ROLE_SENIOR_COURT_BOB, ActorScript_12_45 ; $5b1f
+	script_set_actor_script ACTOR_ROLE_SENIOR_COURT_PAM, ActorScript_12_46 ; $5b2a
 	script_move_player 10.0, 17.0 ; $5b35
 	farcall WaitPlayerMoveDone ; $5b3f
 	script_wait_actor_script ACTOR_PLAYER ; $5b42

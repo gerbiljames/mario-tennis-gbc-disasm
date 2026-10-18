@@ -320,6 +320,8 @@ VarsityCourtCNpc03_13:
 VarsityCourtCNpc04_13:
 	script_null_script ACTOR_VARSITY_COURT_C_BOB ; $607c
 	script_set_anim ACTOR_VARSITY_COURT_C_FAY, ANIM_WALK ; $6081
+	call ApVarsityPracticeC_13
+	ret nz
 	script_set_text Text_31_35 ; $6088
 	script_speak ACTOR_VARSITY_COURT_C_FAY ; $608e
 	script_set_actor_script ACTOR_VARSITY_COURT_C_FAY, ActorScript_13_20 ; $6093
@@ -341,6 +343,8 @@ VarsityCourtCNpc05_13:
 VarsityCourtDNpc05_13:
 	script_null_script ACTOR_COURTYARD_FAY ; $60cc
 	script_set_anim ACTOR_COURTYARD_FAY, ANIM_WALK ; $60d1
+	call ApVarsityPracticeD_13
+	ret nz
 	script_set_text Text_31_40 ; $60d8
 	script_speak ACTOR_COURTYARD_FAY ; $60de
 	script_set_actor_script ACTOR_COURTYARD_FAY, ActorScript_13_20 ; $60e3
@@ -356,6 +360,8 @@ VarsityCourtNpcScriptsD_13:
 VarsityCourtENpc05_13:
 	script_null_script ACTOR_VARSITY_COURT_B_FAY ; $6118
 	script_set_anim ACTOR_VARSITY_COURT_B_FAY, ANIM_WALK ; $611d
+	call ApVarsityPracticeE_13
+	ret nz
 	script_set_text Text_31_45 ; $6124
 	script_speak ACTOR_VARSITY_COURT_B_FAY ; $612a
 	script_set_actor_script ACTOR_VARSITY_COURT_B_FAY, ActorScript_13_20 ; $612f

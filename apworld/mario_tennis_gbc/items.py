@@ -104,7 +104,7 @@ def item_counts(world: MarioTennisGBCWorld) -> dict[str, int]:
 
 def overflow(world: MarioTennisGBCWorld, counts: dict[str, int], locations: int) -> list[str]:
     """The items that go to the start inventory because the pool outgrows the locations: random non-progression
-    ones (3, for doubles with shot items and progressive or excluded mini-games)."""
+    ones. No option combination needs it today; it keeps a future item from breaking generation."""
     surplus = sum(counts.values()) - locations
     if surplus <= 0:
         return []

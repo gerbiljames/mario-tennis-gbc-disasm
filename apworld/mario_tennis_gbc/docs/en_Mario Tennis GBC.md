@@ -19,8 +19,9 @@ Progress through the story is driven by items instead of wins:
 
 ## What is a location?
 
-Every ranking-match win, Island Open round and Dream Match; every drill clear; the swing contest's two scores; and
-every mini-game level clear.
+Every ranking-match and practice-match win, Island Open round and Dream Match; every drill clear; the swing contest's
+two scores; and every mini-game level clear. Each class's practice match stays on offer, from the same player as in
+the game, until you have won it.
 
 ## What is the goal?
 
@@ -30,11 +31,8 @@ Winning the Island Open final, winning the Dream Match, or checking every locati
 
 Passes, drills, mini-games and shots count as soon as they arrive, in story mode or not: a mini-game received from
 the main menu opens on its grid right away (re-enter the grid if it is already on screen). Equipment is applied the
-next time you are walking around in a story file. That is also when the short item messages show, unless `item_messages` is
-off. Items found in your own world are given at once, offline too.
-
-When there are more items than locations (doubles with shot items, unless mini-games are vanilla), some equipment is
-in your starting inventory instead.
+next time you are walking around in a story file. That is also when the short item messages show, unless
+`item_messages` is off. Items found in your own world are given at once, offline too.
 
 EXP Bundles are saved up on the story file. Open Char/Partner Data from the pause menu to receive them and level up
 straight away; any still saved up are awarded the next time you continue that file.
