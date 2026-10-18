@@ -12,3 +12,4 @@ build-fixes/
 build-eur/
 build-fixes-eur/
 .claude/
+.vscode/
