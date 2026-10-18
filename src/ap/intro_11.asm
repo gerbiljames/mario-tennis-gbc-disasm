@@ -26,9 +26,9 @@ ApFrontGateTile_11:
 	farcall RunDialogueYesNoPrompt
 	farcall ScriptCloseDialogueWindow
 	and a
-	ld a, $02
-	jr z, .exit
 	ld a, $03
+	jr z, .exit
+	ld a, $02
 .exit:
 	ld [wUnusedExitTriggerIdMirror], a
 	ld [wStoryModeExitTriggerRequest], a

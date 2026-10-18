@@ -247,7 +247,7 @@ ApComposeGatePrompt:
 	ret
 
 ApTextGatePrompt:
-	db "Fly to the", AP_TEXT_LINE, "Island Open?", 0
+	db "Fly to", AP_TEXT_LINE, "Mario World?", 0
 
 ; For the Senior court's practice offers (Beth in singles, Bob in doubles):
 ; -> a = wMapSceneStage2, or the arc's first ranking stage, where they offer

@@ -825,8 +825,8 @@ def out_the_front_gate(g, answer):
 @test
 def front_gate_asks_with_both_open(g, c):
     set_flag(g, 47, False)
-    assert out_the_front_gate(g, "yes") == (True, STORYLOC_TOURNAMENT_COURTYARD)
-    r = out_the_front_gate(g, "no")
+    assert out_the_front_gate(g, "no") == (True, STORYLOC_TOURNAMENT_COURTYARD)
+    r = out_the_front_gate(g, "yes")
     assert r == (True, STORYLOC_PEACHS_CASTLE), r
 
 
