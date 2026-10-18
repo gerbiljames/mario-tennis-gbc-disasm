@@ -65,6 +65,9 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
         "Service Lesson 2": And(Has(TOPSPIN_SERVE), Has(SLICE_SERVE)),
         "Service Lesson 3": nice_serve,
     }
+    if world.options.minigames != world.options.minigames.option_excluded:
+        # playtested: Perfect Shot can't be scored in without lobbing
+        rules.update({f"Perfect Shot Level {n}": Has(LOB) for n in (1, 2, 3)})
     # possible without, through aces, coach errors or a lower score, just not reliably: out of logic, and
     # Universal Tracker shows them as glitched
     possible = {

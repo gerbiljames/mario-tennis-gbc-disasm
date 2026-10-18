@@ -80,6 +80,12 @@ class TestShotItems(MarioTennisGBCTestBase):
         self.collect_by_name("Progressive Slice")
         self.assertTrue(self.can_reach_location("Net Game Match 3"))
 
+    def test_perfect_shot_needs_the_lob(self) -> None:
+        self.collect_by_name("Progressive Perfect Shot")
+        self.assertFalse(self.can_reach_location("Perfect Shot Level 1"))
+        self.collect_by_name("Lob")
+        self.assertTrue(self.can_reach_location("Perfect Shot Level 3"))
+
     def test_service_matches_want_a_nice_serve(self) -> None:
         self.assertFalse(self.can_reach_location("Service Match 1"))
         self.collect_by_name(["Progressive Topspin Serve", "Progressive Slice Serve", "Progressive Flat Serve"])
