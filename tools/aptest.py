@@ -798,10 +798,11 @@ def out_the_front_gate(g, answer):
     for i in range(60):
         start = g.idle
         g.press("down", hold=20)
-        if g.mem[g.addr("wApMessage")] in b"WI":
+        if g.mem[g.addr("wApMessage")] == ord("I"):
             asked = True
-            g.tick(150)
-            if answer == "mario":
+            g.tick(30)
+            # the Down held to walk in can have moved the cursor already
+            if g.mem[g.sym["wMenuCursorRow"]] != (answer == "mario"):
                 g.press("down", wait=10)
             g.press("a")
             break
@@ -831,6 +832,33 @@ def front_gate_asks_with_both_open(g, c):
 
 
 front_gate_asks_with_both_open.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x04"}
+
+
+@test
+def front_gate_backs_out(g, c):
+    set_flag(g, 47, False)
+    assert g.warp(STORYLOC_ACADEMY_ENTRANCE, 0x01) == STORYLOC_ACADEMY_ENTRANCE
+    g.wram("wApMessage", 0)
+    for _ in range(60):
+        g.press("down", hold=20)
+        if g.mem[g.addr("wApMessage")] == ord("I"):
+            break
+    else:
+        raise AssertionError("never asked")
+    g.tick(150)
+    bank, actors = g.sym["wActors"]
+    y = lambda: g.mem[bank, actors + include_value("ACTORF_Y") + 1]
+    before = y()
+    g.press("b", wait=120)
+    g.wram("wApMessage", 0)
+    g.tick(120)
+    assert g.mem[g.addr("wStoryModeCurrentLocation")] == STORYLOC_ACADEMY_ENTRANCE, "B left the Academy"
+    assert y() == before - 2, f"the player is at row {y()}, from {before}"
+    assert g.mem[g.addr("wApMessage")] == 0, "the menu came back on its own"
+    assert out_the_front_gate(g, "island") == (True, STORYLOC_TOURNAMENT_COURTYARD)
+
+
+front_gate_backs_out.tokens = front_gate_asks_with_both_open.tokens
 
 
 @test

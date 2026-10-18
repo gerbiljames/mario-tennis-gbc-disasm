@@ -18,21 +18,16 @@ ApSkipIntro:
 	ld [wStoryModeExitTriggerRequest], a
 	ret
 
-; Island Open: exit $02, Mario World: exit $03 (Peach's Castle); B asks again
+; Island Open: exit $02, Mario World: exit $03 (Peach's Castle); B walks the
+; player back off the gate cell (a 2x2 cell: two tiles north)
 ApFrontGateTile_11:
-	apcall ApComposeGatePrompt
-	script_set_text AP_MESSAGE_TEXT
-	script_speak_restore ACTOR_PLAYER
 	apcall ApComposeGateMenu
 	ld hl, AP_MESSAGE_TEXT
 	ld de, $0101
 	ld a, $01
 	farcall RunPagedTextMenu
 	cp $ff
-	jr z, ApFrontGateTile_11
-	push af
-	farcall ScriptCloseDialogueWindow
-	pop af
+	jr z, .cancel
 	and a
 	ld a, $02
 	jr z, .exit
@@ -40,4 +35,32 @@ ApFrontGateTile_11:
 .exit:
 	ld [wUnusedExitTriggerIdMirror], a
 	ld [wStoryModeExitTriggerRequest], a
+	ret
+.cancel:
+	farcall BeginCutsceneScriptMode
+	script_player_speed 1.0
+	wram_bank WRAM_ACTORS
+	ld hl, wActors + ACTORF_X
+	ld a, [hl+]
+	ld c, a
+	ld a, [hl+]
+	ld b, a
+	ld a, [hl+]
+	ld e, a
+	ld d, [hl]
+	dec d
+	dec d
+	xor a
+	farcall MovePlayerToPosition
+	farcall WaitPlayerMoveDone
+	; the walk moved the sprite (slot 1); the leader it follows again
+	; (slot 0) has to be there too, or it walks back onto the gate
+	wram_bank WRAM_ACTORS
+	ld hl, wActors + ACTOR_SIZE + ACTORF_X
+	ld de, wActors + ACTORF_X
+	ld bc, 4
+	call CopyMemoryBC
+	ld a, [wActors + ACTOR_SIZE + ACTORF_HEADING]
+	ld [wActors + ACTORF_HEADING], a
+	farcall EndCutsceneScriptMode
 	ret

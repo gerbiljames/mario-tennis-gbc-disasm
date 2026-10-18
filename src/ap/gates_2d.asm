@@ -234,14 +234,9 @@ ApLoadAwardFont:
 	farcall LoadMenuFontGfx
 	jp EnableLCD
 
-; The front gate's question, and its menu, in wApMessage for AP_MESSAGE_TEXT
-ApComposeGatePrompt:
-	ld hl, ApTextGatePrompt
-	jr ApComposeGateText
-
+; The front gate's menu, in wApMessage for AP_MESSAGE_TEXT
 ApComposeGateMenu:
 	ld hl, ApTextGateMenu
-ApComposeGateText:
 	ld de, wApMessage
 .copy:
 	ld a, [hl+]
@@ -250,9 +245,6 @@ ApComposeGateText:
 	and a
 	jr nz, .copy
 	ret
-
-ApTextGatePrompt:
-	db "Where would you", AP_TEXT_LINE, "like to fly?", 0
 
 ApTextGateMenu:
 	db "Island Open", AP_TEXT_LINE, "Mario World", 0
