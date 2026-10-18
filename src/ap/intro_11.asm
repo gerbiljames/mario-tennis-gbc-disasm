@@ -18,17 +18,25 @@ ApSkipIntro:
 	ld [wStoryModeExitTriggerRequest], a
 	ret
 
-; Yes: exit $02 (the Island Open), No: exit $03 (Peach's Castle)
+; Island Open: exit $02, Mario World: exit $03 (Peach's Castle); B asks again
 ApFrontGateTile_11:
 	apcall ApComposeGatePrompt
 	script_set_text AP_MESSAGE_TEXT
 	script_speak_restore ACTOR_PLAYER
-	farcall RunDialogueYesNoPrompt
+	apcall ApComposeGateMenu
+	ld hl, AP_MESSAGE_TEXT
+	ld de, $0101
+	ld a, $01
+	farcall RunPagedTextMenu
+	cp $ff
+	jr z, ApFrontGateTile_11
+	push af
 	farcall ScriptCloseDialogueWindow
+	pop af
 	and a
-	ld a, $03
-	jr z, .exit
 	ld a, $02
+	jr z, .exit
+	ld a, $03
 .exit:
 	ld [wUnusedExitTriggerIdMirror], a
 	ld [wStoryModeExitTriggerRequest], a

@@ -234,9 +234,14 @@ ApLoadAwardFont:
 	farcall LoadMenuFontGfx
 	jp EnableLCD
 
-; The front gate's question, in wApMessage for AP_MESSAGE_TEXT
+; The front gate's question, and its menu, in wApMessage for AP_MESSAGE_TEXT
 ApComposeGatePrompt:
 	ld hl, ApTextGatePrompt
+	jr ApComposeGateText
+
+ApComposeGateMenu:
+	ld hl, ApTextGateMenu
+ApComposeGateText:
 	ld de, wApMessage
 .copy:
 	ld a, [hl+]
@@ -247,7 +252,10 @@ ApComposeGatePrompt:
 	ret
 
 ApTextGatePrompt:
-	db "Fly to", AP_TEXT_LINE, "Mario World?", 0
+	db "Where would you", AP_TEXT_LINE, "like to fly?", 0
+
+ApTextGateMenu:
+	db "Island Open", AP_TEXT_LINE, "Mario World", 0
 
 ; For the Senior court's practice offers (Beth in singles, Bob in doubles):
 ; -> a = wMapSceneStage2, or the arc's first ranking stage, where they offer

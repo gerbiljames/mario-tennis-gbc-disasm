@@ -790,18 +790,18 @@ STORYLOC_ACADEMY_ENTRANCE, STORYLOC_PEACHS_CASTLE = 0x14, 0x1d
 
 def out_the_front_gate(g, answer):
     """Walk south from inside the Academy Entrance until the map changes,
-    answering the gate's question with `answer` -> (asked, where the player
-    ends up)."""
+    picking `answer` ("island" or "mario") from the gate's menu -> (asked,
+    where the player ends up)."""
     assert g.warp(STORYLOC_ACADEMY_ENTRANCE, 0x01) == STORYLOC_ACADEMY_ENTRANCE
     g.wram("wApMessage", 0)
     asked = False
     for i in range(60):
         start = g.idle
         g.press("down", hold=20)
-        if g.mem[g.addr("wApMessage")] == ord("F"):
+        if g.mem[g.addr("wApMessage")] in b"WI":
             asked = True
             g.tick(150)
-            if answer == "no":
+            if answer == "mario":
                 g.press("down", wait=10)
             g.press("a")
             break
@@ -825,8 +825,8 @@ def out_the_front_gate(g, answer):
 @test
 def front_gate_asks_with_both_open(g, c):
     set_flag(g, 47, False)
-    assert out_the_front_gate(g, "no") == (True, STORYLOC_TOURNAMENT_COURTYARD)
-    r = out_the_front_gate(g, "yes")
+    assert out_the_front_gate(g, "island") == (True, STORYLOC_TOURNAMENT_COURTYARD)
+    r = out_the_front_gate(g, "mario")
     assert r == (True, STORYLOC_PEACHS_CASTLE), r
 
 
@@ -836,7 +836,7 @@ front_gate_asks_with_both_open.tokens = lambda c: {("ApStartInventory", c["ITEM_
 @test
 def front_gate_island_open_only(g, c):
     set_flag(g, 47, False)
-    assert out_the_front_gate(g, "yes") == (False, STORYLOC_TOURNAMENT_COURTYARD)
+    assert out_the_front_gate(g, "island") == (False, STORYLOC_TOURNAMENT_COURTYARD)
 
 
 front_gate_island_open_only.tokens = island_open_by_the_front_gate.tokens
