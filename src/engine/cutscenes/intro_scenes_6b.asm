@@ -34,7 +34,7 @@ InitCutsceneSceneA:
 	ld [wCameraX], a ; $544c
 	ld a, $24 ; $544f
 	ld [wCameraY + 1], a ; $5451
-	ld a, $01 ; $5454
+	ld a, SCENECOPY_FROM_CAMERA ; $5454
 	farcall CopyScrolledSceneTilemapToVram ; $5456
 	xor a ; $5459
 	ld [wCameraY + 1], a ; $545a
@@ -67,7 +67,7 @@ Unused_6b_InitCutsceneSceneB:
 	ld [wCameraY], a ; $54ab
 	ld a, $24 ; $54ae
 	ld [wCameraY + 1], a ; $54b0
-	ld a, $01 ; $54b3
+	ld a, SCENECOPY_FROM_CAMERA ; $54b3
 	farcall CopyScrolledSceneTilemapToVram ; $54b5
 	ret ; $54b8
 InitCutsceneSceneC:
@@ -101,7 +101,7 @@ InitCutsceneSceneC:
 	ld [wCameraY], a ; $550f
 	ld a, $24 ; $5512
 	ld [wCameraY + 1], a ; $5514
-	ld a, $01 ; $5517
+	ld a, SCENECOPY_FROM_CAMERA ; $5517
 	farcall CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
 CutsceneSceneAGfx0:
@@ -283,7 +283,7 @@ InitTitleSceneGraphics:
 	ld [wCameraX], a ; $61d7
 	ld [wCameraY], a ; $61da
 	ld [wCameraY + 1], a ; $61dd
-	ld a, $01 ; $61e0
+	ld a, SCENECOPY_FROM_CAMERA ; $61e0
 	farcall CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
 TitleSceneGraphicsGfx0:

@@ -185,7 +185,7 @@ AcademyWingInitScript_10:
 	ld a, $3e ; $64bf
 	ld [wMapHeightTiles], a ; $64c1
 	call DisableLCDSafely ; $64c4
-	ld a, $00 ; $64c7
+	ld a, SCENECOPY_FROM_PLAYER ; $64c7
 	farcall CopyScrolledSceneTilemapToVram ; $64c9
 	call EnableLCD ; $64cc
 	ld a, [wStoryModeEntryPoint] ; $64cf

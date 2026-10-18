@@ -77,7 +77,7 @@ End12PrincipalsOfficeInitScript_27:
 	ld a, $3e ; $4c70
 	ld [wMapHeightTiles], a ; $4c72
 	call DisableLCDSafely ; $4c75
-	ld a, $00 ; $4c78
+	ld a, SCENECOPY_FROM_PLAYER ; $4c78
 	farcall CopyScrolledSceneTilemapToVram ; $4c7a
 	call EnableLCD ; $4c7d
 	ld a, [wStoryModeEntryPoint] ; $4c80

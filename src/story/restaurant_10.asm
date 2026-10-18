@@ -393,7 +393,7 @@ CafeteriaInitScript_10:
 	ld a, $3e ; $5a6c
 	ld [wMapHeightTiles], a ; $5a6e
 	call DisableLCDSafely ; $5a71
-	ld a, $00 ; $5a74
+	ld a, SCENECOPY_FROM_PLAYER ; $5a74
 	farcall CopyScrolledSceneTilemapToVram ; $5a76
 	call EnableLCD ; $5a79
 	call MapArrivalWalkPair_10 ; $5a7c

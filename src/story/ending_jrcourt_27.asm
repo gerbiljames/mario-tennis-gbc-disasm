@@ -70,7 +70,7 @@ End7TrainingCtrEntry01Scene:
 	ld a, $3c ; $627f
 	ld [wMapHeightTiles], a ; $6281
 	call DisableLCDSafely ; $6284
-	ld a, $00 ; $6287
+	ld a, SCENECOPY_FROM_PLAYER ; $6287
 	farcall CopyScrolledSceneTilemapToVram ; $6289
 	call EnableLCD ; $628c
 	call ComputeMachineCourtProgress_27 ; $628f

@@ -216,7 +216,7 @@ TennisMachineRoomInitScript_14:
 	ld a, $3c ; $4287
 	ld [wMapHeightTiles], a ; $4289
 	call DisableLCDSafely ; $428c
-	ld a, $00 ; $428f
+	ld a, SCENECOPY_FROM_PLAYER ; $428f
 	farcall CopyScrolledSceneTilemapToVram ; $4291
 	call EnableLCD ; $4294
 	call ComputeMachineCourtProgress ; $4297

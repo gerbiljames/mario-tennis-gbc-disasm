@@ -139,7 +139,7 @@ ShowTennisDictionaryPageDefault:
 	call AdvanceFrame ; $41b6
 	call DisableLCDSafely ; $41b9
 	call LoadTennisDictionaryAssetsDefault ; $41bc
-	ld a, $01 ; $41bf
+	ld a, SCENECOPY_FROM_CAMERA ; $41bf
 	farcall CopyScrolledSceneTilemapToVram ; $41c1
 	call EnableLCD ; $41c4
 	call SetTennisDictionaryListFromIndexRow ; $41c7
@@ -167,7 +167,7 @@ ShowTennisDictionaryPageChar6:
 	call AdvanceFrame ; $4200
 	call DisableLCDSafely ; $4203
 	call LoadTennisDictionaryAssetsChar6 ; $4206
-	ld a, $01 ; $4209
+	ld a, SCENECOPY_FROM_CAMERA ; $4209
 	farcall CopyScrolledSceneTilemapToVram ; $420b
 	call EnableLCD ; $420e
 	wram_bank WRAM_SCENE ; $4211
@@ -411,7 +411,7 @@ LoadTennisDictionaryScreen:
 	farcall UpdateSceneScroll ; $443a
 	call DisableLCDSafely ; $443d
 	wram_bank WRAM_SCREEN ; $4440
-	ld a, $01 ; $4446
+	ld a, SCENECOPY_FROM_CAMERA ; $4446
 	farcall CopyScrolledSceneTilemapToVram ; $4448
 	call EnableLCD ; $444b
 	ret ; $444e

@@ -236,7 +236,7 @@ RunStoryLocation:
 	farcall InitSceneScroll ; $4f99
 	ld a, [wStoryLocationScene] ; $4f9c
 	farcall LoadStorySceneGraphics ; $4f9f
-	ld a, $00 ; $4fa2
+	ld a, SCENECOPY_FROM_PLAYER ; $4fa2
 	farcall CopyScrolledSceneTilemapToVram ; $4fa4
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4fa7
 	jr nz, .enableLcd ; $4faa

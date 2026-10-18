@@ -341,7 +341,7 @@ WallPracticeRoomInitScript_12:
 	ld a, $3c ; $4f15
 	ld [wMapHeightTiles], a ; $4f17
 	call DisableLCDSafely ; $4f1a
-	ld a, $00 ; $4f1d
+	ld a, SCENECOPY_FROM_PLAYER ; $4f1d
 	farcall CopyScrolledSceneTilemapToVram ; $4f1f
 	call EnableLCD ; $4f22
 	call SetupWallPracticeLevelSigns ; $4f25

@@ -322,7 +322,7 @@ SetupDormRoomSceneVariant:
 	ld a, $14 ; $519b
 	ld [wMapHeightTiles], a ; $519d
 	call DisableLCDSafely ; $51a0
-	ld a, $00 ; $51a3
+	ld a, SCENECOPY_FROM_PLAYER ; $51a3
 	farcall CopyScrolledSceneTilemapToVram ; $51a5
 	call EnableLCD ; $51a8
 	ret ; $51ab
