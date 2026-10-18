@@ -7,13 +7,13 @@
 ; different names.
 MACRO twin
 DEF TWIN EQUS "\2"
-	INCLUDE "src/twins/\1.asm"
+	INCLUDE STRCAT("src/twins/", "\1", ".asm")
 PURGE TWIN
 ENDM
 
 MACRO twin_named
 DEF TWIN_LABEL EQUS "\2"
-	INCLUDE "src/twins/\1.asm"
+	INCLUDE STRCAT("src/twins/", "\1", ".asm")
 PURGE TWIN_LABEL
 ENDM
 
@@ -22,7 +22,7 @@ ENDM
 MACRO twin_in
 DEF TWIN_LABEL EQUS "\2"
 DEF TWIN EQUS "\3"
-	INCLUDE "src/twins/\1.asm"
+	INCLUDE STRCAT("src/twins/", "\1", ".asm")
 PURGE TWIN
 PURGE TWIN_LABEL
 ENDM
