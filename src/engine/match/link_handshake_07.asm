@@ -54,8 +54,8 @@ PrimeSlaveSerialReply:
 PrepareLinkStatePayload:
 	push af ; $49f7
 	ldh a, [hLinkTxByte] ; $49f8
-	and $c0 ; $49fa
-	xor $c0 ; $49fc
+	and LINKTAG_MASK ; $49fa
+	xor LINKTAG_MASK ; $49fc
 	ldh [hLinkTxSeqBits], a ; $49fe
 	ldh a, [hLinkTxInput] ; $4a00
 	ldh [hLinkRemoteInputBuf], a ; $4a02
@@ -70,8 +70,8 @@ PrepareLinkStatePayload:
 PrepareLinkInputPayload:
 	push af ; $4a13
 	ldh a, [hLinkTxByte] ; $4a14
-	and $c0 ; $4a16
-	xor $c0 ; $4a18
+	and LINKTAG_MASK ; $4a16
+	xor LINKTAG_MASK ; $4a18
 	ldh [hLinkTxSeqBits], a ; $4a1a
 	ldh a, [hLinkTxInput] ; $4a1c
 	ldh [hLinkRemoteInputBuf], a ; $4a1e
@@ -223,13 +223,13 @@ TryLinkHandshakeSlave:
 	jr c, .failed ; $4b18
 	di ; $4b1a
 	ldh a, [hLinkRxByte] ; $4b1b
-	cp $c2 ; $4b1d
+	cp LINKMSG_PROBE_REPLY ; $4b1d
 	jr z, .failed ; $4b1f
 	cp $00 ; $4b21
 	jr z, .failed ; $4b23
 	cp $ff ; $4b25
 	jr z, .failed ; $4b27
-	cp $c1 ; $4b29
+	cp LINKMSG_PROBE ; $4b29
 	jr z, .success ; $4b2b
 	ei ; $4b2d
 .failed:
@@ -281,11 +281,11 @@ TryLinkHandshakeMaster:
 	farcall AnimateLinkStatusPalette ; $4b72
 	farcall UpdateAnimatedTiles ; $4b75
 	jr c, .sendReady ; $4b78
-	cp $c1 ; $4b7a
+	cp LINKMSG_PROBE ; $4b7a
 	jr z, .sendReady ; $4b7c
 	cp $ff ; $4b7e
 	jr z, .sendReady ; $4b80
-	cp $c2 ; $4b82
+	cp LINKMSG_PROBE_REPLY ; $4b82
 	jr z, .failed ; $4b84
 	ld a, d ; $4b86
 	cp $03 ; $4b87
@@ -433,7 +433,7 @@ SerialDecodeCommand:
 	push bc ; $4c6a
 	ldh a, [hLinkRxByte] ; $4c6b
 	ld b, a ; $4c6d
-	and $c0 ; $4c6e
+	and LINKTAG_MASK ; $4c6e
 	cp $80 ; $4c70
 	jr z, .decode ; $4c72
 	cp $40 ; $4c74
@@ -444,7 +444,7 @@ SerialDecodeCommand:
 	jr .done ; $4c7d
 .decode:
 	ld a, b ; $4c7f
-	and $3f ; $4c80
+	and LINKTAG_PAYLOAD ; $4c80
 	ldh [hLinkRemoteInput], a ; $4c82
 	ldh a, [hLinkState] ; $4c84
 	cp LINKSTATE_MASTER ; $4c86

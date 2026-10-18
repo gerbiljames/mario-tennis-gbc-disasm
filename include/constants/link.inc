@@ -6,10 +6,23 @@ def LINKSTATE_IDLE           equ $00
 def LINKSTATE_MASTER         equ $01
 def LINKSTATE_SLAVE          equ $02
 
+; --- Serial byte tag (top two bits of every byte the link routines send) ---
+; Bulk blocks travel one nibble per byte under the sender's tag; a tag with
+; no payload is the idle/poll byte. Per-frame play bytes put the alternating
+; hLinkTxSeqBits ($40/$80) there instead. Tag $c0 is the LINKMSG_* range.
+def LINKTAG_MASK    equ $c0
+def LINKTAG_PAYLOAD equ $3f
+def LINKTAG_MASTER  equ $40
+def LINKTAG_SLAVE   equ $80
+
+; Ready tokens (ExchangeReadyTokenMaster/Slave), each side sends its own
+; under its tag and waits for the other's payload.
+def LINKREADY_MASTER equ $0b
+def LINKREADY_SLAVE  equ $0a
+
 ; --- Link control tokens (the serial byte, $07 link routines) ---
-; Bulk blocks travel one nibble per byte with a tag in bits 6-7 (`or $40`
-; from the master, `or $80` from the slave), which keeps $c0-$cf free for
-; in-band control. Per-frame play bytes never use these.
+; LINKTAG_MASK's fourth value, kept free for in-band control. Per-frame play
+; bytes never use these.
 def LINKMSG_NONE             equ $c0 ; nothing to say: sent after the handshake and on a reset
 def LINKMSG_PROBE            equ $c1 ; the master's handshake probe (TryLinkHandshakeMaster)
 def LINKMSG_PROBE_REPLY      equ $c2 ; the slave's answer (TryLinkHandshakeSlave)

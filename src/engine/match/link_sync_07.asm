@@ -54,7 +54,7 @@ ExchangeLinkFrameByteMaster:
 	jr z, .badReply ; $469f
 	cp $ff ; $46a1
 	jr z, .resetLink ; $46a3
-	and $c0 ; $46a5
+	and LINKTAG_MASK ; $46a5
 	cp $80 ; $46a7
 	jr z, .checkDuplicate ; $46a9
 	cp $40 ; $46ab
@@ -76,7 +76,7 @@ ExchangeLinkFrameByteMaster:
 	ldh a, [hLinkLastRxByte] ; $46c7
 	cp b ; $46c9
 	jr nz, .store ; $46ca
-	and $3f ; $46cc
+	and LINKTAG_PAYLOAD ; $46cc
 	ld hl, hLinkCounter ; $46ce
 	inc [hl] ; $46d1
 	ld a, [hl] ; $46d2
@@ -106,7 +106,7 @@ ExchangeLinkFrameByteSlave:
 	jr z, .resetLink ; $46fc
 	cp $ff ; $46fe
 	jr z, .resetLinkAgain ; $4700
-	and $c0 ; $4702
+	and LINKTAG_MASK ; $4702
 	cp $40 ; $4704
 	jr z, .checkDuplicate ; $4706
 	cp $80 ; $4708
@@ -119,7 +119,7 @@ ExchangeLinkFrameByteSlave:
 	ldh a, [hLinkLastRxByte] ; $4712
 	cp b ; $4714
 	jr nz, .store ; $4715
-	and $3f ; $4717
+	and LINKTAG_PAYLOAD ; $4717
 	jr .resetLink ; $4719
 .store:
 	ld a, b ; $471b
@@ -223,8 +223,8 @@ ExchangeReadyTokenMaster:
 	bit B_SC_START, a ; $47ac
 	jr nz, .retry ; $47ae
 	di ; $47b0
-	ld a, $0b ; $47b1
-	or $40 ; $47b3
+	ld a, LINKREADY_MASTER ; $47b1
+	or LINKTAG_MASTER ; $47b3
 	ldh [rSB], a ; $47b5
 	push af ; $47b7
 	ld a, SC_FAST | SC_INTERNAL ; $47b8
@@ -235,8 +235,8 @@ ExchangeReadyTokenMaster:
 	ei ; $47c1
 	call ShortDelay ; $47c2
 	ldh a, [hLinkRxByte] ; $47c5
-	and $3f ; $47c7
-	cp $0a ; $47c9
+	and LINKTAG_PAYLOAD ; $47c7
+	cp LINKREADY_SLAVE ; $47c9
 	jr z, .done ; $47cb
 	dec de ; $47cd
 	ld a, d ; $47ce
@@ -252,8 +252,8 @@ ExchangeReadyTokenSlave:
 	push de ; $47d9
 	ld de, $0003 ; $47da
 	di ; $47dd
-	ld a, $0a ; $47de
-	or $80 ; $47e0
+	ld a, LINKREADY_SLAVE ; $47de
+	or LINKTAG_SLAVE ; $47e0
 	ldh [hLinkTxByte], a ; $47e2
 	ldh [rSB], a ; $47e4
 	push af ; $47e6
@@ -266,8 +266,8 @@ ExchangeReadyTokenSlave:
 .retry:
 	call WaitSerialTransfer ; $47f1
 	ldh a, [hLinkRxByte] ; $47f4
-	and $3f ; $47f6
-	cp $0b ; $47f8
+	and LINKTAG_PAYLOAD ; $47f6
+	cp LINKREADY_MASTER ; $47f8
 	jr z, .done ; $47fa
 	dec de ; $47fc
 	ld a, d ; $47fd

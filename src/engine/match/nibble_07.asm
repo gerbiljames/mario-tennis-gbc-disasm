@@ -4,22 +4,22 @@ ExchangeChecksumMaster:
 	ld a, d ; $432c
 	swap a ; $432d
 	and $0f ; $432f
-	or $40 ; $4331
+	or LINKTAG_MASTER ; $4331
 	call SendByteGetReplyMaster ; $4333
 	ld b, a ; $4336
-	and $c0 ; $4337
-	cp $80 ; $4339
+	and LINKTAG_MASK ; $4337
+	cp LINKTAG_SLAVE ; $4339
 	jr z, .nibble1 ; $433b
 	call LinkErrorReset ; $433d
 .nibble1:
 	call ShiftNibbleIntoChecksum ; $4340
 	ld a, d ; $4343
 	and $0f ; $4344
-	or $40 ; $4346
+	or LINKTAG_MASTER ; $4346
 	call SendByteGetReplyMaster ; $4348
 	ld b, a ; $434b
-	and $c0 ; $434c
-	cp $80 ; $434e
+	and LINKTAG_MASK ; $434c
+	cp LINKTAG_SLAVE ; $434e
 	jr z, .nibble2 ; $4350
 	call LinkErrorReset ; $4352
 .nibble2:
@@ -27,22 +27,22 @@ ExchangeChecksumMaster:
 	ld a, e ; $4358
 	swap a ; $4359
 	and $0f ; $435b
-	or $40 ; $435d
+	or LINKTAG_MASTER ; $435d
 	call SendByteGetReplyMaster ; $435f
 	ld b, a ; $4362
-	and $c0 ; $4363
-	cp $80 ; $4365
+	and LINKTAG_MASK ; $4363
+	cp LINKTAG_SLAVE ; $4365
 	jr z, .nibble3 ; $4367
 	call LinkErrorReset ; $4369
 .nibble3:
 	call ShiftNibbleIntoChecksum ; $436c
 	ld a, e ; $436f
 	and $0f ; $4370
-	or $40 ; $4372
+	or LINKTAG_MASTER ; $4372
 	call SendByteGetReplyMaster ; $4374
 	ld b, a ; $4377
-	and $c0 ; $4378
-	cp $80 ; $437a
+	and LINKTAG_MASK ; $4378
+	cp LINKTAG_SLAVE ; $437a
 	jr z, .done ; $437c
 	call LinkErrorReset ; $437e
 .done:
@@ -57,19 +57,19 @@ ExchangeChecksumSlave:
 	ld a, d ; $4390
 	swap a ; $4391
 	and $0f ; $4393
-	or $80 ; $4395
+	or LINKTAG_SLAVE ; $4395
 	call SendByteGetReplySlave ; $4397
-	cp $cc ; $439a
+	cp LINKMSG_CHECKSUM ; $439a
 	jr z, .nibble1 ; $439c
 	call LinkErrorReset ; $439e
 .nibble1:
 	ld a, d ; $43a1
 	and $0f ; $43a2
-	or $80 ; $43a4
+	or LINKTAG_SLAVE ; $43a4
 	call SendByteGetReplySlave ; $43a6
 	ld b, a ; $43a9
-	and $c0 ; $43aa
-	cp $40 ; $43ac
+	and LINKTAG_MASK ; $43aa
+	cp LINKTAG_MASTER ; $43ac
 	jr z, .nibble2 ; $43ae
 	call LinkErrorReset ; $43b0
 .nibble2:
@@ -77,22 +77,22 @@ ExchangeChecksumSlave:
 	ld a, e ; $43b6
 	swap a ; $43b7
 	and $0f ; $43b9
-	or $80 ; $43bb
+	or LINKTAG_SLAVE ; $43bb
 	call SendByteGetReplySlave ; $43bd
 	ld b, a ; $43c0
-	and $c0 ; $43c1
-	cp $40 ; $43c3
+	and LINKTAG_MASK ; $43c1
+	cp LINKTAG_MASTER ; $43c3
 	jr z, .nibble3 ; $43c5
 	call LinkErrorReset ; $43c7
 .nibble3:
 	call ShiftNibbleIntoChecksum ; $43ca
 	ld a, e ; $43cd
 	and $0f ; $43ce
-	or $80 ; $43d0
+	or LINKTAG_SLAVE ; $43d0
 	call SendByteGetReplySlave ; $43d2
 	ld b, a ; $43d5
-	and $c0 ; $43d6
-	cp $40 ; $43d8
+	and LINKTAG_MASK ; $43d6
+	cp LINKTAG_MASTER ; $43d8
 	jr z, .nibble4 ; $43da
 	call LinkErrorReset ; $43dc
 .nibble4:
@@ -100,8 +100,8 @@ ExchangeChecksumSlave:
 	ld a, LINKMSG_BLOCK_OK ; $43e2
 	call SendByteGetReplySlave ; $43e4
 	ld b, a ; $43e7
-	and $c0 ; $43e8
-	cp $40 ; $43ea
+	and LINKTAG_MASK ; $43e8
+	cp LINKTAG_MASTER ; $43ea
 	jr z, .done ; $43ec
 	call LinkErrorReset ; $43ee
 .done:
@@ -176,7 +176,7 @@ Unused_07_SendNibbleBlockSlave:
 .sendByte:
 	di ; $4450
 	ldh a, [hLinkTxByte] ; $4451
-	or $80 ; $4453
+	or LINKTAG_SLAVE ; $4453
 	ldh [rSB], a ; $4455
 	push af ; $4457
 	ld a, SC_FAST | SC_EXTERNAL ; $4458
@@ -201,11 +201,11 @@ Unused_07_SendNibbleBlockSlave:
 .compareChecksum:
 	ld a, LINKMSG_CHECKSUM ; $447c
 	call SendByteGetReplySlave ; $447e
-	cp $cd ; $4481
+	cp LINKMSG_BLOCK_OK ; $4481
 	jr z, .checksumOk ; $4483
 	ld b, a ; $4485
-	and $c0 ; $4486
-	cp $40 ; $4488
+	and LINKTAG_MASK ; $4486
+	cp LINKTAG_MASTER ; $4488
 	jr nz, .compareChecksum ; $448a
 	sla l ; $448c
 	rl h ; $448e
@@ -235,9 +235,9 @@ Unused_07_SendNibbleBlockSlave:
 	pop hl ; $44ae
 	jr nz, .startBlock ; $44af
 .retry:
-	ld a, $80 ; $44b1
+	ld a, LINKTAG_SLAVE ; $44b1
 	call SendByteGetReplySlave ; $44b3
-	cp $40 ; $44b6
+	cp LINKTAG_MASTER ; $44b6
 	jr nz, .retry ; $44b8
 	scf ; $44ba
 	ccf ; $44bb
@@ -262,7 +262,7 @@ Unused_07_ReceiveNibbleBlockMaster:
 	ld de, $0000 ; $44d4
 	ld b, $00 ; $44d7
 .nibbleLoop:
-	ld a, $40 ; $44d9
+	ld a, LINKTAG_MASTER ; $44d9
 	ldh [rSB], a ; $44db
 	push af ; $44dd
 	ld a, SC_FAST | SC_INTERNAL ; $44de
@@ -273,9 +273,9 @@ Unused_07_ReceiveNibbleBlockMaster:
 	call ShortDelay ; $44e7
 	call PollSerialResponse ; $44ea
 	jr c, .nibbleLoop ; $44ed
-	cp $c5 ; $44ef
+	cp LINKMSG_BLOCK_END ; $44ef
 	jr z, .compareChecksum ; $44f1
-	and $3f ; $44f3
+	and LINKTAG_PAYLOAD ; $44f3
 	ld [hl+], a ; $44f5
 	add e ; $44f6
 	ld e, a ; $44f7
@@ -293,17 +293,17 @@ Unused_07_ReceiveNibbleBlockMaster:
 	ld a, LINKMSG_BLOCK_END_ACK ; $4507
 	call SendByteGetReplyMaster ; $4509
 	ld a, d ; $450c
-	or $40 ; $450d
+	or LINKTAG_MASTER ; $450d
 	call SendByteGetReplyMaster ; $450f
 	ld a, e ; $4512
-	or $40 ; $4513
+	or LINKTAG_MASTER ; $4513
 	call SendByteGetReplyMaster ; $4515
 	ld a, LINKMSG_BLOCK_OK ; $4518
 	call SendByteGetReplyMaster ; $451a
 .retry:
-	ld a, $40 ; $451d
+	ld a, LINKTAG_MASTER ; $451d
 	call SendByteGetReplyMaster ; $451f
-	cp $c3 ; $4522
+	cp LINKMSG_SYNC_MASTER ; $4522
 	jr z, .startBlock ; $4524
 	cp $80 ; $4526
 	jr nz, .retry ; $4528

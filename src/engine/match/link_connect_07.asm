@@ -2,7 +2,7 @@ TryEstablishLink:
 	di ; $4048
 	ldh a, [hLinkRxByte] ; $4049
 	ei ; $404b
-	cp $c1 ; $404c
+	cp LINKMSG_PROBE ; $404c
 	jr z, .probe ; $404e
 	ld a, LINKSTATE_MASTER ; $4050
 	ldh [hLinkState], a ; $4052
@@ -96,7 +96,7 @@ ExchangeNibbleBlockMaster:
 	di ; $40ea
 	ldh a, [hLinkRxByte] ; $40eb
 	ei ; $40ed
-	cp $c4 ; $40ee
+	cp LINKMSG_SYNC_SLAVE ; $40ee
 	jr z, .synced ; $40f0
 	dec e ; $40f2
 	jr nz, .syncLoop ; $40f3
@@ -119,7 +119,7 @@ ExchangeNibbleBlockMaster:
 	ldh [hLinkTxByte], a ; $410c
 .sendRetry:
 	ldh a, [hLinkTxByte] ; $410e
-	or $40 ; $4110
+	or LINKTAG_MASTER ; $4110
 	ldh [rSB], a ; $4112
 	push af ; $4114
 	ld a, SC_FAST | SC_INTERNAL ; $4115
@@ -133,8 +133,8 @@ ExchangeNibbleBlockMaster:
 	call PollSerialResponse ; $4127
 	jr c, .sendRetry ; $412a
 	ld h, a ; $412c
-	and $c0 ; $412d
-	cp $80 ; $412f
+	and LINKTAG_MASK ; $412d
+	cp LINKTAG_SLAVE ; $412f
 	jr z, .storeRxNibble ; $4131
 	call LinkErrorReset ; $4133
 .storeRxNibble:
@@ -148,7 +148,7 @@ ExchangeNibbleBlockMaster:
 	inc h ; $4141
 .accumulate:
 	pop af ; $4142
-	and $3f ; $4143
+	and LINKTAG_PAYLOAD ; $4143
 	ld [hl], a ; $4145
 	add e ; $4146
 	ld e, a ; $4147
@@ -171,7 +171,7 @@ ExchangeNibbleBlockMaster:
 .sendBlockEnd:
 	ld a, LINKMSG_CHECKSUM ; $4165
 	call SendByteGetReplyMaster ; $4167
-	cp $cc ; $416a
+	cp LINKMSG_CHECKSUM ; $416a
 	jr z, .compareChecksum ; $416c
 	call LinkErrorReset ; $416e
 .compareChecksum:
@@ -195,17 +195,17 @@ ExchangeNibbleBlockMaster:
 	jp z, .checksumOk ; $4186
 	ld a, LINKMSG_CHECKSUM_BAD ; $4189
 	call SendByteGetReplyMaster ; $418b
-	cp $cd ; $418e
+	cp LINKMSG_BLOCK_OK ; $418e
 	jp z, .startBlock ; $4190
-	cp $cb ; $4193
+	cp LINKMSG_CHECKSUM_BAD ; $4193
 	jp z, .startBlock ; $4195
 	call LinkErrorReset ; $4198
 .checksumOk:
 	ld a, LINKMSG_BLOCK_OK ; $419b
 	call SendByteGetReplyMaster ; $419d
-	cp $cd ; $41a0
+	cp LINKMSG_BLOCK_OK ; $41a0
 	jr z, .done ; $41a2
-	cp $cb ; $41a4
+	cp LINKMSG_CHECKSUM_BAD ; $41a4
 	jp z, .startBlock ; $41a6
 	call LinkErrorReset ; $41a9
 .done:
@@ -285,7 +285,7 @@ ExchangeNibbleBlockSlave:
 	nop ; $4210
 	di ; $4211
 	ld a, [wLinkNibbleBuffer] ; $4212
-	or $80 ; $4215
+	or LINKTAG_SLAVE ; $4215
 	ldh [hLinkTxByte], a ; $4217
 	ei ; $4219
 	ld e, $64 ; $421a
@@ -295,7 +295,7 @@ ExchangeNibbleBlockSlave:
 	di ; $4221
 	ldh a, [hLinkRxByte] ; $4222
 	ei ; $4224
-	cp $c3 ; $4225
+	cp LINKMSG_SYNC_MASTER ; $4225
 	jr z, .synced ; $4227
 	dec e ; $4229
 	jr nz, .syncLoop ; $422a
@@ -324,7 +324,7 @@ ExchangeNibbleBlockSlave:
 	inc h ; $424e
 .loadTxNibble:
 	ld a, [hl] ; $424f
-	or $80 ; $4250
+	or LINKTAG_SLAVE ; $4250
 	ldh [hLinkTxByte], a ; $4252
 	ei ; $4254
 	call WaitSerialTransfer ; $4255
@@ -336,8 +336,8 @@ ExchangeNibbleBlockSlave:
 	call LinkErrorReset ; $4262
 .checkTag:
 	ld c, a ; $4265
-	and $c0 ; $4266
-	cp $40 ; $4268
+	and LINKTAG_MASK ; $4266
+	cp LINKTAG_MASTER ; $4268
 	jr z, .storeRxNibble ; $426a
 	call LinkErrorReset ; $426c
 .storeRxNibble:
@@ -349,7 +349,7 @@ ExchangeNibbleBlockSlave:
 	inc h ; $4278
 .accumulate:
 	ld a, c ; $4279
-	and $3f ; $427a
+	and LINKTAG_PAYLOAD ; $427a
 	ld [hl], a ; $427c
 	add e ; $427d
 	ld e, a ; $427e
@@ -378,8 +378,8 @@ ExchangeNibbleBlockSlave:
 	ldh a, [hLinkRxByte] ; $42a3
 	ei ; $42a5
 	ld b, a ; $42a6
-	and $c0 ; $42a7
-	cp $40 ; $42a9
+	and LINKTAG_MASK ; $42a7
+	cp LINKTAG_MASTER ; $42a9
 	jr z, .storeLastNibble ; $42ab
 	call LinkErrorReset ; $42ad
 .storeLastNibble:
@@ -391,7 +391,7 @@ ExchangeNibbleBlockSlave:
 	inc h ; $42b9
 .accumulateLast:
 	ld a, b ; $42ba
-	and $3f ; $42bb
+	and LINKTAG_PAYLOAD ; $42bb
 	ld [hl], a ; $42bd
 	add e ; $42be
 	ld e, a ; $42bf
@@ -400,7 +400,7 @@ ExchangeNibbleBlockSlave:
 .sendBlockEnd:
 	ld a, LINKMSG_CHECKSUM ; $42c3
 	call SendByteGetReplySlave ; $42c5
-	cp $c5 ; $42c8
+	cp LINKMSG_BLOCK_END ; $42c8
 	jr z, .compareChecksum ; $42ca
 	call LinkErrorReset ; $42cc
 .compareChecksum:
@@ -439,17 +439,17 @@ ExchangeNibbleBlockSlave:
 	ei ; $42ff
 	ld a, LINKMSG_CHECKSUM_BAD ; $4300
 	call SendByteGetReplySlave ; $4302
-	cp $cb ; $4305
+	cp LINKMSG_CHECKSUM_BAD ; $4305
 	jp z, .startBlock ; $4307
-	cp $cd ; $430a
+	cp LINKMSG_BLOCK_OK ; $430a
 	jp z, .startBlock ; $430c
 	call LinkErrorReset ; $430f
 .checksumOk:
 	ld a, LINKMSG_BLOCK_OK ; $4312
 	call SendByteGetReplySlave ; $4314
-	cp $cb ; $4317
+	cp LINKMSG_CHECKSUM_BAD ; $4317
 	jp z, .startBlock ; $4319
-	cp $cd ; $431c
+	cp LINKMSG_BLOCK_OK ; $431c
 	jr z, .done ; $431e
 	call LinkErrorReset ; $4320
 .done:
