@@ -6,7 +6,8 @@ Progress through the story is driven by items instead of wins:
 
 - **Progressive Singles Pass / Doubles Pass:** each copy opens the next class of that arc: Senior, Varsity, the
   Island Open, then Peach's Castle. Junior is open from the start.
-- **Drills:** progressive items open levels 2 and up of each Training Court drill. Level 1 is always open.
+- **Drills:** progressive items open levels 2 and up of each Training Court drill. Level 1 is always open, and the
+  levels are still played in order: each opens once the one before it is cleared.
 - **Mini-games:** each Mario mini-game is an item (progressive: its copies open the cell and levels 2 and 3).
 - **Equipment:** the six special rackets and two pairs of shoes.
 - **Shots** (`shot_items`, off by default): Progressive Topspin, Slice and Flat Shot (the second copy adds the power

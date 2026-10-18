@@ -41,6 +41,15 @@ def location_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
     if world.options.shot_items:
         for name, rule in shot_rules(world).items():
             rules[name] = And(rules[name], rule) if name in rules else rule
+    # a coach or room only offers its first level not cleared (ApDrillMatchLocked, the coach scripts, the room
+    # stage), so each level also needs the one before it
+    tracks = [[f"{drill} {kind} {n}" for n in (1, 2, 3)] for kind in ("Match", "Lesson") for drill in DRILL_TYPES]
+    tracks += [[f"{room} Level {n}" for n in (1, 2, 3, 4)] + [f"{room} Master"]
+               for room in ("Wall Practice", "Tennis Machine")]
+    for track in tracks:
+        for before, name in zip(track, track[1:]):
+            if before in rules:
+                rules[name] = And(rules[before], rules[name]) if name in rules else rules[before]
     return rules
 
 

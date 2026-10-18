@@ -71,6 +71,15 @@ class TestShotItems(MarioTennisGBCTestBase):
         self.collect_by_name("Lob")
         self.assertTrue(self.can_reach_location("Stroke Lesson 2"))
 
+    def test_a_drill_level_needs_the_one_before(self) -> None:
+        self.collect_by_name("Progressive Net Game Match")
+        self.assertFalse(self.can_reach_location("Net Game Match 3"), "Match 3 without Match 2's smash and lob")
+        self.collect_by_name(["Progressive Flat Shot", "Lob"])
+        if self.world.starting_shots[0] == "Progressive Flat Shot":
+            self.assertFalse(self.can_reach_location("Net Game Match 3"), "Match 3 without Match 1's volley")
+        self.collect_by_name("Progressive Slice")
+        self.assertTrue(self.can_reach_location("Net Game Match 3"))
+
     def test_service_matches_want_a_nice_serve(self) -> None:
         self.assertFalse(self.can_reach_location("Service Match 1"))
         self.collect_by_name(["Progressive Topspin Serve", "Progressive Slice Serve", "Progressive Flat Serve"])
