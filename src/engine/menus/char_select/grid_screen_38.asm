@@ -170,7 +170,7 @@ RunExhibitionCharSelectScreen:
 	wram_bank WRAM_SCREEN ; $4e67
 	ld a, b ; $4e6d
 	ld [wCharSelectMode], a ; $4e6e
-	ld a, $02 ; $4e71
+	ld a, HAND_UNCHOSEN ; $4e71
 	ld [wCharGridHandedness], a ; $4e73
 	call DisableLCDSafely ; $4e76
 	farcall LoadMenuFontGfx ; $4e79
@@ -232,9 +232,9 @@ RunExhibitionCharSelectScreen:
 	ld b, a ; $4f04
 	pop_wram_bank ; $4f05
 	ld a, b ; $4f0a
-	cp $01 ; $4f0b
+	cp CHARSELECT_DONE ; $4f0b
 	jr z, .finish ; $4f0d
-	cp $02 ; $4f0f
+	cp CHARSELECT_CANCELLED ; $4f0f
 	jr z, .done ; $4f11
 	jr .frameLoop ; $4f13
 .finish:
@@ -410,24 +410,24 @@ HandleCharGridDpad:
 	ld a, [wCharGridScrollCount] ; $51bc
 	inc a ; $51bf
 	ld [wCharGridScrollCount], a ; $51c0
-	ld a, $02 ; $51c3
+	ld a, HAND_UNCHOSEN ; $51c3
 	ld [wCharGridHandedness], a ; $51c5
 	call MoveCharGridCursorRight ; $51c8
 	xor a ; $51cb
 	ld [wMenuInputPressed], a ; $51cc
 	jp .done ; $51cf
 .moveLeft:
-	ld a, $02 ; $51d2
+	ld a, HAND_UNCHOSEN ; $51d2
 	ld [wCharGridHandedness], a ; $51d4
 	call MoveCharGridCursorLeft ; $51d7
 	jr .done ; $51da
 .moveRight:
-	ld a, $02 ; $51dc
+	ld a, HAND_UNCHOSEN ; $51dc
 	ld [wCharGridHandedness], a ; $51de
 	call MoveCharGridCursorUp ; $51e1
 	jr .done ; $51e4
 .moveDown:
-	ld a, $02 ; $51e6
+	ld a, HAND_UNCHOSEN ; $51e6
 	ld [wCharGridHandedness], a ; $51e8
 	call MoveCharGridCursorDown ; $51eb
 .done:
@@ -579,14 +579,14 @@ HandleCharGridButtons:
 	jr z, .done ; $52e5
 	sound SFX_MENU_MOVE ; $52e7
 	ld a, [wCharGridHandedness] ; $52e9
-	cp $02 ; $52ec
+	cp HAND_UNCHOSEN ; $52ec
 	jr z, .starChar ; $52ee
 	xor $01 ; $52f0
 	ld [wCharGridHandedness], a ; $52f2
 	call RefreshCharInfoPanel ; $52f5
 	ret ; $52f8
 .starChar:
-	ld a, $01 ; $52f9
+	ld a, HAND_LEFT ; $52f9
 	ld [wCharGridHandedness], a ; $52fb
 	call RefreshCharInfoPanel ; $52fe
 .done:
@@ -631,7 +631,7 @@ ConfirmCharGridSelection:
 	or a ; $5345
 	jr z, .drawPortrait ; $5346
 	ld a, [wCharGridHandedness] ; $5348
-	cp $01 ; $534b
+	cp HAND_LEFT ; $534b
 	jr nz, .drawPortrait ; $534d
 	ld a, [wCharSelectSlot] ; $534f
 	ld hl, wCharSelectSlotLeftHanded ; $5352
@@ -676,7 +676,7 @@ ConfirmCharGridSelection:
 	call AdvanceToNextPlayerSlot ; $5390
 	cp $ff ; $5393
 	jr nz, .done ; $5395
-	ld a, $01 ; $5397
+	ld a, CHARSELECT_DONE ; $5397
 	ld [wCharSelectExitCode], a ; $5399
 .done:
 	call DrawCharGridSlotPrompt ; $539c
@@ -691,7 +691,7 @@ CancelCharGridSelection:
 	call RetreatToPreviousPlayerSlot ; $53b9
 	cp $ff ; $53bc
 	jr nz, .clearSlot ; $53be
-	ld a, $02 ; $53c0
+	ld a, CHARSELECT_CANCELLED ; $53c0
 	ld [wCharSelectExitCode], a ; $53c2
 	pop_wram_bank ; $53c5
 	ret ; $53ca

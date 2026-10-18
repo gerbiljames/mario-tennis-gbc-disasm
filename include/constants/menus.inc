@@ -87,6 +87,22 @@ def CHARSELECTMODE_LINK_SINGLES_P2    equ $03
 def CHARSELECTMODE_LINK_DOUBLES_P1    equ $04
 def CHARSELECTMODE_LINK_DOUBLES_P2    equ $05
 
+; --- Character-grid handedness (wCharGridHandedness) ---
+; START toggles it with `xor 1` (unchosen becomes left) for Mario-cast
+; characters; the label under the portrait reads it.
+def HAND_RIGHT    equ $00
+def HAND_LEFT     equ $01
+def HAND_UNCHOSEN equ $02
+
+; --- Character-select result (wCharSelectExitCode), polled by the frame loop ---
+def CHARSELECT_RUNNING   equ $00
+def CHARSELECT_DONE      equ $01
+def CHARSELECT_CANCELLED equ $02
+
+; --- Equipment screen item kind (wEquipItemKind) ---
+def EQUIPKIND_RACKETS equ $00
+def EQUIPKIND_SHOES   equ $01
+
 ; --- Menu selection sentinel (wMatchMenuSelection) ---
 ; A row in whatever menu is up (match pause, story pause, debug stats), not an
 ; item id: GetMatchMenuItemId maps it via `MatchMenuDefs + wPauseMenuId * 8 +

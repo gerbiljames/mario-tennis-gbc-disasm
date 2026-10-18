@@ -81,7 +81,7 @@ RunCpuDifficultySubmenu:
 	call AdvanceToNextPlayerSlot ; $62a8
 	cp $ff ; $62ab
 	jr nz, .advanceSlot ; $62ad
-	ld a, $01 ; $62af
+	ld a, CHARSELECT_DONE ; $62af
 	ld [wCharSelectExitCode], a ; $62b1
 .advanceSlot:
 	call DrawCharGridSlotPrompt ; $62b4
@@ -216,7 +216,7 @@ RunLinkCharSelectScreen:
 	call EnableTimerInterrupt ; $63cd
 	sound BGM_MENU ; $63d0
 	wram_bank WRAM_SCREEN ; $63d2
-	ld a, $02 ; $63d8
+	ld a, HAND_UNCHOSEN ; $63d8
 	ld [wCharGridHandedness], a ; $63da
 	ld a, [wMatchIsDoubles] ; $63dd
 	or a ; $63e0
@@ -322,9 +322,9 @@ RunLinkCharSelectScreen:
 	ld b, a ; $64b9
 	pop_wram_bank ; $64ba
 	ld a, b ; $64bf
-	cp $01 ; $64c0
+	cp CHARSELECT_DONE ; $64c0
 	jr z, .checkDone ; $64c2
-	cp $02 ; $64c4
+	cp CHARSELECT_CANCELLED ; $64c4
 	jr z, .done ; $64c6
 	jp .frameLoop ; $64c8
 .checkDone:

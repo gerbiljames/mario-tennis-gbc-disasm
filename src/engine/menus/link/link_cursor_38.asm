@@ -411,7 +411,7 @@ UpdateMenuCursorFromLinkInput:
 	bit 0, a ; $6cac
 	jr z, .checkB ; $6cae
 	ld a, [wCharGridHandedness] ; $6cb0
-	cp $01 ; $6cb3
+	cp HAND_LEFT ; $6cb3
 	jr nz, .sendSelect ; $6cb5
 	ld b, $28 ; $6cb7
 	jr .storeCommand ; $6cb9

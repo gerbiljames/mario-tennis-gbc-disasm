@@ -1,5 +1,5 @@
 DrawEquippedRacketPanel:
-	ld a, $00 ; $5458
+	ld a, EQUIPKIND_RACKETS ; $5458
 	ld [wEquipItemKind], a ; $545a
 	call MarkOwnedRackets ; $545d
 	call BuildOwnedItemList ; $5460
@@ -21,7 +21,7 @@ DrawEquippedShoesPanel:
 	ld hl, wEquipItemList ; $5486
 	ld bc, $0003 ; $5489
 	call ClearMemory16 ; $548c
-	ld a, $01 ; $548f
+	ld a, EQUIPKIND_SHOES ; $548f
 	ld [wEquipItemKind], a ; $5491
 	call MarkOwnedShoes ; $5494
 	call BuildOwnedItemList ; $5497
@@ -90,7 +90,7 @@ LoadRacketSelectScreen:
 	ld hl, wEquipItemList ; $5525
 	ld bc, $0002 ; $5528
 	call ClearMemory16 ; $552b
-	ld a, $00 ; $552e
+	ld a, EQUIPKIND_RACKETS ; $552e
 	ld [wEquipItemKind], a ; $5530
 	ld a, $00 ; $5533
 	ld [wEquipStatRowSet], a ; $5535
@@ -183,7 +183,7 @@ HandleEquipSelectInput:
 	call GetEquippedItemId ; $55d5
 	ld b, a ; $55d8
 	ld a, [wEquipItemKind] ; $55d9
-	cp $00 ; $55dc
+	cp EQUIPKIND_RACKETS ; $55dc
 	ld a, b ; $55de
 	jr z, .checkEquippedRacket ; $55df
 	swap a ; $55e1
@@ -302,7 +302,7 @@ LoadShoesSelectScreen:
 	ld hl, wEquipItemList ; $56ce
 	ld bc, $0002 ; $56d1
 	call ClearMemory16 ; $56d4
-	ld a, $01 ; $56d7
+	ld a, EQUIPKIND_SHOES ; $56d7
 	ld [wEquipItemKind], a ; $56d9
 	ld a, $00 ; $56dc
 	ld [wEquipStatRowSet], a ; $56de
