@@ -231,7 +231,7 @@ Unused_0a_InitSceneViewerDefault:
 	call DivHLByDE ; $6091
 	ld a, l ; $6094
 	ld [wScrollListLength], a ; $6095
-	ld a, $00 ; $6098
+	ld a, SCENE_MINIGAME_COURT ; $6098
 	ld [wCurrentScene], a ; $609a
 	ld b, $00 ; $609d
 	call Unused_0a_LoadAndDisplayScene ; $609f
