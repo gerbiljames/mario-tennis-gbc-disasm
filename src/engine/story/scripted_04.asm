@@ -7,13 +7,13 @@ SetActorAnimation:
 	push de ; $4bbf
 	push hl ; $4bc0
 	wram_bank WRAM_ACTORS ; $4bc1
-	ld hl, $002e ; $4bc7
+	ld hl, ACTORF_ANIM ; $4bc7
 	add hl, bc ; $4bca
 	ld a, [hl] ; $4bcb
 	cp d ; $4bcc
 	jr z, .done ; $4bcd
 	ld [hl], d ; $4bcf
-	ld hl, $002f ; $4bd0
+	ld hl, ACTORF_ANIM_DELAY ; $4bd0
 	add hl, bc ; $4bd3
 	ld [hl], $00 ; $4bd4
 	ld hl, wCharSpriteAttr ; $4bd6
@@ -34,7 +34,7 @@ SetActorAnimation:
 	inc h ; $4beb
 .readEntry:
 	push hl ; $4bec
-	ld hl, $0022 ; $4bed
+	ld hl, ACTORF_OBJECT_BANK ; $4bed
 	add hl, bc ; $4bf0
 	ld a, [hl] ; $4bf1
 	pop hl ; $4bf2
@@ -42,12 +42,12 @@ SetActorAnimation:
 	ld e, c ; $4bf6
 	ld d, b ; $4bf7
 	pop bc ; $4bf8
-	ld hl, $002a ; $4bf9
+	ld hl, ACTORF_ANIM_SCRIPT ; $4bf9
 	add hl, bc ; $4bfc
 	ld a, e ; $4bfd
 	ld [hl+], a ; $4bfe
 	ld [hl], d ; $4bff
-	ld hl, $002c ; $4c00
+	ld hl, ACTORF_ANIM_PTR ; $4c00
 	add hl, bc ; $4c03
 	ld a, e ; $4c04
 	ld [hl+], a ; $4c05
@@ -238,14 +238,14 @@ SpawnActorFromTemplate:
 	add hl, hl ; $4cdc
 	ld a, h ; $4cdd
 	and $0f ; $4cde
-	ld hl, $0031 ; $4ce0
+	ld hl, ACTORF_DRAW_DELAY ; $4ce0
 	add hl, bc ; $4ce3
 	ld [hl], a ; $4ce4
-	ld hl, $0018 ; $4ce5
+	ld hl, ACTORF_ANIM_RATE ; $4ce5
 	add hl, bc ; $4ce8
 	ld a, $01 ; $4ce9
 	ld [hl], a ; $4ceb
-	ld hl, $0019 ; $4cec
+	ld hl, ACTORF_ANIM_RATE_MOVING ; $4cec
 	add hl, bc ; $4cef
 	ld a, $02 ; $4cf0
 	ld [hl], a ; $4cf2
@@ -439,16 +439,16 @@ SpawnCompanionActor:
 	ld de, wActors ; $4f4a
 	call AttachActorStepMover ; $4f4d
 	ld de, wActors ; $4f50
-	ld hl, $0014 ; $4f53
+	ld hl, ACTORF_HEADING ; $4f53
 	add hl, de ; $4f56
 	ld a, [hl] ; $4f57
 	ld hl, ACTORF_HEADING ; $4f58
 	add hl, bc ; $4f5b
 	ld [hl], a ; $4f5c
-	ld hl, $000c ; $4f5d
+	ld hl, ACTORF_X ; $4f5d
 	add hl, de ; $4f60
 	push hl ; $4f61
-	ld hl, $000e ; $4f62
+	ld hl, ACTORF_Y ; $4f62
 	add hl, de ; $4f65
 	ld a, [hl+] ; $4f66
 	ld d, [hl] ; $4f67

@@ -68,7 +68,7 @@ MACRO as_jump        ; $0c jump to `target` (signed rel16, relative to the opera
 	dw \1 - @
 ENDM
 
-MACRO as_set_field   ; $0d write a state field (selector byte, value word; type table $04:$47fd). Selector $14 = facing (FACE_* value)
+MACRO as_set_field   ; $0d write a state field (selector byte, value word; type table $04:$47fd). selector = ACTORF_* offset
 	db $0d, \1
 	dw \2
 ENDM

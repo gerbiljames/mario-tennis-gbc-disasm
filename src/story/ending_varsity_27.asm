@@ -5,7 +5,7 @@ ActorScript_27_05:
 	as_jump ActorScript_27_05
 ActorScript_27_06:
 	; $555e, 18 bytes (actor_script)
-	as_set_field $18, $0006
+	as_set_field ACTORF_ANIM_RATE, $0006
 	as_anim ANIM_SWING_LOOP
 	as_halt
 	as_halt
@@ -209,7 +209,7 @@ End10VarsityCourtEntry01Scene:
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $5973
 	script_wait_move ACTOR_PLAYER ; $597d
 	script_get_actor_state ACTOR_PARTNER ; $5982
-	ld de, $0018 ; $5987
+	ld de, ACTORF_ANIM_RATE ; $5987
 	add hl, de ; $598a
 	ld [hl], $04 ; $598b
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $598d
@@ -228,7 +228,7 @@ End10VarsityCourtEntry01Scene:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $59de
 	script_wait_idle ACTOR_PARTNER ; $59e5
 	script_get_actor_state ACTOR_PARTNER ; $59ea
-	ld de, $0018 ; $59ef
+	ld de, ACTORF_ANIM_RATE ; $59ef
 	add hl, de ; $59f2
 	ld [hl], $01 ; $59f3
 	script_face ACTOR_PARTNER, FACE_LEFT ; $59f5
@@ -257,7 +257,7 @@ CeremonyDoublesReaction_27:
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $5a88
 	script_wait_move ACTOR_PLAYER ; $5a92
 	script_get_actor_state ACTOR_PARTNER ; $5a97
-	ld de, $0018 ; $5a9c
+	ld de, ACTORF_ANIM_RATE ; $5a9c
 	add hl, de ; $5a9f
 	ld [hl], $03 ; $5aa0
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5aa2
@@ -269,7 +269,7 @@ CeremonyDoublesReaction_27:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5ac8
 	script_wait_idle ACTOR_PARTNER ; $5acf
 	script_get_actor_state ACTOR_PARTNER ; $5ad4
-	ld de, $0018 ; $5ad9
+	ld de, ACTORF_ANIM_RATE ; $5ad9
 	add hl, de ; $5adc
 	ld [hl], $01 ; $5add
 	script_face ACTOR_PARTNER, FACE_LEFT ; $5adf

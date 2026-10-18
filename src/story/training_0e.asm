@@ -414,21 +414,21 @@ TrainingGymInitScript_0e:
 	ld a, $03 ; $4621
 	ld e, l ; $4623
 	ld d, h ; $4624
-	ld hl, $0018 ; $4625
+	ld hl, ACTORF_ANIM_RATE ; $4625
 	add hl, de ; $4628
 	ld [hl], a ; $4629
 	script_get_actor_state ACTOR_TRAINING_GYM_JUMPING_JACKS_A ; $462a
 	ld a, $03 ; $462f
 	ld e, l ; $4631
 	ld d, h ; $4632
-	ld hl, $0018 ; $4633
+	ld hl, ACTORF_ANIM_RATE ; $4633
 	add hl, de ; $4636
 	ld [hl], a ; $4637
 	script_get_actor_state ACTOR_TRAINING_GYM_JUMPING_JACKS_B_2 ; $4638
 	ld a, $03 ; $463d
 	ld e, l ; $463f
 	ld d, h ; $4640
-	ld hl, $0018 ; $4641
+	ld hl, ACTORF_ANIM_RATE ; $4641
 	add hl, de ; $4644
 	ld [hl], a ; $4645
 	script_set_anim ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1, ANIM_EXERCISE ; $4646

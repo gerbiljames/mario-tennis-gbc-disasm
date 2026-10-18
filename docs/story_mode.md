@@ -333,9 +333,9 @@ their lines.
 * **NpcScripts** — `arg0` is a bitmask applied by `RunNpcInteraction`: bit 0
   turns the actor to face the player (player angle `+ $80`), bit 1 restores
   its facing afterwards, bit 3 forces animation 1 for the duration (old one
-  in `wStoryScriptSavedActorAnim`), bit 4 sets state bits 0/1 at `+$05`
-  (freeze). The actor's `+$19` busy byte is forced to 1 and restored after
-  (`wStoryScriptSavedActorBusy`).
+  in `wStoryScriptSavedActorAnim`), bit 4 sets `ACTORF_FLAGS` bits 0/1
+  (freeze). The actor's `ACTORF_ANIM_RATE_MOVING` is forced to 1 and restored
+  after (`wStoryScriptSavedActorAnimRate`).
 * **TileTriggers via `RunQueuedTriggerScript`** — `arg0 == $01` makes the
   queued trigger a no-op (`$0a:$55c6`): live for an A-press, inert when
   walked over.
@@ -751,7 +751,7 @@ notes are in `ram/wram/`.
 Other addresses: `$c295` `wStoryModeEntryPoint`, `$c296`
 `wStoryModeSpawnPosition` (5 bytes), `$c29c` `wStoryArrivalScript`, `$c2c0`
 `wStoryMapRecord` (8 bytes, the matched `map_entry`/`map_script`),
-`$c2d5`-`$c2d7` the name popup, `$c2d8`-`$c2da` `wStoryScriptSavedActorBusy`
+`$c2d5`-`$c2d7` the name popup, `$c2d8`-`$c2da` `wStoryScriptSavedActorAnimRate`
 / `…Anim` / `wStoryScriptRan`; `$c294` `wUnusedExitTriggerIdMirror` and `$c2db`
 `wUnusedStoryScriptId` (write-only); `$c2b2`-`$c2bf` per-location scratch;
 `$c2d0`-`$c2d4` `wStoryModePlayersXPosition`/`…YPosition`/`wStoryModePlayerFacing`

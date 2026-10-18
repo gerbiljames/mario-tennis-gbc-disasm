@@ -457,14 +457,14 @@ AwardsCeremonyTile02_0f:
 	ld a, $01 ; $4977
 	ld e, l ; $4979
 	ld d, h ; $497a
-	ld hl, $0018 ; $497b
+	ld hl, ACTORF_ANIM_RATE ; $497b
 	add hl, de ; $497e
 	ld [hl], a ; $497f
 	script_get_actor_state ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $4980
 	ld a, $01 ; $4985
 	ld e, l ; $4987
 	ld d, h ; $4988
-	ld hl, $0018 ; $4989
+	ld hl, ACTORF_ANIM_RATE ; $4989
 	add hl, de ; $498c
 	ld [hl], a ; $498d
 	script_set_anim ACTOR_AWARDS_CEREMONY_ALEX, ANIM_BOUNCE ; $498e

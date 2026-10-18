@@ -226,10 +226,10 @@ wStoryModeShowLocationName:: db
 ; [16-bit] Text id of the location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set
 wStoryModeLocationNameTextId:: dw
 
-; [8-bit] The talked-to actor's +$19 byte, saved by RunNpcInteraction while it forces it to 1 for the script, restored afterwards
-wStoryScriptSavedActorBusy:: db
+; [8-bit] The talked-to actor's ACTORF_ANIM_RATE_MOVING, saved by RunNpcInteraction while it forces it to 1 for the script, restored afterwards
+wStoryScriptSavedActorAnimRate:: db
 
-; [8-bit] The talked-to actor's +$2e animation, saved by RunNpcInteraction when the handler's arg0 has bit 3 set and restored with SetActorAnimationChecked afterwards
+; [8-bit] The talked-to actor's ACTORF_ANIM, saved by RunNpcInteraction when the handler's arg0 has bit 3 set and restored with SetActorAnimationChecked afterwards
 wStoryScriptSavedActorAnim:: db
 
 ; [8-bit] Set to 1 by RunStoryScriptOrDialogue when it dispatches a location script; the overworld loop clears it before checking interactions and stops looking for triggers this frame once set

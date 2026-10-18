@@ -384,8 +384,8 @@ ActorScript_11_28:
 	as_halt
 ActorScript_11_29:
 	; $6e16, 55 bytes (actor_script)
-	as_flag $01, $05, $02
-	as_set_field $06, $0008
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
+	as_set_field ACTORF_SPEED, $0008
 .L8:
 	as_set_target 45.0, 7.0
 	as_wait_move2

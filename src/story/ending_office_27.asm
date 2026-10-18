@@ -20,8 +20,8 @@ ActorScript_27_03:
 	as_set_target 14.0, 7.0
 	as_wait_move
 	as_halt
-	as_flag $01, $05, $02
-	as_set_field $06, $0010
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
+	as_set_field ACTORF_SPEED, $0010
 .L21:
 	as_target_rel -2.0, 0.0
 	as_wait_move
@@ -389,7 +389,7 @@ End11TrainingCourtInitScript_27:
 	ld a, $01 ; $52d3
 	ld e, l ; $52d5
 	ld d, h ; $52d6
-	ld hl, $0018 ; $52d7
+	ld hl, ACTORF_ANIM_RATE ; $52d7
 	add hl, de ; $52da
 	ld [hl], a ; $52db
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $52dc
@@ -483,7 +483,7 @@ End11TrainingCourtInitScript_27:
 	ld a, $04 ; $54b3
 	ld e, l ; $54b5
 	ld d, h ; $54b6
-	ld hl, $0018 ; $54b7
+	ld hl, ACTORF_ANIM_RATE ; $54b7
 	add hl, de ; $54ba
 	ld [hl], a ; $54bb
 	script_move_target ACTOR_END11_TRAINING_COURT_ALT_BOB, 31.0, 11.0 ; $54bc

@@ -32,6 +32,7 @@ def ACTORF_SCRIPT       equ $00 ; word: the actor script's next opcode
 def ACTORF_SCRIPT_BANK  equ $02
 def ACTORF_WAIT         equ $03 ; as_wait counter
 def ACTORF_FLAGS        equ $05 ; bit 0 paused, bit 7 moving; bits 3 and 4 set at spawn
+def ACTORF_SPEED        equ $06 ; word: step length per frame (1/256 tile)
 def ACTORF_TARGET_X     equ $08 ; word: where the actor is walking to
 def ACTORF_TARGET_Y     equ $0a ; word
 def ACTORF_X            equ $0c ; word: world position (1/256 tile)
@@ -39,20 +40,35 @@ def ACTORF_Y            equ $0e ; word
 def ACTORF_HEIGHT       equ $10 ; word: height above the ground, negative = up (64 = 1 px)
 def ACTORF_JUMP_VEL     equ $12 ; word: added to ACTORF_HEIGHT each update; gravity adds $10
 def ACTORF_HEADING      equ $14 ; movement direction, a full angle byte
+def ACTORF_TURN_RATE    equ $15 ; largest heading change per step toward the target
+def ACTORF_ANCHOR       equ $16 ; word: record this actor follows (as_follow_wp, as_step); as_begin_path's home tile
+def ACTORF_ANIM_RATE    equ $18 ; subtracted from ACTORF_ANIM_DELAY each frame while standing
+def ACTORF_ANIM_RATE_MOVING equ $19 ; the same while ACTORFLAGB_MOVING is set
 def ACTORF_MODE         equ $20 ; SetActorMode / script_set_active
 def ACTORF_OBJECT       equ $21 ; OBJ_* id (LoadActorObjectDef)
+def ACTORF_OBJECT_BANK  equ $22 ; bank of the object header and its frame and animation tables
 def ACTORF_FRAME_TABLE  equ $24 ; word: object header's frame array
+def ACTORF_VRAM_TILES   equ $26 ; word: the slot's 4 sprite tiles in VRAM bank 1
 def ACTORF_ANIM_TABLE   equ $28 ; word: object header's animation scripts
+def ACTORF_ANIM_SCRIPT  equ $2a ; word: start of the current animation script
+def ACTORF_ANIM_PTR     equ $2c ; word: its next command
+def ACTORF_ANIM         equ $2e ; ANIM_* id playing
+def ACTORF_ANIM_DELAY   equ $2f ; ticks left on the frame shown; $ff = held
 def ACTORF_STATUS       equ $30 ; bit 0 facing locked, bit 6 frame dirty, bit 7 live
+def ACTORF_DRAW_DELAY   equ $31 ; frames DrawActors waits before the first draw: spawn staggers slots
 def ACTORF_DRAWN_FACING equ $32 ; FACE_*: ACTORF_FACING quantised by DirectionToFacing_04
+def ACTORF_ANIM_FRAME   equ $33 ; frame the animation script shows
 def ACTORF_FACING       equ $34 ; angle byte: follows ACTORF_HEADING unless locked
 def ACTORF_FACING_COUNT equ $35 ; object header byte 1; 1 = one facing only
+def ACTORF_TILE         equ $36 ; OAM tile of the slot's tiles; read as a word with ACTORF_OAM_ATTR
 def ACTORF_OAM_ATTR     equ $37 ; object header byte 0, or the map_actor palette override
 def ACTORF_SHADOW_TABLE equ $38 ; word: per-frame placement records
 ; ACTORF_FLAGS bits
 def ACTORFLAGB_PAUSED   equ 0 ; StepActorScript yields without running the script
+def ACTORFLAGB_YIELD    equ 2 ; a move stops short when it would step next to the player
 def ACTORFLAGB_SOLID    equ 3 ; BuildNearbyActorList: blocks the player (IsPointBlocked)
 def ACTORFLAGB_TALKABLE equ 4 ; BuildActorQueryList: FindActorFacingPlayer can pick it
+def ACTORFLAGB_BLOCKED  equ 6 ; set the frame a move yielded to the player
 def ACTORFLAGB_MOVING   equ 7
 ; ACTORF_STATUS bits
 def ACTORSTATUSB_FACING_LOCKED equ 0 ; ACTORF_FACING stops following ACTORF_HEADING

@@ -22,7 +22,7 @@ FaceActorsTowardEachOther:
 	ld hl, hActorPtr ; $4692
 	ld a, [hl+] ; $4695
 	ld h, [hl] ; $4696
-	add $0c ; $4697
+	add ACTORF_X ; $4697
 	ld l, a ; $4699
 	ld c, [hl] ; $469a
 	inc hl ; $469b
@@ -42,7 +42,7 @@ FaceActorsTowardEachOther:
 	ld hl, hActorPtr ; $46ad
 	ld a, [hl+] ; $46b0
 	ld h, [hl] ; $46b1
-	add $0e ; $46b2
+	add ACTORF_Y ; $46b2
 	ld l, a ; $46b4
 	ld a, [hl+] ; $46b5
 	ld h, [hl] ; $46b6
@@ -61,7 +61,7 @@ FaceActorsTowardEachOther:
 	ld hl, hActorPtr ; $46c3
 	ld a, [hl+] ; $46c6
 	ld h, [hl] ; $46c7
-	add $0c ; $46c8
+	add ACTORF_X ; $46c8
 	ld l, a ; $46ca
 	ld a, [hl+] ; $46cb
 	ld h, [hl] ; $46cc
@@ -84,7 +84,7 @@ FaceActorsTowardEachOther:
 	ld hl, hActorPtr ; $46df
 	ld a, [hl+] ; $46e2
 	ld h, [hl] ; $46e3
-	add $14 ; $46e4
+	add ACTORF_HEADING ; $46e4
 	ld l, a ; $46e6
 	pop af ; $46e7
 	ld [hl], a ; $46e8
@@ -98,7 +98,7 @@ FaceActorsTowardEachOther:
 	ld hl, hActorPtr ; $46f3
 	ld a, [hl+] ; $46f6
 	ld h, [hl] ; $46f7
-	add $14 ; $46f8
+	add ACTORF_HEADING ; $46f8
 	ld l, a ; $46fa
 	ld a, d ; $46fb
 	ld [hl], a ; $46fc
@@ -141,7 +141,7 @@ SetActorActive:
 	call GetActorStateAddr ; $472e
 	ret z ; $4731
 	wram_bank WRAM_ACTORS ; $4732
-	ld a, $20 ; $4738
+	ld a, ACTORF_MODE ; $4738
 	add l ; $473a
 	ld l, a ; $473b
 	jr nc, .read ; $473c
@@ -169,7 +169,7 @@ UnusedSetActorMoveTarget:
 	ret z ; $4752
 	push af ; $4753
 	push hl ; $4754
-	ld a, $16 ; $4755
+	ld a, ACTORF_ANCHOR ; $4755
 	add l ; $4757
 	ld l, a ; $4758
 	ld [hl], e ; $4759
@@ -194,7 +194,7 @@ IsActorBusy:
 	push de ; $4770
 	push hl ; $4771
 	wram_bank WRAM_ACTORS ; $4772
-	ld de, $002e ; $4778
+	ld de, ACTORF_ANIM ; $4778
 	add hl, de ; $477b
 	ld a, [hl] ; $477c
 	cp $00 ; $477d
@@ -316,7 +316,7 @@ MovePlayerToActor:
 	ld hl, hActorPtr ; $482f
 	ld a, [hl+] ; $4832
 	ld h, [hl] ; $4833
-	add $0c ; $4834
+	add ACTORF_X ; $4834
 	ld l, a ; $4836
 	ld a, b ; $4837
 	ld c, [hl] ; $4838
@@ -389,7 +389,7 @@ WaitPlayerMoveDone:
 	ld a, h ; $489e
 	ldh [hActorPtr + 1], a ; $489f
 	wram_bank WRAM_ACTORS ; $48a1
-	ld a, $05 ; $48a7
+	ld a, ACTORF_FLAGS ; $48a7
 	add l ; $48a9
 	ld l, a ; $48aa
 	jr nc, .waitLoop ; $48ab

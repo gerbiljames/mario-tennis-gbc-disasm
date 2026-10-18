@@ -697,7 +697,7 @@ TrainingCourtNpc13_15:
 	ld a, $01 ; $4b30
 	ld e, l ; $4b32
 	ld d, h ; $4b33
-	ld hl, $0018 ; $4b34
+	ld hl, ACTORF_ANIM_RATE ; $4b34
 	add hl, de ; $4b37
 	ld [hl], a ; $4b38
 	script_set_text Text_36_671 ; $4b39
@@ -723,7 +723,7 @@ TrainingCourtNpc13_15:
 	ld a, $02 ; $4b95
 	ld e, l ; $4b97
 	ld d, h ; $4b98
-	ld hl, $0018 ; $4b99
+	ld hl, ACTORF_ANIM_RATE ; $4b99
 	add hl, de ; $4b9c
 	ld [hl], a ; $4b9d
 	script_set_anim ACTOR_TRAINING_COURT_WALK_71_06_3, ANIM_BOUNCE ; $4b9e
@@ -732,7 +732,7 @@ TrainingCourtNpc13_15:
 	ld a, $01 ; $4baf
 	ld e, l ; $4bb1
 	ld d, h ; $4bb2
-	ld hl, $0018 ; $4bb3
+	ld hl, ACTORF_ANIM_RATE ; $4bb3
 	add hl, de ; $4bb6
 	ld [hl], a ; $4bb7
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 54.5, 13.5 ; $4bb8
@@ -780,7 +780,7 @@ TrainingCourtNpc13_15:
 	ld a, $02 ; $4ce3
 	ld e, l ; $4ce5
 	ld d, h ; $4ce6
-	ld hl, $0018 ; $4ce7
+	ld hl, ACTORF_ANIM_RATE ; $4ce7
 	add hl, de ; $4cea
 	ld [hl], a ; $4ceb
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4cec

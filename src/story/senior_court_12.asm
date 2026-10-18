@@ -510,7 +510,7 @@ SeniorCourtNpc0A_12:
 	script_get_actor_state ACTOR_SENIOR_COURT_B_BOB ; $5ae3
 	ld e, l ; $5ae8
 	ld d, h ; $5ae9
-	ld hl, $0005 ; $5aea
+	ld hl, ACTORF_FLAGS ; $5aea
 	add hl, de ; $5aed
 	res 0, [hl] ; $5aee
 	res 1, [hl] ; $5af0

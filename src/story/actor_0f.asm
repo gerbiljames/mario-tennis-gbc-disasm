@@ -91,8 +91,8 @@ ReplacePartnerWithStandInActor:
 	ret ; $7a4f
 ActorScript_0f_07:
 	; $7a50, 35 bytes (actor_script)
-	as_flag $01, $05, $02
-	as_set_field $06, $0010
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
+	as_set_field ACTORF_SPEED, $0010
 .L8:
 	as_target_rel -2.0, 0.0
 	as_wait_move
@@ -105,8 +105,8 @@ ActorScript_0f_07:
 	as_jump .L8
 ActorScript_0f_08:
 	; $7a73, 27 bytes (actor_script)
-	as_flag $01, $05, $02
-	as_set_field $06, $0006
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
+	as_set_field ACTORF_SPEED, $0006
 .L8:
 	as_set_target 39.0, 19.0
 	as_wait_move

@@ -160,12 +160,12 @@ FreezeAllActors:
 	dec e ; $6f2a
 	or a ; $6f2b
 	jp z, .next ; $6f2c
-	ld hl, $0005 ; $6f2f
+	ld hl, ACTORF_FLAGS ; $6f2f
 	add hl, de ; $6f32
 	set 0, [hl] ; $6f33
 	set 1, [hl] ; $6f35
 .next:
-	ld hl, $0040 ; $6f37
+	ld hl, ACTOR_SIZE ; $6f37
 	add hl, de ; $6f3a
 	ld e, l ; $6f3b
 	ld d, h ; $6f3c

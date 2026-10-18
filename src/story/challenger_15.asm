@@ -301,7 +301,7 @@ WalkChallengerAwayDefeated:
 	ld a, $04 ; $6065
 	ld e, l ; $6067
 	ld d, h ; $6068
-	ld hl, $0018 ; $6069
+	ld hl, ACTORF_ANIM_RATE ; $6069
 	add hl, de ; $606c
 	ld [hl], a ; $606d
 	ld a, [wMapSceneStage2] ; $606e
@@ -334,7 +334,7 @@ WalkChallengerAwayDefeated:
 	ld a, $04 ; $60be
 	ld e, l ; $60c0
 	ld d, h ; $60c1
-	ld hl, $0018 ; $60c2
+	ld hl, ACTORF_ANIM_RATE ; $60c2
 	add hl, de ; $60c5
 	ld [hl], a ; $60c6
 	ld a, [wMapSceneStage2] ; $60c7
@@ -376,7 +376,7 @@ WalkChallengerAwayDefeated:
 	ld a, $04 ; $612f
 	ld e, l ; $6131
 	ld d, h ; $6132
-	ld hl, $0018 ; $6133
+	ld hl, ACTORF_ANIM_RATE ; $6133
 	add hl, de ; $6136
 	ld [hl], a ; $6137
 	ld a, [wMapSceneStage2] ; $6138

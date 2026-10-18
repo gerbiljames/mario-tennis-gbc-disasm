@@ -1,6 +1,6 @@
 ActorScript_15_01:
 	; $55e2, 4 bytes (actor_script)
-	as_set_field $18, $0004
+	as_set_field ACTORF_ANIM_RATE, $0004
 ActorScript_15_02:
 	; $55e6, 3 bytes (actor_script)
 	as_anim ANIM_SWING_LOOP

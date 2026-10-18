@@ -439,7 +439,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $75c0
 	script_wait_move ACTOR_PLAYER ; $75ca
 	script_get_actor_state ACTOR_PARTNER ; $75cf
-	ld de, $0018 ; $75d4
+	ld de, ACTORF_ANIM_RATE ; $75d4
 	add hl, de ; $75d7
 	ld [hl], $04 ; $75d8
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $75da
@@ -458,7 +458,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $762b
 	script_wait_idle ACTOR_PARTNER ; $7632
 	script_get_actor_state ACTOR_PARTNER ; $7637
-	ld de, $0018 ; $763c
+	ld de, ACTORF_ANIM_RATE ; $763c
 	add hl, de ; $763f
 	ld [hl], $01 ; $7640
 	script_face ACTOR_PARTNER, FACE_LEFT ; $7642
@@ -490,7 +490,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $76e5
 	script_wait_move ACTOR_PLAYER ; $76ef
 	script_get_actor_state ACTOR_PARTNER ; $76f4
-	ld de, $0018 ; $76f9
+	ld de, ACTORF_ANIM_RATE ; $76f9
 	add hl, de ; $76fc
 	ld [hl], $03 ; $76fd
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $76ff
@@ -502,7 +502,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $7725
 	script_wait_idle ACTOR_PARTNER ; $772c
 	script_get_actor_state ACTOR_PARTNER ; $7731
-	ld de, $0018 ; $7736
+	ld de, ACTORF_ANIM_RATE ; $7736
 	add hl, de ; $7739
 	ld [hl], $01 ; $773a
 	script_face ACTOR_PARTNER, FACE_LEFT ; $773c

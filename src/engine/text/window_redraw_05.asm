@@ -15,7 +15,7 @@ GetSpeakerVoice:
 	ld hl, hActorPtr ; $60a5
 	ld a, [hl+] ; $60a8
 	ld h, [hl] ; $60a9
-	add $21 ; $60aa
+	add ACTORF_OBJECT ; $60aa
 	ld l, a ; $60ac
 	ld a, [hl] ; $60ad
 	ld c, a ; $60ae
@@ -430,7 +430,7 @@ Unused_05_ChooseSpeechBubbleHalf:
 	ld hl, hActorPtr ; $63aa
 	ld a, [hl+] ; $63ad
 	ld h, [hl] ; $63ae
-	add $0e ; $63af
+	add ACTORF_Y ; $63af
 	ld l, a ; $63b1
 	inc hl ; $63b2
 	ld a, [hl] ; $63b3

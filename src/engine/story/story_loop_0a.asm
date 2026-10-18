@@ -225,7 +225,7 @@ RunStoryLocation:
 	ld a, [wStoryLocationBank] ; $4f78
 	call InitLocationActors ; $4f7b
 	ld hl, wActors ; $4f7e
-	ld de, $0018 ; $4f81
+	ld de, ACTORF_ANIM_RATE ; $4f81
 	add hl, de ; $4f84
 	ld [hl], $01 ; $4f85
 	set_flag FLAG_HIDE_OVERWORLD_ACTORS ; $4f87
@@ -286,7 +286,7 @@ RunStoryLocation:
 	ldh a, [hRomBank] ; $5008
 	farcall SetActorScript ; $500a
 	ld hl, wActors ; $500d
-	ld de, $0018 ; $5010
+	ld de, ACTORF_ANIM_RATE ; $5010
 	add hl, de ; $5013
 	ld [hl], $01 ; $5014
 	ld hl, wStoryModeTriggerScript ; $5016

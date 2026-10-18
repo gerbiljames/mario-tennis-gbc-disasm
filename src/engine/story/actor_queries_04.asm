@@ -327,7 +327,7 @@ BuildNearbyActorList:
 	ld [hl+], a ; $54c2
 	push hl ; $54c3
 .done:
-	ld hl, $0040 ; $54c4
+	ld hl, ACTOR_SIZE ; $54c4
 	add hl, bc ; $54c7
 	ld c, l ; $54c8
 	ld b, h ; $54c9
@@ -374,7 +374,7 @@ BuildActorQueryList:
 	ld [hl+], a ; $54ff
 	push hl ; $5500
 .done:
-	ld hl, $0040 ; $5501
+	ld hl, ACTOR_SIZE ; $5501
 	add hl, bc ; $5504
 	ld c, l ; $5505
 	ld b, h ; $5506
@@ -505,7 +505,7 @@ DrawActorSprite:
 	add hl, hl ; $55ac
 	ld d, h ; $55ad
 	push bc ; $55ae
-	ld hl, $0036 ; $55af
+	ld hl, ACTORF_TILE ; $55af
 	add hl, bc ; $55b2
 	ld a, [hl+] ; $55b3
 	ld b, [hl] ; $55b4
@@ -522,18 +522,18 @@ AdvanceActorAnimation:
 	add hl, bc ; $55c4
 	bit 1, [hl] ; $55c5
 	jr nz, .frameReady ; $55c7
-	ld hl, $002f ; $55c9
+	ld hl, ACTORF_ANIM_DELAY ; $55c9
 	add hl, bc ; $55cc
 	ld a, [hl] ; $55cd
 	and a ; $55ce
 	jr nz, .frameReady ; $55cf
 .nextCommand:
 	push bc ; $55d1
-	ld hl, $0022 ; $55d2
+	ld hl, ACTORF_OBJECT_BANK ; $55d2
 	add hl, bc ; $55d5
 	ld a, [hl] ; $55d6
 	ld d, a ; $55d7
-	ld hl, $002c ; $55d8
+	ld hl, ACTORF_ANIM_PTR ; $55d8
 	add hl, bc ; $55db
 	ld a, [hl+] ; $55dc
 	ld h, [hl] ; $55dd
@@ -550,12 +550,12 @@ AdvanceActorAnimation:
 	jr z, .jumpToFrames ; $55ed
 	cp $fe ; $55ef
 	jr z, .setAnimation ; $55f1
-	ld hl, $002f ; $55f3
+	ld hl, ACTORF_ANIM_DELAY ; $55f3
 	add hl, bc ; $55f6
 	ld [hl], $ff ; $55f7
 	jr .frameReady ; $55f9
 .jumpToFrames:
-	ld hl, $002a ; $55fb
+	ld hl, ACTORF_ANIM_SCRIPT ; $55fb
 	add hl, bc ; $55fe
 	ld a, [hl+] ; $55ff
 	ld h, [hl] ; $5600
@@ -565,7 +565,7 @@ AdvanceActorAnimation:
 	add hl, de ; $5605
 	ld e, l ; $5606
 	ld d, h ; $5607
-	ld hl, $002c ; $5608
+	ld hl, ACTORF_ANIM_PTR ; $5608
 	add hl, bc ; $560b
 	ld a, e ; $560c
 	ld [hl+], a ; $560d
@@ -575,11 +575,11 @@ AdvanceActorAnimation:
 	call SetActorAnimation ; $5611
 	jr .nextCommand ; $5614
 .setFrameDelay:
-	ld hl, $002f ; $5616
+	ld hl, ACTORF_ANIM_DELAY ; $5616
 	add hl, bc ; $5619
 	ld [hl], d ; $561a
 	push de ; $561b
-	ld hl, $002c ; $561c
+	ld hl, ACTORF_ANIM_PTR ; $561c
 	add hl, bc ; $561f
 	ld a, [hl+] ; $5620
 	ld d, [hl] ; $5621
@@ -592,7 +592,7 @@ AdvanceActorAnimation:
 	pop de ; $5628
 	jr .checkFlip ; $5629
 .frameReady:
-	ld hl, $0033 ; $562b
+	ld hl, ACTORF_ANIM_FRAME ; $562b
 	add hl, bc ; $562e
 	ld e, [hl] ; $562f
 .checkFlip:
@@ -601,10 +601,10 @@ AdvanceActorAnimation:
 	add hl, bc ; $5634
 	bit ACTORFLAGB_MOVING, [hl] ; $5635
 	jr z, .noFlip ; $5637
-	ld hl, $0019 ; $5639
+	ld hl, ACTORF_ANIM_RATE_MOVING ; $5639
 	add hl, bc ; $563c
 	push hl ; $563d
-	ld hl, $002f ; $563e
+	ld hl, ACTORF_ANIM_DELAY ; $563e
 	add hl, bc ; $5641
 	ld c, [hl] ; $5642
 	pop hl ; $5643
@@ -615,10 +615,10 @@ AdvanceActorAnimation:
 	xor a ; $5649
 	jr .storeFrame ; $564a
 .noFlip:
-	ld hl, $0018 ; $564c
+	ld hl, ACTORF_ANIM_RATE ; $564c
 	add hl, bc ; $564f
 	push hl ; $5650
-	ld hl, $002f ; $5651
+	ld hl, ACTORF_ANIM_DELAY ; $5651
 	add hl, bc ; $5654
 	ld c, [hl] ; $5655
 	pop hl ; $5656
@@ -629,10 +629,10 @@ AdvanceActorAnimation:
 	xor a ; $565c
 .storeFrame:
 	pop bc ; $565d
-	ld hl, $002f ; $565e
+	ld hl, ACTORF_ANIM_DELAY ; $565e
 	add hl, bc ; $5661
 	ld [hl], a ; $5662
-	ld hl, $0033 ; $5663
+	ld hl, ACTORF_ANIM_FRAME ; $5663
 	add hl, bc ; $5666
 	ld a, [hl] ; $5667
 	cp e ; $5668
@@ -718,7 +718,7 @@ QueueActorFrameTileCopy:
 .done:
 	pop bc ; $56ed
 	push hl ; $56ee
-	ld hl, $0026 ; $56ef
+	ld hl, ACTORF_VRAM_TILES ; $56ef
 	add hl, bc ; $56f2
 	ld a, [hl+] ; $56f3
 	ld d, [hl] ; $56f4
@@ -778,7 +778,7 @@ IsActorMoving:
 	ret z ; $573a
 	push hl ; $573b
 	wram_bank WRAM_ACTORS ; $573c
-	ld a, $05 ; $5742
+	ld a, ACTORF_FLAGS ; $5742
 	add l ; $5744
 	ld l, a ; $5745
 	jr nc, .readFlag ; $5746

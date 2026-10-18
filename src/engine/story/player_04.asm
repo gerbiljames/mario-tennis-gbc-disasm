@@ -317,7 +317,7 @@ UpdatePlayerControl:
 	jr z, .storeSpeed ; $51ac
 	ld d, $03 ; $51ae
 .storeSpeed:
-	ld hl, $0018 ; $51b0
+	ld hl, ACTORF_ANIM_RATE ; $51b0
 	add hl, bc ; $51b3
 	ld [hl], d ; $51b4
 	ld a, [wPlayerMoveAngleApplied] ; $51b5
@@ -351,7 +351,7 @@ UpdatePlayerControl:
 	add hl, bc ; $51ea
 	ld a, [wPlayerMoveAngle] ; $51eb
 	ld [hl], a ; $51ee
-	ld hl, $0015 ; $51ef
+	ld hl, ACTORF_TURN_RATE ; $51ef
 	add hl, bc ; $51f2
 	ld [hl], $40 ; $51f3
 	test_flag FLAG_PLAYER_RUNNING ; $51f5
@@ -359,7 +359,7 @@ UpdatePlayerControl:
 	ld a, $01 ; $51fa
 	ld [wActorProbeRange], a ; $51fc
 	ld de, $0040 ; $51ff
-	ld hl, $0006 ; $5202
+	ld hl, ACTORF_SPEED ; $5202
 	add hl, bc ; $5205
 	ld a, e ; $5206
 	ld [hl+], a ; $5207
@@ -382,7 +382,7 @@ ENDC
 	ld a, $02 ; $5220
 	ld [wActorProbeRange], a ; $5222
 	ld de, $0010 ; $5225
-	ld hl, $0006 ; $5228
+	ld hl, ACTORF_SPEED ; $5228
 	add hl, bc ; $522b
 	ld a, e ; $522c
 	ld [hl+], a ; $522d
@@ -392,7 +392,7 @@ ENDC
 	xor a ; $5231
 	ld [wActorProbeRange], a ; $5232
 	ld de, $0020 ; $5235
-	ld hl, $0006 ; $5238
+	ld hl, ACTORF_SPEED ; $5238
 	add hl, bc ; $523b
 	ld a, e ; $523c
 	ld [hl+], a ; $523d
@@ -453,7 +453,7 @@ ENDC
 	ld [hl], a ; $52b2
 	jr .idle ; $52b3
 .stopMoving:
-	ld hl, $0006 ; $52b5
+	ld hl, ACTORF_SPEED ; $52b5
 	add hl, bc ; $52b8
 	ld a, [hl+] ; $52b9
 	ld h, [hl] ; $52ba
@@ -466,7 +466,7 @@ ENDC
 	ld hl, ACTORF_FLAGS ; $52c9
 	add hl, bc ; $52cc
 	set ACTORFLAGB_MOVING, [hl] ; $52cd
-	ld hl, $0018 ; $52cf
+	ld hl, ACTORF_ANIM_RATE ; $52cf
 	add hl, bc ; $52d2
 	ld [hl], $02 ; $52d3
 .idle:
@@ -524,7 +524,7 @@ ENDC
 	ld hl, ACTORF_FLAGS ; $531e
 	add hl, bc ; $5321
 	res ACTORFLAGB_MOVING, [hl] ; $5322
-	ld hl, $0018 ; $5324
+	ld hl, ACTORF_ANIM_RATE ; $5324
 	add hl, bc ; $5327
 	ld [hl], $01 ; $5328
 	pop bc ; $532a

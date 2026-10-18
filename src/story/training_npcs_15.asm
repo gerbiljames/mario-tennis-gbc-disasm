@@ -3,7 +3,7 @@ RunWaterSpriteSwingContestAndReward:
 	ld a, $01 ; $4d0c
 	ld e, l ; $4d0e
 	ld d, h ; $4d0f
-	ld hl, $0018 ; $4d10
+	ld hl, ACTORF_ANIM_RATE ; $4d10
 	add hl, de ; $4d13
 	ld [hl], a ; $4d14
 	script_move_player_to_actor ACTOR_PLAYER ; $4d15
