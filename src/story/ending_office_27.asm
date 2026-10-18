@@ -444,8 +444,7 @@ End11TrainingCourtInitScript_27:
 	script_delay 20 ; $53d1
 	script_jump_velocity ACTOR_END11_TRAINING_COURT_BALLOON_EXCLAIM, -3.0 ; $53d6
 	script_jump_velocity ACTOR_PLAYER, -3.0 ; $53de
-	ld a, $00 ; $53e6
-	farcall ScriptWaitActorJumpDone ; $53e8
+	script_wait_jump ACTOR_PLAYER ; $53e6
 	script_delay 30 ; $53eb
 	ld a, $01 ; $53f0
 	ld [wUnusedExitTriggerIdMirror], a ; $53f2

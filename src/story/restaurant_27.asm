@@ -406,8 +406,7 @@ End1MainBldgInitScript_27:
 	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 1.0 ; $73f4
 	script_face ACTOR_END1_MAIN_BLDG_WALK_75_06_1, FACE_DOWN ; $73fc
 	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, -2.0 ; $7403
-	ld a, $06 ; $740b
-	farcall ScriptWaitActorJumpDone ; $740d
+	script_wait_jump ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $740b
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 23.0 ; $7410
 	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $741b
 	sound SFX_EMOTE ; $7420
@@ -428,8 +427,7 @@ End1MainBldgInitScript_27:
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_EXCLAIM, 63.0, 63.0 ; $7495
 	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 1.0 ; $74a0
 	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, -2.0 ; $74a8
-	ld a, $06 ; $74b0
-	farcall ScriptWaitActorJumpDone ; $74b2
+	script_wait_jump ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74b0
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 32.0 ; $74b5
 	script_wait_frames 30 ; $74c0
 	ld bc, wActors + 1 * ACTOR_SIZE ; $74c7

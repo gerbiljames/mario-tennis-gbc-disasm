@@ -144,8 +144,7 @@ DormRoomTile0F_13:
 	script_set_position $06, 63.0, 63.0 ; $4f5c
 	script_speak ACTOR_DORM_ROOM_KATE ; $4f67
 	script_jump_velocity ACTOR_PLAYER, -2.0 ; $4f6c
-	ld a, $00 ; $4f74
-	farcall ScriptWaitActorJumpDone ; $4f76
+	script_wait_jump ACTOR_PLAYER ; $4f74
 	test_flag FLAG_DOUBLES ; $4f79
 	jr nz, .advanceText ; $4f7c
 	script_speak ACTOR_DORM_ROOM_KATE ; $4f7e

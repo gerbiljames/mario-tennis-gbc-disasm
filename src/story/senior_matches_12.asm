@@ -393,8 +393,7 @@ SeniorDoublesRank2Victory:
 	script_wait_idle ACTOR_SENIOR_COURT_A_BETH ; $6eda
 	script_set_position ACTOR_SENIOR_COURT_B_BALLOON_SWEAT, 63.0, 63.0 ; $6edf
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $6eea
-	ld a, $03 ; $6ef2
-	farcall ScriptWaitActorJumpDone ; $6ef4
+	script_wait_jump ACTOR_SENIOR_COURT_B_EMILY ; $6ef2
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $6ef7
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BETH, ActorScript_12_28 ; $6efc
 	script_set_actor_script ACTOR_SENIOR_COURT_B_CURT, ActorScript_12_24 ; $6f07
@@ -431,11 +430,9 @@ SeniorDoublesRank1Victory:
 	script_wait_idle ACTOR_SENIOR_COURT_A_BRIAN ; $6fd5
 	script_wait_frames 20 ; $6fda
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $6fe1
-	ld a, $03 ; $6fe9
-	farcall ScriptWaitActorJumpDone ; $6feb
+	script_wait_jump ACTOR_SENIOR_COURT_B_EMILY ; $6fe9
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $6fee
-	ld a, $03 ; $6ff6
-	farcall ScriptWaitActorJumpDone ; $6ff8
+	script_wait_jump ACTOR_SENIOR_COURT_B_EMILY ; $6ff6
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $6ffb
 	script_wait_frames 60 ; $7000
 	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 45.0, 25.0 ; $7007

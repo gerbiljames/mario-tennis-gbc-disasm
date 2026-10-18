@@ -455,8 +455,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_set_text Text_32_51 ; $6efa
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $6f00
 	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, -2.0 ; $6f05
-	ld a, $03 ; $6f0d
-	farcall ScriptWaitActorJumpDone ; $6f0f
+	script_wait_jump ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $6f0d
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $6f12
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, ActorScript_11_33 ; $6f17
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $6f22
@@ -480,8 +479,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_set_text Text_32_70 ; $6f8d
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $6f93
 	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, -2.0 ; $6f98
-	ld a, $03 ; $6fa0
-	farcall ScriptWaitActorJumpDone ; $6fa2
+	script_wait_jump ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $6fa0
 	script_set_text Text_32_53 ; $6fa5
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $6fab
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ActorScript_11_37 ; $6fb0
@@ -506,8 +504,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_set_text Text_32_65 ; $7026
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $702c
 	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, -2.0 ; $7031
-	ld a, $03 ; $7039
-	farcall ScriptWaitActorJumpDone ; $703b
+	script_wait_jump ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7039
 	script_set_text Text_32_54 ; $703e
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00 ; $7044
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ActorScript_11_40 ; $7049

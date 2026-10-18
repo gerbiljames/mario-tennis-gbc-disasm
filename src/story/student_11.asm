@@ -49,8 +49,7 @@ LateStudentCrashCutscene:
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4824
 	script_face ACTOR_ACADEMY_ARRIVAL_WALK_75_06, FACE_DOWN ; $4829
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4830
-	ld a, $11 ; $4838
-	farcall ScriptWaitActorJumpDone ; $483a
+	script_wait_jump ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4838
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 23.0 ; $483d
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4848
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, 25.5, 21.75 ; $484d
@@ -73,8 +72,7 @@ LateStudentCrashCutscene:
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, 63.0, 63.0 ; $48cc
 	script_set_speed ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 1.0 ; $48d7
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $48df
-	ld a, $11 ; $48e7
-	farcall ScriptWaitActorJumpDone ; $48e9
+	script_wait_jump ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $48e7
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 32.0 ; $48ec
 	script_wait_frames 30 ; $48f7
 	ld bc, wActors + 1 * ACTOR_SIZE ; $48fe
@@ -183,8 +181,7 @@ LateStudentCrashCutscene:
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, 26.5, 33.75 ; $4b9e
 	sound SFX_CHIME ; $4ba9
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4bab
-	ld a, $11 ; $4bb3
-	farcall ScriptWaitActorJumpDone ; $4bb5
+	script_wait_jump ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4bb3
 	script_wait_frames 10 ; $4bb8
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, 63.0, 63.0 ; $4bbf
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4bca
@@ -226,8 +223,7 @@ LateStudentCrashCutscene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4cb9
 	script_wait_idle ACTOR_PLAYER ; $4cc0
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4cc5
-	ld a, $11 ; $4ccd
-	farcall ScriptWaitActorJumpDone ; $4ccf
+	script_wait_jump ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4ccd
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 51.0 ; $4cd2
 	script_wait_frames 20 ; $4cdd
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4ce4

@@ -190,6 +190,14 @@ MACRO script_wait_move
 	farcall ScriptWaitActorMoveDone
 ENDM
 
+; Blocks until the jump script_jump_velocity started on `actor` has landed,
+; advancing a frame each poll, with a 180-frame timeout.
+; Usage: script_wait_jump actor
+MACRO script_wait_jump
+	ld a, \1
+	farcall ScriptWaitActorJumpDone
+ENDM
+
 ; Blocks the cutscene until `actor`'s script finishes (CheckActorScriptEnd),
 ; advancing a frame each poll, with a ~600-frame timeout.
 ; Usage: script_wait_actor_script actor
