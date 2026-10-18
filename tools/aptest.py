@@ -1121,6 +1121,78 @@ for _name in EXP_SCENARIOS:
     TESTS[f"exp_modifier_{_name}_award"] = exp_scenario_test(_name)
 
 
+def exp24(g, label):
+    a = g.addr(label)
+    return g.mem[a] | g.mem[a + 1] << 8 | g.mem[a + 2] << 16
+
+
+def at_distribution_screen(g, frames=3000):
+    """Start a Wall Level 1 award and run until its EXP distribution screen
+    takes input -> the pool's (bank, address) and the award it opened with."""
+    c = constants()
+    match_reward_state(g, c, "GAMEMODE_WALL_PRACTICE", 2, c["MINIGAME_WALL_PRACTICE_1"],
+                       include_value("FLAG_CLEARED_WALL_LEVEL_1"))
+    seen = []
+    pool = g.sym["wExpPoolRemaining"]
+    b, a = g.sym["RunExpDistributionLoop"]
+    g.pb.hook_register(b, a, lambda _: seen.append(pool_left(g, pool)), None)
+    g.pending.append(("ProcessMatchRewards", {}))
+    for i in range(frames):
+        g.tick()
+        if seen:
+            break
+        if i % 30 == 29:
+            g.press("a")
+    g.pb.hook_deregister(b, a)
+    assert seen, "the distribution screen never opened"
+    g.tick(60)
+    return pool, seen[0]
+
+
+def pool_left(g, where):
+    bank, a = where
+    return g.mem[bank, a] | g.mem[bank, a + 1] << 8
+
+
+@test
+def exp_select_assigns_all(g, c):
+    saved = exp24(g, "wStoryMainCharExp")
+    pool, award = at_distribution_screen(g)
+    bank, stats = g.sym["wExpScreenCharStats"]
+    gained = lambda: g.mem[bank, stats + 6] | g.mem[bank, stats + 7] << 8
+    left, before = pool_left(g, pool), gained()
+    assert award > 1000, f"a pool of {award}"
+    g.press("select", wait=30)
+    assert pool_left(g, pool) == 0, "Select left EXP in the pool"
+    assert gained() == before + left, f"{gained() - before} of {left} reached the character"
+    g.press("up", wait=10)
+    for _ in range(60):
+        if not g.awaiting:
+            break
+        g.press("a", wait=30)
+    assert not g.awaiting, "the rewards never finished after Select"
+    assert exp24(g, "wStoryMainCharExp") == saved + award, "the award was not saved to the character"
+
+
+exp_select_assigns_all.tokens = lambda c: {"ApOptExpModifier": b"\x0a"}
+
+
+@test
+def exp_held_increase_accelerates(g, c):
+    pool, award = at_distribution_screen(g)
+    assert award > 1000, f"a pool of {award}"
+    g.pb.button_press("right")
+    for _ in range(700):
+        g.tick()
+        if pool_left(g, pool) == 0:
+            break
+    g.pb.button_release("right")
+    assert pool_left(g, pool) == 0, f"{pool_left(g, pool)} of {award} left after 700 frames held"
+
+
+exp_held_increase_accelerates.tokens = exp_select_assigns_all.tokens
+
+
 @test
 def exp_modifier_normal(g, c):
     assert [scale_exp(g, n) for n in (0, 1, 1234, 0xffff)] == [0, 1, 1234, 0xffff]

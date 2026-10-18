@@ -374,6 +374,7 @@ INCLUDE "src/engine/menus/char_data/page_patches_1d.asm"
 INCLUDE "src/engine/menus/exp/distribute_loop_1d.asm"
 INCLUDE "src/engine/menus/exp/distribute_readouts_1d.asm"
 INCLUDE "src/engine/menus/exp/distribute_gfx_1d.asm"
+INCLUDE "src/ap/exp_1d.asm"
 
 SECTION "ROM Bank $1e", ROMX[$4000], BANK[$1e]
 

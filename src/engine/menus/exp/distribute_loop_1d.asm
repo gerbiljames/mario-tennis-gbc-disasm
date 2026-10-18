@@ -41,6 +41,11 @@ RunExpDistributionLoop:
 	ld [wExpRedrawPending], a ; $6f8e
 	pop af ; $6f91
 .checkButtons:
+	ld b, a
+	ldh a, [hInputRisingEdge]
+	bit PADB_SELECT, a
+	jp nz, ApAssignAllExp
+	ld a, b
 	bit 5, a ; $6f92
 	jp nz, .decrease ; $6f94
 	bit 4, a ; $6f97
@@ -139,6 +144,9 @@ RunExpDistributionLoop:
 	jp nz, RunExpDistributionLoop ; $7081
 	ld hl, wExpInputRepeating ; $7084
 	inc [hl] ; $7087
+	jr nz, .counted
+	dec [hl]
+.counted:
 	ld a, [wExpRedrawPending] ; $7088
 	or a ; $708b
 	jr nz, .increaseRepeat ; $708c
@@ -150,7 +158,7 @@ RunExpDistributionLoop:
 	ld a, [wExpRepeatDelay] ; $709c
 	or a ; $709f
 	jr nz, .applyIncrease ; $70a0
-	call AssignExpPointToChar ; $70a2
+	call ApAssignExpBurst
 .applyIncrease:
 	ld hl, wExpCursorChar ; $70a5
 	set 1, [hl] ; $70a8
