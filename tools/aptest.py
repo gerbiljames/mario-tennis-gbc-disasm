@@ -1249,6 +1249,44 @@ def ceremony_kept(g, c):
     assert warp == (include_value("STORYLOC_ISLAND_SKY"), 0x08), f"warped to {warp}"
 
 
+def first_dream_match(g, doubles=False, frames=4000):
+    """Accept Peach's first Dream Match offer -> the (list, match) it loads."""
+    arc = "DOUBLES" if doubles else "SINGLES"
+    set_flag(g, include_value("FLAG_DOUBLES"), doubles)
+    for f in (f"FLAG_WON_ISLAND_OPEN_{arc}_FINAL", f"FLAG_STORY_COMPLETE_{arc}", f"FLAG_REACHED_MARIO_WORLD_{arc}"):
+        set_flag(g, include_value(f), True)
+    set_flag(g, include_value(f"FLAG_WON_DREAM_MATCH_{arc}"), False)
+    assert g.warp(STORYLOC_PEACHS_CASTLE, 0x0e, frames=3000) == STORYLOC_PEACHS_CASTLE
+    seen = []
+    b, a = g.sym["RunStoryMatch"]
+    m = g.addr("wCurrentMinigameStoryMatch")
+    g.pb.hook_register(b, a, lambda _: seen.append((g.mem[m], g.mem[m + 1])), None)
+    g.pending.append(("PromptExhibitionMatch", {}))
+    for i in range(frames):
+        g.tick()
+        if seen:
+            break
+        if i % 30 == 29:
+            g.press("a")
+    g.pb.hook_deregister(b, a)
+    return seen[0] if seen else None
+
+
+def dream_match_test(choice, match, doubles=False):
+    def fn(g, c):
+        got = first_dream_match(g, doubles)
+        want = (include_value("MATCHLIST_DOUBLES" if doubles else "MATCHLIST_SINGLES"), include_value(match))
+        assert got == want, f"Peach's first offer loaded {got}, not {match}"
+    fn.tokens = lambda c: {"ApOptDreamDifficulty": bytes([choice])}
+    return fn
+
+
+for _choice, _match in ((0, "STORYMATCH_DREAM_INTENSE"), (1, "STORYMATCH_DREAM_HARD"),
+                        (2, "STORYMATCH_DREAM_INTENSE"), (3, "STORYMATCH_DREAM_MAX")):
+    TESTS[f"dream_match_difficulty_{_choice}"] = dream_match_test(_choice, _match)
+TESTS["dream_match_difficulty_doubles"] = dream_match_test(3, "STORYMATCH_DREAM_MAX", doubles=True)
+
+
 @test
 def exp_modifier_normal(g, c):
     assert [scale_exp(g, n) for n in (0, 1, 1234, 0xffff)] == [0, 1, 1234, 0xffff]

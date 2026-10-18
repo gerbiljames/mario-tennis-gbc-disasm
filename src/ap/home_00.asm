@@ -45,3 +45,5 @@ ApOptTwoOnOneGames: db 0
 ApOptExpModifier: db 0
 ; nonzero: skip the Island Open fireworks and Awards Ceremony (src/ap/ceremony_0f.asm)
 ApOptSkipCeremony: db 0
+; dream_match_difficulty: the first Dream Match, 1 Hard, 2 Intense, 3 MAX (0: Intense)
+ApOptDreamDifficulty: db 0

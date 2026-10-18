@@ -124,6 +124,16 @@ class NerfTwoOnOne(Toggle):
     display_name = "Nerf Two-on-One"
 
 
+class DreamMatchDifficulty(Choice):
+    """How hard Mario plays in Peach's first Dream Match offer (Intense in the original game). After a win she lets
+    you pick any of the three, as usual."""
+    display_name = "Dream Match Difficulty"
+    option_hard = 1
+    option_intense = 2
+    option_max = 3
+    default = option_intense
+
+
 class ShotItems(Toggle):
     """
     Your shots are items: topspin, slice and the flat shot (the second copy of each adds its power shot, or the
@@ -156,13 +166,15 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     nerf_swing_contest: NerfSwingContest
     nerf_two_on_one: NerfTwoOnOne
     experience_modifier: ExperienceModifier
+    dream_match_difficulty: DreamMatchDifficulty
     shot_items: ShotItems
     remote_items: RemoteItems
 
 
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames, ShotItems]),
-    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest, NerfTwoOnOne, ExperienceModifier]),
+    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest, NerfTwoOnOne, ExperienceModifier,
+                             DreamMatchDifficulty]),
     OptionGroup("Quality of Life", [SkipIntro, SkipCeremony, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
     OptionGroup("Multiworld", [RemoteItems]),
 ]

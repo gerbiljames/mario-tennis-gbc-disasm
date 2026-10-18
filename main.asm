@@ -200,6 +200,7 @@ INCLUDE "src/story/exhibition_0e.asm"
 INCLUDE "src/story/mario_scenes_0e.asm"
 INCLUDE "src/story/specialcourt_0e.asm"
 INCLUDE "src/story/match_setup_0e.asm"
+INCLUDE "src/ap/dream_0e.asm"
 
 SECTION "ROM Bank $0f", ROMX[$4000], BANK[$0f]
 
