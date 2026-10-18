@@ -51,6 +51,7 @@ ApCatchUpSlot:
 	ld h, [hl]
 	ld l, a
 	ld de, AP_EXP_BUNDLE
+	call ApScaleExp
 	add hl, de
 	jr nc, .store
 	ld hl, $ffff
@@ -314,3 +315,49 @@ FOR I, 1, AP_NUM_ITEMS
 	db "{AP_ITEM_TEXT_{d:I}}"
 	ds AP_ITEM_NAME_SIZE - STRLEN("{AP_ITEM_TEXT_{d:I}}"), 0
 ENDR
+
+; de = an EXP award -> de times experience_modifier (ApOptExpModifier, in
+; halves), at most $ffff; an award that was not 0 stays at least 1. Keeps bc
+; and hl.
+ApScaleExp:
+	ld a, [ApOptExpModifier]
+	and a
+	ret z
+	cp 2
+	ret z
+	push bc
+	push hl
+	ld b, a
+	xor a
+	ld c, a
+	ld h, a
+	ld l, a
+.add:
+	add hl, de
+	jr nc, .next
+	inc c
+.next:
+	dec b
+	jr nz, .add
+	srl c
+	rr h
+	rr l
+	ld a, c
+	and a
+	jr nz, .cap
+	ld a, h
+	or l
+	jr nz, .done
+	ld a, d
+	or e
+	jr z, .done
+	ld l, 1
+	jr .done
+.cap:
+	ld hl, $ffff
+.done:
+	ld d, h
+	ld e, l
+	pop hl
+	pop bc
+	ret

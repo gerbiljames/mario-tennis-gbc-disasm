@@ -179,6 +179,7 @@ ProcessMatchRewards:
 	cp WINLOSE_WIN ; $6571
 	jp nz, .runExpDistributionFlow ; $6573
 	call GetFirstClearRewardExp ; $6576
+	apcall ApScaleExp
 	call ShowExpAwardForMinigame ; $6579
 	ld h, d ; $657c
 	ld l, e ; $657d
@@ -251,6 +252,9 @@ ProcessMatchRewards:
 	add hl, de ; $65f0
 	ld d, h ; $65f1
 	ld e, l ; $65f2
+	apcall ApScaleExp
+	ld h, d
+	ld l, e
 	call ShowExpAwardForMinigame ; $65f3
 	jp .runExpDistributionFlow ; $65f6
 .computeMatchStatsReward:
@@ -268,10 +272,13 @@ ProcessMatchRewards:
 	add hl, de ; $6616
 	ld d, h ; $6617
 	ld e, l ; $6618
+	apcall ApScaleExp
+	ld h, d
+	ld l, e
 	call ShowExpAwardForMatch ; $6619
 	ld a, [wMatchWinLoseFlag] ; $661c
 	cp WINLOSE_WIN ; $661f
-	jr nz, .runExpDistributionFlow ; $6621
+	jp nz, .runExpDistributionFlow ; $6621
 	call SetRewardGameFlag ; $6623
 	push hl ; $6626
 	call ApplyRewardUnlockFlags ; $6627
@@ -284,6 +291,11 @@ ProcessMatchRewards:
 	ld a, [wPlayer1MainEquipment] ; $6639
 	ld d, a ; $663c
 	call ApplyMatchSettingsExpBonus ; $663d
+	ld d, h
+	ld e, l
+	apcall ApScaleExp
+	ld h, d
+	ld l, e
 	call AwardExhibitionMatchExp ; $6640
 	ret ; $6643
 .eq09:
@@ -316,6 +328,11 @@ ProcessMatchRewards:
 	rr e ; $6681
 	add hl, de ; $6683
 .awardLinkedPlayMatchExp:
+	ld d, h
+	ld e, l
+	apcall ApScaleExp
+	ld h, d
+	ld l, e
 	call AwardLinkedPlayMatchExp ; $6684
 	ret ; $6687
 .updateMinigameBestScore:

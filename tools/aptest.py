@@ -1004,6 +1004,72 @@ def shot_filters(g, c):
 shot_filters.tokens = lambda c: {"ApOptShotItems": b"\x01"}
 
 
+def scale_exp(g, amount):
+    g.call("ApScaleExp", D=amount >> 8, E=amount & 0xff)
+    return g.result["D"] << 8 | g.result["E"]
+
+
+@test
+def exp_modifier_off(g, c):
+    assert [scale_exp(g, n) for n in (0, 1, 1234, 0xffff)] == [0, 1, 1234, 0xffff]
+
+
+@test
+def exp_modifier_half(g, c):
+    assert [scale_exp(g, n) for n in (0, 1, 3, 101, 0xffff)] == [0, 1, 1, 50, 0x7fff]
+
+
+exp_modifier_half.tokens = lambda c: {"ApOptExpModifier": b"\x01"}
+
+
+@test
+def exp_modifier_quintuple(g, c):
+    assert [scale_exp(g, n) for n in (0, 300, 13107, 13108)] == [0, 1500, 65535, 65535]
+
+
+exp_modifier_quintuple.tokens = lambda c: {"ApOptExpModifier": b"\x0a"}
+
+
+@test
+def exp_bundle_scaled(g, c):
+    assert int.from_bytes(g.mem[g.addr("wPendingExpStory"):g.addr("wPendingExpStory") + 2], "little") == 300, \
+        "a tripled EXP Bundle"
+
+
+exp_bundle_scaled.tokens = lambda c: {"ApOptExpModifier": b"\x06", ("ApStartInventory", c["ITEM_EXP_BUNDLE"]): b"\x01"}
+
+
+def distributed_exp(g, frames=3000):
+    """Run ProcessMatchRewards from the idle loop, answering its screens ->
+    the EXP RunExpDistributionFlow was given (hl), or None."""
+    seen = []
+    b, a = g.sym["RunExpDistributionFlow"]
+    g.pb.hook_register(b, a, lambda _: seen.append(g.rf.HL), None)
+    g.pending.append(("ProcessMatchRewards", {}))
+    for i in range(frames):
+        g.tick()
+        if seen:
+            break
+        if i % 30 == 29:
+            g.press("a")
+    g.pb.hook_deregister(b, a)
+    return seen[0] if seen else None
+
+
+@test
+def exp_modifier_drill_award(g, c):
+    set_flag(g, include_value("FLAG_CLEARED_SERVICE_MATCH_1"), False)
+    g.wram("wGameMode", include_value("GAMEMODE_TRAINING_DRILL"))
+    g.wram("wPointWinLoseFlag", include_value("WINLOSE_WIN"))
+    g.wram("wMatchExitRequest", 0)
+    g.wram("wKeepMatchStatsFlag", 0)
+    g.wram("wCurrentMinigameStoryMatch", 2, c["MINIGAME_SERVICE_MATCH_1"])
+    assert distributed_exp(g) == 100, "Service Match 1's first clear (50) doubled"
+
+
+exp_modifier_drill_award.tokens = lambda c: {"ApOptExpModifier": b"\x04"}
+
+
 @test
 def shots_ungated_by_default(g, c):
     g.call("ApShotsGated")

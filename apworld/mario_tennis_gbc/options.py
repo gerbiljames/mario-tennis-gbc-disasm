@@ -98,6 +98,21 @@ class NerfSwingContest(Toggle):
     display_name = "Nerf Swing Contest"
 
 
+class ExperienceModifier(Choice):
+    """
+    Multiplies every EXP award: story, exhibition and linked matches, drills, and EXP Bundles. A single award is
+    capped at 65535 and never drops to 0.
+    """
+    display_name = "Experience Modifier"
+    option_half = 1
+    option_normal = 2
+    option_double = 4
+    option_triple = 6
+    option_quadruple = 8
+    option_quintuple = 10
+    default = option_normal
+
+
 class NerfTwoOnOne(Toggle):
     """Bowser's mini-game, Two-on-One, plays 2 games per set instead of 6."""
     display_name = "Nerf Two-on-One"
@@ -133,13 +148,14 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     item_messages: ItemMessages
     nerf_swing_contest: NerfSwingContest
     nerf_two_on_one: NerfTwoOnOne
+    experience_modifier: ExperienceModifier
     shot_items: ShotItems
     remote_items: RemoteItems
 
 
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames, ShotItems]),
-    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest, NerfTwoOnOne]),
+    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest, NerfTwoOnOne, ExperienceModifier]),
     OptionGroup("Quality of Life", [SkipIntro, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
     OptionGroup("Multiworld", [RemoteItems]),
 ]

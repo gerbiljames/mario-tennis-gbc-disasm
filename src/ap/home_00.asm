@@ -41,3 +41,5 @@ ApOptHideMessages: db 0
 ApOptShotItems: db 0
 ; nonzero: Two-on-One's games per set
 ApOptTwoOnOneGames: db 0
+; experience_modifier: the EXP multiplier in halves (0 or 2: x1)
+ApOptExpModifier: db 0
