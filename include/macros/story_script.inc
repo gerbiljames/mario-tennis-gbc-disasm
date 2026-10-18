@@ -238,11 +238,13 @@ MACRO script_copy_scene_rect
 	farcall CopySceneTilemapRect
 ENDM
 
-; Wait `frames` frames through WaitScriptFramesSaveA (preserves af).
+; Wait `frames` frames through the bank's own WaitScriptFramesSaveA_<bank>
+; copy (preserves af).
 ; Usage: script_delay frames
 MACRO script_delay
 	ld a, \1
-	call WaitScriptFramesSaveA
+	REDEF _SCRIPT_DELAY_BANK EQU BANK(@)
+	call WaitScriptFramesSaveA_{02x:_SCRIPT_DELAY_BANK}
 ENDM
 
 ; Start a screen fade-in (BeginFadeIn; speed 0 is treated as 1).

@@ -105,12 +105,7 @@ End1MainBldgGroupDepartureCutscene_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $784f
 	ld [wStoryModeExitTriggerRequest], a ; $7852
 	ret ; $7855
-WaitScriptFramesSaveA:
-	push af ; $7856
-	ld a, a ; $7857
-	farcall WaitScriptFrames ; $7858
-	pop af ; $785b
-	ret ; $785c
+	twin wait_script_frames_save_a, 27 ; $7856 WaitScriptFramesSaveA_27
 ActorScript_27_27:
 	; $785d, 10 bytes (actor_script)
 	as_halt
