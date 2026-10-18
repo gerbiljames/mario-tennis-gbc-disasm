@@ -98,6 +98,11 @@ class NerfSwingContest(Toggle):
     display_name = "Nerf Swing Contest"
 
 
+class NerfTwoOnOne(Toggle):
+    """Bowser's mini-game, Two-on-One, plays 2 games per set instead of 6."""
+    display_name = "Nerf Two-on-One"
+
+
 class ShotItems(Toggle):
     """
     Your shots are items: topspin, slice and the flat shot (the second copy of each adds its power shot, or the
@@ -127,13 +132,14 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     default_camera_mode: DefaultCameraMode
     item_messages: ItemMessages
     nerf_swing_contest: NerfSwingContest
+    nerf_two_on_one: NerfTwoOnOne
     shot_items: ShotItems
     remote_items: RemoteItems
 
 
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames, ShotItems]),
-    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest]),
+    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest, NerfTwoOnOne]),
     OptionGroup("Quality of Life", [SkipIntro, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
     OptionGroup("Multiworld", [RemoteItems]),
 ]

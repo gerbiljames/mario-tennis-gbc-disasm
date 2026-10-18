@@ -304,6 +304,34 @@ def check_minigames(g, c):
 check_minigames.tokens = lambda c: placements(c, {"LOC_TARGET_SHOT_3": "ITEM_TARGET_SHOT"})
 
 
+def two_on_one_length(g):
+    """(games, sets) Two-on-One level 3 starts RunMatch with."""
+    seen = []
+    b, a = g.sym["RunMatch"]
+    g.pb.hook_register(b, a, lambda _: seen.append((g.mem[g.addr("wMatchTypeNumberOfGames")],
+                                                    g.mem[g.addr("wMatchTypeNumberOfSets")])), None)
+    g.wram("wMinigameLevel", 2)
+    g.pending.append(("RunDoublesDrillMatch", {}))
+    for _ in range(600):
+        g.tick()
+        if seen:
+            return seen[0]
+    raise AssertionError("RunMatch never started")
+
+
+@test
+def two_on_one_vanilla(g, c):
+    assert two_on_one_length(g) == (6, 5)
+
+
+@test
+def two_on_one_nerfed(g, c):
+    assert two_on_one_length(g) == (2, 5)
+
+
+two_on_one_nerfed.tokens = lambda c: {"ApOptTwoOnOneGames": b"\x02"}
+
+
 @test
 def check_swing_contest(g, c):
     g.wram("wSwingContestSwings", 99, 0)

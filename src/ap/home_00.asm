@@ -39,3 +39,5 @@ ApOptCameraMode: db 0
 ApOptHideMessages: db 0
 ; nonzero: the player's shots are items (src/ap/shots_2d.asm)
 ApOptShotItems: db 0
+; nonzero: Two-on-One's games per set
+ApOptTwoOnOneGames: db 0

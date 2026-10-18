@@ -738,7 +738,12 @@ RunDoublesDrillMatch:
 	ld a, [hl+] ; $72a7
 	ld h, [hl] ; $72a8
 	ld l, a ; $72a9
-	ld a, [hl+] ; $72aa
+	ld a, [ApOptTwoOnOneGames]
+	and a
+	jr nz, .games
+	ld a, [hl] ; $72aa
+.games:
+	inc hl
 	ld [wMatchTypeNumberOfGames], a ; $72ab
 	ld a, [hl+] ; $72ae
 	ld [wMatchTypeNumberOfSets], a ; $72af

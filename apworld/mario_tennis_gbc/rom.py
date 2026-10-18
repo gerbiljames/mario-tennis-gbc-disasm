@@ -80,6 +80,7 @@ def option_bytes(world: MarioTennisGBCWorld) -> dict[str, int]:
         "ApOptCameraMode": o.default_camera_mode.value,
         "ApOptHideMessages": 0 if o.item_messages else 1,
         "ApOptShotItems": int(o.shot_items.value),
+        "ApOptTwoOnOneGames": 2 if o.nerf_two_on_one else 0,
         # the game's wMessageSpeed (Fast 0, Normal 1, Slow 2) + 1
         "ApOptTextSpeed": {o.default_text_speed.option_fast: 1, o.default_text_speed.option_normal: 2,
                            o.default_text_speed.option_slow: 3}[o.default_text_speed.value],
