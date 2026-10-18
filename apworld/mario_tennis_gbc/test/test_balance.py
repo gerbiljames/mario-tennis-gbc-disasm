@@ -71,6 +71,11 @@ class TestShotItems(MarioTennisGBCTestBase):
         self.collect_by_name("Lob")
         self.assertTrue(self.can_reach_location("Stroke Lesson 2"))
 
+    def test_service_matches_want_a_nice_serve(self) -> None:
+        self.assertFalse(self.can_reach_location("Service Match 1"))
+        self.collect_by_name(["Progressive Topspin Serve", "Progressive Slice Serve", "Progressive Flat Serve"])
+        self.assertTrue(self.can_reach_location("Service Match 1"))
+
     def test_senior_needs_a_third_shot(self) -> None:
         self.collect_by_name("Progressive Singles Pass")
         self.assertFalse(self.can_reach_location("Senior Singles Rank 4"))

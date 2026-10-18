@@ -53,11 +53,12 @@ TIER_SHOTS = {"Senior": 3, "Varsity": 5, "Island Open": 8, "Peach's Castle": 11}
 def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
     """What the shot items add: drills that judge a shot, Target Shot's combos, and a shot count per story tier."""
     volley = HasAny(TOPSPIN, SLICE)
+    nice_serve = Or(*(Has(serve, count=2) for serve in SERVES))
     # can't be done without the shot: the drill checks it on every point that counts
     rules: dict[str, Rule] = {
         "Stroke Lesson 2": Has(LOB),
         "Service Lesson 2": And(Has(TOPSPIN_SERVE), Has(SLICE_SERVE)),
-        "Service Lesson 3": Or(*(Has(serve, count=2) for serve in SERVES)),
+        "Service Lesson 3": nice_serve,
     }
     # possible without, through aces, coach errors or a lower score, just not reliably: out of logic, and
     # Universal Tracker shows them as glitched
@@ -68,6 +69,7 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
         "Net Game Lesson 2": Has(FLAT_SHOT, count=2),
         "Net Game Lesson 3": Has(DROP_SHOT),
         "Stroke Match 2": Has(LOB),
+        **{f"Service Match {n}": nice_serve for n in (1, 2, 3)},
     }
     if world.options.minigames != world.options.minigames.option_excluded:
         for name in ("Target Shot Level 2", "Target Shot Level 3", "Target Shot Record"):
