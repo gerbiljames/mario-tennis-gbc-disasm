@@ -1039,12 +1039,22 @@ def exp_bundle_scaled(g, c):
 exp_bundle_scaled.tokens = lambda c: {"ApOptExpModifier": b"\x06", ("ApStartInventory", c["ITEM_EXP_BUNDLE"]): b"\x01"}
 
 
-def distributed_exp(g, frames=3000):
-    """Run ProcessMatchRewards from the idle loop, answering its screens ->
-    the EXP RunExpDistributionFlow was given (hl), or None."""
+GAME_ARGS = (ROOT / "mariotennis.gbc", ROOT / "build" / "mariotennis.sym", ROOT / "maxed-unlocked.sav")
+
+
+def reward_outcome(g, frames=3000):
+    """Run ProcessMatchRewards from the idle loop, answering its screens -> the
+    award: the award screen's line 3 (wPendingExpAwardAmounts) when
+    RunExpDistributionFlow starts, or for exhibition and link play the amount
+    AwardExhibitionMatchExp / AwardLinkedPlayMatchExp are handed to store."""
     seen = []
-    b, a = g.sym["RunExpDistributionFlow"]
-    g.pb.hook_register(b, a, lambda _: seen.append(g.rf.HL), None)
+    bank, base = g.sym["wPendingExpAwardAmounts"]
+    hooks = [(g.sym["RunExpDistributionFlow"], lambda _: seen.append(g.mem[bank, base + 6] |
+                                                                       g.mem[bank, base + 7] << 8)),
+             (g.sym["AwardExhibitionMatchExp"], lambda _: seen.append(g.rf.HL)),
+             (g.sym["AwardLinkedPlayMatchExp"], lambda _: seen.append(g.rf.HL))]
+    for (b, a), fn in hooks:
+        g.pb.hook_register(b, a, fn, None)
     g.pending.append(("ProcessMatchRewards", {}))
     for i in range(frames):
         g.tick()
@@ -1052,22 +1062,71 @@ def distributed_exp(g, frames=3000):
             break
         if i % 30 == 29:
             g.press("a")
-    g.pb.hook_deregister(b, a)
+    for (b, a), _ in hooks:
+        g.pb.hook_deregister(b, a)
     return seen[0] if seen else None
 
 
-@test
-def exp_modifier_drill_award(g, c):
-    set_flag(g, include_value("FLAG_CLEARED_SERVICE_MATCH_1"), False)
-    g.wram("wGameMode", include_value("GAMEMODE_TRAINING_DRILL"))
+def match_reward_state(g, c, mode, matchlist, match, first_clear_flag):
+    """A won match of `mode`, with its first clear still to come and a few games
+    won by character 0, so every term of the award is in play."""
+    set_flag(g, first_clear_flag, False)
+    g.wram("wGameMode", include_value(mode))
+    g.wram("wMatchWinLoseFlag", include_value("WINLOSE_WIN"))
     g.wram("wPointWinLoseFlag", include_value("WINLOSE_WIN"))
     g.wram("wMatchExitRequest", 0)
     g.wram("wKeepMatchStatsFlag", 0)
-    g.wram("wCurrentMinigameStoryMatch", 2, c["MINIGAME_SERVICE_MATCH_1"])
-    assert distributed_exp(g) == 100, "Service Match 1's first clear (50) doubled"
+    g.wram("wMinigameHighScoreMode", 0)
+    g.wram("wMinigamesCurrentScore", 200, 0)
+    g.wram("wTotalGamesWonInMatch", 6)
+    g.wram("wLinkMatchRole", include_value("LINKSTATE_MASTER"))
+    g.wram("wCurrentMinigameStoryMatch", matchlist, match)
+    g.mem[include_value("WRAM_ACTORS"), include_value("wCharId")] = 0
 
 
-exp_modifier_drill_award.tokens = lambda c: {"ApOptExpModifier": b"\x04"}
+EXP_SCENARIOS = {
+    "drill": ("GAMEMODE_TRAINING_DRILL", 2, "MINIGAME_SERVICE_MATCH_1", "FLAG_CLEARED_SERVICE_MATCH_1"),
+    "story": ("GAMEMODE_RANKING_MATCH", 0, "STORYMATCH_JUNIOR_4", "FLAG_WON_JUNIOR_SINGLES_RANK_4"),
+    "wall": ("GAMEMODE_WALL_PRACTICE", 2, "MINIGAME_WALL_PRACTICE_1", "FLAG_CLEARED_WALL_LEVEL_1"),
+    "exhibition": ("GAMEMODE_EXHIBITION", 0, "STORYMATCH_JUNIOR_4", "FLAG_WON_JUNIOR_SINGLES_RANK_4"),
+    "link": ("GAMEMODE_LINK_MATCH", 0, "STORYMATCH_JUNIOR_4", "FLAG_WON_JUNIOR_SINGLES_RANK_4"),
+}
+
+
+def scenario_award(g, c, name):
+    mode, matchlist, match, flag = EXP_SCENARIOS[name]
+    match_id = c[match] if match.startswith("MINIGAME") else include_value(match)
+    match_reward_state(g, c, mode, matchlist, match_id, include_value(flag))
+    return reward_outcome(g)
+
+
+def exp_scenario_test(name):
+    """The award a `name` win makes at x1 (option byte 2) and at x2 (byte 4):
+    nonzero, and exactly doubled."""
+    def fn(g, c):
+        single = scenario_award(g, c, name)
+        other = Game(*GAME_ARGS, {"ApOptExpModifier": b"\x04"})
+        try:
+            other.to_overworld()
+            double = scenario_award(other, c, name)
+        finally:
+            other.close()
+        assert single, f"no {name} award at x1"
+        assert double == 2 * single, f"{name}: {single} at x1 but {double} at x2"
+    fn.tokens = lambda c: {"ApOptExpModifier": b"\x02"}
+    return fn
+
+
+for _name in EXP_SCENARIOS:
+    TESTS[f"exp_modifier_{_name}_award"] = exp_scenario_test(_name)
+
+
+@test
+def exp_modifier_normal(g, c):
+    assert [scale_exp(g, n) for n in (0, 1, 1234, 0xffff)] == [0, 1, 1234, 0xffff]
+
+
+exp_modifier_normal.tokens = lambda c: {"ApOptExpModifier": b"\x02"}
 
 
 @test
@@ -1234,8 +1293,9 @@ def main():
         write_rom(args.rom, args.sym, args.write_rom, full)
         Path(args.write_rom).with_suffix(".sav").write_bytes(with_ledger(Path(args.save).read_bytes(), args.sym))
         return
-    global SHOTS
+    global SHOTS, GAME_ARGS
     SHOTS = args.shots
+    GAME_ARGS = (args.rom, args.sym, args.save)
     c = constants()
     failed = 0
     if not args.k or args.k in "erases_a_save_without_ledger":
