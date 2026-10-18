@@ -66,8 +66,10 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
         "Service Lesson 3": nice_serve,
     }
     if world.options.minigames != world.options.minigames.option_excluded:
-        # playtested: Perfect Shot can't be scored in without lobbing
+        # playtested: Perfect Shot can't be scored in without lobbing, nor Target Shot's later levels without
+        # the drop shot
         rules.update({f"Perfect Shot Level {n}": Has(LOB) for n in (1, 2, 3)})
+        rules.update({f"Target Shot Level {n}": Has(DROP_SHOT) for n in (2, 3)})
     # possible without, through aces, coach errors or a lower score, just not reliably: out of logic, and
     # Universal Tracker shows them as glitched
     possible = {
@@ -80,13 +82,14 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
         **{f"Service Match {n}": nice_serve for n in (1, 2, 3)},
     }
     if world.options.minigames != world.options.minigames.option_excluded:
-        for name in ("Target Shot Level 2", "Target Shot Level 3"):
-            possible[name] = And(Has(LOB), Has(DROP_SHOT))
+        possible.update({f"Target Shot Level {n}": Has(LOB) for n in (2, 3)})
     for region, names in story_regions(world).items():
         tier = next((t for t in TIER_SHOTS if region.startswith(t)), None)
         if tier:
             possible.update({name: HasFromList(*SHOT_COPIES, count=TIER_SHOTS[tier]) for name in names})
-    rules.update({name: Or(rule, Has(UT_GLITCH)) for name, rule in possible.items()})
+    for name, rule in possible.items():
+        rule = Or(rule, Has(UT_GLITCH))
+        rules[name] = And(rules[name], rule) if name in rules else rule
     return rules
 
 

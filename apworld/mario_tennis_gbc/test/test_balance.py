@@ -86,6 +86,16 @@ class TestShotItems(MarioTennisGBCTestBase):
         self.collect_by_name("Lob")
         self.assertTrue(self.can_reach_location("Perfect Shot Level 3"))
 
+    def test_target_shot_needs_the_drop_and_wants_the_lob(self) -> None:
+        self.collect_by_name("Progressive Target Shot")
+        self.collect_by_name("Lob")
+        self.assertFalse(self.can_reach_location("Target Shot Level 2"), "Target Shot 2 without the drop shot")
+        self.multiworld.state.remove(self.get_item_by_name("Lob"))
+        self.collect_by_name("Drop Shot")
+        self.assertFalse(self.can_reach_location("Target Shot Level 2"), "the lob left logic")
+        self.collect(self.world.create_item(self.world.glitches_item_name))
+        self.assertTrue(self.can_reach_location("Target Shot Level 3"))
+
     def test_service_matches_want_a_nice_serve(self) -> None:
         self.assertFalse(self.can_reach_location("Service Match 1"))
         self.collect_by_name(["Progressive Topspin Serve", "Progressive Slice Serve", "Progressive Flat Serve"])
