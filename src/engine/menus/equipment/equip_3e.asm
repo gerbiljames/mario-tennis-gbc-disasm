@@ -26,7 +26,7 @@ CreateEquipListWindow:
 	farcall FillTilemapRect ; $5834
 	ret ; $5837
 CreateEquipCaptionWindow:
-	ld a, $03 ; $5838
+	ld a, WRAM_SCREEN ; $5838
 	ld [wShadowTilemapBank], a ; $583a
 	ld a, $00 ; $583d
 	ld [wWindowTileAttr], a ; $583f

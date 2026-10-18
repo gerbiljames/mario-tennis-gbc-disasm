@@ -13,7 +13,7 @@ RunCpuDifficultySubmenu:
 	ld a, [wMenuInputPressed] ; $6236
 	bit PADB_A, a ; $6239
 	jr nz, .confirm ; $623b
-	bit 1, a ; $623d
+	bit PADB_B, a ; $623d
 	jr nz, .cancel ; $623f
 	jr .done ; $6241
 .cancel:
@@ -122,7 +122,7 @@ HandleCpuDifficultyInput:
 	ld a, [wMenuInputPressed] ; $630f
 	bit PADB_LEFT, a ; $6312
 	jr nz, .decrease ; $6314
-	bit 4, a ; $6316
+	bit PADB_RIGHT, a ; $6316
 	jr nz, .increase ; $6318
 	ret ; $631a
 .decrease:

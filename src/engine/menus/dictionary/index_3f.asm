@@ -371,7 +371,7 @@ HandleTennisDictionaryListInput:
 .resetTextWindowsAndRestoreMap:
 	push hl ; $564e
 	farcall ResetTextWindowsAndRestoreMap ; $564f
-	ld a, $05 ; $5652
+	ld a, WRAM_TEXT ; $5652
 	ld [wShadowTilemapBank], a ; $5654
 	pop hl ; $5657
 	ld d, $00 ; $5658

@@ -61,7 +61,7 @@ PrepareLinkStatePayload:
 	ldh [hLinkRemoteInputBuf], a ; $4a02
 	call ReadJoypadThunk ; $4a04
 	ldh a, [hPlayerInputFlags] ; $4a07
-	and $f0 ; $4a09
+	and PADF_DPAD ; $4a09
 	ld c, a ; $4a0b
 	call ComposeLinkStateByte ; $4a0c
 	ldh [hLinkTxInput], a ; $4a0f

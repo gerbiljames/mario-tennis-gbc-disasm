@@ -246,7 +246,7 @@ Unused_05_RunMenuSelectionShared:
 	ldh a, [hInputPressed] ; $4b00
 	bit PADB_A, a ; $4b02
 	jp nz, Unused_05_LoadOverworldSpriteDef.isCursorOnAdjustRow ; $4b04
-	bit 6, a ; $4b07
+	bit PADB_UP, a ; $4b07
 	jr z, .bit6Clear ; $4b09
 	dec b ; $4b0b
 	bit 7, b ; $4b0c

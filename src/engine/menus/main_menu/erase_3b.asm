@@ -57,7 +57,7 @@ RunEraseSavedDataSelect:
 	ld a, [wMenuInputPressed] ; $6cce
 	bit PADB_A, a ; $6cd1
 	jr nz, .getMenuCursorCellIndex ; $6cd3
-	bit 1, a ; $6cd5
+	bit PADB_B, a ; $6cd5
 	jr nz, .playSfx3 ; $6cd7
 	jr .loop ; $6cd9
 .getMenuCursorCellIndex:
@@ -259,11 +259,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuInputPressed] ; $6e8d
 	bit PADB_RIGHT, a ; $6e90
 	jr nz, .checkMenuCursorX ; $6e92
-	bit 5, a ; $6e94
+	bit PADB_LEFT, a ; $6e94
 	jr nz, .checkMenuCursorX2 ; $6e96
-	bit 6, a ; $6e98
+	bit PADB_UP, a ; $6e98
 	jr nz, .checkMenuCursorX3 ; $6e9a
-	bit 7, a ; $6e9c
+	bit PADB_DOWN, a ; $6e9c
 	jr nz, .checkMenuCursorX3 ; $6e9e
 	xor a ; $6ea0
 	jp .done ; $6ea1
@@ -320,11 +320,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuInputPressed] ; $6ef2
 	bit PADB_RIGHT, a ; $6ef5
 	jr nz, .checkMenuCursorX4 ; $6ef7
-	bit 5, a ; $6ef9
+	bit PADB_LEFT, a ; $6ef9
 	jr nz, .checkMenuCursorX5 ; $6efb
-	bit 6, a ; $6efd
+	bit PADB_UP, a ; $6efd
 	jr nz, .checkMenuCursorX6 ; $6eff
-	bit 7, a ; $6f01
+	bit PADB_DOWN, a ; $6f01
 	jr nz, .checkMenuCursorX6 ; $6f03
 	xor a ; $6f05
 	jr .done ; $6f06

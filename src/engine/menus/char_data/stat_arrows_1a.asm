@@ -151,9 +151,9 @@ RunCharDataConfirmScreen:
 	ldh a, [hInputRisingEdge] ; $79ce
 	bit PADB_A, a ; $79d0
 	jr nz, .step ; $79d2
-	bit 1, a ; $79d4
+	bit PADB_B, a ; $79d4
 	jr nz, .beginFadeOut2 ; $79d6
-	and $c0 ; $79d8
+	and PADF_UP | PADF_DOWN ; $79d8
 	jr z, .loop ; $79da
 	sound SFX_MENU_MOVE ; $79dc
 	ld a, [wCharDataConfirmState] ; $79de

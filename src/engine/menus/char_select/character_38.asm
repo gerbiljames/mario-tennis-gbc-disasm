@@ -60,9 +60,9 @@ RunCharacterSelectScreen:
 	ldh a, [hInputPressed] ; $486c
 	bit PADB_A, a ; $486e
 	jr nz, .confirm ; $4870
-	bit 1, a ; $4872
+	bit PADB_B, a ; $4872
 	jr nz, .cancel ; $4874
-	bit 3, a ; $4876
+	bit PADB_START, a ; $4876
 	jr nz, .viewStats ; $4878
 	jr .redraw ; $487a
 .confirm:
@@ -225,7 +225,7 @@ SetupCharacterSelectScreen:
 	ld de, vTiles2 ; $49be
 	farcall LoadCompressedTileBlock ; $49c1
 	wram_bank WRAM_TEXT ; $49c4
-	ld a, $03 ; $49ca
+	ld a, WRAM_SCREEN ; $49ca
 	ld [wShadowTilemapBank], a ; $49cc
 	ld a, $00 ; $49cf
 	ld [wWindowTileAttr], a ; $49d1

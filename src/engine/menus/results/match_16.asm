@@ -164,9 +164,9 @@ RunMatchStatsScreen:
 	ldh a, [hInputPressed] ; $5c62
 	bit PADB_LEFT, a ; $5c64
 	jr nz, .beginFadeOut ; $5c66
-	bit 0, a ; $5c68
+	bit PADB_A, a ; $5c68
 	jr nz, .beginFadeOut2 ; $5c6a
-	bit 1, a ; $5c6c
+	bit PADB_B, a ; $5c6c
 	jr nz, .beginFadeOut2 ; $5c6e
 	call AdvanceFrame ; $5c70
 	jr .loop ; $5c73

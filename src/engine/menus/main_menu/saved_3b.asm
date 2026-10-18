@@ -218,7 +218,7 @@ RunSavedDataSourceSelect:
 	ld a, [wMenuInputPressed] ; $67f5
 	bit PADB_A, a ; $67f8
 	jr nz, .getMenuCursorCellIndex ; $67fa
-	bit 1, a ; $67fc
+	bit PADB_B, a ; $67fc
 	jr nz, .playSfx3 ; $67fe
 	jr .loop ; $6800
 .getMenuCursorCellIndex:

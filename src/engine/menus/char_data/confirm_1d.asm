@@ -162,9 +162,9 @@ PromptCharDataConfirm:
 	ldh a, [hInputRisingEdge] ; $5aab
 	bit PADB_A, a ; $5aad
 	jr nz, .step ; $5aaf
-	bit 1, a ; $5ab1
+	bit PADB_B, a ; $5ab1
 	jr nz, .beginFadeOut2 ; $5ab3
-	and $c0 ; $5ab5
+	and PADF_UP | PADF_DOWN ; $5ab5
 	jr z, .loop ; $5ab7
 	sound SFX_MENU_MOVE ; $5ab9
 	ld a, [wCharDataConfirmState] ; $5abb

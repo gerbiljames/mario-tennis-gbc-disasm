@@ -100,7 +100,7 @@ ResetMatchState:
 InitMatchScene:
 	call ClearFrameTasks ; $4145
 	farcall ResetTextWindowState ; $4148
-	ld a, $02 ; $414b
+	ld a, WRAM_COURT_PLANES ; $414b
 	ld [wShadowTilemapBank], a ; $414d
 	ld a, $00 ; $4150
 	ld [wWindowTileAttr], a ; $4152

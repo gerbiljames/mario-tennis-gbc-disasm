@@ -73,7 +73,7 @@ RunMinigameSelect:
 	ld a, [wMenuInputPressed] ; $627f
 	bit PADB_A, a ; $6282
 	jr nz, .getMenuCursorCellIndex ; $6284
-	bit 1, a ; $6286
+	bit PADB_B, a ; $6286
 	jr nz, .playSfx2 ; $6288
 	jr .loop ; $628a
 .getMenuCursorCellIndex:

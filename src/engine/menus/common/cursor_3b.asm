@@ -116,7 +116,7 @@ Unused_3b_MoveMenuCursorRepeat:
 	ld a, [wMenuCursorY] ; $41ac
 	ld e, a ; $41af
 	ldh a, [hLinkInput] ; $41b0
-	bit 4, a ; $41b2
+	bit PADB_RIGHT, a ; $41b2
 	jr z, .bit4Clear ; $41b4
 	ld a, [wMenuCursorX] ; $41b6
 	inc a ; $41b9

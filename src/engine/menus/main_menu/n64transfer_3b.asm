@@ -135,7 +135,7 @@ RunN64RecordTypeSelect:
 	ld a, [wMenuInputPressed] ; $7202
 	bit PADB_A, a ; $7205
 	jr nz, .playSfx ; $7207
-	bit 1, a ; $7209
+	bit PADB_B, a ; $7209
 	jr nz, .playSfx2 ; $720b
 	jr .loop ; $720d
 .playSfx:
@@ -547,7 +547,7 @@ RunN64TransferItemSelect:
 	ld a, [wMenuInputPressed] ; $7511
 	bit PADB_A, a ; $7514
 	jr nz, .playSfx ; $7516
-	bit 1, a ; $7518
+	bit PADB_B, a ; $7518
 	jr nz, .playSfx2 ; $751a
 	jr .loop ; $751c
 .playSfx:

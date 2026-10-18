@@ -74,7 +74,7 @@ Unused_05_RunDebugWindowDemo:
 	ld a, e ; $6daa
 	ld [hl+], a ; $6dab
 	ld [hl], d ; $6dac
-	ld a, $05 ; $6dad
+	ld a, WRAM_TEXT ; $6dad
 	ld [wShadowTilemapBank], a ; $6daf
 	ld a, TILEATTR_PRIORITY ; $6db2
 	ld [wWindowTileAttr], a ; $6db4
@@ -133,7 +133,7 @@ ResetTextWindowState:
 	ld a, e ; $6e29
 	ld [hl+], a ; $6e2a
 	ld [hl], d ; $6e2b
-	ld a, $05 ; $6e2c
+	ld a, WRAM_TEXT ; $6e2c
 	ld [wShadowTilemapBank], a ; $6e2e
 	ld a, TILEATTR_PRIORITY ; $6e31
 	ld [wWindowTileAttr], a ; $6e33

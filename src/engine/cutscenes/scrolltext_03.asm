@@ -140,7 +140,7 @@ RunScrollingTextScreen:
 	jr z, .advanceFrame ; $5a7c
 .nonZero2:
 	ldh a, [hPlayerInputFlags] ; $5a7e
-	and $0b ; $5a80
+	and PADF_A | PADF_B | PADF_START ; $5a80
 	jr nz, .maskSet ; $5a82
 .advanceFrame:
 	call AdvanceFrame ; $5a84

@@ -368,7 +368,7 @@ Unused_06_AdjustDebugStatByte:
 	ldh a, [hInputPressed] ; $6ca8
 	bit PADB_LEFT, a ; $6caa
 	jr nz, .read ; $6cac
-	bit 4, a ; $6cae
+	bit PADB_RIGHT, a ; $6cae
 	jr nz, .readB ; $6cb0
 	ret ; $6cb2
 .read:
@@ -385,7 +385,7 @@ Unused_06_AdjustDebugStatWord:
 	ldh a, [hInputPressed] ; $6cbb
 	bit PADB_LEFT, a ; $6cbd
 	jr nz, .read ; $6cbf
-	bit 4, a ; $6cc1
+	bit PADB_RIGHT, a ; $6cc1
 	jr nz, .readB ; $6cc3
 	ret ; $6cc5
 .read:

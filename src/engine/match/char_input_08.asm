@@ -325,10 +325,10 @@ CharInputHandler6_08:
 	ret ; $7854
 ReadCharPadInput:
 	ldh a, [hPlayerInputFlags] ; $7855
-	and $f0 ; $7857
+	and PADF_DPAD ; $7857
 	ld c, a ; $7859
 	ldh a, [hInputRisingEdge] ; $785a
-	and $0f ; $785c
+	and PADF_BUTTONS ; $785c
 	or c ; $785e
 	ld [wCharInputBits], a ; $785f
 	ret ; $7862
@@ -477,7 +477,7 @@ AiSteerTowardTarget:
 	and $0f ; $7931
 	ld_hl_indexed AngleToDpadTable_08 ; $7933
 	ld a, [wCharInputBits] ; $793a
-	and $0f ; $793d
+	and PADF_BUTTONS ; $793d
 	or [hl] ; $793f
 	ld [wCharInputBits], a ; $7940
 	ret ; $7943
@@ -495,7 +495,7 @@ AiSteerTowardBall:
 	and $0f ; $7955
 	ld_hl_indexed AngleToDpadTable_08 ; $7957
 	ld a, [wCharInputBits] ; $795e
-	and $0f ; $7961
+	and PADF_BUTTONS ; $7961
 	or [hl] ; $7963
 	ld [wCharInputBits], a ; $7964
 	ret ; $7967

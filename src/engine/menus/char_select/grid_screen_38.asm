@@ -315,7 +315,7 @@ SetupCharGridScreen:
 	farcall LoadScreenAssetRecord ; $4fc9
 	farcall ResetTextWindowState ; $4fcc
 	wram_bank WRAM_TEXT ; $4fcf
-	ld a, $03 ; $4fd5
+	ld a, WRAM_SCREEN ; $4fd5
 	ld [wShadowTilemapBank], a ; $4fd7
 	ld a, $00 ; $4fda
 	ld [wWindowTileAttr], a ; $4fdc
@@ -399,11 +399,11 @@ HandleCharGridDpad:
 	ldh a, [hInputPressed] ; $51a8
 	bit PADB_RIGHT, a ; $51aa
 	jr nz, .scrollDown ; $51ac
-	bit 5, a ; $51ae
+	bit PADB_LEFT, a ; $51ae
 	jr nz, .moveLeft ; $51b0
-	bit 6, a ; $51b2
+	bit PADB_UP, a ; $51b2
 	jr nz, .moveRight ; $51b4
-	bit 7, a ; $51b6
+	bit PADB_DOWN, a ; $51b6
 	jr nz, .moveDown ; $51b8
 	jr .done ; $51ba
 .scrollDown:
@@ -550,9 +550,9 @@ HandleCharGridButtons:
 	ld a, [wMenuInputPressed] ; $52b9
 	bit PADB_A, a ; $52bc
 	jr nz, .confirm ; $52be
-	bit 1, a ; $52c0
+	bit PADB_B, a ; $52c0
 	jr nz, .cancel ; $52c2
-	bit 3, a ; $52c4
+	bit PADB_START, a ; $52c4
 	jr nz, .toggleHandedness ; $52c6
 	ret ; $52c8
 .confirm:

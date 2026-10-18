@@ -325,7 +325,7 @@ CaptureShotAim:
 	ret ; $7199
 ApplyCharMovementInput:
 	ld a, [wCharInputBits] ; $719a
-	and $f0 ; $719d
+	and PADF_DPAD ; $719d
 	jr z, .done ; $719f
 	swap a ; $71a1
 	ld_hl_indexed DpadToFacingTable_08 ; $71a3

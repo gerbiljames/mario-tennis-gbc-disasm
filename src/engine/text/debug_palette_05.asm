@@ -199,7 +199,7 @@ RunDebugPaletteViewer:
 	ldh a, [hInputRisingEdge] ; $6ab2
 	bit PADB_B, a ; $6ab4
 	jr nz, .closeWindow ; $6ab6
-	bit 0, a ; $6ab8
+	bit PADB_A, a ; $6ab8
 	jr z, .bit0Clear ; $6aba
 	call RunDebugColorEditor ; $6abc
 .bit0Clear:

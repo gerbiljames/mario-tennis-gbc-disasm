@@ -605,9 +605,9 @@ AdvanceFrame:
 	jr z, .checkStepExit ; $26a6
 	ldh a, [hDebugStepMode] ; $26a8
 	inc a ; $26aa
-	cp $04 ; $26ab
+	cp NUM_DEBUGSTEP_MODES ; $26ab
 	jr c, .storeStepMode ; $26ad
-	ld a, $01 ; $26af
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $26af
 .storeStepMode:
 	ldh [hDebugStepMode], a ; $26b1
 	jr .stepWaitFrame ; $26b3
@@ -615,14 +615,14 @@ AdvanceFrame:
 	ldh a, [hPlayerInputFlags] ; $26b5
 	bit PADB_START, a ; $26b7
 	jr z, .stepWaitFrame ; $26b9
-	bit 2, a ; $26bb
+	bit PADB_SELECT, a ; $26bb
 	jr nz, .stepWaitFrame ; $26bd
 	xor a ; $26bf
 	ldh [hDebugStepPaused], a ; $26c0
 	jr .waitFrame ; $26c2
 .stepWaitFrame:
 	ldh a, [hInputPressed] ; $26c4
-	and $f3 ; $26c6
+	and ~(PADF_SELECT | PADF_START) ; $26c6
 	jr nz, .waitFrame ; $26c8
 	ldh a, [hLinkExchangeActive] ; $26ca
 	or a ; $26cc

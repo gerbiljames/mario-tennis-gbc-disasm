@@ -189,9 +189,9 @@ RunMatchWinLoseScreen:
 	ld [wMenuInputPressed], a ; $450c
 	bit PADB_A, a ; $450f
 	jr nz, .playSfx2 ; $4511
-	bit 1, a ; $4513
+	bit PADB_B, a ; $4513
 	jr nz, .playSfx2 ; $4515
-	bit 4, a ; $4517
+	bit PADB_RIGHT, a ; $4517
 	jr nz, .bit4Set ; $4519
 	jr .loop ; $451b
 .playSfx2:

@@ -36,7 +36,7 @@ RunCourtSelect4Menu:
 	ld a, [wMenuInputPressed] ; $5bee
 	bit PADB_A, a ; $5bf1
 	jr nz, .playSfx ; $5bf3
-	bit 1, a ; $5bf5
+	bit PADB_B, a ; $5bf5
 	jr nz, .playSfx2 ; $5bf7
 	jr .loop ; $5bf9
 .playSfx:
@@ -120,7 +120,7 @@ RunLinkCourtSelect4Menu:
 	ld a, [wMenuInputPressed] ; $5ca5
 	bit PADB_A, a ; $5ca8
 	jr nz, .playSfx ; $5caa
-	bit 1, a ; $5cac
+	bit PADB_B, a ; $5cac
 	jr nz, .playSfx2 ; $5cae
 	jr .loop ; $5cb0
 .playSfx:

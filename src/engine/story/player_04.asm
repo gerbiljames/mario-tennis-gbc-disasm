@@ -313,7 +313,7 @@ UpdatePlayerControl:
 .setAnimSpeed:
 	ld d, $01 ; $51a6
 	ldh a, [hPlayerInputFlags] ; $51a8
-	and $f0 ; $51aa
+	and PADF_DPAD ; $51aa
 	jr z, .storeSpeed ; $51ac
 	ld d, $03 ; $51ae
 .storeSpeed:
@@ -325,7 +325,7 @@ UpdatePlayerControl:
 	xor a ; $51bb
 	ld [wPlayerMoveAngleApplied], a ; $51bc
 	ldh a, [hPlayerInputFlags] ; $51bf
-	and $f0 ; $51c1
+	and PADF_DPAD ; $51c1
 	jr nz, .dpadToAngle ; $51c3
 	xor a ; $51c5
 	ld [wPlayerMoving], a ; $51c6

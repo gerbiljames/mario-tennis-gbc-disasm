@@ -136,7 +136,7 @@ SmallCharTestInitScript_0f:
 	ret ; $41b6
 SmallCharTestButtonTask_0f:
 	ldh a, [hInputRisingEdge] ; $41b7
-	and $f0 ; $41b9
+	and PADF_DPAD ; $41b9
 	jr z, .done ; $41bb
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $41bd
 .done:

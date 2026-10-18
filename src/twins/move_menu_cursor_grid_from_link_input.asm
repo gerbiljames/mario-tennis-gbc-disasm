@@ -11,7 +11,7 @@
 	ld a, [wMenuCursorY]
 	ld e, a
 	ldh a, [hLinkInput]
-	bit 4, a
+	bit PADB_RIGHT, a
 	jr z, .checkLeft
 	ld a, [wMenuCursorX]
 	inc a

@@ -411,7 +411,7 @@ RunN64RingShotData:
 	ld a, [wMenuInputPressed] ; $5188
 	bit PADB_A, a ; $518b
 	jr nz, .playSfx ; $518d
-	bit 1, a ; $518f
+	bit PADB_B, a ; $518f
 	jr nz, .playSfx2 ; $5191
 	jr .loop ; $5193
 .playSfx:

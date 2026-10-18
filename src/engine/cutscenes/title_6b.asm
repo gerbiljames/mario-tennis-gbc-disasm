@@ -107,7 +107,7 @@ RunTitleScreen:
 	ldh a, [hInputRisingEdge] ; $7665
 	bit PADB_A, a ; $7667
 	jr nz, .playSfx ; $7669
-	bit 3, a ; $766b
+	bit PADB_START, a ; $766b
 	jr nz, .playSfx ; $766d
 	ldh a, [hVBlankCounter] ; $766f
 	and $07 ; $7671

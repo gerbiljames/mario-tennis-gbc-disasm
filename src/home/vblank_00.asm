@@ -64,7 +64,7 @@ VBlankHandler:
 	jr nz, .updateGameTimer ; $27b4
 	call ReadJoypad ; $27b6
 	ldh a, [hPlayerInputFlags] ; $27b9
-	cp $0f ; $27bb
+	cp PADF_BUTTONS ; $27bb
 	jp z, SoftReset ; $27bd
 	call AdvanceRandomSeed ; $27c0
 .updateGameTimer:
@@ -321,8 +321,8 @@ SerialEncodeInput:
 	push hl ; $2925
 	ldh a, [hLinkTxInput] ; $2926
 	ld b, a ; $2928
-	and $0f ; $2929
-	cp $0f ; $292b
+	and PADF_BUTTONS ; $2929
+	cp PADF_BUTTONS ; $292b
 	jr nz, .checkBit3 ; $292d
 	ld a, $3f ; $292f
 	ld b, $0f ; $2931

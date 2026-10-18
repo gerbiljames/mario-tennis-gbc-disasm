@@ -227,7 +227,7 @@ Unused_1b_UpdateCharSelectSelection:
 Unused_1b_MoveCharSelectCursor:
 	ldh a, [hInputPressed] ; $6192
 	ld b, a ; $6194
-	and $f0 ; $6195
+	and PADF_DPAD ; $6195
 	jr z, .done ; $6197
 	sound SFX_MENU_MOVE ; $6199
 	ld a, [wCharSelectCol] ; $619b

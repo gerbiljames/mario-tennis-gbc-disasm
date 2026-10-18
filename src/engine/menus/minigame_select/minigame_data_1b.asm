@@ -177,7 +177,7 @@ ShowMinigameDataScreen:
 	ld a, [wMenuInputPressed] ; $741e
 	bit PADB_A, a ; $7421
 	jr nz, .playSfx ; $7423
-	bit 1, a ; $7425
+	bit PADB_B, a ; $7425
 	jr nz, .playSfx2 ; $7427
 	jr .loop ; $7429
 .playSfx:
@@ -237,7 +237,7 @@ ScrollMinigameDataList:
 	ld a, [wMenuInputPressed] ; $74a2
 	bit PADB_DOWN, a ; $74a5
 	jr nz, .checkMenuCursorY ; $74a7
-	bit 6, a ; $74a9
+	bit PADB_UP, a ; $74a9
 	jr nz, .checkMenuCursorY2 ; $74ab
 	ret ; $74ad
 .checkMenuCursorY:

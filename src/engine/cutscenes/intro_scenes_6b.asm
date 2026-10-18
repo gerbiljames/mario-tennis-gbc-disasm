@@ -1,6 +1,6 @@
 CheckIntroSkipInput:
 	ldh a, [hInputRisingEdge] ; $53f1
-	and $09 ; $53f3
+	and PADF_A | PADF_START ; $53f3
 	ret z ; $53f5
 	ld a, $01 ; $53f6
 	ld [wIntroCutsceneCheck], a ; $53f8

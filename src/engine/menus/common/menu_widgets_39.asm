@@ -49,11 +49,11 @@ MoveMinigameGridCursor:
 	ld a, [wMenuInputPressed] ; $6dff
 	bit PADB_RIGHT, a ; $6e02
 	jr nz, .checkMenuCursorX ; $6e04
-	bit 5, a ; $6e06
+	bit PADB_LEFT, a ; $6e06
 	jr nz, .checkMenuCursorX2 ; $6e08
-	bit 6, a ; $6e0a
+	bit PADB_UP, a ; $6e0a
 	jr nz, .checkMenuCursorX3 ; $6e0c
-	bit 7, a ; $6e0e
+	bit PADB_DOWN, a ; $6e0e
 	jr nz, .checkMenuCursorX3 ; $6e10
 	xor a ; $6e12
 	jp .done ; $6e13
@@ -110,11 +110,11 @@ MoveMinigameGridCursor:
 	ld a, [wMenuInputPressed] ; $6e64
 	bit PADB_RIGHT, a ; $6e67
 	jr nz, .checkMenuCursorX4 ; $6e69
-	bit 5, a ; $6e6b
+	bit PADB_LEFT, a ; $6e6b
 	jr nz, .checkMenuCursorX5 ; $6e6d
-	bit 6, a ; $6e6f
+	bit PADB_UP, a ; $6e6f
 	jr nz, .checkMenuCursorX6 ; $6e71
-	bit 7, a ; $6e73
+	bit PADB_DOWN, a ; $6e73
 	jr nz, .checkMenuCursorX6 ; $6e75
 	xor a ; $6e77
 	jr .done ; $6e78

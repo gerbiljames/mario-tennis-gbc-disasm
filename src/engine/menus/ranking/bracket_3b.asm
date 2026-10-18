@@ -18,7 +18,7 @@ ShowTournamentBracket:
 	ldh a, [hInputPressed] ; $778a
 	bit PADB_A, a ; $778c
 	jr nz, .playSfx ; $778e
-	bit 1, a ; $7790
+	bit PADB_B, a ; $7790
 	jr nz, .playSfx ; $7792
 	call AdvanceFrame ; $7794
 	jr .loop ; $7797
@@ -382,7 +382,7 @@ RunMarioCastExhibResults:
 	ld a, [wMenuInputPressed] ; $7a42
 	bit PADB_A, a ; $7a45
 	jr nz, .playSfx ; $7a47
-	bit 1, a ; $7a49
+	bit PADB_B, a ; $7a49
 	jr nz, .playSfx2 ; $7a4b
 	jr .loop ; $7a4d
 .playSfx:

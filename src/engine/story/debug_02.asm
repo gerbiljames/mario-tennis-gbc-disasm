@@ -1,7 +1,7 @@
 Unused_02_DebugStoryStatsScreen:
 	sound BGM_DICTIONARY ; $4fa6
 	wram_bank WRAM_STAGING ; $4fa8
-	ld a, $03 ; $4fae
+	ld a, DEBUGSTEP_CONSOLE_ON ; $4fae
 	ldh [hDebugStepMode], a ; $4fb0
 	xor a ; $4fb2
 	ld [wCurrentStorySlot], a ; $4fb3
@@ -242,10 +242,10 @@ Unused_02_DebugStoryStatsScreen:
 	bit 1, a ; $518f
 	jr z, .bit1Clear ; $5191
 	push de ; $5193
-	ld a, $01 ; $5194
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $5194
 	ldh [hDebugStepMode], a ; $5196
 	sound BGM_DICTIONARY ; $5198
-	ld a, $03 ; $519a
+	ld a, DEBUGSTEP_CONSOLE_ON ; $519a
 	ldh [hDebugStepMode], a ; $519c
 	pop de ; $519e
 	jp .loopB ; $519f

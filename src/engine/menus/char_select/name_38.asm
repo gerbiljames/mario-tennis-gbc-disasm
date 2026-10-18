@@ -225,9 +225,9 @@ RunNameEntryScreen:
 	ld a, [wMenuInputPressed] ; $6e7e
 	bit PADB_A, a ; $6e81
 	jr nz, .pressA ; $6e83
-	bit 1, a ; $6e85
+	bit PADB_B, a ; $6e85
 	jr nz, .pressB ; $6e87
-	bit 2, a ; $6e89
+	bit PADB_SELECT, a ; $6e89
 	jr nz, .beep ; $6e8b
 	jr .redraw ; $6e8d
 .pressA:
@@ -343,7 +343,7 @@ SetupNameEntryScreen:
 	ld de, vTiles2 ; $6f94
 	farcall LoadCompressedTileBlock ; $6f97
 	wram_bank WRAM_TEXT ; $6f9a
-	ld a, $03 ; $6fa0
+	ld a, WRAM_SCREEN ; $6fa0
 	ld [wShadowTilemapBank], a ; $6fa2
 	ld a, $00 ; $6fa5
 	ld [wWindowTileAttr], a ; $6fa7
@@ -423,7 +423,7 @@ HandleNameEntryCursorMove:
 	ldh a, [hInputPressed] ; $707b
 	bit PADB_RIGHT, a ; $707d
 	jr nz, .snapRight ; $707f
-	bit 5, a ; $7081
+	bit PADB_LEFT, a ; $7081
 	jr nz, .snapLeft ; $7083
 	jr .done ; $7085
 .snapRight:

@@ -295,7 +295,7 @@ TryMainMenuLinkHandshake:
 	ldh a, [hInputPressed] ; $5cac
 	bit PADB_A, a ; $5cae
 	jr nz, .beginFadeOut ; $5cb0
-	bit 1, a ; $5cb2
+	bit PADB_B, a ; $5cb2
 	jr nz, .beginFadeOut ; $5cb4
 	dec de ; $5cb6
 	ld a, d ; $5cb7
@@ -360,7 +360,7 @@ RunMatchFormatSelect:
 	ld a, [wMenuInputPressed] ; $5d42
 	bit PADB_A, a ; $5d45
 	jr nz, .playSfx ; $5d47
-	bit 1, a ; $5d49
+	bit PADB_B, a ; $5d49
 	jr nz, .playSfx2 ; $5d4b
 	jr .loop ; $5d4d
 .playSfx:
@@ -591,7 +591,7 @@ HandleMatchFormatInput:
 	ld a, [wMenuInputPressed] ; $5f3c
 	bit PADB_LEFT, a ; $5f3f
 	jr nz, .playSfx ; $5f41
-	bit 4, a ; $5f43
+	bit PADB_RIGHT, a ; $5f43
 	jr nz, .playSfx2 ; $5f45
 	ret ; $5f47
 .playSfx:

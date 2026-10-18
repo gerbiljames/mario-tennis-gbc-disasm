@@ -24,7 +24,7 @@ InitGameProgressScreen:
 	ld a, e ; $7293
 	ld [hl+], a ; $7294
 	ld [hl], d ; $7295
-	ld a, $05 ; $7296
+	ld a, WRAM_TEXT ; $7296
 	ld [wShadowTilemapBank], a ; $7298
 	ld a, $00 ; $729b
 	ld [wWindowTileAttr], a ; $729d

@@ -192,7 +192,7 @@ RunPlayAlonePartnerMenu:
 	ld a, [wMenuInputPressed] ; $51e2
 	bit PADB_A, a ; $51e5
 	jr nz, .playSfx ; $51e7
-	bit 1, a ; $51e9
+	bit PADB_B, a ; $51e9
 	jr nz, .playSfx2 ; $51eb
 	jr .loop ; $51ed
 .playSfx:
@@ -425,7 +425,7 @@ ShowEquipmentStatusScreen:
 	ldh a, [hInputPressed] ; $53b2
 	bit PADB_A, a ; $53b4
 	jr nz, .exit ; $53b6
-	bit 1, a ; $53b8
+	bit PADB_B, a ; $53b8
 	jr nz, .exit ; $53ba
 	call AdvanceFrame ; $53bc
 	jr .inputLoop ; $53bf
@@ -457,7 +457,7 @@ LoadEquipmentStatusWindows:
 	ld de, vTiles2 ; $53fd
 	farcall LoadCompressedTileBlock ; $5400
 	wram_bank WRAM_TEXT ; $5403
-	ld a, $03 ; $5409
+	ld a, WRAM_SCREEN ; $5409
 	ld [wShadowTilemapBank], a ; $540b
 	ld a, $00 ; $540e
 	ld [wWindowTileAttr], a ; $5410

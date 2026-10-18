@@ -370,11 +370,11 @@ RunTrophiesScreen:
 	ld a, [wMenuInputPressed] ; $4998
 	bit PADB_A, a ; $499b
 	jr nz, .checkTrophiesCheatCode ; $499d
-	bit 1, a ; $499f
+	bit PADB_B, a ; $499f
 	jr nz, .playSfx2 ; $49a1
-	bit 5, a ; $49a3
+	bit PADB_LEFT, a ; $49a3
 	jr nz, .bit5Set ; $49a5
-	bit 4, a ; $49a7
+	bit PADB_RIGHT, a ; $49a7
 	jr nz, .bit4Set ; $49a9
 	jr .loop ; $49ab
 .bit5Set:

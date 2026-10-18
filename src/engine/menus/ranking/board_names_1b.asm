@@ -257,7 +257,7 @@ ClearDoublesRankingNameRects:
 InitRankingNameRender:
 	farcall InitTextWindows ; $569c
 	wram_bank WRAM_TEXT ; $569f
-	ld a, $03 ; $56a5
+	ld a, WRAM_SCREEN ; $56a5
 	ld [wShadowTilemapBank], a ; $56a7
 	ld a, $00 ; $56aa
 	ld [wWindowTileAttr], a ; $56ac

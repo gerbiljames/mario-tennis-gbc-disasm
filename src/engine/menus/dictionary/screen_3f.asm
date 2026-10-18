@@ -1111,7 +1111,7 @@ DrawTennisDictionaryList:
 	pop bc ; $5305
 	ld a, [wShadowTilemapBank] ; $5306
 	push af ; $5309
-	ld a, $03 ; $530a
+	ld a, WRAM_SCREEN ; $530a
 	ld [wShadowTilemapBank], a ; $530c
 	ld a, c ; $530f
 	ld c, $0c ; $5310

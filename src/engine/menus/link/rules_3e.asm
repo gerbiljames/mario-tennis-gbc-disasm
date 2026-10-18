@@ -108,7 +108,7 @@ RunLinkMatchRulesMenu:
 	ld a, [wMenuInputPressed] ; $4544
 	bit PADB_A, a ; $4547
 	jr nz, .playSfx ; $4549
-	bit 1, a ; $454b
+	bit PADB_B, a ; $454b
 	jr nz, .playSfx2 ; $454d
 	jr .loop ; $454f
 .playSfx:
@@ -354,7 +354,7 @@ HandleMatchRulesToggleInput:
 	ld a, [wMenuInputPressed] ; $475d
 	bit PADB_LEFT, a ; $4760
 	jr nz, .playSfx ; $4762
-	bit 4, a ; $4764
+	bit PADB_RIGHT, a ; $4764
 	jr nz, .playSfx2 ; $4766
 	ret ; $4768
 .playSfx:

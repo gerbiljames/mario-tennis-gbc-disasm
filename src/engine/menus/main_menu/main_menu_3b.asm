@@ -48,9 +48,9 @@ RunMainMenu:
 	ld a, [wMenuInputPressed] ; $5642
 	bit PADB_A, a ; $5645
 	jr nz, .clearFrameTasks ; $5647
-	bit 1, a ; $5649
+	bit PADB_B, a ; $5649
 	jr nz, .playSfx2 ; $564b
-	bit 2, a ; $564d
+	bit PADB_SELECT, a ; $564d
 	jr nz, .bit2Set ; $564f
 	jr .loop ; $5651
 .bit2Set:

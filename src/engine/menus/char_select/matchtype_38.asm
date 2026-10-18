@@ -103,7 +103,7 @@ Unused_38_RunMatchTypeMenu:
 	ld a, [wMenuInputPressed] ; $44c5
 	bit PADB_A, a ; $44c8
 	jr nz, .confirm ; $44ca
-	bit 1, a ; $44cc
+	bit PADB_B, a ; $44cc
 	jr nz, .done ; $44ce
 	jr .inputLoop ; $44d0
 .confirm:
@@ -164,7 +164,7 @@ Unused_38_RunMatchTypeMenuLink:
 	ld a, [wMenuInputPressed] ; $4543
 	bit PADB_A, a ; $4546
 	jr nz, .confirm ; $4548
-	bit 1, a ; $454a
+	bit PADB_B, a ; $454a
 	jr nz, .done ; $454c
 	jr .inputLoop ; $454e
 .confirm:
@@ -289,7 +289,7 @@ Unused_38_SetupMatchTypeMenuScreen:
 	ld de, vTiles2 ; $4624
 	farcall LoadCompressedTileBlock ; $4627
 	wram_bank WRAM_TEXT ; $462a
-	ld a, $03 ; $4630
+	ld a, WRAM_SCREEN ; $4630
 	ld [wShadowTilemapBank], a ; $4632
 	ld a, $00 ; $4635
 	ld [wWindowTileAttr], a ; $4637
@@ -360,7 +360,7 @@ Unused_38_AdjustMatchTypeSetting:
 	ld a, [wMenuInputPressed] ; $474f
 	bit PADB_LEFT, a ; $4752
 	jr nz, .decrease ; $4754
-	bit 4, a ; $4756
+	bit PADB_RIGHT, a ; $4756
 	jr nz, .increase ; $4758
 	ret ; $475a
 .decrease:

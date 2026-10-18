@@ -81,7 +81,7 @@ RunN64ExhibData:
 	ld a, [wMenuInputPressed] ; $44e2
 	bit PADB_A, a ; $44e5
 	jr nz, .playSfx ; $44e7
-	bit 1, a ; $44e9
+	bit PADB_B, a ; $44e9
 	jr nz, .playSfx2 ; $44eb
 	jr .loop ; $44ed
 .playSfx:

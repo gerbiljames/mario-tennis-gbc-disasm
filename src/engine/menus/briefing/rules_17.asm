@@ -298,11 +298,11 @@ MinigameRulesPageLoop:
 	ldh a, [hInputRisingEdge] ; $710a
 	bit PADB_A, a ; $710c
 	jr nz, .playSfx ; $710e
-	bit 7, a ; $7110
+	bit PADB_DOWN, a ; $7110
 	jr nz, .playSfx ; $7112
-	bit 1, a ; $7114
+	bit PADB_B, a ; $7114
 	jr nz, .playSfx2 ; $7116
-	bit 3, a ; $7118
+	bit PADB_START, a ; $7118
 	jr nz, .restore2 ; $711a
 	jr .loopB ; $711c
 .playSfx:
@@ -343,7 +343,7 @@ LoadRulesScreen:
 	push af ; $7164
 	farcall InitTextWindows ; $7165
 	wram_bank WRAM_TEXT ; $7168
-	ld a, $03 ; $716e
+	ld a, WRAM_SCREEN ; $716e
 	ld [wShadowTilemapBank], a ; $7170
 	ld a, $00 ; $7173
 	ld [wWindowTileAttr], a ; $7175
@@ -362,7 +362,7 @@ LoadRulesScreen:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $719b
 	ld de, vTiles2 ; $719d
 	farcall LoadCompressedTileBlock ; $71a0
-	ld a, $03 ; $71a3
+	ld a, WRAM_SCREEN ; $71a3
 	ld [wShadowTilemapBank], a ; $71a5
 	ld hl, wShadowTilemapPtr ; $71a8
 	ld de, wDecompBuffer ; $71ab

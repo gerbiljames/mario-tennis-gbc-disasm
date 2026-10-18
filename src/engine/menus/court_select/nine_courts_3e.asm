@@ -49,7 +49,7 @@ RunCourtSelect9Menu:
 	ld a, [wMenuInputPressed] ; $6572
 	bit PADB_A, a ; $6575
 	jr nz, .getMenuCursorIndex ; $6577
-	bit 1, a ; $6579
+	bit PADB_B, a ; $6579
 	jr nz, .playSfx2 ; $657b
 	jr .loop ; $657d
 .getMenuCursorIndex:
@@ -147,7 +147,7 @@ RunLinkCourtSelect9Menu:
 	ld a, [wMenuInputPressed] ; $6642
 	bit PADB_A, a ; $6645
 	jr nz, .getMenuCursorIndex ; $6647
-	bit 1, a ; $6649
+	bit PADB_B, a ; $6649
 	jr nz, .playSfx2 ; $664b
 	jr .loop ; $664d
 .getMenuCursorIndex:

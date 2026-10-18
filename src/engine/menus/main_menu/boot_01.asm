@@ -73,7 +73,7 @@ ENDC
 	ld hl, BuildStamp ; $40b2
 	ld_cell de, $05, $11 ; $40b5
 	call PrintString ; $40b8
-	ld a, $03 ; $40bb
+	ld a, DEBUGSTEP_CONSOLE_ON ; $40bb
 	ldh [hDebugStepMode], a ; $40bd
 .loop2:
 	ldh a, [hInputPressed] ; $40bf
@@ -90,7 +90,7 @@ ENDC
 	call AdvanceFrame ; $40d3
 	jr .loop2 ; $40d6
 .setDebugStepMode:
-	ld a, $00 ; $40d8
+	ld a, DEBUGSTEP_OFF ; $40d8
 	ldh [hDebugStepMode], a ; $40da
 	ld hl, wStoryModeCurrentLocation ; $40dc
 	ld [hl], STORYLOC_MAIN_MENU ; $40df
@@ -102,13 +102,13 @@ Unused_01_MenuRedraw:
 	ld hl, BuildStamp ; $40ec
 	ld_cell de, $05, $11 ; $40ef
 	call PrintString ; $40f2
-	ld a, $03 ; $40f5
+	ld a, DEBUGSTEP_CONSOLE_ON ; $40f5
 	ldh [hDebugStepMode], a ; $40f7
 .loop:
 	ldh a, [hInputPressed] ; $40f9
 	bit PADB_START, a ; $40fb
 	jr z, .runSoundTest ; $40fd
-	ld a, $01 ; $40ff
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $40ff
 	ldh [hDebugStepMode], a ; $4101
 	ld hl, wStoryModeCurrentLocation ; $4103
 	ld [hl], STORYLOC_MAIN_MENU ; $4106
@@ -123,7 +123,7 @@ Unused_01_MenuRedraw:
 .bit2Clear:
 	bit 0, a ; $411a
 	jr z, .bit0Clear ; $411c
-	ld a, $01 ; $411e
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $411e
 	ldh [hDebugStepMode], a ; $4120
 .loopB:
 	farcall Unused_07_RunDebugTestMatch ; $4122
@@ -131,7 +131,7 @@ Unused_01_MenuRedraw:
 .bit0Clear:
 	bit 1, a ; $4127
 	jr z, .bit1Clear ; $4129
-	ld a, $01 ; $412b
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $412b
 	ldh [hDebugStepMode], a ; $412d
 .loop2:
 	farcall Unused_3b_StubNop ; $412f
@@ -140,7 +140,7 @@ Unused_01_MenuRedraw:
 .bit1Clear:
 	bit 6, a ; $4138
 	jp z, Unused_01_MatchSetup.bit6Clear ; $413a
-	ld a, $01 ; $413d
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $413d
 	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
 	ld [wCurrentStorySlot], a ; $4143
@@ -191,15 +191,15 @@ Unused_01_MatchSetup:
 	farcall ShowLinkMessageScreen ; $41b2
 	farcall RunShoesSelectScreen ; $41b5
 	farcall RunRacketSelectScreen ; $41b8
-	ld a, $01 ; $41bb
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $41bb
 	ldh [hDebugStepMode], a ; $41bd
 	farcall Unused_1a_RunDebugCharViewer ; $41bf
 .bit6Clear:
 	bit 7, a ; $41c2
 	jr z, Unused_01.positive ; $41c4
-	ld a, $01 ; $41c6
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $41c6
 	ldh [hDebugStepMode], a ; $41c8
-	ld a, $00 ; $41ca
+	ld a, DEBUGSTEP_OFF ; $41ca
 	ldh [hDebugStepMode], a ; $41cc
 .loop:
 	farcall RunIntroCutscene ; $41ce
@@ -212,7 +212,7 @@ Unused_01:
 .positive:
 	bit 4, a ; $41db
 	jr z, .bit4Clear ; $41dd
-	ld a, $01 ; $41df
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $41df
 	ldh [hDebugStepMode], a ; $41e1
 	ld hl, wStoryModeCurrentLocation ; $41e3
 	ld [hl], STORYLOC_TEST ; $41e6
@@ -224,10 +224,10 @@ Unused_01:
 .bit4Clear:
 	bit 5, a ; $41f5
 	jr z, .advanceFrame ; $41f7
-	ld a, $01 ; $41f9
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $41f9
 	ldh [hDebugStepMode], a ; $41fb
 	farcall Unused_1a_RunDebugCharViewer ; $41fd
-	ld a, $00 ; $4200
+	ld a, DEBUGSTEP_OFF ; $4200
 	ldh [hDebugStepMode], a ; $4202
 .loop:
 	call AdvanceFrame ; $4204
@@ -444,7 +444,7 @@ Unused_01_RunSoundTest:
 	ld b, $00 ; $6a67
 	ldh a, [hDebugStepMode] ; $6a69
 	push af ; $6a6b
-	ld a, $03 ; $6a6c
+	ld a, DEBUGSTEP_CONSOLE_ON ; $6a6c
 	ldh [hDebugStepMode], a ; $6a6e
 	push hl ; $6a70
 	push de ; $6a71

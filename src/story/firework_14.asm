@@ -240,7 +240,7 @@ FireworkObjPalettes_14:
 ; Sits after FireworkObjPalettes_14's four palettes, unreferenced: when hInputRisingEdge bit 1 is newly pressed it resets both cutscene firework objects -- X $40/$68, Y $30/$38, phase 0, timer $1e each -- and returns. Nothing calls or jumps to it; UpdateFirework1_14, which follows, is the live routine.
 Unused_14_ResetFireworkObjOnButton:
 	ldh a, [hInputRisingEdge] ; $6ec1
-	and $02 ; $6ec3
+	and PADF_B ; $6ec3
 	jr z, .done ; $6ec5
 	ld a, $40 ; $6ec7
 	ld [wCutsceneObjX], a ; $6ec9

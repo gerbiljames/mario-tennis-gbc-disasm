@@ -308,7 +308,7 @@ RunN64TnmtData:
 	ld a, [wMenuInputPressed] ; $4d32
 	bit PADB_A, a ; $4d35
 	jr nz, .playSfx ; $4d37
-	bit 1, a ; $4d39
+	bit PADB_B, a ; $4d39
 	jr nz, .playSfx2 ; $4d3b
 	jr .loop ; $4d3d
 .playSfx:

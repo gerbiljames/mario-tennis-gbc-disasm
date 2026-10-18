@@ -138,15 +138,15 @@ Unused_1a_RunCharViewerSelectGrid:
 	ldh a, [hInputPressed] ; $68f1
 	bit PADB_UP, a ; $68f3
 	jr nz, .checkDebugCharViewerIndex ; $68f5
-	bit 7, a ; $68f7
+	bit PADB_DOWN, a ; $68f7
 	jr nz, .checkDebugCharViewerIndex2 ; $68f9
-	bit 5, a ; $68fb
+	bit PADB_LEFT, a ; $68fb
 	jr nz, .checkDebugCharViewerIndex3 ; $68fd
-	bit 4, a ; $68ff
+	bit PADB_RIGHT, a ; $68ff
 	jr nz, .checkDebugCharViewerIndex5 ; $6901
-	bit 0, a ; $6903
+	bit PADB_A, a ; $6903
 	jp nz, .bit0Set ; $6905
-	bit 1, a ; $6908
+	bit PADB_B, a ; $6908
 	jp nz, .bit1Set ; $690a
 	jr .loop ; $690d
 	ld c, 16 ; $690f

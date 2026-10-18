@@ -378,7 +378,7 @@ Unused_1b_UpdateUnlockDebugSelection:
 Unused_1b_MoveUnlockDebugCursor:
 	ldh a, [hInputPressed] ; $67f4
 	ld b, a ; $67f6
-	and $f0 ; $67f7
+	and PADF_DPAD ; $67f7
 	jr z, .done ; $67f9
 	sound SFX_MENU_MOVE ; $67fb
 	ld a, [wCharSelectCol] ; $67fd

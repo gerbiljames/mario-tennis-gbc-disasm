@@ -29,11 +29,11 @@ RunEraseDataConfirmMenu:
 	ld [wMenuInputPressed], a ; $4c5f
 	bit PADB_A, a ; $4c62
 	jr nz, .checkMenuCursorY2 ; $4c64
-	bit 1, a ; $4c66
+	bit PADB_B, a ; $4c66
 	jr nz, .playSfx ; $4c68
-	bit 6, a ; $4c6a
+	bit PADB_UP, a ; $4c6a
 	jr nz, .checkMenuCursorY ; $4c6c
-	bit 7, a ; $4c6e
+	bit PADB_DOWN, a ; $4c6e
 	jr nz, .checkMenuCursorY ; $4c70
 	jr .loop ; $4c72
 .checkMenuCursorY:
@@ -93,7 +93,7 @@ LoadEraseDataConfirmScreen:
 	ld de, vTiles2 ; $4cf3
 	farcall LoadCompressedTileBlock ; $4cf6
 	wram_bank WRAM_TEXT ; $4cf9
-	ld a, $03 ; $4cff
+	ld a, WRAM_SCREEN ; $4cff
 	ld [wShadowTilemapBank], a ; $4d01
 	ld a, $00 ; $4d04
 	ld [wWindowTileAttr], a ; $4d06
@@ -300,7 +300,7 @@ RunRacketShoesChoiceMenu:
 	ld a, [wMenuInputPressed] ; $4ef2
 	bit PADB_A, a ; $4ef5
 	jr nz, .playSfx ; $4ef7
-	bit 1, a ; $4ef9
+	bit PADB_B, a ; $4ef9
 	jr nz, .playSfx2 ; $4efb
 	jr .loop ; $4efd
 .playSfx:

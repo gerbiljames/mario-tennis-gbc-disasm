@@ -81,13 +81,13 @@ WaitTextAdvanceInput:
 	jr nz, .restore ; $5037
 	call FlushGlyphRow ; $5039
 	ldh a, [hPlayerInputFlags] ; $503c
-	and $f3 ; $503e
+	and ~(PADF_SELECT | PADF_START) ; $503e
 	jr z, .loopB ; $5040
 	ld b, $1e ; $5042
 .loop:
 	call AdvanceFrame ; $5044
 	ldh a, [hPlayerInputFlags] ; $5047
-	and $f3 ; $5049
+	and ~(PADF_SELECT | PADF_START) ; $5049
 	jr z, .loopB ; $504b
 	dec b ; $504d
 	jr nz, .loop ; $504e
@@ -97,7 +97,7 @@ WaitTextAdvanceInput:
 	call AdvanceRandomSeed ; $5055
 	call AdvanceFrame ; $5058
 	ldh a, [hInputPressed] ; $505b
-	and $f3 ; $505d
+	and ~(PADF_SELECT | PADF_START) ; $505d
 	jr z, .loopB ; $505f
 .restore:
 	pop bc ; $5061
@@ -119,7 +119,7 @@ TextCmdDelay150Skippable:
 .loop:
 	call AdvanceFrame ; $507a
 	ldh a, [hInputPressed] ; $507d
-	and $f3 ; $507f
+	and ~(PADF_SELECT | PADF_START) ; $507f
 	jr nz, .restore ; $5081
 	dec b ; $5083
 	jr nz, .loop ; $5084

@@ -150,14 +150,14 @@ CheckLinkSelectionComplete:
 	ret ; $671f
 HandleLinkGridButtons:
 	ld a, [wMenuInputPressed] ; $6720
-	and $f0 ; $6723
+	and PADF_DPAD ; $6723
 	ret nz ; $6725
 	ld a, [wMenuInputPressed] ; $6726
 	bit PADB_A, a ; $6729
 	jr nz, .confirm ; $672b
-	bit 1, a ; $672d
+	bit PADB_B, a ; $672d
 	jr nz, .cancel ; $672f
-	bit 3, a ; $6731
+	bit PADB_START, a ; $6731
 	jr nz, .toggleHandedness ; $6733
 	ret ; $6735
 .confirm:

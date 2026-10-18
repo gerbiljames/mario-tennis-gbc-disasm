@@ -175,7 +175,7 @@ InitCourtDiagramTextWindow:
 	ld de, vTiles2 ; $49a6
 	farcall LoadCompressedTileBlock ; $49a9
 	wram_bank WRAM_TEXT ; $49ac
-	ld a, $03 ; $49b2
+	ld a, WRAM_SCREEN ; $49b2
 	ld [wShadowTilemapBank], a ; $49b4
 	ld a, $00 ; $49b7
 	ld [wWindowTileAttr], a ; $49b9

@@ -73,7 +73,7 @@ RunMinigameLevelSelect2:
 	ld a, [wMenuInputPressed] ; $6e90
 	bit PADB_A, a ; $6e93
 	jr nz, .getMenuCursorIndex ; $6e95
-	bit 1, a ; $6e97
+	bit PADB_B, a ; $6e97
 	jr nz, .playSfx2 ; $6e99
 	jr .loop ; $6e9b
 .getMenuCursorIndex:
@@ -273,7 +273,7 @@ RunMinigameLevelSelect3:
 	ld a, [wMenuInputPressed] ; $7031
 	bit PADB_A, a ; $7034
 	jr nz, .playSfx ; $7036
-	bit 1, a ; $7038
+	bit PADB_B, a ; $7038
 	jr nz, .playSfx2 ; $703a
 	jr .loop ; $703c
 .playSfx:
@@ -463,7 +463,7 @@ RunSavedDataTypeSelect:
 	ld a, [wMenuInputPressed] ; $71b7
 	bit PADB_A, a ; $71ba
 	jr nz, .playSfx ; $71bc
-	bit 1, a ; $71be
+	bit PADB_B, a ; $71be
 	jr nz, .playSfx2 ; $71c0
 	jr .loop ; $71c2
 .playSfx:

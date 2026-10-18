@@ -345,11 +345,11 @@ RunContinuePrompt:
 	ldh a, [hInputRisingEdge] ; $4b32
 	bit PADB_UP, a ; $4b34
 	jr nz, DrawContinuePromptCursor.playSfx ; $4b36
-	bit 7, a ; $4b38
+	bit PADB_DOWN, a ; $4b38
 	jr nz, DrawContinuePromptCursor.playSfx ; $4b3a
-	bit 0, a ; $4b3c
+	bit PADB_A, a ; $4b3c
 	jr nz, DrawContinuePromptCursor.playSfx2 ; $4b3e
-	bit 1, a ; $4b40
+	bit PADB_B, a ; $4b40
 	jr nz, DrawContinuePromptCursor.playSfx3 ; $4b42
 	jr RunContinuePrompt ; $4b44
 DrawContinuePromptCursor:

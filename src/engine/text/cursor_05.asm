@@ -415,7 +415,7 @@ TextCmdDelay15Skippable:
 .loop:
 	call AdvanceFrame ; $4f65
 	ldh a, [hInputPressed] ; $4f68
-	and $f3 ; $4f6a
+	and ~(PADF_SELECT | PADF_START) ; $4f6a
 	jr nz, .restore ; $4f6c
 	dec b ; $4f6e
 	jr nz, .loop ; $4f6f

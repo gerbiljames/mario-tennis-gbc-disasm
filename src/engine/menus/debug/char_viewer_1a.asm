@@ -76,15 +76,15 @@ Unused_1a_RunCharViewerInputLoop:
 	ldh a, [hInputPressed] ; $6cab
 	bit PADB_UP, a ; $6cad
 	jr nz, .up ; $6caf
-	bit 7, a ; $6cb1
+	bit PADB_DOWN, a ; $6cb1
 	jr nz, .down ; $6cb3
-	bit 5, a ; $6cb5
+	bit PADB_LEFT, a ; $6cb5
 	jp nz, .left ; $6cb7
-	bit 4, a ; $6cba
+	bit PADB_RIGHT, a ; $6cba
 	jp nz, .right ; $6cbc
-	bit 0, a ; $6cbf
+	bit PADB_A, a ; $6cbf
 	jp nz, .confirm ; $6cc1
-	bit 1, a ; $6cc4
+	bit PADB_B, a ; $6cc4
 	jp nz, .exit ; $6cc6
 	bit 3, a ; $6cc9
 	jp nz, .prevPose ; $6ccb

@@ -126,7 +126,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld c, (Unused_03_SaveSlotDebugEditor - SaveEditorCursorTiles_03) / 16 ; $5316
 	call QueueVRAMCopy ; $5318
 	sound BGM_EXHIBITION_MATCH ; $531b
-	ld a, $03 ; $531d
+	ld a, DEBUGSTEP_CONSOLE_ON ; $531d
 	ldh [hDebugStepMode], a ; $531f
 	xor a ; $5321
 	ld [wCurrentStorySlot], a ; $5322

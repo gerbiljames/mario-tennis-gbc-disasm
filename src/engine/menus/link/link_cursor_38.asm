@@ -227,13 +227,13 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	ret ; $6b78
 Unused_38_HandleLinkCpuDifficultyInput:
 	ldh a, [hLinkRemoteInput] ; $6b79
-	bit 5, a ; $6b7b
+	bit PADB_LEFT, a ; $6b7b
 	jr nz, .decrease ; $6b7d
-	bit 4, a ; $6b7f
+	bit PADB_RIGHT, a ; $6b7f
 	jr nz, .increase ; $6b81
-	bit 0, a ; $6b83
+	bit PADB_A, a ; $6b83
 	jr nz, .confirm ; $6b85
-	bit 1, a ; $6b87
+	bit PADB_B, a ; $6b87
 	jr nz, .cancel ; $6b89
 	ret ; $6b8b
 .decrease:
@@ -307,7 +307,7 @@ Unused_38_RunLinkCpuDifficultySubmenu:
 	ld a, [wMenuInputPressed] ; $6bf7
 	bit PADB_A, a ; $6bfa
 	jr nz, .confirm ; $6bfc
-	bit 1, a ; $6bfe
+	bit PADB_B, a ; $6bfe
 	jr nz, .cancel ; $6c00
 	jr .done ; $6c02
 .cancel:

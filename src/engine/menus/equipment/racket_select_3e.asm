@@ -166,7 +166,7 @@ HandleEquipSelectInput:
 	ld [wMenuInputPressed], a ; $55b1
 	bit PADB_A, a ; $55b4
 	jr nz, .step ; $55b6
-	bit 1, a ; $55b8
+	bit PADB_B, a ; $55b8
 	jr nz, .playSfx ; $55ba
 	jr .moveMenuCursorGrid ; $55bc
 .step:

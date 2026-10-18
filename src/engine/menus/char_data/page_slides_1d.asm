@@ -171,11 +171,11 @@ RunDrillResultInputLoop:
 	ldh a, [hInputRisingEdge] ; $4cc2
 	bit PADB_RIGHT, a ; $4cc4
 	jr nz, .playSfx ; $4cc6
-	bit 5, a ; $4cc8
+	bit PADB_LEFT, a ; $4cc8
 	jp nz, .playSfx2 ; $4cca
-	bit 1, a ; $4ccd
+	bit PADB_B, a ; $4ccd
 	jp nz, .playSfx3 ; $4ccf
-	bit 0, a ; $4cd2
+	bit PADB_A, a ; $4cd2
 	jp nz, .playSfx4 ; $4cd4
 	jr .loop ; $4cd7
 .playSfx:
@@ -255,9 +255,9 @@ RunDrillResultInputLoop:
 	ldh a, [hInputRisingEdge] ; $4da3
 	bit PADB_RIGHT, a ; $4da5
 	jr nz, .playSfx5 ; $4da7
-	bit 1, a ; $4da9
+	bit PADB_B, a ; $4da9
 	jr nz, .playSfx6 ; $4dab
-	bit 0, a ; $4dad
+	bit PADB_A, a ; $4dad
 	jr nz, .playSfx7 ; $4daf
 	jr .loopB ; $4db1
 .playSfx5:
@@ -297,9 +297,9 @@ RunDrillResultInputLoop:
 	ldh a, [hInputRisingEdge] ; $4e02
 	bit PADB_LEFT, a ; $4e04
 	jr nz, .playSfx8 ; $4e06
-	bit 1, a ; $4e08
+	bit PADB_B, a ; $4e08
 	jr nz, .playSfx9 ; $4e0a
-	bit 0, a ; $4e0c
+	bit PADB_A, a ; $4e0c
 	jr nz, .playSfx10 ; $4e0e
 	jr .loop2 ; $4e10
 .playSfx8:
