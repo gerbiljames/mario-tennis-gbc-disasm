@@ -497,16 +497,11 @@ TrainingCourtReentryDispatch:
 	xor a ; $53d2
 	ld [wStoryModeShowLocationName], a ; $53d3
 	ld a, $06 ; $53d6
-	ld [wMapSceneStage2], a ; $53d8
+	ld [wChallengerActor], a ; $53d8
 	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $53db
 	script_face ACTOR_PLAYER, FACE_UP ; $53e6
-	ld a, [wMapSceneStage2] ; $53ed
-	ld bc, $1800 ; $53f0
-	ld de, $0d00 ; $53f3
-	farcall ScriptSetActorPosition ; $53f6
-	ld a, [wMapSceneStage2] ; $53f9
-	ld b, FACE_DOWN ; $53fc
-	farcall SetActorFacing ; $53fe
+	script_set_position [wChallengerActor], 24.0, 13.0 ; $53ed
+	script_face [wChallengerActor], FACE_DOWN ; $53f9
 	script_null_script ACTOR_PARTNER ; $5401
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5406
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5411
@@ -535,16 +530,11 @@ TrainingCourtReentryDispatch:
 	xor a ; $5482
 	ld [wStoryModeShowLocationName], a ; $5483
 	ld a, $11 ; $5486
-	ld [wMapSceneStage2], a ; $5488
+	ld [wChallengerActor], a ; $5488
 	script_set_position ACTOR_PLAYER, 40.0, 42.0 ; $548b
 	script_face ACTOR_PLAYER, FACE_UP ; $5496
-	ld a, [wMapSceneStage2] ; $549d
-	ld bc, $2800 ; $54a0
-	ld de, $2500 ; $54a3
-	farcall ScriptSetActorPosition ; $54a6
-	ld a, [wMapSceneStage2] ; $54a9
-	ld b, FACE_DOWN ; $54ac
-	farcall SetActorFacing ; $54ae
+	script_set_position [wChallengerActor], 40.0, 37.0 ; $549d
+	script_face [wChallengerActor], FACE_DOWN ; $54a9
 	script_null_script ACTOR_PARTNER ; $54b1
 	script_set_position ACTOR_PARTNER, 45.0, 45.0 ; $54b6
 	script_face ACTOR_PARTNER, FACE_LEFT ; $54c1
@@ -573,16 +563,11 @@ TrainingCourtReentryDispatch:
 	xor a ; $5532
 	ld [wStoryModeShowLocationName], a ; $5533
 	ld a, $0c ; $5536
-	ld [wMapSceneStage2], a ; $5538
+	ld [wChallengerActor], a ; $5538
 	script_set_position ACTOR_PLAYER, 24.0, 42.0 ; $553b
 	script_face ACTOR_PLAYER, FACE_UP ; $5546
-	ld a, [wMapSceneStage2] ; $554d
-	ld bc, $1800 ; $5550
-	ld de, $2500 ; $5553
-	farcall ScriptSetActorPosition ; $5556
-	ld a, [wMapSceneStage2] ; $5559
-	ld b, FACE_DOWN ; $555c
-	farcall SetActorFacing ; $555e
+	script_set_position [wChallengerActor], 24.0, 37.0 ; $554d
+	script_face [wChallengerActor], FACE_DOWN ; $5559
 	script_null_script ACTOR_PARTNER ; $5561
 	script_set_position ACTOR_PARTNER, 19.0, 45.0 ; $5566
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5571

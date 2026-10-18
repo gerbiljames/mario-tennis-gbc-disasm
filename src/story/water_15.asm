@@ -405,16 +405,11 @@ ServeChallengerResultScene:
 	xor a ; $5cf3
 	ld [wStoryModeShowLocationName], a ; $5cf4
 	ld a, $06 ; $5cf7
-	ld [wMapSceneStage2], a ; $5cf9
+	ld [wChallengerActor], a ; $5cf9
 	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $5cfc
 	script_face ACTOR_PLAYER, FACE_UP ; $5d07
-	ld a, [wMapSceneStage2] ; $5d0e
-	ld bc, $1800 ; $5d11
-	ld de, $0d00 ; $5d14
-	farcall ScriptSetActorPosition ; $5d17
-	ld a, [wMapSceneStage2] ; $5d1a
-	ld b, FACE_DOWN ; $5d1d
-	farcall SetActorFacing ; $5d1f
+	script_set_position [wChallengerActor], 24.0, 13.0 ; $5d0e
+	script_face [wChallengerActor], FACE_DOWN ; $5d1a
 	script_null_script ACTOR_PARTNER ; $5d22
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5d27
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5d32

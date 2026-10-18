@@ -383,18 +383,13 @@ TournamentSiteEntryWalkIn:
 	dec a ; $4708
 	ld_hl_indexed TournamentSiteEntryWalkInFacings + 4 ; $4709
 	ld b, [hl] ; $4710
-	ld a, $02 ; $4711
-	ld b, b ; $4713
-	ld de, $0200 ; $4714
-	farcall MoveActorByAngle ; $4717
+	script_move_angle ACTOR_PARTNER, b, 2.0 ; $4711
 	script_wait_move ACTOR_PARTNER ; $471a
 	ld a, [wStoryModeEntryPoint] ; $471f
 	dec a ; $4722
 	ld_hl_indexed TournamentSiteEntryWalkInFacings ; $4723
 	ld b, [hl] ; $472a
-	ld a, $02 ; $472b
-	ld b, b ; $472d
-	farcall SetActorFacing ; $472e
+	script_face ACTOR_PARTNER, b ; $472b
 	script_set_speed ACTOR_PARTNER, 0.5 ; $4731
 .walkOff:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $4739
@@ -402,10 +397,7 @@ TournamentSiteEntryWalkIn:
 	dec a ; $4744
 	ld_hl_indexed TournamentSiteEntryWalkInFacings ; $4745
 	ld b, [hl] ; $474c
-	ld a, $00 ; $474d
-	ld b, b ; $474f
-	ld de, $0200 ; $4750
-	farcall MoveActorByAngle ; $4753
+	script_move_angle ACTOR_PLAYER, b, 2.0 ; $474d
 .done:
 	ret ; $4756
 TournamentSiteEntryWalkInFacings:

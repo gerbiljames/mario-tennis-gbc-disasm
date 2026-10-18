@@ -2,16 +2,11 @@ NetChallengerResultScene:
 	xor a ; $5d74
 	ld [wStoryModeShowLocationName], a ; $5d75
 	ld a, $11 ; $5d78
-	ld [wMapSceneStage2], a ; $5d7a
+	ld [wChallengerActor], a ; $5d7a
 	script_set_position ACTOR_PLAYER, 40.0, 42.0 ; $5d7d
 	script_face ACTOR_PLAYER, FACE_UP ; $5d88
-	ld a, [wMapSceneStage2] ; $5d8f
-	ld bc, $2800 ; $5d92
-	ld de, $2500 ; $5d95
-	farcall ScriptSetActorPosition ; $5d98
-	ld a, [wMapSceneStage2] ; $5d9b
-	ld b, FACE_DOWN ; $5d9e
-	farcall SetActorFacing ; $5da0
+	script_set_position [wChallengerActor], 40.0, 37.0 ; $5d8f
+	script_face [wChallengerActor], FACE_DOWN ; $5d9b
 	script_null_script ACTOR_PARTNER ; $5da3
 	script_set_position ACTOR_PARTNER, 45.0, 45.0 ; $5da8
 	script_face ACTOR_PARTNER, FACE_LEFT ; $5db3
@@ -42,16 +37,11 @@ StrokeChallengerResultScene:
 	xor a ; $5df3
 	ld [wStoryModeShowLocationName], a ; $5df4
 	ld a, $0c ; $5df7
-	ld [wMapSceneStage2], a ; $5df9
+	ld [wChallengerActor], a ; $5df9
 	script_set_position ACTOR_PLAYER, 24.0, 42.0 ; $5dfc
 	script_face ACTOR_PLAYER, FACE_UP ; $5e07
-	ld a, [wMapSceneStage2] ; $5e0e
-	ld bc, $1800 ; $5e11
-	ld de, $2500 ; $5e14
-	farcall ScriptSetActorPosition ; $5e17
-	ld a, [wMapSceneStage2] ; $5e1a
-	ld b, FACE_DOWN ; $5e1d
-	farcall SetActorFacing ; $5e1f
+	script_set_position [wChallengerActor], 24.0, 37.0 ; $5e0e
+	script_face [wChallengerActor], FACE_DOWN ; $5e1a
 	script_null_script ACTOR_PARTNER ; $5e22
 	script_set_position ACTOR_PARTNER, 19.0, 45.0 ; $5e27
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5e32
@@ -165,14 +155,13 @@ ChallengerResultLose:
 	ld h, [hl] ; $5f0b
 	ld l, a ; $5f0c
 	farcall InitDialogueTextCursor ; $5f0d
-	script_speak_restore [wMapSceneStage2] ; $5f10
+	script_speak_restore [wChallengerActor] ; $5f10
 	farcall RunDialogueYesNoPrompt ; $5f16
 	farcall ScriptCloseDialogueWindow ; $5f19
 	script_wait_frames 5 ; $5f1c
 	and a ; $5f23
 	jr nz, .loseSpeak ; $5f24
-	ld a, [wMapSceneStage2] ; $5f26
-	farcall ScriptShowSpeakerDialogue ; $5f29
+	script_speak [wChallengerActor] ; $5f26
 	ld a, STORYLOC_TRAINING_COURT ; $5f2c
 	ld [wStoryModeCurrentLocation], a ; $5f2e
 	ld a, $0a ; $5f31
@@ -186,8 +175,7 @@ ChallengerResultLose:
 	ret ; $5f47
 .loseSpeak:
 	farcall AdvanceDialogueTextCursor ; $5f48
-	ld a, [wMapSceneStage2] ; $5f4b
-	farcall ScriptShowSpeakerDialogue ; $5f4e
+	script_speak [wChallengerActor] ; $5f4b
 	call WalkChallengerOntoCourt ; $5f51
 	farcall EndCutsceneScriptMode ; $5f54
 	ret ; $5f57
@@ -197,7 +185,7 @@ ChallengerResultFinish:
 	ld h, [hl] ; $5f5c
 	ld l, a ; $5f5d
 	farcall InitDialogueTextCursor ; $5f5e
-	script_speak_restore [wMapSceneStage2] ; $5f61
+	script_speak_restore [wChallengerActor] ; $5f61
 	farcall RunDialogueYesNoPrompt ; $5f67
 	farcall ScriptCloseDialogueWindow ; $5f6a
 	script_wait_frames 5 ; $5f6d
@@ -208,8 +196,7 @@ ChallengerResultFinish:
 	ld h, [hl] ; $5f7b
 	ld l, a ; $5f7c
 	farcall InitDialogueTextCursor ; $5f7d
-	ld a, [wMapSceneStage2] ; $5f80
-	farcall ScriptShowSpeakerDialogue ; $5f83
+	script_speak [wChallengerActor] ; $5f80
 	ld a, STORYLOC_TRAINING_COURT ; $5f86
 	ld [wStoryModeCurrentLocation], a ; $5f88
 	ld a, $0a ; $5f8b
@@ -228,8 +215,7 @@ ChallengerResultFinish:
 	ld l, a ; $5fa7
 	farcall InitDialogueTextCursor ; $5fa8
 	farcall AdvanceDialogueTextCursor ; $5fab
-	ld a, [wMapSceneStage2] ; $5fae
-	farcall ScriptShowSpeakerDialogue ; $5fb1
+	script_speak [wChallengerActor] ; $5fae
 	call WalkChallengerOntoCourt ; $5fb4
 	farcall EndCutsceneScriptMode ; $5fb7
 	ret ; $5fba
@@ -237,49 +223,26 @@ ChallengerResultFinish:
 	farcall EndCutsceneScriptMode ; $5fbe
 	ret ; $5fc1
 ChallengerResultDraw:
-	ld a, [wMapSceneStage2] ; $5fc2
-	ld d, ANIM_BOUNCE ; $5fc5
-	farcall ScriptSetActorAnimation ; $5fc7
-	ld a, [wMapSceneStage2] ; $5fca
-	farcall ScriptWaitActorIdle ; $5fcd
+	script_set_anim [wChallengerActor], ANIM_BOUNCE ; $5fc2
+	script_wait_idle [wChallengerActor] ; $5fca
 	ld hl, wChallengerDrawTextId ; $5fd0
 	ld a, [hl+] ; $5fd3
 	ld h, [hl] ; $5fd4
 	ld l, a ; $5fd5
 	farcall InitDialogueTextCursor ; $5fd6
-	ld a, [wMapSceneStage2] ; $5fd9
-	farcall ScriptShowSpeakerDialogue ; $5fdc
-	ld a, [wMapSceneStage2] ; $5fdf
-	ld b, $01 ; $5fe2
-	farcall ScriptSetActorFacingLock ; $5fe4
-	ld a, [wMapSceneStage2] ; $5fe7
-	ld b, $c0 ; $5fea
-	ld de, $0100 ; $5fec
-	farcall MoveActorByAngle ; $5fef
-	ld a, [wMapSceneStage2] ; $5ff2
-	farcall ScriptWaitActorMoveDone ; $5ff5
+	script_speak [wChallengerActor] ; $5fd9
+	script_lock_facing [wChallengerActor] ; $5fdf
+	script_move_angle [wChallengerActor], FACE_UP, 1.0 ; $5fe7
+	script_wait_move [wChallengerActor] ; $5ff2
 	script_wait_frames 40 ; $5ff8
-	ld a, [wMapSceneStage2] ; $5fff
-	ld b, $c0 ; $6002
-	ld de, $0100 ; $6004
-	farcall MoveActorByAngle ; $6007
-	ld a, [wMapSceneStage2] ; $600a
-	farcall ScriptWaitActorMoveDone ; $600d
-	ld a, [wMapSceneStage2] ; $6010
-	ld d, ANIM_BOUNCE ; $6013
-	farcall ScriptSetActorAnimation ; $6015
-	ld a, [wMapSceneStage2] ; $6018
-	farcall ScriptWaitActorIdle ; $601b
-	ld a, [wMapSceneStage2] ; $601e
-	farcall ScriptShowSpeakerDialogue ; $6021
-	ld a, [wMapSceneStage2] ; $6024
-	ld b, $00 ; $6027
-	farcall ScriptSetActorFacingLock ; $6029
+	script_move_angle [wChallengerActor], FACE_UP, 1.0 ; $5fff
+	script_wait_move [wChallengerActor] ; $600a
+	script_set_anim [wChallengerActor], ANIM_BOUNCE ; $6010
+	script_wait_idle [wChallengerActor] ; $6018
+	script_speak [wChallengerActor] ; $601e
+	script_unlock_facing [wChallengerActor] ; $6024
 	call WalkChallengerAwayDefeated ; $602c
-	ld a, [wMapSceneStage2] ; $602f
-	ld bc, $3f00 ; $6032
-	ld de, $3f00 ; $6035
-	farcall ScriptSetActorPosition ; $6038
+	script_set_position [wChallengerActor], 63.0, 63.0 ; $602f
 	call MovePlayerToLessonCourtSpot ; $603b
 	farcall EndCutsceneScriptMode ; $603e
 	ret ; $6041
@@ -293,111 +256,61 @@ WalkChallengerAwayDefeated:
 	jp .netChallenger ; $6052
 	ret ; $6055
 .serveChallenger:
-	ld a, [wMapSceneStage2] ; $6056
-	ld bc, $0030 ; $6059
-	farcall ScriptSetActorMoveSpeed ; $605c
-	ld a, [wMapSceneStage2] ; $605f
-	farcall GetActorStateAddr ; $6062
+	script_set_speed [wChallengerActor], 1.5 ; $6056
+	script_get_actor_state [wChallengerActor] ; $605f
 	ld a, $04 ; $6065
 	ld e, l ; $6067
 	ld d, h ; $6068
 	ld hl, ACTORF_ANIM_RATE ; $6069
 	add hl, de ; $606c
 	ld [hl], a ; $606d
-	ld a, [wMapSceneStage2] ; $606e
-	ld bc, $1f00 ; $6071
-	ld de, $0b00 ; $6074
-	farcall ScriptSetActorMoveTarget ; $6077
-	ld a, [wMapSceneStage2] ; $607a
-	farcall ScriptWaitActorMoveDone ; $607d
-	ld a, [wMapSceneStage2] ; $6080
-	ld bc, $1f00 ; $6083
-	ld de, $1100 ; $6086
-	farcall ScriptSetActorMoveTarget ; $6089
-	ld a, [wMapSceneStage2] ; $608c
-	farcall ScriptWaitActorMoveDone ; $608f
+	script_move_target [wChallengerActor], 31.0, 11.0 ; $606e
+	script_wait_move [wChallengerActor] ; $607a
+	script_move_target [wChallengerActor], 31.0, 17.0 ; $6080
+	script_wait_move [wChallengerActor] ; $608c
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6092
-	ld a, [wMapSceneStage2] ; $6099
-	ld bc, $1f00 ; $609c
-	ld de, $1f00 ; $609f
-	farcall ScriptSetActorMoveTarget ; $60a2
-	ld a, [wMapSceneStage2] ; $60a5
-	farcall ScriptWaitActorMoveDone ; $60a8
+	script_move_target [wChallengerActor], 31.0, 31.0 ; $6099
+	script_wait_move [wChallengerActor] ; $60a5
 	set_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $60ab
 	ret ; $60ae
 .netChallenger:
-	ld a, [wMapSceneStage2] ; $60af
-	ld bc, $0030 ; $60b2
-	farcall ScriptSetActorMoveSpeed ; $60b5
-	ld a, [wMapSceneStage2] ; $60b8
-	farcall GetActorStateAddr ; $60bb
+	script_set_speed [wChallengerActor], 1.5 ; $60af
+	script_get_actor_state [wChallengerActor] ; $60b8
 	ld a, $04 ; $60be
 	ld e, l ; $60c0
 	ld d, h ; $60c1
 	ld hl, ACTORF_ANIM_RATE ; $60c2
 	add hl, de ; $60c5
 	ld [hl], a ; $60c6
-	ld a, [wMapSceneStage2] ; $60c7
-	ld bc, $2100 ; $60ca
-	ld de, $2500 ; $60cd
-	farcall ScriptSetActorMoveTarget ; $60d0
-	ld a, [wMapSceneStage2] ; $60d3
-	farcall ScriptWaitActorMoveDone ; $60d6
+	script_move_target [wChallengerActor], 33.0, 37.0 ; $60c7
+	script_wait_move [wChallengerActor] ; $60d3
 	script_face ACTOR_PLAYER, FACE_DOWN ; $60d9
-	ld a, [wMapSceneStage2] ; $60e0
-	ld bc, $1f00 ; $60e3
-	ld de, $3500 ; $60e6
-	farcall ScriptSetActorMoveTarget ; $60e9
-	ld a, [wMapSceneStage2] ; $60ec
-	farcall ScriptWaitActorMoveDone ; $60ef
+	script_move_target [wChallengerActor], 31.0, 53.0 ; $60e0
+	script_wait_move [wChallengerActor] ; $60ec
 	set_flag FLAG_NET_CHALLENGER_DEFEATED ; $60f2
 	ret ; $60f5
 .done:
-	ld a, [wMapSceneStage2] ; $60f6
-	ld b, FACE_UP ; $60f9
-	farcall SetActorFacing ; $60fb
-	ld a, [wMapSceneStage2] ; $60fe
-	ld d, ANIM_BOUNCE ; $6101
-	farcall ScriptSetActorAnimation ; $6103
-	ld a, [wMapSceneStage2] ; $6106
-	farcall ScriptWaitActorIdle ; $6109
-	ld a, [wMapSceneStage2] ; $610c
-	ld d, ANIM_BOUNCE ; $610f
-	farcall ScriptSetActorAnimation ; $6111
-	ld a, [wMapSceneStage2] ; $6114
-	farcall ScriptWaitActorIdle ; $6117
-	ld a, [wMapSceneStage2] ; $611a
-	farcall ScriptShowSpeakerDialogue ; $611d
-	ld a, [wMapSceneStage2] ; $6120
-	ld bc, $0030 ; $6123
-	farcall ScriptSetActorMoveSpeed ; $6126
-	ld a, [wMapSceneStage2] ; $6129
-	farcall GetActorStateAddr ; $612c
+	script_face [wChallengerActor], FACE_UP ; $60f6
+	script_set_anim [wChallengerActor], ANIM_BOUNCE ; $60fe
+	script_wait_idle [wChallengerActor] ; $6106
+	script_set_anim [wChallengerActor], ANIM_BOUNCE ; $610c
+	script_wait_idle [wChallengerActor] ; $6114
+	script_speak [wChallengerActor] ; $611a
+	script_set_speed [wChallengerActor], 1.5 ; $6120
+	script_get_actor_state [wChallengerActor] ; $6129
 	ld a, $04 ; $612f
 	ld e, l ; $6131
 	ld d, h ; $6132
 	ld hl, ACTORF_ANIM_RATE ; $6133
 	add hl, de ; $6136
 	ld [hl], a ; $6137
-	ld a, [wMapSceneStage2] ; $6138
-	ld bc, $1f00 ; $613b
-	ld de, $2500 ; $613e
-	farcall ScriptSetActorMoveTarget ; $6141
-	ld a, [wMapSceneStage2] ; $6144
-	farcall ScriptWaitActorMoveDone ; $6147
-	ld a, [wMapSceneStage2] ; $614a
-	ld bc, $1f00 ; $614d
-	ld de, $2900 ; $6150
-	farcall ScriptSetActorMoveTarget ; $6153
-	ld a, [wMapSceneStage2] ; $6156
-	farcall ScriptWaitActorMoveDone ; $6159
+	script_move_target [wChallengerActor], 31.0, 37.0 ; $6138
+	script_wait_move [wChallengerActor] ; $6144
+	script_move_target [wChallengerActor], 31.0, 41.0 ; $614a
+	script_wait_move [wChallengerActor] ; $6156
 	script_face ACTOR_PLAYER, FACE_DOWN ; $615c
-	ld a, [wMapSceneStage2] ; $6163
-	ld bc, $1f00 ; $6166
-	ld de, $3500 ; $6169
-	farcall ScriptSetActorMoveTarget ; $616c
-	ld a, [wMapSceneStage2] ; $616f
-	farcall ScriptWaitActorMoveDone ; $6172
+	script_move_target [wChallengerActor], 31.0, 53.0 ; $6163
+	script_wait_move [wChallengerActor] ; $616f
 	set_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $6175
 	ret ; $6178
 WalkChallengerOntoCourt:
@@ -410,16 +323,9 @@ WalkChallengerOntoCourt:
 	jp .eastCourt ; $6187
 	ret ; $618a
 .northCourt:
-	ld a, [wMapSceneStage2] ; $618b
-	ld bc, $1300 ; $618e
-	ld de, $2500 ; $6191
-	farcall ScriptSetActorMoveTarget ; $6194
-	ld a, [wMapSceneStage2] ; $6197
-	farcall ScriptWaitActorMoveDone ; $619a
-	ld a, [wMapSceneStage2] ; $619d
-	ld bc, $1300 ; $61a0
-	ld de, $2700 ; $61a3
-	farcall ScriptSetActorMoveTarget ; $61a6
+	script_move_target [wChallengerActor], 19.0, 37.0 ; $618b
+	script_wait_move [wChallengerActor] ; $6197
+	script_move_target [wChallengerActor], 19.0, 39.0 ; $619d
 	script_move_target ACTOR_PLAYER, 19.0, 43.0 ; $61a9
 	script_wait_move ACTOR_PLAYER ; $61b4
 	script_get_actor_state ACTOR_PARTNER ; $61b9
@@ -427,17 +333,11 @@ WalkChallengerOntoCourt:
 	ld b, h ; $61bf
 	ld de, wActors ; $61c0
 	farcall AttachActorStepMover ; $61c3
-	ld a, [wMapSceneStage2] ; $61c6
-	farcall ScriptWaitActorMoveDone ; $61c9
-	ld a, [wMapSceneStage2] ; $61cc
-	ld b, FACE_DOWN ; $61cf
-	farcall SetActorFacing ; $61d1
+	script_wait_move [wChallengerActor] ; $61c6
+	script_face [wChallengerActor], FACE_DOWN ; $61cc
 	ret ; $61d4
 .southCourt:
-	ld a, [wMapSceneStage2] ; $61d5
-	ld bc, $1300 ; $61d8
-	ld de, $0b00 ; $61db
-	farcall ScriptSetActorMoveTarget ; $61de
+	script_move_target [wChallengerActor], 19.0, 11.0 ; $61d5
 	script_wait_frames 30 ; $61e1
 	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $61e8
 	script_wait_move ACTOR_PLAYER ; $61f3
@@ -446,17 +346,11 @@ WalkChallengerOntoCourt:
 	ld b, h ; $61fe
 	ld de, wActors ; $61ff
 	farcall AttachActorStepMover ; $6202
-	ld a, [wMapSceneStage2] ; $6205
-	farcall ScriptWaitActorMoveDone ; $6208
-	ld a, [wMapSceneStage2] ; $620b
-	ld b, FACE_RIGHT ; $620e
-	farcall SetActorFacing ; $6210
+	script_wait_move [wChallengerActor] ; $6205
+	script_face [wChallengerActor], FACE_RIGHT ; $620b
 	ret ; $6213
 .eastCourt:
-	ld a, [wMapSceneStage2] ; $6214
-	ld bc, $2d00 ; $6217
-	ld de, $2100 ; $621a
-	farcall ScriptSetActorMoveTarget ; $621d
+	script_move_target [wChallengerActor], 45.0, 33.0 ; $6214
 	script_wait_frames 30 ; $6220
 	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $6227
 	script_wait_move ACTOR_PLAYER ; $6232
@@ -465,9 +359,6 @@ WalkChallengerOntoCourt:
 	ld b, h ; $623d
 	ld de, wActors ; $623e
 	farcall AttachActorStepMover ; $6241
-	ld a, [wMapSceneStage2] ; $6244
-	farcall ScriptWaitActorMoveDone ; $6247
-	ld a, [wMapSceneStage2] ; $624a
-	ld b, FACE_RIGHT ; $624d
-	farcall SetActorFacing ; $624f
+	script_wait_move [wChallengerActor] ; $6244
+	script_face [wChallengerActor], FACE_RIGHT ; $624a
 	ret ; $6252

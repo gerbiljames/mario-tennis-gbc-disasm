@@ -23,18 +23,13 @@ CourtyardEntryWalkIn_13:
 	dec a ; $6317
 	ld_hl_indexed CourtyardEntryWalkInFacings_13 + 3 ; $6318
 	ld b, [hl] ; $631f
-	ld a, $02 ; $6320
-	ld b, b ; $6322
-	ld de, $0200 ; $6323
-	farcall MoveActorByAngle ; $6326
+	script_move_angle ACTOR_PARTNER, b, 2.0 ; $6320
 	script_wait_move ACTOR_PARTNER ; $6329
 	ld a, [wStoryModeEntryPoint] ; $632e
 	dec a ; $6331
 	ld_hl_indexed CourtyardEntryWalkInFacings_13 ; $6332
 	ld b, [hl] ; $6339
-	ld a, $02 ; $633a
-	ld b, b ; $633c
-	farcall SetActorFacing ; $633d
+	script_face ACTOR_PARTNER, b ; $633a
 	script_set_speed ACTOR_PARTNER, 0.5 ; $6340
 .walkOff:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $6348
@@ -42,10 +37,7 @@ CourtyardEntryWalkIn_13:
 	dec a ; $6353
 	ld_hl_indexed CourtyardEntryWalkInFacings_13 ; $6354
 	ld b, [hl] ; $635b
-	ld a, $00 ; $635c
-	ld b, b ; $635e
-	ld de, $0200 ; $635f
-	farcall MoveActorByAngle ; $6362
+	script_move_angle ACTOR_PLAYER, b, 2.0 ; $635c
 .done:
 	ret ; $6365
 CourtyardEntryWalkInFacings_13:

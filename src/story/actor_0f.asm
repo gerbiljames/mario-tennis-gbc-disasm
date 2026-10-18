@@ -135,18 +135,13 @@ WalkActorsInFromEntryPoint_0f:
 	dec a ; $7ac7
 	ld_hl_indexed WalkActorsInFromEntryPointFacings_0f + 5 ; $7ac8
 	ld b, [hl] ; $7acf
-	ld a, $02 ; $7ad0
-	ld b, b ; $7ad2
-	ld de, $0200 ; $7ad3
-	farcall MoveActorByAngle ; $7ad6
+	script_move_angle ACTOR_PARTNER, b, 2.0 ; $7ad0
 	script_wait_move ACTOR_PARTNER ; $7ad9
 	ld a, [wStoryModeEntryPoint] ; $7ade
 	dec a ; $7ae1
 	ld_hl_indexed WalkActorsInFromEntryPointFacings_0f ; $7ae2
 	ld b, [hl] ; $7ae9
-	ld a, $02 ; $7aea
-	ld b, b ; $7aec
-	farcall SetActorFacing ; $7aed
+	script_face ACTOR_PARTNER, b ; $7aea
 	script_set_speed ACTOR_PARTNER, 0.5 ; $7af0
 .walkOff:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $7af8
@@ -154,10 +149,7 @@ WalkActorsInFromEntryPoint_0f:
 	dec a ; $7b03
 	ld_hl_indexed WalkActorsInFromEntryPointFacings_0f ; $7b04
 	ld b, [hl] ; $7b0b
-	ld a, $00 ; $7b0c
-	ld b, b ; $7b0e
-	ld de, $0200 ; $7b0f
-	farcall MoveActorByAngle ; $7b12
+	script_move_angle ACTOR_PLAYER, b, 2.0 ; $7b0c
 .done:
 	ret ; $7b15
 WalkActorsInFromEntryPointFacings_0f:
