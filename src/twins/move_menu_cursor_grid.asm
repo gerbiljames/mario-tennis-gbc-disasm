@@ -1,8 +1,4 @@
-; MoveMenuCursorGrid_<bank>: one routine assembled into banks $38, $3b, $3e through
-; `twin move_menu_cursor_grid, <bank>` -- {TWIN} is the bank suffix, so the labels and the
-; bank-local references become that bank's. No per-instruction addresses:
-; the `twin` line in each bank carries the member's address. Every member's
-; note is above its `twin` line. A fix here lands in every bank.
+; MoveMenuCursorGrid_<bank>, one copy in each of banks $38, $3b, $3e.
 
 MoveMenuCursorGrid_{TWIN}:
 	ld a, [wMenuCursorX]

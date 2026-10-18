@@ -1,8 +1,5 @@
-; LookupBallPosByHeight_<bank>: one routine assembled into banks $20, $21, $22, $23, $24, $29, $2a, $2b, $2c through
-; `twin lookup_ball_pos_by_height, <bank>` -- {TWIN} is the bank suffix, so the labels and the
-; bank-local references become that bank's. No per-instruction addresses:
-; the `twin` line in each bank carries the member's address. Every member's
-; note is above its `twin` line. A fix here lands in every bank.
+; LookupBallPosByHeight_<bank>, one copy in each of banks $20, $21, $22, $23,
+; $24, $29, $2a, $2b, $2c.
 
 LookupBallPosByHeight_{TWIN}:
 	ld e, l

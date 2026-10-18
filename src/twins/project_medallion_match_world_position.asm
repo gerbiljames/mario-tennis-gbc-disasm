@@ -1,7 +1,5 @@
-; One body under 2 names (banks $0d, $0d), assembled through
-; `twin_named project_medallion_match_world_position, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by ProjectTreasureBoxWorldPosition,
+; ProjectMedallionMatchWorldPosition (bank $0d).
 
 {TWIN_LABEL}:
 	ld hl, wMinigameSceneActor + 10

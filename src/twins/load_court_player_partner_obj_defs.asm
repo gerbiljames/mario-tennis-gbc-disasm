@@ -1,7 +1,5 @@
-; One body under 2 names (banks $14, $15), assembled through
-; `twin_named load_court_player_partner_obj_defs, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by LoadCourtPlayerPartnerObjDefs_14, SetPlayerPartnerActorSprites
+; (banks $14, $15).
 
 {TWIN_LABEL}:
 	test_flag FLAG_DOUBLES

@@ -1,7 +1,5 @@
-; One body under 2 names (banks $0d, $0d), assembled through
-; `twin_named tennis_machine4_hook__point_start, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by TennisMachine4Hook_PointStart,
+; TennisMachineHighScoreHook_PointStart (bank $0d).
 
 {TWIN_LABEL}:
 	farcall AdvanceMatchRng

@@ -1,7 +1,5 @@
-; One body under 3 names (banks $0b, $0b, $0b), assembled through
-; `twin_named net_game_practice1_handle_point_end, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by NetGamePractice1HandlePointEnd, NetGamePractice2HandlePointEnd,
+; NetGamePractice3HandlePointEnd (bank $0b).
 
 {TWIN_LABEL}:
 	farcall UpdateScorePanelDisplay

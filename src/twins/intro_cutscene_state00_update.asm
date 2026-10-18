@@ -1,7 +1,5 @@
-; One body under 2 names (banks $6b, $6b), assembled through
-; `twin_named intro_cutscene_state00_update, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by IntroCutsceneState19Update_6b, IntroCutsceneState00Update_6b (bank
+; $6b).
 
 {TWIN_LABEL}:
 	ld a, [wCutsceneStepTimer]
