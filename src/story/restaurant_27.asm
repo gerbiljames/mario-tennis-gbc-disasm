@@ -428,11 +428,7 @@ End1MainBldgInitScript_27:
 	script_wait_jump ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74b0
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 32.0 ; $74b5
 	script_wait_frames 30 ; $74c0
-	ld bc, wActors + 1 * ACTOR_SIZE ; $74c7
-	script_get_actor_state ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74ca
-	ld e, l ; $74cf
-	ld d, h ; $74d0
-	farcall AttachActorWaypointFollower ; $74d1
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74c7
 	script_move_target ACTOR_PLAYER, 24.0, 30.0 ; $74d4
 	script_wait_frames 20 ; $74df
 	call End1MainBldgKnockdown_27 ; $74e6

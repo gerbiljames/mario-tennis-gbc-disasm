@@ -73,11 +73,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_wait_move ACTOR_PLAYER ; $5e9f
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5ea4
 	script_wait_frames 40 ; $5eab
-	script_get_actor_state ACTOR_PARTNER ; $5eb2
-	ld c, l ; $5eb7
-	ld b, h ; $5eb8
-	ld de, wActors ; $5eb9
-	farcall AttachActorStepMover ; $5ebc
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5eb2
 	ret ; $5ebf
 .setFlag2:
 	set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $5ec0
@@ -114,11 +110,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_wait_frames 60 ; $5f9c
 	script_wait_move ACTOR_PLAYER ; $5fa3
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5fa8
-	script_get_actor_state ACTOR_PARTNER ; $5faf
-	ld c, l ; $5fb4
-	ld b, h ; $5fb5
-	ld de, wActors ; $5fb6
-	farcall AttachActorStepMover ; $5fb9
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5faf
 	ret ; $5fbc
 .setFlag3:
 	set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5fbd

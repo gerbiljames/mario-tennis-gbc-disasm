@@ -75,11 +75,7 @@ LateStudentCrashCutscene:
 	script_wait_jump ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $48e7
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 32.0 ; $48ec
 	script_wait_frames 30 ; $48f7
-	ld bc, wActors + 1 * ACTOR_SIZE ; $48fe
-	script_get_actor_state ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4901
-	ld e, l ; $4906
-	ld d, h ; $4907
-	farcall AttachActorWaypointFollower ; $4908
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $48fe
 	script_move_target ACTOR_PLAYER, 24.0, 30.0 ; $490b
 	script_wait_frames 20 ; $4916
 	call LateStudentCrashImpact ; $491d

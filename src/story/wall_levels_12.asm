@@ -45,11 +45,7 @@ RelaunchWallPracticeMasterLevel:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a87
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4a8e
 	script_wait_idle ACTOR_PARTNER ; $4a95
-	script_get_actor_state ACTOR_PARTNER ; $4a9a
-	ld c, l ; $4a9f
-	ld b, h ; $4aa0
-	ld de, wActors ; $4aa1
-	farcall AttachActorStepMover ; $4aa4
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4a9a
 	script_wait_frames 40 ; $4aa7
 .done:
 	ret ; $4aae
@@ -117,11 +113,7 @@ WallPracticeExitCourtScript:
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4b7b
 	test_flag FLAG_DOUBLES ; $4b82
 	jr z, .done ; $4b85
-	script_get_actor_state ACTOR_PARTNER ; $4b87
-	ld c, l ; $4b8c
-	ld b, h ; $4b8d
-	ld de, wActors ; $4b8e
-	farcall AttachActorStepMover ; $4b91
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4b87
 .done:
 	script_wait_frames 10 ; $4b94
 	ret ; $4b9b
@@ -179,11 +171,7 @@ WallPracticeLevelResultScript.speakAndLeave:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4c71
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4c78
 	script_wait_idle ACTOR_PARTNER ; $4c7f
-	script_get_actor_state ACTOR_PARTNER ; $4c84
-	ld c, l ; $4c89
-	ld b, h ; $4c8a
-	ld de, wActors ; $4c8b
-	farcall AttachActorStepMover ; $4c8e
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4c84
 	script_wait_frames 20 ; $4c91
 WallPracticeLevelResultScript.wait:
 	script_wait_frames 10 ; $4c98
@@ -217,11 +205,7 @@ WallPracticeRoomTile02_12:
 	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4d13
 	test_flag FLAG_DOUBLES ; $4d16
 	jr z, .done ; $4d19
-	script_get_actor_state ACTOR_PARTNER ; $4d1b
-	ld c, l ; $4d20
-	ld b, h ; $4d21
-	ld de, wActors ; $4d22
-	farcall AttachActorStepMover ; $4d25
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4d1b
 .done:
 	ret ; $4d28
 WallPracticeRoomTile03_12:

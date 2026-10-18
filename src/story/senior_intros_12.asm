@@ -126,11 +126,7 @@ SeniorDoublesRankOfferScene:
 .setText:
 	script_set_text Text_34_112 ; $6087
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $608d
-	script_get_actor_state ACTOR_PARTNER ; $6092
-	ld c, l ; $6097
-	ld b, h ; $6098
-	ld de, wActors ; $6099
-	farcall AttachActorStepMover ; $609c
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6092
 	ret ; $609f
 StartSeniorRankingMatch:
 	script_set_speed ACTOR_PLAYER, 1.0 ; $60a0
@@ -358,11 +354,7 @@ SeniorDoublesRank3Intro:
 	script_player_speed 1.0 ; $652d
 	script_move_player_to_actor ACTOR_SENIOR_COURT_B_CURT ; $6533
 	farcall WaitPlayerMoveDone ; $653a
-	ld bc, wActors + 1 * ACTOR_SIZE ; $653d
-	script_get_actor_state ACTOR_SENIOR_COURT_B_CURT ; $6540
-	ld e, l ; $6545
-	ld d, h ; $6546
-	farcall AttachActorWaypointFollower ; $6547
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_SENIOR_COURT_B_CURT ; $653d
 	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_B_CURT ; $654a
 	script_null_script ACTOR_SENIOR_COURT_A_BETH ; $6552
 	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_WALK ; $6557
@@ -398,11 +390,7 @@ SeniorDoublesRank2Intro:
 	script_player_speed 1.0 ; $6616
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_BRIAN ; $661c
 	farcall WaitPlayerMoveDone ; $6623
-	ld bc, wActors + 1 * ACTOR_SIZE ; $6626
-	script_get_actor_state ACTOR_SENIOR_COURT_A_BRIAN ; $6629
-	ld e, l ; $662e
-	ld d, h ; $662f
-	farcall AttachActorWaypointFollower ; $6630
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_SENIOR_COURT_A_BRIAN ; $6626
 	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_A_BRIAN ; $6633
 	script_set_anim ACTOR_SENIOR_COURT_A_BRIAN, ANIM_NOD ; $663b
 	script_wait_idle ACTOR_SENIOR_COURT_A_BRIAN ; $6642
@@ -469,11 +457,7 @@ SeniorSinglesRank4Intro:
 	script_player_speed 1.0 ; $67c6
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_BRIAN ; $67cc
 	farcall WaitPlayerMoveDone ; $67d3
-	ld bc, wActors + 1 * ACTOR_SIZE ; $67d6
-	script_get_actor_state ACTOR_SENIOR_COURT_A_BRIAN ; $67d9
-	ld e, l ; $67de
-	ld d, h ; $67df
-	farcall AttachActorWaypointFollower ; $67e0
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_SENIOR_COURT_A_BRIAN ; $67d6
 	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_A_BRIAN ; $67e3
 	script_set_anim ACTOR_SENIOR_COURT_A_BRIAN, ANIM_NOD ; $67eb
 	script_wait_idle ACTOR_SENIOR_COURT_A_BRIAN ; $67f2
@@ -497,11 +481,7 @@ SeniorSinglesRank3Intro:
 	script_player_speed 1.0 ; $6860
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_JOY ; $6866
 	farcall WaitPlayerMoveDone ; $686d
-	ld bc, wActors + 1 * ACTOR_SIZE ; $6870
-	script_get_actor_state ACTOR_SENIOR_COURT_A_JOY ; $6873
-	ld e, l ; $6878
-	ld d, h ; $6879
-	farcall AttachActorWaypointFollower ; $687a
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_SENIOR_COURT_A_JOY ; $6870
 	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_A_JOY ; $687d
 	script_set_anim ACTOR_SENIOR_COURT_A_JOY, ANIM_NOD ; $6885
 	script_wait_idle ACTOR_SENIOR_COURT_A_JOY ; $688c
@@ -530,11 +510,7 @@ SeniorSinglesRank2Intro:
 	script_player_speed 1.0 ; $6918
 	script_move_player_to_actor ACTOR_SENIOR_COURT_A_ALLIE ; $691e
 	farcall WaitPlayerMoveDone ; $6925
-	ld bc, wActors + 1 * ACTOR_SIZE ; $6928
-	script_get_actor_state ACTOR_SENIOR_COURT_A_ALLIE ; $692b
-	ld e, l ; $6930
-	ld d, h ; $6931
-	farcall AttachActorWaypointFollower ; $6932
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_SENIOR_COURT_A_ALLIE ; $6928
 	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_A_ALLIE ; $6935
 	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_NOD ; $693d
 	script_wait_idle ACTOR_SENIOR_COURT_A_ALLIE ; $6944

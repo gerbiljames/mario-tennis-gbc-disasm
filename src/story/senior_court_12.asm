@@ -215,11 +215,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $57ff
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5806
 	script_wait_idle ACTOR_PARTNER ; $580d
-	script_get_actor_state ACTOR_PARTNER ; $5812
-	ld c, l ; $5817
-	ld b, h ; $5818
-	ld de, wActors ; $5819
-	farcall AttachActorStepMover ; $581c
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5812
 	ret ; $581f
 SeniorCourtNpc04_12:
 	ld a, [wMapSceneStage2] ; $5820

@@ -10,29 +10,17 @@ MovePlayerToLessonCourtSpot:
 .netCourtSpot:
 	script_move_target ACTOR_PLAYER, 19.0, 43.0 ; $6265
 	script_wait_move ACTOR_PLAYER ; $6270
-	script_get_actor_state ACTOR_PARTNER ; $6275
-	ld c, l ; $627a
-	ld b, h ; $627b
-	ld de, wActors ; $627c
-	farcall AttachActorStepMover ; $627f
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6275
 	ret ; $6282
 .serveCourtSpot:
 	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $6283
 	script_wait_move ACTOR_PLAYER ; $628e
-	script_get_actor_state ACTOR_PARTNER ; $6293
-	ld c, l ; $6298
-	ld b, h ; $6299
-	ld de, wActors ; $629a
-	farcall AttachActorStepMover ; $629d
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6293
 	ret ; $62a0
 .strokeCourtSpot:
 	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $62a1
 	script_wait_move ACTOR_PLAYER ; $62ac
-	script_get_actor_state ACTOR_PARTNER ; $62b1
-	ld c, l ; $62b6
-	ld b, h ; $62b7
-	ld de, wActors ; $62b8
-	farcall AttachActorStepMover ; $62bb
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $62b1
 	ret ; $62be
 NetGameMatch1ResultScene:
 	ld hl, wChallengerFollowupTextId ; $62bf

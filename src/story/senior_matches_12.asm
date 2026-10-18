@@ -112,11 +112,7 @@ SeniorDoublesMatchConfirm:
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $6bc4
 	call ResumeSeniorOpponentScripts ; $6bc9
 	script_wait_frames 30 ; $6bcc
-	script_get_actor_state ACTOR_PARTNER ; $6bd3
-	ld c, l ; $6bd8
-	ld b, h ; $6bd9
-	ld de, wActors ; $6bda
-	farcall AttachActorStepMover ; $6bdd
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6bd3
 	farcall EndCutsceneScriptMode ; $6be0
 	ret ; $6be3
 .done:
@@ -405,11 +401,7 @@ SeniorDoublesRank2Victory:
 	script_wait_frames 60 ; $6f44
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_DOWN ; $6f4b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6f52
-	script_get_actor_state ACTOR_PARTNER ; $6f59
-	ld c, l ; $6f5e
-	ld b, h ; $6f5f
-	ld de, wActors ; $6f60
-	farcall AttachActorStepMover ; $6f63
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6f59
 	farcall EndCutsceneScriptMode ; $6f66
 	ret ; $6f69
 SeniorDoublesRank1Victory:
@@ -445,10 +437,6 @@ SeniorDoublesRank1Victory:
 	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_DOWN ; $704b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $7052
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7059
-	script_get_actor_state ACTOR_PARTNER ; $7060
-	ld c, l ; $7065
-	ld b, h ; $7066
-	ld de, wActors ; $7067
-	farcall AttachActorStepMover ; $706a
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $7060
 	farcall EndCutsceneScriptMode ; $706d
 	ret ; $7070

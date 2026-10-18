@@ -196,11 +196,7 @@ VarsityCourtBNpc03_13:
 	ret ; $707c
 .stage3:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $707d
-	script_get_actor_state ACTOR_PARTNER ; $7082
-	ld c, l ; $7087
-	ld b, h ; $7088
-	ld de, wActors ; $7089
-	farcall AttachActorStepMover ; $708c
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $7082
 	ret ; $708f
 .speak:
 	farcall AdvanceDialogueTextCursor ; $7090
@@ -216,11 +212,7 @@ VarsityCourtBNpc03_13:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $70ac
 	call ReturnVarsityCourtBNpcsToSpawn_13 ; $70b1
 	script_wait_frames 60 ; $70b4
-	script_get_actor_state ACTOR_PARTNER ; $70bb
-	ld c, l ; $70c0
-	ld b, h ; $70c1
-	ld de, wActors ; $70c2
-	farcall AttachActorStepMover ; $70c5
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $70bb
 	ret ; $70c8
 ReturnVarsityCourtANpc04ToSpawn_13:
 	script_set_actor_script ACTOR_VARSITY_COURT_A_BOB, ActorScript_13_17 ; $70c9

@@ -337,21 +337,13 @@ AwardsCeremonyTile01_0f:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $46df
 	script_face ACTOR_PARTNER, FACE_DOWN ; $46e6
 	script_delay 1 ; $46ed
-	script_get_actor_state ACTOR_PARTNER ; $46f2
-	ld c, l ; $46f7
-	ld b, h ; $46f8
-	ld de, wActors ; $46f9
-	farcall AttachActorStepMover ; $46fc
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $46f2
 	ret ; $46ff
 .done:
 	script_set_position ACTOR_PLAYER, 11.5, 27.0 ; $4700
 	script_face ACTOR_PLAYER, FACE_DOWN ; $470b
 	script_delay 1 ; $4712
-	script_get_actor_state ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $4717
-	ld c, l ; $471c
-	ld b, h ; $471d
-	ld de, wActors ; $471e
-	farcall AttachActorStepMover ; $4721
+	script_follow ACTOR_AWARDS_CEREMONY_WALK_74_08, ACTOR_PLAYER ; $4717
 	ret ; $4724
 AwardsCeremonyTile02_0f:
 	test_flag FLAG_DOUBLES ; $4725
@@ -944,10 +936,6 @@ AwardsCeremonyInitScript_0f:
 	ld e, a ; $5614
 	ld a, $03 ; $5615
 	farcall ScriptSetActorPosition ; $5617
-	script_get_actor_state ACTOR_AWARDS_CEREMONY_DOUBLES_WALK_74_08 ; $561a
-	ld c, l ; $561f
-	ld b, h ; $5620
-	ld de, wActors ; $5621
-	farcall AttachActorStepMover ; $5624
+	script_follow ACTOR_AWARDS_CEREMONY_DOUBLES_WALK_74_08, ACTOR_PLAYER ; $561a
 .done:
 	ret ; $5627

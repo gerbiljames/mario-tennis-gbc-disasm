@@ -41,8 +41,8 @@ stops for the frame, *cont* runs the next opcode, *cond* depends on state.
 | `$07` | `as_move angle, dist` | 4 | cont | `$44df` | Move by angle (byte) + distance (word), absolute angle |
 | `$08` | `as_move_rel angle, dist` | 4 | cont | `$44eb` | Move by angle + distance, angle relative to the heading (`+$14`) |
 | `$09` | `as_rand_box p0, p1` | 3 | cond | `$4886` | Pick a random reachable point in a box (half-width `p0`, half-depth `p1`), gated on `+$30` bit7; yields if four tries all fail |
-| `$0a` | `as_step` | 1 | yield | `$46b0` | Step one tick toward the target waypoint (`ACTORF_ANCHOR`), then yield |
-| `$0b` | `as_follow_wp` | 1 | yield | `$4623` | Advance along the waypoint list at `ACTORF_ANCHOR`, then yield |
+| `$0a` | `as_step` | 1 | yield | `$46b0` | Trail the `ACTORF_ANCHOR` actor: beyond ~2.8 tiles, head for 2 tiles behind it at its speed; then yield |
+| `$0b` | `as_follow_wp` | 1 | yield | `$4623` | Head for the `ACTORF_ANCHOR` actor's position, then yield |
 | `$0c` | `as_jump target` | 3 | cont | `$44d0` | Jump: signed rel16 added to the operand's own address |
 | `$0d` | `as_set_field sel, val` | 4 | cont | `$477f` | Write a state field (selector byte, word value; type table `$47fd`) |
 | `$0e` | `as_add_field sel, val` | 4 | cont | `$47ba` | Add to / set a state field (selector byte, word value) |

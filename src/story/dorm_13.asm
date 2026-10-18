@@ -169,11 +169,7 @@ DormRoomTile0F_13:
 	script_speak ACTOR_DORM_ROOM_KATE ; $4fd3
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4fd8
 	script_wait_idle ACTOR_PLAYER ; $4fdf
-	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $4fe4
-	ld c, l ; $4fe9
-	ld b, h ; $4fea
-	ld de, wActors ; $4feb
-	farcall AttachActorStepMover ; $4fee
+	script_follow ACTOR_DORM_ROOM_KATE, ACTOR_PLAYER ; $4fe4
 	script_set_speed ACTOR_PLAYER, 1.5 ; $4ff1
 	script_move_target ACTOR_PLAYER, 11.0, 20.0 ; $4ff9
 	script_wait_frames 10 ; $5004
@@ -368,11 +364,7 @@ PlaceDormRoomArrivalActors_13:
 	script_null_script ACTOR_PARTNER ; $5220
 	script_set_position ACTOR_PARTNER, 1.0, 1.0 ; $5225
 	call PlaceRoommateAtPlayerTarget_13 ; $5230
-	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5233
-	ld c, l ; $5238
-	ld b, h ; $5239
-	ld de, wActors ; $523a
-	farcall AttachActorStepMover ; $523d
+	script_follow ACTOR_DORM_ROOM_KATE, ACTOR_PLAYER ; $5233
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5240
 	ld c, l ; $5245
 	ld b, h ; $5246
@@ -468,11 +460,7 @@ DormRoomEntry01Scene:
 	script_speak ACTOR_DORM_ROOM_KATE ; $5355
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $535a
 	script_wait_idle ACTOR_PLAYER ; $5361
-	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5366
-	ld c, l ; $536b
-	ld b, h ; $536c
-	ld de, wActors ; $536d
-	farcall AttachActorStepMover ; $5370
+	script_follow ACTOR_DORM_ROOM_KATE, ACTOR_PLAYER ; $5366
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5373
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $537a
 	ld c, l ; $537f

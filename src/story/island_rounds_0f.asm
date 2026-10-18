@@ -576,11 +576,7 @@ IslandOpenDoublesMatchReturn:
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PARTNER ; $781c
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08 ; $7824
 	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $7829
-	script_get_actor_state ACTOR_PARTNER ; $782c
-	ld c, l ; $7831
-	ld b, h ; $7832
-	ld de, wActors ; $7833
-	farcall AttachActorStepMover ; $7836
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $782c
 	ret ; $7839
 IslandOpenRoundSinglesNpc05TextIds:
 	; $783a, 8 bytes (text_ids)

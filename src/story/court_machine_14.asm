@@ -131,11 +131,7 @@ MachineCourtHandleRetryChoice:
 	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 43.0 ; $47a8
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $47b3
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $47b8
-	script_get_actor_state ACTOR_PARTNER ; $47bf
-	ld c, l ; $47c4
-	ld b, h ; $47c5
-	ld de, wActors ; $47c6
-	farcall AttachActorStepMover ; $47c9
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $47bf
 	ret ; $47cc
 MachineCourtRestartLevel:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
@@ -269,11 +265,7 @@ MachineExpertNewRecordScene:
 	farcall PushTextArgNumber ; $48e0
 	call MachineCourtWalkToAttendantCutscene ; $48e3
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $48e6
-	script_get_actor_state ACTOR_PARTNER ; $48eb
-	ld c, l ; $48f0
-	ld b, h ; $48f1
-	ld de, wActors ; $48f2
-	farcall AttachActorStepMover ; $48f5
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $48eb
 	ret ; $48f8
 MachineExpertCounterMaxScene:
 	push_wram_bank WRAM_SOUND ; $48f9
@@ -303,11 +295,7 @@ MachineExpertCounterMaxScene:
 	call MachineCourtWalkToAttendantCutscene ; $4936
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4939
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $493e
-	script_get_actor_state ACTOR_PARTNER ; $4943
-	ld c, l ; $4948
-	ld b, h ; $4949
-	ld de, wActors ; $494a
-	farcall AttachActorStepMover ; $494d
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4943
 	ret ; $4950
 Unused_14_CompareMinigameScoreToRecord:
 	ld hl, wMinigamesCurrentScore ; $4951

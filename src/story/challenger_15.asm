@@ -328,11 +328,7 @@ WalkChallengerOntoCourt:
 	script_move_target [wChallengerActor], 19.0, 39.0 ; $619d
 	script_move_target ACTOR_PLAYER, 19.0, 43.0 ; $61a9
 	script_wait_move ACTOR_PLAYER ; $61b4
-	script_get_actor_state ACTOR_PARTNER ; $61b9
-	ld c, l ; $61be
-	ld b, h ; $61bf
-	ld de, wActors ; $61c0
-	farcall AttachActorStepMover ; $61c3
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $61b9
 	script_wait_move [wChallengerActor] ; $61c6
 	script_face [wChallengerActor], FACE_DOWN ; $61cc
 	ret ; $61d4
@@ -341,11 +337,7 @@ WalkChallengerOntoCourt:
 	script_wait_frames 30 ; $61e1
 	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $61e8
 	script_wait_move ACTOR_PLAYER ; $61f3
-	script_get_actor_state ACTOR_PARTNER ; $61f8
-	ld c, l ; $61fd
-	ld b, h ; $61fe
-	ld de, wActors ; $61ff
-	farcall AttachActorStepMover ; $6202
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $61f8
 	script_wait_move [wChallengerActor] ; $6205
 	script_face [wChallengerActor], FACE_RIGHT ; $620b
 	ret ; $6213
@@ -354,11 +346,7 @@ WalkChallengerOntoCourt:
 	script_wait_frames 30 ; $6220
 	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $6227
 	script_wait_move ACTOR_PLAYER ; $6232
-	script_get_actor_state ACTOR_PARTNER ; $6237
-	ld c, l ; $623c
-	ld b, h ; $623d
-	ld de, wActors ; $623e
-	farcall AttachActorStepMover ; $6241
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6237
 	script_wait_move [wChallengerActor] ; $6244
 	script_face [wChallengerActor], FACE_RIGHT ; $624a
 	ret ; $6252

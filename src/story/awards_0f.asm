@@ -120,11 +120,7 @@ AwardsCeremonyEntry0aScene:
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $586a
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $586f
 	script_wait_idle ACTOR_PLAYER ; $5876
-	script_get_actor_state ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $587b
-	ld c, l ; $5880
-	ld b, h ; $5881
-	ld de, wActors ; $5882
-	farcall AttachActorStepMover ; $5885
+	script_follow ACTOR_AWARDS_CEREMONY_WALK_74_08, ACTOR_PLAYER ; $587b
 	ret ; $5888
 AwardsCeremonyEntry0bScene:
 	script_null_script ACTOR_PARTNER ; $5889
@@ -227,11 +223,7 @@ AwardsCeremonyEntry0bScene:
 	call SpeakPartnerVariantLine ; $5acf
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5ad2
 	script_wait_idle ACTOR_PLAYER ; $5ad9
-	script_get_actor_state ACTOR_PARTNER ; $5ade
-	ld c, l ; $5ae3
-	ld b, h ; $5ae4
-	ld de, wActors ; $5ae5
-	farcall AttachActorStepMover ; $5ae8
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5ade
 	ret ; $5aeb
 SpeakPartnerVariantLine:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5aec

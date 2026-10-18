@@ -266,11 +266,7 @@ MarioWorldArrivalDoubles:
 	jr z, ExhibitionAcceptedDoubles ; $6047
 	script_set_text Text_5e_125 ; $6049
 	call ExhibitionDeclinedCutscene ; $604f
-	script_get_actor_state ACTOR_PARTNER ; $6052
-	ld c, l ; $6057
-	ld b, h ; $6058
-	ld de, wActors ; $6059
-	farcall AttachActorStepMover ; $605c
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6052
 	ret ; $605f
 ExhibitionAcceptedDoubles:
 	script_wait_frames 10 ; $6060

@@ -63,7 +63,8 @@ ACTOR_ARGS = {
     ("script_null_script", 0), ("script_jump_velocity", 0), ("script_face_pair", 0),
     ("script_face_pair", 1), ("script_move_player_to_actor", 0), ("script_set_active", 0),
     ("script_move_angle", 0), ("script_set_objdef", 1), ("script_lock_facing", 0),
-    ("script_unlock_facing", 0), ("script_wait_jump", 0),
+    ("script_unlock_facing", 0), ("script_wait_jump", 0), ("script_follow", 0), ("script_follow", 1),
+    ("script_walk_to_actor", 0), ("script_walk_to_actor", 1),
 }
 FIXED = {"ACTOR_PLAYER", "ACTOR_PLAYER_SHADOW", "ACTOR_PARTNER"}
 # The Senior Court's init script picks its list from the same story flags

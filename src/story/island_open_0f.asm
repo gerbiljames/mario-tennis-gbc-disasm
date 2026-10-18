@@ -429,11 +429,7 @@ IslandOpenArrivalCutscene:
 	script_set_anim ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, ANIM_NOD ; $6585
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_WALK_74_06 ; $658c
 	script_speak ACTOR_ISLAND_OPEN_ROUND_WALK_74_06 ; $6591
-	script_get_actor_state ACTOR_ISLAND_OPEN_ROUND_WALK_74_07 ; $6596
-	ld c, l ; $659b
-	ld b, h ; $659c
-	ld de, wActors ; $659d
-	farcall AttachActorStepMover ; $65a0
+	script_follow ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, ACTOR_PLAYER ; $6596
 	set_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $65a3
 .walkOn:
 	script_player_speed 0.75 ; $65a6

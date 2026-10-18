@@ -190,6 +190,29 @@ MACRO script_wait_move
 	farcall ScriptWaitActorMoveDone
 ENDM
 
+; Makes `actor` trail its leader: once more than about 2.8 tiles away, it walks
+; at the leader's speed toward a point 2 tiles behind it
+; (AttachActorStepMover, as_step).
+; Usage: script_follow actor, leader
+MACRO script_follow
+	script_get_actor_state \1
+	ld c, l
+	ld b, h
+	ld de, wActors + (\2) * ACTOR_SIZE
+	farcall AttachActorStepMover
+ENDM
+
+; Makes `actor` walk to where `target` stands, every frame
+; (AttachActorWaypointFollower, as_follow_wp).
+; Usage: script_walk_to_actor actor, target
+MACRO script_walk_to_actor
+	ld bc, wActors + (\1) * ACTOR_SIZE
+	script_get_actor_state \2
+	ld e, l
+	ld d, h
+	farcall AttachActorWaypointFollower
+ENDM
+
 ; Replaces the location's actor list with `list` (a map_actors table in this
 ; bank) and respawns every actor from it.
 ; Usage: script_respawn_actors list
