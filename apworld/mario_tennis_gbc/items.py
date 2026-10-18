@@ -102,25 +102,10 @@ def item_counts(world: MarioTennisGBCWorld) -> dict[str, int]:
     return counts
 
 
-def overflow(world: MarioTennisGBCWorld, counts: dict[str, int], locations: int) -> list[str]:
-    """The items that go to the start inventory because the pool outgrows the locations: random non-progression
-    ones. No option combination needs it today; it keeps a future item from breaking generation."""
-    surplus = sum(counts.values()) - locations
-    if surplus <= 0:
-        return []
-    spare = sorted(name for name, n in counts.items() if name not in PROGRESSION for _ in range(n))
-    if surplus > len(spare):
-        raise Exception(f"{world.player_name}: {surplus} more items than locations, {len(spare)} can start")
-    return world.random.sample(spare, surplus)
-
-
 def create_all_items(world: MarioTennisGBCWorld) -> None:
     counts = item_counts(world)
     locations = len(world.multiworld.get_unfilled_locations(world.player))
-    spare = overflow(world, counts, locations)
-    for name in spare:
-        counts[name] -= 1
-    for name in world.starting_shots + spare:
+    for name in world.starting_shots:
         world.multiworld.push_precollected(create_item(world, name))
     pool = [create_item(world, name) for name, n in counts.items() for _ in range(n)]
     pool += [create_item(world, FILLER) for _ in range(locations - len(pool))]

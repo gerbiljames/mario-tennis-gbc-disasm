@@ -1,6 +1,6 @@
 import itertools
 
-from ..items import PROGRESSION, SERVES, SHOT_COPIES, STROKES, item_counts, overflow, starting_shots
+from ..items import SERVES, SHOT_COPIES, STROKES, item_counts, starting_shots
 from ..locations import active_location_names
 from . import MarioTennisGBCTestBase
 
@@ -16,10 +16,7 @@ class TestBalance(MarioTennisGBCTestBase):
                 world.starting_shots = starting_shots(world)
                 counts = item_counts(world)
                 locations = len(active_location_names(world))
-                spare = overflow(world, counts, locations)
-                self.assertLessEqual(sum(counts.values()) - len(spare), locations)
-                self.assertFalse(PROGRESSION & set(spare), "progression moved to the start inventory")
-                self.assertEqual(len(spare), 0)
+                self.assertLessEqual(sum(counts.values()), locations)
 
 
 class TestSinglesExcluded(MarioTennisGBCTestBase):
@@ -136,7 +133,7 @@ class TestShotItemsOff(MarioTennisGBCTestBase):
 class TestDoublesExcluded(MarioTennisGBCTestBase):
     options = {"story_arcs": "doubles", "minigames": "excluded", "shot_items": True}
 
-    def test_tightest_case_fits_without_overflow(self) -> None:
+    def test_tightest_case_fits(self) -> None:
         start = [i.name for i in self.multiworld.precollected_items[self.player]]
         self.assertEqual(len(start), 2)
         self.assertEqual(len(self.multiworld.itempool), len(self.multiworld.get_locations(self.player)))
