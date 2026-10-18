@@ -68,6 +68,7 @@ def option_bytes(world: MarioTennisGBCWorld) -> dict[str, int]:
     o = world.options
     return {
         "ApOptSkipIntro": int(o.skip_intro.value),
+        "ApOptSkipCeremony": int(o.skip_ceremony.value),
         "ApOptStoryArcs": o.story_arcs.value,
         "ApOptMinigames": o.minigames.value,
         "ApOptRemoteItems": int(o.remote_items.value),

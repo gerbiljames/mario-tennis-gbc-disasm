@@ -208,6 +208,7 @@ INCLUDE "src/story/awards_0f.asm"
 INCLUDE "src/story/island_open_0f.asm"
 INCLUDE "src/story/island_rounds_0f.asm"
 INCLUDE "src/story/actor_0f.asm"
+INCLUDE "src/ap/ceremony_0f.asm"
 
 SECTION "ROM Bank $10", ROMX[$4000], BANK[$10]
 

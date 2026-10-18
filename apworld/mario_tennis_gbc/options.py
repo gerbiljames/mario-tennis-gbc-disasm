@@ -65,6 +65,12 @@ class SkipIntro(Toggle):
     display_name = "Skip Intro"
 
 
+class SkipCeremony(Toggle):
+    """Winning an Island Open final goes straight from the bracket to the congratulations artwork and credits,
+    skipping the fireworks and the Awards Ceremony."""
+    display_name = "Skip Awards Ceremony"
+
+
 class DefaultTextSpeed(Choice):
     """The message speed a new story file starts with. It can still be changed in the game's Options."""
     display_name = "Default Text Speed"
@@ -143,6 +149,7 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     story_match_sets: StoryMatchSets
     story_match_games: StoryMatchGames
     skip_intro: SkipIntro
+    skip_ceremony: SkipCeremony
     default_text_speed: DefaultTextSpeed
     default_camera_mode: DefaultCameraMode
     item_messages: ItemMessages
@@ -156,7 +163,7 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames, ShotItems]),
     OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest, NerfTwoOnOne, ExperienceModifier]),
-    OptionGroup("Quality of Life", [SkipIntro, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
+    OptionGroup("Quality of Life", [SkipIntro, SkipCeremony, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
     OptionGroup("Multiworld", [RemoteItems]),
 ]
 

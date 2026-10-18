@@ -43,3 +43,5 @@ ApOptShotItems: db 0
 ApOptTwoOnOneGames: db 0
 ; experience_modifier: the EXP multiplier in halves (0 or 2: x1)
 ApOptExpModifier: db 0
+; nonzero: skip the Island Open fireworks and Awards Ceremony (src/ap/ceremony_0f.asm)
+ApOptSkipCeremony: db 0

@@ -1193,6 +1193,62 @@ def exp_held_increase_accelerates(g, c):
 exp_held_increase_accelerates.tokens = exp_select_assigns_all.tokens
 
 
+def island_open_won(g, doubles=False, frames=12000):
+    """Win the singles (or doubles) final and run CheckIslandOpenVictoryTransition ->
+    (the (b, c) RunStorySceneByMode was given, or None; the (location, entry)
+    the transition warped to)."""
+    set_flag(g, include_value("FLAG_DOUBLES"), doubles)
+    set_flag(g, include_value(f"FLAG_WON_ISLAND_OPEN_{'DOUBLES' if doubles else 'SINGLES'}_FINAL"), True)
+    scene = []
+    b, a = g.sym["RunStorySceneByMode"]
+    g.pb.hook_register(b, a, lambda _: scene.append((g.rf.B, g.rf.C)), None)
+    loc, entry = g.addr("wStoryModeCurrentLocation"), g.addr("wStoryModeEntryPoint")
+    start = g.mem[loc]
+    g.pending.append(("CheckIslandOpenVictoryTransition", {}))
+    warp = None
+    for i in range(frames):
+        g.tick()
+        if g.mem[loc] != start:
+            warp = g.mem[loc], g.mem[entry]
+            break
+        if i % 30 == 29:
+            g.press("a")
+    g.pb.hook_deregister(b, a)
+    return (scene[0] if scene else None), warp
+
+
+@test
+def ceremony_skipped(g, c):
+    scene, warp = island_open_won(g)
+    gender = g.mem[g.addr("wStoryModeGenderOfMainCharacter")]
+    assert scene == (1, gender + 4), f"the congratulations scene ran as {scene}"
+    assert warp == (include_value("STORYLOC_ACADEMY_WING"), 0x0f), f"warped to {warp}"
+    n = include_value("FLAG_AWARDS_CEREMONY_SEEN_SINGLES")
+    assert g.mem[g.addr("wGameFlags") + n // 8] & 0x80 >> (n % 8), "the ceremony was not marked seen"
+
+
+ceremony_skipped.tokens = lambda c: {"ApOptSkipCeremony": b"\x01"}
+
+
+@test
+def ceremony_skipped_doubles(g, c):
+    scene, warp = island_open_won(g, doubles=True)
+    main = g.mem[g.addr("wStoryModeGenderOfMainCharacter")]
+    partner = g.mem[g.addr("wStoryModeGenderOfPartnerCharacter")]
+    assert scene == (1, main << 1 | (main ^ partner)), f"the congratulations scene ran as {scene}"
+    assert warp == (include_value("STORYLOC_ACADEMY_WING"), 0x0f), f"warped to {warp}"
+
+
+ceremony_skipped_doubles.tokens = ceremony_skipped.tokens
+
+
+@test
+def ceremony_kept(g, c):
+    scene, warp = island_open_won(g)
+    assert scene is None, "the congratulations scene ran without skip_ceremony"
+    assert warp == (include_value("STORYLOC_ISLAND_SKY"), 0x08), f"warped to {warp}"
+
+
 @test
 def exp_modifier_normal(g, c):
     assert [scale_exp(g, n) for n in (0, 1, 1234, 0xffff)] == [0, 1, 1234, 0xffff]

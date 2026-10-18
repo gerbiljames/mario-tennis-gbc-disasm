@@ -330,6 +330,9 @@ CheckIslandOpenVictoryTransition:
 	jr nz, .transition ; $746b
 	jr .stay ; $746d
 .transition:
+	ld a, [ApOptSkipCeremony]
+	and a
+	jp nz, ApSkipAwardsCeremony_0f
 	ld a, STORYLOC_ISLAND_SKY ; $746f
 	ld [wStoryModeCurrentLocation], a ; $7471
 	ld a, $08 ; $7474
