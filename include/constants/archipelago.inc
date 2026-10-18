@@ -161,10 +161,6 @@ ENDM
 	ap_location LOC_TWO_ON_ONE_2, "Two-on-One Level 2"
 	ap_location LOC_TWO_ON_ONE_3, "Two-on-One Level 3"
 
-	ap_location LOC_SHOOTING_STAR_RECORD, "Shooting Star Record"
-	ap_location LOC_TARGET_SHOT_RECORD, "Target Shot Record"
-	ap_location LOC_BANANA_BUNCH_RECORD, "Banana Bunch Record"
-
 	ap_item ITEM_SINGLES_PASS, "Progressive Singles Pass", "Singles Pass"
 	ap_item ITEM_DOUBLES_PASS, "Progressive Doubles Pass", "Doubles Pass"
 

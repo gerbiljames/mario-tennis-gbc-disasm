@@ -30,14 +30,10 @@ def location_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
         for game in MINIGAMES:
             for n in (1, 2, 3):
                 rules[f"{game} Level {n}"] = Has(MINIGAME_ITEMS[game], count=n)
-        for game in ("Shooting Star", "Target Shot", "Banana Bunch"):
-            rules[f"{game} Record"] = Has(MINIGAME_ITEMS[game], count=3)
     elif minigames == minigames.option_vanilla:
         for game in MINIGAMES:
             for n in (1, 2, 3):
                 rules[f"{game} Level {n}"] = Has(MINIGAME_ITEMS[game])
-        for game in ("Shooting Star", "Target Shot", "Banana Bunch"):
-            rules[f"{game} Record"] = Has(MINIGAME_ITEMS[game])
     if world.options.shot_items:
         for name, rule in shot_rules(world).items():
             rules[name] = And(rules[name], rule) if name in rules else rule
@@ -81,7 +77,7 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
         **{f"Service Match {n}": nice_serve for n in (1, 2, 3)},
     }
     if world.options.minigames != world.options.minigames.option_excluded:
-        for name in ("Target Shot Level 2", "Target Shot Level 3", "Target Shot Record"):
+        for name in ("Target Shot Level 2", "Target Shot Level 3"):
             possible[name] = And(Has(LOB), Has(DROP_SHOT))
     for region, names in story_regions(world).items():
         tier = next((t for t in TIER_SHOTS if region.startswith(t)), None)

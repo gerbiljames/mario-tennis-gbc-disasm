@@ -43,36 +43,6 @@ ApCheckMinigameClear:
 	ld e, a
 	jr ApCheckLocation
 
-; a level-3 score beating the game's default record, for the games whose
-; record unlocks a court (SetMinigameRecordSaveFlag)
-ApCheckMinigameRecord:
-	ld a, [wMinigameLevel]
-	cp 2
-	ret nz
-	ld a, [wCurrentMinigameStoryMatch + 1]
-	ld e, LOC_SHOOTING_STAR_RECORD
-	cp MINIGAME_SHOOTING_STAR
-	jr z, .game
-	ld e, LOC_TARGET_SHOT_RECORD
-	cp MINIGAME_TARGET_SHOT
-	jr z, .game
-	ld e, LOC_BANANA_BUNCH_RECORD
-	cp MINIGAME_BANANA_BUNCH
-	ret nz
-.game:
-	push de
-	sub MINIGAME_BOO_BLAST - 2
-	farcall GetDefaultMinigameRecordValue
-	ld hl, wMinigamesCurrentScore
-	ld a, e
-	sub [hl]
-	inc hl
-	ld a, d
-	sbc [hl]
-	pop de
-	ret nc
-	jr ApCheckLocation
-
 ; after the swing contest's count: one location per threshold reached
 ApCheckSwingContest:
 	ld a, [ApOptSwingLow]

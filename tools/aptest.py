@@ -299,19 +299,6 @@ def check_minigames(g, c):
     g.wram("wMinigameLevel", 0)
     g.call("SetMinigameClearFlag")
     assert g.done(c["LOC_BOO_BLAST_1"])
-    # a record over the default (60) checks the court location, win or lose
-    g.wram("wCurrentMinigameStoryMatch", 0, c["MINIGAME_BANANA_BUNCH"])
-    g.wram("wMinigameLevel", 2)
-    g.wram("wMinigamesCurrentScore", 60, 0)
-    g.call("UpdateMinigameBestScore")
-    assert not g.done(c["LOC_BANANA_BUNCH_RECORD"]), "the default itself is not beaten"
-    g.wram("wMinigamesCurrentScore", 61, 0)
-    g.call("UpdateMinigameBestScore")
-    assert g.done(c["LOC_BANANA_BUNCH_RECORD"])
-    g.wram("wCurrentMinigameStoryMatch", 0, c["MINIGAME_BOO_BLAST"])
-    g.wram("wMinigamesCurrentScore", 0, 1)
-    g.call("UpdateMinigameBestScore")
-    assert not any(g.done(c[f"LOC_{n}_RECORD"]) for n in ("SHOOTING_STAR", "TARGET_SHOT"))
 
 
 check_minigames.tokens = lambda c: placements(c, {"LOC_TARGET_SHOT_3": "ITEM_TARGET_SHOT"})

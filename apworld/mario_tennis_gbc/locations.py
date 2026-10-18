@@ -38,7 +38,6 @@ DRILLS += [f"Tennis Machine Level {n}" for n in (1, 2, 3, 4)] + ["Tennis Machine
 DRILLS += [f"Wall Practice Level {n}" for n in (1, 2, 3, 4)] + ["Wall Practice Master"]
 SWING_CONTEST = ["Swing Contest Low Score", "Swing Contest High Score"]
 MINIGAME_CLEARS = [f"{game} Level {n}" for game in MINIGAMES for n in (1, 2, 3)]
-MINIGAME_RECORDS = ["Shooting Star Record", "Target Shot Record", "Banana Bunch Record"]
 
 FINALS = {"singles": "Island Open Singles Final", "doubles": "Island Open Doubles Final"}
 DREAM_MATCHES = {"singles": "Singles Dream Match", "doubles": "Doubles Dream Match"}
@@ -62,7 +61,7 @@ def location_regions(world: MarioTennisGBCWorld) -> dict[str, list[str]]:
     out = story_regions(world)
     out["Training Court"] = DRILLS + SWING_CONTEST
     if world.options.minigames != world.options.minigames.option_excluded:
-        out["Mini-Games"] = MINIGAME_CLEARS + MINIGAME_RECORDS
+        out["Mini-Games"] = MINIGAME_CLEARS
     return out
 
 
@@ -83,8 +82,7 @@ def _groups() -> dict[str, set[str]]:
         "Tennis Machine": {n for n in DRILLS if n.startswith("Tennis Machine")},
         "Swing Contest": set(SWING_CONTEST),
         "Training Court": set(DRILLS + SWING_CONTEST),
-        "Mini-Games": set(MINIGAME_CLEARS + MINIGAME_RECORDS),
-        "Mini-Game Records": set(MINIGAME_RECORDS),
+        "Mini-Games": set(MINIGAME_CLEARS),
     }
     for region in (SINGLES, DOUBLES):
         for name, names in region.items():
@@ -93,11 +91,11 @@ def _groups() -> dict[str, set[str]]:
     for t in DRILL_TYPES:
         groups[t] = {n for n in DRILLS if n.startswith(t + " ")}
     for game in MINIGAMES:
-        groups[game] = {n for n in MINIGAME_CLEARS + MINIGAME_RECORDS if n.startswith(game + " ")}
+        groups[game] = {n for n in MINIGAME_CLEARS if n.startswith(game + " ")}
     return groups
 
 
 LOCATION_NAME_GROUPS = _groups()
 
 assert set(LOCATION_NAME_TO_ID) == {n for g in (SINGLES, DOUBLES) for names in g.values() for n in names} \
-    | set(DRILLS + SWING_CONTEST + MINIGAME_CLEARS + MINIGAME_RECORDS), "locations.py and ids.py disagree"
+    | set(DRILLS + SWING_CONTEST + MINIGAME_CLEARS), "locations.py and ids.py disagree"

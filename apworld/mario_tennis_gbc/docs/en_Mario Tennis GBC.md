@@ -20,7 +20,7 @@ Progress through the story is driven by items instead of wins:
 ## What is a location?
 
 Every ranking-match win, Island Open round and Dream Match; every drill clear; the swing contest's two scores; and
-every mini-game level clear and record court.
+every mini-game level clear.
 
 ## What is the goal?
 
@@ -33,8 +33,8 @@ the main menu opens on its grid right away (re-enter the grid if it is already o
 next time you are walking around in a story file. That is also when the short item messages show, unless `item_messages` is
 off. Items found in your own world are given at once, offline too.
 
-When there are more items than locations (doubles, mini-games excluded, shot items on), some equipment is in your
-starting inventory instead.
+When there are more items than locations (doubles with shot items, unless mini-games are vanilla), some equipment is
+in your starting inventory instead.
 
 EXP Bundles are saved up on the story file. Open Char/Partner Data from the pause menu to receive them and level up
 straight away; any still saved up are awarded the next time you continue that file.

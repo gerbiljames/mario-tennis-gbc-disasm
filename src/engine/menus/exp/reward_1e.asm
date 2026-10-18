@@ -430,7 +430,6 @@ MinigameClearFlagTable_1e:
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; 25
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; 26
 UpdateMinigameBestScore:
-	apcall ApCheckMinigameRecord
 	ldh a, [hWramBank] ; $6f38
 	push af ; $6f3a
 	ld a, [wMinigameLevel] ; $6f3b

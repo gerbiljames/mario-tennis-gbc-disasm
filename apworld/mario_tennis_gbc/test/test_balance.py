@@ -19,7 +19,7 @@ class TestBalance(MarioTennisGBCTestBase):
                 spare = overflow(world, counts, locations)
                 self.assertLessEqual(sum(counts.values()) - len(spare), locations)
                 self.assertFalse(PROGRESSION & set(spare), "progression moved to the start inventory")
-                self.assertEqual(len(spare), 3 if (arcs, minigames, shots) == (2, 3, 1) else 0)
+                self.assertEqual(len(spare), 3 if (arcs, minigames, shots) in ((2, 1, 1), (2, 3, 1)) else 0)
 
 
 class TestSinglesExcluded(MarioTennisGBCTestBase):
