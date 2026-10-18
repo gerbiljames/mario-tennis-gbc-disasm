@@ -507,7 +507,7 @@ TrainingCourtReentryDispatch:
 	ld de, $0d00 ; $53f3
 	farcall ScriptSetActorPosition ; $53f6
 	ld a, [wMapSceneStage2] ; $53f9
-	ld b, $40 ; $53fc
+	ld b, FACE_DOWN ; $53fc
 	farcall SetActorFacing ; $53fe
 	script_null_script ACTOR_PARTNER ; $5401
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5406
@@ -545,7 +545,7 @@ TrainingCourtReentryDispatch:
 	ld de, $2500 ; $54a3
 	farcall ScriptSetActorPosition ; $54a6
 	ld a, [wMapSceneStage2] ; $54a9
-	ld b, $40 ; $54ac
+	ld b, FACE_DOWN ; $54ac
 	farcall SetActorFacing ; $54ae
 	script_null_script ACTOR_PARTNER ; $54b1
 	script_set_position ACTOR_PARTNER, 45.0, 45.0 ; $54b6
@@ -583,7 +583,7 @@ TrainingCourtReentryDispatch:
 	ld de, $2500 ; $5553
 	farcall ScriptSetActorPosition ; $5556
 	ld a, [wMapSceneStage2] ; $5559
-	ld b, $40 ; $555c
+	ld b, FACE_DOWN ; $555c
 	farcall SetActorFacing ; $555e
 	script_null_script ACTOR_PARTNER ; $5561
 	script_set_position ACTOR_PARTNER, 19.0, 45.0 ; $5566

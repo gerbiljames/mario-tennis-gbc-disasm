@@ -10,7 +10,7 @@ NetChallengerResultScene:
 	ld de, $2500 ; $5d95
 	farcall ScriptSetActorPosition ; $5d98
 	ld a, [wMapSceneStage2] ; $5d9b
-	ld b, $40 ; $5d9e
+	ld b, FACE_DOWN ; $5d9e
 	farcall SetActorFacing ; $5da0
 	script_null_script ACTOR_PARTNER ; $5da3
 	script_set_position ACTOR_PARTNER, 45.0, 45.0 ; $5da8
@@ -50,7 +50,7 @@ StrokeChallengerResultScene:
 	ld de, $2500 ; $5e14
 	farcall ScriptSetActorPosition ; $5e17
 	ld a, [wMapSceneStage2] ; $5e1a
-	ld b, $40 ; $5e1d
+	ld b, FACE_DOWN ; $5e1d
 	farcall SetActorFacing ; $5e1f
 	script_null_script ACTOR_PARTNER ; $5e22
 	script_set_position ACTOR_PARTNER, 19.0, 45.0 ; $5e27
@@ -355,7 +355,7 @@ WalkChallengerAwayDefeated:
 	ret ; $60f5
 .done:
 	ld a, [wMapSceneStage2] ; $60f6
-	ld b, $c0 ; $60f9
+	ld b, FACE_UP ; $60f9
 	farcall SetActorFacing ; $60fb
 	ld a, [wMapSceneStage2] ; $60fe
 	ld d, ANIM_BOUNCE ; $6101
@@ -431,7 +431,7 @@ WalkChallengerOntoCourt:
 	ld a, [wMapSceneStage2] ; $61c6
 	farcall ScriptWaitActorMoveDone ; $61c9
 	ld a, [wMapSceneStage2] ; $61cc
-	ld b, $40 ; $61cf
+	ld b, FACE_DOWN ; $61cf
 	farcall SetActorFacing ; $61d1
 	ret ; $61d4
 .southCourt:
@@ -450,7 +450,7 @@ WalkChallengerOntoCourt:
 	ld a, [wMapSceneStage2] ; $6205
 	farcall ScriptWaitActorMoveDone ; $6208
 	ld a, [wMapSceneStage2] ; $620b
-	ld b, $00 ; $620e
+	ld b, FACE_RIGHT ; $620e
 	farcall SetActorFacing ; $6210
 	ret ; $6213
 .eastCourt:
@@ -469,6 +469,6 @@ WalkChallengerOntoCourt:
 	ld a, [wMapSceneStage2] ; $6244
 	farcall ScriptWaitActorMoveDone ; $6247
 	ld a, [wMapSceneStage2] ; $624a
-	ld b, $00 ; $624d
+	ld b, FACE_RIGHT ; $624d
 	farcall SetActorFacing ; $624f
 	ret ; $6252

@@ -414,7 +414,7 @@ ServeChallengerResultScene:
 	ld de, $0d00 ; $5d14
 	farcall ScriptSetActorPosition ; $5d17
 	ld a, [wMapSceneStage2] ; $5d1a
-	ld b, $40 ; $5d1d
+	ld b, FACE_DOWN ; $5d1d
 	farcall SetActorFacing ; $5d1f
 	script_null_script ACTOR_PARTNER ; $5d22
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5d27
