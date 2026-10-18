@@ -347,8 +347,7 @@ RunLinkCharSelectScreen:
 	jr nz, .finish ; $64f1
 	call WaitVBlank ; $64f3
 .finish:
-	ld c, 8 ; $64f6
-	call BeginFadeOut ; $64f8
+	script_fade_out 8 ; $64f6
 	call WaitFadeEnd ; $64fb
 	ld hl, rIE ; $64fe
 	set B_IE_TIMER, [hl] ; $6501
@@ -363,8 +362,7 @@ RunLinkCharSelectScreen:
 	xor a ; $650f
 	ldh [hLinkExchangeActive], a ; $6510
 	call ResetSerialState ; $6512
-	ld c, 16 ; $6515
-	call BeginFadeOut ; $6517
+	script_fade_out 16 ; $6515
 	call WaitFadeEnd ; $651a
 	call ClearFrameTasks ; $651d
 	ld hl, rIE ; $6520

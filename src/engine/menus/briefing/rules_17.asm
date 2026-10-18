@@ -120,8 +120,7 @@ ShowRulesScreen:
 	ld [wRulesAnimCounter], a ; $6f33
 	ld [wRulesIsMinigame], a ; $6f36
 	ld [wRulesScreenAnimFrame], a ; $6f39
-	ld c, 32 ; $6f3c
-	call BeginFadeOut ; $6f3e
+	script_fade_out 32 ; $6f3c
 	call WaitFadeEnd ; $6f41
 	call DisableLCDSafely ; $6f44
 	call LoadRulesScreen ; $6f47
@@ -144,8 +143,7 @@ ShowRulesScreen:
 	xor a ; $6f7a
 	ld [wRulesAnimCounter], a ; $6f7b
 	call RunMinigameRulesPages ; $6f7e
-	ld c, 32 ; $6f81
-	call BeginFadeOut ; $6f83
+	script_fade_out 32 ; $6f81
 	call WaitFadeEnd ; $6f86
 	call ClearFrameTasks ; $6f89
 	ld a, [wRulesExitCode] ; $6f8c

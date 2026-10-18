@@ -119,8 +119,7 @@ TrainingGymExit02_0e:
 	script_copy_scene_rect 61, 10, 10, 10, 2, 2 ; $42e7
 	script_wait_frames 2 ; $42f6
 	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $42fd
-	ld c, 8 ; $4307
-	call BeginFadeOut ; $4309
+	script_fade_out 8 ; $4307
 	script_unlock_facing ACTOR_PLAYER ; $430c
 	script_wait_frames 10 ; $4313
 	ret ; $431a
@@ -139,8 +138,7 @@ TrainingGymExit03_0e:
 	script_copy_scene_rect 61, 10, 20, 10, 2, 2 ; $4372
 	script_wait_frames 2 ; $4381
 	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $4388
-	ld c, 8 ; $4392
-	call BeginFadeOut ; $4394
+	script_fade_out 8 ; $4392
 	script_unlock_facing ACTOR_PLAYER ; $4397
 	script_wait_frames 10 ; $439e
 	ret ; $43a5

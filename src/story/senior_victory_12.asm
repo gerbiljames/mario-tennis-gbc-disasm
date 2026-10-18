@@ -125,8 +125,7 @@ IslandOpenDoublesVictory:
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $7393
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $739a
 	script_wait_frames 30 ; $739f
-	ld c, 8 ; $73a6
-	call BeginFadeOut ; $73a8
+	script_fade_out 8 ; $73a6
 	call WaitFadeEnd ; $73ab
 	farcall EndCutsceneScriptMode ; $73ae
 	ret ; $73b1
@@ -278,8 +277,7 @@ SeniorSharedVictoryScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7737
 	script_wait_idle ACTOR_PLAYER ; $773e
 	script_wait_frames 30 ; $7743
-	ld c, 8 ; $774a
-	call BeginFadeOut ; $774c
+	script_fade_out 8 ; $774a
 	call WaitFadeEnd ; $774f
 	farcall EndCutsceneScriptMode ; $7752
 	ret ; $7755

@@ -25,8 +25,7 @@ ShowTournamentBracket:
 .playSfx:
 	sound SFX_MENU_SELECT ; $7799
 	call ClearFrameTasks ; $779b
-	ld c, 16 ; $779e
-	call BeginFadeOut ; $77a0
+	script_fade_out 16 ; $779e
 	call WaitFadeEnd ; $77a3
 	ret ; $77a6
 BuildTournamentBracketScreen:
@@ -387,15 +386,13 @@ RunMarioCastExhibResults:
 	jr .loop ; $7a4d
 .playSfx:
 	sound SFX_MENU_SELECT ; $7a4f
-	ld c, 16 ; $7a51
-	call BeginFadeOut ; $7a53
+	script_fade_out 16 ; $7a51
 	call WaitFadeEnd ; $7a56
 	call ClearFrameTasks ; $7a59
 	ret ; $7a5c
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $7a5d
-	ld c, 16 ; $7a5f
-	call BeginFadeOut ; $7a61
+	script_fade_out 16 ; $7a5f
 	call WaitFadeEnd ; $7a64
 	call ClearFrameTasks ; $7a67
 	ld a, $ff ; $7a6a

@@ -416,15 +416,13 @@ RunN64RingShotData:
 	jr .loop ; $5193
 .playSfx:
 	sound SFX_MENU_SELECT ; $5195
-	ld c, 16 ; $5197
-	call BeginFadeOut ; $5199
+	script_fade_out 16 ; $5197
 	call WaitFadeEnd ; $519c
 	call ClearFrameTasks ; $519f
 	ret ; $51a2
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $51a3
-	ld c, 16 ; $51a5
-	call BeginFadeOut ; $51a7
+	script_fade_out 16 ; $51a5
 	call WaitFadeEnd ; $51aa
 	call ClearFrameTasks ; $51ad
 	ld a, $ff ; $51b0

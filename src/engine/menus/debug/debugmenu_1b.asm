@@ -21,8 +21,7 @@ Unused_1b_RunLevelUpStatusTrophiesMenu:
 	call WaitFadeEnd ; $649a
 	farcall RunMenuSelection ; $649d
 	ld b, a ; $64a0
-	ld c, 32 ; $64a1
-	call BeginFadeOut ; $64a3
+	script_fade_out 32 ; $64a1
 	call WaitFadeEnd ; $64a6
 	ld a, [wMenuWindowId] ; $64a9
 	farcall CloseWindow ; $64ac
@@ -65,8 +64,7 @@ Unused_1b_RunDebugSaveDataMenu:
 	call WaitFadeEnd ; $64ff
 	farcall RunMenuSelection ; $6502
 	ld b, a ; $6505
-	ld c, 32 ; $6506
-	call BeginFadeOut ; $6508
+	script_fade_out 32 ; $6506
 	call WaitFadeEnd ; $650b
 	ld a, [wMenuWindowId] ; $650e
 	farcall CloseWindow ; $6511
@@ -288,8 +286,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	ld a, [wCharSelectChar] ; $6731
 	ld [wCharSelectPrevChar], a ; $6734
 	call Unused_1b_ReadUnlockFlagsSaveBlock ; $6737
-	ld c, 32 ; $673a
-	call BeginFadeOut ; $673c
+	script_fade_out 32 ; $673a
 	call WaitFadeEnd ; $673f
 	call DisableLCDSafely ; $6742
 	call Unused_1b_LoadUnlockDebugNavGridGfx ; $6745
@@ -351,8 +348,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	call AdvanceFrame ; $67c1
 	jr .loop ; $67c4
 .beginFadeOut:
-	ld c, 8 ; $67c6
-	call BeginFadeOut ; $67c8
+	script_fade_out 8 ; $67c6
 	call WaitFadeEnd ; $67cb
 	call Unused_1b_WriteUnlockFlagsSaveBlock ; $67ce
 	call AdvanceFrame ; $67d1

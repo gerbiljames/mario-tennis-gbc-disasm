@@ -108,16 +108,14 @@ Unused_38_RunMatchTypeMenu:
 	jr .inputLoop ; $44d0
 .confirm:
 	sound SFX_MENU_SELECT ; $44d2
-	ld c, 16 ; $44d4
-	call BeginFadeOut ; $44d6
+	script_fade_out 16 ; $44d4
 	call WaitFadeEnd ; $44d9
 	call ClearFrameTasks ; $44dc
 	xor a ; $44df
 	ret ; $44e0
 .done:
 	sound SFX_MENU_CANCEL ; $44e1
-	ld c, 16 ; $44e3
-	call BeginFadeOut ; $44e5
+	script_fade_out 16 ; $44e3
 	call WaitFadeEnd ; $44e8
 	call ClearFrameTasks ; $44eb
 	ld a, $ff ; $44ee
@@ -175,8 +173,7 @@ Unused_38_RunMatchTypeMenuLink:
 	xor a ; $4557
 	ldh [hLinkExchangeActive], a ; $4558
 	call ResetSerialState ; $455a
-	ld c, 16 ; $455d
-	call BeginFadeOut ; $455f
+	script_fade_out 16 ; $455d
 	call WaitFadeEnd ; $4562
 	sound BGM_NONE ; $4565
 	sound SFX_STOP ; $4567
@@ -191,8 +188,7 @@ Unused_38_RunMatchTypeMenuLink:
 	xor a ; $4575
 	ldh [hLinkExchangeActive], a ; $4576
 	call ResetSerialState ; $4578
-	ld c, 16 ; $457b
-	call BeginFadeOut ; $457d
+	script_fade_out 16 ; $457b
 	call WaitFadeEnd ; $4580
 	sound BGM_NONE ; $4583
 	sound SFX_STOP ; $4585

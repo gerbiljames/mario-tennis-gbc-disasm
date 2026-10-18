@@ -271,8 +271,7 @@ MovePlayerToPosition:
 	push bc ; $47e1
 	push de ; $47e2
 	push hl ; $47e3
-	ld c, 127 ; $47e4
-	call BeginFadeOut ; $47e6
+	script_fade_out 127 ; $47e4
 	call WaitFadeEnd ; $47e9
 	pop hl ; $47ec
 	pop de ; $47ed
@@ -353,8 +352,7 @@ MovePlayerToActor:
 	push bc ; $4860
 	push de ; $4861
 	push hl ; $4862
-	ld c, 127 ; $4863
-	call BeginFadeOut ; $4865
+	script_fade_out 127 ; $4863
 	call WaitFadeEnd ; $4868
 	pop hl ; $486b
 	pop de ; $486c

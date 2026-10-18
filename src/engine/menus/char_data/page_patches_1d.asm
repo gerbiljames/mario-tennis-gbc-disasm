@@ -240,8 +240,7 @@ ShowExpDistributionScreen:
 	call UpdateExpScreenSelectionPalettes ; $690a
 	call AdvanceFrame ; $690d
 	call RunExpDistributionLoop ; $6910
-	ld c, 16 ; $6913
-	call BeginFadeOut ; $6915
+	script_fade_out 16 ; $6913
 	call WaitFadeEnd ; $6918
 	ld hl, DrawExpCharCursorTask ; $691b
 	call UnregisterFrameTask ; $691e

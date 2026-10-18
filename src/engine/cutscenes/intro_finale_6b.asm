@@ -174,8 +174,7 @@ IntroCutsceneState19Init_6b:
 	ld [hl], d ; $4c6a
 	jp DispatchCutsceneStateInit.loop ; $4c6b
 IntroCutsceneState19Exit_6b:
-	ld c, 4 ; $4c6e
-	call BeginFadeOut ; $4c70
+	script_fade_out 4 ; $4c6e
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.loop2 ; $4c76
 ; Instruction-identical to IntroCutsceneState00Update_6b (in this bank); a change here belongs in every copy.
@@ -375,8 +374,7 @@ ScrollOutIntroLogo:
 	jr z, .eq3e ; $51f7
 	jr .loop ; $51f9
 .eq3e:
-	ld c, 16 ; $51fb
-	call BeginFadeOut ; $51fd
+	script_fade_out 16 ; $51fb
 	call WaitFadeEnd ; $5200
 	call DisableLCDSafely ; $5203
 	xor a ; $5206

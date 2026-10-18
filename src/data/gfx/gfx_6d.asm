@@ -207,8 +207,7 @@ Unused_6d_ShowIntroCharacterScreen:
 	ldh a, [hInputPressed] ; $6aad
 	and PADF_A | PADF_B ; $6aaf
 	jr z, .loop ; $6ab1
-	ld c, 1 ; $6ab3
-	call BeginFadeOut ; $6ab5
+	script_fade_out 1 ; $6ab3
 	call WaitFadeEnd ; $6ab8
 	call ClearFrameTasks ; $6abb
 	ret ; $6abe

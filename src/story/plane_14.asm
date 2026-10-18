@@ -460,8 +460,7 @@ IslandSkyEntry02Scene:
 	jr nz, .done ; $63f6
 	sound SFX_FIREWORK_SPARKLE ; $63f8
 	script_wait_frames 50 ; $63fa
-	ld c, 4 ; $6401
-	call BeginFadeOut ; $6403
+	script_fade_out 4 ; $6401
 	call WaitFadeEnd ; $6406
 	call ClearFrameTasks ; $6409
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $640c

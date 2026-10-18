@@ -20,8 +20,7 @@ InitStoryMatchSettings:
 	ld [wMatchContext], a ; $495e
 	ret ; $4961
 RunStoryMatch:
-	ld c, 16 ; $4962
-	call BeginFadeOut ; $4964
+	script_fade_out 16 ; $4962
 	call WaitFadeEnd ; $4967
 	call AssignStoryMatchCharacters ; $496a
 	farcall RunMatch ; $496d
@@ -42,8 +41,7 @@ RunStoryMatch:
 	ld [wKeepMatchStatsFlag], a ; $498d
 	ret ; $4990
 RestoreOverworldAfterMatch:
-	ld c, 16 ; $4991
-	call BeginFadeOut ; $4993
+	script_fade_out 16 ; $4991
 	call WaitFadeEnd ; $4996
 	farcall LoadStoryObjPalettes ; $4999
 	call DisableLCDSafely ; $499c

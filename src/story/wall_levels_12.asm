@@ -238,8 +238,7 @@ WallPracticeRoomTile03_12:
 	script_move_target ACTOR_PLAYER, 3.0, 49.0 ; $4d5a
 	script_wait_move ACTOR_PLAYER ; $4d65
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4d6a
-	ld c, 4 ; $4d75
-	call BeginFadeOut ; $4d77
+	script_fade_out 4 ; $4d75
 	call WaitFadeEnd ; $4d7a
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4d7d
 	ld [wStoryModeCurrentLocation], a ; $4d7f
@@ -269,8 +268,7 @@ WallPracticeRoomTile04_12:
 	script_move_target ACTOR_PLAYER, 7.0, 49.0 ; $4dcf
 	script_wait_move ACTOR_PLAYER ; $4dda
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4ddf
-	ld c, 4 ; $4dea
-	call BeginFadeOut ; $4dec
+	script_fade_out 4 ; $4dea
 	call WaitFadeEnd ; $4def
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4df2
 	ld [wStoryModeCurrentLocation], a ; $4df4
@@ -300,8 +298,7 @@ WallPracticeRoomTile05_12:
 	script_move_target ACTOR_PLAYER, 17.0, 49.0 ; $4e44
 	script_wait_move ACTOR_PLAYER ; $4e4f
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4e54
-	ld c, 4 ; $4e5f
-	call BeginFadeOut ; $4e61
+	script_fade_out 4 ; $4e5f
 	call WaitFadeEnd ; $4e64
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4e67
 	ld [wStoryModeCurrentLocation], a ; $4e69
@@ -331,8 +328,7 @@ WallPracticeRoomTile06_12:
 	script_move_target ACTOR_PLAYER, 21.0, 49.0 ; $4eb9
 	script_wait_move ACTOR_PLAYER ; $4ec4
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4ec9
-	ld c, 4 ; $4ed4
-	call BeginFadeOut ; $4ed6
+	script_fade_out 4 ; $4ed4
 	call WaitFadeEnd ; $4ed9
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4edc
 	ld [wStoryModeCurrentLocation], a ; $4ede
@@ -449,8 +445,7 @@ WallPracticeRoomInitScript_12:
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $502b
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $5032
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5039
-	ld c, 4 ; $503e
-	call BeginFadeOut ; $5040
+	script_fade_out 4 ; $503e
 	call WaitFadeEnd ; $5043
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5046
 	ld [wStoryModeCurrentLocation], a ; $5048
@@ -610,8 +605,7 @@ WallPracticeRoomNpc07TextIds2:
 	dw Text_36_32 ; record 5
 	dw Text_36_37 ; record 6
 LaunchWallPracticeMinigame:
-	ld c, 4 ; $528d
-	call BeginFadeOut ; $528f
+	script_fade_out 4 ; $528d
 	call WaitFadeEnd ; $5292
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5295
 	ld [wStoryModeCurrentLocation], a ; $5297

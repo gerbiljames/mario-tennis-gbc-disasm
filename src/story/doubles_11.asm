@@ -230,8 +230,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	ld [wUnusedExitTriggerIdMirror], a ; $6281
 	ld [wStoryModeExitTriggerRequest], a ; $6284
 	script_wait_frames 60 ; $6287
-	ld c, 4 ; $628e
-	call BeginFadeOut ; $6290
+	script_fade_out 4 ; $628e
 	call WaitFadeEnd ; $6293
 	script_wait_frames 30 ; $6296
 	ret ; $629d

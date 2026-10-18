@@ -73,8 +73,7 @@ CharDataScreen_Show:
 .runInputLoop:
 	call CharDataScreen_InputLoop ; $40b2
 	push af ; $40b5
-	ld c, 16 ; $40b6
-	call BeginFadeOut ; $40b8
+	script_fade_out 16 ; $40b6
 	call WaitFadeEnd ; $40bb
 	ld hl, wStoryModeNameOfMainCharacter ; $40be
 	ld de, wStorySlotData ; $40c1

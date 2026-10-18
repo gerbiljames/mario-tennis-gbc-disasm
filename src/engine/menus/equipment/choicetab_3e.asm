@@ -407,8 +407,7 @@ PlayAlonePartnerCaptionDests_3e:
 	db $01, $d2, $01, $d2 ; 0x00
 ShowEquipmentStatusScreen:
 	call ClearFrameTasks ; $5388
-	ld c, 16 ; $538b
-	call BeginFadeOut ; $538d
+	script_fade_out 16 ; $538b
 	call WaitFadeEnd ; $5390
 	call AdvanceFrame ; $5393
 	call AdvanceFrame ; $5396
@@ -432,8 +431,7 @@ ShowEquipmentStatusScreen:
 .exit:
 	sound SFX_MENU_SELECT ; $53c1
 	call ClearFrameTasks ; $53c3
-	ld c, 16 ; $53c6
-	call BeginFadeOut ; $53c8
+	script_fade_out 16 ; $53c6
 	call WaitFadeEnd ; $53cb
 	ret ; $53ce
 DrawEquipmentStatusScreen:

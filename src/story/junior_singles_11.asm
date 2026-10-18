@@ -597,7 +597,6 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $726c
 	script_wait_idle ACTOR_PLAYER ; $7273
 	script_wait_frames 40 ; $7278
-	ld c, 4 ; $727f
-	call BeginFadeOut ; $7281
+	script_fade_out 4 ; $727f
 	call WaitFadeEnd ; $7284
 	ret ; $7287

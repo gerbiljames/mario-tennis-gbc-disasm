@@ -156,8 +156,7 @@ RunLinkCourtSelect4Menu:
 	call CloseCourtSelect4Panel ; $5ceb
 	ld a, MENUSLIDE_BACK ; $5cee
 	ld [wMenuSlideDirection], a ; $5cf0
-	ld c, 16 ; $5cf3
-	call BeginFadeOut ; $5cf5
+	script_fade_out 16 ; $5cf3
 	call WaitFadeEnd ; $5cf8
 	ld a, $ff ; $5cfb
 	ret ; $5cfd

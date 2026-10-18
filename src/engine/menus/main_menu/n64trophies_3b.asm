@@ -313,15 +313,13 @@ RunN64TnmtData:
 	jr .loop ; $4d3d
 .playSfx:
 	sound SFX_MENU_SELECT ; $4d3f
-	ld c, 16 ; $4d41
-	call BeginFadeOut ; $4d43
+	script_fade_out 16 ; $4d41
 	call WaitFadeEnd ; $4d46
 	call ClearFrameTasks ; $4d49
 	ret ; $4d4c
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $4d4d
-	ld c, 16 ; $4d4f
-	call BeginFadeOut ; $4d51
+	script_fade_out 16 ; $4d4f
 	call WaitFadeEnd ; $4d54
 	call ClearFrameTasks ; $4d57
 	ld a, $ff ; $4d5a

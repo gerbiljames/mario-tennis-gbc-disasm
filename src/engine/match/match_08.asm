@@ -124,8 +124,7 @@ InitMatchScene:
 	wram_bank WRAM_CHAR0 ; $4189
 	ret ; $418f
 RunMatch:
-	ld c, 32 ; $4190
-	call BeginFadeOut ; $4192
+	script_fade_out 32 ; $4190
 	call WaitFadeEnd ; $4195
 	call AdvanceFrame ; $4198
 	call DisableLCDSafely ; $419b
@@ -151,8 +150,7 @@ RunMatch:
 	ld a, [wGameMode] ; $41d7
 	cp GAMEMODE_MARIO_MINIGAME ; $41da
 	call z, ShowMatchResultScreens ; $41dc
-	ld c, 32 ; $41df
-	call BeginFadeOut ; $41e1
+	script_fade_out 32 ; $41df
 	call WaitFadeEnd ; $41e4
 	call AdvanceFrame ; $41e7
 	farcall RunMatchWinLoseScreen ; $41ea

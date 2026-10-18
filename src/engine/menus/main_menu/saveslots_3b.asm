@@ -302,8 +302,7 @@ TryMainMenuLinkHandshake:
 	or e ; $5cb8
 	jr nz, .loopB ; $5cb9
 .beginFadeOut:
-	ld c, 64 ; $5cbb
-	call BeginFadeOut ; $5cbd
+	script_fade_out 64 ; $5cbb
 	call WaitFadeEnd ; $5cc0
 	call DisableLCDSafely ; $5cc3
 	farcall ResetScreenAndTextWindows ; $5cc6

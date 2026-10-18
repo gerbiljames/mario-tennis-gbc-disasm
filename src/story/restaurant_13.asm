@@ -143,8 +143,7 @@ RestaurantPlazaTile02_13:
 	call AnimateDoorOpen_13 ; $432e
 	script_move_angle ACTOR_PLAYER, $c2, 2.0 ; $4331
 	script_wait_frames 2 ; $433b
-	ld c, 16 ; $4342
-	call BeginFadeOut ; $4344
+	script_fade_out 16 ; $4342
 	script_wait_frames 30 ; $4347
 	ld a, $02 ; $434e
 	ld [wUnusedExitTriggerIdMirror], a ; $4350
@@ -158,8 +157,7 @@ RestaurantPlazaTile03_13:
 	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $437a
 	script_wait_move ACTOR_PLAYER ; $4384
 	call StoryActorsWalkOffAndFadeOut_13 ; $4389
-	ld c, 16 ; $438c
-	call BeginFadeOut ; $438e
+	script_fade_out 16 ; $438c
 	script_wait_frames 30 ; $4391
 	ld a, $03 ; $4398
 	ld [wUnusedExitTriggerIdMirror], a ; $439a
@@ -186,8 +184,7 @@ RestaurantPlazaTile06_13:
 	script_move_target ACTOR_PARTNER, 59.0, 13.0 ; $43e7
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 6.0 ; $43f2
 	script_wait_frames 60 ; $43fc
-	ld c, 16 ; $4403
-	call BeginFadeOut ; $4405
+	script_fade_out 16 ; $4403
 	script_wait_frames 30 ; $4408
 	test_flag FLAG_DOUBLES ; $440f
 	ld a, $06 ; $4412
@@ -206,8 +203,7 @@ StoryActorsWalkOffAndFadeOut_13:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $443b
 	script_wait_frames 40 ; $4443
 	script_set_anim ACTOR_PLAYER, ANIM_DISTANT ; $444a
-	ld c, 8 ; $4451
-	call BeginFadeOut ; $4453
+	script_fade_out 8 ; $4451
 	script_wait_move ACTOR_PLAYER ; $4456
 	script_set_active ACTOR_PLAYER, $00 ; $445b
 	script_wait_frames 10 ; $4462
@@ -227,8 +223,7 @@ StoryActorsWalkOffAndFadeOutDoubles_13:
 	script_move_angle ACTOR_PARTNER, $ca, 2.0 ; $44bc
 	script_wait_move ACTOR_PLAYER ; $44c6
 	script_set_active ACTOR_PLAYER, $00 ; $44cb
-	ld c, 16 ; $44d2
-	call BeginFadeOut ; $44d4
+	script_fade_out 16 ; $44d2
 	script_wait_frames 10 ; $44d7
 	ret ; $44de
 RestaurantPlazaInitScript_13:

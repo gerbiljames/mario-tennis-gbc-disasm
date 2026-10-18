@@ -340,8 +340,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ACTOR_PLAYER ; $7360
 	script_wait_frames 10 ; $7368
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $736f
-	ld c, 2 ; $7376
-	call BeginFadeOut ; $7378
+	script_fade_out 2 ; $7376
 	call WaitFadeEnd ; $737b
 	ld b, $00 ; $737e
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7380
@@ -561,8 +560,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_frames 10 ; $7891
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7898
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $789f
-	ld c, 2 ; $78a6
-	call BeginFadeOut ; $78a8
+	script_fade_out 2 ; $78a6
 	call WaitFadeEnd ; $78ab
 	call PlayDoublesTravelingTeamScreenSequence_13 ; $78ae
 	ld a, STORYLOC_MAIN_MENU ; $78b1

@@ -58,8 +58,7 @@ Unused_1a_RunDebugCharViewer:
 	call Unused_1a_RunCharViewerSelectGrid ; $6802
 	cp $ff ; $6805
 	jr z, .eqff ; $6807
-	ld c, 64 ; $6809
-	call BeginFadeOut ; $680b
+	script_fade_out 64 ; $6809
 	call WaitFadeEnd ; $680e
 	call DisableLCDSafely ; $6811
 	call Unused_1a_InitCharViewerState ; $6814
@@ -83,8 +82,7 @@ Unused_1a_RunDebugCharViewer:
 	ld hl, Unused_1a_DrawCharViewerCursorSprite ; $684e
 	call UnregisterFrameTask ; $6851
 .eqff:
-	ld c, 16 ; $6854
-	call BeginFadeOut ; $6856
+	script_fade_out 16 ; $6854
 	call WaitFadeEnd ; $6859
 	call DisableLCDSafely ; $685c
 	farcall LoadMenuFontGfx ; $685f
@@ -149,8 +147,7 @@ Unused_1a_RunCharViewerSelectGrid:
 	bit PADB_B, a ; $6908
 	jp nz, .bit1Set ; $690a
 	jr .loop ; $690d
-	ld c, 16 ; $690f
-	call BeginFadeOut ; $6911
+	script_fade_out 16 ; $690f
 	call WaitFadeEnd ; $6914
 	call DisableLCDSafely ; $6917
 	ret ; $691a

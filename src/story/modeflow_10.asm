@@ -90,8 +90,7 @@ RunSavedDataMenuFlow:
 	jp z, RunSavedDataMenuFlow ; $52e9
 	or a ; $52ec
 	jr nz, .transferOption1 ; $52ed
-	ld c, 16 ; $52ef
-	call BeginFadeOut ; $52f1
+	script_fade_out 16 ; $52ef
 	call WaitFadeEnd ; $52f4
 	ld a, $00 ; $52f7
 	farcall ShowCharDataScreen ; $52f9
@@ -106,12 +105,10 @@ RunSavedDataMenuFlow:
 .transferOption1:
 	cp $01 ; $5315
 	jr nz, .transferOption2 ; $5317
-	ld c, 16 ; $5319
-	call BeginFadeOut ; $531b
+	script_fade_out 16 ; $5319
 	call WaitFadeEnd ; $531e
 	farcall ShowGameProgressScreen ; $5321
-	ld c, 16 ; $5324
-	call BeginFadeOut ; $5326
+	script_fade_out 16 ; $5324
 	call WaitFadeEnd ; $5329
 	call DisableLCDSafely ; $532c
 	farcall LoadMenuFontGfx ; $532f
@@ -124,8 +121,7 @@ RunSavedDataMenuFlow:
 .transferOption2:
 	cp $02 ; $5345
 	jr nz, .equipmentMenu ; $5347
-	ld c, 16 ; $5349
-	call BeginFadeOut ; $534b
+	script_fade_out 16 ; $5349
 	call WaitFadeEnd ; $534e
 	farcall RunTrophiesScreen ; $5351
 	call DisableLCDSafely ; $5354
@@ -146,8 +142,7 @@ RunSavedDataMenuFlow:
 	ld [wMenuSlideDirection], a ; $537a
 	jp .transferMenu ; $537d
 .racketSelect:
-	ld c, 16 ; $5380
-	call BeginFadeOut ; $5382
+	script_fade_out 16 ; $5380
 	call WaitFadeEnd ; $5385
 	farcall RunRacketSelectScreen ; $5388
 	farcall ShowEquipmentStatusScreen ; $538b
@@ -161,8 +156,7 @@ RunSavedDataMenuFlow:
 	ld [wMenuSlideDirection], a ; $53a4
 	jp .equipmentMenu ; $53a7
 .shoesSelect:
-	ld c, 16 ; $53aa
-	call BeginFadeOut ; $53ac
+	script_fade_out 16 ; $53aa
 	call WaitFadeEnd ; $53af
 	farcall RunShoesSelectScreen ; $53b2
 	farcall ShowEquipmentStatusScreen ; $53b5
@@ -186,12 +180,10 @@ RunSavedDataMenuFlow:
 .savedDataOption:
 	or a ; $53e2
 	jr nz, .minigameData ; $53e3
-	ld c, 16 ; $53e5
-	call BeginFadeOut ; $53e7
+	script_fade_out 16 ; $53e5
 	call WaitFadeEnd ; $53ea
 	farcall RunMarioCastExhibResults ; $53ed
-	ld c, 16 ; $53f0
-	call BeginFadeOut ; $53f2
+	script_fade_out 16 ; $53f0
 	call WaitFadeEnd ; $53f5
 	call DisableLCDSafely ; $53f8
 	farcall LoadMenuFontGfx ; $53fb
@@ -202,12 +194,10 @@ RunSavedDataMenuFlow:
 	ld [wMenuSlideDirection], a ; $540b
 	jp .savedDataMenu ; $540e
 .minigameData:
-	ld c, 16 ; $5411
-	call BeginFadeOut ; $5413
+	script_fade_out 16 ; $5411
 	call WaitFadeEnd ; $5416
 	farcall ShowMinigameDataScreen ; $5419
-	ld c, 16 ; $541c
-	call BeginFadeOut ; $541e
+	script_fade_out 16 ; $541c
 	call WaitFadeEnd ; $5421
 	call DisableLCDSafely ; $5424
 	farcall LoadMenuFontGfx ; $5427
@@ -223,8 +213,7 @@ RunSavedDataMenuFlow:
 	jp z, RunSavedDataMenuFlow ; $5442
 	or a ; $5445
 	jr nz, .n64RecordOption1 ; $5446
-	ld c, 16 ; $5448
-	call BeginFadeOut ; $544a
+	script_fade_out 16 ; $5448
 	call WaitFadeEnd ; $544d
 	farcall RunN64TnmtData ; $5450
 	call DisableLCDSafely ; $5453
@@ -238,8 +227,7 @@ RunSavedDataMenuFlow:
 .n64RecordOption1:
 	cp $01 ; $546c
 	jr nz, .done ; $546e
-	ld c, 16 ; $5470
-	call BeginFadeOut ; $5472
+	script_fade_out 16 ; $5470
 	call WaitFadeEnd ; $5475
 	farcall RunN64ExhibDataAlias1 ; $5478
 	call DisableLCDSafely ; $547b
@@ -261,8 +249,7 @@ RunSavedDataMenuFlow:
 	ld [wMenuSlideDirection], a ; $54aa
 	jp .checkSavedData ; $54ad
 MatchSelectHandlersBHandler7:
-	ld c, 16 ; $54b0
-	call BeginFadeOut ; $54b2
+	script_fade_out 16 ; $54b0
 	call WaitFadeEnd ; $54b5
 	ld a, $06 ; $54b8
 	farcall TennisDictionaryScreen ; $54ba
@@ -302,8 +289,7 @@ EraseSavedDataFlowHandler0_10:
 	ld [wCurrentStorySlot], a ; $54f7
 	farcall CheckStorySlot ; $54fa
 	push bc ; $54fd
-	ld c, 16 ; $54fe
-	call BeginFadeOut ; $5500
+	script_fade_out 16 ; $54fe
 	call WaitFadeEnd ; $5503
 	farcall RunCharDataConfirmScreen ; $5506
 	pop bc ; $5509
@@ -328,8 +314,7 @@ EraseSavedDataFlowHandler0_10:
 	ld [wMenuSlideDirection], a ; $5533
 	jp RunEraseSavedDataFlow ; $5536
 EraseSavedDataFlowHandler3_10:
-	ld c, 16 ; $5539
-	call BeginFadeOut ; $553b
+	script_fade_out 16 ; $5539
 	call WaitFadeEnd ; $553e
 	ld b, $01 ; $5541
 	farcall RunEraseDataConfirmMenu ; $5543
@@ -346,8 +331,7 @@ EraseSavedDataFlowHandler3_10:
 	ld [wMenuSlideDirection], a ; $555f
 	jp RunEraseSavedDataFlow ; $5562
 EraseSavedDataFlowHandler4_10:
-	ld c, 16 ; $5565
-	call BeginFadeOut ; $5567
+	script_fade_out 16 ; $5565
 	call WaitFadeEnd ; $556a
 	ld b, $00 ; $556d
 	farcall RunEraseDataConfirmMenu ; $556f

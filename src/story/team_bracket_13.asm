@@ -123,8 +123,7 @@ ActorScript_13_26:
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ShowStoryTournamentBracket_13:
-	ld c, 8 ; $7ae0
-	call BeginFadeOut ; $7ae2
+	script_fade_out 8 ; $7ae0
 	call WaitFadeEnd ; $7ae5
 	xor a ; $7ae8
 	ldh [hBGColumnBlitPending], a ; $7ae9

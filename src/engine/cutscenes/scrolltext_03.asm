@@ -154,8 +154,7 @@ RunScrollingTextScreen:
 	jr nz, .loopB ; $5a95
 	jp .loop ; $5a97
 .maskSet:
-	ld c, 1 ; $5a9a
-	call BeginFadeOut ; $5a9c
+	script_fade_out 1 ; $5a9a
 	call WaitFadeEnd ; $5a9f
 	call ClearFrameTasks ; $5aa2
 	farcall LoadMenuFontGfx ; $5aa5

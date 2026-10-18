@@ -197,8 +197,7 @@ RunMatchWinLoseScreen:
 .playSfx2:
 	sound SFX_MENU_SELECT ; $451d
 	call ClearFrameTasks ; $451f
-	ld c, 64 ; $4522
-	call BeginFadeOut ; $4524
+	script_fade_out 64 ; $4522
 	call WaitFadeEnd ; $4527
 	ld hl, rIE ; $452a
 	res B_IE_STAT, [hl] ; $452d
@@ -208,8 +207,7 @@ RunMatchWinLoseScreen:
 	ld [wMatchWinLoseFlag], a ; $4537
 	ret ; $453a
 .bit4Set:
-	ld c, 64 ; $453b
-	call BeginFadeOut ; $453d
+	script_fade_out 64 ; $453b
 	call WaitFadeEnd ; $4540
 	ld hl, rIE ; $4543
 	res B_IE_STAT, [hl] ; $4546
@@ -222,8 +220,7 @@ RunMatchWinLoseScreen:
 	cp $ff ; $4556
 	jp nz, RunMatchWinLoseScreen ; $4558
 	call ClearFrameTasks ; $455b
-	ld c, 8 ; $455e
-	call BeginFadeOut ; $4560
+	script_fade_out 8 ; $455e
 	call WaitFadeEnd ; $4563
 	ld hl, rIE ; $4566
 	res B_IE_STAT, [hl] ; $4569

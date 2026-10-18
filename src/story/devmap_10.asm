@@ -89,8 +89,7 @@ DevelopmentExitTriggers_10:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_DEVELOPMENT, $01
 	db $ff
 DevelopmentRespawnActors_10:
-	ld c, 16 ; $4cff
-	call BeginFadeOut ; $4d01
+	script_fade_out 16 ; $4cff
 	call WaitFadeEnd ; $4d04
 	ldh a, [hRomBank] ; $4d07
 	ld hl, DevelopmentRespawnActorList_10 ; $4d09
@@ -117,8 +116,7 @@ Unused_10_DevelopmentMoveActorsAndExit:
 	ld [wStoryModeExitTriggerRequest], a ; $4d6c
 	ret ; $4d6f
 DevelopmentRespawnActorsAlt_10:
-	ld c, 16 ; $4d70
-	call BeginFadeOut ; $4d72
+	script_fade_out 16 ; $4d70
 	call WaitFadeEnd ; $4d75
 	ldh a, [hRomBank] ; $4d78
 	ld hl, DevelopmentActors_10 ; $4d7a
@@ -309,8 +307,7 @@ RunTitleAndMainMenuLoop:
 	ld [wMatchFormatGames], a ; $4f4f
 	ld [wMatchFormatSets], a ; $4f52
 	call EnableLCD ; $4f55
-	ld c, 127 ; $4f58
-	call BeginFadeOut ; $4f5a
+	script_fade_out 127 ; $4f58
 	call WaitFadeEnd ; $4f5d
 	call DisableLCDSafely ; $4f60
 	ld a, MENUSLIDE_FORWARD ; $4f63
@@ -419,8 +416,7 @@ MatchSelectHandlersBHandler0:
 .backToTitle:
 	ld a, $03 ; $5041
 	ld [wAnimatedTilePeriod], a ; $5043
-	ld c, 16 ; $5046
-	call BeginFadeOut ; $5048
+	script_fade_out 16 ; $5046
 	call WaitFadeEnd ; $504b
 	ld a, e ; $504e
 	ld [wCurrentStorySlot], a ; $504f
@@ -533,8 +529,7 @@ MatchSelectHandlersBHandler3:
 	farcall RunMatchFormatSelect ; $5149
 	cp $ff ; $514c
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $514e
-	ld c, 16 ; $5151
-	call BeginFadeOut ; $5153
+	script_fade_out 16 ; $5151
 	call WaitFadeEnd ; $5156
 .savedDataFlow:
 	ld a, [wMatchFormatDoubles] ; $5159

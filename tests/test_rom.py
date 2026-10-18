@@ -50,6 +50,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tscript_(?:set|player)_speed [^;\n]*\$[0-9a-f]{4}"), 0)
         self.assertEqual(count(r"^\tscript_move_angle [^;\n]*\$[0-9a-f]{4}"), 0)
         self.assertEqual(count(r"^\tscript_fade_in \$"), 0)
+        self.assertEqual(count(r"^\tscript_fade_out \$"), 0)
         # frame counts are decimal
         self.assertEqual(count(r"^\t(?:wait_frames|script_wait_frames|script_delay|as_wait) \$"), 0)
         # VRAM copies of whole tilemap rows count rows

@@ -346,8 +346,7 @@ TournamentSiteArrivalScene:
 	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, FACE_UP, 10.0 ; $4693
 	script_move_angle ACTOR_PLAYER, FACE_UP, 10.0 ; $469d
 	script_wait_frames 30 ; $46a7
-	ld c, 8 ; $46ae
-	call BeginFadeOut ; $46b0
+	script_fade_out 8 ; $46ae
 	call WaitFadeEnd ; $46b3
 	ret ; $46b6
 SetupTournamentSitePartnerActor:

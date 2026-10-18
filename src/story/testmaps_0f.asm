@@ -650,8 +650,7 @@ AwardsCeremonyTile02_0f:
 	farcall WaitPlayerMoveDone ; $4e79
 	ld a, 180 ; $4e7c
 	call DelayFrames ; $4e7e
-	ld c, 1 ; $4e81
-	call BeginFadeOut ; $4e83
+	script_fade_out 1 ; $4e81
 	call WaitFadeEnd ; $4e86
 	ld b, $01 ; $4e89
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4e8b
@@ -935,8 +934,7 @@ AwardsCeremonyTile02_0f:
 	farcall WaitPlayerMoveDone ; $554c
 	ld a, 180 ; $554f
 	call DelayFrames ; $5551
-	ld c, 1 ; $5554
-	call BeginFadeOut ; $5556
+	script_fade_out 1 ; $5554
 	call WaitFadeEnd ; $5559
 	ld b, $01 ; $555c
 	ld a, [wStoryModeGenderOfMainCharacter] ; $555e

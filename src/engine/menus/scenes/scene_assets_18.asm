@@ -320,8 +320,7 @@ RunStorySceneByMode:
 	ret ; $7631
 FadeOutAndResetScreen:
 	call EnableLCD ; $7632
-	ld c, 16 ; $7635
-	call BeginFadeOut ; $7637
+	script_fade_out 16 ; $7635
 	call WaitFadeEnd ; $763a
 	call DisableLCDSafely ; $763d
 	call ClearFrameTasks ; $7640
@@ -350,8 +349,7 @@ Unused_18_DebugScreenAssetViewer:
 .loadScreen:
 	ld c, [hl] ; $7668
 	push bc ; $7669
-	ld c, 16 ; $766a
-	call BeginFadeOut ; $766c
+	script_fade_out 16 ; $766a
 	call WaitFadeEnd ; $766f
 	call DisableLCDSafely ; $7672
 	pop bc ; $7675
@@ -405,8 +403,7 @@ PlayScreenSequence0:
 	ldh a, [hInputPressed] ; $76ef
 	and PADF_A | PADF_B ; $76f1
 	jr z, .waitInput ; $76f3
-	ld c, 16 ; $76f5
-	call BeginFadeOut ; $76f7
+	script_fade_out 16 ; $76f5
 	call WaitFadeEnd ; $76fa
 	call DisableLCDSafely ; $76fd
 	call FillAllBgPalettes ; $7700

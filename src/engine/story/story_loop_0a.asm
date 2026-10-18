@@ -200,8 +200,7 @@ RunStoryLocation:
 	push bc ; $4f41
 	push de ; $4f42
 	push hl ; $4f43
-	ld c, 12 ; $4f44
-	call BeginFadeOut ; $4f46
+	script_fade_out 12 ; $4f44
 	call ClearTemporaryStoryFlags ; $4f49
 	call ClearStoryEventRequests ; $4f4c
 	call LoadStoryLocationHeader ; $4f4f

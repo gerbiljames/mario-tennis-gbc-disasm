@@ -399,8 +399,7 @@ IslandSkyInitScript_14:
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $54bc
 	jr z, .setLocation ; $54bf
 .transition:
-	ld c, 4 ; $54c1
-	call BeginFadeOut ; $54c3
+	script_fade_out 4 ; $54c1
 	call WaitFadeEnd ; $54c6
 	call ClearFrameTasks ; $54c9
 	ld a, STORYLOC_TOURNAMENT_COURTYARD ; $54cc
@@ -476,8 +475,7 @@ IslandSkyInitScript_14:
 	script_move_target ACTOR_PLAYER, 11.0, 39.0 ; $5603
 	script_wait_move ACTOR_PLAYER ; $560e
 	script_set_active ACTOR_PLAYER, $00 ; $5613
-	ld c, 4 ; $561a
-	call BeginFadeOut ; $561c
+	script_fade_out 4 ; $561a
 	call WaitFadeEnd ; $561f
 	call WaitFadeEnd ; $5622
 	call ClearFrameTasks ; $5625

@@ -24,8 +24,7 @@ PlayScreenSequence1:
 	ld [wScreenSequenceTimer], a ; $77f5
 	cp $af ; $77f8
 	jr nz, .scrollLoop ; $77fa
-	ld c, 1 ; $77fc
-	call BeginFadeOut ; $77fe
+	script_fade_out 1 ; $77fc
 	call WaitFadeEnd ; $7801
 	call ClearFrameTasks ; $7804
 	call DisableLCDSafely ; $7807
@@ -158,8 +157,7 @@ PlayScreenSequence2:
 	ldh a, [hInputPressed] ; $795b
 	and PADF_A | PADF_B ; $795d
 	jr z, .scene1 ; $795f
-	ld c, 2 ; $7961
-	call BeginFadeOut ; $7963
+	script_fade_out 2 ; $7961
 	call WaitFadeEnd ; $7966
 	ld_flag_id de, FLAG_DOUBLES ; $7969
 	call TestGameFlag ; $796c

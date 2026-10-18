@@ -145,8 +145,7 @@ Unused_1a_ShowExpGainScreen:
 	ldh a, [hWramBank] ; $44e2
 	push af ; $44e4
 	push hl ; $44e5
-	ld c, 16 ; $44e6
-	call BeginFadeOut ; $44e8
+	script_fade_out 16 ; $44e6
 	call WaitFadeEnd ; $44eb
 	call ClearFrameTasks ; $44ee
 	farcall InitTextWindows ; $44f1
@@ -429,8 +428,7 @@ Unused_1a_ShowExpGainScreen:
 	or a ; $4706
 	jr z, .finalWaitLoop ; $4707
 .fadeOut:
-	ld c, 16 ; $4709
-	call BeginFadeOut ; $470b
+	script_fade_out 16 ; $4709
 	call WaitFadeEnd ; $470e
 	ld hl, Unused_1a_ExpScreenDrawTask ; $4711
 	call UnregisterFrameTask ; $4714

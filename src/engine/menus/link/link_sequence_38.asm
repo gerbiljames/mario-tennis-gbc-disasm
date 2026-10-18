@@ -214,8 +214,7 @@ RunLinkMatchSequence:
 	farcall RunLinkMatchRulesMenu ; $740b
 	cp $ff ; $740e
 	jp z, .done ; $7410
-	ld c, 16 ; $7413
-	call BeginFadeOut ; $7415
+	script_fade_out 16 ; $7413
 	call WaitFadeEnd ; $7418
 .startMatch:
 	push_wram_bank WRAM_SCREEN ; $741b
@@ -274,8 +273,7 @@ RunLinkMatchSequence:
 	ld d, a ; $74a4
 	ld a, d ; $74a5
 	ld [wCurrentlyUsedCourt], a ; $74a6
-	ld c, 16 ; $74a9
-	call BeginFadeOut ; $74ab
+	script_fade_out 16 ; $74a9
 	call WaitFadeEnd ; $74ae
 	ld a, CHAR_NINA ; $74b1
 	ld [wMatchPlayerChar], a ; $74b3

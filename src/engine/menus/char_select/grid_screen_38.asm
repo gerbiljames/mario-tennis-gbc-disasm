@@ -238,8 +238,7 @@ RunExhibitionCharSelectScreen:
 	jr z, .done ; $4f11
 	jr .frameLoop ; $4f13
 .finish:
-	ld c, 8 ; $4f15
-	call BeginFadeOut ; $4f17
+	script_fade_out 8 ; $4f15
 	call WaitFadeEnd ; $4f1a
 	call ResolveSelectedCharIds ; $4f1d
 	call InitMatchCharsFromSelection ; $4f20
@@ -253,8 +252,7 @@ RunExhibitionCharSelectScreen:
 	ret ; $4f35
 .done:
 	sound SFX_MENU_CANCEL ; $4f36
-	ld c, 16 ; $4f38
-	call BeginFadeOut ; $4f3a
+	script_fade_out 16 ; $4f38
 	call WaitFadeEnd ; $4f3d
 	call ClearFrameTasks ; $4f40
 	ld hl, rIE ; $4f43

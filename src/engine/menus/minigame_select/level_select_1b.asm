@@ -88,8 +88,7 @@ Unused_1b_QueueBobbingFlagSprite:
 	ret ; $6981
 Unused_1b_RunStoryDataConfirmMenu:
 	wram_bank WRAM_STAGING ; $6982
-	ld c, 32 ; $6988
-	call BeginFadeOut ; $698a
+	script_fade_out 32 ; $6988
 	call WaitFadeEnd ; $698d
 	call DisableLCDSafely ; $6990
 	xor a ; $6993
@@ -131,8 +130,7 @@ Unused_1b_ShowHighScoreConfirmScreen:
 	ld hl, wMinigameHighScoreMode ; $69d9
 	ld [hl], $01 ; $69dc
 	wram_bank WRAM_STAGING ; $69de
-	ld c, 32 ; $69e4
-	call BeginFadeOut ; $69e6
+	script_fade_out 32 ; $69e4
 	call WaitFadeEnd ; $69e9
 	call DisableLCDSafely ; $69ec
 	farcall Unused_18_InitConfirmScreen ; $69ef
@@ -259,8 +257,7 @@ Unused_1b_CopyMainCharNameWithDiacritics:
 	ret ; $6add
 Unused_1b_ShowNoN64DataFoundScreen:
 	wram_bank WRAM_STAGING ; $6ade
-	ld c, 32 ; $6ae4
-	call BeginFadeOut ; $6ae6
+	script_fade_out 32 ; $6ae4
 	call WaitFadeEnd ; $6ae9
 	call DisableLCDSafely ; $6aec
 	ld a, $20 ; $6aef
@@ -325,8 +322,7 @@ Unused_1b_FillTilemapRow17:
 	ret ; $6b6e
 Unused_1b_ShowTrophiesPlaceholderScreen:
 	wram_bank WRAM_STAGING ; $6b6f
-	ld c, 32 ; $6b75
-	call BeginFadeOut ; $6b77
+	script_fade_out 32 ; $6b75
 	call WaitFadeEnd ; $6b7a
 	call DisableLCDSafely ; $6b7d
 	farcall Unused_18_ForceFlushBgMapToVram ; $6b80

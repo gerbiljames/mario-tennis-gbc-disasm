@@ -7,8 +7,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld [wCurrentStorySlot], a ; $4fb3
 	farcall InitTextWindows ; $4fb6
 	call EnableLCD ; $4fb9
-	ld c, 127 ; $4fbc
-	call BeginFadeOut ; $4fbe
+	script_fade_out 127 ; $4fbc
 	script_fade_in 127 ; $4fc1
 	farcall InitStoryModeState ; $4fc6
 	ld d, $00 ; $4fc9

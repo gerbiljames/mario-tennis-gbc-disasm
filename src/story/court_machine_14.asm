@@ -31,8 +31,7 @@ MachinePracticeLevelPrompt:
 	script_wait_move ACTOR_PLAYER ; $4658
 	script_move_target ACTOR_PLAYER, 53.0, 53.0 ; $465d
 	script_wait_move ACTOR_PLAYER ; $4668
-	ld c, 8 ; $466d
-	call BeginFadeOut ; $466f
+	script_fade_out 8 ; $466d
 	call WaitFadeEnd ; $4672
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4675
 	ld [wStoryModeCurrentLocation], a ; $4677

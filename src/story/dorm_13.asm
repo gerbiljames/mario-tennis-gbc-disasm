@@ -161,8 +161,7 @@ DormRoomTile0F_13:
 	ld a, $ff ; $4fbb
 	ld [wUnusedExitTriggerIdMirror], a ; $4fbd
 	ld [wStoryModeExitTriggerRequest], a ; $4fc0
-	ld c, 4 ; $4fc3
-	call BeginFadeOut ; $4fc5
+	script_fade_out 4 ; $4fc3
 	script_wait_frames 20 ; $4fc8
 	ret ; $4fcf
 .advanceText:
@@ -185,8 +184,7 @@ DormRoomTile0F_13:
 	ld a, $ff ; $5015
 	ld [wUnusedExitTriggerIdMirror], a ; $5017
 	ld [wStoryModeExitTriggerRequest], a ; $501a
-	ld c, 4 ; $501d
-	call BeginFadeOut ; $501f
+	script_fade_out 4 ; $501d
 	script_wait_frames 20 ; $5022
 	ret ; $5029
 DormRoomInitScript_13:
@@ -685,8 +683,7 @@ DormRoomEntry02Scene:
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $5665
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $566c
 	call WaitJingleEnd ; $5671
-	ld c, 4 ; $5674
-	call BeginFadeOut ; $5676
+	script_fade_out 4 ; $5674
 	call WaitFadeEnd ; $5679
 	ld a, $02 ; $567c
 	ld [wUnusedExitTriggerIdMirror], a ; $567e

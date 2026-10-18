@@ -252,6 +252,13 @@ MACRO script_fade_in
 	call BeginFadeIn
 ENDM
 
+; Start a screen fade-out (BeginFadeOut; does nothing if already faded out).
+; Usage: script_fade_out speed
+MACRO script_fade_out
+	ld c, \1
+	call BeginFadeOut
+ENDM
+
 ; Set actor `actor`'s script to `script`, a code pointer in the current bank
 ; (bank taken from hRomBank).
 ; Usage: script_set_actor_script actor, script

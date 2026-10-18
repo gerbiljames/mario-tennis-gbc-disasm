@@ -440,8 +440,7 @@ MachineCourtStartLevelScene:
 	script_set_text Text_6e_204 ; $456c
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4572
 .lt04:
-	ld c, 6 ; $4577
-	call BeginFadeOut ; $4579
+	script_fade_out 6 ; $4577
 	call WaitFadeEnd ; $457c
 	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $457f
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4582

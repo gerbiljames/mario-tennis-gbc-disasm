@@ -50,8 +50,7 @@ RunEraseDataConfirmMenu:
 	ld hl, rIE ; $4c88
 	set B_IE_TIMER, [hl] ; $4c8b
 	call ClearFrameTasks ; $4c8d
-	ld c, 16 ; $4c90
-	call BeginFadeOut ; $4c92
+	script_fade_out 16 ; $4c90
 	call WaitFadeEnd ; $4c95
 	ld a, $01 ; $4c98
 	ret ; $4c9a
@@ -60,8 +59,7 @@ RunEraseDataConfirmMenu:
 	ld hl, rIE ; $4c9d
 	set B_IE_TIMER, [hl] ; $4ca0
 	call ClearFrameTasks ; $4ca2
-	ld c, 16 ; $4ca5
-	call BeginFadeOut ; $4ca7
+	script_fade_out 16 ; $4ca5
 	call WaitFadeEnd ; $4caa
 	xor a ; $4cad
 	ret ; $4cae

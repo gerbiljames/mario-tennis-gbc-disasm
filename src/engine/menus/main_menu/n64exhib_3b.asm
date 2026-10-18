@@ -393,15 +393,13 @@ RunTrophiesScreen:
 	call CheckTrophiesCheatCode ; $49c3
 .playSfx:
 	sound SFX_MENU_SELECT ; $49c6
-	ld c, 16 ; $49c8
-	call BeginFadeOut ; $49ca
+	script_fade_out 16 ; $49c8
 	call WaitFadeEnd ; $49cd
 	call ClearFrameTasks ; $49d0
 	ret ; $49d3
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $49d4
-	ld c, 16 ; $49d6
-	call BeginFadeOut ; $49d8
+	script_fade_out 16 ; $49d6
 	call WaitFadeEnd ; $49db
 	call ClearFrameTasks ; $49de
 	ld a, $ff ; $49e1

@@ -81,8 +81,7 @@ RunTrainingDrillByID:
 .showSpeakerDialogue:
 	ld a, $80 ; $479a
 	farcall ShowSpeakerDialogue ; $479c
-	ld c, 16 ; $479f
-	call BeginFadeOut ; $47a1
+	script_fade_out 16 ; $479f
 	call WaitFadeEnd ; $47a4
 .finish:
 	clear_flag FLAG_DRILL_FROM_MENU ; $47a7

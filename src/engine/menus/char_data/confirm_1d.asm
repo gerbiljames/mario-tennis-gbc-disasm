@@ -184,8 +184,7 @@ PromptCharDataConfirm:
 	ld [wCharDataConfirmState], a ; $5add
 	sound SFX_MENU_CANCEL ; $5ae0
 .beginFadeOut:
-	ld c, 16 ; $5ae2
-	call BeginFadeOut ; $5ae4
+	script_fade_out 16 ; $5ae2
 	call WaitFadeEnd ; $5ae7
 	farcall StopCharDataScreenAnimTask ; $5aea
 	call ClearFrameTasks ; $5aed

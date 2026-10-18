@@ -116,8 +116,7 @@ TennisDictionaryScreen:
 	cp $01 ; $417b
 	jp nz, .loop ; $417d
 	push af ; $4180
-	ld c, 16 ; $4181
-	call BeginFadeOut ; $4183
+	script_fade_out 16 ; $4181
 	call WaitFadeEnd ; $4186
 	pop af ; $4189
 	call ResetTennisDictionaryScroll ; $418a
@@ -125,8 +124,7 @@ TennisDictionaryScreen:
 	call UnregisterFrameTask ; $4190
 	ret ; $4193
 ShowTennisDictionaryPageDefault:
-	ld c, 16 ; $4194
-	call BeginFadeOut ; $4196
+	script_fade_out 16 ; $4194
 	call WaitFadeEnd ; $4199
 	ld a, $0d ; $419c
 	ld [wCameraX + 1], a ; $419e
@@ -154,8 +152,7 @@ ShowTennisDictionaryPageDefault:
 	ld a, $08 ; $41dd
 	ret ; $41df
 ShowTennisDictionaryPageChar6:
-	ld c, 16 ; $41e0
-	call BeginFadeOut ; $41e2
+	script_fade_out 16 ; $41e0
 	call WaitFadeEnd ; $41e5
 	ld a, $21 ; $41e8
 	ld [wCameraX + 1], a ; $41ea

@@ -88,8 +88,7 @@ PlayStarWarpTransition:
 	pop_wram_bank ; $71dc
 	ret ; $71e1
 .startFade:
-	ld c, 3 ; $71e2
-	call BeginFadeOut ; $71e4
+	script_fade_out 3 ; $71e2
 	jr .waitLoop ; $71e7
 UpdateStarWarpSprite:
 	wram_bank WRAM_SCENE ; $71e9

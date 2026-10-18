@@ -380,8 +380,7 @@ TrainingCourtIntroTourScene:
 	script_wait_move ACTOR_PLAYER ; $5c20
 	script_move_target ACTOR_PLAYER, 3.0, 55.0 ; $5c25
 	script_wait_frames 90 ; $5c30
-	ld c, 8 ; $5c37
-	call BeginFadeOut ; $5c39
+	script_fade_out 8 ; $5c37
 	script_wait_frames 20 ; $5c3c
 	ld a, $0f ; $5c43
 	ld [wUnusedExitTriggerIdMirror], a ; $5c45

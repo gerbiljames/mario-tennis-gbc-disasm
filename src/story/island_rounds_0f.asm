@@ -136,8 +136,7 @@ IslandOpenRoundCallCutscene:
 	farcall WaitPlayerMoveDone ; $71b5
 	script_wait_frames 60 ; $71b8
 .startMatch:
-	ld c, 16 ; $71bf
-	call BeginFadeOut ; $71c1
+	script_fade_out 16 ; $71bf
 	call WaitFadeEnd ; $71c4
 	call ShowTournamentRankingBoard_0f ; $71c7
 	ld a, STORYLOC_TOURNAMENT ; $71ca
@@ -210,8 +209,7 @@ IslandOpenRoundCallCutscene:
 	farcall WaitPlayerMoveDone ; $7355
 	script_wait_frames 60 ; $7358
 .walkOff:
-	ld c, 16 ; $735f
-	call BeginFadeOut ; $7361
+	script_fade_out 16 ; $735f
 	call WaitFadeEnd ; $7364
 	call ShowTournamentRankingBoard_0f ; $7367
 	ld a, STORYLOC_TOURNAMENT ; $736a

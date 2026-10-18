@@ -72,8 +72,7 @@ SeniorCourtExit01_12:
 	clear_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5591
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, 2.0 ; $5594
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, 2.0 ; $559e
-	ld c, 16 ; $55a8
-	call BeginFadeOut ; $55aa
+	script_fade_out 16 ; $55a8
 	script_wait_frames 30 ; $55ad
 	ret ; $55b4
 .loop:

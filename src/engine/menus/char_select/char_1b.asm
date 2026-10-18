@@ -142,8 +142,7 @@ Unused_1b_RunCharSelectLoop:
 	farcall Unused_1b_UpdateCharSelectSelection ; $60d8
 	ld a, [wCharSelectChar] ; $60db
 	ld [wCharSelectPrevChar], a ; $60de
-	ld c, 32 ; $60e1
-	call BeginFadeOut ; $60e3
+	script_fade_out 32 ; $60e1
 	call WaitFadeEnd ; $60e6
 	call DisableLCDSafely ; $60e9
 	call Unused_1b_LoadCharSelectScreenGfx ; $60ec
@@ -417,8 +416,7 @@ RunNewGameSetup:
 	call CopyMemoryFast ; $62eb
 	xor a ; $62ee
 .beginFadeOut:
-	ld c, 32 ; $62ef
-	call BeginFadeOut ; $62f1
+	script_fade_out 32 ; $62ef
 	call WaitFadeEnd ; $62f4
 	ret ; $62f7
 Unused_1b_RunDebugSaveDataFlow:

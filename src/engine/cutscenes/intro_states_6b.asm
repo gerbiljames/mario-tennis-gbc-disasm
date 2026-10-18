@@ -13,8 +13,7 @@ RunIntroCutscene:
 	ld hl, CheckIntroSkipInput ; $4045
 	call RegisterFrameTask ; $4048
 	call DispatchCutsceneStateInit ; $404b
-	ld c, 127 ; $404e
-	call BeginFadeOut ; $4050
+	script_fade_out 127 ; $404e
 	call WaitFadeEnd ; $4053
 	call ClearFrameTasks ; $4056
 	ld hl, rIE ; $4059
@@ -266,8 +265,7 @@ IntroCutsceneState00Init_6b:
 	call WaitFadeEnd ; $41cd
 	jp DispatchCutsceneStateInit.loop ; $41d0
 IntroCutsceneState00Exit_6b:
-	ld c, 10 ; $41d3
-	call BeginFadeOut ; $41d5
+	script_fade_out 10 ; $41d3
 	call WaitFadeEnd ; $41d8
 	call ClearFrameTasks ; $41db
 	ld a, $01 ; $41de
@@ -384,8 +382,7 @@ IntroCutsceneState02Init_6b:
 IntroCutsceneState02InitPalette_6b:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState02InitPalette_6b.asm" ; $436f, 64 bytes (palettes)
 IntroCutsceneState02Exit_6b:
-	ld c, 6 ; $43af
-	call BeginFadeOut ; $43b1
+	script_fade_out 6 ; $43af
 	call WaitFadeEnd ; $43b4
 	xor a ; $43b7
 	ld [wCutsceneStepTimer], a ; $43b8
@@ -491,8 +488,7 @@ IntroCutsceneState04Init_6b:
 IntroCutsceneState04InitPalettes:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState04InitPalettes.asm" ; $44d0, 64 bytes (palettes)
 IntroCutsceneState04Exit_6b:
-	ld c, 6 ; $4510
-	call BeginFadeOut ; $4512
+	script_fade_out 6 ; $4510
 	call WaitFadeEnd ; $4515
 	xor a ; $4518
 	ld [wCutsceneStepTimer], a ; $4519
@@ -604,8 +600,7 @@ IntroCutsceneState06Init_6b:
 	ld [wCutsceneStepTimer], a ; $463e
 	jp DispatchCutsceneStateInit.loop ; $4641
 IntroCutsceneState06Exit_6b:
-	ld c, 16 ; $4644
-	call BeginFadeOut ; $4646
+	script_fade_out 16 ; $4644
 	call WaitFadeEnd ; $4649
 	jp DispatchCutsceneStateInit.loop2 ; $464c
 IntroCutsceneState06Update_6b:
@@ -703,8 +698,7 @@ IntroCutsceneState13Init_6b:
 	pop_wram_bank ; $4731
 	jp DispatchCutsceneStateInit.loop ; $4736
 IntroCutsceneState13Exit_6b:
-	ld c, 16 ; $4739
-	call BeginFadeOut ; $473b
+	script_fade_out 16 ; $4739
 	call WaitFadeEnd ; $473e
 	call DisableLCDSafely ; $4741
 	xor a ; $4744
@@ -736,8 +730,7 @@ IntroCutsceneState08Init_6b:
 	call WaitFadeEnd ; $47be
 	jp DispatchCutsceneStateInit.loop ; $47c1
 IntroCutsceneState08Exit_6b:
-	ld c, 10 ; $47c4
-	call BeginFadeOut ; $47c6
+	script_fade_out 10 ; $47c4
 	call WaitFadeEnd ; $47c9
 	ld hl, ScrollCutsceneXRightTask ; $47cc
 	call UnregisterFrameTask ; $47cf
@@ -769,8 +762,7 @@ IntroCutsceneState09Init_6b:
 	call WaitFadeEnd ; $480d
 	jp DispatchCutsceneStateInit.loop ; $4810
 IntroCutsceneState09Exit_6b:
-	ld c, 10 ; $4813
-	call BeginFadeOut ; $4815
+	script_fade_out 10 ; $4813
 	call WaitFadeEnd ; $4818
 	ld hl, ScrollCutsceneXLeftTask ; $481b
 	call UnregisterFrameTask ; $481e
@@ -802,8 +794,7 @@ IntroCutsceneState10Init_6b:
 	call WaitFadeEnd ; $485c
 	jp DispatchCutsceneStateInit.loop ; $485f
 IntroCutsceneState10Exit_6b:
-	ld c, 10 ; $4862
-	call BeginFadeOut ; $4864
+	script_fade_out 10 ; $4862
 	call WaitFadeEnd ; $4867
 	ld hl, ScrollCutsceneLeftTask ; $486a
 	call UnregisterFrameTask ; $486d
@@ -883,8 +874,7 @@ Unused_6b_IntroCutsceneState12Init:
 	ld [hl], d ; $491b
 	jp DispatchCutsceneStateInit.loop ; $491c
 Unused_6b_IntroCutsceneState12Exit:
-	ld c, 4 ; $491f
-	call BeginFadeOut ; $4921
+	script_fade_out 4 ; $491f
 	call WaitFadeEnd ; $4924
 	jp DispatchCutsceneStateInit.loop2 ; $4927
 Unused_6b_IntroCutsceneState12Update:

@@ -182,15 +182,13 @@ ShowMinigameDataScreen:
 	jr .loop ; $7429
 .playSfx:
 	sound SFX_MENU_SELECT ; $742b
-	ld c, 16 ; $742d
-	call BeginFadeOut ; $742f
+	script_fade_out 16 ; $742d
 	call WaitFadeEnd ; $7432
 	call ClearFrameTasks ; $7435
 	ret ; $7438
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $7439
-	ld c, 16 ; $743b
-	call BeginFadeOut ; $743d
+	script_fade_out 16 ; $743b
 	call WaitFadeEnd ; $7440
 	call ClearFrameTasks ; $7443
 	ld a, $ff ; $7446

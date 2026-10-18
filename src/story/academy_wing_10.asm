@@ -606,8 +606,7 @@ AcademyWingInitScript_10:
 	script_wait_idle ACTOR_PLAYER ; $6f13
 	script_set_text Text_30_492 ; $6f18
 	script_speak ACTOR_ACADEMY_WING_INIT0_WALK_75_06 ; $6f1e
-	ld c, 4 ; $6f23
-	call BeginFadeOut ; $6f25
+	script_fade_out 4 ; $6f23
 	call WaitFadeEnd ; $6f28
 	script_wait_frames 50 ; $6f2b
 	ld a, STORYLOC_DORM_ROOM ; $6f32
@@ -788,8 +787,7 @@ AcademyWingEntry0fScene:
 .academyWingCloseDoor2:
 	call AcademyWingCloseDoor_10 ; $7314
 	script_wait_frames 60 ; $7317
-	ld c, 2 ; $731e
-	call BeginFadeOut ; $7320
+	script_fade_out 2 ; $731e
 	call WaitFadeEnd ; $7323
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7326
 	ld [wStoryModeCurrentLocation], a ; $7328

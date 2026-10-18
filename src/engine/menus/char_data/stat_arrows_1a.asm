@@ -173,8 +173,7 @@ RunCharDataConfirmScreen:
 	ld [wCharDataConfirmState], a ; $7a00
 	sound SFX_MENU_CANCEL ; $7a03
 .beginFadeOut:
-	ld c, 16 ; $7a05
-	call BeginFadeOut ; $7a07
+	script_fade_out 16 ; $7a05
 	call WaitFadeEnd ; $7a0a
 	farcall StopCharDataValuesSyncTask ; $7a0d
 	farcall StopCharDataScreenAnimTask ; $7a10

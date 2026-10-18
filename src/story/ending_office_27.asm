@@ -289,8 +289,7 @@ End12PrincipalsOfficeInitScript_27:
 	call ClosePrincipalsOfficeDoor_27 ; $514f
 	script_delay 60 ; $5152
 	set_flag FLAG_ENDING_CREDITS_PENDING ; $5157
-	ld c, 4 ; $515a
-	call BeginFadeOut ; $515c
+	script_fade_out 4 ; $515a
 	call WaitFadeEnd ; $515f
 	ld a, $01 ; $5162
 	ld [wUnusedExitTriggerIdMirror], a ; $5164

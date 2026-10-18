@@ -65,8 +65,7 @@ RunRacketSelectScreen:
 	jr .loop ; $54f2
 .ge14:
 	push af ; $54f4
-	ld c, 16 ; $54f5
-	call BeginFadeOut ; $54f7
+	script_fade_out 16 ; $54f5
 	call WaitFadeEnd ; $54fa
 	call ClearFrameTasks ; $54fd
 	pop af ; $5500
@@ -267,8 +266,7 @@ RunShoesSelectScreen:
 	jr .loop ; $567a
 .ge14:
 	push af ; $567c
-	ld c, 16 ; $567d
-	call BeginFadeOut ; $567f
+	script_fade_out 16 ; $567d
 	call WaitFadeEnd ; $5682
 	call ClearFrameTasks ; $5685
 	pop af ; $5688

@@ -78,8 +78,7 @@ NetCoachVolleyLessonScene:
 	ld a, $ff ; $7054
 	ld [wUnusedExitTriggerIdMirror], a ; $7056
 	ld [wStoryModeExitTriggerRequest], a ; $7059
-	ld c, 16 ; $705c
-	call BeginFadeOut ; $705e
+	script_fade_out 16 ; $705c
 	call WaitFadeEnd ; $7061
 	farcall ShowDrillBriefingScreen ; $7064
 	ret ; $7067
@@ -129,8 +128,7 @@ NetCoachSmashLessonScene:
 	ld a, $ff ; $7109
 	ld [wUnusedExitTriggerIdMirror], a ; $710b
 	ld [wStoryModeExitTriggerRequest], a ; $710e
-	ld c, 16 ; $7111
-	call BeginFadeOut ; $7113
+	script_fade_out 16 ; $7111
 	call WaitFadeEnd ; $7116
 	farcall ShowDrillBriefingScreen ; $7119
 	ret ; $711c
@@ -174,8 +172,7 @@ NetCoachDropShotLessonScene:
 	ld a, $ff ; $71aa
 	ld [wUnusedExitTriggerIdMirror], a ; $71ac
 	ld [wStoryModeExitTriggerRequest], a ; $71af
-	ld c, 16 ; $71b2
-	call BeginFadeOut ; $71b4
+	script_fade_out 16 ; $71b2
 	call WaitFadeEnd ; $71b7
 	farcall ShowDrillBriefingScreen ; $71ba
 	ret ; $71bd

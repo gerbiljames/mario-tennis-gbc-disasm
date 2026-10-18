@@ -116,8 +116,7 @@ WaterSpriteRacketRewardScene:
 	ld [wEquippedRacket], a ; $4efb
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4efe
 	script_wait_frames 10 ; $4f03
-	ld c, 3 ; $4f0a
-	call BeginFadeOut ; $4f0c
+	script_fade_out 3 ; $4f0a
 	call WaitFadeEnd ; $4f0f
 	sound SFX_WATER_SPRITE_APPEAR ; $4f12
 	script_set_position ACTOR_TRAINING_COURT_RACKET, 51.0, 9.0 ; $4f14

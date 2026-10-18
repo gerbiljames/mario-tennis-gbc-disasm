@@ -171,14 +171,12 @@ RunMatchStatsScreen:
 	call AdvanceFrame ; $5c70
 	jr .loop ; $5c73
 .beginFadeOut:
-	ld c, 64 ; $5c75
-	call BeginFadeOut ; $5c77
+	script_fade_out 64 ; $5c75
 	call WaitFadeEnd ; $5c7a
 	xor a ; $5c7d
 	ret ; $5c7e
 .beginFadeOut2:
-	ld c, 32 ; $5c7f
-	call BeginFadeOut ; $5c81
+	script_fade_out 32 ; $5c7f
 	call WaitFadeEnd ; $5c84
 	ld a, $ff ; $5c87
 	ret ; $5c89

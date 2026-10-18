@@ -262,8 +262,7 @@ RunNameEntryScreen:
 	jr .redraw ; $6ecc
 .cancel:
 	sound SFX_MENU_CANCEL ; $6ece
-	ld c, 16 ; $6ed0
-	call BeginFadeOut ; $6ed2
+	script_fade_out 16 ; $6ed0
 	call WaitFadeEnd ; $6ed5
 	call ClearFrameTasks ; $6ed8
 	ld hl, rIE ; $6edb
@@ -287,8 +286,7 @@ RunNameEntryScreen:
 	ld bc, wNameEntryBuffer_SIZE ; $6f0b
 	call CopyMemoryBC ; $6f0e
 	sound SFX_MENU_SELECT ; $6f11
-	ld c, 16 ; $6f13
-	call BeginFadeOut ; $6f15
+	script_fade_out 16 ; $6f13
 	call WaitFadeEnd ; $6f18
 	call ClearFrameTasks ; $6f1b
 	ld hl, rIE ; $6f1e
@@ -316,8 +314,7 @@ RunNameEntryScreen:
 	call QueueVRAMCopy ; $6f53
 	call AdvanceFrame ; $6f56
 	sound SFX_MENU_SELECT ; $6f59
-	ld c, 16 ; $6f5b
-	call BeginFadeOut ; $6f5d
+	script_fade_out 16 ; $6f5b
 	call WaitFadeEnd ; $6f60
 	call ClearFrameTasks ; $6f63
 	ld hl, rIE ; $6f66

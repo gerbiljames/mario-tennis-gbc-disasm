@@ -51,8 +51,7 @@ DormEntranceTile01_12:
 	script_player_speed 0.5 ; $4136
 	script_move_player 22.0, 8.0 ; $413c
 	script_wait_frames 15 ; $4146
-	ld c, 4 ; $414d
-	call BeginFadeOut ; $414f
+	script_fade_out 4 ; $414d
 	farcall WaitPlayerMoveDone ; $4152
 	call WaitFadeEnd ; $4155
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4158
@@ -267,8 +266,7 @@ DormEntranceEntry0fScene:
 	farcall EraseStorySlotSaveData ; $4663
 	farcall SaveStorySlotWithTimer ; $4666
 	sound BGM_NONE ; $4669
-	ld c, 4 ; $466b
-	call BeginFadeOut ; $466d
+	script_fade_out 4 ; $466b
 	call WaitFadeEnd ; $4670
 	ld a, $0f ; $4673
 	ld [wUnusedExitTriggerIdMirror], a ; $4675
