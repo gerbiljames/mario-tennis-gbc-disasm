@@ -19,7 +19,8 @@ ApSkipIntro:
 	ret
 
 ; Island Open: exit $02, Mario World: exit $03 (Peach's Castle); B walks the
-; player back off the gate cell (a 2x2 cell: two tiles north)
+; player back off the gate cell (a 2x2 cell: two tiles north), then hands
+; them back to the controls
 ApFrontGateTile_11:
 	apcall ApComposeGateMenu
 	ld hl, AP_MESSAGE_TEXT
@@ -37,32 +38,16 @@ ApFrontGateTile_11:
 	ld [wStoryModeExitTriggerRequest], a
 	ret
 .cancel:
-	farcall BeginCutsceneScriptMode
-	script_face ACTOR_PLAYER, FACE_UP
-	script_set_anim ACTOR_PLAYER, ANIM_WALK
-	script_player_speed 0.75
-	wram_bank WRAM_ACTORS
-	ld hl, wActors + ACTORF_X
-	ld a, [hl+]
-	ld c, a
-	ld a, [hl+]
-	ld b, a
-	ld a, [hl+]
-	ld e, a
-	ld d, [hl]
-	dec d
-	dec d
-	xor a
-	farcall MovePlayerToPosition
-	farcall WaitPlayerMoveDone
-	; the walk moved the sprite (slot 1); the leader it follows again
-	; (slot 0) has to be there too, or it walks back onto the gate
-	wram_bank WRAM_ACTORS
-	ld hl, wActors + ACTOR_SIZE + ACTORF_X
-	ld de, wActors + ACTORF_X
-	ld bc, 4
-	call CopyMemoryBC
-	ld a, FACE_UP
-	ld [wActors + ACTORF_HEADING], a
-	farcall EndCutsceneScriptMode
+	script_set_actor_script ACTOR_PLAYER, ApGateBackOffScript_11
+	script_wait_actor_script ACTOR_PLAYER
+	ld bc, wActors
+	farcall AttachActorControllerScript
 	ret
+
+ApGateBackOffScript_11:
+	as_anim ANIM_WALK
+	as_set_field ACTORF_HEADING, FACE_UP
+	as_target_rel 0.0, -2.0
+	as_wait_move
+	as_set_field ACTORF_HEADING, FACE_UP
+	as_halt
