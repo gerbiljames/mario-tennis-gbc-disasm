@@ -86,9 +86,7 @@ UpdateFirework0_14Table:
 UpdateFirework1_14Table:
 	INCBIN "data/story/UpdateFirework1_14Table.bin" ; $64dd, 4 bytes
 IslandSkyInitScript_14.scriptRespawnLocationActors:
-	ldh a, [hRomBank] ; $64e1
-	ld hl, FireworkMapActors_14 ; $64e3
-	farcall ScriptRespawnLocationActors ; $64e6
+	script_respawn_actors FireworkMapActors_14 ; $64e1
 	farcall BeginCutsceneScriptMode ; $64e9
 	call DisableLCDSafely ; $64ec
 	call LoadFireworkObjGfx_14 ; $64ef

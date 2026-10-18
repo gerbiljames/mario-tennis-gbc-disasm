@@ -290,9 +290,7 @@ WaterSpriteRacketRewardScenePalettes2:
 TrainingCourtIntroTourScene:
 	xor a ; $59c0
 	ld [wStoryModeShowLocationName], a ; $59c1
-	ldh a, [hRomBank] ; $59c4
-	ld hl, TrainingCourtTourActors_15 ; $59c6
-	farcall ScriptRespawnLocationActors ; $59c9
+	script_respawn_actors TrainingCourtTourActors_15 ; $59c4
 	farcall BeginCutsceneScriptMode ; $59cc
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $59cf
 	script_set_position ACTOR_TRAINING_COURT_TOUR_EMILY, 63.0, 63.0 ; $59da

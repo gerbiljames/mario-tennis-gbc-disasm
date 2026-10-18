@@ -157,9 +157,7 @@ AcademyWingInitScript_10:
 	ld a, [wMapSceneStage] ; $6465
 	cp ACADEMYWINGSTAGE_COMPLETE ; $6468
 	jr nz, .stage4 ; $646a
-	ldh a, [hRomBank] ; $646c
-	ld hl, AcademyWingInitActors1_10 ; $646e
-	farcall ScriptRespawnLocationActors ; $6471
+	script_respawn_actors AcademyWingInitActors1_10 ; $646c
 	farcall BeginCutsceneScriptMode ; $6474
 	ld b, $1e ; $6477
 	ld c, $38 ; $6479
@@ -198,9 +196,7 @@ AcademyWingInitScript_10:
 	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
 .stage6:
-	ldh a, [hRomBank] ; $64e0
-	ld hl, AcademyWingInitActors0_10 ; $64e2
-	farcall ScriptRespawnLocationActors ; $64e5
+	script_respawn_actors AcademyWingInitActors0_10 ; $64e0
 	farcall BeginCutsceneScriptMode ; $64e8
 	script_set_anim ACTOR_ACADEMY_WING_INIT0_TROPHY_1, ANIM_TROPHY_SINGLES ; $64eb
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $64f2
@@ -630,9 +626,7 @@ AcademyWingInitActors0_10:
 	map_actor $0000, ActorScript_10_2, 39.0, 48.75, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_INIT0_TROPHY_2
 	map_actor_end
 AcademyWingEntry0fScene:
-	ldh a, [hRomBank] ; $6fcd
-	ld hl, AcademyWingInitActors1_10 ; $6fcf
-	farcall ScriptRespawnLocationActors ; $6fd2
+	script_respawn_actors AcademyWingInitActors1_10 ; $6fcd
 	farcall BeginCutsceneScriptMode ; $6fd5
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_TROPHY_1, ANIM_TROPHY_SINGLES ; $6fd8
 	test_flag FLAG_DOUBLES ; $6fdf

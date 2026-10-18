@@ -228,9 +228,7 @@ EndRestaurantEntInitScript_27:
 .done:
 	ret ; $6f56
 EndRestaurantEntCutscene_27:
-	ldh a, [hRomBank] ; $6f57
-	ld hl, EndRestaurantEntActorsAlt_27 ; $6f59
-	farcall ScriptRespawnLocationActors ; $6f5c
+	script_respawn_actors EndRestaurantEntActorsAlt_27 ; $6f57
 	farcall BeginCutsceneScriptMode ; $6f5f
 	test_flag FLAG_DOUBLES ; $6f62
 	jr z, .placeActors ; $6f65

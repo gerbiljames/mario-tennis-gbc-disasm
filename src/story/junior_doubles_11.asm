@@ -8,9 +8,7 @@ ActorList_11_0:
 	map_actor $0000, ActorScript_11_45, 21.0, 47.0, FACE_RIGHT, OBJ_WALK_71_03, ANIM_WALK, $03, LIST_11_0_WALK_71_03
 	map_actor_end
 AcademyArrivalEntry0cScene:
-	ldh a, [hRomBank] ; $53db
-	ld hl, ActorList_11_1 ; $53dd
-	farcall ScriptRespawnLocationActors ; $53e0
+	script_respawn_actors ActorList_11_1 ; $53db
 	farcall BeginCutsceneScriptMode ; $53e3
 	script_player_speed 7.96875 ; $53e6
 	script_move_player 24.0, 47.0 ; $53ec

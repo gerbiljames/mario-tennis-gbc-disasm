@@ -620,9 +620,7 @@ InitCourt2SceneVariant:
 	jr nz, .doubles ; $4e68
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4e6a
 	jr z, .stage1 ; $4e6d
-	ldh a, [hRomBank] ; $4e6f
-	ld hl, Court2ActorsAlt_14 ; $4e71
-	farcall ScriptRespawnLocationActors ; $4e74
+	script_respawn_actors Court2ActorsAlt_14 ; $4e6f
 	farcall BeginCutsceneScriptMode ; $4e77
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $4e7a
 	jr .stage3 ; $4e7c
@@ -642,9 +640,7 @@ InitCourt2SceneVariant:
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $4e92
 	jr z, .doublesStage2 ; $4e95
-	ldh a, [hRomBank] ; $4e97
-	ld hl, Court2ActorsAlt_14 ; $4e99
-	farcall ScriptRespawnLocationActors ; $4e9c
+	script_respawn_actors Court2ActorsAlt_14 ; $4e97
 	farcall BeginCutsceneScriptMode ; $4e9f
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $4ea2
 	jr .stage3 ; $4ea4

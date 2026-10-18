@@ -260,9 +260,7 @@ AcademyMainBldgInitScript_10:
 .done:
 	ret ; $7740
 AcademyMainBldgNewStudentCutscene_10:
-	ldh a, [hRomBank] ; $7741
-	ld hl, AcademyMainBldgNewStudentActors_10 ; $7743
-	farcall ScriptRespawnLocationActors ; $7746
+	script_respawn_actors AcademyMainBldgNewStudentActors_10 ; $7741
 	farcall BeginCutsceneScriptMode ; $7749
 	script_set_position ACTOR_PLAYER, 34.0, 37.5 ; $774c
 	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, 34.0, 36.0 ; $7757

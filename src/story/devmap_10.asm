@@ -91,9 +91,7 @@ DevelopmentExitTriggers_10:
 DevelopmentRespawnActors_10:
 	script_fade_out 16 ; $4cff
 	call WaitFadeEnd ; $4d04
-	ldh a, [hRomBank] ; $4d07
-	ld hl, DevelopmentRespawnActorList_10 ; $4d09
-	farcall ScriptRespawnLocationActors ; $4d0c
+	script_respawn_actors DevelopmentRespawnActorList_10 ; $4d07
 	script_fade_in 16 ; $4d0f
 	call WaitFadeEnd ; $4d14
 	ret ; $4d17
@@ -118,9 +116,7 @@ Unused_10_DevelopmentMoveActorsAndExit:
 DevelopmentRespawnActorsAlt_10:
 	script_fade_out 16 ; $4d70
 	call WaitFadeEnd ; $4d75
-	ldh a, [hRomBank] ; $4d78
-	ld hl, DevelopmentActors_10 ; $4d7a
-	farcall ScriptRespawnLocationActors ; $4d7d
+	script_respawn_actors DevelopmentActors_10 ; $4d78
 	script_fade_in 16 ; $4d80
 	call WaitFadeEnd ; $4d85
 	ret ; $4d88

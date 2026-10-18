@@ -360,9 +360,7 @@ IslandOpenSinglesMatchReturn:
 	jr z, .returnToSite ; $74ad
 	ret ; $74af
 .returnToSite:
-	ldh a, [hRomBank] ; $74b0
-	ld hl, IslandOpenRoundActorsSingles_0f ; $74b2
-	farcall ScriptRespawnLocationActors ; $74b5
+	script_respawn_actors IslandOpenRoundActorsSingles_0f ; $74b0
 	ld hl, IslandOpenRoundNpcScriptsSingles_0f ; $74b8
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $74bb
 	farcall WriteStoryStateWord ; $74be
@@ -504,9 +502,7 @@ IslandOpenDoublesMatchReturn:
 	jr z, .accepted ; $76f3
 	ret ; $76f5
 .accepted:
-	ldh a, [hRomBank] ; $76f6
-	ld hl, IslandOpenRoundActorsDoubles_0f ; $76f8
-	farcall ScriptRespawnLocationActors ; $76fb
+	script_respawn_actors IslandOpenRoundActorsDoubles_0f ; $76f6
 	farcall BeginCutsceneScriptMode ; $76fe
 	ld hl, IslandOpenRoundNpcScriptsDoubles_0f ; $7701
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $7704

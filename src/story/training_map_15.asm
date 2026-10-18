@@ -253,9 +253,7 @@ TournamentSiteDoublesFinalNpcScripts_15:
 	map_script ACTOR_TOURNAMENT_COURTYARD_WALK_72_03, FACEMASK_ANY, $0000, Text_1f_79, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentSiteArrivalScene:
-	ldh a, [hRomBank] ; $444d
-	ld hl, TournamentSiteRespawnActors_15 ; $444f
-	farcall ScriptRespawnLocationActors ; $4452
+	script_respawn_actors TournamentSiteRespawnActors_15 ; $444d
 	farcall BeginCutsceneScriptMode ; $4455
 	call SetupTournamentSitePartnerActor ; $4458
 	script_player_speed 7.96875 ; $445b

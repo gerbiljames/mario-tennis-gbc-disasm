@@ -898,9 +898,7 @@ AwardsCeremonyTile02_0f:
 AwardsCeremonyInitScript_0f:
 	test_flag FLAG_DOUBLES ; $5581
 	jr z, .setAnims ; $5584
-	ldh a, [hRomBank] ; $5586
-	ld hl, AwardsCeremonyActorsDoubles_0f ; $5588
-	farcall ScriptRespawnLocationActors ; $558b
+	script_respawn_actors AwardsCeremonyActorsDoubles_0f ; $5586
 	ld hl, AwardsCeremonyNpcScriptsDoubles_0f ; $558e
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5591
 	farcall WriteStoryStateWord ; $5594

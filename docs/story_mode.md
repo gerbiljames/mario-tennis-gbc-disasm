@@ -219,7 +219,7 @@ and are marked `; debug warp only` (`tools/routes.py` finds them; `make check`
 `SpawnActorsFromList` (`$04:$4cf7`) walks 14 bytes at a time and stops when
 byte +9 is `$ff`; `map_actor_end` emits nine zero bytes plus that sentinel. A
 slot may hold several back-to-back lists: scene variants swapped in by
-`ScriptRespawnLocationActors` (`$0a:$4152`, which re-runs
+`script_respawn_actors` (`ScriptRespawnLocationActors`, `$0a:$4152`, which re-runs
 `InitLocationActors` with another list pointer).
 
 Slots are fixed (`include/constants/`): `$00` `ACTOR_PLAYER`, `$01`
@@ -241,7 +241,7 @@ A slot is named only where the active list is certain at that line.
 
 * a location starts with its default list and table; the arrival script runs
   next, then the init script, each from what the previous step can leave;
-* `ScriptRespawnLocationActors` replaces the list, and `WriteStoryStateWord`
+* `script_respawn_actors` replaces the list, and `WriteStoryStateWord`
   into `wMapNpcScriptsPtr` the table, on that path only; a callee's installs
   reach its caller;
 * the pairs active under player control are everything the init script and

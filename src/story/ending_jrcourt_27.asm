@@ -287,9 +287,7 @@ End4JrCourtTileTriggers_27:
 End4JrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $67f8
 	jr z, .checkStoryModeEntryPoint ; $67fb
-	ldh a, [hRomBank] ; $67fd
-	ld hl, End4JrCourtActorsAlt_27 ; $67ff
-	farcall ScriptRespawnLocationActors ; $6802
+	script_respawn_actors End4JrCourtActorsAlt_27 ; $67fd
 	farcall BeginCutsceneScriptMode ; $6805
 .checkStoryModeEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $6808

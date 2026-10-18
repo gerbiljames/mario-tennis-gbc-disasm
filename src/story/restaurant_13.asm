@@ -238,9 +238,7 @@ RestaurantPlazaInitScript_13:
 .done:
 	ret ; $44f0
 AcademyCourtsTourCutscene:
-	ldh a, [hRomBank] ; $44f1
-	ld hl, AcademyCourtsTourActors_13 ; $44f3
-	farcall ScriptRespawnLocationActors ; $44f6
+	script_respawn_actors AcademyCourtsTourActors_13 ; $44f1
 	farcall BeginCutsceneScriptMode ; $44f9
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $44fc
 	script_set_position ACTOR_ACADEMY_COURTS_TOUR_EMILY, 63.0, 63.0 ; $4507
@@ -344,9 +342,7 @@ AcademyCourtsTourActors_13:
 	map_actor $0000, ActorScript_13_27, 50.0, 19.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, ACADEMY_COURTS_TOUR_EMILY
 	map_actor_end
 ServiceAceCoachIntroCutscene:
-	ldh a, [hRomBank] ; $476e
-	ld hl, ServiceAceCoachIntroActors_13 ; $4770
-	farcall ScriptRespawnLocationActors ; $4773
+	script_respawn_actors ServiceAceCoachIntroActors_13 ; $476e
 	farcall BeginCutsceneScriptMode ; $4776
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $4779
 	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, 63.0, 63.0 ; $4784

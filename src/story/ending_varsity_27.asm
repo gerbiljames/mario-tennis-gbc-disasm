@@ -77,9 +77,7 @@ End10VarsityCourtEntry01Scene:
 	jp .scriptRespawnLocationActors ; $5648
 .notDoubles:
 	wram_bank WRAM_SCENE ; $564b
-	ldh a, [hRomBank] ; $5651
-	ld hl, End10VarsityCourtActorsAlt_27 ; $5653
-	farcall ScriptRespawnLocationActors ; $5656
+	script_respawn_actors End10VarsityCourtActorsAlt_27 ; $5651
 	script_null_script ACTOR_PLAYER_SHADOW ; $5659
 	script_player_speed 7.5 ; $565e
 	call SetPartnerObjDefByGender_27 ; $5664
@@ -155,9 +153,7 @@ End10VarsityCourtEntry01Scene:
 	ld [wStoryModeExitTriggerRequest], a ; $5828
 	ret ; $582b
 .scriptRespawnLocationActors:
-	ldh a, [hRomBank] ; $582c
-	ld hl, End10VarsityCourtActorsAltB_27 ; $582e
-	farcall ScriptRespawnLocationActors ; $5831
+	script_respawn_actors End10VarsityCourtActorsAltB_27 ; $582c
 	farcall BeginCutsceneScriptMode ; $5834
 	call SetPartnerObjDefByGender_27 ; $5837
 	script_null_script ACTOR_PARTNER ; $583a
@@ -461,9 +457,7 @@ End8SrCourtTileTriggers_27:
 End8SrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $5ed8
 	jp z, .notDoubles ; $5edb
-	ldh a, [hRomBank] ; $5ede
-	ld hl, End8SrCourtActorsAlt_27 ; $5ee0
-	farcall ScriptRespawnLocationActors ; $5ee3
+	script_respawn_actors End8SrCourtActorsAlt_27 ; $5ede
 	farcall BeginCutsceneScriptMode ; $5ee6
 	jr .step ; $5ee9
 	ret ; $5eeb

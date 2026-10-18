@@ -54,9 +54,7 @@ End17AwardCeremonyTileTriggers_27:
 End17AwardCeremonyInitScript_27:
 	test_flag FLAG_DOUBLES ; $419f
 	jr z, .animate ; $41a2
-	ldh a, [hRomBank] ; $41a4
-	ld hl, End17AwardCeremonyActorsAlt_27 ; $41a6
-	farcall ScriptRespawnLocationActors ; $41a9
+	script_respawn_actors End17AwardCeremonyActorsAlt_27 ; $41a4
 	script_copy_scene_rect 26, 13, 8, 13, 8, 3 ; $41ac
 	farcall BeginCutsceneScriptMode ; $41bb
 	jr .setEnd17CeremonyObjectDefs ; $41be
@@ -281,15 +279,11 @@ End16BeforeFinalsTileTriggers_27:
 End16BeforeFinalsInitScript_27:
 	test_flag FLAG_DOUBLES ; $46fd
 	jr nz, .isDoubles ; $4700
-	ldh a, [hRomBank] ; $4702
-	ld hl, End16BeforeFinalsActorsAlt_27 ; $4704
-	farcall ScriptRespawnLocationActors ; $4707
+	script_respawn_actors End16BeforeFinalsActorsAlt_27 ; $4702
 	call End16BeforeFinalsCutscene_27 ; $470a
 	ret ; $470d
 .isDoubles:
-	ldh a, [hRomBank] ; $470e
-	ld hl, End16BeforeFinalsActorsAltB_27 ; $4710
-	farcall ScriptRespawnLocationActors ; $4713
+	script_respawn_actors End16BeforeFinalsActorsAltB_27 ; $470e
 	call End16BeforeFinalsCutscene_27 ; $4716
 	ret ; $4719
 End16BeforeFinalsActorsAlt_27:

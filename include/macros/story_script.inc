@@ -190,6 +190,15 @@ MACRO script_wait_move
 	farcall ScriptWaitActorMoveDone
 ENDM
 
+; Replaces the location's actor list with `list` (a map_actors table in this
+; bank) and respawns every actor from it.
+; Usage: script_respawn_actors list
+MACRO script_respawn_actors
+	ldh a, [hRomBank]
+	ld hl, \1
+	farcall ScriptRespawnLocationActors
+ENDM
+
 ; Blocks until the jump script_jump_velocity started on `actor` has landed,
 ; advancing a frame each poll, with a 180-frame timeout.
 ; Usage: script_wait_jump actor

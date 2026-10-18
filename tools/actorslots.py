@@ -19,7 +19,7 @@ The analysis follows control flow through the story code carrying the set of
 * a location loads with its default list and NpcScripts table; the entry
   point's arrival script runs next, then the init script, each from what the
   step before can leave;
-* `ScriptRespawnLocationActors` after `ld hl, <list>` replaces the list on
+* `script_respawn_actors <list>` (ScriptRespawnLocationActors) replaces the list on
   that path, and `WriteStoryStateWord` into `wMapNpcScriptsPtr` the table; a
   callee's effect on the pair reaches its caller (per-routine summaries);
 * what the player can be walking around under is what the init script and
@@ -316,6 +316,9 @@ class Flow:
             if tg and base is not None:
                 tg = [(t, (base[0], base[1] + k)) for k, t in enumerate(tg)]
             return ("multitail", tg) if tg else ("jump_out", None)
+        m = re.match(r"script_respawn_actors (\w+)$", code)
+        if m:
+            return ("install", m.group(1) if m.group(1) in s.lists else ANY)
         m = re.match(r"(call|farcall) (\w+(?:\.\w+)?)$", code)
         if m:
             t = m.group(2)

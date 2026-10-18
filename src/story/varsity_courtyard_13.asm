@@ -423,9 +423,7 @@ SetupVarsityCourtSceneVariant:
 .stage1:
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $61e1
 	jr z, .stage2 ; $61e4
-	ldh a, [hRomBank] ; $61e6
-	ld hl, VarsityCourtActorsC_13 ; $61e8
-	farcall ScriptRespawnLocationActors ; $61eb
+	script_respawn_actors VarsityCourtActorsC_13 ; $61e6
 	ld hl, VarsityCourtNpcScriptsC_13 ; $61ee
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61f1
 	farcall WriteStoryStateWord ; $61f4
@@ -439,9 +437,7 @@ SetupVarsityCourtSceneVariant:
 .stage2:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $620a
 	jp z, .done ; $620d
-	ldh a, [hRomBank] ; $6210
-	ld hl, VarsityCourtActorsA_13 ; $6212
-	farcall ScriptRespawnLocationActors ; $6215
+	script_respawn_actors VarsityCourtActorsA_13 ; $6210
 	ld hl, VarsityCourtNpcScriptsA_13 ; $6218
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $621b
 	farcall WriteStoryStateWord ; $621e
@@ -449,9 +445,7 @@ SetupVarsityCourtSceneVariant:
 .stage3:
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $6222
 	jr z, .stage4 ; $6225
-	ldh a, [hRomBank] ; $6227
-	ld hl, VarsityCourtActorsB_13 ; $6229
-	farcall ScriptRespawnLocationActors ; $622c
+	script_respawn_actors VarsityCourtActorsB_13 ; $6227
 	ld hl, VarsityCourtNpcScriptsE_13 ; $622f
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6232
 	farcall WriteStoryStateWord ; $6235
@@ -470,9 +464,7 @@ SetupVarsityCourtSceneVariant:
 .stage4:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $627e
 	jr z, .stage5 ; $6281
-	ldh a, [hRomBank] ; $6283
-	ld hl, VarsityCourtActorsD_13 ; $6285
-	farcall ScriptRespawnLocationActors ; $6288
+	script_respawn_actors VarsityCourtActorsD_13 ; $6283
 	ld hl, VarsityCourtNpcScriptsC_13 ; $628b
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $628e
 	farcall WriteStoryStateWord ; $6291
@@ -486,9 +478,7 @@ SetupVarsityCourtSceneVariant:
 .stage5:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $62a7
 	jr z, .done ; $62aa
-	ldh a, [hRomBank] ; $62ac
-	ld hl, VarsityCourtActorsB_13 ; $62ae
-	farcall ScriptRespawnLocationActors ; $62b1
+	script_respawn_actors VarsityCourtActorsB_13 ; $62ac
 	ld hl, VarsityCourtNpcScriptsB_13 ; $62b4
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $62b7
 	farcall WriteStoryStateWord ; $62ba

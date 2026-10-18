@@ -392,9 +392,7 @@ AcademyArrivalInitScriptActorListEnd_11:
 	; $4fc5, 10 bytes (bytes:10)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x00
 AcademyArrivalInitScript_11.scriptRespawnLocationActors:
-	ldh a, [hRomBank] ; $4fcf
-	ld hl, ActorList_11_0 ; $4fd1
-	farcall ScriptRespawnLocationActors ; $4fd4
+	script_respawn_actors ActorList_11_0 ; $4fcf
 	farcall BeginCutsceneScriptMode ; $4fd7
 	test_flag FLAG_DOUBLES ; $4fda
 	jp z, AcademyArrivalInitScript_11.notDoubles ; $4fdd

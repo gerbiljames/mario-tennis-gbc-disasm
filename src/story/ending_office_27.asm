@@ -223,9 +223,7 @@ End12PrincipalsOfficeInitScript_27:
 	ld [wStoryModeExitTriggerRequest], a ; $4fec
 	ret ; $4fef
 .eq02:
-	ldh a, [hRomBank] ; $4ff0
-	ld hl, End12PrincipalsOfficeActorsAlt_27 ; $4ff2
-	farcall ScriptRespawnLocationActors ; $4ff5
+	script_respawn_actors End12PrincipalsOfficeActorsAlt_27 ; $4ff0
 	farcall BeginCutsceneScriptMode ; $4ff8
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, ANIM_TROPHY_SINGLES ; $4ffb
 	test_flag FLAG_DOUBLES ; $5002
@@ -450,9 +448,7 @@ End11TrainingCourtInitScript_27:
 	ld [wStoryModeExitTriggerRequest], a ; $53f5
 	ret ; $53f8
 .eq02:
-	ldh a, [hRomBank] ; $53f9
-	ld hl, End11TrainingCourtActorsAlt_27 ; $53fb
-	farcall ScriptRespawnLocationActors ; $53fe
+	script_respawn_actors End11TrainingCourtActorsAlt_27 ; $53f9
 	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $5401
 	farcall BeginCutsceneScriptMode ; $540c
 	script_face ACTOR_PLAYER, FACE_UP ; $540f

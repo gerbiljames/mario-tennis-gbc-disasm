@@ -44,9 +44,7 @@ CourtyardEntryWalkInFacings_13:
 	; $6366, 6 bytes (enum:FACE:6)
 	db FACE_DOWN, FACE_DOWN, FACE_UP, FACE_UP, FACE_UP, FACE_DOWN ; 0x00
 VarsityCourtTourCutscene:
-	ldh a, [hRomBank] ; $636c
-	ld hl, VarsityCourtTourActors_13 ; $636e
-	farcall ScriptRespawnLocationActors ; $6371
+	script_respawn_actors VarsityCourtTourActors_13 ; $636c
 	farcall BeginCutsceneScriptMode ; $6374
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $6377
 	script_set_position ACTOR_VARSITY_COURT_TOUR_EMILY, 63.0, 63.0 ; $6382

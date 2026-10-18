@@ -167,9 +167,7 @@ SetupCenterCourtSceneVariant:
 	jr z, .stage1 ; $41c3
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $41c5
 	ld [wMapSceneStage], a ; $41c7
-	ldh a, [hRomBank] ; $41ca
-	ld hl, CenterCourtSceneVariantActors_11 ; $41cc
-	farcall ScriptRespawnLocationActors ; $41cf
+	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41ca
 	farcall BeginCutsceneScriptMode ; $41d2
 	ret ; $41d5
 .stage1:
@@ -190,9 +188,7 @@ SetupCenterCourtSceneVariant:
 	jr z, .stage4 ; $41ef
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $41f1
 	ld [wMapSceneStage], a ; $41f3
-	ldh a, [hRomBank] ; $41f6
-	ld hl, CenterCourtSceneVariantActors_11 ; $41f8
-	farcall ScriptRespawnLocationActors ; $41fb
+	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41f6
 	farcall BeginCutsceneScriptMode ; $41fe
 	ret ; $4201
 .stage4:

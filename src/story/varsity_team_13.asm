@@ -237,9 +237,7 @@ Unused_13_RunSinglesTravelingTeamVictoryIfWon:
 	ret ; $70fa
 SinglesTravelingTeamVictoryCutscene:
 	wram_bank WRAM_SCENE ; $70fb
-	ldh a, [hRomBank] ; $7101
-	ld hl, SinglesTravelingTeamActors_13 ; $7103
-	farcall ScriptRespawnLocationActors ; $7106
+	script_respawn_actors SinglesTravelingTeamActors_13 ; $7101
 	script_null_script ACTOR_PLAYER_SHADOW ; $7109
 	script_player_speed 2.0 ; $710e
 	call ApplyPartnerCharacterVariant_13 ; $7114
@@ -377,9 +375,7 @@ Unused_13_RunDoublesTravelingTeamVictoryIfWon:
 	ret ; $744e
 DoublesTravelingTeamVictoryCutscene:
 	script_set_text Text_31_22 ; $744f
-	ldh a, [hRomBank] ; $7455
-	ld hl, DoublesTravelingTeamActors_13 ; $7457
-	farcall ScriptRespawnLocationActors ; $745a
+	script_respawn_actors DoublesTravelingTeamActors_13 ; $7455
 	farcall BeginCutsceneScriptMode ; $745d
 	call ApplyPartnerCharacterVariant_13 ; $7460
 	script_null_script ACTOR_PARTNER ; $7463

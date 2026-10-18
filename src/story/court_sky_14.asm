@@ -108,9 +108,7 @@ InitCourt1SceneVariant:
 	jr z, .stage1 ; $5112
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $5114
 	ld [wMapSceneStage], a ; $5116
-	ldh a, [hRomBank] ; $5119
-	ld hl, Court1ActorsAlt_14 ; $511b
-	farcall ScriptRespawnLocationActors ; $511e
+	script_respawn_actors Court1ActorsAlt_14 ; $5119
 	farcall BeginCutsceneScriptMode ; $5121
 	ret ; $5124
 .stage1:
@@ -131,9 +129,7 @@ InitCourt1SceneVariant:
 	jr z, .doublesStage2 ; $513e
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $5140
 	ld [wMapSceneStage], a ; $5142
-	ldh a, [hRomBank] ; $5145
-	ld hl, Court1ActorsAlt_14 ; $5147
-	farcall ScriptRespawnLocationActors ; $514a
+	script_respawn_actors Court1ActorsAlt_14 ; $5145
 	farcall BeginCutsceneScriptMode ; $514d
 	ret ; $5150
 .doublesStage2:

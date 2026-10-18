@@ -697,9 +697,7 @@ SeniorCourtInitScript_12:
 	jr nz, .done ; $5d7e
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5d80
 	jr z, .placeActors ; $5d83
-	ldh a, [hRomBank] ; $5d85
-	ld hl, SeniorCourtActorsA_12 ; $5d87
-	farcall ScriptRespawnLocationActors ; $5d8a
+	script_respawn_actors SeniorCourtActorsA_12 ; $5d85
 .placeActors:
 	call SeniorCourtPositionActorsByProgressA ; $5d8d
 	call SetPartnerObjDefByGender_12 ; $5d90
@@ -717,9 +715,7 @@ SeniorCourtInitScript_12:
 .done:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5daf
 	jr z, .placeActors ; $5db2
-	ldh a, [hRomBank] ; $5db4
-	ld hl, SeniorCourtActorsB_12 ; $5db6
-	farcall ScriptRespawnLocationActors ; $5db9
+	script_respawn_actors SeniorCourtActorsB_12 ; $5db4
 	jr .placeActors ; $5dbc
 SeniorCourtPositionActorsByProgressB:
 	ld a, [wMapSceneStage2] ; $5dbe
