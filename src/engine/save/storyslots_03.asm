@@ -24,7 +24,7 @@ InvalidateSaveBlock:
 	push hl ; $4b1c
 	push de ; $4b1d
 	push bc ; $4b1e
-	ld a, $0a ; $4b1f
+	ld a, RAMG_SRAM_ENABLE ; $4b1f
 	ld [rRAMG], a ; $4b21
 	ld a, $00 ; $4b24
 	ldh [hSramBank], a ; $4b26
@@ -76,7 +76,7 @@ Unused_03_ResetAllSaveBlocks:
 	call InvalidateSaveBlock ; $4b79
 	ld b, SAVEBLOCK_EXHIBITION_BACKUP ; $4b7c
 	call InvalidateSaveBlock ; $4b7e
-	ld a, $0a ; $4b81
+	ld a, RAMG_SRAM_ENABLE ; $4b81
 	ld [rRAMG], a ; $4b83
 	ld a, $00 ; $4b86
 	ldh [hSramBank], a ; $4b88
@@ -91,7 +91,7 @@ ReadSaveBlock:
 	push hl ; $4b9b
 	push de ; $4b9c
 	push bc ; $4b9d
-	ld a, $0a ; $4b9e
+	ld a, RAMG_SRAM_ENABLE ; $4b9e
 	ld [rRAMG], a ; $4ba0
 	ld a, $00 ; $4ba3
 	ldh [hSramBank], a ; $4ba5
@@ -181,7 +181,7 @@ VerifySaveBlock:
 	push hl ; $4c14
 	push de ; $4c15
 	push bc ; $4c16
-	ld a, $0a ; $4c17
+	ld a, RAMG_SRAM_ENABLE ; $4c17
 	ld [rRAMG], a ; $4c19
 	ld a, $00 ; $4c1c
 	ldh [hSramBank], a ; $4c1e
@@ -280,7 +280,7 @@ ReadSaveBlockTag:
 	push hl ; $4c9e
 	push de ; $4c9f
 	push bc ; $4ca0
-	ld a, $0a ; $4ca1
+	ld a, RAMG_SRAM_ENABLE ; $4ca1
 	ld [rRAMG], a ; $4ca3
 	ld a, $00 ; $4ca6
 	ldh [hSramBank], a ; $4ca8
@@ -319,7 +319,7 @@ Unused_03_ReadSaveBlockTagWord:
 	push hl ; $4cd3
 	push de ; $4cd4
 	push bc ; $4cd5
-	ld a, $0a ; $4cd6
+	ld a, RAMG_SRAM_ENABLE ; $4cd6
 	ld [rRAMG], a ; $4cd8
 	ld a, $00 ; $4cdb
 	ldh [hSramBank], a ; $4cdd
@@ -428,7 +428,7 @@ TestSaveFlag:
 	push de ; $4d87
 	push bc ; $4d88
 	ld b, a ; $4d89
-	ld a, $0a ; $4d8a
+	ld a, RAMG_SRAM_ENABLE ; $4d8a
 	ld [rRAMG], a ; $4d8c
 	ld a, $00 ; $4d8f
 	ldh [hSramBank], a ; $4d91
@@ -461,7 +461,7 @@ TestSaveFlag:
 SetSaveFlag:
 	push hl ; $4db6
 	push af ; $4db7
-	ld a, $0a ; $4db8
+	ld a, RAMG_SRAM_ENABLE ; $4db8
 	ld [rRAMG], a ; $4dba
 	ld a, $00 ; $4dbd
 	ldh [hSramBank], a ; $4dbf
@@ -492,7 +492,7 @@ SetSaveFlag:
 ClearSaveFlag:
 	push hl ; $4de4
 	push af ; $4de5
-	ld a, $0a ; $4de6
+	ld a, RAMG_SRAM_ENABLE ; $4de6
 	ld [rRAMG], a ; $4de8
 	ld a, $00 ; $4deb
 	ldh [hSramBank], a ; $4ded

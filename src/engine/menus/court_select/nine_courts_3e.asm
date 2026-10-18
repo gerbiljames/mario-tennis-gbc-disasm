@@ -15,7 +15,7 @@ RunCourtSelect9Menu:
 	sound BGM_MENU ; $651f
 	call ClearFrameTasks ; $6521
 	ld hl, rIE ; $6524
-	res 2, [hl] ; $6527
+	res B_IE_TIMER, [hl] ; $6527
 	farcall InitMenuBgScroll ; $6529
 	ld b, $01 ; $652c
 	ld c, $01 ; $652e
@@ -65,7 +65,7 @@ RunCourtSelect9Menu:
 	sound SFX_MENU_DECIDE ; $658f
 	call ClearFrameTasks ; $6591
 	ld hl, rIE ; $6594
-	set 2, [hl] ; $6597
+	set B_IE_TIMER, [hl] ; $6597
 	ld b, $01 ; $6599
 	call CloseCourtSelect9Panel ; $659b
 	ld a, MENUSLIDE_FORWARD ; $659e
@@ -82,7 +82,7 @@ RunCourtSelect9Menu:
 	sound SFX_MENU_CANCEL ; $65b2
 	call ClearFrameTasks ; $65b4
 	ld hl, rIE ; $65b7
-	set 2, [hl] ; $65ba
+	set B_IE_TIMER, [hl] ; $65ba
 	ld b, $00 ; $65bc
 	call CloseCourtSelect9Panel ; $65be
 	ld a, MENUSLIDE_BACK ; $65c1

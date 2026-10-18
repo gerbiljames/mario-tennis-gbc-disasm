@@ -30,7 +30,7 @@ PlayScrollingStoryCutscene:
 	call QueueVRAMCopy ; $701f
 	call AdvanceFrame ; $7022
 	farcall StopSceneScrollTask ; $7025
-	ld a, $90 ; $7028
+	ld a, SCREEN_HEIGHT_PX ; $7028
 	ldh [rWY], a ; $702a
 	wram_bank WRAM_SCENE ; $702c
 	xor a ; $7032
@@ -126,7 +126,7 @@ AnimateWindowSlideUpTask:
 	ld [wCutsceneSlideTimer], a ; $72df
 	and $3f ; $72e2
 	ld b, a ; $72e4
-	ld a, $90 ; $72e5
+	ld a, SCREEN_HEIGHT_PX ; $72e5
 	sub b ; $72e7
 	ldh [rWY], a ; $72e8
 	ld a, b ; $72ea

@@ -215,12 +215,12 @@ ExchangeReadyTokenMaster:
 	push af ; $479f
 	push de ; $47a0
 	ldh a, [rSC] ; $47a1
-	and $7f ; $47a3
+	and ~SC_START ; $47a3
 	ldh [rSC], a ; $47a5
 	ld de, $2710 ; $47a7
 .retry:
 	ldh a, [rSC] ; $47aa
-	bit 7, a ; $47ac
+	bit B_SC_START, a ; $47ac
 	jr nz, .retry ; $47ae
 	di ; $47b0
 	ld a, $0b ; $47b1
@@ -431,7 +431,7 @@ Unused_07_ExchangeLinkBlockToWram5:
 	call DisableLCDSafely ; $4926
 	di ; $4929
 	ldh a, [rIF] ; $492a
-	and $08 ; $492c
+	and IF_SERIAL ; $492c
 	ldh [rIF], a ; $492e
 	ei ; $4930
 	xor a ; $4931
@@ -458,7 +458,7 @@ Unused_07_ExchangeLinkBlockToWram5:
 	ld a, $01 ; $4960
 	ldh [hLinkExchangeActive], a ; $4962
 	di ; $4964
-	ld a, $09 ; $4965
+	ld a, IF_SERIAL | IF_VBLANK ; $4965
 	ldh [rIF], a ; $4967
 	ei ; $4969
 	call EnableLCD ; $496a
@@ -471,7 +471,7 @@ ExchangeLinkDataBlock:
 	call DisableLCDSafely ; $4974
 	di ; $4977
 	ldh a, [rIF] ; $4978
-	and $08 ; $497a
+	and IF_SERIAL ; $497a
 	ldh [rIF], a ; $497c
 	ei ; $497e
 	xor a ; $497f
@@ -496,7 +496,7 @@ ExchangeLinkDataBlock:
 .unpack:
 	call PackNibblesToBytes ; $49a3
 	di ; $49a6
-	ld a, $09 ; $49a7
+	ld a, IF_SERIAL | IF_VBLANK ; $49a7
 	ldh [rIF], a ; $49a9
 	ei ; $49ab
 	call EnableLCD ; $49ac

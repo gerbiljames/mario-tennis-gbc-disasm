@@ -209,7 +209,7 @@ ShowExpDistributionScreen:
 	ld [wCameraX + 1], a ; $68b4
 	ld [wCameraY], a ; $68b7
 	ld [wCameraY + 1], a ; $68ba
-	ld a, $90 ; $68bd
+	ld a, SCREEN_HEIGHT_PX ; $68bd
 	ldh [rWY], a ; $68bf
 	call ClearSpriteQueue ; $68c1
 	pop hl ; $68c4

@@ -248,7 +248,7 @@ TryMainMenuLinkHandshake:
 	xor a ; $5c54
 	ldh [rIF], a ; $5c55
 	ldh a, [rIE] ; $5c57
-	and $09 ; $5c59
+	and IE_SERIAL | IE_VBLANK ; $5c59
 	ldh [rIE], a ; $5c5b
 	ei ; $5c5d
 	ld a, [wMenuCursorX] ; $5c5e
@@ -327,7 +327,7 @@ Unused_3b_RestoreScreenAfterLinkAttempt:
 	ret ; $5cf2
 RunMatchFormatSelect:
 	ld hl, rIE ; $5cf3
-	res 2, [hl] ; $5cf6
+	res B_IE_TIMER, [hl] ; $5cf6
 	sound BGM_MENU ; $5cf8
 	call LoadMatchFormatGfx ; $5cfa
 	wram_bank WRAM_SCREEN ; $5cfd
@@ -366,7 +366,7 @@ RunMatchFormatSelect:
 .playSfx:
 	sound SFX_MENU_SELECT ; $5d4f
 	ld hl, rIE ; $5d51
-	set 2, [hl] ; $5d54
+	set B_IE_TIMER, [hl] ; $5d54
 	call ClearFrameTasks ; $5d56
 	ld b, $01 ; $5d59
 	call MatchFormatSlideOut ; $5d5b
@@ -378,7 +378,7 @@ RunMatchFormatSelect:
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $5d69
 	ld hl, rIE ; $5d6b
-	set 2, [hl] ; $5d6e
+	set B_IE_TIMER, [hl] ; $5d6e
 	call ClearFrameTasks ; $5d70
 	ld b, $00 ; $5d73
 	call MatchFormatSlideOut ; $5d75

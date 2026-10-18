@@ -38,13 +38,13 @@ Unused_18_ClearTileVramBothBanks:
 	ld c, $80 ; $55de
 	call ClearMemory16 ; $55e0
 	ldh a, [rVBK] ; $55e3
-	xor $01 ; $55e5
+	xor VBK_BANK ; $55e5
 	ldh [rVBK], a ; $55e7
 	ld hl, vTiles0 ; $55e9
 	ld c, $80 ; $55ec
 	call ClearMemory16 ; $55ee
 	ldh a, [rVBK] ; $55f1
-	xor $01 ; $55f3
+	xor VBK_BANK ; $55f3
 	ldh [rVBK], a ; $55f5
 	ret ; $55f7
 Unused_18_LoadConfirmScreenSpriteGfx:

@@ -35,7 +35,7 @@ ShowExpAwardScreen:
 	ld [wCameraX + 1], a ; $5459
 	ld [wCameraY], a ; $545c
 	ld [wCameraY + 1], a ; $545f
-	ld a, $90 ; $5462
+	ld a, SCREEN_HEIGHT_PX ; $5462
 	ldh [rWY], a ; $5464
 	call ClearSpriteQueue ; $5466
 	farcall InitActorEngine ; $5469

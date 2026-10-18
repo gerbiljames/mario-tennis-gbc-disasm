@@ -24,7 +24,7 @@ CheckN64DataPresent:
 	ret ; $6c7e
 RunEraseSavedDataSelect:
 	ld hl, rIE ; $6c7f
-	res 2, [hl] ; $6c82
+	res B_IE_TIMER, [hl] ; $6c82
 	sound BGM_MENU ; $6c84
 	call BuildSaveSlotSummaries ; $6c86
 	call LoadEraseSavedDataGfx ; $6c89
@@ -88,7 +88,7 @@ RunEraseSavedDataSelect:
 	sound SFX_MENU_SELECT ; $6d00
 	call ClearFrameTasks ; $6d02
 	ld hl, rIE ; $6d05
-	set 2, [hl] ; $6d08
+	set B_IE_TIMER, [hl] ; $6d08
 	ld b, $01 ; $6d0a
 	call SavedDataPickerSlideOut ; $6d0c
 	ld a, MENUSLIDE_FORWARD ; $6d0f
@@ -100,7 +100,7 @@ RunEraseSavedDataSelect:
 	sound SFX_MENU_CANCEL ; $6d1a
 	call ClearFrameTasks ; $6d1c
 	ld hl, rIE ; $6d1f
-	set 2, [hl] ; $6d22
+	set B_IE_TIMER, [hl] ; $6d22
 	ld b, $00 ; $6d24
 	call SavedDataPickerSlideOut ; $6d26
 	ld a, MENUSLIDE_BACK ; $6d29

@@ -185,7 +185,7 @@ RunExhibitionCharSelectScreen:
 	script_fade_in 16 ; $4e92
 	call WaitFadeEnd ; $4e97
 	ld hl, rIE ; $4e9a
-	res 2, [hl] ; $4e9d
+	res B_IE_TIMER, [hl] ; $4e9d
 	ld a, $01 ; $4e9f
 	ld hl, TickMenuBgScrollTask_38 ; $4ea1
 	call RegisterFrameTask ; $4ea4
@@ -248,7 +248,7 @@ RunExhibitionCharSelectScreen:
 	farcall InitDefaultMatchSettings ; $4f29
 	call ClearFrameTasks ; $4f2c
 	ld hl, rIE ; $4f2f
-	set 2, [hl] ; $4f32
+	set B_IE_TIMER, [hl] ; $4f32
 	xor a ; $4f34
 	ret ; $4f35
 .done:
@@ -258,7 +258,7 @@ RunExhibitionCharSelectScreen:
 	call WaitFadeEnd ; $4f3d
 	call ClearFrameTasks ; $4f40
 	ld hl, rIE ; $4f43
-	set 2, [hl] ; $4f46
+	set B_IE_TIMER, [hl] ; $4f46
 	ld a, $ff ; $4f48
 	ret ; $4f4a
 DrawCharGridCursorBox:

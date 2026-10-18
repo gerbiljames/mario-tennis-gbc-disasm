@@ -132,7 +132,7 @@ RunTitleScreen:
 	call BeginFadeOut ; $7698
 	call WaitFadeEnd ; $769b
 	ld hl, rIE ; $769e
-	res 1, [hl] ; $76a1
+	res B_IE_STAT, [hl] ; $76a1
 	ld a, $01 ; $76a3
 	ret ; $76a5
 .playSfx2:

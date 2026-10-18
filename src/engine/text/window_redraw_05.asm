@@ -233,7 +233,7 @@ UploadGlyphTilesPartial:
 	call QueueVRAMCopy ; $623f
 	push af ; $6242
 	ldh a, [rLCDC] ; $6243
-	bit 7, a ; $6245
+	bit B_LCDC_ENABLE, a ; $6245
 	jr z, .restore ; $6247
 	call AdvanceFrame ; $6249
 .restore:
@@ -244,7 +244,7 @@ UploadGlyphTilesPartial:
 	call QueueVRAMCopy ; $6255
 	push af ; $6258
 	ldh a, [rLCDC] ; $6259
-	bit 7, a ; $625b
+	bit B_LCDC_ENABLE, a ; $625b
 	jr z, .restore2 ; $625d
 	call AdvanceFrame ; $625f
 .restore2:

@@ -42,7 +42,7 @@ RunCharacterSelectScreen:
 	script_fade_in 8 ; $4842
 	call WaitFadeEnd ; $4847
 	ld hl, rIE ; $484a
-	res 2, [hl] ; $484d
+	res B_IE_TIMER, [hl] ; $484d
 	ld a, $01 ; $484f
 	ld hl, TickMenuBgScrollTask_38 ; $4851
 	call RegisterFrameTask ; $4854
@@ -105,7 +105,7 @@ RunCharacterSelectScreen:
 	push af ; $48bf
 	call ClearFrameTasks ; $48c0
 	ld hl, rIE ; $48c3
-	set 2, [hl] ; $48c6
+	set B_IE_TIMER, [hl] ; $48c6
 	call DisableLCDSafely ; $48c8
 	farcall LoadMenuFontGfx ; $48cb
 	call EnableLCD ; $48ce
@@ -118,7 +118,7 @@ RunCharacterSelectScreen:
 	call WaitFadeEnd ; $48da
 	call ClearFrameTasks ; $48dd
 	ld hl, rIE ; $48e0
-	set 2, [hl] ; $48e3
+	set B_IE_TIMER, [hl] ; $48e3
 	call DisableLCDSafely ; $48e5
 	farcall LoadMenuFontGfx ; $48e8
 	call EnableLCD ; $48eb
@@ -206,7 +206,7 @@ SetupCharacterSelectScreen:
 	ld [wCameraX + 1], a ; $498d
 	ld [wCameraY], a ; $4990
 	ld [wCameraY + 1], a ; $4993
-	ld a, $90 ; $4996
+	ld a, SCREEN_HEIGHT_PX ; $4996
 	ldh [rWY], a ; $4998
 	call ClearSpriteQueue ; $499a
 	ld a, $02 ; $499d

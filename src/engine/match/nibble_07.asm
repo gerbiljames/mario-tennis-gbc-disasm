@@ -485,7 +485,7 @@ SendByteGetReplySlave:
 	ldh [hLinkTxPending], a ; $4626
 	ldh [hLinkTxByte], a ; $4628
 	ldh a, [rIF] ; $462a
-	and $f7 ; $462c
+	and ~IF_SERIAL ; $462c
 	ldh [rIF], a ; $462e
 	xor a ; $4630
 	ldh [hLinkTransferDone], a ; $4631

@@ -133,7 +133,7 @@ FlushDirtyRowsPerFrame:
 	call CopyDirtyRowSpanToVRAM ; $7130
 	push af ; $7133
 	ldh a, [rLCDC] ; $7134
-	bit 7, a ; $7136
+	bit B_LCDC_ENABLE, a ; $7136
 	jr z, .restore ; $7138
 	call AdvanceFrame ; $713a
 .restore:
@@ -168,7 +168,7 @@ FlushDirtyRowsNow:
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7163
 	push af ; $7166
 	ldh a, [rLCDC] ; $7167
-	bit 7, a ; $7169
+	bit B_LCDC_ENABLE, a ; $7169
 	jr z, .restore ; $716b
 	call AdvanceFrame ; $716d
 .restore:

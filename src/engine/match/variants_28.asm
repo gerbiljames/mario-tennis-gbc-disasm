@@ -322,7 +322,7 @@ LoadMatchStoryGfx:
 	call QueueVRAMCopy ; $60f2
 	push af ; $60f5
 	ldh a, [rLCDC] ; $60f6
-	bit 7, a ; $60f8
+	bit B_LCDC_ENABLE, a ; $60f8
 	jr z, .restore ; $60fa
 	call AdvanceFrame ; $60fc
 .restore:
@@ -333,7 +333,7 @@ LoadMatchStoryGfx:
 	call QueueVRAMCopy ; $6108
 	push af ; $610b
 	ldh a, [rLCDC] ; $610c
-	bit 7, a ; $610e
+	bit B_LCDC_ENABLE, a ; $610e
 	jr z, .restore2 ; $6110
 	call AdvanceFrame ; $6112
 .restore2:
@@ -344,7 +344,7 @@ LoadMatchStoryGfx:
 	call QueueVRAMCopy ; $611e
 	push af ; $6121
 	ldh a, [rLCDC] ; $6122
-	bit 7, a ; $6124
+	bit B_LCDC_ENABLE, a ; $6124
 	jr z, .restore3 ; $6126
 	call AdvanceFrame ; $6128
 .restore3:
@@ -355,7 +355,7 @@ LoadMatchStoryGfx:
 	call QueueVRAMCopy ; $6134
 	push af ; $6137
 	ldh a, [rLCDC] ; $6138
-	bit 7, a ; $613a
+	bit B_LCDC_ENABLE, a ; $613a
 	jr z, .restore4 ; $613c
 	call AdvanceFrame ; $613e
 .restore4:
@@ -375,7 +375,7 @@ LoadMatchStoryGfx:
 	call QueueVRAMCopy ; $6162
 	push af ; $6165
 	ldh a, [rLCDC] ; $6166
-	bit 7, a ; $6168
+	bit B_LCDC_ENABLE, a ; $6168
 	jr z, .restore5 ; $616a
 	call AdvanceFrame ; $616c
 .restore5:

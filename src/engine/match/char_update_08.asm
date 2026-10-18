@@ -589,7 +589,7 @@ CharServeTossPhase:
 	ld a, [wCharInputBits] ; $6b42
 	and PADF_A | PADF_B ; $6b45
 	jr z, .done ; $6b47
-	ld bc, rWBK ; $6b49
+	ld bc, $ff70 ; $6b49
 	ld hl, wCharPosDepth + 1 ; $6b4c
 	ld a, [hl+] ; $6b4f
 	ld d, [hl] ; $6b50

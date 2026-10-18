@@ -135,7 +135,7 @@ UploadGlyphBufferFull:
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $7433
 	push af ; $7436
 	ldh a, [rLCDC] ; $7437
-	bit 7, a ; $7439
+	bit B_LCDC_ENABLE, a ; $7439
 	jr z, .lcdSettled ; $743b
 	call AdvanceFrame ; $743d
 .lcdSettled:
@@ -164,7 +164,7 @@ UploadGlyphBufferFull:
 	call QueueVRAMCopy ; $746c
 	push af ; $746f
 	ldh a, [rLCDC] ; $7470
-	bit 7, a ; $7472
+	bit B_LCDC_ENABLE, a ; $7472
 	jr z, .page2 ; $7474
 	call AdvanceFrame ; $7476
 .page2:
@@ -175,7 +175,7 @@ UploadGlyphBufferFull:
 	call QueueVRAMCopy ; $7480
 	push af ; $7483
 	ldh a, [rLCDC] ; $7484
-	bit 7, a ; $7486
+	bit B_LCDC_ENABLE, a ; $7486
 	jr z, .page3 ; $7488
 	call AdvanceFrame ; $748a
 .page3:
@@ -186,7 +186,7 @@ UploadGlyphBufferFull:
 	call QueueVRAMCopy ; $7494
 	push af ; $7497
 	ldh a, [rLCDC] ; $7498
-	bit 7, a ; $749a
+	bit B_LCDC_ENABLE, a ; $749a
 	jr z, .page4 ; $749c
 	call AdvanceFrame ; $749e
 .page4:
@@ -197,7 +197,7 @@ UploadGlyphBufferFull:
 	call QueueVRAMCopy ; $74a8
 	push af ; $74ab
 	ldh a, [rLCDC] ; $74ac
-	bit 7, a ; $74ae
+	bit B_LCDC_ENABLE, a ; $74ae
 	jr z, .page5 ; $74b0
 	call AdvanceFrame ; $74b2
 .page5:
@@ -212,7 +212,7 @@ UploadGlyphBufferFull:
 	call QueueVRAMCopy ; $74c3
 	push af ; $74c6
 	ldh a, [rLCDC] ; $74c7
-	bit 7, a ; $74c9
+	bit B_LCDC_ENABLE, a ; $74c9
 	jr z, .done ; $74cb
 	call AdvanceFrame ; $74cd
 .done:

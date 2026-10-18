@@ -142,7 +142,7 @@ PromptCharDataConfirm:
 	ld [wCameraX + 1], a ; $5a72
 	ld [wCameraY], a ; $5a75
 	ld [wCameraY + 1], a ; $5a78
-	ld a, $90 ; $5a7b
+	ld a, SCREEN_HEIGHT_PX ; $5a7b
 	ldh [rWY], a ; $5a7d
 	call ClearSpriteQueue ; $5a7f
 	call InitDrillWorkRam ; $5a82
@@ -288,7 +288,7 @@ InitCharDataScreenVideo:
 	ld [wCameraX + 1], a ; $5bf1
 	ld [wCameraY], a ; $5bf4
 	ld [wCameraY + 1], a ; $5bf7
-	ld a, $90 ; $5bfa
+	ld a, SCREEN_HEIGHT_PX ; $5bfa
 	ldh [rWY], a ; $5bfc
 	call ClearSpriteQueue ; $5bfe
 	farcall LoadMenuFontGfx ; $5c01

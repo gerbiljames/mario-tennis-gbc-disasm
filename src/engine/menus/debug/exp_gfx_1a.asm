@@ -50,7 +50,7 @@ Unused_1a_RunDebugCharViewer:
 	ld [wCameraX + 1], a ; $67ec
 	ld [wCameraY], a ; $67ef
 	ld [wCameraY + 1], a ; $67f2
-	ld a, $90 ; $67f5
+	ld a, SCREEN_HEIGHT_PX ; $67f5
 	ldh [rWY], a ; $67f7
 	call ClearSpriteQueue ; $67f9
 	farcall InitActorEngine ; $67fc

@@ -199,7 +199,7 @@ RunNameEntryScreen:
 	script_fade_in 16 ; $6e46
 	call WaitFadeEnd ; $6e4b
 	ld hl, rIE ; $6e4e
-	res 2, [hl] ; $6e51
+	res B_IE_TIMER, [hl] ; $6e51
 	ld a, $01 ; $6e53
 	ld hl, TickMenuBgScrollTask_38 ; $6e55
 	call RegisterFrameTask ; $6e58
@@ -267,7 +267,7 @@ RunNameEntryScreen:
 	call WaitFadeEnd ; $6ed5
 	call ClearFrameTasks ; $6ed8
 	ld hl, rIE ; $6edb
-	set 2, [hl] ; $6ede
+	set B_IE_TIMER, [hl] ; $6ede
 	ld a, $ff ; $6ee0
 	ret ; $6ee2
 .accept:
@@ -292,7 +292,7 @@ RunNameEntryScreen:
 	call WaitFadeEnd ; $6f18
 	call ClearFrameTasks ; $6f1b
 	ld hl, rIE ; $6f1e
-	set 2, [hl] ; $6f21
+	set B_IE_TIMER, [hl] ; $6f21
 	ld a, $00 ; $6f23
 	ret ; $6f25
 .storeName:
@@ -321,7 +321,7 @@ RunNameEntryScreen:
 	call WaitFadeEnd ; $6f60
 	call ClearFrameTasks ; $6f63
 	ld hl, rIE ; $6f66
-	set 2, [hl] ; $6f69
+	set B_IE_TIMER, [hl] ; $6f69
 	ld a, $00 ; $6f6b
 	ret ; $6f6d
 SetupNameEntryScreen:

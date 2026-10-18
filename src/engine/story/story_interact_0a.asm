@@ -403,7 +403,7 @@ RunLocationInitScript:
 	push hl ; $5498
 	ldh a, [hWramBank] ; $5499
 	push af ; $549b
-	ld a, $90 ; $549c
+	ld a, SCREEN_HEIGHT_PX ; $549c
 	ldh [rWY], a ; $549e
 	ld hl, wMapInitScriptPtr ; $54a0
 	ld a, [hl+] ; $54a3

@@ -501,7 +501,7 @@ QueueTennisDictionaryGlyphTiles:
 	call QueueVRAMCopy ; $575a
 	push af ; $575d
 	ldh a, [rLCDC] ; $575e
-	bit 7, a ; $5760
+	bit B_LCDC_ENABLE, a ; $5760
 	jr z, .restore ; $5762
 	call AdvanceFrame ; $5764
 .restore:
@@ -512,7 +512,7 @@ QueueTennisDictionaryGlyphTiles:
 	call QueueVRAMCopy ; $5770
 	push af ; $5773
 	ldh a, [rLCDC] ; $5774
-	bit 7, a ; $5776
+	bit B_LCDC_ENABLE, a ; $5776
 	jr z, .restore2 ; $5778
 	call AdvanceFrame ; $577a
 .restore2:
@@ -551,7 +551,7 @@ QueueTennisDictionaryListRows:
 	call QueueVRAMCopy ; $57d7
 	push af ; $57da
 	ldh a, [rLCDC] ; $57db
-	bit 7, a ; $57dd
+	bit B_LCDC_ENABLE, a ; $57dd
 	jr z, .restore ; $57df
 	call AdvanceFrame ; $57e1
 .restore:

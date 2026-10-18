@@ -66,7 +66,7 @@ RunScrollingTextScreen:
 	ld [wCameraX + 1], a ; $59d6
 	ld [wCameraY], a ; $59d9
 	ld [wCameraY + 1], a ; $59dc
-	ld a, $90 ; $59df
+	ld a, SCREEN_HEIGHT_PX ; $59df
 	ldh [rWY], a ; $59e1
 	call ClearSpriteQueue ; $59e3
 	ld hl, ScrollTextPalette_03 ; $59e6

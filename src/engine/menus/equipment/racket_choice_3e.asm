@@ -1,6 +1,6 @@
 RunEraseDataConfirmMenu:
 	ld hl, rIE ; $4c12
-	res 2, [hl] ; $4c15
+	res B_IE_TIMER, [hl] ; $4c15
 	wram_bank WRAM_SCREEN ; $4c17
 	ld a, b ; $4c1d
 	ld [wScreenScratch], a ; $4c1e
@@ -48,7 +48,7 @@ RunEraseDataConfirmMenu:
 	jr nz, .playSfx ; $4c84
 	sound SFX_MENU_DECIDE ; $4c86
 	ld hl, rIE ; $4c88
-	set 2, [hl] ; $4c8b
+	set B_IE_TIMER, [hl] ; $4c8b
 	call ClearFrameTasks ; $4c8d
 	ld c, 16 ; $4c90
 	call BeginFadeOut ; $4c92
@@ -58,7 +58,7 @@ RunEraseDataConfirmMenu:
 .playSfx:
 	sound SFX_MENU_CANCEL ; $4c9b
 	ld hl, rIE ; $4c9d
-	set 2, [hl] ; $4ca0
+	set B_IE_TIMER, [hl] ; $4ca0
 	call ClearFrameTasks ; $4ca2
 	ld c, 16 ; $4ca5
 	call BeginFadeOut ; $4ca7
@@ -266,7 +266,7 @@ EraseConfirmFlashColors_3e:
 RunRacketShoesChoiceMenu:
 	sound BGM_MENU ; $4ea0
 	ld hl, rIE ; $4ea2
-	res 2, [hl] ; $4ea5
+	res B_IE_TIMER, [hl] ; $4ea5
 	call LoadRacketShoesChoiceGraphics ; $4ea7
 	wram_bank WRAM_SCREEN ; $4eaa
 	ld a, [wMenuSlideDirection] ; $4eb0
@@ -307,7 +307,7 @@ RunRacketShoesChoiceMenu:
 	sound SFX_MENU_SELECT ; $4eff
 	call ClearFrameTasks ; $4f01
 	ld hl, rIE ; $4f04
-	set 2, [hl] ; $4f07
+	set B_IE_TIMER, [hl] ; $4f07
 	ld b, $01 ; $4f09
 	call CloseChoiceTabPanel ; $4f0b
 	ld a, MENUSLIDE_FORWARD ; $4f0e
@@ -320,7 +320,7 @@ RunRacketShoesChoiceMenu:
 	sound SFX_MENU_CANCEL ; $4f1c
 	call ClearFrameTasks ; $4f1e
 	ld hl, rIE ; $4f21
-	set 2, [hl] ; $4f24
+	set B_IE_TIMER, [hl] ; $4f24
 	ld b, $00 ; $4f26
 	call CloseChoiceTabPanel ; $4f28
 	ld a, MENUSLIDE_BACK ; $4f2b

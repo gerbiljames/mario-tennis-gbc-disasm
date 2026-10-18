@@ -340,7 +340,7 @@ MarioWorldArrivalIntroCutscene:
 	script_set_speed ACTOR_MARIO_WORLD_TOAD, 2.0 ; $6ab4
 	ld a, $13 ; $6abc
 	ld bc, $0300 ; $6abe
-	ld de, rJOYP ; $6ac1
+	ld de, $ff00 ; $6ac1
 	farcall MoveActorByDelta ; $6ac4
 	script_wait_move ACTOR_MARIO_WORLD_TOAD ; $6ac7
 	script_face ACTOR_MARIO_WORLD_TOAD, FACE_DOWN ; $6acc

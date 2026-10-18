@@ -20,7 +20,7 @@ VBlankHandler:
 	ldh a, [hScrollY] ; $2767
 	ldh [rSCY], a ; $2769
 	ldh a, [rLCDC] ; $276b
-	and $f7 ; $276d
+	and ~LCDC_BG_MAP ; $276d
 	ldh [rLCDC], a ; $276f
 	jr .checkSpriteBufferPage ; $2771
 .compare:
@@ -31,7 +31,7 @@ VBlankHandler:
 	ld a, $40 ; $277a
 	ldh [rSCY], a ; $277c
 	ldh a, [rLCDC] ; $277e
-	or $08 ; $2780
+	or LCDC_BG_MAP ; $2780
 	ldh [rLCDC], a ; $2782
 	jr .checkSpriteBufferPage ; $2784
 .ne01:
@@ -86,11 +86,11 @@ TimerHandler:
 	cp LINKSTATE_SLAVE ; $27da
 	jr nz, .ne02 ; $27dc
 	ldh a, [rIF] ; $27de
-	and $08 ; $27e0
+	and IF_SERIAL ; $27e0
 	jr nz, .restore ; $27e2
 .ne02:
 	ldh a, [rLCDC] ; $27e4
-	bit 7, a ; $27e6
+	bit B_LCDC_ENABLE, a ; $27e6
 	jr nz, .restore ; $27e8
 	push bc ; $27ea
 	push de ; $27eb
@@ -466,7 +466,7 @@ Unused_00_EnableSerialInterrupt:
 	xor a ; $29f7
 	ldh [rIF], a ; $29f8
 	ldh a, [rIE] ; $29fa
-	or $08 ; $29fc
+	or IE_SERIAL ; $29fc
 	ldh [rIE], a ; $29fe
 	ei ; $2a00
 	ret ; $2a01
@@ -476,7 +476,7 @@ Unused_00_EnableVBlankInterrupt:
 	xor a ; $2a03
 	ldh [rIF], a ; $2a04
 	ldh a, [rIE] ; $2a06
-	or $01 ; $2a08
+	or IE_VBLANK ; $2a08
 	ldh [rIE], a ; $2a0a
 	ei ; $2a0c
 	ret ; $2a0d

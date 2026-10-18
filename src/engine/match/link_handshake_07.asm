@@ -118,7 +118,7 @@ ResyncLinkSession:
 	xor a ; $4a52
 	ldh [rIF], a ; $4a53
 	ldh a, [rIE] ; $4a55
-	and $09 ; $4a57
+	and IE_SERIAL | IE_VBLANK ; $4a57
 	ldh [rIE], a ; $4a59
 	ei ; $4a5b
 	call DisableLCDSafely ; $4a5c
@@ -164,7 +164,7 @@ ResyncLinkSessionWithTimer:
 	xor a ; $4aaa
 	ldh [rIF], a ; $4aab
 	ldh a, [rIE] ; $4aad
-	and $09 ; $4aaf
+	and IE_SERIAL | IE_VBLANK ; $4aaf
 	ldh [rIE], a ; $4ab1
 	ei ; $4ab3
 	ld a, $01 ; $4ab4
@@ -211,7 +211,7 @@ TryLinkHandshakeSlave:
 	call EnableSerialAndVBlankInterrupts ; $4b01
 	di ; $4b04
 	ldh a, [rIF] ; $4b05
-	and $f7 ; $4b07
+	and ~IF_SERIAL ; $4b07
 	ldh [rIF], a ; $4b09
 	xor a ; $4b0b
 	ldh [hLinkTransferDone], a ; $4b0c
@@ -251,7 +251,7 @@ TryLinkHandshakeMaster:
 	call EnableSerialAndVBlankInterrupts ; $4b3b
 	di ; $4b3e
 	ldh a, [rSC] ; $4b3f
-	and $7f ; $4b41
+	and ~SC_START ; $4b41
 	ldh [rSC], a ; $4b43
 	ei ; $4b45
 	ld a, LINKMSG_PROBE ; $4b46
@@ -263,7 +263,7 @@ TryLinkHandshakeMaster:
 	cp $8c ; $4b52
 	jr nz, .pollLoop ; $4b54
 	ldh a, [rSC] ; $4b56
-	bit 7, a ; $4b58
+	bit B_SC_START, a ; $4b58
 	jr nz, .pollLoop ; $4b5a
 	di ; $4b5c
 	ldh a, [hLinkTxByte] ; $4b5d

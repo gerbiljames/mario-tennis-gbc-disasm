@@ -34,7 +34,7 @@ CharDataScreen_Show:
 	ld [wCameraX + 1], a ; $4046
 	ld [wCameraY], a ; $4049
 	ld [wCameraY + 1], a ; $404c
-	ld a, $90 ; $404f
+	ld a, SCREEN_HEIGHT_PX ; $404f
 	ldh [rWY], a ; $4051
 	call ClearSpriteQueue ; $4053
 	pop bc ; $4056

@@ -421,7 +421,7 @@ StartLandingMarker:
 	bit 7, a ; $531c
 	ld de, $0100 ; $531e
 	jr z, .done ; $5321
-	ld de, rJOYP ; $5323
+	ld de, $ff00 ; $5323
 .done:
 	ld bc, $0000 ; $5326
 	call ProjectWorldToScreen_08 ; $5329

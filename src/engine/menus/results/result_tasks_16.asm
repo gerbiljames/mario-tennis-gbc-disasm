@@ -162,10 +162,10 @@ RunMatchWinLoseScreen:
 	call EnableLCD ; $44cf
 	script_fade_in 16 ; $44d2
 	call WaitFadeEnd ; $44d7
-	ld a, $08 ; $44da
+	ld a, STAT_MODE_0 ; $44da
 	ldh [rSTAT], a ; $44dc
 	ld hl, rIE ; $44de
-	set 1, [hl] ; $44e1
+	set B_IE_STAT, [hl] ; $44e1
 	ld a, $48 ; $44e3
 	ld [wRasterScrollStartLY], a ; $44e5
 	ld a, $57 ; $44e8
@@ -201,7 +201,7 @@ RunMatchWinLoseScreen:
 	call BeginFadeOut ; $4524
 	call WaitFadeEnd ; $4527
 	ld hl, rIE ; $452a
-	res 1, [hl] ; $452d
+	res B_IE_STAT, [hl] ; $452d
 	ld a, $03 ; $452f
 	ld [wAnimatedTilePeriod], a ; $4531
 	ld a, [wMatchWinLoseState] ; $4534
@@ -212,7 +212,7 @@ RunMatchWinLoseScreen:
 	call BeginFadeOut ; $453d
 	call WaitFadeEnd ; $4540
 	ld hl, rIE ; $4543
-	res 1, [hl] ; $4546
+	res B_IE_STAT, [hl] ; $4546
 	call ClearFrameTasks ; $4548
 	call RunMatchStatsScreen ; $454b
 	push af ; $454e
@@ -226,7 +226,7 @@ RunMatchWinLoseScreen:
 	call BeginFadeOut ; $4560
 	call WaitFadeEnd ; $4563
 	ld hl, rIE ; $4566
-	res 1, [hl] ; $4569
+	res B_IE_STAT, [hl] ; $4569
 	ld a, $03 ; $456b
 	ld [wAnimatedTilePeriod], a ; $456d
 	ret ; $4570

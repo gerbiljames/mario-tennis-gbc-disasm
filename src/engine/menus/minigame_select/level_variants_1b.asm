@@ -38,7 +38,7 @@ RunMinigameLevelSelect2:
 	call ResumeBGM ; $6e31
 	sound BGM_MARIO_MINIGAME ; $6e34
 	ld hl, rIE ; $6e36
-	res 2, [hl] ; $6e39
+	res B_IE_TIMER, [hl] ; $6e39
 	wram_bank WRAM_SCREEN ; $6e3b
 	ld a, [wMenuSlideDirection] ; $6e41
 	ld b, a ; $6e44
@@ -91,7 +91,7 @@ RunMinigameLevelSelect2:
 	sound SFX_MENU_SELECT ; $6eb5
 	call ClearFrameTasks ; $6eb7
 	ld hl, rIE ; $6eba
-	set 2, [hl] ; $6ebd
+	set B_IE_TIMER, [hl] ; $6ebd
 	wram_bank WRAM_SCREEN ; $6ebf
 	ld b, $01 ; $6ec5
 	farcall CloseChoiceTabPanel ; $6ec7
@@ -106,7 +106,7 @@ RunMinigameLevelSelect2:
 	sound SFX_MENU_CANCEL ; $6ede
 	call ClearFrameTasks ; $6ee0
 	ld hl, rIE ; $6ee3
-	set 2, [hl] ; $6ee6
+	set B_IE_TIMER, [hl] ; $6ee6
 	wram_bank WRAM_SCREEN ; $6ee8
 	ld b, $00 ; $6eee
 	farcall CloseChoiceTabPanel ; $6ef0
@@ -238,7 +238,7 @@ RunMinigameLevelSelect3:
 	call ResumeBGM ; $6fd2
 	sound BGM_MARIO_MINIGAME ; $6fd5
 	ld hl, rIE ; $6fd7
-	res 2, [hl] ; $6fda
+	res B_IE_TIMER, [hl] ; $6fda
 	wram_bank WRAM_SCREEN ; $6fdc
 	ld a, [wMenuSlideDirection] ; $6fe2
 	ld b, a ; $6fe5
@@ -280,7 +280,7 @@ RunMinigameLevelSelect3:
 	sound SFX_MENU_SELECT ; $703e
 	call ClearFrameTasks ; $7040
 	ld hl, rIE ; $7043
-	set 2, [hl] ; $7046
+	set B_IE_TIMER, [hl] ; $7046
 	wram_bank WRAM_SCREEN ; $7048
 	ld b, $01 ; $704e
 	farcall N64RecordTypeSlideOut ; $7050
@@ -295,7 +295,7 @@ RunMinigameLevelSelect3:
 	sound SFX_MENU_CANCEL ; $7067
 	call ClearFrameTasks ; $7069
 	ld hl, rIE ; $706c
-	set 2, [hl] ; $706f
+	set B_IE_TIMER, [hl] ; $706f
 	wram_bank WRAM_SCREEN ; $7071
 	ld b, $00 ; $7077
 	farcall N64RecordTypeSlideOut ; $7079
@@ -426,7 +426,7 @@ MinigameLevelSelect3CursorTable1:
 RunSavedDataTypeSelect:
 	sound BGM_MENU ; $715d
 	ld hl, rIE ; $715f
-	res 2, [hl] ; $7162
+	res B_IE_TIMER, [hl] ; $7162
 	call LoadSavedDataTypeSelectGfx ; $7164
 	wram_bank WRAM_SCREEN ; $7167
 	ld a, [wMenuSlideDirection] ; $716d
@@ -470,7 +470,7 @@ RunSavedDataTypeSelect:
 	sound SFX_MENU_SELECT ; $71c4
 	call ClearFrameTasks ; $71c6
 	ld hl, rIE ; $71c9
-	set 2, [hl] ; $71cc
+	set B_IE_TIMER, [hl] ; $71cc
 	wram_bank WRAM_SCREEN ; $71ce
 	ld b, $01 ; $71d4
 	farcall CloseChoiceTabPanel ; $71d6
@@ -484,7 +484,7 @@ RunSavedDataTypeSelect:
 	sound SFX_MENU_CANCEL ; $71e7
 	call ClearFrameTasks ; $71e9
 	ld hl, rIE ; $71ec
-	set 2, [hl] ; $71ef
+	set B_IE_TIMER, [hl] ; $71ef
 	wram_bank WRAM_SCREEN ; $71f1
 	ld b, $00 ; $71f7
 	farcall CloseChoiceTabPanel ; $71f9

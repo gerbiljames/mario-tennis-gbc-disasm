@@ -117,7 +117,7 @@ SndTriggerNote:
 	cp SNDCHANTYPE_WAVE ; $38ee
 	jr nz, .ne02 ; $38f0
 	call LoadWavePatternIfChanged ; $38f2
-	ld a, $80 ; $38f5
+	ld a, AUD3ENA_ON ; $38f5
 	ldh [rAUD3ENA], a ; $38f7
 .ne02:
 	push hl ; $38f9
@@ -179,7 +179,7 @@ SndTriggerNote:
 	xor a ; $395a
 	ldh [rAUD3LEN], a ; $395b
 	ldh a, [rAUDENA] ; $395d
-	and $04 ; $395f
+	and AUDENA_CH3_ON ; $395f
 	jr z, .loopB ; $3961
 	ld a, h ; $3963
 	and $07 ; $3964

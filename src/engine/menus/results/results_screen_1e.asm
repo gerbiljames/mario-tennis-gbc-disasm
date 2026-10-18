@@ -42,7 +42,7 @@ ShowMatchResultsScreen:
 	ld [wCameraX + 1], a ; $4055
 	ld [wCameraY], a ; $4058
 	ld [wCameraY + 1], a ; $405b
-	ld a, $90 ; $405e
+	ld a, SCREEN_HEIGHT_PX ; $405e
 	ldh [rWY], a ; $4060
 	call ClearSpriteQueue ; $4062
 	farcall InitActorEngine ; $4065

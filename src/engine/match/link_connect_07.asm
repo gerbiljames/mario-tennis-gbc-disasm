@@ -32,7 +32,7 @@ EnableSerialAndVBlankInterrupts:
 	di ; $4077
 	xor a ; $4078
 	ldh [rIF], a ; $4079
-	ld a, $09 ; $407b
+	ld a, IE_SERIAL | IE_VBLANK ; $407b
 	ldh [rIE], a ; $407d
 	ei ; $407f
 	ret ; $4080
@@ -312,7 +312,7 @@ ExchangeNibbleBlockSlave:
 .nibbleLoop:
 	di ; $423b
 	ldh a, [rIF] ; $423c
-	and $f7 ; $423e
+	and ~IF_SERIAL ; $423e
 	ldh [rIF], a ; $4240
 	xor a ; $4242
 	ldh [hLinkTransferDone], a ; $4243
@@ -366,7 +366,7 @@ ExchangeNibbleBlockSlave:
 	jr nz, .nibbleLoop ; $428e
 	di ; $4290
 	ldh a, [rIF] ; $4291
-	and $f7 ; $4293
+	and ~IF_SERIAL ; $4293
 	ldh [rIF], a ; $4295
 	xor a ; $4297
 	ldh [hLinkTransferDone], a ; $4298
@@ -424,7 +424,7 @@ ExchangeNibbleBlockSlave:
 	jp z, .checksumOk ; $42e4
 	di ; $42e7
 	ldh a, [rIF] ; $42e8
-	and $f7 ; $42ea
+	and ~IF_SERIAL ; $42ea
 	ldh [rIF], a ; $42ec
 	xor a ; $42ee
 	ldh [hLinkTransferDone], a ; $42ef

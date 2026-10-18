@@ -45,7 +45,7 @@ ShowCharDataScreen:
 	ld a, $60 ; $4070
 	ld [wMenuBgScrollTile + 1], a ; $4072
 	ld hl, rIE ; $4075
-	res 2, [hl] ; $4078
+	res B_IE_TIMER, [hl] ; $4078
 	call EnableLCD ; $407a
 	call AdvanceFrame ; $407d
 	ld a, $01 ; $4080
@@ -62,7 +62,7 @@ ShowCharDataScreen:
 	call WaitFadeEnd ; $40a0
 	call RunDrillResultInputLoop ; $40a3
 	ld hl, rIE ; $40a6
-	set 2, [hl] ; $40a9
+	set B_IE_TIMER, [hl] ; $40a9
 	ld c, 16 ; $40ab
 	call BeginFadeOut ; $40ad
 	call WaitFadeEnd ; $40b0

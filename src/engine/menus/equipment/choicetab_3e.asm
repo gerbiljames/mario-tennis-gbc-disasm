@@ -158,7 +158,7 @@ ChoiceTabAttrAddrs_3e:
 RunPlayAlonePartnerMenu:
 	sound BGM_MENU ; $5192
 	ld hl, rIE ; $5194
-	res 2, [hl] ; $5197
+	res B_IE_TIMER, [hl] ; $5197
 	call LoadPlayAlonePartnerGraphics ; $5199
 	wram_bank WRAM_SCREEN ; $519c
 	ld a, [wMenuSlideDirection] ; $51a2
@@ -199,7 +199,7 @@ RunPlayAlonePartnerMenu:
 	sound SFX_MENU_SELECT ; $51ef
 	call ClearFrameTasks ; $51f1
 	ld hl, rIE ; $51f4
-	set 2, [hl] ; $51f7
+	set B_IE_TIMER, [hl] ; $51f7
 	ld b, $01 ; $51f9
 	call CloseChoiceTabPanel ; $51fb
 	ld a, MENUSLIDE_FORWARD ; $51fe
@@ -216,7 +216,7 @@ RunPlayAlonePartnerMenu:
 	sound SFX_MENU_CANCEL ; $5212
 	call ClearFrameTasks ; $5214
 	ld hl, rIE ; $5217
-	set 2, [hl] ; $521a
+	set B_IE_TIMER, [hl] ; $521a
 	ld b, $00 ; $521c
 	call CloseChoiceTabPanel ; $521e
 	ld a, MENUSLIDE_BACK ; $5221

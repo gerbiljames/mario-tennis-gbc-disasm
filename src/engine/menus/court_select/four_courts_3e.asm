@@ -2,7 +2,7 @@ RunCourtSelect4Menu:
 	sound BGM_MENU ; $5b99
 	call ClearFrameTasks ; $5b9b
 	ld hl, rIE ; $5b9e
-	res 2, [hl] ; $5ba1
+	res B_IE_TIMER, [hl] ; $5ba1
 	farcall InitMenuBgScroll ; $5ba3
 	ld b, $01 ; $5ba6
 	ld c, $01 ; $5ba8
@@ -43,7 +43,7 @@ RunCourtSelect4Menu:
 	sound SFX_MENU_DECIDE ; $5bfb
 	call ClearFrameTasks ; $5bfd
 	ld hl, rIE ; $5c00
-	set 2, [hl] ; $5c03
+	set B_IE_TIMER, [hl] ; $5c03
 	ld b, $01 ; $5c05
 	call CloseCourtSelect4Panel ; $5c07
 	ld a, MENUSLIDE_FORWARD ; $5c0a
@@ -60,7 +60,7 @@ RunCourtSelect4Menu:
 	sound SFX_MENU_CANCEL ; $5c1e
 	call ClearFrameTasks ; $5c20
 	ld hl, rIE ; $5c23
-	set 2, [hl] ; $5c26
+	set B_IE_TIMER, [hl] ; $5c26
 	ld b, $00 ; $5c28
 	call CloseCourtSelect4Panel ; $5c2a
 	ld a, MENUSLIDE_BACK ; $5c2d

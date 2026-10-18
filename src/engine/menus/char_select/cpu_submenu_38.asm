@@ -351,7 +351,7 @@ RunLinkCharSelectScreen:
 	call BeginFadeOut ; $64f8
 	call WaitFadeEnd ; $64fb
 	ld hl, rIE ; $64fe
-	set 2, [hl] ; $6501
+	set B_IE_TIMER, [hl] ; $6501
 	xor a ; $6503
 	ret ; $6504
 .done:
@@ -368,7 +368,7 @@ RunLinkCharSelectScreen:
 	call WaitFadeEnd ; $651a
 	call ClearFrameTasks ; $651d
 	ld hl, rIE ; $6520
-	set 2, [hl] ; $6523
+	set B_IE_TIMER, [hl] ; $6523
 	ld a, $ff ; $6525
 	ret ; $6527
 ProcessLinkSelectCommand:

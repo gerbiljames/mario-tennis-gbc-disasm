@@ -2,7 +2,7 @@ RunMainMenu:
 	call InitSerialLink ; $55d1
 	sound BGM_MENU ; $55d4
 	ld hl, rIE ; $55d6
-	res 2, [hl] ; $55d9
+	res B_IE_TIMER, [hl] ; $55d9
 	call BuildSaveSlotSummaries ; $55db
 	xor a ; $55de
 	ld [wCheatCodeLength], a ; $55df
@@ -61,7 +61,7 @@ RunMainMenu:
 	sound SFX_MENU_SELECT ; $565a
 	call ClearFrameTasks ; $565c
 	ld hl, rIE ; $565f
-	set 2, [hl] ; $5662
+	set B_IE_TIMER, [hl] ; $5662
 	ld b, $01 ; $5664
 	call MainMenuSlideOut ; $5666
 	ld a, [wMenuCursorX] ; $5669
@@ -88,7 +88,7 @@ RunMainMenu:
 	call ResetSerialState ; $5698
 	call ClearFrameTasks ; $569b
 	ld hl, rIE ; $569e
-	set 2, [hl] ; $56a1
+	set B_IE_TIMER, [hl] ; $56a1
 	ld b, $00 ; $56a3
 	call MainMenuSlideOut ; $56a5
 	ld a, MENUSLIDE_BACK ; $56a8

@@ -494,17 +494,17 @@ SoftReset:
 	call ClearMemory16 ; $25df
 	call InitAudioEngine ; $25e2
 	pop_wram_bank ; $25e5
-	ld a, $07 ; $25ea
+	ld a, WX_OFS ; $25ea
 	ldh [rWX], a ; $25ec
-	ld a, $90 ; $25ee
+	ld a, SCREEN_HEIGHT_PX ; $25ee
 	ldh [rWY], a ; $25f0
 	ld hl, rTMA ; $25f2
 	ld a, $77 ; $25f5
 	ld [hl+], a ; $25f7
 	xor a ; $25f8
 	ld [hl], a ; $25f9
-	set 2, [hl] ; $25fa
-	ld a, $08 ; $25fc
+	set B_TAC_START, [hl] ; $25fa
+	ld a, STAT_MODE_0 ; $25fc
 	ldh [rSTAT], a ; $25fe
 	ld a, $50 ; $2600
 	ldh [rLYC], a ; $2602
@@ -516,9 +516,9 @@ SoftReset:
 	ldh [rSC], a ; $260d
 	xor a ; $260f
 	ldh [rIF], a ; $2610
-	ld a, $0d ; $2612
+	ld a, IE_SERIAL | IE_TIMER | IE_VBLANK ; $2612
 	ldh [rIE], a ; $2614
-	ld a, $e7 ; $2616
+	ld a, LCDC_ON | LCDC_WIN_9C00 | LCDC_WIN_ON | LCDC_OBJ_16 | LCDC_OBJ_ON | LCDC_PRIO_ON ; $2616
 	ldh [rLCDC], a ; $2618
 	ei ; $261a
 	xor a ; $261b

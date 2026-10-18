@@ -180,7 +180,7 @@ SaveGlyphPenColumns:
 UploadGlyphBuffer:
 	push af ; $7792
 	ldh a, [rLCDC] ; $7793
-	bit 7, a ; $7795
+	bit B_LCDC_ENABLE, a ; $7795
 	jr z, .lcdOff ; $7797
 	call UploadGlyphBufferQueued ; $7799
 	jr .done ; $779c
@@ -204,7 +204,7 @@ FlushGlyphRow:
 	jr nz, .step2 ; $77b8
 .uploadGlyphBufferQueued:
 	ldh a, [rLCDC] ; $77ba
-	bit 7, a ; $77bc
+	bit B_LCDC_ENABLE, a ; $77bc
 	jr z, .uploadGlyphBufferDMA ; $77be
 	call UploadGlyphBufferQueued ; $77c0
 	jr .step2 ; $77c3

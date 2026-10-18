@@ -7,7 +7,7 @@ RunIntroCutscene:
 	ld [wIntroCutsceneSubState], a ; $4037
 	ldh [hShowDebugConsole], a ; $403a
 	ld hl, rLCDC ; $403c
-	res 3, [hl] ; $403f
+	res B_LCDC_BG_MAP, [hl] ; $403f
 	sound BGM_INTRO ; $4041
 	ld a, $01 ; $4043
 	ld hl, CheckIntroSkipInput ; $4045
@@ -18,11 +18,11 @@ RunIntroCutscene:
 	call WaitFadeEnd ; $4053
 	call ClearFrameTasks ; $4056
 	ld hl, rIE ; $4059
-	res 1, [hl] ; $405c
+	res B_IE_STAT, [hl] ; $405c
 	xor a ; $405e
 	ldh [hShowDebugConsole], a ; $405f
 	ld hl, rLCDC ; $4061
-	res 3, [hl] ; $4064
+	res B_LCDC_BG_MAP, [hl] ; $4064
 	call ClearDebugTextBuffer ; $4066
 	ret ; $4069
 DispatchCutsceneStateInit:
@@ -521,10 +521,10 @@ IntroCutsceneState05Init_6b:
 	farcall QueueWram3MapToVRAM ; $455c
 	ld c, SCREENASSET_IntroRallies4 ; $455f
 	farcall LoadScreenAssetRecord ; $4561
-	ld a, $08 ; $4564
+	ld a, STAT_MODE_0 ; $4564
 	ldh [rSTAT], a ; $4566
 	ld hl, rIE ; $4568
-	set 1, [hl] ; $456b
+	set B_IE_STAT, [hl] ; $456b
 	ld a, $44 ; $456d
 	ld [wRasterScrollStartLY], a ; $456f
 	ld a, $78 ; $4572
@@ -554,7 +554,7 @@ IntroCutsceneState05Init_6b:
 	jp DispatchCutsceneStateInit.loop ; $45b2
 IntroCutsceneState05Exit_6b:
 	ld hl, rIE ; $45b5
-	res 1, [hl] ; $45b8
+	res B_IE_STAT, [hl] ; $45b8
 	push_wram_bank WRAM_SCREEN ; $45ba
 	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $45c3
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $45c6
@@ -824,7 +824,7 @@ Unused_6b_IntroCutsceneState11Init:
 	ld a, $01 ; $488d
 	ldh [hShowDebugConsole], a ; $488f
 	ld hl, rLCDC ; $4891
-	set 3, [hl] ; $4894
+	set B_LCDC_BG_MAP, [hl] ; $4894
 	wram_bank WRAM_SCREEN ; $4896
 	ld hl, wShadowTilemap ; $489c
 	ld de, vBGMap1 ; $489f
@@ -846,7 +846,7 @@ Unused_6b_IntroCutsceneState11Exit:
 	ld a, $00 ; $48ca
 	ldh [hShowDebugConsole], a ; $48cc
 	ld hl, rLCDC ; $48ce
-	res 3, [hl] ; $48d1
+	res B_LCDC_BG_MAP, [hl] ; $48d1
 	ld hl, Palette_6b_1 ; $48d3
 	ld_bg_pals de, 0, 8 ; $48d6
 	call LoadPaletteShadow ; $48d9
@@ -918,7 +918,7 @@ IntroCutsceneState16Init_6b:
 	ld a, $02 ; $4969
 	ldh [hShowDebugConsole], a ; $496b
 	ld hl, rLCDC ; $496d
-	set 3, [hl] ; $4970
+	set B_LCDC_BG_MAP, [hl] ; $4970
 	wram_bank WRAM_STAGING ; $4972
 	ld_slot hl, DataPtr_IntroGreatestPlayerTiles ; $4978
 	ld de, wDecompBuffer ; $497b

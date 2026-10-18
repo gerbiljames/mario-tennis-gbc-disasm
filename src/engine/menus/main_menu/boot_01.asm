@@ -396,7 +396,7 @@ UnusedJpFontTiles_01:
 UnusedJpFontPalettes_01:
 	INCLUDE "data/engine/menus/main_menu/UnusedJpFontPalettes_01.asm" ; $5ff0, 64 bytes (palettes)
 ShowDmgLockoutScreen:
-	ld a, $00 ; $6030
+	ld a, LCDC_OFF ; $6030
 	ldh [rLCDC], a ; $6032
 	ld hl, DmgLockoutTilesLZ_01 ; $6034
 	ld de, wDecompBuffer ; $6037
@@ -422,7 +422,7 @@ ShowDmgLockoutScreen:
 	ldh [rIF], a ; $606c
 	ld a, $00 ; $606e
 	ldh [rIE], a ; $6070
-	ld a, $c1 ; $6072
+	ld a, LCDC_ON | LCDC_WIN_9C00 | LCDC_BG_ON ; $6072
 	ldh [rLCDC], a ; $6074
 	ei ; $6076
 .loop:

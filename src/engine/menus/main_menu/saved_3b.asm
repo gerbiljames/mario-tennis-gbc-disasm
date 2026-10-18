@@ -184,7 +184,7 @@ DrawMinigameSelectGrid6:
 RunSavedDataSourceSelect:
 	sound BGM_MENU ; $67a1
 	ld hl, rIE ; $67a3
-	res 2, [hl] ; $67a6
+	res B_IE_TIMER, [hl] ; $67a6
 	call BuildSaveSlotSummaries ; $67a8
 	call LoadSavedDataSourceGfx ; $67ab
 	farcall InitMenuBgScroll ; $67ae
@@ -259,7 +259,7 @@ RunSavedDataSourceSelect:
 	sound SFX_MENU_SELECT ; $683a
 	call ClearFrameTasks ; $683c
 	ld hl, rIE ; $683f
-	set 2, [hl] ; $6842
+	set B_IE_TIMER, [hl] ; $6842
 	ld b, $01 ; $6844
 	farcall SavedDataPickerSlideOut ; $6846
 	ld a, MENUSLIDE_FORWARD ; $6849
@@ -272,7 +272,7 @@ RunSavedDataSourceSelect:
 	sound SFX_MENU_CANCEL ; $6857
 	call ClearFrameTasks ; $6859
 	ld hl, rIE ; $685c
-	set 2, [hl] ; $685f
+	set B_IE_TIMER, [hl] ; $685f
 	ld b, $00 ; $6861
 	farcall SavedDataPickerSlideOut ; $6863
 	ld a, MENUSLIDE_BACK ; $6866

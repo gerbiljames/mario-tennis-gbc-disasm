@@ -6,7 +6,7 @@ Unused_3b_StubNop4:
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 2
 RunMinigameSelect:
 	ld hl, rIE ; $61f0
-	res 2, [hl] ; $61f3
+	res B_IE_TIMER, [hl] ; $61f3
 	sound BGM_MARIO_MINIGAME ; $61f5
 	xor a ; $61f7
 	ld [wMinigameSelectUnused], a ; $61f8
@@ -89,7 +89,7 @@ RunMinigameSelect:
 	sound SFX_MENU_SELECT ; $629d
 	call ClearFrameTasks ; $629f
 	ld hl, rIE ; $62a2
-	set 2, [hl] ; $62a5
+	set B_IE_TIMER, [hl] ; $62a5
 	call CheckMinigameGridExpanded ; $62a7
 	or a ; $62aa
 	jr nz, .nonZero2 ; $62ab
@@ -112,7 +112,7 @@ RunMinigameSelect:
 	sound SFX_MENU_CANCEL ; $62cb
 	call ClearFrameTasks ; $62cd
 	ld hl, rIE ; $62d0
-	set 2, [hl] ; $62d3
+	set B_IE_TIMER, [hl] ; $62d3
 	call CheckMinigameGridExpanded ; $62d5
 	or a ; $62d8
 	jr nz, .nonZero3 ; $62d9

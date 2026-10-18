@@ -87,7 +87,7 @@ RunLinkMatchRulesMenu:
 	farcall RunLinkInputFrame ; $4516
 	pop af ; $4519
 	ld hl, rIE ; $451a
-	res 2, [hl] ; $451d
+	res B_IE_TIMER, [hl] ; $451d
 	wram_bank WRAM_SCREEN ; $451f
 .loop:
 	farcall TickMenuBgScroll ; $4525
@@ -128,7 +128,7 @@ RunLinkMatchRulesMenu:
 	ld c, $03 ; $456e
 	call GetMenuCursorIndex_3e ; $4570
 	ld hl, rIE ; $4573
-	set 2, [hl] ; $4576
+	set B_IE_TIMER, [hl] ; $4576
 	ret ; $4578
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $4579
@@ -144,7 +144,7 @@ RunLinkMatchRulesMenu:
 	ld a, MENUSLIDE_BACK ; $458e
 	ld [wMenuSlideDirection], a ; $4590
 	ld hl, rIE ; $4593
-	set 2, [hl] ; $4596
+	set B_IE_TIMER, [hl] ; $4596
 	ld a, $ff ; $4598
 	ret ; $459a
 DrawMatchRulesInitialState:

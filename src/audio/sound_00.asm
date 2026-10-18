@@ -131,7 +131,7 @@ InitAudioEngine:
 	wram_bank WRAM_SOUND ; $3078
 	ld bc, $0000 ; $307e
 	call SetChannelUpdateRequest ; $3081
-	ld a, $80 ; $3084
+	ld a, AUDENA_ON ; $3084
 	ldh [rAUDENA], a ; $3086
 	xor a ; $3088
 	ldh [rAUDTERM], a ; $3089
@@ -586,7 +586,7 @@ UpdateSoundChannels:
 	ldh [rAUD3ENA], a ; $3495
 	ld d, a ; $3497
 	call LoadWavePattern ; $3498
-	ld a, $80 ; $349b
+	ld a, AUD3ENA_ON ; $349b
 	ldh [rAUD3ENA], a ; $349d
 .checkSndChannelBits:
 	ld a, [wSndChannelBits] ; $349f

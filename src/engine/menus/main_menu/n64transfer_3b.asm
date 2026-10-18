@@ -101,7 +101,7 @@ DrawEraseSavedDataCaption:
 RunN64RecordTypeSelect:
 	sound BGM_MENU ; $71b0
 	ld hl, rIE ; $71b2
-	res 2, [hl] ; $71b5
+	res B_IE_TIMER, [hl] ; $71b5
 	call LoadN64RecordTypeGfx ; $71b7
 	farcall InitMenuBgScroll ; $71ba
 	ld b, $01 ; $71bd
@@ -142,7 +142,7 @@ RunN64RecordTypeSelect:
 	sound SFX_MENU_SELECT ; $720f
 	call ClearFrameTasks ; $7211
 	ld hl, rIE ; $7214
-	set 2, [hl] ; $7217
+	set B_IE_TIMER, [hl] ; $7217
 	ld b, $01 ; $7219
 	call N64RecordTypeSlideOut ; $721b
 	ld a, MENUSLIDE_FORWARD ; $721e
@@ -155,7 +155,7 @@ RunN64RecordTypeSelect:
 	sound SFX_MENU_CANCEL ; $722c
 	call ClearFrameTasks ; $722e
 	ld hl, rIE ; $7231
-	set 2, [hl] ; $7234
+	set B_IE_TIMER, [hl] ; $7234
 	ld b, $00 ; $7236
 	call N64RecordTypeSlideOut ; $7238
 	ld a, MENUSLIDE_BACK ; $723b
@@ -513,7 +513,7 @@ DrawN64RecordTypeCaption:
 RunN64TransferItemSelect:
 	sound BGM_MENU ; $74bf
 	ld hl, rIE ; $74c1
-	res 2, [hl] ; $74c4
+	res B_IE_TIMER, [hl] ; $74c4
 	call LoadN64TransferItemGfx ; $74c6
 	wram_bank WRAM_SCREEN ; $74c9
 	ld a, [wMenuSlideDirection] ; $74cf
@@ -554,7 +554,7 @@ RunN64TransferItemSelect:
 	sound SFX_MENU_SELECT ; $751e
 	call ClearFrameTasks ; $7520
 	ld hl, rIE ; $7523
-	set 2, [hl] ; $7526
+	set B_IE_TIMER, [hl] ; $7526
 	ld b, $01 ; $7528
 	farcall CloseCourtSelect4Panel ; $752a
 	ld a, MENUSLIDE_FORWARD ; $752d
@@ -567,7 +567,7 @@ RunN64TransferItemSelect:
 	sound SFX_MENU_CANCEL ; $753b
 	call ClearFrameTasks ; $753d
 	ld hl, rIE ; $7540
-	set 2, [hl] ; $7543
+	set B_IE_TIMER, [hl] ; $7543
 	ld b, $00 ; $7545
 	farcall CloseCourtSelect4Panel ; $7547
 	ld a, MENUSLIDE_BACK ; $754a

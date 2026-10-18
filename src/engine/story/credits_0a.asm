@@ -126,7 +126,7 @@ RunEndingCreditsSequence:
 	ld c, 4 ; $6ee6
 	call BeginFadeOut ; $6ee8
 	call WaitFadeEnd ; $6eeb
-	ld a, $90 ; $6eee
+	ld a, SCREEN_HEIGHT_PX ; $6eee
 	ldh [rWY], a ; $6ef0
 	ld hl, wStoryCharacterSlot ; $6ef2
 	inc [hl] ; $6ef5
