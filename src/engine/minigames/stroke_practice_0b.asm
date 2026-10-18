@@ -734,7 +734,7 @@ RunDoublesDrillMatch:
 	farcall InitCa00RecordFromCharId ; $7299
 	ld a, [wMinigameLevel] ; $729c
 	add a ; $729f
-	ld_hl_indexed DoublesDrillMatchPtrs ; $72a0
+	ld_hl_indexed TwoOnOneLevelSettingsPtrs ; $72a0
 	ld a, [hl+] ; $72a7
 	ld h, [hl] ; $72a8
 	ld l, a ; $72a9
@@ -766,18 +766,20 @@ RunDoublesDrillMatch:
 	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
 	farcall RunMatch ; $72dc
 	ret ; $72df
-DoublesDrillMatchPtrs:
+; Per Two-on-One level: games per set, sets, then the four AI bytes and the
+; difficulty RunDoublesDrillMatch gives both opponents.
+TwoOnOneLevelSettingsPtrs:
 	; $72e0, 6 bytes (records:2)
-	dw DrillResultBitsRow0 ; record 0
-	dw DrillResultBitsRow1 ; record 1
-	dw DrillResultBitsRow2 ; record 2
-DrillResultBitsRow0:
+	dw TwoOnOneLevel1Settings ; record 0
+	dw TwoOnOneLevel2Settings ; record 1
+	dw TwoOnOneLevel3Settings ; record 2
+TwoOnOneLevel1Settings:
 	; $72e6, 7 bytes (bytes:7)
 	db $06, $01, $24, $13, $12, $1e, $00 ; 0x00
-DrillResultBitsRow1:
+TwoOnOneLevel2Settings:
 	; $72ed, 7 bytes (bytes:7)
 	db $06, $03, $14, $0f, $0a, $64, $01 ; 0x00
-DrillResultBitsRow2:
+TwoOnOneLevel3Settings:
 	; $72f4, 7 bytes (bytes:7)
 	db $06, $05, $0e, $0a, $02, $b4, $03 ; 0x00
 	; $72fb, 3333 bytes fill to bank end (linker-padded)
