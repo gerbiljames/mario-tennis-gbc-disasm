@@ -75,8 +75,10 @@ class TestShotItems(MarioTennisGBCTestBase):
         self.collect_by_name("Progressive Net Game Match")
         self.assertFalse(self.can_reach_location("Net Game Match 3"), "Match 3 without Match 2's smash and lob")
         self.collect_by_name(["Progressive Flat Shot", "Lob"])
-        if self.world.starting_shots[0] == "Progressive Flat Shot":
-            self.assertFalse(self.can_reach_location("Net Game Match 3"), "Match 3 without Match 1's volley")
+        for item in self.multiworld.precollected_items[self.player]:
+            if item.name in ("Progressive Topspin", "Progressive Slice"):
+                self.multiworld.state.remove(item)
+        self.assertFalse(self.can_reach_location("Net Game Match 3"), "Match 3 without Match 1's volley")
         self.collect_by_name("Progressive Slice")
         self.assertTrue(self.can_reach_location("Net Game Match 3"))
 
@@ -140,7 +142,23 @@ class TestDoublesExcluded(MarioTennisGBCTestBase):
         self.assertEqual(len(self.multiworld.itempool), len(self.multiworld.get_locations(self.player)))
 
     def test_practices_need_their_class_pass(self) -> None:
+        self.collect(self.get_items_by_name(list(SHOT_COPIES)))
+        passes = self.get_items_by_name("Progressive Doubles Pass")
         self.assertTrue(self.can_reach_location("Junior Doubles Practice"))
         self.assertFalse(self.can_reach_location("Senior Doubles Practice"))
-        self.collect_by_name("Progressive Doubles Pass")
+        self.collect(passes[0])
+        self.assertTrue(self.can_reach_location("Senior Doubles Practice"))
         self.assertFalse(self.can_reach_location("Varsity Doubles Practice"))
+        self.collect(passes[1])
+        self.assertTrue(self.can_reach_location("Varsity Doubles Practice"))
+
+
+class TestUniversalTrackerOldSlotData(MarioTennisGBCTestBase):
+    options = {"shot_items": True}
+
+    def test_slot_data_without_newer_keys(self) -> None:
+        self.multiworld.re_gen_passthrough = {self.game: {"story_arcs": 1, "goal": 0, "minigames": 1}}
+        self.world.generate_early()
+        self.assertEqual(self.world.options.story_arcs.value, 1)
+        self.assertFalse(self.world.options.shot_items)
+        self.assertEqual(self.world.starting_shots, [])

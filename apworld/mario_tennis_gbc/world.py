@@ -47,9 +47,11 @@ class MarioTennisGBCWorld(World):
     def generate_early(self) -> None:
         passthrough = getattr(self.multiworld, "re_gen_passthrough", {}).get(self.game)
         if passthrough:
+            # slot data from before an option existed lacks its key: that seed played it at its default
             for name in mtgbc_options.LOGIC_OPTIONS:
-                getattr(self.options, name).value = passthrough[name]
-            self.starting_shots = passthrough["starting_shots"]
+                option = getattr(self.options, name)
+                option.value = passthrough.get(name, option.default)
+            self.starting_shots = passthrough.get("starting_shots", [])
         else:
             self.starting_shots = items.starting_shots(self)
 

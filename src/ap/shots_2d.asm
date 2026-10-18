@@ -134,12 +134,11 @@ ApGateServeButton:
 ApFilterServeButtonFor:
 	ld a, b
 	and a
-	jr nz, .own
-	inc b
-.own:
-	ld a, b
+	ld d, ITEM_TOPSPIN_SERVE
+	jr z, .test
 	add ITEM_TOPSPIN_SERVE - 1
 	ld d, a
+.test:
 	ld e, 1
 	call ApHasShot
 	ret nz

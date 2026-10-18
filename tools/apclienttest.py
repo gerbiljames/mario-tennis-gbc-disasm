@@ -156,7 +156,7 @@ def receives_items(t):
     assert g.message() == "You got/Doubles Pass/from Alice!"
     g.dismiss()
     assert g.message() is None
-    counts = g.sram("sApClientItems", 32)
+    counts = g.sram("sApClientItems", g.addr("sApRecentItems") - g.addr("sApClientItems"))
     assert counts[c["ITEM_DOUBLES_PASS"]] == 1 and counts[c["ITEM_SMALL_RACKET"]] == 1
 
 
@@ -171,7 +171,7 @@ def rebuilds_a_cleared_client_region(t):
     g.sram_write("sApClientRegion", bytes(g.sym["sApClientRegionEnd"][1] - g.sym["sApClientRegion"][1]))
     poll(t.client, t.ctx)
     assert int.from_bytes(g.sram("sApReceivedCount", 2), "little") == 1
-    assert g.sram("sApClientItems", 32)[c["ITEM_IRON_RACKET"]] == 1
+    assert g.sram("sApClientItems", g.addr("sApRecentItems") - g.addr("sApClientItems"))[c["ITEM_IRON_RACKET"]] == 1
     assert g.message() is None, "a rebuilt item was announced twice"
 
 

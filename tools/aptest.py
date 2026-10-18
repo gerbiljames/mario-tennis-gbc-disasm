@@ -38,6 +38,20 @@ def constants():
     return out
 
 
+def include_value(name):
+    """A `def NAME equ value` constant from include/ (also the mirrored WRAM
+    symbols, which are not in the .sym file)."""
+    import re
+    pattern = re.compile(rf"^def {re.escape(name)}\s+equ\s+(\$[0-9a-fA-F]+|\d+)\b", re.I)
+    for path in sorted((ROOT / "include").rglob("*.inc")):
+        for line in path.read_text().splitlines():
+            m = pattern.match(line.strip())
+            if m:
+                v = m.group(1)
+                return int(v[1:], 16) if v.startswith("$") else int(v)
+    raise KeyError(name)
+
+
 def with_ledger(save, sym, auth=bytes(16)):
     """The battery save with an empty, valid ledger for this auth in SRAM
     bank 3, so the patched game takes the cart as this seed's and keeps its
@@ -289,16 +303,16 @@ PRACTICES = [("SINGLES", 0, 0, "JUNIOR"), ("SINGLES", 0, 5, "SENIOR"), ("SINGLES
 def practice_matches_are_locations(g, c):
     for arc, matchlist, index, tier in PRACTICES:
         loc = c[f"LOC_{tier}_{arc}_PRACTICE"]
-        assert inline_test(g, 0x40, loc), f"{tier} {arc} practice not open before its win"
+        assert inline_test(g, include_value("AP_TEST_OPEN"), loc), f"{tier} {arc} practice not open before its win"
         g.wram("wCurrentMinigameStoryMatch", matchlist, index)
         g.call("SetRewardGameFlag")
         assert g.done(loc), f"{tier} {arc} practice win not marked done"
-        assert not inline_test(g, 0x40, loc), f"{tier} {arc} practice still open once done"
+        assert not inline_test(g, include_value("AP_TEST_OPEN"), loc), f"{tier} {arc} practice still open once done"
 
 
 @test
 def ap_open_absent(g, c):
-    assert not inline_test(g, 0x40, c["LOC_JUNIOR_SINGLES_PRACTICE"]), "an absent location read as open"
+    assert not inline_test(g, include_value("AP_TEST_OPEN"), c["LOC_JUNIOR_SINGLES_PRACTICE"]), "an absent location read as open"
 
 
 ap_open_absent.tokens = lambda c: {("ApPlacements", c["LOC_JUNIOR_SINGLES_PRACTICE"]): b"\xff"}
@@ -943,7 +957,7 @@ def smash_allowed(g, buttons):
     return not g.result["F"] & 0x80
 
 
-SHOTTYPE_SERVE_SLICE = 0x0d
+SHOTTYPE_SERVE_SLICE = include_value("SHOTTYPE_SERVE_SLICE")
 
 
 def serve_height(g, height):
@@ -983,6 +997,8 @@ def shot_filters(g, c):
     assert serve_height(g, -0x250) == -0x250 & 0xffff
     get("ITEM_SLICE_SERVE")
     assert serve_height(g, -0x180) == -0x180 & 0xffff, "clamped a nice slice serve with two copies"
+    get("ITEM_TOPSPIN_SERVE")
+    assert serve(g, 0) == 0, "an owned topspin serve's button 0 was rewritten"
 
 
 shot_filters.tokens = lambda c: {"ApOptShotItems": b"\x01"}
@@ -994,9 +1010,11 @@ def shots_ungated_by_default(g, c):
     assert g.result["F"] & 0x80, "shots gated with ApOptShotItems 0"
 
 
-WRAM_CHAR0, CHAR_INPUT_SOURCE, CHAR_SHOT_BUTTONS = 4, 0xdf1e, 0xdf16
-SHOTTYPE_TOPSPIN, SHOTTYPE_NEUTRAL, SHOTTYPE_REACH, SHOTTYPE_SERVE_TOPSPIN = 0x00, 0x04, 0x05, 0x0c
-POINTOUTCOME_FAULT, POINTOUTCOME_DOUBLE_FAULT = 1, 2
+WRAM_CHAR0, CHAR_INPUT_SOURCE, CHAR_SHOT_BUTTON1, CHAR_SHOT_BUTTON2 = (
+    include_value(n) for n in ("WRAM_CHAR0", "wCharInputSource", "wCharShotButton1", "wCharShotButton2"))
+SHOTTYPE_TOPSPIN, SHOTTYPE_NEUTRAL, SHOTTYPE_REACH, SHOTTYPE_SERVE_TOPSPIN = (
+    include_value(f"SHOTTYPE_{n}") for n in ("TOPSPIN", "NEUTRAL", "REACH", "SERVE_TOPSPIN"))
+POINTOUTCOME_FAULT, POINTOUTCOME_DOUBLE_FAULT = (include_value(f"POINTOUTCOME_{n}") for n in ("FAULT", "DOUBLE_FAULT"))
 
 
 def play_match(g, frames, peak_toss=False):
@@ -1022,12 +1040,12 @@ def play_match(g, frames, peak_toss=False):
 
     def rally(_):
         if char0():
-            m[CHAR_SHOT_BUTTONS], m[CHAR_SHOT_BUTTONS + 1] = pairs[n[0] % len(pairs)]
+            m[CHAR_SHOT_BUTTON1], m[CHAR_SHOT_BUTTON2] = pairs[n[0] % len(pairs)]
             n[0] += 1
 
     def serve(_):
         if char0():
-            m[CHAR_SHOT_BUTTONS] = 1 + n[1] % 3
+            m[CHAR_SHOT_BUTTON1] = 1 + n[1] % 3
             n[1] += 1
 
     def serve_path(_):

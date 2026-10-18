@@ -67,8 +67,8 @@ ENDM
 
 ; ap_open LOC -- nz if this seed has the location and it is not done yet;
 ; like test_flag, keeps every register but af
-DEF AP_TEST_OPEN EQU $40
-	ASSERT AP_ITEM_SLOTS <= AP_TEST_OPEN
+DEF AP_TEST_OPEN EQU $c0
+	ASSERT AP_ITEM_SLOTS <= AP_TEST_PASS
 MACRO ap_open
 	call ApTestInline
 	db AP_TEST_OPEN, \1

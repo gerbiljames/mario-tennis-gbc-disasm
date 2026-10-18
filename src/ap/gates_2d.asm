@@ -7,10 +7,10 @@ ApTestInlineFar:
 	ld a, e
 	ld e, d
 	ld d, a
-	bit 6, d
-	jr nz, ApLocationOpen
 	bit 7, d
 	jr z, ApItemAtLeast
+	bit 6, d
+	jr nz, ApLocationOpen
 	res 7, d
 	jr ApPassAtLeast
 
