@@ -20,7 +20,7 @@ StepMatchFramesSkippable:
 	jr nz, .done ; $443b
 	call StepMatchFrame ; $443d
 	call ReadMatchInputHeld ; $4440
-	and $03 ; $4443
+	and PADF_A | PADF_B ; $4443
 	jr nz, .done ; $4445
 	ld a, [wDebugMatchFlags] ; $4447
 	bit 0, a ; $444a
@@ -35,7 +35,7 @@ RunMatchFramesUntilInput:
 	jr nz, .done ; $4456
 	call StepMatchFrame ; $4458
 	call ReadMatchInputHeld ; $445b
-	and $f3 ; $445e
+	and ~(PADF_SELECT | PADF_START) ; $445e
 	jr nz, .done ; $4460
 	jr RunMatchFramesUntilInput ; $4462
 .done:
@@ -72,7 +72,7 @@ StepMatchFrame:
 	ret ; $4495
 HandlePauseMenu:
 	call ReadMatchInputPressed ; $4496
-	and $08 ; $4499
+	and PADF_START ; $4499
 	ret z ; $449b
 	ld a, [wPauseDisabled] ; $449c
 	and a ; $449f
@@ -112,7 +112,7 @@ ReinitPointAfterPause:
 CheckDebugStatsEditorHotkey:
 	ret ; $44ef
 	call ReadMatchInputPressed ; $44f0
-	and $04 ; $44f3
+	and PADF_SELECT ; $44f3
 	ret z ; $44f5
 	ldh a, [hDebugStepMode] ; $44f6
 	and a ; $44f8

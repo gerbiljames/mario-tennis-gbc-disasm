@@ -329,7 +329,7 @@ ShowRulesPageSequence:
 .loop:
 	farcall StepMatchFrame ; $435d
 	farcall ReadMatchInputPressed ; $4360
-	and $03 ; $4363
+	and PADF_A | PADF_B ; $4363
 	jr z, .loop ; $4365
 	sound SFX_MENU_SELECT ; $4367
 	ld hl, DrawRulesNextPageArrow_06 ; $4369
@@ -366,10 +366,10 @@ MatchPauseMenu_ReviewControls:
 	farcall StepMatchFrame ; $43b6
 .loop:
 	farcall ReadMatchInputPressed ; $43b9
-	and $03 ; $43bc
+	and PADF_A | PADF_B ; $43bc
 	jr nz, .restoreBgTilemap ; $43be
 	farcall ReadMatchInputPressed ; $43c0
-	and $40 ; $43c3
+	and PADF_UP ; $43c3
 	jr z, .stepMatchFrame ; $43c5
 	ldh a, [hDebugStepMode] ; $43c7
 	and a ; $43c9

@@ -43,7 +43,7 @@ RunStoryTwoOptionMenu:
 	call LoadStoryMenuItemGfx ; $7102
 .loop:
 	farcall ReadMatchInputPressed ; $7105
-	and $02 ; $7108
+	and PADF_B ; $7108
 	jr z, .readMatchInputPressed ; $710a
 	sound SFX_MENU_CANCEL ; $710c
 	ld a, MATCHMENUSEL_CANCELLED ; $710e
@@ -51,13 +51,13 @@ RunStoryTwoOptionMenu:
 	jr .advanceFrame ; $7113
 .readMatchInputPressed:
 	farcall ReadMatchInputPressed ; $7115
-	and $01 ; $7118
+	and PADF_A ; $7118
 	jr z, .readMatchInputRepeat ; $711a
 	sound SFX_MENU_SELECT ; $711c
 	jr .advanceFrame ; $711e
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $7120
-	and $30 ; $7123
+	and PADF_RIGHT | PADF_LEFT ; $7123
 	jr z, .checkMatchMenuSelection2 ; $7125
 	ld b, a ; $7127
 	ld c, $02 ; $7128
@@ -134,7 +134,7 @@ RunStoryThreeOptionMenu:
 	call LoadStoryMenuItemGfx ; $71bc
 .loop:
 	farcall ReadMatchInputPressed ; $71bf
-	and $02 ; $71c2
+	and PADF_B ; $71c2
 	jr z, .readMatchInputPressed ; $71c4
 	sound SFX_MENU_CANCEL ; $71c6
 	ld a, MATCHMENUSEL_CANCELLED ; $71c8
@@ -142,13 +142,13 @@ RunStoryThreeOptionMenu:
 	jr .restoreStoryTilemapNoPriority ; $71cd
 .readMatchInputPressed:
 	farcall ReadMatchInputPressed ; $71cf
-	and $01 ; $71d2
+	and PADF_A ; $71d2
 	jr z, .readMatchInputRepeat ; $71d4
 	sound SFX_MENU_SELECT ; $71d6
 	jr .restoreStoryTilemapNoPriority ; $71d8
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $71da
-	and $30 ; $71dd
+	and PADF_RIGHT | PADF_LEFT ; $71dd
 	jr z, .checkMatchMenuSelection ; $71df
 	ld b, a ; $71e1
 	ld c, $03 ; $71e2

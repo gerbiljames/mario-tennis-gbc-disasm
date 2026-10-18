@@ -248,7 +248,7 @@ Unused_06_RunDebugStatsEditor:
 	farcall StepMatchFrame ; $6bb4
 .loop:
 	farcall ReadMatchInputPressed ; $6bb7
-	and $0d ; $6bba
+	and PADF_A | PADF_SELECT | PADF_START ; $6bba
 	jr nz, .maskSet ; $6bbc
 	call Unused_06_HandleDebugStatsInput ; $6bbe
 	call Unused_06_FlushTilemapToVramIfDirty ; $6bc1
@@ -431,7 +431,7 @@ RunStoryMenu:
 	jr .redraw ; $6d19
 .inputLoop:
 	farcall ReadMatchInputPressed ; $6d1b
-	and $0a ; $6d1e
+	and PADF_B | PADF_START ; $6d1e
 	jr z, .checkA ; $6d20
 	sound SFX_MENU_CANCEL ; $6d22
 	ld a, MATCHMENUSEL_CANCELLED ; $6d24
@@ -439,13 +439,13 @@ RunStoryMenu:
 	jr .done ; $6d29
 .checkA:
 	farcall ReadMatchInputPressed ; $6d2b
-	and $01 ; $6d2e
+	and PADF_A ; $6d2e
 	jr z, .checkLeftRight ; $6d30
 	sound SFX_MENU_SELECT ; $6d32
 	jr .done ; $6d34
 .checkLeftRight:
 	farcall ReadMatchInputRepeat ; $6d36
-	and $30 ; $6d39
+	and PADF_RIGHT | PADF_LEFT ; $6d39
 	jr z, .drawCursor ; $6d3b
 	ld b, a ; $6d3d
 	ld a, [wPauseMenuItemCount] ; $6d3e
@@ -672,7 +672,7 @@ UnusedStoryMenuRedrawReentry:
 	jr .checkMatchMenuSelection ; $6ed5
 .loop:
 	farcall ReadMatchInputPressed ; $6ed7
-	and $0e ; $6eda
+	and PADF_B | PADF_SELECT | PADF_START ; $6eda
 	jr z, .readMatchInputPressed ; $6edc
 	sound SFX_MENU_CANCEL ; $6ede
 	ld a, MATCHMENUSEL_CANCELLED ; $6ee0
@@ -680,13 +680,13 @@ UnusedStoryMenuRedrawReentry:
 	jr .advanceFrame ; $6ee5
 .readMatchInputPressed:
 	farcall ReadMatchInputPressed ; $6ee7
-	and $01 ; $6eea
+	and PADF_A ; $6eea
 	jr z, .readMatchInputRepeat ; $6eec
 	sound SFX_MENU_SELECT ; $6eee
 	jr .advanceFrame ; $6ef0
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $6ef2
-	and $30 ; $6ef5
+	and PADF_RIGHT | PADF_LEFT ; $6ef5
 	jr z, .checkMatchMenuSelection2 ; $6ef7
 	ld b, a ; $6ef9
 	ld c, $04 ; $6efa

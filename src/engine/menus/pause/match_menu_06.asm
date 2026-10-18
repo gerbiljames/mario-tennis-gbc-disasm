@@ -52,7 +52,7 @@ ShowMessageWindow:
 .waitInput:
 	farcall StepMatchFrame ; $4543
 	farcall ReadMatchInputPressed ; $4546
-	and $0f ; $4549
+	and PADF_BUTTONS ; $4549
 	jr z, .waitInput ; $454b
 	call RestoreBgTilemap ; $454d
 	call FlushTilemapToVram ; $4550
@@ -273,7 +273,7 @@ RunMatchMenu:
 	jr .redraw ; $46ff
 .inputLoop:
 	farcall ReadMatchInputPressed ; $4701
-	and $0a ; $4704
+	and PADF_B | PADF_START ; $4704
 	jr z, .checkA ; $4706
 	sound SFX_MENU_CANCEL ; $4708
 	ld a, MATCHMENUSEL_CANCELLED ; $470a
@@ -281,13 +281,13 @@ RunMatchMenu:
 	jr .done ; $470f
 .checkA:
 	farcall ReadMatchInputPressed ; $4711
-	and $01 ; $4714
+	and PADF_A ; $4714
 	jr z, .checkLeftRight ; $4716
 	sound SFX_MENU_SELECT ; $4718
 	jr .done ; $471a
 .checkLeftRight:
 	farcall ReadMatchInputRepeat ; $471c
-	and $30 ; $471f
+	and PADF_RIGHT | PADF_LEFT ; $471f
 	jr z, .drawCursor ; $4721
 	ld b, a ; $4723
 	ld a, [wPauseMenuItemCount] ; $4724
@@ -553,7 +553,7 @@ ShowMatchScoreboardScreen:
 	wram_bank WRAM_COURT_PLANES ; $48e8
 .loop:
 	farcall ReadMatchInputPressed ; $48ee
-	and $0f ; $48f1
+	and PADF_BUTTONS ; $48f1
 	jr nz, .maskSet ; $48f3
 	farcall StepMatchFrame ; $48f5
 	jr .loop ; $48f8

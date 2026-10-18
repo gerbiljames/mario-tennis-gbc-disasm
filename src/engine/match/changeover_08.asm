@@ -29,7 +29,7 @@ WalkCharsOffCourt:
 .waitLoop:
 	call StepMatchFrame ; $6025
 	call ReadMatchInputPressed ; $6028
-	and $0b ; $602b
+	and PADF_A | PADF_B | PADF_START ; $602b
 	jr nz, .settle ; $602d
 	call CheckAllCharsPhaseDone ; $602f
 	jr z, .waitLoop ; $6032
@@ -227,7 +227,7 @@ PanCamera:
 	add l ; $6182
 	ld e, a ; $6183
 	call ReadMatchInputPressed ; $6184
-	and $0b ; $6187
+	and PADF_A | PADF_B | PADF_START ; $6187
 	jr nz, .done ; $6189
 	call StepMatchFrame ; $618b
 	dec b ; $618e

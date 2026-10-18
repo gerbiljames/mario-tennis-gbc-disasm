@@ -444,7 +444,7 @@ WalkCharsToNewEnds:
 .waitLoop:
 	call StepMatchFrame ; $5fcf
 	call ReadMatchInputPressed ; $5fd2
-	and $0b ; $5fd5
+	and PADF_A | PADF_B | PADF_START ; $5fd5
 	jr nz, .settle ; $5fd7
 	call CheckAllCharsPhaseDone ; $5fd9
 	jr z, .waitLoop ; $5fdc
