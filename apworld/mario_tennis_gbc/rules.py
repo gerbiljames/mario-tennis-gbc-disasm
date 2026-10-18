@@ -83,6 +83,9 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
     }
     if world.options.minigames != world.options.minigames.option_excluded:
         possible.update({f"Target Shot Level {n}": Has(LOB) for n in (2, 3)})
+        # a match against two opponents at once: as hard as the Dream Match
+        possible.update({f"Two-on-One Level {n}": HasFromList(*SHOT_COPIES, count=TIER_SHOTS["Peach's Castle"])
+                         for n in (1, 2, 3)})
     for region, names in story_regions(world).items():
         tier = next((t for t in TIER_SHOTS if region.startswith(t)), None)
         if tier:

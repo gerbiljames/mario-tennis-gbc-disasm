@@ -96,6 +96,12 @@ class TestShotItems(MarioTennisGBCTestBase):
         self.collect(self.world.create_item(self.world.glitches_item_name))
         self.assertTrue(self.can_reach_location("Target Shot Level 3"))
 
+    def test_two_on_one_wants_dream_match_shots(self) -> None:
+        self.collect_by_name("Progressive Two-on-One")
+        self.assertFalse(self.can_reach_location("Two-on-One Level 1"))
+        self.collect(self.get_items_by_name(list(SHOT_COPIES)))
+        self.assertTrue(self.can_reach_location("Two-on-One Level 3"))
+
     def test_service_matches_want_a_nice_serve(self) -> None:
         self.assertFalse(self.can_reach_location("Service Match 1"))
         self.collect_by_name(["Progressive Topspin Serve", "Progressive Slice Serve", "Progressive Flat Serve"])
