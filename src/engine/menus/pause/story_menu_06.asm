@@ -418,12 +418,12 @@ Unused_06_AdjustDebugStatWord:
 	ret ; $6cdf
 StoryMenuDefs:
 	; $6ce0, 48 bytes (menu_def:STORYMENUITEM)
-	menu_def STORYMENUITEM_STATUS, STORYMENUITEM_CLEAR_STATUS, STORYMENUITEM_OPTIONS, STORYMENUITEM_SAVE ; menu 0
-	menu_def STORYMENUITEM_CHAR_DATA, STORYMENUITEM_ITEMS ; menu 1
-	menu_def STORYMENUITEM_MESSAGES, STORYMENUITEM_MUSIC ; menu 2
-	menu_def STORYMENUITEM_MSG_SLOW, STORYMENUITEM_MSG_NORMAL, STORYMENUITEM_MSG_FAST ; menu 3
-	menu_def STORYMENUITEM_MUSIC_ON, STORYMENUITEM_MUSIC_OFF ; menu 4
-	menu_def STORYMENUITEM_SAVE_GAME, STORYMENUITEM_TO_MAIN_MENU, STORYMENUITEM_CANCEL ; menu 5
+	menu_def STORYMENUITEM_STATUS, STORYMENUITEM_CLEAR_STATUS, STORYMENUITEM_OPTIONS, STORYMENUITEM_SAVE ; STORYMENU_PAUSE
+	menu_def STORYMENUITEM_CHAR_DATA, STORYMENUITEM_ITEMS ; STORYMENU_STATUS
+	menu_def STORYMENUITEM_MESSAGES, STORYMENUITEM_MUSIC ; STORYMENU_OPTIONS
+	menu_def STORYMENUITEM_MSG_SLOW, STORYMENUITEM_MSG_NORMAL, STORYMENUITEM_MSG_FAST ; STORYMENU_MESSAGE_SPEED
+	menu_def STORYMENUITEM_MUSIC_ON, STORYMENUITEM_MUSIC_OFF ; STORYMENU_MUSIC
+	menu_def STORYMENUITEM_SAVE_GAME, STORYMENUITEM_TO_MAIN_MENU, STORYMENUITEM_CANCEL ; STORYMENU_SAVE_QUIT
 RunStoryMenu:
 	call GetStoryMenuItemCount ; $6d10
 	ld [wPauseMenuItemCount], a ; $6d13
@@ -611,7 +611,7 @@ RunStoryModeMenu:
 	ld de, vTiles0 + $64 * TILE_SIZE ; $6e55
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6e58
 	call QueueVRAMCopy ; $6e5a
-	ld a, $00 ; $6e5d
+	ld a, STORYMENU_PAUSE ; $6e5d
 	ld [wPauseMenuId], a ; $6e5f
 	call RunStoryMenu ; $6e62
 	ld a, [wMatchMenuSelection] ; $6e65
@@ -725,7 +725,7 @@ StoryPauseMenu_PlayerData:
 	call RestoreStoryTilemapNoPriority ; $6f42
 	xor a ; $6f45
 	ld [wMatchMenuSelection], a ; $6f46
-	ld a, $01 ; $6f49
+	ld a, STORYMENU_STATUS ; $6f49
 	ld [wPauseMenuId], a ; $6f4b
 	call RunStoryMenu ; $6f4e
 	ld a, [wMatchMenuSelection] ; $6f51
@@ -783,7 +783,7 @@ StoryPauseMenu_Options:
 	xor a ; $6fc3
 	ld [wMatchMenuSelection], a ; $6fc4
 .loop:
-	ld a, $02 ; $6fc7
+	ld a, STORYMENU_OPTIONS ; $6fc7
 	ld [wPauseMenuId], a ; $6fc9
 	call RunStoryMenu ; $6fcc
 	ld a, [wMatchMenuSelection] ; $6fcf
@@ -805,7 +805,7 @@ StoryOptionsMenu_AfterItem:
 UnusedRunStoryPlayerDataMenu:
 	ld a, STORYMENUITEM_CHAR_DATA ; $6fea
 	ld [wStoryMenuFirstItem], a ; $6fec
-	ld a, $01 ; $6fef
+	ld a, STORYMENU_STATUS ; $6fef
 	ld [wPauseMenuId], a ; $6ff1
 	jp RunStoryMenu ; $6ff4
 StoryPauseMenu_MessageSpeed:
@@ -845,7 +845,7 @@ StoryPauseMenu_SaveQuit:
 	call DrawStoryMenuCaption ; $7038
 	ld a, $02 ; $703b
 	ld [wMatchMenuSelection], a ; $703d
-	ld a, $05 ; $7040
+	ld a, STORYMENU_SAVE_QUIT ; $7040
 	ld [wPauseMenuId], a ; $7042
 	call RunStoryMenu ; $7045
 	ld a, [wMatchMenuSelection] ; $7048

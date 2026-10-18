@@ -29,6 +29,32 @@ def MATCHMENUITEM_QUIT_PRACTICE      equ $15 ; "QUIT MINI-GAME"
 def MATCHMENUITEM_QUIT_MACHINE       equ $16 ; "QUIT MINI-GAME"
 def MATCHMENUITEM_QUIT_PRACTICE_ALT  equ $17 ; "QUIT MINI-GAME"
 
+; --- Match pause menus (wPauseMenuId, rows of MatchMenuDefs) ---
+; The save/quit menu comes from SaveQuitMenuIdByGameMode, indexed by wGameMode.
+def MATCHMENU_PAUSE            equ $00 ; free camera: RULES / CONTROLS / OPTIONS / SAVE
+def MATCHMENU_PAUSE_FIXED_VIEW equ $01 ; wCourtViewLocked: MUSIC replaces OPTIONS
+def MATCHMENU_OPTIONS          equ $02
+def MATCHMENU_CAMERA           equ $03
+def MATCHMENU_MUSIC            equ $04
+def MATCHMENU_QUIT_STORY       equ $05 ; story matches
+def MATCHMENU_QUIT_EXHIBITION  equ $06
+def MATCHMENU_QUIT_DRILL       equ $07
+def MATCHMENU_QUIT_LESSON      equ $08 ; wDrillIsPracticeLesson
+def MATCHMENU_QUIT_MACHINE     equ $09
+def MATCHMENU_QUIT_WALL        equ $0a
+def MATCHMENU_QUIT_MINIGAME    equ $0b
+def MATCHMENU_QUIT_LINK        equ $0c
+def MATCHMENU_QUIT_NO_MODE     equ $0d ; GAMEMODE_NONE
+def MATCHMENU_MINIGAME_END     equ $0e ; RunMinigameEndMenu: no CANCEL
+
+; --- Story pause menus (wPauseMenuId, rows of StoryMenuDefs) ---
+def STORYMENU_PAUSE            equ $00
+def STORYMENU_STATUS           equ $01 ; CHAR. DATA / ITEMS
+def STORYMENU_OPTIONS          equ $02
+def STORYMENU_MESSAGE_SPEED    equ $03
+def STORYMENU_MUSIC            equ $04
+def STORYMENU_SAVE_QUIT        equ $05
+
 ; --- Story pause-menu item ids (StoryMenuDefs) ---
 ; Same shape for the story-mode pause menu: StoryMenuItemGfxPointers,
 ; StoryMenuItemRectPointers, caption at text id $0162 + id (bank $30, 354+id).

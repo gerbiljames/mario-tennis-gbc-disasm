@@ -29,7 +29,7 @@ RunMinigameEndMenu:
 .loop:
 	xor a ; $4046
 	ld [wMatchMenuSelection], a ; $4047
-	ld a, $0e ; $404a
+	ld a, MATCHMENU_MINIGAME_END ; $404a
 	ld [wPauseMenuId], a ; $404c
 	call RunMatchQuitMenu ; $404f
 	ld a, [wMatchMenuSelection] ; $4052
@@ -74,11 +74,11 @@ RunMatchPauseMenu:
 	ld a, $0a ; $40b4
 	ld hl, DrawScoreboardModeTitle ; $40b6
 	call RegisterFrameTask ; $40b9
-	ld b, $00 ; $40bc
+	ld b, MATCHMENU_PAUSE ; $40bc
 	ld a, [wCourtViewLocked] ; $40be
 	and a ; $40c1
 	jr z, .zero ; $40c2
-	ld b, $01 ; $40c4
+	ld b, MATCHMENU_PAUSE_FIXED_VIEW ; $40c4
 .zero:
 	ld a, b ; $40c6
 	ld [wPauseMenuId], a ; $40c7
@@ -396,7 +396,7 @@ MatchPauseMenu_ChangeOptions:
 	xor a ; $43f7
 	ld [wMatchMenuSelection], a ; $43f8
 .loop:
-	ld a, $02 ; $43fb
+	ld a, MATCHMENU_OPTIONS ; $43fb
 	ld [wPauseMenuId], a ; $43fd
 	call RunMatchMenu ; $4400
 	ld a, [wMatchMenuSelection] ; $4403
@@ -418,7 +418,7 @@ MatchOptionsMenu_AfterItem:
 MatchPauseMenu_CameraSelect:
 	ld a, [wCourtViewOption] ; $441e
 	ld [wMatchMenuSelection], a ; $4421
-	ld a, $03 ; $4424
+	ld a, MATCHMENU_CAMERA ; $4424
 	ld [wPauseMenuId], a ; $4426
 	call RunMatchMenu ; $4429
 	ld a, [wMatchMenuSelection] ; $442c
@@ -432,7 +432,7 @@ MatchPauseMenu_MusicToggle:
 	ldh a, [hMusic] ; $443a
 	and $01 ; $443c
 	ld [wMatchMenuSelection], a ; $443e
-	ld a, $04 ; $4441
+	ld a, MATCHMENU_MUSIC ; $4441
 	ld [wPauseMenuId], a ; $4443
 	call RunMatchMenu ; $4446
 	ld a, [wMatchMenuSelection] ; $4449
@@ -456,7 +456,7 @@ MatchPauseMenu_SaveQuit:
 	ld a, [wDrillIsPracticeLesson] ; $4473
 	and a ; $4476
 	jr z, .getMatchMenuItemCount ; $4477
-	ld a, $08 ; $4479
+	ld a, MATCHMENU_QUIT_LESSON ; $4479
 	ld [wPauseMenuId], a ; $447b
 .getMatchMenuItemCount:
 	call GetMatchMenuItemCount ; $447e
