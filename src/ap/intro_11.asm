@@ -38,7 +38,9 @@ ApFrontGateTile_11:
 	ret
 .cancel:
 	farcall BeginCutsceneScriptMode
-	script_player_speed 1.0
+	script_face ACTOR_PLAYER, FACE_UP
+	script_set_anim ACTOR_PLAYER, ANIM_WALK
+	script_player_speed 0.75
 	wram_bank WRAM_ACTORS
 	ld hl, wActors + ACTORF_X
 	ld a, [hl+]
@@ -60,7 +62,7 @@ ApFrontGateTile_11:
 	ld de, wActors + ACTORF_X
 	ld bc, 4
 	call CopyMemoryBC
-	ld a, [wActors + ACTOR_SIZE + ACTORF_HEADING]
+	ld a, FACE_UP
 	ld [wActors + ACTORF_HEADING], a
 	farcall EndCutsceneScriptMode
 	ret
