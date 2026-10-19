@@ -86,131 +86,131 @@ Unused_16_BuildMatchResultTilemap:
 	ret ; $4abc
 MatchResultTilemapScripts_16:
 	; $4abd, 480 bytes (tilemap_scripts)
-	dw .script0 ; 0
-	dw .script1 ; 1
-	dw .script2 ; 2
-	dw .script3 ; 3
-	dw .script4 ; 4
-	dw .script5 ; 5
-	dw .script6 ; 6
-	dw .script7 ; 7
-	dw .script8 ; 8
-	dw .script9 ; 9
-	dw .script10 ; 10
-	dw .script11 ; 11
-	dw .script12 ; 12
-	dw .script13 ; 13
-	dw .script14 ; 14
-	dw .script15 ; 15
-	dw .script16 ; 16
-	dw .script17 ; 17
-	dw .script18 ; 18
-	dw .script19 ; 19
-.script0:
+	dw .juniorPractice ; 0
+	dw .junior4 ; 1
+	dw .junior3 ; 2
+	dw .junior2 ; 3
+	dw .junior1 ; 4
+	dw .seniorPractice ; 5
+	dw .senior4 ; 6
+	dw .senior3 ; 7
+	dw .senior2 ; 8
+	dw .senior1 ; 9
+	dw .varsityPractice ; 10
+	dw .varsity4 ; 11
+	dw .varsity3 ; 12
+	dw .varsity2 ; 13
+	dw .varsity1 ; 14
+	dw .grassPractice0f ; 15
+	dw .islandOpenRound1 ; 16
+	dw .islandOpenRound2 ; 17
+	dw .islandOpenSemifinal ; 18
+	dw .islandOpenFinal ; 19
+.juniorPractice:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 10, 22, 9
 	result_copy 10, 16, 13, 30, 9
 	tilemap_copy_end
-.script1:
+.junior4:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 10, 22, 9
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 19, 28, 4
 	tilemap_copy_end
-.script2:
+.junior3:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 10, 22, 9
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 15, 28, 4
 	tilemap_copy_end
-.script3:
+.junior2:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 10, 22, 9
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 11, 28, 4
 	tilemap_copy_end
-.script4:
+.junior1:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 10, 22, 9
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 8, 28, 3
 	tilemap_copy_end
-.script5:
+.seniorPractice:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 19, 22, 8
 	result_copy 10, 16, 13, 30, 9
 	tilemap_copy_end
-.script6:
+.senior4:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 19, 22, 8
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 19, 28, 4
 	tilemap_copy_end
-.script7:
+.senior3:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 19, 22, 8
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 15, 28, 4
 	tilemap_copy_end
-.script8:
+.senior2:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 19, 22, 8
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 11, 28, 4
 	tilemap_copy_end
-.script9:
+.senior1:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 11, 0, 19, 22, 8
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 8, 28, 3
 	tilemap_copy_end
-.script10:
+.varsityPractice:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 10, 0, 0, 24, 10
 	result_copy 10, 16, 13, 30, 9
 	tilemap_copy_end
-.script11:
+.varsity4:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 10, 0, 0, 24, 10
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 19, 28, 4
 	tilemap_copy_end
-.script12:
+.varsity3:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 10, 0, 0, 24, 10
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 15, 28, 4
 	tilemap_copy_end
-.script13:
+.varsity2:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 10, 0, 0, 24, 10
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 11, 28, 4
 	tilemap_copy_end
-.script14:
+.varsity1:
 	result_copy 0, 0, 0, 22, 10
 	result_copy 10, 0, 0, 24, 10
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 8, 28, 3
 	tilemap_copy_end
-.script15:
+.grassPractice0f:
 	result_copy 0, 0, 0, 20, 20
 	result_copy 10, 16, 13, 30, 9
 	tilemap_copy_end
-.script16:
+.islandOpenRound1:
 	result_copy 0, 0, 0, 20, 20
 	result_copy 10, 16, 0, 26, 7
 	tilemap_copy_end
-.script17:
+.islandOpenRound2:
 	result_copy 0, 0, 0, 20, 20
 	result_copy 9, 16, 0, 28, 7
 	result_copy 10, 16, 7, 26, 8
 	tilemap_copy_end
-.script18:
+.islandOpenSemifinal:
 	result_copy 0, 0, 0, 20, 20
 	result_copy 9, 16, 15, 26, 10
 	tilemap_copy_end
-.script19:
+.islandOpenFinal:
 	result_copy 0, 0, 0, 20, 20
 	result_copy 12, 16, 25, 26, 7
 	tilemap_copy_end

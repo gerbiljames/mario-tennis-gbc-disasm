@@ -429,10 +429,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4aa3
 	or a ; $4aa6
 	jr z, .spinLevelField ; $4aa7
-	ld l, $40 ; $4aa9
+	ld l, LOW(wStoryPartner) ; $4aa9
 .spinLevelField:
 	ld a, l ; $4aab
-	add $38 ; $4aac
+	add CHARREC_TRAIN_LEVELS ; $4aac
 	ld l, a ; $4aae
 	ld a, h ; $4aaf
 	adc $00 ; $4ab0
@@ -445,10 +445,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4abc
 	or a ; $4abf
 	jr z, .topStatField ; $4ac0
-	ld l, $40 ; $4ac2
+	ld l, LOW(wStoryPartner) ; $4ac2
 .topStatField:
 	ld a, l ; $4ac4
-	add $20 ; $4ac5
+	add CHARREC_STAT_TOP ; $4ac5
 	ld l, a ; $4ac7
 	ld a, h ; $4ac8
 	adc $00 ; $4ac9
@@ -462,10 +462,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4ad6
 	or a ; $4ad9
 	jr z, .sliceStatField ; $4ada
-	ld l, $40 ; $4adc
+	ld l, LOW(wStoryPartner) ; $4adc
 .sliceStatField:
 	ld a, l ; $4ade
-	add $21 ; $4adf
+	add CHARREC_STAT_SLICE ; $4adf
 	ld l, a ; $4ae1
 	ld a, h ; $4ae2
 	adc $00 ; $4ae3
@@ -479,10 +479,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4af0
 	or a ; $4af3
 	jr z, .powerLevelField ; $4af4
-	ld l, $40 ; $4af6
+	ld l, LOW(wStoryPartner) ; $4af6
 .powerLevelField:
 	ld a, l ; $4af8
-	add $39 ; $4af9
+	add CHARREC_TRAIN_LEVELS + 1 ; $4af9
 	ld l, a ; $4afb
 	ld a, h ; $4afc
 	adc $00 ; $4afd
@@ -495,10 +495,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4b09
 	or a ; $4b0c
 	jr z, .serveStatField ; $4b0d
-	ld l, $40 ; $4b0f
+	ld l, LOW(wStoryPartner) ; $4b0f
 .serveStatField:
 	ld a, l ; $4b11
-	add $22 ; $4b12
+	add CHARREC_STAT_SERVE ; $4b12
 	ld l, a ; $4b14
 	ld a, h ; $4b15
 	adc $00 ; $4b16
@@ -512,10 +512,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4b23
 	or a ; $4b26
 	jr z, .strokeStatField ; $4b27
-	ld l, $40 ; $4b29
+	ld l, LOW(wStoryPartner) ; $4b29
 .strokeStatField:
 	ld a, l ; $4b2b
-	add $23 ; $4b2c
+	add CHARREC_STAT_STROKE ; $4b2c
 	ld l, a ; $4b2e
 	ld a, h ; $4b2f
 	adc $00 ; $4b30
@@ -529,10 +529,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4b3d
 	or a ; $4b40
 	jr z, .volleyStatField ; $4b41
-	ld l, $40 ; $4b43
+	ld l, LOW(wStoryPartner) ; $4b43
 .volleyStatField:
 	ld a, l ; $4b45
-	add $24 ; $4b46
+	add CHARREC_STAT_VOLLEY ; $4b46
 	ld l, a ; $4b48
 	ld a, h ; $4b49
 	adc $00 ; $4b4a
@@ -546,10 +546,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4b57
 	or a ; $4b5a
 	jr z, .controlLevelField ; $4b5b
-	ld l, $40 ; $4b5d
+	ld l, LOW(wStoryPartner) ; $4b5d
 .controlLevelField:
 	ld a, l ; $4b5f
-	add $3a ; $4b60
+	add CHARREC_TRAIN_LEVELS + 2 ; $4b60
 	ld l, a ; $4b62
 	ld a, h ; $4b63
 	adc $00 ; $4b64
@@ -562,10 +562,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4b70
 	or a ; $4b73
 	jr z, .angleStatField ; $4b74
-	ld l, $40 ; $4b76
+	ld l, LOW(wStoryPartner) ; $4b76
 .angleStatField:
 	ld a, l ; $4b78
-	add $25 ; $4b79
+	add CHARREC_STAT_ANGLE ; $4b79
 	ld l, a ; $4b7b
 	ld a, h ; $4b7c
 	adc $00 ; $4b7d
@@ -579,10 +579,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4b8a
 	or a ; $4b8d
 	jr z, .placementStatField ; $4b8e
-	ld l, $40 ; $4b90
+	ld l, LOW(wStoryPartner) ; $4b90
 .placementStatField:
 	ld a, l ; $4b92
-	add $26 ; $4b93
+	add CHARREC_STAT_PLACEMENT ; $4b93
 	ld l, a ; $4b95
 	ld a, h ; $4b96
 	adc $00 ; $4b97
@@ -596,10 +596,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4ba4
 	or a ; $4ba7
 	jr z, .speedLevelField ; $4ba8
-	ld l, $40 ; $4baa
+	ld l, LOW(wStoryPartner) ; $4baa
 .speedLevelField:
 	ld a, l ; $4bac
-	add $3b ; $4bad
+	add CHARREC_TRAIN_LEVELS + 3 ; $4bad
 	ld l, a ; $4baf
 	ld a, h ; $4bb0
 	adc $00 ; $4bb1
@@ -612,10 +612,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4bbd
 	or a ; $4bc0
 	jr z, .speedStatField ; $4bc1
-	ld l, $40 ; $4bc3
+	ld l, LOW(wStoryPartner) ; $4bc3
 .speedStatField:
 	ld a, l ; $4bc5
-	add $27 ; $4bc6
+	add CHARREC_STAT_SPEED ; $4bc6
 	ld l, a ; $4bc8
 	ld a, h ; $4bc9
 	adc $00 ; $4bca
@@ -629,10 +629,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4bd7
 	or a ; $4bda
 	jr z, .dashStatField ; $4bdb
-	ld l, $40 ; $4bdd
+	ld l, LOW(wStoryPartner) ; $4bdd
 .dashStatField:
 	ld a, l ; $4bdf
-	add $28 ; $4be0
+	add CHARREC_STAT_DASH ; $4be0
 	ld l, a ; $4be2
 	ld a, h ; $4be3
 	adc $00 ; $4be4
@@ -646,10 +646,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4bf1
 	or a ; $4bf4
 	jr z, .reactionStatField ; $4bf5
-	ld l, $40 ; $4bf7
+	ld l, LOW(wStoryPartner) ; $4bf7
 .reactionStatField:
 	ld a, l ; $4bf9
-	add $29 ; $4bfa
+	add CHARREC_STAT_REACTION ; $4bfa
 	ld l, a ; $4bfc
 	ld a, h ; $4bfd
 	adc $00 ; $4bfe
@@ -663,10 +663,10 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [wStoryCharacterSlot] ; $4c0b
 	or a ; $4c0e
 	jr z, .stopStatField ; $4c0f
-	ld l, $40 ; $4c11
+	ld l, LOW(wStoryPartner) ; $4c11
 .stopStatField:
 	ld a, l ; $4c13
-	add $2a ; $4c14
+	add CHARREC_STAT_STOP ; $4c14
 	ld l, a ; $4c16
 	ld a, h ; $4c17
 	adc $00 ; $4c18
@@ -704,11 +704,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4c4a
 	ld a, [wStoryCharacterSlot] ; $4c4d
 	or a ; $4c50
-	jr z, .field38 ; $4c51
-	ld l, $40 ; $4c53
-.field38:
+	jr z, .spinLevelField ; $4c51
+	ld l, LOW(wStoryPartner) ; $4c53
+.spinLevelField:
 	ld a, l ; $4c55
-	add $38 ; $4c56
+	add CHARREC_TRAIN_LEVELS ; $4c56
 	ld l, a ; $4c58
 	ld a, h ; $4c59
 	adc $00 ; $4c5a
@@ -720,11 +720,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4c63
 	ld a, [wStoryCharacterSlot] ; $4c66
 	or a ; $4c69
-	jr z, .field20 ; $4c6a
-	ld l, $40 ; $4c6c
-.field20:
+	jr z, .topStatField ; $4c6a
+	ld l, LOW(wStoryPartner) ; $4c6c
+.topStatField:
 	ld a, l ; $4c6e
-	add $20 ; $4c6f
+	add CHARREC_STAT_TOP ; $4c6f
 	ld l, a ; $4c71
 	ld a, h ; $4c72
 	adc $00 ; $4c73
@@ -737,11 +737,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4c7d
 	ld a, [wStoryCharacterSlot] ; $4c80
 	or a ; $4c83
-	jr z, .field21 ; $4c84
-	ld l, $40 ; $4c86
-.field21:
+	jr z, .sliceStatField ; $4c84
+	ld l, LOW(wStoryPartner) ; $4c86
+.sliceStatField:
 	ld a, l ; $4c88
-	add $21 ; $4c89
+	add CHARREC_STAT_SLICE ; $4c89
 	ld l, a ; $4c8b
 	ld a, h ; $4c8c
 	adc $00 ; $4c8d
@@ -754,11 +754,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4c97
 	ld a, [wStoryCharacterSlot] ; $4c9a
 	or a ; $4c9d
-	jr z, .field39 ; $4c9e
-	ld l, $40 ; $4ca0
-.field39:
+	jr z, .powerLevelField ; $4c9e
+	ld l, LOW(wStoryPartner) ; $4ca0
+.powerLevelField:
 	ld a, l ; $4ca2
-	add $39 ; $4ca3
+	add CHARREC_TRAIN_LEVELS + 1 ; $4ca3
 	ld l, a ; $4ca5
 	ld a, h ; $4ca6
 	adc $00 ; $4ca7
@@ -770,11 +770,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4cb0
 	ld a, [wStoryCharacterSlot] ; $4cb3
 	or a ; $4cb6
-	jr z, .field22 ; $4cb7
-	ld l, $40 ; $4cb9
-.field22:
+	jr z, .serveStatField ; $4cb7
+	ld l, LOW(wStoryPartner) ; $4cb9
+.serveStatField:
 	ld a, l ; $4cbb
-	add $22 ; $4cbc
+	add CHARREC_STAT_SERVE ; $4cbc
 	ld l, a ; $4cbe
 	ld a, h ; $4cbf
 	adc $00 ; $4cc0
@@ -787,11 +787,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4cca
 	ld a, [wStoryCharacterSlot] ; $4ccd
 	or a ; $4cd0
-	jr z, .field23 ; $4cd1
-	ld l, $40 ; $4cd3
-.field23:
+	jr z, .strokeStatField ; $4cd1
+	ld l, LOW(wStoryPartner) ; $4cd3
+.strokeStatField:
 	ld a, l ; $4cd5
-	add $23 ; $4cd6
+	add CHARREC_STAT_STROKE ; $4cd6
 	ld l, a ; $4cd8
 	ld a, h ; $4cd9
 	adc $00 ; $4cda
@@ -804,11 +804,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4ce4
 	ld a, [wStoryCharacterSlot] ; $4ce7
 	or a ; $4cea
-	jr z, .field24 ; $4ceb
-	ld l, $40 ; $4ced
-.field24:
+	jr z, .volleyStatField ; $4ceb
+	ld l, LOW(wStoryPartner) ; $4ced
+.volleyStatField:
 	ld a, l ; $4cef
-	add $24 ; $4cf0
+	add CHARREC_STAT_VOLLEY ; $4cf0
 	ld l, a ; $4cf2
 	ld a, h ; $4cf3
 	adc $00 ; $4cf4
@@ -821,11 +821,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4cfe
 	ld a, [wStoryCharacterSlot] ; $4d01
 	or a ; $4d04
-	jr z, .field3a ; $4d05
-	ld l, $40 ; $4d07
-.field3a:
+	jr z, .controlLevelField ; $4d05
+	ld l, LOW(wStoryPartner) ; $4d07
+.controlLevelField:
 	ld a, l ; $4d09
-	add $3a ; $4d0a
+	add CHARREC_TRAIN_LEVELS + 2 ; $4d0a
 	ld l, a ; $4d0c
 	ld a, h ; $4d0d
 	adc $00 ; $4d0e
@@ -837,11 +837,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4d17
 	ld a, [wStoryCharacterSlot] ; $4d1a
 	or a ; $4d1d
-	jr z, .field25 ; $4d1e
-	ld l, $40 ; $4d20
-.field25:
+	jr z, .angleStatField ; $4d1e
+	ld l, LOW(wStoryPartner) ; $4d20
+.angleStatField:
 	ld a, l ; $4d22
-	add $25 ; $4d23
+	add CHARREC_STAT_ANGLE ; $4d23
 	ld l, a ; $4d25
 	ld a, h ; $4d26
 	adc $00 ; $4d27
@@ -854,11 +854,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4d31
 	ld a, [wStoryCharacterSlot] ; $4d34
 	or a ; $4d37
-	jr z, .field26 ; $4d38
-	ld l, $40 ; $4d3a
-.field26:
+	jr z, .placementStatField ; $4d38
+	ld l, LOW(wStoryPartner) ; $4d3a
+.placementStatField:
 	ld a, l ; $4d3c
-	add $26 ; $4d3d
+	add CHARREC_STAT_PLACEMENT ; $4d3d
 	ld l, a ; $4d3f
 	ld a, h ; $4d40
 	adc $00 ; $4d41
@@ -871,11 +871,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4d4b
 	ld a, [wStoryCharacterSlot] ; $4d4e
 	or a ; $4d51
-	jr z, .field3b ; $4d52
-	ld l, $40 ; $4d54
-.field3b:
+	jr z, .speedLevelField ; $4d52
+	ld l, LOW(wStoryPartner) ; $4d54
+.speedLevelField:
 	ld a, l ; $4d56
-	add $3b ; $4d57
+	add CHARREC_TRAIN_LEVELS + 3 ; $4d57
 	ld l, a ; $4d59
 	ld a, h ; $4d5a
 	adc $00 ; $4d5b
@@ -887,11 +887,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4d64
 	ld a, [wStoryCharacterSlot] ; $4d67
 	or a ; $4d6a
-	jr z, .field27 ; $4d6b
-	ld l, $40 ; $4d6d
-.field27:
+	jr z, .speedStatField ; $4d6b
+	ld l, LOW(wStoryPartner) ; $4d6d
+.speedStatField:
 	ld a, l ; $4d6f
-	add $27 ; $4d70
+	add CHARREC_STAT_SPEED ; $4d70
 	ld l, a ; $4d72
 	ld a, h ; $4d73
 	adc $00 ; $4d74
@@ -904,11 +904,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4d7e
 	ld a, [wStoryCharacterSlot] ; $4d81
 	or a ; $4d84
-	jr z, .field28 ; $4d85
-	ld l, $40 ; $4d87
-.field28:
+	jr z, .dashStatField ; $4d85
+	ld l, LOW(wStoryPartner) ; $4d87
+.dashStatField:
 	ld a, l ; $4d89
-	add $28 ; $4d8a
+	add CHARREC_STAT_DASH ; $4d8a
 	ld l, a ; $4d8c
 	ld a, h ; $4d8d
 	adc $00 ; $4d8e
@@ -921,11 +921,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4d98
 	ld a, [wStoryCharacterSlot] ; $4d9b
 	or a ; $4d9e
-	jr z, .field29 ; $4d9f
-	ld l, $40 ; $4da1
-.field29:
+	jr z, .reactionStatField ; $4d9f
+	ld l, LOW(wStoryPartner) ; $4da1
+.reactionStatField:
 	ld a, l ; $4da3
-	add $29 ; $4da4
+	add CHARREC_STAT_REACTION ; $4da4
 	ld l, a ; $4da6
 	ld a, h ; $4da7
 	adc $00 ; $4da8
@@ -938,11 +938,11 @@ LoadCharStats:
 	ld hl, wStoryMainName ; $4db2
 	ld a, [wStoryCharacterSlot] ; $4db5
 	or a ; $4db8
-	jr z, .field2a ; $4db9
-	ld l, $40 ; $4dbb
-.field2a:
+	jr z, .stopStatField ; $4db9
+	ld l, LOW(wStoryPartner) ; $4dbb
+.stopStatField:
 	ld a, l ; $4dbd
-	add $2a ; $4dbe
+	add CHARREC_STAT_STOP ; $4dbe
 	ld l, a ; $4dc0
 	ld a, h ; $4dc1
 	adc $00 ; $4dc2

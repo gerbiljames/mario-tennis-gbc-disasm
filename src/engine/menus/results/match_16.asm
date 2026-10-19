@@ -13,72 +13,72 @@ RemapDoublesMatchGfxIndex:
 	ret ; $4e9c
 GfxSetPointerTable_16:
 	; $4e9d, 176 bytes (gfx_ptr_table)
-	dw .rec0 ; 0
-	dw .rec1 ; 1
-	dw .rec2 ; 2
-	dw .rec3 ; 3
-	dw .rec4 ; 4
-	dw .rec5 ; 5
-	dw .rec6 ; 6
-	dw .rec7 ; 7
-	dw .rec8 ; 8
-	dw .rec9 ; 9
-	dw .rec10 ; 10
-	dw .rec11 ; 11
-	dw .rec12 ; 12
-	dw .rec13 ; 13
-	dw .rec14 ; 14
-	dw .rec15 ; 15
-	dw .rec16 ; 16
-	dw .rec17 ; 17
-	dw .rec18 ; 18
-	dw .rec19 ; 19
-	dw .rec20 ; 20
-	dw .rec20 ; 21
-	dw .rec20 ; 22
-	dw .rec20 ; 23
-	dw .rec20 ; 24
-.rec0:
+	dw .juniorPractice ; 0
+	dw .junior4 ; 1
+	dw .junior3 ; 2
+	dw .junior2 ; 3
+	dw .junior1 ; 4
+	dw .seniorPractice ; 5
+	dw .senior4 ; 6
+	dw .senior3 ; 7
+	dw .senior2 ; 8
+	dw .senior1 ; 9
+	dw .varsityPractice ; 10
+	dw .varsity4 ; 11
+	dw .varsity3 ; 12
+	dw .varsity2 ; 13
+	dw .varsity1 ; 14
+	dw .grassPractice0f ; 15
+	dw .islandOpenRound1 ; 16
+	dw .islandOpenRound2 ; 17
+	dw .islandOpenSemifinal ; 18
+	dw .islandOpenFinal ; 19
+	dw .dreamMatches ; 20
+	dw .dreamMatches ; 21
+	dw .dreamMatches ; 22
+	dw .dreamMatches ; 23
+	dw .dreamMatches ; 24
+.juniorPractice:
 	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC8
-.rec1:
+.junior4:
 	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC7
-.rec2:
+.junior3:
 	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC6
-.rec3:
+.junior2:
 	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC5
-.rec4:
+.junior1:
 	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC4
-.rec5:
+.seniorPractice:
 	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC8
-.rec6:
+.senior4:
 	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC7
-.rec7:
+.senior3:
 	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC6
-.rec8:
+.senior2:
 	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC5
-.rec9:
+.senior1:
 	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC4
-.rec10:
+.varsityPractice:
 	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC8
-.rec11:
+.varsity4:
 	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC7
-.rec12:
+.varsity3:
 	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC6
-.rec13:
+.varsity2:
 	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC5
-.rec14:
+.varsity1:
 	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC4
-.rec15:
+.grassPractice0f:
 	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC8
-.rec16:
+.islandOpenRound1:
 	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC2
-.rec17:
+.islandOpenRound2:
 	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC3
-.rec18:
+.islandOpenSemifinal:
 	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC1
-.rec19:
+.islandOpenFinal:
 	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC0
-.rec20:
+.dreamMatches:
 	gfx_set MatchResultGfxA2, MatchResultGfxB4, MatchResultGfxC9
 MatchResultGfxA0:
 	INCBIN "data/engine/menus/results/lz_MatchResultGfxA0.bin" ; $4f4d, 199 bytes

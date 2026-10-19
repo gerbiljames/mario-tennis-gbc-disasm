@@ -182,9 +182,9 @@ ConfirmLinkGridSelection:
 	cp CHARSELECTSLOT_DONE ; $677b
 	jr z, .allSlotsFilled ; $677d
 	ldh a, [hLinkRemoteInput] ; $677f
-	cp $21 ; $6781
+	cp LINKSEL_PICK ; $6781
 	jr nz, .readEntry ; $6783
-	ld a, $22 ; $6785
+	ld a, LINKSEL_NONE ; $6785
 	ldh [hLinkRemoteInput], a ; $6787
 	jr .allSlotsFilled ; $6789
 .readEntry:
