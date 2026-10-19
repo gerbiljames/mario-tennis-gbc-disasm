@@ -5,7 +5,7 @@ IslandSkyTilesA_14:
 IslandSkyTilesB_14:
 	INCBIN "data/story/IslandSkyTilesB_14.bin" ; $7290, 192 bytes
 IslandSkySpriteData_14:
-	INCBIN "data/story/IslandSkySpriteData_14.bin" ; $7350, 33 bytes
+	INCLUDE "data/story/IslandSkySpriteData_14.asm" ; $7350, 33 bytes (sprite_template)
 AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 	; $7371, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

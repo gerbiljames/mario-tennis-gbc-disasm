@@ -80,37 +80,41 @@ ComposeLinkStateByte:
 	pop bc ; $4d1f
 	ret ; $4d20
 LinkStateBytePtrs_07:
-	INCBIN "data/engine/match/LinkStateBytePtrs_07.bin" ; $4d21, 16 bytes
+	; $4d21: per hLinkPayloadKind, the sources of the high and low nibble
+	dw hPlayerInputFlags, hInputRisingEdge
+	dw hPlayerInputFlags, hPlayerInputFlags
+	dw hInputPressed, hInputRisingEdge
+	dw hInputPressed, hPlayerInputFlags
 ShotPlacementDataTopspin_07:
-	INCBIN "data/engine/match/ShotPlacementDataTopspin_07.bin" ; $4d31, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataTopspin_07.asm" ; $4d31, 80 bytes (words:4)
 ShotPlacementDataPowerTopspin_07:
-	INCBIN "data/engine/match/ShotPlacementDataPowerTopspin_07.bin" ; $4d81, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataPowerTopspin_07.asm" ; $4d81, 80 bytes (words:4)
 ShotPlacementDataSlice_07:
-	INCBIN "data/engine/match/ShotPlacementDataSlice_07.bin" ; $4dd1, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataSlice_07.asm" ; $4dd1, 80 bytes (words:4)
 ShotPlacementDataPowerSlice_07:
-	INCBIN "data/engine/match/ShotPlacementDataPowerSlice_07.bin" ; $4e21, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataPowerSlice_07.asm" ; $4e21, 80 bytes (words:4)
 ShotPlacementDataNeutral_07:
-	INCBIN "data/engine/match/ShotPlacementDataNeutral_07.bin" ; $4e71, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataNeutral_07.asm" ; $4e71, 80 bytes (words:4)
 ShotPlacementDataSmash_07:
-	INCBIN "data/engine/match/ShotPlacementDataSmash_07.bin" ; $4ec1, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataSmash_07.asm" ; $4ec1, 80 bytes (words:4)
 ShotPlacementDataReachBasic_07:
-	INCBIN "data/engine/match/ShotPlacementDataReachBasic_07.bin" ; $4f11, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataReachBasic_07.asm" ; $4f11, 80 bytes (words:4)
 ShotPlacementDataReachPowerTopspin_07:
-	INCBIN "data/engine/match/ShotPlacementDataReachPowerTopspin_07.bin" ; $4f61, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataReachPowerTopspin_07.asm" ; $4f61, 80 bytes (words:4)
 ShotPlacementDataReachPowerSlice_07:
-	INCBIN "data/engine/match/ShotPlacementDataReachPowerSlice_07.bin" ; $4fb1, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataReachPowerSlice_07.asm" ; $4fb1, 80 bytes (words:4)
 ShotPlacementDataReach_07:
-	INCBIN "data/engine/match/ShotPlacementDataReach_07.bin" ; $5001, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataReach_07.asm" ; $5001, 80 bytes (words:4)
 ShotPlacementDataLob_07:
-	INCBIN "data/engine/match/ShotPlacementDataLob_07.bin" ; $5051, 16 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataLob_07.asm" ; $5051, 16 bytes (words:4)
 ShotPlacementDataDrop_07:
-	INCBIN "data/engine/match/ShotPlacementDataDrop_07.bin" ; $5061, 16 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataDrop_07.asm" ; $5061, 16 bytes (words:4)
 ShotPlacementDataServeTopspin_07:
-	INCBIN "data/engine/match/ShotPlacementDataServeTopspin_07.bin" ; $5071, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataServeTopspin_07.asm" ; $5071, 80 bytes (words:4)
 ShotPlacementDataServeSlice_07:
-	INCBIN "data/engine/match/ShotPlacementDataServeSlice_07.bin" ; $50c1, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataServeSlice_07.asm" ; $50c1, 80 bytes (words:4)
 ShotPlacementDataServeFlat_07:
-	INCBIN "data/engine/match/ShotPlacementDataServeFlat_07.bin" ; $5111, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataServeFlat_07.asm" ; $5111, 80 bytes (words:4)
 ComputeShotPlacement:
 	jumptable [wCurrentShotType] ; $5161
 	dw ShotPlacementTopspin ; $5165 jumptable

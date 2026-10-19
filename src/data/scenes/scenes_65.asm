@@ -49,7 +49,7 @@ DataPtr_SeniorClassCourtTiles:
 IslandSkySceneConfig:
 	INCLUDE "data/scenes/IslandSkySceneConfig.asm" ; $4030, 27 bytes (scene_config)
 IslandSkyPalettes:
-	INCBIN "data/scenes/IslandSkyPalettes.bin" ; $404b, 64 bytes
+	INCLUDE "data/scenes/IslandSkyPalettes.asm" ; $404b, 64 bytes (palettes)
 IslandSkyTiles:
 	INCBIN "data/scenes/lz_IslandSkyTiles.bin" ; $408b, 2987 bytes
 IslandSkyTilemap:

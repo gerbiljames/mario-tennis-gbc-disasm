@@ -54,10 +54,10 @@ tilemaps and text.
 | | |
 |---|---|
 | instructions | 125,813 source lines of instructions and code macros (`tools/stats.py`) |
-| source-spelled bytes | 911,348 bytes, 43.5% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 29,565: 14,413 routines and tables and 13,418 locals in ROM, 1,734 RAM names |
-| compressed graphics | 839 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 788 routines and 111 blobs nothing live reaches (`docs/unused_code.md`) |
+| source-spelled bytes | 914,975 bytes, 43.6% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
+| labels | 29,557: 14,405 routines and tables and 13,418 locals in ROM, 1,734 RAM names |
+| compressed graphics | 861 LZ streams, each named, sized by decoding it |
+| `Unused_` routines | 788 routines and 112 blobs nothing live reaches (`docs/unused_code.md`) |
 
 Every `INCBIN` is classified (graphics, audio, text, a resource descriptor,
 a record array or fill). Structure is rendered as source -- farcall slot
@@ -174,7 +174,7 @@ because the layout is recomputed rather than restated:
   (`data/sprites/AlexSpriteFrame00.png`,
   `data/engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin`, `lz_` marking a compressed
   stream).
-- **Graphics are PNGs.** Each of the 2,698 tile-graphics blobs is also
+- **Graphics are PNGs.** Each of the 2,721 tile-graphics blobs is also
   extracted as a four-colour indexed PNG: character frames as the 24x32 body
   with its standing shadow, walk sprites as four facings side by side
   (`docs/graphics_formats.md` §0), everything else as tiles in blob order,
@@ -249,7 +249,7 @@ nothing.
 
 ## Tools
 
-- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, actor-slot names hold, `Unused` names match `reach.py`, `; debug warp only` entries match `routes.py`.
+- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, actor-slot names hold, `Unused` names match `reach.py`, `; debug warp only` entries match `routes.py`.
 - `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts); the README and STATUS figures against `tools/stats.py`.
 - `tools/extract.py` -- `data.manifest` + base ROM -> `data/`.
 - `tools/mods.py` -- copies `mods/` over `data/`; collects edited data files into `mods/`.

@@ -13,7 +13,11 @@ DpadToFacingTable_08:
 	db $ff, $00, $80, $ff, $c0, $e0, $a0, $c0 ; 0x00
 	db $40, $20, $60, $40, $ff, $00, $80, $ff ; 0x08
 AngleToDpadTable_08:
-	INCBIN "data/engine/match/AngleToDpadTable_08.bin" ; $7296, 16 bytes
+	; $7296
+	db PADF_RIGHT, PADF_DOWN | PADF_RIGHT, PADF_DOWN | PADF_RIGHT, PADF_DOWN
+	db PADF_DOWN, PADF_DOWN | PADF_LEFT, PADF_DOWN | PADF_LEFT, PADF_LEFT
+	db PADF_LEFT, PADF_UP | PADF_LEFT, PADF_UP | PADF_LEFT, PADF_UP
+	db PADF_UP, PADF_UP | PADF_RIGHT, PADF_UP | PADF_RIGHT, PADF_RIGHT
 StepCharJumpPhysics:
 	ld hl, wCharFlags ; $72a6
 	bit CHARB_AIRBORNE, [hl] ; $72a9

@@ -584,71 +584,71 @@ CharDataScreenAttrmap_1c:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenAttrmap_1c.bin" ; $6469, 59 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenAttrmap_1c.inc" ; DEF CharDataScreenAttrmap_1c_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenStatBar00:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar00.bin" ; $64a4, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar00.asm" ; $64a4, 5 bytes (bytes:5)
 CharDataScreenStatBar01:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar01.bin" ; $64a9, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar01.asm" ; $64a9, 5 bytes (bytes:5)
 CharDataScreenStatBar02:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar02.bin" ; $64ae, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar02.asm" ; $64ae, 5 bytes (bytes:5)
 CharDataScreenStatBar03:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar03.bin" ; $64b3, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar03.asm" ; $64b3, 5 bytes (bytes:5)
 CharDataScreenStatBar04:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar04.bin" ; $64b8, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar04.asm" ; $64b8, 5 bytes (bytes:5)
 CharDataScreenStatBar05:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar05.bin" ; $64bd, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar05.asm" ; $64bd, 5 bytes (bytes:5)
 CharDataScreenStatBar06:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar06.bin" ; $64c2, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar06.asm" ; $64c2, 5 bytes (bytes:5)
 CharDataScreenStatBar07:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar07.bin" ; $64c7, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar07.asm" ; $64c7, 5 bytes (bytes:5)
 CharDataScreenStatBar08:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar08.bin" ; $64cc, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar08.asm" ; $64cc, 5 bytes (bytes:5)
 CharDataScreenStatBar09:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar09.bin" ; $64d1, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar09.asm" ; $64d1, 5 bytes (bytes:5)
 CharDataScreenStatBar10:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar10.bin" ; $64d6, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar10.asm" ; $64d6, 5 bytes (bytes:5)
 CharDataScreenStatBar11:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar11.bin" ; $64db, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar11.asm" ; $64db, 5 bytes (bytes:5)
 CharDataScreenStatBar12:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar12.bin" ; $64e0, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar12.asm" ; $64e0, 5 bytes (bytes:5)
 CharDataScreenStatBar13:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar13.bin" ; $64e5, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar13.asm" ; $64e5, 5 bytes (bytes:5)
 CharDataScreenStatBar14:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar14.bin" ; $64ea, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar14.asm" ; $64ea, 5 bytes (bytes:5)
 CharDataScreenStatBar15:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar15.bin" ; $64ef, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar15.asm" ; $64ef, 5 bytes (bytes:5)
 CharDataScreenStatBar16:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar16.bin" ; $64f4, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar16.asm" ; $64f4, 5 bytes (bytes:5)
 CharDataScreenStatBar17:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar17.bin" ; $64f9, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar17.asm" ; $64f9, 5 bytes (bytes:5)
 CharDataScreenStatBar18:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar18.bin" ; $64fe, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar18.asm" ; $64fe, 5 bytes (bytes:5)
 CharDataScreenStatBar19:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar19.bin" ; $6503, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar19.asm" ; $6503, 5 bytes (bytes:5)
 CharDataScreenStatBar20:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar20.bin" ; $6508, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar20.asm" ; $6508, 5 bytes (bytes:5)
 CharDataScreenStatBar21:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar21.bin" ; $650d, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar21.asm" ; $650d, 5 bytes (bytes:5)
 CharDataScreenStatBar22:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar22.bin" ; $6512, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar22.asm" ; $6512, 5 bytes (bytes:5)
 CharDataScreenStatBar23:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar23.bin" ; $6517, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar23.asm" ; $6517, 5 bytes (bytes:5)
 CharDataScreenStatBar24:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar24.bin" ; $651c, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar24.asm" ; $651c, 5 bytes (bytes:5)
 CharDataScreenStatBar25:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar25.bin" ; $6521, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar25.asm" ; $6521, 5 bytes (bytes:5)
 CharDataScreenStatBar26:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar26.bin" ; $6526, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar26.asm" ; $6526, 5 bytes (bytes:5)
 CharDataScreenStatBar27:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar27.bin" ; $652b, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar27.asm" ; $652b, 5 bytes (bytes:5)
 CharDataScreenStatBar28:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar28.bin" ; $6530, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar28.asm" ; $6530, 5 bytes (bytes:5)
 CharDataScreenStatBar29:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar29.bin" ; $6535, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar29.asm" ; $6535, 5 bytes (bytes:5)
 CharDataScreenStatBar30:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar30.bin" ; $653a, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar30.asm" ; $653a, 5 bytes (bytes:5)
 CharDataScreenStatBar31:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar31.bin" ; $653f, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar31.asm" ; $653f, 5 bytes (bytes:5)
 CharDataScreenStatBar32:
-	INCBIN "data/engine/menus/char_data/CharDataScreenStatBar32.bin" ; $6544, 5 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenStatBar32.asm" ; $6544, 5 bytes (bytes:5)
 CharDataScreenBand1Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand1Tilemap.bin" ; $6549, 54 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand1Tilemap.inc" ; DEF CharDataScreenBand1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
@@ -656,7 +656,7 @@ CharDataScreenBand1Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand1Attrmap.bin" ; $657f, 23 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand1Attrmap.inc" ; DEF CharDataScreenBand1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage0Columns:
-	INCBIN "data/engine/menus/char_data/CharDataScreenPage0Columns.bin" ; $6596, 50 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenPage0Columns.asm" ; $6596, 50 bytes (bytes:10)
 CharDataScreenBand2Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand2Tilemap.bin" ; $65c8, 67 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand2Tilemap.inc" ; DEF CharDataScreenBand2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
@@ -664,7 +664,7 @@ CharDataScreenBand2Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand2Attrmap.bin" ; $660b, 23 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand2Attrmap.inc" ; DEF CharDataScreenBand2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage1Columns:
-	INCBIN "data/engine/menus/char_data/CharDataScreenPage1Columns.bin" ; $6622, 70 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenPage1Columns.asm" ; $6622, 70 bytes (bytes:10)
 CharDataScreenBand3Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand3Tilemap.bin" ; $6668, 58 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand3Tilemap.inc" ; DEF CharDataScreenBand3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
@@ -672,7 +672,7 @@ CharDataScreenBand3Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand3Attrmap.bin" ; $66a2, 24 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand3Attrmap.inc" ; DEF CharDataScreenBand3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage2Columns:
-	INCBIN "data/engine/menus/char_data/CharDataScreenPage2Columns.bin" ; $66ba, 50 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenPage2Columns.asm" ; $66ba, 50 bytes (bytes:10)
 CharDataScreenBand4Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand4Tilemap.bin" ; $66ec, 72 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand4Tilemap.inc" ; DEF CharDataScreenBand4Tilemap_SIZE EQU its decoded length, generated from the .bin by make
@@ -680,9 +680,9 @@ CharDataScreenBand4Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand4Attrmap.bin" ; $6734, 25 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand4Attrmap.inc" ; DEF CharDataScreenBand4Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPage3Columns:
-	INCBIN "data/engine/menus/char_data/CharDataScreenPage3Columns.bin" ; $674d, 90 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenPage3Columns.asm" ; $674d, 90 bytes (bytes:10)
 CharDataScreenPage4Columns:
-	INCBIN "data/engine/menus/char_data/CharDataScreenPage4Columns.bin" ; $67a7, 30 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenPage4Columns.asm" ; $67a7, 30 bytes (bytes:10)
 CharDataScreenBand5Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand5Tilemap.bin" ; $67c5, 14 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand5Tilemap.inc" ; DEF CharDataScreenBand5Tilemap_SIZE EQU its decoded length, generated from the .bin by make

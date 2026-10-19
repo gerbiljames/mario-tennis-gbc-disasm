@@ -181,7 +181,7 @@ UpdateCutsceneScrollX:
 	ld [wIntroCutsceneScrollY], a ; $4cbd
 	ret ; $4cc0
 CutsceneScrollXTable:
-	INCBIN "data/engine/cutscenes/CutsceneScrollXTable.bin" ; $4cc1, 160 bytes
+	INCLUDE "data/engine/cutscenes/CutsceneScrollXTable.asm" ; $4cc1, 160 bytes (bytes:16)
 UpdateCutsceneScrollY:
 	ld a, [wCutsceneStepTimer] ; $4d61
 	ld hl, CutsceneScrollYTable ; $4d64
@@ -199,7 +199,7 @@ UpdateCutsceneScrollY:
 	ld [wCutsceneScrollAccum], a ; $4d80
 	ret ; $4d83
 CutsceneScrollYTable:
-	INCBIN "data/engine/cutscenes/CutsceneScrollYTable.bin" ; $4d84, 169 bytes
+	INCLUDE "data/engine/cutscenes/CutsceneScrollYTable.asm" ; $4d84, 169 bytes (bytes:16)
 QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e2d
 	cp $20 ; $4e30

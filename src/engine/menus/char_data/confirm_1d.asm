@@ -298,9 +298,9 @@ StatPageTilemapPatch4:
 CharDataConfirmScreenTilemapPatch3:
 	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch3.asm" ; $5d59, 37 bytes (blit_runs)
 CharDataSummaryFieldsTilePlot0:
-	INCBIN "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot0.bin" ; $5d7e, 19 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot0.asm" ; $5d7e, 19 bytes (bytes:2)
 CharDataSummaryFieldsTilePlot1:
-	INCBIN "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot1.bin" ; $5d91, 19 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot1.asm" ; $5d91, 19 bytes (bytes:2)
 MainCharStatPageTilemapPatch00:
 	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch00.asm" ; $5da4, 13 bytes (blit_runs)
 PartnerStatPageTilemapPatch00:

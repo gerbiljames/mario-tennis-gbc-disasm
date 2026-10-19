@@ -38,7 +38,7 @@ ExpDistributionScreenGfx7:
 	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenGfx7.bin" ; $7876, 25 bytes
 	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenGfx7.inc" ; DEF ExpDistributionScreenGfx7_SIZE EQU its decoded length, generated from the .bin by make
 ExpDistributionScreenPalettes:
-	INCBIN "data/engine/menus/exp/ExpDistributionScreenPalettes.bin" ; $788f, 24 bytes
+	INCLUDE "data/engine/menus/exp/ExpDistributionScreenPalettes.asm" ; $788f, 24 bytes (palettes)
 ExpDistributionScreenGfx8:
 	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenGfx8.bin" ; $78a7, 137 bytes
 	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenGfx8.inc" ; DEF ExpDistributionScreenGfx8_SIZE EQU its decoded length, generated from the .bin by make

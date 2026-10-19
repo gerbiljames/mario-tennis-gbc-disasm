@@ -53,17 +53,17 @@ ConfirmScreenGfx1:
 ConfirmScreenGfx2:
 	INCBIN "data/engine/menus/common/lz_ConfirmScreenGfx2.bin" ; $50ce, 138 bytes
 ThreeOptionLabelsData0:
-	INCBIN "data/engine/menus/common/ThreeOptionLabelsData0.bin" ; $5158, 16 bytes
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData0.asm" ; $5158, 16 bytes (bytes:16)
 ThreeOptionLabelsData1:
-	INCBIN "data/engine/menus/common/ThreeOptionLabelsData1.bin" ; $5168, 16 bytes
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData1.asm" ; $5168, 16 bytes (bytes:16)
 ThreeOptionLabelsData2:
-	INCBIN "data/engine/menus/common/ThreeOptionLabelsData2.bin" ; $5178, 16 bytes
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData2.asm" ; $5178, 16 bytes (bytes:16)
 ThreeOptionLabelsData3:
-	INCBIN "data/engine/menus/common/ThreeOptionLabelsData3.bin" ; $5188, 16 bytes
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData3.asm" ; $5188, 16 bytes (bytes:16)
 ThreeOptionLabelsData4:
-	INCBIN "data/engine/menus/common/ThreeOptionLabelsData4.bin" ; $5198, 16 bytes
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData4.asm" ; $5198, 16 bytes (bytes:16)
 ThreeOptionLabelsData5:
-	INCBIN "data/engine/menus/common/ThreeOptionLabelsData5.bin" ; $51a8, 16 bytes
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData5.asm" ; $51a8, 16 bytes (bytes:16)
 YesNoLabels0:
 	; $51b8, 16 bytes (bytes:16)
 	db $8b, $8b, $dd, $de, $df, $8b, $8b, $bd, $be, $bf, $8b, $8b, $ff, $ff, $ff, $ff ; 0x00
@@ -372,7 +372,7 @@ Unused_18_DrawGlyphSprite:
 	ld d, a ; $5505
 	ret ; $5506
 Unused_18_BobRamp:
-	INCBIN "data/engine/menus/common/Unused_18_BobRamp.bin" ; $5507, 32 bytes
+	INCLUDE "data/engine/menus/common/Unused_18_BobRamp.asm" ; $5507, 32 bytes (bytes:16)
 Unused_18_DrawThreeOptionLabels:
 	call Unused_18_DrawConfirmScreenBox ; $5527
 	ld hl, ThreeOptionLabelsData3 ; $552a

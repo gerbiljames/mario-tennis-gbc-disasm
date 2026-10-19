@@ -641,7 +641,24 @@ SeniorCourtNpc0CTextIds:
 	dw Text_SeniorEveryoneHasGoals ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0C_12Table:
-	INCBIN "data/story/SeniorCourtNpc0C_12Table.bin" ; $5c2f, 30 bytes
+	; $5c2f, 30 bytes (text_ids)
+	table_width 2
+	dw Text_KateSeniorSingleHandedRangeAlt ; record 0
+	dw Text_KateSeniorSingleHandedRangeAlt ; record 1
+	dw Text_KateSeniorKeepAtItRankings ; record 2
+	dw Text_KateSeniorYouBeatMeToRankings ; record 3
+	dw Text_KateSeniorYouBeatMeToRankings ; record 4
+	dw Text_KateSeniorYouBeatMeToRankings ; record 5
+	dw Text_BobSeniorAlwaysUnranked ; record 6
+	dw Text_EmilyOfferDoublesRanking ; record 7
+	dw Text_EmilyOfferDoublesRanking ; record 8
+	dw Text_KateSeniorFocusOnDoubles ; record 9
+	dw Text_SeniorStandInCoachEmilyAway ; record 10
+	dw Text_KateSeniorWhoCaresRootingForYou ; record 11
+	dw Text_KateSeniorJealousPartnerNoBetter ; record 12
+	dw Text_KateSeniorLuckyChampPartner ; record 13
+	dw Text_SeniorEveryoneHasGoals ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)
 	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_RIGHT, $0840, SeniorCourtNpc03FaceRight_12, NPC_FACE_PLAYER, $00

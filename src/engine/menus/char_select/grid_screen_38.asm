@@ -363,7 +363,7 @@ CharGridScreenGfx1:
 	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx1.bin" ; $50a7, 74 bytes
 	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx1.inc" ; DEF CharGridScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
 CharGridScreenGfx2:
-	INCBIN "data/engine/menus/char_select/CharGridScreenGfx2.bin" ; $50f1, 8 bytes
+	INCLUDE "data/engine/menus/char_select/CharGridScreenGfx2.asm" ; $50f1, 8 bytes (palettes)
 CharGridScreenGfx3:
 	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx3.bin" ; $50f9, 156 bytes
 	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx3.inc" ; DEF CharGridScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make

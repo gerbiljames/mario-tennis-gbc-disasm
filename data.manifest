@@ -142,24 +142,22 @@ engine/menus/pause/lz_StoryMenuItemGfx_Fast.bin 01b588 79
 engine/menus/pause/lz_StoryMenuItemGfx_CharData.bin 01b601 af
 engine/menus/pause/lz_StoryMenuItemGfx_Items.bin 01b6b0 7d
 engine/menus/pause/lz_StoryMenuItemGfx_Normal.bin 01b72d 79
-engine/match/LinkStateBytePtrs_07.bin 01cd21 10
-engine/match/ShotPlacementDataTopspin_07.bin 01cd31 50
-engine/match/ShotPlacementDataPowerTopspin_07.bin 01cd81 50
-engine/match/ShotPlacementDataSlice_07.bin 01cdd1 50
-engine/match/ShotPlacementDataPowerSlice_07.bin 01ce21 50
-engine/match/ShotPlacementDataNeutral_07.bin 01ce71 50
-engine/match/ShotPlacementDataSmash_07.bin 01cec1 50
-engine/match/ShotPlacementDataReachBasic_07.bin 01cf11 50
-engine/match/ShotPlacementDataReachPowerTopspin_07.bin 01cf61 50
-engine/match/ShotPlacementDataReachPowerSlice_07.bin 01cfb1 50
-engine/match/ShotPlacementDataReach_07.bin 01d001 50
-engine/match/ShotPlacementDataLob_07.bin 01d051 10
-engine/match/ShotPlacementDataDrop_07.bin 01d061 10
-engine/match/ShotPlacementDataServeTopspin_07.bin 01d071 50
-engine/match/ShotPlacementDataServeSlice_07.bin 01d0c1 50
-engine/match/ShotPlacementDataServeFlat_07.bin 01d111 50
-engine/match/SetupCharacterSprite_CharTileBaseTable.bin 01daaf 4
-engine/match/AngleToDpadTable_08.bin 023296 10
+engine/match/ShotPlacementDataTopspin_07.asm 01cd31 50 words:4
+engine/match/ShotPlacementDataPowerTopspin_07.asm 01cd81 50 words:4
+engine/match/ShotPlacementDataSlice_07.asm 01cdd1 50 words:4
+engine/match/ShotPlacementDataPowerSlice_07.asm 01ce21 50 words:4
+engine/match/ShotPlacementDataNeutral_07.asm 01ce71 50 words:4
+engine/match/ShotPlacementDataSmash_07.asm 01cec1 50 words:4
+engine/match/ShotPlacementDataReachBasic_07.asm 01cf11 50 words:4
+engine/match/ShotPlacementDataReachPowerTopspin_07.asm 01cf61 50 words:4
+engine/match/ShotPlacementDataReachPowerSlice_07.asm 01cfb1 50 words:4
+engine/match/ShotPlacementDataReach_07.asm 01d001 50 words:4
+engine/match/ShotPlacementDataLob_07.asm 01d051 10 words:4
+engine/match/ShotPlacementDataDrop_07.asm 01d061 10 words:4
+engine/match/ShotPlacementDataServeTopspin_07.asm 01d071 50 words:4
+engine/match/ShotPlacementDataServeSlice_07.asm 01d0c1 50 words:4
+engine/match/ShotPlacementDataServeFlat_07.asm 01d111 50 words:4
+engine/match/SetupCharacterSprite_CharTileBaseTable.asm 01daaf 4 bytes:4
 engine/match/MoveCurve00_09.asm 0247ce d move_curve
 engine/match/MoveCurve01_09.asm 0247db d move_curve
 engine/match/MoveCurve02_09.asm 0247e8 d move_curve
@@ -189,7 +187,7 @@ engine/match/ServeGfx1_09.bin 026d80 100
 engine/match/ServeGfx2_09.bin 026e80 100
 engine/match/ServeGfx3_09.bin 026f80 100
 engine/story/StoryObjPalettes.asm 029341 28 palettes
-engine/story/DrawMinigameTargetTable.bin 02a6fe 10
+engine/story/DrawMinigameTargetTable.asm 02a6fe 10 bytes:16
 engine/story/MinigameTargetFormation0Script0.asm 02a8e1 a target_script
 engine/story/MinigameTargetFormation0Script1.asm 02a8eb a target_script
 engine/story/MinigameTargetFormation0Script2.asm 02a8f5 a target_script
@@ -247,7 +245,7 @@ engine/story/MinigameTargetFormation8Script0.asm 02ac53 a target_script
 engine/story/MinigameTargetFormation8Script1.asm 02ac5d a target_script
 engine/story/MinigameTargetFormation8Script2.asm 02ac67 a target_script
 engine/story/MinigameTargetFormation8Script3.asm 02ac71 a target_script
-engine/story/DrawMinigameTargetAltTable.bin 02adad 10
+engine/story/DrawMinigameTargetAltTable.asm 02adad 10 bytes:16
 engine/story/EndingCreditsSequencePalette.asm 02ae6c 8 palettes
 audio/Unused_0c_Snd00.bin 030090 e4
 audio/Unused_0c_Snd01.bin 030174 e2
@@ -289,26 +287,25 @@ engine/minigames/LaunchBallTable.bin 034548 66
 story/StarWarpPalette.asm 03b2ce 8 palettes
 story/StarWarpTiles.bin 03b2e0 180 gfx
 story/StarWarpSparkleTiles.bin 03b460 20 gfx
-story/SeniorCourtNpc0C_12Table.bin 049c2f 1e
 story/TourPointerTiles_13.bin 04cd30 40 gfx
 story/TourPointerPalette_13.asm 04cd70 8 palettes
 story/lz_VarsityCourtTourLz0_13.bin 04e793 9e
 story/lz_VarsityCourtTourLz1_13.bin 04e831 9d
 story/lz_VarsityCourtTourLz2_13.bin 04e8ce a1
 story/lz_VarsityCourtTourLz3_13.bin 04e96f 99
-story/VarsityCourtTourPalette_13.bin 04ea08 8
+story/VarsityCourtTourPalette_13.asm 04ea08 8 palettes
 story/PlaneObjTiles_14.bin 051650 400 gfx
 story/IslandObjTiles_14.bin 051a50 400 gfx
 story/IslandObjPalette_14.asm 051e71 8 palettes
 story/WaterSplashObjGfx.bin 051ed0 1c0 gfx
 story/WaterSplashObjPalette_14.asm 052099 8 palettes
-story/UpdateFirework0_14Table.bin 0524d9 4
-story/UpdateFirework1_14Table.bin 0524dd 4
+story/UpdateFirework0_14Table.asm 0524d9 4 bytes:4
+story/UpdateFirework1_14Table.asm 0524dd 4 bytes:4
 story/FireworkObjTiles_14.bin 052680 800 gfx
 story/FireworkObjPalettes_14.asm 052ea1 20 palettes
 story/IslandSkyTilesA_14.bin 053190 100 gfx
 story/IslandSkyTilesB_14.bin 053290 c0 gfx
-story/IslandSkySpriteData_14.bin 053350 21
+story/IslandSkySpriteData_14.asm 053350 21 sprite_template
 story/IslandSkyPalettes_14.asm 05338a 20 palettes
 story/DistantPlaneObjGfx.bin 053430 100 gfx
 story/TwinkleObjGfx.bin 053580 100 gfx
@@ -319,18 +316,9 @@ story/Palettes_15_0.asm 055900 10 palettes
 story/WaterSpriteRacketRewardScenePalettes0.asm 055910 40 palettes
 story/WaterSpriteRacketRewardScenePalettes1.asm 055950 40 palettes
 story/WaterSpriteRacketRewardScenePalettes2.asm 055990 30 palettes
-engine/menus/results/MatchWinLoseScreenGfx.bin 058608 6e
-engine/menus/results/DiagramHighlightPaletteTask.bin 058676 6c
-engine/menus/results/DiagramNearFigureSpriteTask.bin 0586e2 2a
-engine/menus/results/DiagramFarFigureSpriteTask.bin 05870c 2a
-engine/menus/results/DiagramMarkerSpriteTask.bin 058736 1e
-engine/menus/results/DiagramBallSpriteTask.bin 058754 30
-engine/menus/results/MatchWinLoseScreenGfx1.bin 058784 a
-engine/menus/results/DiagramSwingFigureSpriteTask.bin 05878e 61
-engine/menus/results/DiagramPolePairSpriteTask.bin 0587ef 87
-engine/menus/results/DiagramSpotMarkerSpriteTask.bin 058876 4b
-engine/menus/results/DiagramTargetBracketsSpriteTask.bin 0588c1 33
-engine/menus/results/MatchWinLoseScreenPalettes.bin 0588f4 18
+engine/menus/results/lz_MatchWinLoseScreenGfx.bin 058608 17c gfx
+engine/menus/results/lz_MatchWinLoseScreenGfx1.bin 058784 170 gfx
+engine/menus/results/MatchWinLoseScreenPalettes.asm 0588f4 18 palettes
 engine/menus/results/MatchResultPalettes0.asm 058a46 8 palettes
 engine/menus/results/MatchResultPalettes1.asm 058a4e 8 palettes
 engine/menus/results/lz_MatchResultGfxA0.bin 058f4d c7
@@ -398,98 +386,98 @@ engine/menus/briefing/lz_CourtDiagramTilemap.bin 05cd65 dd tilemap:32
 engine/menus/briefing/lz_CourtDiagramAttrmap.bin 05ce42 80 tilemap:32
 engine/menus/briefing/CourtDiagramPalettes.asm 05cec2 10 palettes
 engine/menus/briefing/CycleDiagramTargetPaletteData.asm 05ced2 30 palettes
-engine/menus/briefing/CourtDiagramGfx0.bin 05cf02 3b
-engine/menus/briefing/CourtDiagramGfx1.bin 05cf3d 3f
-engine/menus/briefing/CourtDiagramGfx2.bin 05cf7c 8f
-engine/menus/briefing/CourtDiagramGfx3.bin 05d00b 8f
-engine/menus/briefing/CourtDiagramGfx4.bin 05d09a 93
-engine/menus/briefing/CourtDiagramGfx5.bin 05d12d 62
-engine/menus/briefing/CourtDiagramGfx6.bin 05d18f 62
-engine/menus/briefing/CourtDiagramGfx7.bin 05d1f1 8f
-engine/menus/briefing/CourtDiagramGfx8.bin 05d280 8f
-engine/menus/briefing/CourtDiagramGfx9.bin 05d30f 91
-engine/menus/briefing/CourtDiagramGfx10.bin 05d3a0 69
-engine/menus/briefing/CourtDiagramGfx11.bin 05d409 64
-engine/menus/briefing/CourtDiagramGfx12.bin 05d46d 4a
+engine/menus/briefing/lz_CourtDiagramGfx0.bin 05cf02 3b gfx
+engine/menus/briefing/lz_CourtDiagramGfx1.bin 05cf3d 3f gfx
+engine/menus/briefing/lz_CourtDiagramGfx2.bin 05cf7c 8f gfx
+engine/menus/briefing/lz_CourtDiagramGfx3.bin 05d00b 8f gfx
+engine/menus/briefing/lz_CourtDiagramGfx4.bin 05d09a 93 gfx
+engine/menus/briefing/lz_CourtDiagramGfx5.bin 05d12d 62 gfx
+engine/menus/briefing/lz_CourtDiagramGfx6.bin 05d18f 62 gfx
+engine/menus/briefing/lz_CourtDiagramGfx7.bin 05d1f1 8f gfx
+engine/menus/briefing/lz_CourtDiagramGfx8.bin 05d280 8f gfx
+engine/menus/briefing/lz_CourtDiagramGfx9.bin 05d30f 91 gfx
+engine/menus/briefing/lz_CourtDiagramGfx10.bin 05d3a0 69 gfx
+engine/menus/briefing/lz_CourtDiagramGfx11.bin 05d409 64 gfx
+engine/menus/briefing/lz_CourtDiagramGfx12.bin 05d46d 4a gfx
 engine/menus/briefing/lz_CourtDiagramGfx13.bin 05d4b7 21 gfx
-engine/menus/briefing/CourtDiagramGfx14.bin 05d4d8 27
-engine/menus/briefing/CourtDiagramGfx15.bin 05d4ff 12
-engine/menus/briefing/CourtDiagramGfx16.bin 05d511 12
-engine/menus/briefing/CourtDiagramGfx17.bin 05d523 13
-engine/menus/briefing/CourtDiagramGfx18.bin 05d536 18
-engine/menus/briefing/CourtDiagramGfx19.bin 05d54e 19
+engine/menus/briefing/lz_CourtDiagramGfx14.bin 05d4d8 27 gfx
+engine/menus/briefing/lz_CourtDiagramGfx15.bin 05d4ff 12 gfx
+engine/menus/briefing/lz_CourtDiagramGfx16.bin 05d511 12 gfx
+engine/menus/briefing/lz_CourtDiagramGfx17.bin 05d523 13 gfx
+engine/menus/briefing/lz_CourtDiagramGfx18.bin 05d536 18 gfx
+engine/menus/briefing/lz_CourtDiagramGfx19.bin 05d54e 19 gfx
 engine/menus/briefing/CourtDiagramObjPalettes.asm 05d567 18 palettes
-engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BallPosTable.asm 05d7cb 10
-engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable.bin 05d7db 4
-engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable.asm 05d7df 10
-engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable.bin 05d7ef 4
-engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable.bin 05d7f3 10
-engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable.bin 05d803 4
-engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BracketPosTable.bin 05d807 10
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BallPosTable.asm 05dbf5 10
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable.bin 05dc05 4
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerPosTable.asm 05dc09 10
-engine/menus/briefing/SpinServeBriefing_RotMarkerDirTable.bin 05dc19 4
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim_RotMarkerPosTable.bin 05dc1d 10
-engine/menus/briefing/SpinServeBriefing_TargetOverlayTable.bin 05dc2d 4
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BracketPosTable.bin 05dc31 10
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_BallPosTable.bin 05dc41 8
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable.asm 05dc49 8
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable.bin 05dc53 8
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingFrameTable.bin 05dc5b 4
-engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingPosTable.asm 05dc5f 8
-engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_PlayerPosTable.asm 05df16 10
-engine/menus/briefing/PoleServeBriefing_AdvanceAnim_BallPosTable.asm 05df26 10
-engine/menus/briefing/PoleServeBriefing_HMarkerUnflippedTable.bin 05df36 4
-engine/menus/briefing/PoleServeBriefing_AdvanceAnim_HMarkerPosTable.asm 05df3a 10
-engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_HMarkerPosTable.asm 05df4a 10
-engine/menus/briefing/PoleServeBriefing_AdvanceAnim_RotMarkerDirTable.bin 05df5a 4
-engine/menus/briefing/PoleServeBriefing_AdvanceAnim_RotMarkerPosTable.bin 05df5e 10
-engine/menus/briefing/PoleServeBriefing_TargetOverlayTable.bin 05df6e 4
-engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_BracketPosTable.asm 05df72 10
-engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_PolePosTable.asm 05df82 10
-engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable.bin 05e1c4 10
-engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_BallPosTable.bin 05e1d4 10
-engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable.bin 05e1e4 4
-engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable.bin 05e1e8 10
-engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable.bin 05e1f8 4
-engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable.bin 05e1fc 10
-engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable.bin 05e20c 4
-engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable.asm 05e210 10
-engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable.bin 05e220 10
-engine/menus/briefing/DrillBriefing_ServeAndSmash_OpponentPosTable.bin 05e4cd 10
-engine/menus/briefing/DrillBriefing_ServeAndSmash_BallPosTable.bin 05e4dd 24
-engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerDirTable.bin 05e501 4
-engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerPosTable.bin 05e505 24
-engine/menus/briefing/DrillBriefing_ServeAndSmash_BracketPosTable.asm 05e529 10
-engine/menus/briefing/DrillBriefing_ServeAndSmash2_OpponentPosTable.bin 05e7d6 10
-engine/menus/briefing/DrillBriefing_ServeAndSmash2_BallPosTable.bin 05e7e6 24
-engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerDirTable.bin 05e80a 4
-engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.bin 05e80e 24
-engine/menus/briefing/DrillBriefing_ServeAndSmash2_BracketPosTable.asm 05e832 10
-engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable.asm 05ea1b 10
-engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_BallPosTable.asm 05ea2b 10
-engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable.bin 05ea3b 4
-engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable.bin 05ea3f 10
-engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable.bin 05ea4f 4
-engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable.bin 05ea53 10
-engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_BracketPosTable.bin 05ea63 10
-engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_OpponentPosTable.asm 05ec7e 10
-engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_BallPosTable.asm 05ec8e 10
-engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable.bin 05ec9e 4
-engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HMarkerPosTable.bin 05eca2 10
-engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable.bin 05ecb2 4
-engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable.bin 05ecb6 10
-engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_BracketPosTable.bin 05ecc6 10
-engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_SwingFrameTable.bin 05ecd6 4
-engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_SwingPosTable.asm 05ecda 10
-engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm 05eec3 10
-engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm 05eed3 10
-engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.bin 05eee3 4
-engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.bin 05eee7 10
-engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.bin 05eef7 4
-engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.bin 05eefb 10
-engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.bin 05ef0b 10
+engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BallPosTable.asm 05d7cb 10 words:2
+engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable.asm 05d7db 4 bytes:4
+engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable.asm 05d7df 10 words:2
+engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable.asm 05d7ef 4 bytes:4
+engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable.asm 05d7f3 10 words:2
+engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable.asm 05d803 4 bytes:4
+engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BracketPosTable.asm 05d807 10 words:2
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BallPosTable.asm 05dbf5 10 words:2
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable.asm 05dc05 4 bytes:4
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerPosTable.asm 05dc09 10 words:2
+engine/menus/briefing/SpinServeBriefing_RotMarkerDirTable.asm 05dc19 4 bytes:4
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim_RotMarkerPosTable.asm 05dc1d 10 words:2
+engine/menus/briefing/SpinServeBriefing_TargetOverlayTable.asm 05dc2d 4 bytes:4
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BracketPosTable.asm 05dc31 10 words:2
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_BallPosTable.asm 05dc41 8 words:2
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable.asm 05dc49 8 words:2
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable.asm 05dc53 8 words:2
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingFrameTable.asm 05dc5b 4 bytes:4
+engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingPosTable.asm 05dc5f 8 words:2
+engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_PlayerPosTable.asm 05df16 10 words:2
+engine/menus/briefing/PoleServeBriefing_AdvanceAnim_BallPosTable.asm 05df26 10 words:2
+engine/menus/briefing/PoleServeBriefing_HMarkerUnflippedTable.asm 05df36 4 bytes:4
+engine/menus/briefing/PoleServeBriefing_AdvanceAnim_HMarkerPosTable.asm 05df3a 10 words:2
+engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_HMarkerPosTable.asm 05df4a 10 words:2
+engine/menus/briefing/PoleServeBriefing_AdvanceAnim_RotMarkerDirTable.asm 05df5a 4 bytes:4
+engine/menus/briefing/PoleServeBriefing_AdvanceAnim_RotMarkerPosTable.asm 05df5e 10 words:2
+engine/menus/briefing/PoleServeBriefing_TargetOverlayTable.asm 05df6e 4 bytes:4
+engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_BracketPosTable.asm 05df72 10 words:2
+engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_PolePosTable.asm 05df82 10 words:2
+engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable.asm 05e1c4 10 words:2
+engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_BallPosTable.asm 05e1d4 10 words:2
+engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable.asm 05e1e4 4 bytes:4
+engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable.asm 05e1e8 10 words:2
+engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable.asm 05e1f8 4 bytes:4
+engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable.asm 05e1fc 10 words:2
+engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable.asm 05e20c 4 bytes:4
+engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable.asm 05e210 10 words:2
+engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable.asm 05e220 10 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash_OpponentPosTable.asm 05e4cd 10 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash_BallPosTable.asm 05e4dd 24 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerDirTable.asm 05e501 4 bytes:4
+engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerPosTable.asm 05e505 24 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash_BracketPosTable.asm 05e529 10 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash2_OpponentPosTable.asm 05e7d6 10 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash2_BallPosTable.asm 05e7e6 24 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerDirTable.asm 05e80a 4 bytes:4
+engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.asm 05e80e 24 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash2_BracketPosTable.asm 05e832 10 words:2
+engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable.asm 05ea1b 10 words:2
+engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_BallPosTable.asm 05ea2b 10 words:2
+engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable.asm 05ea3b 4 bytes:4
+engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable.asm 05ea3f 10 words:2
+engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable.asm 05ea4f 4 bytes:4
+engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable.asm 05ea53 10 words:2
+engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_BracketPosTable.asm 05ea63 10 words:2
+engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_OpponentPosTable.asm 05ec7e 10 words:2
+engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_BallPosTable.asm 05ec8e 10 words:2
+engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable.asm 05ec9e 4 bytes:4
+engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HMarkerPosTable.asm 05eca2 10 words:2
+engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable.asm 05ecb2 4 bytes:4
+engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable.asm 05ecb6 10 words:2
+engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_BracketPosTable.asm 05ecc6 10 words:2
+engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_SwingFrameTable.asm 05ecd6 4 bytes:4
+engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_SwingPosTable.asm 05ecda 10 words:2
+engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm 05eec3 10 words:2
+engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm 05eed3 10 words:2
+engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.asm 05eee3 4 bytes:4
+engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.asm 05eee7 10 words:2
+engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.asm 05eef7 4 bytes:4
+engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.asm 05eefb 10 words:2
+engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.asm 05ef0b 10 words:2
 engine/menus/briefing/lz_RulesScreenTiles.bin 05f570 200 gfx
 engine/menus/briefing/lz_RulesScreenTilemap.bin 05f770 135 tilemap:32
 engine/menus/briefing/lz_RulesScreenAttrmap.bin 05f8a5 57 tilemap:32
@@ -509,22 +497,22 @@ engine/menus/common/lz_ConfirmScreenGfx0.bin 06067a 8b9 gfx
 engine/menus/common/ConfirmScreenPalette0.asm 060f33 40 palettes
 engine/menus/common/lz_ConfirmScreenGfx1.bin 060f73 15b gfx
 engine/menus/common/lz_ConfirmScreenGfx2.bin 0610ce 8a gfx
-engine/menus/common/ThreeOptionLabelsData0.bin 061158 10
-engine/menus/common/ThreeOptionLabelsData1.bin 061168 10
-engine/menus/common/ThreeOptionLabelsData2.bin 061178 10
-engine/menus/common/ThreeOptionLabelsData3.bin 061188 10
-engine/menus/common/ThreeOptionLabelsData4.bin 061198 10
-engine/menus/common/ThreeOptionLabelsData5.bin 0611a8 10
+engine/menus/common/ThreeOptionLabelsData0.asm 061158 10 bytes:16
+engine/menus/common/ThreeOptionLabelsData1.asm 061168 10 bytes:16
+engine/menus/common/ThreeOptionLabelsData2.asm 061178 10 bytes:16
+engine/menus/common/ThreeOptionLabelsData3.asm 061188 10 bytes:16
+engine/menus/common/ThreeOptionLabelsData4.asm 061198 10 bytes:16
+engine/menus/common/ThreeOptionLabelsData5.asm 0611a8 10 bytes:16
 engine/menus/common/lz_ConfirmScreenGfx3.bin 0611f8 ce gfx
 engine/menus/common/ConfirmScreenPalette1.asm 0612c6 18 palettes
-engine/menus/common/Unused_18_BobRamp.bin 061507 20
+engine/menus/common/Unused_18_BobRamp.asm 061507 20 bytes:16
 engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.bin 061633 1c1 gfx
 engine/menus/scenes/ConfirmScreenSpritePalette0.asm 06182d 18 palettes
 engine/menus/scenes/ConfirmScreenSpriteGfx1.bin 061845 4d
 engine/menus/scenes/ConfirmScreenSpritePalette1.asm 0618ad 30 palettes
 engine/menus/scenes/CharSelectCursorGfx.bin 0618e0 d9
 engine/menus/scenes/CharSelectCursorPalette.asm 0619b9 8 palettes
-engine/menus/scenes/CharSelectCursorAnimTable.bin 0619fe 20
+engine/menus/scenes/CharSelectCursorAnimTable.asm 0619fe 20 bytes:16
 engine/menus/scenes/OnCourtCharTilesAGfx.bin 061af0 800 gfx
 engine/menus/scenes/OnCourtCharTilesBGfx.bin 0622f0 800 gfx
 engine/menus/scenes/OnCourtCharTilesFallbackGfx.bin 062af0 40 gfx
@@ -572,8 +560,8 @@ engine/menus/scenes/Screen2ObjPalette.asm 063a41 8 palettes
 engine/menus/scenes/PaletteFadeTable_18.asm 063ab5 80 palettes
 engine/menus/scenes/ObjectSceneATilesPalettes.asm 063c0f 18 palettes
 engine/menus/scenes/ObjectSceneBPalette.asm 063d44 18 palettes
-engine/menus/scenes/ObjectArrayAWaveTable_18.bin 063e69 20
-engine/menus/scenes/ObjectArrayBDriftTable_18.bin 063ec8 2d
+engine/menus/scenes/ObjectArrayAWaveTable_18.asm 063e69 20 bytes:16
+engine/menus/scenes/ObjectArrayBDriftTable_18.asm 063ec8 2d bytes:16
 gfx/lz_VictoryCutsceneTiles.bin 06404c c2e gfx
 gfx/VictoryCutscenePalettes.asm 064c7a 40 palettes
 gfx/lz_VictoryCutsceneTilemap.bin 064cba 109 tilemap:32
@@ -617,15 +605,16 @@ engine/menus/debug/ExpScreenGfx1.bin 069be0 240 gfx
 engine/menus/debug/ExpScreenGfx2.bin 069e20 240 gfx
 engine/menus/debug/ExpScreenGfx3.bin 06a060 240 gfx
 engine/menus/debug/ExpScreenGfx4.bin 06a2a0 240 gfx
-engine/menus/debug/ExpScreenGfxPalettes0.bin 06a4e0 170
+engine/menus/debug/ExpScreenGfxPalettes0.asm 06a4e0 50 palettes
+engine/menus/debug/lz_Unused_1a_ExpScreenGfx9.bin 06a530 118 gfx
 engine/menus/debug/lz_ExpScreenGfx5.bin 06a650 18 gfx
-engine/menus/debug/ExpScreenGfxPalettes1.bin 06a668 18
+engine/menus/debug/ExpScreenGfxPalettes1.asm 06a668 18 palettes
 engine/menus/debug/lz_ExpScreenGfx6.bin 06a680 48 gfx
 engine/menus/debug/lz_ExpScreenGfx7.bin 06a6c8 49 gfx
-engine/menus/debug/ExpScreenGfxPalettes2.bin 06a711 10
-engine/menus/debug/ExpScreenGfxPalettes3.bin 06a721 8
+engine/menus/debug/ExpScreenGfxPalettes2.asm 06a711 10 palettes
+engine/menus/debug/ExpScreenGfxPalettes3.asm 06a721 8 palettes
 engine/menus/debug/lz_ExpScreenGfx8.bin 06a729 ab gfx
-engine/menus/debug/DrawCharViewerCursorSpriteTable1.bin 06ac95 a
+engine/menus/debug/DrawCharViewerCursorSpriteTable1.asm 06ac95 a bytes:2
 engine/menus/char_data/Palette_1a_0.asm 06b0d9 40 palettes
 engine/menus/char_data/lz_CharViewerScreenGfx0.bin 06b119 664 gfx
 engine/menus/char_data/lz_CharViewerScreenGfx1.bin 06b77d b4 gfx
@@ -654,7 +643,7 @@ engine/menus/ranking/lz_MugshotGfxStorySlot2_1b.bin 06cb42 93 gfx
 engine/menus/ranking/lz_MugshotGfxStorySlot3_1b.bin 06cbd5 99 gfx
 engine/menus/ranking/lz_MugshotGfxPlaceholder_1b.bin 06cc6e 7e gfx
 engine/menus/ranking/RankingBoardScreenPalettes.asm 06cf76 30 palettes
-engine/menus/ranking/RankingBoardAnimTaskTable.bin 06d97b 89
+engine/menus/ranking/RankingBoardAnimTaskTable.asm 06d97b 89 bytes:16
 engine/menus/minigame_select/lz_UnlockDebugCursorGfx.bin 06e90a 1d gfx
 engine/menus/minigame_select/UnlockDebugCursorPalette.asm 06e930 8 palettes
 engine/menus/minigame_select/MinigameLevelSelectPalette0.asm 06edae 8 palettes
@@ -671,60 +660,60 @@ engine/menus/minigame_select/lz_ObjectSceneBGfx2.bin 06faf6 41 gfx
 engine/menus/minigame_select/lz_Screen0Gfx.bin 06fb37 1f7 gfx
 engine/menus/minigame_select/lz_Screen1ObjGfx.bin 06fd2e 141 gfx
 engine/menus/minigame_select/lz_Screen2ObjGfx.bin 06fe6f 143 gfx
-engine/menus/char_data/RadialOffsetRamp0_1c.bin 070ff1 16
-engine/menus/char_data/RadialOffsetRamp1_1c.bin 071007 16
-engine/menus/char_data/RadialOffsetRamp2_1c.bin 07101d 16
-engine/menus/char_data/RadialOffsetRamp3_1c.bin 071033 16
+engine/menus/char_data/RadialOffsetRamp0_1c.asm 070ff1 16 bytes:2
+engine/menus/char_data/RadialOffsetRamp1_1c.asm 071007 16 bytes:2
+engine/menus/char_data/RadialOffsetRamp2_1c.asm 07101d 16 bytes:2
+engine/menus/char_data/RadialOffsetRamp3_1c.asm 071033 16 bytes:2
 engine/menus/char_data/CharDataScreen_LoadScreenPalette.asm 07198c 40 palettes
 engine/menus/char_data/lz_CharDataScreenGfx0_1c.bin 0719cc a3a
 engine/menus/char_data/lz_CharDataScreenTilemap_1c.bin 072406 63 tilemap:32
 engine/menus/char_data/lz_CharDataScreenAttrmap_1c.bin 072469 3b tilemap:32
-engine/menus/char_data/CharDataScreenStatBar00.bin 0724a4 5
-engine/menus/char_data/CharDataScreenStatBar01.bin 0724a9 5
-engine/menus/char_data/CharDataScreenStatBar02.bin 0724ae 5
-engine/menus/char_data/CharDataScreenStatBar03.bin 0724b3 5
-engine/menus/char_data/CharDataScreenStatBar04.bin 0724b8 5
-engine/menus/char_data/CharDataScreenStatBar05.bin 0724bd 5
-engine/menus/char_data/CharDataScreenStatBar06.bin 0724c2 5
-engine/menus/char_data/CharDataScreenStatBar07.bin 0724c7 5
-engine/menus/char_data/CharDataScreenStatBar08.bin 0724cc 5
-engine/menus/char_data/CharDataScreenStatBar09.bin 0724d1 5
-engine/menus/char_data/CharDataScreenStatBar10.bin 0724d6 5
-engine/menus/char_data/CharDataScreenStatBar11.bin 0724db 5
-engine/menus/char_data/CharDataScreenStatBar12.bin 0724e0 5
-engine/menus/char_data/CharDataScreenStatBar13.bin 0724e5 5
-engine/menus/char_data/CharDataScreenStatBar14.bin 0724ea 5
-engine/menus/char_data/CharDataScreenStatBar15.bin 0724ef 5
-engine/menus/char_data/CharDataScreenStatBar16.bin 0724f4 5
-engine/menus/char_data/CharDataScreenStatBar17.bin 0724f9 5
-engine/menus/char_data/CharDataScreenStatBar18.bin 0724fe 5
-engine/menus/char_data/CharDataScreenStatBar19.bin 072503 5
-engine/menus/char_data/CharDataScreenStatBar20.bin 072508 5
-engine/menus/char_data/CharDataScreenStatBar21.bin 07250d 5
-engine/menus/char_data/CharDataScreenStatBar22.bin 072512 5
-engine/menus/char_data/CharDataScreenStatBar23.bin 072517 5
-engine/menus/char_data/CharDataScreenStatBar24.bin 07251c 5
-engine/menus/char_data/CharDataScreenStatBar25.bin 072521 5
-engine/menus/char_data/CharDataScreenStatBar26.bin 072526 5
-engine/menus/char_data/CharDataScreenStatBar27.bin 07252b 5
-engine/menus/char_data/CharDataScreenStatBar28.bin 072530 5
-engine/menus/char_data/CharDataScreenStatBar29.bin 072535 5
-engine/menus/char_data/CharDataScreenStatBar30.bin 07253a 5
-engine/menus/char_data/CharDataScreenStatBar31.bin 07253f 5
-engine/menus/char_data/CharDataScreenStatBar32.bin 072544 5
+engine/menus/char_data/CharDataScreenStatBar00.asm 0724a4 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar01.asm 0724a9 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar02.asm 0724ae 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar03.asm 0724b3 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar04.asm 0724b8 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar05.asm 0724bd 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar06.asm 0724c2 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar07.asm 0724c7 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar08.asm 0724cc 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar09.asm 0724d1 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar10.asm 0724d6 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar11.asm 0724db 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar12.asm 0724e0 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar13.asm 0724e5 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar14.asm 0724ea 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar15.asm 0724ef 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar16.asm 0724f4 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar17.asm 0724f9 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar18.asm 0724fe 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar19.asm 072503 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar20.asm 072508 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar21.asm 07250d 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar22.asm 072512 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar23.asm 072517 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar24.asm 07251c 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar25.asm 072521 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar26.asm 072526 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar27.asm 07252b 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar28.asm 072530 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar29.asm 072535 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar30.asm 07253a 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar31.asm 07253f 5 bytes:5
+engine/menus/char_data/CharDataScreenStatBar32.asm 072544 5 bytes:5
 engine/menus/char_data/lz_CharDataScreenBand1Tilemap.bin 072549 36 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBand1Attrmap.bin 07257f 17 tilemap:32
-engine/menus/char_data/CharDataScreenPage0Columns.bin 072596 32
+engine/menus/char_data/CharDataScreenPage0Columns.asm 072596 32 bytes:10
 engine/menus/char_data/lz_CharDataScreenBand2Tilemap.bin 0725c8 43 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBand2Attrmap.bin 07260b 17 tilemap:32
-engine/menus/char_data/CharDataScreenPage1Columns.bin 072622 46
+engine/menus/char_data/CharDataScreenPage1Columns.asm 072622 46 bytes:10
 engine/menus/char_data/lz_CharDataScreenBand3Tilemap.bin 072668 3a
 engine/menus/char_data/lz_CharDataScreenBand3Attrmap.bin 0726a2 18
-engine/menus/char_data/CharDataScreenPage2Columns.bin 0726ba 32
+engine/menus/char_data/CharDataScreenPage2Columns.asm 0726ba 32 bytes:10
 engine/menus/char_data/lz_CharDataScreenBand4Tilemap.bin 0726ec 48
 engine/menus/char_data/lz_CharDataScreenBand4Attrmap.bin 072734 19
-engine/menus/char_data/CharDataScreenPage3Columns.bin 07274d 5a
-engine/menus/char_data/CharDataScreenPage4Columns.bin 0727a7 1e
+engine/menus/char_data/CharDataScreenPage3Columns.asm 07274d 5a bytes:10
+engine/menus/char_data/CharDataScreenPage4Columns.asm 0727a7 1e bytes:10
 engine/menus/char_data/lz_CharDataScreenBand5Tilemap.bin 0727c5 e
 engine/menus/char_data/lz_CharDataScreenBand5Attrmap.bin 0727d3 7
 engine/menus/char_data/lz_CharDataScreenUIPatch0Tilemap.bin 0727da 18 tilemap:32
@@ -785,8 +774,8 @@ engine/menus/char_data/StatPageTilemapPatch3.asm 075d0a 15 blit_runs
 engine/menus/char_data/CharDataConfirmScreenTilemapPatch2.asm 075d1f 15 blit_runs
 engine/menus/char_data/StatPageTilemapPatch4.asm 075d34 25 blit_runs
 engine/menus/char_data/CharDataConfirmScreenTilemapPatch3.asm 075d59 25 blit_runs
-engine/menus/char_data/CharDataSummaryFieldsTilePlot0.bin 075d7e 13
-engine/menus/char_data/CharDataSummaryFieldsTilePlot1.bin 075d91 13
+engine/menus/char_data/CharDataSummaryFieldsTilePlot0.asm 075d7e 13 bytes:2
+engine/menus/char_data/CharDataSummaryFieldsTilePlot1.asm 075d91 13 bytes:2
 engine/menus/char_data/MainCharStatPageTilemapPatch00.asm 075da4 d blit_runs
 engine/menus/char_data/PartnerStatPageTilemapPatch00.asm 075db1 d blit_runs
 engine/menus/char_data/CharDataConfirmScreenTilemapPatch4.asm 075dbe d blit_runs
@@ -854,7 +843,7 @@ engine/menus/char_data/CharDataConfirmScreenTilemapPatch5.asm 076303 d blit_runs
 engine/menus/char_data/CharDataConfirmPromptTilemapPatch.asm 076310 11 blit_runs
 engine/menus/char_data/lz_CharDataScreenPagePatch0Tilemap.bin 076321 a
 engine/menus/char_data/lz_CharDataScreenPagePatch0Attrmap.bin 07632b 9
-engine/menus/char_data/CharDataScreenPalettes.bin 076334 8
+engine/menus/char_data/CharDataScreenPalettes.asm 076334 8 palettes
 engine/menus/char_data/lz_CharDataScreenGfx14.bin 07633c b8
 engine/menus/char_data/lz_CharDataScreenPagePatch1Tilemap.bin 0763f4 55
 engine/menus/char_data/lz_CharDataScreenPagePatch1Attrmap.bin 076449 12
@@ -881,7 +870,7 @@ engine/menus/exp/ExpLevelDownTilemapPatch4.asm 07781d 5 blit_runs
 engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.bin 077822 2f gfx
 engine/menus/exp/lz_ExpDistributionScreenPatchAttrmap.bin 077851 25 gfx
 engine/menus/exp/lz_ExpDistributionScreenGfx7.bin 077876 19 gfx
-engine/menus/exp/ExpDistributionScreenPalettes.bin 07788f 18
+engine/menus/exp/ExpDistributionScreenPalettes.asm 07788f 18 palettes
 engine/menus/exp/lz_ExpDistributionScreenGfx8.bin 0778a7 89 gfx
 engine/menus/exp/lz_ExpDistributionScreenGfx0.bin 077949 31 gfx
 engine/menus/exp/lz_ExpDistributionScreenGfx1.bin 077983 31 gfx
@@ -939,7 +928,7 @@ engine/match/BallTouchCharEffectTilesB_28.bin 0a0560 80 gfx
 engine/match/lz_MatchGfxTilesA_28.bin 0a05e0 5c0 gfx
 engine/match/MatchGfxPalettesA_28.asm 0a0ba0 40 palettes
 engine/match/MatchGraphicsPalettes.asm 0a0be0 10 palettes
-engine/match/MatchGfxMapsA_28.bin 0a0bf0 140
+engine/match/MatchGfxMapsA_28.bin 0a0bf0 140 gfx
 engine/match/MatchVariantTiles0.bin 0a0d30 100 gfx
 engine/match/MatchVariantTiles1.bin 0a0e30 300 gfx
 engine/match/MatchVariantTiles2.bin 0a1130 340 gfx
@@ -955,7 +944,7 @@ engine/match/MatchVariantGraphicsPalettes4.asm 0a1e80 18 palettes
 engine/match/MatchVariantGraphicsPalettes5.asm 0a1e98 8 palettes
 engine/match/MatchVariantGraphicsPalettes6.asm 0a1ea0 10 palettes
 engine/match/lz_MatchGfxTilesB_28.bin 0a2180 b94 gfx
-engine/match/Unused_28_MatchGfxPalette.bin 0a2d14 8
+engine/match/Unused_28_MatchGfxPalette.asm 0a2d14 8 palettes
 engine/match/MatchGfxPalettesC_28.asm 0a2d1c 38 palettes
 engine/match/MatchStoryGfxPalettes.asm 0a2d54 10 palettes
 shots/BallPosData_29.asm 0a427d 1c20 traj:6
@@ -980,9 +969,9 @@ text/TextStrings_37.asm 0dc204 391a text_pool
 engine/menus/char_select/MatchTypeLabelSpriteLayouts.bin 0e0695 8d
 engine/menus/char_select/CharGridScreenPalettes.asm 0e107f 28 palettes
 engine/menus/char_select/lz_CharGridScreenGfx1.bin 0e10a7 4a gfx
-engine/menus/char_select/CharGridScreenGfx2.bin 0e10f1 8
+engine/menus/char_select/CharGridScreenGfx2.asm 0e10f1 8 palettes
 engine/menus/char_select/lz_CharGridScreenGfx3.bin 0e10f9 9c gfx
-engine/menus/char_select/NameEntryCursorTable.bin 0e30a5 b4
+engine/menus/char_select/NameEntryCursorTable.asm 0e30a5 b4 bytes:30
 engine/menus/char_select/EnterNameText_38.asm 0e3171 b
 engine/menus/char_select/NameEntryCharset_38.asm 0e31b6 6a
 engine/menus/common/lz_FixedTileBlockAndPalette.bin 0e44f6 20
@@ -1173,7 +1162,7 @@ gfx/lz_TournamentBracketSinglesAttrmap.bin 0f7a5b 73 tilemap:32
 gfx/TournamentBracketPalettes.asm 0f7ace 40 palettes
 gfx/lz_TournamentBracketDoublesTilemap.bin 0f7b0e 14b tilemap:32
 gfx/lz_TournamentBracketDoublesAttrmap.bin 0f7c59 66 tilemap:32
-engine/menus/common/SelectionBoxWobbleYTable_3e.bin 0f80ef 10
+engine/menus/common/SelectionBoxWobbleYTable_3e.asm 0f80ef 10 bytes:16
 engine/menus/link/MatchRulesInitialStatePalettes0.asm 0f85ef 8 palettes
 engine/menus/link/MatchRulesInitialStatePalettes1.asm 0f85f7 8 palettes
 engine/menus/link/MatchRulesInitialStatePalettes2.asm 0f85ff 8 palettes
@@ -1194,8 +1183,8 @@ engine/menus/court_select/CourtSelect4Palette3.asm 0fa01b 8 palettes
 engine/menus/court_select/lz_CourtSelectTitleTiles.bin 0fa1d4 9f gfx
 engine/menus/court_select/lz_CourtSelectTitleTiles2Gfx.bin 0fa273 53 gfx
 engine/menus/court_select/lz_CourtSelectPanelTiles.bin 0fa2c6 1c9 gfx
-engine/menus/court_select/CourtSelect9CursorTemplate0_3e.bin 0fa78d 21
-engine/menus/court_select/CourtSelect9CursorTemplate1_3e.bin 0fa7ae 25
+engine/menus/court_select/CourtSelect9CursorTemplate0_3e.asm 0fa78d 21 sprite_template
+engine/menus/court_select/CourtSelect9CursorTemplate1_3e.asm 0fa7ae 25 sprite_template
 engine/menus/court_select/CourtSelect9Palette0.asm 0fa8eb 8 palettes
 engine/menus/court_select/CourtSelect9Palette1.asm 0fa8f3 8 palettes
 engine/menus/court_select/CourtSelect9Palette2.asm 0fa8fb 8 palettes
@@ -3116,7 +3105,7 @@ scenes/lz_CourtyardCollisionMap.bin 193646 93
 scenes/lz_CourtyardBehaviorMap.bin 1936d9 4f
 scenes/CourtyardSceneUnusedSlot.bin 193730 8d0
 scenes/IslandSkySceneConfig.asm 194030 1b scene_config
-scenes/IslandSkyPalettes.bin 19404b 40
+scenes/IslandSkyPalettes.asm 19404b 40 palettes
 scenes/lz_IslandSkyTiles.bin 19408b bab gfx
 scenes/lz_IslandSkyTilemap.bin 194c36 2ac tilemap:64
 scenes/lz_IslandSkyAttrmap.bin 194ee2 1a0 tilemap:64
@@ -3268,8 +3257,8 @@ engine/cutscenes/IntroCutsceneState04InitPalettes.asm 1ac4d0 40 palettes
 engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm 1ac75a 40 palettes
 engine/cutscenes/IntroCutsceneState16InitPalettes_6b.asm 1aca58 40 palettes
 engine/cutscenes/Palettes_6b_03.asm 1acc00 38 palettes
-engine/cutscenes/CutsceneScrollXTable.bin 1accc1 a0
-engine/cutscenes/CutsceneScrollYTable.bin 1acd84 a9
+engine/cutscenes/CutsceneScrollXTable.asm 1accc1 a0 bytes:16
+engine/cutscenes/CutsceneScrollYTable.asm 1acd84 a9 bytes:16
 engine/cutscenes/CutsceneAnimatedSprites0.bin 1acea5 f0 gfx
 engine/cutscenes/CutsceneAnimatedSprites1.bin 1acf95 d8
 engine/cutscenes/CutsceneAnimatedSprites2.bin 1ad06d 120 gfx

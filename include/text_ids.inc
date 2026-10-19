@@ -525,6 +525,7 @@ def Text_34_19 equ $1013
 def Text_34_20 equ $1014
 def Text_34_21 equ $1015
 def Text_34_22 equ $1016
+def Text_34_23 equ $1017
 def Text_34_24 equ $1018
 def Text_34_25 equ $1019
 def Text_34_26 equ $101a
@@ -543,11 +544,13 @@ def Text_34_43 equ $102b
 def Text_34_44 equ $102c
 def Text_34_45 equ $102d
 def Text_34_46 equ $102e
+def Text_34_47 equ $102f
 def Text_34_48 equ $1030
 def Text_34_49 equ $1031
 def Text_34_50 equ $1032
 def Text_34_51 equ $1033
 def Text_34_52 equ $1034
+def Text_34_53 equ $1035
 def Text_34_54 equ $1036
 def Text_34_56 equ $1038
 def Text_34_58 equ $103a
@@ -603,6 +606,7 @@ def Text_34_146 equ $1092
 def Text_34_147 equ $1093
 def Text_34_148 equ $1094
 def Text_34_149 equ $1095
+def Text_34_150 equ $1096
 def Text_34_151 equ $1097
 def Text_34_152 equ $1098
 def Text_34_153 equ $1099
@@ -619,6 +623,7 @@ def Text_34_163 equ $10a3
 def Text_34_164 equ $10a4
 def Text_34_165 equ $10a5
 def Text_34_166 equ $10a6
+def Text_34_167 equ $10a7
 def Text_34_168 equ $10a8
 def Text_34_169 equ $10a9
 def Text_34_170 equ $10aa
@@ -636,6 +641,7 @@ def Text_34_181 equ $10b5
 def Text_34_182 equ $10b6
 def Text_34_183 equ $10b7
 def Text_34_184 equ $10b8
+def Text_34_185 equ $10b9
 def Text_34_186 equ $10ba
 def Text_34_187 equ $10bb
 def Text_34_188 equ $10bc
@@ -1920,6 +1926,7 @@ def Text_CurtSeniorRhythmToToss equ Text_34_19
 def Text_BobSeniorWorstWantRankings equ Text_34_20
 def Text_PamSeniorKeepOffCourt equ Text_34_21
 def Text_KateSeniorSingleHandedRange equ Text_34_22
+def Text_KateSeniorSingleHandedRangeAlt equ Text_34_23
 def Text_AllieSeniorPartnerHitsHard equ Text_34_24
 def Text_BrianSeniorMasterSlice equ Text_34_25
 def Text_FaySeniorHitsLikeBoys equ Text_34_26
@@ -1938,11 +1945,13 @@ def Text_CurtSeniorCenterLineDefense equ Text_34_43
 def Text_BobSeniorAttackBallNotOpponent equ Text_34_44
 def Text_PamSeniorServeAndRush equ Text_34_45
 def Text_KateSeniorFeelMoreConfident equ Text_34_46
+def Text_KateSeniorKeepAtItRankings equ Text_34_47
 def Text_BethSeniorRankedBeforeMe equ Text_34_48
 def Text_CurtSeniorShowedRankers equ Text_34_49
 def Text_BobSeniorWayToGoRanked equ Text_34_50
 def Text_PamSeniorAggressivePlayer equ Text_34_51
 def Text_KateSeniorHappyRankedPartner equ Text_34_52
+def Text_KateSeniorYouBeatMeToRankings equ Text_34_53
 def Text_SeniorRankOneTicketToVarsity equ Text_34_54
 def Text_SeniorRankTwoGotSomeNerve equ Text_34_56
 def Text_SeniorRankThreeNotThatEasy equ Text_34_58
@@ -1998,6 +2007,7 @@ def Text_CurtSeniorVarsityRankingsTournament equ Text_34_146
 def Text_BobSeniorTravelingRepresentAcademy equ Text_34_147
 def Text_PamSeniorNoCheapPlay equ Text_34_148
 def Text_KateSeniorWorkOnDoubles equ Text_34_149
+def Text_KateSeniorFocusOnDoubles equ Text_34_150
 def Text_SeniorMadeDoublesVarsity equ Text_34_151
 def Text_JoySeniorDoublesFormidable equ Text_34_152
 def Text_BrianSeniorDoublesTopRankOpens equ Text_34_153
@@ -2014,6 +2024,7 @@ def Text_CurtSeniorFavoritePlayers equ Text_34_163
 def Text_BobSeniorIronGearNotGeniuses equ Text_34_164
 def Text_PamSeniorWonderOpenRackets equ Text_34_165
 def Text_KateSeniorRootingForYou equ Text_34_166
+def Text_KateSeniorWhoCaresRootingForYou equ Text_34_167
 def Text_SeniorOpenNotJustDream equ Text_34_168
 def Text_JoySeniorAlreadyGoingToOpen equ Text_34_169
 def Text_BrianSeniorDoublesCommunicate equ Text_34_170
@@ -2031,6 +2042,7 @@ def Text_CurtSeniorWhatPlayWins equ Text_34_181
 def Text_BobSeniorMastersFromEffort equ Text_34_182
 def Text_PamSeniorMostUsedRacket equ Text_34_183
 def Text_KateSeniorPartnerIsOpenChamp equ Text_34_184
+def Text_KateSeniorLuckyChampPartner equ Text_34_185
 def Text_SeniorEveryoneHasGoals equ Text_34_186
 def Text_JoySeniorYouTwoOpenChamps equ Text_34_187
 def Text_BrianSeniorChampsPointers equ Text_34_188

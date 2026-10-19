@@ -96,7 +96,7 @@ ApplySelectionBoxWobbleY:
 	ld e, a ; $40ed
 	ret ; $40ee
 SelectionBoxWobbleYTable_3e:
-	INCBIN "data/engine/menus/common/SelectionBoxWobbleYTable_3e.bin" ; $40ef, 16 bytes
+	INCLUDE "data/engine/menus/common/SelectionBoxWobbleYTable_3e.asm" ; $40ef, 16 bytes (bytes:16)
 	twin_in draw_corner_brackets, Unused_3e_DrawCornerBrackets, 3e ; $40ff Unused_3e_DrawCornerBrackets
 	twin move_menu_cursor_grid, 3e ; $413a MoveMenuCursorGrid_3e
 	twin_in move_menu_cursor_grid_from_link_input, Unused_3e_MoveMenuCursorGridFromLinkInput, 3e ; $41b8 Unused_3e_MoveMenuCursorGridFromLinkInput

@@ -82,9 +82,9 @@ FireworkPhaseDurations_14:
 	; $64d5, 4 bytes (bytes:4)
 	db $00, $0c, $0e, $10 ; 0x00
 UpdateFirework0_14Table:
-	INCBIN "data/story/UpdateFirework0_14Table.bin" ; $64d9, 4 bytes
+	INCLUDE "data/story/UpdateFirework0_14Table.asm" ; $64d9, 4 bytes (bytes:4)
 UpdateFirework1_14Table:
-	INCBIN "data/story/UpdateFirework1_14Table.bin" ; $64dd, 4 bytes
+	INCLUDE "data/story/UpdateFirework1_14Table.asm" ; $64dd, 4 bytes (bytes:4)
 IslandSkyInitScript_14.scriptRespawnLocationActors:
 	script_respawn_actors FireworkMapActors_14 ; $64e1
 	farcall BeginCutsceneScriptMode ; $64e9

@@ -11,7 +11,14 @@ after a real defect broke it:
   lz-labels no assembled symbol (build/mariotennis.sym) lands inside a
             compressed stream (a name once truncated two streams by 29 and
             160 bytes)
+  lz-names  no region outside lz_ is an LZ stream: one decoding over exactly
+            its bytes, or on to the end of a later region (stray labels once
+            cut two streams into eleven blobs)
   regions   manifest regions stay inside their bank and do not overlap
+  text      a region without a spec rendered as .asm is NUL-terminated text
+            (49 position tables once rendered as strings)
+  db-words  a label holding only db rows has no little-endian word equal to
+            a label of its bank: a pointer the assembler cannot move
   layout    data/ mirrors src/: a manifest file sits in the folder of the
             source file that INCBINs or INCLUDEs it
   macros    every target_script, move_curve, frame_place, blit_runs and
@@ -375,6 +382,114 @@ def check_blob_pointers(rom, manifest, fail):
     return n
 
 
+# Byte pairs in db blocks that equal a label of their bank by coincidence:
+# (label, byte offset) -> what the bytes really are.
+KNOWN_DB_WORDS = {
+    ("ArcTanTable", 6): "arctangent steps",
+    ("WavePatterns", 30): "wave RAM samples",
+    ("TextPageDescriptors_03", 116): "7-byte records, not word-aligned",
+    ("ShotRecoilTable_07", 2): "recoil speeds",
+    ("TargetShotZoneOverlayTiles", 32): "tile ids",
+    ("StarWarpPathY", 146): "Y coordinates",
+    ("ExtendModifierByteGfx1", 6): "tile data",
+    ("RankingMarkerCoordsTable0Set1", 8): "screen coordinates",
+    ("RankingMarkerCoordsTable1Set1", 8): "screen coordinates",
+    **{(f"CharDataScreenStatBar{n}", 2): "bar tile ids" for n in range(11, 16)},
+    ("NameEntryCursorTable", 54): "cursor y, x pairs",
+}
+
+
+def check_db_pointers(rom, manifest, fail):
+    """A label whose body is only `db` rows (inline, or a `bytes` region it
+    INCLUDEs) holds no little-endian word equal to a label of its own bank:
+    that is a pointer the assembler cannot move. Words are read at even
+    offsets up to the next symbol."""
+    specs = {p: s for p, _o, _n, s in manifest}
+    at, by_addr = {}, {}
+    for line in (ROOT / "build" / "mariotennis.sym").read_text().splitlines():
+        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
+        if m and int(m.group(2), 16) < 0x8000:
+            key = (int(m.group(1), 16), int(m.group(2), 16))
+            at[m.group(3)] = key
+            if not m.group(3).startswith(("FarPtr_", "DataPtr_")):
+                by_addr.setdefault(key, m.group(3))
+    starts = {}
+    for b, a in by_addr:
+        starts.setdefault(b, []).append(a)
+    for v in starts.values():
+        v.sort()
+    found, n = set(), 0
+    for h in holders():
+        name, body = None, []
+        for line in bank_lines(h)[0] + ["End:"]:
+            m = _GLOBAL_RE.match(line)
+            if not m:
+                s = line.split(";")[0].strip()
+                if s and not s.endswith(":"):
+                    body.append(s)
+                continue
+            inc = re.fullmatch(r'INCLUDE "data/([^"]+)"', body[0]) if len(body) == 1 else None
+            if name in at and body and (all(s.startswith("db ") for s in body) or (
+                    inc and (specs.get(inc.group(1)) or "").startswith("bytes"))):
+                n += 1
+                b, a = at[name]
+                nxt = starts[b][bisect.bisect_right(starts[b], a):] or [0x8000 if b else 0x4000]
+                off = a if b == 0 else b * BANK_SIZE + a - 0x4000
+                lo, hi = (0x4000, 0x8000) if b else (0x150, 0x4000)
+                for k in range(0, nxt[0] - a - 1, 2):
+                    w = rom[off + k] | rom[off + k + 1] << 8
+                    if lo <= w < hi and (b, w) in by_addr:
+                        found.add((name, k))
+                        if (name, k) not in KNOWN_DB_WORDS:
+                            fail("db-words", f"${b:02x}: {name}+{k} is ${w:04x}, "
+                                             f"{by_addr[(b, w)]} -- a hidden pointer?")
+            name, body = m.group(1), []
+    for name, k in sorted(set(KNOWN_DB_WORDS) - found):
+        fail("db-words", f"{name}+{k} no longer matches a label -- drop it from KNOWN_DB_WORDS")
+    return n
+
+
+def check_text_regions(rom, manifest, fail):
+    """A spec-less .asm region is rendered as game text, so it must be text:
+    printable characters and text codes in NUL-terminated strings of two or
+    more bytes. Anything else wants a spec."""
+    from extract import SAFE, TEXT_CODES
+    ok = SAFE | set(TEXT_CODES) | {0x01, 0x02, 0x03}
+    n = 0
+    for path, off, length, spec in manifest:
+        if spec or not path.endswith(".asm"):
+            continue
+        n += 1
+        data = rom[off:off + length]
+        strings = data[:-1].split(b"\0")
+        if (not data.endswith(b"\0") or any(len(s) < 2 for s in strings)
+                or any(b not in ok for b in data[:-1] if b)):
+            fail("text", f"{path}: not NUL-terminated text -- give it a render spec")
+    return n
+
+
+def check_unmarked_lz(rom, manifest, fail):
+    """A region not named lz_ is not an LZ stream: one that decodes using
+    exactly its bytes, or that runs on to end exactly where a later region
+    does (a stream split by stray labels), is a stream under the wrong name."""
+    rows = sorted((o, n, p) for p, o, n, _s in manifest)
+    ends = {o + n for o, n, _p in rows}
+    specs = {p: s for p, _o, _n, s in manifest}
+    n = 0
+    for off, length, path in rows:
+        if "/lz_" in path or (specs[path] or "").startswith(("text", "sound", "snd")):
+            continue
+        n += 1
+        try:
+            data, used = decompress(rom, off, (off // BANK_SIZE + 1) * BANK_SIZE)
+        except ValueError:
+            continue
+        if data and (used == length or (used > length and off + used in ends and len(data) >= 16)):
+            fail("lz-names", f"{path}: an LZ stream of {used} bytes "
+                             f"({len(data)} decoded) -- name it lz_")
+    return n
+
+
 def check_regions(manifest, fail):
     spans = sorted((o, o + n, p) for p, o, n, _s in manifest)
     prev = None
@@ -716,7 +831,10 @@ def main():
     counts = {
         "lz": check_lz(manifest, fail),
         "lz-labels": check_lz_labels(labels, manifest, fail),
+        "lz-names": check_unmarked_lz(rom, manifest, fail),
         "regions": check_regions(manifest, fail),
+        "text": check_text_regions(rom, manifest, fail),
+        "db-words": check_db_pointers(rom, manifest, fail),
         "layout": check_layout(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
         "traj": check_traj(rom, manifest, fail),

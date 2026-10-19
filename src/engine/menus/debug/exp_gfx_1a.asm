@@ -17,12 +17,15 @@ ExpScreenGfx3:
 ExpScreenGfx4:
 	INCBIN "data/engine/menus/debug/ExpScreenGfx4.bin" ; $62a0, 576 bytes
 ExpScreenGfxPalettes0:
-	INCBIN "data/engine/menus/debug/ExpScreenGfxPalettes0.bin" ; $64e0, 368 bytes
+	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes0.asm" ; $64e0, 80 bytes (palettes)
+Unused_1a_ExpScreenGfx9:
+	INCBIN "data/engine/menus/debug/lz_Unused_1a_ExpScreenGfx9.bin" ; $6530, 280 bytes
+	ds 8, $00 ; $6648
 ExpScreenGfx5:
 	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx5.bin" ; $6650, 24 bytes
 	INCLUDE "data/engine/menus/debug/lz_ExpScreenGfx5.inc" ; DEF ExpScreenGfx5_SIZE EQU its decoded length, generated from the .bin by make
 ExpScreenGfxPalettes1:
-	INCBIN "data/engine/menus/debug/ExpScreenGfxPalettes1.bin" ; $6668, 24 bytes
+	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes1.asm" ; $6668, 24 bytes (palettes)
 ExpScreenGfx6:
 	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx6.bin" ; $6680, 72 bytes
 	INCLUDE "data/engine/menus/debug/lz_ExpScreenGfx6.inc" ; DEF ExpScreenGfx6_SIZE EQU its decoded length, generated from the .bin by make
@@ -30,9 +33,9 @@ ExpScreenGfx7:
 	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx7.bin" ; $66c8, 73 bytes
 	INCLUDE "data/engine/menus/debug/lz_ExpScreenGfx7.inc" ; DEF ExpScreenGfx7_SIZE EQU its decoded length, generated from the .bin by make
 ExpScreenGfxPalettes2:
-	INCBIN "data/engine/menus/debug/ExpScreenGfxPalettes2.bin" ; $6711, 16 bytes
+	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes2.asm" ; $6711, 16 bytes (palettes)
 ExpScreenGfxPalettes3:
-	INCBIN "data/engine/menus/debug/ExpScreenGfxPalettes3.bin" ; $6721, 8 bytes
+	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes3.asm" ; $6721, 8 bytes (palettes)
 ExpScreenGfx8:
 	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx8.bin" ; $6729, 171 bytes
 Unused_1a_RunDebugCharViewer:

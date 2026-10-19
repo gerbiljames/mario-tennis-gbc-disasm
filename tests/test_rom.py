@@ -79,7 +79,7 @@ class Source(unittest.TestCase):
 
     def test_named_ids(self):
         self.assertEqual(count(r"ld hl, Text_\w+ ;"), 257)
-        self.assertEqual(count(r"^\tdw Text_\w+"), 737)
+        self.assertEqual(count(r"^\tdw Text_\w+"), 752)
         self.assertGreaterEqual(count(r"\bDRILLMSG_\w+"), 65)
         self.assertGreaterEqual(count(r"\bBEHAVIOR_\w+"), 43)
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n(?:ENDC\n)?\.clearLoop:\n\tpush de ; \$[0-9a-f]{4}\n\tcall ClearGameFlag "),
@@ -151,10 +151,10 @@ class Manifest(unittest.TestCase):
     def test_counts(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
-        self.assertEqual(len(lines), 4268)
-        self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 839)
+        self.assertEqual(len(lines), 4257)
+        self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 861)
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2698)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2721)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
@@ -162,7 +162,7 @@ class Manifest(unittest.TestCase):
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)
-        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 859)
+        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1002)
 
 
 @needs_rom

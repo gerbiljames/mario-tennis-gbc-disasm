@@ -128,7 +128,7 @@ uncompressed payloads. 282 `call` sites in `src/` reach one of the two.
 
 ### 1.5 The corpus
 
-`data.manifest` declares **839** LZ streams; `check.py`'s `lz` check (§7.5)
+`data.manifest` declares **861** LZ streams; `check.py`'s `lz` check (§7.5)
 requires each to decode using exactly its declared extent and to round-trip.
 
 * **315,831 compressed bytes → 804,924 decompressed** (39.2%).
@@ -704,7 +704,7 @@ Unchecked invariants: each `text_offsets` table is followed by its
 `text_pool`, entry 0 is `$0000`, and every word lands on a string start inside
 the pool.
 
-`include/text_ids.inc` is hand-maintained: 1,392 `def Text_<bank>_<index> equ
+`include/text_ids.inc` is hand-maintained: 1,398 `def Text_<bank>_<index> equ
 <raw id>` coordinates, each aliased by what the text says, and the code uses
 the alias. Sites are named only where the id reaches a known text sink, never
 by value.
@@ -796,27 +796,30 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All seventeen
+the source claims is true, not just that the bytes come back. All twenty
 pass:
 
 | check | count | what it asserts |
 |---|---|---|
-| `lz` | 839 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
-| `lz-labels` | 839 | no symbol lands inside a compressed stream |
-| `regions` | 4268 | manifest regions stay inside their bank and do not overlap |
-| `layout` | 4268 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
+| `lz` | 861 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
+| `lz-labels` | 861 | no symbol lands inside a compressed stream |
+| `lz-names` | 3058 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
+| `regions` | 4257 | manifest regions stay inside their bank and do not overlap |
+| `text` | 21 | a spec-less `.asm` region is NUL-terminated text |
+| `db-words` | 560 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
+| `layout` | 4257 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
-| `scopes` | 0 | no global label covers both actor-script bytecode and CPU code |
-| `labels` | 13736 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `scopes` | 266 | no global label covers both actor-script bytecode and CPU code |
+| `labels` | 13740 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
-| `literals` | 35590 | no ROM address is written as a number where the source moves |
+| `literals` | 34388 | no ROM address is written as a number where the source moves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
-| `gfx` | 2698 | every PNG encodes back to the blob it was decoded from |
+| `gfx` | 2721 | every PNG encodes back to the blob it was decoded from |
 | `tilemap` | 231 | every tilemap grid encodes back to its blob |
-| `slots` | 5124 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
-| `reach` | 4870 | a routine is named `Unused` exactly when nothing reachable reaches it |
+| `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
+| `reach` | 4876 | a routine is named `Unused` exactly when nothing reachable reaches it |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
 
 ---
