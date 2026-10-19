@@ -36,49 +36,51 @@ def B_ equ 11
 ; SetPointSituationBgm.
 def BGM_NONE                 equ $00 ; silence: stops the four music channels
 def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing (the location loop skips the start)
-def BGM_INTRO                equ $01 ; RunIntroCutscene
-def BGM_TITLE_SCREEN         equ $02 ; RunTitleScreen
-def BGM_MENU                 equ $03 ; shared theme of ~20 menu screens (main menu, character/court/format select, save and N64 flows)
-def BGM_STATUS_SCREEN        equ $04 ; character/minigame data, game progress, trophies, N64 record screens
-def BGM_DICTIONARY           equ $05 ; TennisDictionaryScreen
-def BGM_EXHIBITION_MATCH     equ $06 ; CourtSelectBgmIds_3e rows 0-3: the four standard courts
-def BGM_EXHIBITION_MATCH_LINK equ $07 ; the same four rows of CourtSelectBgmIdsLink_3e (link play)
-def BGM_MARIO_MINIGAME       equ $08 ; Special Court story_location + the minigame select/level menus
-def BGM_WIN                  equ $09 ; match/point won (ShowMinigamePointResult, RunMatchWinLoseScreen)
-def BGM_LOSE                 equ $0a ; the .lostPoint branch of the same two
-def BGM_EXP_AWARD            equ $0b ; BeginNextExpAward
-def BGM_EXP_DISTRIBUTION     equ $0c ; ShowExpDistributionScreen, TickLevelUpJingle
-def BGM_STAT_DISTRIBUTION    equ $0d ; AnimateCharDataStatsReveal, SetupCharDataScreen
-def BGM_TIEBREAK             equ $0e ; SetPointSituationBgm, wTiebreakerIndicator set
-def BGM_SET_POINT            equ $0f ; same, wMatchPointFlag or wSetPointFlag set
-def BGM_GAME_POINT           equ $10 ; same, wGamePointFlag set
-def BGM_COURT_STAR           equ $11 ; CourtSelectBgmIds_3e row 4; also Boo Blast and InitDefaultMatchSettings
-def BGM_COURT_CASTLE         equ $12 ; row 5; the Peach's Castle story_location and Perfect Shot use it
-def BGM_COURT_TROPIC         equ $13 ; row 6; MinigameConfig_FruitFantasy
-def BGM_COURT_WAREHOUSE      equ $14 ; row 8; MinigameConfig_TreasureBox
-def BGM_TWO_ON_ONE           equ $15 ; RunDoublesDrillMatch
-def BGM_COURT_JUNGLE         equ $16 ; row 7; MinigameConfig_BananaBunch
-def BGM_TARGET_MINIGAMES     equ $19 ; the drill_defs of Medallion Match, Shooting Star and Target Shot
-def BGM_ACADEMY_BUILDING     equ $1a ; story_location: the Academy Main Building and the Academy Wing
-def BGM_ACADEMY_OUTDOORS     equ $1b ; story_location: the courtyards, entrances, class courts, Court #1/#2, the awards ceremony and the island flyover (13 locations)
-def BGM_DORM_ROOM            equ $1c ; DormRoomInitScript_13 / DormRoomNpc03_13
-def BGM_ACADEMY_ROOMS        equ $1d ; story_location: the restaurant, cafeteria, training rooms, the Center Court and the tournament (7 locations)
-def BGM_TENNIS_MACHINE       equ $1e ; the Tennis Machine Room's drill_defs
-def BGM_WALL_PRACTICE        equ $1f ; the Wall Practice Room's drill_defs
-def BGM_PRACTICE_MATCH       equ $20 ; the story practice matches (GAMEMODE_PRACTICE_MATCH rows of the match settings tables)
-def BGM_JUNIOR_RANKING       equ $21 ; the Junior class ranking matches (hard court)
-def BGM_SENIOR_RANKING       equ $22 ; MatchSettingsTable records 6-9; reused by the intro character showcase and the trophy cheat screen
-def BGM_VARSITY_RANKING      equ $23 ; the Varsity ranking matches (composition court)
-def BGM_DRILL_MATCH          equ $24 ; the match drills' drill_def (COURT_TRAINING_MATCH)
-def BGM_DRILL_PRACTICE       equ $25 ; the practice drills' drill_def (COURT_TRAINING_PRACTICE)
-def BGM_ISLAND_OPEN          equ $26 ; the Island Open's early rounds
-def BGM_ISLAND_OPEN_SEMIFINAL equ $27
-def BGM_ISLAND_OPEN_FINAL    equ $28 ; on the Center Court
-def BGM_DREAM_MATCH          equ $29 ; the Dream Matches on the castle court
-def BGM_ISLAND_OPEN_LOSE     equ $2a ; ShowRankingBoard with wRankingBoardMode 2, which SetupRankingBoardArgs sets when wMatchWinLoseFlag != 1
-def BGM_ISLAND_OPEN_WIN      equ $2b ; the same board with mode 1 (match won)
-def BGM_CREDITS              equ $2c ; RunEndingCreditsSequence, the End1 story_location, and the debug text-overflow alarm
-def BGM_THE_END              equ $2d ; the still screen after each credit scroll (PlayScreenSequence1/2)
+	const_def 1
+	const BGM_INTRO                 ; $01 RunIntroCutscene
+	const BGM_TITLE_SCREEN          ; $02 RunTitleScreen
+	const BGM_MENU                  ; $03 shared theme of ~20 menu screens (main menu, character/court/format select, save and N64 flows)
+	const BGM_STATUS_SCREEN         ; $04 character/minigame data, game progress, trophies, N64 record screens
+	const BGM_DICTIONARY            ; $05 TennisDictionaryScreen
+	const BGM_EXHIBITION_MATCH      ; $06 CourtSelectBgmIds_3e rows 0-3: the four standard courts
+	const BGM_EXHIBITION_MATCH_LINK ; $07 the same four rows of CourtSelectBgmIdsLink_3e (link play)
+	const BGM_MARIO_MINIGAME        ; $08 Special Court story_location + the minigame select/level menus
+	const BGM_WIN                   ; $09 match/point won (ShowMinigamePointResult, RunMatchWinLoseScreen)
+	const BGM_LOSE                  ; $0a the .lostPoint branch of the same two
+	const BGM_EXP_AWARD             ; $0b BeginNextExpAward
+	const BGM_EXP_DISTRIBUTION      ; $0c ShowExpDistributionScreen, TickLevelUpJingle
+	const BGM_STAT_DISTRIBUTION     ; $0d AnimateCharDataStatsReveal, SetupCharDataScreen
+	const BGM_TIEBREAK              ; $0e SetPointSituationBgm, wTiebreakerIndicator set
+	const BGM_SET_POINT             ; $0f same, wMatchPointFlag or wSetPointFlag set
+	const BGM_GAME_POINT            ; $10 same, wGamePointFlag set
+	const BGM_COURT_STAR            ; $11 CourtSelectBgmIds_3e row 4; also Boo Blast and InitDefaultMatchSettings
+	const BGM_COURT_CASTLE          ; $12 row 5; the Peach's Castle story_location and Perfect Shot use it
+	const BGM_COURT_TROPIC          ; $13 row 6; MinigameConfig_FruitFantasy
+	const BGM_COURT_WAREHOUSE       ; $14 row 8; MinigameConfig_TreasureBox
+	const BGM_TWO_ON_ONE            ; $15 RunDoublesDrillMatch
+	const BGM_COURT_JUNGLE          ; $16 row 7; MinigameConfig_BananaBunch
+	const_def 25
+	const BGM_TARGET_MINIGAMES      ; $19 the drill_defs of Medallion Match, Shooting Star and Target Shot
+	const BGM_ACADEMY_BUILDING      ; $1a story_location: the Academy Main Building and the Academy Wing
+	const BGM_ACADEMY_OUTDOORS      ; $1b story_location: the courtyards, entrances, class courts, Court #1/#2, the awards ceremony and the island flyover (13 locations)
+	const BGM_DORM_ROOM             ; $1c DormRoomInitScript_13 / DormRoomNpc03_13
+	const BGM_ACADEMY_ROOMS         ; $1d story_location: the restaurant, cafeteria, training rooms, the Center Court and the tournament (7 locations)
+	const BGM_TENNIS_MACHINE        ; $1e the Tennis Machine Room's drill_defs
+	const BGM_WALL_PRACTICE         ; $1f the Wall Practice Room's drill_defs
+	const BGM_PRACTICE_MATCH        ; $20 the story practice matches (GAMEMODE_PRACTICE_MATCH rows of the match settings tables)
+	const BGM_JUNIOR_RANKING        ; $21 the Junior class ranking matches (hard court)
+	const BGM_SENIOR_RANKING        ; $22 MatchSettingsTable records 6-9; reused by the intro character showcase and the trophy cheat screen
+	const BGM_VARSITY_RANKING       ; $23 the Varsity ranking matches (composition court)
+	const BGM_DRILL_MATCH           ; $24 the match drills' drill_def (COURT_TRAINING_MATCH)
+	const BGM_DRILL_PRACTICE        ; $25 the practice drills' drill_def (COURT_TRAINING_PRACTICE)
+	const BGM_ISLAND_OPEN           ; $26 the Island Open's early rounds
+	const BGM_ISLAND_OPEN_SEMIFINAL ; $27
+	const BGM_ISLAND_OPEN_FINAL     ; $28 on the Center Court
+	const BGM_DREAM_MATCH           ; $29 the Dream Matches on the castle court
+	const BGM_ISLAND_OPEN_LOSE      ; $2a ShowRankingBoard with wRankingBoardMode 2, which SetupRankingBoardArgs sets when wMatchWinLoseFlag != 1
+	const BGM_ISLAND_OPEN_WIN       ; $2b the same board with mode 1 (match won)
+	const BGM_CREDITS               ; $2c RunEndingCreditsSequence, the End1 story_location, and the debug text-overflow alarm
+	const BGM_THE_END               ; $2d the still screen after each credit scroll (PlayScreenSequence1/2)
 def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle
 
 ; Jingles ($40-$45, PlaySoundManaged only). The handler stores the id in
@@ -94,20 +96,22 @@ def SFX_STOP                 equ $50 ; silences the two effect channels
 ; The racket-contact sounds, one per shot type in ShotTypePresets_07
 ; (ApplyShotTypePresets plays the row's first byte at contact), named for the
 ; stroke family that uses each; the smash shares the slice sound.
-def SFX_HIT_TOPSPIN          equ $51 ; topspin, power topspin, neutral and the reach strokes
-def SFX_HIT_DROP             equ $52
-def SFX_HIT_LOB              equ $53
-def SFX_HIT_SERVE            equ $54 ; all three serves
+	const_def 81
+	const SFX_HIT_TOPSPIN ; $51 topspin, power topspin, neutral and the reach strokes
+	const SFX_HIT_DROP    ; $52
+	const SFX_HIT_LOB     ; $53
+	const SFX_HIT_SERVE   ; $54 all three serves
 def SFX_HIT_SLICE            equ $57 ; slice, power slice and the smash
 def SFX_BALL_BOUNCE          equ $5b ; HandleBallBounceEvent
 def SFX_SWING                equ $5c ; racket swing (StartCharSwing)
 def SFX_BALL_CONTACT         equ $77 ; the ball connecting with a scoring object: HandleBallTouchCharEvent, HandleMinigameTargetHit, MinigameTargetTypeScores
-def SFX_MENU_MOVE            equ $5e ; every menu's "the cursor moved" branch
-def SFX_MENU_SELECT          equ $5f ; A accepted, menu continues
-def SFX_MENU_DECIDE          equ $60 ; A accepted the screen's final choice (fades out after it)
-def SFX_MENU_LOCKED          equ $61 ; choice refused (IsCourtUnlocked returned 0, locked minigame level)
-def SFX_MENU_CANCEL          equ $62 ; B pressed / selection retreated
-def SFX_PAUSE_MENU           equ $63 ; RunMatchPauseMenu, RunStoryModeMenu
+	const_def 94
+	const SFX_MENU_MOVE   ; $5e every menu's "the cursor moved" branch
+	const SFX_MENU_SELECT ; $5f A accepted, menu continues
+	const SFX_MENU_DECIDE ; $60 A accepted the screen's final choice (fades out after it)
+	const SFX_MENU_LOCKED ; $61 choice refused (IsCourtUnlocked returned 0, locked minigame level)
+	const SFX_MENU_CANCEL ; $62 B pressed / selection retreated
+	const SFX_PAUSE_MENU  ; $63 RunMatchPauseMenu, RunStoryModeMenu
 def SFX_IMPACT               equ $70 ; collision cue, always followed by SetScreenShake
 def SFX_DOOR                 equ $71 ; gym, dorm and restaurant doors (open and close)
 def SFX_COUNTDOWN            equ $74 ; each digit of PlayMinigameCountdown
@@ -135,12 +139,14 @@ def SFX_SWING_CHARGE           equ $59 ; a character starting a swing windup (Ch
 def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNetCrossing $08)
 ; The on-court object cues, from the *ObjTemplate* tables of bank $09 (the
 ; sound field LoadObjTemplate_09 plays as the object appears).
-def SFX_SCORE_DISPLAY          equ $66 ; the point-score digit objects appearing (ObjTemplates_09, the game-score display)
-def SFX_BANNER_WINNER          equ $67 ; the SERVICE/RETURN/SMASH ACE, LOB and DROP SHOT banners (rows 24-28)
-def SFX_BANNER_POINT_SITUATION equ $68 ; the BREAK/GAME/SET/MATCH POINT banners (rows 7-10)
-def SFX_BANNER_FAULT           equ $6a ; the FAULT and DOUBLE FAULT banners (rows 1-2)
-def SFX_BANNER_GAME_WON        equ $6b ; the GAME, SET MATCH and MATCH banners (rows 11-13)
-def SFX_BANNER_CALL            equ $6c ; the LET, NET, OUT and START banners (rows 3-6)
+	const_def 102
+	const SFX_SCORE_DISPLAY          ; $66 the point-score digit objects appearing (ObjTemplates_09, the game-score display)
+	const SFX_BANNER_WINNER          ; $67 the SERVICE/RETURN/SMASH ACE, LOB and DROP SHOT banners (rows 24-28)
+	const SFX_BANNER_POINT_SITUATION ; $68 the BREAK/GAME/SET/MATCH POINT banners (rows 7-10)
+	const_def 106
+	const SFX_BANNER_FAULT    ; $6a the FAULT and DOUBLE FAULT banners (rows 1-2)
+	const SFX_BANNER_GAME_WON ; $6b the GAME, SET MATCH and MATCH banners (rows 11-13)
+	const SFX_BANNER_CALL     ; $6c the LET, NET, OUT and START banners (rows 3-6)
 def SFX_LOGO_JINGLE            equ $65 ; the intro logo screen, and TriggerCheatUnlock
 def SFX_DEUCE                  equ $69 ; the deuce call after a point (DelayAfterPointResolution $08)
 def SFX_LANDING_MARKER         equ $6d ; the landing marker appearing (StartLandingMarker $08)
@@ -154,21 +160,24 @@ def SFX_FIREWORK_SPARKLE       equ $7d ; the island sky scene: twinkle and plane
 def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingBoard $1b, unless wRankingBoardSilent)
 def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingBoardAnimState_* $1b)
 def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (CutsceneStompScreenShake $0f)
-def SFX_THUD                   equ $86 ; a minigame hit scored (ScoreBallHit $0d) and a Mario World NPC landing from a jump
-def SFX_VOICE_YOSHI            equ $87 ; Yoshi speaking in Mario World (MarioWorldNpc09Yoshi_0e)
-def SFX_PEACH_FANFARE          equ $88 ; before "Princess Peach!" in Mario World (MarioWorldNpc0C_0e)
-def SFX_VOICE_BABY_MARIO       equ $89 ; Baby Mario speaking in Mario World (MarioWorldNpc0ABabyMario_0e)
-def SFX_WATER_SPRITE_MAGIC     equ $8a ; the water sprite's palette flash (WaterSpriteRacketRewardScene $15)
-def SFX_CONTEST_WIN            equ $8c ; winning the water-sprite swing contest (WaterSpriteSwingContestScene $15)
-def SFX_CONTEST_FINISH         equ $8d ; the swing contest ending (WaterSpriteSwingContestScene $15)
-def SFX_WATER_SPRITE_APPEAR    equ $8e ; the water sprite appearing after the fade (WaterSpriteRacketRewardScene $15)
-def SFX_WATER_SPRITE_FLY       equ $8f ; the water sprite flying off (WaterSpriteRacketRewardScene $15)
-def SFX_RACKET_GET             equ $90 ; receiving the water sprite's racket (WaterSpriteRacketRewardScene $15)
+	const_def 134
+	const SFX_THUD               ; $86 a minigame hit scored (ScoreBallHit $0d) and a Mario World NPC landing from a jump
+	const SFX_VOICE_YOSHI        ; $87 Yoshi speaking in Mario World (MarioWorldNpc09Yoshi_0e)
+	const SFX_PEACH_FANFARE      ; $88 before "Princess Peach!" in Mario World (MarioWorldNpc0C_0e)
+	const SFX_VOICE_BABY_MARIO   ; $89 Baby Mario speaking in Mario World (MarioWorldNpc0ABabyMario_0e)
+	const SFX_WATER_SPRITE_MAGIC ; $8a the water sprite's palette flash (WaterSpriteRacketRewardScene $15)
+	const_def 140
+	const SFX_CONTEST_WIN         ; $8c winning the water-sprite swing contest (WaterSpriteSwingContestScene $15)
+	const SFX_CONTEST_FINISH      ; $8d the swing contest ending (WaterSpriteSwingContestScene $15)
+	const SFX_WATER_SPRITE_APPEAR ; $8e the water sprite appearing after the fade (WaterSpriteRacketRewardScene $15)
+	const SFX_WATER_SPRITE_FLY    ; $8f the water sprite flying off (WaterSpriteRacketRewardScene $15)
+	const SFX_RACKET_GET          ; $90 receiving the water sprite's racket (WaterSpriteRacketRewardScene $15)
 def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTargetGridClear $0d)
-def SFX_APPEAR2                equ $96 ; the second of the two pop sounds cutscenes alternate as actors are placed one by one (arrivals, match returns, academy init)
-def SFX_CHIME                  equ $97 ; a minigame target hit / score popup, and a success cue in cutscenes
-def SFX_EMOTE                  equ $98 ; an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)
-def SFX_APPEAR1                equ $99 ; the first of the two pop sounds cutscenes alternate as actors are placed one by one; also after a stomp
+	const_def 150
+	const SFX_APPEAR2 ; $96 the second of the two pop sounds cutscenes alternate as actors are placed one by one (arrivals, match returns, academy init)
+	const SFX_CHIME   ; $97 a minigame target hit / score popup, and a success cue in cutscenes
+	const SFX_EMOTE   ; $98 an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)
+	const SFX_APPEAR1 ; $99 the first of the two pop sounds cutscenes alternate as actors are placed one by one; also after a stomp
 def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_MusicSettingHandler0/1 $1a)
 def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries
 
@@ -178,7 +187,8 @@ def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every 
 ; the type is the hardware channel. The wave channel loads wave RAM and skips
 ; duty, volume slide and instrument envelope; the noise channel sends the note
 ; through NoiseNoteTable and skips vibrato.
-def SNDCHANTYPE_SQUARE1      equ $00 ; $ff10 block -- the only one with a sweep unit (NR10)
-def SNDCHANTYPE_SQUARE2      equ $01 ; $ff15 block; takes every default path
-def SNDCHANTYPE_WAVE         equ $02 ; $ff1a block
-def SNDCHANTYPE_NOISE        equ $03 ; $ff1f block
+	const_def
+	const SNDCHANTYPE_SQUARE1 ; $00 $ff10 block -- the only one with a sweep unit (NR10)
+	const SNDCHANTYPE_SQUARE2 ; $01 $ff15 block; takes every default path
+	const SNDCHANTYPE_WAVE    ; $02 $ff1a block
+	const SNDCHANTYPE_NOISE   ; $03 $ff1f block

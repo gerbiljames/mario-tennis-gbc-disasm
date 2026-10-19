@@ -7,6 +7,7 @@ MACRO export_size
 	EXPORT \1_SIZE
 ENDM
 
+INCLUDE "macros/const.inc"
 INCLUDE "constants/memory.inc"
 INCLUDE "constants/characters.inc"
 INCLUDE "macros/ram.inc"

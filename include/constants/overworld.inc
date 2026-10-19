@@ -39,35 +39,39 @@ def ACTORF_X            equ $0c ; word: world position (1/256 tile)
 def ACTORF_Y            equ $0e ; word
 def ACTORF_HEIGHT       equ $10 ; word: height above the ground, negative = up (64 = 1 px)
 def ACTORF_JUMP_VEL     equ $12 ; word: added to ACTORF_HEIGHT each update; gravity adds $10
-def ACTORF_HEADING      equ $14 ; movement direction, a full angle byte
-def ACTORF_TURN_RATE    equ $15 ; largest heading change per step toward the target
-def ACTORF_ANCHOR       equ $16 ; word: record this actor follows (as_follow_wp, as_step); as_begin_path's home tile
+	const_def 20
+	const ACTORF_HEADING   ; $14 movement direction, a full angle byte
+	const ACTORF_TURN_RATE ; $15 largest heading change per step toward the target
+	const ACTORF_ANCHOR    ; $16 word: record this actor follows (as_follow_wp, as_step); as_begin_path's home tile
 def ACTORF_ANIM_RATE    equ $18 ; subtracted from ACTORF_ANIM_DELAY each frame while standing
 def ACTORF_ANIM_RATE_MOVING equ $19 ; the same while ACTORFLAGB_MOVING is set
-def ACTORF_MODE         equ $20 ; SetActorMode / script_set_active
-def ACTORF_OBJECT       equ $21 ; OBJ_* id (LoadActorObjectDef)
-def ACTORF_OBJECT_BANK  equ $22 ; bank of the object header and its frame and animation tables
+	const_def 32
+	const ACTORF_MODE        ; $20 SetActorMode / script_set_active
+	const ACTORF_OBJECT      ; $21 OBJ_* id (LoadActorObjectDef)
+	const ACTORF_OBJECT_BANK ; $22 bank of the object header and its frame and animation tables
 def ACTORF_FRAME_TABLE  equ $24 ; word: object header's frame array
 def ACTORF_VRAM_TILES   equ $26 ; word: the slot's 4 sprite tiles in VRAM bank 1
 def ACTORF_ANIM_TABLE   equ $28 ; word: object header's animation scripts
 def ACTORF_ANIM_SCRIPT  equ $2a ; word: start of the current animation script
 def ACTORF_ANIM_PTR     equ $2c ; word: its next command
-def ACTORF_ANIM         equ $2e ; ANIM_* id playing
-def ACTORF_ANIM_DELAY   equ $2f ; ticks left on the frame shown; $ff = held
-def ACTORF_STATUS       equ $30 ; bit 0 facing locked, bit 6 frame dirty, bit 7 live
-def ACTORF_DRAW_DELAY   equ $31 ; frames DrawActors waits before the first draw: spawn staggers slots
-def ACTORF_DRAWN_FACING equ $32 ; FACE_*: ACTORF_FACING quantised by DirectionToFacing_04
-def ACTORF_ANIM_FRAME   equ $33 ; frame the animation script shows
-def ACTORF_FACING       equ $34 ; angle byte: follows ACTORF_HEADING unless locked
-def ACTORF_FACING_COUNT equ $35 ; object header byte 1; 1 = one facing only
-def ACTORF_TILE         equ $36 ; OAM tile of the slot's tiles; read as a word with ACTORF_OAM_ATTR
-def ACTORF_OAM_ATTR     equ $37 ; object header byte 0, or the map_actor palette override
-def ACTORF_SHADOW_TABLE equ $38 ; word: per-frame placement records
+	const_def 46
+	const ACTORF_ANIM         ; $2e ANIM_* id playing
+	const ACTORF_ANIM_DELAY   ; $2f ticks left on the frame shown; $ff = held
+	const ACTORF_STATUS       ; $30 bit 0 facing locked, bit 6 frame dirty, bit 7 live
+	const ACTORF_DRAW_DELAY   ; $31 frames DrawActors waits before the first draw: spawn staggers slots
+	const ACTORF_DRAWN_FACING ; $32 FACE_*: ACTORF_FACING quantised by DirectionToFacing_04
+	const ACTORF_ANIM_FRAME   ; $33 frame the animation script shows
+	const ACTORF_FACING       ; $34 angle byte: follows ACTORF_HEADING unless locked
+	const ACTORF_FACING_COUNT ; $35 object header byte 1; 1 = one facing only
+	const ACTORF_TILE         ; $36 OAM tile of the slot's tiles; read as a word with ACTORF_OAM_ATTR
+	const ACTORF_OAM_ATTR     ; $37 object header byte 0, or the map_actor palette override
+	const ACTORF_SHADOW_TABLE ; $38 word: per-frame placement records
 ; ACTORF_FLAGS bits
 def ACTORFLAGB_PAUSED   equ 0 ; StepActorScript yields without running the script
-def ACTORFLAGB_YIELD    equ 2 ; a move stops short when it would step next to the player
-def ACTORFLAGB_SOLID    equ 3 ; BuildNearbyActorList: blocks the player (IsPointBlocked)
-def ACTORFLAGB_TALKABLE equ 4 ; BuildActorQueryList: FindActorFacingPlayer can pick it
+	const_def 2
+	const ACTORFLAGB_YIELD    ; $02 a move stops short when it would step next to the player
+	const ACTORFLAGB_SOLID    ; $03 BuildNearbyActorList: blocks the player (IsPointBlocked)
+	const ACTORFLAGB_TALKABLE ; $04 BuildActorQueryList: FindActorFacingPlayer can pick it
 def ACTORFLAGB_BLOCKED  equ 6 ; set the frame a move yielded to the player
 def ACTORFLAGB_MOVING   equ 7
 ; ACTORF_STATUS bits
@@ -94,9 +98,10 @@ def FACE_UP      equ $c0
 ; entry i -> slot 3+i). Only the three system slots have a stable name; the
 ; rest are scene-local. ACTOR_PLAYER_SHADOW and ACTOR_PARTNER both run the
 ; $04:$41d1 follower script.
-def ACTOR_PLAYER        equ $00 ; the main character sprite
-def ACTOR_PLAYER_SHADOW equ $01 ; player's paired follower actor ($41d1)
-def ACTOR_PARTNER       equ $02 ; companion/doubles partner (SpawnCompanionActor)
+	const_def
+	const ACTOR_PLAYER        ; $00 the main character sprite
+	const ACTOR_PLAYER_SHADOW ; $01 player's paired follower actor ($41d1)
+	const ACTOR_PARTNER       ; $02 companion/doubles partner (SpawnCompanionActor)
 
 ; --- Story-script facing mask (map_script `facing_mask`) ---
 ; The direction an actor must face for FindStoryScriptEntry to run the record.
@@ -126,12 +131,13 @@ def TILETRIGGER_PRESS_ONLY equ $01
 ; Animation ids 0-4 mean the same in every walk sprite's AnimPtrs table; ids
 ; 5 and up differ by sprite (a racket swing for the racket holders, another
 ; bounce for the rest).
-def ANIM_STILL  equ $00 ; frame 0, held
-def ANIM_WALK   equ $01 ; frames 0 and 1, the stepping loop (also the idle shuffle)
-def ANIM_BOUNCE equ $02 ; stand, crouch, stand, crouch, then back to ANIM_WALK
-def ANIM_NOD    equ $03 ; head lowered for half a second, then ANIM_WALK
-def ANIM_SHAKE  equ $04 ; upper body swayed left, right, left, right: a head shake
-def ANIM_SWING  equ $05 ; a racket swing, in the sprites that have one (racket-holding
+	const_def
+	const ANIM_STILL  ; $00 frame 0, held
+	const ANIM_WALK   ; $01 frames 0 and 1, the stepping loop (also the idle shuffle)
+	const ANIM_BOUNCE ; $02 stand, crouch, stand, crouch, then back to ANIM_WALK
+	const ANIM_NOD    ; $03 head lowered for half a second, then ANIM_WALK
+	const ANIM_SHAKE  ; $04 upper body swayed left, right, left, right: a head shake
+	const ANIM_SWING  ; $05 a racket swing, in the sprites that have one (racket-holding
                         ; students, Bob, Pam, the twelve-animation sprites); elsewhere a bounce
 ; Ids 5 and up, each named for the sprites whose AnimPtrs table gives it that
 ; meaning; the same id is something else in other sprites, or reads past the
@@ -149,6 +155,7 @@ def ANIM_DISTANT        equ $08 ; Alex, Nina, Harry, Kate, Emily, Luigi, DK, Bab
 def ANIM_TROPHY_SMALL   equ $08 ; OBJ_TROPHY frames 4-5: the small trophy, glinting
 def ANIM_OVERHEAD_SWING equ $08 ; Bob and OBJ_WALK_71_05-07: racket held overhead, a quick swing, the
                                 ; follow-through held, looped
-def ANIM_SWING_BACK     equ $09 ; the twelve-animation sprites: the backswing pose, held
-def ANIM_SWING_THROUGH  equ $0a ; the twelve-animation sprites: the follow-through pose, held
-def ANIM_SIDESTEP       equ $0b ; Alex and Nina: a lean to the side, twice, then held
+	const_def 9
+	const ANIM_SWING_BACK    ; $09 the twelve-animation sprites: the backswing pose, held
+	const ANIM_SWING_THROUGH ; $0a the twelve-animation sprites: the follow-through pose, held
+	const ANIM_SIDESTEP      ; $0b Alex and Nina: a lean to the side, twice, then held

@@ -3,30 +3,32 @@
 ; $c800/$c840) and the four on-court match records ($ca00-$cac0), which bank
 ; $02 reaches as `ld hl, CHARREC_* / add hl, bc` with the record in bc.
 def CHARREC_NAME             equ $00 ; 7 bytes, then padding
-def CHARREC_LINK_COURT_MASK  equ $0a ; name padding; ExchangeLinkUnlockFlags borrows the main records' byte
-def CHARREC_CHAR             equ $0b ; CHAR_* id
-def CHARREC_PALETTE          equ $0c
-def CHARREC_GENDER           equ $0d ; 0 male, 1 female
-def CHARREC_LEFT_HANDED      equ $0e ; becomes the OAM X-flip on court
-def CHARREC_PHYSICS          equ $0f
-def CHARREC_REACH            equ $10 ; 8 bytes: the reach box
+	const_def 10
+	const CHARREC_LINK_COURT_MASK ; $0a name padding; ExchangeLinkUnlockFlags borrows the main records' byte
+	const CHARREC_CHAR            ; $0b CHAR_* id
+	const CHARREC_PALETTE         ; $0c
+	const CHARREC_GENDER          ; $0d 0 male, 1 female
+	const CHARREC_LEFT_HANDED     ; $0e becomes the OAM X-flip on court
+	const CHARREC_PHYSICS         ; $0f
+	const CHARREC_REACH           ; $10 8 bytes: the reach box
 def CHARREC_LEVEL            equ $18 ; 1-99; each level-up also raises one of CHARREC_TRAIN_LEVELS
 def CHARREC_SWING            equ $19 ; word
 def CHARREC_AI_PARAMS        equ $1b ; 4 bytes: reaction delays near and far, tracking, aim-away chance
-def CHARREC_DIFFICULTY       equ $1f ; CPU difficulty 0 easy - 3 intense, the AI's serve style on court
-def CHARREC_STAT_TOP         equ $20 ; the eleven 0-9 stats, in this order
-def CHARREC_STAT_SLICE       equ $21
-def CHARREC_STAT_SERVE       equ $22
-def CHARREC_STAT_STROKE      equ $23
-def CHARREC_STAT_VOLLEY      equ $24
-def CHARREC_STAT_ANGLE       equ $25
-def CHARREC_STAT_PLACEMENT   equ $26
-def CHARREC_STAT_SPEED       equ $27
-def CHARREC_STAT_DASH        equ $28
-def CHARREC_STAT_REACTION    equ $29
-def CHARREC_STAT_STOP        equ $2a
-def CHARREC_SPEED_BONUS      equ $2b ; added to the Speed stat for the shot-placement row
-def CHARREC_EXP              equ $2c ; 3-byte accumulator, capped at 99999
+	const_def 31
+	const CHARREC_DIFFICULTY     ; $1f CPU difficulty 0 easy - 3 intense, the AI's serve style on court
+	const CHARREC_STAT_TOP       ; $20 the eleven 0-9 stats, in this order
+	const CHARREC_STAT_SLICE     ; $21
+	const CHARREC_STAT_SERVE     ; $22
+	const CHARREC_STAT_STROKE    ; $23
+	const CHARREC_STAT_VOLLEY    ; $24
+	const CHARREC_STAT_ANGLE     ; $25
+	const CHARREC_STAT_PLACEMENT ; $26
+	const CHARREC_STAT_SPEED     ; $27
+	const CHARREC_STAT_DASH      ; $28
+	const CHARREC_STAT_REACTION  ; $29
+	const CHARREC_STAT_STOP      ; $2a
+	const CHARREC_SPEED_BONUS    ; $2b added to the Speed stat for the shot-placement row
+	const CHARREC_EXP            ; $2c 3-byte accumulator, capped at 99999
 def CHARREC_BUILD_KIND        equ $2f ; written by InitCa00RecordFromCharId ($03 main, $02 roster), read by nothing
 def CHARREC_PHYSICS_TEMPLATE equ $30 ; four words
 def CHARREC_TRAIN_LEVELS     equ $38 ; four levels, spin first
@@ -39,38 +41,39 @@ def CHARREC_EQUIPMENT        equ $3c ; racket (low nibble) and shoes (high)
 ; from index $1b). Ids 0-3 are always unlocked; for 4-31
 ; CheckCharacterUnlocked tests save flag number = character id, so the
 ; SAVEFLAG_UNLOCKED_*/_CLEARED_* block above names the same characters.
-def CHAR_ALEX       equ $00
-def CHAR_NINA       equ $01
-def CHAR_HARRY      equ $02
-def CHAR_KATE       equ $03
-def CHAR_ALLIE      equ $04
-def CHAR_JOY        equ $05
-def CHAR_BRIAN      equ $06
-def CHAR_PAM        equ $07
-def CHAR_BOB        equ $08
-def CHAR_BETH       equ $09
-def CHAR_FAY        equ $0a
-def CHAR_CURT       equ $0b
-def CHAR_MARK       equ $0c
-def CHAR_SEAN       equ $0d
-def CHAR_SAMMI      equ $0e
-def CHAR_ELDEN      equ $0f
-def CHAR_SPIKE      equ $10
-def CHAR_EMILY      equ $11
-def CHAR_B_COZ      equ $12 ; "B. Coz"
-def CHAR_A_COZ      equ $13 ; "A. Coz"
-def CHAR_KEVIN      equ $14
-def CHAR_UNUSED_15  equ $15 ; roster slot reading "Not used"; see below
-def CHAR_UNUSED_16  equ $16 ; roster slot reading "Not used"
-def CHAR_LUIGI      equ $17
-def CHAR_DK         equ $18
-def CHAR_BABY_MARIO equ $19 ; "Baby M."
-def CHAR_MARIO      equ $1a
-def CHAR_WALUIGI    equ $1b
-def CHAR_YOSHI      equ $1c
-def CHAR_BOWSER     equ $1d
-def CHAR_WARIO      equ $1e
-def CHAR_PEACH      equ $1f
+	const_def
+	const CHAR_ALEX       ; $00
+	const CHAR_NINA       ; $01
+	const CHAR_HARRY      ; $02
+	const CHAR_KATE       ; $03
+	const CHAR_ALLIE      ; $04
+	const CHAR_JOY        ; $05
+	const CHAR_BRIAN      ; $06
+	const CHAR_PAM        ; $07
+	const CHAR_BOB        ; $08
+	const CHAR_BETH       ; $09
+	const CHAR_FAY        ; $0a
+	const CHAR_CURT       ; $0b
+	const CHAR_MARK       ; $0c
+	const CHAR_SEAN       ; $0d
+	const CHAR_SAMMI      ; $0e
+	const CHAR_ELDEN      ; $0f
+	const CHAR_SPIKE      ; $10
+	const CHAR_EMILY      ; $11
+	const CHAR_B_COZ      ; $12 "B. Coz"
+	const CHAR_A_COZ      ; $13 "A. Coz"
+	const CHAR_KEVIN      ; $14
+	const CHAR_UNUSED_15  ; $15 roster slot reading "Not used"; see below
+	const CHAR_UNUSED_16  ; $16 roster slot reading "Not used"
+	const CHAR_LUIGI      ; $17
+	const CHAR_DK         ; $18
+	const CHAR_BABY_MARIO ; $19 "Baby M."
+	const CHAR_MARIO      ; $1a
+	const CHAR_WALUIGI    ; $1b
+	const CHAR_YOSHI      ; $1c
+	const CHAR_BOWSER     ; $1d
+	const CHAR_WARIO      ; $1e
+	const CHAR_PEACH      ; $1f
 
 ; --- Extended character ids: the story and minigame opponents ---
 ; Records $20-$35 of StoryCharacterRecords_02 continue the roster's name pool
@@ -79,71 +82,76 @@ def CHAR_PEACH      equ $1f
 ; (NameTextRemap_02). Records $36 and up have no name in the pool. $36,
 ; $49-$53, $57 and $5a are unnamed because nothing loads them; their stats are
 ; all zero.
-def CHAR_RANKER_32     equ $20
-def CHAR_RANKER_33     equ $21
-def CHAR_RANKER_34     equ $22
-def CHAR_RANKER_35     equ $23
-def CHAR_RANKER_36     equ $24
-def CHAR_RANKER_37     equ $25
-def CHAR_RANKER_38     equ $26
-def CHAR_RANKER_39     equ $27
-def CHAR_RANKER_40     equ $28
-def CHAR_RANKER_41     equ $29
-def CHAR_RANKER_42     equ $2a
-def CHAR_RANKER_43     equ $2b
-def CHAR_RANKER_44     equ $2c
-def CHAR_RANKER_45     equ $2d
-def CHAR_RANKER_46     equ $2e
-def CHAR_RANKER_47     equ $2f
-def CHAR_KEVIN_2     equ $30 ; shown as Kevin
-def CHAR_EMILY_2     equ $31 ; shown as Emily
-def CHAR_MARK_2      equ $32 ; shown as Mark
-def CHAR_BOB_2       equ $33 ; shown as Bob (bank $30 name pool: "Ellis")
-def CHAR_FAY_2       equ $34 ; shown as Fay (name pool: "Frank")
-def CHAR_CURT_2      equ $35 ; shown as Curt (name pool: "Edgar")
+	const_def 32
+	const CHAR_RANKER_32 ; $20
+	const CHAR_RANKER_33 ; $21
+	const CHAR_RANKER_34 ; $22
+	const CHAR_RANKER_35 ; $23
+	const CHAR_RANKER_36 ; $24
+	const CHAR_RANKER_37 ; $25
+	const CHAR_RANKER_38 ; $26
+	const CHAR_RANKER_39 ; $27
+	const CHAR_RANKER_40 ; $28
+	const CHAR_RANKER_41 ; $29
+	const CHAR_RANKER_42 ; $2a
+	const CHAR_RANKER_43 ; $2b
+	const CHAR_RANKER_44 ; $2c
+	const CHAR_RANKER_45 ; $2d
+	const CHAR_RANKER_46 ; $2e
+	const CHAR_RANKER_47 ; $2f
+	const CHAR_KEVIN_2   ; $30 shown as Kevin
+	const CHAR_EMILY_2   ; $31 shown as Emily
+	const CHAR_MARK_2    ; $32 shown as Mark
+	const CHAR_BOB_2     ; $33 shown as Bob (bank $30 name pool: "Ellis")
+	const CHAR_FAY_2     ; $34 shown as Fay (name pool: "Frank")
+	const CHAR_CURT_2    ; $35 shown as Curt (name pool: "Edgar")
 ; Two match drills swap their opponent's record by server at each point
 ; (LoadDrillOpponentBySide): the net-game matches use these on the points the
 ; opponent serves, the stroke matches on the points the player serves.
-def CHAR_DRILL_NET_GAME_MATCH_1_SERVING   equ $54
-def CHAR_DRILL_NET_GAME_MATCH_2_SERVING   equ $55
-def CHAR_DRILL_NET_GAME_MATCH_3_SERVING   equ $56
+	const_def 84
+	const CHAR_DRILL_NET_GAME_MATCH_1_SERVING ; $54
+	const CHAR_DRILL_NET_GAME_MATCH_2_SERVING ; $55
+	const CHAR_DRILL_NET_GAME_MATCH_3_SERVING ; $56
 ; $57 would be Stroke Match 1's: its stats are all zero and that drill loads
 ; no second record.
 def CHAR_DRILL_STROKE_MATCH_2_RECEIVING   equ $58
 def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 ; Records $5b-$60 are the Dream Match opponents' records, in the match
 ; settings rows of STORYMATCH_DREAM_HARD/_INTENSE/_MAX (singles, then doubles).
-def CHAR_DREAM_HARD            equ $5b
-def CHAR_DREAM_INTENSE         equ $5c
-def CHAR_DREAM_MAX             equ $5d
-def CHAR_DREAM_DOUBLES_HARD    equ $5e
-def CHAR_DREAM_DOUBLES_INTENSE equ $5f
-def CHAR_DREAM_DOUBLES_MAX     equ $60
+	const_def 91
+	const CHAR_DREAM_HARD            ; $5b
+	const CHAR_DREAM_INTENSE         ; $5c
+	const CHAR_DREAM_MAX             ; $5d
+	const CHAR_DREAM_DOUBLES_HARD    ; $5e
+	const CHAR_DREAM_DOUBLES_INTENSE ; $5f
+	const CHAR_DREAM_DOUBLES_MAX     ; $60
 ; ... and their doubles partners, which DoublesPartnerTable_0a pairs with
 ; them (AssignStoryMatchCharacters loads the partner from the opponent's id).
-def CHAR_DREAM_DOUBLES_HARD_PARTNER    equ $61
-def CHAR_DREAM_DOUBLES_INTENSE_PARTNER equ $62
-def CHAR_DREAM_DOUBLES_MAX_PARTNER     equ $63
+	const_def 97
+	const CHAR_DREAM_DOUBLES_HARD_PARTNER    ; $61
+	const CHAR_DREAM_DOUBLES_INTENSE_PARTNER ; $62
+	const CHAR_DREAM_DOUBLES_MAX_PARTNER     ; $63
 ; Records $37-$48 are the drill partners, one per training drill in
 ; MINIGAME_* order: each drill_def names its own as the opponent.
-def CHAR_DRILL_SERVICE_MATCH_1    equ $37
-def CHAR_DRILL_SERVICE_MATCH_2    equ $38
-def CHAR_DRILL_SERVICE_MATCH_3    equ $39
-def CHAR_DRILL_SERVICE_PRACTICE_1 equ $3a
-def CHAR_DRILL_SERVICE_PRACTICE_2 equ $3b
-def CHAR_DRILL_SERVICE_PRACTICE_3 equ $3c
-def CHAR_DRILL_NET_GAME_MATCH_1   equ $3d
-def CHAR_DRILL_NET_GAME_MATCH_2   equ $3e
-def CHAR_DRILL_NET_GAME_MATCH_3   equ $3f
-def CHAR_DRILL_NET_GAME_PRACTICE_1 equ $40
-def CHAR_DRILL_NET_GAME_PRACTICE_2 equ $41
-def CHAR_DRILL_NET_GAME_PRACTICE_3 equ $42
-def CHAR_DRILL_STROKE_MATCH_1     equ $43
-def CHAR_DRILL_STROKE_MATCH_2     equ $44
-def CHAR_DRILL_STROKE_MATCH_3     equ $45
-def CHAR_DRILL_STROKE_PRACTICE_1  equ $46
-def CHAR_DRILL_STROKE_PRACTICE_2  equ $47
-def CHAR_DRILL_STROKE_PRACTICE_3  equ $48
+	const_def 55
+	const CHAR_DRILL_SERVICE_MATCH_1     ; $37
+	const CHAR_DRILL_SERVICE_MATCH_2     ; $38
+	const CHAR_DRILL_SERVICE_MATCH_3     ; $39
+	const CHAR_DRILL_SERVICE_PRACTICE_1  ; $3a
+	const CHAR_DRILL_SERVICE_PRACTICE_2  ; $3b
+	const CHAR_DRILL_SERVICE_PRACTICE_3  ; $3c
+	const CHAR_DRILL_NET_GAME_MATCH_1    ; $3d
+	const CHAR_DRILL_NET_GAME_MATCH_2    ; $3e
+	const CHAR_DRILL_NET_GAME_MATCH_3    ; $3f
+	const CHAR_DRILL_NET_GAME_PRACTICE_1 ; $40
+	const CHAR_DRILL_NET_GAME_PRACTICE_2 ; $41
+	const CHAR_DRILL_NET_GAME_PRACTICE_3 ; $42
+	const CHAR_DRILL_STROKE_MATCH_1      ; $43
+	const CHAR_DRILL_STROKE_MATCH_2      ; $44
+	const CHAR_DRILL_STROKE_MATCH_3      ; $45
+	const CHAR_DRILL_STROKE_PRACTICE_1   ; $46
+	const CHAR_DRILL_STROKE_PRACTICE_2   ; $47
+	const CHAR_DRILL_STROKE_PRACTICE_3   ; $48
 
 ; --- Character-id sentinels (values outside the roster) ---
 ; InitCa00RecordFromCharId branches on the id before using it as a roster

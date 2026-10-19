@@ -1,5 +1,6 @@
 ; The idioms the code is built from (README "Reading the source").
 
+INCLUDE "macros/const.inc"
 INCLUDE "macros/code.inc"
 INCLUDE "macros/tables.inc"
 INCLUDE "macros/data.inc"

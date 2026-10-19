@@ -51,6 +51,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from banksrc import bank_lines, bank_of, build_addresses, holders  # noqa: E402
+import consts  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 ANY = "*"
@@ -101,11 +102,7 @@ TILE_LISTS = {
 
 
 def constants():
-    out = {}
-    for inc in (ROOT / "include").rglob("*.inc"):
-        for m in re.finditer(r"^def (\w+)\s+equ \$([0-9a-f]+)", inc.read_text(), re.M | re.I):
-            out[m.group(1)] = int(m.group(2), 16)
-    return out
+    return consts.constants()
 
 
 def stage_filter(st, var, ok):

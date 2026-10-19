@@ -17,6 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from banksrc import bank_lines, holders  # noqa: E402
+import consts  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 MARK = "debug warp only"
@@ -25,8 +26,7 @@ DEBUG = {"RunDebugWarpMenu"}
 
 def scan():
     """(rows, ways): rows = [(loc, entry, file, line, marked)], ways = {(loc, entry or None)}."""
-    locs = {m.group(1): int(m.group(2), 16) for m in re.finditer(
-        r"^def (STORYLOC_\w+)\s+equ \$([0-9a-f]+)", "\n".join(f.read_text() for f in sorted((ROOT / "include" / "constants").glob("*.inc"))), re.M)}
+    locs = {k: v for k, v in consts.constants().items() if k.startswith("STORYLOC_")}
     lines, origin = [], []
     for h in holders():
         L, O = bank_lines(h)
