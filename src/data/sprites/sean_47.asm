@@ -4,7 +4,7 @@ SeanSpriteDesc:
 	dw SeanSpriteFrames ; $4006 frame table
 	dw SeanSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw SeanSpriteOam ; $400c per-slot OAM data
+	dw SeanFramePlace ; $400c per-frame placement records
 SeanSpriteFrames:
 	dw SeanSpriteFrame00 ; $400e
 	dw SeanSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ SeanSpriteFramesUnused:
 	INCBIN "data/sprites/SeanSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/SeanSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/SeanSpriteFrame06.bin" ; $7bf0, 240 bytes
-SeanSpriteOam:
-	INCLUDE "data/sprites/SeanSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+SeanFramePlace:
+	INCLUDE "data/sprites/SeanFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 SeanSpriteAnims:
 	dw SeanSpriteAnim00 ; $7f24
 	dw SeanSpriteAnim01 ; $7f26

@@ -70,10 +70,13 @@ MoveCurve11_09:
 	INCLUDE "data/engine/match/MoveCurve11_09.asm" ; $4841, 9 bytes (move_curve)
 MoveCurve15_09:
 	INCLUDE "data/engine/match/MoveCurve15_09.asm" ; $484a, 10 bytes (move_curve)
+	ASSERT @ == MoveCurve14_09, "MoveCurve15_09 has no terminator and runs on into MoveCurve14_09"
 MoveCurve14_09:
 	INCLUDE "data/engine/match/MoveCurve14_09.asm" ; $4854, 10 bytes (move_curve)
+	ASSERT @ == MoveCurve13_09, "MoveCurve14_09 has no terminator and runs on into MoveCurve13_09"
 MoveCurve13_09:
 	INCLUDE "data/engine/match/MoveCurve13_09.asm" ; $485e, 10 bytes (move_curve)
+	ASSERT @ == MoveCurve12_09, "MoveCurve13_09 has no terminator and runs on into MoveCurve12_09"
 MoveCurve12_09:
 	INCLUDE "data/engine/match/MoveCurve12_09.asm" ; $4868, 11 bytes (move_curve)
 LoadTilesetGfx:

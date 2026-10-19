@@ -4,7 +4,7 @@ HarrySpriteDesc:
 	dw HarrySpriteFrames ; $4006 frame table
 	dw HarrySpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw HarrySpriteOam ; $400c per-slot OAM data
+	dw HarryFramePlace ; $400c per-frame placement records
 HarrySpriteFrames:
 	dw HarrySpriteFrame00 ; $400e
 	dw HarrySpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ HarrySpriteFramesUnused:
 	INCBIN "data/sprites/HarrySpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/HarrySpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/HarrySpriteFrame06.bin" ; $7bf0, 240 bytes
-HarrySpriteOam:
-	INCLUDE "data/sprites/HarrySpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+HarryFramePlace:
+	INCLUDE "data/sprites/HarryFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 HarrySpriteAnims:
 	dw HarrySpriteAnim00 ; $7f24
 	dw HarrySpriteAnim01 ; $7f26

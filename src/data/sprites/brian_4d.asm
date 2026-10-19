@@ -4,7 +4,7 @@ BrianSpriteDesc:
 	dw BrianSpriteFrames ; $4006 frame table
 	dw BrianSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw BrianSpriteOam ; $400c per-slot OAM data
+	dw BrianFramePlace ; $400c per-frame placement records
 BrianSpriteFrames:
 	dw BrianSpriteFrame00 ; $400e
 	dw BrianSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ BrianSpriteFramesUnused:
 	INCBIN "data/sprites/BrianSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/BrianSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BrianSpriteFrame06.bin" ; $7bf0, 240 bytes
-BrianSpriteOam:
-	INCLUDE "data/sprites/BrianSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+BrianFramePlace:
+	INCLUDE "data/sprites/BrianFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BrianSpriteAnims:
 	dw BrianSpriteAnim00 ; $7f24
 	dw BrianSpriteAnim01 ; $7f26

@@ -331,7 +331,8 @@ def check_traj(rom, manifest, fail):
 
 # Record kinds rendered wholly through their macros; a raw `db` row (other
 # than a blit_runs list's $ff terminator) means the renderer met bytes outside
-# the format and fell back.
+# the format and fell back. A blit_runs list must end in its $ff and a target
+# script in tgt_end or tgt_jump.
 MACRO_KINDS = ("target_script", "move_curve", "frame_place", "blit_runs",
                "scoreboard_columns")
 
@@ -346,8 +347,14 @@ def check_macro_kinds(rom, manifest, fail):
             continue
         n += 1
         text = render_spec(rom[off:off + length], spec, Path(path).stem, off)
-        if spec == "blit_runs" and text.endswith("\n\tdb $ff\n"):
+        if spec == "blit_runs":
+            if not text.endswith("\n\tdb $ff\n"):
+                fail("macros", f"{path}: blit_runs list has no $ff terminator")
             text = text[:-len("\tdb $ff\n")]
+        if spec == "target_script":
+            last = [l for l in text.splitlines() if l.startswith("\t")][-1]
+            if not last.startswith(("\ttgt_end", "\ttgt_jump")):
+                fail("macros", f"{path}: target script runs off its end")
         if "\tdb " in text:
             fail("macros", f"{path}: {spec} renders raw db rows")
     return n

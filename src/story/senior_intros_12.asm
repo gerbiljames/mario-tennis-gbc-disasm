@@ -47,7 +47,7 @@ SeniorSinglesRankOfferScene:
 	script_unlock_facing ACTOR_PLAYER ; $5f39
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PLAYER ; $5f40
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $5f48
-	script_set_text Text_SeniorCoachOfferSinglesRanking ; $5f50
+	script_set_text Text_EmilyOfferSinglesRanking ; $5f50
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f56
 	jr z, .prompt ; $5f59
 	farcall AdvanceDialogueTextCursor ; $5f5b
@@ -58,7 +58,7 @@ SeniorSinglesRankOfferScene:
 	script_wait_frames 5 ; $5f69
 	and a ; $5f70
 	jp nz, .done ; $5f71
-	script_set_text Text_SeniorCoachPlayFourthFirst ; $5f74
+	script_set_text Text_EmilyPlayFourthFirst ; $5f74
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f7a
 	jr z, .accepted ; $5f7d
 	farcall AdvanceDialogueTextCursor ; $5f7f
@@ -78,7 +78,7 @@ SeniorSinglesRankOfferScene:
 	call SeniorSinglesMatchConfirm ; $5fb4
 	ret ; $5fb7
 .done:
-	script_set_text Text_SeniorCoachSinglesPracticeFirst ; $5fb8
+	script_set_text Text_EmilySinglesPracticeFirst ; $5fb8
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $5fbe
 	farcall EndCutsceneScriptMode ; $5fc3
 	ret ; $5fc6
@@ -95,7 +95,7 @@ SeniorDoublesRankOfferScene:
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $6009
 	script_wait_frames 30 ; $6011
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $6018
-	script_set_text Text_SeniorCoachOfferDoublesRanking ; $6020
+	script_set_text Text_EmilyOfferDoublesRanking ; $6020
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $6026
 	jr z, .prompt ; $6029
 	farcall AdvanceDialogueTextCursor ; $602b
@@ -106,7 +106,7 @@ SeniorDoublesRankOfferScene:
 	script_wait_frames 5 ; $6039
 	and a ; $6040
 	jp nz, .setText ; $6041
-	script_set_text Text_SeniorCoachFirstVsThirdTeam ; $6044
+	script_set_text Text_EmilyFirstVsThirdTeam ; $6044
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $604a
 	jr z, .accepted ; $604d
 	farcall AdvanceDialogueTextCursor ; $604f
@@ -124,7 +124,7 @@ SeniorDoublesRankOfferScene:
 	call SeniorDoublesMatchConfirm ; $6083
 	ret ; $6086
 .setText:
-	script_set_text Text_SeniorCoachDoublesTrainFirst ; $6087
+	script_set_text Text_EmilyDoublesTrainFirst ; $6087
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $608d
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6092
 	ret ; $609f

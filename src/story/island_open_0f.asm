@@ -62,7 +62,7 @@ TournamentExit_0f:
 	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $60da
 	ret ; $60dd
 TournamentNpc0A_0f:
-	script_set_text Text_SammieIntroPlayYouFirst ; $60de
+	script_set_text Text_SammiIntroPlayYouFirst ; $60de
 	script_speak_restore ACTOR_TOURNAMENT_ELDEN ; $60e4
 	farcall RunDialogueYesNoPrompt ; $60e9
 	farcall ScriptCloseDialogueWindow ; $60ec
@@ -578,7 +578,7 @@ IslandOpenRound2NpcScripts_0f:
 	map_script ACTOR_ISLAND_OPEN_ROUND2_KEVIN_SWEATS, FACEMASK_ANY, $0000, Text_KevinRoundTwoYouPlaySpike, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_ROUND2_MARK_SWEATS, FACEMASK_ANY, $0000, Text_MarkRoundTwoPlayACoz, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_ROUND2_EMILY_SWEATS, FACEMASK_ANY, $0000, Text_EmilyRoundTwoNotGonnaLose, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_ISLAND_OPEN_ROUND2_SAMMI, FACEMASK_ANY, $0000, Text_SammieRoundTwoLostToPlayer, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND2_SAMMI, FACEMASK_ANY, $0000, Text_SammiRoundTwoLostToPlayer, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_ROUND2_SPIKE, FACEMASK_ANY, $0000, Text_SpikeRoundTwoSeededNoThreat, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_ROUND2_ELDEN, FACEMASK_ANY, $0000, Text_EldenRoundTwoAvengeHonor, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_ROUND2_A_COZ, FACEMASK_ANY, $0000, Text_ACozRoundTwoLoseToNoOne, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -610,7 +610,7 @@ IslandOpenSemifinalNpcScripts_0f:
 	; $6919, 105 bytes (map_scripts)
 	map_script ACTOR_ISLAND_OPEN_SEMIFINAL_KEVIN_SWEATS, FACEMASK_ANY, $0000, Text_KevinSemifinalEmilyOpponent, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_SEMIFINAL_MARK_SWEATS, FACEMASK_ANY, $0000, Text_MarkSemifinalPressureGotToMe, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_ISLAND_OPEN_SEMIFINAL_SAMMI, FACEMASK_ANY, $0000, Text_SammieSemifinalLostToPlayer, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_SEMIFINAL_SAMMI, FACEMASK_ANY, $0000, Text_SammiSemifinalLostToPlayer, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_SEMIFINAL_SPIKE, FACEMASK_ANY, $0000, Text_SpikeSemifinalSilence, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_SEMIFINAL_EMILY_SWEATS, FACEMASK_ANY, $0000, Text_EmilySemifinalYoureMyOpponent, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_SEMIFINAL_ELDEN, FACEMASK_ANY, $0000, Text_EldenSemifinalHaveRevenge, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -643,7 +643,7 @@ IslandOpenFinalNpcScripts_0f:
 	; $6a50, 105 bytes (map_scripts)
 	map_script ACTOR_ISLAND_OPEN_FINAL_KEVIN_SWEATS, FACEMASK_ANY, $0000, Text_KevinFinalOpponentACoz, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_FINAL_MARK_SWEATS, FACEMASK_ANY, $0000, Text_MarkFinalPressureGotToMe, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_ISLAND_OPEN_FINAL_SAMMI, FACEMASK_ANY, $0000, Text_SammieFinalLostToPlayer, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_FINAL_SAMMI, FACEMASK_ANY, $0000, Text_SammiFinalLostToPlayer, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_FINAL_SPIKE, FACEMASK_ANY, $0000, Text_SpikeFinalSilence, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_FINAL_A_COZ, FACEMASK_ANY, $0000, Text_ACozFinalUpsetOverEmily, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_FINAL_EMILY_SWEATS, FACEMASK_ANY, $0000, Text_EmilyFinalJustDoYourBest, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -687,7 +687,7 @@ IslandOpenRound1NpcScriptsDoubles_0f:
 	map_script ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_TOURNAMENT_STAFF_2, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 IslandOpenRound1DoublesNpc0A_0f:
-	script_set_text Text_SammieDoublesRoundOneIntro ; $6bda
+	script_set_text Text_SammiDoublesRoundOneIntro ; $6bda
 	script_speak_restore ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_SAMMI ; $6be0
 	farcall RunDialogueYesNoPrompt ; $6be5
 	farcall ScriptCloseDialogueWindow ; $6be8
@@ -754,7 +754,7 @@ IslandOpenSemifinalNpcScriptsDoubles_0f:
 	map_script ACTOR_ISLAND_OPEN_SEMIFINAL_DOUBLES_TOURNAMENT_STAFF_2, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 IslandOpenSemifinalDoublesNpc08_0f:
-	script_set_text Text_SammieDoublesSemifinalWeLost ; $6d67
+	script_set_text Text_SammiDoublesSemifinalWeLost ; $6d67
 	script_speak_restore ACTOR_ISLAND_OPEN_SEMIFINAL_DOUBLES_SAMMI ; $6d6d
 	farcall RunDialogueYesNoPrompt ; $6d72
 	farcall ScriptCloseDialogueWindow ; $6d75
@@ -809,7 +809,7 @@ IslandOpenFinalNpcScriptsDoubles_0f:
 	map_script ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2, FACEMASK_ANY, $0000, TournamentNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 IslandOpenFinalDoublesNpc0C_0f:
-	script_set_text Text_SammieDoublesFinalWeLost ; $6ed0
+	script_set_text Text_SammiDoublesFinalWeLost ; $6ed0
 	script_speak_restore ACTOR_ISLAND_OPEN_FINAL_DOUBLES_SAMMI ; $6ed6
 	farcall RunDialogueYesNoPrompt ; $6edb
 	farcall ScriptCloseDialogueWindow ; $6ede

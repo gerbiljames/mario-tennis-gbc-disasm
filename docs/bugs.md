@@ -186,7 +186,7 @@ method on bit 7 of `hFadeState`:
 ```
         ldh a, [hFadeState]
         add a
-        jr nc, .noCarry2         ; -> AdjustColorsBrightness
+        jr nc, .adjustBrightness ; -> AdjustColorsBrightness
         ld a, c / and $04
         call z, Unused_00_ApplyWhiteFade
 ```
@@ -311,22 +311,22 @@ are already zero. Story screens load the real ones with `LoadStoryObjPalettes`
 is shown:
 
 ```
-        cp $01
-        jr z, .eq01
+        cp DEBUGSTEP_CONSOLE_OFF
+        jr z, .consoleOff
         ...
-.eq01:
+.consoleOff:
         ldh a, [hPlayerInputFlags]
         bit PADB_SELECT, a              ; <- result is never tested
-.storeShowDebugConsole:
+.hideConsole:
         xor a
         jr .store
-.storeShowDebugConsole2:
+.showConsole:
         ld a, $01
 .store:
         ldh [hShowDebugConsole], a
 ```
 
-The `jr nz, .storeShowDebugConsole2` after the `bit` is missing, so in step
+The `jr nz, .showConsole` after the `bit` is missing, so in step
 mode 1 the console is always hidden and SELECT does nothing. Debug-only: the
 VBlank handler calls `UpdateDebugOverlay` only when `hDebugStepMode` is nonzero
 (`$00:$27a1`), and only the bank `$01` debug menus make it so.
@@ -960,7 +960,7 @@ an editing accident.
 `PlotGlyphRow` (`$05:$737a`) turns the glyph pen position into a byte offset
 with a signed shift (`sra d / rr e` three times) and adds it to
 `wGlyphTileBuffer` (bank `$07`, `$d300`) with no bounds check, so a negative pen
-writes below the buffer. At a line break `DrawInlineGlyph`'s `.eq01` path (code
+writes below the buffer. At a line break `DrawInlineGlyph`'s `.newline` path (code
 `$01`) seeds the pen from the row's starting glyph-tile column,
 `wTextRowColumn`:
 

@@ -258,7 +258,7 @@ QueueCharFrameTiles:
 	ld a, [wCharObjectBank] ; $2e6e
 	ldh [hRomBank], a ; $2e71
 	ld [rROMB0], a ; $2e73
-	ld hl, wCharShadowTablePtr ; $2e76
+	ld hl, wCharFramePlaceTablePtr ; $2e76
 	ld a, [hl+] ; $2e79
 	ld h, [hl] ; $2e7a
 	ld l, a ; $2e7b

@@ -127,10 +127,10 @@ Unused_38_MoveMenuCursor2GridRemote:
 	call LinkErrorReset ; $42e2
 .asMaster:
 	ldh a, [hLinkRemoteInput] ; $42e5
-	jr .haveInput ; $42e7
+	jr .gotInput ; $42e7
 .asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $42e9
-.haveInput:
+.gotInput:
 	ld h, a ; $42eb
 	ld a, [wMenuCursorLockFlags] ; $42ec
 	and $02 ; $42ef
@@ -141,11 +141,11 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ld a, [wMenuCursor2X] ; $42f8
 	inc a ; $42fb
 	add a ; $42fc
-	jr nc, .wrapRight ; $42fd
+	jr nc, .checkMaxRight ; $42fd
 	ld a, b ; $42ff
 	dec a ; $4300
 	jr .storeRight ; $4301
-.wrapRight:
+.checkMaxRight:
 	rra ; $4303
 	cp b ; $4304
 	jr c, .storeRight ; $4305
@@ -159,11 +159,11 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ld a, [wMenuCursor2X] ; $4311
 	dec a ; $4314
 	add a ; $4315
-	jr nc, .wrapLeft ; $4316
+	jr nc, .checkMaxLeft ; $4316
 	ld a, b ; $4318
 	dec a ; $4319
 	jr .storeLeft ; $431a
-.wrapLeft:
+.checkMaxLeft:
 	rra ; $431c
 	cp b ; $431d
 	jr c, .storeLeft ; $431e
@@ -177,11 +177,11 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ld a, [wMenuCursor2Y] ; $432a
 	dec a ; $432d
 	add a ; $432e
-	jr nc, .wrapUp ; $432f
+	jr nc, .checkMaxUp ; $432f
 	ld a, c ; $4331
 	dec a ; $4332
 	jr .storeUp ; $4333
-.wrapUp:
+.checkMaxUp:
 	rra ; $4335
 	cp c ; $4336
 	jr c, .storeUp ; $4337
@@ -195,11 +195,11 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ld a, [wMenuCursor2Y] ; $4343
 	inc a ; $4346
 	add a ; $4347
-	jr nc, .wrapDown ; $4348
+	jr nc, .checkMaxDown ; $4348
 	ld a, c ; $434a
 	dec a ; $434b
 	jr .storeDown ; $434c
-.wrapDown:
+.checkMaxDown:
 	rra ; $434e
 	cp c ; $434f
 	jr c, .storeDown ; $4350
@@ -209,7 +209,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 	jr .compare ; $4356
 .checkLock:
 	bit 0, a ; $4358
-	jr z, .checkUnlock ; $435a
+	jr z, .checkB ; $435a
 	ld a, [wMenuCursorLockFlags] ; $435c
 	ld b, a ; $435f
 	and $02 ; $4360
@@ -219,7 +219,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 	or $02 ; $4367
 	ld [wMenuCursorLockFlags], a ; $4369
 	jr .compare ; $436c
-.checkUnlock:
+.checkB:
 	bit 1, a ; $436e
 	jr z, .compare ; $4370
 	sound SFX_MENU_CANCEL ; $4372

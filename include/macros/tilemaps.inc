@@ -33,7 +33,8 @@ MACRO tilemap_rect_end
 ENDM
 
 ; A rectangular block of tilemap (or attrmap) bytes, stored row-major and
-; copied by CopyTextRect/CopyTextRectPair. `tilemap_begin` declares the
+; copied by CopyTextRect/CopyTextRectPair, or by RefreshCourtScoreboard for a
+; court's scoreboard columns. `tilemap_begin` declares the
 ; geometry, one `tilemap_row` follows per row (rgbasm checks that its argument
 ; count matches the declared width), and `tilemap_end` checks the row count and
 ; the total size.

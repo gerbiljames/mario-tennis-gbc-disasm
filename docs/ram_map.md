@@ -151,7 +151,7 @@ text-arg scratch at `$df00` is `wTextArgFetchBuffer`). The main fields:
 | `$df48/49` | walk-target depth; `MoveCharTowardTarget` ($7541) walks toward the target and snaps when `CheckCharNearTarget` ($78be) sees both deltas < $18 |
 | `$df53/54` | last projected screen X/Y (`BuildCharSpriteSlots`, $7672) |
 | `$df57` | point result from this character's perspective (signed `wPointWinLoseFlag`) |
-| `$df1b-1d` | sprite frame data pointer (hi/lo) + h-flip flag, consumed by `DrawCharSprite` ($650a) |
+| `$df1b-1d` | the current frame's placement (X offset, Y offset, size flag), copied from its `*FramePlace` record; `DrawCharSprite` ($650a) dispatches on the flag |
 | `$df80-83` | sprite-slot record for the character sprite (see below) |
 | `$df88-8b` | sprite-slot record for the airborne shadow: tiles `$50/$52/$54/$56` shrink with jump height, drawn only while `$df0f` bit 2 is set |
 | `$df8c-8f` | sprite-slot record for the standing shadow: tile `$58` through the 3-sprite-wide `StandingShadowOamTemplate` ($6301), drawn on alternate frames (flicker transparency) while grounded, singles only (`wStandingShadowsEnabled`) |

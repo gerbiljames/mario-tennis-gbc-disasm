@@ -4,7 +4,7 @@ BCozSpriteDesc:
 	dw BCozSpriteFrames ; $4006 frame table
 	dw BCozSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw BCozSpriteOam ; $400c per-slot OAM data
+	dw BCozFramePlace ; $400c per-frame placement records
 BCozSpriteFrames:
 	dw BCozSpriteFrame00 ; $400e
 	dw BCozSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ BCozSpriteFramesUnused:
 	INCBIN "data/sprites/BCozSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/BCozSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BCozSpriteFrame06.bin" ; $7bf0, 240 bytes
-BCozSpriteOam:
-	INCLUDE "data/sprites/BCozSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+BCozFramePlace:
+	INCLUDE "data/sprites/BCozFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BCozSpriteAnims:
 	dw BCozSpriteAnim00 ; $7f24
 	dw BCozSpriteAnim01 ; $7f26

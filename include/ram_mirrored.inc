@@ -150,7 +150,7 @@ def wCharStatePhase equ $df19
 ; [8-bit] Sub-step of the AI state machine, advanced by AiAdvancePhase (the AI's own counter, separate from wCharStatePhase)
 def wAiPhase equ $df1a
 
-; [3 bytes] Current sprite frame pointer (hi/lo) + h-flip flag, consumed by DrawCharSprite
+; [3 bytes] The current frame's placement, copied from its *FramePlace record by QueueCharFrameTiles: X offset, Y offset, then the size flag DrawCharSprite dispatches on (1 = 32 wide)
 def wCharSpriteFrame equ $df1b
 
 ; [8-bit] Which input drives this character; ReadCharInput indexes CharInputPtrs with it (pad, CPU and link handlers)
@@ -201,8 +201,8 @@ def wCharTileBase equ $df36
 ; [8-bit] OAM attribute byte for the character. The low three bits are the CGB OBJ palette (wCharIndex + 4) and double as the tile-block index ReloadCharFrameGfx uploads into (& $07, + $08); the high bits are the flip bits the animation script's $fb command toggles, and SetCharAnimation clears them with `and $0f`
 def wCharSpriteAttr equ $df37
 
-; [16-bit] Pointer (in wCharObjectBank) to the per-frame shadow/scale table GetPerspectiveScale reads
-def wCharShadowTablePtr equ $df38
+; [16-bit] Pointer (in wCharObjectBank) to the character's *FramePlace table, read by QueueCharFrameTiles
+def wCharFramePlaceTablePtr equ $df38
 
 ; [8-bit] ROM bank holding the character's frame graphics; ReloadCharFrameGfx and LoadCharChargeFlashGfx pass it to the far-call vector at $0110
 def wCharGfxBank equ $df3a

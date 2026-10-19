@@ -4,7 +4,7 @@ BabyMarioSpriteDesc:
 	dw BabyMarioSpriteFrames ; $4006 frame table
 	dw BabyMarioSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw BabyMarioSpriteOam ; $400c per-slot OAM data
+	dw BabyMarioFramePlace ; $400c per-frame placement records
 BabyMarioSpriteFrames:
 	dw BabyMarioSpriteFrame00 ; $400e
 	dw BabyMarioSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ BabyMarioSpriteFramesUnused:
 	INCBIN "data/sprites/BabyMarioSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/BabyMarioSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BabyMarioSpriteFrame06.bin" ; $7bf0, 240 bytes
-BabyMarioSpriteOam:
-	INCLUDE "data/sprites/BabyMarioSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+BabyMarioFramePlace:
+	INCLUDE "data/sprites/BabyMarioFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BabyMarioSpriteAnims:
 	dw BabyMarioSpriteAnim00 ; $7f24
 	dw BabyMarioSpriteAnim01 ; $7f26

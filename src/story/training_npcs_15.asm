@@ -10,7 +10,7 @@ RunWaterSpriteSwingContestAndReward:
 	farcall WaitPlayerMoveDone ; $4d1c
 	script_move_player 51.0, 12.0 ; $4d1f
 	farcall WaitPlayerMoveDone ; $4d29
-	script_set_text Text_WaterSpriteSwingContestRules ; $4d2c
+	script_set_text Text_SwingContestRules ; $4d2c
 	script_speak ACTOR_PLAYER ; $4d32
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4d37
 	call WaterSpriteSwingContestScene ; $4d42

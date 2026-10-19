@@ -4,7 +4,7 @@ JoySpriteDesc:
 	dw JoySpriteFrames ; $4006 frame table
 	dw JoySpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw JoySpriteOam ; $400c per-slot OAM data
+	dw JoyFramePlace ; $400c per-frame placement records
 JoySpriteFrames:
 	dw JoySpriteFrame00 ; $400e
 	dw JoySpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ JoySpriteFramesUnused:
 	INCBIN "data/sprites/JoySpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/JoySpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/JoySpriteFrame06.bin" ; $7bf0, 240 bytes
-JoySpriteOam:
-	INCLUDE "data/sprites/JoySpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+JoyFramePlace:
+	INCLUDE "data/sprites/JoyFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 JoySpriteAnims:
 	dw JoySpriteAnim00 ; $7f24
 	dw JoySpriteAnim01 ; $7f26

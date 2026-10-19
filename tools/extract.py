@@ -568,7 +568,7 @@ def render_move_curve(data: bytes) -> str:
 
 
 def render_frame_place(data: bytes) -> str:
-    """A character bank's *SpriteOam: one 4-byte {dx, dy, size, tiles}
+    """A character bank's *FramePlace: one 4-byte {dx, dy, size, tiles}
     record per frame-table slot (QueueCharFrameTiles, DrawCharSprite), as
     `frame_place dx, dy, width` where the size flag and tile count agree with
     a 24- or 32-pixel-wide frame."""

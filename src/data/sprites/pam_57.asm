@@ -4,7 +4,7 @@ PamSpriteDesc:
 	dw PamSpriteFrames ; $4006 frame table
 	dw PamSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw PamSpriteOam ; $400c per-slot OAM data
+	dw PamFramePlace ; $400c per-frame placement records
 PamSpriteFrames:
 	dw PamSpriteFrame00 ; $400e
 	dw PamSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ PamSpriteFramesUnused:
 	INCBIN "data/sprites/PamSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/PamSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/PamSpriteFrame06.bin" ; $7bf0, 240 bytes
-PamSpriteOam:
-	INCLUDE "data/sprites/PamSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+PamFramePlace:
+	INCLUDE "data/sprites/PamFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 PamSpriteAnims:
 	dw PamSpriteAnim00 ; $7f24
 	dw PamSpriteAnim01 ; $7f26

@@ -26,7 +26,7 @@ MACRO anim_hold
 	db \1
 ENDM
 
-; One *SpriteOam record, indexed like the frame table (QueueCharFrameTiles,
+; One *FramePlace record, indexed like the frame table (QueueCharFrameTiles,
 ; DrawCharSprite): the frame's X and Y offset from the character's position,
 ; then its size flag (0 draws with QueueSprite24x32, 1 with QueueSprite32x32)
 ; and the tile count uploaded for it, both derived from the frame's width.

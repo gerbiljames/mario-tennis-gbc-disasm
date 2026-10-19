@@ -489,7 +489,7 @@ alternate curve), `hFadeSpeed` (`$ffa3`), `hFadeCounter` (`$ffa4`) and the latch
 (`$00:$1d0c`) skips that guard.
 
 `UpdateFadeOut` (`$00:$1d5e`) and `UpdateFadeIn` (`$00:$1d48`) run every VBlank
-and share `.step2` (`$1d76`): subtract the speed from the counter, clamp at 0,
+and share `UpdateFadeOut.applyFade` (`$1d76`): subtract the speed from the counter, clamp at 0,
 derive a ramp in `c`, then
 
 ```

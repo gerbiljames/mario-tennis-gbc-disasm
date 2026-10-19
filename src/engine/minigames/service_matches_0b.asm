@@ -73,7 +73,7 @@ RunTrainingDrillByID:
 	ld a, [wPointWinLoseFlag] ; $478c
 	inc a ; $478f
 	srl a ; $4790
-	ld hl, Text_TrainingFailedErrorCode ; $4792
+	ld hl, Text_TrainingFailedOrPassed ; $4792
 	add_hl_a ; $4795
 	ld a, $80 ; $479a
 	farcall ShowSpeakerDialogue ; $479c

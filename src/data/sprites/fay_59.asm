@@ -4,7 +4,7 @@ FaySpriteDesc:
 	dw FaySpriteFrames ; $4006 frame table
 	dw FaySpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw FaySpriteOam ; $400c per-slot OAM data
+	dw FayFramePlace ; $400c per-frame placement records
 FaySpriteFrames:
 	dw FaySpriteFrame00 ; $400e
 	dw FaySpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ FaySpriteFramesUnused:
 	INCBIN "data/sprites/FaySpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/FaySpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/FaySpriteFrame06.bin" ; $7bf0, 240 bytes
-FaySpriteOam:
-	INCLUDE "data/sprites/FaySpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+FayFramePlace:
+	INCLUDE "data/sprites/FayFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 FaySpriteAnims:
 	dw FaySpriteAnim00 ; $7f24
 	dw FaySpriteAnim01 ; $7f26

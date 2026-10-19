@@ -190,7 +190,7 @@ WaterSpriteSwingContestScene:
 	ld hl, QueueWaterSpriteMinigameHudPanels ; $5758
 	call UnregisterFrameTask ; $575b
 	wait_frames 60 ; $575e
-	script_set_text Text_WaterSpriteSwingContestCount ; $5762
+	script_set_text Text_SwingContestCount ; $5762
 	ld hl, wSwingContestSwings ; $5768
 	ld a, [hl+] ; $576b
 	ld h, [hl] ; $576c

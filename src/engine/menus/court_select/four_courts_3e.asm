@@ -334,7 +334,7 @@ OpenCourtSelect4Panel:
 	ret ; $5e47
 .reverse:
 	ld c, $0a ; $5e48
-.slideReverseLoop:
+.slideBackLoop:
 	call AdvanceFrame ; $5e4a
 	ld b, $13 ; $5e4d
 	farcall RestoreMenuBgAndDrawPanel ; $5e4f
@@ -344,7 +344,7 @@ OpenCourtSelect4Panel:
 	dec a ; $5e58
 	ld c, a ; $5e59
 	cp $ff ; $5e5a
-	jr nz, .slideReverseLoop ; $5e5c
+	jr nz, .slideBackLoop ; $5e5c
 	call AdvanceFrame ; $5e5e
 	ret ; $5e61
 CloseCourtSelect4Panel:

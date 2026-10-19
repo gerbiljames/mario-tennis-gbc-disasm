@@ -123,13 +123,16 @@ test: $(if $(wildcard baserom.gbc),$(ROM))
 
 # shift-test, event-test and slot-audit read build/ and mariotennis.gbc, the
 # USA byte-perfect build.
-USA_ONLY = $(if $(filter 1,$(FIXES) $(EUROPE)),$(error $@ runs on the USA build only, without FIXES or EUROPE))
+ifneq ($(filter shift-test event-test slot-audit,$(MAKECMDGOALS)),)
+ifneq ($(filter 1,$(FIXES) $(EUROPE)),)
+$(error $(filter shift-test event-test slot-audit,$(MAKECMDGOALS)) runs on the USA build only, without FIXES or EUROPE)
+endif
+endif
 
 # Rebuild a copy with every bank padded, check each changed byte is a label
 # reference that moved with its target, and leave the padded ROM to boot
 # (tools/shifttest.py).
 shift-test: $(ROM)
-	$(USA_ONLY)
 	python3 tools/shifttest.py
 
 # Play the padded ROM and this one through every story state under the same
@@ -137,14 +140,12 @@ shift-test: $(ROM)
 # $(PYTHON) (`make venv`) and a battery save to start from.
 SAVE ?= maxed-unlocked.sav
 event-test: $(ROM)
-	$(USA_ONLY)
 	python3 tools/shifttest.py --out build/padded.gbc
 	$(PYTHON) tools/eventtest.py build/padded.gbc --save $(SAVE)
 
 # Check every actor-slot name against the list active at run time, over
 # every story state and location (tools/actorslots.py --runtime).
 slot-audit: $(ROM)
-	$(USA_ONLY)
 	$(PYTHON) tools/actorslots.py --runtime --save $(SAVE)
 
 # Stamp the basepatch id and write the base patch, rom_addresses.py and ids.py

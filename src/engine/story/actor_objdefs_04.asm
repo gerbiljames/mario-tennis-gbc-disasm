@@ -456,7 +456,7 @@ SetupCharSpriteFromObjectDef:
 	ld [hl+], a ; $4b9e
 	ld a, [wActorObjDef + 7] ; $4b9f
 	ld [hl+], a ; $4ba2
-	ld hl, wCharShadowTablePtr ; $4ba3
+	ld hl, wCharFramePlaceTablePtr ; $4ba3
 	ld a, [wActorObjDef + 10] ; $4ba6
 	ld [hl+], a ; $4ba9
 	ld a, [wActorObjDef + 11] ; $4baa

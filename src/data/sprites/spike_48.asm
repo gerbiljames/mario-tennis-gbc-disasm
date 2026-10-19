@@ -4,7 +4,7 @@ SpikeSpriteDesc:
 	dw SpikeSpriteFrames ; $4006 frame table
 	dw SpikeSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw SpikeSpriteOam ; $400c per-slot OAM data
+	dw SpikeFramePlace ; $400c per-frame placement records
 SpikeSpriteFrames:
 	dw SpikeSpriteFrame00 ; $400e
 	dw SpikeSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ SpikeSpriteFramesUnused:
 	INCBIN "data/sprites/SpikeSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/SpikeSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/SpikeSpriteFrame06.bin" ; $7bf0, 240 bytes
-SpikeSpriteOam:
-	INCLUDE "data/sprites/SpikeSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+SpikeFramePlace:
+	INCLUDE "data/sprites/SpikeFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 SpikeSpriteAnims:
 	dw SpikeSpriteAnim00 ; $7f24
 	dw SpikeSpriteAnim01 ; $7f26

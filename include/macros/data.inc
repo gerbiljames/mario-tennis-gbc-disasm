@@ -287,9 +287,11 @@ MACRO gfx_set
 	dw \1, \2, \3
 ENDM
 
-; One run of a BlitTilemapRunsFromTable list: copy `length` bytes from the
-; source row (bc) + `src` to wScreenAttrmap at (`col`, `row`). A $ff byte
-; ends the list.
+; One run of a tilemap patch list: copy `length` bytes from the source row
+; (bc) + `src` to cell (`col`, `row`) of the reader's planes. The readers are
+; BlitTilemapRunsFromTable and ApplyTilemapPatchListExpScreen (cells from
+; wScreenAttrmap), and ApplyTilemapPatchList and its _1a copy (cells from
+; wCharDataScreenCell, tile and attribute planes). A $ff byte ends the list.
 ;   blit_run col, row, src, length
 MACRO blit_run
 	ASSERT (\1) < TILEMAP_WIDTH && (\2) * TILEMAP_WIDTH + (\1) < $ff00, "blit_run: bad cell"
@@ -302,7 +304,11 @@ ENDM
 ; move_curve_end ($81) frees its slot.
 ; Usage: move_curve dx, ...
 MACRO move_curve
-	db \#
+	REPT _NARG
+	ASSERT (\1) >= -126 && (\1) <= 127, "move_curve: \1 would read as the hold or end marker"
+	db \1
+	SHIFT
+	ENDR
 ENDM
 
 MACRO move_curve_hold

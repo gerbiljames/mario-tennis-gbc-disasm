@@ -203,7 +203,7 @@ Unused_14_StubNop:
 	ret ; $52ab
 IslandSkyNpcScripts_14:
 	; $52ac, 9 bytes (map_scripts)
-	map_script ACTOR_ISLAND_SKY_HEADMASTER, FACEMASK_ANY, $0000, Text_HeadmasterDefineAce, $00, $00
+	map_script ACTOR_ISLAND_SKY_HEADMASTER, FACEMASK_ANY, $0000, Text_DefineAce, $00, $00
 	db $ff
 IslandSkyFacingScripts_14:
 	ds 1, $ff ; $52b5, fill
