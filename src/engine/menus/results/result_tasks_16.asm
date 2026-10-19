@@ -268,7 +268,7 @@ InitMatchWinLoseScreen:
 	ld de, wDecompBuffer ; $45db
 	call DecompressData ; $45de
 	ld hl, wDecompBuffer ; $45e1
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $45e4
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $45e4
 	ld c, 32 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
@@ -276,7 +276,7 @@ InitMatchWinLoseScreen:
 	call LoadPaletteShadow ; $45f2
 	ld b, TILEBLOCK_MatchWinLoseGfx ; $45f5
 	ld c, MatchWinLoseGfx_SIZE / 16 ; $45f7
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $45f9
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $45f9
 	farcall LoadCompressedTileBlock ; $45fc
 	pop_wram_bank ; $45ff
 	farcall QueueWram3MapToVRAM ; $4604

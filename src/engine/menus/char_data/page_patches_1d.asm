@@ -310,7 +310,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $69cb
 	call DecompressData ; $69ce
 	ld hl, wDecompBuffer ; $69d1
-	ld de, vTiles0 + $16 * TILE_SIZE + VRAM_BANK1 ; $69d4
+	ld de, vTiles0 tile $16 + VRAM_BANK1 ; $69d4
 	ld c, ExpDistributionScreenGfx7_SIZE / 16 ; $69d7
 	call QueueVRAMCopy ; $69d9
 	wram_bank WRAM_STAGING ; $69dc
@@ -318,7 +318,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $69e5
 	call DecompressData ; $69e8
 	ld hl, wDecompBuffer ; $69eb
-	ld de, vTiles0 + $18 * TILE_SIZE + VRAM_BANK1 ; $69ee
+	ld de, vTiles0 tile $18 + VRAM_BANK1 ; $69ee
 	ld c, ExpDistributionScreenGfx2_SIZE / 16 ; $69f1
 	call QueueVRAMCopy ; $69f3
 	wram_bank WRAM_STAGING ; $69f6
@@ -326,7 +326,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $69ff
 	call DecompressData ; $6a02
 	ld hl, wDecompBuffer ; $6a05
-	ld de, vTiles0 + $2c * TILE_SIZE + VRAM_BANK1 ; $6a08
+	ld de, vTiles0 tile $2c + VRAM_BANK1 ; $6a08
 	ld c, ExpDistributionScreenGfx3_SIZE / 16 ; $6a0b
 	call QueueVRAMCopy ; $6a0d
 	wram_bank WRAM_STAGING ; $6a10
@@ -334,7 +334,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $6a19
 	call DecompressData ; $6a1c
 	ld hl, wDecompBuffer ; $6a1f
-	ld de, vTiles0 + $44 * TILE_SIZE + VRAM_BANK1 ; $6a22
+	ld de, vTiles0 tile $44 + VRAM_BANK1 ; $6a22
 	ld c, ExpDistributionScreenGfx4_SIZE / 16 ; $6a25
 	call QueueVRAMCopy ; $6a27
 	ld hl, ExpDistributionScreenPalettes ; $6a2a
@@ -353,7 +353,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $6a56
 	call DecompressData ; $6a59
 	ld hl, wDecompBuffer ; $6a5c
-	ld de, vTiles0 + $0c * TILE_SIZE + VRAM_BANK1 ; $6a5f
+	ld de, vTiles0 tile $0c + VRAM_BANK1 ; $6a5f
 	ld c, ExpDistributionScreenGfx0_SIZE / 16 ; $6a62
 	call QueueVRAMCopy ; $6a64
 	wram_bank WRAM_STAGING ; $6a67
@@ -361,7 +361,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $6a70
 	call DecompressData ; $6a73
 	ld hl, wDecompBuffer ; $6a76
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6a79
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6a79
 	ld c, ExpDistributionScreenGfx1_SIZE / 16 ; $6a7c
 	call QueueVRAMCopy ; $6a7e
 	wram_bank WRAM_SCREEN ; $6a81

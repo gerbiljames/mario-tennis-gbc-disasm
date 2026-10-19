@@ -13,7 +13,7 @@ RunMinigameEndMenu:
 	farcall StepMatchFrame ; $4017
 	call LoadScoreboardModeGfx ; $401a
 	ld hl, ScoreboardModeGfxTail ; $401d
-	ld de, vTiles0 + $64 * TILE_SIZE ; $4020
+	ld de, vTiles0 tile $64 ; $4020
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4023
 	call QueueVRAMCopy ; $4025
 	farcall StepMatchFrame ; $4028
@@ -60,7 +60,7 @@ RunMatchPauseMenu:
 	farcall StepMatchFrame ; $408d
 	call LoadScoreboardModeGfx ; $4090
 	ld hl, ScoreboardModeGfxTail ; $4093
-	ld de, vTiles0 + $64 * TILE_SIZE ; $4096
+	ld de, vTiles0 tile $64 ; $4096
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4099
 	call QueueVRAMCopy ; $409b
 	farcall StepMatchFrame ; $409e

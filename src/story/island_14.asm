@@ -20,11 +20,11 @@ IslandSkyPalettes_14:
 LoadIslandSkyEffectObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $73aa
 	ld hl, IslandSkyTilesA_14 ; $73b3
-	ld de, vTiles0 + $10 * TILE_SIZE ; $73b6
+	ld de, vTiles0 tile $10 ; $73b6
 	ld c, 64 ; $73b9
 	call QueueVRAMCopy ; $73bb
 	ld hl, IslandSkyTilesB_14 ; $73be
-	ld de, vTiles0 + $20 * TILE_SIZE ; $73c1
+	ld de, vTiles0 tile $20 ; $73c1
 	ld c, 48 ; $73c4
 	call QueueVRAMCopy ; $73c6
 	ld hl, IslandSkyPalettes_14 ; $73c9

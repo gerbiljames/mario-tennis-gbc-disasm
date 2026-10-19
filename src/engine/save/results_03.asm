@@ -381,11 +381,11 @@ RestoreStoryBlockFromBackup:
 	call ReadSaveBlock ; $551b
 	or a ; $551e
 	jr nz, .restore ; $551f
-	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $5521
+	ld hl, wDecompBuffer tile 64 ; $5521
 	call ReadSaveBlockTag ; $5524
 	pop bc ; $5527
 	ld hl, wDecompBuffer ; $5528
-	ld de, wDecompBuffer + 64 * TILE_SIZE ; $552b
+	ld de, wDecompBuffer tile 64 ; $552b
 	call WriteSaveBlock ; $552e
 	ret ; $5531
 .restore:

@@ -610,7 +610,7 @@ RunStoryModeMenu:
 	wram_bank WRAM_TEXT ; $6e4c
 .loop:
 	ld hl, ScoreboardModeGfxTail ; $6e52
-	ld de, vTiles0 + $64 * TILE_SIZE ; $6e55
+	ld de, vTiles0 tile $64 ; $6e55
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6e58
 	call QueueVRAMCopy ; $6e5a
 	ld a, STORYMENU_PAUSE ; $6e5d
@@ -668,7 +668,7 @@ StoryPauseMenu_AfterItem:
 UnusedStoryMenuRedrawReentry:
 	call Unused_06_DrawStoryMenuItemRow ; $6ec7
 	ld hl, ScoreboardModeGfxTail ; $6eca
-	ld de, vTiles0 + $64 * TILE_SIZE ; $6ecd
+	ld de, vTiles0 tile $64 ; $6ecd
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6ed0
 	call QueueVRAMCopy ; $6ed2
 	jr .checkMatchMenuSelection ; $6ed5

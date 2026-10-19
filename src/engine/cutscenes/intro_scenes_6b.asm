@@ -123,27 +123,27 @@ LoadIntroTilesAndPalette:
 	farcall LoadCompressedTileBlock ; $607c
 	ld b, TILEBLOCK_IntroGfx1 ; $607f
 	ld c, IntroGfx1_SIZE / 16 ; $6081
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6083
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6083
 	farcall LoadCompressedTileBlock ; $6086
 	ld b, TILEBLOCK_IntroGfx2 ; $6089
 	ld c, IntroGfx2_SIZE / 16 ; $608b
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $608d
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $608d
 	farcall LoadCompressedTileBlock ; $6090
 	ld b, TILEBLOCK_IntroGfx3 ; $6093
 	ld c, IntroGfx3_SIZE / 16 ; $6095
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6097
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6097
 	farcall LoadCompressedTileBlock ; $609a
 	ld b, TILEBLOCK_IntroGfx4 ; $609d
 	ld c, IntroGfx4_SIZE / 16 ; $609f
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $60a1
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $60a1
 	farcall LoadCompressedTileBlock ; $60a4
 	ld b, TILEBLOCK_IntroGfx5 ; $60a7
 	ld c, IntroGfx5_SIZE / 16 ; $60a9
-	ld de, vTiles0 + $44 * TILE_SIZE + VRAM_BANK1 ; $60ab
+	ld de, vTiles0 tile $44 + VRAM_BANK1 ; $60ab
 	farcall LoadCompressedTileBlock ; $60ae
 	ld b, TILEBLOCK_IntroGfx6 ; $60b1
 	ld c, 4 ; $60b3 -- 4 of IntroGfx6's 2 tiles
-	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $60b5
+	ld de, vTiles0 tile $48 + VRAM_BANK1 ; $60b5
 	farcall LoadCompressedTileBlock ; $60b8
 	ld hl, IntroPalettes ; $60bb
 	ld_obj_pals de, 0, 2 ; $60be

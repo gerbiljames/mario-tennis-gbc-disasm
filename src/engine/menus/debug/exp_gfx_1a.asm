@@ -73,7 +73,7 @@ Unused_1a_RunDebugCharViewer:
 	call AdvanceFrame ; $682e
 	wram_bank WRAM_SCENE ; $6831
 	ld a, [wCharViewerCharId] ; $6837
-	ld de, vTiles0 + $70 * TILE_SIZE ; $683a
+	ld de, vTiles0 tile $70 ; $683a
 	farcall LoadOnCourtCharTilesA ; $683d
 	call AdvanceFrame ; $6840
 	script_fade_in 16 ; $6843

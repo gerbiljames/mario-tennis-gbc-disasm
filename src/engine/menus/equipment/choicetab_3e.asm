@@ -284,12 +284,12 @@ LoadPlayAlonePartnerGraphics:
 	call AdvanceFrame ; $5282
 	ld b, TILEBLOCK_SharedMenuGfx36 ; $5285
 	ld c, SharedMenuGfx36_SIZE / 16 ; $5287
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5289
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5289
 	farcall LoadCompressedTileBlock ; $528c
 	call AdvanceFrame ; $528f
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $5292
 	ld c, SharedMenuGfx27_SIZE / 16 ; $5294
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $5296
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $5296
 	farcall LoadCompressedTileBlock ; $5299
 	call AdvanceFrame ; $529c
 	call AdvanceFrame ; $529f

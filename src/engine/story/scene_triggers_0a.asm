@@ -412,7 +412,7 @@ LoadStorySceneGraphics:
 	ld de, wDecompBuffer ; $58f0
 	ld bc, $0040 ; $58f3
 	call CopyDataFromBank ; $58f6
-	ld hl, wDecompBuffer + 1 * TILE_SIZE ; $58f9
+	ld hl, wDecompBuffer tile 1 ; $58f9
 	ld_bg_pals de, 2, 6 ; $58fc
 	call LoadPaletteShadow ; $58ff
 	wram_bank WRAM_SCENE ; $5902

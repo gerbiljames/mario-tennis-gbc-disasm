@@ -672,15 +672,15 @@ CharDataScreen_DrawPortrait:
 	ld de, wDecompBuffer ; $45d2
 	farcall DecompressCharMugshot ; $45d5
 	ld hl, wDecompBuffer ; $45d8
-	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $45db
+	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $45db
 	ld c, 3 ; $45de
 	call QueueVRAMCopy ; $45e0
-	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $45e3
-	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $45e6
+	ld hl, wDecompBuffer tile 3 ; $45e3
+	ld de, vTiles2 tile $30 + VRAM_BANK1 ; $45e6
 	ld c, 3 ; $45e9
 	call QueueVRAMCopy ; $45eb
-	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $45ee
-	ld de, vTiles2 + $40 * TILE_SIZE + VRAM_BANK1 ; $45f1
+	ld hl, wDecompBuffer tile 6 ; $45ee
+	ld de, vTiles2 tile $40 + VRAM_BANK1 ; $45f1
 	ld c, 3 ; $45f4
 	call QueueVRAMCopy ; $45f6
 	ret ; $45f9
@@ -705,7 +705,7 @@ CharDataScreenAnimTask:
 	ld h, [hl] ; $4627
 	ld l, a ; $4628
 	push hl ; $4629
-	ld de, vTiles2 + $2e * TILE_SIZE + VRAM_BANK1 ; $462a
+	ld de, vTiles2 tile $2e + VRAM_BANK1 ; $462a
 	ld c, 2 ; $462d
 	call QueueVRAMCopy ; $462f
 	pop hl ; $4632
@@ -715,7 +715,7 @@ CharDataScreenAnimTask:
 	jr nc, .queueVRAMCopy ; $4637
 	inc h ; $4639
 .queueVRAMCopy:
-	ld de, vTiles2 + $3e * TILE_SIZE + VRAM_BANK1 ; $463a
+	ld de, vTiles2 tile $3e + VRAM_BANK1 ; $463a
 	ld c, 2 ; $463d
 	call QueueVRAMCopy ; $463f
 	pop af ; $4642
@@ -724,7 +724,7 @@ CharDataScreenAnimTask:
 	ld h, [hl] ; $464b
 	ld l, a ; $464c
 	push hl ; $464d
-	ld de, vTiles2 + $4e * TILE_SIZE + VRAM_BANK1 ; $464e
+	ld de, vTiles2 tile $4e + VRAM_BANK1 ; $464e
 	ld c, 2 ; $4651
 	call QueueVRAMCopy ; $4653
 	pop hl ; $4656
@@ -734,7 +734,7 @@ CharDataScreenAnimTask:
 	jr nc, .queueVRAMCopy2 ; $465b
 	inc h ; $465d
 .queueVRAMCopy2:
-	ld de, vTiles2 + $5e * TILE_SIZE + VRAM_BANK1 ; $465e
+	ld de, vTiles2 tile $5e + VRAM_BANK1 ; $465e
 	ld c, 2 ; $4661
 	call QueueVRAMCopy ; $4663
 .nonZero:

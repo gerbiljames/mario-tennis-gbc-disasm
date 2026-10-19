@@ -238,3 +238,8 @@ ENDC
 	ld [wCurrentMinigameStoryMatch + 1], a
 	farcall LoadMatchSettingsFromTable
 ENDM
+
+; Tile arithmetic: `vTiles0 tile $10` is tile $10 of a tile block,
+; `4 tiles` a length in bytes.
+DEF tile  EQUS "+ TILE_SIZE *"
+DEF tiles EQUS "* TILE_SIZE"

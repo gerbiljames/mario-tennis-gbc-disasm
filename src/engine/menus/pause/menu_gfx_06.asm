@@ -8,7 +8,7 @@ LoadMatchMenuItemGfx:
 	push_wram_bank WRAM_STAGING ; $5227
 	call DecompressData ; $5230
 	ld hl, wDecompBuffer ; $5233
-	ld de, vTiles0 + $40 * TILE_SIZE ; $5236
+	ld de, vTiles0 tile $40 ; $5236
 	ld c, 16 ; $5239
 	call QueueVRAMCopy ; $523b
 	pop_wram_bank ; $523e
@@ -99,7 +99,7 @@ LoadScoreboardModeGfx:
 	ld de, wDecompBuffer ; $5cb2
 	call DecompressData ; $5cb5
 	ld hl, wDecompBuffer ; $5cb8
-	ld de, vTiles0 + $50 * TILE_SIZE ; $5cbb
+	ld de, vTiles0 tile $50 ; $5cbb
 	ld c, 20 ; $5cbe
 	call QueueVRAMCopy ; $5cc0
 	pop_wram_bank ; $5cc3

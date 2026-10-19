@@ -27,10 +27,10 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq2d:
 	wram_bank WRAM_STAGING ; $6446
 	ld hl, CutsceneAnimFrameLZ_2d ; $644c
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $644f
+	ld de, wDecompBuffer tile 16 ; $644f
 	call DecompressData ; $6452
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $6455
-	ld de, vTiles0 + $10 * TILE_SIZE ; $6458
+	ld hl, wDecompBuffer tile 16 ; $6455
+	ld de, vTiles0 tile $10 ; $6458
 	ld c, CutsceneAnimFrameLZ_2d_SIZE / 16 ; $645b
 	call QueueVRAMCopy ; $645d
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate0 ; $6460
@@ -41,10 +41,10 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq2e:
 	wram_bank WRAM_STAGING ; $646e
 	ld hl, CutsceneAnimFrameLZ_2e ; $6474
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $6477
+	ld de, wDecompBuffer tile 16 ; $6477
 	call DecompressData ; $647a
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $647d
-	ld de, vTiles0 + $10 * TILE_SIZE ; $6480
+	ld hl, wDecompBuffer tile 16 ; $647d
+	ld de, vTiles0 tile $10 ; $6480
 	ld c, CutsceneAnimFrameLZ_2e_SIZE / 16 ; $6483
 	call QueueVRAMCopy ; $6485
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate1 ; $6488
@@ -55,10 +55,10 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq2f:
 	wram_bank WRAM_STAGING ; $6496
 	ld hl, CutsceneAnimFrameLZ_2f ; $649c
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $649f
+	ld de, wDecompBuffer tile 16 ; $649f
 	call DecompressData ; $64a2
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $64a5
-	ld de, vTiles0 + $10 * TILE_SIZE ; $64a8
+	ld hl, wDecompBuffer tile 16 ; $64a5
+	ld de, vTiles0 tile $10 ; $64a8
 	ld c, CutsceneAnimFrameLZ_2f_SIZE / 16 ; $64ab
 	call QueueVRAMCopy ; $64ad
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate2 ; $64b0
@@ -69,10 +69,10 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq30:
 	wram_bank WRAM_STAGING ; $64be
 	ld hl, CutsceneAnimFrameLZ_30 ; $64c4
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $64c7
+	ld de, wDecompBuffer tile 16 ; $64c7
 	call DecompressData ; $64ca
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $64cd
-	ld de, vTiles0 + $10 * TILE_SIZE ; $64d0
+	ld hl, wDecompBuffer tile 16 ; $64cd
+	ld de, vTiles0 tile $10 ; $64d0
 	ld c, CutsceneAnimFrameLZ_30_SIZE / 16 ; $64d3
 	call QueueVRAMCopy ; $64d5
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate3 ; $64d8
@@ -83,10 +83,10 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq31:
 	wram_bank WRAM_STAGING ; $64e6
 	ld hl, CutsceneAnimFrameLZ_31 ; $64ec
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $64ef
+	ld de, wDecompBuffer tile 16 ; $64ef
 	call DecompressData ; $64f2
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $64f5
-	ld de, vTiles0 + $10 * TILE_SIZE ; $64f8
+	ld hl, wDecompBuffer tile 16 ; $64f5
+	ld de, vTiles0 tile $10 ; $64f8
 	ld c, CutsceneAnimFrameLZ_31_SIZE / 16 ; $64fb
 	call QueueVRAMCopy ; $64fd
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate4 ; $6500
@@ -97,10 +97,10 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq32:
 	wram_bank WRAM_STAGING ; $650e
 	ld hl, CutsceneAnimFrameLZ_32 ; $6514
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $6517
+	ld de, wDecompBuffer tile 16 ; $6517
 	call DecompressData ; $651a
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $651d
-	ld de, vTiles0 + $10 * TILE_SIZE ; $6520
+	ld hl, wDecompBuffer tile 16 ; $651d
+	ld de, vTiles0 tile $10 ; $6520
 	ld c, CutsceneAnimFrameLZ_32_SIZE / 16 ; $6523
 	call QueueVRAMCopy ; $6525
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate5 ; $6528
@@ -111,10 +111,10 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq33:
 	wram_bank WRAM_STAGING ; $6536
 	ld hl, CutsceneAnimFrameLZ_33 ; $653c
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $653f
+	ld de, wDecompBuffer tile 16 ; $653f
 	call DecompressData ; $6542
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $6545
-	ld de, vTiles0 + $10 * TILE_SIZE ; $6548
+	ld hl, wDecompBuffer tile 16 ; $6545
+	ld de, vTiles0 tile $10 ; $6548
 	ld c, CutsceneAnimFrameLZ_33_SIZE / 16 ; $654b
 	call QueueVRAMCopy ; $654d
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate6 ; $6550
@@ -125,10 +125,10 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq34:
 	wram_bank WRAM_STAGING ; $655e
 	ld hl, CutsceneAnimFrameLZ_34 ; $6564
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $6567
+	ld de, wDecompBuffer tile 16 ; $6567
 	call DecompressData ; $656a
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $656d
-	ld de, vTiles0 + $10 * TILE_SIZE ; $6570
+	ld hl, wDecompBuffer tile 16 ; $656d
+	ld de, vTiles0 tile $10 ; $6570
 	ld c, CutsceneAnimFrameLZ_34_SIZE / 16 ; $6573
 	call QueueVRAMCopy ; $6575
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate7 ; $6578
@@ -139,10 +139,10 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq35:
 	wram_bank WRAM_STAGING ; $6586
 	ld hl, CutsceneAnimFrameLZ_35 ; $658c
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $658f
+	ld de, wDecompBuffer tile 16 ; $658f
 	call DecompressData ; $6592
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $6595
-	ld de, vTiles0 + $10 * TILE_SIZE ; $6598
+	ld hl, wDecompBuffer tile 16 ; $6595
+	ld de, vTiles0 tile $10 ; $6598
 	ld c, CutsceneAnimFrameLZ_35_SIZE / 16 ; $659b
 	call QueueVRAMCopy ; $659d
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate8 ; $65a0

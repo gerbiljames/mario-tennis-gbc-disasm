@@ -495,8 +495,8 @@ HandleTennisDictionaryListInput:
 	ret ; $5748
 QueueTennisDictionaryGlyphTiles:
 	push_wram_bank WRAM_SOUND ; $5749
-	ld hl, wGlyphTileBuffer + 54 * TILE_SIZE ; $5752
-	ld de, vTiles1 + $36 * TILE_SIZE ; $5755
+	ld hl, wGlyphTileBuffer tile 54 ; $5752
+	ld de, vTiles1 tile $36 ; $5755
 	ld c, 24 ; $5758
 	call QueueVRAMCopy ; $575a
 	push af ; $575d
@@ -506,8 +506,8 @@ QueueTennisDictionaryGlyphTiles:
 	call AdvanceFrame ; $5764
 .restore:
 	pop af ; $5767
-	ld hl, wGlyphTileBuffer + 78 * TILE_SIZE ; $5768
-	ld de, vTiles1 + $4e * TILE_SIZE ; $576b
+	ld hl, wGlyphTileBuffer tile 78 ; $5768
+	ld de, vTiles1 tile $4e ; $576b
 	ld c, 24 ; $576e
 	call QueueVRAMCopy ; $5770
 	push af ; $5773
@@ -517,8 +517,8 @@ QueueTennisDictionaryGlyphTiles:
 	call AdvanceFrame ; $577a
 .restore2:
 	pop af ; $577d
-	ld hl, wGlyphTileBuffer + 102 * TILE_SIZE ; $577e
-	ld de, vTiles1 + $66 * TILE_SIZE ; $5781
+	ld hl, wGlyphTileBuffer tile 102 ; $577e
+	ld de, vTiles1 tile $66 ; $5781
 	ld c, 24 ; $5784
 	call QueueVRAMCopy ; $5786
 	pop_wram_bank ; $5789

@@ -295,7 +295,7 @@ SetupCharGridScreen:
 	ld de, wDecompBuffer ; $4f93
 	call DecompressData ; $4f96
 	ld hl, wDecompBuffer ; $4f99
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4f9c
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4f9c
 	ld c, CharGridScreenGfx1_SIZE / 16 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
 	ld hl, CharGridScreenGfx2 ; $4fa4
@@ -306,7 +306,7 @@ SetupCharGridScreen:
 	ld de, wDecompBuffer ; $4fb6
 	call DecompressData ; $4fb9
 	ld hl, wDecompBuffer ; $4fbc
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $4fbf
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $4fbf
 	ld c, CharGridScreenGfx3_SIZE / 16 ; $4fc2
 	call QueueVRAMCopy ; $4fc4
 	ld c, SCREENASSET_ExhibitionSetup ; $4fc7
@@ -333,15 +333,15 @@ SetupCharGridScreen:
 	farcall LoadCompressedTileBlock ; $5008
 	ld b, TILEBLOCK_StatLabelTiles ; $500b
 	ld c, StatLabelTiles_SIZE / 16 ; $500d
-	ld de, vTiles2 + $10 * TILE_SIZE ; $500f
+	ld de, vTiles2 tile $10 ; $500f
 	farcall LoadCompressedTileBlock ; $5012
 	ld b, TILEBLOCK_CharGridGfx2 ; $5015
 	ld c, CharGridGfx2_SIZE / 16 ; $5017
-	ld de, vTiles0 + $50 * TILE_SIZE + VRAM_BANK1 ; $5019
+	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $5019
 	farcall LoadCompressedTileBlock ; $501c
 	ld b, TILEBLOCK_DigitFontTiles ; $501f
 	ld c, DigitFontTiles_SIZE / 16 ; $5021
-	ld de, vTiles0 + $64 * TILE_SIZE + VRAM_BANK1 ; $5023
+	ld de, vTiles0 tile $64 + VRAM_BANK1 ; $5023
 	farcall LoadCompressedTileBlock ; $5026
 	ld de, vTiles0 ; $5029
 	call LoadAllCharPortraitTiles ; $502c
@@ -371,7 +371,7 @@ SetupCharGridScreen:
 	ld [wMenuBgScrollAttr + 1], a ; $506e
 	ld b, TILEBLOCK_CharGridGfx1 ; $5071
 	ld c, CharGridGfx1_SIZE / 16 ; $5073
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $5075
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5075
 	farcall LoadCompressedTileBlock ; $5078
 	farcall InitDefaultMatchSettings ; $507b
 	ret ; $507e

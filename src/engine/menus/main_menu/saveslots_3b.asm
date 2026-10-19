@@ -492,37 +492,37 @@ LoadMatchFormatGfx:
 	call AdvanceFrame ; $5e45
 	ld b, TILEBLOCK_SharedMenuGfx36 ; $5e48
 	ld c, SharedMenuGfx36_SIZE / 16 ; $5e4a
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5e4c
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5e4c
 	farcall LoadCompressedTileBlock ; $5e4f
 	call AdvanceFrame ; $5e52
 	ld b, TILEBLOCK_SharedMenuGfx37 ; $5e55
 	ld c, SharedMenuGfx37_SIZE / 16 ; $5e57
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5e59
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5e59
 	farcall LoadCompressedTileBlock ; $5e5c
 	call AdvanceFrame ; $5e5f
 	ld b, TILEBLOCK_SharedMenuGfx38 ; $5e62
 	ld c, SharedMenuGfx38_SIZE / 16 ; $5e64
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $5e66
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5e66
 	farcall LoadCompressedTileBlock ; $5e69
 	call AdvanceFrame ; $5e6c
 	ld b, TILEBLOCK_SharedMenuGfx39 ; $5e6f
 	ld c, SharedMenuGfx39_SIZE / 16 ; $5e71
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $5e73
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $5e73
 	farcall LoadCompressedTileBlock ; $5e76
 	call AdvanceFrame ; $5e79
 	ld b, TILEBLOCK_SharedMenuGfx40 ; $5e7c
 	ld c, SharedMenuGfx40_SIZE / 16 ; $5e7e
-	ld de, vTiles0 + $50 * TILE_SIZE + VRAM_BANK1 ; $5e80
+	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $5e80
 	farcall LoadCompressedTileBlock ; $5e83
 	call AdvanceFrame ; $5e86
 	ld b, TILEBLOCK_SharedMenuGfx41 ; $5e89
 	ld c, SharedMenuGfx41_SIZE / 16 ; $5e8b
-	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $5e8d
+	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $5e8d
 	farcall LoadCompressedTileBlock ; $5e90
 	call AdvanceFrame ; $5e93
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $5e96
 	ld c, SharedMenuGfx27_SIZE / 16 ; $5e98
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $5e9a
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $5e9a
 	farcall LoadCompressedTileBlock ; $5e9d
 	call AdvanceFrame ; $5ea0
 	ld b, TILEBLOCK_SharedMenuGfx63 ; $5ea3

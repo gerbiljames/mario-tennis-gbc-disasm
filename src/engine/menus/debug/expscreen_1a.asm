@@ -19,7 +19,7 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	adc $00 ; $4b3d
 	ld h, a ; $4b3f
 	pop af ; $4b40
-	ld de, wDecompBuffer + 76 * TILE_SIZE + 7 ; $4b41
+	ld de, wDecompBuffer tile 76 + 7 ; $4b41
 	call Unused_1a_CopyNameToTileBuffer ; $4b44
 	push af ; $4b47
 	ld hl, wStoryMainName ; $4b48
@@ -39,7 +39,7 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	ld l, a ; $4b5d
 	ld h, $00 ; $4b5e
 	farcall PushTextArgNumber ; $4b60
-	ld de, wDecompBuffer + 80 * TILE_SIZE + 7 ; $4b63
+	ld de, wDecompBuffer tile 80 + 7 ; $4b63
 	ld hl, Text_31_237 ; $4b66
 	ld c, $20 ; $4b69
 	farcall RenderProportionalTextAt ; $4b6b

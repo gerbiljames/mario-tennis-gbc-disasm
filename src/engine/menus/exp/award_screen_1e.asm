@@ -156,7 +156,7 @@ LoadExpAwardScreenGraphics:
 	ld de, wDecompBuffer ; $55a8
 	call DecompressData ; $55ab
 	ld hl, wDecompBuffer ; $55ae
-	ld de, vTiles0 + $6c * TILE_SIZE + VRAM_BANK1 ; $55b1
+	ld de, vTiles0 tile $6c + VRAM_BANK1 ; $55b1
 	ld c, ExpDigitSpriteGfx_1e_SIZE / 16 ; $55b4
 	call QueueVRAMCopy ; $55b6
 	ret ; $55b9

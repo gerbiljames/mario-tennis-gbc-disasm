@@ -65,7 +65,7 @@ def SLOT_TABLE_PAGE equ HIGH($4000)
 
 ; --- VRAM regions ---
 ; The three 128-tile blocks and the two background maps, so a copy destination
-; reads as a place: `vTiles0 + $10 * TILE_SIZE` is tile $10 of the sprite
+; reads as a place: `vTiles0 tile $10` is tile $10 of the sprite
 ; block, `vBGMap0 + 15 * TILEMAP_WIDTH + 4` is map cell (4, 15). The BG uses
 ; $8800 addressing (ids $80-$ff in vTiles1, $00-$7f in vTiles2); objects use
 ; $8000 addressing (ids $00-$7f in vTiles0, $80-$ff in vTiles1).

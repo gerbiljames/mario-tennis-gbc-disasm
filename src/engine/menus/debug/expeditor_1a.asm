@@ -266,7 +266,7 @@ Unused_1a_ShowExpGainScreen:
 	ld de, vBGMap0 + VRAM_BANK1 ; $45c1
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $45c4
 	call QueueVRAMCopy ; $45c6
-	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $45c9
+	ld hl, wDecompBuffer tile 64 ; $45c9
 	ld de, vBGMap0 ; $45cc
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $45cf
 	call QueueVRAMCopy ; $45d1
@@ -457,7 +457,7 @@ Unused_1a_ShowExpGainScreen:
 	ld de, vBGMap0 + VRAM_BANK1 ; $4747
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $474a
 	call QueueVRAMCopy ; $474c
-	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $474f
+	ld hl, wDecompBuffer tile 64 ; $474f
 	ld de, vBGMap0 ; $4752
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4755
 	call QueueVRAMCopy ; $4757

@@ -223,17 +223,17 @@ LoadN64RecordTypeGfx:
 	call AdvanceFrame ; $729c
 	ld b, TILEBLOCK_SharedMenuGfx29 ; $729f
 	ld c, SharedMenuGfx29_SIZE / 16 ; $72a1
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $72a3
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $72a3
 	farcall LoadCompressedTileBlock ; $72a6
 	call AdvanceFrame ; $72a9
 	ld b, TILEBLOCK_N64RecordTypeGfx1 ; $72ac
 	ld c, N64RecordTypeGfx1_SIZE / 16 ; $72ae
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $72b0
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $72b0
 	farcall LoadCompressedTileBlock ; $72b3
 	call AdvanceFrame ; $72b6
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $72b9
 	ld c, SharedMenuGfx27_SIZE / 16 ; $72bb
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $72bd
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $72bd
 	farcall LoadCompressedTileBlock ; $72c0
 	call AdvanceFrame ; $72c3
 	ld b, TILEBLOCK_N64RecordTypeGfx2 ; $72c6
@@ -635,22 +635,22 @@ LoadN64TransferItemGfx:
 	call AdvanceFrame ; $75ab
 	ld b, TILEBLOCK_N64TransferItemGfx4 ; $75ae
 	ld c, N64TransferItemGfx4_SIZE / 16 ; $75b0
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $75b2
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $75b2
 	farcall LoadCompressedTileBlock ; $75b5
 	call AdvanceFrame ; $75b8
 	ld b, TILEBLOCK_N64TransferItemGfx1 ; $75bb
 	ld c, N64TransferItemGfx1_SIZE / 16 ; $75bd
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $75bf
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $75bf
 	farcall LoadCompressedTileBlock ; $75c2
 	call AdvanceFrame ; $75c5
 	ld b, TILEBLOCK_N64TransferItemGfx2 ; $75c8
 	ld c, N64TransferItemGfx2_SIZE / 16 ; $75ca
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $75cc
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $75cc
 	farcall LoadCompressedTileBlock ; $75cf
 	call AdvanceFrame ; $75d2
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $75d5
 	ld c, SharedMenuGfx27_SIZE / 16 ; $75d7
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $75d9
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $75d9
 	farcall LoadCompressedTileBlock ; $75dc
 	call AdvanceFrame ; $75df
 	ld b, TILEBLOCK_N64TransferItemGfx3 ; $75e2

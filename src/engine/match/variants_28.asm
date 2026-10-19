@@ -74,7 +74,7 @@ LoadMatchGraphics:
 	ld_bg_pals de, 0, 2 ; $5ec2
 	call LoadPaletteShadow ; $5ec5
 	ld hl, MatchGraphicsGfx ; $5ec8
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $5ecb
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $5ecb
 	ld c, 64 ; $5ece
 	call QueueVRAMCopy ; $5ed0
 	ld hl, MatchGfxTilesA_28 ; $5ed3
@@ -119,7 +119,7 @@ LoadMatchVariantGraphics:
 	dw LoadMatchVariantGraphics.carry ; $5f28 jumptable
 .carry:
 	ld hl, MatchGfxMapsA_28 ; $5f2a
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5f2d
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5f2d
 	ld c, 32 ; $5f30
 	call QueueVRAMCopy ; $5f32
 	ret ; $5f35
@@ -134,14 +134,14 @@ LoadMatchVariantGraphics:
 	ld_obj_pals de, 5, 3 ; $5f46
 	call LoadPaletteShadow ; $5f49
 	ld hl, MatchVariantTiles0 ; $5f4c
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5f4f
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5f4f
 	ld c, (MatchVariantTiles1 - MatchVariantTiles0) / 16 ; $5f52
 	call QueueVRAMCopy ; $5f54
 	call LoadMatchSharedTiles_28 ; $5f57
 	ret ; $5f5a
 .queueVRAMCopy:
 	ld hl, MatchGfxMapsA_28 ; $5f5b
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5f5e
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5f5e
 	ld c, 8 ; $5f61 -- 8 of MatchGfxMapsA_28's 20 tiles
 	call QueueVRAMCopy ; $5f63
 	call LoadMatchSharedTiles_28 ; $5f66
@@ -151,7 +151,7 @@ LoadMatchVariantGraphics:
 	ld_obj_pals de, 6, 2 ; $5f6d
 	call LoadPaletteShadow ; $5f70
 	ld hl, MatchVariantTiles3 ; $5f73
-	ld de, vTiles0 + $3c * TILE_SIZE + VRAM_BANK1 ; $5f76
+	ld de, vTiles0 tile $3c + VRAM_BANK1 ; $5f76
 	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5f79
 	call QueueVRAMCopy ; $5f7b
 	call LoadMatchSharedTiles_28 ; $5f7e
@@ -161,7 +161,7 @@ LoadMatchVariantGraphics:
 	ld_obj_pals de, 6, 2 ; $5f85
 	call LoadPaletteShadow ; $5f88
 	ld hl, MatchVariantTiles3 ; $5f8b
-	ld de, vTiles0 + $3c * TILE_SIZE + VRAM_BANK1 ; $5f8e
+	ld de, vTiles0 tile $3c + VRAM_BANK1 ; $5f8e
 	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5f91
 	call QueueVRAMCopy ; $5f93
 	call LoadMatchSharedTiles_28 ; $5f96
@@ -171,18 +171,18 @@ LoadMatchVariantGraphics:
 	ld_obj_pals de, 7, 1 ; $5f9d
 	call LoadPaletteShadow ; $5fa0
 	ld hl, MatchVariantTiles4 ; $5fa3
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5fa6
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5fa6
 	ld c, (MatchSharedTiles_28 - MatchVariantTiles4) / 16 ; $5fa9
 	call QueueVRAMCopy ; $5fab
 	ld hl, MatchVariantTiles3 ; $5fae
-	ld de, vTiles0 + $3c * TILE_SIZE + VRAM_BANK1 ; $5fb1
+	ld de, vTiles0 tile $3c + VRAM_BANK1 ; $5fb1
 	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5fb4
 	call QueueVRAMCopy ; $5fb6
 	call LoadMatchSharedTiles_28 ; $5fb9
 	ret ; $5fbc
 .queueVRAMCopy2:
 	ld hl, MatchGfxMapsA_28 ; $5fbd
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5fc0
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5fc0
 	ld c, 8 ; $5fc3 -- 8 of MatchGfxMapsA_28's 20 tiles
 	call QueueVRAMCopy ; $5fc5
 	ld hl, MatchVariantGraphicsPalettes4 ; $5fc8
@@ -192,7 +192,7 @@ LoadMatchVariantGraphics:
 	ld_obj_pals de, 7, 1 ; $5fd4
 	call LoadPaletteShadow ; $5fd7
 	ld hl, MatchVariantTiles3 ; $5fda
-	ld de, vTiles0 + $3c * TILE_SIZE + VRAM_BANK1 ; $5fdd
+	ld de, vTiles0 tile $3c + VRAM_BANK1 ; $5fdd
 	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5fe0
 	call QueueVRAMCopy ; $5fe2
 	call LoadMatchSharedTiles_28 ; $5fe5
@@ -202,11 +202,11 @@ LoadMatchVariantGraphics:
 	ld_obj_pals de, 5, 3 ; $5fec
 	call LoadPaletteShadow ; $5fef
 	ld hl, MatchVariantTiles1 ; $5ff2
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5ff5
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5ff5
 	ld c, 16 ; $5ff8 -- 16 of MatchVariantTiles1's 48 tiles
 	call QueueVRAMCopy ; $5ffa
 	ld hl, MatchVariantTiles2 ; $5ffd
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $6000
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6000
 	ld c, 16 ; $6003 -- 16 of MatchVariantTiles2's 52 tiles
 	call QueueVRAMCopy ; $6005
 	call LoadMatchSharedTiles_28 ; $6008
@@ -216,14 +216,14 @@ LoadMatchVariantGraphics:
 	ld_obj_pals de, 5, 3 ; $600f
 	call LoadPaletteShadow ; $6012
 	ld hl, MatchVariantTiles1 ; $6015
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6018
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6018
 	ld c, (MatchVariantTiles2 - MatchVariantTiles1) / 16 ; $601b
 	call QueueVRAMCopy ; $601d
 	call LoadMatchSharedTiles_28 ; $6020
 	ret ; $6023
 LoadMatchSharedTiles_28:
 	ld hl, MatchSharedTiles_28 ; $6024
-	ld de, vTiles0 + $08 * TILE_SIZE ; $6027
+	ld de, vTiles0 tile $08 ; $6027
 	ld c, 20 ; $602a -- 20 of MatchSharedTiles_28's 138 tiles
 	call QueueVRAMCopy ; $602c
 	ret ; $602f
@@ -232,7 +232,7 @@ LoadSpecialHitEffectTiles:
 	rrca ; $6031
 	and $c0 ; $6032
 	ld_hl_indexed SpecialHitEffectTiles_28 ; $6034
-	ld de, vTiles0 + $74 * TILE_SIZE + VRAM_BANK1 ; $603b
+	ld de, vTiles0 tile $74 + VRAM_BANK1 ; $603b
 	ld c, 4 ; $603e
 	call QueueVRAMCopy ; $6040
 	ret ; $6043
@@ -241,7 +241,7 @@ LoadBallTouchCharEffectTilesA:
 	rrca ; $6045
 	and $40 ; $6046
 	ld_hl_indexed BallTouchCharEffectTilesA_28 ; $6048
-	ld de, vTiles0 + $78 * TILE_SIZE + VRAM_BANK1 ; $604f
+	ld de, vTiles0 tile $78 + VRAM_BANK1 ; $604f
 	ld c, 4 ; $6052
 	call QueueVRAMCopy ; $6054
 	ret ; $6057
@@ -250,7 +250,7 @@ LoadBallTouchCharEffectTilesB:
 	rrca ; $6059
 	and $40 ; $605a
 	ld_hl_indexed BallTouchCharEffectTilesB_28 ; $605c
-	ld de, vTiles0 + $7c * TILE_SIZE + VRAM_BANK1 ; $6063
+	ld de, vTiles0 tile $7c + VRAM_BANK1 ; $6063
 	ld c, 4 ; $6066
 	call QueueVRAMCopy ; $6068
 	ret ; $606b
@@ -260,7 +260,7 @@ QueueMatchSpriteFrameA:
 	ld a, [hl+] ; $6074
 	ld h, [hl] ; $6075
 	ld l, a ; $6076
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6077
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6077
 	ld c, 12 ; $607a
 	call QueueVRAMCopy ; $607c
 	ret ; $607f
@@ -273,7 +273,7 @@ QueueMatchSpriteFrameB:
 	ld a, [hl+] ; $608e
 	ld h, [hl] ; $608f
 	ld l, a ; $6090
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6091
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6091
 	ld c, 12 ; $6094
 	call QueueVRAMCopy ; $6096
 	ret ; $6099
@@ -298,7 +298,7 @@ LoadEffectFrameTiles_28:
 	ld h, [hl] ; $60b5
 	ld l, a ; $60b6
 	add hl, de ; $60b7
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $60b8
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $60b8
 	ld c, 4 ; $60bb
 	call QueueVRAMCopy ; $60bd
 	ret ; $60c0
@@ -327,8 +327,8 @@ LoadMatchStoryGfx:
 	call AdvanceFrame ; $60fc
 .restore:
 	pop af ; $60ff
-	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $6100
-	ld de, vTiles2 + $20 * TILE_SIZE ; $6103
+	ld hl, wDecompBuffer tile 32 ; $6100
+	ld de, vTiles2 tile $20 ; $6103
 	ld c, 32 ; $6106 -- 32 of MatchGfxTilesB_28's 256 tiles from tile 32
 	call QueueVRAMCopy ; $6108
 	push af ; $610b
@@ -338,8 +338,8 @@ LoadMatchStoryGfx:
 	call AdvanceFrame ; $6112
 .restore2:
 	pop af ; $6115
-	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $6116
-	ld de, vTiles2 + $40 * TILE_SIZE ; $6119
+	ld hl, wDecompBuffer tile 64 ; $6116
+	ld de, vTiles2 tile $40 ; $6119
 	ld c, 32 ; $611c
 	call QueueVRAMCopy ; $611e
 	push af ; $6121
@@ -349,8 +349,8 @@ LoadMatchStoryGfx:
 	call AdvanceFrame ; $6128
 .restore3:
 	pop af ; $612b
-	ld hl, wDecompBuffer + 96 * TILE_SIZE ; $612c
-	ld de, vTiles2 + $60 * TILE_SIZE ; $612f
+	ld hl, wDecompBuffer tile 96 ; $612c
+	ld de, vTiles2 tile $60 ; $612f
 	ld c, 32 ; $6132
 	call QueueVRAMCopy ; $6134
 	push af ; $6137
@@ -363,14 +363,14 @@ LoadMatchStoryGfx:
 	ld hl, wTextTileBuffer ; $6142
 	ld de, vTiles1 ; $6145
 	ld c, $20 ; $6148
-	ld hl, wTextTileBuffer + 32 * TILE_SIZE ; $614a
-	ld de, vTiles1 + $20 * TILE_SIZE ; $614d
+	ld hl, wTextTileBuffer tile 32 ; $614a
+	ld de, vTiles1 tile $20 ; $614d
 	ld c, $20 ; $6150
-	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $6152
-	ld de, vTiles1 + $40 * TILE_SIZE ; $6155
+	ld hl, wTextTileBuffer tile 64 ; $6152
+	ld de, vTiles1 tile $40 ; $6155
 	ld c, $20 ; $6158
-	ld hl, wTextTileBuffer + 96 * TILE_SIZE ; $615a
-	ld de, vTiles1 + $60 * TILE_SIZE ; $615d
+	ld hl, wTextTileBuffer tile 96 ; $615a
+	ld de, vTiles1 tile $60 ; $615d
 	ld c, 32 ; $6160
 	call QueueVRAMCopy ; $6162
 	push af ; $6165

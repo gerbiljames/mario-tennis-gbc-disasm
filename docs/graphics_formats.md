@@ -167,8 +167,8 @@ first, bit 7 = leftmost pixel (`tiles_image` in `tools/gfxdump.py`):
 c = (lo >> (7 - x) & 1) | ((hi >> (7 - x) & 1) << 1)
 ```
 
-`TILE_SIZE equ 16` (`include/hardware.inc`) is used in address arithmetic,
-e.g. `wDecompBuffer + 1 * TILE_SIZE` at `$0a:$58f9`.
+`TILE_SIZE equ 16` (`include/hardware.inc`) is used in address arithmetic through `tile`,
+e.g. `wDecompBuffer tile 1` at `$0a:$58f9`.
 
 ### 2.2 `QueueVRAMCopy` counts tiles, not bytes
 
@@ -201,7 +201,7 @@ def VRAM_BANK1 equ $2000        ; include/constants/
 `QueueVRAMCopy` does `bit 5, d` to select `rVBK` and `res 5, d` to recover the
 address (`$0486`-`$048d`): `$b800` is `$9800` in VRAM bank 1, written
 `vBGMap0 + VRAM_BANK1`. Every VRAM address in the code (828 sites) is written
-as `vTiles0`/`vTiles1`/`vTiles2` plus `$NN * TILE_SIZE`, or `vBGMap0`/`vBGMap1`
+as `vTiles0`/`vTiles1`/`vTiles2 tile $NN` (`tile` is `+ TILE_SIZE *`), or `vBGMap0`/`vBGMap1`
 plus `row * TILEMAP_WIDTH + col`: copy and loader arguments, destinations
 other routines take (`InitNumberSpriteGfx`, `CopyMugshotBufferToVram`,
 `ResultPortraitSlotTable`), and bases added to an offset (`ld de, vBGMap0` /
@@ -297,7 +297,7 @@ to `vTiles1 + VRAM_BANK1`, `c = wTextTileBuffer_SIZE / 16` (128)
 (`$58a4`-`$58b4`): together `$8800`-`$97ff` of VRAM bank 1.
 
 Slot 1's 64 bytes become **BG palettes 2-7**: from byte 16
-(`wDecompBuffer + 1*TILE_SIZE`), `ld_bg_pals de, 2, 6` (`$58ff`). The block's
+(`wDecompBuffer tile 1`), `ld_bg_pals de, 2, 6` (`$58ff`). The block's
 first two palettes are skipped, reserving BG 0/1 for the text window.
 
 Slot 0 is read back at `$5912`-`$5922`: `wStorySceneRecord + 2` →

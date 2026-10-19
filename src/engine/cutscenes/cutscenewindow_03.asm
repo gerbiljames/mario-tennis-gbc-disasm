@@ -17,7 +17,7 @@ PlayScrollingStoryCutscene:
 	ld a, b ; $6fff
 	push af ; $7000
 	ld hl, WindowSolidTile_03 ; $7001
-	ld de, vTiles1 + $7f * TILE_SIZE ; $7004
+	ld de, vTiles1 tile $7f ; $7004
 	ld c, 1 ; $7007
 	call QueueVRAMCopy ; $7009
 	ld hl, WindowAttrMap_03 ; $700c

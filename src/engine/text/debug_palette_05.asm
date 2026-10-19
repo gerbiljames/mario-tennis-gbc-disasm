@@ -317,7 +317,7 @@ DrawPaletteCursorSprites:
 	ret ; $6b6b
 StartDebugPaletteEditor:
 	ld hl, PaletteEditorCursorTiles_05 ; $6b6c
-	ld de, vTiles0 + $60 * TILE_SIZE ; $6b6f
+	ld de, vTiles0 tile $60 ; $6b6f
 	ld c, (GetSelectedBGPaletteColorPtr - PaletteEditorCursorTiles_05) / 16 ; $6b72
 	call QueueVRAMCopy ; $6b74
 	xor a ; $6b77

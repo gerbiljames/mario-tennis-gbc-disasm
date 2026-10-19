@@ -62,7 +62,7 @@ Unused_18_LoadConfirmScreenSpriteGfx:
 	ld de, wDecompBuffer ; $5618
 	call DecompressData ; $561b
 	ld hl, wDecompBuffer ; $561e
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5621
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5621
 	ld c, 12 ; $5624
 	call QueueVRAMCopy ; $5626
 	ld hl, ConfirmScreenSpritePalette1 ; $5629
@@ -110,7 +110,7 @@ CharSelectCursorPalette:
 	INCLUDE "data/engine/menus/scenes/CharSelectCursorPalette.asm" ; $59b9, 8 bytes (palettes)
 Unused_18_LoadCharSelectCursorGfx:
 	ld hl, CharSelectCursorGfx ; $59c1
-	ld de, vTiles0 + $40 * TILE_SIZE ; $59c4
+	ld de, vTiles0 tile $40 ; $59c4
 	ld c, 12 ; $59c7 -- 12 of CharSelectCursorGfx's 13 tiles
 	call QueueVRAMCopy ; $59c9
 	ld hl, CharSelectCursorPalette ; $59cc

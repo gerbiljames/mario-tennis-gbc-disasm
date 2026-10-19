@@ -80,7 +80,7 @@ InitResultsPromptState:
 BuildResultsScreenTilemap:
 	call LoadResultsScreenGraphics ; $40be
 	ld hl, Text_31_210 ; $40c1
-	ld de, wDecompBuffer + 4 * TILE_SIZE + 1 ; $40c4
+	ld de, wDecompBuffer tile 4 + 1 ; $40c4
 	ld bc, $0020 ; $40c7
 	call DrawProportionalTextLine ; $40ca
 	ld hl, Text_31_211 ; $40cd

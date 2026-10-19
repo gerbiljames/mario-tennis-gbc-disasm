@@ -478,7 +478,7 @@ LoadCharDataScreenMugshots:
 	ld de, wDecompBuffer ; $74c9
 	farcall DecompressCharMugshot ; $74cc
 	ld hl, wDecompBuffer ; $74cf
-	ld de, vTiles1 + $30 * TILE_SIZE + VRAM_BANK1 ; $74d2
+	ld de, vTiles1 tile $30 + VRAM_BANK1 ; $74d2
 	ld c, 9 ; $74d5
 	call QueueVRAMCopy ; $74d7
 	ld a, $01 ; $74da
@@ -519,7 +519,7 @@ LoadCharDataScreenMugshots:
 	ld de, wDecompBuffer ; $7517
 	farcall DecompressCharMugshot ; $751a
 	ld hl, wDecompBuffer ; $751d
-	ld de, vTiles1 + $40 * TILE_SIZE + VRAM_BANK1 ; $7520
+	ld de, vTiles1 tile $40 + VRAM_BANK1 ; $7520
 	ld c, 9 ; $7523
 	call QueueVRAMCopy ; $7525
 	ld hl, wMasterPalettes + 16 ; $7528

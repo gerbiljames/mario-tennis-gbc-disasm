@@ -91,7 +91,7 @@ LoadTilesetGfx:
 	ld c, [hl] ; $4880
 	ld l, e ; $4881
 	ld h, d ; $4882
-	ld de, vTiles0 + $20 * TILE_SIZE ; $4883
+	ld de, vTiles0 tile $20 ; $4883
 	call QueueVRAMCopy ; $4886
 	ret ; $4889
 VramTileset_09:
@@ -139,34 +139,34 @@ LoadScoreDigitGfx:
 LoadPlayer1PointsDigitGfx:
 	ld hl, VramGfxPtrTable_09 ; $610c
 	call GetGfxSourcePtr ; $610f
-	ld de, vTiles0 + $78 * TILE_SIZE ; $6112
+	ld de, vTiles0 tile $78 ; $6112
 	ld c, 4 ; $6115
 	call QueueVRAMCopy ; $6117
 	ret ; $611a
 LoadPlayer2PointsDigitGfx:
 	ld hl, VramGfxPtrTable_09 ; $611b
 	call GetGfxSourcePtr ; $611e
-	ld de, vTiles0 + $7c * TILE_SIZE ; $6121
+	ld de, vTiles0 tile $7c ; $6121
 	ld c, 4 ; $6124
 	call QueueVRAMCopy ; $6126
 	ret ; $6129
 LoadPlayer1ScoreDigitGfx:
 	ld hl, Player1ScoreDigitGfxSource ; $612a
 	call GetGfxSourcePtr ; $612d
-	ld de, vTiles0 + $30 * TILE_SIZE ; $6130
+	ld de, vTiles0 tile $30 ; $6130
 	ld c, 4 ; $6133
 	call QueueVRAMCopy ; $6135
 	ret ; $6138
 LoadPlayer2ScoreDigitGfx:
 	ld hl, Player2ScoreDigitGfxSource ; $6139
 	call GetGfxSourcePtr ; $613c
-	ld de, vTiles0 + $34 * TILE_SIZE ; $613f
+	ld de, vTiles0 tile $34 ; $613f
 	ld c, 4 ; $6142
 	call QueueVRAMCopy ; $6144
 	ret ; $6147
 LoadDeuceAdvantageGfx:
 	ld hl, DeuceAdvantageTiles ; $6148
-	ld de, vTiles0 + $30 * TILE_SIZE ; $614b
+	ld de, vTiles0 tile $30 ; $614b
 	ld c, (LoadServeGfx - DeuceAdvantageTiles) / 16 ; $614e
 	call QueueVRAMCopy ; $6150
 	ret ; $6153
@@ -242,7 +242,7 @@ LoadServeGfx:
 	jr nc, .queue ; $6c62
 	inc h ; $6c64
 .queue:
-	ld de, vTiles0 + $38 * TILE_SIZE ; $6c65
+	ld de, vTiles0 tile $38 ; $6c65
 	ld c, 4 ; $6c68
 	call QueueVRAMCopy ; $6c6a
 	ret ; $6c6d

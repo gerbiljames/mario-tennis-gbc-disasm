@@ -170,14 +170,14 @@ CacheStorySlotNames:
 	ld [wCurrentStorySlot], a ; $607e
 	farcall CheckStorySlot ; $6081
 	ld hl, wStoryMainName ; $6084
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $6087
+	ld de, wDecompBuffer tile 16 ; $6087
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $608a
 	call CopyMemoryFast ; $608d
 	ld a, $02 ; $6090
 	ld [wCurrentStorySlot], a ; $6092
 	farcall CheckStorySlot ; $6095
 	ld hl, wStoryMainName ; $6098
-	ld de, wDecompBuffer + 32 * TILE_SIZE ; $609b
+	ld de, wDecompBuffer tile 32 ; $609b
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $609e
 	call CopyMemoryFast ; $60a1
 	pop_wram_bank ; $60a4

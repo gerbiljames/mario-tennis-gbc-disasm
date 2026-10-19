@@ -289,7 +289,7 @@ LoadMenuTilesB:
 	push de ; $5078
 	push hl ; $5079
 	ld hl, MenuFontTiles_01 ; $507a
-	ld de, vTiles2 + $20 * TILE_SIZE ; $507d
+	ld de, vTiles2 tile $20 ; $507d
 	ld c, 96 ; $5080
 	call QueueVRAMCopy ; $5082
 	ld hl, MenuFontFillTiles_01 ; $5085
@@ -307,22 +307,22 @@ LoadMenuTilesBStaged:
 	push de ; $5097
 	push hl ; $5098
 	ld hl, MenuFontTiles_01 ; $5099
-	ld de, vTiles2 + $20 * TILE_SIZE ; $509c
+	ld de, vTiles2 tile $20 ; $509c
 	ld c, (MenuTilesBStagedTiles0 - MenuFontTiles_01) / 16 ; $509f
 	call QueueVRAMCopy ; $50a1
 	call AdvanceFrame ; $50a4
 	ld hl, MenuTilesBStagedTiles0 ; $50a7
-	ld de, vTiles2 + $40 * TILE_SIZE ; $50aa
+	ld de, vTiles2 tile $40 ; $50aa
 	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50ad
 	call QueueVRAMCopy ; $50af
 	call AdvanceFrame ; $50b2
 	ld hl, MenuTilesBStagedTiles1 ; $50b5
-	ld de, vTiles2 + $60 * TILE_SIZE ; $50b8
+	ld de, vTiles2 tile $60 ; $50b8
 	ld c, (MenuFontFillTiles_01 - MenuTilesBStagedTiles1) / 16 ; $50bb
 	call QueueVRAMCopy ; $50bd
 	call AdvanceFrame ; $50c0
 	ld hl, MenuFontPalettes_01 ; $50c3
-	ld de, vTiles1 + $60 * TILE_SIZE ; $50c6
+	ld de, vTiles1 tile $60 ; $50c6
 	ld c, 32 ; $50c9
 	call QueueVRAMCopy ; $50cb
 	call AdvanceFrame ; $50ce
@@ -333,7 +333,7 @@ LoadMenuTilesBStaged:
 	ret ; $50d5
 Unused_01_LoadMenuTilesBChunk2:
 	ld hl, MenuTilesBStagedTiles0 ; $50d6
-	ld de, vTiles2 + $40 * TILE_SIZE ; $50d9
+	ld de, vTiles2 tile $40 ; $50d9
 	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50dc
 	call QueueVRAMCopy ; $50de
 	ret ; $50e1
@@ -354,7 +354,7 @@ Unused_01_LoadMenuBgPalettes3To7:
 	push bc ; $5177
 	push de ; $5178
 	push hl ; $5179
-	ld hl, vTiles0 + $7c * TILE_SIZE + 8 ; $517a
+	ld hl, vTiles0 tile $7c + 8 ; $517a
 	ld_bg_pals de, 3, 5 ; $517d
 	call LoadPaletteShadow ; $5180
 	pop hl ; $5183
@@ -367,7 +367,7 @@ LoadMenuObjPalettes3To7:
 	push bc ; $5189
 	push de ; $518a
 	push hl ; $518b
-	ld hl, vTiles0 + $7c * TILE_SIZE + 8 ; $518c
+	ld hl, vTiles0 tile $7c + 8 ; $518c
 	ld_obj_pals de, 3, 5 ; $518f
 	call LoadPaletteShadow ; $5192
 	pop hl ; $5195

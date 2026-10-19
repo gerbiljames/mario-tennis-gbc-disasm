@@ -35,10 +35,10 @@ DrawPlayerNameAndLevel:
 	ld de, wDecompBuffer ; $48aa
 	call DecompressData ; $48ad
 	ld hl, ResultsPlayerPanelAttrmap_1e ; $48b0
-	ld de, wDecompBuffer + 12 * TILE_SIZE + 8 ; $48b3
+	ld de, wDecompBuffer tile 12 + 8 ; $48b3
 	call DecompressData ; $48b6
 	ld hl, wDecompBuffer ; $48b9
-	ld de, wDecompBuffer + 10 * TILE_SIZE ; $48bc
+	ld de, wDecompBuffer tile 10 ; $48bc
 	ld c, $08 ; $48bf
 	call CopyTilesAndAttrsRun ; $48c1
 	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH ; $48c4
@@ -223,7 +223,7 @@ InitResultsScreenCharacters:
 	farcall InitChar ; $4a47
 	ld a, $0e ; $4a4a
 	ld [wCharSpriteAttr], a ; $4a4c
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4a4f
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4a4f
 	ld hl, wCharFrameVramDest ; $4a52
 	ld a, e ; $4a55
 	ld [hl+], a ; $4a56

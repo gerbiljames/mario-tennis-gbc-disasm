@@ -235,15 +235,15 @@ BuildCharDataConfirmScreen:
 	ld de, wDecompBuffer ; $5b5d
 	farcall DecompressCharMugshot ; $5b60
 	ld hl, wDecompBuffer ; $5b63
-	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $5b66
+	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $5b66
 	ld c, 3 ; $5b69
 	call QueueVRAMCopy ; $5b6b
-	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $5b6e
-	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $5b71
+	ld hl, wDecompBuffer tile 3 ; $5b6e
+	ld de, vTiles2 tile $30 + VRAM_BANK1 ; $5b71
 	ld c, 3 ; $5b74
 	call QueueVRAMCopy ; $5b76
-	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $5b79
-	ld de, vTiles2 + $40 * TILE_SIZE + VRAM_BANK1 ; $5b7c
+	ld hl, wDecompBuffer tile 6 ; $5b79
+	ld de, vTiles2 tile $40 + VRAM_BANK1 ; $5b7c
 	ld c, 3 ; $5b7f
 	call QueueVRAMCopy ; $5b81
 	call BuildCharStatDisplay ; $5b84

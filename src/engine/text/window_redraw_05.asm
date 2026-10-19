@@ -238,8 +238,8 @@ UploadGlyphTilesPartial:
 	call AdvanceFrame ; $6249
 .restore:
 	pop af ; $624c
-	ld hl, wGlyphTileBuffer + 27 * TILE_SIZE ; $624d
-	ld de, vTiles1 + $1b * TILE_SIZE ; $6250
+	ld hl, wGlyphTileBuffer tile 27 ; $624d
+	ld de, vTiles1 tile $1b ; $6250
 	ld c, 27 ; $6253
 	call QueueVRAMCopy ; $6255
 	push af ; $6258

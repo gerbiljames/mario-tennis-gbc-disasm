@@ -140,12 +140,12 @@ UploadGlyphBufferFull:
 	call AdvanceFrame ; $743d
 .lcdSettled:
 	pop af ; $7440
-	ld hl, vTiles1 + $40 * TILE_SIZE ; $7441
+	ld hl, vTiles1 tile $40 ; $7441
 	wram_bank WRAM_TEXT ; $7444
 	ld a, [wWindowTileAttr] ; $744a
 	bit 3, a ; $744d
 	jr z, .pushPageDests ; $744f
-	ld hl, vTiles1 + $40 * TILE_SIZE + VRAM_BANK1 ; $7451
+	ld hl, vTiles1 tile $40 + VRAM_BANK1 ; $7451
 .pushPageDests:
 	push hl ; $7454
 	ld de, $ff00 ; $7455
@@ -169,7 +169,7 @@ UploadGlyphBufferFull:
 	call AdvanceFrame ; $7476
 .page2:
 	pop af ; $7479
-	ld hl, wGlyphTileBuffer + 16 * TILE_SIZE ; $747a
+	ld hl, wGlyphTileBuffer tile 16 ; $747a
 	pop de ; $747d
 	ld c, 16 ; $747e
 	call QueueVRAMCopy ; $7480
@@ -180,7 +180,7 @@ UploadGlyphBufferFull:
 	call AdvanceFrame ; $748a
 .page3:
 	pop af ; $748d
-	ld hl, wGlyphTileBuffer + 32 * TILE_SIZE ; $748e
+	ld hl, wGlyphTileBuffer tile 32 ; $748e
 	pop de ; $7491
 	ld c, 16 ; $7492
 	call QueueVRAMCopy ; $7494
@@ -191,7 +191,7 @@ UploadGlyphBufferFull:
 	call AdvanceFrame ; $749e
 .page4:
 	pop af ; $74a1
-	ld hl, wGlyphTileBuffer + 48 * TILE_SIZE ; $74a2
+	ld hl, wGlyphTileBuffer tile 48 ; $74a2
 	pop de ; $74a5
 	ld c, 16 ; $74a6
 	call QueueVRAMCopy ; $74a8
@@ -207,7 +207,7 @@ UploadGlyphBufferFull:
 	jr z, .uploadPage5 ; $74bb
 	ld c, $07 ; $74bd
 .uploadPage5:
-	ld hl, wGlyphTileBuffer + 64 * TILE_SIZE ; $74bf
+	ld hl, wGlyphTileBuffer tile 64 ; $74bf
 	pop de ; $74c2
 	call QueueVRAMCopy ; $74c3
 	push af ; $74c6

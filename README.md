@@ -130,7 +130,7 @@ strings, the 315 sound-channel scripts) stays in `data/`.
 - **Id-indexed tables** open with `table_width <row bytes>` and close with
   `assert_table_length NUM_<ids>`: adding an id without its row fails the
   build.
-- **VRAM addresses are places**: `vTiles0 + $10 * TILE_SIZE`,
+- **VRAM addresses are places**: `vTiles0 tile $10`,
   `vBGMap0 + 15 * TILEMAP_WIDTH + 4`, `+ VRAM_BANK1` for the second bank.
 - **RAM**: WRAM banks 1-7 and the overlaid buffers are unions with a variant
   per owner; a banked address is named only where its bank was proven, and a

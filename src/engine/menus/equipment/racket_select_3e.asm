@@ -99,7 +99,7 @@ LoadRacketSelectScreen:
 	call DrawRacketInfoPanel ; $5541
 	ld b, TILEBLOCK_SharedMenuGfx99 ; $5544
 	ld c, SharedMenuGfx99_SIZE / 16 ; $5546
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5548
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5548
 	farcall LoadCompressedTileBlock ; $554b
 	ld hl, Palette_3e ; $554e
 	ld_obj_pals de, 1, 1 ; $5551
@@ -312,7 +312,7 @@ LoadShoesSelectScreen:
 	call DrawShoesInfoPanel ; $56ea
 	ld b, TILEBLOCK_SharedMenuGfx99 ; $56ed
 	ld c, SharedMenuGfx99_SIZE / 16 ; $56ef
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $56f1
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $56f1
 	farcall LoadCompressedTileBlock ; $56f4
 	ld hl, Palette_3e ; $56f7
 	ld_obj_pals de, 1, 1 ; $56fa

@@ -102,18 +102,18 @@ IntroCutsceneState18Init_6b:
 	ld c, 32 ; $4b89
 	call QueueVRAMCopy ; $4b8b
 	call AdvanceFrame ; $4b8e
-	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $4b91
-	ld de, vTiles2 + $20 * TILE_SIZE ; $4b94
+	ld hl, wDecompBuffer tile 32 ; $4b91
+	ld de, vTiles2 tile $20 ; $4b94
 	ld c, 32 ; $4b97
 	call QueueVRAMCopy ; $4b99
 	call AdvanceFrame ; $4b9c
-	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $4b9f
-	ld de, vTiles2 + $40 * TILE_SIZE ; $4ba2
+	ld hl, wDecompBuffer tile 64 ; $4b9f
+	ld de, vTiles2 tile $40 ; $4ba2
 	ld c, 32 ; $4ba5
 	call QueueVRAMCopy ; $4ba7
 	call AdvanceFrame ; $4baa
-	ld hl, wDecompBuffer + 96 * TILE_SIZE ; $4bad
-	ld de, vTiles2 + $60 * TILE_SIZE ; $4bb0
+	ld hl, wDecompBuffer tile 96 ; $4bad
+	ld de, vTiles2 tile $60 ; $4bb0
 	ld c, 32 ; $4bb3
 	call QueueVRAMCopy ; $4bb5
 	call AdvanceFrame ; $4bb8
@@ -387,27 +387,27 @@ LoadCutsceneTileset:
 	farcall LoadCompressedTileBlock ; $5211
 	ld b, TILEBLOCK_CutsceneGfx1 ; $5214
 	ld c, CutsceneGfx1_SIZE / 16 ; $5216
-	ld de, vTiles0 + $06 * TILE_SIZE + VRAM_BANK1 ; $5218
+	ld de, vTiles0 tile $06 + VRAM_BANK1 ; $5218
 	farcall LoadCompressedTileBlock ; $521b
 	ld b, TILEBLOCK_CutsceneGfx2 ; $521e
 	ld c, CutsceneGfx2_SIZE / 16 ; $5220
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5222
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5222
 	farcall LoadCompressedTileBlock ; $5225
 	ld b, TILEBLOCK_CutsceneGfx3 ; $5228
 	ld c, CutsceneGfx3_SIZE / 16 ; $522a
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $522c
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $522c
 	farcall LoadCompressedTileBlock ; $522f
 	ld b, TILEBLOCK_CutsceneGfx4 ; $5232
 	ld c, CutsceneGfx4_SIZE / 16 ; $5234
-	ld de, vTiles0 + $26 * TILE_SIZE + VRAM_BANK1 ; $5236
+	ld de, vTiles0 tile $26 + VRAM_BANK1 ; $5236
 	farcall LoadCompressedTileBlock ; $5239
 	ld b, TILEBLOCK_CutsceneGfx5 ; $523c
 	ld c, CutsceneGfx5_SIZE / 16 ; $523e
-	ld de, vTiles0 + $38 * TILE_SIZE + VRAM_BANK1 ; $5240
+	ld de, vTiles0 tile $38 + VRAM_BANK1 ; $5240
 	farcall LoadCompressedTileBlock ; $5243
 	ld b, TILEBLOCK_CutsceneGfx6 ; $5246
 	ld c, CutsceneGfx6_SIZE / 16 ; $5248
-	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $524a
+	ld de, vTiles0 tile $48 + VRAM_BANK1 ; $524a
 	farcall LoadCompressedTileBlock ; $524d
 	ld hl, CutsceneTilesetPalettes ; $5250
 	ld_obj_pals de, 0, 2 ; $5253

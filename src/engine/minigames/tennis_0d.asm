@@ -18,7 +18,7 @@ PlayMinigameCountdown:
 .loop:
 	push af ; $48e5
 	ld b, $01 ; $48e6
-	ld de, vTiles0 + $20 * TILE_SIZE ; $48e8
+	ld de, vTiles0 tile $20 ; $48e8
 	farcall LoadScoreDigitGfx ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee
 	and a ; $48f1

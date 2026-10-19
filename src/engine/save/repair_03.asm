@@ -23,7 +23,7 @@ RestoreBlock36FromBackup:
 	jr nz, .restore ; $5696
 	pop bc ; $5698
 	ld hl, wDecompBuffer ; $5699
-	ld de, wDecompBuffer + 64 * TILE_SIZE ; $569c
+	ld de, wDecompBuffer tile 64 ; $569c
 	call WriteSaveBlock ; $569f
 	ret ; $56a2
 .restore:

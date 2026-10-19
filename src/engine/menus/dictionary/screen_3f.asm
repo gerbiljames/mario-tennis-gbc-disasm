@@ -310,14 +310,14 @@ LoadTennisDictionaryScreen:
 	ld de, wDecompBuffer ; $434e
 	call DecompressData ; $4351
 	ld hl, wDecompBuffer ; $4354
-	ld de, vTiles0 + $20 * TILE_SIZE ; $4357
+	ld de, vTiles0 tile $20 ; $4357
 	ld c, TennisDictionaryTiles8200_SIZE / 16 ; $435a
 	call QueueVRAMCopy ; $435c
 	ld hl, TennisDictionaryTiles8400 ; $435f
 	ld de, wDecompBuffer ; $4362
 	call DecompressData ; $4365
 	ld hl, wDecompBuffer ; $4368
-	ld de, vTiles0 + $40 * TILE_SIZE ; $436b
+	ld de, vTiles0 tile $40 ; $436b
 	ld c, TennisDictionaryTiles8400_SIZE / 16 ; $436e
 	call QueueVRAMCopy ; $4370
 	ld hl, TennisDictionaryTilesA000 ; $4373
@@ -331,14 +331,14 @@ LoadTennisDictionaryScreen:
 	ld de, wDecompBuffer ; $438a
 	call DecompressData ; $438d
 	ld hl, wDecompBuffer ; $4390
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $4393
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $4393
 	ld c, TennisDictionaryTilesA200_SIZE / 16 ; $4396
 	call QueueVRAMCopy ; $4398
 	ld hl, TennisDictionaryTilesA400 ; $439b
 	ld de, wDecompBuffer ; $439e
 	call DecompressData ; $43a1
 	ld hl, wDecompBuffer ; $43a4
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $43a7
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $43a7
 	ld c, TennisDictionaryTilesA400_SIZE / 16 ; $43aa
 	call QueueVRAMCopy ; $43ac
 	ld hl, TennisDictionaryPalettes ; $43af

@@ -554,12 +554,12 @@ LoadSavedDataTypeSelectGfx:
 	call AdvanceFrame ; $7263
 	ld b, TILEBLOCK_SharedMenuGfx30 ; $7266
 	ld c, SharedMenuGfx30_SIZE / 16 ; $7268
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $726a
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $726a
 	farcall LoadCompressedTileBlock ; $726d
 	call AdvanceFrame ; $7270
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $7273
 	ld c, SharedMenuGfx27_SIZE / 16 ; $7275
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $7277
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $7277
 	farcall LoadCompressedTileBlock ; $727a
 	call AdvanceFrame ; $727d
 	ld b, TILEBLOCK_SavedDataTypeSelectGfx ; $7280

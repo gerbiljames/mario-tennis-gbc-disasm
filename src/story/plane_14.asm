@@ -80,7 +80,7 @@ WaterSplashObjPalette_14:
 LoadWaterSplashObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $60a1
 	ld hl, WaterSplashObjGfx ; $60aa
-	ld de, vTiles0 + $20 * TILE_SIZE ; $60ad
+	ld de, vTiles0 tile $20 ; $60ad
 	ld c, (SpriteTemplate_14_1 - WaterSplashObjGfx) / 16 ; $60b0
 	call QueueVRAMCopy ; $60b2
 	ld hl, WaterSplashObjPalette_14 ; $60b5

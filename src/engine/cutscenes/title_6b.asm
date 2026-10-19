@@ -60,15 +60,15 @@ RunTitleScreen:
 	farcall LoadCompressedTileBlock ; $75ed
 	ld c, TitleGfx1_SIZE / 16 ; $75f0
 	ld b, TILEBLOCK_TitleGfx1 ; $75f2
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $75f4
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $75f4
 	farcall LoadCompressedTileBlock ; $75f7
 	ld c, TitleGfx2_SIZE / 16 ; $75fa
 	ld b, TILEBLOCK_TitleGfx2 ; $75fc
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $75fe
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $75fe
 	farcall LoadCompressedTileBlock ; $7601
 	ld c, TitleGfx3_SIZE / 16 ; $7604
 	ld b, TILEBLOCK_TitleGfx3 ; $7606
-	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $7608
+	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $7608
 	farcall LoadCompressedTileBlock ; $760b
 	ld c, TitleGfx4_SIZE / 16 ; $760e
 	ld b, TILEBLOCK_TitleGfx4 ; $7610
@@ -76,15 +76,15 @@ RunTitleScreen:
 	farcall LoadCompressedTileBlock ; $7615
 	ld c, TitleGfx5_SIZE / 16 ; $7618
 	ld b, TILEBLOCK_TitleGfx5 ; $761a
-	ld de, vTiles0 + $20 * TILE_SIZE ; $761c
+	ld de, vTiles0 tile $20 ; $761c
 	farcall LoadCompressedTileBlock ; $761f
 	ld c, TitleGfx6_SIZE / 16 ; $7622
 	ld b, TILEBLOCK_TitleGfx6 ; $7624
-	ld de, vTiles0 + $40 * TILE_SIZE ; $7626
+	ld de, vTiles0 tile $40 ; $7626
 	farcall LoadCompressedTileBlock ; $7629
 	ld c, TitleGfx7_SIZE / 16 ; $762c
 	ld b, TILEBLOCK_TitleGfx7 ; $762e
-	ld de, vTiles0 + $60 * TILE_SIZE ; $7630
+	ld de, vTiles0 tile $60 ; $7630
 	farcall LoadCompressedTileBlock ; $7633
 	ld hl, Palettes_6b_11 ; $7636
 	ld_obj_pals de, 0, 1 ; $7639

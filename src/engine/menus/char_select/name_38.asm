@@ -324,7 +324,7 @@ RunNameEntryScreen:
 SetupNameEntryScreen:
 	ld b, TILEBLOCK_NameEntryGfx ; $6f6e
 	ld c, NameEntryGfx_SIZE / 16 ; $6f70
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6f72
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6f72
 	farcall LoadCompressedTileBlock ; $6f75
 	ld hl, vTiles0 + VRAM_BANK1 ; $6f78
 	ld de, $0801 ; $6f7b
@@ -368,7 +368,7 @@ SetupNameEntryScreen:
 	push_wram_bank WRAM_COURT_PLANES ; $6fed
 	ld a, [wScreenAttrmap + 1] ; $6ff6
 	farcall LoadCharMugshotToBuffer ; $6ff9
-	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $6ffc
+	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $6ffc
 	farcall CopyMugshotBufferToVram ; $6fff
 	wram_bank WRAM_COURT_PLANES ; $7002
 	call GetActiveStoryNameBuffer ; $7008
@@ -387,7 +387,7 @@ SetupNameEntryScreen:
 	ld [wMenuBgScrollTile + 1], a ; $7029
 	ld b, TILEBLOCK_SharedMenuGfx72 ; $702c
 	ld c, SharedMenuGfx72_SIZE / 16 ; $702e
-	ld de, vTiles0 + $10 * TILE_SIZE ; $7030
+	ld de, vTiles0 tile $10 ; $7030
 	farcall LoadCompressedTileBlock ; $7033
 	push_wram_bank WRAM_COURT_PLANES ; $7036
 	xor a ; $703f

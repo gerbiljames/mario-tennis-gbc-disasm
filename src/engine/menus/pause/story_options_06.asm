@@ -245,7 +245,7 @@ LoadStoryMenuItemGfx:
 	push_wram_bank WRAM_STAGING ; $7291
 	call DecompressData ; $729a
 	ld hl, wDecompBuffer ; $729d
-	ld de, vTiles0 + $70 * TILE_SIZE ; $72a0
+	ld de, vTiles0 tile $70 ; $72a0
 	ld c, 16 ; $72a3
 	call QueueVRAMCopy ; $72a5
 	pop_wram_bank ; $72a8

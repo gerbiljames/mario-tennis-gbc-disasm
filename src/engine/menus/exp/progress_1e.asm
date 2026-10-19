@@ -232,7 +232,7 @@ DrawProgressScreenSprites:
 	jr nz, .loop ; $7b49
 	ret ; $7b4b
 LoadProgressScreenIconTiles:
-	ld de, vTiles0 + $20 * TILE_SIZE ; $7b4c
+	ld de, vTiles0 tile $20 ; $7b4c
 	farcall LoadMenuArrowSpriteTiles ; $7b4f
 	ld b, $08 ; $7b52
 	ld c, $0f ; $7b54

@@ -209,7 +209,7 @@ Bank `$01` has two loaders for the same menu tile set. The plain one:
 
 ```
 LoadMenuTilesB:
-        ld hl, MenuFontTiles_01     / ld de, vTiles2 + $20 * TILE_SIZE / ld c, $60 / call QueueVRAMCopy
+        ld hl, MenuFontTiles_01     / ld de, vTiles2 tile $20 / ld c, $60 / call QueueVRAMCopy
         ld hl, MenuFontFillTiles_01 / ld de, vTiles1 / ld c, $60 / call QueueVRAMCopy
 ```
 
@@ -220,7 +220,7 @@ then does this as its fourth:
 
 ```
         ld hl, MenuFontPalettes_01   ; <- $5010, a 64-byte palette block
-        ld de, vTiles1 + $60 * TILE_SIZE   ; $8e00
+        ld de, vTiles1 tile $60   ; $8e00
         ld c, $20                    ; 512 bytes
         call QueueVRAMCopy
 ```
@@ -294,7 +294,7 @@ screens nothing reaches. The short-text copy is reached only from
 ### Boot loads five object palettes from VRAM
 
 `LoadMenuObjPalettes3To7` (`$01:$5188`), called once at boot (`$01:$4088`),
-hands `LoadPaletteShadow` the source `vTiles0 + $7c * TILE_SIZE + 8` (`$87c8`)
+hands `LoadPaletteShadow` the source `vTiles0 tile $7c + 8` (`$87c8`)
 for object palettes 3-7. That is VRAM; bank `$01` has no palette data at the
 matching ROM address (`$47c8` is inside `MenuTilesBStagedTiles0`). Its
 unreachable twin `Unused_01_LoadMenuBgPalettes3To7` does the same for

@@ -293,7 +293,7 @@ LoadSavedDataSourceGfx:
 	ld de, wDecompBuffer ; $6892
 	call DecompressDataFromBank ; $6895
 	ld hl, wDecompBuffer ; $6898
-	ld de, vTiles1 + $10 * TILE_SIZE + VRAM_BANK1 ; $689b
+	ld de, vTiles1 tile $10 + VRAM_BANK1 ; $689b
 	ld bc, 16 ; $689e
 	call QueueVRAMCopy ; $68a1
 	call AdvanceFrame ; $68a4
@@ -302,7 +302,7 @@ LoadSavedDataSourceGfx:
 	ld [wCurrentStorySlot], a ; $68af
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $68b2
 	farcall LoadCharMugshotToBuffer ; $68b5
-	ld de, vTiles2 + $68 * TILE_SIZE + VRAM_BANK1 ; $68b8
+	ld de, vTiles2 tile $68 + VRAM_BANK1 ; $68b8
 	farcall CopyMugshotBufferToVram ; $68bb
 	call AdvanceFrame ; $68be
 	wram_bank WRAM_SCREEN ; $68c1
@@ -310,7 +310,7 @@ LoadSavedDataSourceGfx:
 	ld [wCurrentStorySlot], a ; $68c9
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $68cc
 	farcall LoadCharMugshotToBuffer ; $68cf
-	ld de, vTiles2 + $71 * TILE_SIZE + VRAM_BANK1 ; $68d2
+	ld de, vTiles2 tile $71 + VRAM_BANK1 ; $68d2
 	farcall CopyMugshotBufferToVram ; $68d5
 	call AdvanceFrame ; $68d8
 	wram_bank WRAM_SCREEN ; $68db
@@ -318,7 +318,7 @@ LoadSavedDataSourceGfx:
 	ld [wCurrentStorySlot], a ; $68e3
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $68e6
 	farcall LoadCharMugshotToBuffer ; $68e9
-	ld de, vTiles1 + $70 * TILE_SIZE + VRAM_BANK1 ; $68ec
+	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $68ec
 	farcall CopyMugshotBufferToVram ; $68ef
 	call AdvanceFrame ; $68f2
 	ld b, TILEBLOCK_SavedDataSourceGfx0 ; $68f5
@@ -328,27 +328,27 @@ LoadSavedDataSourceGfx:
 	call AdvanceFrame ; $68ff
 	ld b, TILEBLOCK_SavedDataSourceGfx1 ; $6902
 	ld c, SavedDataSourceGfx1_SIZE / 16 ; $6904
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6906
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6906
 	farcall LoadCompressedTileBlock ; $6909
 	call AdvanceFrame ; $690c
 	ld b, TILEBLOCK_SavedDataSourceGfx2 ; $690f
 	ld c, SavedDataSourceGfx2_SIZE / 16 ; $6911
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $6913
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6913
 	farcall LoadCompressedTileBlock ; $6916
 	call AdvanceFrame ; $6919
 	ld b, TILEBLOCK_SavedDataSourceGfx3 ; $691c
 	ld c, SavedDataSourceGfx3_SIZE / 16 ; $691e
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6920
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6920
 	farcall LoadCompressedTileBlock ; $6923
 	call AdvanceFrame ; $6926
 	ld b, TILEBLOCK_SavedDataSourceGfx5 ; $6929
 	ld c, SavedDataSourceGfx5_SIZE / 16 ; $692b
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $692d
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $692d
 	farcall LoadCompressedTileBlock ; $6930
 	call AdvanceFrame ; $6933
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $6936
 	ld c, SharedMenuGfx27_SIZE / 16 ; $6938
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $693a
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $693a
 	farcall LoadCompressedTileBlock ; $693d
 	call AdvanceFrame ; $6940
 	ld b, TILEBLOCK_SavedDataSourceGfx4 ; $6943

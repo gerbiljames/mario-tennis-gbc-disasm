@@ -386,12 +386,12 @@ LoadRacketShoesChoiceGraphics:
 	call AdvanceFrame ; $4f8c
 	ld b, TILEBLOCK_RacketShoesChoiceGfx1 ; $4f8f
 	ld c, RacketShoesChoiceGfx1_SIZE / 16 ; $4f91
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4f93
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4f93
 	farcall LoadCompressedTileBlock ; $4f96
 	call AdvanceFrame ; $4f99
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $4f9c
 	ld c, SharedMenuGfx27_SIZE / 16 ; $4f9e
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $4fa0
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $4fa0
 	farcall LoadCompressedTileBlock ; $4fa3
 	call AdvanceFrame ; $4fa6
 	ld b, TILEBLOCK_RacketShoesChoiceGfx2 ; $4fa9

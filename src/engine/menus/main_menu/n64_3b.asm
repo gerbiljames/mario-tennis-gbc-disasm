@@ -199,7 +199,7 @@ BuildN64ExhibDataScreen:
 	ld [wN64ExhibPage], a ; $45de
 	ld c, SCREENASSET_ExhibitionMenu ; $45e1
 	farcall LoadScreenAssetRecord ; $45e3
-	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $45e6
+	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $45e6
 	call LoadChartWindowTiles ; $45e9
 	ld de, vTiles0 + VRAM_BANK1 ; $45ec
 	farcall LoadMenuArrowSpriteTiles ; $45ef

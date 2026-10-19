@@ -427,11 +427,11 @@ LoadGameProgressScreenTiles:
 	ld c, (GameProgressScreenPalettes1 - GameProgressScreenTiles0) / 16 ; $7578
 	call QueueVRAMCopy ; $757a
 	ld hl, GameProgressScreenTiles2 ; $757d
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $7580
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $7580
 	ld c, 4 ; $7583 -- 4 of GameProgressScreenTiles2's 8 tiles
 	call QueueVRAMCopy ; $7585
 	ld hl, GameProgressScreenTiles1 ; $7588
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $758b
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $758b
 	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
 	ld hl, GameProgressScreenPalettes1 ; $7593
