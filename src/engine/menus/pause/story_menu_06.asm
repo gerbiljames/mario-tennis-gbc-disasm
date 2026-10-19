@@ -306,54 +306,54 @@ Unused_06_QueueDebugStatsCursorSprites:
 Unused_06_AdjustSelectedDebugStat:
 	ld a, [wMatchMenuSelection] ; $6c32
 	rst Rst00 ; $6c35
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatWord ; $6c36 jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatWord2 ; $6c38 jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatWord3 ; $6c3a jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatByte ; $6c3c jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatByte2 ; $6c3e jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatByte3 ; $6c40 jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit ; $6c42 jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit2 ; $6c44 jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit3 ; $6c46 jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit4 ; $6c48 jumptable
-	dw Unused_06_AdjustSelectedDebugStat.adjustDebugStatDigit5 ; $6c4a jumptable
-.adjustDebugStatWord:
+	dw Unused_06_AdjustSelectedDebugStat.adjustWordAt0 ; $6c36 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustWordAt4 ; $6c38 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustWordAt6 ; $6c3a jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustByteAt0 ; $6c3c jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustByteAt1 ; $6c3e jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustByteAt2 ; $6c40 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDigitAt3 ; $6c42 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDigitAt4 ; $6c44 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDigitAt5 ; $6c46 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDigitAt6 ; $6c48 jumptable
+	dw Unused_06_AdjustSelectedDebugStat.adjustDigitAt7 ; $6c4a jumptable
+.adjustWordAt0:
 	ld hl, wDebugStatWords ; $6c4c
 	ld bc, $0010 ; $6c4f
 	jp Unused_06_AdjustDebugStatWord ; $6c52
-.adjustDebugStatWord2:
+.adjustWordAt4:
 	ld hl, wDebugStatWords + 4 ; $6c55
 	ld bc, $0010 ; $6c58
 	jp Unused_06_AdjustDebugStatWord ; $6c5b
-.adjustDebugStatWord3:
+.adjustWordAt6:
 	ld hl, wDebugStatWords + 6 ; $6c5e
 	ld bc, $0010 ; $6c61
 	jp Unused_06_AdjustDebugStatWord ; $6c64
-.adjustDebugStatByte:
+.adjustByteAt0:
 	ld hl, wDebugStatBytes ; $6c67
 	ld b, $02 ; $6c6a
 	jp Unused_06_AdjustDebugStatByte ; $6c6c
-.adjustDebugStatByte2:
+.adjustByteAt1:
 	ld hl, wDebugStatBytes + 1 ; $6c6f
 	ld b, $08 ; $6c72
 	jp Unused_06_AdjustDebugStatByte ; $6c74
-.adjustDebugStatByte3:
+.adjustByteAt2:
 	ld hl, wDebugStatBytes + 2 ; $6c77
 	ld b, $02 ; $6c7a
 	jp Unused_06_AdjustDebugStatByte ; $6c7c
-.adjustDebugStatDigit:
+.adjustDigitAt3:
 	ld hl, wDebugStatBytes + 3 ; $6c7f
 	jp Unused_06_AdjustDebugStatDigit ; $6c82
-.adjustDebugStatDigit2:
+.adjustDigitAt4:
 	ld hl, wDebugStatBytes + 4 ; $6c85
 	jp Unused_06_AdjustDebugStatDigit ; $6c88
-.adjustDebugStatDigit3:
+.adjustDigitAt5:
 	ld hl, wDebugStatBytes + 5 ; $6c8b
 	jp Unused_06_AdjustDebugStatDigit ; $6c8e
-.adjustDebugStatDigit4:
+.adjustDigitAt6:
 	ld hl, wDebugStatBytes + 6 ; $6c91
 	jp Unused_06_AdjustDebugStatDigit ; $6c94
-.adjustDebugStatDigit5:
+.adjustDigitAt7:
 	ld hl, wDebugStatBytes + 7 ; $6c97
 	jp Unused_06_AdjustDebugStatDigit ; $6c9a
 Unused_06_AdjustDebugStatDigit:
@@ -462,7 +462,7 @@ RunStoryMenu:
 	push af ; $6d53
 	call LoadStoryMenuItemGfx ; $6d54
 	pop af ; $6d57
-	ld_hl_indexed Text_30_354 ; $6d58
+	ld_hl_indexed Text_CharAndItemData ; $6d58
 	ld_cell de, $00, $0e ; $6d5f
 	call DrawStoryMenuCaption ; $6d62
 	call RedrawStoryTilemapRows ; $6d65
@@ -665,7 +665,7 @@ StoryPauseMenu_AfterItem:
 	farcall InitSceneTileAnimations ; $6ebe
 	pop_wram_bank ; $6ec1
 	ret ; $6ec6
-UnusedStoryMenuRedrawReentry:
+Unused_06_StoryMenuRedrawReentry:
 	call Unused_06_DrawStoryMenuItemRow ; $6ec7
 	ld hl, ScoreboardModeGfxTail ; $6eca
 	ld de, vTiles0 tile $64 ; $6ecd
@@ -700,7 +700,7 @@ UnusedStoryMenuRedrawReentry:
 	ld a, [wMatchMenuSelection] ; $6f07
 	call LoadStoryMenuItemGfx ; $6f0a
 	ld a, [wMatchMenuSelection] ; $6f0d
-	ld_hl_indexed Text_30_354 ; $6f10
+	ld_hl_indexed Text_CharAndItemData ; $6f10
 	ld_cell de, $00, $0e ; $6f17
 	call DrawStoryMenuCaption ; $6f1a
 	call RedrawStoryTilemapRows ; $6f1d
@@ -806,7 +806,7 @@ StoryOptionsMenu_AfterItem:
 	jr StoryPauseMenu_Options.loop ; $6fe7
 .done:
 	ret ; $6fe9
-UnusedRunStoryPlayerDataMenu:
+Unused_06_RunStoryPlayerDataMenu:
 	ld a, STORYMENUITEM_CHAR_DATA ; $6fea
 	ld [wStoryMenuFirstItem], a ; $6fec
 	ld a, STORYMENU_STATUS ; $6fef
@@ -844,7 +844,7 @@ StoryPauseMenu_MusicToggle:
 	ret ; $702e
 StoryPauseMenu_SaveQuit:
 	call RestoreStoryTilemapNoPriority ; $702f
-	ld hl, Text_30_370 ; $7032
+	ld hl, Text_StoryMenuSaveProgress ; $7032
 	ld_cell de, $00, $0e ; $7035
 	call DrawStoryMenuCaption ; $7038
 	ld a, $02 ; $703b

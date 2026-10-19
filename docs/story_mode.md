@@ -462,7 +462,7 @@ Most academy NPCs are unnamed students and staff giving tips, labelled
 `<Location>Npc<id>`. The named cast roster at `$30:$466d` serves the match
 and ranking screens, not the overworld. Peach's Castle (29,
 `MarioWorldMapScripts_0e`) is the exception: the Mario cast, one line each in
-bank `$5e` (`Text_5e_142`-`Text_5e_168`, ids `$308e`-`$30a8`).
+bank `$5e` (`Text_MarioWorldMarioMamaMia`-`Text_BobOmbWorldBelowExit`, ids `$308e`-`$30a8`).
 
 `ShowSpeakerDialogue` (`$05:$581f`) takes the text id in `hl` and speaker in
 `a`, resets the three text-argument queues, applies `wMessageSpeed`, picks a
@@ -775,7 +775,7 @@ settings); `$dc08` `wStorySceneRecord` (bank `$06`).
 
 ## Oddities
 
-* **`UnusedEvalFlagCondition_0a`** (`$0a:$53a2`, between
+* **`Unused_0a_EvalFlagCondition`** (`$0a:$53a2`, between
   `GetTileTriggerAtPlayer`'s `ret` and `FacingMaskTable_0a`) duplicates the
   live `$04:$4c49`; nothing calls it.
 * **The clear-status flag writers.** `SetTrainingCourtClearFlags`

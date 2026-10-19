@@ -77,13 +77,13 @@ DrawEraseSavedDataCaption:
 	pop_wram_bank ; $7185
 	ret ; $718a
 .emptySlot:
-	ld hl, Text_30_206 ; $718b
+	ld hl, Text_EraseCaptionNoDataInFile ; $718b
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $718e
 	ld c, $20 ; $7191
 	farcall RenderTextToBuffer64 ; $7193
 	jr .restore ; $7196
 .nonSlotItem:
-	ld hl, Text_30_204 ; $7198
+	ld hl, Text_EraseN64DataCaption ; $7198
 	sub $03 ; $719b
 	add l ; $719d
 	ld l, a ; $719e
@@ -132,11 +132,11 @@ RunN64RecordTypeSelect:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7202
 	bit PADB_A, a ; $7205
-	jr nz, .playSfx ; $7207
+	jr nz, .playSelectSfx ; $7207
 	bit PADB_B, a ; $7209
-	jr nz, .playSfx2 ; $720b
+	jr nz, .playCancelSfx ; $720b
 	jr .loop ; $720d
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $720f
 	call ClearFrameTasks ; $7211
 	ld hl, rIE ; $7214
@@ -149,7 +149,7 @@ RunN64RecordTypeSelect:
 	call GetMenuCursorIndex_3b ; $7225
 	ld [wSubMenuCursor], a ; $7228
 	ret ; $722b
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $722c
 	call ClearFrameTasks ; $722e
 	ld hl, rIE ; $7231
@@ -494,7 +494,7 @@ DrawN64RecordTypeCaption:
 	ld c, $03 ; $74a3
 	call GetMenuCursorIndex_3b ; $74a5
 	ld b, a ; $74a8
-	ld hl, Text_30_207 ; $74a9
+	ld hl, Text_N64TournamentData ; $74a9
 	add l ; $74ac
 	ld l, a ; $74ad
 	jr nc, .renderTextToBuffer64 ; $74ae
@@ -541,11 +541,11 @@ RunN64TransferItemSelect:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7511
 	bit PADB_A, a ; $7514
-	jr nz, .playSfx ; $7516
+	jr nz, .playSelectSfx ; $7516
 	bit PADB_B, a ; $7518
-	jr nz, .playSfx2 ; $751a
+	jr nz, .playCancelSfx ; $751a
 	jr .loop ; $751c
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $751e
 	call ClearFrameTasks ; $7520
 	ld hl, rIE ; $7523
@@ -558,7 +558,7 @@ RunN64TransferItemSelect:
 	call GetMenuCursorIndex_3b ; $7534
 	ld [wN64TransferMenuCursor], a ; $7537
 	ret ; $753a
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $753b
 	call ClearFrameTasks ; $753d
 	ld hl, rIE ; $7540
@@ -754,7 +754,7 @@ DrawN64TransferItemCaption:
 	ld c, $02 ; $76ce
 	call GetMenuCursorIndex_3b ; $76d0
 	ld b, a ; $76d3
-	ld hl, Text_30_210 ; $76d4
+	ld hl, Text_N64CharPartnerData ; $76d4
 	add l ; $76d7
 	ld l, a ; $76d8
 	jr nc, .renderTextToBuffer64 ; $76d9

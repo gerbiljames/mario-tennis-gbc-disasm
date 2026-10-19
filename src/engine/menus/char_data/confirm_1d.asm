@@ -163,7 +163,7 @@ PromptCharDataConfirm:
 	bit PADB_A, a ; $5aad
 	jr nz, .step ; $5aaf
 	bit PADB_B, a ; $5ab1
-	jr nz, .beginFadeOut2 ; $5ab3
+	jr nz, .cancel ; $5ab3
 	and PADF_UP | PADF_DOWN ; $5ab5
 	jr z, .loop ; $5ab7
 	sound SFX_MENU_MOVE ; $5ab9
@@ -175,10 +175,10 @@ PromptCharDataConfirm:
 	wram_bank WRAM_SCENE ; $5ac5
 	ld a, [wCharDataConfirmState] ; $5acb
 	or a ; $5ace
-	jr nz, .beginFadeOut2 ; $5acf
+	jr nz, .cancel ; $5acf
 	sound SFX_MENU_SELECT ; $5ad1
 	jr .beginFadeOut ; $5ad3
-.beginFadeOut2:
+.cancel:
 	wram_bank WRAM_SCENE ; $5ad5
 	ld a, $01 ; $5adb
 	ld [wCharDataConfirmState], a ; $5add
@@ -308,128 +308,128 @@ StopCharDataValuesSyncTask:
 	call UnregisterFrameTask ; $5c21
 	ret ; $5c24
 DrillDisplayData_1d:
-	INCBIN "data/engine/menus/char_data/DrillDisplayData_1d.bin" ; $5c25, 9 bytes
+	INCLUDE "data/engine/menus/char_data/DrillDisplayData_1d.asm" ; $5c25, 9 bytes (blit_runs)
 StatPageTilemapPatch0:
-	INCBIN "data/engine/menus/char_data/StatPageTilemapPatch0.bin" ; $5c2e, 5 bytes
+	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch0.asm" ; $5c2e, 5 bytes (blit_runs)
 CharDataSummaryPageTilemapPatch0:
-	INCBIN "data/engine/menus/char_data/CharDataSummaryPageTilemapPatch0.bin" ; $5c33, 53 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryPageTilemapPatch0.asm" ; $5c33, 53 bytes (blit_runs)
 CharDataSummaryPageTilemapPatch1:
-	INCBIN "data/engine/menus/char_data/CharDataSummaryPageTilemapPatch1.bin" ; $5c68, 53 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryPageTilemapPatch1.asm" ; $5c68, 53 bytes (blit_runs)
 CharDataSummaryPageTilemapPatch2:
-	INCBIN "data/engine/menus/char_data/CharDataSummaryPageTilemapPatch2.bin" ; $5c9d, 9 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryPageTilemapPatch2.asm" ; $5c9d, 9 bytes (blit_runs)
 StatPageTilemapPatch1:
-	INCBIN "data/engine/menus/char_data/StatPageTilemapPatch1.bin" ; $5ca6, 21 bytes
+	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch1.asm" ; $5ca6, 21 bytes (blit_runs)
 CharDataConfirmScreenTilemapPatch0:
-	INCBIN "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch0.bin" ; $5cbb, 21 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch0.asm" ; $5cbb, 21 bytes (blit_runs)
 StatPageTilemapPatch2:
-	INCBIN "data/engine/menus/char_data/StatPageTilemapPatch2.bin" ; $5cd0, 29 bytes
+	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch2.asm" ; $5cd0, 29 bytes (blit_runs)
 CharDataConfirmScreenTilemapPatch1:
-	INCBIN "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch1.bin" ; $5ced, 29 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch1.asm" ; $5ced, 29 bytes (blit_runs)
 StatPageTilemapPatch3:
-	INCBIN "data/engine/menus/char_data/StatPageTilemapPatch3.bin" ; $5d0a, 21 bytes
+	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch3.asm" ; $5d0a, 21 bytes (blit_runs)
 CharDataConfirmScreenTilemapPatch2:
-	INCBIN "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch2.bin" ; $5d1f, 21 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch2.asm" ; $5d1f, 21 bytes (blit_runs)
 StatPageTilemapPatch4:
-	INCBIN "data/engine/menus/char_data/StatPageTilemapPatch4.bin" ; $5d34, 37 bytes
+	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch4.asm" ; $5d34, 37 bytes (blit_runs)
 CharDataConfirmScreenTilemapPatch3:
-	INCBIN "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch3.bin" ; $5d59, 37 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch3.asm" ; $5d59, 37 bytes (blit_runs)
 CharDataSummaryFieldsTilePlot0:
 	INCBIN "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot0.bin" ; $5d7e, 19 bytes
 CharDataSummaryFieldsTilePlot1:
 	INCBIN "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot1.bin" ; $5d91, 19 bytes
 MainCharStatPageTilemapPatch00:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch00.bin" ; $5da4, 13 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch00.asm" ; $5da4, 13 bytes (blit_runs)
 PartnerStatPageTilemapPatch00:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch00.bin" ; $5db1, 13 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch00.asm" ; $5db1, 13 bytes (blit_runs)
 CharDataConfirmScreenTilemapPatch4:
-	INCBIN "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch4.bin" ; $5dbe, 13 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch4.asm" ; $5dbe, 13 bytes (blit_runs)
 MainCharStatPageTilemapPatch01:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch01.bin" ; $5dcb, 13 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch01.asm" ; $5dcb, 13 bytes (blit_runs)
 PartnerStatPageTilemapPatch01:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch01.bin" ; $5dd8, 13 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch01.asm" ; $5dd8, 13 bytes (blit_runs)
 StatPageTilemapPatch5:
-	INCBIN "data/engine/menus/char_data/StatPageTilemapPatch5.bin" ; $5de5, 13 bytes
+	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch5.asm" ; $5de5, 13 bytes (blit_runs)
 StatPageTilemapPatch6:
-	INCBIN "data/engine/menus/char_data/StatPageTilemapPatch6.bin" ; $5df2, 33 bytes
+	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch6.asm" ; $5df2, 33 bytes (blit_runs)
 StatPageTilemapPatch7:
-	INCBIN "data/engine/menus/char_data/StatPageTilemapPatch7.bin" ; $5e13, 33 bytes
+	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch7.asm" ; $5e13, 33 bytes (blit_runs)
 StatPageTilemapPatch8:
-	INCBIN "data/engine/menus/char_data/StatPageTilemapPatch8.bin" ; $5e34, 9 bytes
+	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch8.asm" ; $5e34, 9 bytes (blit_runs)
 MainCharStatPageTilemapPatch02:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch02.bin" ; $5e3d, 21 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch02.asm" ; $5e3d, 21 bytes (blit_runs)
 MainCharStatPageTilemapPatch03:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch03.bin" ; $5e52, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch03.asm" ; $5e52, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch04:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch04.bin" ; $5e73, 9 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch04.asm" ; $5e73, 9 bytes (blit_runs)
 MainCharStatPageTilemapPatch05:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch05.bin" ; $5e7c, 21 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch05.asm" ; $5e7c, 21 bytes (blit_runs)
 MainCharStatPageTilemapPatch06:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch06.bin" ; $5e91, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch06.asm" ; $5e91, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch07:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch07.bin" ; $5eb2, 9 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch07.asm" ; $5eb2, 9 bytes (blit_runs)
 MainCharStatPageTilemapPatch08:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch08.bin" ; $5ebb, 21 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch08.asm" ; $5ebb, 21 bytes (blit_runs)
 MainCharStatPageTilemapPatch09:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch09.bin" ; $5ed0, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch09.asm" ; $5ed0, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch10:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch10.bin" ; $5ef1, 9 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch10.asm" ; $5ef1, 9 bytes (blit_runs)
 MainCharStatPageTilemapPatch11:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch11.bin" ; $5efa, 21 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch11.asm" ; $5efa, 21 bytes (blit_runs)
 MainCharStatPageTilemapPatch12:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch12.bin" ; $5f0f, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch12.asm" ; $5f0f, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch13:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch13.bin" ; $5f30, 9 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch13.asm" ; $5f30, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch02:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch02.bin" ; $5f39, 21 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch02.asm" ; $5f39, 21 bytes (blit_runs)
 PartnerStatPageTilemapPatch03:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch03.bin" ; $5f4e, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch03.asm" ; $5f4e, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch04:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch04.bin" ; $5f6f, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch04.asm" ; $5f6f, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch05:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch05.bin" ; $5f78, 21 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch05.asm" ; $5f78, 21 bytes (blit_runs)
 PartnerStatPageTilemapPatch06:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch06.bin" ; $5f8d, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch06.asm" ; $5f8d, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch07:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch07.bin" ; $5fae, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch07.asm" ; $5fae, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch08:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch08.bin" ; $5fb7, 21 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch08.asm" ; $5fb7, 21 bytes (blit_runs)
 PartnerStatPageTilemapPatch09:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch09.bin" ; $5fcc, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch09.asm" ; $5fcc, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch10:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch10.bin" ; $5fed, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch10.asm" ; $5fed, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch11:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch11.bin" ; $5ff6, 21 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch11.asm" ; $5ff6, 21 bytes (blit_runs)
 PartnerStatPageTilemapPatch12:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch12.bin" ; $600b, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch12.asm" ; $600b, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch13:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch13.bin" ; $602c, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch13.asm" ; $602c, 9 bytes (blit_runs)
 MainCharStatPageTilemapPatch14:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch14.bin" ; $6035, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch14.asm" ; $6035, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch15:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch15.bin" ; $6056, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch15.asm" ; $6056, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch16:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch16.bin" ; $6077, 9 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch16.asm" ; $6077, 9 bytes (blit_runs)
 MainCharStatPageTilemapPatch17:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch17.bin" ; $6080, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch17.asm" ; $6080, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch18:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch18.bin" ; $60a1, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch18.asm" ; $60a1, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch19:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch19.bin" ; $60c2, 9 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch19.asm" ; $60c2, 9 bytes (blit_runs)
 MainCharStatPageTilemapPatch20:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch20.bin" ; $60cb, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch20.asm" ; $60cb, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch21:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch21.bin" ; $60ec, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch21.asm" ; $60ec, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch22:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch22.bin" ; $610d, 9 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch22.asm" ; $610d, 9 bytes (blit_runs)
 MainCharStatPageTilemapPatch23:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch23.bin" ; $6116, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch23.asm" ; $6116, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch24:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch24.bin" ; $6137, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch24.asm" ; $6137, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch25:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch25.bin" ; $6158, 5 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch25.asm" ; $6158, 5 bytes (blit_runs)
 MainCharStatPageTilemapPatch26:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch26.bin" ; $615d, 21 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch26.asm" ; $615d, 21 bytes (blit_runs)
 MainCharStatPageTilemapPatch27:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch27.bin" ; $6172, 33 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch27.asm" ; $6172, 33 bytes (blit_runs)
 MainCharStatPageTilemapPatch28:
-	INCBIN "data/engine/menus/char_data/MainCharStatPageTilemapPatch28.bin" ; $6193, 5 bytes
+	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch28.asm" ; $6193, 5 bytes (blit_runs)

@@ -1,4 +1,4 @@
-UnusedRunMessagesMusicMenu:
+Unused_06_RunMessagesMusicMenu:
 	ld a, STORYMENUITEM_MESSAGES ; $70ac
 	ld [wStoryMenuFirstItem], a ; $70ae
 	jp RunStoryTwoOptionMenu ; $70b1
@@ -10,7 +10,7 @@ RunMusicOnOffMenu:
 	ld a, STORYMENUITEM_MUSIC_ON ; $70bc
 	ld [wStoryMenuFirstItem], a ; $70be
 	jp RunStoryTwoOptionMenu ; $70c1
-UnusedRunSaveQuitMenu:
+Unused_06_RunSaveQuitMenu:
 	ld a, STORYMENUITEM_SAVE_GAME ; $70c4
 	ld [wStoryMenuFirstItem], a ; $70c6
 	jp RunStoryTwoOptionMenu ; $70c9
@@ -27,12 +27,12 @@ RunStoryTwoOptionMenu:
 	jr z, .redrawStoryTilemapRows ; $70e4
 	ld hl, wMatchMenuSelection ; $70e6
 	add [hl] ; $70e9
-	ld hl, Text_30_354 ; $70ea
+	ld hl, Text_CharAndItemData ; $70ea
 	add l ; $70ed
 	ld l, a ; $70ee
-	jr nc, .drawStoryMenuCaption ; $70ef
+	jr nc, .drawInitialCaption ; $70ef
 	inc h ; $70f1
-.drawStoryMenuCaption:
+.drawInitialCaption:
 	ld_cell de, $00, $0e ; $70f2
 	call DrawStoryMenuCaption ; $70f5
 .redrawStoryTilemapRows:
@@ -70,12 +70,12 @@ RunStoryTwoOptionMenu:
 	jr z, .loadItemGfx ; $713a
 	ld hl, wMatchMenuSelection ; $713c
 	add [hl] ; $713f
-	ld hl, Text_30_354 ; $7140
+	ld hl, Text_CharAndItemData ; $7140
 	add l ; $7143
 	ld l, a ; $7144
-	jr nc, .drawStoryMenuCaption2 ; $7145
+	jr nc, .drawMovedCaption ; $7145
 	inc h ; $7147
-.drawStoryMenuCaption2:
+.drawMovedCaption:
 	ld_cell de, $00, $0e ; $7148
 	call DrawStoryMenuCaption ; $714b
 	call RedrawStoryTilemapRows ; $714e
@@ -119,12 +119,12 @@ RunStoryThreeOptionMenu:
 	cp $06 ; $719e
 	ld hl, wMatchMenuSelection ; $71a0
 	add [hl] ; $71a3
-	ld hl, Text_30_354 ; $71a4
+	ld hl, Text_CharAndItemData ; $71a4
 	add l ; $71a7
 	ld l, a ; $71a8
-	jr nc, .drawStoryMenuCaption ; $71a9
+	jr nc, .drawInitialCaption ; $71a9
 	inc h ; $71ab
-.drawStoryMenuCaption:
+.drawInitialCaption:
 	ld_cell de, $00, $0e ; $71ac
 	call DrawStoryMenuCaption ; $71af
 	call RedrawStoryTilemapRows ; $71b2
@@ -160,12 +160,12 @@ RunStoryThreeOptionMenu:
 	cp $06 ; $71f2
 	ld hl, wMatchMenuSelection ; $71f4
 	add [hl] ; $71f7
-	ld hl, Text_30_354 ; $71f8
+	ld hl, Text_CharAndItemData ; $71f8
 	add l ; $71fb
 	ld l, a ; $71fc
-	jr nc, .drawStoryMenuCaption2 ; $71fd
+	jr nc, .drawMovedCaption ; $71fd
 	inc h ; $71ff
-.drawStoryMenuCaption2:
+.drawMovedCaption:
 	ld_cell de, $00, $0e ; $7200
 	call DrawStoryMenuCaption ; $7203
 	call RedrawStoryTilemapRows ; $7206

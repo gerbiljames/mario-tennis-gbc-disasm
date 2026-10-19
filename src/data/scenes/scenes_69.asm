@@ -47,7 +47,7 @@ DataPtr_AwardsCeremonySceneUnusedSlot:
 DataPtr_AwardsCeremonyTiles:
 	dw AwardsCeremonyTiles ; $402e
 TrainingCenterSceneConfig:
-	INCBIN "data/scenes/TrainingCenterSceneConfig.bin" ; $4030, 42 bytes
+	INCLUDE "data/scenes/TrainingCenterSceneConfig.asm" ; $4030, 42 bytes (scene_config)
 TrainingCenterPalettes:
 	INCLUDE "data/scenes/TrainingCenterPalettes.asm" ; $405a, 64 bytes (palettes)
 TrainingCenterTiles:
@@ -61,7 +61,7 @@ TrainingCenterCollisionMap:
 TrainingCenterBehaviorMap:
 	INCBIN "data/scenes/lz_TrainingCenterBehaviorMap.bin" ; $5493, 129 bytes
 TournamentSceneConfig:
-	INCBIN "data/scenes/TournamentSceneConfig.bin" ; $5514, 42 bytes
+	INCLUDE "data/scenes/TournamentSceneConfig.asm" ; $5514, 42 bytes (scene_config)
 TournamentPalettes:
 	INCLUDE "data/scenes/TournamentPalettes.asm" ; $553e, 64 bytes (palettes)
 TournamentTiles:
@@ -75,7 +75,7 @@ TournamentCollisionMap:
 TournamentBehaviorMap:
 	INCBIN "data/scenes/lz_TournamentBehaviorMap.bin" ; $64eb, 87 bytes
 AwardsCeremonySceneConfig:
-	INCBIN "data/scenes/AwardsCeremonySceneConfig.bin" ; $6542, 27 bytes
+	INCLUDE "data/scenes/AwardsCeremonySceneConfig.asm" ; $6542, 27 bytes (scene_config)
 AwardsCeremonyPalettes:
 	INCLUDE "data/scenes/AwardsCeremonyPalettes.asm" ; $655d, 64 bytes (palettes)
 AwardsCeremonyTiles:

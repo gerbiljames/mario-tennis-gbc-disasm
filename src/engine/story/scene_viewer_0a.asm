@@ -204,7 +204,7 @@ Unused_0a_InitSceneViewer:
 	pop bc ; $606c
 	pop af ; $606d
 	ret ; $606e
-UnusedUnregisterSceneViewerFrameTask:
+Unused_0a_UnregisterSceneViewerFrameTask:
 	ld hl, Unused_0a_StubNop ; $606f
 	call UnregisterFrameTask ; $6072
 	ret ; $6075
@@ -244,7 +244,7 @@ Unused_0a_InitSceneViewerDefault:
 	pop bc ; $60b0
 	pop af ; $60b1
 	ret ; $60b2
-UnusedSceneViewerMainLoop:
+Unused_0a_SceneViewerMainLoop:
 	call Unused_0a_InitSceneViewerDefault ; $60b3
 .clearScroll:
 	call Unused_0a_UpdateSceneViewerScroll ; $60b6
@@ -391,7 +391,7 @@ CopySceneTilemapRect:
 	ld a, c ; $61be
 	ld c, b ; $61bf
 	ld b, $00 ; $61c0
-.rowLoop:
+.courtPlanesRowLoop:
 	push af ; $61c2
 	push bc ; $61c3
 	push de ; $61c4
@@ -413,7 +413,7 @@ CopySceneTilemapRect:
 	add hl, bc ; $61d8
 	pop bc ; $61d9
 	dec a ; $61da
-	jr nz, .rowLoop ; $61db
+	jr nz, .courtPlanesRowLoop ; $61db
 	pop bc ; $61dd
 	pop de ; $61de
 	pop hl ; $61df
@@ -421,7 +421,7 @@ CopySceneTilemapRect:
 	ld a, c ; $61e6
 	ld c, b ; $61e7
 	ld b, $00 ; $61e8
-.rowLoop2:
+.screenRowLoop:
 	push af ; $61ea
 	push bc ; $61eb
 	push de ; $61ec
@@ -443,7 +443,7 @@ CopySceneTilemapRect:
 	add hl, bc ; $6200
 	pop bc ; $6201
 	dec a ; $6202
-	jr nz, .rowLoop2 ; $6203
+	jr nz, .screenRowLoop ; $6203
 	pop hl ; $6205
 	pop de ; $6206
 	wram_bank WRAM_TEXT ; $6207

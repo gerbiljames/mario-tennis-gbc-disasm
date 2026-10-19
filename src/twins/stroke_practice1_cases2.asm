@@ -18,10 +18,10 @@
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3
 	ld b, $00
 	call QueueDrillResultMessage
-	ld hl, wDrillCounters + 3
+	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET
 	inc [hl]
 	jp .storeMatchAbortFlag
-.storeMatchAbortFlag2:
+.ignoreRallyTick:
 	xor a
 	ret
 .hitTarget:

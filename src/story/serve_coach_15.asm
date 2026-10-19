@@ -24,36 +24,36 @@ MovePlayerToLessonCourtSpot:
 	ret ; $62be
 NetGameMatch1ResultScene:
 	ld hl, wChallengerFollowupTextId ; $62bf
-	ld de, Text_6e_77 ; $62c2
+	ld de, Text_BrianWeveGotAMatch ; $62c2
 	ld a, e ; $62c5
 	ld [hl+], a ; $62c6
 	ld [hl], d ; $62c7
 	ld hl, wChallengerLoseTextId ; $62c8
-	ld de, Text_6e_74 ; $62cb
+	ld de, Text_BrianTiedKeepGoing ; $62cb
 	ld a, e ; $62ce
 	ld [hl+], a ; $62cf
 	ld [hl], d ; $62d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $62d1
 	jr z, .netResultTextAlt ; $62d4
 	ld hl, wChallengerWinTextId ; $62d6
-	ld de, Text_6e_80 ; $62d9
+	ld de, Text_BrianBetterAtVolleying ; $62d9
 	ld a, e ; $62dc
 	ld [hl+], a ; $62dd
 	ld [hl], d ; $62de
 	ld hl, wChallengerDrawTextId ; $62df
-	ld de, Text_6e_83 ; $62e2
+	ld de, Text_BrianLostVolleyMatch ; $62e2
 	ld a, e ; $62e5
 	ld [hl+], a ; $62e6
 	ld [hl], d ; $62e7
 	jr .netResult ; $62e8
 .netResultTextAlt:
 	ld hl, wChallengerWinTextId ; $62ea
-	ld de, Text_6e_79 ; $62ed
+	ld de, Text_BrianCantLoseToJunior ; $62ed
 	ld a, e ; $62f0
 	ld [hl+], a ; $62f1
 	ld [hl], d ; $62f2
 	ld hl, wChallengerDrawTextId ; $62f3
-	ld de, Text_6e_81 ; $62f6
+	ld de, Text_BrianLostToJunior ; $62f6
 	ld a, e ; $62f9
 	ld [hl+], a ; $62fa
 	ld [hl], d ; $62fb
@@ -62,22 +62,22 @@ NetGameMatch1ResultScene:
 	ret ; $62ff
 NetGameMatch2ResultScene:
 	ld hl, wChallengerFollowupTextId ; $6300
-	ld de, Text_6e_77 ; $6303
+	ld de, Text_BrianWeveGotAMatch ; $6303
 	ld a, e ; $6306
 	ld [hl+], a ; $6307
 	ld [hl], d ; $6308
 	ld hl, wChallengerLoseTextId ; $6309
-	ld de, Text_6e_74 ; $630c
+	ld de, Text_BrianTiedKeepGoing ; $630c
 	ld a, e ; $630f
 	ld [hl+], a ; $6310
 	ld [hl], d ; $6311
 	ld hl, wChallengerWinTextId ; $6312
-	ld de, Text_6e_95 ; $6315
+	ld de, Text_BrianBetterAtSmash ; $6315
 	ld a, e ; $6318
 	ld [hl+], a ; $6319
 	ld [hl], d ; $631a
 	ld hl, wChallengerDrawTextId ; $631b
-	ld de, Text_6e_96 ; $631e
+	ld de, Text_BrianLostSmashMatch ; $631e
 	ld a, e ; $6321
 	ld [hl+], a ; $6322
 	ld [hl], d ; $6323
@@ -85,22 +85,22 @@ NetGameMatch2ResultScene:
 	ret ; $6327
 NetGameMatch3ResultScene:
 	ld hl, wChallengerFollowupTextId ; $6328
-	ld de, Text_6e_77 ; $632b
+	ld de, Text_BrianWeveGotAMatch ; $632b
 	ld a, e ; $632e
 	ld [hl+], a ; $632f
 	ld [hl], d ; $6330
 	ld hl, wChallengerLoseTextId ; $6331
-	ld de, Text_6e_74 ; $6334
+	ld de, Text_BrianTiedKeepGoing ; $6334
 	ld a, e ; $6337
 	ld [hl+], a ; $6338
 	ld [hl], d ; $6339
 	ld hl, wChallengerWinTextId ; $633a
-	ld de, Text_6e_108 ; $633d
+	ld de, Text_BrianNetGameBetter ; $633d
 	ld a, e ; $6340
 	ld [hl+], a ; $6341
 	ld [hl], d ; $6342
 	ld hl, wChallengerDrawTextId ; $6343
-	ld de, Text_6e_109 ; $6346
+	ld de, Text_BrianLostNetGameAgain ; $6346
 	ld a, e ; $6349
 	ld [hl+], a ; $634a
 	ld [hl], d ; $634b
@@ -108,36 +108,36 @@ NetGameMatch3ResultScene:
 	ret ; $634f
 StrokeMatch1ResultScene:
 	ld hl, wChallengerFollowupTextId ; $6350
-	ld de, Text_6e_123 ; $6353
+	ld de, Text_AllieUpForIt ; $6353
 	ld a, e ; $6356
 	ld [hl+], a ; $6357
 	ld [hl], d ; $6358
 	ld hl, wChallengerLoseTextId ; $6359
-	ld de, Text_6e_120 ; $635c
+	ld de, Text_AllieEvenKeepGoing ; $635c
 	ld a, e ; $635f
 	ld [hl+], a ; $6360
 	ld [hl], d ; $6361
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6362
 	jr z, .serveResult ; $6365
 	ld hl, wChallengerWinTextId ; $6367
-	ld de, Text_6e_126 ; $636a
+	ld de, Text_AllieBetterAtStroke ; $636a
 	ld a, e ; $636d
 	ld [hl+], a ; $636e
 	ld [hl], d ; $636f
 	ld hl, wChallengerDrawTextId ; $6370
-	ld de, Text_6e_130 ; $6373
+	ld de, Text_AllieLostStrokeMatch ; $6373
 	ld a, e ; $6376
 	ld [hl+], a ; $6377
 	ld [hl], d ; $6378
 	jr .serveResultDoubles ; $6379
 .serveResult:
 	ld hl, wChallengerWinTextId ; $637b
-	ld de, Text_6e_125 ; $637e
+	ld de, Text_AllieWontLoseToJunior ; $637e
 	ld a, e ; $6381
 	ld [hl+], a ; $6382
 	ld [hl], d ; $6383
 	ld hl, wChallengerDrawTextId ; $6384
-	ld de, Text_6e_127 ; $6387
+	ld de, Text_AllieLostToJunior ; $6387
 	ld a, e ; $638a
 	ld [hl+], a ; $638b
 	ld [hl], d ; $638c
@@ -146,22 +146,22 @@ StrokeMatch1ResultScene:
 	ret ; $6390
 StrokeMatch2ResultScene:
 	ld hl, wChallengerFollowupTextId ; $6391
-	ld de, Text_6e_123 ; $6394
+	ld de, Text_AllieUpForIt ; $6394
 	ld a, e ; $6397
 	ld [hl+], a ; $6398
 	ld [hl], d ; $6399
 	ld hl, wChallengerLoseTextId ; $639a
-	ld de, Text_6e_120 ; $639d
+	ld de, Text_AllieEvenKeepGoing ; $639d
 	ld a, e ; $63a0
 	ld [hl+], a ; $63a1
 	ld [hl], d ; $63a2
 	ld hl, wChallengerWinTextId ; $63a3
-	ld de, Text_6e_145 ; $63a6
+	ld de, Text_AllieBetterAtLob ; $63a6
 	ld a, e ; $63a9
 	ld [hl+], a ; $63aa
 	ld [hl], d ; $63ab
 	ld hl, wChallengerDrawTextId ; $63ac
-	ld de, Text_6e_146 ; $63af
+	ld de, Text_AllieLostLobMatch ; $63af
 	ld a, e ; $63b2
 	ld [hl+], a ; $63b3
 	ld [hl], d ; $63b4
@@ -169,22 +169,22 @@ StrokeMatch2ResultScene:
 	ret ; $63b8
 StrokeMatch3ResultScene:
 	ld hl, wChallengerFollowupTextId ; $63b9
-	ld de, Text_6e_123 ; $63bc
+	ld de, Text_AllieUpForIt ; $63bc
 	ld a, e ; $63bf
 	ld [hl+], a ; $63c0
 	ld [hl], d ; $63c1
 	ld hl, wChallengerLoseTextId ; $63c2
-	ld de, Text_6e_120 ; $63c5
+	ld de, Text_AllieEvenKeepGoing ; $63c5
 	ld a, e ; $63c8
 	ld [hl+], a ; $63c9
 	ld [hl], d ; $63ca
 	ld hl, wChallengerWinTextId ; $63cb
-	ld de, Text_6e_163 ; $63ce
+	ld de, Text_AllieWonReturnMatch ; $63ce
 	ld a, e ; $63d1
 	ld [hl+], a ; $63d2
 	ld [hl], d ; $63d3
 	ld hl, wChallengerDrawTextId ; $63d4
-	ld de, Text_6e_164 ; $63d7
+	ld de, Text_AllieCantBeatYou ; $63d7
 	ld a, e ; $63da
 	ld [hl+], a ; $63db
 	ld [hl], d ; $63dc
@@ -192,7 +192,7 @@ StrokeMatch3ResultScene:
 	ret ; $63e0
 ServiceAceMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_BOB_1, ACTOR_PARTNER ; $63e1
-	script_set_text Text_6e_20 ; $63e9
+	script_set_text Text_ServeRivalGoodServeChallenge ; $63e9
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $63ef
 	farcall RunDialogueYesNoPrompt ; $63f4
 	farcall ScriptCloseDialogueWindow ; $63f7
@@ -240,7 +240,7 @@ ServiceAceMatchChallengeScene:
 	ret ; $64a7
 CenterLineServeMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_BOB_1, ACTOR_PARTNER ; $64a8
-	script_set_text Text_6e_38 ; $64b0
+	script_set_text Text_ServeRivalServeBetterChallenge ; $64b0
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $64b6
 	farcall RunDialogueYesNoPrompt ; $64bb
 	farcall ScriptCloseDialogueWindow ; $64be
@@ -290,7 +290,7 @@ CenterLineServeMatchChallengeScene:
 	ret ; $6585
 AcademyRulesServeMatchChallengeScene:
 	script_face_toward ACTOR_TRAINING_COURT_BOB_1, ACTOR_PARTNER ; $6586
-	script_set_text Text_6e_52 ; $658e
+	script_set_text Text_ServeRivalWaitingForYou ; $658e
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $6594
 	farcall RunDialogueYesNoPrompt ; $6599
 	farcall ScriptCloseDialogueWindow ; $659c
@@ -385,10 +385,10 @@ ServeCoachJuniorLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_CURT, ACTOR_PARTNER ; $66f5
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $66fd
 	jr nz, .setText ; $6700
-	script_set_text Text_37_16 ; $6702
+	script_set_text Text_CurtJuniorNeedServePractice ; $6702
 	jr .scriptShowSpeakerDialogueRestoreBG ; $6708
 .setText:
-	script_set_text Text_37_22 ; $670a
+	script_set_text Text_CurtHereForServePractice ; $670a
 .scriptShowSpeakerDialogueRestoreBG:
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $6710
 	farcall RunDialogueYesNoPrompt ; $6715
@@ -424,7 +424,7 @@ ServeCoachJuniorLessonScene:
 	ret ; $677d
 ServeCoachSeniorLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_CURT, ACTOR_PARTNER ; $677e
-	script_set_text Text_37_36 ; $6786
+	script_set_text Text_CurtIntermediateServeOffer ; $6786
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $678c
 	farcall RunDialogueYesNoPrompt ; $6791
 	farcall ScriptCloseDialogueWindow ; $6794
@@ -459,7 +459,7 @@ ServeCoachSeniorLessonScene:
 	ret ; $67fb
 ServeCoachVarsityLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_CURT, ACTOR_PARTNER ; $67fc
-	script_set_text Text_37_51 ; $6804
+	script_set_text Text_CurtAdvancedServeOffer ; $6804
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $680a
 	farcall RunDialogueYesNoPrompt ; $680f
 	farcall ScriptCloseDialogueWindow ; $6812

@@ -17,7 +17,6 @@ untouched, which is the list a modder should take.
 usage: ram_free.py [--json FILE]      prints the free ranges per bank
 """
 import argparse
-import glob
 import json
 import re
 import sys
@@ -77,7 +76,7 @@ def named_bytes():
     """{(space, bank): set(addresses a symbol covers)}; space 'w' or 'h'."""
     named = {}
     for fn in ("wram.asm", "hram.asm"):
-        space = bank = base = None
+        space = bank = None
         addr = 0
         union = []          # stack of (start, max_end)
         for line in _expand(ROOT / "ram" / fn):
@@ -86,7 +85,7 @@ def named_bytes():
             if m:
                 space = "h" if m.group(1) == "HRAM" else "w"
                 bank = int(m.group(3) or 0)
-                addr = base = int(m.group(2), 16)
+                addr = int(m.group(2), 16)
                 union = []
                 continue
             if space is None or not line or line.startswith(";"):

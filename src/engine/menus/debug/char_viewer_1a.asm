@@ -291,7 +291,7 @@ Unused_1a_RefreshCharViewerSelection:
 	adc $d1 ; $6e7d
 	sub l ; $6e7f
 	ld h, a ; $6e80
-	jr .queueVRAMCopy ; $6e81
+	jr .markCursorAttr ; $6e81
 .secondRowCursor:
 	sub $0b ; $6e83
 	add $48 ; $6e85
@@ -299,7 +299,7 @@ Unused_1a_RefreshCharViewerSelection:
 	adc $d1 ; $6e88
 	sub l ; $6e8a
 	ld h, a ; $6e8b
-.queueVRAMCopy:
+.markCursorAttr:
 	wram_bank WRAM_COURT_PLANES ; $6e8c
 	ld a, $08 ; $6e92
 	ld [hl], a ; $6e94
@@ -372,14 +372,14 @@ Unused_1a_RefreshCharViewerSelection:
 	ld c, $20 ; $6f0d
 	wram_bank WRAM_SCREEN ; $6f0f
 	farcall RenderTextToBuffer64 ; $6f15
-	jr .queueVRAMCopy2 ; $6f18
+	jr .queueNameRows ; $6f18
 .secondRow:
 	wram_bank WRAM_SCREEN ; $6f1a
-	ld hl, Text_34_192 ; $6f20
+	ld hl, Text_DebugCharViewerChangeColor ; $6f20
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6f23
 	ld c, $20 ; $6f26
 	farcall RenderTextToBuffer64 ; $6f28
-.queueVRAMCopy2:
+.queueNameRows:
 	wram_bank WRAM_SCREEN ; $6f2b
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6f31
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $6f34

@@ -64,8 +64,8 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"\(BANK\([\w.]+\) << 8\) \| LOW\("), 0, "a slot pair not written with ld_slot")
 
     def test_named_ids(self):
-        self.assertEqual(count(r"ld hl, Text_(?:[0-9a-f]+_\d+|Menu\w+) ;"), 257)
-        self.assertEqual(count(r"^\tdw Text_[0-9a-f]+_\d+"), 737)
+        self.assertEqual(count(r"ld hl, Text_\w+ ;"), 257)
+        self.assertEqual(count(r"^\tdw Text_\w+"), 737)
         self.assertGreaterEqual(count(r"\bDRILLMSG_\w+"), 65)
         self.assertGreaterEqual(count(r"\bBEHAVIOR_\w+"), 43)
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n(?:ENDC\n)?\.clearLoop:\n\tpush de ; \$[0-9a-f]{4}\n\tcall ClearGameFlag "),
@@ -145,6 +145,10 @@ class Manifest(unittest.TestCase):
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
         self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 231)
+        for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
+                        ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
+            self.assertEqual(specs.count(spec), n, spec)
+        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 858)
 
 
 @needs_rom
@@ -161,6 +165,30 @@ class Tools(unittest.TestCase):
         # the actor-slot resolver to the script sites it reaches today
         m = re.search(r"^slots\s+(\d+) checked", r.stdout, re.M)
         self.assertGreaterEqual(int(m.group(1)), 5086, "the slot resolver reaches fewer script sites")
+
+    def test_doc_counts(self):
+        """README and STATUS quote tools/stats.py; rerun it and update them."""
+        if not (ROOT / "build" / "mariotennis.map").exists():
+            self.skipTest("build/mariotennis.map not present: run make first")
+        import stats
+        rom, ram = stats.labels()
+        instrs, incbin, fill = stats.source()
+        _, spelled = stats.rom_bytes(incbin, fill)
+        total = sum(rom.values()) + sum(ram.values())
+        readme = (ROOT / "README.md").read_text()
+        status = (ROOT / "docs" / "STATUS.md").read_text()
+        for doc, text, quotes in (
+                ("README.md", readme, [
+                    f"| instructions | {instrs:,} ",
+                    f"| source-spelled bytes | {spelled:,} bytes, {100 * spelled / stats.ROM_SIZE:.1f}% ",
+                    f"| labels | {total:,}: {rom['global']:,} routines and tables and {rom['local']:,} locals in ROM, "
+                    f"{ram['global']:,} RAM names |"]),
+                ("docs/STATUS.md", status, [
+                    f"| instruction and code-macro lines | {instrs:,} |",
+                    f"| source-spelled bytes (`tools/stats.py`) | {spelled:,}, {100 * spelled / stats.ROM_SIZE:.1f}% ",
+                    f"| labels | {total:,}: ROM {rom['global']:,} global + {rom['local']:,} local, RAM {ram['global']:,};"])):
+            for quote in quotes:
+                self.assertIn(quote, text, doc)
 
 
 if __name__ == "__main__":

@@ -282,7 +282,7 @@ AddBobbingOffsetYLargeTable:
 	db $03, $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $01, $01, $01, $00, $00 ; 0x10
 	db $00, $00, $00, $ff, $ff, $ff, $fe, $fe, $fe, $fd, $fd, $fd, $fd, $fd, $fd, $fd ; 0x20
 	db $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fe, $fe, $fe, $ff, $ff, $ff, $00, $00 ; 0x30
-Unused_18_StubNop:
+Unused_18_StubNop0:
 	ret ; $44ee
 Unused_18_FindRosterEntry:
 	push af ; $44ef
@@ -356,7 +356,7 @@ CheckCharacterUnlocked:
 	pop de ; $454a
 	pop hl ; $454b
 	ret ; $454c
-UnusedCheckCharacterIdUnlocked:
+Unused_18_CheckCharacterIdUnlocked:
 	cp $10 ; $454d
 	jr nc, .done ; $454f
 	ld a, $01 ; $4551

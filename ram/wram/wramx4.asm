@@ -94,30 +94,21 @@ wActorScriptBank:: db
 ; RunMinigamePointLoop and UpdateMatchFrame select WRAM bank $04 before
 ; CallModeHook, and ClearMinigameActors / SetMinigameActorHandler /
 ; SetMinigameActorPosition select it again.
-; Bank $0a lays a different array over the same bytes: fifteen 14-byte
-; target records instead of seven 16-byte actors. Both use bit 0 of +$00 as
-; the live flag, but strides and fields differ (bank $0a's script pointer
-; is at +$04, bank $0d's handler pointer at +$0e).
+; Bank $0a lays its MGTARGET_ records over the same bytes.
 UNION
 ; minigames (bank $0d)
-; [112 bytes] Seven 16-byte actor records, cleared as a block by
-; ClearMinigameActors. Fields, addressed through bc by the helpers:
-; +$00 flags (bit 0 = enabled, bit 1 = has a handler), +$02 state,
-; +$03 timer, +$06 world X (16-bit), +$08 world depth (16-bit),
-; +$0a projected screen X (16-bit), +$0c projected screen Y (16-bit),
-; +$0e handler pointer.
+; [112 bytes] Seven MGACTOR_SIZE records, cleared as a block by
+; ClearMinigameActors.
 wMinigameActors:: ds 112
 	export_size wMinigameActors
-; [16 bytes] The eighth record, same layout, outside the
-; ClearMinigameActors block: the object the minigame drives (shot target,
-; Boo, treasure box). The only record addressed by literal address, so its
-; fields appear as wMinigameSceneActor + n.
+; [16 bytes] The eighth record, outside the ClearMinigameActors block:
+; the working copy UpdateMinigameActor runs each handler on.
 wMinigameSceneActor:: ds 16
 	export_size wMinigameSceneActor
 	ds 82
 NEXTU
 ; minigame targets (bank $0a)
-; [210 bytes] Fifteen 14-byte target records for the target-shot minigames, walked by UpdateMinigameTargets and filled by SpawnMinigameTargetsFromList from a formation's script-pointer list. Fields: +$00 flags (bit 0 = live), +$01 the delay ActivateMinigameTarget zeroes, +$04 target script pointer. UpdateMinigameTarget works on a copy in wMinigameTargetWork. InitMinigameTargets clears 256 bytes (`ld c, $10` through ClearMemory16), past the array and over wMinigameTargetWork
+; [210 bytes] Fifteen MGTARGET_SIZE records for the target-shot minigames, walked by UpdateMinigameTargets and filled by SpawnMinigameTargetsFromList from a formation's script-pointer list. InitMinigameTargets clears 256 bytes (`ld c, $10` through ClearMemory16), past the array and over wMinigameTargetWork
 wMinigameTargets:: ds 210
 ENDU
 
@@ -127,7 +118,7 @@ ENDU
 ; UpdateMinigameTarget copies the slot in, runs its script, movement, draw
 ; and hit checks on this record, and copies it back. Owned by bank $0a.
 ; minigame targets (bank $0a)
-; [16 bytes] +$00 flags (bit 0 live, bit 1 moving toward the goal), +$02 delay counter, +$06/+$08 current position, +$0a/+$0c goal position. MoveMinigameTargetTowardGoal steps toward the goal $10 units at a time
+; [16 bytes] MGTARGET_* fields
 wMinigameTargetWork:: ds 16
 	export_size wMinigameTargetWork
 
@@ -220,13 +211,13 @@ SECTION "WRAMX bank 4 $df00", WRAMX[$df00], BANK[4]
 ; wCharSelectHandedness in WRAM bank $03).
 UNION
 ; clear-status developer menu (bank $0a, WRAM bank $05)
-; [8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled; Continue and cancel go straight to the result code. The menu keeps its state in WRAM bank $05 over the idle far-P1 character struct, cleared 32 bytes at a time on entry
+; [8-bit] RunClearStatusSetupMenu's first choice (Text_MenuSetContinue): 0 Set, 1 Continue, $ff cancelled; Continue and cancel go straight to the result code. The menu keeps its state in WRAM bank $05 over the idle far-P1 character struct, cleared 32 bytes at a time on entry
 w4ClearStatusMode:: db
 ; [8-bit] 0 singles, 1 doubles, copied from FLAG_DOUBLES when Set is chosen; picks the singles or doubles rank list and result-code row
 w4ClearStatusDoubles:: db
-; [8-bit] Second menu (Text_34_217): 0 Mini-Game, 1 Ranking Match; $ff steps back
+; [8-bit] Second menu (Text_MenuMinigameOrRanking): 0 Mini-Game, 1 Ranking Match; $ff steps back
 w4ClearStatusFormat:: db
-; [8-bit] Third menu (Text_34_218): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
+; [8-bit] Third menu (Text_MenuClasses): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
 w4ClearStatusClass:: db
 ; [8-bit] Fourth menu: the drill (Text_34_219) for a Mini-Game clear, or the rank within the class (Text_34_220 and the per-class lists after it) for a Ranking Match clear; $ff steps back
 w4ClearStatusRank:: db

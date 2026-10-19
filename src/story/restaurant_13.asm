@@ -100,20 +100,20 @@ RestaurantPlazaExitTriggers_13:
 	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, $0f
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_TRAINING_COURT, $0f
 	db $ff
-Unused_13_PlayerSpeaksText35_48:
-	script_set_text Text_35_48 ; $427f
+Unused_13_PlayerSpeaksDefineAce:
+	script_set_text Text_HeadmasterDefineAce ; $427f
 	script_speak ACTOR_PLAYER ; $4285
 	ret ; $428a
 RestaurantPlazaNpcScripts_13:
 	; $428b, 9 bytes (map_scripts)
-	map_script ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_EXCLAIM, FACEMASK_ANY, $0000, Text_35_55, $00, $00
+	map_script ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_EXCLAIM, FACEMASK_ANY, $0000, Text_DefineDoublesBackPlayer, $00, $00
 	db $ff
 RestaurantPlazaFacingScripts_13:
 	; $4294, 33 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, Text_31_70, $00, $00
-	map_script $02, FACEMASK_ANY, $0000, Text_31_71, $00, $00
-	map_script $03, FACEMASK_ANY, $0000, Text_31_72, $00, $00
-	map_script $04, FACEMASK_ANY, $0000, Text_31_73, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, Text_SignToDormitory, $00, $00
+	map_script $02, FACEMASK_ANY, $0000, Text_SignToSeniorCourt, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_SignToJuniorCourt, $00, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_SignToTrainingCourt, $00, $00
 	db $ff
 RestaurantPlazaTileTriggers_13:
 	; $42b5, 41 bytes (map_scripts)
@@ -265,7 +265,7 @@ AcademyCourtsTourCutscene:
 	ld a, $01 ; $459e
 	ld hl, AnimateTourPointerSprite_13 ; $45a0
 	call RegisterFrameTask ; $45a3
-	script_set_text Text_31_48 ; $45a6
+	script_set_text Text_EmilyJuniorCourtThatWay ; $45a6
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $45ac
 	ld hl, AnimateTourPointerSprite_13 ; $45b1
 	call UnregisterFrameTask ; $45b4
@@ -357,7 +357,7 @@ ServiceAceCoachIntroCutscene:
 	script_wait_move ACTOR_PLAYER ; $47ea
 	script_wait_frames 30 ; $47ef
 	script_face_toward ACTOR_PLAYER, ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $47f6
-	script_set_text Text_31_53 ; $47fe
+	script_set_text Text_EmilyServiceAceRestaurant ; $47fe
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $4804
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4809
 	script_wait_idle ACTOR_PLAYER ; $4810
@@ -428,7 +428,7 @@ ServiceAceCoachIntroCutscene:
 	farcall AdvanceDialogueTextCursor ; $49be
 .speak:
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $49c1
-	script_set_text Text_31_62 ; $49c6
+	script_set_text Text_ServiceAceCoachesHelpTomorrow ; $49c6
 	script_wait_frames 15 ; $49cc
 	script_set_speed ACTOR_PLAYER, 0.75 ; $49d3
 	script_move_target ACTOR_PLAYER, 29.0, 12.0 ; $49db

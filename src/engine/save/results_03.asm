@@ -361,7 +361,7 @@ SaveResultDeletedString_03:
 SaveResultBlankString_03:
 	; $54e0, 8 bytes (ascii)
 	db "      ", $00, $00
-UnusedByteRamp_03:
+Unused_03_ByteRamp:
 	; $54e8, 13 bytes (bytes:13)
 	db $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d ; 0x00
 	; $54f5, 8 bytes (fill)

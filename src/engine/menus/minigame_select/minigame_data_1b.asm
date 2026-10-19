@@ -113,7 +113,7 @@ DrawSavedDataTypeDescription:
 	ld d, [hl] ; $739c
 	ld e, a ; $739d
 	ld a, b ; $739e
-	ld hl, Text_30_202 ; $739f
+	ld hl, Text_SavedDataExhibitionData ; $739f
 	add l ; $73a2
 	ld l, a ; $73a3
 	jr nc, .renderTextToBuffer64 ; $73a4
@@ -174,17 +174,17 @@ ShowMinigameDataScreen:
 	call AdvanceFrame ; $741b
 	ld a, [wMenuInputPressed] ; $741e
 	bit PADB_A, a ; $7421
-	jr nz, .playSfx ; $7423
+	jr nz, .playSelectSfx ; $7423
 	bit PADB_B, a ; $7425
-	jr nz, .playSfx2 ; $7427
+	jr nz, .playCancelSfx ; $7427
 	jr .loop ; $7429
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $742b
 	script_fade_out 16 ; $742d
 	call WaitFadeEnd ; $7432
 	call ClearFrameTasks ; $7435
 	ret ; $7438
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7439
 	script_fade_out 16 ; $743b
 	call WaitFadeEnd ; $7440

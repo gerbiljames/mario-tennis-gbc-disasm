@@ -1,5 +1,5 @@
 EnableTargetZoneAfterDelayTask:
-	ld hl, wDrillCounters + 8 ; $6bd0
+	ld hl, wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY ; $6bd0
 	dec [hl] ; $6bd3
 	ret nz ; $6bd4
 	ld a, $01 ; $6bd5
@@ -14,7 +14,7 @@ StrokePractice1Hook_PointEnd:
 	jr z, .ballOut ; $6be9
 	jr .strokePractice1HandlePointEnd ; $6beb
 .ballOut:
-	ld hl, wDrillCounters + 1 ; $6bed
+	ld hl, wDrillCounters + DRILLCTR_OUTS ; $6bed
 	inc [hl] ; $6bf0
 .strokePractice1HandlePointEnd:
 	call StrokePractice1HandlePointEnd ; $6bf1
@@ -99,16 +99,16 @@ StrokePractice1JudgePoint:
 	rst Rst00 ; $6d07
 	dw StrokePractice1JudgePoint.result0 ; $6d08 jumptable
 	dw StrokePractice1Cases1 ; $6d0a jumptable
-	dw StrokePractice1Cases1.returnZero ; $6d0c jumptable
-	dw StrokePractice1Cases1.returnZero2 ; $6d0e jumptable
+	dw StrokePractice1Cases1.ignoreBounce ; $6d0c jumptable
+	dw StrokePractice1Cases1.ignoreRallyTick ; $6d0e jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6d10
 	ld hl, StrokePractice1JudgePointMessages ; $6d13
 	add l ; $6d16
 	ld l, a ; $6d17
-	jr nc, .readEntry1 ; $6d18
+	jr nc, .readMessage ; $6d18
 	inc h ; $6d1a
-.readEntry1:
+.readMessage:
 	ld a, [hl] ; $6d1b
 	ld a, a ; $6d1c
 	ld b, $00 ; $6d1d
@@ -117,9 +117,9 @@ StrokePractice1JudgePoint:
 	ld hl, EvenRallyVerdicts ; $6d25
 	add l ; $6d28
 	ld l, a ; $6d29
-	jr nc, .readEntry2 ; $6d2a
+	jr nc, .readResult ; $6d2a
 	inc h ; $6d2c
-.readEntry2:
+.readResult:
 	ld a, [hl] ; $6d2d
 	ret ; $6d2e
 StrokePractice1JudgePointMessages:
@@ -128,10 +128,10 @@ StrokePractice1JudgePointMessages:
 StrokePractice1Cases1:
 	xor a ; $6d39
 	ret ; $6d3a
-.returnZero:
+.ignoreBounce:
 	xor a ; $6d3b
 	ret ; $6d3c
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $6d3d
 	ret ; $6d3e
 .dispatchResult:
@@ -141,7 +141,7 @@ StrokePractice1Cases1:
 	dw StrokePractice1Cases1.checkPointOutcome ; $6d42 jumptable
 	dw StrokePractice1Cases2 ; $6d44 jumptable
 	dw StrokePractice1Cases2.checkBallBounceCount ; $6d46 jumptable
-	dw StrokePractice1Cases2.storeMatchAbortFlag2 ; $6d48 jumptable
+	dw StrokePractice1Cases2.ignoreRallyTick ; $6d48 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6d4a
 	ld hl, StrokePractice1Cases1Messages ; $6d4d
@@ -186,8 +186,8 @@ StrokePractice2Hooks:
 	dw RetStub ; record 7
 StrokePractice2Hook_MinigameStart:
 	xor a ; $6dd4
-	ld [wDrillCounters + 2], a ; $6dd5
-	ld [wDrillCounters + 7], a ; $6dd8
+	ld [wDrillCounters + DRILLCTR_LOBS], a ; $6dd5
+	ld [wDrillCounters + DRILLCTR_LOB_PASSES], a ; $6dd8
 	ret ; $6ddb
 StrokePractice2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6ddc
@@ -207,7 +207,7 @@ StrokePractice2Hook_PointStart:
 	xor a ; $6df7
 	ld [wDrillPointJudgement], a ; $6df8
 	ld a, $5a ; $6dfb
-	ld [wDrillCounters + 8], a ; $6dfd
+	ld [wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY], a ; $6dfd
 	ld a, $01 ; $6e00
 	ld hl, StrokePractice2TargetZoneDelayTask ; $6e02
 	call RegisterFrameTask ; $6e05
@@ -225,7 +225,7 @@ StrokePractice2ServeAims:
 	; $6e18, 4 bytes (bytes:4)
 	db PADF_LEFT, PADF_RIGHT, PADF_RIGHT, PADF_LEFT
 StrokePractice2TargetZoneDelayTask:
-	ld hl, wDrillCounters + 8 ; $6e1c
+	ld hl, wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY ; $6e1c
 	dec [hl] ; $6e1f
 	ret nz ; $6e20
 	ld a, $01 ; $6e21
@@ -243,7 +243,7 @@ StrokePractice2Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $6e3c
 	ret ; $6e3f
 StrokePractice2EvaluateResult:
-	ld a, [wDrillCounters + 7] ; $6e40
+	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6e40
 	cp $04 ; $6e43
 	jr nz, .checkCounter7 ; $6e45
 	xor a ; $6e47
@@ -251,14 +251,14 @@ StrokePractice2EvaluateResult:
 	ld a, $01 ; $6e4b
 	ret ; $6e4d
 .checkCounter7:
-	ld a, [wDrillCounters + 7] ; $6e4e
+	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6e4e
 	cp $03 ; $6e51
 	jr c, .checkCounter2 ; $6e53
 	ld a, $05 ; $6e55
 	ld [wDrillLessonResult], a ; $6e57
 	jr .notFound ; $6e5a
 .checkCounter2:
-	ld a, [wDrillCounters + 2] ; $6e5c
+	ld a, [wDrillCounters + DRILLCTR_LOBS] ; $6e5c
 	cp $04 ; $6e5f
 	jr nc, .checkRallyLength ; $6e61
 	ld a, $01 ; $6e63
@@ -313,14 +313,14 @@ StrokePractice2HandlePointEnd:
 	ld [wPointWinLoseFlag], a ; $6ecf
 	cp $01 ; $6ed2
 	jr nz, .recordDrillPointResultBits ; $6ed4
-	ld hl, wDrillCounters + 7 ; $6ed6
+	ld hl, wDrillCounters + DRILLCTR_LOB_PASSES ; $6ed6
 	inc [hl] ; $6ed9
 .recordDrillPointResultBits:
 	call RecordDrillPointResultBits ; $6eda
 	call ShowQueuedDrillMessage ; $6edd
 	farcall UpdatePointStats ; $6ee0
 	farcall AwardPoint ; $6ee3
-	ld a, [wDrillCounters + 7] ; $6ee6
+	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6ee6
 	ld [wPlayer1PointsWon], a ; $6ee9
 	xor a ; $6eec
 	ld [wPlayer2PointsWon], a ; $6eed
@@ -377,16 +377,16 @@ StrokePractice2JudgePoint:
 	rst Rst00 ; $6f4f
 	dw StrokePractice2JudgePoint.result0 ; $6f50 jumptable
 	dw StrokePractice2Cases1 ; $6f52 jumptable
-	dw StrokePractice2Cases1.returnZero ; $6f54 jumptable
-	dw StrokePractice2Cases1.returnZero2 ; $6f56 jumptable
+	dw StrokePractice2Cases1.ignoreBounce ; $6f54 jumptable
+	dw StrokePractice2Cases1.ignoreRallyTick ; $6f56 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6f58
 	ld hl, StrokePractice2JudgePointMessages ; $6f5b
 	add l ; $6f5e
 	ld l, a ; $6f5f
-	jr nc, .readEntry1 ; $6f60
+	jr nc, .readMessage ; $6f60
 	inc h ; $6f62
-.readEntry1:
+.readMessage:
 	ld a, [hl] ; $6f63
 	ld a, a ; $6f64
 	ld b, $00 ; $6f65
@@ -395,9 +395,9 @@ StrokePractice2JudgePoint:
 	ld hl, EvenRallyVerdicts ; $6f6d
 	add l ; $6f70
 	ld l, a ; $6f71
-	jr nc, .readEntry2 ; $6f72
+	jr nc, .readResult ; $6f72
 	inc h ; $6f74
-.readEntry2:
+.readResult:
 	ld a, [hl] ; $6f75
 	ret ; $6f76
 StrokePractice2JudgePointMessages:
@@ -406,10 +406,10 @@ StrokePractice2JudgePointMessages:
 StrokePractice2Cases1:
 	xor a ; $6f81
 	ret ; $6f82
-.returnZero:
+.ignoreBounce:
 	xor a ; $6f83
 	ret ; $6f84
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $6f85
 	ret ; $6f86
 .dispatchResult:
@@ -419,7 +419,7 @@ StrokePractice2Cases1:
 	dw StrokePractice2Cases1.checkPointOutcome ; $6f8a jumptable
 	dw StrokePractice2Cases2 ; $6f8c jumptable
 	dw StrokePractice2Cases2.checkBallBounceCount ; $6f8e jumptable
-	dw StrokePractice2Cases2.storeMatchAbortFlag2 ; $6f90 jumptable
+	dw StrokePractice2Cases2.ignoreRallyTick ; $6f90 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6f92
 	ld hl, StrokePractice2Cases1Messages ; $6f95
@@ -454,7 +454,7 @@ StrokePractice2Cases2:
 	ld a, [wCurrentShotType] ; $6fc7
 	cp SHOTTYPE_LOB ; $6fca
 	jp nz, .storeMatchAbortFlag ; $6fcc
-	ld hl, wDrillCounters + 2 ; $6fcf
+	ld hl, wDrillCounters + DRILLCTR_LOBS ; $6fcf
 	inc [hl] ; $6fd2
 	xor a ; $6fd3
 	ret ; $6fd4
@@ -473,10 +473,10 @@ StrokePractice2Cases2:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3 ; $6fee
 	ld b, $00 ; $6ff0
 	call QueueDrillResultMessage ; $6ff2
-	ld hl, wDrillCounters + 3 ; $6ff5
+	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET ; $6ff5
 	inc [hl] ; $6ff8
 	jp .storeMatchAbortFlag ; $6ff9
-.storeMatchAbortFlag2:
+.ignoreRallyTick:
 	xor a ; $6ffc
 	ret ; $6ffd
 .hitTarget:
@@ -525,7 +525,7 @@ StrokePractice3Hook_PointStart:
 	xor a ; $705c
 	ld [wDrillPointJudgement], a ; $705d
 	ld a, $5a ; $7060
-	ld [wDrillCounters + 8], a ; $7062
+	ld [wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY], a ; $7062
 	ld a, $01 ; $7065
 	ld hl, StrokePractice3TargetZoneDelayTask ; $7067
 	call RegisterFrameTask ; $706a
@@ -543,7 +543,7 @@ StrokePractice3ServeAims:
 	; $707d, 4 bytes (bytes:4)
 	db $00, $00, $00, $00
 StrokePractice3TargetZoneDelayTask:
-	ld hl, wDrillCounters + 8 ; $7081
+	ld hl, wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY ; $7081
 	dec [hl] ; $7084
 	ret nz ; $7085
 	ld a, $01 ; $7086
@@ -624,16 +624,16 @@ StrokePractice3JudgePoint:
 	rst Rst00 ; $71b1
 	dw StrokePractice3JudgePoint.result0 ; $71b2 jumptable
 	dw StrokePractice3Cases1 ; $71b4 jumptable
-	dw StrokePractice3Cases1.returnZero ; $71b6 jumptable
-	dw StrokePractice3Cases1.returnZero2 ; $71b8 jumptable
+	dw StrokePractice3Cases1.ignoreBounce ; $71b6 jumptable
+	dw StrokePractice3Cases1.ignoreRallyTick ; $71b8 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $71ba
 	ld hl, StrokePractice3JudgePointMessages ; $71bd
 	add l ; $71c0
 	ld l, a ; $71c1
-	jr nc, .readEntry1 ; $71c2
+	jr nc, .readMessage ; $71c2
 	inc h ; $71c4
-.readEntry1:
+.readMessage:
 	ld a, [hl] ; $71c5
 	ld a, a ; $71c6
 	ld b, $00 ; $71c7
@@ -642,9 +642,9 @@ StrokePractice3JudgePoint:
 	ld hl, EvenRallyVerdicts ; $71cf
 	add l ; $71d2
 	ld l, a ; $71d3
-	jr nc, .readEntry2 ; $71d4
+	jr nc, .readResult ; $71d4
 	inc h ; $71d6
-.readEntry2:
+.readResult:
 	ld a, [hl] ; $71d7
 	ret ; $71d8
 StrokePractice3JudgePointMessages:
@@ -653,10 +653,10 @@ StrokePractice3JudgePointMessages:
 StrokePractice3Cases1:
 	xor a ; $71e3
 	ret ; $71e4
-.returnZero:
+.ignoreBounce:
 	xor a ; $71e5
 	ret ; $71e6
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $71e7
 	ret ; $71e8
 .dispatchResult:
@@ -666,7 +666,7 @@ StrokePractice3Cases1:
 	dw StrokePractice3Cases1.checkPointOutcome ; $71ec jumptable
 	dw StrokePractice3Cases2 ; $71ee jumptable
 	dw StrokePractice3Cases2.checkBallBounceCount ; $71f0 jumptable
-	dw StrokePractice3Cases2.storeMatchAbortFlag2 ; $71f2 jumptable
+	dw StrokePractice3Cases2.ignoreRallyTick ; $71f2 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $71f4
 	ld hl, StrokePractice3Cases1Messages ; $71f7

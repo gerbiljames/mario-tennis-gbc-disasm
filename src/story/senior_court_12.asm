@@ -97,12 +97,12 @@ SeniorCourtExit01_12:
 SeniorCourtExit01TextIds:
 	; $55dc, 12 bytes (text_ids)
 	table_width 2
-	dw Text_34_141 ; record 0
-	dw Text_34_151 ; record 1
-	dw Text_34_158 ; record 2
-	dw Text_34_168 ; record 3
-	dw Text_34_176 ; record 4
-	dw Text_34_186 ; record 5
+	dw Text_EmilyMakeTravelingTeamFirst ; record 0
+	dw Text_SeniorMadeDoublesVarsity ; record 1
+	dw Text_SeniorStandInCoachEmilyAway ; record 2
+	dw Text_SeniorOpenNotJustDream ; record 3
+	dw Text_SeniorRiseInspiredEveryone ; record 4
+	dw Text_SeniorEveryoneHasGoals ; record 5
 	assert_table_length NUM_SENIORCOURTSTAGES - SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP
 SeniorCourtNpc03_12:
 	ld a, [wMapSceneStage2] ; $55e8
@@ -123,7 +123,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $5606
 	jp nz, SeniorCourtNpc03FaceUpFlag0840_12.checkFlag ; $5609
-	script_set_text Text_34_4 ; $560c
+	script_set_text Text_EmilyUsedToAcademyLife ; $560c
 	script_speak_restore ACTOR_SENIOR_COURT_EMILY ; $5612
 	farcall RunDialogueYesNoPrompt ; $5617
 	farcall ScriptCloseDialogueWindow ; $561a
@@ -192,12 +192,12 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $5779
 	script_unlock_facing ACTOR_PLAYER ; $577e
 	script_face ACTOR_PLAYER, FACE_UP ; $5785
-	script_set_text Text_34_7 ; $578c
+	script_set_text Text_EmilyPartnerIsMyStudent ; $578c
 	set_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5792
 	ld a, [wStoryPartnerGender] ; $5795
 	or a ; $5798
 	jr nz, .speak ; $5799
-	script_set_text Text_34_11 ; $579b
+	script_set_text Text_EmilyThatsWhyPartners ; $579b
 .speak:
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $57a1
 	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_EMILY ; $57a6
@@ -212,7 +212,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $57e4
 	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_EMILY ; $57ec
 .setText:
-	script_set_text Text_34_10 ; $57f4
+	script_set_text Text_EmilyCantWaitToSeeDoubles ; $57f4
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $57fa
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $57ff
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5806
@@ -240,15 +240,15 @@ SeniorCourtNpc04_12:
 	ret ; $5846
 SeniorCourtNpc04TextIds:
 	; $5847, 18 bytes (text_ids)
-	dw Text_34_14 ; record 0
-	dw Text_34_14 ; record 1
-	dw Text_34_26 ; record 2
-	dw Text_34_26 ; record 3
-	dw Text_34_26 ; record 4
-	dw Text_34_27 ; record 5
-	dw Text_34_85 ; record 6
-	dw Text_34_85 ; record 7
-	dw Text_34_86 ; record 8
+	dw Text_FaySeniorBaselinePlay ; record 0
+	dw Text_FaySeniorBaselinePlay ; record 1
+	dw Text_FaySeniorHitsLikeBoys ; record 2
+	dw Text_FaySeniorHitsLikeBoys ; record 3
+	dw Text_FaySeniorHitsLikeBoys ; record 4
+	dw Text_FaySeniorChampTakeYouOn ; record 5
+	dw Text_FaySeniorDoublesChamps ; record 6
+	dw Text_FaySeniorDoublesChamps ; record 7
+	dw Text_FaySeniorDoublesNewTeamSecond ; record 8
 SeniorCourtNpc05_12:
 	ld a, [wMapSceneStage2] ; $5859
 	add a ; $585c
@@ -276,21 +276,21 @@ SeniorCourtNpc05_12:
 SeniorCourtNpc05TextIds_12:
 	; $5895, 30 bytes (text_ids)
 	table_width 2
-	dw Text_34_15 ; record 0
-	dw Text_34_24 ; record 1
-	dw Text_34_28 ; record 2
-	dw Text_34_28 ; record 3
-	dw Text_34_29 ; record 4
-	dw Text_34_32 ; record 5
-	dw Text_34_87 ; record 6
-	dw Text_34_87 ; record 7
-	dw Text_34_88 ; record 8
-	dw Text_34_142 ; record 9
-	dw Text_34_151 ; record 10
-	dw Text_34_159 ; record 11
-	dw Text_34_168 ; record 12
-	dw Text_34_177 ; record 13
-	dw Text_34_186 ; record 14
+	dw Text_AllieSeniorPartnerIsChamp ; record 0
+	dw Text_AllieSeniorPartnerHitsHard ; record 1
+	dw Text_AllieSeniorChampTooGood ; record 2
+	dw Text_AllieSeniorChampTooGood ; record 3
+	dw Text_AllieSeniorCarryYouHigher ; record 4
+	dw Text_AllieSeniorServeVolleyLost ; record 5
+	dw Text_AllieSeniorDoublesChampWontYield ; record 6
+	dw Text_AllieSeniorDoublesChampWontYield ; record 7
+	dw Text_AllieSeniorDoublesWontMakeChamp ; record 8
+	dw Text_AllieSeniorAlreadyVarsity ; record 9
+	dw Text_SeniorMadeDoublesVarsity ; record 10
+	dw Text_AllieSeniorMissEmilyCoaching ; record 11
+	dw Text_SeniorOpenNotJustDream ; record 12
+	dw Text_AllieSeniorEmilyBestCoach ; record 13
+	dw Text_SeniorEveryoneHasGoals ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc06_12:
 	ld a, [wMapSceneStage2] ; $58b3
@@ -323,21 +323,21 @@ SeniorCourtNpc06_12:
 SeniorCourtNpc06TextIds_12:
 	; $58f8, 30 bytes (text_ids)
 	table_width 2
-	dw Text_34_16 ; record 0
-	dw Text_34_16 ; record 1
-	dw Text_34_33 ; record 2
-	dw Text_34_34 ; record 3
-	dw Text_34_35 ; record 4
-	dw Text_34_36 ; record 5
-	dw Text_34_89 ; record 6
-	dw Text_34_94 ; record 7
-	dw Text_34_96 ; record 8
-	dw Text_34_143 ; record 9
-	dw Text_34_152 ; record 10
-	dw Text_34_160 ; record 11
-	dw Text_34_169 ; record 12
-	dw Text_34_178 ; record 13
-	dw Text_34_187 ; record 14
+	dw Text_JoySeniorDoubleVsSingleHanded ; record 0
+	dw Text_JoySeniorDoubleVsSingleHanded ; record 1
+	dw Text_JoySeniorSecondConceited ; record 2
+	dw Text_JoySeniorImNextForYou ; record 3
+	dw Text_JoySeniorNowNumberThree ; record 4
+	dw Text_JoySeniorRelievedYouBeatSecond ; record 5
+	dw Text_JoySeniorHardToMakeSenior ; record 6
+	dw Text_JoySeniorDoublesFaceEachOther ; record 7
+	dw Text_JoySeniorDoublesThrillingLoss ; record 8
+	dw Text_JoySeniorYoullMakeTravelingTeam ; record 9
+	dw Text_JoySeniorDoublesFormidable ; record 10
+	dw Text_JoySeniorHopeKevinWins ; record 11
+	dw Text_JoySeniorAlreadyGoingToOpen ; record 12
+	dw Text_JoySeniorGladYouWonOpen ; record 13
+	dw Text_JoySeniorYouTwoOpenChamps ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc07_12:
 	ld a, [wMapSceneStage2] ; $5916
@@ -352,21 +352,21 @@ SeniorCourtNpc07_12:
 SeniorCourtNpc07TextIds:
 	; $592d, 30 bytes (text_ids)
 	table_width 2
-	dw Text_34_17 ; record 0
-	dw Text_34_25 ; record 1
-	dw Text_34_37 ; record 2
-	dw Text_34_38 ; record 3
-	dw Text_34_38 ; record 4
-	dw Text_34_38 ; record 5
-	dw Text_34_93 ; record 6
-	dw Text_34_95 ; record 7
-	dw Text_34_97 ; record 8
-	dw Text_34_144 ; record 9
-	dw Text_34_153 ; record 10
-	dw Text_34_161 ; record 11
-	dw Text_34_170 ; record 12
-	dw Text_34_179 ; record 13
-	dw Text_34_188 ; record 14
+	dw Text_BrianSeniorSliceKeepsMeFourth ; record 0
+	dw Text_BrianSeniorMasterSlice ; record 1
+	dw Text_BrianSeniorNotSoEasy ; record 2
+	dw Text_BrianSeniorSkillIsReal ; record 3
+	dw Text_BrianSeniorSkillIsReal ; record 4
+	dw Text_BrianSeniorSkillIsReal ; record 5
+	dw Text_BrianSeniorFloundering ; record 6
+	dw Text_BrianSeniorDoublesShowExperience ; record 7
+	dw Text_BrianSeniorDoublesExperienceFailed ; record 8
+	dw Text_BrianSeniorOnlyFourTravel ; record 9
+	dw Text_BrianSeniorDoublesTopRankOpens ; record 10
+	dw Text_BrianSeniorRootingForEmily ; record 11
+	dw Text_BrianSeniorDoublesCommunicate ; record 12
+	dw Text_BrianSeniorEmilyDidWell ; record 13
+	dw Text_BrianSeniorChampsPointers ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc08_12:
 	apcall ApSeniorBethStage
@@ -431,21 +431,21 @@ SeniorCourtNpc08_12:
 SeniorCourtNpc08TextIds:
 	; $5a2b, 30 bytes (text_ids)
 	table_width 2
-	dw Text_34_18 ; record 0
-	dw Text_34_18 ; record 1
-	dw Text_34_39 ; record 2
-	dw Text_34_48 ; record 3
-	dw Text_34_48 ; record 4
-	dw Text_34_48 ; record 5
-	dw Text_34_98 ; record 6
-	dw Text_34_99 ; record 7
-	dw Text_34_99 ; record 8
-	dw Text_34_145 ; record 9
-	dw Text_34_154 ; record 10
-	dw Text_34_162 ; record 11
-	dw Text_34_171 ; record 12
-	dw Text_34_180 ; record 13
-	dw Text_34_189 ; record 14
+	dw Text_BethSeniorMoveFeetForServe ; record 0
+	dw Text_BethSeniorMoveFeetForServe ; record 1
+	dw Text_BethSeniorPracticeMatchOffer ; record 2
+	dw Text_BethSeniorRankedBeforeMe ; record 3
+	dw Text_BethSeniorRankedBeforeMe ; record 4
+	dw Text_BethSeniorRankedBeforeMe ; record 5
+	dw Text_BethSeniorDoublesWontHandOver ; record 6
+	dw Text_BethSeniorDoublesLostRanking ; record 7
+	dw Text_BethSeniorDoublesLostRanking ; record 8
+	dw Text_BethSeniorTalentOutdoesExperience ; record 9
+	dw Text_BethSeniorChanceToRerank ; record 10
+	dw Text_BethSeniorMarkCoolGroovy ; record 11
+	dw Text_BethSeniorBelieveYoureBest ; record 12
+	dw Text_BethSeniorFocusNextOpen ; record 13
+	dw Text_BethSeniorBelieveInEachOther ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc09_12:
 	ld a, [wMapSceneStage2] ; $5a49
@@ -465,21 +465,21 @@ SeniorCourtNpc09_12:
 SeniorCourtNpc09TextIds:
 	; $5a6e, 30 bytes (text_ids)
 	table_width 2
-	dw Text_34_19 ; record 0
-	dw Text_34_19 ; record 1
-	dw Text_34_43 ; record 2
-	dw Text_34_49 ; record 3
-	dw Text_34_49 ; record 4
-	dw Text_34_49 ; record 5
-	dw Text_34_100 ; record 6
-	dw Text_34_101 ; record 7
-	dw Text_34_101 ; record 8
-	dw Text_34_146 ; record 9
-	dw Text_34_155 ; record 10
-	dw Text_34_163 ; record 11
-	dw Text_34_172 ; record 12
-	dw Text_34_181 ; record 13
-	dw Text_34_190 ; record 14
+	dw Text_CurtSeniorRhythmToToss ; record 0
+	dw Text_CurtSeniorRhythmToToss ; record 1
+	dw Text_CurtSeniorCenterLineDefense ; record 2
+	dw Text_CurtSeniorShowedRankers ; record 3
+	dw Text_CurtSeniorShowedRankers ; record 4
+	dw Text_CurtSeniorShowedRankers ; record 5
+	dw Text_CurtSeniorDoublesThirdIsPride ; record 6
+	dw Text_CurtSeniorDoublesPrideGone ; record 7
+	dw Text_CurtSeniorDoublesPrideGone ; record 8
+	dw Text_CurtSeniorVarsityRankingsTournament ; record 9
+	dw Text_CurtSeniorGratefulButMad ; record 10
+	dw Text_CurtSeniorFavoritePlayers ; record 11
+	dw Text_CurtSeniorNeverGiveUpOpen ; record 12
+	dw Text_CurtSeniorWhatPlayWins ; record 13
+	dw Text_CurtSeniorNeverGiveUpChamps ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0A_12:
 	apcall ApSeniorBobStage
@@ -547,21 +547,21 @@ SeniorCourtNpc0A_12:
 SeniorCourtNpc0ATextIds:
 	; $5b75, 30 bytes (text_ids)
 	table_width 2
-	dw Text_34_20 ; record 0
-	dw Text_34_20 ; record 1
-	dw Text_34_44 ; record 2
-	dw Text_34_50 ; record 3
-	dw Text_34_50 ; record 4
-	dw Text_34_50 ; record 5
-	dw Text_34_102 ; record 6
-	dw Text_34_108 ; record 7
-	dw Text_34_108 ; record 8
-	dw Text_34_147 ; record 9
-	dw Text_34_156 ; record 10
-	dw Text_34_164 ; record 11
-	dw Text_34_173 ; record 12
-	dw Text_34_182 ; record 13
-	dw Text_34_191 ; record 14
+	dw Text_BobSeniorWorstWantRankings ; record 0
+	dw Text_BobSeniorWorstWantRankings ; record 1
+	dw Text_BobSeniorAttackBallNotOpponent ; record 2
+	dw Text_BobSeniorWayToGoRanked ; record 3
+	dw Text_BobSeniorWayToGoRanked ; record 4
+	dw Text_BobSeniorWayToGoRanked ; record 5
+	dw Text_BobSeniorDoublesPracticeOffer ; record 6
+	dw Text_BobSeniorAlwaysUnranked ; record 7
+	dw Text_BobSeniorAlwaysUnranked ; record 8
+	dw Text_BobSeniorTravelingRepresentAcademy ; record 9
+	dw Text_BobSeniorNetPlayLesson ; record 10
+	dw Text_BobSeniorIronGearNotGeniuses ; record 11
+	dw Text_BobSeniorAttackWeakerPlayer ; record 12
+	dw Text_BobSeniorMastersFromEffort ; record 13
+	dw Text_BobSeniorAlwaysHitToPartner ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0B_12:
 	ld a, [wMapSceneStage2] ; $5b93
@@ -586,21 +586,21 @@ SeniorCourtNpc0B_12:
 SeniorCourtNpc0BTextIds:
 	; $5bbf, 30 bytes (text_ids)
 	table_width 2
-	dw Text_34_21 ; record 0
-	dw Text_34_21 ; record 1
-	dw Text_34_45 ; record 2
-	dw Text_34_51 ; record 3
-	dw Text_34_51 ; record 4
-	dw Text_34_51 ; record 5
-	dw Text_34_107 ; record 6
-	dw Text_34_109 ; record 7
-	dw Text_34_109 ; record 8
-	dw Text_34_148 ; record 9
-	dw Text_34_157 ; record 10
-	dw Text_34_165 ; record 11
-	dw Text_34_174 ; record 12
-	dw Text_34_183 ; record 13
-	dw Text_34_174 ; record 14
+	dw Text_PamSeniorKeepOffCourt ; record 0
+	dw Text_PamSeniorKeepOffCourt ; record 1
+	dw Text_PamSeniorServeAndRush ; record 2
+	dw Text_PamSeniorAggressivePlayer ; record 3
+	dw Text_PamSeniorAggressivePlayer ; record 4
+	dw Text_PamSeniorAggressivePlayer ; record 5
+	dw Text_PamSeniorNeedExperience ; record 6
+	dw Text_PamSeniorRankedTeamwork ; record 7
+	dw Text_PamSeniorRankedTeamwork ; record 8
+	dw Text_PamSeniorNoCheapPlay ; record 9
+	dw Text_PamSeniorGrabTournamentChance ; record 10
+	dw Text_PamSeniorWonderOpenRackets ; record 11
+	dw Text_PamSeniorJealousPartnerSameLevel ; record 12
+	dw Text_PamSeniorMostUsedRacket ; record 13
+	dw Text_PamSeniorJealousPartnerSameLevel ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0C_12:
 	ld a, [wStoryPartnerGender] ; $5bdd
@@ -628,21 +628,21 @@ SeniorCourtNpc0C_12:
 SeniorCourtNpc0CTextIds:
 	; $5c11, 30 bytes (text_ids)
 	table_width 2
-	dw Text_34_22 ; record 0
-	dw Text_34_22 ; record 1
-	dw Text_34_46 ; record 2
-	dw Text_34_52 ; record 3
-	dw Text_34_52 ; record 4
-	dw Text_34_52 ; record 5
-	dw Text_34_108 ; record 6
-	dw Text_34_110 ; record 7
-	dw Text_34_110 ; record 8
-	dw Text_34_149 ; record 9
-	dw Text_34_158 ; record 10
-	dw Text_34_166 ; record 11
-	dw Text_34_175 ; record 12
-	dw Text_34_184 ; record 13
-	dw Text_34_186 ; record 14
+	dw Text_KateSeniorSingleHandedRange ; record 0
+	dw Text_KateSeniorSingleHandedRange ; record 1
+	dw Text_KateSeniorFeelMoreConfident ; record 2
+	dw Text_KateSeniorHappyRankedPartner ; record 3
+	dw Text_KateSeniorHappyRankedPartner ; record 4
+	dw Text_KateSeniorHappyRankedPartner ; record 5
+	dw Text_BobSeniorAlwaysUnranked ; record 6
+	dw Text_SeniorCoachOfferDoublesRanking ; record 7
+	dw Text_SeniorCoachOfferDoublesRanking ; record 8
+	dw Text_KateSeniorWorkOnDoubles ; record 9
+	dw Text_SeniorStandInCoachEmilyAway ; record 10
+	dw Text_KateSeniorRootingForYou ; record 11
+	dw Text_KateSeniorJealousPartnerNoBetter ; record 12
+	dw Text_KateSeniorPartnerIsOpenChamp ; record 13
+	dw Text_SeniorEveryoneHasGoals ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0C_12Table:
 	INCBIN "data/story/SeniorCourtNpc0C_12Table.bin" ; $5c2f, 30 bytes

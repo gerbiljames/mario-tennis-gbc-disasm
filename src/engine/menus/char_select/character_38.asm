@@ -326,20 +326,20 @@ DrawCharacterSelectPrompt:
 	or a ; $4adf
 	jr nz, .altRow ; $4ae0
 	wram_bank WRAM_SCREEN ; $4ae2
-	ld hl, Text_30_117 ; $4ae8
+	ld hl, Text_CharSelectPickCharacter ; $4ae8
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4aeb
 	ld c, $12 ; $4aee
 	farcall RenderProportionalTextAt ; $4af0
 	jr .nextRow ; $4af3
 .altRow:
 	wram_bank WRAM_SCREEN ; $4af5
-	ld hl, Text_30_119 ; $4afb
+	ld hl, Text_CharSelectChoosePartner ; $4afb
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $4afe
 	ld c, $12 ; $4b01
 	farcall RenderProportionalTextAt ; $4b03
 .nextRow:
 	wram_bank WRAM_SCREEN ; $4b06
-	ld hl, Text_30_118 ; $4b0c
+	ld hl, Text_CharSelectStartChangeHands ; $4b0c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b0f
 	ld c, $12 ; $4b12
 	farcall RenderProportionalTextAt ; $4b14
@@ -432,7 +432,7 @@ DrawCharacterSelectChars:
 	pop_wram_bank ; $4c17
 	ld a, b ; $4c1c
 	or a ; $4c1d
-	jr z, .applySlot ; $4c1e
+	jr z, .applyHandedness ; $4c1e
 	wram_bank WRAM_CHAR0 ; $4c20
 	ld a, $c8 ; $4c26
 	ld [wCharSpriteSlot + 2], a ; $4c28
@@ -454,14 +454,14 @@ DrawCharacterSelectChars:
 	ld a, $61 ; $4c5b
 	ld [wCharSpriteSlot + 3], a ; $4c5d
 	wram_bank WRAM_ACTORS ; $4c60
-.applySlot:
+.applyHandedness:
 	push_wram_bank WRAM_COURT_PLANES ; $4c66
 	ld a, [wCharSelectHandedness] ; $4c6f
 	ld c, a ; $4c72
 	pop_wram_bank ; $4c73
 	ld a, c ; $4c78
 	or a ; $4c79
-	jr z, .applySlot2 ; $4c7a
+	jr z, .drawSprites ; $4c7a
 	wram_bank WRAM_CHAR0 ; $4c7c
 	ld hl, wCharSpriteSlot + 1 ; $4c82
 	set 5, [hl] ; $4c85
@@ -474,7 +474,7 @@ DrawCharacterSelectChars:
 	wram_bank WRAM_CHAR3 ; $4c9d
 	ld hl, wCharSpriteSlot + 1 ; $4ca3
 	set 5, [hl] ; $4ca6
-.applySlot2:
+.drawSprites:
 	wram_bank WRAM_CHAR0 ; $4ca8
 	ld hl, wCharSpriteSlot ; $4cae
 	farcall DrawCharSprite ; $4cb1

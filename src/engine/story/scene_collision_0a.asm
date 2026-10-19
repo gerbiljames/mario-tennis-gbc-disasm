@@ -353,7 +353,7 @@ Unused_0a_SceneViewerSelectScene:
 	call InitSceneTileAnimations ; $5e4e
 .done:
 	ret ; $5e51
-UnusedSceneViewerSelectSceneMenu:
+Unused_0a_SceneViewerSelectSceneMenu:
 	ld hl, Text_MenuSceneViewerScenes ; $5e52
 	ld d, $01 ; $5e55
 	ld e, $01 ; $5e57
@@ -361,7 +361,7 @@ UnusedSceneViewerSelectSceneMenu:
 	ld a, [$d820] ; $5e5c
 	ld [$d82f], a ; $5e5f
 	farcall RestoreShadowTilemap ; $5e62
-	farcall Unused_05_StubNop_05_0 ; $5e65
+	farcall Unused_05_StubNop0 ; $5e65
 .inputLoop:
 	call AdvanceFrame ; $5e68
 	ldh a, [hPlayerInputFlags] ; $5e6b

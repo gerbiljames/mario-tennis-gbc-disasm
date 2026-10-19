@@ -99,10 +99,10 @@ DormRoomTileTriggers_13:
 DormRoomTile0F_13:
 	script_null_script ACTOR_DORM_ROOM_KATE ; $4ef4
 	ld a, $03 ; $4ef9
-	script_set_text Text_31_324 ; $4efb
+	script_set_text Text_RoommateOhNoForgotToTell ; $4efb
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $4f01
 	jr z, .notTempSceneVariantA ; $4f04
-	script_set_text Text_31_328 ; $4f06
+	script_set_text Text_RoommateOhShootForgotToTell ; $4f06
 .notTempSceneVariantA:
 	script_jump_velocity ACTOR_DORM_ROOM_KATE, -2.0 ; $4f0c
 	ld a, $03 ; $4f14
@@ -288,17 +288,17 @@ SetupDormRoomSceneVariant:
 PlaceDormRoomArrivalActors_13:
 	ld a, [wStoryModeEntryPoint] ; $51b0
 	cp STORYENTRY_NONE ; $51b3
-	jr z, .stage3 ; $51b5
+	jr z, .noEntryPoint ; $51b5
 	cp $01 ; $51b7
-	jr z, .stage2 ; $51b9
+	jr z, .entry01 ; $51b9
 	wram_bank WRAM_ACTORS ; $51bb
 	test_flag FLAG_DOUBLES ; $51c1
 	jp nz, PlaceDormRoomArrivalActors_13.isDoubles ; $51c4
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $51c7
 	ret ; $51d2
-.stage2:
+.entry01:
 	test_flag FLAG_DOUBLES ; $51d3
-	jr z, .stage2Singles ; $51d6
+	jr z, .placeKateSingles ; $51d6
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $51d8
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $51e3
 	script_null_script ACTOR_PARTNER ; $51ea
@@ -310,13 +310,13 @@ PlaceDormRoomArrivalActors_13:
 	add hl, bc ; $5204
 	set ACTORFLAGB_TALKABLE, [hl] ; $5205
 	ret ; $5207
-.stage2Singles:
+.placeKateSingles:
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $5208
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $5213
 	ret ; $521a
-.stage3:
+.noEntryPoint:
 	test_flag FLAG_DOUBLES ; $521b
-	jr z, .stage2Singles ; $521e
+	jr z, .placeKateSingles ; $521e
 	script_null_script ACTOR_PARTNER ; $5220
 	script_set_position ACTOR_PARTNER, 1.0, 1.0 ; $5225
 	call PlaceRoommateAtPlayerTarget_13 ; $5230
@@ -367,10 +367,10 @@ DormRoomNpc03_13:
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ROOM_KATE ; $52b0
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $52b8
 	jr z, .altGreeting ; $52bb
-	script_set_text Text_31_289 ; $52bd
+	script_set_text Text_RoommateAskMeSomething ; $52bd
 	jr .prompt ; $52c3
 .altGreeting:
-	script_set_text Text_31_255 ; $52c5
+	script_set_text Text_RoommateAnyQuestions ; $52c5
 .prompt:
 	script_speak_restore ACTOR_DORM_ROOM_KATE ; $52cb
 	farcall RunDialogueYesNoPrompt ; $52d0
@@ -388,10 +388,10 @@ DormRoomEntry01Scene:
 	jp z, DormRoomArrivalCutscene_13 ; $52ec
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $52ef
 	jr z, .stage2Text ; $52f2
-	script_set_text Text_31_263 ; $52f4
+	script_set_text Text_RoommateGoodDayOfPracticeAlt ; $52f4
 	jr .placeActors ; $52fa
 .stage2Text:
-	script_set_text Text_31_258 ; $52fc
+	script_set_text Text_RoommateGoodDayOfPractice ; $52fc
 .placeActors:
 	script_null_script ACTOR_PARTNER ; $5302
 	script_set_position ACTOR_PARTNER, 11.0, 30.0 ; $5307
@@ -437,10 +437,10 @@ DormRoomEntry0fScene:
 	script_player_speed 2.0 ; $53ab
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $53b1
 	jr z, .altBedText ; $53b4
-	script_set_text Text_31_278 ; $53b6
+	script_set_text Text_RoommateAreYouReadyPlayer ; $53b6
 	jr .bedScene ; $53bc
 .altBedText:
-	script_set_text Text_31_244 ; $53be
+	script_set_text Text_RoommateAreYouReady ; $53be
 .bedScene:
 	script_set_position ACTOR_PLAYER, 11.0, 14.0 ; $53c4
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $53cf
@@ -517,14 +517,14 @@ DormRoomEntry0fScene:
 	script_wait_frames 20 ; $5512
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $5519
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $5520
-	script_set_text Text_31_256 ; $5525
+	script_set_text Text_RoommateReadyForCourts ; $5525
 	script_speak ACTOR_DORM_ROOM_KATE ; $552b
 	ret ; $5530
 .wakeScene:
 	script_wait_frames 20 ; $5531
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $5538
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $553f
-	script_set_text Text_31_257 ; $5544
+	script_set_text Text_RoommateReadyForFirstDay ; $5544
 	script_speak ACTOR_DORM_ROOM_KATE ; $554a
 	ret ; $554f
 .morningText:
@@ -533,14 +533,14 @@ DormRoomEntry0fScene:
 	script_wait_frames 20 ; $5555
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $555c
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $5563
-	script_set_text Text_31_291 ; $5568
+	script_set_text Text_RoommateTimeToTrain ; $5568
 	script_speak ACTOR_DORM_ROOM_KATE ; $556e
 	ret ; $5573
 .morningSpeak:
 	script_wait_frames 20 ; $5574
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_NOD ; $557b
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $5582
-	script_set_text Text_31_290 ; $5587
+	script_set_text Text_RoommateHardDayOfTraining ; $5587
 	script_speak ACTOR_DORM_ROOM_KATE ; $558d
 	ret ; $5592
 DormRoomEntry02Scene:

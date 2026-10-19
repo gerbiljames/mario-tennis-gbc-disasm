@@ -417,7 +417,7 @@ UpdateFadeIn:
 	push af ; $1d48
 	ldh a, [hFadeState] ; $1d49
 	and $02 ; $1d4b
-	jr z, UpdateFadeOut.restore2 ; $1d4d
+	jr z, UpdateFadeOut.done ; $1d4d
 	push bc ; $1d4f
 	push de ; $1d50
 	push hl ; $1d51
@@ -434,7 +434,7 @@ UpdateFadeOut:
 	push af ; $1d5e
 	ldh a, [hFadeState] ; $1d5f
 	rrca ; $1d61
-	jr nc, .restore2 ; $1d62
+	jr nc, .done ; $1d62
 	push bc ; $1d64
 	push de ; $1d65
 	push hl ; $1d66
@@ -458,7 +458,7 @@ UpdateFadeOut:
 	ld a, c ; $1d7c
 	and $04 ; $1d7d
 	call z, Unused_00_ApplyWhiteFade ; $1d7f
-	jr .restore ; $1d82
+	jr .updateCounter ; $1d82
 .adjustBrightness:
 	ld hl, wMasterPalettes ; $1d84
 	ld de, wBGPalettes ; $1d87
@@ -466,7 +466,7 @@ UpdateFadeOut:
 	srl c ; $1d8c
 	srl c ; $1d8e
 	call AdjustColorsBrightness ; $1d90
-.restore:
+.updateCounter:
 	pop af ; $1d93
 	and a ; $1d94
 	jr nz, .store ; $1d95
@@ -478,7 +478,7 @@ UpdateFadeOut:
 	pop hl ; $1d9f
 	pop de ; $1da0
 	pop bc ; $1da1
-.restore2:
+.done:
 	pop af ; $1da2
 	ret ; $1da3
 WaitFadeEnd:

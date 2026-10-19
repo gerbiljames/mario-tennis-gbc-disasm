@@ -47,7 +47,7 @@ JuniorClassCourtSinglesNpc03_11:
 	call OfferSinglesRankingMatch ; $696a
 	ret ; $696d
 JuniorClassCourtSinglesNpc04_11:
-	script_set_text Text_32_62 ; $696e
+	script_set_text Text_BobJuniorSinglesNowSeniorNoDropping ; $696e
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6974
 	jr nz, .speak ; $6977
 	farcall AdvanceDialogueTextCursor ; $6979
@@ -58,13 +58,13 @@ JuniorClassCourtSinglesNpc04_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $6984
 	ret ; $6989
 JuniorClassCourtSinglesNpc05_11:
-	script_set_text Text_32_65 ; $698a
+	script_set_text Text_BethJuniorSinglesBackToThird ; $698a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $6990
 	jr nz, .altText ; $6993
 	farcall AdvanceDialogueTextCursor ; $6995
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $6998
 	jr nz, .speak ; $699b
-	script_set_text Text_32_69 ; $699d
+	script_set_text Text_BethJuniorSinglesWinByTwoTip ; $699d
 .altText:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $69a3
 	ret ; $69a8
@@ -80,7 +80,7 @@ JuniorClassCourtSinglesNpc05_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $69c1
 	ret ; $69c6
 JuniorClassCourtSinglesNpc06_11:
-	script_set_text Text_32_70 ; $69c7
+	script_set_text Text_CurtJuniorSinglesIllBeatYouSomeday ; $69c7
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $69cd
 	jr nz, .speak ; $69d0
 	farcall AdvanceDialogueTextCursor ; $69d2
@@ -98,7 +98,7 @@ JuniorClassCourtSinglesNpc06_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $69f5
 	ret ; $69fa
 JuniorClassCourtSinglesNpc07_11:
-	script_set_text Text_32_75 ; $69fb
+	script_set_text Text_PamJuniorSinglesRankingDropped ; $69fb
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6a01
 	jr nz, .speak ; $6a04
 	farcall AdvanceDialogueTextCursor ; $6a06
@@ -110,11 +110,11 @@ JuniorClassCourtSinglesNpc08_11:
 	jr z, .altText ; $6a12
 	ap_open LOC_JUNIOR_SINGLES_PRACTICE
 	jr nz, .altText
-	script_set_text Text_32_86 ; $6a14
+	script_set_text Text_BrianJuniorSinglesYouRankedFirst ; $6a14
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a1a
 	ret ; $6a1f
 .altText:
-	script_set_text Text_32_77 ; $6a20
+	script_set_text Text_BrianJuniorSinglesPracticeMatchOffer ; $6a20
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a26
 	farcall RunDialogueYesNoPrompt ; $6a2b
 	farcall ScriptCloseDialogueWindow ; $6a2e
@@ -159,18 +159,18 @@ JuniorClassCourtSinglesNpc08_11:
 	farcall RestoreOverworldAfterMatch ; $6ae5
 	ret ; $6ae8
 JuniorClassCourtSinglesNpc09_11:
-	script_set_text Text_32_81 ; $6ae9
+	script_set_text Text_FayJuniorSinglesRaiseRankingFirst ; $6ae9
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6aef
 	jr z, .speak ; $6af2
-	script_set_text Text_32_87 ; $6af4
+	script_set_text Text_FayJuniorSinglesGiftedRankIn ; $6af4
 .speak:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_FAY ; $6afa
 	ret ; $6aff
 JuniorClassCourtSinglesNpc0A_11:
-	script_set_text Text_32_82 ; $6b00
+	script_set_text Text_AllieJuniorSinglesBlistersNoPractice ; $6b00
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6b06
 	jr z, .speak ; $6b09
-	script_set_text Text_32_88 ; $6b0b
+	script_set_text Text_AllieJuniorSinglesUnfairStillUnranked ; $6b0b
 .speak:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6b11
 	ret ; $6b16
@@ -178,11 +178,11 @@ JuniorClassCourtSinglesNpc0B_11:
 	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY ; $6b17
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6b1f
 	jr z, .setText ; $6b22
-	script_set_text Text_32_89 ; $6b24
+	script_set_text Text_JoyJuniorSinglesLoveLiftedYou ; $6b24
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY ; $6b2a
 	ret ; $6b2f
 .setText:
-	script_set_text Text_32_83 ; $6b30
+	script_set_text Text_JoyJuniorSinglesScoringRomantic ; $6b30
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY ; $6b36
 	farcall RunDialogueYesNoPrompt ; $6b3b
 	farcall ScriptCloseDialogueWindow ; $6b3e
@@ -208,56 +208,56 @@ JuniorClassCourtSinglesNpcScripts_11:
 	db $ff
 JuniorClassCourtSinglesNpcScriptsA_11:
 	; $6ba5, 65 bytes (map_scripts)
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACEMASK_ANY, $0000, Text_32_137, NPC_FACE_PLAYER, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACEMASK_ANY, $0000, Text_32_138, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACEMASK_ANY, $0000, Text_32_139, NPC_FACE_PLAYER, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACEMASK_ANY, $0000, Text_32_140, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACEMASK_ANY, $0000, Text_JuniorCoachStillDefendingChamp, NPC_FACE_PLAYER, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACEMASK_ANY, $0000, Text_BethJuniorSinglesSecondAgainUnfair, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACEMASK_ANY, $0000, Text_CurtJuniorSinglesFastRiseToSenior, NPC_FACE_PLAYER, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACEMASK_ANY, $0000, Text_PamJuniorSinglesFourthSpotLost, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN, FACEMASK_ANY, $0000, ApJuniorSinglesBrianA_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_FAY, FACEMASK_ANY, $0000, Text_32_142, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, FACEMASK_ANY, $0000, Text_32_143, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY, FACEMASK_ANY, $0000, Text_32_144, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_FAY, FACEMASK_ANY, $0000, Text_FayJuniorSinglesDoublesSuitsMe, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, FACEMASK_ANY, $0000, Text_AllieJuniorSinglesImprovedQuickly, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY, FACEMASK_ANY, $0000, Text_JoyJuniorSinglesDoubleHandedQuestion, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsB_11:
 	; $6be6, 65 bytes (map_scripts)
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACEMASK_ANY, $0000, Text_32_154, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACEMASK_ANY, $0000, Text_32_155, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACEMASK_ANY, $0000, Text_32_156, NPC_FACE_PLAYER, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACEMASK_ANY, $0000, Text_32_157, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACEMASK_ANY, $0000, Text_JuniorCoachSinglesChampionshipOpen, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACEMASK_ANY, $0000, Text_BethJuniorSinglesChanceToBeChamp, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACEMASK_ANY, $0000, Text_CurtJuniorSinglesStillSecond, NPC_FACE_PLAYER, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACEMASK_ANY, $0000, Text_PamJuniorSinglesEveryoneHasAShot, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN, FACEMASK_ANY, $0000, ApJuniorSinglesBrianB_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_FAY, FACEMASK_ANY, $0000, Text_32_159, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, FACEMASK_ANY, $0000, Text_32_160, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY, FACEMASK_ANY, $0000, Text_32_161, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_FAY, FACEMASK_ANY, $0000, Text_FayJuniorSinglesAimingTravelingTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, FACEMASK_ANY, $0000, Text_AllieJuniorSinglesHowDidYouMoveUp, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY, FACEMASK_ANY, $0000, Text_JoyJuniorSinglesRiseIsTalent, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsC_11:
 	; $6c27, 65 bytes (map_scripts)
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACEMASK_ANY, $0000, Text_32_171, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACEMASK_ANY, $0000, Text_32_172, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACEMASK_ANY, $0000, Text_32_173, NPC_FACE_PLAYER, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACEMASK_ANY, $0000, Text_32_174, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACEMASK_ANY, $0000, Text_JuniorCoachSinglesWellGuardAcademy, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACEMASK_ANY, $0000, Text_BethJuniorSinglesUsedToSupportTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACEMASK_ANY, $0000, Text_CurtJuniorSinglesOpenChildhoodMemory, NPC_FACE_PLAYER, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACEMASK_ANY, $0000, Text_PamJuniorSinglesWinForAcademyHonor, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN, FACEMASK_ANY, $0000, ApJuniorSinglesBrianC_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_FAY, FACEMASK_ANY, $0000, Text_32_176, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, FACEMASK_ANY, $0000, Text_32_177, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY, FACEMASK_ANY, $0000, Text_32_181, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_FAY, FACEMASK_ANY, $0000, Text_FayJuniorSinglesWantToCheer, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, FACEMASK_ANY, $0000, Text_AllieJuniorSinglesUnionFactoryGood, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY, FACEMASK_ANY, $0000, Text_JoyJuniorSinglesSeededPlayers, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsD_11:
 	; $6c68, 65 bytes (map_scripts)
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACEMASK_ANY, $0000, Text_33_9, NPC_FACE_PLAYER, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACEMASK_ANY, $0000, Text_33_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACEMASK_ANY, $0000, Text_33_11, NPC_FACE_PLAYER, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACEMASK_ANY, $0000, Text_33_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACEMASK_ANY, $0000, Text_JuniorCoachNextIslandChamp, NPC_FACE_PLAYER, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACEMASK_ANY, $0000, Text_BethJuniorCourtWantedToSeeOpen, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACEMASK_ANY, $0000, Text_CurtJuniorSinglesDreamOfOpen, NPC_FACE_PLAYER, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACEMASK_ANY, $0000, Text_PamJuniorSinglesChallengeLikeYou, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN, FACEMASK_ANY, $0000, ApJuniorSinglesBrianD_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_FAY, FACEMASK_ANY, $0000, Text_33_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_FAY, FACEMASK_ANY, $0000, Text_FayJuniorSinglesRootingForYou, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, FACEMASK_ANY, $0000, JuniorClassCourtSinglesDNpc0A_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY, FACEMASK_ANY, $0000, Text_33_19, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY, FACEMASK_ANY, $0000, Text_JoyJuniorSinglesWonUnseeded, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 JuniorClassCourtSinglesDNpc0A_11:
 	test_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $6ca9
 	jr nz, .altText ; $6cac
-	script_set_text Text_33_15 ; $6cae
+	script_set_text Text_AllieJuniorCourtCostellosWeird ; $6cae
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cb4
 	ret ; $6cb9
 .altText:
-	script_set_text Text_33_16 ; $6cba
+	script_set_text Text_AllieJuniorSinglesLunchPromise ; $6cba
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cc0
 	farcall RunDialogueYesNoPrompt ; $6cc5
 	farcall ScriptCloseDialogueWindow ; $6cc8
@@ -273,7 +273,7 @@ JuniorClassCourtSinglesDNpc0A_11:
 .done:
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, ANIM_NOD ; $6ce4
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6ceb
-	script_set_text Text_33_31 ; $6cf0
+	script_set_text Text_AllieJuniorCourtServiceAceTreat ; $6cf0
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cf6
 	ret ; $6cfb
 JuniorClassCourtSinglesFacingScripts_11:
@@ -282,10 +282,10 @@ JuniorClassCourtSinglesTileTriggers_11:
 	ds 1, $ff ; $6cfd, fill
 JuniorClassCourtSinglesInitScript_11:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6cfe
-	jr z, .stage2 ; $6d01
+	jr z, .byEntryPoint ; $6d01
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, 37.0, 11.0 ; $6d03
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACE_RIGHT ; $6d0e
-.stage2:
+.byEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $6d15
 	cp $0f ; $6d18
 	jp z, JuniorClassCourtSinglesMatchReturn ; $6d1a
@@ -296,19 +296,19 @@ JuniorClassCourtSinglesInitScript_11:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1
 	ret z
 	ap_pass AP_ARC_SINGLES, 4
-	jr nz, .stage3
+	jr nz, .storyComplete
 	ap_pass AP_ARC_SINGLES, 3
-	jr nz, .stage4
+	jr nz, .islandOpen
 	ap_pass AP_ARC_SINGLES, 2
 	jr nz, .placeActors
 	jr .done
-.stage3:
+.storyComplete:
 	ld hl, JuniorClassCourtSinglesNpcScriptsD_11 ; $6d3c
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6d3f
 	farcall WriteStoryStateWord ; $6d42
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 63.0, 41.0 ; $6d45
 	ret ; $6d50
-.stage4:
+.islandOpen:
 	ld hl, JuniorClassCourtSinglesNpcScriptsC_11 ; $6d51
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6d54
 	farcall WriteStoryStateWord ; $6d57
@@ -432,11 +432,11 @@ JuniorClassCourtSinglesEntry0dScene:
 	sub $01 ; $6ea5
 	ld a, a ; $6ea7
 	rst Rst00 ; $6ea8
-	dw JuniorClassCourtSinglesEntry0dScene.parkMiddleCourtPracticePair ; $6ea9 jumptable
-	dw JuniorClassCourtSinglesEntry0dScene.parkLeftCourtPracticePairRightSide ; $6eab jumptable
-	dw JuniorClassCourtSinglesEntry0dScene.parkLeftCourtPracticePairRightSide2 ; $6ead jumptable
-	dw JuniorClassCourtSinglesEntry0dScene.waitPlayerMoveDone ; $6eaf jumptable
-.parkMiddleCourtPracticePair:
+	dw JuniorClassCourtSinglesEntry0dScene.wonRank4 ; $6ea9 jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.wonRank3 ; $6eab jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.wonRank2 ; $6ead jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.wonRank1 ; $6eaf jumptable
+.wonRank4:
 	call ParkMiddleCourtPracticePair ; $6eb1
 	script_player_speed 2.0 ; $6eb4
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, 26.0, 9.0 ; $6eba
@@ -448,7 +448,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACE_RIGHT ; $6eeb
 	script_fade_in 4 ; $6ef2
 	call WaitFadeEnd ; $6ef7
-	script_set_text Text_32_51 ; $6efa
+	script_set_text Text_JuniorRankFourLostYoureFourth ; $6efa
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $6f00
 	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, -2.0 ; $6f05
 	script_wait_jump ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $6f0d
@@ -460,7 +460,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	call ResumeMiddleCourtPractice ; $6f39
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACE_DOWN ; $6f3c
 	ret ; $6f43
-.parkLeftCourtPracticePairRightSide:
+.wonRank3:
 	call ParkLeftCourtPracticePairRightSide ; $6f44
 	script_player_speed 2.0 ; $6f47
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, 9.0, 9.0 ; $6f4d
@@ -472,11 +472,11 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACE_LEFT ; $6f7e
 	script_fade_in 4 ; $6f85
 	call WaitFadeEnd ; $6f8a
-	script_set_text Text_32_70 ; $6f8d
+	script_set_text Text_CurtJuniorSinglesIllBeatYouSomeday ; $6f8d
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $6f93
 	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, -2.0 ; $6f98
 	script_wait_jump ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $6fa0
-	script_set_text Text_32_53 ; $6fa5
+	script_set_text Text_JuniorCoachSinglesUpToThird ; $6fa5
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $6fab
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ActorScript_11_37 ; $6fb0
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $6fbb
@@ -485,7 +485,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	call ResumeLeftCourtPractice ; $6fd2
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACE_DOWN ; $6fd5
 	ret ; $6fdc
-.parkLeftCourtPracticePairRightSide2:
+.wonRank2:
 	call ParkLeftCourtPracticePairRightSide ; $6fdd
 	script_player_speed 2.0 ; $6fe0
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, 9.0, 9.0 ; $6fe6
@@ -497,11 +497,11 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACE_LEFT ; $7017
 	script_fade_in 4 ; $701e
 	call WaitFadeEnd ; $7023
-	script_set_text Text_32_65 ; $7026
+	script_set_text Text_BethJuniorSinglesBackToThird ; $7026
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $702c
 	script_jump_velocity ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, -2.0 ; $7031
 	script_wait_jump ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $7039
-	script_set_text Text_32_54 ; $703e
+	script_set_text Text_JuniorCoachSinglesUpToSecond ; $703e
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $7044
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ActorScript_11_40 ; $7049
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $7054
@@ -510,7 +510,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	call ResumeLeftCourtPractice ; $706b
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACE_DOWN ; $706e
 	ret ; $7075
-.waitPlayerMoveDone:
+.wonRank1:
 	script_player_speed 2.0 ; $7076
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, 19.0, 31.0 ; $707c
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 26.0, 11.0 ; $7087
@@ -524,7 +524,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_fade_in 4 ; $70c2
 	call WaitFadeEnd ; $70c7
 	script_wait_frames 60 ; $70ca
-	script_set_text Text_32_55 ; $70d1
+	script_set_text Text_JuniorCoachSinglesNowSenior ; $70d1
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 26.0, 13.0 ; $70d7
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $70e2
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_BOUNCE ; $70e7

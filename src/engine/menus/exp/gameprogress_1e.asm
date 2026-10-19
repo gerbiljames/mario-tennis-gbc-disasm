@@ -115,14 +115,14 @@ BuildGameProgressScreen:
 	bit 7, a ; $7363
 	call nz, ScrollProgressListDown ; $7365
 	bit 0, a ; $7368
-	jr nz, .playSfx2 ; $736a
+	jr nz, .playSelectSfx ; $736a
 	bit 1, a ; $736c
-	jr nz, .playSfx ; $736e
+	jr nz, .playCancelSfx ; $736e
 	jr .loop ; $7370
-.playSfx:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7372
 	jr .restore ; $7374
-.playSfx2:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $7376
 .restore:
 	pop_wram_bank ; $7378
@@ -173,7 +173,7 @@ ScrollProgressListUp:
 	pop af ; $73d5
 	ret ; $73d6
 ; CreateProgressListWindow with a 16 x 3 window at (2, 0) in place of the 18 x 15 list at (1, 3): the header the progress screen never draws. Nothing calls it.
-UnusedCreateProgressHeaderWindow:
+Unused_1e_CreateProgressHeaderWindow:
 	rect_cell $02, $00 ; $73d7
 	rect_size $10, $03 ; $73db
 	farcall CreateWindowFromScreenRect ; $73df
@@ -349,7 +349,7 @@ DrawProgressListRows:
 	cp $ff ; $74d3
 	jr z, .endOfList ; $74d5
 	push hl ; $74d7
-	ld hl, Text_31_160 ; $74d8
+	ld hl, Text_ProgressStarCourt ; $74d8
 	add l ; $74db
 	ld l, a ; $74dc
 	jr nc, .renderProportionalTextAt ; $74dd

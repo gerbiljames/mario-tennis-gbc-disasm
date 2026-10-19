@@ -395,12 +395,12 @@ BlitBGRowFrom64:
 	ld [de], a ; $2262
 	ld a, l ; $2263
 	and $3f ; $2264
-	jr nz, .nextCell ; $2266
+	jr nz, .attrNoWrap ; $2266
 	ld a, c ; $2268
 	ld bc, -64 ; $2269
 	add hl, bc ; $226c
 	ld c, a ; $226d
-.nextCell:
+.attrNoWrap:
 	inc e ; $226e
 	res 5, e ; $226f
 	dec c ; $2271
@@ -416,12 +416,12 @@ BlitBGRowFrom64:
 	ld [de], a ; $2282
 	ld a, l ; $2283
 	and $3f ; $2284
-	jr nz, .nextCell2 ; $2286
+	jr nz, .tileNoWrap ; $2286
 	ld a, c ; $2288
 	ld bc, -64 ; $2289
 	add hl, bc ; $228c
 	ld c, a ; $228d
-.nextCell2:
+.tileNoWrap:
 	inc e ; $228e
 	res 5, e ; $228f
 	dec c ; $2291

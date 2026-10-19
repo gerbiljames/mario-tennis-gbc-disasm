@@ -196,16 +196,16 @@ CafeteriaNpc03_10:
 CafeteriaNpc03TextIds:
 	; $5899, 20 bytes (text_ids)
 	table_width 2
-	dw Text_33_59 ; record 0
-	dw Text_33_60 ; record 1
-	dw Text_33_98 ; record 2
-	dw Text_33_99 ; record 3
-	dw Text_33_143 ; record 4
-	dw Text_33_143 ; record 5
-	dw Text_33_183 ; record 6
-	dw Text_33_183 ; record 7
-	dw Text_33_218 ; record 8
-	dw Text_33_218 ; record 9
+	dw Text_CafeteriaSeniorPlaySmart ; record 0
+	dw Text_CafeteriaDoublesFormations ; record 1
+	dw Text_CafeteriaSeniorAttackNet ; record 2
+	dw Text_CafeteriaDoublesForwardAttackNet ; record 3
+	dw Text_CafeteriaWonderTravelingTeam ; record 4
+	dw Text_CafeteriaWonderTravelingTeam ; record 5
+	dw Text_CafeteriaOpenFindYourZone ; record 6
+	dw Text_CafeteriaOpenFindYourZone ; record 7
+	dw Text_CafeteriaBoldRefinedGame ; record 8
+	dw Text_CafeteriaBoldRefinedGame ; record 9
 	assert_table_length NUM_STORYRANKS
 CafeteriaNpc04_10:
 	ld a, [wMapSceneStage2] ; $58ad
@@ -243,21 +243,21 @@ CafeteriaNpc04_10:
 	script_wait_frames 5 ; $58ff
 	and a ; $5906
 	jr z, .declined ; $5907
-	script_set_text Text_33_222 ; $5909
+	script_set_text Text_CafeteriaZoneAnswerYesPlaceholder ; $5909
 	script_speak ACTOR_CAFETERIA_STUDENT_LONG_HAIR_2 ; $590f
 	ret ; $5914
 .declined:
-	script_set_text Text_33_221 ; $5915
+	script_set_text Text_CafeteriaZoneAnswerNoPlaceholder ; $5915
 	script_speak ACTOR_CAFETERIA_STUDENT_LONG_HAIR_2 ; $591b
 	ret ; $5920
 CafeteriaNpc04TextIds:
 	; $5921, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_61 ; record 0
-	dw Text_33_100 ; record 1
-	dw Text_33_144 ; record 2
-	dw Text_33_184 ; record 3
-	dw Text_33_219 ; record 4
+	dw Text_CafeteriaVarsityArmStrength ; record 0
+	dw Text_CafeteriaTopspinAndSlice ; record 1
+	dw Text_CafeteriaReturnTopspinWithSlice ; record 2
+	dw Text_CafeteriaWhatIsAZone ; record 3
+	dw Text_CafeteriaWonByZone ; record 4
 	assert_table_length NUM_STORYTIERS
 CafeteriaNpc05_10:
 	ld a, [wMapSceneStage2] ; $592b
@@ -283,11 +283,11 @@ CafeteriaNpc05_10:
 CafeteriaNpc05TextIds:
 	; $5961, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_62 ; record 0
-	dw Text_33_101 ; record 1
-	dw Text_33_145 ; record 2
-	dw Text_33_187 ; record 3
-	dw Text_33_223 ; record 4
+	dw Text_CafeteriaBoysAndGirlsPlay ; record 0
+	dw Text_CafeteriaHitHardAtFirst ; record 1
+	dw Text_CafeteriaWinWithWeakShot ; record 2
+	dw Text_CafeteriaBallFrozenMidair ; record 3
+	dw Text_CafeteriaPigtailsChampPlaceholder ; record 4
 	assert_table_length NUM_STORYTIERS
 CafeteriaNpc06_10:
 	ld a, [wMapSceneStage] ; $596b
@@ -302,16 +302,16 @@ CafeteriaNpc06_10:
 CafeteriaNpc06TextIds:
 	; $5982, 20 bytes (text_ids)
 	table_width 2
-	dw Text_33_63 ; record 0
-	dw Text_33_63 ; record 1
-	dw Text_33_104 ; record 2
-	dw Text_33_105 ; record 3
-	dw Text_33_146 ; record 4
-	dw Text_33_147 ; record 5
-	dw Text_33_188 ; record 6
-	dw Text_33_189 ; record 7
-	dw Text_33_188 ; record 8
-	dw Text_33_189 ; record 9
+	dw Text_CafeteriaMixedRankPartners ; record 0
+	dw Text_CafeteriaMixedRankPartners ; record 1
+	dw Text_CafeteriaSeniorBetterOpponents ; record 2
+	dw Text_CafeteriaSeniorDoublesBetterOpponents ; record 3
+	dw Text_CafeteriaTravelingTeamCompetition ; record 4
+	dw Text_CafeteriaDoublesTravelingCompetition ; record 5
+	dw Text_CafeteriaLargeRacket ; record 6
+	dw Text_CafeteriaRepairCounterShoes ; record 7
+	dw Text_CafeteriaLargeRacket ; record 8
+	dw Text_CafeteriaRepairCounterShoes ; record 9
 	assert_table_length NUM_STORYRANKS
 CafeteriaNpc07_10:
 	ld a, [wMapSceneStage] ; $5996
@@ -326,16 +326,16 @@ CafeteriaNpc07_10:
 CafeteriaNpc07TextIds:
 	; $59ad, 20 bytes (text_ids)
 	table_width 2
-	dw Text_33_64 ; record 0
-	dw Text_33_64 ; record 1
-	dw Text_33_106 ; record 2
-	dw Text_33_107 ; record 3
-	dw Text_33_148 ; record 4
-	dw Text_33_149 ; record 5
-	dw Text_33_190 ; record 6
-	dw Text_33_191 ; record 7
-	dw Text_33_190 ; record 8
-	dw Text_33_191 ; record 9
+	dw Text_CafeteriaPartnerMakesItEasier ; record 0
+	dw Text_CafeteriaPartnerMakesItEasier ; record 1
+	dw Text_CafeteriaMovedUpToSenior ; record 2
+	dw Text_CafeteriaTeamMovedUpToSenior ; record 3
+	dw Text_CafeteriaMoreCompetitionBetterPlay ; record 4
+	dw Text_CafeteriaDoublesVarsityCompetition ; record 5
+	dw Text_CafeteriaSmallRacket ; record 6
+	dw Text_CafeteriaLightShoes ; record 7
+	dw Text_CafeteriaSmallRacket ; record 8
+	dw Text_CafeteriaLightShoes ; record 9
 	assert_table_length NUM_STORYRANKS
 CafeteriaNpc08_10:
 	ld a, [wMapSceneStage] ; $59c1
@@ -350,16 +350,16 @@ CafeteriaNpc08_10:
 CafeteriaNpc08TextIds:
 	; $59d8, 20 bytes (text_ids)
 	table_width 2
-	dw Text_33_65 ; record 0
-	dw Text_33_65 ; record 1
-	dw Text_33_108 ; record 2
-	dw Text_33_108 ; record 3
-	dw Text_33_150 ; record 4
-	dw Text_33_151 ; record 5
-	dw Text_33_192 ; record 6
-	dw Text_33_193 ; record 7
-	dw Text_33_224 ; record 8
-	dw Text_33_193 ; record 9
+	dw Text_CafeteriaVarsityCompetitors ; record 0
+	dw Text_CafeteriaVarsityCompetitors ; record 1
+	dw Text_CafeteriaReadYourOpponent ; record 2
+	dw Text_CafeteriaReadYourOpponent ; record 3
+	dw Text_CafeteriaCantTellYouRivals ; record 4
+	dw Text_CafeteriaCantTellYouTwoRivals ; record 5
+	dw Text_CafeteriaIronRacketTraining ; record 6
+	dw Text_CafeteriaRepairCounterChoose ; record 7
+	dw Text_CafeteriaHeadbandChampPlaceholder ; record 8
+	dw Text_CafeteriaRepairCounterChoose ; record 9
 	assert_table_length NUM_STORYRANKS
 CafeteriaNpc09_10:
 	ld a, [wMapSceneStage] ; $59ec
@@ -374,16 +374,16 @@ CafeteriaNpc09_10:
 CafeteriaNpc09TextIds:
 	; $5a03, 20 bytes (text_ids)
 	table_width 2
-	dw Text_33_66 ; record 0
-	dw Text_33_66 ; record 1
-	dw Text_33_109 ; record 2
-	dw Text_33_109 ; record 3
-	dw Text_33_152 ; record 4
-	dw Text_33_152 ; record 5
-	dw Text_33_194 ; record 6
-	dw Text_33_195 ; record 7
-	dw Text_33_194 ; record 8
-	dw Text_33_195 ; record 9
+	dw Text_CafeteriaDreamOfPros ; record 0
+	dw Text_CafeteriaDreamOfPros ; record 1
+	dw Text_CafeteriaSliceTopspinCorners ; record 2
+	dw Text_CafeteriaSliceTopspinCorners ; record 3
+	dw Text_CafeteriaVarsityPlayManyMatches ; record 4
+	dw Text_CafeteriaVarsityPlayManyMatches ; record 5
+	dw Text_CafeteriaIronGearFreedom ; record 6
+	dw Text_CafeteriaRepairCounterImprove ; record 7
+	dw Text_CafeteriaIronGearFreedom ; record 8
+	dw Text_CafeteriaRepairCounterImprove ; record 9
 	assert_table_length NUM_STORYRANKS
 CafeteriaNpcScripts_10:
 	; $5a17, 57 bytes (map_scripts)
@@ -479,11 +479,11 @@ RestaurantNpc03_10:
 RestaurantNpc03TextIds:
 	; $5c13, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_33 ; record 0
-	dw Text_33_68 ; record 1
-	dw Text_33_111 ; record 2
-	dw Text_33_153 ; record 3
-	dw Text_33_196 ; record 4
+	dw Text_RestaurantServerSelfService ; record 0
+	dw Text_RestaurantServerSeniorEatALot ; record 1
+	dw Text_RestaurantServerEatUp ; record 2
+	dw Text_RestaurantServerOpenStarted ; record 3
+	dw Text_RestaurantServerVarsityEnergy ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc04_10:
 	ld a, [wMapSceneStage2] ; $5c1d
@@ -498,11 +498,11 @@ RestaurantNpc04_10:
 RestaurantNpc04TextIds:
 	; $5c34, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_34 ; record 0
-	dw Text_33_70 ; record 1
-	dw Text_33_112 ; record 2
-	dw Text_33_154 ; record 3
-	dw Text_33_197 ; record 4
+	dw Text_RestaurantServerDontOvereat ; record 0
+	dw Text_RestaurantServerVitamins ; record 1
+	dw Text_RestaurantServerBalancedDiet ; record 2
+	dw Text_RestaurantServerWonderOpenIsland ; record 3
+	dw Text_RestaurantServerLikeOpenChamp ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc05_10:
 	script_face_toward ACTOR_PLAYER, ACTOR_RESTAURANT_STUDENT_LONG_HAIR_1 ; $5c3e
@@ -528,16 +528,16 @@ RestaurantNpc05_10:
 RestaurantNpc05TextIds:
 	; $5c9c, 20 bytes (text_ids)
 	table_width 2
-	dw Text_33_35 ; record 0
-	dw Text_33_35 ; record 1
-	dw Text_33_71 ; record 2
-	dw Text_33_71 ; record 3
-	dw Text_33_113 ; record 4
-	dw Text_33_116 ; record 5
-	dw Text_33_155 ; record 6
-	dw Text_33_158 ; record 7
-	dw Text_33_198 ; record 8
-	dw Text_33_198 ; record 9
+	dw Text_RestaurantWhatShouldIEat ; record 0
+	dw Text_RestaurantWhatShouldIEat ; record 1
+	dw Text_RestaurantWhatllItBe ; record 2
+	dw Text_RestaurantWhatllItBe ; record 3
+	dw Text_RestaurantFromVarsity ; record 4
+	dw Text_RestaurantHealthyFoodBland ; record 5
+	dw Text_RestaurantWhatAboutOpen ; record 6
+	dw Text_RestaurantWhatAboutOpenPair ; record 7
+	dw Text_RestaurantCalorieCount ; record 8
+	dw Text_RestaurantCalorieCount ; record 9
 	assert_table_length NUM_STORYRANKS
 RestaurantNpc06_10:
 	script_set_anim ACTOR_RESTAURANT_CHEF, ANIM_SHAKE ; $5cb0
@@ -568,11 +568,11 @@ RestaurantNpc06_10:
 RestaurantNpc06TextIds_10:
 	; $5cfb, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_38 ; record 0
-	dw Text_33_74 ; record 1
-	dw Text_33_119 ; record 2
-	dw Text_33_161 ; record 3
-	dw Text_33_201 ; record 4
+	dw Text_RestaurantChefWhatAreYouEating ; record 0
+	dw Text_RestaurantChefTofuSteak ; record 1
+	dw Text_RestaurantChefVarsityDoingGreat ; record 2
+	dw Text_RestaurantChefOpenBegun ; record 3
+	dw Text_RestaurantChefFishMeuniere ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc12_10:
 	call TestRestaurantNpc12StageFlag_10 ; $5d05
@@ -637,11 +637,11 @@ RestaurantNpc12_10:
 RestaurantNpc12TextIds:
 	; $5ddc, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_40 ; record 0
-	dw Text_33_76 ; record 1
-	dw Text_33_123 ; record 2
-	dw Text_33_163 ; record 3
-	dw Text_33_203 ; record 4
+	dw Text_RestaurantFruitAndCake ; record 0
+	dw Text_RestaurantEatLightBeforeMatch ; record 1
+	dw Text_RestaurantParfaitSoldOut ; record 2
+	dw Text_RestaurantCoachesAwayEasyPractice ; record 3
+	dw Text_RestaurantCakeAndAerobics ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc08FaceDown_10:
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $5de6
@@ -692,11 +692,11 @@ RestaurantNpc08_10:
 RestaurantNpc08TextIds:
 	; $5e81, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_43 ; record 0
-	dw Text_33_79 ; record 1
-	dw Text_33_126 ; record 2
-	dw Text_33_166 ; record 3
-	dw Text_33_206 ; record 4
+	dw Text_RestaurantCoffeeAfterEating ; record 0
+	dw Text_RestaurantPlanGameOverCoffee ; record 1
+	dw Text_RestaurantRankingFellSniff ; record 2
+	dw Text_RestaurantNonTravelersDepressed ; record 3
+	dw Text_RestaurantNextOpenStrategy ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc09_10:
 	ld a, [wMapSceneStage] ; $5e8b
@@ -718,7 +718,7 @@ RestaurantNpc09_10:
 	script_wait_frames 5 ; $5eb4
 	and a ; $5ebb
 	jr nz, .done ; $5ebc
-	script_set_text Text_33_169 ; $5ebe
+	script_set_text Text_RestaurantSoLuckyJealous ; $5ebe
 	test_flag FLAG_DOUBLES ; $5ec4
 	jr z, .speak ; $5ec7
 	farcall AdvanceDialogueTextCursor ; $5ec9
@@ -726,22 +726,22 @@ RestaurantNpc09_10:
 	script_speak ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ecc
 	ret ; $5ed1
 .done:
-	script_set_text Text_33_171 ; $5ed2
+	script_set_text Text_RestaurantDontBeModest ; $5ed2
 	script_speak ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ed8
 	ret ; $5edd
 RestaurantNpc09TextIds:
 	; $5ede, 20 bytes (text_ids)
 	table_width 2
-	dw Text_33_45 ; record 0
-	dw Text_33_45 ; record 1
-	dw Text_33_81 ; record 2
-	dw Text_33_82 ; record 3
-	dw Text_33_128 ; record 4
-	dw Text_33_129 ; record 5
-	dw Text_33_168 ; record 6
-	dw Text_33_168 ; record 7
-	dw Text_33_208 ; record 8
-	dw Text_33_208 ; record 9
+	dw Text_RestaurantHamburgSteak ; record 0
+	dw Text_RestaurantHamburgSteak ; record 1
+	dw Text_RestaurantJealousYouMadeSenior ; record 2
+	dw Text_RestaurantJealousYouTwoMadeSenior ; record 3
+	dw Text_RestaurantJealousMadeVarsity ; record 4
+	dw Text_RestaurantJealousMadeVarsityDoubles ; record 5
+	dw Text_RestaurantTravelingTeamPutsYouInOpen ; record 6
+	dw Text_RestaurantTravelingTeamPutsYouInOpen ; record 7
+	dw Text_RestaurantWonOpenFirstTime ; record 8
+	dw Text_RestaurantWonOpenFirstTime ; record 9
 	assert_table_length NUM_STORYRANKS
 RestaurantNpc0A_10:
 	script_face_toward ACTOR_PLAYER, ACTOR_RESTAURANT_STUDENT_LONG_HAIR_2 ; $5ef2
@@ -768,16 +768,16 @@ RestaurantNpc0A_10:
 RestaurantNpc0ATextIds:
 	; $5f30, 20 bytes (text_ids)
 	table_width 2
-	dw Text_33_46 ; record 0
-	dw Text_33_49 ; record 1
-	dw Text_33_83 ; record 2
-	dw Text_33_86 ; record 3
-	dw Text_33_130 ; record 4
-	dw Text_33_130 ; record 5
-	dw Text_33_172 ; record 6
-	dw Text_33_172 ; record 7
-	dw Text_33_209 ; record 8
-	dw Text_33_209 ; record 9
+	dw Text_RestaurantNewJuniorKid ; record 0
+	dw Text_RestaurantYouTwoJuniorClass ; record 1
+	dw Text_RestaurantJustEnteredAlreadySenior ; record 2
+	dw Text_RestaurantAlreadyInSenior ; record 3
+	dw Text_RestaurantSecretIsHeart ; record 4
+	dw Text_RestaurantSecretIsHeart ; record 5
+	dw Text_RestaurantSkillAndLuck ; record 6
+	dw Text_RestaurantSkillAndLuck ; record 7
+	dw Text_RestaurantTournamentSecret ; record 8
+	dw Text_RestaurantTournamentSecret ; record 9
 	assert_table_length NUM_STORYRANKS
 RestaurantNpc0B_10:
 	ld a, [wMapSceneStage2] ; $5f44
@@ -797,11 +797,11 @@ RestaurantNpc0B_10:
 RestaurantNpc0BTextIds:
 	; $5f65, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_52 ; record 0
-	dw Text_33_89 ; record 1
-	dw Text_33_133 ; record 2
-	dw Text_33_173 ; record 3
-	dw Text_33_210 ; record 4
+	dw Text_RestaurantMustWinSinglesToday ; record 0
+	dw Text_RestaurantRankingLosingStreak ; record 1
+	dw Text_RestaurantIMovedUpToo ; record 2
+	dw Text_RestaurantAssumeYoullLose ; record 3
+	dw Text_RestaurantAssumeLossBackfires ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc0C_10:
 	ld a, [wMapSceneStage2] ; $5f6f
@@ -839,11 +839,11 @@ RestaurantNpc0C_10:
 RestaurantNpc0CTextIds:
 	; $5fbf, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_54 ; record 0
-	dw Text_33_90 ; record 1
-	dw Text_33_134 ; record 2
-	dw Text_33_174 ; record 3
-	dw Text_33_211 ; record 4
+	dw Text_RestaurantCoachesSayProtein ; record 0
+	dw Text_RestaurantSeniorAskTrainingCenter ; record 1
+	dw Text_RestaurantVarsityAskTrainingCenter ; record 2
+	dw Text_RestaurantWhenDoYouEat ; record 3
+	dw Text_RestaurantTrainingCenterLikeYou ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc0D_10:
 	ld a, [wMapSceneStage2] ; $5fc9
@@ -874,11 +874,11 @@ RestaurantNpc0D_10:
 RestaurantNpc0DTextIds:
 	; $6009, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_55 ; record 0
-	dw Text_33_93 ; record 1
-	dw Text_33_138 ; record 2
-	dw Text_33_176 ; record 3
-	dw Text_33_213 ; record 4
+	dw Text_RestaurantProteinAndTraining ; record 0
+	dw Text_RestaurantSeniorPushHarder ; record 1
+	dw Text_RestaurantVarsityAllAroundAbility ; record 2
+	dw Text_RestaurantWhenIEnteredOpen ; record 3
+	dw Text_RestaurantMarioRumor ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc0E_10:
 	ld a, [wMapSceneStage2] ; $6013
@@ -893,11 +893,11 @@ RestaurantNpc0E_10:
 RestaurantNpc0ETextIds:
 	; $602a, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_56 ; record 0
-	dw Text_33_95 ; record 1
-	dw Text_33_139 ; record 2
-	dw Text_33_179 ; record 3
-	dw Text_33_214 ; record 4
+	dw Text_RestaurantAvoidOilyFoods ; record 0
+	dw Text_RestaurantFixWeaknesses ; record 1
+	dw Text_RestaurantVarsityTennisMachine ; record 2
+	dw Text_RestaurantSomethingToLose ; record 3
+	dw Text_RestaurantMarioStory ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc0F_10:
 	ld a, [wMapSceneStage2] ; $6034
@@ -912,11 +912,11 @@ RestaurantNpc0F_10:
 RestaurantNpc0FTextIds:
 	; $604b, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_57 ; record 0
-	dw Text_33_96 ; record 1
-	dw Text_33_140 ; record 2
-	dw Text_33_180 ; record 3
-	dw Text_33_215 ; record 4
+	dw Text_RestaurantSportsmanDiet ; record 0
+	dw Text_RestaurantStrengthsOrWeaknesses ; record 1
+	dw Text_RestaurantVarsityRivals ; record 2
+	dw Text_RestaurantPlayHardForMe ; record 3
+	dw Text_RestaurantJustMomentum ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpc10_10:
 	ld a, [wMapSceneStage2] ; $6055
@@ -931,11 +931,11 @@ RestaurantNpc10_10:
 RestaurantNpc10TextIds:
 	; $606c, 10 bytes (text_ids)
 	table_width 2
-	dw Text_33_58 ; record 0
-	dw Text_33_97 ; record 1
-	dw Text_33_142 ; record 2
-	dw Text_33_182 ; record 3
-	dw Text_33_217 ; record 4
+	dw Text_RestaurantDessertAfterTraining ; record 0
+	dw Text_RestaurantEightyPercentFull ; record 1
+	dw Text_RestaurantTravelingTeamEntersOpen ; record 2
+	dw Text_RestaurantEveryoneWantsOpen ; record 3
+	dw Text_RestaurantWinningOpenDream ; record 4
 	assert_table_length NUM_STORYTIERS
 RestaurantNpcScripts_10:
 	; $6076, 121 bytes (map_scripts)

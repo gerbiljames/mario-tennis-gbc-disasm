@@ -39,10 +39,10 @@ GetScoreBonus:
 	sbc d ; $681d
 	ld h, a ; $681e
 	bit 7, h ; $681f
-	jr z, .positive ; $6821
+	jr z, .atMost999 ; $6821
 	ld de, $01f4 ; $6823
 	jr .restore ; $6826
-.positive:
+.atMost999:
 	ld hl, $01f3 ; $6828
 	ld a, l ; $682b
 	sub e ; $682c
@@ -51,10 +51,10 @@ GetScoreBonus:
 	sbc d ; $682f
 	ld h, a ; $6830
 	bit 7, h ; $6831
-	jr z, .positive2 ; $6833
+	jr z, .atMost499 ; $6833
 	ld de, $00fa ; $6835
 	jr .restore ; $6838
-.positive2:
+.atMost499:
 	ld hl, $0063 ; $683a
 	ld a, l ; $683d
 	sub e ; $683e
@@ -63,10 +63,10 @@ GetScoreBonus:
 	sbc d ; $6841
 	ld h, a ; $6842
 	bit 7, h ; $6843
-	jr z, .positive3 ; $6845
+	jr z, .atMost99 ; $6845
 	ld de, $0032 ; $6847
 	jr .restore ; $684a
-.positive3:
+.atMost99:
 	ld de, $0000 ; $684c
 .restore:
 	pop hl ; $684f
@@ -355,13 +355,13 @@ ShowExpAwardForMatch:
 	ld c, $00 ; $6a45
 	ld a, [wGameMode] ; $6a47
 	cp GAMEMODE_ISLAND_OPEN ; $6a4a
-	jr nz, .compare ; $6a4c
+	jr nz, .notIslandOpen ; $6a4c
 	ld c, $02 ; $6a4e
-.compare:
+.notIslandOpen:
 	cp GAMEMODE_PRACTICE_MATCH ; $6a50
-	jr nz, .compare2 ; $6a52
+	jr nz, .notPracticeMatch ; $6a52
 	ld c, $03 ; $6a54
-.compare2:
+.notPracticeMatch:
 	cp GAMEMODE_DREAM_MATCH ; $6a56
 	jr nz, .setPendingExpAward ; $6a58
 	ld c, $04 ; $6a5a
@@ -444,7 +444,7 @@ ShowExpAwardForLinkedPlay:
 	pop af ; $6ad8
 	ret ; $6ad9
 ; ShowExpAwardForMinigame with b = 0, c = 0 in place of b = 3, c = 1: the Transfer Pak (N64 records) award variant of the same screen. Nothing calls it, so no N64 EXP award is ever shown.
-UnusedShowExpAwardForN64:
+Unused_1e_ShowExpAwardForN64:
 	ld a, e ; $6ada
 	or d ; $6adb
 	ret z ; $6adc
@@ -515,7 +515,7 @@ ApplyPendingExpAwards:
 .checkAnyExp:
 	ld a, h ; $6b40
 	or l ; $6b41
-	jp z, .restore2 ; $6b42
+	jp z, .noExp ; $6b42
 	push hl ; $6b45
 	farcall ClearPendingExpAwards ; $6b46
 	ld hl, wPendingExpStory ; $6b49
@@ -533,27 +533,27 @@ ApplyPendingExpAwards:
 	ld de, $ffff ; $6b5a
 .scaleExpByPlayerLevel:
 	call ScaleExpByPlayerLevel ; $6b5d
-	jr nc, .setPendingExpAward ; $6b60
+	jr nc, .storyAward ; $6b60
 	ld de, $ffff ; $6b62
-.setPendingExpAward:
+.storyAward:
 	ld a, d ; $6b65
 	or e ; $6b66
-	jr z, .award2 ; $6b67
+	jr z, .exhibitionAward ; $6b67
 	ld b, $00 ; $6b69
 	ld c, $00 ; $6b6b
 	farcall SetPendingExpAward ; $6b6d
-.award2:
+.exhibitionAward:
 	ld hl, wPendingExpExhibition ; $6b70
 	ld a, [hl+] ; $6b73
 	ld d, [hl] ; $6b74
 	ld e, a ; $6b75
 	ld a, d ; $6b76
 	or e ; $6b77
-	jr z, .award3 ; $6b78
+	jr z, .linkedAward ; $6b78
 	ld b, $01 ; $6b7a
 	ld c, $00 ; $6b7c
 	farcall SetPendingExpAward ; $6b7e
-.award3:
+.linkedAward:
 	ld hl, wPendingExpLinked ; $6b81
 	ld a, [hl+] ; $6b84
 	ld d, [hl] ; $6b85
@@ -588,9 +588,9 @@ ApplyPendingExpAwards:
 	call ShowMatchResultsScreen ; $6bb7
 	pop af ; $6bba
 	or a ; $6bbb
-	jr z, .restore ; $6bbc
+	jr z, .runDistribution ; $6bbc
 	clear_flag FLAG_DOUBLES ; $6bbe
-.restore:
+.runDistribution:
 	pop hl ; $6bc1
 	farcall RunExpDistributionFlow ; $6bc2
 	ld c, $00 ; $6bc5
@@ -621,7 +621,7 @@ ApplyPendingExpAwards:
 	pop af ; $6bf6
 	ld a, $01 ; $6bf7
 	ret ; $6bf9
-.restore2:
+.noExp:
 	pop af ; $6bfa
 	ld [wGameMode], a ; $6bfb
 	pop_wram_bank ; $6bfe
@@ -638,12 +638,12 @@ ScaleExpByPlayerLevel:
 	add b ; $6c10
 	srl a ; $6c11
 	cp $0a ; $6c13
-	jr nc, .compare ; $6c15
+	jr nc, .ge0a ; $6c15
 	ccf ; $6c17
 	ret ; $6c18
-.compare:
+.ge0a:
 	cp $14 ; $6c19
-	jr nc, .compare2 ; $6c1b
+	jr nc, .ge14 ; $6c1b
 	ld h, d ; $6c1d
 	ld l, e ; $6c1e
 	srl d ; $6c1f
@@ -652,18 +652,18 @@ ScaleExpByPlayerLevel:
 	ld d, h ; $6c24
 	ld e, l ; $6c25
 	ret ; $6c26
-.compare2:
+.ge14:
 	cp $1e ; $6c27
-	jr nc, .compare3 ; $6c29
+	jr nc, .ge1e ; $6c29
 	ld h, d ; $6c2b
 	ld l, e ; $6c2c
 	add hl, de ; $6c2d
 	ld d, h ; $6c2e
 	ld e, l ; $6c2f
 	ret ; $6c30
-.compare3:
+.ge1e:
 	cp $28 ; $6c31
-	jr nc, .compare4 ; $6c33
+	jr nc, .ge28 ; $6c33
 	ld h, d ; $6c35
 	ld l, e ; $6c36
 	srl d ; $6c37
@@ -673,9 +673,9 @@ ScaleExpByPlayerLevel:
 	ld d, h ; $6c3d
 	ld e, l ; $6c3e
 	ret ; $6c3f
-.compare4:
+.ge28:
 	cp $32 ; $6c40
-	jr nc, .compare5 ; $6c42
+	jr nc, .ge32 ; $6c42
 	ld h, d ; $6c44
 	ld l, e ; $6c45
 	add hl, hl ; $6c46
@@ -683,7 +683,7 @@ ScaleExpByPlayerLevel:
 	ld d, h ; $6c48
 	ld e, l ; $6c49
 	ret ; $6c4a
-.compare5:
+.ge32:
 	cp $3c ; $6c4b
 	jr nc, .scaleTimes4 ; $6c4d
 	ld h, d ; $6c4f

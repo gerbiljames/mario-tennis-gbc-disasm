@@ -264,7 +264,7 @@ MeasureTextDimensions:
 	cp $00 ; $5750
 	jr z, .endOfText ; $5752
 	cp $01 ; $5754
-	jr nz, .compare ; $5756
+	jr nz, .notLineBreak ; $5756
 	inc e ; $5758
 	ld a, d ; $5759
 	cp b ; $575a
@@ -273,21 +273,21 @@ MeasureTextDimensions:
 	jr nc, .loop ; $575e
 	ld d, a ; $5760
 	jr .loop ; $5761
-.compare:
+.notLineBreak:
 	cp $08 ; $5763
-	jr nz, .compare2 ; $5765
+	jr nz, .notShortTextArg ; $5765
 	call GetNextArgShortTextLength ; $5767
 	add b ; $576a
 	ld b, a ; $576b
 	jr .loop ; $576c
-.compare2:
+.notShortTextArg:
 	cp $09 ; $576e
-	jr nz, .compare3 ; $5770
+	jr nz, .notNumberArg ; $5770
 	call MeasureNextArgNumberWidth ; $5772
 	add b ; $5775
 	ld b, a ; $5776
 	jr .loop ; $5777
-.compare3:
+.notNumberArg:
 	cp $20 ; $5779
 	jr c, .loop ; $577b
 	cp $7b ; $577d
@@ -365,23 +365,23 @@ ApplyMessageSpeed:
 	push_wram_bank WRAM_TEXT ; $57e8
 	ld a, [wMessageSpeed] ; $57f1
 	bit 7, a ; $57f4
-	jr z, .speed1 ; $57f6
+	jr z, .checkFast ; $57f6
 	xor a ; $57f8
 	ld [wTextRedrawGuard], a ; $57f9
 	jr .store ; $57fc
-.speed1:
+.checkFast:
 	or a ; $57fe
-	jr nz, .speed2 ; $57ff
+	jr nz, .checkMedium ; $57ff
 	ld a, $00 ; $5801
 	ld [wTextRedrawGuard], a ; $5803
 	jr .store ; $5806
-.speed2:
+.checkMedium:
 	cp $01 ; $5808
-	jr nz, .speed3 ; $580a
+	jr nz, .slow ; $580a
 	ld a, $02 ; $580c
 	ld [wTextRedrawGuard], a ; $580e
 	jr .store ; $5811
-.speed3:
+.slow:
 	ld a, $04 ; $5813
 	ld [wTextRedrawGuard], a ; $5815
 .store:

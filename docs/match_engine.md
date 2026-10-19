@@ -1288,7 +1288,7 @@ Partner, Partner — not monotonic):
 `InitCa00RecordFromCharId` (`$02:$4066`) fills a slot:
 
 - **Roster character** (id bit 7 clear): 29 bytes from
-  `StoryCharacterRecords_02` (`$02:$52cf`, 100 `char_record` rows) into offset
+  `StoryCharacterRecords_02` (`$02:$52cf`, 100 `char_stats_row` rows) into offset
   `+$0f` — exactly the span `LoadCharacterAttributes` reads.
 - **Created story character** (bit 7 set): 64 bytes from the saved record at
   `$c900` or `$c940`, earned stats verbatim.
@@ -1396,7 +1396,7 @@ set, less addresses already given in the text:
   the master. Net latency is probably equal on both sides; the frame alignment
   is not established.
 - **Unreachable code**: `Unused_08_ComputeBallEtaToChar` and its only caller
-  `UnusedComputeBallEtaToCharWrapper` (`$08:$70f1`); the lob check after
+  `Unused_08_ComputeBallEtaToCharWrapper` (`$08:$70f1`); the lob check after
   `AiChoosePositionByStrategy`'s jump table (`$08:$7d37`, no slot points at it);
   `Unused_07_SetSpecialShotFlagThreshold` (`$07:$59ec`);
   `Unused_07_ApplyCharStatPreset` (`$07:$5d1e`). The prologue of

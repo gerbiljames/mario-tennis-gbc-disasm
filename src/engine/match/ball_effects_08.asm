@@ -195,7 +195,7 @@ Unused_08_DrawShotAimMarker:
 	ld_oam bc, OAM_BANK1 | 1, $5e ; $54ff
 	call QueueSprite ; $5502
 	ret ; $5505
-UnusedDrawBallTargetMarker:
+Unused_08_DrawBallTargetMarker:
 	ld bc, $0000 ; $5506
 	ld hl, wBallTargetDepth ; $5509
 	ld a, [hl+] ; $550c

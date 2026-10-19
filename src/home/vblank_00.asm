@@ -150,7 +150,7 @@ ShortDelay:
 	ret ; $282d
 WaitSerialTransfer:
 	push bc ; $282e
-	ld bc, $c350 ; $282f
+	ld bc, 50000 ; $282f
 .waitLoop:
 	ei ; $2832
 	nop ; $2833

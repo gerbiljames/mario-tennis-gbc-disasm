@@ -246,7 +246,7 @@ SelectRandomTreasureBoxTargetZone:
 	xor a ; $5a9c
 	ld [wMinigameHitScored], a ; $5a9d
 	xor a ; $5aa0
-	ld [wMinigameActors + 2], a ; $5aa1
+	ld [wMinigameActors + 0 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5aa1
 	ret ; $5aa4
 TreasureBoxZonePoolsByLevel:
 	; $5aa5, 6 bytes (records:2)
@@ -262,7 +262,7 @@ TreasureBoxZonePool1:
 StubNop_0d_3:
 	ret ; $5acb
 TreasureBoxTargetActorHandler:
-	ld a, [wMinigameSceneActor + 2] ; $5acc
+	ld a, [wMinigameSceneActor + MGACTOR_STATE] ; $5acc
 	rst Rst00 ; $5acf
 	dw TreasureBoxTargetState0 ; $5ad0 jumptable
 	dw TreasureBoxTargetState1 ; $5ad2 jumptable
@@ -270,7 +270,7 @@ TreasureBoxTargetActorHandler:
 	dw TreasureBoxTargetState3 ; $5ad6 jumptable
 	dw RetStub ; $5ad8 jumptable
 AdvanceTreasureBoxActorState:
-	ld hl, wMinigameSceneActor + 2 ; $5ada
+	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $5ada
 	inc [hl] ; $5add
 	ret ; $5ade
 TreasureBoxTargetState0:
@@ -295,7 +295,7 @@ TreasureBoxTargetState0:
 	inc h ; $5b00
 .read:
 	ld a, [hl] ; $5b01
-	ld [wMinigameSceneActor + 1], a ; $5b02
+	ld [wMinigameSceneActor + MGACTOR_SUBTYPE], a ; $5b02
 	ld a, [wMinigameShotRoll] ; $5b05
 	add a ; $5b08
 	ld_hl_indexed TreasureBoxSpawnPointsByZone ; $5b09
@@ -332,7 +332,7 @@ TreasureBoxTargetState1:
 	jp AdvanceTreasureBoxActorState ; $5b3a
 TreasureBoxTargetState2:
 	call DrawTreasureBoxHitCountdown ; $5b3d
-	ld hl, wMinigameSceneActor + 3 ; $5b40
+	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5b40
 	dec [hl] ; $5b43
 	ld a, [hl] ; $5b44
 	and a ; $5b45

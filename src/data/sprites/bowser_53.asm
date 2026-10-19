@@ -330,7 +330,7 @@ BowserSpriteFramesUnused:
 	INCBIN "data/sprites/BowserSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BowserSpriteFrame06.bin" ; $7bf0, 240 bytes
 BowserSpriteOam:
-	INCBIN "data/sprites/BowserSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/BowserSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 BowserSpriteAnims:
 	dw BowserSpriteAnim00 ; $7f24
 	dw BowserSpriteAnim01 ; $7f26

@@ -79,13 +79,13 @@ InitResultsPromptState:
 	ret ; $40bd
 BuildResultsScreenTilemap:
 	call LoadResultsScreenGraphics ; $40be
-	ld hl, Text_31_210 ; $40c1
+	ld hl, Text_ResultsContinueGame ; $40c1
 	ld de, wDecompBuffer tile 4 + 1 ; $40c4
 	ld bc, $0020 ; $40c7
 	call DrawProportionalTextLine ; $40ca
-	ld hl, Text_31_211 ; $40cd
+	ld hl, Text_ResultsYourSavedGame ; $40cd
 	call DrawProportionalTextLine ; $40d0
-	ld hl, Text_31_212 ; $40d3
+	ld hl, Text_ResultsWillBeLostOk ; $40d3
 	call DrawProportionalTextLine ; $40d6
 	call BuildResultsScreenPanels ; $40d9
 	call DrawPlayerNameAndLevel ; $40dc
@@ -280,11 +280,11 @@ BuildResultsScreenPanels:
 	ld [wShadowTilemap + 7 * TILEMAP_WIDTH + 18], a ; $42d1
 	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 15], a ; $42d4
 	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 18], a ; $42d7
-	ld hl, Text_31_213 ; $42da
+	ld hl, Text_ResultsYes ; $42da
 	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH + 16 ; $42dd
 	ld bc, $0020 ; $42e0
 	call FetchAndDrawDialogueText ; $42e3
-	ld hl, Text_31_214 ; $42e6
+	ld hl, Text_ResultsNo ; $42e6
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 16 ; $42e9
 	ld bc, $0020 ; $42ec
 	call FetchAndDrawDialogueText ; $42ef
@@ -411,7 +411,7 @@ CopyLabelTilesToTilemap:
 	dec c ; $4427
 	jr nz, CopyLabelTilesToTilemap ; $4428
 	ret ; $442a
-UnusedClearLabelTilemapRow:
+Unused_1e_ClearLabelTilemapRow:
 	wram_bank WRAM_SCREEN ; $442b
 	ld a, $20 ; $4431
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $4433
@@ -440,13 +440,13 @@ DrawStoryResultsHeader:
 	ld a, [wStoryReturnLocation] ; $446b
 	cp STORYLOC_PEACHS_CASTLE ; $446e
 	jr z, .altPosition ; $4470
-	ld hl, Text_31_216 ; $4472
+	ld hl, Text_ResultsTennisAcademy ; $4472
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $4475
 	ld bc, $0020 ; $4478
 	call DrawProportionalTextLine ; $447b
 	jr .drawOpponentName ; $447e
 .skyScene:
-	ld hl, Text_31_217 ; $4480
+	ld hl, Text_ResultsIslandOpen ; $4480
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 2 ; $4483
 	ld bc, $0020 ; $4486
 	call DrawProportionalTextLine ; $4489

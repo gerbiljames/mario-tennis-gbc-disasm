@@ -15,13 +15,13 @@
 	jr nc, .rightWrapCheck
 	ld a, b
 	dec a
-	jr .storeX
+	jr .storeRight
 .rightWrapCheck:
 	rra
 	cp b
-	jr c, .storeX
+	jr c, .storeRight
 	xor a
-.storeX:
+.storeRight:
 	ld [wMenuCursorX], a
 	jr .checkMoved
 .checkLeft:
@@ -33,13 +33,13 @@
 	jr nc, .leftWrapCheck
 	ld a, b
 	dec a
-	jr .storeX2
+	jr .storeLeft
 .leftWrapCheck:
 	rra
 	cp b
-	jr c, .storeX2
+	jr c, .storeLeft
 	xor a
-.storeX2:
+.storeLeft:
 	ld [wMenuCursorX], a
 	jr .checkMoved
 .checkUp:
@@ -51,13 +51,13 @@
 	jr nc, .upWrapCheck
 	ld a, c
 	dec a
-	jr .storeY
+	jr .storeUp
 .upWrapCheck:
 	rra
 	cp c
-	jr c, .storeY
+	jr c, .storeUp
 	xor a
-.storeY:
+.storeUp:
 	ld [wMenuCursorY], a
 	jr .checkMoved
 .checkDown:
@@ -69,13 +69,13 @@
 	jr nc, .downWrapCheck
 	ld a, c
 	dec a
-	jr .storeY2
+	jr .storeDown
 .downWrapCheck:
 	rra
 	cp c
-	jr c, .storeY2
+	jr c, .storeDown
 	xor a
-.storeY2:
+.storeDown:
 	ld [wMenuCursorY], a
 .checkMoved:
 	ld a, [wMenuCursorX]

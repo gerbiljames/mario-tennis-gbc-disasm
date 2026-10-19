@@ -1,5 +1,5 @@
 PromptChallengeRankingOpponent:
-	script_set_text Text_32_34 ; $7288
+	script_set_text Text_JuniorRankingMatchRulesThreeSets ; $7288
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $728e
 	jr z, .prompt ; $7291
 	farcall AdvanceDialogueTextCursor ; $7293
@@ -15,7 +15,7 @@ PromptChallengeRankingOpponent:
 .declined:
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, ANIM_NOD ; $72b8
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $72bf
-	script_set_text Text_32_40 ; $72c4
+	script_set_text Text_JuniorRankingMatchLetsGo ; $72c4
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $72ca
 	call StartNextRankingMatch ; $72cf
 	script_set_speed ACTOR_PLAYER, 0.75 ; $72d2
@@ -26,7 +26,7 @@ PromptChallengeRankingOpponent:
 	call LoadRankingOpponentGraphics ; $72e8
 	ret ; $72eb
 .done:
-	script_set_text Text_32_37 ; $72ec
+	script_set_text Text_JuniorRankingMatchDeclined ; $72ec
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $72f2
 	farcall RunDialogueYesNoPrompt ; $72f7
 	farcall ScriptCloseDialogueWindow ; $72fa
@@ -38,41 +38,41 @@ LoadRankingOpponentGraphics:
 	test_flag FLAG_DOUBLES ; $730a
 	jp nz, LoadDoublesRankingOpponentGraphics ; $730d
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $7310
-	jr z, .rank2 ; $7313
+	jr z, .vsRank4 ; $7313
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $7315
-	jr z, .rank3 ; $7318
+	jr z, .vsRank3 ; $7318
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $731a
-	jr z, .rank4 ; $731d
+	jr z, .vsRank2 ; $731d
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $731f
-	jr z, .done ; $7322
+	jr z, .vsRank1 ; $7322
 	ret ; $7324
-.rank2:
+.vsRank4:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, ActorScript_11_32 ; $7325
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $7330
 	ret ; $7335
-.rank3:
+.vsRank3:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_36 ; $7336
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT ; $7341
 	ret ; $7346
-.rank4:
+.vsRank2:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, ActorScript_11_39 ; $7347
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH ; $7352
 	ret ; $7357
-.done:
+.vsRank1:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, ActorScript_11_42 ; $7358
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB ; $7363
 	ret ; $7368
 DrawRankingOpponentInfo:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $7369
-	jr z, .rank2 ; $736c
+	jr z, .vsRank4 ; $736c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $736e
-	jp z, .rank3 ; $7371
+	jp z, .vsRank3 ; $7371
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $7374
-	jp z, .rank4 ; $7377
+	jp z, .vsRank2 ; $7377
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $737a
-	jp z, .done ; $737d
+	jp z, .vsRank1 ; $737d
 	ret ; $7380
-.rank2:
+.vsRank4:
 	script_wait_frames 15 ; $7381
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $7388
 	script_wait_frames 30 ; $7390
@@ -94,7 +94,7 @@ DrawRankingOpponentInfo:
 	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $73f9
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, ANIM_BOUNCE ; $7401
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $7408
-	script_set_text Text_32_42 ; $740d
+	script_set_text Text_JuniorRankFourChallengeConfirm ; $740d
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $7413
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, ANIM_NOD ; $7418
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM ; $741f
@@ -102,7 +102,7 @@ DrawRankingOpponentInfo:
 	script_wait_frames 15 ; $7429
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACE_UP ; $7430
 	ret ; $7437
-.rank3:
+.vsRank3:
 	script_wait_frames 15 ; $7438
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $743f
 	script_wait_frames 30 ; $7447
@@ -122,7 +122,7 @@ DrawRankingOpponentInfo:
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $74a7
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ANIM_BOUNCE ; $74ac
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $74b3
-	script_set_text Text_32_44 ; $74b8
+	script_set_text Text_JuniorRankThreeWontClimbEasily ; $74b8
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $74be
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, ANIM_NOD ; $74c3
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT ; $74ca
@@ -130,7 +130,7 @@ DrawRankingOpponentInfo:
 	script_wait_frames 15 ; $74d4
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, FACE_UP ; $74db
 	ret ; $74e2
-.rank4:
+.vsRank2:
 	script_wait_frames 15 ; $74e3
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $74ea
 	script_wait_frames 30 ; $74f2
@@ -150,7 +150,7 @@ DrawRankingOpponentInfo:
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ACTOR_PLAYER ; $7551
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ANIM_BOUNCE ; $7559
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $7560
-	script_set_text Text_32_46 ; $7565
+	script_set_text Text_JuniorRankTwoFinallyChallenge ; $7565
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $756b
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, ANIM_NOD ; $7570
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH ; $7577
@@ -158,7 +158,7 @@ DrawRankingOpponentInfo:
 	script_wait_frames 15 ; $7581
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, FACE_UP ; $7588
 	ret ; $758f
-.done:
+.vsRank1:
 	script_wait_frames 15 ; $7590
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $7597
 	script_wait_frames 30 ; $759f
@@ -178,7 +178,7 @@ DrawRankingOpponentInfo:
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ACTOR_PLAYER ; $7604
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_BOUNCE ; $760c
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $7613
-	script_set_text Text_32_48 ; $7618
+	script_set_text Text_JuniorChampMustAcceptChallenges ; $7618
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $761e
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_NOD ; $7623
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $762a
@@ -329,13 +329,13 @@ ActorScript_11_44:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
 OfferSinglesRankingMatch:
-	script_set_text Text_32_28 ; $7784
+	script_set_text Text_JuniorCoachOfferSinglesRankingMatch ; $7784
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $778a
 	farcall RunDialogueYesNoPrompt ; $778f
 	farcall ScriptCloseDialogueWindow ; $7792
 	script_wait_frames 5 ; $7795
 	and a ; $779c
-	jp nz, .speak2 ; $779d
+	jp nz, .declined ; $779d
 	script_unlock_facing ACTOR_PLAYER ; $77a0
 	script_set_speed ACTOR_PLAYER, 0.75 ; $77a7
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $77af
@@ -345,15 +345,15 @@ OfferSinglesRankingMatch:
 	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $77ce
 	farcall AdvanceDialogueTextCursor ; $77d6
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $77d9
-	jr z, .speak ; $77dc
+	jr z, .announceOpponent ; $77dc
 	farcall AdvanceDialogueTextCursor ; $77de
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $77e1
-	jr z, .speak ; $77e4
+	jr z, .announceOpponent ; $77e4
 	farcall AdvanceDialogueTextCursor ; $77e6
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $77e9
-	jr z, .speak ; $77ec
+	jr z, .announceOpponent ; $77ec
 	farcall AdvanceDialogueTextCursor ; $77ee
-.speak:
+.announceOpponent:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $77f1
 	call DrawRankingOpponentInfo ; $77f6
 	script_face ACTOR_PLAYER, FACE_UP ; $77f9
@@ -362,7 +362,7 @@ OfferSinglesRankingMatch:
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $780e
 	call PromptChallengeRankingOpponent ; $7813
 	ret ; $7816
-.speak2:
+.declined:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $7817
 	ret ; $781c
 StartNextRankingMatch:
@@ -370,15 +370,15 @@ StartNextRankingMatch:
 	test_flag FLAG_DOUBLES ; $7825
 	jp nz, StartNextDoublesRankingMatch ; $7828
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $782b
-	jr z, .rank2 ; $782e
+	jr z, .vsRank4 ; $782e
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $7830
-	jp z, .rank3 ; $7833
+	jp z, .vsRank3 ; $7833
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $7836
-	jp z, .rank4 ; $7839
+	jp z, .vsRank2 ; $7839
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $783c
-	jp z, .done ; $783f
+	jp z, .vsRank1 ; $783f
 	ret ; $7842
-.rank2:
+.vsRank4:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_RIGHT ; $7843
 	script_wait_frames 15 ; $784a
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7851
@@ -401,7 +401,7 @@ StartNextRankingMatch:
 	farcall RunStoryMatch ; $78c8
 	farcall RestoreOverworldAfterMatch ; $78cb
 	ret ; $78ce
-.rank3:
+.vsRank3:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_LEFT ; $78cf
 	script_wait_frames 15 ; $78d6
 	script_face ACTOR_PLAYER, FACE_LEFT ; $78dd
@@ -424,7 +424,7 @@ StartNextRankingMatch:
 	farcall RunStoryMatch ; $7956
 	farcall RestoreOverworldAfterMatch ; $7959
 	ret ; $795c
-.rank4:
+.vsRank2:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_LEFT ; $795d
 	script_wait_frames 15 ; $7964
 	script_face ACTOR_PLAYER, FACE_LEFT ; $796b
@@ -446,7 +446,7 @@ StartNextRankingMatch:
 	farcall RunStoryMatch ; $79e1
 	farcall RestoreOverworldAfterMatch ; $79e4
 	ret ; $79e7
-.done:
+.vsRank1:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_RIGHT ; $79e8
 	script_wait_frames 15 ; $79ef
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $79f6

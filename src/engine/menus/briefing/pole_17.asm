@@ -17,7 +17,7 @@ DrillBriefing_ServeThroughPoles:
 	ld a, $01 ; $5c8f
 	ld hl, CycleDiagramTargetPalette ; $5c91
 	call RegisterFrameTask ; $5c94
-	ld hl, Text_36_699 ; $5c97
+	ld hl, Text_BriefPoleServeFourCourts ; $5c97
 	call DrawBriefingCaption ; $5c9a
 	xor a ; $5c9d
 	ld [wBriefingAnimTimer], a ; $5c9e
@@ -51,7 +51,7 @@ DrillBriefing_ServeThroughPoles:
 	ld a, $01 ; $5ce5
 	ld hl, DrawBriefingTargetBrackets ; $5ce7
 	call RegisterFrameTask ; $5cea
-	ld hl, Text_36_700 ; $5ced
+	ld hl, Text_BriefPoleServeSmallerTargets ; $5ced
 	call DrawBriefingCaption ; $5cf0
 	xor a ; $5cf3
 	ld [wBriefingAnimTimer], a ; $5cf4
@@ -106,7 +106,7 @@ DrillBriefing_ServeThroughPoles:
 	ld a, $01 ; $5d6c
 	ld hl, DrawBriefingTargetBrackets ; $5d6e
 	call RegisterFrameTask ; $5d71
-	ld hl, Text_36_701 ; $5d74
+	ld hl, Text_BriefPoleServeThroughPoles ; $5d74
 	call DrawBriefingCaption ; $5d77
 	call WaitForInputBlinking ; $5d7a
 	call ClearFrameTasks ; $5d7d
@@ -132,7 +132,7 @@ DrillBriefing_ServeThroughPoles:
 	ld a, $01 ; $5db2
 	ld hl, DrawBriefingTargetBrackets ; $5db4
 	call RegisterFrameTask ; $5db7
-	ld hl, Text_36_702 ; $5dba
+	ld hl, Text_BriefPoleServeDownLineTiming ; $5dba
 	call DrawBriefingCaption ; $5dbd
 .animLastCaption:
 	call PoleServeBriefing_TickAnim2 ; $5dc0
@@ -358,7 +358,7 @@ DrillBriefing_ServeAndVolley:
 	ld a, $01 ; $5ffb
 	ld hl, CycleDiagramTargetPalette ; $5ffd
 	call RegisterFrameTask ; $6000
-	ld hl, Text_36_703 ; $6003
+	ld hl, Text_BriefServeVolleyRunToLine ; $6003
 	call DrawBriefingCaption ; $6006
 	call WaitForInputBlinking ; $6009
 	call ClearFrameTasks ; $600c
@@ -394,7 +394,7 @@ DrillBriefing_ServeAndVolley:
 	ld a, $01 ; $605c
 	ld hl, DrawBriefingTargetBrackets ; $605e
 	call RegisterFrameTask ; $6061
-	ld hl, Text_36_704 ; $6064
+	ld hl, Text_BriefServeVolleyAimOpposite ; $6064
 	call DrawBriefingCaption ; $6067
 	call WaitForInputBlinking ; $606a
 	call ClearFrameTasks ; $606d
@@ -429,7 +429,7 @@ DrillBriefing_ServeAndVolley:
 	ld a, $01 ; $60ba
 	ld hl, DrawBriefingTargetBrackets ; $60bc
 	call RegisterFrameTask ; $60bf
-	ld hl, Text_36_705 ; $60c2
+	ld hl, Text_BriefServeVolleyAllPositions ; $60c2
 	call DrawBriefingCaption ; $60c5
 	xor a ; $60c8
 	ld [wBriefingAnimTimer], a ; $60c9

@@ -330,7 +330,7 @@ KateSpriteFramesUnused:
 	INCBIN "data/sprites/KateSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/KateSpriteFrame06.bin" ; $7bf0, 240 bytes
 KateSpriteOam:
-	INCBIN "data/sprites/KateSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/KateSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 KateSpriteAnims:
 	dw KateSpriteAnim00 ; $7f24
 	dw KateSpriteAnim01 ; $7f26

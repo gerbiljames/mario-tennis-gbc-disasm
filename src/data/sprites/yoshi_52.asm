@@ -330,7 +330,7 @@ YoshiSpriteFramesUnused:
 	INCBIN "data/sprites/YoshiSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/YoshiSpriteFrame06.bin" ; $7bf0, 240 bytes
 YoshiSpriteOam:
-	INCBIN "data/sprites/YoshiSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/YoshiSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 YoshiSpriteAnims:
 	dw YoshiSpriteAnim00 ; $7f24
 	dw YoshiSpriteAnim01 ; $7f26

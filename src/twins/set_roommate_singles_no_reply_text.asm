@@ -6,9 +6,9 @@
 	jp nz, .done
 	test_flag FLAG_TEMP_SCENE_VARIANT_A
 	jr z, .setText
-	script_set_text Text_31_276
+	script_set_text Text_RoommateSinglesHurryUp
 	jr .done
 .setText:
-	script_set_text Text_31_271
+	script_set_text Text_RoommateSinglesHeadBack
 .done:
 	ret

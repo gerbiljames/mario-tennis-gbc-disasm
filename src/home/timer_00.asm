@@ -56,7 +56,7 @@ Unused_00_VBlankDeferredTilemapCopyTask:
 	wram_bank ; $2a5e
 	ld a, [wDeferredTilemapPending] ; $2a62
 	and $0f ; $2a65
-	jr z, .maskClear ; $2a67
+	jr z, .checkAttrs ; $2a67
 	ld hl, wDeferredTilemapSrc ; $2a69
 	ld a, [hl+] ; $2a6c
 	ld h, [hl] ; $2a6d
@@ -65,10 +65,10 @@ Unused_00_VBlankDeferredTilemapCopyTask:
 	ld a, [wDeferredTilemapLength] ; $2a72
 	ld c, a ; $2a75
 	call QueueVRAMCopy ; $2a76
-.maskClear:
+.checkAttrs:
 	ld a, [wDeferredTilemapPending] ; $2a79
 	and $f0 ; $2a7c
-	jr z, .maskClear2 ; $2a7e
+	jr z, .clearPending ; $2a7e
 	ld hl, wDeferredTilemapAttrSrc ; $2a80
 	ld a, [hl+] ; $2a83
 	ld h, [hl] ; $2a84
@@ -77,7 +77,7 @@ Unused_00_VBlankDeferredTilemapCopyTask:
 	ld a, [wDeferredTilemapLength] ; $2a89
 	ld c, a ; $2a8c
 	call QueueVRAMCopy ; $2a8d
-.maskClear2:
+.clearPending:
 	xor a ; $2a90
 	ld [wDeferredTilemapPending], a ; $2a91
 	pop_wram_bank ; $2a94
@@ -278,15 +278,15 @@ DrawWindowFrame:
 	ld a, $20 ; $2b86
 	add l ; $2b88
 	ld l, a ; $2b89
-	jr nc, .gotPtr ; $2b8a
+	jr nc, .advanceAttrRow ; $2b8a
 	inc h ; $2b8c
-.gotPtr:
+.advanceAttrRow:
 	ld a, $20 ; $2b8d
 	add e ; $2b8f
 	ld e, a ; $2b90
-	jr nc, .gotPtr2 ; $2b91
+	jr nc, .nextClearRow ; $2b91
 	inc d ; $2b93
-.gotPtr2:
+.nextClearRow:
 	dec c ; $2b94
 	jr nz, .fillRowLoop ; $2b95
 	pop hl ; $2b97
@@ -296,9 +296,9 @@ DrawWindowFrame:
 	ld a, $20 ; $2b9d
 	add l ; $2b9f
 	ld l, a ; $2ba0
-	jr nc, .gotPtr3 ; $2ba1
+	jr nc, .drawSides ; $2ba1
 	inc h ; $2ba3
-.gotPtr3:
+.drawSides:
 	dec c ; $2ba4
 	dec c ; $2ba5
 .sideRowLoop:

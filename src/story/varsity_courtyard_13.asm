@@ -4,10 +4,10 @@ SetRoommateDoublesNoReplyText_13:
 	jp nz, .done ; $5b90
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5b93
 	jr z, .setText ; $5b96
-	script_set_text Text_31_275 ; $5b98
+	script_set_text Text_RoommateDoublesHurryGetThemAlt ; $5b98
 	jr .done ; $5b9e
 .setText:
-	script_set_text Text_31_270 ; $5ba0
+	script_set_text Text_RoommateDoublesHurryGetThem ; $5ba0
 .done:
 	ret ; $5ba6
 	twin_named set_roommate_singles_no_reply_text, SetRoommateSinglesNoReplyText_13 ; $5ba7
@@ -18,10 +18,10 @@ SetRoommateDoublesYesReplyText_13:
 	jp nz, .done ; $5be4
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5be7
 	jr z, .setText ; $5bea
-	script_set_text Text_31_277 ; $5bec
+	script_set_text Text_RoommateDoublesDontForgetAlt ; $5bec
 	jr .done ; $5bf2
 .setText:
-	script_set_text Text_31_272 ; $5bf4
+	script_set_text Text_RoommateDoublesDontForget ; $5bf4
 .done:
 	ret ; $5bfa
 ComputeEmoteActorPosition_13:
@@ -180,10 +180,10 @@ CourtyardExitTriggers_13:
 	map_script $0f, FACEMASK_ANY, $0000, $0000, STORYLOC_RESTAURANT_PLAZA, $0f
 	db $ff
 CourtyardNpc03_13:
-	script_set_text Text_30_527 ; $5eaa
+	script_set_text Text_KevinFewVarsityPlayersSingles ; $5eaa
 	test_flag FLAG_DOUBLES ; $5eb0
 	jr z, .notDoubles ; $5eb3
-	script_set_text Text_30_529 ; $5eb5
+	script_set_text Text_KevinFewVarsityPlayersDoubles ; $5eb5
 .notDoubles:
 	script_speak_restore ACTOR_COURTYARD_KEVIN ; $5ebb
 	farcall RunDialogueYesNoPrompt ; $5ec0
@@ -191,24 +191,24 @@ CourtyardNpc03_13:
 	script_wait_frames 5 ; $5ec6
 	and a ; $5ecd
 	jr nz, .speak ; $5ece
-	script_set_text Text_30_531 ; $5ed0
+	script_set_text Text_KevinVarsityAlwaysCoaching ; $5ed0
 .speak:
 	script_speak ACTOR_COURTYARD_KEVIN ; $5ed6
 	ret ; $5edb
 CourtyardNpcScripts_13:
 	; $5edc, 57 bytes (map_scripts)
 	map_script ACTOR_COURTYARD_KEVIN, FACEMASK_ANY, $0000, CourtyardNpc03_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $05e0, Text_30_532, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $05e0, Text_30_533, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $0000, Text_30_536, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $0000, Text_30_537, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script ACTOR_COURTYARD_CURT, FACEMASK_ANY, $0000, Text_30_534, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_BETH, FACEMASK_ANY, $0000, Text_30_535, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $05e0, Text_BobVarsitySinglesRankings, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $05e0, Text_FayYouCouldBeatTopThree, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $0000, Text_BobVarsityDoublesRankings, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $0000, Text_FayDoublesPracticePartner, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_COURTYARD_CURT, FACEMASK_ANY, $0000, Text_CurtICouldBeatTopThree, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_BETH, FACEMASK_ANY, $0000, Text_BethVarsityAllTalented, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtANpc05_13:
 	script_null_script ACTOR_VARSITY_COURT_A_FAY ; $5f15
 	script_set_anim ACTOR_VARSITY_COURT_A_FAY, ANIM_WALK ; $5f1a
-	script_set_text Text_30_539 ; $5f21
+	script_set_text Text_FaySkillOrLuckChallenge ; $5f21
 	script_speak_restore ACTOR_VARSITY_COURT_A_FAY ; $5f27
 	farcall RunDialogueYesNoPrompt ; $5f2c
 	farcall ScriptCloseDialogueWindow ; $5f2f
@@ -235,13 +235,13 @@ VarsityCourtNpcScriptsA_13:
 	; $5f70, 49 bytes (map_scripts)
 	map_script ACTOR_VARSITY_COURT_A_KEVIN, FACEMASK_UP, $0000, VarsityCourtANpc03FaceUp_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_VARSITY_COURT_A_KEVIN, FACEMASK_ANY, $0000, VarsityCourtANpc03_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_A_BOB, FACEMASK_ANY, $0000, Text_30_538, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_A_BOB, FACEMASK_ANY, $0000, Text_BobFourthButNotWorst, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_VARSITY_COURT_A_FAY, FACEMASK_ANY, $0000, VarsityCourtANpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_A_CURT, FACEMASK_ANY, $0000, Text_30_542, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_VARSITY_COURT_A_BETH, FACEMASK_ANY, $0000, Text_30_543, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_VARSITY_COURT_A_CURT, FACEMASK_ANY, $0000, Text_CurtTravelingTeamRepresents, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_VARSITY_COURT_A_BETH, FACEMASK_ANY, $0000, Text_BethTravelingTeamSelection, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtBNpc09_13:
-	script_set_text Text_31_3 ; $5fa1
+	script_set_text Text_MarkTryingForDoublesTeam ; $5fa1
 	script_speak_restore ACTOR_VARSITY_COURT_B_MARK ; $5fa7
 	farcall RunDialogueYesNoPrompt ; $5fac
 	farcall ScriptCloseDialogueWindow ; $5faf
@@ -255,7 +255,7 @@ VarsityCourtBNpc09_13:
 VarsityCourtBNpc05_13:
 	script_null_script ACTOR_VARSITY_COURT_B_FAY ; $5fc5
 	script_set_anim ACTOR_VARSITY_COURT_B_FAY, ANIM_WALK ; $5fca
-	script_set_text Text_31_7 ; $5fd1
+	script_set_text Text_FayDoublesPracticeMatchOffer ; $5fd1
 	script_speak_restore ACTOR_VARSITY_COURT_B_FAY ; $5fd7
 	farcall RunDialogueYesNoPrompt ; $5fdc
 	farcall ScriptCloseDialogueWindow ; $5fdf
@@ -282,16 +282,16 @@ VarsityCourtNpcScriptsB_13:
 	; $6020, 57 bytes (map_scripts)
 	map_script ACTOR_VARSITY_COURT_B_KEVIN, FACEMASK_UP, $0000, VarsityCourtBNpc03FaceUp_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_VARSITY_COURT_B_KEVIN, FACEMASK_ANY, $0000, VarsityCourtBNpc03_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_B_BOB, FACEMASK_ANY, $0000, Text_31_6, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_B_BOB, FACEMASK_ANY, $0000, Text_BobGiveUpDoublesTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_VARSITY_COURT_B_FAY, FACEMASK_ANY, $0000, VarsityCourtBNpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_B_CURT, FACEMASK_ANY, $0000, Text_31_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_B_BETH, FACEMASK_ANY, $0000, Text_31_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_VARSITY_COURT_B_CURT, FACEMASK_ANY, $0000, Text_CurtNeverMakeDoublesTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_B_BETH, FACEMASK_ANY, $0000, Text_BethAcceptedNeverMakeTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	map_script ACTOR_VARSITY_COURT_B_MARK, FACEMASK_ANY, $0000, VarsityCourtBNpc09_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 VarsityCourtCNpc03_13:
 	script_null_script ACTOR_VARSITY_COURT_C_BOB ; $6059
 	script_set_anim ACTOR_VARSITY_COURT_C_BOB, ANIM_WALK ; $605e
-	script_set_text Text_31_34 ; $6065
+	script_set_text Text_BobNoVarsityHere ; $6065
 	script_speak ACTOR_VARSITY_COURT_C_BOB ; $606b
 	script_set_actor_script ACTOR_VARSITY_COURT_C_BOB, ActorScript_13_20 ; $6070
 	ret ; $607b
@@ -300,7 +300,7 @@ VarsityCourtCNpc04_13:
 	script_set_anim ACTOR_VARSITY_COURT_C_FAY, ANIM_WALK ; $6081
 	call ApVarsityPracticeC_13
 	ret nz
-	script_set_text Text_31_35 ; $6088
+	script_set_text Text_FayVarsityCourtsClosed ; $6088
 	script_speak ACTOR_VARSITY_COURT_C_FAY ; $608e
 	script_set_actor_script ACTOR_VARSITY_COURT_C_FAY, ActorScript_13_20 ; $6093
 	ret ; $609e
@@ -311,7 +311,7 @@ VarsityCourtNpcScriptsC_13:
 	map_script $05, FACEMASK_ANY, $0000, VarsityCourtCNpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtCNpc05_13:
-	script_set_text Text_31_36 ; $60b8
+	script_set_text Text_VarsityCourtSinglesSeeds ; $60b8
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $60be
 	jr z, .speak ; $60c1
 	farcall AdvanceDialogueTextCursor ; $60c3
@@ -323,34 +323,34 @@ VarsityCourtDNpc05_13:
 	script_set_anim ACTOR_COURTYARD_FAY, ANIM_WALK ; $60d1
 	call ApVarsityPracticeD_13
 	ret nz
-	script_set_text Text_31_40 ; $60d8
+	script_set_text Text_FayTougherVarsityChallenge ; $60d8
 	script_speak ACTOR_COURTYARD_FAY ; $60de
 	script_set_actor_script ACTOR_COURTYARD_FAY, ActorScript_13_20 ; $60e3
 	ret ; $60ee
 VarsityCourtNpcScriptsD_13:
 	; $60ef, 41 bytes (map_scripts)
-	map_script ACTOR_COURTYARD_KEVIN, FACEMASK_ANY, $0000, Text_31_38, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $0000, Text_31_39, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_KEVIN, FACEMASK_ANY, $0000, Text_KevinReclaimRankSingles, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_BOB, FACEMASK_ANY, $0000, Text_BobPracticeToBeLikeYou, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_COURTYARD_FAY, FACEMASK_ANY, $0000, VarsityCourtDNpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_CURT, FACEMASK_ANY, $0000, Text_31_41, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURTYARD_BETH, FACEMASK_ANY, $0000, Text_31_42, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_COURTYARD_CURT, FACEMASK_ANY, $0000, Text_CurtEffectiveTraining, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURTYARD_BETH, FACEMASK_ANY, $0000, Text_BethEffortPaidOff, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 VarsityCourtENpc05_13:
 	script_null_script ACTOR_VARSITY_COURT_B_FAY ; $6118
 	script_set_anim ACTOR_VARSITY_COURT_B_FAY, ANIM_WALK ; $611d
 	call ApVarsityPracticeE_13
 	ret nz
-	script_set_text Text_31_45 ; $6124
+	script_set_text Text_FayLuckCanRunOut ; $6124
 	script_speak ACTOR_VARSITY_COURT_B_FAY ; $612a
 	script_set_actor_script ACTOR_VARSITY_COURT_B_FAY, ActorScript_13_20 ; $612f
 	ret ; $613a
 VarsityCourtNpcScriptsE_13:
 	; $613b, 41 bytes (map_scripts)
-	map_script ACTOR_VARSITY_COURT_B_KEVIN, FACEMASK_ANY, $0000, Text_31_43, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_B_BOB, FACEMASK_ANY, $0000, Text_31_44, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_B_KEVIN, FACEMASK_ANY, $0000, Text_KevinReclaimRankDoubles, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_B_BOB, FACEMASK_ANY, $0000, Text_BobAcceptYourRanking, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_VARSITY_COURT_B_FAY, FACEMASK_ANY, $0000, VarsityCourtENpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_B_CURT, FACEMASK_ANY, $0000, Text_31_46, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_VARSITY_COURT_B_BETH, FACEMASK_ANY, $0000, Text_31_47, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_VARSITY_COURT_B_CURT, FACEMASK_ANY, $0000, Text_CurtMentalFocus, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_VARSITY_COURT_B_BETH, FACEMASK_ANY, $0000, Text_BethWeCanMakeTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 CourtyardFacingScripts_13:
 	; $6164, 9 bytes (map_scripts)

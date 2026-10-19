@@ -1,9 +1,9 @@
 AwardsCeremonyNpc08_0f:
-	script_set_text Text_25_125 ; $5628
+	script_set_text Text_AwardsSpikeSilence ; $5628
 	call CheckAwardsCeremonyRivalSceneDone ; $562e
 	and $01 ; $5631
 	jr z, .speak ; $5633
-	script_set_text Text_25_129 ; $5635
+	script_set_text Text_AwardsSpikeNotNextYear ; $5635
 .speak:
 	script_speak ACTOR_AWARDS_CEREMONY_SPIKE ; $563b
 	ret ; $5640
@@ -48,7 +48,7 @@ AwardsCeremonyEntry0aScene:
 	script_wait_idle ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS ; $56b2
 	script_face_toward ACTOR_PLAYER, ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS ; $56b7
 	script_delay 10 ; $56bf
-	script_set_text Text_25_107 ; $56c4
+	script_set_text Text_AwardsKevinCongrats ; $56c4
 	script_speak ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS ; $56ca
 	script_set_anim ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS, ANIM_NOD ; $56cf
 	script_wait_idle ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS ; $56d6
@@ -127,7 +127,7 @@ AwardsCeremonyEntry0bScene:
 	script_set_position ACTOR_PARTNER, 11.0, 39.0 ; $588e
 	script_face ACTOR_PARTNER, FACE_UP ; $5899
 	call AwardsCeremonyArrivalIntro ; $58a0
-	script_set_text Text_25_151 ; $58a3
+	script_set_text Text_AwardsPartnerCongrats ; $58a3
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $58a9
 	script_wait_idle ACTOR_PARTNER ; $58b0
 	script_face ACTOR_PARTNER, FACE_DOWN ; $58b5
@@ -238,15 +238,15 @@ SpeakPartnerVariantLine:
 	ret ; $5b03
 AwardsCeremonyNpcScriptsDoubles_0f:
 	; $5b04, 73 bytes (map_scripts)
-	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, Text_25_183, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_A_COZ, FACEMASK_ANY, $0000, Text_25_165, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_B_COZ, FACEMASK_ANY, $0000, Text_25_166, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_SAMMI, FACEMASK_ANY, $0000, Text_25_175, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_SEAN, FACEMASK_ANY, $0000, Text_25_177, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, Text_AwardsKevinSeeYourTrophy, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_A_COZ, FACEMASK_ANY, $0000, Text_AwardsACozRuinReputation, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_B_COZ, FACEMASK_ANY, $0000, Text_AwardsBCozBackFromDead, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_SAMMI, FACEMASK_ANY, $0000, Text_AwardsSammieAmazedYouBeatThem, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_SEAN, FACEMASK_ANY, $0000, Text_AwardsSeanCostellosFreaky, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_SPIKE, FACEMASK_ANY, $0000, AwardsCeremonyNpc08_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_ISLAND_SPECTATOR_B, FACEMASK_ANY, $0000, Text_25_130, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_ISLAND_SPECTATOR_A, FACEMASK_ANY, $0000, Text_25_131, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_EMILY_SWEATS, FACEMASK_ANY, $0000, Text_25_176, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_ISLAND_SPECTATOR_B, FACEMASK_ANY, $0000, Text_AwardsSpectatorExcitingMatch, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_ISLAND_SPECTATOR_A, FACEMASK_ANY, $0000, Text_AwardsSpectatorEveryMonth, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_EMILY_SWEATS, FACEMASK_ANY, $0000, Text_AwardsEmilyAvengingMyLoss, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 AwardsCeremonyArrivalIntro:
 	script_player_speed 7.96875 ; $5b4d
@@ -295,7 +295,7 @@ AnnounceWinnersToPodiums:
 	script_delay 30 ; $5c77
 	script_face ACTOR_AWARDS_CEREMONY_TOURNAMENT_STAFF_1, FACE_RIGHT ; $5c7c
 	script_face ACTOR_AWARDS_CEREMONY_HEADMASTER, FACE_RIGHT ; $5c83
-	script_set_text Text_25_133 ; $5c8a
+	script_set_text Text_AwardsStaffWinnersToPodiums ; $5c8a
 	script_speak ACTOR_AWARDS_CEREMONY_TOURNAMENT_STAFF_1 ; $5c90
 	ret ; $5c95
 FaceAwardsCeremonyCrowdUp:

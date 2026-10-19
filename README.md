@@ -53,9 +53,9 @@ tilemaps and text.
 
 | | |
 |---|---|
-| instructions | 133,293 source lines of instructions and code macros (`tools/stats.py`) |
-| source-spelled bytes | 848,059 bytes, 40.4% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 30,436: 14,408 routines and tables and 14,416 locals in ROM, 1,612 RAM names |
+| instructions | 132,611 source lines of instructions and code macros (`tools/stats.py`) |
+| source-spelled bytes | 911,345 bytes, 43.5% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
+| labels | 30,590: 14,412 routines and tables and 14,444 locals in ROM, 1,734 RAM names |
 | compressed graphics | 839 LZ streams, each named, sized by decoding it |
 | `Unused_` routines | 788 routines and 111 blobs nothing live reaches (`docs/unused_code.md`) |
 
@@ -166,8 +166,8 @@ because the layout is recomputed rather than restated:
   `page` / `done`, the other control codes are named
   (`include/text_codes.inc`), and a roster name in a string is
   `TX_SHORT_TEXT, CHAR_EMILY`. `tools/strings.py baserom.gbc --index --bank
-  <bank>` finds a string; a text id in code is `Text_<bank>_<index>`
-  (`include/text_ids.inc`).
+  <bank>` finds a string; a text id in code is named for what it says,
+  an alias of its `Text_<bank>_<index>` coordinate (`include/text_ids.inc`).
 - **Data files are named after their labels**
   (`data/sprites/AlexSpriteFrame00.png`,
   `data/engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin`, `lz_` marking a compressed
@@ -248,7 +248,7 @@ nothing.
 ## Tools
 
 - `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, actor-slot names hold, `Unused` names match `reach.py`, `; debug warp only` entries match `routes.py`.
-- `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts).
+- `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts); the README and STATUS figures against `tools/stats.py`.
 - `tools/extract.py` -- `data.manifest` + base ROM -> `data/`.
 - `tools/mods.py` -- copies `mods/` over `data/`; collects edited data files into `mods/`.
 - `tools/lz.py`, `tools/gfx.py`, `tools/tilemap.py`, `tools/snd.py` -- the LZ, PNG, tilemap-grid and sound-script codecs.
@@ -256,7 +256,7 @@ nothing.
 - `tools/savetool.py` -- battery save inspector and editor.
 - `tools/gfxdump.py` -- PNG contact sheets of graphics streams and palettes, in `build/gfxdump/`.
 - `tools/stats.py` -- the headline counts above, from the built `.sym` and `.map`.
-- `tools/banksrc.py`, `tools/deps.py` -- a bank's source read whole; the build's dependency list.
+- `tools/banksrc.py`, `tools/deps.py`, `tools/consts.py` -- a bank's source read whole; the build's dependency list; the `include/` constants by name.
 - `tools/reach.py` -- which routines can run at all, from the reset, interrupt and `rst` vectors; `--coverage` splits never-entered routines into unreachable and not yet reached.
 - `tools/routes.py` -- which `map_entry` rows anything in retail can send the player to.
 - `tools/twins.py` -- the groups of instruction-identical live routines.

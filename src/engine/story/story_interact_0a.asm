@@ -244,8 +244,9 @@ GetTileTriggerAtPlayer:
 	pop de ; $539f
 	pop bc ; $53a0
 	ret ; $53a1
-; Bank $0a's copy of EvalFlagCondition ($04:$4c49), identical instruction for instruction: the shared story include assembled into this bank too. Nothing calls this copy; FindStoryScriptEntry farcalls the bank $04 one.
-UnusedEvalFlagCondition_0a:
+; Bank $0a's copy of EvalFlagCondition, from the shared story include;
+; FindStoryScriptEntry farcalls the bank $04 one.
+Unused_0a_EvalFlagCondition:
 	ld a, e ; $53a2
 	or d ; $53a3
 	ret z ; $53a4

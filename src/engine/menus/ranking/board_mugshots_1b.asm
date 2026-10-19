@@ -135,7 +135,7 @@ CharMugshotGfxPointers:
 	dw $6400, $00ff
 .trailer: ; unreferenced
 	dw $d600, $d690, $d720, $0000, $0090, $0120
-StubNop_1b_00:
+StubNop_1b_0:
 	ret ; $4e0c
 Unused_1b_ResetMugshotPalettes:
 	ld a, $ff ; $4e0d
@@ -176,11 +176,11 @@ LoadCharMugshotToBuffer:
 	call DecompressCharMugshot ; $4e3e
 	pop de ; $4e41
 	ret ; $4e42
-Unused_1b_StubNop_1b_01:
+Unused_1b_StubNop0:
 	ret ; $4e43
-Unused_1b_StubNop_1b_02:
+Unused_1b_StubNop1:
 	ret ; $4e44
-Unused_1b_StubNop_1b_03:
+Unused_1b_StubNop2:
 	ret ; $4e45
 CopyMugshotBufferToVram:
 	push af ; $4e46
@@ -195,7 +195,7 @@ CopyMugshotBufferToVram:
 	pop bc ; $4e54
 	pop af ; $4e55
 	ret ; $4e56
-Unused_1b_StubNop_1b_04:
+Unused_1b_StubNop3:
 	ret ; $4e57
 LoadIndexedPaletteThunk:
 	farcall LoadIndexedPalette_18 ; $4e58
@@ -204,7 +204,7 @@ DecompressCharMugshot:
 	push af ; $4e5c
 	push de ; $4e5d
 	push hl ; $4e5e
-	call StubNop_1b_00 ; $4e5f
+	call StubNop_1b_0 ; $4e5f
 	cp $3f ; $4e62
 	jr nz, .gotIndex ; $4e64
 	ld b, a ; $4e66
@@ -226,9 +226,9 @@ DecompressCharMugshot:
 	pop de ; $4e7c
 	pop af ; $4e7d
 	ret ; $4e7e
-Unused_1b_StubNop_1b_05:
+Unused_1b_StubNop4:
 	ret ; $4e7f
-Unused_1b_StubNop_1b_06:
+Unused_1b_StubNop5:
 	ret ; $4e80
 ShowRankingBoard:
 	wram_bank WRAM_SCREEN ; $4e81

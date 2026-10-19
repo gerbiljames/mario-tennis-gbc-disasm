@@ -330,7 +330,7 @@ CurtSpriteFramesUnused:
 	INCBIN "data/sprites/CurtSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/CurtSpriteFrame06.bin" ; $7bf0, 240 bytes
 CurtSpriteOam:
-	INCBIN "data/sprites/CurtSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/CurtSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 CurtSpriteAnims:
 	dw CurtSpriteAnim00 ; $7f24
 	dw CurtSpriteAnim01 ; $7f26

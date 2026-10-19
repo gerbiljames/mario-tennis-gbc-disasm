@@ -330,7 +330,7 @@ BethSpriteFramesUnused:
 	INCBIN "data/sprites/BethSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BethSpriteFrame06.bin" ; $7bf0, 240 bytes
 BethSpriteOam:
-	INCBIN "data/sprites/BethSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/BethSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 BethSpriteAnims:
 	dw BethSpriteAnim00 ; $7f24
 	dw BethSpriteAnim01 ; $7f26

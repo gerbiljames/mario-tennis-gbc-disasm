@@ -342,7 +342,7 @@ RunDrillMatchListMenu:
 	farcall SaveStorySlotWithTimer ; $4489
 	ret ; $448c
 MatchSelectCharDataOptionDisabled:
-	script_set_text Text_25_164 ; $448d
+	script_set_text Text_CostellosYouTwoAreGood ; $448d
 	script_speak SPEAKER_NONE ; $4493
 	ret ; $4498
 Unused_10_RunCharDataScreen:

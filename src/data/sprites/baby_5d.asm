@@ -330,7 +330,7 @@ BabyMarioSpriteFramesUnused:
 	INCBIN "data/sprites/BabyMarioSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BabyMarioSpriteFrame06.bin" ; $7bf0, 240 bytes
 BabyMarioSpriteOam:
-	INCBIN "data/sprites/BabyMarioSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/BabyMarioSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 BabyMarioSpriteAnims:
 	dw BabyMarioSpriteAnim00 ; $7f24
 	dw BabyMarioSpriteAnim01 ; $7f26

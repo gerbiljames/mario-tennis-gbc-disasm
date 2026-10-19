@@ -135,10 +135,10 @@ NEXTU
 wDrillGateActive:: db
 NEXTU
 ; scoreboard (bank $18)
-; [8-bit] Cleared by Unused_18_InitConfirmScreen; Unused_18_DrawScoreNumbersTask raises wScorePanelBobActive for the frame's score digits when it equals 3. Nothing advances it, and the confirm screen's only caller is Unused_1b_ShowHighScoreConfirmScreen, so the bob is dead (ramp table UnusedBobRamp_18)
+; [8-bit] Cleared by Unused_18_InitConfirmScreen; Unused_18_DrawScoreNumbersTask raises wScorePanelBobActive for the frame's score digits when it equals 3. Nothing advances it, and the confirm screen's only caller is Unused_1b_ShowHighScoreConfirmScreen, so the bob is dead (ramp table Unused_18_BobRamp)
 wScorePanelBobStep:: db
 	ds 2
-; [8-bit] Raised by Unused_18_DrawScoreNumbersTask around drawing the wScorePanelScore digits; Unused_18_DrawGlyphSprite then adds a per-glyph Y offset from UnusedBobRamp_18
+; [8-bit] Raised by Unused_18_DrawScoreNumbersTask around drawing the wScorePanelScore digits; Unused_18_DrawGlyphSprite then adds a per-glyph Y offset from Unused_18_BobRamp
 wScorePanelBobActive:: db
 	ds 6
 ; [8-bit] Snapshot of wStoryMainLevel taken by Unused_18_LoadScorePanelValue, drawn by Unused_18_DrawScoreNumbersTask

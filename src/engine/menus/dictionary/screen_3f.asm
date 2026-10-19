@@ -181,17 +181,17 @@ ShowTennisDictionaryPageChar6:
 	add hl, de ; $422a
 	ld a, h ; $422b
 	cp b ; $422c
-	jr nc, .updateSceneScroll ; $422d
+	jr nc, .reachedScrollEnd ; $422d
 	ld a, l ; $422f
 	ld [wCameraX], a ; $4230
 	ld a, h ; $4233
 	ld [wCameraX + 1], a ; $4234
-	jr .updateSceneScroll2 ; $4237
-.updateSceneScroll:
+	jr .stillScrolling ; $4237
+.reachedScrollEnd:
 	farcall UpdateSceneScroll ; $4239
 	ld a, $01 ; $423c
 	ret ; $423e
-.updateSceneScroll2:
+.stillScrolling:
 	farcall UpdateSceneScroll ; $423f
 	xor a ; $4242
 	ret ; $4243
@@ -418,37 +418,37 @@ LoadTennisDictionaryScreen:
 TennisDictionaryClearList:
 	; $444f, 56 bytes (records:4)
 ; 14 records x 4 bytes
-	dw $d066, $000a ; record 0
-	dw $d0a6, $000a ; record 1
-	dw $d165, $0001 ; record 2
-	dw $d1a5, $0001 ; record 3
-	dw $d1e5, $0001 ; record 4
-	dw $d225, $0001 ; record 5
-	dw $d265, $0001 ; record 6
-	dw $d2a5, $0001 ; record 7
-	dw $d2e5, $0001 ; record 8
-	dw $d325, $0001 ; record 9
-	dw $d365, $0001 ; record 10
-	dw $d3a5, $0001 ; record 11
-	dw $d052, $000a ; record 12
-	dw $d092, $000a ; record 13
+	dw wShadowTilemap + 3 * TILEMAP_WIDTH + 6, $000a ; record 0
+	dw wShadowTilemap + 5 * TILEMAP_WIDTH + 6, $000a ; record 1
+	dw wShadowTilemap + 11 * TILEMAP_WIDTH + 5, $0001 ; record 2
+	dw wShadowTilemap + 13 * TILEMAP_WIDTH + 5, $0001 ; record 3
+	dw wShadowTilemap + 15 * TILEMAP_WIDTH + 5, $0001 ; record 4
+	dw wShadowTilemap + 17 * TILEMAP_WIDTH + 5, $0001 ; record 5
+	dw wShadowTilemap + 19 * TILEMAP_WIDTH + 5, $0001 ; record 6
+	dw wShadowTilemap + 21 * TILEMAP_WIDTH + 5, $0001 ; record 7
+	dw wShadowTilemap + 23 * TILEMAP_WIDTH + 5, $0001 ; record 8
+	dw wShadowTilemap + 25 * TILEMAP_WIDTH + 5, $0001 ; record 9
+	dw wShadowTilemap + 27 * TILEMAP_WIDTH + 5, $0001 ; record 10
+	dw wShadowTilemap + 29 * TILEMAP_WIDTH + 5, $0001 ; record 11
+	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 18, $000a ; record 12
+	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 18, $000a ; record 13
 TennisDictionaryClearList2:
 	; $4487, 56 bytes (records:4)
 ; 14 records x 4 bytes
-	dw $d10f, $0010 ; record 0
-	dw $d14f, $0010 ; record 1
-	dw $d18f, $0010 ; record 2
-	dw $d1cf, $0010 ; record 3
-	dw $d20f, $0010 ; record 4
-	dw $d24f, $0010 ; record 5
-	dw $d28f, $0010 ; record 6
-	dw $d2cf, $0010 ; record 7
-	dw $d30f, $0010 ; record 8
-	dw $d34f, $0010 ; record 9
-	dw $d38f, $0010 ; record 10
-	dw $d3cf, $0010 ; record 11
-	dw $d050, $0001 ; record 12
-	dw $d05e, $0001 ; record 13
+	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 15, $0010 ; record 0
+	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 15, $0010 ; record 1
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 15, $0010 ; record 2
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 15, $0010 ; record 3
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 15, $0010 ; record 4
+	dw wShadowTilemap + 18 * TILEMAP_WIDTH + 15, $0010 ; record 5
+	dw wShadowTilemap + 20 * TILEMAP_WIDTH + 15, $0010 ; record 6
+	dw wShadowTilemap + 22 * TILEMAP_WIDTH + 15, $0010 ; record 7
+	dw wShadowTilemap + 24 * TILEMAP_WIDTH + 15, $0010 ; record 8
+	dw wShadowTilemap + 26 * TILEMAP_WIDTH + 15, $0010 ; record 9
+	dw wShadowTilemap + 28 * TILEMAP_WIDTH + 15, $0010 ; record 10
+	dw wShadowTilemap + 30 * TILEMAP_WIDTH + 15, $0010 ; record 11
+	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 16, $0001 ; record 12
+	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 30, $0001 ; record 13
 TennisDictionaryListDataChar6:
 	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListDataChar6.bin" ; $44bf, 130 bytes
 TennisDictionaryListDataDefault:
@@ -541,7 +541,7 @@ UpdateTennisDictionarySprites:
 .checkTennisDictMode:
 	ld a, [wTennisDictMode] ; $4ed4
 	cp TENNISDICT_INDEX ; $4ed7
-	jp nz, .checkTennisDictFlags ; $4ed9
+	jp nz, .checkScrollAnim ; $4ed9
 	ld a, [wTennisDictSpriteTimer] ; $4edc
 	dec a ; $4edf
 	ld [wTennisDictSpriteTimer], a ; $4ee0
@@ -591,12 +591,12 @@ UpdateTennisDictionarySprites:
 	ld b, a ; $4f1e
 	ld a, [wTennisDictFlags] ; $4f1f
 	bit 1, a ; $4f22
-	jr z, .leftPos ; $4f24
+	jr z, .leftBasePos ; $4f24
 	ld_xy de, $90, $7d ; $4f26
-	jr .queueSpriteTemplate ; $4f29
-.leftPos:
+	jr .queueBase ; $4f29
+.leftBasePos:
 	ld_xy de, $80, $7d ; $4f2b
-.queueSpriteTemplate:
+.queueBase:
 	push hl ; $4f2e
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate2 ; $4f2f
 	call QueueSpriteTemplate ; $4f32
@@ -607,12 +607,12 @@ UpdateTennisDictionarySprites:
 	ld b, a ; $4f39
 	ld a, [wTennisDictFlags] ; $4f3a
 	bit 1, a ; $4f3d
-	jr z, .leftPos2 ; $4f3f
+	jr z, .leftTopPos ; $4f3f
 	ld_xy de, $88, $6d ; $4f41
-	jr .queueSpriteTemplate2 ; $4f44
-.leftPos2:
+	jr .queueTop ; $4f44
+.leftTopPos:
 	ld_xy de, $78, $6d ; $4f46
-.queueSpriteTemplate2:
+.queueTop:
 	push hl ; $4f49
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f4a
 	call QueueSpriteTemplate ; $4f4d
@@ -623,12 +623,12 @@ UpdateTennisDictionarySprites:
 	ld b, a ; $4f54
 	ld a, [wTennisDictFlags] ; $4f55
 	bit 1, a ; $4f58
-	jr z, .leftPos3 ; $4f5a
+	jr z, .leftMiddlePos ; $4f5a
 	ld_xy de, $88, $7d ; $4f5c
-	jr .queueSpriteTemplate3 ; $4f5f
-.leftPos3:
+	jr .queueMiddle ; $4f5f
+.leftMiddlePos:
 	ld_xy de, $78, $7d ; $4f61
-.queueSpriteTemplate3:
+.queueMiddle:
 	push hl ; $4f64
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f65
 	call QueueSpriteTemplate ; $4f68
@@ -639,15 +639,15 @@ UpdateTennisDictionarySprites:
 	ld b, a ; $4f6f
 	ld a, [wTennisDictFlags] ; $4f70
 	bit 1, a ; $4f73
-	jr z, .leftPos4 ; $4f75
+	jr z, .leftBottomPos ; $4f75
 	ld_xy de, $88, $8d ; $4f77
-	jr .queueSpriteTemplate4 ; $4f7a
-.leftPos4:
+	jr .queueBottom ; $4f7a
+.leftBottomPos:
 	ld_xy de, $78, $8d ; $4f7c
-.queueSpriteTemplate4:
+.queueBottom:
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f7f
 	call QueueSpriteTemplate ; $4f82
-.checkTennisDictFlags:
+.checkScrollAnim:
 	ld a, [wTennisDictFlags] ; $4f85
 	bit 1, a ; $4f88
 	jr z, .restore ; $4f8a
@@ -889,23 +889,23 @@ WrapTennisDictionaryScanToEnd:
 	ld a, [hl-] ; $51c4
 	ld d, a ; $51c5
 	and e ; $51c6
-	jr z, .countDone ; $51c7
+	jr z, .notInCategory ; $51c7
 	dec c ; $51c9
-.countDone:
+.notInCategory:
 	ld a, d ; $51ca
 	cp $40 ; $51cb
-	jr z, .wrapTennisDictionaryScanToEnd ; $51cd
+	jr z, .wrapAtLetterStart ; $51cd
 	cp $00 ; $51cf
 	jr nz, .toLetterStartLoop ; $51d1
 	jr .findPrevMatchLoop ; $51d3
-.wrapTennisDictionaryScanToEnd:
+.wrapAtLetterStart:
 	call WrapTennisDictionaryScanToEnd ; $51d5
 .findPrevMatchLoop:
 	ld a, [hl-] ; $51d8
 	cp $40 ; $51d9
-	jr nz, .testCategory ; $51db
+	jr nz, .testPrevMatch ; $51db
 	call WrapTennisDictionaryScanToEnd ; $51dd
-.testCategory:
+.testPrevMatch:
 	and e ; $51e0
 	jr z, .findPrevMatchLoop ; $51e1
 	dec c ; $51e3
@@ -913,28 +913,28 @@ WrapTennisDictionaryScanToEnd:
 	ld a, [hl-] ; $51e4
 	ld d, a ; $51e5
 	and e ; $51e6
-	jr z, .countDone2 ; $51e7
+	jr z, .prevNotInCategory ; $51e7
 	dec c ; $51e9
-.countDone2:
+.prevNotInCategory:
 	ld a, d ; $51ea
 	cp $40 ; $51eb
-	jr z, .wrapTennisDictionaryScanToEnd2 ; $51ed
+	jr z, .wrapAtPrevLetterStart ; $51ed
 	cp $00 ; $51ef
 	jr nz, .toPrevLetterStartLoop ; $51f1
 	inc hl ; $51f3
 	inc c ; $51f4
 	jr .findFirstMatchLoop ; $51f5
-.wrapTennisDictionaryScanToEnd2:
+.wrapAtPrevLetterStart:
 	call WrapTennisDictionaryScanToEnd ; $51f7
 	inc hl ; $51fa
 .findFirstMatchLoop:
 	ld a, [hl+] ; $51fb
 	cp $40 ; $51fc
-	jr nz, .testCategory2 ; $51fe
+	jr nz, .testFirstMatch ; $51fe
 	ld c, $00 ; $5200
 	ld hl, SelectionMaskGrid_3f ; $5202
 	jr .findFirstMatchLoop ; $5205
-.testCategory2:
+.testFirstMatch:
 	and e ; $5207
 	jr z, .findFirstMatchLoop ; $5208
 	ld a, c ; $520a

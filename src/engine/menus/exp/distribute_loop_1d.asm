@@ -216,10 +216,10 @@ SweepExpBarMarkerLeft:
 	ld a, [wStoryCharacterSlot] ; $711f
 	or a ; $7122
 	jr nz, .partner ; $7123
-	ld a, [wExpScreenCharStats + 3] ; $7125
+	ld a, [wExpScreenCharStats + EXPSTAT_BAR] ; $7125
 	jr .getExpBarSweepStep ; $7128
 .partner:
-	ld a, [wExpScreenCharStats + 18] ; $712a
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR] ; $712a
 .getExpBarSweepStep:
 	add $36 ; $712d
 	ld [wExpBarMarkerX], a ; $712f
@@ -236,10 +236,10 @@ SweepExpBarMarkerRight:
 	ld a, [wStoryCharacterSlot] ; $7148
 	or a ; $714b
 	jr nz, .partner ; $714c
-	ld a, [wExpScreenCharStats + 3] ; $714e
+	ld a, [wExpScreenCharStats + EXPSTAT_BAR] ; $714e
 	jr .checkEnd ; $7151
 .partner:
-	ld a, [wExpScreenCharStats + 18] ; $7153
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR] ; $7153
 .checkEnd:
 	add $36 ; $7156
 	ld c, a ; $7158
@@ -258,10 +258,10 @@ GetExpBarSweepStep:
 	ld a, [wStoryCharacterSlot] ; $716e
 	or a ; $7171
 	jr nz, .partner ; $7172
-	ld a, [wExpScreenCharStats + 3] ; $7174
+	ld a, [wExpScreenCharStats + EXPSTAT_BAR] ; $7174
 	jr .computeStep ; $7177
 .partner:
-	ld a, [wExpScreenCharStats + 18] ; $7179
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR] ; $7179
 .computeStep:
 	add $18 ; $717c
 	srl a ; $717e
@@ -279,13 +279,13 @@ UpdateExpScreenSelectionPalettes:
 	ld_bg_pals de, 2, 1 ; $7195
 	farcall LoadIndexedPaletteThunk ; $7198
 	wram_bank WRAM_SCENE ; $719b
-	ld a, [wExpScreenCharStats + 10] ; $71a1
+	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR] ; $71a1
 	ld [wBGPalettes + 58], a ; $71a4
-	ld a, [wExpScreenCharStats + 11] ; $71a7
+	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR + 1] ; $71a7
 	ld [wBGPalettes + 59], a ; $71aa
-	ld a, [wExpScreenCharStats + 25] ; $71ad
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR] ; $71ad
 	ld [wBGPalettes + 34], a ; $71b0
-	ld a, [wExpScreenCharStats + 26] ; $71b3
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR + 1] ; $71b3
 	ld [wBGPalettes + 35], a ; $71b6
 	ld a, [wStoryCharacterSlot] ; $71b9
 	or a ; $71bc
@@ -421,7 +421,7 @@ AssignExpPointToChar:
 	ld a, [wStoryCharacterSlot] ; $7289
 	or a ; $728c
 	jr nz, .partner ; $728d
-	ld hl, wExpScreenCharStats + 6 ; $728f
+	ld hl, wExpScreenCharStats + EXPSTAT_ASSIGNED ; $728f
 	ld a, [hl+] ; $7292
 	ld d, [hl] ; $7293
 	ld e, a ; $7294
@@ -430,7 +430,7 @@ AssignExpPointToChar:
 	ld a, e ; $7297
 	ld [hl+], a ; $7298
 	ld [hl], d ; $7299
-	ld hl, wExpScreenCharStats + 4 ; $729a
+	ld hl, wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL ; $729a
 	ld a, [hl+] ; $729d
 	ld d, [hl] ; $729e
 	ld e, a ; $729f
@@ -439,7 +439,7 @@ AssignExpPointToChar:
 	ld a, e ; $72a2
 	ld [hl+], a ; $72a3
 	ld [hl], d ; $72a4
-	ld hl, wExpScreenCharStats + 8 ; $72a5
+	ld hl, wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT ; $72a5
 	ld a, [hl+] ; $72a8
 	ld d, [hl] ; $72a9
 	ld e, a ; $72aa
@@ -452,7 +452,7 @@ AssignExpPointToChar:
 	ld a, $01 ; $72b3
 	ret ; $72b5
 .partner:
-	ld hl, wExpScreenCharStats + 21 ; $72b6
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_ASSIGNED ; $72b6
 	ld a, [hl+] ; $72b9
 	ld d, [hl] ; $72ba
 	ld e, a ; $72bb
@@ -461,7 +461,7 @@ AssignExpPointToChar:
 	ld a, e ; $72be
 	ld [hl+], a ; $72bf
 	ld [hl], d ; $72c0
-	ld hl, wExpScreenCharStats + 19 ; $72c1
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL ; $72c1
 	ld a, [hl+] ; $72c4
 	ld d, [hl] ; $72c5
 	ld e, a ; $72c6
@@ -470,7 +470,7 @@ AssignExpPointToChar:
 	ld a, e ; $72c9
 	ld [hl+], a ; $72ca
 	ld [hl], d ; $72cb
-	ld hl, wExpScreenCharStats + 23 ; $72cc
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT ; $72cc
 	ld a, [hl+] ; $72cf
 	ld d, [hl] ; $72d0
 	ld e, a ; $72d1

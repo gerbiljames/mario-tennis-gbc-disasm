@@ -104,23 +104,23 @@ Unused_1b_RunStoryDataConfirmMenu:
 	ld a, $0c ; $69b2
 	ld [wStubbedPromptTaskState + 1], a ; $69b4
 	ld a, $01 ; $69b7
-	ld hl, Unused_1b_StubNop_1b_09 ; $69b9
+	ld hl, Unused_1b_StubNop6 ; $69b9
 	call RegisterFrameTask ; $69bc
 	ld b, $01 ; $69bf
 	farcall Unused_18_RunTwoOptionSelectB ; $69c1
 	push af ; $69c4
-	ld hl, Unused_1b_StubNop_1b_09 ; $69c5
+	ld hl, Unused_1b_StubNop6 ; $69c5
 	call UnregisterFrameTask ; $69c8
 	pop af ; $69cb
 	ret ; $69cc
 ; A lone $c9 (ret) followed by the byte pair $ff $36 four times, wedged
 ; between the end of a two-option-select wrapper and the run of ret
-; bytes named Unused_1b_StubNop_1b_09: a stub return plus filler. Nothing
+; bytes named Unused_1b_StubNop6: a stub return plus filler. Nothing
 ; references it.
 Unused_1b_StubRetAndFill:
 	; $69cd, 9 bytes (bytes:9)
 	db $c9, $ff, $36, $ff, $36, $ff, $36, $ff, $36 ; 0x00
-Unused_1b_StubNop_1b_09:
+Unused_1b_StubNop6:
 	ret ; $69d6
 Unused_1b_StubRet1:
 	ret ; $69d7
@@ -134,7 +134,7 @@ Unused_1b_ShowHighScoreConfirmScreen:
 	call WaitFadeEnd ; $69e9
 	call DisableLCDSafely ; $69ec
 	farcall Unused_18_InitConfirmScreen ; $69ef
-	call Unused_1b_StubNop_1b_10 ; $69f2
+	call Unused_1b_StubNop7 ; $69f2
 	farcall Unused_18_ForceFlushBgMapToVram ; $69f5
 	call EnableLCD ; $69f8
 	script_fade_in 32 ; $69fb
@@ -143,7 +143,7 @@ Unused_1b_ShowHighScoreConfirmScreen:
 	and a ; $6a03
 	jr nz, .loop ; $6a04
 	ld b, $00 ; $6a06
-	farcall Unused_18_StubNop_18_1 ; $6a08
+	farcall Unused_18_StubNop1 ; $6a08
 	call AdvanceFrame ; $6a0b
 	ret ; $6a0e
 Unused_1b_DrawErasePrompt:
@@ -151,33 +151,33 @@ Unused_1b_DrawErasePrompt:
 	farcall PushTextArgString ; $6a12
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a15
 	call Unused_1b_CopyMainCharNameWithDiacritics ; $6a18
-	ld hl, Text_31_106 ; $6a1b
+	ld hl, Text_DebugErasePrompt ; $6a1b
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a1e
 	farcall Unused_18_DrawYesNoLabels ; $6a21
 	ret ; $6a24
 Unused_1b_DrawContinuePrompt:
-	ld hl, Text_31_109 ; $6a25
+	ld hl, Text_DebugContinuePrompt ; $6a25
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a28
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a2b
 	farcall Unused_18_DrawYesNoLabels ; $6a2e
 	ret ; $6a31
 Unused_1b_DrawEraseConfirmPrompt:
-	ld hl, Text_31_107 ; $6a32
+	ld hl, Text_DebugEraseReallyPrompt ; $6a32
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a35
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a38
 	farcall Unused_18_DrawYesNoLabels ; $6a3b
 	ret ; $6a3e
 Unused_1b_DrawIsThisCorrectPrompt:
-	ld hl, Text_31_113 ; $6a3f
+	ld hl, Text_DebugIsThisCorrect ; $6a3f
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a42
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a45
 	farcall Unused_18_DrawYesNoLabels ; $6a48
 	ret ; $6a4b
 Unused_1b_DrawCharAndItemDataPrompt:
-	ld hl, Text_30_354 ; $6a4c
+	ld hl, Text_CharAndItemData ; $6a4c
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a4f
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a52
-	ld hl, Text_30_354 ; $6a55
+	ld hl, Text_CharAndItemData ; $6a55
 	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $6a58
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e
@@ -216,7 +216,7 @@ Unused_1b_QueueStoryInfoRowToVram:
 	ld c, 1 ; $6aa7
 	call QueueVRAMCopy ; $6aa9
 	ret ; $6aac
-Unused_1b_StubNop_1b_10:
+Unused_1b_StubNop7:
 	ret ; $6aad
 Unused_1b_CopyMainCharNameWithDiacritics:
 	push de ; $6aae
@@ -282,7 +282,7 @@ Unused_1b_ShowNoN64DataFoundScreen:
 	call Unused_1b_FillTilemapRow17 ; $6b26
 	ld hl, wTextTileBuffer tile 78 + 2 ; $6b29
 	call Unused_1b_FillTilemapRow17 ; $6b2c
-	ld hl, Text_31_123 ; $6b2f
+	ld hl, Text_NoN64DataFound ; $6b2f
 	ld de, wTextTileBuffer tile 8 + 3 ; $6b32
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b35
 	ld hl, Text_MenuLevelUpStatusTrophies ; $6b38
@@ -526,12 +526,12 @@ LoadMinigameLevelSelectGfx:
 	ld a, c ; $6cb9
 	cp $03 ; $6cba
 	jr nz, .loop ; $6cbc
-	jr .loadCompressedTileBlock2 ; $6cbe
+	jr .loadGfx0 ; $6cbe
 .noneCleared:
 	ld a, c ; $6cc0
 	cp $04 ; $6cc1
 	jr nz, .loop ; $6cc3
-.loadCompressedTileBlock2:
+.loadGfx0:
 	ld b, TILEBLOCK_MinigameLevelSelectGfx0 ; $6cc5
 	ld c, MinigameLevelSelectGfx0_SIZE / 16 ; $6cc7
 	ld de, vTiles0 + VRAM_BANK1 ; $6cc9
@@ -545,10 +545,10 @@ LoadMinigameLevelSelectGfx:
 	or a ; $6ce5
 	jr z, .noneClearedIcons ; $6ce6
 	ld b, TILEBLOCK_MinigameLevelSelectIconGfx ; $6ce8
-	jr .loadCompressedTileBlock ; $6cea
+	jr .loadIconBlock ; $6cea
 .noneClearedIcons:
 	ld b, TILEBLOCK_SharedMenuGfx111 ; $6cec
-.loadCompressedTileBlock:
+.loadIconBlock:
 	ld c, SharedMenuGfx111_SIZE / 16 ; $6cee
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6cf0
 	farcall LoadCompressedTileBlock ; $6cf3
@@ -614,7 +614,7 @@ DrawMinigameLevelDescription:
 	ld d, [hl] ; $6d79
 	ld e, a ; $6d7a
 	ld a, b ; $6d7b
-	ld hl, Text_30_194 ; $6d7c
+	ld hl, Text_MinigameLevelClearThisFirst ; $6d7c
 	add l ; $6d7f
 	ld l, a ; $6d80
 	jr nc, .renderTextToBuffer64 ; $6d81

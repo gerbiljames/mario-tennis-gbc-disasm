@@ -10,7 +10,7 @@
 	farptr Unused_18_AddBobbingOffsetXY ; $4012
 	farptr AddBobbingOffsetY ; $4014
 	farptr AddBobbingOffsetYLarge ; $4016
-	farptr Unused_18_StubNop ; $4018
+	farptr Unused_18_StubNop0 ; $4018
 	farptr Unused_18_DrawDecimalNumberToTilemap ; $401a
 	farptr Unused_18_FindRosterEntry ; $401c
 	farptr Unused_18_ApplySpriteBobOffset ; $401e
@@ -28,7 +28,7 @@
 	farptr Unused_18_InitConfirmScreen ; $4036
 	farptr Unused_18_SetupScoreboardDisplay ; $4038
 	farptr Unused_18_LoadScorePanelValue ; $403a
-	farptr Unused_18_StubNop_18_1 ; $403c
+	farptr Unused_18_StubNop1 ; $403c
 	farptr Unused_18_DrawDecimalNumberSprites ; $403e
 	farptr Unused_18_DrawYesNoLabels ; $4040
 	farptr Unused_18_DrawTileBlock6x2ToTilemap ; $4042
@@ -108,5 +108,5 @@ DataPtr_MarioMiniGamesPalettes:
 	farptr Unused_18_DebugScreenAssetViewer ; $4090
 DataPtr_MatchWinLoseGfx:
 	dw MatchWinLoseGfx ; $4092
-DataPtr_UnusedJpCourtStatLabelTiles_18:
-	dw UnusedJpCourtStatLabelTiles_18 ; $4094
+DataPtr_Unused_18_JpCourtStatLabelTiles:
+	dw Unused_18_JpCourtStatLabelTiles ; $4094

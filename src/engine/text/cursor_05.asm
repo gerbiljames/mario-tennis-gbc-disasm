@@ -46,11 +46,11 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	jp nz, .onAdjustRow ; $4cc5
 .checkFlag:
 	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4cc8
-	jr nz, .isPauseOptionsMenuOpen ; $4ccb
+	jr nz, .clearPauseOptionsArrows ; $4ccb
 	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4ccd
-	jp nz, .isMinigamePauseMenuOpen ; $4cd0
+	jp nz, .clearMinigamePauseArrows ; $4cd0
 	jp .blinkArrow ; $4cd3
-.isPauseOptionsMenuOpen:
+.clearPauseOptionsArrows:
 	ld l, $20 ; $4cd6
 	ld_cell de, $0b, $01 ; $4cd8
 	farcall Unused_1a_QueueWindowTileWrite ; $4cdb
@@ -58,7 +58,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld_cell de, $0b, $03 ; $4ce0
 	farcall Unused_1a_QueueWindowTileWrite ; $4ce3
 	jr .blinkArrow ; $4ce6
-.isMinigamePauseMenuOpen:
+.clearMinigamePauseArrows:
 	ld l, $20 ; $4ce8
 	ld_cell de, $0d, $05 ; $4cea
 	farcall Unused_1a_QueueWindowTileWrite ; $4ced
@@ -128,11 +128,11 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld hl, wTextArrowBlinkCounter ; $4d5c
 	inc [hl] ; $4d5f
 	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4d60
-	jr nz, .isPauseOptionsMenuOpen2 ; $4d63
+	jr nz, .blinkPauseOptionsAdjust ; $4d63
 	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4d65
-	jr nz, .isMinigamePauseMenuOpen2 ; $4d68
+	jr nz, .blinkMinigamePauseAdjust ; $4d68
 	jp .doneB ; $4d6a
-.isPauseOptionsMenuOpen2:
+.blinkPauseOptionsAdjust:
 	ld l, $20 ; $4d6d
 	ld_cell de, $0b, $01 ; $4d6f
 	farcall Unused_1a_QueueWindowTileWrite ; $4d72
@@ -141,7 +141,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	farcall Unused_1a_QueueWindowTileWrite ; $4d7a
 	ld a, [wMenuCursorRow] ; $4d7d
 	and a ; $4d80
-	jr nz, .getMenuCursorBlinkPhase ; $4d81
+	jr nz, .pauseOptionsLowerRow ; $4d81
 	call Unused_05_GetMenuCursorBlinkPhase ; $4d83
 	and a ; $4d86
 	ld de, $0101 ; $4d87
@@ -153,7 +153,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld_cell de, $0b, $01 ; $4d97
 	farcall Unused_1a_QueueWindowTileWrite ; $4d9a
 	jp .doneB ; $4d9d
-.getMenuCursorBlinkPhase:
+.pauseOptionsLowerRow:
 	call Unused_05_GetMenuCursorBlinkPhase ; $4da0
 	and a ; $4da3
 	ld de, $0103 ; $4da4
@@ -165,7 +165,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld_cell de, $0b, $03 ; $4db4
 	farcall Unused_1a_QueueWindowTileWrite ; $4db7
 	jp .doneB ; $4dba
-.isMinigamePauseMenuOpen2:
+.blinkMinigamePauseAdjust:
 	ld l, $20 ; $4dbd
 	ld_cell de, $0d, $05 ; $4dbf
 	farcall Unused_1a_QueueWindowTileWrite ; $4dc2
@@ -174,7 +174,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	farcall Unused_1a_QueueWindowTileWrite ; $4dca
 	ld a, [wMenuCursorRow] ; $4dcd
 	cp $03 ; $4dd0
-	jr z, .getMenuCursorBlinkPhase2 ; $4dd2
+	jr z, .minigamePauseLowerRow ; $4dd2
 	call Unused_05_GetMenuCursorBlinkPhase ; $4dd4
 	or a ; $4dd7
 	ld de, $0105 ; $4dd8
@@ -186,7 +186,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld_cell de, $0d, $05 ; $4de7
 	farcall Unused_1a_QueueWindowTileWrite ; $4dea
 	jr .doneB ; $4ded
-.getMenuCursorBlinkPhase2:
+.minigamePauseLowerRow:
 	call Unused_05_GetMenuCursorBlinkPhase ; $4def
 	or a ; $4df2
 	ld de, $0107 ; $4df3

@@ -18,7 +18,7 @@ RepairCounterCheckEquipChanged:
 	cp $ff ; $5024
 	jp nz, .repairRacket ; $5026
 	ld a, [wMapScratch + 10] ; $5029
-	ld hl, Text_1f_1 ; $502c
+	ld hl, Text_RepairCounterAlreadyUsingRacket ; $502c
 	add l ; $502f
 	ld l, a ; $5030
 	jr nc, .askRepair ; $5031
@@ -42,11 +42,11 @@ RepairCounterCheckEquipChanged:
 	call ShowEquipChangeConfirmation ; $5064
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $5067
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $506a
-	script_set_text Text_6e_241 ; $5072
+	script_set_text Text_RepairCounterHopeItHelps ; $5072
 	call PushEquipmentNameTextArg ; $5078
 	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $507b
 .noChange:
-	script_set_text Text_6e_242 ; $5080
+	script_set_text Text_RepairCounterBlank ; $5080
 	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5086
 	farcall RunDialogueYesNoPrompt ; $508b
 	farcall ScriptCloseDialogueWindow ; $508e
@@ -73,7 +73,7 @@ RepairCounterChangedReturnB:
 RepairCounterReopenServiceMenu:
 	xor a ; $50dd
 	ld [wStoryModeShowLocationName], a ; $50de
-	script_set_text Text_6e_239 ; $50e1
+	script_set_text Text_RepairCounterPlayerEquipped ; $50e1
 	ld hl, $00e6 ; $50e7
 	call PushShortTextArg_0e ; $50ea
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $50ed
@@ -94,9 +94,9 @@ RepairCounterReopenServiceMenu:
 	jp nz, RepairCounterChangeShoes
 	test_flag FLAG_HAVE_IRON_SHOES
 	jp nz, RepairCounterChangeShoes ; $511e
-	script_set_text Text_6e_232 ; $5121
+	script_set_text Text_RepairCounterNormalShoesOnly ; $5121
 	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5127
-	script_set_text Text_6e_242 ; $512c
+	script_set_text Text_RepairCounterBlank ; $512c
 	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5132
 	farcall RunDialogueYesNoPrompt ; $5137
 	farcall ScriptCloseDialogueWindow ; $513a
@@ -108,7 +108,7 @@ RepairCounterReopenServiceMenu:
 	ret ; $5152
 ShowEquipChangeConfirmation:
 	ld a, [wMapScratch + 10] ; $5153
-	ld hl, Text_6e_239 ; $5156
+	ld hl, Text_RepairCounterPlayerEquipped ; $5156
 	add l ; $5159
 	ld l, a ; $515a
 	jr nc, .speak ; $515b
@@ -223,11 +223,11 @@ MarioWorldExitTriggers_0e:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_ISLAND_SKY, $0e
 	db $ff
 MarioWorldNpc12Mario_0e:
-	script_set_text Text_5e_142 ; $538e
+	script_set_text Text_MarioWorldMarioMamaMia ; $538e
 	script_speak ACTOR_MARIO_WORLD_MARIO ; $5394
 	ret ; $5399
 MarioWorldNpc11_0e:
-	ld hl, Text_5e_143 ; $539a
+	ld hl, Text_MarioWorldHostessAggressivePlayer ; $539a
 	ld a, [wMapSceneStage] ; $539d
 	add l ; $53a0
 	ld l, a ; $53a1
@@ -238,7 +238,7 @@ MarioWorldNpc11_0e:
 	script_speak ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS ; $53a8
 	ret ; $53ad
 MarioWorldNpc0BLuigi_0e:
-	ld hl, Text_5e_147 ; $53ae
+	ld hl, Text_LuigiYouWorkSoHard ; $53ae
 	ld a, [wMapSceneStage] ; $53b1
 	add l ; $53b4
 	ld l, a ; $53b5
@@ -249,27 +249,27 @@ MarioWorldNpc0BLuigi_0e:
 	script_speak ACTOR_MARIO_WORLD_LUIGI ; $53bc
 	ret ; $53c1
 MarioWorldNpc09Yoshi_0e:
-	script_set_text Text_5e_151 ; $53c2
+	script_set_text Text_YoshiMarioWorld ; $53c2
 	sound SFX_VOICE_YOSHI ; $53c8
 	script_speak ACTOR_MARIO_WORLD_YOSHI ; $53ca
 	ret ; $53cf
 MarioWorldNpc0ABabyMario_0e:
-	script_set_text Text_5e_152 ; $53d0
+	script_set_text Text_BabyMarioSpaghetti ; $53d0
 	sound SFX_VOICE_BABY_MARIO ; $53d6
 	script_speak ACTOR_MARIO_WORLD_BABY_MARIO ; $53d8
 	ret ; $53dd
 MarioWorldNpc0C_0e:
-	script_set_text Text_5e_153 ; $53de
+	script_set_text Text_DonkeyKongOoHoo ; $53de
 	sound SFX_PEACH_FANFARE ; $53e4
 	script_speak ACTOR_MARIO_WORLD_DK ; $53e6
 	ret ; $53eb
 MarioWorldNpc0D_0e:
-	script_set_text Text_5e_154 ; $53ec
+	script_set_text Text_BooGiggle ; $53ec
 	sound SFX_THUD ; $53f2
 	script_speak ACTOR_MARIO_WORLD_BOO ; $53f4
 	ret ; $53f9
 MarioWorldNpc0FBowser_0e:
-	ld hl, Text_5e_155 ; $53fa
+	ld hl, Text_BowserCantWaitMarioDefeat ; $53fa
 	ld a, [wMapSceneStage] ; $53fd
 	add l ; $5400
 	ld l, a ; $5401
@@ -280,7 +280,7 @@ MarioWorldNpc0FBowser_0e:
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $5408
 	ret ; $540d
 MarioWorldNpc10Wario_0e:
-	ld hl, Text_5e_159 ; $540e
+	ld hl, Text_WarioBeatMarioFirst ; $540e
 	ld a, [wMapSceneStage] ; $5411
 	add l ; $5414
 	ld l, a ; $5415
@@ -291,7 +291,7 @@ MarioWorldNpc10Wario_0e:
 	script_speak ACTOR_MARIO_WORLD_WARIO ; $541c
 	ret ; $5421
 MarioWorldNpc0EWaluigi_0e:
-	ld hl, Text_5e_163 ; $5422
+	ld hl, Text_WaluigiWhyNotBeatMario ; $5422
 	ld a, [wMapSceneStage] ; $5425
 	add l ; $5428
 	ld l, a ; $5429
@@ -302,11 +302,11 @@ MarioWorldNpc0EWaluigi_0e:
 	script_speak ACTOR_MARIO_WORLD_WALUIGI ; $5430
 	ret ; $5435
 MarioWorldNpc13_0e:
-	script_set_text Text_5e_167 ; $5436
+	script_set_text Text_ToadMarioWorldLovesTennis ; $5436
 	script_speak ACTOR_MARIO_WORLD_TOAD ; $543c
 	ret ; $5441
 MarioWorldNpc14_0e:
-	script_set_text Text_5e_168 ; $5442
+	script_set_text Text_BobOmbWorldBelowExit ; $5442
 	script_speak ACTOR_MARIO_WORLD_BOB_OMB ; $5448
 	ret ; $544d
 MarioWorldNpcScripts_0e:
@@ -425,7 +425,7 @@ MarioWorldArrivalSingles:
 	script_wait_frames 10 ; $55e3
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $55ea
 	jr nz, .walkIn ; $55ed
-	script_set_text Text_5e_75 ; $55ef
+	script_set_text Text_ToadPrincessPeachSingles ; $55ef
 	script_speak ACTOR_MARIO_WORLD_TOAD ; $55f5
 	script_speak ACTOR_MARIO_WORLD_TOAD ; $55fa
 .walkIn:
@@ -552,6 +552,6 @@ MarioWorldArrivalSingles:
 	script_wait_frames 5 ; $5924
 	and a ; $592b
 	jr z, ExhibitionAcceptedSingles ; $592c
-	script_set_text Text_5e_96 ; $592e
+	script_set_text Text_BowserYouWillPlayMarioSingles ; $592e
 	call ExhibitionDeclinedCutscene ; $5934
 	ret ; $5937

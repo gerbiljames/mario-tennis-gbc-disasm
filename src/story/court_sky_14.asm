@@ -30,11 +30,11 @@ Court1ExitTriggers_14:
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, $01
 	db $ff
 Court1Npc03_14:
-	script_set_text Text_1f_132 ; $5064
+	script_set_text Text_Court1StaffCourtNumberOne ; $5064
 	script_speak ACTOR_COURT1_TOURNAMENT_STAFF_1 ; $506a
 	ret ; $506f
 Court1Npc04_14:
-	script_set_text Text_1f_133 ; $5070
+	script_set_text Text_Court1StaffGalleryEntrance ; $5070
 	script_speak ACTOR_COURT1_TOURNAMENT_STAFF_2 ; $5076
 	ret ; $507b
 Court1Npc05_14:
@@ -50,13 +50,13 @@ Court1Npc05_14:
 Court1Npc05TextIds:
 	; $5093, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_134 ; record 0
-	dw Text_1f_134 ; record 1
-	dw Text_1f_137 ; record 2
-	dw Text_1f_139 ; record 3
-	dw Text_1f_134 ; record 4
-	dw Text_1f_141 ; record 5
-	dw Text_1f_143 ; record 6
+	dw Text_Court1FanAcademyFactoryTalk ; record 0
+	dw Text_Court1FanAcademyFactoryTalk ; record 1
+	dw Text_Court1FanSemifinalsAcademyFactory ; record 2
+	dw Text_Court1FanFinalAcademyVsFactory ; record 3
+	dw Text_Court1FanAcademyFactoryTalk ; record 4
+	dw Text_Court1FanUnionLostDoubles ; record 5
+	dw Text_Court1FanDoublesFinalAcademyVsFactory ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court1Npc06_14:
 	ld a, [wMapSceneStage] ; $50a1
@@ -71,13 +71,13 @@ Court1Npc06_14:
 Court1Npc06TextIds:
 	; $50b8, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_135 ; record 0
-	dw Text_1f_136 ; record 1
-	dw Text_1f_138 ; record 2
-	dw Text_1f_140 ; record 3
-	dw Text_1f_135 ; record 4
-	dw Text_1f_142 ; record 5
-	dw Text_1f_144 ; record 6
+	dw Text_Court1UnionFanDontUnderestimate ; record 0
+	dw Text_Court1UnionFanLostOpeningRound ; record 1
+	dw Text_Court1UnionFanLostAgainSemis ; record 2
+	dw Text_Court1UnionFanLostAgainFinal ; record 3
+	dw Text_Court1UnionFanDontUnderestimate ; record 4
+	dw Text_Court1UnionFanCountingOnUnion ; record 5
+	dw Text_Court1UnionFanLostAgainDoublesFinal ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court1NpcScripts_14:
 	; $50c6, 33 bytes (map_scripts)
@@ -109,34 +109,34 @@ InitCourt1SceneVariant:
 	test_flag FLAG_DOUBLES ; $510a
 	jr nz, .doubles ; $510d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $510f
-	jr z, .stage1 ; $5112
+	jr z, .checkRound2 ; $5112
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $5114
 	ld [wMapSceneStage], a ; $5116
 	script_respawn_actors Court1ActorsAlt_14 ; $5119
 	farcall BeginCutsceneScriptMode ; $5121
 	ret ; $5124
-.stage1:
+.checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $5125
-	jr z, .stage2 ; $5128
+	jr z, .checkRound1 ; $5128
 	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $512a
 	ld [wMapSceneStage], a ; $512c
 	ret ; $512f
-.stage2:
+.checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $5130
-	jr z, .stage3 ; $5133
+	jr z, .keepRound1 ; $5133
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $5135
 	ld [wMapSceneStage], a ; $5137
-.stage3:
+.keepRound1:
 	ret ; $513a
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $513b
-	jr z, .doublesStage2 ; $513e
+	jr z, .doublesCheckRound1 ; $513e
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $5140
 	ld [wMapSceneStage], a ; $5142
 	script_respawn_actors Court1ActorsAlt_14 ; $5145
 	farcall BeginCutsceneScriptMode ; $514d
 	ret ; $5150
-.doublesStage2:
+.doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $5151
 	jr z, .done ; $5154
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $5156
@@ -203,7 +203,7 @@ Unused_14_StubNop:
 	ret ; $52ab
 IslandSkyNpcScripts_14:
 	; $52ac, 9 bytes (map_scripts)
-	map_script ACTOR_ISLAND_SKY_HEADMASTER, FACEMASK_ANY, $0000, Text_35_48, $00, $00
+	map_script ACTOR_ISLAND_SKY_HEADMASTER, FACEMASK_ANY, $0000, Text_HeadmasterDefineAce, $00, $00
 	db $ff
 IslandSkyFacingScripts_14:
 	ds 1, $ff ; $52b5, fill
@@ -286,16 +286,16 @@ IslandSkyInitScript_14:
 	script_wait_frames 60 ; $53aa
 	script_set_position ACTOR_PLAYER, 6.0, 39.0 ; $53b1
 	ld h, $08 ; $53bc
-.planeLoop:
+.levelFlightLoop:
 	script_wait_frames 6 ; $53be
 	call PlayPlaneMoveSfx_14 ; $53c5
 	ld a, [wMapSceneStage2] ; $53c8
 	inc a ; $53cb
 	ld [wMapSceneStage2], a ; $53cc
 	dec h ; $53cf
-	jr nz, .planeLoop ; $53d0
+	jr nz, .levelFlightLoop ; $53d0
 	ld h, $08 ; $53d2
-.planeLoop2:
+.shallowFlightLoop:
 	script_wait_frames 5 ; $53d4
 	call PlayPlaneMoveSfx_14 ; $53db
 	ld a, h ; $53de
@@ -309,7 +309,7 @@ IslandSkyInitScript_14:
 	inc a ; $53ed
 	ld [wMapSceneStage2], a ; $53ee
 	dec h ; $53f1
-	jr nz, .planeLoop2 ; $53f2
+	jr nz, .shallowFlightLoop ; $53f2
 	ld h, $08 ; $53f4
 .checkStage:
 	script_wait_frames 4 ; $53f6

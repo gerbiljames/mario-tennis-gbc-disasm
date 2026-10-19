@@ -379,17 +379,17 @@ MulHLByDE32:
 	ld e, l ; $0d56
 	ld d, h ; $0d57
 	add a ; $0d58
-	jr c, .offset ; $0d59
+	jr c, .loBit6 ; $0d59
 	add a ; $0d5b
-	jr c, .offset2 ; $0d5c
+	jr c, .loBit5 ; $0d5c
 	add a ; $0d5e
-	jr c, .offset3 ; $0d5f
+	jr c, .loBit4 ; $0d5f
 	add a ; $0d61
-	jr c, .offset4 ; $0d62
+	jr c, .loBit3 ; $0d62
 	add a ; $0d64
-	jr c, .offset5 ; $0d65
+	jr c, .loBit2 ; $0d65
 	add a ; $0d67
-	jr c, .offset6 ; $0d68
+	jr c, .loBit1 ; $0d68
 	xor a ; $0d6a
 	jr .mulHighByte ; $0d6b
 .lowZero:
@@ -400,40 +400,40 @@ MulHLByDE32:
 	ld d, h ; $0d73
 	add hl, hl ; $0d74
 	adc a ; $0d75
-	jr nc, .offset ; $0d76
+	jr nc, .loBit6 ; $0d76
 	add hl, de ; $0d78
 	adc b ; $0d79
-.offset:
+.loBit6:
 	add hl, hl ; $0d7a
 	adc a ; $0d7b
-	jr nc, .offset2 ; $0d7c
+	jr nc, .loBit5 ; $0d7c
 	add hl, de ; $0d7e
 	adc b ; $0d7f
-.offset2:
+.loBit5:
 	add hl, hl ; $0d80
 	adc a ; $0d81
-	jr nc, .offset3 ; $0d82
+	jr nc, .loBit4 ; $0d82
 	add hl, de ; $0d84
 	adc b ; $0d85
-.offset3:
+.loBit4:
 	add hl, hl ; $0d86
 	adc a ; $0d87
-	jr nc, .offset4 ; $0d88
+	jr nc, .loBit3 ; $0d88
 	add hl, de ; $0d8a
 	adc b ; $0d8b
-.offset4:
+.loBit3:
 	add hl, hl ; $0d8c
 	adc a ; $0d8d
-	jr nc, .offset5 ; $0d8e
+	jr nc, .loBit2 ; $0d8e
 	add hl, de ; $0d90
 	adc b ; $0d91
-.offset5:
+.loBit2:
 	add hl, hl ; $0d92
 	adc a ; $0d93
-	jr nc, .offset6 ; $0d94
+	jr nc, .loBit1 ; $0d94
 	add hl, de ; $0d96
 	adc b ; $0d97
-.offset6:
+.loBit1:
 	add hl, hl ; $0d98
 	adc a ; $0d99
 	jr nc, .mulHighByte ; $0d9a
@@ -452,67 +452,67 @@ MulHLByDE32:
 	ld e, l ; $0da9
 	ld d, h ; $0daa
 	add a ; $0dab
-	jr c, .offset7 ; $0dac
+	jr c, .hiBit6 ; $0dac
 	add a ; $0dae
-	jr c, .offset8 ; $0daf
+	jr c, .hiBit5 ; $0daf
 	add a ; $0db1
-	jr c, .offset9 ; $0db2
+	jr c, .hiBit4 ; $0db2
 	add a ; $0db4
-	jr c, .offset10 ; $0db5
+	jr c, .hiBit3 ; $0db5
 	add a ; $0db7
-	jr c, .offset11 ; $0db8
+	jr c, .hiBit2 ; $0db8
 	add a ; $0dba
-	jr c, .offset12 ; $0dbb
+	jr c, .hiBit1 ; $0dbb
 	xor a ; $0dbd
-	jr .restore ; $0dbe
+	jr .hiDone ; $0dbe
 .highZero:
 	ld hl, $0000 ; $0dc0
-	jr .restore ; $0dc3
+	jr .hiDone ; $0dc3
 .highFromBit7:
 	ld e, l ; $0dc5
 	ld d, h ; $0dc6
 	add hl, hl ; $0dc7
 	adc a ; $0dc8
-	jr nc, .offset7 ; $0dc9
+	jr nc, .hiBit6 ; $0dc9
 	add hl, de ; $0dcb
 	adc b ; $0dcc
-.offset7:
+.hiBit6:
 	add hl, hl ; $0dcd
 	adc a ; $0dce
-	jr nc, .offset8 ; $0dcf
+	jr nc, .hiBit5 ; $0dcf
 	add hl, de ; $0dd1
 	adc b ; $0dd2
-.offset8:
+.hiBit5:
 	add hl, hl ; $0dd3
 	adc a ; $0dd4
-	jr nc, .offset9 ; $0dd5
+	jr nc, .hiBit4 ; $0dd5
 	add hl, de ; $0dd7
 	adc b ; $0dd8
-.offset9:
+.hiBit4:
 	add hl, hl ; $0dd9
 	adc a ; $0dda
-	jr nc, .offset10 ; $0ddb
+	jr nc, .hiBit3 ; $0ddb
 	add hl, de ; $0ddd
 	adc b ; $0dde
-.offset10:
+.hiBit3:
 	add hl, hl ; $0ddf
 	adc a ; $0de0
-	jr nc, .offset11 ; $0de1
+	jr nc, .hiBit2 ; $0de1
 	add hl, de ; $0de3
 	adc b ; $0de4
-.offset11:
+.hiBit2:
 	add hl, hl ; $0de5
 	adc a ; $0de6
-	jr nc, .offset12 ; $0de7
+	jr nc, .hiBit1 ; $0de7
 	add hl, de ; $0de9
 	adc b ; $0dea
-.offset12:
+.hiBit1:
 	add hl, hl ; $0deb
 	adc a ; $0dec
-	jr nc, .restore ; $0ded
+	jr nc, .hiDone ; $0ded
 	add hl, de ; $0def
 	adc b ; $0df0
-.restore:
+.hiDone:
 	pop de ; $0df1
 	add hl, de ; $0df2
 	adc b ; $0df3
@@ -553,17 +553,17 @@ MulPosHLByA:
 	ld e, l ; $0e19
 	ld d, h ; $0e1a
 	add a ; $0e1b
-	jr c, .offset ; $0e1c
+	jr c, .bit6 ; $0e1c
 	add a ; $0e1e
-	jr c, .offset2 ; $0e1f
+	jr c, .bit5 ; $0e1f
 	add a ; $0e21
-	jr c, .offset3 ; $0e22
+	jr c, .bit4 ; $0e22
 	add a ; $0e24
-	jr c, .offset4 ; $0e25
+	jr c, .bit3 ; $0e25
 	add a ; $0e27
-	jr c, .offset5 ; $0e28
+	jr c, .bit2 ; $0e28
 	add a ; $0e2a
-	jr c, .offset6 ; $0e2b
+	jr c, .bit1 ; $0e2b
 	xor a ; $0e2d
 	jr .done ; $0e2e
 .zeroResult:
@@ -574,40 +574,40 @@ MulPosHLByA:
 	ld d, h ; $0e36
 	add hl, hl ; $0e37
 	adc a ; $0e38
-	jr nc, .offset ; $0e39
+	jr nc, .bit6 ; $0e39
 	add hl, de ; $0e3b
 	adc $00 ; $0e3c
-.offset:
+.bit6:
 	add hl, hl ; $0e3e
 	adc a ; $0e3f
-	jr nc, .offset2 ; $0e40
+	jr nc, .bit5 ; $0e40
 	add hl, de ; $0e42
 	adc $00 ; $0e43
-.offset2:
+.bit5:
 	add hl, hl ; $0e45
 	adc a ; $0e46
-	jr nc, .offset3 ; $0e47
+	jr nc, .bit4 ; $0e47
 	add hl, de ; $0e49
 	adc $00 ; $0e4a
-.offset3:
+.bit4:
 	add hl, hl ; $0e4c
 	adc a ; $0e4d
-	jr nc, .offset4 ; $0e4e
+	jr nc, .bit3 ; $0e4e
 	add hl, de ; $0e50
 	adc $00 ; $0e51
-.offset4:
+.bit3:
 	add hl, hl ; $0e53
 	adc a ; $0e54
-	jr nc, .offset5 ; $0e55
+	jr nc, .bit2 ; $0e55
 	add hl, de ; $0e57
 	adc $00 ; $0e58
-.offset5:
+.bit2:
 	add hl, hl ; $0e5a
 	adc a ; $0e5b
-	jr nc, .offset6 ; $0e5c
+	jr nc, .bit1 ; $0e5c
 	add hl, de ; $0e5e
 	adc $00 ; $0e5f
-.offset6:
+.bit1:
 	add hl, hl ; $0e61
 	adc a ; $0e62
 	jr nc, .done ; $0e63

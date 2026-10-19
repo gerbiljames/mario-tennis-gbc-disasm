@@ -149,7 +149,7 @@ SetActorActive:
 .read:
 	ld [hl], b ; $473f
 	ret ; $4740
-UnusedSubDEFromHL:
+Unused_0a_SubDEFromHL:
 	ld a, d ; $4741
 	or e ; $4742
 	ret z ; $4743
@@ -163,7 +163,7 @@ UnusedSubDEFromHL:
 	ld d, a ; $474d
 	add hl, de ; $474e
 	ret ; $474f
-UnusedSetActorMoveTarget:
+Unused_0a_SetActorMoveTarget:
 	inc h ; $4750
 	dec h ; $4751
 	ret z ; $4752

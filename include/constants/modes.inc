@@ -113,6 +113,44 @@ def DRILLDEF_HOOKS        equ $08 ; word: SetModeHookTable
 def DRILLDEF_POINT_TABLE  equ $0a ; word: SetMinigamePointTable
 def DRILLDEF_INIT         equ $0c ; word: called if nonzero
 
+; --- Drill counters (wDrillCounters) ---
+; Nine bytes each drill uses its own way, so the views below overlap. The
+; bytes NetGameMatch1-3 and StrokeMatch2-3 only clear at PointStart stay raw.
+; Service matches and lessons:
+	rsreset
+def DRILLCTR_SERVES_SCORED       rb ; $00 lessons: points won off the serve
+def DRILLCTR_P1_SUCCESSES        rb ; $01 CountDrillShotSuccesses for each side
+def DRILLCTR_P2_SUCCESSES        rb ; $02
+def DRILLCTR_SERVE_SHOT_TYPE     rb ; $03 ServicePractice2: wCurrentShotType of the serve
+	rb_skip                         ; $04
+def DRILLCTR_LESSON_P1_SUCCESSES rb ; $05 ServicePractice2/3 count the sides here
+def DRILLCTR_LESSON_P2_SUCCESSES rb ; $06
+; ServicePractice2: serves of each kind still owed, 2 each
+	rsset DRILLCTR_P1_SUCCESSES
+def DRILLCTR_TOPSPIN_SERVES_LEFT rb ; $01
+def DRILLCTR_SLICE_SERVES_LEFT   rb ; $02
+; ServicePractice3: 4, less one per nicely timed serve
+	rsset DRILLCTR_P1_SUCCESSES
+def DRILLCTR_TIMED_SERVES_LEFT   rb ; $01
+; Net lessons (NetGamePractice1-3):
+	rsset 2
+def DRILLCTR_NETP1_NET_OR_OUT    rb ; $02 NetGamePractice1's DRILLCTR_NET_OR_OUT
+def DRILLCTR_NET_OR_OUT          rb ; $03 balls into the net or out
+def DRILLCTR_PASSES              rb ; $04 points judged passed, shown as points won
+def DRILLCTR_SHOTS_LEFT          rb ; $05 4, less one per use of the lesson's shot
+; Net matches: per side, nonzero = played the net (read by Unused_0b_NetGameMatch3JudgePoint)
+	rsset 5
+def DRILLCTR_NET_PLAYED          rb 2 ; $05
+; Stroke lessons (StrokePractice1-3):
+	rsset 1
+def DRILLCTR_OUTS                rb ; $01 StrokePractice1: balls hit out
+def DRILLCTR_STROKE_PASSES       rb ; $02 StrokePractice1/3
+def DRILLCTR_LOBS equ DRILLCTR_STROKE_PASSES ; StrokePractice2: lobs played
+def DRILLCTR_OFF_TARGET          rb ; $03 shots that missed the target area (also NetGamePractice1)
+	rsset 7
+def DRILLCTR_LOB_PASSES          rb ; $07 StrokePractice2's DRILLCTR_STROKE_PASSES
+def DRILLCTR_TARGET_ZONE_DELAY   rb ; $08 frames until wTargetZoneEnabled is set
+
 ; --- Game mode (wGameMode) ---
 ; What kind of tennis is being played, $00-$0a. Indexes
 ; SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers (whose word art spells
@@ -134,8 +172,8 @@ def DRILLDEF_INIT         equ $0c ; word: called if nonzero
 	const GAMEMODE_DREAM_MATCH    ; $0a story Dream Match against the Mario cast
 def NUM_GAMEMODES equ const_value
 
-; --- Match-list category (wCurrentMinigameStoryMatch high byte, $c8f6) ---
-; The 16-bit selector at $c8f6 is (category, index). 0/1: the index is a row of
+; --- Match-list category (wCurrentMinigameStoryMatch high byte) ---
+; The 16-bit selector is (category, index). 0/1: the index is a row of
 ; SinglesMatchSettingsTable_0a / DoublesMatchSettingsTable_0a; 2: the index is
 ; a MINIGAME_* id (written by every drill and minigame setup path).
 	const_def
@@ -243,3 +281,36 @@ def NUM_GAMEMODES equ const_value
 	const MARIOGAME_MEDALLION_MATCH ; $07 Waluigi
 	const MARIOGAME_TWO_ON_ONE      ; $08 Bowser
 def NUM_MARIOGAMES equ const_value
+
+; --- Minigame actor fields (wMinigameActors, wMinigameSceneActor) ---
+; UpdateMinigameActor copies each live record into wMinigameSceneActor, runs
+; its handler on that copy, and copies it back.
+	rsreset
+def MGACTOR_FLAGS    rb ; $00 bit 0 enabled, bit 1 has a handler
+def MGACTOR_SUBTYPE  rb ; $01 per minigame: the treasure box type, the medallion index
+def MGACTOR_STATE    rb ; $02 the handler's RST00 sub-state
+def MGACTOR_TIMER    rb ; $03
+	rb_skip 2          ; $04
+def MGACTOR_X        rw ; $06 world X
+def MGACTOR_DEPTH    rw ; $08 world depth
+def MGACTOR_SCREEN_X rw ; $0a projected
+def MGACTOR_SCREEN_Y rw ; $0c
+def MGACTOR_HANDLER  rw ; $0e
+def MGACTOR_SIZE equ _RS
+	ASSERT MGACTOR_SIZE == $10
+
+; --- Minigame target fields (wMinigameTargets, wMinigameTargetWork) ---
+; UpdateMinigameTarget copies each live record into wMinigameTargetWork, runs
+; its script, movement, draw and hit checks there, and copies it back.
+	rsreset
+def MGTARGET_FLAGS        rb ; $00 bit 0 live, bit 1 moving toward the goal, bit 2 hit by the ball
+def MGTARGET_KIND         rb ; $01 0-3: sprite, deflection, wMinigameHitTargetType
+def MGTARGET_HIT_TIMER    rb ; $02 $20 on a hit, counts down; the low nibble shakes the sprite
+def MGTARGET_SCRIPT_DELAY rb ; $03 frames before the script runs again
+def MGTARGET_SCRIPT       rw ; $04
+def MGTARGET_X            rw ; $06
+def MGTARGET_DEPTH        rw ; $08
+def MGTARGET_GOAL_X       rw ; $0a MoveMinigameTargetTowardGoal steps $10 a frame
+def MGTARGET_GOAL_DEPTH   rw ; $0c
+def MGTARGET_SIZE equ _RS
+	ASSERT MGTARGET_SIZE == 14

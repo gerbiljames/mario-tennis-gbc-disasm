@@ -1,6 +1,6 @@
 ; Instruction-for-instruction the same as TournamentNpc0A_0f: the handler assembled a second time. Nothing points at this copy.
-UnusedTournamentNpc0A_0f:
-	script_set_text Text_1f_163 ; $6f18
+Unused_0f_TournamentNpc0A:
+	script_set_text Text_SammieIntroPlayYouFirst ; $6f18
 	script_speak_restore $0b ; $6f1e
 	farcall RunDialogueYesNoPrompt ; $6f23
 	farcall ScriptCloseDialogueWindow ; $6f26
@@ -12,7 +12,7 @@ UnusedTournamentNpc0A_0f:
 	script_speak $0b ; $6f36
 	ret ; $6f3b
 TournamentNpc03_0f:
-	script_set_text Text_1f_172 ; $6f3c
+	script_set_text Text_TournamentStaffReadChartPrompt ; $6f3c
 	script_speak_restore ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_1 ; $6f42
 	farcall RunDialogueYesNoPrompt ; $6f47
 	farcall ScriptCloseDialogueWindow ; $6f4a
@@ -22,7 +22,7 @@ TournamentNpc03_0f:
 	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_1 ; $6f57
 	ret ; $6f5c
 .altLine:
-	ld hl, Text_1f_174 ; $6f5d
+	ld hl, Text_TournamentStaffRoundOneJoinOthers ; $6f5d
 	ld a, [wMapSceneStage] ; $6f60
 	add l ; $6f63
 	ld l, a ; $6f64
@@ -33,7 +33,7 @@ TournamentNpc03_0f:
 	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_1 ; $6f6b
 	ret ; $6f70
 TournamentNpc04_0f:
-	ld hl, Text_1f_178 ; $6f71
+	ld hl, Text_TournamentStaffWaitInCircles ; $6f71
 	ld a, [wMapSceneStage] ; $6f74
 	add l ; $6f77
 	ld l, a ; $6f78
@@ -58,7 +58,7 @@ MovePartnerForRoundCall_0f:
 .done:
 	ret ; $6fc2
 IslandOpenRoundCallCutscene:
-	script_set_text Text_25_94 ; $6fc3
+	script_set_text Text_StaffRoundAboutToBegin ; $6fc3
 	script_move_player 17.0, 15.0 ; $6fc9
 	farcall WaitPlayerMoveDone ; $6fd3
 	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, 14.0, 12.0 ; $6fd6
@@ -309,7 +309,7 @@ ShowTournamentRankingBoard_0f:
 	ret ; $744c
 QueueUpcomingRoundNameText:
 	ld a, [wMapSceneStage] ; $744d
-	ld hl, Text_25_97 ; $7450
+	ld hl, Text_RoundNameSinglesRoundOne ; $7450
 	add l ; $7453
 	ld l, a ; $7454
 	jr nc, .queue ; $7455
@@ -404,10 +404,10 @@ IslandOpenSinglesMatchReturn:
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_SINGLES_EMILY_SWEATS, ACTOR_PLAYER ; $754f
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_EMILY_SWEATS ; $7557
 	call IslandOpenBreakCutscene ; $755c
-	script_set_text Text_25_73 ; $755f
+	script_set_text Text_TimeBeforeRoundTakeWalk ; $755f
 	ld a, [wMapSceneStage] ; $7565
 	dec a ; $7568
-	ld hl, Text_25_98 ; $7569
+	ld hl, Text_RoundNameRoundTwo ; $7569
 	add l ; $756c
 	ld l, a ; $756d
 	jr nc, .done ; $756e
@@ -468,17 +468,17 @@ IslandOpenRoundSinglesNpc05_0f:
 	ret ; $7690
 IslandOpenRoundSinglesNpc05_0fTable:
 	; $7691, 8 bytes (text_ids)
-	dw Text_25_71 ; record 0
-	dw Text_25_75 ; record 1
-	dw Text_25_79 ; record 2
-	dw Text_25_79 ; record 3
+	dw Text_MarkFirstTimeMadeRoundTwo ; record 0
+	dw Text_MarkFirstTimeMadeSemifinals ; record 1
+	dw Text_MarkFirstTimeMadeFinals ; record 2
+	dw Text_MarkFirstTimeMadeFinals ; record 3
 IslandOpenSinglesStageTextPtrs_0f:
 	; $7699, 10 bytes (text_ids)
-	dw Text_25_70 ; record 0
-	dw Text_25_70 ; record 1
-	dw Text_25_74 ; record 2
-	dw Text_25_78 ; record 3
-	dw Text_25_82 ; record 4
+	dw Text_KevinYouMadeRoundTwo ; record 0
+	dw Text_KevinYouMadeRoundTwo ; record 1
+	dw Text_KevinYouMadeSemifinals ; record 2
+	dw Text_KevinLostSemisYouMadeFinals ; record 3
+	dw Text_PartnerWeMadeSemifinals ; record 4
 IslandOpenDoublesMatchReturn:
 	wram_bank WRAM_ACTORS ; $76a3
 	ld a, [wMatchExitRequest] ; $76a9
@@ -564,10 +564,10 @@ IslandOpenDoublesMatchReturn:
 	call IslandOpenBreakCutscene ; $77ed
 	script_face_toward ACTOR_PLAYER, ACTOR_ISLAND_OPEN_ROUND_DOUBLES_EMILY_SWEATS ; $77f0
 	script_face ACTOR_ISLAND_OPEN_ROUND_DOUBLES_KEVIN_SWEATS, FACE_RIGHT ; $77f8
-	script_set_text Text_25_73 ; $77ff
+	script_set_text Text_TimeBeforeRoundTakeWalk ; $77ff
 	ld a, [wMapSceneStage] ; $7805
 	dec a ; $7808
-	ld hl, Text_25_98 ; $7809
+	ld hl, Text_RoundNameRoundTwo ; $7809
 	add l ; $780c
 	ld l, a ; $780d
 	jr nc, .done ; $780e
@@ -582,10 +582,10 @@ IslandOpenDoublesMatchReturn:
 	ret ; $7839
 IslandOpenRoundSinglesNpc05TextIds:
 	; $783a, 8 bytes (text_ids)
-	dw Text_25_82 ; record 0
-	dw Text_25_82 ; record 1
-	dw Text_25_88 ; record 2
-	dw Text_25_78 ; record 3
+	dw Text_PartnerWeMadeSemifinals ; record 0
+	dw Text_PartnerWeMadeSemifinals ; record 1
+	dw Text_PartnerWeMadeFinals ; record 2
+	dw Text_KevinLostSemisYouMadeFinals ; record 3
 IslandOpenRoundActorsDoubles_0f:
 	; $7842, 94 bytes (map_actors)
 	map_actor $0000, ActorScript_0f_09, 33.0, 17.0, FACE_RIGHT, OBJ_KEVIN_SWEATS, ANIM_WALK, $00, ISLAND_OPEN_ROUND_DOUBLES_KEVIN_SWEATS
@@ -614,7 +614,7 @@ IslandOpenRoundDoublesNpc03_0f:
 	ret ; $78e3
 IslandOpenRoundDoublesNpc03TextIds:
 	; $78e4, 8 bytes (text_ids)
-	dw Text_25_83 ; record 0
-	dw Text_25_83 ; record 1
-	dw Text_25_89 ; record 2
-	dw Text_25_79 ; record 3
+	dw Text_KevinDoublesOnToSemifinals ; record 0
+	dw Text_KevinDoublesOnToSemifinals ; record 1
+	dw Text_KevinDoublesLostToCostellos ; record 2
+	dw Text_MarkFirstTimeMadeFinals ; record 3

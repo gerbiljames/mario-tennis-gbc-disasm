@@ -271,14 +271,14 @@ Unused_38_HandleLinkCpuDifficultyInput:
 	ld [wLinkCpuDifficulty], a ; $6bb4
 	ret ; $6bb7
 .confirm:
-	call Unused_38_StubNop_38_0 ; $6bb8
+	call Unused_38_StubNop0 ; $6bb8
 	ret ; $6bbb
 .cancel:
-	call Unused_38_StubNop_38_1 ; $6bbc
+	call Unused_38_StubNop1 ; $6bbc
 	ret ; $6bbf
-Unused_38_StubNop_38_0:
+Unused_38_StubNop0:
 	ret ; $6bc0
-Unused_38_StubNop_38_1:
+Unused_38_StubNop1:
 	ret ; $6bc1
 Unused_38_CheckMarioCastEquipCategory:
 	call IsMarioCastCharacter ; $6bc2

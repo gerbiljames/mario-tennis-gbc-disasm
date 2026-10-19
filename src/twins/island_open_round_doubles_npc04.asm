@@ -2,10 +2,10 @@
 ; (bank $0f).
 
 {TWIN_LABEL}:
-	script_set_text Text_25_73
+	script_set_text Text_TimeBeforeRoundTakeWalk
 	ld a, [wMapSceneStage]
 	dec a
-	ld hl, Text_25_98
+	ld hl, Text_RoundNameRoundTwo
 	add l
 	ld l, a
 	jr nc, .queue

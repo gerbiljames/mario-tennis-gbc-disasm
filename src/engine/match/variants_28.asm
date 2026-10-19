@@ -108,14 +108,14 @@ LoadMatchVariantGraphics:
 	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f12 jumptable
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f14 jumptable
 	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f16 jumptable
-	dw LoadMatchVariantGraphics.loadPaletteShadow2 ; $5f18 jumptable
-	dw LoadMatchVariantGraphics.loadPaletteShadow3 ; $5f1a jumptable
+	dw LoadMatchVariantGraphics.booBlast ; $5f18 jumptable
+	dw LoadMatchVariantGraphics.shootingStar ; $5f1a jumptable
 	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f1c jumptable
-	dw LoadMatchVariantGraphics.queueVRAMCopy ; $5f1e jumptable
-	dw LoadMatchVariantGraphics.loadPaletteShadow6 ; $5f20 jumptable
-	dw LoadMatchVariantGraphics.loadPaletteShadow5 ; $5f22 jumptable
-	dw LoadMatchVariantGraphics.queueVRAMCopy2 ; $5f24 jumptable
-	dw LoadMatchVariantGraphics.loadPaletteShadow4 ; $5f26 jumptable
+	dw LoadMatchVariantGraphics.targetShot ; $5f1e jumptable
+	dw LoadMatchVariantGraphics.fruitFantasy ; $5f20 jumptable
+	dw LoadMatchVariantGraphics.bananaBunch ; $5f22 jumptable
+	dw LoadMatchVariantGraphics.treasureBox ; $5f24 jumptable
+	dw LoadMatchVariantGraphics.medallionMatch ; $5f26 jumptable
 	dw LoadMatchVariantGraphics.loadMapsA ; $5f28 jumptable
 .loadMapsA:
 	ld hl, MatchGfxMapsA_28 ; $5f2a
@@ -139,14 +139,14 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5f54
 	call LoadMatchSharedTiles_28 ; $5f57
 	ret ; $5f5a
-.queueVRAMCopy:
+.targetShot:
 	ld hl, MatchGfxMapsA_28 ; $5f5b
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5f5e
 	ld c, 8 ; $5f61 -- 8 of MatchGfxMapsA_28's 20 tiles
 	call QueueVRAMCopy ; $5f63
 	call LoadMatchSharedTiles_28 ; $5f66
 	ret ; $5f69
-.loadPaletteShadow2:
+.booBlast:
 	ld hl, MatchVariantGraphicsPalettes6 ; $5f6a
 	ld_obj_pals de, 6, 2 ; $5f6d
 	call LoadPaletteShadow ; $5f70
@@ -156,7 +156,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5f7b
 	call LoadMatchSharedTiles_28 ; $5f7e
 	ret ; $5f81
-.loadPaletteShadow3:
+.shootingStar:
 	ld hl, MatchVariantGraphicsPalettes2 ; $5f82
 	ld_obj_pals de, 6, 2 ; $5f85
 	call LoadPaletteShadow ; $5f88
@@ -166,7 +166,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5f93
 	call LoadMatchSharedTiles_28 ; $5f96
 	ret ; $5f99
-.loadPaletteShadow4:
+.medallionMatch:
 	ld hl, MatchVariantGraphicsPalettes3 ; $5f9a
 	ld_obj_pals de, 7, 1 ; $5f9d
 	call LoadPaletteShadow ; $5fa0
@@ -180,7 +180,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5fb6
 	call LoadMatchSharedTiles_28 ; $5fb9
 	ret ; $5fbc
-.queueVRAMCopy2:
+.treasureBox:
 	ld hl, MatchGfxMapsA_28 ; $5fbd
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5fc0
 	ld c, 8 ; $5fc3 -- 8 of MatchGfxMapsA_28's 20 tiles
@@ -197,7 +197,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5fe2
 	call LoadMatchSharedTiles_28 ; $5fe5
 	ret ; $5fe8
-.loadPaletteShadow5:
+.bananaBunch:
 	ld hl, MatchVariantGraphicsPalettes1 ; $5fe9
 	ld_obj_pals de, 5, 3 ; $5fec
 	call LoadPaletteShadow ; $5fef
@@ -211,7 +211,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $6005
 	call LoadMatchSharedTiles_28 ; $6008
 	ret ; $600b
-.loadPaletteShadow6:
+.fruitFantasy:
 	ld hl, MatchVariantGraphicsPalettes1 ; $600c
 	ld_obj_pals de, 5, 3 ; $600f
 	call LoadPaletteShadow ; $6012
@@ -323,9 +323,9 @@ LoadMatchStoryGfx:
 	push af ; $60f5
 	ldh a, [rLCDC] ; $60f6
 	bit B_LCDC_ENABLE, a ; $60f8
-	jr z, .restore ; $60fa
+	jr z, .queuedBlock0 ; $60fa
 	call AdvanceFrame ; $60fc
-.restore:
+.queuedBlock0:
 	pop af ; $60ff
 	ld hl, wDecompBuffer tile 32 ; $6100
 	ld de, vTiles2 tile $20 ; $6103
@@ -334,9 +334,9 @@ LoadMatchStoryGfx:
 	push af ; $610b
 	ldh a, [rLCDC] ; $610c
 	bit B_LCDC_ENABLE, a ; $610e
-	jr z, .restore2 ; $6110
+	jr z, .queuedBlock1 ; $6110
 	call AdvanceFrame ; $6112
-.restore2:
+.queuedBlock1:
 	pop af ; $6115
 	ld hl, wDecompBuffer tile 64 ; $6116
 	ld de, vTiles2 tile $40 ; $6119
@@ -345,9 +345,9 @@ LoadMatchStoryGfx:
 	push af ; $6121
 	ldh a, [rLCDC] ; $6122
 	bit B_LCDC_ENABLE, a ; $6124
-	jr z, .restore3 ; $6126
+	jr z, .queuedBlock2 ; $6126
 	call AdvanceFrame ; $6128
-.restore3:
+.queuedBlock2:
 	pop af ; $612b
 	ld hl, wDecompBuffer tile 96 ; $612c
 	ld de, vTiles2 tile $60 ; $612f
@@ -356,9 +356,9 @@ LoadMatchStoryGfx:
 	push af ; $6137
 	ldh a, [rLCDC] ; $6138
 	bit B_LCDC_ENABLE, a ; $613a
-	jr z, .restore4 ; $613c
+	jr z, .queuedBlock3 ; $613c
 	call AdvanceFrame ; $613e
-.restore4:
+.queuedBlock3:
 	pop af ; $6141
 	ld hl, wTextTileBuffer ; $6142
 	ld de, vTiles1 ; $6145
@@ -376,9 +376,9 @@ LoadMatchStoryGfx:
 	push af ; $6165
 	ldh a, [rLCDC] ; $6166
 	bit B_LCDC_ENABLE, a ; $6168
-	jr z, .restore5 ; $616a
+	jr z, .queuedTextTiles ; $616a
 	call AdvanceFrame ; $616c
-.restore5:
+.queuedTextTiles:
 	pop af ; $616f
 	ret ; $6170
 Padding_28_1:
@@ -386,8 +386,8 @@ Padding_28_1:
 	ds 15, $00
 MatchGfxTilesB_28:
 	INCBIN "data/engine/match/lz_MatchGfxTilesB_28.bin" ; $6180, 2964 bytes
-UnusedMatchGfxPalette_28:
-	INCBIN "data/engine/match/UnusedMatchGfxPalette_28.bin" ; $6d14, 8 bytes
+Unused_28_MatchGfxPalette:
+	INCBIN "data/engine/match/Unused_28_MatchGfxPalette.bin" ; $6d14, 8 bytes
 MatchGfxPalettesC_28:
 	INCLUDE "data/engine/match/MatchGfxPalettesC_28.asm" ; $6d1c, 56 bytes (palettes)
 MatchStoryGfxPalettes:

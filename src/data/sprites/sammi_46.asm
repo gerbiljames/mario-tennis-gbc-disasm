@@ -330,7 +330,7 @@ SammiSpriteFramesUnused:
 	INCBIN "data/sprites/SammiSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/SammiSpriteFrame06.bin" ; $7bf0, 240 bytes
 SammiSpriteOam:
-	INCBIN "data/sprites/SammiSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/SammiSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 SammiSpriteAnims:
 	dw SammiSpriteAnim00 ; $7f24
 	dw SammiSpriteAnim01 ; $7f26

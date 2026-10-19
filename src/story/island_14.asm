@@ -425,7 +425,7 @@ ActorScript_14_4:
 	as_jump ActorScript_14_4
 	as_anim ANIM_STILL
 	as_wait 60
-.swingUpLoop:
+.swingUpSideLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -462,7 +462,7 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .swingUpLoop
+	as_jump .swingUpSideLoop
 	as_anim ANIM_STILL
 	as_wait 30
 .swingDownLoop:
@@ -506,7 +506,7 @@ ActorScript_14_4:
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.swingUpLoop2:
+.swingUpDiagonalLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -543,7 +543,7 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .swingUpLoop2
+	as_jump .swingUpDiagonalLoop
 .nodLoop:
 	as_wait 240
 	as_anim ANIM_NOD
@@ -560,7 +560,7 @@ ActorScript_14_4:
 	as_anim ANIM_NOD
 	as_jump .shakeHeadLoop
 	twin_in compute_ranking_progress_index_13, Unused_14_ComputeRankingProgressIndex, 14 ; $7a9d Unused_14_ComputeRankingProgressIndex
-; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
+; This bank's copy of ComputeStoryRankTier_13.
 Unused_14_ComputeStoryRankTier:
 	ld a, $00 ; $7ae4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6

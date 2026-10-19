@@ -265,7 +265,7 @@ wDrillGateCrossBits:: db
 ; [8-bit] Queued drill message: index into DrillMessageTextIds_0b, $ff = none. Set by the Queue*/Set*Message helpers from the point outcome and server; ShowQueuedDrillMessage defaults it to $6c and shows it
 wDrillMessageId:: db
 
-; [9 bytes] Per-drill counters. Each drill's hooks clear the ones they need at MinigameStart/PointStart and increment them by address ($c2ex); successful-shot counts go to wPlayer1PointsWon/wPlayer2PointsWon at point end, and EvaluateResult compares them against 4 (shots per drill)
+; [9 bytes] Per-drill counters (DRILLCTR_*). Each drill's hooks clear the ones they need at MinigameStart/PointStart and increment them; successful-shot counts go to wPlayer1PointsWon/wPlayer2PointsWon at point end, and EvaluateResult compares them against 4 (shots per drill)
 wDrillCounters:: ds 9
 	ds 8
 
@@ -393,7 +393,7 @@ wLinkSessionActive:: db
 ; [32 bytes] The tile plane of the same row blit, sent to VRAM bank 0
 wBGRowBlitTiles:: ds 32
 
-; [8-bit] Nonzero makes RenderInlineNumber right-align its number in a five-character field. Set and cleared around the Text_30_310 line only
+; [8-bit] Nonzero makes RenderInlineNumber right-align its number in a five-character field. Set and cleared around the Text_NumberArg line only
 wTextNumberRightAlign:: db
 
 ; [8-bit] Argument of text control code $0e: a character id, which TextCmdPrintShortText and MeasureIndexedShortTextWidth print as text id $1b + id

@@ -330,7 +330,7 @@ BallMachineSpriteFramesUnused:
 	INCBIN "data/sprites/BallMachineSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BallMachineSpriteFrame06.bin" ; $7bf0, 240 bytes
 BallMachineSpriteOam:
-	INCBIN "data/sprites/BallMachineSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/BallMachineSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 BallMachineSpriteAnims:
 	dw BallMachineSpriteAnim00 ; $7f24
 	dw BallMachineSpriteAnim01 ; $7f26

@@ -213,9 +213,9 @@ DrawN64TnmtTrophyRows:
 	ld hl, wN64TnmtTrophyCells ; $500e
 	add l ; $5011
 	ld l, a ; $5012
-	jr nc, .gotPtr ; $5013
+	jr nc, .gotCursorRowPtr ; $5013
 	inc h ; $5015
-.gotPtr:
+.gotCursorRowPtr:
 	ld a, [wDataScreenPage] ; $5016
 	or a ; $5019
 	jr z, .drawN64TnmtTrophyRow ; $501a
@@ -238,9 +238,9 @@ DrawN64TnmtTrophyRows:
 	ld a, $0c ; $5033
 	add l ; $5035
 	ld l, a ; $5036
-	jr nc, .gotPtr2 ; $5037
+	jr nc, .gotNextRowPtr ; $5037
 	inc h ; $5039
-.gotPtr2:
+.gotNextRowPtr:
 	ld a, c ; $503a
 	inc a ; $503b
 	ld c, a ; $503c
@@ -256,10 +256,10 @@ DrawN64TnmtTrophyRow:
 .leftCellLoop:
 	ld a, [hl+] ; $5048
 	or a ; $5049
-	jr z, .drawEmptyTrophyCell ; $504a
+	jr z, .drawEmptyLeftCell ; $504a
 	call DrawWonTrophyIcon ; $504c
 	jr .nextLeftCell ; $504f
-.drawEmptyTrophyCell:
+.drawEmptyLeftCell:
 	call DrawEmptyTrophyCell ; $5051
 .nextLeftCell:
 	inc de ; $5054
@@ -274,10 +274,10 @@ DrawN64TnmtTrophyRow:
 .rightCellLoop:
 	ld a, [hl+] ; $5060
 	or a ; $5061
-	jr z, .drawEmptyTrophyCell2 ; $5062
+	jr z, .drawEmptyRightCell ; $5062
 	call DrawWonTrophyIcon ; $5064
 	jr .nextRightCell ; $5067
-.drawEmptyTrophyCell2:
+.drawEmptyRightCell:
 	call DrawEmptyTrophyCell ; $5069
 .nextRightCell:
 	inc de ; $506c
@@ -410,17 +410,17 @@ RunN64RingShotData:
 	call AdvanceFrame ; $5185
 	ld a, [wMenuInputPressed] ; $5188
 	bit PADB_A, a ; $518b
-	jr nz, .playSfx ; $518d
+	jr nz, .playSelectSfx ; $518d
 	bit PADB_B, a ; $518f
-	jr nz, .playSfx2 ; $5191
+	jr nz, .playCancelSfx ; $5191
 	jr .loop ; $5193
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $5195
 	script_fade_out 16 ; $5197
 	call WaitFadeEnd ; $519c
 	call ClearFrameTasks ; $519f
 	ret ; $51a2
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $51a3
 	script_fade_out 16 ; $51a5
 	call WaitFadeEnd ; $51aa

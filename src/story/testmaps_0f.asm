@@ -89,7 +89,7 @@ SmallCharTestNpc04_0f:
 	ld a, l ; $411c
 	jr SmallCharTestApplyStage_0f ; $411d
 ; Instruction-for-instruction the same as SmallCharTestApplyStage_0f just above it: the same four-instruction body assembled twice. Nothing reaches this copy.
-UnusedSmallCharTestApplyStage_0f:
+Unused_0f_SmallCharTestApplyStage:
 	ld hl, wMapSceneStage ; $411f
 	ld [hl], a ; $4122
 	call SetPlayerActorObjectDef ; $4123
@@ -216,15 +216,15 @@ AwardsCeremonyExitTriggers_0f:
 AwardsCeremonyNpcScripts_0f:
 	; $4447, 81 bytes (map_scripts)
 	map_script ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS, FACEMASK_ANY, $0000, $0000, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_A_COZ, FACEMASK_ANY, $0000, Text_25_115, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_B_COZ, FACEMASK_ANY, $0000, Text_25_132, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_SAMMI, FACEMASK_ANY, $0000, Text_25_122, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_SEAN, FACEMASK_ANY, $0000, Text_25_124, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_A_COZ, FACEMASK_ANY, $0000, Text_AwardsACozDestroyYou, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_B_COZ, FACEMASK_ANY, $0000, Text_AwardsBCozWilderNextYear, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_SAMMI, FACEMASK_ANY, $0000, Text_AwardsSammieUnknownWinner, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_SEAN, FACEMASK_ANY, $0000, Text_AwardsSeanAcceptAcademyChamp, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_SPIKE, FACEMASK_ANY, $0000, AwardsCeremonyNpc08_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_ISLAND_SPECTATOR_B, FACEMASK_ANY, $0000, Text_25_130, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_ISLAND_SPECTATOR_A, FACEMASK_ANY, $0000, Text_25_131, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_MARK_SWEATS, FACEMASK_ANY, $0000, Text_25_121, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_EMILY_SWEATS, FACEMASK_ANY, $0000, Text_25_123, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_ISLAND_SPECTATOR_B, FACEMASK_ANY, $0000, Text_AwardsSpectatorExcitingMatch, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_ISLAND_SPECTATOR_A, FACEMASK_ANY, $0000, Text_AwardsSpectatorEveryMonth, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_MARK_SWEATS, FACEMASK_ANY, $0000, Text_AwardsMarkYouWonIslandOpen, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_EMILY_SWEATS, FACEMASK_ANY, $0000, Text_AwardsEmilyKeptMySeed, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 AwardsCeremonyFacingScripts_0f:
 	; $4498, 9 bytes (map_scripts)
@@ -247,12 +247,12 @@ AwardsCeremonyTile01_0f:
 	farcall CopyBehaviorMapRect ; $44bf
 	call CutsceneStompScreenShake ; $44c2
 	call CutsceneStompScreenShake ; $44c5
-	script_set_text Text_25_126 ; $44c8
+	script_set_text Text_AwardsSpikeCantAccept ; $44c8
 	script_speak ACTOR_AWARDS_CEREMONY_SPIKE ; $44ce
 	test_flag FLAG_DOUBLES ; $44d3
 	jp z, .doubles ; $44d6
 	set_flag FLAG_AWARDS_CEREMONY_SEEN_DOUBLES ; $44d9
-	script_set_text Text_25_180 ; $44dc
+	script_set_text Text_AwardsSpikeSureOfFinals ; $44dc
 	script_null_script ACTOR_PARTNER ; $44e2
 	script_move_target ACTOR_PARTNER, 13.0, 27.0 ; $44e7
 	script_wait_move ACTOR_PARTNER ; $44f2
@@ -727,7 +727,7 @@ AwardsCeremonyTile02_0f:
 	script_move_target ACTOR_AWARDS_CEREMONY_TOURNAMENT_STAFF_2, 17.0, 22.0 ; $517a
 	script_wait_move ACTOR_AWARDS_CEREMONY_TOURNAMENT_STAFF_2 ; $5185
 	script_face ACTOR_AWARDS_CEREMONY_TOURNAMENT_STAFF_2, FACE_UP ; $518a
-	script_set_text Text_25_185 ; $5191
+	script_set_text Text_AwardsHeadmasterThankCostellos ; $5191
 	script_set_speed ACTOR_AWARDS_CEREMONY_HEADMASTER, 0.5 ; $5197
 	script_move_target ACTOR_AWARDS_CEREMONY_HEADMASTER, 10.0, 17.0 ; $519f
 	script_move_target ACTOR_AWARDS_CEREMONY_TROPHY_3, 10.0, 16.0 ; $51aa

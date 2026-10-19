@@ -1,37 +1,37 @@
 PartnerStatPageTilemapPatch14:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch14.bin" ; $6198, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch14.asm" ; $6198, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch15:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch15.bin" ; $61b9, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch15.asm" ; $61b9, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch16:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch16.bin" ; $61da, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch16.asm" ; $61da, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch17:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch17.bin" ; $61e3, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch17.asm" ; $61e3, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch18:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch18.bin" ; $6204, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch18.asm" ; $6204, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch19:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch19.bin" ; $6225, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch19.asm" ; $6225, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch20:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch20.bin" ; $622e, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch20.asm" ; $622e, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch21:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch21.bin" ; $624f, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch21.asm" ; $624f, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch22:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch22.bin" ; $6270, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch22.asm" ; $6270, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch23:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch23.bin" ; $6279, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch23.asm" ; $6279, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch24:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch24.bin" ; $629a, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch24.asm" ; $629a, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch25:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch25.bin" ; $62bb, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch25.asm" ; $62bb, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch26:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch26.bin" ; $62c4, 21 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch26.asm" ; $62c4, 21 bytes (blit_runs)
 PartnerStatPageTilemapPatch27:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch27.bin" ; $62d9, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch27.asm" ; $62d9, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch28:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch28.bin" ; $62fa, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch28.asm" ; $62fa, 9 bytes (blit_runs)
 CharDataConfirmScreenTilemapPatch5:
-	INCBIN "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch5.bin" ; $6303, 13 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch5.asm" ; $6303, 13 bytes (blit_runs)
 CharDataConfirmPromptTilemapPatch:
-	INCBIN "data/engine/menus/char_data/CharDataConfirmPromptTilemapPatch.bin" ; $6310, 17 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataConfirmPromptTilemapPatch.asm" ; $6310, 17 bytes (blit_runs)
 CharDataScreenPagePatch0Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Tilemap.bin" ; $6321, 10 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Tilemap.inc" ; DEF CharDataScreenPagePatch0Tilemap_SIZE EQU its decoded length, generated from the .bin by make
@@ -137,13 +137,13 @@ RunExpDistributionFlow:
 .distributeLoop:
 	call ShowExpDistributionScreen ; $6836
 	wram_bank WRAM_SCENE ; $6839
-	ld hl, wExpScreenCharStats + 6 ; $683f
+	ld hl, wExpScreenCharStats + EXPSTAT_ASSIGNED ; $683f
 	ld a, [hl+] ; $6842
 	ld d, [hl] ; $6843
 	ld e, a ; $6844
 	xor a ; $6845
 	farcall AddPlayerExp ; $6846
-	ld hl, wExpScreenCharStats + 21 ; $6849
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_ASSIGNED ; $6849
 	ld a, [hl+] ; $684c
 	ld d, [hl] ; $684d
 	ld e, a ; $684e
@@ -169,7 +169,7 @@ RunExpDistributionFlow:
 	ret ; $6872
 .commitExp:
 	wram_bank WRAM_SCENE ; $6873
-	ld hl, wExpScreenCharStats + 12 ; $6879
+	ld hl, wExpScreenCharStats + EXPSTAT_EXP ; $6879
 	ld de, wStoryMainExp ; $687c
 	ld a, [hl+] ; $687f
 	ld [de], a ; $6880
@@ -179,7 +179,7 @@ RunExpDistributionFlow:
 	inc de ; $6884
 	ld a, [hl] ; $6885
 	ld [de], a ; $6886
-	ld hl, wExpScreenCharStats + 27 ; $6887
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP ; $6887
 	ld de, wStoryPartnerExp ; $688a
 	ld a, [hl+] ; $688d
 	ld [de], a ; $688e
@@ -263,10 +263,10 @@ InitLevelUpScreenState:
 	ld [wExpPoolRemaining + 1], a ; $6948
 	ld [wExpPoolTotal + 1], a ; $694b
 	xor a ; $694e
-	ld [wExpScreenCharStats + 6], a ; $694f
-	ld [wExpScreenCharStats + 7], a ; $6952
-	ld [wExpScreenCharStats + 21], a ; $6955
-	ld [wExpScreenCharStats + 22], a ; $6958
+	ld [wExpScreenCharStats + EXPSTAT_ASSIGNED], a ; $694f
+	ld [wExpScreenCharStats + EXPSTAT_ASSIGNED + 1], a ; $6952
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_ASSIGNED], a ; $6955
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_ASSIGNED + 1], a ; $6958
 	ld [wExpLevelUpFanfare], a ; $695b
 	xor a ; $695e
 	ld [wExpInputRepeating], a ; $695f
@@ -508,9 +508,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6b8d
 	ld a, [wStoryCharacterSlot] ; $6b90
 	or a ; $6b93
-	jr z, .nameField ; $6b94
+	jr z, .mainNameField ; $6b94
 	ld l, $40 ; $6b96
-.nameField:
+.mainNameField:
 	ld a, l ; $6b98
 	add $00 ; $6b99
 	ld l, a ; $6b9b
@@ -526,9 +526,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6bb0
 	ld a, [wStoryCharacterSlot] ; $6bb3
 	or a ; $6bb6
-	jr z, .levelField ; $6bb7
+	jr z, .mainLevelField ; $6bb7
 	ld l, $40 ; $6bb9
-.levelField:
+.mainLevelField:
 	ld a, l ; $6bbb
 	add $18 ; $6bbc
 	ld l, a ; $6bbe
@@ -539,7 +539,7 @@ InitExpScreenCharStats:
 	ld a, [hl] ; $6bc4
 	push af ; $6bc5
 	inc a ; $6bc6
-	ld de, wExpScreenCharStats ; $6bc7
+	ld de, wExpScreenCharStats + EXPSTAT_LEVEL ; $6bc7
 	ld [de], a ; $6bca
 	dec a ; $6bcb
 	ld h, $00 ; $6bcc
@@ -553,28 +553,28 @@ InitExpScreenCharStats:
 	pop af ; $6be3
 	farcall GetExpRequiredForLevel ; $6be4
 	ld a, l ; $6be7
-	ld [wExpScreenCharStats + 1], a ; $6be8
+	ld [wExpScreenCharStats + EXPSTAT_LEVEL_EXP], a ; $6be8
 	ld a, h ; $6beb
-	ld [wExpScreenCharStats + 2], a ; $6bec
+	ld [wExpScreenCharStats + EXPSTAT_LEVEL_EXP + 1], a ; $6bec
 	xor a ; $6bef
 	farcall GetExpProgressInCurrentLevel ; $6bf0
 	ld a, l ; $6bf3
-	ld [wExpScreenCharStats + 4], a ; $6bf4
+	ld [wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL], a ; $6bf4
 	ld a, h ; $6bf7
-	ld [wExpScreenCharStats + 5], a ; $6bf8
+	ld [wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL + 1], a ; $6bf8
 	xor a ; $6bfb
 	farcall GetExpRemainingToNextLevel ; $6bfc
 	ld a, l ; $6bff
-	ld [wExpScreenCharStats + 8], a ; $6c00
+	ld [wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT], a ; $6c00
 	ld a, h ; $6c03
-	ld [wExpScreenCharStats + 9], a ; $6c04
+	ld [wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT + 1], a ; $6c04
 	push af ; $6c07
 	ld hl, wStoryMainName ; $6c08
 	ld a, [wStoryCharacterSlot] ; $6c0b
 	or a ; $6c0e
-	jr z, .expField ; $6c0f
+	jr z, .mainExpField ; $6c0f
 	ld l, $40 ; $6c11
-.expField:
+.mainExpField:
 	ld a, l ; $6c13
 	add $2c ; $6c14
 	ld l, a ; $6c16
@@ -583,20 +583,20 @@ InitExpScreenCharStats:
 	ld h, a ; $6c1a
 	pop af ; $6c1b
 	ld a, [hl+] ; $6c1c
-	ld [wExpScreenCharStats + 12], a ; $6c1d
+	ld [wExpScreenCharStats + EXPSTAT_EXP], a ; $6c1d
 	ld a, [hl+] ; $6c20
-	ld [wExpScreenCharStats + 13], a ; $6c21
+	ld [wExpScreenCharStats + EXPSTAT_EXP + 1], a ; $6c21
 	ld a, [hl] ; $6c24
-	ld [wExpScreenCharStats + 14], a ; $6c25
+	ld [wExpScreenCharStats + EXPSTAT_EXP + 2], a ; $6c25
 	ld a, $01 ; $6c28
 	ld [wStoryCharacterSlot], a ; $6c2a
 	push af ; $6c2d
 	ld hl, wStoryMainName ; $6c2e
 	ld a, [wStoryCharacterSlot] ; $6c31
 	or a ; $6c34
-	jr z, .nameField2 ; $6c35
+	jr z, .partnerNameField ; $6c35
 	ld l, $40 ; $6c37
-.nameField2:
+.partnerNameField:
 	ld a, l ; $6c39
 	add $00 ; $6c3a
 	ld l, a ; $6c3c
@@ -612,9 +612,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6c51
 	ld a, [wStoryCharacterSlot] ; $6c54
 	or a ; $6c57
-	jr z, .levelField2 ; $6c58
+	jr z, .partnerLevelField ; $6c58
 	ld l, $40 ; $6c5a
-.levelField2:
+.partnerLevelField:
 	ld a, l ; $6c5c
 	add $18 ; $6c5d
 	ld l, a ; $6c5f
@@ -625,7 +625,7 @@ InitExpScreenCharStats:
 	ld a, [hl] ; $6c65
 	push af ; $6c66
 	inc a ; $6c67
-	ld de, wExpScreenCharStats + 15 ; $6c68
+	ld de, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL ; $6c68
 	ld [de], a ; $6c6b
 	dec a ; $6c6c
 	ld h, $00 ; $6c6d
@@ -639,28 +639,28 @@ InitExpScreenCharStats:
 	pop af ; $6c84
 	farcall GetExpRequiredForLevel ; $6c85
 	ld a, l ; $6c88
-	ld [wExpScreenCharStats + 16], a ; $6c89
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP], a ; $6c89
 	ld a, h ; $6c8c
-	ld [wExpScreenCharStats + 17], a ; $6c8d
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP + 1], a ; $6c8d
 	ld a, $01 ; $6c90
 	farcall GetExpProgressInCurrentLevel ; $6c92
 	ld a, l ; $6c95
-	ld [wExpScreenCharStats + 19], a ; $6c96
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL], a ; $6c96
 	ld a, h ; $6c99
-	ld [wExpScreenCharStats + 20], a ; $6c9a
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL + 1], a ; $6c9a
 	ld a, $01 ; $6c9d
 	farcall GetExpRemainingToNextLevel ; $6c9f
 	ld a, l ; $6ca2
-	ld [wExpScreenCharStats + 23], a ; $6ca3
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT], a ; $6ca3
 	ld a, h ; $6ca6
-	ld [wExpScreenCharStats + 24], a ; $6ca7
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT + 1], a ; $6ca7
 	push af ; $6caa
 	ld hl, wStoryMainName ; $6cab
 	ld a, [wStoryCharacterSlot] ; $6cae
 	or a ; $6cb1
-	jr z, .expField2 ; $6cb2
+	jr z, .partnerExpField ; $6cb2
 	ld l, $40 ; $6cb4
-.expField2:
+.partnerExpField:
 	ld a, l ; $6cb6
 	add $2c ; $6cb7
 	ld l, a ; $6cb9
@@ -669,11 +669,11 @@ InitExpScreenCharStats:
 	ld h, a ; $6cbd
 	pop af ; $6cbe
 	ld a, [hl+] ; $6cbf
-	ld [wExpScreenCharStats + 27], a ; $6cc0
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP], a ; $6cc0
 	ld a, [hl+] ; $6cc3
-	ld [wExpScreenCharStats + 28], a ; $6cc4
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP + 1], a ; $6cc4
 	ld a, [hl] ; $6cc7
-	ld [wExpScreenCharStats + 29], a ; $6cc8
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP + 2], a ; $6cc8
 	ret ; $6ccb
 .clearStoryCharacterSlot:
 	xor a ; $6ccc
@@ -682,9 +682,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6cd1
 	ld a, [wStoryCharacterSlot] ; $6cd4
 	or a ; $6cd7
-	jr z, .nameField3 ; $6cd8
+	jr z, .viewMainNameField ; $6cd8
 	ld l, $40 ; $6cda
-.nameField3:
+.viewMainNameField:
 	ld a, l ; $6cdc
 	add $00 ; $6cdd
 	ld l, a ; $6cdf
@@ -700,9 +700,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6cf4
 	ld a, [wStoryCharacterSlot] ; $6cf7
 	or a ; $6cfa
-	jr z, .levelField3 ; $6cfb
+	jr z, .viewMainLevelField ; $6cfb
 	ld l, $40 ; $6cfd
-.levelField3:
+.viewMainLevelField:
 	ld a, l ; $6cff
 	add $18 ; $6d00
 	ld l, a ; $6d02
@@ -724,9 +724,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6d20
 	ld a, [wStoryCharacterSlot] ; $6d23
 	or a ; $6d26
-	jr z, .nameField4 ; $6d27
+	jr z, .viewPartnerNameField ; $6d27
 	ld l, $40 ; $6d29
-.nameField4:
+.viewPartnerNameField:
 	ld a, l ; $6d2b
 	add $00 ; $6d2c
 	ld l, a ; $6d2e
@@ -742,9 +742,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6d43
 	ld a, [wStoryCharacterSlot] ; $6d46
 	or a ; $6d49
-	jr z, .levelField4 ; $6d4a
+	jr z, .viewPartnerLevelField ; $6d4a
 	ld l, $40 ; $6d4c
-.levelField4:
+.viewPartnerLevelField:
 	ld a, l ; $6d4e
 	add $18 ; $6d4f
 	ld l, a ; $6d51
@@ -841,11 +841,11 @@ DrawExpScreenLevelNumber:
 	ld a, [wStoryCharacterSlot] ; $6ded
 	or a ; $6df0
 	jr nz, .partner ; $6df1
-	ld a, [wExpScreenCharStats] ; $6df3
+	ld a, [wExpScreenCharStats + EXPSTAT_LEVEL] ; $6df3
 	ld de, wCharDataScreenCell + 4 * TILEMAP_WIDTH + 17 ; $6df6
 	jr .clearExpScreenLevelDigits ; $6df9
 .partner:
-	ld a, [wExpScreenCharStats + 15] ; $6dfb
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL] ; $6dfb
 	ld de, wCharDataScreenCell + 13 * TILEMAP_WIDTH + 17 ; $6dfe
 .clearExpScreenLevelDigits:
 	call ClearExpScreenLevelDigits ; $6e01
@@ -958,47 +958,47 @@ DrawExpScreenLevelBar:
 	ld a, [wStoryCharacterSlot] ; $6ea8
 	or a ; $6eab
 	jr nz, .partner ; $6eac
-	ld a, [wExpScreenCharStats] ; $6eae
+	ld a, [wExpScreenCharStats + EXPSTAT_LEVEL] ; $6eae
 	cp $64 ; $6eb1
 	jr c, .scaleMainBar ; $6eb3
 	xor a ; $6eb5
-	ld [wExpScreenCharStats + 3], a ; $6eb6
+	ld [wExpScreenCharStats + EXPSTAT_BAR], a ; $6eb6
 	ld de, wCharDataRevealStep ; $6eb9
 	jr .drawBar ; $6ebc
 .scaleMainBar:
-	ld hl, wExpScreenCharStats + 4 ; $6ebe
+	ld hl, wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL ; $6ebe
 	ld a, [hl+] ; $6ec1
 	ld d, [hl] ; $6ec2
 	ld e, a ; $6ec3
-	ld hl, wExpScreenCharStats + 1 ; $6ec4
+	ld hl, wExpScreenCharStats + EXPSTAT_LEVEL_EXP ; $6ec4
 	ld a, [hl+] ; $6ec7
 	ld h, [hl] ; $6ec8
 	ld l, a ; $6ec9
 	ld b, $40 ; $6eca
 	call ScaleValueToBar ; $6ecc
-	ld [wExpScreenCharStats + 3], a ; $6ecf
+	ld [wExpScreenCharStats + EXPSTAT_BAR], a ; $6ecf
 	ld de, wCharDataRevealStep ; $6ed2
 	jr .drawBar ; $6ed5
 .partner:
-	ld a, [wExpScreenCharStats + 15] ; $6ed7
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL] ; $6ed7
 	cp $64 ; $6eda
 	jr c, .scalePartnerBar ; $6edc
 	xor a ; $6ede
-	ld [wExpScreenCharStats + 18], a ; $6edf
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR], a ; $6edf
 	ld de, wCharDataValuesSlideX ; $6ee2
 	jr .drawBar ; $6ee5
 .scalePartnerBar:
-	ld hl, wExpScreenCharStats + 19 ; $6ee7
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL ; $6ee7
 	ld a, [hl+] ; $6eea
 	ld d, [hl] ; $6eeb
 	ld e, a ; $6eec
-	ld hl, wExpScreenCharStats + 16 ; $6eed
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP ; $6eed
 	ld a, [hl+] ; $6ef0
 	ld h, [hl] ; $6ef1
 	ld l, a ; $6ef2
 	ld b, $40 ; $6ef3
 	call ScaleValueToBar ; $6ef5
-	ld [wExpScreenCharStats + 18], a ; $6ef8
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR], a ; $6ef8
 	ld de, wCharDataValuesSlideX ; $6efb
 .drawBar:
 	ld b, a ; $6efe

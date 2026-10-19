@@ -339,7 +339,7 @@ Unused_38_DrawMatchTypeOptionLabel:
 	ld d, [hl] ; $4738
 	ld e, a ; $4739
 	ld a, b ; $473a
-	ld hl, Text_30_132 ; $473b
+	ld hl, Text_MatchTypeSinglesOrDoubles ; $473b
 	add l ; $473e
 	ld l, a ; $473f
 	jr nc, .render ; $4740

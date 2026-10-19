@@ -364,7 +364,7 @@ ActorScript_0e_28:
 	as_anim ANIM_NOD
 	as_jump ActorScript_0e_28
 	twin_in compute_ranking_progress_index, ComputeRankingProgressIndex_0e, 0e ; $7e5a ComputeRankingProgressIndex_0e
-; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
+; This bank's copy of ComputeStoryRankTier_13.
 Unused_0e_ComputeStoryRankTier:
 	ld a, $00 ; $7ea1
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ea3

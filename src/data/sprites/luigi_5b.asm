@@ -330,7 +330,7 @@ LuigiSpriteFramesUnused:
 	INCBIN "data/sprites/LuigiSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/LuigiSpriteFrame06.bin" ; $7bf0, 240 bytes
 LuigiSpriteOam:
-	INCBIN "data/sprites/LuigiSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/LuigiSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 LuigiSpriteAnims:
 	dw LuigiSpriteAnim00 ; $7f24
 	dw LuigiSpriteAnim01 ; $7f26

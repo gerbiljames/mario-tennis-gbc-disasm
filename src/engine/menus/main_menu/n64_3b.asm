@@ -48,7 +48,7 @@ Unused_3b_DrawAsciiDigitString:
 .done:
 	ret ; $448f
 	twin_in draw_ascii_digit_char, Unused_3b_DrawAsciiDigitChar, 3b ; $4490 Unused_3b_DrawAsciiDigitChar
-Unused_3b_StubNop:
+Unused_3b_StubNop0:
 	ret ; $44a9
 RunN64ExhibData:
 	sound BGM_STATUS_SCREEN ; $44aa
@@ -73,17 +73,17 @@ RunN64ExhibData:
 	call AdvanceFrame ; $44df
 	ld a, [wMenuInputPressed] ; $44e2
 	bit PADB_A, a ; $44e5
-	jr nz, .playSfx ; $44e7
+	jr nz, .playSelectSfx ; $44e7
 	bit PADB_B, a ; $44e9
-	jr nz, .playSfx2 ; $44eb
+	jr nz, .playCancelSfx ; $44eb
 	jr .loop ; $44ed
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $44ef
 	script_fade_out 16 ; $44f1
 	call WaitFadeEnd ; $44f6
 	call ClearFrameTasks ; $44f9
 	ret ; $44fc
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $44fd
 	script_fade_out 16 ; $44ff
 	call WaitFadeEnd ; $4504

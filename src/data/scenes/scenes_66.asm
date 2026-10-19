@@ -63,7 +63,7 @@ DataPtr_DormEntranceSceneUnusedSlot:
 DataPtr_DormEntranceTiles:
 	dw DormEntranceTiles ; $403e
 JuniorClassCourtSceneConfig:
-	INCBIN "data/scenes/JuniorClassCourtSceneConfig.bin" ; $4040, 42 bytes
+	INCLUDE "data/scenes/JuniorClassCourtSceneConfig.asm" ; $4040, 42 bytes (scene_config)
 JuniorClassCourtPalettes:
 	INCLUDE "data/scenes/JuniorClassCourtPalettes.asm" ; $406a, 64 bytes (palettes)
 JuniorClassCourtTiles:
@@ -77,7 +77,7 @@ JuniorClassCourtCollisionMap:
 JuniorClassCourtBehaviorMap:
 	INCBIN "data/scenes/lz_JuniorClassCourtBehaviorMap.bin" ; $4d07, 72 bytes
 RestaurantSceneConfig:
-	INCBIN "data/scenes/RestaurantSceneConfig.bin" ; $4d4f, 42 bytes
+	INCLUDE "data/scenes/RestaurantSceneConfig.asm" ; $4d4f, 42 bytes (scene_config)
 RestaurantPalettes:
 	INCLUDE "data/scenes/RestaurantPalettes.asm" ; $4d79, 64 bytes (palettes)
 RestaurantTiles:
@@ -91,7 +91,7 @@ RestaurantCollisionMap:
 RestaurantBehaviorMap:
 	INCBIN "data/scenes/lz_RestaurantBehaviorMap.bin" ; $5d02, 128 bytes
 AcademyEntranceSceneConfig:
-	INCBIN "data/scenes/AcademyEntranceSceneConfig.bin" ; $5d82, 9 bytes
+	INCLUDE "data/scenes/AcademyEntranceSceneConfig.asm" ; $5d82, 9 bytes (scene_config)
 AcademyEntrancePalettes:
 	INCLUDE "data/scenes/AcademyEntrancePalettes.asm" ; $5d8b, 64 bytes (palettes)
 AcademyEntranceTiles:
@@ -105,7 +105,7 @@ AcademyEntranceCollisionMap:
 AcademyEntranceBehaviorMap:
 	INCBIN "data/scenes/lz_AcademyEntranceBehaviorMap.bin" ; $6dad, 75 bytes
 DormEntranceSceneConfig:
-	INCBIN "data/scenes/DormEntranceSceneConfig.bin" ; $6df8, 42 bytes
+	INCLUDE "data/scenes/DormEntranceSceneConfig.asm" ; $6df8, 42 bytes (scene_config)
 DormEntrancePalettes:
 	INCLUDE "data/scenes/DormEntrancePalettes.asm" ; $6e22, 64 bytes (palettes)
 DormEntranceTiles:

@@ -130,7 +130,7 @@ Unused_0b_GetBallXAndDepth:
 	ld h, [hl] ; $412c
 	ld l, a ; $412d
 	ret ; $412e
-UnusedGetObjectXAndDepth:
+Unused_0b_GetObjectXAndDepth:
 	ld h, a ; $412f
 	ld l, $00 ; $4130
 	srl h ; $4132

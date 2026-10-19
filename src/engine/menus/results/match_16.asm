@@ -163,19 +163,19 @@ RunMatchStatsScreen:
 	call PrintMatchSetScores ; $5c5f
 	ldh a, [hInputPressed] ; $5c62
 	bit PADB_LEFT, a ; $5c64
-	jr nz, .beginFadeOut ; $5c66
+	jr nz, .pressedLeft ; $5c66
 	bit PADB_A, a ; $5c68
-	jr nz, .beginFadeOut2 ; $5c6a
+	jr nz, .pressedAOrB ; $5c6a
 	bit PADB_B, a ; $5c6c
-	jr nz, .beginFadeOut2 ; $5c6e
+	jr nz, .pressedAOrB ; $5c6e
 	call AdvanceFrame ; $5c70
 	jr .loop ; $5c73
-.beginFadeOut:
+.pressedLeft:
 	script_fade_out 64 ; $5c75
 	call WaitFadeEnd ; $5c7a
 	xor a ; $5c7d
 	ret ; $5c7e
-.beginFadeOut2:
+.pressedAOrB:
 	script_fade_out 32 ; $5c7f
 	call WaitFadeEnd ; $5c84
 	ld a, $ff ; $5c87

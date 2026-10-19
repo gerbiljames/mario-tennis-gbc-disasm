@@ -143,7 +143,7 @@ ComputeTrophyExpAwards:
 	pop bc ; $7062
 	pop af ; $7063
 	ret ; $7064
-UnusedSetPendingTrophyExpAwards:
+Unused_1e_SetPendingTrophyExpAwards:
 	push_wram_bank WRAM_SCENE ; $7065
 	ld hl, wTrophyExpGroup0 ; $706e
 	ld a, [hl+] ; $7071

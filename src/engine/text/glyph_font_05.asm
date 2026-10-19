@@ -281,9 +281,9 @@ UploadGlyphBufferQueued:
 	add hl, de ; $7813
 	push_wram_bank WRAM_TEXT ; $7814
 	ld a, [wWindowTileAttr] ; $781d
-	bit 3, a ; $7820
+	bit B_BG_BANK1, a ; $7820
 	jr z, .restore ; $7822
-	ld de, $2000 ; $7824
+	ld de, VRAM_BANK1 ; $7824
 	add hl, de ; $7827
 .restore:
 	pop_wram_bank ; $7828
@@ -390,7 +390,7 @@ Unused_05_UploadGlyphTileRange:
 	ld a, [wGlyphUploadVramBank] ; $78c9
 	or a ; $78cc
 	jr z, .vramBank0 ; $78cd
-	ld de, $2000 ; $78cf
+	ld de, VRAM_BANK1 ; $78cf
 	add hl, de ; $78d2
 .vramBank0:
 	push hl ; $78d3

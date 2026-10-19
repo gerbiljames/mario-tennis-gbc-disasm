@@ -199,7 +199,7 @@ ActorScript_15_24:
 	as_jump ActorScript_15_24
 	as_anim ANIM_STILL
 	as_wait 60
-.swingUpLoop:
+.swingUpSideLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -236,7 +236,7 @@ ActorScript_15_24:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .swingUpLoop
+	as_jump .swingUpSideLoop
 	as_anim ANIM_STILL
 	as_wait 30
 .swingDownLoop:
@@ -280,7 +280,7 @@ ActorScript_15_24:
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.swingUpLoop2:
+.swingUpDiagonalLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -317,7 +317,7 @@ ActorScript_15_24:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .swingUpLoop2
+	as_jump .swingUpDiagonalLoop
 ActorScript_15_25:
 	; $7f3d, 28 bytes (actor_script)
 	as_wait 240

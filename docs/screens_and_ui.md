@@ -253,6 +253,8 @@ under `wram_bank $02` (attribute) from the same address. Its callers pass `bc` =
 | `+$02` | source offset byte, added to `bc` |
 | `+$03` | length in cells |
 
+The lists are written as `blit_run col, row, src, length` rows ending `db $ff`.
+
 `SaveWorkTilemapToPage` (`$1d:$4a14`, selector in `a`) snapshots 576 bytes of
 the live screen into `wCharDataPageSlot1/2/3` or
 `wCharDataPagePlane + 13 * TILEMAP_WIDTH`, once per bank;
@@ -555,7 +557,8 @@ On truncation it NUL-terminates (and plays `$2c` in debug step mode).
 text banks** using per-bank string counts (`AddTextIdOffsetWordLookupTable`,
 `$05:$5d99`, 13 words), so ids form one flat sequence.
 
-`include/text_ids.inc` defines `Text_<bank>_<index> equ <raw id>` for operands;
+`include/text_ids.inc` defines `Text_<bank>_<index> equ <raw id>` and an alias
+named for the text, which operands use;
 `tools/strings.py --index --bank XX` dumps `bank:index → text` from
 `data/text/TextStrings_XX.asm`.
 
@@ -759,7 +762,7 @@ held throughout.
 A paged text menu lists consecutive text ids, four per page.
 `RunPagedTextMenu` (`$05:$4944`): `hl` = base text id, `de` = window
 column/row, `a` = page count; returns `wMenuPage * 4 + row` or `$ff` (e.g.
-`RunSinglesMatchListMenu`, `$10:$4195`: `ld hl,Text_31_132 / ld de,$0101 /
+`RunSinglesMatchListMenu`, `$10:$4195`: `ld hl,Text_MenuJuniorSinglesRanks / ld de,$0101 /
 ld a,$05`). `Unused_05_RunPagedTextMenuAutoSize` (`$05:$49f6`, no callers)
 re-derives the column per page and registers `Unused_05_PagedMenuFrameTask`,
 whose body is empty ([bugs.md](bugs.md)).

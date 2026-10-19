@@ -1,4 +1,4 @@
-LoadCutsceneAnimFrameGfx_2D_35:
+LoadCutsceneAnimFrameGfx_2d_35:
 	wram_bank WRAM_SCENE ; $6408
 	ld a, [wSceneAnimFrame] ; $640e
 	ld b, a ; $6411
@@ -33,7 +33,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld de, vTiles0 tile $10 ; $6458
 	ld c, CutsceneAnimFrameLZ_2d_SIZE / 16 ; $645b
 	call QueueVRAMCopy ; $645d
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate0 ; $6460
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate0 ; $6460
 	sprite_xy $3e, $80 ; $6463
 	ld_oam bc, 3, $10 ; $6467
 	call QueueSpriteTemplate ; $646a
@@ -47,7 +47,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld de, vTiles0 tile $10 ; $6480
 	ld c, CutsceneAnimFrameLZ_2e_SIZE / 16 ; $6483
 	call QueueVRAMCopy ; $6485
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate1 ; $6488
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate1 ; $6488
 	sprite_xy $3e, $80 ; $648b
 	ld_oam bc, 3, $10 ; $648f
 	call QueueSpriteTemplate ; $6492
@@ -61,7 +61,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld de, vTiles0 tile $10 ; $64a8
 	ld c, CutsceneAnimFrameLZ_2f_SIZE / 16 ; $64ab
 	call QueueVRAMCopy ; $64ad
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate2 ; $64b0
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate2 ; $64b0
 	sprite_xy $3e, $80 ; $64b3
 	ld_oam bc, 3, $10 ; $64b7
 	call QueueSpriteTemplate ; $64ba
@@ -75,7 +75,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld de, vTiles0 tile $10 ; $64d0
 	ld c, CutsceneAnimFrameLZ_30_SIZE / 16 ; $64d3
 	call QueueVRAMCopy ; $64d5
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate3 ; $64d8
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate3 ; $64d8
 	sprite_xy $3e, $80 ; $64db
 	ld_oam bc, 3, $10 ; $64df
 	call QueueSpriteTemplate ; $64e2
@@ -89,7 +89,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld de, vTiles0 tile $10 ; $64f8
 	ld c, CutsceneAnimFrameLZ_31_SIZE / 16 ; $64fb
 	call QueueVRAMCopy ; $64fd
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate4 ; $6500
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate4 ; $6500
 	sprite_xy $3e, $80 ; $6503
 	ld_oam bc, 3, $10 ; $6507
 	call QueueSpriteTemplate ; $650a
@@ -103,7 +103,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld de, vTiles0 tile $10 ; $6520
 	ld c, CutsceneAnimFrameLZ_32_SIZE / 16 ; $6523
 	call QueueVRAMCopy ; $6525
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate5 ; $6528
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate5 ; $6528
 	sprite_xy $3e, $80 ; $652b
 	ld_oam bc, 3, $10 ; $652f
 	call QueueSpriteTemplate ; $6532
@@ -117,7 +117,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld de, vTiles0 tile $10 ; $6548
 	ld c, CutsceneAnimFrameLZ_33_SIZE / 16 ; $654b
 	call QueueVRAMCopy ; $654d
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate6 ; $6550
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate6 ; $6550
 	sprite_xy $3e, $80 ; $6553
 	ld_oam bc, 3, $10 ; $6557
 	call QueueSpriteTemplate ; $655a
@@ -131,7 +131,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld de, vTiles0 tile $10 ; $6570
 	ld c, CutsceneAnimFrameLZ_34_SIZE / 16 ; $6573
 	call QueueVRAMCopy ; $6575
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate7 ; $6578
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate7 ; $6578
 	sprite_xy $3e, $80 ; $657b
 	ld_oam bc, 3, $10 ; $657f
 	call QueueSpriteTemplate ; $6582
@@ -145,13 +145,13 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld de, vTiles0 tile $10 ; $6598
 	ld c, CutsceneAnimFrameLZ_35_SIZE / 16 ; $659b
 	call QueueVRAMCopy ; $659d
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate8 ; $65a0
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate8 ; $65a0
 	sprite_xy $3e, $80 ; $65a3
 	ld_oam bc, 3, $10 ; $65a7
 	call QueueSpriteTemplate ; $65aa
 	ret ; $65ad
 .queueSpriteTemplate:
-	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate8 ; $65ae
+	ld hl, LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate8 ; $65ae
 	sprite_xy $3e, $80 ; $65b1
 	ld_oam bc, 3, $10 ; $65b5
 	call QueueSpriteTemplate ; $65b8
@@ -414,156 +414,156 @@ LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate8:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate0:
+LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate0:
 	; $6f17, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate1:
+LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate1:
 	; $6f20, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate2:
+LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate2:
 	; $6f29, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate3:
+LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate3:
 	; $6f32, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate4:
+LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate4:
 	; $6f3b, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate5:
+LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate5:
 	; $6f44, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate6:
+LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate6:
 	; $6f4d, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate7:
+LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate7:
 	; $6f56, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate8:
+LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate8:
 	; $6f5f, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate0:
+LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate0:
 	; $6f68, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate1:
+LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate1:
 	; $6f6d, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate2:
+LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate2:
 	; $6f72, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate3:
+LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate3:
 	; $6f77, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate4:
+LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate4:
 	; $6f7c, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate5:
+LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate5:
 	; $6f81, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate6:
+LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate6:
 	; $6f86, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate7:
+LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate7:
 	; $6f8b, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate8:
+LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate8:
 	; $6f90, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate0:
+LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate0:
 	; $6f95, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate1:
+LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate1:
 	; $6f9a, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate2:
+LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate2:
 	; $6f9f, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate3:
+LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate3:
 	; $6fa4, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate4:
+LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate4:
 	; $6fa9, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate5:
+LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate5:
 	; $6fae, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate6:
+LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate6:
 	; $6fb3, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate7:
+LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate7:
 	; $6fb8, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate8:
+LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate8:
 	; $6fbd, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate0:
+LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate0:
 	; $6fc2, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate1:
+LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate1:
 	; $6fc7, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate2:
+LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate2:
 	; $6fcc, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate3:
+LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate3:
 	; $6fd1, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate4:
+LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate4:
 	; $6fd6, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate5:
+LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate5:
 	; $6fdb, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate6:
+LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate6:
 	; $6fe0, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate7:
+LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate7:
 	; $6fe5, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate8:
+LoadCutsceneAnimFrameGfx_2d_35_SpriteTemplate8:
 	; $6fea, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end

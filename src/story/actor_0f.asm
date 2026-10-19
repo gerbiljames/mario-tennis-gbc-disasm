@@ -3,7 +3,7 @@ QueueFinishedRoundNameText:
 	jr nz, .doubles ; $78ef
 	ld a, [wMapSceneStage] ; $78f1
 	dec a ; $78f4
-	ld hl, Text_25_97 ; $78f5
+	ld hl, Text_RoundNameSinglesRoundOne ; $78f5
 	add l ; $78f8
 	ld l, a ; $78f9
 	jr nc, .queue ; $78fa
@@ -14,7 +14,7 @@ QueueFinishedRoundNameText:
 .doubles:
 	ld a, [wMapSceneStage] ; $7901
 	dec a ; $7904
-	ld hl, Text_25_101 ; $7905
+	ld hl, Text_RoundNameDoublesRoundOne ; $7905
 	add l ; $7908
 	ld l, a ; $7909
 	jr nc, .queueDoubles ; $790a
@@ -28,7 +28,7 @@ IslandOpenBreakCutscene:
 	script_move_target ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_1, 35.0, 23.0 ; $7927
 	script_move_target ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_2, 37.0, 23.0 ; $7932
 	script_wait_move ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_2 ; $793d
-	script_set_text Text_25_105 ; $7942
+	script_set_text Text_StaffRoundEndedShortBreak ; $7942
 	script_move_player 35.0, 17.0 ; $7948
 	farcall WaitPlayerMoveDone ; $7952
 	script_face ACTOR_ISLAND_OPEN_ROUND_DOUBLES_KEVIN_SWEATS, FACE_DOWN ; $7955
@@ -45,7 +45,7 @@ IslandOpenBreakCutscene:
 	script_set_anim ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_1, ANIM_NOD ; $799a
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_1 ; $79a1
 	ld a, [wMapSceneStage] ; $79a6
-	ld hl, Text_25_97 ; $79a9
+	ld hl, Text_RoundNameSinglesRoundOne ; $79a9
 	add l ; $79ac
 	ld l, a ; $79ad
 	jr nc, .queue ; $79ae
@@ -255,7 +255,7 @@ ActorScript_0f_12:
 	as_jump ActorScript_0f_12
 	as_anim ANIM_STILL
 	as_wait 60
-.swingUpLoop:
+.swingUpSideLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -292,7 +292,7 @@ ActorScript_0f_12:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .swingUpLoop
+	as_jump .swingUpSideLoop
 	as_anim ANIM_STILL
 	as_wait 30
 .swingDownLoop:
@@ -336,7 +336,7 @@ ActorScript_0f_12:
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.swingUpLoop2:
+.swingUpDiagonalLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -373,7 +373,7 @@ ActorScript_0f_12:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .swingUpLoop2
+	as_jump .swingUpDiagonalLoop
 .nodLoop:
 	as_wait 240
 	as_anim ANIM_NOD
@@ -423,7 +423,7 @@ Unused_0f_ComputeRankingProgressIndex:
 	jr z, .loop ; $7d84
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7d86
 	jr .loop ; $7d88
-; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
+; This bank's copy of ComputeStoryRankTier_13.
 Unused_0f_ComputeStoryRankTier:
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c

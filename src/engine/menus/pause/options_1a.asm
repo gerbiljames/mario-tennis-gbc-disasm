@@ -296,7 +296,7 @@ Unused_1a_MusicSettingHandler1:
 	ld bc, MusicSettingPtrs ; $4235
 	ld a, [wPauseMenuWindowId] ; $4238
 	jp Unused_1a_RunPauseMenuWindow.menuLoop ; $423b
-UnusedRunMusicSettingMenu:
+Unused_1a_RunMusicSettingMenu:
 	call Unused_1a_ResetPauseMenuState ; $423e
 	ld a, $c0 ; $4241
 	ld [wPauseMenuOptionBits], a ; $4243
@@ -318,11 +318,11 @@ Unused_1a_AdjustMessageSpeedSetting:
 	ld a, [wPauseMenuOptionBits] ; $426b
 	and $0f ; $426e
 	cp $02 ; $4270
-	jr z, .playSfx2 ; $4272
+	jr z, .decreaseSpeed ; $4272
 	cp $01 ; $4274
-	jr z, .playSfx ; $4276
+	jr z, .increaseSpeed ; $4276
 	jr .done ; $4278
-.playSfx:
+.increaseSpeed:
 	sound SFX_MENU_MOVE ; $427a
 	ld hl, wMessageSpeed ; $427c
 	ld a, [hl] ; $427f
@@ -339,7 +339,7 @@ Unused_1a_AdjustMessageSpeedSetting:
 	ld a, $80 ; $428e
 	ld [hl], a ; $4290
 	jr .done ; $4291
-.playSfx2:
+.decreaseSpeed:
 	sound SFX_MENU_MOVE ; $4293
 	ld hl, wMessageSpeed ; $4295
 	ld a, [hl] ; $4298
@@ -379,7 +379,7 @@ Unused_1a_RestoreMessageSpeed:
 	ret ; $42cd
 .scriptShowSpeakerDialogueRestoreBG:
 	clear_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $42ce
-	script_set_text Text_31_156 ; $42d1
+	script_set_text Text_OptionsSaveYourProgress ; $42d1
 	script_speak_restore SPEAKER_NONE ; $42d7
 	farcall RunDialogueYesNoPrompt ; $42dc
 	farcall ScriptCloseDialogueWindow ; $42df
@@ -410,13 +410,13 @@ Unused_1a_RestoreMessageSpeed:
 	ld [wMenuInitialRow], a ; $4320
 	ld a, [wSuppressMinigamePauseFlag] ; $4323
 	and a ; $4326
-	jr nz, .runPauseMenuWindow ; $4327
+	jr nz, .reopenFromSavePrompt ; $4327
 	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4329
-	jr .runPauseMenuWindow ; $432c
-.runPauseMenuWindow:
+	jr .reopenFromSavePrompt ; $432c
+.reopenFromSavePrompt:
 	jp Unused_1a_RunPauseMenuWindow ; $432e
 .setText:
-	script_set_text Text_31_157 ; $4331
+	script_set_text Text_OptionsBackToMenu ; $4331
 	script_speak_restore SPEAKER_NONE ; $4337
 	ld a, $01 ; $433c
 	ld [wMenuInitialRow], a ; $433e
@@ -439,10 +439,10 @@ Unused_1a_RestoreMessageSpeed:
 	ld [wMenuInitialRow], a ; $436b
 	ld a, [wSuppressMinigamePauseFlag] ; $436e
 	and a ; $4371
-	jr nz, .runPauseMenuWindow2 ; $4372
+	jr nz, .reopenFromQuitPrompt ; $4372
 	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4374
-	jr .runPauseMenuWindow2 ; $4377
-.runPauseMenuWindow2:
+	jr .reopenFromQuitPrompt ; $4377
+.reopenFromQuitPrompt:
 	jp Unused_1a_RunPauseMenuWindow ; $4379
 Unused_1a_BuildMinigameModePauseMenu:
 	call Unused_1a_ResetPauseMenuState ; $437c

@@ -9,15 +9,15 @@ InitMinigameTargets:
 	ld [wMinigameHitTargetType], a ; $65ab
 	ret ; $65ae
 ActivateMinigameTarget:
-	ld hl, $0004 ; $65af
+	ld hl, MGTARGET_SCRIPT ; $65af
 	add hl, bc ; $65b2
 	ld a, e ; $65b3
 	ld [hl+], a ; $65b4
 	ld [hl], d ; $65b5
-	ld hl, $0001 ; $65b6
+	ld hl, MGTARGET_KIND ; $65b6
 	add hl, bc ; $65b9
 	ld [hl], $00 ; $65ba
-	ld hl, $0000 ; $65bc
+	ld hl, MGTARGET_FLAGS ; $65bc
 	add hl, bc ; $65bf
 	set 0, [hl] ; $65c0
 	ret ; $65c2
@@ -29,7 +29,7 @@ UpdateMinigameTargets:
 	ld c, $0f ; $65cb
 .targetLoop:
 	call UpdateMinigameTarget ; $65cd
-	ld de, $000e ; $65d0
+	ld de, MGTARGET_SIZE ; $65d0
 	add hl, de ; $65d3
 	dec c ; $65d4
 	jr nz, .targetLoop ; $65d5
@@ -45,7 +45,7 @@ UpdateMinigameTarget:
 	ld de, wMinigameTargetWork ; $65e0
 	ld c, wMinigameTargetWork_SIZE / 16 ; $65e3
 	call CopyMemoryFast ; $65e5
-	ld hl, wMinigameTargetWork + 2 ; $65e8
+	ld hl, wMinigameTargetWork + MGTARGET_HIT_TIMER ; $65e8
 	ld a, [hl] ; $65eb
 	and a ; $65ec
 	jr z, .hit ; $65ed
@@ -75,14 +75,14 @@ UpdateMinigameTarget:
 	pop af ; $661c
 	ret ; $661d
 MoveMinigameTargetTowardGoal:
-	ld hl, wMinigameTargetWork ; $661e
+	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $661e
 	bit 1, [hl] ; $6621
 	ret z ; $6623
-	ld hl, wMinigameTargetWork + 6 ; $6624
+	ld hl, wMinigameTargetWork + MGTARGET_X ; $6624
 	ld a, [hl+] ; $6627
 	ld d, [hl] ; $6628
 	ld e, a ; $6629
-	ld hl, wMinigameTargetWork + 10 ; $662a
+	ld hl, wMinigameTargetWork + MGTARGET_GOAL_X ; $662a
 	ld a, [hl+] ; $662d
 	ld h, [hl] ; $662e
 	ld l, a ; $662f
@@ -105,7 +105,7 @@ MoveMinigameTargetTowardGoal:
 	sub d ; $6645
 	ld d, a ; $6646
 .stepX:
-	ld hl, wMinigameTargetWork + 6 ; $6647
+	ld hl, wMinigameTargetWork + MGTARGET_X ; $6647
 	ld a, [hl] ; $664a
 	add e ; $664b
 	ld [hl+], a ; $664c
@@ -113,11 +113,11 @@ MoveMinigameTargetTowardGoal:
 	adc d ; $664e
 	ld [hl+], a ; $664f
 .depthAxis:
-	ld hl, wMinigameTargetWork + 8 ; $6650
+	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $6650
 	ld a, [hl+] ; $6653
 	ld d, [hl] ; $6654
 	ld e, a ; $6655
-	ld hl, wMinigameTargetWork + 12 ; $6656
+	ld hl, wMinigameTargetWork + MGTARGET_GOAL_DEPTH ; $6656
 	ld a, [hl+] ; $6659
 	ld h, [hl] ; $665a
 	ld l, a ; $665b
@@ -140,7 +140,7 @@ MoveMinigameTargetTowardGoal:
 	sub d ; $6671
 	ld d, a ; $6672
 .stepDepth:
-	ld hl, wMinigameTargetWork + 8 ; $6673
+	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $6673
 	ld a, [hl] ; $6676
 	add e ; $6677
 	ld [hl+], a ; $6678
@@ -148,11 +148,11 @@ MoveMinigameTargetTowardGoal:
 	adc d ; $667a
 	ld [hl+], a ; $667b
 .checkArrived:
-	ld hl, wMinigameTargetWork + 6 ; $667c
+	ld hl, wMinigameTargetWork + MGTARGET_X ; $667c
 	ld a, [hl+] ; $667f
 	ld d, [hl] ; $6680
 	ld e, a ; $6681
-	ld hl, wMinigameTargetWork + 10 ; $6682
+	ld hl, wMinigameTargetWork + MGTARGET_GOAL_X ; $6682
 	ld a, [hl+] ; $6685
 	ld h, [hl] ; $6686
 	ld l, a ; $6687
@@ -165,11 +165,11 @@ MoveMinigameTargetTowardGoal:
 	ld a, h ; $668e
 	or l ; $668f
 	jr nz, .done ; $6690
-	ld hl, wMinigameTargetWork + 8 ; $6692
+	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $6692
 	ld a, [hl+] ; $6695
 	ld d, [hl] ; $6696
 	ld e, a ; $6697
-	ld hl, wMinigameTargetWork + 12 ; $6698
+	ld hl, wMinigameTargetWork + MGTARGET_GOAL_DEPTH ; $6698
 	ld a, [hl+] ; $669b
 	ld h, [hl] ; $669c
 	ld l, a ; $669d
@@ -182,30 +182,30 @@ MoveMinigameTargetTowardGoal:
 	ld a, h ; $66a4
 	or l ; $66a5
 	jr nz, .done ; $66a6
-	ld hl, wMinigameTargetWork ; $66a8
+	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $66a8
 	res 1, [hl] ; $66ab
 .done:
 	ret ; $66ad
 DrawMinigameTarget:
-	ld hl, wMinigameTargetWork + 8 ; $66ae
+	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $66ae
 	ld a, [hl+] ; $66b1
 	ld b, [hl] ; $66b2
 	ld c, a ; $66b3
-	ld hl, wMinigameTargetWork + 6 ; $66b4
+	ld hl, wMinigameTargetWork + MGTARGET_X ; $66b4
 	ld a, [hl+] ; $66b7
 	ld h, [hl] ; $66b8
 	ld l, a ; $66b9
 	farcall ApplyCameraProjection ; $66ba
 	ld c, e ; $66bd
 	ld b, d ; $66be
-	ld a, [wMinigameTargetWork + 2] ; $66bf
+	ld a, [wMinigameTargetWork + MGTARGET_HIT_TIMER] ; $66bf
 	and $0f ; $66c2
 	jr z, .readSprite ; $66c4
 	ld_hl_indexed DrawMinigameTargetTable ; $66c6
 	ld a, [hl] ; $66cd
 	ld h, $00 ; $66ce
 	ld l, a ; $66d0
-	ld a, [wMinigameTargetWork + 1] ; $66d1
+	ld a, [wMinigameTargetWork + MGTARGET_KIND] ; $66d1
 	rrca ; $66d4
 	rrca ; $66d5
 	and $c0 ; $66d6
@@ -217,7 +217,7 @@ DrawMinigameTarget:
 	add l ; $66df
 	ld d, a ; $66e0
 .readSprite:
-	ld a, [wMinigameTargetWork + 1] ; $66e1
+	ld a, [wMinigameTargetWork + MGTARGET_KIND] ; $66e1
 	add a ; $66e4
 	ld_hl_indexed MinigameTargetTable ; $66e5
 	ld a, [hl+] ; $66ec
@@ -237,14 +237,14 @@ DrawMinigameTarget_SpriteTemplate:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 HandleMinigameTargetHit:
-	ld hl, wMinigameTargetWork ; $6717
+	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6717
 	bit 2, [hl] ; $671a
 	ret z ; $671c
 	res 2, [hl] ; $671d
 	sound SFX_BALL_CONTACT ; $671f
 	ld a, $20 ; $6721
-	ld [wMinigameTargetWork + 2], a ; $6723
-	ld a, [wMinigameTargetWork + 1] ; $6726
+	ld [wMinigameTargetWork + MGTARGET_HIT_TIMER], a ; $6723
+	ld a, [wMinigameTargetWork + MGTARGET_KIND] ; $6726
 	call DeflectBallOffMinigameTarget ; $6729
 	ret ; $672c
 CheckBallHitsMinigameTarget:
@@ -255,7 +255,7 @@ CheckBallHitsMinigameTarget:
 	ld a, [hl+] ; $6735
 	ld d, [hl] ; $6736
 	ld e, a ; $6737
-	ld hl, wMinigameTargetWork + 6 ; $6738
+	ld hl, wMinigameTargetWork + MGTARGET_X ; $6738
 	ld a, [hl+] ; $673b
 	ld h, [hl] ; $673c
 	ld l, a ; $673d
@@ -275,7 +275,7 @@ CheckBallHitsMinigameTarget:
 	ld a, [hl+] ; $6753
 	ld d, [hl] ; $6754
 	ld e, a ; $6755
-	ld hl, wMinigameTargetWork + 8 ; $6756
+	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $6756
 	ld a, [hl+] ; $6759
 	ld h, [hl] ; $675a
 	ld l, a ; $675b
@@ -291,7 +291,7 @@ CheckBallHitsMinigameTarget:
 	add hl, de ; $6769
 	bit 7, h ; $676a
 	jr nz, .done ; $676c
-	ld hl, wMinigameTargetWork ; $676e
+	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $676e
 	set 2, [hl] ; $6771
 .done:
 	ret ; $6773
@@ -427,7 +427,7 @@ MinigameTargetOp_01:
 	ld a, [de] ; $681e
 	inc de ; $681f
 	dec a ; $6820
-	ld [wMinigameTargetWork + 3], a ; $6821
+	ld [wMinigameTargetWork + MGTARGET_SCRIPT_DELAY], a ; $6821
 	xor a ; $6824
 	ret ; $6825
 MinigameTargetOp_02:
@@ -456,7 +456,7 @@ MinigameTargetOp_03:
 	pop de ; $683e
 	ret ; $683f
 MinigameTargetOp_04:
-	ld hl, wMinigameTargetWork ; $6840
+	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6840
 	bit 1, [hl] ; $6843
 	jr nz, .apply ; $6845
 	inc de ; $6847
@@ -469,7 +469,7 @@ MinigameTargetOp_05:
 	inc de ; $684d
 	ld l, e ; $684e
 	ld h, d ; $684f
-	ld de, wMinigameTargetWork + 6 ; $6850
+	ld de, wMinigameTargetWork + MGTARGET_X ; $6850
 	ld a, [hl+] ; $6853
 	ld [de], a ; $6854
 	inc de ; $6855
@@ -484,7 +484,7 @@ MinigameTargetOp_05:
 	inc de ; $685e
 	ld e, l ; $685f
 	ld d, h ; $6860
-	ld hl, wMinigameTargetWork ; $6861
+	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6861
 	res 1, [hl] ; $6864
 	ld a, $01 ; $6866
 	ret ; $6868
@@ -504,30 +504,30 @@ MinigameTargetOp_06:
 	call VectorFromLengthAndAngle ; $6875
 	ld c, l ; $6878
 	ld b, h ; $6879
-	ld hl, wMinigameTargetWork + 6 ; $687a
+	ld hl, wMinigameTargetWork + MGTARGET_X ; $687a
 	ld a, [hl+] ; $687d
 	ld h, [hl] ; $687e
 	ld l, a ; $687f
 	add hl, bc ; $6880
 	ld c, l ; $6881
 	ld b, h ; $6882
-	ld hl, wMinigameTargetWork + 10 ; $6883
+	ld hl, wMinigameTargetWork + MGTARGET_GOAL_X ; $6883
 	ld a, c ; $6886
 	ld [hl+], a ; $6887
 	ld [hl], b ; $6888
-	ld hl, wMinigameTargetWork + 8 ; $6889
+	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $6889
 	ld a, [hl+] ; $688c
 	ld h, [hl] ; $688d
 	ld l, a ; $688e
 	add hl, de ; $688f
 	ld e, l ; $6890
 	ld d, h ; $6891
-	ld hl, wMinigameTargetWork + 12 ; $6892
+	ld hl, wMinigameTargetWork + MGTARGET_GOAL_DEPTH ; $6892
 	ld a, e ; $6895
 	ld [hl+], a ; $6896
 	ld [hl], d ; $6897
 	pop de ; $6898
-	ld hl, wMinigameTargetWork ; $6899
+	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6899
 	set 1, [hl] ; $689c
 	ld a, $01 ; $689e
 	ret ; $68a0
@@ -535,28 +535,28 @@ MinigameTargetOp_07:
 	inc de ; $68a1
 	ld a, [de] ; $68a2
 	inc de ; $68a3
-	ld [wMinigameTargetWork + 1], a ; $68a4
+	ld [wMinigameTargetWork + MGTARGET_KIND], a ; $68a4
 	ld a, $01 ; $68a7
 	ret ; $68a9
 MinigameTargetOp_08:
 	inc de ; $68aa
 	ld a, [de] ; $68ab
 	inc de ; $68ac
-	ld hl, wMinigameTargetWork + 1 ; $68ad
+	ld hl, wMinigameTargetWork + MGTARGET_KIND ; $68ad
 	add [hl] ; $68b0
 	and $03 ; $68b1
 	ld [hl], a ; $68b3
 	ld a, $01 ; $68b4
 	ret ; $68b6
 RunMinigameTargetScript:
-	ld hl, wMinigameTargetWork + 3 ; $68b7
+	ld hl, wMinigameTargetWork + MGTARGET_SCRIPT_DELAY ; $68b7
 	ld a, [hl] ; $68ba
 	and a ; $68bb
 	jr z, .runScript ; $68bc
 	dec [hl] ; $68be
 	ret ; $68bf
 .runScript:
-	ld hl, wMinigameTargetWork + 4 ; $68c0
+	ld hl, wMinigameTargetWork + MGTARGET_SCRIPT ; $68c0
 	ld a, [hl+] ; $68c3
 	ld d, [hl] ; $68c4
 	ld e, a ; $68c5
@@ -571,7 +571,7 @@ RunMinigameTargetScript:
 	ld l, a ; $68d5
 	jp hl ; $68d6
 MinigameTargetScriptOpReturn:
-	ld hl, wMinigameTargetWork + 4 ; $68d7
+	ld hl, wMinigameTargetWork + MGTARGET_SCRIPT ; $68d7
 	ld [hl], e ; $68da
 	inc hl ; $68db
 	ld [hl], d ; $68dc
@@ -579,119 +579,119 @@ MinigameTargetScriptOpReturn:
 	jr nz, RunMinigameTargetScript.dispatchOp ; $68de
 	ret ; $68e0
 MinigameTargetFormation0Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation0Script0.bin" ; $68e1, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation0Script0.asm" ; $68e1, 10 bytes (target_script)
 MinigameTargetFormation0Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation0Script1.bin" ; $68eb, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation0Script1.asm" ; $68eb, 10 bytes (target_script)
 MinigameTargetFormation0Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation0Script2.bin" ; $68f5, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation0Script2.asm" ; $68f5, 10 bytes (target_script)
 MinigameTargetFormation0Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation0Script3.bin" ; $68ff, 33 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation0Script3.asm" ; $68ff, 33 bytes (target_script)
 MinigameTargetFormation1Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script0.bin" ; $6920, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script0.asm" ; $6920, 10 bytes (target_script)
 MinigameTargetFormation1Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script1.bin" ; $692a, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script1.asm" ; $692a, 10 bytes (target_script)
 MinigameTargetFormation1Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script2.bin" ; $6934, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script2.asm" ; $6934, 10 bytes (target_script)
 MinigameTargetFormation1Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script3.bin" ; $693e, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script3.asm" ; $693e, 10 bytes (target_script)
 MinigameTargetFormation1Script4:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script4.bin" ; $6948, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script4.asm" ; $6948, 10 bytes (target_script)
 MinigameTargetFormation1Script5:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script5.bin" ; $6952, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script5.asm" ; $6952, 10 bytes (target_script)
 MinigameTargetFormation1Script6:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script6.bin" ; $695c, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script6.asm" ; $695c, 10 bytes (target_script)
 MinigameTargetFormation1Script7:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script7.bin" ; $6966, 33 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script7.asm" ; $6966, 33 bytes (target_script)
 MinigameTargetFormation2Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script0.bin" ; $6987, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script0.asm" ; $6987, 10 bytes (target_script)
 MinigameTargetFormation2Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script1.bin" ; $6991, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script1.asm" ; $6991, 10 bytes (target_script)
 MinigameTargetFormation2Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script2.bin" ; $699b, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script2.asm" ; $699b, 10 bytes (target_script)
 MinigameTargetFormation2Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script3.bin" ; $69a5, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script3.asm" ; $69a5, 10 bytes (target_script)
 MinigameTargetFormation2Script4:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script4.bin" ; $69af, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script4.asm" ; $69af, 10 bytes (target_script)
 MinigameTargetFormation2Script5:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script5.bin" ; $69b9, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script5.asm" ; $69b9, 10 bytes (target_script)
 MinigameTargetFormation2Script6:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script6.bin" ; $69c3, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script6.asm" ; $69c3, 10 bytes (target_script)
 MinigameTargetFormation2Script7:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script7.bin" ; $69cd, 144 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script7.asm" ; $69cd, 144 bytes (target_script)
 MinigameTargetFormation3Script00:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script00.bin" ; $6a5d, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script00.asm" ; $6a5d, 10 bytes (target_script)
 MinigameTargetFormation3Script01:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script01.bin" ; $6a67, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script01.asm" ; $6a67, 10 bytes (target_script)
 MinigameTargetFormation3Script02:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script02.bin" ; $6a71, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script02.asm" ; $6a71, 10 bytes (target_script)
 MinigameTargetFormation3Script03:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script03.bin" ; $6a7b, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script03.asm" ; $6a7b, 10 bytes (target_script)
 MinigameTargetFormation3Script04:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script04.bin" ; $6a85, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script04.asm" ; $6a85, 10 bytes (target_script)
 MinigameTargetFormation3Script05:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script05.bin" ; $6a8f, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script05.asm" ; $6a8f, 10 bytes (target_script)
 MinigameTargetFormation3Script06:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script06.bin" ; $6a99, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script06.asm" ; $6a99, 10 bytes (target_script)
 MinigameTargetFormation3Script07:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script07.bin" ; $6aa3, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script07.asm" ; $6aa3, 10 bytes (target_script)
 MinigameTargetFormation3Script08:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script08.bin" ; $6aad, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script08.asm" ; $6aad, 10 bytes (target_script)
 MinigameTargetFormation3Script09:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script09.bin" ; $6ab7, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script09.asm" ; $6ab7, 10 bytes (target_script)
 MinigameTargetFormation3Script10:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script10.bin" ; $6ac1, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script10.asm" ; $6ac1, 10 bytes (target_script)
 MinigameTargetFormation3Script11:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script11.bin" ; $6acb, 70 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script11.asm" ; $6acb, 70 bytes (target_script)
 MinigameTargetFormation4Script00:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script00.bin" ; $6b11, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script00.asm" ; $6b11, 10 bytes (target_script)
 MinigameTargetFormation4Script01:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script01.bin" ; $6b1b, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script01.asm" ; $6b1b, 10 bytes (target_script)
 MinigameTargetFormation4Script02:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script02.bin" ; $6b25, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script02.asm" ; $6b25, 10 bytes (target_script)
 MinigameTargetFormation4Script03:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script03.bin" ; $6b2f, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script03.asm" ; $6b2f, 10 bytes (target_script)
 MinigameTargetFormation4Script04:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script04.bin" ; $6b39, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script04.asm" ; $6b39, 10 bytes (target_script)
 MinigameTargetFormation4Script05:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script05.bin" ; $6b43, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script05.asm" ; $6b43, 10 bytes (target_script)
 MinigameTargetFormation4Script06:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script06.bin" ; $6b4d, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script06.asm" ; $6b4d, 10 bytes (target_script)
 MinigameTargetFormation4Script07:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script07.bin" ; $6b57, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script07.asm" ; $6b57, 10 bytes (target_script)
 MinigameTargetFormation4Script08:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script08.bin" ; $6b61, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script08.asm" ; $6b61, 10 bytes (target_script)
 MinigameTargetFormation4Script09:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script09.bin" ; $6b6b, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script09.asm" ; $6b6b, 10 bytes (target_script)
 MinigameTargetFormation4Script10:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script10.bin" ; $6b75, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script10.asm" ; $6b75, 10 bytes (target_script)
 MinigameTargetFormation4Script11:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script11.bin" ; $6b7f, 42 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script11.asm" ; $6b7f, 42 bytes (target_script)
 MinigameTargetFormation5Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation5Script0.bin" ; $6ba9, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation5Script0.asm" ; $6ba9, 10 bytes (target_script)
 MinigameTargetFormation5Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation5Script1.bin" ; $6bb3, 35 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation5Script1.asm" ; $6bb3, 35 bytes (target_script)
 MinigameTargetFormation6Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation6Script0.bin" ; $6bd6, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation6Script0.asm" ; $6bd6, 10 bytes (target_script)
 MinigameTargetFormation6Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation6Script1.bin" ; $6be0, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation6Script1.asm" ; $6be0, 10 bytes (target_script)
 MinigameTargetFormation6Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation6Script2.bin" ; $6bea, 38 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation6Script2.asm" ; $6bea, 38 bytes (target_script)
 MinigameTargetFormation7Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation7Script0.bin" ; $6c10, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation7Script0.asm" ; $6c10, 10 bytes (target_script)
 MinigameTargetFormation7Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation7Script1.bin" ; $6c1a, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation7Script1.asm" ; $6c1a, 10 bytes (target_script)
 MinigameTargetFormation7Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation7Script2.bin" ; $6c24, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation7Script2.asm" ; $6c24, 10 bytes (target_script)
 MinigameTargetFormation7Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation7Script3.bin" ; $6c2e, 37 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation7Script3.asm" ; $6c2e, 37 bytes (target_script)
 MinigameTargetFormation8Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation8Script0.bin" ; $6c53, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation8Script0.asm" ; $6c53, 10 bytes (target_script)
 MinigameTargetFormation8Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation8Script1.bin" ; $6c5d, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation8Script1.asm" ; $6c5d, 10 bytes (target_script)
 MinigameTargetFormation8Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation8Script2.bin" ; $6c67, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation8Script2.asm" ; $6c67, 10 bytes (target_script)
 MinigameTargetFormation8Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation8Script3.bin" ; $6c71, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation8Script3.asm" ; $6c71, 10 bytes (target_script)
 SpawnMinigameTargetFormation:
 	ld a, a ; $6c7b
 	rst Rst00 ; $6c7c
@@ -839,7 +839,7 @@ SpawnMinigameTargetsFromList:
 	call ActivateMinigameTarget ; $6d5f
 	pop hl ; $6d62
 	pop bc ; $6d63
-	ld a, $0e ; $6d64
+	ld a, MGTARGET_SIZE ; $6d64
 	add c ; $6d66
 	ld c, a ; $6d67
 	jr nc, .next ; $6d68
@@ -849,18 +849,18 @@ SpawnMinigameTargetsFromList:
 .done:
 	ret ; $6d6d
 DrawMinigameTargetAlt:
-	ld hl, wMinigameTargetWork + 8 ; $6d6e
+	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $6d6e
 	ld a, [hl+] ; $6d71
 	ld b, [hl] ; $6d72
 	ld c, a ; $6d73
-	ld hl, wMinigameTargetWork + 6 ; $6d74
+	ld hl, wMinigameTargetWork + MGTARGET_X ; $6d74
 	ld a, [hl+] ; $6d77
 	ld h, [hl] ; $6d78
 	ld l, a ; $6d79
 	farcall ApplyCameraProjection ; $6d7a
 	ld c, e ; $6d7d
 	ld b, d ; $6d7e
-	ld a, [wMinigameTargetWork + 2] ; $6d7f
+	ld a, [wMinigameTargetWork + MGTARGET_HIT_TIMER] ; $6d7f
 	and $0f ; $6d82
 	jr z, .readSprite ; $6d84
 	ld_hl_indexed DrawMinigameTargetAltTable ; $6d86
@@ -868,7 +868,7 @@ DrawMinigameTargetAlt:
 	add d ; $6d8e
 	ld d, a ; $6d8f
 .readSprite:
-	ld a, [wMinigameTargetWork + 1] ; $6d90
+	ld a, [wMinigameTargetWork + MGTARGET_KIND] ; $6d90
 	add a ; $6d93
 	ld_hl_indexed MinigameTargetAltTable ; $6d94
 	ld a, [hl+] ; $6d9b
@@ -894,13 +894,13 @@ DrawMinigameTargetAlt_SpriteTemplate:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 HandleMinigameTargetHitAlt:
-	ld hl, wMinigameTargetWork ; $6dde
+	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6dde
 	bit 2, [hl] ; $6de1
 	ret z ; $6de3
 	res 2, [hl] ; $6de4
 	sound SFX_CHIME ; $6de6
 	ld a, $20 ; $6de8
-	ld [wMinigameTargetWork + 2], a ; $6dea
-	ld a, [wMinigameTargetWork + 1] ; $6ded
+	ld [wMinigameTargetWork + MGTARGET_HIT_TIMER], a ; $6dea
+	ld a, [wMinigameTargetWork + MGTARGET_KIND] ; $6ded
 	ld [wMinigameHitTargetType], a ; $6df0
 	ret ; $6df3

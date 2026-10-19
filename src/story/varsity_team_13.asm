@@ -1,12 +1,12 @@
 	twin_named varsity_court_npc03_face_up, VarsityCourtANpc03FaceUp_13 ; $6c13
 VarsityCourtANpc03_13:
-	script_set_text Text_30_544 ; $6c40
+	script_set_text Text_KevinChallengeTravelingTeam ; $6c40
 	script_speak_restore ACTOR_VARSITY_COURT_A_KEVIN ; $6c46
 	farcall RunDialogueYesNoPrompt ; $6c4b
 	farcall ScriptCloseDialogueWindow ; $6c4e
 	script_wait_frames 5 ; $6c51
 	and a ; $6c58
-	jp nz, .stage3 ; $6c59
+	jp nz, .declined ; $6c59
 	farcall AdvanceDialogueTextCursor ; $6c5c
 	script_set_speed ACTOR_PLAYER, 0.5 ; $6c5f
 	script_move_target ACTOR_PLAYER, 13.0, 31.0 ; $6c67
@@ -44,8 +44,8 @@ VarsityCourtANpc03_13:
 	jp nz, .speak ; $6d35
 	script_set_anim ACTOR_VARSITY_COURT_A_KEVIN, ANIM_NOD ; $6d38
 	script_wait_idle ACTOR_VARSITY_COURT_A_KEVIN ; $6d3f
-.stage2:
-	script_set_text Text_30_548 ; $6d44
+.startMatch:
+	script_set_text Text_KevinSinglesLetsGetStarted ; $6d44
 	script_set_anim ACTOR_VARSITY_COURT_A_KEVIN, ANIM_NOD ; $6d4a
 	script_wait_idle ACTOR_VARSITY_COURT_A_KEVIN ; $6d51
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6d56
@@ -74,7 +74,7 @@ VarsityCourtANpc03_13:
 	farcall RunStoryMatch ; $6dee
 	farcall RestoreOverworldAfterMatch ; $6df1
 	ret ; $6df4
-.stage3:
+.declined:
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6df5
 	ret ; $6dfa
 .speak:
@@ -85,7 +85,7 @@ VarsityCourtANpc03_13:
 	script_wait_frames 5 ; $6e09
 	and a ; $6e10
 	jr z, .done ; $6e11
-	jp .stage2 ; $6e13
+	jp .startMatch ; $6e13
 	ret ; $6e16
 .done:
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6e17
@@ -94,13 +94,13 @@ VarsityCourtANpc03_13:
 	twin_named varsity_court_npc03_face_up, VarsityCourtBNpc03FaceUp_13 ; $6e20
 VarsityCourtBNpc03_13:
 	script_null_script ACTOR_PARTNER ; $6e4d
-	script_set_text Text_31_12 ; $6e52
+	script_set_text Text_KevinDoublesChallengeOffer ; $6e52
 	script_speak_restore ACTOR_VARSITY_COURT_B_KEVIN ; $6e58
 	farcall RunDialogueYesNoPrompt ; $6e5d
 	farcall ScriptCloseDialogueWindow ; $6e60
 	script_wait_frames 5 ; $6e63
 	and a ; $6e6a
-	jp nz, .stage3 ; $6e6b
+	jp nz, .declined ; $6e6b
 	farcall AdvanceDialogueTextCursor ; $6e6e
 	script_set_speed ACTOR_PLAYER, 0.5 ; $6e71
 	script_set_speed ACTOR_PARTNER, 0.5 ; $6e79
@@ -150,8 +150,8 @@ VarsityCourtBNpc03_13:
 	jp nz, .speak ; $6fa7
 	script_set_anim ACTOR_VARSITY_COURT_B_KEVIN, ANIM_NOD ; $6faa
 	script_wait_idle ACTOR_VARSITY_COURT_B_KEVIN ; $6fb1
-.stage2:
-	script_set_text Text_31_16 ; $6fb6
+.startMatch:
+	script_set_text Text_KevinDoublesLetsGetStarted ; $6fb6
 	script_set_anim ACTOR_VARSITY_COURT_B_KEVIN, ANIM_NOD ; $6fbc
 	script_wait_idle ACTOR_VARSITY_COURT_B_KEVIN ; $6fc3
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $6fc8
@@ -182,7 +182,7 @@ VarsityCourtBNpc03_13:
 	farcall RunStoryMatch ; $7076
 	farcall RestoreOverworldAfterMatch ; $7079
 	ret ; $707c
-.stage3:
+.declined:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $707d
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $7082
 	ret ; $708f
@@ -194,7 +194,7 @@ VarsityCourtBNpc03_13:
 	script_wait_frames 5 ; $709e
 	and a ; $70a5
 	jr z, .done ; $70a6
-	jp .stage2 ; $70a8
+	jp .startMatch ; $70a8
 	ret ; $70ab
 .done:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $70ac
@@ -230,7 +230,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_fade_in 4 ; $7148
 	call WaitFadeEnd ; $714d
 	script_wait_frames 60 ; $7150
-	script_set_text Text_30_554 ; $7157
+	script_set_text Text_BobYouRepresentAcademy ; $7157
 	script_player_speed 1.0 ; $715d
 	script_move_player 11.0, 23.0 ; $7163
 	farcall WaitPlayerMoveDone ; $716d
@@ -347,7 +347,7 @@ Unused_13_RunDoublesTravelingTeamVictoryIfWon:
 	jp z, DoublesTravelingTeamVictoryCutscene ; $744b
 	ret ; $744e
 DoublesTravelingTeamVictoryCutscene:
-	script_set_text Text_31_22 ; $744f
+	script_set_text Text_KevinDoublesConcede ; $744f
 	script_respawn_actors DoublesTravelingTeamActors_13 ; $7455
 	farcall BeginCutsceneScriptMode ; $745d
 	call SetPartnerObjDefByGender_13 ; $7460
@@ -384,7 +384,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_idle ACTOR_PARTNER ; $752c
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7531
 	jp z, .variantB ; $7534
-	script_set_text Text_31_26 ; $7537
+	script_set_text Text_PartnerDreamComeTrue ; $7537
 	script_speak ACTOR_PARTNER ; $753d
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7542
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $754a
@@ -438,7 +438,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_idle ACTOR_PLAYER ; $766a
 	jp .celebrate ; $766f
 .variantB:
-	script_set_text Text_31_24 ; $7672
+	script_set_text Text_PartnerIsThisForReal ; $7672
 	script_speak ACTOR_PARTNER ; $7678
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $767d
 	script_wait_idle ACTOR_PARTNER ; $7684
@@ -481,7 +481,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $775d
 	script_wait_idle ACTOR_PLAYER ; $7764
 .celebrate:
-	script_set_text Text_31_28 ; $7769
+	script_set_text Text_EmilyYouLostMark ; $7769
 	script_wait_frames 20 ; $776f
 	script_speak ACTOR_DOUBLES_TRAVELING_TEAM_EMILY ; $7776
 	script_unlock_facing ACTOR_PLAYER ; $777b

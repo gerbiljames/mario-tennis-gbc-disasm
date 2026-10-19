@@ -114,19 +114,19 @@ LoadEraseDataConfirmScreen:
 	ld a, [wScreenScratch] ; $4d3e
 	cp $02 ; $4d41
 	jr nz, .compare ; $4d43
-	ld hl, Text_30_221 ; $4d45
+	ld hl, Text_EraseCurrentGame ; $4d45
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4d48
 	ld c, $0e ; $4d4b
 	farcall RenderProportionalTextAt ; $4d4d
-	ld hl, Text_30_222 ; $4d50
+	ld hl, Text_EraseCurrentGameWillBeErased ; $4d50
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; $4d53
 	ld c, $0e ; $4d56
 	farcall RenderProportionalTextAt ; $4d58
-	ld hl, Text_30_223 ; $4d5b
+	ld hl, Text_EraseThisDataPrompt ; $4d5b
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4d5e
 	ld c, $0e ; $4d61
 	farcall RenderProportionalTextAt ; $4d63
-	ld hl, Text_30_220 ; $4d66
+	ld hl, Text_EraseDataOk ; $4d66
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4d69
 	ld c, $0e ; $4d6c
 	farcall RenderProportionalTextAt ; $4d6e
@@ -138,19 +138,19 @@ LoadEraseDataConfirmScreen:
 .compare:
 	or a ; $4d7e
 	jr z, .eraseAll ; $4d7f
-	ld hl, Text_30_216 ; $4d81
+	ld hl, Text_EraseAllN64Data ; $4d81
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4d84
 	ld c, $0e ; $4d87
 	farcall RenderProportionalTextAt ; $4d89
-	ld hl, Text_30_217 ; $4d8c
+	ld hl, Text_EraseN64WillBeErased ; $4d8c
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; $4d8f
 	ld c, $0e ; $4d92
 	farcall RenderProportionalTextAt ; $4d94
-	ld hl, Text_30_219 ; $4d97
+	ld hl, Text_EraseN64Prompt ; $4d97
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4d9a
 	ld c, $0e ; $4d9d
 	farcall RenderProportionalTextAt ; $4d9f
-	ld hl, Text_30_220 ; $4da2
+	ld hl, Text_EraseDataOk ; $4da2
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4da5
 	ld c, $0e ; $4da8
 	farcall RenderProportionalTextAt ; $4daa
@@ -160,19 +160,19 @@ LoadEraseDataConfirmScreen:
 	farcall LoadCompressedTileBlock ; $4db4
 	jr .renderProportionalTextAt ; $4db7
 .eraseAll:
-	ld hl, Text_30_214 ; $4db9
+	ld hl, Text_EraseAllSavedData ; $4db9
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4dbc
 	ld c, $0e ; $4dbf
 	farcall RenderProportionalTextAt ; $4dc1
-	ld hl, Text_30_215 ; $4dc4
+	ld hl, Text_EraseAllWillBeErased ; $4dc4
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; $4dc7
 	ld c, $0e ; $4dca
 	farcall RenderProportionalTextAt ; $4dcc
-	ld hl, Text_30_218 ; $4dcf
+	ld hl, Text_EraseAllPrompt ; $4dcf
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4dd2
 	ld c, $0e ; $4dd5
 	farcall RenderProportionalTextAt ; $4dd7
-	ld hl, Text_30_220 ; $4dda
+	ld hl, Text_EraseDataOk ; $4dda
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4ddd
 	ld c, $0e ; $4de0
 	farcall RenderProportionalTextAt ; $4de2
@@ -181,11 +181,11 @@ LoadEraseDataConfirmScreen:
 	ld de, vTiles0 ; $4de9
 	farcall LoadCompressedTileBlock ; $4dec
 .renderProportionalTextAt:
-	ld hl, Text_30_122 ; $4def
+	ld hl, Text_EraseConfirmYes ; $4def
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 16 ; $4df2
 	ld c, $04 ; $4df5
 	farcall RenderProportionalTextAt ; $4df7
-	ld hl, Text_30_123 ; $4dfa
+	ld hl, Text_EraseConfirmNo ; $4dfa
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 16 ; $4dfd
 	ld c, $04 ; $4e00
 	farcall RenderProportionalTextAt ; $4e02
@@ -296,11 +296,11 @@ RunRacketShoesChoiceMenu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $4ef2
 	bit PADB_A, a ; $4ef5
-	jr nz, .playSfx ; $4ef7
+	jr nz, .playSelectSfx ; $4ef7
 	bit PADB_B, a ; $4ef9
-	jr nz, .playSfx2 ; $4efb
+	jr nz, .playCancelSfx ; $4efb
 	jr .loop ; $4efd
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $4eff
 	call ClearFrameTasks ; $4f01
 	ld hl, rIE ; $4f04
@@ -313,7 +313,7 @@ RunRacketShoesChoiceMenu:
 	call GetMenuCursorIndex_3e ; $4f15
 	ld [wRacketShoesTabIndex], a ; $4f18
 	ret ; $4f1b
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $4f1c
 	call ClearFrameTasks ; $4f1e
 	ld hl, rIE ; $4f21
@@ -487,7 +487,7 @@ DrawRacketShoesChoiceCaption:
 	ld c, $02 ; $5076
 	call GetMenuCursorIndex_3e ; $5078
 	ld b, a ; $507b
-	ld hl, Text_30_224 ; $507c
+	ld hl, Text_EquipChooseRacket ; $507c
 	add l ; $507f
 	ld l, a ; $5080
 	jr nc, .renderTextToBuffer64 ; $5081

@@ -89,7 +89,7 @@ DormEntranceEntry0fScene:
 	script_wait_frames 20 ; $4200
 	script_wait_move ACTOR_DORM_ENTRANCE_EMILY ; $4207
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ENTRANCE_EMILY ; $420c
-	script_set_text Text_31_74 ; $4214
+	script_set_text Text_EmilyDormThatsIt ; $4214
 	script_speak ACTOR_DORM_ENTRANCE_EMILY ; $421a
 	script_set_anim ACTOR_DORM_ENTRANCE_EMILY, ANIM_NOD ; $421f
 	script_wait_idle ACTOR_DORM_ENTRANCE_EMILY ; $4226
@@ -148,7 +148,7 @@ DormEntranceEntry0fScene:
 	ld a, [wStoryPartnerGender] ; $439c
 	or a ; $439f
 	jr nz, .doubles ; $43a0
-	script_set_text Text_31_92 ; $43a2
+	script_set_text Text_EmilyWonderingWhoHeIs ; $43a2
 	script_set_objdef OBJ_HARRY, ACTOR_DORM_ENTRANCE_KATE ; $43a8
 	script_set_anim ACTOR_DORM_ENTRANCE_KATE, ANIM_WALK ; $43b4
 .doubles:
@@ -220,7 +220,7 @@ DormEntranceEntry0fScene:
 	script_wait_frames 30 ; $453a
 	script_set_anim ACTOR_DORM_ENTRANCE_EMILY, ANIM_NOD ; $4541
 	script_wait_idle ACTOR_DORM_ENTRANCE_EMILY ; $4548
-	script_set_text Text_31_90 ; $454d
+	script_set_text Text_DormEntranceLeavingNow ; $454d
 	script_speak ACTOR_DORM_ENTRANCE_KATE ; $4553
 	script_face_toward ACTOR_DORM_ENTRANCE_EMILY, ACTOR_DORM_ENTRANCE_KATE ; $4558
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4560
@@ -345,13 +345,13 @@ WallPracticeRoomNpc03_12:
 WallPracticeRoomNpc03TextIds:
 	; $4773, 14 bytes (text_ids)
 	table_width 2
-	dw Text_35_231 ; record 0
-	dw Text_35_256 ; record 1
-	dw Text_35_266 ; record 2
-	dw Text_36_8 ; record 3
-	dw Text_36_21 ; record 4
-	dw Text_36_21 ; record 5
-	dw Text_36_44 ; record 6
+	dw Text_WallRoomBoyHereForPractice ; record 0
+	dw Text_WallRoomBoyLaterLevelsHard ; record 1
+	dw Text_WallRoomBoyTryLevelThree ; record 2
+	dw Text_WallRoomBoyTryFinalLevel ; record 3
+	dw Text_WallRoomBoyYoureUnstoppable ; record 4
+	dw Text_WallRoomBoyYoureUnstoppable ; record 5
+	dw Text_WallRoomBoyWallMasterAmazing ; record 6
 	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc04_12:
 	ld a, [wMapSceneStage] ; $4781
@@ -366,13 +366,13 @@ WallPracticeRoomNpc04_12:
 WallPracticeRoomNpc04TextIds:
 	; $4798, 14 bytes (text_ids)
 	table_width 2
-	dw Text_35_234 ; record 0
-	dw Text_35_257 ; record 1
-	dw Text_35_269 ; record 2
-	dw Text_36_11 ; record 3
-	dw Text_36_22 ; record 4
-	dw Text_36_22 ; record 5
-	dw Text_36_45 ; record 6
+	dw Text_WallRoomGirlMovingPanelsPain ; record 0
+	dw Text_WallRoomGirlLevelTwoHard ; record 1
+	dw Text_WallRoomGirlLevelThreeRotate ; record 2
+	dw Text_WallRoomGirlLevelFourPanels ; record 3
+	dw Text_WallRoomGirlNobodyBeatLevelFour ; record 4
+	dw Text_WallRoomGirlNobodyBeatLevelFour ; record 5
+	dw Text_WallRoomGirlOutdidMachine ; record 6
 	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc05_12:
 	ld a, [wMapSceneStage] ; $47a6
@@ -397,13 +397,13 @@ WallPracticeRoomNpc05_12:
 WallPracticeRoomNpc05TextIds:
 	; $47e5, 14 bytes (text_ids)
 	table_width 2
-	dw Text_35_235 ; record 0
-	dw Text_35_258 ; record 1
-	dw Text_35_270 ; record 2
-	dw Text_36_12 ; record 3
-	dw Text_36_23 ; record 4
-	dw Text_36_23 ; record 5
-	dw Text_36_46 ; record 6
+	dw Text_WallRoomStudentLevelOnePanels ; record 0
+	dw Text_WallRoomStudentLevelTwoPanels ; record 1
+	dw Text_WallRoomStudentLevelThreeBlank ; record 2
+	dw Text_WallRoomStudentLevelFourMix ; record 3
+	dw Text_WallRoomStudentMasterLevelRumor ; record 4
+	dw Text_WallRoomStudentMasterLevelRumor ; record 5
+	dw Text_WallRoomStudentWallMasterFeat ; record 6
 	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc06_12:
 	ld a, [wMapSceneStage] ; $47f3
@@ -418,13 +418,13 @@ WallPracticeRoomNpc06_12:
 WallPracticeRoomNpc06TextIds:
 	; $480a, 14 bytes (text_ids)
 	table_width 2
-	dw Text_35_237 ; record 0
-	dw Text_35_260 ; record 1
-	dw Text_35_272 ; record 2
-	dw Text_36_14 ; record 3
-	dw Text_36_24 ; record 4
-	dw Text_36_24 ; record 5
-	dw Text_36_47 ; record 6
+	dw Text_WallAttendantLevelOneRules ; record 0
+	dw Text_WallAttendantLevelTwoRules ; record 1
+	dw Text_WallAttendantLevelThreeBlank ; record 2
+	dw Text_WallAttendantLevelThreeRules ; record 3
+	dw Text_WallAttendantMasterLevelInfo ; record 4
+	dw Text_WallAttendantMasterLevelInfo ; record 5
+	dw Text_WallAttendantOutpacedTech ; record 6
 	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpcScripts_12:
 	; $4818, 41 bytes (map_scripts)
@@ -475,7 +475,7 @@ WallPracticeScoreRetryPrompt:
 	ld a, [wPointOutcome] ; $4893
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4896
 	jr nz, .outcomeText ; $4898
-	script_set_text Text_35_250 ; $489a
+	script_set_text Text_WallMasterGameOverHitYou ; $489a
 	jr .pushTextArgNumber ; $48a0
 .outcomeText:
 	ld a, [wPointOutcome] ; $48a2
@@ -517,7 +517,7 @@ WallPracticeNewRecordScript:
 	farcall UpdateMinigameRecord ; $4902
 	pop_wram_bank ; $4905
 	call SetupWallPracticeLevelSigns ; $490a
-	script_set_text Text_36_40 ; $490d
+	script_set_text Text_WallMasterNewRecord ; $490d
 	ld hl, wMinigamesCurrentScore ; $4913
 	ld a, [hl+] ; $4916
 	ld h, [hl] ; $4917
@@ -532,7 +532,7 @@ WallPracticeNewRecordScript:
 	jp LaunchWallPracticeMinigame ; $4932
 	ret ; $4935
 WallPracticeMaxScoreScript:
-	script_set_text Text_36_41 ; $4936
+	script_set_text Text_WallMasterMaxScore ; $4936
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $493c
 	push_wram_bank WRAM_SOUND ; $4941
 	ld a, $00 ; $494a
@@ -550,7 +550,7 @@ WallPracticeMaxScoreScript:
 	sbc d ; $4961
 	ld h, a ; $4962
 	jp c, RelaunchWallPracticeMasterLevel.saveMaxRecord ; $4963
-	script_set_text Text_36_43 ; $4966
+	script_set_text Text_WallMasterTryAgain ; $4966
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $496c
 	farcall RunDialogueYesNoPrompt ; $4971
 	farcall ScriptCloseDialogueWindow ; $4974

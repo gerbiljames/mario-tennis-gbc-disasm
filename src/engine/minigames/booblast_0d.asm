@@ -232,10 +232,10 @@ UpdateBooBlastHitStreak:
 	xor a ; $5710
 	ld [wMinigameHitScored], a ; $5711
 	xor a ; $5714
-	ld [wMinigameActors + 2], a ; $5715
+	ld [wMinigameActors + 0 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5715
 	ret ; $5718
 BooBlastControllerActorHandler:
-	ld a, [wMinigameSceneActor + 2] ; $5719
+	ld a, [wMinigameSceneActor + MGACTOR_STATE] ; $5719
 	rst Rst00 ; $571c
 	dw BooBlastControllerState0 ; $571d jumptable
 	dw BooBlastControllerState1 ; $571f jumptable
@@ -243,7 +243,7 @@ BooBlastControllerActorHandler:
 	dw BooBlastControllerState3 ; $5723 jumptable
 	dw RetStub ; $5725 jumptable
 AdvanceMinigameScriptState:
-	ld hl, wMinigameSceneActor + 2 ; $5727
+	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $5727
 	inc [hl] ; $572a
 	ret ; $572b
 BooBlastControllerState0:
@@ -257,7 +257,7 @@ BooBlastControllerState1:
 	jp AdvanceMinigameScriptState ; $573a
 BooBlastControllerState2:
 	call DrawBooBlastHitBurst ; $573d
-	ld hl, wMinigameSceneActor + 3 ; $5740
+	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5740
 	dec [hl] ; $5743
 	ld a, [hl] ; $5744
 	and a ; $5745
@@ -275,7 +275,7 @@ BooBlastControllerState3:
 	call DrawBooBlastTargetSprite ; $575b
 	ret ; $575e
 IsBallWithinTargetZone:
-	ld hl, wMinigameSceneActor + 6 ; $575f
+	ld hl, wMinigameSceneActor + MGACTOR_X ; $575f
 	ld a, [hl+] ; $5762
 	ld d, [hl] ; $5763
 	ld e, a ; $5764
@@ -290,18 +290,18 @@ IsBallWithinTargetZone:
 	sbc d ; $576f
 	ld h, a ; $5770
 	bit 7, h ; $5771
-	jr z, .positive ; $5773
+	jr z, .absX ; $5773
 	xor a ; $5775
 	sub l ; $5776
 	ld l, a ; $5777
 	sbc a ; $5778
 	sub h ; $5779
 	ld h, a ; $577a
-.positive:
+.absX:
 	ld de, -128 ; $577b
 	add hl, de ; $577e
 	jr c, .returnZero ; $577f
-	ld hl, wMinigameSceneActor + 8 ; $5781
+	ld hl, wMinigameSceneActor + MGACTOR_DEPTH ; $5781
 	ld a, [hl+] ; $5784
 	ld d, [hl] ; $5785
 	ld e, a ; $5786
@@ -316,14 +316,14 @@ IsBallWithinTargetZone:
 	sbc d ; $5791
 	ld h, a ; $5792
 	bit 7, h ; $5793
-	jr z, .positive2 ; $5795
+	jr z, .absDepth ; $5795
 	xor a ; $5797
 	sub l ; $5798
 	ld l, a ; $5799
 	sbc a ; $579a
 	sub h ; $579b
 	ld h, a ; $579c
-.positive2:
+.absDepth:
 	ld de, $fec0 ; $579d
 	add hl, de ; $57a0
 	jr c, .returnZero ; $57a1
@@ -332,14 +332,14 @@ IsBallWithinTargetZone:
 	ld h, [hl] ; $57a7
 	ld l, a ; $57a8
 	bit 7, h ; $57a9
-	jr z, .positive3 ; $57ab
+	jr z, .absHeight ; $57ab
 	xor a ; $57ad
 	sub l ; $57ae
 	ld l, a ; $57af
 	sbc a ; $57b0
 	sub h ; $57b1
 	ld h, a ; $57b2
-.positive3:
+.absHeight:
 	ld de, -256 ; $57b3
 	add hl, de ; $57b6
 	jr c, .returnZero ; $57b7
@@ -350,12 +350,12 @@ IsBallWithinTargetZone:
 	ret ; $57bd
 ScoreBallHit:
 	ld a, $10 ; $57be
-	ld [wMinigameSceneActor + 3], a ; $57c0
+	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $57c0
 	ld a, $01 ; $57c3
 	ld [wMinigameHitScored], a ; $57c5
 	sound SFX_THUD ; $57c8
 	ld a, [wMinigameHitStreak] ; $57ca
-	ld_de_indexed UnusedBitMaskTable_0d ; $57cd
+	ld_de_indexed Unused_0d_BitMaskTable ; $57cd
 	ld a, [de] ; $57d4
 	ld hl, $0001 ; $57d5
 	call MulHLByA ; $57d8
@@ -374,7 +374,7 @@ ScoreBallHit:
 	ld [wPointOutcome], a ; $57f1
 .done:
 	ret ; $57f4
-UnusedBitMaskTable_0d:
+Unused_0d_BitMaskTable:
 	; $57f5, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00
 DrawBooBlastTargetSprite:
@@ -400,11 +400,11 @@ BooBlastTargetAnimFrames:
 DrawBooBlastHitBurst:
 	call ProjectBallSprite ; $583c
 	ld c, $3c ; $583f
-	ld a, [wMinigameSceneActor + 3] ; $5841
+	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $5841
 	call QueueMinigameHitBurst ; $5844
 	ret ; $5847
 ProjectBallSprite:
-	ld hl, wMinigameSceneActor + 10 ; $5848
+	ld hl, wMinigameSceneActor + MGACTOR_SCREEN_X ; $5848
 	ld a, [hl+] ; $584b
 	ld e, a ; $584c
 	ld a, [hl+] ; $584d

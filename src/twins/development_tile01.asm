@@ -2,7 +2,7 @@
 
 {TWIN_LABEL}:
 	farcall BeginCutsceneScriptMode
-	script_set_text Text_31_128
+	script_set_text Text_DevMapTriggerEvent
 	script_speak ACTOR_PLAYER
 	farcall EndCutsceneScriptMode
 	ret

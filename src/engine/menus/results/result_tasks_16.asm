@@ -24,7 +24,7 @@ Unused_16_ClearWram3Row64Alt:
 UpdateResultScreenAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $43f6
 	ret ; $43f9
-UnusedDrawCourtDiagramMarkers:
+Unused_16_DrawCourtDiagramMarkers:
 	push af ; $43fa
 	push bc ; $43fb
 .loop:
@@ -61,7 +61,7 @@ Unused_16_CourtDiagramBaseTask:
 	inc de ; $4421
 	ld a, e ; $4422
 	and $1f ; $4423
-	jr nz, UnusedDrawCourtDiagramMarkers.loop ; $4425
+	jr nz, Unused_16_DrawCourtDiagramMarkers.loop ; $4425
 	push hl ; $4427
 	ld h, d ; $4428
 	ld l, e ; $4429
@@ -69,12 +69,12 @@ Unused_16_CourtDiagramBaseTask:
 	ld d, h ; $442b
 	ld e, l ; $442c
 	pop hl ; $442d
-	jr UnusedDrawCourtDiagramMarkers.loop ; $442e
+	jr Unused_16_DrawCourtDiagramMarkers.loop ; $442e
 .restore:
 	pop bc ; $4430
 	pop af ; $4431
 	ret ; $4432
-UnusedPrintDecimalNumber_16:
+Unused_16_PrintDecimalNumber:
 	push af ; $4433
 	push bc ; $4434
 	push hl ; $4435
@@ -89,7 +89,7 @@ UnusedPrintDecimalNumber_16:
 	ld l, c ; $4440
 	ld h, b ; $4441
 	ld c, e ; $4442
-Unused_16_PrintDecimalNumber:
+.formatDigits:
 	ld b, d ; $4443
 	call FormatDecimalNumber ; $4444
 	ld l, c ; $4447
@@ -138,10 +138,10 @@ RunMatchWinLoseScreen:
 	ld a, $ff ; $44aa
 	ld a, [wMatchWinLoseFlag] ; $44ac
 	cp WINLOSE_LOSE ; $44af
-	jr z, .playSfx ; $44b1
+	jr z, .playLoseBgm ; $44b1
 	sound BGM_WIN ; $44b3
 	jr .initMatchWinLoseScreen ; $44b5
-.playSfx:
+.playLoseBgm:
 	sound BGM_LOSE ; $44b7
 .initMatchWinLoseScreen:
 	call InitMatchWinLoseScreen ; $44b9
@@ -181,13 +181,13 @@ RunMatchWinLoseScreen:
 	ldh a, [hInputPressed] ; $450a
 	ld [wMenuInputPressed], a ; $450c
 	bit PADB_A, a ; $450f
-	jr nz, .playSfx2 ; $4511
+	jr nz, .playSelectSfx ; $4511
 	bit PADB_B, a ; $4513
-	jr nz, .playSfx2 ; $4515
+	jr nz, .playSelectSfx ; $4515
 	bit PADB_RIGHT, a ; $4517
 	jr nz, .pressedRight ; $4519
 	jr .loop ; $451b
-.playSfx2:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $451d
 	call ClearFrameTasks ; $451f
 	script_fade_out 64 ; $4522

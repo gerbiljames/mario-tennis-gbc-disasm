@@ -393,7 +393,7 @@ ExhibitionMatchIntroCutscene:
 	script_wait_move ACTOR_SPECIAL_COURT_PEACH ; $7859
 	script_set_anim ACTOR_SPECIAL_COURT_PEACH, ANIM_NOD ; $785e
 	script_wait_idle ACTOR_SPECIAL_COURT_PEACH ; $7865
-	script_set_text Text_5e_169 ; $786a
+	script_set_text Text_PeachSinglesExhibitionBegin ; $786a
 	script_speak ACTOR_SPECIAL_COURT_PEACH ; $7870
 	script_player_speed 2.0 ; $7875
 	script_move_player 14.0, 20.0 ; $787b
@@ -465,7 +465,7 @@ ExhibitionMatchIntroCutscene:
 	ld [wStoryModeExitTriggerRequest], a ; $7a62
 	ret ; $7a65
 .done:
-	script_set_text Text_5e_170 ; $7a66
+	script_set_text Text_PeachDoublesExhibitionBegin ; $7a66
 	script_speak ACTOR_SPECIAL_COURT_PEACH ; $7a6c
 	script_wait_frames 20 ; $7a71
 	script_set_anim ACTOR_SPECIAL_COURT_MARIO, ANIM_NOD ; $7a78

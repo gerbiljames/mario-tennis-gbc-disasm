@@ -190,7 +190,7 @@ WaterSpriteSwingContestScene:
 	ld hl, QueueWaterSpriteMinigameHudPanels ; $5758
 	call UnregisterFrameTask ; $575b
 	wait_frames 60 ; $575e
-	script_set_text Text_36_676 ; $5762
+	script_set_text Text_WaterSpriteSwingContestCount ; $5762
 	ld hl, wSwingContestSwings ; $5768
 	ld a, [hl+] ; $576b
 	ld h, [hl] ; $576c
@@ -317,7 +317,7 @@ TrainingCourtIntroTourScene:
 	script_wait_frames 60 ; $5a84
 	script_face ACTOR_TRAINING_COURT_TOUR_EMILY, FACE_RIGHT ; $5a8b
 	script_player_speed 2.0 ; $5a92
-	script_set_text Text_36_627 ; $5a98
+	script_set_text Text_TourEmilyTechniqueCoach ; $5a98
 	script_speak ACTOR_TRAINING_COURT_TOUR_EMILY ; $5a9e
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5aa3
 	script_wait_idle ACTOR_PLAYER ; $5aaa
@@ -417,10 +417,10 @@ ServeChallengerResultScene:
 	call WaitFadeEnd ; $5d51
 	ld a, [wPointWinLoseFlag] ; $5d54
 	inc a ; $5d57
-	cp $01 ; $5d58
+	cp WINLOSE_NONE + 1 ; $5d58
 	jr nz, .dispatch ; $5d5a
 	ld hl, wUnusedChallengerLoseTextId ; $5d5c
-	ld de, Text_6e_29 ; $5d5f
+	ld de, Text_ServeRivalTiedKeepGoing ; $5d5f
 	ld a, e ; $5d62
 	ld [hl+], a ; $5d63
 	ld [hl], d ; $5d64

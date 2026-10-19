@@ -228,7 +228,7 @@ then does this as its fourth:
 `MenuFontPalettes_01` is a palette (`LoadMenuFontPalette` hands it to
 `LoadPaletteShadow`). The copy puts its 64 bytes plus 448 bytes of what follows
 at `$5050`-`$520f` (the bank's loaders, `DebugMenuPalettes_01` at `$50f6`, the
-start of `UnusedJpWindowTiles_01` at `$51b0`, and `LoadMenuTilesBStaged`
+start of `Unused_01_JpWindowTiles` at `$51b0`, and `LoadMenuTilesBStaged`
 itself) into VRAM `$8e00`-`$8fff`, tiles `$e0`-`$ff` of the `$8800` block.
 
 `MenuFontFillTiles_01` is never uploaded, so `$8800`-`$8dff` keeps whatever the
@@ -254,7 +254,7 @@ zero) add an offset in `b` to the id, and Stroke Match 2 passes `b = 13` with
 ids 61-70 (`StrokeMatch2Cases2`, `$0b:$6892`, passes 64). Seen in PyBoy: id 74
 twice in six Stroke Match 2 sessions.
 
-**Fix** (`make FIXES=1`): entries 72-86 are `Text_26_0`-`Text_26_14`.
+**Fix** (`make FIXES=1`): entries 72-86 are `Text_DrillYourLobFellShortFail`-`Text_DrillCoachMissedYourCourtFail`.
 
 ### The DMG lockout screen copies a whole map from an 18-row one
 
@@ -445,7 +445,7 @@ pointer's high byte (`$d0`-`$d5`, or `$d0` for the out-of-range case, which
 uses `hl = wActors`), so the routine always returns NZ. The idiom is a guard on
 a caller-supplied `hl` elsewhere in the bank — `CheckActorScriptEnd`
 (`$0a:$438a`), `IsActorBusy` (`$0a:$476c`, after an `xor a`) and
-`UnusedSetActorMoveTarget` (`$0a:$4750`) open with it, and
+`Unused_0a_SetActorMoveTarget` (`$0a:$4750`) open with it, and
 `CheckActorScriptEnd` returns its own `cp $00` intact. Here it sits after the
 answer.
 
@@ -817,11 +817,11 @@ another scene's graphics.
 
 **Only debug code calls it.** Its one caller is
 `Unused_0a_LoadAndDisplayScene` (`$0a:$5de2`), whose four callers —
-`Unused_0a_SceneViewerSelectScene`, `UnusedSceneViewerSelectSceneMenu`,
+`Unused_0a_SceneViewerSelectScene`, `Unused_0a_SceneViewerSelectSceneMenu`,
 `Unused_0a_InitSceneViewer` and `Unused_0a_InitSceneViewerDefault` — are the
-scene viewer. Its entries are `UnusedSceneViewerMainLoop` (which calls
+scene viewer. Its entries are `Unused_0a_SceneViewerMainLoop` (which calls
 `Unused_0a_InitSceneViewerDefault` and `Unused_0a_SceneViewerSelectScene`),
-`UnusedSceneViewerSelectSceneMenu` and `Unused_0a_InitSceneViewer`; the first
+`Unused_0a_SceneViewerSelectSceneMenu` and `Unused_0a_InitSceneViewer`; the first
 two are referenced nowhere, the third only by its directory slot (`$0a:$4072`),
 which no `farcall` uses. (`Unused_0a_RunSceneSelectDebugMenu` is a separate
 picker that calls `LoadStorySceneGraphics` directly.) No `farcall` to
@@ -853,7 +853,7 @@ no amount of play can prove them. (They had been attributed to
 ### A confirm-screen suite in bank `$1b` that nothing can reach
 
 `$1b:$69d9`-`$6aa0` holds seven complete routines with no way in. They follow
-three bare `ret`s, `Unused_1b_StubNop_1b_09`, `Unused_1b_StubRet1` and
+three bare `ret`s, `Unused_1b_StubNop6`, `Unused_1b_StubRet1` and
 `Unused_1b_StubRet2`; the first is registered as a no-op frame task
 (`$1b:$69b9`/`$69c5`) by `Unused_1b_RunStoryDataConfirmMenu` around
 `Unused_18_RunTwoOptionSelectB`, both unreachable as well.

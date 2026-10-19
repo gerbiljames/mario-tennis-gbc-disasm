@@ -147,7 +147,7 @@ DrawMainMenuCaption:
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 16], a ; $5bcc
 	ret ; $5bcf
 .emptySlot:
-	ld hl, Text_30_124 ; $5bd0
+	ld hl, Text_MainMenuCreateCharacter ; $5bd0
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5bd3
 	ld c, $20 ; $5bd6
 	farcall RenderTextToBuffer64 ; $5bd8
@@ -241,7 +241,7 @@ PrintNumberRightAligned:
 	dec c ; $5c4e
 	jr nz, .copyLoop ; $5c4f
 	ret ; $5c51
-Unused_3b_StubNop3:
+Unused_3b_StubNop4:
 	ret ; $5c52
 TryMainMenuLinkHandshake:
 	di ; $5c53
@@ -358,11 +358,11 @@ RunMatchFormatSelect:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5d42
 	bit PADB_A, a ; $5d45
-	jr nz, .playSfx ; $5d47
+	jr nz, .playSelectSfx ; $5d47
 	bit PADB_B, a ; $5d49
-	jr nz, .playSfx2 ; $5d4b
+	jr nz, .playCancelSfx ; $5d4b
 	jr .loop ; $5d4d
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $5d4f
 	ld hl, rIE ; $5d51
 	set B_IE_TIMER, [hl] ; $5d54
@@ -374,7 +374,7 @@ RunMatchFormatSelect:
 	ld c, $03 ; $5d63
 	call GetMenuCursorIndex_3b ; $5d65
 	ret ; $5d68
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $5d69
 	ld hl, rIE ; $5d6b
 	set B_IE_TIMER, [hl] ; $5d6e
@@ -585,16 +585,16 @@ MatchFormatSlideIn:
 HandleMatchFormatInput:
 	ld a, [wMenuInputPressed] ; $5f3c
 	bit PADB_LEFT, a ; $5f3f
-	jr nz, .playSfx ; $5f41
+	jr nz, .left ; $5f41
 	bit PADB_RIGHT, a ; $5f43
-	jr nz, .playSfx2 ; $5f45
+	jr nz, .right ; $5f45
 	ret ; $5f47
-.playSfx:
+.left:
 	sound SFX_MENU_MOVE ; $5f48
 	ld c, $01 ; $5f4a
 	call GetMenuCursorIndex_3b ; $5f4c
 	or a ; $5f4f
-	jr nz, .compare ; $5f50
+	jr nz, .leftGamesOrSets ; $5f50
 	ld a, [wMatchFormatDoubles] ; $5f52
 	xor $01 ; $5f55
 	ld [wMatchFormatDoubles], a ; $5f57
@@ -603,7 +603,7 @@ HandleMatchFormatInput:
 	call RedrawMatchFormatModeRow ; $5f5f
 	call DrawMatchFormatCaption ; $5f62
 	ret ; $5f65
-.compare:
+.leftGamesOrSets:
 	cp $01 ; $5f66
 	jr nz, .decSets ; $5f68
 	ld a, [wMatchFormatGames] ; $5f6a
@@ -618,11 +618,11 @@ HandleMatchFormatInput:
 	ld a, [wMatchFormatSets] ; $5f7e
 	dec a ; $5f81
 	add a ; $5f82
-	jr nc, .noUnderflow ; $5f83
+	jr nc, .checkMaxDecSets ; $5f83
 	ld a, $03 ; $5f85
 	dec a ; $5f87
 	jr .storeDecSets ; $5f88
-.noUnderflow:
+.checkMaxDecSets:
 	rra ; $5f8a
 	cp $03 ; $5f8b
 	jr c, .storeDecSets ; $5f8d
@@ -634,12 +634,12 @@ HandleMatchFormatInput:
 	call RedrawMatchFormatSetsRow ; $5f98
 	call DrawMatchFormatCaption ; $5f9b
 	ret ; $5f9e
-.playSfx2:
+.right:
 	sound SFX_MENU_MOVE ; $5f9f
 	ld c, $01 ; $5fa1
 	call GetMenuCursorIndex_3b ; $5fa3
 	or a ; $5fa6
-	jr nz, .compare2 ; $5fa7
+	jr nz, .rightGamesOrSets ; $5fa7
 	ld a, [wMatchFormatDoubles] ; $5fa9
 	xor $01 ; $5fac
 	ld [wMatchFormatDoubles], a ; $5fae
@@ -648,7 +648,7 @@ HandleMatchFormatInput:
 	call RedrawMatchFormatModeRow ; $5fb6
 	call DrawMatchFormatCaption ; $5fb9
 	ret ; $5fbc
-.compare2:
+.rightGamesOrSets:
 	cp $01 ; $5fbd
 	jr nz, .incSets ; $5fbf
 	ld a, [wMatchFormatGames] ; $5fc1
@@ -663,11 +663,11 @@ HandleMatchFormatInput:
 	ld a, [wMatchFormatSets] ; $5fd5
 	inc a ; $5fd8
 	add a ; $5fd9
-	jr nc, .noUnderflow2 ; $5fda
+	jr nc, .checkMaxIncSets ; $5fda
 	ld a, $03 ; $5fdc
 	dec a ; $5fde
 	jr .storeIncSets ; $5fdf
-.noUnderflow2:
+.checkMaxIncSets:
 	rra ; $5fe1
 	cp $03 ; $5fe2
 	jr c, .storeIncSets ; $5fe4
@@ -872,12 +872,12 @@ RenderMatchFormatOptionText:
 	or a ; $61a6
 	jr nz, .compare ; $61a7
 	ld a, [wMatchFormatDoubles] ; $61a9
-	ld hl, Text_30_135 ; $61ac
+	ld hl, Text_MatchFormatOneOnOne ; $61ac
 	add l ; $61af
 	ld l, a ; $61b0
-	jr nc, .renderTextToBuffer64 ; $61b1
+	jr nc, .renderModeText ; $61b1
 	inc h ; $61b3
-.renderTextToBuffer64:
+.renderModeText:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $61b4
 	ld c, $20 ; $61b7
 	farcall RenderTextToBuffer64 ; $61b9
@@ -886,24 +886,24 @@ RenderMatchFormatOptionText:
 	cp $01 ; $61bd
 	jr nz, .checkMatchFormatSets ; $61bf
 	ld a, [wMatchFormatGames] ; $61c1
-	ld hl, Text_30_137 ; $61c4
+	ld hl, Text_MatchFormatOneSetTwoGames ; $61c4
 	add l ; $61c7
 	ld l, a ; $61c8
-	jr nc, .renderTextToBuffer642 ; $61c9
+	jr nc, .renderGamesText ; $61c9
 	inc h ; $61cb
-.renderTextToBuffer642:
+.renderGamesText:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $61cc
 	ld c, $20 ; $61cf
 	farcall RenderTextToBuffer64 ; $61d1
 	ret ; $61d4
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $61d5
-	ld hl, Text_30_139 ; $61d8
+	ld hl, Text_MatchFormatOneSetMatch ; $61d8
 	add l ; $61db
 	ld l, a ; $61dc
-	jr nc, .renderTextToBuffer643 ; $61dd
+	jr nc, .renderSetsText ; $61dd
 	inc h ; $61df
-.renderTextToBuffer643:
+.renderSetsText:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $61e0
 	ld c, $20 ; $61e3
 	farcall RenderTextToBuffer64 ; $61e5

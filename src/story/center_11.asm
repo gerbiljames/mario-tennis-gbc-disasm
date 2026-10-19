@@ -34,33 +34,33 @@ CenterCourtExitTriggers_11:
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_TOURNAMENT, $02
 	db $ff
 CenterCourtNpc03_11:
-	script_set_text Text_1f_80 ; $4082
+	script_set_text Text_CenterCourtStaffFinalOnly ; $4082
 	test_flag FLAG_DOUBLES ; $4088
 	jr nz, .isDoubles ; $408b
 	ld a, [wMapSceneStage] ; $408d
 	cp ISLANDOPENSTAGE_SINGLES_FINAL ; $4090
 	jr nz, .speak ; $4092
-	script_set_text Text_1f_91 ; $4094
+	script_set_text Text_CenterCourtStaffPreparingFinal ; $4094
 	jr .speak ; $409a
 .isDoubles:
 	ld a, [wMapSceneStage] ; $409c
 	cp ISLANDOPENSTAGE_DOUBLES_FINAL ; $409f
 	jr nz, .speak ; $40a1
-	script_set_text Text_1f_91 ; $40a3
+	script_set_text Text_CenterCourtStaffPreparingFinal ; $40a3
 .speak:
 	script_speak ACTOR_CENTER_COURT_TOURNAMENT_STAFF_1 ; $40a9
 	ret ; $40ae
 CenterCourtNpc04_11:
 	test_flag FLAG_DOUBLES ; $40af
 	jr z, .altText ; $40b2
-	script_set_text Text_1f_96 ; $40b4
+	script_set_text Text_CenterCourtStaffTournamentPeak ; $40b4
 	ld a, [wMapSceneStage] ; $40ba
 	cp ISLANDOPENSTAGE_DOUBLES_FINAL ; $40bd
 	jr nz, .done ; $40bf
-	script_set_text Text_1f_101 ; $40c1
+	script_set_text Text_CenterCourtStaffMomentOfTruth ; $40c1
 	jr .done ; $40c7
 .altText:
-	script_set_text Text_1f_81 ; $40c9
+	script_set_text Text_CenterCourtStaffAcademySweats ; $40c9
 	script_speak_restore ACTOR_CENTER_COURT_TOURNAMENT_STAFF_2 ; $40cf
 	farcall RunDialogueYesNoPrompt ; $40d4
 	farcall ScriptCloseDialogueWindow ; $40d7
@@ -106,13 +106,13 @@ CenterCourtNpc05_11:
 CenterCourtNpc05TextIds:
 	; $413c, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_85 ; record 0
-	dw Text_1f_87 ; record 1
-	dw Text_1f_89 ; record 2
-	dw Text_1f_92 ; record 3
-	dw Text_1f_97 ; record 4
-	dw Text_1f_99 ; record 5
-	dw Text_1f_102 ; record 6
+	dw Text_CenterCourtFactoryFanUpperBrackets ; record 0
+	dw Text_CenterCourtFactoryFanAllInRoundTwo ; record 1
+	dw Text_CenterCourtFactoryFanACozWillAvenge ; record 2
+	dw Text_CenterCourtFactoryFanOhMyYou ; record 3
+	dw Text_CenterCourtFactoryFanDoublesFavorites ; record 4
+	dw Text_CenterCourtFactoryFanMadeSemis ; record 5
+	dw Text_CenterCourtFactoryFanMadeFinals ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 CenterCourtNpc06_11:
 	ld a, [wMapSceneStage] ; $414a
@@ -127,13 +127,13 @@ CenterCourtNpc06_11:
 CenterCourtNpc06TextIds:
 	; $4161, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_86 ; record 0
-	dw Text_1f_88 ; record 1
-	dw Text_1f_90 ; record 2
-	dw Text_1f_95 ; record 3
-	dw Text_1f_98 ; record 4
-	dw Text_1f_100 ; record 5
-	dw Text_1f_103 ; record 6
+	dw Text_CenterCourtFactoryFanStarThisYear ; record 0
+	dw Text_CenterCourtFactoryFanHeardMeCheer ; record 1
+	dw Text_CenterCourtFactoryFanYoungerCozLost ; record 2
+	dw Text_CenterCourtFactoryFanFainted ; record 3
+	dw Text_CenterCourtFactoryFanGreatPair ; record 4
+	dw Text_CenterCourtFactoryFanPassedRoundOne ; record 5
+	dw Text_CenterCourtFactoryFanInTheFinals ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 CenterCourtNpcScripts_11:
 	; $416f, 33 bytes (map_scripts)
@@ -168,34 +168,34 @@ SetupCenterCourtSceneVariant:
 	test_flag FLAG_DOUBLES ; $41bb
 	jr nz, .doneEarly ; $41be
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $41c0
-	jr z, .stage1 ; $41c3
+	jr z, .checkRound2 ; $41c3
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $41c5
 	ld [wMapSceneStage], a ; $41c7
 	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41ca
 	farcall BeginCutsceneScriptMode ; $41d2
 	ret ; $41d5
-.stage1:
+.checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $41d6
-	jr z, .stage2 ; $41d9
+	jr z, .checkRound1 ; $41d9
 	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $41db
 	ld [wMapSceneStage], a ; $41dd
 	ret ; $41e0
-.stage2:
+.checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $41e1
-	jr z, .stage3 ; $41e4
+	jr z, .keepRound1 ; $41e4
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $41e6
 	ld [wMapSceneStage], a ; $41e8
-.stage3:
+.keepRound1:
 	ret ; $41eb
 .doneEarly:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $41ec
-	jr z, .stage4 ; $41ef
+	jr z, .doublesCheckRound1 ; $41ef
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $41f1
 	ld [wMapSceneStage], a ; $41f3
 	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41f6
 	farcall BeginCutsceneScriptMode ; $41fe
 	ret ; $4201
-.stage4:
+.doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4202
 	jr z, .done ; $4205
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $4207
@@ -337,16 +337,16 @@ AcademyArrivalNpc03_11:
 AcademyArrivalNpc03TextIds:
 	; $45e1, 20 bytes (text_ids)
 	table_width 2
-	dw Text_36_54 ; record 0
-	dw Text_36_57 ; record 1
-	dw Text_36_63 ; record 2
-	dw Text_36_63 ; record 3
-	dw Text_36_66 ; record 4
-	dw Text_36_66 ; record 5
-	dw Text_36_71 ; record 6
-	dw Text_36_71 ; record 7
-	dw Text_36_76 ; record 8
-	dw Text_36_76 ; record 9
+	dw Text_ArrivalStudentBumpedHeadmaster ; record 0
+	dw Text_ArrivalStudentFormedDoubles ; record 1
+	dw Text_ArrivalStudentLegendOfMario ; record 2
+	dw Text_ArrivalStudentLegendOfMario ; record 3
+	dw Text_ArrivalStudentMetHeadmaster ; record 4
+	dw Text_ArrivalStudentMetHeadmaster ; record 5
+	dw Text_ArrivalStudentBeenToOpen ; record 6
+	dw Text_ArrivalStudentBeenToOpen ; record 7
+	dw Text_ArrivalStudentLieInSun ; record 8
+	dw Text_ArrivalStudentLieInSun ; record 9
 	assert_table_length NUM_STORYRANKS
 AcademyArrivalNpc04_11:
 	ld a, [wMapSceneStage] ; $45f5
@@ -361,16 +361,16 @@ AcademyArrivalNpc04_11:
 AcademyArrivalNpc04TextIds:
 	; $460c, 20 bytes (text_ids)
 	table_width 2
-	dw Text_36_60 ; record 0
-	dw Text_36_61 ; record 1
-	dw Text_36_64 ; record 2
-	dw Text_36_64 ; record 3
-	dw Text_36_69 ; record 4
-	dw Text_36_69 ; record 5
-	dw Text_36_74 ; record 6
-	dw Text_36_74 ; record 7
-	dw Text_36_77 ; record 8
-	dw Text_36_77 ; record 9
+	dw Text_ArrivalGirlYoureNewStudent ; record 0
+	dw Text_ArrivalGirlLikesAcademyName ; record 1
+	dw Text_ArrivalGirlDreamToGoPro ; record 2
+	dw Text_ArrivalGirlDreamToGoPro ; record 3
+	dw Text_ArrivalGirlHeadmasterReturns ; record 4
+	dw Text_ArrivalGirlHeadmasterReturns ; record 5
+	dw Text_ArrivalGirlHeadmasterChairman ; record 6
+	dw Text_ArrivalGirlHeadmasterChairman ; record 7
+	dw Text_ArrivalGirlHowToSucceed ; record 8
+	dw Text_ArrivalGirlHowToSucceed ; record 9
 	assert_table_length NUM_STORYRANKS
 AcademyArrivalNpc05_11:
 	ld a, [wMapSceneStage] ; $4620
@@ -386,14 +386,14 @@ AcademyArrivalNpc05_11:
 AcademyArrivalNpc05TextIds:
 	; $4639, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_62 ; record 0
-	dw Text_36_65 ; record 1
-	dw Text_36_70 ; record 2
-	dw Text_36_75 ; record 3
-	dw Text_36_78 ; record 4
+	dw Text_ArrivalBoyKingFoundedAcademy ; record 0
+	dw Text_ArrivalBoyEveryoneWantsOpen ; record 1
+	dw Text_ArrivalBoyHeadmasterHappy ; record 2
+	dw Text_ArrivalBoyHeadmasterTrophy ; record 3
+	dw Text_ArrivalBoyDreamNotImpossible ; record 4
 	assert_table_length NUM_STORYTIERS
 AcademyArrivalNpc14_11:
-	script_set_text Text_36_96 ; $4643
+	script_set_text Text_ArrivalStudentNoLeavingCampus ; $4643
 	test_flag FLAG_DOUBLES ; $4649
 	jr nz, .checkFlag ; $464c
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $464e

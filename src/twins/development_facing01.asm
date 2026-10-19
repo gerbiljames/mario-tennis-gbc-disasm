@@ -3,7 +3,7 @@
 {TWIN_LABEL}:
 	farcall BeginCutsceneScriptMode
 	script_fade_in 16
-	script_set_text Text_31_131
+	script_set_text Text_DevMapSearchEvent
 	script_speak ACTOR_PLAYER
 	farcall EndCutsceneScriptMode
 	ret

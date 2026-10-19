@@ -14,6 +14,8 @@ after a real defect broke it:
   regions   manifest regions stay inside their bank and do not overlap
   layout    data/ mirrors src/: a manifest file sits in the folder of the
             source file that INCBINs or INCLUDEs it
+  macros    every target_script, move_curve, frame_place, blit_runs and
+            scoreboard_columns region renders through its macros alone
   scopes    no global label covers both actor-script bytecode and CPU code
             (a routine emitted after a script with nothing naming its entry)
   branches  no conditional branch targets the instruction that follows it --
@@ -171,7 +173,7 @@ def check_stranded_scopes(fail):
     one, with nothing naming its entry, ends up inside the script's label scope,
     where its `.loop`/`.done` read as part of the script. The mix is the signal:
     the two never belong to one symbol."""
-    found = {}
+    found, checked = {}, 0
     for path in holders():
         bank = bank_of(path)
         scope, kinds, entry = None, {}, {}
@@ -191,6 +193,7 @@ def check_stranded_scopes(fail):
             if mi and (mi.group(1) in _MNEMONICS or mi.group(1).startswith("script_")):
                 kinds[scope].add("code")
                 entry.setdefault(scope, True)
+        checked += sum("script" in kind for kind in kinds.values())
         for name, kind in kinds.items():
             if kind == {"script", "code"} and name in entry:
                 found[(bank, name)] = name
@@ -200,7 +203,7 @@ def check_stranded_scopes(fail):
     for bank, name in sorted(KNOWN_STRANDED_IN_SCRIPT - set(found)):
         fail("scopes", f"bank ${bank:02x}: {name} is no longer stranded -- drop it "
                        "from KNOWN_STRANDED_IN_SCRIPT")
-    return len(found)
+    return checked
 
 
 
@@ -323,6 +326,30 @@ def check_traj(rom, manifest, fail):
             continue
         if parse_traj(text) != data:
             fail("traj", f"{path}: rendering does not parse back to the table")
+    return n
+
+
+# Record kinds rendered wholly through their macros; a raw `db` row (other
+# than a blit_runs list's $ff terminator) means the renderer met bytes outside
+# the format and fell back.
+MACRO_KINDS = ("target_script", "move_curve", "frame_place", "blit_runs",
+               "scoreboard_columns")
+
+
+def check_macro_kinds(rom, manifest, fail):
+    """Every region of a MACRO_KINDS spec renders without a raw `db` row."""
+    from extract import prepare_target_scripts, render_spec
+    prepare_target_scripts(rom, manifest)
+    n = 0
+    for path, off, length, spec in manifest:
+        if spec not in MACRO_KINDS:
+            continue
+        n += 1
+        text = render_spec(rom[off:off + length], spec, Path(path).stem, off)
+        if spec == "blit_runs" and text.endswith("\n\tdb $ff\n"):
+            text = text[:-len("\tdb $ff\n")]
+        if "\tdb " in text:
+            fail("macros", f"{path}: {spec} renders raw db rows")
     return n
 
 
@@ -461,11 +488,8 @@ def check_collapsed_branches(fail):
     for path in holders():
         bank = bank_of(path)
         lines, origin = bank_lines(path)
-        scope = None
         for i, line in enumerate(lines):
-            g = _GLOBAL_RE.match(line)
-            if g:
-                scope = g.group(1)
+            if _GLOBAL_RE.match(line):
                 continue
             m = re.match(r"^\t(jr|jp) (nz|z|nc|c), ([.A-Za-z_][\w.]*)", line)
             if not m:
@@ -691,6 +715,7 @@ def main():
         "layout": check_layout(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
         "traj": check_traj(rom, manifest, fail),
+        "macros": check_macro_kinds(rom, manifest, fail),
         "scopes": check_stranded_scopes(fail),
         "labels": check_label_scopes(fail),
         "branches": check_collapsed_branches(fail),

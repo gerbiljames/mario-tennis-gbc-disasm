@@ -21,20 +21,20 @@ UpdateDebugOverlay:
 	inc de ; $18a7
 	ldh a, [hDebugStepMode] ; $18a8
 	cp DEBUGSTEP_CONSOLE_ON ; $18aa
-	jr z, .storeShowDebugConsole2 ; $18ac
+	jr z, .showConsole ; $18ac
 	cp DEBUGSTEP_CONSOLE_OFF ; $18ae
 	jr z, .consoleOff ; $18b0
 	ldh a, [hVBlankCounter] ; $18b2
 	and $01 ; $18b4
-	jr z, .storeShowDebugConsole2 ; $18b6
-	jr .storeShowDebugConsole ; $18b8
+	jr z, .showConsole ; $18b6
+	jr .hideConsole ; $18b8
 .consoleOff:
 	ldh a, [hPlayerInputFlags] ; $18ba
 	bit PADB_SELECT, a ; $18bc
-.storeShowDebugConsole:
+.hideConsole:
 	xor a ; $18be
 	jr .store ; $18bf
-.storeShowDebugConsole2:
+.showConsole:
 	ld a, $01 ; $18c1
 .store:
 	ldh [hShowDebugConsole], a ; $18c3

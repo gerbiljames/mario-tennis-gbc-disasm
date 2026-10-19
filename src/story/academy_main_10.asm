@@ -143,11 +143,11 @@ AcademyMainBldgNpc03_10:
 AcademyMainBldgNpc03TextIds:
 	; $7627, 10 bytes (text_ids)
 	table_width 2
-	dw Text_30_440 ; record 0
-	dw Text_30_443 ; record 1
-	dw Text_30_446 ; record 2
-	dw Text_30_452 ; record 3
-	dw Text_30_457 ; record 4
+	dw Text_ReceptionistAcademyTrainsTopPlayers ; record 0
+	dw Text_ReceptionistGoTrainWithEmily ; record 1
+	dw Text_ReceptionistHeadmasterBackToWork ; record 2
+	dw Text_ReceptionistAcademyWinOpenToo ; record 3
+	dw Text_ReceptionistFinishPaperwork ; record 4
 	assert_table_length NUM_STORYTIERS
 AcademyMainBldgNpc04_10:
 	ld a, [wMapSceneStage] ; $7631
@@ -163,14 +163,14 @@ AcademyMainBldgNpc04_10:
 AcademyMainBldgNpc04TextIds:
 	; $764a, 10 bytes (text_ids)
 	table_width 2
-	dw Text_30_441 ; record 0
-	dw Text_30_444 ; record 1
-	dw Text_30_447 ; record 2
-	dw Text_30_455 ; record 3
-	dw Text_30_458 ; record 4
+	dw Text_TeacherAcademyIdealToImprove ; record 0
+	dw Text_TeacherSeniorsVarsityLevel ; record 1
+	dw Text_TeacherHeadmasterBackForOpen ; record 2
+	dw Text_TeacherCupWillComeBack ; record 3
+	dw Text_TeacherCupBackHeadmasterPleased ; record 4
 	assert_table_length NUM_STORYTIERS
 AcademyMainBldgNpc05_10:
-	script_set_text Text_30_462 ; $7654
+	script_set_text Text_RecordsClerkRecordsOnComputer ; $7654
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $765a
 	script_face ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2, FACE_DOWN ; $765f
 	test_flag FLAG_DOUBLES ; $7666
@@ -192,14 +192,14 @@ AcademyMainBldgNpc05_10:
 AcademyMainBldgNpc05TextIds:
 	; $7698, 10 bytes (text_ids)
 	table_width 2
-	dw Text_30_464 ; record 0
-	dw Text_30_465 ; record 1
-	dw Text_30_466 ; record 2
-	dw Text_30_467 ; record 3
-	dw Text_30_468 ; record 4
+	dw Text_RecordsClerkJuniorClass ; record 0
+	dw Text_RecordsClerkSeniorClass ; record 1
+	dw Text_RecordsClerkVarsityTeam ; record 2
+	dw Text_RecordsClerkTravelingTeam ; record 3
+	dw Text_RecordsClerkIslandOpenChampion ; record 4
 	assert_table_length NUM_STORYTIERS
 AcademyMainBldgNpc05_10.setText:
-	script_set_text Text_30_469 ; $76a2
+	script_set_text Text_RecordsClerkLookingUpTeam ; $76a2
 	script_wait_frames 20 ; $76a8
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $76af
 	call GetDoublesProgressStage_10 ; $76b4
@@ -212,11 +212,11 @@ AcademyMainBldgNpc05_10.setText:
 	jr AcademyMainBldgNpc05_10.loop ; $76c5
 AcademyMainBldgNpc05TextIds2:
 	; $76c7, 10 bytes (text_ids)
-	dw Text_30_470 ; record 0
-	dw Text_30_471 ; record 1
-	dw Text_30_472 ; record 2
-	dw Text_30_473 ; record 3
-	dw Text_30_474 ; record 4
+	dw Text_RecordsClerkDoublesJuniorClass ; record 0
+	dw Text_RecordsClerkDoublesSeniorClass ; record 1
+	dw Text_RecordsClerkDoublesVarsity ; record 2
+	dw Text_RecordsClerkDoublesTravelingTeam ; record 3
+	dw Text_RecordsClerkDoublesOpenChampions ; record 4
 AcademyMainBldgNpc06_10:
 	ld a, [wMapSceneStage] ; $76d1
 	sra a ; $76d4
@@ -231,11 +231,11 @@ AcademyMainBldgNpc06_10:
 AcademyMainBldgNpc06TextIds:
 	; $76ea, 10 bytes (text_ids)
 	table_width 2
-	dw Text_30_442 ; record 0
-	dw Text_30_445 ; record 1
-	dw Text_30_448 ; record 2
-	dw Text_30_456 ; record 3
-	dw Text_30_459 ; record 4
+	dw Text_OldManRecklessYouth ; record 0
+	dw Text_OldManShootForVarsity ; record 1
+	dw Text_OldManDontInterruptHeadmaster ; record 2
+	dw Text_OldManHowsIslandOpen ; record 3
+	dw Text_OldManCantRememberOpen ; record 4
 	assert_table_length NUM_STORYTIERS
 AcademyMainBldgNpcScripts_10:
 	; $76f4, 33 bytes (map_scripts)
@@ -282,7 +282,7 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_move_target ACTOR_PLAYER, 34.0, 25.0 ; $77a6
 	script_face ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_RECEPTIONIST, FACE_RIGHT ; $77b1
 	farcall WaitPlayerMoveDone ; $77b8
-	script_set_text Text_30_430 ; $77bb
+	script_set_text Text_ReceptionistOhCoachEmily ; $77bb
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_RECEPTIONIST ; $77c1
 	script_wait_move ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $77c6
 	script_wait_frames 10 ; $77cb

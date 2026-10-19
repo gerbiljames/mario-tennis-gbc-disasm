@@ -269,7 +269,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_04 ; $50e2
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_04 ; $50ed
 	script_delay 20 ; $50f8
-	jr .closePrincipalsOfficeDoor2 ; $50fd
+	jr .closeDoorBehind ; $50fd
 .animate:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $50ff
 	script_wait_idle ACTOR_PLAYER ; $5106
@@ -283,7 +283,7 @@ End12PrincipalsOfficeInitScript_27:
 	call AcademyWingOpenDoor_27 ; $513c
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_04 ; $513f
 	script_delay 20 ; $514a
-.closePrincipalsOfficeDoor2:
+.closeDoorBehind:
 	call AcademyWingCloseDoor_27 ; $514f
 	script_delay 60 ; $5152
 	set_flag FLAG_ENDING_CREDITS_PENDING ; $5157

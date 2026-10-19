@@ -169,25 +169,25 @@ MinigameMarkTileTable:
 	dw MinigameStarRow2 ; record 2
 MinigameStarRow0:
 	; $778e, 10 bytes (records:2)
-	dw $d0c6 ; record 0
-	dw $d106 ; record 1
-	dw $d146 ; record 2
-	dw $d186 ; record 3
-	dw $d1c6 ; record 4
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 6 ; record 0
+	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 6 ; record 1
+	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 6 ; record 2
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 6 ; record 3
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 6 ; record 4
 MinigameStarRow1:
 	; $7798, 10 bytes (records:2)
-	dw $d0ca ; record 0
-	dw $d10a ; record 1
-	dw $d14a ; record 2
-	dw $d18a ; record 3
-	dw $d1ca ; record 4
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 10 ; record 0
+	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 10 ; record 1
+	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 10 ; record 2
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 10 ; record 3
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; record 4
 MinigameStarRow2:
 	; $77a2, 10 bytes (records:2)
-	dw $d0ce ; record 0
-	dw $d10e ; record 1
-	dw $d14e ; record 2
-	dw $d18e ; record 3
-	dw $d1ce ; record 4
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; record 0
+	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 14 ; record 1
+	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 14 ; record 2
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 14 ; record 3
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 14 ; record 4
 ClearMinigameMarkColumns:
 	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 21 ; $77ac
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 6 ; $77af

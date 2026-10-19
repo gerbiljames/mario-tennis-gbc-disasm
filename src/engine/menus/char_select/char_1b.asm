@@ -80,7 +80,7 @@ Unused_1b_DrawCharSelectPrompt:
 	ld a, [wStoryCharacterSlot] ; $605f
 	or a ; $6062
 	jr z, .drawPrompt ; $6063
-	ld hl, Text_31_123 ; $6065
+	ld hl, Text_NoN64DataFound ; $6065
 .drawPrompt:
 	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $6068
 	farcall Unused_18_RenderProportionalTextAt32 ; $606b
@@ -124,7 +124,7 @@ Unused_1b_DrawCharSelectMugshots:
 	ld a, [wCharSelectChar] ; $60b0
 	farcall LoadCharacterRecordToBuffer ; $60b3
 	ld a, [wCharRecordScratch + 11] ; $60b6
-	farcall Unused_1b_StubNop_1b_01 ; $60b9
+	farcall Unused_1b_StubNop0 ; $60b9
 	ret ; $60bc
 Unused_1b_RunCharSelectLoop:
 	and $01 ; $60bd
@@ -284,12 +284,12 @@ RunNewGameSetup:
 	ld hl, wCharSelectCursorRow ; $6203
 	ld [hl], e ; $6206
 	cp $ff ; $6207
-	jr nz, .compare ; $6209
+	jr nz, .checkMainRepick ; $6209
 	pop af ; $620b
 	ld [wStoryCharacterSlot], a ; $620c
 	ld a, $ff ; $620f
 	jp .beginFadeOut ; $6211
-.compare:
+.checkMainRepick:
 	cp $fe ; $6214
 	jr nz, .confirmMain ; $6216
 	jr .selectMain ; $6218
@@ -309,9 +309,9 @@ RunNewGameSetup:
 	ld hl, wStoryMainName ; $6231
 	ld a, [wStoryCharacterSlot] ; $6234
 	or a ; $6237
-	jr z, .charField ; $6238
+	jr z, .mainCharField ; $6238
 	ld l, $40 ; $623a
-.charField:
+.mainCharField:
 	ld a, l ; $623c
 	add $0b ; $623d
 	ld l, a ; $623f
@@ -344,9 +344,9 @@ RunNewGameSetup:
 	ld hl, wStoryMainName ; $6271
 	ld a, [wStoryCharacterSlot] ; $6274
 	or a ; $6277
-	jr z, .charField2 ; $6278
+	jr z, .autoPartnerCharField ; $6278
 	ld l, $40 ; $627a
-.charField2:
+.autoPartnerCharField:
 	ld a, l ; $627c
 	add $0b ; $627d
 	ld l, a ; $627f
@@ -375,11 +375,11 @@ RunNewGameSetup:
 	ld hl, wCharSelectCursorRow ; $62a4
 	ld [hl], e ; $62a7
 	cp $ff ; $62a8
-	jr nz, .compare2 ; $62aa
+	jr nz, .checkPartnerRepick ; $62aa
 	pop af ; $62ac
 	ld [wStoryCharacterSlot], a ; $62ad
 	jp RunNewGameSetup ; $62b0
-.compare2:
+.checkPartnerRepick:
 	cp $fe ; $62b3
 	jr nz, .confirmPartner ; $62b5
 	jr .selectPartner ; $62b7
@@ -392,9 +392,9 @@ RunNewGameSetup:
 	ld hl, wStoryMainName ; $62c2
 	ld a, [wStoryCharacterSlot] ; $62c5
 	or a ; $62c8
-	jr z, .charField3 ; $62c9
+	jr z, .pickedPartnerCharField ; $62c9
 	ld l, $40 ; $62cb
-.charField3:
+.pickedPartnerCharField:
 	ld a, l ; $62cd
 	add $0b ; $62ce
 	ld l, a ; $62d0
@@ -471,7 +471,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	jr .saveMenuLoop ; $635d
 .slotOk:
 	push bc ; $635f
-	call Unused_1b_StubNop_1b_09 ; $6360
+	call Unused_1b_StubNop6 ; $6360
 	pop bc ; $6363
 	or a ; $6364
 	jr nz, .saveMenuLoop ; $6365

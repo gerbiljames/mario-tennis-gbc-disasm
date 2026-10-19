@@ -22,7 +22,7 @@ ApplyCameraProjection:
 	add hl, hl ; $59d1
 	ld e, h ; $59d2
 	ret ; $59d3
-UnusedMulHLSignedByDE:
+Unused_08_MulHLSignedByDE:
 	bit 7, h ; $59d4
 	jp z, MulHLByDE ; $59d6
 	xor a ; $59d9
@@ -130,7 +130,7 @@ MulHLByTangent:
 	ld d, l ; $5a5d
 	ld e, a ; $5a5e
 	ret ; $5a5f
-UnusedAbsADE:
+Unused_08_AbsADE:
 	bit 7, d ; $5a60
 	ret z ; $5a62
 NegateADE:

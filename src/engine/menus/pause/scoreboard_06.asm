@@ -17,20 +17,20 @@ PrepareScoreboardGfx:
 .checkOnCourtCharCountMinus1:
 	ld a, [wOnCourtCharCountMinus1] ; $4937
 	rst Rst00 ; $493a
-	dw PrepareScoreboardGfx.reloadCharFrameGfx4 ; $493b jumptable
-	dw PrepareScoreboardGfx.reloadCharFrameGfx3 ; $493d jumptable
-	dw PrepareScoreboardGfx.reloadCharFrameGfx2 ; $493f jumptable
-	dw PrepareScoreboardGfx.reloadCharFrameGfx ; $4941 jumptable
-.reloadCharFrameGfx:
+	dw PrepareScoreboardGfx.reloadOneChar ; $493b jumptable
+	dw PrepareScoreboardGfx.reloadTwoChars ; $493d jumptable
+	dw PrepareScoreboardGfx.reloadThreeChars ; $493f jumptable
+	dw PrepareScoreboardGfx.reloadFourChars ; $4941 jumptable
+.reloadFourChars:
 	wram_bank WRAM_SCENE ; $4943
 	farcall ReloadCharFrameGfx ; $4949
-.reloadCharFrameGfx2:
+.reloadThreeChars:
 	wram_bank WRAM_SOUND ; $494c
 	farcall ReloadCharFrameGfx ; $4952
-.reloadCharFrameGfx3:
+.reloadTwoChars:
 	wram_bank WRAM_TEXT ; $4955
 	farcall ReloadCharFrameGfx ; $495b
-.reloadCharFrameGfx4:
+.reloadOneChar:
 	wram_bank WRAM_ACTORS ; $495e
 	farcall ReloadCharFrameGfx ; $4964
 	farcall StepMatchFrame ; $4967

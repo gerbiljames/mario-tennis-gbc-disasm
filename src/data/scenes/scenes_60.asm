@@ -71,9 +71,9 @@ GrassCourtTilemap:
 GrassCourtAttrmap:
 	INCBIN "data/scenes/lz_GrassCourtAttrmap.bin" ; $4f7d, 268 bytes
 GrassCourtSceneConfig:
-	INCBIN "data/scenes/GrassCourtSceneConfig.bin" ; $5089, 40 bytes
+	INCLUDE "data/scenes/GrassCourtSceneConfig.asm" ; $5089, 40 bytes (scoreboard_columns)
 GrassCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/GrassCourtScoreboardColumnAttrs.bin" ; $50b1, 40 bytes
+	INCLUDE "data/scenes/GrassCourtScoreboardColumnAttrs.asm" ; $50b1, 40 bytes (scoreboard_columns)
 TrainingCourtPalettes:
 	INCLUDE "data/scenes/TrainingCourtPalettes.asm" ; $50d9, 64 bytes (palettes)
 TrainingCourtTiles:
@@ -83,9 +83,9 @@ TrainingCourtTilemap:
 TrainingCourtAttrmap:
 	INCBIN "data/scenes/lz_TrainingCourtAttrmap.bin" ; $5cc6, 155 bytes
 TrainingCourtSceneConfig:
-	INCBIN "data/scenes/TrainingCourtSceneConfig.bin" ; $5d61, 40 bytes
+	INCLUDE "data/scenes/TrainingCourtSceneConfig.asm" ; $5d61, 40 bytes (scoreboard_columns)
 TrainingCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/TrainingCourtScoreboardColumnAttrs.bin" ; $5d89, 40 bytes
+	INCLUDE "data/scenes/TrainingCourtScoreboardColumnAttrs.asm" ; $5d89, 40 bytes (scoreboard_columns)
 ClayCourtPalettes:
 	INCLUDE "data/scenes/ClayCourtPalettes.asm" ; $5db1, 64 bytes (palettes)
 ClayCourtTiles:
@@ -95,9 +95,9 @@ ClayCourtTilemap:
 ClayCourtAttrmap:
 	INCBIN "data/scenes/lz_ClayCourtAttrmap.bin" ; $6be8, 166 bytes
 ClayCourtSceneConfig:
-	INCBIN "data/scenes/ClayCourtSceneConfig.bin" ; $6c8e, 40 bytes
+	INCLUDE "data/scenes/ClayCourtSceneConfig.asm" ; $6c8e, 40 bytes (scoreboard_columns)
 ClayCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/ClayCourtScoreboardColumnAttrs.bin" ; $6cb6, 40 bytes
+	INCLUDE "data/scenes/ClayCourtScoreboardColumnAttrs.asm" ; $6cb6, 40 bytes (scoreboard_columns)
 HardCourtPalettes:
 	INCLUDE "data/scenes/HardCourtPalettes.asm" ; $6cde, 64 bytes (palettes)
 HardCourtTiles:
@@ -107,8 +107,8 @@ HardCourtTilemap:
 HardCourtAttrmap:
 	INCBIN "data/scenes/lz_HardCourtAttrmap.bin" ; $7b0d, 160 bytes
 HardCourtSceneConfig:
-	INCBIN "data/scenes/HardCourtSceneConfig.bin" ; $7bad, 40 bytes
+	INCLUDE "data/scenes/HardCourtSceneConfig.asm" ; $7bad, 40 bytes (scoreboard_columns)
 HardCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/HardCourtScoreboardColumnAttrs.bin" ; $7bd5, 40 bytes
+	INCLUDE "data/scenes/HardCourtScoreboardColumnAttrs.asm" ; $7bd5, 40 bytes (scoreboard_columns)
 HardCourtSceneUnusedSlot:
 	; $7bfd, 1027 bytes fill to bank end (linker-padded)

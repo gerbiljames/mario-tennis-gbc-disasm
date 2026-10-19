@@ -457,7 +457,7 @@ Unused_05_WriteNumberToWindow:
 	ld a, $01 ; $606f
 	ld [wTextNumberRightAlign], a ; $6071
 	ld a, b ; $6074
-	ld hl, Text_30_310 ; $6075
+	ld hl, Text_NumberArg ; $6075
 	call FetchDialogueText ; $6078
 	ld hl, wTextBuffer ; $607b
 	call WriteStringToWindow ; $607e

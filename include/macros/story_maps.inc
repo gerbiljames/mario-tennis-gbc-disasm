@@ -1,6 +1,6 @@
 ; Story-mode map tables: map_tree slots, map_entry, map_script, map_actor, locations.
 
-; Each story location owns a 7-word directory (a map_tree) copied to $c286,
+; Each story location owns a 7-word directory (a map_tree) copied to wMapEntryPointsPtr,
 ; one sub-table per slot, consumed by the bank $0a overworld engine:
 ;   0 EntryPoints (map_entry)    - spawn record per entry point / warp id
 ;   1 ExitTriggers (map_script)  - RunLocationExit

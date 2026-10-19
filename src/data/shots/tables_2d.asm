@@ -1,7 +1,7 @@
 SineTable:
 	ASSERT LOW(SineTable) == 0
-	INCBIN "data/shots/SineTable.bin" ; $4000, 4096 bytes
+	INCLUDE "data/shots/SineTable.asm" ; $4000, 4096 bytes (words:8)
 CosecantTable:
 	ASSERT LOW(CosecantTable) == 0
-	INCBIN "data/shots/CosecantTable.bin" ; $5000, 4096 bytes
+	INCLUDE "data/shots/CosecantTable.asm" ; $5000, 4096 bytes (words:8)
 	; $6000, 8192 bytes fill to bank end (linker-padded)

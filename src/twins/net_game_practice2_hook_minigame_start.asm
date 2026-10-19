@@ -2,10 +2,10 @@
 
 {TWIN_LABEL}:
 	xor a
-	ld [wDrillCounters + 3], a
-	ld [wDrillCounters + 4], a
+	ld [wDrillCounters + DRILLCTR_NET_OR_OUT], a
+	ld [wDrillCounters + DRILLCTR_PASSES], a
 	ld a, $04
-	ld [wDrillCounters + 5], a
+	ld [wDrillCounters + DRILLCTR_SHOTS_LEFT], a
 	ld a, $01
 	ld [wDrillIsPracticeLesson], a
 	ret

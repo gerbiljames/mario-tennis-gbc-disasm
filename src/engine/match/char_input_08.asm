@@ -61,7 +61,7 @@ BuildCharSpriteSlots:
 	ld a, [wCharFacingOctant] ; $76ad
 	ld_hl_indexed BuildCharSpriteSlotsTable ; $76b0
 	ld a, [wCharSpriteAttr] ; $76b7
-	or $08 ; $76ba
+	or OAM_BANK1 ; $76ba
 	xor [hl] ; $76bc
 	ld b, a ; $76bd
 	ld a, [wCharTileBase] ; $76be

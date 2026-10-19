@@ -35,11 +35,11 @@ RunCourtSelect4Menu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5bee
 	bit PADB_A, a ; $5bf1
-	jr nz, .playSfx ; $5bf3
+	jr nz, .playDecideSfx ; $5bf3
 	bit PADB_B, a ; $5bf5
-	jr nz, .playSfx2 ; $5bf7
+	jr nz, .playCancelSfx ; $5bf7
 	jr .loop ; $5bf9
-.playSfx:
+.playDecideSfx:
 	sound SFX_MENU_DECIDE ; $5bfb
 	call ClearFrameTasks ; $5bfd
 	ld hl, rIE ; $5c00
@@ -56,7 +56,7 @@ RunCourtSelect4Menu:
 	pop af ; $5c19
 	call CourtSelectIndexToCourtId ; $5c1a
 	ret ; $5c1d
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $5c1e
 	call ClearFrameTasks ; $5c20
 	ld hl, rIE ; $5c23
@@ -119,11 +119,11 @@ RunLinkCourtSelect4Menu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5ca5
 	bit PADB_A, a ; $5ca8
-	jr nz, .playSfx ; $5caa
+	jr nz, .playDecideSfx ; $5caa
 	bit PADB_B, a ; $5cac
-	jr nz, .playSfx2 ; $5cae
+	jr nz, .playCancelSfx ; $5cae
 	jr .loop ; $5cb0
-.playSfx:
+.playDecideSfx:
 	sound SFX_MENU_DECIDE ; $5cb2
 	push af ; $5cb4
 	farcall SyncLinkFrame ; $5cb5
@@ -143,7 +143,7 @@ RunLinkCourtSelect4Menu:
 	pop af ; $5cd4
 	call CourtSelectIndexToCourtId ; $5cd5
 	ret ; $5cd8
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $5cd9
 	push af ; $5cdb
 	farcall SyncLinkFrame ; $5cdc

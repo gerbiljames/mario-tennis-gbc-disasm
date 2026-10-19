@@ -2,19 +2,19 @@ SetupGymActorsForProgress:
 	ld a, [wMapSceneStage] ; $4681
 	sra a ; $4684
 	cp STORYTIER_JUNIOR_CHAMP ; $4686
-	jr z, .stage1 ; $4688
+	jr z, .juniorChamp ; $4688
 	cp STORYTIER_ISLAND_OPEN ; $468a
-	jr z, .stage2 ; $468c
+	jr z, .islandOpen ; $468c
 	cp STORYTIER_COMPLETE ; $468e
 	jr z, .done ; $4690
 	ret ; $4692
-.stage1:
+.juniorChamp:
 	script_set_objdef OBJ_STUDENT_WAVY_HAIR_GIRL, ACTOR_TRAINING_GYM_WEIGHTLIFTER_B ; $4693
 	script_set_anim ACTOR_TRAINING_GYM_WEIGHTLIFTER_A, ANIM_WALK ; $469f
 	script_set_position ACTOR_TRAINING_GYM_WEIGHTLIFTER_B, 39.0, 15.0 ; $46a6
 	script_face ACTOR_TRAINING_GYM_WEIGHTLIFTER_B, FACE_RIGHT ; $46b1
 	ret ; $46b8
-.stage2:
+.islandOpen:
 	script_set_position ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1, 41.0, 7.0 ; $46b9
 	script_set_position ACTOR_TRAINING_GYM_JUMPING_JACKS_A, 39.0, 5.0 ; $46c4
 	script_set_position ACTOR_TRAINING_GYM_JUMPING_JACKS_B_2, 37.0, 7.0 ; $46cf

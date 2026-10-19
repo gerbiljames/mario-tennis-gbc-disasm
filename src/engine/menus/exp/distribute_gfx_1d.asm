@@ -17,17 +17,17 @@ TickLevelUpJingle:
 	sound BGM_LEVEL_UP ; $77c5
 	ret ; $77c7
 ExpPromptWindowFrame_1d:
-	INCBIN "data/engine/menus/exp/ExpPromptWindowFrame_1d.bin" ; $77c8, 25 bytes
+	INCLUDE "data/engine/menus/exp/ExpPromptWindowFrame_1d.asm" ; $77c8, 25 bytes (blit_runs)
 ExpLevelDownTilemapPatch0:
-	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch0.bin" ; $77e1, 21 bytes
+	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch0.asm" ; $77e1, 21 bytes (blit_runs)
 ExpLevelDownTilemapPatch1:
-	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch1.bin" ; $77f6, 17 bytes
+	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch1.asm" ; $77f6, 17 bytes (blit_runs)
 ExpLevelDownTilemapPatch2:
-	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch2.bin" ; $7807, 13 bytes
+	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch2.asm" ; $7807, 13 bytes (blit_runs)
 ExpLevelDownTilemapPatch3:
-	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch3.bin" ; $7814, 9 bytes
+	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch3.asm" ; $7814, 9 bytes (blit_runs)
 ExpLevelDownTilemapPatch4:
-	INCBIN "data/engine/menus/exp/ExpLevelDownTilemapPatch4.bin" ; $781d, 5 bytes
+	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch4.asm" ; $781d, 5 bytes (blit_runs)
 ExpDistributionScreenPatchTilemap:
 	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.bin" ; $7822, 47 bytes
 	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.inc" ; DEF ExpDistributionScreenPatchTilemap_SIZE EQU its decoded length, generated from the .bin by make

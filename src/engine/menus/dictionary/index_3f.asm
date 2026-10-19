@@ -41,7 +41,7 @@ DrawTennisDictionaryLetterLabels:
 	jr nz, .renderNextLetter ; $5374
 	xor a ; $5376
 .renderNextLetter:
-	ld hl, Text_35_143 ; $5377
+	ld hl, Text_TennisDictionaryLetterA ; $5377
 	add l ; $537a
 	ld l, a ; $537b
 	jr nc, .renderTextToBuffer64 ; $537c
@@ -74,7 +74,7 @@ SetTennisDictionaryListFromIndexRow:
 	call GetTennisDictionaryRowFirstLetter ; $5429
 	ld b, a ; $542c
 	or a ; $542d
-	jr z, .clearTennisDictCursorRow ; $542e
+	jr z, .scrollToTop ; $542e
 .loop:
 	ld a, [hl+] ; $5430
 	and e ; $5431
@@ -82,18 +82,18 @@ SetTennisDictionaryListFromIndexRow:
 	inc c ; $5434
 .compare:
 	cp $40 ; $5435
-	jr z, .clearTennisDictCursorRow ; $5437
+	jr z, .scrollToTop ; $5437
 	cp $00 ; $5439
 	jr nz, .loop ; $543b
 	dec b ; $543d
 	jr nz, .loop ; $543e
-	jr .clearTennisDictCursorRow2 ; $5440
-.clearTennisDictCursorRow:
+	jr .scrollToLetter ; $5440
+.scrollToTop:
 	xor a ; $5442
 	ld [wTennisDictCursorRow], a ; $5443
 	ld [wTennisDictScrollTop], a ; $5446
 	ret ; $5449
-.clearTennisDictCursorRow2:
+.scrollToLetter:
 	xor a ; $544a
 	ld [wTennisDictCursorRow], a ; $544b
 	ld a, c ; $544e
@@ -350,17 +350,17 @@ HandleTennisDictionaryListInput:
 	ld b, a ; $5628
 	ld a, [wTennisDictSingleEntry] ; $5629
 	cp $01 ; $562c
-	jr z, .getTennisDictionarySelectedIndex ; $562e
+	jr z, .singleEntryCategory ; $562e
 	call GetTennisDictionarySelectedIndex ; $5630
 	call GetTennisDictionaryEntryIndex ; $5633
 	ld hl, $1430 ; $5636
 	add l ; $5639
 	ld l, a ; $563a
-	jr nc, .getTennisDictionarySelectedIndex2 ; $563b
+	jr nc, .gotEntryTextId ; $563b
 	inc h ; $563d
-.getTennisDictionarySelectedIndex2:
+.gotEntryTextId:
 	jr .resetTextWindowsAndRestoreMap ; $563e
-.getTennisDictionarySelectedIndex:
+.singleEntryCategory:
 	call GetTennisDictionarySelectedIndex ; $5640
 	call GetTennisDictionaryEntryCategory ; $5643
 	ld hl, $14a9 ; $5646
@@ -502,9 +502,9 @@ QueueTennisDictionaryGlyphTiles:
 	push af ; $575d
 	ldh a, [rLCDC] ; $575e
 	bit B_LCDC_ENABLE, a ; $5760
-	jr z, .restore ; $5762
+	jr z, .queueMiddleChunk ; $5762
 	call AdvanceFrame ; $5764
-.restore:
+.queueMiddleChunk:
 	pop af ; $5767
 	ld hl, wGlyphTileBuffer tile 78 ; $5768
 	ld de, vTiles1 tile $4e ; $576b
@@ -513,9 +513,9 @@ QueueTennisDictionaryGlyphTiles:
 	push af ; $5773
 	ldh a, [rLCDC] ; $5774
 	bit B_LCDC_ENABLE, a ; $5776
-	jr z, .restore2 ; $5778
+	jr z, .queueLastChunk ; $5778
 	call AdvanceFrame ; $577a
-.restore2:
+.queueLastChunk:
 	pop af ; $577d
 	ld hl, wGlyphTileBuffer tile 102 ; $577e
 	ld de, vTiles1 tile $66 ; $5781

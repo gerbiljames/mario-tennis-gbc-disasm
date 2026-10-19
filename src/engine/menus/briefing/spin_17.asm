@@ -120,7 +120,7 @@ DrillBriefing_SpinServe:
 	ld a, $01 ; $583f
 	ld hl, CycleDiagramTargetPalette ; $5841
 	call RegisterFrameTask ; $5844
-	ld hl, Text_36_692 ; $5847
+	ld hl, Text_BriefSpinServeFourCourts ; $5847
 	call DrawBriefingCaption ; $584a
 	xor a ; $584d
 	ld [wBriefingAnimTimer], a ; $584e
@@ -154,7 +154,7 @@ DrillBriefing_SpinServe:
 	ld a, $01 ; $5895
 	ld hl, DrawBriefingTargetBrackets ; $5897
 	call RegisterFrameTask ; $589a
-	ld hl, Text_36_693 ; $589d
+	ld hl, Text_BriefSpinServeSmallerTargets ; $589d
 	call DrawBriefingCaption ; $58a0
 	xor a ; $58a3
 	ld [wBriefingAnimTimer], a ; $58a4
@@ -217,7 +217,7 @@ DrillBriefing_SpinServe:
 	ld a, $01 ; $5934
 	ld hl, DrawBriefingTargetBrackets ; $5936
 	call RegisterFrameTask ; $5939
-	ld hl, Text_36_694 ; $593c
+	ld hl, Text_BriefSpinServeDiagonally ; $593c
 	call DrawBriefingCaption ; $593f
 	call WaitForInputBlinking ; $5942
 	call ClearFrameTasks ; $5945
@@ -261,7 +261,7 @@ DrillBriefing_SpinServe:
 	ld a, $01 ; $59a7
 	ld hl, CycleDiagramTargetPalette ; $59a9
 	call RegisterFrameTask ; $59ac
-	ld hl, Text_36_695 ; $59af
+	ld hl, Text_BriefSpinServeBounceOutCorner ; $59af
 	call DrawBriefingCaption ; $59b2
 	call WaitForInputBlinking ; $59b5
 	call ClearFrameTasks ; $59b8
@@ -289,11 +289,11 @@ DrillBriefing_SpinServe:
 	ld a, $01 ; $59f3
 	ld hl, CycleDiagramTargetPalette ; $59f5
 	call RegisterFrameTask ; $59f8
-	ld hl, Text_36_696 ; $59fb
+	ld hl, Text_BriefSpinServeTopspinRight ; $59fb
 	ld a, [wStoryMainLeftHanded] ; $59fe
 	and a ; $5a01
 	jr z, .drawBriefingCaption ; $5a02
-	ld hl, Text_36_697 ; $5a04
+	ld hl, Text_BriefSpinServeTopspinLeft ; $5a04
 .drawBriefingCaption:
 	call DrawBriefingCaption ; $5a07
 	xor a ; $5a0a
@@ -327,7 +327,7 @@ DrillBriefing_SpinServe:
 	ld a, $01 ; $5a50
 	ld hl, DrawBriefingTargetBrackets ; $5a52
 	call RegisterFrameTask ; $5a55
-	ld hl, Text_36_698 ; $5a58
+	ld hl, Text_BriefSpinServeHitAllTargets ; $5a58
 	call DrawBriefingCaption ; $5a5b
 	xor a ; $5a5e
 	ld [wBriefingAnimTimer], a ; $5a5f

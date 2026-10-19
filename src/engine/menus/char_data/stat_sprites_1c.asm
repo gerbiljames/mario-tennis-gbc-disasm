@@ -19,16 +19,16 @@ DrawStatValueSprites:
 	ld l, a ; $4e5f
 	ld a, [wCharDataLevelPreview] ; $4e60
 	or a ; $4e63
-	jr nz, .digits1 ; $4e64
+	jr nz, .spinDigits ; $4e64
 	ld a, [wCharDataPage] ; $4e66
 	or a ; $4e69
-	jr nz, .digits1 ; $4e6a
+	jr nz, .spinDigits ; $4e6a
 	inc l ; $4e6c
 	ld b, $0f ; $4e6d
-.digits1:
+.spinDigits:
 	ld a, l ; $4e6f
 	cp $0a ; $4e70
-	jr c, .singleDigit1 ; $4e72
+	jr c, .spinSingleDigit ; $4e72
 	push bc ; $4e74
 	ld h, $00 ; $4e75
 	ld a, $02 ; $4e77
@@ -53,8 +53,8 @@ DrawStatValueSprites:
 	xor a ; $4e9d
 	call GetStatDigitSpritePos ; $4e9e
 	call QueueSprite ; $4ea1
-	jr .stat2 ; $4ea4
-.singleDigit1:
+	jr .powerLevel ; $4ea4
+.spinSingleDigit:
 	ld a, l ; $4ea6
 	rlca ; $4ea7
 	ld c, a ; $4ea8
@@ -62,22 +62,22 @@ DrawStatValueSprites:
 	xor a ; $4eac
 	call GetStatDigitSpritePos ; $4ead
 	call QueueSprite ; $4eb0
-.stat2:
+.powerLevel:
 	ld b, $0e ; $4eb3
 	ld a, [wCharDataLevels + 1] ; $4eb5
 	ld l, a ; $4eb8
 	ld a, [wCharDataLevelPreview] ; $4eb9
 	or a ; $4ebc
-	jr nz, .digits2 ; $4ebd
+	jr nz, .powerDigits ; $4ebd
 	ld a, [wCharDataPage] ; $4ebf
 	cp $01 ; $4ec2
-	jr nz, .digits2 ; $4ec4
+	jr nz, .powerDigits ; $4ec4
 	inc l ; $4ec6
 	ld b, $0f ; $4ec7
-.digits2:
+.powerDigits:
 	ld a, l ; $4ec9
 	cp $0a ; $4eca
-	jr c, .singleDigit2 ; $4ecc
+	jr c, .powerSingleDigit ; $4ecc
 	push bc ; $4ece
 	ld h, $00 ; $4ecf
 	ld a, $02 ; $4ed1
@@ -102,8 +102,8 @@ DrawStatValueSprites:
 	ld a, $01 ; $4ef8
 	call GetStatDigitSpritePos ; $4efa
 	call QueueSprite ; $4efd
-	jr .stat3 ; $4f00
-.singleDigit2:
+	jr .controlLevel ; $4f00
+.powerSingleDigit:
 	ld a, l ; $4f02
 	rlca ; $4f03
 	ld c, a ; $4f04
@@ -111,22 +111,22 @@ DrawStatValueSprites:
 	ld a, $01 ; $4f08
 	call GetStatDigitSpritePos ; $4f0a
 	call QueueSprite ; $4f0d
-.stat3:
+.controlLevel:
 	ld b, $0e ; $4f10
 	ld a, [wCharDataLevels + 2] ; $4f12
 	ld l, a ; $4f15
 	ld a, [wCharDataLevelPreview] ; $4f16
 	or a ; $4f19
-	jr nz, .digits3 ; $4f1a
+	jr nz, .controlDigits ; $4f1a
 	ld a, [wCharDataPage] ; $4f1c
 	cp $02 ; $4f1f
-	jr nz, .digits3 ; $4f21
+	jr nz, .controlDigits ; $4f21
 	inc l ; $4f23
 	ld b, $0f ; $4f24
-.digits3:
+.controlDigits:
 	ld a, l ; $4f26
 	cp $0a ; $4f27
-	jr c, .singleDigit3 ; $4f29
+	jr c, .controlSingleDigit ; $4f29
 	push bc ; $4f2b
 	ld h, $00 ; $4f2c
 	ld a, $02 ; $4f2e
@@ -151,8 +151,8 @@ DrawStatValueSprites:
 	ld a, $02 ; $4f55
 	call GetStatDigitSpritePos ; $4f57
 	call QueueSprite ; $4f5a
-	jr .stat4 ; $4f5d
-.singleDigit3:
+	jr .speedLevel ; $4f5d
+.controlSingleDigit:
 	ld a, l ; $4f5f
 	rlca ; $4f60
 	ld c, a ; $4f61
@@ -160,22 +160,22 @@ DrawStatValueSprites:
 	ld a, $02 ; $4f65
 	call GetStatDigitSpritePos ; $4f67
 	call QueueSprite ; $4f6a
-.stat4:
+.speedLevel:
 	ld b, $0e ; $4f6d
 	ld a, [wCharDataLevels + 3] ; $4f6f
 	ld l, a ; $4f72
 	ld a, [wCharDataLevelPreview] ; $4f73
 	or a ; $4f76
-	jr nz, .digits4 ; $4f77
+	jr nz, .speedDigits ; $4f77
 	ld a, [wCharDataPage] ; $4f79
 	cp $03 ; $4f7c
-	jr nz, .digits4 ; $4f7e
+	jr nz, .speedDigits ; $4f7e
 	inc l ; $4f80
 	ld b, $0f ; $4f81
-.digits4:
+.speedDigits:
 	ld a, l ; $4f83
 	cp $0a ; $4f84
-	jr c, .singleDigit4 ; $4f86
+	jr c, .speedSingleDigit ; $4f86
 	push bc ; $4f88
 	ld h, $00 ; $4f89
 	ld a, $02 ; $4f8b
@@ -201,7 +201,7 @@ DrawStatValueSprites:
 	call GetStatDigitSpritePos ; $4fb4
 	call QueueSprite ; $4fb7
 	jr .drawStatChangeArrows ; $4fba
-.singleDigit4:
+.speedSingleDigit:
 	ld a, l ; $4fbc
 	rlca ; $4fbd
 	ld c, a ; $4fbe

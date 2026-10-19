@@ -308,17 +308,17 @@ RunN64TnmtData:
 	call AdvanceFrame ; $4d2f
 	ld a, [wMenuInputPressed] ; $4d32
 	bit PADB_A, a ; $4d35
-	jr nz, .playSfx ; $4d37
+	jr nz, .playSelectSfx ; $4d37
 	bit PADB_B, a ; $4d39
-	jr nz, .playSfx2 ; $4d3b
+	jr nz, .playCancelSfx ; $4d3b
 	jr .loop ; $4d3d
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $4d3f
 	script_fade_out 16 ; $4d41
 	call WaitFadeEnd ; $4d46
 	call ClearFrameTasks ; $4d49
 	ret ; $4d4c
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $4d4d
 	script_fade_out 16 ; $4d4f
 	call WaitFadeEnd ; $4d54

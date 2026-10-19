@@ -330,7 +330,7 @@ NinaSpriteFramesUnused:
 	INCBIN "data/sprites/NinaSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/NinaSpriteFrame06.bin" ; $7bf0, 240 bytes
 NinaSpriteOam:
-	INCBIN "data/sprites/NinaSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/NinaSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 NinaSpriteAnims:
 	dw NinaSpriteAnim00 ; $7f24
 	dw NinaSpriteAnim01 ; $7f26

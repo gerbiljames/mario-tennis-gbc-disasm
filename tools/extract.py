@@ -525,8 +525,222 @@ def parse_traj(text: str) -> bytes:
     return bytes(out)
 
 
-def render_spec(data: bytes, spec: str, name: str | None = None) -> str:
+def render_words(data: bytes, cols: int) -> str:
+    """Render a maths table as `dw` rows of `cols` words, commented with the
+    index of the row's first word."""
+    out = []
+    for i in range(0, len(data) - 1, 2 * cols):
+        row = data[i:i + 2 * cols]
+        vals = ", ".join(f"${row[k] | (row[k + 1] << 8):04x}"
+                         for k in range(0, len(row) - 1, 2))
+        out.append(f"\tdw {vals} ; {i // 2:#05x}")
+    if len(data) % 2:
+        out.append(f"\tdb ${data[-1]:02x}")
+    return "\n".join(out) + "\n"
+
+
+def _signed(b: int) -> int:
+    return b - 256 if b >= 0x80 else b
+
+
+def render_move_curve(data: bytes) -> str:
+    """A bank $09 move curve (GetNextMoveCurveValue): signed per-step X
+    offsets, ended by $80 (hold) or $81 (free the object's slot)."""
+    out, run = [], []
+
+    def flush():
+        if run:
+            out.append("\tmove_curve " + ", ".join(str(_signed(b)) for b in run))
+            run.clear()
+
+    for b in data:
+        if b in (0x80, 0x81):
+            flush()
+            out.append("\tmove_curve_hold" if b == 0x80 else "\tmove_curve_end")
+        else:
+            run.append(b)
+            if len(run) == 16:
+                flush()
+    flush()
+    if data and data[-1] not in (0x80, 0x81):
+        out.append("; no terminator: runs on into the next curve")
+    return "\n".join(out) + "\n"
+
+
+def render_frame_place(data: bytes) -> str:
+    """A character bank's *SpriteOam: one 4-byte {dx, dy, size, tiles}
+    record per frame-table slot (QueueCharFrameTiles, DrawCharSprite), as
+    `frame_place dx, dy, width` where the size flag and tile count agree with
+    a 24- or 32-pixel-wide frame."""
+    out = []
+    for i in range(0, len(data) - 3, 4):
+        dx, dy, size, tiles = data[i:i + 4]
+        if (size, tiles) in ((0, 12), (1, 16)):
+            out.append(f"\tframe_place {_signed(dx)}, {_signed(dy)}, "
+                       f"{32 if size else 24} ; slot {i // 4}")
+        else:
+            out.append(f"\tdb ${dx:02x}, ${dy:02x}, ${size:02x}, ${tiles:02x} ; slot {i // 4}")
+    for b in data[len(data) // 4 * 4:]:
+        out.append(f"\tdb ${b:02x}")
+    return "\n".join(out) + "\n"
+
+
+SCOREBOARD_COLUMNS = ("flipped view, left side", "normal view, left side",
+                      "normal view, right side", "flipped view, right side")
+
+
+def render_scoreboard_columns(data: bytes) -> str:
+    """A court's 40-byte scoreboard tile or attribute record: four 2x5
+    blocks RefreshCourtScoreboard copies to tilemap row 12, column 4 or 26."""
+    if len(data) != 40:
+        return render_byte_table(data, 10)
+    out = []
+    for k, what in enumerate(SCOREBOARD_COLUMNS):
+        out.append(f"; {what}")
+        out.append("\ttilemap_begin 2, 5")
+        for r in range(5):
+            row = data[k * 10 + r * 2:k * 10 + r * 2 + 2]
+            out.append("\ttilemap_row " + ", ".join(f"${b:02x}" for b in row))
+        out.append("\ttilemap_end")
+    return "\n".join(out) + "\n"
+
+
+def render_scene_config(data: bytes) -> str:
+    """A story scene config: LoadStorySceneGraphics reads only bytes 2-5,
+    the scroll origin and map size in tiles."""
+    if len(data) < 6:
+        return render_byte_table(data, 8)
+    out = ["\tdb " + ", ".join(f"${b:02x}" for b in data[:2]) + " ; not read",
+           "\tscene_bounds " + ", ".join(str(b) for b in data[2:6])]
+    if len(data) > 6:
+        out.append("; not read")
+    for i in range(6, len(data), 8):
+        row = ", ".join(f"${b:02x}" for b in data[i:i + 8])
+        out.append(f"\tdb {row} ; +{i}")
+    return "\n".join(out) + "\n"
+
+
+def render_blit_runs(data: bytes) -> str:
+    """An ApplyTilemapPatchList* list: `blit_run col, row, src, length`
+    runs (big-endian tilemap offset, source offset, count), ended by $ff."""
+    out = []
+    i = 0
+    while i + 4 <= len(data) and data[i] != 0xFF:
+        dest = data[i] << 8 | data[i + 1]
+        out.append(f"\tblit_run {dest % 32}, {dest // 32}, {data[i + 2]}, {data[i + 3]}")
+        i += 4
+    if i < len(data):
+        out.append("\tdb " + ", ".join(f"${b:02x}" for b in data[i:]))
+    return "\n".join(out) + "\n"
+
+
+# Minigame target script opcodes (RunMinigameTargetScript): name, operand
+# layout ("b" byte, "w" word, "r" relative jump word).
+TARGET_OPS = {0x00: ("tgt_end", ""), 0x01: ("tgt_wait", "b"),
+              0x02: ("tgt_jump", "r"), 0x03: ("tgt_call", "w"),
+              0x04: ("tgt_wait_arrival", ""), 0x05: ("tgt_set_pos", "ww"),
+              0x06: ("tgt_move", "bw"), 0x07: ("tgt_set_type", "b"),
+              0x08: ("tgt_add_type", "b")}
+
+
+def decode_target_script(data: bytes):
+    """[(offset, opcode, operands)] over the whole blob, or None if it does
+    not decode to whole commands. A jump's operand is its target, relative
+    to the blob's start."""
+    ops, i = [], 0
+    while i < len(data):
+        op = data[i]
+        if op not in TARGET_OPS:
+            return None
+        args, j = [], i + 1
+        for kind in TARGET_OPS[op][1]:
+            if kind == "b":
+                if j >= len(data):
+                    return None
+                args.append(data[j])
+                j += 1
+            else:
+                if j + 1 >= len(data):
+                    return None
+                w = data[j] | data[j + 1] << 8
+                args.append(j + (w - 0x10000 if w & 0x8000 else w) if kind == "r" else w)
+                j += 2
+        ops.append((i, op, args))
+        i = j
+    return ops
+
+
+# ROM offset -> label for every jump target of a target_script region,
+# filled from the whole manifest by prepare_target_scripts.
+TARGET_LABELS = {}
+
+
+def prepare_target_scripts(rom: bytes, entries):
+    """Name each target_script jump target: the region's own label at its
+    start, else a `.loop` local in the region that holds it."""
+    regions = [(off, length, Path(path).stem) for path, off, length, spec in entries
+               if spec == "target_script"]
+    targets = set()
+    for off, length, _ in regions:
+        for _, op, args in decode_target_script(rom[off:off + length]) or ():
+            if op == 0x02:
+                targets.add(off + args[0])
+    TARGET_LABELS.clear()
+    for off, length, stem in regions:
+        inner = sorted(t for t in targets if off < t < off + length)
+        for n, t in enumerate(inner):
+            TARGET_LABELS[t] = f"{stem}.loop{n + 1 if len(inner) > 1 else ''}"
+        if off in targets:
+            TARGET_LABELS[off] = stem
+
+
+def render_target_script(data: bytes, name: str, off: int | None) -> str:
+    """A minigame target script as tgt_* commands (include/macros/); jumps
+    name their target, which must be a label TARGET_LABELS knows."""
+    ops = decode_target_script(data)
+    if ops is None or off is None:
+        return render_byte_table(data, 8)
+    out = []
+    for i, op, args in ops:
+        label = TARGET_LABELS.get(off + i)
+        if i and label:
+            out.append(label[len(name):] + ":")
+        mac, kinds = TARGET_OPS[op]
+        vals = []
+        for kind, a in zip(kinds, args):
+            if kind == "r":
+                target = TARGET_LABELS.get(off + a)
+                if target is None:
+                    return render_byte_table(data, 8)
+                vals.append(target[len(name):] if target.startswith(name + ".") else target)
+            elif op == 0x06 and kind == "b":
+                vals.append(f"${a:02x}")
+            elif kind == "w" and op in (0x05, 0x06):
+                v = (a - 0x10000 if a & 0x8000 else a) / 256
+                vals.append(f"{v:.1f}" if v == int(v) else f"{v:.8f}".rstrip("0"))
+            elif kind == "w":
+                vals.append(f"${a:04x}")
+            else:
+                vals.append(str(a))
+        out.append(f"\t{mac}" + (" " + ", ".join(vals) if vals else ""))
+    return "\n".join(out) + "\n"
+
+
+def render_spec(data: bytes, spec: str, name: str | None = None,
+                off: int | None = None) -> str:
     kind, _, param = spec.partition(":")
+    if kind == "target_script":
+        return render_target_script(data, name, off)
+    if kind == "move_curve":
+        return render_move_curve(data)
+    if kind == "frame_place":
+        return render_frame_place(data)
+    if kind == "scoreboard_columns":
+        return render_scoreboard_columns(data)
+    if kind == "scene_config":
+        return render_scene_config(data)
+    if kind == "blit_runs":
+        return render_blit_runs(data)
     if kind == "palettes":
         return render_palettes(data)
     if kind == "traj":
@@ -566,7 +780,7 @@ def render_spec(data: bytes, spec: str, name: str | None = None) -> str:
         return render_byte_table(data, 16)
     if kind == "words":
         # a maths table: numeric words, never resolved against labels
-        return render_records(data, 2 * int(param or 1))
+        return render_words(data, int(param or 1))
     if kind == "squares":
         return render_squares(data)
     if kind == "fill":
@@ -625,6 +839,13 @@ def main() -> int:
     written = set()
     kept = []
     pngs = gfx_skipped = grids = 0
+    entries = []
+    for line in manifest.read_text().splitlines():
+        parts = line.split()
+        if parts and not parts[0].startswith("#"):
+            entries.append((parts[0], int(parts[1], 16), int(parts[2], 16),
+                            parts[3] if len(parts) > 3 else None))
+    prepare_target_scripts(rom, entries)
     try:
         import gfx
         from PIL import Image  # noqa: F401
@@ -633,14 +854,7 @@ def main() -> int:
         gfx_ok = False
         print("note: Pillow not installed; graphics PNGs not generated",
               file=sys.stderr)
-    for line in manifest.read_text().splitlines():
-        line = line.strip()
-        if not line or line.startswith("#"):
-            continue
-        parts = line.split()
-        path, off_s, len_s = parts[0], parts[1], parts[2]
-        spec = parts[3] if len(parts) > 3 else None
-        off, length = int(off_s, 16), int(len_s, 16)
+    for path, off, length, spec in entries:
         if off + length > len(rom):
             print(f"error: {path} range {off:#x}+{length:#x} exceeds ROM size", file=sys.stderr)
             return 1
@@ -655,7 +869,7 @@ def main() -> int:
             if (_gfx_edited(dest, png, data, gfx) if is_gfx and gfx_ok
                     else _grid_edited(dest, grid, data) if is_grid
                     else _edited(dest, (data if not spec and not path.endswith(".asm")
-                                        else (render_spec(data, spec, dest.stem) if spec
+                                        else (render_spec(data, spec, dest.stem, off) if spec
                                               else render_text(data)).encode()))):
                 kept.append(path)
                 written.add(path)
@@ -691,7 +905,7 @@ def main() -> int:
                     pngs += 1
                     dest.write_bytes(rom[off:off + length])
         elif spec:
-            dest.write_text(render_spec(rom[off:off + length], spec, dest.stem))
+            dest.write_text(render_spec(rom[off:off + length], spec, dest.stem, off))
         elif path.endswith(".asm"):
             dest.write_text(render_text(rom[off:off + length]))
         else:

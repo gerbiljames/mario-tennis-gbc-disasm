@@ -1,4 +1,4 @@
-UnusedLatchSwingHoldButton:
+Unused_08_LatchSwingHoldButton:
 	ld a, b ; $7278
 	ld [wCharSwingHoldButton], a ; $7279
 	xor a ; $727c

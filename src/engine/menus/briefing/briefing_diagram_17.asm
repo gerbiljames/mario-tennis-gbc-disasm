@@ -59,16 +59,16 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $48cd
 	ldh a, [hVBlankCounter] ; $48ce
 	and $10 ; $48d0
-	jr z, .maskClear ; $48d2
+	jr z, .topLeftXDone ; $48d2
 	inc d ; $48d4
-.maskClear:
+.topLeftXDone:
 	ld a, [wBriefingBracketY] ; $48d5
 	ld e, a ; $48d8
 	ldh a, [hVBlankCounter] ; $48d9
 	and $10 ; $48db
-	jr z, .maskClear2 ; $48dd
+	jr z, .topLeftYDone ; $48dd
 	inc e ; $48df
-.maskClear2:
+.topLeftYDone:
 	sprite_tile_attr $6c, OAM_BANK1 | 2 ; $48e0
 	call QueueSprite ; $48e4
 	ld a, [wBriefingBracketWidth] ; $48e7
@@ -79,16 +79,16 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $48f1
 	ldh a, [hVBlankCounter] ; $48f2
 	and $10 ; $48f4
-	jr z, .maskClear3 ; $48f6
+	jr z, .topRightXDone ; $48f6
 	dec d ; $48f8
-.maskClear3:
+.topRightXDone:
 	ld a, [wBriefingBracketY] ; $48f9
 	ld e, a ; $48fc
 	ldh a, [hVBlankCounter] ; $48fd
 	and $10 ; $48ff
-	jr z, .maskClear4 ; $4901
+	jr z, .topRightYDone ; $4901
 	inc e ; $4903
-.maskClear4:
+.topRightYDone:
 	sprite_tile_attr $6c, OAM_BANK1 | OAM_XFLIP | 2 ; $4904
 	call QueueSprite ; $4908
 	ld a, [wBriefingBracketWidth] ; $490b
@@ -99,9 +99,9 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $4915
 	ldh a, [hVBlankCounter] ; $4916
 	and $10 ; $4918
-	jr z, .maskClear5 ; $491a
+	jr z, .bottomRightXDone ; $491a
 	dec d ; $491c
-.maskClear5:
+.bottomRightXDone:
 	ld a, [wBriefingBracketHeight] ; $491d
 	sub $05 ; $4920
 	ld b, a ; $4922
@@ -110,18 +110,18 @@ DrawBriefingTargetBrackets:
 	ld e, a ; $4927
 	ldh a, [hVBlankCounter] ; $4928
 	and $10 ; $492a
-	jr z, .maskClear6 ; $492c
+	jr z, .bottomRightYDone ; $492c
 	dec e ; $492e
-.maskClear6:
+.bottomRightYDone:
 	sprite_tile_attr $6c, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 2 ; $492f
 	call QueueSprite ; $4933
 	ld a, [wBriefingBracketX] ; $4936
 	ld d, a ; $4939
 	ldh a, [hVBlankCounter] ; $493a
 	and $10 ; $493c
-	jr z, .maskClear7 ; $493e
+	jr z, .bottomLeftXDone ; $493e
 	inc d ; $4940
-.maskClear7:
+.bottomLeftXDone:
 	ld a, [wBriefingBracketHeight] ; $4941
 	sub $05 ; $4944
 	ld b, a ; $4946
@@ -130,9 +130,9 @@ DrawBriefingTargetBrackets:
 	ld e, a ; $494b
 	ldh a, [hVBlankCounter] ; $494c
 	and $10 ; $494e
-	jr z, .maskClear8 ; $4950
+	jr z, .bottomLeftYDone ; $4950
 	dec e ; $4952
-.maskClear8:
+.bottomLeftYDone:
 	sprite_tile_attr $6c, OAM_BANK1 | OAM_YFLIP | 2 ; $4953
 	call QueueSprite ; $4957
 	pop_wram_bank ; $495a
@@ -211,7 +211,7 @@ ClearBriefingCaptionTilemap:
 Unused_17_StubRet:
 	ret ; $4a05
 Unused_17_DrawSecondCaptionRow:
-	ld hl, Text_30_309 ; $4a06
+	ld hl, Text_DebugTextDisplayTest ; $4a06
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4a09
 	farcall RenderProportionalTextAt ; $4a0c
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $4a0f
@@ -289,12 +289,12 @@ DrawDiagramTargetPatch:
 DiagramTargetPatchRecords_17:
 	; $4a75, 36 bytes (records:6)
 ; 6 records x 6 bytes
-	dw $d243, $d08a, $0203 ; record 0
-	dw $d283, $d0ca, $0203 ; record 1
-	dw $d280, $d0c7, $0203 ; record 2
-	dw $d240, $d087, $0203 ; record 3
-	dw $d2c0, $d067, $0206 ; record 4
-	dw $d300, $d0e7, $0206 ; record 5
+	dw wShadowTilemap + 18 * TILEMAP_WIDTH + 3, wShadowTilemap + 4 * TILEMAP_WIDTH + 10, $0203 ; record 0
+	dw wShadowTilemap + 20 * TILEMAP_WIDTH + 3, wShadowTilemap + 6 * TILEMAP_WIDTH + 10, $0203 ; record 1
+	dw wShadowTilemap + 20 * TILEMAP_WIDTH, wShadowTilemap + 6 * TILEMAP_WIDTH + 7, $0203 ; record 2
+	dw wShadowTilemap + 18 * TILEMAP_WIDTH, wShadowTilemap + 4 * TILEMAP_WIDTH + 7, $0203 ; record 3
+	dw wShadowTilemap + 22 * TILEMAP_WIDTH, wShadowTilemap + 3 * TILEMAP_WIDTH + 7, $0206 ; record 4
+	dw wShadowTilemap + 24 * TILEMAP_WIDTH, wShadowTilemap + 7 * TILEMAP_WIDTH + 7, $0206 ; record 5
 DecompressGraphicsList:
 	ld hl, CourtDiagramGraphicsList ; $4a99
 .loop:
@@ -424,7 +424,7 @@ DrillBriefing_ServeToTargets:
 	ld a, $01 ; $55a7
 	ld hl, CycleDiagramTargetPalette ; $55a9
 	call RegisterFrameTask ; $55ac
-	ld hl, Text_36_688 ; $55af
+	ld hl, Text_BriefTargetServeFourCourts ; $55af
 	call DrawBriefingCaption ; $55b2
 	xor a ; $55b5
 	ld [wBriefingAnimTimer], a ; $55b6
@@ -458,7 +458,7 @@ DrillBriefing_ServeToTargets:
 	ld a, $01 ; $55fd
 	ld hl, DrawBriefingTargetBrackets ; $55ff
 	call RegisterFrameTask ; $5602
-	ld hl, Text_36_689 ; $5605
+	ld hl, Text_BriefTargetServeSmallerTargets ; $5605
 	call DrawBriefingCaption ; $5608
 	xor a ; $560b
 	ld [wBriefingAnimTimer], a ; $560c
@@ -521,7 +521,7 @@ DrillBriefing_ServeToTargets:
 	ld a, $01 ; $569c
 	ld hl, DrawBriefingTargetBrackets ; $569e
 	call RegisterFrameTask ; $56a1
-	ld hl, Text_36_690 ; $56a4
+	ld hl, Text_BriefTargetServeDiagonally ; $56a4
 	call DrawBriefingCaption ; $56a7
 	call WaitForInputBlinking ; $56aa
 	call ClearFrameTasks ; $56ad
@@ -550,7 +550,7 @@ DrillBriefing_ServeToTargets:
 	ld a, $01 ; $56ea
 	ld hl, DrawBriefingTargetBrackets ; $56ec
 	call RegisterFrameTask ; $56ef
-	ld hl, Text_36_691 ; $56f2
+	ld hl, Text_BriefTargetServeAllPositions ; $56f2
 	call DrawBriefingCaption ; $56f5
 	xor a ; $56f8
 	ld [wBriefingAnimTimer], a ; $56f9

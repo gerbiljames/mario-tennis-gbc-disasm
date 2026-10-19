@@ -193,7 +193,7 @@ Unused_3e_DrawMatchRulesCaptionText:
 	ld d, [hl] ; $49cf
 	ld e, a ; $49d0
 	ld a, b ; $49d1
-	ld hl, Text_30_132 ; $49d2
+	ld hl, Text_MatchTypeSinglesOrDoubles ; $49d2
 	add l ; $49d5
 	ld l, a ; $49d6
 	jr nc, .renderTextToBuffer64 ; $49d7
@@ -338,11 +338,11 @@ LoadLinkErrorScreen:
 	farcall RedrawWindowRows ; $4b0e
 	farcall PrepareGlyphBuffer ; $4b11
 	wram_bank WRAM_SCREEN ; $4b14
-	ld hl, Text_30_299 ; $4b1a
+	ld hl, Text_LinkCheckGameLink ; $4b1a
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4b1d
 	ld c, $12 ; $4b20
 	farcall RenderProportionalTextAt ; $4b22
-	ld hl, Text_30_300 ; $4b25
+	ld hl, Text_LinkCableConnection ; $4b25
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b28
 	ld c, $12 ; $4b2b
 	farcall RenderProportionalTextAt ; $4b2d
@@ -409,19 +409,19 @@ ShowLinkStatusMessage:
 	jr z, .message1 ; $4bbd
 	jr .renderProportionalTextAt ; $4bbf
 .message0:
-	ld hl, Text_30_297 ; $4bc1
+	ld hl, Text_LinkOtherPlayerNotReady ; $4bc1
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bc4
 	ld c, $12 ; $4bc7
 	farcall RenderProportionalTextAt ; $4bc9
 	jr .uploadGlyphBuffer ; $4bcc
 .message1:
-	ld hl, Text_30_298 ; $4bce
+	ld hl, Text_LinkImproperlyLinked ; $4bce
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bd1
 	ld c, $12 ; $4bd4
 	farcall RenderProportionalTextAt ; $4bd6
 	jr .uploadGlyphBuffer ; $4bd9
 .renderProportionalTextAt:
-	ld hl, Text_30_296 ; $4bdb
+	ld hl, Text_LinkWaitingForOtherPlayer ; $4bdb
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bde
 	ld c, $12 ; $4be1
 	farcall RenderProportionalTextAt ; $4be3

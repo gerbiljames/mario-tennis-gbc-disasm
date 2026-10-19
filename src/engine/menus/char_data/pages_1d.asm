@@ -291,9 +291,9 @@ LoadCharDataScreenPageGraphics:
 	ld hl, wStoryMainName ; $4360
 	ld a, [wStoryCharacterSlot] ; $4363
 	or a ; $4366
-	jr z, .paletteField ; $4367
+	jr z, .mainPaletteField ; $4367
 	ld l, $40 ; $4369
-.paletteField:
+.mainPaletteField:
 	ld a, l ; $436b
 	add $0c ; $436c
 	ld l, a ; $436e
@@ -309,9 +309,9 @@ LoadCharDataScreenPageGraphics:
 	ld hl, wStoryMainName ; $4382
 	ld a, [wStoryCharacterSlot] ; $4385
 	or a ; $4388
-	jr z, .charField ; $4389
+	jr z, .mainCharField ; $4389
 	ld l, $40 ; $438b
-.charField:
+.mainCharField:
 	ld a, l ; $438d
 	add $0b ; $438e
 	ld l, a ; $4390
@@ -340,9 +340,9 @@ LoadCharDataScreenPageGraphics:
 	ld hl, wStoryMainName ; $43c4
 	ld a, [wStoryCharacterSlot] ; $43c7
 	or a ; $43ca
-	jr z, .paletteField2 ; $43cb
+	jr z, .partnerPaletteField ; $43cb
 	ld l, $40 ; $43cd
-.paletteField2:
+.partnerPaletteField:
 	ld a, l ; $43cf
 	add $0c ; $43d0
 	ld l, a ; $43d2
@@ -358,9 +358,9 @@ LoadCharDataScreenPageGraphics:
 	ld hl, wStoryMainName ; $43e6
 	ld a, [wStoryCharacterSlot] ; $43e9
 	or a ; $43ec
-	jr z, .charField2 ; $43ed
+	jr z, .partnerCharField ; $43ed
 	ld l, $40 ; $43ef
-.charField2:
+.partnerCharField:
 	ld a, l ; $43f1
 	add $0b ; $43f2
 	ld l, a ; $43f4
@@ -413,9 +413,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $4452
 	ld a, [wStoryCharacterSlot] ; $4455
 	or a ; $4458
-	jr z, .nameField ; $4459
+	jr z, .mainNameField ; $4459
 	ld l, $40 ; $445b
-.nameField:
+.mainNameField:
 	ld a, l ; $445d
 	add $00 ; $445e
 	ld l, a ; $4460
@@ -434,9 +434,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $447a
 	ld a, [wStoryCharacterSlot] ; $447d
 	or a ; $4480
-	jr z, .leftHandedField ; $4481
+	jr z, .mainLeftHandedField ; $4481
 	ld l, $40 ; $4483
-.leftHandedField:
+.mainLeftHandedField:
 	ld a, l ; $4485
 	add $0e ; $4486
 	ld l, a ; $4488
@@ -452,9 +452,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $449c
 	ld a, [wStoryCharacterSlot] ; $449f
 	or a ; $44a2
-	jr z, .levelField ; $44a3
+	jr z, .mainLevelField ; $44a3
 	ld l, $40 ; $44a5
-.levelField:
+.mainLevelField:
 	ld a, l ; $44a7
 	add $18 ; $44a8
 	ld l, a ; $44aa
@@ -475,9 +475,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $44c9
 	ld a, [wStoryCharacterSlot] ; $44cc
 	or a ; $44cf
-	jr z, .spinLevelField ; $44d0
+	jr z, .mainSpinLevelField ; $44d0
 	ld l, $40 ; $44d2
-.spinLevelField:
+.mainSpinLevelField:
 	ld a, l ; $44d4
 	add $38 ; $44d5
 	ld l, a ; $44d7
@@ -498,9 +498,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $44f6
 	ld a, [wStoryCharacterSlot] ; $44f9
 	or a ; $44fc
-	jr z, .powerLevelField ; $44fd
+	jr z, .mainPowerLevelField ; $44fd
 	ld l, $40 ; $44ff
-.powerLevelField:
+.mainPowerLevelField:
 	ld a, l ; $4501
 	add $39 ; $4502
 	ld l, a ; $4504
@@ -521,9 +521,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $4523
 	ld a, [wStoryCharacterSlot] ; $4526
 	or a ; $4529
-	jr z, .controlLevelField ; $452a
+	jr z, .mainControlLevelField ; $452a
 	ld l, $40 ; $452c
-.controlLevelField:
+.mainControlLevelField:
 	ld a, l ; $452e
 	add $3a ; $452f
 	ld l, a ; $4531
@@ -544,9 +544,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $4550
 	ld a, [wStoryCharacterSlot] ; $4553
 	or a ; $4556
-	jr z, .speedLevelField ; $4557
+	jr z, .mainSpeedLevelField ; $4557
 	ld l, $40 ; $4559
-.speedLevelField:
+.mainSpeedLevelField:
 	ld a, l ; $455b
 	add $3b ; $455c
 	ld l, a ; $455e
@@ -586,9 +586,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $45a6
 	ld a, [wStoryCharacterSlot] ; $45a9
 	or a ; $45ac
-	jr z, .expField ; $45ad
+	jr z, .mainExpField ; $45ad
 	ld l, $40 ; $45af
-.expField:
+.mainExpField:
 	ld a, l ; $45b1
 	add $2c ; $45b2
 	ld l, a ; $45b4
@@ -623,9 +623,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $45e1
 	ld a, [wStoryCharacterSlot] ; $45e4
 	or a ; $45e7
-	jr z, .nameField2 ; $45e8
+	jr z, .partnerNameField ; $45e8
 	ld l, $40 ; $45ea
-.nameField2:
+.partnerNameField:
 	ld a, l ; $45ec
 	add $00 ; $45ed
 	ld l, a ; $45ef
@@ -645,9 +645,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $460f
 	ld a, [wStoryCharacterSlot] ; $4612
 	or a ; $4615
-	jr z, .leftHandedField2 ; $4616
+	jr z, .partnerLeftHandedField ; $4616
 	ld l, $40 ; $4618
-.leftHandedField2:
+.partnerLeftHandedField:
 	ld a, l ; $461a
 	add $0e ; $461b
 	ld l, a ; $461d
@@ -663,9 +663,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $4631
 	ld a, [wStoryCharacterSlot] ; $4634
 	or a ; $4637
-	jr z, .levelField2 ; $4638
+	jr z, .partnerLevelField ; $4638
 	ld l, $40 ; $463a
-.levelField2:
+.partnerLevelField:
 	ld a, l ; $463c
 	add $18 ; $463d
 	ld l, a ; $463f
@@ -686,9 +686,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
 	or a ; $4664
-	jr z, .spinLevelField2 ; $4665
+	jr z, .partnerSpinLevelField ; $4665
 	ld l, $40 ; $4667
-.spinLevelField2:
+.partnerSpinLevelField:
 	ld a, l ; $4669
 	add $38 ; $466a
 	ld l, a ; $466c
@@ -709,9 +709,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $468b
 	ld a, [wStoryCharacterSlot] ; $468e
 	or a ; $4691
-	jr z, .powerLevelField2 ; $4692
+	jr z, .partnerPowerLevelField ; $4692
 	ld l, $40 ; $4694
-.powerLevelField2:
+.partnerPowerLevelField:
 	ld a, l ; $4696
 	add $39 ; $4697
 	ld l, a ; $4699
@@ -732,9 +732,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $46b8
 	ld a, [wStoryCharacterSlot] ; $46bb
 	or a ; $46be
-	jr z, .controlLevelField2 ; $46bf
+	jr z, .partnerControlLevelField ; $46bf
 	ld l, $40 ; $46c1
-.controlLevelField2:
+.partnerControlLevelField:
 	ld a, l ; $46c3
 	add $3a ; $46c4
 	ld l, a ; $46c6
@@ -755,9 +755,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $46e5
 	ld a, [wStoryCharacterSlot] ; $46e8
 	or a ; $46eb
-	jr z, .speedLevelField2 ; $46ec
+	jr z, .partnerSpeedLevelField ; $46ec
 	ld l, $40 ; $46ee
-.speedLevelField2:
+.partnerSpeedLevelField:
 	ld a, l ; $46f0
 	add $3b ; $46f1
 	ld l, a ; $46f3
@@ -797,9 +797,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $473c
 	ld a, [wStoryCharacterSlot] ; $473f
 	or a ; $4742
-	jr z, .expField2 ; $4743
+	jr z, .partnerExpField ; $4743
 	ld l, $40 ; $4745
-.expField2:
+.partnerExpField:
 	ld a, l ; $4747
 	add $2c ; $4748
 	ld l, a ; $474a

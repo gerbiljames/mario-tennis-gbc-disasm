@@ -240,7 +240,7 @@ DrawExpSinglesPlayerPanel:
 	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 4 ; $5660
 	ld bc, $0020 ; $5663
 	call WriteTextToTilemap ; $5666
-	ld hl, Text_31_228 ; $5669
+	ld hl, Text_LevelAbbrev ; $5669
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 12 ; $566c
 	ld bc, $0020 ; $566f
 	call FetchAndDrawDialogueText ; $5672
@@ -316,7 +316,7 @@ DrawExpDoublesPlayerPanel:
 	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 1 ; $5722
 	ld bc, $0020 ; $5725
 	call WriteTextToTilemap ; $5728
-	ld hl, Text_31_228 ; $572b
+	ld hl, Text_LevelAbbrev ; $572b
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $572e
 	ld bc, $0020 ; $5731
 	call FetchAndDrawDialogueText ; $5734
@@ -391,7 +391,7 @@ DrawExpDoublesPartnerPanel:
 	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 12 ; $57e1
 	ld bc, $0020 ; $57e4
 	call WriteTextToTilemap ; $57e7
-	ld hl, Text_31_228 ; $57ea
+	ld hl, Text_LevelAbbrev ; $57ea
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 12 ; $57ed
 	ld bc, $0020 ; $57f0
 	call FetchAndDrawDialogueText ; $57f3
@@ -449,7 +449,7 @@ DrawExpTotalPanel:
 	call FillTilemapRun ; $5880
 	ld_tile_run bc, $09, $01 ; $5883
 	call FillTilemapRun ; $5886
-	ld hl, Text_31_231 ; $5889
+	ld hl, Text_ExpPtsLabel ; $5889
 	ld de, wScreenAttrmap + 15 * TILEMAP_WIDTH + 3 ; $588c
 	ld bc, $0020 ; $588f
 	call FetchAndDrawDialogueText ; $5892
@@ -544,7 +544,7 @@ UpdateExpScreenCharSprite:
 	ld a, [wCharFacingOctant] ; $5966
 	ld_hl_indexed UpdateExpScreenCharSpriteTable ; $5969
 	ld a, [wCharSpriteAttr] ; $5970
-	or $08 ; $5973
+	or OAM_BANK1 ; $5973
 	xor [hl] ; $5975
 	ld b, a ; $5976
 	pop af ; $5977
@@ -638,13 +638,13 @@ DrawNextExpAwardMessage:
 	ld d, [hl] ; $5a06
 	or d ; $5a07
 	jr z, .drawProportionalTextLine ; $5a08
-	ld hl, Text_31_200 ; $5a0a
+	ld hl, Text_ExpAndFor ; $5a0a
 	ld de, wScreenAttrmap + 1 * TILEMAP_WIDTH + 2 ; $5a0d
 	ld bc, $0020 ; $5a10
 	call DrawProportionalTextLine ; $5a13
 	jr .restore ; $5a16
 .drawProportionalTextLine:
-	ld hl, Text_31_199 ; $5a18
+	ld hl, Text_ExpCalculatingFor ; $5a18
 	ld de, wScreenAttrmap + 1 * TILEMAP_WIDTH + 2 ; $5a1b
 	ld bc, $0020 ; $5a1e
 	call DrawProportionalTextLine ; $5a21
@@ -680,7 +680,7 @@ DrawExpTotalDigits:
 	call FormatDecimalNumberUnsigned ; $5a5f
 	ld a, [wTextBuffer + 4] ; $5a62
 	or a ; $5a65
-	jr nz, .checkTextBuffer ; $5a66
+	jr nz, .fiveDigits ; $5a66
 	ld a, [wTextBuffer] ; $5a68
 	cp $20 ; $5a6b
 	jr z, .fourDigits2 ; $5a6d
@@ -710,7 +710,7 @@ DrawExpTotalDigits:
 	call QueueSprite ; $5aa5
 .done:
 	ret ; $5aa8
-.checkTextBuffer:
+.fiveDigits:
 	ld a, [wTextBuffer] ; $5aa9
 	cp $20 ; $5aac
 	jr z, .fiveDigits2 ; $5aae

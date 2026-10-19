@@ -3,7 +3,7 @@ ExhibitionAcceptedSingles:
 	script_set_anim ACTOR_MARIO_WORLD_BOWSER, ANIM_NOD ; $593f
 	script_wait_idle ACTOR_MARIO_WORLD_BOWSER ; $5946
 	script_wait_frames 10 ; $594b
-	script_set_text Text_5e_99 ; $5952
+	script_set_text Text_BowserExhibitionAcceptedSingles ; $5952
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $5958
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $595d
 	script_face ACTOR_MARIO_WORLD_LUIGI, FACE_UP ; $5962
@@ -114,7 +114,7 @@ MarioWorldArrivalDoubles:
 	script_wait_frames 10 ; $5c52
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5c59
 	jr nz, .walkIn ; $5c5c
-	script_set_text Text_5e_102 ; $5c5e
+	script_set_text Text_ToadPrincessPeachDoubles ; $5c5e
 	script_speak ACTOR_MARIO_WORLD_TOAD ; $5c64
 	script_speak ACTOR_MARIO_WORLD_TOAD ; $5c69
 .walkIn:
@@ -264,7 +264,7 @@ MarioWorldArrivalDoubles:
 	script_wait_frames 5 ; $603f
 	and a ; $6046
 	jr z, ExhibitionAcceptedDoubles ; $6047
-	script_set_text Text_5e_125 ; $6049
+	script_set_text Text_BowserYouWillPlayMarioDoubles ; $6049
 	call ExhibitionDeclinedCutscene ; $604f
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6052
 	ret ; $605f
@@ -273,7 +273,7 @@ ExhibitionAcceptedDoubles:
 	script_set_anim ACTOR_MARIO_WORLD_BOWSER, ANIM_NOD ; $6067
 	script_wait_idle ACTOR_MARIO_WORLD_BOWSER ; $606e
 	script_wait_frames 10 ; $6073
-	script_set_text Text_5e_128 ; $607a
+	script_set_text Text_BowserExhibitionAcceptedDoubles ; $607a
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $6080
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $6085
 	script_face ACTOR_MARIO_WORLD_LUIGI, FACE_UP ; $608a

@@ -137,12 +137,12 @@ ShowMatchRulesPages:
 	add a ; $413a
 	add b ; $413b
 	ld [wRulesPageListIndex], a ; $413c
-	ld_de_indexed Text_26_37 ; $413f
+	ld_de_indexed Text_RulesHeadingOneSetMatch ; $413f
 	ld hl, wRulesTitleTextId ; $4146
 	ld a, e ; $4149
 	ld [hl+], a ; $414a
 	ld [hl], d ; $414b
-	ld de, Text_26_98 ; $414c
+	ld de, Text_RulesFirstToTwoGamesWins ; $414c
 	ld hl, wRulesFirstPageTextId ; $414f
 	ld a, e ; $4152
 	ld [hl+], a ; $4153
@@ -165,12 +165,12 @@ MatchRulesPageLists:
 ShowTrainingRulesPages:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $417d
 	ld [wRulesPageListIndex], a ; $4180
-	ld_de_indexed Text_26_43 ; $4183
+	ld_de_indexed Text_RulesHeadingServiceMatch ; $4183
 	ld hl, wRulesTitleTextId ; $418a
 	ld a, e ; $418d
 	ld [hl+], a ; $418e
 	ld [hl], d ; $418f
-	ld de, Text_26_106 ; $4190
+	ld de, Text_RulesServiceMatchServeAces ; $4190
 	ld hl, wRulesFirstPageTextId ; $4193
 	ld a, e ; $4196
 	ld [hl+], a ; $4197
@@ -223,7 +223,7 @@ ShowMinigameRulesPages:
 	ld a, [wMinigameLevel] ; $4226
 	add b ; $4229
 	ld [wRulesPageListIndex], a ; $422a
-	ld_de_indexed Text_26_71 ; $422d
+	ld_de_indexed Text_RulesHeadingBooBlast ; $422d
 	ld hl, wRulesTitleTextId ; $4234
 	ld a, e ; $4237
 	ld [hl+], a ; $4238
@@ -355,13 +355,13 @@ MatchPauseMenu_ReviewControls:
 	call DrawWindowFrameAt ; $438f
 	farcall PrepareGlyphBuffer ; $4392
 	ld_cell de, $01, $03 ; $4395
-	ld hl, Text_30_343 ; $4398
+	ld hl, Text_ControlsMoveAndStrokes ; $4398
 	call DrawMenuTextLine ; $439b
 	ld_cell de, $06, $0a ; $439e
-	ld hl, Text_30_344 ; $43a1
+	ld hl, Text_ControlsPowerShots ; $43a1
 	call DrawMenuTextLine ; $43a4
 	ld_cell de, $01, $0c ; $43a7
-	ld hl, Text_30_345 ; $43aa
+	ld hl, Text_ControlsSelectStart ; $43aa
 	call DrawMenuTextLine ; $43ad
 	farcall UploadGlyphBuffer ; $43b0
 	call FlushTilemapToVram ; $43b3

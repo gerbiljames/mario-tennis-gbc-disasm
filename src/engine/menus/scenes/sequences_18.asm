@@ -152,29 +152,29 @@ PlayScreenSequence2:
 	call EnableLCD ; $794d
 	script_fade_in 1 ; $7950
 	call WaitFadeEnd ; $7955
-.scene1:
+.waitWinScreenInput:
 	call AdvanceFrame ; $7958
 	ldh a, [hInputPressed] ; $795b
 	and PADF_A | PADF_B ; $795d
-	jr z, .scene1 ; $795f
+	jr z, .waitWinScreenInput ; $795f
 	script_fade_out 2 ; $7961
 	call WaitFadeEnd ; $7966
 	ld_flag_id de, FLAG_DOUBLES ; $7969
 	call TestGameFlag ; $796c
-	jr z, .scene2 ; $796f
+	jr z, .singles ; $796f
 	ld_flag_id de, FLAG_ENDING_SEEN_DOUBLES ; $7971
 	call TestGameFlag ; $7974
-	jr z, .scene2Wait ; $7977
-	jr .scene3 ; $7979
-.scene2:
+	jr z, .runCredits ; $7977
+	jr .showTheEnd ; $7979
+.singles:
 	ld_flag_id de, FLAG_ENDING_SEEN_SINGLES ; $797b
 	call TestGameFlag ; $797e
-	jr z, .scene2Wait ; $7981
-	jr .scene3 ; $7983
-.scene2Wait:
+	jr z, .runCredits ; $7981
+	jr .showTheEnd ; $7983
+.runCredits:
 	sound BGM_CREDITS ; $7985
 	farcall RunEndingCreditsSequence ; $7987
-.scene3:
+.showTheEnd:
 	wram_bank WRAM_SCREEN ; $798a
 	xor a ; $7990
 	ld [wEndingSceneStep], a ; $7991
@@ -191,13 +191,13 @@ PlayScreenSequence2:
 	wram_bank WRAM_SCREEN ; $79b4
 	xor a ; $79ba
 	ld [wScreenSequenceTimer], a ; $79bb
-.scene4:
+.theEndDelay:
 	call AdvanceFrame ; $79be
 	ld a, [wScreenSequenceTimer] ; $79c1
 	inc a ; $79c4
 	ld [wScreenSequenceTimer], a ; $79c5
 	cp $b4 ; $79c8
-	jr nz, .scene4 ; $79ca
+	jr nz, .theEndDelay ; $79ca
 	ld a, $01 ; $79cc
 	ld hl, TaskFadeInPalette_18 ; $79ce
 	call RegisterFrameTask ; $79d1
@@ -205,20 +205,20 @@ PlayScreenSequence2:
 	ld hl, QueueScreen2Sprites ; $79d6
 	call RegisterFrameTask ; $79d9
 	sound BGM_THE_END ; $79dc
-.scene5:
+.waitTheEndInput:
 	call AdvanceFrame ; $79de
 	ldh a, [hInputPressed] ; $79e1
 	and PADF_A | PADF_B ; $79e3
-	jr z, .scene5 ; $79e5
+	jr z, .waitTheEndInput ; $79e5
 	ld de, SAVEFLAG_OPENING_SEEN ; $79e7
 	farcall SetSaveFlag ; $79ea
 	ld_flag_id de, FLAG_DOUBLES ; $79ed
 	call TestGameFlag ; $79f0
-	jr z, .fadeOut ; $79f3
+	jr z, .singlesEndingSeen ; $79f3
 	ld_flag_id de, FLAG_ENDING_SEEN_DOUBLES ; $79f5
 	call SetGameFlag ; $79f8
 	jr .done ; $79fb
-.fadeOut:
+.singlesEndingSeen:
 	ld_flag_id de, FLAG_ENDING_SEEN_SINGLES ; $79fd
 	call SetGameFlag ; $7a00
 .done:
@@ -280,7 +280,7 @@ QueueScreen2Sprites_SpriteTemplate:
 	oam_sprite $10, $48, $10, $00
 	oam_sprite $10, $50, $12, $00
 	oam_sprite_end
-Unused_18_StubNop_7a80:
+Unused_18_StubNop2:
 	ret ; $7a80
 TaskFadeInPalette_18:
 	push_wram_bank WRAM_SCREEN ; $7a81

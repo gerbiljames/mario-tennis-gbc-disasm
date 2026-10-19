@@ -32,38 +32,38 @@ Unused_00_AngleFromVector:
 	ld h, e ; $109b
 	ld a, d ; $109c
 	add b ; $109d
-	jr c, .overshoot ; $109e
+	jr c, .bit7Overshoot ; $109e
 	ld b, a ; $10a0
 	set 7, h ; $10a1
 	ld a, $60 ; $10a3
-	jr .halveDelta ; $10a5
-.overshoot:
+	jr .bit7Done ; $10a5
+.bit7Overshoot:
 	ld a, $e0 ; $10a7
-.halveDelta:
+.bit7Done:
 	add d ; $10a9
 	srl a ; $10aa
 	ld d, a ; $10ac
 	add b ; $10ad
-	jr c, .overshoot2 ; $10ae
+	jr c, .bit6Overshoot ; $10ae
 	ld b, a ; $10b0
 	set 6, h ; $10b1
 	ld a, $18 ; $10b3
-	jr .halveDelta2 ; $10b5
-.overshoot2:
+	jr .bit6Done ; $10b5
+.bit6Overshoot:
 	ld a, $f8 ; $10b7
-.halveDelta2:
+.bit6Done:
 	add d ; $10b9
 	srl a ; $10ba
 	ld d, a ; $10bc
 	add b ; $10bd
-	jr c, .overshoot3 ; $10be
+	jr c, .bit5Overshoot ; $10be
 	ld b, a ; $10c0
 	set 5, h ; $10c1
 	ld a, $06 ; $10c3
-	jr .halveDelta3 ; $10c5
-.overshoot3:
+	jr .bit5Done ; $10c5
+.bit5Overshoot:
 	ld a, $fe ; $10c7
-.halveDelta3:
+.bit5Done:
 	add d ; $10c9
 	srl a ; $10ca
 	ld d, a ; $10cc
@@ -71,60 +71,60 @@ Unused_00_AngleFromVector:
 	ld l, e ; $10ce
 	ld h, d ; $10cf
 	add hl, bc ; $10d0
-	jr c, .overshoot4 ; $10d1
+	jr c, .bit4Overshoot ; $10d1
 	ld c, l ; $10d3
 	ld b, h ; $10d4
 	set 4, a ; $10d5
 	ld hl, $0180 ; $10d7
-	jr .offset ; $10da
-.overshoot4:
+	jr .bit4Done ; $10da
+.bit4Overshoot:
 	ld hl, -128 ; $10dc
-.offset:
+.bit4Done:
 	add hl, de ; $10df
 	srl h ; $10e0
 	rr l ; $10e2
 	ld e, l ; $10e4
 	ld d, h ; $10e5
 	add hl, bc ; $10e6
-	jr c, .overshoot5 ; $10e7
+	jr c, .bit3Overshoot ; $10e7
 	ld c, l ; $10e9
 	ld b, h ; $10ea
 	set 3, a ; $10eb
 	ld hl, $0060 ; $10ed
-	jr .offset2 ; $10f0
-.overshoot5:
+	jr .bit3Done ; $10f0
+.bit3Overshoot:
 	ld hl, -32 ; $10f2
-.offset2:
+.bit3Done:
 	add hl, de ; $10f5
 	srl h ; $10f6
 	rr l ; $10f8
 	ld e, l ; $10fa
 	ld d, h ; $10fb
 	add hl, bc ; $10fc
-	jr c, .overshoot6 ; $10fd
+	jr c, .bit2Overshoot ; $10fd
 	ld c, l ; $10ff
 	ld b, h ; $1100
 	set 2, a ; $1101
 	ld hl, $0018 ; $1103
-	jr .offset3 ; $1106
-.overshoot6:
+	jr .bit2Done ; $1106
+.bit2Overshoot:
 	ld hl, -8 ; $1108
-.offset3:
+.bit2Done:
 	add hl, de ; $110b
 	srl h ; $110c
 	rr l ; $110e
 	ld e, l ; $1110
 	ld d, h ; $1111
 	add hl, bc ; $1112
-	jr c, .overshoot7 ; $1113
+	jr c, .bit1Overshoot ; $1113
 	ld c, l ; $1115
 	ld b, h ; $1116
 	set 1, a ; $1117
 	ld hl, $0006 ; $1119
-	jr .offset4 ; $111c
-.overshoot7:
+	jr .bit1Done ; $111c
+.bit1Overshoot:
 	ld hl, -2 ; $111e
-.offset4:
+.bit1Done:
 	add hl, de ; $1121
 	srl h ; $1122
 	rr l ; $1124

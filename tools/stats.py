@@ -79,15 +79,20 @@ def source():
     return instrs, incbin, fill
 
 
-def main():
-    rom, ram = labels()
-    instrs, incbin, fill = source()
+def rom_bytes(incbin, fill):
+    """(used, spelled out): the ROM banks' used bytes and those not INCBIN or fill."""
     # the RAM sections report a TOTAL EMPTY too: count only the ROM banks'
     text = (ROOT / "build" / "mariotennis.map").read_text()
     free = sum(int(m.group(2), 16) for m in re.finditer(
         r"^(ROM0|ROMX) bank #\d+:\n(?:.*\n)*?\tTOTAL EMPTY: \$([0-9a-f]+) bytes", text, re.M))
     used = ROM_SIZE - free
-    spelled = used - incbin - fill
+    return used, used - incbin - fill
+
+
+def main():
+    rom, ram = labels()
+    instrs, incbin, fill = source()
+    used, spelled = rom_bytes(incbin, fill)
     print(f"labels        {sum(rom.values()) + sum(ram.values()):,}: ROM {rom['global']:,} global "
           f"+ {rom['local']:,} local, RAM {ram['global']:,} global + {ram['local']:,} local")
     print(f"instructions  {instrs:,}")

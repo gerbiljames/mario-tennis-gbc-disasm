@@ -35,7 +35,7 @@ InvalidateSaveBlock:
 	xor a ; $4b32
 	ld [bc], a ; $4b33
 	ld de, $0000 ; $4b34
-	ld hl, $0006 ; $4b37
+	ld hl, SAVEDIR_CHECKSUM ; $4b37
 	add hl, bc ; $4b3a
 	ld [hl], e ; $4b3b
 	inc hl ; $4b3c
@@ -106,7 +106,7 @@ ReadSaveBlock:
 .present:
 	push bc ; $4bb8
 	push hl ; $4bb9
-	ld hl, $0001 ; $4bba
+	ld hl, SAVEDIR_BANK ; $4bba
 	add hl, bc ; $4bbd
 	ld c, [hl] ; $4bbe
 	push bc ; $4bbf
@@ -155,7 +155,7 @@ ReadSaveBlock:
 	ldh [hSramBank], a ; $4bf3
 	ld [rRAMB], a ; $4bf5
 	pop bc ; $4bf8
-	ld hl, $0006 ; $4bf9
+	ld hl, SAVEDIR_CHECKSUM ; $4bf9
 	add hl, bc ; $4bfc
 	ld a, [hl+] ; $4bfd
 	ld h, [hl] ; $4bfe
@@ -196,7 +196,7 @@ VerifySaveBlock:
 .present:
 	push bc ; $4c31
 	push hl ; $4c32
-	ld hl, $0001 ; $4c33
+	ld hl, SAVEDIR_BANK ; $4c33
 	add hl, bc ; $4c36
 	ld c, [hl] ; $4c37
 	push bc ; $4c38
@@ -254,7 +254,7 @@ VerifySaveBlock:
 	ldh [hSramBank], a ; $4c7d
 	ld [rRAMB], a ; $4c7f
 	pop bc ; $4c82
-	ld hl, $0006 ; $4c83
+	ld hl, SAVEDIR_CHECKSUM ; $4c83
 	add hl, bc ; $4c86
 	ld a, [hl+] ; $4c87
 	ld h, [hl] ; $4c88

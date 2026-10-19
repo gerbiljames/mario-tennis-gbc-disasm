@@ -214,11 +214,11 @@ WriteBracketDoublesNames:
 	ld hl, wStoryPartnerName ; $78fc
 	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 9 ; $78ff
 	call DrawNameWithDiacritics_3b ; $7902
-	ld hl, Text_30_75 ; $7905
+	ld hl, Text_NameKevin ; $7905
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 9 ; $7908
 	ld c, $20 ; $790b
 	farcall RenderTextToBuffer64 ; $790d
-	ld hl, Text_30_76 ; $7910
+	ld hl, Text_NameEmilyDoubles ; $7910
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 9 ; $7913
 	ld c, $20 ; $7916
 	farcall RenderTextToBuffer64 ; $7918
@@ -230,11 +230,11 @@ WriteBracketDoublesNames:
 	ld hl, wStoryPartnerName ; $7925
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 9 ; $7928
 	call DrawNameWithDiacritics_3b ; $792b
-	ld hl, Text_30_75 ; $792e
+	ld hl, Text_NameKevin ; $792e
 	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH + 9 ; $7931
 	ld c, $20 ; $7934
 	farcall RenderTextToBuffer64 ; $7936
-	ld hl, Text_30_76 ; $7939
+	ld hl, Text_NameEmilyDoubles ; $7939
 	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 9 ; $793c
 	ld c, $20 ; $793f
 	farcall RenderTextToBuffer64 ; $7941
@@ -378,17 +378,17 @@ RunMarioCastExhibResults:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7a42
 	bit PADB_A, a ; $7a45
-	jr nz, .playSfx ; $7a47
+	jr nz, .playSelectSfx ; $7a47
 	bit PADB_B, a ; $7a49
-	jr nz, .playSfx2 ; $7a4b
+	jr nz, .playCancelSfx ; $7a4b
 	jr .loop ; $7a4d
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $7a4f
 	script_fade_out 16 ; $7a51
 	call WaitFadeEnd ; $7a56
 	call ClearFrameTasks ; $7a59
 	ret ; $7a5c
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7a5d
 	script_fade_out 16 ; $7a5f
 	call WaitFadeEnd ; $7a64
