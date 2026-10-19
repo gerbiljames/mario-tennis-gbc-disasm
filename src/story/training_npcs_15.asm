@@ -451,8 +451,7 @@ TrainingCourtResultDispatch:
 	ret ; $537f
 .dispatchResult:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
-	ld a, a ; $5383
-	rst Rst00 ; $5384
+	jumptable a ; $5383
 	dw ServiceMatch1ResultScene ; $5385 jumptable
 	dw ServiceMatch2ResultScene ; $5387 jumptable
 	dw ServiceMatch3ResultScene ; $5389 jumptable
@@ -473,8 +472,7 @@ TrainingCourtResultDispatch:
 	dw StrokePractice3ResultScene ; $53a7 jumptable
 TrainingCourtReentryDispatch:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $53a9
-	ld a, a ; $53ac
-	rst Rst00 ; $53ad
+	jumptable a ; $53ac
 	dw TrainingCourtReentryDispatch.serveCourt ; $53ae jumptable
 	dw TrainingCourtReentryDispatch.serveCourt ; $53b0 jumptable
 	dw TrainingCourtReentryDispatch.serveCourt ; $53b2 jumptable

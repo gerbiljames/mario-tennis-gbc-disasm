@@ -78,18 +78,14 @@ CallHLInBankA:
 	inc hl ; $0169
 	ldh a, [hRomBank] ; $016a
 	ld [hl], a ; $016c
-	pop af ; $016d
-	ldh [hRomBank], a ; $016e
-	ld [rROMB0], a ; $0170
+	pop_rom_bank ; $016d
 	pop hl ; $0173
 	jp hl ; $0174
 .restoreBank:
 	push af ; $0175
 	push hl ; $0176
 	ld hl, sp + 4 ; $0177
-	ld a, [hl] ; $0179
-	ldh [hRomBank], a ; $017a
-	ld [rROMB0], a ; $017c
+	rom_bank [hl] ; $0179
 	pop hl ; $017f
 	pop af ; $0180
 	inc sp ; $0181
@@ -107,9 +103,7 @@ Unused_00_CallTableEntryInBankA:
 	inc hl ; $018f
 	ldh a, [hRomBank] ; $0190
 	ld [hl], a ; $0192
-	pop af ; $0193
-	ldh [hRomBank], a ; $0194
-	ld [rROMB0], a ; $0196
+	pop_rom_bank ; $0193
 	pop hl ; $0199
 	ld a, b ; $019a
 	add a ; $019b
@@ -124,9 +118,7 @@ Unused_00_CallTableEntryInBankA:
 	push af ; $01a7
 	push hl ; $01a8
 	ld hl, sp + 4 ; $01a9
-	ld a, [hl] ; $01ab
-	ldh [hRomBank], a ; $01ac
-	ld [rROMB0], a ; $01ae
+	rom_bank [hl] ; $01ab
 	pop hl ; $01b1
 	pop af ; $01b2
 	inc sp ; $01b3
@@ -146,9 +138,7 @@ FarCall:
 	ld a, [de] ; $01c3
 	inc de ; $01c4
 	ld [hl], a ; $01c5
-	ld a, [de] ; $01c6
-	ldh [hRomBank], a ; $01c7
-	ld [rROMB0], a ; $01c9
+	rom_bank [de] ; $01c6
 	inc de ; $01cc
 	ld a, [hl] ; $01cd
 	ld [hl], d ; $01ce
@@ -159,9 +149,7 @@ FarCall:
 	push af ; $01d5
 	push hl ; $01d6
 	ld hl, sp + 4 ; $01d7
-	ld a, [hl] ; $01d9
-	ldh [hRomBank], a ; $01da
-	ld [rROMB0], a ; $01dc
+	rom_bank [hl] ; $01d9
 	pop hl ; $01df
 	pop af ; $01e0
 	inc sp ; $01e1
@@ -193,13 +181,9 @@ Unused_00_FarCallVectorInline:
 	ld l, a ; $01fd
 	ld a, [hl+] ; $01fe
 	ld e, a ; $01ff
-	ld a, [hl] ; $0200
-	ldh [hRomBank], a ; $0201
-	ld [rROMB0], a ; $0203
+	rom_bank [hl] ; $0200
 	call CallVectorEntryE ; $0206
-	pop af ; $0209
-	ldh [hRomBank], a ; $020a
-	ld [rROMB0], a ; $020c
+	pop_rom_bank ; $0209
 	pop hl ; $020f
 	inc hl ; $0210
 	inc hl ; $0211
@@ -213,36 +197,24 @@ CallVectorEntryE:
 	jp hl ; $0219
 CopyDataFromBank:
 	push af ; $021a
-	ldh a, [hRomBank] ; $021b
-	push af ; $021d
-	ld a, h ; $021e
-	ldh [hRomBank], a ; $021f
-	ld [rROMB0], a ; $0221
+	push_rom_bank h ; $021b
 	ld h, SLOT_TABLE_PAGE ; $0224
 	ld a, [hl+] ; $0226
 	ld h, [hl] ; $0227
 	ld l, a ; $0228
 	call CopyMemoryBC ; $0229
-	pop af ; $022c
-	ldh [hRomBank], a ; $022d
-	ld [rROMB0], a ; $022f
+	pop_rom_bank ; $022c
 	pop af ; $0232
 	ret ; $0233
 DecompressDataFromBank:
 	push af ; $0234
-	ldh a, [hRomBank] ; $0235
-	push af ; $0237
-	ld a, h ; $0238
-	ldh [hRomBank], a ; $0239
-	ld [rROMB0], a ; $023b
+	push_rom_bank h ; $0235
 	ld h, SLOT_TABLE_PAGE ; $023e
 	ld a, [hl+] ; $0240
 	ld h, [hl] ; $0241
 	ld l, a ; $0242
 	call DecompressData ; $0243
-	pop af ; $0246
-	ldh [hRomBank], a ; $0247
-	ld [rROMB0], a ; $0249
+	pop_rom_bank ; $0246
 	pop af ; $024c
 	ret ; $024d
 ClearBothVRAMBanks:

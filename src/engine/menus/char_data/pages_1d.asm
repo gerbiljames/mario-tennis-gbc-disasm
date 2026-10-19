@@ -47,15 +47,9 @@ ShowCharDataScreen:
 	res B_IE_TIMER, [hl] ; $4078
 	call EnableLCD ; $407a
 	call AdvanceFrame ; $407d
-	ld a, $01 ; $4080
-	ld hl, CharDataScreenBgScrollTask ; $4082
-	call RegisterFrameTask ; $4085
-	ld a, $01 ; $4088
-	ld hl, DrawCharDataPageArrowsTask ; $408a
-	call RegisterFrameTask ; $408d
-	ld a, $01 ; $4090
-	ld hl, CharDataValuesSyncTask ; $4092
-	call RegisterFrameTask ; $4095
+	frame_task CharDataScreenBgScrollTask ; $4080
+	frame_task DrawCharDataPageArrowsTask ; $4088
+	frame_task CharDataValuesSyncTask ; $4090
 	farcall StartCharDataScreenAnimTask ; $4098
 	script_fade_in 16 ; $409b
 	call WaitFadeEnd ; $40a0
@@ -288,36 +282,14 @@ LoadCharDataScreenPageGraphics:
 	xor a ; $435b
 	ld [wStoryCharacterSlot], a ; $435c
 	push af ; $435f
-	ld hl, wStoryMainName ; $4360
-	ld a, [wStoryCharacterSlot] ; $4363
-	or a ; $4366
-	jr z, .mainPaletteField ; $4367
-	ld l, $40 ; $4369
-.mainPaletteField:
-	ld a, l ; $436b
-	add $0c ; $436c
-	ld l, a ; $436e
-	ld a, h ; $436f
-	adc $00 ; $4370
-	ld h, a ; $4372
+	ld_story_char_field CHARREC_PALETTE ; $4360
 	pop af ; $4373
 	ld a, [hl] ; $4374
 	ld_bg_pals de, 4, 1 ; $4375
 	farcall LoadIndexedPaletteThunk ; $4378
 	wram_bank WRAM_STAGING ; $437b
 	push af ; $4381
-	ld hl, wStoryMainName ; $4382
-	ld a, [wStoryCharacterSlot] ; $4385
-	or a ; $4388
-	jr z, .mainCharField ; $4389
-	ld l, $40 ; $438b
-.mainCharField:
-	ld a, l ; $438d
-	add $0b ; $438e
-	ld l, a ; $4390
-	ld a, h ; $4391
-	adc $00 ; $4392
-	ld h, a ; $4394
+	ld_story_char_field CHARREC_CHAR ; $4382
 	pop af ; $4395
 	ld a, [hl] ; $4396
 	ld de, wDecompBuffer ; $4397
@@ -337,36 +309,14 @@ LoadCharDataScreenPageGraphics:
 	ld a, $01 ; $43be
 	ld [wStoryCharacterSlot], a ; $43c0
 	push af ; $43c3
-	ld hl, wStoryMainName ; $43c4
-	ld a, [wStoryCharacterSlot] ; $43c7
-	or a ; $43ca
-	jr z, .partnerPaletteField ; $43cb
-	ld l, $40 ; $43cd
-.partnerPaletteField:
-	ld a, l ; $43cf
-	add $0c ; $43d0
-	ld l, a ; $43d2
-	ld a, h ; $43d3
-	adc $00 ; $43d4
-	ld h, a ; $43d6
+	ld_story_char_field CHARREC_PALETTE ; $43c4
 	pop af ; $43d7
 	ld a, [hl] ; $43d8
 	ld_bg_pals de, 1, 1 ; $43d9
 	farcall LoadIndexedPaletteThunk ; $43dc
 	wram_bank WRAM_STAGING ; $43df
 	push af ; $43e5
-	ld hl, wStoryMainName ; $43e6
-	ld a, [wStoryCharacterSlot] ; $43e9
-	or a ; $43ec
-	jr z, .partnerCharField ; $43ed
-	ld l, $40 ; $43ef
-.partnerCharField:
-	ld a, l ; $43f1
-	add $0b ; $43f2
-	ld l, a ; $43f4
-	ld a, h ; $43f5
-	adc $00 ; $43f6
-	ld h, a ; $43f8
+	ld_story_char_field CHARREC_CHAR ; $43e6
 	pop af ; $43f9
 	ld a, [hl] ; $43fa
 	ld de, wDecompBuffer ; $43fb
@@ -410,18 +360,7 @@ BuildCharDataSummaryFields:
 	xor a ; $444d
 	ld [wStoryCharacterSlot], a ; $444e
 	push af ; $4451
-	ld hl, wStoryMainName ; $4452
-	ld a, [wStoryCharacterSlot] ; $4455
-	or a ; $4458
-	jr z, .mainNameField ; $4459
-	ld l, $40 ; $445b
-.mainNameField:
-	ld a, l ; $445d
-	add $00 ; $445e
-	ld l, a ; $4460
-	ld a, h ; $4461
-	adc $00 ; $4462
-	ld h, a ; $4464
+	ld_story_char_field CHARREC_NAME ; $4452
 	pop af ; $4465
 	ld de, wScreenAttrmap + 30 * TILEMAP_WIDTH + 11 ; $4466
 	ld c, $0a ; $4469
@@ -431,36 +370,14 @@ BuildCharDataSummaryFields:
 	ld b, $0c ; $4474
 	call PlotTilesAtOffsets ; $4476
 	push af ; $4479
-	ld hl, wStoryMainName ; $447a
-	ld a, [wStoryCharacterSlot] ; $447d
-	or a ; $4480
-	jr z, .mainLeftHandedField ; $4481
-	ld l, $40 ; $4483
-.mainLeftHandedField:
-	ld a, l ; $4485
-	add $0e ; $4486
-	ld l, a ; $4488
-	ld a, h ; $4489
-	adc $00 ; $448a
-	ld h, a ; $448c
+	ld_story_char_field CHARREC_LEFT_HANDED ; $447a
 	pop af ; $448d
 	ld a, [hl] ; $448e
 	ld hl, wScreenAttrmap + 31 * TILEMAP_WIDTH + 3 ; $448f
 	call DrawFourTileFlagLabel ; $4492
 	wram_bank WRAM_SCENE ; $4495
 	push af ; $449b
-	ld hl, wStoryMainName ; $449c
-	ld a, [wStoryCharacterSlot] ; $449f
-	or a ; $44a2
-	jr z, .mainLevelField ; $44a3
-	ld l, $40 ; $44a5
-.mainLevelField:
-	ld a, l ; $44a7
-	add $18 ; $44a8
-	ld l, a ; $44aa
-	ld a, h ; $44ab
-	adc $00 ; $44ac
-	ld h, a ; $44ae
+	ld_story_char_field CHARREC_LEVEL ; $449c
 	pop af ; $44af
 	ld a, [hl] ; $44b0
 	ld h, $00 ; $44b1
@@ -472,18 +389,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $44bf
 	wram_bank WRAM_SCENE ; $44c2
 	push af ; $44c8
-	ld hl, wStoryMainName ; $44c9
-	ld a, [wStoryCharacterSlot] ; $44cc
-	or a ; $44cf
-	jr z, .mainSpinLevelField ; $44d0
-	ld l, $40 ; $44d2
-.mainSpinLevelField:
-	ld a, l ; $44d4
-	add $38 ; $44d5
-	ld l, a ; $44d7
-	ld a, h ; $44d8
-	adc $00 ; $44d9
-	ld h, a ; $44db
+	ld_story_char_field CHARREC_TRAIN_LEVELS ; $44c9
 	pop af ; $44dc
 	ld a, [hl] ; $44dd
 	ld h, $00 ; $44de
@@ -495,18 +401,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $44ec
 	wram_bank WRAM_SCENE ; $44ef
 	push af ; $44f5
-	ld hl, wStoryMainName ; $44f6
-	ld a, [wStoryCharacterSlot] ; $44f9
-	or a ; $44fc
-	jr z, .mainPowerLevelField ; $44fd
-	ld l, $40 ; $44ff
-.mainPowerLevelField:
-	ld a, l ; $4501
-	add $39 ; $4502
-	ld l, a ; $4504
-	ld a, h ; $4505
-	adc $00 ; $4506
-	ld h, a ; $4508
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $44f6
 	pop af ; $4509
 	ld a, [hl] ; $450a
 	ld h, $00 ; $450b
@@ -518,18 +413,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4519
 	wram_bank WRAM_SCENE ; $451c
 	push af ; $4522
-	ld hl, wStoryMainName ; $4523
-	ld a, [wStoryCharacterSlot] ; $4526
-	or a ; $4529
-	jr z, .mainControlLevelField ; $452a
-	ld l, $40 ; $452c
-.mainControlLevelField:
-	ld a, l ; $452e
-	add $3a ; $452f
-	ld l, a ; $4531
-	ld a, h ; $4532
-	adc $00 ; $4533
-	ld h, a ; $4535
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $4523
 	pop af ; $4536
 	ld a, [hl] ; $4537
 	ld h, $00 ; $4538
@@ -541,18 +425,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4546
 	wram_bank WRAM_SCENE ; $4549
 	push af ; $454f
-	ld hl, wStoryMainName ; $4550
-	ld a, [wStoryCharacterSlot] ; $4553
-	or a ; $4556
-	jr z, .mainSpeedLevelField ; $4557
-	ld l, $40 ; $4559
-.mainSpeedLevelField:
-	ld a, l ; $455b
-	add $3b ; $455c
-	ld l, a ; $455e
-	ld a, h ; $455f
-	adc $00 ; $4560
-	ld h, a ; $4562
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $4550
 	pop af ; $4563
 	ld a, [hl] ; $4564
 	ld h, $00 ; $4565
@@ -583,18 +456,7 @@ BuildCharDataSummaryFields:
 	ld [de], a ; $459e
 	wram_bank WRAM_SCENE ; $459f
 	push af ; $45a5
-	ld hl, wStoryMainName ; $45a6
-	ld a, [wStoryCharacterSlot] ; $45a9
-	or a ; $45ac
-	jr z, .mainExpField ; $45ad
-	ld l, $40 ; $45af
-.mainExpField:
-	ld a, l ; $45b1
-	add $2c ; $45b2
-	ld l, a ; $45b4
-	ld a, h ; $45b5
-	adc $00 ; $45b6
-	ld h, a ; $45b8
+	ld_story_char_field CHARREC_EXP ; $45a6
 	pop af ; $45b9
 	call FormatExp24BitDecimal ; $45ba
 	ld hl, wCharDataNumberBuffer ; $45bd
@@ -620,18 +482,7 @@ BuildCharDataSummaryFields:
 	ld a, $01 ; $45db
 	ld [wStoryCharacterSlot], a ; $45dd
 	push af ; $45e0
-	ld hl, wStoryMainName ; $45e1
-	ld a, [wStoryCharacterSlot] ; $45e4
-	or a ; $45e7
-	jr z, .partnerNameField ; $45e8
-	ld l, $40 ; $45ea
-.partnerNameField:
-	ld a, l ; $45ec
-	add $00 ; $45ed
-	ld l, a ; $45ef
-	ld a, h ; $45f0
-	adc $00 ; $45f1
-	ld h, a ; $45f3
+	ld_story_char_field CHARREC_NAME ; $45e1
 	pop af ; $45f4
 	ld de, wCharDataPagePlane + 2 * TILEMAP_WIDTH + 27 ; $45f5
 	ld c, $0a ; $45f8
@@ -642,36 +493,14 @@ BuildCharDataSummaryFields:
 	ld b, $09 ; $4609
 	call PlotTilesAtOffsets ; $460b
 	push af ; $460e
-	ld hl, wStoryMainName ; $460f
-	ld a, [wStoryCharacterSlot] ; $4612
-	or a ; $4615
-	jr z, .partnerLeftHandedField ; $4616
-	ld l, $40 ; $4618
-.partnerLeftHandedField:
-	ld a, l ; $461a
-	add $0e ; $461b
-	ld l, a ; $461d
-	ld a, h ; $461e
-	adc $00 ; $461f
-	ld h, a ; $4621
+	ld_story_char_field CHARREC_LEFT_HANDED ; $460f
 	pop af ; $4622
 	ld a, [hl] ; $4623
 	ld hl, wCharDataPagePlane + 3 * TILEMAP_WIDTH + 19 ; $4624
 	call DrawFourTileFlagLabel ; $4627
 	wram_bank WRAM_SCENE ; $462a
 	push af ; $4630
-	ld hl, wStoryMainName ; $4631
-	ld a, [wStoryCharacterSlot] ; $4634
-	or a ; $4637
-	jr z, .partnerLevelField ; $4638
-	ld l, $40 ; $463a
-.partnerLevelField:
-	ld a, l ; $463c
-	add $18 ; $463d
-	ld l, a ; $463f
-	ld a, h ; $4640
-	adc $00 ; $4641
-	ld h, a ; $4643
+	ld_story_char_field CHARREC_LEVEL ; $4631
 	pop af ; $4644
 	ld a, [hl] ; $4645
 	ld h, $00 ; $4646
@@ -683,18 +512,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4654
 	wram_bank WRAM_SCENE ; $4657
 	push af ; $465d
-	ld hl, wStoryMainName ; $465e
-	ld a, [wStoryCharacterSlot] ; $4661
-	or a ; $4664
-	jr z, .partnerSpinLevelField ; $4665
-	ld l, $40 ; $4667
-.partnerSpinLevelField:
-	ld a, l ; $4669
-	add $38 ; $466a
-	ld l, a ; $466c
-	ld a, h ; $466d
-	adc $00 ; $466e
-	ld h, a ; $4670
+	ld_story_char_field CHARREC_TRAIN_LEVELS ; $465e
 	pop af ; $4671
 	ld a, [hl] ; $4672
 	ld h, $00 ; $4673
@@ -706,18 +524,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4681
 	wram_bank WRAM_SCENE ; $4684
 	push af ; $468a
-	ld hl, wStoryMainName ; $468b
-	ld a, [wStoryCharacterSlot] ; $468e
-	or a ; $4691
-	jr z, .partnerPowerLevelField ; $4692
-	ld l, $40 ; $4694
-.partnerPowerLevelField:
-	ld a, l ; $4696
-	add $39 ; $4697
-	ld l, a ; $4699
-	ld a, h ; $469a
-	adc $00 ; $469b
-	ld h, a ; $469d
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $468b
 	pop af ; $469e
 	ld a, [hl] ; $469f
 	ld h, $00 ; $46a0
@@ -729,18 +536,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $46ae
 	wram_bank WRAM_SCENE ; $46b1
 	push af ; $46b7
-	ld hl, wStoryMainName ; $46b8
-	ld a, [wStoryCharacterSlot] ; $46bb
-	or a ; $46be
-	jr z, .partnerControlLevelField ; $46bf
-	ld l, $40 ; $46c1
-.partnerControlLevelField:
-	ld a, l ; $46c3
-	add $3a ; $46c4
-	ld l, a ; $46c6
-	ld a, h ; $46c7
-	adc $00 ; $46c8
-	ld h, a ; $46ca
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $46b8
 	pop af ; $46cb
 	ld a, [hl] ; $46cc
 	ld h, $00 ; $46cd
@@ -752,18 +548,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $46db
 	wram_bank WRAM_SCENE ; $46de
 	push af ; $46e4
-	ld hl, wStoryMainName ; $46e5
-	ld a, [wStoryCharacterSlot] ; $46e8
-	or a ; $46eb
-	jr z, .partnerSpeedLevelField ; $46ec
-	ld l, $40 ; $46ee
-.partnerSpeedLevelField:
-	ld a, l ; $46f0
-	add $3b ; $46f1
-	ld l, a ; $46f3
-	ld a, h ; $46f4
-	adc $00 ; $46f5
-	ld h, a ; $46f7
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $46e5
 	pop af ; $46f8
 	ld a, [hl] ; $46f9
 	ld h, $00 ; $46fa
@@ -794,18 +579,7 @@ BuildCharDataSummaryFields:
 	ld [de], a ; $4734
 	wram_bank WRAM_SCENE ; $4735
 	push af ; $473b
-	ld hl, wStoryMainName ; $473c
-	ld a, [wStoryCharacterSlot] ; $473f
-	or a ; $4742
-	jr z, .partnerExpField ; $4743
-	ld l, $40 ; $4745
-.partnerExpField:
-	ld a, l ; $4747
-	add $2c ; $4748
-	ld l, a ; $474a
-	ld a, h ; $474b
-	adc $00 ; $474c
-	ld h, a ; $474e
+	ld_story_char_field CHARREC_EXP ; $473c
 	pop af ; $474f
 	call FormatExp24BitDecimal ; $4750
 	ld hl, wCharDataNumberBuffer ; $4753

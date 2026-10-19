@@ -83,8 +83,7 @@ ExecuteShot:
 	ld [hl], d ; $543c
 	ld hl, ShotRecoilFrameTask ; $543d
 	push hl ; $5440
-	ld a, [wCurrentShotType] ; $5441
-	rst Rst00 ; $5444
+	jumptable [wCurrentShotType] ; $5441
 	dw ExecuteShotTopspin ; $5445 jumptable
 	dw ExecuteShotPowerTopspin ; $5447 jumptable
 	dw ExecuteShotSlice ; $5449 jumptable
@@ -214,12 +213,7 @@ NudgeShotByPlayerMomentum:
 	ld a, [wCharCourtPos] ; $5514
 	and $02 ; $5517
 	jr nz, .addMomentum ; $5519
-	xor a ; $551b
-	sub l ; $551c
-	ld l, a ; $551d
-	sbc a ; $551e
-	sub h ; $551f
-	ld h, a ; $5520
+	neg_hl ; $551b
 .addMomentum:
 	add hl, bc ; $5521
 	ld c, l ; $5522
@@ -230,15 +224,7 @@ CheckBallInSmashRange:
 	ld a, [hl+] ; $5528
 	ld h, [hl] ; $5529
 	ld l, a ; $552a
-	bit 7, h ; $552b
-	jr z, .absX ; $552d
-	xor a ; $552f
-	sub l ; $5530
-	ld l, a ; $5531
-	sbc a ; $5532
-	sub h ; $5533
-	ld h, a ; $5534
-.absX:
+	abs_hl ; $552b
 	ld e, l ; $5535
 	ld d, h ; $5536
 	sra d ; $5537
@@ -262,15 +248,7 @@ CheckBallInSmashRange:
 	ld a, [hl+] ; $5557
 	ld h, [hl] ; $5558
 	ld l, a ; $5559
-	bit 7, h ; $555a
-	jr z, .absDepth ; $555c
-	xor a ; $555e
-	sub l ; $555f
-	ld l, a ; $5560
-	sbc a ; $5561
-	sub h ; $5562
-	ld h, a ; $5563
-.absDepth:
+	abs_hl ; $555a
 	ld de, $04e0 ; $5564
 	add hl, de ; $5567
 	ld e, l ; $5568
@@ -279,12 +257,7 @@ CheckBallInSmashRange:
 	ld a, [hl+] ; $556d
 	ld h, [hl] ; $556e
 	ld l, a ; $556f
-	xor a ; $5570
-	sub l ; $5571
-	ld l, a ; $5572
-	sbc a ; $5573
-	sub h ; $5574
-	ld h, a ; $5575
+	neg_hl ; $5570
 	call AngleFromVector16 ; $5576
 	pop hl ; $5579
 	add hl, bc ; $557a
@@ -353,12 +326,7 @@ GetShotAimOffsetForSide:
 	ld a, [hl+] ; $5611
 	ld h, [hl] ; $5612
 	ld l, a ; $5613
-	xor a ; $5614
-	sub l ; $5615
-	ld l, a ; $5616
-	sbc a ; $5617
-	sub h ; $5618
-	ld h, a ; $5619
+	neg_hl ; $5614
 	sra h ; $561a
 	rr l ; $561c
 	sra h ; $561e
@@ -397,8 +365,7 @@ ComputeShotTargetX:
 	ld a, [wCharAimOffset] ; $564f
 	add $02 ; $5652
 	and $07 ; $5654
-	ld a, a ; $5656
-	rst Rst00 ; $5657
+	jumptable a ; $5656
 	dw ComputeShotTargetX.fromBallX ; $5658 jumptable
 	dw ComputeShotTargetX.halveShort ; $565a jumptable
 	dw ComputeShotTargetX.straight ; $565c jumptable
@@ -415,22 +382,12 @@ ComputeShotTargetX:
 	ld a, [hl+] ; $566f
 	ld h, [hl] ; $5670
 	ld l, a ; $5671
-	xor a ; $5672
-	sub l ; $5673
-	ld l, a ; $5674
-	sbc a ; $5675
-	sub h ; $5676
-	ld h, a ; $5677
+	neg_hl ; $5672
 	add hl, de ; $5678
 	ld e, l ; $5679
 	ld d, h ; $567a
 	call ClampShotTargetX ; $567b
-	xor a ; $567e
-	sub e ; $567f
-	ld e, a ; $5680
-	sbc a ; $5681
-	sub d ; $5682
-	ld d, a ; $5683
+	neg_de ; $567e
 	ret ; $5684
 .halveLong:
 	sra d ; $5685

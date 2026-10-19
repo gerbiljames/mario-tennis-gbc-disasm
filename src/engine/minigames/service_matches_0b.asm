@@ -276,14 +276,12 @@ ServiceMatch1JudgePoint:
 	ret nz ; $4927
 	ld a, [wRallyLength] ; $4928
 	dec a ; $492b
-	ld a, a ; $492c
-	rst Rst00 ; $492d
+	jumptable a ; $492c
 	dw ServiceMatch1JudgePoint.rally1 ; $492e jumptable
 	dw ServiceMatch1Cases1.dispatchResult ; $4930 jumptable
 .rally1:
 	ld a, b ; $4932
-	ld a, a ; $4933
-	rst Rst00 ; $4934
+	jumptable a ; $4933
 	dw ServiceMatch1JudgePoint.result0 ; $4935 jumptable
 	dw ServiceMatch1Cases1 ; $4937 jumptable
 	dw ServiceMatch1Cases1.ignoreBounce ; $4939 jumptable
@@ -315,8 +313,7 @@ ServiceMatch1Cases1:
 	ret ; $496b
 .dispatchResult:
 	ld a, b ; $496c
-	ld a, a ; $496d
-	rst Rst00 ; $496e
+	jumptable a ; $496d
 	dw ServiceMatch1Cases1.checkPointOutcome ; $496f jumptable
 	dw ServiceMatch1Cases2 ; $4971 jumptable
 	dw ServiceMatch1Cases2.ignoreBounce ; $4973 jumptable
@@ -533,14 +530,12 @@ ServiceMatch2JudgePoint:
 	ret nz ; $4b58
 	ld a, [wRallyLength] ; $4b59
 	dec a ; $4b5c
-	ld a, a ; $4b5d
-	rst Rst00 ; $4b5e
+	jumptable a ; $4b5d
 	dw ServiceMatch2JudgePoint.rally1 ; $4b5f jumptable
 	dw ServiceMatch2Cases1.dispatchResult ; $4b61 jumptable
 .rally1:
 	ld a, b ; $4b63
-	ld a, a ; $4b64
-	rst Rst00 ; $4b65
+	jumptable a ; $4b64
 	dw ServiceMatch2JudgePoint.result0 ; $4b66 jumptable
 	dw ServiceMatch2Cases1 ; $4b68 jumptable
 	dw ServiceMatch2Cases1.ignoreBounce ; $4b6a jumptable
@@ -585,8 +580,7 @@ ServiceMatch2Cases1:
 	ret ; $4bb7
 .dispatchResult:
 	ld a, b ; $4bb8
-	ld a, a ; $4bb9
-	rst Rst00 ; $4bba
+	jumptable a ; $4bb9
 	dw ServiceMatch2Cases1.checkPointOutcome ; $4bbb jumptable
 	dw ServiceMatch2Cases2 ; $4bbd jumptable
 	dw ServiceMatch2Cases2.ignoreBounce ; $4bbf jumptable

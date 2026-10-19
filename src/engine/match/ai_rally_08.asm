@@ -7,12 +7,7 @@ PredictBallXAtDepth:
 	ld a, [hl+] ; $7c8f
 	ld h, [hl] ; $7c90
 	ld l, a ; $7c91
-	xor a ; $7c92
-	sub l ; $7c93
-	ld l, a ; $7c94
-	sbc a ; $7c95
-	sub h ; $7c96
-	ld h, a ; $7c97
+	neg_hl ; $7c92
 	add hl, de ; $7c98
 	call MulHLByTangent ; $7c99
 	ld hl, wBallX ; $7c9c
@@ -22,14 +17,12 @@ PredictBallXAtDepth:
 	add hl, de ; $7ca2
 	ret ; $7ca3
 AiRecoverStateSingles:
-	ld a, [wAiPhase] ; $7ca4
-	rst Rst00 ; $7ca7
+	jumptable [wAiPhase] ; $7ca4
 	dw AiChooseHomePosition ; $7ca8 jumptable
 	dw AiReturnToPositionPhase ; $7caa jumptable
 	dw AiPhaseNoop ; $7cac jumptable
 AiChooseHomePosition:
-	ld a, [wAiPositionStrategy] ; $7cae
-	rst Rst00 ; $7cb1
+	jumptable [wAiPositionStrategy] ; $7cae
 	dw AiChooseHomePosition.baseline ; $7cb2 jumptable
 	dw AiChooseHomePosition.net ; $7cb4 jumptable
 	dw AiChooseHomePosition.midCourt ; $7cb6 jumptable
@@ -51,12 +44,7 @@ AiChooseHomePosition:
 	ld e, a ; $7cd1
 	bit 7, d ; $7cd2
 	jr z, .apply ; $7cd4
-	xor a ; $7cd6
-	sub e ; $7cd7
-	ld e, a ; $7cd8
-	sbc a ; $7cd9
-	sub d ; $7cda
-	ld d, a ; $7cdb
+	neg_de ; $7cd6
 .apply:
 	ld hl, wBallTargetX ; $7cdc
 	ld a, [hl+] ; $7cdf
@@ -76,8 +64,7 @@ AiReturnToPositionPhase:
 .done:
 	ret ; $7cf9
 AiRallyStateSingles:
-	ld a, [wAiPhase] ; $7cfa
-	rst Rst00 ; $7cfd
+	jumptable [wAiPhase] ; $7cfa
 	dw AiSetReactionDelay ; $7cfe jumptable
 	dw AiChoosePositionByStrategy ; $7d00 jumptable
 	dw AiTrackBallPhase ; $7d02 jumptable
@@ -97,8 +84,7 @@ AiSetReactionDelay:
 	ld [wAiActionTimer], a ; $7d1d
 	jp AiAdvancePhase ; $7d20
 AiChoosePositionByStrategy:
-	ld a, [wAiPositionStrategy] ; $7d23
-	rst Rst00 ; $7d26
+	jumptable [wAiPositionStrategy] ; $7d23
 	dw AiChoosePositionByStrategy.behindLanding ; $7d27 jumptable
 	dw AiChoosePositionByStrategy.adaptive ; $7d29 jumptable
 	dw AiChoosePositionByStrategy.lateral ; $7d2b jumptable
@@ -204,14 +190,12 @@ AiSwingControlSingles:
 	call AiRollAimAwayFromChar ; $7dec
 	jp AiAdvancePhase ; $7def
 AiRecoverStateNetPlayer:
-	ld a, [wAiPhase] ; $7df2
-	rst Rst00 ; $7df5
+	jumptable [wAiPhase] ; $7df2
 	dw AiTrackBallTargetX ; $7df6 jumptable
 	dw AiReturnToPositionPhase ; $7df8 jumptable
 	dw AiPhaseNoop ; $7dfa jumptable
 AiRecoverStateBaseliner:
-	ld a, [wAiPhase] ; $7dfc
-	rst Rst00 ; $7dff
+	jumptable [wAiPhase] ; $7dfc
 	dw AiAdvancePhase ; $7e00 jumptable
 	dw AiBaselinerShadowPartner ; $7e02 jumptable
 	dw AiReturnToPositionPhase ; $7e04 jumptable
@@ -238,26 +222,19 @@ AiBaselinerShadowPartner:
 	add $02 ; $7e28
 	and $03 ; $7e2a
 	call CharIndexToWramBank ; $7e2c
-	ld a, a ; $7e2f
-	wram_bank ; $7e30
+	wram_bank a ; $7e2f
 	ld hl, -$c0 ; $7e34
 	ld a, [wCharWalkTargetX + 1] ; $7e37
 	bit 7, a ; $7e3a
 	jr z, .setTarget ; $7e3c
-	xor a ; $7e3e
-	sub l ; $7e3f
-	ld l, a ; $7e40
-	sbc a ; $7e41
-	sub h ; $7e42
-	ld h, a ; $7e43
+	neg_hl ; $7e3e
 .setTarget:
 	pop_wram_bank ; $7e44
 	ld de, $0460 ; $7e49
 	call SetCharTargetMirrored ; $7e4c
 	jp AiAdvancePhase ; $7e4f
 AiRallyStateNetPlayer:
-	ld a, [wAiPhase] ; $7e52
-	rst Rst00 ; $7e55
+	jumptable [wAiPhase] ; $7e52
 	dw AiNetPlayerCheckRally ; $7e56 jumptable
 	dw AiNetPlayerPredictLanding ; $7e58 jumptable
 	dw AiDoublesTrackBallPhase ; $7e5a jumptable
@@ -268,8 +245,7 @@ AiRallyStateNetPlayer:
 	dw AiPhaseNoop ; $7e64 jumptable
 	dw AiNetPlayerPoachCheck ; $7e66 jumptable
 AiRallyStateBaseliner:
-	ld a, [wAiPhase] ; $7e68
-	rst Rst00 ; $7e6b
+	jumptable [wAiPhase] ; $7e68
 	dw AiBaselinerSetTarget ; $7e6c jumptable
 	dw AiBaselinerDone ; $7e6e jumptable
 	dw AiDoublesTrackBallPhase ; $7e70 jumptable
@@ -331,8 +307,7 @@ AiDoublesTrackBallPhase:
 	add $02 ; $7eed
 	and $03 ; $7eef
 	call CharIndexToWramBank ; $7ef1
-	ld a, a ; $7ef4
-	wram_bank ; $7ef5
+	wram_bank a ; $7ef4
 	ld a, [wCharShotButton1] ; $7ef9
 	ld b, a ; $7efc
 	pop_wram_bank ; $7efd
@@ -368,42 +343,20 @@ AiNetPlayerPoachCheck:
 	add $02 ; $7f37
 	and $03 ; $7f39
 	call CharIndexToWramBank ; $7f3b
-	ld a, a ; $7f3e
-	wram_bank ; $7f3f
+	wram_bank a ; $7f3e
 	ld hl, wBallDepth ; $7f43
 	ld a, [hl+] ; $7f46
 	ld d, [hl] ; $7f47
 	ld e, a ; $7f48
-	bit 7, d ; $7f49
-	jr z, .poach ; $7f4b
-	xor a ; $7f4d
-	sub e ; $7f4e
-	ld e, a ; $7f4f
-	sbc a ; $7f50
-	sub d ; $7f51
-	ld d, a ; $7f52
-.poach:
+	abs_de ; $7f49
 	ld hl, wCharPosDepth + 1 ; $7f53
 	ld a, [hl+] ; $7f56
 	ld h, [hl] ; $7f57
 	ld l, a ; $7f58
-	bit 7, h ; $7f59
-	jr z, .stay ; $7f5b
-	xor a ; $7f5d
-	sub l ; $7f5e
-	ld l, a ; $7f5f
-	sbc a ; $7f60
-	sub h ; $7f61
-	ld h, a ; $7f62
-.stay:
+	abs_hl ; $7f59
 	ld bc, $0020 ; $7f63
 	add hl, bc ; $7f66
-	ld a, l ; $7f67
-	sub e ; $7f68
-	ld l, a ; $7f69
-	ld a, h ; $7f6a
-	sbc d ; $7f6b
-	ld h, a ; $7f6c
+	sub_hl_de ; $7f67
 	pop_wram_bank ; $7f6d
 	bit 7, h ; $7f72
 	jr z, .done ; $7f74

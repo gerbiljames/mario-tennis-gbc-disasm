@@ -89,9 +89,7 @@ RunTitleScreen:
 	ld hl, Palettes_6b_11 ; $7636
 	ld_obj_pals de, 0, 1 ; $7639
 	call LoadPaletteShadow ; $763c
-	ld a, $01 ; $763f
-	ld hl, QueueTitleSprite ; $7641
-	call RegisterFrameTask ; $7644
+	frame_task QueueTitleSprite ; $763f
 	sound BGM_TITLE_SCREEN ; $7647
 	call EnableLCD ; $7649
 	script_fade_in 4 ; $764c

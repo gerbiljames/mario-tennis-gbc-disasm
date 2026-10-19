@@ -144,15 +144,7 @@ ShotBallPathSmash:
 	ld a, [hl+] ; $66a3
 	ld h, [hl] ; $66a4
 	ld l, a ; $66a5
-	bit 7, h ; $66a6
-	jr z, .offset ; $66a8
-	xor a ; $66aa
-	sub l ; $66ab
-	ld l, a ; $66ac
-	sbc a ; $66ad
-	sub h ; $66ae
-	ld h, a ; $66af
-.offset:
+	abs_hl ; $66a6
 	add hl, de ; $66b0
 	ld e, l ; $66b1
 	ld d, h ; $66b2
@@ -160,12 +152,7 @@ ShotBallPathSmash:
 	ld a, [hl+] ; $66b6
 	ld h, [hl] ; $66b7
 	ld l, a ; $66b8
-	xor a ; $66b9
-	sub l ; $66ba
-	ld l, a ; $66bb
-	sbc a ; $66bc
-	sub h ; $66bd
-	ld h, a ; $66be
+	neg_hl ; $66b9
 	ld c, l ; $66bf
 	ld b, h ; $66c0
 	sra b ; $66c1

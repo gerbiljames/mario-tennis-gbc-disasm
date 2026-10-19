@@ -170,23 +170,15 @@ RunNameEntryScreen:
 	call DisableLCDSafely ; $6e22
 	call ClearFrameTasks ; $6e25
 	call SetupNameEntryScreen ; $6e28
-	ld a, $01 ; $6e2b
-	ld hl, UpdateAnimatedTilesTask_38 ; $6e2d
-	call RegisterFrameTask ; $6e30
-	ld a, $01 ; $6e33
-	ld hl, DrawNameEntryCursor ; $6e35
-	call RegisterFrameTask ; $6e38
-	ld a, $01 ; $6e3b
-	ld hl, DrawNameEntryUnderlineSprites ; $6e3d
-	call RegisterFrameTask ; $6e40
+	frame_task UpdateAnimatedTilesTask_38 ; $6e2b
+	frame_task DrawNameEntryCursor ; $6e33
+	frame_task DrawNameEntryUnderlineSprites ; $6e3b
 	call EnableLCD ; $6e43
 	script_fade_in 16 ; $6e46
 	call WaitFadeEnd ; $6e4b
 	ld hl, rIE ; $6e4e
 	res B_IE_TIMER, [hl] ; $6e51
-	ld a, $01 ; $6e53
-	ld hl, TickMenuBgScrollTask_38 ; $6e55
-	call RegisterFrameTask ; $6e58
+	frame_task TickMenuBgScrollTask_38 ; $6e53
 .redraw:
 	ld a, [wMenuCursorX] ; $6e5b
 	push de ; $6e5e

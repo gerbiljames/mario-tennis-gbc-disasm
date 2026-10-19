@@ -3,9 +3,7 @@ InitSaveHeader:
 	push bc ; $404b
 	push de ; $404c
 	push hl ; $404d
-	ld a, $00 ; $404e
-	ldh [hSramBank], a ; $4050
-	ld [rRAMB], a ; $4052
+	sram_bank $00 ; $404e
 	ld hl, SaveSignature ; $4055
 	ld de, sSaveSignature ; $4058
 	call CopySaveSignature ; $405b

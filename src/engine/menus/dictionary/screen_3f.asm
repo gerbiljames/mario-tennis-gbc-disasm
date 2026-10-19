@@ -73,9 +73,7 @@ TennisDictionaryScreen:
 	call AdvanceFrame ; $4111
 	script_fade_in 16 ; $4114
 	call WaitFadeEnd ; $4119
-	ld a, $1d ; $411c
-	ld hl, UpdateTennisDictionarySprites ; $411e
-	call RegisterFrameTask ; $4121
+	frame_task UpdateTennisDictionarySprites, $1d ; $411c
 	wram_bank WRAM_SCENE ; $4124
 	ld a, [wTennisDictMode] ; $412a
 	cp TENNISDICT_INDEX ; $412d

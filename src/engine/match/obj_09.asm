@@ -73,8 +73,7 @@ LoadOnCourtCharacterGfx:
 	ld a, $ff ; $40b5
 	ld de, vTiles0 tile $14 ; $40b7
 	farcall LoadOnCourtCharTilesB ; $40ba
-	ld a, [wOnCourtCharCountMinus1] ; $40bd
-	rst Rst00 ; $40c0
+	jumptable [wOnCourtCharCountMinus1] ; $40bd
 	dw LoadOnCourtCharacterGfx.done ; $40c1 jumptable
 	dw LoadOnCourtCharacterGfx.char4 ; $40c3 jumptable
 	dw LoadOnCourtCharacterGfx.char3 ; $40c5 jumptable
@@ -621,8 +620,7 @@ FinishObjSlotUpdate:
 	bit 0, [hl] ; $471b
 	ret z ; $471d
 	farcall FindServerCharBank ; $471e
-	ld a, b ; $4721
-	wram_bank ; $4722
+	wram_bank b ; $4721
 	ld a, [wCharScreenX] ; $4726
 	ld d, a ; $4729
 	ld a, [wCharScreenY] ; $472a
@@ -657,8 +655,7 @@ ObjUpdateHide:
 	res 0, [hl] ; $4761
 	ret ; $4763
 ObjUpdateRunCurve:
-	ld a, [wObjSlotWork + OBJSLOT_STATE] ; $4764
-	rst Rst00 ; $4767
+	jumptable [wObjSlotWork + OBJSLOT_STATE] ; $4764
 	dw ObjUpdateRunCurve.stepCurve ; $4768 jumptable
 	dw ObjUpdateRunCurve.done ; $476a jumptable
 .stepCurve:

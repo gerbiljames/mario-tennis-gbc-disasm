@@ -44,12 +44,8 @@ ShowExpAwardScreen:
 	call InitResultsScreenCharacters ; $5472
 	call EnableLCD ; $5475
 	call AdvanceFrame ; $5478
-	ld a, $01 ; $547b
-	ld hl, DrawExpScreenCharSprites ; $547d
-	call RegisterFrameTask ; $5480
-	ld a, $01 ; $5483
-	ld hl, DrawExpTotalDigits ; $5485
-	call RegisterFrameTask ; $5488
+	frame_task DrawExpScreenCharSprites ; $547b
+	frame_task DrawExpTotalDigits ; $5483
 	script_fade_in 16 ; $548b
 	call WaitFadeEnd ; $5490
 	wait_frames 20 ; $5493
@@ -511,8 +507,7 @@ DrawExpScreenCharSprites:
 	ld b, a ; $591f
 .loadCharBank:
 	push bc ; $5920
-	ld a, b ; $5921
-	wram_bank ; $5922
+	wram_bank b ; $5921
 	xor a ; $5926
 	call UpdateExpScreenCharSprite ; $5927
 	ld hl, wCharSpriteSlot ; $592a
@@ -523,8 +518,7 @@ DrawExpScreenCharSprites:
 	ret z ; $593a
 	inc b ; $593b
 	inc b ; $593c
-	ld a, b ; $593d
-	wram_bank ; $593e
+	wram_bank b ; $593d
 	ld a, $01 ; $5942
 	call UpdateExpScreenCharSprite ; $5944
 	ld hl, wCharSpriteSlot ; $5947

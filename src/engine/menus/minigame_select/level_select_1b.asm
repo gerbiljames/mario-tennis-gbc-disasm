@@ -31,9 +31,7 @@ Unused_1b_LoadUnlockDebugCursorGfx:
 	ld hl, UnlockDebugCursorPalette ; $68f8
 	ld_obj_pals de, 0, 1 ; $68fb
 	call LoadPaletteShadow ; $68fe
-	ld a, $01 ; $6901
-	ld hl, Unused_1b_DrawUnlockDebugFlagSprites ; $6903
-	call RegisterFrameTask ; $6906
+	frame_task Unused_1b_DrawUnlockDebugFlagSprites ; $6901
 	ret ; $6909
 UnlockDebugCursorGfx:
 	INCBIN "data/engine/menus/minigame_select/lz_UnlockDebugCursorGfx.bin" ; $690a, 29 bytes
@@ -95,9 +93,7 @@ Unused_1b_RunStoryDataConfirmMenu:
 	ld [wStubbedPromptTaskState], a ; $69af
 	ld a, $0c ; $69b2
 	ld [wStubbedPromptTaskState + 1], a ; $69b4
-	ld a, $01 ; $69b7
-	ld hl, Unused_1b_StubNop6 ; $69b9
-	call RegisterFrameTask ; $69bc
+	frame_task Unused_1b_StubNop6 ; $69b7
 	ld b, $01 ; $69bf
 	farcall Unused_18_RunTwoOptionSelectB ; $69c1
 	push af ; $69c4

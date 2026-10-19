@@ -142,15 +142,9 @@ ShowMinigameDataScreen:
 	call BuildMinigameDataScreen ; $73e2
 	ld a, $01 ; $73e5
 	ld [wAnimatedTileSet], a ; $73e7
-	ld a, $01 ; $73ea
-	ld hl, UpdateAnimatedTilesTask ; $73ec
-	call RegisterFrameTask ; $73ef
-	ld a, $01 ; $73f2
-	ld hl, DrawMinigameDataScrollArrows ; $73f4
-	call RegisterFrameTask ; $73f7
-	ld a, $01 ; $73fa
-	ld hl, DrawMinigameHighScoreNumbers ; $73fc
-	call RegisterFrameTask ; $73ff
+	frame_task UpdateAnimatedTilesTask ; $73ea
+	frame_task DrawMinigameDataScrollArrows ; $73f2
+	frame_task DrawMinigameHighScoreNumbers ; $73fa
 	call EnableLCD ; $7402
 	script_fade_in 16 ; $7405
 	call WaitFadeEnd ; $740a

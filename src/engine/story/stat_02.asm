@@ -68,12 +68,7 @@ LookupStatBarLevel:
 	ld l, b ; $449b
 	call SignExtendCToBC ; $449c
 	call SignExtendLToHL ; $449f
-	ld a, l ; $44a2
-	sub c ; $44a3
-	ld l, a ; $44a4
-	ld a, h ; $44a5
-	sbc b ; $44a6
-	ld h, a ; $44a7
+	sub_hl_bc ; $44a2
 	ld a, h ; $44a8
 	or l ; $44a9
 	bit 7, h ; $44aa
@@ -98,12 +93,7 @@ ScaleStatForBarLevel:
 	ld d, $00 ; $44c3
 	dec e ; $44c5
 	pop hl ; $44c6
-	ld a, l ; $44c7
-	sub e ; $44c8
-	ld l, a ; $44c9
-	ld a, h ; $44ca
-	sbc d ; $44cb
-	ld h, a ; $44cc
+	sub_hl_de ; $44c7
 	push hl ; $44cd
 	ld de, -127 ; $44ce
 	add hl, de ; $44d1

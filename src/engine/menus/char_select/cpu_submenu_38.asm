@@ -254,9 +254,7 @@ RunLinkCharSelectScreen:
 	ldh [hLinkRemoteInput], a ; $6455
 	ld [wLinkSelectCmdResult], a ; $6457
 	ld [wLinkSelectStartupFrames], a ; $645a
-	ld a, $01 ; $645d
-	ld hl, TickMenuBgScrollTask_38 ; $645f
-	call RegisterFrameTask ; $6462
+	frame_task TickMenuBgScrollTask_38 ; $645d
 	wram_bank WRAM_SCREEN ; $6465
 	call RefreshCharInfoPanel ; $646b
 .frameLoop:

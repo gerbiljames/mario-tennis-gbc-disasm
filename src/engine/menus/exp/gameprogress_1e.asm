@@ -98,12 +98,8 @@ BuildGameProgressScreen:
 	ld [wAnimatedTileSet], a ; $7333
 	ld a, $03 ; $7336
 	ld [wAnimatedTilePeriod], a ; $7338
-	ld a, $01 ; $733b
-	ld hl, UpdateProgressScreenAnimatedTiles ; $733d
-	call RegisterFrameTask ; $7340
-	ld a, $01 ; $7343
-	ld hl, DrawProgressScreenSprites ; $7345
-	call RegisterFrameTask ; $7348
+	frame_task UpdateProgressScreenAnimatedTiles ; $733b
+	frame_task DrawProgressScreenSprites ; $7343
 	script_fade_in 16 ; $734b
 	call WaitFadeEnd ; $7350
 .loop:

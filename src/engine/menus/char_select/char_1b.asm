@@ -56,9 +56,7 @@ Unused_1b_LoadCharSelectScreenGfx:
 	ret ; $6028
 Unused_1b_StartCharSelectCursorTask:
 	farcall Unused_18_LoadCharSelectCursorGfx ; $6029
-	ld a, $0a ; $602c
-	ld hl, Unused_1b_UpdateCharSelectCursorTask ; $602e
-	call RegisterFrameTask ; $6031
+	frame_task Unused_1b_UpdateCharSelectCursorTask, $0a ; $602c
 	ret ; $6034
 Unused_1b_UpdateCharSelectCursorTask:
 	ld a, [wCharSelectChar] ; $6035
@@ -302,18 +300,7 @@ RunNewGameSetup:
 	xor a ; $622c
 	ld [wStoryCharacterSlot], a ; $622d
 	push af ; $6230
-	ld hl, wStoryMainName ; $6231
-	ld a, [wStoryCharacterSlot] ; $6234
-	or a ; $6237
-	jr z, .mainCharField ; $6238
-	ld l, $40 ; $623a
-.mainCharField:
-	ld a, l ; $623c
-	add $0b ; $623d
-	ld l, a ; $623f
-	ld a, h ; $6240
-	adc $00 ; $6241
-	ld h, a ; $6243
+	ld_story_char_field CHARREC_CHAR ; $6231
 	pop af ; $6244
 	ld c, [hl] ; $6245
 	ld b, $00 ; $6246
@@ -337,18 +324,7 @@ RunNewGameSetup:
 	ld a, [wStoryCharacterSlot] ; $626a
 	farcall InitPlayerRecordFromTemplate ; $626d
 	push af ; $6270
-	ld hl, wStoryMainName ; $6271
-	ld a, [wStoryCharacterSlot] ; $6274
-	or a ; $6277
-	jr z, .autoPartnerCharField ; $6278
-	ld l, $40 ; $627a
-.autoPartnerCharField:
-	ld a, l ; $627c
-	add $0b ; $627d
-	ld l, a ; $627f
-	ld a, h ; $6280
-	adc $00 ; $6281
-	ld h, a ; $6283
+	ld_story_char_field CHARREC_CHAR ; $6271
 	pop af ; $6284
 	ld c, [hl] ; $6285
 	ld b, $01 ; $6286
@@ -385,18 +361,7 @@ RunNewGameSetup:
 	and a ; $62be
 	jr nz, .selectPartner ; $62bf
 	push af ; $62c1
-	ld hl, wStoryMainName ; $62c2
-	ld a, [wStoryCharacterSlot] ; $62c5
-	or a ; $62c8
-	jr z, .pickedPartnerCharField ; $62c9
-	ld l, $40 ; $62cb
-.pickedPartnerCharField:
-	ld a, l ; $62cd
-	add $0b ; $62ce
-	ld l, a ; $62d0
-	ld a, h ; $62d1
-	adc $00 ; $62d2
-	ld h, a ; $62d4
+	ld_story_char_field CHARREC_CHAR ; $62c2
 	pop af ; $62d5
 	ld c, [hl] ; $62d6
 	ld b, $01 ; $62d7

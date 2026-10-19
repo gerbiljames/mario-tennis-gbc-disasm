@@ -29,12 +29,7 @@ Unused_29_ApplyBallTrajectoryCapped:
 	ld a, [hl+] ; $4178
 	ld h, [hl] ; $4179
 	ld l, a ; $417a
-	ld a, l ; $417b
-	sub e ; $417c
-	ld l, a ; $417d
-	ld a, h ; $417e
-	sbc d ; $417f
-	ld h, a ; $4180
+	sub_hl_de ; $417b
 	jr nc, .clampDist ; $4181
 	ld hl, wShotDistMax ; $4183
 	ld a, [hl+] ; $4186

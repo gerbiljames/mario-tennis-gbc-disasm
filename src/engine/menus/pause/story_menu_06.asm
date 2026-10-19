@@ -304,8 +304,7 @@ Unused_06_QueueDebugStatsCursorSprites:
 	call QueueSprite ; $6c2e
 	ret ; $6c31
 Unused_06_AdjustSelectedDebugStat:
-	ld a, [wMatchMenuSelection] ; $6c32
-	rst Rst00 ; $6c35
+	jumptable [wMatchMenuSelection] ; $6c32
 	dw Unused_06_AdjustSelectedDebugStat.adjustWordAt0 ; $6c36 jumptable
 	dw Unused_06_AdjustSelectedDebugStat.adjustWordAt4 ; $6c38 jumptable
 	dw Unused_06_AdjustSelectedDebugStat.adjustWordAt6 ; $6c3a jumptable
@@ -614,8 +613,7 @@ RunStoryModeMenu:
 	push af ; $6e6c
 	ld hl, StoryPauseMenu_AfterItem ; $6e6d
 	push hl ; $6e70
-	ld a, [wMatchMenuSelection] ; $6e71
-	rst Rst00 ; $6e74
+	jumptable [wMatchMenuSelection] ; $6e71
 	dw StoryPauseMenu_PlayerData ; $6e75 jumptable
 	dw StoryPauseMenu_GameProgress ; $6e77 jumptable
 	dw StoryPauseMenu_Options ; $6e79 jumptable
@@ -725,8 +723,7 @@ StoryPauseMenu_PlayerData:
 	ld a, [wMatchMenuSelection] ; $6f51
 	cp MATCHMENUSEL_CANCELLED ; $6f54
 	jr z, .restoreStoryTilemapNoPriority ; $6f56
-	ld a, [wMatchMenuSelection] ; $6f58
-	rst Rst00 ; $6f5b
+	jumptable [wMatchMenuSelection] ; $6f58
 	dw StoryPauseMenu_CharPartnerData ; $6f5c jumptable
 	dw StoryPauseMenu_Equipment ; $6f5e jumptable
 .restoreStoryTilemapNoPriority:
@@ -786,8 +783,7 @@ StoryPauseMenu_Options:
 	push af ; $6fd6
 	ld hl, StoryOptionsMenu_AfterItem ; $6fd7
 	push hl ; $6fda
-	ld a, [wMatchMenuSelection] ; $6fdb
-	rst Rst00 ; $6fde
+	jumptable [wMatchMenuSelection] ; $6fdb
 	dw StoryPauseMenu_MessageSpeed ; $6fdf jumptable
 	dw StoryPauseMenu_MusicToggle ; $6fe1 jumptable
 StoryOptionsMenu_AfterItem:

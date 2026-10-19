@@ -452,12 +452,7 @@ UpdateMinigameBestScore:
 	ld l, e ; $6f67
 	ld d, b ; $6f68
 	ld e, c ; $6f69
-	ld a, l ; $6f6a
-	sub c ; $6f6b
-	ld l, a ; $6f6c
-	ld a, h ; $6f6d
-	sbc b ; $6f6e
-	ld h, a ; $6f6f
+	sub_hl_bc ; $6f6a
 	bit 7, h ; $6f70
 	jr z, .restore ; $6f72
 	ld hl, wMinigameRecordValue ; $6f74

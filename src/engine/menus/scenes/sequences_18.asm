@@ -1,12 +1,8 @@
 PlayScreenSequence1:
 	call SetupScreen1Assets ; $77bb
 	call InitObjectSceneA ; $77be
-	ld a, $01 ; $77c1
-	ld hl, TaskDrawObjectSprites_18 ; $77c3
-	call RegisterFrameTask ; $77c6
-	ld a, $01 ; $77c9
-	ld hl, TaskUpdateObjects_18 ; $77cb
-	call RegisterFrameTask ; $77ce
+	frame_task TaskDrawObjectSprites_18 ; $77c1
+	frame_task TaskUpdateObjects_18 ; $77c9
 	sound BGM_CREDITS ; $77d1
 	call EnableLCD ; $77d3
 	script_fade_in 2 ; $77d6
@@ -32,9 +28,7 @@ PlayScreenSequence1:
 	call DisableLCDSafely ; $780d
 	call LoadScreen1ObjTiles ; $7810
 	call FillAllBgPalettes ; $7813
-	ld a, $01 ; $7816
-	ld hl, QueueScreen1Sprites ; $7818
-	call RegisterFrameTask ; $781b
+	frame_task QueueScreen1Sprites ; $7816
 	call EnableLCD ; $781e
 	script_fade_in 64 ; $7821
 	call WaitFadeEnd ; $7826
@@ -139,12 +133,8 @@ PlayScreenSequence2:
 	farcall LoadScreenAssetRecord ; $7934
 	farcall QueueWram3MapToVRAM ; $7937
 	call InitObjectSceneB ; $793a
-	ld a, $01 ; $793d
-	ld hl, TaskDrawObjectSprites_18 ; $793f
-	call RegisterFrameTask ; $7942
-	ld a, $01 ; $7945
-	ld hl, TaskUpdateObjects_18 ; $7947
-	call RegisterFrameTask ; $794a
+	frame_task TaskDrawObjectSprites_18 ; $793d
+	frame_task TaskUpdateObjects_18 ; $7945
 	call EnableLCD ; $794d
 	script_fade_in 1 ; $7950
 	call WaitFadeEnd ; $7955
@@ -194,12 +184,8 @@ PlayScreenSequence2:
 	ld [wScreenSequenceTimer], a ; $79c5
 	cp $b4 ; $79c8
 	jr nz, .theEndDelay ; $79ca
-	ld a, $01 ; $79cc
-	ld hl, TaskFadeInPalette_18 ; $79ce
-	call RegisterFrameTask ; $79d1
-	ld a, $01 ; $79d4
-	ld hl, QueueScreen2Sprites ; $79d6
-	call RegisterFrameTask ; $79d9
+	frame_task TaskFadeInPalette_18 ; $79cc
+	frame_task QueueScreen2Sprites ; $79d4
 	sound BGM_THE_END ; $79dc
 .waitTheEndInput:
 	call AdvanceFrame ; $79de

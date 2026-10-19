@@ -27,8 +27,7 @@ NetChallengerResultScene:
 	ld a, [wPointWinLoseFlag] ; $5de6
 	inc a ; $5de9
 .dispatch:
-	ld a, a ; $5dea
-	rst Rst00 ; $5deb
+	jumptable a ; $5dea
 	dw ChallengerResultFinish ; $5dec jumptable
 	dw ChallengerResultLose ; $5dee jumptable
 	dw ChallengerResultDraw ; $5df0 jumptable
@@ -62,8 +61,7 @@ StrokeChallengerResultScene:
 	ld a, [wPointWinLoseFlag] ; $5e65
 	inc a ; $5e68
 .dispatch:
-	ld a, a ; $5e69
-	rst Rst00 ; $5e6a
+	jumptable a ; $5e69
 	dw ChallengerResultFinish ; $5e6b jumptable
 	dw ChallengerResultLose ; $5e6d jumptable
 	dw ChallengerResultDraw ; $5e6f jumptable

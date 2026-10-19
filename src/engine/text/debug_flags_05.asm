@@ -210,9 +210,7 @@ RunDebugFlagEditor:
 	call RedrawWindowRows ; $6609
 	ld a, [wDebugFlagWindow2Id] ; $660c
 	call RedrawWindowRows ; $660f
-	ld a, $0f ; $6612
-	ld hl, StubNop_05 ; $6614
-	call RegisterFrameTask ; $6617
+	frame_task StubNop_05, $0f ; $6612
 .loop:
 	ldh a, [hInputRisingEdge] ; $661a
 	bit PADB_B, a ; $661c

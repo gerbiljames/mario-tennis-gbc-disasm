@@ -189,8 +189,7 @@ ResetMedallionMatchHitState:
 	ld [wMinigameActors + 5 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5dea
 	ret ; $5ded
 MedallionMatchTargetActorHandler:
-	ld a, [wMinigameSceneActor + MGACTOR_STATE] ; $5dee
-	rst Rst00 ; $5df1
+	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5dee
 	dw MedallionMatchTargetState0 ; $5df2 jumptable
 	dw MedallionMatchTargetState1 ; $5df4 jumptable
 	dw MedallionMatchTargetState2 ; $5df6 jumptable

@@ -32,36 +32,21 @@ GetScoreBonus:
 	ld d, [hl] ; $6814
 	ld e, a ; $6815
 	ld hl, $03e7 ; $6816
-	ld a, l ; $6819
-	sub e ; $681a
-	ld l, a ; $681b
-	ld a, h ; $681c
-	sbc d ; $681d
-	ld h, a ; $681e
+	sub_hl_de ; $6819
 	bit 7, h ; $681f
 	jr z, .atMost999 ; $6821
 	ld de, $01f4 ; $6823
 	jr .restore ; $6826
 .atMost999:
 	ld hl, $01f3 ; $6828
-	ld a, l ; $682b
-	sub e ; $682c
-	ld l, a ; $682d
-	ld a, h ; $682e
-	sbc d ; $682f
-	ld h, a ; $6830
+	sub_hl_de ; $682b
 	bit 7, h ; $6831
 	jr z, .atMost499 ; $6833
 	ld de, $00fa ; $6835
 	jr .restore ; $6838
 .atMost499:
 	ld hl, $0063 ; $683a
-	ld a, l ; $683d
-	sub e ; $683e
-	ld l, a ; $683f
-	ld a, h ; $6840
-	sbc d ; $6841
-	ld h, a ; $6842
+	sub_hl_de ; $683d
 	bit 7, h ; $6843
 	jr z, .atMost99 ; $6845
 	ld de, $0032 ; $6847

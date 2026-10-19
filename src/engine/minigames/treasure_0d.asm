@@ -258,8 +258,7 @@ TreasureBoxZonePool1:
 StubNop_0d_3:
 	ret ; $5acb
 TreasureBoxTargetActorHandler:
-	ld a, [wMinigameSceneActor + MGACTOR_STATE] ; $5acc
-	rst Rst00 ; $5acf
+	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5acc
 	dw TreasureBoxTargetState0 ; $5ad0 jumptable
 	dw TreasureBoxTargetState1 ; $5ad2 jumptable
 	dw TreasureBoxTargetState2 ; $5ad4 jumptable

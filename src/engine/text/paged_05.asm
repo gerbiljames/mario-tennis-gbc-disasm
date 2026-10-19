@@ -117,9 +117,7 @@ Unused_05_RunPagedTextMenuAutoSize:
 	wram_bank WRAM_TEXT ; $4a11
 	xor a ; $4a17
 	ld [wMenuPage], a ; $4a18
-	ld a, $01 ; $4a1b
-	ld hl, Unused_05_PagedMenuFrameTask ; $4a1d
-	call RegisterFrameTask ; $4a20
+	frame_task Unused_05_PagedMenuFrameTask ; $4a1b
 .pageLoop:
 	call FetchDialogueText ; $4a23
 	call MeasureTextDimensions ; $4a26
@@ -233,9 +231,7 @@ Unused_05_RunMenuSelectionShared:
 	ld [hl], e ; $4aea
 	inc hl ; $4aeb
 	ld [hl], d ; $4aec
-	ld a, $01 ; $4aed
-	ld hl, Unused_05_AnimateMenuScrollArrowsTask ; $4aef
-	call RegisterFrameTask ; $4af2
+	frame_task Unused_05_AnimateMenuScrollArrowsTask ; $4aed
 	pop hl ; $4af5
 	pop de ; $4af6
 	pop bc ; $4af7

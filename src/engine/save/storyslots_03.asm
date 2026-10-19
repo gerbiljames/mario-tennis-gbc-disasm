@@ -26,9 +26,7 @@ InvalidateSaveBlock:
 	push bc ; $4b1e
 	ld a, RAMG_SRAM_ENABLE ; $4b1f
 	ld [rRAMG], a ; $4b21
-	ld a, $00 ; $4b24
-	ldh [hSramBank], a ; $4b26
-	ld [rRAMB], a ; $4b28
+	sram_bank $00 ; $4b24
 	call InitSaveHeader ; $4b2b
 	ld a, b ; $4b2e
 	call GetSaveBlockDirEntry ; $4b2f
@@ -78,9 +76,7 @@ Unused_03_ResetAllSaveBlocks:
 	call InvalidateSaveBlock ; $4b7e
 	ld a, RAMG_SRAM_ENABLE ; $4b81
 	ld [rRAMG], a ; $4b83
-	ld a, $00 ; $4b86
-	ldh [hSramBank], a ; $4b88
-	ld [rRAMB], a ; $4b8a
+	sram_bank $00 ; $4b86
 	call Unused_03_ClearSaveFlagsArea ; $4b8d
 	call InitSaveHeader ; $4b90
 	call MirrorSaveHeaderToBank1 ; $4b93
@@ -93,9 +89,7 @@ ReadSaveBlock:
 	push bc ; $4b9d
 	ld a, RAMG_SRAM_ENABLE ; $4b9e
 	ld [rRAMG], a ; $4ba0
-	ld a, $00 ; $4ba3
-	ldh [hSramBank], a ; $4ba5
-	ld [rRAMB], a ; $4ba7
+	sram_bank $00 ; $4ba3
 	ld a, b ; $4baa
 	call GetSaveBlockDirEntry ; $4bab
 	ld a, [bc] ; $4bae
@@ -123,9 +117,7 @@ ReadSaveBlock:
 	ld d, h ; $4bcc
 	ld e, l ; $4bcd
 	pop hl ; $4bce
-	ld a, l ; $4bcf
-	ldh [hSramBank], a ; $4bd0
-	ld [rRAMB], a ; $4bd2
+	sram_bank l ; $4bcf
 	pop hl ; $4bd5
 	push hl ; $4bd6
 	push bc ; $4bd7
@@ -151,9 +143,7 @@ ReadSaveBlock:
 	ld a, b ; $4bed
 	or c ; $4bee
 	jr nz, .checksumLoop ; $4bef
-	ld a, $00 ; $4bf1
-	ldh [hSramBank], a ; $4bf3
-	ld [rRAMB], a ; $4bf5
+	sram_bank $00 ; $4bf1
 	pop bc ; $4bf8
 	ld hl, SAVEDIR_CHECKSUM ; $4bf9
 	add hl, bc ; $4bfc
@@ -183,9 +173,7 @@ VerifySaveBlock:
 	push bc ; $4c16
 	ld a, RAMG_SRAM_ENABLE ; $4c17
 	ld [rRAMG], a ; $4c19
-	ld a, $00 ; $4c1c
-	ldh [hSramBank], a ; $4c1e
-	ld [rRAMB], a ; $4c20
+	sram_bank $00 ; $4c1c
 	ld a, b ; $4c23
 	call GetSaveBlockDirEntry ; $4c24
 	ld a, [bc] ; $4c27
@@ -213,9 +201,7 @@ VerifySaveBlock:
 	ld d, h ; $4c45
 	ld e, l ; $4c46
 	pop hl ; $4c47
-	ld a, l ; $4c48
-	ldh [hSramBank], a ; $4c49
-	ld [rRAMB], a ; $4c4b
+	sram_bank l ; $4c48
 	pop hl ; $4c4e
 	push de ; $4c4f
 	push bc ; $4c50
@@ -223,9 +209,7 @@ VerifySaveBlock:
 	ld a, [de] ; $4c51
 	cp [hl] ; $4c52
 	jr z, .next ; $4c53
-	ld a, $00 ; $4c55
-	ldh [hSramBank], a ; $4c57
-	ld [rRAMB], a ; $4c59
+	sram_bank $00 ; $4c55
 	add sp, 6 ; $4c5c
 	ld a, $fd ; $4c5e
 	jp .done ; $4c60
@@ -250,9 +234,7 @@ VerifySaveBlock:
 	ld a, b ; $4c77
 	or c ; $4c78
 	jr nz, .checksumLoop ; $4c79
-	ld a, $00 ; $4c7b
-	ldh [hSramBank], a ; $4c7d
-	ld [rRAMB], a ; $4c7f
+	sram_bank $00 ; $4c7b
 	pop bc ; $4c82
 	ld hl, SAVEDIR_CHECKSUM ; $4c83
 	add hl, bc ; $4c86
@@ -282,9 +264,7 @@ ReadSaveBlockTag:
 	push bc ; $4ca0
 	ld a, RAMG_SRAM_ENABLE ; $4ca1
 	ld [rRAMG], a ; $4ca3
-	ld a, $00 ; $4ca6
-	ldh [hSramBank], a ; $4ca8
-	ld [rRAMB], a ; $4caa
+	sram_bank $00 ; $4ca6
 	ld a, b ; $4cad
 	call GetSaveBlockDirEntry ; $4cae
 	ld a, [bc] ; $4cb1
@@ -321,9 +301,7 @@ Unused_03_ReadSaveBlockTagWord:
 	push bc ; $4cd5
 	ld a, RAMG_SRAM_ENABLE ; $4cd6
 	ld [rRAMG], a ; $4cd8
-	ld a, $00 ; $4cdb
-	ldh [hSramBank], a ; $4cdd
-	ld [rRAMB], a ; $4cdf
+	sram_bank $00 ; $4cdb
 	ld a, b ; $4ce2
 	call GetSaveBlockDirEntry ; $4ce3
 	ld a, [bc] ; $4ce6
@@ -430,9 +408,7 @@ TestSaveFlag:
 	ld b, a ; $4d89
 	ld a, RAMG_SRAM_ENABLE ; $4d8a
 	ld [rRAMG], a ; $4d8c
-	ld a, $00 ; $4d8f
-	ldh [hSramBank], a ; $4d91
-	ld [rRAMB], a ; $4d93
+	sram_bank $00 ; $4d8f
 	ld hl, SaveFlagMaskTable_03 ; $4d96
 	ld a, e ; $4d99
 	rlca ; $4d9a
@@ -459,9 +435,7 @@ SetSaveFlag:
 	push af ; $4db7
 	ld a, RAMG_SRAM_ENABLE ; $4db8
 	ld [rRAMG], a ; $4dba
-	ld a, $00 ; $4dbd
-	ldh [hSramBank], a ; $4dbf
-	ld [rRAMB], a ; $4dc1
+	sram_bank $00 ; $4dbd
 	ld hl, SaveFlagMaskTable_03 ; $4dc4
 	ld a, e ; $4dc7
 	rlca ; $4dc8
@@ -486,9 +460,7 @@ ClearSaveFlag:
 	push af ; $4de5
 	ld a, RAMG_SRAM_ENABLE ; $4de6
 	ld [rRAMG], a ; $4de8
-	ld a, $00 ; $4deb
-	ldh [hSramBank], a ; $4ded
-	ld [rRAMB], a ; $4def
+	sram_bank $00 ; $4deb
 	ld hl, SaveFlagMaskTable_03 ; $4df2
 	ld a, e ; $4df5
 	rlca ; $4df6

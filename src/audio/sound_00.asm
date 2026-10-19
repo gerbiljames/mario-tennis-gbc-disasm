@@ -303,8 +303,7 @@ PlaySound:
 	ld a, [hl] ; $32df
 	and $0f ; $32e0
 	or $70 ; $32e2
-	ldh [hRomBank], a ; $32e4
-	ld [rROMB0], a ; $32e6
+	rom_bank ; $32e4
 	ld a, [hl+] ; $32e9
 	swap a ; $32ea
 	and $0f ; $32ec
@@ -330,9 +329,7 @@ PlaySound:
 	dec b ; $3306
 	jr nz, .channelLoop ; $3307
 	ei ; $3309
-	pop af ; $330a
-	ldh [hRomBank], a ; $330b
-	ld [rROMB0], a ; $330d
+	pop_rom_bank ; $330a
 	pop hl ; $3310
 	pop de ; $3311
 	pop bc ; $3312
@@ -448,8 +445,7 @@ UpdateSoundChannels:
 	ld c, $02 ; $33b2
 	call CopyMemoryFast ; $33b4
 	ldh a, [hSndDataBank] ; $33b7
-	ldh [hRomBank], a ; $33b9
-	ld [rROMB0], a ; $33bb
+	rom_bank ; $33b9
 	ldh a, [hSndChannelType] ; $33be
 	and $03 ; $33c0
 	ld [wSndChannelType], a ; $33c2
@@ -608,9 +604,7 @@ UpdateSoundChannels:
 	and b ; $34ce
 	ld [wSndPanShadow], a ; $34cf
 	ldh [rAUDTERM], a ; $34d2
-	pop af ; $34d4
-	ldh [hRomBank], a ; $34d5
-	ld [rROMB0], a ; $34d7
+	pop_rom_bank ; $34d4
 	jp ApplyChannelUpdateRequest ; $34da
 .loadHeader:
 	ldh a, [hSndDataPtr] ; $34dd

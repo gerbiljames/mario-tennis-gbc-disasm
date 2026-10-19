@@ -145,12 +145,7 @@ MeasureNextArgNumberWidth:
 	pop hl ; $5380
 	xor a ; $5381
 .subtractPowerLoop:
-	ld a, l ; $5382
-	sub e ; $5383
-	ld l, a ; $5384
-	ld a, h ; $5385
-	sbc d ; $5386
-	ld h, a ; $5387
+	sub_hl_de ; $5382
 	bit 7, h ; $5388
 	jr nz, .offset ; $538a
 	inc a ; $538c

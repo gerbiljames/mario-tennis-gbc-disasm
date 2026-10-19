@@ -124,9 +124,7 @@ RunLocationExit:
 	ld [wStoryModeEntryPoint], a ; $5640
 .saveSlot:
 	xor a ; $5643
-	ld a, a ; $5644
-	ldh [hSramBank], a ; $5645
-	ld [rRAMB], a ; $5647
+	sram_bank a ; $5644
 	pop hl ; $564a
 	pop de ; $564b
 	pop bc ; $564c
@@ -455,9 +453,7 @@ InitSceneScroll:
 	ld a, $40 ; $595a
 	ld [wMapWidthTiles], a ; $595c
 	ld [wMapHeightTiles], a ; $595f
-	ld a, $0f ; $5962
-	ld hl, UpdateSceneScroll ; $5964
-	call RegisterFrameTask ; $5967
+	frame_task UpdateSceneScroll, $0f ; $5962
 	pop hl ; $596a
 	pop de ; $596b
 	pop bc ; $596c

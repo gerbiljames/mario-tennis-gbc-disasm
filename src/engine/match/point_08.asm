@@ -160,8 +160,7 @@ ResolvePointOutcome:
 	call StepMatchFrame ; $4e03
 	ld hl, ResolvePointResultSequence ; $4e06
 	push hl ; $4e09
-	ld a, [wPointOutcome] ; $4e0a
-	rst Rst00 ; $4e0d
+	jumptable [wPointOutcome] ; $4e0a
 	dw RetStub ; $4e0e jumptable
 	dw ResolveCalledPoint ; $4e10 jumptable
 	dw ResolveCalledPoint ; $4e12 jumptable
@@ -404,8 +403,7 @@ CharPointEndReaction:
 	ld [hl+], a ; $4ff3
 	ret ; $4ff4
 SpreadTeammateTargets:
-	ld a, [wOnCourtCharCountMinus1] ; $4ff5
-	rst Rst00 ; $4ff8
+	jumptable [wOnCourtCharCountMinus1] ; $4ff5
 	dw RetStub ; $4ff9 jumptable
 	dw RetStub ; $4ffb jumptable
 	dw SpreadFarTeamPair ; $4ffd jumptable

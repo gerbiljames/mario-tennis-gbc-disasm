@@ -170,12 +170,7 @@ ExchangeNibbleBlockMaster:
 	ld d, a ; $4179
 	push hl ; $417a
 	push de ; $417b
-	ld a, l ; $417c
-	sub e ; $417d
-	ld l, a ; $417e
-	ld a, h ; $417f
-	sbc d ; $4180
-	ld h, a ; $4181
+	sub_hl_de ; $417c
 	ld a, h ; $4182
 	or l ; $4183
 	pop de ; $4184
@@ -379,12 +374,7 @@ ExchangeNibbleBlockSlave:
 	ld d, a ; $42d7
 	push hl ; $42d8
 	push de ; $42d9
-	ld a, l ; $42da
-	sub e ; $42db
-	ld l, a ; $42dc
-	ld a, h ; $42dd
-	sbc d ; $42de
-	ld h, a ; $42df
+	sub_hl_de ; $42da
 	ld a, h ; $42e0
 	or l ; $42e1
 	pop de ; $42e2

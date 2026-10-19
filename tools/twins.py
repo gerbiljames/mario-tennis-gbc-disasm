@@ -34,9 +34,16 @@ _CODE_WORDS = frozenset(
     "swap xor farcall push_wram_bank pop_wram_bank wram_bank ld_hl_indexed wait_frames lb "
     "set_flag clear_flag test_flag ld_flag_id sound ld_slot ld_de_indexed ld_bc_indexed ld_xy ld_oam "
     "ld_size ld_tile_run rect_size rect_cell map_cell sprite_xy sprite_attr_tile sprite_tile_attr "
-    "ld_bg_pals ld_obj_pals ld_cell rect_ptrs rect_pair add_hl_a add_de_a add_bc_a".split())
+    "ld_bg_pals ld_obj_pals ld_cell rect_ptrs rect_pair add_hl_a add_de_a add_bc_a "
+    "neg_hl neg_de neg_bc abs_hl abs_de abs_bc sub_hl_de sub_hl_bc ld_story_char_field rom_bank "
+    "push_rom_bank pop_rom_bank sram_bank jumptable frame_task".split())
 # a macro counted at the instructions it stands for, where that is several
-_WEIGHT = {"add_hl_a": 4, "add_de_a": 4, "add_bc_a": 4}
+_WEIGHT = {"add_hl_a": 4, "add_de_a": 4, "add_bc_a": 4, "neg_hl": 6, "neg_de": 6, "neg_bc": 6,
+           "abs_hl": 8, "abs_de": 8, "abs_bc": 8, "sub_hl_de": 6, "sub_hl_bc": 6,
+           "ld_story_char_field": 11, "rom_bank": 2, "push_rom_bank": 4, "pop_rom_bank": 3,
+           "sram_bank": 2, "jumptable": 1, "frame_task": 3}
+# these load their argument, if given, into a first
+_ARG_LOADS = {"rom_bank", "push_rom_bank", "sram_bank", "jumptable"}
 _SUFFIX_RE = re.compile(r"\b([A-Za-z]\w*?)_[0-9a-f]{2}\b")
 
 
@@ -65,7 +72,7 @@ def routines(min_instrs):
                                       else m.group(1), body))
             word = body.split()[0] if body.strip() else ""
             if word in _CODE_WORDS or word.startswith("script_"):
-                n += _WEIGHT.get(word, 1)
+                n += _WEIGHT.get(word, 1) + (word in _ARG_LOADS and len(body.split()) > 1)
         flush()
     return out
 

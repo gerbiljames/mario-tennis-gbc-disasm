@@ -435,9 +435,7 @@ TextCmdWaitButtonPage:
 	push bc ; $4f8e
 	push de ; $4f8f
 	push hl ; $4f90
-	ld a, $01 ; $4f91
-	ld hl, TextContinueArrowBlinkTask ; $4f93
-	call RegisterFrameTask ; $4f96
+	frame_task TextContinueArrowBlinkTask ; $4f91
 	call WaitTextAdvanceInput ; $4f99
 	ld a, $10 ; $4f9c
 	ld [wTextArrowBlinkCounter], a ; $4f9e

@@ -291,12 +291,7 @@ DecelerateCharDepth:
 	ld l, a ; $7483
 	bit 7, d ; $7484
 	jr nz, .negate ; $7486
-	xor a ; $7488
-	sub l ; $7489
-	ld l, a ; $748a
-	sbc a ; $748b
-	sub h ; $748c
-	ld h, a ; $748d
+	neg_hl ; $7488
 .negate:
 	add hl, de ; $748e
 	ld a, d ; $748f
@@ -329,12 +324,7 @@ DecelerateCharX:
 .negate:
 	bit 7, d ; $74ba
 	jr nz, .apply ; $74bc
-	xor a ; $74be
-	sub l ; $74bf
-	ld l, a ; $74c0
-	sbc a ; $74c1
-	sub h ; $74c2
-	ld h, a ; $74c3
+	neg_hl ; $74be
 .apply:
 	add hl, de ; $74c4
 	ld a, d ; $74c5
@@ -365,18 +355,8 @@ ClampCharDepthSpeed:
 	ld l, a ; $74ec
 	bit 7, h ; $74ed
 	jr z, .clamp ; $74ef
-	xor a ; $74f1
-	sub l ; $74f2
-	ld l, a ; $74f3
-	sbc a ; $74f4
-	sub h ; $74f5
-	ld h, a ; $74f6
-	xor a ; $74f7
-	sub c ; $74f8
-	ld c, a ; $74f9
-	sbc a ; $74fa
-	sub b ; $74fb
-	ld b, a ; $74fc
+	neg_hl ; $74f1
+	neg_bc ; $74f7
 .clamp:
 	ld a, c ; $74fd
 	sub l ; $74fe
@@ -408,18 +388,8 @@ ClampCharXSpeed:
 	ld l, a ; $7521
 	bit 7, h ; $7522
 	jr z, .clamp ; $7524
-	xor a ; $7526
-	sub l ; $7527
-	ld l, a ; $7528
-	sbc a ; $7529
-	sub h ; $752a
-	ld h, a ; $752b
-	xor a ; $752c
-	sub c ; $752d
-	ld c, a ; $752e
-	sbc a ; $752f
-	sub b ; $7530
-	ld b, a ; $7531
+	neg_hl ; $7526
+	neg_bc ; $752c
 .clamp:
 	ld a, c ; $7532
 	sub l ; $7533
@@ -460,12 +430,7 @@ MoveCharTowardTarget:
 	ld a, [hl+] ; $7563
 	ld h, [hl] ; $7564
 	ld l, a ; $7565
-	ld a, l ; $7566
-	sub c ; $7567
-	ld l, a ; $7568
-	ld a, h ; $7569
-	sbc b ; $756a
-	ld h, a ; $756b
+	sub_hl_bc ; $7566
 	call AngleFromVectorCoarse ; $756c
 	ld [wCharFacingDesired], a ; $756f
 	ld a, [wCharFacingDesired] ; $7572

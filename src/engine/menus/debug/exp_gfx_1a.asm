@@ -65,9 +65,7 @@ Unused_1a_RunDebugCharViewer:
 	call Unused_1a_LoadCharViewerScreen ; $6817
 	call Unused_1a_SetupCharViewerScene ; $681a
 	call EnableLCD ; $681d
-	ld a, $01 ; $6820
-	ld hl, Unused_1a_DrawCharViewerCursorSprite ; $6822
-	call RegisterFrameTask ; $6825
+	frame_task Unused_1a_DrawCharViewerCursorSprite ; $6820
 	call Unused_1a_ApplyCharViewerPalette ; $6828
 	call Unused_1a_RefreshCharViewerSelection ; $682b
 	call AdvanceFrame ; $682e
@@ -125,9 +123,7 @@ Unused_1a_RunCharViewerSelectGrid:
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $68d0
 	call QueueVRAMCopy ; $68d2
 	call EnableLCD ; $68d5
-	ld a, $01 ; $68d8
-	ld hl, Unused_1a_DrawCharViewerGridCursor ; $68da
-	call RegisterFrameTask ; $68dd
+	frame_task Unused_1a_DrawCharViewerGridCursor ; $68d8
 	script_fade_in 16 ; $68e0
 	call WaitFadeEnd ; $68e5
 .loop:

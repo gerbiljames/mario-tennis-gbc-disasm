@@ -89,14 +89,12 @@ StrokePractice1JudgePoint:
 	ret nz ; $6cfa
 	ld a, [wRallyLength] ; $6cfb
 	dec a ; $6cfe
-	ld a, a ; $6cff
-	rst Rst00 ; $6d00
+	jumptable a ; $6cff
 	dw StrokePractice1JudgePoint.rally1 ; $6d01 jumptable
 	dw StrokePractice1Cases1.dispatchResult ; $6d03 jumptable
 .rally1:
 	ld a, b ; $6d05
-	ld a, a ; $6d06
-	rst Rst00 ; $6d07
+	jumptable a ; $6d06
 	dw StrokePractice1JudgePoint.result0 ; $6d08 jumptable
 	dw StrokePractice1Cases1 ; $6d0a jumptable
 	dw StrokePractice1Cases1.ignoreBounce ; $6d0c jumptable
@@ -128,8 +126,7 @@ StrokePractice1Cases1:
 	ret ; $6d3e
 .dispatchResult:
 	ld a, b ; $6d3f
-	ld a, a ; $6d40
-	rst Rst00 ; $6d41
+	jumptable a ; $6d40
 	dw StrokePractice1Cases1.checkPointOutcome ; $6d42 jumptable
 	dw StrokePractice1Cases2 ; $6d44 jumptable
 	dw StrokePractice1Cases2.checkBallBounceCount ; $6d46 jumptable
@@ -192,9 +189,7 @@ StrokePractice2Hook_PointStart:
 	ld [wDrillPointJudgement], a ; $6df8
 	ld a, $5a ; $6dfb
 	ld [wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY], a ; $6dfd
-	ld a, $01 ; $6e00
-	ld hl, StrokePractice2TargetZoneDelayTask ; $6e02
-	call RegisterFrameTask ; $6e05
+	frame_task StrokePractice2TargetZoneDelayTask ; $6e00
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e08
 	ld hl, StrokePractice2ServeAims ; $6e0b
 	add_hl_a ; $6e0e
@@ -311,9 +306,7 @@ StrokePractice2HandlePointEnd:
 	ld b, $01 ; $6efb
 	farcall LoadPlayer2PointsDigitGfx ; $6efd
 	farcall StepMatchFrame ; $6f00
-	ld a, $01 ; $6f03
-	ld hl, SyncPointWinLoseFlagTask ; $6f05
-	call RegisterFrameTask ; $6f08
+	frame_task SyncPointWinLoseFlagTask ; $6f03
 	farcall StartPointEndReactions ; $6f0b
 	ld hl, SyncPointWinLoseFlagTask ; $6f0e
 	call UnregisterFrameTask ; $6f11
@@ -347,14 +340,12 @@ StrokePractice2JudgePoint:
 	ret nz ; $6f42
 	ld a, [wRallyLength] ; $6f43
 	dec a ; $6f46
-	ld a, a ; $6f47
-	rst Rst00 ; $6f48
+	jumptable a ; $6f47
 	dw StrokePractice2JudgePoint.rally1 ; $6f49 jumptable
 	dw StrokePractice2Cases1.dispatchResult ; $6f4b jumptable
 .rally1:
 	ld a, b ; $6f4d
-	ld a, a ; $6f4e
-	rst Rst00 ; $6f4f
+	jumptable a ; $6f4e
 	dw StrokePractice2JudgePoint.result0 ; $6f50 jumptable
 	dw StrokePractice2Cases1 ; $6f52 jumptable
 	dw StrokePractice2Cases1.ignoreBounce ; $6f54 jumptable
@@ -386,8 +377,7 @@ StrokePractice2Cases1:
 	ret ; $6f86
 .dispatchResult:
 	ld a, b ; $6f87
-	ld a, a ; $6f88
-	rst Rst00 ; $6f89
+	jumptable a ; $6f88
 	dw StrokePractice2Cases1.checkPointOutcome ; $6f8a jumptable
 	dw StrokePractice2Cases2 ; $6f8c jumptable
 	dw StrokePractice2Cases2.checkBallBounceCount ; $6f8e jumptable
@@ -490,9 +480,7 @@ StrokePractice3Hook_PointStart:
 	ld [wDrillPointJudgement], a ; $705d
 	ld a, $5a ; $7060
 	ld [wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY], a ; $7062
-	ld a, $01 ; $7065
-	ld hl, StrokePractice3TargetZoneDelayTask ; $7067
-	call RegisterFrameTask ; $706a
+	frame_task StrokePractice3TargetZoneDelayTask ; $7065
 	ld a, [wTotalPointsScoredInCurrentGame] ; $706d
 	ld hl, StrokePractice3ServeAims ; $7070
 	add_hl_a ; $7073
@@ -574,14 +562,12 @@ StrokePractice3JudgePoint:
 	ret nz ; $71a4
 	ld a, [wRallyLength] ; $71a5
 	dec a ; $71a8
-	ld a, a ; $71a9
-	rst Rst00 ; $71aa
+	jumptable a ; $71a9
 	dw StrokePractice3JudgePoint.rally1 ; $71ab jumptable
 	dw StrokePractice3Cases1.dispatchResult ; $71ad jumptable
 .rally1:
 	ld a, b ; $71af
-	ld a, a ; $71b0
-	rst Rst00 ; $71b1
+	jumptable a ; $71b0
 	dw StrokePractice3JudgePoint.result0 ; $71b2 jumptable
 	dw StrokePractice3Cases1 ; $71b4 jumptable
 	dw StrokePractice3Cases1.ignoreBounce ; $71b6 jumptable
@@ -613,8 +599,7 @@ StrokePractice3Cases1:
 	ret ; $71e8
 .dispatchResult:
 	ld a, b ; $71e9
-	ld a, a ; $71ea
-	rst Rst00 ; $71eb
+	jumptable a ; $71ea
 	dw StrokePractice3Cases1.checkPointOutcome ; $71ec jumptable
 	dw StrokePractice3Cases2 ; $71ee jumptable
 	dw StrokePractice3Cases2.checkBallBounceCount ; $71f0 jumptable

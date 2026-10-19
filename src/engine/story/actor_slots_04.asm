@@ -6,12 +6,8 @@ ClearActorSlots:
 	ret ; $4040
 InitActorEngine:
 	call ClearActorSlots ; $4041
-	ld a, $10 ; $4044
-	ld hl, UpdateActors ; $4046
-	call RegisterFrameTask ; $4049
-	ld a, $01 ; $404c
-	ld hl, DrawActors ; $404e
-	call RegisterFrameTask ; $4051
+	frame_task UpdateActors, $10 ; $4044
+	frame_task DrawActors ; $404c
 	ret ; $4054
 SpawnActor:
 	push af ; $4055
@@ -452,12 +448,7 @@ AdvanceActorTowardTarget:
 	ld a, [hl+] ; $42c6
 	ld h, [hl] ; $42c7
 	ld l, a ; $42c8
-	ld a, l ; $42c9
-	sub e ; $42ca
-	ld l, a ; $42cb
-	ld a, h ; $42cc
-	sbc d ; $42cd
-	ld h, a ; $42ce
+	sub_hl_de ; $42c9
 	push hl ; $42cf
 	ld hl, ACTORF_TARGET_Y ; $42d0
 	add hl, bc ; $42d3
@@ -469,12 +460,7 @@ AdvanceActorTowardTarget:
 	ld a, [hl+] ; $42db
 	ld h, [hl] ; $42dc
 	ld l, a ; $42dd
-	ld a, l ; $42de
-	sub e ; $42df
-	ld l, a ; $42e0
-	ld a, h ; $42e1
-	sbc d ; $42e2
-	ld h, a ; $42e3
+	sub_hl_de ; $42de
 	pop de ; $42e4
 	push de ; $42e5
 	push hl ; $42e6
@@ -604,12 +590,7 @@ AdvanceActorTowardTarget:
 	ld d, [hl] ; $438e
 	ld e, a ; $438f
 	pop hl ; $4390
-	ld a, l ; $4391
-	sub e ; $4392
-	ld l, a ; $4393
-	ld a, h ; $4394
-	sbc d ; $4395
-	ld h, a ; $4396
+	sub_hl_de ; $4391
 	ld a, h ; $4397
 	or l ; $4398
 	jr nz, .stepTowardTarget ; $4399
@@ -649,12 +630,7 @@ AdvanceActorTowardTarget:
 	ld d, [hl] ; $43c4
 	ld e, a ; $43c5
 	pop hl ; $43c6
-	ld a, l ; $43c7
-	sub e ; $43c8
-	ld l, a ; $43c9
-	ld a, h ; $43ca
-	sbc d ; $43cb
-	ld h, a ; $43cc
+	sub_hl_de ; $43c7
 	ld a, h ; $43cd
 	or l ; $43ce
 	jr nz, .clampToTarget ; $43cf

@@ -146,12 +146,8 @@ RunMatchWinLoseScreen:
 .initMatchWinLoseScreen:
 	call InitMatchWinLoseScreen ; $44b9
 	farcall UpdateAnimatedTiles ; $44bc
-	ld a, $01 ; $44bf
-	ld hl, UpdateResultScreenAnimatedTilesTask ; $44c1
-	call RegisterFrameTask ; $44c4
-	ld a, $01 ; $44c7
-	ld hl, QueueResultScreenSprites ; $44c9
-	call RegisterFrameTask ; $44cc
+	frame_task UpdateResultScreenAnimatedTilesTask ; $44bf
+	frame_task QueueResultScreenSprites ; $44c7
 	call EnableLCD ; $44cf
 	script_fade_in 16 ; $44d2
 	call WaitFadeEnd ; $44d7
@@ -165,9 +161,7 @@ RunMatchWinLoseScreen:
 	ld [wRasterScrollEndLY], a ; $44ea
 	xor a ; $44ed
 	ld [wRasterScrollX], a ; $44ee
-	ld a, $01 ; $44f1
-	ld hl, AdvanceResultScreenTimer ; $44f3
-	call RegisterFrameTask ; $44f6
+	frame_task AdvanceResultScreenTimer ; $44f1
 .loop:
 	call AdvanceFrame ; $44f9
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $44fc

@@ -6,34 +6,12 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	call Unused_1a_ClearExpScreenNameBox ; $4b23
 	wram_bank WRAM_STAGING ; $4b26
 	push af ; $4b2c
-	ld hl, wStoryMainName ; $4b2d
-	ld a, [wStoryCharacterSlot] ; $4b30
-	or a ; $4b33
-	jr z, .readName ; $4b34
-	ld l, $40 ; $4b36
-.readName:
-	ld a, l ; $4b38
-	add $00 ; $4b39
-	ld l, a ; $4b3b
-	ld a, h ; $4b3c
-	adc $00 ; $4b3d
-	ld h, a ; $4b3f
+	ld_story_char_field CHARREC_NAME ; $4b2d
 	pop af ; $4b40
 	ld de, wDecompBuffer tile 76 + 7 ; $4b41
 	call Unused_1a_CopyNameToTileBuffer ; $4b44
 	push af ; $4b47
-	ld hl, wStoryMainName ; $4b48
-	ld a, [wStoryCharacterSlot] ; $4b4b
-	or a ; $4b4e
-	jr z, .readLevel ; $4b4f
-	ld l, $40 ; $4b51
-.readLevel:
-	ld a, l ; $4b53
-	add $18 ; $4b54
-	ld l, a ; $4b56
-	ld a, h ; $4b57
-	adc $00 ; $4b58
-	ld h, a ; $4b5a
+	ld_story_char_field CHARREC_LEVEL ; $4b48
 	pop af ; $4b5b
 	ld a, [hl] ; $4b5c
 	ld l, a ; $4b5d
@@ -264,12 +242,7 @@ Unused_1a_WriteStatModifierToTileBuffer:
 	push hl ; $4c99
 	pop de ; $4c9a
 	ld hl, $0000 ; $4c9b
-	ld a, l ; $4c9e
-	sub e ; $4c9f
-	ld l, a ; $4ca0
-	ld a, h ; $4ca1
-	sbc d ; $4ca2
-	ld h, a ; $4ca3
+	sub_hl_de ; $4c9e
 .divide:
 	ld de, $0064 ; $4ca4
 	call DivHLByDE ; $4ca7
@@ -322,12 +295,7 @@ Unused_1a_CompareBCToDE:
 	push hl ; $4cec
 	push bc ; $4ced
 	pop hl ; $4cee
-	ld a, l ; $4cef
-	sub e ; $4cf0
-	ld l, a ; $4cf1
-	ld a, h ; $4cf2
-	sbc d ; $4cf3
-	ld h, a ; $4cf4
+	sub_hl_de ; $4cef
 	bit 7, h ; $4cf5
 	jr nz, .negative ; $4cf7
 	ld a, h ; $4cf9
@@ -358,22 +326,12 @@ Unused_1a_GetModifierTensDigit:
 	push hl ; $4d1b
 	pop de ; $4d1c
 	ld hl, $0000 ; $4d1d
-	ld a, l ; $4d20
-	sub e ; $4d21
-	ld l, a ; $4d22
-	ld a, h ; $4d23
-	sbc d ; $4d24
-	ld h, a ; $4d25
+	sub_hl_de ; $4d20
 .positive:
 	push hl ; $4d26
 	pop bc ; $4d27
 	ld de, $0064 ; $4d28
-	ld a, l ; $4d2b
-	sub e ; $4d2c
-	ld l, a ; $4d2d
-	ld a, h ; $4d2e
-	sbc d ; $4d2f
-	ld h, a ; $4d30
+	sub_hl_de ; $4d2b
 	bit 7, h ; $4d31
 	jr nz, .negative ; $4d33
 	push hl ; $4d35
@@ -398,22 +356,12 @@ Unused_1a_GetModifierOnesDigit:
 	push hl ; $4d4e
 	pop de ; $4d4f
 	ld hl, $0000 ; $4d50
-	ld a, l ; $4d53
-	sub e ; $4d54
-	ld l, a ; $4d55
-	ld a, h ; $4d56
-	sbc d ; $4d57
-	ld h, a ; $4d58
+	sub_hl_de ; $4d53
 .positive:
 	push hl ; $4d59
 	pop bc ; $4d5a
 	ld de, $0064 ; $4d5b
-	ld a, l ; $4d5e
-	sub e ; $4d5f
-	ld l, a ; $4d60
-	ld a, h ; $4d61
-	sbc d ; $4d62
-	ld h, a ; $4d63
+	sub_hl_de ; $4d5e
 	bit 7, h ; $4d64
 	jr nz, .negative ; $4d66
 	push hl ; $4d68
@@ -429,12 +377,7 @@ Unused_1a_GetModifierOnesDigit:
 	pop de ; $4d78
 	push bc ; $4d79
 	pop hl ; $4d7a
-	ld a, l ; $4d7b
-	sub e ; $4d7c
-	ld l, a ; $4d7d
-	ld a, h ; $4d7e
-	sbc d ; $4d7f
-	ld h, a ; $4d80
+	sub_hl_de ; $4d7b
 	ld a, l ; $4d81
 	pop hl ; $4d82
 	pop de ; $4d83
@@ -450,12 +393,7 @@ Unused_1a_SignExtendModifierByte:
 	pop bc ; $4d8d
 	ld d, $00 ; $4d8e
 	ld e, $91 ; $4d90
-	ld a, l ; $4d92
-	sub e ; $4d93
-	ld l, a ; $4d94
-	ld a, h ; $4d95
-	sbc d ; $4d96
-	ld h, a ; $4d97
+	sub_hl_de ; $4d92
 	bit 7, h ; $4d98
 	jr nz, .positive ; $4d9a
 	push bc ; $4d9c

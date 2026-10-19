@@ -140,14 +140,12 @@ ServiceMatch3JudgePoint:
 	ret nz ; $4d42
 	ld a, [wRallyLength] ; $4d43
 	dec a ; $4d46
-	ld a, a ; $4d47
-	rst Rst00 ; $4d48
+	jumptable a ; $4d47
 	dw ServiceMatch3JudgePoint.rally1 ; $4d49 jumptable
 	dw ServiceMatch3Cases1.dispatchResult ; $4d4b jumptable
 .rally1:
 	ld a, b ; $4d4d
-	ld a, a ; $4d4e
-	rst Rst00 ; $4d4f
+	jumptable a ; $4d4e
 	dw ServiceMatch3JudgePoint.result0 ; $4d50 jumptable
 	dw ServiceMatch3Cases1 ; $4d52 jumptable
 	dw ServiceMatch3Cases1.ignoreBounce ; $4d54 jumptable
@@ -179,8 +177,7 @@ ServiceMatch3Cases1:
 	ret ; $4d86
 .dispatchResult:
 	ld a, b ; $4d87
-	ld a, a ; $4d88
-	rst Rst00 ; $4d89
+	jumptable a ; $4d88
 	dw ServiceMatch3Cases1.checkPointOutcome ; $4d8a jumptable
 	dw ServiceMatch3Cases2 ; $4d8c jumptable
 	dw ServiceMatch3Cases2.ignoreBounce ; $4d8e jumptable
@@ -364,9 +361,7 @@ ServicePractice1HandlePointEnd:
 	ld b, $01 ; $4efc
 	farcall LoadPlayer2PointsDigitGfx ; $4efe
 	farcall StepMatchFrame ; $4f01
-	ld a, $01 ; $4f04
-	ld hl, SyncPointWinLoseFlagTask ; $4f06
-	call RegisterFrameTask ; $4f09
+	frame_task SyncPointWinLoseFlagTask ; $4f04
 	farcall StartPointEndReactions ; $4f0c
 	ld hl, SyncPointWinLoseFlagTask ; $4f0f
 	call UnregisterFrameTask ; $4f12

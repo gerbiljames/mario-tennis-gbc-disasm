@@ -19,15 +19,7 @@
 	ld a, [hl+]
 	ld h, [hl]
 	ld l, a
-	bit 7, h
-	jr z, .offset
-	xor a
-	sub l
-	ld l, a
-	sbc a
-	sub h
-	ld h, a
-.offset:
+	abs_hl
 	add hl, hl
 	ld a, b
 	call MulHLByAFrac
@@ -49,12 +41,7 @@
 	ld a, [wShotAimMirror]
 	and a
 	jr z, .applyAngle
-	xor a
-	sub e
-	ld e, a
-	sbc a
-	sub d
-	ld d, a
+	neg_de
 .applyAngle:
 	ld hl, wShotAimAngle
 	ld a, [hl+]
@@ -69,12 +56,7 @@
 	ld a, [wCharCourtPos]
 	and $02
 	jr z, .maskClear
-	xor a
-	sub e
-	ld e, a
-	sbc a
-	sub d
-	ld d, a
+	neg_de
 .maskClear:
 	ld hl, wBallTargetDepth
 	ld a, e

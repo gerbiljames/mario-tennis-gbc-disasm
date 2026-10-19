@@ -126,8 +126,7 @@ InitResultsScreenCharacters:
 	ld a, [wLinkMatchRole] ; $498f
 	srl a ; $4992
 	add $04 ; $4994
-	ld a, a ; $4996
-	wram_bank ; $4997
+	wram_bank a ; $4996
 	ld bc, wCharPosX ; $499b
 	ld a, [wGameMode] ; $499e
 	ASSERT GAMEMODE_NONE == 0
@@ -185,8 +184,7 @@ InitResultsScreenCharacters:
 	ld a, [wLinkMatchRole] ; $4a0a
 	srl a ; $4a0d
 	add $06 ; $4a0f
-	ld a, a ; $4a11
-	wram_bank ; $4a12
+	wram_bank a ; $4a11
 	ld bc, wCharPosX ; $4a16
 	ld a, [wGameMode] ; $4a19
 	ASSERT GAMEMODE_NONE == 0

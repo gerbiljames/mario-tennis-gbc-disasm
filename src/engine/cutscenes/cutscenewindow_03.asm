@@ -39,9 +39,7 @@ PlayScrollingStoryCutscene:
 	pop af ; $7039
 	push af ; $703a
 	ld [wCutsceneWindowSliding], a ; $703b
-	ld a, $01 ; $703e
-	ld hl, AnimateWindowSlideUpTask ; $7040
-	call RegisterFrameTask ; $7043
+	frame_task AnimateWindowSlideUpTask ; $703e
 .waitSlideLoop:
 	call AdvanceFrame ; $7046
 	ld a, [wCutsceneSlideDone] ; $7049

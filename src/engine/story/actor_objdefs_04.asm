@@ -245,12 +245,7 @@ ComputeSpriteScrollOffset:
 	add hl, hl ; $4a3c
 	add hl, hl ; $4a3d
 	add hl, de ; $4a3e
-	xor a ; $4a3f
-	sub l ; $4a40
-	ld l, a ; $4a41
-	sbc a ; $4a42
-	sub h ; $4a43
-	ld h, a ; $4a44
+	neg_hl ; $4a3f
 	ld c, l ; $4a45
 	ld b, h ; $4a46
 	ld hl, wActorScreenOriginX ; $4a47
@@ -284,12 +279,7 @@ ComputeSpriteScrollOffset:
 	add hl, hl ; $4a70
 	add hl, hl ; $4a71
 	add hl, de ; $4a72
-	xor a ; $4a73
-	sub l ; $4a74
-	ld l, a ; $4a75
-	sbc a ; $4a76
-	sub h ; $4a77
-	ld h, a ; $4a78
+	neg_hl ; $4a73
 	ld c, l ; $4a79
 	ld b, h ; $4a7a
 	ld hl, wActorScreenOriginY ; $4a7b

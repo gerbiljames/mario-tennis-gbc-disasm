@@ -148,9 +148,7 @@ TournamentTile0F_0f:
 	call IslandOpenRoundCallCutscene ; $620b
 	ret ; $620e
 TournamentInitScript_0f:
-	ld a, $01 ; $620f
-	ld hl, UpdateTournamentActorDrawModes_0f ; $6211
-	call RegisterFrameTask ; $6214
+	frame_task UpdateTournamentActorDrawModes_0f ; $620f
 	ld a, [wStoryModeEntryPoint] ; $6217
 	cp STORYENTRY_NONE ; $621a
 	jr z, .inProgress ; $621c

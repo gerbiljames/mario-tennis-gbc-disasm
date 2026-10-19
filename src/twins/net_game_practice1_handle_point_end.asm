@@ -25,9 +25,7 @@
 	ld b, $01
 	farcall LoadPlayer2PointsDigitGfx
 	farcall StepMatchFrame
-	ld a, $01
-	ld hl, SyncPointWinLoseFlagTask
-	call RegisterFrameTask
+	frame_task SyncPointWinLoseFlagTask
 	farcall StartPointEndReactions
 	ld hl, SyncPointWinLoseFlagTask
 	call UnregisterFrameTask

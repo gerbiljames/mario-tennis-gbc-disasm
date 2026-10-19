@@ -133,7 +133,7 @@ StartSeniorRankingMatch:
 	script_set_speed ACTOR_PARTNER, 1.0 ; $60a8
 	ld a, [wMapSceneStage2] ; $60b0
 	sub SENIORCOURTSTAGE_SINGLES_RANK4 ; $60b3
-	rst Rst00 ; $60b5
+	jumptable ; $60b5
 	dw StartSeniorRankingMatch.singlesRank4 ; $60b6 jumptable
 	dw StartSeniorRankingMatch.singlesRank3 ; $60b8 jumptable
 	dw StartSeniorRankingMatch.singlesRank2 ; $60ba jumptable

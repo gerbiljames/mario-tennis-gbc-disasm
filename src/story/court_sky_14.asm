@@ -237,9 +237,7 @@ IslandSkyInitScript_14:
 	ld [wMapSceneStage], a ; $5314
 	ld a, $88 ; $5317
 	ld [wMapSceneStage2], a ; $5319
-	ld a, $01 ; $531c
-	ld hl, QueuePlaneSpriteByHeight_14 ; $531e
-	call RegisterFrameTask ; $5321
+	frame_task QueuePlaneSpriteByHeight_14 ; $531c
 	test_flag FLAG_DOUBLES ; $5324
 	jp z, .setPlayerObjDef ; $5327
 	script_null_script ACTOR_PARTNER ; $532a
@@ -420,9 +418,7 @@ IslandSkyInitScript_14:
 	ld [wCutsceneObjRiseTimer], a ; $54ef
 	ld a, $00 ; $54f2
 	ld [wCutsceneObjActive], a ; $54f4
-	ld a, $01 ; $54f7
-	ld hl, UpdateWaterSplash0_14 ; $54f9
-	call RegisterFrameTask ; $54fc
+	frame_task UpdateWaterSplash0_14 ; $54f7
 	script_wait_frames 10 ; $54ff
 	ld a, $50 ; $5506
 	ld [wCutsceneObjX + 1], a ; $5508
@@ -434,9 +430,7 @@ IslandSkyInitScript_14:
 	ld [wCutsceneObjRiseTimer + 1], a ; $5516
 	ld a, $00 ; $5519
 	ld [wCutsceneObjActive + 1], a ; $551b
-	ld a, $01 ; $551e
-	ld hl, UpdateWaterSplash1_14 ; $5520
-	call RegisterFrameTask ; $5523
+	frame_task UpdateWaterSplash1_14 ; $551e
 	script_wait_frames 80 ; $5526
 	script_set_position ACTOR_ISLAND_SKY_HEADMASTER, 6.0, 41.0 ; $552d
 	script_set_position ACTOR_ISLAND_SKY_KEVIN_SWEATS, 6.0, 41.0 ; $5538

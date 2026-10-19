@@ -62,8 +62,7 @@ WallPracticeLevelResultScript:
 	jp nz, .checkLevel ; $4abe
 	ld a, [wMapSceneStage] ; $4ac1
 	sub $01 ; $4ac4
-	ld a, a ; $4ac6
-	rst Rst00 ; $4ac7
+	jumptable a ; $4ac6
 	dw WallPracticeLevelResultScript.variant4 ; $4ac8 jumptable
 	dw WallPracticeLevelResultScript.variant3 ; $4aca jumptable
 	dw WallPracticeLevelResultScript.variant2 ; $4acc jumptable

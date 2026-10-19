@@ -201,8 +201,7 @@ CopyDirtyRowSpanToVRAM:
 	ld b, a ; $7199
 	ldh a, [hWramBank] ; $719a
 	push af ; $719c
-	ld a, b ; $719d
-	wram_bank ; $719e
+	wram_bank b ; $719d
 	push hl ; $71a2
 	push de ; $71a3
 	push bc ; $71a4
@@ -372,8 +371,7 @@ RenderMenuWindowText:
 	ld a, [wMenuWindowId] ; $7289
 	ld c, a ; $728c
 	ld a, [wShadowTilemapBank] ; $728d
-	ld a, a ; $7290
-	wram_bank ; $7291
+	wram_bank a ; $7290
 	push de ; $7295
 	push hl ; $7296
 	ld a, c ; $7297

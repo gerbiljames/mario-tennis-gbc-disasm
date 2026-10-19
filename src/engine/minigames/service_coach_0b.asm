@@ -56,9 +56,7 @@ ServicePractice2HandlePointEnd:
 	ld b, $01 ; $50c8
 	farcall LoadPlayer2PointsDigitGfx ; $50ca
 	farcall StepMatchFrame ; $50cd
-	ld a, $01 ; $50d0
-	ld hl, SyncPointWinLoseFlagTask ; $50d2
-	call RegisterFrameTask ; $50d5
+	frame_task SyncPointWinLoseFlagTask ; $50d0
 	farcall StartPointEndReactions ; $50d8
 	ld hl, SyncPointWinLoseFlagTask ; $50db
 	call UnregisterFrameTask ; $50de
@@ -357,9 +355,7 @@ ServicePractice3HandlePointEnd:
 	ld b, $01 ; $535e
 	farcall LoadPlayer2PointsDigitGfx ; $5360
 	farcall StepMatchFrame ; $5363
-	ld a, $01 ; $5366
-	ld hl, SyncPointWinLoseFlagTask ; $5368
-	call RegisterFrameTask ; $536b
+	frame_task SyncPointWinLoseFlagTask ; $5366
 	farcall StartPointEndReactions ; $536e
 	ld hl, SyncPointWinLoseFlagTask ; $5371
 	call UnregisterFrameTask ; $5374

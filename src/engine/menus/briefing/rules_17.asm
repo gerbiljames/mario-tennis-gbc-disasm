@@ -128,16 +128,12 @@ ShowRulesScreen:
 	ld [wAnimatedTileSet], a ; $6f4c
 	ld a, $03 ; $6f4f
 	ld [wAnimatedTilePeriod], a ; $6f51
-	ld a, $01 ; $6f54
-	ld hl, UpdateAnimatedTilesTask_17 ; $6f56
-	call RegisterFrameTask ; $6f59
+	frame_task UpdateAnimatedTilesTask_17 ; $6f54
 	call EnableLCD ; $6f5c
 	script_fade_in 32 ; $6f5f
 	call WaitFadeEnd ; $6f64
 	wram_bank WRAM_SCREEN ; $6f67
-	ld a, $01 ; $6f6d
-	ld hl, AdvanceRulesScreenAnimFrame ; $6f6f
-	call RegisterFrameTask ; $6f72
+	frame_task AdvanceRulesScreenAnimFrame ; $6f6d
 	ld a, $01 ; $6f75
 	ld [wRulesAnimEnabled], a ; $6f77
 	xor a ; $6f7a
@@ -267,9 +263,7 @@ MinigameRulesPageLoop:
 	ld a, [hl] ; $70d8
 	cp $ff ; $70d9
 	jr z, .prepareRulesPageTilemap ; $70db
-	ld a, $01 ; $70dd
-	ld hl, DrawRulesNextPageArrow ; $70df
-	call RegisterFrameTask ; $70e2
+	frame_task DrawRulesNextPageArrow ; $70dd
 .prepareRulesPageTilemap:
 	call PrepareRulesPageTilemap ; $70e5
 	ld hl, wRulesPageTextIdBase ; $70e8
@@ -361,9 +355,7 @@ LoadRulesScreen:
 	ld a, e ; $71ae
 	ld [hl+], a ; $71af
 	ld [hl], d ; $71b0
-	ld a, $01 ; $71b1
-	ld hl, DrawRulesScreenCharacters ; $71b3
-	call RegisterFrameTask ; $71b6
+	frame_task DrawRulesScreenCharacters ; $71b1
 	farcall QueueWram3MapToVRAM ; $71b9
 	ret ; $71bc
 ClearRulesScreenTextArea:

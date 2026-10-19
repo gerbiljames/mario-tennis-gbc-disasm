@@ -194,9 +194,7 @@ Unused_0a_InitSceneViewer:
 	ldh [hBGColumnBlitPending], a ; $6055
 	ldh [hBGRowBlitPending], a ; $6057
 	farcall InitTextWindows ; $6059
-	ld a, $01 ; $605c
-	ld hl, Unused_0a_StubNop ; $605e
-	call RegisterFrameTask ; $6061
+	frame_task Unused_0a_StubNop ; $605c
 	ld a, [wCurrentScene] ; $6064
 	call InitSceneTileAnimations ; $6067
 	pop hl ; $606a

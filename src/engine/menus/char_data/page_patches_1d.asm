@@ -218,18 +218,10 @@ ShowExpDistributionScreen:
 	call BuildExpDistributionScreen ; $68cb
 	call EnableLCD ; $68ce
 	call AdvanceFrame ; $68d1
-	ld a, $04 ; $68d4
-	ld hl, DrawExpCharCursorTask ; $68d6
-	call RegisterFrameTask ; $68d9
-	ld a, $04 ; $68dc
-	ld hl, DrawExpBarFillMarkersTask ; $68de
-	call RegisterFrameTask ; $68e1
-	ld a, $01 ; $68e4
-	ld hl, DrawExpBarSweepSpriteTask ; $68e6
-	call RegisterFrameTask ; $68e9
-	ld a, $08 ; $68ec
-	ld hl, DrawExpToNextLevelTask ; $68ee
-	call RegisterFrameTask ; $68f1
+	frame_task DrawExpCharCursorTask, $04 ; $68d4
+	frame_task DrawExpBarFillMarkersTask, $04 ; $68dc
+	frame_task DrawExpBarSweepSpriteTask ; $68e4
+	frame_task DrawExpToNextLevelTask, $08 ; $68ec
 	xor a ; $68f4
 	ld [wStoryCharacterSlot], a ; $68f5
 	script_fade_in 16 ; $68f8
@@ -505,36 +497,14 @@ InitExpScreenCharStats:
 	xor a ; $6b88
 	ld [wStoryCharacterSlot], a ; $6b89
 	push af ; $6b8c
-	ld hl, wStoryMainName ; $6b8d
-	ld a, [wStoryCharacterSlot] ; $6b90
-	or a ; $6b93
-	jr z, .mainNameField ; $6b94
-	ld l, $40 ; $6b96
-.mainNameField:
-	ld a, l ; $6b98
-	add $00 ; $6b99
-	ld l, a ; $6b9b
-	ld a, h ; $6b9c
-	adc $00 ; $6b9d
-	ld h, a ; $6b9f
+	ld_story_char_field CHARREC_NAME ; $6b8d
 	pop af ; $6ba0
 	ld de, wCharDataChoiceBackup + 47 ; $6ba1
 	ld c, $20 ; $6ba4
 	call WriteExpScreenStringTiles ; $6ba6
 	wram_bank WRAM_SCENE ; $6ba9
 	push af ; $6baf
-	ld hl, wStoryMainName ; $6bb0
-	ld a, [wStoryCharacterSlot] ; $6bb3
-	or a ; $6bb6
-	jr z, .mainLevelField ; $6bb7
-	ld l, $40 ; $6bb9
-.mainLevelField:
-	ld a, l ; $6bbb
-	add $18 ; $6bbc
-	ld l, a ; $6bbe
-	ld a, h ; $6bbf
-	adc $00 ; $6bc0
-	ld h, a ; $6bc2
+	ld_story_char_field CHARREC_LEVEL ; $6bb0
 	pop af ; $6bc3
 	ld a, [hl] ; $6bc4
 	push af ; $6bc5
@@ -569,18 +539,7 @@ InitExpScreenCharStats:
 	ld a, h ; $6c03
 	ld [wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT + 1], a ; $6c04
 	push af ; $6c07
-	ld hl, wStoryMainName ; $6c08
-	ld a, [wStoryCharacterSlot] ; $6c0b
-	or a ; $6c0e
-	jr z, .mainExpField ; $6c0f
-	ld l, $40 ; $6c11
-.mainExpField:
-	ld a, l ; $6c13
-	add $2c ; $6c14
-	ld l, a ; $6c16
-	ld a, h ; $6c17
-	adc $00 ; $6c18
-	ld h, a ; $6c1a
+	ld_story_char_field CHARREC_EXP ; $6c08
 	pop af ; $6c1b
 	ld a, [hl+] ; $6c1c
 	ld [wExpScreenCharStats + EXPSTAT_EXP], a ; $6c1d
@@ -591,36 +550,14 @@ InitExpScreenCharStats:
 	ld a, $01 ; $6c28
 	ld [wStoryCharacterSlot], a ; $6c2a
 	push af ; $6c2d
-	ld hl, wStoryMainName ; $6c2e
-	ld a, [wStoryCharacterSlot] ; $6c31
-	or a ; $6c34
-	jr z, .partnerNameField ; $6c35
-	ld l, $40 ; $6c37
-.partnerNameField:
-	ld a, l ; $6c39
-	add $00 ; $6c3a
-	ld l, a ; $6c3c
-	ld a, h ; $6c3d
-	adc $00 ; $6c3e
-	ld h, a ; $6c40
+	ld_story_char_field CHARREC_NAME ; $6c2e
 	pop af ; $6c41
 	ld de, wCharDataScreenCell + 16 * TILEMAP_WIDTH + 12 ; $6c42
 	ld c, $20 ; $6c45
 	call WriteExpScreenStringTiles ; $6c47
 	wram_bank WRAM_SCENE ; $6c4a
 	push af ; $6c50
-	ld hl, wStoryMainName ; $6c51
-	ld a, [wStoryCharacterSlot] ; $6c54
-	or a ; $6c57
-	jr z, .partnerLevelField ; $6c58
-	ld l, $40 ; $6c5a
-.partnerLevelField:
-	ld a, l ; $6c5c
-	add $18 ; $6c5d
-	ld l, a ; $6c5f
-	ld a, h ; $6c60
-	adc $00 ; $6c61
-	ld h, a ; $6c63
+	ld_story_char_field CHARREC_LEVEL ; $6c51
 	pop af ; $6c64
 	ld a, [hl] ; $6c65
 	push af ; $6c66
@@ -655,18 +592,7 @@ InitExpScreenCharStats:
 	ld a, h ; $6ca6
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT + 1], a ; $6ca7
 	push af ; $6caa
-	ld hl, wStoryMainName ; $6cab
-	ld a, [wStoryCharacterSlot] ; $6cae
-	or a ; $6cb1
-	jr z, .partnerExpField ; $6cb2
-	ld l, $40 ; $6cb4
-.partnerExpField:
-	ld a, l ; $6cb6
-	add $2c ; $6cb7
-	ld l, a ; $6cb9
-	ld a, h ; $6cba
-	adc $00 ; $6cbb
-	ld h, a ; $6cbd
+	ld_story_char_field CHARREC_EXP ; $6cab
 	pop af ; $6cbe
 	ld a, [hl+] ; $6cbf
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP], a ; $6cc0
@@ -679,36 +605,14 @@ InitExpScreenCharStats:
 	xor a ; $6ccc
 	ld [wStoryCharacterSlot], a ; $6ccd
 	push af ; $6cd0
-	ld hl, wStoryMainName ; $6cd1
-	ld a, [wStoryCharacterSlot] ; $6cd4
-	or a ; $6cd7
-	jr z, .viewMainNameField ; $6cd8
-	ld l, $40 ; $6cda
-.viewMainNameField:
-	ld a, l ; $6cdc
-	add $00 ; $6cdd
-	ld l, a ; $6cdf
-	ld a, h ; $6ce0
-	adc $00 ; $6ce1
-	ld h, a ; $6ce3
+	ld_story_char_field CHARREC_NAME ; $6cd1
 	pop af ; $6ce4
 	ld de, wCharDataChoiceBackup + 47 ; $6ce5
 	ld c, $20 ; $6ce8
 	call WriteExpScreenStringTiles ; $6cea
 	wram_bank WRAM_SCENE ; $6ced
 	push af ; $6cf3
-	ld hl, wStoryMainName ; $6cf4
-	ld a, [wStoryCharacterSlot] ; $6cf7
-	or a ; $6cfa
-	jr z, .viewMainLevelField ; $6cfb
-	ld l, $40 ; $6cfd
-.viewMainLevelField:
-	ld a, l ; $6cff
-	add $18 ; $6d00
-	ld l, a ; $6d02
-	ld a, h ; $6d03
-	adc $00 ; $6d04
-	ld h, a ; $6d06
+	ld_story_char_field CHARREC_LEVEL ; $6cf4
 	pop af ; $6d07
 	ld a, [hl] ; $6d08
 	ld h, $00 ; $6d09
@@ -721,36 +625,14 @@ InitExpScreenCharStats:
 	ld a, $01 ; $6d1a
 	ld [wStoryCharacterSlot], a ; $6d1c
 	push af ; $6d1f
-	ld hl, wStoryMainName ; $6d20
-	ld a, [wStoryCharacterSlot] ; $6d23
-	or a ; $6d26
-	jr z, .viewPartnerNameField ; $6d27
-	ld l, $40 ; $6d29
-.viewPartnerNameField:
-	ld a, l ; $6d2b
-	add $00 ; $6d2c
-	ld l, a ; $6d2e
-	ld a, h ; $6d2f
-	adc $00 ; $6d30
-	ld h, a ; $6d32
+	ld_story_char_field CHARREC_NAME ; $6d20
 	pop af ; $6d33
 	ld de, wCharDataScreenCell + 16 * TILEMAP_WIDTH + 12 ; $6d34
 	ld c, $20 ; $6d37
 	call WriteExpScreenStringTiles ; $6d39
 	wram_bank WRAM_SCENE ; $6d3c
 	push af ; $6d42
-	ld hl, wStoryMainName ; $6d43
-	ld a, [wStoryCharacterSlot] ; $6d46
-	or a ; $6d49
-	jr z, .viewPartnerLevelField ; $6d4a
-	ld l, $40 ; $6d4c
-.viewPartnerLevelField:
-	ld a, l ; $6d4e
-	add $18 ; $6d4f
-	ld l, a ; $6d51
-	ld a, h ; $6d52
-	adc $00 ; $6d53
-	ld h, a ; $6d55
+	ld_story_char_field CHARREC_LEVEL ; $6d43
 	pop af ; $6d56
 	ld a, [hl] ; $6d57
 	ld h, $00 ; $6d58

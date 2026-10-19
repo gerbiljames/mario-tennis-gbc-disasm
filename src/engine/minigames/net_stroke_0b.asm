@@ -164,15 +164,13 @@ NetGamePractice3JudgePoint:
 	ret nz ; $62eb
 	ld a, [wRallyLength] ; $62ec
 	dec a ; $62ef
-	ld a, a ; $62f0
-	rst Rst00 ; $62f1
+	jumptable a ; $62f0
 	dw NetGamePractice3JudgePoint.rally1 ; $62f2 jumptable
 	dw NetGamePractice3Cases1.dispatchResult ; $62f4 jumptable
 	dw NetGamePractice3Cases2.dispatchResult ; $62f6 jumptable
 .rally1:
 	ld a, b ; $62f8
-	ld a, a ; $62f9
-	rst Rst00 ; $62fa
+	jumptable a ; $62f9
 	dw NetGamePractice3JudgePoint.result0 ; $62fb jumptable
 	dw NetGamePractice3Cases1 ; $62fd jumptable
 	dw NetGamePractice3Cases1.checkBallBounceCount ; $62ff jumptable
@@ -223,8 +221,7 @@ NetGamePractice3Cases1:
 	ret ; $6359
 .dispatchResult:
 	ld a, b ; $635a
-	ld a, a ; $635b
-	rst Rst00 ; $635c
+	jumptable a ; $635b
 	dw NetGamePractice3Cases1.checkPointOutcome ; $635d jumptable
 	dw NetGamePractice3Cases2 ; $635f jumptable
 	dw NetGamePractice3Cases2.ignoreBounce ; $6361 jumptable
@@ -256,8 +253,7 @@ NetGamePractice3Cases2:
 	ret ; $6393
 .dispatchResult:
 	ld a, b ; $6394
-	ld a, a ; $6395
-	rst Rst00 ; $6396
+	jumptable a ; $6395
 	dw NetGamePractice3Cases2.checkPointOutcome ; $6397 jumptable
 	dw NetGamePractice3Cases3 ; $6399 jumptable
 	dw NetGamePractice3Cases3.ignoreBounce ; $639b jumptable
@@ -472,8 +468,7 @@ StrokeMatch1JudgePoint:
 	jp StrokeMatch1Cases3.dispatchResult ; $651c
 .branch13:
 	ld a, b ; $651f
-	ld a, a ; $6520
-	rst Rst00 ; $6521
+	jumptable a ; $6520
 	dw StrokeMatch1JudgePoint.rally1 ; $6522 jumptable
 	dw StrokeMatch1Cases1 ; $6524 jumptable
 	dw StrokeMatch1Cases1.ignoreBounce ; $6526 jumptable
@@ -505,8 +500,7 @@ StrokeMatch1Cases1:
 	ret ; $6558
 .rally2:
 	ld a, b ; $6559
-	ld a, a ; $655a
-	rst Rst00 ; $655b
+	jumptable a ; $655a
 	dw StrokeMatch1Cases1.checkPointOutcome ; $655c jumptable
 	dw StrokeMatch1Cases2 ; $655e jumptable
 	dw StrokeMatch1Cases2.judgeBounce ; $6560 jumptable
@@ -557,8 +551,7 @@ StrokeMatch1Cases2:
 	ret ; $65be
 .maskClear:
 	ld a, b ; $65bf
-	ld a, a ; $65c0
-	rst Rst00 ; $65c1
+	jumptable a ; $65c0
 	dw StrokeMatch1Cases2.queuePointOutcomeMessage ; $65c2 jumptable
 	dw StrokeMatch1Cases3 ; $65c4 jumptable
 	dw StrokeMatch1Cases3.judgeBounce ; $65c6 jumptable
@@ -606,8 +599,7 @@ StrokeMatch1Cases3:
 	ret ; $661e
 .dispatchResult:
 	ld a, b ; $661f
-	ld a, a ; $6620
-	rst Rst00 ; $6621
+	jumptable a ; $6620
 	dw StrokeMatch1Cases3.queuePointOutcomeMessage ; $6622 jumptable
 	dw StrokeMatch1Cases4 ; $6624 jumptable
 	dw StrokeMatch1Cases4.checkPointOutcome ; $6626 jumptable

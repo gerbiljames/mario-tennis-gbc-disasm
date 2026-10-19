@@ -256,9 +256,7 @@ AcademyMainBldgInitScript_10:
 	jr nz, .notSeniorChamp ; $7721
 	script_set_actor_script ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_1, ActorScript_10_1 ; $7723
 .notSeniorChamp:
-	ld a, $01 ; $772e
-	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730
-	call RegisterFrameTask ; $7733
+	frame_task UpdatePlayerPairTileAnimState_10 ; $772e
 	ld a, [wStoryModeEntryPoint] ; $7736
 	cp $0f ; $7739
 	jr nz, .done ; $773b

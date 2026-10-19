@@ -2,21 +2,11 @@ DrillBriefing_ServeThroughPoles:
 	ld a, $03 ; $5c67
 	ld [wBriefingAnimStep], a ; $5c69
 	call PoleServeBriefing_AdvanceAnim ; $5c6c
-	ld a, $01 ; $5c6f
-	ld hl, DrawBriefingPlayerSprite ; $5c71
-	call RegisterFrameTask ; $5c74
-	ld a, $01 ; $5c77
-	ld hl, DrawBriefingBallSprite ; $5c79
-	call RegisterFrameTask ; $5c7c
-	ld a, $01 ; $5c7f
-	ld hl, DrawBriefingMarkerHFlip ; $5c81
-	call RegisterFrameTask ; $5c84
-	ld a, $01 ; $5c87
-	ld hl, DrawBriefingMarkerRotated ; $5c89
-	call RegisterFrameTask ; $5c8c
-	ld a, $01 ; $5c8f
-	ld hl, CycleDiagramTargetPalette ; $5c91
-	call RegisterFrameTask ; $5c94
+	frame_task DrawBriefingPlayerSprite ; $5c6f
+	frame_task DrawBriefingBallSprite ; $5c77
+	frame_task DrawBriefingMarkerHFlip ; $5c7f
+	frame_task DrawBriefingMarkerRotated ; $5c87
+	frame_task CycleDiagramTargetPalette ; $5c8f
 	ld hl, Text_BriefPoleServeFourCourts ; $5c97
 	call DrawBriefingCaption ; $5c9a
 	xor a ; $5c9d
@@ -29,28 +19,18 @@ DrillBriefing_ServeThroughPoles:
 	and a ; $5cac
 	jp z, .animFirstCaption ; $5cad
 	call ClearFrameTasks ; $5cb0
-	ld a, $01 ; $5cb3
-	ld hl, UpdateAnimatedTilesTask_17 ; $5cb5
-	call RegisterFrameTask ; $5cb8
+	frame_task UpdateAnimatedTilesTask_17 ; $5cb3
 	ld a, $03 ; $5cbb
 	ld [wBriefingAnimStep], a ; $5cbd
 	call PoleServeBriefing_AdvanceAnim2 ; $5cc0
-	ld a, $01 ; $5cc3
-	ld hl, DrawBriefingPlayerSprite ; $5cc5
-	call RegisterFrameTask ; $5cc8
-	ld a, $01 ; $5ccb
-	ld hl, DrawBriefingMarkerHFlip ; $5ccd
-	call RegisterFrameTask ; $5cd0
-	ld a, $01 ; $5cd3
-	ld hl, CycleDiagramTargetPalette ; $5cd5
-	call RegisterFrameTask ; $5cd8
+	frame_task DrawBriefingPlayerSprite ; $5cc3
+	frame_task DrawBriefingMarkerHFlip ; $5ccb
+	frame_task CycleDiagramTargetPalette ; $5cd3
 	ld a, $00 ; $5cdb
 	ld [wBriefingBracketWidth], a ; $5cdd
 	ld a, $00 ; $5ce0
 	ld [wBriefingBracketHeight], a ; $5ce2
-	ld a, $01 ; $5ce5
-	ld hl, DrawBriefingTargetBrackets ; $5ce7
-	call RegisterFrameTask ; $5cea
+	frame_task DrawBriefingTargetBrackets ; $5ce5
 	ld hl, Text_BriefPoleServeSmallerTargets ; $5ced
 	call DrawBriefingCaption ; $5cf0
 	xor a ; $5cf3
@@ -75,63 +55,41 @@ DrillBriefing_ServeThroughPoles:
 	and a ; $5d1c
 	jp z, .animSecondCaption ; $5d1d
 	call ClearFrameTasks ; $5d20
-	ld a, $01 ; $5d23
-	ld hl, UpdateAnimatedTilesTask_17 ; $5d25
-	call RegisterFrameTask ; $5d28
+	frame_task UpdateAnimatedTilesTask_17 ; $5d23
 	ld a, $03 ; $5d2b
 	ld [wBriefingAnimStep], a ; $5d2d
 	call PoleServeBriefing_AdvanceAnim2 ; $5d30
-	ld a, $01 ; $5d33
-	ld hl, DrawBriefingPlayerSprite ; $5d35
-	call RegisterFrameTask ; $5d38
+	frame_task DrawBriefingPlayerSprite ; $5d33
 	ld a, $00 ; $5d3b
 	ld [wBriefingHMarkerUnflipped], a ; $5d3d
 	ld a, $4b ; $5d40
 	ld [wBriefingHMarkerX], a ; $5d42
 	ld a, $36 ; $5d45
 	ld [wBriefingHMarkerY], a ; $5d47
-	ld a, $01 ; $5d4a
-	ld hl, DrawBriefingMarkerHFlip ; $5d4c
-	call RegisterFrameTask ; $5d4f
-	ld a, $01 ; $5d52
-	ld hl, DrawBriefingPoleSprites ; $5d54
-	call RegisterFrameTask ; $5d57
-	ld a, $01 ; $5d5a
-	ld hl, CycleDiagramTargetPalette ; $5d5c
-	call RegisterFrameTask ; $5d5f
+	frame_task DrawBriefingMarkerHFlip ; $5d4a
+	frame_task DrawBriefingPoleSprites ; $5d52
+	frame_task CycleDiagramTargetPalette ; $5d5a
 	ld a, $00 ; $5d62
 	ld [wBriefingBracketWidth], a ; $5d64
 	ld a, $00 ; $5d67
 	ld [wBriefingBracketHeight], a ; $5d69
-	ld a, $01 ; $5d6c
-	ld hl, DrawBriefingTargetBrackets ; $5d6e
-	call RegisterFrameTask ; $5d71
+	frame_task DrawBriefingTargetBrackets ; $5d6c
 	ld hl, Text_BriefPoleServeThroughPoles ; $5d74
 	call DrawBriefingCaption ; $5d77
 	call WaitForInputBlinking ; $5d7a
 	call ClearFrameTasks ; $5d7d
-	ld a, $01 ; $5d80
-	ld hl, UpdateAnimatedTilesTask_17 ; $5d82
-	call RegisterFrameTask ; $5d85
+	frame_task UpdateAnimatedTilesTask_17 ; $5d80
 	ld a, $03 ; $5d88
 	ld [wBriefingAnimStep], a ; $5d8a
 	call PoleServeBriefing_AdvanceAnim2 ; $5d8d
-	ld a, $01 ; $5d90
-	ld hl, DrawBriefingPlayerSprite ; $5d92
-	call RegisterFrameTask ; $5d95
-	ld a, $01 ; $5d98
-	ld hl, DrawBriefingPoleSprites ; $5d9a
-	call RegisterFrameTask ; $5d9d
-	ld a, $01 ; $5da0
-	ld hl, CycleDiagramTargetPalette ; $5da2
-	call RegisterFrameTask ; $5da5
+	frame_task DrawBriefingPlayerSprite ; $5d90
+	frame_task DrawBriefingPoleSprites ; $5d98
+	frame_task CycleDiagramTargetPalette ; $5da0
 	ld a, $00 ; $5da8
 	ld [wBriefingBracketWidth], a ; $5daa
 	ld a, $00 ; $5dad
 	ld [wBriefingBracketHeight], a ; $5daf
-	ld a, $01 ; $5db2
-	ld hl, DrawBriefingTargetBrackets ; $5db4
-	call RegisterFrameTask ; $5db7
+	frame_task DrawBriefingTargetBrackets ; $5db2
 	ld hl, Text_BriefPoleServeDownLineTiming ; $5dba
 	call DrawBriefingCaption ; $5dbd
 .animLastCaption:
@@ -318,117 +276,73 @@ DrillBriefing_ServeAndVolley:
 	ld [wBriefingPlayerX], a ; $5f94
 	ld a, $44 ; $5f97
 	ld [wBriefingPlayerY], a ; $5f99
-	ld a, $01 ; $5f9c
-	ld hl, DrawBriefingPlayerSprite ; $5f9e
-	call RegisterFrameTask ; $5fa1
+	frame_task DrawBriefingPlayerSprite ; $5f9c
 	ld a, $34 ; $5fa4
 	ld [wBriefingOpponentX], a ; $5fa6
 	ld a, $06 ; $5fa9
 	ld [wBriefingOpponentY], a ; $5fab
-	ld a, $01 ; $5fae
-	ld hl, DrawBriefingOpponentSprite ; $5fb0
-	call RegisterFrameTask ; $5fb3
+	frame_task DrawBriefingOpponentSprite ; $5fae
 	ld a, $4e ; $5fb6
 	ld [wBriefingBallX], a ; $5fb8
 	ld a, $38 ; $5fbb
 	ld [wBriefingBallY], a ; $5fbd
-	ld a, $01 ; $5fc0
-	ld hl, DrawBriefingBallSprite ; $5fc2
-	call RegisterFrameTask ; $5fc5
+	frame_task DrawBriefingBallSprite ; $5fc0
 	ld a, $00 ; $5fc8
 	ld [wBriefingHMarkerUnflipped], a ; $5fca
 	ld a, $3a ; $5fcd
 	ld [wBriefingHMarkerX], a ; $5fcf
 	ld a, $3c ; $5fd2
 	ld [wBriefingHMarkerY], a ; $5fd4
-	ld a, $01 ; $5fd7
-	ld hl, DrawBriefingMarkerHFlip ; $5fd9
-	call RegisterFrameTask ; $5fdc
+	frame_task DrawBriefingMarkerHFlip ; $5fd7
 	ld a, $03 ; $5fdf
 	ld [wBriefingRotMarkerDir], a ; $5fe1
 	ld a, $52 ; $5fe4
 	ld [wBriefingRotMarkerX], a ; $5fe6
 	ld a, $40 ; $5fe9
 	ld [wBriefingRotMarkerY], a ; $5feb
-	ld a, $01 ; $5fee
-	ld hl, DrawBriefingMarkerRotated ; $5ff0
-	call RegisterFrameTask ; $5ff3
+	frame_task DrawBriefingMarkerRotated ; $5fee
 	ld b, $06 ; $5ff6
 	call DrawDiagramTargetOverlay ; $5ff8
-	ld a, $01 ; $5ffb
-	ld hl, CycleDiagramTargetPalette ; $5ffd
-	call RegisterFrameTask ; $6000
+	frame_task CycleDiagramTargetPalette ; $5ffb
 	ld hl, Text_BriefServeVolleyRunToLine ; $6003
 	call DrawBriefingCaption ; $6006
 	call WaitForInputBlinking ; $6009
 	call ClearFrameTasks ; $600c
-	ld a, $01 ; $600f
-	ld hl, UpdateAnimatedTilesTask_17 ; $6011
-	call RegisterFrameTask ; $6014
+	frame_task UpdateAnimatedTilesTask_17 ; $600f
 	call DrawDiagramTargetOverlay ; $6017
 	ld a, $03 ; $601a
 	ld [wBriefingAnimStep], a ; $601c
 	call ServeAndVolleyBriefing_AdvanceAnim ; $601f
-	ld a, $01 ; $6022
-	ld hl, DrawBriefingPlayerSprite ; $6024
-	call RegisterFrameTask ; $6027
-	ld a, $01 ; $602a
-	ld hl, DrawBriefingOpponentSprite ; $602c
-	call RegisterFrameTask ; $602f
-	ld a, $01 ; $6032
-	ld hl, DrawBriefingBallSprite ; $6034
-	call RegisterFrameTask ; $6037
-	ld a, $01 ; $603a
-	ld hl, DrawBriefingMarkerHFlip ; $603c
-	call RegisterFrameTask ; $603f
-	ld a, $01 ; $6042
-	ld hl, DrawBriefingMarkerRotated ; $6044
-	call RegisterFrameTask ; $6047
-	ld a, $01 ; $604a
-	ld hl, DrawBriefingMarkerVFlip ; $604c
-	call RegisterFrameTask ; $604f
+	frame_task DrawBriefingPlayerSprite ; $6022
+	frame_task DrawBriefingOpponentSprite ; $602a
+	frame_task DrawBriefingBallSprite ; $6032
+	frame_task DrawBriefingMarkerHFlip ; $603a
+	frame_task DrawBriefingMarkerRotated ; $6042
+	frame_task DrawBriefingMarkerVFlip ; $604a
 	ld a, $0d ; $6052
 	ld [wBriefingBracketWidth], a ; $6054
 	ld a, $0f ; $6057
 	ld [wBriefingBracketHeight], a ; $6059
-	ld a, $01 ; $605c
-	ld hl, DrawBriefingTargetBrackets ; $605e
-	call RegisterFrameTask ; $6061
+	frame_task DrawBriefingTargetBrackets ; $605c
 	ld hl, Text_BriefServeVolleyAimOpposite ; $6064
 	call DrawBriefingCaption ; $6067
 	call WaitForInputBlinking ; $606a
 	call ClearFrameTasks ; $606d
-	ld a, $01 ; $6070
-	ld hl, UpdateAnimatedTilesTask_17 ; $6072
-	call RegisterFrameTask ; $6075
+	frame_task UpdateAnimatedTilesTask_17 ; $6070
 	ld a, $03 ; $6078
 	ld [wBriefingAnimStep], a ; $607a
 	call ServeAndVolleyBriefing_AdvanceAnim ; $607d
-	ld a, $01 ; $6080
-	ld hl, DrawBriefingPlayerSprite ; $6082
-	call RegisterFrameTask ; $6085
-	ld a, $01 ; $6088
-	ld hl, DrawBriefingOpponentSprite ; $608a
-	call RegisterFrameTask ; $608d
-	ld a, $01 ; $6090
-	ld hl, DrawBriefingBallSprite ; $6092
-	call RegisterFrameTask ; $6095
-	ld a, $01 ; $6098
-	ld hl, DrawBriefingMarkerHFlip ; $609a
-	call RegisterFrameTask ; $609d
-	ld a, $01 ; $60a0
-	ld hl, DrawBriefingMarkerRotated ; $60a2
-	call RegisterFrameTask ; $60a5
-	ld a, $01 ; $60a8
-	ld hl, DrawBriefingMarkerVFlip ; $60aa
-	call RegisterFrameTask ; $60ad
+	frame_task DrawBriefingPlayerSprite ; $6080
+	frame_task DrawBriefingOpponentSprite ; $6088
+	frame_task DrawBriefingBallSprite ; $6090
+	frame_task DrawBriefingMarkerHFlip ; $6098
+	frame_task DrawBriefingMarkerRotated ; $60a0
+	frame_task DrawBriefingMarkerVFlip ; $60a8
 	ld a, $0d ; $60b0
 	ld [wBriefingBracketWidth], a ; $60b2
 	ld a, $0f ; $60b5
 	ld [wBriefingBracketHeight], a ; $60b7
-	ld a, $01 ; $60ba
-	ld hl, DrawBriefingTargetBrackets ; $60bc
-	call RegisterFrameTask ; $60bf
+	frame_task DrawBriefingTargetBrackets ; $60ba
 	ld hl, Text_BriefServeVolleyAllPositions ; $60c2
 	call DrawBriefingCaption ; $60c5
 	xor a ; $60c8

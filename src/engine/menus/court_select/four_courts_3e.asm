@@ -16,9 +16,7 @@ RunCourtSelect4Menu:
 	ld c, a ; $5bc0
 	ld b, $02 ; $5bc1
 	call SetMenuCursorFromIndex_3e ; $5bc3
-	ld a, $01 ; $5bc6
-	ld hl, CourtSelect4CursorSpriteTask ; $5bc8
-	call RegisterFrameTask ; $5bcb
+	frame_task CourtSelect4CursorSpriteTask ; $5bc6
 	call RedrawCourtSelect4Menu ; $5bce
 	wram_bank WRAM_SCREEN ; $5bd1
 .loop:
@@ -88,9 +86,7 @@ RunLinkCourtSelect4Menu:
 	ld c, a ; $5c63
 	ld b, $02 ; $5c64
 	call SetMenuCursorFromIndex_3e ; $5c66
-	ld a, $01 ; $5c69
-	ld hl, CourtSelect4CursorSpriteTask ; $5c6b
-	call RegisterFrameTask ; $5c6e
+	frame_task CourtSelect4CursorSpriteTask ; $5c69
 	call RedrawCourtSelect4Menu ; $5c71
 	farcall ResyncLinkSessionWithTimer ; $5c74
 	push af ; $5c77

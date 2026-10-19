@@ -406,9 +406,7 @@ PlayScreenSequence0:
 	call EnableLCD ; $7703
 	script_fade_in 16 ; $7706
 	call WaitFadeEnd ; $770b
-	ld a, $01 ; $770e
-	ld hl, QueueScreen0Sprites ; $7710
-	call RegisterFrameTask ; $7713
+	frame_task QueueScreen0Sprites ; $770e
 .done:
 	call AdvanceFrame ; $7716
 	ldh a, [hInputPressed] ; $7719

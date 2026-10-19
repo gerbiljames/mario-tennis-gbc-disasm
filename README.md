@@ -53,9 +53,9 @@ tilemaps and text.
 
 | | |
 |---|---|
-| instructions | 130,131 source lines of instructions and code macros (`tools/stats.py`) |
+| instructions | 125,813 source lines of instructions and code macros (`tools/stats.py`) |
 | source-spelled bytes | 911,348 bytes, 43.5% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 29,764: 14,413 routines and tables and 13,617 locals in ROM, 1,734 RAM names |
+| labels | 29,565: 14,413 routines and tables and 13,418 locals in ROM, 1,734 RAM names |
 | compressed graphics | 839 LZ streams, each named, sized by decoding it |
 | `Unused_` routines | 788 routines and 111 blobs nothing live reaches (`docs/unused_code.md`) |
 
@@ -117,8 +117,10 @@ strings, the 315 sound-channel scripts) stays in `data/`.
   arguments, what is wrong with it.
 - **Macros** (`include/macros/`) stand for the idioms the code is built
   from and expand to the original bytes: `farcall` (`rst $18`), `sound`
-  (`rst $08`), `wram_bank` / `push_wram_bank` / `pop_wram_bank`,
-  `ld_hl_indexed` (`hl = Table + a`), `add_hl_a` (`hl += a`), `wait_frames`, the register-pair
+  (`rst $08`), `jumptable` (`rst $00`), `wram_bank` / `push_wram_bank` / `pop_wram_bank`
+  and the `rom_bank` and `sram_bank` counterparts, `frame_task`,
+  `ld_hl_indexed` (`hl = Table + a`), `add_hl_a` (`hl += a`), `neg_hl`,
+  `abs_hl`, `sub_hl_de`, `ld_story_char_field`, `wait_frames`, the register-pair
   macros (`ld_xy`, `ld_cell`, `ld_size`, `ld_oam`, `ld_tile_run`,
   `ld_bg_pals` / `ld_obj_pals`), map positions in tiles with a point
   (`map_entry $03, FACE_DOWN, 18.0, 13.0`: the game's 1/256-tile words,

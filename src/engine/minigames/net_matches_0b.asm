@@ -133,8 +133,7 @@ NetGameMatch1JudgePoint:
 	ret nz ; $54fe
 	ld a, [wRallyLength] ; $54ff
 	dec a ; $5502
-	ld a, a ; $5503
-	rst Rst00 ; $5504
+	jumptable a ; $5503
 	dw NetGameMatch1JudgePoint.rally1 ; $5505 jumptable
 	dw NetGameMatch1Cases1.dispatchResult ; $5507 jumptable
 	dw NetGameMatch1Cases2.dispatchResult ; $5509 jumptable
@@ -142,8 +141,7 @@ NetGameMatch1JudgePoint:
 	dw NetGameMatch1Cases4.dispatchResult ; $550d jumptable
 .rally1:
 	ld a, b ; $550f
-	ld a, a ; $5510
-	rst Rst00 ; $5511
+	jumptable a ; $5510
 	dw NetGameMatch1JudgePoint.result0 ; $5512 jumptable
 	dw NetGameMatch1Cases1 ; $5514 jumptable
 	dw NetGameMatch1Cases1.ignoreBounce ; $5516 jumptable
@@ -175,8 +173,7 @@ NetGameMatch1Cases1:
 	ret ; $5548
 .dispatchResult:
 	ld a, b ; $5549
-	ld a, a ; $554a
-	rst Rst00 ; $554b
+	jumptable a ; $554a
 	dw NetGameMatch1Cases1.checkPointOutcome ; $554c jumptable
 	dw NetGameMatch1Cases2 ; $554e jumptable
 	dw NetGameMatch1Cases2.ignoreBounce ; $5550 jumptable
@@ -208,8 +205,7 @@ NetGameMatch1Cases2:
 	ret ; $5582
 .dispatchResult:
 	ld a, b ; $5583
-	ld a, a ; $5584
-	rst Rst00 ; $5585
+	jumptable a ; $5584
 	dw NetGameMatch1Cases2.checkPointOutcome ; $5586 jumptable
 	dw NetGameMatch1Cases3 ; $5588 jumptable
 	dw NetGameMatch1Cases3.ignoreBounce ; $558a jumptable
@@ -255,8 +251,7 @@ NetGameMatch1Cases3:
 	ret ; $55de
 .dispatchResult:
 	ld a, b ; $55df
-	ld a, a ; $55e0
-	rst Rst00 ; $55e1
+	jumptable a ; $55e0
 	dw NetGameMatch1Cases3.checkPointOutcome ; $55e2 jumptable
 	dw NetGameMatch1Cases4 ; $55e4 jumptable
 	dw NetGameMatch1Cases4.ignoreBounce ; $55e6 jumptable
@@ -288,8 +283,7 @@ NetGameMatch1Cases4:
 	ret ; $5618
 .dispatchResult:
 	ld a, b ; $5619
-	ld a, a ; $561a
-	rst Rst00 ; $561b
+	jumptable a ; $561a
 	dw NetGameMatch1Cases4.rally5IgnorePointEnd ; $561c jumptable
 	dw NetGameMatch1Cases4.rally5FailBallHit ; $561e jumptable
 	dw NetGameMatch1Cases4.rally5IgnoreBounce ; $5620 jumptable
@@ -463,8 +457,7 @@ NetGameMatch2JudgePoint:
 	ret nz ; $5778
 	ld a, [wRallyLength] ; $5779
 	dec a ; $577c
-	ld a, a ; $577d
-	rst Rst00 ; $577e
+	jumptable a ; $577d
 	dw NetGameMatch2JudgePoint.rally1 ; $577f jumptable
 	dw NetGameMatch2Cases1.dispatchResult ; $5781 jumptable
 	dw NetGameMatch2Cases2.dispatchResult ; $5783 jumptable
@@ -472,8 +465,7 @@ NetGameMatch2JudgePoint:
 	dw NetGameMatch2Cases4.dispatchResult ; $5787 jumptable
 .rally1:
 	ld a, b ; $5789
-	ld a, a ; $578a
-	rst Rst00 ; $578b
+	jumptable a ; $578a
 	dw NetGameMatch2JudgePoint.result0 ; $578c jumptable
 	dw NetGameMatch2Cases1 ; $578e jumptable
 	dw NetGameMatch2Cases1.ignoreBounce ; $5790 jumptable
@@ -505,8 +497,7 @@ NetGameMatch2Cases1:
 	ret ; $57c2
 .dispatchResult:
 	ld a, b ; $57c3
-	ld a, a ; $57c4
-	rst Rst00 ; $57c5
+	jumptable a ; $57c4
 	dw NetGameMatch2Cases1.checkPointOutcome ; $57c6 jumptable
 	dw NetGameMatch2Cases2 ; $57c8 jumptable
 	dw NetGameMatch2Cases2.ignoreBounce ; $57ca jumptable
@@ -547,8 +538,7 @@ NetGameMatch2Cases2:
 	ret ; $5810
 .dispatchResult:
 	ld a, b ; $5811
-	ld a, a ; $5812
-	rst Rst00 ; $5813
+	jumptable a ; $5812
 	dw NetGameMatch2Cases2.checkPointOutcome ; $5814 jumptable
 	dw NetGameMatch2Cases3 ; $5816 jumptable
 	dw NetGameMatch2Cases3.ignoreBounce ; $5818 jumptable
@@ -586,8 +576,7 @@ NetGameMatch2Cases3:
 	ret ; $5859
 .dispatchResult:
 	ld a, b ; $585a
-	ld a, a ; $585b
-	rst Rst00 ; $585c
+	jumptable a ; $585b
 	dw NetGameMatch2Cases3.checkPointOutcome ; $585d jumptable
 	dw NetGameMatch2Cases4 ; $585f jumptable
 	dw NetGameMatch2Cases4.ignoreBounce ; $5861 jumptable
@@ -619,8 +608,7 @@ NetGameMatch2Cases4:
 	ret ; $5893
 .dispatchResult:
 	ld a, b ; $5894
-	ld a, a ; $5895
-	rst Rst00 ; $5896
+	jumptable a ; $5895
 	dw NetGameMatch2Cases4.rally5IgnorePointEnd ; $5897 jumptable
 	dw NetGameMatch2Cases4.rally5FailBallHit ; $5899 jumptable
 	dw NetGameMatch2Cases4.rally5IgnoreBounce ; $589b jumptable

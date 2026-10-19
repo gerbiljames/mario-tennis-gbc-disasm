@@ -51,9 +51,7 @@ ShowMatchResultsScreen:
 	call InitResultsScreenCharacters ; $406f
 	call EnableLCD ; $4072
 	call AdvanceFrame ; $4075
-	ld a, $01 ; $4078
-	ld hl, DrawResultsCharSprites ; $407a
-	call RegisterFrameTask ; $407d
+	frame_task DrawResultsCharSprites ; $4078
 	script_fade_in 16 ; $4080
 	call WaitFadeEnd ; $4085
 	call RunContinuePrompt ; $4088

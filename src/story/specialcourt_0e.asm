@@ -74,9 +74,7 @@ PlayStarWarpTransition:
 	script_copy_scene_rect 4, 45, 20, 20, 6, 2 ; $71a1
 	script_copy_scene_rect 10, 43, 26, 18, 6, 2 ; $71b0
 	sound BGM_WIN ; $71bf
-	ld a, $01 ; $71c1
-	ld hl, UpdateStarWarpSprite ; $71c3
-	call RegisterFrameTask ; $71c6
+	frame_task UpdateStarWarpSprite ; $71c1
 	wram_bank WRAM_SCENE ; $71c9
 .waitLoop:
 	call AdvanceFrame ; $71cf

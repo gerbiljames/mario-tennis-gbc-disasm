@@ -47,26 +47,18 @@ CharDataScreen_Show:
 	jr nz, .reentry ; $406a
 	call EnableLCD ; $406c
 	call AdvanceFrame ; $406f
-	ld a, $01 ; $4072
-	ld hl, DrawStatValueSprites ; $4074
-	call RegisterFrameTask ; $4077
-	ld a, $01 ; $407a
-	ld hl, DrawRemainingPointsSprite ; $407c
-	call RegisterFrameTask ; $407f
+	frame_task DrawStatValueSprites ; $4072
+	frame_task DrawRemainingPointsSprite ; $407a
 	script_fade_in 16 ; $4082
 	call WaitFadeEnd ; $4087
-	ld a, $01 ; $408a
-	ld hl, CharDataScreenAnimTask ; $408c
-	call RegisterFrameTask ; $408f
+	frame_task CharDataScreenAnimTask ; $408a
 	call AnimateCharDataStatsReveal ; $4092
 	wram_bank WRAM_SCENE ; $4095
 	xor a ; $409b
 	ld [wCharDataLevelPreview], a ; $409c
 	call CharDataScreen_DrawPageColumns ; $409f
 	call FlushCharDataTilemaps ; $40a2
-	ld a, $01 ; $40a5
-	ld hl, DrawStatArrowIndicators ; $40a7
-	call RegisterFrameTask ; $40aa
+	frame_task DrawStatArrowIndicators ; $40a5
 	jr .runInputLoop ; $40ad
 .reentry:
 	call SetupCharDataScreen ; $40af
@@ -128,85 +120,30 @@ CharDataScreen_InitState:
 	xor a ; $4135
 	ld [wCharDataPointsWorking], a ; $4136
 	push af ; $4139
-	ld hl, wStoryMainName ; $413a
-	ld a, [wStoryCharacterSlot] ; $413d
-	or a ; $4140
-	jr z, .levelField ; $4141
-	ld l, $40 ; $4143
-.levelField:
-	ld a, l ; $4145
-	add $18 ; $4146
-	ld l, a ; $4148
-	ld a, h ; $4149
-	adc $00 ; $414a
-	ld h, a ; $414c
+	ld_story_char_field CHARREC_LEVEL ; $413a
 	pop af ; $414d
 	ld a, [hl] ; $414e
 	ld [wCharDataLevel], a ; $414f
 	push af ; $4152
-	ld hl, wStoryMainName ; $4153
-	ld a, [wStoryCharacterSlot] ; $4156
-	or a ; $4159
-	jr z, .spinLevelField ; $415a
-	ld l, $40 ; $415c
-.spinLevelField:
-	ld a, l ; $415e
-	add $38 ; $415f
-	ld l, a ; $4161
-	ld a, h ; $4162
-	adc $00 ; $4163
-	ld h, a ; $4165
+	ld_story_char_field CHARREC_TRAIN_LEVELS ; $4153
 	pop af ; $4166
 	ld a, [hl] ; $4167
 	ld [wCharDataNewLevels], a ; $4168
 	ld [wCharDataLevels], a ; $416b
 	push af ; $416e
-	ld hl, wStoryMainName ; $416f
-	ld a, [wStoryCharacterSlot] ; $4172
-	or a ; $4175
-	jr z, .powerLevelField ; $4176
-	ld l, $40 ; $4178
-.powerLevelField:
-	ld a, l ; $417a
-	add $39 ; $417b
-	ld l, a ; $417d
-	ld a, h ; $417e
-	adc $00 ; $417f
-	ld h, a ; $4181
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $416f
 	pop af ; $4182
 	ld a, [hl] ; $4183
 	ld [wCharDataNewLevels + 1], a ; $4184
 	ld [wCharDataLevels + 1], a ; $4187
 	push af ; $418a
-	ld hl, wStoryMainName ; $418b
-	ld a, [wStoryCharacterSlot] ; $418e
-	or a ; $4191
-	jr z, .controlLevelField ; $4192
-	ld l, $40 ; $4194
-.controlLevelField:
-	ld a, l ; $4196
-	add $3a ; $4197
-	ld l, a ; $4199
-	ld a, h ; $419a
-	adc $00 ; $419b
-	ld h, a ; $419d
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $418b
 	pop af ; $419e
 	ld a, [hl] ; $419f
 	ld [wCharDataNewLevels + 2], a ; $41a0
 	ld [wCharDataLevels + 2], a ; $41a3
 	push af ; $41a6
-	ld hl, wStoryMainName ; $41a7
-	ld a, [wStoryCharacterSlot] ; $41aa
-	or a ; $41ad
-	jr z, .speedLevelField ; $41ae
-	ld l, $40 ; $41b0
-.speedLevelField:
-	ld a, l ; $41b2
-	add $3b ; $41b3
-	ld l, a ; $41b5
-	ld a, h ; $41b6
-	adc $00 ; $41b7
-	ld h, a ; $41b9
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $41a7
 	pop af ; $41ba
 	ld a, [hl] ; $41bb
 	ld [wCharDataNewLevels + 3], a ; $41bc
@@ -637,36 +574,14 @@ CharDataScreen_DrawStatBarTable1:
 	dw CharDataScreenStatBar32 ; record 10
 CharDataScreen_DrawPortrait:
 	push af ; $459a
-	ld hl, wStoryMainName ; $459b
-	ld a, [wStoryCharacterSlot] ; $459e
-	or a ; $45a1
-	jr z, .paletteField ; $45a2
-	ld l, $40 ; $45a4
-.paletteField:
-	ld a, l ; $45a6
-	add $0c ; $45a7
-	ld l, a ; $45a9
-	ld a, h ; $45aa
-	adc $00 ; $45ab
-	ld h, a ; $45ad
+	ld_story_char_field CHARREC_PALETTE ; $459b
 	pop af ; $45ae
 	ld a, [hl] ; $45af
 	ld_bg_pals de, 4, 1 ; $45b0
 	farcall LoadIndexedPaletteThunk ; $45b3
 	wram_bank WRAM_STAGING ; $45b6
 	push af ; $45bc
-	ld hl, wStoryMainName ; $45bd
-	ld a, [wStoryCharacterSlot] ; $45c0
-	or a ; $45c3
-	jr z, .charField ; $45c4
-	ld l, $40 ; $45c6
-.charField:
-	ld a, l ; $45c8
-	add $0b ; $45c9
-	ld l, a ; $45cb
-	ld a, h ; $45cc
-	adc $00 ; $45cd
-	ld h, a ; $45cf
+	ld_story_char_field CHARREC_CHAR ; $45bd
 	pop af ; $45d0
 	ld a, [hl] ; $45d1
 	ld de, wDecompBuffer ; $45d2

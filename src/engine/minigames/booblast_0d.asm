@@ -235,8 +235,7 @@ UpdateBooBlastHitStreak:
 	ld [wMinigameActors + 0 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5715
 	ret ; $5718
 BooBlastControllerActorHandler:
-	ld a, [wMinigameSceneActor + MGACTOR_STATE] ; $5719
-	rst Rst00 ; $571c
+	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5719
 	dw BooBlastControllerState0 ; $571d jumptable
 	dw BooBlastControllerState1 ; $571f jumptable
 	dw BooBlastControllerState2 ; $5721 jumptable
@@ -283,21 +282,8 @@ IsBallWithinTargetZone:
 	ld a, [hl+] ; $5768
 	ld h, [hl] ; $5769
 	ld l, a ; $576a
-	ld a, l ; $576b
-	sub e ; $576c
-	ld l, a ; $576d
-	ld a, h ; $576e
-	sbc d ; $576f
-	ld h, a ; $5770
-	bit 7, h ; $5771
-	jr z, .absX ; $5773
-	xor a ; $5775
-	sub l ; $5776
-	ld l, a ; $5777
-	sbc a ; $5778
-	sub h ; $5779
-	ld h, a ; $577a
-.absX:
+	sub_hl_de ; $576b
+	abs_hl ; $5771
 	ld de, -128 ; $577b
 	add hl, de ; $577e
 	jr c, .returnZero ; $577f
@@ -309,21 +295,8 @@ IsBallWithinTargetZone:
 	ld a, [hl+] ; $578a
 	ld h, [hl] ; $578b
 	ld l, a ; $578c
-	ld a, l ; $578d
-	sub e ; $578e
-	ld l, a ; $578f
-	ld a, h ; $5790
-	sbc d ; $5791
-	ld h, a ; $5792
-	bit 7, h ; $5793
-	jr z, .absDepth ; $5795
-	xor a ; $5797
-	sub l ; $5798
-	ld l, a ; $5799
-	sbc a ; $579a
-	sub h ; $579b
-	ld h, a ; $579c
-.absDepth:
+	sub_hl_de ; $578d
+	abs_hl ; $5793
 	ld de, $fec0 ; $579d
 	add hl, de ; $57a0
 	jr c, .returnZero ; $57a1
@@ -331,15 +304,7 @@ IsBallWithinTargetZone:
 	ld a, [hl+] ; $57a6
 	ld h, [hl] ; $57a7
 	ld l, a ; $57a8
-	bit 7, h ; $57a9
-	jr z, .absHeight ; $57ab
-	xor a ; $57ad
-	sub l ; $57ae
-	ld l, a ; $57af
-	sbc a ; $57b0
-	sub h ; $57b1
-	ld h, a ; $57b2
-.absHeight:
+	abs_hl ; $57a9
 	ld de, -256 ; $57b3
 	add hl, de ; $57b6
 	jr c, .returnZero ; $57b7

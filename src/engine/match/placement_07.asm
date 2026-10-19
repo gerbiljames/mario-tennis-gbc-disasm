@@ -112,8 +112,7 @@ ShotPlacementDataServeSlice_07:
 ShotPlacementDataServeFlat_07:
 	INCBIN "data/engine/match/ShotPlacementDataServeFlat_07.bin" ; $5111, 80 bytes
 ComputeShotPlacement:
-	ld a, [wCurrentShotType] ; $5161
-	rst Rst00 ; $5164
+	jumptable [wCurrentShotType] ; $5161
 	dw ShotPlacementTopspin ; $5165 jumptable
 	dw ShotPlacementPowerTopspin ; $5167 jumptable
 	dw ShotPlacementSlice ; $5169 jumptable
@@ -283,12 +282,7 @@ LoadShotPlacementEntry:
 	ld a, [wShotAimMirror] ; $52b5
 	and a ; $52b8
 	jr z, .storeSideSpin ; $52b9
-	xor a ; $52bb
-	sub c ; $52bc
-	ld c, a ; $52bd
-	sbc a ; $52be
-	sub b ; $52bf
-	ld b, a ; $52c0
+	neg_bc ; $52bb
 .storeSideSpin:
 	ld hl, wBallSideSpin ; $52c1
 	ld a, c ; $52c4
@@ -361,12 +355,7 @@ AddBallSpeedEighth:
 .absSpeed:
 	bit 7, h ; $532f
 	jr nz, .store ; $5331
-	xor a ; $5333
-	sub l ; $5334
-	ld l, a ; $5335
-	sbc a ; $5336
-	sub h ; $5337
-	ld h, a ; $5338
+	neg_hl ; $5333
 .store:
 	ld a, l ; $5339
 	ld [wShotSpeedBallTerm], a ; $533a
@@ -421,12 +410,7 @@ AddPlayerMomentumToShot:
 	ld a, [wCharCourtPos] ; $5389
 	and $02 ; $538c
 	jr nz, .store ; $538e
-	xor a ; $5390
-	sub l ; $5391
-	ld l, a ; $5392
-	sbc a ; $5393
-	sub h ; $5394
-	ld h, a ; $5395
+	neg_hl ; $5390
 .store:
 	ld a, l ; $5396
 	ld [wShotSpeedMomentumTerm], a ; $5397

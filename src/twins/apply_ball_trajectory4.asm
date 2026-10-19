@@ -7,12 +7,7 @@
 
 ASSERT STRCMP("{TWIN_LABEL}", "{ApplyBallTrajectory4_{TWIN}_NAME}") == 0
 {TWIN_LABEL}:
-	xor a
-	sub c
-	ld c, a
-	sbc a
-	sub b
-	ld b, a
+	neg_bc
 	ld a, [wShotDistMin]
 	ld e, a
 	ld a, [wShotDistMin + 1]

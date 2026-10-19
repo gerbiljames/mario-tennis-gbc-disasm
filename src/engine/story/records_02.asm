@@ -235,12 +235,7 @@ GetExpRemainingToNextLevel:
 	ld d, [hl] ; $4df4
 	ld e, a ; $4df5
 	pop hl ; $4df6
-	ld a, l ; $4df7
-	sub e ; $4df8
-	ld l, a ; $4df9
-	ld a, h ; $4dfa
-	sbc d ; $4dfb
-	ld h, a ; $4dfc
+	sub_hl_de ; $4df7
 	ret ; $4dfd
 .maxLevel:
 	ld hl, $0000 ; $4dfe
@@ -276,12 +271,7 @@ GetExpProgressInCurrentLevel:
 	ld a, [hl+] ; $4e2c
 	ld h, [hl] ; $4e2d
 	ld l, a ; $4e2e
-	ld a, l ; $4e2f
-	sub e ; $4e30
-	ld l, a ; $4e31
-	ld a, h ; $4e32
-	sbc d ; $4e33
-	ld h, a ; $4e34
+	sub_hl_de ; $4e2f
 	ret ; $4e35
 .maxLevel:
 	ld hl, $0000 ; $4e36
@@ -328,12 +318,7 @@ GetExpRequiredForLevel:
 	ld h, [hl] ; $4e6e
 	ld l, a ; $4e6f
 	pop de ; $4e70
-	ld a, l ; $4e71
-	sub e ; $4e72
-	ld l, a ; $4e73
-	ld a, h ; $4e74
-	sbc d ; $4e75
-	ld h, a ; $4e76
+	sub_hl_de ; $4e71
 	ret ; $4e77
 CharDataPtr_02:
 	; $4e78, 2 bytes (records:2)

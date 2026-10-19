@@ -165,9 +165,7 @@ Unused_1a_ShowExpGainScreen:
 	cp $00 ; $450c
 	jr nz, .done ; $450e
 	call Unused_1a_DrawExpScreenYesNoBox ; $4510
-	ld a, $0e ; $4513
-	ld hl, Unused_1a_StubNop0 ; $4515
-	call RegisterFrameTask ; $4518
+	frame_task Unused_1a_StubNop0, $0e ; $4513
 	call Unused_1a_StubNop1 ; $451b
 	jp .queueVRAMCopy ; $451e
 	call Unused_1a_StubNop2 ; $4521
@@ -185,18 +183,7 @@ Unused_1a_ShowExpGainScreen:
 	call Unused_1a_DrawExpScreenCaption ; $4535
 	wram_bank WRAM_SCENE ; $4538
 	push af ; $453e
-	ld hl, wStoryMainName ; $453f
-	ld a, [wStoryCharacterSlot] ; $4542
-	or a ; $4545
-	jr z, .gotRecord ; $4546
-	ld l, $40 ; $4548
-.gotRecord:
-	ld a, l ; $454a
-	add $18 ; $454b
-	ld l, a ; $454d
-	ld a, h ; $454e
-	adc $00 ; $454f
-	ld h, a ; $4551
+	ld_story_char_field CHARREC_LEVEL ; $453f
 	pop af ; $4552
 	ld a, [hl] ; $4553
 	cp $63 ; $4554
@@ -271,15 +258,11 @@ Unused_1a_ShowExpGainScreen:
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $45cf
 	call QueueVRAMCopy ; $45d1
 	call Unused_00_CopyMapToScrollBuffers ; $45d4
-	ld a, $0f ; $45d7
-	ld hl, Unused_1a_ExpScreenDrawTask ; $45d9
-	call RegisterFrameTask ; $45dc
+	frame_task Unused_1a_ExpScreenDrawTask, $0f ; $45d7
 	call EnableLCD ; $45df
 	script_fade_in 16 ; $45e2
 	call WaitFadeEnd ; $45e7
-	ld a, $0f ; $45ea
-	ld hl, Unused_1a_ExpScreenNumberTask ; $45ec
-	call RegisterFrameTask ; $45ef
+	frame_task Unused_1a_ExpScreenNumberTask, $0f ; $45ea
 	wram_bank WRAM_SCENE ; $45f2
 	pop de ; $45f8
 	pop hl ; $45f9
@@ -462,9 +445,7 @@ Unused_1a_ShowExpGainScreen:
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4755
 	call QueueVRAMCopy ; $4757
 	call Unused_00_CopyMapToScrollBuffers ; $475a
-	ld a, $0f ; $475d
-	ld hl, Unused_1a_ExpScreenDrawTask ; $475f
-	call RegisterFrameTask ; $4762
+	frame_task Unused_1a_ExpScreenDrawTask, $0f ; $475d
 	call EnableLCD ; $4765
 	script_fade_in 16 ; $4768
 	call WaitFadeEnd ; $476d

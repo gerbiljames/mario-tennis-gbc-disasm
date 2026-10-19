@@ -259,8 +259,7 @@ MachineCourtResultScene:
 	cp WINLOSE_WIN ; $430f
 	jr z, .done ; $4311
 	ld a, [wMapSceneStage] ; $4313
-	ld a, a ; $4316
-	rst Rst00 ; $4317
+	jumptable a ; $4316
 	dw MachineLevel1FailedPrompt ; $4318 jumptable
 	dw MachineLevel2FailedPrompt ; $431a jumptable
 	dw MachineLevel3FailedPrompt ; $431c jumptable
@@ -271,8 +270,7 @@ MachineCourtResultScene:
 .done:
 	ld a, [wMapSceneStage] ; $4326
 	dec a ; $4329
-	ld a, a ; $432a
-	rst Rst00 ; $432b
+	jumptable a ; $432a
 	dw MachineLevel1ClearedScene ; $432c jumptable
 	dw MachineLevel2ClearedScene ; $432e jumptable
 	dw MachineLevel3ClearedScene ; $4330 jumptable

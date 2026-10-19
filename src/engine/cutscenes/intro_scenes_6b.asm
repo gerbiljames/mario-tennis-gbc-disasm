@@ -180,12 +180,7 @@ QueueScrollingSprite:
 	ld a, [hl+] ; $6101
 	ld h, [hl] ; $6102
 	ld l, a ; $6103
-	ld a, l ; $6104
-	sub e ; $6105
-	ld l, a ; $6106
-	ld a, h ; $6107
-	sbc d ; $6108
-	ld h, a ; $6109
+	sub_hl_de ; $6104
 	ld e, l ; $610a
 	ld a, [wCutsceneSpriteAnimFrame] ; $610b
 	ld c, a ; $610e
@@ -296,21 +291,15 @@ IntroSequenceTimerTask:
 	ld [wCutsceneSpriteAX], a ; $7087
 	cp $5a ; $708a
 	jr nz, .checkPalette1Start ; $708c
-	ld a, $01 ; $708e
-	ld hl, CycleBgPalettes4To7Task ; $7090
-	call RegisterFrameTask ; $7093
+	frame_task CycleBgPalettes4To7Task ; $708e
 .checkPalette1Start:
 	cp $aa ; $7096
 	jr nz, .checkPalettes2And3Start ; $7098
-	ld a, $01 ; $709a
-	ld hl, AnimateBgPalette1Task ; $709c
-	call RegisterFrameTask ; $709f
+	frame_task AnimateBgPalette1Task ; $709a
 .checkPalettes2And3Start:
 	cp $01 ; $70a2
 	jr nz, .done ; $70a4
-	ld a, $01 ; $70a6
-	ld hl, AnimateBgPalettes2And3Task ; $70a8
-	call RegisterFrameTask ; $70ab
+	frame_task AnimateBgPalettes2And3Task ; $70a6
 .done:
 	ret ; $70ae
 BgPalette1TaskPalettes:

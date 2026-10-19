@@ -153,9 +153,7 @@ RunMatchStatsScreen:
 	ld [wResultScreenMode], a ; $5c43
 	call InitMatchStatsScreen ; $5c46
 	call LoadMatchResultPalettes ; $5c49
-	ld a, $01 ; $5c4c
-	ld hl, UpdateResultScreenAnimatedTilesTask ; $5c4e
-	call RegisterFrameTask ; $5c51
+	frame_task UpdateResultScreenAnimatedTilesTask ; $5c4c
 	call EnableLCD ; $5c54
 	script_fade_in 16 ; $5c57
 	call WaitFadeEnd ; $5c5c

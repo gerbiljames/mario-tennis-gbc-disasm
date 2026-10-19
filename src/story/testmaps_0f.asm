@@ -130,9 +130,7 @@ SmallCharTestInitScript_0f:
 	ld [wMapSceneStage], a ; $41a5
 	farcall GetObjectDefCount ; $41a8
 	ld [wMapSceneStage2], a ; $41ab
-	ld a, $01 ; $41ae
-	ld hl, SmallCharTestButtonTask_0f ; $41b0
-	call RegisterFrameTask ; $41b3
+	frame_task SmallCharTestButtonTask_0f ; $41ae
 	ret ; $41b6
 SmallCharTestButtonTask_0f:
 	ldh a, [hInputRisingEdge] ; $41b7

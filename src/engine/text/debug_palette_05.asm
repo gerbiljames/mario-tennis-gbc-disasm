@@ -188,9 +188,7 @@ RunDebugPaletteViewer:
 	jr nz, .swatchRowLoop ; $6aa2
 	ld a, [wDebugPaletteViewerWindowId] ; $6aa4
 	call RedrawWindowRows ; $6aa7
-	ld a, $0f ; $6aaa
-	ld hl, DrawPaletteCursorSprites ; $6aac
-	call RegisterFrameTask ; $6aaf
+	frame_task DrawPaletteCursorSprites, $0f ; $6aaa
 .inputLoop:
 	ldh a, [hInputRisingEdge] ; $6ab2
 	bit PADB_B, a ; $6ab4

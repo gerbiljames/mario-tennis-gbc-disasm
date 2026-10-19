@@ -3,15 +3,7 @@ AiPhaseNoop:
 AiRushToBallLanding:
 	ld hl, $fea0 ; $796d
 	call OffsetFromBallLanding ; $7970
-	bit 7, d ; $7973
-	jr z, .clampTarget ; $7975
-	xor a ; $7977
-	sub e ; $7978
-	ld e, a ; $7979
-	sbc a ; $797a
-	sub d ; $797b
-	ld d, a ; $797c
-.clampTarget:
+	abs_de ; $7973
 	push hl ; $797d
 	ld l, e ; $797e
 	ld h, d ; $797f
@@ -73,8 +65,7 @@ ReturnOne_08:
 	ld a, $01 ; $79ef
 	ret ; $79f1
 AiServeState:
-	ld a, [wAiPhase] ; $79f2
-	rst Rst00 ; $79f5
+	jumptable [wAiPhase] ; $79f2
 	dw AiServeWalkToSpot ; $79f6 jumptable
 	dw AiServeSteerToSpot ; $79f8 jumptable
 	dw AiServePressToss ; $79fa jumptable
@@ -107,12 +98,7 @@ AiServeWalkToSpot:
 	ld a, [wCharCourtPos] ; $7a28
 	and $01 ; $7a2b
 	jr z, .setTarget ; $7a2d
-	xor a ; $7a2f
-	sub c ; $7a30
-	ld c, a ; $7a31
-	sbc a ; $7a32
-	sub b ; $7a33
-	ld b, a ; $7a34
+	neg_bc ; $7a2f
 .setTarget:
 	ld l, c ; $7a35
 	ld h, b ; $7a36
@@ -239,8 +225,7 @@ AiAimAwayFromChar:
 	push af ; $7b21
 	ld a, c ; $7b22
 	call CharIndexToWramBank ; $7b23
-	ld a, a ; $7b26
-	wram_bank ; $7b27
+	wram_bank a ; $7b26
 	ld hl, wCharVelX ; $7b2b
 	ld a, [hl+] ; $7b2e
 	ld d, [hl] ; $7b2f
@@ -306,15 +291,7 @@ AiPickShotButtons:
 	ld a, [hl+] ; $7b9c
 	ld h, [hl] ; $7b9d
 	ld l, a ; $7b9e
-	bit 7, h ; $7b9f
-	jr z, .checkReachX ; $7ba1
-	xor a ; $7ba3
-	sub l ; $7ba4
-	ld l, a ; $7ba5
-	sbc a ; $7ba6
-	sub h ; $7ba7
-	ld h, a ; $7ba8
-.checkReachX:
+	abs_hl ; $7b9f
 	ld de, $fec0 ; $7ba9
 	add hl, de ; $7bac
 	bit 7, h ; $7bad
@@ -338,22 +315,13 @@ AiPickShotButtons:
 	add $01 ; $7bd1
 	and $01 ; $7bd3
 	call CharIndexToWramBank ; $7bd5
-	ld a, a ; $7bd8
-	wram_bank ; $7bd9
+	wram_bank a ; $7bd8
 	ld hl, wCharPosDepth + 1 ; $7bdd
 	ld a, [hl+] ; $7be0
 	ld h, [hl] ; $7be1
 	ld l, a ; $7be2
 	pop_wram_bank ; $7be3
-	bit 7, h ; $7be8
-	jr z, .checkReachDepth ; $7bea
-	xor a ; $7bec
-	sub l ; $7bed
-	ld l, a ; $7bee
-	sbc a ; $7bef
-	sub h ; $7bf0
-	ld h, a ; $7bf1
-.checkReachDepth:
+	abs_hl ; $7be8
 	ld de, $fe20 ; $7bf2
 	add hl, de ; $7bf5
 	bit 7, h ; $7bf6
@@ -398,12 +366,7 @@ MirrorDepthForFarSide:
 	ld a, [wCharCourtPos] ; $7c33
 	and $02 ; $7c36
 	ret z ; $7c38
-	xor a ; $7c39
-	sub e ; $7c3a
-	ld e, a ; $7c3b
-	sbc a ; $7c3c
-	sub d ; $7c3d
-	ld d, a ; $7c3e
+	neg_de ; $7c39
 	ret ; $7c3f
 GetCharRoleByIndex:
 	ld b, a ; $7c40
@@ -411,8 +374,7 @@ GetCharRoleByIndex:
 	push af ; $7c43
 	ld a, b ; $7c44
 	call CharIndexToWramBank ; $7c45
-	ld a, a ; $7c48
-	wram_bank ; $7c49
+	wram_bank a ; $7c48
 	ld a, [wCharServeRole] ; $7c4d
 	ld b, a ; $7c50
 	pop_wram_bank ; $7c51

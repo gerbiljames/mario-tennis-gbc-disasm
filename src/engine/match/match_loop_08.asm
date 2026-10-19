@@ -135,15 +135,13 @@ GetGamePositionHandler:
 	ret nc ; $4822
 	ld hl, FlipPartnerCourtPositions ; $4823
 	push hl ; $4826
-	ld a, [wOnCourtCharCountMinus1] ; $4827
-	rst Rst00 ; $482a
+	jumptable [wOnCourtCharCountMinus1] ; $4827
 	dw FlipNearCharPosition ; $482b jumptable
 	dw FlipNearCharPosition ; $482d jumptable
 	dw FlipNearCharPosition ; $482f jumptable
 	dw FlipBothCharPositions ; $4831 jumptable
 FlipPartnerCourtPositions:
-	ld a, [wOnCourtCharCountMinus1] ; $4833
-	rst Rst00 ; $4836
+	jumptable [wOnCourtCharCountMinus1] ; $4833
 	dw FlipFarCharPosition ; $4837 jumptable
 	dw FlipFarCharPosition ; $4839 jumptable
 	dw FlipFarBothCharPositions ; $483b jumptable
@@ -426,8 +424,7 @@ FlipAllCharPositions:
 	ret ; $4c79
 IdentifyServingPlayer:
 	call FindServerCharBank ; $4c7a
-	ld a, b ; $4c7d
-	wram_bank ; $4c7e
+	wram_bank b ; $4c7d
 	ld a, b ; $4c82
 	ld [wServingCharWramBank], a ; $4c83
 	ld a, [wCharIndex] ; $4c86

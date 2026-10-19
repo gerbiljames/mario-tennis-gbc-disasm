@@ -403,8 +403,7 @@ DrawTextWindowFrame:
 	dec e ; $6fb7
 	dec e ; $6fb8
 	ld a, [wShadowTilemapBank] ; $6fb9
-	ld a, a ; $6fbc
-	wram_bank ; $6fbd
+	wram_bank a ; $6fbc
 	ld a, [wGlyphRowStartCol] ; $6fc1
 	add $80 ; $6fc4
 	ld [wTextRowNextTile], a ; $6fc6

@@ -84,9 +84,7 @@ ClearSaveBlockData:
 	push hl ; $4e9d
 	push de ; $4e9e
 	push bc ; $4e9f
-	ld a, $00 ; $4ea0
-	ldh [hSramBank], a ; $4ea2
-	ld [rRAMB], a ; $4ea4
+	sram_bank $00 ; $4ea0
 	ld a, b ; $4ea7
 	call GetSaveBlockDirEntry ; $4ea8
 	push bc ; $4eab
@@ -108,9 +106,7 @@ ClearSaveBlockData:
 	ld d, h ; $4ebf
 	ld e, l ; $4ec0
 	pop hl ; $4ec1
-	ld a, l ; $4ec2
-	ldh [hSramBank], a ; $4ec3
-	ld [rRAMB], a ; $4ec5
+	sram_bank l ; $4ec2
 	pop hl ; $4ec8
 	push hl ; $4ec9
 	push bc ; $4eca
@@ -125,9 +121,7 @@ ClearSaveBlockData:
 	pop bc ; $4ed3
 	pop hl ; $4ed4
 	ld de, $0000 ; $4ed5
-	ld a, $00 ; $4ed8
-	ldh [hSramBank], a ; $4eda
-	ld [rRAMB], a ; $4edc
+	sram_bank $00 ; $4ed8
 	pop bc ; $4edf
 	ld a, $01 ; $4ee0
 	ld [bc], a ; $4ee2
@@ -153,9 +147,7 @@ Unused_03_EraseSaveBlock:
 	push hl ; $4ef7
 	push de ; $4ef8
 	push bc ; $4ef9
-	ld a, $00 ; $4efa
-	ldh [hSramBank], a ; $4efc
-	ld [rRAMB], a ; $4efe
+	sram_bank $00 ; $4efa
 	ld a, b ; $4f01
 	call GetSaveBlockDirEntry ; $4f02
 	push bc ; $4f05
@@ -181,9 +173,7 @@ Unused_03_EraseSaveBlock:
 	ld d, h ; $4f1f
 	ld e, l ; $4f20
 	pop hl ; $4f21
-	ld a, l ; $4f22
-	ldh [hSramBank], a ; $4f23
-	ld [rRAMB], a ; $4f25
+	sram_bank l ; $4f22
 	pop hl ; $4f28
 	push hl ; $4f29
 	push bc ; $4f2a
@@ -198,9 +188,7 @@ Unused_03_EraseSaveBlock:
 	pop bc ; $4f33
 	pop hl ; $4f34
 	ld de, $0000 ; $4f35
-	ld a, $00 ; $4f38
-	ldh [hSramBank], a ; $4f3a
-	ld [rRAMB], a ; $4f3c
+	sram_bank $00 ; $4f38
 	pop bc ; $4f3f
 	ld a, $01 ; $4f40
 	ld [bc], a ; $4f42
@@ -225,9 +213,7 @@ ClearSaveBlockEntry:
 	push hl ; $4f57
 	push de ; $4f58
 	push bc ; $4f59
-	ld a, $00 ; $4f5a
-	ldh [hSramBank], a ; $4f5c
-	ld [rRAMB], a ; $4f5e
+	sram_bank $00 ; $4f5a
 	ld a, b ; $4f61
 	call GetSaveBlockDirEntry ; $4f62
 	xor a ; $4f65

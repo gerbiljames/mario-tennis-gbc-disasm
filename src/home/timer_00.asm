@@ -40,9 +40,7 @@ Unused_00_QueueDeferredTilemapCopy:
 	ld [wDeferredTilemapAttrSrc + 1], a ; $2a43
 	xor a ; $2a46
 	ld [wDeferredTilemapPending], a ; $2a47
-	ld a, $05 ; $2a4a
-	ld hl, Unused_00_VBlankDeferredTilemapCopyTask ; $2a4c
-	call RegisterFrameTask ; $2a4f
+	frame_task Unused_00_VBlankDeferredTilemapCopyTask, $05 ; $2a4a
 	pop af ; $2a52
 	ret ; $2a53
 Unused_00_VBlankDeferredTilemapCopyTask:
@@ -52,8 +50,7 @@ Unused_00_VBlankDeferredTilemapCopyTask:
 	push hl ; $2a57
 	ldh a, [hWramBank] ; $2a58
 	push af ; $2a5a
-	ld a, [wDeferredTilemapWramBank] ; $2a5b
-	wram_bank ; $2a5e
+	wram_bank [wDeferredTilemapWramBank] ; $2a5b
 	ld a, [wDeferredTilemapPending] ; $2a62
 	and $0f ; $2a65
 	jr z, .checkAttrs ; $2a67

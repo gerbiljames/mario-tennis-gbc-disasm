@@ -53,32 +53,20 @@ ApplyPendingPaletteUpdates:
 FarReadByte:
 	push bc ; $0628
 	ld b, a ; $0629
-	ldh a, [hRomBank] ; $062a
-	push af ; $062c
-	ld a, b ; $062d
-	ldh [hRomBank], a ; $062e
-	ld [rROMB0], a ; $0630
+	push_rom_bank b ; $062a
 	ld c, [hl] ; $0633
-	pop af ; $0634
-	ldh [hRomBank], a ; $0635
-	ld [rROMB0], a ; $0637
+	pop_rom_bank ; $0634
 	ld a, c ; $063a
 	pop bc ; $063b
 	ret ; $063c
 FarReadWord:
 	ld b, a ; $063d
-	ldh a, [hRomBank] ; $063e
-	push af ; $0640
-	ld a, b ; $0641
-	ldh [hRomBank], a ; $0642
-	ld [rROMB0], a ; $0644
+	push_rom_bank b ; $063e
 	ld c, [hl] ; $0647
 	inc hl ; $0648
 	ld b, [hl] ; $0649
 	dec hl ; $064a
-	pop af ; $064b
-	ldh [hRomBank], a ; $064c
-	ld [rROMB0], a ; $064e
+	pop_rom_bank ; $064b
 	ret ; $0651
 FarReadWordDI:
 	di ; $0652
@@ -96,17 +84,13 @@ Unused_00_ReadFarVectorEntry:
 	push bc ; $0661
 	ldh a, [hRomBank] ; $0662
 	ld b, a ; $0664
-	ld a, h ; $0665
-	ldh [hRomBank], a ; $0666
-	ld [rROMB0], a ; $0668
+	rom_bank h ; $0665
 	ld c, a ; $066b
 	ld h, SLOT_TABLE_PAGE ; $066c
 	ld a, [hl+] ; $066e
 	ld h, [hl] ; $066f
 	ld l, a ; $0670
-	ld a, b ; $0671
-	ldh [hRomBank], a ; $0672
-	ld [rROMB0], a ; $0674
+	rom_bank b ; $0671
 	ld a, c ; $0677
 	pop bc ; $0678
 	ret ; $0679
@@ -115,16 +99,12 @@ FarCopyBytes:
 	ld b, a ; $067b
 	ldh a, [hRomBank] ; $067c
 	ld c, a ; $067e
-	ld a, b ; $067f
-	ldh [hRomBank], a ; $0680
-	ld [rROMB0], a ; $0682
+	rom_bank b ; $067f
 	ld a, c ; $0685
 	pop bc ; $0686
 	push af ; $0687
 	call CopyMemoryBC ; $0688
-	pop af ; $068b
-	ldh [hRomBank], a ; $068c
-	ld [rROMB0], a ; $068e
+	pop_rom_bank ; $068b
 	ret ; $0691
 ; FarCopyBytes with a push af / pop af around the banked call -- the same far-call shell aimed at DecompressData. Nothing calls it; every decompress goes through DecompressDataFromBank.
 Unused_00_FarDecompressData:
@@ -133,16 +113,12 @@ Unused_00_FarDecompressData:
 	ld b, a ; $0694
 	ldh a, [hRomBank] ; $0695
 	ld c, a ; $0697
-	ld a, b ; $0698
-	ldh [hRomBank], a ; $0699
-	ld [rROMB0], a ; $069b
+	rom_bank b ; $0698
 	ld a, c ; $069e
 	pop bc ; $069f
 	push af ; $06a0
 	call DecompressData ; $06a1
-	pop af ; $06a4
-	ldh [hRomBank], a ; $06a5
-	ld [rROMB0], a ; $06a7
+	pop_rom_bank ; $06a4
 	pop af ; $06aa
 	ret ; $06ab
 CopyOAMDMARoutineToHRAM:
@@ -177,11 +153,7 @@ Unused_00_FarDispatchIndexed:
 	push af ; $06cf
 	push bc ; $06d0
 	ld c, a ; $06d1
-	ldh a, [hRomBank] ; $06d2
-	push af ; $06d4
-	ld a, h ; $06d5
-	ldh [hRomBank], a ; $06d6
-	ld [rROMB0], a ; $06d8
+	push_rom_bank h ; $06d2
 	ld h, SLOT_TABLE_PAGE ; $06db
 	ld a, [hl+] ; $06dd
 	ld h, [hl] ; $06de
@@ -197,9 +169,7 @@ Unused_00_FarDispatchIndexed:
 	ld h, [hl] ; $06e9
 	ld l, a ; $06ea
 	call DecompressData ; $06eb
-	pop af ; $06ee
-	ldh [hRomBank], a ; $06ef
-	ld [rROMB0], a ; $06f1
+	pop_rom_bank ; $06ee
 	pop bc ; $06f4
 	pop af ; $06f5
 	ret ; $06f6
@@ -209,11 +179,7 @@ Unused_00_FarCopyIndexed:
 	push de ; $06f9
 	push hl ; $06fa
 	ld b, a ; $06fb
-	ldh a, [hRomBank] ; $06fc
-	push af ; $06fe
-	ld a, h ; $06ff
-	ldh [hRomBank], a ; $0700
-	ld [rROMB0], a ; $0702
+	push_rom_bank h ; $06fc
 	ld h, SLOT_TABLE_PAGE ; $0705
 	ld a, [hl+] ; $0707
 	ld h, [hl] ; $0708
@@ -234,9 +200,7 @@ Unused_00_FarCopyIndexed:
 	inc de ; $0717
 	dec c ; $0718
 	jr nz, .loop ; $0719
-	pop af ; $071b
-	ldh [hRomBank], a ; $071c
-	ld [rROMB0], a ; $071e
+	pop_rom_bank ; $071b
 	pop hl ; $0721
 	pop de ; $0722
 	pop bc ; $0723
@@ -248,11 +212,7 @@ Unused_00_FarCallIndexed1:
 	push de ; $0728
 	push hl ; $0729
 	ld b, a ; $072a
-	ldh a, [hRomBank] ; $072b
-	push af ; $072d
-	ld a, h ; $072e
-	ldh [hRomBank], a ; $072f
-	ld [rROMB0], a ; $0731
+	push_rom_bank h ; $072b
 	ld h, SLOT_TABLE_PAGE ; $0734
 	ld a, [hl+] ; $0736
 	ld h, [hl] ; $0737
@@ -268,9 +228,7 @@ Unused_00_FarCallIndexed1:
 	ld h, [hl] ; $0742
 	ld l, a ; $0743
 	call QueueVRAMCopy ; $0744
-	pop af ; $0747
-	ldh [hRomBank], a ; $0748
-	ld [rROMB0], a ; $074a
+	pop_rom_bank ; $0747
 	pop hl ; $074d
 	pop de ; $074e
 	pop bc ; $074f
@@ -282,11 +240,7 @@ Unused_00_FarCallIndexed2:
 	push de ; $0754
 	push hl ; $0755
 	ld b, a ; $0756
-	ldh a, [hRomBank] ; $0757
-	push af ; $0759
-	ld a, h ; $075a
-	ldh [hRomBank], a ; $075b
-	ld [rROMB0], a ; $075d
+	push_rom_bank h ; $0757
 	ld h, SLOT_TABLE_PAGE ; $0760
 	ld a, [hl+] ; $0762
 	ld h, [hl] ; $0763
@@ -302,9 +256,7 @@ Unused_00_FarCallIndexed2:
 	ld h, [hl] ; $076e
 	ld l, a ; $076f
 	call StartVRAMDMAFromHL ; $0770
-	pop af ; $0773
-	ldh [hRomBank], a ; $0774
-	ld [rROMB0], a ; $0776
+	pop_rom_bank ; $0773
 	pop hl ; $0779
 	pop de ; $077a
 	pop bc ; $077b
@@ -316,11 +268,7 @@ Unused_00_FarCallIndexed3:
 	push de ; $0780
 	push hl ; $0781
 	ld b, a ; $0782
-	ldh a, [hRomBank] ; $0783
-	push af ; $0785
-	ld a, h ; $0786
-	ldh [hRomBank], a ; $0787
-	ld [rROMB0], a ; $0789
+	push_rom_bank h ; $0783
 	ld h, SLOT_TABLE_PAGE ; $078c
 	ld a, [hl+] ; $078e
 	ld h, [hl] ; $078f
@@ -336,9 +284,7 @@ Unused_00_FarCallIndexed3:
 	ld h, [hl] ; $079a
 	ld l, a ; $079b
 	call CopyMemoryFast ; $079c
-	pop af ; $079f
-	ldh [hRomBank], a ; $07a0
-	ld [rROMB0], a ; $07a2
+	pop_rom_bank ; $079f
 	pop hl ; $07a5
 	pop de ; $07a6
 	pop bc ; $07a7
@@ -348,34 +294,24 @@ Unused_00_FarReadPtrIndexed:
 	push bc ; $07aa
 	ldh a, [hRomBank] ; $07ab
 	ld b, a ; $07ad
-	ld a, h ; $07ae
-	ldh [hRomBank], a ; $07af
-	ld [rROMB0], a ; $07b1
+	rom_bank h ; $07ae
 	ld c, a ; $07b4
 	ld h, SLOT_TABLE_PAGE ; $07b5
 	ld a, [hl+] ; $07b7
 	ld h, [hl] ; $07b8
 	ld l, a ; $07b9
-	ld a, b ; $07ba
-	ldh [hRomBank], a ; $07bb
-	ld [rROMB0], a ; $07bd
+	rom_bank b ; $07ba
 	ld a, c ; $07c0
 	pop bc ; $07c1
 	jp CallHLInBankA ; $07c2
 FarCallVector:
-	ldh a, [hRomBank] ; $07c5
-	push af ; $07c7
-	ld a, h ; $07c8
-	ldh [hRomBank], a ; $07c9
-	ld [rROMB0], a ; $07cb
+	push_rom_bank h ; $07c5
 	ld h, SLOT_TABLE_PAGE ; $07ce
 	ld a, [hl+] ; $07d0
 	ld h, [hl] ; $07d1
 	ld l, a ; $07d2
 	call JumpToHL ; $07d3
-	pop af ; $07d6
-	ldh [hRomBank], a ; $07d7
-	ld [rROMB0], a ; $07d9
+	pop_rom_bank ; $07d6
 	ret ; $07dc
 Unused_00_CopyMapRows32To64:
 	ld c, $10 ; $07dd

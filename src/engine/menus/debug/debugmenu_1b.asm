@@ -186,9 +186,7 @@ Unused_1b_LoadUnlockDebugNavGridGfx:
 	ld hl, UnlockDebugNavGridTable ; $665f
 	ld_obj_pals de, 0, 1 ; $6662
 	call LoadPaletteShadow ; $6665
-	ld a, $0a ; $6668
-	ld hl, Unused_1b_UpdateBobbingDecorSprite ; $666a
-	call RegisterFrameTask ; $666d
+	frame_task Unused_1b_UpdateBobbingDecorSprite, $0a ; $6668
 	ret ; $6670
 Unused_1b_UpdateBobbingDecorSprite:
 	ld de, $2cfa ; $6671
@@ -199,9 +197,7 @@ Unused_1b_UpdateBobbingDecorSprite:
 	ret ; $6680
 Unused_1b_StartUnlockDebugCursorTask:
 	farcall Unused_18_LoadCharSelectCursorGfx ; $6681
-	ld a, $0a ; $6684
-	ld hl, Unused_1b_UpdateUnlockDebugCursorTask ; $6686
-	call RegisterFrameTask ; $6689
+	frame_task Unused_1b_UpdateUnlockDebugCursorTask, $0a ; $6684
 	ret ; $668c
 Unused_1b_UpdateUnlockDebugCursorTask:
 	ld a, [wCharSelectChar] ; $668d
@@ -228,9 +224,7 @@ Unused_1b_UpdateUnlockDebugSelectedMugshot:
 	ld a, $20 ; $66b6
 	ld [wCharRecordBuffer + 11], a ; $66b8
 .registerStatTask:
-	ld a, $0a ; $66bb
-	ld hl, Unused_1b_UpdateUnlockDebugStatOnChange ; $66bd
-	call RegisterFrameTask ; $66c0
+	frame_task Unused_1b_UpdateUnlockDebugStatOnChange, $0a ; $66bb
 	ret ; $66c3
 Unused_1b_UpdateUnlockDebugStatOnChange:
 	ld hl, wCharSelectChar ; $66c4

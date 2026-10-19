@@ -186,9 +186,7 @@ RunStoryModeOverworld:
 	ld [wOverworldEnterFlag], a ; $4f2d
 .restart:
 	call ClearFrameTasks ; $4f30
-	ld a, $01 ; $4f33
-	ld hl, DrawPlayerPositionDebugOverlay ; $4f35
-	call RegisterFrameTask ; $4f38
+	frame_task DrawPlayerPositionDebugOverlay ; $4f33
 	call RunStoryLocation ; $4f3b
 	jr .restart ; $4f3e
 RunStoryLocation:

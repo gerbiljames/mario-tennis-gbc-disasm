@@ -73,12 +73,7 @@ DidBallCrossGate:
 	ld a, [hl+] ; $6782
 	ld h, [hl] ; $6783
 	ld l, a ; $6784
-	ld a, l ; $6785
-	sub c ; $6786
-	ld l, a ; $6787
-	ld a, h ; $6788
-	sbc b ; $6789
-	ld h, a ; $678a
+	sub_hl_bc ; $6785
 	ld a, h ; $678b
 	xor d ; $678c
 	bit 7, a ; $678d
@@ -91,12 +86,7 @@ DidBallCrossGate:
 	ld a, [hl+] ; $679a
 	ld h, [hl] ; $679b
 	ld l, a ; $679c
-	ld a, l ; $679d
-	sub e ; $679e
-	ld l, a ; $679f
-	ld a, h ; $67a0
-	sbc d ; $67a1
-	ld h, a ; $67a2
+	sub_hl_de ; $679d
 	bit 7, h ; $67a3
 	jr nz, .no ; $67a5
 	ld hl, wDrillGate2 ; $67a7
@@ -107,12 +97,7 @@ DidBallCrossGate:
 	ld a, [hl+] ; $67b0
 	ld h, [hl] ; $67b1
 	ld l, a ; $67b2
-	ld a, l ; $67b3
-	sub e ; $67b4
-	ld l, a ; $67b5
-	ld a, h ; $67b6
-	sbc d ; $67b7
-	ld h, a ; $67b8
+	sub_hl_de ; $67b3
 	bit 7, h ; $67b9
 	jr z, .no ; $67bb
 	xor a ; $67bd
@@ -135,12 +120,7 @@ IsBallInTargetZone:
 	ld a, [hl+] ; $67da
 	ld h, [hl] ; $67db
 	ld l, a ; $67dc
-	ld a, l ; $67dd
-	sub e ; $67de
-	ld l, a ; $67df
-	ld a, h ; $67e0
-	sbc d ; $67e1
-	ld h, a ; $67e2
+	sub_hl_de ; $67dd
 	bit 7, h ; $67e3
 	jr nz, .outside ; $67e5
 	ld hl, wTargetZoneX2 ; $67e7
@@ -155,12 +135,7 @@ IsBallInTargetZone:
 	ld a, [hl+] ; $67f6
 	ld h, [hl] ; $67f7
 	ld l, a ; $67f8
-	ld a, l ; $67f9
-	sub e ; $67fa
-	ld l, a ; $67fb
-	ld a, h ; $67fc
-	sbc d ; $67fd
-	ld h, a ; $67fe
+	sub_hl_de ; $67f9
 	bit 7, h ; $67ff
 	jr z, .outside ; $6801
 	ld hl, wTargetZoneDepth1 ; $6803
@@ -175,12 +150,7 @@ IsBallInTargetZone:
 	ld a, [hl+] ; $6812
 	ld h, [hl] ; $6813
 	ld l, a ; $6814
-	ld a, l ; $6815
-	sub e ; $6816
-	ld l, a ; $6817
-	ld a, h ; $6818
-	sbc d ; $6819
-	ld h, a ; $681a
+	sub_hl_de ; $6815
 	bit 7, h ; $681b
 	jr nz, .outside ; $681d
 	ld hl, wTargetZoneDepth2 ; $681f
@@ -195,12 +165,7 @@ IsBallInTargetZone:
 	ld a, [hl+] ; $682e
 	ld h, [hl] ; $682f
 	ld l, a ; $6830
-	ld a, l ; $6831
-	sub e ; $6832
-	ld l, a ; $6833
-	ld a, h ; $6834
-	sbc d ; $6835
-	ld h, a ; $6836
+	sub_hl_de ; $6831
 	bit 7, h ; $6837
 	jr z, .outside ; $6839
 	pop_wram_bank ; $683b
@@ -262,8 +227,7 @@ InitAllChars:
 .storeShadowFlag:
 	ld a, b ; $68c7
 	ld [wStandingShadowsEnabled], a ; $68c8
-	ld a, [wOnCourtCharCountMinus1] ; $68cb
-	rst Rst00 ; $68ce
+	jumptable [wOnCourtCharCountMinus1] ; $68cb
 	dw InitAllChars.char1 ; $68cf jumptable
 	dw InitAllChars.char2 ; $68d1 jumptable
 	dw InitAllChars.char3 ; $68d3 jumptable
@@ -482,8 +446,7 @@ UpdateCharStateMachine:
 	jr z, .runState ; $6a74
 	dec [hl] ; $6a76
 .runState:
-	ld a, [wCharState] ; $6a77
-	rst Rst00 ; $6a7a
+	jumptable [wCharState] ; $6a77
 	dw AdvanceCharStatePhase.done ; $6a7b jumptable
 	dw CharRallyState ; $6a7d jumptable
 	dw CharRecoverState ; $6a7f jumptable
@@ -537,8 +500,7 @@ CharRallyEndState:
 	call EndChargeFlash ; $6ade
 	ret ; $6ae1
 CharServeState:
-	ld a, [wCharStatePhase] ; $6ae2
-	rst Rst00 ; $6ae5
+	jumptable [wCharStatePhase] ; $6ae2
 	dw CharServeInitPhase ; $6ae6 jumptable
 	dw CharServeWaitAnimPhase ; $6ae8 jumptable
 	dw CharServeTossPhase ; $6aea jumptable
@@ -656,8 +618,7 @@ CharServeStrikePhase:
 .done:
 	ret ; $6bd8
 CharRecoverState:
-	ld a, [wCharStatePhase] ; $6bd9
-	rst Rst00 ; $6bdc
+	jumptable [wCharStatePhase] ; $6bd9
 	dw CharRallyEndState ; $6bdd jumptable
 	dw CharRecoverMovementPhase ; $6bdf jumptable
 	dw AdvanceCharStatePhase.done ; $6be1 jumptable
@@ -666,8 +627,7 @@ CharRecoverMovementPhase:
 	call UpdateCharRunAnimation ; $6be6
 	ret ; $6be9
 CharRallyState:
-	ld a, [wCharStatePhase] ; $6bea
-	rst Rst00 ; $6bed
+	jumptable [wCharStatePhase] ; $6bea
 	dw CharRallyEndState ; $6bee jumptable
 	dw CharRallyReadyPhase ; $6bf0 jumptable
 	dw CharSwingWindupPhase ; $6bf2 jumptable

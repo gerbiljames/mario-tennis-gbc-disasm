@@ -9,9 +9,7 @@ ShowTournamentBracket:
 	call EnableLCD ; $7771
 	script_fade_in 16 ; $7774
 	call WaitFadeEnd ; $7779
-	ld a, $01 ; $777c
-	ld hl, BracketHighlightBlinkTask ; $777e
-	call RegisterFrameTask ; $7781
+	frame_task BracketHighlightBlinkTask ; $777c
 	sound SFX_MARKER ; $7784
 	wait_frames 120 ; $7786
 .loop:
@@ -322,12 +320,8 @@ RunMarioCastExhibResults:
 	ld [wAnimatedTileSet], a ; $7a03
 	ld a, $03 ; $7a06
 	ld [wAnimatedTilePeriod], a ; $7a08
-	ld a, $01 ; $7a0b
-	ld hl, UpdateAnimatedTilesTask_3b ; $7a0d
-	call RegisterFrameTask ; $7a10
-	ld a, $01 ; $7a13
-	ld hl, MarioCastChartScrollArrowsTask ; $7a15
-	call RegisterFrameTask ; $7a18
+	frame_task UpdateAnimatedTilesTask_3b ; $7a0b
+	frame_task MarioCastChartScrollArrowsTask ; $7a13
 	call EnableLCD ; $7a1b
 	script_fade_in 16 ; $7a1e
 	call WaitFadeEnd ; $7a23

@@ -327,7 +327,10 @@ class Flow:
         if DATA.match("\t" + code):
             return ("data", None)
         prev = [x.split(";")[0].strip() for x in L[max(0, i - 8):i]]
-        if code == "rst Rst00":
+        m = re.match(r"jumptable(?: (.+))?$", code)
+        if m:
+            if m.group(1):
+                prev.append(f"ld a, {m.group(1)}")
             # JumpTableDispatch pops the return address: the dw rows after it
             # are jump targets, and their returns are this routine's
             tg = []

@@ -12,12 +12,7 @@ CheckBallHitsMinigameTargetAlt:
 	ld a, [hl+] ; $6e07
 	ld h, [hl] ; $6e08
 	ld l, a ; $6e09
-	ld a, l ; $6e0a
-	sub e ; $6e0b
-	ld l, a ; $6e0c
-	ld a, h ; $6e0d
-	sbc d ; $6e0e
-	ld h, a ; $6e0f
+	sub_hl_de ; $6e0a
 	bit 7, h ; $6e10
 	jr z, .done ; $6e12
 	ld de, $0400 ; $6e14
@@ -32,12 +27,7 @@ CheckBallHitsMinigameTargetAlt:
 	ld a, [hl+] ; $6e25
 	ld h, [hl] ; $6e26
 	ld l, a ; $6e27
-	ld a, l ; $6e28
-	sub e ; $6e29
-	ld l, a ; $6e2a
-	ld a, h ; $6e2b
-	sbc d ; $6e2c
-	ld h, a ; $6e2d
+	sub_hl_de ; $6e28
 	bit 7, h ; $6e2e
 	jr z, .done ; $6e30
 	ld de, $0400 ; $6e32

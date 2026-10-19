@@ -20,14 +20,12 @@ ResetSwingAnimation:
 .done:
 	ret ; $6cbd
 CharStandbyState:
-	ld a, [wCharStatePhase] ; $6cbe
-	rst Rst00 ; $6cc1
+	jumptable [wCharStatePhase] ; $6cbe
 	dw CharRallyEndState ; $6cc2 jumptable
 	dw CharAwaitServeState.checkInput ; $6cc4 jumptable
 	dw AdvanceCharStatePhase.done ; $6cc6 jumptable
 CharAwaitServeState:
-	ld a, [wCharStatePhase] ; $6cc8
-	rst Rst00 ; $6ccb
+	jumptable [wCharStatePhase] ; $6cc8
 	dw CharRallyEndState ; $6ccc jumptable
 	dw CharAwaitServeState.startServe ; $6cce jumptable
 	dw CharAwaitServeState.checkInput ; $6cd0 jumptable
@@ -43,15 +41,7 @@ CharAwaitServeState:
 	ld a, [hl+] ; $6ce4
 	ld h, [hl] ; $6ce5
 	ld l, a ; $6ce6
-	bit 7, h ; $6ce7
-	jr z, .waitForToss ; $6ce9
-	xor a ; $6ceb
-	sub l ; $6cec
-	ld l, a ; $6ced
-	sbc a ; $6cee
-	sub h ; $6cef
-	ld h, a ; $6cf0
-.waitForToss:
+	abs_hl ; $6ce7
 	ld de, $fe00 ; $6cf1
 	add hl, de ; $6cf4
 	bit 7, h ; $6cf5
@@ -63,13 +53,11 @@ CharAwaitServeState:
 .done:
 	ret ; $6d0d
 CharWalkState:
-	ld a, [wCharStatePhase] ; $6d0e
-	rst Rst00 ; $6d11
+	jumptable [wCharStatePhase] ; $6d0e
 	dw CharWalkToTargetPhase ; $6d12 jumptable
 	dw AdvanceCharStatePhase.done ; $6d14 jumptable
 CharPointEndState:
-	ld a, [wCharStatePhase] ; $6d16
-	rst Rst00 ; $6d19
+	jumptable [wCharStatePhase] ; $6d16
 	dw CharRallyEndState ; $6d1a jumptable
 	dw CharWalkToTargetPhase ; $6d1c jumptable
 	dw CharPointReactionPhase ; $6d1e jumptable
@@ -134,22 +122,9 @@ StartCharSwing:
 	jr nz, .absOffset ; $6d86
 	ld bc, $0000 ; $6d88
 .absOffset:
-	bit 7, h ; $6d8b
-	jr z, .compareReach ; $6d8d
-	xor a ; $6d8f
-	sub l ; $6d90
-	ld l, a ; $6d91
-	sbc a ; $6d92
-	sub h ; $6d93
-	ld h, a ; $6d94
-.compareReach:
+	abs_hl ; $6d8b
 	add hl, bc ; $6d95
-	ld a, l ; $6d96
-	sub e ; $6d97
-	ld l, a ; $6d98
-	ld a, h ; $6d99
-	sbc d ; $6d9a
-	ld h, a ; $6d9b
+	sub_hl_de ; $6d96
 	bit 7, h ; $6d9c
 	jr z, .dive ; $6d9e
 .checkHeight:
@@ -196,12 +171,7 @@ StartCharSwing:
 	ld a, [hl+] ; $6ddd
 	ld d, [hl] ; $6dde
 	ld e, a ; $6ddf
-	xor a ; $6de0
-	sub e ; $6de1
-	ld e, a ; $6de2
-	sbc a ; $6de3
-	sub d ; $6de4
-	ld d, a ; $6de5
+	neg_de ; $6de0
 	ld hl, wCharVelHeight ; $6de6
 	ld a, e ; $6de9
 	ld [hl+], a ; $6dea
@@ -317,15 +287,7 @@ UpdateCharBallGeometry:
 	ld a, [hl+] ; $6e99
 	ld h, [hl] ; $6e9a
 	ld l, a ; $6e9b
-	bit 7, h ; $6e9c
-	jr z, .checkReach ; $6e9e
-	xor a ; $6ea0
-	sub l ; $6ea1
-	ld l, a ; $6ea2
-	sbc a ; $6ea3
-	sub h ; $6ea4
-	ld h, a ; $6ea5
-.checkReach:
+	abs_hl ; $6e9c
 	xor a ; $6ea6
 	ld de, $fd60 ; $6ea7
 	add hl, de ; $6eaa
@@ -356,15 +318,7 @@ CheckCharBallContact:
 	ld a, [hl+] ; $6ed8
 	ld h, [hl] ; $6ed9
 	ld l, a ; $6eda
-	bit 7, h ; $6edb
-	jr z, .checkHeight ; $6edd
-	xor a ; $6edf
-	sub l ; $6ee0
-	ld l, a ; $6ee1
-	sbc a ; $6ee2
-	sub h ; $6ee3
-	ld h, a ; $6ee4
-.checkHeight:
+	abs_hl ; $6edb
 	ld de, -16 ; $6ee5
 	add hl, de ; $6ee8
 	ret c ; $6ee9
@@ -378,22 +332,9 @@ CheckCharBallContact:
 	ld a, [hl+] ; $6ef5
 	ld h, [hl] ; $6ef6
 	ld l, a ; $6ef7
-	bit 7, h ; $6ef8
-	jr z, .checkX ; $6efa
-	xor a ; $6efc
-	sub l ; $6efd
-	ld l, a ; $6efe
-	sbc a ; $6eff
-	sub h ; $6f00
-	ld h, a ; $6f01
-.checkX:
+	abs_hl ; $6ef8
 	add hl, hl ; $6f02
-	ld a, l ; $6f03
-	sub e ; $6f04
-	ld l, a ; $6f05
-	ld a, h ; $6f06
-	sbc d ; $6f07
-	ld h, a ; $6f08
+	sub_hl_de ; $6f03
 	ret nc ; $6f09
 	ld hl, wCharReachHeight ; $6f0a
 	ld a, [hl+] ; $6f0d
@@ -405,21 +346,8 @@ CheckCharBallContact:
 	ld a, [hl+] ; $6f15
 	ld h, [hl] ; $6f16
 	ld l, a ; $6f17
-	bit 7, h ; $6f18
-	jr z, .done ; $6f1a
-	xor a ; $6f1c
-	sub l ; $6f1d
-	ld l, a ; $6f1e
-	sbc a ; $6f1f
-	sub h ; $6f20
-	ld h, a ; $6f21
-.done:
-	ld a, l ; $6f22
-	sub e ; $6f23
-	ld l, a ; $6f24
-	ld a, h ; $6f25
-	sbc d ; $6f26
-	ld h, a ; $6f27
+	abs_hl ; $6f18
+	sub_hl_de ; $6f22
 	ret nc ; $6f28
 	ld hl, wCharBallReachFlags ; $6f29
 	set 2, [hl] ; $6f2c

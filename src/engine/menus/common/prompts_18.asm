@@ -159,9 +159,7 @@ Unused_18_SetupScoreboardDisplay:
 	call Unused_18_GetTextSlotPointer ; $53a1
 	ld de, wTextTileBuffer tile 16 + 11 ; $53a4
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $53a7
-	ld a, $0a ; $53aa
-	ld hl, Unused_18_DrawScoreNumbersTask ; $53ac
-	call RegisterFrameTask ; $53af
+	frame_task Unused_18_DrawScoreNumbersTask, $0a ; $53aa
 	ret ; $53b2
 Unused_18_DrawScoreNumbersTask:
 	ld a, [wScorePanelExpTier] ; $53b3

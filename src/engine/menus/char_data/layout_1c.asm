@@ -34,85 +34,30 @@ ApplyCharStatLevelUp:
 	ld hl, wCharDataPointsLeft ; $5411
 	inc [hl] ; $5414
 	push af ; $5415
-	ld hl, wStoryMainName ; $5416
-	ld a, [wStoryCharacterSlot] ; $5419
-	or a ; $541c
-	jr z, .levelField ; $541d
-	ld l, $40 ; $541f
-.levelField:
-	ld a, l ; $5421
-	add $18 ; $5422
-	ld l, a ; $5424
-	ld a, h ; $5425
-	adc $00 ; $5426
-	ld h, a ; $5428
+	ld_story_char_field CHARREC_LEVEL ; $5416
 	pop af ; $5429
 	ld a, [wCharDataLevel] ; $542a
 	ld [hl], a ; $542d
 	push af ; $542e
-	ld hl, wStoryMainName ; $542f
-	ld a, [wStoryCharacterSlot] ; $5432
-	or a ; $5435
-	jr z, .spinLevelField ; $5436
-	ld l, $40 ; $5438
-.spinLevelField:
-	ld a, l ; $543a
-	add $38 ; $543b
-	ld l, a ; $543d
-	ld a, h ; $543e
-	adc $00 ; $543f
-	ld h, a ; $5441
+	ld_story_char_field CHARREC_TRAIN_LEVELS ; $542f
 	pop af ; $5442
 	ld a, [wCharDataNewLevels] ; $5443
 	ld [hl], a ; $5446
 	ld [wCharDataLevels], a ; $5447
 	push af ; $544a
-	ld hl, wStoryMainName ; $544b
-	ld a, [wStoryCharacterSlot] ; $544e
-	or a ; $5451
-	jr z, .powerLevelField ; $5452
-	ld l, $40 ; $5454
-.powerLevelField:
-	ld a, l ; $5456
-	add $39 ; $5457
-	ld l, a ; $5459
-	ld a, h ; $545a
-	adc $00 ; $545b
-	ld h, a ; $545d
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $544b
 	pop af ; $545e
 	ld a, [wCharDataNewLevels + 1] ; $545f
 	ld [hl], a ; $5462
 	ld [wCharDataLevels + 1], a ; $5463
 	push af ; $5466
-	ld hl, wStoryMainName ; $5467
-	ld a, [wStoryCharacterSlot] ; $546a
-	or a ; $546d
-	jr z, .controlLevelField ; $546e
-	ld l, $40 ; $5470
-.controlLevelField:
-	ld a, l ; $5472
-	add $3a ; $5473
-	ld l, a ; $5475
-	ld a, h ; $5476
-	adc $00 ; $5477
-	ld h, a ; $5479
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $5467
 	pop af ; $547a
 	ld a, [wCharDataNewLevels + 2] ; $547b
 	ld [hl], a ; $547e
 	ld [wCharDataLevels + 2], a ; $547f
 	push af ; $5482
-	ld hl, wStoryMainName ; $5483
-	ld a, [wStoryCharacterSlot] ; $5486
-	or a ; $5489
-	jr z, .speedLevelField ; $548a
-	ld l, $40 ; $548c
-.speedLevelField:
-	ld a, l ; $548e
-	add $3b ; $548f
-	ld l, a ; $5491
-	ld a, h ; $5492
-	adc $00 ; $5493
-	ld h, a ; $5495
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $5483
 	pop af ; $5496
 	ld a, [wCharDataNewLevels + 3] ; $5497
 	ld [hl], a ; $549a
@@ -246,14 +191,10 @@ SetupCharDataScreen:
 	ld [wCharDataLevelPreview], a ; $55e0
 	call EnableLCD ; $55e3
 	call AdvanceFrame ; $55e6
-	ld a, $01 ; $55e9
-	ld hl, DrawStatValueSprites ; $55eb
-	call RegisterFrameTask ; $55ee
+	frame_task DrawStatValueSprites ; $55e9
 	script_fade_in 16 ; $55f1
 	call WaitFadeEnd ; $55f6
-	ld a, $01 ; $55f9
-	ld hl, CharDataScreenAnimTask ; $55fb
-	call RegisterFrameTask ; $55fe
+	frame_task CharDataScreenAnimTask ; $55f9
 	call RestoreCharDataScreenRow ; $5601
 	call DrawCharStatRows ; $5604
 	ld hl, CharDataBand8RunsStep1_1c ; $5607

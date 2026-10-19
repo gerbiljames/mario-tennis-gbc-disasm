@@ -42,9 +42,7 @@ BeginCutsceneScriptMode:
 	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $40f5
 	jr z, .done ; $40f6
-	ld a, $01 ; $40f8
-	ld hl, ToggleCutsceneFastForward ; $40fa
-	call RegisterFrameTask ; $40fd
+	frame_task ToggleCutsceneFastForward ; $40f8
 .done:
 	pop hl ; $4100
 	pop de ; $4101

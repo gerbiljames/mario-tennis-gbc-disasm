@@ -113,9 +113,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld [wCutsceneObjPhase + 1], a ; $6548
 	ld a, $1e ; $654b
 	ld [wCutsceneObjTimer + 1], a ; $654d
-	ld a, $01 ; $6550
-	ld hl, UpdateFirework1_14 ; $6552
-	call RegisterFrameTask ; $6555
+	frame_task UpdateFirework1_14 ; $6550
 	script_wait_frames 80 ; $6558
 	ld a, $40 ; $655f
 	ld [wCutsceneObjX], a ; $6561
@@ -125,9 +123,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld [wCutsceneObjPhase], a ; $656b
 	ld a, $1e ; $656e
 	ld [wCutsceneObjTimer], a ; $6570
-	ld a, $01 ; $6573
-	ld hl, UpdateFirework0_14 ; $6575
-	call RegisterFrameTask ; $6578
+	frame_task UpdateFirework0_14 ; $6573
 	script_wait_frames 80 ; $657b
 	ld a, $48 ; $6582
 	ld [wCutsceneObjX + 1], a ; $6584
@@ -335,16 +331,12 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wMapSceneStage], a ; $6f89
 	ld a, $88 ; $6f8c
 	ld [wMapSceneStage2], a ; $6f8e
-	ld a, $01 ; $6f91
-	ld hl, QueuePlaneSpriteByHeight_14 ; $6f93
-	call RegisterFrameTask ; $6f96
+	frame_task QueuePlaneSpriteByHeight_14 ; $6f91
 	ld a, $00 ; $6f99
 	ld [wCutsceneObjLimit], a ; $6f9b
 	ld [wCutsceneObjLimit + 1], a ; $6f9e
 	ld [wCutsceneObjActive], a ; $6fa1
-	ld a, $01 ; $6fa4
-	ld hl, AnimateIslandSkyEffectSprites_14 ; $6fa6
-	call RegisterFrameTask ; $6fa9
+	frame_task AnimateIslandSkyEffectSprites_14 ; $6fa4
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $6fac
 	test_flag FLAG_DOUBLES ; $6fb7
 	jp z, .fadeIn ; $6fba
@@ -438,9 +430,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wCutsceneObjPhase], a ; $70ac
 	ld a, $a8 ; $70af
 	ld [wMapSceneStage2], a ; $70b1
-	ld a, $01 ; $70b4
-	ld hl, QueueDistantPlaneSprite_14 ; $70b6
-	call RegisterFrameTask ; $70b9
+	frame_task QueueDistantPlaneSprite_14 ; $70b4
 	ld h, $50 ; $70bc
 .speak:
 	script_wait_frames 2 ; $70be

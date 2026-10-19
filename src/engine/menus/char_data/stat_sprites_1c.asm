@@ -380,18 +380,7 @@ CharDataScreen_InputLoop:
 .checkStatCap:
 	ld a, [wStoryCharacterSlot] ; $5171
 	push af ; $5174
-	ld hl, wStoryMainName ; $5175
-	ld a, [wStoryCharacterSlot] ; $5178
-	or a ; $517b
-	jr z, .readStatCap ; $517c
-	ld l, $40 ; $517e
-.readStatCap:
-	ld a, l ; $5180
-	add $18 ; $5181
-	ld l, a ; $5183
-	ld a, h ; $5184
-	adc $00 ; $5185
-	ld h, a ; $5187
+	ld_story_char_field CHARREC_LEVEL ; $5175
 	pop af ; $5188
 	ld a, [hl] ; $5189
 	cp $63 ; $518a
@@ -543,9 +532,7 @@ CharDataScreen_InputLoop:
 	ld a, $03 ; $5323
 	ld [wCharDataRevealStep], a ; $5325
 	call FlushCharDataTilemaps ; $5328
-	ld a, $01 ; $532b
-	ld hl, DrawRemainingPointsSprite ; $532d
-	call RegisterFrameTask ; $5330
+	frame_task DrawRemainingPointsSprite ; $532b
 	call RestoreCharDataScreenRow ; $5333
 	call DrawCharStatRows ; $5336
 	ld hl, CharDataBand6RunsStep1_1c ; $5339
@@ -578,7 +565,5 @@ CharDataScreen_InputLoop:
 	call DrawCharStatsAndFlush ; $538f
 	call CharDataScreen_DrawPageColumns ; $5392
 	call FlushCharDataTilemaps ; $5395
-	ld a, $01 ; $5398
-	ld hl, DrawStatArrowIndicators ; $539a
-	call RegisterFrameTask ; $539d
+	frame_task DrawStatArrowIndicators ; $5398
 	jp CharDataScreen_InputLoop ; $53a0

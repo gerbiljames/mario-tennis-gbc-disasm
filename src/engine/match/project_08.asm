@@ -25,12 +25,7 @@ ApplyCameraProjection:
 Unused_08_MulHLSignedByDE:
 	bit 7, h ; $59d4
 	jp z, MulHLByDE ; $59d6
-	xor a ; $59d9
-	sub l ; $59da
-	ld l, a ; $59db
-	sbc a ; $59dc
-	sub h ; $59dd
-	ld h, a ; $59de
+	neg_hl ; $59d9
 	call MulHLByDE ; $59df
 NegateMulResultLow:
 	ldh a, [hMulResult] ; $59e2
@@ -54,24 +49,8 @@ MulHLByDESigned32:
 	ld a, h ; $59fb
 	xor d ; $59fc
 	ldh [hMathSign], a ; $59fd
-	bit 7, h ; $59ff
-	jr z, .absDE ; $5a01
-	xor a ; $5a03
-	sub l ; $5a04
-	ld l, a ; $5a05
-	sbc a ; $5a06
-	sub h ; $5a07
-	ld h, a ; $5a08
-.absDE:
-	bit 7, d ; $5a09
-	jr z, .multiply ; $5a0b
-	xor a ; $5a0d
-	sub e ; $5a0e
-	ld e, a ; $5a0f
-	sbc a ; $5a10
-	sub d ; $5a11
-	ld d, a ; $5a12
-.multiply:
+	abs_hl ; $59ff
+	abs_de ; $5a09
 	call MulHLByDE ; $5a13
 	ldh a, [hMathSign] ; $5a16
 	bit 7, a ; $5a18
@@ -81,36 +60,15 @@ MulHLByDEAbs:
 	ld a, h ; $5a1d
 	xor d ; $5a1e
 	ldh [hMathSign], a ; $5a1f
-	bit 7, h ; $5a21
-	jr z, .absDE ; $5a23
-	xor a ; $5a25
-	sub l ; $5a26
-	ld l, a ; $5a27
-	sbc a ; $5a28
-	sub h ; $5a29
-	ld h, a ; $5a2a
-.absDE:
-	bit 7, d ; $5a2b
-	jr z, .multiply ; $5a2d
-	xor a ; $5a2f
-	sub e ; $5a30
-	ld e, a ; $5a31
-	sbc a ; $5a32
-	sub d ; $5a33
-	ld d, a ; $5a34
-.multiply:
+	abs_hl ; $5a21
+	abs_de ; $5a2b
 	call MulHLByDE ; $5a35
 	ret ; $5a38
 MulSignedHLByAFrac:
 	bit 7, h ; $5a39
 	jp z, MulHLByAFrac ; $5a3b
 	ld d, a ; $5a3e
-	xor a ; $5a3f
-	sub l ; $5a40
-	ld l, a ; $5a41
-	sbc a ; $5a42
-	sub h ; $5a43
-	ld h, a ; $5a44
+	neg_hl ; $5a3f
 	ld a, d ; $5a45
 	call MulHLByAFrac ; $5a46
 	ld e, l ; $5a49

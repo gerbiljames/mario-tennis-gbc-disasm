@@ -378,15 +378,9 @@ RunN64RingShotData:
 	call BuildN64RingShotScreen ; $514d
 	xor a ; $5150
 	ld [wAnimatedTileSet], a ; $5151
-	ld a, $01 ; $5154
-	ld hl, UpdateAnimatedTilesTask_3b ; $5156
-	call RegisterFrameTask ; $5159
-	ld a, $01 ; $515c
-	ld hl, RingShotScrollArrowsTask ; $515e
-	call RegisterFrameTask ; $5161
-	ld a, $01 ; $5164
-	ld hl, RingShotScoreDrawTask ; $5166
-	call RegisterFrameTask ; $5169
+	frame_task UpdateAnimatedTilesTask_3b ; $5154
+	frame_task RingShotScrollArrowsTask ; $515c
+	frame_task RingShotScoreDrawTask ; $5164
 	call EnableLCD ; $516c
 	script_fade_in 16 ; $516f
 	call WaitFadeEnd ; $5174

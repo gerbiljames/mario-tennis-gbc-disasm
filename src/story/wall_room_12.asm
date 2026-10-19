@@ -317,8 +317,7 @@ WallPracticeRoomNpc03_12:
 	ld l, a ; $472c
 	farcall InitDialogueTextCursor ; $472d
 	ld a, [wMapSceneStage] ; $4730
-	ld a, a ; $4733
-	rst Rst00 ; $4734
+	jumptable a ; $4733
 	dw WallPracticeRoomNpc03_12.altText ; $4735 jumptable
 	dw WallPracticeRoomNpc03_12.speak ; $4737 jumptable
 	dw WallPracticeRoomNpc03_12.altText ; $4739 jumptable
@@ -465,12 +464,7 @@ WallPracticeScoreRetryPrompt:
 	ld l, c ; $4887
 	ld h, b ; $4888
 	inc de ; $4889
-	ld a, l ; $488a
-	sub e ; $488b
-	ld l, a ; $488c
-	ld a, h ; $488d
-	sbc d ; $488e
-	ld h, a ; $488f
+	sub_hl_de ; $488a
 	jp nc, WallPracticeNewRecordScript ; $4890
 	ld a, [wPointOutcome] ; $4893
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4896
@@ -543,12 +537,7 @@ WallPracticeMaxScoreScript:
 	ld l, a ; $4954
 	pop_wram_bank ; $4955
 	ld de, $270f ; $495a
-	ld a, l ; $495d
-	sub e ; $495e
-	ld l, a ; $495f
-	ld a, h ; $4960
-	sbc d ; $4961
-	ld h, a ; $4962
+	sub_hl_de ; $495d
 	jp c, RelaunchWallPracticeMasterLevel.saveMaxRecord ; $4963
 	script_set_text Text_WallMasterTryAgain ; $4966
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $496c

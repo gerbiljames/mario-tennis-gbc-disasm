@@ -262,9 +262,7 @@ AcademyCourtsTourCutscene:
 	ld [wMapSceneStage], a ; $4596
 	ld a, $48 ; $4599
 	ld [wMapSceneStage2], a ; $459b
-	ld a, $01 ; $459e
-	ld hl, AnimateTourPointerSprite_13 ; $45a0
-	call RegisterFrameTask ; $45a3
+	frame_task AnimateTourPointerSprite_13 ; $459e
 	script_set_text Text_EmilyJuniorCourtThatWay ; $45a6
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $45ac
 	ld hl, AnimateTourPointerSprite_13 ; $45b1
@@ -288,9 +286,7 @@ AcademyCourtsTourCutscene:
 	ld [wMapSceneStage], a ; $461d
 	ld a, $48 ; $4620
 	ld [wMapSceneStage2], a ; $4622
-	ld a, $01 ; $4625
-	ld hl, AnimateTourPointerSprite_13 ; $4627
-	call RegisterFrameTask ; $462a
+	frame_task AnimateTourPointerSprite_13 ; $4625
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $462d
 	ld hl, AnimateTourPointerSprite_13 ; $4632
 	call UnregisterFrameTask ; $4635

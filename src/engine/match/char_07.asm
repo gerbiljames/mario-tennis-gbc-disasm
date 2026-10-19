@@ -3,12 +3,7 @@ SetSpecialShotFlagFromBallHeight:
 	ld a, [hl+] ; $5a04
 	ld h, [hl] ; $5a05
 	ld l, a ; $5a06
-	xor a ; $5a07
-	sub l ; $5a08
-	ld l, a ; $5a09
-	sbc a ; $5a0a
-	sub h ; $5a0b
-	ld h, a ; $5a0c
+	neg_hl ; $5a07
 	add hl, hl ; $5a0d
 	add hl, hl ; $5a0e
 	add hl, hl ; $5a0f

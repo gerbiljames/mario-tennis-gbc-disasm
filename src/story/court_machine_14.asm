@@ -201,12 +201,7 @@ MachineExpertResultScene:
 	pop_wram_bank ; $4861
 	ld l, c ; $4866
 	ld h, b ; $4867
-	ld a, l ; $4868
-	sub e ; $4869
-	ld l, a ; $486a
-	ld a, h ; $486b
-	sbc d ; $486c
-	ld h, a ; $486d
+	sub_hl_de ; $4868
 	jp nc, MachineExpertRetryPrompt ; $486e
 	ld bc, $270f ; $4871
 	push_wram_bank WRAM_SOUND ; $4874
@@ -219,12 +214,7 @@ MachineExpertResultScene:
 	pop_wram_bank ; $4888
 	ld l, c ; $488d
 	ld h, b ; $488e
-	ld a, l ; $488f
-	sub e ; $4890
-	ld l, a ; $4891
-	ld a, h ; $4892
-	sbc d ; $4893
-	ld h, a ; $4894
+	sub_hl_de ; $488f
 	jp z, MachineExpertRetryPrompt ; $4895
 	ld hl, wMinigamesCurrentScore ; $4898
 	ld a, [hl+] ; $489b
@@ -239,12 +229,7 @@ MachineExpertResultScene:
 	ld l, c ; $48b2
 	ld h, b ; $48b3
 	inc de ; $48b4
-	ld a, l ; $48b5
-	sub e ; $48b6
-	ld l, a ; $48b7
-	ld a, h ; $48b8
-	sbc d ; $48b9
-	ld h, a ; $48ba
+	sub_hl_de ; $48b5
 	jp nc, MachineExpertNewRecordScene ; $48bb
 MachineExpertRetryPrompt:
 	script_set_text Text_MachineExpertRetry ; $48be
@@ -277,12 +262,7 @@ MachineExpertCounterMaxScene:
 	ld l, a ; $490c
 	pop_wram_bank ; $490d
 	ld de, 9999 ; $4912
-	ld a, l ; $4915
-	sub e ; $4916
-	ld l, a ; $4917
-	ld a, h ; $4918
-	sbc d ; $4919
-	ld h, a ; $491a
+	sub_hl_de ; $4915
 	jp z, MachineExpertRetryPrompt ; $491b
 	call SaveMachineExpertRecord ; $491e
 	script_set_text Text_MachineExpertCounterMax ; $4921
@@ -310,12 +290,7 @@ Unused_14_CompareMinigameScoreToRecord:
 	pop_wram_bank ; $4966
 	ld l, c ; $496b
 	ld h, b ; $496c
-	ld a, l ; $496d
-	sub e ; $496e
-	ld l, a ; $496f
-	ld a, h ; $4970
-	sbc d ; $4971
-	ld h, a ; $4972
+	sub_hl_de ; $496d
 	ret ; $4973
 SaveMachineExpertRecord:
 	push_wram_bank WRAM_SOUND ; $4974

@@ -305,9 +305,7 @@ RunTrophiesScreen:
 	call BuildTrophiesScreen ; $4968
 	ld a, $00 ; $496b
 	ld [wAnimatedTileSet], a ; $496d
-	ld a, $01 ; $4970
-	ld hl, UpdateAnimatedTilesTask_3b ; $4972
-	call RegisterFrameTask ; $4975
+	frame_task UpdateAnimatedTilesTask_3b ; $4970
 	xor a ; $4978
 	ld [wN64RecordsBlock + 1], a ; $4979
 	ld [wN64RecordsBlock], a ; $497c
