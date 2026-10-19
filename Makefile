@@ -56,11 +56,14 @@ $(ROM): $(OBJS)
 # of main.asm.
 PRELUDE := include/hardware.inc include/macros.inc include/constants.inc include/text_ids.inc include/flag_constants.inc include/text_codes.inc include/ram_mirrored.inc include/actor_roles.inc
 
-$(BUILD)/main.o: main.asm $(PRELUDE) $(wildcard include/*/*.inc) | $(BUILD)/rgbdscheck.o
-	$(RGBASM) -E $(ASDEFS) -I include $(PRELUDE:%=-P %) -o $@ $<
+# Each assembly also writes the files it read to a .d file (-M), included
+# below, so an edit to any include rebuilds the object; -MP keeps a deleted
+# one from stopping make.
+$(BUILD)/main.o: main.asm $(PRELUDE) | $(BUILD)/rgbdscheck.o
+	$(RGBASM) -E $(ASDEFS) -I include $(PRELUDE:%=-P %) -M $(BUILD)/main.d -MP -o $@ $<
 
 $(BUILD)/ram.o: $(RAM_SRCS) | $(BUILD)/rgbdscheck.o
-	$(RGBASM) -E $(ASDEFS) -I include -I . -o $@ ram.asm
+	$(RGBASM) -E $(ASDEFS) -I include -I . -M $(BUILD)/ram.d -MP -o $@ ram.asm
 
 # A graphics blob whose PNG (written by extract.py beside it) is newer is
 # re-encoded from the image -- and re-compressed if it is an LZ stream. The
@@ -93,7 +96,7 @@ $(BUILD)/deps.mk: main.asm $(FRAGMENTS) tools/deps.py tools/banksrc.py | $(BUILD
 	python3 tools/deps.py $(BUILD) > $@
 
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
--include $(BUILD)/deps.mk
+-include $(BUILD)/deps.mk $(BUILD)/main.d $(BUILD)/ram.d
 endif
 
 $(BUILD):
@@ -121,11 +124,12 @@ PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 test: $(if $(wildcard baserom.gbc),$(ROM))
 	$(PYTHON) -m unittest discover -s tests -t . -v
 
-# shift-test, event-test and slot-audit read build/ and mariotennis.gbc, the
-# USA byte-perfect build.
-ifneq ($(filter shift-test event-test slot-audit,$(MAKECMDGOALS)),)
+# check, shift-test, event-test and slot-audit read build/ and
+# mariotennis.gbc, the USA byte-perfect build.
+USA_ONLY := check shift-test event-test slot-audit
+ifneq ($(filter $(USA_ONLY),$(MAKECMDGOALS)),)
 ifneq ($(filter 1,$(FIXES) $(EUROPE)),)
-$(error $(filter shift-test event-test slot-audit,$(MAKECMDGOALS)) runs on the USA build only, without FIXES or EUROPE)
+$(error $(filter $(USA_ONLY),$(MAKECMDGOALS)) runs on the USA build only, without FIXES or EUROPE)
 endif
 endif
 
