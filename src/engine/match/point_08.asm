@@ -354,7 +354,7 @@ SetCharStateFromServeRole:
 	ret ; $4f9f
 ServeRoleCharStateTable_08:
 	; $4fa0, 4 bytes (bytes:4)
-	db $03, $05, $04, $05 ; 0x00
+	db CHARSTATE_SERVE, CHARSTATE_STANDBY, CHARSTATE_AWAIT_SERVE, CHARSTATE_STANDBY
 EndPointBallEffects:
 	xor a ; $4fa4
 	ld [wBallTrailEnabled], a ; $4fa5

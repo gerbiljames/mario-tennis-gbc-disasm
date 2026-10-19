@@ -454,7 +454,7 @@ SetCharFacingFromCourtPos:
 	ret ; $4cad
 CourtPosFacingTable_08:
 	; $4cae, 4 bytes (bytes:4)
-	db $c0, $c0, $40, $40 ; 0x00
+	db FACE_UP, FACE_UP, FACE_DOWN, FACE_DOWN
 MoveCharToBaseCourtPosition:
 	call GetCharBaseCourtPosition ; $4cb2
 	call SetCharPosAndTarget ; $4cb5

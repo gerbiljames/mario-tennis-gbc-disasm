@@ -303,13 +303,31 @@ BuildCharUnlockFlags:
 	pop_wram_bank ; $5b11
 	ret ; $5b16
 CharUnlockFlagsTable0:
-	; $5b17, 18 bytes (bytes:16)
-	db $c0, $01, $ff, $ff, $e0, $01, $ff, $ff, $60, $01, $ff, $ff, $a0, $01, $40, $01 ; 0x00
-	db $80, $01 ; 0x10
+	; $5b17, 18 bytes (save_flag_ids)
+	dw SAVEFLAG_UNLOCKED_SAMMI
+	dw $ffff
+	dw SAVEFLAG_UNLOCKED_ELDEN
+	dw $ffff
+	dw SAVEFLAG_UNLOCKED_CURT
+	dw $ffff
+	dw SAVEFLAG_UNLOCKED_SEAN
+	dw SAVEFLAG_UNLOCKED_FAY
+	dw SAVEFLAG_UNLOCKED_MARK
 CharUnlockFlagsTable1:
-	; $5b29, 26 bytes (bytes:16)
-	db $00, $14, $20, $14, $40, $14, $60, $14, $80, $14, $a0, $14, $c0, $14, $e0, $14 ; 0x00
-	db $00, $15, $20, $15, $40, $15, $60, $15, $80, $15 ; 0x10
+	; $5b29, 26 bytes (flag_ids)
+	flag_id FLAG_CHEAT_UNLOCK_0
+	flag_id FLAG_CHEAT_UNLOCK_1
+	flag_id FLAG_CHEAT_UNLOCK_2
+	flag_id FLAG_CHEAT_UNLOCK_3
+	flag_id FLAG_CHEAT_UNLOCK_4
+	flag_id FLAG_CHEAT_UNLOCK_5
+	flag_id FLAG_CHEAT_UNLOCK_6
+	flag_id FLAG_CHEAT_UNLOCK_7
+	flag_id FLAG_CHEAT_UNLOCK_8
+	flag_id FLAG_CHEAT_UNLOCK_11
+	flag_id FLAG_CHEAT_UNLOCK_12
+	flag_id FLAG_CHEAT_UNLOCK_9
+	flag_id FLAG_CHEAT_UNLOCK_10
 BuildCharGridFromUnlockFlags:
 	ld a, $01 ; $5b43
 	ld [wCharGridBuilt], a ; $5b45
@@ -357,9 +375,13 @@ CharGridUnlockMask_38:
 	db $00, $00, $00, $00 ; 0x20
 CharGridFromUnlockFlagsTable:
 	; $5b93, 36 bytes (bytes:16)
-	db $1a, $17, $1f, $19, $1c, $18, $1e, $1b, $1d, $00, $00, $00, $00, $00, $00, $04 ; 0x00
-	db $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f, $10, $11, $12, $13, $ff ; 0x10
-	db $ff, $ff, $ff, $c9 ; 0x20
+	table_width 1
+	db CHAR_MARIO, CHAR_LUIGI, CHAR_PEACH, CHAR_BABY_MARIO, CHAR_YOSHI, CHAR_DK, CHAR_WARIO, CHAR_WALUIGI
+	db CHAR_BOWSER, $00, $00, $00, $00, $00, $00, CHAR_ALLIE
+	db CHAR_JOY, CHAR_BRIAN, CHAR_PAM, CHAR_BOB, CHAR_BETH, CHAR_FAY, CHAR_CURT, CHAR_MARK
+	db CHAR_SEAN, CHAR_SAMMI, CHAR_ELDEN, CHAR_SPIKE, CHAR_EMILY, CHAR_B_COZ, CHAR_A_COZ, CHAR_NONE
+	assert_table_length 32
+	db $ff, $ff, $ff, $c9
 FillCharGridPaletteIndices:
 	ld hl, wCharGridEntries ; $5bb7
 	ld c, $00 ; $5bba

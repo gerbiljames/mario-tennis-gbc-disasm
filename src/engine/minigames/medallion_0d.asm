@@ -35,7 +35,7 @@ TreasureBoxValuesByType:
 	db $05, $0a, $32, $64 ; 0x00
 TreasureBoxHitStreakSounds:
 	; $5c81, 4 bytes (bytes:4)
-	db $c0, $be, $bc, $ba ; 0x00
+	db SFX_SCORE_STEP1, SFX_SCORE_STEP3, SFX_SCORE_STEP5, SFX_SCORE_STEP7
 TreasureBoxHitStreakMultipliers:
 	; $5c85, 4 bytes (bytes:4)
 	db $01, $02, $04, $08 ; 0x00
@@ -266,7 +266,7 @@ AwardMedallionMatchHitScore:
 	ret ; $5ee3
 MedallionMatchHitStreakSounds:
 	; $5ee4, 8 bytes (bytes:8)
-	db $c0, $bf, $be, $bd, $bc, $bb, $ba, $ba ; 0x00
+	db SFX_SCORE_STEP1, SFX_SCORE_STEP2, SFX_SCORE_STEP3, SFX_SCORE_STEP4, SFX_SCORE_STEP5, SFX_SCORE_STEP6, SFX_SCORE_STEP7, SFX_SCORE_STEP7
 MedallionMatchHitStreakMultipliers:
 	; $5eec, 6 bytes (bytes:6)
 	db $01, $05, $1e, $46, $96, $fa ; 0x00

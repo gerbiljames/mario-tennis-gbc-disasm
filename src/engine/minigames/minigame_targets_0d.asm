@@ -300,7 +300,7 @@ AwardHitScore:
 	ret ; $534e
 MinigameHitStreakSounds:
 	; $534f, 8 bytes (bytes:8)
-	db $c0, $bf, $be, $bd, $bc, $bb, $ba, $ba ; 0x00
+	db SFX_SCORE_STEP1, SFX_SCORE_STEP2, SFX_SCORE_STEP3, SFX_SCORE_STEP4, SFX_SCORE_STEP5, SFX_SCORE_STEP6, SFX_SCORE_STEP7, SFX_SCORE_STEP7
 MinigameHitStreakMultipliers:
 	; $5357, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00

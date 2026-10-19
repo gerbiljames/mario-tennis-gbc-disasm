@@ -451,5 +451,9 @@ MachineCourtStartLevelScene:
 	set_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $45f4
 	ret ; $45f7
 MachineCourtStartLevelSceneTable:
-	; $45f8, 8 bytes (bytes:16)
-	db $12, $13, $14, $15, $1a, $1a, $1a, $c9 ; 0x00
+	; $45f8, 7 bytes (bytes:7)
+	table_width 1
+	db MINIGAME_TENNIS_MACHINE_1, MINIGAME_TENNIS_MACHINE_2, MINIGAME_TENNIS_MACHINE_3, MINIGAME_TENNIS_MACHINE_4, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE
+	assert_table_length NUM_MACHINECOURTSTAGES
+MachineCourtStartLevelScene.deadRet:
+	ret ; $45ff

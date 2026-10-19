@@ -78,9 +78,9 @@ GetMarioCastCharAtGridSlot:
 	ret ; $66e8
 MarioCastCharAtGridSlotTable:
 	; $66e9, 9 bytes (bytes:3)
-	db $1a, $17, $1f ; 0x00
-	db $19, $1c, $18 ; 0x03
-	db $1e, $1b, $1d ; 0x06
+	db CHAR_MARIO, CHAR_LUIGI, CHAR_PEACH
+	db CHAR_BABY_MARIO, CHAR_YOSHI, CHAR_DK
+	db CHAR_WARIO, CHAR_WALUIGI, CHAR_BOWSER
 CheckMinigameGridExpanded:
 	ld c, MARIOGAME_TREASURE_BOX ; $66f2
 	call GetUnlockedMarioCastCharAtGridSlot ; $66f4

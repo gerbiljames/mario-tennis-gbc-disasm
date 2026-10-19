@@ -171,7 +171,7 @@ CourtSelectIndexToCourtId:
 	ret ; $5d07
 CourtSelectCourtIds_3e:
 	; $5d08, 9 bytes (bytes:9)
-	db $00, $01, $02, $03, $04, $05, $06, $07, $08 ; 0x00
+	db COURT_HARD, COURT_CLAY, COURT_GRASS, COURT_COMPOSITION, COURT_STAR, COURT_CASTLE, COURT_TROPICS, COURT_JUNGLE, COURT_WAREHOUSE
 LoadCourtSelectGraphics:
 	ldh a, [hWramBank] ; $5d11
 	push af ; $5d13
