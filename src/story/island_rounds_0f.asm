@@ -48,13 +48,13 @@ MovePartnerForRoundCall_0f:
 	jr z, .done ; $6f88
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $6f8a
 	jr nz, .done ; $6f8d
-	script_null_script $0d ; $6f8f
-	script_move_target $0d, 25.0, 17.0 ; $6f94
-	script_wait_move $0d ; $6f9f
-	script_move_target $0d, 25.0, 19.0 ; $6fa4
-	script_wait_move $0d ; $6faf
-	script_face $0c, FACE_DOWN ; $6fb4
-	script_face $0d, FACE_DOWN ; $6fbb
+	script_null_script ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ ; $6f8f
+	script_move_target ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ, 25.0, 17.0 ; $6f94
+	script_wait_move ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ ; $6f9f
+	script_move_target ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ, 25.0, 19.0 ; $6fa4
+	script_wait_move ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ ; $6faf
+	script_face ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_A_COZ, FACE_DOWN ; $6fb4
+	script_face ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ, FACE_DOWN ; $6fbb
 .done:
 	ret ; $6fc2
 IslandOpenRoundCallCutscene:

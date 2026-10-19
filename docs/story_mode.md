@@ -259,6 +259,12 @@ A slot is named only where the active list is certain at that line.
   `wMapSceneStage2` stages, the Tournament's round lists to the
   `wMapSceneStage` round `LoadIslandOpenRoundNpcs` sets (`STAGE_LISTS`); a
   stage-indexed table dispatches each entry under its own stage's lists;
+* lists a script installs on a flag (the singles and doubles ending lists,
+  the traveling teams, the Island Open round lists, which also hang on the
+  semifinal flags) are bound to its value (`FLAG_LISTS`), and a
+  `test_flag` branch keeps, on each side, the lists that agree; a
+  location's default list is never bound, since it is active before any
+  test;
 * the Tournament's round-call tile triggers exist only once
   `LoadIslandOpenRoundNpcs` has written their cells, so they run only under
   its round lists — singles for trigger `$0f`, doubles for `$0e`
@@ -270,19 +276,22 @@ the same character under different scripts (the five seniors in all three
 Senior Court lists) or whoever plays a part (Island Open slot `$0a` is this
 round's opponent, Spike in one round and A. Coz in another) — gets a *role*
 name, `ACTOR_ROLE_<location>_<role>`, declared with its lists in
-`include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`). Eleven roles cover 49 operands and 7
+`include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`). Twelve roles cover 55 operands and 7
 `NpcScripts` ids.
 
-The sites the tool reaches carry 5,124 slot names (row and role names,
-script operands, `NpcScripts` ids); 22 keep a number, and unreached code
-keeps more. The numbered ones are:
+The sites the tool reaches carry 5,153 slot names (row and role names,
+script operands, `NpcScripts` ids); 13 keep a number, and unreached code
+keeps more. A PyBoy sweep that hooks each numbered site and records the
+installed list and the slot's object agrees with the analysis wherever it
+reached one. The numbered ones are:
 
 * slots with no single part: a trophy in one list and a balloon in another;
-  the Coz twins in most Island Open rounds but Sean or Elden in the final;
-  B. Coz in the doubles ending's lists but a spectator in the singles ones
-  (`End16BeforeFinalsCutscene_27` walks slot `$0b` to the court in both; in
-  singles the spectator gets it and stays put);
-* slots past the end of every candidate list (script-spawned actors);
+  B. Coz in the doubles award ceremony but a walk-sprite student in the
+  singles one, where the flow cannot tie the list to the branch;
+* slots past the end of every candidate list: at run time the slot is
+  empty (`DormRoomTile0F_13` and `CenterCourtEntry0fScene` position slots
+  `$06` and `$0a`, which their lists never fill, so those lines move
+  nothing);
 * lines inside shared twin files;
 * tables of locations the player never controls.
 

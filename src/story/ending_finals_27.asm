@@ -117,7 +117,7 @@ End17AwardCeremonyInitScript_27:
 	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3, ANIM_BOUNCE ; $434c
 	script_wait_idle ACTOR_END17_AWARD_CEREMONY_ALT_WALK_6F_07_3 ; $4353
 	script_delay 50 ; $4358
-	script_face $07, FACE_LEFT ; $435d
+	script_face ACTOR_END17_AWARD_CEREMONY_WALK_74_08, FACE_LEFT ; $435d
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_A_COZ, FACE_RIGHT ; $4364
 	script_delay 60 ; $436b
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 11.25, 12.25 ; $4370
@@ -424,7 +424,7 @@ End16BeforeFinalsCutscene_27:
 	script_wait_frames 20 ; $4af5
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_02 ; $4afc
 	script_wait_frames 60 ; $4b07
-	script_set_actor_script $0b, ActorScript_27_03 ; $4b0e
+	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_B_COZ, ActorScript_27_03 ; $4b0e
 	script_wait_frames 20 ; $4b19
 	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ActorScript_27_03 ; $4b20
 	script_move_player 17.0, 13.0 ; $4b2b

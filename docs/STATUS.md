@@ -51,7 +51,7 @@ with a fork's edits under `mods/`.
 
 * **Banked-WRAM operands:** 97 stay raw numbers, all inside `Unused*`
   routines no trace can reach.
-* **Actor slots:** 22 operands on reached code stay numbers, each a slot that
+* **Actor slots:** 13 operands on reached code stay numbers, each a slot that
   holds different actors in the lists possible there (`docs/story_mode.md`).
 * **Behaviour:** the event test finds no difference between a shifted build
   and the original. Its only crashes are the Test2 debug screens' glyph
