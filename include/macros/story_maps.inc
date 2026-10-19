@@ -53,11 +53,25 @@ ENDM
 ; Entry-point spawn record (8 bytes, table terminated by $ff). Selected by
 ; wStoryModeEntryPoint; places the main character (facing a FACE_* direction,
 ; include/constants/) and runs `arrival_script`.
-; Usage: map_entry id, facing, x, y, arrival_script
+; Usage: map_entry id, facing, x, y, arrival_script[, NAME]
+; NAME (location first: DORM_ROOM_CONTINUE) defines ENTRY_NAME as `id`.
 MACRO map_entry
+IF _NARG == 6
+DEF ENTRY_\6 EQU \1
+EXPORT ENTRY_\6
+ENDC
 	map_pos \3, \4
 	db \1, \2
 	dw (\3) >> 8, (\4) >> 8, \5
+ENDM
+
+; Names an entry id with no map_entry row (LoadStoryEntryPointRecord falls
+; back to the first row): one the init script tests, or the main menu's.
+; Sits in the location's EntryPoints table and emits nothing.
+; Usage: entry_id NAME, id
+MACRO entry_id
+DEF ENTRY_\1 EQU \2
+EXPORT ENTRY_\1
 ENDM
 
 ; Story-script record (8 bytes, table terminated by $ff). FindStoryScriptEntry
@@ -69,8 +83,14 @@ ENDM
 ; a STORYLOC_* id -- and `arg1` into wStoryModeEntryPoint, which indexes the
 ; destination's own map_entry list. In the other three slots they are whatever
 ; the handler reads them as.
-; Usage: map_script id, facing_mask, flag_cond, handler, arg0, arg1
+; In an ExitTriggers table a NAME (location first: DORM_ROOM_END_OF_DAY) defines
+; EXIT_NAME as `id`, the value written to wStoryModeExitTriggerRequest.
+; Usage: map_script id, facing_mask, flag_cond, handler, arg0, arg1[, NAME]
 MACRO map_script
+IF _NARG == 7
+DEF EXIT_\7 EQU \1
+EXPORT EXIT_\7
+ENDC
 	db \1, \2
 	dw \3, \4
 	db \5, \6

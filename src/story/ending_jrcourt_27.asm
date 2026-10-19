@@ -17,13 +17,13 @@ End7TrainingCtrActors_27:
 	map_actor_end
 End7TrainingCtrEntryPoints_27:
 	; $61dd, 17 bytes (map_entries)
-	map_entry $01, FACE_UP, 43.0, 57.0, $0000
-	map_entry $02, FACE_UP, 22.0, 24.0, $0000
+	map_entry $01, FACE_UP, 43.0, 57.0, $0000, END7_TRAINING_CTR_SCENE_A
+	map_entry $02, FACE_UP, 22.0, 24.0, $0000, END7_TRAINING_CTR_SCENE_B
 	db $ff
 End7TrainingCtrExitTriggers_27:
 	; $61ee, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_CENTER, $03
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_CENTER, $03
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_CENTER, ENTRY_TRAINING_CENTER_FROM_TENNIS_MACHINE_ROOM, END7_TRAINING_CTR_DONE
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_CENTER, ENTRY_TRAINING_CENTER_FROM_TENNIS_MACHINE_ROOM
 	db $ff
 End7TrainingCtrNpcScripts_27:
 	ds 1, $ff ; $61ff, fill
@@ -33,9 +33,9 @@ End7TrainingCtrTileTriggers_27:
 	ds 1, $ff ; $6201, fill
 End7TrainingCtrInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6202
-	cp $01 ; $6205
+	cp ENTRY_END7_TRAINING_CTR_SCENE_A ; $6205
 	jr z, End7TrainingCtrEntry01Scene ; $6207
-	cp $02 ; $6209
+	cp ENTRY_END7_TRAINING_CTR_SCENE_B ; $6209
 	jp z, End7TrainingCtrEntry02Scene ; $620b
 	ret ; $620e
 ComputeMachineCourtProgress_27:
@@ -102,7 +102,7 @@ End7TrainingCtrEntry01Scene:
 	script_wait_move ACTOR_PLAYER ; $6354
 	script_face ACTOR_PLAYER, FACE_UP ; $6359
 	script_wait_frames 10 ; $6360
-	ld a, $01 ; $6367
+	ld a, EXIT_END7_TRAINING_CTR_DONE ; $6367
 	ld [wUnusedExitTriggerIdMirror], a ; $6369
 	ld [wStoryModeExitTriggerRequest], a ; $636c
 	ret ; $636f
@@ -130,7 +130,7 @@ End7TrainingCtrEntry02Scene:
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $6404
 	script_set_speed ACTOR_PLAYER, 1.0 ; $640b
 	script_face_toward ACTOR_END7_TRAINING_CTR_STUDENT_SIDE_PART_BOY_2, ACTOR_PLAYER ; $6413
-	ld a, $01 ; $641b
+	ld a, EXIT_END7_TRAINING_CTR_DONE ; $641b
 	ld [wUnusedExitTriggerIdMirror], a ; $641d
 	ld [wStoryModeExitTriggerRequest], a ; $6420
 	ret ; $6423
@@ -180,13 +180,13 @@ End5ServiceAceActors_27:
 	map_actor_end
 End5ServiceAceEntryPoints_27:
 	; $654d, 17 bytes (map_entries)
-	map_entry $01, FACE_RIGHT, 13.0, 29.0, $0000
+	map_entry $01, FACE_RIGHT, 13.0, 29.0, $0000, END5_SERVICE_ACE_SCENE
 	map_entry $02, FACE_DOWN, 5.0, 23.0, $0000 ; debug warp only
 	db $ff
 End5ServiceAceExitTriggers_27:
 	; $655e, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END5_SERVICE_ACE, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_CAFETERIA, $01
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END5_SERVICE_ACE, ENTRY_END5_SERVICE_ACE_SCENE, END5_SERVICE_ACE_DONE
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_CAFETERIA, ENTRY_CAFETERIA_FROM_RESTAURANT
 	db $ff
 End5ServiceAceCutscene_27:
 	farcall BeginCutsceneScriptMode ; $656f
@@ -211,7 +211,7 @@ End5ServiceAceCutscene_27:
 	script_set_position ACTOR_END5_SERVICE_ACE_BALLOON_EXCLAIM, 28.0, 17.0 ; $65f6
 	script_set_anim ACTOR_END5_SERVICE_ACE_STUDENT_PIGTAILS_GIRL_2, ANIM_BOUNCE ; $6601
 	script_wait_frames 60 ; $6608
-	ld a, $01 ; $660f
+	ld a, EXIT_END5_SERVICE_ACE_DONE ; $660f
 	ld [wUnusedExitTriggerIdMirror], a ; $6611
 	ld [wStoryModeExitTriggerRequest], a ; $6614
 	farcall EndCutsceneScriptMode ; $6617
@@ -271,12 +271,12 @@ End4JrCourtActorsAlt_27:
 	map_actor_end
 End4JrCourtEntryPoints_27:
 	; $67da, 10 bytes (map_entries)
-	map_entry $01, FACE_UP, 19.0, 33.0, $0000
+	map_entry $01, FACE_UP, 19.0, 33.0, $0000, END4_JR_COURT_SCENE
 	db $ff, $c9
 End4JrCourtExitTriggers_27:
 	; $67e4, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, $05
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_JUNIOR_CLASS_COURT, END4_JR_COURT_DONE
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, ENTRY_JUNIOR_CLASS_COURT_SINGLES_MATCH_RETURN, END4_JR_COURT_DONE_DOUBLES
 	db $ff
 End4JrCourtNpcScripts_27:
 	ds 1, $ff ; $67f5, fill
@@ -291,7 +291,7 @@ End4JrCourtInitScript_27:
 	farcall BeginCutsceneScriptMode ; $6805
 .checkStoryModeEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $6808
-	cp $01 ; $680b
+	cp ENTRY_END4_JR_COURT_SCENE ; $680b
 	jp z, End4JrCourtSceneSingles_27.walkPlayer ; $680d
 	ret ; $6810
 ActorScript_27_14:
@@ -408,7 +408,7 @@ End4JrCourtSceneSingles_27:
 	farcall WaitPlayerMoveDone ; $69d6
 	script_wait_actor_script ACTOR_END4_JR_COURT_ALT_PAM ; $69d9
 	script_wait_frames 20 ; $69de
-	ld a, $01 ; $69e5
+	ld a, EXIT_END4_JR_COURT_DONE ; $69e5
 	ld [wUnusedExitTriggerIdMirror], a ; $69e7
 	ld [wStoryModeExitTriggerRequest], a ; $69ea
 	ret ; $69ed
@@ -428,7 +428,7 @@ End4JrCourtSceneSingles_27:
 	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_RIGHT ; $6a3a
 	script_wait_frames 30 ; $6a41
 	call End4JrCourtDepartureDoubles_27 ; $6a48
-	ld a, $01 ; $6a4b
+	ld a, EXIT_END4_JR_COURT_DONE ; $6a4b
 	ld [wUnusedExitTriggerIdMirror], a ; $6a4d
 	ld [wStoryModeExitTriggerRequest], a ; $6a50
 	ret ; $6a53
@@ -481,7 +481,7 @@ End4JrCourtDepartureDoubles_27:
 	script_face ACTOR_PLAYER, FACE_UP ; $6b76
 	script_face ACTOR_PARTNER, FACE_UP ; $6b7d
 	script_wait_frames 60 ; $6b84
-	ld a, $0f ; $6b8b
+	ld a, EXIT_END4_JR_COURT_DONE_DOUBLES ; $6b8b
 	ld [wUnusedExitTriggerIdMirror], a ; $6b8d
 	ld [wStoryModeExitTriggerRequest], a ; $6b90
 	ret ; $6b93

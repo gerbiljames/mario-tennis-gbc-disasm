@@ -195,7 +195,7 @@ IslandSkyInitScript_14.placeActors2:
 	jr z, IslandSkyInitScript_14.notDoubles ; $664d
 	ld a, STORYLOC_AWARDS_CEREMONY ; $664f
 	ld [wStoryModeCurrentLocation], a ; $6651
-	ld a, $0b ; $6654
+	ld a, ENTRY_AWARDS_CEREMONY_DOUBLES ; $6654
 	ld [wStoryModeEntryPoint], a ; $6656
 	ld a, EXITTRIGGER_DIRECT ; $6659
 	ld [wUnusedExitTriggerIdMirror], a ; $665b
@@ -204,7 +204,7 @@ IslandSkyInitScript_14.placeActors2:
 IslandSkyInitScript_14.notDoubles:
 	ld a, STORYLOC_AWARDS_CEREMONY ; $6662
 	ld [wStoryModeCurrentLocation], a ; $6664
-	ld a, $0a ; $6667
+	ld a, ENTRY_AWARDS_CEREMONY_SINGLES ; $6667
 	ld [wStoryModeEntryPoint], a ; $6669
 	ld a, EXITTRIGGER_DIRECT ; $666c
 	ld [wUnusedExitTriggerIdMirror], a ; $666e
@@ -455,11 +455,11 @@ IslandSkyEntry0fAnd0dScene:
 	call PlayTwinkleAnimation_14 ; $70ec
 	script_wait_frames 70 ; $70ef
 	ld a, [wStoryModeEntryPoint] ; $70f6
-	cp $0d ; $70f9
+	cp ENTRY_ISLAND_SKY_CREDITS_TO_PEACHS_CASTLE ; $70f9
 	jp nz, .fadeOut ; $70fb
 	ld a, $01 ; $70fe
 	ld [wCutsceneObjActive], a ; $7100
-	ld a, $01 ; $7103
+	ld a, EXIT_ISLAND_SKY_DONE ; $7103
 	ld [wUnusedExitTriggerIdMirror], a ; $7105
 	ld [wStoryModeExitTriggerRequest], a ; $7108
 	ret ; $710b
@@ -476,14 +476,14 @@ IslandSkyEntry0fAnd0dScene:
 	set_flag FLAG_STORY_COMPLETE_SINGLES ; $7121
 .setLocation:
 	ld b, STORYLOC_PEACHS_CASTLE ; $7124
-	ld c, $0f ; $7126
+	ld c, ENTRY_PEACHS_CASTLE_FIRST_VISIT ; $7126
 	farcall SaveStoryReturnPoint ; $7128
 	farcall SaveStorySlotWithTimer ; $712b
 	script_fade_out 1 ; $712e
 	call WaitFadeEnd ; $7133
 	ld a, STORYLOC_MAIN_MENU ; $7136
 	ld [wStoryModeCurrentLocation], a ; $7138
-	ld a, $0a ; $713b
+	ld a, ENTRY_MAIN_MENU_TITLE ; $713b
 	ld [wStoryModeEntryPoint], a ; $713d
 	ld a, EXITTRIGGER_DIRECT ; $7140
 	ld [wUnusedExitTriggerIdMirror], a ; $7142
@@ -501,7 +501,7 @@ IslandSkyEntry0fAnd0dScene:
 	call WaitFadeEnd ; $715a
 	ld a, STORYLOC_PEACHS_CASTLE ; $715d
 	ld [wStoryModeCurrentLocation], a ; $715f
-	ld a, $01 ; $7162
+	ld a, ENTRY_PEACHS_CASTLE_REVISIT ; $7162
 	ld [wStoryModeEntryPoint], a ; $7164
 	ld a, EXITTRIGGER_DIRECT ; $7167
 	ld [wUnusedExitTriggerIdMirror], a ; $7169
@@ -512,7 +512,7 @@ IslandSkyEntry0fAnd0dScene:
 	call WaitFadeEnd ; $7175
 	ld a, STORYLOC_PEACHS_CASTLE ; $7178
 	ld [wStoryModeCurrentLocation], a ; $717a
-	ld a, $0f ; $717d
+	ld a, ENTRY_PEACHS_CASTLE_FIRST_VISIT ; $717d
 	ld [wStoryModeEntryPoint], a ; $717f
 	ld a, EXITTRIGGER_DIRECT ; $7182
 	ld [wUnusedExitTriggerIdMirror], a ; $7184

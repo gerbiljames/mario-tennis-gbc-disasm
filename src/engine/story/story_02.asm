@@ -222,7 +222,7 @@ InitStoryModeState:
 	ld hl, wStoryModeCurrentLocation ; $4235
 	ld [hl], STORYLOC_MAIN_MENU ; $4238
 	ld hl, wStoryModeEntryPoint ; $423a
-	ld [hl], $02 ; $423d
+	ld [hl], ENTRY_MAIN_MENU_INIT ; $423d
 	ld a, $01 ; $423f
 	ld [wMessageSpeed], a ; $4241
 	farcall InitDefaultMatchSettings ; $4244

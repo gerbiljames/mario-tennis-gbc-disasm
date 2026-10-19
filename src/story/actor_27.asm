@@ -101,7 +101,7 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_move_target ACTOR_END1_MAIN_BLDG_KEVIN_SWEATS, 27.0, 29.0 ; $7832
 	script_move_target ACTOR_END1_MAIN_BLDG_HEADMASTER_2, 24.0, 33.0 ; $783d
 	script_wait_move ACTOR_END1_MAIN_BLDG_HEADMASTER_2 ; $7848
-	ld a, $05 ; $784d
+	ld a, EXIT_END1_MAIN_BLDG_DEPARTURE_DONE ; $784d
 	ld [wUnusedExitTriggerIdMirror], a ; $784f
 	ld [wStoryModeExitTriggerRequest], a ; $7852
 	ret ; $7855

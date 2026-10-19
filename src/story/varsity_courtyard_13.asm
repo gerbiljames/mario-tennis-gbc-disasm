@@ -162,22 +162,22 @@ VarsityCourtActorsD_13:
 	map_actor_end
 CourtyardEntryPoints_13:
 	; $5e40, 57 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 54.0, 22.0, $0000
-	map_entry $02, FACE_DOWN, 34.0, 11.0, $0000
-	map_entry $03, FACE_UP, 34.0, 49.0, $0000
+	map_entry $01, FACE_DOWN, 54.0, 22.0, $0000, COURTYARD_FROM_TRAINING_CENTER
+	map_entry $02, FACE_DOWN, 34.0, 11.0, $0000, COURTYARD_FROM_RESTAURANT_PLAZA
+	map_entry $03, FACE_UP, 34.0, 49.0, $0000, COURTYARD_FROM_ACADEMY_MAIN_BLDG
 	map_entry $0a, FACE_UP, 17.0, 29.0, $0000 ; debug warp only
-	map_entry $0d, FACE_UP, 13.0, 31.0, $0000
-	map_entry $0e, FACE_UP, 15.0, 31.0, $0000
-	map_entry $0f, FACE_UP, 34.0, 47.0, $0000
+	map_entry $0d, FACE_UP, 13.0, 31.0, $0000, COURTYARD_VARSITY_MATCH_RETURN
+	map_entry $0e, FACE_UP, 15.0, 31.0, $0000, COURTYARD_TRAVELING_TEAM_WON
+	map_entry $0f, FACE_UP, 34.0, 47.0, $0000, COURTYARD_TOUR
 	db $ff
 CourtyardExitTriggers_13:
 	; $5e79, 49 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, $0000, STORYLOC_TRAINING_CENTER, $01
-	map_script $02, FACEMASK_ANY, $0000, $0000, STORYLOC_RESTAURANT_PLAZA, $04
-	map_script $03, FACEMASK_ANY, $0000, $0000, STORYLOC_ACADEMY_MAIN_BLDG, $02
-	map_script $0a, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_MAIN_MENU, $0a
-	map_script $0e, FACEMASK_ANY, $0000, $0000, STORYLOC_COURTYARD, $0e
-	map_script $0f, FACEMASK_ANY, $0000, $0000, STORYLOC_RESTAURANT_PLAZA, $0f
+	map_script $01, FACEMASK_ANY, $0000, $0000, STORYLOC_TRAINING_CENTER, ENTRY_TRAINING_CENTER_FROM_COURTYARD, COURTYARD_TO_TRAINING_CENTER
+	map_script $02, FACEMASK_ANY, $0000, $0000, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_COURTYARD, COURTYARD_TO_RESTAURANT_PLAZA
+	map_script $03, FACEMASK_ANY, $0000, $0000, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_FROM_COURTYARD, COURTYARD_TO_ACADEMY_MAIN_BLDG
+	map_script $0a, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_MAIN_MENU, ENTRY_MAIN_MENU_TITLE, COURTYARD_TO_MAIN_MENU
+	map_script $0e, FACEMASK_ANY, $0000, $0000, STORYLOC_COURTYARD, ENTRY_COURTYARD_TRAVELING_TEAM_WON, COURTYARD_TRAVELING_TEAM_WON
+	map_script $0f, FACEMASK_ANY, $0000, $0000, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_COURTS_TOUR, COURTYARD_TOUR
 	db $ff
 CourtyardNpc03_13:
 	script_set_text Text_KevinFewVarsityPlayersSingles ; $5eaa
@@ -366,16 +366,16 @@ CourtyardTileTriggers_13:
 CourtyardInitScript_13:
 	call SetupVarsityCourtSceneVariant ; $6189
 	ld a, [wStoryModeEntryPoint] ; $618c
-	cp $0f ; $618f
+	cp ENTRY_COURTYARD_TOUR ; $618f
 	jr nz, .notTour ; $6191
 	jp VarsityCourtTourCutscene ; $6193
 .notTour:
-	cp $0d ; $6196
+	cp ENTRY_COURTYARD_VARSITY_MATCH_RETURN ; $6196
 	jr nz, .notBracket ; $6198
 	call RunTravelingTeamBracketIfWon_13 ; $619a
 	ret ; $619d
 .notBracket:
-	cp $0e ; $619e
+	cp ENTRY_COURTYARD_TRAVELING_TEAM_WON ; $619e
 	jr nz, .walkIn ; $61a0
 	jp RunTravelingTeamVictoryCutscene_13 ; $61a2
 .walkIn:

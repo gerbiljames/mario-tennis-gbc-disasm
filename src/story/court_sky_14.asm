@@ -21,13 +21,13 @@ Court1Actors_14:
 	map_actor_end
 Court1EntryPoints_14:
 	; $5042, 17 bytes (map_entries)
-	map_entry $01, FACE_RIGHT, 3.0, 21.0, $0000
-	map_entry $02, FACE_RIGHT, 3.0, 37.0, $0000
+	map_entry $01, FACE_RIGHT, 3.0, 21.0, $0000, COURT_1_FROM_TOURNAMENT
+	map_entry $02, FACE_RIGHT, 3.0, 37.0, $0000, COURT_1_FROM_TOURNAMENT_COURTYARD
 	db $ff
 Court1ExitTriggers_14:
 	; $5053, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, $04
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, $01
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, ENTRY_TOURNAMENT_FROM_COURT_1, COURT_1_TO_TOURNAMENT
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, ENTRY_TOURNAMENT_COURTYARD_FROM_COURT_1, COURT_1_TO_TOURNAMENT_COURTYARD
 	db $ff
 Court1Npc03_14:
 	script_set_text Text_Court1StaffCourtNumberOne ; $5064
@@ -188,16 +188,17 @@ IslandSkyActors_14:
 	map_actor_end
 IslandSkyEntryPoints_14:
 	; $5271, 49 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 12.0, 18.0, $0000
-	map_entry $02, FACE_UP, 6.0, 39.0, $0000
-	map_entry $08, FACE_DOWN, 6.0, 39.0, $0000
-	map_entry $0c, FACE_DOWN, 6.0, 39.0, $0000
-	map_entry $0e, FACE_DOWN, 12.0, 11.0, $0000
-	map_entry $0f, FACE_DOWN, 12.0, 18.0, $0000
+	map_entry $01, FACE_DOWN, 12.0, 18.0, $0000, ISLAND_SKY_TO_ISLAND_OPEN
+	map_entry $02, FACE_UP, 6.0, 39.0, $0000, ISLAND_SKY_HOME_FROM_ISLAND_OPEN
+	map_entry $08, FACE_DOWN, 6.0, 39.0, $0000, ISLAND_SKY_VICTORY_FIREWORKS
+	map_entry $0c, FACE_DOWN, 6.0, 39.0, $0000, ISLAND_SKY_CREDITS_TO_ISLAND_OPEN
+	map_entry $0e, FACE_DOWN, 12.0, 11.0, $0000, ISLAND_SKY_HOME_FROM_PEACHS_CASTLE
+	map_entry $0f, FACE_DOWN, 12.0, 18.0, $0000, ISLAND_SKY_TO_PEACHS_CASTLE
+	entry_id ISLAND_SKY_CREDITS_TO_PEACHS_CASTLE, $0d
 	db $ff
 IslandSkyExitTriggers_14:
 	; $52a2, 9 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_RESTAURANT_PLAZA, $06
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_TRAINING_COURT, ISLAND_SKY_DONE
 	db $ff
 Unused_14_StubNop:
 	ret ; $52ab
@@ -215,15 +216,15 @@ IslandSkyInitScript_14:
 	script_set_position ACTOR_ISLAND_SKY_MARK_SWEATS, 63.0, 63.0 ; $52cd
 	script_set_position ACTOR_ISLAND_SKY_EMILY_SWEATS, 63.0, 63.0 ; $52d8
 	ld a, [wStoryModeEntryPoint] ; $52e3
-	cp $02 ; $52e6
+	cp ENTRY_ISLAND_SKY_HOME_FROM_ISLAND_OPEN ; $52e6
 	jp z, IslandSkyEntry02Scene ; $52e8
-	cp $08 ; $52eb
+	cp ENTRY_ISLAND_SKY_VICTORY_FIREWORKS ; $52eb
 	jp z, IslandSkyInitScript_14.scriptRespawnLocationActors ; $52ed
-	cp $0e ; $52f0
+	cp ENTRY_ISLAND_SKY_HOME_FROM_PEACHS_CASTLE ; $52f0
 	jp z, IslandSkyEntry0eScene ; $52f2
-	cp $0f ; $52f5
+	cp ENTRY_ISLAND_SKY_TO_PEACHS_CASTLE ; $52f5
 	jp z, IslandSkyEntry0fAnd0dScene ; $52f7
-	cp $0d ; $52fa
+	cp ENTRY_ISLAND_SKY_CREDITS_TO_PEACHS_CASTLE ; $52fa
 	jp z, IslandSkyEntry0fAnd0dScene ; $52fc
 	jp .loadScene ; $52ff
 	ret ; $5302
@@ -263,7 +264,7 @@ IslandSkyInitScript_14:
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $5363
 	script_set_active ACTOR_PLAYER, $00 ; $536a
 	ld a, [wStoryModeEntryPoint] ; $5371
-	cp $0c ; $5374
+	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $5374
 	jr nz, .fadeIn ; $5376
 	script_set_position ACTOR_PLAYER, 6.0, 39.0 ; $5378
 	xor a ; $5383
@@ -385,7 +386,7 @@ IslandSkyInitScript_14:
 	dec h ; $54a5
 	jr nz, .speakDoubles ; $54a6
 	ld a, [wStoryModeEntryPoint] ; $54a8
-	cp $0c ; $54ab
+	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $54ab
 	jr z, .setLocation ; $54ad
 	test_flag FLAG_DOUBLES ; $54af
 	jr z, .fadeOut ; $54b2
@@ -401,7 +402,7 @@ IslandSkyInitScript_14:
 	call ClearFrameTasks ; $54c9
 	ld a, STORYLOC_TOURNAMENT_COURTYARD ; $54cc
 	ld [wStoryModeCurrentLocation], a ; $54ce
-	ld a, $04 ; $54d1
+	ld a, ENTRY_TOURNAMENT_COURTYARD_FROM_ISLAND_SKY ; $54d1
 	ld [wStoryModeEntryPoint], a ; $54d3
 	ld a, EXITTRIGGER_DIRECT ; $54d6
 	ld [wUnusedExitTriggerIdMirror], a ; $54d8
@@ -455,12 +456,12 @@ IslandSkyInitScript_14:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $55df
 	script_wait_idle ACTOR_PLAYER ; $55e6
 	ld a, [wStoryModeEntryPoint] ; $55eb
-	cp $0c ; $55ee
+	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $55ee
 	jr nz, .done ; $55f0
 	ld a, $01 ; $55f2
 	ld [wCutsceneObjActive], a ; $55f4
 	ld [wCutsceneObjActive + 1], a ; $55f7
-	ld a, $01 ; $55fa
+	ld a, EXIT_ISLAND_SKY_DONE ; $55fa
 	ld [wUnusedExitTriggerIdMirror], a ; $55fc
 	ld [wStoryModeExitTriggerRequest], a ; $55ff
 	ret ; $5602
@@ -474,7 +475,7 @@ IslandSkyInitScript_14:
 	call ClearFrameTasks ; $5625
 	ld a, STORYLOC_DORM_ROOM ; $5628
 	ld [wStoryModeCurrentLocation], a ; $562a
-	ld a, $09 ; $562d
+	ld a, ENTRY_DORM_ROOM_ISLAND_OPEN_ARRIVAL ; $562d
 	ld [wStoryModeEntryPoint], a ; $562f
 	ld a, EXITTRIGGER_DIRECT ; $5632
 	ld [wUnusedExitTriggerIdMirror], a ; $5634

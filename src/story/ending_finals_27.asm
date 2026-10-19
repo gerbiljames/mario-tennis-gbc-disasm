@@ -39,11 +39,11 @@ End17AwardCeremonyActorsAlt_27:
 	map_actor_end
 End17AwardCeremonyEntryPoints_27:
 	; $418a, 9 bytes (map_entries)
-	map_entry $01, FACE_UP, 12.0, 17.0, $0000
+	map_entry $01, FACE_UP, 12.0, 17.0, $0000, END17_AWARD_CEREMONY_SCENE
 	db $ff
 End17AwardCeremonyExitTriggers_27:
 	; $4193, 9 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, $06
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_TRAINING_COURT, END17_AWARD_CEREMONY_DONE
 	db $ff
 End17AwardCeremonyNpcScripts_27:
 	ds 1, $ff ; $419c, fill
@@ -137,7 +137,7 @@ End17AwardCeremonyInitScript_27:
 	script_move_player 12.0, 13.0 ; $43a7
 	farcall WaitPlayerMoveDone ; $43b1
 	script_delay 50 ; $43b4
-	ld a, $01 ; $43b9
+	ld a, EXIT_END17_AWARD_CEREMONY_DONE ; $43b9
 	ld [wUnusedExitTriggerIdMirror], a ; $43bb
 	ld [wStoryModeExitTriggerRequest], a ; $43be
 	ret ; $43c1
@@ -264,11 +264,11 @@ End16BeforeFinalsActors_27:
 	map_actor_end
 End16BeforeFinalsEntryPoints_27:
 	; $46e8, 9 bytes (map_entries)
-	map_entry $01, FACE_UP, 28.0, 35.0, $0000
+	map_entry $01, FACE_UP, 28.0, 35.0, $0000, END16_BEFORE_FINALS_SCENE
 	db $ff
 End16BeforeFinalsExitTriggers_27:
 	; $46f1, 9 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_CENTER_COURT, $01
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_CENTER_COURT, ENTRY_CENTER_COURT_FROM_TOURNAMENT_WEST, END16_BEFORE_FINALS_DONE
 	db $ff
 End16BeforeFinalsNpcScripts_27:
 	ds 1, $ff ; $46fa, fill
@@ -402,7 +402,7 @@ End16BeforeFinalsCutscene_27:
 	script_move_player 17.0, 13.0 ; $4a6b
 	farcall WaitPlayerMoveDone ; $4a75
 	script_wait_frames 30 ; $4a78
-	ld a, $01 ; $4a7f
+	ld a, EXIT_END16_BEFORE_FINALS_DONE ; $4a7f
 	ld [wUnusedExitTriggerIdMirror], a ; $4a81
 	ld [wStoryModeExitTriggerRequest], a ; $4a84
 	ret ; $4a87
@@ -429,7 +429,7 @@ End16BeforeFinalsCutscene_27:
 	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ActorScript_27_03 ; $4b20
 	script_move_player 17.0, 13.0 ; $4b2b
 	farcall WaitPlayerMoveDone ; $4b35
-	ld a, $01 ; $4b38
+	ld a, EXIT_END16_BEFORE_FINALS_DONE ; $4b38
 	ld [wUnusedExitTriggerIdMirror], a ; $4b3a
 	ld [wStoryModeExitTriggerRequest], a ; $4b3d
 	ret ; $4b40

@@ -398,14 +398,14 @@ InitEquipmentHandoutDialogue:
 	farcall InitDialogueTextCursor ; $4fbb
 	ret ; $4fbe
 RepairCounterReturnA:
-	ld a, $0b ; $4fbf
+	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A ; $4fbf
 	ld [wMapSceneStage2], a ; $4fc1
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4fc4
 	script_set_position ACTOR_PARTNER, 15.0, 15.0 ; $4fcc
 	jp RepairCounterCheckEquipChanged ; $4fd7
 	ret ; $4fda
 RepairCounterReturnB:
-	ld a, $0c ; $4fdb
+	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B ; $4fdb
 	ld [wMapSceneStage2], a ; $4fdd
 	farcall WaitPlayerMoveDone ; $4fe0
 	script_player_speed 7.5 ; $4fe3

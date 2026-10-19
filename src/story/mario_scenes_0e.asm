@@ -83,7 +83,7 @@ PromptExhibitionMatch:
 	script_player_speed 0.75 ; $65d7
 	script_move_player 18.0, 13.0 ; $65dd
 	farcall WaitPlayerMoveDone ; $65e7
-	ld a, $02 ; $65ea
+	ld a, ENTRY_SPECIAL_COURT_SINGLES_INTENSE ; $65ea
 	ld [wMapScratch + 2], a ; $65ec
 	ld hl, wMapScratch ; $65ef
 	ld de, $3083 ; $65f2
@@ -92,7 +92,7 @@ PromptExhibitionMatch:
 	ld [hl], d ; $65f7
 	test_flag FLAG_DOUBLES ; $65f8
 	jr z, .prompt ; $65fb
-	ld a, $05 ; $65fd
+	ld a, ENTRY_SPECIAL_COURT_DOUBLES_INTENSE ; $65fd
 	ld [wMapScratch + 2], a ; $65ff
 	ld hl, wMapScratch ; $6602
 	ld de, $3089 ; $6605

@@ -153,7 +153,7 @@ VarsityCourtTourCutscene:
 	script_wait_frames 10 ; $6619
 	script_move_player 34.0, 13.0 ; $6620
 	script_wait_move ACTOR_PLAYER ; $662a
-	ld a, $0f ; $662f
+	ld a, EXIT_COURTYARD_TOUR ; $662f
 	ld [wUnusedExitTriggerIdMirror], a ; $6631
 	ld [wStoryModeExitTriggerRequest], a ; $6634
 	ret ; $6637

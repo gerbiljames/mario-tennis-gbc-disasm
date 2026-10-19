@@ -373,7 +373,7 @@ TrainingCourtIntroTourScene:
 	script_wait_frames 90 ; $5c30
 	script_fade_out 8 ; $5c37
 	script_wait_frames 20 ; $5c3c
-	ld a, $0f ; $5c43
+	ld a, EXIT_TRAINING_COURT_TOUR ; $5c43
 	ld [wUnusedExitTriggerIdMirror], a ; $5c45
 	ld [wStoryModeExitTriggerRequest], a ; $5c48
 	farcall EndCutsceneScriptMode ; $5c4b

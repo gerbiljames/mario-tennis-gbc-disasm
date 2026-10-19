@@ -393,7 +393,7 @@ StartNextRankingMatch:
 	farcall WaitPlayerMoveDone ; $78a1
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM ; $78a4
 	script_wait_frames 20 ; $78a9
-	ld a, $0f ; $78b0
+	ld a, EXIT_JUNIOR_CLASS_COURT_SINGLES_RANKING_MATCH ; $78b0
 	ld [wUnusedExitTriggerIdMirror], a ; $78b2
 	ld [wStoryModeExitTriggerRequest], a ; $78b5
 	farcall InitStoryMatchSettings ; $78b8
@@ -416,7 +416,7 @@ StartNextRankingMatch:
 	farcall WaitPlayerMoveDone ; $792f
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT ; $7932
 	script_wait_frames 40 ; $7937
-	ld a, $0f ; $793e
+	ld a, EXIT_JUNIOR_CLASS_COURT_SINGLES_RANKING_MATCH ; $793e
 	ld [wUnusedExitTriggerIdMirror], a ; $7940
 	ld [wStoryModeExitTriggerRequest], a ; $7943
 	farcall InitStoryMatchSettings ; $7946
@@ -438,7 +438,7 @@ StartNextRankingMatch:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_44 ; $79b2
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH ; $79bd
 	script_wait_frames 40 ; $79c2
-	ld a, $0f ; $79c9
+	ld a, EXIT_JUNIOR_CLASS_COURT_SINGLES_RANKING_MATCH ; $79c9
 	ld [wUnusedExitTriggerIdMirror], a ; $79cb
 	ld [wStoryModeExitTriggerRequest], a ; $79ce
 	farcall InitStoryMatchSettings ; $79d1
@@ -461,7 +461,7 @@ StartNextRankingMatch:
 	farcall WaitPlayerMoveDone ; $7a48
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB ; $7a4b
 	script_wait_frames 40 ; $7a50
-	ld a, $0f ; $7a57
+	ld a, EXIT_JUNIOR_CLASS_COURT_SINGLES_RANKING_MATCH ; $7a57
 	ld [wUnusedExitTriggerIdMirror], a ; $7a59
 	ld [wStoryModeExitTriggerRequest], a ; $7a5c
 	farcall InitStoryMatchSettings ; $7a5f

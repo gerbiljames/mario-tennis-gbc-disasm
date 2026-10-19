@@ -227,7 +227,7 @@ ServiceAceMatchChallengeScene:
 	call WalkToServeChallengeCourtCutscene ; $6487
 	ld a, STORYLOC_TRAINING_COURT ; $648a
 	ld [wStoryModeCurrentLocation], a ; $648c
-	ld a, $0a ; $648f
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $648f
 	ld [wStoryModeEntryPoint], a ; $6491
 	ld a, EXITTRIGGER_DIRECT ; $6494
 	ld [wUnusedExitTriggerIdMirror], a ; $6496
@@ -280,7 +280,7 @@ CenterLineServeMatchChallengeScene:
 	call WalkToServeChallengeCourtCutscene ; $656b
 	ld a, STORYLOC_TRAINING_COURT ; $656e
 	ld [wStoryModeCurrentLocation], a ; $6570
-	ld a, $0a ; $6573
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $6573
 	ld [wStoryModeEntryPoint], a ; $6575
 	ld a, EXITTRIGGER_DIRECT ; $6578
 	ld [wUnusedExitTriggerIdMirror], a ; $657a
@@ -325,7 +325,7 @@ AcademyRulesServeMatchChallengeScene:
 	call WalkToServeChallengeCourtCutscene ; $662c
 	ld a, STORYLOC_TRAINING_COURT ; $662f
 	ld [wStoryModeCurrentLocation], a ; $6631
-	ld a, $0a ; $6634
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $6634
 	ld [wStoryModeEntryPoint], a ; $6636
 	ld a, EXITTRIGGER_DIRECT ; $6639
 	ld [wUnusedExitTriggerIdMirror], a ; $663b
@@ -413,7 +413,7 @@ ServeCoachJuniorLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $675d
 	ld a, STORYLOC_TRAINING_COURT ; $6760
 	ld [wStoryModeCurrentLocation], a ; $6762
-	ld a, $09 ; $6765
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6765
 	ld [wStoryModeEntryPoint], a ; $6767
 	ld a, EXITTRIGGER_DIRECT ; $676a
 	ld [wUnusedExitTriggerIdMirror], a ; $676c
@@ -448,7 +448,7 @@ ServeCoachSeniorLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $67db
 	ld a, STORYLOC_TRAINING_COURT ; $67de
 	ld [wStoryModeCurrentLocation], a ; $67e0
-	ld a, $09 ; $67e3
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $67e3
 	ld [wStoryModeEntryPoint], a ; $67e5
 	ld a, EXITTRIGGER_DIRECT ; $67e8
 	ld [wUnusedExitTriggerIdMirror], a ; $67ea
@@ -483,7 +483,7 @@ ServeCoachVarsityLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6859
 	ld a, STORYLOC_TRAINING_COURT ; $685c
 	ld [wStoryModeCurrentLocation], a ; $685e
-	ld a, $09 ; $6861
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6861
 	ld [wStoryModeEntryPoint], a ; $6863
 	ld a, EXITTRIGGER_DIRECT ; $6866
 	ld [wUnusedExitTriggerIdMirror], a ; $6868

@@ -302,7 +302,7 @@ IslandSkyEntry0eScene:
 	call WaitFadeEnd ; $785d
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7860
 	ld [wStoryModeCurrentLocation], a ; $7862
-	ld a, $02 ; $7865
+	ld a, ENTRY_ACADEMY_ENTRANCE_FROM_ISLAND_SKY ; $7865
 	ld [wStoryModeEntryPoint], a ; $7867
 	ld a, EXITTRIGGER_DIRECT ; $786a
 	ld [wUnusedExitTriggerIdMirror], a ; $786c

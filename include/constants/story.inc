@@ -64,7 +64,8 @@ def NUM_STORY_SLOTS          equ $03 ; the three story files, as a bound: `cp $0
 ; Entry point ids are location-scoped: each location's map_tree carries its
 ; own `map_entry` table (8-byte records keyed by their first byte), which
 ; LoadStoryEntryPointRecord searches, falling back to its first record. Only
-; the sentinel is engine-wide.
+; the sentinel is engine-wide; the ENTRY_<location>_* and EXIT_<location>_*
+; names are defined by the map tables (include/macros/story_maps.inc).
 def EXITTRIGGER_DIRECT       equ $ff ; wStoryModeExitTriggerRequest: matches no exit row (it ends the list), so the loop reloads wStoryModeCurrentLocation at wStoryModeEntryPoint as the caller set them
 def STORYENTRY_NONE          equ $ff ; no entry point: keep the saved position (LoadStoryEntryPointRecord returns early), suppress the location-name popup, and terminate a map_entry table
 

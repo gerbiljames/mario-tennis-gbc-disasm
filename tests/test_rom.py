@@ -87,6 +87,13 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n\t(?:far)?call (Set|Clear|Test)GameFlag "),
                          0, "a raw game-flag id passed straight to a flag helper")
 
+    def test_entry_and_exit_ids_are_named(self):
+        self.assertEqual(count(r"^\tld a, \$[0-9a-f]+ ;[^\n]*\n\tld \[wStoryModeEntryPoint\], a"), 0)
+        self.assertEqual(count(r"^\tld a, \$[0-9a-f]+ ;[^\n]*\n\tld \[wUnusedExitTriggerIdMirror\], a"), 2,
+                         "only the two exit ids with no ExitTriggers row stay raw")
+        self.assertEqual(count(r"\bENTRY_\w+"), 306)
+        self.assertEqual(count(r"\bEXIT_\w+"), 85)
+
     def test_sound_ids_are_named(self):
         self.assertEqual(count(r"^\tsound \$"), 0)
         self.assertGreaterEqual(count(r"^\tsound (?:SFX|BGM)_"), 600)

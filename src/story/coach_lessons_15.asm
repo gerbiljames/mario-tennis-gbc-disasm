@@ -8,7 +8,7 @@ WalkToStrokeChallengeCourtCutscene:
 	call PlayerPartnerGestureCutscene ; $6f86
 	ld a, STORYLOC_TRAINING_COURT ; $6f89
 	ld [wStoryModeCurrentLocation], a ; $6f8b
-	ld a, $0a ; $6f8e
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $6f8e
 	ld [wStoryModeEntryPoint], a ; $6f90
 	ld a, EXITTRIGGER_DIRECT ; $6f93
 	ld [wUnusedExitTriggerIdMirror], a ; $6f95
@@ -73,7 +73,7 @@ NetCoachVolleyLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $7047
 	ld a, STORYLOC_TRAINING_COURT ; $704a
 	ld [wStoryModeCurrentLocation], a ; $704c
-	ld a, $09 ; $704f
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $704f
 	ld [wStoryModeEntryPoint], a ; $7051
 	ld a, EXITTRIGGER_DIRECT ; $7054
 	ld [wUnusedExitTriggerIdMirror], a ; $7056
@@ -123,7 +123,7 @@ NetCoachSmashLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $70fc
 	ld a, STORYLOC_TRAINING_COURT ; $70ff
 	ld [wStoryModeCurrentLocation], a ; $7101
-	ld a, $09 ; $7104
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $7104
 	ld [wStoryModeEntryPoint], a ; $7106
 	ld a, EXITTRIGGER_DIRECT ; $7109
 	ld [wUnusedExitTriggerIdMirror], a ; $710b
@@ -167,7 +167,7 @@ NetCoachDropShotLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $719d
 	ld a, STORYLOC_TRAINING_COURT ; $71a0
 	ld [wStoryModeCurrentLocation], a ; $71a2
-	ld a, $09 ; $71a5
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $71a5
 	ld [wStoryModeEntryPoint], a ; $71a7
 	ld a, EXITTRIGGER_DIRECT ; $71aa
 	ld [wUnusedExitTriggerIdMirror], a ; $71ac

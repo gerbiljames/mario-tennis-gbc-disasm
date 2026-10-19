@@ -117,7 +117,7 @@ IslandOpenDoublesVictory:
 	script_wait_idle ACTOR_SENIOR_COURT_A_ALLIE ; $737c
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $7381
 	ld [wStoryModeCurrentLocation], a ; $7383
-	ld a, $01 ; $7386
+	ld a, ENTRY_SENIOR_CLASS_COURT_FROM_RESTAURANT_PLAZA ; $7386
 	ld [wStoryModeEntryPoint], a ; $7388
 	ld a, EXITTRIGGER_DIRECT ; $738b
 	ld [wUnusedExitTriggerIdMirror], a ; $738d
@@ -267,7 +267,7 @@ SeniorSharedVictoryScene:
 	script_speak ACTOR_ROLE_SENIOR_COURT_FAY ; $7714
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $7719
 	ld [wStoryModeCurrentLocation], a ; $771b
-	ld a, $01 ; $771e
+	ld a, ENTRY_SENIOR_CLASS_COURT_FROM_RESTAURANT_PLAZA ; $771e
 	ld [wStoryModeEntryPoint], a ; $7720
 	ld a, EXITTRIGGER_DIRECT ; $7723
 	ld [wUnusedExitTriggerIdMirror], a ; $7725

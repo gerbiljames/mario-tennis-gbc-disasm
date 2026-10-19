@@ -27,18 +27,18 @@ TournamentCourtyardActors_15:
 	map_actor_end
 TournamentCourtyardEntryPoints_15:
 	; $40b6, 41 bytes (map_entries)
-	map_entry $01, FACE_LEFT, 33.0, 20.0, $0000
-	map_entry $02, FACE_RIGHT, 3.0, 20.0, $0000
-	map_entry $03, FACE_DOWN, 18.0, 13.0, $0000
-	map_entry $04, FACE_UP, 18.0, 41.0, $0000
-	map_entry $0f, FACE_UP, 17.0, 57.0, $0000
+	map_entry $01, FACE_LEFT, 33.0, 20.0, $0000, TOURNAMENT_COURTYARD_FROM_COURT_1
+	map_entry $02, FACE_RIGHT, 3.0, 20.0, $0000, TOURNAMENT_COURTYARD_FROM_COURT_2
+	map_entry $03, FACE_DOWN, 18.0, 13.0, $0000, TOURNAMENT_COURTYARD_FROM_TOURNAMENT
+	map_entry $04, FACE_UP, 18.0, 41.0, $0000, TOURNAMENT_COURTYARD_FROM_ISLAND_SKY
+	map_entry $0f, FACE_UP, 17.0, 57.0, $0000, TOURNAMENT_COURTYARD_SITE_ARRIVAL
 	db $ff
 TournamentCourtyardExitTriggers_15:
 	; $40df, 33 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_COURT_1, $02
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_COURT_2, $02
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_TOURNAMENT, $05
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_ISLAND_SKY, $02
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_COURT_1, ENTRY_COURT_1_FROM_TOURNAMENT_COURTYARD, TOURNAMENT_COURTYARD_TO_COURT_1
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_COURT_2, ENTRY_COURT_2_FROM_TOURNAMENT_COURTYARD, TOURNAMENT_COURTYARD_TO_COURT_2
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_TOURNAMENT, ENTRY_TOURNAMENT_FROM_TOURNAMENT_COURTYARD, TOURNAMENT_COURTYARD_TO_TOURNAMENT
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_ISLAND_SKY, ENTRY_ISLAND_SKY_HOME_FROM_ISLAND_OPEN, TOURNAMENT_COURTYARD_FLY_HOME
 	db $ff
 TournamentCourtyardNpc05_15:
 	ld a, [wMapSceneStage] ; $4100
@@ -101,7 +101,7 @@ TournamentCourtyardTile01_15:
 	ret ; $41a5
 TournamentCourtyardInitScript_15:
 	ld a, [wStoryModeEntryPoint] ; $41a6
-	cp $0f ; $41a9
+	cp ENTRY_TOURNAMENT_COURTYARD_SITE_ARRIVAL ; $41a9
 	jr nz, .ne0f ; $41ab
 	jp TournamentSiteArrivalScene ; $41ad
 .ne0f:
@@ -334,7 +334,7 @@ TournamentSiteArrivalScene:
 	script_wait_idle ACTOR_TOURNAMENT_SITE_RESPAWN_MARK_SWEATS ; $4668
 	ld a, STORYLOC_TOURNAMENT ; $466d
 	ld [wStoryModeCurrentLocation], a ; $466f
-	ld a, $0f ; $4672
+	ld a, ENTRY_TOURNAMENT_ARRIVAL ; $4672
 	ld [wStoryModeEntryPoint], a ; $4674
 	ld a, EXITTRIGGER_DIRECT ; $4677
 	ld [wUnusedExitTriggerIdMirror], a ; $4679
@@ -437,13 +437,14 @@ TrainingCourtActors_15:
 	map_actor_end
 TrainingCourtEntryPoints_15:
 	; $48d4, 57 bytes (map_entries)
-	map_entry $01, FACE_RIGHT, 9.0, 55.0, TrainingCourtArrival01_15
+	map_entry $01, FACE_RIGHT, 9.0, 55.0, TrainingCourtArrival01_15, TRAINING_COURT_FROM_RESTAURANT_PLAZA
 	map_entry $02, FACE_DOWN, 19.0, 19.0, $0000 ; debug warp only
-	map_entry $09, FACE_DOWN, 19.0, 19.0, $0000
-	map_entry $0a, FACE_UP, 19.0, 19.0, $0000
-	map_entry $0b, FACE_DOWN, 19.0, 19.0, $0000
-	map_entry $0c, FACE_UP, 45.0, 43.0, $0000
-	map_entry $0d, FACE_LEFT, 21.0, 41.0, $0000
+	map_entry $09, FACE_DOWN, 19.0, 19.0, $0000, TRAINING_COURT_PENDING_LESSON
+	map_entry $0a, FACE_UP, 19.0, 19.0, $0000, TRAINING_COURT_DRILL_RESULT
+	map_entry $0b, FACE_DOWN, 19.0, 19.0, $0000, TRAINING_COURT_AT_SERVE_COACH
+	map_entry $0c, FACE_UP, 45.0, 43.0, $0000, TRAINING_COURT_AT_NET_COACH
+	map_entry $0d, FACE_LEFT, 21.0, 41.0, $0000, TRAINING_COURT_AT_RETURN_COACH
+	entry_id TRAINING_COURT_TOUR, $0f
 	db $ff
 TrainingCourtArrival01_15:
 	ld a, [wStoryModeEntryPoint] ; $490d
@@ -464,8 +465,8 @@ TrainingCourtArrival01_15:
 	ret ; $4955
 TrainingCourtExitTriggers_15:
 	; $4956, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, ClearTrainingCourtNpcFlags, STORYLOC_RESTAURANT_PLAZA, $06
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_RESTAURANT_PLAZA, $0e
+	map_script $01, FACEMASK_ANY, $0000, ClearTrainingCourtNpcFlags, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_TRAINING_COURT, TRAINING_COURT_TO_RESTAURANT_PLAZA
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_SERVICE_ACE_INTRO, TRAINING_COURT_TOUR
 	db $ff
 ClearTrainingCourtNpcFlags:
 	clear_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $4967

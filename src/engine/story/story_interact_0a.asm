@@ -121,7 +121,7 @@ SaveStoryReturnPoint:
 	ld a, [wStoryModeCurrentLocation] ; $5292
 	ld [wStoryReturnLocation], a ; $5295
 	ld hl, wStoryReturnEntryPoint ; $5298
-	ld [hl], $ff ; $529b
+	ld [hl], STORYENTRY_NONE ; $529b
 	ld hl, wStoryModePlayersXPosition ; $529d
 	ld de, wStoryReturnPosition ; $52a0
 	ld bc, wStoryReturnPosition_SIZE ; $52a3
@@ -138,7 +138,7 @@ RestoreStoryReturnPoint:
 	push de ; $52b0
 	push hl ; $52b1
 	ld a, [wStoryReturnEntryPoint] ; $52b2
-	cp $ff ; $52b5
+	cp STORYENTRY_NONE ; $52b5
 	jr z, .restorePosition ; $52b7
 	ld a, [wStoryReturnLocation] ; $52b9
 	ld [wStoryModeCurrentLocation], a ; $52bc
