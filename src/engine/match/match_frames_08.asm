@@ -78,6 +78,7 @@ HandlePauseMenu:
 	and a ; $449f
 	ret nz ; $44a0
 	ld a, [wMatchWinLoseFlag] ; $44a1
+	ASSERT WINLOSE_NONE == 0
 	and a ; $44a4
 	ret nz ; $44a5
 	ld a, $ff ; $44a6
@@ -115,6 +116,7 @@ CheckDebugStatsEditorHotkey:
 	and PADF_SELECT ; $44f3
 	ret z ; $44f5
 	ldh a, [hDebugStepMode] ; $44f6
+	ASSERT DEBUGSTEP_OFF == 0
 	and a ; $44f8
 	ret z ; $44f9
 	ld a, $ff ; $44fa

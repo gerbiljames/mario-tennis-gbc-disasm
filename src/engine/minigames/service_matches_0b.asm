@@ -167,6 +167,7 @@ ServiceMatch1Hook_PointStart:
 	ld [wDrillAbortCountdownActive], a ; $4852
 	ld a, $0a ; $4855
 	ld [wDrillAbortCountdown], a ; $4857
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $485a
 	ld [wDrillMessageId], a ; $485b
 	xor a ; $485e
@@ -198,6 +199,7 @@ ServiceMatch1Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $488b
 	ret ; $488e
 .clearPointWinLoseFlag:
+	ASSERT WINLOSE_NONE == 0
 	xor a ; $488f
 	ld [wPointWinLoseFlag], a ; $4890
 	ret ; $4893
@@ -433,6 +435,7 @@ ServiceMatch2Hook_PointStart:
 .read:
 	ld a, [hl] ; $4a16
 	ld [wAiServeAimOverride], a ; $4a17
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $4a1a
 	ld [wDrillMessageId], a ; $4a1b
 	xor a ; $4a1e
@@ -467,6 +470,7 @@ ServiceMatch2Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $4a4f
 	ret ; $4a52
 .clearPointWinLoseFlag:
+	ASSERT WINLOSE_NONE == 0
 	xor a ; $4a53
 	ld [wPointWinLoseFlag], a ; $4a54
 	ret ; $4a57

@@ -39,6 +39,7 @@ BeginCutsceneScriptMode:
 	ld a, $01 ; $40ee
 	call SetActorNullScript ; $40f0
 	ldh a, [hDebugStepMode] ; $40f3
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $40f5
 	jr z, .done ; $40f6
 	ld a, $01 ; $40f8

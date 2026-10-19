@@ -267,6 +267,7 @@ QueueVRAMCopy:
 	ld a, $01 ; $04d8
 	ldh [hVRAMQueueDirty], a ; $04da
 	ldh a, [hDebugStepMode] ; $04dc
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $04de
 	jr z, .queueFull ; $04df
 	sound SFX_DEBUG_ALARM ; $04e1

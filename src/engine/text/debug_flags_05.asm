@@ -277,6 +277,7 @@ RunDebugFlagEditor:
 	ret ; $669f
 RunDebugMenu:
 	ldh a, [hDebugStepMode] ; $66a0
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $66a2
 	ret z ; $66a3
 	push af ; $66a4

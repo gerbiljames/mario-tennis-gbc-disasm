@@ -5,6 +5,7 @@
 
 {TWIN_LABEL}:
 	ld a, [wPointWinLoseFlag]
+	ASSERT WINLOSE_NONE == 0
 	or a
 	ret z
 	inc a

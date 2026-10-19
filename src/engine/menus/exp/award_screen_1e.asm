@@ -295,6 +295,7 @@ DrawExpDoublesPlayerPanel:
 	ld_tile_run bc, $09, $01 ; $56f6
 	call FillTilemapRun ; $56f9
 	ld a, [wGameMode] ; $56fc
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $56ff
 	jr nz, .nonZero ; $5700
 	ld bc, wStoryMainName ; $5702
@@ -371,6 +372,7 @@ DrawExpDoublesPartnerPanel:
 	ld_tile_run bc, $09, $01 ; $57bb
 	call FillTilemapRun ; $57be
 	ld a, [wGameMode] ; $57c1
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $57c4
 	jr nz, .nonZero ; $57c5
 	ld bc, wStoryPartnerName ; $57c7
@@ -501,6 +503,7 @@ FillTilemapRun:
 DrawExpScreenCharSprites:
 	ld b, $04 ; $5914
 	ld a, [wLinkMatchRole] ; $5916
+	ASSERT LINKSTATE_IDLE == 0
 	or a ; $5919
 	jr z, .zero ; $591a
 	srl a ; $591c

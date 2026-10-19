@@ -133,6 +133,7 @@ RunScrollingTextScreen:
 	ld [hl], d ; $5a72
 .checkDebugStepMode:
 	ldh a, [hDebugStepMode] ; $5a73
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $5a75
 	jr nz, .nonZero2 ; $5a76
 	ld a, [wScrollTextDone] ; $5a78

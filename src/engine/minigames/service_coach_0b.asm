@@ -37,6 +37,7 @@ ServicePractice2HandlePointEnd:
 	call CountDrillShotSuccesses ; $509b
 	ld [wDrillCounters + 6], a ; $509e
 	ld a, [wDrillMessageId] ; $50a1
+	ASSERT DRILLMSG_NONE == 0
 	or a ; $50a4
 	jr nz, .showDrillMessageByIndex ; $50a5
 	call QueueDrillOutcomeMessage ; $50a7
@@ -244,6 +245,7 @@ ServicePractice3Hook_PointStart:
 	ld [wDrillGateActive], a ; $5229
 	ld hl, ServicePractice3PointStartDrillPositions ; $522c
 	call IndexDrillTableByPoint ; $522f
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $5232
 	ld [wDrillMessageId], a ; $5233
 	ret ; $5236
@@ -253,6 +255,7 @@ ServicePractice3Hook_PointEnd:
 	cp $04 ; $523d
 	ret c ; $523f
 	ld a, [wPointWinLoseFlag] ; $5240
+	ASSERT WINLOSE_NONE == 0
 	or a ; $5243
 	ret z ; $5244
 	call ServicePractice3EvaluateResult ; $5245

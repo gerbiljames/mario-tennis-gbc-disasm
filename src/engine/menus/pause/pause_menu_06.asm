@@ -374,6 +374,7 @@ MatchPauseMenu_ReviewControls:
 	and PADF_UP ; $43c3
 	jr z, .stepMatchFrame ; $43c5
 	ldh a, [hDebugStepMode] ; $43c7
+	ASSERT DEBUGSTEP_OFF == 0
 	and a ; $43c9
 	jr z, .stepMatchFrame ; $43ca
 	push_wram_bank WRAM_CHAR0 ; $43cc

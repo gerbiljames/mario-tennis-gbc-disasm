@@ -481,6 +481,7 @@ SoftReset:
 	ld [rRAMG], a ; $25b5
 	call CopyOAMDMARoutineToHRAM ; $25b8
 	call ClearVRAMBank ; $25bb
+	ASSERT DEBUGSTEP_OFF == 0
 	xor a ; $25be
 	ldh [hDebugStepMode], a ; $25bf
 	call SwitchCPUSpeed ; $25c1
@@ -584,6 +585,7 @@ AdvanceFrame:
 	ld de, wDebugPeakLYText ; $267e
 	call FormatHexWord ; $2681
 	ldh a, [hDebugStepMode] ; $2684
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $2686
 	jp z, .waitFrame ; $2687
 	ldh a, [hLinkExchangeActive] ; $268a

@@ -176,6 +176,7 @@ ResolvePointResultSequence:
 	ld hl, DelayAfterPointResolution ; $4e22
 	push hl ; $4e25
 	ld a, [wMatchWinLoseFlag] ; $4e26
+	ASSERT WINLOSE_NONE == 0
 	and a ; $4e29
 	jp nz, ShowMatchEndSequence ; $4e2a
 	ld a, [wSetWinLoseFlag] ; $4e2d
@@ -234,6 +235,7 @@ ResolveCalledPoint:
 	ret ; $4ea2
 ShowPointScoreSequence:
 	ld a, [wPointWinLoseFlag] ; $4ea3
+	ASSERT WINLOSE_NONE == 0
 	and a ; $4ea6
 	ret z ; $4ea7
 	farcall SpawnGameScoreDisplayObjs ; $4ea8

@@ -1,6 +1,7 @@
 Unused_1a_CheckDebugExpEditorHotkey:
 	push af ; $4399
 	ldh a, [hDebugStepMode] ; $439a
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $439c
 	jr z, .restore ; $439d
 	ldh a, [hPlayerInputFlags] ; $439f

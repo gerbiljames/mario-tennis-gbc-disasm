@@ -5,6 +5,7 @@ Unused_18_InitPlayerRecordForCharacter:
 	bit PADB_SELECT, a ; $463f
 	jr z, .fromTemplate ; $4641
 	ldh a, [hDebugStepMode] ; $4643
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $4645
 	jr z, .fromTemplate ; $4646
 	ld a, b ; $4648

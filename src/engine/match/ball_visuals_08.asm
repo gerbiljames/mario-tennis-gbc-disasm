@@ -151,6 +151,7 @@ UpdateBallVisuals:
 	and a ; $5168
 	jr nz, .shiftHistory ; $5169
 	ldh a, [hDebugStepMode] ; $516b
+	ASSERT DEBUGSTEP_OFF == 0
 	and a ; $516d
 	jr z, .shiftHistory ; $516e
 .shiftHistory:

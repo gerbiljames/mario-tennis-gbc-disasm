@@ -129,6 +129,7 @@ RunEndingCreditsSequence:
 	ld hl, wStoryCharacterSlot ; $6ef2
 	inc [hl] ; $6ef5
 	ldh a, [hDebugStepMode] ; $6ef6
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $6ef8
 	jr z, .nextScene ; $6ef9
 	ldh a, [hPlayerInputFlags] ; $6efb

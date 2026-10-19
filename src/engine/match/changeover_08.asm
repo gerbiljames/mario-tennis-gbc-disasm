@@ -171,6 +171,7 @@ GetCharChangeoverPositionTable:
 PlayCourtIntro:
 	ld b, $44 ; $6117
 	ld a, [wMatchContext] ; $6119
+	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	and a ; $611c
 	jr z, .playFanfare ; $611d
 	ld b, $45 ; $611f
@@ -181,6 +182,7 @@ PlayCourtIntro:
 	cp GAMEMODE_ISLAND_OPEN ; $6128
 	jr z, .panCamera ; $612a
 	ld a, [wMatchContext] ; $612c
+	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	and a ; $612f
 	jr nz, .done ; $6130
 .panCamera:

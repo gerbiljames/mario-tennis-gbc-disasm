@@ -47,6 +47,7 @@ RestoreOverworldAfterMatch:
 	call DisableLCDSafely ; $499c
 	farcall LoadMenuFontGfx ; $499f
 	call EnableLCD ; $49a2
+	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	xor a ; $49a5
 	ld [wMatchContext], a ; $49a6
 	ret ; $49a9

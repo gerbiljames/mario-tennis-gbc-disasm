@@ -255,6 +255,7 @@ WallPractice1Hook_BallHit:
 	ret ; $4aba
 UpdateMinigameHudAndBallTrail:
 	ld a, [wPointWinLoseFlag] ; $4abb
+	ASSERT WINLOSE_NONE == 0
 	and a ; $4abe
 	jr nz, .trail ; $4abf
 	ld_xy de, $84, $84 ; $4ac1

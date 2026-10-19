@@ -21,6 +21,7 @@ NetGameMatch1Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $5407
 	ld hl, NetGameMatch1DrillOpponent ; $540a
 	call LoadDrillOpponentBySide ; $540d
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $5410
 	ld [wDrillMessageId], a ; $5411
 	xor a ; $5414
@@ -373,6 +374,7 @@ NetGameMatch2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $566e
 	ld hl, NetGameMatch2DrillOpponent ; $5671
 	call LoadDrillOpponentBySide ; $5674
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $5677
 	ld [wDrillMessageId], a ; $5678
 	xor a ; $567b
@@ -734,6 +736,7 @@ NetGameMatch3Hook_PointStart:
 	ld [wDrillAbortCountdownActive], a ; $58e4
 	ld a, $0a ; $58e7
 	ld [wDrillAbortCountdown], a ; $58e9
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $58ec
 	ld [wDrillMessageId], a ; $58ed
 	xor a ; $58f0

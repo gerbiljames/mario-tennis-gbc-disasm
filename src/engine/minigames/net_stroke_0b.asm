@@ -38,6 +38,7 @@ NetGamePractice3Hook_PointStart:
 	call SetDrillTargetZoneForPoint ; $619b
 	ld a, CHAR_DRILL_NET_GAME_PRACTICE_3 ; $619e
 	call LoadDrillOpponentChar ; $61a0
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $61a3
 	ld [wDrillMessageId], a ; $61a4
 	xor a ; $61a7
@@ -369,6 +370,7 @@ StrokeMatch1Hook_PointStart:
 	ld [wDrillAbortCountdownActive], a ; $642b
 	ld a, $0a ; $642e
 	ld [wDrillAbortCountdown], a ; $6430
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $6433
 	ld [wDrillMessageId], a ; $6434
 	xor a ; $6437
@@ -406,6 +408,7 @@ StrokeMatch1Hook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $646d
 	cp $08 ; $6470
 	ret nz ; $6472
+	ASSERT WINLOSE_NONE == 0
 	xor a ; $6473
 	ld [wPointWinLoseFlag], a ; $6474
 	ld a, MATCHABORT_MATCH ; $6477
@@ -448,6 +451,7 @@ StrokeMatch1HandlePointEnd:
 	ret ; $64c2
 StrokeMatch1AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $64c3
+	ASSERT WINLOSE_NONE == 0
 	or a ; $64c6
 	ret z ; $64c7
 	inc a ; $64c8

@@ -82,6 +82,7 @@ Unused_3e_GetEquipSelectTextRowPtr:
 	push bc ; $58bc
 	ld hl, EquipSelectTextRowPtrs_3e ; $58bd
 	ld a, [wEquipItemKind] ; $58c0
+	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $58c3
 	jr z, .zero ; $58c4
 	ld hl, EquipSelectTextRows_3e ; $58c6
@@ -271,6 +272,7 @@ GetItemStatModListPtr:
 	push bc ; $5a45
 	ld hl, ItemStatModListPtrPtrs ; $5a46
 	ld a, [wEquipItemKind] ; $5a49
+	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $5a4c
 	jr z, .zero ; $5a4d
 	ld hl, ItemStatModListPtrTable ; $5a4f

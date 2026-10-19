@@ -50,6 +50,7 @@ VBlankHandler:
 	call ProcessVRAMCopyQueues ; $279e
 .nonZero:
 	ldh a, [hDebugStepMode] ; $27a1
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $27a3
 	jr z, .zero ; $27a4
 	call UpdateDebugOverlay ; $27a6
@@ -263,6 +264,7 @@ InitSerialLink:
 	ldh [rSC], a ; $28c6
 	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $28c8
 	ldh [rSC], a ; $28ca
+	ASSERT LINKSTATE_IDLE == 0
 	xor a ; $28cc
 	ldh [hLinkState], a ; $28cd
 	ldh [hLinkErrorFlags], a ; $28cf

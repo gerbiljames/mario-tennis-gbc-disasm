@@ -38,6 +38,7 @@ FetchText_{TWIN}:
 	xor a
 	ld [de], a
 	ldh a, [hDebugStepMode]
+	ASSERT DEBUGSTEP_OFF == 0
 	or a
 	jr z, .restore
 	sound BGM_CREDITS

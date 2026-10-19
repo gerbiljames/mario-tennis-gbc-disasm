@@ -372,6 +372,7 @@ RunStoryLocation:
 	and a ; $50b7
 	jr nz, .nextFrame ; $50b8
 	ldh a, [hDebugStepMode] ; $50ba
+	ASSERT DEBUGSTEP_OFF == 0
 	and a ; $50bc
 	jr z, .nextFrame ; $50bd
 	call WaitPlayerMoveDone ; $50bf

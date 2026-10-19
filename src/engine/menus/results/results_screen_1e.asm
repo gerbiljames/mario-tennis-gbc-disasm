@@ -303,6 +303,7 @@ BuildResultsScreenPanels:
 	ld c, $06 ; $4314
 	call FillMemoryC ; $4316
 	ld a, [wGameMode] ; $4319
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $431c
 	jp z, DrawStoryResultsHeader ; $431d
 	cp GAMEMODE_EXHIBITION ; $4320

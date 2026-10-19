@@ -38,6 +38,7 @@ DrawCharSelectSlotLabel:
 	cp $02 ; $591e
 	jr nc, .drawName ; $5920
 	ld a, [wCharGridHandedness] ; $5922
+	ASSERT HAND_RIGHT == 0
 	or a ; $5925
 	jr nz, .slot2 ; $5926
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5928
@@ -168,6 +169,7 @@ InitCharGridState:
 	push_wram_bank WRAM_SCREEN ; $5a1b
 	ld a, $00 ; $5a24
 	ld [wCharGridPage], a ; $5a26
+	ASSERT CHARSELECT_RUNNING == 0
 	xor a ; $5a29
 	ld [wCharSelectExitCode], a ; $5a2a
 	ld [wCharSelectRemoteSlot], a ; $5a2d

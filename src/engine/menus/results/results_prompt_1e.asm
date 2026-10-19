@@ -134,6 +134,7 @@ InitResultsScreenCharacters:
 	wram_bank ; $4997
 	ld bc, wCharPosX ; $499b
 	ld a, [wGameMode] ; $499e
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $49a1
 	jr nz, .nonZero ; $49a2
 	ld a, [wStoryMainChar] ; $49a4
@@ -192,6 +193,7 @@ InitResultsScreenCharacters:
 	wram_bank ; $4a12
 	ld bc, wCharPosX ; $4a16
 	ld a, [wGameMode] ; $4a19
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $4a1c
 	jr nz, .nonZero3 ; $4a1d
 	ld a, [wStoryPartnerChar] ; $4a1f

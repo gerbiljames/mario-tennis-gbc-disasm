@@ -131,6 +131,7 @@ DrawItemIcon2x2:
 	push hl ; $557d
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $557e
 	ld a, [wEquipItemKind] ; $5581
+	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $5584
 	jr z, .gotBase ; $5585
 	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH ; $5587
@@ -214,6 +215,7 @@ HandleEquipSelectInput:
 	sound SFX_MENU_MOVE ; $560d
 	call ClearEquipSelectTextRows ; $560f
 	ld a, [wEquipItemKind] ; $5612
+	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $5615
 	jr z, .drawRacketInfoPanel ; $5616
 	call DrawShoesInfoPanel ; $5618
