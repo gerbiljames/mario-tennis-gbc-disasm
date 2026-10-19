@@ -330,7 +330,7 @@ HarrySpriteFramesUnused:
 	INCBIN "data/sprites/HarrySpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/HarrySpriteFrame06.bin" ; $7bf0, 240 bytes
 HarrySpriteOam:
-	INCBIN "data/sprites/HarrySpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/HarrySpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 HarrySpriteAnims:
 	dw HarrySpriteAnim00 ; $7f24
 	dw HarrySpriteAnim01 ; $7f26

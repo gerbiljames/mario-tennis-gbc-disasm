@@ -519,7 +519,9 @@ The character banks `$40`-`$5d` also carry `*SpriteOam` (e.g. `AlexSpriteOam`,
 580 bytes = 145 × 4): per-frame placement records
 `{x offset, y offset, size flag, tile count}`, not OAM rows, read at
 `$00:$2e7e`-`$2e8a`. `DrawCharSprite` (`$08:$650a`) dispatches on the size flag
-to `QueueSprite24x32` (0) or `QueueSprite32x32`.
+to `QueueSprite24x32` (0) or `QueueSprite32x32`. Every record is `-4, -15`
+with the flag and count of a 24- or 32-pixel frame, written `frame_place -4,
+-15, 24`.
 
 Each character bank's 145-slot frame table points only at `SpriteFrame00`-`55`.
 The seven 240-byte frames after `Frame55` (`$7650`-`$7cdf`,
@@ -718,7 +720,8 @@ Each structured data region's first line names the spec it was rendered from
 edited directly as those macro rows; the retired generator and its
 `data_tables.json` are at git tag `generator-final`. Counts below are the
 2,751 declarations at that tag (today's source differs, e.g. 170
-`sprite_template` and 262 `actor_script` regions). `data.manifest` holds the
+`sprite_template` and 262 `actor_script` regions; `*` counts are today's,
+for kinds added since). `data.manifest` holds the
 extracted regions.
 
 | spec | count | renders as |
@@ -748,14 +751,20 @@ extracted regions.
 | `enum` | 8 | named constants |
 | `rules_pages` | 4 | page-offset lists |
 | `pattern` | 3 | a repeated short pattern as one `ds` |
-| `words[:n]` | 2 | numeric words, never label-resolved |
+| `words[:n]` | 2 | numeric words, never label-resolved (`n` per row) |
 | `menu_def` | 2 | menu definitions |
+| `blit_runs` | 84* | `blit_run col, row, src, length` runs and the `$ff` end (`screens_and_ui.md` §3.2) |
+| `target_script` | 57* | `tgt_*` commands (`include/macros/minigame_targets.inc`) |
+| `scoreboard_columns` | 32* | a court's `SceneConfig` (tiles) or `ScoreboardColumnAttrs`: four 2x5 `tilemap_begin` blocks (§3.4) |
+| `frame_place` | 30* | `*SpriteOam` rows (§4.5) |
+| `scene_config` | 21* | a story `SceneConfig`: `scene_bounds` and the unread bytes |
+| `move_curve` | 16* | bank `$09` X-offset curves, `move_curve_hold`/`_end` |
 | one each | | `cart_header`, `squares`, `story_locations`, `location_entries`, `minigame_configs`, `tilemap_scripts`, `gfx_ptr_table`, `lz_ptr_table`, `char_lz_ptr_table`, `mugshot_ptr_table`, `tilemap_dispatch` |
 
 ### 7.2 No ROM values in the repository
 
 Kinds whose rows are literal ROM values (`palettes`, `sound_index`,
-`sound_data`, `text_pool`) are generated into the gitignored `data/` tree at
+`sound_data`, `text_pool`, `words`, the `*` kinds above) are generated into the gitignored `data/` tree at
 setup by `tools/extract.py`'s `render_spec` and `INCLUDE`d. Kinds whose rows
 are label arithmetic, pointer symbols or macro calls are written inline, since
 rgbasm recomputes them from the layout.
@@ -787,7 +796,7 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All sixteen
+the source claims is true, not just that the bytes come back. All seventeen
 pass:
 
 | check | count | what it asserts |
@@ -798,6 +807,7 @@ pass:
 | `layout` | 4268 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
+| `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
 | `scopes` | 0 | no global label covers both actor-script bytecode and CPU code |
 | `labels` | 13736 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |

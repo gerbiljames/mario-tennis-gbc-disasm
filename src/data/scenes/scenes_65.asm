@@ -47,7 +47,7 @@ DataPtr_SeniorClassCourtSceneUnusedSlot:
 DataPtr_SeniorClassCourtTiles:
 	dw SeniorClassCourtTiles ; $402e
 IslandSkySceneConfig:
-	INCBIN "data/scenes/IslandSkySceneConfig.bin" ; $4030, 27 bytes
+	INCLUDE "data/scenes/IslandSkySceneConfig.asm" ; $4030, 27 bytes (scene_config)
 IslandSkyPalettes:
 	INCBIN "data/scenes/IslandSkyPalettes.bin" ; $404b, 64 bytes
 IslandSkyTiles:
@@ -65,7 +65,7 @@ IslandSkyBehaviorMap:
 IslandSkySceneUnusedSlot:
 	INCBIN "data/scenes/IslandSkySceneUnusedSlot.bin" ; $5120, 1536 bytes
 SpecialCourtSceneConfig:
-	INCBIN "data/scenes/SpecialCourtSceneConfig.bin" ; $5720, 23 bytes
+	INCLUDE "data/scenes/SpecialCourtSceneConfig.asm" ; $5720, 23 bytes (scene_config)
 SpecialCourtPalettes:
 	INCLUDE "data/scenes/SpecialCourtPalettes.asm" ; $5737, 64 bytes (palettes)
 SpecialCourtTiles:
@@ -83,7 +83,7 @@ SpecialCourtBehaviorMap:
 SpecialCourtSceneUnusedSlot:
 	INCBIN "data/scenes/SpecialCourtSceneUnusedSlot.bin" ; $6500, 1536 bytes
 SeniorClassCourtSceneConfig:
-	INCBIN "data/scenes/SeniorClassCourtSceneConfig.bin" ; $6b00, 42 bytes
+	INCLUDE "data/scenes/SeniorClassCourtSceneConfig.asm" ; $6b00, 42 bytes (scene_config)
 SeniorClassCourtPalettes:
 	INCLUDE "data/scenes/SeniorClassCourtPalettes.asm" ; $6b2a, 64 bytes (palettes)
 SeniorClassCourtTiles:

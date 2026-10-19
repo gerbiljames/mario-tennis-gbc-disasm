@@ -330,7 +330,7 @@ WarioSpriteFramesUnused:
 	INCBIN "data/sprites/WarioSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/WarioSpriteFrame06.bin" ; $7bf0, 240 bytes
 WarioSpriteOam:
-	INCBIN "data/sprites/WarioSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/WarioSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 WarioSpriteAnims:
 	dw WarioSpriteAnim00 ; $7f24
 	dw WarioSpriteAnim01 ; $7f26

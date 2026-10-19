@@ -330,7 +330,7 @@ DKSpriteFramesUnused:
 	INCBIN "data/sprites/DKSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/DKSpriteFrame06.bin" ; $7bf0, 240 bytes
 DKSpriteOam:
-	INCBIN "data/sprites/DKSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/DKSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 DKSpriteAnims:
 	dw DKSpriteAnim00 ; $7f24
 	dw DKSpriteAnim01 ; $7f26

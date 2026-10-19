@@ -330,7 +330,7 @@ SpikeSpriteFramesUnused:
 	INCBIN "data/sprites/SpikeSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/SpikeSpriteFrame06.bin" ; $7bf0, 240 bytes
 SpikeSpriteOam:
-	INCBIN "data/sprites/SpikeSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/SpikeSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 SpikeSpriteAnims:
 	dw SpikeSpriteAnim00 ; $7f24
 	dw SpikeSpriteAnim01 ; $7f26

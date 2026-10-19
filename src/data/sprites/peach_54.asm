@@ -330,7 +330,7 @@ PeachSpriteFramesUnused:
 	INCBIN "data/sprites/PeachSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/PeachSpriteFrame06.bin" ; $7bf0, 240 bytes
 PeachSpriteOam:
-	INCBIN "data/sprites/PeachSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/PeachSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 PeachSpriteAnims:
 	dw PeachSpriteAnim00 ; $7f24
 	dw PeachSpriteAnim01 ; $7f26

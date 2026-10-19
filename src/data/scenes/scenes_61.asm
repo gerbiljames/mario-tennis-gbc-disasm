@@ -71,9 +71,9 @@ MachineCourtTilemap:
 MachineCourtAttrmap:
 	INCBIN "data/scenes/lz_MachineCourtAttrmap.bin" ; $4b7b, 158 bytes
 MachineCourtSceneConfig:
-	INCBIN "data/scenes/MachineCourtSceneConfig.bin" ; $4c19, 40 bytes
+	INCLUDE "data/scenes/MachineCourtSceneConfig.asm" ; $4c19, 40 bytes (scoreboard_columns)
 MachineCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/MachineCourtScoreboardColumnAttrs.bin" ; $4c41, 40 bytes
+	INCLUDE "data/scenes/MachineCourtScoreboardColumnAttrs.asm" ; $4c41, 40 bytes (scoreboard_columns)
 CenterCourtPalettes:
 	INCLUDE "data/scenes/CenterCourtPalettes.asm" ; $4c69, 64 bytes (palettes)
 CenterCourtTiles:
@@ -83,9 +83,9 @@ CenterCourtTilemap:
 CenterCourtAttrmap:
 	INCBIN "data/scenes/lz_CenterCourtAttrmap.bin" ; $5aee, 269 bytes
 CenterCourtSceneConfig:
-	INCBIN "data/scenes/CenterCourtSceneConfig.bin" ; $5bfb, 40 bytes
+	INCLUDE "data/scenes/CenterCourtSceneConfig.asm" ; $5bfb, 40 bytes (scoreboard_columns)
 CenterCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/CenterCourtScoreboardColumnAttrs.bin" ; $5c23, 40 bytes
+	INCLUDE "data/scenes/CenterCourtScoreboardColumnAttrs.asm" ; $5c23, 40 bytes (scoreboard_columns)
 CompositionCourtPalettes:
 	INCLUDE "data/scenes/CompositionCourtPalettes.asm" ; $5c4b, 64 bytes (palettes)
 CompositionCourtTiles:
@@ -95,9 +95,9 @@ CompositionCourtTilemap:
 CompositionCourtAttrmap:
 	INCBIN "data/scenes/lz_CompositionCourtAttrmap.bin" ; $6977, 132 bytes
 CompositionCourtSceneConfig:
-	INCBIN "data/scenes/CompositionCourtSceneConfig.bin" ; $69fb, 40 bytes
+	INCLUDE "data/scenes/CompositionCourtSceneConfig.asm" ; $69fb, 40 bytes (scoreboard_columns)
 CompositionCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/CompositionCourtScoreboardColumnAttrs.bin" ; $6a23, 40 bytes
+	INCLUDE "data/scenes/CompositionCourtScoreboardColumnAttrs.asm" ; $6a23, 40 bytes (scoreboard_columns)
 TropicsCourtPalettes:
 	INCLUDE "data/scenes/TropicsCourtPalettes.asm" ; $6a4b, 64 bytes (palettes)
 TropicsCourtTiles:
@@ -107,8 +107,8 @@ TropicsCourtTilemap:
 TropicsCourtAttrmap:
 	INCBIN "data/scenes/lz_TropicsCourtAttrmap.bin" ; $790a, 317 bytes
 TropicsCourtSceneConfig:
-	INCBIN "data/scenes/TropicsCourtSceneConfig.bin" ; $7a47, 40 bytes
+	INCLUDE "data/scenes/TropicsCourtSceneConfig.asm" ; $7a47, 40 bytes (scoreboard_columns)
 TropicsCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/TropicsCourtScoreboardColumnAttrs.bin" ; $7a6f, 40 bytes
+	INCLUDE "data/scenes/TropicsCourtScoreboardColumnAttrs.asm" ; $7a6f, 40 bytes (scoreboard_columns)
 TropicsCourtSceneUnusedSlot:
 	; $7a97, 1385 bytes fill to bank end (linker-padded)

@@ -330,7 +330,7 @@ AllieSpriteFramesUnused:
 	INCBIN "data/sprites/AllieSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/AllieSpriteFrame06.bin" ; $7bf0, 240 bytes
 AllieSpriteOam:
-	INCBIN "data/sprites/AllieSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/AllieSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 AllieSpriteAnims:
 	dw AllieSpriteAnim00 ; $7f24
 	dw AllieSpriteAnim01 ; $7f26

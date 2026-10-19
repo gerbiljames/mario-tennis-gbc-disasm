@@ -330,7 +330,7 @@ AlexSpriteFramesUnused:
 	INCBIN "data/sprites/AlexSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/AlexSpriteFrame06.bin" ; $7bf0, 240 bytes
 AlexSpriteOam:
-	INCBIN "data/sprites/AlexSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/AlexSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 AlexSpriteAnims:
 	dw AlexSpriteAnim00 ; $7f24
 	dw AlexSpriteAnim01 ; $7f26

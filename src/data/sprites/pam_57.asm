@@ -330,7 +330,7 @@ PamSpriteFramesUnused:
 	INCBIN "data/sprites/PamSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/PamSpriteFrame06.bin" ; $7bf0, 240 bytes
 PamSpriteOam:
-	INCBIN "data/sprites/PamSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/PamSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 PamSpriteAnims:
 	dw PamSpriteAnim00 ; $7f24
 	dw PamSpriteAnim01 ; $7f26

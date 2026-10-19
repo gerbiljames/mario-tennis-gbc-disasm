@@ -1,37 +1,37 @@
 PartnerStatPageTilemapPatch14:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch14.bin" ; $6198, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch14.asm" ; $6198, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch15:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch15.bin" ; $61b9, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch15.asm" ; $61b9, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch16:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch16.bin" ; $61da, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch16.asm" ; $61da, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch17:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch17.bin" ; $61e3, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch17.asm" ; $61e3, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch18:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch18.bin" ; $6204, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch18.asm" ; $6204, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch19:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch19.bin" ; $6225, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch19.asm" ; $6225, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch20:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch20.bin" ; $622e, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch20.asm" ; $622e, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch21:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch21.bin" ; $624f, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch21.asm" ; $624f, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch22:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch22.bin" ; $6270, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch22.asm" ; $6270, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch23:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch23.bin" ; $6279, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch23.asm" ; $6279, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch24:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch24.bin" ; $629a, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch24.asm" ; $629a, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch25:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch25.bin" ; $62bb, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch25.asm" ; $62bb, 9 bytes (blit_runs)
 PartnerStatPageTilemapPatch26:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch26.bin" ; $62c4, 21 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch26.asm" ; $62c4, 21 bytes (blit_runs)
 PartnerStatPageTilemapPatch27:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch27.bin" ; $62d9, 33 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch27.asm" ; $62d9, 33 bytes (blit_runs)
 PartnerStatPageTilemapPatch28:
-	INCBIN "data/engine/menus/char_data/PartnerStatPageTilemapPatch28.bin" ; $62fa, 9 bytes
+	INCLUDE "data/engine/menus/char_data/PartnerStatPageTilemapPatch28.asm" ; $62fa, 9 bytes (blit_runs)
 CharDataConfirmScreenTilemapPatch5:
-	INCBIN "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch5.bin" ; $6303, 13 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch5.asm" ; $6303, 13 bytes (blit_runs)
 CharDataConfirmPromptTilemapPatch:
-	INCBIN "data/engine/menus/char_data/CharDataConfirmPromptTilemapPatch.bin" ; $6310, 17 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataConfirmPromptTilemapPatch.asm" ; $6310, 17 bytes (blit_runs)
 CharDataScreenPagePatch0Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Tilemap.bin" ; $6321, 10 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Tilemap.inc" ; DEF CharDataScreenPagePatch0Tilemap_SIZE EQU its decoded length, generated from the .bin by make

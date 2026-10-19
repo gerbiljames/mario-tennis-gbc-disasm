@@ -71,9 +71,9 @@ StarCourtTilemap:
 StarCourtAttrmap:
 	INCBIN "data/scenes/lz_StarCourtAttrmap.bin" ; $4a42, 209 bytes
 StarCourtSceneConfig:
-	INCBIN "data/scenes/StarCourtSceneConfig.bin" ; $4b13, 40 bytes
+	INCLUDE "data/scenes/StarCourtSceneConfig.asm" ; $4b13, 40 bytes (scoreboard_columns)
 StarCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/StarCourtScoreboardColumnAttrs.bin" ; $4b3b, 40 bytes
+	INCLUDE "data/scenes/StarCourtScoreboardColumnAttrs.asm" ; $4b3b, 40 bytes (scoreboard_columns)
 BowserCourtPalettes:
 	INCLUDE "data/scenes/BowserCourtPalettes.asm" ; $4b63, 64 bytes (palettes)
 BowserCourtTiles:
@@ -83,9 +83,9 @@ BowserCourtTilemap:
 BowserCourtAttrmap:
 	INCBIN "data/scenes/lz_BowserCourtAttrmap.bin" ; $54e3, 285 bytes
 BowserCourtSceneConfig:
-	INCBIN "data/scenes/BowserCourtSceneConfig.bin" ; $5600, 40 bytes
+	INCLUDE "data/scenes/BowserCourtSceneConfig.asm" ; $5600, 40 bytes (scoreboard_columns)
 BowserCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/BowserCourtScoreboardColumnAttrs.bin" ; $5628, 40 bytes
+	INCLUDE "data/scenes/BowserCourtScoreboardColumnAttrs.asm" ; $5628, 40 bytes (scoreboard_columns)
 WarehouseCourtPalettes:
 	INCLUDE "data/scenes/WarehouseCourtPalettes.asm" ; $5650, 64 bytes (palettes)
 WarehouseCourtTiles:
@@ -95,9 +95,9 @@ WarehouseCourtTilemap:
 WarehouseCourtAttrmap:
 	INCBIN "data/scenes/lz_WarehouseCourtAttrmap.bin" ; $62cf, 274 bytes
 WarehouseCourtSceneConfig:
-	INCBIN "data/scenes/WarehouseCourtSceneConfig.bin" ; $63e1, 40 bytes
+	INCLUDE "data/scenes/WarehouseCourtSceneConfig.asm" ; $63e1, 40 bytes (scoreboard_columns)
 WarehouseCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/WarehouseCourtScoreboardColumnAttrs.bin" ; $6409, 40 bytes
+	INCLUDE "data/scenes/WarehouseCourtScoreboardColumnAttrs.asm" ; $6409, 40 bytes (scoreboard_columns)
 CastleCourtPalettes:
 	INCLUDE "data/scenes/CastleCourtPalettes.asm" ; $6431, 64 bytes (palettes)
 CastleCourtTiles:
@@ -107,8 +107,8 @@ CastleCourtTilemap:
 CastleCourtAttrmap:
 	INCBIN "data/scenes/lz_CastleCourtAttrmap.bin" ; $6df5, 313 bytes
 CastleCourtSceneConfig:
-	INCBIN "data/scenes/CastleCourtSceneConfig.bin" ; $6f2e, 40 bytes
+	INCLUDE "data/scenes/CastleCourtSceneConfig.asm" ; $6f2e, 40 bytes (scoreboard_columns)
 CastleCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/CastleCourtScoreboardColumnAttrs.bin" ; $6f56, 40 bytes
+	INCLUDE "data/scenes/CastleCourtScoreboardColumnAttrs.asm" ; $6f56, 40 bytes (scoreboard_columns)
 CastleCourtSceneUnusedSlot:
 	; $6f7e, 4226 bytes fill to bank end (linker-padded)

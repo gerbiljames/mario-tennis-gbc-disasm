@@ -47,7 +47,7 @@ DataPtr_CourtyardSceneUnusedSlot:
 DataPtr_CourtyardTiles:
 	dw CourtyardTiles ; $402e
 DormRoomSceneConfig:
-	INCBIN "data/scenes/DormRoomSceneConfig.bin" ; $4030, 42 bytes
+	INCLUDE "data/scenes/DormRoomSceneConfig.asm" ; $4030, 42 bytes (scene_config)
 DormRoomPalettes:
 	INCLUDE "data/scenes/DormRoomPalettes.asm" ; $405a, 64 bytes (palettes)
 DormRoomTiles:
@@ -61,7 +61,7 @@ DormRoomCollisionMap:
 DormRoomBehaviorMap:
 	INCBIN "data/scenes/lz_DormRoomBehaviorMap.bin" ; $4ed4, 72 bytes
 RestaurantPlazaSceneConfig:
-	INCBIN "data/scenes/RestaurantPlazaSceneConfig.bin" ; $4f1c, 42 bytes
+	INCLUDE "data/scenes/RestaurantPlazaSceneConfig.asm" ; $4f1c, 42 bytes (scene_config)
 RestaurantPlazaPalettes:
 	INCLUDE "data/scenes/RestaurantPlazaPalettes.asm" ; $4f46, 64 bytes (palettes)
 RestaurantPlazaTiles:
@@ -75,7 +75,7 @@ RestaurantPlazaCollisionMap:
 RestaurantPlazaBehaviorMap:
 	INCBIN "data/scenes/lz_RestaurantPlazaBehaviorMap.bin" ; $6139, 90 bytes
 CourtyardSceneConfig:
-	INCBIN "data/scenes/CourtyardSceneConfig.bin" ; $6193, 27 bytes
+	INCLUDE "data/scenes/CourtyardSceneConfig.asm" ; $6193, 27 bytes (scene_config)
 CourtyardPalettes:
 	INCLUDE "data/scenes/CourtyardPalettes.asm" ; $61ae, 64 bytes (palettes)
 CourtyardTiles:

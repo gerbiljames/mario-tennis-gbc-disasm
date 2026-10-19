@@ -330,7 +330,7 @@ BobSpriteFramesUnused:
 	INCBIN "data/sprites/BobSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BobSpriteFrame06.bin" ; $7bf0, 240 bytes
 BobSpriteOam:
-	INCBIN "data/sprites/BobSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/BobSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 BobSpriteAnims:
 	dw BobSpriteAnim00 ; $7f24
 	dw BobSpriteAnim01 ; $7f26

@@ -330,7 +330,7 @@ EmilySpriteFramesUnused:
 	INCBIN "data/sprites/EmilySpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/EmilySpriteFrame06.bin" ; $7bf0, 240 bytes
 EmilySpriteOam:
-	INCBIN "data/sprites/EmilySpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/EmilySpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 EmilySpriteAnims:
 	dw EmilySpriteAnim00 ; $7f24
 	dw EmilySpriteAnim01 ; $7f26

@@ -253,6 +253,8 @@ under `wram_bank $02` (attribute) from the same address. Its callers pass `bc` =
 | `+$02` | source offset byte, added to `bc` |
 | `+$03` | length in cells |
 
+The lists are written as `blit_run col, row, src, length` rows ending `db $ff`.
+
 `SaveWorkTilemapToPage` (`$1d:$4a14`, selector in `a`) snapshots 576 bytes of
 the live screen into `wCharDataPageSlot1/2/3` or
 `wCharDataPagePlane + 13 * TILEMAP_WIDTH`, once per bank;

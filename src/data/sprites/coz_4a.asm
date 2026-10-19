@@ -330,7 +330,7 @@ ACozSpriteFramesUnused:
 	INCBIN "data/sprites/ACozSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/ACozSpriteFrame06.bin" ; $7bf0, 240 bytes
 ACozSpriteOam:
-	INCBIN "data/sprites/ACozSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/ACozSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 ACozSpriteAnims:
 	dw ACozSpriteAnim00 ; $7f24
 	dw ACozSpriteAnim01 ; $7f26

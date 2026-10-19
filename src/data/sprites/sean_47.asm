@@ -330,7 +330,7 @@ SeanSpriteFramesUnused:
 	INCBIN "data/sprites/SeanSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/SeanSpriteFrame06.bin" ; $7bf0, 240 bytes
 SeanSpriteOam:
-	INCBIN "data/sprites/SeanSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/SeanSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 SeanSpriteAnims:
 	dw SeanSpriteAnim00 ; $7f24
 	dw SeanSpriteAnim01 ; $7f26

@@ -330,7 +330,7 @@ BCozSpriteFramesUnused:
 	INCBIN "data/sprites/BCozSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BCozSpriteFrame06.bin" ; $7bf0, 240 bytes
 BCozSpriteOam:
-	INCBIN "data/sprites/BCozSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/BCozSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 BCozSpriteAnims:
 	dw BCozSpriteAnim00 ; $7f24
 	dw BCozSpriteAnim01 ; $7f26

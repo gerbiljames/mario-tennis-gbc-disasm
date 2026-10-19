@@ -330,7 +330,7 @@ BrianSpriteFramesUnused:
 	INCBIN "data/sprites/BrianSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BrianSpriteFrame06.bin" ; $7bf0, 240 bytes
 BrianSpriteOam:
-	INCBIN "data/sprites/BrianSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/BrianSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 BrianSpriteAnims:
 	dw BrianSpriteAnim00 ; $7f24
 	dw BrianSpriteAnim01 ; $7f26

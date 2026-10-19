@@ -330,7 +330,7 @@ WaluigiSpriteFramesUnused:
 	INCBIN "data/sprites/WaluigiSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/WaluigiSpriteFrame06.bin" ; $7bf0, 240 bytes
 WaluigiSpriteOam:
-	INCBIN "data/sprites/WaluigiSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/WaluigiSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 WaluigiSpriteAnims:
 	dw WaluigiSpriteAnim00 ; $7f24
 	dw WaluigiSpriteAnim01 ; $7f26
