@@ -212,7 +212,7 @@ AiServeApplyAim:
 	ret ; $7aea
 AiApplyServeAim:
 	ld a, [wAiServeAimOverride] ; $7aeb
-	cp $ff ; $7aee
+	cp AISERVEAIM_RANDOM ; $7aee
 	jr z, .randomAim ; $7af0
 	ld b, a ; $7af2
 	jr .applyAim ; $7af3
@@ -230,7 +230,7 @@ AiApplyServeAim:
 	ret ; $7b0a
 AiApplyServeAimTable:
 	; $7b0b, 8 bytes (bytes:8)
-	db $10, $10, $10, $10, $20, $20, $20, $20 ; 0x00
+	db PADF_RIGHT, PADF_RIGHT, PADF_RIGHT, PADF_RIGHT, PADF_LEFT, PADF_LEFT, PADF_LEFT, PADF_LEFT
 AiRollAimAwayFromChar:
 	ld c, a ; $7b13
 	call AdvanceMatchRng ; $7b14

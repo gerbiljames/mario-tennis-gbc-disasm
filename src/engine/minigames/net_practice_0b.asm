@@ -287,7 +287,7 @@ NetGamePractice1Hook_PointStart:
 	xor a ; $5c3a
 	ld [wDrillPointJudgement], a ; $5c3b
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5c3e
-	ld hl, NetGamePractice1PointStartTable ; $5c41
+	ld hl, NetGamePractice1ServeAims ; $5c41
 	add l ; $5c44
 	ld l, a ; $5c45
 	jr nc, .read ; $5c46
@@ -296,9 +296,9 @@ NetGamePractice1Hook_PointStart:
 	ld a, [hl] ; $5c49
 	ld [wAiServeAimOverride], a ; $5c4a
 	ret ; $5c4d
-NetGamePractice1PointStartTable:
+NetGamePractice1ServeAims:
 	; $5c4e, 4 bytes (bytes:4)
-	db $20, $10, $10, $20 ; 0x00
+	db PADF_LEFT, PADF_RIGHT, PADF_RIGHT, PADF_LEFT
 NetGamePractice1Hook_PointEnd:
 	call NetGamePractice1JudgeOnPointEnd ; $5c52
 	ld a, [wPointOutcome] ; $5c55

@@ -208,6 +208,8 @@ def POINTOUTCOME_MINIGAME_CLEARED equ $0b ; bank $0d only, set right after IsMin
 ; A signed -1/0/+1 shared by both flags and the set/game-level ones: AwardPoint
 ; (`add a / ret z / jr nc`) credits nobody on $00, the player-1 side on +1 and
 ; the player-2 side on -1.
+def AISERVEAIM_RANDOM equ $ff ; wAiServeAimOverride: AiApplyServeAim rolls the aim from AiApplyServeAimTable; otherwise the PADF_LEFT/PADF_RIGHT bits it ORs into the serve input
+
 def WINLOSE_NONE             equ $00 ; nothing decided yet
 def WINLOSE_WIN              equ $01 ; the player-1 side took it
 def WINLOSE_LOSE             equ $ff ; the player-2 side took it

@@ -28,7 +28,7 @@ RunTrainingDrillByID:
 	ld hl, wDrillAbortCountdown ; $4726
 	ld c, $02 ; $4729
 	call ClearMemory16 ; $472b
-	ld a, $ff ; $472e
+	ld a, AISERVEAIM_RANDOM ; $472e
 	ld [wAiServeAimOverride], a ; $4730
 	xor a ; $4733
 	ld hl, wAiServeTargetX ; $4734
@@ -40,7 +40,7 @@ RunTrainingDrillByID:
 	xor a ; $473f
 	ldh [hScrollX], a ; $4740
 	ldh [hScrollY], a ; $4742
-	ld a, $ff ; $4744
+	ld a, AISERVEAIM_RANDOM ; $4744
 	ld [wAiServeAimOverride], a ; $4746
 	xor a ; $4749
 	ld hl, wAiServeTargetX ; $474a
@@ -417,7 +417,7 @@ ServiceMatch2Hook_PointStart:
 	call IndexDrillTableByPoint ; $4a06
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a09
 	srl a ; $4a0c
-	ld hl, ServiceMatch2PointStartTable ; $4a0e
+	ld hl, ServiceMatch2ServeAims ; $4a0e
 	add l ; $4a11
 	ld l, a ; $4a12
 	jr nc, .read ; $4a13
@@ -431,9 +431,9 @@ ServiceMatch2Hook_PointStart:
 	xor a ; $4a1e
 	ld [wDrillPointJudgement], a ; $4a1f
 	ret ; $4a22
-ServiceMatch2PointStartTable:
+ServiceMatch2ServeAims:
 	; $4a23, 4 bytes (bytes:4)
-	db $20, $10, $10, $20 ; 0x00
+	db PADF_LEFT, PADF_RIGHT, PADF_RIGHT, PADF_LEFT
 ServiceMatch2Hook_PointEnd:
 	call ServiceMatch2JudgeOnPointEnd ; $4a27
 	call ServiceMatch2HandlePointEnd ; $4a2a

@@ -713,7 +713,7 @@ StrokePractice1Hook_PointStart:
 	ld hl, EnableTargetZoneAfterDelayTask ; $6bb6
 	call RegisterFrameTask ; $6bb9
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bbc
-	ld hl, StrokePractice1PointStartTable ; $6bbf
+	ld hl, StrokePractice1ServeAims ; $6bbf
 	add l ; $6bc2
 	ld l, a ; $6bc3
 	jr nc, .read ; $6bc4
@@ -722,6 +722,6 @@ StrokePractice1Hook_PointStart:
 	ld a, [hl] ; $6bc7
 	ld [wAiServeAimOverride], a ; $6bc8
 	ret ; $6bcb
-StrokePractice1PointStartTable:
+StrokePractice1ServeAims:
 	; $6bcc, 4 bytes (bytes:4)
-	db $20, $10, $10, $20 ; 0x00
+	db PADF_LEFT, PADF_RIGHT, PADF_RIGHT, PADF_LEFT

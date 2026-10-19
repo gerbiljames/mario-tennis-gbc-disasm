@@ -212,7 +212,7 @@ StrokePractice2Hook_PointStart:
 	ld hl, StrokePractice2TargetZoneDelayTask ; $6e02
 	call RegisterFrameTask ; $6e05
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e08
-	ld hl, StrokePractice2PointStartTable ; $6e0b
+	ld hl, StrokePractice2ServeAims ; $6e0b
 	add l ; $6e0e
 	ld l, a ; $6e0f
 	jr nc, .read ; $6e10
@@ -221,9 +221,9 @@ StrokePractice2Hook_PointStart:
 	ld a, [hl] ; $6e13
 	ld [wAiServeAimOverride], a ; $6e14
 	ret ; $6e17
-StrokePractice2PointStartTable:
+StrokePractice2ServeAims:
 	; $6e18, 4 bytes (bytes:4)
-	db $20, $10, $10, $20 ; 0x00
+	db PADF_LEFT, PADF_RIGHT, PADF_RIGHT, PADF_LEFT
 StrokePractice2TargetZoneDelayTask:
 	ld hl, wDrillCounters + 8 ; $6e1c
 	dec [hl] ; $6e1f
@@ -530,7 +530,7 @@ StrokePractice3Hook_PointStart:
 	ld hl, StrokePractice3TargetZoneDelayTask ; $7067
 	call RegisterFrameTask ; $706a
 	ld a, [wTotalPointsScoredInCurrentGame] ; $706d
-	ld hl, StrokePractice3PointStartTable ; $7070
+	ld hl, StrokePractice3ServeAims ; $7070
 	add l ; $7073
 	ld l, a ; $7074
 	jr nc, .read ; $7075
@@ -539,9 +539,9 @@ StrokePractice3Hook_PointStart:
 	ld a, [hl] ; $7078
 	ld [wAiServeAimOverride], a ; $7079
 	ret ; $707c
-StrokePractice3PointStartTable:
+StrokePractice3ServeAims:
 	; $707d, 4 bytes (bytes:4)
-	db $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $00
 StrokePractice3TargetZoneDelayTask:
 	ld hl, wDrillCounters + 8 ; $7081
 	dec [hl] ; $7084

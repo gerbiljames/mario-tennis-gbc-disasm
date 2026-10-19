@@ -136,7 +136,7 @@ RunMatch:
 	ld hl, wModeScratch ; $41ad
 	ld c, $08 ; $41b0
 	call ClearMemory16 ; $41b2
-	ld a, $ff ; $41b5
+	ld a, AISERVEAIM_RANDOM ; $41b5
 	ld [wAiServeAimOverride], a ; $41b7
 	script_fade_in 32 ; $41ba
 	wram_bank WRAM_ACTORS ; $41bf
