@@ -82,9 +82,9 @@ RestoreShadowTilemapRow:
 	ld d, e ; $43dd
 .mapRowOffsetLoop:
 	rr d ; $43de
-	jr nc, .shiftRowSize ; $43e0
+	jr nc, .shiftMapRowSize ; $43e0
 	add hl, bc ; $43e2
-.shiftRowSize:
+.shiftMapRowSize:
 	sla c ; $43e3
 	rl b ; $43e5
 	dec a ; $43e7
@@ -104,9 +104,9 @@ RestoreShadowTilemapRow:
 	and $1f ; $4401
 	add l ; $4403
 	ld l, a ; $4404
-	jr nc, .gotPtr ; $4405
+	jr nc, .gotTileStagePtr ; $4405
 	inc h ; $4407
-.gotPtr:
+.gotTileStagePtr:
 	ld d, $20 ; $4408
 .copyTileLoop:
 	ld a, [bc] ; $440a
@@ -134,9 +134,9 @@ RestoreShadowTilemapRow:
 	ld bc, $0020 ; $442b
 .tilemapRowOffsetLoop:
 	rr d ; $442e
-	jr nc, .shiftRowSize2 ; $4430
+	jr nc, .shiftTilemapRowSize ; $4430
 	add hl, bc ; $4432
-.shiftRowSize2:
+.shiftTilemapRowSize:
 	sla c ; $4433
 	rl b ; $4435
 	dec a ; $4437
@@ -156,9 +156,9 @@ RestoreShadowTilemapRow:
 	and $1f ; $4458
 	add l ; $445a
 	ld l, a ; $445b
-	jr nc, .gotPtr2 ; $445c
+	jr nc, .gotAttrStagePtr ; $445c
 	inc h ; $445e
-.gotPtr2:
+.gotAttrStagePtr:
 	ld d, $20 ; $445f
 .copyAttrLoop:
 	ld a, [bc] ; $4461
@@ -186,9 +186,9 @@ RestoreShadowTilemapRow:
 	ld bc, $0020 ; $4482
 .attrmapRowOffsetLoop:
 	rr d ; $4485
-	jr nc, .shiftRowSize3 ; $4487
+	jr nc, .shiftAttrmapRowSize ; $4487
 	add hl, bc ; $4489
-.shiftRowSize3:
+.shiftAttrmapRowSize:
 	sla c ; $448a
 	rl b ; $448c
 	dec a ; $448e

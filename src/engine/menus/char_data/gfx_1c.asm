@@ -446,9 +446,9 @@ LoadCharDataScreenMugshots:
 	ld hl, wStoryMainName ; $7492
 	ld a, [wStoryCharacterSlot] ; $7495
 	or a ; $7498
-	jr z, .paletteField ; $7499
+	jr z, .mainPaletteField ; $7499
 	ld l, $40 ; $749b
-.paletteField:
+.mainPaletteField:
 	ld a, l ; $749d
 	add $0c ; $749e
 	ld l, a ; $74a0
@@ -464,9 +464,9 @@ LoadCharDataScreenMugshots:
 	ld hl, wStoryMainName ; $74b4
 	ld a, [wStoryCharacterSlot] ; $74b7
 	or a ; $74ba
-	jr z, .charField ; $74bb
+	jr z, .mainCharField ; $74bb
 	ld l, $40 ; $74bd
-.charField:
+.mainCharField:
 	ld a, l ; $74bf
 	add $0b ; $74c0
 	ld l, a ; $74c2
@@ -487,9 +487,9 @@ LoadCharDataScreenMugshots:
 	ld hl, wStoryMainName ; $74e0
 	ld a, [wStoryCharacterSlot] ; $74e3
 	or a ; $74e6
-	jr z, .paletteField2 ; $74e7
+	jr z, .partnerPaletteField ; $74e7
 	ld l, $40 ; $74e9
-.paletteField2:
+.partnerPaletteField:
 	ld a, l ; $74eb
 	add $0c ; $74ec
 	ld l, a ; $74ee
@@ -505,9 +505,9 @@ LoadCharDataScreenMugshots:
 	ld hl, wStoryMainName ; $7502
 	ld a, [wStoryCharacterSlot] ; $7505
 	or a ; $7508
-	jr z, .charField2 ; $7509
+	jr z, .partnerCharField ; $7509
 	ld l, $40 ; $750b
-.charField2:
+.partnerCharField:
 	ld a, l ; $750d
 	add $0b ; $750e
 	ld l, a ; $7510

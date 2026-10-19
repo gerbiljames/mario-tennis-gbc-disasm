@@ -115,14 +115,14 @@ BuildGameProgressScreen:
 	bit 7, a ; $7363
 	call nz, ScrollProgressListDown ; $7365
 	bit 0, a ; $7368
-	jr nz, .playSfx2 ; $736a
+	jr nz, .playSelectSfx ; $736a
 	bit 1, a ; $736c
-	jr nz, .playSfx ; $736e
+	jr nz, .playCancelSfx ; $736e
 	jr .loop ; $7370
-.playSfx:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7372
 	jr .restore ; $7374
-.playSfx2:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $7376
 .restore:
 	pop_wram_bank ; $7378

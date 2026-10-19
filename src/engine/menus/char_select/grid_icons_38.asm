@@ -40,7 +40,7 @@ DrawCharSelectSlotLabel:
 	ld a, [wCharGridHandedness] ; $5922
 	ASSERT HAND_RIGHT == 0
 	or a ; $5925
-	jr nz, .slot2 ; $5926
+	jr nz, .notRightHanded ; $5926
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5928
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $592b
 	rect_size $05, $01 ; $592e
@@ -50,9 +50,9 @@ DrawCharSelectSlotLabel:
 	rect_size $05, $01 ; $593b
 	farcall CopyTilemapRect ; $593f
 	jr .drawName ; $5942
-.slot2:
+.notRightHanded:
 	cp $01 ; $5944
-	jr nz, .slot3 ; $5946
+	jr nz, .handsNotChosen ; $5946
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5948
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $594b
 	rect_size $05, $01 ; $594e
@@ -62,7 +62,7 @@ DrawCharSelectSlotLabel:
 	rect_size $05, $01 ; $595b
 	farcall CopyTilemapRect ; $595f
 	jr .drawName ; $5962
-.slot3:
+.handsNotChosen:
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5964
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $5967
 	rect_size $05, $01 ; $596a

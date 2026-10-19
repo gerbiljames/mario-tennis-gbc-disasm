@@ -216,362 +216,362 @@ RestoreMenuBgAndDrawPanel:
 	ret ; $4e5f
 TilemapAssemblyDispatch_39:
 	; $4e60, 8034 bytes (tilemap_dispatch)
-	dw .l2_0 ; 0
-	dw .l2_1 ; 1
-	dw .l2_2 ; 2
-	dw .l2_3 ; 3
-	dw .l2_4 ; 4
-	dw .l2_5 ; 5
-	dw .l2_6 ; 6
-	dw .l2_7 ; 7
-	dw .l2_8 ; 8
-	dw .l2_9 ; 9
-	dw .l2_10 ; 10
-	dw .l2_11 ; 11
-	dw .l2_12 ; 12
-	dw .l2_12 ; 13
-	dw .l2_12 ; 14
-	dw .l2_12 ; 15
-	dw .l2_12 ; 16
-	dw .l2_13 ; 17
-	dw .l2_14 ; 18
-	dw .l2_15 ; 19
-	dw .l2_16 ; 20
-	dw .l2_17 ; 21
-	dw .l2_18 ; 22
-	dw .l2_19 ; 23
-.l2_0:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_1
-	dw .rl_2
-	dw .rl_3
-	dw .rl_4
-	dw .rl_5
-	dw .rl_6
-	dw .rl_7
-	dw .rl_8
-	dw .rl_9
-	dw .rl_10
-	dw .rl_11
-	dw .rl_12
-	dw .rl_13
-.l2_1:
-	dw .rl_13
-	dw .rl_14
-	dw .rl_15
-	dw .rl_16
-	dw .rl_17
-	dw .rl_18
-	dw .rl_19
-	dw .rl_20
-	dw .rl_21
-	dw .rl_22
-.l2_2:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_23
-	dw .rl_24
-	dw .rl_25
-	dw .rl_26
-	dw .rl_27
-	dw .rl_28
-	dw .rl_29
-	dw .rl_30
-	dw .rl_31
-	dw .rl_32
-	dw .rl_33
-	dw .rl_34
-	dw .rl_34
-.l2_3:
-	dw .rl_34
-	dw .rl_35
-	dw .rl_36
-	dw .rl_37
-	dw .rl_38
-	dw .rl_39
-	dw .rl_40
-	dw .rl_41
-	dw .rl_42
-	dw .rl_43
-	dw .rl_0
-	dw .rl_0
-.l2_4:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_44
-	dw .rl_45
-	dw .rl_46
-	dw .rl_47
-	dw .rl_48
-	dw .rl_49
-	dw .rl_50
-	dw .rl_51
-	dw .rl_52
-	dw .rl_53
-	dw .rl_54
-	dw .rl_55
-	dw .rl_55
-.l2_5:
-	dw .rl_54
-	dw .rl_55
-	dw .rl_56
-	dw .rl_57
-	dw .rl_58
-	dw .rl_59
-	dw .rl_60
-	dw .rl_61
-	dw .rl_62
-	dw .rl_63
-	dw .rl_64
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-.l2_6:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_65
-	dw .rl_66
-	dw .rl_67
-	dw .rl_68
-	dw .rl_69
-	dw .rl_70
-	dw .rl_71
-	dw .rl_72
-	dw .rl_73
-	dw .rl_74
-	dw .rl_74
-.l2_7:
-	dw .rl_74
-	dw .rl_75
-	dw .rl_76
-	dw .rl_77
-	dw .rl_78
-	dw .rl_79
-	dw .rl_80
-	dw .rl_81
-	dw .rl_82
-	dw .rl_0
-	dw .rl_0
-.l2_8:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_83
-	dw .rl_84
-	dw .rl_85
-	dw .rl_86
-	dw .rl_87
-	dw .rl_88
-	dw .rl_89
-	dw .rl_90
-	dw .rl_91
-	dw .rl_92
-	dw .rl_93
-	dw .rl_94
-	dw .rl_95
-.l2_9:
-	dw .rl_94
-	dw .rl_95
-	dw .rl_96
-	dw .rl_97
-	dw .rl_98
-	dw .rl_99
-	dw .rl_100
-	dw .rl_101
-	dw .rl_102
-	dw .rl_103
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-.l2_10:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_104
-	dw .rl_105
-	dw .rl_106
-	dw .rl_107
-	dw .rl_108
-	dw .rl_109
-	dw .rl_110
-	dw .rl_111
-	dw .rl_112
-	dw .rl_113
-.l2_11:
-	dw .rl_114
-	dw .rl_115
-	dw .rl_116
-	dw .rl_117
-	dw .rl_118
-	dw .rl_119
-	dw .rl_120
-	dw .rl_121
-	dw .rl_122
-	dw .rl_123
-	dw .rl_124
-.l2_12:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_125
-	dw .rl_126
-	dw .rl_127
-	dw .rl_128
-	dw .rl_129
-	dw .rl_130
-	dw .rl_131
-	dw .rl_132
-	dw .rl_133
-	dw .rl_134
-	dw .rl_134
-	dw .rl_134
-	dw .rl_134
-	dw .rl_134
-.l2_13:
-	dw .rl_134
-	dw .rl_135
-	dw .rl_136
-	dw .rl_137
-	dw .rl_138
-	dw .rl_139
-	dw .rl_140
-	dw .rl_141
-	dw .rl_142
-	dw .rl_143
-	dw .rl_144
-	dw .rl_144
-	dw .rl_144
-	dw .rl_144
-.l2_14:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_144
-	dw .rl_145
-	dw .rl_146
-	dw .rl_147
-	dw .rl_148
-	dw .rl_149
-	dw .rl_150
-	dw .rl_151
-	dw .rl_152
-	dw .rl_153
-	dw .rl_154
-	dw .rl_155
-	dw .rl_156
-	dw .rl_157
-.l2_15:
-	dw .rl_158
-	dw .rl_159
-	dw .rl_160
-	dw .rl_161
-	dw .rl_162
-	dw .rl_163
-	dw .rl_164
-	dw .rl_165
-	dw .rl_166
-	dw .rl_167
-	dw .rl_168
-	dw .rl_169
-	dw .rl_170
-	dw .rl_171
-.l2_16:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_172
-	dw .rl_173
-	dw .rl_174
-	dw .rl_175
-	dw .rl_176
-	dw .rl_177
-	dw .rl_178
-	dw .rl_179
-	dw .rl_180
-	dw .rl_181
-	dw .rl_182
-	dw .rl_183
-	dw .rl_184
-	dw .rl_184
-.l2_17:
-	dw .rl_184
-	dw .rl_185
-	dw .rl_186
-	dw .rl_187
-	dw .rl_188
-	dw .rl_189
-	dw .rl_190
-	dw .rl_191
-	dw .rl_192
-	dw .rl_193
-	dw .rl_194
-	dw .rl_195
-	dw .rl_195
-	dw .rl_195
-.l2_18:
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_195
-	dw .rl_196
-	dw .rl_197
-	dw .rl_198
-	dw .rl_199
-	dw .rl_200
-	dw .rl_201
-	dw .rl_202
-	dw .rl_203
-	dw .rl_204
-	dw .rl_205
-	dw .rl_206
-	dw .rl_206
-	dw .rl_206
-.l2_19:
-	dw .rl_205
-	dw .rl_206
-	dw .rl_207
-	dw .rl_208
-	dw .rl_209
-	dw .rl_210
-	dw .rl_211
-	dw .rl_212
-	dw .rl_213
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
-	dw .rl_0
+	dw .mainMenuSlideIn ; 0
+	dw .mainMenuSlideOut ; 1
+	dw .matchFormatSlideIn ; 2
+	dw .matchFormatSlideOut ; 3
+	dw .minigameGrid9SlideIn ; 4
+	dw .minigameGrid9SlideOut ; 5
+	dw .unusedPanelSlideIn ; 6
+	dw .unusedPanelSlideOut ; 7
+	dw .savedDataPickerSlideIn ; 8
+	dw .savedDataPickerSlideOut ; 9
+	dw .n64RecordTypeSlideIn ; 10
+	dw .n64RecordTypeSlideOut ; 11
+	dw .choiceTabSlideIn ; 12
+	dw .choiceTabSlideIn ; 13
+	dw .choiceTabSlideIn ; 14
+	dw .choiceTabSlideIn ; 15
+	dw .choiceTabSlideIn ; 16
+	dw .choiceTabSlideOut ; 17
+	dw .courtSelect4SlideIn ; 18
+	dw .courtSelect4SlideOut ; 19
+	dw .courtSelect9SlideIn ; 20
+	dw .courtSelect9SlideOut ; 21
+	dw .minigameGrid6SlideIn ; 22
+	dw .minigameGrid6SlideOut ; 23
+.mainMenuSlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .mainMenuInFrame3
+	dw .mainMenuInFrame4
+	dw .mainMenuInFrame5
+	dw .mainMenuInFrame6
+	dw .mainMenuInFrame7
+	dw .mainMenuInFrame8
+	dw .mainMenuInFrame9
+	dw .mainMenuInFrame10
+	dw .mainMenuInFrame11
+	dw .mainMenuInFrame12
+	dw .mainMenuInFrame13
+	dw .mainMenuInFrame14
+	dw .mainMenuShown
+.mainMenuSlideOut:
+	dw .mainMenuShown
+	dw .mainMenuOutFrame1
+	dw .mainMenuOutFrame2
+	dw .mainMenuOutFrame3
+	dw .mainMenuOutFrame4
+	dw .mainMenuOutFrame5
+	dw .mainMenuOutFrame6
+	dw .mainMenuOutFrame7
+	dw .mainMenuOutFrame8
+	dw .mainMenuOutFrame9
+.matchFormatSlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .matchFormatInFrame3
+	dw .matchFormatInFrame4
+	dw .matchFormatInFrame5
+	dw .matchFormatInFrame6
+	dw .matchFormatInFrame7
+	dw .matchFormatInFrame8
+	dw .matchFormatInFrame9
+	dw .matchFormatInFrame10
+	dw .matchFormatInFrame11
+	dw .matchFormatInFrame12
+	dw .matchFormatInFrame13
+	dw .matchFormatShown
+	dw .matchFormatShown
+.matchFormatSlideOut:
+	dw .matchFormatShown
+	dw .matchFormatOutFrame1
+	dw .matchFormatOutFrame2
+	dw .matchFormatOutFrame3
+	dw .matchFormatOutFrame4
+	dw .matchFormatOutFrame5
+	dw .matchFormatOutFrame6
+	dw .matchFormatOutFrame7
+	dw .matchFormatOutFrame8
+	dw .matchFormatOutFrame9
+	dw .noRects
+	dw .noRects
+.minigameGrid9SlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .minigameGrid9InFrame3
+	dw .minigameGrid9InFrame4
+	dw .minigameGrid9InFrame5
+	dw .minigameGrid9InFrame6
+	dw .minigameGrid9InFrame7
+	dw .minigameGrid9InFrame8
+	dw .minigameGrid9InFrame9
+	dw .minigameGrid9InFrame10
+	dw .minigameGrid9InFrame11
+	dw .minigameGrid9InFrame12
+	dw .minigameGrid9Shown
+	dw .minigameGrid9ShownNudged
+	dw .minigameGrid9ShownNudged
+.minigameGrid9SlideOut:
+	dw .minigameGrid9Shown
+	dw .minigameGrid9ShownNudged
+	dw .minigameGrid9OutFrame2
+	dw .minigameGrid9OutFrame3
+	dw .minigameGrid9OutFrame4
+	dw .minigameGrid9OutFrame5
+	dw .minigameGrid9OutFrame6
+	dw .minigameGrid9OutFrame7
+	dw .minigameGrid9OutFrame8
+	dw .minigameGrid9OutFrame9
+	dw .minigameGrid9OutFrame10
+	dw .noRects
+	dw .noRects
+	dw .noRects
+.unusedPanelSlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .unusedPanelInFrame3
+	dw .unusedPanelInFrame4
+	dw .unusedPanelInFrame5
+	dw .unusedPanelInFrame6
+	dw .unusedPanelInFrame7
+	dw .unusedPanelInFrame8
+	dw .unusedPanelInFrame9
+	dw .unusedPanelInFrame10
+	dw .unusedPanelInFrame11
+	dw .unusedPanelShown
+	dw .unusedPanelShown
+.unusedPanelSlideOut:
+	dw .unusedPanelShown
+	dw .unusedPanelOutFrame1
+	dw .unusedPanelOutFrame2
+	dw .unusedPanelOutFrame3
+	dw .unusedPanelOutFrame4
+	dw .unusedPanelOutFrame5
+	dw .unusedPanelOutFrame6
+	dw .unusedPanelOutFrame7
+	dw .unusedPanelOutFrame8
+	dw .noRects
+	dw .noRects
+.savedDataPickerSlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .savedDataPickerInFrame3
+	dw .savedDataPickerInFrame4
+	dw .savedDataPickerInFrame5
+	dw .savedDataPickerInFrame6
+	dw .savedDataPickerInFrame7
+	dw .savedDataPickerInFrame8
+	dw .savedDataPickerInFrame9
+	dw .savedDataPickerInFrame10
+	dw .savedDataPickerInFrame11
+	dw .savedDataPickerInFrame12
+	dw .savedDataPickerInFrame13
+	dw .savedDataPickerShown
+	dw .savedDataPickerShownNudged
+.savedDataPickerSlideOut:
+	dw .savedDataPickerShown
+	dw .savedDataPickerShownNudged
+	dw .savedDataPickerOutFrame2
+	dw .savedDataPickerOutFrame3
+	dw .savedDataPickerOutFrame4
+	dw .savedDataPickerOutFrame5
+	dw .savedDataPickerOutFrame6
+	dw .savedDataPickerOutFrame7
+	dw .savedDataPickerOutFrame8
+	dw .savedDataPickerOutFrame9
+	dw .noRects
+	dw .noRects
+	dw .noRects
+.n64RecordTypeSlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .n64RecordTypeInFrame3
+	dw .n64RecordTypeInFrame4
+	dw .n64RecordTypeInFrame5
+	dw .n64RecordTypeInFrame6
+	dw .n64RecordTypeInFrame7
+	dw .n64RecordTypeInFrame8
+	dw .n64RecordTypeInFrame9
+	dw .n64RecordTypeInFrame10
+	dw .n64RecordTypeInFrame11
+	dw .n64RecordTypeInFrame12
+.n64RecordTypeSlideOut:
+	dw .n64RecordTypeOutFrame0
+	dw .n64RecordTypeOutFrame1
+	dw .n64RecordTypeOutFrame2
+	dw .n64RecordTypeOutFrame3
+	dw .n64RecordTypeOutFrame4
+	dw .n64RecordTypeOutFrame5
+	dw .n64RecordTypeOutFrame6
+	dw .n64RecordTypeOutFrame7
+	dw .n64RecordTypeOutFrame8
+	dw .n64RecordTypeOutFrame9
+	dw .n64RecordTypeOutFrame10
+.choiceTabSlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .choiceTabInFrame3
+	dw .choiceTabInFrame4
+	dw .choiceTabInFrame5
+	dw .choiceTabInFrame6
+	dw .choiceTabInFrame7
+	dw .choiceTabInFrame8
+	dw .choiceTabInFrame9
+	dw .choiceTabInFrame10
+	dw .choiceTabInFrame11
+	dw .choiceTabShown
+	dw .choiceTabShown
+	dw .choiceTabShown
+	dw .choiceTabShown
+	dw .choiceTabShown
+.choiceTabSlideOut:
+	dw .choiceTabShown
+	dw .choiceTabOutFrame1
+	dw .choiceTabOutFrame2
+	dw .choiceTabOutFrame3
+	dw .choiceTabOutFrame4
+	dw .choiceTabOutFrame5
+	dw .choiceTabOutFrame6
+	dw .choiceTabOutFrame7
+	dw .choiceTabOutFrame8
+	dw .choiceTabOutFrame9
+	dw .courtSelect4InFrame3
+	dw .courtSelect4InFrame3
+	dw .courtSelect4InFrame3
+	dw .courtSelect4InFrame3
+.courtSelect4SlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .courtSelect4InFrame3
+	dw .courtSelect4InFrame4
+	dw .courtSelect4InFrame5
+	dw .courtSelect4InFrame6
+	dw .courtSelect4InFrame7
+	dw .courtSelect4InFrame8
+	dw .courtSelect4InFrame9
+	dw .courtSelect4InFrame10
+	dw .courtSelect4InFrame11
+	dw .courtSelect4InFrame12
+	dw .courtSelect4InFrame13
+	dw .courtSelect4InFrame14
+	dw .courtSelect4InFrame15
+	dw .courtSelect4InFrame16
+.courtSelect4SlideOut:
+	dw .courtSelect4OutFrame0
+	dw .courtSelect4OutFrame1
+	dw .courtSelect4OutFrame2
+	dw .courtSelect4OutFrame3
+	dw .courtSelect4OutFrame4
+	dw .courtSelect4OutFrame5
+	dw .courtSelect4OutFrame6
+	dw .courtSelect4OutFrame7
+	dw .courtSelect4OutFrame8
+	dw .courtSelect4OutFrame9
+	dw .courtSelect4OutFrame10
+	dw .courtSelect4OutFrame11
+	dw .courtSelect4OutFrame12
+	dw .courtSelect4OutFrame13
+.courtSelect9SlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .courtSelect9InFrame3
+	dw .courtSelect9InFrame4
+	dw .courtSelect9InFrame5
+	dw .courtSelect9InFrame6
+	dw .courtSelect9InFrame7
+	dw .courtSelect9InFrame8
+	dw .courtSelect9InFrame9
+	dw .courtSelect9InFrame10
+	dw .courtSelect9InFrame11
+	dw .courtSelect9InFrame12
+	dw .courtSelect9InFrame13
+	dw .courtSelect9InFrame14
+	dw .courtSelect9Shown
+	dw .courtSelect9Shown
+.courtSelect9SlideOut:
+	dw .courtSelect9Shown
+	dw .courtSelect9OutFrame1
+	dw .courtSelect9OutFrame2
+	dw .courtSelect9OutFrame3
+	dw .courtSelect9OutFrame4
+	dw .courtSelect9OutFrame5
+	dw .courtSelect9OutFrame6
+	dw .courtSelect9OutFrame7
+	dw .courtSelect9OutFrame8
+	dw .courtSelect9OutFrame9
+	dw .courtSelect9OutFrame10
+	dw .minigameGrid6InFrame3
+	dw .minigameGrid6InFrame3
+	dw .minigameGrid6InFrame3
+.minigameGrid6SlideIn:
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .minigameGrid6InFrame3
+	dw .minigameGrid6InFrame4
+	dw .minigameGrid6InFrame5
+	dw .minigameGrid6InFrame6
+	dw .minigameGrid6InFrame7
+	dw .minigameGrid6InFrame8
+	dw .minigameGrid6InFrame9
+	dw .minigameGrid6InFrame10
+	dw .minigameGrid6InFrame11
+	dw .minigameGrid6InFrame12
+	dw .minigameGrid6Shown
+	dw .minigameGrid6ShownNudged
+	dw .minigameGrid6ShownNudged
+	dw .minigameGrid6ShownNudged
+.minigameGrid6SlideOut:
+	dw .minigameGrid6Shown
+	dw .minigameGrid6ShownNudged
+	dw .minigameGrid6OutFrame2
+	dw .minigameGrid6OutFrame3
+	dw .minigameGrid6OutFrame4
+	dw .minigameGrid6OutFrame5
+	dw .minigameGrid6OutFrame6
+	dw .minigameGrid6OutFrame7
+	dw .minigameGrid6OutFrame8
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .noRects
+	dw .noRects
 	dw .pastEnd
 	dw .pastEnd
 	dw .pastEnd
 	dw .pastEnd
 	dw .pastEnd
 	dw .pastEnd
-.rl_0:
+.noRects:
 	tilemap_rect_end
-.rl_1:
+.mainMenuInFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 16, 3, 5, 3
 	tilemap_rect_end
-.rl_2:
+.mainMenuInFrame4:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 13, 3, 5, 3
 	panel_rect 0, 18, 20, 7, 3, 3
 	tilemap_rect_end
-.rl_3:
+.mainMenuInFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 10, 3, 5, 3
 	panel_rect 5, 21, 16, 3, 5, 3
 	panel_rect 0, 21, 16, 3, 3, 3
 	tilemap_rect_end
-.rl_4:
+.mainMenuInFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 7, 3, 5, 3
 	panel_rect 5, 21, 13, 3, 5, 3
@@ -579,7 +579,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 3, 18, 20, 7, 3, 3
 	panel_rect 15, 21, 19, 11, 5, 3
 	tilemap_rect_end
-.rl_5:
+.mainMenuInFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 3, 5, 3
 	panel_rect 5, 21, 10, 3, 5, 3
@@ -588,7 +588,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 3, 18, 17, 7, 3, 3
 	panel_rect 15, 21, 16, 11, 5, 3
 	tilemap_rect_end
-.rl_6:
+.mainMenuInFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 2, 3, 5, 3
 	panel_rect 5, 21, 8, 3, 5, 3
@@ -599,7 +599,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 15, 21, 13, 11, 5, 3
 	panel_rect 20, 21, 19, 11, 5, 3
 	tilemap_rect_end
-.rl_7:
+.mainMenuInFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -611,7 +611,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 16, 11, 5, 3
 	panel_rect 25, 21, 22, 11, 5, 3
 	tilemap_rect_end
-.rl_8:
+.mainMenuInFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -623,7 +623,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 13, 11, 5, 3
 	panel_rect 25, 21, 19, 11, 5, 3
 	tilemap_rect_end
-.rl_9:
+.mainMenuInFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -635,7 +635,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 10, 11, 5, 3
 	panel_rect 25, 21, 16, 11, 5, 3
 	tilemap_rect_end
-.rl_10:
+.mainMenuInFrame12:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -647,7 +647,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 8, 11, 5, 3
 	panel_rect 25, 21, 14, 11, 5, 3
 	tilemap_rect_end
-.rl_11:
+.mainMenuInFrame13:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -659,7 +659,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 7, 11, 5, 3
 	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_12:
+.mainMenuInFrame14:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -671,7 +671,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 7, 11, 5, 3
 	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_13:
+.mainMenuShown:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -683,7 +683,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 7, 11, 5, 3
 	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_14:
+.mainMenuOutFrame1:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 0, 3, 5, 3
 	panel_rect 5, 21, 6, 3, 5, 3
@@ -695,7 +695,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 7, 11, 5, 3
 	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_15:
+.mainMenuOutFrame2:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 30, 2, 5, 3
 	panel_rect 5, 21, 4, 3, 5, 3
@@ -707,7 +707,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 7, 11, 5, 3
 	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_16:
+.mainMenuOutFrame3:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 27, 2, 5, 3
 	panel_rect 5, 21, 1, 3, 5, 3
@@ -719,7 +719,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 7, 11, 5, 3
 	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_17:
+.mainMenuOutFrame4:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 5, 21, 30, 2, 5, 3
 	panel_rect 10, 21, 4, 3, 5, 3
@@ -730,7 +730,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 6, 11, 5, 3
 	panel_rect 25, 21, 12, 11, 5, 3
 	tilemap_rect_end
-.rl_18:
+.mainMenuOutFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 5, 21, 27, 2, 5, 3
 	panel_rect 10, 21, 1, 3, 5, 3
@@ -741,7 +741,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 4, 11, 5, 3
 	panel_rect 25, 21, 10, 11, 5, 3
 	tilemap_rect_end
-.rl_19:
+.mainMenuOutFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 10, 21, 30, 2, 5, 3
 	panel_rect 3, 18, 28, 6, 3, 3
@@ -750,39 +750,39 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 1, 11, 5, 3
 	panel_rect 25, 21, 7, 11, 5, 3
 	tilemap_rect_end
-.rl_20:
+.mainMenuOutFrame7:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 10, 21, 27, 2, 5, 3
 	panel_rect 6, 18, 31, 6, 3, 3
 	panel_rect 20, 21, 30, 10, 5, 3
 	panel_rect 25, 21, 4, 11, 5, 3
 	tilemap_rect_end
-.rl_21:
+.mainMenuOutFrame8:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 6, 18, 28, 6, 3, 3
 	panel_rect 20, 21, 27, 10, 5, 3
 	panel_rect 25, 21, 1, 11, 5, 3
 	tilemap_rect_end
-.rl_22:
+.mainMenuOutFrame9:
 	panel_rect 25, 21, 30, 10, 5, 3
 	tilemap_rect_end
-.rl_23:
+.matchFormatInFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 18, 3, 5, 3
 	tilemap_rect_end
-.rl_24:
+.matchFormatInFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 15, 3, 5, 3
 	panel_rect 5, 21, 24, 3, 5, 3
 	panel_rect 10, 21, 21, 7, 5, 3
 	tilemap_rect_end
-.rl_25:
+.matchFormatInFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 12, 3, 5, 3
 	panel_rect 5, 21, 21, 3, 5, 3
 	panel_rect 10, 21, 18, 7, 5, 3
 	tilemap_rect_end
-.rl_26:
+.matchFormatInFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 9, 3, 5, 3
 	panel_rect 5, 21, 18, 3, 5, 3
@@ -790,7 +790,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 15, 21, 24, 7, 5, 3
 	panel_rect 20, 21, 19, 11, 5, 3
 	tilemap_rect_end
-.rl_27:
+.matchFormatInFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 6, 3, 5, 3
 	panel_rect 5, 21, 15, 3, 5, 3
@@ -798,7 +798,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 15, 21, 21, 7, 5, 3
 	panel_rect 20, 21, 16, 11, 5, 3
 	tilemap_rect_end
-.rl_28:
+.matchFormatInFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 3, 5, 3
 	panel_rect 5, 21, 13, 3, 5, 3
@@ -807,7 +807,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 21, 13, 11, 5, 3
 	panel_rect 25, 21, 19, 11, 5, 3
 	tilemap_rect_end
-.rl_29:
+.matchFormatInFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 3, 5, 3
 	panel_rect 5, 21, 12, 3, 5, 3
@@ -817,7 +817,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 16, 11, 5, 3
 	panel_rect 20, 26, 22, 11, 5, 3
 	tilemap_rect_end
-.rl_30:
+.matchFormatInFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 3, 5, 3
 	panel_rect 5, 21, 12, 3, 5, 3
@@ -827,7 +827,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 13, 11, 5, 3
 	panel_rect 20, 26, 19, 11, 5, 3
 	tilemap_rect_end
-.rl_31:
+.matchFormatInFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 3, 5, 3
 	panel_rect 5, 21, 12, 3, 5, 3
@@ -837,7 +837,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 10, 11, 5, 3
 	panel_rect 20, 26, 16, 11, 5, 3
 	tilemap_rect_end
-.rl_32:
+.matchFormatInFrame12:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 3, 5, 3
 	panel_rect 5, 21, 12, 3, 5, 3
@@ -847,7 +847,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 8, 11, 5, 3
 	panel_rect 20, 26, 14, 11, 5, 3
 	tilemap_rect_end
-.rl_33:
+.matchFormatInFrame13:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 3, 5, 3
 	panel_rect 5, 21, 12, 3, 5, 3
@@ -857,7 +857,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 7, 11, 5, 3
 	panel_rect 20, 26, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_34:
+.matchFormatShown:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 3, 5, 3
 	panel_rect 5, 21, 12, 3, 5, 3
@@ -867,7 +867,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 7, 11, 5, 3
 	panel_rect 20, 26, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_35:
+.matchFormatOutFrame1:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 2, 3, 5, 3
 	panel_rect 5, 21, 11, 3, 5, 3
@@ -877,7 +877,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 7, 11, 5, 3
 	panel_rect 20, 26, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_36:
+.matchFormatOutFrame2:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 0, 3, 5, 3
 	panel_rect 5, 21, 9, 3, 5, 3
@@ -887,7 +887,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 7, 11, 5, 3
 	panel_rect 20, 26, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_37:
+.matchFormatOutFrame3:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 29, 2, 5, 3
 	panel_rect 5, 21, 6, 3, 5, 3
@@ -897,7 +897,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 6, 11, 5, 3
 	panel_rect 20, 26, 12, 11, 5, 3
 	tilemap_rect_end
-.rl_38:
+.matchFormatOutFrame4:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 29, 2, 5, 3
 	panel_rect 5, 21, 6, 3, 5, 3
@@ -907,7 +907,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 6, 11, 5, 3
 	panel_rect 20, 26, 12, 11, 5, 3
 	tilemap_rect_end
-.rl_39:
+.matchFormatOutFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 26, 2, 5, 3
 	panel_rect 5, 21, 3, 3, 5, 3
@@ -917,7 +917,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 4, 11, 5, 3
 	panel_rect 20, 26, 10, 11, 5, 3
 	tilemap_rect_end
-.rl_40:
+.matchFormatOutFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 5, 21, 0, 3, 5, 3
 	panel_rect 10, 21, 26, 6, 5, 3
@@ -926,40 +926,40 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 1, 11, 5, 3
 	panel_rect 20, 26, 7, 11, 5, 3
 	tilemap_rect_end
-.rl_41:
+.matchFormatOutFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 5, 21, 29, 2, 5, 3
 	panel_rect 15, 21, 0, 7, 5, 3
 	panel_rect 25, 21, 30, 10, 5, 3
 	panel_rect 20, 26, 4, 11, 5, 3
 	tilemap_rect_end
-.rl_42:
+.matchFormatOutFrame8:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 15, 21, 29, 6, 5, 3
 	panel_rect 25, 21, 27, 10, 5, 3
 	panel_rect 20, 26, 1, 11, 5, 3
 	tilemap_rect_end
-.rl_43:
+.matchFormatOutFrame9:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 20, 26, 30, 10, 5, 3
 	tilemap_rect_end
-.rl_44:
+.minigameGrid9InFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 17, 3, 3, 3
 	tilemap_rect_end
-.rl_45:
+.minigameGrid9InFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 14, 3, 3, 3
 	panel_rect 3, 18, 20, 3, 3, 3
 	tilemap_rect_end
-.rl_46:
+.minigameGrid9InFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 11, 3, 3, 3
 	panel_rect 3, 18, 17, 3, 3, 3
 	panel_rect 6, 18, 23, 3, 3, 3
 	panel_rect 9, 18, 17, 7, 3, 3
 	tilemap_rect_end
-.rl_47:
+.minigameGrid9InFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 8, 3, 3, 3
 	panel_rect 3, 18, 14, 3, 3, 3
@@ -968,7 +968,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 12, 18, 20, 7, 3, 3
 	panel_rect 18, 18, 20, 11, 3, 3
 	tilemap_rect_end
-.rl_48:
+.minigameGrid9InFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 5, 3, 3, 3
 	panel_rect 3, 18, 11, 3, 3, 3
@@ -978,7 +978,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 18, 18, 17, 11, 3, 3
 	panel_rect 21, 18, 23, 11, 3, 3
 	tilemap_rect_end
-.rl_49:
+.minigameGrid9InFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 3, 3, 3, 3
 	panel_rect 3, 18, 9, 3, 3, 3
@@ -990,7 +990,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 20, 11, 3, 3
 	panel_rect 24, 18, 26, 11, 3, 3
 	tilemap_rect_end
-.rl_50:
+.minigameGrid9InFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 3, 3, 3
 	panel_rect 3, 18, 8, 3, 3, 3
@@ -1002,7 +1002,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 17, 11, 3, 3
 	panel_rect 24, 18, 23, 11, 3, 3
 	tilemap_rect_end
-.rl_51:
+.minigameGrid9InFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 3, 3, 3
 	panel_rect 3, 18, 8, 3, 3, 3
@@ -1014,7 +1014,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 14, 11, 3, 3
 	panel_rect 24, 18, 20, 11, 3, 3
 	tilemap_rect_end
-.rl_52:
+.minigameGrid9InFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 3, 3, 3
 	panel_rect 3, 18, 8, 3, 3, 3
@@ -1026,7 +1026,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 11, 11, 3, 3
 	panel_rect 24, 18, 17, 11, 3, 3
 	tilemap_rect_end
-.rl_53:
+.minigameGrid9InFrame12:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 3, 3, 3
 	panel_rect 3, 18, 8, 3, 3, 3
@@ -1038,7 +1038,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 9, 11, 3, 3
 	panel_rect 24, 18, 15, 11, 3, 3
 	tilemap_rect_end
-.rl_54:
+.minigameGrid9Shown:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 3, 3, 3
 	panel_rect 3, 18, 8, 3, 3, 3
@@ -1050,7 +1050,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 8, 11, 3, 3
 	panel_rect 24, 18, 14, 11, 3, 3
 	tilemap_rect_end
-.rl_55:
+.minigameGrid9ShownNudged:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 1, 3, 3, 3
 	panel_rect 3, 18, 7, 3, 3, 3
@@ -1062,7 +1062,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 8, 11, 3, 3
 	panel_rect 24, 18, 14, 11, 3, 3
 	tilemap_rect_end
-.rl_56:
+.minigameGrid9OutFrame2:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 31, 2, 3, 3
 	panel_rect 3, 18, 5, 3, 3, 3
@@ -1074,7 +1074,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 8, 11, 3, 3
 	panel_rect 24, 18, 14, 11, 3, 3
 	tilemap_rect_end
-.rl_57:
+.minigameGrid9OutFrame3:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 28, 2, 3, 3
 	panel_rect 3, 18, 2, 3, 3, 3
@@ -1086,7 +1086,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 8, 11, 3, 3
 	panel_rect 24, 18, 14, 11, 3, 3
 	tilemap_rect_end
-.rl_58:
+.minigameGrid9OutFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 3, 18, 31, 2, 3, 3
 	panel_rect 6, 18, 5, 3, 3, 3
@@ -1097,7 +1097,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 7, 11, 3, 3
 	panel_rect 24, 18, 13, 11, 3, 3
 	tilemap_rect_end
-.rl_59:
+.minigameGrid9OutFrame5:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 3, 18, 28, 2, 3, 3
 	panel_rect 6, 18, 2, 3, 3, 3
@@ -1108,7 +1108,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 5, 11, 3, 3
 	panel_rect 24, 18, 11, 11, 3, 3
 	tilemap_rect_end
-.rl_60:
+.minigameGrid9OutFrame6:
 	panel_rect 6, 18, 31, 2, 3, 3
 	panel_rect 12, 18, 31, 6, 3, 3
 	panel_rect 15, 18, 5, 7, 3, 3
@@ -1116,165 +1116,165 @@ TilemapAssemblyDispatch_39:
 	panel_rect 21, 18, 2, 11, 3, 3
 	panel_rect 24, 18, 8, 11, 3, 3
 	tilemap_rect_end
-.rl_61:
+.minigameGrid9OutFrame7:
 	panel_rect 12, 18, 28, 6, 3, 3
 	panel_rect 15, 18, 2, 7, 3, 3
 	panel_rect 21, 18, 31, 10, 3, 3
 	panel_rect 24, 18, 5, 11, 3, 3
 	tilemap_rect_end
-.rl_62:
+.minigameGrid9OutFrame8:
 	panel_rect 15, 18, 31, 6, 3, 3
 	panel_rect 21, 18, 28, 10, 3, 3
 	panel_rect 24, 18, 2, 11, 3, 3
 	tilemap_rect_end
-.rl_63:
+.minigameGrid9OutFrame9:
 	panel_rect 24, 18, 31, 10, 3, 3
 	tilemap_rect_end
-.rl_64:
+.minigameGrid9OutFrame10:
 	tilemap_rect_end
-.rl_65:
+.unusedPanelInFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 17, 4, 3, 3
 	tilemap_rect_end
-.rl_66:
+.unusedPanelInFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 14, 4, 3, 3
 	panel_rect 3, 18, 20, 4, 3, 3
 	tilemap_rect_end
-.rl_67:
+.unusedPanelInFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 11, 4, 3, 3
 	panel_rect 3, 18, 17, 4, 3, 3
 	tilemap_rect_end
-.rl_68:
+.unusedPanelInFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 8, 4, 3, 3
 	panel_rect 3, 18, 14, 4, 3, 3
 	panel_rect 0, 21, 19, 9, 3, 3
 	tilemap_rect_end
-.rl_69:
+.unusedPanelInFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 5, 4, 3, 3
 	panel_rect 3, 18, 11, 4, 3, 3
 	panel_rect 6, 18, 17, 4, 3, 3
 	panel_rect 0, 21, 16, 9, 3, 3
 	tilemap_rect_end
-.rl_70:
+.unusedPanelInFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 3, 4, 3, 3
 	panel_rect 3, 18, 9, 4, 3, 3
 	panel_rect 6, 18, 15, 4, 3, 3
 	panel_rect 0, 21, 13, 9, 3, 3
 	tilemap_rect_end
-.rl_71:
+.unusedPanelInFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
 	panel_rect 6, 18, 14, 4, 3, 3
 	panel_rect 0, 21, 10, 9, 5, 3
 	tilemap_rect_end
-.rl_72:
+.unusedPanelInFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
 	panel_rect 6, 18, 14, 4, 3, 3
 	panel_rect 0, 21, 8, 9, 5, 3
 	tilemap_rect_end
-.rl_73:
+.unusedPanelInFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
 	panel_rect 6, 18, 14, 4, 3, 3
 	panel_rect 0, 21, 7, 9, 5, 3
 	tilemap_rect_end
-.rl_74:
+.unusedPanelShown:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
 	panel_rect 6, 18, 14, 4, 3, 3
 	panel_rect 0, 21, 7, 9, 5, 3
 	tilemap_rect_end
-.rl_75:
+.unusedPanelOutFrame1:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 1, 4, 3, 3
 	panel_rect 3, 18, 7, 4, 3, 3
 	panel_rect 6, 18, 13, 4, 3, 3
 	panel_rect 0, 21, 7, 9, 5, 3
 	tilemap_rect_end
-.rl_76:
+.unusedPanelOutFrame2:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 31, 3, 3, 3
 	panel_rect 3, 18, 5, 4, 3, 3
 	panel_rect 6, 18, 11, 4, 3, 3
 	panel_rect 0, 21, 7, 9, 5, 3
 	tilemap_rect_end
-.rl_77:
+.unusedPanelOutFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 28, 3, 3, 3
 	panel_rect 3, 18, 2, 4, 3, 3
 	panel_rect 6, 18, 8, 4, 3, 3
 	panel_rect 0, 21, 6, 9, 5, 3
 	tilemap_rect_end
-.rl_78:
+.unusedPanelOutFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 3, 18, 31, 3, 3, 3
 	panel_rect 6, 18, 5, 4, 3, 3
 	panel_rect 0, 21, 4, 9, 5, 3
 	tilemap_rect_end
-.rl_79:
+.unusedPanelOutFrame5:
 	panel_rect 3, 18, 28, 3, 3, 3
 	panel_rect 6, 18, 2, 4, 3, 3
 	panel_rect 0, 21, 1, 9, 5, 3
 	tilemap_rect_end
-.rl_80:
+.unusedPanelOutFrame6:
 	panel_rect 6, 18, 31, 3, 3, 3
 	panel_rect 0, 21, 30, 8, 5, 3
 	tilemap_rect_end
-.rl_81:
+.unusedPanelOutFrame7:
 	panel_rect 6, 18, 28, 3, 3, 3
 	panel_rect 0, 21, 27, 8, 5, 3
 	tilemap_rect_end
-.rl_82:
+.unusedPanelOutFrame8:
 	panel_rect 0, 21, 24, 8, 5, 3
 	tilemap_rect_end
-.rl_83:
+.savedDataPickerInFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 20, 4, 3, 3
 	tilemap_rect_end
-.rl_84:
+.savedDataPickerInFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 17, 4, 3, 3
 	tilemap_rect_end
-.rl_85:
+.savedDataPickerInFrame5:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 14, 4, 3, 3
 	panel_rect 3, 18, 20, 4, 3, 3
 	tilemap_rect_end
-.rl_86:
+.savedDataPickerInFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 11, 4, 3, 3
 	panel_rect 3, 18, 17, 4, 3, 3
 	tilemap_rect_end
-.rl_87:
+.savedDataPickerInFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 8, 4, 3, 3
 	panel_rect 3, 18, 14, 4, 3, 3
 	tilemap_rect_end
-.rl_88:
+.savedDataPickerInFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 5, 4, 3, 3
 	panel_rect 3, 18, 11, 4, 3, 3
 	panel_rect 6, 18, 17, 4, 3, 3
 	panel_rect 0, 21, 18, 9, 5, 3
 	tilemap_rect_end
-.rl_89:
+.savedDataPickerInFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 3, 4, 3, 3
 	panel_rect 3, 18, 9, 4, 3, 3
 	panel_rect 6, 18, 15, 4, 3, 3
 	panel_rect 0, 21, 15, 9, 5, 3
 	tilemap_rect_end
-.rl_90:
+.savedDataPickerInFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1282,7 +1282,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 0, 21, 12, 9, 5, 3
 	panel_rect 5, 21, 20, 9, 5, 3
 	tilemap_rect_end
-.rl_91:
+.savedDataPickerInFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1290,7 +1290,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 0, 21, 9, 9, 5, 3
 	panel_rect 5, 21, 17, 9, 5, 3
 	tilemap_rect_end
-.rl_92:
+.savedDataPickerInFrame12:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1298,7 +1298,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 0, 21, 6, 9, 5, 3
 	panel_rect 5, 21, 14, 9, 5, 3
 	tilemap_rect_end
-.rl_93:
+.savedDataPickerInFrame13:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1306,7 +1306,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 0, 21, 4, 9, 5, 3
 	panel_rect 5, 21, 12, 9, 5, 3
 	tilemap_rect_end
-.rl_94:
+.savedDataPickerShown:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1314,7 +1314,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 0, 21, 3, 9, 5, 3
 	panel_rect 5, 21, 11, 9, 5, 3
 	tilemap_rect_end
-.rl_95:
+.savedDataPickerShownNudged:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 1, 4, 3, 3
 	panel_rect 3, 18, 7, 4, 3, 3
@@ -1322,7 +1322,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 0, 21, 3, 9, 5, 3
 	panel_rect 5, 21, 11, 9, 5, 3
 	tilemap_rect_end
-.rl_96:
+.savedDataPickerOutFrame2:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 31, 3, 3, 3
 	panel_rect 3, 18, 5, 4, 3, 3
@@ -1330,371 +1330,371 @@ TilemapAssemblyDispatch_39:
 	panel_rect 0, 21, 3, 9, 5, 3
 	panel_rect 5, 21, 11, 9, 5, 3
 	tilemap_rect_end
-.rl_97:
+.savedDataPickerOutFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 3, 18, 2, 4, 3, 3
 	panel_rect 6, 18, 8, 4, 3, 3
 	panel_rect 0, 21, 2, 9, 5, 3
 	panel_rect 5, 21, 10, 9, 5, 3
 	tilemap_rect_end
-.rl_98:
+.savedDataPickerOutFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 3, 18, 31, 3, 3, 3
 	panel_rect 6, 18, 5, 4, 3, 3
 	panel_rect 0, 21, 0, 9, 5, 3
 	panel_rect 5, 21, 8, 9, 5, 3
 	tilemap_rect_end
-.rl_99:
+.savedDataPickerOutFrame5:
 	panel_rect 6, 18, 2, 4, 3, 3
 	panel_rect 0, 21, 29, 8, 5, 3
 	panel_rect 5, 21, 5, 9, 5, 3
 	tilemap_rect_end
-.rl_100:
+.savedDataPickerOutFrame6:
 	panel_rect 6, 18, 31, 3, 3, 3
 	panel_rect 0, 21, 26, 8, 5, 3
 	panel_rect 5, 21, 2, 9, 5, 3
 	tilemap_rect_end
-.rl_101:
+.savedDataPickerOutFrame7:
 	panel_rect 0, 21, 23, 8, 5, 3
 	panel_rect 5, 21, 31, 8, 5, 3
 	tilemap_rect_end
-.rl_102:
+.savedDataPickerOutFrame8:
 	panel_rect 5, 21, 28, 8, 5, 3
 	tilemap_rect_end
-.rl_103:
+.savedDataPickerOutFrame9:
 	panel_rect 5, 21, 25, 8, 5, 3
 	tilemap_rect_end
-.rl_104:
+.n64RecordTypeInFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 19, 7, 5, 3
 	tilemap_rect_end
-.rl_105:
+.n64RecordTypeInFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 16, 7, 5, 3
 	tilemap_rect_end
-.rl_106:
+.n64RecordTypeInFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 13, 7, 5, 3
 	panel_rect 5, 21, 22, 7, 5, 3
 	tilemap_rect_end
-.rl_107:
+.n64RecordTypeInFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 10, 7, 5, 3
 	panel_rect 5, 21, 19, 7, 5, 3
 	tilemap_rect_end
-.rl_108:
+.n64RecordTypeInFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 7, 7, 5, 3
 	panel_rect 5, 21, 16, 7, 5, 3
 	tilemap_rect_end
-.rl_109:
+.n64RecordTypeInFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 7, 5, 3
 	panel_rect 5, 21, 13, 7, 5, 3
 	panel_rect 10, 21, 22, 7, 5, 3
 	tilemap_rect_end
-.rl_110:
+.n64RecordTypeInFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 2, 7, 5, 3
 	panel_rect 5, 21, 10, 7, 5, 3
 	panel_rect 10, 21, 19, 7, 5, 3
 	tilemap_rect_end
-.rl_111:
+.n64RecordTypeInFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 7, 5, 3
 	panel_rect 5, 21, 8, 7, 5, 3
 	panel_rect 10, 21, 16, 7, 5, 3
 	tilemap_rect_end
-.rl_112:
+.n64RecordTypeInFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 7, 5, 3
 	panel_rect 5, 21, 7, 7, 5, 3
 	panel_rect 10, 21, 14, 7, 5, 3
 	tilemap_rect_end
-.rl_113:
+.n64RecordTypeInFrame12:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 7, 5, 3
 	panel_rect 5, 21, 7, 7, 5, 3
 	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
-.rl_114:
+.n64RecordTypeOutFrame0:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 7, 5, 3
 	panel_rect 5, 21, 7, 7, 5, 3
 	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
-.rl_115:
+.n64RecordTypeOutFrame1:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 0, 7, 5, 3
 	panel_rect 5, 21, 7, 7, 5, 3
 	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
-.rl_116:
+.n64RecordTypeOutFrame2:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 30, 6, 5, 3
 	panel_rect 5, 21, 6, 7, 5, 3
 	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
-.rl_117:
+.n64RecordTypeOutFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 27, 6, 5, 3
 	panel_rect 5, 21, 4, 7, 5, 3
 	panel_rect 10, 21, 12, 7, 5, 3
 	tilemap_rect_end
-.rl_118:
+.n64RecordTypeOutFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 24, 6, 5, 3
 	panel_rect 5, 21, 1, 7, 5, 3
 	panel_rect 10, 21, 10, 7, 5, 3
 	tilemap_rect_end
-.rl_119:
+.n64RecordTypeOutFrame5:
 	panel_rect 5, 21, 30, 6, 5, 3
 	panel_rect 10, 21, 7, 7, 5, 3
 	tilemap_rect_end
-.rl_120:
+.n64RecordTypeOutFrame6:
 	panel_rect 5, 21, 27, 6, 5, 3
 	panel_rect 10, 21, 4, 7, 5, 3
 	tilemap_rect_end
-.rl_121:
+.n64RecordTypeOutFrame7:
 	panel_rect 10, 21, 1, 7, 5, 3
 	tilemap_rect_end
-.rl_122:
+.n64RecordTypeOutFrame8:
 	panel_rect 10, 21, 30, 6, 5, 3
 	tilemap_rect_end
-.rl_123:
+.n64RecordTypeOutFrame9:
 	panel_rect 10, 21, 27, 6, 5, 3
 	tilemap_rect_end
-.rl_124:
+.n64RecordTypeOutFrame10:
 	panel_rect 10, 21, 24, 6, 5, 3
 	tilemap_rect_end
-.rl_125:
+.choiceTabInFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 21, 7, 5, 3
 	tilemap_rect_end
-.rl_126:
+.choiceTabInFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 18, 7, 5, 3
 	tilemap_rect_end
-.rl_127:
+.choiceTabInFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 15, 7, 5, 3
 	tilemap_rect_end
-.rl_128:
+.choiceTabInFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 12, 7, 5, 3
 	panel_rect 5, 21, 24, 7, 5, 3
 	tilemap_rect_end
-.rl_129:
+.choiceTabInFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 9, 7, 5, 3
 	panel_rect 5, 21, 21, 7, 5, 3
 	tilemap_rect_end
-.rl_130:
+.choiceTabInFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 6, 7, 5, 3
 	panel_rect 5, 21, 18, 7, 5, 3
 	tilemap_rect_end
-.rl_131:
+.choiceTabInFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 7, 5, 3
 	panel_rect 5, 21, 15, 7, 5, 3
 	tilemap_rect_end
-.rl_132:
+.choiceTabInFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 7, 5, 3
 	panel_rect 5, 21, 13, 7, 5, 3
 	tilemap_rect_end
-.rl_133:
+.choiceTabInFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 7, 5, 3
 	panel_rect 5, 21, 12, 7, 5, 3
 	tilemap_rect_end
-.rl_134:
+.choiceTabShown:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 7, 5, 3
 	panel_rect 5, 21, 12, 7, 5, 3
 	tilemap_rect_end
-.rl_135:
+.choiceTabOutFrame1:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 2, 7, 5, 3
 	panel_rect 5, 21, 12, 7, 5, 3
 	tilemap_rect_end
-.rl_136:
+.choiceTabOutFrame2:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 0, 7, 5, 3
 	panel_rect 5, 21, 11, 7, 5, 3
 	tilemap_rect_end
-.rl_137:
+.choiceTabOutFrame3:
 	panel_rect 0, 21, 29, 6, 5, 3
 	panel_rect 5, 21, 9, 7, 5, 3
 	tilemap_rect_end
-.rl_138:
+.choiceTabOutFrame4:
 	panel_rect 0, 21, 26, 6, 5, 3
 	panel_rect 5, 21, 6, 7, 5, 3
 	tilemap_rect_end
-.rl_139:
+.choiceTabOutFrame5:
 	panel_rect 0, 21, 23, 6, 5, 3
 	panel_rect 5, 21, 3, 7, 5, 3
 	tilemap_rect_end
-.rl_140:
+.choiceTabOutFrame6:
 	panel_rect 5, 21, 0, 7, 5, 3
 	tilemap_rect_end
-.rl_141:
+.choiceTabOutFrame7:
 	panel_rect 5, 21, 29, 6, 5, 3
 	tilemap_rect_end
-.rl_142:
+.choiceTabOutFrame8:
 	panel_rect 5, 21, 26, 6, 5, 3
 	tilemap_rect_end
-.rl_143:
+.choiceTabOutFrame9:
 	tilemap_rect_end
-.rl_144:
+.courtSelect4InFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 22, 4, 5, 3
 	tilemap_rect_end
-.rl_145:
+.courtSelect4InFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 19, 4, 5, 3
 	tilemap_rect_end
-.rl_146:
+.courtSelect4InFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 16, 4, 5, 3
 	panel_rect 5, 21, 23, 4, 5, 3
 	panel_rect 10, 21, 22, 9, 5, 3
 	tilemap_rect_end
-.rl_147:
+.courtSelect4InFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 13, 4, 5, 3
 	panel_rect 5, 21, 20, 4, 5, 3
 	panel_rect 10, 21, 19, 9, 5, 3
 	tilemap_rect_end
-.rl_148:
+.courtSelect4InFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 10, 4, 5, 3
 	panel_rect 5, 21, 17, 4, 5, 3
 	panel_rect 10, 21, 16, 9, 5, 3
 	panel_rect 15, 21, 23, 9, 5, 3
 	tilemap_rect_end
-.rl_149:
+.courtSelect4InFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 7, 4, 5, 3
 	panel_rect 5, 21, 14, 4, 5, 3
 	panel_rect 10, 21, 13, 9, 5, 3
 	panel_rect 15, 21, 20, 9, 5, 3
 	tilemap_rect_end
-.rl_150:
+.courtSelect4InFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 5, 4, 5, 3
 	panel_rect 5, 21, 12, 4, 5, 3
 	panel_rect 10, 21, 10, 9, 5, 3
 	panel_rect 15, 21, 17, 9, 5, 3
 	tilemap_rect_end
-.rl_151:
+.courtSelect4InFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 4, 5, 3
 	panel_rect 5, 21, 11, 4, 5, 3
 	panel_rect 10, 21, 7, 9, 5, 3
 	panel_rect 15, 21, 14, 9, 5, 3
 	tilemap_rect_end
-.rl_152:
+.courtSelect4InFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 4, 5, 3
 	panel_rect 5, 21, 11, 4, 5, 3
 	panel_rect 10, 21, 5, 9, 5, 3
 	panel_rect 15, 21, 12, 9, 5, 3
 	tilemap_rect_end
-.rl_153:
+.courtSelect4InFrame12:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 4, 5, 3
 	panel_rect 5, 21, 11, 4, 5, 3
 	panel_rect 10, 21, 4, 9, 5, 3
 	panel_rect 15, 21, 11, 9, 5, 3
 	tilemap_rect_end
-.rl_154:
+.courtSelect4InFrame13:
 	tilemap_rect_end
-.rl_155:
+.courtSelect4InFrame14:
 	tilemap_rect_end
-.rl_156:
+.courtSelect4InFrame15:
 	tilemap_rect_end
-.rl_157:
+.courtSelect4InFrame16:
 	tilemap_rect_end
-.rl_158:
+.courtSelect4OutFrame0:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 4, 5, 3
 	panel_rect 5, 21, 11, 4, 5, 3
 	panel_rect 10, 21, 4, 9, 5, 3
 	panel_rect 15, 21, 11, 9, 5, 3
 	tilemap_rect_end
-.rl_159:
+.courtSelect4OutFrame1:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 3, 4, 5, 3
 	panel_rect 5, 21, 10, 4, 5, 3
 	panel_rect 10, 21, 4, 9, 5, 3
 	panel_rect 15, 21, 11, 9, 5, 3
 	tilemap_rect_end
-.rl_160:
+.courtSelect4OutFrame2:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 1, 4, 5, 3
 	panel_rect 5, 21, 8, 4, 5, 3
 	panel_rect 10, 21, 4, 9, 5, 3
 	panel_rect 15, 21, 11, 9, 5, 3
 	tilemap_rect_end
-.rl_161:
+.courtSelect4OutFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 30, 3, 5, 3
 	panel_rect 5, 21, 5, 4, 5, 3
 	panel_rect 10, 21, 3, 9, 5, 3
 	panel_rect 15, 21, 10, 9, 5, 3
 	tilemap_rect_end
-.rl_162:
+.courtSelect4OutFrame4:
 	panel_rect 0, 21, 27, 3, 5, 3
 	panel_rect 5, 21, 2, 4, 5, 3
 	panel_rect 10, 21, 1, 9, 5, 3
 	panel_rect 15, 21, 8, 9, 5, 3
 	tilemap_rect_end
-.rl_163:
+.courtSelect4OutFrame5:
 	panel_rect 0, 21, 24, 3, 5, 3
 	panel_rect 5, 21, 31, 3, 5, 3
 	panel_rect 10, 21, 30, 8, 5, 3
 	panel_rect 15, 21, 5, 9, 5, 3
 	tilemap_rect_end
-.rl_164:
+.courtSelect4OutFrame6:
 	panel_rect 5, 21, 28, 3, 5, 3
 	panel_rect 10, 21, 27, 8, 5, 3
 	panel_rect 15, 21, 2, 9, 5, 3
 	tilemap_rect_end
-.rl_165:
+.courtSelect4OutFrame7:
 	panel_rect 15, 21, 31, 8, 5, 3
 	tilemap_rect_end
-.rl_166:
+.courtSelect4OutFrame8:
 	panel_rect 15, 21, 28, 8, 5, 3
 	tilemap_rect_end
-.rl_167:
+.courtSelect4OutFrame9:
 	tilemap_rect_end
-.rl_168:
+.courtSelect4OutFrame10:
 	tilemap_rect_end
-.rl_169:
+.courtSelect4OutFrame11:
 	tilemap_rect_end
-.rl_170:
+.courtSelect4OutFrame12:
 	tilemap_rect_end
-.rl_171:
+.courtSelect4OutFrame13:
 	tilemap_rect_end
-.rl_172:
+.courtSelect9InFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 19, 3, 5, 3
 	tilemap_rect_end
-.rl_173:
+.courtSelect9InFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 16, 3, 5, 3
 	panel_rect 5, 21, 22, 3, 5, 3
 	tilemap_rect_end
-.rl_174:
+.courtSelect9InFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 13, 3, 5, 3
 	panel_rect 5, 21, 19, 3, 5, 3
 	panel_rect 15, 21, 19, 7, 5, 3
 	panel_rect 20, 21, 25, 7, 5, 3
 	tilemap_rect_end
-.rl_175:
+.courtSelect9InFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 10, 3, 5, 3
 	panel_rect 5, 21, 16, 3, 5, 3
@@ -1702,7 +1702,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 15, 21, 16, 7, 5, 3
 	panel_rect 20, 21, 22, 7, 5, 3
 	tilemap_rect_end
-.rl_176:
+.courtSelect9InFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 7, 3, 5, 3
 	panel_rect 5, 21, 13, 3, 5, 3
@@ -1712,7 +1712,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 21, 25, 7, 5, 3
 	panel_rect 20, 26, 19, 11, 5, 3
 	tilemap_rect_end
-.rl_177:
+.courtSelect9InFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 3, 5, 3
 	panel_rect 5, 21, 10, 3, 5, 3
@@ -1723,7 +1723,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 20, 26, 16, 11, 5, 3
 	panel_rect 25, 26, 22, 11, 5, 3
 	tilemap_rect_end
-.rl_178:
+.courtSelect9InFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 2, 3, 5, 3
 	panel_rect 5, 21, 8, 3, 5, 3
@@ -1735,7 +1735,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 19, 11, 5, 3
 	panel_rect 27, 18, 25, 11, 5, 3
 	tilemap_rect_end
-.rl_179:
+.courtSelect9InFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -1747,7 +1747,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 16, 11, 5, 3
 	panel_rect 27, 18, 22, 11, 5, 3
 	tilemap_rect_end
-.rl_180:
+.courtSelect9InFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -1759,7 +1759,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 13, 11, 5, 3
 	panel_rect 27, 18, 19, 11, 5, 3
 	tilemap_rect_end
-.rl_181:
+.courtSelect9InFrame12:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -1771,7 +1771,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 10, 11, 5, 3
 	panel_rect 27, 18, 16, 11, 5, 3
 	tilemap_rect_end
-.rl_182:
+.courtSelect9InFrame13:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -1783,7 +1783,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 8, 11, 5, 3
 	panel_rect 27, 18, 14, 11, 5, 3
 	tilemap_rect_end
-.rl_183:
+.courtSelect9InFrame14:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 3, 5, 3
 	panel_rect 5, 21, 7, 3, 5, 3
@@ -1795,7 +1795,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 7, 11, 5, 3
 	panel_rect 27, 18, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_184:
+.courtSelect9Shown:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 0, 3, 5, 3
 	panel_rect 5, 21, 6, 3, 5, 3
@@ -1807,7 +1807,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 7, 11, 5, 3
 	panel_rect 27, 18, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_185:
+.courtSelect9OutFrame1:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 30, 2, 5, 3
 	panel_rect 5, 21, 4, 3, 5, 3
@@ -1819,7 +1819,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 7, 11, 5, 3
 	panel_rect 27, 18, 13, 11, 5, 3
 	tilemap_rect_end
-.rl_186:
+.courtSelect9OutFrame2:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 27, 2, 5, 3
 	panel_rect 5, 21, 1, 3, 5, 3
@@ -1831,7 +1831,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 6, 11, 5, 3
 	panel_rect 27, 18, 12, 11, 5, 3
 	tilemap_rect_end
-.rl_187:
+.courtSelect9OutFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 24, 2, 5, 3
 	panel_rect 5, 21, 30, 2, 5, 3
@@ -1843,7 +1843,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 4, 11, 5, 3
 	panel_rect 27, 18, 10, 11, 5, 3
 	tilemap_rect_end
-.rl_188:
+.courtSelect9OutFrame4:
 	panel_rect 5, 21, 27, 2, 5, 3
 	panel_rect 10, 21, 1, 3, 5, 3
 	panel_rect 15, 21, 24, 6, 5, 3
@@ -1853,7 +1853,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 1, 11, 5, 3
 	panel_rect 27, 18, 7, 11, 5, 3
 	tilemap_rect_end
-.rl_189:
+.courtSelect9OutFrame5:
 	panel_rect 10, 21, 30, 2, 5, 3
 	panel_rect 20, 21, 27, 6, 5, 3
 	panel_rect 25, 21, 1, 7, 5, 3
@@ -1861,49 +1861,49 @@ TilemapAssemblyDispatch_39:
 	panel_rect 25, 26, 30, 10, 5, 3
 	panel_rect 27, 18, 4, 11, 5, 3
 	tilemap_rect_end
-.rl_190:
+.courtSelect9OutFrame6:
 	panel_rect 25, 21, 30, 6, 5, 3
 	panel_rect 25, 26, 27, 10, 5, 3
 	panel_rect 27, 18, 1, 11, 5, 3
 	tilemap_rect_end
-.rl_191:
+.courtSelect9OutFrame7:
 	panel_rect 27, 18, 30, 10, 5, 3
 	tilemap_rect_end
-.rl_192:
+.courtSelect9OutFrame8:
 	panel_rect 27, 18, 27, 10, 5, 3
 	tilemap_rect_end
-.rl_193:
+.courtSelect9OutFrame9:
 	panel_rect 27, 18, 24, 10, 5, 3
 	tilemap_rect_end
-.rl_194:
+.courtSelect9OutFrame10:
 	tilemap_rect_end
-.rl_195:
+.minigameGrid6InFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 17, 4, 3, 3
 	tilemap_rect_end
-.rl_196:
+.minigameGrid6InFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 14, 4, 3, 3
 	tilemap_rect_end
-.rl_197:
+.minigameGrid6InFrame5:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 11, 4, 3, 3
 	panel_rect 3, 18, 17, 4, 3, 3
 	tilemap_rect_end
-.rl_198:
+.minigameGrid6InFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 8, 4, 3, 3
 	panel_rect 3, 18, 14, 4, 3, 3
 	panel_rect 6, 18, 20, 4, 3, 3
 	tilemap_rect_end
-.rl_199:
+.minigameGrid6InFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 5, 4, 3, 3
 	panel_rect 3, 18, 11, 4, 3, 3
 	panel_rect 6, 18, 17, 4, 3, 3
 	panel_rect 9, 18, 20, 9, 3, 3
 	tilemap_rect_end
-.rl_200:
+.minigameGrid6InFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 3, 4, 3, 3
 	panel_rect 3, 18, 9, 4, 3, 3
@@ -1911,7 +1911,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 17, 9, 3, 3
 	panel_rect 15, 18, 23, 9, 3, 3
 	tilemap_rect_end
-.rl_201:
+.minigameGrid6InFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1919,7 +1919,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 14, 9, 3, 3
 	panel_rect 15, 18, 20, 9, 3, 3
 	tilemap_rect_end
-.rl_202:
+.minigameGrid6InFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1927,7 +1927,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 11, 9, 3, 3
 	panel_rect 15, 18, 17, 9, 3, 3
 	tilemap_rect_end
-.rl_203:
+.minigameGrid6InFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1935,7 +1935,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 8, 9, 3, 3
 	panel_rect 15, 18, 14, 9, 3, 3
 	tilemap_rect_end
-.rl_204:
+.minigameGrid6InFrame12:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1943,7 +1943,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 6, 9, 3, 3
 	panel_rect 15, 18, 12, 9, 3, 3
 	tilemap_rect_end
-.rl_205:
+.minigameGrid6Shown:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 2, 4, 3, 3
 	panel_rect 3, 18, 8, 4, 3, 3
@@ -1951,7 +1951,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 5, 9, 3, 3
 	panel_rect 15, 18, 11, 9, 3, 3
 	tilemap_rect_end
-.rl_206:
+.minigameGrid6ShownNudged:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 1, 4, 3, 3
 	panel_rect 3, 18, 7, 4, 3, 3
@@ -1959,7 +1959,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 5, 9, 3, 3
 	panel_rect 15, 18, 11, 9, 3, 3
 	tilemap_rect_end
-.rl_207:
+.minigameGrid6OutFrame2:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 18, 31, 3, 3, 3
 	panel_rect 3, 18, 5, 4, 3, 3
@@ -1967,7 +1967,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 5, 9, 3, 3
 	panel_rect 15, 18, 11, 9, 3, 3
 	tilemap_rect_end
-.rl_208:
+.minigameGrid6OutFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 28, 3, 3, 3
 	panel_rect 3, 18, 2, 4, 3, 3
@@ -1975,7 +1975,7 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 4, 9, 3, 3
 	panel_rect 15, 18, 10, 9, 3, 3
 	tilemap_rect_end
-.rl_209:
+.minigameGrid6OutFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 18, 25, 3, 3, 3
 	panel_rect 3, 18, 31, 3, 3, 3
@@ -1983,22 +1983,22 @@ TilemapAssemblyDispatch_39:
 	panel_rect 9, 18, 2, 9, 3, 3
 	panel_rect 15, 18, 8, 9, 3, 3
 	tilemap_rect_end
-.rl_210:
+.minigameGrid6OutFrame5:
 	panel_rect 3, 18, 28, 3, 3, 3
 	panel_rect 6, 18, 2, 4, 3, 3
 	panel_rect 9, 18, 31, 8, 3, 3
 	panel_rect 15, 18, 5, 9, 3, 3
 	tilemap_rect_end
-.rl_211:
+.minigameGrid6OutFrame6:
 	panel_rect 6, 18, 31, 3, 3, 3
 	panel_rect 9, 18, 28, 8, 3, 3
 	panel_rect 15, 18, 2, 9, 3, 3
 	tilemap_rect_end
-.rl_212:
+.minigameGrid6OutFrame7:
 	panel_rect 9, 18, 25, 8, 3, 3
 	panel_rect 15, 18, 31, 8, 3, 3
 	tilemap_rect_end
-.rl_213:
+.minigameGrid6OutFrame8:
 	panel_rect 15, 18, 28, 8, 3, 3
 	tilemap_rect_end
 .pastEnd:

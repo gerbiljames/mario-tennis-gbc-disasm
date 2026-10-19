@@ -46,16 +46,16 @@ LoadN64RingShotRecords:
 	ld a, [hl] ; $5256
 	ld b, a ; $5257
 	and $01 ; $5258
-	jr nz, .maskSet ; $525a
+	jr nz, .entry14Unlocked ; $525a
 	ld a, $10 ; $525c
 	ld [wRingShotEntryList + 14], a ; $525e
-.maskSet:
+.entry14Unlocked:
 	ld a, b ; $5261
 	and $02 ; $5262
-	jr nz, .maskSet2 ; $5264
+	jr nz, .entry15Unlocked ; $5264
 	ld a, $10 ; $5266
 	ld [wRingShotEntryList + 15], a ; $5268
-.maskSet2:
+.entry15Unlocked:
 	ld hl, wChartRows ; $526b
 	ld bc, $0140 ; $526e
 	call ClearBytes ; $5271
@@ -517,9 +517,9 @@ RingShotScoreDrawTask:
 	add a ; $55a9
 	add l ; $55aa
 	ld l, a ; $55ab
-	jr nc, .gotPtr ; $55ac
+	jr nc, .gotColumnPtr ; $55ac
 	inc h ; $55ae
-.gotPtr:
+.gotColumnPtr:
 	ld_xy de, $8a, $35 ; $55af
 	ld c, $00 ; $55b2
 .loopB:
@@ -536,9 +536,9 @@ RingShotScoreDrawTask:
 	ld a, $0c ; $55c2
 	add l ; $55c4
 	ld l, a ; $55c5
-	jr nc, .gotPtr2 ; $55c6
+	jr nc, .gotNextRowPtr ; $55c6
 	inc h ; $55c8
-.gotPtr2:
+.gotNextRowPtr:
 	ld a, c ; $55c9
 	inc a ; $55ca
 	ld c, a ; $55cb

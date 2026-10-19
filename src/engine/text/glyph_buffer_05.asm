@@ -413,7 +413,7 @@ UploadLastGlyphTiles:
 	ld b, a ; $760e
 	ld a, [wWindowId] ; $760f
 	cp b ; $7612
-	jr nz, .restore ; $7613
+	jr nz, .noUpload ; $7613
 	ld b, a ; $7615
 	ld a, [wDialogueWindowId] ; $7616
 	cp b ; $7619
@@ -426,10 +426,10 @@ UploadLastGlyphTiles:
 .checkMessageSpeed:
 	ld a, [wMessageSpeed] ; $7621
 	bit 7, a ; $7624
-	jr nz, .restore ; $7626
+	jr nz, .noUpload ; $7626
 	and $7f ; $7628
 	jr nz, .maskSet ; $762a
-.restore:
+.noUpload:
 	pop hl ; $762c
 	pop de ; $762d
 	pop bc ; $762e
@@ -447,7 +447,7 @@ UploadLastGlyphTiles:
 .checkLimit:
 	ld a, [wGlyphRowStartCol] ; $7646
 	cp b ; $7649
-	jr nc, .restore2 ; $764a
+	jr nc, .done ; $764a
 	ld hl, wGlyphPenX ; $764c
 	ld a, [hl+] ; $764f
 	ld h, [hl] ; $7650
@@ -478,7 +478,7 @@ UploadLastGlyphTiles:
 	pop hl ; $7671
 	ld c, 2 ; $7672
 	call QueueVRAMCopy ; $7674
-.restore2:
+.done:
 	pop_wram_bank ; $7677
 	pop hl ; $767c
 	pop de ; $767d

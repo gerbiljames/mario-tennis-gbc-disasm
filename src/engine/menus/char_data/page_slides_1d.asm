@@ -170,15 +170,15 @@ RunDrillResultInputLoop:
 	call AdvanceFrame ; $4cbf
 	ldh a, [hInputRisingEdge] ; $4cc2
 	bit PADB_RIGHT, a ; $4cc4
-	jr nz, .playSfx ; $4cc6
+	jr nz, .toPartnerPage ; $4cc6
 	bit PADB_LEFT, a ; $4cc8
-	jp nz, .playSfx2 ; $4cca
+	jp nz, .toMainPage ; $4cca
 	bit PADB_B, a ; $4ccd
-	jp nz, .playSfx3 ; $4ccf
+	jp nz, .cancel ; $4ccf
 	bit PADB_A, a ; $4cd2
-	jp nz, .playSfx4 ; $4cd4
+	jp nz, .confirm ; $4cd4
 	jr .overviewLoop ; $4cd7
-.playSfx:
+.toPartnerPage:
 	sound SFX_MENU_MOVE ; $4cd9
 	ld hl, CharDataScreenBgScrollTask ; $4cdb
 	call UnregisterFrameTask ; $4cde
@@ -211,7 +211,7 @@ RunDrillResultInputLoop:
 	ld hl, SlideCharDataArrowsInTask ; $4d31
 	call RegisterFrameTask ; $4d34
 	jp .partnerPageLoop ; $4d37
-.playSfx2:
+.toMainPage:
 	sound SFX_MENU_MOVE ; $4d3a
 	ld hl, CharDataScreenBgScrollTask ; $4d3c
 	call UnregisterFrameTask ; $4d3f
@@ -244,23 +244,23 @@ RunDrillResultInputLoop:
 	ld hl, SlideCharDataArrowsInTask ; $4d92
 	call RegisterFrameTask ; $4d95
 	jr .mainPageLoop ; $4d98
-.playSfx3:
+.cancel:
 	sound SFX_MENU_CANCEL ; $4d9a
 	ret ; $4d9c
-.playSfx4:
+.confirm:
 	sound SFX_MENU_SELECT ; $4d9d
 	ret ; $4d9f
 .mainPageLoop:
 	call AdvanceFrame ; $4da0
 	ldh a, [hInputRisingEdge] ; $4da3
 	bit PADB_RIGHT, a ; $4da5
-	jr nz, .playSfx5 ; $4da7
+	jr nz, .mainPageBack ; $4da7
 	bit PADB_B, a ; $4da9
-	jr nz, .playSfx6 ; $4dab
+	jr nz, .mainPageCancel ; $4dab
 	bit PADB_A, a ; $4dad
-	jr nz, .playSfx7 ; $4daf
+	jr nz, .mainPageConfirm ; $4daf
 	jr .mainPageLoop ; $4db1
-.playSfx5:
+.mainPageBack:
 	sound SFX_MENU_MOVE ; $4db3
 	ld hl, SlideCharDataArrowsInTask ; $4db5
 	call UnregisterFrameTask ; $4db8
@@ -286,23 +286,23 @@ RunDrillResultInputLoop:
 	call RegisterFrameTask ; $4df0
 	farcall StartCharDataScreenAnimTask ; $4df3
 	jp .overviewLoop ; $4df6
-.playSfx6:
+.mainPageCancel:
 	sound SFX_MENU_CANCEL ; $4df9
 	ret ; $4dfb
-.playSfx7:
+.mainPageConfirm:
 	sound SFX_MENU_SELECT ; $4dfc
 	ret ; $4dfe
 .partnerPageLoop:
 	call AdvanceFrame ; $4dff
 	ldh a, [hInputRisingEdge] ; $4e02
 	bit PADB_LEFT, a ; $4e04
-	jr nz, .playSfx8 ; $4e06
+	jr nz, .partnerPageBack ; $4e06
 	bit PADB_B, a ; $4e08
-	jr nz, .playSfx9 ; $4e0a
+	jr nz, .partnerPageCancel ; $4e0a
 	bit PADB_A, a ; $4e0c
-	jr nz, .playSfx10 ; $4e0e
+	jr nz, .partnerPageConfirm ; $4e0e
 	jr .partnerPageLoop ; $4e10
-.playSfx8:
+.partnerPageBack:
 	sound SFX_MENU_MOVE ; $4e12
 	ld hl, SlideCharDataArrowsInTask ; $4e14
 	call UnregisterFrameTask ; $4e17
@@ -328,10 +328,10 @@ RunDrillResultInputLoop:
 	call RegisterFrameTask ; $4e4f
 	farcall StartCharDataScreenAnimTask ; $4e52
 	jp .overviewLoop ; $4e55
-.playSfx9:
+.partnerPageCancel:
 	sound SFX_MENU_CANCEL ; $4e58
 	ret ; $4e5a
-.playSfx10:
+.partnerPageConfirm:
 	sound SFX_MENU_SELECT ; $4e5b
 	ret ; $4e5d
 SlideCharDataArrowsOutTask:

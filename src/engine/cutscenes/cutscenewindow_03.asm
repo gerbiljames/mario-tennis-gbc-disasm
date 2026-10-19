@@ -264,9 +264,9 @@ DrawCutsceneTextLines:
 	pop af ; $7429
 	add l ; $742a
 	ld l, a ; $742b
-	jr nc, .gotPtr ; $742c
+	jr nc, .gotTextPtr ; $742c
 	inc h ; $742e
-.gotPtr:
+.gotTextPtr:
 	wram_bank WRAM_STAGING ; $742f
 .loop:
 	ld c, $50 ; $7435
@@ -275,9 +275,9 @@ DrawCutsceneTextLines:
 	ld a, $50 ; $743d
 	add e ; $743f
 	ld e, a ; $7440
-	jr nc, .gotPtr2 ; $7441
+	jr nc, .gotNextRowDest ; $7441
 	inc d ; $7443
-.gotPtr2:
+.gotNextRowDest:
 	inc hl ; $7444
 	dec b ; $7445
 	jr nz, .loop ; $7446
@@ -335,9 +335,9 @@ BlitCutsceneTextWindow:
 	ld a, c ; $749a
 	add l ; $749b
 	ld l, a ; $749c
-	jr nc, .gotPtr ; $749d
+	jr nc, .gotSrcPtr ; $749d
 	inc h ; $749f
-.gotPtr:
+.gotSrcPtr:
 	ld b, $08 ; $74a0
 	ld de, wWindowShadowTilemap ; $74a2
 .loop:
@@ -363,15 +363,15 @@ BlitCutsceneTextWindow:
 	ld a, $50 ; $74c3
 	add l ; $74c5
 	ld l, a ; $74c6
-	jr nc, .gotPtr2 ; $74c7
+	jr nc, .gotNextSrcRow ; $74c7
 	inc h ; $74c9
-.gotPtr2:
+.gotNextSrcRow:
 	ld a, $20 ; $74ca
 	add e ; $74cc
 	ld e, a ; $74cd
-	jr nc, .gotPtr3 ; $74ce
+	jr nc, .gotNextDestRow ; $74ce
 	inc d ; $74d0
-.gotPtr3:
+.gotNextDestRow:
 	dec b ; $74d1
 	jr nz, .loop ; $74d2
 	wram_bank WRAM_TEXT ; $74d4

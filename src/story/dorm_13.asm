@@ -308,17 +308,17 @@ SetupDormRoomSceneVariant:
 PlaceDormRoomArrivalActors_13:
 	ld a, [wStoryModeEntryPoint] ; $51b0
 	cp STORYENTRY_NONE ; $51b3
-	jr z, .stage3 ; $51b5
+	jr z, .noEntryPoint ; $51b5
 	cp $01 ; $51b7
-	jr z, .stage2 ; $51b9
+	jr z, .entry01 ; $51b9
 	wram_bank WRAM_ACTORS ; $51bb
 	test_flag FLAG_DOUBLES ; $51c1
 	jp nz, PlaceDormRoomArrivalActors_13.isDoubles ; $51c4
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $51c7
 	ret ; $51d2
-.stage2:
+.entry01:
 	test_flag FLAG_DOUBLES ; $51d3
-	jr z, .stage2Singles ; $51d6
+	jr z, .placeKateSingles ; $51d6
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $51d8
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $51e3
 	script_null_script ACTOR_PARTNER ; $51ea
@@ -330,13 +330,13 @@ PlaceDormRoomArrivalActors_13:
 	add hl, bc ; $5204
 	set ACTORFLAGB_TALKABLE, [hl] ; $5205
 	ret ; $5207
-.stage2Singles:
+.placeKateSingles:
 	script_set_position ACTOR_DORM_ROOM_KATE, 11.0, 10.0 ; $5208
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $5213
 	ret ; $521a
-.stage3:
+.noEntryPoint:
 	test_flag FLAG_DOUBLES ; $521b
-	jr z, .stage2Singles ; $521e
+	jr z, .placeKateSingles ; $521e
 	script_null_script ACTOR_PARTNER ; $5220
 	script_set_position ACTOR_PARTNER, 1.0, 1.0 ; $5225
 	call PlaceRoommateAtPlayerTarget_13 ; $5230

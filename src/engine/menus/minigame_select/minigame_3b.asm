@@ -74,7 +74,7 @@ RunMinigameSelect:
 	bit PADB_A, a ; $6282
 	jr nz, .getMenuCursorCellIndex ; $6284
 	bit PADB_B, a ; $6286
-	jr nz, .playSfx2 ; $6288
+	jr nz, .playCancelSfx ; $6288
 	jr .loop ; $628a
 .getMenuCursorCellIndex:
 	ld c, $03 ; $628c
@@ -82,10 +82,10 @@ RunMinigameSelect:
 	ld c, a ; $6291
 	call GetUnlockedMarioCastCharAtGridSlot ; $6292
 	cp CHAR_UNUSED_15 ; $6295
-	jr nz, .playSfx ; $6297
+	jr nz, .playSelectSfx ; $6297
 	sound SFX_MENU_LOCKED ; $6299
 	jr .loop ; $629b
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $629d
 	call ClearFrameTasks ; $629f
 	ld hl, rIE ; $62a2
@@ -95,11 +95,11 @@ RunMinigameSelect:
 	jr nz, .slideOutGrid9 ; $62ab
 	ld b, $01 ; $62ad
 	call MinigameSelectSlideOut6 ; $62af
-	jr .storeMenuSlideDirection ; $62b2
+	jr .storeForwardSlide ; $62b2
 .slideOutGrid9:
 	ld b, $01 ; $62b4
 	call MinigameSelectSlideOut9 ; $62b6
-.storeMenuSlideDirection:
+.storeForwardSlide:
 	ld a, MENUSLIDE_FORWARD ; $62b9
 	ld [wMenuSlideDirection], a ; $62bb
 	xor a ; $62be
@@ -108,7 +108,7 @@ RunMinigameSelect:
 	call GetMenuCursorIndex_3b ; $62c4
 	ld [wSelectedMinigame], a ; $62c7
 	ret ; $62ca
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $62cb
 	call ClearFrameTasks ; $62cd
 	ld hl, rIE ; $62d0
@@ -118,11 +118,11 @@ RunMinigameSelect:
 	jr nz, .slideBackGrid9 ; $62d9
 	ld b, $00 ; $62db
 	call MinigameSelectSlideOut6 ; $62dd
-	jr .storeMenuSlideDirection2 ; $62e0
+	jr .storeBackSlide ; $62e0
 .slideBackGrid9:
 	ld b, $00 ; $62e2
 	call MinigameSelectSlideOut9 ; $62e4
-.storeMenuSlideDirection2:
+.storeBackSlide:
 	ld a, MENUSLIDE_BACK ; $62e7
 	ld [wMenuSlideDirection], a ; $62e9
 	ld a, $ff ; $62ec

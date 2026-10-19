@@ -104,18 +104,18 @@ RunTitleScreen:
 	call AdvanceFrame ; $7662
 	ldh a, [hInputRisingEdge] ; $7665
 	bit PADB_A, a ; $7667
-	jr nz, .playSfx ; $7669
+	jr nz, .startGame ; $7669
 	bit PADB_START, a ; $766b
-	jr nz, .playSfx ; $766d
+	jr nz, .startGame ; $766d
 	ldh a, [hVBlankCounter] ; $766f
 	and $07 ; $7671
 	jr nz, .loop ; $7673
 	ld a, [wScreenScratch] ; $7675
 	inc a ; $7678
 	ld [wScreenScratch], a ; $7679
-	jr z, .playSfx2 ; $767c
+	jr z, .attractTimeout ; $767c
 	jr .loop ; $767e
-.playSfx:
+.startGame:
 	sound BGM_NONE ; $7680
 	sound SFX_MENU_DECIDE ; $7682
 	call ClearFrameTasks ; $7684
@@ -131,7 +131,7 @@ RunTitleScreen:
 	res B_IE_STAT, [hl] ; $76a1
 	ld a, $01 ; $76a3
 	ret ; $76a5
-.playSfx2:
+.attractTimeout:
 	sound BGM_NONE ; $76a6
 	call ClearFrameTasks ; $76a8
 	script_fade_out 8 ; $76ab

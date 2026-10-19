@@ -49,7 +49,7 @@ RunCourtSelect9Menu:
 	bit PADB_A, a ; $6575
 	jr nz, .getMenuCursorIndex ; $6577
 	bit PADB_B, a ; $6579
-	jr nz, .playSfx2 ; $657b
+	jr nz, .playCancelSfx ; $657b
 	jr .loop ; $657d
 .getMenuCursorIndex:
 	ld c, $03 ; $657f
@@ -57,10 +57,10 @@ RunCourtSelect9Menu:
 	ld b, a ; $6584
 	call IsCourtUnlocked ; $6585
 	or a ; $6588
-	jr nz, .playSfx ; $6589
+	jr nz, .playDecideSfx ; $6589
 	sound SFX_MENU_LOCKED ; $658b
 	jr .loop ; $658d
-.playSfx:
+.playDecideSfx:
 	sound SFX_MENU_DECIDE ; $658f
 	call ClearFrameTasks ; $6591
 	ld hl, rIE ; $6594
@@ -77,7 +77,7 @@ RunCourtSelect9Menu:
 	pop af ; $65ad
 	call CourtSelectIndexToCourtId ; $65ae
 	ret ; $65b1
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $65b2
 	call ClearFrameTasks ; $65b4
 	ld hl, rIE ; $65b7
@@ -147,7 +147,7 @@ RunLinkCourtSelect9Menu:
 	bit PADB_A, a ; $6645
 	jr nz, .getMenuCursorIndex ; $6647
 	bit PADB_B, a ; $6649
-	jr nz, .playSfx2 ; $664b
+	jr nz, .playCancelSfx ; $664b
 	jr .loop ; $664d
 .getMenuCursorIndex:
 	ld c, $03 ; $664f
@@ -155,10 +155,10 @@ RunLinkCourtSelect9Menu:
 	ld b, a ; $6654
 	call IsCourtUnlocked ; $6655
 	or a ; $6658
-	jr nz, .playSfx ; $6659
+	jr nz, .playDecideSfx ; $6659
 	sound SFX_MENU_LOCKED ; $665b
 	jr .loop ; $665d
-.playSfx:
+.playDecideSfx:
 	sound SFX_MENU_DECIDE ; $665f
 	push af ; $6661
 	farcall SyncLinkFrame ; $6662
@@ -178,7 +178,7 @@ RunLinkCourtSelect9Menu:
 	pop af ; $6681
 	call CourtSelectIndexToCourtId ; $6682
 	ret ; $6685
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $6686
 	push af ; $6688
 	farcall SyncLinkFrame ; $6689

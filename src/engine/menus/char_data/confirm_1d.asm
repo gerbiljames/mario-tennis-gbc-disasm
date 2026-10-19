@@ -163,7 +163,7 @@ PromptCharDataConfirm:
 	bit PADB_A, a ; $5aad
 	jr nz, .step ; $5aaf
 	bit PADB_B, a ; $5ab1
-	jr nz, .beginFadeOut2 ; $5ab3
+	jr nz, .cancel ; $5ab3
 	and PADF_UP | PADF_DOWN ; $5ab5
 	jr z, .loop ; $5ab7
 	sound SFX_MENU_MOVE ; $5ab9
@@ -175,10 +175,10 @@ PromptCharDataConfirm:
 	wram_bank WRAM_SCENE ; $5ac5
 	ld a, [wCharDataConfirmState] ; $5acb
 	or a ; $5ace
-	jr nz, .beginFadeOut2 ; $5acf
+	jr nz, .cancel ; $5acf
 	sound SFX_MENU_SELECT ; $5ad1
 	jr .beginFadeOut ; $5ad3
-.beginFadeOut2:
+.cancel:
 	wram_bank WRAM_SCENE ; $5ad5
 	ld a, $01 ; $5adb
 	ld [wCharDataConfirmState], a ; $5add

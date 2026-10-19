@@ -270,20 +270,20 @@ CacheStorySlotSummaries:
 	ld [wCurrentStorySlot], a ; $427e
 	farcall CheckStorySlot ; $4281
 	cp $fe ; $4284
-	jr z, .eqfe ; $4286
+	jr z, .checkSlot1 ; $4286
 	ld hl, wStorySaveSignature ; $4288
 	ld de, wStorySlotSignatures ; $428b
 	call Copy4Bytes ; $428e
-.eqfe:
+.checkSlot1:
 	ld a, $01 ; $4291
 	ld [wCurrentStorySlot], a ; $4293
 	farcall CheckStorySlot ; $4296
 	cp $fe ; $4299
-	jr z, .eqfe2 ; $429b
+	jr z, .checkSlot2 ; $429b
 	ld hl, wStorySaveSignature ; $429d
 	ld de, wStorySlotSignatures + 4 ; $42a0
 	call Copy4Bytes ; $42a3
-.eqfe2:
+.checkSlot2:
 	ld a, $02 ; $42a6
 	ld [wCurrentStorySlot], a ; $42a8
 	farcall CheckStorySlot ; $42ab

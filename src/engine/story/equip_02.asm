@@ -147,26 +147,26 @@ LevelUpPlayerRecord:
 	jp nc, .done ; $49c8
 	ld a, d ; $49cb
 	or a ; $49cc
-	jr nz, .compare ; $49cd
+	jr nz, .notSpin ; $49cd
 	ld hl, CHARREC_TRAIN_LEVELS ; $49cf
 	add hl, bc ; $49d2
 	inc [hl] ; $49d3
 	jr .recomputeCharacterStats ; $49d4
-.compare:
+.notSpin:
 	cp $01 ; $49d6
-	jr nz, .compare2 ; $49d8
+	jr nz, .notPower ; $49d8
 	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $49da
 	add hl, bc ; $49dd
 	inc [hl] ; $49de
 	jr .recomputeCharacterStats ; $49df
-.compare2:
+.notPower:
 	cp $02 ; $49e1
-	jr nz, .compare3 ; $49e3
+	jr nz, .notControl ; $49e3
 	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $49e5
 	add hl, bc ; $49e8
 	inc [hl] ; $49e9
 	jr .recomputeCharacterStats ; $49ea
-.compare3:
+.notControl:
 	cp $03 ; $49ec
 	jr nz, .recomputeCharacterStats ; $49ee
 	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $49f0

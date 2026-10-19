@@ -680,7 +680,7 @@ DrawExpTotalDigits:
 	call FormatDecimalNumberUnsigned ; $5a5f
 	ld a, [wTextBuffer + 4] ; $5a62
 	or a ; $5a65
-	jr nz, .checkTextBuffer ; $5a66
+	jr nz, .fiveDigits ; $5a66
 	ld a, [wTextBuffer] ; $5a68
 	cp $20 ; $5a6b
 	jr z, .fourDigits2 ; $5a6d
@@ -710,7 +710,7 @@ DrawExpTotalDigits:
 	call QueueSprite ; $5aa5
 .done:
 	ret ; $5aa8
-.checkTextBuffer:
+.fiveDigits:
 	ld a, [wTextBuffer] ; $5aa9
 	cp $20 ; $5aac
 	jr z, .fiveDigits2 ; $5aae

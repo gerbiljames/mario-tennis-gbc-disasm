@@ -191,11 +191,11 @@ RunPlayAlonePartnerMenu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $51e2
 	bit PADB_A, a ; $51e5
-	jr nz, .playSfx ; $51e7
+	jr nz, .playSelectSfx ; $51e7
 	bit PADB_B, a ; $51e9
-	jr nz, .playSfx2 ; $51eb
+	jr nz, .playCancelSfx ; $51eb
 	jr .loop ; $51ed
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $51ef
 	call ClearFrameTasks ; $51f1
 	ld hl, rIE ; $51f4
@@ -212,7 +212,7 @@ RunPlayAlonePartnerMenu:
 	set_flag FLAG_DOUBLES ; $520e
 .done:
 	ret ; $5211
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $5212
 	call ClearFrameTasks ; $5214
 	ld hl, rIE ; $5217

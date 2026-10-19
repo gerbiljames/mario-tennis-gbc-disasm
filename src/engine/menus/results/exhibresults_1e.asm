@@ -416,24 +416,24 @@ DrawTournamentRoundLabel:
 	ld a, $31 ; $4803
 	ld [hl], a ; $4805
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4806
-	jr nz, .checkFlag ; $4809
+	jr nz, .doubles ; $4809
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $480b
 	jr z, .read ; $480e
 	inc [hl] ; $4810
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4811
 	jr z, .read ; $4814
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4816
-	jr z, .clearRoundLabelRow ; $4819
+	jr z, .semifinal ; $4819
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $481b
-	jr z, .clearRoundLabelRow2 ; $481e
+	jr z, .final ; $481e
 	ret ; $4820
-.checkFlag:
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4821
 	jr z, .read ; $4824
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $4826
-	jr z, .clearRoundLabelRow ; $4829
+	jr z, .semifinal ; $4829
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $482b
-	jr z, .clearRoundLabelRow2 ; $482e
+	jr z, .final ; $482e
 	ret ; $4830
 .read:
 	ld a, [hl] ; $4831
@@ -447,14 +447,14 @@ DrawTournamentRoundLabel:
 	ld bc, $0020 ; $4840
 	call DrawProportionalTextLine ; $4843
 	ret ; $4846
-.clearRoundLabelRow:
+.semifinal:
 	call ClearRoundLabelRow ; $4847
 	ld hl, Text_31_230 ; $484a
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 9 ; $484d
 	ld bc, $0020 ; $4850
 	call DrawProportionalTextLine ; $4853
 	ret ; $4856
-.clearRoundLabelRow2:
+.final:
 	call ClearRoundLabelRow ; $4857
 	ld hl, Text_31_229 ; $485a
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $485d

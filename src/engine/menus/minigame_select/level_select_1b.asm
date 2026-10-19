@@ -523,12 +523,12 @@ LoadMinigameLevelSelectGfx:
 	ld a, c ; $6cb9
 	cp $03 ; $6cba
 	jr nz, .loop ; $6cbc
-	jr .loadCompressedTileBlock2 ; $6cbe
+	jr .loadGfx0 ; $6cbe
 .noneCleared:
 	ld a, c ; $6cc0
 	cp $04 ; $6cc1
 	jr nz, .loop ; $6cc3
-.loadCompressedTileBlock2:
+.loadGfx0:
 	ld b, TILEBLOCK_MinigameLevelSelectGfx0 ; $6cc5
 	ld c, MinigameLevelSelectGfx0_SIZE / 16 ; $6cc7
 	ld de, vTiles0 + VRAM_BANK1 ; $6cc9
@@ -542,10 +542,10 @@ LoadMinigameLevelSelectGfx:
 	or a ; $6ce5
 	jr z, .noneClearedIcons ; $6ce6
 	ld b, TILEBLOCK_MinigameLevelSelectIconGfx ; $6ce8
-	jr .loadCompressedTileBlock ; $6cea
+	jr .loadIconBlock ; $6cea
 .noneClearedIcons:
 	ld b, TILEBLOCK_SharedMenuGfx111 ; $6cec
-.loadCompressedTileBlock:
+.loadIconBlock:
 	ld c, SharedMenuGfx111_SIZE / 16 ; $6cee
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6cf0
 	farcall LoadCompressedTileBlock ; $6cf3

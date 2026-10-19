@@ -59,16 +59,16 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $48cd
 	ldh a, [hVBlankCounter] ; $48ce
 	and $10 ; $48d0
-	jr z, .maskClear ; $48d2
+	jr z, .topLeftXDone ; $48d2
 	inc d ; $48d4
-.maskClear:
+.topLeftXDone:
 	ld a, [wBriefingBracketY] ; $48d5
 	ld e, a ; $48d8
 	ldh a, [hVBlankCounter] ; $48d9
 	and $10 ; $48db
-	jr z, .maskClear2 ; $48dd
+	jr z, .topLeftYDone ; $48dd
 	inc e ; $48df
-.maskClear2:
+.topLeftYDone:
 	sprite_tile_attr $6c, OAM_BANK1 | 2 ; $48e0
 	call QueueSprite ; $48e4
 	ld a, [wBriefingBracketWidth] ; $48e7
@@ -79,16 +79,16 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $48f1
 	ldh a, [hVBlankCounter] ; $48f2
 	and $10 ; $48f4
-	jr z, .maskClear3 ; $48f6
+	jr z, .topRightXDone ; $48f6
 	dec d ; $48f8
-.maskClear3:
+.topRightXDone:
 	ld a, [wBriefingBracketY] ; $48f9
 	ld e, a ; $48fc
 	ldh a, [hVBlankCounter] ; $48fd
 	and $10 ; $48ff
-	jr z, .maskClear4 ; $4901
+	jr z, .topRightYDone ; $4901
 	inc e ; $4903
-.maskClear4:
+.topRightYDone:
 	sprite_tile_attr $6c, OAM_BANK1 | OAM_XFLIP | 2 ; $4904
 	call QueueSprite ; $4908
 	ld a, [wBriefingBracketWidth] ; $490b
@@ -99,9 +99,9 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $4915
 	ldh a, [hVBlankCounter] ; $4916
 	and $10 ; $4918
-	jr z, .maskClear5 ; $491a
+	jr z, .bottomRightXDone ; $491a
 	dec d ; $491c
-.maskClear5:
+.bottomRightXDone:
 	ld a, [wBriefingBracketHeight] ; $491d
 	sub $05 ; $4920
 	ld b, a ; $4922
@@ -110,18 +110,18 @@ DrawBriefingTargetBrackets:
 	ld e, a ; $4927
 	ldh a, [hVBlankCounter] ; $4928
 	and $10 ; $492a
-	jr z, .maskClear6 ; $492c
+	jr z, .bottomRightYDone ; $492c
 	dec e ; $492e
-.maskClear6:
+.bottomRightYDone:
 	sprite_tile_attr $6c, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 2 ; $492f
 	call QueueSprite ; $4933
 	ld a, [wBriefingBracketX] ; $4936
 	ld d, a ; $4939
 	ldh a, [hVBlankCounter] ; $493a
 	and $10 ; $493c
-	jr z, .maskClear7 ; $493e
+	jr z, .bottomLeftXDone ; $493e
 	inc d ; $4940
-.maskClear7:
+.bottomLeftXDone:
 	ld a, [wBriefingBracketHeight] ; $4941
 	sub $05 ; $4944
 	ld b, a ; $4946
@@ -130,9 +130,9 @@ DrawBriefingTargetBrackets:
 	ld e, a ; $494b
 	ldh a, [hVBlankCounter] ; $494c
 	and $10 ; $494e
-	jr z, .maskClear8 ; $4950
+	jr z, .bottomLeftYDone ; $4950
 	dec e ; $4952
-.maskClear8:
+.bottomLeftYDone:
 	sprite_tile_attr $6c, OAM_BANK1 | OAM_YFLIP | 2 ; $4953
 	call QueueSprite ; $4957
 	pop_wram_bank ; $495a

@@ -371,7 +371,7 @@ RunTrophiesScreen:
 	bit PADB_A, a ; $499b
 	jr nz, .checkTrophiesCheatCode ; $499d
 	bit PADB_B, a ; $499f
-	jr nz, .playSfx2 ; $49a1
+	jr nz, .playCancelSfx ; $49a1
 	bit PADB_LEFT, a ; $49a3
 	jr nz, .pressedLeft ; $49a5
 	bit PADB_RIGHT, a ; $49a7
@@ -389,15 +389,15 @@ RunTrophiesScreen:
 	jr .loop ; $49bd
 .checkTrophiesCheatCode:
 	bit 2, a ; $49bf
-	jr z, .playSfx ; $49c1
+	jr z, .playSelectSfx ; $49c1
 	call CheckTrophiesCheatCode ; $49c3
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $49c6
 	script_fade_out 16 ; $49c8
 	call WaitFadeEnd ; $49cd
 	call ClearFrameTasks ; $49d0
 	ret ; $49d3
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $49d4
 	script_fade_out 16 ; $49d6
 	call WaitFadeEnd ; $49db

@@ -6,7 +6,7 @@ VarsityCourtANpc03_13:
 	farcall ScriptCloseDialogueWindow ; $6c4e
 	script_wait_frames 5 ; $6c51
 	and a ; $6c58
-	jp nz, .stage3 ; $6c59
+	jp nz, .declined ; $6c59
 	farcall AdvanceDialogueTextCursor ; $6c5c
 	script_set_speed ACTOR_PLAYER, 0.5 ; $6c5f
 	script_move_target ACTOR_PLAYER, 13.0, 31.0 ; $6c67
@@ -44,7 +44,7 @@ VarsityCourtANpc03_13:
 	jp nz, .speak ; $6d35
 	script_set_anim ACTOR_VARSITY_COURT_A_KEVIN, ANIM_NOD ; $6d38
 	script_wait_idle ACTOR_VARSITY_COURT_A_KEVIN ; $6d3f
-.stage2:
+.startMatch:
 	script_set_text Text_30_548 ; $6d44
 	script_set_anim ACTOR_VARSITY_COURT_A_KEVIN, ANIM_NOD ; $6d4a
 	script_wait_idle ACTOR_VARSITY_COURT_A_KEVIN ; $6d51
@@ -74,7 +74,7 @@ VarsityCourtANpc03_13:
 	farcall RunStoryMatch ; $6dee
 	farcall RestoreOverworldAfterMatch ; $6df1
 	ret ; $6df4
-.stage3:
+.declined:
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6df5
 	ret ; $6dfa
 .speak:
@@ -85,7 +85,7 @@ VarsityCourtANpc03_13:
 	script_wait_frames 5 ; $6e09
 	and a ; $6e10
 	jr z, .done ; $6e11
-	jp .stage2 ; $6e13
+	jp .startMatch ; $6e13
 	ret ; $6e16
 .done:
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6e17
@@ -100,7 +100,7 @@ VarsityCourtBNpc03_13:
 	farcall ScriptCloseDialogueWindow ; $6e60
 	script_wait_frames 5 ; $6e63
 	and a ; $6e6a
-	jp nz, .stage3 ; $6e6b
+	jp nz, .declined ; $6e6b
 	farcall AdvanceDialogueTextCursor ; $6e6e
 	script_set_speed ACTOR_PLAYER, 0.5 ; $6e71
 	script_set_speed ACTOR_PARTNER, 0.5 ; $6e79
@@ -150,7 +150,7 @@ VarsityCourtBNpc03_13:
 	jp nz, .speak ; $6fa7
 	script_set_anim ACTOR_VARSITY_COURT_B_KEVIN, ANIM_NOD ; $6faa
 	script_wait_idle ACTOR_VARSITY_COURT_B_KEVIN ; $6fb1
-.stage2:
+.startMatch:
 	script_set_text Text_31_16 ; $6fb6
 	script_set_anim ACTOR_VARSITY_COURT_B_KEVIN, ANIM_NOD ; $6fbc
 	script_wait_idle ACTOR_VARSITY_COURT_B_KEVIN ; $6fc3
@@ -182,7 +182,7 @@ VarsityCourtBNpc03_13:
 	farcall RunStoryMatch ; $7076
 	farcall RestoreOverworldAfterMatch ; $7079
 	ret ; $707c
-.stage3:
+.declined:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $707d
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $7082
 	ret ; $708f
@@ -194,7 +194,7 @@ VarsityCourtBNpc03_13:
 	script_wait_frames 5 ; $709e
 	and a ; $70a5
 	jr z, .done ; $70a6
-	jp .stage2 ; $70a8
+	jp .startMatch ; $70a8
 	ret ; $70ab
 .done:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $70ac

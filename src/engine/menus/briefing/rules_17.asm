@@ -239,7 +239,7 @@ MinigameRulesPageLoop:
 .loop:
 	ld a, [hl+] ; $70a4
 	cp $ff ; $70a5
-	jp z, .playSfx3 ; $70a7
+	jp z, .endOfPages ; $70a7
 	push hl ; $70aa
 	bit 7, a ; $70ab
 	jr z, .step ; $70ad
@@ -253,15 +253,15 @@ MinigameRulesPageLoop:
 	wram_bank WRAM_SCREEN ; $70bd
 	ld a, h ; $70c3
 	cp $27 ; $70c4
-	jr nz, .restore ; $70c6
+	jr nz, .recordNotMaxed ; $70c6
 	ld a, l ; $70c8
 	cp $0f ; $70c9
-	jr nz, .restore ; $70cb
+	jr nz, .recordNotMaxed ; $70cb
 	pop bc ; $70cd
 	ld a, d ; $70ce
 	inc a ; $70cf
 	jr .step ; $70d0
-.restore:
+.recordNotMaxed:
 	pop af ; $70d2
 .step:
 	and $7f ; $70d3
@@ -297,15 +297,15 @@ MinigameRulesPageLoop:
 	call AdvanceFrame ; $7107
 	ldh a, [hInputRisingEdge] ; $710a
 	bit PADB_A, a ; $710c
-	jr nz, .playSfx ; $710e
+	jr nz, .nextPage ; $710e
 	bit PADB_DOWN, a ; $7110
-	jr nz, .playSfx ; $7112
+	jr nz, .nextPage ; $7112
 	bit PADB_B, a ; $7114
-	jr nz, .playSfx2 ; $7116
+	jr nz, .cancel ; $7116
 	bit PADB_START, a ; $7118
-	jr nz, .restore2 ; $711a
+	jr nz, .startPressed ; $711a
 	jr .loopB ; $711c
-.playSfx:
+.nextPage:
 	sound SFX_MENU_SELECT ; $711e
 	ld hl, DrawRulesNextPageArrow ; $7120
 	call UnregisterFrameTask ; $7123
@@ -318,7 +318,7 @@ MinigameRulesPageLoop:
 	ld [wRulesAnimCounter], a ; $7135
 	pop hl ; $7138
 	jp .loop ; $7139
-.playSfx2:
+.cancel:
 	sound SFX_MENU_CANCEL ; $713c
 	ld hl, DrawRulesNextPageArrow ; $713e
 	call UnregisterFrameTask ; $7141
@@ -327,10 +327,10 @@ MinigameRulesPageLoop:
 	ld a, $ff ; $714a
 	ld [wRulesExitCode], a ; $714c
 	pop hl ; $714f
-.playSfx3:
+.endOfPages:
 	sound SFX_MENU_DECIDE ; $7150
 	ret ; $7152
-.restore2:
+.startPressed:
 	pop hl ; $7153
 	sound SFX_MENU_DECIDE ; $7154
 	ret ; $7156

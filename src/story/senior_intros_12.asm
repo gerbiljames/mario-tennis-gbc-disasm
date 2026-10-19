@@ -134,14 +134,14 @@ StartSeniorRankingMatch:
 	ld a, [wMapSceneStage2] ; $60b0
 	sub SENIORCOURTSTAGE_SINGLES_RANK4 ; $60b3
 	rst Rst00 ; $60b5
-	dw StartSeniorRankingMatch.rank4 ; $60b6 jumptable
-	dw StartSeniorRankingMatch.rank5 ; $60b8 jumptable
-	dw StartSeniorRankingMatch.rank6 ; $60ba jumptable
-	dw StartSeniorRankingMatch.rank7 ; $60bc jumptable
-	dw StartSeniorRankingMatch.rank1 ; $60be jumptable
-	dw StartSeniorRankingMatch.rank2 ; $60c0 jumptable
-	dw StartSeniorRankingMatch.rank3 ; $60c2 jumptable
-.rank1:
+	dw StartSeniorRankingMatch.singlesRank4 ; $60b6 jumptable
+	dw StartSeniorRankingMatch.singlesRank3 ; $60b8 jumptable
+	dw StartSeniorRankingMatch.singlesRank2 ; $60ba jumptable
+	dw StartSeniorRankingMatch.singlesRank1 ; $60bc jumptable
+	dw StartSeniorRankingMatch.doublesRank3 ; $60be jumptable
+	dw StartSeniorRankingMatch.doublesRank2 ; $60c0 jumptable
+	dw StartSeniorRankingMatch.doublesRank1 ; $60c2 jumptable
+.doublesRank3:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $60c4
 	script_wait_frames 15 ; $60cb
 	script_set_actor_script ACTOR_SENIOR_COURT_B_CURT, ActorScript_12_26 ; $60d2
@@ -160,7 +160,7 @@ StartSeniorRankingMatch:
 	farcall RunStoryMatch ; $612f
 	farcall RestoreOverworldAfterMatch ; $6132
 	ret ; $6135
-.rank2:
+.doublesRank2:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_RIGHT ; $6136
 	script_wait_frames 15 ; $613d
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6144
@@ -182,7 +182,7 @@ StartSeniorRankingMatch:
 	farcall RunStoryMatch ; $61ab
 	farcall RestoreOverworldAfterMatch ; $61ae
 	ret ; $61b1
-.rank3:
+.doublesRank1:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $61b2
 	script_wait_frames 15 ; $61b9
 	script_face ACTOR_PLAYER, FACE_LEFT ; $61c0
@@ -203,7 +203,7 @@ StartSeniorRankingMatch:
 	farcall RunStoryMatch ; $622b
 	farcall RestoreOverworldAfterMatch ; $622e
 	ret ; $6231
-.rank4:
+.singlesRank4:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $6232
 	script_wait_frames 15 ; $6239
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6240
@@ -221,7 +221,7 @@ StartSeniorRankingMatch:
 	farcall RunStoryMatch ; $6283
 	farcall RestoreOverworldAfterMatch ; $6286
 	ret ; $6289
-.rank5:
+.singlesRank3:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_RIGHT ; $628a
 	script_wait_frames 15 ; $6291
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6298
@@ -240,7 +240,7 @@ StartSeniorRankingMatch:
 	farcall RunStoryMatch ; $62e2
 	farcall RestoreOverworldAfterMatch ; $62e5
 	ret ; $62e8
-.rank6:
+.singlesRank2:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_RIGHT ; $62e9
 	script_wait_frames 15 ; $62f0
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $62f7
@@ -259,7 +259,7 @@ StartSeniorRankingMatch:
 	farcall RunStoryMatch ; $6341
 	farcall RestoreOverworldAfterMatch ; $6344
 	ret ; $6347
-.rank7:
+.singlesRank1:
 	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $6348
 	script_wait_frames 15 ; $634f
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6356

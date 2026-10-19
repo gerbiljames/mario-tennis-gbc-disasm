@@ -299,17 +299,17 @@ IntroSequenceTimerTask:
 	inc a ; $7086
 	ld [wCutsceneSpriteAX], a ; $7087
 	cp $5a ; $708a
-	jr nz, .compare ; $708c
+	jr nz, .checkPalette1Start ; $708c
 	ld a, $01 ; $708e
 	ld hl, CycleBgPalettes4To7Task ; $7090
 	call RegisterFrameTask ; $7093
-.compare:
+.checkPalette1Start:
 	cp $aa ; $7096
-	jr nz, .compare2 ; $7098
+	jr nz, .checkPalettes2And3Start ; $7098
 	ld a, $01 ; $709a
 	ld hl, AnimateBgPalette1Task ; $709c
 	call RegisterFrameTask ; $709f
-.compare2:
+.checkPalettes2And3Start:
 	cp $01 ; $70a2
 	jr nz, .done ; $70a4
 	ld a, $01 ; $70a6
@@ -368,18 +368,18 @@ AnimateBgPalettes2And3Task:
 	ld hl, BgPalettes2And3TaskPalettes0 ; $72f6
 	add l ; $72f9
 	ld l, a ; $72fa
-	jr nc, .loadPalettesImmediate ; $72fb
+	jr nc, .loadBgPal2 ; $72fb
 	inc h ; $72fd
-.loadPalettesImmediate:
+.loadBgPal2:
 	ld_bg_pals de, 2, 1 ; $72fe
 	call LoadPalettesImmediate ; $7301
 	pop af ; $7304
 	ld hl, BgPalettes2And3TaskPalettes1 ; $7305
 	add l ; $7308
 	ld l, a ; $7309
-	jr nc, .loadPalettesImmediate2 ; $730a
+	jr nc, .loadBgPal3 ; $730a
 	inc h ; $730c
-.loadPalettesImmediate2:
+.loadBgPal3:
 	ld_bg_pals de, 3, 1 ; $730d
 	call LoadPalettesImmediate ; $7310
 	ret ; $7313
@@ -403,9 +403,9 @@ CycleBgPalettes4To7Task:
 	ld hl, BgPalettes4To7TaskPalettes ; $7333
 	add l ; $7336
 	ld l, a ; $7337
-	jr nc, .loadPalettesImmediate ; $7338
+	jr nc, .loadFadeInStep ; $7338
 	inc h ; $733a
-.loadPalettesImmediate:
+.loadFadeInStep:
 	ld_bg_pals de, 4, 4 ; $733b
 	call LoadPalettesImmediate ; $733e
 	ret ; $7341
@@ -421,9 +421,9 @@ CycleBgPalettes4To7Task:
 	ld hl, BgPalettes4To7TaskPalettes ; $7350
 	add l ; $7353
 	ld l, a ; $7354
-	jr nc, .loadPalettesImmediate2 ; $7355
+	jr nc, .loadFadeOutStep ; $7355
 	inc h ; $7357
-.loadPalettesImmediate2:
+.loadFadeOutStep:
 	ld_bg_pals de, 4, 4 ; $7358
 	call LoadPalettesImmediate ; $735b
 	ret ; $735e

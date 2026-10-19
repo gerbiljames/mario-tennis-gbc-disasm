@@ -281,11 +281,11 @@ FlushCharDataTilemapChunk:
 	ld a, [wCharDataFlushChunk] ; $496d
 	inc a ; $4970
 	dec a ; $4971
-	jr z, .countDone ; $4972
+	jr z, .flushBottomRows ; $4972
 	dec a ; $4974
-	jr z, .countDone2 ; $4975
-	jr .queueVRAMCopy ; $4977
-.countDone:
+	jr z, .flushMiddleRows ; $4975
+	jr .flushTopRows ; $4977
+.flushBottomRows:
 	wram_bank WRAM_SCREEN ; $4979
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $497f
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $4982
@@ -298,7 +298,7 @@ FlushCharDataTilemapChunk:
 	call QueueVRAMCopy ; $4998
 	call AdvanceFrame ; $499b
 	ret ; $499e
-.countDone2:
+.flushMiddleRows:
 	wram_bank WRAM_SCREEN ; $499f
 	ld hl, wShadowTilemap + 7 * TILEMAP_WIDTH ; $49a5
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH ; $49a8
@@ -311,7 +311,7 @@ FlushCharDataTilemapChunk:
 	call QueueVRAMCopy ; $49be
 	call AdvanceFrame ; $49c1
 	ret ; $49c4
-.queueVRAMCopy:
+.flushTopRows:
 	wram_bank WRAM_SCREEN ; $49c5
 	ld hl, wShadowTilemap ; $49cb
 	ld de, vBGMap0 ; $49ce

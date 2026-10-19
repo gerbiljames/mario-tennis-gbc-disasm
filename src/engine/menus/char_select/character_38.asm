@@ -432,7 +432,7 @@ DrawCharacterSelectChars:
 	pop_wram_bank ; $4c17
 	ld a, b ; $4c1c
 	or a ; $4c1d
-	jr z, .applySlot ; $4c1e
+	jr z, .applyHandedness ; $4c1e
 	wram_bank WRAM_CHAR0 ; $4c20
 	ld a, $c8 ; $4c26
 	ld [wCharSpriteSlot + 2], a ; $4c28
@@ -454,14 +454,14 @@ DrawCharacterSelectChars:
 	ld a, $61 ; $4c5b
 	ld [wCharSpriteSlot + 3], a ; $4c5d
 	wram_bank WRAM_ACTORS ; $4c60
-.applySlot:
+.applyHandedness:
 	push_wram_bank WRAM_COURT_PLANES ; $4c66
 	ld a, [wCharSelectHandedness] ; $4c6f
 	ld c, a ; $4c72
 	pop_wram_bank ; $4c73
 	ld a, c ; $4c78
 	or a ; $4c79
-	jr z, .applySlot2 ; $4c7a
+	jr z, .drawSprites ; $4c7a
 	wram_bank WRAM_CHAR0 ; $4c7c
 	ld hl, wCharSpriteSlot + 1 ; $4c82
 	set 5, [hl] ; $4c85
@@ -474,7 +474,7 @@ DrawCharacterSelectChars:
 	wram_bank WRAM_CHAR3 ; $4c9d
 	ld hl, wCharSpriteSlot + 1 ; $4ca3
 	set 5, [hl] ; $4ca6
-.applySlot2:
+.drawSprites:
 	wram_bank WRAM_CHAR0 ; $4ca8
 	ld hl, wCharSpriteSlot ; $4cae
 	farcall DrawCharSprite ; $4cb1

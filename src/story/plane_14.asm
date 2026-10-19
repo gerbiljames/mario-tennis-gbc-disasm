@@ -351,7 +351,7 @@ IslandSkyEntry02Scene:
 	script_wait_frames 60 ; $62e0
 	script_set_position ACTOR_PLAYER, 12.0, 19.0 ; $62e7
 	ld h, $08 ; $62f2
-.planeLoop:
+.levelFlightLoop:
 	script_wait_frames 6 ; $62f4
 	call PlayPlaneMoveSfx_14 ; $62fb
 	ld a, [wMapSceneStage2] ; $62fe
@@ -359,9 +359,9 @@ IslandSkyEntry02Scene:
 	ld [wMapSceneStage2], a ; $6302
 	call AdvancePlaneFrameCounter_14 ; $6305
 	dec h ; $6308
-	jr nz, .planeLoop ; $6309
+	jr nz, .levelFlightLoop ; $6309
 	ld h, $08 ; $630b
-.planeLoop2:
+.shallowFlightLoop:
 	script_wait_frames 5 ; $630d
 	call PlayPlaneMoveSfx_14 ; $6314
 	ld a, h ; $6317
@@ -376,7 +376,7 @@ IslandSkyEntry02Scene:
 	ld [wMapSceneStage2], a ; $6327
 	call AdvancePlaneFrameCounter_14 ; $632a
 	dec h ; $632d
-	jr nz, .planeLoop2 ; $632e
+	jr nz, .shallowFlightLoop ; $632e
 	ld h, $08 ; $6330
 .descend:
 	script_wait_frames 4 ; $6332

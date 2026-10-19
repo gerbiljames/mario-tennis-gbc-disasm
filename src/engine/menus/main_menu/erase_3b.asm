@@ -58,13 +58,13 @@ RunEraseSavedDataSelect:
 	bit PADB_A, a ; $6cd1
 	jr nz, .getMenuCursorCellIndex ; $6cd3
 	bit PADB_B, a ; $6cd5
-	jr nz, .playSfx3 ; $6cd7
+	jr nz, .playCancelSfx ; $6cd7
 	jr .loop ; $6cd9
 .getMenuCursorCellIndex:
 	ld c, $03 ; $6cdb
 	call GetMenuCursorIndex_3b ; $6cdd
 	cp $03 ; $6ce0
-	jp nc, .playSfx2 ; $6ce2
+	jp nc, .playSelectSfx ; $6ce2
 	add a ; $6ce5
 	add a ; $6ce6
 	add a ; $6ce7
@@ -79,12 +79,12 @@ RunEraseSavedDataSelect:
 	add hl, bc ; $6cf4
 	ld a, [hl] ; $6cf5
 	cp $3f ; $6cf6
-	jr z, .playSfx ; $6cf8
-	jr .playSfx2 ; $6cfa
-.playSfx:
+	jr z, .rejectEmptySlot ; $6cf8
+	jr .playSelectSfx ; $6cfa
+.rejectEmptySlot:
 	sound SFX_MENU_CANCEL ; $6cfc
 	jr .loop ; $6cfe
-.playSfx2:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $6d00
 	call ClearFrameTasks ; $6d02
 	ld hl, rIE ; $6d05
@@ -96,7 +96,7 @@ RunEraseSavedDataSelect:
 	ld c, $03 ; $6d14
 	call GetMenuCursorIndex_3b ; $6d16
 	ret ; $6d19
-.playSfx3:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $6d1a
 	call ClearFrameTasks ; $6d1c
 	ld hl, rIE ; $6d1f
@@ -271,11 +271,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorX] ; $6ea4
 	inc a ; $6ea7
 	add a ; $6ea8
-	jr nc, .noUnderflow ; $6ea9
+	jr nc, .checkMaxTopRight ; $6ea9
 	ld a, $03 ; $6eab
 	dec a ; $6ead
 	jr .storeTopRight ; $6eae
-.noUnderflow:
+.checkMaxTopRight:
 	rra ; $6eb0
 	cp $03 ; $6eb1
 	jr c, .storeTopRight ; $6eb3
@@ -288,11 +288,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorX] ; $6ebe
 	dec a ; $6ec1
 	add a ; $6ec2
-	jr nc, .noUnderflow2 ; $6ec3
+	jr nc, .checkMaxTopLeft ; $6ec3
 	ld a, $03 ; $6ec5
 	dec a ; $6ec7
 	jr .storeTopLeft ; $6ec8
-.noUnderflow2:
+.checkMaxTopLeft:
 	rra ; $6eca
 	cp $03 ; $6ecb
 	jr c, .storeTopLeft ; $6ecd
@@ -332,11 +332,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorX] ; $6f08
 	inc a ; $6f0b
 	add a ; $6f0c
-	jr nc, .noUnderflow3 ; $6f0d
+	jr nc, .checkMaxBottomRight ; $6f0d
 	ld a, $02 ; $6f0f
 	dec a ; $6f11
 	jr .storeBottomRight ; $6f12
-.noUnderflow3:
+.checkMaxBottomRight:
 	rra ; $6f14
 	cp $02 ; $6f15
 	jr c, .storeBottomRight ; $6f17
@@ -349,11 +349,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorX] ; $6f21
 	dec a ; $6f24
 	add a ; $6f25
-	jr nc, .noUnderflow4 ; $6f26
+	jr nc, .checkMaxBottomLeft ; $6f26
 	ld a, $02 ; $6f28
 	dec a ; $6f2a
 	jr .storeBottomLeft ; $6f2b
-.noUnderflow4:
+.checkMaxBottomLeft:
 	rra ; $6f2d
 	cp $02 ; $6f2e
 	jr c, .storeBottomLeft ; $6f30

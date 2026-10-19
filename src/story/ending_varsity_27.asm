@@ -97,16 +97,16 @@ End10VarsityCourtEntry01Scene:
 	script_wait_actor_script ACTOR_END10_VARSITY_COURT_ALT_KEVIN ; $5731
 	script_face_toward ACTOR_PLAYER, ACTOR_END10_VARSITY_COURT_ALT_KATE ; $5736
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $573e
-	jr z, .animate ; $5741
+	jr z, .variantBBounce ; $5741
 	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_KATE, ANIM_BOUNCE ; $5743
 	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_KATE ; $574a
 	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_KATE, ACTOR_PLAYER ; $574f
-	jr .animate2 ; $5757
-.animate:
+	jr .markShakes ; $5757
+.variantBBounce:
 	script_set_anim $0d, ANIM_BOUNCE ; $5759
 	script_wait_idle $0d ; $5760
 	script_face_toward $0d, ACTOR_PLAYER ; $5765
-.animate2:
+.markShakes:
 	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_MARK, ANIM_SHAKE ; $576d
 	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_MARK ; $5774
 	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_MARK, ACTOR_PLAYER ; $5779

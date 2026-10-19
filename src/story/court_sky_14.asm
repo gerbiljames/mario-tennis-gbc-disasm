@@ -109,34 +109,34 @@ InitCourt1SceneVariant:
 	test_flag FLAG_DOUBLES ; $510a
 	jr nz, .doubles ; $510d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $510f
-	jr z, .stage1 ; $5112
+	jr z, .checkRound2 ; $5112
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $5114
 	ld [wMapSceneStage], a ; $5116
 	script_respawn_actors Court1ActorsAlt_14 ; $5119
 	farcall BeginCutsceneScriptMode ; $5121
 	ret ; $5124
-.stage1:
+.checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $5125
-	jr z, .stage2 ; $5128
+	jr z, .checkRound1 ; $5128
 	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $512a
 	ld [wMapSceneStage], a ; $512c
 	ret ; $512f
-.stage2:
+.checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $5130
-	jr z, .stage3 ; $5133
+	jr z, .keepRound1 ; $5133
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $5135
 	ld [wMapSceneStage], a ; $5137
-.stage3:
+.keepRound1:
 	ret ; $513a
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $513b
-	jr z, .doublesStage2 ; $513e
+	jr z, .doublesCheckRound1 ; $513e
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $5140
 	ld [wMapSceneStage], a ; $5142
 	script_respawn_actors Court1ActorsAlt_14 ; $5145
 	farcall BeginCutsceneScriptMode ; $514d
 	ret ; $5150
-.doublesStage2:
+.doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $5151
 	jr z, .done ; $5154
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $5156
@@ -286,16 +286,16 @@ IslandSkyInitScript_14:
 	script_wait_frames 60 ; $53aa
 	script_set_position ACTOR_PLAYER, 6.0, 39.0 ; $53b1
 	ld h, $08 ; $53bc
-.planeLoop:
+.levelFlightLoop:
 	script_wait_frames 6 ; $53be
 	call PlayPlaneMoveSfx_14 ; $53c5
 	ld a, [wMapSceneStage2] ; $53c8
 	inc a ; $53cb
 	ld [wMapSceneStage2], a ; $53cc
 	dec h ; $53cf
-	jr nz, .planeLoop ; $53d0
+	jr nz, .levelFlightLoop ; $53d0
 	ld h, $08 ; $53d2
-.planeLoop2:
+.shallowFlightLoop:
 	script_wait_frames 5 ; $53d4
 	call PlayPlaneMoveSfx_14 ; $53db
 	ld a, h ; $53de
@@ -309,7 +309,7 @@ IslandSkyInitScript_14:
 	inc a ; $53ed
 	ld [wMapSceneStage2], a ; $53ee
 	dec h ; $53f1
-	jr nz, .planeLoop2 ; $53f2
+	jr nz, .shallowFlightLoop ; $53f2
 	ld h, $08 ; $53f4
 .checkStage:
 	script_wait_frames 4 ; $53f6

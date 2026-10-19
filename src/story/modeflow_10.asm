@@ -89,7 +89,7 @@ RunSavedDataMenuFlow:
 	cp $ff ; $52e7
 	jp z, RunSavedDataMenuFlow ; $52e9
 	or a ; $52ec
-	jr nz, .transferOption1 ; $52ed
+	jr nz, .progressMenu ; $52ed
 	script_fade_out 16 ; $52ef
 	call WaitFadeEnd ; $52f4
 	ld a, $00 ; $52f7
@@ -102,9 +102,9 @@ RunSavedDataMenuFlow:
 	ld a, MENUSLIDE_BACK ; $530d
 	ld [wMenuSlideDirection], a ; $530f
 	jp .transferMenu ; $5312
-.transferOption1:
+.progressMenu:
 	cp $01 ; $5315
-	jr nz, .transferOption2 ; $5317
+	jr nz, .trophiesMenu ; $5317
 	script_fade_out 16 ; $5319
 	call WaitFadeEnd ; $531e
 	farcall ShowGameProgressScreen ; $5321
@@ -118,7 +118,7 @@ RunSavedDataMenuFlow:
 	ld a, MENUSLIDE_BACK ; $533d
 	ld [wMenuSlideDirection], a ; $533f
 	jp .transferMenu ; $5342
-.transferOption2:
+.trophiesMenu:
 	cp $02 ; $5345
 	jr nz, .equipmentMenu ; $5347
 	script_fade_out 16 ; $5349

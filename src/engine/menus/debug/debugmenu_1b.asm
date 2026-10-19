@@ -221,13 +221,13 @@ Unused_1b_UpdateUnlockDebugSelectedMugshot:
 	farcall Unused_18_CheckUnlockFlag ; $66aa
 	pop bc ; $66ad
 	ld a, b ; $66ae
-	jr z, .registerFrameTask2 ; $66af
+	jr z, .locked ; $66af
 	farcall LoadCharacterRecordToBuffer ; $66b1
-	jr .registerFrameTask ; $66b4
-.registerFrameTask2:
+	jr .registerStatTask ; $66b4
+.locked:
 	ld a, $20 ; $66b6
 	ld [wCharRecordBuffer + 11], a ; $66b8
-.registerFrameTask:
+.registerStatTask:
 	ld a, $0a ; $66bb
 	ld hl, Unused_1b_UpdateUnlockDebugStatOnChange ; $66bd
 	call RegisterFrameTask ; $66c0
@@ -317,12 +317,12 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	farcall Unused_18_CheckUnlockFlag ; $6789
 	pop bc ; $678c
 	ld a, b ; $678d
-	jr z, .playSfx ; $678e
-	jr .playSfx2 ; $6790
-.playSfx:
+	jr z, .playCancelSfx ; $678e
+	jr .playSelectSfx ; $6790
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $6792
 	jr .loop ; $6794
-.playSfx2:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $6796
 	ld hl, wUnlockDebugSelection ; $6798
 	jr .beginFadeOut ; $679b
@@ -388,13 +388,13 @@ Unused_1b_MoveUnlockDebugCursor:
 	farcall Unused_18_CheckUnlockFlag ; $680d
 	pop bc ; $6810
 	ld a, b ; $6811
-	jr z, .storeCharSelectCol2 ; $6812
+	jr z, .locked ; $6812
 	farcall LoadCharacterRecordToBuffer ; $6814
-	jr .storeCharSelectCol ; $6817
-.storeCharSelectCol2:
+	jr .storeCursor ; $6817
+.locked:
 	ld a, $20 ; $6819
 	ld [wCharRecordBuffer + 11], a ; $681b
-.storeCharSelectCol:
+.storeCursor:
 	ld a, d ; $681e
 	ld [wCharSelectCol], a ; $681f
 	ld a, e ; $6822

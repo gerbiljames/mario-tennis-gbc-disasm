@@ -440,7 +440,7 @@ Unused_1a_DrawExpBonusMessage:
 	jp z, .nameSean ; $5116
 	cp $1e ; $5119
 	jp z, .nameSammi ; $511b
-	jp .loadDialogueTextToBuffer ; $511e
+	jp .otherBonus ; $511e
 .academyIntroYes:
 	ld hl, Text_31_245 ; $5121
 	call Unused_1a_LoadDialogueTextToBuffer ; $5124
@@ -449,7 +449,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0201 ; $5130
 	ld e, $01 ; $5133
 	call Unused_1a_DrawStringToTileBuffer ; $5135
-	jp .loadDialogueTextToBuffer2 ; $5138
+	jp .drawFooterLine ; $5138
 .academyIntroNo:
 	ld hl, Text_31_246 ; $513b
 	call Unused_1a_LoadDialogueTextToBuffer ; $513e
@@ -458,7 +458,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0201 ; $514a
 	ld e, $01 ; $514d
 	call Unused_1a_DrawStringToTileBuffer ; $514f
-	jp .loadDialogueTextToBuffer2 ; $5152
+	jp .drawFooterLine ; $5152
 .academySchedule:
 	ld hl, Text_31_247 ; $5155
 	call Unused_1a_LoadDialogueTextToBuffer ; $5158
@@ -467,7 +467,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0201 ; $5164
 	ld e, $01 ; $5167
 	call Unused_1a_DrawStringToTileBuffer ; $5169
-	jp .loadDialogueTextToBuffer2 ; $516c
+	jp .drawFooterLine ; $516c
 .nameAllie:
 	ld hl, Text_31_248 ; $516f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5172
@@ -490,7 +490,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0901 ; $51ac
 	ld e, $01 ; $51af
 	call Unused_1a_DrawStringToTileBuffer ; $51b1
-	jp .loadDialogueTextToBuffer2 ; $51b4
+	jp .drawFooterLine ; $51b4
 .nameJoy:
 	ld hl, Text_31_248 ; $51b7
 	call Unused_1a_LoadDialogueTextToBuffer ; $51ba
@@ -513,7 +513,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0a01 ; $51f4
 	ld e, $01 ; $51f7
 	call Unused_1a_DrawStringToTileBuffer ; $51f9
-	jp .loadDialogueTextToBuffer2 ; $51fc
+	jp .drawFooterLine ; $51fc
 .nameBrian:
 	ld hl, Text_31_248 ; $51ff
 	call Unused_1a_LoadDialogueTextToBuffer ; $5202
@@ -536,7 +536,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0a01 ; $523c
 	ld e, $01 ; $523f
 	call Unused_1a_DrawStringToTileBuffer ; $5241
-	jp .loadDialogueTextToBuffer2 ; $5244
+	jp .drawFooterLine ; $5244
 .namePam:
 	ld hl, Text_31_248 ; $5247
 	call Unused_1a_LoadDialogueTextToBuffer ; $524a
@@ -559,7 +559,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0901 ; $5284
 	ld e, $01 ; $5287
 	call Unused_1a_DrawStringToTileBuffer ; $5289
-	jp .loadDialogueTextToBuffer2 ; $528c
+	jp .drawFooterLine ; $528c
 .nameBob:
 	ld hl, Text_31_248 ; $528f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5292
@@ -582,7 +582,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0901 ; $52cc
 	ld e, $01 ; $52cf
 	call Unused_1a_DrawStringToTileBuffer ; $52d1
-	jp .loadDialogueTextToBuffer2 ; $52d4
+	jp .drawFooterLine ; $52d4
 .nameBeth:
 	ld hl, Text_31_248 ; $52d7
 	call Unused_1a_LoadDialogueTextToBuffer ; $52da
@@ -605,7 +605,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0a01 ; $5314
 	ld e, $01 ; $5317
 	call Unused_1a_DrawStringToTileBuffer ; $5319
-	jp .loadDialogueTextToBuffer2 ; $531c
+	jp .drawFooterLine ; $531c
 .nameFay:
 	ld hl, Text_31_248 ; $531f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5322
@@ -628,7 +628,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0a01 ; $535c
 	ld e, $01 ; $535f
 	call Unused_1a_DrawStringToTileBuffer ; $5361
-	jp .loadDialogueTextToBuffer2 ; $5364
+	jp .drawFooterLine ; $5364
 .nameCurt:
 	ld hl, Text_31_248 ; $5367
 	call Unused_1a_LoadDialogueTextToBuffer ; $536a
@@ -651,7 +651,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0901 ; $53a4
 	ld e, $01 ; $53a7
 	call Unused_1a_DrawStringToTileBuffer ; $53a9
-	jp .loadDialogueTextToBuffer2 ; $53ac
+	jp .drawFooterLine ; $53ac
 .nameMark:
 	ld hl, Text_31_248 ; $53af
 	call Unused_1a_LoadDialogueTextToBuffer ; $53b2
@@ -674,7 +674,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0901 ; $53ec
 	ld e, $01 ; $53ef
 	call Unused_1a_DrawStringToTileBuffer ; $53f1
-	jp .loadDialogueTextToBuffer2 ; $53f4
+	jp .drawFooterLine ; $53f4
 .nameSean:
 	ld hl, Text_31_248 ; $53f7
 	call Unused_1a_LoadDialogueTextToBuffer ; $53fa
@@ -697,7 +697,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0a01 ; $5434
 	ld e, $01 ; $5437
 	call Unused_1a_DrawStringToTileBuffer ; $5439
-	jp .loadDialogueTextToBuffer2 ; $543c
+	jp .drawFooterLine ; $543c
 .nameSammi:
 	ld hl, Text_31_248 ; $543f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5442
@@ -720,8 +720,8 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0b01 ; $547c
 	ld e, $01 ; $547f
 	call Unused_1a_DrawStringToTileBuffer ; $5481
-	jr .loadDialogueTextToBuffer2 ; $5484
-.loadDialogueTextToBuffer:
+	jr .drawFooterLine ; $5484
+.otherBonus:
 	ld hl, Text_31_248 ; $5486
 	call Unused_1a_LoadDialogueTextToBuffer ; $5489
 	wram_bank WRAM_STAGING ; $548c
@@ -743,8 +743,8 @@ Unused_1a_DrawExpBonusMessage:
 	ld bc, $0901 ; $54c3
 	ld e, $01 ; $54c6
 	call Unused_1a_DrawStringToTileBuffer ; $54c8
-	jr .loadDialogueTextToBuffer2 ; $54cb
-.loadDialogueTextToBuffer2:
+	jr .drawFooterLine ; $54cb
+.drawFooterLine:
 	ld hl, Text_31_244 ; $54cd
 	call Unused_1a_LoadDialogueTextToBuffer ; $54d0
 	wram_bank WRAM_STAGING ; $54d3

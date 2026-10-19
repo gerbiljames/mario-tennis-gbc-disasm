@@ -615,39 +615,39 @@ InitCourt2SceneVariant:
 	test_flag FLAG_DOUBLES ; $4e65
 	jr nz, .doubles ; $4e68
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4e6a
-	jr z, .stage1 ; $4e6d
+	jr z, .checkRound2 ; $4e6d
 	script_respawn_actors Court2ActorsAlt_14 ; $4e6f
 	farcall BeginCutsceneScriptMode ; $4e77
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $4e7a
-	jr .stage3 ; $4e7c
-.stage1:
+	jr .storeStage ; $4e7c
+.checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4e7e
-	jr z, .stage2 ; $4e81
+	jr z, .checkRound1 ; $4e81
 	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $4e83
-	jr .stage3 ; $4e85
-.stage2:
+	jr .storeStage ; $4e85
+.checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $4e87
-	jr z, .stage4 ; $4e8a
+	jr z, .keepRound1 ; $4e8a
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $4e8c
-.stage3:
+.storeStage:
 	ld [wMapSceneStage], a ; $4e8e
-.stage4:
+.keepRound1:
 	ret ; $4e91
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $4e92
-	jr z, .doublesStage2 ; $4e95
+	jr z, .doublesCheckRound1 ; $4e95
 	script_respawn_actors Court2ActorsAlt_14 ; $4e97
 	farcall BeginCutsceneScriptMode ; $4e9f
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $4ea2
-	jr .stage3 ; $4ea4
-.doublesStage2:
+	jr .storeStage ; $4ea4
+.doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4ea6
 	jr z, .done ; $4ea9
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $4eab
-	jr .stage3 ; $4ead
+	jr .storeStage ; $4ead
 .done:
 	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $4eaf
-	jr .stage3 ; $4eb1
+	jr .storeStage ; $4eb1
 	ret ; $4eb3
 Court2ActorsAlt_14:
 	; $4eb4, 178 bytes (map_actors)

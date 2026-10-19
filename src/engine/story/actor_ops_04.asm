@@ -433,28 +433,28 @@ ActorScriptOp_FollowWaypoint:
 	add hl, de ; $4673
 	ld a, h ; $4674
 	or a ; $4675
-	jr nz, .speed5 ; $4676
+	jr nz, .distAtLeast4 ; $4676
 	ld a, l ; $4678
 	cp $01 ; $4679
-	jr nc, .speed2 ; $467b
+	jr nc, .distAtLeast1 ; $467b
 	ld de, $0010 ; $467d
 	jr .setSpeed ; $4680
-.speed2:
+.distAtLeast1:
 	cp $04 ; $4682
-	jr nc, .speed3 ; $4684
+	jr nc, .distAtLeast2 ; $4684
 	ld de, $0018 ; $4686
 	jr .setSpeed ; $4689
-.speed3:
+.distAtLeast2:
 	cp $09 ; $468b
-	jr nc, .speed4 ; $468d
+	jr nc, .distAtLeast3 ; $468d
 	ld de, $0020 ; $468f
 	jr .setSpeed ; $4692
-.speed4:
+.distAtLeast3:
 	cp $10 ; $4694
-	jr nc, .speed5 ; $4696
+	jr nc, .distAtLeast4 ; $4696
 	ld de, $0040 ; $4698
 	jr .setSpeed ; $469b
-.speed5:
+.distAtLeast4:
 	ld de, $0080 ; $469d
 .setSpeed:
 	ld hl, ACTORF_SPEED ; $46a0

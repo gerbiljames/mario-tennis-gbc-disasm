@@ -39,9 +39,9 @@ RunMainMenu:
 	ld c, $03 ; $5633
 	call MoveMenuCursorGrid_3b ; $5635
 	or a ; $5638
-	jr nz, .playSfx ; $5639
+	jr nz, .playMoveSfx ; $5639
 	jr .checkMenuInputPressed ; $563b
-.playSfx:
+.playMoveSfx:
 	sound SFX_MENU_MOVE ; $563d
 	call DrawMainMenuSelection ; $563f
 .checkMenuInputPressed:
@@ -49,7 +49,7 @@ RunMainMenu:
 	bit PADB_A, a ; $5645
 	jr nz, .clearFrameTasks ; $5647
 	bit PADB_B, a ; $5649
-	jr nz, .playSfx2 ; $564b
+	jr nz, .playCancelSfx ; $564b
 	bit PADB_SELECT, a ; $564d
 	jr nz, .pressedSelect ; $564f
 	jr .loop ; $5651
@@ -83,7 +83,7 @@ RunMainMenu:
 	ld [wMainMenuCursor], a ; $568f
 	call MapMainMenuCursorToItemId ; $5692
 	ret ; $5695
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $5696
 	call ResetSerialState ; $5698
 	call ClearFrameTasks ; $569b

@@ -42,7 +42,7 @@ TextCmdPrintArgNumber:
 	ld b, a ; $52db
 	ld a, [wTextArgNumberWriteIndex] ; $52dc
 	cp b ; $52df
-	jr z, .restore ; $52e0
+	jr z, .queueEmpty ; $52e0
 	ld b, $00 ; $52e2
 	ld c, a ; $52e4
 	sla c ; $52e5
@@ -57,10 +57,10 @@ TextCmdPrintArgNumber:
 	ld h, b ; $52f7
 	ld l, c ; $52f8
 	call RenderInlineNumber ; $52f9
-	jr .restore2 ; $52fc
-.restore:
+	jr .done ; $52fc
+.queueEmpty:
 	pop_wram_bank ; $52fe
-.restore2:
+.done:
 	pop bc ; $5303
 	ret ; $5304
 MeasureNextArgNumberWidth:
