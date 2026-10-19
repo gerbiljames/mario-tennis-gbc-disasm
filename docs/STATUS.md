@@ -1,4 +1,4 @@
-# Project status — 2026-10-05
+# Project status — 2026-10-19
 
 Where the disassembly stands and what is still open. The subsystem docs under
 `docs/` are the writeups; the git log has the history.
@@ -14,10 +14,16 @@ user's `baserom.gbc` per `data.manifest`.
 | | |
 |---|---|
 | source-spelled bytes (`tools/stats.py`) | 848,059, 40.4% of the 2 MiB ROM; 1,044,693 `INCBIN`, 200,809 free |
-| instruction and code-macro lines | 133,293 |
-| labels | 30,436: ROM 14,408 global + 14,416 local, RAM 1,612; none state only an address |
+| instruction and code-macro lines | 132,507 |
+| labels | 30,548: ROM 14,401 global + 14,416 local, RAM 1,731; none state only an address |
 | extracted data regions | 4,213 (3,655 `INCBIN`, 558 generated `INCLUDE`s), 839 of them LZ streams |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator is retired at tag `generator-final` |
+
+Ids, records and layouts are checked at build time: id-indexed tables assert
+their row count (`table_width` / `assert_table_length`), record layouts are
+`rsreset` / `rb` declarations and RAM structure macros (`char_record`,
+`match_stats`), enumerations are `const_def` / `const`, and code that relies
+on RAM adjacency or on an id being 0 asserts it.
 
 Everything once anonymous is classified, and the structure is rendered
 rather than binary: farcall slots, `rst` pseudo-ops, story map trees, actor
