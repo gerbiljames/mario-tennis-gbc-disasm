@@ -58,7 +58,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from banksrc import bank_lines, bank_of, holders
+from banksrc import SYM, bank_lines, bank_of, holders, read_sym
 from lz import compress, decompress
 import actorslots
 import reach
@@ -101,21 +101,13 @@ def check_lz(manifest, fail):
 def load_symbols():
     """ROM symbols from build/mariotennis.sym as {flat offset: name}.
 
-    rgblink writes `BB:AAAA Name`; only ROM banks (an address below $8000)
-    matter here. A local label is listed as `Parent.local`."""
+    Only ROM banks (an address below $8000) matter here."""
     out = {}
-    path = ROOT / "build" / "mariotennis.sym"
-    if not path.exists():
+    if not SYM.exists():
         sys.exit("build/mariotennis.sym is missing: run `make` first")
-    for line in path.read_text().splitlines():
-        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
-        if not m:
-            continue
-        bank, addr = int(m.group(1), 16), int(m.group(2), 16)
-        if addr >= 0x8000:
-            continue
+    for bank, addr, name in read_sym(rom_only=True):
         off = addr if bank == 0 else bank * BANK_SIZE + addr - 0x4000
-        out.setdefault(off, m.group(3))
+        out.setdefault(off, name)
     return out
 
 
@@ -124,11 +116,8 @@ def check_lz_labels(labels, manifest, fail):
     each stream is found by the label on its INCBIN, so the check holds for
     an edited build whose code has moved as well as for the original."""
     at = {}
-    for line in (ROOT / "build" / "mariotennis.sym").read_text().splitlines():
-        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
-        if m and int(m.group(2), 16) < 0x8000:
-            bank, addr = int(m.group(1), 16), int(m.group(2), 16)
-            at[m.group(3)] = addr if bank == 0 else bank * BANK_SIZE + addr - 0x4000
+    for bank, addr, name in read_sym(rom_only=True):
+        at[name] = addr if bank == 0 else bank * BANK_SIZE + addr - 0x4000
     streams = {p for p, _o, _n, _s in manifest if "/lz_" in p}
     spans = []
     for h in holders():
@@ -410,13 +399,10 @@ def check_db_pointers(rom, manifest, fail):
         return 0
     specs = {p: s for p, _o, _n, s in manifest}
     at, by_addr = {}, {}
-    for line in (ROOT / "build" / "mariotennis.sym").read_text().splitlines():
-        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
-        if m and int(m.group(2), 16) < 0x8000:
-            key = (int(m.group(1), 16), int(m.group(2), 16))
-            at[m.group(3)] = key
-            if not m.group(3).startswith(("FarPtr_", "DataPtr_")):
-                by_addr.setdefault(key, m.group(3))
+    for bank, addr, name in read_sym(rom_only=True):
+        at[name] = (bank, addr)
+        if not name.startswith(("FarPtr_", "DataPtr_")):
+            by_addr.setdefault((bank, addr), name)
     starts = {}
     for b, a in by_addr:
         starts.setdefault(b, []).append(a)
@@ -680,10 +666,9 @@ def check_literal_pointers(fail):
                 kinds.setdefault((m.group(1), i), set()).add(k)
     label_only = {k for k, v in kinds.items() if "label" in v and "other" not in v}
     by_addr = {}
-    for line in (ROOT / "build" / "mariotennis.sym").read_text().splitlines():
-        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
-        if m and not m.group(3).startswith(("FarPtr_", "DataPtr_")):
-            by_addr.setdefault((int(m.group(1), 16), int(m.group(2), 16)), m.group(3))
+    for bank, addr, name in read_sym():
+        if not name.startswith(("FarPtr_", "DataPtr_")):
+            by_addr.setdefault((bank, addr), name)
     routines, tables = set(), set()
     for h in holders():
         lines = bank_lines(h)[0]

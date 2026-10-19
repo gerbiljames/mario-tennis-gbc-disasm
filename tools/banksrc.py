@@ -40,6 +40,22 @@ def _twin_lines(kind, name, arg, arg2=None, equs=None):
 
 
 MAIN = ROOT / "main.asm"
+SYM = ROOT / "build" / "mariotennis.sym"
+_SYM_LINE = re.compile(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", re.I)
+
+
+def read_sym(path=None, rom_only=False):
+    """(bank, address, name) for each symbol in an rgblink .sym file, the
+    USA build's by default, in file order. `rom_only` drops the RAM ones
+    (address $8000 and up). A local label is listed as `Parent.local`."""
+    out = []
+    for line in Path(path or SYM).read_text().splitlines():
+        m = _SYM_LINE.match(line)
+        if m:
+            bank, addr = int(m.group(1), 16), int(m.group(2), 16)
+            if not rom_only or addr < 0x8000:
+                out.append((bank, addr, m.group(3)))
+    return out
 _SECTION_RE = re.compile(r'^SECTION "ROM Bank \$([0-9a-f]{2})"')
 
 

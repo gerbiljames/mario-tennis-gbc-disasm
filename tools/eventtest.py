@@ -62,7 +62,7 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from banksrc import bank_lines, build_addresses, holders, placed_original
+from banksrc import SYM, bank_lines, build_addresses, holders, placed_original, read_sym
 from reach import MNEMONICS
 import routes
 
@@ -108,10 +108,8 @@ SYNC = {"pad": ("ReadJoypad", 0x0317), "frame": [("AdvanceFrame", 0x2644), ("Wai
 
 def symbols(path):
     out = {}
-    for line in Path(path).read_text().splitlines():
-        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line)
-        if m:
-            out.setdefault(m.group(3), (int(m.group(1), 16), int(m.group(2), 16)))
+    for bank, addr, name in read_sym(path):
+        out.setdefault(name, (bank, addr))
     return out
 
 
@@ -190,7 +188,7 @@ class Game:
     def __init__(self, rom, sym, save, cap, skip=(), learn_irq=False, extra=None):
         from pyboy import PyBoy
         self.sym = symbols(sym)
-        base = symbols(ROOT / "build" / "mariotennis.sym")
+        base = symbols(SYM)
         # under the sweep's run directory when there is one, so a worker
         # killed on a timeout does not leave its copy behind in /tmp
         self.tmp = Path(tempfile.mkdtemp(prefix="eventtest-", dir=os.environ.get("EVENTTEST_TMP")))
