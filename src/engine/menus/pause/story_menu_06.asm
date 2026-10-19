@@ -671,7 +671,7 @@ UnusedStoryMenuRedrawReentry:
 	ld de, vTiles0 tile $64 ; $6ecd
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6ed0
 	call QueueVRAMCopy ; $6ed2
-	jr .checkMatchMenuSelection ; $6ed5
+	jr .loadItemGfx ; $6ed5
 .loop:
 	farcall ReadMatchInputPressed ; $6ed7
 	and PADF_B | PADF_SELECT | PADF_START ; $6eda
@@ -689,14 +689,14 @@ UnusedStoryMenuRedrawReentry:
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $6ef2
 	and PADF_RIGHT | PADF_LEFT ; $6ef5
-	jr z, .checkMatchMenuSelection2 ; $6ef7
+	jr z, .drawCursor ; $6ef7
 	ld b, a ; $6ef9
 	ld c, $04 ; $6efa
 	ld a, [wMatchMenuSelection] ; $6efc
 	call MoveCursorHorizontal ; $6eff
 	ld [wMatchMenuSelection], a ; $6f02
 	sound SFX_MENU_MOVE ; $6f05
-.checkMatchMenuSelection:
+.loadItemGfx:
 	ld a, [wMatchMenuSelection] ; $6f07
 	call LoadStoryMenuItemGfx ; $6f0a
 	ld a, [wMatchMenuSelection] ; $6f0d
@@ -704,7 +704,7 @@ UnusedStoryMenuRedrawReentry:
 	ld_cell de, $00, $0e ; $6f17
 	call DrawStoryMenuCaption ; $6f1a
 	call RedrawStoryTilemapRows ; $6f1d
-.checkMatchMenuSelection2:
+.drawCursor:
 	ld a, [wMatchMenuSelection] ; $6f20
 	add a ; $6f23
 	ld_hl_indexed StoryPauseMenuCursorPositions ; $6f24

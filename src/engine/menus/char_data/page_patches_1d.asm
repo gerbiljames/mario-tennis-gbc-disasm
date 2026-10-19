@@ -134,7 +134,7 @@ RunExpDistributionFlow:
 	wram_bank WRAM_SCENE ; $682c
 	xor a ; $6832
 	ld [wCharDataViewOnly], a ; $6833
-.loop:
+.distributeLoop:
 	call ShowExpDistributionScreen ; $6836
 	wram_bank WRAM_SCENE ; $6839
 	ld hl, wExpScreenCharStats + 6 ; $683f
@@ -149,11 +149,11 @@ RunExpDistributionFlow:
 	ld e, a ; $684e
 	ld a, $01 ; $684f
 	farcall AddPlayerExp ; $6851
-.loopB:
+.showCharData:
 	ld c, $00 ; $6854
 	farcall CharDataScreen_Show ; $6856
 	dec a ; $6859
-	jr z, .loop2 ; $685a
+	jr z, .commitExp ; $685a
 	inc a ; $685c
 	jr nz, .countLeft ; $685d
 	farcall BackupCharData ; $685f
@@ -167,7 +167,7 @@ RunExpDistributionFlow:
 	dec a ; $686f
 	jr z, .countDone ; $6870
 	ret ; $6872
-.loop2:
+.commitExp:
 	wram_bank WRAM_SCENE ; $6873
 	ld hl, wExpScreenCharStats + 12 ; $6879
 	ld de, wStoryMainExp ; $687c
@@ -191,12 +191,12 @@ RunExpDistributionFlow:
 	ld [de], a ; $6894
 	ld a, $01 ; $6895
 	ld [wCharDataViewOnly], a ; $6897
-	jr .loop ; $689a
+	jr .distributeLoop ; $689a
 .restoreCharData:
 	farcall RestoreCharData ; $689c
-	jr .loopB ; $689f
+	jr .showCharData ; $689f
 .countDone:
-	jr .loop2 ; $68a1
+	jr .commitExp ; $68a1
 ShowExpDistributionScreen:
 	push hl ; $68a3
 	sound BGM_EXP_DISTRIBUTION ; $68a4

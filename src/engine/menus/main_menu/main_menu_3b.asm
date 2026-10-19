@@ -328,9 +328,9 @@ MainMenuCursorSpriteTask:
 	ld hl, MainMenuCursorSpriteTaskTable1 ; $586c
 	add l ; $586f
 	ld l, a ; $5870
-	jr nc, .read ; $5871
+	jr nc, .readTile ; $5871
 	inc h ; $5873
-.read:
+.readTile:
 	ld c, [hl] ; $5874
 	ld hl, MainMenuCursorSpriteTaskTable0 ; $5875
 	pop af ; $5878
@@ -338,9 +338,9 @@ MainMenuCursorSpriteTask:
 	push af ; $587a
 	add l ; $587b
 	ld l, a ; $587c
-	jr nc, .readB ; $587d
+	jr nc, .readPosition ; $587d
 	inc h ; $587f
-.readB:
+.readPosition:
 	ld a, [hl+] ; $5880
 	ld d, [hl] ; $5881
 	ld e, a ; $5882
@@ -349,9 +349,9 @@ MainMenuCursorSpriteTask:
 	ld hl, MainMenuCursorSpriteTaskPtrs ; $5887
 	add l ; $588a
 	ld l, a ; $588b
-	jr nc, .read2 ; $588c
+	jr nc, .readTemplatePtr ; $588c
 	inc h ; $588e
-.read2:
+.readTemplatePtr:
 	ld a, [hl+] ; $588f
 	ld h, [hl] ; $5890
 	ld l, a ; $5891
@@ -363,9 +363,9 @@ MainMenuCursorSpriteTask:
 	ld hl, MainMenuCursorSpriteTaskTable2 ; $589d
 	add l ; $58a0
 	ld l, a ; $58a1
-	jr nc, .read3 ; $58a2
+	jr nc, .readLabelYOffset ; $58a2
 	inc h ; $58a4
-.read3:
+.readLabelYOffset:
 	ld a, [hl] ; $58a5
 	pop de ; $58a6
 	ld hl, $17f8 ; $58a7

@@ -80,7 +80,7 @@ RestoreShadowTilemapRow:
 	ld a, $06 ; $43d8
 	ld bc, $0040 ; $43da
 	ld d, e ; $43dd
-.loop:
+.mapRowOffsetLoop:
 	rr d ; $43de
 	jr nc, .shiftRowSize ; $43e0
 	add hl, bc ; $43e2
@@ -88,7 +88,7 @@ RestoreShadowTilemapRow:
 	sla c ; $43e3
 	rl b ; $43e5
 	dec a ; $43e7
-	jr nz, .loop ; $43e8
+	jr nz, .mapRowOffsetLoop ; $43e8
 	ld a, [wCameraX + 1] ; $43ea
 	and $3f ; $43ed
 	ld d, a ; $43ef
@@ -108,31 +108,31 @@ RestoreShadowTilemapRow:
 	inc h ; $4407
 .gotPtr:
 	ld d, $20 ; $4408
-.loopB:
+.copyTileLoop:
 	ld a, [bc] ; $440a
 	ld [hl+], a ; $440b
 	inc bc ; $440c
 	ld a, c ; $440d
 	and $1f ; $440e
-	jr nz, .next ; $4410
+	jr nz, .nextTile ; $4410
 	ld hl, wTilemapRowStage ; $4412
 	ld a, c ; $4415
 	and $3f ; $4416
-	jr nz, .next ; $4418
+	jr nz, .nextTile ; $4418
 	dec bc ; $441a
 	ld a, c ; $441b
 	and $c0 ; $441c
 	ld c, a ; $441e
-.next:
+.nextTile:
 	dec d ; $441f
-	jr nz, .loopB ; $4420
+	jr nz, .copyTileLoop ; $4420
 	ld hl, wWindowShadowTilemap ; $4422
 	ld a, e ; $4425
 	and $1f ; $4426
 	ld d, a ; $4428
 	ld a, $05 ; $4429
 	ld bc, $0020 ; $442b
-.loop2:
+.tilemapRowOffsetLoop:
 	rr d ; $442e
 	jr nc, .shiftRowSize2 ; $4430
 	add hl, bc ; $4432
@@ -140,7 +140,7 @@ RestoreShadowTilemapRow:
 	sla c ; $4433
 	rl b ; $4435
 	dec a ; $4437
-	jr nz, .loop2 ; $4438
+	jr nz, .tilemapRowOffsetLoop ; $4438
 	push de ; $443a
 	ld d, h ; $443b
 	ld e, l ; $443c
@@ -160,31 +160,31 @@ RestoreShadowTilemapRow:
 	inc h ; $445e
 .gotPtr2:
 	ld d, $20 ; $445f
-.loop3:
+.copyAttrLoop:
 	ld a, [bc] ; $4461
 	ld [hl+], a ; $4462
 	inc bc ; $4463
 	ld a, c ; $4464
 	and $1f ; $4465
-	jr nz, .next2 ; $4467
+	jr nz, .nextAttr ; $4467
 	ld hl, wTilemapRowStage ; $4469
 	ld a, c ; $446c
 	and $3f ; $446d
-	jr nz, .next2 ; $446f
+	jr nz, .nextAttr ; $446f
 	dec bc ; $4471
 	ld a, c ; $4472
 	and $c0 ; $4473
 	ld c, a ; $4475
-.next2:
+.nextAttr:
 	dec d ; $4476
-	jr nz, .loop3 ; $4477
+	jr nz, .copyAttrLoop ; $4477
 	ld hl, wWindowShadowAttrmap ; $4479
 	ld a, e ; $447c
 	and $1f ; $447d
 	ld d, a ; $447f
 	ld a, $05 ; $4480
 	ld bc, $0020 ; $4482
-.loop4:
+.attrmapRowOffsetLoop:
 	rr d ; $4485
 	jr nc, .shiftRowSize3 ; $4487
 	add hl, bc ; $4489
@@ -192,7 +192,7 @@ RestoreShadowTilemapRow:
 	sla c ; $448a
 	rl b ; $448c
 	dec a ; $448e
-	jr nz, .loop4 ; $448f
+	jr nz, .attrmapRowOffsetLoop ; $448f
 	ld d, h ; $4491
 	ld e, l ; $4492
 	ld hl, wTilemapRowStage ; $4493
@@ -379,10 +379,10 @@ Unused_05_ClearShadowMapRect:
 	inc hl ; $4599
 	ld c, [hl] ; $459a
 	inc hl ; $459b
-.loop2:
+.rowLoop:
 	push de ; $459c
 	push bc ; $459d
-.loop3:
+.cellLoop:
 	ld a, $00 ; $459e
 	push de ; $45a0
 	call GetTilemapCellAddress ; $45a1
@@ -391,7 +391,7 @@ Unused_05_ClearShadowMapRect:
 	dec b ; $45a6
 	jr z, .countDone ; $45a7
 	inc d ; $45a9
-	jr .loop3 ; $45aa
+	jr .cellLoop ; $45aa
 .countDone:
 	ld a, c ; $45ac
 	pop bc ; $45ad
@@ -401,7 +401,7 @@ Unused_05_ClearShadowMapRect:
 	ld e, a ; $45b1
 	inc e ; $45b2
 	dec c ; $45b3
-	jr nz, .loop2 ; $45b4
+	jr nz, .rowLoop ; $45b4
 	pop de ; $45b6
 	pop bc ; $45b7
 	pop af ; $45b8

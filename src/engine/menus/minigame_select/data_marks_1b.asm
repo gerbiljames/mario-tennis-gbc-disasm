@@ -261,9 +261,9 @@ DrawMinigameHighScoreNumber:
 	ld hl, MinigameHighScoreNumberTable ; $784d
 	add l ; $7850
 	ld l, a ; $7851
-	jr nc, .read ; $7852
+	jr nc, .readPosition ; $7852
 	inc h ; $7854
-.read:
+.readPosition:
 	ld a, [hl+] ; $7855
 	ld d, [hl] ; $7856
 	ld e, a ; $7857
@@ -271,9 +271,9 @@ DrawMinigameHighScoreNumber:
 	ld hl, wMinigameDataStarFlags ; $7859
 	add l ; $785c
 	ld l, a ; $785d
-	jr nc, .readB ; $785e
+	jr nc, .readStarFlag ; $785e
 	inc h ; $7860
-.readB:
+.readStarFlag:
 	ld a, [hl] ; $7861
 	or a ; $7862
 	ret z ; $7863
@@ -282,9 +282,9 @@ DrawMinigameHighScoreNumber:
 	ld hl, wMinigameDataHighScores ; $7866
 	add l ; $7869
 	ld l, a ; $786a
-	jr nc, .read2 ; $786b
+	jr nc, .readHighScore ; $786b
 	inc h ; $786d
-.read2:
+.readHighScore:
 	ld a, [hl+] ; $786e
 	ld h, [hl] ; $786f
 	ld l, a ; $7870

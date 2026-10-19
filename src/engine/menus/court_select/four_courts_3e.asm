@@ -398,9 +398,9 @@ CourtSelect4CursorSpriteTask:
 	ld hl, CourtSelect4CursorTiles_3e ; $5e9c
 	add l ; $5e9f
 	ld l, a ; $5ea0
-	jr nc, .read ; $5ea1
+	jr nc, .readTile ; $5ea1
 	inc h ; $5ea3
-.read:
+.readTile:
 	ld c, [hl] ; $5ea4
 	pop af ; $5ea5
 	push af ; $5ea6
@@ -408,9 +408,9 @@ CourtSelect4CursorSpriteTask:
 	add a ; $5eaa
 	add l ; $5eab
 	ld l, a ; $5eac
-	jr nc, .readB ; $5ead
+	jr nc, .readPosition ; $5ead
 	inc h ; $5eaf
-.readB:
+.readPosition:
 	ld a, [hl+] ; $5eb0
 	ld d, [hl] ; $5eb1
 	ld e, a ; $5eb2
@@ -421,9 +421,9 @@ CourtSelect4CursorSpriteTask:
 	ld hl, CourtSelect4CursorSpriteTaskPtrs ; $5eb9
 	add l ; $5ebc
 	ld l, a ; $5ebd
-	jr nc, .read2 ; $5ebe
+	jr nc, .readTemplatePtr ; $5ebe
 	inc h ; $5ec0
-.read2:
+.readTemplatePtr:
 	ld a, [hl+] ; $5ec1
 	ld h, [hl] ; $5ec2
 	ld l, a ; $5ec3
@@ -436,9 +436,9 @@ CourtSelect4CursorSpriteTask:
 	ld hl, CourtSelect4LabelYOffsets_3e ; $5ed0
 	add l ; $5ed3
 	ld l, a ; $5ed4
-	jr nc, .read3 ; $5ed5
+	jr nc, .readLabelYOffset ; $5ed5
 	inc h ; $5ed7
-.read3:
+.readLabelYOffset:
 	ld a, [hl] ; $5ed8
 	ld h, a ; $5ed9
 	ld l, $f8 ; $5eda

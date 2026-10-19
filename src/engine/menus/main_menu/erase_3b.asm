@@ -255,53 +255,53 @@ SavedDataPickerSlideOut:
 MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorY] ; $6e87
 	or a ; $6e8a
-	jr nz, .checkMenuInputPressed ; $6e8b
+	jr nz, .bottomRow ; $6e8b
 	ld a, [wMenuInputPressed] ; $6e8d
 	bit PADB_RIGHT, a ; $6e90
-	jr nz, .checkMenuCursorX ; $6e92
+	jr nz, .topRight ; $6e92
 	bit PADB_LEFT, a ; $6e94
-	jr nz, .checkMenuCursorX2 ; $6e96
+	jr nz, .topLeft ; $6e96
 	bit PADB_UP, a ; $6e98
-	jr nz, .checkMenuCursorX3 ; $6e9a
+	jr nz, .topVertical ; $6e9a
 	bit PADB_DOWN, a ; $6e9c
-	jr nz, .checkMenuCursorX3 ; $6e9e
+	jr nz, .topVertical ; $6e9e
 	xor a ; $6ea0
 	jp .done ; $6ea1
-.checkMenuCursorX:
+.topRight:
 	ld a, [wMenuCursorX] ; $6ea4
 	inc a ; $6ea7
 	add a ; $6ea8
 	jr nc, .noUnderflow ; $6ea9
 	ld a, $03 ; $6eab
 	dec a ; $6ead
-	jr .store ; $6eae
+	jr .storeTopRight ; $6eae
 .noUnderflow:
 	rra ; $6eb0
 	cp $03 ; $6eb1
-	jr c, .store ; $6eb3
+	jr c, .storeTopRight ; $6eb3
 	xor a ; $6eb5
-.store:
+.storeTopRight:
 	ld [wMenuCursorX], a ; $6eb6
 	ld a, $01 ; $6eb9
 	jp .done ; $6ebb
-.checkMenuCursorX2:
+.topLeft:
 	ld a, [wMenuCursorX] ; $6ebe
 	dec a ; $6ec1
 	add a ; $6ec2
 	jr nc, .noUnderflow2 ; $6ec3
 	ld a, $03 ; $6ec5
 	dec a ; $6ec7
-	jr .store2 ; $6ec8
+	jr .storeTopLeft ; $6ec8
 .noUnderflow2:
 	rra ; $6eca
 	cp $03 ; $6ecb
-	jr c, .store2 ; $6ecd
+	jr c, .storeTopLeft ; $6ecd
 	xor a ; $6ecf
-.store2:
+.storeTopLeft:
 	ld [wMenuCursorX], a ; $6ed0
 	ld a, $01 ; $6ed3
 	jr .done ; $6ed5
-.checkMenuCursorX3:
+.topVertical:
 	ld a, [wMenuCursorX] ; $6ed7
 	ld hl, SavedDataPickerCursorTable0 ; $6eda
 	add l ; $6edd
@@ -316,53 +316,53 @@ MoveSavedDataPickerCursor:
 	ld [wMenuCursorY], a ; $6eeb
 	ld a, $01 ; $6eee
 	jr .done ; $6ef0
-.checkMenuInputPressed:
+.bottomRow:
 	ld a, [wMenuInputPressed] ; $6ef2
 	bit PADB_RIGHT, a ; $6ef5
-	jr nz, .checkMenuCursorX4 ; $6ef7
+	jr nz, .bottomRight ; $6ef7
 	bit PADB_LEFT, a ; $6ef9
-	jr nz, .checkMenuCursorX5 ; $6efb
+	jr nz, .bottomLeft ; $6efb
 	bit PADB_UP, a ; $6efd
-	jr nz, .checkMenuCursorX6 ; $6eff
+	jr nz, .bottomVertical ; $6eff
 	bit PADB_DOWN, a ; $6f01
-	jr nz, .checkMenuCursorX6 ; $6f03
+	jr nz, .bottomVertical ; $6f03
 	xor a ; $6f05
 	jr .done ; $6f06
-.checkMenuCursorX4:
+.bottomRight:
 	ld a, [wMenuCursorX] ; $6f08
 	inc a ; $6f0b
 	add a ; $6f0c
 	jr nc, .noUnderflow3 ; $6f0d
 	ld a, $02 ; $6f0f
 	dec a ; $6f11
-	jr .store3 ; $6f12
+	jr .storeBottomRight ; $6f12
 .noUnderflow3:
 	rra ; $6f14
 	cp $02 ; $6f15
-	jr c, .store3 ; $6f17
+	jr c, .storeBottomRight ; $6f17
 	xor a ; $6f19
-.store3:
+.storeBottomRight:
 	ld [wMenuCursorX], a ; $6f1a
 	ld a, $01 ; $6f1d
 	jr .done ; $6f1f
-.checkMenuCursorX5:
+.bottomLeft:
 	ld a, [wMenuCursorX] ; $6f21
 	dec a ; $6f24
 	add a ; $6f25
 	jr nc, .noUnderflow4 ; $6f26
 	ld a, $02 ; $6f28
 	dec a ; $6f2a
-	jr .store4 ; $6f2b
+	jr .storeBottomLeft ; $6f2b
 .noUnderflow4:
 	rra ; $6f2d
 	cp $02 ; $6f2e
-	jr c, .store4 ; $6f30
+	jr c, .storeBottomLeft ; $6f30
 	xor a ; $6f32
-.store4:
+.storeBottomLeft:
 	ld [wMenuCursorX], a ; $6f33
 	ld a, $01 ; $6f36
 	jr .done ; $6f38
-.checkMenuCursorX6:
+.bottomVertical:
 	ld a, [wMenuCursorX] ; $6f3a
 	ld hl, SavedDataPickerCursorTable1 ; $6f3d
 	add l ; $6f40

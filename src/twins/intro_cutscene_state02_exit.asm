@@ -5,4 +5,4 @@
 	call WaitFadeEnd
 	xor a
 	ld [wCutsceneStepTimer], a
-	jp DispatchCutsceneStateInit.loop2
+	jp DispatchCutsceneStateInit.nextState

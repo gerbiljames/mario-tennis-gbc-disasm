@@ -359,7 +359,7 @@ HandleMatchRulesToggleInput:
 	ret ; $4786
 .compare:
 	cp $01 ; $4787
-	jr nz, .checkMatchFormatSets ; $4789
+	jr nz, .decSets ; $4789
 	ld a, [wMatchFormatGames] ; $478b
 	xor $01 ; $478e
 	ld [wMatchFormatGames], a ; $4790
@@ -368,20 +368,20 @@ HandleMatchRulesToggleInput:
 	ld b, $01 ; $4799
 	call FlushMatchRuleRowAttrs ; $479b
 	ret ; $479e
-.checkMatchFormatSets:
+.decSets:
 	ld a, [wMatchFormatSets] ; $479f
 	dec a ; $47a2
 	add a ; $47a3
 	jr nc, .noUnderflow ; $47a4
 	ld a, $03 ; $47a6
 	dec a ; $47a8
-	jr .store ; $47a9
+	jr .storeDecSets ; $47a9
 .noUnderflow:
 	rra ; $47ab
 	cp $03 ; $47ac
-	jr c, .store ; $47ae
+	jr c, .storeDecSets ; $47ae
 	xor a ; $47b0
-.store:
+.storeDecSets:
 	ld [wMatchFormatSets], a ; $47b1
 	call DrawSetCountRow ; $47b4
 	call DrawMatchRulesCaption ; $47b7
@@ -404,7 +404,7 @@ HandleMatchRulesToggleInput:
 	ret ; $47dd
 .compare2:
 	cp $01 ; $47de
-	jr nz, .checkMatchFormatSets2 ; $47e0
+	jr nz, .incSets ; $47e0
 	ld a, [wMatchFormatGames] ; $47e2
 	xor $01 ; $47e5
 	ld [wMatchFormatGames], a ; $47e7
@@ -413,20 +413,20 @@ HandleMatchRulesToggleInput:
 	ld b, $01 ; $47f0
 	call FlushMatchRuleRowAttrs ; $47f2
 	ret ; $47f5
-.checkMatchFormatSets2:
+.incSets:
 	ld a, [wMatchFormatSets] ; $47f6
 	inc a ; $47f9
 	add a ; $47fa
 	jr nc, .noUnderflow2 ; $47fb
 	ld a, $03 ; $47fd
 	dec a ; $47ff
-	jr .store2 ; $4800
+	jr .storeIncSets ; $4800
 .noUnderflow2:
 	rra ; $4802
 	cp $03 ; $4803
-	jr c, .store2 ; $4805
+	jr c, .storeIncSets ; $4805
 	xor a ; $4807
-.store2:
+.storeIncSets:
 	ld [wMatchFormatSets], a ; $4808
 	call DrawSetCountRow ; $480b
 	call DrawMatchRulesCaption ; $480e

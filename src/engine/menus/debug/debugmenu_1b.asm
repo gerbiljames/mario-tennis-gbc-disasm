@@ -310,7 +310,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	wram_bank WRAM_STAGING ; $6778
 	ldh a, [hInputRisingEdge] ; $677e
 	and PADF_A ; $6780
-	jr z, .checkInputRisingEdge ; $6782
+	jr z, .checkB ; $6782
 	ld a, [wCharSelectChar] ; $6784
 	ld b, a ; $6787
 	push bc ; $6788
@@ -326,17 +326,17 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	sound SFX_MENU_SELECT ; $6796
 	ld hl, wUnlockDebugSelection ; $6798
 	jr .beginFadeOut ; $679b
-.checkInputRisingEdge:
+.checkB:
 	ldh a, [hInputRisingEdge] ; $679d
 	and PADF_B ; $679f
-	jr z, .checkInputRisingEdge2 ; $67a1
+	jr z, .checkStart ; $67a1
 	sound SFX_MENU_CANCEL ; $67a3
 	ld hl, wUnlockDebugSelection ; $67a5
 	ld a, $00 ; $67a8
 	ld [hl], a ; $67aa
 	ld a, $ff ; $67ab
 	jr .beginFadeOut ; $67ad
-.checkInputRisingEdge2:
+.checkStart:
 	ldh a, [hInputRisingEdge] ; $67af
 	and PADF_START ; $67b1
 	jr z, .moveUnlockDebugCursor ; $67b3

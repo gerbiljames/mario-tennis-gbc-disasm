@@ -599,11 +599,11 @@ StrokeMatch1Cases2:
 	ld a, b ; $65bf
 	ld a, a ; $65c0
 	rst Rst00 ; $65c1
-	dw StrokeMatch1Cases2.checkPointOutcome2 ; $65c2 jumptable
+	dw StrokeMatch1Cases2.queuePointOutcomeMessage ; $65c2 jumptable
 	dw StrokeMatch1Cases3 ; $65c4 jumptable
 	dw StrokeMatch1Cases3.checkPointOutcome ; $65c6 jumptable
 	dw StrokeMatch1Cases3.returnZero ; $65c8 jumptable
-.checkPointOutcome2:
+.queuePointOutcomeMessage:
 	ld a, [wPointOutcome] ; $65ca
 	ld hl, StrokeMatch1Cases2Messages ; $65cd
 	add l ; $65d0
@@ -656,11 +656,11 @@ StrokeMatch1Cases3:
 	ld a, b ; $661f
 	ld a, a ; $6620
 	rst Rst00 ; $6621
-	dw StrokeMatch1Cases3.checkPointOutcome2 ; $6622 jumptable
+	dw StrokeMatch1Cases3.queuePointOutcomeMessage ; $6622 jumptable
 	dw StrokeMatch1Cases4 ; $6624 jumptable
 	dw StrokeMatch1Cases4.checkPointOutcome ; $6626 jumptable
 	dw StrokeMatch1Cases4.storeMatchAbortFlag3 ; $6628 jumptable
-.checkPointOutcome2:
+.queuePointOutcomeMessage:
 	ld a, [wPointOutcome] ; $662a
 	ld hl, StrokeMatch1Cases3Messages ; $662d
 	add l ; $6630

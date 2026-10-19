@@ -4,13 +4,13 @@
 Unused_17_WriteGridPosFromLinearIndex:
 	ld d, $00 ; $43cb
 	ld a, c ; $43cd
-.loop3:
+.divideLoop:
 	cp b ; $43ce
-	jr c, .store20 ; $43cf
+	jr c, .storeXY ; $43cf
 	inc d ; $43d1
 	sub b ; $43d2
-	jr .loop3 ; $43d3
-.store20:
+	jr .divideLoop ; $43d3
+.storeXY:
 	ld [hl+], a ; $43d5
 	ld a, d ; $43d6
 	ld [hl], a ; $43d7
@@ -19,20 +19,20 @@ Unused_17_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $43d9
 	xor a ; $43e2
 	ld c, $40 ; $43e3
-.loop4:
+.clearLoop:
 	ld [hl+], a ; $43e5
 	dec c ; $43e6
-	jr nz, .loop4 ; $43e7
+	jr nz, .clearLoop ; $43e7
 	pop_wram_bank ; $43e9
 	ret ; $43ee
 Unused_17_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $43ef
 	ld a, $00 ; $43f8
 	ld c, $40 ; $43fa
-.loop5:
+.clearLoop:
 	ld [hl+], a ; $43fc
 	dec c ; $43fd
-	jr nz, .loop5 ; $43fe
+	jr nz, .clearLoop ; $43fe
 	pop_wram_bank ; $4400
 	ret ; $4405
 UpdateAnimatedTilesTask_17:

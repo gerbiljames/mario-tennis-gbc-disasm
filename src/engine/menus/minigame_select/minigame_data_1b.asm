@@ -232,18 +232,18 @@ ScrollMinigameDataList:
 	ret z ; $74a1
 	ld a, [wMenuInputPressed] ; $74a2
 	bit PADB_DOWN, a ; $74a5
-	jr nz, .checkMenuCursorY ; $74a7
+	jr nz, .scrollDown ; $74a7
 	bit PADB_UP, a ; $74a9
-	jr nz, .checkMenuCursorY2 ; $74ab
+	jr nz, .scrollUp ; $74ab
 	ret ; $74ad
-.checkMenuCursorY:
+.scrollDown:
 	ld a, [wMenuCursorY] ; $74ae
 	inc a ; $74b1
 	cp $05 ; $74b2
 	ret z ; $74b4
 	ld [wMenuCursorY], a ; $74b5
 	jr .playSfx ; $74b8
-.checkMenuCursorY2:
+.scrollUp:
 	ld a, [wMenuCursorY] ; $74ba
 	dec a ; $74bd
 	cp $ff ; $74be

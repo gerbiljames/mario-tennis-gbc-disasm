@@ -429,12 +429,12 @@ DrillBriefing_ServeToTargets:
 	xor a ; $55b5
 	ld [wBriefingAnimTimer], a ; $55b6
 	ld [wBriefingAnimStep], a ; $55b9
-.loop:
+.animFirstCaption:
 	call ServeToTargetsBriefing_TickAnim ; $55bc
 	ld c, $00 ; $55bf
 	call AdvanceFrameCheckInput ; $55c1
 	and a ; $55c4
-	jp z, .loop ; $55c5
+	jp z, .animFirstCaption ; $55c5
 	call ClearFrameTasks ; $55c8
 	ld a, $01 ; $55cb
 	ld hl, UpdateAnimatedTilesTask_17 ; $55cd
@@ -463,12 +463,12 @@ DrillBriefing_ServeToTargets:
 	xor a ; $560b
 	ld [wBriefingAnimTimer], a ; $560c
 	ld [wBriefingAnimStep], a ; $560f
-.loopB:
+.animSecondCaption:
 	call ServeToTargetsBriefing_TickAnim ; $5612
 	ld c, $00 ; $5615
 	call AdvanceFrameCheckInput ; $5617
 	and a ; $561a
-	jp z, .loopB ; $561b
+	jp z, .animSecondCaption ; $561b
 	call ClearFrameTasks ; $561e
 	ld a, $01 ; $5621
 	ld hl, UpdateAnimatedTilesTask_17 ; $5623
@@ -555,11 +555,11 @@ DrillBriefing_ServeToTargets:
 	xor a ; $56f8
 	ld [wBriefingAnimTimer], a ; $56f9
 	ld [wBriefingAnimStep], a ; $56fc
-.loop2:
+.animLastCaption:
 	call ServeToTargetsBriefing_TickAnim ; $56ff
 	ld c, $01 ; $5702
 	call AdvanceFrameCheckInput ; $5704
 	and a ; $5707
-	jp z, .loop2 ; $5708
+	jp z, .animLastCaption ; $5708
 	call ClearFrameTasks ; $570b
 	ret ; $570e

@@ -158,9 +158,9 @@ SyncPointWinLoseFlagTask:
 UnusedQueueDrillOutcomeMessage:
 	ld a, [wPointOutcome] ; $4484
 	cp POINTOUTCOME_FAULT ; $4487
-	jr z, .checkPointOutcome2 ; $4489
+	jr z, .hideMessage ; $4489
 	cp POINTOUTCOME_LET ; $448b
-	jr z, .checkPointOutcome2 ; $448d
+	jr z, .hideMessage ; $448d
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $448f
 	ld a, $01 ; $4491
 	jr z, .checkCurrentServingPlayer ; $4493
@@ -216,7 +216,7 @@ UnusedQueueDrillOutcomeMessage:
 	add b ; $44e7
 	ld [wDrillMessageId], a ; $44e8
 	ret ; $44eb
-.checkPointOutcome2:
+.hideMessage:
 	ld a, DRILLMSG_HIDE ; $44ec
 	ld [wDrillMessageId], a ; $44ee
 	ret ; $44f1

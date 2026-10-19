@@ -433,12 +433,17 @@ class Game:
         shutil.rmtree(self.tmp)
 
 
-def boot(rom, sym, save, out, menu=False):
-    # the button presses below assume this tree's menus: a ROM left over from
-    # another branch's build (git checkout does not rebuild) lands elsewhere
+def check_build(rom):
+    """Stop on a mariotennis.gbc older than the checkout: scripted inputs
+    assume this tree's menus, and a ROM left over from another branch's build
+    (git checkout does not rebuild) lands elsewhere."""
     if Path(rom).resolve() == ROOT / "mariotennis.gbc" and \
             subprocess.run(["make", "-q", "mariotennis.gbc"], cwd=ROOT, capture_output=True).returncode:
         raise SystemExit("mariotennis.gbc is out of date for this checkout: run make first")
+
+
+def boot(rom, sym, save, out, menu=False):
+    check_build(rom)
     g = Game(rom, sym, save, 10 ** 9, learn_irq=True)
     presses = [(950, "start"), (90, "a")]
     if not menu:

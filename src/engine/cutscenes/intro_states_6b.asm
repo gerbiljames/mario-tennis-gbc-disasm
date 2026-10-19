@@ -38,7 +38,7 @@ DispatchCutsceneStateInit:
 	ld h, [hl] ; $4079
 	ld l, a ; $407a
 	jp hl ; $407b
-.loop:
+.runUpdate:
 	ld a, [wIntroCutsceneCheck] ; $407c
 	or a ; $407f
 	jr nz, .done ; $4080
@@ -58,7 +58,7 @@ DispatchCutsceneStateInit:
 	ld h, [hl] ; $4096
 	ld l, a ; $4097
 	jp hl ; $4098
-.loopB:
+.runExit:
 	ld a, [wCutsceneStep] ; $4099
 	ld l, a ; $409c
 	ld h, $00 ; $409d
@@ -76,7 +76,7 @@ DispatchCutsceneStateInit:
 	ld h, [hl] ; $40ac
 	ld l, a ; $40ad
 	jp hl ; $40ae
-.loop2:
+.nextState:
 	ld a, [wCutsceneStep] ; $40af
 	inc a ; $40b2
 	ld [wCutsceneStep], a ; $40b3
@@ -206,34 +206,34 @@ IntroCutsceneState19_6b:
 	dw IntroCutsceneState19Update_6b ; record 1
 	dw IntroCutsceneState19Exit_6b ; record 2
 Unused_6b_UpdateHandler_6b:
-	jp DispatchCutsceneStateInit.loop ; $4159
+	jp DispatchCutsceneStateInit.runUpdate ; $4159
 IntroCutsceneState14Exit_6b:
-	jp DispatchCutsceneStateInit.loop2 ; $415c
+	jp DispatchCutsceneStateInit.nextState ; $415c
 Unused_6b_ExitHandler_6b:
 	xor a ; $415f
 	ld [wCutsceneStepTimer], a ; $4160
-	jp DispatchCutsceneStateInit.loop2 ; $4163
+	jp DispatchCutsceneStateInit.nextState ; $4163
 IntroCutsceneState14Init_6b:
 	ld a, $01 ; $4166
 	ld [wIntroCutsceneCheck], a ; $4168
-	jp DispatchCutsceneStateInit.loop ; $416b
+	jp DispatchCutsceneStateInit.runUpdate ; $416b
 IntroCutsceneState14Update_6b:
-	jp DispatchCutsceneStateInit.loop ; $416e
+	jp DispatchCutsceneStateInit.runUpdate ; $416e
 IntroCutsceneState15Init_6b:
 	xor a ; $4171
 	ld [wCutsceneStepTimer], a ; $4172
-	jp DispatchCutsceneStateInit.loop ; $4175
+	jp DispatchCutsceneStateInit.runUpdate ; $4175
 IntroCutsceneState15Exit_6b:
 	xor a ; $4178
 	ld [wCutsceneStepTimer], a ; $4179
-	jp DispatchCutsceneStateInit.loop2 ; $417c
+	jp DispatchCutsceneStateInit.nextState ; $417c
 IntroCutsceneState15Update_6b:
 	ld a, [wCutsceneStepTimer] ; $417f
 	inc a ; $4182
 	ld [wCutsceneStepTimer], a ; $4183
 	cp $0a ; $4186
-	jp z, DispatchCutsceneStateInit.loopB ; $4188
-	jp DispatchCutsceneStateInit.loop ; $418b
+	jp z, DispatchCutsceneStateInit.runExit ; $4188
+	jp DispatchCutsceneStateInit.runUpdate ; $418b
 IntroCutsceneState00Init_6b:
 	call InitCutsceneSceneC ; $418e
 	call LoadIntroTilesAndPalette ; $4191
@@ -263,7 +263,7 @@ IntroCutsceneState00Init_6b:
 	call EnableLCD ; $41c5
 	script_fade_in 32 ; $41c8
 	call WaitFadeEnd ; $41cd
-	jp DispatchCutsceneStateInit.loop ; $41d0
+	jp DispatchCutsceneStateInit.runUpdate ; $41d0
 IntroCutsceneState00Exit_6b:
 	script_fade_out 10 ; $41d3
 	call WaitFadeEnd ; $41d8
@@ -278,7 +278,7 @@ IntroCutsceneState00Exit_6b:
 	ld [wCameraX + 1], a ; $41ee
 	ld [wCameraY], a ; $41f1
 	ld [wCameraY + 1], a ; $41f4
-	jp DispatchCutsceneStateInit.loop2 ; $41f7
+	jp DispatchCutsceneStateInit.nextState ; $41f7
 	twin_named intro_cutscene_state00_update, IntroCutsceneState00Update_6b ; $41fa
 IntroCutsceneState01Init_6b:
 	call DisableLCDSafely ; $421f
@@ -327,7 +327,7 @@ IntroCutsceneState01Init_6b:
 	call RegisterFrameTask ; $42a4
 	call EnableLCD ; $42a7
 	script_fade_in 64 ; $42aa
-	jp DispatchCutsceneStateInit.loop ; $42af
+	jp DispatchCutsceneStateInit.runUpdate ; $42af
 Palettes_6b_00:
 	INCLUDE "data/engine/cutscenes/Palettes_6b_00.asm" ; $42b2, 64 bytes (palettes)
 IntroCutsceneState01Exit_6b:
@@ -337,7 +337,7 @@ IntroCutsceneState01Exit_6b:
 	ld [wCutsceneStepTimer], a ; $42f9
 	ld [wCutsceneScrollX], a ; $42fc
 	ldh [hScrollX], a ; $42ff
-	jp DispatchCutsceneStateInit.loop2 ; $4301
+	jp DispatchCutsceneStateInit.nextState ; $4301
 IntroCutsceneState01Update_6b:
 	ld a, [wCutsceneScrollX] ; $4304
 	add $03 ; $4307
@@ -351,9 +351,9 @@ IntroCutsceneState01Update_6b:
 	ld a, [wCutsceneSpriteAX] ; $4319
 	inc a ; $431c
 	ld [wCutsceneSpriteAX], a ; $431d
-	jp DispatchCutsceneStateInit.loop ; $4320
+	jp DispatchCutsceneStateInit.runUpdate ; $4320
 .timerExpired:
-	jp DispatchCutsceneStateInit.loopB ; $4323
+	jp DispatchCutsceneStateInit.runExit ; $4323
 IntroCutsceneState02Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4326
 	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $432f
@@ -377,7 +377,7 @@ IntroCutsceneState02Init_6b:
 	ld hl, IntroCutsceneState02InitPalette_6b ; $4363
 	ld_bg_pals de, 0, 8 ; $4366
 	call LoadPalettesImmediate ; $4369
-	jp DispatchCutsceneStateInit.loop ; $436c
+	jp DispatchCutsceneStateInit.runUpdate ; $436c
 IntroCutsceneState02InitPalette_6b:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState02InitPalette_6b.asm" ; $436f, 64 bytes (palettes)
 	twin_named intro_cutscene_state02_exit, IntroCutsceneState02Exit_6b ; $43af
@@ -387,9 +387,9 @@ IntroCutsceneState02Update_6b:
 	ld [wCutsceneStepTimer], a ; $43c2
 	cp $1e ; $43c5
 	jr z, .timerExpired ; $43c7
-	jp DispatchCutsceneStateInit.loop ; $43c9
+	jp DispatchCutsceneStateInit.runUpdate ; $43c9
 .timerExpired:
-	jp DispatchCutsceneStateInit.loopB ; $43cc
+	jp DispatchCutsceneStateInit.runExit ; $43cc
 IntroCutsceneState03Init_6b:
 	call DisableLCDSafely ; $43cf
 	ld c, SCREENASSET_IntroRallies2 ; $43d2
@@ -432,7 +432,7 @@ IntroCutsceneState03Init_6b:
 	call EnableLCD ; $4447
 	script_fade_in 127 ; $444a
 	call WaitFadeEnd ; $444f
-	jp DispatchCutsceneStateInit.loop ; $4452
+	jp DispatchCutsceneStateInit.runUpdate ; $4452
 IntroCutsceneState03Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupB ; $4455
 	call UnregisterFrameTask ; $4458
@@ -440,13 +440,13 @@ IntroCutsceneState03Exit_6b:
 	ld [wCutsceneStepTimer], a ; $445c
 	ld [wIntroCutsceneSubState], a ; $445f
 	ldh [hScrollX], a ; $4462
-	jp DispatchCutsceneStateInit.loop2 ; $4464
+	jp DispatchCutsceneStateInit.nextState ; $4464
 IntroCutsceneState03Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4467
 	inc a ; $446a
 	ld [wCutsceneStepTimer], a ; $446b
 	cp $7d ; $446e
-	jp z, DispatchCutsceneStateInit.loopB ; $4470
+	jp z, DispatchCutsceneStateInit.runExit ; $4470
 	ld a, [wIntroCutsceneSubState] ; $4473
 	sub $03 ; $4476
 	ld [wIntroCutsceneSubState], a ; $4478
@@ -454,7 +454,7 @@ IntroCutsceneState03Update_6b:
 	ld a, [wCutsceneSpriteBX] ; $447d
 	dec a ; $4480
 	ld [wCutsceneSpriteBX], a ; $4481
-	jp DispatchCutsceneStateInit.loop ; $4484
+	jp DispatchCutsceneStateInit.runUpdate ; $4484
 IntroCutsceneState04Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4487
 	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4490
@@ -478,7 +478,7 @@ IntroCutsceneState04Init_6b:
 	ld hl, IntroCutsceneState04InitPalettes ; $44c4
 	ld_bg_pals de, 0, 8 ; $44c7
 	call LoadPalettesImmediate ; $44ca
-	jp DispatchCutsceneStateInit.loop ; $44cd
+	jp DispatchCutsceneStateInit.runUpdate ; $44cd
 IntroCutsceneState04InitPalettes:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState04InitPalettes.asm" ; $44d0, 64 bytes (palettes)
 	twin_named intro_cutscene_state02_exit, IntroCutsceneState04Exit_6b ; $4510
@@ -487,8 +487,8 @@ IntroCutsceneState04Update_6b:
 	inc a ; $4522
 	ld [wCutsceneStepTimer], a ; $4523
 	cp $1e ; $4526
-	jp z, DispatchCutsceneStateInit.loopB ; $4528
-	jp DispatchCutsceneStateInit.loop ; $452b
+	jp z, DispatchCutsceneStateInit.runExit ; $4528
+	jp DispatchCutsceneStateInit.runUpdate ; $452b
 IntroCutsceneState05Init_6b:
 	call DisableLCDSafely ; $452e
 	ld c, SCREENASSET_IntroRallies3 ; $4531
@@ -536,7 +536,7 @@ IntroCutsceneState05Init_6b:
 	call EnableLCD ; $45a7
 	script_fade_in 16 ; $45aa
 	call WaitFadeEnd ; $45af
-	jp DispatchCutsceneStateInit.loop ; $45b2
+	jp DispatchCutsceneStateInit.runUpdate ; $45b2
 IntroCutsceneState05Exit_6b:
 	ld hl, rIE ; $45b5
 	res B_IE_STAT, [hl] ; $45b8
@@ -570,28 +570,28 @@ IntroCutsceneState05Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupB ; $4614
 	call UnregisterFrameTask ; $4617
 	call AdvanceFrame ; $461a
-	jp DispatchCutsceneStateInit.loop2 ; $461d
+	jp DispatchCutsceneStateInit.nextState ; $461d
 IntroCutsceneState05Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4620
 	inc a ; $4623
 	ld [wCutsceneStepTimer], a ; $4624
 	cp $60 ; $4627
-	jp z, DispatchCutsceneStateInit.loopB ; $4629
+	jp z, DispatchCutsceneStateInit.runExit ; $4629
 	ld a, [wCutsceneSpriteAX] ; $462c
 	inc a ; $462f
 	ld [wCutsceneSpriteAX], a ; $4630
 	ld a, [wCutsceneSpriteBX] ; $4633
 	dec a ; $4636
 	ld [wCutsceneSpriteBX], a ; $4637
-	jp DispatchCutsceneStateInit.loop ; $463a
+	jp DispatchCutsceneStateInit.runUpdate ; $463a
 IntroCutsceneState06Init_6b:
 	xor a ; $463d
 	ld [wCutsceneStepTimer], a ; $463e
-	jp DispatchCutsceneStateInit.loop ; $4641
+	jp DispatchCutsceneStateInit.runUpdate ; $4641
 IntroCutsceneState06Exit_6b:
 	script_fade_out 16 ; $4644
 	call WaitFadeEnd ; $4649
-	jp DispatchCutsceneStateInit.loop2 ; $464c
+	jp DispatchCutsceneStateInit.nextState ; $464c
 	twin_named intro_cutscene_state06_update, IntroCutsceneState06Update_6b ; $464f
 IntroCutsceneState07Init_6b:
 	call InitTitleSceneGraphics ; $465e
@@ -608,7 +608,7 @@ IntroCutsceneState07Init_6b:
 	ld a, $01 ; $467f
 	ld hl, IntroSequenceTimerTask ; $4681
 	call RegisterFrameTask ; $4684
-	jp DispatchCutsceneStateInit.loop ; $4687
+	jp DispatchCutsceneStateInit.runUpdate ; $4687
 IntroCutsceneState07Exit_6b:
 	call ClearFrameTasks ; $468a
 	ld a, $01 ; $468d
@@ -621,7 +621,7 @@ IntroCutsceneState07Exit_6b:
 	ld [wCameraX + 1], a ; $469d
 	ld [wCameraY], a ; $46a0
 	ld [wCameraY + 1], a ; $46a3
-	jp DispatchCutsceneStateInit.loop2 ; $46a6
+	jp DispatchCutsceneStateInit.nextState ; $46a6
 IntroCutsceneState07Update_6b:
 	ld a, [wCameraX + 1] ; $46a9
 	cp $40 ; $46ac
@@ -630,15 +630,15 @@ IntroCutsceneState07Update_6b:
 	inc a ; $46b4
 	ld [wCutsceneStepTimer], a ; $46b5
 	cp $29 ; $46b8
-	jp z, DispatchCutsceneStateInit.loopB ; $46ba
-	jp DispatchCutsceneStateInit.loop ; $46bd
+	jp z, DispatchCutsceneStateInit.runExit ; $46ba
+	jp DispatchCutsceneStateInit.runUpdate ; $46bd
 .checkCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $46c0
 	cp $01 ; $46c3
 	jr z, .scrollCamera ; $46c5
 	inc a ; $46c7
 	ld [wCutsceneStepTimer], a ; $46c8
-	jp DispatchCutsceneStateInit.loop ; $46cb
+	jp DispatchCutsceneStateInit.runUpdate ; $46cb
 .scrollCamera:
 	ld a, [wCameraX + 1] ; $46ce
 	ld h, a ; $46d1
@@ -650,7 +650,7 @@ IntroCutsceneState07Update_6b:
 	ld [wCameraX + 1], a ; $46db
 	ld a, l ; $46de
 	ld [wCameraX], a ; $46df
-	jp DispatchCutsceneStateInit.loop ; $46e2
+	jp DispatchCutsceneStateInit.runUpdate ; $46e2
 IntroCutsceneState13Init_6b:
 	xor a ; $46e5
 	ldh [hScrollY], a ; $46e6
@@ -679,14 +679,14 @@ IntroCutsceneState13Init_6b:
 	call QueueVRAMCopy ; $472b
 	call AdvanceFrame ; $472e
 	pop_wram_bank ; $4731
-	jp DispatchCutsceneStateInit.loop ; $4736
+	jp DispatchCutsceneStateInit.runUpdate ; $4736
 IntroCutsceneState13Exit_6b:
 	script_fade_out 16 ; $4739
 	call WaitFadeEnd ; $473e
 	call DisableLCDSafely ; $4741
 	xor a ; $4744
 	ld [wCutsceneStepTimer], a ; $4745
-	jp DispatchCutsceneStateInit.loop2 ; $4748
+	jp DispatchCutsceneStateInit.nextState ; $4748
 	twin_named intro_cutscene_state06_update, IntroCutsceneState13Update_6b ; $474b
 IntroCutsceneState13InitPalettes_6b:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm" ; $475a, 64 bytes (palettes)
@@ -705,7 +705,7 @@ IntroCutsceneState08Init_6b:
 	call EnableLCD ; $47b6
 	script_fade_in 16 ; $47b9
 	call WaitFadeEnd ; $47be
-	jp DispatchCutsceneStateInit.loop ; $47c1
+	jp DispatchCutsceneStateInit.runUpdate ; $47c1
 IntroCutsceneState08Exit_6b:
 	script_fade_out 10 ; $47c4
 	call WaitFadeEnd ; $47c9
@@ -713,14 +713,14 @@ IntroCutsceneState08Exit_6b:
 	call UnregisterFrameTask ; $47cf
 	xor a ; $47d2
 	ldh [hScrollX], a ; $47d3
-	jp DispatchCutsceneStateInit.loop2 ; $47d5
+	jp DispatchCutsceneStateInit.nextState ; $47d5
 IntroCutsceneState08Update_6b:
 	ld a, [wCutsceneStepTimer] ; $47d8
 	inc a ; $47db
 	ld [wCutsceneStepTimer], a ; $47dc
 	cp $2c ; $47df
-	jp z, DispatchCutsceneStateInit.loopB ; $47e1
-	jp DispatchCutsceneStateInit.loop ; $47e4
+	jp z, DispatchCutsceneStateInit.runExit ; $47e1
+	jp DispatchCutsceneStateInit.runUpdate ; $47e4
 IntroCutsceneState09Init_6b:
 	call DisableLCDSafely ; $47e7
 	ld c, SCREENASSET_IntroDive ; $47ea
@@ -737,7 +737,7 @@ IntroCutsceneState09Init_6b:
 	call EnableLCD ; $4805
 	script_fade_in 16 ; $4808
 	call WaitFadeEnd ; $480d
-	jp DispatchCutsceneStateInit.loop ; $4810
+	jp DispatchCutsceneStateInit.runUpdate ; $4810
 IntroCutsceneState09Exit_6b:
 	script_fade_out 10 ; $4813
 	call WaitFadeEnd ; $4818
@@ -745,7 +745,7 @@ IntroCutsceneState09Exit_6b:
 	call UnregisterFrameTask ; $481e
 	xor a ; $4821
 	ldh [hScrollX], a ; $4822
-	jp DispatchCutsceneStateInit.loop2 ; $4824
+	jp DispatchCutsceneStateInit.nextState ; $4824
 	twin_named intro_cutscene_state09_update, IntroCutsceneState09Update_6b ; $4827
 IntroCutsceneState10Init_6b:
 	call DisableLCDSafely ; $4836
@@ -763,7 +763,7 @@ IntroCutsceneState10Init_6b:
 	call EnableLCD ; $4854
 	script_fade_in 16 ; $4857
 	call WaitFadeEnd ; $485c
-	jp DispatchCutsceneStateInit.loop ; $485f
+	jp DispatchCutsceneStateInit.runUpdate ; $485f
 IntroCutsceneState10Exit_6b:
 	script_fade_out 10 ; $4862
 	call WaitFadeEnd ; $4867
@@ -771,7 +771,7 @@ IntroCutsceneState10Exit_6b:
 	call UnregisterFrameTask ; $486d
 	xor a ; $4870
 	ldh [hScrollX], a ; $4871
-	jp DispatchCutsceneStateInit.loop2 ; $4873
+	jp DispatchCutsceneStateInit.nextState ; $4873
 	twin_named intro_cutscene_state09_update, IntroCutsceneState10Update_6b ; $4876
 Unused_6b_IntroCutsceneState11Init:
 	call DisableLCDSafely ; $4885
@@ -797,7 +797,7 @@ Unused_6b_IntroCutsceneState11Init:
 	call WaitFadeEnd ; $48c0
 	xor a ; $48c3
 	ld [wCutsceneStepTimer], a ; $48c4
-	jp DispatchCutsceneStateInit.loop ; $48c7
+	jp DispatchCutsceneStateInit.runUpdate ; $48c7
 Unused_6b_IntroCutsceneState11Exit:
 	ld a, $00 ; $48ca
 	ldh [hShowDebugConsole], a ; $48cc
@@ -808,14 +808,14 @@ Unused_6b_IntroCutsceneState11Exit:
 	call LoadPaletteShadow ; $48d9
 	xor a ; $48dc
 	ld [wCutsceneStepTimer], a ; $48dd
-	jp DispatchCutsceneStateInit.loop2 ; $48e0
+	jp DispatchCutsceneStateInit.nextState ; $48e0
 Unused_6b_IntroCutsceneState11Update:
 	ld a, [wCutsceneStepTimer] ; $48e3
 	inc a ; $48e6
 	ld [wCutsceneStepTimer], a ; $48e7
 	cp $70 ; $48ea
-	jp z, DispatchCutsceneStateInit.loopB ; $48ec
-	jp DispatchCutsceneStateInit.loop ; $48ef
+	jp z, DispatchCutsceneStateInit.runExit ; $48ec
+	jp DispatchCutsceneStateInit.runUpdate ; $48ef
 Unused_6b_IntroCutsceneState12Init:
 	xor a ; $48f2
 	ld [wCutsceneStepTimer], a ; $48f3
@@ -837,11 +837,11 @@ Unused_6b_IntroCutsceneState12Init:
 	ld a, e ; $4919
 	ld [hl+], a ; $491a
 	ld [hl], d ; $491b
-	jp DispatchCutsceneStateInit.loop ; $491c
+	jp DispatchCutsceneStateInit.runUpdate ; $491c
 Unused_6b_IntroCutsceneState12Exit:
 	script_fade_out 4 ; $491f
 	call WaitFadeEnd ; $4924
-	jp DispatchCutsceneStateInit.loop2 ; $4927
+	jp DispatchCutsceneStateInit.nextState ; $4927
 Unused_6b_IntroCutsceneState12Update:
 	ld a, [wCutsceneSpriteAY] ; $492a
 	cp $0a ; $492d
@@ -849,13 +849,13 @@ Unused_6b_IntroCutsceneState12Update:
 	inc a ; $4931
 	ld [wCutsceneSpriteAY], a ; $4932
 	call QueueScrollingSprite ; $4935
-	jp DispatchCutsceneStateInit.loop ; $4938
+	jp DispatchCutsceneStateInit.runUpdate ; $4938
 .checkCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $493b
 	inc a ; $493e
 	ld [wCutsceneStepTimer], a ; $493f
 	cp $80 ; $4942
-	jp z, DispatchCutsceneStateInit.loopB ; $4944
+	jp z, DispatchCutsceneStateInit.runExit ; $4944
 	cp $64 ; $4947
 	jr nc, .updateCutsceneScrollY ; $4949
 	call AdvanceSpriteAnimTimer ; $494b
@@ -865,7 +865,7 @@ Unused_6b_IntroCutsceneState12Update:
 	call SetCameraYFromScrollPos ; $4954
 	call QueueScrollingSprite ; $4957
 	call QueueCutsceneAnimatedSprites ; $495a
-	jp DispatchCutsceneStateInit.loop ; $495d
+	jp DispatchCutsceneStateInit.runUpdate ; $495d
 IntroCutsceneState16Init_6b:
 	call DisableLCDSafely ; $4960
 	call InitCutsceneSceneA ; $4963
@@ -940,4 +940,4 @@ IntroCutsceneState16Init_6b:
 	call EnableLCD ; $4a34
 	script_fade_in 8 ; $4a37
 	call WaitFadeEnd ; $4a3c
-	jp DispatchCutsceneStateInit.loop ; $4a3f
+	jp DispatchCutsceneStateInit.runUpdate ; $4a3f

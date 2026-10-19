@@ -692,9 +692,9 @@ DrawRulesScreenCharacters:
 	ld hl, RulesScreenCharactersTable0 ; $74e7
 	add l ; $74ea
 	ld l, a ; $74eb
-	jr nc, .read ; $74ec
+	jr nc, .readTile ; $74ec
 	inc h ; $74ee
-.read:
+.readTile:
 	ld a, [hl] ; $74ef
 	ld c, a ; $74f0
 	push bc ; $74f1
@@ -702,9 +702,9 @@ DrawRulesScreenCharacters:
 	ld hl, RulesScreenCharactersTable1 ; $74f5
 	add l ; $74f8
 	ld l, a ; $74f9
-	jr nc, .readB ; $74fa
+	jr nc, .readFirstAttr ; $74fa
 	inc h ; $74fc
-.readB:
+.readFirstAttr:
 	ld b, [hl] ; $74fd
 	ld_xy de, $7e, $68 ; $74fe
 	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $7501
@@ -717,9 +717,9 @@ DrawRulesScreenCharacters:
 	ld hl, RulesScreenCharactersTable2 ; $750f
 	add l ; $7512
 	ld l, a ; $7513
-	jr nc, .read2 ; $7514
+	jr nc, .readSecondAttr ; $7514
 	inc h ; $7516
-.read2:
+.readSecondAttr:
 	ld b, [hl] ; $7517
 	ld_xy de, $7e, $68 ; $7518
 	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $751b

@@ -141,7 +141,7 @@ Unused_03_SaveSlotDebugEditor:
 	script_fade_in 127 ; $5339
 	farcall InitStoryModeState ; $533e
 	ld de, $0000 ; $5341
-.loop:
+.reloadSlot:
 	call Unused_03_ReadCurrentSlotBlock ; $5344
 	or a ; $5347
 	jr z, .loaded ; $5348
@@ -153,12 +153,12 @@ Unused_03_SaveSlotDebugEditor:
 	ld hl, wSaveEditorBlock ; $5355
 	ld c, $30 ; $5358
 	call ClearMemory16 ; $535a
-	jp .loopB ; $535d
+	jp .redraw ; $535d
 .loaded:
 	ld hl, SaveResultLoadedString_03 ; $5360
 	ld_cell de, $05, $11 ; $5363
 	call PrintString ; $5366
-.loopB:
+.redraw:
 	wram_bank WRAM_SOUND ; $5369
 	push de ; $536f
 	ld hl, hSaveEditorCursor ; $5370
@@ -172,7 +172,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld l, a ; $537d
 	ld b, $10 ; $537e
 	ld e, $01 ; $5380
-.loop2:
+.rowLoop:
 	ld d, $00 ; $5382
 	push bc ; $5384
 	push de ; $5385
@@ -188,7 +188,7 @@ Unused_03_SaveSlotDebugEditor:
 	inc d ; $5392
 	inc d ; $5393
 	ld c, $04 ; $5394
-.loop3:
+.wordLoop:
 	push hl ; $5396
 	ld a, [hl+] ; $5397
 	ld l, [hl] ; $5398
@@ -206,13 +206,13 @@ Unused_03_SaveSlotDebugEditor:
 	inc d ; $53a6
 	inc d ; $53a7
 	dec c ; $53a8
-	jr nz, .loop3 ; $53a9
+	jr nz, .wordLoop ; $53a9
 	inc e ; $53ab
 	pop bc ; $53ac
 	dec b ; $53ad
-	jr nz, .loop2 ; $53ae
+	jr nz, .rowLoop ; $53ae
 	pop de ; $53b0
-.loop4:
+.printStatus:
 	push de ; $53b1
 	ld hl, hSaveEditorCursor ; $53b2
 	ld a, [hl+] ; $53b5
@@ -224,7 +224,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld_cell de, $00, $11 ; $53c1
 	call PrintDecimalByte ; $53c4
 	pop de ; $53c7
-.loop5:
+.inputLoop:
 	ldh a, [hPlayerInputFlags] ; $53c8
 	bit PADB_A, a ; $53ca
 	jr nz, .drawCursor ; $53cc
@@ -260,29 +260,29 @@ Unused_03_SaveSlotDebugEditor:
 	jr z, .moveSaveEditorCursor ; $53ff
 	ld bc, $f0f8 ; $5401
 	call Unused_03_MoveSaveEditorCursor ; $5404
-	jr z, .loop4 ; $5407
-	jp .loopB ; $5409
+	jr z, .printStatus ; $5407
+	jp .redraw ; $5409
 .moveSaveEditorCursor:
 	bit 5, a ; $540c
 	jr z, .checkRight ; $540e
 	ld bc, $ffff ; $5410
 	call Unused_03_MoveSaveEditorCursor ; $5413
-	jr z, .loop4 ; $5416
-	jp .loopB ; $5418
+	jr z, .printStatus ; $5416
+	jp .redraw ; $5418
 .checkRight:
 	bit 4, a ; $541b
 	jr z, .checkDown ; $541d
 	ld bc, $0101 ; $541f
 	call Unused_03_MoveSaveEditorCursor ; $5422
-	jr z, .loop4 ; $5425
-	jp .loopB ; $5427
+	jr z, .printStatus ; $5425
+	jp .redraw ; $5427
 .checkDown:
 	bit 7, a ; $542a
 	jr z, .positive ; $542c
 	ld bc, $1008 ; $542e
 	call Unused_03_MoveSaveEditorCursor ; $5431
-	jp z, .loop4 ; $5434
-	jp .loopB ; $5437
+	jp z, .printStatus ; $5434
+	jp .redraw ; $5437
 .positive:
 	bit 1, a ; $543a
 	jr z, .checkSelect ; $543c
@@ -308,11 +308,11 @@ Unused_03_SaveSlotDebugEditor:
 	call Unused_03_WriteCurrentSlotBlock ; $545d
 	pop af ; $5460
 	sound JINGLE_DONE_FOR_THE_DAY ; $5461
-	jp .loop ; $5463
+	jp .reloadSlot ; $5463
 .restore:
 	pop af ; $5466
 	ld [wCurrentStorySlot], a ; $5467
-	jp .loop ; $546a
+	jp .reloadSlot ; $546a
 .checkSelect:
 	bit 2, a ; $546d
 	jr z, .checkStart ; $546f
@@ -321,7 +321,7 @@ Unused_03_SaveSlotDebugEditor:
 	inc a ; $5476
 	and $03 ; $5477
 	ld [wCurrentStorySlot], a ; $5479
-	jp .loop ; $547c
+	jp .reloadSlot ; $547c
 .checkStart:
 	bit 3, a ; $547f
 	jr z, .skipSave ; $5481
@@ -335,17 +335,17 @@ Unused_03_SaveSlotDebugEditor:
 	call PrintString ; $5492
 	call Unused_03_WriteCurrentSlotBlock ; $5495
 	pop de ; $5498
-	jp .loop4 ; $5499
+	jp .printStatus ; $5499
 .deleteSlot:
 	push de ; $549c
 	ld hl, SaveResultDeletedString_03 ; $549d
 	ld_cell de, $05, $11 ; $54a0
 	call PrintString ; $54a3
 	call Unused_03_InvalidateCurrentSlotBlock ; $54a6
-	jp .loop4 ; $54a9
+	jp .printStatus ; $54a9
 	db $d1 ; $54ac
 .skipSave:
-	jp .loop5 ; $54ad
+	jp .inputLoop ; $54ad
 SaveResultFailedString_03:
 	; $54b0, 12 bytes (ascii)
 	db "FAILED     ", $00

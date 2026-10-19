@@ -74,9 +74,9 @@ ServicePractice2SetupShotTarget:
 	ld hl, ServicePractice2ExpectedServes ; $50f1
 	add l ; $50f4
 	ld l, a ; $50f5
-	jr nc, .checkStoryModeMainCharacterLeftHanded ; $50f6
+	jr nc, .indexByHandedness ; $50f6
 	inc h ; $50f8
-.checkStoryModeMainCharacterLeftHanded:
+.indexByHandedness:
 	ld a, [wStoryMainLeftHanded] ; $50f9
 	add l ; $50fc
 	ld l, a ; $50fd
@@ -93,9 +93,9 @@ ServicePractice2SetupShotTarget:
 	ld hl, ServicePractice2ServeCounterPtrs ; $510f
 	add l ; $5112
 	ld l, a ; $5113
-	jr nc, .checkStoryModeMainCharacterLeftHanded2 ; $5114
+	jr nc, .indexCounterPtrByHandedness ; $5114
 	inc h ; $5116
-.checkStoryModeMainCharacterLeftHanded2:
+.indexCounterPtrByHandedness:
 	ld a, [wStoryMainLeftHanded] ; $5117
 	add a ; $511a
 	add l ; $511b

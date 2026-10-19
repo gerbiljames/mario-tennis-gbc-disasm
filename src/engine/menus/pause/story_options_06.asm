@@ -58,7 +58,7 @@ RunStoryTwoOptionMenu:
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $7120
 	and PADF_RIGHT | PADF_LEFT ; $7123
-	jr z, .checkMatchMenuSelection2 ; $7125
+	jr z, .drawCursor ; $7125
 	ld b, a ; $7127
 	ld c, $02 ; $7128
 	ld a, [wMatchMenuSelection] ; $712a
@@ -67,7 +67,7 @@ RunStoryTwoOptionMenu:
 	sound SFX_MENU_MOVE ; $7133
 	ld a, [wStoryMenuFirstItem] ; $7135
 	cp STORYMENUITEM_SAVE_GAME ; $7138
-	jr z, .checkMatchMenuSelection ; $713a
+	jr z, .loadItemGfx ; $713a
 	ld hl, wMatchMenuSelection ; $713c
 	add [hl] ; $713f
 	ld hl, Text_30_354 ; $7140
@@ -79,12 +79,12 @@ RunStoryTwoOptionMenu:
 	ld_cell de, $00, $0e ; $7148
 	call DrawStoryMenuCaption ; $714b
 	call RedrawStoryTilemapRows ; $714e
-.checkMatchMenuSelection:
+.loadItemGfx:
 	ld a, [wMatchMenuSelection] ; $7151
 	ld hl, wStoryMenuFirstItem ; $7154
 	add [hl] ; $7157
 	call LoadStoryMenuItemGfx ; $7158
-.checkMatchMenuSelection2:
+.drawCursor:
 	ld a, [wMatchMenuSelection] ; $715b
 	add a ; $715e
 	ld_hl_indexed StoryTwoOptionCursorPositions ; $715f

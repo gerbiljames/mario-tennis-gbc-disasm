@@ -273,7 +273,7 @@ RenderTextToBuffer64:
 .charLoop:
 	ld a, [hl] ; $5f7f
 	cp $20 ; $5f80
-	jr nc, TextCodeLiteral_05.store ; $5f82
+	jr nc, TextCodeLiteral_05.storeChar ; $5f82
 	push hl ; $5f84
 	push af ; $5f85
 	add a ; $5f86
@@ -314,7 +314,7 @@ TextCodeLineBreak_05:
 	jr RenderTextToBuffer64.charLoop ; $5fbb
 TextCodeLiteral_05:
 	pop hl ; $5fbd
-.store:
+.storeChar:
 	ld [de], a ; $5fbe
 	inc hl ; $5fbf
 	ld a, [hl] ; $5fc0
@@ -332,9 +332,9 @@ TextCodeLiteral_05:
 	cp $03 ; $5fcf
 	ld a, b ; $5fd1
 	ld b, $ff ; $5fd2
-	jr nz, .store2 ; $5fd4
+	jr nz, .storeDiacritic ; $5fd4
 	sub $d0 ; $5fd6
-.store2:
+.storeDiacritic:
 	ld [hl], a ; $5fd8
 	pop hl ; $5fd9
 	inc hl ; $5fda

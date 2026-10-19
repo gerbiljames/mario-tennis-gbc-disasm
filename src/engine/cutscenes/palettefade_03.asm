@@ -237,18 +237,18 @@ SetupPaletteFadeMask:
 	ret ; $7718
 AnimatePaletteFadeToTarget:
 	push_wram_bank WRAM_SCENE ; $7719
-.loop:
+.fadeStepLoop:
 	ld a, [wPaletteFadeFrameDelay] ; $7722
-.loopB:
+.delayLoop:
 	and a ; $7725
 	jr z, .stepPalettes ; $7726
 	call AdvanceFrame ; $7728
 	dec a ; $772b
-	jr .loopB ; $772c
+	jr .delayLoop ; $772c
 .stepPalettes:
 	ld de, wPaletteFadeMask ; $772e
 	ld b, $00 ; $7731
-.loop2:
+.paletteLoop:
 	push de ; $7733
 	push bc ; $7734
 	ld a, [de] ; $7735
@@ -262,7 +262,7 @@ AnimatePaletteFadeToTarget:
 	inc b ; $773f
 	ld a, b ; $7740
 	cp $10 ; $7741
-	jr nz, .loop2 ; $7743
+	jr nz, .paletteLoop ; $7743
 	ld hl, wPaletteFadeLive ; $7745
 	ld d, $00 ; $7748
 	ld e, $10 ; $774a
@@ -273,7 +273,7 @@ AnimatePaletteFadeToTarget:
 	dec a ; $7756
 	ld [hl], a ; $7757
 	and a ; $7758
-	jr nz, .loop ; $7759
+	jr nz, .fadeStepLoop ; $7759
 	call SnapPalettesToTarget ; $775b
 	pop_wram_bank ; $775e
 	ret ; $7763

@@ -260,18 +260,18 @@ DrawWindowFrame:
 	push bc ; $2b72
 	push de ; $2b73
 	push hl ; $2b74
-.loop:
+.fillRowLoop:
 	push bc ; $2b75
 	push de ; $2b76
 	push hl ; $2b77
-.loopB:
+.fillCellLoop:
 	ld a, $20 ; $2b78
 	ld [hl+], a ; $2b7a
 	ld a, [wWindowFrameAttr] ; $2b7b
 	ld [de], a ; $2b7e
 	inc de ; $2b7f
 	dec b ; $2b80
-	jr nz, .loopB ; $2b81
+	jr nz, .fillCellLoop ; $2b81
 	pop hl ; $2b83
 	pop de ; $2b84
 	pop bc ; $2b85
@@ -288,7 +288,7 @@ DrawWindowFrame:
 	inc d ; $2b93
 .gotPtr2:
 	dec c ; $2b94
-	jr nz, .loop ; $2b95
+	jr nz, .fillRowLoop ; $2b95
 	pop hl ; $2b97
 	pop de ; $2b98
 	pop bc ; $2b99
@@ -301,7 +301,7 @@ DrawWindowFrame:
 .gotPtr3:
 	dec c ; $2ba4
 	dec c ; $2ba5
-.loop2:
+.sideRowLoop:
 	call DrawWindowFrameSides ; $2ba6
 	ld a, $20 ; $2ba9
 	add l ; $2bab
@@ -310,7 +310,7 @@ DrawWindowFrame:
 	inc h ; $2baf
 .drawWindowFrameBottom:
 	dec c ; $2bb0
-	jr nz, .loop2 ; $2bb1
+	jr nz, .sideRowLoop ; $2bb1
 	call DrawWindowFrameBottom ; $2bb3
 	pop hl ; $2bb6
 	pop de ; $2bb7

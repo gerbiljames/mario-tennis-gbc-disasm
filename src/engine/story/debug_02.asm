@@ -11,7 +11,7 @@ Unused_02_DebugStoryStatsScreen:
 	script_fade_in 127 ; $4fc1
 	farcall InitStoryModeState ; $4fc6
 	ld d, $00 ; $4fc9
-.loop:
+.reloadSlot:
 	farcall CheckStorySlot ; $4fcb
 	or a ; $4fce
 	jr z, .slotOk ; $4fcf
@@ -55,7 +55,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld [hl+], a ; $5011
 	ld [hl+], a ; $5012
 	ld [hl+], a ; $5013
-	jr .loopB ; $5014
+	jr .redraw ; $5014
 .printString:
 	push de ; $5016
 	ld hl, DebugStoryStatsScreenString2 ; $5017
@@ -65,7 +65,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld_cell de, $08, $10 ; $5023
 	call PrintString ; $5026
 	pop de ; $5029
-.loopB:
+.redraw:
 	push de ; $502a
 	ld bc, wStoryMainName ; $502b
 	ld a, [wCurrentStorySlot] ; $502e
@@ -197,7 +197,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld_cell de, $0c, $0e ; $5138
 	call PrintDecimalByte ; $513b
 	pop de ; $513e
-.loop2:
+.inputLoop:
 	call AdvanceFrame ; $513f
 	call AdvanceRandomSeed ; $5142
 	ldh a, [hInputPressed] ; $5145
@@ -209,7 +209,7 @@ Unused_02_DebugStoryStatsScreen:
 	call LevelUpPlayer ; $5150
 	pop de ; $5153
 	sound SFX_MENU_MOVE ; $5154
-	jp .loopB ; $5156
+	jp .redraw ; $5156
 .levelUpPlayer:
 	bit 5, a ; $5159
 	jr z, .checkRight ; $515b
@@ -219,7 +219,7 @@ Unused_02_DebugStoryStatsScreen:
 	call LevelUpPlayer ; $5162
 	pop de ; $5165
 	sound SFX_MENU_MOVE ; $5166
-	jp .loopB ; $5168
+	jp .redraw ; $5168
 .checkRight:
 	bit 4, a ; $516b
 	jr z, .checkDown ; $516d
@@ -229,7 +229,7 @@ Unused_02_DebugStoryStatsScreen:
 	call LevelUpPlayer ; $5174
 	pop de ; $5177
 	sound SFX_MENU_MOVE ; $5178
-	jp .loopB ; $517a
+	jp .redraw ; $517a
 .checkDown:
 	bit 7, a ; $517d
 	jr z, .positive ; $517f
@@ -239,7 +239,7 @@ Unused_02_DebugStoryStatsScreen:
 	call LevelUpPlayer ; $5186
 	pop de ; $5189
 	sound SFX_MENU_MOVE ; $518a
-	jp .loopB ; $518c
+	jp .redraw ; $518c
 .positive:
 	bit 1, a ; $518f
 	jr z, .checkA ; $5191
@@ -250,7 +250,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld a, DEBUGSTEP_CONSOLE_ON ; $519a
 	ldh [hDebugStepMode], a ; $519c
 	pop de ; $519e
-	jp .loopB ; $519f
+	jp .redraw ; $519f
 .checkA:
 	bit 0, a ; $51a2
 	jr z, .checkSelect ; $51a4
@@ -273,10 +273,10 @@ Unused_02_DebugStoryStatsScreen:
 	call InitPlayerRecordFromTemplate ; $51ba
 	pop de ; $51bd
 	bit 2, d ; $51be
-	jp z, .loopB ; $51c0
+	jp z, .redraw ; $51c0
 	ld a, $01 ; $51c3
 	ld [wStoryMainLeftHanded], a ; $51c5
-	jp .loopB ; $51c8
+	jp .redraw ; $51c8
 .checkSelect:
 	bit 2, a ; $51cb
 	jr z, .checkStart ; $51cd
@@ -288,7 +288,7 @@ Unused_02_DebugStoryStatsScreen:
 	xor a ; $51d9
 .store:
 	ld [wCurrentStorySlot], a ; $51da
-	jp .loop ; $51dd
+	jp .reloadSlot ; $51dd
 .checkStart:
 	bit 3, a ; $51e0
 	jr z, .skipSave ; $51e2
@@ -299,9 +299,9 @@ Unused_02_DebugStoryStatsScreen:
 	call PrintString ; $51ed
 	farcall SaveStorySlotWithTimer ; $51f0
 	pop de ; $51f3
-	jp .loopB ; $51f4
+	jp .redraw ; $51f4
 .skipSave:
-	jp .loop2 ; $51f7
+	jp .inputLoop ; $51f7
 MenuTilemaps_02:
 	; $51fa, 8 bytes (bytes:16)
 	db $46, $41, $49, $4c, $45, $44, $20, $00 ; 0x00

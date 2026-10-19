@@ -2,7 +2,7 @@
 IntroCutsceneState16Exit_6b:
 	xor a ; $4a51
 	ld [wCutsceneStepTimer], a ; $4a52
-	jp DispatchCutsceneStateInit.loop2 ; $4a55
+	jp DispatchCutsceneStateInit.nextState ; $4a55
 IntroCutsceneState16InitPalettes_6b:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState16InitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
 IntroCutsceneState17Init_6b:
@@ -30,10 +30,10 @@ IntroCutsceneState17Init_6b:
 	call LoadPaletteShadow ; $4ad6
 	xor a ; $4ad9
 	ld [wCutsceneStepTimer], a ; $4ada
-	jp DispatchCutsceneStateInit.loop ; $4add
+	jp DispatchCutsceneStateInit.runUpdate ; $4add
 	twin_named intro_cutscene_state16_update, IntroCutsceneState17Update_6b ; $4ae0
 IntroCutsceneState17Exit_6b:
-	jp DispatchCutsceneStateInit.loop2 ; $4aef
+	jp DispatchCutsceneStateInit.nextState ; $4aef
 IntroCutsceneState18Init_6b:
 	ld hl, IntroCutsceneState18InitPalettes_6b ; $4af2
 	ld_bg_pals de, 0, 8 ; $4af5
@@ -112,13 +112,13 @@ IntroCutsceneState18Init_6b:
 	call AdvanceFrame ; $4bc6
 	xor a ; $4bc9
 	ld [wCutsceneStepTimer], a ; $4bca
-	jp DispatchCutsceneStateInit.loop ; $4bcd
+	jp DispatchCutsceneStateInit.runUpdate ; $4bcd
 IntroCutsceneState18Update_6b:
 	ld a, [wCutsceneSpriteAX] ; $4bd0
 	sub $04 ; $4bd3
 	ld [wCutsceneSpriteAX], a ; $4bd5
 	ldh [hScrollY], a ; $4bd8
-	jp z, DispatchCutsceneStateInit.loopB ; $4bda
+	jp z, DispatchCutsceneStateInit.runExit ; $4bda
 	ld a, [wCutsceneStepTimer] ; $4bdd
 	or a ; $4be0
 	jr nz, .checkCutsceneStepTimer ; $4be1
@@ -126,14 +126,14 @@ IntroCutsceneState18Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4be3
 	inc a ; $4be6
 	ld [wCutsceneStepTimer], a ; $4be7
-	jp DispatchCutsceneStateInit.loop ; $4bea
+	jp DispatchCutsceneStateInit.runUpdate ; $4bea
 IntroCutsceneState18Exit_6b:
 	ld hl, ApplyScrollYFromWram ; $4bed
 	call UnregisterFrameTask ; $4bf0
 	wram_bank WRAM_SCREEN ; $4bf3
 	ld a, $00 ; $4bf9
 	ldh [hShowDebugConsole], a ; $4bfb
-	jp DispatchCutsceneStateInit.loop2 ; $4bfd
+	jp DispatchCutsceneStateInit.nextState ; $4bfd
 Palettes_6b_03:
 	INCLUDE "data/engine/cutscenes/Palettes_6b_03.asm" ; $4c00, 56 bytes (palettes)
 IntroCutsceneState19Init_6b:
@@ -160,11 +160,11 @@ IntroCutsceneState19Init_6b:
 	ld a, e ; $4c68
 	ld [hl+], a ; $4c69
 	ld [hl], d ; $4c6a
-	jp DispatchCutsceneStateInit.loop ; $4c6b
+	jp DispatchCutsceneStateInit.runUpdate ; $4c6b
 IntroCutsceneState19Exit_6b:
 	script_fade_out 4 ; $4c6e
 	call WaitFadeEnd ; $4c73
-	jp DispatchCutsceneStateInit.loop2 ; $4c76
+	jp DispatchCutsceneStateInit.nextState ; $4c76
 	twin_named intro_cutscene_state00_update, IntroCutsceneState19Update_6b ; $4c79
 UpdateCutsceneScrollX:
 	ld a, [wCutsceneStepTimer] ; $4c9e
@@ -230,9 +230,9 @@ QueueCutsceneAnimatedSprites:
 	ld hl, CutsceneAnimatedSprites2 ; $4e39
 	add l ; $4e3c
 	ld l, a ; $4e3d
-	jr nc, .read ; $4e3e
+	jr nc, .readSprite2 ; $4e3e
 	inc h ; $4e40
-.read:
+.readSprite2:
 	ld a, [hl+] ; $4e41
 	ld d, [hl] ; $4e42
 	ld e, a ; $4e43
@@ -246,9 +246,9 @@ QueueCutsceneAnimatedSprites:
 	ld hl, CutsceneAnimatedSprites1 ; $4e57
 	add l ; $4e5a
 	ld l, a ; $4e5b
-	jr nc, .readB ; $4e5c
+	jr nc, .readSprite1 ; $4e5c
 	inc h ; $4e5e
-.readB:
+.readSprite1:
 	ld a, [hl+] ; $4e5f
 	ld d, [hl] ; $4e60
 	ld e, a ; $4e61
@@ -262,9 +262,9 @@ QueueCutsceneAnimatedSprites:
 	ld hl, CutsceneAnimatedSprites0 ; $4e75
 	add l ; $4e78
 	ld l, a ; $4e79
-	jr nc, .read2 ; $4e7a
+	jr nc, .readSprite0 ; $4e7a
 	inc h ; $4e7c
-.read2:
+.readSprite0:
 	ld a, [hl+] ; $4e7d
 	ld d, [hl] ; $4e7e
 	ld e, a ; $4e7f

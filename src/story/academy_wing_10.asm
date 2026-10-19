@@ -630,7 +630,7 @@ AcademyWingEntry0fScene:
 	farcall BeginCutsceneScriptMode ; $6fd5
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_TROPHY_1, ANIM_TROPHY_SINGLES ; $6fd8
 	test_flag FLAG_DOUBLES ; $6fdf
-	jp z, .checkFlag2 ; $6fe2
+	jp z, .checkDoublesFinalWon ; $6fe2
 	script_null_script ACTOR_PARTNER ; $6fe5
 	script_set_position ACTOR_PLAYER, 31.0, 52.0 ; $6fea
 	script_set_position ACTOR_PARTNER, 33.0, 52.0 ; $6ff5
@@ -639,7 +639,7 @@ AcademyWingEntry0fScene:
 	jr nz, .face2 ; $700a
 	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_1, 63.0, 63.0 ; $700c
 	jr .face2 ; $7017
-.checkFlag2:
+.checkDoublesFinalWon:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7019
 	jr nz, .face2 ; $701c
 	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_2, 63.0, 63.0 ; $701e

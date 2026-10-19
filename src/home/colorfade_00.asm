@@ -199,17 +199,17 @@ RunFrameTasks:
 	ret ; $1c3e
 SortFrameTasks:
 	ld c, $0f ; $1c3f
-.loop:
+.passLoop:
 	ld hl, wFrameTasks ; $1c41
 	ld de, wFrameTasks + 4 ; $1c44
 	ld b, c ; $1c47
-.loopB:
+.compareLoop:
 	ld a, [de] ; $1c48
 	cp [hl] ; $1c49
-	jr c, .next ; $1c4a
+	jr c, .advancePair ; $1c4a
 	push bc ; $1c4c
 	ld c, $04 ; $1c4d
-.loop2:
+.swapLoop:
 	ld b, [hl] ; $1c4f
 	ld a, [de] ; $1c50
 	ld [hl+], a ; $1c51
@@ -217,10 +217,10 @@ SortFrameTasks:
 	ld [de], a ; $1c53
 	inc de ; $1c54
 	dec c ; $1c55
-	jr nz, .loop2 ; $1c56
+	jr nz, .swapLoop ; $1c56
 	pop bc ; $1c58
-	jr .next2 ; $1c59
-.next:
+	jr .nextPair ; $1c59
+.advancePair:
 	inc hl ; $1c5b
 	inc de ; $1c5c
 	inc hl ; $1c5d
@@ -229,11 +229,11 @@ SortFrameTasks:
 	inc de ; $1c60
 	inc hl ; $1c61
 	inc de ; $1c62
-.next2:
+.nextPair:
 	dec b ; $1c63
-	jr nz, .loopB ; $1c64
+	jr nz, .compareLoop ; $1c64
 	dec c ; $1c66
-	jr nz, .loop ; $1c67
+	jr nz, .passLoop ; $1c67
 	ret ; $1c69
 SplitColorComponents:
 	push de ; $1c6a

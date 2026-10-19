@@ -473,9 +473,9 @@ Unused_02_ListForEach:
 	call LevelUpPlayer ; $4ba6
 	pop hl ; $4ba9
 	ld a, [hl+] ; $4baa
-.loop:
+.stat0Loop:
 	or a ; $4bab
-	jr z, .read ; $4bac
+	jr z, .readStat1 ; $4bac
 	push af ; $4bae
 	push hl ; $4baf
 	ld d, $00 ; $4bb0
@@ -483,12 +483,12 @@ Unused_02_ListForEach:
 	pop hl ; $4bb5
 	pop af ; $4bb6
 	dec a ; $4bb7
-	jr .loop ; $4bb8
-.read:
+	jr .stat0Loop ; $4bb8
+.readStat1:
 	ld a, [hl+] ; $4bba
-.loopB:
+.stat1Loop:
 	or a ; $4bbb
-	jr z, .readB ; $4bbc
+	jr z, .readStat2 ; $4bbc
 	push af ; $4bbe
 	push hl ; $4bbf
 	ld d, $01 ; $4bc0
@@ -496,12 +496,12 @@ Unused_02_ListForEach:
 	pop hl ; $4bc5
 	pop af ; $4bc6
 	dec a ; $4bc7
-	jr .loopB ; $4bc8
-.readB:
+	jr .stat1Loop ; $4bc8
+.readStat2:
 	ld a, [hl+] ; $4bca
-.loop2:
+.stat2Loop:
 	or a ; $4bcb
-	jr z, .read2 ; $4bcc
+	jr z, .readStat3 ; $4bcc
 	push af ; $4bce
 	push hl ; $4bcf
 	ld d, $02 ; $4bd0
@@ -509,10 +509,10 @@ Unused_02_ListForEach:
 	pop hl ; $4bd5
 	pop af ; $4bd6
 	dec a ; $4bd7
-	jr .loop2 ; $4bd8
-.read2:
+	jr .stat2Loop ; $4bd8
+.readStat3:
 	ld a, [hl+] ; $4bda
-.loop3:
+.stat3Loop:
 	or a ; $4bdb
 	jr z, .stat3Done ; $4bdc
 	push af ; $4bde
@@ -522,15 +522,15 @@ Unused_02_ListForEach:
 	pop hl ; $4be5
 	pop af ; $4be6
 	dec a ; $4be7
-	jr .loop3 ; $4be8
+	jr .stat3Loop ; $4be8
 .stat3Done:
 	xor a ; $4bea
 	ld hl, CharDataPtr_02 ; $4beb
 	add l ; $4bee
 	ld l, a ; $4bef
-	jr nc, .read3 ; $4bf0
+	jr nc, .readCharDataPtr ; $4bf0
 	inc h ; $4bf2
-.read3:
+.readCharDataPtr:
 	ld a, [hl+] ; $4bf3
 	ld d, [hl] ; $4bf4
 	ld e, a ; $4bf5

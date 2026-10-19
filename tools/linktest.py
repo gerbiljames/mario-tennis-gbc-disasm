@@ -87,6 +87,7 @@ class Side:
 
 def boot_to_menu(rom, save, out):
     from pyboy import PyBoy
+    E.check_build(rom)
     tmp = Path(tempfile.mkdtemp(dir=ROOT / "build"))
     shutil.copy(rom, tmp / "r.gbc")
     shutil.copy(save, tmp / "r.gbc.ram")

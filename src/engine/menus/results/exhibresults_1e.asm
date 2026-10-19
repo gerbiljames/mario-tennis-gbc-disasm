@@ -328,7 +328,7 @@ DrawRankMatchLabel:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4754
 	jr nz, .checkWramBank ; $4757
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4759
-	jr nz, .checkFlag ; $475c
+	jr nz, .seniorSinglesRank ; $475c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $475e
 	jp z, .read ; $4761
 	dec [hl] ; $4764
@@ -341,7 +341,7 @@ DrawRankMatchLabel:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4772
 	jr z, .read ; $4775
 	ret ; $4777
-.checkFlag:
+.seniorSinglesRank:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $4778
 	jr z, .read ; $477b
 	dec [hl] ; $477d
@@ -360,7 +360,7 @@ DrawRankMatchLabel:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $4793
 	jr nz, .checkWramBank ; $4796
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $4798
-	jr nz, .checkFlag2 ; $479b
+	jr nz, .seniorDoublesRank ; $479b
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $479d
 	jr z, .read ; $47a0
 	dec [hl] ; $47a2
@@ -370,7 +370,7 @@ DrawRankMatchLabel:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $47a9
 	jr z, .read ; $47ac
 	ret ; $47ae
-.checkFlag2:
+.seniorDoublesRank:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $47af
 	jr z, .read ; $47b2
 	dec [hl] ; $47b4
