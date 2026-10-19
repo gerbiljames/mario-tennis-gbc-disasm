@@ -59,7 +59,7 @@ TileBlockPtrs_39:
 	tileblock Screen1ObjGfx ; record 7
 	tileblock Screen2ObjGfx ; record 8
 	tileblock MatchWinLoseGfx ; record 9
-	tileblock UnusedJpCourtStatLabelTiles_18 ; record 10
+	tileblock Unused_18_JpCourtStatLabelTiles ; record 10
 	tileblock SharedMenuGfx17Alias11 ; record 11
 	tileblock SharedMenuGfx17Alias12 ; record 12
 	tileblock SharedMenuGfx17Alias13 ; record 13

@@ -665,7 +665,7 @@ StoryPauseMenu_AfterItem:
 	farcall InitSceneTileAnimations ; $6ebe
 	pop_wram_bank ; $6ec1
 	ret ; $6ec6
-UnusedStoryMenuRedrawReentry:
+Unused_06_StoryMenuRedrawReentry:
 	call Unused_06_DrawStoryMenuItemRow ; $6ec7
 	ld hl, ScoreboardModeGfxTail ; $6eca
 	ld de, vTiles0 tile $64 ; $6ecd
@@ -804,7 +804,7 @@ StoryOptionsMenu_AfterItem:
 	jr StoryPauseMenu_Options.loop ; $6fe7
 .done:
 	ret ; $6fe9
-UnusedRunStoryPlayerDataMenu:
+Unused_06_RunStoryPlayerDataMenu:
 	ld a, STORYMENUITEM_CHAR_DATA ; $6fea
 	ld [wStoryMenuFirstItem], a ; $6fec
 	ld a, STORYMENU_STATUS ; $6fef

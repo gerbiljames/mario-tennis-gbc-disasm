@@ -156,7 +156,7 @@ NetGameMatch3Cases3:
 	and $01 ; $5b66
 	call TestCharStateBit4 ; $5b68
 	or a ; $5b6b
-	jp z, UnusedStoreMatchAbortFlag_5.storeMatchAbortFlag ; $5b6c
+	jp z, Unused_0b_StoreMatchAbortFlag_5.storeMatchAbortFlag ; $5b6c
 	xor a ; $5b6f
 	ret ; $5b70
 .ignoreBounce:
@@ -221,14 +221,14 @@ NetGameMatch3Cases4:
 	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $5bbc
 	ld b, $0d ; $5bbe
 	call QueueDrillResultMessage ; $5bc0
-	jp UnusedStoreMatchAbortFlag_5.storeMatchAbortFlag ; $5bc3
+	jp Unused_0b_StoreMatchAbortFlag_5.storeMatchAbortFlag ; $5bc3
 .rally5IgnoreBounce:
 	xor a ; $5bc6
 	ret ; $5bc7
 .rally5IgnoreRallyTick:
 	xor a ; $5bc8
 	ret ; $5bc9
-UnusedStoreMatchAbortFlag_5:
+Unused_0b_StoreMatchAbortFlag_5:
 	ld a, MATCHABORT_POINT ; $5bca
 	ld [wMatchAbortFlag], a ; $5bcc
 	ld a, $01 ; $5bcf

@@ -223,7 +223,7 @@ NetGamePractice3Cases1:
 	call RecordDrillTargetZoneHit ; $634c
 	call CheckDrillTargetZoneMissed ; $634f
 	or a ; $6352
-	jp z, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $6353
+	jp z, Unused_0b_StoreMatchAbortFlag_6.storeMatchAbortFlag ; $6353
 	xor a ; $6356
 	ret ; $6357
 .ignoreRallyTick:
@@ -309,13 +309,13 @@ NetGamePractice3Cases3:
 	xor a ; $63cf
 	call TestCharStateBit4 ; $63d0
 	or a ; $63d3
-	jp z, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $63d4
+	jp z, Unused_0b_StoreMatchAbortFlag_6.storeMatchAbortFlag ; $63d4
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_DROP_SHOT_SO_YOU_FAIL ; $63d7
 	ld b, $00 ; $63d9
 	call QueueDrillResultMessage ; $63db
 	ld a, [wCurrentShotType] ; $63de
 	cp SHOTTYPE_DROP ; $63e1
-	jp nz, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $63e3
+	jp nz, Unused_0b_StoreMatchAbortFlag_6.storeMatchAbortFlag ; $63e3
 	ld hl, wDrillCounters + DRILLCTR_SHOTS_LEFT ; $63e6
 	dec [hl] ; $63e9
 	xor a ; $63ea
@@ -326,7 +326,7 @@ NetGamePractice3Cases3:
 .ignoreRallyTick:
 	xor a ; $63ee
 	ret ; $63ef
-UnusedStoreMatchAbortFlag_6:
+Unused_0b_StoreMatchAbortFlag_6:
 	ld a, MATCHABORT_POINT ; $63f0
 	ld [wMatchAbortFlag], a ; $63f2
 	ld a, $01 ; $63f5

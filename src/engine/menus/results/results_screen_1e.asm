@@ -411,7 +411,7 @@ CopyLabelTilesToTilemap:
 	dec c ; $4427
 	jr nz, CopyLabelTilesToTilemap ; $4428
 	ret ; $442a
-UnusedClearLabelTilemapRow:
+Unused_1e_ClearLabelTilemapRow:
 	wram_bank WRAM_SCREEN ; $442b
 	ld a, $20 ; $4431
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $4433

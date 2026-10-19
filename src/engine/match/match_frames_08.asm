@@ -191,7 +191,7 @@ SelectScoreboardLayout:
 	ld a, b ; $4583
 	ld [wScoreboardLayout], a ; $4584
 	ret ; $4587
-UnusedTickTimerTrampoline:
+Unused_08_TickTimerTrampoline:
 	jp TickTimer ; $4588
 SetBallPosition:
 	push hl ; $458b

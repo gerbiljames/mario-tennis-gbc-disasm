@@ -1,4 +1,4 @@
-UnusedRunMessagesMusicMenu:
+Unused_06_RunMessagesMusicMenu:
 	ld a, STORYMENUITEM_MESSAGES ; $70ac
 	ld [wStoryMenuFirstItem], a ; $70ae
 	jp RunStoryTwoOptionMenu ; $70b1
@@ -10,7 +10,7 @@ RunMusicOnOffMenu:
 	ld a, STORYMENUITEM_MUSIC_ON ; $70bc
 	ld [wStoryMenuFirstItem], a ; $70be
 	jp RunStoryTwoOptionMenu ; $70c1
-UnusedRunSaveQuitMenu:
+Unused_06_RunSaveQuitMenu:
 	ld a, STORYMENUITEM_SAVE_GAME ; $70c4
 	ld [wStoryMenuFirstItem], a ; $70c6
 	jp RunStoryTwoOptionMenu ; $70c9

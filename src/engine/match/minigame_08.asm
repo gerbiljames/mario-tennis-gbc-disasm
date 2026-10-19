@@ -215,7 +215,7 @@ DrawStandingShadowSlot:
 	ld hl, StandingShadowOamTemplate ; $6531
 	jp QueueSpriteTemplate ; $6534
 ; Instruction-for-instruction the same as DrawSlotSprite, with the operands aimed at slot 16. Nothing calls it.
-UnusedDrawStandingShadowSlot16:
+Unused_08_DrawStandingShadowSlot16:
 	ld a, [hl+] ; $6537
 	cp $ff ; $6538
 	ret z ; $653a

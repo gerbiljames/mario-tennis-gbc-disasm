@@ -300,7 +300,7 @@ SetActorDrawModeFromSceneTile_0f:
 	ld [hl], a ; $6394
 	ret ; $6395
 ; SetActorDrawModeFromSceneTile_0f without the push af / pop af / or a / jr z that makes the live one skip on a zero argument. Nothing calls it.
-UnusedSetActorDrawModeFromSceneTileSingle_0f:
+Unused_0f_SetActorDrawModeFromSceneTileSingle:
 	ld h, a ; $6396
 	ld l, $00 ; $6397
 	wram_bank WRAM_ACTORS ; $6399

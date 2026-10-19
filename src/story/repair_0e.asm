@@ -43,7 +43,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld [hl], d ; $4c78
 	jp TrainingGymRunnerCheckClearance ; $4c79
 ; Fetches actor $0a's state and `res 0`s its +5 flag. Nothing calls it.
-UnusedTrainingGymRunner0AClearWaypoint:
+Unused_0e_TrainingGymRunner0AClearWaypoint:
 	script_get_actor_state $0a ; $4c7c
 	ld c, l ; $4c81
 	ld b, h ; $4c82
@@ -97,8 +97,8 @@ TrainingGymRunner0BWaitWaypointClear:
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
 	jp TrainingGymRunnerCheckClearance ; $4cd0
-; The same as UnusedTrainingGymRunner0AClearWaypoint for actor $0b. Nothing calls it.
-UnusedTrainingGymRunner0BClearWaypoint:
+; The same as Unused_0e_TrainingGymRunner0AClearWaypoint for actor $0b. Nothing calls it.
+Unused_0e_TrainingGymRunner0BClearWaypoint:
 	script_get_actor_state $0b ; $4cd3
 	ld c, l ; $4cd8
 	ld b, h ; $4cd9
@@ -152,7 +152,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	ld [hl+], a ; $4d25
 	ld [hl], d ; $4d26
 	jp TrainingGymRunnerCheckClearance ; $4d27
-UnusedTrainingGymRunner0CClearWaypoint:
+Unused_0e_TrainingGymRunner0CClearWaypoint:
 	script_get_actor_state $0c ; $4d2a
 	ld c, l ; $4d2f
 	ld b, h ; $4d30

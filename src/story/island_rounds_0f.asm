@@ -1,5 +1,5 @@
 ; Instruction-for-instruction the same as TournamentNpc0A_0f: the handler assembled a second time. Nothing points at this copy.
-UnusedTournamentNpc0A_0f:
+Unused_0f_TournamentNpc0A:
 	script_set_text Text_SammieIntroPlayYouFirst ; $6f18
 	script_speak_restore $0b ; $6f1e
 	farcall RunDialogueYesNoPrompt ; $6f23

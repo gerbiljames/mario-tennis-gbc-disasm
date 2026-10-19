@@ -1,4 +1,4 @@
-UnusedStoreMatchAbortFlag_2:
+Unused_0b_StoreMatchAbortFlag_2:
 	ld a, MATCHABORT_POINT ; $4c03
 	ld [wMatchAbortFlag], a ; $4c05
 	ld a, $01 ; $4c08
@@ -225,7 +225,7 @@ ServiceMatch3Cases2:
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4dc3
 	ld b, $06 ; $4dc5
 	call QueueDrillResultMessage ; $4dc7
-	jr UnusedStoreMatchAbortFlag_3.storeMatchAbortFlag ; $4dca
+	jr Unused_0b_StoreMatchAbortFlag_3.storeMatchAbortFlag ; $4dca
 .unreachable:
 	xor a ; $4dcc
 	ret ; $4dcd
@@ -235,7 +235,7 @@ ServiceMatch3Cases2:
 .ignoreRallyTick:
 	xor a ; $4dd0
 	ret ; $4dd1
-UnusedStoreMatchAbortFlag_3:
+Unused_0b_StoreMatchAbortFlag_3:
 	ld a, MATCHABORT_POINT ; $4dd2
 	ld [wMatchAbortFlag], a ; $4dd4
 	ld a, $01 ; $4dd7
@@ -328,7 +328,7 @@ ServicePractice1EvaluateResult:
 ServicePractice1Hook_RallyTick:
 	ret ; $4e74
 	twin_named service_practice1_hook_bounce, ServicePractice1Hook_Bounce ; $4e75
-UnusedServeSecondBounceSound_1:
+Unused_0b_ServeSecondBounceSound_1:
 	ld a, [wBallBounceCount] ; $4e7f
 	cp $02 ; $4e82
 	ret nz ; $4e84
@@ -388,7 +388,7 @@ ServicePractice1HandlePointEnd:
 	call UnregisterFrameTask ; $4f12
 	call PlayDrillPointEndSequence ; $4f15
 	ret ; $4f18
-UnusedStoreDrillServeTargetResult:
+Unused_0b_StoreDrillServeTargetResult:
 	call CheckDrillTargetZoneMissed ; $4f19
 	add a ; $4f1c
 	dec a ; $4f1d

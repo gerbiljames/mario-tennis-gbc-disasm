@@ -228,7 +228,7 @@ then does this as its fourth:
 `MenuFontPalettes_01` is a palette (`LoadMenuFontPalette` hands it to
 `LoadPaletteShadow`). The copy puts its 64 bytes plus 448 bytes of what follows
 at `$5050`-`$520f` (the bank's loaders, `DebugMenuPalettes_01` at `$50f6`, the
-start of `UnusedJpWindowTiles_01` at `$51b0`, and `LoadMenuTilesBStaged`
+start of `Unused_01_JpWindowTiles` at `$51b0`, and `LoadMenuTilesBStaged`
 itself) into VRAM `$8e00`-`$8fff`, tiles `$e0`-`$ff` of the `$8800` block.
 
 `MenuFontFillTiles_01` is never uploaded, so `$8800`-`$8dff` keeps whatever the
@@ -445,7 +445,7 @@ pointer's high byte (`$d0`-`$d5`, or `$d0` for the out-of-range case, which
 uses `hl = wActors`), so the routine always returns NZ. The idiom is a guard on
 a caller-supplied `hl` elsewhere in the bank — `CheckActorScriptEnd`
 (`$0a:$438a`), `IsActorBusy` (`$0a:$476c`, after an `xor a`) and
-`UnusedSetActorMoveTarget` (`$0a:$4750`) open with it, and
+`Unused_0a_SetActorMoveTarget` (`$0a:$4750`) open with it, and
 `CheckActorScriptEnd` returns its own `cp $00` intact. Here it sits after the
 answer.
 
@@ -817,11 +817,11 @@ another scene's graphics.
 
 **Only debug code calls it.** Its one caller is
 `Unused_0a_LoadAndDisplayScene` (`$0a:$5de2`), whose four callers —
-`Unused_0a_SceneViewerSelectScene`, `UnusedSceneViewerSelectSceneMenu`,
+`Unused_0a_SceneViewerSelectScene`, `Unused_0a_SceneViewerSelectSceneMenu`,
 `Unused_0a_InitSceneViewer` and `Unused_0a_InitSceneViewerDefault` — are the
-scene viewer. Its entries are `UnusedSceneViewerMainLoop` (which calls
+scene viewer. Its entries are `Unused_0a_SceneViewerMainLoop` (which calls
 `Unused_0a_InitSceneViewerDefault` and `Unused_0a_SceneViewerSelectScene`),
-`UnusedSceneViewerSelectSceneMenu` and `Unused_0a_InitSceneViewer`; the first
+`Unused_0a_SceneViewerSelectSceneMenu` and `Unused_0a_InitSceneViewer`; the first
 two are referenced nowhere, the third only by its directory slot (`$0a:$4072`),
 which no `farcall` uses. (`Unused_0a_RunSceneSelectDebugMenu` is a separate
 picker that calls `LoadStorySceneGraphics` directly.) No `farcall` to

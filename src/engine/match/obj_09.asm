@@ -424,14 +424,14 @@ SetObjDrawMode:
 	add hl, bc ; $45f5
 	ld [hl], d ; $45f6
 	ret ; $45f7
-UnusedToggleObjMoveCurveBits_1:
+Unused_09_ToggleObjMoveCurveBits_1:
 	ld hl, OBJSLOT_CURVE ; $45f8
 	add hl, bc ; $45fb
 	ld a, [hl] ; $45fc
 	xor $02 ; $45fd
 	ld [hl], a ; $45ff
 	ret ; $4600
-UnusedToggleObjMoveCurveBits_2:
+Unused_09_ToggleObjMoveCurveBits_2:
 	ld hl, OBJSLOT_CURVE ; $4601
 	add hl, bc ; $4604
 	ld a, [hl] ; $4605

@@ -106,7 +106,7 @@ is not. `TestAndSetGridEntryTaken` is live, `Unused_38_TestAndClearGridEntryTake
 are opcode-identical to a live routine in another bank, and their names say
 so: `Unused_0e_ComputeStoryRankTier`, `_0f_`, `_10_`, `_11_`, `_12_` and
 `_14_` are all the 24-instruction `ComputeStoryRankTier_13`, one copy per
-story bank; `UnusedEvalFlagCondition_0a` is
+story bank; `Unused_0a_EvalFlagCondition` is
 `EvalFlagCondition` from bank `$04`; `Unused_05_FetchSRAMShortText` is
 `FetchSRAMDialogueText`. This is what a shared include assembled into every
 story bank looks like: each bank got the whole set, and only the copy the
@@ -150,21 +150,21 @@ template); three lone `ret`s in bank `$11` sit after list terminators
 and the `Unused_1b_StubRet1`/`2` pair; `Unused_39_PushPopNop_1`/`_2` and
 `Unused_38_WramBank3Nop`, routines that do nothing but preserve registers — script slots that were filled and never wired.
 
-**7. Cut or never-finished features.** `UnusedShowExpAwardForN64` is
+**7. Cut or never-finished features.** `Unused_1e_ShowExpAwardForN64` is
 opcode-identical to `ShowExpAwardForMinigame`: the EXP award screen has a
-Transfer Pak branch the game never takes. `UnusedRunMessagesMusicMenu` and
-`UnusedRunSaveQuitMenu` are pause-menu options with no row.
+Transfer Pak branch the game never takes. `Unused_06_RunMessagesMusicMenu` and
+`Unused_06_RunSaveQuitMenu` are pause-menu options with no row.
 `Unused_10_RunWaterSpriteMinigame` (94% of the live target-zone test mode)
 and `Unused_07_ApplyCharStatPreset` (168 instructions of stat presets
 nothing loads) are the largest bodies with no live twin at all.
-`UnusedDrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
+`Unused_08_DrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
 **8. Data that came along.** The 111 unused blobs are mostly two things:
 bank `$0c`, an entire sound bank of 36 channel scripts that the sound-id
 tables never index (`docs/sound_engine.md`), and the Japanese font and
-window tiles in bank `$01` (`UnusedJpFontTiles_01`, 3,136 bytes, and
-`UnusedJpWindowTiles_01`), left over from the original release.
+window tiles in bank `$01` (`Unused_01_JpFontTiles`, 3,136 bytes, and
+`Unused_01_JpWindowTiles`), left over from the original release.
 
 ## Where it sits
 

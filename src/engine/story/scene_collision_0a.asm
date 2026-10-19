@@ -353,7 +353,7 @@ Unused_0a_SceneViewerSelectScene:
 	call InitSceneTileAnimations ; $5e4e
 .done:
 	ret ; $5e51
-UnusedSceneViewerSelectSceneMenu:
+Unused_0a_SceneViewerSelectSceneMenu:
 	ld hl, Text_MenuSceneViewerScenes ; $5e52
 	ld d, $01 ; $5e55
 	ld e, $01 ; $5e57

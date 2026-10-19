@@ -360,7 +360,7 @@ Unused_18_DrawGlyphSprite:
 	ld hl, hVBlankCounter ; $54ed
 	sub [hl] ; $54f0
 	and $1f ; $54f1
-	ld_hl_indexed UnusedBobRamp_18 ; $54f3
+	ld_hl_indexed Unused_18_BobRamp ; $54f3
 	ld a, [hl] ; $54fa
 	add e ; $54fb
 	ld e, a ; $54fc
@@ -373,8 +373,8 @@ Unused_18_DrawGlyphSprite:
 	add $08 ; $5503
 	ld d, a ; $5505
 	ret ; $5506
-UnusedBobRamp_18:
-	INCBIN "data/engine/menus/common/UnusedBobRamp_18.bin" ; $5507, 32 bytes
+Unused_18_BobRamp:
+	INCBIN "data/engine/menus/common/Unused_18_BobRamp.bin" ; $5507, 32 bytes
 Unused_18_DrawThreeOptionLabels:
 	call Unused_18_DrawConfirmScreenBox ; $5527
 	ld hl, ThreeOptionLabelsData3 ; $552a

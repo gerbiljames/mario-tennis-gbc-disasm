@@ -14,9 +14,9 @@ engine/menus/main_menu/MenuTilesBStagedTiles0.bin 004610 200 gfx
 engine/menus/main_menu/MenuTilesBStagedTiles1.bin 004810 200 gfx
 engine/menus/main_menu/MenuFontPalettes_01.asm 005010 40 palettes
 engine/menus/main_menu/DebugMenuPalettes_01.asm 0050f6 80 palettes
-engine/menus/main_menu/UnusedJpWindowTiles_01.bin 0051b0 100 gfx
-engine/menus/main_menu/UnusedJpFontTiles_01.bin 0053b0 c40 gfx
-engine/menus/main_menu/UnusedJpFontPalettes_01.asm 005ff0 40 palettes
+engine/menus/main_menu/Unused_01_JpWindowTiles.bin 0051b0 100 gfx
+engine/menus/main_menu/Unused_01_JpFontTiles.bin 0053b0 c40 gfx
+engine/menus/main_menu/Unused_01_JpFontPalettes.asm 005ff0 40 palettes
 engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin 00607c 887 gfx
 engine/menus/main_menu/lz_DmgLockoutTilemapLZ_01.bin 006903 158 tilemap:32
 engine/menus/main_menu/SoundTestStrings_01.asm 006b64 6 sound_data
@@ -250,42 +250,42 @@ engine/story/MinigameTargetFormation8Script2.asm 02ac67 a target_script
 engine/story/MinigameTargetFormation8Script3.asm 02ac71 a target_script
 engine/story/DrawMinigameTargetAltTable.bin 02adad 10
 engine/story/EndingCreditsSequencePalette.asm 02ae6c 8 palettes
-audio/UnusedSnd0c_00.bin 030090 e4
-audio/UnusedSnd0c_01.bin 030174 e2
-audio/UnusedSnd0c_02.bin 030256 158
-audio/UnusedSnd0c_03.bin 0303ae 57a
-audio/UnusedSnd0c_04.bin 030928 42
-audio/UnusedSnd0c_05.bin 03096a 4e
-audio/UnusedSnd0c_06.bin 0309b8 b2
-audio/UnusedSnd0c_07.bin 030a6a 2f6
-audio/UnusedSnd0c_08.bin 030d60 1e6
-audio/UnusedSnd0c_09.bin 030f46 1c0
-audio/UnusedSnd0c_10.bin 031106 46e
-audio/UnusedSnd0c_11.bin 031574 340
-audio/UnusedSnd0c_12.bin 0318b4 212
-audio/UnusedSnd0c_13.bin 031ac6 212
-audio/UnusedSnd0c_14.bin 031cd8 10a
-audio/UnusedSnd0c_15.bin 031de2 338
-audio/UnusedSnd0c_16.bin 03211a 1b4
-audio/UnusedSnd0c_17.bin 0322ce 12c
-audio/UnusedSnd0c_18.bin 0323fa 162
-audio/UnusedSnd0c_19.bin 03255c 362
-audio/UnusedSnd0c_20.bin 0328be 272
-audio/UnusedSnd0c_21.bin 032b30 244
-audio/UnusedSnd0c_22.bin 032d74 4fe
-audio/UnusedSnd0c_23.bin 033272 588
-audio/UnusedSnd0c_24.bin 0337fa 9a
-audio/UnusedSnd0c_25.bin 033894 9a
-audio/UnusedSnd0c_26.bin 03392e 8e
-audio/UnusedSnd0c_27.bin 0339bc 324
-audio/UnusedSnd0c_28.bin 033ce0 3a
-audio/UnusedSnd0c_29.bin 033d1a 38
-audio/UnusedSnd0c_30.bin 033d52 18
-audio/UnusedSnd0c_31.bin 033d6a 5e
-audio/UnusedSnd0c_32.bin 033dc8 4c
-audio/UnusedSnd0c_33.bin 033e14 48
-audio/UnusedSnd0c_34.bin 033e5c 12
-audio/UnusedSnd0c_35.bin 033e6e 16
+audio/Unused_0c_Snd00.bin 030090 e4
+audio/Unused_0c_Snd01.bin 030174 e2
+audio/Unused_0c_Snd02.bin 030256 158
+audio/Unused_0c_Snd03.bin 0303ae 57a
+audio/Unused_0c_Snd04.bin 030928 42
+audio/Unused_0c_Snd05.bin 03096a 4e
+audio/Unused_0c_Snd06.bin 0309b8 b2
+audio/Unused_0c_Snd07.bin 030a6a 2f6
+audio/Unused_0c_Snd08.bin 030d60 1e6
+audio/Unused_0c_Snd09.bin 030f46 1c0
+audio/Unused_0c_Snd10.bin 031106 46e
+audio/Unused_0c_Snd11.bin 031574 340
+audio/Unused_0c_Snd12.bin 0318b4 212
+audio/Unused_0c_Snd13.bin 031ac6 212
+audio/Unused_0c_Snd14.bin 031cd8 10a
+audio/Unused_0c_Snd15.bin 031de2 338
+audio/Unused_0c_Snd16.bin 03211a 1b4
+audio/Unused_0c_Snd17.bin 0322ce 12c
+audio/Unused_0c_Snd18.bin 0323fa 162
+audio/Unused_0c_Snd19.bin 03255c 362
+audio/Unused_0c_Snd20.bin 0328be 272
+audio/Unused_0c_Snd21.bin 032b30 244
+audio/Unused_0c_Snd22.bin 032d74 4fe
+audio/Unused_0c_Snd23.bin 033272 588
+audio/Unused_0c_Snd24.bin 0337fa 9a
+audio/Unused_0c_Snd25.bin 033894 9a
+audio/Unused_0c_Snd26.bin 03392e 8e
+audio/Unused_0c_Snd27.bin 0339bc 324
+audio/Unused_0c_Snd28.bin 033ce0 3a
+audio/Unused_0c_Snd29.bin 033d1a 38
+audio/Unused_0c_Snd30.bin 033d52 18
+audio/Unused_0c_Snd31.bin 033d6a 5e
+audio/Unused_0c_Snd32.bin 033dc8 4c
+audio/Unused_0c_Snd33.bin 033e14 48
+audio/Unused_0c_Snd34.bin 033e5c 12
+audio/Unused_0c_Snd35.bin 033e6e 16
 engine/minigames/LaunchBallTable.bin 034548 66
 story/StarWarpPalette.asm 03b2ce 8 palettes
 story/StarWarpTiles.bin 03b2e0 180 gfx
@@ -517,7 +517,7 @@ engine/menus/common/ThreeOptionLabelsData4.bin 061198 10
 engine/menus/common/ThreeOptionLabelsData5.bin 0611a8 10
 engine/menus/common/lz_ConfirmScreenGfx3.bin 0611f8 ce gfx
 engine/menus/common/ConfirmScreenPalette1.asm 0612c6 18 palettes
-engine/menus/common/UnusedBobRamp_18.bin 061507 20
+engine/menus/common/Unused_18_BobRamp.bin 061507 20
 engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.bin 061633 1c1 gfx
 engine/menus/scenes/ConfirmScreenSpritePalette0.asm 06182d 18 palettes
 engine/menus/scenes/ConfirmScreenSpriteGfx1.bin 061845 4d
@@ -564,7 +564,7 @@ engine/menus/scenes/lz_MarioMiniGamesTilemap.bin 0632db 130 tilemap:32
 engine/menus/scenes/lz_MarioMiniGamesAttrmap.bin 06340b d6 tilemap:32
 engine/menus/scenes/MarioMiniGamesPalettes.asm 0634e1 40 palettes
 engine/menus/scenes/lz_MatchWinLoseGfx.bin 063521 47 gfx
-engine/menus/scenes/lz_UnusedJpCourtStatLabelTiles_18.bin 063568 af gfx
+engine/menus/scenes/lz_Unused_18_JpCourtStatLabelTiles.bin 063568 af gfx
 engine/menus/scenes/Screen0Palette.asm 063754 8 palettes
 engine/menus/scenes/AllBgPalettes.asm 0638a9 8 palettes
 engine/menus/scenes/Screen1ObjPalette.asm 0638c5 8 palettes
@@ -735,38 +735,38 @@ engine/menus/char_data/lz_CharDataScreenUIPatch2Tilemap.bin 07282e 1a
 engine/menus/char_data/lz_CharDataScreenUIPatch2Attrmap.bin 072848 7
 engine/menus/char_data/lz_CharDataScreenUIPatch3Tilemap.bin 07284f 1c
 engine/menus/char_data/lz_CharDataScreenUIPatch3Attrmap.bin 07286b 7
-engine/menus/char_data/UnusedShiftGfx00.bin 072880 40 gfx
-engine/menus/char_data/UnusedShiftGfx01.bin 0728c0 40 gfx
-engine/menus/char_data/UnusedShiftGfx02.bin 072900 40 gfx
-engine/menus/char_data/UnusedShiftGfx03.bin 072940 40 gfx
-engine/menus/char_data/UnusedShiftGfx04.bin 072980 40 gfx
-engine/menus/char_data/UnusedShiftGfx05.bin 0729c0 40 gfx
-engine/menus/char_data/UnusedShiftGfx06.bin 072a00 40 gfx
-engine/menus/char_data/UnusedShiftGfx07.bin 072a40 40 gfx
-engine/menus/char_data/UnusedShiftGfx08.bin 072a80 40 gfx
-engine/menus/char_data/UnusedShiftGfx09.bin 072ac0 40 gfx
-engine/menus/char_data/UnusedShiftGfx10.bin 072b00 40 gfx
-engine/menus/char_data/UnusedShiftGfx11.bin 072b40 40 gfx
-engine/menus/char_data/UnusedShiftGfx12.bin 072b80 40 gfx
-engine/menus/char_data/UnusedShiftGfx13.bin 072bc0 40 gfx
-engine/menus/char_data/UnusedShiftGfx14.bin 072c00 40 gfx
-engine/menus/char_data/UnusedShiftGfx15.bin 072c40 40 gfx
-engine/menus/char_data/UnusedShiftGfx16.bin 072c80 40 gfx
-engine/menus/char_data/UnusedShiftGfx17.bin 072cc0 40 gfx
-engine/menus/char_data/UnusedShiftGfx18.bin 072d00 40 gfx
-engine/menus/char_data/UnusedShiftGfx19.bin 072d40 40 gfx
-engine/menus/char_data/UnusedShiftGfx20.bin 072d80 40 gfx
-engine/menus/char_data/UnusedShiftGfx21.bin 072dc0 40 gfx
-engine/menus/char_data/UnusedShiftGfx22.bin 072e00 40 gfx
-engine/menus/char_data/UnusedShiftGfx23.bin 072e40 40 gfx
-engine/menus/char_data/UnusedShiftGfx24.bin 072e80 40 gfx
-engine/menus/char_data/UnusedShiftGfx25.bin 072ec0 2f
+engine/menus/char_data/Unused_1c_ShiftGfx00.bin 072880 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx01.bin 0728c0 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx02.bin 072900 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx03.bin 072940 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx04.bin 072980 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx05.bin 0729c0 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx06.bin 072a00 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx07.bin 072a40 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx08.bin 072a80 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx09.bin 072ac0 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx10.bin 072b00 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx11.bin 072b40 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx12.bin 072b80 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx13.bin 072bc0 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx14.bin 072c00 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx15.bin 072c40 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx16.bin 072c80 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx17.bin 072cc0 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx18.bin 072d00 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx19.bin 072d40 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx20.bin 072d80 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx21.bin 072dc0 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx22.bin 072e00 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx23.bin 072e40 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx24.bin 072e80 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx25.bin 072ec0 2f
 engine/menus/char_data/CharDataScreenTiles_1c.bin 072f2a 16
-engine/menus/char_data/UnusedShiftGfx27.bin 072f40 40 gfx
-engine/menus/char_data/UnusedShiftGfx28.bin 072f80 40 gfx
-engine/menus/char_data/UnusedShiftGfx29.bin 072fc0 40 gfx
-engine/menus/char_data/UnusedShiftGfx30.bin 073000 40 gfx
-engine/menus/char_data/UnusedShiftGfx31.bin 073040 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx27.bin 072f40 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx28.bin 072f80 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx29.bin 072fc0 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx30.bin 073000 40 gfx
+engine/menus/char_data/Unused_1c_ShiftGfx31.bin 073040 40 gfx
 engine/menus/char_data/lz_CharDataScreenGfx13.bin 073080 96
 engine/menus/char_data/CharDataScreenBgAndPalettes.asm 073541 40 palettes
 engine/menus/char_data/lz_CharDataScreenBgAndPalettes0.bin 073581 75e
@@ -955,7 +955,7 @@ engine/match/MatchVariantGraphicsPalettes4.asm 0a1e80 18 palettes
 engine/match/MatchVariantGraphicsPalettes5.asm 0a1e98 8 palettes
 engine/match/MatchVariantGraphicsPalettes6.asm 0a1ea0 10 palettes
 engine/match/lz_MatchGfxTilesB_28.bin 0a2180 b94 gfx
-engine/match/UnusedMatchGfxPalette_28.bin 0a2d14 8
+engine/match/Unused_28_MatchGfxPalette.bin 0a2d14 8
 engine/match/MatchGfxPalettesC_28.asm 0a2d1c 38 palettes
 engine/match/MatchStoryGfxPalettes.asm 0a2d54 10 palettes
 shots/BallPosData_29.asm 0a427d 1c20 traj:6

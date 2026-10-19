@@ -444,7 +444,7 @@ ShowExpAwardForLinkedPlay:
 	pop af ; $6ad8
 	ret ; $6ad9
 ; ShowExpAwardForMinigame with b = 0, c = 0 in place of b = 3, c = 1: the Transfer Pak (N64 records) award variant of the same screen. Nothing calls it, so no N64 EXP award is ever shown.
-UnusedShowExpAwardForN64:
+Unused_1e_ShowExpAwardForN64:
 	ld a, e ; $6ada
 	or d ; $6adb
 	ret z ; $6adc

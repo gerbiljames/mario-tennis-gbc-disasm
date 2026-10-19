@@ -775,7 +775,7 @@ settings); `$dc08` `wStorySceneRecord` (bank `$06`).
 
 ## Oddities
 
-* **`UnusedEvalFlagCondition_0a`** (`$0a:$53a2`, between
+* **`Unused_0a_EvalFlagCondition`** (`$0a:$53a2`, between
   `GetTileTriggerAtPlayer`'s `ret` and `FacingMaskTable_0a`) duplicates the
   live `$04:$4c49`; nothing calls it.
 * **The clear-status flag writers.** `SetTrainingCourtClearFlags`

@@ -89,7 +89,7 @@ SmallCharTestNpc04_0f:
 	ld a, l ; $411c
 	jr SmallCharTestApplyStage_0f ; $411d
 ; Instruction-for-instruction the same as SmallCharTestApplyStage_0f just above it: the same four-instruction body assembled twice. Nothing reaches this copy.
-UnusedSmallCharTestApplyStage_0f:
+Unused_0f_SmallCharTestApplyStage:
 	ld hl, wMapSceneStage ; $411f
 	ld [hl], a ; $4122
 	call SetPlayerActorObjectDef ; $4123

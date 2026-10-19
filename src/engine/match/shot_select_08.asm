@@ -217,7 +217,7 @@ Unused_08_ComputeBallEtaToChar:
 	ld e, l ; $70ee
 	ld d, h ; $70ef
 	ret ; $70f0
-UnusedComputeBallEtaToCharWrapper:
+Unused_08_ComputeBallEtaToCharWrapper:
 	call Unused_08_ComputeBallEtaToChar ; $70f1
 	ret ; $70f4
 PredictBallLateralOffset:
@@ -445,7 +445,7 @@ HandleServePositioning:
 CheckSwingRelease:
 	ld a, [wCharInputBits] ; $7267
 	and PADF_SELECT ; $726a
-	jr z, UnusedLatchSwingHoldButton.tickTimer ; $726c
+	jr z, Unused_08_LatchSwingHoldButton.tickTimer ; $726c
 	xor a ; $726e
 	ld [wCharSwingHoldButton], a ; $726f
 	ld [wCharSwingHoldFrames], a ; $7272

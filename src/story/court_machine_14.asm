@@ -167,7 +167,7 @@ ActorScript_14_0:
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ; Reads tennis-machine record $01 and then throws the result away, storing the constant $0050 into wMinigameRecordValue instead, before sending the player back to the machine room at entry point $01. Nothing calls it. It never calls UpdateMinigameRecord, so the 80 would not persist.
-UnusedMachineRecordOverrideAndReturn_14:
+Unused_14_MachineRecordOverrideAndReturn:
 	push_wram_bank WRAM_SOUND ; $4813
 	ld a, $01 ; $481c
 	farcall ReadMinigameRecord ; $481e

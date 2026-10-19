@@ -306,40 +306,40 @@ CharDataPageRightTargets_1c:
 	db $02, $03, $ff, $ff, $03 ; 0x00
 Unused_1c_0:
 	; $5679, 32 bytes (records:2)
-	dw UnusedShiftGfx00 ; record 0
-	dw UnusedShiftGfx01 ; record 1
-	dw UnusedShiftGfx02 ; record 2
-	dw UnusedShiftGfx03 ; record 3
-	dw UnusedShiftGfx04 ; record 4
-	dw UnusedShiftGfx05 ; record 5
-	dw UnusedShiftGfx06 ; record 6
-	dw UnusedShiftGfx07 ; record 7
-	dw UnusedShiftGfx08 ; record 8
-	dw UnusedShiftGfx09 ; record 9
-	dw UnusedShiftGfx10 ; record 10
-	dw UnusedShiftGfx11 ; record 11
-	dw UnusedShiftGfx12 ; record 12
-	dw UnusedShiftGfx13 ; record 13
-	dw UnusedShiftGfx14 ; record 14
-	dw UnusedShiftGfx15 ; record 15
+	dw Unused_1c_ShiftGfx00 ; record 0
+	dw Unused_1c_ShiftGfx01 ; record 1
+	dw Unused_1c_ShiftGfx02 ; record 2
+	dw Unused_1c_ShiftGfx03 ; record 3
+	dw Unused_1c_ShiftGfx04 ; record 4
+	dw Unused_1c_ShiftGfx05 ; record 5
+	dw Unused_1c_ShiftGfx06 ; record 6
+	dw Unused_1c_ShiftGfx07 ; record 7
+	dw Unused_1c_ShiftGfx08 ; record 8
+	dw Unused_1c_ShiftGfx09 ; record 9
+	dw Unused_1c_ShiftGfx10 ; record 10
+	dw Unused_1c_ShiftGfx11 ; record 11
+	dw Unused_1c_ShiftGfx12 ; record 12
+	dw Unused_1c_ShiftGfx13 ; record 13
+	dw Unused_1c_ShiftGfx14 ; record 14
+	dw Unused_1c_ShiftGfx15 ; record 15
 CharDataScreenAnimTask_CharDataFlushChunkTable:
 	; $5699, 32 bytes (records:2)
-	dw UnusedShiftGfx16 ; record 0
-	dw UnusedShiftGfx17 ; record 1
-	dw UnusedShiftGfx18 ; record 2
-	dw UnusedShiftGfx19 ; record 3
-	dw UnusedShiftGfx20 ; record 4
-	dw UnusedShiftGfx21 ; record 5
-	dw UnusedShiftGfx22 ; record 6
-	dw UnusedShiftGfx23 ; record 7
-	dw UnusedShiftGfx24 ; record 8
-	dw UnusedShiftGfx25 ; record 9
-	dw UnusedShiftGfx26 ; record 10
-	dw UnusedShiftGfx27 ; record 11
-	dw UnusedShiftGfx28 ; record 12
-	dw UnusedShiftGfx29 ; record 13
-	dw UnusedShiftGfx30 ; record 14
-	dw UnusedShiftGfx31 ; record 15
+	dw Unused_1c_ShiftGfx16 ; record 0
+	dw Unused_1c_ShiftGfx17 ; record 1
+	dw Unused_1c_ShiftGfx18 ; record 2
+	dw Unused_1c_ShiftGfx19 ; record 3
+	dw Unused_1c_ShiftGfx20 ; record 4
+	dw Unused_1c_ShiftGfx21 ; record 5
+	dw Unused_1c_ShiftGfx22 ; record 6
+	dw Unused_1c_ShiftGfx23 ; record 7
+	dw Unused_1c_ShiftGfx24 ; record 8
+	dw Unused_1c_ShiftGfx25 ; record 9
+	dw Unused_1c_ShiftGfx26 ; record 10
+	dw Unused_1c_ShiftGfx27 ; record 11
+	dw Unused_1c_ShiftGfx28 ; record 12
+	dw Unused_1c_ShiftGfx29 ; record 13
+	dw Unused_1c_ShiftGfx30 ; record 14
+	dw Unused_1c_ShiftGfx31 ; record 15
 CharDataBand0RunsStep7_1c:
 	; $56b9, 22 bytes (blit_runs)
 	blit_run 0, 3, 0, 10

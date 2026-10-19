@@ -69,7 +69,7 @@ UpdateCameraFromPlayer:
 	ld a, d ; $6298
 	ld [hl], a ; $6299
 	ret ; $629a
-UnusedStepCourtSceneGfxStream:
+Unused_0a_StepCourtSceneGfxStream:
 	ld a, [wCourtSceneGfxStepsLeft] ; $629b
 	or a ; $629e
 	jr nz, .done ; $629f

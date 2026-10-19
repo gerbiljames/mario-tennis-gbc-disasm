@@ -356,7 +356,7 @@ CheckCharacterUnlocked:
 	pop de ; $454a
 	pop hl ; $454b
 	ret ; $454c
-UnusedCheckCharacterIdUnlocked:
+Unused_18_CheckCharacterIdUnlocked:
 	cp $10 ; $454d
 	jr nc, .done ; $454f
 	ld a, $01 ; $4551

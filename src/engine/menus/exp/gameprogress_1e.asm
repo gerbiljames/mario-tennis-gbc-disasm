@@ -173,7 +173,7 @@ ScrollProgressListUp:
 	pop af ; $73d5
 	ret ; $73d6
 ; CreateProgressListWindow with a 16 x 3 window at (2, 0) in place of the 18 x 15 list at (1, 3): the header the progress screen never draws. Nothing calls it.
-UnusedCreateProgressHeaderWindow:
+Unused_1e_CreateProgressHeaderWindow:
 	rect_cell $02, $00 ; $73d7
 	rect_size $10, $03 ; $73db
 	farcall CreateWindowFromScreenRect ; $73df

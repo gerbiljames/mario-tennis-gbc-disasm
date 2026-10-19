@@ -299,8 +299,8 @@ MarioMiniGamesPalettes:
 	INCLUDE "data/engine/menus/scenes/MarioMiniGamesPalettes.asm" ; $74e1, 64 bytes (palettes)
 MatchWinLoseGfx:
 	INCBIN "data/engine/menus/scenes/lz_MatchWinLoseGfx.bin" ; $7521, 71 bytes
-UnusedJpCourtStatLabelTiles_18:
-	INCBIN "data/engine/menus/scenes/lz_UnusedJpCourtStatLabelTiles_18.bin" ; $7568, 175 bytes
+Unused_18_JpCourtStatLabelTiles:
+	INCBIN "data/engine/menus/scenes/lz_Unused_18_JpCourtStatLabelTiles.bin" ; $7568, 175 bytes
 RunStorySceneByMode:
 	ld a, c ; $7617
 	ld [wStorySceneAssetIndex], a ; $7618

@@ -1,4 +1,4 @@
-UnusedServeSecondBounceSound_2:
+Unused_0b_ServeSecondBounceSound_2:
 	ld a, [wBallBounceCount] ; $5041
 	cp $02 ; $5044
 	ret nz ; $5046

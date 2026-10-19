@@ -387,14 +387,14 @@ LoadDebugMenuPalette:
 	; $51ab, 5 bytes (fill)
 	ds 5, $00
 	ds ALIGN[4]
-UnusedJpWindowTiles_01:
-	INCBIN "data/engine/menus/main_menu/UnusedJpWindowTiles_01.bin" ; $51b0, 256 bytes
+Unused_01_JpWindowTiles:
+	INCBIN "data/engine/menus/main_menu/Unused_01_JpWindowTiles.bin" ; $51b0, 256 bytes
 	ds 256, $00 ; $52b0, fill
 	ds ALIGN[4]
-UnusedJpFontTiles_01:
-	INCBIN "data/engine/menus/main_menu/UnusedJpFontTiles_01.bin" ; $53b0, 3136 bytes
-UnusedJpFontPalettes_01:
-	INCLUDE "data/engine/menus/main_menu/UnusedJpFontPalettes_01.asm" ; $5ff0, 64 bytes (palettes)
+Unused_01_JpFontTiles:
+	INCBIN "data/engine/menus/main_menu/Unused_01_JpFontTiles.bin" ; $53b0, 3136 bytes
+Unused_01_JpFontPalettes:
+	INCLUDE "data/engine/menus/main_menu/Unused_01_JpFontPalettes.asm" ; $5ff0, 64 bytes (palettes)
 ShowDmgLockoutScreen:
 	ld a, LCDC_OFF ; $6030
 	ldh [rLCDC], a ; $6032

@@ -204,7 +204,7 @@ Unused_0a_InitSceneViewer:
 	pop bc ; $606c
 	pop af ; $606d
 	ret ; $606e
-UnusedUnregisterSceneViewerFrameTask:
+Unused_0a_UnregisterSceneViewerFrameTask:
 	ld hl, Unused_0a_StubNop ; $606f
 	call UnregisterFrameTask ; $6072
 	ret ; $6075
@@ -244,7 +244,7 @@ Unused_0a_InitSceneViewerDefault:
 	pop bc ; $60b0
 	pop af ; $60b1
 	ret ; $60b2
-UnusedSceneViewerMainLoop:
+Unused_0a_SceneViewerMainLoop:
 	call Unused_0a_InitSceneViewerDefault ; $60b3
 .clearScroll:
 	call Unused_0a_UpdateSceneViewerScroll ; $60b6

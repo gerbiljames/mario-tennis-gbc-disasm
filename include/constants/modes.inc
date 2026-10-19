@@ -138,7 +138,7 @@ def DRILLCTR_NETP1_NET_OR_OUT    rb ; $02 NetGamePractice1's DRILLCTR_NET_OR_OUT
 def DRILLCTR_NET_OR_OUT          rb ; $03 balls into the net or out
 def DRILLCTR_PASSES              rb ; $04 points judged passed, shown as points won
 def DRILLCTR_SHOTS_LEFT          rb ; $05 4, less one per use of the lesson's shot
-; Net matches: per side, nonzero = played the net (read by UnusedNetGameMatch3JudgePoint)
+; Net matches: per side, nonzero = played the net (read by Unused_0b_NetGameMatch3JudgePoint)
 	rsset 5
 def DRILLCTR_NET_PLAYED          rb 2 ; $05
 ; Stroke lessons (StrokePractice1-3):

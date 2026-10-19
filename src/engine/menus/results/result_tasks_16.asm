@@ -24,7 +24,7 @@ Unused_16_ClearWram3Row64Alt:
 UpdateResultScreenAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $43f6
 	ret ; $43f9
-UnusedDrawCourtDiagramMarkers:
+Unused_16_DrawCourtDiagramMarkers:
 	push af ; $43fa
 	push bc ; $43fb
 .loop:
@@ -61,7 +61,7 @@ Unused_16_CourtDiagramBaseTask:
 	inc de ; $4421
 	ld a, e ; $4422
 	and $1f ; $4423
-	jr nz, UnusedDrawCourtDiagramMarkers.loop ; $4425
+	jr nz, Unused_16_DrawCourtDiagramMarkers.loop ; $4425
 	push hl ; $4427
 	ld h, d ; $4428
 	ld l, e ; $4429
@@ -69,12 +69,12 @@ Unused_16_CourtDiagramBaseTask:
 	ld d, h ; $442b
 	ld e, l ; $442c
 	pop hl ; $442d
-	jr UnusedDrawCourtDiagramMarkers.loop ; $442e
+	jr Unused_16_DrawCourtDiagramMarkers.loop ; $442e
 .restore:
 	pop bc ; $4430
 	pop af ; $4431
 	ret ; $4432
-UnusedPrintDecimalNumber_16:
+Unused_16_PrintDecimalNumber:
 	push af ; $4433
 	push bc ; $4434
 	push hl ; $4435
@@ -89,7 +89,7 @@ UnusedPrintDecimalNumber_16:
 	ld l, c ; $4440
 	ld h, b ; $4441
 	ld c, e ; $4442
-Unused_16_PrintDecimalNumber:
+.formatDigits:
 	ld b, d ; $4443
 	call FormatDecimalNumber ; $4444
 	ld l, c ; $4447

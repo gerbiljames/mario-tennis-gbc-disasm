@@ -296,7 +296,7 @@ Unused_1a_MusicSettingHandler1:
 	ld bc, MusicSettingPtrs ; $4235
 	ld a, [wPauseMenuWindowId] ; $4238
 	jp Unused_1a_RunPauseMenuWindow.menuLoop ; $423b
-UnusedRunMusicSettingMenu:
+Unused_1a_RunMusicSettingMenu:
 	call Unused_1a_ResetPauseMenuState ; $423e
 	ld a, $c0 ; $4241
 	ld [wPauseMenuOptionBits], a ; $4243

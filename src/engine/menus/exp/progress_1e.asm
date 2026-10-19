@@ -50,7 +50,7 @@ FillProgressListRowAttrs:
 	dec e ; $7a2c
 	jr nz, .loop ; $7a2d
 	ret ; $7a2f
-UnusedCopyProgressListTilemap:
+Unused_1e_CopyProgressListTilemap:
 	ld hl, $d060 ; $7a30
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $7a33
 	ld c, 15 * TILEMAP_WIDTH / 16 ; $7a36

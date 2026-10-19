@@ -1,6 +1,6 @@
 Unused_1a_StubNop3:
 	ret ; $4da8
-UnusedDrawExpScreenMessage_1:
+Unused_1a_DrawExpScreenMessage_1:
 	push af ; $4da9
 	push bc ; $4daa
 	push de ; $4dab
@@ -35,7 +35,7 @@ UnusedDrawExpScreenMessage_1:
 	pop bc ; $4e04
 	pop af ; $4e05
 	ret ; $4e06
-UnusedDrawExpScreenMessage_2:
+Unused_1a_DrawExpScreenMessage_2:
 	push af ; $4e07
 	push bc ; $4e08
 	push de ; $4e09

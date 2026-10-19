@@ -123,7 +123,7 @@ Unused_0b_WriteCharStructByte:
 	ld [hl], b ; $4439
 	pop_wram_bank ; $443a
 	ret ; $443f
-UnusedSetAiReactionDelayFar:
+Unused_0b_SetAiReactionDelayFar:
 	ld hl, $007a ; $4440
 	call Unused_0b_WriteCharStructByte ; $4443
 	ret ; $4446
@@ -155,7 +155,7 @@ SyncPointWinLoseFlagTask:
 	ld [hl], a ; $447d
 	pop_wram_bank ; $447e
 	ret ; $4483
-UnusedQueueDrillOutcomeMessage:
+Unused_0b_QueueDrillOutcomeMessage:
 	ld a, [wPointOutcome] ; $4484
 	cp POINTOUTCOME_FAULT ; $4487
 	jr z, .hideMessage ; $4489
