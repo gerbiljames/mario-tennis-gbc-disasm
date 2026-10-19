@@ -89,16 +89,16 @@ ServiceMatch3HandlePointEnd:
 	call RecordDrillPointResultBits ; $4cac
 	ld a, $00 ; $4caf
 	call CountDrillShotSuccesses ; $4cb1
-	ld [wDrillCounters + 1], a ; $4cb4
+	ld [wDrillCounters + DRILLCTR_P1_SUCCESSES], a ; $4cb4
 	ld a, $01 ; $4cb7
 	call CountDrillShotSuccesses ; $4cb9
-	ld [wDrillCounters + 2], a ; $4cbc
+	ld [wDrillCounters + DRILLCTR_P2_SUCCESSES], a ; $4cbc
 	call ShowQueuedDrillMessage ; $4cbf
 	farcall UpdatePointStats ; $4cc2
 	call ServiceMatch3AwardPointToSide ; $4cc5
-	ld a, [wDrillCounters + 1] ; $4cc8
+	ld a, [wDrillCounters + DRILLCTR_P1_SUCCESSES] ; $4cc8
 	ld [wPlayer1PointsWon], a ; $4ccb
-	ld a, [wDrillCounters + 2] ; $4cce
+	ld a, [wDrillCounters + DRILLCTR_P2_SUCCESSES] ; $4cce
 	ld [wPlayer2PointsWon], a ; $4cd1
 	ld a, [wPlayer1PointsWon] ; $4cd4
 	ld b, $01 ; $4cd7
@@ -293,7 +293,7 @@ ServicePractice1Hook_PointEnd:
 	ld [wMatchAbortFlag], a ; $4e3b
 	ret ; $4e3e
 ServicePractice1EvaluateResult:
-	ld a, [wDrillCounters] ; $4e3f
+	ld a, [wDrillCounters + DRILLCTR_SERVES_SCORED] ; $4e3f
 	ld b, a ; $4e42
 	ld a, $04 ; $4e43
 	sub b ; $4e45
@@ -362,14 +362,14 @@ ServicePractice1HandlePointEnd:
 	call RecordDrillPointResultBits ; $4ecb
 	ld a, $00 ; $4ece
 	call CountDrillShotSuccesses ; $4ed0
-	ld [wDrillCounters + 1], a ; $4ed3
+	ld [wDrillCounters + DRILLCTR_P1_SUCCESSES], a ; $4ed3
 	ld a, $01 ; $4ed6
 	call CountDrillShotSuccesses ; $4ed8
-	ld [wDrillCounters + 2], a ; $4edb
+	ld [wDrillCounters + DRILLCTR_P2_SUCCESSES], a ; $4edb
 	call ShowQueuedDrillMessage ; $4ede
 	farcall UpdatePointStats ; $4ee1
 	farcall AwardPoint ; $4ee4
-	ld a, [wDrillCounters + 1] ; $4ee7
+	ld a, [wDrillCounters + DRILLCTR_P1_SUCCESSES] ; $4ee7
 	ld [wPlayer1PointsWon], a ; $4eea
 	xor a ; $4eed
 	ld [wPlayer2PointsWon], a ; $4eee
@@ -422,7 +422,7 @@ ServicePractice1QueueOutcomeMessage:
 .unreachable:
 	jr .missed ; $4f56
 .targetHit:
-	ld hl, wDrillCounters ; $4f58
+	ld hl, wDrillCounters + DRILLCTR_SERVES_SCORED ; $4f58
 	inc [hl] ; $4f5b
 	ld a, $01 ; $4f5c
 	ret ; $4f5e
@@ -453,8 +453,8 @@ ServicePractice2Hooks:
 	dw RetStub ; record 7
 ServicePractice2Hook_MinigameStart:
 	ld a, $02 ; $4f8f
-	ld [wDrillCounters + 1], a ; $4f91
-	ld [wDrillCounters + 2], a ; $4f94
+	ld [wDrillCounters + DRILLCTR_TOPSPIN_SERVES_LEFT], a ; $4f91
+	ld [wDrillCounters + DRILLCTR_SLICE_SERVES_LEFT], a ; $4f94
 	ret ; $4f97
 ServicePractice2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $4f98
@@ -508,10 +508,10 @@ ServicePractice2EvaluateResult:
 	ld [wDrillLessonResult], a ; $4ff1
 	jr .notFound ; $4ff4
 .checkCounter2:
-	ld a, [wDrillCounters + 2] ; $4ff6
+	ld a, [wDrillCounters + DRILLCTR_SLICE_SERVES_LEFT] ; $4ff6
 	or a ; $4ff9
 	jr z, .checkCounter1 ; $4ffa
-	ld a, [wDrillCounters + 1] ; $4ffc
+	ld a, [wDrillCounters + DRILLCTR_TOPSPIN_SERVES_LEFT] ; $4ffc
 	or a ; $4fff
 	jr z, .byHandedness ; $5000
 	ld a, $04 ; $5002
@@ -526,7 +526,7 @@ ServicePractice2EvaluateResult:
 	ld [wDrillLessonResult], a ; $5011
 	jr .notFound ; $5014
 .checkCounter1:
-	ld a, [wDrillCounters + 1] ; $5016
+	ld a, [wDrillCounters + DRILLCTR_TOPSPIN_SERVES_LEFT] ; $5016
 	or a ; $5019
 	jr z, .allPassed ; $501a
 	ld b, $05 ; $501c

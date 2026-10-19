@@ -745,8 +745,8 @@ NetGameMatch3Hook_PointStart:
 	xor a ; $58fa
 	ld [wDrillCounters + 1], a ; $58fb
 	ld [wDrillCounters + 2], a ; $58fe
-	ld [wDrillCounters + 5], a ; $5901
-	ld [wDrillCounters + 6], a ; $5904
+	ld [wDrillCounters + DRILLCTR_NET_PLAYED], a ; $5901
+	ld [wDrillCounters + DRILLCTR_NET_PLAYED + 1], a ; $5904
 	ret ; $5907
 NetGameMatch3Hook_PointEnd:
 	call NetGameMatch3JudgeOnPointEnd ; $5908
@@ -866,7 +866,7 @@ UnusedNetGameMatch3JudgePoint.queueDrillResultMessage2:
 	call QueueDrillResultMessage ; $59d8
 	ld a, [wTotalPointsScoredInCurrentGame] ; $59db
 	and $01 ; $59de
-	ld hl, wDrillCounters + 5 ; $59e0
+	ld hl, wDrillCounters + DRILLCTR_NET_PLAYED ; $59e0
 	add l ; $59e3
 	ld l, a ; $59e4
 	jr nc, UnusedNetGameMatch3JudgePoint.readB ; $59e5

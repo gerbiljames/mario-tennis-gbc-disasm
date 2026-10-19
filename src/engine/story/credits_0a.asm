@@ -8,7 +8,7 @@ CheckBallHitsMinigameTargetAlt:
 	ld a, [hl+] ; $6e01
 	ld d, [hl] ; $6e02
 	ld e, a ; $6e03
-	ld hl, wMinigameTargetWork + 6 ; $6e04
+	ld hl, wMinigameTargetWork + MGTARGET_X ; $6e04
 	ld a, [hl+] ; $6e07
 	ld h, [hl] ; $6e08
 	ld l, a ; $6e09
@@ -28,7 +28,7 @@ CheckBallHitsMinigameTargetAlt:
 	ld a, [hl+] ; $6e1f
 	ld d, [hl] ; $6e20
 	ld e, a ; $6e21
-	ld hl, wMinigameTargetWork + 8 ; $6e22
+	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $6e22
 	ld a, [hl+] ; $6e25
 	ld h, [hl] ; $6e26
 	ld l, a ; $6e27
@@ -44,7 +44,7 @@ CheckBallHitsMinigameTargetAlt:
 	add hl, de ; $6e35
 	bit 7, h ; $6e36
 	jr nz, .done ; $6e38
-	ld hl, wMinigameTargetWork ; $6e3a
+	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6e3a
 	set 2, [hl] ; $6e3d
 .done:
 	ret ; $6e3f

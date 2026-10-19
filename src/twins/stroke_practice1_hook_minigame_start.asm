@@ -4,6 +4,6 @@
 	ld a, $01
 	ld [wDrillIsPracticeLesson], a
 	xor a
-	ld [wDrillCounters + 2], a
-	ld [wDrillCounters + 1], a
+	ld [wDrillCounters + DRILLCTR_STROKE_PASSES], a
+	ld [wDrillCounters + DRILLCTR_OUTS], a
 	ret

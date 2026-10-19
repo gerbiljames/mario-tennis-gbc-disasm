@@ -1,5 +1,5 @@
 EnableTargetZoneAfterDelayTask:
-	ld hl, wDrillCounters + 8 ; $6bd0
+	ld hl, wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY ; $6bd0
 	dec [hl] ; $6bd3
 	ret nz ; $6bd4
 	ld a, $01 ; $6bd5
@@ -14,7 +14,7 @@ StrokePractice1Hook_PointEnd:
 	jr z, .ballOut ; $6be9
 	jr .strokePractice1HandlePointEnd ; $6beb
 .ballOut:
-	ld hl, wDrillCounters + 1 ; $6bed
+	ld hl, wDrillCounters + DRILLCTR_OUTS ; $6bed
 	inc [hl] ; $6bf0
 .strokePractice1HandlePointEnd:
 	call StrokePractice1HandlePointEnd ; $6bf1
@@ -186,8 +186,8 @@ StrokePractice2Hooks:
 	dw RetStub ; record 7
 StrokePractice2Hook_MinigameStart:
 	xor a ; $6dd4
-	ld [wDrillCounters + 2], a ; $6dd5
-	ld [wDrillCounters + 7], a ; $6dd8
+	ld [wDrillCounters + DRILLCTR_LOBS], a ; $6dd5
+	ld [wDrillCounters + DRILLCTR_LOB_PASSES], a ; $6dd8
 	ret ; $6ddb
 StrokePractice2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6ddc
@@ -207,7 +207,7 @@ StrokePractice2Hook_PointStart:
 	xor a ; $6df7
 	ld [wDrillPointJudgement], a ; $6df8
 	ld a, $5a ; $6dfb
-	ld [wDrillCounters + 8], a ; $6dfd
+	ld [wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY], a ; $6dfd
 	ld a, $01 ; $6e00
 	ld hl, StrokePractice2TargetZoneDelayTask ; $6e02
 	call RegisterFrameTask ; $6e05
@@ -225,7 +225,7 @@ StrokePractice2ServeAims:
 	; $6e18, 4 bytes (bytes:4)
 	db PADF_LEFT, PADF_RIGHT, PADF_RIGHT, PADF_LEFT
 StrokePractice2TargetZoneDelayTask:
-	ld hl, wDrillCounters + 8 ; $6e1c
+	ld hl, wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY ; $6e1c
 	dec [hl] ; $6e1f
 	ret nz ; $6e20
 	ld a, $01 ; $6e21
@@ -243,7 +243,7 @@ StrokePractice2Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $6e3c
 	ret ; $6e3f
 StrokePractice2EvaluateResult:
-	ld a, [wDrillCounters + 7] ; $6e40
+	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6e40
 	cp $04 ; $6e43
 	jr nz, .checkCounter7 ; $6e45
 	xor a ; $6e47
@@ -251,14 +251,14 @@ StrokePractice2EvaluateResult:
 	ld a, $01 ; $6e4b
 	ret ; $6e4d
 .checkCounter7:
-	ld a, [wDrillCounters + 7] ; $6e4e
+	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6e4e
 	cp $03 ; $6e51
 	jr c, .checkCounter2 ; $6e53
 	ld a, $05 ; $6e55
 	ld [wDrillLessonResult], a ; $6e57
 	jr .notFound ; $6e5a
 .checkCounter2:
-	ld a, [wDrillCounters + 2] ; $6e5c
+	ld a, [wDrillCounters + DRILLCTR_LOBS] ; $6e5c
 	cp $04 ; $6e5f
 	jr nc, .checkRallyLength ; $6e61
 	ld a, $01 ; $6e63
@@ -313,14 +313,14 @@ StrokePractice2HandlePointEnd:
 	ld [wPointWinLoseFlag], a ; $6ecf
 	cp $01 ; $6ed2
 	jr nz, .recordDrillPointResultBits ; $6ed4
-	ld hl, wDrillCounters + 7 ; $6ed6
+	ld hl, wDrillCounters + DRILLCTR_LOB_PASSES ; $6ed6
 	inc [hl] ; $6ed9
 .recordDrillPointResultBits:
 	call RecordDrillPointResultBits ; $6eda
 	call ShowQueuedDrillMessage ; $6edd
 	farcall UpdatePointStats ; $6ee0
 	farcall AwardPoint ; $6ee3
-	ld a, [wDrillCounters + 7] ; $6ee6
+	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6ee6
 	ld [wPlayer1PointsWon], a ; $6ee9
 	xor a ; $6eec
 	ld [wPlayer2PointsWon], a ; $6eed
@@ -454,7 +454,7 @@ StrokePractice2Cases2:
 	ld a, [wCurrentShotType] ; $6fc7
 	cp SHOTTYPE_LOB ; $6fca
 	jp nz, .storeMatchAbortFlag ; $6fcc
-	ld hl, wDrillCounters + 2 ; $6fcf
+	ld hl, wDrillCounters + DRILLCTR_LOBS ; $6fcf
 	inc [hl] ; $6fd2
 	xor a ; $6fd3
 	ret ; $6fd4
@@ -473,7 +473,7 @@ StrokePractice2Cases2:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3 ; $6fee
 	ld b, $00 ; $6ff0
 	call QueueDrillResultMessage ; $6ff2
-	ld hl, wDrillCounters + 3 ; $6ff5
+	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET ; $6ff5
 	inc [hl] ; $6ff8
 	jp .storeMatchAbortFlag ; $6ff9
 .storeMatchAbortFlag2:
@@ -525,7 +525,7 @@ StrokePractice3Hook_PointStart:
 	xor a ; $705c
 	ld [wDrillPointJudgement], a ; $705d
 	ld a, $5a ; $7060
-	ld [wDrillCounters + 8], a ; $7062
+	ld [wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY], a ; $7062
 	ld a, $01 ; $7065
 	ld hl, StrokePractice3TargetZoneDelayTask ; $7067
 	call RegisterFrameTask ; $706a
@@ -543,7 +543,7 @@ StrokePractice3ServeAims:
 	; $707d, 4 bytes (bytes:4)
 	db $00, $00, $00, $00
 StrokePractice3TargetZoneDelayTask:
-	ld hl, wDrillCounters + 8 ; $7081
+	ld hl, wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY ; $7081
 	dec [hl] ; $7084
 	ret nz ; $7085
 	ld a, $01 ; $7086

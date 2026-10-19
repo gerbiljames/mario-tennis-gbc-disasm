@@ -3,7 +3,7 @@ UnassignExpPointFromChar:
 	ld a, [wStoryCharacterSlot] ; $72e3
 	or a ; $72e6
 	jr nz, .partner ; $72e7
-	ld hl, wExpScreenCharStats + 6 ; $72e9
+	ld hl, wExpScreenCharStats + EXPSTAT_ASSIGNED ; $72e9
 	ld a, [hl+] ; $72ec
 	ld d, [hl] ; $72ed
 	ld e, a ; $72ee
@@ -15,7 +15,7 @@ UnassignExpPointFromChar:
 	ld a, e ; $72f5
 	ld [hl+], a ; $72f6
 	ld [hl], d ; $72f7
-	ld hl, wExpScreenCharStats + 4 ; $72f8
+	ld hl, wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL ; $72f8
 	ld a, [hl+] ; $72fb
 	ld d, [hl] ; $72fc
 	ld e, a ; $72fd
@@ -24,7 +24,7 @@ UnassignExpPointFromChar:
 	ld a, e ; $7300
 	ld [hl+], a ; $7301
 	ld [hl], d ; $7302
-	ld hl, wExpScreenCharStats + 8 ; $7303
+	ld hl, wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT ; $7303
 	ld a, [hl+] ; $7306
 	ld d, [hl] ; $7307
 	ld e, a ; $7308
@@ -36,7 +36,7 @@ UnassignExpPointFromChar:
 	call CheckExpLevelDown ; $730e
 	jr .refundPool ; $7311
 .partner:
-	ld hl, wExpScreenCharStats + 21 ; $7313
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_ASSIGNED ; $7313
 	ld a, [hl+] ; $7316
 	ld d, [hl] ; $7317
 	ld e, a ; $7318
@@ -48,7 +48,7 @@ UnassignExpPointFromChar:
 	ld a, e ; $731f
 	ld [hl+], a ; $7320
 	ld [hl], d ; $7321
-	ld hl, wExpScreenCharStats + 19 ; $7322
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL ; $7322
 	ld a, [hl+] ; $7325
 	ld d, [hl] ; $7326
 	ld e, a ; $7327
@@ -57,7 +57,7 @@ UnassignExpPointFromChar:
 	ld a, e ; $732a
 	ld [hl+], a ; $732b
 	ld [hl], d ; $732c
-	ld hl, wExpScreenCharStats + 23 ; $732d
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT ; $732d
 	ld a, [hl+] ; $7330
 	ld d, [hl] ; $7331
 	ld e, a ; $7332
@@ -107,7 +107,7 @@ CheckExpLevelUp:
 	ld a, [wStoryCharacterSlot] ; $7383
 	or a ; $7386
 	jr nz, .partner ; $7387
-	ld hl, wExpScreenCharStats + 8 ; $7389
+	ld hl, wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT ; $7389
 	ld a, [hl+] ; $738c
 	ld d, [hl] ; $738d
 	ld e, a ; $738e
@@ -116,23 +116,23 @@ CheckExpLevelUp:
 	ret nz ; $7391
 	ld a, $ff ; $7392
 	ld [wExpLevelUpFanfare], a ; $7394
-	ld a, [wExpScreenCharStats] ; $7397
+	ld a, [wExpScreenCharStats + EXPSTAT_LEVEL] ; $7397
 	inc a ; $739a
-	ld [wExpScreenCharStats], a ; $739b
+	ld [wExpScreenCharStats + EXPSTAT_LEVEL], a ; $739b
 	dec a ; $739e
 	farcall GetExpRequiredForLevel ; $739f
 	ld a, l ; $73a2
-	ld [wExpScreenCharStats + 1], a ; $73a3
-	ld [wExpScreenCharStats + 8], a ; $73a6
+	ld [wExpScreenCharStats + EXPSTAT_LEVEL_EXP], a ; $73a3
+	ld [wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT], a ; $73a6
 	ld a, h ; $73a9
-	ld [wExpScreenCharStats + 2], a ; $73aa
-	ld [wExpScreenCharStats + 9], a ; $73ad
+	ld [wExpScreenCharStats + EXPSTAT_LEVEL_EXP + 1], a ; $73aa
+	ld [wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT + 1], a ; $73ad
 	xor a ; $73b0
-	ld [wExpScreenCharStats + 4], a ; $73b1
-	ld [wExpScreenCharStats + 5], a ; $73b4
+	ld [wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL], a ; $73b1
+	ld [wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL + 1], a ; $73b4
 	ret ; $73b7
 .partner:
-	ld hl, wExpScreenCharStats + 23 ; $73b8
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT ; $73b8
 	ld a, [hl+] ; $73bb
 	ld d, [hl] ; $73bc
 	ld e, a ; $73bd
@@ -141,27 +141,27 @@ CheckExpLevelUp:
 	ret nz ; $73c0
 	ld a, $ff ; $73c1
 	ld [wExpLevelUpFanfare], a ; $73c3
-	ld a, [wExpScreenCharStats + 15] ; $73c6
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL] ; $73c6
 	inc a ; $73c9
-	ld [wExpScreenCharStats + 15], a ; $73ca
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL], a ; $73ca
 	dec a ; $73cd
 	farcall GetExpRequiredForLevel ; $73ce
 	ld a, l ; $73d1
-	ld [wExpScreenCharStats + 16], a ; $73d2
-	ld [wExpScreenCharStats + 23], a ; $73d5
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP], a ; $73d2
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT], a ; $73d5
 	ld a, h ; $73d8
-	ld [wExpScreenCharStats + 17], a ; $73d9
-	ld [wExpScreenCharStats + 24], a ; $73dc
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP + 1], a ; $73d9
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT + 1], a ; $73dc
 	xor a ; $73df
-	ld [wExpScreenCharStats + 19], a ; $73e0
-	ld [wExpScreenCharStats + 20], a ; $73e3
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL], a ; $73e0
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL + 1], a ; $73e3
 	ret ; $73e6
 CheckExpLevelDown:
 	wram_bank WRAM_SCENE ; $73e7
 	ld a, [wStoryCharacterSlot] ; $73ed
 	or a ; $73f0
 	jr nz, .partner ; $73f1
-	ld hl, wExpScreenCharStats + 4 ; $73f3
+	ld hl, wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL ; $73f3
 	ld a, [hl+] ; $73f6
 	ld d, [hl] ; $73f7
 	ld e, a ; $73f8
@@ -169,27 +169,27 @@ CheckExpLevelDown:
 	ld a, d ; $73fa
 	or e ; $73fb
 	ret nz ; $73fc
-	ld a, [wExpScreenCharStats] ; $73fd
+	ld a, [wExpScreenCharStats + EXPSTAT_LEVEL] ; $73fd
 	dec a ; $7400
-	ld [wExpScreenCharStats], a ; $7401
+	ld [wExpScreenCharStats + EXPSTAT_LEVEL], a ; $7401
 	dec a ; $7404
 	farcall GetExpRequiredForLevel ; $7405
 	ld a, l ; $7408
-	ld [wExpScreenCharStats + 1], a ; $7409
+	ld [wExpScreenCharStats + EXPSTAT_LEVEL_EXP], a ; $7409
 	ld a, h ; $740c
-	ld [wExpScreenCharStats + 2], a ; $740d
+	ld [wExpScreenCharStats + EXPSTAT_LEVEL_EXP + 1], a ; $740d
 	dec hl ; $7410
 	ld a, l ; $7411
-	ld [wExpScreenCharStats + 4], a ; $7412
+	ld [wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL], a ; $7412
 	ld a, h ; $7415
-	ld [wExpScreenCharStats + 5], a ; $7416
+	ld [wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL + 1], a ; $7416
 	ld a, $01 ; $7419
-	ld [wExpScreenCharStats + 8], a ; $741b
+	ld [wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT], a ; $741b
 	dec a ; $741e
-	ld [wExpScreenCharStats + 9], a ; $741f
+	ld [wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT + 1], a ; $741f
 	ret ; $7422
 .partner:
-	ld hl, wExpScreenCharStats + 19 ; $7423
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL ; $7423
 	ld a, [hl+] ; $7426
 	ld d, [hl] ; $7427
 	ld e, a ; $7428
@@ -197,37 +197,37 @@ CheckExpLevelDown:
 	ld a, d ; $742a
 	or e ; $742b
 	ret nz ; $742c
-	ld a, [wExpScreenCharStats + 15] ; $742d
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL] ; $742d
 	dec a ; $7430
-	ld [wExpScreenCharStats + 15], a ; $7431
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL], a ; $7431
 	dec a ; $7434
 	farcall GetExpRequiredForLevel ; $7435
 	ld a, l ; $7438
-	ld [wExpScreenCharStats + 16], a ; $7439
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP], a ; $7439
 	ld a, h ; $743c
-	ld [wExpScreenCharStats + 17], a ; $743d
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP + 1], a ; $743d
 	dec hl ; $7440
 	ld a, l ; $7441
-	ld [wExpScreenCharStats + 19], a ; $7442
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL], a ; $7442
 	ld a, h ; $7445
-	ld [wExpScreenCharStats + 20], a ; $7446
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL + 1], a ; $7446
 	ld a, $01 ; $7449
-	ld [wExpScreenCharStats + 23], a ; $744b
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT], a ; $744b
 	dec a ; $744e
-	ld [wExpScreenCharStats + 24], a ; $744f
+	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT + 1], a ; $744f
 	ret ; $7452
 .openConfirmPrompt:
 	wram_bank WRAM_SCENE ; $7453
 	ld hl, wExpCursorChar ; $7459
 	set 2, [hl] ; $745c
 	wram_bank WRAM_SCENE ; $745e
-	ld a, [wExpScreenCharStats + 10] ; $7464
+	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR] ; $7464
 	ld [wBGPalettes + 58], a ; $7467
-	ld a, [wExpScreenCharStats + 11] ; $746a
+	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR + 1] ; $746a
 	ld [wBGPalettes + 59], a ; $746d
-	ld a, [wExpScreenCharStats + 25] ; $7470
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR] ; $7470
 	ld [wBGPalettes + 34], a ; $7473
-	ld a, [wExpScreenCharStats + 26] ; $7476
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR + 1] ; $7476
 	ld [wBGPalettes + 35], a ; $7479
 	ld a, [wStoryMainPalette] ; $747c
 	ld_bg_pals de, 1, 1 ; $747f
@@ -444,10 +444,10 @@ DrawExpToNextLevelTask:
 	or a ; $7675
 	jr nz, .partner ; $7676
 	wram_bank WRAM_SCENE ; $7678
-	ld a, [wExpScreenCharStats] ; $767e
+	ld a, [wExpScreenCharStats + EXPSTAT_LEVEL] ; $767e
 	cp $64 ; $7681
 	ret nc ; $7683
-	ld hl, wExpScreenCharStats + 8 ; $7684
+	ld hl, wExpScreenCharStats + EXPSTAT_EXP_TO_NEXT ; $7684
 	ld a, [hl+] ; $7687
 	ld h, [hl] ; $7688
 	ld l, a ; $7689
@@ -479,10 +479,10 @@ DrawExpToNextLevelTask:
 	ret ; $76ca
 .partner:
 	wram_bank WRAM_SCENE ; $76cb
-	ld a, [wExpScreenCharStats + 15] ; $76d1
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL] ; $76d1
 	cp $64 ; $76d4
 	ret nc ; $76d6
-	ld hl, wExpScreenCharStats + 23 ; $76d7
+	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT ; $76d7
 	ld a, [hl+] ; $76da
 	ld h, [hl] ; $76db
 	ld l, a ; $76dc
@@ -538,14 +538,14 @@ DrawExpCharCursorTaskTable:
 DrawExpBarFillMarkersTask:
 	wram_bank WRAM_SCENE ; $7760
 	ld de, $3801 ; $7766
-	ld a, [wExpScreenCharStats + 3] ; $7769
+	ld a, [wExpScreenCharStats + EXPSTAT_BAR] ; $7769
 	add d ; $776c
 	ld d, a ; $776d
 	ld hl, DrawExpBarFillMarkersTask_SpriteTemplate ; $776e
 	ld_oam bc, OAM_BANK1 | 7, $0c ; $7771
 	call QueueSpriteTemplate ; $7774
 	ld de, $3849 ; $7777
-	ld a, [wExpScreenCharStats + 18] ; $777a
+	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR] ; $777a
 	add d ; $777d
 	ld d, a ; $777e
 	ld hl, DrawExpBarFillMarkersTask_SpriteTemplate ; $777f

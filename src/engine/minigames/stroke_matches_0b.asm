@@ -708,7 +708,7 @@ StrokePractice1Hook_PointStart:
 	xor a ; $6bab
 	ld [wDrillPointJudgement], a ; $6bac
 	ld a, $5a ; $6baf
-	ld [wDrillCounters + 8], a ; $6bb1
+	ld [wDrillCounters + DRILLCTR_TARGET_ZONE_DELAY], a ; $6bb1
 	ld a, $01 ; $6bb4
 	ld hl, EnableTargetZoneAfterDelayTask ; $6bb6
 	call RegisterFrameTask ; $6bb9

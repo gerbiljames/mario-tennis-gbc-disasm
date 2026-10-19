@@ -145,3 +145,18 @@ def TENNISDICT_INDEX equ $06 ; the 9-cell category index page; modes 0-5 open on
 	const RANKINGBOARD_PLAIN     ; $00
 	const RANKINGBOARD_FANFARE   ; $01 plays fanfare $2b and the marker climb
 	const RANKINGBOARD_CURSOR    ; $02 the second fanfare and RankingCursorBobTask; no marker animation
+
+; --- EXP award screen record (wExpScreenCharStats) ---
+; One per story character, slot 1 at + EXPSTAT_SIZE; filled by
+; InitExpScreenCharStats.
+	rsreset
+def EXPSTAT_LEVEL        rb   ; $00 1-100
+def EXPSTAT_LEVEL_EXP    rw   ; $01 GetExpRequiredForLevel
+def EXPSTAT_BAR          rb   ; $03 filled pixels of the level bar
+def EXPSTAT_EXP_IN_LEVEL rw   ; $04
+def EXPSTAT_ASSIGNED     rw   ; $06 points given this visit, passed to AddPlayerExp
+def EXPSTAT_EXP_TO_NEXT  rw   ; $08 CheckExpLevelUp/Down act when it runs out
+def EXPSTAT_SAVED_COLOR  rw   ; $0a BG colour the screen greys out and restores
+def EXPSTAT_EXP          rb 3 ; $0c CHARREC_EXP, copied back to wStory*Exp
+def EXPSTAT_SIZE equ _RS
+	ASSERT EXPSTAT_SIZE == 15

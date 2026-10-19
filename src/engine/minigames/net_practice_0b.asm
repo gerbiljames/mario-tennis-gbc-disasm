@@ -257,11 +257,11 @@ NetGamePractice1Hooks:
 	dw RetStub ; record 7
 NetGamePractice1Hook_MinigameStart:
 	xor a ; $5c00
-	ld [wDrillCounters + 2], a ; $5c01
-	ld [wDrillCounters + 3], a ; $5c04
-	ld [wDrillCounters + 4], a ; $5c07
+	ld [wDrillCounters + DRILLCTR_NETP1_NET_OR_OUT], a ; $5c01
+	ld [wDrillCounters + DRILLCTR_OFF_TARGET], a ; $5c04
+	ld [wDrillCounters + DRILLCTR_PASSES], a ; $5c07
 	ld a, $04 ; $5c0a
-	ld [wDrillCounters + 5], a ; $5c0c
+	ld [wDrillCounters + DRILLCTR_SHOTS_LEFT], a ; $5c0c
 	ld a, $01 ; $5c0f
 	ld [wDrillIsPracticeLesson], a ; $5c11
 	ret ; $5c14
@@ -308,7 +308,7 @@ NetGamePractice1Hook_PointEnd:
 	jr z, .netGamePractice1HandlePointEnd2 ; $5c5e
 	jr .netGamePractice1HandlePointEnd ; $5c60
 .netGamePractice1HandlePointEnd2:
-	ld hl, wDrillCounters + 2 ; $5c62
+	ld hl, wDrillCounters + DRILLCTR_NETP1_NET_OR_OUT ; $5c62
 	inc [hl] ; $5c65
 .netGamePractice1HandlePointEnd:
 	call NetGamePractice1HandlePointEnd ; $5c66
@@ -319,7 +319,7 @@ NetGamePractice1Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $5c72
 	ret ; $5c75
 NetGamePractice1EvaluateResult:
-	ld a, [wDrillCounters + 4] ; $5c76
+	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5c76
 	cp $04 ; $5c79
 	jr nz, .checkCharacter1DoubleFaults ; $5c7b
 	xor a ; $5c7d
@@ -340,14 +340,14 @@ NetGamePractice1EvaluateResult:
 	ld [wDrillLessonResult], a ; $5c97
 	jr .notFound ; $5c9a
 .noDoubleFaults:
-	ld a, [wDrillCounters + 4] ; $5c9c
+	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5c9c
 	cp $03 ; $5c9f
 	jr nz, .checkCounter5 ; $5ca1
 	ld a, $05 ; $5ca3
 	ld [wDrillLessonResult], a ; $5ca5
 	jr .notFound ; $5ca8
 .checkCounter5:
-	ld a, [wDrillCounters + 5] ; $5caa
+	ld a, [wDrillCounters + DRILLCTR_SHOTS_LEFT] ; $5caa
 	or a ; $5cad
 	jr nz, .result3 ; $5cae
 	ld a, $04 ; $5cb0
@@ -561,7 +561,7 @@ NetGamePractice1Cases3:
 	ld a, [wShotRecoilVariant] ; $5e47
 	cp $01 ; $5e4a
 	jp nz, .storeMatchAbortFlag ; $5e4c
-	ld hl, wDrillCounters + 5 ; $5e4f
+	ld hl, wDrillCounters + DRILLCTR_SHOTS_LEFT ; $5e4f
 	dec [hl] ; $5e52
 	xor a ; $5e53
 	ret ; $5e54
@@ -584,7 +584,7 @@ NetGamePractice1Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2 ; $5e75
 	ld b, $00 ; $5e77
 	call QueueDrillResultMessage ; $5e79
-	ld hl, wDrillCounters + 3 ; $5e7c
+	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET ; $5e7c
 	inc [hl] ; $5e7f
 	jp .storeMatchAbortFlag ; $5e80
 .storeMatchAbortFlag2:
@@ -650,7 +650,7 @@ NetGamePractice2Hook_PointEnd:
 	jr z, .netGamePractice2HandlePointEnd2 ; $5f06
 	jr .netGamePractice2HandlePointEnd ; $5f08
 .netGamePractice2HandlePointEnd2:
-	ld hl, wDrillCounters + 3 ; $5f0a
+	ld hl, wDrillCounters + DRILLCTR_NET_OR_OUT ; $5f0a
 	inc [hl] ; $5f0d
 .netGamePractice2HandlePointEnd:
 	call NetGamePractice2HandlePointEnd ; $5f0e
@@ -661,7 +661,7 @@ NetGamePractice2Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $5f1a
 	ret ; $5f1d
 NetGamePractice2EvaluateResult:
-	ld a, [wDrillCounters + 4] ; $5f1e
+	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5f1e
 	cp $04 ; $5f21
 	jr nz, .checkCharacter1DoubleFaults ; $5f23
 	xor a ; $5f25
@@ -682,21 +682,21 @@ NetGamePractice2EvaluateResult:
 	ld [wDrillLessonResult], a ; $5f3f
 	jr .notFound ; $5f42
 .noDoubleFaults:
-	ld a, [wDrillCounters + 4] ; $5f44
+	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5f44
 	cp $03 ; $5f47
 	jr nz, .checkCounter5 ; $5f49
 	ld a, $06 ; $5f4b
 	ld [wDrillLessonResult], a ; $5f4d
 	jr .notFound ; $5f50
 .checkCounter5:
-	ld a, [wDrillCounters + 5] ; $5f52
+	ld a, [wDrillCounters + DRILLCTR_SHOTS_LEFT] ; $5f52
 	or a ; $5f55
 	jr nz, .checkCounter4Range ; $5f56
 	ld a, $05 ; $5f58
 	ld [wDrillLessonResult], a ; $5f5a
 	jr .notFound ; $5f5d
 .checkCounter4Range:
-	ld a, [wDrillCounters + 4] ; $5f5f
+	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5f5f
 	cp $01 ; $5f62
 	jr c, .result3 ; $5f64
 	cp $03 ; $5f66
@@ -920,7 +920,7 @@ NetGamePractice2Cases3:
 	ld a, [wCurrentShotType] ; $612c
 	cp SHOTTYPE_SMASH ; $612f
 	jp nz, .notSmash ; $6131
-	ld hl, wDrillCounters + 5 ; $6134
+	ld hl, wDrillCounters + DRILLCTR_SHOTS_LEFT ; $6134
 	dec [hl] ; $6137
 	xor a ; $6138
 	ret ; $6139

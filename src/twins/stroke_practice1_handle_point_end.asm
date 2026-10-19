@@ -7,14 +7,14 @@
 	ld [wPointWinLoseFlag], a
 	cp $01
 	jr nz, .recordDrillPointResultBits
-	ld hl, wDrillCounters + 2
+	ld hl, wDrillCounters + DRILLCTR_STROKE_PASSES
 	inc [hl]
 .recordDrillPointResultBits:
 	call RecordDrillPointResultBits
 	call ShowQueuedDrillMessage
 	farcall UpdatePointStats
 	farcall AwardPoint
-	ld a, [wDrillCounters + 2]
+	ld a, [wDrillCounters + DRILLCTR_STROKE_PASSES]
 	ld [wPlayer1PointsWon], a
 	xor a
 	ld [wPlayer2PointsWon], a

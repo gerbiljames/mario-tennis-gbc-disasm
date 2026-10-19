@@ -32,10 +32,10 @@ ServicePractice2HandlePointEnd:
 	call RecordDrillPointResultBits ; $508e
 	ld a, $00 ; $5091
 	call CountDrillShotSuccesses ; $5093
-	ld [wDrillCounters + 5], a ; $5096
+	ld [wDrillCounters + DRILLCTR_LESSON_P1_SUCCESSES], a ; $5096
 	ld a, $01 ; $5099
 	call CountDrillShotSuccesses ; $509b
-	ld [wDrillCounters + 6], a ; $509e
+	ld [wDrillCounters + DRILLCTR_LESSON_P2_SUCCESSES], a ; $509e
 	ld a, [wDrillMessageId] ; $50a1
 	ASSERT DRILLMSG_NONE == 0
 	or a ; $50a4
@@ -45,7 +45,7 @@ ServicePractice2HandlePointEnd:
 	call ShowDrillMessageByIndex ; $50aa
 	farcall UpdatePointStats ; $50ad
 	farcall AwardPoint ; $50b0
-	ld a, [wDrillCounters + 5] ; $50b3
+	ld a, [wDrillCounters + DRILLCTR_LESSON_P1_SUCCESSES] ; $50b3
 	ld [wPlayer1PointsWon], a ; $50b6
 	xor a ; $50b9
 	ld [wPlayer2PointsWon], a ; $50ba
@@ -85,7 +85,7 @@ ServicePractice2SetupShotTarget:
 .read:
 	ld b, [hl] ; $5101
 	ld a, [wCurrentShotType] ; $5102
-	ld [wDrillCounters + 3], a ; $5105
+	ld [wDrillCounters + DRILLCTR_SERVE_SHOT_TYPE], a ; $5105
 	cp b ; $5108
 	jr nz, .checkTotalPointsScoredInCurrentGame ; $5109
 	ld a, [wTotalPointsScoredInCurrentGame] ; $510b
@@ -119,7 +119,7 @@ ServicePractice2ExpectedServes:
 	db SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE
 ServicePractice2ServeCounterPtrs:
 	; $5135, 10 bytes (pointers)
-	dw wDrillCounters + 2, wDrillCounters + 1, wDrillCounters + 2, wDrillCounters + 1, wDrillCounters + 2
+	dw wDrillCounters + DRILLCTR_SLICE_SERVES_LEFT, wDrillCounters + DRILLCTR_TOPSPIN_SERVES_LEFT, wDrillCounters + DRILLCTR_SLICE_SERVES_LEFT, wDrillCounters + DRILLCTR_TOPSPIN_SERVES_LEFT, wDrillCounters + DRILLCTR_SLICE_SERVES_LEFT
 ServicePractice2QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $513f
 	cp POINTOUTCOME_FAULT ; $5142
@@ -162,7 +162,7 @@ ServicePractice2QueueOutcomeMessage:
 	inc h ; $518b
 .read:
 	ld b, [hl] ; $518c
-	ld a, [wDrillCounters + 3] ; $518d
+	ld a, [wDrillCounters + DRILLCTR_SERVE_SHOT_TYPE] ; $518d
 	cp b ; $5190
 	jr nz, .notFound ; $5191
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $5193
@@ -182,7 +182,7 @@ ServicePractice2QueueOutcomeMessage:
 	call QueueDrillResultMessage ; $51b2
 	jr .notFound ; $51b5
 .winner:
-	ld hl, wDrillCounters ; $51b7
+	ld hl, wDrillCounters + DRILLCTR_SERVES_SCORED ; $51b7
 	inc [hl] ; $51ba
 	ld a, $01 ; $51bb
 	ret ; $51bd
@@ -216,7 +216,7 @@ ServicePractice3Hooks:
 	dw ServicePractice3Hook_Draw ; record 7
 ServicePractice3Hook_MinigameStart:
 	ld a, $04 ; $51f3
-	ld [wDrillCounters + 1], a ; $51f5
+	ld [wDrillCounters + DRILLCTR_TIMED_SERVES_LEFT], a ; $51f5
 	ld a, $01 ; $51f8
 	ld [wDrillIsPracticeLesson], a ; $51fa
 	ret ; $51fd
@@ -268,7 +268,7 @@ ServicePractice3EvaluateResult:
 	ld b, a ; $5254
 	call CountDrillResultBitsSetAlt ; $5255
 	ld c, a ; $5258
-	ld a, [wDrillCounters] ; $5259
+	ld a, [wDrillCounters + DRILLCTR_SERVES_SCORED] ; $5259
 	or a ; $525c
 	jr nz, .checkCharacter1DoubleFaults ; $525d
 	ld a, $01 ; $525f
@@ -289,7 +289,7 @@ ServicePractice3EvaluateResult:
 	ld [wDrillLessonResult], a ; $527b
 	jr .notFound ; $527e
 .checkCounter1:
-	ld a, [wDrillCounters + 1] ; $5280
+	ld a, [wDrillCounters + DRILLCTR_TIMED_SERVES_LEFT] ; $5280
 	or a ; $5283
 	jr z, .countDrillResultBitsSetAlt ; $5284
 	ld a, $04 ; $5286
@@ -337,7 +337,7 @@ ServicePractice3SetupShotTarget:
 	ld [wDrillMessageId], a ; $52d7
 	ret ; $52da
 .niceTiming:
-	ld hl, wDrillCounters + 1 ; $52db
+	ld hl, wDrillCounters + DRILLCTR_TIMED_SERVES_LEFT ; $52db
 	dec [hl] ; $52de
 	ret ; $52df
 ServicePractice3PointStartDrillPositions:
@@ -363,14 +363,14 @@ ServicePractice3HandlePointEnd:
 	call RecordDrillPointResultBits ; $532d
 	ld a, $00 ; $5330
 	call CountDrillShotSuccesses ; $5332
-	ld [wDrillCounters + 5], a ; $5335
+	ld [wDrillCounters + DRILLCTR_LESSON_P1_SUCCESSES], a ; $5335
 	ld a, $01 ; $5338
 	call CountDrillShotSuccesses ; $533a
-	ld [wDrillCounters + 6], a ; $533d
+	ld [wDrillCounters + DRILLCTR_LESSON_P2_SUCCESSES], a ; $533d
 	call ShowQueuedDrillMessage ; $5340
 	farcall UpdatePointStats ; $5343
 	farcall AwardPoint ; $5346
-	ld a, [wDrillCounters + 5] ; $5349
+	ld a, [wDrillCounters + DRILLCTR_LESSON_P1_SUCCESSES] ; $5349
 	ld [wPlayer1PointsWon], a ; $534c
 	xor a ; $534f
 	ld [wPlayer2PointsWon], a ; $5350
@@ -427,7 +427,7 @@ ServicePractice3QueueOutcomeMessage:
 	call QueueDrillResultMessage ; $53c7
 	jr .notFound ; $53ca
 .winner:
-	ld hl, wDrillCounters ; $53cc
+	ld hl, wDrillCounters + DRILLCTR_SERVES_SCORED ; $53cc
 	inc [hl] ; $53cf
 	ld a, $01 ; $53d0
 	ret ; $53d2

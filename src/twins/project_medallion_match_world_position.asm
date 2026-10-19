@@ -2,7 +2,7 @@
 ; ProjectMedallionMatchWorldPosition (bank $0d).
 
 {TWIN_LABEL}:
-	ld hl, wMinigameSceneActor + 10
+	ld hl, wMinigameSceneActor + MGACTOR_SCREEN_X
 	ld a, [hl+]
 	ld e, a
 	ld a, [hl+]
