@@ -295,3 +295,28 @@ MACRO blit_run
 	ASSERT (\1) < TILEMAP_WIDTH && (\2) * TILEMAP_WIDTH + (\1) < $ff00, "blit_run: bad cell"
 	db HIGH((\2) * TILEMAP_WIDTH + (\1)), LOW((\2) * TILEMAP_WIDTH + (\1)), \3, \4
 ENDM
+
+; One run of a bank $09 move curve (MoveCurveTable_09; GetNextMoveCurveValue):
+; the signed X offset, in pixels, of each step of the object's slide.
+; move_curve_hold ($80) keeps the object where the curve left it;
+; move_curve_end ($81) frees its slot.
+; Usage: move_curve dx, ...
+MACRO move_curve
+	db \#
+ENDM
+
+MACRO move_curve_hold
+	db $80
+ENDM
+
+MACRO move_curve_end
+	db $81
+ENDM
+
+; Bytes 2-5 of a story scene config, the only ones LoadStorySceneGraphics
+; reads: the scroll origin (wMapScrollMinX/Y) and the map size in tiles
+; (wMapWidthTiles/HeightTiles).
+; Usage: scene_bounds min_x, min_y, width, height
+MACRO scene_bounds
+	db \1, \2, \3, \4
+ENDM

@@ -47,7 +47,7 @@ DataPtr_PeachsCastleSceneUnusedSlot:
 DataPtr_PeachsCastleTiles:
 	dw PeachsCastleTiles ; $402e
 Court2SceneConfig:
-	INCBIN "data/scenes/Court2SceneConfig.bin" ; $4030, 42 bytes
+	INCLUDE "data/scenes/Court2SceneConfig.asm" ; $4030, 42 bytes (scene_config)
 Court2Palettes:
 	INCLUDE "data/scenes/Court2Palettes.asm" ; $405a, 64 bytes (palettes)
 Court2Tiles:
@@ -61,7 +61,7 @@ Court2CollisionMap:
 Court2BehaviorMap:
 	INCBIN "data/scenes/lz_Court2BehaviorMap.bin" ; $5431, 74 bytes
 CenterCourtMapSceneConfig:
-	INCBIN "data/scenes/CenterCourtMapSceneConfig.bin" ; $547b, 42 bytes
+	INCLUDE "data/scenes/CenterCourtMapSceneConfig.asm" ; $547b, 42 bytes (scene_config)
 CenterCourtMapPalettes:
 	INCLUDE "data/scenes/CenterCourtMapPalettes.asm" ; $54a5, 64 bytes (palettes)
 CenterCourtMapTiles:
@@ -75,7 +75,7 @@ CenterCourtMapCollisionMap:
 CenterCourtMapBehaviorMap:
 	INCBIN "data/scenes/lz_CenterCourtMapBehaviorMap.bin" ; $6435, 75 bytes
 PeachsCastleSceneConfig:
-	INCBIN "data/scenes/PeachsCastleSceneConfig.bin" ; $6480, 23 bytes
+	INCLUDE "data/scenes/PeachsCastleSceneConfig.asm" ; $6480, 23 bytes (scene_config)
 PeachsCastlePalettes:
 	INCLUDE "data/scenes/PeachsCastlePalettes.asm" ; $6497, 64 bytes (palettes)
 PeachsCastleTiles:

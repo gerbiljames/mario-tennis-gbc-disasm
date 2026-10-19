@@ -330,7 +330,7 @@ EldenSpriteFramesUnused:
 	INCBIN "data/sprites/EldenSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/EldenSpriteFrame06.bin" ; $7bf0, 240 bytes
 EldenSpriteOam:
-	INCBIN "data/sprites/EldenSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/EldenSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 EldenSpriteAnims:
 	dw EldenSpriteAnim00 ; $7f24
 	dw EldenSpriteAnim01 ; $7f26

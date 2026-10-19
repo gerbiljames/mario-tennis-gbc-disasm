@@ -49,37 +49,37 @@ MoveCurveTable_09:
 	dw MoveCurve14_09 ; $47ca
 	dw MoveCurve15_09 ; $47cc
 MoveCurve00_09:
-	INCBIN "data/engine/match/MoveCurve00_09.bin" ; $47ce, 13 bytes
+	INCLUDE "data/engine/match/MoveCurve00_09.asm" ; $47ce, 13 bytes (move_curve)
 MoveCurve01_09:
-	INCBIN "data/engine/match/MoveCurve01_09.bin" ; $47db, 13 bytes
+	INCLUDE "data/engine/match/MoveCurve01_09.asm" ; $47db, 13 bytes (move_curve)
 MoveCurve02_09:
-	INCBIN "data/engine/match/MoveCurve02_09.bin" ; $47e8, 13 bytes
+	INCLUDE "data/engine/match/MoveCurve02_09.asm" ; $47e8, 13 bytes (move_curve)
 MoveCurve03_09:
-	INCBIN "data/engine/match/MoveCurve03_09.bin" ; $47f5, 13 bytes
+	INCLUDE "data/engine/match/MoveCurve03_09.asm" ; $47f5, 13 bytes (move_curve)
 MoveCurve04_09:
-	INCBIN "data/engine/match/MoveCurve04_09.bin" ; $4802, 9 bytes
+	INCLUDE "data/engine/match/MoveCurve04_09.asm" ; $4802, 9 bytes (move_curve)
 MoveCurve05_09:
-	INCBIN "data/engine/match/MoveCurve05_09.bin" ; $480b, 9 bytes
+	INCLUDE "data/engine/match/MoveCurve05_09.asm" ; $480b, 9 bytes (move_curve)
 MoveCurve06_09:
-	INCBIN "data/engine/match/MoveCurve06_09.bin" ; $4814, 9 bytes
+	INCLUDE "data/engine/match/MoveCurve06_09.asm" ; $4814, 9 bytes (move_curve)
 MoveCurve07_09:
-	INCBIN "data/engine/match/MoveCurve07_09.bin" ; $481d, 9 bytes
+	INCLUDE "data/engine/match/MoveCurve07_09.asm" ; $481d, 9 bytes (move_curve)
 MoveCurve08_09:
-	INCBIN "data/engine/match/MoveCurve08_09.bin" ; $4826, 9 bytes
+	INCLUDE "data/engine/match/MoveCurve08_09.asm" ; $4826, 9 bytes (move_curve)
 MoveCurve09_09:
-	INCBIN "data/engine/match/MoveCurve09_09.bin" ; $482f, 9 bytes
+	INCLUDE "data/engine/match/MoveCurve09_09.asm" ; $482f, 9 bytes (move_curve)
 MoveCurve10_09:
-	INCBIN "data/engine/match/MoveCurve10_09.bin" ; $4838, 9 bytes
+	INCLUDE "data/engine/match/MoveCurve10_09.asm" ; $4838, 9 bytes (move_curve)
 MoveCurve11_09:
-	INCBIN "data/engine/match/MoveCurve11_09.bin" ; $4841, 9 bytes
+	INCLUDE "data/engine/match/MoveCurve11_09.asm" ; $4841, 9 bytes (move_curve)
 MoveCurve15_09:
-	INCBIN "data/engine/match/MoveCurve15_09.bin" ; $484a, 10 bytes
+	INCLUDE "data/engine/match/MoveCurve15_09.asm" ; $484a, 10 bytes (move_curve)
 MoveCurve14_09:
-	INCBIN "data/engine/match/MoveCurve14_09.bin" ; $4854, 10 bytes
+	INCLUDE "data/engine/match/MoveCurve14_09.asm" ; $4854, 10 bytes (move_curve)
 MoveCurve13_09:
-	INCBIN "data/engine/match/MoveCurve13_09.bin" ; $485e, 10 bytes
+	INCLUDE "data/engine/match/MoveCurve13_09.asm" ; $485e, 10 bytes (move_curve)
 MoveCurve12_09:
-	INCBIN "data/engine/match/MoveCurve12_09.bin" ; $4868, 11 bytes
+	INCLUDE "data/engine/match/MoveCurve12_09.asm" ; $4868, 11 bytes (move_curve)
 LoadTilesetGfx:
 	add a ; $4873
 	add a ; $4874

@@ -579,119 +579,119 @@ MinigameTargetScriptOpReturn:
 	jr nz, RunMinigameTargetScript.dispatchOp ; $68de
 	ret ; $68e0
 MinigameTargetFormation0Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation0Script0.bin" ; $68e1, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation0Script0.asm" ; $68e1, 10 bytes (target_script)
 MinigameTargetFormation0Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation0Script1.bin" ; $68eb, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation0Script1.asm" ; $68eb, 10 bytes (target_script)
 MinigameTargetFormation0Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation0Script2.bin" ; $68f5, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation0Script2.asm" ; $68f5, 10 bytes (target_script)
 MinigameTargetFormation0Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation0Script3.bin" ; $68ff, 33 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation0Script3.asm" ; $68ff, 33 bytes (target_script)
 MinigameTargetFormation1Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script0.bin" ; $6920, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script0.asm" ; $6920, 10 bytes (target_script)
 MinigameTargetFormation1Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script1.bin" ; $692a, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script1.asm" ; $692a, 10 bytes (target_script)
 MinigameTargetFormation1Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script2.bin" ; $6934, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script2.asm" ; $6934, 10 bytes (target_script)
 MinigameTargetFormation1Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script3.bin" ; $693e, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script3.asm" ; $693e, 10 bytes (target_script)
 MinigameTargetFormation1Script4:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script4.bin" ; $6948, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script4.asm" ; $6948, 10 bytes (target_script)
 MinigameTargetFormation1Script5:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script5.bin" ; $6952, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script5.asm" ; $6952, 10 bytes (target_script)
 MinigameTargetFormation1Script6:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script6.bin" ; $695c, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script6.asm" ; $695c, 10 bytes (target_script)
 MinigameTargetFormation1Script7:
-	INCBIN "data/engine/story/MinigameTargetFormation1Script7.bin" ; $6966, 33 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation1Script7.asm" ; $6966, 33 bytes (target_script)
 MinigameTargetFormation2Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script0.bin" ; $6987, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script0.asm" ; $6987, 10 bytes (target_script)
 MinigameTargetFormation2Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script1.bin" ; $6991, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script1.asm" ; $6991, 10 bytes (target_script)
 MinigameTargetFormation2Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script2.bin" ; $699b, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script2.asm" ; $699b, 10 bytes (target_script)
 MinigameTargetFormation2Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script3.bin" ; $69a5, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script3.asm" ; $69a5, 10 bytes (target_script)
 MinigameTargetFormation2Script4:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script4.bin" ; $69af, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script4.asm" ; $69af, 10 bytes (target_script)
 MinigameTargetFormation2Script5:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script5.bin" ; $69b9, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script5.asm" ; $69b9, 10 bytes (target_script)
 MinigameTargetFormation2Script6:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script6.bin" ; $69c3, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script6.asm" ; $69c3, 10 bytes (target_script)
 MinigameTargetFormation2Script7:
-	INCBIN "data/engine/story/MinigameTargetFormation2Script7.bin" ; $69cd, 144 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation2Script7.asm" ; $69cd, 144 bytes (target_script)
 MinigameTargetFormation3Script00:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script00.bin" ; $6a5d, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script00.asm" ; $6a5d, 10 bytes (target_script)
 MinigameTargetFormation3Script01:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script01.bin" ; $6a67, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script01.asm" ; $6a67, 10 bytes (target_script)
 MinigameTargetFormation3Script02:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script02.bin" ; $6a71, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script02.asm" ; $6a71, 10 bytes (target_script)
 MinigameTargetFormation3Script03:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script03.bin" ; $6a7b, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script03.asm" ; $6a7b, 10 bytes (target_script)
 MinigameTargetFormation3Script04:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script04.bin" ; $6a85, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script04.asm" ; $6a85, 10 bytes (target_script)
 MinigameTargetFormation3Script05:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script05.bin" ; $6a8f, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script05.asm" ; $6a8f, 10 bytes (target_script)
 MinigameTargetFormation3Script06:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script06.bin" ; $6a99, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script06.asm" ; $6a99, 10 bytes (target_script)
 MinigameTargetFormation3Script07:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script07.bin" ; $6aa3, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script07.asm" ; $6aa3, 10 bytes (target_script)
 MinigameTargetFormation3Script08:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script08.bin" ; $6aad, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script08.asm" ; $6aad, 10 bytes (target_script)
 MinigameTargetFormation3Script09:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script09.bin" ; $6ab7, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script09.asm" ; $6ab7, 10 bytes (target_script)
 MinigameTargetFormation3Script10:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script10.bin" ; $6ac1, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script10.asm" ; $6ac1, 10 bytes (target_script)
 MinigameTargetFormation3Script11:
-	INCBIN "data/engine/story/MinigameTargetFormation3Script11.bin" ; $6acb, 70 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation3Script11.asm" ; $6acb, 70 bytes (target_script)
 MinigameTargetFormation4Script00:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script00.bin" ; $6b11, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script00.asm" ; $6b11, 10 bytes (target_script)
 MinigameTargetFormation4Script01:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script01.bin" ; $6b1b, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script01.asm" ; $6b1b, 10 bytes (target_script)
 MinigameTargetFormation4Script02:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script02.bin" ; $6b25, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script02.asm" ; $6b25, 10 bytes (target_script)
 MinigameTargetFormation4Script03:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script03.bin" ; $6b2f, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script03.asm" ; $6b2f, 10 bytes (target_script)
 MinigameTargetFormation4Script04:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script04.bin" ; $6b39, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script04.asm" ; $6b39, 10 bytes (target_script)
 MinigameTargetFormation4Script05:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script05.bin" ; $6b43, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script05.asm" ; $6b43, 10 bytes (target_script)
 MinigameTargetFormation4Script06:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script06.bin" ; $6b4d, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script06.asm" ; $6b4d, 10 bytes (target_script)
 MinigameTargetFormation4Script07:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script07.bin" ; $6b57, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script07.asm" ; $6b57, 10 bytes (target_script)
 MinigameTargetFormation4Script08:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script08.bin" ; $6b61, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script08.asm" ; $6b61, 10 bytes (target_script)
 MinigameTargetFormation4Script09:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script09.bin" ; $6b6b, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script09.asm" ; $6b6b, 10 bytes (target_script)
 MinigameTargetFormation4Script10:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script10.bin" ; $6b75, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script10.asm" ; $6b75, 10 bytes (target_script)
 MinigameTargetFormation4Script11:
-	INCBIN "data/engine/story/MinigameTargetFormation4Script11.bin" ; $6b7f, 42 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation4Script11.asm" ; $6b7f, 42 bytes (target_script)
 MinigameTargetFormation5Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation5Script0.bin" ; $6ba9, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation5Script0.asm" ; $6ba9, 10 bytes (target_script)
 MinigameTargetFormation5Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation5Script1.bin" ; $6bb3, 35 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation5Script1.asm" ; $6bb3, 35 bytes (target_script)
 MinigameTargetFormation6Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation6Script0.bin" ; $6bd6, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation6Script0.asm" ; $6bd6, 10 bytes (target_script)
 MinigameTargetFormation6Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation6Script1.bin" ; $6be0, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation6Script1.asm" ; $6be0, 10 bytes (target_script)
 MinigameTargetFormation6Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation6Script2.bin" ; $6bea, 38 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation6Script2.asm" ; $6bea, 38 bytes (target_script)
 MinigameTargetFormation7Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation7Script0.bin" ; $6c10, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation7Script0.asm" ; $6c10, 10 bytes (target_script)
 MinigameTargetFormation7Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation7Script1.bin" ; $6c1a, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation7Script1.asm" ; $6c1a, 10 bytes (target_script)
 MinigameTargetFormation7Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation7Script2.bin" ; $6c24, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation7Script2.asm" ; $6c24, 10 bytes (target_script)
 MinigameTargetFormation7Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation7Script3.bin" ; $6c2e, 37 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation7Script3.asm" ; $6c2e, 37 bytes (target_script)
 MinigameTargetFormation8Script0:
-	INCBIN "data/engine/story/MinigameTargetFormation8Script0.bin" ; $6c53, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation8Script0.asm" ; $6c53, 10 bytes (target_script)
 MinigameTargetFormation8Script1:
-	INCBIN "data/engine/story/MinigameTargetFormation8Script1.bin" ; $6c5d, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation8Script1.asm" ; $6c5d, 10 bytes (target_script)
 MinigameTargetFormation8Script2:
-	INCBIN "data/engine/story/MinigameTargetFormation8Script2.bin" ; $6c67, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation8Script2.asm" ; $6c67, 10 bytes (target_script)
 MinigameTargetFormation8Script3:
-	INCBIN "data/engine/story/MinigameTargetFormation8Script3.bin" ; $6c71, 10 bytes
+	INCLUDE "data/engine/story/MinigameTargetFormation8Script3.asm" ; $6c71, 10 bytes (target_script)
 SpawnMinigameTargetFormation:
 	ld a, a ; $6c7b
 	rst Rst00 ; $6c7c

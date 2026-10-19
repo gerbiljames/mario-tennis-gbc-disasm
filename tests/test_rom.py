@@ -145,6 +145,10 @@ class Manifest(unittest.TestCase):
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
         self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 231)
+        for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
+                        ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
+            self.assertEqual(specs.count(spec), n, spec)
+        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 803)
 
 
 @needs_rom

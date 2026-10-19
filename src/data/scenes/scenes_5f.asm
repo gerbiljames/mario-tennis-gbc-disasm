@@ -39,9 +39,9 @@ MinigameCourtTilemap:
 MinigameCourtAttrmap:
 	INCBIN "data/scenes/lz_MinigameCourtAttrmap.bin" ; $4ac6, 333 bytes
 MinigameCourtSceneConfig:
-	INCBIN "data/scenes/MinigameCourtSceneConfig.bin" ; $4c13, 40 bytes
+	INCLUDE "data/scenes/MinigameCourtSceneConfig.asm" ; $4c13, 40 bytes (scoreboard_columns)
 MinigameCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/MinigameCourtScoreboardColumnAttrs.bin" ; $4c3b, 40 bytes
+	INCLUDE "data/scenes/MinigameCourtScoreboardColumnAttrs.asm" ; $4c3b, 40 bytes (scoreboard_columns)
 TargetShotCourtPalettes:
 	INCLUDE "data/scenes/TargetShotCourtPalettes.asm" ; $4c63, 64 bytes (palettes)
 TargetShotCourtTiles:
@@ -51,8 +51,8 @@ TargetShotCourtTilemap:
 TargetShotCourtAttrmap:
 	INCBIN "data/scenes/lz_TargetShotCourtAttrmap.bin" ; $57de, 294 bytes
 TargetShotCourtSceneConfig:
-	INCBIN "data/scenes/TargetShotCourtSceneConfig.bin" ; $5904, 40 bytes
+	INCLUDE "data/scenes/TargetShotCourtSceneConfig.asm" ; $5904, 40 bytes (scoreboard_columns)
 TargetShotCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/TargetShotCourtScoreboardColumnAttrs.bin" ; $592c, 40 bytes
+	INCLUDE "data/scenes/TargetShotCourtScoreboardColumnAttrs.asm" ; $592c, 40 bytes (scoreboard_columns)
 TargetShotCourtSceneUnusedSlot:
 	; $5954, 9900 bytes fill to bank end (linker-padded)

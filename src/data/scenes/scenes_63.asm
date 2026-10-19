@@ -71,9 +71,9 @@ WallPracticeCourtTilemap:
 WallPracticeCourtAttrmap:
 	INCBIN "data/scenes/lz_WallPracticeCourtAttrmap.bin" ; $4af5, 185 bytes
 WallPracticeCourtSceneConfig:
-	INCBIN "data/scenes/WallPracticeCourtSceneConfig.bin" ; $4bae, 40 bytes
+	INCLUDE "data/scenes/WallPracticeCourtSceneConfig.asm" ; $4bae, 40 bytes (scoreboard_columns)
 WallPracticeCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/WallPracticeCourtScoreboardColumnAttrs.bin" ; $4bd6, 40 bytes
+	INCLUDE "data/scenes/WallPracticeCourtScoreboardColumnAttrs.asm" ; $4bd6, 40 bytes (scoreboard_columns)
 JungleCourtPalettes:
 	INCLUDE "data/scenes/JungleCourtPalettes.asm" ; $4bfe, 64 bytes (palettes)
 JungleCourtTiles:
@@ -83,11 +83,11 @@ JungleCourtTilemap:
 JungleCourtAttrmap:
 	INCBIN "data/scenes/lz_JungleCourtAttrmap.bin" ; $5be2, 323 bytes
 JungleCourtSceneConfig:
-	INCBIN "data/scenes/JungleCourtSceneConfig.bin" ; $5d25, 40 bytes
+	INCLUDE "data/scenes/JungleCourtSceneConfig.asm" ; $5d25, 40 bytes (scoreboard_columns)
 JungleCourtScoreboardColumnAttrs:
-	INCBIN "data/scenes/JungleCourtScoreboardColumnAttrs.bin" ; $5d4d, 40 bytes
+	INCLUDE "data/scenes/JungleCourtScoreboardColumnAttrs.asm" ; $5d4d, 40 bytes (scoreboard_columns)
 StarPatternBgSceneConfig:
-	INCBIN "data/scenes/StarPatternBgSceneConfig.bin" ; $5d75, 42 bytes
+	INCLUDE "data/scenes/StarPatternBgSceneConfig.asm" ; $5d75, 42 bytes (scene_config)
 StarPatternBgPalettes:
 	INCLUDE "data/scenes/StarPatternBgPalettes.asm" ; $5d9f, 64 bytes (palettes)
 StarPatternBgTiles:
@@ -101,7 +101,7 @@ StarPatternBgCollisionMap:
 StarPatternBgBehaviorMap:
 	INCBIN "data/scenes/lz_StarPatternBgBehaviorMap.bin" ; $62eb, 70 bytes
 AcademyMainBldgSceneConfig:
-	INCBIN "data/scenes/AcademyMainBldgSceneConfig.bin" ; $6331, 42 bytes
+	INCLUDE "data/scenes/AcademyMainBldgSceneConfig.asm" ; $6331, 42 bytes (scene_config)
 AcademyMainBldgPalettes:
 	INCLUDE "data/scenes/AcademyMainBldgPalettes.asm" ; $635b, 64 bytes (palettes)
 AcademyMainBldgTiles:

@@ -54,7 +54,7 @@ tilemaps and text.
 | | |
 |---|---|
 | instructions | 133,293 source lines of instructions and code macros (`tools/stats.py`) |
-| source-spelled bytes | 848,059 bytes, 40.4% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
+| source-spelled bytes | 911,345 bytes, 43.5% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
 | labels | 30,436: 14,408 routines and tables and 14,416 locals in ROM, 1,612 RAM names |
 | compressed graphics | 839 LZ streams, each named, sized by decoding it |
 | `Unused_` routines | 788 routines and 111 blobs nothing live reaches (`docs/unused_code.md`) |

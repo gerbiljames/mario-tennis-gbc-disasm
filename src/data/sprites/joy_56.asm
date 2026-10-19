@@ -330,7 +330,7 @@ JoySpriteFramesUnused:
 	INCBIN "data/sprites/JoySpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/JoySpriteFrame06.bin" ; $7bf0, 240 bytes
 JoySpriteOam:
-	INCBIN "data/sprites/JoySpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/JoySpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 JoySpriteAnims:
 	dw JoySpriteAnim00 ; $7f24
 	dw JoySpriteAnim01 ; $7f26

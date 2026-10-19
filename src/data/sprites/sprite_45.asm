@@ -330,7 +330,7 @@ MarkSpriteFramesUnused:
 	INCBIN "data/sprites/MarkSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/MarkSpriteFrame06.bin" ; $7bf0, 240 bytes
 MarkSpriteOam:
-	INCBIN "data/sprites/MarkSpriteOam.bin" ; $7ce0, 580 bytes
+	INCLUDE "data/sprites/MarkSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
 MarkSpriteAnims:
 	dw MarkSpriteAnim00 ; $7f24
 	dw MarkSpriteAnim01 ; $7f26
