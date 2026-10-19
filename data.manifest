@@ -1,5 +1,4 @@
 # path  rom_offset(hex)  length(hex)  [render-spec] — consumed by tools/extract.py
-home/d_000b.bin 00000b d
 home/NintendoLogo.bin 000104 30 gfx:logo
 audio/JingleSoundIds.asm 002fe0 6 sound_data
 audio/MusicIndexTable.asm 003151 64 sound_index
@@ -393,6 +392,7 @@ engine/menus/results/lz_PortraitGfxYoshi_16.bin 05b8e4 8b
 engine/menus/results/lz_PortraitGfxBowser_16.bin 05b96f a5
 engine/menus/results/lz_PortraitGfxWario_16.bin 05ba14 a2
 engine/menus/results/lz_PortraitGfxPeach_16.bin 05bab6 99
+engine/menus/briefing/Unused_17_Palette.asm 05c6c2 8 palettes
 engine/menus/briefing/lz_CourtDiagramTiles.bin 05cb17 24e gfx
 engine/menus/briefing/lz_CourtDiagramTilemap.bin 05cd65 dd tilemap:32
 engine/menus/briefing/lz_CourtDiagramAttrmap.bin 05ce42 80 tilemap:32

@@ -90,11 +90,9 @@ MedallionMatchHook_MinigameStart:
 	xor a ; $5d27
 	ld [wStandingShadowsEnabled], a ; $5d28
 	ret ; $5d2b
-Unused_0d:
-	; $5d2c, 6 bytes (records:2)
-	dw $0064 ; record 0
-	dw $012c ; record 1
-	dw $270f ; record 2
+; Medallion Match's three level goals again, as in MinigameTargetScores.
+Unused_0d_MedallionMatchTargetScores:
+	dw 100, 300, 9999 ; $5d2c
 MedallionMatchHook_PerFrame:
 	call DrawMinigameScoreHud ; $5d32
 	call UpdateScorePopup ; $5d35

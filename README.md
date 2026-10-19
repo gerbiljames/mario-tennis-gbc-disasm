@@ -53,9 +53,9 @@ tilemaps and text.
 
 | | |
 |---|---|
-| instructions | 132,611 source lines of instructions and code macros (`tools/stats.py`) |
-| source-spelled bytes | 911,345 bytes, 43.5% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 30,590: 14,412 routines and tables and 14,444 locals in ROM, 1,734 RAM names |
+| instructions | 132,612 source lines of instructions and code macros (`tools/stats.py`) |
+| source-spelled bytes | 911,348 bytes, 43.5% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
+| labels | 30,591: 14,413 routines and tables and 14,444 locals in ROM, 1,734 RAM names |
 | compressed graphics | 839 LZ streams, each named, sized by decoding it |
 | `Unused_` routines | 788 routines and 111 blobs nothing live reaches (`docs/unused_code.md`) |
 
@@ -171,7 +171,7 @@ because the layout is recomputed rather than restated:
 - **Data files are named after their labels**
   (`data/sprites/AlexSpriteFrame00.png`,
   `data/engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin`, `lz_` marking a compressed
-  stream); only a blob nothing names keeps an address name (`d_4004.bin`).
+  stream).
 - **Graphics are PNGs.** Each of the 2,698 tile-graphics blobs is also
   extracted as a four-colour indexed PNG: character frames as the 24x32 body
   with its standing shadow, walk sprites as four facings side by side
