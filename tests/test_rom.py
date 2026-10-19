@@ -166,6 +166,30 @@ class Tools(unittest.TestCase):
         m = re.search(r"^slots\s+(\d+) checked", r.stdout, re.M)
         self.assertGreaterEqual(int(m.group(1)), 5124, "the slot resolver reaches fewer script sites")
 
+    def test_doc_counts(self):
+        """README and STATUS quote tools/stats.py; rerun it and update them."""
+        if not (ROOT / "build" / "mariotennis.map").exists():
+            self.skipTest("build/mariotennis.map not present: run make first")
+        import stats
+        rom, ram = stats.labels()
+        instrs, incbin, fill = stats.source()
+        _, spelled = stats.rom_bytes(incbin, fill)
+        total = sum(rom.values()) + sum(ram.values())
+        readme = (ROOT / "README.md").read_text()
+        status = (ROOT / "docs" / "STATUS.md").read_text()
+        for doc, text, quotes in (
+                ("README.md", readme, [
+                    f"| instructions | {instrs:,} ",
+                    f"| source-spelled bytes | {spelled:,} bytes, {100 * spelled / stats.ROM_SIZE:.1f}% ",
+                    f"| labels | {total:,}: {rom['global']:,} routines and tables and {rom['local']:,} locals in ROM, "
+                    f"{ram['global']:,} RAM names |"]),
+                ("docs/STATUS.md", status, [
+                    f"| instruction and code-macro lines | {instrs:,} |",
+                    f"| source-spelled bytes (`tools/stats.py`) | {spelled:,}, {100 * spelled / stats.ROM_SIZE:.1f}% ",
+                    f"| labels | {total:,}: ROM {rom['global']:,} global + {rom['local']:,} local, RAM {ram['global']:,};"])):
+            for quote in quotes:
+                self.assertIn(quote, text, doc)
+
 
 if __name__ == "__main__":
     unittest.main()

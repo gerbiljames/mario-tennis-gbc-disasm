@@ -55,7 +55,7 @@ tilemaps and text.
 |---|---|
 | instructions | 132,611 source lines of instructions and code macros (`tools/stats.py`) |
 | source-spelled bytes | 911,345 bytes, 43.5% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 30,590: 14,413 routines and tables and 14,443 locals in ROM, 1,734 RAM names |
+| labels | 30,590: 14,412 routines and tables and 14,444 locals in ROM, 1,734 RAM names |
 | compressed graphics | 839 LZ streams, each named, sized by decoding it |
 | `Unused_` routines | 788 routines and 111 blobs nothing live reaches (`docs/unused_code.md`) |
 
@@ -248,7 +248,7 @@ nothing.
 ## Tools
 
 - `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, actor-slot names hold, `Unused` names match `reach.py`, `; debug warp only` entries match `routes.py`.
-- `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts).
+- `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts); the README and STATUS figures against `tools/stats.py`.
 - `tools/extract.py` -- `data.manifest` + base ROM -> `data/`.
 - `tools/mods.py` -- copies `mods/` over `data/`; collects edited data files into `mods/`.
 - `tools/lz.py`, `tools/gfx.py`, `tools/tilemap.py`, `tools/snd.py` -- the LZ, PNG, tilemap-grid and sound-script codecs.
