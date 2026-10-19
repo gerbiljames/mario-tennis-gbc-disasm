@@ -680,7 +680,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4c1d
 	ld [wCharDataStats + 10], a ; $4c1e
 	ld a, [wCharDataPage] ; $4c21
-	cp $04 ; $4c24
+	cp CHARDATAPAGE_CONFIRM ; $4c24
 	jr z, .clearDeltas ; $4c26
 	ld d, a ; $4c28
 	ld hl, wCharDataStatDeltas ; $4c29
@@ -997,7 +997,7 @@ CharDataScreen_DrawPageColumns:
 	jr nz, .nextRow ; $4e0c
 	wram_bank WRAM_SCENE ; $4e0e
 	ld a, [wCharDataPage] ; $4e14
-	cp $04 ; $4e17
+	cp CHARDATAPAGE_CONFIRM ; $4e17
 	jr z, .nextRow ; $4e19
 	dec de ; $4e1b
 	dec de ; $4e1c

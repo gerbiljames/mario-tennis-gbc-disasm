@@ -130,3 +130,18 @@ def DIALOGUEWIN_NONE         equ $ff ; no dialogue window open
 ; --- Menu transition direction (wMenuSlideDirection) ---
 def MENUSLIDE_BACK           equ $00
 def MENUSLIDE_FORWARD        equ $01 ; into a submenu
+
+; --- Character select slot (wCharSelectSlot) ---
+def CHARSELECTSLOT_DONE equ $04 ; every player slot is filled: the screen shows the wait banner
+
+; --- Character-data screen cursor (wCharDataPage) ---
+def CHARDATAPAGE_CONFIRM equ $04 ; the confirm cell, after level-up choices 0-3
+
+; --- Tennis Dictionary mode (wTennisDictMode) ---
+def TENNISDICT_INDEX equ $06 ; the 9-cell category index page; modes 0-5 open one category's term list
+
+; --- Ranking board presentation (wRankingBoardMode) ---
+	const_def
+	const RANKINGBOARD_PLAIN     ; $00
+	const RANKINGBOARD_FANFARE   ; $01 plays fanfare $2b and the marker climb
+	const RANKINGBOARD_CURSOR    ; $02 the second fanfare and RankingCursorBobTask; no marker animation

@@ -147,7 +147,7 @@ ApplyCharStatLevelUp:
 	ld a, [wCharDataChoiceCount] ; $54c2
 	dec a ; $54c5
 	ld [wCharDataChoiceCount], a ; $54c6
-	ld a, $04 ; $54c9
+	ld a, CHARDATAPAGE_CONFIRM ; $54c9
 	ld [wCharDataPage], a ; $54cb
 	call RestoreCharDataScreenRow ; $54ce
 	call LoadCharStats ; $54d1
@@ -159,7 +159,7 @@ ApplyCharStatLevelUp:
 	ret ; $54e2
 SelectCharDataConfirmSlot:
 	wram_bank WRAM_SCENE ; $54e3
-	ld a, $04 ; $54e9
+	ld a, CHARDATAPAGE_CONFIRM ; $54e9
 	ld [wCharDataPage], a ; $54eb
 	call WriteCharStatsToDisplayBuffer ; $54ee
 	ret ; $54f1

@@ -115,7 +115,7 @@ CharDataScreen_InitState:
 	inc a ; $4119
 	inc a ; $411a
 	ld [wCharDataPageArrowMode], a ; $411b
-	ld a, $04 ; $411e
+	ld a, CHARDATAPAGE_CONFIRM ; $411e
 	ld [wCharDataPage], a ; $4120
 	ld a, $0a ; $4123
 	ld [wCharDataRevealTimer], a ; $4125
