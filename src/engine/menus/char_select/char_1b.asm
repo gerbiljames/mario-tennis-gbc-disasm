@@ -34,21 +34,21 @@ Unused_1b_LoadCharSelectRosterTable:
 ; Unused_1b_LoadUnlockDebugScreenGfx with one more decompress and CharSelectNavGridTable as its source: the character-select variant of the same screen loader. Called only from Unused_1b_RunCharSelectLoop.
 Unused_1b_LoadCharSelectScreenGfx:
 	ld hl, CharSelectNavGridTable ; $5fee
-	ld de, $d000 ; $5ff1
+	ld de, wDecompBuffer ; $5ff1
 	call DecompressData ; $5ff4
-	ld hl, $d000 ; $5ff7
+	ld hl, wDecompBuffer ; $5ff7
 	ld de, vTiles2 + VRAM_BANK1 ; $5ffa
 	ld c, 128 ; $5ffd
 	call QueueVRAMCopy ; $5fff
-	ld hl, $d800 ; $6002
+	ld hl, wStagedTilemap ; $6002
 	ld de, vTiles1 + VRAM_BANK1 ; $6005
 	ld c, 128 ; $6008
 	call QueueVRAMCopy ; $600a
 	ld hl, CharSelectNavGridTable ; $600d
-	ld de, $dc00 ; $6010
+	ld de, wStagedAttrmap ; $6010
 	call DecompressData ; $6013
 	ld hl, CharSelectNavGridTable ; $6016
-	ld de, $d800 ; $6019
+	ld de, wStagedTilemap ; $6019
 	call DecompressData ; $601c
 	ld hl, CharSelectNavGridTable ; $601f
 	ld_bg_pals de, 0, 8 ; $6022
@@ -68,12 +68,12 @@ Unused_1b_UpdateCharSelectCursorTask:
 	farcall Unused_18_DrawCharSelectCursor ; $6041
 	ret ; $6044
 Unused_1b_DrawCharSelectPrompt:
-	ld hl, $d000 ; $6045
+	ld hl, wDecompBuffer ; $6045
 	ld de, vTiles2 ; $6048
 	ld c, 16 ; $604b
 	call QueueVRAMCopy ; $604d
-	ld hl, $d9e0 ; $6050
-	ld de, $dde0 ; $6053
+	ld hl, wStagedTilemap + 15 * TILEMAP_WIDTH ; $6050
+	ld de, wStagedAttrmap + 15 * TILEMAP_WIDTH ; $6053
 	ld bc, $1403 ; $6056
 	farcall Unused_18_DrawBox ; $6059
 	ld hl, $0470 ; $605c
@@ -82,7 +82,7 @@ Unused_1b_DrawCharSelectPrompt:
 	jr z, .drawPrompt ; $6063
 	ld hl, Text_31_123 ; $6065
 .drawPrompt:
-	ld de, $da01 ; $6068
+	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $6068
 	farcall Unused_18_RenderProportionalTextAt32 ; $606b
 	ret ; $606e
 Unused_1b_DrawCharSelectMugshots:
@@ -148,11 +148,11 @@ Unused_1b_RunCharSelectLoop:
 	call Unused_1b_LoadCharSelectScreenGfx ; $60ec
 	call Unused_1b_DrawCharSelectMugshots ; $60ef
 	call Unused_1b_DrawCharSelectPrompt ; $60f2
-	ld hl, $dc00 ; $60f5
+	ld hl, wStagedAttrmap ; $60f5
 	ld de, vBGMap0 + VRAM_BANK1 ; $60f8
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $60fb
 	call QueueVRAMCopy ; $60fd
-	ld hl, $d800 ; $6100
+	ld hl, wStagedTilemap ; $6100
 	ld de, vBGMap0 ; $6103
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $6106
 	call QueueVRAMCopy ; $6108
@@ -514,7 +514,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	jr z, .checkTrophyExp ; $63a9
 	push_wram_bank WRAM_SCENE ; $63ab
 	xor a ; $63b4
-	ld [$d000], a ; $63b5
+	ld [wCharDataAnimCounter], a ; $63b5
 	pop_wram_bank ; $63b8
 	ld h, $01 ; $63bd
 	ld l, $00 ; $63bf
@@ -531,7 +531,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	jr z, .clearPendingExp ; $63d2
 	push_wram_bank WRAM_SCENE ; $63d4
 	xor a ; $63dd
-	ld [$d000], a ; $63de
+	ld [wCharDataAnimCounter], a ; $63de
 	pop_wram_bank ; $63e1
 	ld h, $01 ; $63e6
 	ld l, $01 ; $63e8

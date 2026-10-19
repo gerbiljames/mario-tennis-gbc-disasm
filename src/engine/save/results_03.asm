@@ -56,7 +56,7 @@ Unused_03_MoveSaveEditorCursor:
 	ld a, [hl+] ; $5275
 	ld h, [hl] ; $5276
 	ld l, a ; $5277
-	ld de, $d300 ; $5278
+	ld de, wSaveEditorBlock ; $5278
 	add hl, de ; $527b
 	push hl ; $527c
 	ld a, [hl] ; $527d
@@ -150,7 +150,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld_cell de, $05, $11 ; $534e
 	call PrintString ; $5351
 	pop de ; $5354
-	ld hl, $d300 ; $5355
+	ld hl, wSaveEditorBlock ; $5355
 	ld c, $30 ; $5358
 	call ClearMemory16 ; $535a
 	jp .loopB ; $535d
@@ -165,7 +165,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld a, [hl+] ; $5373
 	ld h, [hl] ; $5374
 	ld l, a ; $5375
-	ld de, $d300 ; $5376
+	ld de, wSaveEditorBlock ; $5376
 	add hl, de ; $5379
 	ld a, l ; $537a
 	and $80 ; $537b
@@ -293,7 +293,7 @@ Unused_03_SaveSlotDebugEditor:
 	call Unused_03_ReadCurrentSlotBlock ; $5447
 	or a ; $544a
 	jr nz, .restore ; $544b
-	ld hl, $d300 ; $544d
+	ld hl, wSaveEditorBlock ; $544d
 	ld a, [hl+] ; $5450
 	or [hl] ; $5451
 	jr z, .restore ; $5452

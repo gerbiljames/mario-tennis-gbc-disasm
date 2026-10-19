@@ -104,10 +104,10 @@ Unused_18_InitConfirmScreen:
 	ld_bg_pals de, 0, 8 ; $5313
 	call LoadPaletteShadow ; $5316
 	ld hl, ConfirmScreenGfx2 ; $5319
-	ld de, wTextTileBuffer tile 64 ; $531c
+	ld de, wStagedAttrmap ; $531c
 	call DecompressData ; $531f
 	ld hl, ConfirmScreenGfx1 ; $5322
-	ld de, wTextTileBuffer ; $5325
+	ld de, wStagedTilemap ; $5325
 	call DecompressData ; $5328
 	call Unused_18_LoadFontTiles ; $532b
 	call Unused_18_DrawConfirmScreenBox ; $532e
@@ -131,8 +131,8 @@ Unused_18_InitConfirmScreen:
 	call Unused_18_StubNop_18_1 ; $5361
 	ret ; $5364
 Unused_18_DrawConfirmScreenBox:
-	ld hl, wTextTileBuffer tile 26 ; $5365
-	ld de, wTextTileBuffer tile 90 ; $5368
+	ld hl, wStagedTilemap + 13 * TILEMAP_WIDTH ; $5365
+	ld de, wStagedAttrmap + 13 * TILEMAP_WIDTH ; $5368
 	ld bc, $0e05 ; $536b
 	call Unused_18_DrawBox ; $536e
 	ret ; $5371
@@ -378,36 +378,36 @@ UnusedBobRamp_18:
 Unused_18_DrawThreeOptionLabels:
 	call Unused_18_DrawConfirmScreenBox ; $5527
 	ld hl, ThreeOptionLabelsData3 ; $552a
-	ld de, $ddc1 ; $552d
+	ld de, wStagedAttrmap + 14 * TILEMAP_WIDTH + 1 ; $552d
 	call Unused_18_CopyBytes11 ; $5530
 	ld hl, ThreeOptionLabelsData4 ; $5533
-	ld de, $dde1 ; $5536
+	ld de, wStagedAttrmap + 15 * TILEMAP_WIDTH + 1 ; $5536
 	call Unused_18_CopyBytes11 ; $5539
 	ld hl, ThreeOptionLabelsData5 ; $553c
-	ld de, $de01 ; $553f
+	ld de, wStagedAttrmap + 16 * TILEMAP_WIDTH + 1 ; $553f
 	call Unused_18_CopyBytes11 ; $5542
 	ld hl, ThreeOptionLabelsData0 ; $5545
-	ld de, $d9c1 ; $5548
+	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $5548
 	call Unused_18_CopyBytes11 ; $554b
 	ld hl, ThreeOptionLabelsData1 ; $554e
-	ld de, $d9e1 ; $5551
+	ld de, wStagedTilemap + 15 * TILEMAP_WIDTH + 1 ; $5551
 	call Unused_18_CopyBytes11 ; $5554
 	ld hl, ThreeOptionLabelsData2 ; $5557
-	ld de, $da01 ; $555a
+	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $555a
 	call Unused_18_CopyBytes11 ; $555d
 	ret ; $5560
 Unused_18_DrawYesNoLabels:
 	ld hl, YesNoLabels2 ; $5561
-	ld de, $dde1 ; $5564
+	ld de, wStagedAttrmap + 15 * TILEMAP_WIDTH + 1 ; $5564
 	call Unused_18_CopyBytes11 ; $5567
 	ld hl, YesNoLabels3 ; $556a
-	ld de, $de01 ; $556d
+	ld de, wStagedAttrmap + 16 * TILEMAP_WIDTH + 1 ; $556d
 	call Unused_18_CopyBytes11 ; $5570
 	ld hl, YesNoLabels0 ; $5573
-	ld de, $d9e1 ; $5576
+	ld de, wStagedTilemap + 15 * TILEMAP_WIDTH + 1 ; $5576
 	call Unused_18_CopyBytes11 ; $5579
 	ld hl, YesNoLabels1 ; $557c
-	ld de, $da01 ; $557f
+	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $557f
 	call Unused_18_CopyBytes11 ; $5582
 	ret ; $5585
 Unused_18_DrawTileBlock6x2ToTilemap:

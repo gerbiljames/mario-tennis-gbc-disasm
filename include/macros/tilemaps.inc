@@ -1,28 +1,31 @@
 ; Tilemap grids and rect copies.
 
-; Match-result tilemap-copy record (CopyTilemapRect):
-; copy a `rows`-tall, 2-tile-wide rectangle from `src` to `dest` in the BG
-; tilemap shadow. Lists live in MatchResultTilemapScripts_16, one per result
+; Match-result tilemap-copy record (CopyTilemapRect): copy a `width`-wide,
+; two-row rectangle from cell (src_col, src_row) to (dest_col, dest_row) of
+; wShadowTilemap. Lists live in MatchResultTilemapScripts_16, one per result
 ; layout, and end with a tilemap_copy_end sentinel.
-; Usage: tilemap_copy dest, src, rows
-MACRO tilemap_copy
-	dw \1, \2
-	db \3
+; Usage: result_copy dest_col, dest_row, src_col, src_row, width
+MACRO result_copy
+	ASSERT (\1) < TILEMAP_WIDTH && (\3) < TILEMAP_WIDTH && (\2) < 32 && (\4) < 32, "result_copy: cell off the plane"
+	dw wShadowTilemap + (\2) * TILEMAP_WIDTH + (\1), wShadowTilemap + (\4) * TILEMAP_WIDTH + (\3)
+	db \5
 ENDM
 
-; Terminates a tilemap_copy list: the routine stops on a dest word of $0000.
+; Terminates a result_copy list: the routine stops on a dest word of $0000.
 MACRO tilemap_copy_end
 	ds 5, $00
 ENDM
 
-; Tilemap-assembly record (bank $39, via CopyTilemapRect): copy a
-; `height`x`width` rectangle from `src` to `dest` in the tilemap shadow (and
-; again at a +$0400 buffer offset). Lists end with tilemap_rect_end (a record
-; whose height byte is 0, which the loop stops on).
-; Usage: tilemap_rect src, dest, height, width
-MACRO tilemap_rect
-	dw \1, \2
-	db \3, \4
+; Tilemap-assembly record (bank $39, RestoreMenuBgAndDrawPanel): copy a
+; `width`x`height` rectangle from cell (src_col, src_row) of the panel art
+; in wStadiumTilemapCopy to (dest_col, dest_row) of wShadowTilemap, then
+; the same rectangle of the attribute planes $400 above both. Lists end with
+; tilemap_rect_end (a record whose width byte is 0, which the loop stops on).
+; Usage: panel_rect src_col, src_row, dest_col, dest_row, width, height
+MACRO panel_rect
+	ASSERT (\1) < TILEMAP_WIDTH && (\3) < TILEMAP_WIDTH && (\2) < 32 && (\4) < 32, "panel_rect: cell off the plane"
+	dw wStadiumTilemapCopy + (\2) * TILEMAP_WIDTH + (\1), wShadowTilemap + (\4) * TILEMAP_WIDTH + (\3)
+	db \5, \6
 ENDM
 
 MACRO tilemap_rect_end

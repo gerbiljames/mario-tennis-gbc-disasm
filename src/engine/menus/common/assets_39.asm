@@ -134,11 +134,11 @@ RestoreMenuBgAndDrawPanel:
 	push bc ; $4df0
 	push de ; $4df1
 	push hl ; $4df2
-	ld hl, wScreenScratch ; $4df3
+	ld hl, wStadiumTilemapCopy ; $4df3
 	ld de, wShadowTilemap ; $4df6
 	rect_size $14, $10 ; $4df9
 	call CopyTilemapRect ; $4dfd
-	ld hl, wRulesScreenAnimFrame ; $4e00
+	ld hl, wStadiumAttrmapCopy ; $4e00
 	ld de, wShadowAttrmap ; $4e03
 	rect_size $14, $10 ; $4e06
 	call CopyTilemapRect ; $4e0a
@@ -557,1057 +557,1057 @@ TilemapAssemblyDispatch_39:
 .rl_0:
 	tilemap_rect_end
 .rl_1:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d070, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 16, 3, 5, 3
 	tilemap_rect_end
 .rl_2:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d06d, $05, $03
-	tilemap_rect $da40, $d0f4, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 13, 3, 5, 3
+	panel_rect 0, 18, 20, 7, 3, 3
 	tilemap_rect_end
 .rl_3:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d06a, $05, $03
-	tilemap_rect $daa5, $d070, $05, $03
-	tilemap_rect $daa0, $d070, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 10, 3, 5, 3
+	panel_rect 5, 21, 16, 3, 5, 3
+	panel_rect 0, 21, 16, 3, 3, 3
 	tilemap_rect_end
 .rl_4:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d067, $05, $03
-	tilemap_rect $daa5, $d06d, $05, $03
-	tilemap_rect $da40, $d0ee, $03, $03
-	tilemap_rect $da43, $d0f4, $03, $03
-	tilemap_rect $daaf, $d173, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 7, 3, 5, 3
+	panel_rect 5, 21, 13, 3, 5, 3
+	panel_rect 0, 18, 14, 7, 3, 3
+	panel_rect 3, 18, 20, 7, 3, 3
+	panel_rect 15, 21, 19, 11, 5, 3
 	tilemap_rect_end
 .rl_5:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d064, $05, $03
-	tilemap_rect $daa5, $d06a, $05, $03
-	tilemap_rect $daaa, $d070, $05, $03
-	tilemap_rect $da40, $d0eb, $03, $03
-	tilemap_rect $da43, $d0f1, $03, $03
-	tilemap_rect $daaf, $d170, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 4, 3, 5, 3
+	panel_rect 5, 21, 10, 3, 5, 3
+	panel_rect 10, 21, 16, 3, 5, 3
+	panel_rect 0, 18, 11, 7, 3, 3
+	panel_rect 3, 18, 17, 7, 3, 3
+	panel_rect 15, 21, 16, 11, 5, 3
 	tilemap_rect_end
 .rl_6:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d062, $05, $03
-	tilemap_rect $daa5, $d068, $05, $03
-	tilemap_rect $daaa, $d06e, $05, $03
-	tilemap_rect $da40, $d0e8, $03, $03
-	tilemap_rect $da43, $d0ee, $03, $03
-	tilemap_rect $da46, $d0f4, $03, $03
-	tilemap_rect $daaf, $d16d, $05, $03
-	tilemap_rect $dab4, $d173, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 2, 3, 5, 3
+	panel_rect 5, 21, 8, 3, 5, 3
+	panel_rect 10, 21, 14, 3, 5, 3
+	panel_rect 0, 18, 8, 7, 3, 3
+	panel_rect 3, 18, 14, 7, 3, 3
+	panel_rect 6, 18, 20, 7, 3, 3
+	panel_rect 15, 21, 13, 11, 5, 3
+	panel_rect 20, 21, 19, 11, 5, 3
 	tilemap_rect_end
 .rl_7:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $da40, $d0e5, $03, $03
-	tilemap_rect $da43, $d0eb, $03, $03
-	tilemap_rect $da46, $d0f1, $03, $03
-	tilemap_rect $daaf, $d16a, $05, $03
-	tilemap_rect $dab4, $d170, $05, $03
-	tilemap_rect $dab9, $d176, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 0, 18, 5, 7, 3, 3
+	panel_rect 3, 18, 11, 7, 3, 3
+	panel_rect 6, 18, 17, 7, 3, 3
+	panel_rect 15, 21, 10, 11, 5, 3
+	panel_rect 20, 21, 16, 11, 5, 3
+	panel_rect 25, 21, 22, 11, 5, 3
 	tilemap_rect_end
 .rl_8:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $da40, $d0e3, $03, $03
-	tilemap_rect $da43, $d0e9, $03, $03
-	tilemap_rect $da46, $d0ef, $03, $03
-	tilemap_rect $daaf, $d167, $05, $03
-	tilemap_rect $dab4, $d16d, $05, $03
-	tilemap_rect $dab9, $d173, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 0, 18, 3, 7, 3, 3
+	panel_rect 3, 18, 9, 7, 3, 3
+	panel_rect 6, 18, 15, 7, 3, 3
+	panel_rect 15, 21, 7, 11, 5, 3
+	panel_rect 20, 21, 13, 11, 5, 3
+	panel_rect 25, 21, 19, 11, 5, 3
 	tilemap_rect_end
 .rl_9:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $da40, $d0e2, $03, $03
-	tilemap_rect $da43, $d0e8, $03, $03
-	tilemap_rect $da46, $d0ee, $03, $03
-	tilemap_rect $daaf, $d164, $05, $03
-	tilemap_rect $dab4, $d16a, $05, $03
-	tilemap_rect $dab9, $d170, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 0, 18, 2, 7, 3, 3
+	panel_rect 3, 18, 8, 7, 3, 3
+	panel_rect 6, 18, 14, 7, 3, 3
+	panel_rect 15, 21, 4, 11, 5, 3
+	panel_rect 20, 21, 10, 11, 5, 3
+	panel_rect 25, 21, 16, 11, 5, 3
 	tilemap_rect_end
 .rl_10:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $da40, $d0e2, $03, $03
-	tilemap_rect $da43, $d0e8, $03, $03
-	tilemap_rect $da46, $d0ee, $03, $03
-	tilemap_rect $daaf, $d162, $05, $03
-	tilemap_rect $dab4, $d168, $05, $03
-	tilemap_rect $dab9, $d16e, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 0, 18, 2, 7, 3, 3
+	panel_rect 3, 18, 8, 7, 3, 3
+	panel_rect 6, 18, 14, 7, 3, 3
+	panel_rect 15, 21, 2, 11, 5, 3
+	panel_rect 20, 21, 8, 11, 5, 3
+	panel_rect 25, 21, 14, 11, 5, 3
 	tilemap_rect_end
 .rl_11:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $da40, $d0e2, $03, $03
-	tilemap_rect $da43, $d0e8, $03, $03
-	tilemap_rect $da46, $d0ee, $03, $03
-	tilemap_rect $daaf, $d161, $05, $03
-	tilemap_rect $dab4, $d167, $05, $03
-	tilemap_rect $dab9, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 0, 18, 2, 7, 3, 3
+	panel_rect 3, 18, 8, 7, 3, 3
+	panel_rect 6, 18, 14, 7, 3, 3
+	panel_rect 15, 21, 1, 11, 5, 3
+	panel_rect 20, 21, 7, 11, 5, 3
+	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_12:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $da40, $d0e2, $03, $03
-	tilemap_rect $da43, $d0e8, $03, $03
-	tilemap_rect $da46, $d0ee, $03, $03
-	tilemap_rect $daaf, $d161, $05, $03
-	tilemap_rect $dab4, $d167, $05, $03
-	tilemap_rect $dab9, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 0, 18, 2, 7, 3, 3
+	panel_rect 3, 18, 8, 7, 3, 3
+	panel_rect 6, 18, 14, 7, 3, 3
+	panel_rect 15, 21, 1, 11, 5, 3
+	panel_rect 20, 21, 7, 11, 5, 3
+	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_13:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $da40, $d0e2, $03, $03
-	tilemap_rect $da43, $d0e8, $03, $03
-	tilemap_rect $da46, $d0ee, $03, $03
-	tilemap_rect $daaf, $d161, $05, $03
-	tilemap_rect $dab4, $d167, $05, $03
-	tilemap_rect $dab9, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 0, 18, 2, 7, 3, 3
+	panel_rect 3, 18, 8, 7, 3, 3
+	panel_rect 6, 18, 14, 7, 3, 3
+	panel_rect 15, 21, 1, 11, 5, 3
+	panel_rect 20, 21, 7, 11, 5, 3
+	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_14:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d060, $05, $03
-	tilemap_rect $daa5, $d066, $05, $03
-	tilemap_rect $daaa, $d06c, $05, $03
-	tilemap_rect $da40, $d0e2, $03, $03
-	tilemap_rect $da43, $d0e8, $03, $03
-	tilemap_rect $da46, $d0ee, $03, $03
-	tilemap_rect $daaf, $d161, $05, $03
-	tilemap_rect $dab4, $d167, $05, $03
-	tilemap_rect $dab9, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 0, 3, 5, 3
+	panel_rect 5, 21, 6, 3, 5, 3
+	panel_rect 10, 21, 12, 3, 5, 3
+	panel_rect 0, 18, 2, 7, 3, 3
+	panel_rect 3, 18, 8, 7, 3, 3
+	panel_rect 6, 18, 14, 7, 3, 3
+	panel_rect 15, 21, 1, 11, 5, 3
+	panel_rect 20, 21, 7, 11, 5, 3
+	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_15:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d05e, $05, $03
-	tilemap_rect $daa5, $d064, $05, $03
-	tilemap_rect $daaa, $d06a, $05, $03
-	tilemap_rect $da40, $d0e1, $03, $03
-	tilemap_rect $da43, $d0e7, $03, $03
-	tilemap_rect $da46, $d0ed, $03, $03
-	tilemap_rect $daaf, $d161, $05, $03
-	tilemap_rect $dab4, $d167, $05, $03
-	tilemap_rect $dab9, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 30, 2, 5, 3
+	panel_rect 5, 21, 4, 3, 5, 3
+	panel_rect 10, 21, 10, 3, 5, 3
+	panel_rect 0, 18, 1, 7, 3, 3
+	panel_rect 3, 18, 7, 7, 3, 3
+	panel_rect 6, 18, 13, 7, 3, 3
+	panel_rect 15, 21, 1, 11, 5, 3
+	panel_rect 20, 21, 7, 11, 5, 3
+	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_16:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d05b, $05, $03
-	tilemap_rect $daa5, $d061, $05, $03
-	tilemap_rect $daaa, $d067, $05, $03
-	tilemap_rect $da40, $d0df, $03, $03
-	tilemap_rect $da43, $d0e5, $03, $03
-	tilemap_rect $da46, $d0eb, $03, $03
-	tilemap_rect $daaf, $d161, $05, $03
-	tilemap_rect $dab4, $d167, $05, $03
-	tilemap_rect $dab9, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 27, 2, 5, 3
+	panel_rect 5, 21, 1, 3, 5, 3
+	panel_rect 10, 21, 7, 3, 5, 3
+	panel_rect 0, 18, 31, 6, 3, 3
+	panel_rect 3, 18, 5, 7, 3, 3
+	panel_rect 6, 18, 11, 7, 3, 3
+	panel_rect 15, 21, 1, 11, 5, 3
+	panel_rect 20, 21, 7, 11, 5, 3
+	panel_rect 25, 21, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_17:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa5, $d05e, $05, $03
-	tilemap_rect $daaa, $d064, $05, $03
-	tilemap_rect $da40, $d0dc, $03, $03
-	tilemap_rect $da43, $d0e2, $03, $03
-	tilemap_rect $da46, $d0e8, $03, $03
-	tilemap_rect $daaf, $d160, $05, $03
-	tilemap_rect $dab4, $d166, $05, $03
-	tilemap_rect $dab9, $d16c, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 5, 21, 30, 2, 5, 3
+	panel_rect 10, 21, 4, 3, 5, 3
+	panel_rect 0, 18, 28, 6, 3, 3
+	panel_rect 3, 18, 2, 7, 3, 3
+	panel_rect 6, 18, 8, 7, 3, 3
+	panel_rect 15, 21, 0, 11, 5, 3
+	panel_rect 20, 21, 6, 11, 5, 3
+	panel_rect 25, 21, 12, 11, 5, 3
 	tilemap_rect_end
 .rl_18:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa5, $d05b, $05, $03
-	tilemap_rect $daaa, $d061, $05, $03
-	tilemap_rect $da40, $d0d9, $03, $03
-	tilemap_rect $da43, $d0df, $03, $03
-	tilemap_rect $da46, $d0e5, $03, $03
-	tilemap_rect $daaf, $d15e, $05, $03
-	tilemap_rect $dab4, $d164, $05, $03
-	tilemap_rect $dab9, $d16a, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 5, 21, 27, 2, 5, 3
+	panel_rect 10, 21, 1, 3, 5, 3
+	panel_rect 0, 18, 25, 6, 3, 3
+	panel_rect 3, 18, 31, 6, 3, 3
+	panel_rect 6, 18, 5, 7, 3, 3
+	panel_rect 15, 21, 30, 10, 5, 3
+	panel_rect 20, 21, 4, 11, 5, 3
+	panel_rect 25, 21, 10, 11, 5, 3
 	tilemap_rect_end
 .rl_19:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daaa, $d05e, $05, $03
-	tilemap_rect $da43, $d0dc, $03, $03
-	tilemap_rect $da46, $d0e2, $03, $03
-	tilemap_rect $daaf, $d15b, $05, $03
-	tilemap_rect $dab4, $d161, $05, $03
-	tilemap_rect $dab9, $d167, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 10, 21, 30, 2, 5, 3
+	panel_rect 3, 18, 28, 6, 3, 3
+	panel_rect 6, 18, 2, 7, 3, 3
+	panel_rect 15, 21, 27, 10, 5, 3
+	panel_rect 20, 21, 1, 11, 5, 3
+	panel_rect 25, 21, 7, 11, 5, 3
 	tilemap_rect_end
 .rl_20:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daaa, $d05b, $05, $03
-	tilemap_rect $da46, $d0df, $03, $03
-	tilemap_rect $dab4, $d15e, $05, $03
-	tilemap_rect $dab9, $d164, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 10, 21, 27, 2, 5, 3
+	panel_rect 6, 18, 31, 6, 3, 3
+	panel_rect 20, 21, 30, 10, 5, 3
+	panel_rect 25, 21, 4, 11, 5, 3
 	tilemap_rect_end
 .rl_21:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da46, $d0dc, $03, $03
-	tilemap_rect $dab4, $d15b, $05, $03
-	tilemap_rect $dab9, $d161, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 6, 18, 28, 6, 3, 3
+	panel_rect 20, 21, 27, 10, 5, 3
+	panel_rect 25, 21, 1, 11, 5, 3
 	tilemap_rect_end
 .rl_22:
-	tilemap_rect $dab9, $d15e, $05, $03
+	panel_rect 25, 21, 30, 10, 5, 3
 	tilemap_rect_end
 .rl_23:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d072, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 18, 3, 5, 3
 	tilemap_rect_end
 .rl_24:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d06f, $05, $03
-	tilemap_rect $daa5, $d078, $05, $03
-	tilemap_rect $daaa, $d0f5, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 15, 3, 5, 3
+	panel_rect 5, 21, 24, 3, 5, 3
+	panel_rect 10, 21, 21, 7, 5, 3
 	tilemap_rect_end
 .rl_25:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d06c, $05, $03
-	tilemap_rect $daa5, $d075, $05, $03
-	tilemap_rect $daaa, $d0f2, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 12, 3, 5, 3
+	panel_rect 5, 21, 21, 3, 5, 3
+	panel_rect 10, 21, 18, 7, 5, 3
 	tilemap_rect_end
 .rl_26:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d069, $05, $03
-	tilemap_rect $daa5, $d072, $05, $03
-	tilemap_rect $daaa, $d0ef, $05, $03
-	tilemap_rect $daaf, $d0f8, $05, $03
-	tilemap_rect $dab4, $d173, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 9, 3, 5, 3
+	panel_rect 5, 21, 18, 3, 5, 3
+	panel_rect 10, 21, 15, 7, 5, 3
+	panel_rect 15, 21, 24, 7, 5, 3
+	panel_rect 20, 21, 19, 11, 5, 3
 	tilemap_rect_end
 .rl_27:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d066, $05, $03
-	tilemap_rect $daa5, $d06f, $05, $03
-	tilemap_rect $daaa, $d0ec, $05, $03
-	tilemap_rect $daaf, $d0f5, $05, $03
-	tilemap_rect $dab4, $d170, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 6, 3, 5, 3
+	panel_rect 5, 21, 15, 3, 5, 3
+	panel_rect 10, 21, 12, 7, 5, 3
+	panel_rect 15, 21, 21, 7, 5, 3
+	panel_rect 20, 21, 16, 11, 5, 3
 	tilemap_rect_end
 .rl_28:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d064, $05, $03
-	tilemap_rect $daa5, $d06d, $05, $03
-	tilemap_rect $daaa, $d0e9, $05, $03
-	tilemap_rect $daaf, $d0f2, $05, $03
-	tilemap_rect $dab4, $d16d, $05, $03
-	tilemap_rect $dab9, $d173, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 4, 3, 5, 3
+	panel_rect 5, 21, 13, 3, 5, 3
+	panel_rect 10, 21, 9, 7, 5, 3
+	panel_rect 15, 21, 18, 7, 5, 3
+	panel_rect 20, 21, 13, 11, 5, 3
+	panel_rect 25, 21, 19, 11, 5, 3
 	tilemap_rect_end
 .rl_29:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d063, $05, $03
-	tilemap_rect $daa5, $d06c, $05, $03
-	tilemap_rect $daaa, $d0e6, $05, $03
-	tilemap_rect $daaf, $d0ef, $05, $03
-	tilemap_rect $dab4, $d16a, $05, $03
-	tilemap_rect $dab9, $d170, $05, $03
-	tilemap_rect $db54, $d176, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 3, 5, 3
+	panel_rect 5, 21, 12, 3, 5, 3
+	panel_rect 10, 21, 6, 7, 5, 3
+	panel_rect 15, 21, 15, 7, 5, 3
+	panel_rect 20, 21, 10, 11, 5, 3
+	panel_rect 25, 21, 16, 11, 5, 3
+	panel_rect 20, 26, 22, 11, 5, 3
 	tilemap_rect_end
 .rl_30:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d063, $05, $03
-	tilemap_rect $daa5, $d06c, $05, $03
-	tilemap_rect $daaa, $d0e4, $05, $03
-	tilemap_rect $daaf, $d0ed, $05, $03
-	tilemap_rect $dab4, $d167, $05, $03
-	tilemap_rect $dab9, $d16d, $05, $03
-	tilemap_rect $db54, $d173, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 3, 5, 3
+	panel_rect 5, 21, 12, 3, 5, 3
+	panel_rect 10, 21, 4, 7, 5, 3
+	panel_rect 15, 21, 13, 7, 5, 3
+	panel_rect 20, 21, 7, 11, 5, 3
+	panel_rect 25, 21, 13, 11, 5, 3
+	panel_rect 20, 26, 19, 11, 5, 3
 	tilemap_rect_end
 .rl_31:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d063, $05, $03
-	tilemap_rect $daa5, $d06c, $05, $03
-	tilemap_rect $daaa, $d0e3, $05, $03
-	tilemap_rect $daaf, $d0ec, $05, $03
-	tilemap_rect $dab4, $d164, $05, $03
-	tilemap_rect $dab9, $d16a, $05, $03
-	tilemap_rect $db54, $d170, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 3, 5, 3
+	panel_rect 5, 21, 12, 3, 5, 3
+	panel_rect 10, 21, 3, 7, 5, 3
+	panel_rect 15, 21, 12, 7, 5, 3
+	panel_rect 20, 21, 4, 11, 5, 3
+	panel_rect 25, 21, 10, 11, 5, 3
+	panel_rect 20, 26, 16, 11, 5, 3
 	tilemap_rect_end
 .rl_32:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d063, $05, $03
-	tilemap_rect $daa5, $d06c, $05, $03
-	tilemap_rect $daaa, $d0e3, $05, $03
-	tilemap_rect $daaf, $d0ec, $05, $03
-	tilemap_rect $dab4, $d162, $05, $03
-	tilemap_rect $dab9, $d168, $05, $03
-	tilemap_rect $db54, $d16e, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 3, 5, 3
+	panel_rect 5, 21, 12, 3, 5, 3
+	panel_rect 10, 21, 3, 7, 5, 3
+	panel_rect 15, 21, 12, 7, 5, 3
+	panel_rect 20, 21, 2, 11, 5, 3
+	panel_rect 25, 21, 8, 11, 5, 3
+	panel_rect 20, 26, 14, 11, 5, 3
 	tilemap_rect_end
 .rl_33:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d063, $05, $03
-	tilemap_rect $daa5, $d06c, $05, $03
-	tilemap_rect $daaa, $d0e3, $05, $03
-	tilemap_rect $daaf, $d0ec, $05, $03
-	tilemap_rect $dab4, $d161, $05, $03
-	tilemap_rect $dab9, $d167, $05, $03
-	tilemap_rect $db54, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 3, 5, 3
+	panel_rect 5, 21, 12, 3, 5, 3
+	panel_rect 10, 21, 3, 7, 5, 3
+	panel_rect 15, 21, 12, 7, 5, 3
+	panel_rect 20, 21, 1, 11, 5, 3
+	panel_rect 25, 21, 7, 11, 5, 3
+	panel_rect 20, 26, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_34:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d063, $05, $03
-	tilemap_rect $daa5, $d06c, $05, $03
-	tilemap_rect $daaa, $d0e3, $05, $03
-	tilemap_rect $daaf, $d0ec, $05, $03
-	tilemap_rect $dab4, $d161, $05, $03
-	tilemap_rect $dab9, $d167, $05, $03
-	tilemap_rect $db54, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 3, 5, 3
+	panel_rect 5, 21, 12, 3, 5, 3
+	panel_rect 10, 21, 3, 7, 5, 3
+	panel_rect 15, 21, 12, 7, 5, 3
+	panel_rect 20, 21, 1, 11, 5, 3
+	panel_rect 25, 21, 7, 11, 5, 3
+	panel_rect 20, 26, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_35:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d062, $05, $03
-	tilemap_rect $daa5, $d06b, $05, $03
-	tilemap_rect $daaa, $d0e3, $05, $03
-	tilemap_rect $daaf, $d0ec, $05, $03
-	tilemap_rect $dab4, $d161, $05, $03
-	tilemap_rect $dab9, $d167, $05, $03
-	tilemap_rect $db54, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 2, 3, 5, 3
+	panel_rect 5, 21, 11, 3, 5, 3
+	panel_rect 10, 21, 3, 7, 5, 3
+	panel_rect 15, 21, 12, 7, 5, 3
+	panel_rect 20, 21, 1, 11, 5, 3
+	panel_rect 25, 21, 7, 11, 5, 3
+	panel_rect 20, 26, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_36:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d060, $05, $03
-	tilemap_rect $daa5, $d069, $05, $03
-	tilemap_rect $daaa, $d0e2, $05, $03
-	tilemap_rect $daaf, $d0eb, $05, $03
-	tilemap_rect $dab4, $d161, $05, $03
-	tilemap_rect $dab9, $d167, $05, $03
-	tilemap_rect $db54, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 0, 3, 5, 3
+	panel_rect 5, 21, 9, 3, 5, 3
+	panel_rect 10, 21, 2, 7, 5, 3
+	panel_rect 15, 21, 11, 7, 5, 3
+	panel_rect 20, 21, 1, 11, 5, 3
+	panel_rect 25, 21, 7, 11, 5, 3
+	panel_rect 20, 26, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_37:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d05d, $05, $03
-	tilemap_rect $daa5, $d066, $05, $03
-	tilemap_rect $daaa, $d0e0, $05, $03
-	tilemap_rect $daaf, $d0e9, $05, $03
-	tilemap_rect $dab4, $d160, $05, $03
-	tilemap_rect $dab9, $d166, $05, $03
-	tilemap_rect $db54, $d16c, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 29, 2, 5, 3
+	panel_rect 5, 21, 6, 3, 5, 3
+	panel_rect 10, 21, 0, 7, 5, 3
+	panel_rect 15, 21, 9, 7, 5, 3
+	panel_rect 20, 21, 0, 11, 5, 3
+	panel_rect 25, 21, 6, 11, 5, 3
+	panel_rect 20, 26, 12, 11, 5, 3
 	tilemap_rect_end
 .rl_38:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d05d, $05, $03
-	tilemap_rect $daa5, $d066, $05, $03
-	tilemap_rect $daaa, $d0e0, $05, $03
-	tilemap_rect $daaf, $d0e9, $05, $03
-	tilemap_rect $dab4, $d160, $05, $03
-	tilemap_rect $dab9, $d166, $05, $03
-	tilemap_rect $db54, $d16c, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 29, 2, 5, 3
+	panel_rect 5, 21, 6, 3, 5, 3
+	panel_rect 10, 21, 0, 7, 5, 3
+	panel_rect 15, 21, 9, 7, 5, 3
+	panel_rect 20, 21, 0, 11, 5, 3
+	panel_rect 25, 21, 6, 11, 5, 3
+	panel_rect 20, 26, 12, 11, 5, 3
 	tilemap_rect_end
 .rl_39:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d05a, $05, $03
-	tilemap_rect $daa5, $d063, $05, $03
-	tilemap_rect $daaa, $d0dd, $05, $03
-	tilemap_rect $daaf, $d0e6, $05, $03
-	tilemap_rect $dab4, $d15e, $05, $03
-	tilemap_rect $dab9, $d164, $05, $03
-	tilemap_rect $db54, $d16a, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 26, 2, 5, 3
+	panel_rect 5, 21, 3, 3, 5, 3
+	panel_rect 10, 21, 29, 6, 5, 3
+	panel_rect 15, 21, 6, 7, 5, 3
+	panel_rect 20, 21, 30, 10, 5, 3
+	panel_rect 25, 21, 4, 11, 5, 3
+	panel_rect 20, 26, 10, 11, 5, 3
 	tilemap_rect_end
 .rl_40:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa5, $d060, $05, $03
-	tilemap_rect $daaa, $d0da, $05, $03
-	tilemap_rect $daaf, $d0e3, $05, $03
-	tilemap_rect $dab4, $d15b, $05, $03
-	tilemap_rect $dab9, $d161, $05, $03
-	tilemap_rect $db54, $d167, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 5, 21, 0, 3, 5, 3
+	panel_rect 10, 21, 26, 6, 5, 3
+	panel_rect 15, 21, 3, 7, 5, 3
+	panel_rect 20, 21, 27, 10, 5, 3
+	panel_rect 25, 21, 1, 11, 5, 3
+	panel_rect 20, 26, 7, 11, 5, 3
 	tilemap_rect_end
 .rl_41:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa5, $d05d, $05, $03
-	tilemap_rect $daaf, $d0e0, $05, $03
-	tilemap_rect $dab9, $d15e, $05, $03
-	tilemap_rect $db54, $d164, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 5, 21, 29, 2, 5, 3
+	panel_rect 15, 21, 0, 7, 5, 3
+	panel_rect 25, 21, 30, 10, 5, 3
+	panel_rect 20, 26, 4, 11, 5, 3
 	tilemap_rect_end
 .rl_42:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daaf, $d0dd, $05, $03
-	tilemap_rect $dab9, $d15b, $05, $03
-	tilemap_rect $db54, $d161, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 15, 21, 29, 6, 5, 3
+	panel_rect 25, 21, 27, 10, 5, 3
+	panel_rect 20, 26, 1, 11, 5, 3
 	tilemap_rect_end
 .rl_43:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $db54, $d15e, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 20, 26, 30, 10, 5, 3
 	tilemap_rect_end
 .rl_44:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d071, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 17, 3, 3, 3
 	tilemap_rect_end
 .rl_45:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d06e, $03, $03
-	tilemap_rect $da43, $d074, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 14, 3, 3, 3
+	panel_rect 3, 18, 20, 3, 3, 3
 	tilemap_rect_end
 .rl_46:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d06b, $03, $03
-	tilemap_rect $da43, $d071, $03, $03
-	tilemap_rect $da46, $d077, $03, $03
-	tilemap_rect $da49, $d0f1, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 11, 3, 3, 3
+	panel_rect 3, 18, 17, 3, 3, 3
+	panel_rect 6, 18, 23, 3, 3, 3
+	panel_rect 9, 18, 17, 7, 3, 3
 	tilemap_rect_end
 .rl_47:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d068, $03, $03
-	tilemap_rect $da43, $d06e, $03, $03
-	tilemap_rect $da46, $d074, $03, $03
-	tilemap_rect $da49, $d0ee, $03, $03
-	tilemap_rect $da4c, $d0f4, $03, $03
-	tilemap_rect $da52, $d174, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 8, 3, 3, 3
+	panel_rect 3, 18, 14, 3, 3, 3
+	panel_rect 6, 18, 20, 3, 3, 3
+	panel_rect 9, 18, 14, 7, 3, 3
+	panel_rect 12, 18, 20, 7, 3, 3
+	panel_rect 18, 18, 20, 11, 3, 3
 	tilemap_rect_end
 .rl_48:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d065, $03, $03
-	tilemap_rect $da43, $d06b, $03, $03
-	tilemap_rect $da46, $d071, $03, $03
-	tilemap_rect $da49, $d0eb, $03, $03
-	tilemap_rect $da4c, $d0f1, $03, $03
-	tilemap_rect $da52, $d171, $03, $03
-	tilemap_rect $da55, $d177, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 5, 3, 3, 3
+	panel_rect 3, 18, 11, 3, 3, 3
+	panel_rect 6, 18, 17, 3, 3, 3
+	panel_rect 9, 18, 11, 7, 3, 3
+	panel_rect 12, 18, 17, 7, 3, 3
+	panel_rect 18, 18, 17, 11, 3, 3
+	panel_rect 21, 18, 23, 11, 3, 3
 	tilemap_rect_end
 .rl_49:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d063, $03, $03
-	tilemap_rect $da43, $d069, $03, $03
-	tilemap_rect $da46, $d06f, $03, $03
-	tilemap_rect $da49, $d0e8, $03, $03
-	tilemap_rect $da4c, $d0ee, $03, $03
-	tilemap_rect $da4f, $d0f4, $03, $03
-	tilemap_rect $da52, $d16e, $03, $03
-	tilemap_rect $da55, $d174, $03, $03
-	tilemap_rect $da58, $d17a, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 3, 3, 3, 3
+	panel_rect 3, 18, 9, 3, 3, 3
+	panel_rect 6, 18, 15, 3, 3, 3
+	panel_rect 9, 18, 8, 7, 3, 3
+	panel_rect 12, 18, 14, 7, 3, 3
+	panel_rect 15, 18, 20, 7, 3, 3
+	panel_rect 18, 18, 14, 11, 3, 3
+	panel_rect 21, 18, 20, 11, 3, 3
+	panel_rect 24, 18, 26, 11, 3, 3
 	tilemap_rect_end
 .rl_50:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d062, $03, $03
-	tilemap_rect $da43, $d068, $03, $03
-	tilemap_rect $da46, $d06e, $03, $03
-	tilemap_rect $da49, $d0e5, $03, $03
-	tilemap_rect $da4c, $d0eb, $03, $03
-	tilemap_rect $da4f, $d0f1, $03, $03
-	tilemap_rect $da52, $d16b, $03, $03
-	tilemap_rect $da55, $d171, $03, $03
-	tilemap_rect $da58, $d177, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 3, 3, 3
+	panel_rect 3, 18, 8, 3, 3, 3
+	panel_rect 6, 18, 14, 3, 3, 3
+	panel_rect 9, 18, 5, 7, 3, 3
+	panel_rect 12, 18, 11, 7, 3, 3
+	panel_rect 15, 18, 17, 7, 3, 3
+	panel_rect 18, 18, 11, 11, 3, 3
+	panel_rect 21, 18, 17, 11, 3, 3
+	panel_rect 24, 18, 23, 11, 3, 3
 	tilemap_rect_end
 .rl_51:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d062, $03, $03
-	tilemap_rect $da43, $d068, $03, $03
-	tilemap_rect $da46, $d06e, $03, $03
-	tilemap_rect $da49, $d0e3, $03, $03
-	tilemap_rect $da4c, $d0e9, $03, $03
-	tilemap_rect $da4f, $d0ef, $03, $03
-	tilemap_rect $da52, $d168, $03, $03
-	tilemap_rect $da55, $d16e, $03, $03
-	tilemap_rect $da58, $d174, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 3, 3, 3
+	panel_rect 3, 18, 8, 3, 3, 3
+	panel_rect 6, 18, 14, 3, 3, 3
+	panel_rect 9, 18, 3, 7, 3, 3
+	panel_rect 12, 18, 9, 7, 3, 3
+	panel_rect 15, 18, 15, 7, 3, 3
+	panel_rect 18, 18, 8, 11, 3, 3
+	panel_rect 21, 18, 14, 11, 3, 3
+	panel_rect 24, 18, 20, 11, 3, 3
 	tilemap_rect_end
 .rl_52:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d062, $03, $03
-	tilemap_rect $da43, $d068, $03, $03
-	tilemap_rect $da46, $d06e, $03, $03
-	tilemap_rect $da49, $d0e2, $03, $03
-	tilemap_rect $da4c, $d0e8, $03, $03
-	tilemap_rect $da4f, $d0ee, $03, $03
-	tilemap_rect $da52, $d165, $03, $03
-	tilemap_rect $da55, $d16b, $03, $03
-	tilemap_rect $da58, $d171, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 3, 3, 3
+	panel_rect 3, 18, 8, 3, 3, 3
+	panel_rect 6, 18, 14, 3, 3, 3
+	panel_rect 9, 18, 2, 7, 3, 3
+	panel_rect 12, 18, 8, 7, 3, 3
+	panel_rect 15, 18, 14, 7, 3, 3
+	panel_rect 18, 18, 5, 11, 3, 3
+	panel_rect 21, 18, 11, 11, 3, 3
+	panel_rect 24, 18, 17, 11, 3, 3
 	tilemap_rect_end
 .rl_53:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d062, $03, $03
-	tilemap_rect $da43, $d068, $03, $03
-	tilemap_rect $da46, $d06e, $03, $03
-	tilemap_rect $da49, $d0e2, $03, $03
-	tilemap_rect $da4c, $d0e8, $03, $03
-	tilemap_rect $da4f, $d0ee, $03, $03
-	tilemap_rect $da52, $d163, $03, $03
-	tilemap_rect $da55, $d169, $03, $03
-	tilemap_rect $da58, $d16f, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 3, 3, 3
+	panel_rect 3, 18, 8, 3, 3, 3
+	panel_rect 6, 18, 14, 3, 3, 3
+	panel_rect 9, 18, 2, 7, 3, 3
+	panel_rect 12, 18, 8, 7, 3, 3
+	panel_rect 15, 18, 14, 7, 3, 3
+	panel_rect 18, 18, 3, 11, 3, 3
+	panel_rect 21, 18, 9, 11, 3, 3
+	panel_rect 24, 18, 15, 11, 3, 3
 	tilemap_rect_end
 .rl_54:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d062, $03, $03
-	tilemap_rect $da43, $d068, $03, $03
-	tilemap_rect $da46, $d06e, $03, $03
-	tilemap_rect $da49, $d0e2, $03, $03
-	tilemap_rect $da4c, $d0e8, $03, $03
-	tilemap_rect $da4f, $d0ee, $03, $03
-	tilemap_rect $da52, $d162, $03, $03
-	tilemap_rect $da55, $d168, $03, $03
-	tilemap_rect $da58, $d16e, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 3, 3, 3
+	panel_rect 3, 18, 8, 3, 3, 3
+	panel_rect 6, 18, 14, 3, 3, 3
+	panel_rect 9, 18, 2, 7, 3, 3
+	panel_rect 12, 18, 8, 7, 3, 3
+	panel_rect 15, 18, 14, 7, 3, 3
+	panel_rect 18, 18, 2, 11, 3, 3
+	panel_rect 21, 18, 8, 11, 3, 3
+	panel_rect 24, 18, 14, 11, 3, 3
 	tilemap_rect_end
 .rl_55:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d061, $03, $03
-	tilemap_rect $da43, $d067, $03, $03
-	tilemap_rect $da46, $d06d, $03, $03
-	tilemap_rect $da49, $d0e2, $03, $03
-	tilemap_rect $da4c, $d0e8, $03, $03
-	tilemap_rect $da4f, $d0ee, $03, $03
-	tilemap_rect $da52, $d162, $03, $03
-	tilemap_rect $da55, $d168, $03, $03
-	tilemap_rect $da58, $d16e, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 1, 3, 3, 3
+	panel_rect 3, 18, 7, 3, 3, 3
+	panel_rect 6, 18, 13, 3, 3, 3
+	panel_rect 9, 18, 2, 7, 3, 3
+	panel_rect 12, 18, 8, 7, 3, 3
+	panel_rect 15, 18, 14, 7, 3, 3
+	panel_rect 18, 18, 2, 11, 3, 3
+	panel_rect 21, 18, 8, 11, 3, 3
+	panel_rect 24, 18, 14, 11, 3, 3
 	tilemap_rect_end
 .rl_56:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d05f, $03, $03
-	tilemap_rect $da43, $d065, $03, $03
-	tilemap_rect $da46, $d06b, $03, $03
-	tilemap_rect $da49, $d0e2, $03, $03
-	tilemap_rect $da4c, $d0e8, $03, $03
-	tilemap_rect $da4f, $d0ee, $03, $03
-	tilemap_rect $da52, $d162, $03, $03
-	tilemap_rect $da55, $d168, $03, $03
-	tilemap_rect $da58, $d16e, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 31, 2, 3, 3
+	panel_rect 3, 18, 5, 3, 3, 3
+	panel_rect 6, 18, 11, 3, 3, 3
+	panel_rect 9, 18, 2, 7, 3, 3
+	panel_rect 12, 18, 8, 7, 3, 3
+	panel_rect 15, 18, 14, 7, 3, 3
+	panel_rect 18, 18, 2, 11, 3, 3
+	panel_rect 21, 18, 8, 11, 3, 3
+	panel_rect 24, 18, 14, 11, 3, 3
 	tilemap_rect_end
 .rl_57:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d05c, $03, $03
-	tilemap_rect $da43, $d062, $03, $03
-	tilemap_rect $da46, $d068, $03, $03
-	tilemap_rect $da49, $d0e1, $03, $03
-	tilemap_rect $da4c, $d0e7, $03, $03
-	tilemap_rect $da4f, $d0ed, $03, $03
-	tilemap_rect $da52, $d162, $03, $03
-	tilemap_rect $da55, $d168, $03, $03
-	tilemap_rect $da58, $d16e, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 28, 2, 3, 3
+	panel_rect 3, 18, 2, 3, 3, 3
+	panel_rect 6, 18, 8, 3, 3, 3
+	panel_rect 9, 18, 1, 7, 3, 3
+	panel_rect 12, 18, 7, 7, 3, 3
+	panel_rect 15, 18, 13, 7, 3, 3
+	panel_rect 18, 18, 2, 11, 3, 3
+	panel_rect 21, 18, 8, 11, 3, 3
+	panel_rect 24, 18, 14, 11, 3, 3
 	tilemap_rect_end
 .rl_58:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da43, $d05f, $03, $03
-	tilemap_rect $da46, $d065, $03, $03
-	tilemap_rect $da49, $d0df, $03, $03
-	tilemap_rect $da4c, $d0e5, $03, $03
-	tilemap_rect $da4f, $d0eb, $03, $03
-	tilemap_rect $da52, $d161, $03, $03
-	tilemap_rect $da55, $d167, $03, $03
-	tilemap_rect $da58, $d16d, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 3, 18, 31, 2, 3, 3
+	panel_rect 6, 18, 5, 3, 3, 3
+	panel_rect 9, 18, 31, 6, 3, 3
+	panel_rect 12, 18, 5, 7, 3, 3
+	panel_rect 15, 18, 11, 7, 3, 3
+	panel_rect 18, 18, 1, 11, 3, 3
+	panel_rect 21, 18, 7, 11, 3, 3
+	panel_rect 24, 18, 13, 11, 3, 3
 	tilemap_rect_end
 .rl_59:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da43, $d05c, $03, $03
-	tilemap_rect $da46, $d062, $03, $03
-	tilemap_rect $da49, $d0dc, $03, $03
-	tilemap_rect $da4c, $d0e2, $03, $03
-	tilemap_rect $da4f, $d0e8, $03, $03
-	tilemap_rect $da52, $d15f, $03, $03
-	tilemap_rect $da55, $d165, $03, $03
-	tilemap_rect $da58, $d16b, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 3, 18, 28, 2, 3, 3
+	panel_rect 6, 18, 2, 3, 3, 3
+	panel_rect 9, 18, 28, 6, 3, 3
+	panel_rect 12, 18, 2, 7, 3, 3
+	panel_rect 15, 18, 8, 7, 3, 3
+	panel_rect 18, 18, 31, 10, 3, 3
+	panel_rect 21, 18, 5, 11, 3, 3
+	panel_rect 24, 18, 11, 11, 3, 3
 	tilemap_rect_end
 .rl_60:
-	tilemap_rect $da46, $d05f, $03, $03
-	tilemap_rect $da4c, $d0df, $03, $03
-	tilemap_rect $da4f, $d0e5, $03, $03
-	tilemap_rect $da52, $d15c, $03, $03
-	tilemap_rect $da55, $d162, $03, $03
-	tilemap_rect $da58, $d168, $03, $03
+	panel_rect 6, 18, 31, 2, 3, 3
+	panel_rect 12, 18, 31, 6, 3, 3
+	panel_rect 15, 18, 5, 7, 3, 3
+	panel_rect 18, 18, 28, 10, 3, 3
+	panel_rect 21, 18, 2, 11, 3, 3
+	panel_rect 24, 18, 8, 11, 3, 3
 	tilemap_rect_end
 .rl_61:
-	tilemap_rect $da4c, $d0dc, $03, $03
-	tilemap_rect $da4f, $d0e2, $03, $03
-	tilemap_rect $da55, $d15f, $03, $03
-	tilemap_rect $da58, $d165, $03, $03
+	panel_rect 12, 18, 28, 6, 3, 3
+	panel_rect 15, 18, 2, 7, 3, 3
+	panel_rect 21, 18, 31, 10, 3, 3
+	panel_rect 24, 18, 5, 11, 3, 3
 	tilemap_rect_end
 .rl_62:
-	tilemap_rect $da4f, $d0df, $03, $03
-	tilemap_rect $da55, $d15c, $03, $03
-	tilemap_rect $da58, $d162, $03, $03
+	panel_rect 15, 18, 31, 6, 3, 3
+	panel_rect 21, 18, 28, 10, 3, 3
+	panel_rect 24, 18, 2, 11, 3, 3
 	tilemap_rect_end
 .rl_63:
-	tilemap_rect $da58, $d15f, $03, $03
+	panel_rect 24, 18, 31, 10, 3, 3
 	tilemap_rect_end
 .rl_64:
 	tilemap_rect_end
 .rl_65:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d091, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 17, 4, 3, 3
 	tilemap_rect_end
 .rl_66:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d08e, $03, $03
-	tilemap_rect $da43, $d094, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 14, 4, 3, 3
+	panel_rect 3, 18, 20, 4, 3, 3
 	tilemap_rect_end
 .rl_67:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d08b, $03, $03
-	tilemap_rect $da43, $d091, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 11, 4, 3, 3
+	panel_rect 3, 18, 17, 4, 3, 3
 	tilemap_rect_end
 .rl_68:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d088, $03, $03
-	tilemap_rect $da43, $d08e, $03, $03
-	tilemap_rect $daa0, $d133, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 8, 4, 3, 3
+	panel_rect 3, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 19, 9, 3, 3
 	tilemap_rect_end
 .rl_69:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d085, $03, $03
-	tilemap_rect $da43, $d08b, $03, $03
-	tilemap_rect $da46, $d091, $03, $03
-	tilemap_rect $daa0, $d130, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 5, 4, 3, 3
+	panel_rect 3, 18, 11, 4, 3, 3
+	panel_rect 6, 18, 17, 4, 3, 3
+	panel_rect 0, 21, 16, 9, 3, 3
 	tilemap_rect_end
 .rl_70:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d083, $03, $03
-	tilemap_rect $da43, $d089, $03, $03
-	tilemap_rect $da46, $d08f, $03, $03
-	tilemap_rect $daa0, $d12d, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 3, 4, 3, 3
+	panel_rect 3, 18, 9, 4, 3, 3
+	panel_rect 6, 18, 15, 4, 3, 3
+	panel_rect 0, 21, 13, 9, 3, 3
 	tilemap_rect_end
 .rl_71:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $daa0, $d12a, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 10, 9, 5, 3
 	tilemap_rect_end
 .rl_72:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $daa0, $d128, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 8, 9, 5, 3
 	tilemap_rect_end
 .rl_73:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $daa0, $d127, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 7, 9, 5, 3
 	tilemap_rect_end
 .rl_74:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $daa0, $d127, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 7, 9, 5, 3
 	tilemap_rect_end
 .rl_75:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d081, $03, $03
-	tilemap_rect $da43, $d087, $03, $03
-	tilemap_rect $da46, $d08d, $03, $03
-	tilemap_rect $daa0, $d127, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 1, 4, 3, 3
+	panel_rect 3, 18, 7, 4, 3, 3
+	panel_rect 6, 18, 13, 4, 3, 3
+	panel_rect 0, 21, 7, 9, 5, 3
 	tilemap_rect_end
 .rl_76:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d07f, $03, $03
-	tilemap_rect $da43, $d085, $03, $03
-	tilemap_rect $da46, $d08b, $03, $03
-	tilemap_rect $daa0, $d127, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 31, 3, 3, 3
+	panel_rect 3, 18, 5, 4, 3, 3
+	panel_rect 6, 18, 11, 4, 3, 3
+	panel_rect 0, 21, 7, 9, 5, 3
 	tilemap_rect_end
 .rl_77:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d07c, $03, $03
-	tilemap_rect $da43, $d082, $03, $03
-	tilemap_rect $da46, $d088, $03, $03
-	tilemap_rect $daa0, $d126, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 28, 3, 3, 3
+	panel_rect 3, 18, 2, 4, 3, 3
+	panel_rect 6, 18, 8, 4, 3, 3
+	panel_rect 0, 21, 6, 9, 5, 3
 	tilemap_rect_end
 .rl_78:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da43, $d07f, $03, $03
-	tilemap_rect $da46, $d085, $03, $03
-	tilemap_rect $daa0, $d124, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 3, 18, 31, 3, 3, 3
+	panel_rect 6, 18, 5, 4, 3, 3
+	panel_rect 0, 21, 4, 9, 5, 3
 	tilemap_rect_end
 .rl_79:
-	tilemap_rect $da43, $d07c, $03, $03
-	tilemap_rect $da46, $d082, $03, $03
-	tilemap_rect $daa0, $d121, $05, $03
+	panel_rect 3, 18, 28, 3, 3, 3
+	panel_rect 6, 18, 2, 4, 3, 3
+	panel_rect 0, 21, 1, 9, 5, 3
 	tilemap_rect_end
 .rl_80:
-	tilemap_rect $da46, $d07f, $03, $03
-	tilemap_rect $daa0, $d11e, $05, $03
+	panel_rect 6, 18, 31, 3, 3, 3
+	panel_rect 0, 21, 30, 8, 5, 3
 	tilemap_rect_end
 .rl_81:
-	tilemap_rect $da46, $d07c, $03, $03
-	tilemap_rect $daa0, $d11b, $05, $03
+	panel_rect 6, 18, 28, 3, 3, 3
+	panel_rect 0, 21, 27, 8, 5, 3
 	tilemap_rect_end
 .rl_82:
-	tilemap_rect $daa0, $d118, $05, $03
+	panel_rect 0, 21, 24, 8, 5, 3
 	tilemap_rect_end
 .rl_83:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d094, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 20, 4, 3, 3
 	tilemap_rect_end
 .rl_84:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d091, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 17, 4, 3, 3
 	tilemap_rect_end
 .rl_85:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d08e, $03, $03
-	tilemap_rect $da43, $d094, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 14, 4, 3, 3
+	panel_rect 3, 18, 20, 4, 3, 3
 	tilemap_rect_end
 .rl_86:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d08b, $03, $03
-	tilemap_rect $da43, $d091, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 11, 4, 3, 3
+	panel_rect 3, 18, 17, 4, 3, 3
 	tilemap_rect_end
 .rl_87:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d088, $03, $03
-	tilemap_rect $da43, $d08e, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 8, 4, 3, 3
+	panel_rect 3, 18, 14, 4, 3, 3
 	tilemap_rect_end
 .rl_88:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d085, $03, $03
-	tilemap_rect $da43, $d08b, $03, $03
-	tilemap_rect $da46, $d091, $03, $03
-	tilemap_rect $daa0, $d132, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 5, 4, 3, 3
+	panel_rect 3, 18, 11, 4, 3, 3
+	panel_rect 6, 18, 17, 4, 3, 3
+	panel_rect 0, 21, 18, 9, 5, 3
 	tilemap_rect_end
 .rl_89:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d083, $03, $03
-	tilemap_rect $da43, $d089, $03, $03
-	tilemap_rect $da46, $d08f, $03, $03
-	tilemap_rect $daa0, $d12f, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 3, 4, 3, 3
+	panel_rect 3, 18, 9, 4, 3, 3
+	panel_rect 6, 18, 15, 4, 3, 3
+	panel_rect 0, 21, 15, 9, 5, 3
 	tilemap_rect_end
 .rl_90:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $daa0, $d12c, $05, $03
-	tilemap_rect $daa5, $d134, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 12, 9, 5, 3
+	panel_rect 5, 21, 20, 9, 5, 3
 	tilemap_rect_end
 .rl_91:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $daa0, $d129, $05, $03
-	tilemap_rect $daa5, $d131, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 9, 9, 5, 3
+	panel_rect 5, 21, 17, 9, 5, 3
 	tilemap_rect_end
 .rl_92:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $daa0, $d126, $05, $03
-	tilemap_rect $daa5, $d12e, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 6, 9, 5, 3
+	panel_rect 5, 21, 14, 9, 5, 3
 	tilemap_rect_end
 .rl_93:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $daa0, $d124, $05, $03
-	tilemap_rect $daa5, $d12c, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 4, 9, 5, 3
+	panel_rect 5, 21, 12, 9, 5, 3
 	tilemap_rect_end
 .rl_94:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $daa0, $d123, $05, $03
-	tilemap_rect $daa5, $d12b, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 0, 21, 3, 9, 5, 3
+	panel_rect 5, 21, 11, 9, 5, 3
 	tilemap_rect_end
 .rl_95:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d081, $03, $03
-	tilemap_rect $da43, $d087, $03, $03
-	tilemap_rect $da46, $d08d, $03, $03
-	tilemap_rect $daa0, $d123, $05, $03
-	tilemap_rect $daa5, $d12b, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 1, 4, 3, 3
+	panel_rect 3, 18, 7, 4, 3, 3
+	panel_rect 6, 18, 13, 4, 3, 3
+	panel_rect 0, 21, 3, 9, 5, 3
+	panel_rect 5, 21, 11, 9, 5, 3
 	tilemap_rect_end
 .rl_96:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d07f, $03, $03
-	tilemap_rect $da43, $d085, $03, $03
-	tilemap_rect $da46, $d08b, $03, $03
-	tilemap_rect $daa0, $d123, $05, $03
-	tilemap_rect $daa5, $d12b, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 31, 3, 3, 3
+	panel_rect 3, 18, 5, 4, 3, 3
+	panel_rect 6, 18, 11, 4, 3, 3
+	panel_rect 0, 21, 3, 9, 5, 3
+	panel_rect 5, 21, 11, 9, 5, 3
 	tilemap_rect_end
 .rl_97:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da43, $d082, $03, $03
-	tilemap_rect $da46, $d088, $03, $03
-	tilemap_rect $daa0, $d122, $05, $03
-	tilemap_rect $daa5, $d12a, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 3, 18, 2, 4, 3, 3
+	panel_rect 6, 18, 8, 4, 3, 3
+	panel_rect 0, 21, 2, 9, 5, 3
+	panel_rect 5, 21, 10, 9, 5, 3
 	tilemap_rect_end
 .rl_98:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da43, $d07f, $03, $03
-	tilemap_rect $da46, $d085, $03, $03
-	tilemap_rect $daa0, $d120, $05, $03
-	tilemap_rect $daa5, $d128, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 3, 18, 31, 3, 3, 3
+	panel_rect 6, 18, 5, 4, 3, 3
+	panel_rect 0, 21, 0, 9, 5, 3
+	panel_rect 5, 21, 8, 9, 5, 3
 	tilemap_rect_end
 .rl_99:
-	tilemap_rect $da46, $d082, $03, $03
-	tilemap_rect $daa0, $d11d, $05, $03
-	tilemap_rect $daa5, $d125, $05, $03
+	panel_rect 6, 18, 2, 4, 3, 3
+	panel_rect 0, 21, 29, 8, 5, 3
+	panel_rect 5, 21, 5, 9, 5, 3
 	tilemap_rect_end
 .rl_100:
-	tilemap_rect $da46, $d07f, $03, $03
-	tilemap_rect $daa0, $d11a, $05, $03
-	tilemap_rect $daa5, $d122, $05, $03
+	panel_rect 6, 18, 31, 3, 3, 3
+	panel_rect 0, 21, 26, 8, 5, 3
+	panel_rect 5, 21, 2, 9, 5, 3
 	tilemap_rect_end
 .rl_101:
-	tilemap_rect $daa0, $d117, $05, $03
-	tilemap_rect $daa5, $d11f, $05, $03
+	panel_rect 0, 21, 23, 8, 5, 3
+	panel_rect 5, 21, 31, 8, 5, 3
 	tilemap_rect_end
 .rl_102:
-	tilemap_rect $daa5, $d11c, $05, $03
+	panel_rect 5, 21, 28, 8, 5, 3
 	tilemap_rect_end
 .rl_103:
-	tilemap_rect $daa5, $d119, $05, $03
+	panel_rect 5, 21, 25, 8, 5, 3
 	tilemap_rect_end
 .rl_104:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d0f3, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 19, 7, 5, 3
 	tilemap_rect_end
 .rl_105:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d0f0, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 16, 7, 5, 3
 	tilemap_rect_end
 .rl_106:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0ed, $05, $03
-	tilemap_rect $daa5, $d0f6, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 13, 7, 5, 3
+	panel_rect 5, 21, 22, 7, 5, 3
 	tilemap_rect_end
 .rl_107:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0ea, $05, $03
-	tilemap_rect $daa5, $d0f3, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 10, 7, 5, 3
+	panel_rect 5, 21, 19, 7, 5, 3
 	tilemap_rect_end
 .rl_108:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e7, $05, $03
-	tilemap_rect $daa5, $d0f0, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 7, 7, 5, 3
+	panel_rect 5, 21, 16, 7, 5, 3
 	tilemap_rect_end
 .rl_109:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e4, $05, $03
-	tilemap_rect $daa5, $d0ed, $05, $03
-	tilemap_rect $daaa, $d0f6, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 4, 7, 5, 3
+	panel_rect 5, 21, 13, 7, 5, 3
+	panel_rect 10, 21, 22, 7, 5, 3
 	tilemap_rect_end
 .rl_110:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e2, $05, $03
-	tilemap_rect $daa5, $d0ea, $05, $03
-	tilemap_rect $daaa, $d0f3, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 2, 7, 5, 3
+	panel_rect 5, 21, 10, 7, 5, 3
+	panel_rect 10, 21, 19, 7, 5, 3
 	tilemap_rect_end
 .rl_111:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e1, $05, $03
-	tilemap_rect $daa5, $d0e8, $05, $03
-	tilemap_rect $daaa, $d0f0, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 7, 5, 3
+	panel_rect 5, 21, 8, 7, 5, 3
+	panel_rect 10, 21, 16, 7, 5, 3
 	tilemap_rect_end
 .rl_112:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e1, $05, $03
-	tilemap_rect $daa5, $d0e7, $05, $03
-	tilemap_rect $daaa, $d0ee, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 7, 5, 3
+	panel_rect 5, 21, 7, 7, 5, 3
+	panel_rect 10, 21, 14, 7, 5, 3
 	tilemap_rect_end
 .rl_113:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e1, $05, $03
-	tilemap_rect $daa5, $d0e7, $05, $03
-	tilemap_rect $daaa, $d0ed, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 7, 5, 3
+	panel_rect 5, 21, 7, 7, 5, 3
+	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
 .rl_114:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e1, $05, $03
-	tilemap_rect $daa5, $d0e7, $05, $03
-	tilemap_rect $daaa, $d0ed, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 7, 5, 3
+	panel_rect 5, 21, 7, 7, 5, 3
+	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
 .rl_115:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e0, $05, $03
-	tilemap_rect $daa5, $d0e7, $05, $03
-	tilemap_rect $daaa, $d0ed, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 0, 7, 5, 3
+	panel_rect 5, 21, 7, 7, 5, 3
+	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
 .rl_116:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0de, $05, $03
-	tilemap_rect $daa5, $d0e6, $05, $03
-	tilemap_rect $daaa, $d0ed, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 30, 6, 5, 3
+	panel_rect 5, 21, 6, 7, 5, 3
+	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
 .rl_117:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d0db, $05, $03
-	tilemap_rect $daa5, $d0e4, $05, $03
-	tilemap_rect $daaa, $d0ec, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 27, 6, 5, 3
+	panel_rect 5, 21, 4, 7, 5, 3
+	panel_rect 10, 21, 12, 7, 5, 3
 	tilemap_rect_end
 .rl_118:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d0d8, $05, $03
-	tilemap_rect $daa5, $d0e1, $05, $03
-	tilemap_rect $daaa, $d0ea, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 24, 6, 5, 3
+	panel_rect 5, 21, 1, 7, 5, 3
+	panel_rect 10, 21, 10, 7, 5, 3
 	tilemap_rect_end
 .rl_119:
-	tilemap_rect $daa5, $d0de, $05, $03
-	tilemap_rect $daaa, $d0e7, $05, $03
+	panel_rect 5, 21, 30, 6, 5, 3
+	panel_rect 10, 21, 7, 7, 5, 3
 	tilemap_rect_end
 .rl_120:
-	tilemap_rect $daa5, $d0db, $05, $03
-	tilemap_rect $daaa, $d0e4, $05, $03
+	panel_rect 5, 21, 27, 6, 5, 3
+	panel_rect 10, 21, 4, 7, 5, 3
 	tilemap_rect_end
 .rl_121:
-	tilemap_rect $daaa, $d0e1, $05, $03
+	panel_rect 10, 21, 1, 7, 5, 3
 	tilemap_rect_end
 .rl_122:
-	tilemap_rect $daaa, $d0de, $05, $03
+	panel_rect 10, 21, 30, 6, 5, 3
 	tilemap_rect_end
 .rl_123:
-	tilemap_rect $daaa, $d0db, $05, $03
+	panel_rect 10, 21, 27, 6, 5, 3
 	tilemap_rect_end
 .rl_124:
-	tilemap_rect $daaa, $d0d8, $05, $03
+	panel_rect 10, 21, 24, 6, 5, 3
 	tilemap_rect_end
 .rl_125:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d0f5, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 21, 7, 5, 3
 	tilemap_rect_end
 .rl_126:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d0f2, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 18, 7, 5, 3
 	tilemap_rect_end
 .rl_127:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0ef, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 15, 7, 5, 3
 	tilemap_rect_end
 .rl_128:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0ec, $05, $03
-	tilemap_rect $daa5, $d0f8, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 12, 7, 5, 3
+	panel_rect 5, 21, 24, 7, 5, 3
 	tilemap_rect_end
 .rl_129:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e9, $05, $03
-	tilemap_rect $daa5, $d0f5, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 9, 7, 5, 3
+	panel_rect 5, 21, 21, 7, 5, 3
 	tilemap_rect_end
 .rl_130:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e6, $05, $03
-	tilemap_rect $daa5, $d0f2, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 6, 7, 5, 3
+	panel_rect 5, 21, 18, 7, 5, 3
 	tilemap_rect_end
 .rl_131:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e4, $05, $03
-	tilemap_rect $daa5, $d0ef, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 4, 7, 5, 3
+	panel_rect 5, 21, 15, 7, 5, 3
 	tilemap_rect_end
 .rl_132:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e3, $05, $03
-	tilemap_rect $daa5, $d0ed, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 7, 5, 3
+	panel_rect 5, 21, 13, 7, 5, 3
 	tilemap_rect_end
 .rl_133:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e3, $05, $03
-	tilemap_rect $daa5, $d0ec, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 7, 5, 3
+	panel_rect 5, 21, 12, 7, 5, 3
 	tilemap_rect_end
 .rl_134:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d0e3, $05, $03
-	tilemap_rect $daa5, $d0ec, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 7, 5, 3
+	panel_rect 5, 21, 12, 7, 5, 3
 	tilemap_rect_end
 .rl_135:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d0e2, $05, $03
-	tilemap_rect $daa5, $d0ec, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 2, 7, 5, 3
+	panel_rect 5, 21, 12, 7, 5, 3
 	tilemap_rect_end
 .rl_136:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d0e0, $05, $03
-	tilemap_rect $daa5, $d0eb, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 0, 7, 5, 3
+	panel_rect 5, 21, 11, 7, 5, 3
 	tilemap_rect_end
 .rl_137:
-	tilemap_rect $daa0, $d0dd, $05, $03
-	tilemap_rect $daa5, $d0e9, $05, $03
+	panel_rect 0, 21, 29, 6, 5, 3
+	panel_rect 5, 21, 9, 7, 5, 3
 	tilemap_rect_end
 .rl_138:
-	tilemap_rect $daa0, $d0da, $05, $03
-	tilemap_rect $daa5, $d0e6, $05, $03
+	panel_rect 0, 21, 26, 6, 5, 3
+	panel_rect 5, 21, 6, 7, 5, 3
 	tilemap_rect_end
 .rl_139:
-	tilemap_rect $daa0, $d0d7, $05, $03
-	tilemap_rect $daa5, $d0e3, $05, $03
+	panel_rect 0, 21, 23, 6, 5, 3
+	panel_rect 5, 21, 3, 7, 5, 3
 	tilemap_rect_end
 .rl_140:
-	tilemap_rect $daa5, $d0e0, $05, $03
+	panel_rect 5, 21, 0, 7, 5, 3
 	tilemap_rect_end
 .rl_141:
-	tilemap_rect $daa5, $d0dd, $05, $03
+	panel_rect 5, 21, 29, 6, 5, 3
 	tilemap_rect_end
 .rl_142:
-	tilemap_rect $daa5, $d0da, $05, $03
+	panel_rect 5, 21, 26, 6, 5, 3
 	tilemap_rect_end
 .rl_143:
 	tilemap_rect_end
 .rl_144:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d096, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 22, 4, 5, 3
 	tilemap_rect_end
 .rl_145:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d093, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 19, 4, 5, 3
 	tilemap_rect_end
 .rl_146:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d090, $05, $03
-	tilemap_rect $daa5, $d097, $05, $03
-	tilemap_rect $daaa, $d136, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 16, 4, 5, 3
+	panel_rect 5, 21, 23, 4, 5, 3
+	panel_rect 10, 21, 22, 9, 5, 3
 	tilemap_rect_end
 .rl_147:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d08d, $05, $03
-	tilemap_rect $daa5, $d094, $05, $03
-	tilemap_rect $daaa, $d133, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 13, 4, 5, 3
+	panel_rect 5, 21, 20, 4, 5, 3
+	panel_rect 10, 21, 19, 9, 5, 3
 	tilemap_rect_end
 .rl_148:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d08a, $05, $03
-	tilemap_rect $daa5, $d091, $05, $03
-	tilemap_rect $daaa, $d130, $05, $03
-	tilemap_rect $daaf, $d137, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 10, 4, 5, 3
+	panel_rect 5, 21, 17, 4, 5, 3
+	panel_rect 10, 21, 16, 9, 5, 3
+	panel_rect 15, 21, 23, 9, 5, 3
 	tilemap_rect_end
 .rl_149:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d087, $05, $03
-	tilemap_rect $daa5, $d08e, $05, $03
-	tilemap_rect $daaa, $d12d, $05, $03
-	tilemap_rect $daaf, $d134, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 7, 4, 5, 3
+	panel_rect 5, 21, 14, 4, 5, 3
+	panel_rect 10, 21, 13, 9, 5, 3
+	panel_rect 15, 21, 20, 9, 5, 3
 	tilemap_rect_end
 .rl_150:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d085, $05, $03
-	tilemap_rect $daa5, $d08c, $05, $03
-	tilemap_rect $daaa, $d12a, $05, $03
-	tilemap_rect $daaf, $d131, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 5, 4, 5, 3
+	panel_rect 5, 21, 12, 4, 5, 3
+	panel_rect 10, 21, 10, 9, 5, 3
+	panel_rect 15, 21, 17, 9, 5, 3
 	tilemap_rect_end
 .rl_151:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d084, $05, $03
-	tilemap_rect $daa5, $d08b, $05, $03
-	tilemap_rect $daaa, $d127, $05, $03
-	tilemap_rect $daaf, $d12e, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 4, 4, 5, 3
+	panel_rect 5, 21, 11, 4, 5, 3
+	panel_rect 10, 21, 7, 9, 5, 3
+	panel_rect 15, 21, 14, 9, 5, 3
 	tilemap_rect_end
 .rl_152:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d084, $05, $03
-	tilemap_rect $daa5, $d08b, $05, $03
-	tilemap_rect $daaa, $d125, $05, $03
-	tilemap_rect $daaf, $d12c, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 4, 4, 5, 3
+	panel_rect 5, 21, 11, 4, 5, 3
+	panel_rect 10, 21, 5, 9, 5, 3
+	panel_rect 15, 21, 12, 9, 5, 3
 	tilemap_rect_end
 .rl_153:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d084, $05, $03
-	tilemap_rect $daa5, $d08b, $05, $03
-	tilemap_rect $daaa, $d124, $05, $03
-	tilemap_rect $daaf, $d12b, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 4, 4, 5, 3
+	panel_rect 5, 21, 11, 4, 5, 3
+	panel_rect 10, 21, 4, 9, 5, 3
+	panel_rect 15, 21, 11, 9, 5, 3
 	tilemap_rect_end
 .rl_154:
 	tilemap_rect_end
@@ -1618,55 +1618,55 @@ TilemapAssemblyDispatch_39:
 .rl_157:
 	tilemap_rect_end
 .rl_158:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d084, $05, $03
-	tilemap_rect $daa5, $d08b, $05, $03
-	tilemap_rect $daaa, $d124, $05, $03
-	tilemap_rect $daaf, $d12b, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 4, 4, 5, 3
+	panel_rect 5, 21, 11, 4, 5, 3
+	panel_rect 10, 21, 4, 9, 5, 3
+	panel_rect 15, 21, 11, 9, 5, 3
 	tilemap_rect_end
 .rl_159:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d083, $05, $03
-	tilemap_rect $daa5, $d08a, $05, $03
-	tilemap_rect $daaa, $d124, $05, $03
-	tilemap_rect $daaf, $d12b, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 3, 4, 5, 3
+	panel_rect 5, 21, 10, 4, 5, 3
+	panel_rect 10, 21, 4, 9, 5, 3
+	panel_rect 15, 21, 11, 9, 5, 3
 	tilemap_rect_end
 .rl_160:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d081, $05, $03
-	tilemap_rect $daa5, $d088, $05, $03
-	tilemap_rect $daaa, $d124, $05, $03
-	tilemap_rect $daaf, $d12b, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 1, 4, 5, 3
+	panel_rect 5, 21, 8, 4, 5, 3
+	panel_rect 10, 21, 4, 9, 5, 3
+	panel_rect 15, 21, 11, 9, 5, 3
 	tilemap_rect_end
 .rl_161:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d07e, $05, $03
-	tilemap_rect $daa5, $d085, $05, $03
-	tilemap_rect $daaa, $d123, $05, $03
-	tilemap_rect $daaf, $d12a, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 30, 3, 5, 3
+	panel_rect 5, 21, 5, 4, 5, 3
+	panel_rect 10, 21, 3, 9, 5, 3
+	panel_rect 15, 21, 10, 9, 5, 3
 	tilemap_rect_end
 .rl_162:
-	tilemap_rect $daa0, $d07b, $05, $03
-	tilemap_rect $daa5, $d082, $05, $03
-	tilemap_rect $daaa, $d121, $05, $03
-	tilemap_rect $daaf, $d128, $05, $03
+	panel_rect 0, 21, 27, 3, 5, 3
+	panel_rect 5, 21, 2, 4, 5, 3
+	panel_rect 10, 21, 1, 9, 5, 3
+	panel_rect 15, 21, 8, 9, 5, 3
 	tilemap_rect_end
 .rl_163:
-	tilemap_rect $daa0, $d078, $05, $03
-	tilemap_rect $daa5, $d07f, $05, $03
-	tilemap_rect $daaa, $d11e, $05, $03
-	tilemap_rect $daaf, $d125, $05, $03
+	panel_rect 0, 21, 24, 3, 5, 3
+	panel_rect 5, 21, 31, 3, 5, 3
+	panel_rect 10, 21, 30, 8, 5, 3
+	panel_rect 15, 21, 5, 9, 5, 3
 	tilemap_rect_end
 .rl_164:
-	tilemap_rect $daa5, $d07c, $05, $03
-	tilemap_rect $daaa, $d11b, $05, $03
-	tilemap_rect $daaf, $d122, $05, $03
+	panel_rect 5, 21, 28, 3, 5, 3
+	panel_rect 10, 21, 27, 8, 5, 3
+	panel_rect 15, 21, 2, 9, 5, 3
 	tilemap_rect_end
 .rl_165:
-	tilemap_rect $daaf, $d11f, $05, $03
+	panel_rect 15, 21, 31, 8, 5, 3
 	tilemap_rect_end
 .rl_166:
-	tilemap_rect $daaf, $d11c, $05, $03
+	panel_rect 15, 21, 28, 8, 5, 3
 	tilemap_rect_end
 .rl_167:
 	tilemap_rect_end
@@ -1679,326 +1679,326 @@ TilemapAssemblyDispatch_39:
 .rl_171:
 	tilemap_rect_end
 .rl_172:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d073, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 19, 3, 5, 3
 	tilemap_rect_end
 .rl_173:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d070, $05, $03
-	tilemap_rect $daa5, $d076, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 16, 3, 5, 3
+	panel_rect 5, 21, 22, 3, 5, 3
 	tilemap_rect_end
 .rl_174:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d06d, $05, $03
-	tilemap_rect $daa5, $d073, $05, $03
-	tilemap_rect $daaf, $d0f3, $05, $03
-	tilemap_rect $dab4, $d0f9, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 13, 3, 5, 3
+	panel_rect 5, 21, 19, 3, 5, 3
+	panel_rect 15, 21, 19, 7, 5, 3
+	panel_rect 20, 21, 25, 7, 5, 3
 	tilemap_rect_end
 .rl_175:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d06a, $05, $03
-	tilemap_rect $daa5, $d070, $05, $03
-	tilemap_rect $daaa, $d076, $05, $03
-	tilemap_rect $daaf, $d0f0, $05, $03
-	tilemap_rect $dab4, $d0f6, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 10, 3, 5, 3
+	panel_rect 5, 21, 16, 3, 5, 3
+	panel_rect 10, 21, 22, 3, 5, 3
+	panel_rect 15, 21, 16, 7, 5, 3
+	panel_rect 20, 21, 22, 7, 5, 3
 	tilemap_rect_end
 .rl_176:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d067, $05, $03
-	tilemap_rect $daa5, $d06d, $05, $03
-	tilemap_rect $daaa, $d073, $05, $03
-	tilemap_rect $daaf, $d0ed, $05, $03
-	tilemap_rect $dab4, $d0f3, $05, $03
-	tilemap_rect $dab9, $d0f9, $05, $03
-	tilemap_rect $db54, $d173, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 7, 3, 5, 3
+	panel_rect 5, 21, 13, 3, 5, 3
+	panel_rect 10, 21, 19, 3, 5, 3
+	panel_rect 15, 21, 13, 7, 5, 3
+	panel_rect 20, 21, 19, 7, 5, 3
+	panel_rect 25, 21, 25, 7, 5, 3
+	panel_rect 20, 26, 19, 11, 5, 3
 	tilemap_rect_end
 .rl_177:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d064, $05, $03
-	tilemap_rect $daa5, $d06a, $05, $03
-	tilemap_rect $daaa, $d070, $05, $03
-	tilemap_rect $daaf, $d0ea, $05, $03
-	tilemap_rect $dab4, $d0f0, $05, $03
-	tilemap_rect $dab9, $d0f6, $05, $03
-	tilemap_rect $db54, $d170, $05, $03
-	tilemap_rect $db59, $d176, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 4, 3, 5, 3
+	panel_rect 5, 21, 10, 3, 5, 3
+	panel_rect 10, 21, 16, 3, 5, 3
+	panel_rect 15, 21, 10, 7, 5, 3
+	panel_rect 20, 21, 16, 7, 5, 3
+	panel_rect 25, 21, 22, 7, 5, 3
+	panel_rect 20, 26, 16, 11, 5, 3
+	panel_rect 25, 26, 22, 11, 5, 3
 	tilemap_rect_end
 .rl_178:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d062, $05, $03
-	tilemap_rect $daa5, $d068, $05, $03
-	tilemap_rect $daaa, $d06e, $05, $03
-	tilemap_rect $daaf, $d0e7, $05, $03
-	tilemap_rect $dab4, $d0ed, $05, $03
-	tilemap_rect $dab9, $d0f3, $05, $03
-	tilemap_rect $db54, $d16d, $05, $03
-	tilemap_rect $db59, $d173, $05, $03
-	tilemap_rect $da5b, $d179, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 2, 3, 5, 3
+	panel_rect 5, 21, 8, 3, 5, 3
+	panel_rect 10, 21, 14, 3, 5, 3
+	panel_rect 15, 21, 7, 7, 5, 3
+	panel_rect 20, 21, 13, 7, 5, 3
+	panel_rect 25, 21, 19, 7, 5, 3
+	panel_rect 20, 26, 13, 11, 5, 3
+	panel_rect 25, 26, 19, 11, 5, 3
+	panel_rect 27, 18, 25, 11, 5, 3
 	tilemap_rect_end
 .rl_179:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $daaf, $d0e4, $05, $03
-	tilemap_rect $dab4, $d0ea, $05, $03
-	tilemap_rect $dab9, $d0f0, $05, $03
-	tilemap_rect $db54, $d16a, $05, $03
-	tilemap_rect $db59, $d170, $05, $03
-	tilemap_rect $da5b, $d176, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 15, 21, 4, 7, 5, 3
+	panel_rect 20, 21, 10, 7, 5, 3
+	panel_rect 25, 21, 16, 7, 5, 3
+	panel_rect 20, 26, 10, 11, 5, 3
+	panel_rect 25, 26, 16, 11, 5, 3
+	panel_rect 27, 18, 22, 11, 5, 3
 	tilemap_rect_end
 .rl_180:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $daaf, $d0e2, $05, $03
-	tilemap_rect $dab4, $d0e8, $05, $03
-	tilemap_rect $dab9, $d0ee, $05, $03
-	tilemap_rect $db54, $d167, $05, $03
-	tilemap_rect $db59, $d16d, $05, $03
-	tilemap_rect $da5b, $d173, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 15, 21, 2, 7, 5, 3
+	panel_rect 20, 21, 8, 7, 5, 3
+	panel_rect 25, 21, 14, 7, 5, 3
+	panel_rect 20, 26, 7, 11, 5, 3
+	panel_rect 25, 26, 13, 11, 5, 3
+	panel_rect 27, 18, 19, 11, 5, 3
 	tilemap_rect_end
 .rl_181:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $daaf, $d0e1, $05, $03
-	tilemap_rect $dab4, $d0e7, $05, $03
-	tilemap_rect $dab9, $d0ed, $05, $03
-	tilemap_rect $db54, $d164, $05, $03
-	tilemap_rect $db59, $d16a, $05, $03
-	tilemap_rect $da5b, $d170, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 15, 21, 1, 7, 5, 3
+	panel_rect 20, 21, 7, 7, 5, 3
+	panel_rect 25, 21, 13, 7, 5, 3
+	panel_rect 20, 26, 4, 11, 5, 3
+	panel_rect 25, 26, 10, 11, 5, 3
+	panel_rect 27, 18, 16, 11, 5, 3
 	tilemap_rect_end
 .rl_182:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $daaf, $d0e1, $05, $03
-	tilemap_rect $dab4, $d0e7, $05, $03
-	tilemap_rect $dab9, $d0ed, $05, $03
-	tilemap_rect $db54, $d162, $05, $03
-	tilemap_rect $db59, $d168, $05, $03
-	tilemap_rect $da5b, $d16e, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 15, 21, 1, 7, 5, 3
+	panel_rect 20, 21, 7, 7, 5, 3
+	panel_rect 25, 21, 13, 7, 5, 3
+	panel_rect 20, 26, 2, 11, 5, 3
+	panel_rect 25, 26, 8, 11, 5, 3
+	panel_rect 27, 18, 14, 11, 5, 3
 	tilemap_rect_end
 .rl_183:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d061, $05, $03
-	tilemap_rect $daa5, $d067, $05, $03
-	tilemap_rect $daaa, $d06d, $05, $03
-	tilemap_rect $daaf, $d0e1, $05, $03
-	tilemap_rect $dab4, $d0e7, $05, $03
-	tilemap_rect $dab9, $d0ed, $05, $03
-	tilemap_rect $db54, $d161, $05, $03
-	tilemap_rect $db59, $d167, $05, $03
-	tilemap_rect $da5b, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 1, 3, 5, 3
+	panel_rect 5, 21, 7, 3, 5, 3
+	panel_rect 10, 21, 13, 3, 5, 3
+	panel_rect 15, 21, 1, 7, 5, 3
+	panel_rect 20, 21, 7, 7, 5, 3
+	panel_rect 25, 21, 13, 7, 5, 3
+	panel_rect 20, 26, 1, 11, 5, 3
+	panel_rect 25, 26, 7, 11, 5, 3
+	panel_rect 27, 18, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_184:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d060, $05, $03
-	tilemap_rect $daa5, $d066, $05, $03
-	tilemap_rect $daaa, $d06c, $05, $03
-	tilemap_rect $daaf, $d0e1, $05, $03
-	tilemap_rect $dab4, $d0e7, $05, $03
-	tilemap_rect $dab9, $d0ed, $05, $03
-	tilemap_rect $db54, $d161, $05, $03
-	tilemap_rect $db59, $d167, $05, $03
-	tilemap_rect $da5b, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 0, 3, 5, 3
+	panel_rect 5, 21, 6, 3, 5, 3
+	panel_rect 10, 21, 12, 3, 5, 3
+	panel_rect 15, 21, 1, 7, 5, 3
+	panel_rect 20, 21, 7, 7, 5, 3
+	panel_rect 25, 21, 13, 7, 5, 3
+	panel_rect 20, 26, 1, 11, 5, 3
+	panel_rect 25, 26, 7, 11, 5, 3
+	panel_rect 27, 18, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_185:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d05e, $05, $03
-	tilemap_rect $daa5, $d064, $05, $03
-	tilemap_rect $daaa, $d06a, $05, $03
-	tilemap_rect $daaf, $d0e0, $05, $03
-	tilemap_rect $dab4, $d0e6, $05, $03
-	tilemap_rect $dab9, $d0ec, $05, $03
-	tilemap_rect $db54, $d161, $05, $03
-	tilemap_rect $db59, $d167, $05, $03
-	tilemap_rect $da5b, $d16d, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 30, 2, 5, 3
+	panel_rect 5, 21, 4, 3, 5, 3
+	panel_rect 10, 21, 10, 3, 5, 3
+	panel_rect 15, 21, 0, 7, 5, 3
+	panel_rect 20, 21, 6, 7, 5, 3
+	panel_rect 25, 21, 12, 7, 5, 3
+	panel_rect 20, 26, 1, 11, 5, 3
+	panel_rect 25, 26, 7, 11, 5, 3
+	panel_rect 27, 18, 13, 11, 5, 3
 	tilemap_rect_end
 .rl_186:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $daa0, $d05b, $05, $03
-	tilemap_rect $daa5, $d061, $05, $03
-	tilemap_rect $daaa, $d067, $05, $03
-	tilemap_rect $daaf, $d0de, $05, $03
-	tilemap_rect $dab4, $d0e4, $05, $03
-	tilemap_rect $dab9, $d0ea, $05, $03
-	tilemap_rect $db54, $d160, $05, $03
-	tilemap_rect $db59, $d166, $05, $03
-	tilemap_rect $da5b, $d16c, $05, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 21, 27, 2, 5, 3
+	panel_rect 5, 21, 1, 3, 5, 3
+	panel_rect 10, 21, 7, 3, 5, 3
+	panel_rect 15, 21, 30, 6, 5, 3
+	panel_rect 20, 21, 4, 7, 5, 3
+	panel_rect 25, 21, 10, 7, 5, 3
+	panel_rect 20, 26, 0, 11, 5, 3
+	panel_rect 25, 26, 6, 11, 5, 3
+	panel_rect 27, 18, 12, 11, 5, 3
 	tilemap_rect_end
 .rl_187:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $daa0, $d058, $05, $03
-	tilemap_rect $daa5, $d05e, $05, $03
-	tilemap_rect $daaa, $d064, $05, $03
-	tilemap_rect $daaf, $d0db, $05, $03
-	tilemap_rect $dab4, $d0e1, $05, $03
-	tilemap_rect $dab9, $d0e7, $05, $03
-	tilemap_rect $db54, $d15e, $05, $03
-	tilemap_rect $db59, $d164, $05, $03
-	tilemap_rect $da5b, $d16a, $05, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 21, 24, 2, 5, 3
+	panel_rect 5, 21, 30, 2, 5, 3
+	panel_rect 10, 21, 4, 3, 5, 3
+	panel_rect 15, 21, 27, 6, 5, 3
+	panel_rect 20, 21, 1, 7, 5, 3
+	panel_rect 25, 21, 7, 7, 5, 3
+	panel_rect 20, 26, 30, 10, 5, 3
+	panel_rect 25, 26, 4, 11, 5, 3
+	panel_rect 27, 18, 10, 11, 5, 3
 	tilemap_rect_end
 .rl_188:
-	tilemap_rect $daa5, $d05b, $05, $03
-	tilemap_rect $daaa, $d061, $05, $03
-	tilemap_rect $daaf, $d0d8, $05, $03
-	tilemap_rect $dab4, $d0de, $05, $03
-	tilemap_rect $dab9, $d0e4, $05, $03
-	tilemap_rect $db54, $d15b, $05, $03
-	tilemap_rect $db59, $d161, $05, $03
-	tilemap_rect $da5b, $d167, $05, $03
+	panel_rect 5, 21, 27, 2, 5, 3
+	panel_rect 10, 21, 1, 3, 5, 3
+	panel_rect 15, 21, 24, 6, 5, 3
+	panel_rect 20, 21, 30, 6, 5, 3
+	panel_rect 25, 21, 4, 7, 5, 3
+	panel_rect 20, 26, 27, 10, 5, 3
+	panel_rect 25, 26, 1, 11, 5, 3
+	panel_rect 27, 18, 7, 11, 5, 3
 	tilemap_rect_end
 .rl_189:
-	tilemap_rect $daaa, $d05e, $05, $03
-	tilemap_rect $dab4, $d0db, $05, $03
-	tilemap_rect $dab9, $d0e1, $05, $03
-	tilemap_rect $db54, $d158, $05, $03
-	tilemap_rect $db59, $d15e, $05, $03
-	tilemap_rect $da5b, $d164, $05, $03
+	panel_rect 10, 21, 30, 2, 5, 3
+	panel_rect 20, 21, 27, 6, 5, 3
+	panel_rect 25, 21, 1, 7, 5, 3
+	panel_rect 20, 26, 24, 10, 5, 3
+	panel_rect 25, 26, 30, 10, 5, 3
+	panel_rect 27, 18, 4, 11, 5, 3
 	tilemap_rect_end
 .rl_190:
-	tilemap_rect $dab9, $d0de, $05, $03
-	tilemap_rect $db59, $d15b, $05, $03
-	tilemap_rect $da5b, $d161, $05, $03
+	panel_rect 25, 21, 30, 6, 5, 3
+	panel_rect 25, 26, 27, 10, 5, 3
+	panel_rect 27, 18, 1, 11, 5, 3
 	tilemap_rect_end
 .rl_191:
-	tilemap_rect $da5b, $d15e, $05, $03
+	panel_rect 27, 18, 30, 10, 5, 3
 	tilemap_rect_end
 .rl_192:
-	tilemap_rect $da5b, $d15b, $05, $03
+	panel_rect 27, 18, 27, 10, 5, 3
 	tilemap_rect_end
 .rl_193:
-	tilemap_rect $da5b, $d158, $05, $03
+	panel_rect 27, 18, 24, 10, 5, 3
 	tilemap_rect_end
 .rl_194:
 	tilemap_rect_end
 .rl_195:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d091, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 17, 4, 3, 3
 	tilemap_rect_end
 .rl_196:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d08e, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 14, 4, 3, 3
 	tilemap_rect_end
 .rl_197:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d08b, $03, $03
-	tilemap_rect $da43, $d091, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 11, 4, 3, 3
+	panel_rect 3, 18, 17, 4, 3, 3
 	tilemap_rect_end
 .rl_198:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d088, $03, $03
-	tilemap_rect $da43, $d08e, $03, $03
-	tilemap_rect $da46, $d094, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 8, 4, 3, 3
+	panel_rect 3, 18, 14, 4, 3, 3
+	panel_rect 6, 18, 20, 4, 3, 3
 	tilemap_rect_end
 .rl_199:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d085, $03, $03
-	tilemap_rect $da43, $d08b, $03, $03
-	tilemap_rect $da46, $d091, $03, $03
-	tilemap_rect $da49, $d134, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 5, 4, 3, 3
+	panel_rect 3, 18, 11, 4, 3, 3
+	panel_rect 6, 18, 17, 4, 3, 3
+	panel_rect 9, 18, 20, 9, 3, 3
 	tilemap_rect_end
 .rl_200:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d083, $03, $03
-	tilemap_rect $da43, $d089, $03, $03
-	tilemap_rect $da46, $d08f, $03, $03
-	tilemap_rect $da49, $d131, $03, $03
-	tilemap_rect $da4f, $d137, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 3, 4, 3, 3
+	panel_rect 3, 18, 9, 4, 3, 3
+	panel_rect 6, 18, 15, 4, 3, 3
+	panel_rect 9, 18, 17, 9, 3, 3
+	panel_rect 15, 18, 23, 9, 3, 3
 	tilemap_rect_end
 .rl_201:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $da49, $d12e, $03, $03
-	tilemap_rect $da4f, $d134, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 9, 18, 14, 9, 3, 3
+	panel_rect 15, 18, 20, 9, 3, 3
 	tilemap_rect_end
 .rl_202:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $da49, $d12b, $03, $03
-	tilemap_rect $da4f, $d131, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 9, 18, 11, 9, 3, 3
+	panel_rect 15, 18, 17, 9, 3, 3
 	tilemap_rect_end
 .rl_203:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $da49, $d128, $03, $03
-	tilemap_rect $da4f, $d12e, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 9, 18, 8, 9, 3, 3
+	panel_rect 15, 18, 14, 9, 3, 3
 	tilemap_rect_end
 .rl_204:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $da49, $d126, $03, $03
-	tilemap_rect $da4f, $d12c, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 9, 18, 6, 9, 3, 3
+	panel_rect 15, 18, 12, 9, 3, 3
 	tilemap_rect_end
 .rl_205:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d082, $03, $03
-	tilemap_rect $da43, $d088, $03, $03
-	tilemap_rect $da46, $d08e, $03, $03
-	tilemap_rect $da49, $d125, $03, $03
-	tilemap_rect $da4f, $d12b, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 2, 4, 3, 3
+	panel_rect 3, 18, 8, 4, 3, 3
+	panel_rect 6, 18, 14, 4, 3, 3
+	panel_rect 9, 18, 5, 9, 3, 3
+	panel_rect 15, 18, 11, 9, 3, 3
 	tilemap_rect_end
 .rl_206:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d081, $03, $03
-	tilemap_rect $da43, $d087, $03, $03
-	tilemap_rect $da46, $d08d, $03, $03
-	tilemap_rect $da49, $d125, $03, $03
-	tilemap_rect $da4f, $d12b, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 1, 4, 3, 3
+	panel_rect 3, 18, 7, 4, 3, 3
+	panel_rect 6, 18, 13, 4, 3, 3
+	panel_rect 9, 18, 5, 9, 3, 3
+	panel_rect 15, 18, 11, 9, 3, 3
 	tilemap_rect_end
 .rl_207:
-	tilemap_rect $db60, $d000, $14, $02
-	tilemap_rect $da40, $d07f, $03, $03
-	tilemap_rect $da43, $d085, $03, $03
-	tilemap_rect $da46, $d08b, $03, $03
-	tilemap_rect $da49, $d125, $03, $03
-	tilemap_rect $da4f, $d12b, $03, $03
+	panel_rect 0, 27, 0, 0, 20, 2
+	panel_rect 0, 18, 31, 3, 3, 3
+	panel_rect 3, 18, 5, 4, 3, 3
+	panel_rect 6, 18, 11, 4, 3, 3
+	panel_rect 9, 18, 5, 9, 3, 3
+	panel_rect 15, 18, 11, 9, 3, 3
 	tilemap_rect_end
 .rl_208:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d07c, $03, $03
-	tilemap_rect $da43, $d082, $03, $03
-	tilemap_rect $da46, $d088, $03, $03
-	tilemap_rect $da49, $d124, $03, $03
-	tilemap_rect $da4f, $d12a, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 28, 3, 3, 3
+	panel_rect 3, 18, 2, 4, 3, 3
+	panel_rect 6, 18, 8, 4, 3, 3
+	panel_rect 9, 18, 4, 9, 3, 3
+	panel_rect 15, 18, 10, 9, 3, 3
 	tilemap_rect_end
 .rl_209:
-	tilemap_rect $db80, $d000, $14, $01
-	tilemap_rect $da40, $d079, $03, $03
-	tilemap_rect $da43, $d07f, $03, $03
-	tilemap_rect $da46, $d085, $03, $03
-	tilemap_rect $da49, $d122, $03, $03
-	tilemap_rect $da4f, $d128, $03, $03
+	panel_rect 0, 28, 0, 0, 20, 1
+	panel_rect 0, 18, 25, 3, 3, 3
+	panel_rect 3, 18, 31, 3, 3, 3
+	panel_rect 6, 18, 5, 4, 3, 3
+	panel_rect 9, 18, 2, 9, 3, 3
+	panel_rect 15, 18, 8, 9, 3, 3
 	tilemap_rect_end
 .rl_210:
-	tilemap_rect $da43, $d07c, $03, $03
-	tilemap_rect $da46, $d082, $03, $03
-	tilemap_rect $da49, $d11f, $03, $03
-	tilemap_rect $da4f, $d125, $03, $03
+	panel_rect 3, 18, 28, 3, 3, 3
+	panel_rect 6, 18, 2, 4, 3, 3
+	panel_rect 9, 18, 31, 8, 3, 3
+	panel_rect 15, 18, 5, 9, 3, 3
 	tilemap_rect_end
 .rl_211:
-	tilemap_rect $da46, $d07f, $03, $03
-	tilemap_rect $da49, $d11c, $03, $03
-	tilemap_rect $da4f, $d122, $03, $03
+	panel_rect 6, 18, 31, 3, 3, 3
+	panel_rect 9, 18, 28, 8, 3, 3
+	panel_rect 15, 18, 2, 9, 3, 3
 	tilemap_rect_end
 .rl_212:
-	tilemap_rect $da49, $d119, $03, $03
-	tilemap_rect $da4f, $d11f, $03, $03
+	panel_rect 9, 18, 25, 8, 3, 3
+	panel_rect 15, 18, 31, 8, 3, 3
 	tilemap_rect_end
 .rl_213:
-	tilemap_rect $da4f, $d11c, $03, $03
+	panel_rect 15, 18, 28, 8, 3, 3
 	tilemap_rect_end
 .pastEnd:

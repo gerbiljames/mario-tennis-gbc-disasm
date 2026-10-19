@@ -149,7 +149,7 @@ Unused_1b_ShowHighScoreConfirmScreen:
 Unused_1b_DrawErasePrompt:
 	ld hl, wPlayer1MainName ; $6a0f
 	farcall PushTextArgString ; $6a12
-	ld de, $d9c1 ; $6a15
+	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a15
 	call Unused_1b_CopyMainCharNameWithDiacritics ; $6a18
 	ld hl, Text_31_106 ; $6a1b
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a1e
@@ -157,28 +157,28 @@ Unused_1b_DrawErasePrompt:
 	ret ; $6a24
 Unused_1b_DrawContinuePrompt:
 	ld hl, Text_31_109 ; $6a25
-	ld de, $d9c1 ; $6a28
+	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a28
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a2b
 	farcall Unused_18_DrawYesNoLabels ; $6a2e
 	ret ; $6a31
 Unused_1b_DrawEraseConfirmPrompt:
 	ld hl, Text_31_107 ; $6a32
-	ld de, $d9c1 ; $6a35
+	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a35
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a38
 	farcall Unused_18_DrawYesNoLabels ; $6a3b
 	ret ; $6a3e
 Unused_1b_DrawIsThisCorrectPrompt:
 	ld hl, Text_31_113 ; $6a3f
-	ld de, $d9c1 ; $6a42
+	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a42
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a45
 	farcall Unused_18_DrawYesNoLabels ; $6a48
 	ret ; $6a4b
 Unused_1b_DrawCharAndItemDataPrompt:
 	ld hl, Text_30_354 ; $6a4c
-	ld de, $d9c1 ; $6a4f
+	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a4f
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a52
 	ld hl, Text_30_354 ; $6a55
-	ld de, $da01 ; $6a58
+	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $6a58
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e
 Unused_1b_DrawGameTimerRow:
@@ -186,32 +186,32 @@ Unused_1b_DrawGameTimerRow:
 	ld h, $00 ; $6a62
 	ld l, a ; $6a64
 	ld a, $02 ; $6a65
-	ld de, $da05 ; $6a67
+	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 5 ; $6a67
 	farcall Unused_18_DrawDecimalNumberToTilemap ; $6a6a
 	ld a, [wGameTimer + 2] ; $6a6d
 	add $64 ; $6a70
 	ld h, $00 ; $6a72
 	ld l, a ; $6a74
 	ld a, $03 ; $6a75
-	ld de, $da07 ; $6a77
+	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 7 ; $6a77
 	farcall Unused_18_DrawDecimalNumberToTilemap ; $6a7a
 	ld a, [wGameTimer + 1] ; $6a7d
 	add $64 ; $6a80
 	ld h, $00 ; $6a82
 	ld l, a ; $6a84
 	ld a, $03 ; $6a85
-	ld de, $da0a ; $6a87
+	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 10 ; $6a87
 	farcall Unused_18_DrawDecimalNumberToTilemap ; $6a8a
 	ld a, $3a ; $6a8d
-	ld de, $da07 ; $6a8f
+	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 7 ; $6a8f
 	farcall Unused_18_WriteTilemapByteAdvance ; $6a92
 	ld a, $3a ; $6a95
-	ld de, $da0a ; $6a97
+	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 10 ; $6a97
 	farcall Unused_18_WriteTilemapByteAdvance ; $6a9a
 	call Unused_1b_QueueStoryInfoRowToVram ; $6a9d
 	ret ; $6aa0
 Unused_1b_QueueStoryInfoRowToVram:
-	ld hl, $da00 ; $6aa1
+	ld hl, wStagedTilemap + 16 * TILEMAP_WIDTH ; $6aa1
 	ld de, vBGMap0 + 16 * TILEMAP_WIDTH ; $6aa4
 	ld c, 1 ; $6aa7
 	call QueueVRAMCopy ; $6aa9

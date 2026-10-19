@@ -116,9 +116,10 @@ Unused_0b_CheckTwoPointLead:
 .tied:
 	xor a ; $4119
 	ret ; $411a
-Unused_0b_0:
-	; $411b, 7 bytes (bytes:7)
-	db $df, $2a, $08, $fa, $b1, $c4, $c9 ; 0x00
+Unused_0b_CheckBallOutOfBounds:
+	farcall CheckBallOutOfBounds ; $411b
+	ld a, [wBallOutOfBoundsBits] ; $411e
+	ret ; $4121
 Unused_0b_GetBallXAndDepth:
 	ld hl, wBallDepth ; $4122
 	ld a, [hl+] ; $4125
