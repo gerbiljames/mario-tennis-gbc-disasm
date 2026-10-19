@@ -141,7 +141,7 @@ InitResultsScreenCharacters:
 	ld d, a ; $49a7
 	ld a, [wStoryMainPalette] ; $49a8
 	ld e, a ; $49ab
-	jr .initChar ; $49ac
+	jr .initMainChar ; $49ac
 .matchMainChar:
 	ld a, [wLinkMatchRole] ; $49ae
 	srl a ; $49b1
@@ -151,13 +151,13 @@ InitResultsScreenCharacters:
 	ld d, a ; $49b9
 	ld a, [wPlayer1MainPalette] ; $49ba
 	ld e, a ; $49bd
-	jr .initChar ; $49be
+	jr .initMainChar ; $49be
 .checkPlayer2CurrentMainCharacter:
 	ld a, [wPlayer2MainChar] ; $49c0
 	ld d, a ; $49c3
 	ld a, [wPlayer2MainPalette] ; $49c4
 	ld e, a ; $49c7
-.initChar:
+.initMainChar:
 	ld a, d ; $49c8
 	push af ; $49c9
 	ld a, $00 ; $49ca
@@ -200,7 +200,7 @@ InitResultsScreenCharacters:
 	ld d, a ; $4a22
 	ld a, [wStoryPartnerPalette] ; $4a23
 	ld e, a ; $4a26
-	jr .initChar2 ; $4a27
+	jr .initPartnerChar ; $4a27
 .matchPartnerChar:
 	ld a, [wLinkMatchRole] ; $4a29
 	srl a ; $4a2c
@@ -210,13 +210,13 @@ InitResultsScreenCharacters:
 	ld d, a ; $4a34
 	ld a, [wPlayer1PartnerPalette] ; $4a35
 	ld e, a ; $4a38
-	jr .initChar2 ; $4a39
+	jr .initPartnerChar ; $4a39
 .checkPlayer2CurrentPartnerCharacter:
 	ld a, [wPlayer2PartnerChar] ; $4a3b
 	ld d, a ; $4a3e
 	ld a, [wPlayer2PartnerPalette] ; $4a3f
 	ld e, a ; $4a42
-.initChar2:
+.initPartnerChar:
 	ld a, d ; $4a43
 	push af ; $4a44
 	ld a, $02 ; $4a45
@@ -346,13 +346,13 @@ RunContinuePrompt:
 	call AdvanceFrame ; $4b2f
 	ldh a, [hInputRisingEdge] ; $4b32
 	bit PADB_UP, a ; $4b34
-	jr nz, DrawContinuePromptCursor.playSfx ; $4b36
+	jr nz, DrawContinuePromptCursor.playMoveSfx ; $4b36
 	bit PADB_DOWN, a ; $4b38
-	jr nz, DrawContinuePromptCursor.playSfx ; $4b3a
+	jr nz, DrawContinuePromptCursor.playMoveSfx ; $4b3a
 	bit PADB_A, a ; $4b3c
-	jr nz, DrawContinuePromptCursor.playSfx2 ; $4b3e
+	jr nz, DrawContinuePromptCursor.playSelectSfx ; $4b3e
 	bit PADB_B, a ; $4b40
-	jr nz, DrawContinuePromptCursor.playSfx3 ; $4b42
+	jr nz, DrawContinuePromptCursor.playCancelSfx ; $4b42
 	jr RunContinuePrompt ; $4b44
 DrawContinuePromptCursor:
 	wram_bank WRAM_SCENE ; $4b46
@@ -367,14 +367,14 @@ DrawContinuePromptCursor:
 	ld_oam bc, OAM_BANK1, $8e ; $4b5a
 	call QueueSprite ; $4b5d
 	ret ; $4b60
-.playSfx:
+.playMoveSfx:
 	sound SFX_MENU_MOVE ; $4b61
 	wram_bank WRAM_SCENE ; $4b63
 	ld a, [wContinuePromptRow] ; $4b69
 	xor $01 ; $4b6c
 	ld [wContinuePromptRow], a ; $4b6e
 	jr RunContinuePrompt ; $4b71
-.playSfx2:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $4b73
 	wram_bank WRAM_SCENE ; $4b75
 	ld a, [wContinuePromptPage] ; $4b7b
@@ -405,7 +405,7 @@ DrawContinuePromptCursor:
 	add $ff ; $4ba9
 	ld [wContinuePromptResult], a ; $4bab
 	ret ; $4bae
-.playSfx3:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $4baf
 	wram_bank WRAM_SCENE ; $4bb1
 	ld a, [wContinuePromptPage] ; $4bb7

@@ -138,10 +138,10 @@ RunMatchWinLoseScreen:
 	ld a, $ff ; $44aa
 	ld a, [wMatchWinLoseFlag] ; $44ac
 	cp WINLOSE_LOSE ; $44af
-	jr z, .playSfx ; $44b1
+	jr z, .playLoseBgm ; $44b1
 	sound BGM_WIN ; $44b3
 	jr .initMatchWinLoseScreen ; $44b5
-.playSfx:
+.playLoseBgm:
 	sound BGM_LOSE ; $44b7
 .initMatchWinLoseScreen:
 	call InitMatchWinLoseScreen ; $44b9
@@ -181,13 +181,13 @@ RunMatchWinLoseScreen:
 	ldh a, [hInputPressed] ; $450a
 	ld [wMenuInputPressed], a ; $450c
 	bit PADB_A, a ; $450f
-	jr nz, .playSfx2 ; $4511
+	jr nz, .playSelectSfx ; $4511
 	bit PADB_B, a ; $4513
-	jr nz, .playSfx2 ; $4515
+	jr nz, .playSelectSfx ; $4515
 	bit PADB_RIGHT, a ; $4517
 	jr nz, .pressedRight ; $4519
 	jr .loop ; $451b
-.playSfx2:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $451d
 	call ClearFrameTasks ; $451f
 	script_fade_out 64 ; $4522

@@ -374,16 +374,16 @@ Unused_11_NullScriptB:
 	ret ; $5a21
 JuniorClassCourtDoublesInitScript_11:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5a22
-	jr nz, .stage2 ; $5a25
+	jr nz, .byEntryPoint ; $5a25
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5a27
-	jr z, .stage2 ; $5a2a
+	jr z, .byEntryPoint ; $5a2a
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, 37.0, 9.0 ; $5a2c
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACE_RIGHT ; $5a37
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, ActorScript_11_45 ; $5a3e
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, 37.0, 11.0 ; $5a49
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACE_RIGHT ; $5a54
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, ActorScript_11_45 ; $5a5b
-.stage2:
+.byEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $5a66
 	cp $0f ; $5a69
 	jp z, JuniorClassCourtDoublesMatchReturn ; $5a6b
@@ -392,22 +392,22 @@ JuniorClassCourtDoublesInitScript_11:
 	cp $0d ; $5a73
 	jp z, JuniorClassCourtDoublesEntry0dScene ; $5a75
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5a78
-	jr nz, .stage3 ; $5a7b
+	jr nz, .storyComplete ; $5a7b
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5a7d
-	jr nz, .stage4 ; $5a80
+	jr nz, .islandOpen ; $5a80
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $5a82
 	jr nz, .placeActors ; $5a85
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5a87
 	jr nz, .done ; $5a8a
 	ret ; $5a8c
-.stage3:
+.storyComplete:
 	ld hl, JuniorClassCourtDoublesNpcScriptsD_11 ; $5a8d
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5a90
 	farcall WriteStoryStateWord ; $5a93
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, 32.0, 25.0 ; $5a96
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5aa1
 	ret ; $5aac
-.stage4:
+.islandOpen:
 	ld hl, JuniorClassCourtDoublesNpcScriptsC_11 ; $5aad
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5ab0
 	farcall WriteStoryStateWord ; $5ab3

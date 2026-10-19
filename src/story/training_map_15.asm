@@ -141,42 +141,42 @@ InitTournamentSiteSceneVariant:
 	map_cell 14, 20 ; $427d
 	farcall WriteBehaviorMapCell ; $4281
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4284
-	jr z, .stage1 ; $4287
+	jr z, .checkRound2 ; $4287
 	ld hl, TournamentSiteFinalNpcScripts_15 ; $4289
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $428c
 	farcall WriteStoryStateWord ; $428f
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $4292
 	ld [wMapSceneStage], a ; $4294
 	ret ; $4297
-.stage1:
+.checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4298
-	jr z, .stage2 ; $429b
+	jr z, .checkRound1 ; $429b
 	ld hl, TournamentSiteSemifinalNpcScripts_15 ; $429d
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $42a0
 	farcall WriteStoryStateWord ; $42a3
 	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $42a6
 	ld [wMapSceneStage], a ; $42a8
 	ret ; $42ab
-.stage2:
+.checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $42ac
-	jr z, .stage3 ; $42af
+	jr z, .keepRound1 ; $42af
 	ld hl, TournamentSiteRound2NpcScripts_15 ; $42b1
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $42b4
 	farcall WriteStoryStateWord ; $42b7
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $42ba
 	ld [wMapSceneStage], a ; $42bc
-.stage3:
+.keepRound1:
 	ret ; $42bf
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $42c0
-	jr z, .doublesStage2 ; $42c3
+	jr z, .doublesCheckRound1 ; $42c3
 	ld hl, TournamentSiteDoublesFinalNpcScripts_15 ; $42c5
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $42c8
 	farcall WriteStoryStateWord ; $42cb
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $42ce
 	ld [wMapSceneStage], a ; $42d0
 	ret ; $42d3
-.doublesStage2:
+.doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $42d4
 	jr z, .done ; $42d7
 	ld hl, TournamentSiteDoublesSemifinalNpcScripts_15 ; $42d9

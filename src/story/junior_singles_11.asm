@@ -280,10 +280,10 @@ JuniorClassCourtSinglesTileTriggers_11:
 	ds 1, $ff ; $6cfd, fill
 JuniorClassCourtSinglesInitScript_11:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6cfe
-	jr z, .stage2 ; $6d01
+	jr z, .byEntryPoint ; $6d01
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, 37.0, 11.0 ; $6d03
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACE_RIGHT ; $6d0e
-.stage2:
+.byEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $6d15
 	cp $0f ; $6d18
 	jp z, JuniorClassCourtSinglesMatchReturn ; $6d1a
@@ -292,21 +292,21 @@ JuniorClassCourtSinglesInitScript_11:
 	cp $0d ; $6d22
 	jp z, JuniorClassCourtSinglesEntry0dScene ; $6d24
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $6d27
-	jr nz, .stage3 ; $6d2a
+	jr nz, .storyComplete ; $6d2a
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $6d2c
-	jr nz, .stage4 ; $6d2f
+	jr nz, .islandOpen ; $6d2f
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6d31
 	jr nz, .placeActors ; $6d34
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6d36
 	jr nz, .done ; $6d39
 	ret ; $6d3b
-.stage3:
+.storyComplete:
 	ld hl, JuniorClassCourtSinglesNpcScriptsD_11 ; $6d3c
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6d3f
 	farcall WriteStoryStateWord ; $6d42
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 63.0, 41.0 ; $6d45
 	ret ; $6d50
-.stage4:
+.islandOpen:
 	ld hl, JuniorClassCourtSinglesNpcScriptsC_11 ; $6d51
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6d54
 	farcall WriteStoryStateWord ; $6d57
@@ -430,11 +430,11 @@ JuniorClassCourtSinglesEntry0dScene:
 	sub $01 ; $6ea5
 	ld a, a ; $6ea7
 	rst Rst00 ; $6ea8
-	dw JuniorClassCourtSinglesEntry0dScene.parkMiddleCourtPracticePair ; $6ea9 jumptable
-	dw JuniorClassCourtSinglesEntry0dScene.parkLeftCourtPracticePairRightSide ; $6eab jumptable
-	dw JuniorClassCourtSinglesEntry0dScene.parkLeftCourtPracticePairRightSide2 ; $6ead jumptable
-	dw JuniorClassCourtSinglesEntry0dScene.waitPlayerMoveDone ; $6eaf jumptable
-.parkMiddleCourtPracticePair:
+	dw JuniorClassCourtSinglesEntry0dScene.wonRank4 ; $6ea9 jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.wonRank3 ; $6eab jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.wonRank2 ; $6ead jumptable
+	dw JuniorClassCourtSinglesEntry0dScene.wonRank1 ; $6eaf jumptable
+.wonRank4:
 	call ParkMiddleCourtPracticePair ; $6eb1
 	script_player_speed 2.0 ; $6eb4
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, 26.0, 9.0 ; $6eba
@@ -458,7 +458,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	call ResumeMiddleCourtPractice ; $6f39
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACE_DOWN ; $6f3c
 	ret ; $6f43
-.parkLeftCourtPracticePairRightSide:
+.wonRank3:
 	call ParkLeftCourtPracticePairRightSide ; $6f44
 	script_player_speed 2.0 ; $6f47
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_CURT, 9.0, 9.0 ; $6f4d
@@ -483,7 +483,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	call ResumeLeftCourtPractice ; $6fd2
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACE_DOWN ; $6fd5
 	ret ; $6fdc
-.parkLeftCourtPracticePairRightSide2:
+.wonRank2:
 	call ParkLeftCourtPracticePairRightSide ; $6fdd
 	script_player_speed 2.0 ; $6fe0
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BETH, 9.0, 9.0 ; $6fe6
@@ -508,7 +508,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	call ResumeLeftCourtPractice ; $706b
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, FACE_DOWN ; $706e
 	ret ; $7075
-.waitPlayerMoveDone:
+.wonRank1:
 	script_player_speed 2.0 ; $7076
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, 19.0, 31.0 ; $707c
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 26.0, 11.0 ; $7087

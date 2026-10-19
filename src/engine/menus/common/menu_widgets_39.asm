@@ -64,13 +64,13 @@ MoveMinigameGridCursor:
 	jr nc, .checkMaxRight ; $6e1b
 	ld a, $03 ; $6e1d
 	dec a ; $6e1f
-	jr .storeX ; $6e20
+	jr .storeTopRight ; $6e20
 .checkMaxRight:
 	rra ; $6e22
 	cp $03 ; $6e23
-	jr c, .storeX ; $6e25
+	jr c, .storeTopRight ; $6e25
 	xor a ; $6e27
-.storeX:
+.storeTopRight:
 	ld [wMenuCursorX], a ; $6e28
 	ld a, $01 ; $6e2b
 	jp .done ; $6e2d
@@ -81,13 +81,13 @@ MoveMinigameGridCursor:
 	jr nc, .checkMaxLeft ; $6e35
 	ld a, $03 ; $6e37
 	dec a ; $6e39
-	jr .storeX2 ; $6e3a
+	jr .storeTopLeft ; $6e3a
 .checkMaxLeft:
 	rra ; $6e3c
 	cp $03 ; $6e3d
-	jr c, .storeX2 ; $6e3f
+	jr c, .storeTopLeft ; $6e3f
 	xor a ; $6e41
-.storeX2:
+.storeTopLeft:
 	ld [wMenuCursorX], a ; $6e42
 	ld a, $01 ; $6e45
 	jr .done ; $6e47
@@ -96,9 +96,9 @@ MoveMinigameGridCursor:
 	ld hl, MoveMinigameGridCursorTable0 ; $6e4c
 	add l ; $6e4f
 	ld l, a ; $6e50
-	jr nc, .read ; $6e51
+	jr nc, .readTopTarget ; $6e51
 	inc h ; $6e53
-.read:
+.readTopTarget:
 	ld a, [hl] ; $6e54
 	ld [wMenuCursorX], a ; $6e55
 	ld a, [wMenuCursorY] ; $6e58
@@ -123,10 +123,10 @@ MoveMinigameGridCursor:
 	or a ; $6e7d
 	jr z, .rightToCol2 ; $6e7e
 	xor a ; $6e80
-	jr .storeX3 ; $6e81
+	jr .storeBottomRight ; $6e81
 .rightToCol2:
 	ld a, $02 ; $6e83
-.storeX3:
+.storeBottomRight:
 	ld [wMenuCursorX], a ; $6e85
 	ld a, $01 ; $6e88
 	jr .done ; $6e8a
@@ -135,10 +135,10 @@ MoveMinigameGridCursor:
 	or a ; $6e8f
 	jr z, .leftToCol2 ; $6e90
 	xor a ; $6e92
-	jr .storeX4 ; $6e93
+	jr .storeBottomLeft ; $6e93
 .leftToCol2:
 	ld a, $02 ; $6e95
-.storeX4:
+.storeBottomLeft:
 	ld [wMenuCursorX], a ; $6e97
 	ld a, $01 ; $6e9a
 	jr .done ; $6e9c
@@ -147,9 +147,9 @@ MoveMinigameGridCursor:
 	ld hl, MoveMinigameGridCursorTable1 ; $6ea1
 	add l ; $6ea4
 	ld l, a ; $6ea5
-	jr nc, .readB ; $6ea6
+	jr nc, .readBottomTarget ; $6ea6
 	inc h ; $6ea8
-.readB:
+.readBottomTarget:
 	ld a, [hl] ; $6ea9
 	ld [wMenuCursorX], a ; $6eaa
 	ld a, [wMenuCursorY] ; $6ead

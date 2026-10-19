@@ -97,11 +97,11 @@ RunLinkMatchRulesMenu:
 	pop af ; $4543
 	ld a, [wMenuInputPressed] ; $4544
 	bit PADB_A, a ; $4547
-	jr nz, .playSfx ; $4549
+	jr nz, .playSelectSfx ; $4549
 	bit PADB_B, a ; $454b
-	jr nz, .playSfx2 ; $454d
+	jr nz, .playCancelSfx ; $454d
 	jr .loop ; $454f
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $4551
 	push af ; $4553
 	farcall SyncLinkFrame ; $4554
@@ -120,7 +120,7 @@ RunLinkMatchRulesMenu:
 	ld hl, rIE ; $4573
 	set B_IE_TIMER, [hl] ; $4576
 	ret ; $4578
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $4579
 	push af ; $457b
 	farcall SyncLinkFrame ; $457c
@@ -339,16 +339,16 @@ OpenMatchRulesPanel:
 HandleMatchRulesToggleInput:
 	ld a, [wMenuInputPressed] ; $475d
 	bit PADB_LEFT, a ; $4760
-	jr nz, .playSfx ; $4762
+	jr nz, .left ; $4762
 	bit PADB_RIGHT, a ; $4764
-	jr nz, .playSfx2 ; $4766
+	jr nz, .right ; $4766
 	ret ; $4768
-.playSfx:
+.left:
 	sound SFX_MENU_MOVE ; $4769
 	ld c, $01 ; $476b
 	call GetMenuCursorIndex_3e ; $476d
 	or a ; $4770
-	jr nz, .compare ; $4771
+	jr nz, .leftGames ; $4771
 	ld a, [wMatchFormatDoubles] ; $4773
 	xor $01 ; $4776
 	ld [wMatchFormatDoubles], a ; $4778
@@ -357,7 +357,7 @@ HandleMatchRulesToggleInput:
 	ld b, $00 ; $4781
 	call FlushMatchRuleRowAttrs ; $4783
 	ret ; $4786
-.compare:
+.leftGames:
 	cp $01 ; $4787
 	jr nz, .decSets ; $4789
 	ld a, [wMatchFormatGames] ; $478b
@@ -372,11 +372,11 @@ HandleMatchRulesToggleInput:
 	ld a, [wMatchFormatSets] ; $479f
 	dec a ; $47a2
 	add a ; $47a3
-	jr nc, .noUnderflow ; $47a4
+	jr nc, .checkMaxDecSets ; $47a4
 	ld a, $03 ; $47a6
 	dec a ; $47a8
 	jr .storeDecSets ; $47a9
-.noUnderflow:
+.checkMaxDecSets:
 	rra ; $47ab
 	cp $03 ; $47ac
 	jr c, .storeDecSets ; $47ae
@@ -388,12 +388,12 @@ HandleMatchRulesToggleInput:
 	ld b, $02 ; $47ba
 	call FlushMatchRuleRowAttrs ; $47bc
 	ret ; $47bf
-.playSfx2:
+.right:
 	sound SFX_MENU_MOVE ; $47c0
 	ld c, $01 ; $47c2
 	call GetMenuCursorIndex_3e ; $47c4
 	or a ; $47c7
-	jr nz, .compare2 ; $47c8
+	jr nz, .rightGames ; $47c8
 	ld a, [wMatchFormatDoubles] ; $47ca
 	xor $01 ; $47cd
 	ld [wMatchFormatDoubles], a ; $47cf
@@ -402,7 +402,7 @@ HandleMatchRulesToggleInput:
 	ld b, $00 ; $47d8
 	call FlushMatchRuleRowAttrs ; $47da
 	ret ; $47dd
-.compare2:
+.rightGames:
 	cp $01 ; $47de
 	jr nz, .incSets ; $47e0
 	ld a, [wMatchFormatGames] ; $47e2
@@ -417,11 +417,11 @@ HandleMatchRulesToggleInput:
 	ld a, [wMatchFormatSets] ; $47f6
 	inc a ; $47f9
 	add a ; $47fa
-	jr nc, .noUnderflow2 ; $47fb
+	jr nc, .checkMaxIncSets ; $47fb
 	ld a, $03 ; $47fd
 	dec a ; $47ff
 	jr .storeIncSets ; $4800
-.noUnderflow2:
+.checkMaxIncSets:
 	rra ; $4802
 	cp $03 ; $4803
 	jr c, .storeIncSets ; $4805

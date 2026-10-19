@@ -155,9 +155,9 @@ SetupPaletteFadeMask:
 	ld [wPaletteFadeFrameDelay], a ; $769e
 	ld hl, wPaletteFadeMask ; $76a1
 	bit 7, b ; $76a4
-	jr z, .positive ; $76a6
+	jr z, .skipBgPal0 ; $76a6
 	ld [hl], $01 ; $76a8
-.positive:
+.skipBgPal0:
 	inc hl ; $76aa
 	bit 6, b ; $76ab
 	jr z, .bgPal2 ; $76ad
@@ -195,9 +195,9 @@ SetupPaletteFadeMask:
 .objPal0:
 	inc hl ; $76db
 	bit 7, c ; $76dc
-	jr z, .positive2 ; $76de
+	jr z, .skipObjPal0 ; $76de
 	ld [hl], $01 ; $76e0
-.positive2:
+.skipObjPal0:
 	inc hl ; $76e2
 	bit 6, c ; $76e3
 	jr z, .objPal2 ; $76e5

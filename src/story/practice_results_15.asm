@@ -194,17 +194,17 @@ ReturnCoachIntroDialogue_15:
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $780a
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $7811
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7816
-	jr z, .speak ; $7819
+	jr z, .speakGreeting ; $7819
 	farcall AdvanceDialogueTextCursor ; $781b
-.speak:
+.speakGreeting:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $781e
 	script_set_text Text_37_225 ; $7823
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_SHAKE ; $7829
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $7830
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7835
-	jr z, .speak2 ; $7838
+	jr z, .speakFollowUp ; $7838
 	farcall AdvanceDialogueTextCursor ; $783a
-.speak2:
+.speakFollowUp:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $783d
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7842
 	set_flag FLAG_RETURN_COACH_GREETED ; $7849

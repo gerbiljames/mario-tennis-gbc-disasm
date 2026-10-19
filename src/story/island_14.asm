@@ -425,7 +425,7 @@ ActorScript_14_4:
 	as_jump ActorScript_14_4
 	as_anim ANIM_STILL
 	as_wait 60
-.swingUpLoop:
+.swingUpSideLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -462,7 +462,7 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .swingUpLoop
+	as_jump .swingUpSideLoop
 	as_anim ANIM_STILL
 	as_wait 30
 .swingDownLoop:
@@ -506,7 +506,7 @@ ActorScript_14_4:
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.swingUpLoop2:
+.swingUpDiagonalLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -543,7 +543,7 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .swingUpLoop2
+	as_jump .swingUpDiagonalLoop
 .nodLoop:
 	as_wait 240
 	as_anim ANIM_NOD

@@ -74,20 +74,20 @@ RunMinigameLevelSelect2:
 	bit PADB_A, a ; $6e93
 	jr nz, .getMenuCursorIndex ; $6e95
 	bit PADB_B, a ; $6e97
-	jr nz, .playSfx2 ; $6e99
+	jr nz, .playCancelSfx ; $6e99
 	jr .loop ; $6e9b
 .getMenuCursorIndex:
 	ld c, $03 ; $6e9d
 	call GetMenuCursorIndex_1b ; $6e9f
 	or a ; $6ea2
-	jr z, .playSfx ; $6ea3
+	jr z, .playSelectSfx ; $6ea3
 	wram_bank WRAM_COURT_PLANES ; $6ea5
 	ld a, [wScreenAttrmap + 1] ; $6eab
 	or a ; $6eae
-	jr nz, .playSfx ; $6eaf
+	jr nz, .playSelectSfx ; $6eaf
 	sound SFX_MENU_LOCKED ; $6eb1
 	jr .loop ; $6eb3
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $6eb5
 	call ClearFrameTasks ; $6eb7
 	ld hl, rIE ; $6eba
@@ -102,7 +102,7 @@ RunMinigameLevelSelect2:
 	call GetMenuCursorIndex_1b ; $6ed7
 	ld [wScreenAttrmap + 3], a ; $6eda
 	ret ; $6edd
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $6ede
 	call ClearFrameTasks ; $6ee0
 	ld hl, rIE ; $6ee3
@@ -272,11 +272,11 @@ RunMinigameLevelSelect3:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7031
 	bit PADB_A, a ; $7034
-	jr nz, .playSfx ; $7036
+	jr nz, .playSelectSfx ; $7036
 	bit PADB_B, a ; $7038
-	jr nz, .playSfx2 ; $703a
+	jr nz, .playCancelSfx ; $703a
 	jr .loop ; $703c
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $703e
 	call ClearFrameTasks ; $7040
 	ld hl, rIE ; $7043
@@ -291,7 +291,7 @@ RunMinigameLevelSelect3:
 	call GetMenuCursorIndex_1b ; $7060
 	ld [wScreenAttrmap + 3], a ; $7063
 	ret ; $7066
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7067
 	call ClearFrameTasks ; $7069
 	ld hl, rIE ; $706c
@@ -462,11 +462,11 @@ RunSavedDataTypeSelect:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $71b7
 	bit PADB_A, a ; $71ba
-	jr nz, .playSfx ; $71bc
+	jr nz, .playSelectSfx ; $71bc
 	bit PADB_B, a ; $71be
-	jr nz, .playSfx2 ; $71c0
+	jr nz, .playCancelSfx ; $71c0
 	jr .loop ; $71c2
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $71c4
 	call ClearFrameTasks ; $71c6
 	ld hl, rIE ; $71c9
@@ -480,7 +480,7 @@ RunSavedDataTypeSelect:
 	call GetMenuCursorIndex_1b ; $71e0
 	ld [wSavedDataTypeTabIndex], a ; $71e3
 	ret ; $71e6
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $71e7
 	call ClearFrameTasks ; $71e9
 	ld hl, rIE ; $71ec

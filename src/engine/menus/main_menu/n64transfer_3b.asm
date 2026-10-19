@@ -132,11 +132,11 @@ RunN64RecordTypeSelect:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7202
 	bit PADB_A, a ; $7205
-	jr nz, .playSfx ; $7207
+	jr nz, .playSelectSfx ; $7207
 	bit PADB_B, a ; $7209
-	jr nz, .playSfx2 ; $720b
+	jr nz, .playCancelSfx ; $720b
 	jr .loop ; $720d
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $720f
 	call ClearFrameTasks ; $7211
 	ld hl, rIE ; $7214
@@ -149,7 +149,7 @@ RunN64RecordTypeSelect:
 	call GetMenuCursorIndex_3b ; $7225
 	ld [wSubMenuCursor], a ; $7228
 	ret ; $722b
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $722c
 	call ClearFrameTasks ; $722e
 	ld hl, rIE ; $7231
@@ -541,11 +541,11 @@ RunN64TransferItemSelect:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7511
 	bit PADB_A, a ; $7514
-	jr nz, .playSfx ; $7516
+	jr nz, .playSelectSfx ; $7516
 	bit PADB_B, a ; $7518
-	jr nz, .playSfx2 ; $751a
+	jr nz, .playCancelSfx ; $751a
 	jr .loop ; $751c
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $751e
 	call ClearFrameTasks ; $7520
 	ld hl, rIE ; $7523
@@ -558,7 +558,7 @@ RunN64TransferItemSelect:
 	call GetMenuCursorIndex_3b ; $7534
 	ld [wN64TransferMenuCursor], a ; $7537
 	ret ; $753a
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $753b
 	call ClearFrameTasks ; $753d
 	ld hl, rIE ; $7540

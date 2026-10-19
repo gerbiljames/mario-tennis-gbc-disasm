@@ -152,7 +152,7 @@ RunCharDataConfirmScreen:
 	bit PADB_A, a ; $79d0
 	jr nz, .step ; $79d2
 	bit PADB_B, a ; $79d4
-	jr nz, .beginFadeOut2 ; $79d6
+	jr nz, .cancel ; $79d6
 	and PADF_UP | PADF_DOWN ; $79d8
 	jr z, .loop ; $79da
 	sound SFX_MENU_MOVE ; $79dc
@@ -164,10 +164,10 @@ RunCharDataConfirmScreen:
 	wram_bank WRAM_SCENE ; $79e8
 	ld a, [wCharDataConfirmState] ; $79ee
 	or a ; $79f1
-	jr nz, .beginFadeOut2 ; $79f2
+	jr nz, .cancel ; $79f2
 	sound SFX_MENU_SELECT ; $79f4
 	jr .beginFadeOut ; $79f6
-.beginFadeOut2:
+.cancel:
 	wram_bank WRAM_SCENE ; $79f8
 	ld a, $01 ; $79fe
 	ld [wCharDataConfirmState], a ; $7a00
@@ -432,7 +432,7 @@ DrawStatChangeArrows:
 	ret z ; $7bfd
 	ld a, [wCharDataRacketDeltas] ; $7bfe
 	or a ; $7c01
-	jr z, .getStatArrowSpriteAttr ; $7c02
+	jr z, .sliceArrow ; $7c02
 	call GetStatArrowSpriteAttr ; $7c04
 	call GetStatArrowTile ; $7c07
 	push af ; $7c0a
@@ -447,14 +447,14 @@ DrawStatChangeArrows:
 	pop de ; $7c1d
 	pop af ; $7c1e
 	or a ; $7c1f
-	jr z, .getStatArrowSpriteAttr ; $7c20
+	jr z, .sliceArrow ; $7c20
 	call GetStatArrowExtraTile ; $7c22
 	call OffsetStatArrowSpriteX ; $7c25
 	call QueueSprite ; $7c28
-.getStatArrowSpriteAttr:
+.sliceArrow:
 	ld a, [wCharDataRacketDeltas + 1] ; $7c2b
 	or a ; $7c2e
-	jr z, .getStatArrowSpriteAttr2 ; $7c2f
+	jr z, .serveArrow ; $7c2f
 	call GetStatArrowSpriteAttr ; $7c31
 	call GetStatArrowTile ; $7c34
 	push af ; $7c37
@@ -469,14 +469,14 @@ DrawStatChangeArrows:
 	pop de ; $7c4a
 	pop af ; $7c4b
 	or a ; $7c4c
-	jr z, .getStatArrowSpriteAttr2 ; $7c4d
+	jr z, .serveArrow ; $7c4d
 	call GetStatArrowExtraTile ; $7c4f
 	call OffsetStatArrowSpriteX ; $7c52
 	call QueueSprite ; $7c55
-.getStatArrowSpriteAttr2:
+.serveArrow:
 	ld a, [wCharDataRacketDeltas + 2] ; $7c58
 	or a ; $7c5b
-	jr z, .getStatArrowSpriteAttr3 ; $7c5c
+	jr z, .strokeArrow ; $7c5c
 	call GetStatArrowSpriteAttr ; $7c5e
 	call GetStatArrowTile ; $7c61
 	push af ; $7c64
@@ -491,14 +491,14 @@ DrawStatChangeArrows:
 	pop de ; $7c77
 	pop af ; $7c78
 	or a ; $7c79
-	jr z, .getStatArrowSpriteAttr3 ; $7c7a
+	jr z, .strokeArrow ; $7c7a
 	call GetStatArrowExtraTile ; $7c7c
 	call OffsetStatArrowSpriteX ; $7c7f
 	call QueueSprite ; $7c82
-.getStatArrowSpriteAttr3:
+.strokeArrow:
 	ld a, [wCharDataRacketDeltas + 3] ; $7c85
 	or a ; $7c88
-	jr z, .getStatArrowSpriteAttr4 ; $7c89
+	jr z, .volleyArrow ; $7c89
 	call GetStatArrowSpriteAttr ; $7c8b
 	call GetStatArrowTile ; $7c8e
 	push af ; $7c91
@@ -513,14 +513,14 @@ DrawStatChangeArrows:
 	pop de ; $7ca4
 	pop af ; $7ca5
 	or a ; $7ca6
-	jr z, .getStatArrowSpriteAttr4 ; $7ca7
+	jr z, .volleyArrow ; $7ca7
 	call GetStatArrowExtraTile ; $7ca9
 	call OffsetStatArrowSpriteX ; $7cac
 	call QueueSprite ; $7caf
-.getStatArrowSpriteAttr4:
+.volleyArrow:
 	ld a, [wCharDataRacketDeltas + 4] ; $7cb2
 	or a ; $7cb5
-	jr z, .getStatArrowSpriteAttr5 ; $7cb6
+	jr z, .angleArrow ; $7cb6
 	call GetStatArrowSpriteAttr ; $7cb8
 	call GetStatArrowTile ; $7cbb
 	push af ; $7cbe
@@ -535,14 +535,14 @@ DrawStatChangeArrows:
 	pop de ; $7cd1
 	pop af ; $7cd2
 	or a ; $7cd3
-	jr z, .getStatArrowSpriteAttr5 ; $7cd4
+	jr z, .angleArrow ; $7cd4
 	call GetStatArrowExtraTile ; $7cd6
 	call OffsetStatArrowSpriteX ; $7cd9
 	call QueueSprite ; $7cdc
-.getStatArrowSpriteAttr5:
+.angleArrow:
 	ld a, [wCharDataRacketDeltas + 5] ; $7cdf
 	or a ; $7ce2
-	jr z, .getStatArrowSpriteAttr6 ; $7ce3
+	jr z, .placementArrow ; $7ce3
 	call GetStatArrowSpriteAttr ; $7ce5
 	call GetStatArrowTile ; $7ce8
 	push af ; $7ceb
@@ -557,14 +557,14 @@ DrawStatChangeArrows:
 	pop de ; $7cfe
 	pop af ; $7cff
 	or a ; $7d00
-	jr z, .getStatArrowSpriteAttr6 ; $7d01
+	jr z, .placementArrow ; $7d01
 	call GetStatArrowExtraTile ; $7d03
 	call OffsetStatArrowSpriteX ; $7d06
 	call QueueSprite ; $7d09
-.getStatArrowSpriteAttr6:
+.placementArrow:
 	ld a, [wCharDataRacketDeltas + 6] ; $7d0c
 	or a ; $7d0f
-	jr z, .getStatArrowSpriteAttr7 ; $7d10
+	jr z, .speedArrow ; $7d10
 	call GetStatArrowSpriteAttr ; $7d12
 	call GetStatArrowTile ; $7d15
 	push af ; $7d18
@@ -579,14 +579,14 @@ DrawStatChangeArrows:
 	pop de ; $7d2b
 	pop af ; $7d2c
 	or a ; $7d2d
-	jr z, .getStatArrowSpriteAttr7 ; $7d2e
+	jr z, .speedArrow ; $7d2e
 	call GetStatArrowExtraTile ; $7d30
 	call OffsetStatArrowSpriteX ; $7d33
 	call QueueSprite ; $7d36
-.getStatArrowSpriteAttr7:
+.speedArrow:
 	ld a, [wCharDataRacketDeltas + 7] ; $7d39
 	or a ; $7d3c
-	jr z, .getStatArrowSpriteAttr8 ; $7d3d
+	jr z, .dashArrow ; $7d3d
 	call GetStatArrowSpriteAttr ; $7d3f
 	call GetStatArrowTile ; $7d42
 	push af ; $7d45
@@ -601,14 +601,14 @@ DrawStatChangeArrows:
 	pop de ; $7d58
 	pop af ; $7d59
 	or a ; $7d5a
-	jr z, .getStatArrowSpriteAttr8 ; $7d5b
+	jr z, .dashArrow ; $7d5b
 	call GetStatArrowExtraTile ; $7d5d
 	call OffsetStatArrowSpriteX ; $7d60
 	call QueueSprite ; $7d63
-.getStatArrowSpriteAttr8:
+.dashArrow:
 	ld a, [wCharDataRacketDeltas + 8] ; $7d66
 	or a ; $7d69
-	jr z, .getStatArrowSpriteAttr9 ; $7d6a
+	jr z, .reactionArrow ; $7d6a
 	call GetStatArrowSpriteAttr ; $7d6c
 	call GetStatArrowTile ; $7d6f
 	push af ; $7d72
@@ -623,14 +623,14 @@ DrawStatChangeArrows:
 	pop de ; $7d85
 	pop af ; $7d86
 	or a ; $7d87
-	jr z, .getStatArrowSpriteAttr9 ; $7d88
+	jr z, .reactionArrow ; $7d88
 	call GetStatArrowExtraTile ; $7d8a
 	call OffsetStatArrowSpriteX ; $7d8d
 	call QueueSprite ; $7d90
-.getStatArrowSpriteAttr9:
+.reactionArrow:
 	ld a, [wCharDataRacketDeltas + 9] ; $7d93
 	or a ; $7d96
-	jr z, .getStatArrowSpriteAttr10 ; $7d97
+	jr z, .stopArrow ; $7d97
 	call GetStatArrowSpriteAttr ; $7d99
 	call GetStatArrowTile ; $7d9c
 	push af ; $7d9f
@@ -645,11 +645,11 @@ DrawStatChangeArrows:
 	pop de ; $7db2
 	pop af ; $7db3
 	or a ; $7db4
-	jr z, .getStatArrowSpriteAttr10 ; $7db5
+	jr z, .stopArrow ; $7db5
 	call GetStatArrowExtraTile ; $7db7
 	call OffsetStatArrowSpriteX ; $7dba
 	call QueueSprite ; $7dbd
-.getStatArrowSpriteAttr10:
+.stopArrow:
 	ld a, [wCharDataRacketDeltas + 10] ; $7dc0
 	or a ; $7dc3
 	jr z, .done ; $7dc4

@@ -383,9 +383,9 @@ CourtyardInitScript_13:
 	ret ; $61a8
 SetupVarsityCourtSceneVariant:
 	test_flag FLAG_DOUBLES ; $61a9
-	jr nz, .stage3 ; $61ac
+	jr nz, .doubles ; $61ac
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $61ae
-	jr z, .stage1 ; $61b1
+	jr z, .checkIslandOpen ; $61b1
 	ld hl, VarsityCourtNpcScriptsD_13 ; $61b3
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61b6
 	farcall WriteStoryStateWord ; $61b9
@@ -398,9 +398,9 @@ SetupVarsityCourtSceneVariant:
 	script_set_position ACTOR_COURTYARD_CURT, 5.0, 21.0 ; $61ce
 	script_face ACTOR_COURTYARD_CURT, FACE_RIGHT ; $61d9
 	ret ; $61e0
-.stage1:
+.checkIslandOpen:
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $61e1
-	jr z, .stage2 ; $61e4
+	jr z, .checkSeniorChamp ; $61e4
 	script_respawn_actors VarsityCourtActorsC_13 ; $61e6
 	ld hl, VarsityCourtNpcScriptsC_13 ; $61ee
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61f1
@@ -412,7 +412,7 @@ SetupVarsityCourtSceneVariant:
 	map_cell 6, 16 ; $6202
 	farcall WriteBehaviorMapCell ; $6206
 	ret ; $6209
-.stage2:
+.checkSeniorChamp:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $620a
 	jp z, .done ; $620d
 	script_respawn_actors VarsityCourtActorsA_13 ; $6210
@@ -420,9 +420,9 @@ SetupVarsityCourtSceneVariant:
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $621b
 	farcall WriteStoryStateWord ; $621e
 	ret ; $6221
-.stage3:
+.doubles:
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $6222
-	jr z, .stage4 ; $6225
+	jr z, .doublesCheckIslandOpen ; $6225
 	script_respawn_actors VarsityCourtActorsB_13 ; $6227
 	ld hl, VarsityCourtNpcScriptsE_13 ; $622f
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6232
@@ -439,9 +439,9 @@ SetupVarsityCourtSceneVariant:
 	script_set_position ACTOR_VARSITY_COURT_B_BETH, 15.0, 23.0 ; $6267
 	script_set_actor_script ACTOR_VARSITY_COURT_B_BETH, ActorScript_13_28 ; $6272
 	ret ; $627d
-.stage4:
+.doublesCheckIslandOpen:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $627e
-	jr z, .stage5 ; $6281
+	jr z, .doublesCheckSeniorChamp ; $6281
 	script_respawn_actors VarsityCourtActorsD_13 ; $6283
 	ld hl, VarsityCourtNpcScriptsC_13 ; $628b
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $628e
@@ -453,7 +453,7 @@ SetupVarsityCourtSceneVariant:
 	map_cell 6, 16 ; $629f
 	farcall WriteBehaviorMapCell ; $62a3
 	ret ; $62a6
-.stage5:
+.doublesCheckSeniorChamp:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $62a7
 	jr z, .done ; $62aa
 	script_respawn_actors VarsityCourtActorsB_13 ; $62ac

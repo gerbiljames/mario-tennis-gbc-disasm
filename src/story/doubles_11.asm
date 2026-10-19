@@ -34,10 +34,10 @@ JuniorClassCourtDoublesEntry0dScene:
 	sub $02 ; $5dad
 	ld a, a ; $5daf
 	rst Rst00 ; $5db0
-	dw JuniorClassCourtDoublesEntry0dScene.setFlag ; $5db1 jumptable
-	dw JuniorClassCourtDoublesEntry0dScene.setFlag2 ; $5db3 jumptable
-	dw JuniorClassCourtDoublesEntry0dScene.setFlag3 ; $5db5 jumptable
-.setFlag:
+	dw JuniorClassCourtDoublesEntry0dScene.wonRank3 ; $5db1 jumptable
+	dw JuniorClassCourtDoublesEntry0dScene.wonRank2 ; $5db3 jumptable
+	dw JuniorClassCourtDoublesEntry0dScene.wonRank1 ; $5db5 jumptable
+.wonRank3:
 	set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5db7
 	script_player_speed 2.0 ; $5dba
 	script_move_player 25.0, 17.0 ; $5dc0
@@ -75,7 +75,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_wait_frames 40 ; $5eab
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5eb2
 	ret ; $5ebf
-.setFlag2:
+.wonRank2:
 	set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $5ec0
 	call ParkLeftCourtPracticePairLeftSide ; $5ec3
 	script_player_speed 2.0 ; $5ec6
@@ -112,7 +112,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5fa8
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5faf
 	ret ; $5fbc
-.setFlag3:
+.wonRank1:
 	set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5fbd
 	script_player_speed 2.0 ; $5fc0
 	script_move_player 25.0, 13.0 ; $5fc6
@@ -268,13 +268,13 @@ OfferDoublesRankingMatch:
 	ret ; $6350
 DrawDoublesRankingOpponentInfo:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $6351
-	jp z, .rank2 ; $6354
+	jp z, .vsRank3 ; $6354
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $6357
-	jp z, .rank3 ; $635a
+	jp z, .vsRank2 ; $635a
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $635d
-	jp z, .done ; $6360
+	jp z, .vsRank1 ; $6360
 	ret ; $6363
-.rank2:
+.vsRank3:
 	script_player_speed 1.0 ; $6364
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_RIGHT ; $636a
 	script_move_player_to_actor ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN ; $6371
@@ -307,7 +307,7 @@ DrawDoublesRankingOpponentInfo:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN, FACE_UP ; $6423
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, FACE_UP ; $642a
 	ret ; $6431
-.rank3:
+.vsRank2:
 	script_player_speed 1.0 ; $6432
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_LEFT ; $6438
 	script_move_player_to_actor ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH ; $643f
@@ -334,7 +334,7 @@ DrawDoublesRankingOpponentInfo:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, FACE_UP ; $64cc
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, FACE_UP ; $64d3
 	ret ; $64da
-.done:
+.vsRank1:
 	script_player_speed 1.0 ; $64db
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_RIGHT ; $64e1
 	script_wait_frames 20 ; $64e8
@@ -368,13 +368,13 @@ StartNextDoublesRankingMatch:
 	script_set_speed ACTOR_PLAYER, 1.0 ; $6596
 	script_set_speed ACTOR_PARTNER, 1.0 ; $659e
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $65a6
-	jp z, .rank2 ; $65a9
+	jp z, .vsRank3 ; $65a9
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $65ac
-	jp z, .rank3 ; $65af
+	jp z, .vsRank2 ; $65af
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $65b2
-	jp z, .done ; $65b5
+	jp z, .vsRank1 ; $65b5
 	ret ; $65b8
-.rank2:
+.vsRank3:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_RIGHT ; $65b9
 	script_wait_frames 30 ; $65c0
 	script_null_script ACTOR_PARTNER ; $65c7
@@ -396,7 +396,7 @@ StartNextDoublesRankingMatch:
 	farcall RunStoryMatch ; $663b
 	farcall RestoreOverworldAfterMatch ; $663e
 	ret ; $6641
-.rank3:
+.vsRank2:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_LEFT ; $6642
 	script_wait_frames 15 ; $6649
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6650
@@ -425,7 +425,7 @@ StartNextDoublesRankingMatch:
 	farcall RunStoryMatch ; $66fb
 	farcall RestoreOverworldAfterMatch ; $66fe
 	ret ; $6701
-.done:
+.vsRank1:
 	script_face ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, FACE_RIGHT ; $6702
 	script_wait_frames 15 ; $6709
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6710
@@ -452,13 +452,13 @@ StartNextDoublesRankingMatch:
 	ret ; $679f
 LoadDoublesRankingOpponentGraphics:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $67a0
-	jr z, .rank2 ; $67a3
+	jr z, .vsRank3 ; $67a3
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $67a5
-	jr z, .rank3 ; $67a8
+	jr z, .vsRank2 ; $67a8
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $67aa
-	jr z, .done ; $67ad
+	jr z, .vsRank1 ; $67ad
 	ret ; $67af
-.rank2:
+.vsRank3:
 	script_set_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_BRIAN, ActorScript_11_03 ; $67b0
 	script_set_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_FAY, ActorScript_11_05 ; $67bb
 	script_wait_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_FAY ; $67c6
@@ -466,12 +466,12 @@ LoadDoublesRankingOpponentGraphics:
 	script_wait_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_BRIAN ; $67d6
 	script_set_actor_script ACTOR_ROLE_JUNIOR_CLASS_COURT_BRIAN, ActorScript_11_52 ; $67db
 	ret ; $67e6
-.rank3:
+.vsRank2:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH, ActorScript_11_13 ; $67e7
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_PAM, ActorScript_11_16 ; $67f2
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BETH ; $67fd
 	ret ; $6802
-.done:
+.vsRank1:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB, ActorScript_11_18 ; $6803
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_19 ; $680e
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BOB ; $6819

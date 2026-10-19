@@ -219,7 +219,7 @@ RunSavedDataSourceSelect:
 	bit PADB_A, a ; $67f8
 	jr nz, .getMenuCursorCellIndex ; $67fa
 	bit PADB_B, a ; $67fc
-	jr nz, .playSfx3 ; $67fe
+	jr nz, .playCancelSfx ; $67fe
 	jr .loop ; $6800
 .getMenuCursorCellIndex:
 	ld c, $03 ; $6802
@@ -228,14 +228,14 @@ RunSavedDataSourceSelect:
 	jr nz, .checkSaveSlot ; $6809
 	call CheckN64DataPresent ; $680b
 	or a ; $680e
-	jr nz, .playSfx2 ; $680f
+	jr nz, .playSelectSfx ; $680f
 	sound SFX_MENU_LOCKED ; $6811
 	jr .loop ; $6813
 .checkSaveSlot:
 	ld c, $03 ; $6815
 	call GetMenuCursorIndex_3b ; $6817
 	cp $03 ; $681a
-	jp nc, .playSfx2 ; $681c
+	jp nc, .playSelectSfx ; $681c
 	add a ; $681f
 	add a ; $6820
 	add a ; $6821
@@ -250,12 +250,12 @@ RunSavedDataSourceSelect:
 	add hl, bc ; $682e
 	ld a, [hl] ; $682f
 	cp $3f ; $6830
-	jr z, .playSfx ; $6832
-	jr .playSfx2 ; $6834
-.playSfx:
+	jr z, .rejectEmptySlot ; $6832
+	jr .playSelectSfx ; $6834
+.rejectEmptySlot:
 	sound SFX_MENU_LOCKED ; $6836
 	jr .loop ; $6838
-.playSfx2:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $683a
 	call ClearFrameTasks ; $683c
 	ld hl, rIE ; $683f
@@ -268,7 +268,7 @@ RunSavedDataSourceSelect:
 	call GetMenuCursorIndex_3b ; $6850
 	ld [wSavedDataMenuCursor], a ; $6853
 	ret ; $6856
-.playSfx3:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $6857
 	call ClearFrameTasks ; $6859
 	ld hl, rIE ; $685c

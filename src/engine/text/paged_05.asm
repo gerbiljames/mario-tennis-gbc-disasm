@@ -246,7 +246,7 @@ Unused_05_RunMenuSelectionShared:
 	call AdvanceFrame ; $4afd
 	ldh a, [hInputPressed] ; $4b00
 	bit PADB_A, a ; $4b02
-	jp nz, Unused_05_LoadOverworldSpriteDef.isCursorOnAdjustRow ; $4b04
+	jp nz, Unused_05_LoadOverworldSpriteDef.aPressed ; $4b04
 	bit PADB_UP, a ; $4b07
 	jr z, .checkDown ; $4b09
 	dec b ; $4b0b
@@ -319,7 +319,7 @@ Unused_05_LoadOverworldSpriteDef:
 	ld a, b ; $4b6c
 	ld [wMenuCursorRow], a ; $4b6d
 	jr .checkInputRisingEdge ; $4b70
-.isCursorOnAdjustRow:
+.aPressed:
 	call Unused_05_IsCursorOnAdjustRow ; $4b72
 	or a ; $4b75
 	jr nz, Unused_05_RunMenuSelectionShared.loop ; $4b76
@@ -360,21 +360,21 @@ Unused_05_LoadOverworldSpriteDef:
 .checkInputPressed:
 	ldh a, [hInputPressed] ; $4bbb
 	and PADF_B ; $4bbd
-	jp z, .isCursorOnAdjustRow2 ; $4bbf
+	jp z, .checkAdjustRow ; $4bbf
 	sound SFX_MENU_CANCEL ; $4bc2
 	ld a, [wPauseMenuOptionBits] ; $4bc4
 	and $f0 ; $4bc7
 	ld [wPauseMenuOptionBits], a ; $4bc9
 	ld a, $ff ; $4bcc
 	jp .store ; $4bce
-.isCursorOnAdjustRow2:
+.checkAdjustRow:
 	push af ; $4bd1
 	push bc ; $4bd2
 	push de ; $4bd3
 	push hl ; $4bd4
 	call Unused_05_IsCursorOnAdjustRow ; $4bd5
 	or a ; $4bd8
-	jr z, .restore ; $4bd9
+	jr z, .notAdjusting ; $4bd9
 	ldh a, [hInputPressed] ; $4bdb
 	and PADF_LEFT ; $4bdd
 	jp z, .checkRight ; $4bdf
@@ -382,17 +382,17 @@ Unused_05_LoadOverworldSpriteDef:
 	and $f0 ; $4be5
 	or $01 ; $4be7
 	ld [wPauseMenuOptionBits], a ; $4be9
-	jr .restore2 ; $4bec
+	jr .adjusted ; $4bec
 .checkRight:
 	ldh a, [hInputPressed] ; $4bee
 	and PADF_RIGHT ; $4bf0
-	jr z, .restore ; $4bf2
+	jr z, .notAdjusting ; $4bf2
 	ld a, [wPauseMenuOptionBits] ; $4bf4
 	and $f0 ; $4bf7
 	or $02 ; $4bf9
 	ld [wPauseMenuOptionBits], a ; $4bfb
-	jr .restore2 ; $4bfe
-.restore:
+	jr .adjusted ; $4bfe
+.notAdjusting:
 	pop hl ; $4c00
 	pop de ; $4c01
 	pop bc ; $4c02
@@ -418,7 +418,7 @@ Unused_05_LoadOverworldSpriteDef:
 .store:
 	ld [wMenuCursorRow], a ; $4c2b
 	jr .unregisterFrameTask ; $4c2e
-.restore2:
+.adjusted:
 	pop hl ; $4c30
 	pop de ; $4c31
 	pop bc ; $4c32
@@ -434,7 +434,7 @@ Unused_05_LoadOverworldSpriteDef:
 	call AdvanceFrame ; $4c41
 	ld a, [wMenuDepth] ; $4c44
 	or a ; $4c47
-	jr z, .restore3 ; $4c48
+	jr z, .noParentMenu ; $4c48
 	dec a ; $4c4a
 	ld hl, wMenuStack ; $4c4b
 	sla a ; $4c4e
@@ -452,7 +452,7 @@ Unused_05_LoadOverworldSpriteDef:
 	ld c, $20 ; $4c60
 	ld b, $80 ; $4c62
 	call WriteWindowCellTileAttr ; $4c64
-.restore3:
+.noParentMenu:
 	pop hl ; $4c67
 	pop de ; $4c68
 	pop bc ; $4c69

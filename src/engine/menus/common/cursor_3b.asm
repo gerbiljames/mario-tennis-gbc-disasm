@@ -122,13 +122,13 @@ Unused_3b_MoveMenuCursorRepeat:
 	jr nc, .checkMaxRight ; $41bb
 	ld a, b ; $41bd
 	dec a ; $41be
-	jr .storeX ; $41bf
+	jr .storeRight ; $41bf
 .checkMaxRight:
 	rra ; $41c1
 	cp b ; $41c2
-	jr c, .storeX ; $41c3
+	jr c, .storeRight ; $41c3
 	xor a ; $41c5
-.storeX:
+.storeRight:
 	ld [wMenuCursorX], a ; $41c6
 	jr .checkMoved ; $41c9
 .checkLeft:
@@ -140,13 +140,13 @@ Unused_3b_MoveMenuCursorRepeat:
 	jr nc, .checkMaxLeft ; $41d4
 	ld a, b ; $41d6
 	dec a ; $41d7
-	jr .storeX2 ; $41d8
+	jr .storeLeft ; $41d8
 .checkMaxLeft:
 	rra ; $41da
 	cp b ; $41db
-	jr c, .storeX2 ; $41dc
+	jr c, .storeLeft ; $41dc
 	xor a ; $41de
-.storeX2:
+.storeLeft:
 	ld [wMenuCursorX], a ; $41df
 	jr .checkMoved ; $41e2
 .checkUp:
@@ -158,13 +158,13 @@ Unused_3b_MoveMenuCursorRepeat:
 	jr nc, .checkMaxUp ; $41ed
 	ld a, c ; $41ef
 	dec a ; $41f0
-	jr .storeY ; $41f1
+	jr .storeUp ; $41f1
 .checkMaxUp:
 	rra ; $41f3
 	cp c ; $41f4
-	jr c, .storeY ; $41f5
+	jr c, .storeUp ; $41f5
 	xor a ; $41f7
-.storeY:
+.storeUp:
 	ld [wMenuCursorY], a ; $41f8
 	jr .checkMoved ; $41fb
 .checkDown:
@@ -176,13 +176,13 @@ Unused_3b_MoveMenuCursorRepeat:
 	jr nc, .checkMaxDown ; $4206
 	ld a, c ; $4208
 	dec a ; $4209
-	jr .storeY2 ; $420a
+	jr .storeDown ; $420a
 .checkMaxDown:
 	rra ; $420c
 	cp c ; $420d
-	jr c, .storeY2 ; $420e
+	jr c, .storeDown ; $420e
 	xor a ; $4210
-.storeY2:
+.storeDown:
 	ld [wMenuCursorY], a ; $4211
 .checkMoved:
 	ld a, [wMenuCursorX] ; $4214
@@ -209,10 +209,10 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	call LinkErrorReset ; $4237
 .asMaster:
 	ldh a, [hLinkRemoteInputBuf] ; $423a
-	jr .checkMenuCursorLockFlags ; $423c
+	jr .gotInput ; $423c
 .asSlave:
 	ldh a, [hLinkRemoteInput] ; $423e
-.checkMenuCursorLockFlags:
+.gotInput:
 	ld h, a ; $4240
 	ld a, [wMenuCursorLockFlags] ; $4241
 	and $01 ; $4244
@@ -226,13 +226,13 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	jr nc, .checkMaxRight ; $4252
 	ld a, b ; $4254
 	dec a ; $4255
-	jr .storeX ; $4256
+	jr .storeRight ; $4256
 .checkMaxRight:
 	rra ; $4258
 	cp b ; $4259
-	jr c, .storeX ; $425a
+	jr c, .storeRight ; $425a
 	xor a ; $425c
-.storeX:
+.storeRight:
 	ld [wMenuCursorX], a ; $425d
 	jr .checkMoved ; $4260
 .checkLeft:
@@ -244,13 +244,13 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	jr nc, .checkMaxLeft ; $426b
 	ld a, b ; $426d
 	dec a ; $426e
-	jr .storeX2 ; $426f
+	jr .storeLeft ; $426f
 .checkMaxLeft:
 	rra ; $4271
 	cp b ; $4272
-	jr c, .storeX2 ; $4273
+	jr c, .storeLeft ; $4273
 	xor a ; $4275
-.storeX2:
+.storeLeft:
 	ld [wMenuCursorX], a ; $4276
 	jr .checkMoved ; $4279
 .checkUp:
@@ -262,13 +262,13 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	jr nc, .checkMaxUp ; $4284
 	ld a, c ; $4286
 	dec a ; $4287
-	jr .storeY ; $4288
+	jr .storeUp ; $4288
 .checkMaxUp:
 	rra ; $428a
 	cp c ; $428b
-	jr c, .storeY ; $428c
+	jr c, .storeUp ; $428c
 	xor a ; $428e
-.storeY:
+.storeUp:
 	ld [wMenuCursorY], a ; $428f
 	jr .checkMoved ; $4292
 .checkDown:
@@ -280,13 +280,13 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	jr nc, .checkMaxDown ; $429d
 	ld a, c ; $429f
 	dec a ; $42a0
-	jr .storeY2 ; $42a1
+	jr .storeDown ; $42a1
 .checkMaxDown:
 	rra ; $42a3
 	cp c ; $42a4
-	jr c, .storeY2 ; $42a5
+	jr c, .storeDown ; $42a5
 	xor a ; $42a7
-.storeY2:
+.storeDown:
 	ld [wMenuCursorY], a ; $42a8
 	jr .checkMoved ; $42ab
 .checkA:
@@ -343,10 +343,10 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	call LinkErrorReset ; $4302
 .asMaster:
 	ldh a, [hLinkRemoteInput] ; $4305
-	jr .checkMenuCursorLockFlags ; $4307
+	jr .gotInput ; $4307
 .asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $4309
-.checkMenuCursorLockFlags:
+.gotInput:
 	ld h, a ; $430b
 	ld a, [wMenuCursorLockFlags] ; $430c
 	and $02 ; $430f

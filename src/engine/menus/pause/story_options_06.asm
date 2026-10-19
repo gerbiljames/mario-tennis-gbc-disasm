@@ -30,9 +30,9 @@ RunStoryTwoOptionMenu:
 	ld hl, Text_30_354 ; $70ea
 	add l ; $70ed
 	ld l, a ; $70ee
-	jr nc, .drawStoryMenuCaption ; $70ef
+	jr nc, .drawInitialCaption ; $70ef
 	inc h ; $70f1
-.drawStoryMenuCaption:
+.drawInitialCaption:
 	ld_cell de, $00, $0e ; $70f2
 	call DrawStoryMenuCaption ; $70f5
 .redrawStoryTilemapRows:
@@ -73,9 +73,9 @@ RunStoryTwoOptionMenu:
 	ld hl, Text_30_354 ; $7140
 	add l ; $7143
 	ld l, a ; $7144
-	jr nc, .drawStoryMenuCaption2 ; $7145
+	jr nc, .drawMovedCaption ; $7145
 	inc h ; $7147
-.drawStoryMenuCaption2:
+.drawMovedCaption:
 	ld_cell de, $00, $0e ; $7148
 	call DrawStoryMenuCaption ; $714b
 	call RedrawStoryTilemapRows ; $714e
@@ -122,9 +122,9 @@ RunStoryThreeOptionMenu:
 	ld hl, Text_30_354 ; $71a4
 	add l ; $71a7
 	ld l, a ; $71a8
-	jr nc, .drawStoryMenuCaption ; $71a9
+	jr nc, .drawInitialCaption ; $71a9
 	inc h ; $71ab
-.drawStoryMenuCaption:
+.drawInitialCaption:
 	ld_cell de, $00, $0e ; $71ac
 	call DrawStoryMenuCaption ; $71af
 	call RedrawStoryTilemapRows ; $71b2
@@ -163,9 +163,9 @@ RunStoryThreeOptionMenu:
 	ld hl, Text_30_354 ; $71f8
 	add l ; $71fb
 	ld l, a ; $71fc
-	jr nc, .drawStoryMenuCaption2 ; $71fd
+	jr nc, .drawMovedCaption ; $71fd
 	inc h ; $71ff
-.drawStoryMenuCaption2:
+.drawMovedCaption:
 	ld_cell de, $00, $0e ; $7200
 	call DrawStoryMenuCaption ; $7203
 	call RedrawStoryTilemapRows ; $7206

@@ -378,17 +378,17 @@ RunMarioCastExhibResults:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7a42
 	bit PADB_A, a ; $7a45
-	jr nz, .playSfx ; $7a47
+	jr nz, .playSelectSfx ; $7a47
 	bit PADB_B, a ; $7a49
-	jr nz, .playSfx2 ; $7a4b
+	jr nz, .playCancelSfx ; $7a4b
 	jr .loop ; $7a4d
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $7a4f
 	script_fade_out 16 ; $7a51
 	call WaitFadeEnd ; $7a56
 	call ClearFrameTasks ; $7a59
 	ret ; $7a5c
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7a5d
 	script_fade_out 16 ; $7a5f
 	call WaitFadeEnd ; $7a64

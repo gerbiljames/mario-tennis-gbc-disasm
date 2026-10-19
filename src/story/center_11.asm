@@ -168,34 +168,34 @@ SetupCenterCourtSceneVariant:
 	test_flag FLAG_DOUBLES ; $41bb
 	jr nz, .doneEarly ; $41be
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $41c0
-	jr z, .stage1 ; $41c3
+	jr z, .checkRound2 ; $41c3
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $41c5
 	ld [wMapSceneStage], a ; $41c7
 	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41ca
 	farcall BeginCutsceneScriptMode ; $41d2
 	ret ; $41d5
-.stage1:
+.checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $41d6
-	jr z, .stage2 ; $41d9
+	jr z, .checkRound1 ; $41d9
 	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $41db
 	ld [wMapSceneStage], a ; $41dd
 	ret ; $41e0
-.stage2:
+.checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $41e1
-	jr z, .stage3 ; $41e4
+	jr z, .keepRound1 ; $41e4
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $41e6
 	ld [wMapSceneStage], a ; $41e8
-.stage3:
+.keepRound1:
 	ret ; $41eb
 .doneEarly:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $41ec
-	jr z, .stage4 ; $41ef
+	jr z, .doublesCheckRound1 ; $41ef
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $41f1
 	ld [wMapSceneStage], a ; $41f3
 	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41f6
 	farcall BeginCutsceneScriptMode ; $41fe
 	ret ; $4201
-.stage4:
+.doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4202
 	jr z, .done ; $4205
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $4207

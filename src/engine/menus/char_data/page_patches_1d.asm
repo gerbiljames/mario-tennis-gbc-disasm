@@ -508,9 +508,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6b8d
 	ld a, [wStoryCharacterSlot] ; $6b90
 	or a ; $6b93
-	jr z, .nameField ; $6b94
+	jr z, .mainNameField ; $6b94
 	ld l, $40 ; $6b96
-.nameField:
+.mainNameField:
 	ld a, l ; $6b98
 	add $00 ; $6b99
 	ld l, a ; $6b9b
@@ -526,9 +526,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6bb0
 	ld a, [wStoryCharacterSlot] ; $6bb3
 	or a ; $6bb6
-	jr z, .levelField ; $6bb7
+	jr z, .mainLevelField ; $6bb7
 	ld l, $40 ; $6bb9
-.levelField:
+.mainLevelField:
 	ld a, l ; $6bbb
 	add $18 ; $6bbc
 	ld l, a ; $6bbe
@@ -572,9 +572,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6c08
 	ld a, [wStoryCharacterSlot] ; $6c0b
 	or a ; $6c0e
-	jr z, .expField ; $6c0f
+	jr z, .mainExpField ; $6c0f
 	ld l, $40 ; $6c11
-.expField:
+.mainExpField:
 	ld a, l ; $6c13
 	add $2c ; $6c14
 	ld l, a ; $6c16
@@ -594,9 +594,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6c2e
 	ld a, [wStoryCharacterSlot] ; $6c31
 	or a ; $6c34
-	jr z, .nameField2 ; $6c35
+	jr z, .partnerNameField ; $6c35
 	ld l, $40 ; $6c37
-.nameField2:
+.partnerNameField:
 	ld a, l ; $6c39
 	add $00 ; $6c3a
 	ld l, a ; $6c3c
@@ -612,9 +612,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6c51
 	ld a, [wStoryCharacterSlot] ; $6c54
 	or a ; $6c57
-	jr z, .levelField2 ; $6c58
+	jr z, .partnerLevelField ; $6c58
 	ld l, $40 ; $6c5a
-.levelField2:
+.partnerLevelField:
 	ld a, l ; $6c5c
 	add $18 ; $6c5d
 	ld l, a ; $6c5f
@@ -658,9 +658,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6cab
 	ld a, [wStoryCharacterSlot] ; $6cae
 	or a ; $6cb1
-	jr z, .expField2 ; $6cb2
+	jr z, .partnerExpField ; $6cb2
 	ld l, $40 ; $6cb4
-.expField2:
+.partnerExpField:
 	ld a, l ; $6cb6
 	add $2c ; $6cb7
 	ld l, a ; $6cb9
@@ -682,9 +682,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6cd1
 	ld a, [wStoryCharacterSlot] ; $6cd4
 	or a ; $6cd7
-	jr z, .nameField3 ; $6cd8
+	jr z, .viewMainNameField ; $6cd8
 	ld l, $40 ; $6cda
-.nameField3:
+.viewMainNameField:
 	ld a, l ; $6cdc
 	add $00 ; $6cdd
 	ld l, a ; $6cdf
@@ -700,9 +700,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6cf4
 	ld a, [wStoryCharacterSlot] ; $6cf7
 	or a ; $6cfa
-	jr z, .levelField3 ; $6cfb
+	jr z, .viewMainLevelField ; $6cfb
 	ld l, $40 ; $6cfd
-.levelField3:
+.viewMainLevelField:
 	ld a, l ; $6cff
 	add $18 ; $6d00
 	ld l, a ; $6d02
@@ -724,9 +724,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6d20
 	ld a, [wStoryCharacterSlot] ; $6d23
 	or a ; $6d26
-	jr z, .nameField4 ; $6d27
+	jr z, .viewPartnerNameField ; $6d27
 	ld l, $40 ; $6d29
-.nameField4:
+.viewPartnerNameField:
 	ld a, l ; $6d2b
 	add $00 ; $6d2c
 	ld l, a ; $6d2e
@@ -742,9 +742,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6d43
 	ld a, [wStoryCharacterSlot] ; $6d46
 	or a ; $6d49
-	jr z, .levelField4 ; $6d4a
+	jr z, .viewPartnerLevelField ; $6d4a
 	ld l, $40 ; $6d4c
-.levelField4:
+.viewPartnerLevelField:
 	ld a, l ; $6d4e
 	add $18 ; $6d4f
 	ld l, a ; $6d51

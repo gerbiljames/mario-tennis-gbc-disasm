@@ -371,21 +371,21 @@ RewardUnlockFlagsTable:
 SetMinigameRecordSaveFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
 	cp MINIGAME_SHOOTING_STAR ; $6eb4
-	jr nz, .compare ; $6eb6
+	jr nz, .notShootingStar ; $6eb6
 	push de ; $6eb8
 	ld de, SAVEFLAG_COURT_CASTLE ; $6eb9
 	farcall SetSaveFlag ; $6ebc
 	pop de ; $6ebf
 	ret ; $6ec0
-.compare:
+.notShootingStar:
 	cp MINIGAME_TARGET_SHOT ; $6ec1
-	jr nz, .compare2 ; $6ec3
+	jr nz, .notTargetShot ; $6ec3
 	push de ; $6ec5
 	ld de, SAVEFLAG_COURT_TROPICS ; $6ec6
 	farcall SetSaveFlag ; $6ec9
 	pop de ; $6ecc
 	ret ; $6ecd
-.compare2:
+.notTargetShot:
 	cp MINIGAME_BANANA_BUNCH ; $6ece
 	jr nz, .done ; $6ed0
 	push de ; $6ed2

@@ -291,13 +291,13 @@ UploadExpPromptWindowRows:
 	call AdvanceFrame ; $752e
 	ldh a, [hInputRisingEdge] ; $7531
 	bit PADB_UP, a ; $7533
-	jr nz, DrawExpPromptCursor.playSfx ; $7535
+	jr nz, DrawExpPromptCursor.playMoveSfx ; $7535
 	bit PADB_DOWN, a ; $7537
-	jr nz, DrawExpPromptCursor.playSfx ; $7539
+	jr nz, DrawExpPromptCursor.playMoveSfx ; $7539
 	bit PADB_A, a ; $753b
 	jr nz, DrawExpPromptCursor.pressedA ; $753d
 	bit PADB_B, a ; $753f
-	jr nz, DrawExpPromptCursor.playSfx2 ; $7541
+	jr nz, DrawExpPromptCursor.playCancelSfx ; $7541
 	jr .loop ; $7543
 UploadExpPromptWindowRowsClosing:
 	wram_bank WRAM_SCREEN ; $7545
@@ -324,7 +324,7 @@ DrawExpPromptCursor:
 .queueSprite:
 	call QueueSprite ; $757b
 	ret ; $757e
-.playSfx:
+.playMoveSfx:
 	sound SFX_MENU_MOVE ; $757f
 	ld a, [wExpPromptCursorRow] ; $7581
 	xor $01 ; $7584
@@ -333,10 +333,10 @@ DrawExpPromptCursor:
 .pressedA:
 	ld a, [wExpPromptCursorRow] ; $758b
 	or a ; $758e
-	jr nz, .playSfx2 ; $758f
+	jr nz, .playCancelSfx ; $758f
 	sound SFX_MENU_SELECT ; $7591
 	ret ; $7593
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7594
 	farcall RestoreCharDataScreenRow ; $7596
 	ld hl, ExpLevelDownTilemapPatch0 ; $7599

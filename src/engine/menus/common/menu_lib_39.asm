@@ -330,16 +330,16 @@ TickMenuBgScroll:
 	ld a, [wMenuBgScrollY] ; $4b6d
 	dec a ; $4b70
 	cp $b0 ; $4b71
-	jr nz, .wrapped1 ; $4b73
+	jr nz, .storeLane0Y ; $4b73
 	ld a, $a0 ; $4b75
-.wrapped1:
+.storeLane0Y:
 	ld [wMenuBgScrollY], a ; $4b77
 	ld a, [wMenuBgScrollY + 1] ; $4b7a
 	dec a ; $4b7d
 	cp $b0 ; $4b7e
-	jr nz, .wrapped2 ; $4b80
+	jr nz, .storeLane1Y ; $4b80
 	ld a, $a0 ; $4b82
-.wrapped2:
+.storeLane1Y:
 	ld [wMenuBgScrollY + 1], a ; $4b84
 	ld a, [wMenuBgScrollLane] ; $4b87
 	or a ; $4b8a

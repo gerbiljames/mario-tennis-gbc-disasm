@@ -122,10 +122,10 @@ Unused_1b_MoveMenuCursorGridRemote:
 	call LinkErrorReset ; $423f
 .asMaster:
 	ldh a, [hLinkRemoteInputBuf] ; $4242
-	jr .checkMenuCursorLockFlags ; $4244
+	jr .gotInput ; $4244
 .asSlave:
 	ldh a, [hLinkRemoteInput] ; $4246
-.checkMenuCursorLockFlags:
+.gotInput:
 	ld h, a ; $4248
 	ld a, [wMenuCursorLockFlags] ; $4249
 	and $01 ; $424c
@@ -139,13 +139,13 @@ Unused_1b_MoveMenuCursorGridRemote:
 	jr nc, .checkMaxRight ; $425a
 	ld a, b ; $425c
 	dec a ; $425d
-	jr .storeX ; $425e
+	jr .storeRight ; $425e
 .checkMaxRight:
 	rra ; $4260
 	cp b ; $4261
-	jr c, .storeX ; $4262
+	jr c, .storeRight ; $4262
 	xor a ; $4264
-.storeX:
+.storeRight:
 	ld [wMenuCursorX], a ; $4265
 	jr .checkMoved ; $4268
 .checkLeft:
@@ -157,13 +157,13 @@ Unused_1b_MoveMenuCursorGridRemote:
 	jr nc, .checkMaxLeft ; $4273
 	ld a, b ; $4275
 	dec a ; $4276
-	jr .storeX2 ; $4277
+	jr .storeLeft ; $4277
 .checkMaxLeft:
 	rra ; $4279
 	cp b ; $427a
-	jr c, .storeX2 ; $427b
+	jr c, .storeLeft ; $427b
 	xor a ; $427d
-.storeX2:
+.storeLeft:
 	ld [wMenuCursorX], a ; $427e
 	jr .checkMoved ; $4281
 .checkUp:
@@ -175,13 +175,13 @@ Unused_1b_MoveMenuCursorGridRemote:
 	jr nc, .checkMaxUp ; $428c
 	ld a, c ; $428e
 	dec a ; $428f
-	jr .storeY ; $4290
+	jr .storeUp ; $4290
 .checkMaxUp:
 	rra ; $4292
 	cp c ; $4293
-	jr c, .storeY ; $4294
+	jr c, .storeUp ; $4294
 	xor a ; $4296
-.storeY:
+.storeUp:
 	ld [wMenuCursorY], a ; $4297
 	jr .checkMoved ; $429a
 .checkDown:
@@ -193,13 +193,13 @@ Unused_1b_MoveMenuCursorGridRemote:
 	jr nc, .checkMaxDown ; $42a5
 	ld a, c ; $42a7
 	dec a ; $42a8
-	jr .storeY2 ; $42a9
+	jr .storeDown ; $42a9
 .checkMaxDown:
 	rra ; $42ab
 	cp c ; $42ac
-	jr c, .storeY2 ; $42ad
+	jr c, .storeDown ; $42ad
 	xor a ; $42af
-.storeY2:
+.storeDown:
 	ld [wMenuCursorY], a ; $42b0
 	jr .checkMoved ; $42b3
 .checkA:
@@ -256,10 +256,10 @@ Unused_1b_MoveMenuCursor2GridRemote:
 	call LinkErrorReset ; $430a
 .asMaster:
 	ldh a, [hLinkRemoteInput] ; $430d
-	jr .checkMenuCursorLockFlags ; $430f
+	jr .gotInput ; $430f
 .asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $4311
-.checkMenuCursorLockFlags:
+.gotInput:
 	ld h, a ; $4313
 	ld a, [wMenuCursorLockFlags] ; $4314
 	and $02 ; $4317

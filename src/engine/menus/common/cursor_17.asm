@@ -61,10 +61,10 @@ Unused_17_MoveMenuCursorGridRemote:
 	call LinkErrorReset ; $4215
 .asMaster:
 	ldh a, [hLinkRemoteInputBuf] ; $4218
-	jr .checkMenuCursorLockFlags ; $421a
+	jr .gotInput ; $421a
 .asSlave:
 	ldh a, [hLinkRemoteInput] ; $421c
-.checkMenuCursorLockFlags:
+.gotInput:
 	ld h, a ; $421e
 	ld a, [wMenuCursorLockFlags] ; $421f
 	and $01 ; $4222
@@ -78,13 +78,13 @@ Unused_17_MoveMenuCursorGridRemote:
 	jr nc, .wrapRight ; $4230
 	ld a, b ; $4232
 	dec a ; $4233
-	jr .storeX ; $4234
+	jr .storeRight ; $4234
 .wrapRight:
 	rra ; $4236
 	cp b ; $4237
-	jr c, .storeX ; $4238
+	jr c, .storeRight ; $4238
 	xor a ; $423a
-.storeX:
+.storeRight:
 	ld [wMenuCursorX], a ; $423b
 	jr .checkMoved ; $423e
 .checkLeft:
@@ -96,13 +96,13 @@ Unused_17_MoveMenuCursorGridRemote:
 	jr nc, .wrapLeft ; $4249
 	ld a, b ; $424b
 	dec a ; $424c
-	jr .storeX2 ; $424d
+	jr .storeLeft ; $424d
 .wrapLeft:
 	rra ; $424f
 	cp b ; $4250
-	jr c, .storeX2 ; $4251
+	jr c, .storeLeft ; $4251
 	xor a ; $4253
-.storeX2:
+.storeLeft:
 	ld [wMenuCursorX], a ; $4254
 	jr .checkMoved ; $4257
 .checkUp:
@@ -114,13 +114,13 @@ Unused_17_MoveMenuCursorGridRemote:
 	jr nc, .wrapUp ; $4262
 	ld a, c ; $4264
 	dec a ; $4265
-	jr .storeY ; $4266
+	jr .storeUp ; $4266
 .wrapUp:
 	rra ; $4268
 	cp c ; $4269
-	jr c, .storeY ; $426a
+	jr c, .storeUp ; $426a
 	xor a ; $426c
-.storeY:
+.storeUp:
 	ld [wMenuCursorY], a ; $426d
 	jr .checkMoved ; $4270
 .checkDown:
@@ -132,13 +132,13 @@ Unused_17_MoveMenuCursorGridRemote:
 	jr nc, .wrapDown ; $427b
 	ld a, c ; $427d
 	dec a ; $427e
-	jr .storeY2 ; $427f
+	jr .storeDown ; $427f
 .wrapDown:
 	rra ; $4281
 	cp c ; $4282
-	jr c, .storeY2 ; $4283
+	jr c, .storeDown ; $4283
 	xor a ; $4285
-.storeY2:
+.storeDown:
 	ld [wMenuCursorY], a ; $4286
 	jr .checkMoved ; $4289
 .checkA:

@@ -268,10 +268,10 @@ CharDataValuesSyncTask:
 	ld a, [wCharDataNumberBuffer] ; $4927
 	cp $20 ; $492a
 	jr z, .zeroPadTens ; $492c
-	jr .getCharDataDigitSprite ; $492e
+	jr .minutesTens ; $492e
 .zeroPadTens:
 	ld a, $30 ; $4930
-.getCharDataDigitSprite:
+.minutesTens:
 	call GetCharDataDigitSprite ; $4932
 	ld_xy de, $74, $88 ; $4935
 	ld hl, wCharDataValuesSlideX ; $4938

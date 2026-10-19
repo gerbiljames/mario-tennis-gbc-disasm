@@ -296,11 +296,11 @@ RunRacketShoesChoiceMenu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $4ef2
 	bit PADB_A, a ; $4ef5
-	jr nz, .playSfx ; $4ef7
+	jr nz, .playSelectSfx ; $4ef7
 	bit PADB_B, a ; $4ef9
-	jr nz, .playSfx2 ; $4efb
+	jr nz, .playCancelSfx ; $4efb
 	jr .loop ; $4efd
-.playSfx:
+.playSelectSfx:
 	sound SFX_MENU_SELECT ; $4eff
 	call ClearFrameTasks ; $4f01
 	ld hl, rIE ; $4f04
@@ -313,7 +313,7 @@ RunRacketShoesChoiceMenu:
 	call GetMenuCursorIndex_3e ; $4f15
 	ld [wRacketShoesTabIndex], a ; $4f18
 	ret ; $4f1b
-.playSfx2:
+.playCancelSfx:
 	sound SFX_MENU_CANCEL ; $4f1c
 	call ClearFrameTasks ; $4f1e
 	ld hl, rIE ; $4f21

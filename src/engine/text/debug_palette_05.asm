@@ -128,17 +128,17 @@ RunDebugColorEditor:
 	ld b, a ; $6a2b
 	ld a, e ; $6a2c
 	and $03 ; $6a2d
-	jr nz, .maskSet ; $6a2f
+	jr nz, .notRed ; $6a2f
 	call AdjustColorRed ; $6a31
-.maskSet:
+.notRed:
 	dec a ; $6a34
-	jr nz, .countLeft ; $6a35
+	jr nz, .notGreen ; $6a35
 	call AdjustColorGreen ; $6a37
-.countLeft:
+.notGreen:
 	dec a ; $6a3a
-	jr nz, .countLeft2 ; $6a3b
+	jr nz, .storeColor ; $6a3b
 	call AdjustColorBlue ; $6a3d
-.countLeft2:
+.storeColor:
 	ld a, c ; $6a40
 	ld [hl+], a ; $6a41
 	ld a, b ; $6a42

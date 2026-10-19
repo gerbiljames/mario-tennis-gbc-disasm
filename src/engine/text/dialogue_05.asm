@@ -226,16 +226,16 @@ OpenSpeechBubble:
 	inc b ; $5b81
 	ld a, [hl] ; $5b82
 	cp b ; $5b83
-	jr nc, .countLeft ; $5b84
+	jr nc, .widthClamped ; $5b84
 	ld b, a ; $5b86
-.countLeft:
+.widthClamped:
 	inc hl ; $5b87
 	inc c ; $5b88
 	ld a, [hl] ; $5b89
 	cp c ; $5b8a
-	jr nc, .countLeft2 ; $5b8b
+	jr nc, .heightClamped ; $5b8b
 	ld c, a ; $5b8d
-.countLeft2:
+.heightClamped:
 	dec hl ; $5b8e
 	dec hl ; $5b8f
 	dec hl ; $5b90
