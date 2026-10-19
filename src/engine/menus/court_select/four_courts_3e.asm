@@ -162,11 +162,7 @@ RunLinkCourtSelect4Menu:
 	ret ; $5cfd
 CourtSelectIndexToCourtId:
 	ld hl, CourtSelectCourtIds_3e ; $5cfe
-	add l ; $5d01
-	ld l, a ; $5d02
-	jr nc, .read ; $5d03
-	inc h ; $5d05
-.read:
+	add_hl_a ; $5d01
 	ld a, [hl] ; $5d06
 	ret ; $5d07
 CourtSelectCourtIds_3e:
@@ -187,11 +183,7 @@ LoadCourtSelectGraphics:
 	ld a, c ; $5d28
 	add a ; $5d29
 	ld hl, CourtSelectGraphicsTable ; $5d2a
-	add l ; $5d2d
-	ld l, a ; $5d2e
-	jr nc, .read ; $5d2f
-	inc h ; $5d31
-.read:
+	add_hl_a ; $5d2d
 	ld a, [hl+] ; $5d32
 	ld h, [hl] ; $5d33
 	ld l, a ; $5d34
@@ -209,11 +201,7 @@ LoadCourtSelectGraphics:
 	ld hl, CourtSelectTable ; $5d46
 	ld a, c ; $5d49
 	add a ; $5d4a
-	add l ; $5d4b
-	ld l, a ; $5d4c
-	jr nc, .readB ; $5d4d
-	inc h ; $5d4f
-.readB:
+	add_hl_a ; $5d4b
 	ld a, [hl+] ; $5d50
 	ld d, [hl] ; $5d51
 	ld e, a ; $5d52
@@ -331,7 +319,7 @@ OpenCourtSelect4Panel:
 	or a ; $5e2b
 	jr z, .reverse ; $5e2c
 	ld c, $00 ; $5e2e
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $5e30
 	ld b, $12 ; $5e33
 	farcall RestoreMenuBgAndDrawPanel ; $5e35
@@ -341,12 +329,12 @@ OpenCourtSelect4Panel:
 	inc a ; $5e3e
 	ld c, a ; $5e3f
 	cp $0d ; $5e40
-	jr nz, .loop ; $5e42
+	jr nz, .slideForwardLoop ; $5e42
 	call AdvanceFrame ; $5e44
 	ret ; $5e47
 .reverse:
 	ld c, $0a ; $5e48
-.loopB:
+.slideReverseLoop:
 	call AdvanceFrame ; $5e4a
 	ld b, $13 ; $5e4d
 	farcall RestoreMenuBgAndDrawPanel ; $5e4f
@@ -356,7 +344,7 @@ OpenCourtSelect4Panel:
 	dec a ; $5e58
 	ld c, a ; $5e59
 	cp $ff ; $5e5a
-	jr nz, .loopB ; $5e5c
+	jr nz, .slideReverseLoop ; $5e5c
 	call AdvanceFrame ; $5e5e
 	ret ; $5e61
 CloseCourtSelect4Panel:
@@ -396,21 +384,13 @@ CourtSelect4CursorSpriteTask:
 	call GetMenuCursorIndex_3e ; $5e98
 	push af ; $5e9b
 	ld hl, CourtSelect4CursorTiles_3e ; $5e9c
-	add l ; $5e9f
-	ld l, a ; $5ea0
-	jr nc, .readTile ; $5ea1
-	inc h ; $5ea3
-.readTile:
+	add_hl_a ; $5e9f
 	ld c, [hl] ; $5ea4
 	pop af ; $5ea5
 	push af ; $5ea6
 	ld hl, CourtSelect4CursorPositions_3e ; $5ea7
 	add a ; $5eaa
-	add l ; $5eab
-	ld l, a ; $5eac
-	jr nc, .readPosition ; $5ead
-	inc h ; $5eaf
-.readPosition:
+	add_hl_a ; $5eab
 	ld a, [hl+] ; $5eb0
 	ld d, [hl] ; $5eb1
 	ld e, a ; $5eb2
@@ -419,11 +399,7 @@ CourtSelect4CursorSpriteTask:
 	pop af ; $5eb7
 	add a ; $5eb8
 	ld hl, CourtSelect4CursorSpriteTaskPtrs ; $5eb9
-	add l ; $5ebc
-	ld l, a ; $5ebd
-	jr nc, .readTemplatePtr ; $5ebe
-	inc h ; $5ec0
-.readTemplatePtr:
+	add_hl_a ; $5ebc
 	ld a, [hl+] ; $5ec1
 	ld h, [hl] ; $5ec2
 	ld l, a ; $5ec3
@@ -434,11 +410,7 @@ CourtSelect4CursorSpriteTask:
 	ld c, $02 ; $5ecb
 	call GetMenuCursorIndex_3e ; $5ecd
 	ld hl, CourtSelect4LabelYOffsets_3e ; $5ed0
-	add l ; $5ed3
-	ld l, a ; $5ed4
-	jr nc, .readLabelYOffset ; $5ed5
-	inc h ; $5ed7
-.readLabelYOffset:
+	add_hl_a ; $5ed3
 	ld a, [hl] ; $5ed8
 	ld h, a ; $5ed9
 	ld l, $f8 ; $5eda
@@ -543,11 +515,7 @@ SetCourtSelect4TabAttrRect:
 	ld hl, CourtSelect4TabAttrAddrs_3e ; $5fbc
 	ld a, b ; $5fbf
 	add a ; $5fc0
-	add l ; $5fc1
-	ld l, a ; $5fc2
-	jr nc, .readAddr ; $5fc3
-	inc h ; $5fc5
-.readAddr:
+	add_hl_a ; $5fc1
 	ld a, [hl+] ; $5fc6
 	ld d, [hl] ; $5fc7
 	ld e, a ; $5fc8
@@ -565,11 +533,7 @@ CourtSelect4TabAttrAddrs_3e:
 SetCourtSelect4Palette:
 	ld hl, CourtSelect4PalettePtrs ; $5fde
 	add a ; $5fe1
-	add l ; $5fe2
-	ld l, a ; $5fe3
-	jr nc, .read ; $5fe4
-	inc h ; $5fe6
-.read:
+	add_hl_a ; $5fe2
 	ld a, [hl+] ; $5fe7
 	ld h, [hl] ; $5fe8
 	ld l, a ; $5fe9
@@ -612,18 +576,10 @@ Unused_3e_DrawCourtSelect4TitleText:
 Unused_3e_DrawCourtSelectTitleTiles:
 	ld hl, Unused_3e_CourtSelectTitleColumns ; $6045
 	ld a, c ; $6048
-	add l ; $6049
-	ld l, a ; $604a
-	jr nc, .read ; $604b
-	inc h ; $604d
-.read:
+	add_hl_a ; $6049
 	ld a, [hl] ; $604e
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $604f
-	add l ; $6052
-	ld l, a ; $6053
-	jr nc, .copy ; $6054
-	inc h ; $6056
-.copy:
+	add_hl_a ; $6052
 	ld d, h ; $6057
 	ld e, l ; $6058
 	ld hl, Unused_3e_CourtSelectTitleTilesA ; $6059
@@ -637,18 +593,10 @@ Unused_3e_DrawCourtSelectTitleTiles:
 Unused_3e_RenderCourtSelectTitleText:
 	ld a, c ; $606f
 	ld hl, Unused_3e_CourtSelectTitleTextIndices ; $6070
-	add l ; $6073
-	ld l, a ; $6074
-	jr nc, .read ; $6075
-	inc h ; $6077
-.read:
+	add_hl_a ; $6073
 	ld a, [hl] ; $6078
 	ld hl, $00a9 ; $6079
-	add l ; $607c
-	ld l, a ; $607d
-	jr nc, .render ; $607e
-	inc h ; $6080
-.render:
+	add_hl_a ; $607c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 6 ; $6081
 	ld c, $20 ; $6084
 	farcall RenderTextToBuffer64 ; $6086
@@ -659,35 +607,19 @@ Unused_3e_CourtSelectTitleTextIndices:
 Unused_3e_RenderCourtSelectTitleText2:
 	ld hl, Unused_3e_CourtSelectTitleColumns ; $6093
 	ld a, c ; $6096
-	add l ; $6097
-	ld l, a ; $6098
-	jr nc, .readColumn ; $6099
-	inc h ; $609b
-.readColumn:
+	add_hl_a ; $6097
 	ld a, [hl] ; $609c
 	add $05 ; $609d
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $609f
-	add l ; $60a2
-	ld l, a ; $60a3
-	jr nc, .dest ; $60a4
-	inc h ; $60a6
-.dest:
+	add_hl_a ; $60a2
 	ld d, h ; $60a7
 	ld e, l ; $60a8
 	ld hl, Unused_3e_CourtSelectTitleText2Indices ; $60a9
 	ld a, c ; $60ac
-	add l ; $60ad
-	ld l, a ; $60ae
-	jr nc, .read ; $60af
-	inc h ; $60b1
-.read:
+	add_hl_a ; $60ad
 	ld a, [hl] ; $60b2
 	ld hl, $00a9 ; $60b3
-	add l ; $60b6
-	ld l, a ; $60b7
-	jr nc, .render ; $60b8
-	inc h ; $60ba
-.render:
+	add_hl_a ; $60b6
 	ld c, $20 ; $60bb
 	farcall RenderTextToBuffer64 ; $60bd
 	ret ; $60c0
@@ -706,11 +638,7 @@ Unused_3e_CourtSelectTitleTilesB:
 SetCourtSelectBGM:
 	ld a, c ; $60dd
 	ld hl, CourtSelectBgmIds_3e ; $60de
-	add l ; $60e1
-	ld l, a ; $60e2
-	jr nc, .read ; $60e3
-	inc h ; $60e5
-.read:
+	add_hl_a ; $60e1
 	ld a, [hl] ; $60e6
 	ld [wMatchBGM], a ; $60e7
 	ret ; $60ea
@@ -720,11 +648,7 @@ CourtSelectBgmIds_3e:
 SetCourtSelectBGMLink:
 	ld a, c ; $60f4
 	ld hl, CourtSelectBgmIdsLink_3e ; $60f5
-	add l ; $60f8
-	ld l, a ; $60f9
-	jr nc, .read ; $60fa
-	inc h ; $60fc
-.read:
+	add_hl_a ; $60f8
 	ld a, [hl] ; $60fd
 	ld [wMatchBGM], a ; $60fe
 	ret ; $6101
@@ -835,11 +759,7 @@ DrawCourtNameLeft:
 .lookupCourt:
 	ld hl, CourtNameLeftIndices_3e ; $64af
 	ld a, b ; $64b2
-	add l ; $64b3
-	ld l, a ; $64b4
-	jr nc, .read ; $64b5
-	inc h ; $64b7
-.read:
+	add_hl_a ; $64b3
 	ld a, [hl] ; $64b8
 	ld b, $80 ; $64b9
 	add b ; $64bb
@@ -861,11 +781,7 @@ DrawCourtNameRight:
 .lookupCourt:
 	ld hl, CourtNameRightIndices_3e ; $64d8
 	ld a, b ; $64db
-	add l ; $64dc
-	ld l, a ; $64dd
-	jr nc, .read ; $64de
-	inc h ; $64e0
-.read:
+	add_hl_a ; $64dc
 	ld a, [hl] ; $64e1
 	ld b, $80 ; $64e2
 	add b ; $64e4

@@ -273,6 +273,10 @@ class MacroBytes(unittest.TestCase):
         # add LOW(Table) / ld l,a / adc HIGH(Table) / sub l / ld h,a, Table=$0007
         self.assertEqual(out[:7], bytes.fromhex("c607" "6f" "ce00" "95" "67"))
 
+    def test_add_pair_a(self):
+        out = self.bytes_of("add_hl_a\nadd_de_a\nadd_bc_a")
+        self.assertEqual(out[:15], bytes.fromhex("85" "6f" "3001" "24" "83" "5f" "3001" "14" "81" "4f" "3001" "04"))
+
     def test_wait_frames_and_lb(self):
         out = self.bytes_of("wait_frames $1e\nlb de, $02, $06\nlb bc, $ff, $00")
         self.assertEqual(out[:4], bytes.fromhex("cd2527" "1e"))   # WaitFramesCmd = $2725

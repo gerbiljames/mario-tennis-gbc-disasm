@@ -61,11 +61,7 @@ Unused_1a_RunPauseMenuWindow:
 	cp $ff ; $407e
 	jr z, .done ; $4080
 	add a ; $4082
-	add c ; $4083
-	ld c, a ; $4084
-	jr nc, .redraw ; $4085
-	inc b ; $4087
-.redraw:
+	add_bc_a ; $4083
 	ld h, b ; $4088
 	ld l, c ; $4089
 	ld a, [hl+] ; $408a

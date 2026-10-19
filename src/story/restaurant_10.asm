@@ -1,10 +1,6 @@
 GetMinigameDrillId:
 	ld hl, MinigameDrillIdTable ; $56e9
-	add l ; $56ec
-	ld l, a ; $56ed
-	jr nc, .read ; $56ee
-	inc h ; $56f0
-.read:
+	add_hl_a ; $56ec
 	ld a, [hl] ; $56f1
 	ret ; $56f2
 MinigameDrillIdTable:
@@ -607,11 +603,7 @@ RestaurantNpc12_10:
 	ld h, [hl] ; $5d96
 	ld l, a ; $5d97
 	ld a, $02 ; $5d98
-	add l ; $5d9a
-	ld l, a ; $5d9b
-	jr nc, .altText ; $5d9c
-	inc h ; $5d9e
-.altText:
+	add_hl_a ; $5d9a
 	farcall InitDialogueTextCursor ; $5d9f
 	script_speak ACTOR_RESTAURANT_STUDENT_PIGTAILS_GIRL_2 ; $5da2
 	script_unlock_facing ACTOR_RESTAURANT_STUDENT_PIGTAILS_GIRL_2 ; $5da7
@@ -626,11 +618,7 @@ RestaurantNpc12_10:
 	ld h, [hl] ; $5dca
 	ld l, a ; $5dcb
 	ld a, $02 ; $5dcc
-	add l ; $5dce
-	ld l, a ; $5dcf
-	jr nc, .done ; $5dd0
-	inc h ; $5dd2
-.done:
+	add_hl_a ; $5dce
 	farcall InitDialogueTextCursor ; $5dd3
 	script_speak ACTOR_RESTAURANT_STUDENT_PIGTAILS_GIRL_2 ; $5dd6
 	ret ; $5ddb
@@ -680,11 +668,7 @@ RestaurantNpc08_10:
 	ld h, [hl] ; $5e68
 	ld l, a ; $5e69
 	ld a, $01 ; $5e6a
-	add l ; $5e6c
-	ld l, a ; $5e6d
-	jr nc, .done ; $5e6e
-	inc h ; $5e70
-.done:
+	add_hl_a ; $5e6c
 	farcall InitDialogueTextCursor ; $5e71
 	script_speak ACTOR_RESTAURANT_STUDENT_CAP_BOY_1 ; $5e74
 	script_face ACTOR_RESTAURANT_STUDENT_CAP_BOY_1, FACE_RIGHT ; $5e79

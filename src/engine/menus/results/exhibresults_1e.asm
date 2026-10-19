@@ -221,16 +221,16 @@ DrawDoublesPlayerNames:
 ShiftDestForLongName:
 	ld c, $00 ; $4683
 	ld hl, wTextBuffer ; $4685
-.loop:
+.countLoop:
 	ld a, [hl+] ; $4688
 	or a ; $4689
 	jr z, .counted ; $468a
 	cp $de ; $468c
-	jr z, .loop ; $468e
+	jr z, .countLoop ; $468e
 	cp $df ; $4690
-	jr z, .loop ; $4692
+	jr z, .countLoop ; $4692
 	inc c ; $4694
-	jr .loop ; $4695
+	jr .countLoop ; $4695
 .counted:
 	ld a, $05 ; $4697
 	cp c ; $4699
@@ -238,10 +238,10 @@ ShiftDestForLongName:
 	ld a, c ; $469b
 	sub $05 ; $469c
 	ld c, a ; $469e
-.loopB:
+.shiftLoop:
 	dec de ; $469f
 	dec c ; $46a0
-	jr nz, .loopB ; $46a1
+	jr nz, .shiftLoop ; $46a1
 	ret ; $46a3
 DrawSetsGamesScore:
 	ld hl, Text_ResultsSets ; $46a4

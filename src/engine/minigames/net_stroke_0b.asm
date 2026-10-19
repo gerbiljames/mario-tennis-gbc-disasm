@@ -180,22 +180,14 @@ NetGamePractice3JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $6303
 	ld hl, NetGamePractice3JudgePointMessages ; $6306
-	add l ; $6309
-	ld l, a ; $630a
-	jr nc, .readMessage ; $630b
-	inc h ; $630d
-.readMessage:
+	add_hl_a ; $6309
 	ld a, [hl] ; $630e
 	ld a, a ; $630f
 	ld b, $00 ; $6310
 	call QueueDrillResultMessage ; $6312
 	ld a, [wPointOutcome] ; $6315
 	ld hl, OddRallyVerdicts ; $6318
-	add l ; $631b
-	ld l, a ; $631c
-	jr nc, .readResult ; $631d
-	inc h ; $631f
-.readResult:
+	add_hl_a ; $631b
 	ld a, [hl] ; $6320
 	ret ; $6321
 NetGamePractice3JudgePointMessages:
@@ -240,22 +232,14 @@ NetGamePractice3Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6365
 	ld hl, NetGamePractice3Cases1Messages ; $6368
-	add l ; $636b
-	ld l, a ; $636c
-	jr nc, .read ; $636d
-	inc h ; $636f
-.read:
+	add_hl_a ; $636b
 	ld a, [hl] ; $6370
 	ld a, a ; $6371
 	ld b, $00 ; $6372
 	call QueueDrillResultMessage ; $6374
 	ld a, [wPointOutcome] ; $6377
 	ld hl, EvenRallyVerdicts ; $637a
-	add l ; $637d
-	ld l, a ; $637e
-	jr nc, .readB ; $637f
-	inc h ; $6381
-.readB:
+	add_hl_a ; $637d
 	ld a, [hl] ; $6382
 	ret ; $6383
 NetGamePractice3Cases1Messages:
@@ -281,22 +265,14 @@ NetGamePractice3Cases2:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $639f
 	ld hl, NetGamePractice3Cases2Messages ; $63a2
-	add l ; $63a5
-	ld l, a ; $63a6
-	jr nc, .read ; $63a7
-	inc h ; $63a9
-.read:
+	add_hl_a ; $63a5
 	ld a, [hl] ; $63aa
 	ld a, a ; $63ab
 	ld b, $00 ; $63ac
 	call QueueDrillResultMessage ; $63ae
 	ld a, [wPointOutcome] ; $63b1
 	ld hl, OddRallyVerdicts ; $63b4
-	add l ; $63b7
-	ld l, a ; $63b8
-	jr nc, .readB ; $63b9
-	inc h ; $63bb
-.readB:
+	add_hl_a ; $63b7
 	ld a, [hl] ; $63bc
 	ret ; $63bd
 NetGamePractice3Cases2Messages:
@@ -505,22 +481,14 @@ StrokeMatch1JudgePoint:
 .rally1:
 	ld a, [wPointOutcome] ; $652a
 	ld hl, StrokeMatch1JudgePointMessages ; $652d
-	add l ; $6530
-	ld l, a ; $6531
-	jr nc, .readMessage ; $6532
-	inc h ; $6534
-.readMessage:
+	add_hl_a ; $6530
 	ld a, [hl] ; $6535
 	ld a, a ; $6536
 	ld b, $07 ; $6537
 	call SetDrillMessageByRallyParity ; $6539
 	call SelectStrokeTargetTableByPoint ; $653c
 	ld a, [wPointOutcome] ; $653f
-	add l ; $6542
-	ld l, a ; $6543
-	jr nc, .readResult ; $6544
-	inc h ; $6546
-.readResult:
+	add_hl_a ; $6542
 	ld a, [hl] ; $6547
 	ret ; $6548
 StrokeMatch1JudgePointMessages:
@@ -546,22 +514,14 @@ StrokeMatch1Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6564
 	ld hl, StrokeMatch1Cases1Messages ; $6567
-	add l ; $656a
-	ld l, a ; $656b
-	jr nc, .read ; $656c
-	inc h ; $656e
-.read:
+	add_hl_a ; $656a
 	ld a, [hl] ; $656f
 	ld a, a ; $6570
 	ld b, $07 ; $6571
 	call SetDrillMessageByRallyParity ; $6573
 	call SelectStrokeTargetTableByPointAlt ; $6576
 	ld a, [wPointOutcome] ; $6579
-	add l ; $657c
-	ld l, a ; $657d
-	jr nc, .readB ; $657e
-	inc h ; $6580
-.readB:
+	add_hl_a ; $657c
 	ld a, [hl] ; $6581
 	ret ; $6582
 StrokeMatch1Cases1Messages:
@@ -606,22 +566,14 @@ StrokeMatch1Cases2:
 .queuePointOutcomeMessage:
 	ld a, [wPointOutcome] ; $65ca
 	ld hl, StrokeMatch1Cases2Messages ; $65cd
-	add l ; $65d0
-	ld l, a ; $65d1
-	jr nc, .read ; $65d2
-	inc h ; $65d4
-.read:
+	add_hl_a ; $65d0
 	ld a, [hl] ; $65d5
 	ld a, a ; $65d6
 	ld b, $07 ; $65d7
 	call SetDrillMessageByRallyParity ; $65d9
 	call SelectStrokeTargetTableByPoint ; $65dc
 	ld a, [wPointOutcome] ; $65df
-	add l ; $65e2
-	ld l, a ; $65e3
-	jr nc, .readB ; $65e4
-	inc h ; $65e6
-.readB:
+	add_hl_a ; $65e2
 	ld a, [hl] ; $65e7
 	ret ; $65e8
 StrokeMatch1Cases2Messages:
@@ -663,22 +615,14 @@ StrokeMatch1Cases3:
 .queuePointOutcomeMessage:
 	ld a, [wPointOutcome] ; $662a
 	ld hl, StrokeMatch1Cases3Messages ; $662d
-	add l ; $6630
-	ld l, a ; $6631
-	jr nc, .read ; $6632
-	inc h ; $6634
-.read:
+	add_hl_a ; $6630
 	ld a, [hl] ; $6635
 	ld a, a ; $6636
 	ld b, $07 ; $6637
 	call SetDrillMessageByRallyParity ; $6639
 	call SelectStrokeTargetTableByPointAlt ; $663c
 	ld a, [wPointOutcome] ; $663f
-	add l ; $6642
-	ld l, a ; $6643
-	jr nc, .readB ; $6644
-	inc h ; $6646
-.readB:
+	add_hl_a ; $6642
 	ld a, [hl] ; $6647
 	ret ; $6648
 StrokeMatch1Cases3Messages:

@@ -26,11 +26,7 @@
 	add a
 	pop hl
 	pop de
-	add l
-	ld l, a
-	jr nc, .readEntry
-	inc h
-.readEntry:
+	add_hl_a
 	ld a, [hl+]
 	ld h, [hl]
 	ld l, a

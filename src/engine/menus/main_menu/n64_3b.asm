@@ -28,10 +28,10 @@ Unused_3b_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $4411
 	ld a, $00 ; $441a
 	ld c, $40 ; $441c
-.loopB:
+.loop:
 	ld [hl+], a ; $441e
 	dec c ; $441f
-	jr nz, .loopB ; $4420
+	jr nz, .loop ; $4420
 	pop_wram_bank ; $4422
 	ret ; $4427
 UpdateAnimatedTilesTask_3b:
@@ -222,21 +222,13 @@ RedrawN64ExhibDataWindow:
 	wram_bank WRAM_SCREEN ; $462d
 	ld a, [wN64ExhibPage] ; $4633
 	ld hl, wChartColumnList ; $4636
-	add l ; $4639
-	ld l, a ; $463a
-	jr nc, .drawRow ; $463b
-	inc h ; $463d
-.drawRow:
+	add_hl_a ; $4639
 	ld bc, wShadowTilemap + 5 * TILEMAP_WIDTH + 4 ; $463e
 	ld a, $07 ; $4641
 	call DrawChartIconRow ; $4643
 	ld a, [wN64ExhibCursorRow] ; $4646
 	ld hl, wChartColumnList ; $4649
-	add l ; $464c
-	ld l, a ; $464d
-	jr nc, .drawColumn ; $464e
-	inc h ; $4650
-.drawColumn:
+	add_hl_a ; $464c
 	ld bc, wShadowTilemap + 7 * TILEMAP_WIDTH + 2 ; $4651
 	call DrawChartIconColumn ; $4654
 	ld a, [wN64ExhibCursorRow] ; $4657
@@ -250,11 +242,7 @@ RedrawN64ExhibDataWindow:
 	jr .rowSeekLoop ; $4665
 .rowFound:
 	ld a, [wN64ExhibPage] ; $4667
-	add l ; $466a
-	ld l, a ; $466b
-	jr nc, .drawCells ; $466c
-	inc h ; $466e
-.drawCells:
+	add_hl_a ; $466a
 	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH + 4 ; $466f
 	ld a, $07 ; $4672
 	call DrawChartCellRows ; $4674
@@ -367,11 +355,7 @@ DrawChartCellMark:
 	push hl ; $471b
 	ld hl, ChartCellMarkTable ; $471c
 	ld a, b ; $471f
-	add l ; $4720
-	ld l, a ; $4721
-	jr nc, .read ; $4722
-	inc h ; $4724
-.read:
+	add_hl_a ; $4720
 	ld a, [hl] ; $4725
 	ld h, d ; $4726
 	ld l, e ; $4727

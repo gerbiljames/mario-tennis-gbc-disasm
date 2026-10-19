@@ -3,11 +3,7 @@ ApplyCpuDifficultyToCharRecords:
 	ld a, [wCharSelectSlotDifficulty + 1] ; $5f55
 	ld hl, CpuDifficultyParamPtrs_38 ; $5f58
 	add a ; $5f5b
-	add l ; $5f5c
-	ld l, a ; $5f5d
-	jr nc, .readSlot1 ; $5f5e
-	inc h ; $5f60
-.readSlot1:
+	add_hl_a ; $5f5c
 	ld a, [hl+] ; $5f61
 	ld h, [hl] ; $5f62
 	ld l, a ; $5f63
@@ -31,11 +27,7 @@ ApplyCpuDifficultyToCharRecords:
 	ld a, [wCharSelectSlotDifficulty + 2] ; $5f85
 	ld hl, CpuDifficultyParamPtrs_38 ; $5f88
 	add a ; $5f8b
-	add l ; $5f8c
-	ld l, a ; $5f8d
-	jr nc, .readSlot2 ; $5f8e
-	inc h ; $5f90
-.readSlot2:
+	add_hl_a ; $5f8c
 	ld a, [hl+] ; $5f91
 	ld h, [hl] ; $5f92
 	ld l, a ; $5f93
@@ -59,11 +51,7 @@ ApplyCpuDifficultyToCharRecords:
 	ld a, [wCharSelectSlotDifficulty + 3] ; $5fb5
 	ld hl, CpuDifficultyParamPtrs_38 ; $5fb8
 	add a ; $5fbb
-	add l ; $5fbc
-	ld l, a ; $5fbd
-	jr nc, .readSlot3 ; $5fbe
-	inc h ; $5fc0
-.readSlot3:
+	add_hl_a ; $5fbc
 	ld a, [hl+] ; $5fc1
 	ld h, [hl] ; $5fc2
 	ld l, a ; $5fc3
@@ -199,11 +187,7 @@ LoadCachedStorySlotName:
 	ld a, b ; $60c6
 	add a ; $60c7
 	ld hl, CachedStorySlotNameTable ; $60c8
-	add l ; $60cb
-	ld l, a ; $60cc
-	jr nc, .readPtr ; $60cd
-	inc h ; $60cf
-.readPtr:
+	add_hl_a ; $60cb
 	ld a, [hl+] ; $60d0
 	ld h, [hl] ; $60d1
 	ld l, a ; $60d2
@@ -413,11 +397,7 @@ CountCharGridEntries:
 SetCharGridPageCount:
 	ld a, [wCharGridEntryCount] ; $61cb
 	ld hl, CharGridPageCountTable ; $61ce
-	add l ; $61d1
-	ld l, a ; $61d2
-	jr nc, .read ; $61d3
-	inc h ; $61d5
-.read:
+	add_hl_a ; $61d1
 	ld a, [hl] ; $61d6
 	ld [wCharGridPageCount], a ; $61d7
 	ret ; $61da

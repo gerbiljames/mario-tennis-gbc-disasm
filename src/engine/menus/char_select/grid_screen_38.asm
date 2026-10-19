@@ -122,11 +122,7 @@ GetSelectedCharWramBank:
 	add a ; $4e13
 	add b ; $4e14
 	ld hl, SelectedCharWramBankTable ; $4e15
-	add l ; $4e18
-	ld l, a ; $4e19
-	jr nc, .read ; $4e1a
-	inc h ; $4e1c
-.read:
+	add_hl_a ; $4e18
 	ld b, [hl] ; $4e1d
 	ret ; $4e1e
 SelectedCharWramBankTable:
@@ -137,11 +133,7 @@ DrawCharacterSelectCursor:
 	call GetMenuCursorIndex_38 ; $4e25
 	add a ; $4e28
 	ld hl, CharacterSelectCursorTable ; $4e29
-	add l ; $4e2c
-	ld l, a ; $4e2d
-	jr nc, .read ; $4e2e
-	inc h ; $4e30
-.read:
+	add_hl_a ; $4e2c
 	ld a, [hl+] ; $4e31
 	ld d, [hl] ; $4e32
 	ld e, a ; $4e33
@@ -264,11 +256,7 @@ DrawCharGridCursorBox:
 	call GetMenuCursorIndex_38 ; $4f4d
 	add a ; $4f50
 	ld hl, CharGridCursorBoxTable ; $4f51
-	add l ; $4f54
-	ld l, a ; $4f55
-	jr nc, .read ; $4f56
-	inc h ; $4f58
-.read:
+	add_hl_a ; $4f54
 	ld a, [hl+] ; $4f59
 	ld d, [hl] ; $4f5a
 	ld e, a ; $4f5b
@@ -562,11 +550,7 @@ HandleCharGridButtons:
 	ld hl, wCharGridEntries ; $52d5
 	add a ; $52d8
 	add a ; $52d9
-	add l ; $52da
-	ld l, a ; $52db
-	jr nc, .readCharId ; $52dc
-	inc h ; $52de
-.readCharId:
+	add_hl_a ; $52da
 	ld a, [hl] ; $52df
 	ld c, a ; $52e0
 	call IsMarioCastCharacter ; $52e1
@@ -603,22 +587,14 @@ ConfirmCharGridSelection:
 	ld hl, wCharGridEntries ; $5324
 	add a ; $5327
 	add a ; $5328
-	add l ; $5329
-	ld l, a ; $532a
-	jr nc, .readEntry ; $532b
-	inc h ; $532d
-.readEntry:
+	add_hl_a ; $5329
 	ld a, [hl] ; $532e
 	cp $ff ; $532f
 	jr z, .emptyCell ; $5331
 	ld c, a ; $5333
 	ld a, [wCharSelectSlot] ; $5334
 	ld hl, wCharSelectSlotChars ; $5337
-	add l ; $533a
-	ld l, a ; $533b
-	jr nc, .markTaken ; $533c
-	inc h ; $533e
-.markTaken:
+	add_hl_a ; $533a
 	ld [hl], b ; $533f
 	ld a, c ; $5340
 	ld c, a ; $5341
@@ -630,11 +606,7 @@ ConfirmCharGridSelection:
 	jr nz, .drawPortrait ; $534d
 	ld a, [wCharSelectSlot] ; $534f
 	ld hl, wCharSelectSlotLeftHanded ; $5352
-	add l ; $5355
-	ld l, a ; $5356
-	jr nc, .markLeftHanded ; $5357
-	inc h ; $5359
-.markLeftHanded:
+	add_hl_a ; $5355
 	ld a, $01 ; $535a
 	ld [hl], a ; $535c
 .drawPortrait:
@@ -654,11 +626,7 @@ ConfirmCharGridSelection:
 	ld hl, wCharGridEntries ; $5377
 	add a ; $537a
 	add a ; $537b
-	add l ; $537c
-	ld l, a ; $537d
-	jr nc, .allSlotsFilled ; $537e
-	inc h ; $5380
-.allSlotsFilled:
+	add_hl_a ; $537c
 	ld a, [hl] ; $5381
 	ld c, a ; $5382
 	call NeedsCpuDifficultyPrompt ; $5383
@@ -694,22 +662,14 @@ CancelCharGridSelection:
 	sound SFX_MENU_CANCEL ; $53cb
 	ld hl, wCharSelectSlotChars ; $53cd
 	ld a, [wCharSelectSlot] ; $53d0
-	add l ; $53d3
-	ld l, a ; $53d4
-	jr nc, .clearTaken ; $53d5
-	inc h ; $53d7
-.clearTaken:
+	add_hl_a ; $53d3
 	ld a, [hl] ; $53d8
 	ld b, $00 ; $53d9
 	ld [hl], b ; $53db
 	ld hl, wCharGridEntries ; $53dc
 	add a ; $53df
 	add a ; $53e0
-	add l ; $53e1
-	ld l, a ; $53e2
-	jr nc, .clearRecord ; $53e3
-	inc h ; $53e5
-.clearRecord:
+	add_hl_a ; $53e1
 	inc hl ; $53e6
 	inc hl ; $53e7
 	xor a ; $53e8
@@ -717,20 +677,12 @@ CancelCharGridSelection:
 	wram_bank WRAM_SCREEN ; $53ea
 	ld hl, wCharSelectSlotDifficulty ; $53f0
 	ld a, [wCharSelectSlot] ; $53f3
-	add l ; $53f6
-	ld l, a ; $53f7
-	jr nc, .refresh ; $53f8
-	inc h ; $53fa
-.refresh:
+	add_hl_a ; $53f6
 	xor a ; $53fb
 	ld [hl], a ; $53fc
 	ld hl, wCharSelectSlotLeftHanded ; $53fd
 	ld a, [wCharSelectSlot] ; $5400
-	add l ; $5403
-	ld l, a ; $5404
-	jr nc, .done ; $5405
-	inc h ; $5407
-.done:
+	add_hl_a ; $5403
 	xor a ; $5408
 	ld [hl], a ; $5409
 	call ClearPlayerSlotPortrait ; $540a
@@ -775,11 +727,7 @@ DrawCharGridSlotPrompt:
 .readEntry:
 	ld a, [wCharSelectSlot] ; $5471
 	add a ; $5474
-	add l ; $5475
-	ld l, a ; $5476
-	jr nc, .draw ; $5477
-	inc h ; $5479
-.draw:
+	add_hl_a ; $5475
 	ld a, [hl+] ; $547a
 	ld h, [hl] ; $547b
 	ld l, a ; $547c
@@ -871,11 +819,7 @@ DrawCharGridCharSprites:
 	ld a, c ; $5554
 	add a ; $5555
 	ld hl, CharGridCharSprites ; $5556
-	add l ; $5559
-	ld l, a ; $555a
-	jr nc, .readOffset ; $555b
-	inc h ; $555d
-.readOffset:
+	add_hl_a ; $5559
 	ld a, [hl+] ; $555e
 	ld d, [hl] ; $555f
 	ld e, a ; $5560

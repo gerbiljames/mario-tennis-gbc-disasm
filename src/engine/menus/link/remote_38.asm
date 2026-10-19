@@ -65,40 +65,24 @@ ApplyRemoteCharCancel:
 	jr z, .clearOwnSlot ; $6684
 	ld a, [wCharSelectRemoteSlot] ; $6686
 	ld hl, wCharSelectSlotDifficulty + 2 ; $6689
-	add l ; $668c
-	ld l, a ; $668d
-	jr nc, .clearTaken ; $668e
-	inc h ; $6690
-.clearTaken:
+	add_hl_a ; $668c
 	xor a ; $6691
 	ld [hl], a ; $6692
 	ld a, [wCharSelectRemoteSlot] ; $6693
 	ld hl, wCharSelectSlotLeftHanded + 2 ; $6696
-	add l ; $6699
-	ld l, a ; $669a
-	jr nc, .clearLeftHanded ; $669b
-	inc h ; $669d
-.clearLeftHanded:
+	add_hl_a ; $6699
 	xor a ; $669e
 	ld [hl], a ; $669f
 	jr .retreatSlot ; $66a0
 .clearOwnSlot:
 	ld a, [wCharSelectRemoteSlot] ; $66a2
 	ld hl, wCharSelectSlotDifficulty ; $66a5
-	add l ; $66a8
-	ld l, a ; $66a9
-	jr nc, .clearOwnTaken ; $66aa
-	inc h ; $66ac
-.clearOwnTaken:
+	add_hl_a ; $66a8
 	xor a ; $66ad
 	ld [hl], a ; $66ae
 	ld a, [wCharSelectRemoteSlot] ; $66af
 	ld hl, wCharSelectSlotLeftHanded ; $66b2
-	add l ; $66b5
-	ld l, a ; $66b6
-	jr nc, .clearOwnLeftHanded ; $66b7
-	inc h ; $66b9
-.clearOwnLeftHanded:
+	add_hl_a ; $66b5
 	xor a ; $66ba
 	ld [hl], a ; $66bb
 .retreatSlot:
@@ -172,11 +156,7 @@ HandleLinkGridButtons:
 	ld hl, wCharGridEntries ; $6742
 	add a ; $6745
 	add a ; $6746
-	add l ; $6747
-	ld l, a ; $6748
-	jr nc, .readCharId ; $6749
-	inc h ; $674b
-.readCharId:
+	add_hl_a ; $6747
 	ld a, [hl] ; $674c
 	ld c, a ; $674d
 	call IsMarioCastCharacter ; $674e
@@ -223,11 +203,7 @@ ConfirmLinkGridSelection:
 	ld hl, wCharGridEntries ; $67a3
 	add a ; $67a6
 	add a ; $67a7
-	add l ; $67a8
-	ld l, a ; $67a9
-	jr nc, .markLeftHanded ; $67aa
-	inc h ; $67ac
-.markLeftHanded:
+	add_hl_a ; $67a8
 	ld a, [hl] ; $67ad
 	cp $ff ; $67ae
 	jr z, .allSlotsFilled ; $67b0
@@ -240,21 +216,13 @@ ConfirmLinkGridSelection:
 	jr nz, .emptyCell ; $67be
 	ld a, [wCharSelectSlot] ; $67c0
 	ld hl, wCharSelectSlotLeftHanded ; $67c3
-	add l ; $67c6
-	ld l, a ; $67c7
-	jr nc, .drawPortrait ; $67c8
-	inc h ; $67ca
-.drawPortrait:
+	add_hl_a ; $67c6
 	ld a, $01 ; $67cb
 	ld [hl], a ; $67cd
 .emptyCell:
 	ld a, [wCharSelectSlot] ; $67ce
 	ld hl, wCharSelectSlotChars ; $67d1
-	add l ; $67d4
-	ld l, a ; $67d5
-	jr nc, .advanceSlot ; $67d6
-	inc h ; $67d8
-.advanceSlot:
+	add_hl_a ; $67d4
 	ld [hl], b ; $67d9
 	call DrawPlayerSlotPortrait ; $67da
 	jr .refresh ; $67dd
@@ -297,22 +265,14 @@ CancelLinkGridSelection:
 	sound SFX_MENU_CANCEL ; $6834
 	ld hl, wCharSelectSlotChars ; $6836
 	ld a, [wCharSelectSlot] ; $6839
-	add l ; $683c
-	ld l, a ; $683d
-	jr nc, .clearRecord ; $683e
-	inc h ; $6840
-.clearRecord:
+	add_hl_a ; $683c
 	ld a, [hl] ; $6841
 	ld b, $00 ; $6842
 	ld [hl], b ; $6844
 	ld hl, wCharGridEntries ; $6845
 	add a ; $6848
 	add a ; $6849
-	add l ; $684a
-	ld l, a ; $684b
-	jr nc, .refresh ; $684c
-	inc h ; $684e
-.refresh:
+	add_hl_a ; $684a
 	inc hl ; $684f
 	inc hl ; $6850
 	xor a ; $6851
@@ -320,20 +280,12 @@ CancelLinkGridSelection:
 	wram_bank WRAM_SCREEN ; $6853
 	ld hl, wCharSelectSlotDifficulty ; $6859
 	ld a, [wCharSelectSlot] ; $685c
-	add l ; $685f
-	ld l, a ; $6860
-	jr nc, .redraw ; $6861
-	inc h ; $6863
-.redraw:
+	add_hl_a ; $685f
 	xor a ; $6864
 	ld [hl], a ; $6865
 	ld hl, wCharSelectSlotLeftHanded ; $6866
 	ld a, [wCharSelectSlot] ; $6869
-	add l ; $686c
-	ld l, a ; $686d
-	jr nc, .done ; $686e
-	inc h ; $6870
-.done:
+	add_hl_a ; $686c
 	xor a ; $6871
 	ld [hl], a ; $6872
 	call ClearPlayerSlotPortrait ; $6873
@@ -396,11 +348,7 @@ DrawRemoteSlotLeftHandedMark:
 	jr z, .checkOwnSlot ; $68f5
 	ld a, [wCharSelectRemoteSlot] ; $68f7
 	ld hl, wCharSelectSlotLeftHanded + 2 ; $68fa
-	add l ; $68fd
-	ld l, a ; $68fe
-	jr nc, .checkLeftHanded ; $68ff
-	inc h ; $6901
-.checkLeftHanded:
+	add_hl_a ; $68fd
 	ld a, [hl] ; $6902
 	or a ; $6903
 	ret z ; $6904
@@ -408,11 +356,7 @@ DrawRemoteSlotLeftHandedMark:
 .checkOwnSlot:
 	ld a, [wCharSelectRemoteSlot] ; $6907
 	ld hl, wCharSelectSlotLeftHanded ; $690a
-	add l ; $690d
-	ld l, a ; $690e
-	jr nc, .checkOwnLeftHanded ; $690f
-	inc h ; $6911
-.checkOwnLeftHanded:
+	add_hl_a ; $690d
 	ld a, [hl] ; $6912
 	or a ; $6913
 	ret z ; $6914
@@ -496,21 +440,13 @@ GetRemoteSlotBoxAddress:
 	ld a, [wCharSelectMode] ; $69a5
 	add a ; $69a8
 	ld hl, RemoteSlotBoxAddrPtrs_38 ; $69a9
-	add l ; $69ac
-	ld l, a ; $69ad
-	jr nc, .readTable ; $69ae
-	inc h ; $69b0
-.readTable:
+	add_hl_a ; $69ac
 	ld a, [hl+] ; $69b1
 	ld h, [hl] ; $69b2
 	ld l, a ; $69b3
 	ld a, [wCharSelectRemoteSlot] ; $69b4
 	add a ; $69b7
-	add l ; $69b8
-	ld l, a ; $69b9
-	jr nc, .read ; $69ba
-	inc h ; $69bc
-.read:
+	add_hl_a ; $69b8
 	ld a, [hl+] ; $69bd
 	ld b, [hl] ; $69be
 	ld c, a ; $69bf
@@ -558,11 +494,7 @@ AdvanceRemotePlayerSlot:
 	ld a, [wCharSelectMode] ; $69ed
 	ld hl, RemotePlayerSlotLists_38 ; $69f0
 	add a ; $69f3
-	add l ; $69f4
-	ld l, a ; $69f5
-	jr nc, .read ; $69f6
-	inc h ; $69f8
-.read:
+	add_hl_a ; $69f4
 	ld a, [hl+] ; $69f9
 	ld h, [hl] ; $69fa
 	ld l, a ; $69fb

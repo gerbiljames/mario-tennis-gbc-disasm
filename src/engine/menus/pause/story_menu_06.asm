@@ -367,16 +367,16 @@ Unused_06_AdjustDebugStatDigit:
 Unused_06_AdjustDebugStatByte:
 	ldh a, [hInputPressed] ; $6ca8
 	bit PADB_LEFT, a ; $6caa
-	jr nz, .read ; $6cac
+	jr nz, .decrease ; $6cac
 	bit PADB_RIGHT, a ; $6cae
-	jr nz, .readB ; $6cb0
+	jr nz, .increase ; $6cb0
 	ret ; $6cb2
-.read:
+.decrease:
 	ld a, [hl] ; $6cb3
 	sub b ; $6cb4
 	ld [hl], a ; $6cb5
 	ret ; $6cb6
-.readB:
+.increase:
 	ld a, [hl] ; $6cb7
 	add b ; $6cb8
 	ld [hl], a ; $6cb9
@@ -384,11 +384,11 @@ Unused_06_AdjustDebugStatByte:
 Unused_06_AdjustDebugStatWord:
 	ldh a, [hInputPressed] ; $6cbb
 	bit PADB_LEFT, a ; $6cbd
-	jr nz, .read ; $6cbf
+	jr nz, .decrease ; $6cbf
 	bit PADB_RIGHT, a ; $6cc1
-	jr nz, .readB ; $6cc3
+	jr nz, .increase ; $6cc3
 	ret ; $6cc5
-.read:
+.decrease:
 	ld a, [hl+] ; $6cc6
 	ld e, a ; $6cc7
 	ld d, [hl] ; $6cc8
@@ -402,7 +402,7 @@ Unused_06_AdjustDebugStatWord:
 	ld [hl-], a ; $6cd0
 	ld [hl], e ; $6cd1
 	ret ; $6cd2
-.readB:
+.increase:
 	ld a, [hl+] ; $6cd3
 	ld e, a ; $6cd4
 	ld d, [hl] ; $6cd5
@@ -481,11 +481,7 @@ GetStoryMenuItemId:
 	add a ; $6d7a
 	ld_hl_indexed StoryMenuDefs ; $6d7b
 	ld a, b ; $6d82
-	add l ; $6d83
-	ld l, a ; $6d84
-	jr nc, .read ; $6d85
-	inc h ; $6d87
-.read:
+	add_hl_a ; $6d83
 	ld a, [hl] ; $6d88
 	ret ; $6d89
 GetStoryMenuItemCount:
@@ -553,11 +549,7 @@ DrawStoryMenuCursor:
 	ld l, a ; $6dea
 	ld a, [wMatchMenuSelection] ; $6deb
 	add a ; $6dee
-	add l ; $6def
-	ld l, a ; $6df0
-	jr nc, .read ; $6df1
-	inc h ; $6df3
-.read:
+	add_hl_a ; $6def
 	ld a, [hl+] ; $6df4
 	ld d, [hl] ; $6df5
 	ld e, a ; $6df6

@@ -33,21 +33,17 @@ SetRowDirtyFlags:
 	ld hl, wTilemapRowDirty ; $70aa
 	ld c, $20 ; $70ad
 	xor a ; $70af
-.loop:
+.clearLoop:
 	ld [hl+], a ; $70b0
 	dec c ; $70b1
-	jr nz, .loop ; $70b2
+	jr nz, .clearLoop ; $70b2
 	ld hl, wTilemapRowDirty ; $70b4
 	ld a, d ; $70b7
 	and $1f ; $70b8
 	ld d, a ; $70ba
-	add l ; $70bb
-	ld l, a ; $70bc
-	jr nc, .gotPtr ; $70bd
-	inc h ; $70bf
-.gotPtr:
+	add_hl_a ; $70bb
 	ld a, $01 ; $70c0
-.loopB:
+.markLoop:
 	ld [hl+], a ; $70c2
 	inc d ; $70c3
 	bit 5, d ; $70c4
@@ -56,7 +52,7 @@ SetRowDirtyFlags:
 	ld hl, wTilemapRowDirty ; $70ca
 .nextRow:
 	dec e ; $70cd
-	jr nz, .loopB ; $70ce
+	jr nz, .markLoop ; $70ce
 	ret ; $70d0
 MarkWindowRowsDirtyMin7:
 	push af ; $70d1
@@ -85,21 +81,17 @@ MarkWindowRowsDirtyMin7:
 	ld hl, wTilemapRowDirty ; $70ef
 	ld c, $20 ; $70f2
 	xor a ; $70f4
-.loop:
+.clearLoop:
 	ld [hl+], a ; $70f5
 	dec c ; $70f6
-	jr nz, .loop ; $70f7
+	jr nz, .clearLoop ; $70f7
 	ld hl, wTilemapRowDirty ; $70f9
 	ld a, d ; $70fc
 	and $1f ; $70fd
 	ld d, a ; $70ff
-	add l ; $7100
-	ld l, a ; $7101
-	jr nc, .gotPtr ; $7102
-	inc h ; $7104
-.gotPtr:
+	add_hl_a ; $7100
 	ld a, $01 ; $7105
-.loopB:
+.markLoop:
 	ld [hl+], a ; $7107
 	inc d ; $7108
 	bit 5, d ; $7109
@@ -108,7 +100,7 @@ MarkWindowRowsDirtyMin7:
 	ld hl, wTilemapRowDirty ; $710f
 .nextRow:
 	dec e ; $7112
-	jr nz, .loopB ; $7113
+	jr nz, .markLoop ; $7113
 	pop hl ; $7115
 	pop de ; $7116
 	pop bc ; $7117
@@ -237,7 +229,7 @@ BuildDirtyRowRuns:
 	ld c, $00 ; $71c4
 	ld hl, wTilemapRowDirty ; $71c6
 	ld de, wTilemapRowRuns ; $71c9
-.loop:
+.scanLoop:
 	ld a, c ; $71cc
 	cp $20 ; $71cd
 	jr nc, .terminate ; $71cf
@@ -246,7 +238,7 @@ BuildDirtyRowRuns:
 	jr nz, .startRun ; $71d3
 	inc hl ; $71d5
 	inc c ; $71d6
-	jr .loop ; $71d7
+	jr .scanLoop ; $71d7
 .startRun:
 	push hl ; $71d9
 	ld h, d ; $71da
@@ -257,7 +249,7 @@ BuildDirtyRowRuns:
 	ld e, l ; $71df
 	pop hl ; $71e0
 	ld b, $00 ; $71e1
-.loopB:
+.runLoop:
 	ld a, c ; $71e3
 	cp $20 ; $71e4
 	jr nc, .storeRunLength ; $71e6
@@ -270,7 +262,7 @@ BuildDirtyRowRuns:
 	ld a, b ; $71ef
 	cp $07 ; $71f0
 	jr nc, .storeRunLength ; $71f2
-	jr .loopB ; $71f4
+	jr .runLoop ; $71f4
 .storeRunLength:
 	push hl ; $71f6
 	ld h, d ; $71f7
@@ -280,7 +272,7 @@ BuildDirtyRowRuns:
 	ld d, h ; $71fb
 	ld e, l ; $71fc
 	pop hl ; $71fd
-	jr .loop ; $71fe
+	jr .scanLoop ; $71fe
 .terminate:
 	ld h, d ; $7200
 	ld l, e ; $7201
@@ -365,11 +357,7 @@ RenderMenuWindowText:
 	add hl, hl ; $726c
 	add hl, hl ; $726d
 	ld a, d ; $726e
-	add l ; $726f
-	ld l, a ; $7270
-	jr nc, .gotPtr ; $7271
-	inc h ; $7273
-.gotPtr:
+	add_hl_a ; $726f
 	ld d, h ; $7274
 	ld e, l ; $7275
 	ld hl, wShadowTilemapPtr ; $7276
@@ -391,11 +379,7 @@ RenderMenuWindowText:
 	ld a, c ; $7297
 	call GetWindowStructPtr ; $7298
 	ld a, $02 ; $729b
-	add l ; $729d
-	ld l, a ; $729e
-	jr nc, .read ; $729f
-	inc h ; $72a1
-.read:
+	add_hl_a ; $729d
 	ld c, [hl] ; $72a2
 	dec c ; $72a3
 	dec c ; $72a4
@@ -500,11 +484,7 @@ DrawGlyph:
 	ld a, [hl+] ; $7336
 	call PlotGlyphRow ; $7337
 	ld a, $08 ; $733a
-	add e ; $733c
-	ld e, a ; $733d
-	jr nc, .nextRow ; $733e
-	inc d ; $7340
-.nextRow:
+	add_de_a ; $733c
 	dec c ; $7341
 	jr nz, .rowLoop ; $7342
 	pop de ; $7344
@@ -543,10 +523,6 @@ GetGlyphWidth:
 	ret ; $736f
 GetGlyphWidthByIndex:
 	ld hl, GlyphWidths_05 ; $7370
-	add l ; $7373
-	ld l, a ; $7374
-	jr nc, .read ; $7375
-	inc h ; $7377
-.read:
+	add_hl_a ; $7373
 	ld c, [hl] ; $7378
 	ret ; $7379

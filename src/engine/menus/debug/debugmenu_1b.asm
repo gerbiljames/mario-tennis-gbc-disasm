@@ -263,11 +263,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	farcall Unused_1b_SetMugshotAttrs ; $6700
 .nextEntry:
 	ld a, $08 ; $6703
-	add l ; $6705
-	ld l, a ; $6706
-	jr nc, .read ; $6707
-	inc h ; $6709
-.read:
+	add_hl_a ; $6705
 	ld a, [hl] ; $670a
 	cp $ff ; $670b
 	jr nz, .loop ; $670d
@@ -453,11 +449,7 @@ Unused_1b_StepUnlockDebugCursor:
 	add a ; $6864
 	add d ; $6865
 	push hl ; $6866
-	add l ; $6867
-	ld l, a ; $6868
-	jr nc, .read ; $6869
-	inc h ; $686b
-.read:
+	add_hl_a ; $6867
 	ld a, [hl] ; $686c
 	pop hl ; $686d
 	ret ; $686e

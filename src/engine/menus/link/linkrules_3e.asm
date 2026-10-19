@@ -48,11 +48,7 @@ SetMatchRuleOptionAttrRect:
 	ld hl, MatchRuleOptionAttrAddrs_3e ; $4877
 	ld a, b ; $487a
 	add a ; $487b
-	add l ; $487c
-	ld l, a ; $487d
-	jr nc, .readAddr ; $487e
-	inc h ; $4880
-.readAddr:
+	add_hl_a ; $487c
 	ld a, [hl+] ; $4881
 	ld d, [hl] ; $4882
 	ld e, a ; $4883
@@ -62,11 +58,7 @@ SetMatchRuleOptionAttrRect:
 	jr z, .fill ; $4888
 	ld a, b ; $488a
 	ld hl, MatchRuleOptionAttrWidths_3e ; $488b
-	add l ; $488e
-	ld l, a ; $488f
-	jr nc, .readWidth ; $4890
-	inc h ; $4892
-.readWidth:
+	add_hl_a ; $488e
 	ld a, [hl] ; $4893
 	ld h, a ; $4894
 .fill:
@@ -104,20 +96,12 @@ MatchRulesCursorSpriteTask:
 .gotRuleValue:
 	push af ; $490e
 	ld hl, MatchRulesCursorTiles_3e ; $490f
-	add l ; $4912
-	ld l, a ; $4913
-	jr nc, .read ; $4914
-	inc h ; $4916
-.read:
+	add_hl_a ; $4912
 	ld c, [hl] ; $4917
 	pop af ; $4918
 	ld hl, MatchRulesCursorPositions_3e ; $4919
 	add a ; $491c
-	add l ; $491d
-	ld l, a ; $491e
-	jr nc, .readB ; $491f
-	inc h ; $4921
-.readB:
+	add_hl_a ; $491d
 	ld a, [hl+] ; $4922
 	ld d, [hl] ; $4923
 	ld e, a ; $4924
@@ -184,21 +168,13 @@ Unused_3e_DrawMatchRulesCaptionText:
 	ld b, a ; $49c4
 	add a ; $49c5
 	ld hl, MatchRulesCaptionDests_3e ; $49c6
-	add l ; $49c9
-	ld l, a ; $49ca
-	jr nc, .read ; $49cb
-	inc h ; $49cd
-.read:
+	add_hl_a ; $49c9
 	ld a, [hl+] ; $49ce
 	ld d, [hl] ; $49cf
 	ld e, a ; $49d0
 	ld a, b ; $49d1
 	ld hl, Text_MatchTypeSinglesOrDoubles ; $49d2
-	add l ; $49d5
-	ld l, a ; $49d6
-	jr nc, .renderTextToBuffer64 ; $49d7
-	inc h ; $49d9
-.renderTextToBuffer64:
+	add_hl_a ; $49d5
 	ld c, $20 ; $49da
 	farcall RenderTextToBuffer64 ; $49dc
 	ret ; $49df
@@ -261,11 +237,7 @@ AnimateLinkStatusPalette:
 	srl a ; $4a5e
 	ld hl, AnimateLinkStatusPalettePtrs ; $4a60
 	add a ; $4a63
-	add l ; $4a64
-	ld l, a ; $4a65
-	jr nc, .read ; $4a66
-	inc h ; $4a68
-.read:
+	add_hl_a ; $4a64
 	ld a, [hl+] ; $4a69
 	ld h, [hl] ; $4a6a
 	ld l, a ; $4a6b
@@ -372,11 +344,7 @@ AnimateLinkErrorPalette:
 .gotFlashIndex:
 	add a ; $4b62
 	ld hl, LinkErrorFlashColors_3e ; $4b63
-	add l ; $4b66
-	ld l, a ; $4b67
-	jr nc, .read ; $4b68
-	inc h ; $4b6a
-.read:
+	add_hl_a ; $4b66
 	ld a, [hl+] ; $4b6b
 	ld d, [hl] ; $4b6c
 	ld e, a ; $4b6d

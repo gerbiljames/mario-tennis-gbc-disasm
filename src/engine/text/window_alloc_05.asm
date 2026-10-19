@@ -184,11 +184,7 @@ AllocWindowStruct:
 	add a ; $6e81
 	add a ; $6e82
 	ld hl, wWindowStructs ; $6e83
-	add l ; $6e86
-	ld l, a ; $6e87
-	jr nc, .store ; $6e88
-	inc h ; $6e8a
-.store:
+	add_hl_a ; $6e86
 	ld [hl], d ; $6e8b
 	inc hl ; $6e8c
 	ld [hl], e ; $6e8d
@@ -270,11 +266,7 @@ GetWindowStructPtr:
 	add a ; $6eee
 	add a ; $6eef
 	ld hl, wWindowStructs ; $6ef0
-	add l ; $6ef3
-	ld l, a ; $6ef4
-	jr nc, .done ; $6ef5
-	inc h ; $6ef7
-.done:
+	add_hl_a ; $6ef3
 	pop af ; $6ef8
 	ret ; $6ef9
 SaveWindowStruct:
@@ -384,11 +376,7 @@ DrawTextWindowFrame:
 	add hl, hl ; $6f90
 	add hl, hl ; $6f91
 	ld a, d ; $6f92
-	add l ; $6f93
-	ld l, a ; $6f94
-	jr nc, .gotOffset ; $6f95
-	inc h ; $6f97
-.gotOffset:
+	add_hl_a ; $6f93
 	ld d, h ; $6f98
 	ld e, l ; $6f99
 	ld hl, wShadowTilemapPtr ; $6f9a
@@ -436,11 +424,7 @@ DrawTextWindowFrame:
 	call WrapCellPtrToRowStart ; $6fdd
 	pop hl ; $6fe0
 	ld a, $20 ; $6fe1
-	add l ; $6fe3
-	ld l, a ; $6fe4
-	jr nc, .topRowDone ; $6fe5
-	inc h ; $6fe7
-.topRowDone:
+	add_hl_a ; $6fe3
 	call ClampCellPtrToShadowMap ; $6fe8
 .midRowLoop:
 	push hl ; $6feb
@@ -479,11 +463,7 @@ DrawTextWindowFrame:
 	call WrapCellPtrToRowStart ; $701d
 	pop hl ; $7020
 	ld a, $20 ; $7021
-	add l ; $7023
-	ld l, a ; $7024
-	jr nc, .midRowDone ; $7025
-	inc h ; $7027
-.midRowDone:
+	add_hl_a ; $7023
 	call ClampCellPtrToShadowMap ; $7028
 	dec d ; $702b
 	jr nz, .midRowLoop ; $702c
@@ -503,11 +483,7 @@ DrawTextWindowFrame:
 	call WrapCellPtrToRowStart ; $7042
 	pop hl ; $7045
 	ld a, $20 ; $7046
-	add l ; $7048
-	ld l, a ; $7049
-	jr nc, .bottomRowDone ; $704a
-	inc h ; $704c
-.bottomRowDone:
+	add_hl_a ; $7048
 	call ClampCellPtrToShadowMap ; $704d
 	pop hl ; $7050
 	ld bc, $0400 ; $7051
@@ -534,11 +510,7 @@ DrawTextWindowFrame:
 	call WrapCellPtrToRowStart ; $706b
 	pop hl ; $706e
 	ld a, $20 ; $706f
-	add l ; $7071
-	ld l, a ; $7072
-	jr nc, .attrRowDone ; $7073
-	inc h ; $7075
-.attrRowDone:
+	add_hl_a ; $7071
 	call ClampCellPtrToAttrMap ; $7076
 	dec d ; $7079
 	jr nz, .attrRowLoop ; $707a

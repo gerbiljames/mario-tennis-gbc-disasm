@@ -82,23 +82,23 @@ WaitTextAdvanceInput:
 	call FlushGlyphRow ; $5039
 	ldh a, [hPlayerInputFlags] ; $503c
 	and ~(PADF_SELECT | PADF_START) ; $503e
-	jr z, .loopB ; $5040
+	jr z, .waitPressLoop ; $5040
 	ld b, $1e ; $5042
-.loop:
+.holdDelayLoop:
 	call AdvanceFrame ; $5044
 	ldh a, [hPlayerInputFlags] ; $5047
 	and ~(PADF_SELECT | PADF_START) ; $5049
-	jr z, .loopB ; $504b
+	jr z, .waitPressLoop ; $504b
 	dec b ; $504d
-	jr nz, .loop ; $504e
-.loopB:
+	jr nz, .holdDelayLoop ; $504e
+.waitPressLoop:
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $5050
 	jr nz, .restore ; $5053
 	call AdvanceRandomSeed ; $5055
 	call AdvanceFrame ; $5058
 	ldh a, [hInputPressed] ; $505b
 	and ~(PADF_SELECT | PADF_START) ; $505d
-	jr z, .loopB ; $505f
+	jr z, .waitPressLoop ; $505f
 .restore:
 	pop bc ; $5061
 	pop af ; $5062

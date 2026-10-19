@@ -169,11 +169,7 @@ IntroCutsceneState19Exit_6b:
 UpdateCutsceneScrollX:
 	ld a, [wCutsceneStepTimer] ; $4c9e
 	ld hl, CutsceneScrollXTable ; $4ca1
-	add l ; $4ca4
-	ld l, a ; $4ca5
-	jr nc, .read ; $4ca6
-	inc h ; $4ca8
-.read:
+	add_hl_a ; $4ca4
 	ld e, [hl] ; $4ca9
 	ld hl, wIntroCutsceneScrollY ; $4caa
 	ld a, [hl+] ; $4cad
@@ -196,11 +192,7 @@ CutsceneScrollXTable:
 UpdateCutsceneScrollY:
 	ld a, [wCutsceneStepTimer] ; $4d61
 	ld hl, CutsceneScrollYTable ; $4d64
-	add l ; $4d67
-	ld l, a ; $4d68
-	jr nc, .read ; $4d69
-	inc h ; $4d6b
-.read:
+	add_hl_a ; $4d67
 	ld e, [hl] ; $4d6c
 	ld hl, wCutsceneScrollAccum ; $4d6d
 	ld a, [hl+] ; $4d70
@@ -228,11 +220,7 @@ QueueCutsceneAnimatedSprites:
 	sub $20 ; $4e36
 	add a ; $4e38
 	ld hl, CutsceneAnimatedSprites2 ; $4e39
-	add l ; $4e3c
-	ld l, a ; $4e3d
-	jr nc, .readSprite2 ; $4e3e
-	inc h ; $4e40
-.readSprite2:
+	add_hl_a ; $4e3c
 	ld a, [hl+] ; $4e41
 	ld d, [hl] ; $4e42
 	ld e, a ; $4e43
@@ -244,11 +232,7 @@ QueueCutsceneAnimatedSprites:
 	sub $20 ; $4e54
 	add a ; $4e56
 	ld hl, CutsceneAnimatedSprites1 ; $4e57
-	add l ; $4e5a
-	ld l, a ; $4e5b
-	jr nc, .readSprite1 ; $4e5c
-	inc h ; $4e5e
-.readSprite1:
+	add_hl_a ; $4e5a
 	ld a, [hl+] ; $4e5f
 	ld d, [hl] ; $4e60
 	ld e, a ; $4e61
@@ -260,11 +244,7 @@ QueueCutsceneAnimatedSprites:
 	sub $20 ; $4e72
 	add a ; $4e74
 	ld hl, CutsceneAnimatedSprites0 ; $4e75
-	add l ; $4e78
-	ld l, a ; $4e79
-	jr nc, .readSprite0 ; $4e7a
-	inc h ; $4e7c
-.readSprite0:
+	add_hl_a ; $4e78
 	ld a, [hl+] ; $4e7d
 	ld d, [hl] ; $4e7e
 	ld e, a ; $4e7f
@@ -545,11 +525,7 @@ ApplyCutsceneBobOffset:
 	ld a, [wCutsceneStepTimer] ; $53b9
 	and $0f ; $53bc
 	ld hl, CutsceneBobOffsetTable ; $53be
-	add l ; $53c1
-	ld l, a ; $53c2
-	jr nc, .readOffset ; $53c3
-	inc h ; $53c5
-.readOffset:
+	add_hl_a ; $53c1
 	ld a, [hl] ; $53c6
 	add e ; $53c7
 	ld e, a ; $53c8

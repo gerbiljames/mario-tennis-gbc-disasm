@@ -151,22 +151,14 @@ NetGameMatch1JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $551a
 	ld hl, NetGameMatch1JudgePointMessages ; $551d
-	add l ; $5520
-	ld l, a ; $5521
-	jr nc, .readMessage ; $5522
-	inc h ; $5524
-.readMessage:
+	add_hl_a ; $5520
 	ld a, [hl] ; $5525
 	ld a, a ; $5526
 	ld b, $0d ; $5527
 	call QueueDrillResultMessage ; $5529
 	ld a, [wPointOutcome] ; $552c
 	ld hl, OddRallyVerdicts ; $552f
-	add l ; $5532
-	ld l, a ; $5533
-	jr nc, .readResult ; $5534
-	inc h ; $5536
-.readResult:
+	add_hl_a ; $5532
 	ld a, [hl] ; $5537
 	ret ; $5538
 NetGameMatch1JudgePointMessages:
@@ -192,22 +184,14 @@ NetGameMatch1Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5554
 	ld hl, NetGameMatch1Cases1Messages ; $5557
-	add l ; $555a
-	ld l, a ; $555b
-	jr nc, .read ; $555c
-	inc h ; $555e
-.read:
+	add_hl_a ; $555a
 	ld a, [hl] ; $555f
 	ld a, a ; $5560
 	ld b, $0d ; $5561
 	call QueueDrillResultMessage ; $5563
 	ld a, [wPointOutcome] ; $5566
 	ld hl, EvenRallyVerdicts ; $5569
-	add l ; $556c
-	ld l, a ; $556d
-	jr nc, .readB ; $556e
-	inc h ; $5570
-.readB:
+	add_hl_a ; $556c
 	ld a, [hl] ; $5571
 	ret ; $5572
 NetGameMatch1Cases1Messages:
@@ -233,22 +217,14 @@ NetGameMatch1Cases2:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $558e
 	ld hl, NetGameMatch1Cases2Messages ; $5591
-	add l ; $5594
-	ld l, a ; $5595
-	jr nc, .read ; $5596
-	inc h ; $5598
-.read:
+	add_hl_a ; $5594
 	ld a, [hl] ; $5599
 	ld a, a ; $559a
 	ld b, $0d ; $559b
 	call QueueDrillResultMessage ; $559d
 	ld a, [wPointOutcome] ; $55a0
 	ld hl, OddRallyVerdicts ; $55a3
-	add l ; $55a6
-	ld l, a ; $55a7
-	jr nc, .readB ; $55a8
-	inc h ; $55aa
-.readB:
+	add_hl_a ; $55a6
 	ld a, [hl] ; $55ab
 	ret ; $55ac
 NetGameMatch1Cases2Messages:
@@ -288,22 +264,14 @@ NetGameMatch1Cases3:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $55ea
 	ld hl, NetGameMatch1Cases3Messages ; $55ed
-	add l ; $55f0
-	ld l, a ; $55f1
-	jr nc, .read ; $55f2
-	inc h ; $55f4
-.read:
+	add_hl_a ; $55f0
 	ld a, [hl] ; $55f5
 	ld a, a ; $55f6
 	ld b, $0d ; $55f7
 	call QueueDrillResultMessage ; $55f9
 	ld a, [wPointOutcome] ; $55fc
 	ld hl, EvenRallyVerdicts ; $55ff
-	add l ; $5602
-	ld l, a ; $5603
-	jr nc, .readB ; $5604
-	inc h ; $5606
-.readB:
+	add_hl_a ; $5602
 	ld a, [hl] ; $5607
 	ret ; $5608
 NetGameMatch1Cases3Messages:
@@ -513,22 +481,14 @@ NetGameMatch2JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $5794
 	ld hl, NetGameMatch2JudgePointMessages ; $5797
-	add l ; $579a
-	ld l, a ; $579b
-	jr nc, .readMessage ; $579c
-	inc h ; $579e
-.readMessage:
+	add_hl_a ; $579a
 	ld a, [hl] ; $579f
 	ld a, a ; $57a0
 	ld b, $0d ; $57a1
 	call QueueDrillResultMessage ; $57a3
 	ld a, [wPointOutcome] ; $57a6
 	ld hl, OddRallyVerdicts ; $57a9
-	add l ; $57ac
-	ld l, a ; $57ad
-	jr nc, .readResult ; $57ae
-	inc h ; $57b0
-.readResult:
+	add_hl_a ; $57ac
 	ld a, [hl] ; $57b1
 	ret ; $57b2
 NetGameMatch2JudgePointMessages:
@@ -554,22 +514,14 @@ NetGameMatch2Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $57ce
 	ld hl, NetGameMatch2Cases1Messages ; $57d1
-	add l ; $57d4
-	ld l, a ; $57d5
-	jr nc, .read ; $57d6
-	inc h ; $57d8
-.read:
+	add_hl_a ; $57d4
 	ld a, [hl] ; $57d9
 	ld a, a ; $57da
 	ld b, $0d ; $57db
 	call QueueDrillResultMessage ; $57dd
 	ld a, [wPointOutcome] ; $57e0
 	ld hl, EvenRallyVerdicts ; $57e3
-	add l ; $57e6
-	ld l, a ; $57e7
-	jr nc, .readB ; $57e8
-	inc h ; $57ea
-.readB:
+	add_hl_a ; $57e6
 	ld a, [hl] ; $57eb
 	ret ; $57ec
 NetGameMatch2Cases1Messages:
@@ -604,22 +556,14 @@ NetGameMatch2Cases2:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $581c
 	ld hl, NetGameMatch2Cases2Messages ; $581f
-	add l ; $5822
-	ld l, a ; $5823
-	jr nc, .read ; $5824
-	inc h ; $5826
-.read:
+	add_hl_a ; $5822
 	ld a, [hl] ; $5827
 	ld a, a ; $5828
 	ld b, $0d ; $5829
 	call QueueDrillResultMessage ; $582b
 	ld a, [wPointOutcome] ; $582e
 	ld hl, OddRallyVerdicts ; $5831
-	add l ; $5834
-	ld l, a ; $5835
-	jr nc, .readB ; $5836
-	inc h ; $5838
-.readB:
+	add_hl_a ; $5834
 	ld a, [hl] ; $5839
 	ret ; $583a
 NetGameMatch2Cases2Messages:
@@ -651,22 +595,14 @@ NetGameMatch2Cases3:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5865
 	ld hl, NetGameMatch2Cases3Messages ; $5868
-	add l ; $586b
-	ld l, a ; $586c
-	jr nc, .read ; $586d
-	inc h ; $586f
-.read:
+	add_hl_a ; $586b
 	ld a, [hl] ; $5870
 	ld a, a ; $5871
 	ld b, $0d ; $5872
 	call QueueDrillResultMessage ; $5874
 	ld a, [wPointOutcome] ; $5877
 	ld hl, EvenRallyVerdicts ; $587a
-	add l ; $587d
-	ld l, a ; $587e
-	jr nc, .readB ; $587f
-	inc h ; $5881
-.readB:
+	add_hl_a ; $587d
 	ld a, [hl] ; $5882
 	ret ; $5883
 NetGameMatch2Cases3Messages:
@@ -835,11 +771,7 @@ Unused_0b_NetGameMatch3JudgePoint:
 	and $03 ; $59a5
 	add a ; $59a7
 	ld hl, NetGameMatch3HandlePointEndTable ; $59a8
-	add l ; $59ab
-	ld l, a ; $59ac
-	jr nc, .read ; $59ad
-	inc h ; $59af
-.read:
+	add_hl_a ; $59ab
 	ld a, [hl+] ; $59b0
 	ld h, [hl] ; $59b1
 	ld l, a ; $59b2

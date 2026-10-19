@@ -236,11 +236,7 @@ BlitTilemapRunsFromTable:
 	ld a, [hl] ; $4921
 	ld h, b ; $4922
 	ld l, c ; $4923
-	add l ; $4924
-	ld l, a ; $4925
-	jr nc, .gotSrc ; $4926
-	inc h ; $4928
-.gotSrc:
+	add_hl_a ; $4924
 	wram_bank WRAM_SCENE ; $4929
 	ld a, l ; $492f
 	ld [wCharDataNumberBuffer], a ; $4930
@@ -1011,11 +1007,7 @@ CharDataScreen_DrawPageColumns:
 	inc de ; $4e2a
 .nextRow:
 	ld a, $16 ; $4e2b
-	add e ; $4e2d
-	ld e, a ; $4e2e
-	jr nc, .rowDone ; $4e2f
-	inc d ; $4e31
-.rowDone:
+	add_de_a ; $4e2d
 	dec c ; $4e32
 	jr nz, .rowLoop ; $4e33
 	ret ; $4e35

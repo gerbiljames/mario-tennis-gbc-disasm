@@ -336,11 +336,11 @@ Unused_17_GetMenuCursorLinearIndexFromPtr:
 	ld b, a ; $43ab
 	xor a ; $43ac
 	inc b ; $43ad
-.loopB:
+.loop:
 	dec b ; $43ae
 	jr z, .countDone2 ; $43af
 	add c ; $43b1
-	jr .loopB ; $43b2
+	jr .loop ; $43b2
 .countDone2:
 	ld b, a ; $43b4
 	ld a, [hl] ; $43b5

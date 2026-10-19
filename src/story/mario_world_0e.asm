@@ -19,11 +19,7 @@ RepairCounterCheckEquipChanged:
 	jp nz, .repairRacket ; $5026
 	ld a, [wMapScratch + 10] ; $5029
 	ld hl, Text_RepairCounterAlreadyUsingRacket ; $502c
-	add l ; $502f
-	ld l, a ; $5030
-	jr nc, .askRepair ; $5031
-	inc h ; $5033
-.askRepair:
+	add_hl_a ; $502f
 	farcall InitDialogueTextCursor ; $5034
 	call PushEquipmentNameTextArg ; $5037
 	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $503a
@@ -109,11 +105,7 @@ RepairCounterReopenServiceMenu:
 ShowEquipChangeConfirmation:
 	ld a, [wMapScratch + 10] ; $5153
 	ld hl, Text_RepairCounterPlayerEquipped ; $5156
-	add l ; $5159
-	ld l, a ; $515a
-	jr nc, .speak ; $515b
-	inc h ; $515d
-.speak:
+	add_hl_a ; $5159
 	farcall InitDialogueTextCursor ; $515e
 	call PushEquipmentNameTextArg ; $5161
 	ld a, [wMapScratch + 10] ; $5164
@@ -229,22 +221,14 @@ MarioWorldNpc12Mario_0e:
 MarioWorldNpc11_0e:
 	ld hl, Text_MarioWorldHostessAggressivePlayer ; $539a
 	ld a, [wMapSceneStage] ; $539d
-	add l ; $53a0
-	ld l, a ; $53a1
-	jr nc, .speak ; $53a2
-	inc h ; $53a4
-.speak:
+	add_hl_a ; $53a0
 	farcall InitDialogueTextCursor ; $53a5
 	script_speak ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS ; $53a8
 	ret ; $53ad
 MarioWorldNpc0BLuigi_0e:
 	ld hl, Text_LuigiYouWorkSoHard ; $53ae
 	ld a, [wMapSceneStage] ; $53b1
-	add l ; $53b4
-	ld l, a ; $53b5
-	jr nc, .speak ; $53b6
-	inc h ; $53b8
-.speak:
+	add_hl_a ; $53b4
 	farcall InitDialogueTextCursor ; $53b9
 	script_speak ACTOR_MARIO_WORLD_LUIGI ; $53bc
 	ret ; $53c1
@@ -271,33 +255,21 @@ MarioWorldNpc0D_0e:
 MarioWorldNpc0FBowser_0e:
 	ld hl, Text_BowserCantWaitMarioDefeat ; $53fa
 	ld a, [wMapSceneStage] ; $53fd
-	add l ; $5400
-	ld l, a ; $5401
-	jr nc, .speak ; $5402
-	inc h ; $5404
-.speak:
+	add_hl_a ; $5400
 	farcall InitDialogueTextCursor ; $5405
 	script_speak ACTOR_MARIO_WORLD_BOWSER ; $5408
 	ret ; $540d
 MarioWorldNpc10Wario_0e:
 	ld hl, Text_WarioBeatMarioFirst ; $540e
 	ld a, [wMapSceneStage] ; $5411
-	add l ; $5414
-	ld l, a ; $5415
-	jr nc, .speak ; $5416
-	inc h ; $5418
-.speak:
+	add_hl_a ; $5414
 	farcall InitDialogueTextCursor ; $5419
 	script_speak ACTOR_MARIO_WORLD_WARIO ; $541c
 	ret ; $5421
 MarioWorldNpc0EWaluigi_0e:
 	ld hl, Text_WaluigiWhyNotBeatMario ; $5422
 	ld a, [wMapSceneStage] ; $5425
-	add l ; $5428
-	ld l, a ; $5429
-	jr nc, .speak ; $542a
-	inc h ; $542c
-.speak:
+	add_hl_a ; $5428
 	farcall InitDialogueTextCursor ; $542d
 	script_speak ACTOR_MARIO_WORLD_WALUIGI ; $5430
 	ret ; $5435

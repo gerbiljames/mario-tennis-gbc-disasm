@@ -206,11 +206,7 @@ AdvanceSpriteAnimTimer:
 QueueIntroSpriteBlock:
 	ld hl, IntroSpriteBlockTable ; $6126
 	ld a, c ; $6129
-	add l ; $612a
-	ld l, a ; $612b
-	jr nc, .read ; $612c
-	inc h ; $612e
-.read:
+	add_hl_a ; $612a
 	ld c, [hl] ; $612f
 	ld hl, QueueIntroSpriteBlock_SpriteTemplate ; $6130
 	ld b, OAM_BANK1 ; $6133
@@ -339,11 +335,7 @@ AnimateBgPalette1Task:
 	sla a ; $72c3
 	sla a ; $72c5
 	ld hl, BgPalette1TaskPalettes ; $72c7
-	add l ; $72ca
-	ld l, a ; $72cb
-	jr nc, .loadPalettesImmediate ; $72cc
-	inc h ; $72ce
-.loadPalettesImmediate:
+	add_hl_a ; $72ca
 	ld_bg_pals de, 1, 1 ; $72cf
 	call LoadPalettesImmediate ; $72d2
 	ret ; $72d5
@@ -366,20 +358,12 @@ AnimateBgPalettes2And3Task:
 	sla a ; $72f3
 	push af ; $72f5
 	ld hl, BgPalettes2And3TaskPalettes0 ; $72f6
-	add l ; $72f9
-	ld l, a ; $72fa
-	jr nc, .loadBgPal2 ; $72fb
-	inc h ; $72fd
-.loadBgPal2:
+	add_hl_a ; $72f9
 	ld_bg_pals de, 2, 1 ; $72fe
 	call LoadPalettesImmediate ; $7301
 	pop af ; $7304
 	ld hl, BgPalettes2And3TaskPalettes1 ; $7305
-	add l ; $7308
-	ld l, a ; $7309
-	jr nc, .loadBgPal3 ; $730a
-	inc h ; $730c
-.loadBgPal3:
+	add_hl_a ; $7308
 	ld_bg_pals de, 3, 1 ; $730d
 	call LoadPalettesImmediate ; $7310
 	ret ; $7313
@@ -401,11 +385,7 @@ CycleBgPalettes4To7Task:
 	sla a ; $732f
 	sla a ; $7331
 	ld hl, BgPalettes4To7TaskPalettes ; $7333
-	add l ; $7336
-	ld l, a ; $7337
-	jr nc, .loadFadeInStep ; $7338
-	inc h ; $733a
-.loadFadeInStep:
+	add_hl_a ; $7336
 	ld_bg_pals de, 4, 4 ; $733b
 	call LoadPalettesImmediate ; $733e
 	ret ; $7341
@@ -419,11 +399,7 @@ CycleBgPalettes4To7Task:
 	sla a ; $734c
 	sla a ; $734e
 	ld hl, BgPalettes4To7TaskPalettes ; $7350
-	add l ; $7353
-	ld l, a ; $7354
-	jr nc, .loadFadeOutStep ; $7355
-	inc h ; $7357
-.loadFadeOutStep:
+	add_hl_a ; $7353
 	ld_bg_pals de, 4, 4 ; $7358
 	call LoadPalettesImmediate ; $735b
 	ret ; $735e
@@ -436,11 +412,7 @@ ScrollCutsceneXRightTask:
 	cp $10 ; $7369
 	jr nc, .done ; $736b
 	ld hl, ScrollCutsceneXRightTaskTable ; $736d
-	add l ; $7370
-	ld l, a ; $7371
-	jr nc, .read ; $7372
-	inc h ; $7374
-.read:
+	add_hl_a ; $7370
 	ld a, [hl] ; $7375
 	ld b, a ; $7376
 	ld a, [wCutsceneScrollX] ; $7377
@@ -458,11 +430,7 @@ ScrollCutsceneXLeftTask:
 	cp $10 ; $7398
 	jr nc, .done ; $739a
 	ld hl, ScrollCutsceneXLeftTaskTable ; $739c
-	add l ; $739f
-	ld l, a ; $73a0
-	jr nc, .read ; $73a1
-	inc h ; $73a3
-.read:
+	add_hl_a ; $739f
 	ld a, [hl] ; $73a4
 	ld b, a ; $73a5
 	ld a, [wCutsceneScrollX] ; $73a6
@@ -480,11 +448,7 @@ ScrollCutsceneLeftTask:
 	cp $10 ; $73c7
 	jr nc, .done ; $73c9
 	ld hl, ScrollCutsceneLeftTaskTable ; $73cb
-	add l ; $73ce
-	ld l, a ; $73cf
-	jr nc, .read ; $73d0
-	inc h ; $73d2
-.read:
+	add_hl_a ; $73ce
 	ld a, [hl] ; $73d3
 	ld b, a ; $73d4
 	ld a, [wCutsceneScrollX] ; $73d5

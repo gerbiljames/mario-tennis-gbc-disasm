@@ -72,17 +72,9 @@ ServicePractice2SetupShotTarget:
 	cp $04 ; $50ee
 	ret nc ; $50f0
 	ld hl, ServicePractice2ExpectedServes ; $50f1
-	add l ; $50f4
-	ld l, a ; $50f5
-	jr nc, .indexByHandedness ; $50f6
-	inc h ; $50f8
-.indexByHandedness:
+	add_hl_a ; $50f4
 	ld a, [wStoryMainLeftHanded] ; $50f9
-	add l ; $50fc
-	ld l, a ; $50fd
-	jr nc, .read ; $50fe
-	inc h ; $5100
-.read:
+	add_hl_a ; $50fc
 	ld b, [hl] ; $5101
 	ld a, [wCurrentShotType] ; $5102
 	ld [wDrillCounters + DRILLCTR_SERVE_SHOT_TYPE], a ; $5105
@@ -91,18 +83,10 @@ ServicePractice2SetupShotTarget:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $510b
 	add a ; $510e
 	ld hl, ServicePractice2ServeCounterPtrs ; $510f
-	add l ; $5112
-	ld l, a ; $5113
-	jr nc, .indexCounterPtrByHandedness ; $5114
-	inc h ; $5116
-.indexCounterPtrByHandedness:
+	add_hl_a ; $5112
 	ld a, [wStoryMainLeftHanded] ; $5117
 	add a ; $511a
-	add l ; $511b
-	ld l, a ; $511c
-	jr nc, .readB ; $511d
-	inc h ; $511f
-.readB:
+	add_hl_a ; $511b
 	ld a, [hl+] ; $5120
 	ld h, [hl] ; $5121
 	ld l, a ; $5122
@@ -150,17 +134,9 @@ ServicePractice2QueueOutcomeMessage:
 	ld [wDrillMessageId], a ; $5176
 	ld a, [wStoryMainLeftHanded] ; $5179
 	ld hl, ServicePractice2OutcomeExpectedServes ; $517c
-	add l ; $517f
-	ld l, a ; $5180
-	jr nc, .checkTotalPointsScoredInCurrentGame ; $5181
-	inc h ; $5183
-.checkTotalPointsScoredInCurrentGame:
+	add_hl_a ; $517f
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5184
-	add l ; $5187
-	ld l, a ; $5188
-	jr nc, .read ; $5189
-	inc h ; $518b
-.read:
+	add_hl_a ; $5187
 	ld b, [hl] ; $518c
 	ld a, [wDrillCounters + DRILLCTR_SERVE_SHOT_TYPE] ; $518d
 	cp b ; $5190

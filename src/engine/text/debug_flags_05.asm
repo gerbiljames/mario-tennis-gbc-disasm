@@ -8,11 +8,7 @@ DebugDrawHexRowLabel:
 	ld hl, HexDigitChars_05 ; $649c
 	swap a ; $649f
 	and $0f ; $64a1
-	add l ; $64a3
-	ld l, a ; $64a4
-	jr nc, .writeCell ; $64a5
-	inc h ; $64a7
-.writeCell:
+	add_hl_a ; $64a3
 	ld c, [hl] ; $64a8
 	ld a, b ; $64a9
 	ld b, $80 ; $64aa
@@ -301,11 +297,7 @@ RunDebugMenu:
 	jr z, .restore ; $66ca
 	ld hl, TextSubcmdHandlers_05 ; $66cc
 	add a ; $66cf
-	add l ; $66d0
-	ld l, a ; $66d1
-	jr nc, .read ; $66d2
-	inc h ; $66d4
-.read:
+	add_hl_a ; $66d0
 	ld a, [hl+] ; $66d5
 	ld h, [hl] ; $66d6
 	ld l, a ; $66d7
@@ -364,11 +356,7 @@ DebugDrawWarpMenu:
 	ld a, [wDebugWarpWindowId] ; $673c
 	ld a, [wDebugMenuWindowId] ; $673f
 	ld hl, $0179 ; $6742
-	add l ; $6745
-	ld l, a ; $6746
-	jr nc, .draw ; $6747
-	inc h ; $6749
-.draw:
+	add_hl_a ; $6745
 	ld de, $0102 ; $674a
 	ld a, [wDebugWarpWindowId] ; $674d
 	call WriteDialogueToWindow ; $6750

@@ -719,7 +719,7 @@ AcademyWingEntry0fScene:
 	script_wait_idle ACTOR_PLAYER ; $71aa
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_HEADMASTER, ANIM_NOD ; $71af
 	script_wait_idle ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $71b6
-.loopB:
+.loop:
 	script_speak_restore ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $71bb
 	farcall RunDialogueYesNoPrompt ; $71c0
 	farcall ScriptCloseDialogueWindow ; $71c3
@@ -731,7 +731,7 @@ AcademyWingEntry0fScene:
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_HEADMASTER, ANIM_BOUNCE ; $71dc
 	script_wait_idle ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $71e3
 	script_set_text Text_HeadmasterUrgeMeetMario ; $71e8
-	jr .loopB ; $71ee
+	jr .loop ; $71ee
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $71f0
 	jp z, .singlesExit ; $71f3

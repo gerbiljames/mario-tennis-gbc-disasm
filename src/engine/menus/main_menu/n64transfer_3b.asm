@@ -14,11 +14,7 @@ DrawEraseSavedDataCaption:
 	add a ; $7116
 	add a ; $7117
 	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $7118
-	add c ; $711b
-	ld c, a ; $711c
-	jr nc, .gotPtr ; $711d
-	inc b ; $711f
-.gotPtr:
+	add_bc_a ; $711b
 	ld hl, $0000 ; $7120
 	add hl, bc ; $7123
 	ld a, [hl] ; $7124
@@ -85,11 +81,7 @@ DrawEraseSavedDataCaption:
 .nonSlotItem:
 	ld hl, Text_EraseN64DataCaption ; $7198
 	sub $03 ; $719b
-	add l ; $719d
-	ld l, a ; $719e
-	jr nc, .renderTextToBuffer64 ; $719f
-	inc h ; $71a1
-.renderTextToBuffer64:
+	add_hl_a ; $719d
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $71a2
 	ld c, $20 ; $71a5
 	farcall RenderTextToBuffer64 ; $71a7
@@ -167,11 +159,7 @@ LoadN64RecordTypeGfx:
 	ld a, c ; $724e
 	add a ; $724f
 	ld hl, N64RecordTypeTable0 ; $7250
-	add l ; $7253
-	ld l, a ; $7254
-	jr nc, .read ; $7255
-	inc h ; $7257
-.read:
+	add_hl_a ; $7253
 	ld a, [hl+] ; $7258
 	ld h, [hl] ; $7259
 	ld l, a ; $725a
@@ -188,11 +176,7 @@ LoadN64RecordTypeGfx:
 	ld hl, N64RecordTypeTable1 ; $7269
 	ld a, c ; $726c
 	add a ; $726d
-	add l ; $726e
-	ld l, a ; $726f
-	jr nc, .readB ; $7270
-	inc h ; $7272
-.readB:
+	add_hl_a ; $726e
 	ld a, [hl+] ; $7273
 	ld d, [hl] ; $7274
 	ld e, a ; $7275
@@ -259,7 +243,7 @@ N64RecordTypeSlideIn:
 	or a ; $72ed
 	jr z, .slideBack ; $72ee
 	ld c, $00 ; $72f0
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $72f2
 	ld b, $0a ; $72f5
 	farcall RestoreMenuBgAndDrawPanel ; $72f7
@@ -269,11 +253,11 @@ N64RecordTypeSlideIn:
 	inc a ; $7300
 	ld c, a ; $7301
 	cp $0d ; $7302
-	jr nz, .loop ; $7304
+	jr nz, .slideForwardLoop ; $7304
 	ret ; $7306
 .slideBack:
 	ld c, $0a ; $7307
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $7309
 	ld b, $0b ; $730c
 	farcall RestoreMenuBgAndDrawPanel ; $730e
@@ -283,7 +267,7 @@ N64RecordTypeSlideIn:
 	dec a ; $7317
 	ld c, a ; $7318
 	cp $ff ; $7319
-	jr nz, .loopB ; $731b
+	jr nz, .slideBackLoop ; $731b
 	ret ; $731d
 N64RecordTypeSlideOut:
 	ld a, b ; $731e
@@ -322,20 +306,12 @@ N64RecordTypeCursorSpriteTask:
 	call GetMenuCursorIndex_3b ; $7354
 	push af ; $7357
 	ld hl, N64RecordTypeCursorSpriteTaskTable1 ; $7358
-	add l ; $735b
-	ld l, a ; $735c
-	jr nc, .read ; $735d
-	inc h ; $735f
-.read:
+	add_hl_a ; $735b
 	ld c, [hl] ; $7360
 	pop af ; $7361
 	ld hl, N64RecordTypeCursorSpriteTaskTable0 ; $7362
 	add a ; $7365
-	add l ; $7366
-	ld l, a ; $7367
-	jr nc, .readB ; $7368
-	inc h ; $736a
-.readB:
+	add_hl_a ; $7366
 	ld a, [hl+] ; $736b
 	ld d, [hl] ; $736c
 	ld e, a ; $736d
@@ -434,11 +410,7 @@ FillN64RecordTypeCell:
 	ld hl, FillN64RecordTypeCellTable ; $7437
 	ld a, b ; $743a
 	add a ; $743b
-	add l ; $743c
-	ld l, a ; $743d
-	jr nc, .read ; $743e
-	inc h ; $7440
-.read:
+	add_hl_a ; $743c
 	ld a, [hl+] ; $7441
 	ld d, [hl] ; $7442
 	ld e, a ; $7443
@@ -461,11 +433,7 @@ FillN64RecordTypeCellTable:
 LoadN64RecordTypeCellPalette:
 	ld hl, N64RecordTypeCellPalettePtrs ; $745d
 	add a ; $7460
-	add l ; $7461
-	ld l, a ; $7462
-	jr nc, .read ; $7463
-	inc h ; $7465
-.read:
+	add_hl_a ; $7461
 	ld a, [hl+] ; $7466
 	ld h, [hl] ; $7467
 	ld l, a ; $7468
@@ -495,11 +463,7 @@ DrawN64RecordTypeCaption:
 	call GetMenuCursorIndex_3b ; $74a5
 	ld b, a ; $74a8
 	ld hl, Text_N64TournamentData ; $74a9
-	add l ; $74ac
-	ld l, a ; $74ad
-	jr nc, .renderTextToBuffer64 ; $74ae
-	inc h ; $74b0
-.renderTextToBuffer64:
+	add_hl_a ; $74ac
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $74b1
 	ld c, $20 ; $74b4
 	farcall RenderTextToBuffer64 ; $74b6
@@ -576,11 +540,7 @@ LoadN64TransferItemGfx:
 	ld a, c ; $755d
 	add a ; $755e
 	ld hl, N64TransferItemTable0 ; $755f
-	add l ; $7562
-	ld l, a ; $7563
-	jr nc, .read ; $7564
-	inc h ; $7566
-.read:
+	add_hl_a ; $7562
 	ld a, [hl+] ; $7567
 	ld h, [hl] ; $7568
 	ld l, a ; $7569
@@ -597,11 +557,7 @@ LoadN64TransferItemGfx:
 	ld hl, N64TransferItemTable1 ; $7578
 	ld a, c ; $757b
 	add a ; $757c
-	add l ; $757d
-	ld l, a ; $757e
-	jr nc, .readB ; $757f
-	inc h ; $7581
-.readB:
+	add_hl_a ; $757d
 	ld a, [hl+] ; $7582
 	ld d, [hl] ; $7583
 	ld e, a ; $7584
@@ -719,11 +675,7 @@ DrawN64TransferItemGrid:
 LoadN64TransferItemCellPalette:
 	ld hl, N64TransferItemCellPalettePtrs ; $7680
 	add a ; $7683
-	add l ; $7684
-	ld l, a ; $7685
-	jr nc, .read ; $7686
-	inc h ; $7688
-.read:
+	add_hl_a ; $7684
 	ld a, [hl+] ; $7689
 	ld h, [hl] ; $768a
 	ld l, a ; $768b
@@ -755,11 +707,7 @@ DrawN64TransferItemCaption:
 	call GetMenuCursorIndex_3b ; $76d0
 	ld b, a ; $76d3
 	ld hl, Text_N64CharPartnerData ; $76d4
-	add l ; $76d7
-	ld l, a ; $76d8
-	jr nc, .renderTextToBuffer64 ; $76d9
-	inc h ; $76db
-.renderTextToBuffer64:
+	add_hl_a ; $76d7
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $76dc
 	ld c, $20 ; $76df
 	farcall RenderTextToBuffer64 ; $76e1
@@ -771,20 +719,12 @@ N64TransferItemCursorSpriteTask:
 	call GetMenuCursorIndex_3b ; $76ef
 	push af ; $76f2
 	ld hl, N64TransferItemCursorSpriteTaskTable1 ; $76f3
-	add l ; $76f6
-	ld l, a ; $76f7
-	jr nc, .read ; $76f8
-	inc h ; $76fa
-.read:
+	add_hl_a ; $76f6
 	ld c, [hl] ; $76fb
 	pop af ; $76fc
 	ld hl, N64TransferItemCursorSpriteTaskTable0 ; $76fd
 	add a ; $7700
-	add l ; $7701
-	ld l, a ; $7702
-	jr nc, .readB ; $7703
-	inc h ; $7705
-.readB:
+	add_hl_a ; $7701
 	ld a, [hl+] ; $7706
 	ld d, [hl] ; $7707
 	ld e, a ; $7708

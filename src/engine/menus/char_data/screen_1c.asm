@@ -710,11 +710,7 @@ CharDataScreenAnimTask:
 	call QueueVRAMCopy ; $462f
 	pop hl ; $4632
 	ld a, $20 ; $4633
-	add l ; $4635
-	ld l, a ; $4636
-	jr nc, .copyTiles3e ; $4637
-	inc h ; $4639
-.copyTiles3e:
+	add_hl_a ; $4635
 	ld de, vTiles2 tile $3e + VRAM_BANK1 ; $463a
 	ld c, 2 ; $463d
 	call QueueVRAMCopy ; $463f
@@ -729,11 +725,7 @@ CharDataScreenAnimTask:
 	call QueueVRAMCopy ; $4653
 	pop hl ; $4656
 	ld a, $20 ; $4657
-	add l ; $4659
-	ld l, a ; $465a
-	jr nc, .copyTiles5e ; $465b
-	inc h ; $465d
-.copyTiles5e:
+	add_hl_a ; $4659
 	ld de, vTiles2 tile $5e + VRAM_BANK1 ; $465e
 	ld c, 2 ; $4661
 	call QueueVRAMCopy ; $4663

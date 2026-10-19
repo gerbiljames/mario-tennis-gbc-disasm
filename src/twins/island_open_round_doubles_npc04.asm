@@ -6,11 +6,7 @@
 	ld a, [wMapSceneStage]
 	dec a
 	ld hl, Text_RoundNameRoundTwo
-	add l
-	ld l, a
-	jr nc, .queue
-	inc h
-.queue:
+	add_hl_a
 	call PushShortTextArg_0f
 	script_speak ACTOR_ROLE_ISLAND_OPEN_ROUND_B_COZ
 	ret

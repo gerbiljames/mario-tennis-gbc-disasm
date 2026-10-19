@@ -395,11 +395,7 @@ ApplyTilemapPatchListExpScreen:
 	ld a, [hl] ; $7622
 	ld h, b ; $7623
 	ld l, c ; $7624
-	add l ; $7625
-	ld l, a ; $7626
-	jr nc, .gotSrc ; $7627
-	inc h ; $7629
-.gotSrc:
+	add_hl_a ; $7625
 	wram_bank WRAM_SCENE ; $762a
 	ld a, l ; $7630
 	ld [wCharDataNumberBuffer], a ; $7631

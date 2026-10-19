@@ -6,17 +6,17 @@ DrawTennisDictionaryLetterLabels:
 	ld e, a ; $533c
 	ld hl, SelectionMaskGrid_3f ; $533d
 	ld d, $00 ; $5340
-.loop:
+.findSelectedLoop:
 	ld a, [hl+] ; $5342
 	cp $00 ; $5343
 	jr nz, .testCategory ; $5345
 	inc d ; $5347
-	jr .loop ; $5348
+	jr .findSelectedLoop ; $5348
 .testCategory:
 	and e ; $534a
-	jr z, .loop ; $534b
+	jr z, .findSelectedLoop ; $534b
 	dec b ; $534d
-	jr nz, .loop ; $534e
+	jr nz, .findSelectedLoop ; $534e
 	wram_bank WRAM_SCREEN ; $5350
 	ld a, d ; $5356
 	dec a ; $5357
@@ -25,11 +25,7 @@ DrawTennisDictionaryLetterLabels:
 	ld a, $16 ; $535c
 .renderPrevLetter:
 	ld hl, $148f ; $535e
-	add l ; $5361
-	ld l, a ; $5362
-	jr nc, .gotPtr ; $5363
-	inc h ; $5365
-.gotPtr:
+	add_hl_a ; $5361
 	push de ; $5366
 	ld c, $40 ; $5367
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 16 ; $5369
@@ -42,16 +38,12 @@ DrawTennisDictionaryLetterLabels:
 	xor a ; $5376
 .renderNextLetter:
 	ld hl, Text_TennisDictionaryLetterA ; $5377
-	add l ; $537a
-	ld l, a ; $537b
-	jr nc, .renderTextToBuffer64 ; $537c
-	inc h ; $537e
-.renderTextToBuffer64:
+	add_hl_a ; $537a
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 30 ; $537f
 	farcall RenderTextToBuffer64 ; $5382
 	ld a, $06 ; $5385
 	ld [wShadowTilemap + 2 * TILEMAP_WIDTH], a ; $5387
-.loopB:
+.waitQueueLoop:
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 16 ; $538a
 	ld de, vBGMap0 + 1 * TILEMAP_WIDTH + 16 ; $538d
 	ld c, 1 ; $5390
@@ -59,7 +51,7 @@ DrawTennisDictionaryLetterLabels:
 	or a ; $5395
 	jr nz, .done ; $5396
 	call AdvanceFrame ; $5398
-	jr .loopB ; $539b
+	jr .waitQueueLoop ; $539b
 .done:
 	ret ; $539d
 SelectionMaskGrid_3f:
@@ -102,11 +94,7 @@ SetTennisDictionaryListFromIndexRow:
 GetTennisDictionaryRowFirstLetter:
 	push hl ; $5453
 	ld hl, TennisDictionaryRowFirstLetterTable ; $5454
-	add l ; $5457
-	ld l, a ; $5458
-	jr nc, .read ; $5459
-	inc h ; $545b
-.read:
+	add_hl_a ; $5457
 	ld a, [hl] ; $545c
 	pop hl ; $545d
 	ret ; $545e
@@ -150,11 +138,7 @@ SetTennisDictionaryIndexRowFromList:
 GetTennisDictionaryLetterRow:
 	push hl ; $54a1
 	ld hl, TennisDictionaryLetterRowTable ; $54a2
-	add l ; $54a5
-	ld l, a ; $54a6
-	jr nc, .read ; $54a7
-	inc h ; $54a9
-.read:
+	add_hl_a ; $54a5
 	ld a, [hl] ; $54aa
 	pop hl ; $54ab
 	ret ; $54ac
@@ -176,33 +160,21 @@ DrawTennisDictionaryIndexCursor:
 	inc b ; $54dd
 .rowLoop:
 	ld a, $80 ; $54de
-	add e ; $54e0
-	ld e, a ; $54e1
-	jr nc, .nextRow ; $54e2
-	inc d ; $54e4
-.nextRow:
+	add_de_a ; $54e0
 	dec b ; $54e5
 	jr nz, .rowLoop ; $54e6
 	ld a, c ; $54e8
 	push af ; $54e9
 	add a ; $54ea
 	add a ; $54eb
-	add l ; $54ec
-	ld l, a ; $54ed
-	jr nc, .readEntry ; $54ee
-	inc h ; $54f0
-.readEntry:
+	add_hl_a ; $54ec
 	ld a, [hl+] ; $54f1
 	ld [de], a ; $54f2
 	inc de ; $54f3
 	ld a, [hl+] ; $54f4
 	ld [de], a ; $54f5
 	ld a, $3f ; $54f6
-	add e ; $54f8
-	ld e, a ; $54f9
-	jr nc, .secondRow ; $54fa
-	inc d ; $54fc
-.secondRow:
+	add_de_a ; $54f8
 	ld a, [hl+] ; $54fd
 	ld [de], a ; $54fe
 	inc de ; $54ff
@@ -216,17 +188,9 @@ DrawTennisDictionaryIndexCursor:
 	inc b ; $550b
 .vramRowLoop:
 	ld a, $40 ; $550c
-	add l ; $550e
-	ld l, a ; $550f
-	jr nc, .advanceDest ; $5510
-	inc h ; $5512
-.advanceDest:
+	add_hl_a ; $550e
 	ld a, $20 ; $5513
-	add e ; $5515
-	ld e, a ; $5516
-	jr nc, .nextVramRow ; $5517
-	inc d ; $5519
-.nextVramRow:
+	add_de_a ; $5515
 	dec b ; $551a
 	jr nz, .vramRowLoop ; $551b
 	ld c, 1 ; $551d
@@ -236,17 +200,9 @@ DrawTennisDictionaryIndexCursor:
 	pop hl ; $5524
 	pop de ; $5525
 	ld a, $40 ; $5526
-	add l ; $5528
-	ld l, a ; $5529
-	jr nc, .secondQueueDest ; $552a
-	inc h ; $552c
-.secondQueueDest:
+	add_hl_a ; $5528
 	ld a, $20 ; $552d
-	add e ; $552f
-	ld e, a ; $5530
-	jr nc, .queueSecond ; $5531
-	inc d ; $5533
-.queueSecond:
+	add_de_a ; $552f
 	ld c, 1 ; $5534
 	call QueueVRAMCopy ; $5536
 	wram_bank WRAM_SCENE ; $5539
@@ -354,11 +310,7 @@ HandleTennisDictionaryListInput:
 	call GetTennisDictionarySelectedIndex ; $5630
 	call GetTennisDictionaryEntryIndex ; $5633
 	ld hl, $1430 ; $5636
-	add l ; $5639
-	ld l, a ; $563a
-	jr nc, .gotEntryTextId ; $563b
-	inc h ; $563d
-.gotEntryTextId:
+	add_hl_a ; $5639
 	jr .resetTextWindowsAndRestoreMap ; $563e
 .singleEntryCategory:
 	call GetTennisDictionarySelectedIndex ; $5640

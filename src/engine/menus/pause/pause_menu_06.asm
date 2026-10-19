@@ -318,11 +318,7 @@ ShowRulesPageSequence:
 	ld h, [hl] ; $4346
 	ld l, a ; $4347
 	pop af ; $4348
-	add l ; $4349
-	ld l, a ; $434a
-	jr nc, .drawMenuTextLine ; $434b
-	inc h ; $434d
-.drawMenuTextLine:
+	add_hl_a ; $4349
 	ld_cell de, $01, $06 ; $434e
 	call DrawMenuTextLine ; $4351
 	farcall StepMatchFrame ; $4354

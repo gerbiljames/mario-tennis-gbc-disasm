@@ -110,6 +110,28 @@ MACRO ld_bc_indexed
 	ld b, a
 ENDM
 
+; hl / de / bc += a, the carry into the high byte by a jr over `inc`.
+MACRO add_hl_a
+	add l
+	ld l, a
+	jr nc, @ + 3
+	inc h
+ENDM
+
+MACRO add_de_a
+	add e
+	ld e, a
+	jr nc, @ + 3
+	inc d
+ENDM
+
+MACRO add_bc_a
+	add c
+	ld c, a
+	jr nc, @ + 3
+	inc b
+ENDM
+
 ; WaitFramesCmd takes its frame count as an inline byte after the call.
 MACRO wait_frames
 	call WaitFramesCmd

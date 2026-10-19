@@ -702,21 +702,13 @@ QueueActorFrameTileCopy:
 	ld l, a ; $56d7
 	ld a, e ; $56d8
 	add a ; $56d9
-	add l ; $56da
-	ld l, a ; $56db
-	jr nc, .queue ; $56dc
-	inc h ; $56de
-.queue:
+	add_hl_a ; $56da
 	ld a, [wActorScriptBank] ; $56df
 	call FarReadWord ; $56e2
 	ld l, c ; $56e5
 	ld h, b ; $56e6
 	ld a, d ; $56e7
-	add l ; $56e8
-	ld l, a ; $56e9
-	jr nc, .done ; $56ea
-	inc h ; $56ec
-.done:
+	add_hl_a ; $56e8
 	pop bc ; $56ed
 	push hl ; $56ee
 	ld hl, ACTORF_VRAM_TILES ; $56ef
@@ -780,11 +772,7 @@ IsActorMoving:
 	push hl ; $573b
 	wram_bank WRAM_ACTORS ; $573c
 	ld a, ACTORF_FLAGS ; $5742
-	add l ; $5744
-	ld l, a ; $5745
-	jr nc, .readFlag ; $5746
-	inc h ; $5748
-.readFlag:
+	add_hl_a ; $5744
 	bit 7, [hl] ; $5749
 	jr z, .idle ; $574b
 	ld a, $01 ; $574d

@@ -343,11 +343,7 @@ FetchDialogueText:
 	and $0f ; $5c2c
 	ld hl, DialogueTextFetchers_05 ; $5c2e
 	add a ; $5c31
-	add l ; $5c32
-	ld l, a ; $5c33
-	jr nc, .readFetcher ; $5c34
-	inc h ; $5c36
-.readFetcher:
+	add_hl_a ; $5c32
 	ld a, [hl+] ; $5c37
 	ld h, [hl] ; $5c38
 	ld l, a ; $5c39
@@ -447,11 +443,7 @@ FetchShortText:
 	and $0f ; $5cb8
 	ld hl, ShortTextFetchers_05 ; $5cba
 	add a ; $5cbd
-	add l ; $5cbe
-	ld l, a ; $5cbf
-	jr nc, .read ; $5cc0
-	inc h ; $5cc2
-.read:
+	add_hl_a ; $5cbe
 	ld a, [hl+] ; $5cc3
 	ld h, [hl] ; $5cc4
 	ld l, a ; $5cc5

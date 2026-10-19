@@ -28,11 +28,7 @@ RunStoryTwoOptionMenu:
 	ld hl, wMatchMenuSelection ; $70e6
 	add [hl] ; $70e9
 	ld hl, Text_CharAndItemData ; $70ea
-	add l ; $70ed
-	ld l, a ; $70ee
-	jr nc, .drawInitialCaption ; $70ef
-	inc h ; $70f1
-.drawInitialCaption:
+	add_hl_a ; $70ed
 	ld_cell de, $00, $0e ; $70f2
 	call DrawStoryMenuCaption ; $70f5
 .redrawStoryTilemapRows:
@@ -71,11 +67,7 @@ RunStoryTwoOptionMenu:
 	ld hl, wMatchMenuSelection ; $713c
 	add [hl] ; $713f
 	ld hl, Text_CharAndItemData ; $7140
-	add l ; $7143
-	ld l, a ; $7144
-	jr nc, .drawMovedCaption ; $7145
-	inc h ; $7147
-.drawMovedCaption:
+	add_hl_a ; $7143
 	ld_cell de, $00, $0e ; $7148
 	call DrawStoryMenuCaption ; $714b
 	call RedrawStoryTilemapRows ; $714e
@@ -120,11 +112,7 @@ RunStoryThreeOptionMenu:
 	ld hl, wMatchMenuSelection ; $71a0
 	add [hl] ; $71a3
 	ld hl, Text_CharAndItemData ; $71a4
-	add l ; $71a7
-	ld l, a ; $71a8
-	jr nc, .drawInitialCaption ; $71a9
-	inc h ; $71ab
-.drawInitialCaption:
+	add_hl_a ; $71a7
 	ld_cell de, $00, $0e ; $71ac
 	call DrawStoryMenuCaption ; $71af
 	call RedrawStoryTilemapRows ; $71b2
@@ -161,11 +149,7 @@ RunStoryThreeOptionMenu:
 	ld hl, wMatchMenuSelection ; $71f4
 	add [hl] ; $71f7
 	ld hl, Text_CharAndItemData ; $71f8
-	add l ; $71fb
-	ld l, a ; $71fc
-	jr nc, .drawMovedCaption ; $71fd
-	inc h ; $71ff
-.drawMovedCaption:
+	add_hl_a ; $71fb
 	ld_cell de, $00, $0e ; $7200
 	call DrawStoryMenuCaption ; $7203
 	call RedrawStoryTilemapRows ; $7206
@@ -487,11 +471,7 @@ CopyTileRectToShadowTilemap:
 	pop de ; $789a
 	pop bc ; $789b
 	ld a, $20 ; $789c
-	add e ; $789e
-	ld e, a ; $789f
-	jr nc, .gotPtr ; $78a0
-	inc d ; $78a2
-.gotPtr:
+	add_de_a ; $789e
 	ld a, d ; $78a3
 	and $f3 ; $78a4
 	ld d, a ; $78a6
@@ -523,11 +503,7 @@ CopyTileRectToShadowAttrmap:
 	pop de ; $78c3
 	pop bc ; $78c4
 	ld a, $20 ; $78c5
-	add e ; $78c7
-	ld e, a ; $78c8
-	jr nc, .gotPtr ; $78c9
-	inc d ; $78cb
-.gotPtr:
+	add_de_a ; $78c7
 	ld a, d ; $78cc
 	cp $d8 ; $78cd
 	jr c, .nextRow ; $78cf

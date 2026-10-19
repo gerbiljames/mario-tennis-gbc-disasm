@@ -273,11 +273,7 @@ CycleDiagramTargetPalette:
 .lookupColor:
 	add a ; $46a1
 	ld hl, DiagramTargetPaletteRamp_17 ; $46a2
-	add l ; $46a5
-	ld l, a ; $46a6
-	jr nc, .read ; $46a7
-	inc h ; $46a9
-.read:
+	add_hl_a ; $46a5
 	ld a, [hl+] ; $46aa
 	ld d, [hl] ; $46ab
 	ld e, a ; $46ac
@@ -379,11 +375,7 @@ DrawBriefingSwingAnim:
 	push_wram_bank WRAM_SCREEN ; $478e
 	ld a, [wBriefingSwingFrame] ; $4797
 	ld hl, BriefingSwingAnimTable0 ; $479a
-	add l ; $479d
-	ld l, a ; $479e
-	jr nc, .read ; $479f
-	inc h ; $47a1
-.read:
+	add_hl_a ; $479d
 	ld c, [hl] ; $47a2
 	ld hl, BriefingSwingAnimTable1 ; $47a3
 	ld a, [wBriefingSwingFrame] ; $47a6

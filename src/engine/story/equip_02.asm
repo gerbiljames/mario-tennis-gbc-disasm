@@ -463,11 +463,7 @@ Unused_02_ListForEach:
 	add a ; $4b99
 	add a ; $4b9a
 	ld hl, Unused_02_4b99_Table ; $4b9b
-	add l ; $4b9e
-	ld l, a ; $4b9f
-	jr nc, .levelUpPlayer ; $4ba0
-	inc h ; $4ba2
-.levelUpPlayer:
+	add_hl_a ; $4b9e
 	push hl ; $4ba3
 	ld d, $ff ; $4ba4
 	call LevelUpPlayer ; $4ba6
@@ -526,11 +522,7 @@ Unused_02_ListForEach:
 .stat3Done:
 	xor a ; $4bea
 	ld hl, CharDataPtr_02 ; $4beb
-	add l ; $4bee
-	ld l, a ; $4bef
-	jr nc, .readCharDataPtr ; $4bf0
-	inc h ; $4bf2
-.readCharDataPtr:
+	add_hl_a ; $4bee
 	ld a, [hl+] ; $4bf3
 	ld d, [hl] ; $4bf4
 	ld e, a ; $4bf5
@@ -544,11 +536,7 @@ Unused_02_ListForEach:
 	ld d, a ; $4c01
 	add a ; $4c02
 	add d ; $4c03
-	add l ; $4c04
-	ld l, a ; $4c05
-	jr nc, .gotPtr ; $4c06
-	inc h ; $4c08
-.gotPtr:
+	add_hl_a ; $4c04
 	ld d, h ; $4c09
 	ld e, l ; $4c0a
 	ld hl, CHARREC_EXP ; $4c0b

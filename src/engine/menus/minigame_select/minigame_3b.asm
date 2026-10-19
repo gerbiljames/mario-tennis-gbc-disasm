@@ -141,11 +141,7 @@ LoadMinigameSelectGfx:
 	ld a, c ; $6307
 	add a ; $6308
 	ld hl, MinigameSelectTable ; $6309
-	add l ; $630c
-	ld l, a ; $630d
-	jr nc, .read ; $630e
-	inc h ; $6310
-.read:
+	add_hl_a ; $630c
 	ld a, [hl+] ; $6311
 	ld d, [hl] ; $6312
 	ld e, a ; $6313
@@ -257,7 +253,7 @@ MinigameSelectSlideIn9:
 	or a ; $640b
 	jr z, .slideBack ; $640c
 	ld c, $00 ; $640e
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6410
 	ld b, $04 ; $6413
 	farcall RestoreMenuBgAndDrawPanel ; $6415
@@ -267,11 +263,11 @@ MinigameSelectSlideIn9:
 	inc a ; $641e
 	ld c, a ; $641f
 	cp $0e ; $6420
-	jr nz, .loop ; $6422
+	jr nz, .slideForwardLoop ; $6422
 	ret ; $6424
 .slideBack:
 	ld c, $0c ; $6425
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $6427
 	ld b, $05 ; $642a
 	farcall RestoreMenuBgAndDrawPanel ; $642c
@@ -281,14 +277,14 @@ MinigameSelectSlideIn9:
 	dec a ; $6435
 	ld c, a ; $6436
 	cp $ff ; $6437
-	jr nz, .loopB ; $6439
+	jr nz, .slideBackLoop ; $6439
 	ret ; $643b
 MinigameSelectSlideOut9:
 	ld a, b ; $643c
 	or a ; $643d
 	jr z, .slideBack ; $643e
 	ld c, $00 ; $6440
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6442
 	ld b, $05 ; $6445
 	farcall RestoreMenuBgAndDrawPanel ; $6447
@@ -298,11 +294,11 @@ MinigameSelectSlideOut9:
 	inc a ; $6450
 	ld c, a ; $6451
 	cp $0b ; $6452
-	jr nz, .loop ; $6454
+	jr nz, .slideForwardLoop ; $6454
 	ret ; $6456
 .slideBack:
 	ld c, $0d ; $6457
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $6459
 	ld b, $04 ; $645c
 	farcall RestoreMenuBgAndDrawPanel ; $645e
@@ -312,7 +308,7 @@ MinigameSelectSlideOut9:
 	dec a ; $6467
 	ld c, a ; $6468
 	or a ; $6469
-	jr nz, .loopB ; $646a
+	jr nz, .slideBackLoop ; $646a
 	ret ; $646c
 MinigameSelectCursorSpriteTask:
 	farcall TickMenuBgScroll ; $646d
@@ -320,32 +316,20 @@ MinigameSelectCursorSpriteTask:
 	call GetMenuCursorIndex_3b ; $6472
 	push af ; $6475
 	ld hl, MinigameSelectCursorSpriteTaskTable1 ; $6476
-	add l ; $6479
-	ld l, a ; $647a
-	jr nc, .readTile ; $647b
-	inc h ; $647d
-.readTile:
+	add_hl_a ; $6479
 	ld c, [hl] ; $647e
 	pop af ; $647f
 	push af ; $6480
 	call GetMinigameCursorPosTable ; $6481
 	add a ; $6484
-	add l ; $6485
-	ld l, a ; $6486
-	jr nc, .readPosition ; $6487
-	inc h ; $6489
-.readPosition:
+	add_hl_a ; $6485
 	ld a, [hl+] ; $648a
 	ld d, [hl] ; $648b
 	ld e, a ; $648c
 	farcall ApplySpriteBobOffset ; $648d
 	pop af ; $6490
 	ld hl, MinigameSelectCursorSpriteTaskTable0 ; $6491
-	add l ; $6494
-	ld l, a ; $6495
-	jr nc, .readAttr ; $6496
-	inc h ; $6498
-.readAttr:
+	add_hl_a ; $6494
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
 	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate0 ; $649d
@@ -466,11 +450,7 @@ RenderMinigameNameText:
 	ld b, a ; $65be
 	add a ; $65bf
 	ld hl, RenderMinigameNameTextTable ; $65c0
-	add l ; $65c3
-	ld l, a ; $65c4
-	jr nc, .read ; $65c5
-	inc h ; $65c7
-.read:
+	add_hl_a ; $65c3
 	ld a, [hl+] ; $65c8
 	ld d, [hl] ; $65c9
 	ld e, a ; $65ca
@@ -548,11 +528,7 @@ FillMinigameSelectCell:
 	ld hl, FillMinigameSelectCellTable ; $664a
 	ld a, e ; $664d
 	add a ; $664e
-	add l ; $664f
-	ld l, a ; $6650
-	jr nc, .read ; $6651
-	inc h ; $6653
-.read:
+	add_hl_a ; $664f
 	ld a, [hl+] ; $6654
 	ld d, [hl] ; $6655
 	ld e, a ; $6656

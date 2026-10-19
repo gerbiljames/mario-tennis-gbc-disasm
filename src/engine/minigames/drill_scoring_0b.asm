@@ -19,11 +19,7 @@ RecordDrillPointResultBits:
 	ld a, b ; $4095
 	and $01 ; $4096
 	add a ; $4098
-	add l ; $4099
-	ld l, a ; $409a
-	jr nc, .checkOddPoint ; $409b
-	inc h ; $409d
-.checkOddPoint:
+	add_hl_a ; $4099
 	srl b ; $409e
 	ld a, [wTotalPointsScoredInCurrentGame] ; $40a0
 	and $01 ; $40a3
@@ -54,11 +50,7 @@ CountDrillShotSuccesses:
 	push bc ; $40c0
 	push hl ; $40c1
 	ld hl, wDrillShotResultBits ; $40c2
-	add l ; $40c5
-	ld l, a ; $40c6
-	jr nc, .gotSlot ; $40c7
-	inc h ; $40c9
-.gotSlot:
+	add_hl_a ; $40c5
 	ld c, $00 ; $40ca
 	ld a, [hl] ; $40cc
 	ld b, a ; $40cd
@@ -161,11 +153,7 @@ IndexDrillTableByPoint:
 	add a ; $4162
 	add a ; $4163
 	add a ; $4164
-	add l ; $4165
-	ld l, a ; $4166
-	jr nc, .gotPtr ; $4167
-	inc h ; $4169
-.gotPtr:
+	add_hl_a ; $4165
 	ld b, h ; $416a
 	ld c, l ; $416b
 	ld hl, $0002 ; $416c
@@ -198,11 +186,7 @@ SetDrillTargetZoneForPoint:
 	add a ; $4194
 	add a ; $4195
 	add a ; $4196
-	add l ; $4197
-	ld l, a ; $4198
-	jr nc, .gotEntry ; $4199
-	inc h ; $419b
-.gotEntry:
+	add_hl_a ; $4197
 	ld b, h ; $419c
 	ld c, l ; $419d
 	ld hl, $0002 ; $419e

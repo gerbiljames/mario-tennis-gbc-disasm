@@ -209,7 +209,7 @@ def check_stranded_scopes(fail):
 
 _CODE_PREFIXES = ("script_", "farcall", "push_wram_bank", "pop_wram_bank", "wram_bank",
                   "ld_", "rect_", "sprite_", "map_cell", "test_flag", "set_flag",
-                  "clear_flag", "sound", "wait_frames", "lb ")
+                  "clear_flag", "sound", "wait_frames", "lb ", "add_hl_a", "add_de_a", "add_bc_a")
 _DATA_PREFIXES = ("db", "dw", "INCBIN", "map_actor", "map_actor_end", "map_entry",
                   "map_script", "map_tree", "as_", "anim_", "tilemap_", "oam_",
                   "palette", "snd_", "drill_", "court_", "story_location")

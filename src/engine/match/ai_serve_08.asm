@@ -156,11 +156,7 @@ AiServePressToss:
 	ld l, a ; $7a7f
 	call AdvanceMatchRng ; $7a80
 	and $07 ; $7a83
-	add l ; $7a85
-	ld l, a ; $7a86
-	jr nc, .press ; $7a87
-	inc h ; $7a89
-.press:
+	add_hl_a ; $7a85
 	ld a, [hl] ; $7a8a
 	and a ; $7a8b
 	jr z, .release ; $7a8c

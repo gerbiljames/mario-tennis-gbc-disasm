@@ -74,7 +74,7 @@ LoadResultScreenPortraits:
 	call LoadResultPortraitSlot ; $6010
 	ld de, FLAG_DOUBLES ; $6013
 	call TestGameFlagByNumber ; $6016
-	jr z, .done ; $6019
+	jr z, .doneNormalOrder ; $6019
 	ld a, [wPlayer1PartnerChar] ; $601b
 	ld d, a ; $601e
 	ld a, [wPlayer1PartnerPalette] ; $601f
@@ -87,7 +87,7 @@ LoadResultScreenPortraits:
 	ld b, a ; $602f
 	ld c, $03 ; $6030
 	call LoadResultPortraitSlot ; $6032
-.done:
+.doneNormalOrder:
 	ret ; $6035
 .swappedOrder:
 	ld a, [wPlayer1MainChar] ; $6036
@@ -104,7 +104,7 @@ LoadResultScreenPortraits:
 	call LoadResultPortraitSlot ; $604d
 	ld de, FLAG_DOUBLES ; $6050
 	call TestGameFlagByNumber ; $6053
-	jr z, .doneB ; $6056
+	jr z, .doneSwappedOrder ; $6056
 	ld a, [wPlayer1PartnerChar] ; $6058
 	ld d, a ; $605b
 	ld a, [wPlayer1PartnerPalette] ; $605c
@@ -117,7 +117,7 @@ LoadResultScreenPortraits:
 	ld b, a ; $606c
 	ld c, $01 ; $606d
 	call LoadResultPortraitSlot ; $606f
-.doneB:
+.doneSwappedOrder:
 	ret ; $6072
 LoadResultPortraitSlot:
 	push de ; $6073
@@ -133,11 +133,7 @@ LoadResultPortraitSlot:
 	ld a, c ; $6080
 	add a ; $6081
 	ld hl, ResultPortraitSlotTable ; $6082
-	add l ; $6085
-	ld l, a ; $6086
-	jr nc, .readDest ; $6087
-	inc h ; $6089
-.readDest:
+	add_hl_a ; $6085
 	ld a, [hl+] ; $608a
 	ld d, [hl] ; $608b
 	ld e, a ; $608c
@@ -202,11 +198,7 @@ DecompressWinLosePortraitVariant:
 .gotVariant:
 	ld hl, WinLosePortraitVariantTable_16 ; $60e1
 	add a ; $60e4
-	add l ; $60e5
-	ld l, a ; $60e6
-	jr nc, .read ; $60e7
-	inc h ; $60e9
-.read:
+	add_hl_a ; $60e5
 	ld a, [hl+] ; $60ea
 	ld h, [hl] ; $60eb
 	ld l, a ; $60ec
@@ -243,11 +235,7 @@ DecompressCharacterPortrait:
 	and $1f ; $6956
 	add a ; $6958
 	ld hl, CharacterPortraitTable_16 ; $6959
-	add l ; $695c
-	ld l, a ; $695d
-	jr nc, .read ; $695e
-	inc h ; $6960
-.read:
+	add_hl_a ; $695c
 	ld a, [hl+] ; $6961
 	ld h, [hl] ; $6962
 	ld l, a ; $6963

@@ -131,7 +131,7 @@ releases. While paused, `UpdateDebugOverlay` runs each VBlank. Step mode also
 makes two overflows audible: a full VRAM copy queue plays sound `$6f`
 (`$00:$04e1`), a truncated text fetch `$2c` (`$30:$7dc7`).
 
-The only reachable nonzero write is `InitAndRunGame` setting it to 3 at `.loopB`
+The only reachable nonzero write is `InitAndRunGame` setting it to 3 at `.buildStampLoop`
 (`$01:$40bd`), which runs only if `RunStoryModeOverworld` returns; apart from
 `SoftReset`'s clear and the stepper's own cycling, every other writer is in an
 `Unused` debug screen
@@ -980,7 +980,7 @@ font and OBJ palettes, validates and repairs SRAM, initialises story and match
 state, enables the LCD, fades in, and does `farcall RunStoryModeOverworld` with
 `wStoryModeCurrentLocation = 0` and `wStoryModeEntryPoint = $0a`
 (`$01:$40a5`-`$40af`). Only if that returns does the build-stamp screen at
-`.loopB` (`$01:$40b2`) appear, waiting for A or START and re-entering the
+`.buildStampLoop` (`$01:$40b2`) appear, waiting for A or START and re-entering the
 overworld. So it is the boot manager, and its debug-harness half is unreachable.
 
 ### Open items

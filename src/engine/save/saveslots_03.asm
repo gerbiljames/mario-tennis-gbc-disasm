@@ -119,14 +119,14 @@ ClearSaveBlockData:
 	pop hl ; $4ec8
 	push hl ; $4ec9
 	push bc ; $4eca
-.loop:
+.clearDataLoop:
 	xor a ; $4ecb
 	ld [de], a ; $4ecc
 	inc de ; $4ecd
 	dec bc ; $4ece
 	ld a, b ; $4ecf
 	or c ; $4ed0
-	jr nz, .loop ; $4ed1
+	jr nz, .clearDataLoop ; $4ed1
 	pop bc ; $4ed3
 	pop hl ; $4ed4
 	ld de, $0000 ; $4ed5
@@ -143,11 +143,11 @@ ClearSaveBlockData:
 	ld [hl], d ; $4ee9
 	inc hl ; $4eea
 	ld c, $08 ; $4eeb
-.loopB:
+.clearTagLoop:
 	xor a ; $4eed
 	ld [hl+], a ; $4eee
 	dec c ; $4eef
-	jr nz, .loopB ; $4ef0
+	jr nz, .clearTagLoop ; $4ef0
 	xor a ; $4ef2
 	pop bc ; $4ef3
 	pop de ; $4ef4

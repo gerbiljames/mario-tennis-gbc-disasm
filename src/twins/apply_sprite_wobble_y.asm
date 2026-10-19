@@ -6,11 +6,7 @@ ASSERT STRCMP("{TWIN_LABEL}", "{ApplySpriteWobbleY_{TWIN}_NAME}") == 0
 	ldh a, [hVBlankCounter]
 	and $0f
 	ld hl, SpriteWobbleYTable_{TWIN}
-	add l
-	ld l, a
-	jr nc, .readOffset
-	inc h
-.readOffset:
+	add_hl_a
 	ld a, [hl]
 	ld b, a
 	ld a, c

@@ -291,21 +291,21 @@ ReadSaveBlockTag:
 	or a ; $4cb2
 	jp nz, .copyTag ; $4cb3
 	ld a, $fe ; $4cb6
-	jp .loopB ; $4cb8
+	jp .disableSram ; $4cb8
 .copyTag:
 	ld a, $08 ; $4cbb
 	add c ; $4cbd
 	ld e, a ; $4cbe
 	ld d, b ; $4cbf
 	ld c, $08 ; $4cc0
-.loop:
+.copyTagLoop:
 	ld a, [de] ; $4cc2
 	ld [hl+], a ; $4cc3
 	inc de ; $4cc4
 	dec c ; $4cc5
-	jr nz, .loop ; $4cc6
+	jr nz, .copyTagLoop ; $4cc6
 	xor a ; $4cc8
-.loopB:
+.disableSram:
 	push af ; $4cc9
 	xor a ; $4cca
 	ld [rRAMG], a ; $4ccb
@@ -330,7 +330,7 @@ Unused_03_ReadSaveBlockTagWord:
 	or a ; $4ce7
 	jp nz, .copyTag ; $4ce8
 	ld a, $fe ; $4ceb
-	jp ReadSaveBlockTag.loopB ; $4ced
+	jp ReadSaveBlockTag.disableSram ; $4ced
 .copyTag:
 	ld a, $08 ; $4cf0
 	add c ; $4cf2
@@ -438,11 +438,7 @@ TestSaveFlag:
 	rlca ; $4d9a
 	rlca ; $4d9b
 	rlca ; $4d9c
-	add l ; $4d9d
-	ld l, a ; $4d9e
-	jr nc, .gotMask ; $4d9f
-	inc h ; $4da1
-.gotMask:
+	add_hl_a ; $4d9d
 	ld a, [hl] ; $4da2
 	ld hl, sSaveFlags ; $4da3
 	ld e, d ; $4da6
@@ -471,11 +467,7 @@ SetSaveFlag:
 	rlca ; $4dc8
 	rlca ; $4dc9
 	rlca ; $4dca
-	add l ; $4dcb
-	ld l, a ; $4dcc
-	jr nc, .gotMask ; $4dcd
-	inc h ; $4dcf
-.gotMask:
+	add_hl_a ; $4dcb
 	ld a, [hl] ; $4dd0
 	ld hl, sSaveFlags ; $4dd1
 	ld e, d ; $4dd4
@@ -502,11 +494,7 @@ ClearSaveFlag:
 	rlca ; $4df6
 	rlca ; $4df7
 	rlca ; $4df8
-	add l ; $4df9
-	ld l, a ; $4dfa
-	jr nc, .gotMask ; $4dfb
-	inc h ; $4dfd
-.gotMask:
+	add_hl_a ; $4df9
 	ld a, [hl] ; $4dfe
 	ld hl, sSaveFlags ; $4dff
 	ld e, d ; $4e02

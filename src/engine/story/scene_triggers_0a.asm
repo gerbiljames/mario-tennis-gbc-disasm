@@ -320,11 +320,7 @@ Unused_0a_CopySceneTilemapChunk:
 	ld h, a ; $5851
 	pop de ; $5852
 	ld a, $20 ; $5853
-	add e ; $5855
-	ld e, a ; $5856
-	jr nc, .done ; $5857
-	inc d ; $5859
-.done:
+	add_de_a ; $5855
 	res 2, d ; $585a
 	ret ; $585c
 LoadStorySceneGraphics:

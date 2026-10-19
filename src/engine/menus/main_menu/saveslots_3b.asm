@@ -84,11 +84,7 @@ DrawMainMenuCaption:
 	add a ; $5b5b
 	add a ; $5b5c
 	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $5b5d
-	add c ; $5b60
-	ld c, a ; $5b61
-	jr nc, .gotPtr ; $5b62
-	inc b ; $5b64
-.gotPtr:
+	add_bc_a ; $5b60
 	ld hl, $0000 ; $5b65
 	add hl, bc ; $5b68
 	ld a, [hl] ; $5b69
@@ -157,22 +153,14 @@ DrawMainMenuCaption:
 	ld a, b ; $5bde
 	add a ; $5bdf
 	ld hl, MainMenuCaptionTable ; $5be0
-	add l ; $5be3
-	ld l, a ; $5be4
-	jr nc, .read ; $5be5
-	inc h ; $5be7
-.read:
+	add_hl_a ; $5be3
 	ld a, [hl+] ; $5be8
 	ld d, [hl] ; $5be9
 	ld e, a ; $5bea
 	ld a, b ; $5beb
 	ld hl, MainMenuCaptionTable1 ; $5bec
 	add a ; $5bef
-	add l ; $5bf0
-	ld l, a ; $5bf1
-	jr nc, .readB ; $5bf2
-	inc h ; $5bf4
-.readB:
+	add_hl_a ; $5bf0
 	ld a, [hl+] ; $5bf5
 	ld h, [hl] ; $5bf6
 	ld l, a ; $5bf7
@@ -267,7 +255,7 @@ TryMainMenuLinkHandshake:
 	ei ; $5c73
 	cp $c1 ; $5c74
 	jr z, .waitFramesCmd ; $5c76
-.loop:
+.linkAttemptLoop:
 	farcall ShowLinkMessageScreen ; $5c78
 	farcall TryEstablishLink ; $5c7b
 	push af ; $5c7e
@@ -288,7 +276,7 @@ TryMainMenuLinkHandshake:
 	pop_wram_bank ; $5c9b
 .animateLinkStatusPalette:
 	ld de, $01f4 ; $5ca0
-.loopB:
+.statusWaitLoop:
 	farcall AnimateLinkStatusPalette ; $5ca3
 	farcall UpdateAnimatedTiles ; $5ca6
 	call AdvanceFrame ; $5ca9
@@ -300,7 +288,7 @@ TryMainMenuLinkHandshake:
 	dec de ; $5cb6
 	ld a, d ; $5cb7
 	or e ; $5cb8
-	jr nz, .loopB ; $5cb9
+	jr nz, .statusWaitLoop ; $5cb9
 .beginFadeOut:
 	script_fade_out 64 ; $5cbb
 	call WaitFadeEnd ; $5cc0
@@ -314,7 +302,7 @@ TryMainMenuLinkHandshake:
 .waitFramesCmd:
 	wait_frames 6 ; $5cd7
 	farcall TryEstablishLink ; $5cdb
-	jr c, .loop ; $5cde
+	jr c, .linkAttemptLoop ; $5cde
 .done:
 	ret ; $5ce0
 Unused_3b_RestoreScreenAfterLinkAttempt:
@@ -435,11 +423,7 @@ LoadMatchFormatGfx:
 	ld a, c ; $5df7
 	add a ; $5df8
 	ld hl, MatchFormatTable0 ; $5df9
-	add l ; $5dfc
-	ld l, a ; $5dfd
-	jr nc, .read ; $5dfe
-	inc h ; $5e00
-.read:
+	add_hl_a ; $5dfc
 	ld a, [hl+] ; $5e01
 	ld h, [hl] ; $5e02
 	ld l, a ; $5e03
@@ -456,11 +440,7 @@ LoadMatchFormatGfx:
 	ld hl, MatchFormatTable1 ; $5e12
 	ld a, c ; $5e15
 	add a ; $5e16
-	add l ; $5e17
-	ld l, a ; $5e18
-	jr nc, .readB ; $5e19
-	inc h ; $5e1b
-.readB:
+	add_hl_a ; $5e17
 	ld a, [hl+] ; $5e1c
 	ld d, [hl] ; $5e1d
 	ld e, a ; $5e1e
@@ -555,7 +535,7 @@ MatchFormatSlideIn:
 	or a ; $5eda
 	jr z, .slideBack ; $5edb
 	ld c, $00 ; $5edd
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $5edf
 	ld b, $02 ; $5ee2
 	farcall RestoreMenuBgAndDrawPanel ; $5ee4
@@ -565,11 +545,11 @@ MatchFormatSlideIn:
 	inc a ; $5eed
 	ld c, a ; $5eee
 	cp $0e ; $5eef
-	jr nz, .loop ; $5ef1
+	jr nz, .slideForwardLoop ; $5ef1
 	ret ; $5ef3
 .slideBack:
 	ld c, $0a ; $5ef4
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $5ef6
 	ld b, $03 ; $5ef9
 	farcall RestoreMenuBgAndDrawPanel ; $5efb
@@ -579,7 +559,7 @@ MatchFormatSlideIn:
 	dec a ; $5f04
 	ld c, a ; $5f05
 	cp $ff ; $5f06
-	jr nz, .loopB ; $5f08
+	jr nz, .slideBackLoop ; $5f08
 	ret ; $5f0a
 	twin_named match_format_slide_out, MatchFormatSlideOut ; $5f0b
 HandleMatchFormatInput:
@@ -729,11 +709,7 @@ FillMatchFormatOptionCell:
 	ld hl, FillMatchFormatOptionCellTable ; $6056
 	ld a, b ; $6059
 	add a ; $605a
-	add l ; $605b
-	ld l, a ; $605c
-	jr nc, .readAddr ; $605d
-	inc h ; $605f
-.readAddr:
+	add_hl_a ; $605b
 	ld a, [hl+] ; $6060
 	ld d, [hl] ; $6061
 	ld e, a ; $6062
@@ -743,11 +719,7 @@ FillMatchFormatOptionCell:
 	jr z, .fill ; $6067
 	ld a, b ; $6069
 	ld hl, MatchFormatOptionCellTable ; $606a
-	add l ; $606d
-	ld l, a ; $606e
-	jr nc, .readWidth ; $606f
-	inc h ; $6071
-.readWidth:
+	add_hl_a ; $606d
 	ld a, [hl] ; $6072
 	ld h, a ; $6073
 .fill:
@@ -792,20 +764,12 @@ MatchFormatCursorSpriteTask:
 .gotRuleValue:
 	push af ; $60f0
 	ld hl, MatchFormatCursorSpriteTaskTable1 ; $60f1
-	add l ; $60f4
-	ld l, a ; $60f5
-	jr nc, .read ; $60f6
-	inc h ; $60f8
-.read:
+	add_hl_a ; $60f4
 	ld c, [hl] ; $60f9
 	pop af ; $60fa
 	ld hl, MatchFormatCursorSpriteTaskTable0 ; $60fb
 	add a ; $60fe
-	add l ; $60ff
-	ld l, a ; $6100
-	jr nc, .readB ; $6101
-	inc h ; $6103
-.readB:
+	add_hl_a ; $60ff
 	ld a, [hl+] ; $6104
 	ld d, [hl] ; $6105
 	ld e, a ; $6106
@@ -873,11 +837,7 @@ RenderMatchFormatOptionText:
 	jr nz, .compare ; $61a7
 	ld a, [wMatchFormatDoubles] ; $61a9
 	ld hl, Text_MatchFormatOneOnOne ; $61ac
-	add l ; $61af
-	ld l, a ; $61b0
-	jr nc, .renderModeText ; $61b1
-	inc h ; $61b3
-.renderModeText:
+	add_hl_a ; $61af
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $61b4
 	ld c, $20 ; $61b7
 	farcall RenderTextToBuffer64 ; $61b9
@@ -887,11 +847,7 @@ RenderMatchFormatOptionText:
 	jr nz, .checkMatchFormatSets ; $61bf
 	ld a, [wMatchFormatGames] ; $61c1
 	ld hl, Text_MatchFormatOneSetTwoGames ; $61c4
-	add l ; $61c7
-	ld l, a ; $61c8
-	jr nc, .renderGamesText ; $61c9
-	inc h ; $61cb
-.renderGamesText:
+	add_hl_a ; $61c7
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $61cc
 	ld c, $20 ; $61cf
 	farcall RenderTextToBuffer64 ; $61d1
@@ -899,11 +855,7 @@ RenderMatchFormatOptionText:
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $61d5
 	ld hl, Text_MatchFormatOneSetMatch ; $61d8
-	add l ; $61db
-	ld l, a ; $61dc
-	jr nc, .renderSetsText ; $61dd
-	inc h ; $61df
-.renderSetsText:
+	add_hl_a ; $61db
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $61e0
 	ld c, $20 ; $61e3
 	farcall RenderTextToBuffer64 ; $61e5

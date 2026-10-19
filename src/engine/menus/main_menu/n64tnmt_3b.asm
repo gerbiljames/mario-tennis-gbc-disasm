@@ -131,11 +131,7 @@ DrawN64TnmtRowIcons:
 	push_wram_bank WRAM_SCREEN ; $4f49
 	ld hl, wN64TnmtLayout ; $4f52
 	ld a, [wDataScreenCursorRow] ; $4f55
-	add l ; $4f58
-	ld l, a ; $4f59
-	jr nc, .gotPtr ; $4f5a
-	inc h ; $4f5c
-.gotPtr:
+	add_hl_a ; $4f58
 	ld d, h ; $4f5d
 	ld e, l ; $4f5e
 	ld c, $00 ; $4f5f
@@ -211,11 +207,7 @@ DrawN64TnmtTrophyRows:
 	add b ; $500c
 	add a ; $500d
 	ld hl, wN64TnmtTrophyCells ; $500e
-	add l ; $5011
-	ld l, a ; $5012
-	jr nc, .gotCursorRowPtr ; $5013
-	inc h ; $5015
-.gotCursorRowPtr:
+	add_hl_a ; $5011
 	ld a, [wDataScreenPage] ; $5016
 	or a ; $5019
 	jr z, .drawN64TnmtTrophyRow ; $501a
@@ -236,11 +228,7 @@ DrawN64TnmtTrophyRows:
 	ld e, l ; $5031
 	pop hl ; $5032
 	ld a, $0c ; $5033
-	add l ; $5035
-	ld l, a ; $5036
-	jr nc, .gotNextRowPtr ; $5037
-	inc h ; $5039
-.gotNextRowPtr:
+	add_hl_a ; $5035
 	ld a, c ; $503a
 	inc a ; $503b
 	ld c, a ; $503c

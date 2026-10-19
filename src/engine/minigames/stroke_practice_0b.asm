@@ -104,22 +104,14 @@ StrokePractice1JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $6d10
 	ld hl, StrokePractice1JudgePointMessages ; $6d13
-	add l ; $6d16
-	ld l, a ; $6d17
-	jr nc, .readMessage ; $6d18
-	inc h ; $6d1a
-.readMessage:
+	add_hl_a ; $6d16
 	ld a, [hl] ; $6d1b
 	ld a, a ; $6d1c
 	ld b, $00 ; $6d1d
 	call QueueDrillResultMessage ; $6d1f
 	ld a, [wPointOutcome] ; $6d22
 	ld hl, EvenRallyVerdicts ; $6d25
-	add l ; $6d28
-	ld l, a ; $6d29
-	jr nc, .readResult ; $6d2a
-	inc h ; $6d2c
-.readResult:
+	add_hl_a ; $6d28
 	ld a, [hl] ; $6d2d
 	ret ; $6d2e
 StrokePractice1JudgePointMessages:
@@ -145,22 +137,14 @@ StrokePractice1Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6d4a
 	ld hl, StrokePractice1Cases1Messages ; $6d4d
-	add l ; $6d50
-	ld l, a ; $6d51
-	jr nc, .read ; $6d52
-	inc h ; $6d54
-.read:
+	add_hl_a ; $6d50
 	ld a, [hl] ; $6d55
 	ld a, a ; $6d56
 	ld b, $00 ; $6d57
 	call QueueDrillResultMessage ; $6d59
 	ld a, [wPointOutcome] ; $6d5c
 	ld hl, OddRallyVerdicts ; $6d5f
-	add l ; $6d62
-	ld l, a ; $6d63
-	jr nc, .readB ; $6d64
-	inc h ; $6d66
-.readB:
+	add_hl_a ; $6d62
 	ld a, [hl] ; $6d67
 	ret ; $6d68
 StrokePractice1Cases1Messages:
@@ -213,11 +197,7 @@ StrokePractice2Hook_PointStart:
 	call RegisterFrameTask ; $6e05
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e08
 	ld hl, StrokePractice2ServeAims ; $6e0b
-	add l ; $6e0e
-	ld l, a ; $6e0f
-	jr nc, .read ; $6e10
-	inc h ; $6e12
-.read:
+	add_hl_a ; $6e0e
 	ld a, [hl] ; $6e13
 	ld [wAiServeAimOverride], a ; $6e14
 	ret ; $6e17
@@ -382,22 +362,14 @@ StrokePractice2JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $6f58
 	ld hl, StrokePractice2JudgePointMessages ; $6f5b
-	add l ; $6f5e
-	ld l, a ; $6f5f
-	jr nc, .readMessage ; $6f60
-	inc h ; $6f62
-.readMessage:
+	add_hl_a ; $6f5e
 	ld a, [hl] ; $6f63
 	ld a, a ; $6f64
 	ld b, $00 ; $6f65
 	call QueueDrillResultMessage ; $6f67
 	ld a, [wPointOutcome] ; $6f6a
 	ld hl, EvenRallyVerdicts ; $6f6d
-	add l ; $6f70
-	ld l, a ; $6f71
-	jr nc, .readResult ; $6f72
-	inc h ; $6f74
-.readResult:
+	add_hl_a ; $6f70
 	ld a, [hl] ; $6f75
 	ret ; $6f76
 StrokePractice2JudgePointMessages:
@@ -423,22 +395,14 @@ StrokePractice2Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6f92
 	ld hl, StrokePractice2Cases1Messages ; $6f95
-	add l ; $6f98
-	ld l, a ; $6f99
-	jr nc, .read ; $6f9a
-	inc h ; $6f9c
-.read:
+	add_hl_a ; $6f98
 	ld a, [hl] ; $6f9d
 	ld a, a ; $6f9e
 	ld b, $00 ; $6f9f
 	call QueueDrillResultMessage ; $6fa1
 	ld a, [wPointOutcome] ; $6fa4
 	ld hl, OddRallyVerdicts ; $6fa7
-	add l ; $6faa
-	ld l, a ; $6fab
-	jr nc, .readB ; $6fac
-	inc h ; $6fae
-.readB:
+	add_hl_a ; $6faa
 	ld a, [hl] ; $6faf
 	ret ; $6fb0
 StrokePractice2Cases1Messages:
@@ -531,11 +495,7 @@ StrokePractice3Hook_PointStart:
 	call RegisterFrameTask ; $706a
 	ld a, [wTotalPointsScoredInCurrentGame] ; $706d
 	ld hl, StrokePractice3ServeAims ; $7070
-	add l ; $7073
-	ld l, a ; $7074
-	jr nc, .read ; $7075
-	inc h ; $7077
-.read:
+	add_hl_a ; $7073
 	ld a, [hl] ; $7078
 	ld [wAiServeAimOverride], a ; $7079
 	ret ; $707c
@@ -629,22 +589,14 @@ StrokePractice3JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $71ba
 	ld hl, StrokePractice3JudgePointMessages ; $71bd
-	add l ; $71c0
-	ld l, a ; $71c1
-	jr nc, .readMessage ; $71c2
-	inc h ; $71c4
-.readMessage:
+	add_hl_a ; $71c0
 	ld a, [hl] ; $71c5
 	ld a, a ; $71c6
 	ld b, $00 ; $71c7
 	call QueueDrillResultMessage ; $71c9
 	ld a, [wPointOutcome] ; $71cc
 	ld hl, EvenRallyVerdicts ; $71cf
-	add l ; $71d2
-	ld l, a ; $71d3
-	jr nc, .readResult ; $71d4
-	inc h ; $71d6
-.readResult:
+	add_hl_a ; $71d2
 	ld a, [hl] ; $71d7
 	ret ; $71d8
 StrokePractice3JudgePointMessages:
@@ -670,22 +622,14 @@ StrokePractice3Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $71f4
 	ld hl, StrokePractice3Cases1Messages ; $71f7
-	add l ; $71fa
-	ld l, a ; $71fb
-	jr nc, .read ; $71fc
-	inc h ; $71fe
-.read:
+	add_hl_a ; $71fa
 	ld a, [hl] ; $71ff
 	ld a, a ; $7200
 	ld b, $00 ; $7201
 	call QueueDrillResultMessage ; $7203
 	ld a, [wPointOutcome] ; $7206
 	ld hl, OddRallyVerdicts ; $7209
-	add l ; $720c
-	ld l, a ; $720d
-	jr nc, .readB ; $720e
-	inc h ; $7210
-.readB:
+	add_hl_a ; $720c
 	ld a, [hl] ; $7211
 	ret ; $7212
 StrokePractice3Cases1Messages:

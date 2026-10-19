@@ -9,11 +9,7 @@ ReadSceneTilemapTile_{TWIN}:
 	srl h
 	rr l
 	ld a, d
-	add l
-	ld l, a
-	jr nc, .read
-	inc h
-.read:
+	add_hl_a
 	ld d, h
 	ld e, l
 	ld l, c

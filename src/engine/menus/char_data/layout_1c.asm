@@ -2,11 +2,7 @@
 MoveCharDataScreenSelection:
 	wram_bank WRAM_SCENE ; $53c3
 	ld a, [wCharDataPage] ; $53c9
-	add l ; $53cc
-	ld l, a ; $53cd
-	jr nc, .readTarget ; $53ce
-	inc h ; $53d0
-.readTarget:
+	add_hl_a ; $53cc
 	ld a, [hl] ; $53d1
 	cp $ff ; $53d2
 	ret z ; $53d4

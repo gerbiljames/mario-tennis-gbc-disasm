@@ -64,13 +64,13 @@ ENDC
 	farcall InitDefaultMatchSettings ; $409a
 	call EnableLCD ; $409d
 	script_fade_in 127 ; $40a0
-.loop:
+.runMainMenu:
 	ld hl, wStoryModeCurrentLocation ; $40a5
 	ld [hl], STORYLOC_MAIN_MENU ; $40a8
 	ld hl, wStoryModeEntryPoint ; $40aa
 	ld [hl], $0a ; $40ad
 	farcall RunStoryModeOverworld ; $40af
-.loopB:
+.buildStampLoop:
 	ld hl, BuildStamp ; $40b2
 	ld_cell de, $05, $11 ; $40b5
 	call PrintString ; $40b8
@@ -98,7 +98,7 @@ ENDC
 	ld hl, wStoryModeEntryPoint ; $40e1
 	ld [hl], $0a ; $40e4
 	farcall RunStoryModeOverworld ; $40e6
-	jp .loopB ; $40e9
+	jp .buildStampLoop ; $40e9
 Unused_01_DebugBootMenu:
 	ld hl, BuildStamp ; $40ec
 	ld_cell de, $05, $11 ; $40ef
@@ -116,7 +116,7 @@ Unused_01_DebugBootMenu:
 	ld hl, wStoryModeEntryPoint ; $4108
 	ld [hl], $0a ; $410b
 	farcall RunStoryModeOverworld ; $410d
-	jp InitAndRunGame.loop ; $4110
+	jp InitAndRunGame.runMainMenu ; $4110
 .checkSelect:
 	bit 2, a ; $4113
 	jr z, .checkA ; $4115
@@ -207,7 +207,7 @@ Unused_01_DebugBootMenu.introLoop:
 	farcall RunTitleScreen ; $41d1
 	jr Unused_01_DebugBootMenu.introLoop ; $41d4
 Unused_01_JumpToMainMenu:
-	jp InitAndRunGame.loop ; $41d6
+	jp InitAndRunGame.runMainMenu ; $41d6
 	db $18 ; $41d9
 	db $ef ; $41da
 Unused_01_DebugBootMenu.checkRight:

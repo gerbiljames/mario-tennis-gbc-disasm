@@ -48,7 +48,7 @@ Unused_00_BlitBGStrip:
 	push hl ; $233f
 	wram_bank WRAM_COURT_PLANES ; $2340
 	ld c, $20 ; $2346
-.loop:
+.attrLoop:
 	ld a, [hl+] ; $2348
 	ld [de], a ; $2349
 	ld a, l ; $234a
@@ -62,14 +62,14 @@ Unused_00_BlitBGStrip:
 	inc e ; $2355
 	res 5, e ; $2356
 	dec c ; $2358
-	jr nz, .loop ; $2359
+	jr nz, .attrLoop ; $2359
 	pop hl ; $235b
 	wram_bank WRAM_SCREEN ; $235c
 	ld bc, $4020 ; $2362
 	ld a, e ; $2365
 	add b ; $2366
 	ld e, a ; $2367
-.loopB:
+.tileLoop:
 	ld a, [hl+] ; $2368
 	ld [de], a ; $2369
 	ld a, l ; $236a
@@ -83,7 +83,7 @@ Unused_00_BlitBGStrip:
 	inc e ; $2375
 	res 5, e ; $2376
 	dec c ; $2378
-	jr nz, .loopB ; $2379
+	jr nz, .tileLoop ; $2379
 	ld a, $01 ; $237b
 	ldh [hBGRowBlitPending], a ; $237d
 	ret ; $237f
@@ -107,7 +107,7 @@ Unused_00_BlitBGStrip2:
 	push hl ; $239e
 	wram_bank WRAM_COURT_PLANES ; $239f
 	ld c, $20 ; $23a5
-.loop:
+.attrLoop:
 	ld a, [hl] ; $23a7
 	ld [de], a ; $23a8
 	ld a, c ; $23a9
@@ -119,14 +119,14 @@ Unused_00_BlitBGStrip2:
 	inc e ; $23b3
 	res 5, e ; $23b4
 	dec c ; $23b6
-	jr nz, .loop ; $23b7
+	jr nz, .attrLoop ; $23b7
 	pop hl ; $23b9
 	wram_bank WRAM_SCREEN ; $23ba
 	ld bc, $4020 ; $23c0
 	ld a, e ; $23c3
 	add b ; $23c4
 	ld e, a ; $23c5
-.loopB:
+.tileLoop:
 	ld a, [hl] ; $23c6
 	ld [de], a ; $23c7
 	ld a, c ; $23c8
@@ -138,7 +138,7 @@ Unused_00_BlitBGStrip2:
 	inc e ; $23d2
 	res 5, e ; $23d3
 	dec c ; $23d5
-	jr nz, .loopB ; $23d6
+	jr nz, .tileLoop ; $23d6
 	ld a, $01 ; $23d8
 	ldh [hBGColumnBlitPending], a ; $23da
 	ret ; $23dc

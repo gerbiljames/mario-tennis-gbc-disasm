@@ -58,11 +58,7 @@ ApplyCursorBounceX:
 	ldh a, [hVBlankCounter] ; $409b
 	and $0f ; $409d
 	ld hl, CursorBounceXTable ; $409f
-	add l ; $40a2
-	ld l, a ; $40a3
-	jr nc, .readOffset ; $40a4
-	inc h ; $40a6
-.readOffset:
+	add_hl_a ; $40a2
 	ld a, [hl] ; $40a7
 	ld b, a ; $40a8
 	ld a, c ; $40a9
@@ -84,11 +80,7 @@ ApplyCursorBounceY:
 	ldh a, [hVBlankCounter] ; $40c5
 	and $0f ; $40c7
 	ld hl, CursorBounceYTable ; $40c9
-	add l ; $40cc
-	ld l, a ; $40cd
-	jr nc, .readOffset ; $40ce
-	inc h ; $40d0
-.readOffset:
+	add_hl_a ; $40cc
 	ld a, [hl] ; $40d1
 	ld b, a ; $40d2
 	ld a, c ; $40d3

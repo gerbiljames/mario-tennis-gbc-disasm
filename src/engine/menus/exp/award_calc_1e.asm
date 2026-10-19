@@ -271,11 +271,7 @@ AwardLinkedPlayMatchExp:
 	ld a, [wLinkMatchRole] ; $69bf
 	srl a ; $69c2
 	sla a ; $69c4
-	add l ; $69c6
-	ld l, a ; $69c7
-	jr nc, .read ; $69c8
-	inc h ; $69ca
-.read:
+	add_hl_a ; $69c6
 	ld a, [hl] ; $69cb
 	bit 7, a ; $69cc
 	jr z, .done ; $69ce
@@ -289,11 +285,7 @@ AwardLinkedPlayMatchExp:
 	and $03 ; $69e1
 	srl a ; $69e3
 	sla a ; $69e5
-	add l ; $69e7
-	ld l, a ; $69e8
-	jr nc, .readB ; $69e9
-	inc h ; $69eb
-.readB:
+	add_hl_a ; $69e7
 	ld a, [hl] ; $69ec
 	srl a ; $69ed
 	and $03 ; $69ef

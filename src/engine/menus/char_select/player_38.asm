@@ -62,11 +62,7 @@ DrawPlayerSlotPortrait:
 	ld a, b ; $5615
 	add a ; $5616
 	add a ; $5617
-	add l ; $5618
-	ld l, a ; $5619
-	jr nc, .gotSource ; $561a
-	inc h ; $561c
-.gotSource:
+	add_hl_a ; $5618
 	ld b, h ; $561d
 	ld c, l ; $561e
 	ld hl, $0000 ; $561f
@@ -120,11 +116,7 @@ Unused_38_PortraitCellAddrs1:
 DrawPlayerSlotLeftHandedMark:
 	ld a, [wCharSelectSlot] ; $567a
 	ld hl, wCharSelectSlotLeftHanded ; $567d
-	add l ; $5680
-	ld l, a ; $5681
-	jr nc, .read ; $5682
-	inc h ; $5684
-.read:
+	add_hl_a ; $5680
 	ld a, [hl] ; $5685
 	or a ; $5686
 	ret z ; $5687
@@ -137,11 +129,7 @@ DrawPlayerSlotLeftHandedMark:
 DrawPlayerSlotDifficultyMark:
 	ld hl, wCharSelectSlotDifficulty ; $5693
 	ld a, [wCharSelectSlot] ; $5696
-	add l ; $5699
-	ld l, a ; $569a
-	jr nc, .read ; $569b
-	inc h ; $569d
-.read:
+	add_hl_a ; $5699
 	ld a, [hl] ; $569e
 	ld c, $33 ; $569f
 	add c ; $56a1
@@ -157,21 +145,13 @@ GetPlayerSlotBoxAddress:
 	ld a, [wCharSelectMode] ; $56ad
 	add a ; $56b0
 	ld hl, PlayerSlotBoxAddrPtrs_38 ; $56b1
-	add l ; $56b4
-	ld l, a ; $56b5
-	jr nc, .readTable ; $56b6
-	inc h ; $56b8
-.readTable:
+	add_hl_a ; $56b4
 	ld a, [hl+] ; $56b9
 	ld h, [hl] ; $56ba
 	ld l, a ; $56bb
 	ld a, [wCharSelectSlot] ; $56bc
 	add a ; $56bf
-	add l ; $56c0
-	ld l, a ; $56c1
-	jr nc, .readEntry ; $56c2
-	inc h ; $56c4
-.readEntry:
+	add_hl_a ; $56c0
 	ld a, [hl+] ; $56c5
 	ld b, [hl] ; $56c6
 	ld c, a ; $56c7
@@ -315,11 +295,7 @@ RefreshCharInfoPanel:
 	add a ; $5791
 	add a ; $5792
 	ld hl, wCharGridEntries ; $5793
-	add l ; $5796
-	ld l, a ; $5797
-	jr nc, .readSlot ; $5798
-	inc h ; $579a
-.readSlot:
+	add_hl_a ; $5796
 	ld a, [hl] ; $579b
 	cp $04 ; $579c
 	jr nc, .namedChar ; $579e

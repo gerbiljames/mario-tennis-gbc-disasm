@@ -220,11 +220,7 @@ LoadPositionRecord:
 	add a ; $48ed
 	add a ; $48ee
 	add a ; $48ef
-	add l ; $48f0
-	ld l, a ; $48f1
-	jr nc, .singles ; $48f2
-	inc h ; $48f4
-.singles:
+	add_hl_a ; $48f0
 	ld de, wCharCourtPos ; $48f5
 	wram_bank WRAM_CHAR0 ; $48f8
 	ld a, [hl+] ; $48fe
@@ -243,11 +239,7 @@ LoadPositionRecord:
 	add a ; $491a
 	add a ; $491b
 	add a ; $491c
-	add l ; $491d
-	ld l, a ; $491e
-	jr nc, .doublesEntry ; $491f
-	inc h ; $4921
-.doublesEntry:
+	add_hl_a ; $491d
 	ld de, wCharCourtPos ; $4922
 	wram_bank WRAM_CHAR0 ; $4925
 	ld a, [hl+] ; $492b

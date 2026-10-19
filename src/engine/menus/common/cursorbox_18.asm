@@ -142,17 +142,9 @@ Unused_18_DrawBox:
 	pop de ; $43dd
 	pop bc ; $43de
 	ld a, $20 ; $43df
-	add l ; $43e1
-	ld l, a ; $43e2
-	jr nc, .nextRowAttr ; $43e3
-	inc h ; $43e5
-.nextRowAttr:
+	add_hl_a ; $43e1
 	ld a, $20 ; $43e6
-	add e ; $43e8
-	ld e, a ; $43e9
-	jr nc, .nextRow ; $43ea
-	inc d ; $43ec
-.nextRow:
+	add_de_a ; $43e8
 	dec c ; $43ed
 	jr nz, .rowLoop ; $43ee
 	pop hl ; $43f0
@@ -160,21 +152,13 @@ Unused_18_DrawBox:
 	pop bc ; $43f2
 	call Unused_18_DrawBoxTopRow ; $43f3
 	ld a, $20 ; $43f6
-	add l ; $43f8
-	ld l, a ; $43f9
-	jr nc, .topRowDone ; $43fa
-	inc h ; $43fc
-.topRowDone:
+	add_hl_a ; $43f8
 	dec c ; $43fd
 	dec c ; $43fe
 .bottomRow:
 	call Unused_18_DrawBoxSideRow ; $43ff
 	ld a, $20 ; $4402
-	add l ; $4404
-	ld l, a ; $4405
-	jr nc, .done ; $4406
-	inc h ; $4408
-.done:
+	add_hl_a ; $4404
 	dec c ; $4409
 	jr nz, .bottomRow ; $440a
 	call Unused_18_DrawBoxBottomRow ; $440c
@@ -205,11 +189,7 @@ Unused_18_DrawBoxSideRow:
 	ld [hl], $05 ; $4428
 	ld a, b ; $442a
 	dec a ; $442b
-	add l ; $442c
-	ld l, a ; $442d
-	jr nc, .read ; $442e
-	inc h ; $4430
-.read:
+	add_hl_a ; $442c
 	ld [hl], $06 ; $4431
 	pop hl ; $4433
 	ret ; $4434
@@ -295,11 +275,7 @@ Unused_18_FindRosterEntry:
 	cp $ff ; $44f6
 	jr z, .found ; $44f8
 	ld a, $08 ; $44fa
-	add l ; $44fc
-	ld l, a ; $44fd
-	jr nc, .next ; $44fe
-	inc h ; $4500
-.next:
+	add_hl_a ; $44fc
 	jr .searchLoop ; $4501
 .found:
 	add hl, de ; $4503
@@ -380,11 +356,7 @@ Unused_18_TestUnlockFlagById:
 	push de ; $4565
 	ld hl, UnlockFlagIds_18 ; $4566
 	add a ; $4569
-	add l ; $456a
-	ld l, a ; $456b
-	jr nc, .readFlagId ; $456c
-	inc h ; $456e
-.readFlagId:
+	add_hl_a ; $456a
 	ld a, [hl+] ; $456f
 	ld d, [hl] ; $4570
 	ld e, a ; $4571
@@ -462,11 +434,7 @@ Unused_18_MoveGridCursor:
 	add a ; $4607
 	add d ; $4608
 	push hl ; $4609
-	add l ; $460a
-	ld l, a ; $460b
-	jr nc, .haveCell ; $460c
-	inc h ; $460e
-.haveCell:
+	add_hl_a ; $460a
 	ld a, [hl] ; $460f
 	pop hl ; $4610
 	cp $ff ; $4611

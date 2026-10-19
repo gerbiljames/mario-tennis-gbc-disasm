@@ -107,11 +107,7 @@ LoadDrillOpponentChar:
 LoadDrillOpponentBySide:
 	ld a, [wCurrentServingPlayer] ; $441c
 	and $01 ; $441f
-	add l ; $4421
-	ld l, a ; $4422
-	jr nc, .load ; $4423
-	inc h ; $4425
-.load:
+	add_hl_a ; $4421
 	ld a, [hl] ; $4426
 	call LoadDrillOpponentChar ; $4427
 	ret ; $442a
@@ -169,11 +165,7 @@ Unused_0b_QueueDrillOutcomeMessage:
 	jr nz, .checkRallyLength ; $449a
 	ld hl, wDrillServeTargetResult ; $449c
 	ld a, [wCurrentServingPlayer] ; $449f
-	add l ; $44a2
-	ld l, a ; $44a3
-	jr nc, .read ; $44a4
-	inc h ; $44a6
-.read:
+	add_hl_a ; $44a2
 	ld a, [hl] ; $44a7
 	or a ; $44a8
 	jr nz, .checkRallyLength ; $44a9

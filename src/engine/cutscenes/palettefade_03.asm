@@ -17,10 +17,10 @@ Unused_03_InitBlackPaletteFade:
 	xor a ; $75d3
 	ld hl, wPaletteFadeMask ; $75d4
 	ld b, $10 ; $75d7
-.loopB:
+.loop:
 	ld [hl+], a ; $75d9
 	dec b ; $75da
-	jr nz, .loopB ; $75db
+	jr nz, .loop ; $75db
 	call CopyMasterPalettesToFadeBuffers ; $75dd
 	call Unused_03_ClearFadeTargetPalettes ; $75e0
 	pop_wram_bank ; $75e3
@@ -29,21 +29,21 @@ CopyMasterPalettesToFadeBuffers:
 	ld hl, wMasterPalettes ; $75e9
 	ld de, wPaletteFadeLive ; $75ec
 	ld b, $80 ; $75ef
-.loop:
+.copyLiveLoop:
 	ld a, [hl+] ; $75f1
 	ld [de], a ; $75f2
 	inc de ; $75f3
 	dec b ; $75f4
-	jr nz, .loop ; $75f5
+	jr nz, .copyLiveLoop ; $75f5
 	ld hl, wMasterPalettes ; $75f7
 	ld de, wPaletteFadeTarget ; $75fa
 	ld b, $80 ; $75fd
-.loopB:
+.copyTargetLoop:
 	ld a, [hl+] ; $75ff
 	ld [de], a ; $7600
 	inc de ; $7601
 	dec b ; $7602
-	jr nz, .loopB ; $7603
+	jr nz, .copyTargetLoop ; $7603
 	ret ; $7605
 Unused_03_ClearFadeTargetPalettes:
 	ld hl, wPaletteFadeTarget ; $7606
@@ -419,11 +419,7 @@ AdvanceToPaletteEntry:
 	and a ; $782a
 	ret z ; $782b
 	ld a, $08 ; $782c
-	add l ; $782e
-	ld l, a ; $782f
-	jr nc, .seekLoop ; $7830
-	inc h ; $7832
-.seekLoop:
+	add_hl_a ; $782e
 	dec b ; $7833
 	jr AdvanceToPaletteEntry ; $7834
 	; $7836, 1994 bytes fill to bank end (linker-padded)

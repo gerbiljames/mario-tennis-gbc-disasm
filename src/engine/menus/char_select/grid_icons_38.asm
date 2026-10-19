@@ -2,29 +2,17 @@ DrawCharNameAndType:
 	push bc ; $58cd
 	ld a, c ; $58ce
 	ld hl, Text_NameAlex ; $58cf
-	add l ; $58d2
-	ld l, a ; $58d3
-	jr nc, .drawName ; $58d4
-	inc h ; $58d6
-.drawName:
+	add_hl_a ; $58d2
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 6 ; $58d7
 	ld c, $20 ; $58da
 	farcall RenderTextToBuffer64 ; $58dc
 	pop bc ; $58df
 	ld a, c ; $58e0
 	ld hl, CharNameAndTypeTable ; $58e1
-	add l ; $58e4
-	ld l, a ; $58e5
-	jr nc, .readType ; $58e6
-	inc h ; $58e8
-.readType:
+	add_hl_a ; $58e4
 	ld a, [hl] ; $58e9
 	ld hl, Text_CharTypePower ; $58ea
-	add l ; $58ed
-	ld l, a ; $58ee
-	jr nc, .drawType ; $58ef
-	inc h ; $58f1
-.drawType:
+	add_hl_a ; $58ed
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 3 ; $58f2
 	ld c, $20 ; $58f5
 	farcall RenderTextToBuffer64 ; $58f7
@@ -82,11 +70,7 @@ DrawCharGridSlotIcons:
 	ld a, [wCharSelectMode] ; $5994
 	add a ; $5997
 	ld hl, CharGridSlotIconListPtrs_38 ; $5998
-	add l ; $599b
-	ld l, a ; $599c
-	jr nc, .readList ; $599d
-	inc h ; $599f
-.readList:
+	add_hl_a ; $599b
 	ld a, [hl+] ; $59a0
 	ld h, [hl] ; $59a1
 	ld l, a ; $59a2
@@ -215,11 +199,7 @@ BuildCharUnlockFlags:
 	ld a, b ; $5a96
 	add a ; $5a97
 	ld hl, CharUnlockFlagsTable0 ; $5a98
-	add l ; $5a9b
-	ld l, a ; $5a9c
-	jr nc, .readFlagId ; $5a9d
-	inc h ; $5a9f
-.readFlagId:
+	add_hl_a ; $5a9b
 	ld a, [hl+] ; $5aa0
 	ld d, [hl] ; $5aa1
 	ld e, a ; $5aa2
@@ -233,11 +213,7 @@ BuildCharUnlockFlags:
 .markUnlocked:
 	ld hl, wCharUnlockFlags ; $5ab0
 	ld a, b ; $5ab3
-	add l ; $5ab4
-	ld l, a ; $5ab5
-	jr nc, .storeUnlocked ; $5ab6
-	inc h ; $5ab8
-.storeUnlocked:
+	add_hl_a ; $5ab4
 	ld a, $01 ; $5ab9
 	ld [hl], a ; $5abb
 .nextFlag:
@@ -265,11 +241,7 @@ BuildCharUnlockFlags:
 	ld a, b ; $5ade
 	add a ; $5adf
 	ld hl, CharUnlockFlagsTable1 ; $5ae0
-	add l ; $5ae3
-	ld l, a ; $5ae4
-	jr nc, .readCharId ; $5ae5
-	inc h ; $5ae7
-.readCharId:
+	add_hl_a ; $5ae3
 	ld a, [hl+] ; $5ae8
 	ld d, [hl] ; $5ae9
 	ld e, a ; $5aea
@@ -279,11 +251,7 @@ BuildCharUnlockFlags:
 .markChar:
 	ld hl, wCharUnlockFlags + 18 ; $5af2
 	ld a, b ; $5af5
-	add l ; $5af6
-	ld l, a ; $5af7
-	jr nc, .nextChar ; $5af8
-	inc h ; $5afa
-.nextChar:
+	add_hl_a ; $5af6
 	ld a, $01 ; $5afb
 	ld [hl], a ; $5afd
 .nextSlot:
@@ -340,11 +308,7 @@ BuildCharGridFromUnlockFlags:
 	push hl ; $5b51
 	ld hl, CharGridFromUnlockFlagsTable ; $5b52
 	ld a, c ; $5b55
-	add l ; $5b56
-	ld l, a ; $5b57
-	jr nc, .storeCharId ; $5b58
-	inc h ; $5b5a
-.storeCharId:
+	add_hl_a ; $5b56
 	ld a, [hl] ; $5b5b
 	ld [de], a ; $5b5c
 	pop hl ; $5b5d
@@ -398,11 +362,7 @@ FillCharGridPaletteIndices:
 	ld [hl], a ; $5bc8
 	dec hl ; $5bc9
 	ld a, $04 ; $5bca
-	add l ; $5bcc
-	ld l, a ; $5bcd
-	jr nc, .storeIndex ; $5bce
-	inc h ; $5bd0
-.storeIndex:
+	add_hl_a ; $5bcc
 	ld a, c ; $5bd1
 	inc a ; $5bd2
 	ld c, a ; $5bd3
@@ -423,11 +383,7 @@ AddCreatedCharsToCharGrid:
 	ld a, b ; $5bf2
 	add a ; $5bf3
 	add a ; $5bf4
-	add l ; $5bf5
-	ld l, a ; $5bf6
-	jr nc, .addEntry ; $5bf7
-	inc h ; $5bf9
-.addEntry:
+	add_hl_a ; $5bf5
 	ld d, h ; $5bfa
 	ld e, l ; $5bfb
 	pop hl ; $5bfc
@@ -453,11 +409,7 @@ AddCreatedCharsToCharGrid:
 	add $03 ; $5c14
 	add a ; $5c16
 	add a ; $5c17
-	add l ; $5c18
-	ld l, a ; $5c19
-	jr nc, .nextSlot ; $5c1a
-	inc h ; $5c1c
-.nextSlot:
+	add_hl_a ; $5c18
 	ld d, h ; $5c1d
 	ld e, l ; $5c1e
 	pop hl ; $5c1f

@@ -160,18 +160,14 @@ OAMDMARoutine:
 	ld a, HIGH(wShadowOAM) ; $06ba
 	ldh [rDMA], a ; $06bc
 	ld a, $28 ; $06be
-.loopB:
+.loop:
 	dec a ; $06c0
-	jr nz, .loopB ; $06c1
+	jr nz, .loop ; $06c1
 	ret ; $06c3
 JumpTableDispatch:
 	add a ; $06c4
 	pop hl ; $06c5
-	add l ; $06c6
-	ld l, a ; $06c7
-	jr nc, .read ; $06c8
-	inc h ; $06ca
-.read:
+	add_hl_a ; $06c6
 	ld a, [hl+] ; $06cb
 	ld h, [hl] ; $06cc
 	ld l, a ; $06cd

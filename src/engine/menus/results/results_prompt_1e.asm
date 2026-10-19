@@ -111,11 +111,7 @@ CopyTilesAndAttrsRun:
 	wram_bank WRAM_STAGING ; $4971
 	push hl ; $4977
 	ld a, $c8 ; $4978
-	add l ; $497a
-	ld l, a ; $497b
-	jr nc, .readAttr ; $497c
-	inc h ; $497e
-.readAttr:
+	add_hl_a ; $497a
 	ld b, [hl] ; $497f
 	wram_bank WRAM_COURT_PLANES ; $4980
 	ld a, b ; $4986

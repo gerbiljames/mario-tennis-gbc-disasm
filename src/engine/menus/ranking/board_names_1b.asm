@@ -29,22 +29,14 @@ DrawSinglesRankingEntry:
 	ld a, b ; $553a
 	add a ; $553b
 	ld hl, SinglesRankingEntryTable1 ; $553c
-	add l ; $553f
-	ld l, a ; $5540
-	jr nc, .read ; $5541
-	inc h ; $5543
-.read:
+	add_hl_a ; $553f
 	ld a, [hl+] ; $5544
 	ld d, [hl] ; $5545
 	ld e, a ; $5546
 	ld a, b ; $5547
 	add a ; $5548
 	ld hl, SinglesRankingEntryTable ; $5549
-	add l ; $554c
-	ld l, a ; $554d
-	jr nc, .readB ; $554e
-	inc h ; $5550
-.readB:
+	add_hl_a ; $554c
 	ld a, [hl+] ; $5551
 	ld h, [hl] ; $5552
 	ld l, a ; $5553
@@ -90,7 +82,7 @@ ClearSinglesRankingNameRects:
 	push hl ; $5591
 	ld b, $00 ; $5592
 	ld de, wShadowAttrmap + 1 ; $5594
-.loop:
+.leftColumnLoop:
 	push bc ; $5597
 	ld h, $00 ; $5598
 	rect_size $05, $02 ; $559a
@@ -104,10 +96,10 @@ ClearSinglesRankingNameRects:
 	inc a ; $55a9
 	ld b, a ; $55aa
 	cp $06 ; $55ab
-	jr nz, .loop ; $55ad
+	jr nz, .leftColumnLoop ; $55ad
 	ld de, wShadowAttrmap + 14 ; $55af
 	ld b, $00 ; $55b2
-.loopB:
+.rightColumnLoop:
 	push bc ; $55b4
 	ld h, $01 ; $55b5
 	rect_size $05, $02 ; $55b7
@@ -121,7 +113,7 @@ ClearSinglesRankingNameRects:
 	inc a ; $55c6
 	ld b, a ; $55c7
 	cp $06 ; $55c8
-	jr nz, .loopB ; $55ca
+	jr nz, .rightColumnLoop ; $55ca
 	pop hl ; $55cc
 	pop de ; $55cd
 	pop bc ; $55ce
@@ -155,22 +147,14 @@ DrawDoublesRankingEntry:
 	ld a, b ; $5603
 	add a ; $5604
 	ld hl, DoublesRankingEntryTable1 ; $5605
-	add l ; $5608
-	ld l, a ; $5609
-	jr nc, .read ; $560a
-	inc h ; $560c
-.read:
+	add_hl_a ; $5608
 	ld a, [hl+] ; $560d
 	ld d, [hl] ; $560e
 	ld e, a ; $560f
 	ld a, b ; $5610
 	add a ; $5611
 	ld hl, DoublesRankingEntryTable ; $5612
-	add l ; $5615
-	ld l, a ; $5616
-	jr nc, .readB ; $5617
-	inc h ; $5619
-.readB:
+	add_hl_a ; $5615
 	ld a, [hl+] ; $561a
 	ld h, [hl] ; $561b
 	ld l, a ; $561c
@@ -217,7 +201,7 @@ ClearDoublesRankingNameRects:
 	push hl ; $565c
 	ld b, $00 ; $565d
 	ld de, wShadowAttrmap + 1 * TILEMAP_WIDTH + 1 ; $565f
-.loop:
+.leftColumnLoop:
 	push bc ; $5662
 	ld h, $00 ; $5663
 	rect_size $05, $04 ; $5665
@@ -231,10 +215,10 @@ ClearDoublesRankingNameRects:
 	inc a ; $5674
 	ld b, a ; $5675
 	cp $03 ; $5676
-	jr nz, .loop ; $5678
+	jr nz, .leftColumnLoop ; $5678
 	ld de, wShadowAttrmap + 1 * TILEMAP_WIDTH + 14 ; $567a
 	ld b, $00 ; $567d
-.loopB:
+.rightColumnLoop:
 	push bc ; $567f
 	ld h, $01 ; $5680
 	rect_size $05, $04 ; $5682
@@ -248,7 +232,7 @@ ClearDoublesRankingNameRects:
 	inc a ; $5691
 	ld b, a ; $5692
 	cp $03 ; $5693
-	jr nz, .loopB ; $5695
+	jr nz, .rightColumnLoop ; $5695
 	pop hl ; $5697
 	pop de ; $5698
 	pop bc ; $5699
@@ -363,11 +347,7 @@ HighlightRankingRow:
 	ret z ; $5752
 	add a ; $5753
 	ld hl, RankingRowDrawHandlers_1b ; $5754
-	add l ; $5757
-	ld l, a ; $5758
-	jr nc, .jumpToHandler ; $5759
-	inc h ; $575b
-.jumpToHandler:
+	add_hl_a ; $5757
 	ld a, [hl+] ; $575c
 	ld h, [hl] ; $575d
 	ld l, a ; $575e

@@ -220,11 +220,7 @@ GetStatDigitSpritePos:
 	ld l, a ; $4fd8
 	ld a, [wCharDataRevealTimer] ; $4fd9
 	rlca ; $4fdc
-	add l ; $4fdd
-	ld l, a ; $4fde
-	jr nc, .readOffsets ; $4fdf
-	inc h ; $4fe1
-.readOffsets:
+	add_hl_a ; $4fdd
 	ld a, [hl+] ; $4fe2
 	add d ; $4fe3
 	ld d, a ; $4fe4

@@ -392,11 +392,7 @@ SetActorFacing:
 	ret z ; $45e5
 	wram_bank WRAM_ACTORS ; $45e6
 	ld a, ACTORF_HEADING ; $45ec
-	add l ; $45ee
-	ld l, a ; $45ef
-	jr nc, .store ; $45f0
-	inc h ; $45f2
-.store:
+	add_hl_a ; $45ee
 	ld [hl], b ; $45f3
 	ret ; $45f4
 FaceActorTowardActor:

@@ -16,9 +16,9 @@ RestoreAllShadowTilemapRows:
 	ld a, [wCameraY + 1] ; $4383
 	and $3f ; $4386
 	ld c, $04 ; $4388
-.loop:
+.frameLoop:
 	ld b, $05 ; $438a
-.loopB:
+.rowLoop:
 	push af ; $438c
 	push bc ; $438d
 	call RestoreShadowTilemapRow ; $438e
@@ -27,7 +27,7 @@ RestoreAllShadowTilemapRows:
 	inc a ; $4393
 	and $3f ; $4394
 	dec b ; $4396
-	jr nz, .loopB ; $4397
+	jr nz, .rowLoop ; $4397
 	push af ; $4399
 	ldh a, [rLCDC] ; $439a
 	bit B_LCDC_ENABLE, a ; $439c
@@ -36,7 +36,7 @@ RestoreAllShadowTilemapRows:
 .restore:
 	pop af ; $43a3
 	dec c ; $43a4
-	jr nz, .loop ; $43a5
+	jr nz, .frameLoop ; $43a5
 	ret ; $43a7
 RestoreTilemapUnderWindow:
 	push af ; $43a8
@@ -102,11 +102,7 @@ RestoreShadowTilemapRow:
 	ld hl, wTilemapRowStage ; $43fd
 	ld a, c ; $4400
 	and $1f ; $4401
-	add l ; $4403
-	ld l, a ; $4404
-	jr nc, .gotTileStagePtr ; $4405
-	inc h ; $4407
-.gotTileStagePtr:
+	add_hl_a ; $4403
 	ld d, $20 ; $4408
 .copyTileLoop:
 	ld a, [bc] ; $440a
@@ -154,11 +150,7 @@ RestoreShadowTilemapRow:
 	wram_bank WRAM_COURT_PLANES ; $4451
 	ld a, c ; $4457
 	and $1f ; $4458
-	add l ; $445a
-	ld l, a ; $445b
-	jr nc, .gotAttrStagePtr ; $445c
-	inc h ; $445e
-.gotAttrStagePtr:
+	add_hl_a ; $445a
 	ld d, $20 ; $445f
 .copyAttrLoop:
 	ld a, [bc] ; $4461
@@ -326,11 +318,11 @@ Unused_05_DrawTileAttrRect:
 	ld c, [hl] ; $455d
 	inc hl ; $455e
 	push af ; $455f
-.loop:
+.rowLoop:
 	push de ; $4560
 	push bc ; $4561
 	call GetTilemapCellAddress ; $4562
-.loopB:
+.columnLoop:
 	ld a, [hl] ; $4565
 	inc hl ; $4566
 	ld [de], a ; $4567
@@ -352,14 +344,14 @@ Unused_05_DrawTileAttrRect:
 	inc de ; $457d
 	pop hl ; $457e
 	dec b ; $457f
-	jr nz, .loopB ; $4580
+	jr nz, .columnLoop ; $4580
 	ld a, c ; $4582
 	pop bc ; $4583
 	ld c, a ; $4584
 	pop de ; $4585
 	inc e ; $4586
 	dec c ; $4587
-	jr nz, .loop ; $4588
+	jr nz, .rowLoop ; $4588
 	pop af ; $458a
 	pop hl ; $458b
 	pop de ; $458c
@@ -418,11 +410,7 @@ Unused_05_CloseMenuWindow:
 	ld a, b ; $45c6
 	call FreeWindow ; $45c7
 	ld a, $04 ; $45ca
-	add l ; $45cc
-	ld l, a ; $45cd
-	jr nc, .gotPtr ; $45ce
-	inc h ; $45d0
-.gotPtr:
+	add_hl_a ; $45cc
 	ld d, h ; $45d1
 	ld e, l ; $45d2
 	ld a, [wGlyphBufferHoldCount] ; $45d3

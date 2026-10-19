@@ -24,11 +24,7 @@ PlaySoundCmd:
 	ldh [hActiveJingle], a ; $2fd1
 	sub $40 ; $2fd3
 	ld hl, JingleSoundIds ; $2fd5
-	add l ; $2fd8
-	ld l, a ; $2fd9
-	jr nc, .read ; $2fda
-	inc h ; $2fdc
-.read:
+	add_hl_a ; $2fd8
 	ld a, [hl] ; $2fdd
 	jr PlaySoundCmd.play ; $2fde
 JingleSoundIds:
@@ -141,20 +137,20 @@ InitAudioEngine:
 	ld hl, wSndChannels ; $3092
 	ld b, $06 ; $3095
 	ld a, $ff ; $3097
-.loop:
+.resetChannelsLoop:
 	ld [hl+], a ; $3099
 	ld [hl-], a ; $309a
 	ld de, $0020 ; $309b
 	add hl, de ; $309e
 	dec b ; $309f
-	jr nz, .loop ; $30a0
+	jr nz, .resetChannelsLoop ; $30a0
 	ld hl, wSndLoopSlots ; $30a2
 	ld b, $48 ; $30a5
 	xor a ; $30a7
-.loopB:
+.clearLoopSlotsLoop:
 	ld [hl+], a ; $30a8
 	dec b ; $30a9
-	jr nz, .loopB ; $30aa
+	jr nz, .clearLoopSlotsLoop ; $30aa
 	xor a ; $30ac
 	ld [wSndFirstChannel], a ; $30ad
 	ld [wSndWaveReloadPending], a ; $30b0
@@ -301,11 +297,7 @@ PlaySound:
 	jr nc, .addIndex ; $32d4
 	inc h ; $32d6
 .addIndex:
-	add l ; $32d7
-	ld l, a ; $32d8
-	jr nc, .startChannels ; $32d9
-	inc h ; $32db
-.startChannels:
+	add_hl_a ; $32d7
 	ldh a, [hRomBank] ; $32dc
 	push af ; $32de
 	ld a, [hl] ; $32df

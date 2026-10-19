@@ -12,10 +12,10 @@ Unused_38_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $43f1
 	ld a, $00 ; $43fa
 	ld c, $40 ; $43fc
-.loopB:
+.loop:
 	ld [hl+], a ; $43fe
 	dec c ; $43ff
-	jr nz, .loopB ; $4400
+	jr nz, .loop ; $4400
 	pop_wram_bank ; $4402
 	ret ; $4407
 UpdateAnimatedTilesTask_38:
@@ -198,11 +198,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	ld a, [wMatchFormatDoubles] ; $458d
 	add a ; $4590
 	ld hl, MatchTypeOptionBoxesTable0 ; $4591
-	add l ; $4594
-	ld l, a ; $4595
-	jr nc, .doublesBox ; $4596
-	inc h ; $4598
-.doublesBox:
+	add_hl_a ; $4594
 	ld a, [hl+] ; $4599
 	ld d, [hl] ; $459a
 	ld e, a ; $459b
@@ -220,11 +216,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	ld a, [wMatchFormatGames] ; $45b2
 	add a ; $45b5
 	ld hl, MatchTypeOptionBoxesTable1 ; $45b6
-	add l ; $45b9
-	ld l, a ; $45ba
-	jr nc, .gamesOption ; $45bb
-	inc h ; $45bd
-.gamesOption:
+	add_hl_a ; $45b9
 	ld a, [hl+] ; $45be
 	ld d, [hl] ; $45bf
 	ld e, a ; $45c0
@@ -242,11 +234,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	ld a, [wMatchFormatSets] ; $45d8
 	add a ; $45db
 	ld hl, MatchTypeOptionBoxesTable2 ; $45dc
-	add l ; $45df
-	ld l, a ; $45e0
-	jr nc, .setsOption ; $45e1
-	inc h ; $45e3
-.setsOption:
+	add_hl_a ; $45df
 	ld a, [hl+] ; $45e4
 	ld d, [hl] ; $45e5
 	ld e, a ; $45e6
@@ -330,21 +318,13 @@ Unused_38_DrawMatchTypeOptionLabel:
 	ld b, a ; $472d
 	add a ; $472e
 	ld hl, MatchTypeOptionLabelTable ; $472f
-	add l ; $4732
-	ld l, a ; $4733
-	jr nc, .read ; $4734
-	inc h ; $4736
-.read:
+	add_hl_a ; $4732
 	ld a, [hl+] ; $4737
 	ld d, [hl] ; $4738
 	ld e, a ; $4739
 	ld a, b ; $473a
 	ld hl, Text_MatchTypeSinglesOrDoubles ; $473b
-	add l ; $473e
-	ld l, a ; $473f
-	jr nc, .render ; $4740
-	inc h ; $4742
-.render:
+	add_hl_a ; $473e
 	ld c, $20 ; $4743
 	farcall RenderTextToBuffer64 ; $4745
 	ret ; $4748

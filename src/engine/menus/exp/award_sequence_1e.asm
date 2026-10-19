@@ -381,21 +381,13 @@ GetFirstClearRewardExp:
 	ld a, [wCurrentMinigameStoryMatch] ; $66da
 	ld hl, FirstClearExpTablePtrs_1e ; $66dd
 	add a ; $66e0
-	add l ; $66e1
-	ld l, a ; $66e2
-	jr nc, .read ; $66e3
-	inc h ; $66e5
-.read:
+	add_hl_a ; $66e1
 	ld a, [hl+] ; $66e6
 	ld h, [hl] ; $66e7
 	ld l, a ; $66e8
 	call GetRewardTableIndex ; $66e9
 	add a ; $66ec
-	add l ; $66ed
-	ld l, a ; $66ee
-	jr nc, .readB ; $66ef
-	inc h ; $66f1
-.readB:
+	add_hl_a ; $66ed
 	ld a, [hl+] ; $66f2
 	ld d, [hl] ; $66f3
 	ld e, a ; $66f4

@@ -469,11 +469,7 @@ LaunchBall:
 	ld_hl_indexed MinigameShotAimPools ; $484b
 	farcall AdvanceMatchRng ; $4852
 	and $0f ; $4855
-	add l ; $4857
-	ld l, a ; $4858
-	jr nc, .read ; $4859
-	inc h ; $485b
-.read:
+	add_hl_a ; $4857
 	ld a, [hl] ; $485c
 	swap a ; $485d
 	and $0f ; $485f

@@ -75,11 +75,7 @@ RunMinigameSelectMenu:
 	cp $ff ; $4648
 	jp z, RunDoublesMatchListMenu.done ; $464a
 	ld de, MinigameSelectMenuTable ; $464d
-	add e ; $4650
-	ld e, a ; $4651
-	jr nc, .runPagedTextMenu ; $4652
-	inc d ; $4654
-.runPagedTextMenu:
+	add_de_a ; $4650
 	ld hl, Text_MenuLevels ; $4655
 	ld a, $01 ; $4658
 	farcall RunPagedTextMenu ; $465a

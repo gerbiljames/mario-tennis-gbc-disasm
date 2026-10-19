@@ -59,11 +59,7 @@ ComposeLinkStateByte:
 	add a ; $4d02
 	add a ; $4d03
 	ld hl, LinkStateBytePtrs_07 ; $4d04
-	add l ; $4d07
-	ld l, a ; $4d08
-	jr nc, .readEntry ; $4d09
-	inc h ; $4d0b
-.readEntry:
+	add_hl_a ; $4d07
 	push hl ; $4d0c
 	ld a, [hl+] ; $4d0d
 	ld h, [hl] ; $4d0e
@@ -276,11 +272,7 @@ LoadShotPlacementEntry:
 	add a ; $52a2
 	add a ; $52a3
 	add a ; $52a4
-	add l ; $52a5
-	ld l, a ; $52a6
-	jr nc, .gotEntry ; $52a7
-	inc h ; $52a9
-.gotEntry:
+	add_hl_a ; $52a5
 	ld a, [hl+] ; $52aa
 	ld [wBallTopspin], a ; $52ab
 	ld a, [hl+] ; $52ae
@@ -308,11 +300,7 @@ LoadShotPlacementEntry:
 	add a ; $52ca
 	add a ; $52cb
 	add $04 ; $52cc
-	add l ; $52ce
-	ld l, a ; $52cf
-	jr nc, .readTarget ; $52d0
-	inc h ; $52d2
-.readTarget:
+	add_hl_a ; $52ce
 	ld a, [hl+] ; $52d3
 	ld b, [hl] ; $52d4
 	ld c, a ; $52d5

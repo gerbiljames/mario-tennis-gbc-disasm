@@ -21,11 +21,7 @@ HighlightDoublesRankingRow:
 	ret z ; $5848
 	add a ; $5849
 	ld hl, RankingMarkerHandlers_1b ; $584a
-	add l ; $584d
-	ld l, a ; $584e
-	jr nc, .jumpToHandler ; $584f
-	inc h ; $5851
-.jumpToHandler:
+	add_hl_a ; $584d
 	ld a, [hl+] ; $5852
 	ld h, [hl] ; $5853
 	ld l, a ; $5854
@@ -115,11 +111,7 @@ RankingBoardAnimTask_1b:
 .advance:
 	ld a, [wRankingBannerAnimFrame] ; $591d
 	ld hl, RankingBoardAnimTaskTable ; $5920
-	add l ; $5923
-	ld l, a ; $5924
-	jr nc, .read ; $5925
-	inc h ; $5927
-.read:
+	add_hl_a ; $5923
 	ld b, [hl] ; $5928
 	ld a, [wRankingBannerX] ; $5929
 	add b ; $592c
@@ -486,11 +478,7 @@ LoadRankingMarkerCoords:
 .gotTable:
 	ld a, [wRankingBoardPlayerRow] ; $5c4d
 	add a ; $5c50
-	add l ; $5c51
-	ld l, a ; $5c52
-	jr nc, .read ; $5c53
-	inc h ; $5c55
-.read:
+	add_hl_a ; $5c51
 	ld a, [hl+] ; $5c56
 	ld h, [hl] ; $5c57
 	ld l, a ; $5c58
@@ -511,11 +499,7 @@ LoadRankingMarkerCoords:
 .gotDoublesTable:
 	ld a, [wRankingBoardPlayerRow] ; $5c73
 	add a ; $5c76
-	add l ; $5c77
-	ld l, a ; $5c78
-	jr nc, .readB ; $5c79
-	inc h ; $5c7b
-.readB:
+	add_hl_a ; $5c77
 	ld a, [hl+] ; $5c7c
 	ld h, [hl] ; $5c7d
 	ld l, a ; $5c7e
@@ -755,11 +739,7 @@ GetRankingMarkerSlot:
 	add a ; $5f53
 	add a ; $5f54
 	ld hl, wRankingMarkerSlots ; $5f55
-	add l ; $5f58
-	ld l, a ; $5f59
-	jr nc, .done ; $5f5a
-	inc h ; $5f5c
-.done:
+	add_hl_a ; $5f58
 	pop af ; $5f5d
 	ret ; $5f5e
 Unused_1b_WriteRankingMarkerSlot:

@@ -98,7 +98,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld [wTextArrowBlinkCounter], a ; $4d24
 	ld a, [wTextArrowEraseAddr + 1] ; $4d27
 	or a ; $4d2a
-	jr z, .done ; $4d2b
+	jr z, .doneBlink ; $4d2b
 	ld d, a ; $4d2d
 	ld a, [wTextArrowEraseAddr] ; $4d2e
 	ld e, a ; $4d31
@@ -108,7 +108,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	call QueueBGTileWrite ; $4d37
 	xor a ; $4d3a
 	ld [wTextArrowEraseAddr + 1], a ; $4d3b
-.done:
+.doneBlink:
 	ret ; $4d3e
 .onAdjustRow:
 	ld a, [wTextArrowEraseAddr + 1] ; $4d3f
@@ -131,7 +131,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	jr nz, .blinkPauseOptionsAdjust ; $4d63
 	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4d65
 	jr nz, .blinkMinigamePauseAdjust ; $4d68
-	jp .doneB ; $4d6a
+	jp .doneAdjust ; $4d6a
 .blinkPauseOptionsAdjust:
 	ld l, $20 ; $4d6d
 	ld_cell de, $0b, $01 ; $4d6f
@@ -152,7 +152,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld l, $0d ; $4d95
 	ld_cell de, $0b, $01 ; $4d97
 	farcall Unused_1a_QueueWindowTileWrite ; $4d9a
-	jp .doneB ; $4d9d
+	jp .doneAdjust ; $4d9d
 .pauseOptionsLowerRow:
 	call Unused_05_GetMenuCursorBlinkPhase ; $4da0
 	and a ; $4da3
@@ -164,7 +164,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld l, $0d ; $4db2
 	ld_cell de, $0b, $03 ; $4db4
 	farcall Unused_1a_QueueWindowTileWrite ; $4db7
-	jp .doneB ; $4dba
+	jp .doneAdjust ; $4dba
 .blinkMinigamePauseAdjust:
 	ld l, $20 ; $4dbd
 	ld_cell de, $0d, $05 ; $4dbf
@@ -185,7 +185,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld l, $0d ; $4de5
 	ld_cell de, $0d, $05 ; $4de7
 	farcall Unused_1a_QueueWindowTileWrite ; $4dea
-	jr .doneB ; $4ded
+	jr .doneAdjust ; $4ded
 .minigamePauseLowerRow:
 	call Unused_05_GetMenuCursorBlinkPhase ; $4def
 	or a ; $4df2
@@ -197,11 +197,11 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld l, $0d ; $4e00
 	ld_cell de, $0d, $07 ; $4e02
 	farcall Unused_1a_QueueWindowTileWrite ; $4e05
-	jr .doneB ; $4e08
+	jr .doneAdjust ; $4e08
 .queueWindowTileWrite:
 	ld l, $20 ; $4e0a
 	farcall Unused_1a_QueueWindowTileWrite ; $4e0c
-.doneB:
+.doneAdjust:
 	ret ; $4e0f
 Unused_05_GetMenuCursorBlinkPhase:
 	wram_bank WRAM_TEXT ; $4e10
@@ -344,11 +344,7 @@ TextCmdNextGlyphStreamRow:
 	ld h, [hl] ; $4ef0
 	ld l, a ; $4ef1
 	ld a, $40 ; $4ef2
-	add l ; $4ef4
-	ld l, a ; $4ef5
-	jr nc, .gotPtr ; $4ef6
-	inc h ; $4ef8
-.gotPtr:
+	add_hl_a ; $4ef4
 	ld b, h ; $4ef9
 	ld c, l ; $4efa
 	ld hl, wGlyphTileWritePtr ; $4efb
@@ -365,11 +361,7 @@ TextCmdNextGlyphStreamRow:
 	cpl ; $4f16
 	inc a ; $4f17
 	sla a ; $4f18
-	add l ; $4f1a
-	ld l, a ; $4f1b
-	jr nc, .storeGlyphVramDest ; $4f1c
-	inc h ; $4f1e
-.storeGlyphVramDest:
+	add_hl_a ; $4f1a
 	ld a, l ; $4f1f
 	ld [wGlyphVramDest], a ; $4f20
 	ld a, h ; $4f23

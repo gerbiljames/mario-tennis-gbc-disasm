@@ -36,11 +36,7 @@ AppendCharToName:
 	ld hl, NameEntryCharset_38 ; $72dd
 .indexCharset:
 	ld a, d ; $72e0
-	add l ; $72e1
-	ld l, a ; $72e2
-	jr nc, .checkMark ; $72e3
-	inc h ; $72e5
-.checkMark:
+	add_hl_a ; $72e1
 	ld d, [hl] ; $72e6
 	ld a, d ; $72e7
 	cp $9e ; $72e8
@@ -304,20 +300,12 @@ RunLinkMatchSequence:
 ApplyMatchTypeSettingsLink:
 	ld hl, MatchTypeSettingsLinkTable0 ; $74e3
 	ld a, [wMatchFormatSets] ; $74e6
-	add l ; $74e9
-	ld l, a ; $74ea
-	jr nc, .readSets ; $74eb
-	inc h ; $74ed
-.readSets:
+	add_hl_a ; $74e9
 	ld a, [hl] ; $74ee
 	ld [wMatchTypeNumberOfSets], a ; $74ef
 	ld hl, MatchTypeSettingsLinkTable1 ; $74f2
 	ld a, [wMatchFormatGames] ; $74f5
-	add l ; $74f8
-	ld l, a ; $74f9
-	jr nc, .readGames ; $74fa
-	inc h ; $74fc
-.readGames:
+	add_hl_a ; $74f8
 	ld a, [hl] ; $74fd
 	ld [wMatchTypeNumberOfGames], a ; $74fe
 	ld a, [wMatchFormatDoubles] ; $7501
@@ -443,17 +431,9 @@ ExchangeLinkCharSelection:
 	ld b, $25 ; $75c6
 .storeCommand:
 	ld a, c ; $75c8
-	add l ; $75c9
-	ld l, a ; $75ca
-	jr nc, .writeSlot ; $75cb
-	inc h ; $75cd
-.writeSlot:
+	add_hl_a ; $75c9
 	ld a, c ; $75ce
-	add e ; $75cf
-	ld e, a ; $75d0
-	jr nc, .send ; $75d1
-	inc d ; $75d3
-.send:
+	add_de_a ; $75cf
 	push bc ; $75d4
 	ld c, b ; $75d5
 	farcall ExchangeLinkDataBlock ; $75d6
@@ -643,11 +623,7 @@ UnpackUnlockFlagsFromLink:
 	push hl ; $770e
 	ld hl, wCharUnlockFlags ; $770f
 	ld a, c ; $7712
-	add l ; $7713
-	ld l, a ; $7714
-	jr nc, .markChar ; $7715
-	inc h ; $7717
-.markChar:
+	add_hl_a ; $7713
 	ld a, $01 ; $7718
 	ld [hl], a ; $771a
 	pop hl ; $771b
@@ -674,11 +650,7 @@ UnpackUnlockFlagsFromLink:
 	push hl ; $773b
 	ld hl, wCharUnlockFlags + 15 ; $773c
 	ld a, c ; $773f
-	add l ; $7740
-	ld l, a ; $7741
-	jr nc, .markCourt ; $7742
-	inc h ; $7744
-.markCourt:
+	add_hl_a ; $7740
 	ld a, $01 ; $7745
 	ld [hl], a ; $7747
 	pop hl ; $7748
@@ -698,11 +670,7 @@ UnpackUnlockFlagsFromLink:
 	push hl ; $775c
 	ld hl, wCharUnlockFlags + 23 ; $775d
 	ld a, c ; $7760
-	add l ; $7761
-	ld l, a ; $7762
-	jr nc, .markItem ; $7763
-	inc h ; $7765
-.markItem:
+	add_hl_a ; $7761
 	ld a, $01 ; $7766
 	ld [hl], a ; $7768
 	pop hl ; $7769

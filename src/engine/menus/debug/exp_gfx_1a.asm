@@ -276,23 +276,19 @@ Unused_1a_LoadCharViewerGridTilemap:
 	wram_bank WRAM_COURT_PLANES ; $6a1b
 	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH + 1 ; $6a21
 	ld c, $10 ; $6a24
-.loop:
+.rowLoop:
 	push hl ; $6a26
 	ld b, $12 ; $6a27
-.loopB:
+.columnLoop:
 	xor a ; $6a29
 	ld [hl+], a ; $6a2a
 	dec b ; $6a2b
-	jr nz, .loopB ; $6a2c
+	jr nz, .columnLoop ; $6a2c
 	pop hl ; $6a2e
 	ld a, $20 ; $6a2f
-	add l ; $6a31
-	ld l, a ; $6a32
-	jr nc, .gotPtr ; $6a33
-	inc h ; $6a35
-.gotPtr:
+	add_hl_a ; $6a31
 	dec c ; $6a36
-	jr nz, .loop ; $6a37
+	jr nz, .rowLoop ; $6a37
 	ret ; $6a39
 Unused_1a_DrawCharViewerPageNames:
 	or a ; $6a3a

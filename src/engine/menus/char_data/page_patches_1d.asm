@@ -434,7 +434,7 @@ DrawExpPoolGauge:
 	ld b, a ; $6b15
 	ld c, $0b ; $6b16
 	wram_bank WRAM_SCREEN ; $6b18
-.loop:
+.fullCellLoop:
 	ld a, b ; $6b1e
 	sub $08 ; $6b1f
 	jr c, .partialCell ; $6b21
@@ -451,7 +451,7 @@ DrawExpPoolGauge:
 	dec c ; $6b34
 	ret z ; $6b35
 	call ExpGaugePtrUpOneRow ; $6b36
-	jr .loop ; $6b39
+	jr .fullCellLoop ; $6b39
 .partialCell:
 	add $08 ; $6b3b
 	rlca ; $6b3d
@@ -465,7 +465,7 @@ DrawExpPoolGauge:
 	dec c ; $6b4b
 	ret z ; $6b4c
 	call ExpGaugePtrUpOneRow ; $6b4d
-.loopB:
+.emptyCellLoop:
 	ld hl, ExpPoolGaugeTilePairTable ; $6b50
 	ld a, [hl+] ; $6b53
 	ld [de], a ; $6b54
@@ -476,7 +476,7 @@ DrawExpPoolGauge:
 	dec c ; $6b59
 	ret z ; $6b5a
 	call ExpGaugePtrUpOneRow ; $6b5b
-	jr .loopB ; $6b5e
+	jr .emptyCellLoop ; $6b5e
 ExpGaugePtrUpOneRow:
 	push bc ; $6b60
 	ld c, $20 ; $6b61
@@ -830,11 +830,7 @@ ExpScreenTilePtrUpOneRow:
 	ret ; $6dde
 ExpScreenTilePtrDownOneRow:
 	ld a, $21 ; $6ddf
-	add e ; $6de1
-	ld e, a ; $6de2
-	jr nc, .done ; $6de3
-	inc d ; $6de5
-.done:
+	add_de_a ; $6de1
 	ret ; $6de6
 DrawExpScreenLevelNumber:
 	wram_bank WRAM_SCENE ; $6de7
@@ -884,11 +880,7 @@ DrawExpScreenLevelNumber:
 	inc a ; $6e38
 	ld [hl], a ; $6e39
 	ld a, $1d ; $6e3a
-	add l ; $6e3c
-	ld l, a ; $6e3d
-	jr nc, .gotPtr ; $6e3e
-	inc h ; $6e40
-.gotPtr:
+	add_hl_a ; $6e3c
 	ld a, $ac ; $6e41
 	ld [hl+], a ; $6e43
 	inc a ; $6e44
@@ -911,11 +903,7 @@ DrawExpScreenLevelDigit:
 	add b ; $6e61
 	ld b, a ; $6e62
 	ld a, $20 ; $6e63
-	add e ; $6e65
-	ld e, a ; $6e66
-	jr nc, .gotPtr ; $6e67
-	inc d ; $6e69
-.gotPtr:
+	add_de_a ; $6e65
 	ld a, b ; $6e6a
 	ld [de], a ; $6e6b
 	pop de ; $6e6c
@@ -937,11 +925,7 @@ ClearExpScreenLevelDigits:
 	ld [hl+], a ; $6e87
 	ld [hl], a ; $6e88
 	ld a, $1d ; $6e89
-	add l ; $6e8b
-	ld l, a ; $6e8c
-	jr nc, .gotPtr ; $6e8d
-	inc h ; $6e8f
-.gotPtr:
+	add_hl_a ; $6e8b
 	ld a, $74 ; $6e90
 	ld [hl+], a ; $6e92
 	inc a ; $6e93
@@ -1004,7 +988,7 @@ DrawExpScreenLevelBar:
 	ld b, a ; $6efe
 	ld c, $08 ; $6eff
 	wram_bank WRAM_SCREEN ; $6f01
-.loop:
+.fullCellLoop:
 	ld a, b ; $6f07
 	sub $08 ; $6f08
 	jr c, .partialCell ; $6f0a
@@ -1016,7 +1000,7 @@ DrawExpScreenLevelBar:
 	dec c ; $6f18
 	ret z ; $6f19
 	inc de ; $6f1a
-	jr .loop ; $6f1b
+	jr .fullCellLoop ; $6f1b
 .partialCell:
 	add $08 ; $6f1d
 	ld_hl_indexed ExpBarFillTiles_1d ; $6f1f
@@ -1025,11 +1009,11 @@ DrawExpScreenLevelBar:
 	dec c ; $6f28
 	ret z ; $6f29
 	inc de ; $6f2a
-.loopB:
+.emptyCellLoop:
 	ld hl, ExpBarFillTiles_1d ; $6f2b
 	ld a, [hl] ; $6f2e
 	ld [de], a ; $6f2f
 	inc de ; $6f30
 	dec c ; $6f31
 	ret z ; $6f32
-	jr .loopB ; $6f33
+	jr .emptyCellLoop ; $6f33

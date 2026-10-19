@@ -5,11 +5,7 @@ BuildMarioCastUnlockMask:
 	ld a, c ; $6683
 	add a ; $6684
 	ld hl, MarioCastUnlockMaskTable ; $6685
-	add l ; $6688
-	ld l, a ; $6689
-	jr nc, .read ; $668a
-	inc h ; $668c
-.read:
+	add_hl_a ; $6688
 	ld a, [hl+] ; $668d
 	ld d, [hl] ; $668e
 	ld e, a ; $668f
@@ -61,11 +57,7 @@ GetUnlockedMarioCastCharAtGridSlot:
 	ld d, a ; $66c1
 	sub $1a ; $66c2
 	ld hl, UnlockedMarioCastCharAtGridSlotTable ; $66c4
-	add l ; $66c7
-	ld l, a ; $66c8
-	jr nc, .readMask ; $66c9
-	inc h ; $66cb
-.readMask:
+	add_hl_a ; $66c7
 	ld b, [hl] ; $66cc
 	ld a, [wMarioCastUnlockMask] ; $66cd
 	and b ; $66d0
@@ -81,11 +73,7 @@ UnlockedMarioCastCharAtGridSlotTable:
 GetMarioCastCharAtGridSlot:
 	ld hl, MarioCastCharAtGridSlotTable ; $66de
 	ld a, c ; $66e1
-	add l ; $66e2
-	ld l, a ; $66e3
-	jr nc, .read ; $66e4
-	inc h ; $66e6
-.read:
+	add_hl_a ; $66e2
 	ld a, [hl] ; $66e7
 	ret ; $66e8
 MarioCastCharAtGridSlotTable:
@@ -112,7 +100,7 @@ MinigameSelectSlideIn6:
 	or a ; $6701
 	jr z, .slideBack ; $6702
 	ld c, $00 ; $6704
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6706
 	ld b, $16 ; $6709
 	farcall RestoreMenuBgAndDrawPanel ; $670b
@@ -122,11 +110,11 @@ MinigameSelectSlideIn6:
 	inc a ; $6714
 	ld c, a ; $6715
 	cp $0e ; $6716
-	jr nz, .loop ; $6718
+	jr nz, .slideForwardLoop ; $6718
 	ret ; $671a
 .slideBack:
 	ld c, $0c ; $671b
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $671d
 	ld b, $17 ; $6720
 	farcall RestoreMenuBgAndDrawPanel ; $6722
@@ -136,14 +124,14 @@ MinigameSelectSlideIn6:
 	dec a ; $672b
 	ld c, a ; $672c
 	cp $ff ; $672d
-	jr nz, .loopB ; $672f
+	jr nz, .slideBackLoop ; $672f
 	ret ; $6731
 MinigameSelectSlideOut6:
 	ld a, b ; $6732
 	or a ; $6733
 	jr z, .slideBack ; $6734
 	ld c, $00 ; $6736
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6738
 	ld b, $17 ; $673b
 	farcall RestoreMenuBgAndDrawPanel ; $673d
@@ -153,11 +141,11 @@ MinigameSelectSlideOut6:
 	inc a ; $6746
 	ld c, a ; $6747
 	cp $0b ; $6748
-	jr nz, .loop ; $674a
+	jr nz, .slideForwardLoop ; $674a
 	ret ; $674c
 .slideBack:
 	ld c, $0d ; $674d
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $674f
 	ld b, $16 ; $6752
 	farcall RestoreMenuBgAndDrawPanel ; $6754
@@ -167,7 +155,7 @@ MinigameSelectSlideOut6:
 	dec a ; $675d
 	ld c, a ; $675e
 	or a ; $675f
-	jr nz, .loopB ; $6760
+	jr nz, .slideBackLoop ; $6760
 	ret ; $6762
 DrawMinigameSelectGrid6:
 	wram_bank WRAM_SCREEN ; $6763
@@ -257,11 +245,7 @@ RunSavedDataSourceSelect:
 	add a ; $6821
 	add a ; $6822
 	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6823
-	add c ; $6826
-	ld c, a ; $6827
-	jr nc, .gotPtr ; $6828
-	inc b ; $682a
-.gotPtr:
+	add_bc_a ; $6826
 	ld hl, $0000 ; $682b
 	add hl, bc ; $682e
 	ld a, [hl] ; $682f
@@ -399,7 +383,7 @@ Unused_3b_SlideMenuPanel_1:
 	or a ; $697a
 	jr z, .slideBack ; $697b
 	ld c, $00 ; $697d
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $697f
 	ld b, $06 ; $6982
 	farcall RestoreMenuBgAndDrawPanel ; $6984
@@ -409,11 +393,11 @@ Unused_3b_SlideMenuPanel_1:
 	inc a ; $698d
 	ld c, a ; $698e
 	cp $0c ; $698f
-	jr nz, .loop ; $6991
+	jr nz, .slideForwardLoop ; $6991
 	ret ; $6993
 .slideBack:
 	ld c, $0a ; $6994
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $6996
 	ld b, $07 ; $6999
 	farcall RestoreMenuBgAndDrawPanel ; $699b
@@ -423,7 +407,7 @@ Unused_3b_SlideMenuPanel_1:
 	dec a ; $69a4
 	ld c, a ; $69a5
 	cp $ff ; $69a6
-	jr nz, .loopB ; $69a8
+	jr nz, .slideBackLoop ; $69a8
 	ret ; $69aa
 ; MainMenuSlideOut with different start columns, end test (`cp $0d`) and row count: the slide-out matching Unused_3b_SlideMenuPanel_1. Nothing calls it.
 Unused_3b_SlideMenuPanel_2:
@@ -463,20 +447,12 @@ SavedDataSourceCursorSpriteTask:
 	call GetMenuCursorIndex_3b ; $69e1
 	push af ; $69e4
 	ld hl, SavedDataSourceCursorSpriteTaskTable1 ; $69e5
-	add l ; $69e8
-	ld l, a ; $69e9
-	jr nc, .read ; $69ea
-	inc h ; $69ec
-.read:
+	add_hl_a ; $69e8
 	ld c, [hl] ; $69ed
 	pop af ; $69ee
 	ld hl, SavedDataSourceCursorSpriteTaskTable0 ; $69ef
 	add a ; $69f2
-	add l ; $69f3
-	ld l, a ; $69f4
-	jr nc, .readB ; $69f5
-	inc h ; $69f7
-.readB:
+	add_hl_a ; $69f3
 	ld a, [hl+] ; $69f8
 	ld d, [hl] ; $69f9
 	ld e, a ; $69fa
@@ -543,11 +519,7 @@ DrawSavedDataSourceGrid:
 	add a ; $6aa8
 	add a ; $6aa9
 	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6aaa
-	add c ; $6aad
-	ld c, a ; $6aae
-	jr nc, .gotPtr ; $6aaf
-	inc b ; $6ab1
-.gotPtr:
+	add_bc_a ; $6aad
 	ld hl, $0001 ; $6ab2
 	add hl, bc ; $6ab5
 	ld a, [hl] ; $6ab6
@@ -613,11 +585,7 @@ FillSavedDataSourceCell:
 	ld hl, FillSavedDataSourceCellTable ; $6b2e
 	ld a, e ; $6b31
 	add a ; $6b32
-	add l ; $6b33
-	ld l, a ; $6b34
-	jr nc, .read ; $6b35
-	inc h ; $6b37
-.read:
+	add_hl_a ; $6b33
 	ld a, [hl+] ; $6b38
 	ld d, [hl] ; $6b39
 	ld e, a ; $6b3a
@@ -638,11 +606,7 @@ FillSavedDataSourceCellTable:
 LoadSavedDataSourceCellPalette:
 	ld hl, SavedDataSourceCellPalettePtrs ; $6b4e
 	add a ; $6b51
-	add l ; $6b52
-	ld l, a ; $6b53
-	jr nc, .read ; $6b54
-	inc h ; $6b56
-.read:
+	add_hl_a ; $6b52
 	ld a, [hl+] ; $6b57
 	ld h, [hl] ; $6b58
 	ld l, a ; $6b59
@@ -676,11 +640,7 @@ DrawSavedDataSourceCaption:
 	add a ; $6b99
 	add a ; $6b9a
 	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6b9b
-	add c ; $6b9e
-	ld c, a ; $6b9f
-	jr nc, .gotPtr ; $6ba0
-	inc b ; $6ba2
-.gotPtr:
+	add_bc_a ; $6b9e
 	ld hl, $0000 ; $6ba3
 	add hl, bc ; $6ba6
 	ld a, [hl] ; $6ba7

@@ -22,40 +22,24 @@ RunCpuDifficultySubmenu:
 	wram_bank WRAM_SCREEN ; $6248
 	ld hl, wCharSelectSlotDifficulty ; $624e
 	ld a, [wCharSelectSlot] ; $6251
-	add l ; $6254
-	ld l, a ; $6255
-	jr nc, .clearDifficulty ; $6256
-	inc h ; $6258
-.clearDifficulty:
+	add_hl_a ; $6254
 	xor a ; $6259
 	ld [hl], a ; $625a
 	ld hl, wCharSelectSlotLeftHanded ; $625b
 	ld a, [wCharSelectSlot] ; $625e
-	add l ; $6261
-	ld l, a ; $6262
-	jr nc, .clearTaken ; $6263
-	inc h ; $6265
-.clearTaken:
+	add_hl_a ; $6261
 	xor a ; $6266
 	ld [hl], a ; $6267
 	ld hl, wCharSelectSlotChars ; $6268
 	ld a, [wCharSelectSlot] ; $626b
-	add l ; $626e
-	ld l, a ; $626f
-	jr nc, .readSlotChar ; $6270
-	inc h ; $6272
-.readSlotChar:
+	add_hl_a ; $626e
 	ld a, [hl] ; $6273
 	ld b, $00 ; $6274
 	ld [hl], b ; $6276
 	ld hl, wCharGridEntries ; $6277
 	add a ; $627a
 	add a ; $627b
-	add l ; $627c
-	ld l, a ; $627d
-	jr nc, .clearGridEntry ; $627e
-	inc h ; $6280
-.clearGridEntry:
+	add_hl_a ; $627c
 	inc hl ; $6281
 	inc hl ; $6282
 	xor a ; $6283
@@ -68,11 +52,7 @@ RunCpuDifficultySubmenu:
 	call CloseCpuDifficultyPanel ; $628f
 	ld hl, wCharSelectSlotDifficulty ; $6292
 	ld a, [wCharSelectSlot] ; $6295
-	add l ; $6298
-	ld l, a ; $6299
-	jr nc, .storeDifficulty ; $629a
-	inc h ; $629c
-.storeDifficulty:
+	add_hl_a ; $6298
 	ld a, [wCpuDifficultyCursor] ; $629d
 	inc a ; $62a0
 	ld [hl], a ; $62a1
@@ -152,22 +132,14 @@ DrawCpuDifficultyCursorBox:
 	ld a, [wCpuDifficultyCursor] ; $633b
 	add a ; $633e
 	ld hl, CpuDifficultyCursorBoxTable0 ; $633f
-	add l ; $6342
-	ld l, a ; $6343
-	jr nc, .read ; $6344
-	inc h ; $6346
-.read:
+	add_hl_a ; $6342
 	ld a, [hl+] ; $6347
 	ld d, [hl] ; $6348
 	ld e, a ; $6349
 	ld a, [wCpuDifficultyCursor] ; $634a
 	add a ; $634d
 	ld hl, CpuDifficultyCursorBoxTable1 ; $634e
-	add l ; $6351
-	ld l, a ; $6352
-	jr nc, .readB ; $6353
-	inc h ; $6355
-.readB:
+	add_hl_a ; $6351
 	ld a, [hl+] ; $6356
 	ld b, [hl] ; $6357
 	ld c, a ; $6358
@@ -413,21 +385,13 @@ ProcessLinkSelectCommand:
 	jr z, .markOwnSlot ; $6580
 	ld a, [wCharSelectRemoteSlot] ; $6582
 	ld hl, wCharSelectSlotLeftHanded + 2 ; $6585
-	add l ; $6588
-	ld l, a ; $6589
-	jr nc, .markSlotTaken ; $658a
-	inc h ; $658c
-.markSlotTaken:
+	add_hl_a ; $6588
 	ld [hl], $01 ; $658d
 	jr .applySelection ; $658f
 .markOwnSlot:
 	ld a, [wCharSelectRemoteSlot] ; $6591
 	ld hl, wCharSelectSlotLeftHanded ; $6594
-	add l ; $6597
-	ld l, a ; $6598
-	jr nc, .markOwnSlotTaken ; $6599
-	inc h ; $659b
-.markOwnSlotTaken:
+	add_hl_a ; $6597
 	ld [hl], $01 ; $659c
 .applySelection:
 	ld a, [wLinkSelectCmdChar] ; $659e

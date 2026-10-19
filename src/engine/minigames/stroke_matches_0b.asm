@@ -192,22 +192,14 @@ StrokeMatch2JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $682f
 	ld hl, StrokeMatch2JudgePointMessages ; $6832
-	add l ; $6835
-	ld l, a ; $6836
-	jr nc, .readMessage ; $6837
-	inc h ; $6839
-.readMessage:
+	add_hl_a ; $6835
 	ld a, [hl] ; $683a
 	ld a, a ; $683b
 	ld b, $0d ; $683c
 	call SetDrillMessageByServer ; $683e
 	ld a, [wPointOutcome] ; $6841
 	ld hl, EvenRallyVerdicts ; $6844
-	add l ; $6847
-	ld l, a ; $6848
-	jr nc, .readResult ; $6849
-	inc h ; $684b
-.readResult:
+	add_hl_a ; $6847
 	ld a, [hl] ; $684c
 	ret ; $684d
 StrokeMatch2JudgePointMessages:
@@ -233,22 +225,14 @@ StrokeMatch2Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6869
 	ld hl, StrokeMatch2Cases1Messages ; $686c
-	add l ; $686f
-	ld l, a ; $6870
-	jr nc, .read ; $6871
-	inc h ; $6873
-.read:
+	add_hl_a ; $686f
 	ld a, [hl] ; $6874
 	ld a, a ; $6875
 	ld b, $0d ; $6876
 	call SetDrillMessageByServer ; $6878
 	ld a, [wPointOutcome] ; $687b
 	ld hl, OddRallyVerdicts ; $687e
-	add l ; $6881
-	ld l, a ; $6882
-	jr nc, .readB ; $6883
-	inc h ; $6885
-.readB:
+	add_hl_a ; $6881
 	ld a, [hl] ; $6886
 	ret ; $6887
 StrokeMatch2Cases1Messages:
@@ -283,22 +267,14 @@ StrokeMatch2Cases2:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $68b7
 	ld hl, StrokeMatch2Cases2Messages ; $68ba
-	add l ; $68bd
-	ld l, a ; $68be
-	jr nc, .read ; $68bf
-	inc h ; $68c1
-.read:
+	add_hl_a ; $68bd
 	ld a, [hl] ; $68c2
 	ld a, a ; $68c3
 	ld b, $0d ; $68c4
 	call SetDrillMessageByServer ; $68c6
 	ld a, [wPointOutcome] ; $68c9
 	ld hl, EvenRallyVerdicts ; $68cc
-	add l ; $68cf
-	ld l, a ; $68d0
-	jr nc, .readB ; $68d1
-	inc h ; $68d3
-.readB:
+	add_hl_a ; $68cf
 	ld a, [hl] ; $68d4
 	ret ; $68d5
 StrokeMatch2Cases2Messages:
@@ -519,22 +495,14 @@ StrokeMatch3JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $6a7a
 	ld hl, StrokeMatch3JudgePointMessages ; $6a7d
-	add l ; $6a80
-	ld l, a ; $6a81
-	jr nc, .readMessage ; $6a82
-	inc h ; $6a84
-.readMessage:
+	add_hl_a ; $6a80
 	ld a, [hl] ; $6a85
 	ld a, a ; $6a86
 	ld b, $0d ; $6a87
 	call SetDrillMessageByServer ; $6a89
 	ld a, [wPointOutcome] ; $6a8c
 	ld hl, EvenRallyVerdicts ; $6a8f
-	add l ; $6a92
-	ld l, a ; $6a93
-	jr nc, .readResult ; $6a94
-	inc h ; $6a96
-.readResult:
+	add_hl_a ; $6a92
 	ld a, [hl] ; $6a97
 	ret ; $6a98
 StrokeMatch3JudgePointMessages:
@@ -560,22 +528,14 @@ StrokeMatch3Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6ab4
 	ld hl, StrokeMatch3Cases1Messages ; $6ab7
-	add l ; $6aba
-	ld l, a ; $6abb
-	jr nc, .read ; $6abc
-	inc h ; $6abe
-.read:
+	add_hl_a ; $6aba
 	ld a, [hl] ; $6abf
 	ld a, a ; $6ac0
 	ld b, $0d ; $6ac1
 	call SetDrillMessageByServer ; $6ac3
 	ld a, [wPointOutcome] ; $6ac6
 	ld hl, OddRallyVerdicts ; $6ac9
-	add l ; $6acc
-	ld l, a ; $6acd
-	jr nc, .readB ; $6ace
-	inc h ; $6ad0
-.readB:
+	add_hl_a ; $6acc
 	ld a, [hl] ; $6ad1
 	ret ; $6ad2
 StrokeMatch3Cases1Messages:
@@ -601,22 +561,14 @@ StrokeMatch3Cases2:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6aee
 	ld hl, StrokeMatch3Cases2Messages ; $6af1
-	add l ; $6af4
-	ld l, a ; $6af5
-	jr nc, .read ; $6af6
-	inc h ; $6af8
-.read:
+	add_hl_a ; $6af4
 	ld a, [hl] ; $6af9
 	ld a, a ; $6afa
 	ld b, $0d ; $6afb
 	call SetDrillMessageByServer ; $6afd
 	ld a, [wPointOutcome] ; $6b00
 	ld hl, EvenRallyVerdicts ; $6b03
-	add l ; $6b06
-	ld l, a ; $6b07
-	jr nc, .readB ; $6b08
-	inc h ; $6b0a
-.readB:
+	add_hl_a ; $6b06
 	ld a, [hl] ; $6b0b
 	ret ; $6b0c
 StrokeMatch3Cases2Messages:
@@ -714,11 +666,7 @@ StrokePractice1Hook_PointStart:
 	call RegisterFrameTask ; $6bb9
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bbc
 	ld hl, StrokePractice1ServeAims ; $6bbf
-	add l ; $6bc2
-	ld l, a ; $6bc3
-	jr nc, .read ; $6bc4
-	inc h ; $6bc6
-.read:
+	add_hl_a ; $6bc2
 	ld a, [hl] ; $6bc7
 	ld [wAiServeAimOverride], a ; $6bc8
 	ret ; $6bcb

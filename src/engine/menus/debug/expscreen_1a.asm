@@ -63,11 +63,7 @@ Unused_1a_CopyNameToTileBuffer:
 	call Unused_1a_MoveTileBufferDestUpRow ; $4b82
 	ld [de], a ; $4b85
 	ld a, $21 ; $4b86
-	add e ; $4b88
-	ld e, a ; $4b89
-	jr nc, .copyNameToTileBuffer ; $4b8a
-	inc d ; $4b8c
-.copyNameToTileBuffer:
+	add_de_a ; $4b88
 	jr Unused_1a_CopyNameToTileBuffer ; $4b8d
 Unused_1a_MoveTileBufferDestUpRow:
 	ld b, $21 ; $4b8f
@@ -82,22 +78,22 @@ Unused_1a_ClearExpScreenNameBox:
 	push de ; $4b98
 	push hl ; $4b99
 	ld c, $05 ; $4b9a
-.loop:
+.rowLoop:
 	ld a, c ; $4b9c
 	cp $09 ; $4b9d
 	jr z, .restore ; $4b9f
 	ld b, $07 ; $4ba1
-.loopB:
+.columnLoop:
 	ld a, b ; $4ba3
 	cp $0d ; $4ba4
 	jr z, .nextRow ; $4ba6
 	ld de, $2000 ; $4ba8
 	call Unused_1a_WriteTileBufferCell ; $4bab
 	inc b ; $4bae
-	jr .loopB ; $4baf
+	jr .columnLoop ; $4baf
 .nextRow:
 	inc c ; $4bb1
-	jr .loop ; $4bb2
+	jr .rowLoop ; $4bb2
 .restore:
 	pop hl ; $4bb4
 	pop de ; $4bb5

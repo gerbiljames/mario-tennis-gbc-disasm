@@ -231,11 +231,7 @@ CopyTextRect:
 	pop de ; $2b4f
 	pop bc ; $2b50
 	ld a, $20 ; $2b51
-	add e ; $2b53
-	ld e, a ; $2b54
-	jr nc, .nextRow ; $2b55
-	inc d ; $2b57
-.nextRow:
+	add_de_a ; $2b53
 	dec c ; $2b58
 	jr nz, CopyTextRect ; $2b59
 	ret ; $2b5b
@@ -276,17 +272,9 @@ DrawWindowFrame:
 	pop de ; $2b84
 	pop bc ; $2b85
 	ld a, $20 ; $2b86
-	add l ; $2b88
-	ld l, a ; $2b89
-	jr nc, .advanceAttrRow ; $2b8a
-	inc h ; $2b8c
-.advanceAttrRow:
+	add_hl_a ; $2b88
 	ld a, $20 ; $2b8d
-	add e ; $2b8f
-	ld e, a ; $2b90
-	jr nc, .nextClearRow ; $2b91
-	inc d ; $2b93
-.nextClearRow:
+	add_de_a ; $2b8f
 	dec c ; $2b94
 	jr nz, .fillRowLoop ; $2b95
 	pop hl ; $2b97
@@ -294,21 +282,13 @@ DrawWindowFrame:
 	pop bc ; $2b99
 	call DrawWindowFrameTop ; $2b9a
 	ld a, $20 ; $2b9d
-	add l ; $2b9f
-	ld l, a ; $2ba0
-	jr nc, .drawSides ; $2ba1
-	inc h ; $2ba3
-.drawSides:
+	add_hl_a ; $2b9f
 	dec c ; $2ba4
 	dec c ; $2ba5
 .sideRowLoop:
 	call DrawWindowFrameSides ; $2ba6
 	ld a, $20 ; $2ba9
-	add l ; $2bab
-	ld l, a ; $2bac
-	jr nc, .drawWindowFrameBottom ; $2bad
-	inc h ; $2baf
-.drawWindowFrameBottom:
+	add_hl_a ; $2bab
 	dec c ; $2bb0
 	jr nz, .sideRowLoop ; $2bb1
 	call DrawWindowFrameBottom ; $2bb3
@@ -339,11 +319,7 @@ DrawWindowFrameSides:
 	ld [hl], $05 ; $2bcf
 	ld a, b ; $2bd1
 	dec a ; $2bd2
-	add l ; $2bd3
-	ld l, a ; $2bd4
-	jr nc, .store ; $2bd5
-	inc h ; $2bd7
-.store:
+	add_hl_a ; $2bd3
 	ld [hl], $06 ; $2bd8
 	pop hl ; $2bda
 	ret ; $2bdb

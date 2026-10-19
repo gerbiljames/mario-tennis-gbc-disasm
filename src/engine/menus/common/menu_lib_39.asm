@@ -28,11 +28,7 @@ LoadCompressedTileBlock:
 	ld a, b ; $468e
 	add a ; $468f
 	ld hl, TileBlockPtrs_39 ; $4690
-	add l ; $4693
-	ld l, a ; $4694
-	jr nc, .readPtr ; $4695
-	inc h ; $4697
-.readPtr:
+	add_hl_a ; $4693
 	ld a, [hl+] ; $4698
 	ld h, [hl] ; $4699
 	ld l, a ; $469a

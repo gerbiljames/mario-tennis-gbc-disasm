@@ -72,11 +72,7 @@ RunEraseSavedDataSelect:
 	add a ; $6ce7
 	add a ; $6ce8
 	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6ce9
-	add c ; $6cec
-	ld c, a ; $6ced
-	jr nc, .gotPtr ; $6cee
-	inc b ; $6cf0
-.gotPtr:
+	add_bc_a ; $6cec
 	ld hl, $0000 ; $6cf1
 	add hl, bc ; $6cf4
 	ld a, [hl] ; $6cf5
@@ -197,7 +193,7 @@ SavedDataPickerSlideIn:
 	or a ; $6e25
 	jr z, .slideBack ; $6e26
 	ld c, $00 ; $6e28
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6e2a
 	ld b, $08 ; $6e2d
 	farcall RestoreMenuBgAndDrawPanel ; $6e2f
@@ -207,11 +203,11 @@ SavedDataPickerSlideIn:
 	inc a ; $6e38
 	ld c, a ; $6e39
 	cp $0f ; $6e3a
-	jr nz, .loop ; $6e3c
+	jr nz, .slideForwardLoop ; $6e3c
 	ret ; $6e3e
 .slideBack:
 	ld c, $0b ; $6e3f
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $6e41
 	ld b, $09 ; $6e44
 	farcall RestoreMenuBgAndDrawPanel ; $6e46
@@ -221,7 +217,7 @@ SavedDataPickerSlideIn:
 	dec a ; $6e4f
 	ld c, a ; $6e50
 	cp $ff ; $6e51
-	jr nz, .loopB ; $6e53
+	jr nz, .slideBackLoop ; $6e53
 	ret ; $6e55
 SavedDataPickerSlideOut:
 	ld a, b ; $6e56
@@ -306,11 +302,7 @@ MoveSavedDataPickerCursor:
 .topVertical:
 	ld a, [wMenuCursorX] ; $6ed7
 	ld hl, SavedDataPickerCursorTable0 ; $6eda
-	add l ; $6edd
-	ld l, a ; $6ede
-	jr nc, .read ; $6edf
-	inc h ; $6ee1
-.read:
+	add_hl_a ; $6edd
 	ld a, [hl] ; $6ee2
 	ld [wMenuCursorX], a ; $6ee3
 	ld a, [wMenuCursorY] ; $6ee6
@@ -367,11 +359,7 @@ MoveSavedDataPickerCursor:
 .bottomVertical:
 	ld a, [wMenuCursorX] ; $6f3a
 	ld hl, SavedDataPickerCursorTable1 ; $6f3d
-	add l ; $6f40
-	ld l, a ; $6f41
-	jr nc, .readB ; $6f42
-	inc h ; $6f44
-.readB:
+	add_hl_a ; $6f40
 	ld a, [hl] ; $6f45
 	ld [wMenuCursorX], a ; $6f46
 	ld a, [wMenuCursorY] ; $6f49
@@ -393,20 +381,12 @@ EraseSavedDataCursorSpriteTask:
 	call GetMenuCursorIndex_3b ; $6f60
 	push af ; $6f63
 	ld hl, EraseSavedDataCursorSpriteTaskTable1 ; $6f64
-	add l ; $6f67
-	ld l, a ; $6f68
-	jr nc, .read ; $6f69
-	inc h ; $6f6b
-.read:
+	add_hl_a ; $6f67
 	ld c, [hl] ; $6f6c
 	pop af ; $6f6d
 	ld hl, EraseSavedDataCursorSpriteTaskTable0 ; $6f6e
 	add a ; $6f71
-	add l ; $6f72
-	ld l, a ; $6f73
-	jr nc, .readB ; $6f74
-	inc h ; $6f76
-.readB:
+	add_hl_a ; $6f72
 	ld a, [hl+] ; $6f77
 	ld d, [hl] ; $6f78
 	ld e, a ; $6f79
@@ -473,11 +453,7 @@ DrawEraseSavedDataGrid:
 	add a ; $7025
 	add a ; $7026
 	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $7027
-	add c ; $702a
-	ld c, a ; $702b
-	jr nc, .gotPtr ; $702c
-	inc b ; $702e
-.gotPtr:
+	add_bc_a ; $702a
 	ld hl, $0001 ; $702f
 	add hl, bc ; $7032
 	ld a, [hl] ; $7033
@@ -543,11 +519,7 @@ FillEraseSavedDataCell:
 	ld hl, FillEraseSavedDataCellTable ; $70ab
 	ld a, e ; $70ae
 	add a ; $70af
-	add l ; $70b0
-	ld l, a ; $70b1
-	jr nc, .read ; $70b2
-	inc h ; $70b4
-.read:
+	add_hl_a ; $70b0
 	ld a, [hl+] ; $70b5
 	ld d, [hl] ; $70b6
 	ld e, a ; $70b7
@@ -568,11 +540,7 @@ FillEraseSavedDataCellTable:
 LoadEraseSavedDataCellPalette:
 	ld hl, EraseSavedDataCellPalettePtrs ; $70cb
 	add a ; $70ce
-	add l ; $70cf
-	ld l, a ; $70d0
-	jr nc, .read ; $70d1
-	inc h ; $70d3
-.read:
+	add_hl_a ; $70cf
 	ld a, [hl+] ; $70d4
 	ld h, [hl] ; $70d5
 	ld l, a ; $70d6

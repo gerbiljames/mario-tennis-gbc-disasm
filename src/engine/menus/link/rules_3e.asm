@@ -187,11 +187,7 @@ LoadMatchRulesMenuGraphics:
 	ld a, c ; $4612
 	add a ; $4613
 	ld hl, MatchRulesMenuGraphicsTable ; $4614
-	add l ; $4617
-	ld l, a ; $4618
-	jr nc, .read ; $4619
-	inc h ; $461b
-.read:
+	add_hl_a ; $4617
 	ld a, [hl+] ; $461c
 	ld h, [hl] ; $461d
 	ld l, a ; $461e
@@ -208,11 +204,7 @@ LoadMatchRulesMenuGraphics:
 	ld hl, MatchRulesMenuTable ; $462d
 	ld a, c ; $4630
 	add a ; $4631
-	add l ; $4632
-	ld l, a ; $4633
-	jr nc, .readB ; $4634
-	inc h ; $4636
-.readB:
+	add_hl_a ; $4632
 	ld a, [hl+] ; $4637
 	ld d, [hl] ; $4638
 	ld e, a ; $4639
@@ -307,7 +299,7 @@ OpenMatchRulesPanel:
 	or a ; $46f5
 	jr z, .slideBack ; $46f6
 	ld c, $00 ; $46f8
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $46fa
 	ld b, $02 ; $46fd
 	farcall RestoreMenuBgAndDrawPanel ; $46ff
@@ -317,12 +309,12 @@ OpenMatchRulesPanel:
 	inc a ; $4708
 	ld c, a ; $4709
 	cp $0e ; $470a
-	jr nz, .loop ; $470c
+	jr nz, .slideForwardLoop ; $470c
 	call AdvanceFrame ; $470e
 	ret ; $4711
 .slideBack:
 	ld c, $0a ; $4712
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $4714
 	ld b, $03 ; $4717
 	farcall RestoreMenuBgAndDrawPanel ; $4719
@@ -332,7 +324,7 @@ OpenMatchRulesPanel:
 	dec a ; $4722
 	ld c, a ; $4723
 	cp $ff ; $4724
-	jr nz, .loopB ; $4726
+	jr nz, .slideBackLoop ; $4726
 	call AdvanceFrame ; $4728
 	ret ; $472b
 	twin_named match_format_slide_out, CloseMatchRulesPanel ; $472c

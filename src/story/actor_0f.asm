@@ -4,22 +4,14 @@ QueueFinishedRoundNameText:
 	ld a, [wMapSceneStage] ; $78f1
 	dec a ; $78f4
 	ld hl, Text_RoundNameSinglesRoundOne ; $78f5
-	add l ; $78f8
-	ld l, a ; $78f9
-	jr nc, .queue ; $78fa
-	inc h ; $78fc
-.queue:
+	add_hl_a ; $78f8
 	call PushShortTextArg_0f ; $78fd
 	ret ; $7900
 .doubles:
 	ld a, [wMapSceneStage] ; $7901
 	dec a ; $7904
 	ld hl, Text_RoundNameDoublesRoundOne ; $7905
-	add l ; $7908
-	ld l, a ; $7909
-	jr nc, .queueDoubles ; $790a
-	inc h ; $790c
-.queueDoubles:
+	add_hl_a ; $7908
 	call PushShortTextArg_0f ; $790d
 	ret ; $7910
 IslandOpenBreakCutscene:
@@ -46,11 +38,7 @@ IslandOpenBreakCutscene:
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_1 ; $79a1
 	ld a, [wMapSceneStage] ; $79a6
 	ld hl, Text_RoundNameSinglesRoundOne ; $79a9
-	add l ; $79ac
-	ld l, a ; $79ad
-	jr nc, .queue ; $79ae
-	inc h ; $79b0
-.queue:
+	add_hl_a ; $79ac
 	call PushShortTextArg_0f ; $79b1
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_1 ; $79b4
 	script_face_pair ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_2, ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_1 ; $79b9
@@ -427,28 +415,28 @@ Unused_0f_ComputeRankingProgressIndex:
 Unused_0f_ComputeStoryRankTier:
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c
-	jr z, .loopB ; $7d8f
+	jr z, .loop ; $7d8f
 	inc a ; $7d91
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d92
-	jr z, .loopB ; $7d95
+	jr z, .loop ; $7d95
 	inc a ; $7d97
 	test_flag FLAG_DOUBLES ; $7d98
 	jr nz, .doublesIsland ; $7d9b
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d9d
-	jr z, .loopB ; $7da0
+	jr z, .loop ; $7da0
 	inc a ; $7da2
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7da3
-	jr z, .loopB ; $7da6
+	jr z, .loop ; $7da6
 	inc a ; $7da8
-.loopB:
+.loop:
 	ld [wMapSceneStage], a ; $7da9
 	ret ; $7dac
 .doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dad
-	jr z, .loopB ; $7db0
+	jr z, .loop ; $7db0
 	inc a ; $7db2
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7db3
-	jr z, .loopB ; $7db6
+	jr z, .loop ; $7db6
 	inc a ; $7db8
-	jr .loopB ; $7db9
+	jr .loop ; $7db9
 	; $7dbb, 581 bytes fill to bank end (linker-padded)

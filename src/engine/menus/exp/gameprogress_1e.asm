@@ -188,11 +188,7 @@ TestProgressEntryFlag:
 	push de ; $73f0
 	ld hl, ProgressEntryFlagList_1e ; $73f1
 	add a ; $73f4
-	add l ; $73f5
-	ld l, a ; $73f6
-	jr nc, .read ; $73f7
-	inc h ; $73f9
-.read:
+	add_hl_a ; $73f5
 	ld a, [hl+] ; $73fa
 	ld d, [hl] ; $73fb
 	ld e, a ; $73fc
@@ -207,11 +203,7 @@ TestProgressEntryFlag:
 RunRewardCategoryList:
 	ld hl, RewardCategoryEntryListPtrs_1e ; $7408
 	add a ; $740b
-	add l ; $740c
-	ld l, a ; $740d
-	jr nc, .readList ; $740e
-	inc h ; $7410
-.readList:
+	add_hl_a ; $740c
 	ld a, [hl+] ; $7411
 	ld d, [hl] ; $7412
 	ld e, a ; $7413
@@ -223,11 +215,7 @@ RunRewardCategoryList:
 	push af ; $741a
 	ld hl, RewardCategoryFlagTable_1e ; $741b
 	add a ; $741e
-	add l ; $741f
-	ld l, a ; $7420
-	jr nc, .readFlagId ; $7421
-	inc h ; $7423
-.readFlagId:
+	add_hl_a ; $741f
 	ld a, [hl+] ; $7424
 	ld d, [hl] ; $7425
 	ld e, a ; $7426
@@ -243,11 +231,7 @@ RunRewardCategoryList:
 	ld e, a ; $7435
 	pop af ; $7436
 	ld hl, wProgressEntryUnlocked ; $7437
-	add l ; $743a
-	ld l, a ; $743b
-	jr nc, .writeSlot ; $743c
-	inc h ; $743e
-.writeSlot:
+	add_hl_a ; $743a
 	ld [hl], e ; $743f
 	pop de ; $7440
 	inc de ; $7441
@@ -318,11 +302,7 @@ BuildProgressEntryEarnedTable:
 GetProgressEntryEarned:
 	push hl ; $74aa
 	ld hl, wProgressEntryEarned ; $74ab
-	add l ; $74ae
-	ld l, a ; $74af
-	jr nc, .read ; $74b0
-	inc h ; $74b2
-.read:
+	add_hl_a ; $74ae
 	ld a, [hl] ; $74b3
 	pop hl ; $74b4
 	ret ; $74b5
@@ -338,11 +318,7 @@ DrawProgressListRows:
 	ld e, l ; $74c4
 	ld a, [wProgressListIndex] ; $74c5
 	ld hl, wProgressVisibleEntries ; $74c8
-	add l ; $74cb
-	ld l, a ; $74cc
-	jr nc, .gotPtr ; $74cd
-	inc h ; $74cf
-.gotPtr:
+	add_hl_a ; $74cb
 	ld c, $07 ; $74d0
 .loop:
 	ld a, [hl+] ; $74d2
@@ -350,11 +326,7 @@ DrawProgressListRows:
 	jr z, .endOfList ; $74d5
 	push hl ; $74d7
 	ld hl, Text_ProgressStarCourt ; $74d8
-	add l ; $74db
-	ld l, a ; $74dc
-	jr nc, .renderProportionalTextAt ; $74dd
-	inc h ; $74df
-.renderProportionalTextAt:
+	add_hl_a ; $74db
 	push bc ; $74e0
 	ld c, $10 ; $74e1
 	farcall RenderProportionalTextAt ; $74e3
