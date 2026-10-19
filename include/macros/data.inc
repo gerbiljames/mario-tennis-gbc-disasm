@@ -286,3 +286,12 @@ ENDM
 MACRO gfx_set
 	dw \1, \2, \3
 ENDM
+
+; One run of a BlitTilemapRunsFromTable list: copy `length` bytes from the
+; source row (bc) + `src` to wScreenAttrmap at (`col`, `row`). A $ff byte
+; ends the list.
+;   blit_run col, row, src, length
+MACRO blit_run
+	ASSERT (\1) < TILEMAP_WIDTH && (\2) * TILEMAP_WIDTH + (\1) < $ff00, "blit_run: bad cell"
+	db HIGH((\2) * TILEMAP_WIDTH + (\1)), LOW((\2) * TILEMAP_WIDTH + (\1)), \3, \4
+ENDM

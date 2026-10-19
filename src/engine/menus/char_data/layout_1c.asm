@@ -341,161 +341,301 @@ CharDataScreenAnimTask_CharDataFlushChunkTable:
 	dw UnusedShiftGfx30 ; record 14
 	dw UnusedShiftGfx31 ; record 15
 CharDataBand0RunsStep7_1c:
-	; $56b9, 22 bytes (bytes:16)
-	db $00, $60, $00, $0a, $00, $80, $0a, $0a, $00, $a0, $14, $0a, $00, $c0, $1e, $0a ; 0x00
-	db $00, $e0, $28, $0a, $ff, $ff ; 0x10
+	; $56b9, 22 bytes (blit_runs)
+	blit_run 0, 3, 0, 10
+	blit_run 0, 4, 10, 10
+	blit_run 0, 5, 20, 10
+	blit_run 0, 6, 30, 10
+	blit_run 0, 7, 40, 10
+	db $ff, $ff
 CharDataBand0RunsStep6_1c:
-	; $56cf, 21 bytes (bytes:16)
-	db $00, $40, $01, $09, $00, $60, $0b, $09, $00, $80, $15, $09, $00, $a0, $1f, $09 ; 0x00
-	db $00, $c0, $29, $09, $ff ; 0x10
+	; $56cf, 21 bytes (blit_runs)
+	blit_run 0, 2, 1, 9
+	blit_run 0, 3, 11, 9
+	blit_run 0, 4, 21, 9
+	blit_run 0, 5, 31, 9
+	blit_run 0, 6, 41, 9
+	db $ff
 CharDataBand0RunsStep5_1c:
-	; $56e4, 21 bytes (bytes:16)
-	db $00, $20, $02, $08, $00, $40, $0c, $08, $00, $60, $16, $08, $00, $80, $20, $08 ; 0x00
-	db $00, $a0, $2a, $08, $ff ; 0x10
+	; $56e4, 21 bytes (blit_runs)
+	blit_run 0, 1, 2, 8
+	blit_run 0, 2, 12, 8
+	blit_run 0, 3, 22, 8
+	blit_run 0, 4, 32, 8
+	blit_run 0, 5, 42, 8
+	db $ff
 CharDataBand0RunsStep4_1c:
-	; $56f9, 21 bytes (bytes:16)
-	db $00, $00, $03, $07, $00, $20, $0d, $07, $00, $40, $17, $07, $00, $60, $21, $07 ; 0x00
-	db $00, $80, $2b, $07, $ff ; 0x10
+	; $56f9, 21 bytes (blit_runs)
+	blit_run 0, 0, 3, 7
+	blit_run 0, 1, 13, 7
+	blit_run 0, 2, 23, 7
+	blit_run 0, 3, 33, 7
+	blit_run 0, 4, 43, 7
+	db $ff
 CharDataBand0RunsStep3_1c:
-	; $570e, 13 bytes (bytes:13)
-	db $00, $00, $19, $05, $00, $20, $23, $05, $00, $40, $2d, $05, $ff ; 0x00
+	; $570e, 13 bytes (blit_runs)
+	blit_run 0, 0, 25, 5
+	blit_run 0, 1, 35, 5
+	blit_run 0, 2, 45, 5
+	db $ff
 CharDataBand0RunsStep2_1c:
-	; $571b, 5 bytes (bytes:5)
-	db $00, $00, $2f, $03, $ff ; 0x00
+	; $571b, 5 bytes (blit_runs)
+	blit_run 0, 0, 47, 3
+	db $ff
 CharDataBand1RunsStep6_1c:
-	; $5720, 29 bytes (bytes:16)
-	db $01, $00, $00, $0a, $01, $20, $0a, $0a, $01, $40, $14, $0a, $01, $60, $1e, $0a ; 0x00
-	db $01, $80, $28, $0a, $01, $a0, $32, $0a, $01, $c0, $3c, $0a, $ff ; 0x10
+	; $5720, 29 bytes (blit_runs)
+	blit_run 0, 8, 0, 10
+	blit_run 0, 9, 10, 10
+	blit_run 0, 10, 20, 10
+	blit_run 0, 11, 30, 10
+	blit_run 0, 12, 40, 10
+	blit_run 0, 13, 50, 10
+	blit_run 0, 14, 60, 10
+	db $ff
 CharDataBand1RunsStep5_1c:
-	; $573d, 29 bytes (bytes:16)
-	db $01, $20, $01, $09, $01, $40, $0b, $09, $01, $60, $15, $09, $01, $80, $1f, $09 ; 0x00
-	db $01, $a0, $29, $09, $01, $c0, $33, $09, $01, $e0, $3d, $09, $ff ; 0x10
+	; $573d, 29 bytes (blit_runs)
+	blit_run 0, 9, 1, 9
+	blit_run 0, 10, 11, 9
+	blit_run 0, 11, 21, 9
+	blit_run 0, 12, 31, 9
+	blit_run 0, 13, 41, 9
+	blit_run 0, 14, 51, 9
+	blit_run 0, 15, 61, 9
+	db $ff
 CharDataBand1RunsStep4_1c:
-	; $575a, 29 bytes (bytes:16)
-	db $01, $40, $02, $08, $01, $60, $0c, $08, $01, $80, $16, $08, $01, $a0, $20, $08 ; 0x00
-	db $01, $c0, $2a, $08, $01, $e0, $34, $08, $02, $00, $3e, $08, $ff ; 0x10
+	; $575a, 29 bytes (blit_runs)
+	blit_run 0, 10, 2, 8
+	blit_run 0, 11, 12, 8
+	blit_run 0, 12, 22, 8
+	blit_run 0, 13, 32, 8
+	blit_run 0, 14, 42, 8
+	blit_run 0, 15, 52, 8
+	blit_run 0, 16, 62, 8
+	db $ff
 CharDataBand1RunsStep3_1c:
-	; $5777, 29 bytes (bytes:16)
-	db $01, $60, $03, $07, $01, $80, $0d, $07, $01, $a0, $17, $07, $01, $c0, $21, $07 ; 0x00
-	db $01, $e0, $2b, $07, $02, $00, $35, $07, $02, $20, $3f, $07, $ff ; 0x10
+	; $5777, 29 bytes (blit_runs)
+	blit_run 0, 11, 3, 7
+	blit_run 0, 12, 13, 7
+	blit_run 0, 13, 23, 7
+	blit_run 0, 14, 33, 7
+	blit_run 0, 15, 43, 7
+	blit_run 0, 16, 53, 7
+	blit_run 0, 17, 63, 7
+	db $ff
 CharDataBand1RunsStep2_1c:
-	; $5794, 21 bytes (bytes:16)
-	db $01, $a0, $05, $05, $01, $c0, $0f, $05, $01, $e0, $19, $05, $02, $00, $23, $05 ; 0x00
-	db $02, $20, $2d, $05, $ff ; 0x10
+	; $5794, 21 bytes (blit_runs)
+	blit_run 0, 13, 5, 5
+	blit_run 0, 14, 15, 5
+	blit_run 0, 15, 25, 5
+	blit_run 0, 16, 35, 5
+	blit_run 0, 17, 45, 5
+	db $ff
 CharDataBand1RunsStep1_1c:
-	; $57a9, 13 bytes (bytes:13)
-	db $01, $e0, $07, $03, $02, $00, $11, $03, $02, $20, $1b, $03, $ff ; 0x00
+	; $57a9, 13 bytes (blit_runs)
+	blit_run 0, 15, 7, 3
+	blit_run 0, 16, 17, 3
+	blit_run 0, 17, 27, 3
+	db $ff
 CharDataBand0RunsStep1_1c:
-	; $57b6, 5 bytes (bytes:5)
-	db $02, $20, $09, $01, $ff ; 0x00
+	; $57b6, 5 bytes (blit_runs)
+	blit_run 0, 17, 9, 1
+	db $ff
 CharDataBand2RunsStep6_1c:
-	; $57bb, 21 bytes (bytes:16)
-	db $00, $6a, $00, $0a, $00, $8a, $0a, $0a, $00, $aa, $14, $0a, $00, $ca, $1e, $0a ; 0x00
-	db $00, $ea, $28, $0a, $ff ; 0x10
+	; $57bb, 21 bytes (blit_runs)
+	blit_run 10, 3, 0, 10
+	blit_run 10, 4, 10, 10
+	blit_run 10, 5, 20, 10
+	blit_run 10, 6, 30, 10
+	blit_run 10, 7, 40, 10
+	db $ff
 CharDataBand2RunsStep5_1c:
-	; $57d0, 21 bytes (bytes:16)
-	db $00, $4b, $00, $09, $00, $6b, $0a, $09, $00, $8b, $14, $09, $00, $ab, $1e, $09 ; 0x00
-	db $00, $cb, $28, $09, $ff ; 0x10
+	; $57d0, 21 bytes (blit_runs)
+	blit_run 11, 2, 0, 9
+	blit_run 11, 3, 10, 9
+	blit_run 11, 4, 20, 9
+	blit_run 11, 5, 30, 9
+	blit_run 11, 6, 40, 9
+	db $ff
 CharDataBand2RunsStep4_1c:
-	; $57e5, 21 bytes (bytes:16)
-	db $00, $2c, $00, $08, $00, $4c, $0a, $08, $00, $6c, $14, $08, $00, $8c, $1e, $08 ; 0x00
-	db $00, $ac, $28, $08, $ff ; 0x10
+	; $57e5, 21 bytes (blit_runs)
+	blit_run 12, 1, 0, 8
+	blit_run 12, 2, 10, 8
+	blit_run 12, 3, 20, 8
+	blit_run 12, 4, 30, 8
+	blit_run 12, 5, 40, 8
+	db $ff
 CharDataBand2RunsStep3_1c:
-	; $57fa, 21 bytes (bytes:16)
-	db $00, $0d, $00, $07, $00, $2d, $0a, $07, $00, $4d, $14, $07, $00, $6d, $1e, $07 ; 0x00
-	db $00, $8d, $28, $07, $ff ; 0x10
+	; $57fa, 21 bytes (blit_runs)
+	blit_run 13, 0, 0, 7
+	blit_run 13, 1, 10, 7
+	blit_run 13, 2, 20, 7
+	blit_run 13, 3, 30, 7
+	blit_run 13, 4, 40, 7
+	db $ff
 CharDataBand2RunsStep2_1c:
-	; $580f, 13 bytes (bytes:13)
-	db $00, $0f, $14, $05, $00, $2f, $1e, $05, $00, $4f, $28, $05, $ff ; 0x00
+	; $580f, 13 bytes (blit_runs)
+	blit_run 15, 0, 20, 5
+	blit_run 15, 1, 30, 5
+	blit_run 15, 2, 40, 5
+	db $ff
 CharDataBand2RunsStep1_1c:
-	; $581c, 5 bytes (bytes:5)
-	db $00, $11, $28, $03, $ff ; 0x00
+	; $581c, 5 bytes (blit_runs)
+	blit_run 17, 0, 40, 3
+	db $ff
 CharDataBand3RunsStep7_1c:
-	; $5821, 37 bytes (bytes:16)
-	db $01, $0a, $00, $0a, $01, $2a, $0a, $0a, $01, $4a, $14, $0a, $01, $6a, $1e, $0a ; 0x00
-	db $01, $8a, $28, $0a, $01, $aa, $32, $0a, $01, $ca, $3c, $0a, $01, $ea, $46, $0a ; 0x10
-	db $02, $0a, $50, $0a, $ff ; 0x20
+	; $5821, 37 bytes (blit_runs)
+	blit_run 10, 8, 0, 10
+	blit_run 10, 9, 10, 10
+	blit_run 10, 10, 20, 10
+	blit_run 10, 11, 30, 10
+	blit_run 10, 12, 40, 10
+	blit_run 10, 13, 50, 10
+	blit_run 10, 14, 60, 10
+	blit_run 10, 15, 70, 10
+	blit_run 10, 16, 80, 10
+	db $ff
 CharDataBand3RunsStep6_1c:
-	; $5846, 37 bytes (bytes:16)
-	db $01, $2b, $00, $09, $01, $4b, $0a, $09, $01, $6b, $14, $09, $01, $8b, $1e, $09 ; 0x00
-	db $01, $ab, $28, $09, $01, $cb, $32, $09, $01, $eb, $3c, $09, $02, $0b, $46, $09 ; 0x10
-	db $02, $2b, $50, $09, $ff ; 0x20
+	; $5846, 37 bytes (blit_runs)
+	blit_run 11, 9, 0, 9
+	blit_run 11, 10, 10, 9
+	blit_run 11, 11, 20, 9
+	blit_run 11, 12, 30, 9
+	blit_run 11, 13, 40, 9
+	blit_run 11, 14, 50, 9
+	blit_run 11, 15, 60, 9
+	blit_run 11, 16, 70, 9
+	blit_run 11, 17, 80, 9
+	db $ff
 CharDataBand3RunsStep5_1c:
-	; $586b, 33 bytes (bytes:16)
-	db $01, $4c, $00, $08, $01, $6c, $0a, $08, $01, $8c, $14, $08, $01, $ac, $1e, $08 ; 0x00
-	db $01, $cc, $28, $08, $01, $ec, $32, $08, $02, $0c, $3c, $08, $02, $2c, $46, $08 ; 0x10
-	db $ff ; 0x20
+	; $586b, 33 bytes (blit_runs)
+	blit_run 12, 10, 0, 8
+	blit_run 12, 11, 10, 8
+	blit_run 12, 12, 20, 8
+	blit_run 12, 13, 30, 8
+	blit_run 12, 14, 40, 8
+	blit_run 12, 15, 50, 8
+	blit_run 12, 16, 60, 8
+	blit_run 12, 17, 70, 8
+	db $ff
 CharDataBand3RunsStep4_1c:
-	; $588c, 29 bytes (bytes:16)
-	db $01, $6d, $00, $07, $01, $8d, $0a, $07, $01, $ad, $14, $07, $01, $cd, $1e, $07 ; 0x00
-	db $01, $ed, $28, $07, $02, $0d, $32, $07, $02, $2d, $3c, $07, $ff ; 0x10
+	; $588c, 29 bytes (blit_runs)
+	blit_run 13, 11, 0, 7
+	blit_run 13, 12, 10, 7
+	blit_run 13, 13, 20, 7
+	blit_run 13, 14, 30, 7
+	blit_run 13, 15, 40, 7
+	blit_run 13, 16, 50, 7
+	blit_run 13, 17, 60, 7
+	db $ff
 CharDataBand3RunsStep3_1c:
-	; $58a9, 21 bytes (bytes:16)
-	db $01, $af, $00, $05, $01, $cf, $0a, $05, $01, $ef, $14, $05, $02, $0f, $1e, $05 ; 0x00
-	db $02, $2f, $28, $05, $ff ; 0x10
+	; $58a9, 21 bytes (blit_runs)
+	blit_run 15, 13, 0, 5
+	blit_run 15, 14, 10, 5
+	blit_run 15, 15, 20, 5
+	blit_run 15, 16, 30, 5
+	blit_run 15, 17, 40, 5
+	db $ff
 CharDataBand3RunsStep2_1c:
-	; $58be, 13 bytes (bytes:13)
-	db $01, $f1, $00, $04, $02, $11, $0a, $04, $02, $31, $14, $04, $ff ; 0x00
+	; $58be, 13 bytes (blit_runs)
+	blit_run 17, 15, 0, 4
+	blit_run 17, 16, 10, 4
+	blit_run 17, 17, 20, 4
+	db $ff
 CharDataBand3RunsStep1_1c:
-	; $58cb, 5 bytes (bytes:5)
-	db $02, $33, $00, $02, $ff ; 0x00
+	; $58cb, 5 bytes (blit_runs)
+	blit_run 19, 17, 0, 2
+	db $ff
 CharDataBand4RunsStep3_1c:
-	; $58d0, 13 bytes (bytes:13)
-	db $00, $00, $00, $03, $00, $20, $03, $03, $00, $40, $06, $03, $ff ; 0x00
+	; $58d0, 13 bytes (blit_runs)
+	blit_run 0, 0, 0, 3
+	blit_run 0, 1, 3, 3
+	blit_run 0, 2, 6, 3
+	db $ff
 CharDataBand4RunsStep2_1c:
-	; $58dd, 13 bytes (bytes:13)
-	db $00, $00, $01, $02, $00, $20, $04, $02, $00, $40, $07, $02, $ff ; 0x00
+	; $58dd, 13 bytes (blit_runs)
+	blit_run 0, 0, 1, 2
+	blit_run 0, 1, 4, 2
+	blit_run 0, 2, 7, 2
+	db $ff
 CharDataBand4RunsStep1_1c:
-	; $58ea, 13 bytes (bytes:13)
-	db $00, $00, $02, $01, $00, $20, $05, $01, $00, $40, $08, $01, $ff ; 0x00
+	; $58ea, 13 bytes (blit_runs)
+	blit_run 0, 0, 2, 1
+	blit_run 0, 1, 5, 1
+	blit_run 0, 2, 8, 1
+	db $ff
 CharDataBand6RunsStep3_1c:
-	; $58f7, 13 bytes (bytes:13)
-	db $00, $03, $00, $11, $00, $23, $11, $11, $00, $43, $22, $11, $ff ; 0x00
+	; $58f7, 13 bytes (blit_runs)
+	blit_run 3, 0, 0, 17
+	blit_run 3, 1, 17, 17
+	blit_run 3, 2, 34, 17
+	db $ff
 CharDataBand6RunsStep2_1c:
-	; $5904, 9 bytes (bytes:9)
-	db $00, $03, $11, $11, $00, $23, $22, $11, $ff ; 0x00
+	; $5904, 9 bytes (blit_runs)
+	blit_run 3, 0, 17, 17
+	blit_run 3, 1, 34, 17
+	db $ff
 CharDataBand6RunsStep1_1c:
-	; $590d, 5 bytes (bytes:5)
-	db $00, $03, $22, $11, $ff ; 0x00
+	; $590d, 5 bytes (blit_runs)
+	blit_run 3, 0, 34, 17
+	db $ff
 CharDataBand5RunsStep3_1c:
-	; $5912, 13 bytes (bytes:10)
-	db $01, $e0, $00, $0a, $02, $00, $0a, $0a, $02, $20 ; 0x00
-	db $14, $0a, $ff ; 0x0a
+	; $5912, 13 bytes (blit_runs)
+	blit_run 0, 15, 0, 10
+	blit_run 0, 16, 10, 10
+	blit_run 0, 17, 20, 10
+	db $ff
 CharDataBand5RunsStep2_1c:
-	; $591f, 9 bytes (bytes:9)
-	db $02, $00, $00, $0a, $02, $20, $0a, $0a, $ff ; 0x00
+	; $591f, 9 bytes (blit_runs)
+	blit_run 0, 16, 0, 10
+	blit_run 0, 17, 10, 10
+	db $ff
 CharDataBand5RunsStep1_1c:
-	; $5928, 5 bytes (bytes:5)
-	db $02, $20, $00, $0a, $ff ; 0x00
+	; $5928, 5 bytes (blit_runs)
+	blit_run 0, 17, 0, 10
+	db $ff
 CharDataBand7RunsStep3_1c:
-	; $592d, 13 bytes (bytes:13)
-	db $00, $03, $00, $0b, $00, $23, $0b, $0b, $00, $43, $16, $0b, $ff ; 0x00
+	; $592d, 13 bytes (blit_runs)
+	blit_run 3, 0, 0, 11
+	blit_run 3, 1, 11, 11
+	blit_run 3, 2, 22, 11
+	db $ff
 CharDataBand7RunsStep2_1c:
-	; $593a, 9 bytes (bytes:9)
-	db $00, $03, $0b, $0b, $00, $23, $16, $0b, $ff ; 0x00
+	; $593a, 9 bytes (blit_runs)
+	blit_run 3, 0, 11, 11
+	blit_run 3, 1, 22, 11
+	db $ff
 CharDataBand7RunsStep1_1c:
-	; $5943, 5 bytes (bytes:1)
-	db $00 ; 0x00
-	db $03 ; 0x01
-	db $16 ; 0x02
-	db $0b ; 0x03
-	db $ff ; 0x04
+	; $5943, 5 bytes (blit_runs)
+	blit_run 3, 0, 22, 11
+	db $ff
 CharDataBand8RunsStep4_1c:
-	; $5948, 17 bytes (bytes:16)
-	db $00, $0e, $00, $06, $00, $2e, $06, $06, $00, $4e, $0c, $06, $00, $6e, $12, $06 ; 0x00
-	db $ff ; 0x10
+	; $5948, 17 bytes (blit_runs)
+	blit_run 14, 0, 0, 6
+	blit_run 14, 1, 6, 6
+	blit_run 14, 2, 12, 6
+	blit_run 14, 3, 18, 6
+	db $ff
 CharDataBand8RunsStep3_1c:
-	; $5959, 17 bytes (bytes:16)
-	db $00, $10, $00, $04, $00, $30, $06, $04, $00, $50, $0c, $04, $00, $70, $12, $04 ; 0x00
-	db $ff ; 0x10
+	; $5959, 17 bytes (blit_runs)
+	blit_run 16, 0, 0, 4
+	blit_run 16, 1, 6, 4
+	blit_run 16, 2, 12, 4
+	blit_run 16, 3, 18, 4
+	db $ff
 CharDataBand8RunsStep2_1c:
-	; $596a, 17 bytes (bytes:16)
-	db $00, $12, $00, $03, $00, $32, $06, $03, $00, $52, $0c, $03, $00, $72, $12, $03 ; 0x00
-	db $ff ; 0x10
+	; $596a, 17 bytes (blit_runs)
+	blit_run 18, 0, 0, 3
+	blit_run 18, 1, 6, 3
+	blit_run 18, 2, 12, 3
+	blit_run 18, 3, 18, 3
+	db $ff
 CharDataBand8RunsStep1_1c:
-	; $597b, 17 bytes (bytes:16)
-	db $00, $14, $00, $01, $00, $34, $06, $01, $00, $54, $0c, $01, $00, $74, $12, $01 ; 0x00
-	db $ff ; 0x10
+	; $597b, 17 bytes (blit_runs)
+	blit_run 20, 0, 0, 1
+	blit_run 20, 1, 6, 1
+	blit_run 20, 2, 12, 1
+	blit_run 20, 3, 18, 1
+	db $ff
 CharDataScreen_LoadScreenPalette:
 	INCLUDE "data/engine/menus/char_data/CharDataScreen_LoadScreenPalette.asm" ; $598c, 64 bytes (palettes)
 CharDataScreenGfx0_1c:
