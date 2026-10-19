@@ -255,8 +255,7 @@ AnimateEraseConfirmPalette:
 	pop_wram_bank ; $4e7a
 	ret ; $4e7f
 EraseConfirmPalette_3e:
-	; $4e80, 8 bytes (bytes:8)
-	db $48, $00, $13, $3e, $ff, $7f, $bf, $01 ; 0x00
+	INCLUDE "data/engine/menus/equipment/EraseConfirmPalette_3e.asm" ; $4e80, 8 bytes (palettes)
 EraseConfirmFlashColors_3e:
 	; $4e88, 24 bytes (bytes:16)
 	db $1f, $00, $df, $00, $ff, $01, $bf, $02, $7f, $03, $ff, $03, $ff, $03, $9f, $03 ; 0x00
@@ -480,11 +479,9 @@ RacketShoesChoicePalettePtrs:
 	dw RacketShoesChoicePalette0 ; record 7
 	dw RacketShoesChoicePalette0 ; record 8
 RacketShoesChoicePalette0:
-	; $505d, 8 bytes (bytes:8)
-	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePalette0.asm" ; $505d, 8 bytes (palettes)
 RacketShoesChoicePalette1:
-	; $5065, 8 bytes (bytes:8)
-	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePalette1.asm" ; $5065, 8 bytes (palettes)
 DrawRacketShoesChoiceCaption:
 	push_wram_bank WRAM_SCREEN ; $506d
 	ld c, $02 ; $5076

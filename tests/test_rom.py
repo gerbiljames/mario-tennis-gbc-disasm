@@ -24,8 +24,8 @@ class Source(unittest.TestCase):
     """What the committed src/ holds."""
 
     def test_idiom_macro_sites(self):
-        self.assertEqual(count(r"^\tpush_wram_bank "), 351)
-        self.assertEqual(count(r"^\tpop_wram_bank"), 453)
+        self.assertEqual(count(r"^\tpush_wram_bank "), 353)
+        self.assertEqual(count(r"^\tpop_wram_bank"), 455)
         self.assertEqual(count(r"^\tld_hl_indexed "), 424)
         self.assertEqual(count(r"^\twait_frames "), 79)
         self.assertEqual(count(r"^\tlb (de|bc|hl), "), 0, "a register pair written with lb instead of a named pair macro")
@@ -137,7 +137,7 @@ class Manifest(unittest.TestCase):
     def test_counts(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
-        self.assertEqual(len(lines), 4213)
+        self.assertEqual(len(lines), 4267)
         self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 839)
         specs = [f[3] for f in lines if len(f) > 3]
         self.assertEqual(sum(s.startswith("gfx") for s in specs), 2698)

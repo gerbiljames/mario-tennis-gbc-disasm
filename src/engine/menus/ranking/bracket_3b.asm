@@ -343,11 +343,9 @@ BracketHighlightBlinkTask:
 	call LoadPalettesImmediate ; $79e5
 	ret ; $79e8
 BracketHighlightBlinkTaskPalettes0:
-	; $79e9, 8 bytes (bytes:8)
-	db $f9, $67, $00, $00, $1f, $3e, $ff, $33 ; 0x00
+	INCLUDE "data/engine/menus/ranking/BracketHighlightBlinkTaskPalettes0.asm" ; $79e9, 8 bytes (palettes)
 BracketHighlightBlinkTaskPalettes1:
-	; $79f1, 8 bytes (bytes:8)
-	db $f9, $67, $00, $00, $98, $00, $1f, $03 ; 0x00
+	INCLUDE "data/engine/menus/ranking/BracketHighlightBlinkTaskPalettes1.asm" ; $79f1, 8 bytes (palettes)
 RunMarioCastExhibResults:
 	sound BGM_STATUS_SCREEN ; $79f9
 	call DisableLCDSafely ; $79fb

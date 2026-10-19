@@ -287,17 +287,13 @@ AnimateLinkStatusPalettePtrs:
 	dw LinkStatusPalette3 ; record 6
 	dw LinkStatusPalette3 ; record 7
 LinkStatusPalette0:
-	; $4a87, 8 bytes (bytes:8)
-	db $bf, $01, $ff, $0b, $67, $1f, $c8, $6c ; 0x00
+	INCLUDE "data/engine/menus/link/LinkStatusPalette0.asm" ; $4a87, 8 bytes (palettes)
 LinkStatusPalette1:
-	; $4a8f, 8 bytes (bytes:8)
-	db $bf, $01, $ff, $7f, $67, $1f, $c8, $6c ; 0x00
+	INCLUDE "data/engine/menus/link/LinkStatusPalette1.asm" ; $4a8f, 8 bytes (palettes)
 LinkStatusPalette2:
-	; $4a97, 8 bytes (bytes:8)
-	db $bf, $01, $ff, $0b, $ff, $7f, $c8, $6c ; 0x00
+	INCLUDE "data/engine/menus/link/LinkStatusPalette2.asm" ; $4a97, 8 bytes (palettes)
 LinkStatusPalette3:
-	; $4a9f, 8 bytes (bytes:8)
-	db $bf, $01, $ff, $0b, $67, $1f, $ff, $7f ; 0x00
+	INCLUDE "data/engine/menus/link/LinkStatusPalette3.asm" ; $4a9f, 8 bytes (palettes)
 ShowLinkErrorScreen:
 	call InitSerialLink ; $4aa7
 	call DisableLCDSafely ; $4aaa
@@ -394,8 +390,7 @@ AnimateLinkErrorPalette:
 	pop_wram_bank ; $4b7d
 	ret ; $4b82
 LinkErrorPalette_3e:
-	; $4b83, 8 bytes (bytes:8)
-	db $9f, $33, $1f, $00, $07, $50, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/link/LinkErrorPalette_3e.asm" ; $4b83, 8 bytes (palettes)
 LinkErrorFlashColors_3e:
 	; $4b8b, 24 bytes (bytes:16)
 	db $1f, $00, $df, $00, $ff, $01, $bf, $02, $7f, $03, $ff, $03, $ff, $03, $9f, $03 ; 0x00

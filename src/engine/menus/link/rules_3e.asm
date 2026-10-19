@@ -175,14 +175,11 @@ DrawMatchRulesInitialState:
 	call LoadPaletteShadow ; $45eb
 	ret ; $45ee
 MatchRulesInitialStatePalettes0:
-	; $45ef, 8 bytes (bytes:8)
-	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/link/MatchRulesInitialStatePalettes0.asm" ; $45ef, 8 bytes (palettes)
 MatchRulesInitialStatePalettes1:
-	; $45f7, 8 bytes (bytes:8)
-	db $df, $02, $ff, $7f, $1f, $01, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/link/MatchRulesInitialStatePalettes1.asm" ; $45f7, 8 bytes (palettes)
 MatchRulesInitialStatePalettes2:
-	; $45ff, 8 bytes (bytes:8)
-	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/link/MatchRulesInitialStatePalettes2.asm" ; $45ff, 8 bytes (palettes)
 LoadMatchRulesMenuGraphics:
 	push_wram_bank WRAM_STAGING ; $4607
 	ld c, $00 ; $4610

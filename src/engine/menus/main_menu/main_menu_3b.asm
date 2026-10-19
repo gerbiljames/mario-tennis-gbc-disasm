@@ -587,20 +587,14 @@ MainMenuItemPalettePtrs:
 	dw MainMenuItemPalette1 ; record 7
 	dw MainMenuItemPalette5 ; record 8
 MainMenuItemPalette0:
-	; $5a7c, 8 bytes (bytes:8)
-	db $9f, $3e, $ff, $6b, $0a, $50, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette0.asm" ; $5a7c, 8 bytes (palettes)
 MainMenuItemPalette1:
-	; $5a84, 8 bytes (bytes:8)
-	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette1.asm" ; $5a84, 8 bytes (palettes)
 MainMenuItemPalette2:
-	; $5a8c, 8 bytes (bytes:8)
-	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette2.asm" ; $5a8c, 8 bytes (palettes)
 MainMenuItemPalette3:
-	; $5a94, 8 bytes (bytes:8)
-	db $32, $1b, $ff, $6b, $e0, $15, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette3.asm" ; $5a94, 8 bytes (palettes)
 MainMenuItemPalette4:
-	; $5a9c, 8 bytes (bytes:8)
-	db $5f, $1a, $ff, $6b, $7c, $00, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette4.asm" ; $5a9c, 8 bytes (palettes)
 MainMenuItemPalette5:
-	; $5aa4, 8 bytes (bytes:8)
-	db $96, $59, $ff, $6b, $12, $14, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette5.asm" ; $5aa4, 8 bytes (palettes)

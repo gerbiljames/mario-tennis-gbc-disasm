@@ -145,11 +145,9 @@ SavedDataTypePalettePtrs:
 	dw SavedDataTypePalette0 ; record 0
 	dw SavedDataTypePalette1 ; record 1
 SavedDataTypePalette0:
-	; $73cd, 8 bytes (bytes:8)
-	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/minigame_select/SavedDataTypePalette0.asm" ; $73cd, 8 bytes (palettes)
 SavedDataTypePalette1:
-	; $73d5, 8 bytes (bytes:8)
-	db $bf, $02, $ff, $6b, $1b, $18, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/minigame_select/SavedDataTypePalette1.asm" ; $73d5, 8 bytes (palettes)
 ShowMinigameDataScreen:
 	sound BGM_STATUS_SCREEN ; $73dd
 	call DisableLCDSafely ; $73df

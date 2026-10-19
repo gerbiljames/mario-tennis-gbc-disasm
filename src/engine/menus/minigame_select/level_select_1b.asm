@@ -644,11 +644,8 @@ MinigameLevelSelectPalettePtrs:
 	dw MinigameLevelSelectPalette2 ; record 1
 	dw MinigameLevelSelectPalette1 ; record 2
 MinigameLevelSelectPalette0:
-	; $6dae, 8 bytes (bytes:8)
-	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/minigame_select/MinigameLevelSelectPalette0.asm" ; $6dae, 8 bytes (palettes)
 MinigameLevelSelectPalette1:
-	; $6db6, 8 bytes (bytes:8)
-	db $b7, $5e, $ff, $6b, $93, $7c, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/minigame_select/MinigameLevelSelectPalette1.asm" ; $6db6, 8 bytes (palettes)
 MinigameLevelSelectPalette2:
-	; $6dbe, 8 bytes (bytes:8)
-	db $99, $52, $ff, $6b, $1f, $14, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/minigame_select/MinigameLevelSelectPalette2.asm" ; $6dbe, 8 bytes (palettes)

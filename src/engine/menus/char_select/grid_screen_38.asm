@@ -353,7 +353,7 @@ SetupCharGridScreen:
 	farcall QueueWram3MapToVRAM ; $503e
 	ld de, vTiles0 + VRAM_BANK1 ; $5041
 	farcall LoadFixedTileBlockAndPalette ; $5044
-	ld hl, CharGridScreenTable0 ; $5047
+	ld hl, CharGridScreenPalettes ; $5047
 	ld_obj_pals de, 3, 5 ; $504a
 	call LoadPalettesMasterOnly ; $504d
 	ld c, $0b ; $5050
@@ -375,11 +375,8 @@ SetupCharGridScreen:
 	farcall LoadCompressedTileBlock ; $5078
 	farcall InitDefaultMatchSettings ; $507b
 	ret ; $507e
-CharGridScreenTable0:
-	; $507f, 40 bytes (bytes:16)
-	db $5f, $01, $ff, $6b, $40, $1e, $00, $00, $5f, $01, $ff, $6b, $5c, $50, $00, $00 ; 0x00
-	db $5f, $01, $ff, $6b, $df, $01, $00, $00, $5f, $01, $ff, $6b, $1f, $00, $00, $00 ; 0x10
-	db $5f, $01, $ff, $6b, $4a, $7d, $00, $00 ; 0x20
+CharGridScreenPalettes:
+	INCLUDE "data/engine/menus/char_select/CharGridScreenPalettes.asm" ; $507f, 40 bytes (palettes)
 CharGridScreenGfx1:
 	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx1.bin" ; $50a7, 74 bytes
 	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx1.inc" ; DEF CharGridScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make

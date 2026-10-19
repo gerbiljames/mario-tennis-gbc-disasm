@@ -423,14 +423,11 @@ InitMatchFormatOptions:
 	call LoadPaletteShadow ; $5dd0
 	ret ; $5dd3
 MatchFormatOptionsPalettes0:
-	; $5dd4, 8 bytes (bytes:8)
-	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MatchFormatOptionsPalettes0.asm" ; $5dd4, 8 bytes (palettes)
 MatchFormatOptionsPalettes1:
-	; $5ddc, 8 bytes (bytes:8)
-	db $df, $02, $ff, $7f, $1f, $01, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MatchFormatOptionsPalettes1.asm" ; $5ddc, 8 bytes (palettes)
 MatchFormatOptionsPalettes2:
-	; $5de4, 8 bytes (bytes:8)
-	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MatchFormatOptionsPalettes2.asm" ; $5de4, 8 bytes (palettes)
 LoadMatchFormatGfx:
 	push_wram_bank WRAM_STAGING ; $5dec
 	ld c, $00 ; $5df5

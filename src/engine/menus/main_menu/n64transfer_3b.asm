@@ -1,9 +1,7 @@
 SavedDataCellPalette0:
-	; $70f0, 8 bytes (bytes:8)
-	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/SavedDataCellPalette0.asm" ; $70f0, 8 bytes (palettes)
 SavedDataCellPalette1:
-	; $70f8, 8 bytes (bytes:8)
-	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/SavedDataCellPalette1.asm" ; $70f8, 8 bytes (palettes)
 DrawEraseSavedDataCaption:
 	push_wram_bank WRAM_SCREEN ; $7100
 	ld c, $03 ; $7109
@@ -486,14 +484,11 @@ N64RecordTypeCellPalettePtrs:
 	dw N64RecordTypeCellPalette0 ; record 7
 	dw N64RecordTypeCellPalette0 ; record 8
 N64RecordTypeCellPalette0:
-	; $7482, 8 bytes (bytes:8)
-	db $9f, $3e, $ff, $6b, $4a, $50, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/N64RecordTypeCellPalette0.asm" ; $7482, 8 bytes (palettes)
 N64RecordTypeCellPalette1:
-	; $748a, 8 bytes (bytes:8)
-	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/N64RecordTypeCellPalette1.asm" ; $748a, 8 bytes (palettes)
 N64RecordTypeCellPalette2:
-	; $7492, 8 bytes (bytes:8)
-	db $32, $1b, $ff, $6b, $e0, $15, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/N64RecordTypeCellPalette2.asm" ; $7492, 8 bytes (palettes)
 DrawN64RecordTypeCaption:
 	push_wram_bank WRAM_SCREEN ; $749a
 	ld c, $03 ; $74a3
@@ -747,17 +742,13 @@ N64TransferItemCellPalettePtrs:
 	dw N64TransferItemCellPalette0 ; record 7
 	dw N64TransferItemCellPalette0 ; record 8
 N64TransferItemCellPalette0:
-	; $76a5, 8 bytes (bytes:8)
-	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/N64TransferItemCellPalette0.asm" ; $76a5, 8 bytes (palettes)
 N64TransferItemCellPalette1:
-	; $76ad, 8 bytes (bytes:8)
-	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/N64TransferItemCellPalette1.asm" ; $76ad, 8 bytes (palettes)
 N64TransferItemCellPalette2:
-	; $76b5, 8 bytes (bytes:8)
-	db $ff, $29, $ff, $6b, $4a, $50, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/N64TransferItemCellPalette2.asm" ; $76b5, 8 bytes (palettes)
 N64TransferItemCellPalette3:
-	; $76bd, 8 bytes (bytes:8)
-	db $bf, $02, $ff, $6b, $57, $05, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/N64TransferItemCellPalette3.asm" ; $76bd, 8 bytes (palettes)
 DrawN64TransferItemCaption:
 	push_wram_bank WRAM_SCREEN ; $76c5
 	ld c, $02 ; $76ce

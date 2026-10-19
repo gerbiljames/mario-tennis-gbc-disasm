@@ -645,11 +645,9 @@ SavedDataSourceCellPalettePtrs:
 	dw SavedDataSourceCellPalette0 ; record 7
 	dw SavedDataSourceCellPalette0 ; record 8
 SavedDataSourceCellPalette0:
-	; $6b73, 8 bytes (bytes:8)
-	db $88, $7a, $ff, $6b, $00, $7d, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/SavedDataSourceCellPalette0.asm" ; $6b73, 8 bytes (palettes)
 SavedDataSourceCellPalette1:
-	; $6b7b, 8 bytes (bytes:8)
-	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/SavedDataSourceCellPalette1.asm" ; $6b7b, 8 bytes (palettes)
 DrawSavedDataSourceCaption:
 	push_wram_bank WRAM_SCREEN ; $6b83
 	ld c, $03 ; $6b8c

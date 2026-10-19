@@ -459,7 +459,4 @@ LoadObjectSceneATiles:
 	call LoadPaletteShadow ; $7c0b
 	ret ; $7c0e
 ObjectSceneATilesPalettes:
-	; $7c0f, 24 bytes (bytes:8)
-	db $ff, $6b, $df, $5a, $ff, $20, $00, $00 ; 0x00
-	db $ff, $6b, $b8, $3b, $80, $12, $00, $00 ; 0x08
-	db $ff, $6b, $bf, $53, $9f, $02, $00, $00 ; 0x10
+	INCLUDE "data/engine/menus/scenes/ObjectSceneATilesPalettes.asm" ; $7c0f, 24 bytes (palettes)
