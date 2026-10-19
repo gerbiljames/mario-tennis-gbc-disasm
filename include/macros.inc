@@ -1,6 +1,7 @@
 ; The idioms the code is built from (README "Reading the source").
 
 INCLUDE "macros/code.inc"
+INCLUDE "macros/tables.inc"
 INCLUDE "macros/data.inc"
 INCLUDE "macros/text.inc"
 INCLUDE "macros/sound.inc"

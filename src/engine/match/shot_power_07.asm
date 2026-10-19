@@ -312,6 +312,7 @@ ApplyShotTypePresets:
 	ret ; $559d
 ShotTypePresets_07:
 	; $559e, 75 bytes (shot_preset)
+	table_width 5
 ; shot_preset sound, recoil variant, trail colour, target depth
 	shot_preset SFX_HIT_TOPSPIN, 0, 0, $0280 ; SHOTTYPE_TOPSPIN
 	shot_preset SFX_HIT_TOPSPIN, 0, 1, $03c0 ; SHOTTYPE_POWER_TOPSPIN
@@ -328,6 +329,7 @@ ShotTypePresets_07:
 	shot_preset SFX_HIT_SERVE, 4, 1, $02a0 ; SHOTTYPE_SERVE_TOPSPIN
 	shot_preset SFX_HIT_SERVE, 4, 2, $02a0 ; SHOTTYPE_SERVE_SLICE
 	shot_preset SFX_HIT_SERVE, 4, 3, $02a0 ; SHOTTYPE_SERVE_FLAT
+	assert_table_length NUM_SHOTTYPES
 GetShotAimOffsetForSide:
 	ld hl, ShotAimOffsetForSideCourtSideOffsets ; $55e9
 	ld a, [wMinigameUsesWall] ; $55ec

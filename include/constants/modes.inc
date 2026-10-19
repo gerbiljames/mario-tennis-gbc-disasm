@@ -128,6 +128,7 @@ def GAMEMODE_WALL_PRACTICE  equ $07 ; Wall Practice Room (FLAG_CLEARED_WALL_MAST
 def GAMEMODE_MARIO_MINIGAME equ $08 ; a Mario mini-game (bank $0d configs)
 def GAMEMODE_LINK_MATCH     equ $09 ; link-cable versus match (set beside wLinkMatchRole)
 def GAMEMODE_DREAM_MATCH    equ $0a ; story Dream Match against the Mario cast
+def NUM_GAMEMODES           equ $0b
 
 ; --- Match-list category (wCurrentMinigameStoryMatch high byte, $c8f6) ---
 ; The 16-bit selector at $c8f6 is (category, index). 0/1: the index is a row of
@@ -231,3 +232,4 @@ def MARIOGAME_BANANA_BUNCH    equ $05 ; DK
 def MARIOGAME_TREASURE_BOX    equ $06 ; Wario; first cell of the expanded grid
 def MARIOGAME_MEDALLION_MATCH equ $07 ; Waluigi
 def MARIOGAME_TWO_ON_ONE      equ $08 ; Bowser
+def NUM_MARIOGAMES equ $09

@@ -184,6 +184,7 @@ RunMinigameRulesPages:
 	ret ; $6fda
 MinigameRulesTextIdBases_17:
 	; $6fdb, 18 bytes (records:2)
+	table_width 2
 	dw $2cc6 ; record 0
 	dw $2cd0 ; record 1
 	dw $2cda ; record 2
@@ -193,6 +194,7 @@ MinigameRulesTextIdBases_17:
 	dw $3007 ; record 6
 	dw $3017 ; record 7
 	dw $3026 ; record 8
+	assert_table_length NUM_MARIOGAMES
 MinigameRulesPageLists_17:
 	; $6fed, 174 bytes (rules_pages:6)
 	rules_pages_stride 6

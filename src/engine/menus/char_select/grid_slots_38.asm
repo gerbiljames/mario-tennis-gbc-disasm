@@ -55,12 +55,14 @@ RetreatToPreviousPlayerSlot:
 	ret ; $5c8e
 CharSelectSlotRingTable:
 	; $5c8f, 12 bytes (records:2)
+	table_width 2
 	dw CharSelectSlotRing0 ; record 0
 	dw CharSelectSlotRing1 ; record 1
 	dw CharSelectSlotRing2 ; record 2
 	dw CharSelectSlotRing3 ; record 3
 	dw CharSelectSlotRing4 ; record 4
 	dw CharSelectSlotRing5 ; record 5
+	assert_table_length NUM_CHARSELECTMODES
 CharSelectSlotRing0:
 	; $5c9b, 4 bytes (bytes:4)
 	db $ff, $00, $02, $ff ; 0x00

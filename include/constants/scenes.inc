@@ -41,6 +41,7 @@ def SCENE_PEACHS_CASTLE      equ $21
 def SCENE_TRAINING_CENTER    equ $22 ; also the machine and wall practice rooms
 def SCENE_TOURNAMENT         equ $23
 def SCENE_AWARDS_CEREMONY    equ $24
+def NUM_SCENES equ $25
 
 ; --- Scene tilemap copy origin (a for CopyScrolledSceneTilemapToVram) ---
 def SCENECOPY_FROM_PLAYER equ $00 ; re-centre the camera on the player first

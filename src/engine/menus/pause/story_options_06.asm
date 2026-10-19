@@ -252,6 +252,7 @@ LoadStoryMenuItemGfx:
 	ret ; $72ad
 StoryMenuItemGfxPointers:
 	; $72ae, 32 bytes (records:2)
+	table_width 2
 	dw StoryMenuItemGfx_Status ; record 0
 	dw StoryMenuItemGfx_ClearStatus ; record 1
 	dw MatchMenuItemGfx_Options ; record 2
@@ -268,6 +269,7 @@ StoryMenuItemGfxPointers:
 	dw MatchMenuItemGfx_Cancel ; record 13
 	dw StoryMenuItemGfx_CharData ; record 14
 	dw StoryMenuItemGfx_Items ; record 15
+	assert_table_length NUM_STORYMENUITEMS
 QueueStoryMenuCursorSprite:
 	ld a, d ; $72ce
 	add $fc ; $72cf
@@ -328,6 +330,7 @@ DrawStoryMenuItem:
 	ret ; $77ca
 StoryMenuItemRectPointers:
 	; $77cb, 32 bytes (records:2)
+	table_width 2
 	dw StoryMenuItemRect_Status ; record 0
 	dw StoryMenuItemRect_ClearStatus ; record 1
 	dw StoryMenuItemRect_Options ; record 2
@@ -344,6 +347,7 @@ StoryMenuItemRectPointers:
 	dw StoryMenuItemRect_Cancel ; record 13
 	dw StoryMenuItemRect_CharData ; record 14
 	dw StoryMenuItemRect_Items ; record 15
+	assert_table_length NUM_STORYMENUITEMS
 StoryMenuItemRect_Status:
 	; $77eb, 6 bytes (tilemap:3)
 	tilemap_begin 3, 2

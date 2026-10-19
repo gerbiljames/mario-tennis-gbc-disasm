@@ -112,12 +112,14 @@ DrawCharGridSlotIcons:
 ; WriteSlotIconTiles.
 CharGridSlotIconListPtrs_38:
 	; $59ba, 12 bytes (records:2)
+	table_width 2
 	dw CharGridSlotIconList0 ; record 0
 	dw CharGridSlotIconList1 ; record 1
 	dw CharGridSlotIconList2 ; record 2
 	dw CharGridSlotIconList2 ; record 3
 	dw CharGridSlotIconList3 ; record 4
 	dw CharGridSlotIconList3 ; record 5
+	assert_table_length NUM_CHARSELECTMODES
 CharGridSlotIconList0:
 	; $59c6, 9 bytes (bytes:4)
 	db $01, $00, $cc, $d0 ; 0x00

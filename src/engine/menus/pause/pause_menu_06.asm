@@ -249,6 +249,7 @@ ShowMinigameRulesPages:
 	ret ; $4261
 MinigameRulesTextIdBases:
 	; $4262, 18 bytes (records:2)
+	table_width 2
 	dw $2c87 ; record 0
 	dw $2c8d ; record 1
 	dw $2c92 ; record 2
@@ -258,6 +259,7 @@ MinigameRulesTextIdBases:
 	dw $2ca5 ; record 6
 	dw $2cb1 ; record 7
 	dw $2cbd ; record 8
+	assert_table_length NUM_MARIOGAMES
 MinigameRulesPageLists:
 	; $4274, 162 bytes (rules_pages:6)
 	rules_pages_stride 6

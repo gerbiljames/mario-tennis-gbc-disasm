@@ -40,6 +40,7 @@ def SHOTTYPE_DROP              equ $0b ; B -> A
 def SHOTTYPE_SERVE_TOPSPIN     equ $0c ; serve, A
 def SHOTTYPE_SERVE_SLICE       equ $0d ; serve, B
 def SHOTTYPE_SERVE_FLAT        equ $0e ; serve, A+B
+def NUM_SHOTTYPES equ $0f
 
 ; AI shot habits (CharGroupTable_02, one 16-entry row per serve style;
 ; AiPickShotButtons draws one by AdvanceMatchRng & $0f): the stroke's two
@@ -104,6 +105,7 @@ def COURT_MEDALLION_MATCH   equ $15
 def COURT_FRUIT_FANTASY     equ $16
 def COURT_TWO_ON_ONE        equ $17
 def COURT_TRAINING_MATCH    equ $18 ; Training Court, Match drills
+def NUM_COURTS equ $19
 
 ; --- On-court character animation ids (wCharAnimId, wCharSwingAnim) ---
 ; SetCharAnimation stores its argument in wCharAnimId and indexes
@@ -159,6 +161,7 @@ def CHARSTATE_AWAIT_SERVE    equ 4 ; CharAwaitServeState
 def CHARSTATE_STANDBY        equ 5 ; CharStandbyState: end-state, then state 4's movement phase
 def CHARSTATE_WALK           equ 6 ; CharWalkState: the scripted changeover and walk-off walks
 def CHARSTATE_POINT_END      equ 7 ; CharPointEndState: walk to target, then the win/lose reaction
+def NUM_CHARSTATES equ $08
 
 ; --- On-court character flags (wCharFlags) ---
 ; Bit indices only (every site is a `bit`/`res`/`set`). Bits 3 and 7 are

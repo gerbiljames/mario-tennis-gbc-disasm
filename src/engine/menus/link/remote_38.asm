@@ -522,12 +522,14 @@ GetRemoteSlotBoxAddress:
 ; $0000 for slots that have no box.
 RemoteSlotBoxAddrPtrs_38:
 	; $69c1, 12 bytes (records:2)
+	table_width 2
 	dw RemoteSlotBoxAddrs0 ; record 0
 	dw RemoteSlotBoxAddrs0 ; record 1
 	dw RemoteSlotBoxAddrs1 ; record 2
 	dw RemoteSlotBoxAddrs0 ; record 3
 	dw RemoteSlotBoxAddrs3 ; record 4
 	dw RemoteSlotBoxAddrs2 ; record 5
+	assert_table_length NUM_CHARSELECTMODES
 RemoteSlotBoxAddrs0:
 	; $69cd, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 0

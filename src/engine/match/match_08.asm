@@ -300,7 +300,9 @@ SetCharStateOnBallHit:
 	ret ; $431d
 SetCharStateOnBallHitTable:
 	; $431e, 8 bytes (bytes:8)
+	table_width 1
 	db $00, $02, $01, $02, $02, $01, $06, $07 ; 0x00
+	assert_table_length NUM_CHARSTATES
 DetectServeAceOutcome:
 	ld a, [wRallyLength] ; $4326
 	cp $02 ; $4329

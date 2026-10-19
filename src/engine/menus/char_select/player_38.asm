@@ -178,12 +178,14 @@ GetPlayerSlotBoxAddress:
 	ret ; $56c8
 PlayerSlotBoxAddrPtrs_38:
 	; $56c9, 12 bytes (records:2)
+	table_width 2
 	dw PlayerSlotBoxAddrs0 ; record 0
 	dw PlayerSlotBoxAddrs1 ; record 1
 	dw PlayerSlotBoxAddrs2 ; record 2
 	dw PlayerSlotBoxAddrs3 ; record 3
 	dw PlayerSlotBoxAddrs4 ; record 4
 	dw PlayerSlotBoxAddrs5 ; record 5
+	assert_table_length NUM_CHARSELECTMODES
 PlayerSlotBoxAddrs0:
 	; $56d5, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 0

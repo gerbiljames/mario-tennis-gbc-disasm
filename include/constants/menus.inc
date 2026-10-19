@@ -28,6 +28,7 @@ def MATCHMENUITEM_QUIT_MATCH         equ $14 ; "QUIT MINI-GAME"
 def MATCHMENUITEM_QUIT_PRACTICE      equ $15 ; "QUIT MINI-GAME"
 def MATCHMENUITEM_QUIT_MACHINE       equ $16 ; "QUIT MINI-GAME"
 def MATCHMENUITEM_QUIT_PRACTICE_ALT  equ $17 ; "QUIT MINI-GAME"
+def NUM_MATCHMENUITEMS equ $18
 
 ; --- Match pause menus (wPauseMenuId, rows of MatchMenuDefs) ---
 ; The save/quit menu comes from SaveQuitMenuIdByGameMode, indexed by wGameMode.
@@ -46,6 +47,7 @@ def MATCHMENU_QUIT_MINIGAME    equ $0b
 def MATCHMENU_QUIT_LINK        equ $0c
 def MATCHMENU_QUIT_NO_MODE     equ $0d ; GAMEMODE_NONE
 def MATCHMENU_MINIGAME_END     equ $0e ; RunMinigameEndMenu: no CANCEL
+def NUM_MATCHMENUS equ $0f
 
 ; --- Story pause menus (wPauseMenuId, rows of StoryMenuDefs) ---
 def STORYMENU_PAUSE            equ $00
@@ -54,6 +56,7 @@ def STORYMENU_OPTIONS          equ $02
 def STORYMENU_MESSAGE_SPEED    equ $03
 def STORYMENU_MUSIC            equ $04
 def STORYMENU_SAVE_QUIT        equ $05
+def NUM_STORYMENUS equ $06
 
 ; --- Story pause-menu item ids (StoryMenuDefs) ---
 ; Same shape for the story-mode pause menu: StoryMenuItemGfxPointers,
@@ -74,6 +77,7 @@ def STORYMENUITEM_TO_MAIN_MENU  equ $0c ; "TO MAIN MENU"
 def STORYMENUITEM_CANCEL        equ $0d ; "CANCEL" (continue game)
 def STORYMENUITEM_CHAR_DATA     equ $0e ; "CHAR. DATA"
 def STORYMENUITEM_ITEMS         equ $0f ; "ITEMS"
+def NUM_STORYMENUITEMS equ $10
 
 ; --- Character-select mode (wCharSelectMode) ---
 ; Six modes, indexing four parallel 6-record tables (CharSelectSlotRing0-5
@@ -86,6 +90,7 @@ def CHARSELECTMODE_LINK_SINGLES_P1    equ $02
 def CHARSELECTMODE_LINK_SINGLES_P2    equ $03
 def CHARSELECTMODE_LINK_DOUBLES_P1    equ $04
 def CHARSELECTMODE_LINK_DOUBLES_P2    equ $05
+def NUM_CHARSELECTMODES equ $06
 
 ; --- Character-grid handedness (wCharGridHandedness) ---
 ; START toggles it with `xor 1` (unchosen becomes left) for Mario-cast

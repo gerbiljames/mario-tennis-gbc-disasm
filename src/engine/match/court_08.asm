@@ -210,6 +210,7 @@ ResolvePointWinner:
 	ret ; $5dc3
 CourtSceneDataTable:
 	; $5dc4, 100 bytes (court_scene)
+	table_width 4
 ; court_scene friction, bounce, scene, unused
 	court_scene $cd, $cd, SCENE_HARD_COURT, $21 ; $00 COURT_HARD
 	court_scene $b3, $99, SCENE_CLAY_COURT, $22 ; $01 COURT_CLAY
@@ -236,6 +237,7 @@ CourtSceneDataTable:
 	court_scene $cd, $b3, SCENE_MINIGAME_COURT, $13 ; $16 Fruit Fantasy
 	court_scene $b3, $cd, SCENE_WAREHOUSE_COURT, $15 ; $17 Two-On-One
 	court_scene $cd, $b3, SCENE_TRAINING_COURT, $24 ; $18 Training Court (match)
+	assert_table_length NUM_COURTS
 LoadCourtSceneData:
 	ldh a, [hWramBank] ; $5e28
 	push af ; $5e2a
