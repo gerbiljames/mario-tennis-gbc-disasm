@@ -1,5 +1,4 @@
 """Shared fixtures for the test suite."""
-import os
 import shutil
 import subprocess
 import sys

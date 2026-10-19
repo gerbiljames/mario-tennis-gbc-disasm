@@ -138,7 +138,7 @@ Unused_05_RunPagedTextMenuAutoSize:
 	ld e, $05 ; $4a3c
 	call CreateMenuWindowPaged ; $4a3e
 	call RestoreShadowTilemap ; $4a41
-	call Unused_05_StubNop_05_0 ; $4a44
+	call Unused_05_StubNop0 ; $4a44
 	call RunMenuSelection ; $4a47
 	push af ; $4a4a
 	ld a, [wMenuWindowId] ; $4a4b

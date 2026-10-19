@@ -276,7 +276,7 @@ Unused_05_RunFixedTextMenu:
 	ld hl, Text_MenuYesNo ; $4514
 	call CreateMenuWindowFromText ; $4517
 	call RestoreShadowTilemap ; $451a
-	call Unused_05_StubNop_05_0 ; $451d
+	call Unused_05_StubNop0 ; $451d
 	call RunMenuSelection ; $4520
 	ld h, a ; $4523
 	ld a, [wMenuWindowId] ; $4524

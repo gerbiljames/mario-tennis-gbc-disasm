@@ -30,7 +30,7 @@ HighlightDoublesRankingRow:
 	ld h, [hl] ; $5853
 	ld l, a ; $5854
 	jp hl ; $5855
-StubNop_1b_08:
+StubNop_1b_2:
 	ret ; $5856
 RankingMarkerHandlers_1b:
 	dw DrawDoublesRankingMarker0 ; $5857 jumptable
@@ -45,37 +45,37 @@ DrawDoublesRankingMarker0:
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $5868
 	rect_size $04, $04 ; $586b
 	farcall CopyTilemapRect ; $586f
-	jp StubNop_1b_08 ; $5872
+	jp StubNop_1b_2 ; $5872
 DrawDoublesRankingMarker2:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 4 ; $5875
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 10 ; $5878
 	rect_size $04, $04 ; $587b
 	farcall CopyTilemapRect ; $587f
-	jp StubNop_1b_08 ; $5882
+	jp StubNop_1b_2 ; $5882
 DrawDoublesRankingMarker3:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 8 ; $5885
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $5888
 	rect_size $04, $07 ; $588b
 	farcall CopyTilemapRect ; $588f
-	jp StubNop_1b_08 ; $5892
+	jp StubNop_1b_2 ; $5892
 DrawDoublesRankingMarker4:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 12 ; $5895
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 10 ; $5898
 	rect_size $04, $07 ; $589b
 	farcall CopyTilemapRect ; $589f
-	jp StubNop_1b_08 ; $58a2
+	jp StubNop_1b_2 ; $58a2
 DrawDoublesRankingMarker5:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 8 ; $58a5
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $58a8
 	rect_size $08, $07 ; $58ab
 	farcall CopyTilemapRect ; $58af
-	jp StubNop_1b_08 ; $58b2
+	jp StubNop_1b_2 ; $58b2
 DrawDoublesRankingMarker6:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 16 ; $58b5
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $58b8
 	rect_size $08, $07 ; $58bb
 	farcall CopyTilemapRect ; $58bf
-	jp StubNop_1b_08 ; $58c2
+	jp StubNop_1b_2 ; $58c2
 PushRankingBoardTilemapRows:
 	ld hl, wShadowTilemap ; $58c5
 	ld de, vBGMap0 ; $58c8

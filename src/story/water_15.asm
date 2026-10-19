@@ -417,7 +417,7 @@ ServeChallengerResultScene:
 	call WaitFadeEnd ; $5d51
 	ld a, [wPointWinLoseFlag] ; $5d54
 	inc a ; $5d57
-	cp $01 ; $5d58
+	cp WINLOSE_NONE + 1 ; $5d58
 	jr nz, .dispatch ; $5d5a
 	ld hl, wUnusedChallengerLoseTextId ; $5d5c
 	ld de, Text_6e_29 ; $5d5f

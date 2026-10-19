@@ -205,11 +205,11 @@ IntroCutsceneState19_6b:
 	dw IntroCutsceneState19Init_6b ; record 0
 	dw IntroCutsceneState19Update_6b ; record 1
 	dw IntroCutsceneState19Exit_6b ; record 2
-Unused_6b_UpdateHandler_6b:
+Unused_6b_UpdateHandler:
 	jp DispatchCutsceneStateInit.runUpdate ; $4159
 IntroCutsceneState14Exit_6b:
 	jp DispatchCutsceneStateInit.nextState ; $415c
-Unused_6b_ExitHandler_6b:
+Unused_6b_ExitHandler:
 	xor a ; $415f
 	ld [wCutsceneStepTimer], a ; $4160
 	jp DispatchCutsceneStateInit.nextState ; $4163

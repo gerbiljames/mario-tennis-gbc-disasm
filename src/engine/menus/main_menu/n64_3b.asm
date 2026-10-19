@@ -48,7 +48,7 @@ Unused_3b_DrawAsciiDigitString:
 .done:
 	ret ; $448f
 	twin_in draw_ascii_digit_char, Unused_3b_DrawAsciiDigitChar, 3b ; $4490 Unused_3b_DrawAsciiDigitChar
-Unused_3b_StubNop:
+Unused_3b_StubNop0:
 	ret ; $44a9
 RunN64ExhibData:
 	sound BGM_STATUS_SCREEN ; $44aa

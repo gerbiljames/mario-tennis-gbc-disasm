@@ -48,7 +48,7 @@ RETCC = re.compile(r"^ret (nz|z|nc|c)$")
 JUMP = re.compile(r"^(jr|jp) (\S+)$")
 INDIRECT = re.compile(r"^(jp hl|call JumpToHL|jp JumpToHL|call CallHLInBankA|jp CallHLInBankA)$")
 FLAG = {"z": (0x80, True), "nz": (0x80, False), "c": (0x10, True), "nc": (0x10, False)}
-DATA = re.compile(r"(db|dw|dn|ds|map_(?!cell\b)\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|"
+DATA = re.compile(r"(db|dw|dn|ds|map_(?!cell\b)\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|char_stats_row|"
                   r"story_location|obj_template)\b")
 
 

@@ -124,7 +124,7 @@ Unused_1b_DrawCharSelectMugshots:
 	ld a, [wCharSelectChar] ; $60b0
 	farcall LoadCharacterRecordToBuffer ; $60b3
 	ld a, [wCharRecordScratch + 11] ; $60b6
-	farcall Unused_1b_StubNop_1b_01 ; $60b9
+	farcall Unused_1b_StubNop0 ; $60b9
 	ret ; $60bc
 Unused_1b_RunCharSelectLoop:
 	and $01 ; $60bd
@@ -471,7 +471,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	jr .saveMenuLoop ; $635d
 .slotOk:
 	push bc ; $635f
-	call Unused_1b_StubNop_1b_09 ; $6360
+	call Unused_1b_StubNop6 ; $6360
 	pop bc ; $6363
 	or a ; $6364
 	jr nz, .saveMenuLoop ; $6365

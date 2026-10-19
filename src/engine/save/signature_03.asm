@@ -393,7 +393,7 @@ WriteSaveBlock:
 	call GetSaveBlockDirEntry ; $4a9d
 	push bc ; $4aa0
 	push hl ; $4aa1
-	ld hl, $0001 ; $4aa2
+	ld hl, SAVEDIR_BANK ; $4aa2
 	add hl, bc ; $4aa5
 	ld c, [hl] ; $4aa6
 	push bc ; $4aa7
@@ -444,7 +444,7 @@ WriteSaveBlock:
 	pop bc ; $4ae0
 	ld a, $01 ; $4ae1
 	ld [bc], a ; $4ae3
-	ld hl, $0006 ; $4ae4
+	ld hl, SAVEDIR_CHECKSUM ; $4ae4
 	add hl, bc ; $4ae7
 	ld [hl], e ; $4ae8
 	inc hl ; $4ae9

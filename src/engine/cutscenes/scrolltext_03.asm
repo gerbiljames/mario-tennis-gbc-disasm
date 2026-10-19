@@ -238,10 +238,10 @@ UpdateSceneAnimation:
 	push_wram_bank WRAM_SCENE ; $5b4d
 	call LoadCutsceneAnimFrameGfx_00_08 ; $5b56
 	call LoadCutsceneAnimFrameGfx_09_11 ; $5b59
-	call LoadCutsceneAnimFrameGfx_12_1A ; $5b5c
-	call LoadCutsceneAnimFrameGfx_1B_23 ; $5b5f
-	call LoadCutsceneAnimFrameGfx_24_2C ; $5b62
-	call LoadCutsceneAnimFrameGfx_2D_35 ; $5b65
+	call LoadCutsceneAnimFrameGfx_12_1a ; $5b5c
+	call LoadCutsceneAnimFrameGfx_1b_23 ; $5b5f
+	call LoadCutsceneAnimFrameGfx_24_2c ; $5b62
+	call LoadCutsceneAnimFrameGfx_2d_35 ; $5b65
 	wram_bank WRAM_SCENE ; $5b68
 	ld a, [wCutsceneSlideTimer] ; $5b6e
 	and $03 ; $5b71
@@ -568,7 +568,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld_oam bc, 2, $04 ; $5ee5
 	call QueueSpriteTemplate ; $5ee8
 	ret ; $5eeb
-LoadCutsceneAnimFrameGfx_12_1A:
+LoadCutsceneAnimFrameGfx_12_1a:
 	wram_bank WRAM_SCENE ; $5eec
 	ld a, [wSceneAnimFrame] ; $5ef2
 	ld b, a ; $5ef5
@@ -603,7 +603,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld de, vTiles0 tile $08 ; $5f3c
 	ld c, CutsceneAnimFrameLZ_12_SIZE / 16 ; $5f3f
 	call QueueVRAMCopy ; $5f41
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate0 ; $5f44
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate0 ; $5f44
 	sprite_xy $1e, $80 ; $5f47
 	ld_oam bc, 3, $08 ; $5f4b
 	call QueueSpriteTemplate ; $5f4e
@@ -617,7 +617,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld de, vTiles0 tile $08 ; $5f64
 	ld c, CutsceneAnimFrameLZ_13_SIZE / 16 ; $5f67
 	call QueueVRAMCopy ; $5f69
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate1 ; $5f6c
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate1 ; $5f6c
 	sprite_xy $1e, $80 ; $5f6f
 	ld_oam bc, 3, $08 ; $5f73
 	call QueueSpriteTemplate ; $5f76
@@ -631,7 +631,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld de, vTiles0 tile $08 ; $5f8c
 	ld c, CutsceneAnimFrameLZ_14_SIZE / 16 ; $5f8f
 	call QueueVRAMCopy ; $5f91
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate2 ; $5f94
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate2 ; $5f94
 	sprite_xy $1e, $80 ; $5f97
 	ld_oam bc, 3, $08 ; $5f9b
 	call QueueSpriteTemplate ; $5f9e
@@ -645,7 +645,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld de, vTiles0 tile $08 ; $5fb4
 	ld c, CutsceneAnimFrameLZ_15_SIZE / 16 ; $5fb7
 	call QueueVRAMCopy ; $5fb9
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate3 ; $5fbc
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate3 ; $5fbc
 	sprite_xy $1e, $80 ; $5fbf
 	ld_oam bc, 3, $08 ; $5fc3
 	call QueueSpriteTemplate ; $5fc6
@@ -659,7 +659,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld de, vTiles0 tile $08 ; $5fdc
 	ld c, CutsceneAnimFrameLZ_16_SIZE / 16 ; $5fdf
 	call QueueVRAMCopy ; $5fe1
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate4 ; $5fe4
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate4 ; $5fe4
 	sprite_xy $1e, $80 ; $5fe7
 	ld_oam bc, 3, $08 ; $5feb
 	call QueueSpriteTemplate ; $5fee
@@ -673,7 +673,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld de, vTiles0 tile $08 ; $6004
 	ld c, CutsceneAnimFrameLZ_17_SIZE / 16 ; $6007
 	call QueueVRAMCopy ; $6009
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate5 ; $600c
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate5 ; $600c
 	sprite_xy $1e, $80 ; $600f
 	ld_oam bc, 3, $08 ; $6013
 	call QueueSpriteTemplate ; $6016
@@ -687,7 +687,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld de, vTiles0 tile $08 ; $602c
 	ld c, CutsceneAnimFrameLZ_18_SIZE / 16 ; $602f
 	call QueueVRAMCopy ; $6031
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate6 ; $6034
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate6 ; $6034
 	sprite_xy $1e, $80 ; $6037
 	ld_oam bc, 3, $08 ; $603b
 	call QueueSpriteTemplate ; $603e
@@ -701,7 +701,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld de, vTiles0 tile $08 ; $6054
 	ld c, CutsceneAnimFrameLZ_19_SIZE / 16 ; $6057
 	call QueueVRAMCopy ; $6059
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate7 ; $605c
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate7 ; $605c
 	sprite_xy $1e, $80 ; $605f
 	ld_oam bc, 3, $08 ; $6063
 	call QueueSpriteTemplate ; $6066
@@ -715,18 +715,18 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld de, vTiles0 tile $08 ; $607c
 	ld c, CutsceneAnimFrameLZ_1a_SIZE / 16 ; $607f
 	call QueueVRAMCopy ; $6081
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate8 ; $6084
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate8 ; $6084
 	sprite_xy $1e, $80 ; $6087
 	ld_oam bc, 3, $08 ; $608b
 	call QueueSpriteTemplate ; $608e
 	ret ; $6091
 .queueSpriteTemplate:
-	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate8 ; $6092
+	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate8 ; $6092
 	sprite_xy $1e, $80 ; $6095
 	ld_oam bc, 3, $08 ; $6099
 	call QueueSpriteTemplate ; $609c
 	ret ; $609f
-LoadCutsceneAnimFrameGfx_1B_23:
+LoadCutsceneAnimFrameGfx_1b_23:
 	wram_bank WRAM_SCENE ; $60a0
 	ld a, [wSceneAnimFrame] ; $60a6
 	ld b, a ; $60a9
@@ -761,7 +761,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld de, vTiles0 tile $0c ; $60f0
 	ld c, CutsceneAnimFrameLZ_1b_SIZE / 16 ; $60f3
 	call QueueVRAMCopy ; $60f5
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate0 ; $60f8
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate0 ; $60f8
 	sprite_xy $2e, $80 ; $60fb
 	ld_oam bc, 3, $0c ; $60ff
 	call QueueSpriteTemplate ; $6102
@@ -775,7 +775,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld de, vTiles0 tile $0c ; $6118
 	ld c, CutsceneAnimFrameLZ_1c_SIZE / 16 ; $611b
 	call QueueVRAMCopy ; $611d
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate1 ; $6120
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate1 ; $6120
 	sprite_xy $2e, $80 ; $6123
 	ld_oam bc, 3, $0c ; $6127
 	call QueueSpriteTemplate ; $612a
@@ -789,7 +789,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld de, vTiles0 tile $0c ; $6140
 	ld c, CutsceneAnimFrameLZ_1d_SIZE / 16 ; $6143
 	call QueueVRAMCopy ; $6145
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate2 ; $6148
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate2 ; $6148
 	sprite_xy $2e, $80 ; $614b
 	ld_oam bc, 3, $0c ; $614f
 	call QueueSpriteTemplate ; $6152
@@ -803,7 +803,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld de, vTiles0 tile $0c ; $6168
 	ld c, CutsceneAnimFrameLZ_1e_SIZE / 16 ; $616b
 	call QueueVRAMCopy ; $616d
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate3 ; $6170
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate3 ; $6170
 	sprite_xy $2e, $80 ; $6173
 	ld_oam bc, 3, $0c ; $6177
 	call QueueSpriteTemplate ; $617a
@@ -817,7 +817,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld de, vTiles0 tile $0c ; $6190
 	ld c, CutsceneAnimFrameLZ_1f_SIZE / 16 ; $6193
 	call QueueVRAMCopy ; $6195
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate4 ; $6198
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate4 ; $6198
 	sprite_xy $2e, $80 ; $619b
 	ld_oam bc, 3, $0c ; $619f
 	call QueueSpriteTemplate ; $61a2
@@ -831,7 +831,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld de, vTiles0 tile $0c ; $61b8
 	ld c, CutsceneAnimFrameLZ_20_SIZE / 16 ; $61bb
 	call QueueVRAMCopy ; $61bd
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate5 ; $61c0
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate5 ; $61c0
 	sprite_xy $2e, $80 ; $61c3
 	ld_oam bc, 3, $0c ; $61c7
 	call QueueSpriteTemplate ; $61ca
@@ -845,7 +845,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld de, vTiles0 tile $0c ; $61e0
 	ld c, CutsceneAnimFrameLZ_21_SIZE / 16 ; $61e3
 	call QueueVRAMCopy ; $61e5
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate6 ; $61e8
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate6 ; $61e8
 	sprite_xy $2e, $80 ; $61eb
 	ld_oam bc, 3, $0c ; $61ef
 	call QueueSpriteTemplate ; $61f2
@@ -859,7 +859,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld de, vTiles0 tile $0c ; $6208
 	ld c, CutsceneAnimFrameLZ_22_SIZE / 16 ; $620b
 	call QueueVRAMCopy ; $620d
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate7 ; $6210
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate7 ; $6210
 	sprite_xy $2e, $80 ; $6213
 	ld_oam bc, 3, $0c ; $6217
 	call QueueSpriteTemplate ; $621a
@@ -873,18 +873,18 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld de, vTiles0 tile $0c ; $6230
 	ld c, CutsceneAnimFrameLZ_23_SIZE / 16 ; $6233
 	call QueueVRAMCopy ; $6235
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate8 ; $6238
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate8 ; $6238
 	sprite_xy $2e, $80 ; $623b
 	ld_oam bc, 3, $0c ; $623f
 	call QueueSpriteTemplate ; $6242
 	ret ; $6245
 .queueSpriteTemplate:
-	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate8 ; $6246
+	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate8 ; $6246
 	sprite_xy $2e, $80 ; $6249
 	ld_oam bc, 3, $0c ; $624d
 	call QueueSpriteTemplate ; $6250
 	ret ; $6253
-LoadCutsceneAnimFrameGfx_24_2C:
+LoadCutsceneAnimFrameGfx_24_2c:
 	wram_bank WRAM_SCENE ; $6254
 	ld a, [wSceneAnimFrame] ; $625a
 	ld b, a ; $625d
@@ -919,7 +919,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld de, vTiles0 tile $0e ; $62a4
 	ld c, CutsceneAnimFrameLZ_24_SIZE / 16 ; $62a7
 	call QueueVRAMCopy ; $62a9
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate0 ; $62ac
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate0 ; $62ac
 	sprite_xy $36, $80 ; $62af
 	ld_oam bc, 2, $0e ; $62b3
 	call QueueSpriteTemplate ; $62b6
@@ -933,7 +933,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld de, vTiles0 tile $0e ; $62cc
 	ld c, CutsceneAnimFrameLZ_25_SIZE / 16 ; $62cf
 	call QueueVRAMCopy ; $62d1
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate1 ; $62d4
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate1 ; $62d4
 	sprite_xy $36, $80 ; $62d7
 	ld_oam bc, 2, $0e ; $62db
 	call QueueSpriteTemplate ; $62de
@@ -947,7 +947,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld de, vTiles0 tile $0e ; $62f4
 	ld c, CutsceneAnimFrameLZ_26_SIZE / 16 ; $62f7
 	call QueueVRAMCopy ; $62f9
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate2 ; $62fc
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate2 ; $62fc
 	sprite_xy $36, $80 ; $62ff
 	ld_oam bc, 2, $0e ; $6303
 	call QueueSpriteTemplate ; $6306
@@ -961,7 +961,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld de, vTiles0 tile $0e ; $631c
 	ld c, CutsceneAnimFrameLZ_27_SIZE / 16 ; $631f
 	call QueueVRAMCopy ; $6321
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate3 ; $6324
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate3 ; $6324
 	sprite_xy $36, $80 ; $6327
 	ld_oam bc, 2, $0e ; $632b
 	call QueueSpriteTemplate ; $632e
@@ -975,7 +975,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld de, vTiles0 tile $0e ; $6344
 	ld c, CutsceneAnimFrameLZ_28_SIZE / 16 ; $6347
 	call QueueVRAMCopy ; $6349
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate4 ; $634c
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate4 ; $634c
 	sprite_xy $36, $80 ; $634f
 	ld_oam bc, 2, $0e ; $6353
 	call QueueSpriteTemplate ; $6356
@@ -989,7 +989,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld de, vTiles0 tile $0e ; $636c
 	ld c, CutsceneAnimFrameLZ_29_SIZE / 16 ; $636f
 	call QueueVRAMCopy ; $6371
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate5 ; $6374
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate5 ; $6374
 	sprite_xy $36, $80 ; $6377
 	ld_oam bc, 2, $0e ; $637b
 	call QueueSpriteTemplate ; $637e
@@ -1003,7 +1003,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld de, vTiles0 tile $0e ; $6394
 	ld c, CutsceneAnimFrameLZ_2a_SIZE / 16 ; $6397
 	call QueueVRAMCopy ; $6399
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate6 ; $639c
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate6 ; $639c
 	sprite_xy $36, $80 ; $639f
 	ld_oam bc, 2, $0e ; $63a3
 	call QueueSpriteTemplate ; $63a6
@@ -1017,7 +1017,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld de, vTiles0 tile $0e ; $63bc
 	ld c, CutsceneAnimFrameLZ_2b_SIZE / 16 ; $63bf
 	call QueueVRAMCopy ; $63c1
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate7 ; $63c4
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate7 ; $63c4
 	sprite_xy $36, $80 ; $63c7
 	ld_oam bc, 2, $0e ; $63cb
 	call QueueSpriteTemplate ; $63ce
@@ -1031,13 +1031,13 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld de, vTiles0 tile $0e ; $63e4
 	ld c, CutsceneAnimFrameLZ_2c_SIZE / 16 ; $63e7
 	call QueueVRAMCopy ; $63e9
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate8 ; $63ec
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate8 ; $63ec
 	sprite_xy $36, $80 ; $63ef
 	ld_oam bc, 2, $0e ; $63f3
 	call QueueSpriteTemplate ; $63f6
 	ret ; $63f9
 .queueSpriteTemplate:
-	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate8 ; $63fa
+	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate8 ; $63fa
 	sprite_xy $36, $80 ; $63fd
 	ld_oam bc, 2, $0e ; $6401
 	call QueueSpriteTemplate ; $6404

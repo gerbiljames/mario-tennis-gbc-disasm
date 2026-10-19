@@ -289,12 +289,12 @@ DrawDiagramTargetPatch:
 DiagramTargetPatchRecords_17:
 	; $4a75, 36 bytes (records:6)
 ; 6 records x 6 bytes
-	dw $d243, $d08a, $0203 ; record 0
-	dw $d283, $d0ca, $0203 ; record 1
-	dw $d280, $d0c7, $0203 ; record 2
-	dw $d240, $d087, $0203 ; record 3
-	dw $d2c0, $d067, $0206 ; record 4
-	dw $d300, $d0e7, $0206 ; record 5
+	dw wShadowTilemap + 18 * TILEMAP_WIDTH + 3, wShadowTilemap + 4 * TILEMAP_WIDTH + 10, $0203 ; record 0
+	dw wShadowTilemap + 20 * TILEMAP_WIDTH + 3, wShadowTilemap + 6 * TILEMAP_WIDTH + 10, $0203 ; record 1
+	dw wShadowTilemap + 20 * TILEMAP_WIDTH, wShadowTilemap + 6 * TILEMAP_WIDTH + 7, $0203 ; record 2
+	dw wShadowTilemap + 18 * TILEMAP_WIDTH, wShadowTilemap + 4 * TILEMAP_WIDTH + 7, $0203 ; record 3
+	dw wShadowTilemap + 22 * TILEMAP_WIDTH, wShadowTilemap + 3 * TILEMAP_WIDTH + 7, $0206 ; record 4
+	dw wShadowTilemap + 24 * TILEMAP_WIDTH, wShadowTilemap + 7 * TILEMAP_WIDTH + 7, $0206 ; record 5
 DecompressGraphicsList:
 	ld hl, CourtDiagramGraphicsList ; $4a99
 .loop:

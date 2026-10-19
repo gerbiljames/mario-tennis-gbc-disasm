@@ -22,7 +22,7 @@ Unused_1a_RunDebugExpEditor:
 	farcall CreateWindow ; $43bd
 	ld [wPauseMenuWindowId], a ; $43c0
 	farcall RestoreShadowTilemap ; $43c3
-	farcall Unused_05_StubNop_05_0 ; $43c6
+	farcall Unused_05_StubNop0 ; $43c6
 	ld c, $00 ; $43c9
 .loop:
 	ld hl, wStoryMainExp ; $43cb
@@ -48,7 +48,7 @@ Unused_1a_RunDebugExpEditor:
 	ld a, [wPauseMenuWindowId] ; $43f9
 	farcall WriteStringToWindow ; $43fc
 	farcall RestoreShadowTilemap ; $43ff
-	farcall Unused_05_StubNop_05_0 ; $4402
+	farcall Unused_05_StubNop0 ; $4402
 	call AdvanceFrame ; $4405
 	ldh a, [hPlayerInputFlags] ; $4408
 	and PADF_A ; $440a
@@ -166,11 +166,11 @@ Unused_1a_ShowExpGainScreen:
 	jr nz, .done ; $450e
 	call Unused_1a_DrawExpScreenYesNoBox ; $4510
 	ld a, $0e ; $4513
-	ld hl, Unused_1a_StubNop_1a_0 ; $4515
+	ld hl, Unused_1a_StubNop0 ; $4515
 	call RegisterFrameTask ; $4518
-	call Unused_1a_StubNop_1a_1 ; $451b
+	call Unused_1a_StubNop1 ; $451b
 	jp .queueVRAMCopy ; $451e
-	call Unused_1a_StubNop_1a_2 ; $4521
+	call Unused_1a_StubNop2 ; $4521
 	jp .queueVRAMCopy ; $4524
 .done:
 	pop_wram_bank ; $4527

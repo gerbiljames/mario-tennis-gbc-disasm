@@ -1,16 +1,16 @@
-; Advances an object along its move curve. wObjSlotWork + 14 selects the curve
-; in MoveCurveTable_09 and + 13 is the step within it. Two terminators: $80
-; holds the object where it is, $81 ends the sequence and frees the slot by
-; writing $ff to the record's +$00. Returns nz while the curve is still
-; producing values.
+; Advances an object along its move curve. OBJSLOT_CURVE selects the curve in
+; MoveCurveTable_09 and OBJSLOT_CURVE_STEP is the step within it. Two
+; terminators: $80 holds the object where it is, $81 ends the sequence and
+; frees the slot by writing $ff to OBJSLOT_ID. Returns nz while the curve is
+; still producing values.
 GetNextMoveCurveValue:
-	ld a, [wObjSlotWork + 14] ; $4782
+	ld a, [wObjSlotWork + OBJSLOT_CURVE] ; $4782
 	add a ; $4785
 	ld_hl_indexed MoveCurveTable_09 ; $4786
 	ld a, [hl+] ; $478d
 	ld h, [hl] ; $478e
 	ld l, a ; $478f
-	ld a, [wObjSlotWork + 13] ; $4790
+	ld a, [wObjSlotWork + OBJSLOT_CURVE_STEP] ; $4790
 	add l ; $4793
 	ld l, a ; $4794
 	jr nc, .readValue ; $4795
@@ -21,7 +21,7 @@ GetNextMoveCurveValue:
 	jr z, .done ; $479b
 	cp $81 ; $479d
 	jr z, .markFinished ; $479f
-	ld [wObjSlotWork + 10], a ; $47a1
+	ld [wObjSlotWork + OBJSLOT_CURVE_X], a ; $47a1
 	xor a ; $47a4
 	inc a ; $47a5
 	ret ; $47a6

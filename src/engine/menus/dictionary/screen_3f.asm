@@ -418,37 +418,37 @@ LoadTennisDictionaryScreen:
 TennisDictionaryClearList:
 	; $444f, 56 bytes (records:4)
 ; 14 records x 4 bytes
-	dw $d066, $000a ; record 0
-	dw $d0a6, $000a ; record 1
-	dw $d165, $0001 ; record 2
-	dw $d1a5, $0001 ; record 3
-	dw $d1e5, $0001 ; record 4
-	dw $d225, $0001 ; record 5
-	dw $d265, $0001 ; record 6
-	dw $d2a5, $0001 ; record 7
-	dw $d2e5, $0001 ; record 8
-	dw $d325, $0001 ; record 9
-	dw $d365, $0001 ; record 10
-	dw $d3a5, $0001 ; record 11
-	dw $d052, $000a ; record 12
-	dw $d092, $000a ; record 13
+	dw wShadowTilemap + 3 * TILEMAP_WIDTH + 6, $000a ; record 0
+	dw wShadowTilemap + 5 * TILEMAP_WIDTH + 6, $000a ; record 1
+	dw wShadowTilemap + 11 * TILEMAP_WIDTH + 5, $0001 ; record 2
+	dw wShadowTilemap + 13 * TILEMAP_WIDTH + 5, $0001 ; record 3
+	dw wShadowTilemap + 15 * TILEMAP_WIDTH + 5, $0001 ; record 4
+	dw wShadowTilemap + 17 * TILEMAP_WIDTH + 5, $0001 ; record 5
+	dw wShadowTilemap + 19 * TILEMAP_WIDTH + 5, $0001 ; record 6
+	dw wShadowTilemap + 21 * TILEMAP_WIDTH + 5, $0001 ; record 7
+	dw wShadowTilemap + 23 * TILEMAP_WIDTH + 5, $0001 ; record 8
+	dw wShadowTilemap + 25 * TILEMAP_WIDTH + 5, $0001 ; record 9
+	dw wShadowTilemap + 27 * TILEMAP_WIDTH + 5, $0001 ; record 10
+	dw wShadowTilemap + 29 * TILEMAP_WIDTH + 5, $0001 ; record 11
+	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 18, $000a ; record 12
+	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 18, $000a ; record 13
 TennisDictionaryClearList2:
 	; $4487, 56 bytes (records:4)
 ; 14 records x 4 bytes
-	dw $d10f, $0010 ; record 0
-	dw $d14f, $0010 ; record 1
-	dw $d18f, $0010 ; record 2
-	dw $d1cf, $0010 ; record 3
-	dw $d20f, $0010 ; record 4
-	dw $d24f, $0010 ; record 5
-	dw $d28f, $0010 ; record 6
-	dw $d2cf, $0010 ; record 7
-	dw $d30f, $0010 ; record 8
-	dw $d34f, $0010 ; record 9
-	dw $d38f, $0010 ; record 10
-	dw $d3cf, $0010 ; record 11
-	dw $d050, $0001 ; record 12
-	dw $d05e, $0001 ; record 13
+	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 15, $0010 ; record 0
+	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 15, $0010 ; record 1
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 15, $0010 ; record 2
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 15, $0010 ; record 3
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 15, $0010 ; record 4
+	dw wShadowTilemap + 18 * TILEMAP_WIDTH + 15, $0010 ; record 5
+	dw wShadowTilemap + 20 * TILEMAP_WIDTH + 15, $0010 ; record 6
+	dw wShadowTilemap + 22 * TILEMAP_WIDTH + 15, $0010 ; record 7
+	dw wShadowTilemap + 24 * TILEMAP_WIDTH + 15, $0010 ; record 8
+	dw wShadowTilemap + 26 * TILEMAP_WIDTH + 15, $0010 ; record 9
+	dw wShadowTilemap + 28 * TILEMAP_WIDTH + 15, $0010 ; record 10
+	dw wShadowTilemap + 30 * TILEMAP_WIDTH + 15, $0010 ; record 11
+	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 16, $0001 ; record 12
+	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 30, $0001 ; record 13
 TennisDictionaryListDataChar6:
 	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListDataChar6.bin" ; $44bf, 130 bytes
 TennisDictionaryListDataDefault:

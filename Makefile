@@ -116,28 +116,35 @@ previews:
 	python3 tools/tilemap.py previews data.previews data/
 
 # The unit tests need no ROM; the regression pins in tests/test_rom.py skip
-# themselves when baserom.gbc is absent.
-test:
-	python3 -m unittest discover -s tests -t . -v
+# themselves when baserom.gbc is absent, and otherwise read the build.
+PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
+test: $(if $(wildcard baserom.gbc),$(ROM))
+	$(PYTHON) -m unittest discover -s tests -t . -v
+
+# shift-test, event-test and slot-audit read build/ and mariotennis.gbc, the
+# USA byte-perfect build.
+USA_ONLY = $(if $(filter 1,$(FIXES) $(EUROPE)),$(error $@ runs on the USA build only, without FIXES or EUROPE))
 
 # Rebuild a copy with every bank padded, check each changed byte is a label
 # reference that moved with its target, and leave the padded ROM to boot
 # (tools/shifttest.py).
 shift-test: $(ROM)
+	$(USA_ONLY)
 	python3 tools/shifttest.py
 
 # Play the padded ROM and this one through every story state under the same
 # inputs and compare what the game does (tools/eventtest.py). Needs PyBoy in
 # $(PYTHON) (`make venv`) and a battery save to start from.
-PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 SAVE ?= maxed-unlocked.sav
 event-test: $(ROM)
+	$(USA_ONLY)
 	python3 tools/shifttest.py --out build/padded.gbc
 	$(PYTHON) tools/eventtest.py build/padded.gbc --save $(SAVE)
 
 # Check every actor-slot name against the list active at run time, over
 # every story state and location (tools/actorslots.py --runtime).
 slot-audit: $(ROM)
+	$(USA_ONLY)
 	$(PYTHON) tools/actorslots.py --runtime --save $(SAVE)
 
 # A virtualenv with the packages in requirements.txt; PYTHON uses it.
@@ -146,4 +153,4 @@ venv:
 	.venv/bin/pip install -r requirements.txt
 
 clean:
-	rm -rf build build-fixes mariotennis.gbc mariotennis-fixes.gbc
+	rm -rf build build-fixes build-eur build-fixes-eur mariotennis.gbc mariotennis-fixes.gbc mariotennis-eur.gbc mariotennis-fixes-eur.gbc

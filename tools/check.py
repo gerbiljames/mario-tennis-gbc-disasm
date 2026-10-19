@@ -167,7 +167,7 @@ def check_stranded_scopes(fail):
     one, with nothing naming its entry, ends up inside the script's label scope,
     where its `.loop`/`.done` read as part of the script. The mix is the signal:
     the two never belong to one symbol."""
-    found = {}
+    found, checked = {}, 0
     for path in holders():
         bank = bank_of(path)
         scope, kinds, entry = None, {}, {}
@@ -187,6 +187,7 @@ def check_stranded_scopes(fail):
             if mi and (mi.group(1) in _MNEMONICS or mi.group(1).startswith("script_")):
                 kinds[scope].add("code")
                 entry.setdefault(scope, True)
+        checked += sum("script" in kind for kind in kinds.values())
         for name, kind in kinds.items():
             if kind == {"script", "code"} and name in entry:
                 found[(bank, name)] = name
@@ -196,7 +197,7 @@ def check_stranded_scopes(fail):
     for bank, name in sorted(KNOWN_STRANDED_IN_SCRIPT - set(found)):
         fail("scopes", f"bank ${bank:02x}: {name} is no longer stranded -- drop it "
                        "from KNOWN_STRANDED_IN_SCRIPT")
-    return len(found)
+    return checked
 
 
 
@@ -457,11 +458,8 @@ def check_collapsed_branches(fail):
     for path in holders():
         bank = bank_of(path)
         lines, origin = bank_lines(path)
-        scope = None
         for i, line in enumerate(lines):
-            g = _GLOBAL_RE.match(line)
-            if g:
-                scope = g.group(1)
+            if _GLOBAL_RE.match(line):
                 continue
             m = re.match(r"^\t(jr|jp) (nz|z|nc|c), ([.A-Za-z_][\w.]*)", line)
             if not m:

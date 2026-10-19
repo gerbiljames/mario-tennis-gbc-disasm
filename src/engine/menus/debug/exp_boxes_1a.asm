@@ -1,4 +1,4 @@
-Unused_1a_StubNop_1a_0:
+Unused_1a_StubNop0:
 	ret ; $4779
 Unused_1a_ExpScreenDrawTask:
 	push af ; $477a

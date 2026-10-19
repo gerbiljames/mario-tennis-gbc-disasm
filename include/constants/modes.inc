@@ -134,8 +134,8 @@ def DRILLDEF_INIT         equ $0c ; word: called if nonzero
 	const GAMEMODE_DREAM_MATCH    ; $0a story Dream Match against the Mario cast
 def NUM_GAMEMODES equ const_value
 
-; --- Match-list category (wCurrentMinigameStoryMatch high byte, $c8f6) ---
-; The 16-bit selector at $c8f6 is (category, index). 0/1: the index is a row of
+; --- Match-list category (wCurrentMinigameStoryMatch high byte) ---
+; The 16-bit selector is (category, index). 0/1: the index is a row of
 ; SinglesMatchSettingsTable_0a / DoublesMatchSettingsTable_0a; 2: the index is
 ; a MINIGAME_* id (written by every drill and minigame setup path).
 	const_def

@@ -33,11 +33,11 @@ ENDM
 ; copies into a character record at +$0f-+$2b and LoadCharacterAttributes
 ; turns into the wChar*/wAi* fields (docs/match_engine.md "Character stats
 ; into the engine").
-;   char_record strategy, reach_h, reach_x, smash_jump, dive, tier, swing,
-;               delay_near, delay_far, tracking, aim_away, serve_style,
-;               Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed,
-;               Dash, Reaction, Stop, speed_bonus
-MACRO char_record
+;   char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, swing,
+;                  delay_near, delay_far, tracking, aim_away, serve_style,
+;                  Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed,
+;                  Dash, Reaction, Stop, speed_bonus
+MACRO char_stats_row
 	db \1
 	dw \2, \3, \4, \5
 	db \6

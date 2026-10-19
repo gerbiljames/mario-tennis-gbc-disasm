@@ -104,9 +104,9 @@ Unused_1a_ClearExpScreenNameBox:
 	pop bc ; $4bb6
 	pop af ; $4bb7
 	ret ; $4bb8
-Unused_1a_StubNop_1a_1:
+Unused_1a_StubNop1:
 	ret ; $4bb9
-Unused_1a_StubNop_1a_2:
+Unused_1a_StubNop2:
 	ret ; $4bba
 Unused_1a_DrawPositionedStringToTileBuffer:
 	push af ; $4bbb

@@ -52,7 +52,7 @@ RecordExhibitionVictory:
 .restore:
 	pop_wram_bank ; $7dbd
 	ret ; $7dc2
-Unused_3b_StubNop5:
+Unused_3b_StubNop6:
 	ret ; $7dc3
 GetVictoryScore:
 	ld b, a ; $7dc4

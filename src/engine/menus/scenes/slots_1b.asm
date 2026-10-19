@@ -1,15 +1,15 @@
 	farptr DecompressCharMugshot ; $4000
 	farptr LoadIndexedPaletteThunk ; $4002
-	farptr Unused_1b_StubNop_1b_05 ; $4004
-	farptr Unused_1b_StubNop_1b_06 ; $4006
-	farptr StubNop_1b_06Alias1, Unused_1b_StubNop_1b_06 ; $4008
-	farptr Unused_1b_StubNop_1b_04 ; $400a
+	farptr Unused_1b_StubNop4 ; $4004
+	farptr Unused_1b_StubNop5 ; $4006
+	farptr StubNop_1b_06Alias1, Unused_1b_StubNop5 ; $4008
+	farptr Unused_1b_StubNop3 ; $400a
 	farptr Unused_1b_ResetMugshotPalettes ; $400c
 	farptr Unused_1b_SetMugshotAttrs ; $400e
 	farptr LoadCharMugshotToBuffer ; $4010
-	farptr Unused_1b_StubNop_1b_01 ; $4012
-	farptr Unused_1b_StubNop_1b_02 ; $4014
-	farptr Unused_1b_StubNop_1b_03 ; $4016
+	farptr Unused_1b_StubNop0 ; $4012
+	farptr Unused_1b_StubNop1 ; $4014
+	farptr Unused_1b_StubNop2 ; $4016
 	farptr CopyMugshotBufferToVram ; $4018
 	farptr ShowRankingBoard ; $401a
 	farptr Unused_1b_UpdateCharSelectSelection ; $401c

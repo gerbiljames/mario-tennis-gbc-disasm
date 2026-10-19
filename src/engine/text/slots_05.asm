@@ -4,9 +4,9 @@
 	farptr CreateDialogueWindow ; $4006
 	farptr CreateMenuWindowFromText ; $4008
 	farptr CloseActiveDialogueWindow ; $400a
-	farptr Unused_05_StubNop_05_1 ; $400c
+	farptr Unused_05_StubNop1 ; $400c
 	farptr SetWindowTextId ; $400e
-	farptr Unused_05_StubNop_05_0 ; $4010
+	farptr Unused_05_StubNop0 ; $4010
 	farptr Unused_05_QueueFullTilemapCopy ; $4012
 	farptr Unused_05_QueueFullAttrmapCopy ; $4014
 	farptr Unused_05_CopyVisibleTilemapToVRAM ; $4016

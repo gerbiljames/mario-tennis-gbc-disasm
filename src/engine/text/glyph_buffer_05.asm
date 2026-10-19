@@ -143,7 +143,7 @@ UploadGlyphBufferFull:
 	ld hl, vTiles1 tile $40 ; $7441
 	wram_bank WRAM_TEXT ; $7444
 	ld a, [wWindowTileAttr] ; $744a
-	bit 3, a ; $744d
+	bit B_BG_BANK1, a ; $744d
 	jr z, .pushPageDests ; $744f
 	ld hl, vTiles1 tile $40 + VRAM_BANK1 ; $7451
 .pushPageDests:

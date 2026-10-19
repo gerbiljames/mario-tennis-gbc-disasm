@@ -1,8 +1,8 @@
 ; --- Joypad buttons (standard GB layout) ---
-; The per-character input byte ($df1f, built by ReadCharPadInput) and the raw
-; joypad shadow use the standard layout: buttons in the low nibble, d-pad in the
-; high nibble. PADF_* are the bit masks; PADB_* the matching bit indices (for
-; bit/set/res).
+; The per-character input byte (wCharInputBits, built by ReadCharPadInput) and
+; the raw joypad shadow use the standard layout: buttons in the low nibble, d-pad
+; in the high nibble. PADF_* are the bit masks; PADB_* the matching bit indices
+; (for bit/set/res).
 def PADF_A       equ $01
 def PADF_B       equ $02
 def PADF_SELECT  equ $04

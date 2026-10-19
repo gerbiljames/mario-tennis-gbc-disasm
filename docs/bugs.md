@@ -853,7 +853,7 @@ no amount of play can prove them. (They had been attributed to
 ### A confirm-screen suite in bank `$1b` that nothing can reach
 
 `$1b:$69d9`-`$6aa0` holds seven complete routines with no way in. They follow
-three bare `ret`s, `Unused_1b_StubNop_1b_09`, `Unused_1b_StubRet1` and
+three bare `ret`s, `Unused_1b_StubNop6`, `Unused_1b_StubRet1` and
 `Unused_1b_StubRet2`; the first is registered as a no-op frame task
 (`$1b:$69b9`/`$69c5`) by `Unused_1b_RunStoryDataConfirmMenu` around
 `Unused_18_RunTwoOptionSelectB`, both unreachable as well.

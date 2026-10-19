@@ -131,7 +131,7 @@ def stage_filter(st, var, ok):
                          or ok(FLAG_LISTS[x[0]][var]))
     return frozenset(x for x in st if STAGE_LISTS.get(x[0], (None,))[0] != var
                      or any(ok(v) for v in STAGE_LISTS[x[0]][1]))
-DATA = re.compile(r"\t(db|dw|dn|ds|map_(?!cell\b)\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|"
+DATA = re.compile(r"\t(db|dw|dn|ds|map_(?!cell\b)\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|char_stats_row|"
                   r"story_location|obj_template)\b")
 GLOBAL = re.compile(r"^([A-Za-z_]\w*):")
 LOCAL = re.compile(r"^\.(\w+):")

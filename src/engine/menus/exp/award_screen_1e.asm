@@ -544,7 +544,7 @@ UpdateExpScreenCharSprite:
 	ld a, [wCharFacingOctant] ; $5966
 	ld_hl_indexed UpdateExpScreenCharSpriteTable ; $5969
 	ld a, [wCharSpriteAttr] ; $5970
-	or $08 ; $5973
+	or OAM_BANK1 ; $5973
 	xor [hl] ; $5975
 	ld b, a ; $5976
 	pop af ; $5977

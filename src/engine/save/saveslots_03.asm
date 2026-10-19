@@ -91,7 +91,7 @@ ClearSaveBlockData:
 	call GetSaveBlockDirEntry ; $4ea8
 	push bc ; $4eab
 	push hl ; $4eac
-	ld hl, $0001 ; $4ead
+	ld hl, SAVEDIR_BANK ; $4ead
 	add hl, bc ; $4eb0
 	ld c, [hl] ; $4eb1
 	push bc ; $4eb2
@@ -131,7 +131,7 @@ ClearSaveBlockData:
 	pop bc ; $4edf
 	ld a, $01 ; $4ee0
 	ld [bc], a ; $4ee2
-	ld hl, $0006 ; $4ee3
+	ld hl, SAVEDIR_CHECKSUM ; $4ee3
 	add hl, bc ; $4ee6
 	ld [hl], e ; $4ee7
 	inc hl ; $4ee8
@@ -160,7 +160,7 @@ Unused_03_EraseSaveBlock:
 	call GetSaveBlockDirEntry ; $4f02
 	push bc ; $4f05
 	push hl ; $4f06
-	ld hl, $0001 ; $4f07
+	ld hl, SAVEDIR_BANK ; $4f07
 	add hl, bc ; $4f0a
 	ld c, [hl] ; $4f0b
 	push bc ; $4f0c
@@ -204,7 +204,7 @@ Unused_03_EraseSaveBlock:
 	pop bc ; $4f3f
 	ld a, $01 ; $4f40
 	ld [bc], a ; $4f42
-	ld hl, $0006 ; $4f43
+	ld hl, SAVEDIR_CHECKSUM ; $4f43
 	add hl, bc ; $4f46
 	ld [hl], e ; $4f47
 	inc hl ; $4f48
@@ -233,7 +233,7 @@ ClearSaveBlockEntry:
 	xor a ; $4f65
 	ld [bc], a ; $4f66
 	ld de, $0000 ; $4f67
-	ld hl, $0006 ; $4f6a
+	ld hl, SAVEDIR_CHECKSUM ; $4f6a
 	add hl, bc ; $4f6d
 	ld [hl], e ; $4f6e
 	inc hl ; $4f6f

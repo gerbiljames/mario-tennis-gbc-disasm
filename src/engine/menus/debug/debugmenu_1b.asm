@@ -274,7 +274,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	ld a, [wCharSelectChar] ; $670f
 	farcall LoadCharacterRecordToBuffer ; $6712
 	ld a, [wCharRecordBuffer + 11] ; $6715
-	farcall Unused_1b_StubNop_1b_01 ; $6718
+	farcall Unused_1b_StubNop0 ; $6718
 	ret ; $671b
 Unused_1b_RunMinigameFlagsDebugScreen:
 	wram_bank WRAM_STAGING ; $671c

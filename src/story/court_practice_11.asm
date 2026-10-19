@@ -273,7 +273,7 @@ ActorScript_11_52:
 	as_anim ANIM_NOD
 	as_jump ActorScript_11_52
 	twin_in compute_ranking_progress_index, ComputeRankingProgressIndex_11, 11 ; $7d95 ComputeRankingProgressIndex_11
-; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
+; This bank's copy of ComputeStoryRankTier_13.
 Unused_11_ComputeStoryRankTier:
 	ld a, $00 ; $7ddc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7dde

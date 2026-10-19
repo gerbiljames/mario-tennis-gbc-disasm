@@ -570,7 +570,7 @@ ProcessObjSlot:
 	call CopyMemoryFast ; $46c5
 	ld hl, DrawObjSlot ; $46c8
 	push hl ; $46cb
-	ld hl, wObjSlotWork + 8 ; $46cc
+	ld hl, wObjSlotWork + OBJSLOT_HANDLER ; $46cc
 	ld a, [hl+] ; $46cf
 	ld h, [hl] ; $46d0
 	ld l, a ; $46d1
@@ -578,7 +578,7 @@ ProcessObjSlot:
 DrawObjSlot:
 	ld hl, FinishObjSlotUpdate ; $46d3
 	push hl ; $46d6
-	ld a, [wObjSlotWork + 15] ; $46d7
+	ld a, [wObjSlotWork + OBJSLOT_ANCHOR] ; $46d7
 	and a ; $46da
 	jr z, FinishObjSlotUpdate.drawAtOffset ; $46db
 	cp $01 ; $46dd
@@ -590,7 +590,7 @@ DrawObjSlot:
 ; .drawAtOffset uses the stored X/Y as they stand, .drawOnServer adds the
 ; serving character's wCharScreenX/Y first.
 FinishObjSlotUpdate:
-	ld hl, wObjSlotWork + 13 ; $46e1
+	ld hl, wObjSlotWork + OBJSLOT_CURVE_STEP ; $46e1
 	ld a, [hl] ; $46e4
 	inc [hl] ; $46e5
 	pop de ; $46e6
@@ -599,29 +599,29 @@ FinishObjSlotUpdate:
 	call CopyMemoryFast ; $46ec
 	ret ; $46ef
 .drawAtOffset:
-	ld hl, wObjSlotWork + 1 ; $46f0
+	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $46f0
 	bit 0, [hl] ; $46f3
 	ret z ; $46f5
-	ld hl, wObjSlotWork + 6 ; $46f6
-	ld a, [wObjSlotWork + 10] ; $46f9
+	ld hl, wObjSlotWork + OBJSLOT_X ; $46f6
+	ld a, [wObjSlotWork + OBJSLOT_CURVE_X] ; $46f9
 	add [hl] ; $46fc
 	ld d, a ; $46fd
-	ld hl, wObjSlotWork + 7 ; $46fe
-	ld a, [wObjSlotWork + 11] ; $4701
+	ld hl, wObjSlotWork + OBJSLOT_Y ; $46fe
+	ld a, [wObjSlotWork + OBJSLOT_CURVE_Y] ; $4701
 	add [hl] ; $4704
 	ld e, a ; $4705
-	ld a, [wObjSlotWork + 4] ; $4706
+	ld a, [wObjSlotWork + OBJSLOT_OAM_ATTR] ; $4706
 	ld b, a ; $4709
-	ld a, [wObjSlotWork + 5] ; $470a
+	ld a, [wObjSlotWork + OBJSLOT_TILE] ; $470a
 	ld c, a ; $470d
-	ld hl, wObjSlotWork + 2 ; $470e
+	ld hl, wObjSlotWork + OBJSLOT_SPRITE_TEMPLATE ; $470e
 	ld a, [hl+] ; $4711
 	ld h, [hl] ; $4712
 	ld l, a ; $4713
 	call QueueSpriteTemplate ; $4714
 	ret ; $4717
 .drawOnServer:
-	ld hl, wObjSlotWork + 1 ; $4718
+	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $4718
 	bit 0, [hl] ; $471b
 	ret z ; $471d
 	farcall FindServerCharBank ; $471e
@@ -632,49 +632,49 @@ FinishObjSlotUpdate:
 	ld a, [wCharScreenY] ; $472a
 	ld e, a ; $472d
 	wram_bank WRAM_ACTORS ; $472e
-	ld a, [wObjSlotWork + 10] ; $4734
-	ld hl, wObjSlotWork + 6 ; $4737
+	ld a, [wObjSlotWork + OBJSLOT_CURVE_X] ; $4734
+	ld hl, wObjSlotWork + OBJSLOT_X ; $4737
 	add [hl] ; $473a
 	add d ; $473b
 	ld d, a ; $473c
-	ld a, [wObjSlotWork + 11] ; $473d
-	ld hl, wObjSlotWork + 7 ; $4740
+	ld a, [wObjSlotWork + OBJSLOT_CURVE_Y] ; $473d
+	ld hl, wObjSlotWork + OBJSLOT_Y ; $4740
 	add [hl] ; $4743
 	add e ; $4744
 	ld e, a ; $4745
-	ld a, [wObjSlotWork + 4] ; $4746
+	ld a, [wObjSlotWork + OBJSLOT_OAM_ATTR] ; $4746
 	ld b, a ; $4749
-	ld a, [wObjSlotWork + 5] ; $474a
+	ld a, [wObjSlotWork + OBJSLOT_TILE] ; $474a
 	ld c, a ; $474d
-	ld hl, wObjSlotWork + 2 ; $474e
+	ld hl, wObjSlotWork + OBJSLOT_SPRITE_TEMPLATE ; $474e
 	ld a, [hl+] ; $4751
 	ld h, [hl] ; $4752
 	ld l, a ; $4753
 	call QueueSpriteTemplate ; $4754
 	ret ; $4757
 ObjUpdateShow:
-	ld hl, wObjSlotWork + 1 ; $4758
+	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $4758
 	set 0, [hl] ; $475b
 	ret ; $475d
 ObjUpdateHide:
-	ld hl, wObjSlotWork + 1 ; $475e
+	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $475e
 	res 0, [hl] ; $4761
 	ret ; $4763
 ObjUpdateRunCurve:
-	ld a, [wObjSlotWork + 12] ; $4764
+	ld a, [wObjSlotWork + OBJSLOT_STATE] ; $4764
 	rst Rst00 ; $4767
 	dw ObjUpdateRunCurve.stepCurve ; $4768 jumptable
 	dw ObjUpdateRunCurve.done ; $476a jumptable
 .stepCurve:
-	ld hl, wObjSlotWork + 1 ; $476c
+	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $476c
 	set 0, [hl] ; $476f
 	call GetNextMoveCurveValue ; $4771
 	jp z, .advanceState ; $4774
 	ret ; $4777
-	ld hl, wObjSlotWork + 1 ; $4778
+	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $4778
 	res 0, [hl] ; $477b
 .advanceState:
-	ld hl, wObjSlotWork + 12 ; $477d
+	ld hl, wObjSlotWork + OBJSLOT_STATE ; $477d
 	inc [hl] ; $4780
 .done:
 	ret ; $4781

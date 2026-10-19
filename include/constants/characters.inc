@@ -1,7 +1,7 @@
 ; --- Character record fields ---
-; The $40-byte record of the story characters ($c900/$c940, mirrored at
-; $c800/$c840) and the four on-court match records ($ca00-$cac0), which bank
-; $02 reaches as `ld hl, CHARREC_* / add hl, bc` with the record in bc.
+; The $40-byte record of the story characters (wStoryMain/wStoryPartner,
+; mirrored at wSavedMain/wSavedPartner) and the four on-court match records
+; (wPlayer1Main onwards), which bank $02 reaches as `ld hl, CHARREC_* / add hl, bc` with the record in bc.
 	rsreset
 def CHARREC_NAME             rb 7 ; $00 then padding
 	rb_skip 3                        ; $07

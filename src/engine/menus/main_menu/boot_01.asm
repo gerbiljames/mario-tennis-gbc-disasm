@@ -134,7 +134,7 @@ Unused_01_MenuRedraw:
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $412b
 	ldh [hDebugStepMode], a ; $412d
 .matchLoop:
-	farcall Unused_3b_StubNop ; $412f
+	farcall Unused_3b_StubNop0 ; $412f
 	farcall RunMatch ; $4132
 	jp .matchLoop ; $4135
 .checkUp:

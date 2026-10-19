@@ -230,9 +230,9 @@ QueueIntroSpriteBlock_SpriteTemplate:
 	oam_sprite $10, $20, $0c, $00
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
-; Returns unless wCutsceneStepTimer >= $14 and [$c323] is nonzero, then
-; reads the 16-bit camera Y at $c322 (wCameraY) and writes it back
-; unchanged, so the routine has no effect. Nothing calls it.
+; Returns unless wCutsceneStepTimer >= $14 and wCameraY + 1 is nonzero, then
+; reads the 16-bit wCameraY and writes it back unchanged, so the routine has
+; no effect. Nothing calls it.
 Unused_6b_RewriteCutsceneCameraY:
 	ld a, [wCutsceneStepTimer] ; $615e
 	cp $14 ; $6161

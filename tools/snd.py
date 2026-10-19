@@ -14,6 +14,7 @@ usage: snd.py decode <file.bin> [pulse|wave|noise]   print the rendering
 """
 import re
 import sys
+from pathlib import Path
 
 NOTE_NAMES = ["C_", "C#", "D_", "D#", "E_", "F_", "F#", "G_", "G#", "A_", "A#", "B_"]
 NOTE_VALUE = {n: i for i, n in enumerate(NOTE_NAMES)}
@@ -191,7 +192,7 @@ def main():
     if len(sys.argv) < 3 or sys.argv[1] != "decode":
         print(__doc__)
         return 1
-    data = open(sys.argv[2], "rb").read()
+    data = Path(sys.argv[2]).read_bytes()
     kind = sys.argv[3] if len(sys.argv) > 3 else "pulse"
     sys.stdout.write(render(data, "Track", kind))
     return 0

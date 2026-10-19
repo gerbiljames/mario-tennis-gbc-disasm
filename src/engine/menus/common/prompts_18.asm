@@ -128,7 +128,7 @@ Unused_18_InitConfirmScreen:
 	call Unused_18_SetupScoreboardDisplay ; $535a
 	ld hl, wMinigameHighScoreMode ; $535d
 	ld b, [hl] ; $5360
-	call Unused_18_StubNop_18_1 ; $5361
+	call Unused_18_StubNop1 ; $5361
 	ret ; $5364
 Unused_18_DrawConfirmScreenBox:
 	ld hl, wStagedTilemap + 13 * TILEMAP_WIDTH ; $5365
@@ -140,7 +140,7 @@ Unused_18_LoadScorePanelValue:
 	ld a, [wStoryMainLevel] ; $5372
 	ld [wScorePanelExpTier], a ; $5375
 	ret ; $5378
-Unused_18_StubNop_18_1:
+Unused_18_StubNop1:
 	ret ; $5379
 Unused_18_SetupScoreboardDisplay:
 	ld a, [wScorePanelValues] ; $537a

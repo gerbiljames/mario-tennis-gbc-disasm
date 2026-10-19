@@ -86,7 +86,7 @@ Unused_07_RunTargetZoneTestMode:
 	farcall RunN64ExhibData ; $5ecb
 	farcall RunMinigameMatch ; $5ece
 	ret ; $5ed1
-Unused_07_StubNop_07_0:
+Unused_07_StubNop0:
 	ret ; $5ed2
 Unused_07_ResolveTargetModePoint:
 	farcall UpdateScorePanelDisplay ; $5ed3
@@ -112,7 +112,7 @@ ModeHookTable_07:
 	dw RetStub ; record 3
 	dw Unused_07_TargetZoneBallHitHook ; record 4
 	dw Unused_07_TargetZoneBounceHook ; record 5
-	dw Unused_07_StubNop_07_1 ; record 6
+	dw Unused_07_StubNop1 ; record 6
 	dw RetStub ; record 7
 Unused_07_ModeHookNop:
 	ret ; $5f0c
@@ -127,7 +127,7 @@ Unused_07_TargetZoneHitStopHook:
 	ld [wMatchSimFrozen], a ; $5f1d
 	clear_flag $0c, 4 ; $5f20
 	ret ; $5f23
-Unused_07_StubNop_07_1:
+Unused_07_StubNop1:
 	ret ; $5f24
 Unused_07_TargetZoneBounceHook:
 	farcall IsBallInTargetZone ; $5f25
@@ -170,7 +170,7 @@ Unused_07_TargetZonePointStartHook:
 	ld hl, $0000 ; $5f68
 	ld de, $ff00 ; $5f6b
 	farcall SetTargetZoneCorner2 ; $5f6e
-	call Unused_07_StubNop_07_0 ; $5f71
+	call Unused_07_StubNop0 ; $5f71
 	ret ; $5f74
 Unused_07_TargetZonePointEndHook:
 	ld hl, $013f ; $5f75

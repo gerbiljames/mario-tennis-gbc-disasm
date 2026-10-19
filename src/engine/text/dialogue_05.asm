@@ -87,7 +87,7 @@ Unused_05_DrawDialogueAtPosition:
 .loop:
 	call SetActiveWindowTextId ; $5a7b
 	call RestoreShadowTilemap ; $5a7e
-	call Unused_05_StubNop_05_0 ; $5a81
+	call Unused_05_StubNop0 ; $5a81
 	ld a, [wTextPageBreakRequest] ; $5a84
 	or a ; $5a87
 	jr nz, .loop ; $5a88

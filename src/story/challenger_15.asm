@@ -17,7 +17,7 @@ NetChallengerResultScene:
 	call WaitFadeEnd ; $5dd2
 	ld a, [wPointWinLoseFlag] ; $5dd5
 	inc a ; $5dd8
-	cp $01 ; $5dd9
+	cp WINLOSE_NONE + 1 ; $5dd9
 	jr nz, .dispatch ; $5ddb
 	ld hl, wUnusedChallengerLoseTextId ; $5ddd
 	ld de, Text_6e_74 ; $5de0
@@ -52,7 +52,7 @@ StrokeChallengerResultScene:
 	call WaitFadeEnd ; $5e51
 	ld a, [wPointWinLoseFlag] ; $5e54
 	inc a ; $5e57
-	cp $01 ; $5e58
+	cp WINLOSE_NONE + 1 ; $5e58
 	jr nz, .dispatch ; $5e5a
 	ld hl, wUnusedChallengerLoseTextId ; $5e5c
 	ld de, Text_6e_120 ; $5e5f

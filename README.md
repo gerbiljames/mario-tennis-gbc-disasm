@@ -256,7 +256,7 @@ nothing.
 - `tools/savetool.py` -- battery save inspector and editor.
 - `tools/gfxdump.py` -- PNG contact sheets of graphics streams and palettes, in `build/gfxdump/`.
 - `tools/stats.py` -- the headline counts above, from the built `.sym` and `.map`.
-- `tools/banksrc.py`, `tools/deps.py` -- a bank's source read whole; the build's dependency list.
+- `tools/banksrc.py`, `tools/deps.py`, `tools/consts.py` -- a bank's source read whole; the build's dependency list; the `include/` constants by name.
 - `tools/reach.py` -- which routines can run at all, from the reset, interrupt and `rst` vectors; `--coverage` splits never-entered routines into unreachable and not yet reached.
 - `tools/routes.py` -- which `map_entry` rows anything in retail can send the player to.
 - `tools/twins.py` -- the groups of instruction-identical live routines.

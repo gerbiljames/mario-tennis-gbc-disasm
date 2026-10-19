@@ -361,7 +361,7 @@ UnusedSceneViewerSelectSceneMenu:
 	ld a, [$d820] ; $5e5c
 	ld [$d82f], a ; $5e5f
 	farcall RestoreShadowTilemap ; $5e62
-	farcall Unused_05_StubNop_05_0 ; $5e65
+	farcall Unused_05_StubNop0 ; $5e65
 .inputLoop:
 	call AdvanceFrame ; $5e68
 	ldh a, [hPlayerInputFlags] ; $5e6b

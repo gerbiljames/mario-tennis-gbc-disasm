@@ -560,7 +560,7 @@ ActorScript_14_4:
 	as_anim ANIM_NOD
 	as_jump .shakeHeadLoop
 	twin_in compute_ranking_progress_index_13, Unused_14_ComputeRankingProgressIndex, 14 ; $7a9d Unused_14_ComputeRankingProgressIndex
-; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
+; This bank's copy of ComputeStoryRankTier_13.
 Unused_14_ComputeStoryRankTier:
 	ld a, $00 ; $7ae4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6

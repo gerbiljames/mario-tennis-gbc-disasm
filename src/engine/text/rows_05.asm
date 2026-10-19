@@ -217,7 +217,7 @@ CopyDirtyRowSpanToVRAM:
 	call QueueVRAMCopy ; $71a5
 	pop bc ; $71a8
 	pop de ; $71a9
-	ld hl, $2000 ; $71aa
+	ld hl, VRAM_BANK1 ; $71aa
 	add hl, de ; $71ad
 	ld d, h ; $71ae
 	ld e, l ; $71af

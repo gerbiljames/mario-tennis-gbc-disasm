@@ -6,8 +6,9 @@ import sys
 import random
 import tempfile
 import unittest
+from pathlib import Path
 
-from tests.helpers import ROOT, TOOLS, assemble, needs_rgbasm
+from tests.helpers import TOOLS, assemble, needs_rgbasm
 
 import lz
 
@@ -107,7 +108,7 @@ class TileImages(unittest.TestCase):
                 f.write(lz.compress(data))
             self.assertEqual(tilemap.decode(p, p[:-4] + ".tilemap", 32), 32)
             tilemap.encode(p[:-4] + ".tilemap", p)
-            self.assertEqual(lz.decompress(open(p, "rb").read(), 0)[0], data)
+            self.assertEqual(lz.decompress(Path(p).read_bytes(), 0)[0], data)
 
     def test_scene_preview_composes(self):
         import tilemap
@@ -189,11 +190,11 @@ class TileImages(unittest.TestCase):
                 f.write(b"x")
             outp = run("--keep")
             self.assertIn("kept 3 edited", outp)
-            self.assertEqual(open(blob, "rb").read(), b"edited")
+            self.assertEqual(Path(blob).read_bytes(), b"edited")
             self.assertNotEqual(self.gfx.image_file_to_tiles(png), rom[:0x40])
             self.assertTrue(os.path.exists(stale))
             run()
-            self.assertEqual(open(blob, "rb").read(), rom[0x40:0x50])
+            self.assertEqual(Path(blob).read_bytes(), rom[0x40:0x50])
             self.assertEqual(self.gfx.image_file_to_tiles(png), rom[:0x40])
             self.assertFalse(os.path.exists(stale))
 
@@ -215,13 +216,13 @@ class TileImages(unittest.TestCase):
                 f.write(data)
             self.assertEqual(self.gfx.decode(raw, raw[:-4] + ".png"), 48)
             self.gfx.encode(raw[:-4] + ".png", raw)
-            self.assertEqual(open(raw, "rb").read(), data)
+            self.assertEqual(Path(raw).read_bytes(), data)
             lzp = os.path.join(d, "lz_4000.bin")
             with open(lzp, "wb") as f:
                 f.write(lz.compress(data))
             self.assertEqual(self.gfx.decode(lzp, lzp[:-4] + ".png"), 48)
             self.gfx.encode(lzp[:-4] + ".png", lzp)
-            self.assertEqual(lz.decompress(open(lzp, "rb").read(), 0)[0], data)
+            self.assertEqual(lz.decompress(Path(lzp).read_bytes(), 0)[0], data)
 
     def test_rejects_partial_tiles(self):
         with tempfile.TemporaryDirectory() as d:

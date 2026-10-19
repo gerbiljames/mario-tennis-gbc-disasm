@@ -282,7 +282,7 @@ AddBobbingOffsetYLargeTable:
 	db $03, $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $01, $01, $01, $00, $00 ; 0x10
 	db $00, $00, $00, $ff, $ff, $ff, $fe, $fe, $fe, $fd, $fd, $fd, $fd, $fd, $fd, $fd ; 0x20
 	db $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fe, $fe, $fe, $ff, $ff, $ff, $00, $00 ; 0x30
-Unused_18_StubNop:
+Unused_18_StubNop0:
 	ret ; $44ee
 Unused_18_FindRosterEntry:
 	push af ; $44ef

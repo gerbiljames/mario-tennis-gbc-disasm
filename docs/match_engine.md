@@ -1288,7 +1288,7 @@ Partner, Partner — not monotonic):
 `InitCa00RecordFromCharId` (`$02:$4066`) fills a slot:
 
 - **Roster character** (id bit 7 clear): 29 bytes from
-  `StoryCharacterRecords_02` (`$02:$52cf`, 100 `char_record` rows) into offset
+  `StoryCharacterRecords_02` (`$02:$52cf`, 100 `char_stats_row` rows) into offset
   `+$0f` — exactly the span `LoadCharacterAttributes` reads.
 - **Created story character** (bit 7 set): 64 bytes from the saved record at
   `$c900` or `$c940`, earned stats verbatim.
