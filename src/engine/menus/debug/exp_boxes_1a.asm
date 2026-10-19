@@ -365,7 +365,7 @@ Unused_1a_DrawExpScreenYesNoBox:
 	jr .loop ; $4aa2
 .drawText:
 	ld de, wCharDataPagePlane + 6 * TILEMAP_WIDTH + 2 ; $4aa4
-	ld hl, Text_31_235 ; $4aa7
+	ld hl, Text_MenuYesNoExpScreen ; $4aa7
 	ld c, $20 ; $4aaa
 	farcall RenderProportionalTextAt ; $4aac
 	pop hl ; $4aaf

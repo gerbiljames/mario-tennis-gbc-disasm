@@ -393,7 +393,7 @@ wLinkSessionActive:: db
 ; [32 bytes] The tile plane of the same row blit, sent to VRAM bank 0
 wBGRowBlitTiles:: ds 32
 
-; [8-bit] Nonzero makes RenderInlineNumber right-align its number in a five-character field. Set and cleared around the Text_30_310 line only
+; [8-bit] Nonzero makes RenderInlineNumber right-align its number in a five-character field. Set and cleared around the Text_NumberArg line only
 wTextNumberRightAlign:: db
 
 ; [8-bit] Argument of text control code $0e: a character id, which TextCmdPrintShortText and MeasureIndexedShortTextWidth print as text id $1b + id

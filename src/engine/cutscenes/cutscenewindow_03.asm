@@ -431,11 +431,11 @@ ShowStoryResultScreen:
 	ld de, $0240 ; $753f
 	ld b, $20 ; $7542
 	call FillMemoryDE ; $7544
-	ld hl, Text_5e_320 ; $7547
+	ld hl, Text_CreditCamelot ; $7547
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $754a
 	ld bc, $0020 ; $754d
 	farcall FetchAndDrawDialogueText ; $7550
-	ld hl, Text_5e_322 ; $7553
+	ld hl, Text_CreditNintendo ; $7553
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH ; $7556
 	ld bc, $0020 ; $7559
 	farcall FetchAndDrawDialogueText ; $755c

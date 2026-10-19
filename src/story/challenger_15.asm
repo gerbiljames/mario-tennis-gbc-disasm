@@ -20,7 +20,7 @@ NetChallengerResultScene:
 	cp WINLOSE_NONE + 1 ; $5dd9
 	jr nz, .dispatch ; $5ddb
 	ld hl, wUnusedChallengerLoseTextId ; $5ddd
-	ld de, Text_6e_74 ; $5de0
+	ld de, Text_BrianTiedKeepGoing ; $5de0
 	ld a, e ; $5de3
 	ld [hl+], a ; $5de4
 	ld [hl], d ; $5de5
@@ -55,7 +55,7 @@ StrokeChallengerResultScene:
 	cp WINLOSE_NONE + 1 ; $5e58
 	jr nz, .dispatch ; $5e5a
 	ld hl, wUnusedChallengerLoseTextId ; $5e5c
-	ld de, Text_6e_120 ; $5e5f
+	ld de, Text_AllieEvenKeepGoing ; $5e5f
 	ld a, e ; $5e62
 	ld [hl+], a ; $5e63
 	ld [hl], d ; $5e64
@@ -76,12 +76,12 @@ ChallengerResultJumpForJoy:
 	ret ; $5e84
 ServiceMatch1ResultScene:
 	ld hl, wChallengerFollowupTextId ; $5e85
-	ld de, Text_6e_32 ; $5e88
+	ld de, Text_ServeRivalLetsGetGoing ; $5e88
 	ld a, e ; $5e8b
 	ld [hl+], a ; $5e8c
 	ld [hl], d ; $5e8d
 	ld hl, wChallengerLoseTextId ; $5e8e
-	ld de, Text_6e_29 ; $5e91
+	ld de, Text_ServeRivalTiedKeepGoing ; $5e91
 	ld a, e ; $5e94
 	ld [hl+], a ; $5e95
 	ld [hl], d ; $5e96
@@ -97,7 +97,7 @@ ServiceMatch1ResultScene:
 	ld [hl+], a ; $5ea8
 	ld [hl], d ; $5ea9
 	ld hl, wChallengerDrawTextId ; $5eaa
-	ld de, Text_6e_36 ; $5ead
+	ld de, Text_ServeRivalCantLose ; $5ead
 	ld a, e ; $5eb0
 	ld [hl+], a ; $5eb1
 	ld [hl], d ; $5eb2
@@ -105,22 +105,22 @@ ServiceMatch1ResultScene:
 	ret ; $5eb6
 ServiceMatch2ResultScene:
 	ld hl, wChallengerFollowupTextId ; $5eb7
-	ld de, Text_6e_32 ; $5eba
+	ld de, Text_ServeRivalLetsGetGoing ; $5eba
 	ld a, e ; $5ebd
 	ld [hl+], a ; $5ebe
 	ld [hl], d ; $5ebf
 	ld hl, wChallengerLoseTextId ; $5ec0
-	ld de, Text_6e_29 ; $5ec3
+	ld de, Text_ServeRivalTiedKeepGoing ; $5ec3
 	ld a, e ; $5ec6
 	ld [hl+], a ; $5ec7
 	ld [hl], d ; $5ec8
 	ld hl, wChallengerWinTextId ; $5ec9
-	ld de, Text_6e_49 ; $5ecc
+	ld de, Text_ServeRivalGotRevenge ; $5ecc
 	ld a, e ; $5ecf
 	ld [hl+], a ; $5ed0
 	ld [hl], d ; $5ed1
 	ld hl, wChallengerDrawTextId ; $5ed2
-	ld de, Text_6e_50 ; $5ed5
+	ld de, Text_ServeRivalLostAgain ; $5ed5
 	ld a, e ; $5ed8
 	ld [hl+], a ; $5ed9
 	ld [hl], d ; $5eda
@@ -128,22 +128,22 @@ ServiceMatch2ResultScene:
 	ret ; $5ede
 ServiceMatch3ResultScene:
 	ld hl, wChallengerFollowupTextId ; $5edf
-	ld de, Text_6e_32 ; $5ee2
+	ld de, Text_ServeRivalLetsGetGoing ; $5ee2
 	ld a, e ; $5ee5
 	ld [hl+], a ; $5ee6
 	ld [hl], d ; $5ee7
 	ld hl, wChallengerLoseTextId ; $5ee8
-	ld de, Text_6e_29 ; $5eeb
+	ld de, Text_ServeRivalTiedKeepGoing ; $5eeb
 	ld a, e ; $5eee
 	ld [hl+], a ; $5eef
 	ld [hl], d ; $5ef0
 	ld hl, wChallengerWinTextId ; $5ef1
-	ld de, Text_6e_61 ; $5ef4
+	ld de, Text_ServeRivalBeatYouThisTime ; $5ef4
 	ld a, e ; $5ef7
 	ld [hl+], a ; $5ef8
 	ld [hl], d ; $5ef9
 	ld hl, wChallengerDrawTextId ; $5efa
-	ld de, Text_6e_62 ; $5efd
+	ld de, Text_ServeRivalFinalLoss ; $5efd
 	ld a, e ; $5f00
 	ld [hl+], a ; $5f01
 	ld [hl], d ; $5f02

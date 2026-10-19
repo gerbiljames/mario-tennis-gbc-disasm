@@ -41,7 +41,7 @@ LateStudentCrashCutscene:
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_SHAKE ; $47f2
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $47f9
 	script_face ACTOR_ACADEMY_ARRIVAL_HEADMASTER, FACE_UP ; $47fe
-	script_set_text Text_36_79 ; $4805
+	script_set_text Text_LateStudentImLate ; $4805
 	script_speak ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $480b
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_NOD ; $4810
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4817
@@ -145,7 +145,7 @@ LateStudentCrashCutscene:
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_BOUNCE ; $4ae8
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4aef
 .loop:
-	script_set_text Text_36_87 ; $4af4
+	script_set_text Text_LateStudentForgiveMe ; $4af4
 	script_speak_restore ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4afa
 	farcall RunDialogueYesNoPrompt ; $4aff
 	farcall ScriptCloseDialogueWindow ; $4b02
@@ -156,7 +156,7 @@ LateStudentCrashCutscene:
 	script_speak ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4b16
 	jr .loop ; $4b1b
 .setText:
-	script_set_text Text_36_89 ; $4b1d
+	script_set_text Text_LateStudentThankYou ; $4b1d
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_NOD ; $4b23
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4b2a
 	script_speak ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4b2f
@@ -278,7 +278,7 @@ AcademyArrivalGreetingScene:
 	script_move_target ACTOR_PLAYER, 24.0, 36.0 ; $4db4
 	script_wait_move ACTOR_PLAYER ; $4dbf
 	script_move_target ACTOR_PLAYER, 24.0, 19.0 ; $4dc4
-	script_set_text Text_30_419 ; $4dcf
+	script_set_text Text_EmilyYoureThePlayerRight ; $4dcf
 	script_wait_frames 120 ; $4dd5
 	script_set_position ACTOR_ACADEMY_ARRIVAL_EMILY, 24.0, 15.0 ; $4ddc
 	script_wait_move ACTOR_PLAYER ; $4de7
@@ -306,7 +306,7 @@ AcademyArrivalGreetingScene:
 	script_wait_frames 15 ; $4e68
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_EMILY, ANIM_NOD ; $4e6f
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_EMILY ; $4e76
-	script_set_text Text_30_421 ; $4e7b
+	script_set_text Text_AcademyArrivalRightOnTime ; $4e7b
 	script_speak ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_1 ; $4e81
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, 25.25, 17.75 ; $4e86
 	sound SFX_EMOTE ; $4e91
@@ -334,13 +334,13 @@ AcademyArrivalGreetingScene:
 	jr z, .done ; $4ef4
 	xor a ; $4ef6
 	ld [wStoryModeShowLocationName], a ; $4ef7
-	script_set_text Text_30_427 ; $4efa
+	script_set_text Text_EmilyWaitUntilYouFeelBetter ; $4efa
 	script_speak ACTOR_ACADEMY_ARRIVAL_EMILY ; $4f00
 	set_flag FLAG_STORY_MENU_LOCKED ; $4f05
 	call ArmAcademyEntranceTileTrigger ; $4f08
 	ret ; $4f0b
 .done:
-	script_set_text Text_30_426 ; $4f0c
+	script_set_text Text_EmilyShowYouAroundAcademy ; $4f0c
 	script_speak ACTOR_ACADEMY_ARRIVAL_EMILY ; $4f12
 	call FollowGuideIntoAcademy ; $4f17
 	ret ; $4f1a
@@ -366,7 +366,7 @@ ResumeAcademyGuideTour:
 	script_face_toward ACTOR_ACADEMY_ARRIVAL_EMILY, ACTOR_PLAYER ; $4f5c
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_EMILY, ANIM_NOD ; $4f64
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_EMILY ; $4f6b
-	script_set_text Text_30_428 ; $4f70
+	script_set_text Text_EmilySeeYoureAllBetter ; $4f70
 	script_speak ACTOR_ACADEMY_ARRIVAL_EMILY ; $4f76
 	script_speak ACTOR_ACADEMY_ARRIVAL_EMILY ; $4f7b
 	call FollowGuideIntoAcademy ; $4f80
@@ -422,7 +422,7 @@ AcademyArrivalInitScript_11.notDoubles:
 	script_fade_in 8 ; $504e
 	call WaitFadeEnd ; $5053
 	script_wait_frames 60 ; $5056
-	script_set_text Text_30_493 ; $505d
+	script_set_text Text_HeadmasterAllReady ; $505d
 	script_speak ACTOR_LIST_11_0_HEADMASTER ; $5063
 	test_flag FLAG_DOUBLES ; $5068
 	jp z, AcademyArrivalInitScript_11.animate ; $506b

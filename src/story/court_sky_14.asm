@@ -30,11 +30,11 @@ Court1ExitTriggers_14:
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, $01
 	db $ff
 Court1Npc03_14:
-	script_set_text Text_1f_132 ; $5064
+	script_set_text Text_Court1StaffCourtNumberOne ; $5064
 	script_speak ACTOR_COURT1_TOURNAMENT_STAFF_1 ; $506a
 	ret ; $506f
 Court1Npc04_14:
-	script_set_text Text_1f_133 ; $5070
+	script_set_text Text_Court1StaffGalleryEntrance ; $5070
 	script_speak ACTOR_COURT1_TOURNAMENT_STAFF_2 ; $5076
 	ret ; $507b
 Court1Npc05_14:
@@ -50,13 +50,13 @@ Court1Npc05_14:
 Court1Npc05TextIds:
 	; $5093, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_134 ; record 0
-	dw Text_1f_134 ; record 1
-	dw Text_1f_137 ; record 2
-	dw Text_1f_139 ; record 3
-	dw Text_1f_134 ; record 4
-	dw Text_1f_141 ; record 5
-	dw Text_1f_143 ; record 6
+	dw Text_Court1FanAcademyFactoryTalk ; record 0
+	dw Text_Court1FanAcademyFactoryTalk ; record 1
+	dw Text_Court1FanSemifinalsAcademyFactory ; record 2
+	dw Text_Court1FanFinalAcademyVsFactory ; record 3
+	dw Text_Court1FanAcademyFactoryTalk ; record 4
+	dw Text_Court1FanUnionLostDoubles ; record 5
+	dw Text_Court1FanDoublesFinalAcademyVsFactory ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court1Npc06_14:
 	ld a, [wMapSceneStage] ; $50a1
@@ -71,13 +71,13 @@ Court1Npc06_14:
 Court1Npc06TextIds:
 	; $50b8, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_135 ; record 0
-	dw Text_1f_136 ; record 1
-	dw Text_1f_138 ; record 2
-	dw Text_1f_140 ; record 3
-	dw Text_1f_135 ; record 4
-	dw Text_1f_142 ; record 5
-	dw Text_1f_144 ; record 6
+	dw Text_Court1UnionFanDontUnderestimate ; record 0
+	dw Text_Court1UnionFanLostOpeningRound ; record 1
+	dw Text_Court1UnionFanLostAgainSemis ; record 2
+	dw Text_Court1UnionFanLostAgainFinal ; record 3
+	dw Text_Court1UnionFanDontUnderestimate ; record 4
+	dw Text_Court1UnionFanCountingOnUnion ; record 5
+	dw Text_Court1UnionFanLostAgainDoublesFinal ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court1NpcScripts_14:
 	; $50c6, 33 bytes (map_scripts)
@@ -203,7 +203,7 @@ Unused_14_StubNop:
 	ret ; $52ab
 IslandSkyNpcScripts_14:
 	; $52ac, 9 bytes (map_scripts)
-	map_script ACTOR_ISLAND_SKY_HEADMASTER, FACEMASK_ANY, $0000, Text_35_48, $00, $00
+	map_script ACTOR_ISLAND_SKY_HEADMASTER, FACEMASK_ANY, $0000, Text_HeadmasterDefineAce, $00, $00
 	db $ff
 IslandSkyFacingScripts_14:
 	ds 1, $ff ; $52b5, fill

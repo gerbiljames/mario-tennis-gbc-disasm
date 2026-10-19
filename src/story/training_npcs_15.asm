@@ -10,7 +10,7 @@ RunWaterSpriteSwingContestAndReward:
 	farcall WaitPlayerMoveDone ; $4d1c
 	script_move_player 51.0, 12.0 ; $4d1f
 	farcall WaitPlayerMoveDone ; $4d29
-	script_set_text Text_36_675 ; $4d2c
+	script_set_text Text_WaterSpriteSwingContestRules ; $4d2c
 	script_speak ACTOR_PLAYER ; $4d32
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4d37
 	call WaterSpriteSwingContestScene ; $4d42
@@ -26,7 +26,7 @@ RunWaterSpriteSwingContestAndReward:
 	ret ; $4d5c
 WaterSpriteRacketRewardScene:
 	script_wait_frames 60 ; $4d5d
-	script_set_text Text_36_677 ; $4d64
+	script_set_text Text_WaterSpriteTryingHardest ; $4d64
 	script_speak ACTOR_TRAINING_COURT_WATER_SPRITE ; $4d6a
 	script_wait_frames 30 ; $4d6f
 	script_face ACTOR_PLAYER, FACE_LEFT ; $4d76
@@ -137,7 +137,7 @@ WaterSpriteRacketRewardScene:
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SWEAT, 63.0, 63.0 ; $4f72
 	script_set_anim ACTOR_TRAINING_COURT_WATER_SPRITE, ANIM_NOD ; $4f7d
 	script_wait_idle ACTOR_TRAINING_COURT_WATER_SPRITE ; $4f84
-	script_set_text Text_36_683 ; $4f89
+	script_set_text Text_WaterSpriteRacketToRepair ; $4f89
 	script_speak ACTOR_TRAINING_COURT_WATER_SPRITE ; $4f8f
 	script_wait_frames 50 ; $4f94
 	sound SFX_RACKET_GET ; $4f9b
@@ -238,10 +238,10 @@ TrainingCourtNpc07_15:
 	call ServeCoachSeniorLessonScene ; $5157
 	ret ; $515a
 .lesson2Line:
-	script_set_text Text_37_33 ; $515b
+	script_set_text Text_CurtComeBackAsSenior ; $515b
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5161
 	jr z, .speak ; $5164
-	script_set_text Text_37_34 ; $5166
+	script_set_text Text_CurtNextLessonNextVisit ; $5166
 .speak:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $516c
 	ret ; $5171
@@ -255,15 +255,15 @@ TrainingCourtNpc07_15:
 	call ServeCoachVarsityLessonScene ; $5181
 	ret ; $5184
 .lesson3Line:
-	script_set_text Text_37_50 ; $5185
+	script_set_text Text_CurtComeBackAsVarsity ; $5185
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $518b
 	jr z, .speakLesson3 ; $518e
-	script_set_text Text_37_34 ; $5190
+	script_set_text Text_CurtNextLessonNextVisit ; $5190
 .speakLesson3:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $5196
 	ret ; $519b
 .done:
-	script_set_text Text_37_61 ; $519c
+	script_set_text Text_CurtServeAlreadyTopClass ; $519c
 	script_speak ACTOR_TRAINING_COURT_CURT ; $51a2
 	ret ; $51a7
 TrainingCourtNpc11_15:
@@ -301,10 +301,10 @@ TrainingCourtNpc12_15:
 	call NetCoachSmashLessonScene ; $5203
 	ret ; $5206
 .lesson2Line:
-	script_set_text Text_37_128 ; $5207
+	script_set_text Text_BethComeBackAsSenior ; $5207
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $520d
 	jr z, .speak ; $5210
-	script_set_text Text_37_131 ; $5212
+	script_set_text Text_BethIntermediateNextTime ; $5212
 .speak:
 	script_speak ACTOR_TRAINING_COURT_BETH ; $5218
 	ret ; $521d
@@ -318,15 +318,15 @@ TrainingCourtNpc12_15:
 	call NetCoachDropShotLessonScene ; $522d
 	ret ; $5230
 .lesson3Line:
-	script_set_text Text_37_158 ; $5231
+	script_set_text Text_BethComeBackAsVarsity ; $5231
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5237
 	jr z, .speakLesson3 ; $523a
-	script_set_text Text_37_156 ; $523c
+	script_set_text Text_BethAdvancedNextTime ; $523c
 .speakLesson3:
 	script_speak ACTOR_TRAINING_COURT_BETH ; $5242
 	ret ; $5247
 .done:
-	script_set_text Text_37_187 ; $5248
+	script_set_text Text_BethNothingLeftToTeach ; $5248
 	script_speak ACTOR_TRAINING_COURT_BETH ; $524e
 	ret ; $5253
 TrainingCourtNpc0C_15:
@@ -364,13 +364,13 @@ TrainingCourtNpc0D_15:
 	call ReturnCoachLobLessonScene ; $52af
 	ret ; $52b2
 .lesson2Line:
-	script_set_text Text_37_225 ; $52b3
+	script_set_text Text_ReturnCoachMakeSeniorClass ; $52b3
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $52b9
 	jr z, .speak ; $52bc
-	script_set_text Text_37_226 ; $52be
+	script_set_text Text_ReturnCoachComeBackForMore ; $52be
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $52c4
 	jr z, .speak ; $52c7
-	script_set_text Text_37_226 ; $52c9
+	script_set_text Text_ReturnCoachComeBackForMore ; $52c9
 .speak:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $52cf
 	ret ; $52d4
@@ -384,11 +384,11 @@ TrainingCourtNpc0D_15:
 	call ReturnCoachPassingShotLessonScene ; $52e4
 	ret ; $52e7
 .lesson3Line:
-	script_set_text Text_37_248 ; $52e8
+	script_set_text Text_ReturnCoachPerfectYourLob ; $52e8
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $52ee
 	ret ; $52f3
 .done:
-	script_set_text Text_6e_18 ; $52f4
+	script_set_text Text_ReturnCoachCantWaitToSee ; $52f4
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $52fa
 	ret ; $52ff
 TrainingCourtFacingScripts_15:

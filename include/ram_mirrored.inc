@@ -66,7 +66,7 @@ def wCharDataPageSlot3 equ $dc60
 ; [3 bytes] Lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
 def wCharPosX equ $df00
 
-; [8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled; Continue and cancel skip to the result code. The menu's state lives in WRAM bank $05 over the idle far-P1 character struct, cleared on entry
+; [8-bit] RunClearStatusSetupMenu's first choice (Text_MenuSetContinue): 0 Set, 1 Continue, $ff cancelled; Continue and cancel skip to the result code. The menu's state lives in WRAM bank $05 over the idle far-P1 character struct, cleared on entry
 def wClearStatusMode equ $df00
 
 ; [NUL-terminated string] Bank 5 scratch buffer that PushShortTextArg_<bank> fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
@@ -75,13 +75,13 @@ def wTextArgFetchBuffer equ $df00
 ; [8-bit] 0 singles, 1 doubles, copied from FLAG_DOUBLES when Set is chosen; picks the rank list and result-code row
 def wClearStatusDoubles equ $df01
 
-; [8-bit] Second menu (Text_34_217): 0 Mini-Game, 1 Ranking Match; $ff steps back
+; [8-bit] Second menu (Text_MenuMinigameOrRanking): 0 Mini-Game, 1 Ranking Match; $ff steps back
 def wClearStatusFormat equ $df02
 
 ; [3 bytes] Depth position (toward/away from net), same 24-bit fixed-point format; the two court sides carry opposite signs
 def wCharPosDepth equ $df03
 
-; [8-bit] Third menu (Text_34_218): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
+; [8-bit] Third menu (Text_MenuClasses): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
 def wClearStatusClass equ $df03
 
 ; [8-bit] Fourth menu: the drill (Text_34_219) for a Mini-Game clear, or the rank within the class (Text_34_220 and the per-class lists after it) for a Ranking Match clear; $ff steps back

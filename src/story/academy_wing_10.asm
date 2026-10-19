@@ -31,7 +31,7 @@ AcademyWingNpc03_10:
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_WING_HEADMASTER ; $623b
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $6243
 	jr z, .altText ; $6246
-	script_set_text Text_30_517 ; $6248
+	script_set_text Text_HeadmasterWishToMeetMario ; $6248
 	jr .done ; $624e
 .altText:
 	script_get_actor_state $06 ; $6250
@@ -46,19 +46,19 @@ AcademyWingNpc03_10:
 	sound SFX_CHIME ; $626a
 	script_wait_frames 60 ; $626c
 	script_set_position $06, 1.0, 1.0 ; $6273
-	script_set_text Text_30_513 ; $627e
+	script_set_text Text_HeadmasterDidYouMeetMario ; $627e
 	test_flag FLAG_DOUBLES ; $6284
 	jr z, .speak ; $6287
 	farcall AdvanceDialogueTextCursor ; $6289
 .speak:
 	script_speak_restore ACTOR_ACADEMY_WING_HEADMASTER ; $628c
-	script_set_text Text_30_515 ; $6291
+	script_set_text Text_HeadmasterWaitingOutsideGates ; $6291
 	farcall RunDialogueYesNoPrompt ; $6297
 	farcall ScriptCloseDialogueWindow ; $629a
 	script_wait_frames 5 ; $629d
 	and a ; $62a4
 	jr nz, .done ; $62a5
-	script_set_text Text_30_516 ; $62a7
+	script_set_text Text_HeadmasterYoureALegendNow ; $62a7
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62ad
 .done:
 	script_speak ACTOR_ACADEMY_WING_HEADMASTER ; $62b0
@@ -79,7 +79,7 @@ AcademyWingFacing02_10:
 	farcall BeginCutsceneScriptMode ; $62d7
 	script_player_speed 1.0 ; $62da
 	script_move_player 33.0, 51.0 ; $62e0
-	script_set_text Text_30_449 ; $62ea
+	script_set_text Text_AcademyWingWhoMightThatBe ; $62ea
 	script_face ACTOR_ACADEMY_WING_HEADMASTER, FACE_DOWN ; $62f0
 	script_wait_frames 10 ; $62f7
 	script_speak $04 ; $62fe
@@ -98,7 +98,7 @@ AcademyWingFacing02_10:
 	farcall EndCutsceneScriptMode ; $6351
 	ret ; $6354
 AcademyWingFacing01_10:
-	script_set_text Text_30_451 ; $6355
+	script_set_text Text_AcademyWingDoorLocked ; $6355
 	script_speak ACTOR_PLAYER ; $635b
 	ret ; $6360
 AcademyWingTileTriggers_10:
@@ -219,7 +219,7 @@ AcademyWingInitScript_10:
 	script_wait_frames 60 ; $6547
 	script_set_anim ACTOR_ACADEMY_WING_INIT0_HEADMASTER, ANIM_BOUNCE ; $654e
 	script_wait_idle ACTOR_ACADEMY_WING_INIT0_HEADMASTER ; $6555
-	script_set_text Text_30_475 ; $655a
+	script_set_text Text_HeadmasterOpenEntrantsFinalized ; $655a
 	script_speak ACTOR_ACADEMY_WING_INIT0_HEADMASTER ; $6560
 	script_set_anim ACTOR_ACADEMY_WING_INIT0_KEVIN, ANIM_BOUNCE ; $6565
 	script_set_anim ACTOR_ACADEMY_WING_INIT0_MARK, ANIM_BOUNCE ; $656c
@@ -317,7 +317,7 @@ AcademyWingInitScript_10:
 	script_face ACTOR_ACADEMY_WING_INIT0_KEVIN, FACE_UP ; $67e1
 	script_face ACTOR_ACADEMY_WING_INIT0_MARK, FACE_UP ; $67e8
 	script_face ACTOR_ACADEMY_WING_INIT0_EMILY, FACE_UP ; $67ef
-	script_set_text Text_30_482 ; $67f6
+	script_set_text Text_HeadmasterWhereIsNewestMember ; $67f6
 	script_speak ACTOR_ACADEMY_WING_INIT0_HEADMASTER ; $67fc
 	script_set_objdef OBJ_BALLOON_SWEAT, ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY ; $6801
 	script_set_anim ACTOR_ACADEMY_WING_INIT0_BALLOON_ANGRY, ANIM_WALK ; $680d
@@ -572,7 +572,7 @@ AcademyWingInitScript_10:
 .loop:
 	script_set_anim ACTOR_ACADEMY_WING_INIT0_EMILY, ANIM_SHAKE ; $6e87
 	script_wait_idle ACTOR_ACADEMY_WING_INIT0_EMILY ; $6e8e
-	script_set_text Text_30_491 ; $6e93
+	script_set_text Text_EmilyThinkOfItAsPractice ; $6e93
 	script_speak_restore ACTOR_ACADEMY_WING_INIT0_EMILY ; $6e99
 	farcall RunDialogueYesNoPrompt ; $6e9e
 	farcall ScriptCloseDialogueWindow ; $6ea1
@@ -600,7 +600,7 @@ AcademyWingInitScript_10:
 .skipPartnerNod:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6f0c
 	script_wait_idle ACTOR_PLAYER ; $6f13
-	script_set_text Text_30_492 ; $6f18
+	script_set_text Text_HeadmasterLeaveTomorrowMorning ; $6f18
 	script_speak ACTOR_ACADEMY_WING_INIT0_HEADMASTER ; $6f1e
 	script_fade_out 4 ; $6f23
 	call WaitFadeEnd ; $6f28
@@ -650,7 +650,7 @@ AcademyWingEntry0fScene:
 	script_fade_in 4 ; $7034
 	call WaitFadeEnd ; $7039
 	script_wait_frames 60 ; $703c
-	script_set_text Text_30_498 ; $7043
+	script_set_text Text_HeadmasterMustTalkToYou ; $7043
 	call SpeakNpc03SinglesOrDoublesLine_10 ; $7049
 	test_flag FLAG_DOUBLES ; $704c
 	jp z, .skipPartnerBounce ; $704f
@@ -678,7 +678,7 @@ AcademyWingEntry0fScene:
 	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $70a8
 	script_face ACTOR_ACADEMY_WING_INIT1_HEADMASTER, FACE_UP ; $70ad
 	script_wait_frames 80 ; $70b4
-	script_set_text Text_30_504 ; $70bb
+	script_set_text Text_HeadmasterMarioInvitation ; $70bb
 	call SpeakNpc03SinglesOrDoublesLine_10 ; $70c1
 	test_flag FLAG_DOUBLES ; $70c4
 	jp z, .placeActors4 ; $70c7
@@ -730,7 +730,7 @@ AcademyWingEntry0fScene:
 	script_wait_idle ACTOR_PLAYER ; $71d7
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_HEADMASTER, ANIM_BOUNCE ; $71dc
 	script_wait_idle ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $71e3
-	script_set_text Text_30_511 ; $71e8
+	script_set_text Text_HeadmasterUrgeMeetMario ; $71e8
 	jr .loopB ; $71ee
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $71f0
@@ -739,7 +739,7 @@ AcademyWingEntry0fScene:
 	script_wait_idle ACTOR_PLAYER ; $71fd
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_HEADMASTER, ANIM_NOD ; $7202
 	script_wait_idle ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $7209
-	script_set_text Text_30_512 ; $720e
+	script_set_text Text_HeadmasterMeetOutsideGates ; $720e
 	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $7214
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7219
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $7220
@@ -766,7 +766,7 @@ AcademyWingEntry0fScene:
 	script_wait_idle ACTOR_PLAYER ; $72b0
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_HEADMASTER, ANIM_NOD ; $72b5
 	script_wait_idle ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $72bc
-	script_set_text Text_30_512 ; $72c1
+	script_set_text Text_HeadmasterMeetOutsideGates ; $72c1
 	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $72c7
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $72cc
 	script_wait_idle ACTOR_PLAYER ; $72d3

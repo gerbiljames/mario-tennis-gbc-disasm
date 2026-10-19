@@ -304,33 +304,33 @@ Unused_1a_DrawCharViewerPageNames:
 	ret ; $6a43
 .page0:
 	wram_bank WRAM_SCREEN ; $6a44
-	ld hl, Text_30_27 ; $6a4a
+	ld hl, Text_NameAlex ; $6a4a
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 3 ; $6a4d
 	ld c, $08 ; $6a50
 	call Unused_1a_RenderTextColumnToBuffer64 ; $6a52
-	ld hl, Text_30_35 ; $6a55
+	ld hl, Text_NameBob ; $6a55
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 11 ; $6a58
 	ld c, $08 ; $6a5b
 	call Unused_1a_RenderTextColumnToBuffer64 ; $6a5d
 	ret ; $6a60
 .page1:
 	wram_bank WRAM_SCREEN ; $6a61
-	ld hl, Text_30_43 ; $6a67
+	ld hl, Text_NameSpike ; $6a67
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 3 ; $6a6a
 	ld c, $08 ; $6a6d
 	call Unused_1a_RenderTextColumnToBuffer64 ; $6a6f
-	ld hl, Text_30_51 ; $6a72
+	ld hl, Text_NameDonkeyKong ; $6a72
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 11 ; $6a75
 	ld c, $08 ; $6a78
 	call Unused_1a_RenderTextColumnToBuffer64 ; $6a7a
 	ret ; $6a7d
 .page2:
 	wram_bank WRAM_SCREEN ; $6a7e
-	ld hl, Text_30_59 ; $6a84
+	ld hl, Text_NameRanker32 ; $6a84
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 3 ; $6a87
 	ld c, $08 ; $6a8a
 	call Unused_1a_RenderTextColumnToBuffer64 ; $6a8c
-	ld hl, Text_30_67 ; $6a8f
+	ld hl, Text_NameRanker40 ; $6a8f
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 11 ; $6a92
 	ld c, $08 ; $6a95
 	call Unused_1a_RenderTextColumnToBuffer64 ; $6a97

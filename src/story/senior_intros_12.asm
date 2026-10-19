@@ -47,7 +47,7 @@ SeniorSinglesRankOfferScene:
 	script_unlock_facing ACTOR_PLAYER ; $5f39
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PLAYER ; $5f40
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $5f48
-	script_set_text Text_34_60 ; $5f50
+	script_set_text Text_SeniorCoachOfferSinglesRanking ; $5f50
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f56
 	jr z, .prompt ; $5f59
 	farcall AdvanceDialogueTextCursor ; $5f5b
@@ -58,7 +58,7 @@ SeniorSinglesRankOfferScene:
 	script_wait_frames 5 ; $5f69
 	and a ; $5f70
 	jp nz, .done ; $5f71
-	script_set_text Text_34_64 ; $5f74
+	script_set_text Text_SeniorCoachPlayFourthFirst ; $5f74
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f7a
 	jr z, .accepted ; $5f7d
 	farcall AdvanceDialogueTextCursor ; $5f7f
@@ -78,7 +78,7 @@ SeniorSinglesRankOfferScene:
 	call SeniorSinglesMatchConfirm ; $5fb4
 	ret ; $5fb7
 .done:
-	script_set_text Text_34_62 ; $5fb8
+	script_set_text Text_SeniorCoachSinglesPracticeFirst ; $5fb8
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $5fbe
 	farcall EndCutsceneScriptMode ; $5fc3
 	ret ; $5fc6
@@ -95,7 +95,7 @@ SeniorDoublesRankOfferScene:
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $6009
 	script_wait_frames 30 ; $6011
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $6018
-	script_set_text Text_34_110 ; $6020
+	script_set_text Text_SeniorCoachOfferDoublesRanking ; $6020
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $6026
 	jr z, .prompt ; $6029
 	farcall AdvanceDialogueTextCursor ; $602b
@@ -106,7 +106,7 @@ SeniorDoublesRankOfferScene:
 	script_wait_frames 5 ; $6039
 	and a ; $6040
 	jp nz, .setText ; $6041
-	script_set_text Text_34_113 ; $6044
+	script_set_text Text_SeniorCoachFirstVsThirdTeam ; $6044
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $604a
 	jr z, .accepted ; $604d
 	farcall AdvanceDialogueTextCursor ; $604f
@@ -124,7 +124,7 @@ SeniorDoublesRankOfferScene:
 	call SeniorDoublesMatchConfirm ; $6083
 	ret ; $6086
 .setText:
-	script_set_text Text_34_112 ; $6087
+	script_set_text Text_SeniorCoachDoublesTrainFirst ; $6087
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $608d
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6092
 	ret ; $609f
@@ -371,7 +371,7 @@ SeniorDoublesRank3Intro:
 	script_move_player_to_actor ACTOR_PLAYER ; $6599
 	farcall WaitPlayerMoveDone ; $65a0
 	script_face_toward ACTOR_SENIOR_COURT_B_CURT, ACTOR_PLAYER ; $65a3
-	script_set_text Text_34_126 ; $65ab
+	script_set_text Text_SeniorDoublesRankThreeShowYou ; $65ab
 	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_NOD ; $65b1
 	script_wait_idle ACTOR_SENIOR_COURT_A_BETH ; $65b8
 	script_speak ACTOR_SENIOR_COURT_A_BETH ; $65bd
@@ -403,7 +403,7 @@ SeniorDoublesRank2Intro:
 	script_null_script ACTOR_PLAYER_SHADOW ; $6669
 	script_move_player_to_actor ACTOR_PLAYER ; $666e
 	farcall WaitPlayerMoveDone ; $6675
-	script_set_text Text_34_124 ; $6678
+	script_set_text Text_SeniorDoublesRankTwoAwesomeCombo ; $6678
 	script_set_anim ACTOR_SENIOR_COURT_B_JOY, ANIM_NOD ; $667e
 	script_wait_idle ACTOR_SENIOR_COURT_B_JOY ; $6685
 	script_speak ACTOR_SENIOR_COURT_B_JOY ; $668a
@@ -440,7 +440,7 @@ SeniorDoublesRank1Intro:
 	script_wait_actor_script ACTOR_SENIOR_COURT_B_FAY ; $6755
 	script_face_toward ACTOR_SENIOR_COURT_B_FAY, ACTOR_PLAYER ; $675a
 	script_face_toward ACTOR_SENIOR_COURT_A_ALLIE, ACTOR_PARTNER ; $6762
-	script_set_text Text_34_122 ; $676a
+	script_set_text Text_SeniorDoublesRankOneSoonerThanExpected ; $676a
 	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_NOD ; $6770
 	script_wait_idle ACTOR_SENIOR_COURT_B_FAY ; $6777
 	script_speak ACTOR_SENIOR_COURT_B_FAY ; $677c
@@ -495,7 +495,7 @@ SeniorSinglesRank3Intro:
 	script_face_pair ACTOR_PLAYER, ACTOR_SENIOR_COURT_A_JOY ; $68b4
 	script_set_anim ACTOR_SENIOR_COURT_A_JOY, ANIM_BOUNCE ; $68bc
 	script_wait_idle ACTOR_SENIOR_COURT_A_JOY ; $68c3
-	script_set_text Text_34_58 ; $68c8
+	script_set_text Text_SeniorRankThreeNotThatEasy ; $68c8
 	script_speak ACTOR_SENIOR_COURT_A_JOY ; $68ce
 	script_set_anim ACTOR_SENIOR_COURT_A_JOY, ANIM_NOD ; $68d3
 	script_wait_idle ACTOR_SENIOR_COURT_A_JOY ; $68da
@@ -524,7 +524,7 @@ SeniorSinglesRank2Intro:
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_A_ALLIE ; $696a
 	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_BOUNCE ; $6972
 	script_wait_idle ACTOR_SENIOR_COURT_A_ALLIE ; $6979
-	script_set_text Text_34_56 ; $697e
+	script_set_text Text_SeniorRankTwoGotSomeNerve ; $697e
 	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $6984
 	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_NOD ; $6989
 	script_wait_idle ACTOR_SENIOR_COURT_A_ALLIE ; $6990
@@ -549,7 +549,7 @@ SeniorSinglesRank1Intro:
 	script_move_player_to_actor ACTOR_PLAYER ; $6a04
 	farcall WaitPlayerMoveDone ; $6a0b
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_A_FAY ; $6a0e
-	script_set_text Text_34_54 ; $6a16
+	script_set_text Text_SeniorRankOneTicketToVarsity ; $6a16
 	script_speak ACTOR_SENIOR_COURT_A_FAY ; $6a1c
 	script_set_anim ACTOR_SENIOR_COURT_A_FAY, ANIM_NOD ; $6a21
 	script_wait_idle ACTOR_SENIOR_COURT_A_FAY ; $6a28

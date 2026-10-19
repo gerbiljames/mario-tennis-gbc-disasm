@@ -1,19 +1,19 @@
 TennisMachineRoomNpc05TextIds:
 	; $4600, 18 bytes (text_ids)
-	dw Text_6e_169 ; record 0
-	dw Text_6e_180 ; record 1
-	dw Text_6e_187 ; record 2
-	dw Text_6e_194 ; record 3
-	dw Text_6e_201 ; record 4
-	dw Text_6e_209 ; record 5
-	dw Text_6e_216 ; record 6
-	dw Text_6e_209 ; record 7
-	dw Text_6e_216 ; record 8
+	dw Text_MachineAttendantTryLevelOne ; record 0
+	dw Text_MachineAttendantTryLevelTwo ; record 1
+	dw Text_MachineAttendantTryLevelThree ; record 2
+	dw Text_MachineAttendantTryLevelFour ; record 3
+	dw Text_MachineAttendantTryExpert ; record 4
+	dw Text_MachineAttendantBreakRecord ; record 5
+	dw Text_MachineAttendantMachineMaster ; record 6
+	dw Text_MachineAttendantBreakRecord ; record 7
+	dw Text_MachineAttendantMachineMaster ; record 8
 MachinePracticeLevelPrompt:
 	ld [wMapScratch + 6], a ; $4612
 	call TestMachineLevelClearedFlag ; $4615
 	jr z, MachineLevelNotClearedMessage ; $4618
-	script_set_text Text_6e_224 ; $461a
+	script_set_text Text_MachinePracticeAtLevel ; $461a
 	ld a, [wMapScratch + 6] ; $4620
 	inc a ; $4623
 	ld h, $00 ; $4624
@@ -47,7 +47,7 @@ MachinePracticeLevelPrompt:
 .done:
 	ret ; $4692
 MachineLevelNotClearedMessage:
-	script_set_text Text_6e_225 ; $4693
+	script_set_text Text_MachineLevelNotCleared ; $4693
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $4699
 	ret ; $469e
 TestMachineLevelClearedFlag:
@@ -92,7 +92,7 @@ MachinePracticeResultScene:
 	ld a, [wMatchExitRequest] ; $4710
 	and a ; $4713
 	jp nz, .done ; $4714
-	script_set_text Text_6e_219 ; $4717
+	script_set_text Text_MachineLevelFailedRetry ; $4717
 	ld hl, wMinigamesTargetScore ; $471d
 	ld a, [hl+] ; $4720
 	ld h, [hl] ; $4721
@@ -119,7 +119,7 @@ MachineCourtHandleRetryChoice:
 	script_wait_frames 5 ; $4759
 	and a ; $4760
 	jr z, MachineCourtRestartLevel ; $4761
-	script_set_text Text_6e_220 ; $4763
+	script_set_text Text_MachineGameOverLeaveCourt ; $4763
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $4769
 	script_move_target ACTOR_PLAYER, 51.0, 54.0 ; $476e
 	script_wait_move ACTOR_PLAYER ; $4779
@@ -247,7 +247,7 @@ MachineExpertResultScene:
 	ld h, a ; $48ba
 	jp nc, MachineExpertNewRecordScene ; $48bb
 MachineExpertRetryPrompt:
-	script_set_text Text_6e_221 ; $48be
+	script_set_text Text_MachineExpertRetry ; $48be
 	ld hl, wMinigamesCurrentScore ; $48c4
 	ld a, [hl+] ; $48c7
 	ld h, [hl] ; $48c8
@@ -257,7 +257,7 @@ MachineExpertRetryPrompt:
 	ret ; $48d0
 MachineExpertNewRecordScene:
 	call SaveMachineExpertRecord ; $48d1
-	script_set_text Text_6e_206 ; $48d4
+	script_set_text Text_MachineExpertNewRecord ; $48d4
 	ld hl, wMinigamesCurrentScore ; $48da
 	ld a, [hl+] ; $48dd
 	ld h, [hl] ; $48de
@@ -285,13 +285,13 @@ MachineExpertCounterMaxScene:
 	ld h, a ; $491a
 	jp z, MachineExpertRetryPrompt ; $491b
 	call SaveMachineExpertRecord ; $491e
-	script_set_text Text_6e_212 ; $4921
+	script_set_text Text_MachineExpertCounterMax ; $4921
 	ld hl, wMinigamesCurrentScore ; $4927
 	ld a, [hl+] ; $492a
 	ld h, [hl] ; $492b
 	ld l, a ; $492c
 	farcall PushTextArgNumber ; $492d
-	script_set_text Text_6e_212 ; $4930
+	script_set_text Text_MachineExpertCounterMax ; $4930
 	call MachineCourtWalkToAttendantCutscene ; $4936
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $4939
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $493e
@@ -399,7 +399,7 @@ Court2ExitTriggers_14:
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, $02
 	db $ff
 Court2Npc03_14:
-	script_set_text Text_1f_145 ; $4b61
+	script_set_text Text_Court2StaffCourtNumberTwo ; $4b61
 	script_speak ACTOR_COURT2_TOURNAMENT_STAFF_1 ; $4b67
 	ret ; $4b6c
 Court2Npc04_14:
@@ -415,13 +415,13 @@ Court2Npc04_14:
 Court2Npc04TextIds:
 	; $4b84, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_146 ; record 0
-	dw Text_1f_146 ; record 1
-	dw Text_1f_146 ; record 2
-	dw Text_1f_151 ; record 3
-	dw Text_1f_146 ; record 4
-	dw Text_1f_146 ; record 5
-	dw Text_1f_151 ; record 6
+	dw Text_Court2StaffFilledWithSpectators ; record 0
+	dw Text_Court2StaffFilledWithSpectators ; record 1
+	dw Text_Court2StaffFilledWithSpectators ; record 2
+	dw Text_Court2StaffFinalsPreparations ; record 3
+	dw Text_Court2StaffFilledWithSpectators ; record 4
+	dw Text_Court2StaffFilledWithSpectators ; record 5
+	dw Text_Court2StaffFinalsPreparations ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court2Npc05_14:
 	ld a, [wMapSceneStage] ; $4b92
@@ -436,13 +436,13 @@ Court2Npc05_14:
 Court2Npc05TextIds:
 	; $4ba9, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_147 ; record 0
-	dw Text_1f_147 ; record 1
-	dw Text_1f_149 ; record 2
-	dw Text_1f_152 ; record 3
-	dw Text_1f_153 ; record 4
-	dw Text_1f_155 ; record 5
-	dw Text_1f_157 ; record 6
+	dw Text_Court2EmpireFanSpikeTopSeed ; record 0
+	dw Text_Court2EmpireFanSpikeTopSeed ; record 1
+	dw Text_Court2EmpireFanSpikeGaveAll ; record 2
+	dw Text_Court2EmpireFanSpikeInFinals ; record 3
+	dw Text_Court2EmpireFanEmpireHonor ; record 4
+	dw Text_Court2EmpireFanSpikeAndElden ; record 5
+	dw Text_Court2EmpireFanWontForgetThem ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court2Npc06_14:
 	ld a, [wMapSceneStage] ; $4bb7
@@ -457,13 +457,13 @@ Court2Npc06_14:
 Court2Npc06TextIds:
 	; $4bce, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_148 ; record 0
-	dw Text_1f_148 ; record 1
-	dw Text_1f_150 ; record 2
-	dw Text_1f_150 ; record 3
-	dw Text_1f_154 ; record 4
-	dw Text_1f_156 ; record 5
-	dw Text_1f_158 ; record 6
+	dw Text_Court2EmpireFanSpikeFavorite ; record 0
+	dw Text_Court2EmpireFanSpikeFavorite ; record 1
+	dw Text_Court2EmpireFanSpikeStillFavorite ; record 2
+	dw Text_Court2EmpireFanSpikeStillFavorite ; record 3
+	dw Text_Court2EmpireFanEmpireTakeItAll ; record 4
+	dw Text_Court2EmpireFanTakeItAllSemis ; record 5
+	dw Text_Court2EmpireFanNoIdeaThisHappen ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court2SpectatorChat_14:
 	test_flag FLAG_DOUBLES ; $4bdc
@@ -538,19 +538,19 @@ Court2SpectatorChat_14:
 Court2SpectatorChatTextIds:
 	; $4d5f, 14 bytes (text_ids)
 	table_width 2
-	dw Text_1f_107 ; record 0
-	dw Text_1f_107 ; record 1
-	dw Text_1f_107 ; record 2
-	dw Text_1f_114 ; record 3
-	dw Text_1f_120 ; record 4
-	dw Text_1f_120 ; record 5
-	dw Text_1f_126 ; record 6
+	dw Text_Court2ChatFactoryWinThisTime ; record 0
+	dw Text_Court2ChatFactoryWinThisTime ; record 1
+	dw Text_Court2ChatFactoryWinThisTime ; record 2
+	dw Text_Court2ChatFactoryWinSinglesFinal ; record 3
+	dw Text_Court2ChatFactoryWinDoubles ; record 4
+	dw Text_Court2ChatFactoryWinDoubles ; record 5
+	dw Text_Court2ChatFactoryWinDoublesFinal ; record 6
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court2SpectatorsRepeatChat:
 	script_set_anim ACTOR_COURT2_STUDENT_SIDE_PART_BOY_3, ANIM_BOUNCE ; $4d6d
 	script_wait_idle ACTOR_COURT2_STUDENT_SIDE_PART_BOY_3 ; $4d74
 	script_face_toward ACTOR_PLAYER, ACTOR_COURT2_STUDENT_SIDE_PART_BOY_3 ; $4d79
-	script_set_text Text_1f_111 ; $4d81
+	script_set_text Text_Court2ChatRootForAcademy ; $4d81
 	script_speak ACTOR_COURT2_STUDENT_SIDE_PART_BOY_3 ; $4d87
 	script_set_anim ACTOR_COURT2_STUDENT_PIGTAILS_GIRL_1, ANIM_BOUNCE ; $4d8c
 	script_wait_idle ACTOR_COURT2_STUDENT_PIGTAILS_GIRL_1 ; $4d93
@@ -564,19 +564,19 @@ Court2SpectatorsRepeatChat:
 	script_wait_idle ACTOR_COURT2_STUDENT_PIGTAILS_GIRL_1 ; $4dc6
 	ret ; $4dcb
 Court2Npc0A_14:
-	script_set_text Text_1f_106 ; $4dcc
+	script_set_text Text_Court2SpectatorWhoReachesCenter ; $4dcc
 	test_flag FLAG_DOUBLES ; $4dd2
 	jr nz, .isDoubles ; $4dd5
 	ld a, [wMapSceneStage] ; $4dd7
 	cp ISLANDOPENSTAGE_SINGLES_FINAL ; $4dda
 	jr nz, .speak ; $4ddc
-	script_set_text Text_1f_113 ; $4dde
+	script_set_text Text_Court2SpectatorWhoWinsCenter ; $4dde
 	jr .speak ; $4de4
 .isDoubles:
 	ld a, [wMapSceneStage] ; $4de6
 	cp ISLANDOPENSTAGE_DOUBLES_FINAL ; $4de9
 	jr nz, .speak ; $4deb
-	script_set_text Text_1f_113 ; $4ded
+	script_set_text Text_Court2SpectatorWhoWinsCenter ; $4ded
 .speak:
 	script_speak ACTOR_COURT2_ISLAND_SPECTATOR_A ; $4df3
 	ret ; $4df8
@@ -586,11 +586,11 @@ Court2NpcScripts_14:
 	map_script ACTOR_COURT2_TOURNAMENT_STAFF_2, FACEMASK_ANY, $0000, Court2Npc04_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_COURT2_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Court2Npc05_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ROLE_COURT2_SPECTATOR, FACEMASK_ANY, $0000, Court2Npc06_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_COURT2_STUDENT_SIDE_PART_BOY_2, FACEMASK_ANY, $0000, Text_1f_104, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_COURT2_STUDENT_SIDE_PART_BOY_2, FACEMASK_ANY, $0000, Text_Court2FanCameToSeeYourTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	map_script ACTOR_COURT2_STUDENT_SIDE_PART_BOY_3, FACEMASK_ANY, $0000, Court2SpectatorChat_14, $00, $00
 	map_script ACTOR_COURT2_STUDENT_PIGTAILS_GIRL_1, FACEMASK_ANY, $0000, Court2SpectatorChat_14, $00, $00
 	map_script ACTOR_COURT2_ISLAND_SPECTATOR_A, FACEMASK_ANY, $0000, Court2Npc0A_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURT2_ISLAND_SPECTATOR_B, FACEMASK_ANY, $0000, Text_1f_105, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURT2_ISLAND_SPECTATOR_B, FACEMASK_ANY, $0000, Text_Court2SpectatorCantWaitIslandOpen, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 Court2FacingScripts_14:
 	; $4e42, 9 bytes (map_scripts)

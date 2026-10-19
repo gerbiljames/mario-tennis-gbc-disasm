@@ -358,7 +358,7 @@ ScoreboardCaption_SetGamePoint:
 	add hl, bc ; $4797
 	ld e, l ; $4798
 	ld d, h ; $4799
-	ld hl, Text_30_346 ; $479a
+	ld hl, Text_ScoreboardSetGamePoint ; $479a
 	call DrawMenuTextLine ; $479d
 	ret ; $47a0
 ScoreboardCaption_Total:
@@ -370,7 +370,7 @@ ScoreboardCaption_Total:
 	add hl, bc ; $47aa
 	ld e, l ; $47ab
 	ld d, h ; $47ac
-	ld hl, Text_30_347 ; $47ad
+	ld hl, Text_ScoreboardTotal ; $47ad
 	call DrawMenuTextLine ; $47b0
 	ret ; $47b3
 ScoreboardCaption_ScoreTarget:
@@ -378,23 +378,23 @@ ScoreboardCaption_ScoreTarget:
 	ld a, [hl+] ; $47b7
 	ld b, [hl] ; $47b8
 	ld c, a ; $47b9
-	ld hl, Text_31_258 ; $47ba
+	ld hl, Text_RoommateGoodDayOfPractice ; $47ba
 	add hl, bc ; $47bd
 	ld e, l ; $47be
 	ld d, h ; $47bf
-	ld hl, Text_30_348 ; $47c0
+	ld hl, Text_ScoreboardScore ; $47c0
 	call DrawMenuTextLine ; $47c3
 	ld hl, $0304 ; $47c6
 	add hl, bc ; $47c9
 	ld e, l ; $47ca
 	ld d, h ; $47cb
-	ld hl, Text_30_349 ; $47cc
+	ld hl, Text_ScoreboardTarget ; $47cc
 	call DrawMenuTextLine ; $47cf
-	ld hl, Text_31_261 ; $47d2
+	ld hl, Text_RoommateHeadForSeniorCourt ; $47d2
 	add hl, bc ; $47d5
 	ld e, l ; $47d6
 	ld d, h ; $47d7
-	ld hl, Text_30_348 ; $47d8
+	ld hl, Text_ScoreboardScore ; $47d8
 	call DrawMenuTextLine ; $47db
 	ret ; $47de
 ScoreboardCaption_ScoreHigh:
@@ -402,23 +402,23 @@ ScoreboardCaption_ScoreHigh:
 	ld a, [hl+] ; $47e2
 	ld b, [hl] ; $47e3
 	ld c, a ; $47e4
-	ld hl, Text_31_258 ; $47e5
+	ld hl, Text_RoommateGoodDayOfPractice ; $47e5
 	add hl, bc ; $47e8
 	ld e, l ; $47e9
 	ld d, h ; $47ea
-	ld hl, Text_30_348 ; $47eb
+	ld hl, Text_ScoreboardScore ; $47eb
 	call DrawMenuTextLine ; $47ee
-	ld hl, Text_31_4 ; $47f1
+	ld hl, Text_MarkDoublesPairsBeatUs ; $47f1
 	add hl, bc ; $47f4
 	ld e, l ; $47f5
 	ld d, h ; $47f6
-	ld hl, Text_30_350 ; $47f7
+	ld hl, Text_ScoreboardHigh ; $47f7
 	call DrawMenuTextLine ; $47fa
-	ld hl, Text_31_261 ; $47fd
+	ld hl, Text_RoommateHeadForSeniorCourt ; $47fd
 	add hl, bc ; $4800
 	ld e, l ; $4801
 	ld d, h ; $4802
-	ld hl, Text_30_348 ; $4803
+	ld hl, Text_ScoreboardScore ; $4803
 	call DrawMenuTextLine ; $4806
 	ret ; $4809
 GetMatchMenuItemId:

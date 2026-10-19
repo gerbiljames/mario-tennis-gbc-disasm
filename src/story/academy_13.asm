@@ -3,10 +3,10 @@ RunPlayDoublesTodayPrompt:
 	jp nz, .accepted ; $56be
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $56c1
 	jr nz, .altText ; $56c4
-	script_set_text Text_31_310 ; $56c6
+	script_set_text Text_RoommatePlayDoublesToday ; $56c6
 	jr .prompt ; $56cc
 .altText:
-	script_set_text Text_31_304 ; $56ce
+	script_set_text Text_RoommateWannaPlayDoubles ; $56ce
 .prompt:
 	script_speak_restore ACTOR_DORM_ROOM_KATE ; $56d4
 	farcall RunDialogueYesNoPrompt ; $56d9
@@ -57,10 +57,10 @@ RunPlayDoublesTodayPrompt:
 .accepted:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5782
 	jr nz, .acceptedAlt ; $5785
-	script_set_text Text_31_313 ; $5787
+	script_set_text Text_RoommateDecidedOnSingles ; $5787
 	jr .setUpDoubles ; $578d
 .acceptedAlt:
-	script_set_text Text_31_307 ; $578f
+	script_set_text Text_RoommateSinglesAllOfSudden ; $578f
 .setUpDoubles:
 	script_speak_restore ACTOR_DORM_ROOM_KATE ; $5795
 	farcall RunDialogueYesNoPrompt ; $579a
@@ -168,13 +168,13 @@ RunAcademyQuestionsMenu:
 	ld a, e ; $58d1
 	ld [hl+], a ; $58d2
 	ld [hl], d ; $58d3
-	ld hl, Text_31_332 ; $58d4
+	ld hl, Text_MenuAcademyQuestions ; $58d4
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $58d7
 	jr z, .runMenu ; $58da
-	ld hl, Text_31_333 ; $58dc
+	ld hl, Text_MenuAcademyQuestionsAfterSenior ; $58dc
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $58df
 	jr z, .runMenu ; $58e2
-	ld hl, Text_31_334 ; $58e4
+	ld hl, Text_MenuAcademyQuestionsAfterVarsity ; $58e4
 .runMenu:
 	ld de, $0101 ; $58e7
 	ld a, $01 ; $58ea
@@ -384,7 +384,7 @@ ShowStoryNarration_13:
 	ret ; $5a75
 	twin_named dorm_room_entry08_scene, DormRoomEntry0aScene ; $5a76
 DormRoomEntry09Scene:
-	script_set_text Text_30_497 ; $5a92
+	script_set_text Text_NarrationArrivedAtIslandOpen ; $5a92
 	call ShowStoryNarration_13 ; $5a98
 	ld a, STORYLOC_TOURNAMENT_COURTYARD ; $5a9b
 	ld [wStoryModeCurrentLocation], a ; $5a9d
@@ -420,10 +420,10 @@ GetDormRoomStoryStage_13:
 DormRoomArrivalCutscene_13:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5aee
 	jr z, .variantB ; $5af1
-	script_set_text Text_31_273 ; $5af3
+	script_set_text Text_RoommateForgotLuckySocksAlt ; $5af3
 	jr .placeActors ; $5af9
 .variantB:
-	script_set_text Text_31_268 ; $5afb
+	script_set_text Text_RoommateForgotLuckySocks ; $5afb
 .placeActors:
 	script_null_script ACTOR_PARTNER ; $5b01
 	script_set_position ACTOR_PARTNER, 11.0, 30.0 ; $5b06

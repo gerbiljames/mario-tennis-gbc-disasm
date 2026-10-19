@@ -74,7 +74,7 @@ VarsityCourtTourCutscene:
 	script_move_player 12.0, 27.0 ; $6411
 	farcall WaitPlayerMoveDone ; $641b
 	script_wait_frames 30 ; $641e
-	script_set_text Text_30_518 ; $6425
+	script_set_text Text_EmilyFavoriteCourtTour ; $6425
 	script_speak ACTOR_VARSITY_COURT_TOUR_EMILY ; $642b
 	script_wait_frames 15 ; $6430
 	script_player_speed 2.0 ; $6437

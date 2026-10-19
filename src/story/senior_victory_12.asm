@@ -26,7 +26,7 @@ IslandOpenDoublesVictory:
 	farcall WaitPlayerMoveDone ; $712b
 	script_fade_in 32 ; $712e
 	call WaitFadeEnd ; $7133
-	script_set_text Text_34_130 ; $7136
+	script_set_text Text_SeniorDoublesChampsWeLost ; $7136
 	script_move_target ACTOR_SENIOR_COURT_B_FAY, 37.0, 19.0 ; $713c
 	script_wait_move ACTOR_SENIOR_COURT_B_FAY ; $7147
 	script_face_pair ACTOR_SENIOR_COURT_A_ALLIE, ACTOR_SENIOR_COURT_B_FAY ; $714c
@@ -67,7 +67,7 @@ IslandOpenDoublesVictory:
 	script_wait_idle ACTOR_PLAYER ; $723d
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $7242
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $7249
-	script_set_text Text_34_135 ; $724e
+	script_set_text Text_SeniorCoachChampionMedal ; $724e
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $7254
 	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 37.0, 29.0 ; $7259
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $7264
@@ -133,7 +133,7 @@ SeniorSinglesRank4And3Victory:
 	script_set_position ACTOR_SENIOR_COURT_A_BRIAN, 35.0, 15.0 ; $73b2
 	script_face ACTOR_SENIOR_COURT_A_BRIAN, FACE_DOWN ; $73bd
 	call FadeInSeniorCourtNearPairA ; $73c4
-	script_set_text Text_34_74 ; $73c7
+	script_set_text Text_SeniorRankFourSpotIsYours ; $73c7
 	script_speak ACTOR_SENIOR_COURT_A_BRIAN ; $73cd
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $73d2
 	script_wait_jump ACTOR_SENIOR_COURT_A_EMILY ; $73da
@@ -158,11 +158,11 @@ SeniorSinglesRank2Victory:
 	script_face ACTOR_SENIOR_COURT_A_JOY, FACE_DOWN ; $7457
 	call FadeInSeniorCourtNearPairB ; $745e
 	script_set_position ACTOR_PLAYER, 52.0, 27.0 ; $7461
-	script_set_text Text_34_35 ; $746c
+	script_set_text Text_JoySeniorNowNumberThree ; $746c
 	script_speak ACTOR_SENIOR_COURT_A_JOY ; $7472
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $7477
 	script_wait_jump ACTOR_SENIOR_COURT_A_EMILY ; $747f
-	script_set_text Text_34_76 ; $7484
+	script_set_text Text_SeniorCoachNowRankedThird ; $7484
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $748a
 	script_set_actor_script ACTOR_SENIOR_COURT_A_JOY, ActorScript_12_07 ; $748f
 	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $749a
@@ -178,11 +178,11 @@ SeniorSinglesRank1Victory:
 	script_face ACTOR_SENIOR_COURT_A_ALLIE, FACE_DOWN ; $74c9
 	call FadeInSeniorCourtNearPairB ; $74d0
 	script_set_position ACTOR_PLAYER, 52.0, 27.0 ; $74d3
-	script_set_text Text_34_32 ; $74de
+	script_set_text Text_AllieSeniorServeVolleyLost ; $74de
 	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $74e4
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $74e9
 	script_wait_jump ACTOR_SENIOR_COURT_A_EMILY ; $74f1
-	script_set_text Text_34_77 ; $74f6
+	script_set_text Text_SeniorCoachNowRankedSecond ; $74f6
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $74fc
 	script_set_actor_script ACTOR_SENIOR_COURT_A_ALLIE, ActorScript_12_10 ; $7501
 	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $750c
@@ -206,7 +206,7 @@ SeniorSharedVictoryScene:
 	script_fade_in 8 ; $757e
 	call WaitFadeEnd ; $7583
 	script_wait_frames 30 ; $7586
-	script_set_text Text_34_78 ; $758d
+	script_set_text Text_SeniorChampHandledHardStroke ; $758d
 	script_move_target ACTOR_ROLE_SENIOR_COURT_FAY, 36.0, 19.0 ; $7593
 	script_wait_move ACTOR_ROLE_SENIOR_COURT_FAY ; $759e
 	script_set_anim ACTOR_ROLE_SENIOR_COURT_FAY, ANIM_BOUNCE ; $75a3

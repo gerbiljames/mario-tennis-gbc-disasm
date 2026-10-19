@@ -1,7 +1,7 @@
 ; Shared by DormRoomEntry08Scene, DormRoomEntry0aScene (bank $13).
 
 {TWIN_LABEL}:
-	script_set_text Text_30_496
+	script_set_text Text_NarrationMorningOfDeparture
 	call ShowStoryNarration_13
 	ld a, STORYLOC_ACADEMY_ENTRANCE
 	ld [wStoryModeCurrentLocation], a

@@ -55,13 +55,13 @@ TennisMachineRoomNpc03_14:
 TennisMachineRoomNpc03TextIds:
 	; $40a6, 14 bytes (text_ids)
 	table_width 2
-	dw Text_6e_167 ; record 0
-	dw Text_6e_176 ; record 1
-	dw Text_6e_185 ; record 2
-	dw Text_6e_192 ; record 3
-	dw Text_6e_199 ; record 4
-	dw Text_6e_207 ; record 5
-	dw Text_6e_214 ; record 6
+	dw Text_MachineEngineerLatestTech ; record 0
+	dw Text_MachineEngineerHarderFromHere ; record 1
+	dw Text_MachineEngineerLevelThreeHarder ; record 2
+	dw Text_MachineEngineerWorkedHard ; record 3
+	dw Text_MachineEngineerExpertUnlocked ; record 4
+	dw Text_MachineEngineerRecordImpressive ; record 5
+	dw Text_MachineEngineerExceededHopes ; record 6
 	assert_table_length NUM_MACHINECOURTSTAGES
 TennisMachineRoomNpc04_14:
 	ld a, [wMapSceneStage] ; $40b4
@@ -89,13 +89,13 @@ TennisMachineRoomNpc04_14:
 TennisMachineRoomNpc04TextIds:
 	; $40ec, 14 bytes (text_ids)
 	table_width 2
-	dw Text_6e_168 ; record 0
-	dw Text_6e_177 ; record 1
-	dw Text_6e_186 ; record 2
-	dw Text_6e_193 ; record 3
-	dw Text_6e_200 ; record 4
-	dw Text_6e_208 ; record 5
-	dw Text_6e_215 ; record 6
+	dw Text_MachineEngineerHundredAllStar ; record 0
+	dw Text_MachineEngineerEasierThanThought ; record 1
+	dw Text_MachineEngineerStrokeStronger ; record 2
+	dw Text_MachineEngineerParWithVarsity ; record 3
+	dw Text_MachineEngineerExpertSystem ; record 4
+	dw Text_MachineEngineerBrokeExpertRecord ; record 5
+	dw Text_MachineEngineerJohnHenry ; record 6
 	assert_table_length NUM_MACHINECOURTSTAGES
 TennisMachineRoomNpcScripts_14:
 	; $40fa, 25 bytes (map_scripts)
@@ -104,7 +104,7 @@ TennisMachineRoomNpcScripts_14:
 	map_script ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, FACEMASK_ANY, $0000, TennisMachineRoomNpc05_14, $00, $00
 	db $ff
 MachineLevel1FailedPrompt:
-	script_set_text Text_6e_219 ; $4113
+	script_set_text Text_MachineLevelFailedRetry ; $4113
 	ld hl, $000f ; $4119
 	farcall PushTextArgNumber ; $411c
 	ld hl, wMinigamesCurrentScore ; $411f
@@ -115,12 +115,12 @@ MachineLevel1FailedPrompt:
 	jp MachineCourtHandleRetryChoice ; $4128
 MachineLevel1ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $412b
-	script_set_text Text_6e_175 ; $412e
+	script_set_text Text_MachineClearedLevelOne ; $412e
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $4134
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4139
 	ret ; $4146
 MachineLevel2FailedPrompt:
-	script_set_text Text_6e_219 ; $4147
+	script_set_text Text_MachineLevelFailedRetry ; $4147
 	ld hl, $001e ; $414d
 	farcall PushTextArgNumber ; $4150
 	ld hl, wMinigamesCurrentScore ; $4153
@@ -132,12 +132,12 @@ MachineLevel2FailedPrompt:
 	ret ; $415f
 MachineLevel2ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4160
-	script_set_text Text_6e_183 ; $4163
+	script_set_text Text_MachineClearedLevelTwo ; $4163
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $4169
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $416e
 	ret ; $417b
 MachineLevel3FailedPrompt:
-	script_set_text Text_6e_219 ; $417c
+	script_set_text Text_MachineLevelFailedRetry ; $417c
 	ld hl, $003c ; $4182
 	farcall PushTextArgNumber ; $4185
 	ld hl, wMinigamesCurrentScore ; $4188
@@ -149,12 +149,12 @@ MachineLevel3FailedPrompt:
 	ret ; $4194
 MachineLevel3ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4195
-	script_set_text Text_6e_190 ; $4198
+	script_set_text Text_MachineClearedLevelThree ; $4198
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $419e
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $41a3
 	ret ; $41b0
 MachineLevel4FailedPrompt:
-	script_set_text Text_6e_219 ; $41b1
+	script_set_text Text_MachineLevelFailedRetry ; $41b1
 	ld hl, $0064 ; $41b7
 	farcall PushTextArgNumber ; $41ba
 	ld hl, wMinigamesCurrentScore ; $41bd
@@ -166,7 +166,7 @@ MachineLevel4FailedPrompt:
 	ret ; $41c9
 MachineLevel4ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $41ca
-	script_set_text Text_6e_197 ; $41cd
+	script_set_text Text_MachineClearedLevelFour ; $41cd
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $41d3
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $41d8
 	ret ; $41e5
@@ -281,7 +281,7 @@ MachineCourtResultScene:
 	dw MachineExpertResultScene ; $4336 jumptable
 	dw MachineExpertResultScene ; $4338 jumptable
 MachineCourtGameOverExitScene:
-	script_set_text Text_6e_220 ; $433a
+	script_set_text Text_MachineGameOverLeaveCourt ; $433a
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $4340
 	script_move_target ACTOR_PLAYER, 51.0, 54.0 ; $4345
 	script_wait_move ACTOR_PLAYER ; $4350
@@ -376,7 +376,7 @@ TennisMachineRoomNpc05_14:
 .accepted:
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $44a9
 	jr z, .done ; $44ac
-	script_set_text Text_6e_222 ; $44ae
+	script_set_text Text_MachineAttendantPracticeCleared ; $44ae
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $44b4
 	farcall RunDialogueYesNoPrompt ; $44b9
 	farcall ScriptCloseDialogueWindow ; $44bc
@@ -417,7 +417,7 @@ MachineCourtStartLevelScene:
 	ld a, [wMapSceneStage] ; $4565
 	cp MACHINECOURTSTAGE_MASTER ; $4568
 	jr c, .notMaster ; $456a
-	script_set_text Text_6e_204 ; $456c
+	script_set_text Text_MachineCountdownBlastOff ; $456c
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $4572
 .notMaster:
 	script_fade_out 6 ; $4577

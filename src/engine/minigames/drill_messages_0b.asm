@@ -355,175 +355,175 @@ ShowDrillMessageByIndex:
 	ret ; $45c3
 DrillMessageTextIds_0b:
 	; $45c4, 218 bytes (records:2)
-	dw Text_25_196 ; record 0
-	dw Text_25_196 ; record 1
-	dw Text_25_197 ; record 2
-	dw Text_25_198 ; record 3
-	dw Text_25_199 ; record 4
-	dw Text_25_200 ; record 5
-	dw Text_25_201 ; record 6
-	dw Text_25_202 ; record 7
-	dw Text_25_203 ; record 8
-	dw Text_25_204 ; record 9
-	dw Text_25_205 ; record 10
-	dw Text_25_206 ; record 11
-	dw Text_25_207 ; record 12
-	dw Text_25_208 ; record 13
-	dw Text_25_209 ; record 14
-	dw Text_25_210 ; record 15
-	dw Text_25_211 ; record 16
-	dw Text_25_212 ; record 17
-	dw Text_25_213 ; record 18
-	dw Text_25_214 ; record 19
-	dw Text_25_215 ; record 20
-	dw Text_25_216 ; record 21
-	dw Text_25_217 ; record 22
-	dw Text_25_218 ; record 23
-	dw Text_25_219 ; record 24
-	dw Text_25_220 ; record 25
-	dw Text_25_221 ; record 26
-	dw Text_25_222 ; record 27
-	dw Text_25_223 ; record 28
-	dw Text_25_224 ; record 29
-	dw Text_25_225 ; record 30
-	dw Text_25_226 ; record 31
-	dw Text_25_227 ; record 32
-	dw Text_25_228 ; record 33
-	dw Text_25_229 ; record 34
-	dw Text_25_230 ; record 35
-	dw Text_25_231 ; record 36
-	dw Text_25_232 ; record 37
-	dw Text_25_233 ; record 38
-	dw Text_25_234 ; record 39
-	dw Text_25_235 ; record 40
-	dw Text_25_236 ; record 41
-	dw Text_25_237 ; record 42
-	dw Text_25_238 ; record 43
-	dw Text_25_239 ; record 44
-	dw Text_25_240 ; record 45
-	dw Text_25_241 ; record 46
-	dw Text_25_242 ; record 47
-	dw Text_25_243 ; record 48
-	dw Text_25_244 ; record 49
-	dw Text_25_245 ; record 50
-	dw Text_25_246 ; record 51
-	dw Text_25_247 ; record 52
-	dw Text_25_248 ; record 53
-	dw Text_25_249 ; record 54
-	dw Text_25_250 ; record 55
-	dw Text_25_251 ; record 56
-	dw Text_25_252 ; record 57
-	dw Text_25_253 ; record 58
-	dw Text_25_254 ; record 59
-	dw Text_25_255 ; record 60
-	dw Text_25_256 ; record 61
-	dw Text_25_257 ; record 62
-	dw Text_25_258 ; record 63
-	dw Text_25_259 ; record 64
-	dw Text_25_260 ; record 65
-	dw Text_25_261 ; record 66
-	dw Text_25_262 ; record 67
-	dw Text_25_263 ; record 68
-	dw Text_25_264 ; record 69
-	dw Text_25_265 ; record 70
-	dw Text_25_266 ; record 71
+	dw Text_DrillServiceMatchAceYourPoint ; record 0
+	dw Text_DrillServiceMatchAceYourPoint ; record 1
+	dw Text_DrillServiceMatchDoubleFaultYouFail ; record 2
+	dw Text_DrillServiceMatchMissedPolesYouFail ; record 3
+	dw Text_DrillServiceMatchReturnedYouFail ; record 4
+	dw Text_DrillServiceMatchTouchedYouFail ; record 5
+	dw Text_DrillServiceMatchEarlyReturnYourPoint ; record 6
+	dw Text_DrillServiceMatchAceMyPoint ; record 7
+	dw Text_DrillServiceMatchDoubleFaultIFail ; record 8
+	dw Text_DrillServiceMatchMissedPolesIFail ; record 9
+	dw Text_DrillServiceMatchReturnedIFail ; record 10
+	dw Text_DrillServiceMatchTouchedIFail ; record 11
+	dw Text_DrillServiceMatchEarlyReturnMyPoint ; record 12
+	dw Text_DrillServicePracticeNiceServe ; record 13
+	dw Text_DrillServicePracticeDoubleFault ; record 14
+	dw Text_DrillServicePracticeMissedPoles ; record 15
+	dw Text_DrillServicePracticeMissedTarget ; record 16
+	dw Text_DrillServicePracticeNoTopspinOut ; record 17
+	dw Text_DrillServicePracticeNoSliceOut ; record 18
+	dw Text_DrillServicePracticeBadTiming ; record 19
+	dw Text_DrillNetMatchNiceVolleyYourPoint ; record 20
+	dw Text_DrillNetMatchNiceSmashYourPoint ; record 21
+	dw Text_DrillNetMatchPlayedNetYourPoint ; record 22
+	dw Text_DrillNetMatchNoReturnYourPoint ; record 23
+	dw Text_DrillNetMatchNoLobYourPoint ; record 24
+	dw Text_DrillNetMatchDoubleFaultYouFail ; record 25
+	dw Text_DrillNetMatchNoVolleyReturnYouFail ; record 26
+	dw Text_DrillNetMatchBehindServiceLineYouFail ; record 27
+	dw Text_DrillNetMatchNoSmashYouFail ; record 28
+	dw Text_DrillNetMatchNoScoreYouFail ; record 29
+	dw Text_DrillNetMatchEarlyReturnYourPoint ; record 30
+	dw Text_DrillNetMatchDidntVolleyYouFail ; record 31
+	dw Text_DrillNetMatchDidntPlayNetYouFail ; record 32
+	dw Text_DrillNetMatchNiceVolleyMyPoint ; record 33
+	dw Text_DrillNetMatchNiceSmashMyPoint ; record 34
+	dw Text_DrillNetMatchPlayedNetMyPoint ; record 35
+	dw Text_DrillNetMatchNoReturnMyPoint ; record 36
+	dw Text_DrillNetMatchNoLobMyPoint ; record 37
+	dw Text_DrillNetMatchDoubleFaultIFail ; record 38
+	dw Text_DrillNetMatchNoVolleyReturnIFail ; record 39
+	dw Text_DrillNetMatchBehindServiceLineIFail ; record 40
+	dw Text_DrillNetMatchNoSmashIFail ; record 41
+	dw Text_DrillNetMatchNoScoreIFail ; record 42
+	dw Text_DrillNetMatchEarlyReturnMyPoint ; record 43
+	dw Text_DrillNetMatchDidntVolleyIFail ; record 44
+	dw Text_DrillNetMatchDidntPlayNetIFail ; record 45
+	dw Text_DrillNetPracticeNiceVolley ; record 46
+	dw Text_DrillNetPracticeNiceSmash ; record 47
+	dw Text_DrillNetPracticeNiceDropShot ; record 48
+	dw Text_DrillNetPracticeNoReturnSucceed ; record 49
+	dw Text_DrillNetPracticeNoLobSucceed ; record 50
+	dw Text_DrillNetPracticeDoubleFault ; record 51
+	dw Text_DrillNetPracticeNoVolleyReturn ; record 52
+	dw Text_DrillNetPracticeBehindServiceLine ; record 53
+	dw Text_DrillNetPracticeNoSmash ; record 54
+	dw Text_DrillNetPracticeNoSmashWinner ; record 55
+	dw Text_DrillNetPracticeMissedTarget ; record 56
+	dw Text_DrillNetPracticeNoDropShot ; record 57
+	dw Text_DrillNetPracticeDidntVolley ; record 58
+	dw Text_DrillNetPracticeNoDeepServe ; record 59
+	dw Text_DrillNetPracticeDropShotNoScore ; record 60
+	dw Text_DrillStrokeNiceLob ; record 61
+	dw Text_DrillStrokeNiceReturn ; record 62
+	dw Text_DrillStrokeNoServeReturn ; record 63
+	dw Text_DrillStrokeNoLobReturn ; record 64
+	dw Text_DrillStrokeNoReturnYourPoint ; record 65
+	dw Text_DrillStrokeDoubleFaultYourPoint ; record 66
+	dw Text_DrillStrokePlayedNetYouFail ; record 67
+	dw Text_DrillStrokeVolleyedYouFail ; record 68
+	dw Text_DrillStrokeSmashedYouFail ; record 69
+	dw Text_DrillStrokeBehindServiceLineYourPoint ; record 70
+	dw Text_DrillStrokeEarlyReturnYouFail ; record 71
 IF DEF(FIXES)
-	dw Text_26_0
+	dw Text_DrillYourLobFellShortFail
 ELSE
 	dw $290b ; record 72, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_1
+	dw Text_DrillYouMissedMyCourtFail
 ELSE
 	dw $290c ; record 73, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_2
+	dw Text_DrillNiceLobIGetPoint
 ELSE
 	dw $290d ; record 74, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_3
+	dw Text_DrillNiceReturnIGetPoint
 ELSE
 	dw $290e ; record 75, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_4
+	dw Text_DrillCoachMissedServeFail
 ELSE
 	dw $290f ; record 76, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_5
+	dw Text_DrillCoachNoLobReturnFail
 ELSE
 	dw $2910 ; record 77, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_6
+	dw Text_DrillYouMissedBallCoachPoint
 ELSE
 	dw $2911 ; record 78, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_7
+	dw Text_DrillDoubleFaultCoachPoint
 ELSE
 	dw $2912 ; record 79, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_8
+	dw Text_DrillYouPlayedNetCoachFail
 ELSE
 	dw $2913 ; record 80, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_9
+	dw Text_DrillYouVolleyedCoachFail
 ELSE
 	dw $2914 ; record 81, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_10
+	dw Text_DrillYouSmashedCoachFail
 ELSE
 	dw $2915 ; record 82, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_11
+	dw Text_DrillNotInsideServiceLineMyPoint
 ELSE
 	dw $2916 ; record 83, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_12
+	dw Text_DrillCoachReturnedServeEarlyFail
 ELSE
 	dw $2917 ; record 84, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_13
+	dw Text_DrillCoachLobFellShortFail
 ELSE
 	dw $2918 ; record 85, past text bank $25's table (docs/bugs.md)
 ENDC
 IF DEF(FIXES)
-	dw Text_26_14
+	dw Text_DrillCoachMissedYourCourtFail
 ELSE
 	dw $2919 ; record 86, past text bank $25's table (docs/bugs.md)
 ENDC
-	dw Text_26_15 ; record 87
-	dw Text_26_16 ; record 88
-	dw Text_26_17 ; record 89
-	dw Text_26_18 ; record 90
-	dw Text_26_19 ; record 91
-	dw Text_26_20 ; record 92
-	dw Text_26_21 ; record 93
-	dw Text_26_22 ; record 94
-	dw Text_26_23 ; record 95
-	dw Text_26_24 ; record 96
-	dw Text_26_25 ; record 97
-	dw Text_26_26 ; record 98
-	dw Text_26_27 ; record 99
-	dw Text_26_28 ; record 100
-	dw Text_26_29 ; record 101
-	dw Text_26_30 ; record 102
-	dw Text_26_31 ; record 103
-	dw Text_26_32 ; record 104
-	dw Text_26_33 ; record 105
-	dw Text_26_34 ; record 106
-	dw Text_26_35 ; record 107
-	dw Text_26_36 ; record 108
+	dw Text_DrillNiceReturnYouDidIt ; record 87
+	dw Text_DrillNiceLobYouDidIt ; record 88
+	dw Text_DrillYouDidntReturnFail ; record 89
+	dw Text_DrillMissedTargetAreaFail ; record 90
+	dw Text_DrillNoLobFail ; record 91
+	dw Text_DrillDoubleFaultYouPass ; record 92
+	dw Text_DrillYouReturnedServeEarlyFail ; record 93
+	dw Text_DrillNiceStrokeYourPoint ; record 94
+	dw Text_DrillYouMissedMyCourtMyPoint ; record 95
+	dw Text_DrillCoachMissedYourPoint ; record 96
+	dw Text_DrillShortOfServiceLineMyPoint ; record 97
+	dw Text_DrillYouPassedServiceLineMyPoint ; record 98
+	dw Text_DrillDoubleFaultMyPoint ; record 99
+	dw Text_DrillYouReturnedServeEarlyMyPoint ; record 100
+	dw Text_DrillNiceStrokeMyPoint ; record 101
+	dw Text_DrillCoachMissedYourCourtYourPoint ; record 102
+	dw Text_DrillYouDidntReturnMyPoint ; record 103
+	dw Text_DrillCoachShortOfServiceLineYourPoint ; record 104
+	dw Text_DrillCoachPlayedNetYourPoint ; record 105
+	dw Text_DrillCoachDoubleFaultYourPoint ; record 106
+	dw Text_DrillCoachReturnedServeEarlyYourPoint ; record 107
+	dw Text_DrillNoMessageForCase ; record 108
 Unused_0b_1:
 	; $469e, 2 bytes (bytes:2)
 	db $00, $02 ; 0x00

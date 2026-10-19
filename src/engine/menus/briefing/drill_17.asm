@@ -49,7 +49,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $01 ; $62a8
 	ld hl, DrawBriefingTargetBrackets ; $62aa
 	call RegisterFrameTask ; $62ad
-	ld hl, Text_36_706 ; $62b0
+	ld hl, Text_BriefServeSmashServeDeep ; $62b0
 	call DrawBriefingCaption ; $62b3
 	call WaitForInputBlinking ; $62b6
 	call ClearFrameTasks ; $62b9
@@ -84,7 +84,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $01 ; $6304
 	ld hl, CycleDiagramTargetPalette ; $6306
 	call RegisterFrameTask ; $6309
-	ld hl, Text_36_707 ; $630c
+	ld hl, Text_BriefServeSmashRunToLine ; $630c
 	call DrawBriefingCaption ; $630f
 	call WaitForInputBlinking ; $6312
 	call ClearFrameTasks ; $6315
@@ -140,7 +140,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $01 ; $6396
 	ld hl, DrawBriefingSwingAnim ; $6398
 	call RegisterFrameTask ; $639b
-	ld hl, Text_36_708 ; $639e
+	ld hl, Text_BriefServeSmashSmashLob ; $639e
 	call DrawBriefingCaption ; $63a1
 	call WaitForInputBlinking ; $63a4
 	call ClearFrameTasks ; $63a7
@@ -188,7 +188,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $01 ; $6413
 	ld hl, DrawBriefingTargetBrackets ; $6415
 	call RegisterFrameTask ; $6418
-	ld hl, Text_36_709 ; $641b
+	ld hl, Text_BriefServeSmashAllPositions ; $641b
 	call DrawBriefingCaption ; $641e
 .loop:
 	ld a, [wBriefingAnimTimer] ; $6421
@@ -336,7 +336,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $01 ; $65b1
 	ld hl, DrawBriefingTargetBrackets ; $65b3
 	call RegisterFrameTask ; $65b6
-	ld hl, Text_36_710 ; $65b9
+	ld hl, Text_BriefDropShotServeDeep ; $65b9
 	call DrawBriefingCaption ; $65bc
 	call WaitForInputBlinking ; $65bf
 	call ClearFrameTasks ; $65c2
@@ -371,7 +371,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $01 ; $660d
 	ld hl, CycleDiagramTargetPalette ; $660f
 	call RegisterFrameTask ; $6612
-	ld hl, Text_36_711 ; $6615
+	ld hl, Text_BriefDropShotRunUpBlank ; $6615
 	call DrawBriefingCaption ; $6618
 	call WaitForInputBlinking ; $661b
 	call ClearFrameTasks ; $661e
@@ -427,7 +427,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $01 ; $669f
 	ld hl, DrawBriefingSwingAnim ; $66a1
 	call RegisterFrameTask ; $66a4
-	ld hl, Text_36_712 ; $66a7
+	ld hl, Text_BriefDropShotMiddleBlank ; $66a7
 	call DrawBriefingCaption ; $66aa
 	call WaitForInputBlinking ; $66ad
 	call ClearFrameTasks ; $66b0
@@ -475,7 +475,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $01 ; $671c
 	ld hl, DrawBriefingTargetBrackets ; $671e
 	call RegisterFrameTask ; $6721
-	ld hl, Text_36_713 ; $6724
+	ld hl, Text_BriefDropShotPassBlank ; $6724
 	call DrawBriefingCaption ; $6727
 .loop:
 	ld a, [wBriefingAnimTimer] ; $672a
@@ -603,7 +603,7 @@ DrillBriefing_ReturnToTarget:
 	ld a, $01 ; $6887
 	ld hl, DrawBriefingMarkerRotated ; $6889
 	call RegisterFrameTask ; $688c
-	ld hl, Text_37_3 ; $688f
+	ld hl, Text_BriefReturnTargetReturnServe ; $688f
 	call DrawBriefingCaption ; $6892
 	call WaitForInputBlinking ; $6895
 	call ClearFrameTasks ; $6898
@@ -635,7 +635,7 @@ DrillBriefing_ReturnToTarget:
 	ld a, $01 ; $68dd
 	ld hl, DrawBriefingTargetBrackets ; $68df
 	call RegisterFrameTask ; $68e2
-	ld hl, Text_37_4 ; $68e5
+	ld hl, Text_BriefReturnTargetHitTarget ; $68e5
 	call DrawBriefingCaption ; $68e8
 	call WaitForInputBlinking ; $68eb
 	call ClearFrameTasks ; $68ee
@@ -667,7 +667,7 @@ DrillBriefing_ReturnToTarget:
 	ld a, $01 ; $6933
 	ld hl, DrawBriefingTargetBrackets ; $6935
 	call RegisterFrameTask ; $6938
-	ld hl, Text_37_5 ; $693b
+	ld hl, Text_BriefReturnTargetAllPositions ; $693b
 	call DrawBriefingCaption ; $693e
 	xor a ; $6941
 	ld [wBriefingAnimTimer], a ; $6942

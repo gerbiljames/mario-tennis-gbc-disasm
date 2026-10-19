@@ -77,13 +77,13 @@ DrawEraseSavedDataCaption:
 	pop_wram_bank ; $7185
 	ret ; $718a
 .emptySlot:
-	ld hl, Text_30_206 ; $718b
+	ld hl, Text_EraseCaptionNoDataInFile ; $718b
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $718e
 	ld c, $20 ; $7191
 	farcall RenderTextToBuffer64 ; $7193
 	jr .restore ; $7196
 .nonSlotItem:
-	ld hl, Text_30_204 ; $7198
+	ld hl, Text_EraseN64DataCaption ; $7198
 	sub $03 ; $719b
 	add l ; $719d
 	ld l, a ; $719e
@@ -494,7 +494,7 @@ DrawN64RecordTypeCaption:
 	ld c, $03 ; $74a3
 	call GetMenuCursorIndex_3b ; $74a5
 	ld b, a ; $74a8
-	ld hl, Text_30_207 ; $74a9
+	ld hl, Text_N64TournamentData ; $74a9
 	add l ; $74ac
 	ld l, a ; $74ad
 	jr nc, .renderTextToBuffer64 ; $74ae
@@ -754,7 +754,7 @@ DrawN64TransferItemCaption:
 	ld c, $02 ; $76ce
 	call GetMenuCursorIndex_3b ; $76d0
 	ld b, a ; $76d3
-	ld hl, Text_30_210 ; $76d4
+	ld hl, Text_N64CharPartnerData ; $76d4
 	add l ; $76d7
 	ld l, a ; $76d8
 	jr nc, .renderTextToBuffer64 ; $76d9

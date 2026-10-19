@@ -254,7 +254,7 @@ zero) add an offset in `b` to the id, and Stroke Match 2 passes `b = 13` with
 ids 61-70 (`StrokeMatch2Cases2`, `$0b:$6892`, passes 64). Seen in PyBoy: id 74
 twice in six Stroke Match 2 sessions.
 
-**Fix** (`make FIXES=1`): entries 72-86 are `Text_26_0`-`Text_26_14`.
+**Fix** (`make FIXES=1`): entries 72-86 are `Text_DrillYourLobFellShortFail`-`Text_DrillCoachMissedYourCourtFail`.
 
 ### The DMG lockout screen copies a whole map from an 18-row one
 

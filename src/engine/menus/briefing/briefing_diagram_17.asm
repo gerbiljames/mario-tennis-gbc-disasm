@@ -211,7 +211,7 @@ ClearBriefingCaptionTilemap:
 Unused_17_StubRet:
 	ret ; $4a05
 Unused_17_DrawSecondCaptionRow:
-	ld hl, Text_30_309 ; $4a06
+	ld hl, Text_DebugTextDisplayTest ; $4a06
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4a09
 	farcall RenderProportionalTextAt ; $4a0c
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $4a0f
@@ -424,7 +424,7 @@ DrillBriefing_ServeToTargets:
 	ld a, $01 ; $55a7
 	ld hl, CycleDiagramTargetPalette ; $55a9
 	call RegisterFrameTask ; $55ac
-	ld hl, Text_36_688 ; $55af
+	ld hl, Text_BriefTargetServeFourCourts ; $55af
 	call DrawBriefingCaption ; $55b2
 	xor a ; $55b5
 	ld [wBriefingAnimTimer], a ; $55b6
@@ -458,7 +458,7 @@ DrillBriefing_ServeToTargets:
 	ld a, $01 ; $55fd
 	ld hl, DrawBriefingTargetBrackets ; $55ff
 	call RegisterFrameTask ; $5602
-	ld hl, Text_36_689 ; $5605
+	ld hl, Text_BriefTargetServeSmallerTargets ; $5605
 	call DrawBriefingCaption ; $5608
 	xor a ; $560b
 	ld [wBriefingAnimTimer], a ; $560c
@@ -521,7 +521,7 @@ DrillBriefing_ServeToTargets:
 	ld a, $01 ; $569c
 	ld hl, DrawBriefingTargetBrackets ; $569e
 	call RegisterFrameTask ; $56a1
-	ld hl, Text_36_690 ; $56a4
+	ld hl, Text_BriefTargetServeDiagonally ; $56a4
 	call DrawBriefingCaption ; $56a7
 	call WaitForInputBlinking ; $56aa
 	call ClearFrameTasks ; $56ad
@@ -550,7 +550,7 @@ DrillBriefing_ServeToTargets:
 	ld a, $01 ; $56ea
 	ld hl, DrawBriefingTargetBrackets ; $56ec
 	call RegisterFrameTask ; $56ef
-	ld hl, Text_36_691 ; $56f2
+	ld hl, Text_BriefTargetServeAllPositions ; $56f2
 	call DrawBriefingCaption ; $56f5
 	xor a ; $56f8
 	ld [wBriefingAnimTimer], a ; $56f9

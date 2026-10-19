@@ -326,20 +326,20 @@ DrawCharacterSelectPrompt:
 	or a ; $4adf
 	jr nz, .altRow ; $4ae0
 	wram_bank WRAM_SCREEN ; $4ae2
-	ld hl, Text_30_117 ; $4ae8
+	ld hl, Text_CharSelectPickCharacter ; $4ae8
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4aeb
 	ld c, $12 ; $4aee
 	farcall RenderProportionalTextAt ; $4af0
 	jr .nextRow ; $4af3
 .altRow:
 	wram_bank WRAM_SCREEN ; $4af5
-	ld hl, Text_30_119 ; $4afb
+	ld hl, Text_CharSelectChoosePartner ; $4afb
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $4afe
 	ld c, $12 ; $4b01
 	farcall RenderProportionalTextAt ; $4b03
 .nextRow:
 	wram_bank WRAM_SCREEN ; $4b06
-	ld hl, Text_30_118 ; $4b0c
+	ld hl, Text_CharSelectStartChangeHands ; $4b0c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b0f
 	ld c, $12 ; $4b12
 	farcall RenderProportionalTextAt ; $4b14

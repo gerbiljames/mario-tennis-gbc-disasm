@@ -15,13 +15,13 @@ ClearRoundLabelRow:
 	ld [hl], a ; $487f
 	ret ; $4880
 DrawPracticeMatchLabel:
-	ld hl, Text_31_224 ; $4881
+	ld hl, Text_ResultsPracticeMatch ; $4881
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 11 ; $4884
 	ld bc, $0020 ; $4887
 	call DrawProportionalTextLine ; $488a
 	ret ; $488d
 DrawMarioExhibitionLabel:
-	ld hl, Text_31_234 ; $488e
+	ld hl, Text_ResultsMarioExhibition ; $488e
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $4891
 	ld bc, $0020 ; $4894
 	call DrawProportionalTextLine ; $4897
@@ -68,7 +68,7 @@ DrawPlayerNameAndLevel:
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $490a
 	ld bc, $0020 ; $490d
 	call WriteTextToTilemap ; $4910
-	ld hl, Text_31_228 ; $4913
+	ld hl, Text_LevelAbbrev ; $4913
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $4916
 	ld bc, $0020 ; $4919
 	call FetchAndDrawDialogueText ; $491c

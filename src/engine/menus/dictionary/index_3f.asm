@@ -41,7 +41,7 @@ DrawTennisDictionaryLetterLabels:
 	jr nz, .renderNextLetter ; $5374
 	xor a ; $5376
 .renderNextLetter:
-	ld hl, Text_35_143 ; $5377
+	ld hl, Text_TennisDictionaryLetterA ; $5377
 	add l ; $537a
 	ld l, a ; $537b
 	jr nc, .renderTextToBuffer64 ; $537c

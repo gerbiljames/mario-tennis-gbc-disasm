@@ -40,7 +40,7 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	ld h, $00 ; $4b5e
 	farcall PushTextArgNumber ; $4b60
 	ld de, wDecompBuffer tile 80 + 7 ; $4b63
-	ld hl, Text_31_237 ; $4b66
+	ld hl, Text_ExpScreenLevel ; $4b66
 	ld c, $20 ; $4b69
 	farcall RenderProportionalTextAt ; $4b6b
 	pop hl ; $4b6e

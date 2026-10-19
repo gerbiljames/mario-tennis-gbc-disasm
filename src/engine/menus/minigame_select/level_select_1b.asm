@@ -151,33 +151,33 @@ Unused_1b_DrawErasePrompt:
 	farcall PushTextArgString ; $6a12
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a15
 	call Unused_1b_CopyMainCharNameWithDiacritics ; $6a18
-	ld hl, Text_31_106 ; $6a1b
+	ld hl, Text_DebugErasePrompt ; $6a1b
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a1e
 	farcall Unused_18_DrawYesNoLabels ; $6a21
 	ret ; $6a24
 Unused_1b_DrawContinuePrompt:
-	ld hl, Text_31_109 ; $6a25
+	ld hl, Text_DebugContinuePrompt ; $6a25
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a28
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a2b
 	farcall Unused_18_DrawYesNoLabels ; $6a2e
 	ret ; $6a31
 Unused_1b_DrawEraseConfirmPrompt:
-	ld hl, Text_31_107 ; $6a32
+	ld hl, Text_DebugEraseReallyPrompt ; $6a32
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a35
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a38
 	farcall Unused_18_DrawYesNoLabels ; $6a3b
 	ret ; $6a3e
 Unused_1b_DrawIsThisCorrectPrompt:
-	ld hl, Text_31_113 ; $6a3f
+	ld hl, Text_DebugIsThisCorrect ; $6a3f
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a42
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a45
 	farcall Unused_18_DrawYesNoLabels ; $6a48
 	ret ; $6a4b
 Unused_1b_DrawCharAndItemDataPrompt:
-	ld hl, Text_30_354 ; $6a4c
+	ld hl, Text_CharAndItemData ; $6a4c
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a4f
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a52
-	ld hl, Text_30_354 ; $6a55
+	ld hl, Text_CharAndItemData ; $6a55
 	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $6a58
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e
@@ -282,7 +282,7 @@ Unused_1b_ShowNoN64DataFoundScreen:
 	call Unused_1b_FillTilemapRow17 ; $6b26
 	ld hl, wTextTileBuffer tile 78 + 2 ; $6b29
 	call Unused_1b_FillTilemapRow17 ; $6b2c
-	ld hl, Text_31_123 ; $6b2f
+	ld hl, Text_NoN64DataFound ; $6b2f
 	ld de, wTextTileBuffer tile 8 + 3 ; $6b32
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b35
 	ld hl, Text_MenuLevelUpStatusTrophies ; $6b38
@@ -611,7 +611,7 @@ DrawMinigameLevelDescription:
 	ld d, [hl] ; $6d79
 	ld e, a ; $6d7a
 	ld a, b ; $6d7b
-	ld hl, Text_30_194 ; $6d7c
+	ld hl, Text_MinigameLevelClearThisFirst ; $6d7c
 	add l ; $6d7f
 	ld l, a ; $6d80
 	jr nc, .renderTextToBuffer64 ; $6d81

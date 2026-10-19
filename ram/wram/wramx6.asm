@@ -363,13 +363,13 @@ SECTION "WRAMX bank 6 $df00", WRAMX[$df00], BANK[6]
 ; wCharSelectHandedness in WRAM bank $03).
 UNION
 ; clear-status developer menu (bank $0a, WRAM bank $05)
-; [8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled; Continue and cancel go straight to the result code. The menu keeps its state in WRAM bank $05 over the idle far-P1 character struct, cleared 32 bytes at a time on entry
+; [8-bit] RunClearStatusSetupMenu's first choice (Text_MenuSetContinue): 0 Set, 1 Continue, $ff cancelled; Continue and cancel go straight to the result code. The menu keeps its state in WRAM bank $05 over the idle far-P1 character struct, cleared 32 bytes at a time on entry
 w6ClearStatusMode:: db
 ; [8-bit] 0 singles, 1 doubles, copied from FLAG_DOUBLES when Set is chosen; picks the singles or doubles rank list and result-code row
 w6ClearStatusDoubles:: db
-; [8-bit] Second menu (Text_34_217): 0 Mini-Game, 1 Ranking Match; $ff steps back
+; [8-bit] Second menu (Text_MenuMinigameOrRanking): 0 Mini-Game, 1 Ranking Match; $ff steps back
 w6ClearStatusFormat:: db
-; [8-bit] Third menu (Text_34_218): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
+; [8-bit] Third menu (Text_MenuClasses): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
 w6ClearStatusClass:: db
 ; [8-bit] Fourth menu: the drill (Text_34_219) for a Mini-Game clear, or the rank within the class (Text_34_220 and the per-class lists after it) for a Ranking Match clear; $ff steps back
 w6ClearStatusRank:: db

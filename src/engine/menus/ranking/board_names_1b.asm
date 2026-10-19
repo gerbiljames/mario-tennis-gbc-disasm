@@ -58,17 +58,17 @@ DrawSinglesRankingEntry:
 SinglesRankingEntryTable:
 	; $555e, 24 bytes (records:2)
 	dw $0000 ; record 0
-	dw Text_30_41 ; record 1
-	dw Text_30_43 ; record 2
-	dw Text_30_45 ; record 3
-	dw Text_30_78 ; record 4
-	dw Text_30_44 ; record 5
-	dw Text_30_79 ; record 6
-	dw Text_30_40 ; record 7
-	dw Text_30_75 ; record 8
-	dw Text_30_46 ; record 9
-	dw Text_30_42 ; record 10
-	dw Text_30_39 ; record 11
+	dw Text_NameSammi ; record 1
+	dw Text_NameSpike ; record 2
+	dw Text_NameBCoz ; record 3
+	dw Text_NameEllis ; record 4
+	dw Text_NameEmilySingles ; record 5
+	dw Text_NameFrank ; record 6
+	dw Text_NameSean ; record 7
+	dw Text_NameKevin ; record 8
+	dw Text_NameACoz ; record 9
+	dw Text_NameElden ; record 10
+	dw Text_NameMark ; record 11
 SinglesRankingEntryTable1:
 	; $5576, 24 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; record 0
@@ -185,17 +185,17 @@ DoublesRankingEntryTable:
 	; $5627, 26 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
-	dw Text_30_41 ; record 2
-	dw Text_30_40 ; record 3
-	dw Text_30_43 ; record 4
-	dw Text_30_42 ; record 5
-	dw Text_30_46 ; record 6
-	dw Text_30_45 ; record 7
-	dw Text_30_78 ; record 8
-	dw Text_30_80 ; record 9
-	dw Text_30_75 ; record 10
-	dw Text_30_76 ; record 11
-	dw Text_30_43 ; record 12
+	dw Text_NameSammi ; record 2
+	dw Text_NameSean ; record 3
+	dw Text_NameSpike ; record 4
+	dw Text_NameElden ; record 5
+	dw Text_NameACoz ; record 6
+	dw Text_NameBCoz ; record 7
+	dw Text_NameEllis ; record 8
+	dw Text_NameEdgar ; record 9
+	dw Text_NameKevin ; record 10
+	dw Text_NameEmilyDoubles ; record 11
+	dw Text_NameSpike ; record 12
 DoublesRankingEntryTable1:
 	; $5641, 24 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; record 0

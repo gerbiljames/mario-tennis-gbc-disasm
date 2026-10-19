@@ -42,10 +42,10 @@ NetCoachVolleyLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_BETH, ACTOR_PARTNER ; $6fcf
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6fd7
 	jr nz, .setText ; $6fda
-	script_set_text Text_37_93 ; $6fdc
+	script_set_text Text_BethJuniorNetPractice ; $6fdc
 	jr .scriptShowSpeakerDialogueRestoreBG ; $6fe2
 .setText:
-	script_set_text Text_37_100 ; $6fe4
+	script_set_text Text_BethHerePracticeNetGame ; $6fe4
 .scriptShowSpeakerDialogueRestoreBG:
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $6fea
 	farcall RunDialogueYesNoPrompt ; $6fef
@@ -67,7 +67,7 @@ NetCoachVolleyLessonScene:
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7029
 	script_set_anim ACTOR_TRAINING_COURT_BETH, ANIM_BOUNCE ; $702e
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7035
-	script_set_text Text_37_99 ; $703a
+	script_set_text Text_BethServeVolleyBasics ; $703a
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7040
 	ld a, MINIGAME_NET_GAME_PRACTICE_1 ; $7045
 	ld [wCurrentMinigameStoryMatch + 1], a ; $7047
@@ -87,7 +87,7 @@ NetCoachVolleyLessonScene:
 	ret ; $706d
 NetCoachSmashLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_BETH, ACTOR_PARTNER ; $706e
-	script_set_text Text_37_134 ; $7076
+	script_set_text Text_BethSmashLessonOffer ; $7076
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $707c
 	farcall RunDialogueYesNoPrompt ; $7081
 	farcall ScriptCloseDialogueWindow ; $7084
@@ -134,7 +134,7 @@ NetCoachSmashLessonScene:
 	ret ; $711c
 NetCoachDropShotLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_BETH, ACTOR_PARTNER ; $711d
-	script_set_text Text_37_159 ; $7125
+	script_set_text Text_BethDropShotLessonOffer ; $7125
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $712b
 	farcall RunDialogueYesNoPrompt ; $7130
 	farcall ScriptCloseDialogueWindow ; $7133
@@ -318,7 +318,7 @@ ServicePractice3ResultScene:
 	dw ServicePractice1Result1 ; $72c5 jumptable
 ServeCoachIntroDialogue_15:
 	call InitServeCoachScene ; $72c7
-	script_set_text Text_37_28 ; $72ca
+	script_set_text Text_CurtClearedAllFourTargets ; $72ca
 	script_speak ACTOR_TRAINING_COURT_CURT ; $72d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $72d5
 	jr z, .greet ; $72d8
@@ -330,7 +330,7 @@ ServeCoachIntroDialogue_15:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $72f1
 	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_BOUNCE ; $72f6
 	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $72fd
-	script_set_text Text_37_31 ; $7302
+	script_set_text Text_CurtKeepPracticingAfterPass ; $7302
 	script_speak ACTOR_TRAINING_COURT_CURT ; $7308
 	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_SHAKE ; $730d
 	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $7314
@@ -345,10 +345,10 @@ ServeCoachIntroDialogue_15:
 	ret ; $7335
 ServicePractice2Result0:
 	call InitServeCoachScene ; $7336
-	script_set_text Text_37_42 ; $7339
+	script_set_text Text_CurtClearedAllSpinServes ; $7339
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $733f
 	jr z, .lesson1Speak ; $7342
-	script_set_text Text_37_46 ; $7344
+	script_set_text Text_CurtClearedAllSpinServesRanked ; $7344
 .lesson1Speak:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $734a
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_CURT ; $734f
@@ -367,7 +367,7 @@ ServicePractice2Result0:
 	ret ; $739b
 ServicePractice3Result0:
 	call InitServeCoachScene ; $739c
-	script_set_text Text_37_57 ; $739f
+	script_set_text Text_CurtClearedAllDownLine ; $739f
 	script_speak ACTOR_TRAINING_COURT_CURT ; $73a5
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_CURT ; $73aa
 	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_NOD ; $73b2
@@ -384,47 +384,47 @@ ServicePractice3Result0:
 	ret ; $73ef
 ServicePractice1Result1:
 	call InitServeCoachScene ; $73f0
-	script_set_text Text_37_62 ; $73f3
+	script_set_text Text_CurtMissedEveryTarget ; $73f3
 	call ServeCoachChainedRetryPrompt ; $73f9
 	ret ; $73fc
 ServicePractice1Result2:
 	call InitServeCoachScene ; $73fd
-	script_set_text Text_37_67 ; $7400
+	script_set_text Text_CurtDoubleFaults ; $7400
 	call ServeCoachTwoStageRetryPrompt ; $7406
 	ret ; $7409
 ServicePractice1Result3:
 	call InitServeCoachScene ; $740a
-	script_set_text Text_37_72 ; $740d
+	script_set_text Text_CurtMissedBigTarget ; $740d
 	call ServeCoachRetryPrompt ; $7413
 	ret ; $7416
 ServicePractice2Result3:
 	call InitServeCoachScene ; $7417
-	script_set_text Text_37_75 ; $741a
+	script_set_text Text_CurtHitTargetAtYourLevel ; $741a
 	call ServeCoachRetryPrompt ; $7420
 	ret ; $7423
 ServicePractice2Result4:
 	call InitServeCoachScene ; $7424
-	script_set_text Text_37_78 ; $7427
+	script_set_text Text_CurtNotPuttingSpin ; $7427
 	call ServeCoachRetryPrompt ; $742d
 	ret ; $7430
 ServicePractice2Result5:
 	call InitServeCoachScene ; $7431
-	script_set_text Text_37_81 ; $7434
+	script_set_text Text_CurtClearedLeftNotRight ; $7434
 	call ServeCoachRetryPrompt ; $743a
 	ret ; $743d
 ServicePractice2Result6:
 	call InitServeCoachScene ; $743e
-	script_set_text Text_37_84 ; $7441
+	script_set_text Text_CurtClearedRightNotLeft ; $7441
 	call ServeCoachRetryPrompt ; $7447
 	ret ; $744a
 ServicePractice3Result4:
 	call InitServeCoachScene ; $744b
-	script_set_text Text_37_87 ; $744e
+	script_set_text Text_CurtServeLineFastTiming ; $744e
 	call ServeCoachRetryPrompt ; $7454
 	ret ; $7457
 ServicePractice3Result5:
 	call InitServeCoachScene ; $7458
-	script_set_text Text_37_90 ; $745b
+	script_set_text Text_CurtServeLineFromCenter ; $745b
 	call ServeCoachRetryPrompt ; $7461
 	ret ; $7464
 ServeCoachChainedRetryPrompt:
@@ -459,10 +459,10 @@ ServeCoachTwoStageRetryPrompt:
 	script_wait_frames 5 ; $74be
 	and a ; $74c5
 	jp z, .setText ; $74c6
-	script_set_text Text_37_71 ; $74c9
+	script_set_text Text_CurtPracticeFirstTryLater ; $74c9
 	jp InitServeCoachScene.speak ; $74cf
 .setText:
-	script_set_text Text_37_65 ; $74d2
+	script_set_text Text_CurtOkLetsDoIt ; $74d2
 	script_speak ACTOR_TRAINING_COURT_CURT ; $74d8
 	call ServeCoachWalkToCourtAndStartLesson ; $74dd
 	ret ; $74e0

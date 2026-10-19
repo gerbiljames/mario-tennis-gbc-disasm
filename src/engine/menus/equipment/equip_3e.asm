@@ -168,7 +168,7 @@ RenderShoesDescText:
 	ld hl, $00f7 ; $599e
 	jp RenderRacketDescText.addTextIndex ; $59a1
 RenderRacketDescText:
-	ld hl, Text_30_237 ; $59a4
+	ld hl, Text_RacketNormalDesc ; $59a4
 .addTextIndex:
 	ld a, c ; $59a7
 	add l ; $59a8
@@ -186,7 +186,7 @@ RenderShoesNameText:
 	ld hl, $00f4 ; $59b8
 	jp RenderRacketNameText.addTextIndex ; $59bb
 RenderRacketNameText:
-	ld hl, Text_30_229 ; $59be
+	ld hl, Text_RacketNormal ; $59be
 .addTextIndex:
 	ld a, c ; $59c1
 	add l ; $59c2

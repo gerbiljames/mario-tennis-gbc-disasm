@@ -156,7 +156,7 @@ Unused_10_Test2Npc03:
 	set_flag FLAG_DRILL_FROM_MENU ; $47e6
 	ld hl, $0001 ; $47e9
 	farcall PushTextArgNumber ; $47ec
-	script_set_text Text_30_353 ; $47ef
+	script_set_text Text_TestMapMiniGameNumber ; $47ef
 	script_speak SPEAKER_NONE ; $47f5
 	ld a, MINIGAME_SERVICE_MATCH_2 ; $47fa
 	farcall RunTrainingDrillByID ; $47fc
@@ -174,7 +174,7 @@ Unused_10_Test2Npc04:
 	set_flag FLAG_DRILL_FROM_MENU ; $4817
 	ld hl, $0002 ; $481a
 	farcall PushTextArgNumber ; $481d
-	script_set_text Text_30_353 ; $4820
+	script_set_text Text_TestMapMiniGameNumber ; $4820
 	script_speak SPEAKER_NONE ; $4826
 	ld a, MINIGAME_SERVICE_MATCH_3 ; $482b
 	farcall RunTrainingDrillByID ; $482d
@@ -192,7 +192,7 @@ Unused_10_Test2Npc05:
 	set_flag FLAG_DRILL_FROM_MENU ; $4848
 	ld hl, $0003 ; $484b
 	farcall PushTextArgNumber ; $484e
-	script_set_text Text_30_353 ; $4851
+	script_set_text Text_TestMapMiniGameNumber ; $4851
 	script_speak SPEAKER_NONE ; $4857
 	ld a, MINIGAME_SERVICE_PRACTICE_1 ; $485c
 	farcall RunTrainingDrillByID ; $485e
@@ -210,7 +210,7 @@ Unused_10_Test2Npc06:
 	set_flag FLAG_DRILL_FROM_MENU ; $4879
 	ld hl, $0004 ; $487c
 	farcall PushTextArgNumber ; $487f
-	script_set_text Text_30_353 ; $4882
+	script_set_text Text_TestMapMiniGameNumber ; $4882
 	script_speak SPEAKER_NONE ; $4888
 	ld a, MINIGAME_SERVICE_PRACTICE_2 ; $488d
 	farcall RunTrainingDrillByID ; $488f
@@ -228,7 +228,7 @@ Unused_10_Test2Npc07:
 	set_flag FLAG_DRILL_FROM_MENU ; $48aa
 	ld hl, $0005 ; $48ad
 	farcall PushTextArgNumber ; $48b0
-	script_set_text Text_30_353 ; $48b3
+	script_set_text Text_TestMapMiniGameNumber ; $48b3
 	script_speak SPEAKER_NONE ; $48b9
 	ld a, MINIGAME_SERVICE_PRACTICE_3 ; $48be
 	farcall RunTrainingDrillByID ; $48c0
@@ -246,7 +246,7 @@ Unused_10_Test2Npc08:
 	set_flag FLAG_DRILL_FROM_MENU ; $48db
 	ld hl, $0006 ; $48de
 	farcall PushTextArgNumber ; $48e1
-	script_set_text Text_30_353 ; $48e4
+	script_set_text Text_TestMapMiniGameNumber ; $48e4
 	script_speak SPEAKER_NONE ; $48ea
 	ld a, MINIGAME_NET_GAME_MATCH_1 ; $48ef
 	farcall RunTrainingDrillByID ; $48f1
@@ -264,7 +264,7 @@ Unused_10_Test2Npc09:
 	set_flag FLAG_DRILL_FROM_MENU ; $490c
 	ld hl, $0007 ; $490f
 	farcall PushTextArgNumber ; $4912
-	script_set_text Text_30_353 ; $4915
+	script_set_text Text_TestMapMiniGameNumber ; $4915
 	script_speak SPEAKER_NONE ; $491b
 	ld a, MINIGAME_NET_GAME_MATCH_2 ; $4920
 	farcall RunTrainingDrillByID ; $4922
@@ -282,7 +282,7 @@ Unused_10_Test2Npc0A:
 	set_flag FLAG_DRILL_FROM_MENU ; $493d
 	ld hl, $0008 ; $4940
 	farcall PushTextArgNumber ; $4943
-	script_set_text Text_30_353 ; $4946
+	script_set_text Text_TestMapMiniGameNumber ; $4946
 	script_speak SPEAKER_NONE ; $494c
 	ld a, MINIGAME_NET_GAME_MATCH_3 ; $4951
 	farcall RunTrainingDrillByID ; $4953
@@ -299,7 +299,7 @@ Test2Npc0B_10:
 	set_flag FLAG_DRILL_FROM_MENU ; $496e
 	ld hl, $0009 ; $4971
 	farcall PushTextArgNumber ; $4974
-	script_set_text Text_30_353 ; $4977
+	script_set_text Text_TestMapMiniGameNumber ; $4977
 	script_speak SPEAKER_NONE ; $497d
 	ld a, MINIGAME_NET_GAME_PRACTICE_1 ; $4982
 	farcall RunTrainingDrillByID ; $4984
@@ -316,7 +316,7 @@ Test2Npc0C_10:
 	set_flag FLAG_DRILL_FROM_MENU ; $499f
 	ld hl, $000a ; $49a2
 	farcall PushTextArgNumber ; $49a5
-	script_set_text Text_30_353 ; $49a8
+	script_set_text Text_TestMapMiniGameNumber ; $49a8
 	script_speak SPEAKER_NONE ; $49ae
 	ld a, MINIGAME_NET_GAME_PRACTICE_2 ; $49b3
 	farcall RunTrainingDrillByID ; $49b5
@@ -333,7 +333,7 @@ Test2Npc0D_10:
 	set_flag FLAG_DRILL_FROM_MENU ; $49d0
 	ld hl, $000b ; $49d3
 	farcall PushTextArgNumber ; $49d6
-	script_set_text Text_30_353 ; $49d9
+	script_set_text Text_TestMapMiniGameNumber ; $49d9
 	script_speak SPEAKER_NONE ; $49df
 	ld a, MINIGAME_NET_GAME_PRACTICE_3 ; $49e4
 	farcall RunTrainingDrillByID ; $49e6
@@ -350,7 +350,7 @@ Test2Npc0E_10:
 	set_flag FLAG_DRILL_FROM_MENU ; $4a01
 	ld hl, $000c ; $4a04
 	farcall PushTextArgNumber ; $4a07
-	script_set_text Text_30_353 ; $4a0a
+	script_set_text Text_TestMapMiniGameNumber ; $4a0a
 	script_speak SPEAKER_NONE ; $4a10
 	ld a, MINIGAME_STROKE_MATCH_1 ; $4a15
 	farcall RunTrainingDrillByID ; $4a17
@@ -367,7 +367,7 @@ Test2Npc0F_10:
 	set_flag FLAG_DRILL_FROM_MENU ; $4a32
 	ld hl, $000d ; $4a35
 	farcall PushTextArgNumber ; $4a38
-	script_set_text Text_30_353 ; $4a3b
+	script_set_text Text_TestMapMiniGameNumber ; $4a3b
 	script_speak SPEAKER_NONE ; $4a41
 	ld a, MINIGAME_STROKE_MATCH_2 ; $4a46
 	farcall RunTrainingDrillByID ; $4a48
@@ -384,7 +384,7 @@ Test2Npc10_10:
 	set_flag FLAG_DRILL_FROM_MENU ; $4a63
 	ld hl, $000e ; $4a66
 	farcall PushTextArgNumber ; $4a69
-	script_set_text Text_30_353 ; $4a6c
+	script_set_text Text_TestMapMiniGameNumber ; $4a6c
 	script_speak SPEAKER_NONE ; $4a72
 	ld a, MINIGAME_STROKE_MATCH_3 ; $4a77
 	farcall RunTrainingDrillByID ; $4a79
@@ -401,7 +401,7 @@ Test2Npc11_10:
 	set_flag FLAG_DRILL_FROM_MENU ; $4a94
 	ld hl, $000f ; $4a97
 	farcall PushTextArgNumber ; $4a9a
-	script_set_text Text_30_353 ; $4a9d
+	script_set_text Text_TestMapMiniGameNumber ; $4a9d
 	script_speak SPEAKER_NONE ; $4aa3
 	ld a, MINIGAME_STROKE_PRACTICE_1 ; $4aa8
 	farcall RunTrainingDrillByID ; $4aaa
@@ -418,21 +418,21 @@ Test2Npc12_10:
 	set_flag FLAG_DRILL_FROM_MENU ; $4ac5
 	ld hl, $0010 ; $4ac8
 	farcall PushTextArgNumber ; $4acb
-	script_set_text Text_30_353 ; $4ace
+	script_set_text Text_TestMapMiniGameNumber ; $4ace
 	script_speak SPEAKER_NONE ; $4ad4
 	ld a, MINIGAME_STROKE_PRACTICE_2 ; $4ad9
 	farcall RunTrainingDrillByID ; $4adb
 	ret ; $4ade
 Test2NpcScripts_10:
 	; $4adf, 129 bytes (map_scripts)
-	map_script ACTOR_TEST2_CAT, FACEMASK_ANY, $0000, Text_33_33, $00, $00
-	map_script ACTOR_TEST2_NINA, FACEMASK_ANY, $0000, Text_33_34, $00, $00
-	map_script ACTOR_TEST2_ALEX, FACEMASK_ANY, $0000, Text_33_35, $00, $00
-	map_script ACTOR_TEST2_KATE, FACEMASK_ANY, $0000, Text_33_36, $00, $00
-	map_script ACTOR_TEST2_HARRY, FACEMASK_ANY, $0000, Text_33_37, $00, $00
-	map_script ACTOR_TEST2_MARIO, FACEMASK_ANY, $0000, Text_33_38, $00, $00
-	map_script ACTOR_TEST2_BOWSER, FACEMASK_ANY, $0000, Text_33_39, $00, $00
-	map_script ACTOR_TEST2_WALUIGI, FACEMASK_ANY, $0000, Text_33_40, $00, $00
+	map_script ACTOR_TEST2_CAT, FACEMASK_ANY, $0000, Text_RestaurantServerSelfService, $00, $00
+	map_script ACTOR_TEST2_NINA, FACEMASK_ANY, $0000, Text_RestaurantServerDontOvereat, $00, $00
+	map_script ACTOR_TEST2_ALEX, FACEMASK_ANY, $0000, Text_RestaurantWhatShouldIEat, $00, $00
+	map_script ACTOR_TEST2_KATE, FACEMASK_ANY, $0000, Text_RestaurantSandwichOrPizza, $00, $00
+	map_script ACTOR_TEST2_HARRY, FACEMASK_ANY, $0000, Text_RestaurantWantToTryItAll, $00, $00
+	map_script ACTOR_TEST2_MARIO, FACEMASK_ANY, $0000, Text_RestaurantChefWhatAreYouEating, $00, $00
+	map_script ACTOR_TEST2_BOWSER, FACEMASK_ANY, $0000, Text_RestaurantThinkAsLongAsYouLike, $00, $00
+	map_script ACTOR_TEST2_WALUIGI, FACEMASK_ANY, $0000, Text_RestaurantFruitAndCake, $00, $00
 	map_script ACTOR_TEST2_RESTAURANT_SERVER_1, FACEMASK_ANY, $0000, Test2Npc0B_10, $00, $00
 	map_script ACTOR_TEST2_RESTAURANT_SERVER_2, FACEMASK_ANY, $0000, Test2Npc0C_10, $00, $00
 	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_1, FACEMASK_ANY, $0000, Test2Npc0D_10, $00, $00

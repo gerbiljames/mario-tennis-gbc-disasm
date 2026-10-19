@@ -335,7 +335,7 @@ RunClearStatusSetupMenu:
 .modeMenu:
 	ld a, [wClearStatusWindowId] ; $4bf1
 	farcall DrawTextWindowFrame ; $4bf4
-	ld hl, Text_34_232 ; $4bf7
+	ld hl, Text_ClearStatusSetOrHandOver ; $4bf7
 	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bfa
 	farcall RenderProportionalTextAt ; $4bfd
 	ld a, [wClearStatusWindowId] ; $4c00
@@ -374,7 +374,7 @@ RunClearStatusSetupMenu:
 .formatMenu:
 	ld a, [wClearStatusWindowId] ; $4c4a
 	farcall DrawTextWindowFrame ; $4c4d
-	ld hl, Text_34_228 ; $4c50
+	ld hl, Text_ClearStatusChooseMode ; $4c50
 	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4c53
 	farcall RenderProportionalTextAt ; $4c56
 	ld a, [wClearStatusWindowId] ; $4c59
@@ -395,7 +395,7 @@ RunClearStatusSetupMenu:
 .setsMenu:
 	ld a, [wClearStatusWindowId] ; $4c83
 	farcall DrawTextWindowFrame ; $4c86
-	ld hl, Text_34_229 ; $4c89
+	ld hl, Text_ClearStatusChooseClass ; $4c89
 	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4c8c
 	farcall RenderProportionalTextAt ; $4c8f
 	ld a, [wClearStatusWindowId] ; $4c92
@@ -415,7 +415,7 @@ RunClearStatusSetupMenu:
 	jp z, .formatMenu ; $4cb9
 	ld a, [wClearStatusWindowId] ; $4cbc
 	farcall DrawTextWindowFrame ; $4cbf
-	ld hl, Text_34_230 ; $4cc2
+	ld hl, Text_ClearStatusChooseGame ; $4cc2
 	ld a, [wClearStatusFormat] ; $4cc5
 	add l ; $4cc8
 	ld l, a ; $4cc9

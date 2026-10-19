@@ -759,7 +759,7 @@ DrawCharGridSlotPrompt:
 	ld a, [wCpuDifficultyPrompt] ; $544e
 	or a ; $5451
 	jr z, .promptFromTable ; $5452
-	ld hl, Text_30_149 ; $5454
+	ld hl, Text_CharGridCpuDifficulty ; $5454
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $5457
 	ld c, $20 ; $545a
 	farcall RenderTextToBuffer64 ; $545c

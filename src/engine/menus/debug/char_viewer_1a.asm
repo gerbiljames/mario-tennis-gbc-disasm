@@ -375,7 +375,7 @@ Unused_1a_RefreshCharViewerSelection:
 	jr .queueNameRows ; $6f18
 .secondRow:
 	wram_bank WRAM_SCREEN ; $6f1a
-	ld hl, Text_34_192 ; $6f20
+	ld hl, Text_DebugCharViewerChangeColor ; $6f20
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6f23
 	ld c, $20 ; $6f26
 	farcall RenderTextToBuffer64 ; $6f28

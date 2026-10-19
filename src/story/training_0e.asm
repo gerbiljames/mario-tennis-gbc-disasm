@@ -155,16 +155,16 @@ TrainingGymNpc03_0e:
 TrainingGymNpc03TextIds:
 	; $43bd, 20 bytes (text_ids)
 	table_width 2
-	dw Text_35_169 ; record 0
-	dw Text_35_169 ; record 1
-	dw Text_35_179 ; record 2
-	dw Text_35_179 ; record 3
-	dw Text_35_189 ; record 4
-	dw Text_35_190 ; record 5
-	dw Text_35_203 ; record 6
-	dw Text_35_204 ; record 7
-	dw Text_35_219 ; record 8
-	dw Text_35_219 ; record 9
+	dw Text_GymLifterTooMuchMuscleSlows ; record 0
+	dw Text_GymLifterTooMuchMuscleSlows ; record 1
+	dw Text_GymLifterHeavyWeightsHurt ; record 2
+	dw Text_GymLifterHeavyWeightsHurt ; record 3
+	dw Text_GymLifterVarsitySkipBench ; record 4
+	dw Text_GymLifterVarsityPairSkipBench ; record 5
+	dw Text_GymLifterTravelingTeamIronGear ; record 6
+	dw Text_GymLifterTryRepairCounter ; record 7
+	dw Text_GymLifterHeyIslandOpenChamp ; record 8
+	dw Text_GymLifterHeyIslandOpenChamp ; record 9
 	assert_table_length NUM_STORYRANKS
 TrainingGymNpc04_0e:
 	ld a, [wMapSceneStage] ; $43d1
@@ -180,11 +180,11 @@ TrainingGymNpc04_0e:
 TrainingGymNpc04TextIds:
 	; $43ea, 10 bytes (text_ids)
 	table_width 2
-	dw Text_35_170 ; record 0
-	dw Text_35_180 ; record 1
-	dw Text_35_191 ; record 2
-	dw Text_35_205 ; record 3
-	dw Text_35_220 ; record 4
+	dw Text_GymLifterGirlWantsMorePower ; record 0
+	dw Text_GymLifterGirlUppingWeights ; record 1
+	dw Text_GymLifterGirlVarsityExperience ; record 2
+	dw Text_GymLifterGirlSeniorsUseRepair ; record 3
+	dw Text_GymLifterGirlMuscleTone ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingGymNpc05_0e:
 	ld a, [wMapSceneStage] ; $43f4
@@ -199,16 +199,16 @@ TrainingGymNpc05_0e:
 TrainingGymNpc05TextIds:
 	; $440b, 20 bytes (text_ids)
 	table_width 2
-	dw Text_35_171 ; record 0
-	dw Text_35_171 ; record 1
-	dw Text_35_181 ; record 2
-	dw Text_35_181 ; record 3
-	dw Text_35_192 ; record 4
-	dw Text_35_193 ; record 5
-	dw Text_35_206 ; record 6
-	dw Text_35_207 ; record 7
-	dw Text_35_221 ; record 8
-	dw Text_35_221 ; record 9
+	dw Text_GymSitupsOutlastOpponents ; record 0
+	dw Text_GymSitupsOutlastOpponents ; record 1
+	dw Text_GymSitupsEvenLegMuscle ; record 2
+	dw Text_GymSitupsEvenLegMuscle ; record 3
+	dw Text_GymSitupsVarsityFootrace ; record 4
+	dw Text_GymSitupsVarsityFootracePair ; record 5
+	dw Text_GymSitupsLegStrengthThink ; record 6
+	dw Text_GymSitupsLegStrengthSay ; record 7
+	dw Text_GymSitupsLookAtMyLegs ; record 8
+	dw Text_GymSitupsLookAtMyLegs ; record 9
 	assert_table_length NUM_STORYRANKS
 TrainingGymNpc06_0e:
 	ld a, [wMapSceneStage] ; $441f
@@ -223,16 +223,16 @@ TrainingGymNpc06_0e:
 TrainingGymNpc06TextIds:
 	; $4436, 20 bytes (text_ids)
 	table_width 2
-	dw Text_35_172 ; record 0
-	dw Text_35_172 ; record 1
-	dw Text_35_182 ; record 2
-	dw Text_35_182 ; record 3
-	dw Text_35_194 ; record 4
-	dw Text_35_194 ; record 5
-	dw Text_35_208 ; record 6
-	dw Text_35_209 ; record 7
-	dw Text_35_222 ; record 8
-	dw Text_35_222 ; record 9
+	dw Text_GymSitupsMachineTrainingHelps ; record 0
+	dw Text_GymSitupsMachineTrainingHelps ; record 1
+	dw Text_GymSitupsRunningBuildsEndurance ; record 2
+	dw Text_GymSitupsRunningBuildsEndurance ; record 3
+	dw Text_GymSitupsAlmostReachedGoal ; record 4
+	dw Text_GymSitupsAlmostReachedGoal ; record 5
+	dw Text_GymSitupsAfraidToRest ; record 6
+	dw Text_GymSitupsAfraidToRestPair ; record 7
+	dw Text_GymSitupsHowLongToTrain ; record 8
+	dw Text_GymSitupsHowLongToTrain ; record 9
 	assert_table_length NUM_STORYRANKS
 TrainingGymNpc07_0e:
 	ld a, [wMapSceneStage] ; $444a
@@ -250,14 +250,14 @@ TrainingGymNpc07_0e:
 TrainingGymNpc07TextIds:
 	; $4467, 10 bytes (text_ids)
 	table_width 2
-	dw Text_35_173 ; record 0
-	dw Text_35_183 ; record 1
-	dw Text_35_195 ; record 2
-	dw Text_35_210 ; record 3
-	dw Text_35_223 ; record 4
+	dw Text_GymAerobicsRhythmTraining ; record 0
+	dw Text_GymAerobicsMuscleElasticity ; record 1
+	dw Text_GymAerobicsWhyNotJoinUs ; record 2
+	dw Text_GymAerobicsOffTempo ; record 3
+	dw Text_GymAerobicsIronShoesOff ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingGymNpc07_0e.speak:
-	script_set_text Text_35_210 ; $4471
+	script_set_text Text_GymAerobicsOffTempo ; $4471
 	script_speak_restore ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1 ; $4477
 	farcall RunDialogueYesNoPrompt ; $447c
 	farcall ScriptCloseDialogueWindow ; $447f
@@ -282,11 +282,11 @@ TrainingGymNpc08_0e:
 TrainingGymNpc08TextIds:
 	; $44ae, 10 bytes (text_ids)
 	table_width 2
-	dw Text_35_174 ; record 0
-	dw Text_35_184 ; record 1
-	dw Text_35_196 ; record 2
-	dw Text_35_213 ; record 3
-	dw Text_35_224 ; record 4
+	dw Text_GymAerobicsBreatheBurnFat ; record 0
+	dw Text_GymAerobicsHeadbandHelps ; record 1
+	dw Text_GymAerobicsAlreadySweaty ; record 2
+	dw Text_GymAerobicsNoIronShoes ; record 3
+	dw Text_GymAerobicsNoRhythmThrowsOff ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingGymNpc09_0e:
 	ld a, [wMapSceneStage] ; $44b8
@@ -302,11 +302,11 @@ TrainingGymNpc09_0e:
 TrainingGymNpc09TextIds:
 	; $44d1, 10 bytes (text_ids)
 	table_width 2
-	dw Text_35_175 ; record 0
-	dw Text_35_185 ; record 1
-	dw Text_35_197 ; record 2
-	dw Text_35_214 ; record 3
-	dw Text_35_225 ; record 4
+	dw Text_GymAerobicsInviteToDance ; record 0
+	dw Text_GymAerobicsWhyNotMorePeople ; record 1
+	dw Text_GymAerobicsSelfConscious ; record 2
+	dw Text_GymAerobicsWhoIsThatDancer ; record 3
+	dw Text_GymAerobicsDancingWeirdRude ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingGymNpc0A_0e:
 	ld a, [wMapSceneStage] ; $44db
@@ -321,16 +321,16 @@ TrainingGymNpc0A_0e:
 TrainingGymNpc0ATextIds:
 	; $44f2, 20 bytes (text_ids)
 	table_width 2
-	dw Text_35_176 ; record 0
-	dw Text_35_176 ; record 1
-	dw Text_35_186 ; record 2
-	dw Text_35_186 ; record 3
-	dw Text_35_198 ; record 4
-	dw Text_35_199 ; record 5
-	dw Text_35_215 ; record 6
-	dw Text_35_215 ; record 7
-	dw Text_35_226 ; record 8
-	dw Text_35_227 ; record 9
+	dw Text_GymRunnerTennisIsRunning ; record 0
+	dw Text_GymRunnerTennisIsRunning ; record 1
+	dw Text_GymRunnerCoolDownRun ; record 2
+	dw Text_GymRunnerCoolDownRun ; record 3
+	dw Text_GymRunnerYouMadeVarsity ; record 4
+	dw Text_GymRunnerYouTwoMadeVarsity ; record 5
+	dw Text_GymRunnerWatchCostelloTwins ; record 6
+	dw Text_GymRunnerWatchCostelloTwins ; record 7
+	dw Text_GymRunnerYouBecameChampion ; record 8
+	dw Text_GymRunnerYouTwoBecameChamps ; record 9
 	assert_table_length NUM_STORYRANKS
 TrainingGymNpc0B_0e:
 	ld a, [wMapSceneStage] ; $4506
@@ -345,16 +345,16 @@ TrainingGymNpc0B_0e:
 TrainingGymNpc0BTextIds:
 	; $451d, 20 bytes (text_ids)
 	table_width 2
-	dw Text_35_177 ; record 0
-	dw Text_35_177 ; record 1
-	dw Text_35_187 ; record 2
-	dw Text_35_187 ; record 3
-	dw Text_35_200 ; record 4
-	dw Text_35_200 ; record 5
-	dw Text_35_216 ; record 6
-	dw Text_35_217 ; record 7
-	dw Text_35_228 ; record 8
-	dw Text_35_229 ; record 9
+	dw Text_GymHeadbandBoyLazyPutOnFat ; record 0
+	dw Text_GymHeadbandBoyLazyPutOnFat ; record 1
+	dw Text_GymHeadbandBoyOutOfShape ; record 2
+	dw Text_GymHeadbandBoyOutOfShape ; record 3
+	dw Text_GymHeadbandBoyMadeVarsityToo ; record 4
+	dw Text_GymHeadbandBoyMadeVarsityToo ; record 5
+	dw Text_GymHeadbandBoyAllEntrantsGood ; record 6
+	dw Text_GymHeadbandBoyTwinsDoubles ; record 7
+	dw Text_GymHeadbandBoyCoachMeSingles ; record 8
+	dw Text_GymHeadbandBoyCoachMeDoubles ; record 9
 	assert_table_length NUM_STORYRANKS
 TrainingGymNpc0C_0e:
 	ld a, [wMapSceneStage] ; $4531
@@ -370,11 +370,11 @@ TrainingGymNpc0C_0e:
 TrainingGymNpc0CTextIds:
 	; $454a, 10 bytes (text_ids)
 	table_width 2
-	dw Text_35_178 ; record 0
-	dw Text_35_188 ; record 1
-	dw Text_35_201 ; record 2
-	dw Text_35_218 ; record 3
-	dw Text_35_230 ; record 4
+	dw Text_GymCoachHopefulRunsOffStress ; record 0
+	dw Text_GymCoachHopefulMissedTeam ; record 1
+	dw Text_GymCoachHopefulProCoachDream ; record 2
+	dw Text_GymCoachHopefulHeadmasterReturns ; record 3
+	dw Text_GymCoachHopefulBackToNormal ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingGymNpcScripts_0e:
 	; $4554, 89 bytes (map_scripts)
@@ -388,7 +388,7 @@ TrainingGymNpcScripts_0e:
 	map_script ACTOR_TRAINING_GYM_STUDENT_BLACK_HAIR_BOY_1, FACEMASK_ANY, $0000, TrainingGymNpc0A_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	map_script ACTOR_TRAINING_GYM_STUDENT_HEADBAND_BOY, FACEMASK_ANY, $0000, TrainingGymNpc0B_0e, NPC_FREEZE, $00
 	map_script ACTOR_TRAINING_GYM_STUDENT_BLACK_HAIR_BOY_2, FACEMASK_ANY, $0000, TrainingGymNpc0C_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_1, FACEMASK_ANY, $0000, Text_6e_226, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_1, FACEMASK_ANY, $0000, Text_GymBoySuggestsRepairCounter, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 TrainingGymFacingScripts_0e:
 	; $45ad, 17 bytes (map_scripts)

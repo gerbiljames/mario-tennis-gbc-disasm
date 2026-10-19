@@ -706,8 +706,9 @@ Unchecked invariants: each `text_offsets` table is followed by its
 the pool.
 
 `include/text_ids.inc` is hand-maintained: 1,392 `def Text_<bank>_<index> equ
-<raw id>` lines. Sites are named only where the id reaches a known text sink,
-never by value.
+<raw id>` coordinates, each aliased by what the text says, and the code uses
+the alias. Sites are named only where the id reaches a known text sink, never
+by value.
 
 ---
 

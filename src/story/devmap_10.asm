@@ -122,7 +122,7 @@ DevelopmentRespawnActorsAlt_10:
 	ret ; $4d88
 Unused_10_SpeakCheckedChest:
 	farcall BeginCutsceneScriptMode ; $4d89
-	script_set_text Text_30_1 ; $4d8c
+	script_set_text Text_DevMapCheckedChest ; $4d8c
 	script_speak ACTOR_PLAYER ; $4d92
 	farcall EndCutsceneScriptMode ; $4d97
 	ret ; $4d9a

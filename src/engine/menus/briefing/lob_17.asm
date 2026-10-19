@@ -138,7 +138,7 @@ DrillBriefing_ReturnLob:
 	ld a, $01 ; $6ab8
 	ld hl, DrawBriefingMarkerRotated ; $6aba
 	call RegisterFrameTask ; $6abd
-	ld hl, Text_37_6 ; $6ac0
+	ld hl, Text_BriefReturnLobReturnServe ; $6ac0
 	call DrawBriefingCaption ; $6ac3
 	call WaitForInputBlinking ; $6ac6
 	call ClearFrameTasks ; $6ac9
@@ -173,7 +173,7 @@ DrillBriefing_ReturnLob:
 	ld a, $01 ; $6b16
 	ld hl, DrawBriefingTargetBrackets ; $6b18
 	call RegisterFrameTask ; $6b1b
-	ld hl, Text_37_7 ; $6b1e
+	ld hl, Text_BriefReturnLobHitLobTarget ; $6b1e
 	call DrawBriefingCaption ; $6b21
 	call WaitForInputBlinking ; $6b24
 	call ClearFrameTasks ; $6b27
@@ -208,7 +208,7 @@ DrillBriefing_ReturnLob:
 	ld a, $01 ; $6b74
 	ld hl, DrawBriefingTargetBrackets ; $6b76
 	call RegisterFrameTask ; $6b79
-	ld hl, Text_37_8 ; $6b7c
+	ld hl, Text_BriefReturnLobAllPositions ; $6b7c
 	call DrawBriefingCaption ; $6b7f
 	xor a ; $6b82
 	ld [wBriefingAnimTimer], a ; $6b83
@@ -379,7 +379,7 @@ DrillBriefing_ReturnDownLine:
 	ld a, $01 ; $6d2f
 	ld hl, DrawBriefingMarkerRotated ; $6d31
 	call RegisterFrameTask ; $6d34
-	ld hl, Text_37_9 ; $6d37
+	ld hl, Text_BriefPassingShotReturnServe ; $6d37
 	call DrawBriefingCaption ; $6d3a
 	call WaitForInputBlinking ; $6d3d
 	call ClearFrameTasks ; $6d40
@@ -411,7 +411,7 @@ DrillBriefing_ReturnDownLine:
 	ld a, $01 ; $6d85
 	ld hl, DrawBriefingTargetBrackets ; $6d87
 	call RegisterFrameTask ; $6d8a
-	ld hl, Text_37_10 ; $6d8d
+	ld hl, Text_BriefPassingShotDownLine ; $6d8d
 	call DrawBriefingCaption ; $6d90
 	call WaitForInputBlinking ; $6d93
 	call ClearFrameTasks ; $6d96
@@ -443,7 +443,7 @@ DrillBriefing_ReturnDownLine:
 	ld a, $01 ; $6ddb
 	ld hl, DrawBriefingTargetBrackets ; $6ddd
 	call RegisterFrameTask ; $6de0
-	ld hl, Text_37_11 ; $6de3
+	ld hl, Text_BriefPassingShotAllPositions ; $6de3
 	call DrawBriefingCaption ; $6de6
 	xor a ; $6de9
 	ld [wBriefingAnimTimer], a ; $6dea

@@ -379,7 +379,7 @@ Unused_1a_RestoreMessageSpeed:
 	ret ; $42cd
 .scriptShowSpeakerDialogueRestoreBG:
 	clear_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $42ce
-	script_set_text Text_31_156 ; $42d1
+	script_set_text Text_OptionsSaveYourProgress ; $42d1
 	script_speak_restore SPEAKER_NONE ; $42d7
 	farcall RunDialogueYesNoPrompt ; $42dc
 	farcall ScriptCloseDialogueWindow ; $42df
@@ -416,7 +416,7 @@ Unused_1a_RestoreMessageSpeed:
 .reopenFromSavePrompt:
 	jp Unused_1a_RunPauseMenuWindow ; $432e
 .setText:
-	script_set_text Text_31_157 ; $4331
+	script_set_text Text_OptionsBackToMenu ; $4331
 	script_speak_restore SPEAKER_NONE ; $4337
 	ld a, $01 ; $433c
 	ld [wMenuInitialRow], a ; $433e

@@ -80,7 +80,7 @@ Unused_1b_DrawCharSelectPrompt:
 	ld a, [wStoryCharacterSlot] ; $605f
 	or a ; $6062
 	jr z, .drawPrompt ; $6063
-	ld hl, Text_31_123 ; $6065
+	ld hl, Text_NoN64DataFound ; $6065
 .drawPrompt:
 	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $6068
 	farcall Unused_18_RenderProportionalTextAt32 ; $606b

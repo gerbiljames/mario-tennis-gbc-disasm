@@ -723,7 +723,7 @@ DrawSavedDataSourceCaption:
 	pop_wram_bank ; $6c08
 	ret ; $6c0d
 .emptySlot:
-	ld hl, Text_30_200 ; $6c0e
+	ld hl, Text_SavedDataNoDataInFile ; $6c0e
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6c11
 	ld c, $20 ; $6c14
 	farcall RenderTextToBuffer64 ; $6c16
@@ -731,13 +731,13 @@ DrawSavedDataSourceCaption:
 .compare:
 	cp $04 ; $6c1b
 	jr nz, .otherItem ; $6c1d
-	ld hl, Text_30_199 ; $6c1f
+	ld hl, Text_SavedDataN64TennisData ; $6c1f
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6c22
 	ld c, $20 ; $6c25
 	farcall RenderTextToBuffer64 ; $6c27
 	jr .restore ; $6c2a
 .otherItem:
-	ld hl, Text_30_201 ; $6c2c
+	ld hl, Text_SavedDataMarioCharData ; $6c2c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6c2f
 	ld c, $20 ; $6c32
 	farcall RenderTextToBuffer64 ; $6c34

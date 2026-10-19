@@ -139,7 +139,7 @@ Unused_17_ShowCourtDiagramTestScreen:
 	ld a, $01 ; $4552
 	ld hl, DrawBriefingMarkerHFlip ; $4554
 	call RegisterFrameTask ; $4557
-	ld hl, Text_30_228 ; $455a
+	ld hl, Text_DebugRacketTest ; $455a
 	call DrawBriefingCaption ; $455d
 	call WaitForInputBlinking ; $4560
 	call ClearFrameTasks ; $4563
@@ -204,7 +204,7 @@ Unused_17_ShowCourtDiagramTestScreen:
 	ld a, $01 ; $45fa
 	ld hl, DrawBriefingTargetBrackets ; $45fc
 	call RegisterFrameTask ; $45ff
-	ld hl, Text_30_309 ; $4602
+	ld hl, Text_DebugTextDisplayTest ; $4602
 	call DrawBriefingCaption ; $4605
 	ld b, $02 ; $4608
 	call DrawDiagramTargetOverlay ; $460a
@@ -218,7 +218,7 @@ Unused_17_ShowCourtDiagramTestScreen:
 	call RegisterFrameTask ; $4620
 	ld b, $00 ; $4623
 	call DrawDiagramTargetOverlay ; $4625
-	ld hl, Text_30_228 ; $4628
+	ld hl, Text_DebugRacketTest ; $4628
 	call DrawBriefingCaption ; $462b
 	ld a, $70 ; $462e
 	ld [wBriefingHMarkerX], a ; $4630

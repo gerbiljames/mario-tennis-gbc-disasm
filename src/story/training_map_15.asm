@@ -65,27 +65,27 @@ TournamentCourtyardNpc05_15:
 	script_speak ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY ; $4139
 	ret ; $413e
 .done:
-	script_set_text Text_1f_32 ; $413f
+	script_set_text Text_UnionFanRootForYou ; $413f
 	script_speak ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY ; $4145
 	ret ; $414a
 TournamentCourtyardNpc05TextIds:
 	; $414b, 14 bytes (text_ids)
-	dw Text_1f_30 ; record 0
-	dw Text_1f_39 ; record 1
-	dw Text_1f_39 ; record 2
-	dw Text_1f_39 ; record 3
-	dw Text_1f_58 ; record 4
-	dw Text_1f_66 ; record 5
-	dw Text_1f_74 ; record 6
+	dw Text_UnionFanAllUnionThisYear ; record 0
+	dw Text_UnionFanAllLostRoundOne ; record 1
+	dw Text_UnionFanAllLostRoundOne ; record 2
+	dw Text_UnionFanAllLostRoundOne ; record 3
+	dw Text_UnionFanSammieAndSean ; record 4
+	dw Text_UnionFanOnlyTeamLost ; record 5
+	dw Text_UnionFanWonderWhyWeLost ; record 6
 TournamentCourtyardNpcScripts_15:
 	; $4159, 57 bytes (map_scripts)
-	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_1f_28, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_1f_29, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_ProgramSellerRoundOneSouvenirs, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_SouvenirSellerHopingCloseMatches, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_1f_33, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_1f_34, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_1f_35, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_1f_36, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_FactoryFanCozTwinsWillWin, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_EmpireFanAcademyNoChance, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_CourtyardFanSunnySkies, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_CourtyardGirlLearnTheRules, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentCourtyardFacingScripts_15:
 	; $4192, 9 bytes (map_scripts)
@@ -194,63 +194,63 @@ InitTournamentSiteSceneVariant:
 	ret ; $42f6
 TournamentSiteRound2NpcScripts_15:
 	; $42f7, 57 bytes (map_scripts)
-	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_1f_37, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_1f_38, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_ProgramSellerFactoryHat, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_SouvenirSellerEveryoneDoBest, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_1f_41, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_1f_42, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_1f_43, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_1f_44, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_FactoryFanAllMadeRoundTwo, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_EmpireFanSpikeWillWin, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_CourtyardFanYouDidWellUnseeded, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_CourtyardGirlYoureGood, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentSiteSemifinalNpcScripts_15:
 	; $4330, 57 bytes (map_scripts)
-	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_1f_45, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_1f_46, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_ProgramSellerSemifinalists, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_SouvenirSellerPlayerUnseededGood, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_1f_47, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_1f_48, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_1f_49, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_1f_50, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_FactoryFanOnlyACozLeft, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_EmpireFanHopeSpikesVictorWins, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_CourtyardFanYouBeatSpike, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_CourtyardGirlWantAutograph, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentSiteFinalNpcScripts_15:
 	; $4369, 57 bytes (map_scripts)
-	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_1f_51, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_1f_52, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_ProgramSellerFinalACozVsPlayer, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_SouvenirSellerACozToughFinal, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_1f_53, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_1f_54, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_1f_55, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_1f_56, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_FactoryFanACozMadeFinals, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_EmpireFanCountingOnYou, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_CourtyardFanUpsetOverEmily, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_CourtyardGirlYouMadeFinals, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentSiteDoublesRound1NpcScripts_15:
 	; $43a2, 57 bytes (map_scripts)
-	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_1f_28, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_1f_57, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_ProgramSellerRoundOneSouvenirs, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_SouvenirSellerHopeForSales, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_1f_60, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_1f_61, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_1f_62, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_1f_63, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_FactoryFanCozBrothersDoubles, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_EmpireFanAcademyNoChanceDoubles, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_CourtyardFanDoublesStrategic, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_CourtyardGirlWhatsDoubles, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentSiteDoublesSemifinalNpcScripts_15:
 	; $43db, 57 bytes (map_scripts)
-	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_1f_64, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_1f_65, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_ProgramSellerGetSouvenirsWhileYouCan, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_SouvenirSellerGoodFirstRound, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_1f_68, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_1f_69, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_1f_70, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_1f_71, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_FactoryFanEasySemifinal, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_EmpireFanEllisEdgarLost, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_CourtyardFanGreatTeamwork, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_CourtyardGirlYourTeamsGood, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentSiteDoublesFinalNpcScripts_15:
 	; $4414, 57 bytes (map_scripts)
-	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_1f_72, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_1f_73, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_PROGRAM_SELLER, FACEMASK_ANY, $0000, Text_ProgramSellerDoublesFinalCrowd, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_SOUVENIR_SELLER, FACEMASK_ANY, $0000, Text_SouvenirSellerCozBrothersFinals, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_1f_76, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_1f_77, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_1f_78, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_1f_79, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_WAVY_HAIR_GIRL, FACEMASK_ANY, $0000, Text_FactoryFanCozBeatAcademySeeds, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, Text_EmpireFanSpikeEdgarLost, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, Text_CourtyardFanDoublesSoDeep, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TOURNAMENT_COURTYARD_STUDENT_PIGTAILS_GIRL, FACEMASK_ANY, $0000, Text_CourtyardGirlDoublesFinalists, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentSiteArrivalScene:
 	script_respawn_actors TournamentSiteRespawnActors_15 ; $444d
@@ -277,7 +277,7 @@ TournamentSiteArrivalScene:
 	script_wait_move ACTOR_PLAYER ; $44f9
 	script_wait_frames 40 ; $44fe
 	script_face ACTOR_TOURNAMENT_SITE_RESPAWN_HEADMASTER, FACE_DOWN ; $4505
-	script_set_text Text_1f_13 ; $450c
+	script_set_text Text_HeadmasterTournamentSiteArrival ; $450c
 	script_speak ACTOR_TOURNAMENT_SITE_RESPAWN_HEADMASTER ; $4512
 	script_set_anim ACTOR_TOURNAMENT_SITE_RESPAWN_EMILY_SWEATS, ANIM_NOD ; $4517
 	script_set_anim ACTOR_TOURNAMENT_SITE_RESPAWN_MARK_SWEATS, ANIM_NOD ; $451e
@@ -488,11 +488,11 @@ TrainingCourtNpc03_15:
 TrainingCourtNpc03TextIds:
 	; $4991, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_633 ; record 0
-	dw Text_36_636 ; record 1
-	dw Text_36_639 ; record 2
-	dw Text_36_639 ; record 3
-	dw Text_36_639 ; record 4
+	dw Text_CourtServeStudentImproveServe ; record 0
+	dw Text_CourtServeStudentSeniorServe ; record 1
+	dw Text_CourtServeStudentDownLineDefined ; record 2
+	dw Text_CourtServeStudentDownLineDefined ; record 3
+	dw Text_CourtServeStudentDownLineDefined ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc04_15:
 	ld a, [wMapSceneStage] ; $499b
@@ -507,11 +507,11 @@ TrainingCourtNpc04_15:
 TrainingCourtNpc04TextIds:
 	; $49b2, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_634 ; record 0
-	dw Text_36_637 ; record 1
-	dw Text_36_640 ; record 2
-	dw Text_36_640 ; record 3
-	dw Text_36_640 ; record 4
+	dw Text_CourtServeStudentGoodToss ; record 0
+	dw Text_CourtServeStudentCornerServe ; record 1
+	dw Text_CourtServeStudentAngledVsLine ; record 2
+	dw Text_CourtServeStudentAngledVsLine ; record 3
+	dw Text_CourtServeStudentAngledVsLine ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc05_15:
 	ld a, [wMapSceneStage] ; $49bc
@@ -526,11 +526,11 @@ TrainingCourtNpc05_15:
 TrainingCourtNpc05TextIds:
 	; $49d3, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_635 ; record 0
-	dw Text_36_638 ; record 1
-	dw Text_36_641 ; record 2
-	dw Text_36_641 ; record 3
-	dw Text_36_641 ; record 4
+	dw Text_CourtServeStudentFirstServeTip ; record 0
+	dw Text_CourtServeStudentSpinByCorner ; record 1
+	dw Text_CourtServeStudentFirstServeLine ; record 2
+	dw Text_CourtServeStudentFirstServeLine ; record 3
+	dw Text_CourtServeStudentFirstServeLine ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc08_15:
 	ld a, [wMapSceneStage] ; $49dd
@@ -545,11 +545,11 @@ TrainingCourtNpc08_15:
 TrainingCourtNpc08TextIds:
 	; $49f4, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_655 ; record 0
-	dw Text_36_661 ; record 1
-	dw Text_36_665 ; record 2
-	dw Text_36_665 ; record 3
-	dw Text_36_665 ; record 4
+	dw Text_CourtStrokeStudentStrokeBasics ; record 0
+	dw Text_CourtStrokeStudentLobVsNet ; record 1
+	dw Text_CourtStrokeStudentBreakService ; record 2
+	dw Text_CourtStrokeStudentBreakService ; record 3
+	dw Text_CourtStrokeStudentBreakService ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc09_15:
 	ld a, [wMapSceneStage] ; $49fe
@@ -564,11 +564,11 @@ TrainingCourtNpc09_15:
 TrainingCourtNpc09TextIds_15:
 	; $4a15, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_656 ; record 0
-	dw Text_36_662 ; record 1
-	dw Text_36_666 ; record 2
-	dw Text_36_666 ; record 3
-	dw Text_36_666 ; record 4
+	dw Text_CourtStrokeStudentTopspin ; record 0
+	dw Text_CourtStrokeStudentLobDeep ; record 1
+	dw Text_CourtStrokeStudentPressureServer ; record 2
+	dw Text_CourtStrokeStudentPressureServer ; record 3
+	dw Text_CourtStrokeStudentPressureServer ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0A_15:
 	ld a, [wMapSceneStage] ; $4a1f
@@ -583,11 +583,11 @@ TrainingCourtNpc0A_15:
 TrainingCourtNpc0ATextIds:
 	; $4a36, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_657 ; record 0
-	dw Text_36_663 ; record 1
-	dw Text_36_667 ; record 2
-	dw Text_36_667 ; record 3
-	dw Text_36_667 ; record 4
+	dw Text_CourtStrokeStudentRallyPatience ; record 0
+	dw Text_CourtStrokeStudentShortLobRisk ; record 1
+	dw Text_CourtStrokeStudentPassingShotAim ; record 2
+	dw Text_CourtStrokeStudentPassingShotAim ; record 3
+	dw Text_CourtStrokeStudentPassingShotAim ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0B_15:
 	ld a, [wMapSceneStage] ; $4a40
@@ -613,11 +613,11 @@ TrainingCourtNpc0B_15:
 TrainingCourtNpc0BTextIds:
 	; $4a76, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_658 ; record 0
-	dw Text_36_664 ; record 1
-	dw Text_36_668 ; record 2
-	dw Text_36_668 ; record 3
-	dw Text_36_668 ; record 4
+	dw Text_CourtStrokeStudentRallySecret ; record 0
+	dw Text_CourtStrokeStudentHighDeepLob ; record 1
+	dw Text_CourtStrokeStudentPassingShot ; record 2
+	dw Text_CourtStrokeStudentPassingShot ; record 3
+	dw Text_CourtStrokeStudentPassingShot ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0E_15:
 	ld a, [wMapSceneStage] ; $4a80
@@ -632,11 +632,11 @@ TrainingCourtNpc0E_15:
 TrainingCourtNpc0ETextIds:
 	; $4a97, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_642 ; record 0
-	dw Text_36_647 ; record 1
-	dw Text_36_650 ; record 2
-	dw Text_36_650 ; record 3
-	dw Text_36_650 ; record 4
+	dw Text_CourtNetStudentNetPlayWins ; record 0
+	dw Text_CourtNetStudentNetPressure ; record 1
+	dw Text_CourtNetStudentMixTechniques ; record 2
+	dw Text_CourtNetStudentMixTechniques ; record 3
+	dw Text_CourtNetStudentMixTechniques ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0F_15:
 	ld a, [wMapSceneStage] ; $4aa1
@@ -662,11 +662,11 @@ TrainingCourtNpc0F_15:
 TrainingCourtNpc0FTextIds:
 	; $4ad7, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_643 ; record 0
-	dw Text_36_648 ; record 1
-	dw Text_36_651 ; record 2
-	dw Text_36_651 ; record 3
-	dw Text_36_651 ; record 4
+	dw Text_CourtNetStudentTooCloseToNet ; record 0
+	dw Text_CourtNetStudentUseSmashes ; record 1
+	dw Text_CourtNetStudentDropShotTip ; record 2
+	dw Text_CourtNetStudentDropShotTip ; record 3
+	dw Text_CourtNetStudentDropShotTip ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc10_15:
 	ld a, [wMapSceneStage] ; $4ae1
@@ -692,11 +692,11 @@ TrainingCourtNpc10_15:
 TrainingCourtNpc10TextIds_15:
 	; $4b17, 10 bytes (text_ids)
 	table_width 2
-	dw Text_36_646 ; record 0
-	dw Text_36_649 ; record 1
-	dw Text_36_652 ; record 2
-	dw Text_36_652 ; record 3
-	dw Text_36_652 ; record 4
+	dw Text_CourtNetStudentWatchForLobs ; record 0
+	dw Text_CourtNetStudentWeakLobSmash ; record 1
+	dw Text_CourtNetStudentDropBallHard ; record 2
+	dw Text_CourtNetStudentDropBallHard ; record 3
+	dw Text_CourtNetStudentDropBallHard ; record 4
 	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc13_15:
 	script_move_player_to_actor ACTOR_TRAINING_COURT_STUDENT_CAP_BOY_3 ; $4b21
@@ -708,7 +708,7 @@ TrainingCourtNpc13_15:
 	ld hl, ACTORF_ANIM_RATE ; $4b34
 	add hl, de ; $4b37
 	ld [hl], a ; $4b38
-	script_set_text Text_36_671 ; $4b39
+	script_set_text Text_SwingStudentPracticeSwing ; $4b39
 	script_speak_restore ACTOR_TRAINING_COURT_STUDENT_CAP_BOY_3 ; $4b3f
 	farcall RunDialogueYesNoPrompt ; $4b44
 	farcall ScriptCloseDialogueWindow ; $4b47

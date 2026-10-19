@@ -147,7 +147,7 @@ DrawMainMenuCaption:
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 16], a ; $5bcc
 	ret ; $5bcf
 .emptySlot:
-	ld hl, Text_30_124 ; $5bd0
+	ld hl, Text_MainMenuCreateCharacter ; $5bd0
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5bd3
 	ld c, $20 ; $5bd6
 	farcall RenderTextToBuffer64 ; $5bd8
@@ -872,7 +872,7 @@ RenderMatchFormatOptionText:
 	or a ; $61a6
 	jr nz, .compare ; $61a7
 	ld a, [wMatchFormatDoubles] ; $61a9
-	ld hl, Text_30_135 ; $61ac
+	ld hl, Text_MatchFormatOneOnOne ; $61ac
 	add l ; $61af
 	ld l, a ; $61b0
 	jr nc, .renderModeText ; $61b1
@@ -886,7 +886,7 @@ RenderMatchFormatOptionText:
 	cp $01 ; $61bd
 	jr nz, .checkMatchFormatSets ; $61bf
 	ld a, [wMatchFormatGames] ; $61c1
-	ld hl, Text_30_137 ; $61c4
+	ld hl, Text_MatchFormatOneSetTwoGames ; $61c4
 	add l ; $61c7
 	ld l, a ; $61c8
 	jr nc, .renderGamesText ; $61c9
@@ -898,7 +898,7 @@ RenderMatchFormatOptionText:
 	ret ; $61d4
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $61d5
-	ld hl, Text_30_139 ; $61d8
+	ld hl, Text_MatchFormatOneSetMatch ; $61d8
 	add l ; $61db
 	ld l, a ; $61dc
 	jr nc, .renderSetsText ; $61dd
