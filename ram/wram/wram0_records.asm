@@ -90,94 +90,18 @@ wLinkMatchCharLevel:: db
 wStoryRandomBytes:: ds 4
 	ds 1
 
-; [8-bit] Character 1 Service Aces
-wCharacter1ServiceAces:: db
-
-; [8-bit] Character 1 Return Aces
-wCharacter1ReturnAces:: db
-
-; [8-bit] Character 1 Smash Aces
-wCharacter1SmashAces:: db
-
-; [8-bit] Character 1 Lob Shot Winners
-wCharacter1LobShotWinners:: db
-
-; [8-bit] Character 1 Drop Shot Winners
-wCharacter1DropShotWinners:: db
-
-; [8-bit] Character 1 Faults
-wCharacter1Faults:: db
-
-; [8-bit] Character 1 Double Faults
-wCharacter1DoubleFaults:: db
+; Match statistics per on-court character, read by the results and EXP
+; screens.
+	match_stats wCharacter1
 	ds 1
-
-; [8-bit] Character 2 Service Aces
-wCharacter2ServiceAces:: db
-
-; [8-bit] Character 2 Return Aces
-wCharacter2ReturnAces:: db
-
-; [8-bit] Character 2 Smash Aces
-wCharacter2SmashAces:: db
-
-; [8-bit] Character 2 Lob Shot Winners
-wCharacter2LobShotWinners:: db
-
-; [8-bit] Character 2 Drop Shot Winners
-wCharacter2DropShotWinners:: db
-
-; [8-bit] Character 2 Faults
-wCharacter2Faults:: db
-
-; [8-bit] Character 2 Double Faults
-wCharacter2DoubleFaults:: db
+	match_stats wCharacter2
 
 ; [8-bit] wCharCourtPos as of last frame. CheckServerEndChanged swaps the new value in and raises wChangeEndsPending when bit 1 differs; UpdateViewFlipState reads it for the flipped view
 wPrevCourtPos:: db
-
-; [8-bit] Character 3 Service Aces
-wCharacter3ServiceAces:: db
-
-; [8-bit] Character 3 Return Aces
-wCharacter3ReturnAces:: db
-
-; [8-bit] Character 3 Smash Aces
-wCharacter3SmashAces:: db
-
-; [8-bit] Character 3 Lob Shot Winners
-wCharacter3LobShotWinners:: db
-
-; [8-bit] Character 3 Drop Shot Winners
-wCharacter3DropShotWinners:: db
-
-; [8-bit] Character 3 Faults (sixth byte of the stat block; the label repeats DropShotWinners)
-wCharacter3Faults:: db
-
-; [8-bit] Character 3 Double Faults
-wCharacter3DoubleFaults:: db
+	match_stats wCharacter3
 	ds 1
-
-; [8-bit] Character 4 Service Aces
-wCharacter4ServiceAces:: db
-
-; [8-bit] Character 4 Return Aces
-wCharacter4ReturnAces:: db
-
-; [8-bit] Character 4 Smash Aces
-wCharacter4SmashAces:: db
-
-; [8-bit] Player 4 Lob Shot Winners
-wCharacter4LobShotWinners:: db
-
-; [8-bit] Character 4 Drop Shot Winners
-wCharacter4DropShotWinners:: db
-
-; [8-bit] Character 4 Faults
-wCharacter4Faults:: db
-
-; [8-bit] Character 4 Double Faults
-wCharacter4DoubleFaults:: db
+	match_stats wCharacter4
+	ASSERT wCharacter4ServiceAces - wCharacter1ServiceAces == 3 * MATCH_STATS_STRIDE
 
 ; [8-bit] Match RNG state: seeded from hVBlankCounter at match start, stirred by AdvanceMatchRng (+$73 plus ball position bytes)
 wMatchRngState:: db

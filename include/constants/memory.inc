@@ -50,6 +50,7 @@ def VRAM_SIZE equ $2000
 ; partner), their saved-slot mirror at $c800/$c840, and the four match
 ; records at $ca00-$caff. The pairs are copied together, two records at once.
 def CHAR_RECORD_SIZE equ $40
+def MATCH_STATS_STRIDE equ 8 ; wCharacter1ServiceAces + character index * 8
 
 ; --- VRAM bank in a copy destination ---
 ; QueueVRAMCopy takes its destination in de and carries the VRAM bank in bit 13

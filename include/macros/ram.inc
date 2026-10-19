@@ -61,3 +61,15 @@ MACRO char_record
 	ASSERT \1TrainLevels - \1 == CHARREC_TRAIN_LEVELS
 	ASSERT \1Equipment - \1 == CHARREC_EQUIPMENT
 ENDM
+
+; One on-court character's match statistics, labelled <prefix><Stat>. The
+; four sit MATCH_STATS_STRIDE bytes apart, indexed by wLastShotCharIndex.
+MACRO match_stats
+\1ServiceAces::     db
+\1ReturnAces::      db
+\1SmashAces::       db
+\1LobShotWinners::  db
+\1DropShotWinners:: db
+\1Faults::          db
+\1DoubleFaults::    db
+ENDM
