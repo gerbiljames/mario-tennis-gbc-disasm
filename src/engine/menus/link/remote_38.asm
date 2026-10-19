@@ -120,10 +120,10 @@ CheckLinkSelectionComplete:
 	ld [wCharSelectExitCode], a ; $6702
 .checkSlots:
 	ld a, [wCharSelectSlot] ; $6705
-	cp $ff ; $6708
+	cp CHARSELECTSLOT_BACKED_OUT ; $6708
 	jr z, .allChosen ; $670a
 	ld a, [wCharSelectRemoteSlot] ; $670c
-	cp $ff ; $670f
+	cp CHARSELECTSLOT_BACKED_OUT ; $670f
 	jr z, .allChosen ; $6711
 	jr .done ; $6713
 .allChosen:

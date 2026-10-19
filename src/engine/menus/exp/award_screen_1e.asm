@@ -24,7 +24,7 @@ ShowExpAwardScreen:
 	farcall LoadMenuFontGfx ; $543d
 	farcall InitTextWindows ; $5440
 	ld hl, wShadowTilemapBank ; $5443
-	ld [hl], $03 ; $5446
+	ld [hl], WRAM_SCREEN ; $5446
 	farcall PrepareGlyphBuffer ; $5448
 	call ClearFrameTasks ; $544b
 	call DisableLCDSafely ; $544e

@@ -792,7 +792,7 @@ RestaurantNpc0C_10:
 	ld a, [wMapSceneStage2] ; $5f80
 	cp STORYTIER_ACADEMY ; $5f83
 	jr z, .speak ; $5f85
-	cp $03 ; $5f87
+	cp STORYTIER_ISLAND_OPEN ; $5f87
 	jr nc, .islandOpenOrLater ; $5f89
 	script_speak_restore ACTOR_RESTAURANT_STUDENT_CAP_BOY_2 ; $5f8b
 	farcall RunDialogueYesNoPrompt ; $5f90

@@ -147,7 +147,7 @@ wStoryModeInteractRequest:: db
 wStoryModeMenuRequest:: db
 	ds 10
 
-; [8-bit] Scene stage of the loaded location, derived from save flags by the map's init script (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, ComputeRankingProgressIndex_27, ...). NPC scripts index per-stage text-id tables with it. Values are per location. First byte of the $c2b0-$c2bf per-location scratch block
+; [8-bit] Scene stage of the loaded location, derived from save flags by the map's init script (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, Unused_27_ComputeRankingProgressIndex, ...). NPC scripts index per-stage text-id tables with it. Values are per location. First byte of the $c2b0-$c2bf per-location scratch block
 wMapSceneStage:: db
 
 UNION
@@ -277,7 +277,7 @@ wDrillServeTargetResult:: dw
 wDrillShotResultBits:: dw
 	ds 1
 
-; [8-bit] Judgement of the current drill point, 0 until judged. JudgeShot0-3 store their JudgePoint result; JudgePoint returns early while it is nonzero, so the first judgement wins
+; [8-bit] Judgement of the current drill point, 0 until judged. *JudgeOn* hooks store their JudgePoint result; JudgePoint returns early while it is nonzero, so the first judgement wins
 wDrillPointJudgement:: db
 
 ; [32 bytes] One tilemap row of CGB attributes, sent to VRAM bank 1 at wBGRowBlitDest by ProcessBGBlitQueue (VRAM DMA) when hBGRowBlitPending is set

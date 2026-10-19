@@ -1481,7 +1481,7 @@ def Text_ScoreboardTarget equ Text_30_349
 def Text_ScoreboardHigh equ Text_30_350
 def Text_TrainingFailedOrPassed equ Text_30_351
 def Text_TestMapMiniGameNumber equ Text_30_353
-def Text_CharAndItemData equ Text_30_354
+def Text_StoryMenuCaptions equ Text_30_354
 def Text_StoryMenuSaveProgress equ Text_30_370
 def Text_MenuSceneViewerScenes equ Text_30_374
 def Text_EmilyYoureThePlayerRight equ Text_30_419

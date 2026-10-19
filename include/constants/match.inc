@@ -82,7 +82,7 @@ def AISHOT_NEUTRAL             equ $30 ; A+B, a smash when the ball is in range
 
 ; --- Court ids (wCurrentlyUsedCourt) ---
 ; Read only by LoadCourtSceneData, which takes row (id * 4) of the 25-row
-; LoadCourtSceneDataTable: surface friction, surface restitution and
+; CourtSceneDataTable: surface friction, surface restitution and
 ; court-scene graphics id. Ids that differ only in scene are skins of the same
 ; surface ($0d is $02's row byte for byte). IsCourtUnlocked reads byte
 ; (id - 4) of the unlock bits, so ids 4-8 are SAVEFLAG_COURT_STAR..._WAREHOUSE;
@@ -190,7 +190,7 @@ def NUM_CHARSTATES equ const_value
 ; `bit 7`), and the two bits break different loops. The quit paths write $ff,
 ; every bit.
 def MATCHABORT_POINT         equ $01 ; give up the current rally: tested by PlayPoint.rallyLoop and PlayMinigamePoint.rallyLoop
-def MATCHABORT_MATCH         equ $80 ; break out of the point/game/set/match loops: tested in RunMatchPlayLoop, CheckSetComplete and RunMinigameLoop
+def MATCHABORT_MATCH         equ $80 ; break out of the point/game/set/match loops: tested in RunMatchPlayLoop, CheckSetComplete and RunMinigamePointLoop
 def MATCHABORT_ALL           equ $ff ; every bit set, written by the four MatchQuitMenu_* actions, StoryPauseMenu_ReturnToMainMenu and Unused_07_TargetZonePointEndHook
 def MATCHABORTB_MATCH        equ 7   ; bit-index form of MATCHABORT_MATCH
 

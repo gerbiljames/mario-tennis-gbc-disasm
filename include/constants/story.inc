@@ -91,7 +91,7 @@ def NUM_STORYRANKS equ const_value
 ; STORYRANK_* with the singles/doubles bit shifted out (`sra a`): a
 ; format-independent tier. The Cafeteria and Restaurant init scripts store it
 ; in wMapSceneStage2; the Training Gym and Academy main building shift at each
-; reader; ComputeTrainingCourtProgressIndex writes it directly.
+; reader; ComputeStoryRankTier_15 writes it directly.
 	const_def
 	const STORYTIER_ACADEMY      ; $00
 	const STORYTIER_JUNIOR_CHAMP ; $01

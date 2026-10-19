@@ -30,7 +30,7 @@ ShowMatchResultsScreen:
 	push bc ; $403b
 	farcall InitTextWindows ; $403c
 	ld hl, wShadowTilemapBank ; $403f
-	ld [hl], $03 ; $4042
+	ld [hl], WRAM_SCREEN ; $4042
 	farcall PrepareGlyphBuffer ; $4044
 	call ClearFrameTasks ; $4047
 	call DisableLCDSafely ; $404a

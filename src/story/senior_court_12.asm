@@ -104,7 +104,7 @@ SeniorCourtNpc03_12:
 	ld a, [wMapSceneStage2] ; $55e8
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55eb
 	jr c, SeniorCourtNpc03FaceUpFlag0000_12.checkDoubles ; $55ed
-	cp $09 ; $55ef
+	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55ef
 	jr nc, SeniorCourtExit01_12.loop ; $55f1
 	call SeniorRankOfferScenePrep ; $55f3
 	ret ; $55f6
@@ -112,7 +112,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 	ld a, [wMapSceneStage2] ; $55f7
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55fa
 	jr c, .checkDoubles ; $55fc
-	cp $09 ; $55fe
+	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55fe
 	jr nc, SeniorCourtExit01_12.loop ; $5600
 	call SeniorRankOfferScenePrepFacingUp ; $5602
 	ret ; $5605
@@ -731,7 +731,7 @@ SeniorCourtPositionActorsByProgressB:
 	ld a, [wMapSceneStage2] ; $5dbe
 	cp SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN ; $5dc1
 	jr c, .checkDoubles ; $5dc3
-	cp $0d ; $5dc5
+	cp SENIORCOURTSTAGE_SINGLES_COMPLETE ; $5dc5
 	jr nc, .checkDoubles ; $5dc7
 	script_get_actor_state ACTOR_SENIOR_COURT_A_EMILY ; $5dc9
 	ld c, l ; $5dce
@@ -773,7 +773,7 @@ SeniorCourtPositionActorsByProgressA:
 	ld a, [wMapSceneStage2] ; $5e38
 	cp SENIORCOURTSTAGE_DOUBLES_RANK2 ; $5e3b
 	jr c, .checkStage10 ; $5e3d
-	cp $09 ; $5e3f
+	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $5e3f
 	jr nc, .checkStage10 ; $5e41
 	script_set_position ACTOR_SENIOR_COURT_A_CURT, 27.0, 11.0 ; $5e43
 	script_set_position ACTOR_SENIOR_COURT_A_BETH, 27.0, 13.0 ; $5e4e

@@ -133,9 +133,17 @@ def MENUSLIDE_FORWARD        equ $01 ; into a submenu
 
 ; --- Character select slot (wCharSelectSlot) ---
 def CHARSELECTSLOT_DONE equ $04 ; every player slot is filled: the screen shows the wait banner
+def CHARSELECTSLOT_BACKED_OUT equ $ff ; B on the first slot (CharSelectSlotRingTable): leave the screen
 
 ; --- Character-data screen cursor (wCharDataPage) ---
-def CHARDATAPAGE_CONFIRM equ $04 ; the confirm cell, after level-up choices 0-3
+; The four level-up choices (the training levels, CHARREC_TRAIN_LEVELS order),
+; then the confirm cell.
+	const_def
+	const CHARDATAPAGE_SPIN    ; $00
+	const CHARDATAPAGE_POWER   ; $01
+	const CHARDATAPAGE_CONTROL ; $02
+	const CHARDATAPAGE_SPEED   ; $03
+	const CHARDATAPAGE_CONFIRM ; $04
 
 ; --- Tennis Dictionary mode (wTennisDictMode) ---
 def TENNISDICT_INDEX equ $06 ; the 9-cell category index page; modes 0-5 open one category's term list

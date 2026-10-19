@@ -90,7 +90,7 @@ wDebugStatWords2:: ds 8
 ; engine's two `ld hl, $c780 / ld c, $08 / call ClearMemory16` sites zero
 ; the whole $c780-$c7ff mode page (c * 16 bytes), resetting every union
 ; variant, the wTargetZone*/wDrillGate* flats and the mode-hook table.
-; ResetMugshotPalettes_1b writes $ff to $c780; nothing reads it back.
+; Unused_1b_ResetMugshotPalettes writes $ff to $c780; nothing reads it back.
 wModeScratch::
 UNION
 ; character select (bank $1b)

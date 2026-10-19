@@ -1,6 +1,6 @@
 ; WRAM0 $cb00-$cfff: menu, cutscene, dictionary and link-screen state; the stack below $d000.
 
-; [8-bit] Which story character record the character-select / name-entry / char-data screens act on: 0 = main, 1 = partner. A $40-stride index into the wStoryModeMainCharacter* / wStoryModePartnerCharacter* records (e.g. GetActiveStoryNameBuffer)
+; [8-bit] Which story character record the character-select / name-entry / char-data screens act on: 0 = main, 1 = partner. A $40-stride index into the wStoryMain* / wStoryPartner* records (e.g. GetActiveStoryNameBuffer)
 wStoryCharacterSlot:: db
 
 ; [8-bit] rSCX the LCD STAT handler applies inside a scanline band, giving the results and cutscene screens a horizontally offset strip. The credits and window-slide code reuse the next two bytes as a 16-bit camera offset while the STAT handler is off

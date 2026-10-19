@@ -166,10 +166,10 @@ Unused_1b_DrawIsThisCorrectPrompt:
 	farcall Unused_18_DrawYesNoLabels ; $6a48
 	ret ; $6a4b
 Unused_1b_DrawCharAndItemDataPrompt:
-	ld hl, Text_CharAndItemData ; $6a4c
+	ld hl, Text_StoryMenuCaptions ; $6a4c
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a4f
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a52
-	ld hl, Text_CharAndItemData ; $6a55
+	ld hl, Text_StoryMenuCaptions ; $6a55
 	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $6a58
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e

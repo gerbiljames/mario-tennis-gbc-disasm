@@ -73,7 +73,7 @@ GetScoreBonus:
 	ret ; $6850
 ComputeMatchStatsReward:
 	ld a, [wCharId] ; $6851
-	cp $04 ; $6854
+	cp NUM_STORY_HEROES ; $6854
 	ret nc ; $6856
 	push hl ; $6857
 	call GetPlayerExpTier ; $6858
@@ -198,7 +198,7 @@ LookupExpTierForChar:
 	ld a, [wCharExpTier] ; $693e
 	ld c, a ; $6941
 	ld a, [wCharId] ; $6942
-	cp $04 ; $6945
+	cp NUM_STORY_HEROES ; $6945
 	jr nc, LookupExpTierForChar.storedTier ; $6947
 	ld l, c ; $6949
 	xor a ; $694a

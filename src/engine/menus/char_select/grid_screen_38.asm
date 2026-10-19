@@ -697,7 +697,7 @@ CancelCharGridSelection:
 DrawCharGridSlotPrompt:
 	wram_bank WRAM_SCREEN ; $5424
 	ld a, [wCharSelectSlot] ; $542a
-	cp $ff ; $542d
+	cp CHARSELECTSLOT_BACKED_OUT ; $542d
 	ret z ; $542f
 	wram_bank WRAM_SCREEN ; $5430
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $5436

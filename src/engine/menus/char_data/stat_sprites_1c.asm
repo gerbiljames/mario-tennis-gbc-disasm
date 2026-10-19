@@ -21,6 +21,7 @@ DrawStatValueSprites:
 	or a ; $4e63
 	jr nz, .spinDigits ; $4e64
 	ld a, [wCharDataPage] ; $4e66
+	ASSERT CHARDATAPAGE_SPIN == 0
 	or a ; $4e69
 	jr nz, .spinDigits ; $4e6a
 	inc l ; $4e6c
@@ -70,7 +71,7 @@ DrawStatValueSprites:
 	or a ; $4ebc
 	jr nz, .powerDigits ; $4ebd
 	ld a, [wCharDataPage] ; $4ebf
-	cp $01 ; $4ec2
+	cp CHARDATAPAGE_POWER ; $4ec2
 	jr nz, .powerDigits ; $4ec4
 	inc l ; $4ec6
 	ld b, $0f ; $4ec7
@@ -119,7 +120,7 @@ DrawStatValueSprites:
 	or a ; $4f19
 	jr nz, .controlDigits ; $4f1a
 	ld a, [wCharDataPage] ; $4f1c
-	cp $02 ; $4f1f
+	cp CHARDATAPAGE_CONTROL ; $4f1f
 	jr nz, .controlDigits ; $4f21
 	inc l ; $4f23
 	ld b, $0f ; $4f24
@@ -168,7 +169,7 @@ DrawStatValueSprites:
 	or a ; $4f76
 	jr nz, .speedDigits ; $4f77
 	ld a, [wCharDataPage] ; $4f79
-	cp $03 ; $4f7c
+	cp CHARDATAPAGE_SPEED ; $4f7c
 	jr nz, .speedDigits ; $4f7e
 	inc l ; $4f80
 	ld b, $0f ; $4f81
