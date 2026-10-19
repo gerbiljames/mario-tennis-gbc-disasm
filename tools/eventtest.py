@@ -192,6 +192,18 @@ class Game:
         copy = self.tmp / "rom.gbc"
         shutil.copy(rom, copy)
         shutil.copy(save, str(copy) + ".ram")
+        if "ApBootLedger.erase" in self.sym:
+            # an Archipelago build erases a save its ledger was not sealed
+            # for, the test save among them: skip that call (the ledger is
+            # still sealed for this seed) so the story file survives
+            b, a = self.sym["ApBootLedger.erase"]
+            at = b * 0x4000 + a - 0x4000 + 8
+            data = bytearray(copy.read_bytes())
+            target = self.sym["CallHLInBankA"][1]
+            if data[at:at + 3] != bytes([0xcd, target & 0xff, target >> 8]):
+                sys.exit("eventtest: ApBootLedger's erase call moved; update the patch")
+            data[at:at + 3] = b"\x00\x00\x00"
+            copy.write_bytes(data)
         self.pb = pb = PyBoy(str(copy), window="null", sound_emulated=False, log_level="ERROR")
         pb.set_emulation_speed(0)
         self.rf, self.mem = pb.register_file, pb.memory
