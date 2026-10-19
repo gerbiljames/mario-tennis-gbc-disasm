@@ -7,7 +7,7 @@
 	ld [wStoryModeCurrentLocation], a
 	ld a, $0a
 	ld [wStoryModeEntryPoint], a
-	ld a, $ff
+	ld a, EXITTRIGGER_DIRECT
 	ld [wUnusedExitTriggerIdMirror], a
 	ld [wStoryModeExitTriggerRequest], a
 	ret
