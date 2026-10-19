@@ -20,11 +20,7 @@ PopulateObjectArrayA:
 	ld e, l ; $7c43
 	pop hl ; $7c44
 	ld a, $0b ; $7c45
-	add l ; $7c47
-	ld l, a ; $7c48
-	jr nc, .read ; $7c49
-	inc h ; $7c4b
-.read:
+	add_hl_a ; $7c47
 	inc c ; $7c4c
 	ld a, c ; $7c4d
 	cp $10 ; $7c4e
@@ -114,11 +110,7 @@ PopulateObjectArrayB:
 	ld e, l ; $7d78
 	pop hl ; $7d79
 	ld a, $0b ; $7d7a
-	add l ; $7d7c
-	ld l, a ; $7d7d
-	jr nc, .read ; $7d7e
-	inc h ; $7d80
-.read:
+	add_hl_a ; $7d7c
 	inc c ; $7d81
 	ld a, c ; $7d82
 	cp $10 ; $7d83
@@ -164,11 +156,7 @@ ObjectArrayAUpdateCallback_18:
 	add c ; $7e3a
 	and $1f ; $7e3b
 	ld hl, ObjectArrayAWaveTable_18 ; $7e3d
-	add l ; $7e40
-	ld l, a ; $7e41
-	jr nc, .read ; $7e42
-	inc h ; $7e44
-.read:
+	add_hl_a ; $7e40
 	ld d, [hl] ; $7e45
 	ld hl, $0005 ; $7e46
 	add hl, bc ; $7e49
@@ -206,11 +194,7 @@ ObjectArrayBUpdateCallback_18:
 	add c ; $7e96
 	and $1f ; $7e97
 	ld hl, ObjectArrayBDriftTable_18 ; $7e99
-	add l ; $7e9c
-	ld l, a ; $7e9d
-	jr nc, .read ; $7e9e
-	inc h ; $7ea0
-.read:
+	add_hl_a ; $7e9c
 	ld d, [hl] ; $7ea1
 	ld hl, $0002 ; $7ea2
 	add hl, bc ; $7ea5

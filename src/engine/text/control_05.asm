@@ -138,11 +138,7 @@ MeasureNextArgNumberWidth:
 	dec a ; $5373
 	add a ; $5374
 	ld hl, PowersOfTen_05 ; $5375
-	add l ; $5378
-	ld l, a ; $5379
-	jr nc, .read ; $537a
-	inc h ; $537c
-.read:
+	add_hl_a ; $5378
 	ld a, [hl+] ; $537d
 	ld d, [hl] ; $537e
 	ld e, a ; $537f
@@ -206,11 +202,7 @@ TextCmdPrintShortText:
 	ld a, [wTextCharNameArg] ; $53cc
 	push de ; $53cf
 	ld hl, $001b ; $53d0
-	add l ; $53d3
-	ld l, a ; $53d4
-	jr nc, .fetchShortTextToBuffer ; $53d5
-	inc h ; $53d7
-.fetchShortTextToBuffer:
+	add_hl_a ; $53d3
 	ld de, wInlineTextBuffer ; $53d8
 	call FetchShortTextToBuffer ; $53db
 	pop de ; $53de
@@ -225,11 +217,7 @@ MeasureIndexedShortTextWidth:
 	push hl ; $53ea
 	ld a, [wTextCharNameArg] ; $53eb
 	ld hl, $001b ; $53ee
-	add l ; $53f1
-	ld l, a ; $53f2
-	jr nc, .fetchShortTextToBuffer ; $53f3
-	inc h ; $53f5
-.fetchShortTextToBuffer:
+	add_hl_a ; $53f1
 	ld de, wInlineTextBuffer ; $53f6
 	farcall FetchShortTextToBuffer ; $53f9
 	ld hl, wInlineTextBuffer ; $53fc

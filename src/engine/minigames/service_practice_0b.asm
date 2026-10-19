@@ -155,22 +155,14 @@ ServiceMatch3JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $4d58
 	ld hl, ServiceMatch3JudgePointMessages ; $4d5b
-	add l ; $4d5e
-	ld l, a ; $4d5f
-	jr nc, .readMessage ; $4d60
-	inc h ; $4d62
-.readMessage:
+	add_hl_a ; $4d5e
 	ld a, [hl] ; $4d63
 	ld a, a ; $4d64
 	ld b, $06 ; $4d65
 	call QueueDrillResultMessage ; $4d67
 	ld a, [wPointOutcome] ; $4d6a
 	ld hl, OddRallyVerdicts ; $4d6d
-	add l ; $4d70
-	ld l, a ; $4d71
-	jr nc, .readResult ; $4d72
-	inc h ; $4d74
-.readResult:
+	add_hl_a ; $4d70
 	ld a, [hl] ; $4d75
 	ret ; $4d76
 ServiceMatch3JudgePointMessages:
@@ -196,22 +188,14 @@ ServiceMatch3Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4d92
 	ld hl, ServiceMatch3Cases1Messages ; $4d95
-	add l ; $4d98
-	ld l, a ; $4d99
-	jr nc, .read ; $4d9a
-	inc h ; $4d9c
-.read:
+	add_hl_a ; $4d98
 	ld a, [hl] ; $4d9d
 	ld a, a ; $4d9e
 	ld b, $06 ; $4d9f
 	call QueueDrillResultMessage ; $4da1
 	ld a, [wPointOutcome] ; $4da4
 	ld hl, EvenRallyVerdicts ; $4da7
-	add l ; $4daa
-	ld l, a ; $4dab
-	jr nc, .readB ; $4dac
-	inc h ; $4dae
-.readB:
+	add_hl_a ; $4daa
 	ld a, [hl] ; $4daf
 	ret ; $4db0
 ServiceMatch3Cases1Messages:

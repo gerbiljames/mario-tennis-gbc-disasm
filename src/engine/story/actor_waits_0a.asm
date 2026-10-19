@@ -128,11 +128,7 @@ ScriptSetActorJumpVelocity:
 	ret z ; $471c
 	wram_bank WRAM_ACTORS ; $471d
 	ld a, ACTORF_JUMP_VEL ; $4723
-	add l ; $4725
-	ld l, a ; $4726
-	jr nc, .read ; $4727
-	inc h ; $4729
-.read:
+	add_hl_a ; $4725
 	ld a, e ; $472a
 	ld [hl+], a ; $472b
 	ld [hl], d ; $472c
@@ -142,11 +138,7 @@ SetActorActive:
 	ret z ; $4731
 	wram_bank WRAM_ACTORS ; $4732
 	ld a, ACTORF_MODE ; $4738
-	add l ; $473a
-	ld l, a ; $473b
-	jr nc, .read ; $473c
-	inc h ; $473e
-.read:
+	add_hl_a ; $473a
 	ld [hl], b ; $473f
 	ret ; $4740
 Unused_0a_SubDEFromHL:

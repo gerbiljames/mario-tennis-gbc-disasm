@@ -34,11 +34,7 @@ InitChartRowFlags:
 	ld a, $01 ; $4788
 	ld [hl], a ; $478a
 	ld a, $11 ; $478b
-	add l ; $478d
-	ld l, a ; $478e
-	jr nc, .gotPtr ; $478f
-	inc h ; $4791
-.gotPtr:
+	add_hl_a ; $478d
 	ld a, c ; $4792
 	inc a ; $4793
 	ld c, a ; $4794
@@ -52,11 +48,7 @@ BuildN64ExhibResultsGrid:
 	push bc ; $479f
 	ld hl, N64ExhibResultsGridTable ; $47a0
 	ld a, b ; $47a3
-	add l ; $47a4
-	ld l, a ; $47a5
-	jr nc, .read ; $47a6
-	inc h ; $47a8
-.read:
+	add_hl_a ; $47a4
 	ld b, [hl] ; $47a9
 	call DecodeN64ExhibResultsRow ; $47aa
 	pop bc ; $47ad
@@ -84,11 +76,7 @@ DecodeN64ExhibResultsRow:
 	add a ; $47d5
 	add a ; $47d6
 	add a ; $47d7
-	add l ; $47d8
-	ld l, a ; $47d9
-	jr nc, .expandRowBytesToBits ; $47da
-	inc h ; $47dc
-.expandRowBytesToBits:
+	add_hl_a ; $47d8
 	ld d, h ; $47dd
 	ld e, l ; $47de
 	call ExpandRowBytesToBits ; $47df
@@ -101,11 +89,7 @@ DecodeN64ExhibResultsRow:
 	push hl ; $47e8
 	ld hl, DecodeN64ExhibResultsRowTable ; $47e9
 	ld a, b ; $47ec
-	add l ; $47ed
-	ld l, a ; $47ee
-	jr nc, .read ; $47ef
-	inc h ; $47f1
-.read:
+	add_hl_a ; $47ed
 	ld b, [hl] ; $47f2
 	call CombineExhibCellBits ; $47f3
 	pop hl ; $47f6
@@ -128,11 +112,7 @@ DecodeN64ExhibResultsRowTable:
 MapExhibCellValueToGlyph:
 	push hl ; $4818
 	ld hl, MapExhibCellValueToGlyphTable ; $4819
-	add l ; $481c
-	ld l, a ; $481d
-	jr nc, .read ; $481e
-	inc h ; $4820
-.read:
+	add_hl_a ; $481c
 	ld a, [hl] ; $4821
 	pop hl ; $4822
 	ret ; $4823
@@ -147,37 +127,21 @@ CombineExhibCellBits:
 	ld a, b ; $4837
 	and $0f ; $4838
 	ld hl, wExhibCellBits ; $483a
-	add l ; $483d
-	ld l, a ; $483e
-	jr nc, .readBit0 ; $483f
-	inc h ; $4841
-.readBit0:
+	add_hl_a ; $483d
 	ld c, [hl] ; $4842
 	ld a, $10 ; $4843
-	add l ; $4845
-	ld l, a ; $4846
-	jr nc, .readBit1 ; $4847
-	inc h ; $4849
-.readBit1:
+	add_hl_a ; $4845
 	ld a, [hl] ; $484a
 	sla a ; $484b
 	ld d, a ; $484d
 	ld a, $10 ; $484e
-	add l ; $4850
-	ld l, a ; $4851
-	jr nc, .readBit2 ; $4852
-	inc h ; $4854
-.readBit2:
+	add_hl_a ; $4850
 	ld a, [hl] ; $4855
 	sla a ; $4856
 	sla a ; $4858
 	ld e, a ; $485a
 	ld a, $10 ; $485b
-	add l ; $485d
-	ld l, a ; $485e
-	jr nc, .readBit3 ; $485f
-	inc h ; $4861
-.readBit3:
+	add_hl_a ; $485d
 	ld a, [hl] ; $4862
 	sla a ; $4863
 	sla a ; $4865
@@ -207,11 +171,7 @@ ExpandRowBytesToBits:
 	ld b, a ; $4886
 	call ExpandByteToBitArray ; $4887
 	ld a, $08 ; $488a
-	add l ; $488c
-	ld l, a ; $488d
-	jr nc, .gotPtr ; $488e
-	inc h ; $4890
-.gotPtr:
+	add_hl_a ; $488c
 	ld a, c ; $4891
 	inc a ; $4892
 	ld c, a ; $4893
@@ -226,11 +186,7 @@ ExpandByteToBitArray:
 	push hl ; $489d
 	push bc ; $489e
 	ld a, $07 ; $489f
-	add l ; $48a1
-	ld l, a ; $48a2
-	jr nc, .gotPtr ; $48a3
-	inc h ; $48a5
-.gotPtr:
+	add_hl_a ; $48a1
 	ld c, $00 ; $48a6
 .loop:
 	ld a, b ; $48a8
@@ -310,11 +266,7 @@ DrawChartCharIcon:
 	ld a, b ; $4915
 	push hl ; $4916
 	ld hl, ChartCharIconTable ; $4917
-	add l ; $491a
-	ld l, a ; $491b
-	jr nc, .readTile ; $491c
-	inc h ; $491e
-.readTile:
+	add_hl_a ; $491a
 	ld a, [hl] ; $491f
 	pop hl ; $4920
 	ld [hl+], a ; $4921

@@ -87,11 +87,7 @@ DrawExpProgressBarTiles:
 	ld [de], a ; $5a16
 	push de ; $5a17
 	ld a, $0a ; $5a18
-	add e ; $5a1a
-	ld e, a ; $5a1b
-	jr nc, .fullCellLower ; $5a1c
-	inc d ; $5a1e
-.fullCellLower:
+	add_de_a ; $5a1a
 	ld a, [hl] ; $5a1f
 	ld [de], a ; $5a20
 	pop de ; $5a21
@@ -104,11 +100,7 @@ DrawExpProgressBarTiles:
 	ld a, [hl+] ; $5a2f
 	ld [de], a ; $5a30
 	ld a, $0a ; $5a31
-	add e ; $5a33
-	ld e, a ; $5a34
-	jr nc, .partialCellLower ; $5a35
-	inc d ; $5a37
-.partialCellLower:
+	add_de_a ; $5a33
 	ld a, [hl] ; $5a38
 	ld [de], a ; $5a39
 	ret ; $5a3a
@@ -119,11 +111,7 @@ DrawExpProgressBarTiles:
 	ld a, [hl+] ; $5a45
 	ld [de], a ; $5a46
 	ld a, $0a ; $5a47
-	add e ; $5a49
-	ld e, a ; $5a4a
-	jr nc, .lastCellLower ; $5a4b
-	inc d ; $5a4d
-.lastCellLower:
+	add_de_a ; $5a49
 	ld a, [hl] ; $5a4e
 	ld [de], a ; $5a4f
 	ret ; $5a50

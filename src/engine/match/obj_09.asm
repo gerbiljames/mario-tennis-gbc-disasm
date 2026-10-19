@@ -515,11 +515,7 @@ StartObjExitAnim:
 	add a ; $466c
 	add a ; $466d
 	add $08 ; $466e
-	add l ; $4670
-	ld l, a ; $4671
-	jr nc, .readEntry ; $4672
-	inc h ; $4674
-.readEntry:
+	add_hl_a ; $4670
 	ld a, [hl+] ; $4675
 	ld e, a ; $4676
 	ld a, [hl+] ; $4677

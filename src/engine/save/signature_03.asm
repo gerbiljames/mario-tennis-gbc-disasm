@@ -75,11 +75,7 @@ SumSaveHeaderRegion:
 .loop:
 	ld a, [de] ; $4855
 	inc de ; $4856
-	add l ; $4857
-	ld l, a ; $4858
-	jr nc, .gotPtr ; $4859
-	inc h ; $485b
-.gotPtr:
+	add_hl_a ; $4857
 	dec c ; $485c
 	jr nz, .loop ; $485d
 	dec b ; $485f

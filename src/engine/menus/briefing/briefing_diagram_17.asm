@@ -24,11 +24,7 @@ DrawBriefingMarkerRotated:
 	push_wram_bank WRAM_SCREEN ; $4876
 	ld hl, BriefingMarkerRotatedTable ; $487f
 	ld a, [wBriefingRotMarkerDir] ; $4882
-	add l ; $4885
-	ld l, a ; $4886
-	jr nc, .read ; $4887
-	inc h ; $4889
-.read:
+	add_hl_a ; $4885
 	ld b, [hl] ; $488a
 	ld c, $68 ; $488b
 	ld a, [wBriefingRotMarkerX] ; $488d
@@ -266,11 +262,7 @@ DrawDiagramTargetPatch:
 	add a ; $4a5a
 	add c ; $4a5b
 	ld hl, DiagramTargetPatchRecords_17 ; $4a5c
-	add l ; $4a5f
-	ld l, a ; $4a60
-	jr nc, .read ; $4a61
-	inc h ; $4a63
-.read:
+	add_hl_a ; $4a5f
 	ld a, [hl+] ; $4a64
 	ld b, [hl] ; $4a65
 	ld c, a ; $4a66
@@ -317,11 +309,7 @@ DecompressGraphicsList:
 	call DecompressData ; $4aad
 	pop hl ; $4ab0
 	ld a, $04 ; $4ab1
-	add l ; $4ab3
-	ld l, a ; $4ab4
-	jr nc, .gotPtr ; $4ab5
-	inc h ; $4ab7
-.gotPtr:
+	add_hl_a ; $4ab3
 	jr .loop ; $4ab8
 .done:
 	ret ; $4aba

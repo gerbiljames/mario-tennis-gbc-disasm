@@ -74,11 +74,7 @@ RunTrainingDrillByID:
 	inc a ; $478f
 	srl a ; $4790
 	ld hl, Text_TrainingFailedErrorCode ; $4792
-	add l ; $4795
-	ld l, a ; $4796
-	jr nc, .showSpeakerDialogue ; $4797
-	inc h ; $4799
-.showSpeakerDialogue:
+	add_hl_a ; $4795
 	ld a, $80 ; $479a
 	farcall ShowSpeakerDialogue ; $479c
 	script_fade_out 16 ; $479f
@@ -295,22 +291,14 @@ ServiceMatch1JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $493d
 	ld hl, ServiceMatch1JudgePointMessages ; $4940
-	add l ; $4943
-	ld l, a ; $4944
-	jr nc, .readMessage ; $4945
-	inc h ; $4947
-.readMessage:
+	add_hl_a ; $4943
 	ld a, [hl] ; $4948
 	ld a, a ; $4949
 	ld b, $06 ; $494a
 	call QueueDrillResultMessage ; $494c
 	ld a, [wPointOutcome] ; $494f
 	ld hl, OddRallyVerdicts ; $4952
-	add l ; $4955
-	ld l, a ; $4956
-	jr nc, .readResult ; $4957
-	inc h ; $4959
-.readResult:
+	add_hl_a ; $4955
 	ld a, [hl] ; $495a
 	ret ; $495b
 ServiceMatch1JudgePointMessages:
@@ -336,22 +324,14 @@ ServiceMatch1Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4977
 	ld hl, ServiceMatch1Cases1Messages ; $497a
-	add l ; $497d
-	ld l, a ; $497e
-	jr nc, .read ; $497f
-	inc h ; $4981
-.read:
+	add_hl_a ; $497d
 	ld a, [hl] ; $4982
 	ld a, a ; $4983
 	ld b, $06 ; $4984
 	call QueueDrillResultMessage ; $4986
 	ld a, [wPointOutcome] ; $4989
 	ld hl, EvenRallyVerdicts ; $498c
-	add l ; $498f
-	ld l, a ; $4990
-	jr nc, .readB ; $4991
-	inc h ; $4993
-.readB:
+	add_hl_a ; $498f
 	ld a, [hl] ; $4994
 	ret ; $4995
 ServiceMatch1Cases1Messages:
@@ -418,11 +398,7 @@ ServiceMatch2Hook_PointStart:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a09
 	srl a ; $4a0c
 	ld hl, ServiceMatch2ServeAims ; $4a0e
-	add l ; $4a11
-	ld l, a ; $4a12
-	jr nc, .read ; $4a13
-	inc h ; $4a15
-.read:
+	add_hl_a ; $4a11
 	ld a, [hl] ; $4a16
 	ld [wAiServeAimOverride], a ; $4a17
 	ASSERT DRILLMSG_NONE == 0
@@ -511,11 +487,7 @@ ServiceMatch2HandlePointEnd:
 	call ShowQueuedDrillMessage ; $4ad3
 	ld hl, wDrillServeTargetResult ; $4ad6
 	ld a, [wCurrentServingPlayer] ; $4ad9
-	add l ; $4adc
-	ld l, a ; $4add
-	jr nc, .read ; $4ade
-	inc h ; $4ae0
-.read:
+	add_hl_a ; $4adc
 	ld a, [hl] ; $4ae1
 	or a ; $4ae2
 	jr z, .serviceMatch2AwardPointToSide ; $4ae3
@@ -576,22 +548,14 @@ ServiceMatch2JudgePoint:
 .result0:
 	ld a, [wPointOutcome] ; $4b6e
 	ld hl, ServiceMatch2JudgePointMessages ; $4b71
-	add l ; $4b74
-	ld l, a ; $4b75
-	jr nc, .readMessage ; $4b76
-	inc h ; $4b78
-.readMessage:
+	add_hl_a ; $4b74
 	ld a, [hl] ; $4b79
 	ld a, a ; $4b7a
 	ld b, $06 ; $4b7b
 	call QueueDrillResultMessage ; $4b7d
 	ld a, [wPointOutcome] ; $4b80
 	ld hl, OddRallyVerdicts ; $4b83
-	add l ; $4b86
-	ld l, a ; $4b87
-	jr nc, .readResult ; $4b88
-	inc h ; $4b8a
-.readResult:
+	add_hl_a ; $4b86
 	ld a, [hl] ; $4b8b
 	ret ; $4b8c
 ServiceMatch2JudgePointMessages:
@@ -630,22 +594,14 @@ ServiceMatch2Cases1:
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4bc3
 	ld hl, ServiceMatch2Cases1Messages ; $4bc6
-	add l ; $4bc9
-	ld l, a ; $4bca
-	jr nc, .read ; $4bcb
-	inc h ; $4bcd
-.read:
+	add_hl_a ; $4bc9
 	ld a, [hl] ; $4bce
 	ld a, a ; $4bcf
 	ld b, $06 ; $4bd0
 	call QueueDrillResultMessage ; $4bd2
 	ld a, [wPointOutcome] ; $4bd5
 	ld hl, EvenRallyVerdicts ; $4bd8
-	add l ; $4bdb
-	ld l, a ; $4bdc
-	jr nc, .readB ; $4bdd
-	inc h ; $4bdf
-.readB:
+	add_hl_a ; $4bdb
 	ld a, [hl] ; $4be0
 	ret ; $4be1
 ServiceMatch2Cases1Messages:

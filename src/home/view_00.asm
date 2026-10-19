@@ -304,57 +304,29 @@ QueueCharFrameTiles:
 	ld bc, $0100 ; $2eba
 	add hl, bc ; $2ebd
 	ld a, $30 ; $2ebe
-	add e ; $2ec0
-	ld e, a ; $2ec1
-	jr nc, .shadowRow1 ; $2ec2
-	inc d ; $2ec4
-.shadowRow1:
+	add_de_a ; $2ec0
 	call QueueTileCopyAdvance ; $2ec5
 	ld a, $40 ; $2ec8
-	add e ; $2eca
-	ld e, a ; $2ecb
-	jr nc, .shadowRow2 ; $2ecc
-	inc d ; $2ece
-.shadowRow2:
+	add_de_a ; $2eca
 	call QueueTileCopyAdvance ; $2ecf
 	ld a, $40 ; $2ed2
-	add e ; $2ed4
-	ld e, a ; $2ed5
-	jr nc, .shadowRow3 ; $2ed6
-	inc d ; $2ed8
-.shadowRow3:
+	add_de_a ; $2ed4
 	call QueueTileCopyAdvance ; $2ed9
 	ld a, $40 ; $2edc
-	add e ; $2ede
-	ld e, a ; $2edf
-	jr nc, .shadowRow4 ; $2ee0
-	inc d ; $2ee2
-.shadowRow4:
+	add_de_a ; $2ede
 	call QueueTileCopyAdvance ; $2ee3
 	jr .loop ; $2ee6
 .smallShadow:
 	ld bc, $00c0 ; $2ee8
 	add hl, bc ; $2eeb
 	ld a, $30 ; $2eec
-	add e ; $2eee
-	ld e, a ; $2eef
-	jr nc, .shortShadowRow1 ; $2ef0
-	inc d ; $2ef2
-.shortShadowRow1:
+	add_de_a ; $2eee
 	call QueueTileCopyAdvance ; $2ef3
 	ld a, $40 ; $2ef6
-	add e ; $2ef8
-	ld e, a ; $2ef9
-	jr nc, .shortShadowRow2 ; $2efa
-	inc d ; $2efc
-.shortShadowRow2:
+	add_de_a ; $2ef8
 	call QueueTileCopyAdvance ; $2efd
 	ld a, $40 ; $2f00
-	add e ; $2f02
-	ld e, a ; $2f03
-	jr nc, .shortShadowRow3 ; $2f04
-	inc d ; $2f06
-.shortShadowRow3:
+	add_de_a ; $2f02
 	call QueueTileCopyAdvance ; $2f07
 	jr .loop ; $2f0a
 QueueTileCopyAdvance:

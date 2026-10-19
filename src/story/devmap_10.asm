@@ -223,20 +223,12 @@ MainMenuInitScript_10:
 ApplyMatchTypeSettings:
 	ld hl, MatchTypeSettingsTable0 ; $4ece
 	ld a, [wMatchFormatSets] ; $4ed1
-	add l ; $4ed4
-	ld l, a ; $4ed5
-	jr nc, .readSets ; $4ed6
-	inc h ; $4ed8
-.readSets:
+	add_hl_a ; $4ed4
 	ld a, [hl] ; $4ed9
 	ld [wMatchTypeNumberOfSets], a ; $4eda
 	ld hl, MatchTypeSettingsTable1 ; $4edd
 	ld a, [wMatchFormatGames] ; $4ee0
-	add l ; $4ee3
-	ld l, a ; $4ee4
-	jr nc, .readGames ; $4ee5
-	inc h ; $4ee7
-.readGames:
+	add_hl_a ; $4ee3
 	ld a, [hl] ; $4ee8
 	ld [wMatchTypeNumberOfGames], a ; $4ee9
 	ld a, [wMatchFormatDoubles] ; $4eec
@@ -330,11 +322,7 @@ RunTitleAndMainMenuLoop:
 	ld e, a ; $4fb8
 	ld hl, MatchSelectHandlersB_10 ; $4fb9
 	add a ; $4fbc
-	add l ; $4fbd
-	ld l, a ; $4fbe
-	jr nc, .done ; $4fbf
-	inc h ; $4fc1
-.done:
+	add_hl_a ; $4fbd
 	ld a, [hl+] ; $4fc2
 	ld h, [hl] ; $4fc3
 	ld l, a ; $4fc4

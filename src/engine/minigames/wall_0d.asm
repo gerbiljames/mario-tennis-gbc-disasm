@@ -288,11 +288,7 @@ SelectRandomMinigameShot:
 	ld l, a ; $4e36
 	farcall AdvanceMatchRng ; $4e37
 	and $0f ; $4e3a
-	add l ; $4e3c
-	ld l, a ; $4e3d
-	jr nc, .read ; $4e3e
-	inc h ; $4e40
-.read:
+	add_hl_a ; $4e3c
 	ld a, [hl] ; $4e41
 	ld [wMinigameShotRoll], a ; $4e42
 	ld a, [wMinigameShotRoll] ; $4e45

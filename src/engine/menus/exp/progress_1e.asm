@@ -161,11 +161,7 @@ DrawProgressScreenSprites:
 .drawIcons:
 	ld hl, wProgressVisibleEntries ; $7adb
 	ld a, [wProgressListIndex] ; $7ade
-	add l ; $7ae1
-	ld l, a ; $7ae2
-	jr nc, .gotPtr ; $7ae3
-	inc h ; $7ae5
-.gotPtr:
+	add_hl_a ; $7ae1
 	ld c, $07 ; $7ae6
 	ld b, $00 ; $7ae8
 .loop:

@@ -286,11 +286,7 @@ Unused_1a_LoadCharViewerGridTilemap:
 	jr nz, .loopB ; $6a2c
 	pop hl ; $6a2e
 	ld a, $20 ; $6a2f
-	add l ; $6a31
-	ld l, a ; $6a32
-	jr nc, .gotPtr ; $6a33
-	inc h ; $6a35
-.gotPtr:
+	add_hl_a ; $6a31
 	dec c ; $6a36
 	jr nz, .loop ; $6a37
 	ret ; $6a39

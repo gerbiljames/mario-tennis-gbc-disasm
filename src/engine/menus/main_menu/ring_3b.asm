@@ -6,11 +6,7 @@ DrawRingShotRowIcons:
 	push_wram_bank WRAM_SCREEN ; $5206
 	ld hl, wRingShotEntryList ; $520f
 	ld a, [wMenuCursorY] ; $5212
-	add l ; $5215
-	ld l, a ; $5216
-	jr nc, .gotPtr ; $5217
-	inc h ; $5219
-.gotPtr:
+	add_hl_a ; $5215
 	ld d, h ; $521a
 	ld e, l ; $521b
 	ld c, $00 ; $521c
@@ -111,11 +107,7 @@ BuildRingShotResultsGrid:
 .loop:
 	ld hl, RingShotResultsGridTable ; $531e
 	ld a, c ; $5321
-	add l ; $5322
-	ld l, a ; $5323
-	jr nc, .read ; $5324
-	inc h ; $5326
-.read:
+	add_hl_a ; $5322
 	ld b, [hl] ; $5327
 	call DecodeRingShotCharClears ; $5328
 	ld hl, $000c ; $532b
@@ -132,11 +124,7 @@ BuildRingShotResultsGrid:
 .loopB:
 	ld hl, RingShotResultsGridTable ; $533d
 	ld a, c ; $5340
-	add l ; $5341
-	ld l, a ; $5342
-	jr nc, .readB ; $5343
-	inc h ; $5345
-.readB:
+	add_hl_a ; $5341
 	ld b, [hl] ; $5346
 	call CopyRingShotCharScores ; $5347
 	ld hl, $000c ; $534a
@@ -162,11 +150,7 @@ CopyRingShotCharScores:
 	add a ; $536e
 	add a ; $536f
 	ld hl, wN64RecordsBlock + 88 ; $5370
-	add l ; $5373
-	ld l, a ; $5374
-	jr nc, .gotPtr ; $5375
-	inc h ; $5377
-.gotPtr:
+	add_hl_a ; $5373
 	ld c, $00 ; $5378
 .loop:
 	ld a, [hl+] ; $537a
@@ -196,11 +180,7 @@ DecodeRingShotCharClears:
 	add a ; $5393
 	add a ; $5394
 	ld hl, wN64RecordsBlock + 24 ; $5395
-	add l ; $5398
-	ld l, a ; $5399
-	jr nc, .gotPtr ; $539a
-	inc h ; $539c
-.gotPtr:
+	add_hl_a ; $5398
 	ld c, $00 ; $539d
 .loop:
 	ld b, [hl] ; $539f
@@ -291,11 +271,7 @@ DrawRingShotModeTab:
 	ld a, [wMenuCursorX] ; $542f
 	add a ; $5432
 	ld hl, RingShotModeTabTable ; $5433
-	add l ; $5436
-	ld l, a ; $5437
-	jr nc, .read ; $5438
-	inc h ; $543a
-.read:
+	add_hl_a ; $5436
 	ld a, [hl+] ; $543b
 	ld h, [hl] ; $543c
 	ld l, a ; $543d
@@ -393,11 +369,7 @@ DrawRingShotClearMarks:
 	jr .loop ; $550c
 .checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $550e
-	add l ; $5511
-	ld l, a ; $5512
-	jr nc, .gotPtr ; $5513
-	inc h ; $5515
-.gotPtr:
+	add_hl_a ; $5511
 	ld b, $00 ; $5516
 .loopB:
 	ld a, [hl] ; $5518
@@ -419,11 +391,7 @@ DrawRingShotClearMarkRow:
 	ld a, b ; $552d
 	add a ; $552e
 	ld hl, RingShotClearMarkRowTable ; $552f
-	add l ; $5532
-	ld l, a ; $5533
-	jr nc, .read ; $5534
-	inc h ; $5536
-.read:
+	add_hl_a ; $5532
 	ld a, [hl+] ; $5537
 	ld d, [hl] ; $5538
 	ld e, a ; $5539
@@ -477,11 +445,7 @@ DrawRingShotMarkCell:
 	ld a, b ; $5572
 	add a ; $5573
 	ld hl, RingShotMarkCellTable ; $5574
-	add l ; $5577
-	ld l, a ; $5578
-	jr nc, .read ; $5579
-	inc h ; $557b
-.read:
+	add_hl_a ; $5577
 	ld a, [hl+] ; $557c
 	ld h, [hl] ; $557d
 	ld l, a ; $557e
@@ -508,18 +472,10 @@ RingShotScoreDrawTask:
 	jr .loop ; $559d
 .gotRow:
 	ld a, $04 ; $559f
-	add l ; $55a1
-	ld l, a ; $55a2
-	jr nc, .checkMenuCursorX ; $55a3
-	inc h ; $55a5
-.checkMenuCursorX:
+	add_hl_a ; $55a1
 	ld a, [wMenuCursorX] ; $55a6
 	add a ; $55a9
-	add l ; $55aa
-	ld l, a ; $55ab
-	jr nc, .gotColumnPtr ; $55ac
-	inc h ; $55ae
-.gotColumnPtr:
+	add_hl_a ; $55aa
 	ld_xy de, $8a, $35 ; $55af
 	ld c, $00 ; $55b2
 .loopB:
@@ -534,11 +490,7 @@ RingShotScoreDrawTask:
 	ld e, l ; $55c0
 	pop hl ; $55c1
 	ld a, $0c ; $55c2
-	add l ; $55c4
-	ld l, a ; $55c5
-	jr nc, .gotNextRowPtr ; $55c6
-	inc h ; $55c8
-.gotNextRowPtr:
+	add_hl_a ; $55c4
 	ld a, c ; $55c9
 	inc a ; $55ca
 	ld c, a ; $55cb

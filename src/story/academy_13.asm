@@ -221,19 +221,11 @@ AcademyTopicSinglesRank:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5940
 	jr z, .setCursor ; $5943
 	ld a, $01 ; $5945
-	add l ; $5947
-	ld l, a ; $5948
-	jr nc, .rank2 ; $5949
-	inc h ; $594b
-.rank2:
+	add_hl_a ; $5947
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $594c
 	jr z, .setCursor ; $594f
 	ld a, $01 ; $5951
-	add l ; $5953
-	ld l, a ; $5954
-	jr nc, .rank3 ; $5955
-	inc h ; $5957
-.rank3:
+	add_hl_a ; $5953
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $5958
 	jr z, .setCursor ; $595b
 	ld a, $01 ; $595d
@@ -254,27 +246,15 @@ AcademyTopicDoublesRank:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5972
 	jr z, .setCursor ; $5975
 	ld a, $01 ; $5977
-	add l ; $5979
-	ld l, a ; $597a
-	jr nc, .rank2 ; $597b
-	inc h ; $597d
-.rank2:
+	add_hl_a ; $5979
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $597e
 	jr z, .setCursor ; $5981
 	ld a, $01 ; $5983
-	add l ; $5985
-	ld l, a ; $5986
-	jr nc, .rank3 ; $5987
-	inc h ; $5989
-.rank3:
+	add_hl_a ; $5985
 	test_flag FLAG_WON_VARSITY_DOUBLES_RANK_2 ; $598a
 	jr z, .setCursor ; $598d
 	ld a, $01 ; $598f
-	add l ; $5991
-	ld l, a ; $5992
-	jr nc, .rank4 ; $5993
-	inc h ; $5995
-.rank4:
+	add_hl_a ; $5991
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5996
 	jr z, .setCursor ; $5999
 	ld a, $01 ; $599b
@@ -312,11 +292,7 @@ AcademyTopicClassRank:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $59ca
 	jr z, .setCursor ; $59cd
 	ld a, $01 ; $59cf
-	add l ; $59d1
-	ld l, a ; $59d2
-	jr nc, .rank2 ; $59d3
-	inc h ; $59d5
-.rank2:
+	add_hl_a ; $59d1
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $59d6
 	jr z, .setCursor ; $59d9
 	ld a, $01 ; $59db

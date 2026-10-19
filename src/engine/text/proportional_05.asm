@@ -63,11 +63,7 @@ RenderProportionalTextAt:
 	push af ; $5e2a
 	add a ; $5e2b
 	ld hl, ProportionalTextCodeHandlers_05 ; $5e2c
-	add l ; $5e2f
-	ld l, a ; $5e30
-	jr nc, .readVector ; $5e31
-	inc h ; $5e33
-.readVector:
+	add_hl_a ; $5e2f
 	ld a, [hl+] ; $5e34
 	ld h, [hl] ; $5e35
 	ld l, a ; $5e36
@@ -220,11 +216,7 @@ StampGlyphTileAtPen:
 	ld c, a ; $5f2c
 	sub b ; $5f2d
 	ld h, e ; $5f2e
-	add e ; $5f2f
-	ld e, a ; $5f30
-	jr nc, .cellPtrOk ; $5f31
-	inc d ; $5f33
-.cellPtrOk:
+	add_de_a ; $5f2f
 	ld a, e ; $5f34
 	and $20 ; $5f35
 	ld l, a ; $5f37
@@ -278,11 +270,7 @@ RenderTextToBuffer64:
 	push af ; $5f85
 	add a ; $5f86
 	ld hl, TextControlCodeHandlers_05 ; $5f87
-	add l ; $5f8a
-	ld l, a ; $5f8b
-	jr nc, .readVector ; $5f8c
-	inc h ; $5f8e
-.readVector:
+	add_hl_a ; $5f8a
 	ld a, [hl+] ; $5f8f
 	ld h, [hl] ; $5f90
 	ld l, a ; $5f91

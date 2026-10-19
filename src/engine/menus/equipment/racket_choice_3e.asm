@@ -237,11 +237,7 @@ AnimateEraseConfirmPalette:
 .readColor:
 	add a ; $4e5f
 	ld hl, EraseConfirmFlashColors_3e ; $4e60
-	add l ; $4e63
-	ld l, a ; $4e64
-	jr nc, .read ; $4e65
-	inc h ; $4e67
-.read:
+	add_hl_a ; $4e63
 	ld a, [hl+] ; $4e68
 	ld d, [hl] ; $4e69
 	ld e, a ; $4e6a
@@ -331,11 +327,7 @@ LoadRacketShoesChoiceGraphics:
 	ld a, c ; $4f3e
 	add a ; $4f3f
 	ld hl, RacketShoesChoiceGfxParams_3e ; $4f40
-	add l ; $4f43
-	ld l, a ; $4f44
-	jr nc, .read ; $4f45
-	inc h ; $4f47
-.read:
+	add_hl_a ; $4f43
 	ld a, [hl+] ; $4f48
 	ld h, [hl] ; $4f49
 	ld l, a ; $4f4a
@@ -352,11 +344,7 @@ LoadRacketShoesChoiceGraphics:
 	ld hl, RacketShoesChoiceGfxDests_3e ; $4f59
 	ld a, c ; $4f5c
 	add a ; $4f5d
-	add l ; $4f5e
-	ld l, a ; $4f5f
-	jr nc, .readB ; $4f60
-	inc h ; $4f62
-.readB:
+	add_hl_a ; $4f5e
 	ld a, [hl+] ; $4f63
 	ld d, [hl] ; $4f64
 	ld e, a ; $4f65
@@ -456,11 +444,7 @@ RedrawRacketShoesChoiceMenu:
 SetRacketShoesChoicePalette:
 	ld hl, RacketShoesChoicePalettePtrs ; $5038
 	add a ; $503b
-	add l ; $503c
-	ld l, a ; $503d
-	jr nc, .read ; $503e
-	inc h ; $5040
-.read:
+	add_hl_a ; $503c
 	ld a, [hl+] ; $5041
 	ld h, [hl] ; $5042
 	ld l, a ; $5043
@@ -488,11 +472,7 @@ DrawRacketShoesChoiceCaption:
 	call GetMenuCursorIndex_3e ; $5078
 	ld b, a ; $507b
 	ld hl, Text_EquipChooseRacket ; $507c
-	add l ; $507f
-	ld l, a ; $5080
-	jr nc, .renderTextToBuffer64 ; $5081
-	inc h ; $5083
-.renderTextToBuffer64:
+	add_hl_a ; $507f
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5084
 	ld c, $20 ; $5087
 	farcall RenderTextToBuffer64 ; $5089

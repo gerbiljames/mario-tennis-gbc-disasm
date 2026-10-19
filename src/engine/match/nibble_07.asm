@@ -131,11 +131,7 @@ ComputeNibbleBufferChecksum:
 	ld de, $0000 ; $4413
 .sumLoop:
 	ld a, [hl+] ; $4416
-	add e ; $4417
-	ld e, a ; $4418
-	jr nc, .next ; $4419
-	inc d ; $441b
-.next:
+	add_de_a ; $4417
 	dec c ; $441c
 	jr nz, .sumLoop ; $441d
 	ld a, e ; $441f
@@ -277,11 +273,7 @@ Unused_07_ReceiveNibbleBlockMaster:
 	jr z, .compareChecksum ; $44f1
 	and LINKTAG_PAYLOAD ; $44f3
 	ld [hl+], a ; $44f5
-	add e ; $44f6
-	ld e, a ; $44f7
-	jr nc, .nextNibble ; $44f8
-	inc d ; $44fa
-.nextNibble:
+	add_de_a ; $44f6
 	xor a ; $44fb
 	ldh [hLinkCounter], a ; $44fc
 	inc b ; $44fe

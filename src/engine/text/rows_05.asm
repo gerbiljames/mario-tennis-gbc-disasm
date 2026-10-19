@@ -41,11 +41,7 @@ SetRowDirtyFlags:
 	ld a, d ; $70b7
 	and $1f ; $70b8
 	ld d, a ; $70ba
-	add l ; $70bb
-	ld l, a ; $70bc
-	jr nc, .gotPtr ; $70bd
-	inc h ; $70bf
-.gotPtr:
+	add_hl_a ; $70bb
 	ld a, $01 ; $70c0
 .loopB:
 	ld [hl+], a ; $70c2
@@ -93,11 +89,7 @@ MarkWindowRowsDirtyMin7:
 	ld a, d ; $70fc
 	and $1f ; $70fd
 	ld d, a ; $70ff
-	add l ; $7100
-	ld l, a ; $7101
-	jr nc, .gotPtr ; $7102
-	inc h ; $7104
-.gotPtr:
+	add_hl_a ; $7100
 	ld a, $01 ; $7105
 .loopB:
 	ld [hl+], a ; $7107
@@ -365,11 +357,7 @@ RenderMenuWindowText:
 	add hl, hl ; $726c
 	add hl, hl ; $726d
 	ld a, d ; $726e
-	add l ; $726f
-	ld l, a ; $7270
-	jr nc, .gotPtr ; $7271
-	inc h ; $7273
-.gotPtr:
+	add_hl_a ; $726f
 	ld d, h ; $7274
 	ld e, l ; $7275
 	ld hl, wShadowTilemapPtr ; $7276
@@ -391,11 +379,7 @@ RenderMenuWindowText:
 	ld a, c ; $7297
 	call GetWindowStructPtr ; $7298
 	ld a, $02 ; $729b
-	add l ; $729d
-	ld l, a ; $729e
-	jr nc, .read ; $729f
-	inc h ; $72a1
-.read:
+	add_hl_a ; $729d
 	ld c, [hl] ; $72a2
 	dec c ; $72a3
 	dec c ; $72a4
@@ -500,11 +484,7 @@ DrawGlyph:
 	ld a, [hl+] ; $7336
 	call PlotGlyphRow ; $7337
 	ld a, $08 ; $733a
-	add e ; $733c
-	ld e, a ; $733d
-	jr nc, .nextRow ; $733e
-	inc d ; $7340
-.nextRow:
+	add_de_a ; $733c
 	dec c ; $7341
 	jr nz, .rowLoop ; $7342
 	pop de ; $7344
@@ -543,10 +523,6 @@ GetGlyphWidth:
 	ret ; $736f
 GetGlyphWidthByIndex:
 	ld hl, GlyphWidths_05 ; $7370
-	add l ; $7373
-	ld l, a ; $7374
-	jr nc, .read ; $7375
-	inc h ; $7377
-.read:
+	add_hl_a ; $7373
 	ld c, [hl] ; $7378
 	ret ; $7379

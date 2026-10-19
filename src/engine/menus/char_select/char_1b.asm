@@ -113,11 +113,7 @@ Unused_1b_DrawCharSelectMugshots:
 	farcall Unused_1b_SetMugshotAttrs ; $60a1
 .step:
 	ld a, $08 ; $60a4
-	add l ; $60a6
-	ld l, a ; $60a7
-	jr nc, .read ; $60a8
-	inc h ; $60aa
-.read:
+	add_hl_a ; $60a6
 	ld a, [hl] ; $60ab
 	cp $ff ; $60ac
 	jr nz, .loop ; $60ae

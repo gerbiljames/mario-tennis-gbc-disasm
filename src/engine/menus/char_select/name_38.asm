@@ -102,22 +102,14 @@ Unused_38_RetreatLinkGridSelection:
 	sound SFX_MENU_CANCEL ; $6d9f
 	ld hl, wCharSelectSlotChars ; $6da1
 	ld a, [wCharSelectSlot] ; $6da4
-	add l ; $6da7
-	ld l, a ; $6da8
-	jr nc, .clearTaken ; $6da9
-	inc h ; $6dab
-.clearTaken:
+	add_hl_a ; $6da7
 	ld a, [hl] ; $6dac
 	ld b, $00 ; $6dad
 	ld [hl], b ; $6daf
 	ld hl, wCharGridEntries ; $6db0
 	add a ; $6db3
 	add a ; $6db4
-	add l ; $6db5
-	ld l, a ; $6db6
-	jr nc, .clearRecord ; $6db7
-	inc h ; $6db9
-.clearRecord:
+	add_hl_a ; $6db5
 	inc hl ; $6dba
 	inc hl ; $6dbb
 	xor a ; $6dbc
@@ -141,21 +133,13 @@ Unused_38_ConfirmRemoteGridSelection:
 	ld hl, wCharGridEntries ; $6ddd
 	add a ; $6de0
 	add a ; $6de1
-	add l ; $6de2
-	ld l, a ; $6de3
-	jr nc, .refresh ; $6de4
-	inc h ; $6de6
-.refresh:
+	add_hl_a ; $6de2
 	ld a, [hl] ; $6de7
 	cp $ff ; $6de8
 	jr z, .done ; $6dea
 	ld a, [wCharSelectSlot] ; $6dec
 	ld hl, wCharSelectSlotChars ; $6def
-	add l ; $6df2
-	ld l, a ; $6df3
-	jr nc, .redraw ; $6df4
-	inc h ; $6df6
-.redraw:
+	add_hl_a ; $6df2
 	ld [hl], b ; $6df7
 	ld a, $01 ; $6df8
 	ld [wLinkSelectSlotState], a ; $6dfa
@@ -435,11 +419,7 @@ DrawNameEntryCursor:
 	call GetMenuCursorIndex_38 ; $7092
 	add a ; $7095
 	ld hl, NameEntryCursorTable ; $7096
-	add l ; $7099
-	ld l, a ; $709a
-	jr nc, .read ; $709b
-	inc h ; $709d
-.read:
+	add_hl_a ; $7099
 	ld a, [hl+] ; $709e
 	ld d, [hl] ; $709f
 	ld e, a ; $70a0
@@ -498,11 +478,7 @@ NameEntryCharset_38:
 GetNameEntryBottomRowAction:
 	ld hl, NameEntryBottomRowActionTable ; $7220
 	ld a, [wMenuCursorX] ; $7223
-	add l ; $7226
-	ld l, a ; $7227
-	jr nc, .read ; $7228
-	inc h ; $722a
-.read:
+	add_hl_a ; $7226
 	ld a, [hl] ; $722b
 	ret ; $722c
 NameEntryBottomRowActionTable:
@@ -511,11 +487,7 @@ NameEntryBottomRowActionTable:
 SnapNameEntryCursorRight:
 	ld hl, SnapNameEntryCursorRightTable ; $723c
 	ld a, [wMenuCursorX] ; $723f
-	add l ; $7242
-	ld l, a ; $7243
-	jr nc, .read ; $7244
-	inc h ; $7246
-.read:
+	add_hl_a ; $7242
 	ld a, [hl] ; $7247
 	ld [wMenuCursorX], a ; $7248
 	ret ; $724b
@@ -525,11 +497,7 @@ SnapNameEntryCursorRightTable:
 SnapNameEntryCursorLeft:
 	ld hl, SnapNameEntryCursorLeftTable ; $725b
 	ld a, [wMenuCursorX] ; $725e
-	add l ; $7261
-	ld l, a ; $7262
-	jr nc, .read ; $7263
-	inc h ; $7265
-.read:
+	add_hl_a ; $7261
 	ld a, [hl] ; $7266
 	ld [wMenuCursorX], a ; $7267
 	ret ; $726a

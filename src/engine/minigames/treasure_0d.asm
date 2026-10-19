@@ -228,11 +228,7 @@ SelectRandomTreasureBoxTargetZone:
 	ld l, a ; $5a7d
 	farcall AdvanceMatchRng ; $5a7e
 	and $0f ; $5a81
-	add l ; $5a83
-	ld l, a ; $5a84
-	jr nc, .read ; $5a85
-	inc h ; $5a87
-.read:
+	add_hl_a ; $5a83
 	ld a, [hl] ; $5a88
 	ld [wMinigameShotRoll], a ; $5a89
 	ld a, [wMinigameShotRoll] ; $5a8c
@@ -289,11 +285,7 @@ TreasureBoxTargetState0:
 .advanceMatchRng:
 	farcall AdvanceMatchRng ; $5af7
 	and $0f ; $5afa
-	add l ; $5afc
-	ld l, a ; $5afd
-	jr nc, .read ; $5afe
-	inc h ; $5b00
-.read:
+	add_hl_a ; $5afc
 	ld a, [hl] ; $5b01
 	ld [wMinigameSceneActor + MGACTOR_SUBTYPE], a ; $5b02
 	ld a, [wMinigameShotRoll] ; $5b05
@@ -306,11 +298,7 @@ TreasureBoxTargetState0:
 	and $03 ; $5b16
 	add a ; $5b18
 	add a ; $5b19
-	add l ; $5b1a
-	ld l, a ; $5b1b
-	jr nc, .readB ; $5b1c
-	inc h ; $5b1e
-.readB:
+	add_hl_a ; $5b1a
 	ld a, [hl+] ; $5b1f
 	ld c, a ; $5b20
 	ld a, [hl+] ; $5b21

@@ -141,11 +141,7 @@ GetClearStatusResultCode:
 	ld a, [wClearStatusRank] ; $4ee0
 .index:
 	add b ; $4ee3
-	add l ; $4ee4
-	ld l, a ; $4ee5
-	jr nc, .read ; $4ee6
-	inc h ; $4ee8
-.read:
+	add_hl_a ; $4ee4
 	ld a, [hl] ; $4ee9
 	ld [wClearStatusResultCode], a ; $4eea
 	ret ; $4eed
@@ -517,11 +513,7 @@ LoadStoryEntryPointRecord:
 	cp d ; $518e
 	jr z, .copyRecord ; $518f
 	ld a, $08 ; $5191
-	add l ; $5193
-	ld l, a ; $5194
-	jr nc, .next ; $5195
-	inc h ; $5197
-.next:
+	add_hl_a ; $5193
 	jr .searchLoop ; $5198
 .notFound:
 	ld hl, wMapEntryPointsPtr ; $519a

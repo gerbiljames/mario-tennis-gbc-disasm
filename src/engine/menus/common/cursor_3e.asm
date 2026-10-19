@@ -58,11 +58,7 @@ ApplySelectionBoxWobbleX:
 	ldh a, [hVBlankCounter] ; $40ab
 	and $0f ; $40ad
 	ld hl, SelectionBoxWobbleXTable_3e ; $40af
-	add l ; $40b2
-	ld l, a ; $40b3
-	jr nc, .readOffset ; $40b4
-	inc h ; $40b6
-.readOffset:
+	add_hl_a ; $40b2
 	ld a, [hl] ; $40b7
 	ld b, a ; $40b8
 	ld a, c ; $40b9
@@ -84,11 +80,7 @@ ApplySelectionBoxWobbleY:
 	ldh a, [hVBlankCounter] ; $40d5
 	and $0f ; $40d7
 	ld hl, SelectionBoxWobbleYTable_3e ; $40d9
-	add l ; $40dc
-	ld l, a ; $40dd
-	jr nc, .readOffset ; $40de
-	inc h ; $40e0
-.readOffset:
+	add_hl_a ; $40dc
 	ld a, [hl] ; $40e1
 	ld b, a ; $40e2
 	ld a, c ; $40e3

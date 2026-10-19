@@ -7,11 +7,7 @@ LookupBallPosByShotIndex_{TWIN}:
 	add a
 	ld l, c
 	ld h, b
-	add l
-	ld l, a
-	jr nc, .read
-	inc h
-.read:
+	add_hl_a
 	ld a, [hl+]
 	ld h, [hl]
 	ld l, a

@@ -142,11 +142,7 @@ PromptExhibitionMatch:
 	ld h, [hl] ; $6672
 	ld l, a ; $6673
 	ld a, $03 ; $6674
-	add l ; $6676
-	ld l, a ; $6677
-	jr nc, .speakConfirm ; $6678
-	inc h ; $667a
-.speakConfirm:
+	add_hl_a ; $6676
 	farcall InitDialogueTextCursor ; $667b
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $667e
 	script_face ACTOR_MARIO_WORLD_LUIGI, FACE_UP ; $6683

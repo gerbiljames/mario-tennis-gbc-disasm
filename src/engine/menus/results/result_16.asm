@@ -43,11 +43,7 @@ Unused_16_BuildMatchResultTilemap:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a71
 	add a ; $4a74
 	ld hl, MatchResultTilemapScripts_16 ; $4a75
-	add l ; $4a78
-	ld l, a ; $4a79
-	jr nc, .read ; $4a7a
-	inc h ; $4a7c
-.read:
+	add_hl_a ; $4a78
 	ld a, [hl+] ; $4a7d
 	ld h, [hl] ; $4a7e
 	ld l, a ; $4a7f
@@ -364,11 +360,7 @@ GetResultSpriteWobbleOffset:
 	srl a ; $4de0
 	and $0f ; $4de2
 	ld hl, ResultSpriteWobbleOffsetTable ; $4de4
-	add l ; $4de7
-	ld l, a ; $4de8
-	jr nc, .read ; $4de9
-	inc h ; $4deb
-.read:
+	add_hl_a ; $4de7
 	ld a, [hl] ; $4dec
 	ret ; $4ded
 ResultSpriteWobbleOffsetTable:
@@ -413,11 +405,7 @@ LoadMatchResultGfxSet:
 	call RemapDoublesMatchGfxIndex ; $4e57
 	add a ; $4e5a
 	ld hl, GfxSetPointerTable_16 ; $4e5b
-	add l ; $4e5e
-	ld l, a ; $4e5f
-	jr nc, .read ; $4e60
-	inc h ; $4e62
-.read:
+	add_hl_a ; $4e5e
 	ld a, [hl+] ; $4e63
 	ld h, [hl] ; $4e64
 	ld l, a ; $4e65

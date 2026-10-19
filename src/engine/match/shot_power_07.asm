@@ -345,11 +345,7 @@ GetShotAimOffsetForSide:
 	ld a, [wCharAimOffset] ; $5601
 	inc a ; $5604
 	add a ; $5605
-	add l ; $5606
-	ld l, a ; $5607
-	jr nc, .done ; $5608
-	inc h ; $560a
-.done:
+	add_hl_a ; $5606
 	ld a, [hl+] ; $560b
 	ld d, [hl] ; $560c
 	ld e, a ; $560d
@@ -467,9 +463,5 @@ ComputeShotTargetX:
 .absTarget:
 	call GetRandomAimJitter ; $56ad
 	ld a, h ; $56b0
-	add e ; $56b1
-	ld e, a ; $56b2
-	jr nc, .store ; $56b3
-	inc d ; $56b5
-.store:
+	add_de_a ; $56b1
 	ret ; $56b6

@@ -3,11 +3,7 @@ PlotTilesAtOffsets:
 	ld a, [hl+] ; $4772
 	cp $ff ; $4773
 	jr z, .restore ; $4775
-	add e ; $4777
-	ld e, a ; $4778
-	jr nc, .read ; $4779
-	inc d ; $477b
-.read:
+	add_de_a ; $4777
 	ld a, [hl+] ; $477c
 	ld c, a ; $477d
 	wram_bank WRAM_SCREEN ; $477e
@@ -91,11 +87,7 @@ NameTilePtrUpOneRow:
 NameTilePtrDownOneRow:
 	ld a, c ; $4806
 	inc a ; $4807
-	add e ; $4808
-	ld e, a ; $4809
-	jr nc, .done ; $480a
-	inc d ; $480c
-.done:
+	add_de_a ; $4808
 	ret ; $480d
 FormatExp24BitDecimal:
 	wram_bank WRAM_SCENE ; $480e

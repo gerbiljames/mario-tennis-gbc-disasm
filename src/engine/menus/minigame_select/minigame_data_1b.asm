@@ -104,21 +104,13 @@ DrawSavedDataTypeDescription:
 	ld b, a ; $7391
 	ld hl, SavedDataTypeDescriptionTable ; $7392
 	add a ; $7395
-	add l ; $7396
-	ld l, a ; $7397
-	jr nc, .read ; $7398
-	inc h ; $739a
-.read:
+	add_hl_a ; $7396
 	ld a, [hl+] ; $739b
 	ld d, [hl] ; $739c
 	ld e, a ; $739d
 	ld a, b ; $739e
 	ld hl, Text_SavedDataExhibitionData ; $739f
-	add l ; $73a2
-	ld l, a ; $73a3
-	jr nc, .renderTextToBuffer64 ; $73a4
-	inc h ; $73a6
-.renderTextToBuffer64:
+	add_hl_a ; $73a2
 	ld c, $20 ; $73a7
 	farcall RenderTextToBuffer64 ; $73a9
 	pop_wram_bank ; $73ac
@@ -129,11 +121,7 @@ SavedDataTypeDescriptionTable:
 LoadSavedDataTypePalette:
 	ld hl, SavedDataTypePalettePtrs ; $73b6
 	add a ; $73b9
-	add l ; $73ba
-	ld l, a ; $73bb
-	jr nc, .read ; $73bc
-	inc h ; $73be
-.read:
+	add_hl_a ; $73ba
 	ld a, [hl+] ; $73bf
 	ld h, [hl] ; $73c0
 	ld l, a ; $73c1
@@ -274,11 +262,7 @@ LoadMinigameClearFlags:
 	add a ; $74ee
 	push hl ; $74ef
 	ld hl, MinigameClearFlagsTable ; $74f0
-	add l ; $74f3
-	ld l, a ; $74f4
-	jr nc, .read ; $74f5
-	inc h ; $74f7
-.read:
+	add_hl_a ; $74f3
 	ld a, [hl+] ; $74f8
 	ld d, [hl] ; $74f9
 	ld e, a ; $74fa
@@ -317,11 +301,7 @@ LoadMinigameStarFlags:
 	add a ; $752e
 	push hl ; $752f
 	ld hl, MinigameStarFlagsTable ; $7530
-	add l ; $7533
-	ld l, a ; $7534
-	jr nc, .read ; $7535
-	inc h ; $7537
-.read:
+	add_hl_a ; $7533
 	ld a, [hl+] ; $7538
 	ld d, [hl] ; $7539
 	ld e, a ; $753a
@@ -379,11 +359,7 @@ LoadMinigameHighScores:
 	ld hl, wMinigameDataHighScores ; $7595
 	ld a, c ; $7598
 	add a ; $7599
-	add l ; $759a
-	ld l, a ; $759b
-	jr nc, .gotPtr ; $759c
-	inc h ; $759e
-.gotPtr:
+	add_hl_a ; $759a
 	ld a, e ; $759f
 	ld [hl+], a ; $75a0
 	ld [hl], d ; $75a1

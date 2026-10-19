@@ -2,11 +2,7 @@ RetreatRemotePlayerSlot:
 	ld a, [wCharSelectMode] ; $6a09
 	ld hl, RemotePlayerSlotLists_38 ; $6a0c
 	add a ; $6a0f
-	add l ; $6a10
-	ld l, a ; $6a11
-	jr nc, .readList ; $6a12
-	inc h ; $6a14
-.readList:
+	add_hl_a ; $6a10
 	ld a, [hl+] ; $6a15
 	ld h, [hl] ; $6a16
 	ld l, a ; $6a17
@@ -42,11 +38,7 @@ Unused_38_GetGridEntryAtCursor:
 	ld hl, wCharGridEntries ; $6a3f
 	add a ; $6a42
 	add a ; $6a43
-	add l ; $6a44
-	ld l, a ; $6a45
-	jr nc, .store ; $6a46
-	inc h ; $6a48
-.store:
+	add_hl_a ; $6a44
 	ld a, [hl] ; $6a49
 	ret ; $6a4a
 SetGridEntryTakenByCharId:
@@ -366,11 +358,7 @@ GetLinkCursorSelectionCode:
 	ld hl, wCharGridEntries ; $6c67
 	add a ; $6c6a
 	add a ; $6c6b
-	add l ; $6c6c
-	ld l, a ; $6c6d
-	jr nc, .readEntry ; $6c6e
-	inc h ; $6c70
-.readEntry:
+	add_hl_a ; $6c6c
 	ld a, [hl] ; $6c71
 	cp $ff ; $6c72
 	jr nz, .checkTaken ; $6c74

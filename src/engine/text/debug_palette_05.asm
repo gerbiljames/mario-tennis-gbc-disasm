@@ -10,11 +10,7 @@ GetSelectedBGPaletteColorPtr:
 	add [hl] ; $6959
 	add a ; $695a
 	ld hl, wBGPalettes ; $695b
-	add l ; $695e
-	ld l, a ; $695f
-	jr nc, .done ; $6960
-	inc h ; $6962
-.done:
+	add_hl_a ; $695e
 	ret ; $6963
 DebugDrawColorComponents:
 	push af ; $6964

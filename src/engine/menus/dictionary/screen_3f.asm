@@ -562,17 +562,9 @@ UpdateTennisDictionarySprites:
 	add a ; $4efd
 	add a ; $4efe
 	add a ; $4eff
-	add l ; $4f00
-	ld l, a ; $4f01
-	jr nc, .gotPtr ; $4f02
-	inc h ; $4f04
-.gotPtr:
+	add_hl_a ; $4f00
 	ld a, [wTennisDictSpritePhase] ; $4f05
-	add l ; $4f08
-	ld l, a ; $4f09
-	jr nc, .readPhaseFrame ; $4f0a
-	inc h ; $4f0c
-.readPhaseFrame:
+	add_hl_a ; $4f08
 	ld a, [hl] ; $4f0d
 	add a ; $4f0e
 	add a ; $4f0f
@@ -580,11 +572,7 @@ UpdateTennisDictionarySprites:
 	push af ; $4f11
 	pop af ; $4f12
 	ld hl, TennisDictionarySprites2 ; $4f13
-	add l ; $4f16
-	ld l, a ; $4f17
-	jr nc, .readFrameTiles ; $4f18
-	inc h ; $4f1a
-.readFrameTiles:
+	add_hl_a ; $4f16
 	ld a, [hl+] ; $4f1b
 	ld c, a ; $4f1c
 	ld a, [hl+] ; $4f1d
@@ -674,11 +662,7 @@ UpdateTennisDictionarySprites:
 	ld hl, TennisDictionarySprites0 ; $4fac
 	ld a, [wTennisDictScrollTimer] ; $4faf
 	and $0f ; $4fb2
-	add l ; $4fb4
-	ld l, a ; $4fb5
-	jr nc, .readCursorBob ; $4fb6
-	inc h ; $4fb8
-.readCursorBob:
+	add_hl_a ; $4fb4
 	ld a, [hl] ; $4fb9
 	add $0a ; $4fba
 	ld d, a ; $4fbc
@@ -1088,11 +1072,7 @@ DrawTennisDictionaryList:
 	push hl ; $52ea
 	ld hl, $10f0 ; $52eb
 	ld a, c ; $52ee
-	add l ; $52ef
-	ld l, a ; $52f0
-	jr nc, .haveEntry ; $52f1
-	inc h ; $52f3
-.haveEntry:
+	add_hl_a ; $52ef
 	inc c ; $52f4
 	inc b ; $52f5
 	push de ; $52f6
@@ -1100,11 +1080,7 @@ DrawTennisDictionaryList:
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; $52f8
 .rowLoop:
 	ld a, $80 ; $52fb
-	add e ; $52fd
-	ld e, a ; $52fe
-	jr nc, .nextRow ; $52ff
-	inc d ; $5301
-.nextRow:
+	add_de_a ; $52fd
 	dec b ; $5302
 	jr nz, .rowLoop ; $5303
 	pop bc ; $5305

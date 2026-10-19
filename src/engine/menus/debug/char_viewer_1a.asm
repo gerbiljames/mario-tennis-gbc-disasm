@@ -215,11 +215,7 @@ Unused_1a_RunCharViewerInputLoop:
 	ld a, [wCharViewerCursor] ; $6df2
 	ld [wCharViewerSavedCursor], a ; $6df5
 	ld hl, CharViewerInputLoopTable ; $6df8
-	add l ; $6dfb
-	ld l, a ; $6dfc
-	jr nc, .readAnimId ; $6dfd
-	inc h ; $6dff
-.readAnimId:
+	add_hl_a ; $6dfb
 	ld d, [hl] ; $6e00
 	wram_bank WRAM_ACTORS ; $6e01
 	farcall SetCharAnimation ; $6e07

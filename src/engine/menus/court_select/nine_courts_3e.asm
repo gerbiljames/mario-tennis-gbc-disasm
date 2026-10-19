@@ -265,21 +265,13 @@ CourtSelect9CursorSpriteTask:
 	call GetMenuCursorIndex_3e ; $6719
 	push af ; $671c
 	ld hl, CourtSelect9CursorTiles_3e ; $671d
-	add l ; $6720
-	ld l, a ; $6721
-	jr nc, .readTile ; $6722
-	inc h ; $6724
-.readTile:
+	add_hl_a ; $6720
 	ld c, [hl] ; $6725
 	pop af ; $6726
 	push af ; $6727
 	ld hl, CourtSelect9CursorPositions_3e ; $6728
 	add a ; $672b
-	add l ; $672c
-	ld l, a ; $672d
-	jr nc, .readPosition ; $672e
-	inc h ; $6730
-.readPosition:
+	add_hl_a ; $672c
 	ld a, [hl+] ; $6731
 	ld d, [hl] ; $6732
 	ld e, a ; $6733
@@ -288,21 +280,13 @@ CourtSelect9CursorSpriteTask:
 	ld c, $03 ; $6738
 	call GetMenuCursorIndex_3e ; $673a
 	ld hl, CourtSelect9CursorAttrs_3e ; $673d
-	add l ; $6740
-	ld l, a ; $6741
-	jr nc, .restore ; $6742
-	inc h ; $6744
-.restore:
+	add_hl_a ; $6740
 	pop bc ; $6745
 	ld b, [hl] ; $6746
 	pop af ; $6747
 	add a ; $6748
 	ld hl, CourtSelect9CursorTemplatePtrs_3e ; $6749
-	add l ; $674c
-	ld l, a ; $674d
-	jr nc, .readTemplatePtr ; $674e
-	inc h ; $6750
-.readTemplatePtr:
+	add_hl_a ; $674c
 	ld a, [hl+] ; $6751
 	ld h, [hl] ; $6752
 	ld l, a ; $6753
@@ -313,11 +297,7 @@ CourtSelect9CursorSpriteTask:
 	ld c, $03 ; $675c
 	call GetMenuCursorIndex_3e ; $675e
 	ld hl, CourtSelect9LabelYOffsets_3e ; $6761
-	add l ; $6764
-	ld l, a ; $6765
-	jr nc, .readLabelYOffset ; $6766
-	inc h ; $6768
-.readLabelYOffset:
+	add_hl_a ; $6764
 	ld a, [hl] ; $6769
 	ld h, a ; $676a
 	ld l, $f8 ; $676b
@@ -434,11 +414,7 @@ SetCourtSelect9TabAttrRect:
 	ld hl, CourtSelect9TabAttrAddrs_3e ; $689a
 	ld a, b ; $689d
 	add a ; $689e
-	add l ; $689f
-	ld l, a ; $68a0
-	jr nc, .read ; $68a1
-	inc h ; $68a3
-.read:
+	add_hl_a ; $689f
 	ld a, [hl+] ; $68a4
 	ld d, [hl] ; $68a5
 	ld e, a ; $68a6
@@ -457,11 +433,7 @@ CourtSelect9TabAttrAddrs_3e:
 SetCourtSelect9Palette:
 	ld hl, CourtSelect9PalettePtrs ; $68c6
 	add a ; $68c9
-	add l ; $68ca
-	ld l, a ; $68cb
-	jr nc, .read ; $68cc
-	inc h ; $68ce
-.read:
+	add_hl_a ; $68ca
 	ld a, [hl+] ; $68cf
 	ld h, [hl] ; $68d0
 	ld l, a ; $68d1
@@ -543,11 +515,7 @@ IsCourtUnlocked:
 	ld a, b ; $698c
 	sub COURT_STAR ; $698d
 	ld hl, wScreenAttrmap ; $698f
-	add l ; $6992
-	ld l, a ; $6993
-	jr nc, .read ; $6994
-	inc h ; $6996
-.read:
+	add_hl_a ; $6992
 	ld a, [hl] ; $6997
 	ld b, a ; $6998
 	pop_wram_bank ; $6999
@@ -560,11 +528,7 @@ ComputeUnlockedCourtFlags:
 	ld a, c ; $69a4
 	add a ; $69a5
 	ld hl, CourtUnlockFlagIds_3e ; $69a6
-	add l ; $69a9
-	ld l, a ; $69aa
-	jr nc, .read ; $69ab
-	inc h ; $69ad
-.read:
+	add_hl_a ; $69a9
 	ld a, [hl+] ; $69ae
 	ld d, [hl] ; $69af
 	ld e, a ; $69b0

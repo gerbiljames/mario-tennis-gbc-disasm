@@ -167,11 +167,7 @@ OAMDMARoutine:
 JumpTableDispatch:
 	add a ; $06c4
 	pop hl ; $06c5
-	add l ; $06c6
-	ld l, a ; $06c7
-	jr nc, .read ; $06c8
-	inc h ; $06ca
-.read:
+	add_hl_a ; $06c6
 	ld a, [hl+] ; $06cb
 	ld h, [hl] ; $06cc
 	ld l, a ; $06cd

@@ -133,11 +133,7 @@ LoadResultPortraitSlot:
 	ld a, c ; $6080
 	add a ; $6081
 	ld hl, ResultPortraitSlotTable ; $6082
-	add l ; $6085
-	ld l, a ; $6086
-	jr nc, .readDest ; $6087
-	inc h ; $6089
-.readDest:
+	add_hl_a ; $6085
 	ld a, [hl+] ; $608a
 	ld d, [hl] ; $608b
 	ld e, a ; $608c
@@ -202,11 +198,7 @@ DecompressWinLosePortraitVariant:
 .gotVariant:
 	ld hl, WinLosePortraitVariantTable_16 ; $60e1
 	add a ; $60e4
-	add l ; $60e5
-	ld l, a ; $60e6
-	jr nc, .read ; $60e7
-	inc h ; $60e9
-.read:
+	add_hl_a ; $60e5
 	ld a, [hl+] ; $60ea
 	ld h, [hl] ; $60eb
 	ld l, a ; $60ec
@@ -243,11 +235,7 @@ DecompressCharacterPortrait:
 	and $1f ; $6956
 	add a ; $6958
 	ld hl, CharacterPortraitTable_16 ; $6959
-	add l ; $695c
-	ld l, a ; $695d
-	jr nc, .read ; $695e
-	inc h ; $6960
-.read:
+	add_hl_a ; $695c
 	ld a, [hl+] ; $6961
 	ld h, [hl] ; $6962
 	ld l, a ; $6963

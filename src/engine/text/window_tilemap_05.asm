@@ -417,11 +417,7 @@ GetWindowCellOffset:
 	add hl, hl ; $4312
 	add hl, hl ; $4313
 	ld a, d ; $4314
-	add l ; $4315
-	ld l, a ; $4316
-	jr nc, .gotPtr ; $4317
-	inc h ; $4319
-.gotPtr:
+	add_hl_a ; $4315
 	ld d, h ; $431a
 	ld e, l ; $431b
 	ret ; $431c

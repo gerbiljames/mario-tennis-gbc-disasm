@@ -165,11 +165,7 @@ RunMinigameRulesPages:
 	ld a, [wSelectedMinigame] ; $6fb7
 	ld hl, MinigameRulesTextIdBases_17 ; $6fba
 	add a ; $6fbd
-	add l ; $6fbe
-	ld l, a ; $6fbf
-	jr nc, .read ; $6fc0
-	inc h ; $6fc2
-.read:
+	add_hl_a ; $6fbe
 	ld a, [hl+] ; $6fc3
 	ld d, [hl] ; $6fc4
 	ld e, a ; $6fc5
@@ -281,11 +277,7 @@ MinigameRulesPageLoop:
 	ld h, [hl] ; $70ec
 	ld l, a ; $70ed
 	pop af ; $70ee
-	add l ; $70ef
-	ld l, a ; $70f0
-	jr nc, .prepareGlyphBuffer ; $70f1
-	inc h ; $70f3
-.prepareGlyphBuffer:
+	add_hl_a ; $70ef
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 2 ; $70f4
 	ld c, $20 ; $70f7
 	farcall PrepareGlyphBuffer ; $70f9
@@ -600,11 +592,7 @@ AdvanceRulesScreenAnimFrame:
 	srl a ; $743c
 	and $3f ; $743e
 	ld hl, RulesScreenAnimFrameTable1 ; $7440
-	add l ; $7443
-	ld l, a ; $7444
-	jr nc, .read ; $7445
-	inc h ; $7447
-.read:
+	add_hl_a ; $7443
 	ld a, [hl] ; $7448
 	ld [wRulesScreenAnimFrame], a ; $7449
 	jr .checkAnimEnd ; $744c
@@ -616,11 +604,7 @@ AdvanceRulesScreenAnimFrame:
 	srl a ; $7456
 	and $1f ; $7458
 	ld hl, RulesScreenAnimFrameTable ; $745a
-	add l ; $745d
-	ld l, a ; $745e
-	jr nc, .readB ; $745f
-	inc h ; $7461
-.readB:
+	add_hl_a ; $745d
 	ld a, [hl] ; $7462
 	ld [wRulesScreenAnimFrame], a ; $7463
 	jr .checkAnimEnd ; $7466
@@ -690,21 +674,13 @@ DrawRulesScreenCharacters:
 	push_wram_bank WRAM_SCREEN ; $74db
 	ld a, [wRulesScreenAnimFrame] ; $74e4
 	ld hl, RulesScreenCharactersTable0 ; $74e7
-	add l ; $74ea
-	ld l, a ; $74eb
-	jr nc, .readTile ; $74ec
-	inc h ; $74ee
-.readTile:
+	add_hl_a ; $74ea
 	ld a, [hl] ; $74ef
 	ld c, a ; $74f0
 	push bc ; $74f1
 	ld a, [wRulesScreenAnimFrame] ; $74f2
 	ld hl, RulesScreenCharactersTable1 ; $74f5
-	add l ; $74f8
-	ld l, a ; $74f9
-	jr nc, .readFirstAttr ; $74fa
-	inc h ; $74fc
-.readFirstAttr:
+	add_hl_a ; $74f8
 	ld b, [hl] ; $74fd
 	ld_xy de, $7e, $68 ; $74fe
 	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $7501
@@ -715,11 +691,7 @@ DrawRulesScreenCharacters:
 	ld c, a ; $750b
 	ld a, [wRulesScreenAnimFrame] ; $750c
 	ld hl, RulesScreenCharactersTable2 ; $750f
-	add l ; $7512
-	ld l, a ; $7513
-	jr nc, .readSecondAttr ; $7514
-	inc h ; $7516
-.readSecondAttr:
+	add_hl_a ; $7512
 	ld b, [hl] ; $7517
 	ld_xy de, $7e, $68 ; $7518
 	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $751b

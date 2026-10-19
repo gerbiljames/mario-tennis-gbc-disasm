@@ -397,21 +397,13 @@ PushEquipmentNameTextArg:
 .racket:
 	call GetEquippedRacketNibble ; $4f7b
 	ld hl, $00e5 ; $4f7e
-	add l ; $4f81
-	ld l, a ; $4f82
-	jr nc, .pushRacket ; $4f83
-	inc h ; $4f85
-.pushRacket:
+	add_hl_a ; $4f81
 	call PushShortTextArg_0e ; $4f86
 	ret ; $4f89
 .shoes:
 	call GetEquippedRacketNibble ; $4f8a
 	ld hl, $00f4 ; $4f8d
-	add l ; $4f90
-	ld l, a ; $4f91
-	jr nc, .pushShoes ; $4f92
-	inc h ; $4f94
-.pushShoes:
+	add_hl_a ; $4f90
 	call PushShortTextArg_0e ; $4f95
 	ret ; $4f98
 InitEquipmentHandoutDialogue:
@@ -422,21 +414,13 @@ InitEquipmentHandoutDialogue:
 .racket:
 	call GetEquippedRacketNibble ; $4fa1
 	ld hl, Text_EquipHandoutNormalRacket ; $4fa4
-	add l ; $4fa7
-	ld l, a ; $4fa8
-	jr nc, .setRacketCursor ; $4fa9
-	inc h ; $4fab
-.setRacketCursor:
+	add_hl_a ; $4fa7
 	farcall InitDialogueTextCursor ; $4fac
 	ret ; $4faf
 .shoes:
 	call GetEquippedRacketNibble ; $4fb0
 	ld hl, Text_EquipHandoutNormalShoes ; $4fb3
-	add l ; $4fb6
-	ld l, a ; $4fb7
-	jr nc, .setShoesCursor ; $4fb8
-	inc h ; $4fba
-.setShoesCursor:
+	add_hl_a ; $4fb6
 	farcall InitDialogueTextCursor ; $4fbb
 	ret ; $4fbe
 RepairCounterReturnA:

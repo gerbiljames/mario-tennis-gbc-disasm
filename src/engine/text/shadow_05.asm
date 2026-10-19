@@ -102,11 +102,7 @@ RestoreShadowTilemapRow:
 	ld hl, wTilemapRowStage ; $43fd
 	ld a, c ; $4400
 	and $1f ; $4401
-	add l ; $4403
-	ld l, a ; $4404
-	jr nc, .gotTileStagePtr ; $4405
-	inc h ; $4407
-.gotTileStagePtr:
+	add_hl_a ; $4403
 	ld d, $20 ; $4408
 .copyTileLoop:
 	ld a, [bc] ; $440a
@@ -154,11 +150,7 @@ RestoreShadowTilemapRow:
 	wram_bank WRAM_COURT_PLANES ; $4451
 	ld a, c ; $4457
 	and $1f ; $4458
-	add l ; $445a
-	ld l, a ; $445b
-	jr nc, .gotAttrStagePtr ; $445c
-	inc h ; $445e
-.gotAttrStagePtr:
+	add_hl_a ; $445a
 	ld d, $20 ; $445f
 .copyAttrLoop:
 	ld a, [bc] ; $4461
@@ -418,11 +410,7 @@ Unused_05_CloseMenuWindow:
 	ld a, b ; $45c6
 	call FreeWindow ; $45c7
 	ld a, $04 ; $45ca
-	add l ; $45cc
-	ld l, a ; $45cd
-	jr nc, .gotPtr ; $45ce
-	inc h ; $45d0
-.gotPtr:
+	add_hl_a ; $45cc
 	ld d, h ; $45d1
 	ld e, l ; $45d2
 	ld a, [wGlyphBufferHoldCount] ; $45d3

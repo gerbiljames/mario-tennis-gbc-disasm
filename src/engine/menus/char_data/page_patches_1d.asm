@@ -830,11 +830,7 @@ ExpScreenTilePtrUpOneRow:
 	ret ; $6dde
 ExpScreenTilePtrDownOneRow:
 	ld a, $21 ; $6ddf
-	add e ; $6de1
-	ld e, a ; $6de2
-	jr nc, .done ; $6de3
-	inc d ; $6de5
-.done:
+	add_de_a ; $6de1
 	ret ; $6de6
 DrawExpScreenLevelNumber:
 	wram_bank WRAM_SCENE ; $6de7
@@ -884,11 +880,7 @@ DrawExpScreenLevelNumber:
 	inc a ; $6e38
 	ld [hl], a ; $6e39
 	ld a, $1d ; $6e3a
-	add l ; $6e3c
-	ld l, a ; $6e3d
-	jr nc, .gotPtr ; $6e3e
-	inc h ; $6e40
-.gotPtr:
+	add_hl_a ; $6e3c
 	ld a, $ac ; $6e41
 	ld [hl+], a ; $6e43
 	inc a ; $6e44
@@ -911,11 +903,7 @@ DrawExpScreenLevelDigit:
 	add b ; $6e61
 	ld b, a ; $6e62
 	ld a, $20 ; $6e63
-	add e ; $6e65
-	ld e, a ; $6e66
-	jr nc, .gotPtr ; $6e67
-	inc d ; $6e69
-.gotPtr:
+	add_de_a ; $6e65
 	ld a, b ; $6e6a
 	ld [de], a ; $6e6b
 	pop de ; $6e6c
@@ -937,11 +925,7 @@ ClearExpScreenLevelDigits:
 	ld [hl+], a ; $6e87
 	ld [hl], a ; $6e88
 	ld a, $1d ; $6e89
-	add l ; $6e8b
-	ld l, a ; $6e8c
-	jr nc, .gotPtr ; $6e8d
-	inc h ; $6e8f
-.gotPtr:
+	add_hl_a ; $6e8b
 	ld a, $74 ; $6e90
 	ld [hl+], a ; $6e92
 	inc a ; $6e93

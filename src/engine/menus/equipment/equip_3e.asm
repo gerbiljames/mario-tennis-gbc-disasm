@@ -89,11 +89,7 @@ Unused_3e_GetEquipSelectTextRowPtr:
 .readEntry:
 	ld a, b ; $58c9
 	add a ; $58ca
-	add l ; $58cb
-	ld l, a ; $58cc
-	jr nc, .read ; $58cd
-	inc h ; $58cf
-.read:
+	add_hl_a ; $58cb
 	ld a, [hl+] ; $58d0
 	ld h, [hl] ; $58d1
 	ld l, a ; $58d2
@@ -120,11 +116,7 @@ GetHoveredItemId:
 	ld c, a ; $594f
 	call GetMenuCursorIndex_3e ; $5950
 	ld hl, wEquipItemList ; $5953
-	add l ; $5956
-	ld l, a ; $5957
-	jr nc, .read ; $5958
-	inc h ; $595a
-.read:
+	add_hl_a ; $5956
 	ld a, [hl] ; $595b
 	pop hl ; $595c
 	pop bc ; $595d
@@ -133,11 +125,7 @@ GetEquippedItemId:
 	push hl ; $595f
 	ld a, [wEquipEquippedIndex] ; $5960
 	ld hl, wEquipItemList ; $5963
-	add l ; $5966
-	ld l, a ; $5967
-	jr nc, .read ; $5968
-	inc h ; $596a
-.read:
+	add_hl_a ; $5966
 	ld a, [hl] ; $596b
 	pop hl ; $596c
 	ret ; $596d
@@ -171,11 +159,7 @@ RenderRacketDescText:
 	ld hl, Text_RacketNormalDesc ; $59a4
 .addTextIndex:
 	ld a, c ; $59a7
-	add l ; $59a8
-	ld l, a ; $59a9
-	jr nc, .gotPtr ; $59aa
-	inc h ; $59ac
-.gotPtr:
+	add_hl_a ; $59a8
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $59ad
 	ld c, $12 ; $59b0
 	push hl ; $59b2
@@ -189,11 +173,7 @@ RenderRacketNameText:
 	ld hl, Text_RacketNormal ; $59be
 .addTextIndex:
 	ld a, c ; $59c1
-	add l ; $59c2
-	ld l, a ; $59c3
-	jr nc, .renderProportionalTextAt ; $59c4
-	inc h ; $59c6
-.renderProportionalTextAt:
+	add_hl_a ; $59c2
 	ld c, $12 ; $59c7
 	farcall RenderProportionalTextAt ; $59c9
 	ret ; $59cc
@@ -201,11 +181,7 @@ EquipListCursorSpriteTask:
 	ld c, $07 ; $59cd
 	call GetMenuCursorIndex_3e ; $59cf
 	ld hl, EquipListCursorYPositions_3e ; $59d2
-	add l ; $59d5
-	ld l, a ; $59d6
-	jr nc, .read ; $59d7
-	inc h ; $59d9
-.read:
+	add_hl_a ; $59d5
 	ld d, [hl] ; $59da
 	ld e, $06 ; $59db
 	ld b, $10 ; $59dd
@@ -219,11 +195,7 @@ EquippedItemMarkerSpriteTask:
 	push_wram_bank WRAM_SCREEN ; $59eb
 	ld a, [wEquipEquippedIndex] ; $59f4
 	ld hl, EquippedMarkerYPositions_3e ; $59f7
-	add l ; $59fa
-	ld l, a ; $59fb
-	jr nc, .read ; $59fc
-	inc h ; $59fe
-.read:
+	add_hl_a ; $59fa
 	ld d, [hl] ; $59ff
 	ld e, $18 ; $5a00
 	sprite_attr_tile OAM_BANK1 | 1, $20 ; $5a02
@@ -279,11 +251,7 @@ GetItemStatModListPtr:
 .readEntry:
 	ld a, b ; $5a52
 	add a ; $5a53
-	add l ; $5a54
-	ld l, a ; $5a55
-	jr nc, .read ; $5a56
-	inc h ; $5a58
-.read:
+	add_hl_a ; $5a54
 	ld a, [hl+] ; $5a59
 	ld h, [hl] ; $5a5a
 	ld l, a ; $5a5b
@@ -358,11 +326,7 @@ GetStatModLabelTile:
 	push hl ; $5ae2
 	ld a, d ; $5ae3
 	ld hl, StatModLabelTiles_3e ; $5ae4
-	add l ; $5ae7
-	ld l, a ; $5ae8
-	jr nc, .read ; $5ae9
-	inc h ; $5aeb
-.read:
+	add_hl_a ; $5ae7
 	ld b, [hl] ; $5aec
 	pop hl ; $5aed
 	ret ; $5aee
@@ -373,11 +337,7 @@ GetStatModLabelLen:
 	push hl ; $5afc
 	ld a, d ; $5afd
 	ld hl, StatModLabelLengths_3e ; $5afe
-	add l ; $5b01
-	ld l, a ; $5b02
-	jr nc, .read ; $5b03
-	inc h ; $5b05
-.read:
+	add_hl_a ; $5b01
 	ld a, [hl] ; $5b06
 	pop hl ; $5b07
 	ret ; $5b08
@@ -419,21 +379,13 @@ GetStatModRowAddr:
 	ld a, [wEquipStatRowSet] ; $5b3e
 	add a ; $5b41
 	ld hl, StatModRowAddrPtrs ; $5b42
-	add l ; $5b45
-	ld l, a ; $5b46
-	jr nc, .read ; $5b47
-	inc h ; $5b49
-.read:
+	add_hl_a ; $5b45
 	ld a, [hl+] ; $5b4a
 	ld h, [hl] ; $5b4b
 	ld l, a ; $5b4c
 	ld a, b ; $5b4d
 	add a ; $5b4e
-	add l ; $5b4f
-	ld l, a ; $5b50
-	jr nc, .readB ; $5b51
-	inc h ; $5b53
-.readB:
+	add_hl_a ; $5b4f
 	ld a, [hl+] ; $5b54
 	ld h, [hl] ; $5b55
 	ld l, a ; $5b56

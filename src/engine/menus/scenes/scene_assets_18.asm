@@ -342,11 +342,7 @@ Unused_18_DebugScreenAssetViewer:
 	push bc ; $765e
 	ld a, c ; $765f
 	ld hl, DebugScreenAssetViewerRecords ; $7660
-	add l ; $7663
-	ld l, a ; $7664
-	jr nc, .loadScreen ; $7665
-	inc h ; $7667
-.loadScreen:
+	add_hl_a ; $7663
 	ld c, [hl] ; $7668
 	push bc ; $7669
 	script_fade_out 16 ; $766a
@@ -428,11 +424,7 @@ SetupScreen0Assets:
 LookupScreen0AssetId:
 	ld a, [wStorySceneAssetIndex] ; $772d
 	ld hl, Screen0AssetIdTable ; $7730
-	add l ; $7733
-	ld l, a ; $7734
-	jr nc, .read ; $7735
-	inc h ; $7737
-.read:
+	add_hl_a ; $7733
 	ld c, [hl] ; $7738
 	ret ; $7739
 Screen0AssetIdTable:

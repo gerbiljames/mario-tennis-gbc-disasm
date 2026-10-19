@@ -419,11 +419,7 @@ AdvanceToPaletteEntry:
 	and a ; $782a
 	ret z ; $782b
 	ld a, $08 ; $782c
-	add l ; $782e
-	ld l, a ; $782f
-	jr nc, .seekLoop ; $7830
-	inc h ; $7832
-.seekLoop:
+	add_hl_a ; $782e
 	dec b ; $7833
 	jr AdvanceToPaletteEntry ; $7834
 	; $7836, 1994 bytes fill to bank end (linker-padded)

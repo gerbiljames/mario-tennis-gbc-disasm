@@ -67,11 +67,7 @@ AssignStoryMatchCharacters:
 	farcall InitCa00RecordFromCharId ; $49c4
 	ld a, [wMatchOpponentChar] ; $49c7
 	ld hl, DoublesPartnerTable_0a ; $49ca
-	add l ; $49cd
-	ld l, a ; $49ce
-	jr nc, .read ; $49cf
-	inc h ; $49d1
-.read:
+	add_hl_a ; $49cd
 	ld b, [hl] ; $49d2
 	ld c, $03 ; $49d3
 	farcall InitCa00RecordFromCharId ; $49d5
@@ -216,11 +212,7 @@ LoadMatchSettingsFromTable:
 	ld h, $00 ; $4a73
 	add hl, hl ; $4a75
 	add hl, hl ; $4a76
-	add l ; $4a77
-	ld l, a ; $4a78
-	jr nc, .readEntry ; $4a79
-	inc h ; $4a7b
-.readEntry:
+	add_hl_a ; $4a77
 	add hl, de ; $4a7c
 	ld a, [hl+] ; $4a7d
 	ld [wGameMode], a ; $4a7e
@@ -417,11 +409,7 @@ RunClearStatusSetupMenu:
 	farcall DrawTextWindowFrame ; $4cbf
 	ld hl, Text_ClearStatusChooseGame ; $4cc2
 	ld a, [wClearStatusFormat] ; $4cc5
-	add l ; $4cc8
-	ld l, a ; $4cc9
-	jr nc, .drawSetsOption ; $4cca
-	inc h ; $4ccc
-.drawSetsOption:
+	add_hl_a ; $4cc8
 	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4ccd
 	farcall RenderProportionalTextAt ; $4cd0
 	ld a, [wClearStatusWindowId] ; $4cd3

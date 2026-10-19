@@ -187,11 +187,7 @@ ResetWindowState:
 	push af ; $4757
 	call GetWindowStructPtr ; $4758
 	ld a, $04 ; $475b
-	add l ; $475d
-	ld l, a ; $475e
-	jr nc, .store ; $475f
-	inc h ; $4761
-.store:
+	add_hl_a ; $475d
 	ld [hl], $ff ; $4762
 	pop af ; $4764
 	ret ; $4765
@@ -200,21 +196,13 @@ Unused_05_StubNop1:
 SetWindowState:
 	call GetWindowStructPtr ; $4767
 	ld a, $04 ; $476a
-	add l ; $476c
-	ld l, a ; $476d
-	jr nc, .store ; $476e
-	inc h ; $4770
-.store:
+	add_hl_a ; $476c
 	ld [hl], b ; $4771
 	ret ; $4772
 GetWindowState:
 	call GetWindowStructPtr ; $4773
 	ld a, $04 ; $4776
-	add l ; $4778
-	ld l, a ; $4779
-	jr nc, .read ; $477a
-	inc h ; $477c
-.read:
+	add_hl_a ; $4778
 	ld a, [hl] ; $477d
 	ret ; $477e
 RunMenuSelection:

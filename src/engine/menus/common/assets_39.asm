@@ -149,21 +149,13 @@ RestoreMenuBgAndDrawPanel:
 	ld a, b ; $4e11
 	add a ; $4e12
 	ld hl, TilemapAssemblyDispatch_39 ; $4e13
-	add l ; $4e16
-	ld l, a ; $4e17
-	jr nc, .readTable ; $4e18
-	inc h ; $4e1a
-.readTable:
+	add_hl_a ; $4e16
 	ld a, [hl+] ; $4e1b
 	ld h, [hl] ; $4e1c
 	ld l, a ; $4e1d
 	ld a, c ; $4e1e
 	add a ; $4e1f
-	add l ; $4e20
-	ld l, a ; $4e21
-	jr nc, .readEntry ; $4e22
-	inc h ; $4e24
-.readEntry:
+	add_hl_a ; $4e20
 	ld a, [hl+] ; $4e25
 	ld h, [hl] ; $4e26
 	ld l, a ; $4e27
@@ -200,11 +192,7 @@ RestoreMenuBgAndDrawPanel:
 	call CopyTilemapRect ; $4e4c
 	pop hl ; $4e4f
 	ld a, $06 ; $4e50
-	add l ; $4e52
-	ld l, a ; $4e53
-	jr nc, .nextRect ; $4e54
-	inc h ; $4e56
-.nextRect:
+	add_hl_a ; $4e52
 	jr .rectLoop ; $4e57
 .done:
 	pop hl ; $4e59

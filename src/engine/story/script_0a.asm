@@ -364,11 +364,7 @@ GetActorStateAddr:
 	wram_bank WRAM_ACTORS ; $4326
 	push hl ; $432c
 	ld a, ACTORF_MODE ; $432d
-	add l ; $432f
-	ld l, a ; $4330
-	jr nc, .readActive ; $4331
-	inc h ; $4333
-.readActive:
+	add_hl_a ; $432f
 	ld a, [hl] ; $4334
 	cp $00 ; $4335
 	pop hl ; $4337
@@ -380,11 +376,7 @@ ScriptSetActorMoveSpeed:
 	ret z ; $433e
 	wram_bank WRAM_ACTORS ; $433f
 	ld a, ACTORF_SPEED ; $4345
-	add l ; $4347
-	ld l, a ; $4348
-	jr nc, .store ; $4349
-	inc h ; $434b
-.store:
+	add_hl_a ; $4347
 	ld a, c ; $434c
 	ld [hl+], a ; $434d
 	ld [hl], b ; $434e

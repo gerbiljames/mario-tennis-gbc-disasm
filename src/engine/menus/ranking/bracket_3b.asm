@@ -108,11 +108,7 @@ WriteBracketSinglesNames:
 	ld a, [wDataScreenPage] ; $786c
 	ld hl, WriteBracketSinglesNamesPtrs ; $786f
 	add a ; $7872
-	add l ; $7873
-	ld l, a ; $7874
-	jr nc, .read ; $7875
-	inc h ; $7877
-.read:
+	add_hl_a ; $7873
 	ld a, [hl+] ; $7878
 	ld h, [hl] ; $7879
 	ld l, a ; $787a
@@ -154,20 +150,12 @@ WriteBracketEntrantName:
 	jr z, .player ; $78a8
 	ld hl, $004b ; $78aa
 	dec a ; $78ad
-	add l ; $78ae
-	ld l, a ; $78af
-	jr nc, .gotPtr ; $78b0
-	inc h ; $78b2
-.gotPtr:
+	add_hl_a ; $78ae
 	push hl ; $78b3
 	ld hl, WriteBracketEntrantNameTable ; $78b4
 	ld a, b ; $78b7
 	add a ; $78b8
-	add l ; $78b9
-	ld l, a ; $78ba
-	jr nc, .read ; $78bb
-	inc h ; $78bd
-.read:
+	add_hl_a ; $78b9
 	ld a, [hl+] ; $78be
 	ld d, [hl] ; $78bf
 	ld e, a ; $78c0
@@ -183,11 +171,7 @@ WriteBracketEntrantName:
 	ld hl, WriteBracketEntrantNameTable ; $78cc
 	ld a, b ; $78cf
 	add a ; $78d0
-	add l ; $78d1
-	ld l, a ; $78d2
-	jr nc, .readB ; $78d3
-	inc h ; $78d5
-.readB:
+	add_hl_a ; $78d1
 	ld a, [hl+] ; $78d6
 	ld d, [hl] ; $78d7
 	ld e, a ; $78d8
@@ -246,11 +230,7 @@ HighlightBracketPlayerRow:
 	ld a, [wDataScreenPage] ; $794b
 	ld hl, HighlightBracketPlayerRowTable ; $794e
 	add a ; $7951
-	add l ; $7952
-	ld l, a ; $7953
-	jr nc, .readSinglesRow ; $7954
-	inc h ; $7956
-.readSinglesRow:
+	add_hl_a ; $7952
 	ld a, [hl+] ; $7957
 	ld d, [hl] ; $7958
 	ld e, a ; $7959
@@ -260,11 +240,7 @@ HighlightBracketPlayerRow:
 	ld a, [wDataScreenPage] ; $7963
 	ld hl, BracketPlayerRowTable0 ; $7966
 	add a ; $7969
-	add l ; $796a
-	ld l, a ; $796b
-	jr nc, .readSinglesMarker ; $796c
-	inc h ; $796e
-.readSinglesMarker:
+	add_hl_a ; $796a
 	ld a, [hl+] ; $796f
 	ld d, [hl] ; $7970
 	ld e, a ; $7971
@@ -282,11 +258,7 @@ HighlightBracketPlayerRow:
 	ld a, [wDataScreenPage] ; $7985
 	ld hl, BracketPlayerRowTable1 ; $7988
 	add a ; $798b
-	add l ; $798c
-	ld l, a ; $798d
-	jr nc, .readDoublesRow ; $798e
-	inc h ; $7990
-.readDoublesRow:
+	add_hl_a ; $798c
 	ld a, [hl+] ; $7991
 	ld d, [hl] ; $7992
 	ld e, a ; $7993
@@ -296,11 +268,7 @@ HighlightBracketPlayerRow:
 	ld a, [wDataScreenPage] ; $799d
 	ld hl, BracketPlayerRowTable2 ; $79a0
 	add a ; $79a3
-	add l ; $79a4
-	ld l, a ; $79a5
-	jr nc, .readDoublesMarker ; $79a6
-	inc h ; $79a8
-.readDoublesMarker:
+	add_hl_a ; $79a4
 	ld a, [hl+] ; $79a9
 	ld d, [hl] ; $79aa
 	ld e, a ; $79ab
@@ -578,20 +546,12 @@ RedrawMarioCastChartWindow:
 	ld bc, wShadowTilemap + 5 * TILEMAP_WIDTH + 4 ; $7bf6
 	ld a, [wMenuCursorX] ; $7bf9
 	ld hl, wChartColumnList ; $7bfc
-	add l ; $7bff
-	ld l, a ; $7c00
-	jr nc, .wideRow ; $7c01
-	inc h ; $7c03
-.wideRow:
+	add_hl_a ; $7bff
 	ld a, $07 ; $7c04
 	call DrawChartIconRow ; $7c06
 	ld a, [wMenuCursorY] ; $7c09
 	ld hl, wChartColumnList ; $7c0c
-	add l ; $7c0f
-	ld l, a ; $7c10
-	jr nc, .wideColumn ; $7c11
-	inc h ; $7c13
-.wideColumn:
+	add_hl_a ; $7c0f
 	ld bc, wShadowTilemap + 7 * TILEMAP_WIDTH + 2 ; $7c14
 	call DrawChartIconColumn ; $7c17
 	ld a, [wMenuCursorY] ; $7c1a
@@ -605,11 +565,7 @@ RedrawMarioCastChartWindow:
 	jr .wideRowLoop ; $7c28
 .wideRowFound:
 	ld a, [wMenuCursorX] ; $7c2a
-	add l ; $7c2d
-	ld l, a ; $7c2e
-	jr nc, .wideCells ; $7c2f
-	inc h ; $7c31
-.wideCells:
+	add_hl_a ; $7c2d
 	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH + 4 ; $7c32
 	ld a, $07 ; $7c35
 	call DrawChartCellRows ; $7c37
@@ -618,20 +574,12 @@ RedrawMarioCastChartWindow:
 	ld bc, wShadowTilemap + 5 * TILEMAP_WIDTH + 6 ; $7c3c
 	ld a, [wMenuCursorX] ; $7c3f
 	ld hl, wChartColumnList ; $7c42
-	add l ; $7c45
-	ld l, a ; $7c46
-	jr nc, .compactRow ; $7c47
-	inc h ; $7c49
-.compactRow:
+	add_hl_a ; $7c45
 	ld a, $05 ; $7c4a
 	call DrawChartIconRow ; $7c4c
 	ld a, [wMenuCursorY] ; $7c4f
 	ld hl, wChartColumnList ; $7c52
-	add l ; $7c55
-	ld l, a ; $7c56
-	jr nc, .compactColumn ; $7c57
-	inc h ; $7c59
-.compactColumn:
+	add_hl_a ; $7c55
 	ld bc, wShadowTilemap + 7 * TILEMAP_WIDTH + 4 ; $7c5a
 	call DrawChartIconColumn ; $7c5d
 	ld a, [wMenuCursorY] ; $7c60
@@ -645,11 +593,7 @@ RedrawMarioCastChartWindow:
 	jr .compactRowLoop ; $7c6e
 .compactRowFound:
 	ld a, [wMenuCursorX] ; $7c70
-	add l ; $7c73
-	ld l, a ; $7c74
-	jr nc, .compactCells ; $7c75
-	inc h ; $7c77
-.compactCells:
+	add_hl_a ; $7c73
 	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH + 6 ; $7c78
 	ld a, $05 ; $7c7b
 	call DrawChartCellRows ; $7c7d
@@ -689,11 +633,7 @@ BuildMarioCastChartColumnList:
 	ld hl, MarioCastChartColumnListTable ; $7ccc
 	ld a, c ; $7ccf
 	add a ; $7cd0
-	add l ; $7cd1
-	ld l, a ; $7cd2
-	jr nc, .read ; $7cd3
-	inc h ; $7cd5
-.read:
+	add_hl_a ; $7cd1
 	ld a, [hl+] ; $7cd6
 	ld d, [hl] ; $7cd7
 	ld e, a ; $7cd8
@@ -708,20 +648,12 @@ BuildMarioCastChartColumnList:
 .unlocked:
 	ld hl, MarioCastChartColumnTable ; $7ce8
 	ld a, c ; $7ceb
-	add l ; $7cec
-	ld l, a ; $7ced
-	jr nc, .readB ; $7cee
-	inc h ; $7cf0
-.readB:
+	add_hl_a ; $7cec
 	ld b, [hl] ; $7cf1
 .storeColumn:
 	ld hl, wChartColumnList ; $7cf2
 	ld a, c ; $7cf5
-	add l ; $7cf6
-	ld l, a ; $7cf7
-	jr nc, .store ; $7cf8
-	inc h ; $7cfa
-.store:
+	add_hl_a ; $7cf6
 	ld [hl], b ; $7cfb
 	inc c ; $7cfc
 	ld a, c ; $7cfd

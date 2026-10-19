@@ -173,11 +173,7 @@ Unused_13_DecompressVarsityCourtTourRecords:
 	push af ; $6687
 	ld hl, VarsityCourtTourLzPtrs_13 ; $6688
 	sla a ; $668b
-	add l ; $668d
-	ld l, a ; $668e
-	jr nc, .read ; $668f
-	inc h ; $6691
-.read:
+	add_hl_a ; $668d
 	ld a, [hl+] ; $6692
 	ld h, [hl] ; $6693
 	ld l, a ; $6694
@@ -219,11 +215,7 @@ Unused_13_QueueVarsityCourtTourSprites:
 	push af ; $66d9
 	ld hl, VarsityCourtTourSpritePtrs_13 ; $66da
 	sla a ; $66dd
-	add l ; $66df
-	ld l, a ; $66e0
-	jr nc, .read ; $66e1
-	inc h ; $66e3
-.read:
+	add_hl_a ; $66df
 	ld a, [hl+] ; $66e4
 	ld h, [hl] ; $66e5
 	ld l, a ; $66e6

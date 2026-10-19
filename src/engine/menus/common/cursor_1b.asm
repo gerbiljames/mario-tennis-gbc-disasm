@@ -58,11 +58,7 @@ Unused_1b_ApplyCursorBobOffsetX:
 	ldh a, [hVBlankCounter] ; $40a3
 	and $0f ; $40a5
 	ld hl, CursorBobOffsetTableX ; $40a7
-	add l ; $40aa
-	ld l, a ; $40ab
-	jr nc, .readOffset ; $40ac
-	inc h ; $40ae
-.readOffset:
+	add_hl_a ; $40aa
 	ld a, [hl] ; $40af
 	ld b, a ; $40b0
 	ld a, c ; $40b1
@@ -84,11 +80,7 @@ ApplyArrowBobOffset:
 	ldh a, [hVBlankCounter] ; $40cd
 	and $0f ; $40cf
 	ld hl, ArrowBobOffsetTable_1b ; $40d1
-	add l ; $40d4
-	ld l, a ; $40d5
-	jr nc, .readOffset ; $40d6
-	inc h ; $40d8
-.readOffset:
+	add_hl_a ; $40d4
 	ld a, [hl] ; $40d9
 	ld b, a ; $40da
 	ld a, c ; $40db

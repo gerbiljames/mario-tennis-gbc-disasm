@@ -4,22 +4,14 @@ QueueFinishedRoundNameText:
 	ld a, [wMapSceneStage] ; $78f1
 	dec a ; $78f4
 	ld hl, Text_RoundNameSinglesRoundOne ; $78f5
-	add l ; $78f8
-	ld l, a ; $78f9
-	jr nc, .queue ; $78fa
-	inc h ; $78fc
-.queue:
+	add_hl_a ; $78f8
 	call PushShortTextArg_0f ; $78fd
 	ret ; $7900
 .doubles:
 	ld a, [wMapSceneStage] ; $7901
 	dec a ; $7904
 	ld hl, Text_RoundNameDoublesRoundOne ; $7905
-	add l ; $7908
-	ld l, a ; $7909
-	jr nc, .queueDoubles ; $790a
-	inc h ; $790c
-.queueDoubles:
+	add_hl_a ; $7908
 	call PushShortTextArg_0f ; $790d
 	ret ; $7910
 IslandOpenBreakCutscene:
@@ -46,11 +38,7 @@ IslandOpenBreakCutscene:
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_1 ; $79a1
 	ld a, [wMapSceneStage] ; $79a6
 	ld hl, Text_RoundNameSinglesRoundOne ; $79a9
-	add l ; $79ac
-	ld l, a ; $79ad
-	jr nc, .queue ; $79ae
-	inc h ; $79b0
-.queue:
+	add_hl_a ; $79ac
 	call PushShortTextArg_0f ; $79b1
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_1 ; $79b4
 	script_face_pair ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_2, ACTOR_ISLAND_OPEN_ROUND_DOUBLES_TOURNAMENT_STAFF_1 ; $79b9

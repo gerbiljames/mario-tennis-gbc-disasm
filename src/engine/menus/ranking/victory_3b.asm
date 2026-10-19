@@ -31,11 +31,7 @@ RecordExhibitionVictory:
 	add d ; $7d9b
 	add e ; $7d9c
 	ld hl, wN64RecordsBlock ; $7d9d
-	add l ; $7da0
-	ld l, a ; $7da1
-	jr nc, .checkExhibitionModeCPUMainCharacterDifficulty ; $7da2
-	inc h ; $7da4
-.checkExhibitionModeCPUMainCharacterDifficulty:
+	add_hl_a ; $7da0
 	push hl ; $7da5
 	ld d, [hl] ; $7da6
 	ld a, [wPlayer2MainDifficulty] ; $7da7
@@ -63,11 +59,7 @@ GetVictoryScore:
 	ld hl, VictoryScoreTable1 ; $7dce
 .gotTable:
 	ld a, b ; $7dd1
-	add l ; $7dd2
-	ld l, a ; $7dd3
-	jr nc, .read ; $7dd4
-	inc h ; $7dd6
-.read:
+	add_hl_a ; $7dd2
 	ld a, [hl] ; $7dd7
 	ret ; $7dd8
 VictoryScoreTable:
@@ -79,11 +71,7 @@ VictoryScoreTable1:
 GetMarioCastIndex:
 	sub $17 ; $7de1
 	ld hl, MarioCastOrderTable ; $7de3
-	add l ; $7de6
-	ld l, a ; $7de7
-	jr nc, .read ; $7de8
-	inc h ; $7dea
-.read:
+	add_hl_a ; $7de6
 	ld a, [hl] ; $7deb
 	ret ; $7dec
 MarioCastOrderTable:
@@ -100,11 +88,7 @@ UpdateMarioCastUnlocks:
 	add a ; $7dfd
 	add a ; $7dfe
 	add c ; $7dff
-	add l ; $7e00
-	ld l, a ; $7e01
-	jr nc, .gotPtr ; $7e02
-	inc h ; $7e04
-.gotPtr:
+	add_hl_a ; $7e00
 	ld b, $00 ; $7e05
 .loopB:
 	ld a, c ; $7e07

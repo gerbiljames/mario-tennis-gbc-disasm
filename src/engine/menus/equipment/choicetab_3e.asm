@@ -66,20 +66,12 @@ ChoiceTabCursorSpriteTask:
 	call GetMenuCursorIndex_3e ; $50fa
 	push af ; $50fd
 	ld hl, ChoiceTabCursorTiles_3e ; $50fe
-	add l ; $5101
-	ld l, a ; $5102
-	jr nc, .read ; $5103
-	inc h ; $5105
-.read:
+	add_hl_a ; $5101
 	ld c, [hl] ; $5106
 	pop af ; $5107
 	ld hl, ChoiceTabCursorPositions_3e ; $5108
 	add a ; $510b
-	add l ; $510c
-	ld l, a ; $510d
-	jr nc, .readB ; $510e
-	inc h ; $5110
-.readB:
+	add_hl_a ; $510c
 	ld a, [hl+] ; $5111
 	ld d, [hl] ; $5112
 	ld e, a ; $5113
@@ -136,11 +128,7 @@ SetChoiceTabAttrRect:
 	ld hl, ChoiceTabAttrAddrs_3e ; $5174
 	ld a, b ; $5177
 	add a ; $5178
-	add l ; $5179
-	ld l, a ; $517a
-	jr nc, .readAddr ; $517b
-	inc h ; $517d
-.readAddr:
+	add_hl_a ; $5179
 	ld a, [hl+] ; $517e
 	ld d, [hl] ; $517f
 	ld e, a ; $5180
@@ -230,11 +218,7 @@ LoadPlayAlonePartnerGraphics:
 	ld a, c ; $5234
 	add a ; $5235
 	ld hl, PlayAlonePartnerGfxParams_3e ; $5236
-	add l ; $5239
-	ld l, a ; $523a
-	jr nc, .read ; $523b
-	inc h ; $523d
-.read:
+	add_hl_a ; $5239
 	ld a, [hl+] ; $523e
 	ld h, [hl] ; $523f
 	ld l, a ; $5240
@@ -251,11 +235,7 @@ LoadPlayAlonePartnerGraphics:
 	ld hl, PlayAlonePartnerGfxDests_3e ; $524f
 	ld a, c ; $5252
 	add a ; $5253
-	add l ; $5254
-	ld l, a ; $5255
-	jr nc, .readB ; $5256
-	inc h ; $5258
-.readB:
+	add_hl_a ; $5254
 	ld a, [hl+] ; $5259
 	ld d, [hl] ; $525a
 	ld e, a ; $525b
@@ -350,11 +330,7 @@ RedrawPlayAlonePartnerMenu:
 SetPlayAlonePartnerPalette:
 	ld hl, PlayAlonePartnerPalettePtrs ; $5320
 	add a ; $5323
-	add l ; $5324
-	ld l, a ; $5325
-	jr nc, .read ; $5326
-	inc h ; $5328
-.read:
+	add_hl_a ; $5324
 	ld a, [hl+] ; $5329
 	ld h, [hl] ; $532a
 	ld l, a ; $532b
@@ -381,21 +357,13 @@ DrawPlayAlonePartnerCaption:
 	ld b, a ; $5363
 	ld hl, PlayAlonePartnerCaptionDests_3e ; $5364
 	add a ; $5367
-	add l ; $5368
-	ld l, a ; $5369
-	jr nc, .read ; $536a
-	inc h ; $536c
-.read:
+	add_hl_a ; $5368
 	ld a, [hl+] ; $536d
 	ld d, [hl] ; $536e
 	ld e, a ; $536f
 	ld a, b ; $5370
 	ld hl, Text_EquipPlayAlone ; $5371
-	add l ; $5374
-	ld l, a ; $5375
-	jr nc, .renderTextToBuffer64 ; $5376
-	inc h ; $5378
-.renderTextToBuffer64:
+	add_hl_a ; $5374
 	ld c, $20 ; $5379
 	farcall RenderTextToBuffer64 ; $537b
 	pop_wram_bank ; $537e

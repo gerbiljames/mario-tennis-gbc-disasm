@@ -113,11 +113,7 @@ Unused_00_CallTableEntryInBankA:
 	pop hl ; $0199
 	ld a, b ; $019a
 	add a ; $019b
-	add l ; $019c
-	ld l, a ; $019d
-	jr nc, .readSlot ; $019e
-	inc h ; $01a0
-.readSlot:
+	add_hl_a ; $019c
 	ld a, [hl+] ; $01a1
 	ld h, [hl] ; $01a2
 	ld l, a ; $01a3

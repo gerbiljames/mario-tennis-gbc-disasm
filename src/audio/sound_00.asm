@@ -24,11 +24,7 @@ PlaySoundCmd:
 	ldh [hActiveJingle], a ; $2fd1
 	sub $40 ; $2fd3
 	ld hl, JingleSoundIds ; $2fd5
-	add l ; $2fd8
-	ld l, a ; $2fd9
-	jr nc, .read ; $2fda
-	inc h ; $2fdc
-.read:
+	add_hl_a ; $2fd8
 	ld a, [hl] ; $2fdd
 	jr PlaySoundCmd.play ; $2fde
 JingleSoundIds:
@@ -301,11 +297,7 @@ PlaySound:
 	jr nc, .addIndex ; $32d4
 	inc h ; $32d6
 .addIndex:
-	add l ; $32d7
-	ld l, a ; $32d8
-	jr nc, .startChannels ; $32d9
-	inc h ; $32db
-.startChannels:
+	add_hl_a ; $32d7
 	ldh a, [hRomBank] ; $32dc
 	push af ; $32de
 	ld a, [hl] ; $32df

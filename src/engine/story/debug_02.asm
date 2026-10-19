@@ -526,11 +526,7 @@ GetCharGroupEntry:
 	ld_hl_indexed CharGroupTable_02 ; $5eb7
 	ld a, b ; $5ebe
 	and $0f ; $5ebf
-	add l ; $5ec1
-	ld l, a ; $5ec2
-	jr nc, .read ; $5ec3
-	inc h ; $5ec5
-.read:
+	add_hl_a ; $5ec1
 	ld a, [hl] ; $5ec6
 	ret ; $5ec7
 Unused_02_CharGroupFind:

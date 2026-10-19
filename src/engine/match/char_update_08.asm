@@ -418,11 +418,7 @@ SetCharAnimation:
 	ld l, a ; $6a01
 	ld a, d ; $6a02
 	add a ; $6a03
-	add l ; $6a04
-	ld l, a ; $6a05
-	jr nc, .readAnimPtr ; $6a06
-	inc h ; $6a08
-.readAnimPtr:
+	add_hl_a ; $6a04
 	ld a, [wCharObjectBank] ; $6a09
 	call FarReadWordDI ; $6a0c
 	ld hl, wCharAnimScriptBase ; $6a0f

@@ -136,11 +136,7 @@ Unused_38_DrawCharSelectCursorBox:
 	call GetMenuCursorIndex_38 ; $490e
 	add a ; $4911
 	ld hl, CharacterSelectScreenTable ; $4912
-	add l ; $4915
-	ld l, a ; $4916
-	jr nc, .done ; $4917
-	inc h ; $4919
-.done:
+	add_hl_a ; $4915
 	ld a, [hl+] ; $491a
 	ld d, [hl] ; $491b
 	ld e, a ; $491c

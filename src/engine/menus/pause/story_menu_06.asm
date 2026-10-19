@@ -481,11 +481,7 @@ GetStoryMenuItemId:
 	add a ; $6d7a
 	ld_hl_indexed StoryMenuDefs ; $6d7b
 	ld a, b ; $6d82
-	add l ; $6d83
-	ld l, a ; $6d84
-	jr nc, .read ; $6d85
-	inc h ; $6d87
-.read:
+	add_hl_a ; $6d83
 	ld a, [hl] ; $6d88
 	ret ; $6d89
 GetStoryMenuItemCount:
@@ -553,11 +549,7 @@ DrawStoryMenuCursor:
 	ld l, a ; $6dea
 	ld a, [wMatchMenuSelection] ; $6deb
 	add a ; $6dee
-	add l ; $6def
-	ld l, a ; $6df0
-	jr nc, .read ; $6df1
-	inc h ; $6df3
-.read:
+	add_hl_a ; $6def
 	ld a, [hl+] ; $6df4
 	ld d, [hl] ; $6df5
 	ld e, a ; $6df6

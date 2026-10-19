@@ -70,11 +70,7 @@ ApplySpriteBobOffsetX:
 	ldh a, [hVBlankCounter] ; $407b
 	and $0f ; $407d
 	ld hl, SpriteBobOffsetXTable ; $407f
-	add l ; $4082
-	ld l, a ; $4083
-	jr nc, .readOffset ; $4084
-	inc h ; $4086
-.readOffset:
+	add_hl_a ; $4082
 	ld a, [hl] ; $4087
 	ld b, a ; $4088
 	ld a, c ; $4089
@@ -96,11 +92,7 @@ ApplySpriteBobOffsetY:
 	ldh a, [hVBlankCounter] ; $40a5
 	and $0f ; $40a7
 	ld hl, SpriteBobOffsetYTable_38 ; $40a9
-	add l ; $40ac
-	ld l, a ; $40ad
-	jr nc, .readOffset ; $40ae
-	inc h ; $40b0
-.readOffset:
+	add_hl_a ; $40ac
 	ld a, [hl] ; $40b1
 	ld b, a ; $40b2
 	ld a, c ; $40b3

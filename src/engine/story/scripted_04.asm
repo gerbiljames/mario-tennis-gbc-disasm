@@ -28,11 +28,7 @@ SetActorAnimation:
 	ld l, a ; $4be4
 	ld a, d ; $4be5
 	add a ; $4be6
-	add l ; $4be7
-	ld l, a ; $4be8
-	jr nc, .readEntry ; $4be9
-	inc h ; $4beb
-.readEntry:
+	add_hl_a ; $4be7
 	push hl ; $4bec
 	ld hl, ACTORF_OBJECT_BANK ; $4bed
 	add hl, bc ; $4bf0
@@ -76,11 +72,7 @@ GetObjectDefCount:
 Unused_04_GetCharObjectId:
 	push hl ; $4c1d
 	ld hl, CharObjectIdTable ; $4c1e
-	add l ; $4c21
-	ld l, a ; $4c22
-	jr nc, .read ; $4c23
-	inc h ; $4c25
-.read:
+	add_hl_a ; $4c21
 	ld a, [hl] ; $4c26
 	pop hl ; $4c27
 	ret ; $4c28

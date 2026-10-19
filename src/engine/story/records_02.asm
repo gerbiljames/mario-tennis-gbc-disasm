@@ -188,11 +188,7 @@ HasReachedNextLevelExp:
 	push hl ; $4dad
 	xor a ; $4dae
 	ld hl, CharDataPtr_02 ; $4daf
-	add l ; $4db2
-	ld l, a ; $4db3
-	jr nc, .read ; $4db4
-	inc h ; $4db6
-.read:
+	add_hl_a ; $4db2
 	ld a, [hl+] ; $4db7
 	ld h, [hl] ; $4db8
 	ld l, a ; $4db9
@@ -223,11 +219,7 @@ GetExpRemainingToNextLevel:
 	push hl ; $4ddc
 	xor a ; $4ddd
 	ld hl, CharDataPtr_02 ; $4dde
-	add l ; $4de1
-	ld l, a ; $4de2
-	jr nc, .readTable ; $4de3
-	inc h ; $4de5
-.readTable:
+	add_hl_a ; $4de1
 	ld a, [hl+] ; $4de6
 	ld h, [hl] ; $4de7
 	ld l, a ; $4de8
@@ -270,11 +262,7 @@ GetExpProgressInCurrentLevel:
 	push hl ; $4e16
 	xor a ; $4e17
 	ld hl, CharDataPtr_02 ; $4e18
-	add l ; $4e1b
-	ld l, a ; $4e1c
-	jr nc, .read ; $4e1d
-	inc h ; $4e1f
-.read:
+	add_hl_a ; $4e1b
 	ld a, [hl+] ; $4e20
 	ld h, [hl] ; $4e21
 	ld l, a ; $4e22
@@ -310,11 +298,7 @@ GetExpRequiredForLevel:
 	push hl ; $4e43
 	xor a ; $4e44
 	ld hl, CharDataPtr_02 ; $4e45
-	add l ; $4e48
-	ld l, a ; $4e49
-	jr nc, .readPrevTable ; $4e4a
-	inc h ; $4e4c
-.readPrevTable:
+	add_hl_a ; $4e48
 	ld a, [hl+] ; $4e4d
 	ld h, [hl] ; $4e4e
 	ld l, a ; $4e4f
@@ -334,11 +318,7 @@ GetExpRequiredForLevel:
 	push hl ; $4e5e
 	xor a ; $4e5f
 	ld hl, CharDataPtr_02 ; $4e60
-	add l ; $4e63
-	ld l, a ; $4e64
-	jr nc, .readTable ; $4e65
-	inc h ; $4e67
-.readTable:
+	add_hl_a ; $4e63
 	ld a, [hl+] ; $4e68
 	ld h, [hl] ; $4e69
 	ld l, a ; $4e6a

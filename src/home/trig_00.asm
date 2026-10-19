@@ -376,11 +376,7 @@ AngleFromVector16:
 	jr .probeBit6 ; $1463
 .add7:
 	ld a, $80 ; $1465
-	add l ; $1467
-	ld l, a ; $1468
-	jr nc, .setBit7 ; $1469
-	inc h ; $146b
-.setBit7:
+	add_hl_a ; $1467
 	set 7, b ; $146c
 .probeBit6:
 	ld a, [hl+] ; $146e
@@ -402,11 +398,7 @@ AngleFromVector16:
 	jr .probeBit5 ; $1481
 .add6:
 	ld a, $40 ; $1483
-	add l ; $1485
-	ld l, a ; $1486
-	jr nc, .setBit6 ; $1487
-	inc h ; $1489
-.setBit6:
+	add_hl_a ; $1485
 	set 6, b ; $148a
 .probeBit5:
 	ld a, [hl+] ; $148c
@@ -428,11 +420,7 @@ AngleFromVector16:
 	jr .probeBit4 ; $149f
 .add5:
 	ld a, $20 ; $14a1
-	add l ; $14a3
-	ld l, a ; $14a4
-	jr nc, .setBit5 ; $14a5
-	inc h ; $14a7
-.setBit5:
+	add_hl_a ; $14a3
 	set 5, b ; $14a8
 .probeBit4:
 	ld a, [hl+] ; $14aa
@@ -454,11 +442,7 @@ AngleFromVector16:
 	jr .probeBit3 ; $14bd
 .add4:
 	ld a, $10 ; $14bf
-	add l ; $14c1
-	ld l, a ; $14c2
-	jr nc, .setBit4 ; $14c3
-	inc h ; $14c5
-.setBit4:
+	add_hl_a ; $14c1
 	set 4, b ; $14c6
 .probeBit3:
 	ld a, [hl+] ; $14c8
@@ -480,11 +464,7 @@ AngleFromVector16:
 	jr .probeBit2 ; $14db
 .add3:
 	ld a, $08 ; $14dd
-	add l ; $14df
-	ld l, a ; $14e0
-	jr nc, .setBit3 ; $14e1
-	inc h ; $14e3
-.setBit3:
+	add_hl_a ; $14df
 	set 3, b ; $14e4
 .probeBit2:
 	ld a, [hl+] ; $14e6
@@ -506,11 +486,7 @@ AngleFromVector16:
 	jr .probeBit1 ; $14f9
 .add2:
 	ld a, $04 ; $14fb
-	add l ; $14fd
-	ld l, a ; $14fe
-	jr nc, .setBit2 ; $14ff
-	inc h ; $1501
-.setBit2:
+	add_hl_a ; $14fd
 	set 2, b ; $1502
 .probeBit1:
 	ld a, [hl+] ; $1504
@@ -532,11 +508,7 @@ AngleFromVector16:
 	jr .lastStep ; $1517
 .add1:
 	ld a, $02 ; $1519
-	add l ; $151b
-	ld l, a ; $151c
-	jr nc, .setBit1 ; $151d
-	inc h ; $151f
-.setBit1:
+	add_hl_a ; $151b
 	set 1, b ; $1520
 .lastStep:
 	ld a, [hl+] ; $1522

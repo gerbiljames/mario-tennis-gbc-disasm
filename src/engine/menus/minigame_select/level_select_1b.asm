@@ -7,11 +7,7 @@ Unused_1b_ToggleSelectedUnlockFlag:
 	cp CHAR_PEACH + 1 ; $68b7
 	jr nc, .playSfx ; $68b9
 	sub $18 ; $68bb
-	add l ; $68bd
-	ld l, a ; $68be
-	jr nc, .read ; $68bf
-	inc h ; $68c1
-.read:
+	add_hl_a ; $68bd
 	ld a, [hl] ; $68c2
 	xor $01 ; $68c3
 	ld [hl], a ; $68c5
@@ -58,11 +54,7 @@ Unused_1b_DrawUnlockDebugFlagSprites:
 	jr z, .restore ; $694a
 	push hl ; $694c
 	ld hl, UnlockDebugFlagSprites ; $694d
-	add l ; $6950
-	ld l, a ; $6951
-	jr nc, .read ; $6952
-	inc h ; $6954
-.read:
+	add_hl_a ; $6950
 	ld d, [hl] ; $6955
 	inc hl ; $6956
 	ld e, [hl] ; $6957
@@ -365,11 +357,7 @@ CountClearedMinigameLevels:
 	ld a, [wScreenAttrmap] ; $6bd5
 	add a ; $6bd8
 	ld hl, ClearedMinigameLevelsTable ; $6bd9
-	add l ; $6bdc
-	ld l, a ; $6bdd
-	jr nc, .read ; $6bde
-	inc h ; $6be0
-.read:
+	add_hl_a ; $6bdc
 	ld a, [hl+] ; $6be1
 	ld h, [hl] ; $6be2
 	ld l, a ; $6be3
@@ -395,11 +383,7 @@ CountClearedMinigameLevels:
 	ld [wScreenAttrmap + 1], a ; $6bfb
 	ld a, [wScreenAttrmap + 1] ; $6bfe
 	ld hl, CountClearedMinigameLevelsTable ; $6c01
-	add l ; $6c04
-	ld l, a ; $6c05
-	jr nc, .readB ; $6c06
-	inc h ; $6c08
-.readB:
+	add_hl_a ; $6c04
 	ld a, [hl] ; $6c09
 	ld [wScreenAttrmap + 2], a ; $6c0a
 	ret ; $6c0d
@@ -469,11 +453,7 @@ LoadMinigameLevelSelectGfx:
 	ld a, c ; $6c64
 	add a ; $6c65
 	ld hl, MinigameLevelSelectGfxTable ; $6c66
-	add l ; $6c69
-	ld l, a ; $6c6a
-	jr nc, .read ; $6c6b
-	inc h ; $6c6d
-.read:
+	add_hl_a ; $6c69
 	ld a, [hl+] ; $6c6e
 	ld h, [hl] ; $6c6f
 	ld l, a ; $6c70
@@ -490,11 +470,7 @@ LoadMinigameLevelSelectGfx:
 	ld hl, MinigameLevelSelectTable ; $6c7f
 	ld a, c ; $6c82
 	add a ; $6c83
-	add l ; $6c84
-	ld l, a ; $6c85
-	jr nc, .readB ; $6c86
-	inc h ; $6c88
-.readB:
+	add_hl_a ; $6c84
 	ld a, [hl+] ; $6c89
 	ld d, [hl] ; $6c8a
 	ld e, a ; $6c8b
@@ -602,11 +578,7 @@ DrawMinigameLevelDescription:
 	ld b, a ; $6d6e
 	ld hl, MinigameLevelDescriptionTable ; $6d6f
 	add a ; $6d72
-	add l ; $6d73
-	ld l, a ; $6d74
-	jr nc, .read ; $6d75
-	inc h ; $6d77
-.read:
+	add_hl_a ; $6d73
 	ld a, [hl+] ; $6d78
 	ld d, [hl] ; $6d79
 	ld e, a ; $6d7a
@@ -627,11 +599,7 @@ MinigameLevelDescriptionTable:
 LoadMinigameLevelSelectPalette:
 	ld hl, MinigameLevelSelectPalettePtrs ; $6d95
 	add a ; $6d98
-	add l ; $6d99
-	ld l, a ; $6d9a
-	jr nc, .read ; $6d9b
-	inc h ; $6d9d
-.read:
+	add_hl_a ; $6d99
 	ld a, [hl+] ; $6d9e
 	ld h, [hl] ; $6d9f
 	ld l, a ; $6da0

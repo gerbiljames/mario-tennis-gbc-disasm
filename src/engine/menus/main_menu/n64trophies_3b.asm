@@ -66,11 +66,7 @@ DrawTrophiesCharSprite:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4af1
 	ld a, c ; $4af4
 	add a ; $4af5
-	add l ; $4af6
-	ld l, a ; $4af7
-	jr nc, .copyRect ; $4af8
-	inc h ; $4afa
-.copyRect:
+	add_hl_a ; $4af6
 	ld b, $02 ; $4afb
 	ld c, $02 ; $4afd
 	push hl ; $4aff
@@ -457,18 +453,10 @@ BuildN64TnmtTrophyGrid:
 GetN64CharTrophyRowPtr:
 	ld a, b ; $4e74
 	ld hl, N64CharTrophyRowPtrTable ; $4e75
-	add l ; $4e78
-	ld l, a ; $4e79
-	jr nc, .read ; $4e7a
-	inc h ; $4e7c
-.read:
+	add_hl_a ; $4e78
 	ld a, [hl] ; $4e7d
 	ld hl, wN64RecordsBlock + 8 ; $4e7e
-	add l ; $4e81
-	ld l, a ; $4e82
-	jr nc, .done ; $4e83
-	inc h ; $4e85
-.done:
+	add_hl_a ; $4e81
 	ret ; $4e86
 N64CharTrophyRowPtrTable:
 	; $4e87, 16 bytes (bytes:16)

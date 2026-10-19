@@ -268,11 +268,7 @@ RunEraseSavedDataFlow:
 	ld b, a ; $54de
 	add a ; $54df
 	ld hl, EraseSavedDataFlowHandlers_10 ; $54e0
-	add l ; $54e3
-	ld l, a ; $54e4
-	jr nc, .readHandler ; $54e5
-	inc h ; $54e7
-.readHandler:
+	add_hl_a ; $54e3
 	ld a, [hl+] ; $54e8
 	ld h, [hl] ; $54e9
 	ld l, a ; $54ea

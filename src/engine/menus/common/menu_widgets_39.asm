@@ -19,11 +19,7 @@ FillMenuGridCellTile:
 	ld hl, FillMenuGridCellTileTable ; $6dd7
 	ld a, e ; $6dda
 	add a ; $6ddb
-	add l ; $6ddc
-	ld l, a ; $6ddd
-	jr nc, .read ; $6dde
-	inc h ; $6de0
-.read:
+	add_hl_a ; $6ddc
 	ld a, [hl+] ; $6de1
 	ld d, [hl] ; $6de2
 	ld e, a ; $6de3
@@ -94,11 +90,7 @@ MoveMinigameGridCursor:
 .topVertical:
 	ld a, [wMenuCursorX] ; $6e49
 	ld hl, MoveMinigameGridCursorTable0 ; $6e4c
-	add l ; $6e4f
-	ld l, a ; $6e50
-	jr nc, .readTopTarget ; $6e51
-	inc h ; $6e53
-.readTopTarget:
+	add_hl_a ; $6e4f
 	ld a, [hl] ; $6e54
 	ld [wMenuCursorX], a ; $6e55
 	ld a, [wMenuCursorY] ; $6e58
@@ -145,11 +137,7 @@ MoveMinigameGridCursor:
 .bottomVertical:
 	ld a, [wMenuCursorX] ; $6e9e
 	ld hl, MoveMinigameGridCursorTable1 ; $6ea1
-	add l ; $6ea4
-	ld l, a ; $6ea5
-	jr nc, .readBottomTarget ; $6ea6
-	inc h ; $6ea8
-.readBottomTarget:
+	add_hl_a ; $6ea4
 	ld a, [hl] ; $6ea9
 	ld [wMenuCursorX], a ; $6eaa
 	ld a, [wMenuCursorY] ; $6ead
@@ -279,19 +267,11 @@ UpdateCheatCodeEntry:
 .loop:
 	ld hl, wDecompBuffer ; $6f7e
 	ld a, c ; $6f81
-	add l ; $6f82
-	ld l, a ; $6f83
-	jr nc, .read ; $6f84
-	inc h ; $6f86
-.read:
+	add_hl_a ; $6f82
 	ld d, [hl] ; $6f87
 	ld a, c ; $6f88
 	ld hl, CheatCodeEntryTable ; $6f89
-	add l ; $6f8c
-	ld l, a ; $6f8d
-	jr nc, .readB ; $6f8e
-	inc h ; $6f90
-.readB:
+	add_hl_a ; $6f8c
 	ld a, [hl] ; $6f91
 	cp d ; $6f92
 	jr nz, .restore ; $6f93
@@ -311,11 +291,7 @@ UpdateCheatCodeEntry:
 	ld a, [wCheatCodeLength] ; $6fab
 	and $1f ; $6fae
 	ld hl, wDecompBuffer ; $6fb0
-	add l ; $6fb3
-	ld l, a ; $6fb4
-	jr nc, .store ; $6fb5
-	inc h ; $6fb7
-.store:
+	add_hl_a ; $6fb3
 	ld [hl], b ; $6fb8
 	ld a, [wCheatCodeLength] ; $6fb9
 	inc a ; $6fbc

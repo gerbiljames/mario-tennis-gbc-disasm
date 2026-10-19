@@ -24,11 +24,7 @@ ASSERT STRCMP("{TWIN_LABEL}", "{SeekBallTrajEntry4_{TWIN}_NAME}") == 0
 	jr nc, .done
 	inc d
 	ld a, $04
-	add l
-	ld l, a
-	jr nc, .gotPtr
-	inc h
-.gotPtr:
+	add_hl_a
 	jr .loop
 .done:
 	ret

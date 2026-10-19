@@ -344,11 +344,7 @@ TextCmdNextGlyphStreamRow:
 	ld h, [hl] ; $4ef0
 	ld l, a ; $4ef1
 	ld a, $40 ; $4ef2
-	add l ; $4ef4
-	ld l, a ; $4ef5
-	jr nc, .gotPtr ; $4ef6
-	inc h ; $4ef8
-.gotPtr:
+	add_hl_a ; $4ef4
 	ld b, h ; $4ef9
 	ld c, l ; $4efa
 	ld hl, wGlyphTileWritePtr ; $4efb
@@ -365,11 +361,7 @@ TextCmdNextGlyphStreamRow:
 	cpl ; $4f16
 	inc a ; $4f17
 	sla a ; $4f18
-	add l ; $4f1a
-	ld l, a ; $4f1b
-	jr nc, .storeGlyphVramDest ; $4f1c
-	inc h ; $4f1e
-.storeGlyphVramDest:
+	add_hl_a ; $4f1a
 	ld a, l ; $4f1f
 	ld [wGlyphVramDest], a ; $4f20
 	ld a, h ; $4f23

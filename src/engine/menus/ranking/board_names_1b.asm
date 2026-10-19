@@ -29,22 +29,14 @@ DrawSinglesRankingEntry:
 	ld a, b ; $553a
 	add a ; $553b
 	ld hl, SinglesRankingEntryTable1 ; $553c
-	add l ; $553f
-	ld l, a ; $5540
-	jr nc, .read ; $5541
-	inc h ; $5543
-.read:
+	add_hl_a ; $553f
 	ld a, [hl+] ; $5544
 	ld d, [hl] ; $5545
 	ld e, a ; $5546
 	ld a, b ; $5547
 	add a ; $5548
 	ld hl, SinglesRankingEntryTable ; $5549
-	add l ; $554c
-	ld l, a ; $554d
-	jr nc, .readB ; $554e
-	inc h ; $5550
-.readB:
+	add_hl_a ; $554c
 	ld a, [hl+] ; $5551
 	ld h, [hl] ; $5552
 	ld l, a ; $5553
@@ -155,22 +147,14 @@ DrawDoublesRankingEntry:
 	ld a, b ; $5603
 	add a ; $5604
 	ld hl, DoublesRankingEntryTable1 ; $5605
-	add l ; $5608
-	ld l, a ; $5609
-	jr nc, .read ; $560a
-	inc h ; $560c
-.read:
+	add_hl_a ; $5608
 	ld a, [hl+] ; $560d
 	ld d, [hl] ; $560e
 	ld e, a ; $560f
 	ld a, b ; $5610
 	add a ; $5611
 	ld hl, DoublesRankingEntryTable ; $5612
-	add l ; $5615
-	ld l, a ; $5616
-	jr nc, .readB ; $5617
-	inc h ; $5619
-.readB:
+	add_hl_a ; $5615
 	ld a, [hl+] ; $561a
 	ld h, [hl] ; $561b
 	ld l, a ; $561c
@@ -363,11 +347,7 @@ HighlightRankingRow:
 	ret z ; $5752
 	add a ; $5753
 	ld hl, RankingRowDrawHandlers_1b ; $5754
-	add l ; $5757
-	ld l, a ; $5758
-	jr nc, .jumpToHandler ; $5759
-	inc h ; $575b
-.jumpToHandler:
+	add_hl_a ; $5757
 	ld a, [hl+] ; $575c
 	ld h, [hl] ; $575d
 	ld l, a ; $575e

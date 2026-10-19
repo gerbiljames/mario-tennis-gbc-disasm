@@ -2,11 +2,7 @@ AdvanceToNextPlayerSlot:
 	ld a, [wCharSelectMode] ; $5c47
 	ld hl, CharSelectSlotRingTable ; $5c4a
 	add a ; $5c4d
-	add l ; $5c4e
-	ld l, a ; $5c4f
-	jr nc, .read ; $5c50
-	inc h ; $5c52
-.read:
+	add_hl_a ; $5c4e
 	ld a, [hl+] ; $5c53
 	ld h, [hl] ; $5c54
 	ld l, a ; $5c55
@@ -23,11 +19,7 @@ RetreatToPreviousPlayerSlot:
 	ld a, [wCharSelectMode] ; $5c63
 	ld hl, CharSelectSlotRingTable ; $5c66
 	add a ; $5c69
-	add l ; $5c6a
-	ld l, a ; $5c6b
-	jr nc, .readList ; $5c6c
-	inc h ; $5c6e
-.readList:
+	add_hl_a ; $5c6a
 	ld a, [hl+] ; $5c6f
 	ld h, [hl] ; $5c70
 	ld l, a ; $5c71
@@ -204,17 +196,9 @@ GetGridEntryTakenPtr:
 	add e ; $5d73
 	add a ; $5d74
 	add a ; $5d75
-	add l ; $5d76
-	ld l, a ; $5d77
-	jr nc, .offsetTaken ; $5d78
-	inc h ; $5d7a
-.offsetTaken:
+	add_hl_a ; $5d76
 	ld a, $02 ; $5d7b
-	add l ; $5d7d
-	ld l, a ; $5d7e
-	jr nc, .done ; $5d7f
-	inc h ; $5d81
-.done:
+	add_hl_a ; $5d7d
 	ret ; $5d82
 BuildCreatedCharRecords:
 	push af ; $5d83
@@ -353,11 +337,7 @@ ResolveSelectedCharIds:
 	ld hl, wCharGridEntries ; $5e82
 	add a ; $5e85
 	add a ; $5e86
-	add l ; $5e87
-	ld l, a ; $5e88
-	jr nc, .readEntry ; $5e89
-	inc h ; $5e8b
-.readEntry:
+	add_hl_a ; $5e87
 	ld a, [hl] ; $5e8c
 	cp $04 ; $5e8d
 	jr nc, .nextSlot ; $5e8f

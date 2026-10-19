@@ -142,19 +142,11 @@ QueueTitleSprite:
 	push_wram_bank WRAM_SCREEN ; $76b6
 	ld a, [wTitleSpriteFrame] ; $76bf
 	ld hl, TitleSpriteTable0 ; $76c2
-	add l ; $76c5
-	ld l, a ; $76c6
-	jr nc, .read ; $76c7
-	inc h ; $76c9
-.read:
+	add_hl_a ; $76c5
 	ld c, [hl] ; $76ca
 	ld a, [wTitleSpriteFrame] ; $76cb
 	ld hl, TitleSpriteTable1 ; $76ce
-	add l ; $76d1
-	ld l, a ; $76d2
-	jr nc, .readB ; $76d3
-	inc h ; $76d5
-.readB:
+	add_hl_a ; $76d1
 	ld b, [hl] ; $76d6
 	ld_xy de, $28, $58 ; $76d7
 	ld hl, QueueTitleSprite_SpriteTemplate ; $76da

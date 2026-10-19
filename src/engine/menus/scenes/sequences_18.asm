@@ -54,11 +54,7 @@ SetupScreen1Assets:
 LookupScreen1AssetId:
 	ld a, [wStorySceneAssetIndex] ; $7842
 	ld hl, Screen1AssetIdTable ; $7845
-	add l ; $7848
-	ld l, a ; $7849
-	jr nc, .read ; $784a
-	inc h ; $784c
-.read:
+	add_hl_a ; $7848
 	ld c, [hl] ; $784d
 	ret ; $784e
 Screen1AssetIdTable:
@@ -227,11 +223,7 @@ PlayScreenSequence2:
 LookupScreen2AssetIdA:
 	ld a, [wStorySceneAssetIndex] ; $7a07
 	ld hl, Screen2AssetIdATable ; $7a0a
-	add l ; $7a0d
-	ld l, a ; $7a0e
-	jr nc, .read ; $7a0f
-	inc h ; $7a11
-.read:
+	add_hl_a ; $7a0d
 	ld c, [hl] ; $7a12
 	ret ; $7a13
 Screen2AssetIdATable:
@@ -240,11 +232,7 @@ Screen2AssetIdATable:
 LookupScreen2AssetIdB:
 	ld a, [wStorySceneAssetIndex] ; $7a1a
 	ld hl, Screen2AssetIdBTable ; $7a1d
-	add l ; $7a20
-	ld l, a ; $7a21
-	jr nc, .read ; $7a22
-	inc h ; $7a24
-.read:
+	add_hl_a ; $7a20
 	ld c, [hl] ; $7a25
 	ret ; $7a26
 Screen2AssetIdBTable:
@@ -291,11 +279,7 @@ TaskFadeInPalette_18:
 	add a ; $7a92
 	add a ; $7a93
 	ld hl, PaletteFadeTable_18 ; $7a94
-	add l ; $7a97
-	ld l, a ; $7a98
-	jr nc, .read ; $7a99
-	inc h ; $7a9b
-.read:
+	add_hl_a ; $7a97
 	ld_obj_pals de, 0, 1 ; $7a9c
 	call LoadPalettesImmediate ; $7a9f
 	ldh a, [hVBlankCounter] ; $7aa2
@@ -321,11 +305,7 @@ TaskDrawObjectSprites_18:
 	add a ; $7b3e
 	add a ; $7b3f
 	add a ; $7b40
-	add l ; $7b41
-	ld l, a ; $7b42
-	jr nc, .read ; $7b43
-	inc h ; $7b45
-.read:
+	add_hl_a ; $7b41
 	ld a, [hl+] ; $7b46
 	ld b, a ; $7b47
 	inc hl ; $7b48
@@ -369,11 +349,7 @@ TaskUpdateObjects_18:
 	add a ; $7b76
 	add a ; $7b77
 	add a ; $7b78
-	add l ; $7b79
-	ld l, a ; $7b7a
-	jr nc, .updateObject ; $7b7b
-	inc h ; $7b7d
-.updateObject:
+	add_hl_a ; $7b79
 	ld b, h ; $7b7e
 	ld c, l ; $7b7f
 	ld hl, $0005 ; $7b80

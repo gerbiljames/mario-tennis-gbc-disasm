@@ -177,11 +177,7 @@ UpdateAnimatedTiles:
 	and $03 ; $437a
 	add a ; $437c
 	ld hl, UpdateAnimatedTilesTable ; $437d
-	add l ; $4380
-	ld l, a ; $4381
-	jr nc, .readFrameTableA ; $4382
-	inc h ; $4384
-.readFrameTableA:
+	add_hl_a ; $4380
 	ld a, [hl+] ; $4385
 	ld h, [hl] ; $4386
 	ld l, a ; $4387
@@ -192,11 +188,7 @@ UpdateAnimatedTiles:
 	jr z, .frameB ; $438d
 	pop af ; $438f
 	push af ; $4390
-	add l ; $4391
-	ld l, a ; $4392
-	jr nc, .readFrameA ; $4393
-	inc h ; $4395
-.readFrameA:
+	add_hl_a ; $4391
 	ld a, [hl+] ; $4396
 	ld h, [hl] ; $4397
 	ld l, a ; $4398
@@ -216,11 +208,7 @@ UpdateAnimatedTiles:
 	and $03 ; $43be
 	add a ; $43c0
 	ld hl, AnimatedTilesTable0 ; $43c1
-	add l ; $43c4
-	ld l, a ; $43c5
-	jr nc, .readFrameTableB ; $43c6
-	inc h ; $43c8
-.readFrameTableB:
+	add_hl_a ; $43c4
 	ld a, [hl+] ; $43c9
 	ld h, [hl] ; $43ca
 	ld l, a ; $43cb
@@ -231,11 +219,7 @@ UpdateAnimatedTiles:
 	cp $ff ; $43d0
 	jr z, .done ; $43d2
 	ld a, c ; $43d4
-	add l ; $43d5
-	ld l, a ; $43d6
-	jr nc, .readFrameB ; $43d7
-	inc h ; $43d9
-.readFrameB:
+	add_hl_a ; $43d5
 	ld a, [hl+] ; $43da
 	ld h, [hl] ; $43db
 	ld l, a ; $43dc

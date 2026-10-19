@@ -840,11 +840,7 @@ SpawnMinigameTargetsFromList:
 	pop hl ; $6d62
 	pop bc ; $6d63
 	ld a, MGTARGET_SIZE ; $6d64
-	add c ; $6d66
-	ld c, a ; $6d67
-	jr nc, .next ; $6d68
-	inc b ; $6d6a
-.next:
+	add_bc_a ; $6d66
 	jr .spawnLoop ; $6d6b
 .done:
 	ret ; $6d6d

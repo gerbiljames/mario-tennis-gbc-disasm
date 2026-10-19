@@ -110,11 +110,7 @@ ExchangeNibbleBlockMaster:
 .nibbleLoop:
 	ld hl, wLinkNibbleBuffer ; $4101
 	ldh a, [hLinkBlockOffset] ; $4104
-	add l ; $4106
-	ld l, a ; $4107
-	jr nc, .loadTxNibble ; $4108
-	inc h ; $410a
-.loadTxNibble:
+	add_hl_a ; $4106
 	ld a, [hl] ; $410b
 	ldh [hLinkTxByte], a ; $410c
 .sendRetry:
@@ -142,19 +138,11 @@ ExchangeNibbleBlockMaster:
 	push af ; $4137
 	ld hl, wLinkByteBuffer ; $4138
 	ldh a, [hLinkNibbleAccum] ; $413b
-	add l ; $413d
-	ld l, a ; $413e
-	jr nc, .accumulate ; $413f
-	inc h ; $4141
-.accumulate:
+	add_hl_a ; $413d
 	pop af ; $4142
 	and LINKTAG_PAYLOAD ; $4143
 	ld [hl], a ; $4145
-	add e ; $4146
-	ld e, a ; $4147
-	jr nc, .nextNibble ; $4148
-	inc d ; $414a
-.nextNibble:
+	add_de_a ; $4146
 	xor a ; $414b
 	ldh [hLinkCounter], a ; $414c
 	ld hl, hLinkBlockOffset ; $414e
@@ -318,11 +306,7 @@ ExchangeNibbleBlockSlave:
 	ldh [hLinkTransferDone], a ; $4243
 	ld hl, wLinkNibbleBuffer ; $4245
 	ldh a, [hLinkBlockOffset] ; $4248
-	add l ; $424a
-	ld l, a ; $424b
-	jr nc, .loadTxNibble ; $424c
-	inc h ; $424e
-.loadTxNibble:
+	add_hl_a ; $424a
 	ld a, [hl] ; $424f
 	or LINKTAG_SLAVE ; $4250
 	ldh [hLinkTxByte], a ; $4252
@@ -343,19 +327,11 @@ ExchangeNibbleBlockSlave:
 .storeRxNibble:
 	ld hl, wLinkByteBuffer ; $426f
 	ldh a, [hLinkNibbleAccum] ; $4272
-	add l ; $4274
-	ld l, a ; $4275
-	jr nc, .accumulate ; $4276
-	inc h ; $4278
-.accumulate:
+	add_hl_a ; $4274
 	ld a, c ; $4279
 	and LINKTAG_PAYLOAD ; $427a
 	ld [hl], a ; $427c
-	add e ; $427d
-	ld e, a ; $427e
-	jr nc, .nextNibble ; $427f
-	inc d ; $4281
-.nextNibble:
+	add_de_a ; $427d
 	xor a ; $4282
 	ldh [hLinkCounter], a ; $4283
 	ld hl, hLinkBlockOffset ; $4285
@@ -385,19 +361,11 @@ ExchangeNibbleBlockSlave:
 .storeLastNibble:
 	ld hl, wLinkByteBuffer ; $42b0
 	ldh a, [hLinkNibbleAccum] ; $42b3
-	add l ; $42b5
-	ld l, a ; $42b6
-	jr nc, .accumulateLast ; $42b7
-	inc h ; $42b9
-.accumulateLast:
+	add_hl_a ; $42b5
 	ld a, b ; $42ba
 	and LINKTAG_PAYLOAD ; $42bb
 	ld [hl], a ; $42bd
-	add e ; $42be
-	ld e, a ; $42bf
-	jr nc, .sendBlockEnd ; $42c0
-	inc d ; $42c2
-.sendBlockEnd:
+	add_de_a ; $42be
 	ld a, LINKMSG_CHECKSUM ; $42c3
 	call SendByteGetReplySlave ; $42c5
 	cp LINKMSG_BLOCK_END ; $42c8

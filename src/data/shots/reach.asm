@@ -22,11 +22,7 @@ Unused_2c_LookupBallPosByShotIndex:
 	add a ; $4274
 	ld l, c ; $4275
 	ld h, b ; $4276
-	add l ; $4277
-	ld l, a ; $4278
-	jr nc, .readB ; $4279
-	inc h ; $427b
-.readB:
+	add_hl_a ; $4277
 	ld a, [hl+] ; $427c
 	ld h, [hl] ; $427d
 	ld l, a ; $427e

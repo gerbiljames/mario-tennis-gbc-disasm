@@ -63,11 +63,7 @@ Unused_1a_CopyNameToTileBuffer:
 	call Unused_1a_MoveTileBufferDestUpRow ; $4b82
 	ld [de], a ; $4b85
 	ld a, $21 ; $4b86
-	add e ; $4b88
-	ld e, a ; $4b89
-	jr nc, .copyNameToTileBuffer ; $4b8a
-	inc d ; $4b8c
-.copyNameToTileBuffer:
+	add_de_a ; $4b88
 	jr Unused_1a_CopyNameToTileBuffer ; $4b8d
 Unused_1a_MoveTileBufferDestUpRow:
 	ld b, $21 ; $4b8f

@@ -222,11 +222,7 @@ ApplyTilemapPatchList_1a:
 	ld a, [hl] ; $7a79
 	ld h, b ; $7a7a
 	ld l, c ; $7a7b
-	add l ; $7a7c
-	ld l, a ; $7a7d
-	jr nc, .gotPtr ; $7a7e
-	inc h ; $7a80
-.gotPtr:
+	add_hl_a ; $7a7c
 	wram_bank WRAM_SCENE ; $7a81
 	ld a, l ; $7a87
 	ld [wCharDataNumberBuffer], a ; $7a88

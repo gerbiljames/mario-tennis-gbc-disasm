@@ -187,11 +187,7 @@ LoadMatchRulesMenuGraphics:
 	ld a, c ; $4612
 	add a ; $4613
 	ld hl, MatchRulesMenuGraphicsTable ; $4614
-	add l ; $4617
-	ld l, a ; $4618
-	jr nc, .read ; $4619
-	inc h ; $461b
-.read:
+	add_hl_a ; $4617
 	ld a, [hl+] ; $461c
 	ld h, [hl] ; $461d
 	ld l, a ; $461e
@@ -208,11 +204,7 @@ LoadMatchRulesMenuGraphics:
 	ld hl, MatchRulesMenuTable ; $462d
 	ld a, c ; $4630
 	add a ; $4631
-	add l ; $4632
-	ld l, a ; $4633
-	jr nc, .readB ; $4634
-	inc h ; $4636
-.readB:
+	add_hl_a ; $4632
 	ld a, [hl+] ; $4637
 	ld d, [hl] ; $4638
 	ld e, a ; $4639

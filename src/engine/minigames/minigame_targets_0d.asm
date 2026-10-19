@@ -385,21 +385,13 @@ QueueMinigameHitBurstParticle:
 	add d ; $540d
 	ld d, a ; $540e
 	ld a, $10 ; $540f
-	add l ; $5411
-	ld l, a ; $5412
-	jr nc, .readY ; $5413
-	inc h ; $5415
-.readY:
+	add_hl_a ; $5411
 	ld a, [hl] ; $5416
 	add a ; $5417
 	add e ; $5418
 	ld e, a ; $5419
 	ld a, $10 ; $541a
-	add l ; $541c
-	ld l, a ; $541d
-	jr nc, .queue ; $541e
-	inc h ; $5420
-.queue:
+	add_hl_a ; $541c
 	push hl ; $5421
 	call QueueSprite ; $5422
 	pop hl ; $5425

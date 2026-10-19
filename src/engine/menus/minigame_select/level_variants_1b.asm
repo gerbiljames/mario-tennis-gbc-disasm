@@ -156,11 +156,7 @@ SetSelectPanelAttrRect:
 	ld hl, SelectPanelAttrRectTable ; $6f44
 	ld a, b ; $6f47
 	add a ; $6f48
-	add l ; $6f49
-	ld l, a ; $6f4a
-	jr nc, .readAddr ; $6f4b
-	inc h ; $6f4d
-.readAddr:
+	add_hl_a ; $6f49
 	ld a, [hl+] ; $6f4e
 	ld d, [hl] ; $6f4f
 	ld e, a ; $6f50
@@ -181,20 +177,12 @@ DrawMinigameLevelSelect2Cursor:
 	call GetMenuCursorIndex_1b ; $6f67
 	push af ; $6f6a
 	ld hl, MinigameLevelSelect2CursorTable1 ; $6f6b
-	add l ; $6f6e
-	ld l, a ; $6f6f
-	jr nc, .read ; $6f70
-	inc h ; $6f72
-.read:
+	add_hl_a ; $6f6e
 	ld c, [hl] ; $6f73
 	pop af ; $6f74
 	ld hl, MinigameLevelSelect2CursorTable0 ; $6f75
 	add a ; $6f78
-	add l ; $6f79
-	ld l, a ; $6f7a
-	jr nc, .readB ; $6f7b
-	inc h ; $6f7d
-.readB:
+	add_hl_a ; $6f79
 	ld a, [hl+] ; $6f7e
 	ld d, [hl] ; $6f7f
 	ld e, a ; $6f80
@@ -345,11 +333,7 @@ SetSelectPanelAttrRect3:
 	ld hl, SelectPanelAttrRect3Table ; $70cd
 	ld a, b ; $70d0
 	add a ; $70d1
-	add l ; $70d2
-	ld l, a ; $70d3
-	jr nc, .read ; $70d4
-	inc h ; $70d6
-.read:
+	add_hl_a ; $70d2
 	ld a, [hl+] ; $70d7
 	ld d, [hl] ; $70d8
 	ld e, a ; $70d9
@@ -370,20 +354,12 @@ DrawMinigameLevelSelect3Cursor:
 	call GetMenuCursorIndex_1b ; $70f2
 	push af ; $70f5
 	ld hl, MinigameLevelSelect3CursorTable1 ; $70f6
-	add l ; $70f9
-	ld l, a ; $70fa
-	jr nc, .read ; $70fb
-	inc h ; $70fd
-.read:
+	add_hl_a ; $70f9
 	ld c, [hl] ; $70fe
 	pop af ; $70ff
 	ld hl, MinigameLevelSelect3CursorTable0 ; $7100
 	add a ; $7103
-	add l ; $7104
-	ld l, a ; $7105
-	jr nc, .readB ; $7106
-	inc h ; $7108
-.readB:
+	add_hl_a ; $7104
 	ld a, [hl+] ; $7109
 	ld d, [hl] ; $710a
 	ld e, a ; $710b
@@ -500,11 +476,7 @@ LoadSavedDataTypeSelectGfx:
 	ld a, c ; $7215
 	add a ; $7216
 	ld hl, SavedDataTypeSelectGfx0 ; $7217
-	add l ; $721a
-	ld l, a ; $721b
-	jr nc, .read ; $721c
-	inc h ; $721e
-.read:
+	add_hl_a ; $721a
 	ld a, [hl+] ; $721f
 	ld h, [hl] ; $7220
 	ld l, a ; $7221
@@ -521,11 +493,7 @@ LoadSavedDataTypeSelectGfx:
 	ld hl, SavedDataTypeSelectGfx1 ; $7230
 	ld a, c ; $7233
 	add a ; $7234
-	add l ; $7235
-	ld l, a ; $7236
-	jr nc, .readB ; $7237
-	inc h ; $7239
-.readB:
+	add_hl_a ; $7235
 	ld a, [hl+] ; $723a
 	ld d, [hl] ; $723b
 	ld e, a ; $723c

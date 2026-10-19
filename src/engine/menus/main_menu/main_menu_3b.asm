@@ -97,11 +97,7 @@ RunMainMenu:
 	ret ; $56af
 MapMainMenuCursorToItemId:
 	ld hl, MapMainMenuCursorToItemIdTable ; $56b0
-	add l ; $56b3
-	ld l, a ; $56b4
-	jr nc, .read ; $56b5
-	inc h ; $56b7
-.read:
+	add_hl_a ; $56b3
 	ld a, [hl] ; $56b8
 	ret ; $56b9
 MapMainMenuCursorToItemIdTable:
@@ -118,11 +114,7 @@ LoadMainMenuGfx:
 	ld a, c ; $56cf
 	add a ; $56d0
 	ld hl, MainMenuTable0 ; $56d1
-	add l ; $56d4
-	ld l, a ; $56d5
-	jr nc, .read ; $56d6
-	inc h ; $56d8
-.read:
+	add_hl_a ; $56d4
 	ld a, [hl+] ; $56d9
 	ld h, [hl] ; $56da
 	ld l, a ; $56db
@@ -139,11 +131,7 @@ LoadMainMenuGfx:
 	ld hl, MainMenuTable1 ; $56ea
 	ld a, c ; $56ed
 	add a ; $56ee
-	add l ; $56ef
-	ld l, a ; $56f0
-	jr nc, .readB ; $56f1
-	inc h ; $56f3
-.readB:
+	add_hl_a ; $56ef
 	ld a, [hl+] ; $56f4
 	ld d, [hl] ; $56f5
 	ld e, a ; $56f6
@@ -326,32 +314,20 @@ MainMenuCursorSpriteTask:
 	call GetMenuCursorIndex_3b ; $5868
 	push af ; $586b
 	ld hl, MainMenuCursorSpriteTaskTable1 ; $586c
-	add l ; $586f
-	ld l, a ; $5870
-	jr nc, .readTile ; $5871
-	inc h ; $5873
-.readTile:
+	add_hl_a ; $586f
 	ld c, [hl] ; $5874
 	ld hl, MainMenuCursorSpriteTaskTable0 ; $5875
 	pop af ; $5878
 	add a ; $5879
 	push af ; $587a
-	add l ; $587b
-	ld l, a ; $587c
-	jr nc, .readPosition ; $587d
-	inc h ; $587f
-.readPosition:
+	add_hl_a ; $587b
 	ld a, [hl+] ; $5880
 	ld d, [hl] ; $5881
 	ld e, a ; $5882
 	farcall ApplySpriteBobOffset ; $5883
 	pop af ; $5886
 	ld hl, MainMenuCursorSpriteTaskPtrs ; $5887
-	add l ; $588a
-	ld l, a ; $588b
-	jr nc, .readTemplatePtr ; $588c
-	inc h ; $588e
-.readTemplatePtr:
+	add_hl_a ; $588a
 	ld a, [hl+] ; $588f
 	ld h, [hl] ; $5890
 	ld l, a ; $5891
@@ -361,11 +337,7 @@ MainMenuCursorSpriteTask:
 	ld c, $03 ; $5898
 	call GetMenuCursorIndex_3b ; $589a
 	ld hl, MainMenuCursorSpriteTaskTable2 ; $589d
-	add l ; $58a0
-	ld l, a ; $58a1
-	jr nc, .readLabelYOffset ; $58a2
-	inc h ; $58a4
-.readLabelYOffset:
+	add_hl_a ; $58a0
 	ld a, [hl] ; $58a5
 	pop de ; $58a6
 	ld hl, $17f8 ; $58a7
@@ -458,11 +430,7 @@ DrawMainMenuSelection:
 	add a ; $5998
 	add a ; $5999
 	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $599a
-	add c ; $599d
-	ld c, a ; $599e
-	jr nc, .gotPtr ; $599f
-	inc b ; $59a1
-.gotPtr:
+	add_bc_a ; $599d
 	ld hl, $0001 ; $59a2
 	add hl, bc ; $59a5
 	ld a, [hl] ; $59a6
@@ -534,11 +502,7 @@ FillMainMenuCellHighlight:
 	ld hl, FillMainMenuCellHighlightTable ; $5a2d
 	ld a, e ; $5a30
 	add a ; $5a31
-	add l ; $5a32
-	ld l, a ; $5a33
-	jr nc, .read ; $5a34
-	inc h ; $5a36
-.read:
+	add_hl_a ; $5a32
 	ld a, [hl+] ; $5a37
 	ld d, [hl] ; $5a38
 	ld e, a ; $5a39
@@ -564,11 +528,7 @@ FillMainMenuCellHighlightTable:
 LoadMainMenuItemPalette:
 	ld hl, MainMenuItemPalettePtrs ; $5a57
 	add a ; $5a5a
-	add l ; $5a5b
-	ld l, a ; $5a5c
-	jr nc, .read ; $5a5d
-	inc h ; $5a5f
-.read:
+	add_hl_a ; $5a5b
 	ld a, [hl+] ; $5a60
 	ld h, [hl] ; $5a61
 	ld l, a ; $5a62

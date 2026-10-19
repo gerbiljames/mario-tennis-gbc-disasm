@@ -2,11 +2,7 @@ MapMinigameRowToMugshotSlot:
 	push hl ; $768a
 	ld hl, MapMinigameRowToMugshotSlotTable ; $768b
 	ld a, c ; $768e
-	add l ; $768f
-	ld l, a ; $7690
-	jr nc, .read ; $7691
-	inc h ; $7693
-.read:
+	add_hl_a ; $768f
 	ld c, [hl] ; $7694
 	pop hl ; $7695
 	ret ; $7696
@@ -17,11 +13,7 @@ GetMinigameRowTilemapDest:
 	ld hl, MinigameRowTilemapDestTable ; $76a1
 	ld a, b ; $76a4
 	add a ; $76a5
-	add l ; $76a6
-	ld l, a ; $76a7
-	jr nc, .read ; $76a8
-	inc h ; $76aa
-.read:
+	add_hl_a ; $76a6
 	ld a, [hl+] ; $76ab
 	ld h, [hl] ; $76ac
 	ld l, a ; $76ad
@@ -65,11 +57,7 @@ DrawMinigameDataMarks:
 DrawMinigameClearMarks:
 	ld hl, wMinigameDataClearFlags ; $76fb
 	ld a, [wMenuCursorY] ; $76fe
-	add l ; $7701
-	ld l, a ; $7702
-	jr nc, .gotPtr ; $7703
-	inc h ; $7705
-.gotPtr:
+	add_hl_a ; $7701
 	ld c, $00 ; $7706
 .loop:
 	ld b, $00 ; $7708
@@ -87,11 +75,7 @@ DrawMinigameClearMarks:
 DrawMinigameStarMarks:
 	ld hl, wMinigameDataStarFlags ; $7719
 	ld a, [wMenuCursorY] ; $771c
-	add l ; $771f
-	ld l, a ; $7720
-	jr nc, .gotPtr ; $7721
-	inc h ; $7723
-.gotPtr:
+	add_hl_a ; $771f
 	ld c, $00 ; $7724
 .loop:
 	ld b, $01 ; $7726
@@ -127,21 +111,13 @@ DrawMinigameMarkTile:
 	ld hl, MinigameMarkTileTable ; $7750
 	ld a, b ; $7753
 	add a ; $7754
-	add l ; $7755
-	ld l, a ; $7756
-	jr nc, .read ; $7757
-	inc h ; $7759
-.read:
+	add_hl_a ; $7755
 	ld a, [hl+] ; $775a
 	ld h, [hl] ; $775b
 	ld l, a ; $775c
 	ld a, c ; $775d
 	add a ; $775e
-	add l ; $775f
-	ld l, a ; $7760
-	jr nc, .readB ; $7761
-	inc h ; $7763
-.readB:
+	add_hl_a ; $775f
 	ld a, [hl+] ; $7764
 	ld d, [hl] ; $7765
 	ld e, a ; $7766
@@ -259,32 +235,20 @@ DrawMinigameHighScoreNumber:
 	ld a, b ; $784b
 	add a ; $784c
 	ld hl, MinigameHighScoreNumberTable ; $784d
-	add l ; $7850
-	ld l, a ; $7851
-	jr nc, .readPosition ; $7852
-	inc h ; $7854
-.readPosition:
+	add_hl_a ; $7850
 	ld a, [hl+] ; $7855
 	ld d, [hl] ; $7856
 	ld e, a ; $7857
 	ld a, c ; $7858
 	ld hl, wMinigameDataStarFlags ; $7859
-	add l ; $785c
-	ld l, a ; $785d
-	jr nc, .readStarFlag ; $785e
-	inc h ; $7860
-.readStarFlag:
+	add_hl_a ; $785c
 	ld a, [hl] ; $7861
 	or a ; $7862
 	ret z ; $7863
 	ld a, c ; $7864
 	add a ; $7865
 	ld hl, wMinigameDataHighScores ; $7866
-	add l ; $7869
-	ld l, a ; $786a
-	jr nc, .readHighScore ; $786b
-	inc h ; $786d
-.readHighScore:
+	add_hl_a ; $7869
 	ld a, [hl+] ; $786e
 	ld h, [hl] ; $786f
 	ld l, a ; $7870

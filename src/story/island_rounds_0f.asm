@@ -24,22 +24,14 @@ TournamentNpc03_0f:
 .altLine:
 	ld hl, Text_TournamentStaffRoundOneJoinOthers ; $6f5d
 	ld a, [wMapSceneStage] ; $6f60
-	add l ; $6f63
-	ld l, a ; $6f64
-	jr nc, .setCursor ; $6f65
-	inc h ; $6f67
-.setCursor:
+	add_hl_a ; $6f63
 	farcall InitDialogueTextCursor ; $6f68
 	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_1 ; $6f6b
 	ret ; $6f70
 TournamentNpc04_0f:
 	ld hl, Text_TournamentStaffWaitInCircles ; $6f71
 	ld a, [wMapSceneStage] ; $6f74
-	add l ; $6f77
-	ld l, a ; $6f78
-	jr nc, .setCursor ; $6f79
-	inc h ; $6f7b
-.setCursor:
+	add_hl_a ; $6f77
 	farcall InitDialogueTextCursor ; $6f7c
 	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2 ; $6f7f
 	ret ; $6f84
@@ -310,11 +302,7 @@ ShowTournamentRankingBoard_0f:
 QueueUpcomingRoundNameText:
 	ld a, [wMapSceneStage] ; $744d
 	ld hl, Text_RoundNameSinglesRoundOne ; $7450
-	add l ; $7453
-	ld l, a ; $7454
-	jr nc, .queue ; $7455
-	inc h ; $7457
-.queue:
+	add_hl_a ; $7453
 	call PushShortTextArg_0f ; $7458
 	ret ; $745b
 CheckIslandOpenVictoryTransition:
@@ -405,11 +393,7 @@ IslandOpenSinglesMatchReturn:
 	ld a, [wMapSceneStage] ; $7565
 	dec a ; $7568
 	ld hl, Text_RoundNameRoundTwo ; $7569
-	add l ; $756c
-	ld l, a ; $756d
-	jr nc, .done ; $756e
-	inc h ; $7570
-.done:
+	add_hl_a ; $756c
 	call PushShortTextArg_0f ; $7571
 	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_EMILY_SWEATS, FACE_UP ; $7574
 	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_KEVIN_SWEATS, FACE_RIGHT ; $757b
@@ -565,11 +549,7 @@ IslandOpenDoublesMatchReturn:
 	ld a, [wMapSceneStage] ; $7805
 	dec a ; $7808
 	ld hl, Text_RoundNameRoundTwo ; $7809
-	add l ; $780c
-	ld l, a ; $780d
-	jr nc, .done ; $780e
-	inc h ; $7810
-.done:
+	add_hl_a ; $780c
 	call PushShortTextArg_0f ; $7811
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_EMILY_SWEATS, ACTOR_PLAYER ; $7814
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_EMILY_SWEATS, ACTOR_PARTNER ; $781c

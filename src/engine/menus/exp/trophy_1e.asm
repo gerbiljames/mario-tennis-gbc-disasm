@@ -67,11 +67,7 @@ GetTrophyExpValue:
 	add a ; $6fed
 	add b ; $6fee
 	ld hl, TrophyExpValueTable ; $6fef
-	add l ; $6ff2
-	ld l, a ; $6ff3
-	jr nc, .read ; $6ff4
-	inc h ; $6ff6
-.read:
+	add_hl_a ; $6ff2
 	ld a, [hl+] ; $6ff7
 	ld b, [hl] ; $6ff8
 	ld c, a ; $6ff9
@@ -246,19 +242,11 @@ ComputeTrophyExpForGroup:
 	ld a, c ; $710b
 	ld [wTrophyExpGroup], a ; $710c
 	ld hl, TrophyExpGroupThresholds ; $710f
-	add l ; $7112
-	ld l, a ; $7113
-	jr nc, .readThreshold ; $7114
-	inc h ; $7116
-.readThreshold:
+	add_hl_a ; $7112
 	ld b, [hl] ; $7117
 	ld a, c ; $7118
 	ld hl, TrophyExpGroupMasks ; $7119
-	add l ; $711c
-	ld l, a ; $711d
-	jr nc, .readMask ; $711e
-	inc h ; $7120
-.readMask:
+	add_hl_a ; $711c
 	ld c, [hl] ; $7121
 	xor a ; $7122
 	ld hl, wTrophyExpGroupAccum ; $7123
@@ -273,11 +261,7 @@ ComputeTrophyExpForGroup:
 	add a ; $7133
 	add a ; $7134
 	ld hl, TrophyExpTierFlags ; $7135
-	add l ; $7138
-	ld l, a ; $7139
-	jr nc, .readFlag1 ; $713a
-	inc h ; $713c
-.readFlag1:
+	add_hl_a ; $7138
 	ld a, [hl+] ; $713d
 	ld d, [hl] ; $713e
 	ld e, a ; $713f
@@ -313,11 +297,7 @@ ComputeTrophyExpForGroup:
 	add a ; $7170
 	add a ; $7171
 	ld hl, TrophyExpTierFlags + 2 ; $7172
-	add l ; $7175
-	ld l, a ; $7176
-	jr nc, .readFlag2 ; $7177
-	inc h ; $7179
-.readFlag2:
+	add_hl_a ; $7175
 	ld a, [hl+] ; $717a
 	ld d, [hl] ; $717b
 	ld e, a ; $717c
@@ -352,11 +332,7 @@ ComputeTrophyExpForGroup:
 	add a ; $71ab
 	add a ; $71ac
 	ld hl, TrophyExpTierFlags + 4 ; $71ad
-	add l ; $71b0
-	ld l, a ; $71b1
-	jr nc, .readFlag3 ; $71b2
-	inc h ; $71b4
-.readFlag3:
+	add_hl_a ; $71b0
 	ld a, [hl+] ; $71b5
 	ld d, [hl] ; $71b6
 	ld e, a ; $71b7
@@ -392,11 +368,7 @@ ComputeTrophyExpForGroup:
 	add a ; $71e8
 	add a ; $71e9
 	ld hl, TrophyExpTierFlags + 6 ; $71ea
-	add l ; $71ed
-	ld l, a ; $71ee
-	jr nc, .readFlag4 ; $71ef
-	inc h ; $71f1
-.readFlag4:
+	add_hl_a ; $71ed
 	ld a, [hl+] ; $71f2
 	ld d, [hl] ; $71f3
 	ld e, a ; $71f4

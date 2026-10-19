@@ -51,21 +51,13 @@ SetRewardGameFlag:
 	ld a, [wCurrentMinigameStoryMatch] ; $6cae
 	add a ; $6cb1
 	ld hl, RewardFlagListPtrs_1e ; $6cb2
-	add l ; $6cb5
-	ld l, a ; $6cb6
-	jr nc, .read ; $6cb7
-	inc h ; $6cb9
-.read:
+	add_hl_a ; $6cb5
 	ld a, [hl+] ; $6cba
 	ld h, [hl] ; $6cbb
 	ld l, a ; $6cbc
 	call GetRewardTableIndex ; $6cbd
 	add a ; $6cc0
-	add l ; $6cc1
-	ld l, a ; $6cc2
-	jr nc, .readB ; $6cc3
-	inc h ; $6cc5
-.readB:
+	add_hl_a ; $6cc1
 	ld a, [hl+] ; $6cc6
 	ld d, [hl] ; $6cc7
 	ld e, a ; $6cc8
@@ -82,21 +74,13 @@ TestRewardGameFlag:
 	ld a, [wCurrentMinigameStoryMatch] ; $6cd4
 	add a ; $6cd7
 	ld hl, RewardFlagListPtrs_1e ; $6cd8
-	add l ; $6cdb
-	ld l, a ; $6cdc
-	jr nc, .read ; $6cdd
-	inc h ; $6cdf
-.read:
+	add_hl_a ; $6cdb
 	ld a, [hl+] ; $6ce0
 	ld h, [hl] ; $6ce1
 	ld l, a ; $6ce2
 	call GetRewardTableIndex ; $6ce3
 	add a ; $6ce6
-	add l ; $6ce7
-	ld l, a ; $6ce8
-	jr nc, .readB ; $6ce9
-	inc h ; $6ceb
-.readB:
+	add_hl_a ; $6ce7
 	ld a, [hl+] ; $6cec
 	ld d, [hl] ; $6ced
 	ld e, a ; $6cee
@@ -314,11 +298,7 @@ SetRewardUnlockFlag:
 	ld a, c ; $6e51
 	add a ; $6e52
 	ld hl, RewardUnlockFlagTable ; $6e53
-	add l ; $6e56
-	ld l, a ; $6e57
-	jr nc, .read ; $6e58
-	inc h ; $6e5a
-.read:
+	add_hl_a ; $6e56
 	ld a, [hl+] ; $6e5b
 	ld d, [hl] ; $6e5c
 	ld e, a ; $6e5d
@@ -404,18 +384,10 @@ SetMinigameClearFlag:
 	ld h, $00 ; $6ee5
 	ld l, a ; $6ee7
 	add hl, hl ; $6ee8
-	add l ; $6ee9
-	ld l, a ; $6eea
-	jr nc, .checkMinigameLevel ; $6eeb
-	inc h ; $6eed
-.checkMinigameLevel:
+	add_hl_a ; $6ee9
 	ld a, [wMinigameLevel] ; $6eee
 	add a ; $6ef1
-	add l ; $6ef2
-	ld l, a ; $6ef3
-	jr nc, .gotPtr ; $6ef4
-	inc h ; $6ef6
-.gotPtr:
+	add_hl_a ; $6ef2
 	ld de, MinigameClearFlagTable_1e ; $6ef7
 	add hl, de ; $6efa
 	ld a, [hl+] ; $6efb

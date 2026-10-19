@@ -209,11 +209,7 @@ GetScrolledTilemapOffset:
 	rrca ; $4641
 	add d ; $4642
 	and $1f ; $4643
-	add l ; $4645
-	ld l, a ; $4646
-	jr nc, .done ; $4647
-	inc h ; $4649
-.done:
+	add_hl_a ; $4645
 	ret ; $464a
 GetScrolledTilemapRowOffset:
 	ldh a, [hScrollY] ; $464b
@@ -429,11 +425,7 @@ GetMatchMenuItemId:
 	add a ; $4810
 	ld_hl_indexed MatchMenuDefs ; $4811
 	ld a, b ; $4818
-	add l ; $4819
-	ld l, a ; $481a
-	jr nc, .read ; $481b
-	inc h ; $481d
-.read:
+	add_hl_a ; $4819
 	ld a, [hl] ; $481e
 	ret ; $481f
 GetMatchMenuItemCount:
@@ -501,11 +493,7 @@ DrawMatchMenuCursor:
 	ld l, a ; $4880
 	ld a, [wMatchMenuSelection] ; $4881
 	add a ; $4884
-	add l ; $4885
-	ld l, a ; $4886
-	jr nc, .read ; $4887
-	inc h ; $4889
-.read:
+	add_hl_a ; $4885
 	ld a, [hl+] ; $488a
 	ld d, [hl] ; $488b
 	ld e, a ; $488c

@@ -322,11 +322,7 @@ RunMinigamePointLoop:
 	add a ; $661e
 	add a ; $661f
 	add a ; $6620
-	add l ; $6621
-	ld l, a ; $6622
-	jr nc, .nextPoint ; $6623
-	inc h ; $6625
-.nextPoint:
+	add_hl_a ; $6621
 	ld a, [wModeHookBank] ; $6626
 	call FarReadByte ; $6629
 	cp $ff ; $662c
@@ -374,11 +370,7 @@ LoadMinigamePointLayout:
 	add a ; $6677
 	add a ; $6678
 	add a ; $6679
-	add l ; $667a
-	ld l, a ; $667b
-	jr nc, .copyLayout ; $667c
-	inc h ; $667e
-.copyLayout:
+	add_hl_a ; $667a
 	ld a, [wModeHookBank] ; $667f
 	ld bc, $0008 ; $6682
 	call FarCopyBytes ; $6685
@@ -437,11 +429,7 @@ CallModeHook:
 	ld l, a ; $66ff
 	ld a, d ; $6700
 	add a ; $6701
-	add l ; $6702
-	ld l, a ; $6703
-	jr nc, .readHook ; $6704
-	inc h ; $6706
-.readHook:
+	add_hl_a ; $6702
 	ld a, [wModeHookBank] ; $6707
 	call FarReadWord ; $670a
 	ld l, c ; $670d

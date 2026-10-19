@@ -614,11 +614,7 @@ DormRoomEntry02Scene:
 	ld l, a ; $5612
 	ld a, $02 ; $5613
 .daySpeak:
-	add l ; $5615
-	ld l, a ; $5616
-	jr nc, .dayScene ; $5617
-	inc h ; $5619
-.dayScene:
+	add_hl_a ; $5615
 	farcall InitDialogueTextCursor ; $561a
 	script_set_anim ACTOR_DORM_ROOM_KATE, ANIM_SHAKE ; $561d
 	script_wait_idle ACTOR_DORM_ROOM_KATE ; $5624
@@ -633,11 +629,7 @@ DormRoomEntry02Scene:
 	ld h, [hl] ; $5642
 	ld l, a ; $5643
 	ld a, $03 ; $5644
-	add l ; $5646
-	ld l, a ; $5647
-	jr nc, .dayEnd ; $5648
-	inc h ; $564a
-.dayEnd:
+	add_hl_a ; $5646
 	farcall InitDialogueTextCursor ; $564b
 	script_speak ACTOR_DORM_ROOM_KATE ; $564e
 	sound BGM_NONE ; $5653
@@ -663,11 +655,7 @@ DormRoomEntry02Scene:
 	ld h, [hl] ; $5693
 	ld l, a ; $5694
 	ld a, $04 ; $5695
-	add l ; $5697
-	ld l, a ; $5698
-	jr nc, .finalSpeak ; $5699
-	inc h ; $569b
-.finalSpeak:
+	add_hl_a ; $5697
 	farcall InitDialogueTextCursor ; $569c
 	script_speak_restore ACTOR_DORM_ROOM_KATE ; $569f
 	farcall RunDialogueYesNoPrompt ; $56a4

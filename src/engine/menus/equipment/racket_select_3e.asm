@@ -138,11 +138,7 @@ DrawItemIcon2x2:
 .gotBase:
 	ld a, c ; $558a
 	add a ; $558b
-	add l ; $558c
-	ld l, a ; $558d
-	jr nc, .copy ; $558e
-	inc h ; $5590
-.copy:
+	add_hl_a ; $558c
 	rect_size $02, $02 ; $5591
 	farcall CopyTilemapRect ; $5595
 	ld bc, $0400 ; $5598
@@ -379,11 +375,7 @@ MarkOwnedRackets:
 	ld a, c ; $576b
 	push hl ; $576c
 	ld hl, RacketItemTiles_3e ; $576d
-	add l ; $5770
-	ld l, a ; $5771
-	jr nc, .gotFlagPtr ; $5772
-	inc h ; $5774
-.gotFlagPtr:
+	add_hl_a ; $5770
 	ld d, $00 ; $5775
 	ld e, [hl] ; $5777
 	pop hl ; $5778
@@ -401,11 +393,7 @@ MarkOwnedRackets:
 	ld a, [wStoryMainEquipment] ; $5789
 	and $0f ; $578c
 	ld hl, wEquipOwnedMap ; $578e
-	add l ; $5791
-	ld l, a ; $5792
-	jr nc, .markEquipped ; $5793
-	inc h ; $5795
-.markEquipped:
+	add_hl_a ; $5791
 	ld a, $02 ; $5796
 	ld [hl], a ; $5798
 	ret ; $5799
@@ -427,11 +415,7 @@ MarkOwnedShoes:
 	ld a, c ; $57b9
 	push hl ; $57ba
 	ld hl, ShoeItemTiles_3e ; $57bb
-	add l ; $57be
-	ld l, a ; $57bf
-	jr nc, .gotFlagPtr ; $57c0
-	inc h ; $57c2
-.gotFlagPtr:
+	add_hl_a ; $57be
 	ld d, $00 ; $57c3
 	ld e, [hl] ; $57c5
 	pop hl ; $57c6
@@ -450,11 +434,7 @@ MarkOwnedShoes:
 	and $f0 ; $57da
 	swap a ; $57dc
 	ld hl, wEquipOwnedMap ; $57de
-	add l ; $57e1
-	ld l, a ; $57e2
-	jr nc, .markEquipped ; $57e3
-	inc h ; $57e5
-.markEquipped:
+	add_hl_a ; $57e1
 	ld a, $02 ; $57e6
 	ld [hl], a ; $57e8
 	ret ; $57e9

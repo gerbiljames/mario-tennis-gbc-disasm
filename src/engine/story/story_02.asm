@@ -100,11 +100,7 @@ InitCa00RecordFromCharId:
 	ld b, a ; $40d2
 	push de ; $40d3
 	ld a, $0f ; $40d4
-	add e ; $40d6
-	ld e, a ; $40d7
-	jr nc, .gotDest ; $40d8
-	inc d ; $40da
-.gotDest:
+	add_de_a ; $40d6
 	ld c, $1d ; $40db
 .copyLoop:
 	ld a, [hl+] ; $40dd
@@ -127,11 +123,7 @@ InitCa00RecordFromCharId:
 	add hl, de ; $40f9
 	ld a, [hl] ; $40fa
 	ld hl, $001b ; $40fb
-	add l ; $40fe
-	ld l, a ; $40ff
-	jr nc, .gotTextId ; $4100
-	inc h ; $4102
-.gotTextId:
+	add_hl_a ; $40fe
 	push hl ; $4103
 	ld hl, $0000 ; $4104
 	add hl, de ; $4107
@@ -379,11 +371,7 @@ RollStoryRandomByte:
 	push de ; $4350
 	push hl ; $4351
 	ld de, wStoryRandomBytes ; $4352
-	add e ; $4355
-	ld e, a ; $4356
-	jr nc, .advanceRandomSeed ; $4357
-	inc d ; $4359
-.advanceRandomSeed:
+	add_de_a ; $4355
 	call AdvanceRandomSeed ; $435a
 	ld a, h ; $435d
 	ld [de], a ; $435e

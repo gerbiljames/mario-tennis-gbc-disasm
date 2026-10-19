@@ -625,11 +625,7 @@ DrawNextExpAwardMessage:
 	ld h, [hl] ; $59f0
 	ld l, a ; $59f1
 	ld a, d ; $59f2
-	add l ; $59f3
-	ld l, a ; $59f4
-	jr nc, .drawExpMessageWindow ; $59f5
-	inc h ; $59f7
-.drawExpMessageWindow:
+	add_hl_a ; $59f3
 	push hl ; $59f8
 	call DrawExpMessageWindow ; $59f9
 	wram_bank WRAM_SCENE ; $59fc

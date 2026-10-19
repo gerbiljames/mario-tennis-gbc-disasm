@@ -11,11 +11,7 @@ GetNextMoveCurveValue:
 	ld h, [hl] ; $478e
 	ld l, a ; $478f
 	ld a, [wObjSlotWork + OBJSLOT_CURVE_STEP] ; $4790
-	add l ; $4793
-	ld l, a ; $4794
-	jr nc, .readValue ; $4795
-	inc h ; $4797
-.readValue:
+	add_hl_a ; $4793
 	ld a, [hl] ; $4798
 	cp $80 ; $4799
 	jr z, .done ; $479b
@@ -174,11 +170,7 @@ GetGfxSourcePtr:
 	push af ; $6154
 	ld a, b ; $6155
 	add a ; $6156
-	add l ; $6157
-	ld l, a ; $6158
-	jr nc, .read ; $6159
-	inc h ; $615b
-.read:
+	add_hl_a ; $6157
 	ld a, [hl+] ; $615c
 	ld h, [hl] ; $615d
 	ld l, a ; $615e
@@ -237,11 +229,7 @@ LoadServeGfx:
 	add a ; $6c5d
 	add a ; $6c5e
 	add a ; $6c5f
-	add l ; $6c60
-	ld l, a ; $6c61
-	jr nc, .queue ; $6c62
-	inc h ; $6c64
-.queue:
+	add_hl_a ; $6c60
 	ld de, vTiles0 tile $38 ; $6c65
 	ld c, 4 ; $6c68
 	call QueueVRAMCopy ; $6c6a

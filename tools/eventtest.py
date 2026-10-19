@@ -76,7 +76,8 @@ NOT_HOOKED = {"OAMDMARoutine"}
 # a breakpoint on an interrupt vector hangs PyBoy; the handlers are hooked
 NOT_HOOKED |= {"VBlankInterrupt", "LCDStatInterrupt", "TimerInterrupt", "SerialInterrupt",
                "JoypadInterrupt"}
-CODE_MACROS = {"farcall", "lb", "ld_slot", "ld_hl_indexed", "ld_de_indexed", "ld_bc_indexed"}
+CODE_MACROS = {"farcall", "lb", "ld_slot", "ld_hl_indexed", "ld_de_indexed", "ld_bc_indexed",
+               "add_hl_a", "add_de_a", "add_bc_a"}
 BUTTONS = {"a": 0x01, "b": 0x02, "select": 0x04, "start": 0x08, "right": 0x10, "left": 0x20, "up": 0x40, "down": 0x80}
 # (label, offset) of the points the sync hooks, taken from the base build:
 # after ReadJoypad stores the pad, where AdvanceFrame, WaitVBlank and

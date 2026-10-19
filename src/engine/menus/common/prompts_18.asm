@@ -430,17 +430,9 @@ Unused_18_DrawTileBlock6x2ToTilemap:
 	ld [de], a ; $5596
 	inc de ; $5597
 	ld a, $1a ; $5598
-	add l ; $559a
-	ld l, a ; $559b
-	jr nc, .gotSource ; $559c
-	inc h ; $559e
-.gotSource:
+	add_hl_a ; $559a
 	ld a, $1a ; $559f
-	add e ; $55a1
-	ld e, a ; $55a2
-	jr nc, .copyRows ; $55a3
-	inc d ; $55a5
-.copyRows:
+	add_de_a ; $55a1
 	ld a, [hl+] ; $55a6
 	ld [de], a ; $55a7
 	inc de ; $55a8

@@ -374,11 +374,7 @@ DispatchRankingBoardAnim:
 	ld a, [wRankingBoardPlayerRow] ; $5008
 	add a ; $500b
 	ld hl, RankingBoardAnimHandlers2_1b ; $500c
-	add l ; $500f
-	ld l, a ; $5010
-	jr nc, .jumpSinglesMode0 ; $5011
-	inc h ; $5013
-.jumpSinglesMode0:
+	add_hl_a ; $500f
 	ld a, [hl+] ; $5014
 	ld h, [hl] ; $5015
 	ld l, a ; $5016
@@ -387,11 +383,7 @@ DispatchRankingBoardAnim:
 	ld a, [wRankingBoardPlayerRow] ; $5018
 	add a ; $501b
 	ld hl, RankingBoardAnimHandlers1_1b ; $501c
-	add l ; $501f
-	ld l, a ; $5020
-	jr nc, .jumpSinglesMode1 ; $5021
-	inc h ; $5023
-.jumpSinglesMode1:
+	add_hl_a ; $501f
 	ld a, [hl+] ; $5024
 	ld h, [hl] ; $5025
 	ld l, a ; $5026
@@ -403,11 +395,7 @@ DispatchRankingBoardAnim:
 	ld a, [wRankingBoardPlayerRow] ; $502e
 	add a ; $5031
 	ld hl, RankingBoardAnimHandlers4_1b ; $5032
-	add l ; $5035
-	ld l, a ; $5036
-	jr nc, .jumpDoublesMode0 ; $5037
-	inc h ; $5039
-.jumpDoublesMode0:
+	add_hl_a ; $5035
 	ld a, [hl+] ; $503a
 	ld h, [hl] ; $503b
 	ld l, a ; $503c
@@ -416,11 +404,7 @@ DispatchRankingBoardAnim:
 	ld a, [wRankingBoardPlayerRow] ; $503e
 	add a ; $5041
 	ld hl, RankingBoardAnimHandlers3_1b ; $5042
-	add l ; $5045
-	ld l, a ; $5046
-	jr nc, .jumpDoublesMode1 ; $5047
-	inc h ; $5049
-.jumpDoublesMode1:
+	add_hl_a ; $5045
 	ld a, [hl+] ; $504a
 	ld h, [hl] ; $504b
 	ld l, a ; $504c

@@ -35,11 +35,7 @@ RecordDropShotWinnerStat:
 	add a ; $5cb5
 	add a ; $5cb6
 	add a ; $5cb7
-	add l ; $5cb8
-	ld l, a ; $5cb9
-	jr nc, .increment ; $5cba
-	inc h ; $5cbc
-.increment:
+	add_hl_a ; $5cb8
 	ld a, [hl] ; $5cbd
 	cp $63 ; $5cbe
 	ret nc ; $5cc0
@@ -336,11 +332,7 @@ CopyScoreboardTileColumn:
 	ld [de], a ; $5f0c
 	inc de ; $5f0d
 	ld a, $1e ; $5f0e
-	add e ; $5f10
-	ld e, a ; $5f11
-	jr nc, .row1 ; $5f12
-	inc d ; $5f14
-.row1:
+	add_de_a ; $5f10
 	ld a, [hl+] ; $5f15
 	ld [de], a ; $5f16
 	inc de ; $5f17
@@ -348,11 +340,7 @@ CopyScoreboardTileColumn:
 	ld [de], a ; $5f19
 	inc de ; $5f1a
 	ld a, $1e ; $5f1b
-	add e ; $5f1d
-	ld e, a ; $5f1e
-	jr nc, .row2 ; $5f1f
-	inc d ; $5f21
-.row2:
+	add_de_a ; $5f1d
 	ld a, [hl+] ; $5f22
 	ld [de], a ; $5f23
 	inc de ; $5f24
@@ -360,11 +348,7 @@ CopyScoreboardTileColumn:
 	ld [de], a ; $5f26
 	inc de ; $5f27
 	ld a, $1e ; $5f28
-	add e ; $5f2a
-	ld e, a ; $5f2b
-	jr nc, .row3 ; $5f2c
-	inc d ; $5f2e
-.row3:
+	add_de_a ; $5f2a
 	ld a, [hl+] ; $5f2f
 	ld [de], a ; $5f30
 	inc de ; $5f31
@@ -372,11 +356,7 @@ CopyScoreboardTileColumn:
 	ld [de], a ; $5f33
 	inc de ; $5f34
 	ld a, $1e ; $5f35
-	add e ; $5f37
-	ld e, a ; $5f38
-	jr nc, .row4 ; $5f39
-	inc d ; $5f3b
-.row4:
+	add_de_a ; $5f37
 	ld a, [hl+] ; $5f3c
 	ld [de], a ; $5f3d
 	inc de ; $5f3e

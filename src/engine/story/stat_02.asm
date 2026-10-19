@@ -34,11 +34,7 @@ Unused_02_LoadMainCharacterFromRoster:
 	ld hl, $000b ; $4467
 	add hl, de ; $446a
 	ld a, [hl] ; $446b
-	add l ; $446c
-	ld l, a ; $446d
-	jr nc, .gotPtr ; $446e
-	inc h ; $4470
-.gotPtr:
+	add_hl_a ; $446c
 	ldh a, [hWramBank] ; $4471
 	push af ; $4473
 	pop_wram_bank ; $4474
@@ -418,11 +414,7 @@ ApplyStatModifierRow:
 	ld a, d ; $46b5
 	add a ; $46b6
 	ld hl, EquipStatDeltaPtrs_02 ; $46b7
-	add l ; $46ba
-	ld l, a ; $46bb
-	jr nc, .read ; $46bc
-	inc h ; $46be
-.read:
+	add_hl_a ; $46ba
 	ld a, [hl+] ; $46bf
 	ld h, [hl] ; $46c0
 	ld l, a ; $46c1
