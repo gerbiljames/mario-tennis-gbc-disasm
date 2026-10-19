@@ -311,9 +311,9 @@ CourtSelect9CursorSpriteTask:
 CourtSelect9CursorTemplatePtrs_3e:
 	dw CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate1_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e ; $677b
 CourtSelect9CursorTemplate0_3e:
-	INCBIN "data/engine/menus/court_select/CourtSelect9CursorTemplate0_3e.bin" ; $678d, 33 bytes
+	INCLUDE "data/engine/menus/court_select/CourtSelect9CursorTemplate0_3e.asm" ; $678d, 33 bytes (sprite_template)
 CourtSelect9CursorTemplate1_3e:
-	INCBIN "data/engine/menus/court_select/CourtSelect9CursorTemplate1_3e.bin" ; $67ae, 37 bytes
+	INCLUDE "data/engine/menus/court_select/CourtSelect9CursorTemplate1_3e.asm" ; $67ae, 37 bytes (sprite_template)
 CourtSelect9CursorSpriteTask_SpriteTemplate:
 	; $67d3, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

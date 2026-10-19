@@ -300,7 +300,7 @@ VarsityCourtTourLz2_13:
 VarsityCourtTourLz3_13:
 	INCBIN "data/story/lz_VarsityCourtTourLz3_13.bin" ; $696f, 153 bytes
 VarsityCourtTourPalette_13:
-	INCBIN "data/story/VarsityCourtTourPalette_13.bin" ; $6a08, 8 bytes
+	INCLUDE "data/story/VarsityCourtTourPalette_13.asm" ; $6a08, 8 bytes (palettes)
 SetupStoryMinigameMatch0:
 	script_null_script ACTOR_VARSITY_COURT_A_FAY ; $6a10
 	script_set_anim ACTOR_VARSITY_COURT_A_FAY, ANIM_WALK ; $6a15

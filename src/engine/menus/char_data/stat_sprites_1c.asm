@@ -232,13 +232,13 @@ GetStatDigitSpritePos:
 RadialOffsetRamps_1c:
 	dw RadialOffsetRamp0_1c, RadialOffsetRamp1_1c, RadialOffsetRamp2_1c, RadialOffsetRamp3_1c ; $4fe9
 RadialOffsetRamp0_1c:
-	INCBIN "data/engine/menus/char_data/RadialOffsetRamp0_1c.bin" ; $4ff1, 22 bytes
+	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp0_1c.asm" ; $4ff1, 22 bytes (bytes:2)
 RadialOffsetRamp1_1c:
-	INCBIN "data/engine/menus/char_data/RadialOffsetRamp1_1c.bin" ; $5007, 22 bytes
+	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp1_1c.asm" ; $5007, 22 bytes (bytes:2)
 RadialOffsetRamp2_1c:
-	INCBIN "data/engine/menus/char_data/RadialOffsetRamp2_1c.bin" ; $501d, 22 bytes
+	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp2_1c.asm" ; $501d, 22 bytes (bytes:2)
 RadialOffsetRamp3_1c:
-	INCBIN "data/engine/menus/char_data/RadialOffsetRamp3_1c.bin" ; $5033, 22 bytes
+	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp3_1c.asm" ; $5033, 22 bytes (bytes:2)
 DrawRemainingPointsSprite:
 	wram_bank WRAM_SCENE ; $5049
 	ld a, [wCharDataPointsLeft] ; $504f

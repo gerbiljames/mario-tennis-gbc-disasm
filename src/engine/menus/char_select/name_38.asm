@@ -426,7 +426,7 @@ DrawNameEntryCursor:
 	call QueueNameEntryCursorSprites ; $70a1
 	ret ; $70a4
 NameEntryCursorTable:
-	INCBIN "data/engine/menus/char_select/NameEntryCursorTable.bin" ; $70a5, 180 bytes
+	INCLUDE "data/engine/menus/char_select/NameEntryCursorTable.asm" ; $70a5, 180 bytes (bytes:30)
 DrawEnterNameLabel:
 	push_wram_bank WRAM_SCREEN ; $7159
 	ld hl, EnterNameText_38 ; $7162

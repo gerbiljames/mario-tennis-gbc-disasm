@@ -148,7 +148,7 @@ RankingBoardAnimTask_1b_SpriteTemplate:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
 RankingBoardAnimTaskTable:
-	INCBIN "data/engine/menus/ranking/RankingBoardAnimTaskTable.bin" ; $597b, 137 bytes
+	INCLUDE "data/engine/menus/ranking/RankingBoardAnimTaskTable.asm" ; $597b, 137 bytes (bytes:16)
 RankingCursorBobTask:
 	ld a, [wRankingBannerAnimFrame] ; $5a04
 	or a ; $5a07

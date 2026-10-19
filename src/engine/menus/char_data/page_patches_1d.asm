@@ -39,7 +39,7 @@ CharDataScreenPagePatch0Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Attrmap.bin" ; $632b, 9 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Attrmap.inc" ; DEF CharDataScreenPagePatch0Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPalettes:
-	INCBIN "data/engine/menus/char_data/CharDataScreenPalettes.bin" ; $6334, 8 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataScreenPalettes.asm" ; $6334, 8 bytes (palettes)
 CharDataScreenGfx14:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx14.bin" ; $633c, 184 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx14.inc" ; DEF CharDataScreenGfx14_SIZE EQU its decoded length, generated from the .bin by make

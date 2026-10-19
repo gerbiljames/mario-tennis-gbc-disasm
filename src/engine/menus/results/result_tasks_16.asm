@@ -255,14 +255,14 @@ InitMatchWinLoseScreen:
 	call DecompressData ; $45ca
 	ld hl, wDecompBuffer ; $45cd
 	ld de, vTiles0 + VRAM_BANK1 ; $45d0
-	ld c, 32 ; $45d3
+	ld c, MatchWinLoseScreenGfx_SIZE / 16 ; $45d3
 	call QueueVRAMCopy ; $45d5
 	ld hl, MatchWinLoseScreenGfx1 ; $45d8
 	ld de, wDecompBuffer ; $45db
 	call DecompressData ; $45de
 	ld hl, wDecompBuffer ; $45e1
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $45e4
-	ld c, 32 ; $45e7
+	ld c, MatchWinLoseScreenGfx1_SIZE / 16 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
 	ld_obj_pals de, 0, 3 ; $45ef
@@ -275,29 +275,13 @@ InitMatchWinLoseScreen:
 	farcall QueueWram3MapToVRAM ; $4604
 	ret ; $4607
 MatchWinLoseScreenGfx:
-	INCBIN "data/engine/menus/results/MatchWinLoseScreenGfx.bin" ; $4608, 110 bytes
-DiagramHighlightPaletteTask:
-	INCBIN "data/engine/menus/results/DiagramHighlightPaletteTask.bin" ; $4676, 108 bytes
-DiagramNearFigureSpriteTask:
-	INCBIN "data/engine/menus/results/DiagramNearFigureSpriteTask.bin" ; $46e2, 42 bytes
-DiagramFarFigureSpriteTask:
-	INCBIN "data/engine/menus/results/DiagramFarFigureSpriteTask.bin" ; $470c, 42 bytes
-DiagramMarkerSpriteTask:
-	INCBIN "data/engine/menus/results/DiagramMarkerSpriteTask.bin" ; $4736, 30 bytes
-DiagramBallSpriteTask:
-	INCBIN "data/engine/menus/results/DiagramBallSpriteTask.bin" ; $4754, 48 bytes
+	INCBIN "data/engine/menus/results/lz_MatchWinLoseScreenGfx.bin" ; $4608, 380 bytes
+	INCLUDE "data/engine/menus/results/lz_MatchWinLoseScreenGfx.inc" ; DEF MatchWinLoseScreenGfx_SIZE EQU its decoded length, generated from the .bin by make
 MatchWinLoseScreenGfx1:
-	INCBIN "data/engine/menus/results/MatchWinLoseScreenGfx1.bin" ; $4784, 10 bytes
-DiagramSwingFigureSpriteTask:
-	INCBIN "data/engine/menus/results/DiagramSwingFigureSpriteTask.bin" ; $478e, 97 bytes
-DiagramPolePairSpriteTask:
-	INCBIN "data/engine/menus/results/DiagramPolePairSpriteTask.bin" ; $47ef, 135 bytes
-DiagramSpotMarkerSpriteTask:
-	INCBIN "data/engine/menus/results/DiagramSpotMarkerSpriteTask.bin" ; $4876, 75 bytes
-DiagramTargetBracketsSpriteTask:
-	INCBIN "data/engine/menus/results/DiagramTargetBracketsSpriteTask.bin" ; $48c1, 51 bytes
+	INCBIN "data/engine/menus/results/lz_MatchWinLoseScreenGfx1.bin" ; $4784, 368 bytes
+	INCLUDE "data/engine/menus/results/lz_MatchWinLoseScreenGfx1.inc" ; DEF MatchWinLoseScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
 MatchWinLoseScreenPalettes:
-	INCBIN "data/engine/menus/results/MatchWinLoseScreenPalettes.bin" ; $48f4, 24 bytes
+	INCLUDE "data/engine/menus/results/MatchWinLoseScreenPalettes.asm" ; $48f4, 24 bytes (palettes)
 LoadWinLoseScreenAssets:
 	ld a, [wResultScreenWon] ; $490c
 	or a ; $490f

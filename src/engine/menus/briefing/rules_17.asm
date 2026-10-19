@@ -94,19 +94,19 @@ ReturnDownLineBriefing_AdvanceAnimTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6ec3, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6ec3, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm" ; $6ed3, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm" ; $6ed3, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6ee3, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $6ee3, 4 bytes (bytes:4)
 ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6ee7, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $6ee7, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.bin" ; $6ef7, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.asm" ; $6ef7, 4 bytes (bytes:4)
 ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.bin" ; $6efb, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.asm" ; $6efb, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.bin" ; $6f0b, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.asm" ; $6f0b, 16 bytes (words:2)
 ShowRulesScreen:
 	push af ; $6f1b
 	wram_bank WRAM_SCREEN ; $6f1c

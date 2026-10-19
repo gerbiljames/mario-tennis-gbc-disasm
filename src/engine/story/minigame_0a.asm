@@ -230,7 +230,7 @@ MinigameTargetTable:
 	; $66f6, 8 bytes (bytes:8)
 	db $10, $0d, $14, $0f, $18, $0b, $1c, $0e ; 0x00
 DrawMinigameTargetTable:
-	INCBIN "data/engine/story/DrawMinigameTargetTable.bin" ; $66fe, 16 bytes
+	INCLUDE "data/engine/story/DrawMinigameTargetTable.asm" ; $66fe, 16 bytes (bytes:16)
 DrawMinigameTarget_SpriteTemplate:
 	; $670e, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -877,7 +877,7 @@ MinigameTargetAltTable:
 	; $6da5, 8 bytes (bytes:8)
 	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
 DrawMinigameTargetAltTable:
-	INCBIN "data/engine/story/DrawMinigameTargetAltTable.bin" ; $6dad, 16 bytes
+	INCLUDE "data/engine/story/DrawMinigameTargetAltTable.asm" ; $6dad, 16 bytes (bytes:16)
 DrawMinigameTargetAlt_SpriteTemplate:
 	; $6dbd, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

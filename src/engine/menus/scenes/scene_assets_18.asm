@@ -138,7 +138,7 @@ Unused_18_DrawCharSelectCursor:
 	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
 CharSelectCursorAnimTable:
-	INCBIN "data/engine/menus/scenes/CharSelectCursorAnimTable.bin" ; $59fe, 32 bytes
+	INCLUDE "data/engine/menus/scenes/CharSelectCursorAnimTable.asm" ; $59fe, 32 bytes (bytes:16)
 CharSelectCursorTemplatePtrs:
 	; $5a1e, 8 bytes (records:2)
 	dw CharSelectCursorTemplate0 ; record 0

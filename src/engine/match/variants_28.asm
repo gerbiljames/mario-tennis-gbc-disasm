@@ -387,7 +387,7 @@ Padding_28_1:
 MatchGfxTilesB_28:
 	INCBIN "data/engine/match/lz_MatchGfxTilesB_28.bin" ; $6180, 2964 bytes
 Unused_28_MatchGfxPalette:
-	INCBIN "data/engine/match/Unused_28_MatchGfxPalette.bin" ; $6d14, 8 bytes
+	INCLUDE "data/engine/match/Unused_28_MatchGfxPalette.asm" ; $6d14, 8 bytes (palettes)
 MatchGfxPalettesC_28:
 	INCLUDE "data/engine/match/MatchGfxPalettesC_28.asm" ; $6d1c, 56 bytes (palettes)
 MatchStoryGfxPalettes:

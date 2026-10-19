@@ -88,19 +88,19 @@ ServeToTargetsBriefing_AdvanceAnimTable:
 	dw $0054 ; record 6
 	dw $0003 ; record 7
 ServeToTargetsBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BallPosTable.asm" ; $57cb, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BallPosTable.asm" ; $57cb, 16 bytes (words:2)
 ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $57db, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $57db, 4 bytes (bytes:4)
 ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $57df, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $57df, 16 bytes (words:2)
 ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $57ef, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable.asm" ; $57ef, 4 bytes (bytes:4)
 ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $57f3, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $57f3, 16 bytes (words:2)
 ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable.bin" ; $5803, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable.asm" ; $5803, 4 bytes (bytes:4)
 ServeToTargetsBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BracketPosTable.bin" ; $5807, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BracketPosTable.asm" ; $5807, 16 bytes (words:2)
 DrillBriefing_SpinServe:
 	ld a, $03 ; $5817
 	ld [wBriefingAnimStep], a ; $5819
@@ -519,29 +519,29 @@ SpinServeBriefing_AdvanceAnimTable:
 	dw $0052 ; record 6
 	dw $0000 ; record 7
 SpinServeBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5bf5, 16 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5bf5, 16 bytes (words:2)
 SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $5c05, 4 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $5c05, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5c09, 16 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5c09, 16 bytes (words:2)
 SpinServeBriefing_RotMarkerDirTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_RotMarkerDirTable.bin" ; $5c19, 4 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_RotMarkerDirTable.asm" ; $5c19, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $5c1d, 16 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $5c1d, 16 bytes (words:2)
 SpinServeBriefing_TargetOverlayTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_TargetOverlayTable.bin" ; $5c2d, 4 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_TargetOverlayTable.asm" ; $5c2d, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BracketPosTable.bin" ; $5c31, 16 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BracketPosTable.asm" ; $5c31, 16 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_BallPosTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_BallPosTable.bin" ; $5c41, 8 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_BallPosTable.asm" ; $5c41, 8 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable.asm" ; $5c49, 8 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable.asm" ; $5c49, 8 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_SpinMarkerUnflippedTable:
 	db $01 ; $5c51
 	db $00 ; $5c52
 SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable.bin" ; $5c53, 8 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable.asm" ; $5c53, 8 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_SwingFrameTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingFrameTable.bin" ; $5c5b, 4 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingFrameTable.asm" ; $5c5b, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim2_SwingPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingPosTable.asm" ; $5c5f, 8 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingPosTable.asm" ; $5c5f, 8 bytes (words:2)
