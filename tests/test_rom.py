@@ -3,6 +3,7 @@ to have. They read `src/` as text and need no ROM. A pin here is a ratchet
 on structure that the byte compare cannot see -- an idiom written out by
 hand instead of through its macro, a raw sound id, a VRAM address as a bare
 number -- and an edit that adds or removes code moves it on purpose."""
+import hashlib
 import re
 import subprocess
 import sys
@@ -10,6 +11,8 @@ import unittest
 
 from tests.helpers import ROOT, needs_rom
 from banksrc import bank_text, holders
+
+USA_SHA1 = "414ba58340a27fc27b127bc01455b32764151ff0"
 
 # each bank as one text, its fragment files expanded in place
 SRC = [(h.name, bank_text(h)) for h in holders()]
@@ -168,8 +171,9 @@ class Tools(unittest.TestCase):
 
     def test_doc_counts(self):
         """README and STATUS quote tools/stats.py; rerun it and update them."""
-        if not (ROOT / "build" / "mariotennis.map").exists():
-            self.skipTest("build/mariotennis.map not present: run make first")
+        rom = ROOT / "mariotennis.gbc"
+        if not rom.exists() or hashlib.sha1(rom.read_bytes()).hexdigest() != USA_SHA1:
+            self.skipTest("the figures are the byte-perfect USA build's: run make on an unedited tree")
         import stats
         rom, ram = stats.labels()
         instrs, incbin, fill = stats.source()
@@ -188,7 +192,7 @@ class Tools(unittest.TestCase):
                     f"| source-spelled bytes (`tools/stats.py`) | {spelled:,}, {100 * spelled / stats.ROM_SIZE:.1f}% ",
                     f"| labels | {total:,}: ROM {rom['global']:,} global + {rom['local']:,} local, RAM {ram['global']:,};"])):
             for quote in quotes:
-                self.assertIn(quote, text, doc)
+                self.assertTrue(quote in text, f"{doc} does not say {quote!r}")
 
 
 if __name__ == "__main__":
