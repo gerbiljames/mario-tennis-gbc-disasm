@@ -434,6 +434,11 @@ class Game:
 
 
 def boot(rom, sym, save, out, menu=False):
+    # the button presses below assume this tree's menus: a ROM left over from
+    # another branch's build (git checkout does not rebuild) lands elsewhere
+    if Path(rom).resolve() == ROOT / "mariotennis.gbc" and \
+            subprocess.run(["make", "-q", "mariotennis.gbc"], cwd=ROOT, capture_output=True).returncode:
+        raise SystemExit("mariotennis.gbc is out of date for this checkout: run make first")
     g = Game(rom, sym, save, 10 ** 9, learn_irq=True)
     presses = [(950, "start"), (90, "a")]
     if not menu:
@@ -444,6 +449,9 @@ def boot(rom, sym, save, out, menu=False):
     inputs += [0] * 300
     g.run(inputs, len(inputs), 20 * len(inputs))
     loc = g.mem[g.w["wStoryModeCurrentLocation"]]
+    if not menu and loc == 0:
+        g.close()
+        raise SystemExit(f"{rom}: the boot inputs did not reach story mode (location 0)")
     buf = io.BytesIO()
     g.pb.save_state(buf)
     Path(out).write_bytes(buf.getvalue())
