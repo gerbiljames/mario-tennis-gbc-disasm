@@ -392,7 +392,7 @@ Unused_1a_RestoreMessageSpeed:
 	farcall SaveStorySlotWithTimer ; $42ff
 	ld a, STORYLOC_MAIN_MENU ; $4302
 	ld [wStoryModeCurrentLocation], a ; $4304
-	ld a, $01 ; $4307
+	ld a, ENTRY_MAIN_MENU_FROM_STORY ; $4307
 	ld [wStoryModeEntryPoint], a ; $4309
 	ld a, EXITTRIGGER_DIRECT ; $430c
 	ld [wUnusedExitTriggerIdMirror], a ; $430e

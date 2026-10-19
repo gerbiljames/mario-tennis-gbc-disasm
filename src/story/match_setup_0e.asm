@@ -52,7 +52,7 @@ ActorScript_0e_21:
 PrepareStoryMatch:
 	ld a, STORYLOC_SPECIAL_COURT ; $7b7f
 	ld [wStoryModeCurrentLocation], a ; $7b81
-	ld a, $0a ; $7b84
+	ld a, ENTRY_SPECIAL_COURT_MATCH_RESULT ; $7b84
 	ld [wStoryModeEntryPoint], a ; $7b86
 	ld a, EXITTRIGGER_DIRECT ; $7b89
 	ld [wUnusedExitTriggerIdMirror], a ; $7b8b
@@ -108,7 +108,7 @@ HandleExhibitionMatchResult:
 .lost:
 	ld a, STORYLOC_PEACHS_CASTLE ; $7c24
 	ld [wStoryModeCurrentLocation], a ; $7c26
-	ld a, $0e ; $7c29
+	ld a, ENTRY_PEACHS_CASTLE_AFTER_EXHIBITION ; $7c29
 	ld [wStoryModeEntryPoint], a ; $7c2b
 	ld a, EXITTRIGGER_DIRECT ; $7c2e
 	ld [wUnusedExitTriggerIdMirror], a ; $7c30
@@ -137,7 +137,7 @@ HandleExhibitionMatchResult:
 .done:
 	ld a, STORYLOC_MAIN_MENU ; $7c5b
 	ld [wStoryModeCurrentLocation], a ; $7c5d
-	ld a, $0a ; $7c60
+	ld a, ENTRY_MAIN_MENU_TITLE ; $7c60
 	ld [wStoryModeEntryPoint], a ; $7c62
 	ld a, EXITTRIGGER_DIRECT ; $7c65
 	ld [wUnusedExitTriggerIdMirror], a ; $7c67

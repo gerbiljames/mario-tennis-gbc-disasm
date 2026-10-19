@@ -402,7 +402,7 @@ ServeCoachWalkToCourtAndStartLesson:
 	call PlayerPartnerGestureCutscene ; $7ae7
 	ld a, STORYLOC_TRAINING_COURT ; $7aea
 	ld [wStoryModeCurrentLocation], a ; $7aec
-	ld a, $0a ; $7aef
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $7aef
 	ld [wStoryModeEntryPoint], a ; $7af1
 	ld a, EXITTRIGGER_DIRECT ; $7af4
 	ld [wUnusedExitTriggerIdMirror], a ; $7af6
@@ -446,7 +446,7 @@ NetCoachWalkToCourtAndStartLesson:
 	call PlayerPartnerGestureCutscene ; $7b7a
 	ld a, STORYLOC_TRAINING_COURT ; $7b7d
 	ld [wStoryModeCurrentLocation], a ; $7b7f
-	ld a, $0a ; $7b82
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $7b82
 	ld [wStoryModeEntryPoint], a ; $7b84
 	ld a, EXITTRIGGER_DIRECT ; $7b87
 	ld [wUnusedExitTriggerIdMirror], a ; $7b89

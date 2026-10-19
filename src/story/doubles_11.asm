@@ -18,7 +18,7 @@ JuniorClassCourtDoublesMatchReturn:
 JuniorClassCourtDoublesEntry0eScene:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $5d85
 	ld [wStoryModeCurrentLocation], a ; $5d87
-	ld a, $0d ; $5d8a
+	ld a, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_VICTORY_SCENE ; $5d8a
 	ld [wStoryModeEntryPoint], a ; $5d8c
 	ld a, EXITTRIGGER_DIRECT ; $5d8f
 	ld [wUnusedExitTriggerIdMirror], a ; $5d91
@@ -215,7 +215,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, ANIM_NOD ; $626e
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $6275
 	ld [wStoryModeCurrentLocation], a ; $6277
-	ld a, $01 ; $627a
+	ld a, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_FROM_RESTAURANT_PLAZA ; $627a
 	ld [wStoryModeEntryPoint], a ; $627c
 	ld a, EXITTRIGGER_DIRECT ; $627f
 	ld [wUnusedExitTriggerIdMirror], a ; $6281
@@ -387,7 +387,7 @@ StartNextDoublesRankingMatch:
 	script_face ACTOR_PLAYER, FACE_UP ; $660e
 	script_face ACTOR_PARTNER, FACE_UP ; $6615
 	script_wait_frames 60 ; $661c
-	ld a, $0f ; $6623
+	ld a, EXIT_JUNIOR_CLASS_COURT_DOUBLES_RANKING_MATCH ; $6623
 	ld [wUnusedExitTriggerIdMirror], a ; $6625
 	ld [wStoryModeExitTriggerRequest], a ; $6628
 	farcall InitStoryMatchSettings ; $662b
@@ -416,7 +416,7 @@ StartNextDoublesRankingMatch:
 	script_face ACTOR_PLAYER, FACE_UP ; $66ce
 	script_face ACTOR_PARTNER, FACE_UP ; $66d5
 	script_wait_frames 60 ; $66dc
-	ld a, $0f ; $66e3
+	ld a, EXIT_JUNIOR_CLASS_COURT_DOUBLES_RANKING_MATCH ; $66e3
 	ld [wUnusedExitTriggerIdMirror], a ; $66e5
 	ld [wStoryModeExitTriggerRequest], a ; $66e8
 	farcall InitStoryMatchSettings ; $66eb
@@ -441,7 +441,7 @@ StartNextDoublesRankingMatch:
 	script_face ACTOR_PLAYER, FACE_UP ; $676c
 	script_face ACTOR_PARTNER, FACE_UP ; $6773
 	script_wait_frames 60 ; $677a
-	ld a, $0f ; $6781
+	ld a, EXIT_JUNIOR_CLASS_COURT_DOUBLES_RANKING_MATCH ; $6781
 	ld [wUnusedExitTriggerIdMirror], a ; $6783
 	ld [wStoryModeExitTriggerRequest], a ; $6786
 	farcall InitStoryMatchSettings ; $6789

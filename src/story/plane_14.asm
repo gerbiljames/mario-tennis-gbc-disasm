@@ -463,7 +463,7 @@ IslandSkyEntry02Scene:
 	call ClearFrameTasks ; $6409
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $640c
 	ld [wStoryModeCurrentLocation], a ; $640e
-	ld a, $02 ; $6411
+	ld a, ENTRY_ACADEMY_ENTRANCE_FROM_ISLAND_SKY ; $6411
 	ld [wStoryModeEntryPoint], a ; $6413
 	ld a, EXITTRIGGER_DIRECT ; $6416
 	ld [wUnusedExitTriggerIdMirror], a ; $6418

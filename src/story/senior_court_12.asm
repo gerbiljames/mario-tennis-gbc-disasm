@@ -60,13 +60,16 @@ SeniorCourtActorsB_12:
 	map_actor_end
 SeniorCourtEntryPoints_12:
 	; $556f, 17 bytes (map_entries)
-	map_entry $01, FACE_UP, 43.0, 35.0, $0000
-	map_entry $09, FACE_UP, 11.0, 25.0, $0000
+	map_entry $01, FACE_UP, 43.0, 35.0, $0000, SENIOR_CLASS_COURT_FROM_RESTAURANT_PLAZA
+	map_entry $09, FACE_UP, 11.0, 25.0, $0000, SENIOR_CLASS_COURT_PRACTICE_MATCH_RETURN
+	entry_id SENIOR_CLASS_COURT_VICTORY_SCENE, $0d
+	entry_id SENIOR_CLASS_COURT_MATCH_WON, $0e
+	entry_id SENIOR_CLASS_COURT_MATCH_RETURN, $0f
 	db $ff
 SeniorCourtExitTriggers_12:
 	; $5580, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, SeniorCourtExit01_12, STORYLOC_RESTAURANT_PLAZA, $03
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_SENIOR_CLASS_COURT, $0f
+	map_script $01, FACEMASK_ANY, $0000, SeniorCourtExit01_12, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_SENIOR_CLASS_COURT, SENIOR_CLASS_COURT_TO_RESTAURANT_PLAZA
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_SENIOR_CLASS_COURT, ENTRY_SENIOR_CLASS_COURT_MATCH_RETURN, SENIOR_CLASS_COURT_RANKING_MATCH
 	db $ff
 SeniorCourtExit01_12:
 	clear_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5591
@@ -712,11 +715,11 @@ SeniorCourtInitScript_12:
 	call SeniorCourtPositionActorsByProgressA ; $5d8d
 	call SetPartnerObjDefByGender_12 ; $5d90
 	ld a, [wStoryModeEntryPoint] ; $5d93
-	cp $0f ; $5d96
+	cp ENTRY_SENIOR_CLASS_COURT_MATCH_RETURN ; $5d96
 	jp z, SeniorCourtPostMatchReturn ; $5d98
-	cp $0e ; $5d9b
+	cp ENTRY_SENIOR_CLASS_COURT_MATCH_WON ; $5d9b
 	jp z, SeniorCourtReloadIntoVictoryScene ; $5d9d
-	cp $0d ; $5da0
+	cp ENTRY_SENIOR_CLASS_COURT_VICTORY_SCENE ; $5da0
 	jp z, SeniorMatchVictorySceneDispatch ; $5da2
 	call SeniorCourtPositionActorsByProgressB ; $5da5
 	farcall EndCutsceneScriptMode ; $5da8

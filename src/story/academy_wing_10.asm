@@ -16,16 +16,17 @@ AcademyWingActors_10:
 	map_actor_end
 AcademyWingEntryPoints_10:
 	; $6201, 17 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 59.0, 57.0, MapArrivalWalkPair_10
-	map_entry $0f, FACE_UP, 32.0, 52.0, MapScriptNop_10
+	map_entry $01, FACE_DOWN, 59.0, 57.0, MapArrivalWalkPair_10, ACADEMY_WING_FROM_MAIN_BLDG
+	map_entry $0f, FACE_UP, 32.0, 52.0, MapScriptNop_10, ACADEMY_WING_ISLAND_OPEN_WON
+	entry_id ACADEMY_WING_ISLAND_OPEN_ENTRANTS, $0d
 	db $ff
 AcademyWingExitTriggers_10:
 	; $6212, 41 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $03
-	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_ACADEMY_MAIN_BLDG, $04
-	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, STORYLOC_ACADEMY_MAIN_BLDG, $03
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, ENTRY_ACADEMY_ENTRANCE_FROM_ACADEMY_MAIN_BLDG, ACADEMY_WING_TO_ACADEMY_ENTRANCE
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, ENTRY_COURTYARD_FROM_ACADEMY_MAIN_BLDG, ACADEMY_WING_TO_COURTYARD
+	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_FROM_WING, ACADEMY_WING_TO_MAIN_BLDG
+	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_UPPER_EAST, ACADEMY_WING_TO_MAIN_BLDG_UPPER_EAST
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, ENTRY_COURTYARD_TOUR, ACADEMY_WING_TOUR
 	db $ff
 AcademyWingNpc03_10:
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_WING_HEADMASTER ; $623b
@@ -189,9 +190,9 @@ AcademyWingInitScript_10:
 	farcall CopyScrolledSceneTilemapToVram ; $64c9
 	call EnableLCD ; $64cc
 	ld a, [wStoryModeEntryPoint] ; $64cf
-	cp $0d ; $64d2
+	cp ENTRY_ACADEMY_WING_ISLAND_OPEN_ENTRANTS ; $64d2
 	jp z, .entry0dScene ; $64d4
-	cp $0f ; $64d7
+	cp ENTRY_ACADEMY_WING_ISLAND_OPEN_WON ; $64d7
 	jp z, AcademyWingEntry0fScene ; $64d9
 	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
@@ -607,7 +608,7 @@ AcademyWingInitScript_10:
 	script_wait_frames 50 ; $6f2b
 	ld a, STORYLOC_DORM_ROOM ; $6f32
 	ld [wStoryModeCurrentLocation], a ; $6f34
-	ld a, $0a ; $6f37
+	ld a, ENTRY_DORM_ROOM_DEPARTURE_MORNING ; $6f37
 	ld [wStoryModeEntryPoint], a ; $6f39
 	ld a, EXITTRIGGER_DIRECT ; $6f3c
 	ld [wUnusedExitTriggerIdMirror], a ; $6f3e
@@ -785,7 +786,7 @@ AcademyWingEntry0fScene:
 	call WaitFadeEnd ; $7323
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7326
 	ld [wStoryModeCurrentLocation], a ; $7328
-	ld a, $0c ; $732b
+	ld a, ENTRY_ACADEMY_ENTRANCE_DEPART_FOR_PEACHS_CASTLE ; $732b
 	ld [wStoryModeEntryPoint], a ; $732d
 	ld a, EXITTRIGGER_DIRECT ; $7330
 	ld [wUnusedExitTriggerIdMirror], a ; $7332

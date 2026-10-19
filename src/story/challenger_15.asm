@@ -162,7 +162,7 @@ ChallengerResultLose:
 	script_speak [wChallengerActor] ; $5f26
 	ld a, STORYLOC_TRAINING_COURT ; $5f2c
 	ld [wStoryModeCurrentLocation], a ; $5f2e
-	ld a, $0a ; $5f31
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $5f31
 	ld [wStoryModeEntryPoint], a ; $5f33
 	ld a, EXITTRIGGER_DIRECT ; $5f36
 	ld [wUnusedExitTriggerIdMirror], a ; $5f38
@@ -197,7 +197,7 @@ ChallengerResultFinish:
 	script_speak [wChallengerActor] ; $5f80
 	ld a, STORYLOC_TRAINING_COURT ; $5f86
 	ld [wStoryModeCurrentLocation], a ; $5f88
-	ld a, $0a ; $5f8b
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $5f8b
 	ld [wStoryModeEntryPoint], a ; $5f8d
 	ld a, EXITTRIGGER_DIRECT ; $5f90
 	ld [wUnusedExitTriggerIdMirror], a ; $5f92

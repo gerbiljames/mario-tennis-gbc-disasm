@@ -30,13 +30,13 @@ TrainingGymActors_0e:
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)
-	map_entry $01, FACE_UP, 22.0, 24.0, TrainingGymArrival01_0e
-	map_entry $02, FACE_DOWN, 11.0, 12.0, TrainingGymArrival02_0e
-	map_entry $03, FACE_DOWN, 21.0, 12.0, TrainingGymArrival03_0e
-	map_entry $0b, FACE_DOWN, 13.0, 15.0, $0000
-	map_entry $0c, FACE_LEFT, 17.0, 19.0, $0000
-	map_entry $0d, FACE_DOWN, 13.0, 15.0, $0000
-	map_entry $0e, FACE_LEFT, 17.0, 19.0, $0000
+	map_entry $01, FACE_UP, 22.0, 24.0, TrainingGymArrival01_0e, TRAINING_CENTER_FROM_COURTYARD
+	map_entry $02, FACE_DOWN, 11.0, 12.0, TrainingGymArrival02_0e, TRAINING_CENTER_FROM_WALL_PRACTICE_ROOM
+	map_entry $03, FACE_DOWN, 21.0, 12.0, TrainingGymArrival03_0e, TRAINING_CENTER_FROM_TENNIS_MACHINE_ROOM
+	map_entry $0b, FACE_DOWN, 13.0, 15.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_A
+	map_entry $0c, FACE_LEFT, 17.0, 19.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_B
+	map_entry $0d, FACE_DOWN, 13.0, 15.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_A_CHANGED
+	map_entry $0e, FACE_LEFT, 17.0, 19.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_B_CHANGED
 	db $ff
 TrainingGymArrival01_0e:
 	ld a, [wStoryModeEntryPoint] ; $40ff
@@ -100,9 +100,9 @@ TrainingGymArrival03_0e:
 	ret ; $4276
 TrainingGymExitTriggers_0e:
 	; $4277, 25 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_COURTYARD, $01
-	map_script $03, FACEMASK_ANY, $0000, TrainingGymExit03_0e, STORYLOC_TENNIS_MACHINE_ROOM, $01
-	map_script $02, FACEMASK_ANY, $0000, TrainingGymExit02_0e, STORYLOC_WALL_PRACTICE_ROOM, $01
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_COURTYARD, ENTRY_COURTYARD_FROM_TRAINING_CENTER, TRAINING_CENTER_TO_COURTYARD
+	map_script $03, FACEMASK_ANY, $0000, TrainingGymExit03_0e, STORYLOC_TENNIS_MACHINE_ROOM, ENTRY_TENNIS_MACHINE_ROOM_FROM_TRAINING_CENTER, TRAINING_CENTER_TO_TENNIS_MACHINE_ROOM
+	map_script $02, FACEMASK_ANY, $0000, TrainingGymExit02_0e, STORYLOC_WALL_PRACTICE_ROOM, ENTRY_WALL_PRACTICE_ROOM_FROM_TRAINING_CENTER, TRAINING_CENTER_TO_WALL_PRACTICE_ROOM
 	db $ff
 TrainingGymExit02_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $4290
@@ -396,7 +396,7 @@ TrainingGymFacingScripts_0e:
 	map_script $02, FACEMASK_ANY, $0000, TrainingGymFacing02_0e, $00, $00
 	db $ff
 TrainingGymFacing01_0e:
-	ld a, $0b ; $45be
+	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A ; $45be
 	ld [wMapSceneStage2], a ; $45c0
 	script_player_speed 2.0 ; $45c3
 	script_move_player 13.0, 19.0 ; $45c9
@@ -404,7 +404,7 @@ TrainingGymFacing01_0e:
 	call RunRepairCounterDialogue ; $45d6
 	ret ; $45d9
 TrainingGymFacing02_0e:
-	ld a, $0c ; $45da
+	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B ; $45da
 	ld [wMapSceneStage2], a ; $45dc
 	script_player_speed 2.0 ; $45df
 	script_move_player 13.0, 19.0 ; $45e5
@@ -417,12 +417,12 @@ TrainingGymTileTriggers_0e:
 	map_script $03, FACEMASK_UP, $0000, TrainingGymTile03_0e, $00, $00
 	db $ff
 TrainingGymTile02_0e:
-	ld a, $02 ; $4607
+	ld a, EXIT_TRAINING_CENTER_TO_WALL_PRACTICE_ROOM ; $4607
 	ld [wUnusedExitTriggerIdMirror], a ; $4609
 	ld [wStoryModeExitTriggerRequest], a ; $460c
 	ret ; $460f
 TrainingGymTile03_0e:
-	ld a, $03 ; $4610
+	ld a, EXIT_TRAINING_CENTER_TO_TENNIS_MACHINE_ROOM ; $4610
 	ld [wUnusedExitTriggerIdMirror], a ; $4612
 	ld [wStoryModeExitTriggerRequest], a ; $4615
 	ret ; $4618
@@ -454,22 +454,22 @@ TrainingGymInitScript_0e:
 	script_set_anim ACTOR_TRAINING_GYM_JUMPING_JACKS_B_2, ANIM_EXERCISE ; $4654
 	call SetupGymActorsForProgress ; $465b
 	ld a, [wStoryModeEntryPoint] ; $465e
-	cp $0b ; $4661
+	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A ; $4661
 	jr nz, .entry0c ; $4663
 	call RepairCounterReturnA ; $4665
 	ret ; $4668
 .entry0c:
-	cp $0c ; $4669
+	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B ; $4669
 	jr nz, .entry0d ; $466b
 	call RepairCounterReturnB ; $466d
 	ret ; $4670
 .entry0d:
-	cp $0d ; $4671
+	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A_CHANGED ; $4671
 	jr nz, .entry0e ; $4673
 	call RepairCounterChangedReturnA ; $4675
 	ret ; $4678
 .entry0e:
-	cp $0e ; $4679
+	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B_CHANGED ; $4679
 	jr nz, .done ; $467b
 	call RepairCounterChangedReturnB ; $467d
 .done:

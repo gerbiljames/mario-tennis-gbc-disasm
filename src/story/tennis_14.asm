@@ -23,9 +23,9 @@ TennisMachineRoomActors_14:
 	map_actor_end
 TennisMachineRoomEntryPoints_14:
 	; $404a, 25 bytes (map_entries)
-	map_entry $01, FACE_UP, 43.0, 57.0, TennisMachineRoomArrival01_14
-	map_entry $05, FACE_UP, 56.0, 54.0, $0000
-	map_entry $07, FACE_UP, 56.0, 54.0, $0000
+	map_entry $01, FACE_UP, 43.0, 57.0, TennisMachineRoomArrival01_14, TENNIS_MACHINE_ROOM_FROM_TRAINING_CENTER
+	map_entry $05, FACE_UP, 56.0, 54.0, $0000, TENNIS_MACHINE_ROOM_LEVEL_RESULT
+	map_entry $07, FACE_UP, 56.0, 54.0, $0000, TENNIS_MACHINE_ROOM_PRACTICE_RESULT
 	db $ff
 TennisMachineRoomArrival01_14:
 	ld a, [wStoryModeEntryPoint] ; $4063
@@ -40,7 +40,7 @@ TennisMachineRoomArrival01_14:
 	ret ; $4085
 TennisMachineRoomExitTriggers_14:
 	; $4086, 9 bytes (map_scripts:exit)
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TRAINING_CENTER, $03
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TRAINING_CENTER, ENTRY_TRAINING_CENTER_FROM_TENNIS_MACHINE_ROOM, TENNIS_MACHINE_ROOM_TO_TRAINING_CENTER
 	db $ff
 TennisMachineRoomNpc03_14:
 	ld a, [wMapSceneStage] ; $408f
@@ -226,9 +226,9 @@ TennisMachineRoomInitScript_14:
 	call ComputeMachineCourtProgress ; $4297
 	farcall WaitPlayerMoveDone ; $429a
 	ld a, [wStoryModeEntryPoint] ; $429d
-	cp $05 ; $42a0
+	cp ENTRY_TENNIS_MACHINE_ROOM_LEVEL_RESULT ; $42a0
 	jp z, MachineCourtResultScene ; $42a2
-	cp $07 ; $42a5
+	cp ENTRY_TENNIS_MACHINE_ROOM_PRACTICE_RESULT ; $42a5
 	jp z, MachinePracticeResultScene ; $42a7
 	cp STORYENTRY_NONE ; $42aa
 	jp z, TennisMachineRoomNoEntryScene ; $42ac
@@ -423,7 +423,7 @@ MachineCourtStartLevelScene:
 	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $457f
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4582
 	ld [wStoryModeCurrentLocation], a ; $4584
-	ld a, $05 ; $4587
+	ld a, ENTRY_TENNIS_MACHINE_ROOM_LEVEL_RESULT ; $4587
 	ld [wStoryModeEntryPoint], a ; $4589
 	ld a, EXITTRIGGER_DIRECT ; $458c
 	ld [wUnusedExitTriggerIdMirror], a ; $458e

@@ -202,15 +202,15 @@ MarioWorldActors_0e:
 	map_actor_end
 MarioWorldEntryPoints_0e:
 	; $535c, 41 bytes (map_entries)
-	map_entry $01, FACE_UP, 18.0, 33.0, $0000
+	map_entry $01, FACE_UP, 18.0, 33.0, $0000, PEACHS_CASTLE_REVISIT
 	map_entry $02, FACE_DOWN, 27.0, 11.0, $0000 ; debug warp only
-	map_entry $0a, FACE_UP, 18.0, 8.0, $0000
-	map_entry $0e, FACE_UP, 18.0, 15.0, $0000
-	map_entry $0f, FACE_UP, 18.0, 8.0, $0000
+	map_entry $0a, FACE_UP, 18.0, 8.0, $0000, PEACHS_CASTLE_CREDITS
+	map_entry $0e, FACE_UP, 18.0, 15.0, $0000, PEACHS_CASTLE_AFTER_EXHIBITION
+	map_entry $0f, FACE_UP, 18.0, 8.0, $0000, PEACHS_CASTLE_FIRST_VISIT
 	db $ff
 MarioWorldExitTriggers_0e:
 	; $5385, 9 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_ISLAND_SKY, $0e
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_ISLAND_SKY, ENTRY_ISLAND_SKY_HOME_FROM_PEACHS_CASTLE, PEACHS_CASTLE_FLY_HOME
 	db $ff
 MarioWorldNpc12Mario_0e:
 	script_set_text Text_MarioWorldMarioMamaMia ; $538e
@@ -307,11 +307,11 @@ Unused_0e_StubNop:
 MarioWorldInitScript_0e:
 	call ComputeMarioWorldProgressIndex ; $54d2
 	ld a, [wStoryModeEntryPoint] ; $54d5
-	cp $0a ; $54d8
+	cp ENTRY_PEACHS_CASTLE_CREDITS ; $54d8
 	jp z, MarioWorldArrivalSingles ; $54da
-	cp $0e ; $54dd
+	cp ENTRY_PEACHS_CASTLE_AFTER_EXHIBITION ; $54dd
 	jp z, MarioWorldEntry0eScene ; $54df
-	cp $0f ; $54e2
+	cp ENTRY_PEACHS_CASTLE_FIRST_VISIT ; $54e2
 	jp z, MarioWorldArrivalSingles ; $54e4
 	test_flag FLAG_DOUBLES ; $54e7
 	jr nz, .placeActors ; $54ea
@@ -427,7 +427,7 @@ MarioWorldArrivalSingles:
 	jr z, .done ; $56a7
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_DOWN ; $56a9
 	script_wait_frames 20 ; $56b0
-	ld a, $01 ; $56b7
+	ld a, EXIT_PEACHS_CASTLE_FLY_HOME ; $56b7
 	ld [wUnusedExitTriggerIdMirror], a ; $56b9
 	ld [wStoryModeExitTriggerRequest], a ; $56bc
 	ret ; $56bf

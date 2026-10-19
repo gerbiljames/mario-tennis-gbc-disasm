@@ -15,7 +15,7 @@ RunTravelingTeamBracketIfWon_13:
 .won:
 	ld a, STORYLOC_COURTYARD ; $79a4
 	ld [wStoryModeCurrentLocation], a ; $79a6
-	ld a, $0e ; $79a9
+	ld a, ENTRY_COURTYARD_TRAVELING_TEAM_WON ; $79a9
 	ld [wStoryModeEntryPoint], a ; $79ab
 	ld a, EXITTRIGGER_DIRECT ; $79ae
 	ld [wUnusedExitTriggerIdMirror], a ; $79b0

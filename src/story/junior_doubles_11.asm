@@ -32,7 +32,7 @@ AcademyArrivalEntry0cScene:
 	call WaitFadeEnd ; $5454
 	ld a, STORYLOC_ISLAND_SKY ; $5457
 	ld [wStoryModeCurrentLocation], a ; $5459
-	ld a, $0f ; $545c
+	ld a, ENTRY_ISLAND_SKY_TO_PEACHS_CASTLE ; $545c
 	ld [wStoryModeEntryPoint], a ; $545e
 	ld a, EXITTRIGGER_DIRECT ; $5461
 	ld [wUnusedExitTriggerIdMirror], a ; $5463
@@ -95,13 +95,16 @@ JuniorClassCourtDoublesActors_11:
 	map_actor_end
 JuniorClassCourtDoublesEntryPoints_11:
 	; $558e, 17 bytes (map_entries)
-	map_entry $01, FACE_UP, 19.0, 29.0, MapArrivalWalk_11
-	map_entry $09, FACE_UP, 55.0, 25.0, $0000
+	map_entry $01, FACE_UP, 19.0, 29.0, MapArrivalWalk_11, JUNIOR_CLASS_COURT_DOUBLES_FROM_RESTAURANT_PLAZA
+	map_entry $09, FACE_UP, 55.0, 25.0, $0000, JUNIOR_CLASS_COURT_DOUBLES_PRACTICE_MATCH_RETURN
+	entry_id JUNIOR_CLASS_COURT_DOUBLES_VICTORY_SCENE, $0d
+	entry_id JUNIOR_CLASS_COURT_DOUBLES_MATCH_WON, $0e
+	entry_id JUNIOR_CLASS_COURT_DOUBLES_MATCH_RETURN, $0f
 	db $ff
 JuniorClassCourtDoublesExitTriggers_11:
 	; $559f, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_RESTAURANT_PLAZA, $05
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_JUNIOR_CLASS_COURT, JUNIOR_CLASS_COURT_DOUBLES_TO_RESTAURANT_PLAZA
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_MATCH_RETURN, JUNIOR_CLASS_COURT_DOUBLES_RANKING_MATCH
 	db $ff
 JuniorClassCourtDoublesNpc04_11:
 	script_set_text Text_BobJuniorDoublesBeatYouInSenior ; $55b0
@@ -385,11 +388,11 @@ JuniorClassCourtDoublesInitScript_11:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY, ActorScript_11_45 ; $5a5b
 .byEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $5a66
-	cp $0f ; $5a69
+	cp ENTRY_JUNIOR_CLASS_COURT_DOUBLES_MATCH_RETURN ; $5a69
 	jp z, JuniorClassCourtDoublesMatchReturn ; $5a6b
-	cp $0e ; $5a6e
+	cp ENTRY_JUNIOR_CLASS_COURT_DOUBLES_MATCH_WON ; $5a6e
 	jp z, JuniorClassCourtDoublesEntry0eScene ; $5a70
-	cp $0d ; $5a73
+	cp ENTRY_JUNIOR_CLASS_COURT_DOUBLES_VICTORY_SCENE ; $5a73
 	jp z, JuniorClassCourtDoublesEntry0dScene ; $5a75
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5a78
 	jr nz, .storyComplete ; $5a7b

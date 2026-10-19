@@ -64,6 +64,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from banksrc import bank_lines, build_addresses, holders, placed_original
 from reach import MNEMONICS
+import routes
 
 ROOT = Path(__file__).resolve().parent.parent
 SINGLES = [80, 81, 82, 83, 84, 85, 86, 87, 88, 174, 63, 62, 61, 60, 185, 176, 183, 178, 59]
@@ -629,10 +630,10 @@ def handler_rows():
         # an init script that stays only for one entry point (and otherwise
         # sends the player straight out) is entered by that one
         init = slots.get("InitScript")
-        m = init and re.search(rf"^{init}:\n\tld a, \[wStoryModeEntryPoint\][^\n]*\n\tcp (\$[0-9a-f]+)[^\n]*\n"
+        m = init and re.search(rf"^{init}:\n\tld a, \[wStoryModeEntryPoint\][^\n]*\n\tcp (\$[0-9a-f]+|ENTRY_\w+)[^\n]*\n"
                                rf"\tret z", text, re.M)
         if m:
-            entry = int(m.group(1)[1:], 16)
+            entry = int(m.group(1)[1:], 16) if m.group(1).startswith("$") else routes.entry_ids()[m.group(1)]
         tables = [(kind, slots.get(role)) for kind, role in
                   (("npc", "NpcScripts"), ("facing", "FacingScripts"), ("tile", "TileTriggers"))]
         extra = sorted({t for (_, t, _) in flow.visits.get(tree, ())

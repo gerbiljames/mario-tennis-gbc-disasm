@@ -856,7 +856,7 @@ StoryPauseMenu_SaveQuit:
 	farcall SaveStorySlotWithTimer ; $706d
 	ld a, STORYLOC_MAIN_MENU ; $7070
 	ld [wStoryModeCurrentLocation], a ; $7072
-	ld a, $01 ; $7075
+	ld a, ENTRY_MAIN_MENU_FROM_STORY ; $7075
 	ld [wStoryModeEntryPoint], a ; $7077
 	ld a, EXITTRIGGER_DIRECT ; $707a
 	ld [wUnusedExitTriggerIdMirror], a ; $707c
@@ -871,7 +871,7 @@ StoryPauseMenu_ReturnToMainMenu:
 	ld [wMatchAbortFlag], a ; $7091
 	ld a, STORYLOC_MAIN_MENU ; $7094
 	ld [wStoryModeCurrentLocation], a ; $7096
-	ld a, $01 ; $7099
+	ld a, ENTRY_MAIN_MENU_FROM_STORY ; $7099
 	ld [wStoryModeEntryPoint], a ; $709b
 	ld a, EXITTRIGGER_DIRECT ; $709e
 	ld [wUnusedExitTriggerIdMirror], a ; $70a0

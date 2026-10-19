@@ -35,7 +35,7 @@ MachinePracticeLevelPrompt:
 	call WaitFadeEnd ; $4672
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4675
 	ld [wStoryModeCurrentLocation], a ; $4677
-	ld a, $07 ; $467a
+	ld a, ENTRY_TENNIS_MACHINE_ROOM_PRACTICE_RESULT ; $467a
 	ld [wStoryModeEntryPoint], a ; $467c
 	ld a, EXITTRIGGER_DIRECT ; $467f
 	ld [wUnusedExitTriggerIdMirror], a ; $4681
@@ -142,7 +142,7 @@ MachineCourtRestartLevel:
 	jr z, .storeStoryModeCurrentLocation ; $47d9
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $47db
 	ld [wStoryModeCurrentLocation], a ; $47dd
-	ld a, $07 ; $47e0
+	ld a, ENTRY_TENNIS_MACHINE_ROOM_PRACTICE_RESULT ; $47e0
 	ld [wStoryModeEntryPoint], a ; $47e2
 	ld a, EXITTRIGGER_DIRECT ; $47e5
 	ld [wUnusedExitTriggerIdMirror], a ; $47e7
@@ -151,7 +151,7 @@ MachineCourtRestartLevel:
 .storeStoryModeCurrentLocation:
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $47ef
 	ld [wStoryModeCurrentLocation], a ; $47f1
-	ld a, $05 ; $47f4
+	ld a, ENTRY_TENNIS_MACHINE_ROOM_LEVEL_RESULT ; $47f4
 	ld [wStoryModeEntryPoint], a ; $47f6
 	ld a, EXITTRIGGER_DIRECT ; $47f9
 	ld [wUnusedExitTriggerIdMirror], a ; $47fb
@@ -179,7 +179,7 @@ Unused_14_MachineRecordOverrideAndReturn:
 	pop_wram_bank ; $482a
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $482f
 	ld [wStoryModeCurrentLocation], a ; $4831
-	ld a, $01 ; $4834
+	ld a, ENTRY_TENNIS_MACHINE_ROOM_FROM_TRAINING_CENTER ; $4834
 	ld [wStoryModeEntryPoint], a ; $4836
 	ld a, EXITTRIGGER_DIRECT ; $4839
 	ld [wUnusedExitTriggerIdMirror], a ; $483b
@@ -365,13 +365,13 @@ Court2Actors_14:
 	map_actor_end
 Court2EntryPoints_14:
 	; $4b3f, 17 bytes (map_entries)
-	map_entry $01, FACE_LEFT, 37.0, 21.0, $0000
-	map_entry $02, FACE_LEFT, 37.0, 37.0, $0000
+	map_entry $01, FACE_LEFT, 37.0, 21.0, $0000, COURT_2_FROM_TOURNAMENT
+	map_entry $02, FACE_LEFT, 37.0, 37.0, $0000, COURT_2_FROM_TOURNAMENT_COURTYARD
 	db $ff
 Court2ExitTriggers_14:
 	; $4b50, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, $03
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, $02
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, ENTRY_TOURNAMENT_FROM_COURT_2, COURT_2_TO_TOURNAMENT
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, ENTRY_TOURNAMENT_COURTYARD_FROM_COURT_2, COURT_2_TO_TOURNAMENT_COURTYARD
 	db $ff
 Court2Npc03_14:
 	script_set_text Text_Court2StaffCourtNumberTwo ; $4b61

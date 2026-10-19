@@ -51,7 +51,7 @@ VarsityCourtANpc03_13:
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6d56
 	ld a, STORYLOC_COURTYARD ; $6d5b
 	ld [wStoryModeCurrentLocation], a ; $6d5d
-	ld a, $0d ; $6d60
+	ld a, ENTRY_COURTYARD_VARSITY_MATCH_RETURN ; $6d60
 	ld [wStoryModeEntryPoint], a ; $6d62
 	ld a, EXITTRIGGER_DIRECT ; $6d65
 	ld [wUnusedExitTriggerIdMirror], a ; $6d67
@@ -157,7 +157,7 @@ VarsityCourtBNpc03_13:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $6fc8
 	ld a, STORYLOC_COURTYARD ; $6fcd
 	ld [wStoryModeCurrentLocation], a ; $6fcf
-	ld a, $0d ; $6fd2
+	ld a, ENTRY_COURTYARD_VARSITY_MATCH_RETURN ; $6fd2
 	ld [wStoryModeEntryPoint], a ; $6fd4
 	ld a, EXITTRIGGER_DIRECT ; $6fd7
 	ld [wUnusedExitTriggerIdMirror], a ; $6fd9
@@ -327,7 +327,7 @@ SinglesTravelingTeamVictoryCutscene:
 	farcall RunStorySceneByMode ; $7386
 	ld a, STORYLOC_MAIN_MENU ; $7389
 	ld [wStoryModeCurrentLocation], a ; $738b
-	ld a, $0a ; $738e
+	ld a, ENTRY_MAIN_MENU_TITLE ; $738e
 	ld [wStoryModeEntryPoint], a ; $7390
 	ld a, EXITTRIGGER_DIRECT ; $7393
 	ld [wUnusedExitTriggerIdMirror], a ; $7395
@@ -541,7 +541,7 @@ DoublesTravelingTeamVictoryCutscene:
 	call PlayDoublesTravelingTeamScreenSequence_13 ; $78ae
 	ld a, STORYLOC_MAIN_MENU ; $78b1
 	ld [wStoryModeCurrentLocation], a ; $78b3
-	ld a, $0a ; $78b6
+	ld a, ENTRY_MAIN_MENU_TITLE ; $78b6
 	ld [wStoryModeEntryPoint], a ; $78b8
 	ld a, EXITTRIGGER_DIRECT ; $78bb
 	ld [wUnusedExitTriggerIdMirror], a ; $78bd

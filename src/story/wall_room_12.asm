@@ -22,17 +22,17 @@ DormEntranceActors_12:
 	map_actor_end
 DormEntranceEntryPoints_12:
 	; $4056, 25 bytes (map_entries)
-	map_entry $01, FACE_UP, 22.0, 27.0, DormEntranceArrival01_12
-	map_entry $02, FACE_DOWN, 22.0, 13.0, DormEntranceArrival02_12
-	map_entry $0f, FACE_UP, 22.0, 27.0, $0000
+	map_entry $01, FACE_UP, 22.0, 27.0, DormEntranceArrival01_12, DORM_ENTRANCE_FROM_RESTAURANT_PLAZA
+	map_entry $02, FACE_DOWN, 22.0, 13.0, DormEntranceArrival02_12, DORM_ENTRANCE_FROM_DORM_ROOM
+	map_entry $0f, FACE_UP, 22.0, 27.0, $0000, DORM_ENTRANCE_TOUR
 	db $ff
 	twin_named academy_main_bldg_arrival02, DormEntranceArrival02_12 ; $406f
 	twin_named academy_main_bldg_arrival01, DormEntranceArrival01_12 ; $40b5
 DormEntranceExitTriggers_12:
 	; $40fb, 25 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_DORM_ROOM, $02
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_RESTAURANT_PLAZA, $01
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_DORM_ROOM, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_DORM_ROOM, ENTRY_DORM_ROOM_FROM_DORM_ENTRANCE, DORM_ENTRANCE_TO_DORM_ROOM
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_DORM_ENTRANCE, DORM_ENTRANCE_TO_RESTAURANT_PLAZA
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_DORM_ROOM, ENTRY_DORM_ROOM_TOUR_END, DORM_ENTRANCE_TOUR
 	db $ff
 DormEntranceNpcScripts_12:
 	ds 1, $ff ; $4114, fill
@@ -55,18 +55,18 @@ DormEntranceTile01_12:
 	ld a, [wStoryMainGender] ; $4158
 	or a ; $415b
 	jr nz, .female ; $415c
-	ld a, $01 ; $415e
+	ld a, EXIT_DORM_ENTRANCE_TO_DORM_ROOM ; $415e
 	ld [wUnusedExitTriggerIdMirror], a ; $4160
 	ld [wStoryModeExitTriggerRequest], a ; $4163
 	ret ; $4166
 .female:
-	ld a, $01 ; $4167
+	ld a, EXIT_DORM_ENTRANCE_TO_DORM_ROOM ; $4167
 	ld [wUnusedExitTriggerIdMirror], a ; $4169
 	ld [wStoryModeExitTriggerRequest], a ; $416c
 	ret ; $416f
 DormEntranceInitScript_12:
 	ld a, [wStoryModeEntryPoint] ; $4170
-	cp $0f ; $4173
+	cp ENTRY_DORM_ENTRANCE_TOUR ; $4173
 	call z, DormEntranceEntry0fScene ; $4175
 	ret ; $4178
 DormEntranceEntry0fScene:
@@ -257,7 +257,7 @@ DormEntranceEntry0fScene:
 	script_wait_move ACTOR_PLAYER ; $4648
 	script_move_player 22.0, 11.0 ; $464d
 	ld b, STORYLOC_DORM_ROOM ; $4657
-	ld c, $0f ; $4659
+	ld c, ENTRY_DORM_ROOM_TOUR_END ; $4659
 	farcall SaveStoryReturnPoint ; $465b
 	farcall SaveStorySlotWithTimer ; $465e
 	ld a, $01 ; $4661
@@ -266,7 +266,7 @@ DormEntranceEntry0fScene:
 	sound BGM_NONE ; $4669
 	script_fade_out 4 ; $466b
 	call WaitFadeEnd ; $4670
-	ld a, $0f ; $4673
+	ld a, EXIT_DORM_ENTRANCE_TOUR ; $4673
 	ld [wUnusedExitTriggerIdMirror], a ; $4675
 	ld [wStoryModeExitTriggerRequest], a ; $4678
 	ret ; $467b
@@ -289,9 +289,9 @@ WallPracticeRoomActors_12:
 	map_actor_end
 WallPracticeRoomEntryPoints_12:
 	; $46da, 25 bytes (map_entries)
-	map_entry $01, FACE_UP, 15.0, 57.0, WallPracticeRoomArrival01_12
-	map_entry $0a, FACE_UP, 12.0, 49.0, $0000
-	map_entry $0b, FACE_UP, 12.0, 49.0, $0000
+	map_entry $01, FACE_UP, 15.0, 57.0, WallPracticeRoomArrival01_12, WALL_PRACTICE_ROOM_FROM_TRAINING_CENTER
+	map_entry $0a, FACE_UP, 12.0, 49.0, $0000, WALL_PRACTICE_ROOM_MINIGAME_RESULT
+	map_entry $0b, FACE_UP, 12.0, 49.0, $0000, WALL_PRACTICE_ROOM_LEVEL_RESULT
 	db $ff
 WallPracticeRoomArrival01_12:
 	ld a, [wStoryModeEntryPoint] ; $46f3
@@ -306,7 +306,7 @@ WallPracticeRoomArrival01_12:
 	ret ; $4715
 WallPracticeRoomExitTriggers_12:
 	; $4716, 9 bytes (map_scripts:exit)
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_TRAINING_CENTER, $02
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_TRAINING_CENTER, ENTRY_TRAINING_CENTER_FROM_WALL_PRACTICE_ROOM, WALL_PRACTICE_ROOM_TO_TRAINING_CENTER
 	db $ff
 WallPracticeRoomNpc03_12:
 	ld a, [wMapSceneStage] ; $471f
