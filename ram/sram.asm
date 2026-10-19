@@ -29,4 +29,4 @@ sSaveFlagsUnused:: ds 24
 
 ; Save block directory (docs/save_format.md), owned by the bank $03 save engine
 ; [113 x 16 bytes] block directory; +0 valid, +1 SRAM bank, +2 offset word, +4 length word, +6 checksum word, +8 tag (hi,lo)
-sSaveBlockDirectory:: ds 1808
+sSaveBlockDirectory:: ds NUM_SAVEBLOCKS * SAVEDIR_ENTRY_SIZE

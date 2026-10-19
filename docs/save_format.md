@@ -119,7 +119,11 @@ of `wTextBuffer`, not a magic constant.
 ## Block directory (113 entries, from `InitSaveHeader`)
 
 `InitSaveHeader` (03:404a) defines far more than the game ever writes
-(`bank:off`, offset from `$a000`):
+(`bank:off`, offset from `$a000`). Each entry is a `savedir_entry block,
+bank, offset, length` line, which asserts the blocks come in id order and
+each bank's run neither overlaps nor leaves its bank. The never-written
+runs are `SAVEBLOCK_UNUSED_BANK0`-`_BANK6` + n, one base per SRAM bank
+(`_BANK6` covers banks 6-14):
 
 | blocks | bank:off | len | contents |
 |---|---|---|---|

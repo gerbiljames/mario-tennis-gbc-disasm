@@ -116,6 +116,37 @@ MACRO sram_bank
 	ld [rRAMB], a
 ENDM
 
+; One InitSaveHeader directory entry: block \1 lives in SRAM bank \2 at
+; offset \3 from SRAM_BASE, \4 bytes long. Entries come in block order, and
+; the blocks in each bank run upward without overlapping (bank 0's start
+; after the header).
+MACRO savedir_entry
+	ASSERT SAVEDIR_OFFSET == SAVEDIR_BANK + 1 && SAVEDIR_LENGTH == SAVEDIR_OFFSET + 2
+	IF (\1) == 0
+		DEF savedir_next = 0
+		DEF savedir_bank = 0
+		DEF savedir_end = SAVE_HEADER_SIZE
+	ELIF (\2) != savedir_bank
+		DEF savedir_bank = \2
+		DEF savedir_end = 0
+	ENDC
+	ASSERT (\1) == savedir_next, "savedir_entry: block \1 is out of order"
+	ASSERT (\3) >= savedir_end, "savedir_entry: block \1 overlaps the one before"
+	ASSERT (\3) + (\4) <= SRAM_BANK_SIZE, "savedir_entry: block \1 runs past its SRAM bank"
+	DEF savedir_next += 1
+	DEF savedir_end = (\3) + (\4)
+	ld hl, sSaveBlockDirectory + (\1) * SAVEDIR_ENTRY_SIZE + SAVEDIR_BANK
+	ld [hl], \2
+	inc hl
+	ld [hl], LOW(\3)
+	inc hl
+	ld [hl], HIGH(\3)
+	inc hl
+	ld [hl], LOW(\4)
+	inc hl
+	ld [hl], HIGH(\4)
+ENDM
+
 ; rst $00 (JumpTableDispatch, $06c4): jump to entry a of the dw table that
 ; follows, loading the argument, if given, into a first. A site whose index
 ; is already in a has a no-op `ld a, a` there, as if the original's macro

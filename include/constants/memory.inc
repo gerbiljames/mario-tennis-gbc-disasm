@@ -15,6 +15,7 @@ def STACK_TOP equ $d000
 def SRAM_BASE           equ $a000
 def SRAM_BANK_SIZE      equ $2000
 def SAVE_HEADER_CHUNK   equ $200
+def SAVE_HEADER_SIZE    equ 4 * SAVE_HEADER_CHUNK
 def SAVEDIR_ENTRY_SIZE  equ 16
 	const_def
 	const SAVEDIR_VALID  ; $00 1 = in use
@@ -44,6 +45,16 @@ def SAVEBLOCK_BACKUP            equ $1b
 	const SAVEBLOCK_EXHIBITION_BACKUP ; $37
 	const SAVEBLOCK_MINIGAME_RECORDS  ; $38 + story slot; backups at + 3
 def SAVEBLOCK_STAR_GRID         equ $3e ; star-character exhibition victory grid
+; Blocks InitSaveHeader defines but no code writes, as runs filling the rest
+; of each SRAM bank. Banks 3-14 are not on the 32 KiB cart.
+def SAVEBLOCK_UNUSED_BANK0      equ $0c ; $0c-$1a
+def SAVEBLOCK_UNUSED_BANK1      equ $26 ; $26-$35
+def SAVEBLOCK_UNUSED_BANK2      equ $3f ; $3f-$49
+def SAVEBLOCK_UNUSED_BANK3      equ $4a ; $4a-$57
+def SAVEBLOCK_UNUSED_BANK4      equ $58 ; $58-$61
+def SAVEBLOCK_UNUSED_BANK5      equ $62 ; $62-$67
+def SAVEBLOCK_UNUSED_BANK6      equ $68 ; $68-$70, one whole-bank block each for banks 6-14
+def NUM_SAVEBLOCKS              equ $71
 
 ; One VRAM bank: the three tile blocks and both maps.
 def VRAM_SIZE equ $2000
