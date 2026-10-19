@@ -17,7 +17,7 @@ NetGameMatch1Hook_PerFrame:
 NetGameMatch1Hook_PointStart:
 	xor a ; $5401
 	ld [wDrillAbortCountdownActive], a ; $5402
-	ld a, $0a ; $5405
+	ld a, DRILL_ABORT_FRAMES ; $5405
 	ld [wDrillAbortCountdown], a ; $5407
 	ld hl, NetGameMatch1DrillOpponent ; $540a
 	call LoadDrillOpponentBySide ; $540d
@@ -105,24 +105,24 @@ NetGameMatch1DecideWinner:
 	ld [wPointWinLoseFlag], a ; $54cf
 	ret ; $54d2
 NetGameMatch1JudgeOnPointEnd:
-	ld a, $00 ; $54d3
+	ld a, JUDGEEVENT_POINT_END ; $54d3
 	call NetGameMatch1JudgePoint ; $54d5
 	ld [wDrillPointJudgement], a ; $54d8
 	ret ; $54db
 NetGameMatch1JudgeOnBallHit:
-	ld a, $01 ; $54dc
+	ld a, JUDGEEVENT_BALL_HIT ; $54dc
 	call NetGameMatch1JudgePoint ; $54de
 	ld [wDrillPointJudgement], a ; $54e1
 	ret ; $54e4
 NetGameMatch1JudgeOnBounce:
 	ret ; $54e5
-	ld a, $02 ; $54e6
+	ld a, JUDGEEVENT_BOUNCE ; $54e6
 	call NetGameMatch1JudgePoint ; $54e8
 	ld [wDrillPointJudgement], a ; $54eb
 	ret ; $54ee
 NetGameMatch1JudgeOnRallyTick:
 	ret ; $54ef
-	ld a, $03 ; $54f0
+	ld a, JUDGEEVENT_RALLY_TICK ; $54f0
 	call NetGameMatch1JudgePoint ; $54f2
 	ld [wDrillPointJudgement], a ; $54f5
 	ret ; $54f8
@@ -331,7 +331,7 @@ NetGameMatch2Hook_PerFrame:
 NetGameMatch2Hook_PointStart:
 	xor a ; $5668
 	ld [wDrillAbortCountdownActive], a ; $5669
-	ld a, $0a ; $566c
+	ld a, DRILL_ABORT_FRAMES ; $566c
 	ld [wDrillAbortCountdown], a ; $566e
 	ld hl, NetGameMatch2DrillOpponent ; $5671
 	call LoadDrillOpponentBySide ; $5674
@@ -385,7 +385,7 @@ NetGameMatch2Hook_PointEnd:
 	ret ; $56cc
 .checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $56cd
-	cp $08 ; $56d0
+	cp DRILL_MATCH_POINTS ; $56d0
 	ret nz ; $56d2
 	ld a, WINLOSE_NONE ; $56d3
 	ld [wPointWinLoseFlag], a ; $56d5
@@ -429,24 +429,24 @@ NetGameMatch2HandlePointEnd:
 	ret ; $5723
 	twin_named net_game_match1_award_point_to_side, NetGameMatch2AwardPointToSide ; $5724
 NetGameMatch2JudgeOnPointEnd:
-	ld a, $00 ; $574d
+	ld a, JUDGEEVENT_POINT_END ; $574d
 	call NetGameMatch2JudgePoint ; $574f
 	ld [wDrillPointJudgement], a ; $5752
 	ret ; $5755
 NetGameMatch2JudgeOnBallHit:
-	ld a, $01 ; $5756
+	ld a, JUDGEEVENT_BALL_HIT ; $5756
 	call NetGameMatch2JudgePoint ; $5758
 	ld [wDrillPointJudgement], a ; $575b
 	ret ; $575e
 NetGameMatch2JudgeOnBounce:
 	ret ; $575f
-	ld a, $02 ; $5760
+	ld a, JUDGEEVENT_BOUNCE ; $5760
 	call NetGameMatch2JudgePoint ; $5762
 	ld [wDrillPointJudgement], a ; $5765
 	ret ; $5768
 NetGameMatch2JudgeOnRallyTick:
 	ret ; $5769
-	ld a, $03 ; $576a
+	ld a, JUDGEEVENT_RALLY_TICK ; $576a
 	call NetGameMatch2JudgePoint ; $576c
 	ld [wDrillPointJudgement], a ; $576f
 	ret ; $5772
@@ -656,7 +656,7 @@ NetGameMatch3Hook_PerFrame:
 NetGameMatch3Hook_PointStart:
 	xor a ; $58e3
 	ld [wDrillAbortCountdownActive], a ; $58e4
-	ld a, $0a ; $58e7
+	ld a, DRILL_ABORT_FRAMES ; $58e7
 	ld [wDrillAbortCountdown], a ; $58e9
 	ASSERT DRILLMSG_NONE == 0
 	xor a ; $58ec
@@ -705,7 +705,7 @@ NetGameMatch3Hook_PointEnd:
 	ret ; $593f
 .checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5940
-	cp $08 ; $5943
+	cp DRILL_MATCH_POINTS ; $5943
 	ret c ; $5945
 	ld a, WINLOSE_NONE ; $5946
 	ld [wPointWinLoseFlag], a ; $5948

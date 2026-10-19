@@ -72,13 +72,48 @@ def AISHOT_NEUTRAL             equ $30 ; A+B, a smash when the ball is in range
 
 ; --- Winning-shot type (wPointWinnerShotType) ---
 ; Set by the Record*Stat functions; the winner court banner is
-; ShowCourtBanner(value + $17) -> banner ids 24-28.
+; ShowCourtBanner(value + $17) -> BANNER_SERVICE_ACE..BANNER_DROP_SHOT.
 	const_def $01
 	const POINTWINNER_SERVICE_ACE ; $01
 	const POINTWINNER_RETURN_ACE  ; $02
 	const POINTWINNER_SMASH_ACE   ; $03
 	const POINTWINNER_LOB         ; $04
 	const POINTWINNER_DROP_SHOT   ; $05
+
+; --- Court banners (ShowCourtBanner / SpawnCourtBannerObj argument) ---
+; Both a VramTileset_09 record (the word art) and a CourtBannerObjTemplates_09
+; record. The point-outcome banners share POINTOUTCOME_* values, and the
+; winning-shot banners follow POINTWINNER_* order.
+def BANNER_CHANGE_ENDS     equ $00
+def BANNER_FAULT           equ POINTOUTCOME_FAULT
+def BANNER_DOUBLE_FAULT    equ POINTOUTCOME_DOUBLE_FAULT
+def BANNER_LET             equ POINTOUTCOME_LET
+def BANNER_NET             equ POINTOUTCOME_NET
+def BANNER_OUT             equ POINTOUTCOME_OUT
+	const_def $07
+	const BANNER_BREAK_POINT     ; $07 the receiver holds game point
+	const BANNER_GAME_POINT      ; $08 the server holds it
+	const BANNER_SET_POINT       ; $09
+	const BANNER_MATCH_POINT     ; $0a
+	const BANNER_GAME            ; $0b game won
+	const BANNER_SET             ; $0c
+	const BANNER_MATCH           ; $0d
+	const BANNER_POWER_SERVE     ; $0e wSpecialShotFlag on the serve
+	const BANNER_TIEBREAK        ; $0f
+	const BANNER_START           ; $10 end of the minigame countdown
+	const BANNER_COUNTDOWN_DIGIT ; $11 SpawnCourtBannerObj only: the digit tiles come from LoadScoreDigitGfx
+	const BANNER_LEVEL_1_CLEARED ; $12 + wMinigameLevel
+	const BANNER_LEVEL_2_CLEARED ; $13
+	const BANNER_LEVEL_3_CLEARED ; $14
+	const BANNER_LEVEL_4_CLEARED ; $15
+	const BANNER_HIGH_SCORE      ; $16
+	const BANNER_GAME_OVER       ; $17
+	const BANNER_SERVICE_ACE     ; $18 + wPointWinnerShotType - POINTWINNER_SERVICE_ACE
+	const BANNER_RETURN_ACE      ; $19
+	const BANNER_SMASH_ACE       ; $1a
+	const BANNER_LOB             ; $1b
+	const BANNER_DROP_SHOT       ; $1c
+	ASSERT BANNER_DROP_SHOT - BANNER_SERVICE_ACE == POINTWINNER_DROP_SHOT - POINTWINNER_SERVICE_ACE
 
 ; --- Court ids (wCurrentlyUsedCourt) ---
 ; Read only by LoadCourtSceneData, which takes row (id * 4) of the 25-row

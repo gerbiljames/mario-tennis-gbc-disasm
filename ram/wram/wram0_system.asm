@@ -244,7 +244,7 @@ wStoryScriptRan:: db
 wUnusedStoryScriptId:: db
 	ds 4
 
-; [8-bit] Frames left before a drill point gives up: UpdateDrillAbortCountdown decrements it while wDrillAbortCountdownActive is set and wPointOutcome is 0, setting wMatchAbortFlag at 0. Point start loads $0a
+; [8-bit] Frames left before a drill point gives up: UpdateDrillAbortCountdown decrements it while wDrillAbortCountdownActive is set and wPointOutcome is 0, setting wMatchAbortFlag at 0. Point start loads DRILL_ABORT_FRAMES
 wDrillAbortCountdown:: db
 
 ; [8-bit] Nonzero enables wDrillAbortCountdown; cleared at point start, set once the drill waits for the point-ending shot
@@ -253,7 +253,7 @@ wDrillAbortCountdownActive:: db
 ; [8-bit] Cleared by ServiceMatch2Hook_PointStart and read by nothing
 wUnusedDrillPointStartByte:: db
 
-; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (0 = passed, 1 = no points won, 2 = double fault, 3 = target missed, 4+ = partial, offset by wStoryMainLeftHanded). The bank $15 training-court coaches pick their follow-up dialogue on it
+; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (LESSON_*: LESSON_PASSED, else a per-coach, per-lesson reason). The bank $15 training-court coaches pick their follow-up dialogue on it
 wDrillLessonResult:: db
 
 ; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneHit when the ball bounced inside the target zone; CountDrillResultBitsSet and CheckDrillTargetZoneMissed read it back
@@ -424,7 +424,7 @@ wExpBonusPending:: db
 wExpBonusAmount:: dw
 	ds 4
 
-; [8-bit] Minigame level - 1 (0x00-0x03)
+; [8-bit] Minigame level - 1 (0x00-0x03); MINIGAMELEVEL_HIGH_SCORE is a Mario minigame's high-score level
 wMinigameLevel:: db
 	ds 9
 

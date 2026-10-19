@@ -22,7 +22,7 @@ NetGamePractice3Hook_PerFrame:
 NetGamePractice3Hook_PointStart:
 	xor a ; $618a
 	ld [wDrillAbortCountdownActive], a ; $618b
-	ld a, $0a ; $618e
+	ld a, DRILL_ABORT_FRAMES ; $618e
 	ld [wDrillAbortCountdown], a ; $6190
 	ld a, $01 ; $6193
 	ld [wTargetZoneEnabled], a ; $6195
@@ -50,51 +50,52 @@ NetGamePractice3Hook_PointEnd:
 .handlePointEnd:
 	call NetGamePractice3HandlePointEnd ; $61c0
 	ld a, [wTotalPointsScoredInCurrentGame] ; $61c3
-	cp $04 ; $61c6
+	cp DRILL_LESSON_POINTS ; $61c6
 	ret c ; $61c8
 	call NetGamePractice3EvaluateResult ; $61c9
 	ld [wPointWinLoseFlag], a ; $61cc
 	ret ; $61cf
 NetGamePractice3EvaluateResult:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $61d0
-	cp $04 ; $61d3
+	cp DRILL_LESSON_POINTS ; $61d3
 	jr nz, .checkCharacter1DoubleFaults ; $61d5
+	ASSERT LESSON_PASSED == 0
 	xor a ; $61d7
 	ld [wDrillLessonResult], a ; $61d8
 	ld a, $01 ; $61db
 	ret ; $61dd
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $61de
-	cp $04 ; $61e1
+	cp DRILL_LESSON_POINTS ; $61e1
 	jr nz, .compare ; $61e3
-	ld a, $01 ; $61e5
+	ld a, LESSON_NET_ALL_FAULTS ; $61e5
 	ld [wDrillLessonResult], a ; $61e7
 	jr .notFound ; $61ea
 .compare:
 	or a ; $61ec
 	jr z, .noDoubleFaults ; $61ed
-	ld a, $02 ; $61ef
+	ld a, LESSON_NET_DOUBLE_FAULT ; $61ef
 	ld [wDrillLessonResult], a ; $61f1
 	jr .notFound ; $61f4
 .noDoubleFaults:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $61f6
-	cp $03 ; $61f9
+	cp DRILL_LESSON_POINTS - 1 ; $61f9
 	jr nz, .countDrillResultBitsSet ; $61fb
-	ld a, $07 ; $61fd
+	ld a, LESSON_DROP_ALMOST ; $61fd
 	ld [wDrillLessonResult], a ; $61ff
 	jr .notFound ; $6202
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $6204
 	or a ; $6207
 	jr z, .checkCounter5 ; $6208
-	ld a, $03 ; $620a
+	ld a, LESSON_DROP_SERVE_SHALLOW ; $620a
 	ld [wDrillLessonResult], a ; $620c
 	jr .notFound ; $620f
 .checkCounter5:
 	ld a, [wDrillCounters + DRILLCTR_SHOTS_LEFT] ; $6211
 	or a ; $6214
 	jr nz, .checkCounter4Range ; $6215
-	ld a, $06 ; $6217
+	ld a, LESSON_DROP_MISSED ; $6217
 	ld [wDrillLessonResult], a ; $6219
 	jr .notFound ; $621c
 .checkCounter4Range:
@@ -103,11 +104,11 @@ NetGamePractice3EvaluateResult:
 	jr c, .result4 ; $6223
 	cp $03 ; $6225
 	jr nc, .result4 ; $6227
-	ld a, $05 ; $6229
+	ld a, LESSON_DROP_TIMING ; $6229
 	ld [wDrillLessonResult], a ; $622b
 	jr .notFound ; $622e
 .result4:
-	ld a, $04 ; $6230
+	ld a, LESSON_DROP_NOT_ALL_SIDES ; $6230
 	ld [wDrillLessonResult], a ; $6232
 	jr .notFound ; $6235
 .notFound:
@@ -137,23 +138,23 @@ NetGamePractice3PointStartDrillPositions:
 	db $ff, $ff ; end
 	twin_named net_game_practice1_handle_point_end, NetGamePractice3HandlePointEnd ; $6272
 NetGamePractice3JudgeOnPointEnd:
-	ld a, $00 ; $62c1
+	ld a, JUDGEEVENT_POINT_END ; $62c1
 	call NetGamePractice3JudgePoint ; $62c3
 	ld [wDrillPointJudgement], a ; $62c6
 	ret ; $62c9
 NetGamePractice3JudgeOnBallHit:
-	ld a, $01 ; $62ca
+	ld a, JUDGEEVENT_BALL_HIT ; $62ca
 	call NetGamePractice3JudgePoint ; $62cc
 	ld [wDrillPointJudgement], a ; $62cf
 	ret ; $62d2
 NetGamePractice3JudgeOnBounce:
-	ld a, $02 ; $62d3
+	ld a, JUDGEEVENT_BOUNCE ; $62d3
 	call NetGamePractice3JudgePoint ; $62d5
 	ld [wDrillPointJudgement], a ; $62d8
 	ret ; $62db
 NetGamePractice3JudgeOnRallyTick:
 	ret ; $62dc
-	ld a, $03 ; $62dd
+	ld a, JUDGEEVENT_RALLY_TICK ; $62dd
 	call NetGamePractice3JudgePoint ; $62df
 	ld [wDrillPointJudgement], a ; $62e2
 	ret ; $62e5
@@ -322,7 +323,7 @@ StrokeMatch1Hooks:
 	dw StrokeMatch1Hook_RallyTick ; record 6
 	dw RetStub ; record 7
 StrokeMatch1Hook_MinigameStart:
-	ld a, $05 ; $6420
+	ld a, SCOREBOARD_POINT_PIPS ; $6420
 	ld [wScoreboardLayout], a ; $6422
 	ret ; $6425
 StrokeMatch1Hook_PerFrame:
@@ -331,7 +332,7 @@ StrokeMatch1Hook_PerFrame:
 StrokeMatch1Hook_PointStart:
 	xor a ; $642a
 	ld [wDrillAbortCountdownActive], a ; $642b
-	ld a, $0a ; $642e
+	ld a, DRILL_ABORT_FRAMES ; $642e
 	ld [wDrillAbortCountdown], a ; $6430
 	ASSERT DRILLMSG_NONE == 0
 	xor a ; $6433
@@ -369,7 +370,7 @@ StrokeMatch1Hook_PointEnd:
 	ret ; $646c
 .checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $646d
-	cp $08 ; $6470
+	cp DRILL_MATCH_POINTS ; $6470
 	ret nz ; $6472
 	ASSERT WINLOSE_NONE == 0
 	xor a ; $6473
@@ -433,23 +434,23 @@ StrokeMatch1AwardPointToSide:
 	inc [hl] ; $64de
 	ret ; $64df
 StrokeMatch1JudgeOnPointEnd:
-	ld a, $00 ; $64e0
+	ld a, JUDGEEVENT_POINT_END ; $64e0
 	call StrokeMatch1JudgePoint ; $64e2
 	ld [wDrillPointJudgement], a ; $64e5
 	ret ; $64e8
 StrokeMatch1JudgeOnBallHit:
-	ld a, $01 ; $64e9
+	ld a, JUDGEEVENT_BALL_HIT ; $64e9
 	call StrokeMatch1JudgePoint ; $64eb
 	ld [wDrillPointJudgement], a ; $64ee
 	ret ; $64f1
 StrokeMatch1JudgeOnBounce:
-	ld a, $02 ; $64f2
+	ld a, JUDGEEVENT_BOUNCE ; $64f2
 	call StrokeMatch1JudgePoint ; $64f4
 	ld [wDrillPointJudgement], a ; $64f7
 	ret ; $64fa
 StrokeMatch1JudgeOnRallyTick:
 	ret ; $64fb
-	ld a, $03 ; $64fc
+	ld a, JUDGEEVENT_RALLY_TICK ; $64fc
 	call StrokeMatch1JudgePoint ; $64fe
 	ld [wDrillPointJudgement], a ; $6501
 	ret ; $6504

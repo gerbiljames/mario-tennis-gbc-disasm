@@ -3,7 +3,7 @@
 {TWIN_LABEL}:
 	xor a
 	ld [wDrillAbortCountdownActive], a
-	ld a, $0a
+	ld a, DRILL_ABORT_FRAMES
 	ld [wDrillAbortCountdown], a
 	ASSERT DRILLMSG_NONE == 0
 	xor a

@@ -152,7 +152,7 @@ wPointWinLoseFlag:: db
 ; [8-bit] Total Games Won In Match
 wTotalGamesWonInMatch:: db
 
-; [8-bit] Total Points Scored In Current Game
+; [8-bit] Total Points Scored In Current Game; a drill ends at DRILL_LESSON_POINTS or DRILL_MATCH_POINTS
 wTotalPointsScoredInCurrentGame:: db
 
 ; [8-bit] 1 after a first-serve fault (the next fault is a double fault, point outcome 2); cleared on double fault and at match reset

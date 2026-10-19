@@ -225,7 +225,7 @@ wMatchFramesAbort:: db
 ; [8-bit] hLinkState when RunMatchPlayLoop returned, taken before EndLinkSession. Write-only
 wMatchEndLinkState:: db
 
-; [8-bit] Scoreboard layout/caption style, 0-7, chosen by SelectScoreboardLayout from wOnCourtCharCount (singles/doubles) or, for minigames ($c8f5 == 2), from $c7ba/$c7bb as 3/4/7. Jumptable index for DrawScoreboardCaption and DrawScoreboard, table index elsewhere in bank $06; bank $09's serve-indicator spawner checks it against 3
+; [8-bit] Scoreboard layout/caption style (SCOREBOARD_*), chosen by SelectScoreboardLayout. Jumptable index for DrawScoreboardCaption and DrawScoreboard, table index elsewhere in bank $06; bank $09's serve-indicator spawner checks it against SCOREBOARD_LESSON
 wScoreboardLayout:: db
 	ds 11
 

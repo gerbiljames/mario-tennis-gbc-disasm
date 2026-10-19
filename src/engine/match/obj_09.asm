@@ -115,7 +115,7 @@ SpawnGameScoreDisplayObjs:
 	wram_bank WRAM_ACTORS ; $412a
 	call ClearAllObjSlots ; $4130
 	ld a, [wScoreboardLayout] ; $4133
-	cp $03 ; $4136
+	cp SCOREBOARD_LESSON ; $4136
 	jr z, .doubles ; $4138
 	ld a, [wCurrentServingPlayer] ; $413a
 	cpl ; $413d
@@ -206,7 +206,7 @@ SpawnServeIndicatorObjs:
 	call GetPlayer1ServeIndicatorSprites ; $4254
 	call SetObjSpriteTemplate ; $4257
 	ld a, [wScoreboardLayout] ; $425a
-	cp $03 ; $425d
+	cp SCOREBOARD_LESSON ; $425d
 	jr z, .player2Indicator ; $425f
 	ld a, [wServingCharCourtPos] ; $4261
 	ld hl, ServeIndicatorObjTemplates_09 ; $4264
