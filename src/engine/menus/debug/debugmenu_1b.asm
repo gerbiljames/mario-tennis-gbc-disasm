@@ -177,9 +177,9 @@ Unused_1b_LoadUnlockDebugScreenGfx:
 Unused_1b_LoadUnlockDebugNavGridGfx:
 	ret ; $664a
 	ld hl, UnlockDebugNavGridTable ; $664b
-	ld de, $d000 ; $664e
+	ld de, wDecompBuffer ; $664e
 	call DecompressData ; $6651
-	ld hl, $d000 ; $6654
+	ld hl, wDecompBuffer ; $6654
 	ld de, vTiles0 tile $50 ; $6657
 	ld c, 40 ; $665a
 	call QueueVRAMCopy ; $665c

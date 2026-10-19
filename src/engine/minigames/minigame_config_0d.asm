@@ -232,7 +232,7 @@ IsMinigameScoreLimitReached:
 	ld a, [hl+] ; $41f1
 	ld d, [hl] ; $41f2
 	ld e, a ; $41f3
-	ld hl, $d8f1 ; $41f4
+	ld hl, -9999 ; $41f4
 	add hl, de ; $41f7
 	ld a, h ; $41f8
 	or l ; $41f9
@@ -309,10 +309,10 @@ AddToMinigameScore:
 	add hl, de ; $426c
 	ld e, l ; $426d
 	ld d, h ; $426e
-	ld hl, $d8f1 ; $426f
+	ld hl, -9999 ; $426f
 	add hl, de ; $4272
 	jr nc, .store ; $4273
-	ld de, $270f ; $4275
+	ld de, 9999 ; $4275
 .store:
 	ld hl, wMinigamesCurrentScore ; $4278
 	ld a, e ; $427b

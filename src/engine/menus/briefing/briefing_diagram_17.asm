@@ -212,9 +212,9 @@ Unused_17_StubRet:
 	ret ; $4a05
 Unused_17_DrawSecondCaptionRow:
 	ld hl, Text_30_309 ; $4a06
-	ld de, $d1c1 ; $4a09
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4a09
 	farcall RenderProportionalTextAt ; $4a0c
-	ld hl, $d1a0 ; $4a0f
+	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $4a0f
 	ld de, vBGMap0 + 13 * TILEMAP_WIDTH ; $4a12
 	ld c, 6 * TILEMAP_WIDTH / 16 ; $4a15
 	call QueueVRAMCopy ; $4a17

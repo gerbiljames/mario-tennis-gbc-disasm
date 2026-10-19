@@ -432,13 +432,13 @@ LoadStadiumBgGraphics:
 	ld de, wShadowTilemap ; $4c69
 	call DecompressDataFromBank ; $4c6c
 	ld_slot hl, DataPtr_StadiumTilemap ; $4c6f
-	ld de, wScreenScratch ; $4c72
+	ld de, wStadiumTilemapCopy ; $4c72
 	call DecompressDataFromBank ; $4c75
 	ld_slot hl, DataPtr_StadiumAttrmap ; $4c78
 	ld de, wShadowAttrmap ; $4c7b
 	call DecompressDataFromBank ; $4c7e
 	ld_slot hl, DataPtr_StadiumAttrmap ; $4c81
-	ld de, wRulesScreenAnimFrame ; $4c84
+	ld de, wStadiumAttrmapCopy ; $4c84
 	call DecompressDataFromBank ; $4c87
 	wram_bank WRAM_STAGING ; $4c8a
 	ld_slot hl, DataPtr_StadiumPalettes ; $4c90

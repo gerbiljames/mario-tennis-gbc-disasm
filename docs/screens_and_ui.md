@@ -271,7 +271,7 @@ mechanism belongs to the character-data screens only.
 
 The data shapes these consume are macros in `include/macros/`:
 `tilemap_begin`/`tilemap_row`/`tilemap_end`, `rect_pair` (for
-`CopyTextRectPair`, `$06:$5045`), `rect_ptrs`, and `tilemap_copy`/`tilemap_rect`
+`CopyTextRectPair`, `$06:$5045`), `rect_ptrs`, and `result_copy`/`panel_rect`
 (the two `CopyTilemapRect` record formats, driven at `$16:$4a71` and `$39:$4e11`).
 
 Both window-frame implementations (`$00:$2bbb`-`$2bea`, `$05:$6fca`-`$703f`) use

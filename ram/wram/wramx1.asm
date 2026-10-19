@@ -30,4 +30,11 @@ wDecompBuffer:: ds 2048
 ; [2048 bytes] The other half: Unused_1a_DrawStringToTileBuffer renders strings here as tile data (the EXP screen's captions and bonus messages), uploaded like any other graphics
 wTextTileBuffer:: ds 2048
 	export_size wTextTileBuffer
+NEXTU
+; staged screen planes (banks $18/$1b)
+	ds 2048
+; [1024 bytes] A full 32x32 BG tilemap plane the unused confirm and character-select screens build here (labels, boxes, prompts) and queue to vBGMap0
+wStagedTilemap:: ds 1024
+; [1024 bytes] Its attribute plane, queued to vBGMap0 in VRAM bank 1
+wStagedAttrmap:: ds 1024
 ENDU

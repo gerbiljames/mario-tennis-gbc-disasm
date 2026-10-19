@@ -325,7 +325,7 @@ Unused_1a_ShowExpGainScreen:
 	ld a, [hl+] ; $4643
 	ld h, [hl] ; $4644
 	ld l, a ; $4645
-	ld de, $d8f0 ; $4646
+	ld de, -10000 ; $4646
 	add hl, de ; $4649
 	jr nc, .fastFill ; $464a
 	call Unused_1a_AdvanceExpGaugeFill ; $464c

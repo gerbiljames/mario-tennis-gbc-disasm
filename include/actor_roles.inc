@@ -28,3 +28,8 @@
 ; The Island Open between-round lists: B. Coz, drawn with walk sprite 74_06
 ; ("Grrr! I'm Factory's B. Coz...").
 	actor_role ISLAND_OPEN_ROUND_B_COZ, $04, IslandOpenRoundActorsSingles_0f, IslandOpenRoundActorsDoubles_0f
+
+; B. Coz at the Tournament map's slot $0d, in its default
+; list and the doubles round 1 and semifinal lists (the doubles final puts
+; Sean there), under different actor scripts.
+	actor_role ISLAND_OPEN_TOURNAMENT_B_COZ, $0d, TournamentActors_0f, IslandOpenRound1ActorsDoubles_0f, IslandOpenSemifinalActorsDoubles_0f

@@ -90,6 +90,25 @@ STAGE_LISTS = {
     "IslandOpenFinalActorsDoubles_0f": ("wMapSceneStage", {0x03}),
 }
 STAGE_VARS = {v for v, _ in STAGE_LISTS.values()}
+# Lists a script installs on a game flag (never a location's default list,
+# which is active before the flag is tested), with the flag's value (0 clear,
+# 1 set) wherever they are active: a `test_flag FLAG / jr|jp|ret z|nz` keeps,
+# on each side, the lists that agree with it.
+FLAG_LISTS = {
+    "IslandOpenRound2Actors_0f": {"FLAG_DOUBLES": 0, "FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL": 0},
+    "IslandOpenSemifinalActors_0f": {"FLAG_DOUBLES": 0, "FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL": 0},
+    "IslandOpenFinalActors_0f": {"FLAG_DOUBLES": 0, "FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL": 1},
+    "IslandOpenRound1ActorsDoubles_0f": {"FLAG_DOUBLES": 1, "FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL": 0},
+    "IslandOpenSemifinalActorsDoubles_0f": {"FLAG_DOUBLES": 1, "FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL": 0},
+    "IslandOpenFinalActorsDoubles_0f": {"FLAG_DOUBLES": 1, "FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL": 1},
+    "SinglesTravelingTeamActors_13": {"FLAG_DOUBLES": 0},
+    "DoublesTravelingTeamActors_13": {"FLAG_DOUBLES": 1},
+    "End10VarsityCourtActorsAlt_27": {"FLAG_DOUBLES": 0},
+    "End10VarsityCourtActorsAltB_27": {"FLAG_DOUBLES": 1},
+    "End16BeforeFinalsActorsAlt_27": {"FLAG_DOUBLES": 0},
+    "End16BeforeFinalsActorsAltB_27": {"FLAG_DOUBLES": 1},
+    "End17AwardCeremonyActorsAlt_27": {"FLAG_DOUBLES": 1},
+}
 # A tile trigger whose cell is not in the map's own behaviour data runs only
 # under the lists installed by the routine that writes the cell:
 # LoadIslandOpenRoundNpcs writes trigger $0f for singles, $0e for doubles.
@@ -107,6 +126,9 @@ def constants():
 
 def stage_filter(st, var, ok):
     """Keep the states whose list is not bound to var's stage, or has a stage ok() accepts."""
+    if var.startswith("FLAG_"):
+        return frozenset(x for x in st if var not in FLAG_LISTS.get(x[0], {})
+                         or ok(FLAG_LISTS[x[0]][var]))
     return frozenset(x for x in st if STAGE_LISTS.get(x[0], (None,))[0] != var
                      or any(ok(v) for v in STAGE_LISTS[x[0]][1]))
 DATA = re.compile(r"\t(db|dw|dn|ds|map_(?!cell\b)\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|"
@@ -269,6 +291,13 @@ class Flow:
         m = re.match(r"(?:jr|jp|ret) (nz|z|nc|c)\b", code)
         if not m:
             return None
+        k = i - 1
+        while k >= 0 and not L[k].split(";")[0].strip():
+            k -= 1
+        f = re.match(r"test_flag (FLAG_\w+)$", L[k].split(";")[0].strip()) if k >= 0 else None
+        if f and m.group(1) in ("z", "nz"):
+            # test_flag sets Z when the flag is clear
+            return (m.group(1), 0, f.group(1))
         k, cmp = i - 1, None
         while k >= 0:
             c = L[k].split(";")[0].strip()

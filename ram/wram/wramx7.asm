@@ -75,7 +75,8 @@ UNION
 wGlyphTileBuffer:: ds 2048
 NEXTU
 ; save-block staging (bank $03)
-	ds 384
+; [384 bytes] The region bank $03's debug save editor hex-dumps, wipes and edits (see above)
+wSaveEditorBlock:: ds 384
 ; [32 bytes] Image of a minigame-record save block ($38 + story slot): 16 16-bit records by record id. ReadMinigameRecord zeroes it, reads the block over it and returns record b in wMinigameRecordValue; UpdateMinigameRecord does the reverse and verifies the block
 wMinigameRecordBlock:: ds 32
 	ds 96

@@ -396,3 +396,11 @@ def wProgressEntryEarned equ $df40
 ; [48 bytes] The entry ids to draw, in order, $ff-filled past wProgressVisibleCount
 ; in WRAM banks $05
 def wProgressVisibleEntries equ $df70
+
+; [1024 bytes] Second copy of the decompressed stadium tilemap that the bank $39 menus keep beside wShadowTilemap: RestoreMenuBgAndDrawPanel restores the 20 x 16 background from its top rows and copies panel art out of rows 16-31 (panel_rect). Overlays the bank's screen-scratch unions.
+; in WRAM banks $03
+def wStadiumTilemapCopy equ $d800
+
+; [1024 bytes] The matching copy of the stadium attribute map, the source of the attribute half of every panel_rect.
+; in WRAM banks $03
+def wStadiumAttrmapCopy equ $dc00

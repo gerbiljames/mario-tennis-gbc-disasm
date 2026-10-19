@@ -76,14 +76,14 @@ Unused_16_BuildMatchResultTilemap:
 	ld a, [wCurrentMinigameStoryMatch] ; $4a99
 	cp MATCHLIST_DOUBLES ; $4a9c
 	jr nz, .singles ; $4a9e
-	ld hl, $d3c7 ; $4aa0
-	ld de, $d200 ; $4aa3
+	ld hl, wShadowTilemap + 30 * TILEMAP_WIDTH + 7 ; $4aa0
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH ; $4aa3
 	rect_size $06, $02 ; $4aa6
 	farcall CopyTilemapRect ; $4aaa
 	jr .done ; $4aad
 .singles:
-	ld hl, $d3c0 ; $4aaf
-	ld de, $d200 ; $4ab2
+	ld hl, wShadowTilemap + 30 * TILEMAP_WIDTH ; $4aaf
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH ; $4ab2
 	rect_size $07, $02 ; $4ab5
 	farcall CopyTilemapRect ; $4ab9
 .done:
@@ -111,112 +111,112 @@ MatchResultTilemapScripts_16:
 	dw .script18 ; 18
 	dw .script19 ; 19
 .script0:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2ca, 9
-	tilemap_copy $d20a, $d3cd, 9
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 10, 22, 9
+	result_copy 10, 16, 13, 30, 9
 	tilemap_copy_end
 .script1:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2ca, 9
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d393, 4
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 10, 22, 9
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 19, 28, 4
 	tilemap_copy_end
 .script2:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2ca, 9
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d38f, 4
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 10, 22, 9
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 15, 28, 4
 	tilemap_copy_end
 .script3:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2ca, 9
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d38b, 4
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 10, 22, 9
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 11, 28, 4
 	tilemap_copy_end
 .script4:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2ca, 9
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d388, 3
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 10, 22, 9
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 8, 28, 3
 	tilemap_copy_end
 .script5:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2d3, 8
-	tilemap_copy $d20a, $d3cd, 9
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 19, 22, 8
+	result_copy 10, 16, 13, 30, 9
 	tilemap_copy_end
 .script6:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2d3, 8
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d393, 4
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 19, 22, 8
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 19, 28, 4
 	tilemap_copy_end
 .script7:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2d3, 8
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d38f, 4
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 19, 22, 8
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 15, 28, 4
 	tilemap_copy_end
 .script8:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2d3, 8
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d38b, 4
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 19, 22, 8
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 11, 28, 4
 	tilemap_copy_end
 .script9:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00b, $d2d3, 8
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d388, 3
+	result_copy 0, 0, 0, 22, 10
+	result_copy 11, 0, 19, 22, 8
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 8, 28, 3
 	tilemap_copy_end
 .script10:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00a, $d300, 10
-	tilemap_copy $d20a, $d3cd, 9
+	result_copy 0, 0, 0, 22, 10
+	result_copy 10, 0, 0, 24, 10
+	result_copy 10, 16, 13, 30, 9
 	tilemap_copy_end
 .script11:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00a, $d300, 10
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d393, 4
+	result_copy 0, 0, 0, 22, 10
+	result_copy 10, 0, 0, 24, 10
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 19, 28, 4
 	tilemap_copy_end
 .script12:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00a, $d300, 10
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d38f, 4
+	result_copy 0, 0, 0, 22, 10
+	result_copy 10, 0, 0, 24, 10
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 15, 28, 4
 	tilemap_copy_end
 .script13:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00a, $d300, 10
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d38b, 4
+	result_copy 0, 0, 0, 22, 10
+	result_copy 10, 0, 0, 24, 10
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 11, 28, 4
 	tilemap_copy_end
 .script14:
-	tilemap_copy $d000, $d2c0, 10
-	tilemap_copy $d00a, $d300, 10
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d210, $d388, 3
+	result_copy 0, 0, 0, 22, 10
+	result_copy 10, 0, 0, 24, 10
+	result_copy 9, 16, 0, 28, 7
+	result_copy 16, 16, 8, 28, 3
 	tilemap_copy_end
 .script15:
-	tilemap_copy $d000, $d280, 20
-	tilemap_copy $d20a, $d3cd, 9
+	result_copy 0, 0, 0, 20, 20
+	result_copy 10, 16, 13, 30, 9
 	tilemap_copy_end
 .script16:
-	tilemap_copy $d000, $d280, 20
-	tilemap_copy $d20a, $d340, 7
+	result_copy 0, 0, 0, 20, 20
+	result_copy 10, 16, 0, 26, 7
 	tilemap_copy_end
 .script17:
-	tilemap_copy $d000, $d280, 20
-	tilemap_copy $d209, $d380, 7
-	tilemap_copy $d20a, $d347, 8
+	result_copy 0, 0, 0, 20, 20
+	result_copy 9, 16, 0, 28, 7
+	result_copy 10, 16, 7, 26, 8
 	tilemap_copy_end
 .script18:
-	tilemap_copy $d000, $d280, 20
-	tilemap_copy $d209, $d34f, 10
+	result_copy 0, 0, 0, 20, 20
+	result_copy 9, 16, 15, 26, 10
 	tilemap_copy_end
 .script19:
-	tilemap_copy $d000, $d280, 20
-	tilemap_copy $d20c, $d359, 7
+	result_copy 0, 0, 0, 20, 20
+	result_copy 12, 16, 25, 26, 7
 	tilemap_copy_end
 AdvanceResultScreenTimer:
 	ld a, [wMatchWinLoseFlag] ; $4c9d
