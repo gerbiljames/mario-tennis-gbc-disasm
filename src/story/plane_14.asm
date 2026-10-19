@@ -42,7 +42,7 @@ LoadPlaneObjGfx_14:
 QueuePlaneSpriteByHeight_14:
 	call GetSceneObjectScreenPos_14 ; $5e9c
 	ld b, $00 ; $5e9f
-	ld a, [wMapSceneStage2] ; $5ea1
+	ld a, [wCutscenePlaneY] ; $5ea1
 	sub $88 ; $5ea4
 	cp $0a ; $5ea6
 	jr c, .queueSpriteTemplate ; $5ea8
@@ -328,9 +328,9 @@ IslandSkyEntry02Scene:
 	call LoadPlaneObjGfx2_14 ; $6291
 	call EnableLCD ; $6294
 	ld a, $20 ; $6297
-	ld [wMapSceneStage], a ; $6299
+	ld [wCutscenePlaneX], a ; $6299
 	ld a, $28 ; $629c
-	ld [wMapSceneStage2], a ; $629e
+	ld [wCutscenePlaneY], a ; $629e
 	ld a, $00 ; $62a1
 	ld [wCutsceneObjX], a ; $62a3
 	frame_task QueuePlaneSpriteByFrameCounter_14 ; $62a6
@@ -352,9 +352,9 @@ IslandSkyEntry02Scene:
 .levelFlightLoop:
 	script_wait_frames 6 ; $62f4
 	call PlayPlaneMoveSfx_14 ; $62fb
-	ld a, [wMapSceneStage2] ; $62fe
+	ld a, [wCutscenePlaneY] ; $62fe
 	dec a ; $6301
-	ld [wMapSceneStage2], a ; $6302
+	ld [wCutscenePlaneY], a ; $6302
 	call AdvancePlaneFrameCounter_14 ; $6305
 	dec h ; $6308
 	jr nz, .levelFlightLoop ; $6309
@@ -365,13 +365,13 @@ IslandSkyEntry02Scene:
 	ld a, h ; $6317
 	and $01 ; $6318
 	jr z, .planeArrived ; $631a
-	ld a, [wMapSceneStage] ; $631c
+	ld a, [wCutscenePlaneX] ; $631c
 	inc a ; $631f
-	ld [wMapSceneStage], a ; $6320
+	ld [wCutscenePlaneX], a ; $6320
 .planeArrived:
-	ld a, [wMapSceneStage2] ; $6323
+	ld a, [wCutscenePlaneY] ; $6323
 	dec a ; $6326
-	ld [wMapSceneStage2], a ; $6327
+	ld [wCutscenePlaneY], a ; $6327
 	call AdvancePlaneFrameCounter_14 ; $632a
 	dec h ; $632d
 	jr nz, .shallowFlightLoop ; $632e
@@ -379,12 +379,12 @@ IslandSkyEntry02Scene:
 .descend:
 	script_wait_frames 4 ; $6332
 	call PlayPlaneMoveSfx_14 ; $6339
-	ld a, [wMapSceneStage] ; $633c
+	ld a, [wCutscenePlaneX] ; $633c
 	inc a ; $633f
-	ld [wMapSceneStage], a ; $6340
-	ld a, [wMapSceneStage2] ; $6343
+	ld [wCutscenePlaneX], a ; $6340
+	ld a, [wCutscenePlaneY] ; $6343
 	dec a ; $6346
-	ld [wMapSceneStage2], a ; $6347
+	ld [wCutscenePlaneY], a ; $6347
 	call AdvancePlaneFrameCounter_14 ; $634a
 	dec h ; $634d
 	jr nz, .descend ; $634e
@@ -397,13 +397,13 @@ IslandSkyEntry02Scene:
 	ld a, h ; $6369
 	and $01 ; $636a
 	jr z, .disembark ; $636c
-	ld a, [wMapSceneStage] ; $636e
+	ld a, [wCutscenePlaneX] ; $636e
 	inc a ; $6371
-	ld [wMapSceneStage], a ; $6372
+	ld [wCutscenePlaneX], a ; $6372
 .disembark:
-	ld a, [wMapSceneStage2] ; $6375
+	ld a, [wCutscenePlaneY] ; $6375
 	dec a ; $6378
-	ld [wMapSceneStage2], a ; $6379
+	ld [wCutscenePlaneY], a ; $6379
 	call AdvancePlaneFrameCounter_14 ; $637c
 	dec h ; $637f
 	jr nz, .land ; $6380
@@ -412,27 +412,27 @@ IslandSkyEntry02Scene:
 	script_wait_frames 3 ; $6384
 	inc h ; $638b
 	call PlayPlaneMoveSfx_14 ; $638c
-	ld a, [wMapSceneStage2] ; $638f
+	ld a, [wCutscenePlaneY] ; $638f
 	dec a ; $6392
-	ld [wMapSceneStage2], a ; $6393
+	ld [wCutscenePlaneY], a ; $6393
 	and $03 ; $6396
 	cp $03 ; $6398
 	jr nz, .speak ; $639a
-	ld a, [wMapSceneStage] ; $639c
+	ld a, [wCutscenePlaneX] ; $639c
 	inc a ; $639f
-	ld [wMapSceneStage], a ; $63a0
+	ld [wCutscenePlaneX], a ; $63a0
 .speak:
 	call AdvancePlaneFrameCounter_14 ; $63a3
-	ld a, [wMapSceneStage] ; $63a6
+	ld a, [wCutscenePlaneX] ; $63a6
 	cp $50 ; $63a9
 	jr nz, .walkOff ; $63ab
 	ld h, $08 ; $63ad
 .speakDoubles:
 	script_wait_frames 4 ; $63af
 	call PlayPlaneMoveSfx_14 ; $63b6
-	ld a, [wMapSceneStage2] ; $63b9
+	ld a, [wCutscenePlaneY] ; $63b9
 	dec a ; $63bc
-	ld [wMapSceneStage2], a ; $63bd
+	ld [wCutscenePlaneY], a ; $63bd
 	call AdvancePlaneFrameCounter_14 ; $63c0
 	dec h ; $63c3
 	jr nz, .speakDoubles ; $63c4
@@ -440,9 +440,9 @@ IslandSkyEntry02Scene:
 .fadeOut:
 	script_wait_frames 6 ; $63c8
 	call PlayPlaneMoveSfx_14 ; $63cf
-	ld a, [wMapSceneStage2] ; $63d2
+	ld a, [wCutscenePlaneY] ; $63d2
 	dec a ; $63d5
-	ld [wMapSceneStage2], a ; $63d6
+	ld [wCutscenePlaneY], a ; $63d6
 	call AdvancePlaneFrameCounter_14 ; $63d9
 	dec h ; $63dc
 	jr nz, .fadeOut ; $63dd
@@ -450,9 +450,9 @@ IslandSkyEntry02Scene:
 .done:
 	script_wait_frames 8 ; $63e1
 	call PlayPlaneMoveSfx_14 ; $63e8
-	ld a, [wMapSceneStage2] ; $63eb
+	ld a, [wCutscenePlaneY] ; $63eb
 	dec a ; $63ee
-	ld [wMapSceneStage2], a ; $63ef
+	ld [wCutscenePlaneY], a ; $63ef
 	call AdvancePlaneFrameCounter_14 ; $63f2
 	dec h ; $63f5
 	jr nz, .done ; $63f6

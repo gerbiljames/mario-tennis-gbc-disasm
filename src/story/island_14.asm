@@ -115,12 +115,12 @@ QueueDistantPlaneSprite_14:
 GetSceneObjectScreenPos_14:
 	ldh a, [hScrollX] ; $756d
 	ld b, a ; $756f
-	ld a, [wMapSceneStage] ; $7570
+	ld a, [wCutscenePlaneX] ; $7570
 	sub b ; $7573
 	ld d, a ; $7574
 	ldh a, [hScrollY] ; $7575
 	ld b, a ; $7577
-	ld a, [wMapSceneStage2] ; $7578
+	ld a, [wCutscenePlaneY] ; $7578
 	sub b ; $757b
 	ld e, a ; $757c
 	ret ; $757d
@@ -185,20 +185,20 @@ IslandSkyEntry0eScene:
 	ld a, $08 ; $7723
 	ld [wCutsceneObjPhase], a ; $7725
 	ld a, $54 ; $7728
-	ld [wMapSceneStage], a ; $772a
+	ld [wCutscenePlaneX], a ; $772a
 	ld a, $58 ; $772d
-	ld [wMapSceneStage2], a ; $772f
+	ld [wCutscenePlaneY], a ; $772f
 	frame_task QueueDistantPlaneSprite_14 ; $7732
 	ld h, $4b ; $773a
 .fadeIn:
 	script_wait_frames 2 ; $773c
 	call PlayPlaneMoveSfx_14 ; $7743
-	ld a, [wMapSceneStage2] ; $7746
+	ld a, [wCutscenePlaneY] ; $7746
 	inc a ; $7749
-	ld [wMapSceneStage2], a ; $774a
-	ld a, [wMapSceneStage] ; $774d
+	ld [wCutscenePlaneY], a ; $774a
+	ld a, [wCutscenePlaneX] ; $774d
 	inc a ; $7750
-	ld [wMapSceneStage], a ; $7751
+	ld [wCutscenePlaneX], a ; $7751
 	ld a, h ; $7754
 	cp $2d ; $7755
 	jr nz, .fireworkLoop ; $7757
@@ -219,9 +219,9 @@ IslandSkyEntry0eScene:
 	jr nz, .burst ; $7784
 	call LoadPlaneObjGfx2_14 ; $7786
 	ld a, $a4 ; $7789
-	ld [wMapSceneStage], a ; $778b
+	ld [wCutscenePlaneX], a ; $778b
 	ld a, $c6 ; $778e
-	ld [wMapSceneStage2], a ; $7790
+	ld [wCutscenePlaneY], a ; $7790
 	ld a, $3c ; $7793
 	ld [wCutsceneObjX], a ; $7795
 	frame_task QueuePlaneSpriteByFrameCounter_14 ; $7798
@@ -229,15 +229,15 @@ IslandSkyEntry0eScene:
 .nextBurst:
 	script_wait_frames 2 ; $77a2
 	call PlayPlaneMoveSfx_14 ; $77a9
-	ld a, [wMapSceneStage] ; $77ac
+	ld a, [wCutscenePlaneX] ; $77ac
 	dec a ; $77af
-	ld [wMapSceneStage], a ; $77b0
+	ld [wCutscenePlaneX], a ; $77b0
 	and $03 ; $77b3
 	cp $03 ; $77b5
 	jr nz, .finale ; $77b7
-	ld a, [wMapSceneStage2] ; $77b9
+	ld a, [wCutscenePlaneY] ; $77b9
 	dec a ; $77bc
-	ld [wMapSceneStage2], a ; $77bd
+	ld [wCutscenePlaneY], a ; $77bd
 .finale:
 	call AdvancePlaneFrameCounter2_14 ; $77c0
 	dec h ; $77c3
@@ -246,14 +246,14 @@ IslandSkyEntry0eScene:
 .finaleLoop:
 	script_wait_frames 2 ; $77c8
 	call PlayPlaneMoveSfx_14 ; $77cf
-	ld a, [wMapSceneStage] ; $77d2
+	ld a, [wCutscenePlaneX] ; $77d2
 	dec a ; $77d5
-	ld [wMapSceneStage], a ; $77d6
+	ld [wCutscenePlaneX], a ; $77d6
 	and $01 ; $77d9
 	ld b, a ; $77db
-	ld a, [wMapSceneStage2] ; $77dc
+	ld a, [wCutscenePlaneY] ; $77dc
 	sub b ; $77df
-	ld [wMapSceneStage2], a ; $77e0
+	ld [wCutscenePlaneY], a ; $77e0
 	call AdvancePlaneFrameCounter2_14 ; $77e3
 	dec h ; $77e6
 	jr nz, .finaleLoop ; $77e7
@@ -262,12 +262,12 @@ IslandSkyEntry0eScene:
 .speak:
 	script_wait_frames 3 ; $77f5
 	call PlayPlaneMoveSfx_14 ; $77fc
-	ld a, [wMapSceneStage2] ; $77ff
+	ld a, [wCutscenePlaneY] ; $77ff
 	dec a ; $7802
-	ld [wMapSceneStage2], a ; $7803
-	ld a, [wMapSceneStage] ; $7806
+	ld [wCutscenePlaneY], a ; $7803
+	ld a, [wCutscenePlaneX] ; $7806
 	dec a ; $7809
-	ld [wMapSceneStage], a ; $780a
+	ld [wCutscenePlaneX], a ; $780a
 	call AdvancePlaneFrameCounter2_14 ; $780d
 	dec h ; $7810
 	jr nz, .speak ; $7811
@@ -275,14 +275,14 @@ IslandSkyEntry0eScene:
 .fadeOut:
 	script_wait_frames 4 ; $7815
 	call PlayPlaneMoveSfx_14 ; $781c
-	ld a, [wMapSceneStage2] ; $781f
+	ld a, [wCutscenePlaneY] ; $781f
 	dec a ; $7822
-	ld [wMapSceneStage2], a ; $7823
+	ld [wCutscenePlaneY], a ; $7823
 	and $01 ; $7826
 	ld b, a ; $7828
-	ld a, [wMapSceneStage] ; $7829
+	ld a, [wCutscenePlaneX] ; $7829
 	sub b ; $782c
-	ld [wMapSceneStage], a ; $782d
+	ld [wCutscenePlaneX], a ; $782d
 	call AdvancePlaneFrameCounter2_14 ; $7830
 	dec h ; $7833
 	jr nz, .fadeOut ; $7834
@@ -290,9 +290,9 @@ IslandSkyEntry0eScene:
 .done:
 	script_wait_frames 6 ; $7838
 	call PlayPlaneMoveSfx_14 ; $783f
-	ld a, [wMapSceneStage2] ; $7842
+	ld a, [wCutscenePlaneY] ; $7842
 	dec a ; $7845
-	ld [wMapSceneStage2], a ; $7846
+	ld [wCutscenePlaneY], a ; $7846
 	call AdvancePlaneFrameCounter2_14 ; $7849
 	dec h ; $784c
 	jr nz, .done ; $784d

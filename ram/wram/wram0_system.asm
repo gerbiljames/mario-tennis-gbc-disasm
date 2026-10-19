@@ -147,15 +147,21 @@ wStoryModeInteractRequest:: db
 wStoryModeMenuRequest:: db
 	ds 10
 
+UNION
 ; [8-bit] Scene stage of the loaded location, derived from save flags by the map's init script (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, Unused_27_ComputeRankingProgressIndex, ...). NPC scripts index per-stage text-id tables with it. Values are per location. First byte of the $c2b0-$c2bf per-location scratch block
 wMapSceneStage:: db
-
-UNION
 ; [8-bit] Second per-location scene stage, set by map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, ComputeSeniorCourtStage) and read by that location's NPC scripts to pick a text id
 wMapSceneStage2:: db
 NEXTU
+	ds 1
 ; [8-bit] Training Court (bank $15): the actor slot of the challenger a result scene walks on, from TrainingCourtReentryDispatch or the scene itself: $06 Bob (serve), $0c Allie (stroke), $11 Brian (net)
 wChallengerActor:: db
+NEXTU
+; plane cutscenes (bank $14: IslandSkyInitScript_14, IslandSkyEntry02Scene, IslandSkyEntry0eScene, IslandSkyEntry0fAnd0dScene and the plane sprite drawers)
+; [8-bit] World X of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollX
+wCutscenePlaneX:: db
+; [8-bit] World Y of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollY, QueuePlaneSpriteByHeight_14 picks the sprite size from it
+wCutscenePlaneY:: db
 ENDU
 
 ; Per-location scratch, rest of $c2b0-$c2bf. Bank $14's island cutscenes

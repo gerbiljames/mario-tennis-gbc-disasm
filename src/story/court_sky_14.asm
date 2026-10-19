@@ -235,9 +235,9 @@ IslandSkyInitScript_14:
 	call LoadWaterSplashObjGfx_14 ; $530c
 	call EnableLCD ; $530f
 	ld a, $50 ; $5312
-	ld [wMapSceneStage], a ; $5314
+	ld [wCutscenePlaneX], a ; $5314
 	ld a, $88 ; $5317
-	ld [wMapSceneStage2], a ; $5319
+	ld [wCutscenePlaneY], a ; $5319
 	frame_task QueuePlaneSpriteByHeight_14 ; $531c
 	test_flag FLAG_DOUBLES ; $5324
 	jp z, .setPlayerObjDef ; $5327
@@ -272,9 +272,9 @@ IslandSkyInitScript_14:
 	script_fade_in 4 ; $5387
 	call WaitFadeEnd ; $538c
 	ld a, $3b ; $538f
-	ld [wMapSceneStage], a ; $5391
+	ld [wCutscenePlaneX], a ; $5391
 	ld a, $a8 ; $5394
-	ld [wMapSceneStage2], a ; $5396
+	ld [wCutscenePlaneY], a ; $5396
 	jp .afterFlight ; $5399
 .fadeIn:
 	xor a ; $539c
@@ -288,9 +288,9 @@ IslandSkyInitScript_14:
 .levelFlightLoop:
 	script_wait_frames 6 ; $53be
 	call PlayPlaneMoveSfx_14 ; $53c5
-	ld a, [wMapSceneStage2] ; $53c8
+	ld a, [wCutscenePlaneY] ; $53c8
 	inc a ; $53cb
-	ld [wMapSceneStage2], a ; $53cc
+	ld [wCutscenePlaneY], a ; $53cc
 	dec h ; $53cf
 	jr nz, .levelFlightLoop ; $53d0
 	ld h, $08 ; $53d2
@@ -300,25 +300,25 @@ IslandSkyInitScript_14:
 	ld a, h ; $53de
 	and $01 ; $53df
 	jr z, .advanceStage ; $53e1
-	ld a, [wMapSceneStage] ; $53e3
+	ld a, [wCutscenePlaneX] ; $53e3
 	dec a ; $53e6
-	ld [wMapSceneStage], a ; $53e7
+	ld [wCutscenePlaneX], a ; $53e7
 .advanceStage:
-	ld a, [wMapSceneStage2] ; $53ea
+	ld a, [wCutscenePlaneY] ; $53ea
 	inc a ; $53ed
-	ld [wMapSceneStage2], a ; $53ee
+	ld [wCutscenePlaneY], a ; $53ee
 	dec h ; $53f1
 	jr nz, .shallowFlightLoop ; $53f2
 	ld h, $08 ; $53f4
 .checkStage:
 	script_wait_frames 4 ; $53f6
 	call PlayPlaneMoveSfx_14 ; $53fd
-	ld a, [wMapSceneStage] ; $5400
+	ld a, [wCutscenePlaneX] ; $5400
 	dec a ; $5403
-	ld [wMapSceneStage], a ; $5404
-	ld a, [wMapSceneStage2] ; $5407
+	ld [wCutscenePlaneX], a ; $5404
+	ld a, [wCutscenePlaneY] ; $5407
 	inc a ; $540a
-	ld [wMapSceneStage2], a ; $540b
+	ld [wCutscenePlaneY], a ; $540b
 	dec h ; $540e
 	jr nz, .checkStage ; $540f
 	script_player_speed 0.5625 ; $5411
@@ -330,13 +330,13 @@ IslandSkyInitScript_14:
 	ld a, h ; $542a
 	and $01 ; $542b
 	jr z, .landed ; $542d
-	ld a, [wMapSceneStage] ; $542f
+	ld a, [wCutscenePlaneX] ; $542f
 	dec a ; $5432
-	ld [wMapSceneStage], a ; $5433
+	ld [wCutscenePlaneX], a ; $5433
 .landed:
-	ld a, [wMapSceneStage2] ; $5436
+	ld a, [wCutscenePlaneY] ; $5436
 	inc a ; $5439
-	ld [wMapSceneStage2], a ; $543a
+	ld [wCutscenePlaneY], a ; $543a
 	dec h ; $543d
 	jr nz, .descend ; $543e
 .afterFlight:
@@ -345,44 +345,44 @@ IslandSkyInitScript_14:
 	script_wait_frames 3 ; $5442
 	inc h ; $5449
 	call PlayPlaneMoveSfx_14 ; $544a
-	ld a, [wMapSceneStage2] ; $544d
+	ld a, [wCutscenePlaneY] ; $544d
 	inc a ; $5450
-	ld [wMapSceneStage2], a ; $5451
+	ld [wCutscenePlaneY], a ; $5451
 	and $03 ; $5454
 	cp $03 ; $5456
 	jr nz, .placeDoubles ; $5458
-	ld a, [wMapSceneStage] ; $545a
+	ld a, [wCutscenePlaneX] ; $545a
 	dec a ; $545d
-	ld [wMapSceneStage], a ; $545e
+	ld [wCutscenePlaneX], a ; $545e
 .placeDoubles:
-	ld a, [wMapSceneStage] ; $5461
+	ld a, [wCutscenePlaneX] ; $5461
 	cp $20 ; $5464
 	jr nz, .placeActors ; $5466
 	ld h, $08 ; $5468
 .walkOff:
 	script_wait_frames 4 ; $546a
 	call PlayPlaneMoveSfx_14 ; $5471
-	ld a, [wMapSceneStage2] ; $5474
+	ld a, [wCutscenePlaneY] ; $5474
 	inc a ; $5477
-	ld [wMapSceneStage2], a ; $5478
+	ld [wCutscenePlaneY], a ; $5478
 	dec h ; $547b
 	jr nz, .walkOff ; $547c
 	sound SFX_PLANE ; $547e
 	ld h, $08 ; $5480
 .speak:
 	script_wait_frames 6 ; $5482
-	ld a, [wMapSceneStage2] ; $5489
+	ld a, [wCutscenePlaneY] ; $5489
 	inc a ; $548c
-	ld [wMapSceneStage2], a ; $548d
+	ld [wCutscenePlaneY], a ; $548d
 	dec h ; $5490
 	jr nz, .speak ; $5491
 	sound SFX_FIREWORK_SPARKLE ; $5493
 	ld h, $04 ; $5495
 .speakDoubles:
 	script_wait_frames 8 ; $5497
-	ld a, [wMapSceneStage2] ; $549e
+	ld a, [wCutscenePlaneY] ; $549e
 	inc a ; $54a1
-	ld [wMapSceneStage2], a ; $54a2
+	ld [wCutscenePlaneY], a ; $54a2
 	dec h ; $54a5
 	jr nz, .speakDoubles ; $54a6
 	ld a, [wStoryModeEntryPoint] ; $54a8
