@@ -1,13 +1,13 @@
 AwardTreasureBoxHitScore:
 	ld a, $10 ; $5c2c
-	ld [wMinigameSceneActor + 3], a ; $5c2e
+	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $5c2e
 	ld a, $01 ; $5c31
 	ld [wMinigameHitScored], a ; $5c33
 	ld a, [wMinigameHitStreak] ; $5c36
 	ld_de_indexed TreasureBoxHitStreakSounds ; $5c39
 	ld a, [de] ; $5c40
 	call PlaySoundManaged ; $5c41
-	ld a, [wMinigameSceneActor + 1] ; $5c44
+	ld a, [wMinigameSceneActor + MGACTOR_SUBTYPE] ; $5c44
 	ld_hl_indexed TreasureBoxValuesByType ; $5c47
 	ld l, [hl] ; $5c4e
 	ld h, $00 ; $5c4f
@@ -43,7 +43,7 @@ DrawTreasureBoxSprite:
 	call ProjectTreasureBoxWorldPosition ; $5c89
 	ld c, $30 ; $5c8c
 	call QueueSprite16 ; $5c8e
-	ld a, [wMinigameSceneActor + 1] ; $5c91
+	ld a, [wMinigameSceneActor + MGACTOR_SUBTYPE] ; $5c91
 	ld b, a ; $5c94
 	ld hl, wTreasureBoxState ; $5c95
 	ld a, [hl] ; $5c98
@@ -64,7 +64,7 @@ TreasureBoxSpriteAnimFrames:
 DrawTreasureBoxHitCountdown:
 	call ProjectTreasureBoxWorldPosition ; $5ccb
 	ld c, $3c ; $5cce
-	ld a, [wMinigameSceneActor + 3] ; $5cd0
+	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $5cd0
 	call QueueMinigameHitBurstFirstFour ; $5cd3
 	ret ; $5cd6
 	twin_named project_medallion_match_world_position, ProjectTreasureBoxWorldPosition ; $5cd7
@@ -137,27 +137,27 @@ SpawnMedallionMatchTargets:
 	call InitMedallionMatchTargetActor ; $5d73
 	ld hl, $0080 ; $5d76
 	ld de, $fe40 ; $5d79
-	ld bc, wMinigameActors + 16 ; $5d7c
+	ld bc, wMinigameActors + MGACTOR_SIZE ; $5d7c
 	ld a, $01 ; $5d7f
 	call InitMedallionMatchTargetActor ; $5d81
 	ld hl, $00c0 ; $5d84
 	ld de, $fd80 ; $5d87
-	ld bc, wMinigameActors + 32 ; $5d8a
+	ld bc, wMinigameActors + 2 * MGACTOR_SIZE ; $5d8a
 	ld a, $02 ; $5d8d
 	call InitMedallionMatchTargetActor ; $5d8f
 	ld hl, $ffc0 ; $5d92
 	ld de, $ff00 ; $5d95
-	ld bc, wMinigameActors + 48 ; $5d98
+	ld bc, wMinigameActors + 3 * MGACTOR_SIZE ; $5d98
 	ld a, $03 ; $5d9b
 	call InitMedallionMatchTargetActor ; $5d9d
 	ld hl, $ff80 ; $5da0
 	ld de, $fe40 ; $5da3
-	ld bc, wMinigameActors + 64 ; $5da6
+	ld bc, wMinigameActors + 4 * MGACTOR_SIZE ; $5da6
 	ld a, $04 ; $5da9
 	call InitMedallionMatchTargetActor ; $5dab
 	ld hl, $ff40 ; $5dae
 	ld de, $fd80 ; $5db1
-	ld bc, wMinigameActors + 80 ; $5db4
+	ld bc, wMinigameActors + 5 * MGACTOR_SIZE ; $5db4
 	ld a, $05 ; $5db7
 	call InitMedallionMatchTargetActor ; $5db9
 	ret ; $5dbc
@@ -173,7 +173,7 @@ InitMedallionMatchTargetActor:
 	pop bc ; $5dc9
 	pop af ; $5dca
 	push hl ; $5dcb
-	ld hl, $0001 ; $5dcc
+	ld hl, MGACTOR_SUBTYPE ; $5dcc
 	add hl, bc ; $5dcf
 	ld [hl], a ; $5dd0
 	pop hl ; $5dd1
@@ -183,15 +183,15 @@ ResetMedallionMatchHitState:
 	xor a ; $5dd6
 	ld [wMinigameHitStreak], a ; $5dd7
 	xor a ; $5dda
-	ld [wMinigameActors + 2], a ; $5ddb
-	ld [wMinigameActors + 18], a ; $5dde
-	ld [wMinigameActors + 34], a ; $5de1
-	ld [wMinigameActors + 50], a ; $5de4
-	ld [wMinigameActors + 66], a ; $5de7
-	ld [wMinigameActors + 82], a ; $5dea
+	ld [wMinigameActors + 0 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5ddb
+	ld [wMinigameActors + MGACTOR_SIZE + MGACTOR_STATE], a ; $5dde
+	ld [wMinigameActors + 2 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5de1
+	ld [wMinigameActors + 3 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5de4
+	ld [wMinigameActors + 4 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5de7
+	ld [wMinigameActors + 5 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5dea
 	ret ; $5ded
 MedallionMatchTargetActorHandler:
-	ld a, [wMinigameSceneActor + 2] ; $5dee
+	ld a, [wMinigameSceneActor + MGACTOR_STATE] ; $5dee
 	rst Rst00 ; $5df1
 	dw MedallionMatchTargetState0 ; $5df2 jumptable
 	dw MedallionMatchTargetState1 ; $5df4 jumptable
@@ -199,7 +199,7 @@ MedallionMatchTargetActorHandler:
 	dw MedallionMatchTargetState3 ; $5df8 jumptable
 	dw RetStub ; $5dfa jumptable
 AdvanceMedallionMatchActorState:
-	ld hl, wMinigameSceneActor + 2 ; $5dfc
+	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $5dfc
 	inc [hl] ; $5dff
 	ret ; $5e00
 MedallionMatchTargetState0:
@@ -213,12 +213,12 @@ MedallionMatchTargetState1:
 	jp AdvanceMedallionMatchActorState ; $5e0f
 MedallionMatchTargetState2:
 	call DrawMedallionMatchHitCountdown ; $5e12
-	ld hl, wMinigameSceneActor + 3 ; $5e15
+	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5e15
 	dec [hl] ; $5e18
 	ld a, [hl] ; $5e19
 	and a ; $5e1a
 	ret nz ; $5e1b
-	ld hl, wMinigameSceneActor + 8 ; $5e1c
+	ld hl, wMinigameSceneActor + MGACTOR_DEPTH ; $5e1c
 	ld a, [hl+] ; $5e1f
 	ld d, [hl] ; $5e20
 	ld e, a ; $5e21
@@ -236,13 +236,13 @@ MedallionMatchTargetState3:
 	twin_named is_ball_in_medallion_match_hit_zone, IsBallInMedallionMatchHitZone ; $5e37
 AwardMedallionMatchHitScore:
 	ld a, $10 ; $5e9e
-	ld [wMinigameSceneActor + 3], a ; $5ea0
+	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $5ea0
 	ld hl, $0001 ; $5ea3
 	ld a, [wCurrentShotType] ; $5ea6
 	cp SHOTTYPE_SMASH ; $5ea9
 	jr nz, .step ; $5eab
 	ld a, $20 ; $5ead
-	ld [wMinigameSceneActor + 3], a ; $5eaf
+	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $5eaf
 	ld hl, $0002 ; $5eb2
 .step:
 	ld a, [wMinigameHitStreak] ; $5eb5
@@ -273,7 +273,7 @@ MedallionMatchHitStreakMultipliers:
 DrawMedallionMatchSprite:
 	call ProjectMedallionMatchWorldPosition ; $5ef2
 	ldh a, [hVBlankCounter] ; $5ef5
-	ld hl, wMinigameSceneActor + 10 ; $5ef7
+	ld hl, wMinigameSceneActor + MGACTOR_SCREEN_X ; $5ef7
 	add [hl] ; $5efa
 	srl a ; $5efb
 	srl a ; $5efd
@@ -289,7 +289,7 @@ MedallionMatchSpriteAnimFrames:
 DrawMedallionMatchHitCountdown:
 	call ProjectMedallionMatchWorldPosition ; $5f13
 	ld c, $3c ; $5f16
-	ld a, [wMinigameSceneActor + 3] ; $5f18
+	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $5f18
 	call QueueMinigameHitBurstFirstTwo ; $5f1b
 	ret ; $5f1e
 	twin_named project_medallion_match_world_position, ProjectMedallionMatchWorldPosition ; $5f1f

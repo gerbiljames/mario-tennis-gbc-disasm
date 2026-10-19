@@ -77,12 +77,12 @@ ClearMinigameActors:
 	ret ; $444e
 SetMinigameActorHandler:
 	wram_bank WRAM_ACTORS ; $444f
-	ld hl, $000e ; $4455
+	ld hl, MGACTOR_HANDLER ; $4455
 	add hl, bc ; $4458
 	ld a, e ; $4459
 	ld [hl+], a ; $445a
 	ld [hl], d ; $445b
-	ld hl, $0000 ; $445c
+	ld hl, MGACTOR_FLAGS ; $445c
 	add hl, bc ; $445f
 	set 0, [hl] ; $4460
 	set 1, [hl] ; $4462
@@ -92,13 +92,13 @@ SetMinigameActorPosition:
 	push de ; $446b
 	push hl ; $446c
 	push hl ; $446d
-	ld hl, $0008 ; $446e
+	ld hl, MGACTOR_DEPTH ; $446e
 	add hl, bc ; $4471
 	ld a, e ; $4472
 	ld [hl+], a ; $4473
 	ld [hl], d ; $4474
 	pop de ; $4475
-	ld hl, $0006 ; $4476
+	ld hl, MGACTOR_X ; $4476
 	add hl, bc ; $4479
 	ld a, e ; $447a
 	ld [hl+], a ; $447b
@@ -112,13 +112,13 @@ SetMinigameActorPosition:
 	ld d, b ; $4487
 	pop bc ; $4488
 	push hl ; $4489
-	ld hl, $000c ; $448a
+	ld hl, MGACTOR_SCREEN_Y ; $448a
 	add hl, bc ; $448d
 	ld a, e ; $448e
 	ld [hl+], a ; $448f
 	ld [hl], d ; $4490
 	pop de ; $4491
-	ld hl, $000a ; $4492
+	ld hl, MGACTOR_SCREEN_X ; $4492
 	add hl, bc ; $4495
 	ld a, e ; $4496
 	ld [hl+], a ; $4497
@@ -127,7 +127,7 @@ SetMinigameActorPosition:
 SetMinigameActorWorldPos:
 	ld c, l ; $449a
 	ld b, h ; $449b
-	ld hl, wMinigameSceneActor + 6 ; $449c
+	ld hl, wMinigameSceneActor + MGACTOR_X ; $449c
 	ld a, c ; $449f
 	ld [hl+], a ; $44a0
 	ld a, b ; $44a1
@@ -142,7 +142,7 @@ SetMinigameActorWorldPos:
 	farcall ProjectWorldToScreen_08 ; $44ac
 	ld e, l ; $44af
 	ld d, h ; $44b0
-	ld hl, wMinigameSceneActor + 10 ; $44b1
+	ld hl, wMinigameSceneActor + MGACTOR_SCREEN_X ; $44b1
 	ld a, e ; $44b4
 	ld [hl+], a ; $44b5
 	ld a, d ; $44b6
@@ -158,7 +158,7 @@ UpdateMinigameActors:
 	ld c, $07 ; $44c6
 .actorLoop:
 	call UpdateMinigameActor ; $44c8
-	ld de, $0010 ; $44cb
+	ld de, MGACTOR_SIZE ; $44cb
 	add hl, de ; $44ce
 	dec c ; $44cf
 	jr nz, .actorLoop ; $44d0
@@ -174,7 +174,7 @@ UpdateMinigameActor:
 	ld de, wMinigameSceneActor ; $44db
 	ld c, wMinigameSceneActor_SIZE / 16 ; $44de
 	call CopyMemoryFast ; $44e0
-	ld hl, wMinigameSceneActor + 14 ; $44e3
+	ld hl, wMinigameSceneActor + MGACTOR_HANDLER ; $44e3
 	ld a, [hl+] ; $44e6
 	ld h, [hl] ; $44e7
 	ld l, a ; $44e8

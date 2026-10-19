@@ -5,7 +5,7 @@
 	ld a, [wLastShotCharIndex]
 	and $01
 	jp nz, .returnZero
-	ld hl, wMinigameSceneActor + 6
+	ld hl, wMinigameSceneActor + MGACTOR_X
 	ld a, [hl+]
 	ld d, [hl]
 	ld e, a
@@ -31,7 +31,7 @@
 	ld de, $ffa0
 	add hl, de
 	jr c, .returnZero
-	ld hl, wMinigameSceneActor + 8
+	ld hl, wMinigameSceneActor + MGACTOR_DEPTH
 	ld a, [hl+]
 	ld d, [hl]
 	ld e, a

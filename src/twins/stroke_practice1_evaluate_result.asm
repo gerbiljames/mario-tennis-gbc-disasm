@@ -2,7 +2,7 @@
 ; $0b).
 
 {TWIN_LABEL}:
-	ld a, [wDrillCounters + 2]
+	ld a, [wDrillCounters + DRILLCTR_STROKE_PASSES]
 	cp $04
 	jr nz, .checkCounter1
 	xor a
@@ -10,7 +10,7 @@
 	ld a, $01
 	ret
 .checkCounter1:
-	ld a, [wDrillCounters + 1]
+	ld a, [wDrillCounters + DRILLCTR_OUTS]
 	cp $04
 	jr c, .counter1Below4
 	ld a, $01
@@ -23,7 +23,7 @@
 	ld [wDrillLessonResult], a
 	jr .notFound
 .checkCounter2:
-	ld a, [wDrillCounters + 2]
+	ld a, [wDrillCounters + DRILLCTR_STROKE_PASSES]
 	or a
 	jr nz, .counter2NonZero
 	ld a, $03

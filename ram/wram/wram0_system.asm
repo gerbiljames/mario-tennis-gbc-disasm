@@ -265,7 +265,7 @@ wDrillGateCrossBits:: db
 ; [8-bit] Queued drill message: index into DrillMessageTextIds_0b, $ff = none. Set by the Queue*/Set*Message helpers from the point outcome and server; ShowQueuedDrillMessage defaults it to $6c and shows it
 wDrillMessageId:: db
 
-; [9 bytes] Per-drill counters. Each drill's hooks clear the ones they need at MinigameStart/PointStart and increment them by address ($c2ex); successful-shot counts go to wPlayer1PointsWon/wPlayer2PointsWon at point end, and EvaluateResult compares them against 4 (shots per drill)
+; [9 bytes] Per-drill counters (DRILLCTR_*). Each drill's hooks clear the ones they need at MinigameStart/PointStart and increment them; successful-shot counts go to wPlayer1PointsWon/wPlayer2PointsWon at point end, and EvaluateResult compares them against 4 (shots per drill)
 wDrillCounters:: ds 9
 	ds 8
 

@@ -182,7 +182,7 @@ wCharDataStatsSlideX:: dw
 ; [16-bit] The same offset for the value column, applied by CharDataValuesSyncTask (the two columns slide at different times)
 wCharDataValuesSlideX:: dw
 	ds 24
-; [2 x 15 bytes] Per-character record the EXP award screen works on, selected by wStoryCharacterSlot (slot 1 at +15). InitExpScreenCharStats fills $d161-$d16f; +8 is the 16-bit total CheckExpLevelUp/Down compare; DrawExpScreenLevelNumber, DrawExpScreenLevelBar and the SweepExpBarMarker routines read +0 and +3
+; [2 x EXPSTAT_SIZE] Per-character record the EXP award screen works on, selected by wStoryCharacterSlot
 wExpScreenCharStats:: ds 30
 NEXTU
 ; palette fade engine (bank $03)

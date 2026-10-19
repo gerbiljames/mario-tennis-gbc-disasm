@@ -171,7 +171,7 @@ ServiceMatch1Hook_PointEnd:
 	ret nz ; $486e
 	cp $08 ; $486f
 	jr z, .finalPoint ; $4871
-	ld hl, wDrillCounters + 1 ; $4873
+	ld hl, wDrillCounters + DRILLCTR_P1_SUCCESSES ; $4873
 	ld a, [hl+] ; $4876
 	ld b, [hl] ; $4877
 	cp b ; $4878
@@ -180,7 +180,7 @@ ServiceMatch1Hook_PointEnd:
 	ld [wMatchAbortFlag], a ; $487c
 	ret ; $487f
 .finalPoint:
-	ld hl, wDrillCounters + 2 ; $4880
+	ld hl, wDrillCounters + DRILLCTR_P2_SUCCESSES ; $4880
 	ld a, [hl-] ; $4883
 	sub [hl] ; $4884
 	jr z, .clearPointWinLoseFlag ; $4885
@@ -221,16 +221,16 @@ ServiceMatch1HandlePointEnd:
 	call RecordDrillPointResultBits ; $48ba
 	ld a, $00 ; $48bd
 	call CountDrillShotSuccesses ; $48bf
-	ld [wDrillCounters + 1], a ; $48c2
+	ld [wDrillCounters + DRILLCTR_P1_SUCCESSES], a ; $48c2
 	ld a, $01 ; $48c5
 	call CountDrillShotSuccesses ; $48c7
-	ld [wDrillCounters + 2], a ; $48ca
+	ld [wDrillCounters + DRILLCTR_P2_SUCCESSES], a ; $48ca
 	call ShowQueuedDrillMessage ; $48cd
 	farcall UpdatePointStats ; $48d0
 	farcall AwardPoint ; $48d3
-	ld a, [wDrillCounters + 1] ; $48d6
+	ld a, [wDrillCounters + DRILLCTR_P1_SUCCESSES] ; $48d6
 	ld [wPlayer1PointsWon], a ; $48d9
-	ld a, [wDrillCounters + 2] ; $48dc
+	ld a, [wDrillCounters + DRILLCTR_P2_SUCCESSES] ; $48dc
 	ld [wPlayer2PointsWon], a ; $48df
 	ld a, [wPlayer1PointsWon] ; $48e2
 	ld b, $01 ; $48e5
@@ -442,7 +442,7 @@ ServiceMatch2Hook_PointEnd:
 	ret nz ; $4a32
 	cp $08 ; $4a33
 	jr z, .finalPoint ; $4a35
-	ld hl, wDrillCounters + 1 ; $4a37
+	ld hl, wDrillCounters + DRILLCTR_P1_SUCCESSES ; $4a37
 	ld a, [hl+] ; $4a3a
 	ld b, [hl] ; $4a3b
 	cp b ; $4a3c
@@ -451,7 +451,7 @@ ServiceMatch2Hook_PointEnd:
 	ld [wMatchAbortFlag], a ; $4a40
 	ret ; $4a43
 .finalPoint:
-	ld hl, wDrillCounters + 2 ; $4a44
+	ld hl, wDrillCounters + DRILLCTR_P2_SUCCESSES ; $4a44
 	ld a, [hl-] ; $4a47
 	sub [hl] ; $4a48
 	jr z, .clearPointWinLoseFlag ; $4a49
@@ -504,10 +504,10 @@ ServiceMatch2HandlePointEnd:
 	call RecordDrillPointResultBits ; $4ac0
 	ld a, $00 ; $4ac3
 	call CountDrillShotSuccesses ; $4ac5
-	ld [wDrillCounters + 1], a ; $4ac8
+	ld [wDrillCounters + DRILLCTR_P1_SUCCESSES], a ; $4ac8
 	ld a, $01 ; $4acb
 	call CountDrillShotSuccesses ; $4acd
-	ld [wDrillCounters + 2], a ; $4ad0
+	ld [wDrillCounters + DRILLCTR_P2_SUCCESSES], a ; $4ad0
 	call ShowQueuedDrillMessage ; $4ad3
 	ld hl, wDrillServeTargetResult ; $4ad6
 	ld a, [wCurrentServingPlayer] ; $4ad9

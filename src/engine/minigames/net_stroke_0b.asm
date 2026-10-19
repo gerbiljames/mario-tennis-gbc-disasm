@@ -45,7 +45,7 @@ NetGamePractice3Hook_PointEnd:
 	jr z, .countNetOrOut ; $61b8
 	jr .handlePointEnd ; $61ba
 .countNetOrOut:
-	ld hl, wDrillCounters + 3 ; $61bc
+	ld hl, wDrillCounters + DRILLCTR_NET_OR_OUT ; $61bc
 	inc [hl] ; $61bf
 .handlePointEnd:
 	call NetGamePractice3HandlePointEnd ; $61c0
@@ -56,7 +56,7 @@ NetGamePractice3Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $61cc
 	ret ; $61cf
 NetGamePractice3EvaluateResult:
-	ld a, [wDrillCounters + 4] ; $61d0
+	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $61d0
 	cp $04 ; $61d3
 	jr nz, .checkCharacter1DoubleFaults ; $61d5
 	xor a ; $61d7
@@ -77,7 +77,7 @@ NetGamePractice3EvaluateResult:
 	ld [wDrillLessonResult], a ; $61f1
 	jr .notFound ; $61f4
 .noDoubleFaults:
-	ld a, [wDrillCounters + 4] ; $61f6
+	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $61f6
 	cp $03 ; $61f9
 	jr nz, .countDrillResultBitsSet ; $61fb
 	ld a, $07 ; $61fd
@@ -91,14 +91,14 @@ NetGamePractice3EvaluateResult:
 	ld [wDrillLessonResult], a ; $620c
 	jr .notFound ; $620f
 .checkCounter5:
-	ld a, [wDrillCounters + 5] ; $6211
+	ld a, [wDrillCounters + DRILLCTR_SHOTS_LEFT] ; $6211
 	or a ; $6214
 	jr nz, .checkCounter4Range ; $6215
 	ld a, $06 ; $6217
 	ld [wDrillLessonResult], a ; $6219
 	jr .notFound ; $621c
 .checkCounter4Range:
-	ld a, [wDrillCounters + 4] ; $621e
+	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $621e
 	cp $01 ; $6221
 	jr c, .result4 ; $6223
 	cp $03 ; $6225
@@ -316,7 +316,7 @@ NetGamePractice3Cases3:
 	ld a, [wCurrentShotType] ; $63de
 	cp SHOTTYPE_DROP ; $63e1
 	jp nz, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $63e3
-	ld hl, wDrillCounters + 5 ; $63e6
+	ld hl, wDrillCounters + DRILLCTR_SHOTS_LEFT ; $63e6
 	dec [hl] ; $63e9
 	xor a ; $63ea
 	ret ; $63eb

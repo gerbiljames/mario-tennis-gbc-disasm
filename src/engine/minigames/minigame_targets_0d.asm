@@ -129,10 +129,10 @@ ResetTargetHitState:
 	xor a ; $5228
 	ld [wMinigameHitScored], a ; $5229
 	xor a ; $522c
-	ld [wMinigameActors + 2], a ; $522d
+	ld [wMinigameActors + 0 * MGACTOR_SIZE + MGACTOR_STATE], a ; $522d
 	ret ; $5230
 ShootingStarTargetActorHandler:
-	ld a, [wMinigameSceneActor + 2] ; $5231
+	ld a, [wMinigameSceneActor + MGACTOR_STATE] ; $5231
 	rst Rst00 ; $5234
 	dw ShootingStarTargetState0 ; $5235 jumptable
 	dw ShootingStarTargetState1 ; $5237 jumptable
@@ -140,11 +140,11 @@ ShootingStarTargetActorHandler:
 	dw ShootingStarTargetState3 ; $523b jumptable
 	dw RetStub ; $523d jumptable
 AdvanceTargetActorState:
-	ld hl, wMinigameSceneActor + 2 ; $523f
+	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $523f
 	inc [hl] ; $5242
 	ret ; $5243
 ShootingStarTargetState0:
-	ld a, [wMinigameSceneActor + 3] ; $5244
+	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $5244
 	and a ; $5247
 	jr z, .advance ; $5248
 	farcall AdvanceMatchRng ; $524a
@@ -157,7 +157,7 @@ ShootingStarTargetState0:
 	call SetMinigameActorWorldPos ; $5258
 .advance:
 	xor a ; $525b
-	ld [wMinigameSceneActor + 3], a ; $525c
+	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $525c
 	call AdvanceTargetActorState ; $525f
 ShootingStarTargetState1:
 	call DrawTargetReticleSprite ; $5262
@@ -168,7 +168,7 @@ ShootingStarTargetState1:
 	jp AdvanceTargetActorState ; $526d
 ShootingStarTargetState2:
 	call DrawTargetHitCountdown ; $5270
-	ld hl, wMinigameSceneActor + 3 ; $5273
+	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5273
 	dec [hl] ; $5276
 	ld a, [hl] ; $5277
 	and a ; $5278
@@ -189,7 +189,7 @@ IsBallInHitZone:
 	ld a, [wLastShotCharIndex] ; $5292
 	and $01 ; $5295
 	jp nz, .returnZero ; $5297
-	ld hl, wMinigameSceneActor + 6 ; $529a
+	ld hl, wMinigameSceneActor + MGACTOR_X ; $529a
 	ld a, [hl+] ; $529d
 	ld d, [hl] ; $529e
 	ld e, a ; $529f
@@ -215,7 +215,7 @@ IsBallInHitZone:
 	ld de, -128 ; $52b6
 	add hl, de ; $52b9
 	jr c, .returnZero ; $52ba
-	ld hl, wMinigameSceneActor + 8 ; $52bc
+	ld hl, wMinigameSceneActor + MGACTOR_DEPTH ; $52bc
 	ld a, [hl+] ; $52bf
 	ld d, [hl] ; $52c0
 	ld e, a ; $52c1
@@ -264,13 +264,13 @@ IsBallInHitZone:
 	ret ; $52f8
 AwardHitScore:
 	ld a, $10 ; $52f9
-	ld [wMinigameSceneActor + 3], a ; $52fb
+	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $52fb
 	ld hl, $0001 ; $52fe
 	ld a, [wCurrentShotType] ; $5301
 	cp SHOTTYPE_SMASH ; $5304
 	jr nz, .step ; $5306
 	ld a, $20 ; $5308
-	ld [wMinigameSceneActor + 3], a ; $530a
+	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $530a
 	ld hl, $0007 ; $530d
 .step:
 	ld a, $01 ; $5310
@@ -327,11 +327,11 @@ TargetReticleAnimFrames:
 DrawTargetHitCountdown:
 	call ProjectMinigameWorldPosition ; $539e
 	ld c, $3c ; $53a1
-	ld a, [wMinigameSceneActor + 3] ; $53a3
+	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $53a3
 	call QueueMinigameHitBurst ; $53a6
 	ret ; $53a9
 ProjectMinigameWorldPosition:
-	ld hl, wMinigameSceneActor + 10 ; $53aa
+	ld hl, wMinigameSceneActor + MGACTOR_SCREEN_X ; $53aa
 	ld a, [hl+] ; $53ad
 	ld e, a ; $53ae
 	ld a, [hl+] ; $53af
