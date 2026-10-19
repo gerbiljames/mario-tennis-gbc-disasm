@@ -74,18 +74,9 @@ Unused_1c_ShiftGfx23:
 Unused_1c_ShiftGfx24:
 	INCBIN "data/engine/menus/char_data/Unused_1c_ShiftGfx24.bin" ; $6e80, 64 bytes
 Unused_1c_ShiftGfx25:
-	INCBIN "data/engine/menus/char_data/Unused_1c_ShiftGfx25.bin" ; $6ec0, 47 bytes
-Unused_1c_1:
-	; $6eef, 17 bytes (bytes:16)
-	db $ec, $00, $00, $00, $00, $08, $07, $20, $1f, $44, $38, $0a, $71, $84, $73, $10 ; 0x00
-	db $e7 ; 0x10
+	INCBIN "data/engine/menus/char_data/Unused_1c_ShiftGfx25.bin" ; $6ec0, 64 bytes
 Unused_1c_ShiftGfx26:
-	; $6f00, 42 bytes (bytes:16)
-	db $00, $d9, $00, $d9, $40, $99, $a0, $19, $49, $30, $00, $f0, $10, $e0, $20, $c0 ; 0x00
-	db $20, $cf, $10, $cf, $40, $9f, $a0, $1f, $42, $3c, $09, $f0, $94, $63, $48, $27 ; 0x10
-	db $80, $00, $00, $00, $00, $00, $80, $00, $20, $c0 ; 0x20
-CharDataScreenTiles_1c:
-	INCBIN "data/engine/menus/char_data/CharDataScreenTiles_1c.bin" ; $6f2a, 22 bytes
+	INCBIN "data/engine/menus/char_data/Unused_1c_ShiftGfx26.bin" ; $6f00, 64 bytes
 	ds ALIGN[4]
 Unused_1c_ShiftGfx27:
 	INCBIN "data/engine/menus/char_data/Unused_1c_ShiftGfx27.bin" ; $6f40, 64 bytes
@@ -356,12 +347,12 @@ LoadCharDataScreenBgAndPalettes:
 	ld hl, wMasterPalettes + 34 ; $7431
 	farcall GrayscalePaletteColorInPlace ; $7434
 	wram_bank WRAM_STAGING ; $7437
-	ld hl, CharDataScreenBgAndPalettes0 ; $743d
+	ld hl, CharDataScreenBgGfx ; $743d
 	ld de, wDecompBuffer ; $7440
 	call DecompressData ; $7443
 	ld hl, wDecompBuffer ; $7446
 	ld de, vTiles2 + VRAM_BANK1 ; $7449
-	ld c, 128 ; $744c -- 128 of CharDataScreenBgAndPalettes0's 256 tiles
+	ld c, 128 ; $744c -- 128 of CharDataScreenBgGfx's 256 tiles
 	call QueueVRAMCopy ; $744e
 	ld hl, wTextTileBuffer ; $7451
 	ld de, vTiles1 + VRAM_BANK1 ; $7454
@@ -432,8 +423,8 @@ LoadCharDataScreenMugshots:
 	ret ; $7540
 CharDataScreenBgAndPalettes:
 	INCLUDE "data/engine/menus/char_data/CharDataScreenBgAndPalettes.asm" ; $7541, 64 bytes (palettes)
-CharDataScreenBgAndPalettes0:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgAndPalettes0.bin" ; $7581, 1886 bytes
+CharDataScreenBgGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgGfx.bin" ; $7581, 1886 bytes
 CharDataScreenBgTilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgTilemap.bin" ; $7cdf, 320 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBgTilemap.inc" ; DEF CharDataScreenBgTilemap_SIZE EQU its decoded length, generated from the .bin by make

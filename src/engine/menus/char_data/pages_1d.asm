@@ -164,7 +164,7 @@ LoadCharDataScreenPageGraphics:
 	call DecompressData ; $41cf
 	ld hl, wDecompBuffer ; $41d2
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $41d5
-	ld c, 8 ; $41d8
+	ld c, CharDataScreenPageGraphicsGfx2_SIZE / 16 ; $41d8
 	call QueueVRAMCopy ; $41da
 	wram_bank WRAM_STAGING ; $41dd
 	ld hl, CharDataScreenPagePatch3Tilemap ; $41e3

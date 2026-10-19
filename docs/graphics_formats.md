@@ -128,11 +128,11 @@ uncompressed payloads. 282 `call` sites in `src/` reach one of the two.
 
 ### 1.5 The corpus
 
-`data.manifest` declares **861** LZ streams; `check.py`'s `lz` check (§7.5)
+`data.manifest` declares **863** LZ streams; `check.py`'s `lz` check (§7.5)
 requires each to decode using exactly its declared extent and to round-trip.
 
-* **315,831 compressed bytes → 804,924 decompressed** (39.2%).
-* **803 decompress to a multiple of 16 bytes** (whole tiles or map planes). The
+* **318,679 compressed bytes → 808,508 decompressed** (39.4%).
+* **827 decompress to a multiple of 16 bytes** (whole tiles or map planes). The
   36 that do not are small tilemap/attrmap rect streams in banks `$1a`-`$1e`
   (`CharDataScreen*`, `CharDataConfirmScreen*`, `Results*Tilemap_1e`,
   `ResultsPlayerPanelAttrmap_1e`), 9 to 130 bytes.
@@ -238,7 +238,7 @@ WRAM bank `$03`) and `wScreenAttrmap` (1024 bytes, WRAM bank `$02`).
 
 ### 2.5 The `tilemap` spec
 
-Screen layouts are written as rows of cells. The 231 blobs `data.manifest`
+Screen layouts are written as rows of cells. The 237 blobs `data.manifest`
 tags `tilemap:W` (all `lz_*`, decompressed first) get a `.tilemap` text grid
 beside their `.bin` (`tools/tilemap.py`); the Makefile encodes an edited grid
 back and `make check` (`tilemap`) round-trips every one. Character-data screen
@@ -796,32 +796,33 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All twenty-one
+the source claims is true, not just that the bytes come back. All twenty-two
 pass:
 
 | check | count | what it asserts |
 |---|---|---|
-| `lz` | 861 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
-| `lz-labels` | 861 | no symbol lands inside a compressed stream |
-| `lz-names` | 3058 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
-| `regions` | 4257 | manifest regions stay inside their bank and do not overlap |
+| `lz` | 863 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
+| `lz-labels` | 863 | no symbol lands inside a compressed stream |
+| `lz-names` | 3066 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
+| `regions` | 4267 | manifest regions stay inside their bank and do not overlap |
 | `text` | 21 | a spec-less `.asm` region is NUL-terminated text |
-| `db-words` | 560 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
-| `layout` | 4257 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
+| `db-words` | 561 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
+| `layout` | 4267 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
 | `scopes` | 266 | no global label covers both actor-script bytecode and CPU code |
-| `labels` | 13740 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `labels` | 13745 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
-| `literals` | 34388 | no ROM address is written as a number where the source moves |
+| `literals` | 34200 | no ROM address is written as a number where the source moves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
-| `gfx` | 2721 | every PNG encodes back to the blob it was decoded from |
-| `tilemap` | 231 | every tilemap grid encodes back to its blob |
+| `gfx` | 2913 | every PNG encodes back to the blob it was decoded from |
+| `gfx-specs` | 126 | no spec-less region is named `*Gfx*`/`*Tiles*`, and no spec-less whole-tile LZ stream is decompressed on to `vTiles` (exceptions allow-listed) |
+| `tilemap` | 237 | every tilemap grid encodes back to its blob |
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4876 | a routine is named `Unused` exactly when nothing reachable reaches it |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
-| `raw-ids` | 1381 | a raw `cp` or store on a variable whose other values are named never equals a member of that family (exceptions allow-listed) |
+| `raw-ids` | 1154 | a raw `cp` or store on a variable whose other values are named never equals a member of that family (exceptions allow-listed) |
 
 ---
 

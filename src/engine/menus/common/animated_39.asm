@@ -359,20 +359,20 @@ AnimatedTilesTable4:
 LoadFixedTileBlockAndPalette:
 	push de ; $44d3
 	wram_bank WRAM_STAGING ; $44d4
-	ld hl, FixedTileBlockAndPalette ; $44da
+	ld hl, FixedTileBlockGfx ; $44da
 	ld de, wDecompBuffer ; $44dd
 	call DecompressData ; $44e0
 	ld hl, wDecompBuffer ; $44e3
 	pop de ; $44e6
-	ld c, FixedTileBlockAndPalette_SIZE / 16 ; $44e7
+	ld c, FixedTileBlockGfx_SIZE / 16 ; $44e7
 	call QueueVRAMCopy ; $44e9
 	ld hl, FixedTileBlockPalette ; $44ec
 	ld_obj_pals de, 0, 1 ; $44ef
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
-FixedTileBlockAndPalette:
-	INCBIN "data/engine/menus/common/lz_FixedTileBlockAndPalette.bin" ; $44f6, 32 bytes
-	INCLUDE "data/engine/menus/common/lz_FixedTileBlockAndPalette.inc" ; DEF FixedTileBlockAndPalette_SIZE EQU its decoded length, generated from the .bin by make
+FixedTileBlockGfx:
+	INCBIN "data/engine/menus/common/lz_FixedTileBlockGfx.bin" ; $44f6, 32 bytes
+	INCLUDE "data/engine/menus/common/lz_FixedTileBlockGfx.inc" ; DEF FixedTileBlockGfx_SIZE EQU its decoded length, generated from the .bin by make
 FixedTileBlockPalette:
 	INCLUDE "data/engine/menus/common/FixedTileBlockPalette.asm" ; $4516, 8 bytes (palettes)
 Unused_39_LoadFixedBgPalette0:

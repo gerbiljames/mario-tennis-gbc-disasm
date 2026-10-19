@@ -290,7 +290,7 @@ Unused_18_RunTwoOptionSelectB:
 	ld a, b ; $5490
 	and a ; $5491
 	jr z, .redraw ; $5492
-	ld de, TwoOptionSelectBTable ; $5494
+	ld de, $5892 ; $5494
 .redraw:
 	call Unused_18_AddBobbingOffsetXY ; $5497
 	push bc ; $549a

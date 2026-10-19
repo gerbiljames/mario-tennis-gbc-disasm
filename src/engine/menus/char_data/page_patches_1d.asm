@@ -112,17 +112,8 @@ DrawCharDataPageArrowsTask_SpriteTemplate2:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx2:
-	INCBIN "data/engine/menus/char_data/CharDataScreenPageGraphicsGfx2.bin" ; $67ab, 101 bytes
-CharDataPageArrowsTaskSpriteTemplate:
-	; $6810, 11 bytes (sprite_template)
-	oam_sprite $7f, $90, $c0, $20
-	oam_sprite_end
-	db $40
-	db $00
-	db $80
-	db $00
-	db $00
-	db $00
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx2.bin" ; $67ab, 112 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx2.inc" ; DEF CharDataScreenPageGraphicsGfx2_SIZE EQU its decoded length, generated from the .bin by make
 DrawCharDataPageArrowsTask_SpriteTemplate3:
 	; $681b, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
