@@ -1,6 +1,6 @@
 QueueSprite32x32:
 	bit 5, b ; $2ced
-	jr nz, .bit5Set ; $2cef
+	jr nz, .flipped ; $2cef
 	ld a, h ; $2cf1
 	add d ; $2cf2
 	ldh [hSpriteBlitX], a ; $2cf3
@@ -30,7 +30,7 @@ QueueSprite32x32:
 	ld a, l ; $2d30
 	ldh [hSpriteQueueIndex], a ; $2d31
 	ret ; $2d33
-.bit5Set:
+.flipped:
 	ld a, d ; $2d34
 	sub h ; $2d35
 	add $08 ; $2d36
@@ -285,14 +285,14 @@ QueueCharFrameTiles:
 	ld d, a ; $2e9c
 	ld a, [wStandingShadowsEnabled] ; $2e9d
 	and a ; $2ea0
-	jr nz, .nonZero ; $2ea1
+	jr nz, .withShadow ; $2ea1
 	call QueueVRAMCopy ; $2ea3
 .loop:
 	pop af ; $2ea6
 	ldh [hRomBank], a ; $2ea7
 	ld [rROMB0], a ; $2ea9
 	ret ; $2eac
-.nonZero:
+.withShadow:
 	push de ; $2ead
 	push hl ; $2eae
 	call QueueVRAMCopy ; $2eaf
@@ -300,7 +300,7 @@ QueueCharFrameTiles:
 	pop de ; $2eb3
 	ld a, [wCharSpriteFrame + 2] ; $2eb4
 	and a ; $2eb7
-	jr z, .zero ; $2eb8
+	jr z, .smallShadow ; $2eb8
 	ld bc, $0100 ; $2eba
 	add hl, bc ; $2ebd
 	ld a, $30 ; $2ebe
@@ -332,7 +332,7 @@ QueueCharFrameTiles:
 .queueTileCopyAdvance4:
 	call QueueTileCopyAdvance ; $2ee3
 	jr .loop ; $2ee6
-.zero:
+.smallShadow:
 	ld bc, $00c0 ; $2ee8
 	add hl, bc ; $2eeb
 	ld a, $30 ; $2eec

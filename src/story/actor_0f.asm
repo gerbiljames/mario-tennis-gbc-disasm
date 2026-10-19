@@ -9,7 +9,7 @@ QueueFinishedRoundNameText:
 	jr nc, .queue ; $78fa
 	inc h ; $78fc
 .queue:
-	call QueueShortText ; $78fd
+	call PushShortTextArg_0f ; $78fd
 	ret ; $7900
 .doubles:
 	ld a, [wMapSceneStage] ; $7901
@@ -20,7 +20,7 @@ QueueFinishedRoundNameText:
 	jr nc, .queueDoubles ; $790a
 	inc h ; $790c
 .queueDoubles:
-	call QueueShortText ; $790d
+	call PushShortTextArg_0f ; $790d
 	ret ; $7910
 IslandOpenBreakCutscene:
 	script_set_position ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_1, 21.0, 23.0 ; $7911
@@ -51,7 +51,7 @@ IslandOpenBreakCutscene:
 	jr nc, .queue ; $79ae
 	inc h ; $79b0
 .queue:
-	call QueueShortText ; $79b1
+	call PushShortTextArg_0f ; $79b1
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_1 ; $79b4
 	script_face_pair ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_2, ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_1 ; $79b9
 	script_wait_frames 20 ; $79c1
@@ -93,7 +93,7 @@ ActorScript_0f_07:
 	; $7a50, 35 bytes (actor_script)
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_field ACTORF_SPEED, $0010
-.L8:
+.pace:
 	as_target_rel -2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
@@ -102,28 +102,20 @@ ActorScript_0f_07:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 75
-	as_jump .L8
+	as_jump .pace
 ActorScript_0f_08:
 	; $7a73, 27 bytes (actor_script)
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_field ACTORF_SPEED, $0006
-.L8:
+.pace:
 	as_set_target 39.0, 19.0
 	as_wait_move
 	as_wait 75
 	as_set_target 41.0, 19.0
 	as_wait_move
 	as_wait 120
-	as_jump .L8
-QueueShortText:
-	push_wram_bank WRAM_CHAR3 ; $7a8e
-	ld de, wTextArgFetchBuffer ; $7a97
-	wram_bank WRAM_CHAR1 ; $7a9a
-	farcall FetchShortTextToBuffer ; $7aa0
-	ld hl, wTextArgFetchBuffer ; $7aa3
-	farcall PushTextArgString ; $7aa6
-	pop_wram_bank ; $7aa9
-	ret ; $7aae
+	as_jump .pace
+	twin push_short_text_arg, 0f ; $7a8e PushShortTextArg_0f
 WalkActorsInFromEntryPoint_0f:
 	ld a, [wStoryModeEntryPoint] ; $7aaf
 	cp STORYENTRY_NONE ; $7ab2
@@ -183,32 +175,32 @@ ActorScript_0f_09:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_0f_10:
 	; $7b61, 20 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 	as_begin_path
-.Lb:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderNarrow
 ActorScript_0f_11:
 	; $7b75, 10 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 Unused_0f_MapScriptNopAlt:
 	ret ; $7b7f
 Unused_0f_MapScriptClearActiveFlag:
@@ -263,7 +255,7 @@ ActorScript_0f_12:
 	as_jump ActorScript_0f_12
 	as_anim ANIM_STILL
 	as_wait 60
-.L67:
+.swingUpLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -300,10 +292,10 @@ ActorScript_0f_12:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L67
+	as_jump .swingUpLoop
 	as_anim ANIM_STILL
 	as_wait 30
-.Lce:
+.swingDownLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -340,11 +332,11 @@ ActorScript_0f_12:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .Lce
+	as_jump .swingDownLoop
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L137:
+.swingUpLoop2:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -381,22 +373,22 @@ ActorScript_0f_12:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L137
-.L19a:
+	as_jump .swingUpLoop2
+.nodLoop:
 	as_wait 240
 	as_anim ANIM_NOD
 	as_wait 80
 	as_anim ANIM_NOD
 	as_wait 60
-	as_jump .L19a
-.L1a7:
+	as_jump .nodLoop
+.shakeHeadLoop:
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_NOD
-	as_jump .L1a7
+	as_jump .shakeHeadLoop
 Unused_0f_ComputeRankingProgressIndex:
 	test_flag FLAG_DOUBLES ; $7d43
 	jr nz, .doubles ; $7d46

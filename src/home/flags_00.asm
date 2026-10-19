@@ -55,7 +55,7 @@ Unused_00_BlitBGStrip:
 	and $1f ; $234b
 	jr nz, .maskSet ; $234d
 	ld a, c ; $234f
-	ld bc, $ffe0 ; $2350
+	ld bc, -32 ; $2350
 	add hl, bc ; $2353
 	ld c, a ; $2354
 .maskSet:
@@ -76,7 +76,7 @@ Unused_00_BlitBGStrip:
 	and $1f ; $236b
 	jr nz, .maskSet2 ; $236d
 	ld a, c ; $236f
-	ld bc, $ffe0 ; $2370
+	ld bc, -32 ; $2370
 	add hl, bc ; $2373
 	ld c, a ; $2374
 .maskSet2:

@@ -105,18 +105,9 @@ ApplySelectionBoxWobbleY:
 	ret ; $40ee
 SelectionBoxWobbleYTable_3e:
 	INCBIN "data/engine/menus/common/SelectionBoxWobbleYTable_3e.bin" ; $40ef, 16 bytes
-; Instruction-identical to Unused_1b_DrawCornerBrackets, Unused_38_DrawCornerBrackets and Unused_3b_DrawCornerBrackets (one copy per bank); a change here belongs in every copy.
 	twin_in draw_corner_brackets, Unused_3e_DrawCornerBrackets, 3e ; $40ff Unused_3e_DrawCornerBrackets
-; Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3b (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid, 3e ; $413a MoveMenuCursorGrid_3e
-; Instruction-identical to Unused_16_MoveMenuCursorGridFromLinkInput and Unused_38_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_from_link_input, Unused_3e_MoveMenuCursorGridFromLinkInput, 3e ; $41b8 Unused_3e_MoveMenuCursorGridFromLinkInput
-; Instruction-identical to Unused_16_MoveMenuCursorGridRemote and Unused_38_MoveMenuCursorGridRemote (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_remote, Unused_3e_MoveMenuCursorGridRemote, 3e ; $4235 Unused_3e_MoveMenuCursorGridRemote
-; Instruction-identical to Unused_16_MoveMenuCursor2GridRemote (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in move_menu_cursor2_grid_remote, Unused_3e_MoveMenuCursor2GridRemote, 3e ; $4300 Unused_3e_MoveMenuCursor2GridRemote
-; Instruction-identical to Unused_16_GetMenuCursorIndex, GetMenuCursorIndex_1b, GetMenuCursorIndex_38 and GetMenuCursorIndex_3b (one copy per bank); a change here belongs in every copy.
 	twin_in get_menu_cursor_index, GetMenuCursorIndex_3e, 3e ; $43c9 GetMenuCursorIndex_3e

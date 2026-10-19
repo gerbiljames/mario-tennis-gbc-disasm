@@ -84,7 +84,7 @@ ExhibitionAcceptedSingles:
 	ld [wStoryModeCurrentLocation], a ; $5ba9
 	ld a, $01 ; $5bac
 	ld [wStoryModeEntryPoint], a ; $5bae
-	ld a, $ff ; $5bb1
+	ld a, EXITTRIGGER_DIRECT ; $5bb1
 	ld [wUnusedExitTriggerIdMirror], a ; $5bb3
 	ld [wStoryModeExitTriggerRequest], a ; $5bb6
 	ret ; $5bb9
@@ -359,7 +359,7 @@ ExhibitionAcceptedDoubles:
 	ld [wStoryModeCurrentLocation], a ; $62fa
 	ld a, $04 ; $62fd
 	ld [wStoryModeEntryPoint], a ; $62ff
-	ld a, $ff ; $6302
+	ld a, EXITTRIGGER_DIRECT ; $6302
 	ld [wUnusedExitTriggerIdMirror], a ; $6304
 	ld [wStoryModeExitTriggerRequest], a ; $6307
 	ret ; $630a

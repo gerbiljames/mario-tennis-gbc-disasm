@@ -332,9 +332,9 @@ WriteCharStatsToDisplayBuffer:
 	ld hl, wStoryMainName ; $49f8
 	ld a, [wStoryCharacterSlot] ; $49fb
 	or a ; $49fe
-	jr z, .zero ; $49ff
+	jr z, .levelField ; $49ff
 	ld l, $40 ; $4a01
-.zero:
+.levelField:
 	ld a, l ; $4a03
 	add $18 ; $4a04
 	ld l, a ; $4a06
@@ -348,9 +348,9 @@ WriteCharStatsToDisplayBuffer:
 	ld hl, wStoryMainName ; $4a11
 	ld a, [wStoryCharacterSlot] ; $4a14
 	or a ; $4a17
-	jr z, .zero2 ; $4a18
+	jr z, .spinLevelField ; $4a18
 	ld l, $40 ; $4a1a
-.zero2:
+.spinLevelField:
 	ld a, l ; $4a1c
 	add $38 ; $4a1d
 	ld l, a ; $4a1f
@@ -365,9 +365,9 @@ WriteCharStatsToDisplayBuffer:
 	ld hl, wStoryMainName ; $4a2d
 	ld a, [wStoryCharacterSlot] ; $4a30
 	or a ; $4a33
-	jr z, .zero3 ; $4a34
+	jr z, .powerLevelField ; $4a34
 	ld l, $40 ; $4a36
-.zero3:
+.powerLevelField:
 	ld a, l ; $4a38
 	add $39 ; $4a39
 	ld l, a ; $4a3b
@@ -382,9 +382,9 @@ WriteCharStatsToDisplayBuffer:
 	ld hl, wStoryMainName ; $4a49
 	ld a, [wStoryCharacterSlot] ; $4a4c
 	or a ; $4a4f
-	jr z, .zero4 ; $4a50
+	jr z, .controlLevelField ; $4a50
 	ld l, $40 ; $4a52
-.zero4:
+.controlLevelField:
 	ld a, l ; $4a54
 	add $3a ; $4a55
 	ld l, a ; $4a57
@@ -399,9 +399,9 @@ WriteCharStatsToDisplayBuffer:
 	ld hl, wStoryMainName ; $4a65
 	ld a, [wStoryCharacterSlot] ; $4a68
 	or a ; $4a6b
-	jr z, .zero5 ; $4a6c
+	jr z, .speedLevelField ; $4a6c
 	ld l, $40 ; $4a6e
-.zero5:
+.speedLevelField:
 	ld a, l ; $4a70
 	add $3b ; $4a71
 	ld l, a ; $4a73
@@ -432,9 +432,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4aa0
 	ld a, [wStoryCharacterSlot] ; $4aa3
 	or a ; $4aa6
-	jr z, .zero ; $4aa7
+	jr z, .spinLevelField ; $4aa7
 	ld l, $40 ; $4aa9
-.zero:
+.spinLevelField:
 	ld a, l ; $4aab
 	add $38 ; $4aac
 	ld l, a ; $4aae
@@ -448,9 +448,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4ab9
 	ld a, [wStoryCharacterSlot] ; $4abc
 	or a ; $4abf
-	jr z, .zero2 ; $4ac0
+	jr z, .topStatField ; $4ac0
 	ld l, $40 ; $4ac2
-.zero2:
+.topStatField:
 	ld a, l ; $4ac4
 	add $20 ; $4ac5
 	ld l, a ; $4ac7
@@ -465,9 +465,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4ad3
 	ld a, [wStoryCharacterSlot] ; $4ad6
 	or a ; $4ad9
-	jr z, .zero3 ; $4ada
+	jr z, .sliceStatField ; $4ada
 	ld l, $40 ; $4adc
-.zero3:
+.sliceStatField:
 	ld a, l ; $4ade
 	add $21 ; $4adf
 	ld l, a ; $4ae1
@@ -482,9 +482,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4aed
 	ld a, [wStoryCharacterSlot] ; $4af0
 	or a ; $4af3
-	jr z, .zero4 ; $4af4
+	jr z, .powerLevelField ; $4af4
 	ld l, $40 ; $4af6
-.zero4:
+.powerLevelField:
 	ld a, l ; $4af8
 	add $39 ; $4af9
 	ld l, a ; $4afb
@@ -498,9 +498,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4b06
 	ld a, [wStoryCharacterSlot] ; $4b09
 	or a ; $4b0c
-	jr z, .zero5 ; $4b0d
+	jr z, .serveStatField ; $4b0d
 	ld l, $40 ; $4b0f
-.zero5:
+.serveStatField:
 	ld a, l ; $4b11
 	add $22 ; $4b12
 	ld l, a ; $4b14
@@ -515,9 +515,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4b20
 	ld a, [wStoryCharacterSlot] ; $4b23
 	or a ; $4b26
-	jr z, .zero6 ; $4b27
+	jr z, .strokeStatField ; $4b27
 	ld l, $40 ; $4b29
-.zero6:
+.strokeStatField:
 	ld a, l ; $4b2b
 	add $23 ; $4b2c
 	ld l, a ; $4b2e
@@ -532,9 +532,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4b3a
 	ld a, [wStoryCharacterSlot] ; $4b3d
 	or a ; $4b40
-	jr z, .zero7 ; $4b41
+	jr z, .volleyStatField ; $4b41
 	ld l, $40 ; $4b43
-.zero7:
+.volleyStatField:
 	ld a, l ; $4b45
 	add $24 ; $4b46
 	ld l, a ; $4b48
@@ -549,9 +549,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4b54
 	ld a, [wStoryCharacterSlot] ; $4b57
 	or a ; $4b5a
-	jr z, .zero8 ; $4b5b
+	jr z, .controlLevelField ; $4b5b
 	ld l, $40 ; $4b5d
-.zero8:
+.controlLevelField:
 	ld a, l ; $4b5f
 	add $3a ; $4b60
 	ld l, a ; $4b62
@@ -565,9 +565,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4b6d
 	ld a, [wStoryCharacterSlot] ; $4b70
 	or a ; $4b73
-	jr z, .zero9 ; $4b74
+	jr z, .angleStatField ; $4b74
 	ld l, $40 ; $4b76
-.zero9:
+.angleStatField:
 	ld a, l ; $4b78
 	add $25 ; $4b79
 	ld l, a ; $4b7b
@@ -582,9 +582,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4b87
 	ld a, [wStoryCharacterSlot] ; $4b8a
 	or a ; $4b8d
-	jr z, .zero10 ; $4b8e
+	jr z, .placementStatField ; $4b8e
 	ld l, $40 ; $4b90
-.zero10:
+.placementStatField:
 	ld a, l ; $4b92
 	add $26 ; $4b93
 	ld l, a ; $4b95
@@ -599,9 +599,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4ba1
 	ld a, [wStoryCharacterSlot] ; $4ba4
 	or a ; $4ba7
-	jr z, .zero11 ; $4ba8
+	jr z, .speedLevelField ; $4ba8
 	ld l, $40 ; $4baa
-.zero11:
+.speedLevelField:
 	ld a, l ; $4bac
 	add $3b ; $4bad
 	ld l, a ; $4baf
@@ -615,9 +615,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4bba
 	ld a, [wStoryCharacterSlot] ; $4bbd
 	or a ; $4bc0
-	jr z, .zero12 ; $4bc1
+	jr z, .speedStatField ; $4bc1
 	ld l, $40 ; $4bc3
-.zero12:
+.speedStatField:
 	ld a, l ; $4bc5
 	add $27 ; $4bc6
 	ld l, a ; $4bc8
@@ -632,9 +632,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4bd4
 	ld a, [wStoryCharacterSlot] ; $4bd7
 	or a ; $4bda
-	jr z, .zero13 ; $4bdb
+	jr z, .dashStatField ; $4bdb
 	ld l, $40 ; $4bdd
-.zero13:
+.dashStatField:
 	ld a, l ; $4bdf
 	add $28 ; $4be0
 	ld l, a ; $4be2
@@ -649,9 +649,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4bee
 	ld a, [wStoryCharacterSlot] ; $4bf1
 	or a ; $4bf4
-	jr z, .zero14 ; $4bf5
+	jr z, .reactionStatField ; $4bf5
 	ld l, $40 ; $4bf7
-.zero14:
+.reactionStatField:
 	ld a, l ; $4bf9
 	add $29 ; $4bfa
 	ld l, a ; $4bfc
@@ -666,9 +666,9 @@ LoadCharStatsWithLevelUpDeltas:
 	ld hl, wStoryMainName ; $4c08
 	ld a, [wStoryCharacterSlot] ; $4c0b
 	or a ; $4c0e
-	jr z, .zero15 ; $4c0f
+	jr z, .stopStatField ; $4c0f
 	ld l, $40 ; $4c11
-.zero15:
+.stopStatField:
 	ld a, l ; $4c13
 	add $2a ; $4c14
 	ld l, a ; $4c16
@@ -681,13 +681,13 @@ LoadCharStatsWithLevelUpDeltas:
 	ld [wCharDataStats + 10], a ; $4c1e
 	ld a, [wCharDataPage] ; $4c21
 	cp $04 ; $4c24
-	jr z, .eq04 ; $4c26
+	jr z, .clearDeltas ; $4c26
 	ld d, a ; $4c28
 	ld hl, wCharDataStatDeltas ; $4c29
 	ld a, [wStoryCharacterSlot] ; $4c2c
 	farcall ComputeLevelUpStatDeltas ; $4c2f
 	ret ; $4c32
-.eq04:
+.clearDeltas:
 	xor a ; $4c33
 	ld hl, wCharDataStatDeltas ; $4c34
 	ld [hl+], a ; $4c37

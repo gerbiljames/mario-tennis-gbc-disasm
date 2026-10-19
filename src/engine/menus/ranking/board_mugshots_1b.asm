@@ -21,10 +21,7 @@ Unused_1b_ClearWram3Row64Alt:
 UpdateAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $4430
 	ret ; $4433
-; Instruction-identical to Unused_17_DrawNameWithDiacritics and Unused_3e_DrawNameWithDiacritics (one copy per bank); a change here belongs in every copy.
 	twin_in draw_name_with_diacritics, DrawNameWithDiacritics_1b, 1b ; $4434 DrawNameWithDiacritics_1b
-; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_3b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_1b_DrawDecimalNumber, 1b ; $446d Unused_1b_DrawDecimalNumber
 Unused_1b_DrawAsciiDigitString:
 	ld a, [hl+] ; $448e
@@ -34,7 +31,6 @@ Unused_1b_DrawAsciiDigitString:
 	jr Unused_1b_DrawAsciiDigitString ; $4495
 .done:
 	ret ; $4497
-; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_17_DrawAsciiDigitChar, Unused_3b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
 	twin_in draw_ascii_digit_char, Unused_1b_DrawAsciiDigitChar, 1b ; $4498 Unused_1b_DrawAsciiDigitChar
 MugshotGfxAlex_1b:
 	INCBIN "data/engine/menus/ranking/lz_MugshotGfxAlex_1b.bin" ; $44b1, 158 bytes
@@ -305,14 +301,14 @@ BuildRankingBoardScreen:
 	call LoadRankingMarkerCoords ; $4f22
 	ld a, [wRankingBoardDoubles] ; $4f25
 	or a ; $4f28
-	jr z, .zero ; $4f29
+	jr z, .singles ; $4f29
 	ld c, SCREENASSET_TournamentBracketDoubles ; $4f2b
 	farcall LoadScreenAssetRecord ; $4f2d
 	wram_bank WRAM_SCREEN ; $4f30
 	call DrawDoublesRankingNames ; $4f36
 	call HighlightDoublesRankingRows ; $4f39
 	jr .loadRankingBoardTiles ; $4f3c
-.zero:
+.singles:
 	ld c, SCREENASSET_TournamentBracketSingles ; $4f3e
 	farcall LoadScreenAssetRecord ; $4f40
 	wram_bank WRAM_SCREEN ; $4f43
@@ -371,10 +367,10 @@ DispatchRankingBoardAnim:
 	ret z ; $4ffb
 	ld a, [wRankingBoardDoubles] ; $4ffc
 	or a ; $4fff
-	jr nz, .nonZero2 ; $5000
+	jr nz, .doubles ; $5000
 	ld a, [wRankingBoardMode] ; $5002
 	or a ; $5005
-	jr nz, .nonZero ; $5006
+	jr nz, .singlesMode1 ; $5006
 	ld a, [wRankingBoardPlayerRow] ; $5008
 	add a ; $500b
 	ld hl, RankingBoardAnimHandlers2_1b ; $500c
@@ -387,7 +383,7 @@ DispatchRankingBoardAnim:
 	ld h, [hl] ; $5015
 	ld l, a ; $5016
 	jp hl ; $5017
-.nonZero:
+.singlesMode1:
 	ld a, [wRankingBoardPlayerRow] ; $5018
 	add a ; $501b
 	ld hl, RankingBoardAnimHandlers1_1b ; $501c
@@ -400,10 +396,10 @@ DispatchRankingBoardAnim:
 	ld h, [hl] ; $5025
 	ld l, a ; $5026
 	jp hl ; $5027
-.nonZero2:
+.doubles:
 	ld a, [wRankingBoardMode] ; $5028
 	or a ; $502b
-	jr nz, .nonZero3 ; $502c
+	jr nz, .doublesMode1 ; $502c
 	ld a, [wRankingBoardPlayerRow] ; $502e
 	add a ; $5031
 	ld hl, RankingBoardAnimHandlers4_1b ; $5032
@@ -416,7 +412,7 @@ DispatchRankingBoardAnim:
 	ld h, [hl] ; $503b
 	ld l, a ; $503c
 	jp hl ; $503d
-.nonZero3:
+.doublesMode1:
 	ld a, [wRankingBoardPlayerRow] ; $503e
 	add a ; $5041
 	ld hl, RankingBoardAnimHandlers3_1b ; $5042

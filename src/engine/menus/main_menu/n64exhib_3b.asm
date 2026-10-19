@@ -373,16 +373,16 @@ RunTrophiesScreen:
 	bit PADB_B, a ; $499f
 	jr nz, .playSfx2 ; $49a1
 	bit PADB_LEFT, a ; $49a3
-	jr nz, .bit5Set ; $49a5
+	jr nz, .pressedLeft ; $49a5
 	bit PADB_RIGHT, a ; $49a7
-	jr nz, .bit4Set ; $49a9
+	jr nz, .pressedRight ; $49a9
 	jr .loop ; $49ab
-.bit5Set:
+.pressedLeft:
 	ld a, [wN64RecordsBlock + 1] ; $49ad
 	inc a ; $49b0
 	ld [wN64RecordsBlock + 1], a ; $49b1
 	jr .loop ; $49b4
-.bit4Set:
+.pressedRight:
 	ld a, [wN64RecordsBlock] ; $49b6
 	inc a ; $49b9
 	ld [wN64RecordsBlock], a ; $49ba
@@ -411,11 +411,11 @@ BuildTrophiesScreen:
 	call DecodeTrophyCounts ; $49eb
 	ld a, [wTrophySecondSetPresent] ; $49ee
 	or a ; $49f1
-	jr nz, .nonZero ; $49f2
+	jr nz, .bothSets ; $49f2
 	ld c, SCREENASSET_N64Tournament2 ; $49f4
 	farcall LoadScreenAssetRecord ; $49f6
 	jr .drawTrophiesWonRows ; $49f9
-.nonZero:
+.bothSets:
 	ld c, SCREENASSET_N64Tournament ; $49fb
 	farcall LoadScreenAssetRecord ; $49fd
 .drawTrophiesWonRows:
@@ -423,7 +423,7 @@ BuildTrophiesScreen:
 	call DrawTrophiesWonRows ; $4a06
 	ld a, [wTrophySecondSetPresent] ; $4a09
 	or a ; $4a0c
-	jr nz, .nonZero2 ; $4a0d
+	jr nz, .bothSetsChars ; $4a0d
 	ld a, [wStoryMainChar] ; $4a0f
 	ld c, a ; $4a12
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 2 ; $4a13
@@ -433,7 +433,7 @@ BuildTrophiesScreen:
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 2 ; $4a1d
 	call DrawTrophiesCharSprite ; $4a20
 	jr .queueWram3MapToVRAM ; $4a23
-.nonZero2:
+.bothSetsChars:
 	ld c, $00 ; $4a25
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 2 ; $4a27
 	call DrawTrophiesCharSprite ; $4a2a
@@ -468,14 +468,14 @@ BuildTrophiesScreen:
 DrawTrophiesWonRows:
 	ld a, [wTrophySecondSetPresent] ; $4a71
 	or a ; $4a74
-	jr nz, .nonZero ; $4a75
+	jr nz, .bothSets ; $4a75
 	ld hl, wTrophyCellsMainSet1 ; $4a77
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 5 ; $4a7a
 	call DrawTrophyRowPair ; $4a7d
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 5 ; $4a80
 	call DrawTrophyRowPair ; $4a83
 	ret ; $4a86
-.nonZero:
+.bothSets:
 	ld hl, wTrophyCellsMainSet1 ; $4a87
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 5 ; $4a8a
 	call DrawTrophyRowPair ; $4a8d

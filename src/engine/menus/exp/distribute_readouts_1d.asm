@@ -2,7 +2,7 @@ UnassignExpPointFromChar:
 	wram_bank WRAM_SCENE ; $72dd
 	ld a, [wStoryCharacterSlot] ; $72e3
 	or a ; $72e6
-	jr nz, .nonZero ; $72e7
+	jr nz, .partner ; $72e7
 	ld hl, wExpScreenCharStats + 6 ; $72e9
 	ld a, [hl+] ; $72ec
 	ld d, [hl] ; $72ed
@@ -34,8 +34,8 @@ UnassignExpPointFromChar:
 	ld [hl+], a ; $730c
 	ld [hl], d ; $730d
 	call CheckExpLevelDown ; $730e
-	jr .step2 ; $7311
-.nonZero:
+	jr .refundPool ; $7311
+.partner:
 	ld hl, wExpScreenCharStats + 21 ; $7313
 	ld a, [hl+] ; $7316
 	ld d, [hl] ; $7317
@@ -67,7 +67,7 @@ UnassignExpPointFromChar:
 	ld [hl+], a ; $7336
 	ld [hl], d ; $7337
 	call CheckExpLevelDown ; $7338
-.step2:
+.refundPool:
 	ld hl, wExpPoolRemaining ; $733b
 	ld a, [hl+] ; $733e
 	ld d, [hl] ; $733f
@@ -106,7 +106,7 @@ CheckExpLevelUp:
 	wram_bank WRAM_SCENE ; $737d
 	ld a, [wStoryCharacterSlot] ; $7383
 	or a ; $7386
-	jr nz, .nonZero ; $7387
+	jr nz, .partner ; $7387
 	ld hl, wExpScreenCharStats + 8 ; $7389
 	ld a, [hl+] ; $738c
 	ld d, [hl] ; $738d
@@ -131,7 +131,7 @@ CheckExpLevelUp:
 	ld [wExpScreenCharStats + 4], a ; $73b1
 	ld [wExpScreenCharStats + 5], a ; $73b4
 	ret ; $73b7
-.nonZero:
+.partner:
 	ld hl, wExpScreenCharStats + 23 ; $73b8
 	ld a, [hl+] ; $73bb
 	ld d, [hl] ; $73bc
@@ -160,7 +160,7 @@ CheckExpLevelDown:
 	wram_bank WRAM_SCENE ; $73e7
 	ld a, [wStoryCharacterSlot] ; $73ed
 	or a ; $73f0
-	jr nz, .nonZero ; $73f1
+	jr nz, .partner ; $73f1
 	ld hl, wExpScreenCharStats + 4 ; $73f3
 	ld a, [hl+] ; $73f6
 	ld d, [hl] ; $73f7
@@ -188,7 +188,7 @@ CheckExpLevelDown:
 	dec a ; $741e
 	ld [wExpScreenCharStats + 9], a ; $741f
 	ret ; $7422
-.nonZero:
+.partner:
 	ld hl, wExpScreenCharStats + 19 ; $7423
 	ld a, [hl+] ; $7426
 	ld d, [hl] ; $7427
@@ -216,7 +216,7 @@ CheckExpLevelDown:
 	dec a ; $744e
 	ld [wExpScreenCharStats + 24], a ; $744f
 	ret ; $7452
-.step2:
+.openConfirmPrompt:
 	wram_bank WRAM_SCENE ; $7453
 	ld hl, wExpCursorChar ; $7459
 	set 2, [hl] ; $745c
@@ -295,7 +295,7 @@ UploadExpPromptWindowRows:
 	bit PADB_DOWN, a ; $7537
 	jr nz, DrawExpPromptCursor.playSfx ; $7539
 	bit PADB_A, a ; $753b
-	jr nz, DrawExpPromptCursor.bit0Set ; $753d
+	jr nz, DrawExpPromptCursor.pressedA ; $753d
 	bit PADB_B, a ; $753f
 	jr nz, DrawExpPromptCursor.playSfx2 ; $7541
 	jr .loop ; $7543
@@ -330,7 +330,7 @@ DrawExpPromptCursor:
 	xor $01 ; $7584
 	ld [wExpPromptCursorRow], a ; $7586
 	jr UploadExpPromptWindowRows.loop ; $7589
-.bit0Set:
+.pressedA:
 	ld a, [wExpPromptCursorRow] ; $758b
 	or a ; $758e
 	jr nz, .playSfx2 ; $758f
@@ -442,7 +442,7 @@ DrawExpToNextLevelTask:
 	ret nz ; $7671
 	ld a, [wStoryCharacterSlot] ; $7672
 	or a ; $7675
-	jr nz, .nonZero ; $7676
+	jr nz, .partner ; $7676
 	wram_bank WRAM_SCENE ; $7678
 	ld a, [wExpScreenCharStats] ; $767e
 	cp $64 ; $7681
@@ -456,18 +456,18 @@ DrawExpToNextLevelTask:
 	call FormatDecimalNumberUnsigned ; $768f
 	ld a, [wCharDataNumberBuffer] ; $7692
 	cp $20 ; $7695
-	jr z, .eq20 ; $7697
+	jr z, .mainDigit2 ; $7697
 	call GetExpScreenDigitSprite ; $7699
 	ld_xy de, $18, $2f ; $769c
 	call QueueSprite ; $769f
-.eq20:
+.mainDigit2:
 	ld a, [wCharDataNumberBuffer + 1] ; $76a2
 	cp $20 ; $76a5
-	jr z, .eq202 ; $76a7
+	jr z, .mainDigit3 ; $76a7
 	call GetExpScreenDigitSprite ; $76a9
 	ld_xy de, $1f, $2f ; $76ac
 	call QueueSprite ; $76af
-.eq202:
+.mainDigit3:
 	ld a, [wCharDataNumberBuffer + 2] ; $76b2
 	call GetExpScreenDigitSprite ; $76b5
 	ld_xy de, $26, $2f ; $76b8
@@ -477,7 +477,7 @@ DrawExpToNextLevelTask:
 	ld_xy de, $14, $2e ; $76c4
 	call QueueSpriteTemplate ; $76c7
 	ret ; $76ca
-.nonZero:
+.partner:
 	wram_bank WRAM_SCENE ; $76cb
 	ld a, [wExpScreenCharStats + 15] ; $76d1
 	cp $64 ; $76d4
@@ -491,18 +491,18 @@ DrawExpToNextLevelTask:
 	call FormatDecimalNumberUnsigned ; $76e2
 	ld a, [wCharDataNumberBuffer] ; $76e5
 	cp $20 ; $76e8
-	jr z, .eq203 ; $76ea
+	jr z, .partnerDigit2 ; $76ea
 	call GetExpScreenDigitSprite ; $76ec
 	ld_xy de, $18, $62 ; $76ef
 	call QueueSprite ; $76f2
-.eq203:
+.partnerDigit2:
 	ld a, [wCharDataNumberBuffer + 1] ; $76f5
 	cp $20 ; $76f8
-	jr z, .eq204 ; $76fa
+	jr z, .partnerDigit3 ; $76fa
 	call GetExpScreenDigitSprite ; $76fc
 	ld_xy de, $1f, $62 ; $76ff
 	call QueueSprite ; $7702
-.eq204:
+.partnerDigit3:
 	ld a, [wCharDataNumberBuffer + 2] ; $7705
 	call GetExpScreenDigitSprite ; $7708
 	ld_xy de, $26, $62 ; $770b
@@ -556,9 +556,9 @@ DrawExpBarSweepSpriteTask:
 	ld e, $01 ; $7789
 	ld a, [wStoryCharacterSlot] ; $778b
 	or a ; $778e
-	jr z, .zero ; $778f
+	jr z, .queueSprite ; $778f
 	ld e, $49 ; $7791
-.zero:
+.queueSprite:
 	wram_bank WRAM_SCENE ; $7793
 	ld a, [wExpBarMarkerX] ; $7799
 	ld d, a ; $779c

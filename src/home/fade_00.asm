@@ -48,12 +48,12 @@ Unused_00_ApplyWhiteFade:
 	or $78 ; $1df8
 .positive:
 	bit 2, a ; $1dfa
-	jr z, .bit2Clear ; $1dfc
+	jr z, .noOverflow ; $1dfc
 	and $fc ; $1dfe
 	dec a ; $1e00
 	set 7, c ; $1e01
 	set 6, c ; $1e03
-.bit2Clear:
+.noOverflow:
 	ld b, a ; $1e05
 	ld a, c ; $1e06
 	bit 5, a ; $1e07

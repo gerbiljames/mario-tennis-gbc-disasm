@@ -136,13 +136,13 @@ InitResultsScreenCharacters:
 	ld a, [wGameMode] ; $499e
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $49a1
-	jr nz, .nonZero ; $49a2
+	jr nz, .matchMainChar ; $49a2
 	ld a, [wStoryMainChar] ; $49a4
 	ld d, a ; $49a7
 	ld a, [wStoryMainPalette] ; $49a8
 	ld e, a ; $49ab
 	jr .initChar ; $49ac
-.nonZero:
+.matchMainChar:
 	ld a, [wLinkMatchRole] ; $49ae
 	srl a ; $49b1
 	or a ; $49b3
@@ -181,11 +181,11 @@ InitResultsScreenCharacters:
 	wram_bank WRAM_SCENE ; $49f4
 	ld a, [wContinuePromptKind] ; $49fa
 	or a ; $49fd
-	jr nz, .nonZero2 ; $49fe
+	jr nz, .initPartner ; $49fe
 	wram_bank WRAM_ACTORS ; $4a00
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a06
 	ret z ; $4a09
-.nonZero2:
+.initPartner:
 	ld a, [wLinkMatchRole] ; $4a0a
 	srl a ; $4a0d
 	add $06 ; $4a0f
@@ -195,13 +195,13 @@ InitResultsScreenCharacters:
 	ld a, [wGameMode] ; $4a19
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $4a1c
-	jr nz, .nonZero3 ; $4a1d
+	jr nz, .matchPartnerChar ; $4a1d
 	ld a, [wStoryPartnerChar] ; $4a1f
 	ld d, a ; $4a22
 	ld a, [wStoryPartnerPalette] ; $4a23
 	ld e, a ; $4a26
 	jr .initChar2 ; $4a27
-.nonZero3:
+.matchPartnerChar:
 	ld a, [wLinkMatchRole] ; $4a29
 	srl a ; $4a2c
 	or a ; $4a2e
@@ -271,18 +271,18 @@ UpdateResultsCharSprite:
 	pop af ; $4ac1
 	push af ; $4ac2
 	or a ; $4ac3
-	jr nz, .nonZero ; $4ac4
+	jr nz, .player2 ; $4ac4
 	ld a, [wPlayer1MainLeftHanded] ; $4ac6
 	jr .compare ; $4ac9
-.nonZero:
+.player2:
 	ld a, [wPlayer2MainLeftHanded] ; $4acb
 .compare:
 	or a ; $4ace
-	jr z, .zero ; $4acf
+	jr z, .rightHanded ; $4acf
 	ld a, $20 ; $4ad1
 	xor b ; $4ad3
 	ld b, a ; $4ad4
-.zero:
+.rightHanded:
 	ld hl, wCharTileBase ; $4ad5
 	ld a, [hl+] ; $4ad8
 	ld c, a ; $4ad9
@@ -294,20 +294,20 @@ UpdateResultsCharSprite:
 	push bc ; $4adf
 	push de ; $4ae0
 	or a ; $4ae1
-	jr nz, .nonZero2 ; $4ae2
+	jr nz, .player2Pos ; $4ae2
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4ae4
 	jr z, .notTempResultsScreenOpen ; $4ae7
 	ld d, $48 ; $4ae9
 	ld e, $56 ; $4aeb
-	jr .step5 ; $4aed
+	jr .setPos ; $4aed
 .notTempResultsScreenOpen:
 	ld d, $54 ; $4aef
 	ld e, $56 ; $4af1
-	jr .step5 ; $4af3
-.nonZero2:
+	jr .setPos ; $4af3
+.player2Pos:
 	ld d, $60 ; $4af5
 	ld e, $56 ; $4af7
-.step5:
+.setPos:
 	ld a, d ; $4af9
 	ld [wCharScreenX], a ; $4afa
 	ld a, e ; $4afd
@@ -358,10 +358,10 @@ DrawContinuePromptCursor:
 	wram_bank WRAM_SCENE ; $4b46
 	ld a, [wContinuePromptRow] ; $4b4c
 	or a ; $4b4f
-	jr nz, .nonZero ; $4b50
+	jr nz, .row1 ; $4b50
 	ld_xy de, $7a, $3c ; $4b52
 	jr .queueSprite ; $4b55
-.nonZero:
+.row1:
 	ld_xy de, $7a, $44 ; $4b57
 .queueSprite:
 	ld_oam bc, OAM_BANK1, $8e ; $4b5a
@@ -379,28 +379,28 @@ DrawContinuePromptCursor:
 	wram_bank WRAM_SCENE ; $4b75
 	ld a, [wContinuePromptPage] ; $4b7b
 	or a ; $4b7e
-	jr nz, .nonZero2 ; $4b7f
+	jr nz, .onWarningPage ; $4b7f
 	ld a, [wContinuePromptRow] ; $4b81
 	or a ; $4b84
-	jr z, .zero ; $4b85
+	jr z, .acceptPage0 ; $4b85
 	ld a, $01 ; $4b87
 	ld [wContinuePromptPage], a ; $4b89
 	call RefreshContinuePromptText ; $4b8c
 	jr RunContinuePrompt ; $4b8f
-.nonZero2:
+.onWarningPage:
 	ld a, [wContinuePromptRow] ; $4b91
 	or a ; $4b94
-	jr z, .zero2 ; $4b95
+	jr z, .acceptWarning ; $4b95
 .loop:
 	xor a ; $4b97
 	ld [wContinuePromptPage], a ; $4b98
 	call RefreshContinuePromptText ; $4b9b
 	jr RunContinuePrompt ; $4b9e
-.zero:
+.acceptPage0:
 	ld a, $01 ; $4ba0
 	ld [wContinuePromptResult], a ; $4ba2
 	ret ; $4ba5
-.zero2:
+.acceptWarning:
 	ld a, [wContinuePromptPage] ; $4ba6
 	add $ff ; $4ba9
 	ld [wContinuePromptResult], a ; $4bab
@@ -410,18 +410,18 @@ DrawContinuePromptCursor:
 	wram_bank WRAM_SCENE ; $4bb1
 	ld a, [wContinuePromptPage] ; $4bb7
 	or a ; $4bba
-	jr nz, .nonZero3 ; $4bbb
+	jr nz, .cancelWarning ; $4bbb
 	ld a, $ff ; $4bbd
 	ld [wContinuePromptResult], a ; $4bbf
 	ld a, MENUSLIDE_BACK ; $4bc2
 	ld [wMenuSlideDirection], a ; $4bc4
 	ret ; $4bc7
-.nonZero3:
+.cancelWarning:
 	jr .loop ; $4bc8
 RefreshContinuePromptText:
 	ld a, [wContinuePromptPage] ; $4bca
 	or a ; $4bcd
-	jr nz, .nonZero ; $4bce
+	jr nz, .warningPage ; $4bce
 	xor a ; $4bd0
 	ld [wContinuePromptRow], a ; $4bd1
 	call ClearContinuePromptRows ; $4bd4
@@ -433,7 +433,7 @@ RefreshContinuePromptText:
 	call QueueVRAMCopy ; $4be5
 	wram_bank WRAM_SCENE ; $4be8
 	ret ; $4bee
-.nonZero:
+.warningPage:
 	ld a, $01 ; $4bef
 	ld [wContinuePromptRow], a ; $4bf1
 	call ClearContinuePromptRows ; $4bf4

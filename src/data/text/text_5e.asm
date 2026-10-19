@@ -327,18 +327,5 @@ FetchTextTable_5e:
 	dw TextStrings_5e.s438 - TextStrings_5e ; 322
 TextStrings_5e:
 	INCLUDE "data/text/TextStrings_5e.asm" ; $428a, 11269 bytes (text_pool)
-FetchDialogueText_5e:
-	push af ; $6e8f
-	ld a, $00 ; $6e90
-	call FetchText_5e ; $6e92
-	pop af ; $6e95
-	ret ; $6e96
-FetchShortText_5e:
-	push af ; $6e97
-	ld a, $01 ; $6e98
-	call FetchText_5e ; $6e9a
-	pop af ; $6e9d
-	ret ; $6e9e
-; Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37 and FetchText_6e (one copy per bank); a change here belongs in every copy.
-	twin fetch_text, 5e ; $6e9f FetchText_5e
+	twin fetch_text, 5e ; $6e8f FetchDialogueText_5e
 	; $6eda, 4390 bytes fill to bank end (linker-padded)

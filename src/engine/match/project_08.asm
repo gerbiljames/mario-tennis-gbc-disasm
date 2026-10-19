@@ -136,7 +136,7 @@ UnusedAbsADE:
 NegateADE:
 	cpl ; $5a63
 	inc a ; $5a64
-	jr nz, .notZero ; $5a65
+	jr nz, .noBorrow ; $5a65
 	sub e ; $5a67
 	ld e, a ; $5a68
 	sbc a ; $5a69
@@ -144,7 +144,7 @@ NegateADE:
 	ld d, a ; $5a6b
 	xor a ; $5a6c
 	ret ; $5a6d
-.notZero:
+.noBorrow:
 	push af ; $5a6e
 	ld a, e ; $5a6f
 	cpl ; $5a70

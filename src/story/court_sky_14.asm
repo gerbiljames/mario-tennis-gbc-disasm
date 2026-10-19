@@ -100,7 +100,7 @@ Court1Tile01_14:
 	ret ; $50fa
 Court1InitScript_14:
 	call InitCourt1SceneVariant ; $50fb
-	call LoadCourtPlayerPartnerObjDefs_14 ; $50fe
+	call LoadPlayerPartnerObjDefs_14 ; $50fe
 	call Court1EntryWalkIn ; $5101
 	ret ; $5104
 InitCourt1SceneVariant:
@@ -169,8 +169,7 @@ Court1EntryWalkIn:
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 2.0 ; $51df
 .done:
 	ret ; $51e9
-; Instruction-identical to SetPlayerPartnerActorSprites (one copy per bank); a change here belongs in every copy.
-	twin_named load_court_player_partner_obj_defs, LoadCourtPlayerPartnerObjDefs_14 ; $51ea
+	twin load_player_partner_obj_defs, 14 ; $51ea LoadPlayerPartnerObjDefs_14
 IslandSkyMapScripts_14:
 	; $5221, 14 bytes (map_tree)
 	dw IslandSkyEntryPoints_14 ; slot 0 EntryPoints
@@ -404,7 +403,7 @@ IslandSkyInitScript_14:
 	ld [wStoryModeCurrentLocation], a ; $54ce
 	ld a, $04 ; $54d1
 	ld [wStoryModeEntryPoint], a ; $54d3
-	ld a, $ff ; $54d6
+	ld a, EXITTRIGGER_DIRECT ; $54d6
 	ld [wUnusedExitTriggerIdMirror], a ; $54d8
 	ld [wStoryModeExitTriggerRequest], a ; $54db
 	ret ; $54de
@@ -481,7 +480,7 @@ IslandSkyInitScript_14:
 	ld [wStoryModeCurrentLocation], a ; $562a
 	ld a, $09 ; $562d
 	ld [wStoryModeEntryPoint], a ; $562f
-	ld a, $ff ; $5632
+	ld a, EXITTRIGGER_DIRECT ; $5632
 	ld [wUnusedExitTriggerIdMirror], a ; $5634
 	ld [wStoryModeExitTriggerRequest], a ; $5637
 	ret ; $563a

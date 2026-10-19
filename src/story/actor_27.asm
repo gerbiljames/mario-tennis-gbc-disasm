@@ -111,32 +111,32 @@ ActorScript_27_27:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_27_28:
 	; $7867, 20 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 	as_begin_path
-.Lb:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderNarrow
 ActorScript_27_29:
 	; $787b, 10 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 MapScriptNop_27:
 	ret ; $7885
 Unused_27_MapScriptClearActiveFlag:
@@ -193,7 +193,7 @@ ActorScript_27_31:
 	; $78f6, 103 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 60
-.L4:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -230,12 +230,12 @@ ActorScript_27_31:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L4
+	as_jump .swingLoop
 ActorScript_27_32:
 	; $795d, 103 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 30
-.L4:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -272,13 +272,13 @@ ActorScript_27_32:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L4
+	as_jump .swingLoop
 ActorScript_27_33:
 	; $79c4, 133 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L6:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -315,23 +315,22 @@ ActorScript_27_33:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L6
-.L69:
+	as_jump .swingLoop
+.nodLoop:
 	as_wait 240
 	as_anim ANIM_NOD
 	as_wait 80
 	as_anim ANIM_NOD
 	as_wait 60
-	as_jump .L69
-.L76:
+	as_jump .nodLoop
+.shakeHeadLoop:
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_NOD
-	as_jump .L76
-; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and ComputeRankingProgressIndex_12 (one copy per bank); a change here belongs in every copy.
+	as_jump .shakeHeadLoop
 	twin_in compute_ranking_progress_index, Unused_27_ComputeRankingProgressIndex, 27 ; $7a49 Unused_27_ComputeRankingProgressIndex
 Unused_27_SetStoryRankTier:
 	ld a, $00 ; $7a90

@@ -84,7 +84,6 @@ MatchRuleOptionAttrAddrs_3e:
 MatchRuleOptionAttrWidths_3e:
 	; $48b4, 7 bytes (bytes:7)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
-; Instruction-identical to FlushMatchFormatRowToVram (one copy per bank); a change here belongs in every copy.
 	twin_named flush_match_format_row_to_vram, FlushMatchRuleRowAttrs ; $48bb
 MatchRulesCursorSpriteTask:
 	ld c, $01 ; $48f1
@@ -92,17 +91,17 @@ MatchRulesCursorSpriteTask:
 	or a ; $48f6
 	jr nz, .compare ; $48f7
 	ld a, [wMatchFormatDoubles] ; $48f9
-	jr .step ; $48fc
+	jr .gotRuleValue ; $48fc
 .compare:
 	cp $01 ; $48fe
 	jr nz, .checkMatchFormatSets ; $4900
 	ld a, [wMatchFormatGames] ; $4902
 	add $02 ; $4905
-	jr .step ; $4907
+	jr .gotRuleValue ; $4907
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $4909
 	add $04 ; $490c
-.step:
+.gotRuleValue:
 	push af ; $490e
 	ld hl, MatchRulesCursorTiles_3e ; $490f
 	add l ; $4912
@@ -288,17 +287,13 @@ AnimateLinkStatusPalettePtrs:
 	dw LinkStatusPalette3 ; record 6
 	dw LinkStatusPalette3 ; record 7
 LinkStatusPalette0:
-	; $4a87, 8 bytes (bytes:8)
-	db $bf, $01, $ff, $0b, $67, $1f, $c8, $6c ; 0x00
+	INCLUDE "data/engine/menus/link/LinkStatusPalette0.asm" ; $4a87, 8 bytes (palettes)
 LinkStatusPalette1:
-	; $4a8f, 8 bytes (bytes:8)
-	db $bf, $01, $ff, $7f, $67, $1f, $c8, $6c ; 0x00
+	INCLUDE "data/engine/menus/link/LinkStatusPalette1.asm" ; $4a8f, 8 bytes (palettes)
 LinkStatusPalette2:
-	; $4a97, 8 bytes (bytes:8)
-	db $bf, $01, $ff, $0b, $ff, $7f, $c8, $6c ; 0x00
+	INCLUDE "data/engine/menus/link/LinkStatusPalette2.asm" ; $4a97, 8 bytes (palettes)
 LinkStatusPalette3:
-	; $4a9f, 8 bytes (bytes:8)
-	db $bf, $01, $ff, $0b, $67, $1f, $ff, $7f ; 0x00
+	INCLUDE "data/engine/menus/link/LinkStatusPalette3.asm" ; $4a9f, 8 bytes (palettes)
 ShowLinkErrorScreen:
 	call InitSerialLink ; $4aa7
 	call DisableLCDSafely ; $4aaa
@@ -365,16 +360,16 @@ AnimateLinkErrorPalette:
 	srl a ; $4b50
 	srl a ; $4b52
 	add a ; $4b54
-	jr nc, .noCarry ; $4b55
+	jr nc, .notNegative ; $4b55
 	ld a, $0c ; $4b57
 	dec a ; $4b59
-	jr .step2 ; $4b5a
-.noCarry:
+	jr .gotFlashIndex ; $4b5a
+.notNegative:
 	rra ; $4b5c
 	cp $0c ; $4b5d
-	jr c, .step2 ; $4b5f
+	jr c, .gotFlashIndex ; $4b5f
 	xor a ; $4b61
-.step2:
+.gotFlashIndex:
 	add a ; $4b62
 	ld hl, LinkErrorFlashColors_3e ; $4b63
 	add l ; $4b66
@@ -395,8 +390,7 @@ AnimateLinkErrorPalette:
 	pop_wram_bank ; $4b7d
 	ret ; $4b82
 LinkErrorPalette_3e:
-	; $4b83, 8 bytes (bytes:8)
-	db $9f, $33, $1f, $00, $07, $50, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/link/LinkErrorPalette_3e.asm" ; $4b83, 8 bytes (palettes)
 LinkErrorFlashColors_3e:
 	; $4b8b, 24 bytes (bytes:16)
 	db $1f, $00, $df, $00, $ff, $01, $bf, $02, $7f, $03, $ff, $03, $ff, $03, $9f, $03 ; 0x00
@@ -410,17 +404,17 @@ ShowLinkStatusMessage:
 	pop bc ; $4bb6
 	ld a, c ; $4bb7
 	or a ; $4bb8
-	jr z, .zero ; $4bb9
+	jr z, .message0 ; $4bb9
 	cp $01 ; $4bbb
-	jr z, .eq01 ; $4bbd
+	jr z, .message1 ; $4bbd
 	jr .renderProportionalTextAt ; $4bbf
-.zero:
+.message0:
 	ld hl, Text_30_297 ; $4bc1
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bc4
 	ld c, $12 ; $4bc7
 	farcall RenderProportionalTextAt ; $4bc9
 	jr .uploadGlyphBuffer ; $4bcc
-.eq01:
+.message1:
 	ld hl, Text_30_298 ; $4bce
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bd1
 	ld c, $12 ; $4bd4
@@ -445,9 +439,4 @@ ClearLinkMessageWindow:
 	ld h, $20 ; $4c00
 	farcall FillTilemapRect ; $4c02
 	ret ; $4c05
-FlushLinkMessageRows:
-	ld hl, wShadowTilemap + 11 * TILEMAP_WIDTH ; $4c06
-	ld de, vBGMap0 + 11 * TILEMAP_WIDTH ; $4c09
-	ld c, 6 * TILEMAP_WIDTH / 16 ; $4c0c
-	call QueueVRAMCopy ; $4c0e
-	ret ; $4c11
+	twin_named queue_caption_row_to_vram, FlushLinkMessageRows ; $4c06

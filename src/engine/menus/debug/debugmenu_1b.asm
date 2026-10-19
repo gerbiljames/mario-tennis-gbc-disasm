@@ -249,7 +249,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	ld a, [hl] ; $66dd
 	farcall LoadCharacterRecordToBuffer ; $66de
 	farcall Unused_18_CheckUnlockFlag ; $66e1
-	jr z, .step ; $66e4
+	jr z, .nextEntry ; $66e4
 	ld a, [wCharRecordBuffer + 11] ; $66e6
 	farcall LoadCharMugshotToBuffer ; $66e9
 	ld a, [hl] ; $66ec
@@ -261,7 +261,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	call Unused_1b_GetUnlockDebugRosterField ; $66fa
 	ld a, [wCharRecordBuffer + 12] ; $66fd
 	farcall Unused_1b_SetMugshotAttrs ; $6700
-.step:
+.nextEntry:
 	ld a, $08 ; $6703
 	add l ; $6705
 	ld l, a ; $6706
@@ -403,31 +403,31 @@ Unused_1b_MoveUnlockDebugCursor:
 	ret ; $6826
 Unused_1b_StepUnlockDebugCursor:
 	bit 5, b ; $6827
-	jr z, .bit5Clear ; $6829
+	jr z, .checkRight ; $6829
 	dec d ; $682b
 	jr .wrapX ; $682c
-.bit5Clear:
+.checkRight:
 	bit 4, b ; $682e
-	jr z, .bit4Clear ; $6830
+	jr z, .checkUp ; $6830
 	inc d ; $6832
 	jr .wrapX ; $6833
-.bit4Clear:
+.checkUp:
 	bit 6, b ; $6835
-	jr z, .bit6Clear ; $6837
+	jr z, .checkDown ; $6837
 	dec e ; $6839
 	jr .wrapX ; $683a
-.bit6Clear:
+.checkDown:
 	bit 7, b ; $683c
 	jr z, .wrapX ; $683e
 	inc e ; $6840
 .wrapX:
 	ld a, d ; $6841
 	add a ; $6842
-	jr nc, .noCarry ; $6843
+	jr nc, .checkMaxX ; $6843
 	ld a, $05 ; $6845
 	dec a ; $6847
 	jr .storeX ; $6848
-.noCarry:
+.checkMaxX:
 	rra ; $684a
 	cp $05 ; $684b
 	jr c, .storeX ; $684d
@@ -436,11 +436,11 @@ Unused_1b_StepUnlockDebugCursor:
 	ld d, a ; $6850
 	ld a, e ; $6851
 	add a ; $6852
-	jr nc, .noCarry2 ; $6853
+	jr nc, .checkMaxY ; $6853
 	ld a, $02 ; $6855
 	dec a ; $6857
 	jr .storeY ; $6858
-.noCarry2:
+.checkMaxY:
 	rra ; $685a
 	cp $02 ; $685b
 	jr c, .storeY ; $685d

@@ -84,9 +84,9 @@ Unused_3e_GetEquipSelectTextRowPtr:
 	ld a, [wEquipItemKind] ; $58c0
 	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $58c3
-	jr z, .zero ; $58c4
+	jr z, .readEntry ; $58c4
 	ld hl, EquipSelectTextRows_3e ; $58c6
-.zero:
+.readEntry:
 	ld a, b ; $58c9
 	add a ; $58ca
 	add l ; $58cb
@@ -166,10 +166,10 @@ DrawHoveredItemStatMods:
 	ret ; $599d
 RenderShoesDescText:
 	ld hl, $00f7 ; $599e
-	jp RenderRacketDescText.step ; $59a1
+	jp RenderRacketDescText.addTextIndex ; $59a1
 RenderRacketDescText:
 	ld hl, Text_30_237 ; $59a4
-.step:
+.addTextIndex:
 	ld a, c ; $59a7
 	add l ; $59a8
 	ld l, a ; $59a9
@@ -184,10 +184,10 @@ RenderRacketDescText:
 	ret ; $59b7
 RenderShoesNameText:
 	ld hl, $00f4 ; $59b8
-	jp RenderRacketNameText.step ; $59bb
+	jp RenderRacketNameText.addTextIndex ; $59bb
 RenderRacketNameText:
 	ld hl, Text_30_229 ; $59be
-.step:
+.addTextIndex:
 	ld a, c ; $59c1
 	add l ; $59c2
 	ld l, a ; $59c3
@@ -274,9 +274,9 @@ GetItemStatModListPtr:
 	ld a, [wEquipItemKind] ; $5a49
 	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $5a4c
-	jr z, .zero ; $5a4d
+	jr z, .readEntry ; $5a4d
 	ld hl, ItemStatModListPtrTable ; $5a4f
-.zero:
+.readEntry:
 	ld a, b ; $5a52
 	add a ; $5a53
 	add l ; $5a54

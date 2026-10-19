@@ -570,6 +570,7 @@ engine/menus/scenes/AllBgPalettes.asm 0638a9 8 palettes
 engine/menus/scenes/Screen1ObjPalette.asm 0638c5 8 palettes
 engine/menus/scenes/Screen2ObjPalette.asm 063a41 8 palettes
 engine/menus/scenes/PaletteFadeTable_18.asm 063ab5 80 palettes
+engine/menus/scenes/ObjectSceneATilesPalettes.asm 063c0f 18 palettes
 engine/menus/scenes/ObjectSceneBPalette.asm 063d44 18 palettes
 engine/menus/scenes/ObjectArrayAWaveTable_18.bin 063e69 20
 engine/menus/scenes/ObjectArrayBDriftTable_18.bin 063ec8 2d
@@ -656,6 +657,11 @@ engine/menus/ranking/RankingBoardScreenPalettes.asm 06cf76 30 palettes
 engine/menus/ranking/RankingBoardAnimTaskTable.bin 06d97b 89
 engine/menus/minigame_select/lz_UnlockDebugCursorGfx.bin 06e90a 1d gfx
 engine/menus/minigame_select/UnlockDebugCursorPalette.asm 06e930 8 palettes
+engine/menus/minigame_select/MinigameLevelSelectPalette0.asm 06edae 8 palettes
+engine/menus/minigame_select/MinigameLevelSelectPalette1.asm 06edb6 8 palettes
+engine/menus/minigame_select/MinigameLevelSelectPalette2.asm 06edbe 8 palettes
+engine/menus/minigame_select/SavedDataTypePalette0.asm 06f3cd 8 palettes
+engine/menus/minigame_select/SavedDataTypePalette1.asm 06f3d5 8 palettes
 engine/menus/minigame_select/lz_ObjectSceneAGfx0.bin 06f8bd b3 gfx
 engine/menus/minigame_select/lz_ObjectSceneAGfx1.bin 06f970 50 gfx
 engine/menus/minigame_select/lz_ObjectSceneAGfx2.bin 06f9c0 b8 gfx
@@ -923,6 +929,7 @@ shots/BallPosDataReach_24.asm 092707 1000 traj:4:64
 shots/BallPosHeightOffsetsReach_24.asm 093719 40 words:1
 text/TextStrings_25.asm 09421a 391e text_pool
 text/TextStrings_26.asm 0981f6 3921 text_pool
+story/Unused_27_Palettes.asm 09d570 10 palettes
 story/End11TrainingCourtInitScriptPalette0_27.asm 09d580 40 palettes
 story/End11TrainingCourtInitScriptPalette1_27.asm 09d5c0 30 palettes
 engine/match/MatchGraphicsGfx.bin 0a0020 340 gfx
@@ -971,6 +978,7 @@ text/TextStrings_35.asm 0d4220 3909 text_pool
 text/TextStrings_36.asm 0d8592 392c text_pool
 text/TextStrings_37.asm 0dc204 391a text_pool
 engine/menus/char_select/MatchTypeLabelSpriteLayouts.bin 0e0695 8d
+engine/menus/char_select/CharGridScreenPalettes.asm 0e107f 28 palettes
 engine/menus/char_select/lz_CharGridScreenGfx1.bin 0e10a7 4a gfx
 engine/menus/char_select/CharGridScreenGfx2.bin 0e10f1 8
 engine/menus/char_select/lz_CharGridScreenGfx3.bin 0e10f9 9c gfx
@@ -1029,6 +1037,28 @@ gfx/lz_LinkErrorTilemap.bin 0ebc6f ef tilemap:32
 gfx/lz_LinkErrorAttrmap.bin 0ebd5e 5c tilemap:32
 gfx/LinkErrorPalettes.asm 0ebdba 40 palettes
 gfx/lz_LinkErrorLabelTiles.bin 0ebdfa e3 gfx
+engine/menus/main_menu/MainMenuItemPalette0.asm 0eda7c 8 palettes
+engine/menus/main_menu/MainMenuItemPalette1.asm 0eda84 8 palettes
+engine/menus/main_menu/MainMenuItemPalette2.asm 0eda8c 8 palettes
+engine/menus/main_menu/MainMenuItemPalette3.asm 0eda94 8 palettes
+engine/menus/main_menu/MainMenuItemPalette4.asm 0eda9c 8 palettes
+engine/menus/main_menu/MainMenuItemPalette5.asm 0edaa4 8 palettes
+engine/menus/main_menu/MatchFormatOptionsPalettes0.asm 0eddd4 8 palettes
+engine/menus/main_menu/MatchFormatOptionsPalettes1.asm 0edddc 8 palettes
+engine/menus/main_menu/MatchFormatOptionsPalettes2.asm 0edde4 8 palettes
+engine/menus/main_menu/SavedDataSourceCellPalette0.asm 0eeb73 8 palettes
+engine/menus/main_menu/SavedDataSourceCellPalette1.asm 0eeb7b 8 palettes
+engine/menus/main_menu/SavedDataCellPalette0.asm 0ef0f0 8 palettes
+engine/menus/main_menu/SavedDataCellPalette1.asm 0ef0f8 8 palettes
+engine/menus/main_menu/N64RecordTypeCellPalette0.asm 0ef482 8 palettes
+engine/menus/main_menu/N64RecordTypeCellPalette1.asm 0ef48a 8 palettes
+engine/menus/main_menu/N64RecordTypeCellPalette2.asm 0ef492 8 palettes
+engine/menus/main_menu/N64TransferItemCellPalette0.asm 0ef6a5 8 palettes
+engine/menus/main_menu/N64TransferItemCellPalette1.asm 0ef6ad 8 palettes
+engine/menus/main_menu/N64TransferItemCellPalette2.asm 0ef6b5 8 palettes
+engine/menus/main_menu/N64TransferItemCellPalette3.asm 0ef6bd 8 palettes
+engine/menus/ranking/BracketHighlightBlinkTaskPalettes0.asm 0ef9e9 8 palettes
+engine/menus/ranking/BracketHighlightBlinkTaskPalettes1.asm 0ef9f1 8 palettes
 gfx/lz_ModeSelectTiles.bin 0f007e 503 gfx
 gfx/lz_ModeSelectTilemap.bin 0f0581 10c tilemap:32
 gfx/lz_ModeSelectAttrmap.bin 0f068d 84 tilemap:32
@@ -1144,12 +1174,37 @@ gfx/TournamentBracketPalettes.asm 0f7ace 40 palettes
 gfx/lz_TournamentBracketDoublesTilemap.bin 0f7b0e 14b tilemap:32
 gfx/lz_TournamentBracketDoublesAttrmap.bin 0f7c59 66 tilemap:32
 engine/menus/common/SelectionBoxWobbleYTable_3e.bin 0f80ef 10
+engine/menus/link/MatchRulesInitialStatePalettes0.asm 0f85ef 8 palettes
+engine/menus/link/MatchRulesInitialStatePalettes1.asm 0f85f7 8 palettes
+engine/menus/link/MatchRulesInitialStatePalettes2.asm 0f85ff 8 palettes
+engine/menus/link/LinkStatusPalette0.asm 0f8a87 8 palettes
+engine/menus/link/LinkStatusPalette1.asm 0f8a8f 8 palettes
+engine/menus/link/LinkStatusPalette2.asm 0f8a97 8 palettes
+engine/menus/link/LinkStatusPalette3.asm 0f8a9f 8 palettes
+engine/menus/link/LinkErrorPalette_3e.asm 0f8b83 8 palettes
+engine/menus/equipment/EraseConfirmPalette_3e.asm 0f8e80 8 palettes
+engine/menus/equipment/RacketShoesChoicePalette0.asm 0f905d 8 palettes
+engine/menus/equipment/RacketShoesChoicePalette1.asm 0f9065 8 palettes
+engine/menus/equipment/PlayAlonePartnerPalette.asm 0f9345 10 palettes
 engine/menus/equipment/Palette_3e.asm 0f955b 8 palettes
+engine/menus/court_select/CourtSelect4Palette0.asm 0fa003 8 palettes
+engine/menus/court_select/CourtSelect4Palette1.asm 0fa00b 8 palettes
+engine/menus/court_select/CourtSelect4Palette2.asm 0fa013 8 palettes
+engine/menus/court_select/CourtSelect4Palette3.asm 0fa01b 8 palettes
 engine/menus/court_select/lz_CourtSelectTitleTiles.bin 0fa1d4 9f gfx
 engine/menus/court_select/lz_CourtSelectTitleTiles2Gfx.bin 0fa273 53 gfx
 engine/menus/court_select/lz_CourtSelectPanelTiles.bin 0fa2c6 1c9 gfx
 engine/menus/court_select/CourtSelect9CursorTemplate0_3e.bin 0fa78d 21
 engine/menus/court_select/CourtSelect9CursorTemplate1_3e.bin 0fa7ae 25
+engine/menus/court_select/CourtSelect9Palette0.asm 0fa8eb 8 palettes
+engine/menus/court_select/CourtSelect9Palette1.asm 0fa8f3 8 palettes
+engine/menus/court_select/CourtSelect9Palette2.asm 0fa8fb 8 palettes
+engine/menus/court_select/CourtSelect9Palette3.asm 0fa903 8 palettes
+engine/menus/court_select/CourtSelect9Palette4.asm 0fa90b 8 palettes
+engine/menus/court_select/CourtSelect9Palette5.asm 0fa913 8 palettes
+engine/menus/court_select/CourtSelect9Palette6.asm 0fa91b 8 palettes
+engine/menus/court_select/CourtSelect9Palette7.asm 0fa923 8 palettes
+engine/menus/court_select/CourtSelect9Palette8.asm 0fa92b 8 palettes
 engine/menus/court_select/lz_AwardCeremonyTiles.bin 0fa9d5 a51 gfx
 engine/menus/court_select/AwardCeremonyPalettes.asm 0fb426 40 palettes
 engine/menus/court_select/lz_AwardCeremonyTilemap5.bin 0fb466 117 tilemap:32

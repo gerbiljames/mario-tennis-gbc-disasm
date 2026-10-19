@@ -138,9 +138,9 @@ ScaleEchoVolume:
 	rr c ; $3db4
 	ld a, c ; $3db6
 	and a ; $3db7
-	jr nz, .nonZero ; $3db8
+	jr nz, .storeVolume ; $3db8
 	ld c, $01 ; $3dba
-.nonZero:
+.storeVolume:
 	swap c ; $3dbc
 	ldh a, [hSndVolume] ; $3dbe
 	ld d, a ; $3dc0

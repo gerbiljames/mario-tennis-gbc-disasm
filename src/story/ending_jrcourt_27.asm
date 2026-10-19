@@ -314,7 +314,7 @@ ActorScript_27_16:
 	; $682f, 55 bytes (actor_script)
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_field ACTORF_SPEED, $0008
-.L8:
+.pace:
 	as_set_target 45.0, 7.0
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_DOWN
@@ -331,7 +331,7 @@ ActorScript_27_16:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 240
 	as_wait 240
-	as_jump .L8
+	as_jump .pace
 End4JrCourtApproachSingles_27:
 	script_wait_frames 15 ; $6866
 	script_face_toward ACTOR_END4_JR_COURT_ALT_PAM, ACTOR_END4_JR_COURT_ALT_WALK_72_00 ; $686d

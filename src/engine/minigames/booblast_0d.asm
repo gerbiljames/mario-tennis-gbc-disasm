@@ -49,11 +49,7 @@ BananaBunchHook_BallHit:
 UpdateBananaBunchTargetHits:
 	call ScoreMinigameTargetHitOrDeflectBall ; $55a6
 	ret ; $55a9
-BananaBunchReflectBallAndRecordCell:
-	call ReflectBallVelocity ; $55aa
-	call GetMinigameGridCellIndex ; $55ad
-	ld [wMinigameLastHitCell], a ; $55b0
-	ret ; $55b3
+	twin_named banana_bunch_reflect_ball_and_record_cell, BananaBunchReflectBallAndRecordCell ; $55aa
 CopyMinigameTilemapBlock:
 	wram_bank WRAM_COURT_PLANES ; $55b4
 	ld de, wMinigameTargetGrid ; $55ba
@@ -70,7 +66,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 	ld [hl], $00 ; $55d0
 	ld a, [wMinigameHitTargetType] ; $55d2
 	cp $ff ; $55d5
-	jr z, ScoreMinigameTargetHitOrDeflectBall.eqff ; $55d7
+	jr z, ScoreMinigameTargetHitOrDeflectBall.deflectBall ; $55d7
 	ld a, [wMinigameHitTargetType] ; $55d9
 	ld_hl_indexed MinigameTargetTypeScores ; $55dc
 	ld e, [hl] ; $55e3
@@ -87,7 +83,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 MinigameTargetTypeScores:
 	; $55f9, 4 bytes (bytes:4)
 	db $01, $03, $05, $03 ; 0x00
-ScoreMinigameTargetHitOrDeflectBall.eqff:
+ScoreMinigameTargetHitOrDeflectBall.deflectBall:
 	ld a, [wMinigameLastHitCell] ; $55fd
 	cp $ff ; $5600
 	ret z ; $5602
@@ -111,10 +107,10 @@ InitMinigame_BooBlast:
 	ld [wMinigameIsBooBlast], a ; $5627
 	ld a, [wMinigameLevel] ; $562a
 	cp $02 ; $562d
-	jr nz, .ne02 ; $562f
+	jr nz, .loadParams ; $562f
 	ld a, $01 ; $5631
 	ld [wMinigameHighScoreMode], a ; $5633
-.ne02:
+.loadParams:
 	ld hl, BooBlastInitParams ; $5636
 	ld a, [hl+] ; $5639
 	ld [wPlayer2MainAiParams], a ; $563a
@@ -220,7 +216,7 @@ UpdateBooBlastHitStreak:
 	jr nz, .maskSet ; $56f5
 	ld a, [wMinigameHitScored] ; $56f7
 	and a ; $56fa
-	jr z, .step3 ; $56fb
+	jr z, .clearHitScored ; $56fb
 	jr .incrementCappedCounter ; $56fd
 .maskSet:
 	ld a, [wMinigameHitScored] ; $56ff
@@ -228,11 +224,11 @@ UpdateBooBlastHitStreak:
 	jr nz, .incrementCappedCounter ; $5703
 	xor a ; $5705
 	ld [wMinigameHitStreak], a ; $5706
-	jr .step3 ; $5709
+	jr .clearHitScored ; $5709
 .incrementCappedCounter:
 	ld b, $07 ; $570b
 	call IncrementCappedCounter ; $570d
-.step3:
+.clearHitScored:
 	xor a ; $5710
 	ld [wMinigameHitScored], a ; $5711
 	xor a ; $5714
@@ -270,7 +266,7 @@ BooBlastControllerState2:
 	ld h, $00 ; $574a
 	ld l, a ; $574c
 	add hl, hl ; $574d
-	ld de, $ff00 ; $574e
+	ld de, -256 ; $574e
 	add hl, de ; $5751
 	ld de, $0000 ; $5752
 	call SetMinigameActorWorldPos ; $5755
@@ -302,7 +298,7 @@ IsBallWithinTargetZone:
 	sub h ; $5779
 	ld h, a ; $577a
 .positive:
-	ld de, $ff80 ; $577b
+	ld de, -128 ; $577b
 	add hl, de ; $577e
 	jr c, .returnZero ; $577f
 	ld hl, wMinigameSceneActor + 8 ; $5781
@@ -344,7 +340,7 @@ IsBallWithinTargetZone:
 	sub h ; $57b1
 	ld h, a ; $57b2
 .positive3:
-	ld de, $ff00 ; $57b3
+	ld de, -256 ; $57b3
 	add hl, de ; $57b6
 	jr c, .returnZero ; $57b7
 	ld a, $01 ; $57b9

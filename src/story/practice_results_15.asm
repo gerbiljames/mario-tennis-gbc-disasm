@@ -342,10 +342,20 @@ InitReturnCoachScene:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7a16
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7a1b
 	ret ; $7a22
-Table_15:
-	; $7a23, 34 bytes (bytes:17)
-	db $03, $00, $2f, $00, $01, $01, $03, $03, $00, $2f, $00, $07, $01, $03, $0c, $f1, $ff ; 0x00
-	db $03, $00, $2f, $00, $01, $01, $05, $03, $00, $2f, $00, $07, $01, $05, $0c, $f1, $ff ; 0x11
+Unused_15_ActorScriptBlink3:
+	; $7a23, 17 bytes (actor_script)
+	as_set_pos 47.0, 1.0
+	as_wait 3
+	as_set_pos 47.0, 7.0
+	as_wait 3
+	as_jump Unused_15_ActorScriptBlink3
+Unused_15_ActorScriptBlink5:
+	; $7a34, 17 bytes (actor_script)
+	as_set_pos 47.0, 1.0
+	as_wait 5
+	as_set_pos 47.0, 7.0
+	as_wait 5
+	as_jump Unused_15_ActorScriptBlink5
 PlaceSwingPracticeKidActor:
 	ld a, [wStoryMainEquipment] ; $7a4b
 	and $0f ; $7a4e
@@ -395,7 +405,7 @@ ServeCoachWalkToCourtAndStartLesson:
 	ld [wStoryModeCurrentLocation], a ; $7aec
 	ld a, $0a ; $7aef
 	ld [wStoryModeEntryPoint], a ; $7af1
-	ld a, $ff ; $7af4
+	ld a, EXITTRIGGER_DIRECT ; $7af4
 	ld [wUnusedExitTriggerIdMirror], a ; $7af6
 	ld [wStoryModeExitTriggerRequest], a ; $7af9
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7afc
@@ -439,7 +449,7 @@ NetCoachWalkToCourtAndStartLesson:
 	ld [wStoryModeCurrentLocation], a ; $7b7f
 	ld a, $0a ; $7b82
 	ld [wStoryModeEntryPoint], a ; $7b84
-	ld a, $ff ; $7b87
+	ld a, EXITTRIGGER_DIRECT ; $7b87
 	ld [wUnusedExitTriggerIdMirror], a ; $7b89
 	ld [wStoryModeExitTriggerRequest], a ; $7b8c
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7b8f

@@ -1,7 +1,7 @@
 LoadMatchResultPalettes:
 	ld a, [wMatchWinLoseFlag] ; $4a0f
 	cp WINLOSE_LOSE ; $4a12
-	jr z, .eqff ; $4a14
+	jr z, .lost ; $4a14
 	ld a, $02 ; $4a16
 	ld [wAnimatedTileSet], a ; $4a18
 	ld hl, MatchResultPalettes1 ; $4a1b
@@ -11,7 +11,7 @@ LoadMatchResultPalettes:
 	ld_bg_pals de, 2, 1 ; $4a27
 	call LoadPaletteShadow ; $4a2a
 	ret ; $4a2d
-.eqff:
+.lost:
 	ld a, $03 ; $4a2e
 	ld [wAnimatedTileSet], a ; $4a30
 	ld hl, MatchResultPalettes1 ; $4a33
@@ -75,13 +75,13 @@ Unused_16_BuildMatchResultTilemap:
 .checkCurrentMinigameStoryMatch:
 	ld a, [wCurrentMinigameStoryMatch] ; $4a99
 	cp MATCHLIST_DOUBLES ; $4a9c
-	jr nz, .ne01 ; $4a9e
+	jr nz, .singles ; $4a9e
 	ld hl, $d3c7 ; $4aa0
 	ld de, $d200 ; $4aa3
 	rect_size $06, $02 ; $4aa6
 	farcall CopyTilemapRect ; $4aaa
 	jr .done ; $4aad
-.ne01:
+.singles:
 	ld hl, $d3c0 ; $4aaf
 	ld de, $d200 ; $4ab2
 	rect_size $07, $02 ; $4ab5
@@ -221,11 +221,11 @@ MatchResultTilemapScripts_16:
 AdvanceResultScreenTimer:
 	ld a, [wMatchWinLoseFlag] ; $4c9d
 	cp WINLOSE_LOSE ; $4ca0
-	jr nz, .neff ; $4ca2
+	jr nz, .scroll ; $4ca2
 	ldh a, [hVBlankCounter] ; $4ca4
 	and $01 ; $4ca6
 	ret z ; $4ca8
-.neff:
+.scroll:
 	ld a, [wRasterScrollX] ; $4ca9
 	inc a ; $4cac
 	ld [wRasterScrollX], a ; $4cad
@@ -233,7 +233,7 @@ AdvanceResultScreenTimer:
 QueueResultScreenSprites:
 	ld a, [wMatchWinLoseFlag] ; $4cb1
 	cp WINLOSE_LOSE ; $4cb4
-	jr z, .eqff ; $4cb6
+	jr z, .lost ; $4cb6
 	ld de, $0824 ; $4cb8
 	call QueueResultPortraitTop ; $4cbb
 	ld de, $502c ; $4cbe
@@ -243,7 +243,7 @@ QueueResultScreenSprites:
 	ld de, $4e68 ; $4cca
 	call QueueLoserMarkerForOpponent ; $4ccd
 	ret ; $4cd0
-.eqff:
+.lost:
 	ld de, $5860 ; $4cd1
 	call QueueResultPortraitTop ; $4cd4
 	ld de, $5068 ; $4cd7

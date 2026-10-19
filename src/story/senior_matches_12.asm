@@ -314,7 +314,7 @@ SeniorCourtReloadIntoVictoryScene:
 	ld [wStoryModeCurrentLocation], a ; $6d8c
 	ld a, $0d ; $6d8f
 	ld [wStoryModeEntryPoint], a ; $6d91
-	ld a, $ff ; $6d94
+	ld a, EXITTRIGGER_DIRECT ; $6d94
 	ld [wUnusedExitTriggerIdMirror], a ; $6d96
 	ld [wStoryModeExitTriggerRequest], a ; $6d99
 	farcall StubNop_1e ; $6d9c
@@ -323,11 +323,11 @@ SeniorCourtPostMatchReturn:
 	wram_bank WRAM_ACTORS ; $6da0
 	ld a, [wMatchExitRequest] ; $6da6
 	cp $01 ; $6da9
-	jr z, .eq01 ; $6dab
+	jr z, .lostOrQuit ; $6dab
 	ld a, [wMatchWinLoseFlag] ; $6dad
 	cp WINLOSE_WIN ; $6db0
 	jp z, SeniorMatchVictorySceneDispatch ; $6db2
-.eq01:
+.lostOrQuit:
 	script_player_speed 2.0 ; $6db5
 	script_move_player 45.0, 27.0 ; $6dbb
 	script_set_position ACTOR_PLAYER, 45.0, 27.0 ; $6dc5

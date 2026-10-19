@@ -448,10 +448,10 @@ AnimateTextArrowTask:
 	ld a, [hl+] ; $48fe
 	and $10 ; $48ff
 	or a ; $4901
-	jr z, .zero ; $4902
+	jr z, .evenPhase ; $4902
 	ld a, $20 ; $4904
 	jr .read ; $4906
-.zero:
+.evenPhase:
 	ld a, $0d ; $4908
 .read:
 	ld e, [hl] ; $490a

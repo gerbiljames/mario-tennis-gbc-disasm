@@ -131,9 +131,9 @@ CharDataScreen_InitState:
 	ld hl, wStoryMainName ; $413a
 	ld a, [wStoryCharacterSlot] ; $413d
 	or a ; $4140
-	jr z, .zero ; $4141
+	jr z, .levelField ; $4141
 	ld l, $40 ; $4143
-.zero:
+.levelField:
 	ld a, l ; $4145
 	add $18 ; $4146
 	ld l, a ; $4148
@@ -147,9 +147,9 @@ CharDataScreen_InitState:
 	ld hl, wStoryMainName ; $4153
 	ld a, [wStoryCharacterSlot] ; $4156
 	or a ; $4159
-	jr z, .zero2 ; $415a
+	jr z, .spinLevelField ; $415a
 	ld l, $40 ; $415c
-.zero2:
+.spinLevelField:
 	ld a, l ; $415e
 	add $38 ; $415f
 	ld l, a ; $4161
@@ -164,9 +164,9 @@ CharDataScreen_InitState:
 	ld hl, wStoryMainName ; $416f
 	ld a, [wStoryCharacterSlot] ; $4172
 	or a ; $4175
-	jr z, .zero3 ; $4176
+	jr z, .powerLevelField ; $4176
 	ld l, $40 ; $4178
-.zero3:
+.powerLevelField:
 	ld a, l ; $417a
 	add $39 ; $417b
 	ld l, a ; $417d
@@ -181,9 +181,9 @@ CharDataScreen_InitState:
 	ld hl, wStoryMainName ; $418b
 	ld a, [wStoryCharacterSlot] ; $418e
 	or a ; $4191
-	jr z, .zero4 ; $4192
+	jr z, .controlLevelField ; $4192
 	ld l, $40 ; $4194
-.zero4:
+.controlLevelField:
 	ld a, l ; $4196
 	add $3a ; $4197
 	ld l, a ; $4199
@@ -198,9 +198,9 @@ CharDataScreen_InitState:
 	ld hl, wStoryMainName ; $41a7
 	ld a, [wStoryCharacterSlot] ; $41aa
 	or a ; $41ad
-	jr z, .zero5 ; $41ae
+	jr z, .speedLevelField ; $41ae
 	ld l, $40 ; $41b0
-.zero5:
+.speedLevelField:
 	ld a, l ; $41b2
 	add $3b ; $41b3
 	ld l, a ; $41b5
@@ -640,9 +640,9 @@ CharDataScreen_DrawPortrait:
 	ld hl, wStoryMainName ; $459b
 	ld a, [wStoryCharacterSlot] ; $459e
 	or a ; $45a1
-	jr z, .zero ; $45a2
+	jr z, .paletteField ; $45a2
 	ld l, $40 ; $45a4
-.zero:
+.paletteField:
 	ld a, l ; $45a6
 	add $0c ; $45a7
 	ld l, a ; $45a9
@@ -658,9 +658,9 @@ CharDataScreen_DrawPortrait:
 	ld hl, wStoryMainName ; $45bd
 	ld a, [wStoryCharacterSlot] ; $45c0
 	or a ; $45c3
-	jr z, .zero2 ; $45c4
+	jr z, .charField ; $45c4
 	ld l, $40 ; $45c6
-.zero2:
+.charField:
 	ld a, l ; $45c8
 	add $0b ; $45c9
 	ld l, a ; $45cb
@@ -692,7 +692,7 @@ CharDataScreenAnimTask:
 	push_wram_bank WRAM_SCENE ; $45fe
 	ld a, [wCharDataFlushChunk] ; $4607
 	or a ; $460a
-	jp nz, .nonZero ; $460b
+	jp nz, .nextFlushChunk ; $460b
 	wram_bank WRAM_SCENE ; $460e
 	ld a, [wCharDataAnimCounter] ; $4614
 	inc a ; $4617
@@ -737,7 +737,7 @@ CharDataScreenAnimTask:
 	ld de, vTiles2 tile $5e + VRAM_BANK1 ; $465e
 	ld c, 2 ; $4661
 	call QueueVRAMCopy ; $4663
-.nonZero:
+.nextFlushChunk:
 	wram_bank WRAM_SCENE ; $4666
 	ld a, [wCharDataFlushChunk] ; $466c
 	inc a ; $466f

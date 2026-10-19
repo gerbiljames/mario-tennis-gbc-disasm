@@ -49,10 +49,10 @@ RenderWindowText:
 	ld b, a ; $560f
 	ld a, [wTextPageBreakRequest] ; $5610
 	or a ; $5613
-	jr z, .zero ; $5614
+	jr z, .noPageBreak ; $5614
 	xor a ; $5616
 	ld [wTextPageBreakRequest], a ; $5617
-.zero:
+.noPageBreak:
 	ld a, b ; $561a
 	cp $03 ; $561b
 	ld a, $01 ; $561d
@@ -262,7 +262,7 @@ MeasureTextDimensions:
 .loop:
 	ld a, [hl+] ; $574f
 	cp $00 ; $5750
-	jr z, .eq00 ; $5752
+	jr z, .endOfText ; $5752
 	cp $01 ; $5754
 	jr nz, .compare ; $5756
 	inc e ; $5758
@@ -297,7 +297,7 @@ MeasureTextDimensions:
 	add b ; $5785
 	ld b, a ; $5786
 	jr .loop ; $5787
-.eq00:
+.endOfText:
 	inc e ; $5789
 	ld a, d ; $578a
 	cp b ; $578b
@@ -447,12 +447,12 @@ ShowSpeakerDialogue:
 	call RenderActiveWindowText ; $58b5
 	ld a, [wTextPageBreakRequest] ; $58b8
 	or a ; $58bb
-	jr z, .zero ; $58bc
+	jr z, .closeDialogue ; $58bc
 	ld a, [wDialogueWindowId] ; $58be
 	call RestoreTilemapUnderWindow ; $58c1
 	call FitWindowToText ; $58c4
 	jr .loop ; $58c7
-.zero:
+.closeDialogue:
 	ld a, [wDialogueWindowId] ; $58c9
 	call CloseWindow ; $58cc
 	ld a, DIALOGUEWIN_NONE ; $58cf

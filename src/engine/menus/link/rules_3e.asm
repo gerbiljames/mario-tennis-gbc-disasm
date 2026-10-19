@@ -1,10 +1,5 @@
-; Instruction-identical to Unused_16_GetCellIndexFromCursorPtr and Unused_3b_GetCellIndexFromCursorPtr (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in get_cell_index_from_cursor_ptr, Unused_3e_GetCellIndexFromCursorPtr, 3e ; $43db Unused_3e_GetCellIndexFromCursorPtr
-; Instruction-identical to Unused_16_SetMenuCursorFromIndex, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3b (one copy per bank); a change here belongs in every copy.
 	twin_in set_menu_cursor_from_index, SetMenuCursorFromIndex_3e, 3e ; $43eb SetMenuCursorFromIndex_3e
-; Instruction-identical to Unused_16_SetMenuCursorFromIndexToPtr and Unused_38_SetMenuCursorFromIndexToPtr (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in set_menu_cursor_from_index_to_ptr, Unused_3e_SetMenuCursorFromIndexToPtr, 3e ; $43fd Unused_3e_SetMenuCursorFromIndexToPtr
 Unused_3e_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $440b
@@ -29,11 +24,7 @@ Unused_3e_ClearWram3Row64Alt:
 UpdateAnimatedTiles_3e:
 	farcall UpdateAnimatedTiles ; $4438
 	ret ; $443b
-; Instruction-identical to Unused_17_DrawNameWithDiacritics and DrawNameWithDiacritics_1b (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_name_with_diacritics, Unused_3e_DrawNameWithDiacritics, 3e ; $443c Unused_3e_DrawNameWithDiacritics
-; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_1b_DrawDecimalNumber and Unused_3b_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_3e_DrawDecimalNumber, 3e ; $4475 Unused_3e_DrawDecimalNumber
 Unused_3e_DrawAsciiDigitString:
 	ld a, [hl+] ; $4496
@@ -43,7 +34,6 @@ Unused_3e_DrawAsciiDigitString:
 	jr Unused_3e_DrawAsciiDigitString ; $449d
 .done:
 	ret ; $449f
-; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_17_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar and Unused_3b_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
 	twin_in draw_ascii_digit_char, Unused_3e_DrawAsciiDigitChar, 3e ; $44a0 Unused_3e_DrawAsciiDigitChar
 RestoreMenuScreenAndFadeIn:
 	call DisableLCDSafely ; $44b9
@@ -98,10 +88,10 @@ RunLinkMatchRulesMenu:
 	ld c, $03 ; $4532
 	call MoveMenuCursorGrid_3e ; $4534
 	or a ; $4537
-	jr z, .zero ; $4538
+	jr z, .cursorUnmoved ; $4538
 	sound SFX_MENU_MOVE ; $453a
 	call DrawMatchRulesCaption ; $453c
-.zero:
+.cursorUnmoved:
 	push af ; $453f
 	farcall RunLinkInputFrame ; $4540
 	pop af ; $4543
@@ -185,14 +175,11 @@ DrawMatchRulesInitialState:
 	call LoadPaletteShadow ; $45eb
 	ret ; $45ee
 MatchRulesInitialStatePalettes0:
-	; $45ef, 8 bytes (bytes:8)
-	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/link/MatchRulesInitialStatePalettes0.asm" ; $45ef, 8 bytes (palettes)
 MatchRulesInitialStatePalettes1:
-	; $45f7, 8 bytes (bytes:8)
-	db $df, $02, $ff, $7f, $1f, $01, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/link/MatchRulesInitialStatePalettes1.asm" ; $45f7, 8 bytes (palettes)
 MatchRulesInitialStatePalettes2:
-	; $45ff, 8 bytes (bytes:8)
-	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/link/MatchRulesInitialStatePalettes2.asm" ; $45ff, 8 bytes (palettes)
 LoadMatchRulesMenuGraphics:
 	push_wram_bank WRAM_STAGING ; $4607
 	ld c, $00 ; $4610
@@ -318,7 +305,7 @@ MatchRulesMenuTable:
 OpenMatchRulesPanel:
 	ld a, b ; $46f4
 	or a ; $46f5
-	jr z, .zero ; $46f6
+	jr z, .slideBack ; $46f6
 	ld c, $00 ; $46f8
 .loop:
 	call AdvanceFrame ; $46fa
@@ -333,7 +320,7 @@ OpenMatchRulesPanel:
 	jr nz, .loop ; $470c
 	call AdvanceFrame ; $470e
 	ret ; $4711
-.zero:
+.slideBack:
 	ld c, $0a ; $4712
 .loopB:
 	call AdvanceFrame ; $4714
@@ -348,7 +335,6 @@ OpenMatchRulesPanel:
 	jr nz, .loopB ; $4726
 	call AdvanceFrame ; $4728
 	ret ; $472b
-; Instruction-identical to MatchFormatSlideOut (one copy per bank); a change here belongs in every copy.
 	twin_named match_format_slide_out, CloseMatchRulesPanel ; $472c
 HandleMatchRulesToggleInput:
 	ld a, [wMenuInputPressed] ; $475d
@@ -386,11 +372,11 @@ HandleMatchRulesToggleInput:
 	ld a, [wMatchFormatSets] ; $479f
 	dec a ; $47a2
 	add a ; $47a3
-	jr nc, .noCarry ; $47a4
+	jr nc, .noUnderflow ; $47a4
 	ld a, $03 ; $47a6
 	dec a ; $47a8
 	jr .store ; $47a9
-.noCarry:
+.noUnderflow:
 	rra ; $47ab
 	cp $03 ; $47ac
 	jr c, .store ; $47ae
@@ -431,11 +417,11 @@ HandleMatchRulesToggleInput:
 	ld a, [wMatchFormatSets] ; $47f6
 	inc a ; $47f9
 	add a ; $47fa
-	jr nc, .noCarry2 ; $47fb
+	jr nc, .noUnderflow2 ; $47fb
 	ld a, $03 ; $47fd
 	dec a ; $47ff
 	jr .store2 ; $4800
-.noCarry2:
+.noUnderflow2:
 	rra ; $4802
 	cp $03 ; $4803
 	jr c, .store2 ; $4805

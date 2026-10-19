@@ -487,7 +487,7 @@ ActorScriptOp_Step:
 	ld e, a ; $46c3
 	ld c, d ; $46c4
 	push de ; $46c5
-	ld de, $fffd ; $46c6
+	ld de, -3 ; $46c6
 	add hl, de ; $46c9
 	ld a, [hl+] ; $46ca
 	ld d, [hl] ; $46cb
@@ -498,7 +498,7 @@ ActorScriptOp_Step:
 	add hl, de ; $46d2
 	ld a, [hl] ; $46d3
 	push af ; $46d4
-	ld de, $fff2 ; $46d5
+	ld de, -14 ; $46d5
 	add hl, de ; $46d8
 	ld a, [hl+] ; $46d9
 	ld d, [hl] ; $46da

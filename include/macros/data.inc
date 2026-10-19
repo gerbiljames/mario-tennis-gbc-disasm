@@ -94,12 +94,18 @@ MACRO match_settings
 	db \1, \2, \3, ((\4) << 4) | (\5), \6
 ENDM
 
-; A training drill's per-outcome byte row: ten entries indexed by
-; wPointOutcome -- 0 undecided, then POINTOUTCOME_FAULT, DOUBLE_FAULT, LET,
-; NET, OUT, WINNER, SERVE_VOLLEYED, WRONG_RECEIVER, BALL_HIT_PLAYER -- a
-; message id ($ff = none) in the *DrillShotTable rows, a signed verdict in
-; the SignedTable_0b_* rows.
-MACRO drill_outcomes
+; A training drill's per-outcome rows: ten entries indexed by wPointOutcome --
+; 0 undecided, then POINTOUTCOME_FAULT, DOUBLE_FAULT, LET, NET, OUT, WINNER,
+; SERVE_VOLLEYED, WRONG_RECEIVER, BALL_HIT_PLAYER. *Messages rows hold the
+; DRILLMSG_* id for the player serving (QueueDrillResultMessage adds an offset
+; otherwise); *Verdicts rows hold the WINLOSE_* the point gives.
+MACRO drill_messages
+	ASSERT _NARG == 10, "drill_messages takes 10 entries"
+	db \1, \2, \3, \4, \5, \6, \7, \8, \9, \<10>
+ENDM
+
+MACRO drill_verdicts
+	ASSERT _NARG == 10, "drill_verdicts takes 10 entries"
 	db \1, \2, \3, \4, \5, \6, \7, \8, \9, \<10>
 ENDM
 
@@ -279,4 +285,13 @@ ENDM
 ; Usage: gfx_set tiles_lo, tiles_mid, tiles_hi
 MACRO gfx_set
 	dw \1, \2, \3
+ENDM
+
+; One run of a BlitTilemapRunsFromTable list: copy `length` bytes from the
+; source row (bc) + `src` to wScreenAttrmap at (`col`, `row`). A $ff byte
+; ends the list.
+;   blit_run col, row, src, length
+MACRO blit_run
+	ASSERT (\1) < TILEMAP_WIDTH && (\2) * TILEMAP_WIDTH + (\1) < $ff00, "blit_run: bad cell"
+	db HIGH((\2) * TILEMAP_WIDTH + (\1)), LOW((\2) * TILEMAP_WIDTH + (\1)), \3, \4
 ENDM

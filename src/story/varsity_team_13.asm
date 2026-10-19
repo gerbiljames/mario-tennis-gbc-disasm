@@ -1,10 +1,4 @@
-VarsityCourtANpc03FaceUp_13:
-	script_set_speed ACTOR_PLAYER, 0.25 ; $6c13
-	script_lock_facing ACTOR_PLAYER ; $6c1b
-	script_move_target ACTOR_PLAYER, 13.0, 31.0 ; $6c22
-	script_wait_move ACTOR_PLAYER ; $6c2d
-	script_unlock_facing ACTOR_PLAYER ; $6c32
-	script_face ACTOR_PLAYER, FACE_UP ; $6c39
+	twin_named varsity_court_npc03_face_up, VarsityCourtANpc03FaceUp_13 ; $6c13
 VarsityCourtANpc03_13:
 	script_set_text Text_30_544 ; $6c40
 	script_speak_restore ACTOR_VARSITY_COURT_A_KEVIN ; $6c46
@@ -59,7 +53,7 @@ VarsityCourtANpc03_13:
 	ld [wStoryModeCurrentLocation], a ; $6d5d
 	ld a, $0d ; $6d60
 	ld [wStoryModeEntryPoint], a ; $6d62
-	ld a, $ff ; $6d65
+	ld a, EXITTRIGGER_DIRECT ; $6d65
 	ld [wUnusedExitTriggerIdMirror], a ; $6d67
 	ld [wStoryModeExitTriggerRequest], a ; $6d6a
 	script_null_script ACTOR_VARSITY_COURT_A_BETH ; $6d6d
@@ -97,13 +91,7 @@ VarsityCourtANpc03_13:
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6e17
 	call ReturnVarsityCourtANpc04ToSpawn_13 ; $6e1c
 	ret ; $6e1f
-VarsityCourtBNpc03FaceUp_13:
-	script_set_speed ACTOR_PLAYER, 0.25 ; $6e20
-	script_lock_facing ACTOR_PLAYER ; $6e28
-	script_move_target ACTOR_PLAYER, 13.0, 31.0 ; $6e2f
-	script_wait_move ACTOR_PLAYER ; $6e3a
-	script_unlock_facing ACTOR_PLAYER ; $6e3f
-	script_face ACTOR_PLAYER, FACE_UP ; $6e46
+	twin_named varsity_court_npc03_face_up, VarsityCourtBNpc03FaceUp_13 ; $6e20
 VarsityCourtBNpc03_13:
 	script_null_script ACTOR_PARTNER ; $6e4d
 	script_set_text Text_31_12 ; $6e52
@@ -171,7 +159,7 @@ VarsityCourtBNpc03_13:
 	ld [wStoryModeCurrentLocation], a ; $6fcf
 	ld a, $0d ; $6fd2
 	ld [wStoryModeEntryPoint], a ; $6fd4
-	ld a, $ff ; $6fd7
+	ld a, EXITTRIGGER_DIRECT ; $6fd7
 	ld [wUnusedExitTriggerIdMirror], a ; $6fd9
 	ld [wStoryModeExitTriggerRequest], a ; $6fdc
 	script_set_speed ACTOR_PLAYER, 1.0 ; $6fdf
@@ -232,7 +220,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_respawn_actors SinglesTravelingTeamActors_13 ; $7101
 	script_null_script ACTOR_PLAYER_SHADOW ; $7109
 	script_player_speed 2.0 ; $710e
-	call ApplyPartnerCharacterVariant_13 ; $7114
+	call SetPartnerObjDefByGender_13 ; $7114
 	script_set_position ACTOR_PLAYER, 11.0, 29.0 ; $7117
 	script_set_position ACTOR_PARTNER, 13.0, 35.0 ; $7122
 	script_face ACTOR_PLAYER, FACE_UP ; $712d
@@ -362,7 +350,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_text Text_31_22 ; $744f
 	script_respawn_actors DoublesTravelingTeamActors_13 ; $7455
 	farcall BeginCutsceneScriptMode ; $745d
-	call ApplyPartnerCharacterVariant_13 ; $7460
+	call SetPartnerObjDefByGender_13 ; $7460
 	script_null_script ACTOR_PARTNER ; $7463
 	script_null_script ACTOR_PLAYER_SHADOW ; $7468
 	script_player_speed 2.0 ; $746d

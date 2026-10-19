@@ -12,10 +12,10 @@
 	inc hl
 	ld a, [hl]
 	cp $de
-	jr z, .eqde
+	jr z, .diacritic
 	cp $df
-	jr nz, .nedf
-.eqde:
+	jr nz, .nextColumn
+.diacritic:
 	push hl
 	push bc
 	ld h, d
@@ -33,7 +33,7 @@
 	pop bc
 	pop hl
 	inc hl
-.nedf:
+.nextColumn:
 	inc de
 	ld a, e
 	and $1f

@@ -38,11 +38,7 @@ Unused_17_ClearWram3Row64Alt:
 UpdateAnimatedTilesTask_17:
 	farcall UpdateAnimatedTiles ; $4406
 	ret ; $4409
-; Instruction-identical to DrawNameWithDiacritics_1b and Unused_3e_DrawNameWithDiacritics (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_name_with_diacritics, Unused_17_DrawNameWithDiacritics, 17 ; $440a Unused_17_DrawNameWithDiacritics
-; Instruction-identical to Unused_1b_DrawDecimalNumber, Unused_3b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_17_DrawDecimalNumber, 17 ; $4443 Unused_17_DrawDecimalNumber
 Unused_17_DrawAsciiDigitString:
 	ld a, [hl+] ; $4464
@@ -52,7 +48,6 @@ Unused_17_DrawAsciiDigitString:
 	jr Unused_17_DrawAsciiDigitString ; $446b
 .done:
 	ret ; $446d
-; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar, Unused_3b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
 	twin_in draw_ascii_digit_char, Unused_17_DrawAsciiDigitChar, 17 ; $446e Unused_17_DrawAsciiDigitChar
 ShowDrillBriefingScreen:
 	xor a ; $4487
@@ -266,16 +261,16 @@ CycleDiagramTargetPalette:
 	srl a ; $468f
 	srl a ; $4691
 	add a ; $4693
-	jr nc, .noCarry ; $4694
+	jr nc, .wrapIndex ; $4694
 	ld a, $0c ; $4696
 	dec a ; $4698
-	jr .step2 ; $4699
-.noCarry:
+	jr .lookupColor ; $4699
+.wrapIndex:
 	rra ; $469b
 	cp $0c ; $469c
-	jr c, .step2 ; $469e
+	jr c, .lookupColor ; $469e
 	xor a ; $46a0
-.step2:
+.lookupColor:
 	add a ; $46a1
 	ld hl, DiagramTargetPaletteRamp_17 ; $46a2
 	add l ; $46a5
@@ -359,9 +354,9 @@ DrawBriefingMarkerHFlip:
 	ld b, $09 ; $475d
 	ld a, [wBriefingHMarkerUnflipped] ; $475f
 	cp $01 ; $4762
-	jr z, .eq01 ; $4764
+	jr z, .gotAttr ; $4764
 	ld b, $29 ; $4766
-.eq01:
+.gotAttr:
 	ld a, [wBriefingHMarkerX] ; $4768
 	ld d, a ; $476b
 	ldh a, [hVBlankCounter] ; $476c
@@ -394,9 +389,9 @@ DrawBriefingSwingAnim:
 	ld hl, BriefingSwingAnimTable1 ; $47a3
 	ld a, [wBriefingSwingFrame] ; $47a6
 	cp $06 ; $47a9
-	jr nc, .ge06 ; $47ab
+	jr nc, .gotTemplate ; $47ab
 	ld hl, DrawBriefingSwingAnim_SpriteTemplate ; $47ad
-.ge06:
+.gotTemplate:
 	ld a, [wBriefingSwingX] ; $47b0
 	ld d, a ; $47b3
 	ld a, [wBriefingSwingY] ; $47b4
@@ -441,9 +436,9 @@ DrawBriefingMarkerVFlip:
 	ld b, $09 ; $4827
 	ld a, [wBriefingVMarkerUpright] ; $4829
 	cp $01 ; $482c
-	jr z, .eq01 ; $482e
+	jr z, .gotAttr ; $482e
 	ld b, OAM_BANK1 | OAM_YFLIP | 1 ; $4830
-.eq01:
+.gotAttr:
 	ld a, [wBriefingVMarkerX] ; $4832
 	ld d, a ; $4835
 	ld a, [wBriefingVMarkerY] ; $4836

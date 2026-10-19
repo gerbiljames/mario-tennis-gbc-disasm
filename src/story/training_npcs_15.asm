@@ -433,15 +433,15 @@ TrainingCourtInitScript_15:
 TrainingCourtResultDispatch:
 	ld a, [wMatchExitRequest] ; $536d
 	cp $01 ; $5370
-	jr nz, .ne01 ; $5372
+	jr nz, .notQuit ; $5372
 	call TrainingCourtReentryDispatch ; $5374
 	ret ; $5377
-.ne01:
+.notQuit:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5378
 	cp MINIGAME_TENNIS_MACHINE_1 ; $537b
-	jr c, .lt12 ; $537d
+	jr c, .dispatchResult ; $537d
 	ret ; $537f
-.lt12:
+.dispatchResult:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
 	ld a, a ; $5383
 	rst Rst00 ; $5384

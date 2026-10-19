@@ -11,9 +11,9 @@ StrokePractice1Hook_PointEnd:
 	call StrokePractice1JudgeOnPointEnd ; $6be1
 	ld a, [wPointOutcome] ; $6be4
 	cp POINTOUTCOME_OUT ; $6be7
-	jr z, .eq05 ; $6be9
+	jr z, .ballOut ; $6be9
 	jr .strokePractice1HandlePointEnd ; $6beb
-.eq05:
+.ballOut:
 	ld hl, wDrillCounters + 1 ; $6bed
 	inc [hl] ; $6bf0
 .strokePractice1HandlePointEnd:
@@ -24,7 +24,6 @@ StrokePractice1Hook_PointEnd:
 	call StrokePractice1EvaluateResult ; $6bfa
 	ld [wPointWinLoseFlag], a ; $6bfd
 	ret ; $6c00
-; Instruction-identical to StrokePractice3EvaluateResult (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_evaluate_result, StrokePractice1EvaluateResult ; $6c01
 StrokePractice1Hook_RallyTick:
 	call StrokePractice1JudgeOnRallyTick ; $6c4a
@@ -58,7 +57,6 @@ StrokePractice1Table:
 	dw $0000 ; record 14
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
-; Instruction-identical to StrokePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_handle_point_end, StrokePractice1HandlePointEnd ; $6c81
 StrokePractice1JudgeOnPointEnd:
 	ld a, $00 ; $6cd0
@@ -105,7 +103,7 @@ StrokePractice1JudgePoint:
 	dw StrokePractice1Cases1.returnZero2 ; $6d0e jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6d10
-	ld hl, StrokePractice1JudgePointSignedTable ; $6d13
+	ld hl, StrokePractice1JudgePointMessages ; $6d13
 	add l ; $6d16
 	ld l, a ; $6d17
 	jr nc, .readEntry1 ; $6d18
@@ -116,7 +114,7 @@ StrokePractice1JudgePoint:
 	ld b, $00 ; $6d1d
 	call QueueDrillResultMessage ; $6d1f
 	ld a, [wPointOutcome] ; $6d22
-	ld hl, SignedTable_0b_01 ; $6d25
+	ld hl, EvenRallyVerdicts ; $6d25
 	add l ; $6d28
 	ld l, a ; $6d29
 	jr nc, .readEntry2 ; $6d2a
@@ -124,9 +122,9 @@ StrokePractice1JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6d2d
 	ret ; $6d2e
-StrokePractice1JudgePointSignedTable:
-	; $6d2f, 10 bytes (bytes:10)
-	db $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59 ; 0x00
+StrokePractice1JudgePointMessages:
+	; $6d2f, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_PASS, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL
 StrokePractice1Cases1:
 	xor a ; $6d39
 	ret ; $6d3a
@@ -146,7 +144,7 @@ StrokePractice1Cases1:
 	dw StrokePractice1Cases2.storeMatchAbortFlag2 ; $6d48 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6d4a
-	ld hl, StrokePractice1Cases1SignedTable ; $6d4d
+	ld hl, StrokePractice1Cases1Messages ; $6d4d
 	add l ; $6d50
 	ld l, a ; $6d51
 	jr nc, .read ; $6d52
@@ -157,7 +155,7 @@ StrokePractice1Cases1:
 	ld b, $00 ; $6d57
 	call QueueDrillResultMessage ; $6d59
 	ld a, [wPointOutcome] ; $6d5c
-	ld hl, SignedTable_0b_00 ; $6d5f
+	ld hl, OddRallyVerdicts ; $6d5f
 	add l ; $6d62
 	ld l, a ; $6d63
 	jr nc, .readB ; $6d64
@@ -165,10 +163,9 @@ StrokePractice1Cases1:
 .readB:
 	ld a, [hl] ; $6d67
 	ret ; $6d68
-StrokePractice1Cases1SignedTable:
-	; $6d69, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
-; Instruction-identical to StrokePractice3Cases2 (in this bank); a change here belongs in every copy.
+StrokePractice1Cases1Messages:
+	; $6d69, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT
 	twin_named stroke_practice1_cases2, StrokePractice1Cases2 ; $6d73
 StrokePractice2Drill:
 	; $6dae, 16 bytes
@@ -215,7 +212,7 @@ StrokePractice2Hook_PointStart:
 	ld hl, StrokePractice2TargetZoneDelayTask ; $6e02
 	call RegisterFrameTask ; $6e05
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e08
-	ld hl, StrokePractice2PointStartTable ; $6e0b
+	ld hl, StrokePractice2ServeAims ; $6e0b
 	add l ; $6e0e
 	ld l, a ; $6e0f
 	jr nc, .read ; $6e10
@@ -224,9 +221,9 @@ StrokePractice2Hook_PointStart:
 	ld a, [hl] ; $6e13
 	ld [wAiServeAimOverride], a ; $6e14
 	ret ; $6e17
-StrokePractice2PointStartTable:
+StrokePractice2ServeAims:
 	; $6e18, 4 bytes (bytes:4)
-	db $20, $10, $10, $20 ; 0x00
+	db PADF_LEFT, PADF_RIGHT, PADF_RIGHT, PADF_LEFT
 StrokePractice2TargetZoneDelayTask:
 	ld hl, wDrillCounters + 8 ; $6e1c
 	dec [hl] ; $6e1f
@@ -248,19 +245,19 @@ StrokePractice2Hook_PointEnd:
 StrokePractice2EvaluateResult:
 	ld a, [wDrillCounters + 7] ; $6e40
 	cp $04 ; $6e43
-	jr nz, .ne04 ; $6e45
+	jr nz, .checkCounter7 ; $6e45
 	xor a ; $6e47
 	ld [wDrillLessonResult], a ; $6e48
 	ld a, $01 ; $6e4b
 	ret ; $6e4d
-.ne04:
+.checkCounter7:
 	ld a, [wDrillCounters + 7] ; $6e4e
 	cp $03 ; $6e51
-	jr c, .lt03 ; $6e53
+	jr c, .checkCounter2 ; $6e53
 	ld a, $05 ; $6e55
 	ld [wDrillLessonResult], a ; $6e57
 	jr .notFound ; $6e5a
-.lt03:
+.checkCounter2:
 	ld a, [wDrillCounters + 2] ; $6e5c
 	cp $04 ; $6e5f
 	jr nc, .checkRallyLength ; $6e61
@@ -270,7 +267,7 @@ StrokePractice2EvaluateResult:
 .checkRallyLength:
 	ld a, [wRallyLength] ; $6e6a
 	cp $03 ; $6e6d
-	jr nc, .step3 ; $6e6f
+	jr nc, .result4 ; $6e6f
 	ld a, [wShotRecoilVariant] ; $6e71
 	cp $01 ; $6e74
 	jr nz, .compare ; $6e76
@@ -279,11 +276,11 @@ StrokePractice2EvaluateResult:
 	jr .notFound ; $6e7d
 .compare:
 	cp $02 ; $6e7f
-	jr nz, .step3 ; $6e81
+	jr nz, .result4 ; $6e81
 	ld a, $03 ; $6e83
 	ld [wDrillLessonResult], a ; $6e85
 	jr .notFound ; $6e88
-.step3:
+.result4:
 	ld a, $04 ; $6e8a
 	ld [wDrillLessonResult], a ; $6e8c
 .notFound:
@@ -384,7 +381,7 @@ StrokePractice2JudgePoint:
 	dw StrokePractice2Cases1.returnZero2 ; $6f56 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6f58
-	ld hl, StrokePractice2JudgePointDrillShotTable ; $6f5b
+	ld hl, StrokePractice2JudgePointMessages ; $6f5b
 	add l ; $6f5e
 	ld l, a ; $6f5f
 	jr nc, .readEntry1 ; $6f60
@@ -395,7 +392,7 @@ StrokePractice2JudgePoint:
 	ld b, $00 ; $6f65
 	call QueueDrillResultMessage ; $6f67
 	ld a, [wPointOutcome] ; $6f6a
-	ld hl, SignedTable_0b_01 ; $6f6d
+	ld hl, EvenRallyVerdicts ; $6f6d
 	add l ; $6f70
 	ld l, a ; $6f71
 	jr nc, .readEntry2 ; $6f72
@@ -403,9 +400,9 @@ StrokePractice2JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6f75
 	ret ; $6f76
-StrokePractice2JudgePointDrillShotTable:
-	; $6f77, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59
+StrokePractice2JudgePointMessages:
+	; $6f77, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_PASS, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL
 StrokePractice2Cases1:
 	xor a ; $6f81
 	ret ; $6f82
@@ -425,7 +422,7 @@ StrokePractice2Cases1:
 	dw StrokePractice2Cases2.storeMatchAbortFlag2 ; $6f90 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6f92
-	ld hl, StrokePractice2Cases1DrillShotTable ; $6f95
+	ld hl, StrokePractice2Cases1Messages ; $6f95
 	add l ; $6f98
 	ld l, a ; $6f99
 	jr nc, .read ; $6f9a
@@ -436,7 +433,7 @@ StrokePractice2Cases1:
 	ld b, $00 ; $6f9f
 	call QueueDrillResultMessage ; $6fa1
 	ld a, [wPointOutcome] ; $6fa4
-	ld hl, SignedTable_0b_00 ; $6fa7
+	ld hl, OddRallyVerdicts ; $6fa7
 	add l ; $6faa
 	ld l, a ; $6fab
 	jr nc, .readB ; $6fac
@@ -444,9 +441,9 @@ StrokePractice2Cases1:
 .readB:
 	ld a, [hl] ; $6faf
 	ret ; $6fb0
-StrokePractice2Cases1DrillShotTable:
-	; $6fb1, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57
+StrokePractice2Cases1Messages:
+	; $6fb1, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT
 StrokePractice2Cases2:
 	ld a, [wBallBounceCount] ; $6fbb
 	or a ; $6fbe
@@ -472,7 +469,7 @@ StrokePractice2Cases2:
 	call RecordDrillTargetZoneHit ; $6fe4
 	call CheckDrillTargetZoneMissed ; $6fe7
 	or a ; $6fea
-	jp nz, .nonZero ; $6feb
+	jp nz, .hitTarget ; $6feb
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3 ; $6fee
 	ld b, $00 ; $6ff0
 	call QueueDrillResultMessage ; $6ff2
@@ -482,7 +479,7 @@ StrokePractice2Cases2:
 .storeMatchAbortFlag2:
 	xor a ; $6ffc
 	ret ; $6ffd
-.nonZero:
+.hitTarget:
 	ld a, MATCHABORT_POINT ; $6ffe
 	ld [wMatchAbortFlag], a ; $7000
 	ld a, $01 ; $7003
@@ -509,13 +506,7 @@ StrokePractice3Hooks:
 	dw StrokePractice3Hook_Bounce ; record 5
 	dw StrokePractice3Hook_RallyTick ; record 6
 	dw RetStub ; record 7
-StrokePractice3Hook_MinigameStart:
-	ld a, $01 ; $7034
-	ld [wDrillIsPracticeLesson], a ; $7036
-	xor a ; $7039
-	ld [wDrillCounters + 2], a ; $703a
-	ld [wDrillCounters + 1], a ; $703d
-	ret ; $7040
+	twin_named stroke_practice1_hook_minigame_start, StrokePractice3Hook_MinigameStart ; $7034
 StrokePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $7041
 	ret ; $7044
@@ -539,7 +530,7 @@ StrokePractice3Hook_PointStart:
 	ld hl, StrokePractice3TargetZoneDelayTask ; $7067
 	call RegisterFrameTask ; $706a
 	ld a, [wTotalPointsScoredInCurrentGame] ; $706d
-	ld hl, StrokePractice3PointStartTable ; $7070
+	ld hl, StrokePractice3ServeAims ; $7070
 	add l ; $7073
 	ld l, a ; $7074
 	jr nc, .read ; $7075
@@ -548,9 +539,9 @@ StrokePractice3Hook_PointStart:
 	ld a, [hl] ; $7078
 	ld [wAiServeAimOverride], a ; $7079
 	ret ; $707c
-StrokePractice3PointStartTable:
+StrokePractice3ServeAims:
 	; $707d, 4 bytes (bytes:4)
-	db $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $00
 StrokePractice3TargetZoneDelayTask:
 	ld hl, wDrillCounters + 8 ; $7081
 	dec [hl] ; $7084
@@ -569,7 +560,6 @@ StrokePractice3Hook_PointEnd:
 	call StrokePractice3EvaluateResult ; $709e
 	ld [wPointWinLoseFlag], a ; $70a1
 	ret ; $70a4
-; Instruction-identical to StrokePractice1EvaluateResult (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_evaluate_result, StrokePractice3EvaluateResult ; $70a5
 StrokePractice3Hook_RallyTick:
 	call StrokePractice3JudgeOnRallyTick ; $70ee
@@ -595,7 +585,6 @@ StrokePractice3PointStartDrillPositions:
 	drill_gates $fe50, $02a0, $fee0, $04e0 ; point 2
 	drill_gates $0120, $02a0, $01b0, $04e0 ; point 3
 	db $ff, $ff ; end
-; Instruction-identical to StrokePractice1HandlePointEnd (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_handle_point_end, StrokePractice3HandlePointEnd ; $712b
 StrokePractice3JudgeOnPointEnd:
 	ld a, $00 ; $717a
@@ -639,7 +628,7 @@ StrokePractice3JudgePoint:
 	dw StrokePractice3Cases1.returnZero2 ; $71b8 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $71ba
-	ld hl, StrokePractice3JudgePointDrillShotTable ; $71bd
+	ld hl, StrokePractice3JudgePointMessages ; $71bd
 	add l ; $71c0
 	ld l, a ; $71c1
 	jr nc, .readEntry1 ; $71c2
@@ -650,7 +639,7 @@ StrokePractice3JudgePoint:
 	ld b, $00 ; $71c7
 	call QueueDrillResultMessage ; $71c9
 	ld a, [wPointOutcome] ; $71cc
-	ld hl, SignedTable_0b_01 ; $71cf
+	ld hl, EvenRallyVerdicts ; $71cf
 	add l ; $71d2
 	ld l, a ; $71d3
 	jr nc, .readEntry2 ; $71d4
@@ -658,9 +647,9 @@ StrokePractice3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $71d7
 	ret ; $71d8
-StrokePractice3JudgePointDrillShotTable:
-	; $71d9, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59
+StrokePractice3JudgePointMessages:
+	; $71d9, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_PASS, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL
 StrokePractice3Cases1:
 	xor a ; $71e3
 	ret ; $71e4
@@ -680,7 +669,7 @@ StrokePractice3Cases1:
 	dw StrokePractice3Cases2.storeMatchAbortFlag2 ; $71f2 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $71f4
-	ld hl, StrokePractice3Cases1DrillShotTable ; $71f7
+	ld hl, StrokePractice3Cases1Messages ; $71f7
 	add l ; $71fa
 	ld l, a ; $71fb
 	jr nc, .read ; $71fc
@@ -691,7 +680,7 @@ StrokePractice3Cases1:
 	ld b, $00 ; $7201
 	call QueueDrillResultMessage ; $7203
 	ld a, [wPointOutcome] ; $7206
-	ld hl, SignedTable_0b_00 ; $7209
+	ld hl, OddRallyVerdicts ; $7209
 	add l ; $720c
 	ld l, a ; $720d
 	jr nc, .readB ; $720e
@@ -699,10 +688,9 @@ StrokePractice3Cases1:
 .readB:
 	ld a, [hl] ; $7211
 	ret ; $7212
-StrokePractice3Cases1DrillShotTable:
-	; $7213, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57
-; Instruction-identical to StrokePractice1Cases2 (in this bank); a change here belongs in every copy.
+StrokePractice3Cases1Messages:
+	; $7213, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT
 	twin_named stroke_practice1_cases2, StrokePractice3Cases2 ; $721d
 RunDoublesDrillMatch:
 	ASSERT MATCHCONTEXT_EXHIBITION == 0

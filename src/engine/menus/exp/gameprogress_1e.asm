@@ -289,12 +289,12 @@ BuildVisibleProgressEntryList:
 .loop:
 	ld a, [hl+] ; $7486
 	or a ; $7487
-	jr z, .zero ; $7488
+	jr z, .locked ; $7488
 	inc b ; $748a
 	ld a, c ; $748b
 	ld [de], a ; $748c
 	inc de ; $748d
-.zero:
+.locked:
 	inc c ; $748e
 	ld a, c ; $748f
 	cp $30 ; $7490
@@ -347,7 +347,7 @@ DrawProgressListRows:
 .loop:
 	ld a, [hl+] ; $74d2
 	cp $ff ; $74d3
-	jr z, .eqff ; $74d5
+	jr z, .endOfList ; $74d5
 	push hl ; $74d7
 	ld hl, Text_31_160 ; $74d8
 	add l ; $74db
@@ -366,7 +366,7 @@ DrawProgressListRows:
 	pop hl ; $74ed
 	dec c ; $74ee
 	jr nz, .loop ; $74ef
-.eqff:
+.endOfList:
 	ld a, $70 ; $74f1
 	ld [wGlyphRowStartCol], a ; $74f3
 	farcall UploadGlyphBuffer ; $74f6

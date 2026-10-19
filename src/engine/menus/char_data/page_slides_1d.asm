@@ -91,13 +91,13 @@ DrawCharDataPageArrowsTask:
 	wram_bank WRAM_SCENE ; $4c04
 	ld a, [wCharDataArrowHold] ; $4c0a
 	or a ; $4c0d
-	jr nz, .nonZero ; $4c0e
+	jr nz, .drawArrows ; $4c0e
 	ld hl, wCharDataArrowPhase ; $4c10
 	inc [hl] ; $4c13
-.nonZero:
+.drawArrows:
 	ld a, [wCharDataPageArrowMode] ; $4c14
 	or a ; $4c17
-	jr z, .zero ; $4c18
+	jr z, .bothArrows ; $4c18
 	dec a ; $4c1a
 	jr z, .countDone ; $4c1b
 	ld de, $0103 ; $4c1d
@@ -113,7 +113,7 @@ DrawCharDataPageArrowsTask:
 	sprite_attr_tile OAM_BANK1 | 6, $30 ; $4c37
 	call QueueSpriteTemplate ; $4c3b
 	ret ; $4c3e
-.zero:
+.bothArrows:
 	ld de, $1010 ; $4c3f
 	call BobArrowSpriteLeft ; $4c42
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate0 ; $4c45
@@ -360,9 +360,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4e94
 	ld a, [wStoryCharacterSlot] ; $4e97
 	or a ; $4e9a
-	jr z, .zero ; $4e9b
+	jr z, .spinLevelField ; $4e9b
 	ld l, $40 ; $4e9d
-.zero:
+.spinLevelField:
 	ld a, l ; $4e9f
 	add $38 ; $4ea0
 	ld l, a ; $4ea2
@@ -376,9 +376,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4ead
 	ld a, [wStoryCharacterSlot] ; $4eb0
 	or a ; $4eb3
-	jr z, .zero2 ; $4eb4
+	jr z, .topStatField ; $4eb4
 	ld l, $40 ; $4eb6
-.zero2:
+.topStatField:
 	ld a, l ; $4eb8
 	add $20 ; $4eb9
 	ld l, a ; $4ebb
@@ -393,9 +393,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4ec7
 	ld a, [wStoryCharacterSlot] ; $4eca
 	or a ; $4ecd
-	jr z, .zero3 ; $4ece
+	jr z, .sliceStatField ; $4ece
 	ld l, $40 ; $4ed0
-.zero3:
+.sliceStatField:
 	ld a, l ; $4ed2
 	add $21 ; $4ed3
 	ld l, a ; $4ed5
@@ -410,9 +410,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4ee1
 	ld a, [wStoryCharacterSlot] ; $4ee4
 	or a ; $4ee7
-	jr z, .zero4 ; $4ee8
+	jr z, .powerLevelField ; $4ee8
 	ld l, $40 ; $4eea
-.zero4:
+.powerLevelField:
 	ld a, l ; $4eec
 	add $39 ; $4eed
 	ld l, a ; $4eef
@@ -426,9 +426,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4efa
 	ld a, [wStoryCharacterSlot] ; $4efd
 	or a ; $4f00
-	jr z, .zero5 ; $4f01
+	jr z, .serveStatField ; $4f01
 	ld l, $40 ; $4f03
-.zero5:
+.serveStatField:
 	ld a, l ; $4f05
 	add $22 ; $4f06
 	ld l, a ; $4f08
@@ -443,9 +443,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4f14
 	ld a, [wStoryCharacterSlot] ; $4f17
 	or a ; $4f1a
-	jr z, .zero6 ; $4f1b
+	jr z, .strokeStatField ; $4f1b
 	ld l, $40 ; $4f1d
-.zero6:
+.strokeStatField:
 	ld a, l ; $4f1f
 	add $23 ; $4f20
 	ld l, a ; $4f22
@@ -460,9 +460,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4f2e
 	ld a, [wStoryCharacterSlot] ; $4f31
 	or a ; $4f34
-	jr z, .zero7 ; $4f35
+	jr z, .volleyStatField ; $4f35
 	ld l, $40 ; $4f37
-.zero7:
+.volleyStatField:
 	ld a, l ; $4f39
 	add $24 ; $4f3a
 	ld l, a ; $4f3c
@@ -477,9 +477,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4f48
 	ld a, [wStoryCharacterSlot] ; $4f4b
 	or a ; $4f4e
-	jr z, .zero8 ; $4f4f
+	jr z, .controlLevelField ; $4f4f
 	ld l, $40 ; $4f51
-.zero8:
+.controlLevelField:
 	ld a, l ; $4f53
 	add $3a ; $4f54
 	ld l, a ; $4f56
@@ -493,9 +493,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4f61
 	ld a, [wStoryCharacterSlot] ; $4f64
 	or a ; $4f67
-	jr z, .zero9 ; $4f68
+	jr z, .angleStatField ; $4f68
 	ld l, $40 ; $4f6a
-.zero9:
+.angleStatField:
 	ld a, l ; $4f6c
 	add $25 ; $4f6d
 	ld l, a ; $4f6f
@@ -510,9 +510,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4f7b
 	ld a, [wStoryCharacterSlot] ; $4f7e
 	or a ; $4f81
-	jr z, .zero10 ; $4f82
+	jr z, .placementStatField ; $4f82
 	ld l, $40 ; $4f84
-.zero10:
+.placementStatField:
 	ld a, l ; $4f86
 	add $26 ; $4f87
 	ld l, a ; $4f89
@@ -527,9 +527,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4f95
 	ld a, [wStoryCharacterSlot] ; $4f98
 	or a ; $4f9b
-	jr z, .zero11 ; $4f9c
+	jr z, .speedLevelField ; $4f9c
 	ld l, $40 ; $4f9e
-.zero11:
+.speedLevelField:
 	ld a, l ; $4fa0
 	add $3b ; $4fa1
 	ld l, a ; $4fa3
@@ -543,9 +543,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4fae
 	ld a, [wStoryCharacterSlot] ; $4fb1
 	or a ; $4fb4
-	jr z, .zero12 ; $4fb5
+	jr z, .speedStatField ; $4fb5
 	ld l, $40 ; $4fb7
-.zero12:
+.speedStatField:
 	ld a, l ; $4fb9
 	add $27 ; $4fba
 	ld l, a ; $4fbc
@@ -560,9 +560,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4fc8
 	ld a, [wStoryCharacterSlot] ; $4fcb
 	or a ; $4fce
-	jr z, .zero13 ; $4fcf
+	jr z, .dashStatField ; $4fcf
 	ld l, $40 ; $4fd1
-.zero13:
+.dashStatField:
 	ld a, l ; $4fd3
 	add $28 ; $4fd4
 	ld l, a ; $4fd6
@@ -577,9 +577,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4fe2
 	ld a, [wStoryCharacterSlot] ; $4fe5
 	or a ; $4fe8
-	jr z, .zero14 ; $4fe9
+	jr z, .reactionStatField ; $4fe9
 	ld l, $40 ; $4feb
-.zero14:
+.reactionStatField:
 	ld a, l ; $4fed
 	add $29 ; $4fee
 	ld l, a ; $4ff0
@@ -594,9 +594,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $4ffc
 	ld a, [wStoryCharacterSlot] ; $4fff
 	or a ; $5002
-	jr z, .zero15 ; $5003
+	jr z, .stopStatField ; $5003
 	ld l, $40 ; $5005
-.zero15:
+.stopStatField:
 	ld a, l ; $5007
 	add $2a ; $5008
 	ld l, a ; $500a
@@ -649,9 +649,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $5052
 	ld a, [wStoryCharacterSlot] ; $5055
 	or a ; $5058
-	jr z, .zero16 ; $5059
+	jr z, .nameField ; $5059
 	ld l, $40 ; $505b
-.zero16:
+.nameField:
 	ld a, l ; $505d
 	add $00 ; $505e
 	ld l, a ; $5060
@@ -667,9 +667,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryMainName ; $5075
 	ld a, [wStoryCharacterSlot] ; $5078
 	or a ; $507b
-	jr z, .zero17 ; $507c
+	jr z, .levelField ; $507c
 	ld l, $40 ; $507e
-.zero17:
+.levelField:
 	ld a, l ; $5080
 	add $18 ; $5081
 	ld l, a ; $5083

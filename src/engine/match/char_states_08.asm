@@ -74,8 +74,9 @@ CharPointEndState:
 	dw CharWalkToTargetPhase ; $6d1c jumptable
 	dw CharPointReactionPhase ; $6d1e jumptable
 	dw AdvanceCharStatePhase.done ; $6d20 jumptable
-	dw PrintString.markDirty ; $6d22 jumptable
-	dw UpdateSoundChannels.step6 ; $6d24 jumptable
+Unused_08_AdvanceCharStatePhase:
+	ld hl, wCharStatePhase ; $6d22
+	inc [hl] ; $6d25
 	ret ; $6d26
 CharPointReactionPhase:
 	call ReloadCharFrameGfx ; $6d27
@@ -364,7 +365,7 @@ CheckCharBallContact:
 	sub h ; $6ee3
 	ld h, a ; $6ee4
 .checkHeight:
-	ld de, $fff0 ; $6ee5
+	ld de, -16 ; $6ee5
 	add hl, de ; $6ee8
 	ret c ; $6ee9
 	ld hl, wCharReachX ; $6eea

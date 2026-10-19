@@ -19,14 +19,9 @@ ActorScript_27_06:
 	as_halt
 	as_halt
 	as_halt
-; Sixteen bytes: $0080, $5520, $7ea0, $4460, then $2508 four times, read
-; as words. Three of those look like bank-$27 addresses but each lands
-; mid-object rather than on any labelled start, so it is not a pointer
-; record. Contents unknown.
-; Nothing reads it.
-Unused_27_Record:
-	; $5570, 16 bytes (bytes:16)
-	db $80, $00, $20, $55, $a0, $7e, $60, $44, $08, $25, $08, $25, $08, $25, $08, $25 ; 0x00
+; Two palettes nothing loads, in front of the scene's own.
+Unused_27_Palettes:
+	INCLUDE "data/story/Unused_27_Palettes.asm" ; $5570, 16 bytes (palettes)
 End11TrainingCourtInitScriptPalette0_27:
 	INCLUDE "data/story/End11TrainingCourtInitScriptPalette0_27.asm" ; $5580, 64 bytes (palettes)
 End11TrainingCourtInitScriptPalette1_27:
@@ -62,15 +57,7 @@ End10VarsityCourtInitScript_27:
 	cp $01 ; $5620
 	jp z, End10VarsityCourtEntry01Scene ; $5622
 	ret ; $5625
-SetPartnerObjDefByGender_27:
-	ld a, [wStoryPartnerGender] ; $5626
-	or a ; $5629
-	jr nz, .done ; $562a
-	script_set_objdef OBJ_HARRY, $0d ; $562c
-	script_set_anim $0d, ANIM_WALK ; $5638
-	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $563f
-.done:
-	ret ; $5642
+	twin set_partner_obj_def_by_gender, 27 ; $5626 SetPartnerObjDefByGender_27
 End10VarsityCourtEntry01Scene:
 	test_flag FLAG_DOUBLES ; $5643
 	jr z, .notDoubles ; $5646

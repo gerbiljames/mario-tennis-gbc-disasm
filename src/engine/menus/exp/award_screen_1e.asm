@@ -228,11 +228,11 @@ DrawExpSinglesPlayerPanel:
 	ld bc, wPlayer1MainName ; $5645
 	ld a, [wLinkMatchRole] ; $5648
 	cp LINKSTATE_SLAVE ; $564b
-	jr nz, .ne02 ; $564d
+	jr nz, .drawName ; $564d
 	ld bc, wPlayer2MainName ; $564f
 	ld a, [wLinkMatchCharLevel] ; $5652
 	ld [wPlayer2MainLevel], a ; $5655
-.ne02:
+.drawName:
 	push bc ; $5658
 	ld hl, CHARREC_NAME ; $5659
 	add hl, bc ; $565c
@@ -297,10 +297,10 @@ DrawExpDoublesPlayerPanel:
 	ld a, [wGameMode] ; $56fc
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $56ff
-	jr nz, .nonZero ; $5700
+	jr nz, .useMatchRecord ; $5700
 	ld bc, wStoryMainName ; $5702
 	jr .copyStringToTextBuffer ; $5705
-.nonZero:
+.useMatchRecord:
 	ld bc, wPlayer1MainName ; $5707
 	ld a, [wLinkMatchRole] ; $570a
 	cp LINKSTATE_SLAVE ; $570d
@@ -374,10 +374,10 @@ DrawExpDoublesPartnerPanel:
 	ld a, [wGameMode] ; $57c1
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $57c4
-	jr nz, .nonZero ; $57c5
+	jr nz, .useMatchRecord ; $57c5
 	ld bc, wStoryPartnerName ; $57c7
 	jr .copyStringToTextBuffer ; $57ca
-.nonZero:
+.useMatchRecord:
 	ld bc, wPlayer1PartnerName ; $57cc
 	ld a, [wLinkMatchRole] ; $57cf
 	cp LINKSTATE_SLAVE ; $57d2
@@ -505,11 +505,11 @@ DrawExpScreenCharSprites:
 	ld a, [wLinkMatchRole] ; $5916
 	ASSERT LINKSTATE_IDLE == 0
 	or a ; $5919
-	jr z, .zero ; $591a
+	jr z, .loadCharBank ; $591a
 	srl a ; $591c
 	add b ; $591e
 	ld b, a ; $591f
-.zero:
+.loadCharBank:
 	push bc ; $5920
 	ld a, b ; $5921
 	wram_bank ; $5922
@@ -550,36 +550,36 @@ UpdateExpScreenCharSprite:
 	pop af ; $5977
 	push af ; $5978
 	or a ; $5979
-	jr nz, .nonZero ; $597a
+	jr nz, .player2Hand ; $597a
 	ld a, [wPlayer1MainLeftHanded] ; $597c
 	jr .compare ; $597f
-.nonZero:
+.player2Hand:
 	ld a, [wPlayer2MainLeftHanded] ; $5981
 .compare:
 	or a ; $5984
-	jr z, .zero ; $5985
+	jr z, .gotAttr ; $5985
 	ld a, $20 ; $5987
 	xor b ; $5989
 	ld b, a ; $598a
-.zero:
+.gotAttr:
 	ld a, [wCharTileBase] ; $598b
 	ld c, a ; $598e
 	pop af ; $598f
 	or a ; $5990
-	jr nz, .nonZero2 ; $5991
+	jr nz, .secondSprite ; $5991
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5993
 	jr z, .notTempResultsScreenOpen ; $5996
 	ld d, $44 ; $5998
 	ld e, $66 ; $599a
-	jr .step5 ; $599c
+	jr .writeSlot ; $599c
 .notTempResultsScreenOpen:
 	ld d, $50 ; $599e
 	ld e, $66 ; $59a0
-	jr .step5 ; $59a2
-.nonZero2:
+	jr .writeSlot ; $59a2
+.secondSprite:
 	ld d, $5c ; $59a4
 	ld e, $66 ; $59a6
-.step5:
+.writeSlot:
 	ld hl, wCharSpriteSlot ; $59a8
 	ld a, c ; $59ab
 	ld [hl+], a ; $59ac
@@ -606,7 +606,7 @@ DrawNextExpAwardMessage:
 	ld a, [hl+] ; $59d0
 	ld b, [hl] ; $59d1
 	or b ; $59d2
-	jr z, .zero ; $59d3
+	jr z, .skipEmptyAward ; $59d3
 	dec hl ; $59d5
 	ld c, [hl] ; $59d6
 	push bc ; $59d7
@@ -657,7 +657,7 @@ DrawNextExpAwardMessage:
 	farcall UploadGlyphBuffer ; $5a2f
 	ld a, $01 ; $5a32
 	ret ; $5a34
-.zero:
+.skipEmptyAward:
 	ld a, [wExpAwardIndex] ; $5a35
 	inc a ; $5a38
 	ld [wExpAwardIndex], a ; $5a39
@@ -683,25 +683,25 @@ DrawExpTotalDigits:
 	jr nz, .checkTextBuffer ; $5a66
 	ld a, [wTextBuffer] ; $5a68
 	cp $20 ; $5a6b
-	jr z, .eq20 ; $5a6d
+	jr z, .fourDigits2 ; $5a6d
 	call GetDigitSpriteTile ; $5a6f
 	ld_xy de, $6b, $77 ; $5a72
 	call QueueSprite ; $5a75
-.eq20:
+.fourDigits2:
 	ld a, [wTextBuffer + 1] ; $5a78
 	cp $20 ; $5a7b
-	jr z, .eq202 ; $5a7d
+	jr z, .fourDigits3 ; $5a7d
 	call GetDigitSpriteTile ; $5a7f
 	ld_xy de, $73, $77 ; $5a82
 	call QueueSprite ; $5a85
-.eq202:
+.fourDigits3:
 	ld a, [wTextBuffer + 2] ; $5a88
 	cp $20 ; $5a8b
-	jr z, .eq203 ; $5a8d
+	jr z, .fourDigits4 ; $5a8d
 	call GetDigitSpriteTile ; $5a8f
 	ld_xy de, $7b, $77 ; $5a92
 	call QueueSprite ; $5a95
-.eq203:
+.fourDigits4:
 	ld a, [wTextBuffer + 3] ; $5a98
 	cp $20 ; $5a9b
 	jr z, .done ; $5a9d
@@ -713,32 +713,32 @@ DrawExpTotalDigits:
 .checkTextBuffer:
 	ld a, [wTextBuffer] ; $5aa9
 	cp $20 ; $5aac
-	jr z, .eq204 ; $5aae
+	jr z, .fiveDigits2 ; $5aae
 	call GetDigitSpriteTile ; $5ab0
 	ld_xy de, $67, $77 ; $5ab3
 	call QueueSprite ; $5ab6
-.eq204:
+.fiveDigits2:
 	ld a, [wTextBuffer + 1] ; $5ab9
 	cp $20 ; $5abc
-	jr z, .eq205 ; $5abe
+	jr z, .fiveDigits3 ; $5abe
 	call GetDigitSpriteTile ; $5ac0
 	ld_xy de, $6f, $77 ; $5ac3
 	call QueueSprite ; $5ac6
-.eq205:
+.fiveDigits3:
 	ld a, [wTextBuffer + 2] ; $5ac9
 	cp $20 ; $5acc
-	jr z, .eq206 ; $5ace
+	jr z, .fiveDigits4 ; $5ace
 	call GetDigitSpriteTile ; $5ad0
 	ld_xy de, $77, $77 ; $5ad3
 	call QueueSprite ; $5ad6
-.eq206:
+.fiveDigits4:
 	ld a, [wTextBuffer + 3] ; $5ad9
 	cp $20 ; $5adc
-	jr z, .eq207 ; $5ade
+	jr z, .fiveDigits5 ; $5ade
 	call GetDigitSpriteTile ; $5ae0
 	ld_xy de, $7f, $77 ; $5ae3
 	call QueueSprite ; $5ae6
-.eq207:
+.fiveDigits5:
 	ld a, [wTextBuffer + 4] ; $5ae9
 	cp $20 ; $5aec
 	jr z, .doneB ; $5aee

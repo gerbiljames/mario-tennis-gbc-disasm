@@ -367,8 +367,8 @@ wRulesExitCode:: db
 wRulesAnimEnabled:: db
 ; [8-bit] Frame counter AdvanceRulesScreenAnimFrame increments, wrapping at $ff
 wRulesAnimCounter:: db
-; [8-bit] 0 for the minigame rules (PrepareRulesPageTilemap then reads wRulesMinigameLevel), nonzero for match and training rules
-wRulesIsMinigame:: db
+; [8-bit] 0 on the rules screen's first page, 1 once a page has been turned: the first page tints its header row by wRulesMinigameLevel and sits one row lower
+wRulesPastFirstPage:: db
 ; [8-bit] Copy of wMinigameLevel taken on entry, so the rules page matches the level being played
 wRulesMinigameLevel:: db
 	ds 13

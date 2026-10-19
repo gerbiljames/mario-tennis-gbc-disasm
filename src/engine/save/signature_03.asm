@@ -231,7 +231,7 @@ ValidateSaveRam:
 	call VerifySaveHeaderChecksum ; $4977
 	jr nz, .setSramBank ; $497a
 	xor a ; $497c
-	jp .step2 ; $497d
+	jp .disableSram ; $497d
 .setSramBank:
 	ld a, $01 ; $4980
 	ldh [hSramBank], a ; $4982
@@ -300,14 +300,14 @@ ENDC
 	call VerifySaveHeaderChecksum ; $4a1b
 	jr nz, .wipeAllSaveRam ; $4a1e
 	ld a, $01 ; $4a20
-	jr .step2 ; $4a22
+	jr .disableSram ; $4a22
 .wipeAllSaveRam:
 	call WipeAllSaveRam ; $4a24
 	call InitSaveHeader ; $4a27
 	call MirrorSaveHeaderToBank1 ; $4a2a
 	call InitAllMinigameRecordBlocks ; $4a2d
 	ld a, $ff ; $4a30
-.step2:
+.disableSram:
 	push af ; $4a32
 	xor a ; $4a33
 	ld [rRAMG], a ; $4a34
@@ -334,13 +334,13 @@ CompareSaveSignature:
 .loop:
 	ld a, [de] ; $4a58
 	cp [hl] ; $4a59
-	jr nz, .step ; $4a5a
+	jr nz, .mismatch ; $4a5a
 	or a ; $4a5c
 	jr z, .restore ; $4a5d
 	inc de ; $4a5f
 	inc hl ; $4a60
 	jr .loop ; $4a61
-.step:
+.mismatch:
 	ld a, $01 ; $4a63
 .restore:
 	pop hl ; $4a65

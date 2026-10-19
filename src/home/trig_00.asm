@@ -32,38 +32,38 @@ Unused_00_AngleFromVector:
 	ld h, e ; $109b
 	ld a, d ; $109c
 	add b ; $109d
-	jr c, .carry ; $109e
+	jr c, .overshoot ; $109e
 	ld b, a ; $10a0
 	set 7, h ; $10a1
 	ld a, $60 ; $10a3
-	jr .step2 ; $10a5
-.carry:
+	jr .halveDelta ; $10a5
+.overshoot:
 	ld a, $e0 ; $10a7
-.step2:
+.halveDelta:
 	add d ; $10a9
 	srl a ; $10aa
 	ld d, a ; $10ac
 	add b ; $10ad
-	jr c, .carry2 ; $10ae
+	jr c, .overshoot2 ; $10ae
 	ld b, a ; $10b0
 	set 6, h ; $10b1
 	ld a, $18 ; $10b3
-	jr .step4 ; $10b5
-.carry2:
+	jr .halveDelta2 ; $10b5
+.overshoot2:
 	ld a, $f8 ; $10b7
-.step4:
+.halveDelta2:
 	add d ; $10b9
 	srl a ; $10ba
 	ld d, a ; $10bc
 	add b ; $10bd
-	jr c, .carry3 ; $10be
+	jr c, .overshoot3 ; $10be
 	ld b, a ; $10c0
 	set 5, h ; $10c1
 	ld a, $06 ; $10c3
-	jr .step6 ; $10c5
-.carry3:
+	jr .halveDelta3 ; $10c5
+.overshoot3:
 	ld a, $fe ; $10c7
-.step6:
+.halveDelta3:
 	add d ; $10c9
 	srl a ; $10ca
 	ld d, a ; $10cc
@@ -71,14 +71,14 @@ Unused_00_AngleFromVector:
 	ld l, e ; $10ce
 	ld h, d ; $10cf
 	add hl, bc ; $10d0
-	jr c, .carry4 ; $10d1
+	jr c, .overshoot4 ; $10d1
 	ld c, l ; $10d3
 	ld b, h ; $10d4
 	set 4, a ; $10d5
 	ld hl, $0180 ; $10d7
 	jr .offset ; $10da
-.carry4:
-	ld hl, $ff80 ; $10dc
+.overshoot4:
+	ld hl, -128 ; $10dc
 .offset:
 	add hl, de ; $10df
 	srl h ; $10e0
@@ -86,14 +86,14 @@ Unused_00_AngleFromVector:
 	ld e, l ; $10e4
 	ld d, h ; $10e5
 	add hl, bc ; $10e6
-	jr c, .carry5 ; $10e7
+	jr c, .overshoot5 ; $10e7
 	ld c, l ; $10e9
 	ld b, h ; $10ea
 	set 3, a ; $10eb
 	ld hl, $0060 ; $10ed
 	jr .offset2 ; $10f0
-.carry5:
-	ld hl, $ffe0 ; $10f2
+.overshoot5:
+	ld hl, -32 ; $10f2
 .offset2:
 	add hl, de ; $10f5
 	srl h ; $10f6
@@ -101,14 +101,14 @@ Unused_00_AngleFromVector:
 	ld e, l ; $10fa
 	ld d, h ; $10fb
 	add hl, bc ; $10fc
-	jr c, .carry6 ; $10fd
+	jr c, .overshoot6 ; $10fd
 	ld c, l ; $10ff
 	ld b, h ; $1100
 	set 2, a ; $1101
 	ld hl, $0018 ; $1103
 	jr .offset3 ; $1106
-.carry6:
-	ld hl, $fff8 ; $1108
+.overshoot6:
+	ld hl, -8 ; $1108
 .offset3:
 	add hl, de ; $110b
 	srl h ; $110c
@@ -116,14 +116,14 @@ Unused_00_AngleFromVector:
 	ld e, l ; $1110
 	ld d, h ; $1111
 	add hl, bc ; $1112
-	jr c, .carry7 ; $1113
+	jr c, .overshoot7 ; $1113
 	ld c, l ; $1115
 	ld b, h ; $1116
 	set 1, a ; $1117
 	ld hl, $0006 ; $1119
 	jr .offset4 ; $111c
-.carry7:
-	ld hl, hIsCGB ; $111e
+.overshoot7:
+	ld hl, -2 ; $111e
 .offset4:
 	add hl, de ; $1121
 	srl h ; $1122
@@ -373,7 +373,7 @@ AngleFromVector16:
 	jr nc, .sub7Done ; $1460
 	dec h ; $1462
 .sub7Done:
-	jr .step6 ; $1463
+	jr .probeBit6 ; $1463
 .add7:
 	ld a, $80 ; $1465
 	add l ; $1467
@@ -382,7 +382,7 @@ AngleFromVector16:
 	inc h ; $146b
 .setBit7:
 	set 7, b ; $146c
-.step6:
+.probeBit6:
 	ld a, [hl+] ; $146e
 	ld c, a ; $146f
 	ld a, [hl-] ; $1470
@@ -399,7 +399,7 @@ AngleFromVector16:
 	jr nc, .sub6Done ; $147e
 	dec h ; $1480
 .sub6Done:
-	jr .step5 ; $1481
+	jr .probeBit5 ; $1481
 .add6:
 	ld a, $40 ; $1483
 	add l ; $1485
@@ -408,7 +408,7 @@ AngleFromVector16:
 	inc h ; $1489
 .setBit6:
 	set 6, b ; $148a
-.step5:
+.probeBit5:
 	ld a, [hl+] ; $148c
 	ld c, a ; $148d
 	ld a, [hl-] ; $148e
@@ -425,7 +425,7 @@ AngleFromVector16:
 	jr nc, .sub5Done ; $149c
 	dec h ; $149e
 .sub5Done:
-	jr .step4 ; $149f
+	jr .probeBit4 ; $149f
 .add5:
 	ld a, $20 ; $14a1
 	add l ; $14a3
@@ -434,7 +434,7 @@ AngleFromVector16:
 	inc h ; $14a7
 .setBit5:
 	set 5, b ; $14a8
-.step4:
+.probeBit4:
 	ld a, [hl+] ; $14aa
 	ld c, a ; $14ab
 	ld a, [hl-] ; $14ac
@@ -451,7 +451,7 @@ AngleFromVector16:
 	jr nc, .sub4Done ; $14ba
 	dec h ; $14bc
 .sub4Done:
-	jr .step3 ; $14bd
+	jr .probeBit3 ; $14bd
 .add4:
 	ld a, $10 ; $14bf
 	add l ; $14c1
@@ -460,7 +460,7 @@ AngleFromVector16:
 	inc h ; $14c5
 .setBit4:
 	set 4, b ; $14c6
-.step3:
+.probeBit3:
 	ld a, [hl+] ; $14c8
 	ld c, a ; $14c9
 	ld a, [hl-] ; $14ca
@@ -477,7 +477,7 @@ AngleFromVector16:
 	jr nc, .sub3Done ; $14d8
 	dec h ; $14da
 .sub3Done:
-	jr .step2 ; $14db
+	jr .probeBit2 ; $14db
 .add3:
 	ld a, $08 ; $14dd
 	add l ; $14df
@@ -486,7 +486,7 @@ AngleFromVector16:
 	inc h ; $14e3
 .setBit3:
 	set 3, b ; $14e4
-.step2:
+.probeBit2:
 	ld a, [hl+] ; $14e6
 	ld c, a ; $14e7
 	ld a, [hl-] ; $14e8
@@ -503,7 +503,7 @@ AngleFromVector16:
 	jr nc, .sub2Done ; $14f6
 	dec h ; $14f8
 .sub2Done:
-	jr .step1 ; $14f9
+	jr .probeBit1 ; $14f9
 .add2:
 	ld a, $04 ; $14fb
 	add l ; $14fd
@@ -512,7 +512,7 @@ AngleFromVector16:
 	inc h ; $1501
 .setBit2:
 	set 2, b ; $1502
-.step1:
+.probeBit1:
 	ld a, [hl+] ; $1504
 	ld c, a ; $1505
 	ld a, [hl-] ; $1506

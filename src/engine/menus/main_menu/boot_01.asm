@@ -119,28 +119,28 @@ Unused_01_MenuRedraw:
 	jp InitAndRunGame.loop ; $4110
 .runSoundTest:
 	bit 2, a ; $4113
-	jr z, .bit2Clear ; $4115
+	jr z, .checkA ; $4115
 	farcall Unused_01_RunSoundTest ; $4117
-.bit2Clear:
+.checkA:
 	bit 0, a ; $411a
-	jr z, .bit0Clear ; $411c
+	jr z, .checkB ; $411c
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $411e
 	ldh [hDebugStepMode], a ; $4120
 .loopB:
 	farcall Unused_07_RunDebugTestMatch ; $4122
 	jr .loopB ; $4125
-.bit0Clear:
+.checkB:
 	bit 1, a ; $4127
-	jr z, .bit1Clear ; $4129
+	jr z, .checkUp ; $4129
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $412b
 	ldh [hDebugStepMode], a ; $412d
 .loop2:
 	farcall Unused_3b_StubNop ; $412f
 	farcall RunMatch ; $4132
 	jp .loop2 ; $4135
-.bit1Clear:
+.checkUp:
 	bit 6, a ; $4138
-	jp z, Unused_01_MatchSetup.bit6Clear ; $413a
+	jp z, Unused_01_MatchSetup.checkDown ; $413a
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $413d
 	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
@@ -195,7 +195,7 @@ Unused_01_MatchSetup:
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41bb
 	ldh [hDebugStepMode], a ; $41bd
 	farcall Unused_1a_RunDebugCharViewer ; $41bf
-.bit6Clear:
+.checkDown:
 	bit 7, a ; $41c2
 	jr z, Unused_01.positive ; $41c4
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41c6
@@ -212,7 +212,7 @@ Unused_01:
 	db $ef ; $41da
 .positive:
 	bit 4, a ; $41db
-	jr z, .bit4Clear ; $41dd
+	jr z, .checkLeft ; $41dd
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41df
 	ldh [hDebugStepMode], a ; $41e1
 	ld hl, wStoryModeCurrentLocation ; $41e3
@@ -222,7 +222,7 @@ Unused_01:
 	ld a, $00 ; $41ed
 	ld [wStoryMainChar], a ; $41ef
 	farcall RunStoryModeOverworld ; $41f2
-.bit4Clear:
+.checkLeft:
 	bit 5, a ; $41f5
 	jr z, .advanceFrame ; $41f7
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41f9
@@ -472,30 +472,30 @@ Unused_01_RunSoundTest:
 .clampTrack:
 	ld a, b ; $6a97
 	or a ; $6a98
-	jr nz, .nonZero ; $6a99
+	jr nz, .editSfx ; $6a99
 	ldh a, [hInputPressed] ; $6a9b
 	bit PADB_RIGHT, a ; $6a9d
-	jr z, .zero ; $6a9f
+	jr z, .checkTrackLeft ; $6a9f
 	inc d ; $6aa1
 	jr .clampBank ; $6aa2
-.zero:
+.checkTrackLeft:
 	bit 5, a ; $6aa4
 	jr z, .clampTrackDown ; $6aa6
 	dec d ; $6aa8
 .clampBank:
 	ld a, d ; $6aa9
 	cp $ff ; $6aaa
-	jr nz, .neff ; $6aac
+	jr nz, .noTrackUnderflow ; $6aac
 	ld d, $3e ; $6aae
 	jr .clampTrackDown ; $6ab0
-.neff:
+.noTrackUnderflow:
 	ld a, d ; $6ab2
 	cp $3e ; $6ab3
 	jr c, .clampTrackDown ; $6ab5
 	jr z, .clampTrackDown ; $6ab7
 	ld d, $00 ; $6ab9
 	jr .clampTrackDown ; $6abb
-.nonZero:
+.editSfx:
 	ldh a, [hInputPressed] ; $6abd
 	bit PADB_RIGHT, a ; $6abf
 	jr z, .checkLeft ; $6ac1
@@ -508,10 +508,10 @@ Unused_01_RunSoundTest:
 .clampSfx:
 	ld a, e ; $6acb
 	cp $ff ; $6acc
-	jr nz, .neff2 ; $6ace
+	jr nz, .noSfxUnderflow ; $6ace
 	ld e, $71 ; $6ad0
 	jr .clampTrackDown ; $6ad2
-.neff2:
+.noSfxUnderflow:
 	ld a, e ; $6ad4
 	cp $71 ; $6ad5
 	jr c, .clampTrackDown ; $6ad7
@@ -520,7 +520,7 @@ Unused_01_RunSoundTest:
 .clampTrackDown:
 	ld a, b ; $6add
 	or a ; $6ade
-	jr nz, .nonZero2 ; $6adf
+	jr nz, .sfxRowSelected ; $6adf
 	push hl ; $6ae1
 	push de ; $6ae2
 	ld hl, SoundTestString1 ; $6ae3
@@ -536,7 +536,7 @@ Unused_01_RunSoundTest:
 	pop de ; $6af9
 	pop hl ; $6afa
 	jr .printDecimalByte ; $6afb
-.nonZero2:
+.sfxRowSelected:
 	push hl ; $6afd
 	push de ; $6afe
 	ld hl, SoundTestString1 ; $6aff
@@ -570,7 +570,7 @@ Unused_01_RunSoundTest:
 	bit PADB_A, a ; $6b2f
 	jr z, .continueLoop ; $6b31
 	bit 0, b ; $6b33
-	jr nz, .bit0Set ; $6b35
+	jr nz, .playSfx ; $6b35
 	push af ; $6b37
 	push bc ; $6b38
 	push de ; $6b39
@@ -584,7 +584,7 @@ Unused_01_RunSoundTest:
 	pop bc ; $6b49
 	pop af ; $6b4a
 	jr .continueLoop ; $6b4b
-.bit0Set:
+.playSfx:
 	push af ; $6b4d
 	push bc ; $6b4e
 	push de ; $6b4f

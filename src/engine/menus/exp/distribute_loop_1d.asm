@@ -8,7 +8,7 @@ RunExpDistributionLoop:
 	jr z, .tick ; $6f48
 	xor a ; $6f4a
 	ld [wCharDataViewOnly], a ; $6f4b
-	jp CheckExpLevelDown.step2 ; $6f4e
+	jp CheckExpLevelDown.openConfirmPrompt ; $6f4e
 .tick:
 	wram_bank WRAM_SCENE ; $6f51
 	ld a, [wExpInputRepeating] ; $6f57
@@ -172,7 +172,7 @@ RunExpDistributionLoop:
 	res 1, [hl] ; $70bc
 	ld a, $a8 ; $70be
 	ld [wExpBarMarkerX], a ; $70c0
-	jp CheckExpLevelDown.step2 ; $70c3
+	jp CheckExpLevelDown.openConfirmPrompt ; $70c3
 .increaseRepeat:
 	call SweepExpBarMarkerRight ; $70c6
 	jp RunExpDistributionLoop ; $70c9
@@ -215,10 +215,10 @@ SweepExpBarMarkerLeft:
 .checkStoryCharacterSlot:
 	ld a, [wStoryCharacterSlot] ; $711f
 	or a ; $7122
-	jr nz, .nonZero ; $7123
+	jr nz, .partner ; $7123
 	ld a, [wExpScreenCharStats + 3] ; $7125
 	jr .getExpBarSweepStep ; $7128
-.nonZero:
+.partner:
 	ld a, [wExpScreenCharStats + 18] ; $712a
 .getExpBarSweepStep:
 	add $36 ; $712d
@@ -229,18 +229,18 @@ SweepExpBarMarkerRight:
 	wram_bank WRAM_SCENE ; $7136
 	ld a, [wExpBarMarkerX] ; $713c
 	cp $a8 ; $713f
-	jr z, .eqa8 ; $7141
+	jr z, .wrapToStart ; $7141
 	add b ; $7143
 	ld [wExpBarMarkerX], a ; $7144
 	ld b, a ; $7147
 	ld a, [wStoryCharacterSlot] ; $7148
 	or a ; $714b
-	jr nz, .nonZero ; $714c
+	jr nz, .partner ; $714c
 	ld a, [wExpScreenCharStats + 3] ; $714e
-	jr .step2 ; $7151
-.nonZero:
+	jr .checkEnd ; $7151
+.partner:
 	ld a, [wExpScreenCharStats + 18] ; $7153
-.step2:
+.checkEnd:
 	add $36 ; $7156
 	ld c, a ; $7158
 	ld a, b ; $7159
@@ -249,7 +249,7 @@ SweepExpBarMarkerRight:
 	ld a, $a8 ; $715c
 	ld [wExpBarMarkerX], a ; $715e
 	ret ; $7161
-.eqa8:
+.wrapToStart:
 	ld a, $18 ; $7162
 	ld [wExpBarMarkerX], a ; $7164
 	ret ; $7167
@@ -257,12 +257,12 @@ GetExpBarSweepStep:
 	wram_bank WRAM_SCENE ; $7168
 	ld a, [wStoryCharacterSlot] ; $716e
 	or a ; $7171
-	jr nz, .nonZero ; $7172
+	jr nz, .partner ; $7172
 	ld a, [wExpScreenCharStats + 3] ; $7174
-	jr .step2 ; $7177
-.nonZero:
+	jr .computeStep ; $7177
+.partner:
 	ld a, [wExpScreenCharStats + 18] ; $7179
-.step2:
+.computeStep:
 	add $18 ; $717c
 	srl a ; $717e
 	srl a ; $7180
@@ -420,7 +420,7 @@ AssignExpPointToChar:
 	ld [hl], d ; $7288
 	ld a, [wStoryCharacterSlot] ; $7289
 	or a ; $728c
-	jr nz, .nonZero ; $728d
+	jr nz, .partner ; $728d
 	ld hl, wExpScreenCharStats + 6 ; $728f
 	ld a, [hl+] ; $7292
 	ld d, [hl] ; $7293
@@ -451,7 +451,7 @@ AssignExpPointToChar:
 	call CheckExpLevelUp ; $72b0
 	ld a, $01 ; $72b3
 	ret ; $72b5
-.nonZero:
+.partner:
 	ld hl, wExpScreenCharStats + 21 ; $72b6
 	ld a, [hl+] ; $72b9
 	ld d, [hl] ; $72ba

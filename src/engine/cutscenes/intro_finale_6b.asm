@@ -1,10 +1,4 @@
-IntroCutsceneState16Update_6b:
-	ld a, [wCutsceneStepTimer] ; $4a42
-	inc a ; $4a45
-	ld [wCutsceneStepTimer], a ; $4a46
-	cp $70 ; $4a49
-	jp z, DispatchCutsceneStateInit.loopB ; $4a4b
-	jp DispatchCutsceneStateInit.loop ; $4a4e
+	twin_named intro_cutscene_state16_update, IntroCutsceneState16Update_6b ; $4a42
 IntroCutsceneState16Exit_6b:
 	xor a ; $4a51
 	ld [wCutsceneStepTimer], a ; $4a52
@@ -37,13 +31,7 @@ IntroCutsceneState17Init_6b:
 	xor a ; $4ad9
 	ld [wCutsceneStepTimer], a ; $4ada
 	jp DispatchCutsceneStateInit.loop ; $4add
-IntroCutsceneState17Update_6b:
-	ld a, [wCutsceneStepTimer] ; $4ae0
-	inc a ; $4ae3
-	ld [wCutsceneStepTimer], a ; $4ae4
-	cp $70 ; $4ae7
-	jp z, DispatchCutsceneStateInit.loopB ; $4ae9
-	jp DispatchCutsceneStateInit.loop ; $4aec
+	twin_named intro_cutscene_state16_update, IntroCutsceneState17Update_6b ; $4ae0
 IntroCutsceneState17Exit_6b:
 	jp DispatchCutsceneStateInit.loop2 ; $4aef
 IntroCutsceneState18Init_6b:
@@ -177,7 +165,6 @@ IntroCutsceneState19Exit_6b:
 	script_fade_out 4 ; $4c6e
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.loop2 ; $4c76
-; Instruction-identical to IntroCutsceneState00Update_6b (in this bank); a change here belongs in every copy.
 	twin_named intro_cutscene_state00_update, IntroCutsceneState19Update_6b ; $4c79
 UpdateCutsceneScrollX:
 	ld a, [wCutsceneStepTimer] ; $4c9e
@@ -371,9 +358,9 @@ ScrollOutIntroLogo:
 	inc a ; $51f1
 	ld [wCutsceneStepTimer], a ; $51f2
 	cp $3e ; $51f5
-	jr z, .eq3e ; $51f7
+	jr z, .fadeOut ; $51f7
 	jr .loop ; $51f9
-.eq3e:
+.fadeOut:
 	script_fade_out 16 ; $51fb
 	call WaitFadeEnd ; $5200
 	call DisableLCDSafely ; $5203

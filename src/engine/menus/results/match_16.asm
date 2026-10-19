@@ -135,10 +135,10 @@ ApplyLinkRoleToWinLoseFlag:
 	jr nz, .done ; $5c21
 	ld a, [wMatchWinLoseFlag] ; $5c23
 	cp WINLOSE_LOSE ; $5c26
-	jr z, .eqff ; $5c28
+	jr z, .toWin ; $5c28
 	ld a, WINLOSE_LOSE ; $5c2a
 	jr .store ; $5c2c
-.eqff:
+.toWin:
 	ld a, WINLOSE_WIN ; $5c2e
 .store:
 	ld [wMatchWinLoseFlag], a ; $5c30

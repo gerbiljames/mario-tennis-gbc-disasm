@@ -6,25 +6,25 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ret c ; $6414
 	ld a, b ; $6415
 	cp $2d ; $6416
-	jp z, .eq2d ; $6418
+	jp z, .frame2d ; $6418
 	cp $2e ; $641b
-	jp z, .eq2e ; $641d
+	jp z, .frame2e ; $641d
 	cp $2f ; $6420
-	jp z, .eq2f ; $6422
+	jp z, .frame2f ; $6422
 	cp $30 ; $6425
-	jp z, .eq30 ; $6427
+	jp z, .frame30 ; $6427
 	cp $31 ; $642a
-	jp z, .eq31 ; $642c
+	jp z, .frame31 ; $642c
 	cp $32 ; $642f
-	jp z, .eq32 ; $6431
+	jp z, .frame32 ; $6431
 	cp $33 ; $6434
-	jp z, .eq33 ; $6436
+	jp z, .frame33 ; $6436
 	cp $34 ; $6439
-	jp z, .eq34 ; $643b
+	jp z, .frame34 ; $643b
 	cp $35 ; $643e
-	jp z, .eq35 ; $6440
+	jp z, .frame35 ; $6440
 	jp .queueSpriteTemplate ; $6443
-.eq2d:
+.frame2d:
 	wram_bank WRAM_STAGING ; $6446
 	ld hl, CutsceneAnimFrameLZ_2d ; $644c
 	ld de, wDecompBuffer tile 16 ; $644f
@@ -38,7 +38,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld_oam bc, 3, $10 ; $6467
 	call QueueSpriteTemplate ; $646a
 	ret ; $646d
-.eq2e:
+.frame2e:
 	wram_bank WRAM_STAGING ; $646e
 	ld hl, CutsceneAnimFrameLZ_2e ; $6474
 	ld de, wDecompBuffer tile 16 ; $6477
@@ -52,7 +52,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld_oam bc, 3, $10 ; $648f
 	call QueueSpriteTemplate ; $6492
 	ret ; $6495
-.eq2f:
+.frame2f:
 	wram_bank WRAM_STAGING ; $6496
 	ld hl, CutsceneAnimFrameLZ_2f ; $649c
 	ld de, wDecompBuffer tile 16 ; $649f
@@ -66,7 +66,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld_oam bc, 3, $10 ; $64b7
 	call QueueSpriteTemplate ; $64ba
 	ret ; $64bd
-.eq30:
+.frame30:
 	wram_bank WRAM_STAGING ; $64be
 	ld hl, CutsceneAnimFrameLZ_30 ; $64c4
 	ld de, wDecompBuffer tile 16 ; $64c7
@@ -80,7 +80,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld_oam bc, 3, $10 ; $64df
 	call QueueSpriteTemplate ; $64e2
 	ret ; $64e5
-.eq31:
+.frame31:
 	wram_bank WRAM_STAGING ; $64e6
 	ld hl, CutsceneAnimFrameLZ_31 ; $64ec
 	ld de, wDecompBuffer tile 16 ; $64ef
@@ -94,7 +94,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld_oam bc, 3, $10 ; $6507
 	call QueueSpriteTemplate ; $650a
 	ret ; $650d
-.eq32:
+.frame32:
 	wram_bank WRAM_STAGING ; $650e
 	ld hl, CutsceneAnimFrameLZ_32 ; $6514
 	ld de, wDecompBuffer tile 16 ; $6517
@@ -108,7 +108,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld_oam bc, 3, $10 ; $652f
 	call QueueSpriteTemplate ; $6532
 	ret ; $6535
-.eq33:
+.frame33:
 	wram_bank WRAM_STAGING ; $6536
 	ld hl, CutsceneAnimFrameLZ_33 ; $653c
 	ld de, wDecompBuffer tile 16 ; $653f
@@ -122,7 +122,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld_oam bc, 3, $10 ; $6557
 	call QueueSpriteTemplate ; $655a
 	ret ; $655d
-.eq34:
+.frame34:
 	wram_bank WRAM_STAGING ; $655e
 	ld hl, CutsceneAnimFrameLZ_34 ; $6564
 	ld de, wDecompBuffer tile 16 ; $6567
@@ -136,7 +136,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld_oam bc, 3, $10 ; $657f
 	call QueueSpriteTemplate ; $6582
 	ret ; $6585
-.eq35:
+.frame35:
 	wram_bank WRAM_STAGING ; $6586
 	ld hl, CutsceneAnimFrameLZ_35 ; $658c
 	ld de, wDecompBuffer tile 16 ; $658f

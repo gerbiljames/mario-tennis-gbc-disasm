@@ -160,39 +160,39 @@ SetupPaletteFadeMask:
 .positive:
 	inc hl ; $76aa
 	bit 6, b ; $76ab
-	jr z, .bit6Clear ; $76ad
+	jr z, .bgPal2 ; $76ad
 	ld [hl], $01 ; $76af
-.bit6Clear:
+.bgPal2:
 	inc hl ; $76b1
 	bit 5, b ; $76b2
-	jr z, .bit5Clear ; $76b4
+	jr z, .bgPal3 ; $76b4
 	ld [hl], $01 ; $76b6
-.bit5Clear:
+.bgPal3:
 	inc hl ; $76b8
 	bit 4, b ; $76b9
-	jr z, .bit4Clear ; $76bb
+	jr z, .bgPal4 ; $76bb
 	ld [hl], $01 ; $76bd
-.bit4Clear:
+.bgPal4:
 	inc hl ; $76bf
 	bit 3, b ; $76c0
-	jr z, .bit3Clear ; $76c2
+	jr z, .bgPal5 ; $76c2
 	ld [hl], $01 ; $76c4
-.bit3Clear:
+.bgPal5:
 	inc hl ; $76c6
 	bit 2, b ; $76c7
-	jr z, .bit2Clear ; $76c9
+	jr z, .bgPal6 ; $76c9
 	ld [hl], $01 ; $76cb
-.bit2Clear:
+.bgPal6:
 	inc hl ; $76cd
 	bit 1, b ; $76ce
-	jr z, .bit1Clear ; $76d0
+	jr z, .bgPal7 ; $76d0
 	ld [hl], $01 ; $76d2
-.bit1Clear:
+.bgPal7:
 	inc hl ; $76d4
 	bit 0, b ; $76d5
-	jr z, .bit0Clear ; $76d7
+	jr z, .objPal0 ; $76d7
 	ld [hl], $01 ; $76d9
-.bit0Clear:
+.objPal0:
 	inc hl ; $76db
 	bit 7, c ; $76dc
 	jr z, .positive2 ; $76de
@@ -200,34 +200,34 @@ SetupPaletteFadeMask:
 .positive2:
 	inc hl ; $76e2
 	bit 6, c ; $76e3
-	jr z, .bit6Clear2 ; $76e5
+	jr z, .objPal2 ; $76e5
 	ld [hl], $01 ; $76e7
-.bit6Clear2:
+.objPal2:
 	inc hl ; $76e9
 	bit 5, c ; $76ea
-	jr z, .bit5Clear2 ; $76ec
+	jr z, .objPal3 ; $76ec
 	ld [hl], $01 ; $76ee
-.bit5Clear2:
+.objPal3:
 	inc hl ; $76f0
 	bit 4, c ; $76f1
-	jr z, .bit4Clear2 ; $76f3
+	jr z, .objPal4 ; $76f3
 	ld [hl], $01 ; $76f5
-.bit4Clear2:
+.objPal4:
 	inc hl ; $76f7
 	bit 3, c ; $76f8
-	jr z, .bit3Clear2 ; $76fa
+	jr z, .objPal5 ; $76fa
 	ld [hl], $01 ; $76fc
-.bit3Clear2:
+.objPal5:
 	inc hl ; $76fe
 	bit 2, c ; $76ff
-	jr z, .bit2Clear2 ; $7701
+	jr z, .objPal6 ; $7701
 	ld [hl], $01 ; $7703
-.bit2Clear2:
+.objPal6:
 	inc hl ; $7705
 	bit 1, c ; $7706
-	jr z, .bit1Clear2 ; $7708
+	jr z, .objPal7 ; $7708
 	ld [hl], $01 ; $770a
-.bit1Clear2:
+.objPal7:
 	inc hl ; $770c
 	bit 0, c ; $770d
 	jr z, .restore ; $770f
@@ -241,11 +241,11 @@ AnimatePaletteFadeToTarget:
 	ld a, [wPaletteFadeFrameDelay] ; $7722
 .loopB:
 	and a ; $7725
-	jr z, .zero ; $7726
+	jr z, .stepPalettes ; $7726
 	call AdvanceFrame ; $7728
 	dec a ; $772b
 	jr .loopB ; $772c
-.zero:
+.stepPalettes:
 	ld de, wPaletteFadeMask ; $772e
 	ld b, $00 ; $7731
 .loop2:

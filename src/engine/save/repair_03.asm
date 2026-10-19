@@ -94,51 +94,51 @@ UpdateUnlockablesSaveBlock:
 	ld a, $02 ; $571e
 	call CheckUnlockCondition ; $5720
 	or a ; $5723
-	jr z, .zero ; $5724
+	jr z, .checkUnlock04 ; $5724
 	ld hl, wSaveBlockBuffer + 2 ; $5726
 	ld a, $01 ; $5729
 	ld [hl], a ; $572b
-.zero:
+.checkUnlock04:
 	ld a, $04 ; $572c
 	call CheckUnlockCondition ; $572e
 	or a ; $5731
-	jr z, .zero2 ; $5732
+	jr z, .checkUnlock06 ; $5732
 	ld hl, wSaveBlockBuffer + 7 ; $5734
 	ld a, $01 ; $5737
 	ld [hl], a ; $5739
-.zero2:
+.checkUnlock06:
 	ld a, $06 ; $573a
 	call CheckUnlockCondition ; $573c
 	or a ; $573f
-	jr z, .zero3 ; $5740
+	jr z, .checkUnlock08 ; $5740
 	ld hl, wSaveBlockBuffer + 4 ; $5742
 	ld a, $01 ; $5745
 	ld [hl], a ; $5747
-.zero3:
+.checkUnlock08:
 	ld a, $08 ; $5748
 	call CheckUnlockCondition ; $574a
 	or a ; $574d
-	jr z, .zero4 ; $574e
+	jr z, .checkUnlock09 ; $574e
 	ld hl, wSaveBlockBuffer + 6 ; $5750
 	ld a, $01 ; $5753
 	ld [hl], a ; $5755
-.zero4:
+.checkUnlock09:
 	ld a, $09 ; $5756
 	call CheckUnlockCondition ; $5758
 	or a ; $575b
-	jr z, .zero5 ; $575c
+	jr z, .checkUnlock0a ; $575c
 	ld hl, wSaveBlockBuffer + 3 ; $575e
 	ld a, $01 ; $5761
 	ld [hl], a ; $5763
-.zero5:
+.checkUnlock0a:
 	ld a, $0a ; $5764
 	call CheckUnlockCondition ; $5766
 	or a ; $5769
-	jr z, .zero6 ; $576a
+	jr z, .writeRecords ; $576a
 	ld hl, wSaveBlockBuffer + 5 ; $576c
 	ld a, $01 ; $576f
 	ld [hl], a ; $5771
-.zero6:
+.writeRecords:
 	ld hl, wSaveBlockBuffer ; $5772
 	ld b, SAVEBLOCK_N64_RECORDS ; $5775
 	ld de, $0000 ; $5777
@@ -270,20 +270,20 @@ WriteBlock6WithBackup:
 	ld b, SAVEBLOCK_PRESERVED ; $584a
 	call WriteSaveBlock ; $584c
 	or a ; $584f
-	jr nz, .step ; $5850
+	jr nz, .fail ; $5850
 	call VerifySaveBlock ; $5852
 	or a ; $5855
-	jr nz, .step ; $5856
+	jr nz, .fail ; $5856
 	ld b, SAVEBLOCK_PRESERVED + SAVEBLOCK_BACKUP ; $5858
 	call WriteSaveBlock ; $585a
 	or a ; $585d
-	jr nz, .step ; $585e
+	jr nz, .fail ; $585e
 	call VerifySaveBlock ; $5860
 	or a ; $5863
-	jr nz, .step ; $5864
+	jr nz, .fail ; $5864
 	xor a ; $5866
 	jr .restore ; $5867
-.step:
+.fail:
 	ld a, $ff ; $5869
 .restore:
 	pop hl ; $586b
@@ -308,20 +308,20 @@ Unused_03_WriteBlock7WithBackup:
 	ld b, SAVEBLOCK_SPARE7 ; $5881
 	call WriteSaveBlock ; $5883
 	or a ; $5886
-	jr nz, .step ; $5887
+	jr nz, .fail ; $5887
 	call VerifySaveBlock ; $5889
 	or a ; $588c
-	jr nz, .step ; $588d
+	jr nz, .fail ; $588d
 	ld b, SAVEBLOCK_SPARE7 + SAVEBLOCK_BACKUP ; $588f
 	call WriteSaveBlock ; $5891
 	or a ; $5894
-	jr nz, .step ; $5895
+	jr nz, .fail ; $5895
 	call VerifySaveBlock ; $5897
 	or a ; $589a
-	jr nz, .step ; $589b
+	jr nz, .fail ; $589b
 	xor a ; $589d
 	jr .restore ; $589e
-.step:
+.fail:
 	ld a, $ff ; $58a0
 .restore:
 	pop hl ; $58a2
@@ -346,20 +346,20 @@ Unused_03_WriteBlock8WithBackup:
 	ld b, SAVEBLOCK_SPARE8 ; $58b8
 	call WriteSaveBlock ; $58ba
 	or a ; $58bd
-	jr nz, .step ; $58be
+	jr nz, .fail ; $58be
 	call VerifySaveBlock ; $58c0
 	or a ; $58c3
-	jr nz, .step ; $58c4
+	jr nz, .fail ; $58c4
 	ld b, SAVEBLOCK_SPARE8 + SAVEBLOCK_BACKUP ; $58c6
 	call WriteSaveBlock ; $58c8
 	or a ; $58cb
-	jr nz, .step ; $58cc
+	jr nz, .fail ; $58cc
 	call VerifySaveBlock ; $58ce
 	or a ; $58d1
-	jr nz, .step ; $58d2
+	jr nz, .fail ; $58d2
 	xor a ; $58d4
 	jr .restore ; $58d5
-.step:
+.fail:
 	ld a, $ff ; $58d7
 .restore:
 	pop hl ; $58d9
@@ -384,20 +384,20 @@ Unused_03_WriteBlock9WithBackup:
 	ld b, SAVEBLOCK_SPARE9 ; $58ef
 	call WriteSaveBlock ; $58f1
 	or a ; $58f4
-	jr nz, .step ; $58f5
+	jr nz, .fail ; $58f5
 	call VerifySaveBlock ; $58f7
 	or a ; $58fa
-	jr nz, .step ; $58fb
+	jr nz, .fail ; $58fb
 	ld b, SAVEBLOCK_SPARE9 + SAVEBLOCK_BACKUP ; $58fd
 	call WriteSaveBlock ; $58ff
 	or a ; $5902
-	jr nz, .step ; $5903
+	jr nz, .fail ; $5903
 	call VerifySaveBlock ; $5905
 	or a ; $5908
-	jr nz, .step ; $5909
+	jr nz, .fail ; $5909
 	xor a ; $590b
 	jr .restore ; $590c
-.step:
+.fail:
 	ld a, $ff ; $590e
 .restore:
 	pop hl ; $5910
@@ -422,20 +422,20 @@ Unused_03_WriteBlock10WithBackup:
 	ld b, SAVEBLOCK_SPARE10 ; $5926
 	call WriteSaveBlock ; $5928
 	or a ; $592b
-	jr nz, .step ; $592c
+	jr nz, .fail ; $592c
 	call VerifySaveBlock ; $592e
 	or a ; $5931
-	jr nz, .step ; $5932
+	jr nz, .fail ; $5932
 	ld b, SAVEBLOCK_SPARE10 + SAVEBLOCK_BACKUP ; $5934
 	call WriteSaveBlock ; $5936
 	or a ; $5939
-	jr nz, .step ; $593a
+	jr nz, .fail ; $593a
 	call VerifySaveBlock ; $593c
 	or a ; $593f
-	jr nz, .step ; $5940
+	jr nz, .fail ; $5940
 	xor a ; $5942
 	jr .restore ; $5943
-.step:
+.fail:
 	ld a, $ff ; $5945
 .restore:
 	pop hl ; $5947

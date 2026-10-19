@@ -73,9 +73,9 @@ TennisMachineRoomNpc04_14:
 	farcall InitDialogueTextCursor ; $40c2
 	ld a, [wMapSceneStage] ; $40c5
 	cp MACHINECOURTSTAGE_LEVEL2 ; $40c8
-	jr z, .eq01 ; $40ca
+	jr z, .level2 ; $40ca
 	jr .speak ; $40cc
-.eq01:
+.level2:
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_WALK_72_06_2 ; $40ce
 	farcall RunDialogueYesNoPrompt ; $40d3
 	farcall ScriptCloseDialogueWindow ; $40d6
@@ -421,10 +421,10 @@ MachineCourtStartLevelScene:
 	script_wait_frames 10 ; $455e
 	ld a, [wMapSceneStage] ; $4565
 	cp MACHINECOURTSTAGE_MASTER ; $4568
-	jr c, .lt04 ; $456a
+	jr c, .notMaster ; $456a
 	script_set_text Text_6e_204 ; $456c
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4572
-.lt04:
+.notMaster:
 	script_fade_out 6 ; $4577
 	call WaitFadeEnd ; $457c
 	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $457f
@@ -432,7 +432,7 @@ MachineCourtStartLevelScene:
 	ld [wStoryModeCurrentLocation], a ; $4584
 	ld a, $05 ; $4587
 	ld [wStoryModeEntryPoint], a ; $4589
-	ld a, $ff ; $458c
+	ld a, EXITTRIGGER_DIRECT ; $458c
 	ld [wUnusedExitTriggerIdMirror], a ; $458e
 	ld [wStoryModeExitTriggerRequest], a ; $4591
 	ld a, [wMapSceneStage] ; $4594
@@ -456,5 +456,9 @@ MachineCourtStartLevelScene:
 	set_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $45f4
 	ret ; $45f7
 MachineCourtStartLevelSceneTable:
-	; $45f8, 8 bytes (bytes:16)
-	db $12, $13, $14, $15, $1a, $1a, $1a, $c9 ; 0x00
+	; $45f8, 7 bytes (bytes:7)
+	table_width 1
+	db MINIGAME_TENNIS_MACHINE_1, MINIGAME_TENNIS_MACHINE_2, MINIGAME_TENNIS_MACHINE_3, MINIGAME_TENNIS_MACHINE_4, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE
+	assert_table_length NUM_MACHINECOURTSTAGES
+MachineCourtStartLevelScene.deadRet:
+	ret ; $45ff

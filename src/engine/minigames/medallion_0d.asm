@@ -35,7 +35,7 @@ TreasureBoxValuesByType:
 	db $05, $0a, $32, $64 ; 0x00
 TreasureBoxHitStreakSounds:
 	; $5c81, 4 bytes (bytes:4)
-	db $c0, $be, $bc, $ba ; 0x00
+	db SFX_SCORE_STEP1, SFX_SCORE_STEP3, SFX_SCORE_STEP5, SFX_SCORE_STEP7
 TreasureBoxHitStreakMultipliers:
 	; $5c85, 4 bytes (bytes:4)
 	db $01, $02, $04, $08 ; 0x00
@@ -67,21 +67,11 @@ DrawTreasureBoxHitCountdown:
 	ld a, [wMinigameSceneActor + 3] ; $5cd0
 	call QueueMinigameHitBurstFirstFour ; $5cd3
 	ret ; $5cd6
-; Instruction-identical to ProjectMedallionMatchWorldPosition (in this bank); a change here belongs in every copy.
 	twin_named project_medallion_match_world_position, ProjectTreasureBoxWorldPosition ; $5cd7
 MinigameConfig_MedallionMatch:
 	; $5cea, 16 bytes
 	drill_def CHAR_LUIGI, COURT_MEDALLION_MATCH, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_MEDALLION_MATCH, BGM_TARGET_MINIGAMES, CHAR_WALUIGI, MinigameHooks_MedallionMatch, MinigamePointLayoutDuo, InitMinigame_MedallionMatch
-InitMinigame_MedallionMatch:
-	ld a, $01 ; $5cfa
-	ld [wMinigameUsesTennisMachine], a ; $5cfc
-	ld a, [wMinigameLevel] ; $5cff
-	cp $02 ; $5d02
-	jr nz, .done ; $5d04
-	ld a, $01 ; $5d06
-	ld [wMinigameHighScoreMode], a ; $5d08
-.done:
-	ret ; $5d0b
+	twin_named init_minigame_medallion_match, InitMinigame_MedallionMatch ; $5cfa
 MinigameHooks_MedallionMatch:
 	; $5d0c, 16 bytes (mode_hooks)
 	dw MedallionMatchHook_PerFrame ; record 0
@@ -236,14 +226,13 @@ MedallionMatchTargetState2:
 	ld h, $00 ; $5e25
 	ld l, a ; $5e27
 	add hl, hl ; $5e28
-	ld bc, $ff00 ; $5e29
+	ld bc, -256 ; $5e29
 	add hl, bc ; $5e2c
 	call SetMinigameActorWorldPos ; $5e2d
 	jp AdvanceMedallionMatchActorState ; $5e30
 MedallionMatchTargetState3:
 	call DrawMedallionMatchSprite ; $5e33
 	ret ; $5e36
-; Instruction-identical to IsBallInTreasureBoxHitZone (in this bank); a change here belongs in every copy.
 	twin_named is_ball_in_medallion_match_hit_zone, IsBallInMedallionMatchHitZone ; $5e37
 AwardMedallionMatchHitScore:
 	ld a, $10 ; $5e9e
@@ -277,7 +266,7 @@ AwardMedallionMatchHitScore:
 	ret ; $5ee3
 MedallionMatchHitStreakSounds:
 	; $5ee4, 8 bytes (bytes:8)
-	db $c0, $bf, $be, $bd, $bc, $bb, $ba, $ba ; 0x00
+	db SFX_SCORE_STEP1, SFX_SCORE_STEP2, SFX_SCORE_STEP3, SFX_SCORE_STEP4, SFX_SCORE_STEP5, SFX_SCORE_STEP6, SFX_SCORE_STEP7, SFX_SCORE_STEP7
 MedallionMatchHitStreakMultipliers:
 	; $5eec, 6 bytes (bytes:6)
 	db $01, $05, $1e, $46, $96, $fa ; 0x00
@@ -303,7 +292,6 @@ DrawMedallionMatchHitCountdown:
 	ld a, [wMinigameSceneActor + 3] ; $5f18
 	call QueueMinigameHitBurstFirstTwo ; $5f1b
 	ret ; $5f1e
-; Instruction-identical to ProjectTreasureBoxWorldPosition (in this bank); a change here belongs in every copy.
 	twin_named project_medallion_match_world_position, ProjectMedallionMatchWorldPosition ; $5f1f
 MinigameConfig_FruitFantasy:
 	; $5f32, 16 bytes
@@ -384,9 +372,5 @@ FruitFantasyHook_BallHit:
 UpdateFruitFantasyTargetHits:
 	call ScoreMinigameTargetHitOrDeflectBall ; $5fec
 	ret ; $5fef
-FruitFantasyReflectBallAndRecordCell:
-	call ReflectBallVelocity ; $5ff0
-	call GetMinigameGridCellIndex ; $5ff3
-	ld [wMinigameLastHitCell], a ; $5ff6
-	ret ; $5ff9
+	twin_named banana_bunch_reflect_ball_and_record_cell, FruitFantasyReflectBallAndRecordCell ; $5ff0
 	; $5ffa, 8198 bytes fill to bank end (linker-padded)

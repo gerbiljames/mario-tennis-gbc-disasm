@@ -158,7 +158,7 @@ Unused_05_RunPagedTextMenuAutoSize:
 	cp $ff ; $4a66
 	jr z, .store3 ; $4a68
 	cp $fe ; $4a6a
-	jr nz, .nefe ; $4a6c
+	jr nz, .nextPage ; $4a6c
 	ld a, [wMenuPage] ; $4a6e
 	dec a ; $4a71
 	cp $ff ; $4a72
@@ -169,7 +169,7 @@ Unused_05_RunPagedTextMenuAutoSize:
 .store:
 	ld [wMenuPage], a ; $4a7a
 	jr .loop ; $4a7d
-.nefe:
+.nextPage:
 	ld a, [wMenuPage] ; $4a7f
 	inc a ; $4a82
 	ld hl, sp + 2 ; $4a83
@@ -248,7 +248,7 @@ Unused_05_RunMenuSelectionShared:
 	bit PADB_A, a ; $4b02
 	jp nz, Unused_05_LoadOverworldSpriteDef.isCursorOnAdjustRow ; $4b04
 	bit PADB_UP, a ; $4b07
-	jr z, .bit6Clear ; $4b09
+	jr z, .checkDown ; $4b09
 	dec b ; $4b0b
 	bit 7, b ; $4b0c
 	jr z, .playSfx ; $4b0e
@@ -256,7 +256,7 @@ Unused_05_RunMenuSelectionShared:
 	dec a ; $4b13
 	ld b, a ; $4b14
 	jr .playSfx ; $4b15
-.bit6Clear:
+.checkDown:
 	ldh a, [hInputPressed] ; $4b17
 	and PADF_DOWN ; $4b19
 	jp z, Unused_05_LoadOverworldSpriteDef.checkInputRisingEdge ; $4b1b
@@ -346,7 +346,7 @@ Unused_05_LoadOverworldSpriteDef:
 	pop de ; $4b9f
 	pop bc ; $4ba0
 	pop af ; $4ba1
-	jp .step7 ; $4ba2
+	jp .returnSelection ; $4ba2
 .checkInputRisingEdge:
 	ldh a, [hInputRisingEdge] ; $4ba5
 	and PADF_START ; $4ba7
@@ -377,13 +377,13 @@ Unused_05_LoadOverworldSpriteDef:
 	jr z, .restore ; $4bd9
 	ldh a, [hInputPressed] ; $4bdb
 	and PADF_LEFT ; $4bdd
-	jp z, .zero ; $4bdf
+	jp z, .checkRight ; $4bdf
 	ld a, [wPauseMenuOptionBits] ; $4be2
 	and $f0 ; $4be5
 	or $01 ; $4be7
 	ld [wPauseMenuOptionBits], a ; $4be9
 	jr .restore2 ; $4bec
-.zero:
+.checkRight:
 	ldh a, [hInputPressed] ; $4bee
 	and PADF_RIGHT ; $4bf0
 	jr z, .restore ; $4bf2
@@ -457,7 +457,7 @@ Unused_05_LoadOverworldSpriteDef:
 	pop de ; $4c68
 	pop bc ; $4c69
 	pop af ; $4c6a
-.step7:
+.returnSelection:
 	ld b, a ; $4c6b
 	pop_wram_bank ; $4c6c
 	ld a, b ; $4c71

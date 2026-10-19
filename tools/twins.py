@@ -9,9 +9,8 @@ several banks fingerprint alike whatever their bank-local helpers are
 called. Routines shorter than --min instructions and `Unused*` routines
 (catalogued in docs/unused_code.md) are left out.
 
-The groups are what a fix has to be applied to in full: the note above each
-member in `src/` names its twins, and docs/duplicated_code.md is this
-tool's table.
+The groups are what a fix has to be applied to in full; docs/duplicated_code.md
+is this tool's table.
 
 usage: twins.py [--min N] [--json FILE]
 """

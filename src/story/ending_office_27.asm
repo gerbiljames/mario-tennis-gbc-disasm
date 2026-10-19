@@ -22,7 +22,7 @@ ActorScript_27_03:
 	as_halt
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_field ACTORF_SPEED, $0010
-.L21:
+.pace:
 	as_target_rel -2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
@@ -31,7 +31,7 @@ ActorScript_27_03:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 75
-	as_jump .L21
+	as_jump .pace
 End12PrincipalsOfficeMapScripts_27:
 	; $4bbc, 14 bytes (map_tree)
 	dw End12PrincipalsOfficeEntryPoints_27 ; slot 0 EntryPoints
@@ -82,7 +82,7 @@ End12PrincipalsOfficeInitScript_27:
 	call EnableLCD ; $4c7d
 	ld a, [wStoryModeEntryPoint] ; $4c80
 	cp $02 ; $4c83
-	jp z, .eq02 ; $4c85
+	jp z, .altScene ; $4c85
 	jp .clearStoryModeShowLocationName ; $4c88
 	ret ; $4c8b
 .clearStoryModeShowLocationName:
@@ -130,7 +130,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_wait_move ACTOR_PARTNER ; $4da2
 	script_wait_frames 5 ; $4da7
 	script_face ACTOR_PLAYER, FACE_UP ; $4dae
-	call OpenPrincipalsOfficeDoor_27 ; $4db5
+	call AcademyWingOpenDoor_27 ; $4db5
 	script_move_target ACTOR_PLAYER, 33.0, 53.0 ; $4db8
 	script_move_target ACTOR_PARTNER, 33.0, 59.0 ; $4dc3
 	script_wait_move ACTOR_PARTNER ; $4dce
@@ -147,7 +147,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_move_target ACTOR_PLAYER, 33.0, 59.0 ; $4e13
 	script_wait_move ACTOR_PLAYER ; $4e1e
 	script_face ACTOR_PLAYER, FACE_UP ; $4e23
-	call OpenPrincipalsOfficeDoor_27 ; $4e2a
+	call AcademyWingOpenDoor_27 ; $4e2a
 	script_move_target ACTOR_PLAYER, 33.0, 53.0 ; $4e2d
 	script_wait_move ACTOR_PLAYER ; $4e38
 	script_move_target ACTOR_PLAYER, 32.0, 53.0 ; $4e3d
@@ -155,7 +155,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_face ACTOR_PLAYER, FACE_UP ; $4e4d
 	script_delay 1 ; $4e54
 .closePrincipalsOfficeDoor:
-	call ClosePrincipalsOfficeDoor_27 ; $4e59
+	call AcademyWingCloseDoor_27 ; $4e59
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_WALK_75_06, ANIM_BOUNCE ; $4e5c
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_KEVIN, ANIM_BOUNCE ; $4e63
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_MARK, ANIM_BOUNCE ; $4e6a
@@ -222,7 +222,7 @@ End12PrincipalsOfficeInitScript_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $4fe9
 	ld [wStoryModeExitTriggerRequest], a ; $4fec
 	ret ; $4fef
-.eq02:
+.altScene:
 	script_respawn_actors End12PrincipalsOfficeActorsAlt_27 ; $4ff0
 	farcall BeginCutsceneScriptMode ; $4ff8
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, ANIM_TROPHY_SINGLES ; $4ffb
@@ -265,7 +265,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_move_target ACTOR_PLAYER, 33.0, 55.0 ; $50c4
 	script_move_target ACTOR_PARTNER, 33.0, 53.0 ; $50cf
 	script_wait_move ACTOR_PARTNER ; $50da
-	call OpenPrincipalsOfficeDoor_27 ; $50df
+	call AcademyWingOpenDoor_27 ; $50df
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_04 ; $50e2
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_04 ; $50ed
 	script_delay 20 ; $50f8
@@ -280,11 +280,11 @@ End12PrincipalsOfficeInitScript_27:
 	script_wait_move ACTOR_PLAYER ; $5127
 	script_move_target ACTOR_PLAYER, 33.0, 55.0 ; $512c
 	script_wait_move ACTOR_PLAYER ; $5137
-	call OpenPrincipalsOfficeDoor_27 ; $513c
+	call AcademyWingOpenDoor_27 ; $513c
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_04 ; $513f
 	script_delay 20 ; $514a
 .closePrincipalsOfficeDoor2:
-	call ClosePrincipalsOfficeDoor_27 ; $514f
+	call AcademyWingCloseDoor_27 ; $514f
 	script_delay 60 ; $5152
 	set_flag FLAG_ENDING_CREDITS_PENDING ; $5157
 	script_fade_out 4 ; $515a
@@ -293,21 +293,8 @@ End12PrincipalsOfficeInitScript_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $5164
 	ld [wStoryModeExitTriggerRequest], a ; $5167
 	ret ; $516a
-OpenPrincipalsOfficeDoor_27:
-	script_wait_frames 10 ; $516b
-	sound SFX_DOOR_ALT ; $5172
-	script_copy_scene_rect 7, 56, 32, 56, 2, 2 ; $5174
-	script_wait_frames 2 ; $5183
-	script_copy_scene_rect 11, 56, 32, 56, 2, 2 ; $518a
-	script_wait_frames 4 ; $5199
-	ret ; $51a0
-ClosePrincipalsOfficeDoor_27:
-	sound SFX_DOOR_ALT ; $51a1
-	script_copy_scene_rect 7, 56, 32, 56, 2, 2 ; $51a3
-	script_wait_frames 2 ; $51b2
-	script_copy_scene_rect 3, 56, 32, 56, 2, 2 ; $51b9
-	script_wait_frames 4 ; $51c8
-	ret ; $51cf
+	twin academy_wing_open_door, 27 ; $516b AcademyWingOpenDoor_27
+	twin academy_wing_close_door, 27 ; $51a1 AcademyWingCloseDoor_27
 ActorScript_27_04:
 	; $51d0, 13 bytes (actor_script)
 	as_set_target 33.0, 59.0
@@ -356,7 +343,7 @@ End11TrainingCourtInitScript_27:
 	cp $01 ; $5273
 	jp z, .checkDoubles ; $5275
 	cp $02 ; $5278
-	jp z, .eq02 ; $527a
+	jp z, .altScene ; $527a
 	ret ; $527d
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $527e
@@ -447,7 +434,7 @@ End11TrainingCourtInitScript_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $53f2
 	ld [wStoryModeExitTriggerRequest], a ; $53f5
 	ret ; $53f8
-.eq02:
+.altScene:
 	script_respawn_actors End11TrainingCourtActorsAlt_27 ; $53f9
 	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $5401
 	farcall BeginCutsceneScriptMode ; $540c

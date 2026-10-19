@@ -425,7 +425,7 @@ Player2CharIconSpriteTemplate1_09:
 	oam_sprite $10, $18, $18, $07
 	oam_sprite $10, $20, $1a, $07
 	oam_sprite_end
-SpriteTemplate_09_8:
+GameScoreDisplaySpriteTemplate_09:
 	; $71f7, 33 bytes (sprite_template)
 	oam_sprite $08, $18, $00, $04
 	oam_sprite $08, $20, $02, $04

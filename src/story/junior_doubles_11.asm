@@ -34,7 +34,7 @@ AcademyArrivalEntry0cScene:
 	ld [wStoryModeCurrentLocation], a ; $5459
 	ld a, $0f ; $545c
 	ld [wStoryModeEntryPoint], a ; $545e
-	ld a, $ff ; $5461
+	ld a, EXITTRIGGER_DIRECT ; $5461
 	ld [wUnusedExitTriggerIdMirror], a ; $5463
 	ld [wStoryModeExitTriggerRequest], a ; $5466
 	ret ; $5469
@@ -257,13 +257,7 @@ JuniorClassCourtDoublesANpc0A_11:
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $57de
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $57e3
 	ret ; $57e8
-JuniorClassCourtDoublesNpc03FaceUp_11:
-	script_set_speed ACTOR_PLAYER, 0.25 ; $57e9
-	script_lock_facing ACTOR_PLAYER ; $57f1
-	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $57f8
-	script_wait_move ACTOR_PLAYER ; $5803
-	script_unlock_facing ACTOR_PLAYER ; $5808
-	script_face ACTOR_PLAYER, FACE_UP ; $580f
+	twin_named junior_class_court_singles_npc03_face_up, JuniorClassCourtDoublesNpc03FaceUp_11 ; $57e9
 JuniorClassCourtDoublesNpc03_11:
 	call OfferDoublesRankingMatch ; $5816
 	ret ; $5819

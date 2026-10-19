@@ -91,9 +91,9 @@ Unused_1a_ExpScreenNumberTask:
 	ld hl, wStoryMainName ; $4e8e
 	ld a, [wStoryCharacterSlot] ; $4e91
 	or a ; $4e94
-	jr z, .zero ; $4e95
+	jr z, .readLevel ; $4e95
 	ld l, $40 ; $4e97
-.zero:
+.readLevel:
 	ld a, l ; $4e99
 	add $18 ; $4e9a
 	ld l, a ; $4e9c
@@ -106,7 +106,7 @@ Unused_1a_ExpScreenNumberTask:
 	ret z ; $4ea5
 	ld a, [wCharDataAnimCounter] ; $4ea6
 	and a ; $4ea9
-	jp nz, .nonZero ; $4eaa
+	jp nz, .showExpToNextLevel ; $4eaa
 	ld a, [wExpLevelUpQueued] ; $4ead
 	and a ; $4eb0
 	ret nz ; $4eb1
@@ -116,7 +116,7 @@ Unused_1a_ExpScreenNumberTask:
 	ld l, a ; $4eb7
 	ld a, h ; $4eb8
 	or l ; $4eb9
-	jr z, .step2 ; $4eba
+	jr z, .queueLevelUp ; $4eba
 	ld de, wExpToNextDigits ; $4ebc
 	ld a, $05 ; $4ebf
 	call FormatDecimalNumberUnsigned ; $4ec1
@@ -128,7 +128,7 @@ Unused_1a_ExpScreenNumberTask:
 	ld a, $05 ; $4ecd
 	call Unused_1a_QueueNumberSprites ; $4ecf
 	ret ; $4ed2
-.step2:
+.queueLevelUp:
 	ld a, [wExpLevelUpQueued] ; $4ed3
 	and a ; $4ed6
 	ret nz ; $4ed7
@@ -137,7 +137,7 @@ Unused_1a_ExpScreenNumberTask:
 	ld [wExpScreenFlags], a ; $4edd
 	ld a, $01 ; $4ee0
 	ld [wExpLevelUpQueued], a ; $4ee2
-.nonZero:
+.showExpToNextLevel:
 	ld hl, wExpToNextLevel ; $4ee5
 	ld a, [hl+] ; $4ee8
 	ld h, [hl] ; $4ee9
@@ -413,35 +413,35 @@ Unused_1a_DrawExpBonusMessage:
 	call Unused_1a_DrawExpScreenMessageBox ; $50d4
 	pop af ; $50d7
 	cp $01 ; $50d8
-	jp z, .eq01 ; $50da
+	jp z, .academyIntroYes ; $50da
 	cp $02 ; $50dd
-	jp z, .eq02 ; $50df
+	jp z, .academyIntroNo ; $50df
 	cp $03 ; $50e2
-	jp z, .eq03 ; $50e4
+	jp z, .academySchedule ; $50e4
 	cp $14 ; $50e7
-	jp z, .eq14 ; $50e9
+	jp z, .nameAllie ; $50e9
 	cp $15 ; $50ec
-	jp z, .eq15 ; $50ee
+	jp z, .nameJoy ; $50ee
 	cp $16 ; $50f1
-	jp z, .eq16 ; $50f3
+	jp z, .nameBrian ; $50f3
 	cp $17 ; $50f6
-	jp z, .eq17 ; $50f8
+	jp z, .namePam ; $50f8
 	cp $18 ; $50fb
-	jp z, .eq18 ; $50fd
+	jp z, .nameBob ; $50fd
 	cp $19 ; $5100
-	jp z, .eq19 ; $5102
+	jp z, .nameBeth ; $5102
 	cp $1a ; $5105
-	jp z, .eq1a ; $5107
+	jp z, .nameFay ; $5107
 	cp $1b ; $510a
-	jp z, .eq1b ; $510c
+	jp z, .nameCurt ; $510c
 	cp $1c ; $510f
-	jp z, .eq1c ; $5111
+	jp z, .nameMark ; $5111
 	cp $1d ; $5114
-	jp z, .eq1d ; $5116
+	jp z, .nameSean ; $5116
 	cp $1e ; $5119
-	jp z, .eq1e ; $511b
+	jp z, .nameSammi ; $511b
 	jp .loadDialogueTextToBuffer ; $511e
-.eq01:
+.academyIntroYes:
 	ld hl, Text_31_245 ; $5121
 	call Unused_1a_LoadDialogueTextToBuffer ; $5124
 	wram_bank WRAM_STAGING ; $5127
@@ -450,7 +450,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $5133
 	call Unused_1a_DrawStringToTileBuffer ; $5135
 	jp .loadDialogueTextToBuffer2 ; $5138
-.eq02:
+.academyIntroNo:
 	ld hl, Text_31_246 ; $513b
 	call Unused_1a_LoadDialogueTextToBuffer ; $513e
 	wram_bank WRAM_STAGING ; $5141
@@ -459,7 +459,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $514d
 	call Unused_1a_DrawStringToTileBuffer ; $514f
 	jp .loadDialogueTextToBuffer2 ; $5152
-.eq03:
+.academySchedule:
 	ld hl, Text_31_247 ; $5155
 	call Unused_1a_LoadDialogueTextToBuffer ; $5158
 	wram_bank WRAM_STAGING ; $515b
@@ -468,7 +468,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $5167
 	call Unused_1a_DrawStringToTileBuffer ; $5169
 	jp .loadDialogueTextToBuffer2 ; $516c
-.eq14:
+.nameAllie:
 	ld hl, Text_31_248 ; $516f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5172
 	wram_bank WRAM_STAGING ; $5175
@@ -491,7 +491,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $51af
 	call Unused_1a_DrawStringToTileBuffer ; $51b1
 	jp .loadDialogueTextToBuffer2 ; $51b4
-.eq15:
+.nameJoy:
 	ld hl, Text_31_248 ; $51b7
 	call Unused_1a_LoadDialogueTextToBuffer ; $51ba
 	wram_bank WRAM_STAGING ; $51bd
@@ -514,7 +514,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $51f7
 	call Unused_1a_DrawStringToTileBuffer ; $51f9
 	jp .loadDialogueTextToBuffer2 ; $51fc
-.eq16:
+.nameBrian:
 	ld hl, Text_31_248 ; $51ff
 	call Unused_1a_LoadDialogueTextToBuffer ; $5202
 	wram_bank WRAM_STAGING ; $5205
@@ -537,7 +537,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $523f
 	call Unused_1a_DrawStringToTileBuffer ; $5241
 	jp .loadDialogueTextToBuffer2 ; $5244
-.eq17:
+.namePam:
 	ld hl, Text_31_248 ; $5247
 	call Unused_1a_LoadDialogueTextToBuffer ; $524a
 	wram_bank WRAM_STAGING ; $524d
@@ -560,7 +560,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $5287
 	call Unused_1a_DrawStringToTileBuffer ; $5289
 	jp .loadDialogueTextToBuffer2 ; $528c
-.eq18:
+.nameBob:
 	ld hl, Text_31_248 ; $528f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5292
 	wram_bank WRAM_STAGING ; $5295
@@ -583,7 +583,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $52cf
 	call Unused_1a_DrawStringToTileBuffer ; $52d1
 	jp .loadDialogueTextToBuffer2 ; $52d4
-.eq19:
+.nameBeth:
 	ld hl, Text_31_248 ; $52d7
 	call Unused_1a_LoadDialogueTextToBuffer ; $52da
 	wram_bank WRAM_STAGING ; $52dd
@@ -606,7 +606,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $5317
 	call Unused_1a_DrawStringToTileBuffer ; $5319
 	jp .loadDialogueTextToBuffer2 ; $531c
-.eq1a:
+.nameFay:
 	ld hl, Text_31_248 ; $531f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5322
 	wram_bank WRAM_STAGING ; $5325
@@ -629,7 +629,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $535f
 	call Unused_1a_DrawStringToTileBuffer ; $5361
 	jp .loadDialogueTextToBuffer2 ; $5364
-.eq1b:
+.nameCurt:
 	ld hl, Text_31_248 ; $5367
 	call Unused_1a_LoadDialogueTextToBuffer ; $536a
 	wram_bank WRAM_STAGING ; $536d
@@ -652,7 +652,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $53a7
 	call Unused_1a_DrawStringToTileBuffer ; $53a9
 	jp .loadDialogueTextToBuffer2 ; $53ac
-.eq1c:
+.nameMark:
 	ld hl, Text_31_248 ; $53af
 	call Unused_1a_LoadDialogueTextToBuffer ; $53b2
 	wram_bank WRAM_STAGING ; $53b5
@@ -675,7 +675,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $53ef
 	call Unused_1a_DrawStringToTileBuffer ; $53f1
 	jp .loadDialogueTextToBuffer2 ; $53f4
-.eq1d:
+.nameSean:
 	ld hl, Text_31_248 ; $53f7
 	call Unused_1a_LoadDialogueTextToBuffer ; $53fa
 	wram_bank WRAM_STAGING ; $53fd
@@ -698,7 +698,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $5437
 	call Unused_1a_DrawStringToTileBuffer ; $5439
 	jp .loadDialogueTextToBuffer2 ; $543c
-.eq1e:
+.nameSammi:
 	ld hl, Text_31_248 ; $543f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5442
 	wram_bank WRAM_STAGING ; $5445

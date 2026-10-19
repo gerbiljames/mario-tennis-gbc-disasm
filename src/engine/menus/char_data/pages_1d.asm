@@ -291,9 +291,9 @@ LoadCharDataScreenPageGraphics:
 	ld hl, wStoryMainName ; $4360
 	ld a, [wStoryCharacterSlot] ; $4363
 	or a ; $4366
-	jr z, .zero ; $4367
+	jr z, .paletteField ; $4367
 	ld l, $40 ; $4369
-.zero:
+.paletteField:
 	ld a, l ; $436b
 	add $0c ; $436c
 	ld l, a ; $436e
@@ -309,9 +309,9 @@ LoadCharDataScreenPageGraphics:
 	ld hl, wStoryMainName ; $4382
 	ld a, [wStoryCharacterSlot] ; $4385
 	or a ; $4388
-	jr z, .zero2 ; $4389
+	jr z, .charField ; $4389
 	ld l, $40 ; $438b
-.zero2:
+.charField:
 	ld a, l ; $438d
 	add $0b ; $438e
 	ld l, a ; $4390
@@ -340,9 +340,9 @@ LoadCharDataScreenPageGraphics:
 	ld hl, wStoryMainName ; $43c4
 	ld a, [wStoryCharacterSlot] ; $43c7
 	or a ; $43ca
-	jr z, .zero3 ; $43cb
+	jr z, .paletteField2 ; $43cb
 	ld l, $40 ; $43cd
-.zero3:
+.paletteField2:
 	ld a, l ; $43cf
 	add $0c ; $43d0
 	ld l, a ; $43d2
@@ -358,9 +358,9 @@ LoadCharDataScreenPageGraphics:
 	ld hl, wStoryMainName ; $43e6
 	ld a, [wStoryCharacterSlot] ; $43e9
 	or a ; $43ec
-	jr z, .zero4 ; $43ed
+	jr z, .charField2 ; $43ed
 	ld l, $40 ; $43ef
-.zero4:
+.charField2:
 	ld a, l ; $43f1
 	add $0b ; $43f2
 	ld l, a ; $43f4
@@ -413,9 +413,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $4452
 	ld a, [wStoryCharacterSlot] ; $4455
 	or a ; $4458
-	jr z, .zero ; $4459
+	jr z, .nameField ; $4459
 	ld l, $40 ; $445b
-.zero:
+.nameField:
 	ld a, l ; $445d
 	add $00 ; $445e
 	ld l, a ; $4460
@@ -434,9 +434,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $447a
 	ld a, [wStoryCharacterSlot] ; $447d
 	or a ; $4480
-	jr z, .zero2 ; $4481
+	jr z, .leftHandedField ; $4481
 	ld l, $40 ; $4483
-.zero2:
+.leftHandedField:
 	ld a, l ; $4485
 	add $0e ; $4486
 	ld l, a ; $4488
@@ -452,9 +452,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $449c
 	ld a, [wStoryCharacterSlot] ; $449f
 	or a ; $44a2
-	jr z, .zero3 ; $44a3
+	jr z, .levelField ; $44a3
 	ld l, $40 ; $44a5
-.zero3:
+.levelField:
 	ld a, l ; $44a7
 	add $18 ; $44a8
 	ld l, a ; $44aa
@@ -475,9 +475,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $44c9
 	ld a, [wStoryCharacterSlot] ; $44cc
 	or a ; $44cf
-	jr z, .zero4 ; $44d0
+	jr z, .spinLevelField ; $44d0
 	ld l, $40 ; $44d2
-.zero4:
+.spinLevelField:
 	ld a, l ; $44d4
 	add $38 ; $44d5
 	ld l, a ; $44d7
@@ -498,9 +498,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $44f6
 	ld a, [wStoryCharacterSlot] ; $44f9
 	or a ; $44fc
-	jr z, .zero5 ; $44fd
+	jr z, .powerLevelField ; $44fd
 	ld l, $40 ; $44ff
-.zero5:
+.powerLevelField:
 	ld a, l ; $4501
 	add $39 ; $4502
 	ld l, a ; $4504
@@ -521,9 +521,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $4523
 	ld a, [wStoryCharacterSlot] ; $4526
 	or a ; $4529
-	jr z, .zero6 ; $452a
+	jr z, .controlLevelField ; $452a
 	ld l, $40 ; $452c
-.zero6:
+.controlLevelField:
 	ld a, l ; $452e
 	add $3a ; $452f
 	ld l, a ; $4531
@@ -544,9 +544,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $4550
 	ld a, [wStoryCharacterSlot] ; $4553
 	or a ; $4556
-	jr z, .zero7 ; $4557
+	jr z, .speedLevelField ; $4557
 	ld l, $40 ; $4559
-.zero7:
+.speedLevelField:
 	ld a, l ; $455b
 	add $3b ; $455c
 	ld l, a ; $455e
@@ -586,9 +586,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $45a6
 	ld a, [wStoryCharacterSlot] ; $45a9
 	or a ; $45ac
-	jr z, .zero8 ; $45ad
+	jr z, .expField ; $45ad
 	ld l, $40 ; $45af
-.zero8:
+.expField:
 	ld a, l ; $45b1
 	add $2c ; $45b2
 	ld l, a ; $45b4
@@ -601,11 +601,11 @@ BuildCharDataSummaryFields:
 	ld de, wCharStatPageMain + 4 ; $45c0
 	ld a, [hl] ; $45c3
 	or a ; $45c4
-	jr nz, .nonZero ; $45c5
+	jr nz, .capMainExp ; $45c5
 	ld bc, wCharDataNumberBuffer_SIZE ; $45c7
 	call CopyMemoryBC ; $45ca
 	jr .storeStoryCharacterSlot ; $45cd
-.nonZero:
+.capMainExp:
 	ld h, d ; $45cf
 	ld l, e ; $45d0
 	ld a, $20 ; $45d1
@@ -623,9 +623,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $45e1
 	ld a, [wStoryCharacterSlot] ; $45e4
 	or a ; $45e7
-	jr z, .zero9 ; $45e8
+	jr z, .nameField2 ; $45e8
 	ld l, $40 ; $45ea
-.zero9:
+.nameField2:
 	ld a, l ; $45ec
 	add $00 ; $45ed
 	ld l, a ; $45ef
@@ -645,9 +645,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $460f
 	ld a, [wStoryCharacterSlot] ; $4612
 	or a ; $4615
-	jr z, .zero10 ; $4616
+	jr z, .leftHandedField2 ; $4616
 	ld l, $40 ; $4618
-.zero10:
+.leftHandedField2:
 	ld a, l ; $461a
 	add $0e ; $461b
 	ld l, a ; $461d
@@ -663,9 +663,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $4631
 	ld a, [wStoryCharacterSlot] ; $4634
 	or a ; $4637
-	jr z, .zero11 ; $4638
+	jr z, .levelField2 ; $4638
 	ld l, $40 ; $463a
-.zero11:
+.levelField2:
 	ld a, l ; $463c
 	add $18 ; $463d
 	ld l, a ; $463f
@@ -686,9 +686,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
 	or a ; $4664
-	jr z, .zero12 ; $4665
+	jr z, .spinLevelField2 ; $4665
 	ld l, $40 ; $4667
-.zero12:
+.spinLevelField2:
 	ld a, l ; $4669
 	add $38 ; $466a
 	ld l, a ; $466c
@@ -709,9 +709,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $468b
 	ld a, [wStoryCharacterSlot] ; $468e
 	or a ; $4691
-	jr z, .zero13 ; $4692
+	jr z, .powerLevelField2 ; $4692
 	ld l, $40 ; $4694
-.zero13:
+.powerLevelField2:
 	ld a, l ; $4696
 	add $39 ; $4697
 	ld l, a ; $4699
@@ -732,9 +732,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $46b8
 	ld a, [wStoryCharacterSlot] ; $46bb
 	or a ; $46be
-	jr z, .zero14 ; $46bf
+	jr z, .controlLevelField2 ; $46bf
 	ld l, $40 ; $46c1
-.zero14:
+.controlLevelField2:
 	ld a, l ; $46c3
 	add $3a ; $46c4
 	ld l, a ; $46c6
@@ -755,9 +755,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $46e5
 	ld a, [wStoryCharacterSlot] ; $46e8
 	or a ; $46eb
-	jr z, .zero15 ; $46ec
+	jr z, .speedLevelField2 ; $46ec
 	ld l, $40 ; $46ee
-.zero15:
+.speedLevelField2:
 	ld a, l ; $46f0
 	add $3b ; $46f1
 	ld l, a ; $46f3
@@ -797,9 +797,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryMainName ; $473c
 	ld a, [wStoryCharacterSlot] ; $473f
 	or a ; $4742
-	jr z, .zero16 ; $4743
+	jr z, .expField2 ; $4743
 	ld l, $40 ; $4745
-.zero16:
+.expField2:
 	ld a, l ; $4747
 	add $2c ; $4748
 	ld l, a ; $474a
@@ -812,11 +812,11 @@ BuildCharDataSummaryFields:
 	ld de, wCharStatPagePartner + 4 ; $4756
 	ld a, [hl] ; $4759
 	or a ; $475a
-	jr nz, .nonZero2 ; $475b
+	jr nz, .capPartnerExp ; $475b
 	ld bc, wCharDataNumberBuffer_SIZE ; $475d
 	call CopyMemoryBC ; $4760
 	ret ; $4763
-.nonZero2:
+.capPartnerExp:
 	ld h, d ; $4764
 	ld l, e ; $4765
 	ld a, $20 ; $4766

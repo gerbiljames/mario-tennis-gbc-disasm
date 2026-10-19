@@ -183,7 +183,7 @@ QueueTitleSprite_SpriteTemplate:
 StepTitleSpriteAnimation:
 	ld a, [wTitleSpriteTimer] ; $771f
 	or a ; $7722
-	jr z, .zero ; $7723
+	jr z, .advanceFrame ; $7723
 	inc a ; $7725
 	ld [wTitleSpriteTimer], a ; $7726
 	cp $10 ; $7729
@@ -191,7 +191,7 @@ StepTitleSpriteAnimation:
 	xor a ; $772d
 	ld [wTitleSpriteTimer], a ; $772e
 	ret ; $7731
-.zero:
+.advanceFrame:
 	ldh a, [hVBlankCounter] ; $7732
 	and $07 ; $7734
 	cp $07 ; $7736

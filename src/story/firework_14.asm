@@ -2,7 +2,7 @@ LoadFireworkObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $6427
 	ld hl, FireworkObjTiles_14 ; $6430
 	ld de, vTiles0 tile $10 ; $6433
-	ld c, (SpriteTemplate_14_2 - FireworkObjTiles_14) / 16 ; $6436
+	ld c, (FireworkSpriteTemplate_14 - FireworkObjTiles_14) / 16 ; $6436
 	call QueueVRAMCopy ; $6438
 	ld hl, FireworkObjPalettes_14 ; $643b
 	ld_obj_pals de, 1, 4 ; $643e
@@ -39,7 +39,7 @@ UpdateFirework0_14:
 	cp $04 ; $647d
 	jp nc, .done ; $647f
 	ld a, [wCutsceneObjPhase] ; $6482
-	ld_hl_indexed Table_14 ; $6485
+	ld_hl_indexed FireworkPhaseDurations_14 ; $6485
 	ld a, [hl] ; $648c
 	ld [wCutsceneObjTimer], a ; $648d
 	ld a, [wCutsceneObjPhase] ; $6490
@@ -60,7 +60,7 @@ UpdateFirework0_14:
 	and $03 ; $64b3
 	inc a ; $64b5
 	ld b, a ; $64b6
-	ld hl, SpriteTemplate_14_2 ; $64b7
+	ld hl, FireworkSpriteTemplate_14 ; $64b7
 	call QueueSpriteTemplate ; $64ba
 .done:
 	ret ; $64bd
@@ -78,7 +78,7 @@ AdvanceFirework0Ascent_14:
 	sub b ; $64d0
 	ld [wCutsceneObjY], a ; $64d1
 	ret ; $64d4
-Table_14:
+FireworkPhaseDurations_14:
 	; $64d5, 4 bytes (bytes:4)
 	db $00, $0c, $0e, $10 ; 0x00
 UpdateFirework0_14Table:
@@ -201,7 +201,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld [wStoryModeCurrentLocation], a ; $6651
 	ld a, $0b ; $6654
 	ld [wStoryModeEntryPoint], a ; $6656
-	ld a, $ff ; $6659
+	ld a, EXITTRIGGER_DIRECT ; $6659
 	ld [wUnusedExitTriggerIdMirror], a ; $665b
 	ld [wStoryModeExitTriggerRequest], a ; $665e
 	ret ; $6661
@@ -210,7 +210,7 @@ IslandSkyInitScript_14.notDoubles:
 	ld [wStoryModeCurrentLocation], a ; $6664
 	ld a, $0a ; $6667
 	ld [wStoryModeEntryPoint], a ; $6669
-	ld a, $ff ; $666c
+	ld a, EXITTRIGGER_DIRECT ; $666c
 	ld [wUnusedExitTriggerIdMirror], a ; $666e
 	ld [wStoryModeExitTriggerRequest], a ; $6671
 	ret ; $6674
@@ -221,7 +221,7 @@ FireworkMapActors_14:
 	ds ALIGN[4]
 FireworkObjTiles_14:
 	INCBIN "data/story/FireworkObjTiles_14.bin" ; $6680, 2048 bytes
-SpriteTemplate_14_2:
+FireworkSpriteTemplate_14:
 	; $6e80, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -287,7 +287,7 @@ UpdateFirework1_14:
 	cp $04 ; $6f23
 	jp nc, .done ; $6f25
 	ld a, [wCutsceneObjPhase + 1] ; $6f28
-	ld_hl_indexed Table_14 ; $6f2b
+	ld_hl_indexed FireworkPhaseDurations_14 ; $6f2b
 	ld a, [hl] ; $6f32
 	ld [wCutsceneObjTimer + 1], a ; $6f33
 	ld a, [wCutsceneObjPhase + 1] ; $6f36
@@ -308,7 +308,7 @@ UpdateFirework1_14:
 	and $03 ; $6f59
 	inc a ; $6f5b
 	ld b, a ; $6f5c
-	ld hl, SpriteTemplate_14_2 ; $6f5d
+	ld hl, FireworkSpriteTemplate_14 ; $6f5d
 	call QueueSpriteTemplate ; $6f60
 .done:
 	ret ; $6f63
@@ -499,7 +499,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wStoryModeCurrentLocation], a ; $7138
 	ld a, $0a ; $713b
 	ld [wStoryModeEntryPoint], a ; $713d
-	ld a, $ff ; $7140
+	ld a, EXITTRIGGER_DIRECT ; $7140
 	ld [wUnusedExitTriggerIdMirror], a ; $7142
 	ld [wStoryModeExitTriggerRequest], a ; $7145
 	ret ; $7148
@@ -517,7 +517,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wStoryModeCurrentLocation], a ; $715f
 	ld a, $01 ; $7162
 	ld [wStoryModeEntryPoint], a ; $7164
-	ld a, $ff ; $7167
+	ld a, EXITTRIGGER_DIRECT ; $7167
 	ld [wUnusedExitTriggerIdMirror], a ; $7169
 	ld [wStoryModeExitTriggerRequest], a ; $716c
 	ret ; $716f
@@ -528,7 +528,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wStoryModeCurrentLocation], a ; $717a
 	ld a, $0f ; $717d
 	ld [wStoryModeEntryPoint], a ; $717f
-	ld a, $ff ; $7182
+	ld a, EXITTRIGGER_DIRECT ; $7182
 	ld [wUnusedExitTriggerIdMirror], a ; $7184
 	ld [wStoryModeExitTriggerRequest], a ; $7187
 	ret ; $718a

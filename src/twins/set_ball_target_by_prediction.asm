@@ -48,14 +48,14 @@
 	ld d, a
 	ld a, [wShotAimMirror]
 	and a
-	jr z, .zero
+	jr z, .applyAngle
 	xor a
 	sub e
 	ld e, a
 	sbc a
 	sub d
 	ld d, a
-.zero:
+.applyAngle:
 	ld hl, wShotAimAngle
 	ld a, [hl+]
 	ld h, [hl]

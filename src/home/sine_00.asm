@@ -374,8 +374,8 @@ MulHLByDE32:
 	ld b, $00 ; $0d4e
 	push hl ; $0d50
 	add a ; $0d51
-	jr c, .carry ; $0d52
-	jr z, .zero ; $0d54
+	jr c, .lowFromBit7 ; $0d52
+	jr z, .lowZero ; $0d54
 	ld e, l ; $0d56
 	ld d, h ; $0d57
 	add a ; $0d58
@@ -391,11 +391,11 @@ MulHLByDE32:
 	add a ; $0d67
 	jr c, .offset6 ; $0d68
 	xor a ; $0d6a
-	jr .step3 ; $0d6b
-.zero:
+	jr .mulHighByte ; $0d6b
+.lowZero:
 	ld hl, $0000 ; $0d6d
-	jr .step3 ; $0d70
-.carry:
+	jr .mulHighByte ; $0d70
+.lowFromBit7:
 	ld e, l ; $0d72
 	ld d, h ; $0d73
 	add hl, hl ; $0d74
@@ -436,10 +436,10 @@ MulHLByDE32:
 .offset6:
 	add hl, hl ; $0d98
 	adc a ; $0d99
-	jr nc, .step3 ; $0d9a
+	jr nc, .mulHighByte ; $0d9a
 	add hl, de ; $0d9c
 	adc b ; $0d9d
-.step3:
+.mulHighByte:
 	ld e, h ; $0d9e
 	ld d, a ; $0d9f
 	ld a, c ; $0da0
@@ -447,8 +447,8 @@ MulHLByDE32:
 	pop hl ; $0da2
 	push de ; $0da3
 	add a ; $0da4
-	jr c, .carry2 ; $0da5
-	jr z, .zero2 ; $0da7
+	jr c, .highFromBit7 ; $0da5
+	jr z, .highZero ; $0da7
 	ld e, l ; $0da9
 	ld d, h ; $0daa
 	add a ; $0dab
@@ -465,10 +465,10 @@ MulHLByDE32:
 	jr c, .offset12 ; $0dbb
 	xor a ; $0dbd
 	jr .restore ; $0dbe
-.zero2:
+.highZero:
 	ld hl, $0000 ; $0dc0
 	jr .restore ; $0dc3
-.carry2:
+.highFromBit7:
 	ld e, l ; $0dc5
 	ld d, h ; $0dc6
 	add hl, hl ; $0dc7
@@ -543,13 +543,13 @@ MulNegHLByA:
 	sub h ; $0e0e
 	ld h, a ; $0e0f
 	ld a, e ; $0e10
-	jr MulPosHLByA.step ; $0e11
+	jr MulPosHLByA.multiply ; $0e11
 MulPosHLByA:
 	push de ; $0e13
-.step:
+.multiply:
 	add a ; $0e14
-	jr c, .carry ; $0e15
-	jr z, .zero ; $0e17
+	jr c, .fromBit7 ; $0e15
+	jr z, .zeroResult ; $0e17
 	ld e, l ; $0e19
 	ld d, h ; $0e1a
 	add a ; $0e1b
@@ -565,11 +565,11 @@ MulPosHLByA:
 	add a ; $0e2a
 	jr c, .offset6 ; $0e2b
 	xor a ; $0e2d
-	jr .step4 ; $0e2e
-.zero:
+	jr .done ; $0e2e
+.zeroResult:
 	ld hl, $0000 ; $0e30
-	jr .step4 ; $0e33
-.carry:
+	jr .done ; $0e33
+.fromBit7:
 	ld e, l ; $0e35
 	ld d, h ; $0e36
 	add hl, hl ; $0e37
@@ -610,10 +610,10 @@ MulPosHLByA:
 .offset6:
 	add hl, hl ; $0e61
 	adc a ; $0e62
-	jr nc, .step4 ; $0e63
+	jr nc, .done ; $0e63
 	add hl, de ; $0e65
 	adc $00 ; $0e66
-.step4:
+.done:
 	ld l, h ; $0e68
 	ld h, a ; $0e69
 	pop de ; $0e6a

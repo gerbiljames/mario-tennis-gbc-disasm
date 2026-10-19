@@ -47,19 +47,19 @@ AnimateIslandSkyEffectSprites_14:
 	ld hl, IslandSkySpriteData_14 ; $73e8
 	ld a, [wCutsceneObjActive] ; $73eb
 	and a ; $73ee
-	jr nz, .nonZero ; $73ef
+	jr nz, .noTick ; $73ef
 	ld a, [wCutsceneObjLimit] ; $73f1
 	inc a ; $73f4
 	ld [wCutsceneObjLimit], a ; $73f5
-.nonZero:
+.noTick:
 	ld a, [wCutsceneObjLimit] ; $73f8
 	swap a ; $73fb
 	and $03 ; $73fd
 	cp $03 ; $73ff
-	jr nz, .ne03 ; $7401
+	jr nz, .noWrap ; $7401
 	ld a, $00 ; $7403
 	ld [wCutsceneObjLimit], a ; $7405
-.ne03:
+.noWrap:
 	inc a ; $7408
 	ld b, a ; $7409
 	call QueueSpriteTemplate ; $740a
@@ -87,7 +87,7 @@ AnimateIslandSkyEffectSprites_14:
 	ds ALIGN[4]
 DistantPlaneObjGfx:
 	INCBIN "data/story/DistantPlaneObjGfx.bin" ; $7430, 256 bytes
-SpriteTemplate_14_3:
+DistantPlaneSpriteTemplate_14:
 	; $7530, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -96,7 +96,7 @@ LoadDistantPlaneObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $7539
 	ld hl, DistantPlaneObjGfx ; $7542
 	ld de, vTiles0 + VRAM_BANK1 ; $7545
-	ld c, (SpriteTemplate_14_3 - DistantPlaneObjGfx) / 16 ; $7548
+	ld c, (DistantPlaneSpriteTemplate_14 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
 	ld hl, IslandObjPalette_14 ; $754d
 	ld_obj_pals de, 0, 1 ; $7550
@@ -108,7 +108,7 @@ QueueDistantPlaneSprite_14:
 	ld a, [wCutsceneObjPhase] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
-	ld hl, SpriteTemplate_14_3 ; $7564
+	ld hl, DistantPlaneSpriteTemplate_14 ; $7564
 	ld b, OAM_BANK1 ; $7567
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
@@ -155,7 +155,7 @@ QueueTwinkleSprite_14:
 	ld e, a ; $76b8
 	ld a, [wCutsceneObjPhase] ; $76b9
 	ld c, a ; $76bc
-	ld hl, SpriteTemplate_14_3 ; $76bd
+	ld hl, DistantPlaneSpriteTemplate_14 ; $76bd
 	ld b, OAM_BANK1 ; $76c0
 	call QueueSpriteTemplate ; $76c2
 	ret ; $76c5
@@ -310,15 +310,11 @@ IslandSkyEntry0eScene:
 	ld [wStoryModeCurrentLocation], a ; $7862
 	ld a, $02 ; $7865
 	ld [wStoryModeEntryPoint], a ; $7867
-	ld a, $ff ; $786a
+	ld a, EXITTRIGGER_DIRECT ; $786a
 	ld [wUnusedExitTriggerIdMirror], a ; $786c
 	ld [wStoryModeExitTriggerRequest], a ; $786f
 	ret ; $7872
-AdvancePlaneFrameCounter2_14:
-	ld a, [wCutsceneObjX] ; $7873
-	inc a ; $7876
-	ld [wCutsceneObjX], a ; $7877
-	ret ; $787a
+	twin_named advance_plane_frame_counter, AdvancePlaneFrameCounter2_14 ; $7873
 PlayTwinkleAnimation_14:
 	xor a ; $787b
 	ld [wCutsceneObjPhase], a ; $787c
@@ -351,30 +347,30 @@ ActorScript_14_2:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_14_3:
 	; $78bb, 30 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 	as_begin_path
-.Lb:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderNarrow
 	as_begin_path
-.L15:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L15
+	as_jump .wanderSmall
 MapScriptNop_14:
 	ret ; $78d9
 Unused_14_MapScriptClearActiveFlag:
@@ -429,7 +425,7 @@ ActorScript_14_4:
 	as_jump ActorScript_14_4
 	as_anim ANIM_STILL
 	as_wait 60
-.L67:
+.swingUpLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -466,10 +462,10 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L67
+	as_jump .swingUpLoop
 	as_anim ANIM_STILL
 	as_wait 30
-.Lce:
+.swingDownLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -506,11 +502,11 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .Lce
+	as_jump .swingDownLoop
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L137:
+.swingUpLoop2:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -547,23 +543,22 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L137
-.L19a:
+	as_jump .swingUpLoop2
+.nodLoop:
 	as_wait 240
 	as_anim ANIM_NOD
 	as_wait 80
 	as_anim ANIM_NOD
 	as_wait 60
-	as_jump .L19a
-.L1a7:
+	as_jump .nodLoop
+.shakeHeadLoop:
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_NOD
-	as_jump .L1a7
-; Instruction-identical to Unused_13_ComputeRankingProgressIndex and Unused_15_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
+	as_jump .shakeHeadLoop
 	twin_in compute_ranking_progress_index_13, Unused_14_ComputeRankingProgressIndex, 14 ; $7a9d Unused_14_ComputeRankingProgressIndex
 ; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_14_ComputeStoryRankTier:

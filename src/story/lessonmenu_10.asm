@@ -446,23 +446,12 @@ Test2FacingScripts_10:
 	; $4b60, 9 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, Test2Facing01_10, $00, $00
 	db $ff
-Test2Facing01_10:
-	farcall BeginCutsceneScriptMode ; $4b69
-	script_fade_in 16 ; $4b6c
-	script_set_text Text_31_131 ; $4b71
-	script_speak ACTOR_PLAYER ; $4b77
-	farcall EndCutsceneScriptMode ; $4b7c
-	ret ; $4b7f
+	twin_named development_facing01, Test2Facing01_10 ; $4b69
 Test2TileTriggers_10:
 	; $4b80, 9 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, Test2Tile01_10, $00, $00
 	db $ff
-Test2Tile01_10:
-	farcall BeginCutsceneScriptMode ; $4b89
-	script_set_text Text_31_128 ; $4b8c
-	script_speak ACTOR_PLAYER ; $4b92
-	farcall EndCutsceneScriptMode ; $4b97
-	ret ; $4b9a
+	twin_named development_tile01, Test2Tile01_10 ; $4b89
 Test2InitScript_10:
 	ld a, [wStoryModeEntryPoint] ; $4b9b
 	cp $0f ; $4b9e

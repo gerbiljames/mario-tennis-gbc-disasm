@@ -373,9 +373,7 @@ PlayAlonePartnerPalettePtrs:
 	dw PlayAlonePartnerPalette ; record 7
 	dw PlayAlonePartnerPalette ; record 8
 PlayAlonePartnerPalette:
-	; $5345, 16 bytes (bytes:8)
-	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
-	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x08
+	INCLUDE "data/engine/menus/equipment/PlayAlonePartnerPalette.asm" ; $5345, 16 bytes (palettes)
 DrawPlayAlonePartnerCaption:
 	push_wram_bank WRAM_SCREEN ; $5355
 	ld c, $02 ; $535e

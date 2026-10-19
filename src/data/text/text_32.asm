@@ -191,18 +191,5 @@ FetchTextTable_32:
 	dw TextStrings_32.s356 - TextStrings_32 ; 186
 TextStrings_32:
 	INCLUDE "data/text/TextStrings_32.asm" ; $417a, 14637 bytes (text_pool)
-FetchDialogueText_32:
-	push af ; $7aa7
-	ld a, $00 ; $7aa8
-	call FetchText_32 ; $7aaa
-	pop af ; $7aad
-	ret ; $7aae
-FetchShortText_32:
-	push af ; $7aaf
-	ld a, $01 ; $7ab0
-	call FetchText_32 ; $7ab2
-	pop af ; $7ab5
-	ret ; $7ab6
-; Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy.
-	twin fetch_text, 32 ; $7ab7 FetchText_32
+	twin fetch_text, 32 ; $7aa7 FetchDialogueText_32
 	; $7af2, 1294 bytes fill to bank end (linker-padded)

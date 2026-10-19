@@ -3,20 +3,20 @@ Compare3Bytes:
 	push de ; $1b49
 	ld a, [de] ; $1b4a
 	cp [hl] ; $1b4b
-	jr nz, .step ; $1b4c
+	jr nz, .differ ; $1b4c
 	inc hl ; $1b4e
 	inc de ; $1b4f
 	ld a, [de] ; $1b50
 	cp [hl] ; $1b51
-	jr nz, .step ; $1b52
+	jr nz, .differ ; $1b52
 	inc hl ; $1b54
 	inc de ; $1b55
 	ld a, [de] ; $1b56
 	cp [hl] ; $1b57
-	jr nz, .step ; $1b58
+	jr nz, .differ ; $1b58
 	xor a ; $1b5a
 	jr .restore ; $1b5b
-.step:
+.differ:
 	ld a, $01 ; $1b5d
 	or a ; $1b5f
 .restore:
@@ -425,11 +425,11 @@ UpdateFadeIn:
 	ld c, a ; $1d54
 	ldh a, [hFadeCounter] ; $1d55
 	sub c ; $1d57
-	jr nc, .noCarry ; $1d58
+	jr nc, .clamped ; $1d58
 	xor a ; $1d5a
-.noCarry:
+.clamped:
 	ld c, a ; $1d5b
-	jr UpdateFadeOut.step2 ; $1d5c
+	jr UpdateFadeOut.applyFade ; $1d5c
 UpdateFadeOut:
 	push af ; $1d5e
 	ldh a, [hFadeState] ; $1d5f
@@ -442,24 +442,24 @@ UpdateFadeOut:
 	ld c, a ; $1d69
 	ldh a, [hFadeCounter] ; $1d6a
 	sub c ; $1d6c
-	jr nc, .noCarry ; $1d6d
+	jr nc, .clamped ; $1d6d
 	xor a ; $1d6f
-.noCarry:
+.clamped:
 	ld b, a ; $1d70
 	ld a, $7c ; $1d71
 	sub b ; $1d73
 	ld c, a ; $1d74
 	ld a, b ; $1d75
-.step2:
+.applyFade:
 	push af ; $1d76
 	ldh a, [hFadeState] ; $1d77
 	add a ; $1d79
-	jr nc, .noCarry2 ; $1d7a
+	jr nc, .adjustBrightness ; $1d7a
 	ld a, c ; $1d7c
 	and $04 ; $1d7d
 	call z, Unused_00_ApplyWhiteFade ; $1d7f
 	jr .restore ; $1d82
-.noCarry2:
+.adjustBrightness:
 	ld hl, wMasterPalettes ; $1d84
 	ld de, wBGPalettes ; $1d87
 	ld b, $40 ; $1d8a

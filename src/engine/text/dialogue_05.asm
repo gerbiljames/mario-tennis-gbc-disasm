@@ -120,7 +120,7 @@ OpenSpeechBubble:
 	ld e, a ; $5abb
 	rl b ; $5abc
 	jr nc, .getObjectSlotPointer ; $5abe
-	jr .step2 ; $5ac0
+	jr .storeBubbleHalf ; $5ac0
 .getObjectSlotPointer:
 	call GetObjectSlotPointer ; $5ac2
 	ld a, [wCameraY + 1] ; $5ac5
@@ -139,14 +139,14 @@ OpenSpeechBubble:
 	ld a, [hl] ; $5ade
 	sub b ; $5adf
 	cp $0a ; $5ae0
-	jr c, .lt0a ; $5ae2
+	jr c, .lowerHalf ; $5ae2
 	ld e, $00 ; $5ae4
 	ld b, $00 ; $5ae6
-	jr .step2 ; $5ae8
-.lt0a:
+	jr .storeBubbleHalf ; $5ae8
+.lowerHalf:
 	ld e, $0a ; $5aea
 	ld b, $01 ; $5aec
-.step2:
+.storeBubbleHalf:
 	wram_bank WRAM_TEXT ; $5aee
 	ld a, b ; $5af4
 	ld [wSpeechBubbleLowerHalf], a ; $5af5
@@ -179,9 +179,9 @@ OpenSpeechBubble:
 	inc hl ; $5b37
 	ld a, [hl] ; $5b38
 	rr a ; $5b39
-	jr c, .carry ; $5b3b
+	jr c, .oddWidth ; $5b3b
 	inc b ; $5b3d
-.carry:
+.oddWidth:
 	dec hl ; $5b3e
 	dec hl ; $5b3f
 	call RestoreShadowTilemap ; $5b40
@@ -201,11 +201,11 @@ OpenSpeechBubble:
 	call RedrawWindowRowsPadded ; $5b61
 	ld a, d ; $5b64
 	cp [hl] ; $5b65
-	jr z, .step4 ; $5b66
+	jr z, .colDone ; $5b66
 	dec a ; $5b68
 	and $1f ; $5b69
 	ld d, a ; $5b6b
-.step4:
+.colDone:
 	jr .next ; $5b6c
 	dec d ; $5b6e
 	bit 7, d ; $5b6f

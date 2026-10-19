@@ -24,8 +24,8 @@ class Source(unittest.TestCase):
     """What the committed src/ holds."""
 
     def test_idiom_macro_sites(self):
-        self.assertEqual(count(r"^\tpush_wram_bank "), 351)
-        self.assertEqual(count(r"^\tpop_wram_bank"), 453)
+        self.assertEqual(count(r"^\tpush_wram_bank "), 353)
+        self.assertEqual(count(r"^\tpop_wram_bank"), 455)
         self.assertEqual(count(r"^\tld_hl_indexed "), 421)
         self.assertEqual(count(r"^\twait_frames "), 79)
         self.assertEqual(count(r"^\tlb (de|bc|hl), "), 0, "a register pair written with lb instead of a named pair macro")
@@ -37,7 +37,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tld_size bc, "), 24)
         self.assertEqual(count(r"^\tld_tile_run bc, "), 63)
         # map positions are tiles with a point (map_pos), never raw 1/256-tile words
-        self.assertEqual(count(r"^\t(?:map_entry|map_actor|script_move_target|script_set_position|script_move_player|as_set_target|as_set_pos) [^;\n]*\b\d+\.\d+"), 3075)
+        self.assertEqual(count(r"^\t(?:map_entry|map_actor|script_move_target|script_set_position|script_move_player|as_set_target|as_set_pos) [^;\n]*\b\d+\.\d+"), 3079)
         self.assertEqual(count(r"^\t(?:map_entry \S+, \S+,|map_actor \S+, \S+,|script_move_target \S+,|script_set_position \S+,|script_move_player|as_set_target|as_set_pos) \$[0-9a-f]{4}\b"), 0)
         # register pairs loaded with two instructions, named by the split-pair macros
         for mac, n in (("rect_size", 198), ("rect_cell", 24), ("map_cell", 38), ("sprite_xy", 60),
@@ -137,7 +137,7 @@ class Manifest(unittest.TestCase):
     def test_counts(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
-        self.assertEqual(len(lines), 4213)
+        self.assertEqual(len(lines), 4268)
         self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 839)
         specs = [f[3] for f in lines if len(f) > 3]
         self.assertEqual(sum(s.startswith("gfx") for s in specs), 2698)

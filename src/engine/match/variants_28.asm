@@ -95,7 +95,7 @@ LoadMatchGraphics:
 LoadMatchVariantGraphics:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5efb
 	sub MINIGAME_TENNIS_MACHINE_1 ; $5efe
-	jr c, .carry ; $5f00
+	jr c, .loadMapsA ; $5f00
 	ld a, a ; $5f02
 	rst Rst00 ; $5f03
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f04 jumptable
@@ -116,8 +116,8 @@ LoadMatchVariantGraphics:
 	dw LoadMatchVariantGraphics.loadPaletteShadow5 ; $5f22 jumptable
 	dw LoadMatchVariantGraphics.queueVRAMCopy2 ; $5f24 jumptable
 	dw LoadMatchVariantGraphics.loadPaletteShadow4 ; $5f26 jumptable
-	dw LoadMatchVariantGraphics.carry ; $5f28 jumptable
-.carry:
+	dw LoadMatchVariantGraphics.loadMapsA ; $5f28 jumptable
+.loadMapsA:
 	ld hl, MatchGfxMapsA_28 ; $5f2a
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5f2d
 	ld c, 32 ; $5f30

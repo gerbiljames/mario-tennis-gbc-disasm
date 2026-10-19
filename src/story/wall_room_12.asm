@@ -26,9 +26,7 @@ DormEntranceEntryPoints_12:
 	map_entry $02, FACE_DOWN, 22.0, 13.0, DormEntranceArrival02_12
 	map_entry $0f, FACE_UP, 22.0, 27.0, $0000
 	db $ff
-; Instruction-identical to AcademyMainBldgArrival02_10 and AcademyArrivalArrival01_11 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival02, DormEntranceArrival02_12 ; $406f
-; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, MapArrivalWalk_11 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival01, DormEntranceArrival01_12 ; $40b5
 DormEntranceExitTriggers_12:
 	; $40fb, 25 bytes (map_scripts:exit)
@@ -56,12 +54,12 @@ DormEntranceTile01_12:
 	call WaitFadeEnd ; $4155
 	ld a, [wStoryMainGender] ; $4158
 	or a ; $415b
-	jr nz, .nonZero ; $415c
+	jr nz, .female ; $415c
 	ld a, $01 ; $415e
 	ld [wUnusedExitTriggerIdMirror], a ; $4160
 	ld [wStoryModeExitTriggerRequest], a ; $4163
 	ret ; $4166
-.nonZero:
+.female:
 	ld a, $01 ; $4167
 	ld [wUnusedExitTriggerIdMirror], a ; $4169
 	ld [wStoryModeExitTriggerRequest], a ; $416c
@@ -476,10 +474,10 @@ WallPracticeScoreRetryPrompt:
 	jp nc, WallPracticeNewRecordScript ; $4890
 	ld a, [wPointOutcome] ; $4893
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4896
-	jr nz, .ne09 ; $4898
+	jr nz, .outcomeText ; $4898
 	script_set_text Text_35_250 ; $489a
 	jr .pushTextArgNumber ; $48a0
-.ne09:
+.outcomeText:
 	ld a, [wPointOutcome] ; $48a2
 	and $03 ; $48a5
 	add a ; $48a7
@@ -551,7 +549,7 @@ WallPracticeMaxScoreScript:
 	ld a, h ; $4960
 	sbc d ; $4961
 	ld h, a ; $4962
-	jp c, RelaunchWallPracticeMasterLevel.carry ; $4963
+	jp c, RelaunchWallPracticeMasterLevel.saveMaxRecord ; $4963
 	script_set_text Text_36_43 ; $4966
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $496c
 	farcall RunDialogueYesNoPrompt ; $4971

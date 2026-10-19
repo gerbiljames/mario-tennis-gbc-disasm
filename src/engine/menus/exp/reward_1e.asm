@@ -335,15 +335,48 @@ SetRewardUnlockFlag:
 	pop hl ; $6e61
 	ret ; $6e62
 RewardUnlockFlagTable:
-	; $6e63, 26 bytes (bytes:16)
-	db $00, $14, $20, $14, $40, $14, $60, $14, $80, $14, $a0, $14, $c0, $14, $e0, $14 ; 0x00
-	db $00, $15, $20, $15, $40, $15, $60, $15, $80, $15 ; 0x10
+	; $6e63, 26 bytes (flag_ids)
+	flag_id FLAG_CHEAT_UNLOCK_0
+	flag_id FLAG_CHEAT_UNLOCK_1
+	flag_id FLAG_CHEAT_UNLOCK_2
+	flag_id FLAG_CHEAT_UNLOCK_3
+	flag_id FLAG_CHEAT_UNLOCK_4
+	flag_id FLAG_CHEAT_UNLOCK_5
+	flag_id FLAG_CHEAT_UNLOCK_6
+	flag_id FLAG_CHEAT_UNLOCK_7
+	flag_id FLAG_CHEAT_UNLOCK_8
+	flag_id FLAG_CHEAT_UNLOCK_11
+	flag_id FLAG_CHEAT_UNLOCK_12
+	flag_id FLAG_CHEAT_UNLOCK_9
+	flag_id FLAG_CHEAT_UNLOCK_10
 RewardUnlockFlagsTable:
-	; $6e7d, 52 bytes (bytes:16)
-	db $60, $0a, $40, $08, $60, $0a, $40, $08, $60, $0a, $40, $08, $e0, $0a, $c0, $08 ; 0x00
-	db $e0, $0a, $c0, $08, $00, $09, $00, $00, $e0, $06, $00, $00, $e0, $07, $e0, $06 ; 0x10
-	db $c0, $06, $00, $00, $c0, $07, $c0, $06, $a0, $07, $00, $00, $a0, $06, $00, $00 ; 0x20
-	db $80, $07, $a0, $06 ; 0x30
+	; $6e7d, 52 bytes (flag_ids)
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_1
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_1
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_1
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_1
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_1
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_1
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_1
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_1
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_1
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_1
+	flag_id FLAG_WON_VARSITY_DOUBLES_RANK_2
+	dw $0000
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1
+	dw $0000
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL
+	dw $0000
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL
+	dw $0000
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL
+	dw $0000
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL
 SetMinigameRecordSaveFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
 	cp MINIGAME_SHOOTING_STAR ; $6eb4

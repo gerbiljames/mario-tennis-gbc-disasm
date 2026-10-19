@@ -148,15 +148,10 @@ MinigameHooks_TennisMachineHighScore:
 	dw TennisMachineHighScoreHook_Bounce ; record 5
 	dw TennisMachineHighScoreHook_RallyTick ; record 6
 	dw RetStub ; record 7
-TennisMachineHighScoreHook_MinigameStart:
-	ld a, $04 ; $4d09
-	ld [wMinigameServeSlot], a ; $4d0b
-	call StartMinigameMatch ; $4d0e
-	ret ; $4d11
+	twin_named tennis_machine3_hook_minigame_start, TennisMachineHighScoreHook_MinigameStart ; $4d09
 TennisMachineHighScoreHook_PerFrame:
 	call DrawMinigameScoreHud ; $4d12
 	ret ; $4d15
-; Instruction-identical to TennisMachine4Hook_PointStart (in this bank); a change here belongs in every copy.
 	twin_named tennis_machine4_hook__point_start, TennisMachineHighScoreHook_PointStart ; $4d16
 TennisMachineHighScoreHook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4d2b
@@ -215,16 +210,7 @@ WallPracticeHighScoreHook_BallHit:
 MinigameConfig_TargetShot:
 	; $4d8b, 16 bytes
 	drill_def CHAR_UNUSED_15, COURT_TARGET_SHOT, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_TARGET_SHOT, BGM_TARGET_MINIGAMES, CHAR_BABY_MARIO, MinigameHooks_TargetShot, MinigamePointLayoutDuo, InitMinigame_TargetShot
-InitMinigame_TargetShot:
-	ld a, $01 ; $4d9b
-	ld [wMinigameUsesTennisMachine], a ; $4d9d
-	ld a, [wMinigameLevel] ; $4da0
-	cp $02 ; $4da3
-	jr nz, .done ; $4da5
-	ld a, $01 ; $4da7
-	ld [wMinigameHighScoreMode], a ; $4da9
-.done:
-	ret ; $4dac
+	twin_named init_minigame_medallion_match, InitMinigame_TargetShot ; $4d9b
 MinigameHooks_TargetShot:
 	; $4dad, 16 bytes (mode_hooks)
 	dw TargetShotHook_PerFrame ; record 0
@@ -344,7 +330,7 @@ LookupMinigameShotResult:
 .loop:
 	ld a, [hl+] ; $4e99
 	cp $ff ; $4e9a
-	jr z, .eqff2 ; $4e9c
+	jr z, .noMatch ; $4e9c
 	ld e, a ; $4e9e
 	ld a, [hl+] ; $4e9f
 	ld d, a ; $4ea0
@@ -360,14 +346,14 @@ LookupMinigameShotResult:
 	jr nz, .loop ; $4eaf
 	ld a, c ; $4eb1
 	cp $ff ; $4eb2
-	jr z, .eqff ; $4eb4
+	jr z, .matched ; $4eb4
 	ld a, [wCurrentShotType] ; $4eb6
 	cp c ; $4eb9
 	jr nz, .loop ; $4eba
-.eqff:
+.matched:
 	ld a, b ; $4ebc
 	ret ; $4ebd
-.eqff2:
+.noMatch:
 	ld a, $01 ; $4ebe
 	ret ; $4ec0
 TargetShotScoreRules:

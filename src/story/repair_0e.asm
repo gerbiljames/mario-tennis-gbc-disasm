@@ -319,7 +319,7 @@ PrepareEquipmentSelectScreen:
 	ld [wStoryModeCurrentLocation], a ; $4eba
 	ld a, [wMapSceneStage2] ; $4ebd
 	ld [wStoryModeEntryPoint], a ; $4ec0
-	ld a, $ff ; $4ec3
+	ld a, EXITTRIGGER_DIRECT ; $4ec3
 	ld [wUnusedExitTriggerIdMirror], a ; $4ec5
 	ld [wStoryModeExitTriggerRequest], a ; $4ec8
 	script_fade_out 16 ; $4ecb
@@ -362,20 +362,12 @@ RestoreScreenAfterEquipSelect:
 	ld [wStoryModeCurrentLocation], a ; $4f27
 	ld a, [wMapSceneStage2] ; $4f2a
 	ld [wStoryModeEntryPoint], a ; $4f2d
-	ld a, $ff ; $4f30
+	ld a, EXITTRIGGER_DIRECT ; $4f30
 	ld [wUnusedExitTriggerIdMirror], a ; $4f32
 	ld [wStoryModeExitTriggerRequest], a ; $4f35
 	call RestoreScreenAfterEquipSelect ; $4f38
 	ret ; $4f3b
-FetchAndPushShortTextArg:
-	push_wram_bank WRAM_CHAR3 ; $4f3c
-	ld de, wTextArgFetchBuffer ; $4f45
-	wram_bank WRAM_CHAR1 ; $4f48
-	farcall FetchShortTextToBuffer ; $4f4e
-	ld hl, wTextArgFetchBuffer ; $4f51
-	farcall PushTextArgString ; $4f54
-	pop_wram_bank ; $4f57
-	ret ; $4f5c
+	twin push_short_text_arg, 0e ; $4f3c PushShortTextArg_0e
 GetEquippedRacketNibble:
 	ld a, [wMapScratch + 10] ; $4f5d
 	and a ; $4f60
@@ -403,7 +395,7 @@ PushEquipmentNameTextArg:
 	jr nc, .pushRacket ; $4f83
 	inc h ; $4f85
 .pushRacket:
-	call FetchAndPushShortTextArg ; $4f86
+	call PushShortTextArg_0e ; $4f86
 	ret ; $4f89
 .shoes:
 	call GetEquippedRacketNibble ; $4f8a
@@ -413,7 +405,7 @@ PushEquipmentNameTextArg:
 	jr nc, .pushShoes ; $4f92
 	inc h ; $4f94
 .pushShoes:
-	call FetchAndPushShortTextArg ; $4f95
+	call PushShortTextArg_0e ; $4f95
 	ret ; $4f98
 InitEquipmentHandoutDialogue:
 	ld a, [wMapScratch + 10] ; $4f99

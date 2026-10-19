@@ -8,84 +8,84 @@
 	ld e, a
 	ld a, [wMenuInputPressed]
 	bit PADB_RIGHT, a
-	jr z, .checkMenuCursorX4
+	jr z, .checkLeft
 	ld a, [wMenuCursorX]
 	inc a
 	add a
-	jr nc, .noCarry
+	jr nc, .rightWrapCheck
 	ld a, b
 	dec a
-	jr .store
-.noCarry:
+	jr .storeX
+.rightWrapCheck:
 	rra
 	cp b
-	jr c, .store
+	jr c, .storeX
 	xor a
-.store:
+.storeX:
 	ld [wMenuCursorX], a
-	jr .checkMenuCursorX
-.checkMenuCursorX4:
+	jr .checkMoved
+.checkLeft:
 	bit 5, a
-	jr z, .bit5Clear
+	jr z, .checkUp
 	ld a, [wMenuCursorX]
 	dec a
 	add a
-	jr nc, .noCarry2
+	jr nc, .leftWrapCheck
 	ld a, b
 	dec a
-	jr .store2
-.noCarry2:
+	jr .storeX2
+.leftWrapCheck:
 	rra
 	cp b
-	jr c, .store2
+	jr c, .storeX2
 	xor a
-.store2:
+.storeX2:
 	ld [wMenuCursorX], a
-	jr .checkMenuCursorX
-.bit5Clear:
+	jr .checkMoved
+.checkUp:
 	bit 6, a
-	jr z, .bit6Clear
+	jr z, .checkDown
 	ld a, [wMenuCursorY]
 	dec a
 	add a
-	jr nc, .noCarry3
+	jr nc, .upWrapCheck
 	ld a, c
 	dec a
-	jr .store3
-.noCarry3:
+	jr .storeY
+.upWrapCheck:
 	rra
 	cp c
-	jr c, .store3
+	jr c, .storeY
 	xor a
-.store3:
+.storeY:
 	ld [wMenuCursorY], a
-	jr .checkMenuCursorX
-.bit6Clear:
+	jr .checkMoved
+.checkDown:
 	bit 7, a
-	jr z, .checkMenuCursorX
+	jr z, .checkMoved
 	ld a, [wMenuCursorY]
 	inc a
 	add a
-	jr nc, .noCarry4
+	jr nc, .downWrapCheck
 	ld a, c
 	dec a
-	jr .store4
-.noCarry4:
+	jr .storeY2
+.downWrapCheck:
 	rra
 	cp c
-	jr c, .store4
+	jr c, .storeY2
 	xor a
-.store4:
+.storeY2:
 	ld [wMenuCursorY], a
-.checkMenuCursorX:
+.checkMoved:
 	ld a, [wMenuCursorX]
 	cp d
-	jr nz, .checkMenuCursorX5
+	jr nz, .moved
 	ld a, [wMenuCursorY]
 	cp e
-	jr nz, .checkMenuCursorX5
+	jr nz, .moved
 	xor a
 	ret
-.checkMenuCursorX5:
+.moved:
 	ld a, $01
 	ret

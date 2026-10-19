@@ -283,7 +283,7 @@ Unused_1a_DrawExpScreenMessageBox:
 .loopB:
 	ld a, b ; $4a28
 	cp $14 ; $4a29
-	jr z, .eq14 ; $4a2b
+	jr z, .nextRow ; $4a2b
 	ld a, [hl] ; $4a2d
 	ld d, a ; $4a2e
 	inc hl ; $4a2f
@@ -293,7 +293,7 @@ Unused_1a_DrawExpScreenMessageBox:
 	inc hl ; $4a35
 	inc b ; $4a36
 	jr .loopB ; $4a37
-.eq14:
+.nextRow:
 	inc c ; $4a39
 	jr .loop ; $4a3a
 .restore:
@@ -345,12 +345,12 @@ Unused_1a_DrawExpScreenYesNoBox:
 .loop:
 	ld a, c ; $4a89
 	cp $0a ; $4a8a
-	jr z, .eq0a ; $4a8c
+	jr z, .drawText ; $4a8c
 	ld b, $00 ; $4a8e
 .loopB:
 	ld a, b ; $4a90
 	cp $06 ; $4a91
-	jr z, .eq06 ; $4a93
+	jr z, .nextRow ; $4a93
 	ld a, [hl] ; $4a95
 	ld d, a ; $4a96
 	inc hl ; $4a97
@@ -360,10 +360,10 @@ Unused_1a_DrawExpScreenYesNoBox:
 	inc hl ; $4a9d
 	inc b ; $4a9e
 	jr .loopB ; $4a9f
-.eq06:
+.nextRow:
 	inc c ; $4aa1
 	jr .loop ; $4aa2
-.eq0a:
+.drawText:
 	ld de, wCharDataPagePlane + 6 * TILEMAP_WIDTH + 2 ; $4aa4
 	ld hl, Text_31_235 ; $4aa7
 	ld c, $20 ; $4aaa

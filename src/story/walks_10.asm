@@ -1,4 +1,3 @@
-; Instruction-identical to ReadSceneTilemapTile_0f (one copy per bank); a change here belongs in every copy.
 	twin read_scene_tilemap_tile, 10 ; $7ac8 ReadSceneTilemapTile_10
 MapExitWalkCurveRight_10:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $7ae6
@@ -36,7 +35,7 @@ ActorScript_10_1:
 	; $7b8b, 43 bytes (actor_script)
 	as_set_field ACTORF_SPEED, $0018
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
-.L8:
+.pace:
 	as_set_target 27.0, 23.125
 	as_wait_move2
 	as_wait 5
@@ -49,7 +48,7 @@ ActorScript_10_1:
 	as_set_target 29.0, 23.125
 	as_wait_move2
 	as_wait 5
-	as_jump .L8
+	as_jump .pace
 GetDoublesProgressStage_10:
 	ld a, $00 ; $7bb6
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7bb8
@@ -71,30 +70,30 @@ ActorScript_10_2:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_10_3:
 	; $7bdb, 30 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 	as_begin_path
-.Lb:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderNarrow
 	as_begin_path
-.L15:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L15
+	as_jump .wanderSmall
 MapScriptNop_10:
 	ret ; $7bf9
 Unused_10_MapScriptClearActiveFlag:
@@ -149,7 +148,7 @@ ActorScript_10_4:
 	as_jump ActorScript_10_4
 	as_anim ANIM_STILL
 	as_wait 60
-.L67:
+.swingUpLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -186,10 +185,10 @@ ActorScript_10_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L67
+	as_jump .swingUpLoop
 	as_anim ANIM_STILL
 	as_wait 30
-.Lce:
+.swingDownLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -226,11 +225,11 @@ ActorScript_10_4:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .Lce
+	as_jump .swingDownLoop
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L137:
+.swingUpLoop2:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -267,22 +266,22 @@ ActorScript_10_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L137
-.L19a:
+	as_jump .swingUpLoop2
+.nodLoop:
 	as_wait 240
 	as_anim ANIM_NOD
 	as_wait 80
 	as_anim ANIM_NOD
 	as_wait 60
-	as_jump .L19a
-.L1a7:
+	as_jump .nodLoop
+.shakeHeadLoop:
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_NOD
-	as_jump .L1a7
+	as_jump .shakeHeadLoop
 SetStoryDialogueStage_10:
 	test_flag FLAG_DOUBLES ; $7dbd
 	jr nz, .doublesStage ; $7dc0

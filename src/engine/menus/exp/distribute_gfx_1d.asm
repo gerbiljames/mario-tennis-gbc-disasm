@@ -4,13 +4,13 @@ TickLevelUpJingle:
 	or a ; $77b0
 	ret z ; $77b1
 	cp $ff ; $77b2
-	jr z, .eqff ; $77b4
+	jr z, .startFanfare ; $77b4
 	dec a ; $77b6
 	ld [wExpLevelUpFanfare], a ; $77b7
 	ret nz ; $77ba
 	sound BGM_EXP_DISTRIBUTION ; $77bb
 	ret ; $77bd
-.eqff:
+.startFanfare:
 	ld a, $a0 ; $77be
 	ld [wExpLevelUpFanfare], a ; $77c0
 	sound BGM_NONE ; $77c3

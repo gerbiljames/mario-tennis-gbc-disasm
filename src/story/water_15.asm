@@ -198,7 +198,6 @@ WaterSpriteSwingContestScene:
 	farcall PushTextArgNumber ; $576e
 	script_speak ACTOR_PLAYER ; $5771
 	ret ; $5776
-; Instruction-identical to MirrorPlayerSpriteIfLeftHanded (one copy per bank); a change here belongs in every copy.
 	twin_named mirror_player_sprite_if_left_handed, TogglePlayerSpriteXFlip ; $5777
 DrawWaterSpriteMinigameCounters:
 	ld hl, wSwingContestTimer ; $578d

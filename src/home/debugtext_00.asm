@@ -23,12 +23,12 @@ UpdateDebugOverlay:
 	cp DEBUGSTEP_CONSOLE_ON ; $18aa
 	jr z, .storeShowDebugConsole2 ; $18ac
 	cp DEBUGSTEP_CONSOLE_OFF ; $18ae
-	jr z, .eq01 ; $18b0
+	jr z, .consoleOff ; $18b0
 	ldh a, [hVBlankCounter] ; $18b2
 	and $01 ; $18b4
 	jr z, .storeShowDebugConsole2 ; $18b6
 	jr .storeShowDebugConsole ; $18b8
-.eq01:
+.consoleOff:
 	ldh a, [hPlayerInputFlags] ; $18ba
 	bit PADB_SELECT, a ; $18bc
 .storeShowDebugConsole:
@@ -115,7 +115,6 @@ PrintString:
 .terminated:
 	dec hl ; $191e
 	ld a, $01 ; $191f
-.markDirty:
 	ldh [hDebugTextDirty], a ; $1921
 	pop af ; $1923
 	ret ; $1924
@@ -202,27 +201,27 @@ FormatDecimalNumber:
 	ld d, h ; $199a
 	ld l, c ; $199b
 	ld h, b ; $199c
-	ld bc, $d8f0 ; $199d
+	ld bc, -10000 ; $199d
 	call ExtractDecimalDigit ; $19a0
-	ld bc, $2710 ; $19a3
+	ld bc, 10000 ; $19a3
 	add hl, bc ; $19a6
 	ld [de], a ; $19a7
 	inc de ; $19a8
-	ld bc, $fc18 ; $19a9
+	ld bc, -1000 ; $19a9
 	call ExtractDecimalDigit ; $19ac
-	ld bc, $03e8 ; $19af
+	ld bc, 1000 ; $19af
 	add hl, bc ; $19b2
 	ld [de], a ; $19b3
 	inc de ; $19b4
-	ld bc, hSpriteQueueBase ; $19b5
+	ld bc, -100 ; $19b5
 	call ExtractDecimalDigit ; $19b8
-	ld bc, $0064 ; $19bb
+	ld bc, 100 ; $19bb
 	add hl, bc ; $19be
 	ld [de], a ; $19bf
 	inc de ; $19c0
-	ld bc, $fff6 ; $19c1
+	ld bc, -10 ; $19c1
 	call ExtractDecimalDigit ; $19c4
-	ld bc, $000a ; $19c7
+	ld bc, 10 ; $19c7
 	add hl, bc ; $19ca
 	ld [de], a ; $19cb
 	inc de ; $19cc
@@ -290,14 +289,7 @@ FormatDecimalNumber:
 	pop bc ; $1a1c
 	add sp, 6 ; $1a1d
 	ret ; $1a1f
-ExtractDecimalDigit:
-	xor a ; $1a20
-.loop:
-	inc a ; $1a21
-	add hl, bc ; $1a22
-	jr c, .loop ; $1a23
-	dec a ; $1a25
-	ret ; $1a26
+	twin_named extract_decimal_digit, ExtractDecimalDigit ; $1a20
 FormatDecimalNumberUnsigned:
 	add sp, -6 ; $1a27
 	push bc ; $1a29
@@ -319,27 +311,27 @@ FormatDecimalNumberUnsigned:
 	ld d, h ; $1a3d
 	ld l, c ; $1a3e
 	ld h, b ; $1a3f
-	ld bc, $d8f0 ; $1a40
+	ld bc, -10000 ; $1a40
 	call ExtractDecimalDigitUnsigned ; $1a43
-	ld bc, $2710 ; $1a46
+	ld bc, 10000 ; $1a46
 	add hl, bc ; $1a49
 	ld [de], a ; $1a4a
 	inc de ; $1a4b
-	ld bc, $fc18 ; $1a4c
+	ld bc, -1000 ; $1a4c
 	call ExtractDecimalDigitUnsigned ; $1a4f
-	ld bc, $03e8 ; $1a52
+	ld bc, 1000 ; $1a52
 	add hl, bc ; $1a55
 	ld [de], a ; $1a56
 	inc de ; $1a57
-	ld bc, hSpriteQueueBase ; $1a58
+	ld bc, -100 ; $1a58
 	call ExtractDecimalDigitUnsigned ; $1a5b
-	ld bc, $0064 ; $1a5e
+	ld bc, 100 ; $1a5e
 	add hl, bc ; $1a61
 	ld [de], a ; $1a62
 	inc de ; $1a63
-	ld bc, $fff6 ; $1a64
+	ld bc, -10 ; $1a64
 	call ExtractDecimalDigitUnsigned ; $1a67
-	ld bc, $000a ; $1a6a
+	ld bc, 10 ; $1a6a
 	add hl, bc ; $1a6d
 	ld [de], a ; $1a6e
 	inc de ; $1a6f
@@ -395,14 +387,7 @@ FormatDecimalNumberUnsigned:
 	pop bc ; $1aac
 	add sp, 6 ; $1aad
 	ret ; $1aaf
-ExtractDecimalDigitUnsigned:
-	xor a ; $1ab0
-.loop:
-	inc a ; $1ab1
-	add hl, bc ; $1ab2
-	jr c, .loop ; $1ab3
-	dec a ; $1ab5
-	ret ; $1ab6
+	twin_named extract_decimal_digit, ExtractDecimalDigitUnsigned ; $1ab0
 PrintHexByte:
 	push af ; $1ab7
 	push bc ; $1ab8

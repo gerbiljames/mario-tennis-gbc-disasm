@@ -232,7 +232,7 @@ InitMinigameMatchSettings:
 	ld [wMatchContext], a ; $6549
 	ld a, $01 ; $654c
 	ld [wScoreDisplayIsTiebreak], a ; $654e
-	ld a, $ff ; $6551
+	ld a, AISERVEAIM_RANDOM ; $6551
 	ld [wAiServeAimOverride], a ; $6553
 	ret ; $6556
 RunMinigameMatch:

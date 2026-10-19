@@ -54,7 +54,7 @@ PrepareStoryMatch:
 	ld [wStoryModeCurrentLocation], a ; $7b81
 	ld a, $0a ; $7b84
 	ld [wStoryModeEntryPoint], a ; $7b86
-	ld a, $ff ; $7b89
+	ld a, EXITTRIGGER_DIRECT ; $7b89
 	ld [wUnusedExitTriggerIdMirror], a ; $7b8b
 	ld [wStoryModeExitTriggerRequest], a ; $7b8e
 	farcall InitStoryMatchSettings ; $7b91
@@ -110,7 +110,7 @@ HandleExhibitionMatchResult:
 	ld [wStoryModeCurrentLocation], a ; $7c26
 	ld a, $0e ; $7c29
 	ld [wStoryModeEntryPoint], a ; $7c2b
-	ld a, $ff ; $7c2e
+	ld a, EXITTRIGGER_DIRECT ; $7c2e
 	ld [wUnusedExitTriggerIdMirror], a ; $7c30
 	ld [wStoryModeExitTriggerRequest], a ; $7c33
 	ret ; $7c36
@@ -139,7 +139,7 @@ HandleExhibitionMatchResult:
 	ld [wStoryModeCurrentLocation], a ; $7c5d
 	ld a, $0a ; $7c60
 	ld [wStoryModeEntryPoint], a ; $7c62
-	ld a, $ff ; $7c65
+	ld a, EXITTRIGGER_DIRECT ; $7c65
 	ld [wUnusedExitTriggerIdMirror], a ; $7c67
 	ld [wStoryModeExitTriggerRequest], a ; $7c6a
 	ret ; $7c6d
@@ -148,28 +148,28 @@ ActorScript_0e_22:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 	as_begin_path
-.Lb:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wander
 	as_begin_path
-.L15:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L15
+	as_jump .wanderNarrow
 	as_begin_path
-.L1f:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L1f
+	as_jump .wanderSmall
 MapScriptNop_0e:
 	ret ; $7c96
 Unused_0e_MapScriptClearActiveFlag:
@@ -363,7 +363,6 @@ ActorScript_0e_28:
 	as_wait 140
 	as_anim ANIM_NOD
 	as_jump ActorScript_0e_28
-; Instruction-identical to ComputeRankingProgressIndex_11, ComputeRankingProgressIndex_12 and Unused_27_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
 	twin_in compute_ranking_progress_index, ComputeRankingProgressIndex_0e, 0e ; $7e5a ComputeRankingProgressIndex_0e
 ; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_0e_ComputeStoryRankTier:

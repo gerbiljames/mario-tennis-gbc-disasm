@@ -4,7 +4,7 @@ Unused_03_InvalidateStorySlot:
 	push bc ; $4b01
 	ld a, b ; $4b02
 	cp $03 ; $4b03
-	jr nc, .ge03 ; $4b05
+	jr nc, .badSlot ; $4b05
 	sla a ; $4b07
 	ld b, a ; $4b09
 	call InvalidateSaveBlock ; $4b0a
@@ -13,7 +13,7 @@ Unused_03_InvalidateStorySlot:
 	inc b ; $4b10
 	call InvalidateSaveBlock ; $4b11
 	jr .restore ; $4b14
-.ge03:
+.badSlot:
 	ld a, $ff ; $4b16
 .restore:
 	pop bc ; $4b18
@@ -289,10 +289,10 @@ ReadSaveBlockTag:
 	call GetSaveBlockDirEntry ; $4cae
 	ld a, [bc] ; $4cb1
 	or a ; $4cb2
-	jp nz, .nonZero ; $4cb3
+	jp nz, .copyTag ; $4cb3
 	ld a, $fe ; $4cb6
 	jp .loopB ; $4cb8
-.nonZero:
+.copyTag:
 	ld a, $08 ; $4cbb
 	add c ; $4cbd
 	ld e, a ; $4cbe
@@ -328,10 +328,10 @@ Unused_03_ReadSaveBlockTagWord:
 	call GetSaveBlockDirEntry ; $4ce3
 	ld a, [bc] ; $4ce6
 	or a ; $4ce7
-	jp nz, .nonZero2 ; $4ce8
+	jp nz, .copyTag ; $4ce8
 	ld a, $fe ; $4ceb
 	jp ReadSaveBlockTag.loopB ; $4ced
-.nonZero2:
+.copyTag:
 	ld a, $08 ; $4cf0
 	add c ; $4cf2
 	ld e, a ; $4cf3

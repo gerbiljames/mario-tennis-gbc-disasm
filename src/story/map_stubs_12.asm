@@ -1,44 +1,36 @@
 Unclassified_12:
 	; $7a65, 3 bytes (bytes:3)
 	db $fa, $4d, $c9 ; 0x00
-PushTextArgFetchedString:
-	push_wram_bank WRAM_CHAR3 ; $7a68
-	ld de, wTextArgFetchBuffer ; $7a71
-	wram_bank WRAM_CHAR1 ; $7a74
-	farcall FetchShortTextToBuffer ; $7a7a
-	ld hl, wTextArgFetchBuffer ; $7a7d
-	farcall PushTextArgString ; $7a80
-	pop_wram_bank ; $7a83
-	ret ; $7a88
+	twin push_short_text_arg, 12 ; $7a68 PushShortTextArg_12
 ActorScript_12_51:
 	; $7a89, 10 bytes (actor_script)
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_12_52:
 	; $7a93, 30 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 	as_begin_path
-.Lb:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderNarrow
 	as_begin_path
-.L15:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L15
+	as_jump .wanderSmall
 MapScriptNop_12:
 	ret ; $7ab1
 Unused_12_MapScriptClearActiveFlag:
@@ -95,7 +87,7 @@ ActorScript_12_54:
 	; $7b22, 103 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 60
-.L4:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -132,12 +124,12 @@ ActorScript_12_54:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L4
+	as_jump .swingLoop
 ActorScript_12_55:
 	; $7b89, 103 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 30
-.L4:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -174,13 +166,13 @@ ActorScript_12_55:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L4
+	as_jump .swingLoop
 ActorScript_12_56:
 	; $7bf0, 105 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L6:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -217,7 +209,7 @@ ActorScript_12_56:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L6
+	as_jump .swingLoop
 ActorScript_12_57:
 	; $7c59, 13 bytes (actor_script)
 	as_wait 240
@@ -235,7 +227,6 @@ ActorScript_12_58:
 	as_wait 140
 	as_anim ANIM_NOD
 	as_jump ActorScript_12_58
-; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and Unused_27_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
 	twin_in compute_ranking_progress_index, ComputeRankingProgressIndex_12, 12 ; $7c75 ComputeRankingProgressIndex_12
 ; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_12_ComputeStoryRankTier:

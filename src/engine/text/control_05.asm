@@ -23,14 +23,14 @@ GetNextArgShortTextLength:
 .loop:
 	ld a, [hl+] ; $52ba
 	cp $00 ; $52bb
-	jr z, .eq00 ; $52bd
+	jr z, .done ; $52bd
 	cp $de ; $52bf
 	jr z, .loop ; $52c1
 	cp $df ; $52c3
 	jr z, .loop ; $52c5
 	inc b ; $52c7
 	jr .loop ; $52c8
-.eq00:
+.done:
 	ld a, b ; $52ca
 	pop hl ; $52cb
 	pop bc ; $52cc
@@ -80,57 +80,57 @@ MeasureNextArgNumberWidth:
 	ld d, [hl] ; $531a
 	ld h, d ; $531b
 	ld l, e ; $531c
-	ld bc, $d8f0 ; $531d
-	ld de, $2710 ; $5320
+	ld bc, -10000 ; $531d
+	ld de, 10000 ; $5320
 	add hl, bc ; $5323
 	ld a, $05 ; $5324
 	bit 7, h ; $5326
-	jr z, IsTileBlockedAt.step ; $5328
+	jr z, .sumDigitWidths ; $5328
 	add hl, de ; $532a
-.loop:
+.loopTenThousands:
 	add hl, bc ; $532b
 	bit 7, h ; $532c
-	jr z, .loop ; $532e
+	jr z, .loopTenThousands ; $532e
 	add hl, de ; $5330
-	ld bc, $fc18 ; $5331
-	ld de, $03e8 ; $5334
+	ld bc, -1000 ; $5331
+	ld de, 1000 ; $5334
 	add hl, bc ; $5337
 	ld a, $04 ; $5338
 	bit 7, h ; $533a
-	jr z, IsTileBlockedAt.step ; $533c
+	jr z, .sumDigitWidths ; $533c
 	add hl, de ; $533e
-.loopB:
+.loopThousands:
 	add hl, bc ; $533f
 	bit 7, h ; $5340
-	jr z, .loopB ; $5342
+	jr z, .loopThousands ; $5342
 	add hl, de ; $5344
-	ld bc, hSpriteQueueBase ; $5345
-	ld de, $0064 ; $5348
-IsTileBlockedAt:
+	ld bc, -100 ; $5345
+	ld de, 100 ; $5348
+.hundreds:
 	add hl, bc ; $534b
 	ld a, $03 ; $534c
 	bit 7, h ; $534e
-	jr z, .step ; $5350
+	jr z, .sumDigitWidths ; $5350
 	add hl, de ; $5352
-.loop:
+.loopHundreds:
 	add hl, bc ; $5353
 	bit 7, h ; $5354
-	jr z, .loop ; $5356
+	jr z, .loopHundreds ; $5356
 	add hl, de ; $5358
-	ld bc, $fff6 ; $5359
-	ld de, $000a ; $535c
+	ld bc, -10 ; $5359
+	ld de, 10 ; $535c
 	add hl, bc ; $535f
 	ld a, $02 ; $5360
 	bit 7, h ; $5362
-	jr z, .step ; $5364
+	jr z, .sumDigitWidths ; $5364
 	add hl, de ; $5366
-.loopB:
+.loopTens:
 	add hl, bc ; $5367
 	bit 7, h ; $5368
-	jr z, .loopB ; $536a
+	jr z, .loopTens ; $536a
 	add hl, de ; $536c
 	ld a, $01 ; $536d
-.step:
+.sumDigitWidths:
 	ld b, $00 ; $536f
 .loop2:
 	push af ; $5371
@@ -237,13 +237,13 @@ MeasureIndexedShortTextWidth:
 .loop:
 	ld a, [hl+] ; $5401
 	cp $00 ; $5402
-	jr z, .eq00 ; $5404
+	jr z, .done ; $5404
 	call GetGlyphWidth ; $5406
 	ld a, c ; $5409
 	add b ; $540a
 	ld b, a ; $540b
 	jr .loop ; $540c
-.eq00:
+.done:
 	ld a, b ; $540e
 	pop hl ; $540f
 	pop de ; $5410
@@ -263,14 +263,14 @@ WrapTextCellPointer:
 	sra l ; $5423
 	ld a, [wTextCursorRow] ; $5425
 	cp l ; $5428
-	jr z, .step ; $5429
+	jr z, .mapToBuffer ; $5429
 	ld a, e ; $542b
 	sub $20 ; $542c
 	ld e, a ; $542e
-	jr nc, .step ; $542f
+	jr nc, .mapToBuffer ; $542f
 	ld e, a ; $5431
 	dec d ; $5432
-.step:
+.mapToBuffer:
 	ld a, d ; $5433
 	and $03 ; $5434
 	ld h, a ; $5436
@@ -295,15 +295,15 @@ WrapTextCellPointerPrevRow:
 	dec a ; $5452
 	and $1f ; $5453
 	cp l ; $5455
-	jr z, .step ; $5456
+	jr z, .mapToBuffer ; $5456
 	ld a, e ; $5458
 	sub $20 ; $5459
 	ld e, a ; $545b
-	jr nc, .step ; $545c
+	jr nc, .mapToBuffer ; $545c
 	and $3f ; $545e
 	ld e, a ; $5460
 	dec d ; $5461
-.step:
+.mapToBuffer:
 	ld a, d ; $5462
 	and $03 ; $5463
 	ld h, a ; $5465
@@ -402,7 +402,7 @@ RenderInlineString:
 	push hl ; $54e9
 	ld h, d ; $54ea
 	ld l, e ; $54eb
-	ld de, $ffe0 ; $54ec
+	ld de, -32 ; $54ec
 	add hl, de ; $54ef
 	ld d, h ; $54f0
 	ld e, l ; $54f1
@@ -433,7 +433,7 @@ RenderInlineString:
 	push bc ; $551c
 	ld h, d ; $551d
 	ld l, e ; $551e
-	ld bc, $ffe0 ; $551f
+	ld bc, -32 ; $551f
 	add hl, bc ; $5522
 	push af ; $5523
 	ld a, [wShadowTilemapPtr + 1] ; $5524
@@ -465,7 +465,7 @@ RenderInlineString:
 	push hl ; $5547
 	ld h, d ; $5548
 	ld l, e ; $5549
-	ld de, $ffe0 ; $554a
+	ld de, -32 ; $554a
 	add hl, de ; $554d
 	ld d, h ; $554e
 	ld e, l ; $554f
@@ -488,7 +488,7 @@ Unused_05_RenderInlineHexByte:
 	ld h, $00 ; $5561
 	ld l, a ; $5563
 	call FormatHexWord ; $5564
-	jp RenderInlineNumber.zero ; $5567
+	jp RenderInlineNumber.leftAligned ; $5567
 ; PrintHexWord without its push de and with a jp tail: the inline-argument variant of the same renderer. Nothing calls it.
 Unused_05_RenderInlineHexWord:
 	push af ; $556a
@@ -506,7 +506,7 @@ Unused_05_RenderInlineHexWord:
 	ld b, d ; $5578
 	ld c, e ; $5579
 	call FormatHexWord ; $557a
-	jp RenderInlineNumber.zero ; $557d
+	jp RenderInlineNumber.leftAligned ; $557d
 ; PrintDecimalByte without its push de and with a jp tail: the inline-argument variant of the same renderer. Nothing calls it.
 Unused_05_RenderInlineDecimalByte:
 	push af ; $5580
@@ -523,7 +523,7 @@ Unused_05_RenderInlineDecimalByte:
 	ld l, a ; $558e
 	ld a, $04 ; $558f
 	call FormatDecimalNumber ; $5591
-	jp RenderInlineNumber.zero ; $5594
+	jp RenderInlineNumber.leftAligned ; $5594
 RenderInlineNumber:
 	push af ; $5597
 	push bc ; $5598
@@ -543,7 +543,7 @@ RenderInlineNumber:
 	call FormatDecimalNumber ; $55a9
 	ld a, [wTextNumberRightAlign] ; $55ac
 	or a ; $55af
-	jr z, .zero ; $55b0
+	jr z, .leftAligned ; $55b0
 	push bc ; $55b2
 	ld h, b ; $55b3
 	ld l, c ; $55b4
@@ -564,7 +564,7 @@ RenderInlineNumber:
 	ld h, b ; $55c5
 	ld l, c ; $55c6
 	jr .renderInlineString ; $55c7
-.zero:
+.leftAligned:
 	ld h, b ; $55c9
 	ld l, c ; $55ca
 	pop de ; $55cb

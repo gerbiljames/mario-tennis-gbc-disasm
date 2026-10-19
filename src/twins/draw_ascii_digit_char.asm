@@ -7,7 +7,7 @@ ASSERT STRCMP("{TWIN_LABEL}", "{DrawAsciiDigitChar_{TWIN}_NAME}") == 0
 	push hl
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH
 	sub $30
-	jr c, .carry
+	jr c, .notDigit
 	add $30
 	ld b, a
 	wram_bank WRAM_SCREEN
@@ -16,7 +16,7 @@ ASSERT STRCMP("{TWIN_LABEL}", "{DrawAsciiDigitChar_{TWIN}_NAME}") == 0
 	inc de
 	pop hl
 	ret
-.carry:
+.notDigit:
 	inc de
 	pop hl
 	ret

@@ -82,9 +82,9 @@ RestoreShadowTilemapRow:
 	ld d, e ; $43dd
 .loop:
 	rr d ; $43de
-	jr nc, .noCarry ; $43e0
+	jr nc, .shiftRowSize ; $43e0
 	add hl, bc ; $43e2
-.noCarry:
+.shiftRowSize:
 	sla c ; $43e3
 	rl b ; $43e5
 	dec a ; $43e7
@@ -134,9 +134,9 @@ RestoreShadowTilemapRow:
 	ld bc, $0020 ; $442b
 .loop2:
 	rr d ; $442e
-	jr nc, .noCarry2 ; $4430
+	jr nc, .shiftRowSize2 ; $4430
 	add hl, bc ; $4432
-.noCarry2:
+.shiftRowSize2:
 	sla c ; $4433
 	rl b ; $4435
 	dec a ; $4437
@@ -186,9 +186,9 @@ RestoreShadowTilemapRow:
 	ld bc, $0020 ; $4482
 .loop4:
 	rr d ; $4485
-	jr nc, .noCarry3 ; $4487
+	jr nc, .shiftRowSize3 ; $4487
 	add hl, bc ; $4489
-.noCarry3:
+.shiftRowSize3:
 	sla c ; $448a
 	rl b ; $448c
 	dec a ; $448e
@@ -343,12 +343,12 @@ Unused_05_DrawTileAttrRect:
 	ld a, e ; $4570
 	and $1f ; $4571
 	cp $1f ; $4573
-	jr nz, .ne1f ; $4575
-	ld hl, $ffe0 ; $4577
+	jr nz, .nextCell ; $4575
+	ld hl, -32 ; $4577
 	add hl, de ; $457a
 	ld d, h ; $457b
 	ld e, l ; $457c
-.ne1f:
+.nextCell:
 	inc de ; $457d
 	pop hl ; $457e
 	dec b ; $457f
@@ -433,7 +433,7 @@ Unused_05_CloseMenuWindow:
 	jr z, .restore ; $45dd
 	ld a, [wMenuDepth] ; $45df
 	or a ; $45e2
-	jr z, .zero ; $45e3
+	jr z, .popMenuDepth ; $45e3
 	dec a ; $45e5
 	ld hl, wMenuStack ; $45e6
 	sla a ; $45e9
@@ -443,7 +443,7 @@ Unused_05_CloseMenuWindow:
 	ld a, [hl] ; $45ef
 	and $0f ; $45f0
 	ld [wMenuCursorRow], a ; $45f2
-.zero:
+.popMenuDepth:
 	ld a, [wMenuDepth] ; $45f5
 	dec a ; $45f8
 	ld [wMenuDepth], a ; $45f9

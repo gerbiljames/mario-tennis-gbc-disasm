@@ -3,13 +3,13 @@ RelaunchWallPracticeMasterLevel:
 	ld [wStoryModeCurrentLocation], a ; $49cf
 	ld a, $0a ; $49d2
 	ld [wStoryModeEntryPoint], a ; $49d4
-	ld a, $ff ; $49d7
+	ld a, EXITTRIGGER_DIRECT ; $49d7
 	ld [wUnusedExitTriggerIdMirror], a ; $49d9
 	ld [wStoryModeExitTriggerRequest], a ; $49dc
 	ld a, MINIGAME_WALL_PRACTICE_HIGH_SCORE ; $49df
 	farcall RunTrainingDrillByID ; $49e1
 	ret ; $49e4
-.carry:
+.saveMaxRecord:
 	push_wram_bank WRAM_SOUND ; $49e5
 	ld hl, wMinigamesCurrentScore ; $49ee
 	ld a, [hl+] ; $49f1
@@ -180,13 +180,7 @@ WallPracticeRoomFacingScripts_12:
 	; $4ca0, 9 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, WallPracticeRoomFacing01_12, $00, $00
 	db $ff
-WallPracticeRoomFacing01_12:
-	farcall BeginCutsceneScriptMode ; $4ca9
-	script_fade_in 16 ; $4cac
-	script_set_text Text_31_131 ; $4cb1
-	script_speak ACTOR_PLAYER ; $4cb7
-	farcall EndCutsceneScriptMode ; $4cbc
-	ret ; $4cbf
+	twin_named development_facing01, WallPracticeRoomFacing01_12 ; $4ca9
 WallPracticeRoomTileTriggers_12:
 	; $4cc0, 41 bytes (map_scripts)
 	map_script $02, FACEMASK_ANY, $9c00, WallPracticeRoomTile02_12, $00, $00
@@ -228,7 +222,7 @@ WallPracticeRoomTile03_12:
 	ld [wStoryModeCurrentLocation], a ; $4d7f
 	ld a, $0b ; $4d82
 	ld [wStoryModeEntryPoint], a ; $4d84
-	ld a, $ff ; $4d87
+	ld a, EXITTRIGGER_DIRECT ; $4d87
 	ld [wUnusedExitTriggerIdMirror], a ; $4d89
 	ld [wStoryModeExitTriggerRequest], a ; $4d8c
 	ld a, MINIGAME_WALL_PRACTICE_1 ; $4d8f
@@ -258,7 +252,7 @@ WallPracticeRoomTile04_12:
 	ld [wStoryModeCurrentLocation], a ; $4df4
 	ld a, $0b ; $4df7
 	ld [wStoryModeEntryPoint], a ; $4df9
-	ld a, $ff ; $4dfc
+	ld a, EXITTRIGGER_DIRECT ; $4dfc
 	ld [wUnusedExitTriggerIdMirror], a ; $4dfe
 	ld [wStoryModeExitTriggerRequest], a ; $4e01
 	ld a, MINIGAME_WALL_PRACTICE_2 ; $4e04
@@ -288,7 +282,7 @@ WallPracticeRoomTile05_12:
 	ld [wStoryModeCurrentLocation], a ; $4e69
 	ld a, $0b ; $4e6c
 	ld [wStoryModeEntryPoint], a ; $4e6e
-	ld a, $ff ; $4e71
+	ld a, EXITTRIGGER_DIRECT ; $4e71
 	ld [wUnusedExitTriggerIdMirror], a ; $4e73
 	ld [wStoryModeExitTriggerRequest], a ; $4e76
 	ld a, MINIGAME_WALL_PRACTICE_3 ; $4e79
@@ -318,7 +312,7 @@ WallPracticeRoomTile06_12:
 	ld [wStoryModeCurrentLocation], a ; $4ede
 	ld a, $0b ; $4ee1
 	ld [wStoryModeEntryPoint], a ; $4ee3
-	ld a, $ff ; $4ee6
+	ld a, EXITTRIGGER_DIRECT ; $4ee6
 	ld [wUnusedExitTriggerIdMirror], a ; $4ee8
 	ld [wStoryModeExitTriggerRequest], a ; $4eeb
 	ld a, MINIGAME_WALL_PRACTICE_4 ; $4eee
@@ -435,7 +429,7 @@ WallPracticeRoomInitScript_12:
 	ld [wStoryModeCurrentLocation], a ; $5048
 	ld a, $0b ; $504b
 	ld [wStoryModeEntryPoint], a ; $504d
-	ld a, $ff ; $5050
+	ld a, EXITTRIGGER_DIRECT ; $5050
 	ld [wUnusedExitTriggerIdMirror], a ; $5052
 	ld [wStoryModeExitTriggerRequest], a ; $5055
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5058
@@ -607,7 +601,7 @@ LaunchWallPracticeMinigame:
 	ld [wStoryModeCurrentLocation], a ; $5297
 	ld a, $0a ; $529a
 	ld [wStoryModeEntryPoint], a ; $529c
-	ld a, $ff ; $529f
+	ld a, EXITTRIGGER_DIRECT ; $529f
 	ld [wUnusedExitTriggerIdMirror], a ; $52a1
 	ld [wStoryModeExitTriggerRequest], a ; $52a4
 	ld a, [wMapSceneStage] ; $52a7
@@ -619,7 +613,7 @@ LaunchWallPracticeMinigame:
 LaunchWallPracticeMinigameTable:
 	; $52b9, 7 bytes (bytes:16)
 	table_width 1
-	db $16, $17, $18, $19, $1b, $1b, $1b ; 0x00
+	db MINIGAME_WALL_PRACTICE_1, MINIGAME_WALL_PRACTICE_2, MINIGAME_WALL_PRACTICE_3, MINIGAME_WALL_PRACTICE_4, MINIGAME_WALL_PRACTICE_HIGH_SCORE, MINIGAME_WALL_PRACTICE_HIGH_SCORE, MINIGAME_WALL_PRACTICE_HIGH_SCORE
 	assert_table_length NUM_WALLPRACTICESTAGES
 RestoreWallPracticeRoomActors:
 	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $52c0

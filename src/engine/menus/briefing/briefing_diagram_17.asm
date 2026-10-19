@@ -4,9 +4,9 @@ DrawSpinServeBriefingMarker:
 	ld b, $09 ; $484e
 	ld a, [wBriefingSpinMarkerUnflipped] ; $4850
 	cp $01 ; $4853
-	jr z, .eq01 ; $4855
+	jr z, .gotAttr ; $4855
 	ld b, OAM_BANK1 | OAM_XFLIP | 1 ; $4857
-.eq01:
+.gotAttr:
 	ld a, [wBriefingSpinMarkerX] ; $4859
 	ld d, a ; $485c
 	ld a, [wBriefingSpinMarkerY] ; $485d
@@ -207,12 +207,7 @@ ClearBriefingCaptionTilemap:
 	pop bc ; $49f6
 	pop af ; $49f7
 	ret ; $49f8
-QueueCaptionRowToVRAM:
-	ld hl, wShadowTilemap + 11 * TILEMAP_WIDTH ; $49f9
-	ld de, vBGMap0 + 11 * TILEMAP_WIDTH ; $49fc
-	ld c, 6 * TILEMAP_WIDTH / 16 ; $49ff
-	call QueueVRAMCopy ; $4a01
-	ret ; $4a04
+	twin_named queue_caption_row_to_vram, QueueCaptionRowToVRAM ; $49f9
 Unused_17_StubRet:
 	ret ; $4a05
 Unused_17_DrawSecondCaptionRow:

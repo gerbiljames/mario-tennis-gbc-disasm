@@ -75,9 +75,9 @@ DrawMinigameClearMarks:
 	ld b, $00 ; $7708
 	ld a, [hl+] ; $770a
 	or a ; $770b
-	jr z, .zero ; $770c
+	jr z, .notCleared ; $770c
 	call DrawMinigameMarkTile ; $770e
-.zero:
+.notCleared:
 	ld a, c ; $7711
 	inc a ; $7712
 	ld c, a ; $7713
@@ -97,9 +97,9 @@ DrawMinigameStarMarks:
 	ld b, $01 ; $7726
 	ld a, [hl+] ; $7728
 	or a ; $7729
-	jr z, .zero ; $772a
+	jr z, .noStar ; $772a
 	call DrawMinigameMarkTile ; $772c
-.zero:
+.noStar:
 	ld a, c ; $772f
 	inc a ; $7730
 	ld c, a ; $7731
@@ -220,14 +220,14 @@ DrawStarLegendMark:
 .loop:
 	ld a, [hl+] ; $7800
 	or a ; $7801
-	jr nz, .nonZero ; $7802
+	jr nz, .drawLegend ; $7802
 	ld a, c ; $7804
 	inc a ; $7805
 	ld c, a ; $7806
 	cp $09 ; $7807
 	jr nz, .loop ; $7809
 	ret ; $780b
-.nonZero:
+.drawLegend:
 	ld hl, wShadowTilemap + 22 ; $780c
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 14 ; $780f
 	rect_size $02, $02 ; $7812

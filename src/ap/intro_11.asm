@@ -13,7 +13,7 @@ ApSkipIntro:
 	ld [wStoryModeCurrentLocation], a
 	ld a, $01
 	ld [wStoryModeEntryPoint], a
-	ld a, $ff
+	ld a, EXITTRIGGER_DIRECT
 	ld [wUnusedExitTriggerIdMirror], a
 	ld [wStoryModeExitTriggerRequest], a
 	ret

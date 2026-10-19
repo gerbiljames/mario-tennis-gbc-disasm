@@ -1,7 +1,6 @@
 	farptr StartMinigameByID ; $4000
 	farptr GetDefaultMinigameRecordValue ; $4002
 	farptr ShowMinigamePointResult ; $4004
-; Instruction-identical to StartDrillFromDefinition (one copy per bank); a change here belongs in every copy.
 	twin_named start_drill_from_definition, InitMinigameFromConfig ; $4006
 StartMinigameByID:
 	sub MINIGAME_TENNIS_MACHINE_1 ; $407f
@@ -85,7 +84,7 @@ GetMinigameTargetScore:
 	cp MINIGAME_TENNIS_MACHINE_1 ; $4124
 	ret c ; $4126
 	cp MINIGAME_BOO_BLAST ; $4127
-	jr nc, .ge1c ; $4129
+	jr nc, .booBlastOnward ; $4129
 	sub MINIGAME_TENNIS_MACHINE_1 ; $412b
 	add a ; $412d
 	ld_hl_indexed MinigamePracticeTargetScores ; $412e
@@ -93,7 +92,7 @@ GetMinigameTargetScore:
 	ld d, [hl] ; $4136
 	ld e, a ; $4137
 	ret ; $4138
-.ge1c:
+.booBlastOnward:
 	sub MINIGAME_BOO_BLAST ; $4139
 	add a ; $413b
 	add a ; $413c
@@ -387,7 +386,7 @@ DrawMinigameGrid:
 .loop:
 	ld a, [hl+] ; $4309
 	and a ; $430a
-	jr z, .zero ; $430b
+	jr z, .nextCell ; $430b
 	push bc ; $430d
 	push hl ; $430e
 	ld b, a ; $430f
@@ -395,7 +394,7 @@ DrawMinigameGrid:
 	call DrawMinigameGridCell ; $4311
 	pop hl ; $4314
 	pop bc ; $4315
-.zero:
+.nextCell:
 	inc c ; $4316
 	dec b ; $4317
 	jr nz, .loop ; $4318

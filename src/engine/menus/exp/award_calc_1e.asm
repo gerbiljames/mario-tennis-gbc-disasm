@@ -166,7 +166,7 @@ GetOpponentExpTier:
 	call LookupExpTierForChar ; $690a
 	ld a, [wMatchIsDoubles] ; $690d
 	and a ; $6910
-	jr z, .zero ; $6911
+	jr z, .clampTier ; $6911
 	push bc ; $6913
 	wram_bank WRAM_SOUND ; $6914
 	call LookupExpTierForChar ; $691a
@@ -176,12 +176,12 @@ GetOpponentExpTier:
 	inc a ; $6920
 	srl a ; $6921
 	ld c, a ; $6923
-.zero:
+.clampTier:
 	ld a, c ; $6924
 	cp $06 ; $6925
-	jr c, .lt06 ; $6927
+	jr c, .storeTier ; $6927
 	ld a, $06 ; $6929
-.lt06:
+.storeTier:
 	ld c, a ; $692b
 	pop_wram_bank ; $692c
 	ret ; $6931
@@ -189,9 +189,9 @@ GetPlayerExpTier:
 	call LookupExpTierForChar ; $6932
 	ld a, c ; $6935
 	cp $06 ; $6936
-	jr c, .lt06 ; $6938
+	jr c, .storeTier ; $6938
 	ld a, $06 ; $693a
-.lt06:
+.storeTier:
 	ld c, a ; $693c
 	ret ; $693d
 LookupExpTierForChar:
@@ -199,7 +199,7 @@ LookupExpTierForChar:
 	ld c, a ; $6941
 	ld a, [wCharId] ; $6942
 	cp $04 ; $6945
-	jr nc, LookupExpTierForChar.ge04 ; $6947
+	jr nc, LookupExpTierForChar.storedTier ; $6947
 	ld l, c ; $6949
 	xor a ; $694a
 	ld h, a ; $694b
@@ -212,7 +212,7 @@ LookupExpTierForChar:
 LookupExpTierForCharTable:
 	; $695b, 10 bytes (bytes:10)
 	db $00, $01, $02, $03, $04, $04, $05, $05, $06, $06 ; 0x00
-LookupExpTierForChar.ge04:
+LookupExpTierForChar.storedTier:
 	dec c ; $6965
 	ret ; $6966
 AwardExhibitionMatchExp:
@@ -244,9 +244,9 @@ AwardExhibitionMatchExp:
 	ld h, [hl] ; $6996
 	ld l, a ; $6997
 	add hl, de ; $6998
-	jr nc, .noCarry ; $6999
+	jr nc, .storeTotal ; $6999
 	ld hl, rIE ; $699b
-.noCarry:
+.storeTotal:
 	ld d, h ; $699e
 	ld e, l ; $699f
 	ld hl, wPendingExpExhibition ; $69a0
@@ -304,9 +304,9 @@ AwardLinkedPlayMatchExp:
 	ld h, [hl] ; $69fb
 	ld l, a ; $69fc
 	add hl, de ; $69fd
-	jr nc, .noCarry ; $69fe
+	jr nc, .storeTotal ; $69fe
 	ld hl, rIE ; $6a00
-.noCarry:
+.storeTotal:
 	ld d, h ; $6a03
 	ld e, l ; $6a04
 	ld hl, wPendingExpLinked ; $6a05
@@ -509,10 +509,10 @@ ApplyPendingExpAwards:
 	ld h, [hl] ; $6b38
 	ld l, a ; $6b39
 	add hl, de ; $6b3a
-	jr nc, .noCarry ; $6b3b
+	jr nc, .checkAnyExp ; $6b3b
 .sumAwards:
 	ld hl, rIE ; $6b3d
-.noCarry:
+.checkAnyExp:
 	ld a, h ; $6b40
 	or l ; $6b41
 	jp z, .restore2 ; $6b42
@@ -685,7 +685,7 @@ ScaleExpByPlayerLevel:
 	ret ; $6c4a
 .compare5:
 	cp $3c ; $6c4b
-	jr nc, .ge3c ; $6c4d
+	jr nc, .scaleTimes4 ; $6c4d
 	ld h, d ; $6c4f
 	ld l, e ; $6c50
 	add hl, hl ; $6c51
@@ -696,7 +696,7 @@ ScaleExpByPlayerLevel:
 	ld d, h ; $6c58
 	ld e, l ; $6c59
 	ret ; $6c5a
-.ge3c:
+.scaleTimes4:
 	ld h, d ; $6c5b
 	ld l, e ; $6c5c
 	add hl, hl ; $6c5d

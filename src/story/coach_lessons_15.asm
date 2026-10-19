@@ -10,7 +10,7 @@ WalkToStrokeChallengeCourtCutscene:
 	ld [wStoryModeCurrentLocation], a ; $6f8b
 	ld a, $0a ; $6f8e
 	ld [wStoryModeEntryPoint], a ; $6f90
-	ld a, $ff ; $6f93
+	ld a, EXITTRIGGER_DIRECT ; $6f93
 	ld [wUnusedExitTriggerIdMirror], a ; $6f95
 	ld [wStoryModeExitTriggerRequest], a ; $6f98
 	ret ; $6f9b
@@ -75,7 +75,7 @@ NetCoachVolleyLessonScene:
 	ld [wStoryModeCurrentLocation], a ; $704c
 	ld a, $09 ; $704f
 	ld [wStoryModeEntryPoint], a ; $7051
-	ld a, $ff ; $7054
+	ld a, EXITTRIGGER_DIRECT ; $7054
 	ld [wUnusedExitTriggerIdMirror], a ; $7056
 	ld [wStoryModeExitTriggerRequest], a ; $7059
 	script_fade_out 16 ; $705c
@@ -125,7 +125,7 @@ NetCoachSmashLessonScene:
 	ld [wStoryModeCurrentLocation], a ; $7101
 	ld a, $09 ; $7104
 	ld [wStoryModeEntryPoint], a ; $7106
-	ld a, $ff ; $7109
+	ld a, EXITTRIGGER_DIRECT ; $7109
 	ld [wUnusedExitTriggerIdMirror], a ; $710b
 	ld [wStoryModeExitTriggerRequest], a ; $710e
 	script_fade_out 16 ; $7111
@@ -169,7 +169,7 @@ NetCoachDropShotLessonScene:
 	ld [wStoryModeCurrentLocation], a ; $71a2
 	ld a, $09 ; $71a5
 	ld [wStoryModeEntryPoint], a ; $71a7
-	ld a, $ff ; $71aa
+	ld a, EXITTRIGGER_DIRECT ; $71aa
 	ld [wUnusedExitTriggerIdMirror], a ; $71ac
 	ld [wStoryModeExitTriggerRequest], a ; $71af
 	script_fade_out 16 ; $71b2
@@ -435,9 +435,9 @@ ServeCoachTwoStageRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $74a2
 	script_wait_frames 5 ; $74a5
 	and a ; $74ac
-	jp nz, .nonZero ; $74ad
+	jp nz, .secondPrompt ; $74ad
 	farcall AdvanceDialogueTextCursor ; $74b0
-.nonZero:
+.secondPrompt:
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $74b3
 	farcall RunDialogueYesNoPrompt ; $74b8
 	farcall ScriptCloseDialogueWindow ; $74bb

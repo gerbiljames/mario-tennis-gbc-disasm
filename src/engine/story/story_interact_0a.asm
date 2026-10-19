@@ -144,7 +144,7 @@ RestoreStoryReturnPoint:
 	ld [wStoryModeCurrentLocation], a ; $52bc
 	ld a, [wStoryReturnEntryPoint] ; $52bf
 	ld [wStoryModeEntryPoint], a ; $52c2
-	ld a, $ff ; $52c5
+	ld a, EXITTRIGGER_DIRECT ; $52c5
 	ld [wUnusedExitTriggerIdMirror], a ; $52c7
 	ld [wStoryModeExitTriggerRequest], a ; $52ca
 	jr .done ; $52cd
@@ -157,9 +157,9 @@ RestoreStoryReturnPoint:
 	ld [wStoryModeCurrentLocation], a ; $52de
 	ld a, STORYENTRY_NONE ; $52e1
 	ld [wStoryModeEntryPoint], a ; $52e3
-	ld a, $ff ; $52e6
+	ld a, EXITTRIGGER_DIRECT ; $52e6
 	ld [wUnusedExitTriggerIdMirror], a ; $52e8
-	ld a, $ff ; $52eb
+	ld a, EXITTRIGGER_DIRECT ; $52eb
 	ld [wStoryModeExitTriggerRequest], a ; $52ed
 .done:
 	pop hl ; $52f0

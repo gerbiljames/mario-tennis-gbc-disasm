@@ -51,32 +51,32 @@ ActorScript_11_45:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_11_46:
 	; $7bb3, 10 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 ActorScript_11_47:
 	; $7bbd, 20 bytes (actor_script)
 	as_begin_path
-.L1:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wanderNarrow
 	as_begin_path
-.Lb:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderSmall
 MapScriptNop_11:
 	ret ; $7bd1
 Unused_11_MapScriptClearActiveFlag:
@@ -133,7 +133,7 @@ ActorScript_11_49:
 	; $7c42, 103 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 60
-.L4:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -170,12 +170,12 @@ ActorScript_11_49:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L4
+	as_jump .swingLoop
 ActorScript_11_50:
 	; $7ca9, 103 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 30
-.L4:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -212,13 +212,13 @@ ActorScript_11_50:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L4
+	as_jump .swingLoop
 ActorScript_11_51:
 	; $7d10, 118 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L6:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -255,14 +255,14 @@ ActorScript_11_51:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L6
-.L69:
+	as_jump .swingLoop
+.nodLoop:
 	as_wait 240
 	as_anim ANIM_NOD
 	as_wait 80
 	as_anim ANIM_NOD
 	as_wait 60
-	as_jump .L69
+	as_jump .nodLoop
 ActorScript_11_52:
 	; $7d86, 15 bytes (actor_script)
 	as_wait 140
@@ -272,7 +272,6 @@ ActorScript_11_52:
 	as_wait 140
 	as_anim ANIM_NOD
 	as_jump ActorScript_11_52
-; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_12 and Unused_27_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
 	twin_in compute_ranking_progress_index, ComputeRankingProgressIndex_11, 11 ; $7d95 ComputeRankingProgressIndex_11
 ; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_11_ComputeStoryRankTier:

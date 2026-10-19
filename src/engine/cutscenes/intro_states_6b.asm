@@ -279,7 +279,6 @@ IntroCutsceneState00Exit_6b:
 	ld [wCameraY], a ; $41f1
 	ld [wCameraY + 1], a ; $41f4
 	jp DispatchCutsceneStateInit.loop2 ; $41f7
-; Instruction-identical to IntroCutsceneState19Update_6b (in this bank); a change here belongs in every copy.
 	twin_named intro_cutscene_state00_update, IntroCutsceneState00Update_6b ; $41fa
 IntroCutsceneState01Init_6b:
 	call DisableLCDSafely ; $421f
@@ -381,12 +380,7 @@ IntroCutsceneState02Init_6b:
 	jp DispatchCutsceneStateInit.loop ; $436c
 IntroCutsceneState02InitPalette_6b:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState02InitPalette_6b.asm" ; $436f, 64 bytes (palettes)
-IntroCutsceneState02Exit_6b:
-	script_fade_out 6 ; $43af
-	call WaitFadeEnd ; $43b4
-	xor a ; $43b7
-	ld [wCutsceneStepTimer], a ; $43b8
-	jp DispatchCutsceneStateInit.loop2 ; $43bb
+	twin_named intro_cutscene_state02_exit, IntroCutsceneState02Exit_6b ; $43af
 IntroCutsceneState02Update_6b:
 	ld a, [wCutsceneStepTimer] ; $43be
 	inc a ; $43c1
@@ -487,12 +481,7 @@ IntroCutsceneState04Init_6b:
 	jp DispatchCutsceneStateInit.loop ; $44cd
 IntroCutsceneState04InitPalettes:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState04InitPalettes.asm" ; $44d0, 64 bytes (palettes)
-IntroCutsceneState04Exit_6b:
-	script_fade_out 6 ; $4510
-	call WaitFadeEnd ; $4515
-	xor a ; $4518
-	ld [wCutsceneStepTimer], a ; $4519
-	jp DispatchCutsceneStateInit.loop2 ; $451c
+	twin_named intro_cutscene_state02_exit, IntroCutsceneState04Exit_6b ; $4510
 IntroCutsceneState04Update_6b:
 	ld a, [wCutsceneStepTimer] ; $451f
 	inc a ; $4522
@@ -603,13 +592,7 @@ IntroCutsceneState06Exit_6b:
 	script_fade_out 16 ; $4644
 	call WaitFadeEnd ; $4649
 	jp DispatchCutsceneStateInit.loop2 ; $464c
-IntroCutsceneState06Update_6b:
-	ld a, [wCutsceneStepTimer] ; $464f
-	inc a ; $4652
-	ld [wCutsceneStepTimer], a ; $4653
-	cp $64 ; $4656
-	jp z, DispatchCutsceneStateInit.loopB ; $4658
-	jp DispatchCutsceneStateInit.loop ; $465b
+	twin_named intro_cutscene_state06_update, IntroCutsceneState06Update_6b ; $464f
 IntroCutsceneState07Init_6b:
 	call InitTitleSceneGraphics ; $465e
 	call DecompressIntroTitleTiles ; $4661
@@ -652,11 +635,11 @@ IntroCutsceneState07Update_6b:
 .checkCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $46c0
 	cp $01 ; $46c3
-	jr z, .eq01 ; $46c5
+	jr z, .scrollCamera ; $46c5
 	inc a ; $46c7
 	ld [wCutsceneStepTimer], a ; $46c8
 	jp DispatchCutsceneStateInit.loop ; $46cb
-.eq01:
+.scrollCamera:
 	ld a, [wCameraX + 1] ; $46ce
 	ld h, a ; $46d1
 	ld a, [wCameraX] ; $46d2
@@ -704,13 +687,7 @@ IntroCutsceneState13Exit_6b:
 	xor a ; $4744
 	ld [wCutsceneStepTimer], a ; $4745
 	jp DispatchCutsceneStateInit.loop2 ; $4748
-IntroCutsceneState13Update_6b:
-	ld a, [wCutsceneStepTimer] ; $474b
-	inc a ; $474e
-	ld [wCutsceneStepTimer], a ; $474f
-	cp $64 ; $4752
-	jp z, DispatchCutsceneStateInit.loopB ; $4754
-	jp DispatchCutsceneStateInit.loop ; $4757
+	twin_named intro_cutscene_state06_update, IntroCutsceneState13Update_6b ; $474b
 IntroCutsceneState13InitPalettes_6b:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm" ; $475a, 64 bytes (palettes)
 IntroCutsceneState08Init_6b:
@@ -769,13 +746,7 @@ IntroCutsceneState09Exit_6b:
 	xor a ; $4821
 	ldh [hScrollX], a ; $4822
 	jp DispatchCutsceneStateInit.loop2 ; $4824
-IntroCutsceneState09Update_6b:
-	ld a, [wCutsceneStepTimer] ; $4827
-	inc a ; $482a
-	ld [wCutsceneStepTimer], a ; $482b
-	cp $2b ; $482e
-	jp z, DispatchCutsceneStateInit.loopB ; $4830
-	jp DispatchCutsceneStateInit.loop ; $4833
+	twin_named intro_cutscene_state09_update, IntroCutsceneState09Update_6b ; $4827
 IntroCutsceneState10Init_6b:
 	call DisableLCDSafely ; $4836
 	ld c, SCREENASSET_IntroGirlSwing ; $4839
@@ -801,13 +772,7 @@ IntroCutsceneState10Exit_6b:
 	xor a ; $4870
 	ldh [hScrollX], a ; $4871
 	jp DispatchCutsceneStateInit.loop2 ; $4873
-IntroCutsceneState10Update_6b:
-	ld a, [wCutsceneStepTimer] ; $4876
-	inc a ; $4879
-	ld [wCutsceneStepTimer], a ; $487a
-	cp $2b ; $487d
-	jp z, DispatchCutsceneStateInit.loopB ; $487f
-	jp DispatchCutsceneStateInit.loop ; $4882
+	twin_named intro_cutscene_state09_update, IntroCutsceneState10Update_6b ; $4876
 Unused_6b_IntroCutsceneState11Init:
 	call DisableLCDSafely ; $4885
 	ld c, SCREENASSET_DecompressIntroTitleTilesPtrs ; $4888

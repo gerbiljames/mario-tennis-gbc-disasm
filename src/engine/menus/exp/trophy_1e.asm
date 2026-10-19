@@ -39,14 +39,14 @@ SetupRankingBoardArgs:
 	and $01 ; $6fc2
 	ld b, a ; $6fc4
 	or a ; $6fc5
-	jr nz, .nonZero ; $6fc6
+	jr nz, .oddMatch ; $6fc6
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fc8
 	sub $13 ; $6fcb
 	add $04 ; $6fcd
 	and $07 ; $6fcf
 	ld c, a ; $6fd1
 	jr .checkMatchWinLoseFlag ; $6fd2
-.nonZero:
+.oddMatch:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fd4
 	sub $13 ; $6fd7
 	add $03 ; $6fd9
@@ -55,10 +55,10 @@ SetupRankingBoardArgs:
 .checkMatchWinLoseFlag:
 	ld a, [wMatchWinLoseFlag] ; $6fde
 	cp WINLOSE_WIN ; $6fe1
-	jr nz, .ne01 ; $6fe3
+	jr nz, .lost ; $6fe3
 	ld d, $01 ; $6fe5
 	ret ; $6fe7
-.ne01:
+.lost:
 	ld d, $02 ; $6fe8
 	ret ; $6fea
 GetTrophyExpValue:

@@ -601,7 +601,7 @@ InitAllMinigameRecordBlocks:
 	xor a ; $51bb
 .loop:
 	cp $0b ; $51bc
-	jr z, .eq0b ; $51be
+	jr z, .saveRecords ; $51be
 	push af ; $51c0
 	push hl ; $51c1
 	farcall GetDefaultMinigameRecordValue ; $51c2
@@ -613,7 +613,7 @@ InitAllMinigameRecordBlocks:
 	inc a ; $51ca
 	inc hl ; $51cb
 	jr .loop ; $51cc
-.eq0b:
+.saveRecords:
 	ld a, SAVEBLOCK_MINIGAME_RECORDS ; $51ce
 	ld b, a ; $51d0
 	ld hl, wMinigameRecordBlock ; $51d1

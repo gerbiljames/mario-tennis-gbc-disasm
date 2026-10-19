@@ -121,7 +121,7 @@ RunPlayDoublesTodayPrompt:
 ActorScript_13_00:
 	; $585f, 24 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_DOWN
@@ -130,7 +130,7 @@ ActorScript_13_00:
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait 180
-	as_jump .L1
+	as_jump .wander
 ActorScript_13_01:
 	; $5877, 10 bytes (actor_script)
 	as_set_pos 15.25, 14.875
@@ -146,7 +146,7 @@ ActorScript_13_03:
 	as_set_pos 3.0, 7.0
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_begin_path
-.La:
+.pace:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 180
 	as_set_target 3.0, 8.0
@@ -160,7 +160,7 @@ ActorScript_13_03:
 	as_wait 240
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait 18
-	as_jump .La
+	as_jump .pace
 RunAcademyQuestionsMenu:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58be
 	jr z, .variantB ; $58c1
@@ -388,17 +388,7 @@ ShowStoryNarration_13:
 	script_speak SPEAKER_NONE | 5 ; $5a69
 	script_wait_frames 4 ; $5a6e
 	ret ; $5a75
-DormRoomEntry0aScene:
-	script_set_text Text_30_496 ; $5a76
-	call ShowStoryNarration_13 ; $5a7c
-	ld a, STORYLOC_ACADEMY_ENTRANCE ; $5a7f
-	ld [wStoryModeCurrentLocation], a ; $5a81
-	ld a, $0a ; $5a84
-	ld [wStoryModeEntryPoint], a ; $5a86
-	ld a, $ff ; $5a89
-	ld [wUnusedExitTriggerIdMirror], a ; $5a8b
-	ld [wStoryModeExitTriggerRequest], a ; $5a8e
-	ret ; $5a91
+	twin_named dorm_room_entry08_scene, DormRoomEntry0aScene ; $5a76
 DormRoomEntry09Scene:
 	script_set_text Text_30_497 ; $5a92
 	call ShowStoryNarration_13 ; $5a98
@@ -406,21 +396,11 @@ DormRoomEntry09Scene:
 	ld [wStoryModeCurrentLocation], a ; $5a9d
 	ld a, $0f ; $5aa0
 	ld [wStoryModeEntryPoint], a ; $5aa2
-	ld a, $ff ; $5aa5
+	ld a, EXITTRIGGER_DIRECT ; $5aa5
 	ld [wUnusedExitTriggerIdMirror], a ; $5aa7
 	ld [wStoryModeExitTriggerRequest], a ; $5aaa
 	ret ; $5aad
-DormRoomEntry08Scene:
-	script_set_text Text_30_496 ; $5aae
-	call ShowStoryNarration_13 ; $5ab4
-	ld a, STORYLOC_ACADEMY_ENTRANCE ; $5ab7
-	ld [wStoryModeCurrentLocation], a ; $5ab9
-	ld a, $0a ; $5abc
-	ld [wStoryModeEntryPoint], a ; $5abe
-	ld a, $ff ; $5ac1
-	ld [wUnusedExitTriggerIdMirror], a ; $5ac3
-	ld [wStoryModeExitTriggerRequest], a ; $5ac6
-	ret ; $5ac9
+	twin_named dorm_room_entry08_scene, DormRoomEntry08Scene ; $5aae
 GetDormRoomStoryStage_13:
 	test_flag FLAG_DOUBLES ; $5aca
 	jr nz, .doubles ; $5acd

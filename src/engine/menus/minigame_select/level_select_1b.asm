@@ -227,27 +227,27 @@ Unused_1b_CopyMainCharNameWithDiacritics:
 	and a ; $6ab4
 	jr z, .done ; $6ab5
 	cp $de ; $6ab7
-	jr z, .eqde ; $6ab9
+	jr z, .dakuten ; $6ab9
 	cp $df ; $6abb
-	jr z, .eqdf ; $6abd
+	jr z, .handakuten ; $6abd
 	ld b, a ; $6abf
 	ld a, b ; $6ac0
 	ld [de], a ; $6ac1
 	inc de ; $6ac2
 	jr .loop ; $6ac3
-.eqde:
+.dakuten:
 	push de ; $6ac5
 	push hl ; $6ac6
-	ld hl, $ffdf ; $6ac7
+	ld hl, -33 ; $6ac7
 	add hl, de ; $6aca
 	ld [hl], $0e ; $6acb
 	pop hl ; $6acd
 	pop de ; $6ace
 	jr .loop ; $6acf
-.eqdf:
+.handakuten:
 	push de ; $6ad1
 	push hl ; $6ad2
-	ld hl, $ffdf ; $6ad3
+	ld hl, -33 ; $6ad3
 	add hl, de ; $6ad6
 	ld [hl], $0f ; $6ad7
 	pop hl ; $6ad9
@@ -350,10 +350,10 @@ RunMinigameLevelSelect:
 	cp $02 ; $6bb6
 	jr z, .runMinigameLevelSelect3 ; $6bb8
 	call RunMinigameLevelSelect2 ; $6bba
-	jr .step ; $6bbd
+	jr .readResult ; $6bbd
 .runMinigameLevelSelect3:
 	call RunMinigameLevelSelect3 ; $6bbf
-.step:
+.readResult:
 	wram_bank WRAM_COURT_PLANES ; $6bc2
 	ld a, [wScreenAttrmap + 3] ; $6bc8
 	ld c, a ; $6bcb
@@ -522,12 +522,12 @@ LoadMinigameLevelSelectGfx:
 	pop_wram_bank ; $6cb0
 	ld a, b ; $6cb5
 	or a ; $6cb6
-	jr z, .zero ; $6cb7
+	jr z, .noneCleared ; $6cb7
 	ld a, c ; $6cb9
 	cp $03 ; $6cba
 	jr nz, .loop ; $6cbc
 	jr .loadCompressedTileBlock2 ; $6cbe
-.zero:
+.noneCleared:
 	ld a, c ; $6cc0
 	cp $04 ; $6cc1
 	jr nz, .loop ; $6cc3
@@ -543,10 +543,10 @@ LoadMinigameLevelSelectGfx:
 	pop_wram_bank ; $6cdf
 	ld a, b ; $6ce4
 	or a ; $6ce5
-	jr z, .zero2 ; $6ce6
+	jr z, .noneClearedIcons ; $6ce6
 	ld b, TILEBLOCK_MinigameLevelSelectIconGfx ; $6ce8
 	jr .loadCompressedTileBlock ; $6cea
-.zero2:
+.noneClearedIcons:
 	ld b, TILEBLOCK_SharedMenuGfx111 ; $6cec
 .loadCompressedTileBlock:
 	ld c, SharedMenuGfx111_SIZE / 16 ; $6cee
@@ -647,11 +647,8 @@ MinigameLevelSelectPalettePtrs:
 	dw MinigameLevelSelectPalette2 ; record 1
 	dw MinigameLevelSelectPalette1 ; record 2
 MinigameLevelSelectPalette0:
-	; $6dae, 8 bytes (bytes:8)
-	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/minigame_select/MinigameLevelSelectPalette0.asm" ; $6dae, 8 bytes (palettes)
 MinigameLevelSelectPalette1:
-	; $6db6, 8 bytes (bytes:8)
-	db $b7, $5e, $ff, $6b, $93, $7c, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/minigame_select/MinigameLevelSelectPalette1.asm" ; $6db6, 8 bytes (palettes)
 MinigameLevelSelectPalette2:
-	; $6dbe, 8 bytes (bytes:8)
-	db $99, $52, $ff, $6b, $1f, $14, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/minigame_select/MinigameLevelSelectPalette2.asm" ; $6dbe, 8 bytes (palettes)

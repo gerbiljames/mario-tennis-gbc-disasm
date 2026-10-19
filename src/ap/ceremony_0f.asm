@@ -31,7 +31,7 @@ ApSkipAwardsCeremony_0f:
 	ld [wStoryModeCurrentLocation], a
 	ld a, $0f
 	ld [wStoryModeEntryPoint], a
-	ld a, $ff
+	ld a, EXITTRIGGER_DIRECT
 	ld [wUnusedExitTriggerIdMirror], a
 	ld [wStoryModeExitTriggerRequest], a
 	ld a, $01

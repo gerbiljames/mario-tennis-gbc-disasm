@@ -39,26 +39,8 @@ TourPointerTiles_13:
 	INCBIN "data/story/TourPointerTiles_13.bin" ; $4d30, 64 bytes
 TourPointerPalette_13:
 	INCLUDE "data/story/TourPointerPalette_13.asm" ; $4d70, 8 bytes (palettes)
-AnimateDoorOpen_13:
-	sound SFX_DOOR ; $4d78
-	script_copy_scene_rect 20, 8, 6, 21, 2, 2 ; $4d7a
-	script_copy_scene_rect 0, 21, 20, 8, 2, 2 ; $4d89
-	script_wait_frames 2 ; $4d98
-	script_copy_scene_rect 2, 21, 20, 8, 2, 2 ; $4d9f
-	script_wait_frames 2 ; $4dae
-	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $4db5
-	script_wait_frames 2 ; $4dc4
-	ret ; $4dcb
-AnimateDoorClose_13:
-	sound SFX_DOOR ; $4dcc
-	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $4dce
-	script_wait_frames 1 ; $4ddd
-	script_copy_scene_rect 2, 21, 20, 8, 2, 2 ; $4de4
-	script_wait_frames 1 ; $4df3
-	script_copy_scene_rect 0, 21, 20, 8, 2, 2 ; $4dfa
-	script_wait_frames 1 ; $4e09
-	script_copy_scene_rect 6, 21, 20, 8, 2, 2 ; $4e10
-	ret ; $4e1f
+	twin open_restaurant_ent_door, 13 ; $4d78 OpenRestaurantEntDoor_13
+	twin close_restaurant_ent_door, 13 ; $4dcc CloseRestaurantEntDoor_13
 DormRoomMapScripts_13:
 	; $4e20, 14 bytes (map_tree)
 	dw DormRoomEntryPoints_13 ; slot 0 EntryPoints
@@ -109,13 +91,7 @@ DormRoomFacingScripts_13:
 	; $4ecb, 9 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, DormRoomFacing01_13, $00, $00
 	db $ff
-DormRoomFacing01_13:
-	farcall BeginCutsceneScriptMode ; $4ed4
-	script_fade_in 16 ; $4ed7
-	script_set_text Text_31_131 ; $4edc
-	script_speak ACTOR_PLAYER ; $4ee2
-	farcall EndCutsceneScriptMode ; $4ee7
-	ret ; $4eea
+	twin_named development_facing01, DormRoomFacing01_13 ; $4ed4
 DormRoomTileTriggers_13:
 	; $4eeb, 9 bytes (map_scripts)
 	map_script $0f, FACEMASK_DOWN, $0000, DormRoomTile0F_13, $00, $00
@@ -158,7 +134,7 @@ DormRoomTile0F_13:
 	ld [wStoryModeCurrentLocation], a ; $4fb3
 	ld a, $0d ; $4fb6
 	ld [wStoryModeEntryPoint], a ; $4fb8
-	ld a, $ff ; $4fbb
+	ld a, EXITTRIGGER_DIRECT ; $4fbb
 	ld [wUnusedExitTriggerIdMirror], a ; $4fbd
 	ld [wStoryModeExitTriggerRequest], a ; $4fc0
 	script_fade_out 4 ; $4fc3
@@ -177,7 +153,7 @@ DormRoomTile0F_13:
 	ld [wStoryModeCurrentLocation], a ; $500d
 	ld a, $0d ; $5010
 	ld [wStoryModeEntryPoint], a ; $5012
-	ld a, $ff ; $5015
+	ld a, EXITTRIGGER_DIRECT ; $5015
 	ld [wUnusedExitTriggerIdMirror], a ; $5017
 	ld [wStoryModeExitTriggerRequest], a ; $501a
 	script_fade_out 4 ; $501d
@@ -271,7 +247,7 @@ SetDormRoomEventTriggerCells_13:
 SetupDormRoomSceneVariant:
 	ld a, [wStoryPartnerGender] ; $5130
 	or a ; $5133
-	jr nz, .nonZero ; $5134
+	jr nz, .partnerFemale ; $5134
 	farcall WaitPlayerMoveDone ; $5136
 	ld b, $20 ; $5139
 	ld c, $00 ; $513b
@@ -306,7 +282,7 @@ SetupDormRoomSceneVariant:
 	farcall CopyScrolledSceneTilemapToVram ; $51a5
 	call EnableLCD ; $51a8
 	ret ; $51ab
-.nonZero:
+.partnerFemale:
 	call SetRandomDormRoomNpc04Script_13 ; $51ac
 	ret ; $51af
 PlaceDormRoomArrivalActors_13:

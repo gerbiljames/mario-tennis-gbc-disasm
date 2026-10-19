@@ -35,7 +35,7 @@ Unused_1a_DrawCharViewerCursorSprite:
 	wram_bank WRAM_SCENE ; $6c28
 	ld a, [wCharViewerRow] ; $6c2e
 	or a ; $6c31
-	jr nz, .nonZero ; $6c32
+	jr nz, .secondRow ; $6c32
 	ld a, [wCharViewerCursor] ; $6c34
 	rlca ; $6c37
 	ld_hl_indexed DrawCharViewerCursorSpriteTable0 ; $6c38
@@ -43,7 +43,7 @@ Unused_1a_DrawCharViewerCursorSprite:
 	ld d, [hl] ; $6c40
 	ld e, a ; $6c41
 	jr .queueSprite ; $6c42
-.nonZero:
+.secondRow:
 	ld a, [wCharViewerCursor] ; $6c44
 	rlca ; $6c47
 	ld_hl_indexed DrawCharViewerCursorSpriteTable1 ; $6c48
@@ -285,14 +285,14 @@ Unused_1a_RefreshCharViewerSelection:
 	wram_bank WRAM_SCENE ; $6e6d
 	ld a, [wCharViewerSavedCursor] ; $6e73
 	cp $0b ; $6e76
-	jr nc, .ge0b ; $6e78
+	jr nc, .secondRowCursor ; $6e78
 	add $28 ; $6e7a
 	ld l, a ; $6e7c
 	adc $d1 ; $6e7d
 	sub l ; $6e7f
 	ld h, a ; $6e80
 	jr .queueVRAMCopy ; $6e81
-.ge0b:
+.secondRowCursor:
 	sub $0b ; $6e83
 	add $48 ; $6e85
 	ld l, a ; $6e87
@@ -360,7 +360,7 @@ Unused_1a_RefreshCharViewerSelection:
 	wram_bank WRAM_SCENE ; $6ef2
 	ld a, [wCharViewerRow] ; $6ef8
 	or a ; $6efb
-	jr nz, .nonZero ; $6efc
+	jr nz, .secondRow ; $6efc
 	ld a, [wCharViewerCursor] ; $6efe
 	add $01 ; $6f01
 	add $c0 ; $6f03
@@ -373,7 +373,7 @@ Unused_1a_RefreshCharViewerSelection:
 	wram_bank WRAM_SCREEN ; $6f0f
 	farcall RenderTextToBuffer64 ; $6f15
 	jr .queueVRAMCopy2 ; $6f18
-.nonZero:
+.secondRow:
 	wram_bank WRAM_SCREEN ; $6f1a
 	ld hl, Text_34_192 ; $6f20
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6f23

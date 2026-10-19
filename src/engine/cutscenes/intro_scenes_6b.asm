@@ -334,7 +334,7 @@ AnimateBgPalette1Task:
 	inc a ; $72b9
 	ld [wCutsceneSpriteAY], a ; $72ba
 	cp $10 ; $72bd
-	jr nc, .ge10 ; $72bf
+	jr nc, .finished ; $72bf
 	sla a ; $72c1
 	sla a ; $72c3
 	sla a ; $72c5
@@ -347,7 +347,7 @@ AnimateBgPalette1Task:
 	ld_bg_pals de, 1, 1 ; $72cf
 	call LoadPalettesImmediate ; $72d2
 	ret ; $72d5
-.ge10:
+.finished:
 	ld hl, AnimateBgPalette1Task ; $72d6
 	call UnregisterFrameTask ; $72d9
 	ret ; $72dc
@@ -360,7 +360,7 @@ AnimateBgPalettes2And3Task:
 	inc a ; $72e7
 	ld [wCutsceneSpriteBX], a ; $72e8
 	cp $10 ; $72eb
-	jr nc, .ge10 ; $72ed
+	jr nc, .finished ; $72ed
 	sla a ; $72ef
 	sla a ; $72f1
 	sla a ; $72f3
@@ -383,7 +383,7 @@ AnimateBgPalettes2And3Task:
 	ld_bg_pals de, 3, 1 ; $730d
 	call LoadPalettesImmediate ; $7310
 	ret ; $7313
-.ge10:
+.finished:
 	ld hl, AnimateBgPalettes2And3Task ; $7314
 	call UnregisterFrameTask ; $7317
 	ret ; $731a
@@ -411,7 +411,7 @@ CycleBgPalettes4To7Task:
 	ret ; $7341
 .compare:
 	cp $20 ; $7342
-	jr c, .lt20 ; $7344
+	jr c, .finished ; $7344
 	ld b, a ; $7346
 	ld a, $20 ; $7347
 	sub b ; $7349
@@ -427,7 +427,7 @@ CycleBgPalettes4To7Task:
 	ld_bg_pals de, 4, 4 ; $7358
 	call LoadPalettesImmediate ; $735b
 	ret ; $735e
-.lt20:
+.finished:
 	ld hl, CycleBgPalettes4To7Task ; $735f
 	call UnregisterFrameTask ; $7362
 	ret ; $7365

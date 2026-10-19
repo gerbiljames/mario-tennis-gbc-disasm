@@ -51,9 +51,9 @@ RunMainMenu:
 	bit PADB_B, a ; $5649
 	jr nz, .playSfx2 ; $564b
 	bit PADB_SELECT, a ; $564d
-	jr nz, .bit2Set ; $564f
+	jr nz, .pressedSelect ; $564f
 	jr .loop ; $5651
-.bit2Set:
+.pressedSelect:
 	jr .loop ; $5653
 .clearFrameTasks:
 	ld a, $01 ; $5655
@@ -261,7 +261,7 @@ MainMenuTable1:
 MainMenuSlideIn:
 	ld a, b ; $5800
 	or a ; $5801
-	jr z, .zero ; $5802
+	jr z, .slideBack ; $5802
 	ld c, $00 ; $5804
 .loop:
 	call AdvanceFrame ; $5806
@@ -275,7 +275,7 @@ MainMenuSlideIn:
 	cp $10 ; $5816
 	jr nz, .loop ; $5818
 	ret ; $581a
-.zero:
+.slideBack:
 	ld c, $09 ; $581b
 .loopB:
 	call AdvanceFrame ; $581d
@@ -292,7 +292,7 @@ MainMenuSlideIn:
 MainMenuSlideOut:
 	ld a, b ; $5832
 	or a ; $5833
-	jr z, .zero ; $5834
+	jr z, .slideBack ; $5834
 	ld c, $00 ; $5836
 .loop:
 	call AdvanceFrame ; $5838
@@ -306,7 +306,7 @@ MainMenuSlideOut:
 	cp $0c ; $5848
 	jr nz, .loop ; $584a
 	ret ; $584c
-.zero:
+.slideBack:
 	ld c, $0f ; $584d
 .loopB:
 	call AdvanceFrame ; $584f
@@ -512,24 +512,24 @@ FillMainMenuCellHighlight:
 	ld e, b ; $5a0e
 	ld a, b ; $5a0f
 	cp $06 ; $5a10
-	jr nc, .step ; $5a12
+	jr nc, .wideCell ; $5a12
 	cp $03 ; $5a14
-	jr c, .step ; $5a16
+	jr c, .wideCell ; $5a16
 	ld b, $03 ; $5a18
 	ld c, $03 ; $5a1a
-	jr .step2 ; $5a1c
-.step:
+	jr .pickAttr ; $5a1c
+.wideCell:
 	ld b, $05 ; $5a1e
 	ld c, $03 ; $5a20
-.step2:
+.pickAttr:
 	ld a, d ; $5a22
 	or a ; $5a23
-	jr z, .zero ; $5a24
+	jr z, .unhighlighted ; $5a24
 	ld h, $0c ; $5a26
-	jr .step4 ; $5a28
-.zero:
+	jr .fill ; $5a28
+.unhighlighted:
 	ld h, $0d ; $5a2a
-.step4:
+.fill:
 	push hl ; $5a2c
 	ld hl, FillMainMenuCellHighlightTable ; $5a2d
 	ld a, e ; $5a30
@@ -587,20 +587,14 @@ MainMenuItemPalettePtrs:
 	dw MainMenuItemPalette1 ; record 7
 	dw MainMenuItemPalette5 ; record 8
 MainMenuItemPalette0:
-	; $5a7c, 8 bytes (bytes:8)
-	db $9f, $3e, $ff, $6b, $0a, $50, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette0.asm" ; $5a7c, 8 bytes (palettes)
 MainMenuItemPalette1:
-	; $5a84, 8 bytes (bytes:8)
-	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette1.asm" ; $5a84, 8 bytes (palettes)
 MainMenuItemPalette2:
-	; $5a8c, 8 bytes (bytes:8)
-	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette2.asm" ; $5a8c, 8 bytes (palettes)
 MainMenuItemPalette3:
-	; $5a94, 8 bytes (bytes:8)
-	db $32, $1b, $ff, $6b, $e0, $15, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette3.asm" ; $5a94, 8 bytes (palettes)
 MainMenuItemPalette4:
-	; $5a9c, 8 bytes (bytes:8)
-	db $5f, $1a, $ff, $6b, $7c, $00, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette4.asm" ; $5a9c, 8 bytes (palettes)
 MainMenuItemPalette5:
-	; $5aa4, 8 bytes (bytes:8)
-	db $96, $59, $ff, $6b, $12, $14, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette5.asm" ; $5aa4, 8 bytes (palettes)

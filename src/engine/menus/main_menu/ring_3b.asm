@@ -431,7 +431,7 @@ DrawRingShotClearMarkRow:
 .loop:
 	ld a, b ; $553b
 	or a ; $553c
-	jr z, .zero ; $553d
+	jr z, .drawRemainingMarks ; $553d
 	ld h, b ; $553f
 	ld b, $00 ; $5540
 	call DrawRingShotMarkCell ; $5542
@@ -440,7 +440,7 @@ DrawRingShotClearMarkRow:
 	ld b, h ; $5547
 	dec b ; $5548
 	jr .loop ; $5549
-.zero:
+.drawRemainingMarks:
 	ld a, $05 ; $554b
 	sub c ; $554d
 	ld b, a ; $554e
@@ -502,11 +502,11 @@ RingShotScoreDrawTask:
 	ld bc, $000c ; $5595
 .loop:
 	or a ; $5598
-	jr z, .zero ; $5599
+	jr z, .gotRow ; $5599
 	add hl, bc ; $559b
 	dec a ; $559c
 	jr .loop ; $559d
-.zero:
+.gotRow:
 	ld a, $04 ; $559f
 	add l ; $55a1
 	ld l, a ; $55a2

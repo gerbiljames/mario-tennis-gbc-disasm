@@ -1,17 +1,23 @@
-ApplyPartnerCharacterVariant_13:
-	ld a, [wStoryPartnerGender] ; $62be
-	or a ; $62c1
-	jr nz, .done ; $62c2
-	script_set_objdef OBJ_HARRY, $0d ; $62c4
-	script_set_anim $0d, ANIM_WALK ; $62d0
-	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62d7
-.done:
-	ret ; $62da
-Table_13:
-	; $62db, 36 bytes (bytes:12)
-	db $0d, $12, $80, $ff, $01, $1e, $0d, $12, $60, $ff, $01, $32 ; 0x00
-	db $10, $03, $01, $1e, $10, $01, $10, $03, $01, $5a, $0c, $e9 ; 0x0c
-	db $ff, $10, $02, $01, $5a, $10, $04, $01, $96, $0c, $f7, $ff ; 0x18
+	twin set_partner_obj_def_by_gender, 13 ; $62be SetPartnerObjDefByGender_13
+Unused_13_ActorScriptHopNod:
+	; $62db, 25 bytes (actor_script)
+	as_set_field ACTORF_JUMP_VEL, -$80
+	as_wait 30
+	as_set_field ACTORF_JUMP_VEL, -$a0
+	as_wait 50
+	as_anim ANIM_NOD
+	as_wait 30
+	as_anim ANIM_WALK
+	as_anim ANIM_NOD
+	as_wait 90
+	as_jump Unused_13_ActorScriptHopNod
+Unused_13_ActorScriptBounceShake:
+	; $62f4, 11 bytes (actor_script)
+	as_anim ANIM_BOUNCE
+	as_wait 90
+	as_anim ANIM_SHAKE
+	as_wait 150
+	as_jump Unused_13_ActorScriptBounceShake
 CourtyardEntryWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $62ff
 	cp STORYENTRY_NONE ; $6302

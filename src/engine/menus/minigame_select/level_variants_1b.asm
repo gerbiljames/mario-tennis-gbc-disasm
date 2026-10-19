@@ -335,12 +335,12 @@ SetSelectPanelAttrRect3:
 	push hl ; $70c1
 	ld a, c ; $70c2
 	or a ; $70c3
-	jr z, .zero ; $70c4
+	jr z, .unhighlighted ; $70c4
 	ld h, $0c ; $70c6
-	jr .step2 ; $70c8
-.zero:
+	jr .fill ; $70c8
+.unhighlighted:
 	ld h, $0d ; $70ca
-.step2:
+.fill:
 	push hl ; $70cc
 	ld hl, SelectPanelAttrRect3Table ; $70cd
 	ld a, b ; $70d0

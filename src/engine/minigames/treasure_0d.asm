@@ -71,9 +71,9 @@ ProcessTargetTileHit:
 	ld hl, wTargetTileHit ; $591d
 	ld a, [hl] ; $5920
 	cp $09 ; $5921
-	jr nc, .ge09 ; $5923
+	jr nc, .clearGrid ; $5923
 	inc [hl] ; $5925
-.ge09:
+.clearGrid:
 	push_wram_bank WRAM_COURT_PLANES ; $5926
 	ld a, $01 ; $592f
 	ld [wMatchSimFrozen], a ; $5931
@@ -109,7 +109,7 @@ AnimateTargetGridClear:
 .loop:
 	ld a, [hl+] ; $5997
 	cp $00 ; $5998
-	jr z, .eq00 ; $599a
+	jr z, .nextCell ; $599a
 	push bc ; $599c
 	push hl ; $599d
 	ld b, a ; $599e
@@ -121,7 +121,7 @@ AnimateTargetGridClear:
 	farcall StepMatchFrames ; $59aa
 	pop hl ; $59ad
 	pop bc ; $59ae
-.eq00:
+.nextCell:
 	inc c ; $59af
 	dec b ; $59b0
 	jr nz, .loop ; $59b1
@@ -134,27 +134,18 @@ AreAllTargetsHit:
 .loop:
 	ld a, [hl+] ; $59bd
 	cp $01 ; $59be
-	jr nz, .ne01 ; $59c0
+	jr nz, .notAllHit ; $59c0
 	dec c ; $59c2
 	jr nz, .loop ; $59c3
 	ld a, $01 ; $59c5
 	ret ; $59c7
-.ne01:
+.notAllHit:
 	ld a, $00 ; $59c8
 	ret ; $59ca
 MinigameConfig_TreasureBox:
 	; $59cb, 16 bytes
 	drill_def CHAR_WALUIGI, COURT_TREASURE_BOX, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_TREASURE_BOX, BGM_COURT_WAREHOUSE, CHAR_WARIO, MinigameHooks_TreasureBox, MinigamePointLayoutDuo, InitMinigame_TreasureBox
-InitMinigame_TreasureBox:
-	ld a, $01 ; $59db
-	ld [wMinigameUsesTennisMachine], a ; $59dd
-	ld a, [wMinigameLevel] ; $59e0
-	cp $02 ; $59e3
-	jr nz, .done ; $59e5
-	ld a, $01 ; $59e7
-	ld [wMinigameHighScoreMode], a ; $59e9
-.done:
-	ret ; $59ec
+	twin_named init_minigame_medallion_match, InitMinigame_TreasureBox ; $59db
 MinigameHooks_TreasureBox:
 	; $59ed, 16 bytes (mode_hooks)
 	dw TreasureBoxHook_PerFrame ; record 0
@@ -248,10 +239,10 @@ SelectRandomTreasureBoxTargetZone:
 	call LoadTargetZoneConfig ; $5a8f
 	ld a, [wMinigameHitScored] ; $5a92
 	and a ; $5a95
-	jr nz, .nonZero ; $5a96
+	jr nz, .clearHitScored ; $5a96
 	xor a ; $5a98
 	ld [wMinigameHitStreak], a ; $5a99
-.nonZero:
+.clearHitScored:
 	xor a ; $5a9c
 	ld [wMinigameHitScored], a ; $5a9d
 	xor a ; $5aa0
@@ -289,7 +280,7 @@ TreasureBoxTargetState0:
 	ld a, [hl+] ; $5ae6
 	ld h, [hl] ; $5ae7
 	ld l, a ; $5ae8
-	ld de, $fff5 ; $5ae9
+	ld de, -11 ; $5ae9
 	add hl, de ; $5aec
 	bit 7, h ; $5aed
 	ld hl, TreasureBoxTypePoolLate ; $5aef
@@ -392,5 +383,4 @@ TreasureBoxSpawnPoints4:
 	db $00, $00, $80, $fe ; 0x04
 	db $00, $01, $c0, $fd ; 0x08
 	db $00, $ff, $c0, $fd ; 0x0c
-; Instruction-identical to IsBallInMedallionMatchHitZone (in this bank); a change here belongs in every copy.
 	twin_named is_ball_in_medallion_match_hit_zone, IsBallInTreasureBoxHitZone ; $5bc5

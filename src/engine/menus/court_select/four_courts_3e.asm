@@ -171,7 +171,7 @@ CourtSelectIndexToCourtId:
 	ret ; $5d07
 CourtSelectCourtIds_3e:
 	; $5d08, 9 bytes (bytes:9)
-	db $00, $01, $02, $03, $04, $05, $06, $07, $08 ; 0x00
+	db COURT_HARD, COURT_CLAY, COURT_GRASS, COURT_COMPOSITION, COURT_STAR, COURT_CASTLE, COURT_TROPICS, COURT_JUNGLE, COURT_WAREHOUSE
 LoadCourtSelectGraphics:
 	ldh a, [hWramBank] ; $5d11
 	push af ; $5d13
@@ -329,7 +329,7 @@ GetCourtThumbnailPtr:
 OpenCourtSelect4Panel:
 	ld a, b ; $5e2a
 	or a ; $5e2b
-	jr z, .zero ; $5e2c
+	jr z, .reverse ; $5e2c
 	ld c, $00 ; $5e2e
 .loop:
 	call AdvanceFrame ; $5e30
@@ -344,7 +344,7 @@ OpenCourtSelect4Panel:
 	jr nz, .loop ; $5e42
 	call AdvanceFrame ; $5e44
 	ret ; $5e47
-.zero:
+.reverse:
 	ld c, $0a ; $5e48
 .loopB:
 	call AdvanceFrame ; $5e4a
@@ -588,41 +588,121 @@ CourtSelect4PalettePtrs:
 	dw CourtSelect4Palette0 ; record 7
 	dw CourtSelect4Palette0 ; record 8
 CourtSelect4Palette0:
-	; $6003, 8 bytes (bytes:8)
-	db $40, $7d, $ff, $7f, $a0, $3c, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette0.asm" ; $6003, 8 bytes (palettes)
 CourtSelect4Palette1:
-	; $600b, 8 bytes (bytes:8)
-	db $1f, $00, $ff, $7f, $12, $00, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette1.asm" ; $600b, 8 bytes (palettes)
 CourtSelect4Palette2:
-	; $6013, 8 bytes (bytes:8)
-	db $e0, $01, $ff, $7f, $40, $01, $00, $00 ; 0x00
+	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette2.asm" ; $6013, 8 bytes (palettes)
 CourtSelect4Palette3:
-	; $601b, 194 bytes (bytes:8)
-	db $12, $48, $ff, $7f, $08, $00, $00, $00 ; 0x00
-	db $f0, $96, $f5, $3e, $03, $e0, $96, $e0 ; 0x08
-	db $70, $0e, $02, $cd, $c9, $43, $4f, $c5 ; 0x10
-	db $cd, $45, $60, $c1, $c5, $cd, $6f, $60 ; 0x18
-	db $c1, $cd, $93, $60, $f1, $e0, $96, $e0 ; 0x20
-	db $70, $c9, $21, $ca, $60, $79, $85, $6f ; 0x28
-	db $30, $01, $24, $7e, $21, $00, $d2, $85 ; 0x30
-	db $6f, $30, $01, $24, $54, $5d, $21, $d3 ; 0x38
-	db $60, $01, $05, $00, $cd, $db, $03, $21 ; 0x40
-	db $d8, $60, $11, $01, $d2, $01, $05, $00 ; 0x48
-	db $cd, $db, $03, $c9, $79, $21, $8a, $60 ; 0x50
-	db $85, $6f, $30, $01, $24, $7e, $21, $a9 ; 0x58
-	db $00, $85, $6f, $30, $01, $24, $11, $06 ; 0x60
-	db $d2, $0e, $20, $df, $72, $05, $c9, $01 ; 0x68
-	db $00, $02, $03, $02, $01, $03, $02, $00 ; 0x70
-	db $21, $ca, $60, $79, $85, $6f, $30, $01 ; 0x78
-	db $24, $7e, $c6, $05, $21, $00, $d2, $85 ; 0x80
-	db $6f, $30, $01, $24, $54, $5d, $21, $c1 ; 0x88
-	db $60, $79, $85, $6f, $30, $01, $24, $7e ; 0x90
-	db $21, $a9, $00, $85, $6f, $30, $01, $24 ; 0x98
-	db $0e, $20, $df, $72, $05, $c9, $06, $04 ; 0xa0
-	db $04, $05, $06, $05, $04, $07, $06, $0a ; 0xa8
-	db $0a, $0a, $0a, $0a, $0a, $0a, $09, $0a ; 0xb0
-	db $15, $16, $17, $18, $19, $10, $11, $12 ; 0xb8
-	db $13, $14 ; 0xc0
+	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette3.asm" ; $601b, 8 bytes (palettes)
+Unused_3e_DrawCourtSelect4TitleText:
+	push_wram_bank WRAM_SCREEN ; $6023
+	ld c, $02 ; $602c
+	call GetMenuCursorIndex_3e ; $602e
+	ld c, a ; $6031
+	push bc ; $6032
+	call Unused_3e_DrawCourtSelectTitleTiles ; $6033
+	pop bc ; $6036
+	push bc ; $6037
+	call Unused_3e_RenderCourtSelectTitleText ; $6038
+	pop bc ; $603b
+	call Unused_3e_RenderCourtSelectTitleText2 ; $603c
+	pop_wram_bank ; $603f
+	ret ; $6044
+Unused_3e_DrawCourtSelectTitleTiles:
+	ld hl, Unused_3e_CourtSelectTitleColumns ; $6045
+	ld a, c ; $6048
+	add l ; $6049
+	ld l, a ; $604a
+	jr nc, .read ; $604b
+	inc h ; $604d
+.read:
+	ld a, [hl] ; $604e
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $604f
+	add l ; $6052
+	ld l, a ; $6053
+	jr nc, .copy ; $6054
+	inc h ; $6056
+.copy:
+	ld d, h ; $6057
+	ld e, l ; $6058
+	ld hl, Unused_3e_CourtSelectTitleTilesA ; $6059
+	ld bc, 5 ; $605c
+	call CopyMemoryBC ; $605f
+	ld hl, Unused_3e_CourtSelectTitleTilesB ; $6062
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6065
+	ld bc, 5 ; $6068
+	call CopyMemoryBC ; $606b
+	ret ; $606e
+Unused_3e_RenderCourtSelectTitleText:
+	ld a, c ; $606f
+	ld hl, Unused_3e_CourtSelectTitleTextIndices ; $6070
+	add l ; $6073
+	ld l, a ; $6074
+	jr nc, .read ; $6075
+	inc h ; $6077
+.read:
+	ld a, [hl] ; $6078
+	ld hl, $00a9 ; $6079
+	add l ; $607c
+	ld l, a ; $607d
+	jr nc, .render ; $607e
+	inc h ; $6080
+.render:
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 6 ; $6081
+	ld c, $20 ; $6084
+	farcall RenderTextToBuffer64 ; $6086
+	ret ; $6089
+Unused_3e_CourtSelectTitleTextIndices:
+	; $608a, 9 bytes (bytes:9)
+	db $01, $00, $02, $03, $02, $01, $03, $02, $00 ; 0x00
+Unused_3e_RenderCourtSelectTitleText2:
+	ld hl, Unused_3e_CourtSelectTitleColumns ; $6093
+	ld a, c ; $6096
+	add l ; $6097
+	ld l, a ; $6098
+	jr nc, .readColumn ; $6099
+	inc h ; $609b
+.readColumn:
+	ld a, [hl] ; $609c
+	add $05 ; $609d
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $609f
+	add l ; $60a2
+	ld l, a ; $60a3
+	jr nc, .dest ; $60a4
+	inc h ; $60a6
+.dest:
+	ld d, h ; $60a7
+	ld e, l ; $60a8
+	ld hl, Unused_3e_CourtSelectTitleText2Indices ; $60a9
+	ld a, c ; $60ac
+	add l ; $60ad
+	ld l, a ; $60ae
+	jr nc, .read ; $60af
+	inc h ; $60b1
+.read:
+	ld a, [hl] ; $60b2
+	ld hl, $00a9 ; $60b3
+	add l ; $60b6
+	ld l, a ; $60b7
+	jr nc, .render ; $60b8
+	inc h ; $60ba
+.render:
+	ld c, $20 ; $60bb
+	farcall RenderTextToBuffer64 ; $60bd
+	ret ; $60c0
+Unused_3e_CourtSelectTitleText2Indices:
+	; $60c1, 9 bytes (bytes:9)
+	db $06, $04, $04, $05, $06, $05, $04, $07, $06 ; 0x00
+Unused_3e_CourtSelectTitleColumns:
+	; $60ca, 9 bytes (bytes:9)
+	db $0a, $0a, $0a, $0a, $0a, $0a, $0a, $09, $0a ; 0x00
+Unused_3e_CourtSelectTitleTilesA:
+	; $60d3, 5 bytes (bytes:5)
+	db $15, $16, $17, $18, $19 ; 0x00
+Unused_3e_CourtSelectTitleTilesB:
+	; $60d8, 5 bytes (bytes:5)
+	db $10, $11, $12, $13, $14 ; 0x00
 SetCourtSelectBGM:
 	ld a, c ; $60dd
 	ld hl, CourtSelectBgmIds_3e ; $60de
@@ -749,10 +829,10 @@ DrawCourtNameTiles:
 DrawCourtNameLeft:
 	ld a, b ; $64a6
 	cp $ff ; $64a7
-	jr nz, .neff ; $64a9
+	jr nz, .lookupCourt ; $64a9
 	ld b, $ac ; $64ab
 	jr .fillIncrementingBytes ; $64ad
-.neff:
+.lookupCourt:
 	ld hl, CourtNameLeftIndices_3e ; $64af
 	ld a, b ; $64b2
 	add l ; $64b3
@@ -775,10 +855,10 @@ CourtNameLeftIndices_3e:
 DrawCourtNameRight:
 	ld a, b ; $64cf
 	cp $ff ; $64d0
-	jr nz, .neff ; $64d2
+	jr nz, .lookupCourt ; $64d2
 	ld b, $b1 ; $64d4
 	jr .fillIncrementingBytes ; $64d6
-.neff:
+.lookupCourt:
 	ld hl, CourtNameRightIndices_3e ; $64d8
 	ld a, b ; $64db
 	add l ; $64dc

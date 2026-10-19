@@ -143,7 +143,7 @@ IslandOpenRoundCallCutscene:
 	ld [wStoryModeCurrentLocation], a ; $71cc
 	ld a, $0a ; $71cf
 	ld [wStoryModeEntryPoint], a ; $71d1
-	ld a, $ff ; $71d4
+	ld a, EXITTRIGGER_DIRECT ; $71d4
 	ld [wUnusedExitTriggerIdMirror], a ; $71d6
 	ld [wStoryModeExitTriggerRequest], a ; $71d9
 	farcall InitStoryMatchSettings ; $71dc
@@ -216,7 +216,7 @@ IslandOpenRoundCallCutscene:
 	ld [wStoryModeCurrentLocation], a ; $736c
 	ld a, $0b ; $736f
 	ld [wStoryModeEntryPoint], a ; $7371
-	ld a, $ff ; $7374
+	ld a, EXITTRIGGER_DIRECT ; $7374
 	ld [wUnusedExitTriggerIdMirror], a ; $7376
 	ld [wStoryModeExitTriggerRequest], a ; $7379
 	farcall InitStoryMatchSettings ; $737c
@@ -315,7 +315,7 @@ QueueUpcomingRoundNameText:
 	jr nc, .queue ; $7455
 	inc h ; $7457
 .queue:
-	call QueueShortText ; $7458
+	call PushShortTextArg_0f ; $7458
 	ret ; $745b
 CheckIslandOpenVictoryTransition:
 	test_flag FLAG_DOUBLES ; $745c
@@ -335,7 +335,7 @@ CheckIslandOpenVictoryTransition:
 	ld [wStoryModeCurrentLocation], a ; $7471
 	ld a, $08 ; $7474
 	ld [wStoryModeEntryPoint], a ; $7476
-	ld a, $ff ; $7479
+	ld a, EXITTRIGGER_DIRECT ; $7479
 	ld [wUnusedExitTriggerIdMirror], a ; $747b
 	ld [wStoryModeExitTriggerRequest], a ; $747e
 	ld a, $01 ; $7481
@@ -413,7 +413,7 @@ IslandOpenSinglesMatchReturn:
 	jr nc, .done ; $756e
 	inc h ; $7570
 .done:
-	call QueueShortText ; $7571
+	call PushShortTextArg_0f ; $7571
 	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACE_UP ; $7574
 	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, FACE_RIGHT ; $757b
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, ACTOR_PLAYER ; $7582
@@ -440,7 +440,6 @@ IslandOpenRoundNpcScriptsSingles_0f:
 	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
-; Instruction-identical to IslandOpenRoundDoublesNpc04_0f (in this bank); a change here belongs in every copy.
 	twin_named island_open_round_doubles_npc04, IslandOpenRoundSinglesNpc04_0f ; $762e
 IslandOpenRoundSinglesNpc03_0f:
 	ld a, [wMapSceneStage] ; $7649
@@ -574,7 +573,7 @@ IslandOpenDoublesMatchReturn:
 	jr nc, .done ; $780e
 	inc h ; $7810
 .done:
-	call QueueShortText ; $7811
+	call PushShortTextArg_0f ; $7811
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PLAYER ; $7814
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PARTNER ; $781c
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08 ; $7824
@@ -601,7 +600,6 @@ IslandOpenRoundNpcScriptsDoubles_0f:
 	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
-; Instruction-identical to IslandOpenRoundSinglesNpc04_0f (in this bank); a change here belongs in every copy.
 	twin_named island_open_round_doubles_npc04, IslandOpenRoundDoublesNpc04_0f ; $78b1
 IslandOpenRoundDoublesNpc03_0f:
 	ld a, [wMapSceneStage] ; $78cc

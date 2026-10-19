@@ -59,16 +59,7 @@ MinigameTargetZoneBounds:
 MinigameConfig_ShootingStar:
 	; $5194, 16 bytes
 	drill_def CHAR_UNUSED_15, COURT_SHOOTING_STAR, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_SHOOTING_STAR, BGM_TARGET_MINIGAMES, CHAR_LUIGI, MinigameHooks_ShootingStar, MinigamePointLayoutDuo, InitMinigame_ShootingStar
-InitMinigame_ShootingStar:
-	ld a, $01 ; $51a4
-	ld [wMinigameUsesTennisMachine], a ; $51a6
-	ld a, [wMinigameLevel] ; $51a9
-	cp $02 ; $51ac
-	jr nz, .done ; $51ae
-	ld a, $01 ; $51b0
-	ld [wMinigameHighScoreMode], a ; $51b2
-.done:
-	ret ; $51b5
+	twin_named init_minigame_medallion_match, InitMinigame_ShootingStar ; $51a4
 MinigameHooks_ShootingStar:
 	; $51b6, 16 bytes (mode_hooks)
 	dw ShootingStarHook_PerFrame ; record 0
@@ -131,10 +122,10 @@ InitBallTargetActor:
 ResetTargetHitState:
 	ld a, [wMinigameHitScored] ; $521e
 	and a ; $5221
-	jr nz, .nonZero ; $5222
+	jr nz, .clearHitScored ; $5222
 	xor a ; $5224
 	ld [wMinigameHitStreak], a ; $5225
-.nonZero:
+.clearHitScored:
 	xor a ; $5228
 	ld [wMinigameHitScored], a ; $5229
 	xor a ; $522c
@@ -155,16 +146,16 @@ AdvanceTargetActorState:
 ShootingStarTargetState0:
 	ld a, [wMinigameSceneActor + 3] ; $5244
 	and a ; $5247
-	jr z, .zero ; $5248
+	jr z, .advance ; $5248
 	farcall AdvanceMatchRng ; $524a
 	ld h, $00 ; $524d
 	ld l, a ; $524f
 	add hl, hl ; $5250
-	ld de, $ff00 ; $5251
+	ld de, -256 ; $5251
 	add hl, de ; $5254
 	ld de, $fdc0 ; $5255
 	call SetMinigameActorWorldPos ; $5258
-.zero:
+.advance:
 	xor a ; $525b
 	ld [wMinigameSceneActor + 3], a ; $525c
 	call AdvanceTargetActorState ; $525f
@@ -186,7 +177,7 @@ ShootingStarTargetState2:
 	ld h, $00 ; $527d
 	ld l, a ; $527f
 	add hl, hl ; $5280
-	ld de, $ff00 ; $5281
+	ld de, -256 ; $5281
 	add hl, de ; $5284
 	ld de, $fdc0 ; $5285
 	call SetMinigameActorWorldPos ; $5288
@@ -221,7 +212,7 @@ IsBallInHitZone:
 	sub h ; $52b4
 	ld h, a ; $52b5
 .positive:
-	ld de, $ff80 ; $52b6
+	ld de, -128 ; $52b6
 	add hl, de ; $52b9
 	jr c, .returnZero ; $52ba
 	ld hl, wMinigameSceneActor + 8 ; $52bc
@@ -247,7 +238,7 @@ IsBallInHitZone:
 	sub h ; $52d6
 	ld h, a ; $52d7
 .positive2:
-	ld de, $ff00 ; $52d8
+	ld de, -256 ; $52d8
 	add hl, de ; $52db
 	jr c, .returnZero ; $52dc
 	ld hl, wBallHeight ; $52de
@@ -263,7 +254,7 @@ IsBallInHitZone:
 	sub h ; $52ec
 	ld h, a ; $52ed
 .positive3:
-	ld de, $ff40 ; $52ee
+	ld de, -192 ; $52ee
 	add hl, de ; $52f1
 	jr c, .returnZero ; $52f2
 	ld a, $01 ; $52f4
@@ -309,7 +300,7 @@ AwardHitScore:
 	ret ; $534e
 MinigameHitStreakSounds:
 	; $534f, 8 bytes (bytes:8)
-	db $c0, $bf, $be, $bd, $bc, $bb, $ba, $ba ; 0x00
+	db SFX_SCORE_STEP1, SFX_SCORE_STEP2, SFX_SCORE_STEP3, SFX_SCORE_STEP4, SFX_SCORE_STEP5, SFX_SCORE_STEP6, SFX_SCORE_STEP7, SFX_SCORE_STEP7
 MinigameHitStreakMultipliers:
 	; $5357, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00

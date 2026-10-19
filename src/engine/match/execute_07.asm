@@ -228,7 +228,7 @@ ComputeShotTrajectory:
 .absSideways:
 	ld c, l ; $57ec
 	ld b, h ; $57ed
-	ld hl, $ffe0 ; $57ee
+	ld hl, -32 ; $57ee
 	add hl, bc ; $57f1
 	jr nc, .solveHeight ; $57f2
 	ld hl, wCourtLimitX ; $57f4

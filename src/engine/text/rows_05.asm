@@ -51,10 +51,10 @@ SetRowDirtyFlags:
 	ld [hl+], a ; $70c2
 	inc d ; $70c3
 	bit 5, d ; $70c4
-	jr z, .bit5Clear ; $70c6
+	jr z, .nextRow ; $70c6
 	res 5, d ; $70c8
 	ld hl, wTilemapRowDirty ; $70ca
-.bit5Clear:
+.nextRow:
 	dec e ; $70cd
 	jr nz, .loopB ; $70ce
 	ret ; $70d0
@@ -71,7 +71,7 @@ MarkWindowRowsDirtyMin7:
 	ld e, [hl] ; $70dc
 	ld a, e ; $70dd
 	cp $07 ; $70de
-	jr nc, .ge07 ; $70e0
+	jr nc, .clearFlags ; $70e0
 	ld a, $07 ; $70e2
 	sub e ; $70e4
 	srl a ; $70e5
@@ -81,7 +81,7 @@ MarkWindowRowsDirtyMin7:
 	and $1f ; $70ea
 	ld d, a ; $70ec
 	ld e, $07 ; $70ed
-.ge07:
+.clearFlags:
 	ld hl, wTilemapRowDirty ; $70ef
 	ld c, $20 ; $70f2
 	xor a ; $70f4
@@ -103,10 +103,10 @@ MarkWindowRowsDirtyMin7:
 	ld [hl+], a ; $7107
 	inc d ; $7108
 	bit 5, d ; $7109
-	jr z, .bit5Clear ; $710b
+	jr z, .nextRow ; $710b
 	res 5, d ; $710d
 	ld hl, wTilemapRowDirty ; $710f
-.bit5Clear:
+.nextRow:
 	dec e ; $7112
 	jr nz, .loopB ; $7113
 	pop hl ; $7115
@@ -125,7 +125,7 @@ FlushDirtyRowsPerFrame:
 .loop:
 	ld a, [hl] ; $7127
 	cp $ff ; $7128
-	jr z, .eqff ; $712a
+	jr z, .done ; $712a
 	ld c, [hl] ; $712c
 	inc hl ; $712d
 	ld b, [hl] ; $712e
@@ -139,7 +139,7 @@ FlushDirtyRowsPerFrame:
 .restore:
 	pop af ; $713d
 	jr .loop ; $713e
-.eqff:
+.done:
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7140
 	pop hl ; $7143
 	pop de ; $7144
@@ -157,14 +157,14 @@ FlushDirtyRowsNow:
 .loop:
 	ld a, [hl] ; $7155
 	cp $ff ; $7156
-	jr z, .eqff ; $7158
+	jr z, .done ; $7158
 	ld c, [hl] ; $715a
 	inc hl ; $715b
 	ld b, [hl] ; $715c
 	inc hl ; $715d
 	call CopyDirtyRowSpanToVRAM ; $715e
 	jr .loop ; $7161
-.eqff:
+.done:
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7163
 	push af ; $7166
 	ldh a, [rLCDC] ; $7167
@@ -240,14 +240,14 @@ BuildDirtyRowRuns:
 .loop:
 	ld a, c ; $71cc
 	cp $20 ; $71cd
-	jr nc, .ge20 ; $71cf
+	jr nc, .terminate ; $71cf
 	ld a, [hl] ; $71d1
 	or a ; $71d2
-	jr nz, .nonZero ; $71d3
+	jr nz, .startRun ; $71d3
 	inc hl ; $71d5
 	inc c ; $71d6
 	jr .loop ; $71d7
-.nonZero:
+.startRun:
 	push hl ; $71d9
 	ld h, d ; $71da
 	ld l, e ; $71db
@@ -260,18 +260,18 @@ BuildDirtyRowRuns:
 .loopB:
 	ld a, c ; $71e3
 	cp $20 ; $71e4
-	jr nc, .step2 ; $71e6
+	jr nc, .storeRunLength ; $71e6
 	ld a, [hl] ; $71e8
 	or a ; $71e9
-	jr z, .step2 ; $71ea
+	jr z, .storeRunLength ; $71ea
 	inc hl ; $71ec
 	inc c ; $71ed
 	inc b ; $71ee
 	ld a, b ; $71ef
 	cp $07 ; $71f0
-	jr nc, .step2 ; $71f2
+	jr nc, .storeRunLength ; $71f2
 	jr .loopB ; $71f4
-.step2:
+.storeRunLength:
 	push hl ; $71f6
 	ld h, d ; $71f7
 	ld l, e ; $71f8
@@ -281,7 +281,7 @@ BuildDirtyRowRuns:
 	ld e, l ; $71fc
 	pop hl ; $71fd
 	jr .loop ; $71fe
-.ge20:
+.terminate:
 	ld h, d ; $7200
 	ld l, e ; $7201
 	ld [hl], $ff ; $7202

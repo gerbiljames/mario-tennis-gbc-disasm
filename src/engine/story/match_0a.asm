@@ -32,7 +32,7 @@ RunStoryMatch:
 	ld [wStoryModeCurrentLocation], a ; $497b
 	ld a, $01 ; $497e
 	ld [wStoryModeEntryPoint], a ; $4980
-	ld a, $ff ; $4983
+	ld a, EXITTRIGGER_DIRECT ; $4983
 	ld [wUnusedExitTriggerIdMirror], a ; $4985
 	ld [wStoryModeExitTriggerRequest], a ; $4988
 	ret ; $498b

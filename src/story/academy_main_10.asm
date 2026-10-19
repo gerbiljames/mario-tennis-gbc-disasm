@@ -104,9 +104,7 @@ AcademyMainBldgEntryPoints_10:
 	map_entry $0e, FACE_UP, 34.0, 19.0, $0000 ; debug warp only
 	map_entry $0f, FACE_UP, 34.0, 29.0, $0000
 	db $ff
-; Instruction-identical to AcademyArrivalArrival01_11 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival02, AcademyMainBldgArrival02_10 ; $7532
-; Instruction-identical to RestaurantArrival01_10, MapArrivalWalk_11, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival01, AcademyMainBldgArrival01_10 ; $7578
 AcademyMainBldgExitTriggers_10:
 	; $75be, 41 bytes (map_scripts:exit)
@@ -128,10 +126,10 @@ AcademyMainBldgNpc03_10:
 	ld a, [wMapSceneStage] ; $75fa
 	sra a ; $75fd
 	cp STORYTIER_ISLAND_OPEN ; $75ff
-	jr z, .eq03 ; $7601
+	jr z, .islandOpen ; $7601
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1 ; $7603
 	ret ; $7608
-.eq03:
+.islandOpen:
 	script_speak_restore ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1 ; $7609
 	farcall RunDialogueYesNoPrompt ; $760e
 	farcall ScriptCloseDialogueWindow ; $7611
@@ -255,9 +253,9 @@ AcademyMainBldgInitScript_10:
 	ld a, [wMapSceneStage] ; $771a
 	sra a ; $771d
 	cp STORYTIER_SENIOR_CHAMP ; $771f
-	jr nz, .ne02 ; $7721
+	jr nz, .notSeniorChamp ; $7721
 	script_set_actor_script ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1, ActorScript_10_1 ; $7723
-.ne02:
+.notSeniorChamp:
 	ld a, $01 ; $772e
 	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730
 	call RegisterFrameTask ; $7733
@@ -396,7 +394,7 @@ UpdateActorTileAnimState_10:
 	ld a, [hl+] ; $79fb
 	ld h, [hl] ; $79fc
 	ld l, a ; $79fd
-	ld de, $ffb0 ; $79fe
+	ld de, -80 ; $79fe
 	add hl, de ; $7a01
 	ld d, h ; $7a02
 	ld hl, ACTORF_Y ; $7a03
@@ -464,7 +462,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	ld a, [hl+] ; $7a71
 	ld h, [hl] ; $7a72
 	ld l, a ; $7a73
-	ld de, $ffb0 ; $7a74
+	ld de, -80 ; $7a74
 	add hl, de ; $7a77
 	ld d, h ; $7a78
 	ld hl, ACTORF_Y ; $7a79

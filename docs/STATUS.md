@@ -1,4 +1,4 @@
-# Project status — 2026-10-05
+# Project status — 2026-10-19
 
 Where the disassembly stands and what is still open. The subsystem docs under
 `docs/` are the writeups; the git log has the history.
@@ -14,10 +14,17 @@ user's `baserom.gbc` per `data.manifest`.
 | | |
 |---|---|
 | source-spelled bytes (`tools/stats.py`) | 848,059, 40.4% of the 2 MiB ROM; 1,044,693 `INCBIN`, 200,809 free |
-| instruction and code-macro lines | 133,293 |
-| labels | 30,436: ROM 14,408 global + 14,416 local, RAM 1,612; none state only an address |
-| extracted data regions | 4,213 (3,655 `INCBIN`, 558 generated `INCLUDE`s), 839 of them LZ streams |
+| instruction and code-macro lines | 132,608 |
+| labels | 30,569: ROM 14,413 global + 14,425 local, RAM 1,731; none state only an address |
+| extracted data regions | 4,268 (3,655 `INCBIN`, 613 generated `INCLUDE`s), 839 of them LZ streams |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator is retired at tag `generator-final` |
+
+Ids, records and layouts are checked at build time: id-indexed tables assert
+their row count (`table_width` / `assert_table_length`), record layouts are
+`rsreset` / `rb` declarations and RAM structure macros (`char_record`,
+`match_stats`), enumerations are `const_def` / `const`, and code that relies
+on RAM adjacency or on an id being 0 asserts it. Routines copied into
+several banks are one file under `src/twins/` (90 families).
 
 Everything once anonymous is classified, and the structure is rendered
 rather than binary: farcall slots, `rst` pseudo-ops, story map trees, actor
@@ -37,7 +44,7 @@ with a fork's edits under `mods/`.
 | `docs/save_format.md` | the battery save and `tools/savetool.py` |
 | `docs/ram_map.md` | WRAM/HRAM, union overlays, free RAM |
 | `docs/bugs.md` | defects in the game, and the nine `make FIXES=1` fixes |
-| `docs/unused_code.md` | the 779 routines and 103 blobs nothing live reaches |
+| `docs/unused_code.md` | the 788 routines and 111 blobs nothing live reaches |
 | `docs/bank0_notes.md` | the ROM0 helpers |
 
 ## What is still open

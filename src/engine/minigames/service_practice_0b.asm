@@ -24,17 +24,7 @@ ServiceMatch3Hooks:
 ServiceMatch3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $4c33
 	ret ; $4c36
-ServiceMatch3Hook_PointStart:
-	xor a ; $4c37
-	ld [wDrillAbortCountdownActive], a ; $4c38
-	ld a, $0a ; $4c3b
-	ld [wDrillAbortCountdown], a ; $4c3d
-	ASSERT DRILLMSG_NONE == 0
-	xor a ; $4c40
-	ld [wDrillMessageId], a ; $4c41
-	xor a ; $4c44
-	ld [wDrillPointJudgement], a ; $4c45
-	ret ; $4c48
+	twin_named service_match1_hook_point_start, ServiceMatch3Hook_PointStart ; $4c37
 ServiceMatch3Hook_PointEnd:
 	call ServiceMatch3JudgeOnPointEnd ; $4c49
 	call ServiceMatch3HandlePointEnd ; $4c4c
@@ -120,7 +110,6 @@ ServiceMatch3HandlePointEnd:
 	farcall StartPointEndReactions ; $4ce7
 	call PlayDrillPointEndSequence ; $4cea
 	ret ; $4ced
-; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 	twin_named net_game_match1_award_point_to_side, ServiceMatch3AwardPointToSide ; $4cee
 ServiceMatch3JudgeOnPointEnd:
 	ld a, $00 ; $4d17
@@ -165,7 +154,7 @@ ServiceMatch3JudgePoint:
 	dw ServiceMatch3Cases1.returnZero2 ; $4d56 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $4d58
-	ld hl, ServiceMatch3JudgePointDrillShotTable ; $4d5b
+	ld hl, ServiceMatch3JudgePointMessages ; $4d5b
 	add l ; $4d5e
 	ld l, a ; $4d5f
 	jr nc, .readEntry1 ; $4d60
@@ -176,7 +165,7 @@ ServiceMatch3JudgePoint:
 	ld b, $06 ; $4d65
 	call QueueDrillResultMessage ; $4d67
 	ld a, [wPointOutcome] ; $4d6a
-	ld hl, SignedTable_0b_00 ; $4d6d
+	ld hl, OddRallyVerdicts ; $4d6d
 	add l ; $4d70
 	ld l, a ; $4d71
 	jr nc, .readEntry2 ; $4d72
@@ -184,9 +173,9 @@ ServiceMatch3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $4d75
 	ret ; $4d76
-ServiceMatch3JudgePointDrillShotTable:
-	; $4d77, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01
+ServiceMatch3JudgePointMessages:
+	; $4d77, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT
 ServiceMatch3Cases1:
 	xor a ; $4d81
 	ret ; $4d82
@@ -206,7 +195,7 @@ ServiceMatch3Cases1:
 	dw ServiceMatch3Cases2.storeMatchAbortFlag2 ; $4d90 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4d92
-	ld hl, ServiceMatch3Cases1DrillShotTable ; $4d95
+	ld hl, ServiceMatch3Cases1Messages ; $4d95
 	add l ; $4d98
 	ld l, a ; $4d99
 	jr nc, .read ; $4d9a
@@ -217,7 +206,7 @@ ServiceMatch3Cases1:
 	ld b, $06 ; $4d9f
 	call QueueDrillResultMessage ; $4da1
 	ld a, [wPointOutcome] ; $4da4
-	ld hl, SignedTable_0b_01 ; $4da7
+	ld hl, EvenRallyVerdicts ; $4da7
 	add l ; $4daa
 	ld l, a ; $4dab
 	jr nc, .readB ; $4dac
@@ -225,9 +214,9 @@ ServiceMatch3Cases1:
 .readB:
 	ld a, [hl] ; $4daf
 	ret ; $4db0
-ServiceMatch3Cases1DrillShotTable:
-	; $4db1, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff
+ServiceMatch3Cases1Messages:
+	; $4db1, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_HIDE
 ServiceMatch3Cases2:
 	ld a, [wPointOutcome] ; $4dbb
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $4dbe
@@ -317,33 +306,28 @@ ServicePractice1EvaluateResult:
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $4e52
 	or a ; $4e55
-	jr z, .zero ; $4e56
+	jr z, .noDoubleFaults ; $4e56
 	ld a, $02 ; $4e58
 	ld [wDrillLessonResult], a ; $4e5a
 	jr .notFound ; $4e5d
-.zero:
+.noDoubleFaults:
 	ld a, b ; $4e5f
 	or a ; $4e60
-	jr z, .zero2 ; $4e61
+	jr z, .allPassed ; $4e61
 	ld a, $03 ; $4e63
 	ld [wDrillLessonResult], a ; $4e65
 	jr .notFound ; $4e68
 .notFound:
 	ld a, $ff ; $4e6a
 	ret ; $4e6c
-.zero2:
+.allPassed:
 	xor a ; $4e6d
 	ld [wDrillLessonResult], a ; $4e6e
 	ld a, $01 ; $4e71
 	ret ; $4e73
 ServicePractice1Hook_RallyTick:
 	ret ; $4e74
-ServicePractice1Hook_Bounce:
-	ld a, [wRallyLength] ; $4e75
-	cp $01 ; $4e78
-	ret nz ; $4e7a
-	call RecordDrillTargetZoneHitIfInPlay ; $4e7b
-	ret ; $4e7e
+	twin_named service_practice1_hook_bounce, ServicePractice1Hook_Bounce ; $4e75
 UnusedServeSecondBounceSound_1:
 	ld a, [wBallBounceCount] ; $4e7f
 	cp $02 ; $4e82
@@ -413,39 +397,39 @@ UnusedStoreDrillServeTargetResult:
 ServicePractice1QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $4f22
 	cp POINTOUTCOME_FAULT ; $4f25
-	jp z, .step4 ; $4f27
+	jp z, .hide ; $4f27
 	cp POINTOUTCOME_LET ; $4f2a
-	jp z, .step4 ; $4f2c
+	jp z, .hide ; $4f2c
 	ld a, [wPointOutcome] ; $4f2f
 	cp POINTOUTCOME_DOUBLE_FAULT ; $4f32
-	jr z, .eq02 ; $4f34
+	jr z, .doubleFault ; $4f34
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4f36
 	ld b, $00 ; $4f38
 	call QueueDrillResultMessage ; $4f3a
 	call CheckDrillTargetZoneMissed ; $4f3d
 	or a ; $4f40
-	jr z, .zero ; $4f41
+	jr z, .missed ; $4f41
 	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $4f43
 	ld b, $00 ; $4f45
 	call QueueDrillResultMessage ; $4f47
-	jr .step2 ; $4f4a
-.eq02:
+	jr .targetHit ; $4f4a
+.doubleFault:
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $4f4c
 	ld b, $00 ; $4f4e
 	call QueueDrillResultMessage ; $4f50
 	ld a, $ff ; $4f53
 	ret ; $4f55
 .unreachable:
-	jr .zero ; $4f56
-.step2:
+	jr .missed ; $4f56
+.targetHit:
 	ld hl, wDrillCounters ; $4f58
 	inc [hl] ; $4f5b
 	ld a, $01 ; $4f5c
 	ret ; $4f5e
-.zero:
+.missed:
 	ld a, $ff ; $4f5f
 	ret ; $4f61
-.step4:
+.hide:
 	ld a, DRILLMSG_HIDE ; $4f62
 	ld [wDrillMessageId], a ; $4f64
 	xor a ; $4f67
@@ -519,21 +503,21 @@ ServicePractice2EvaluateResult:
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $4fe9
 	or a ; $4fec
-	jr z, .zero ; $4fed
+	jr z, .checkCounter2 ; $4fed
 	ld a, $03 ; $4fef
 	ld [wDrillLessonResult], a ; $4ff1
 	jr .notFound ; $4ff4
-.zero:
+.checkCounter2:
 	ld a, [wDrillCounters + 2] ; $4ff6
 	or a ; $4ff9
-	jr z, .zero3 ; $4ffa
+	jr z, .checkCounter1 ; $4ffa
 	ld a, [wDrillCounters + 1] ; $4ffc
 	or a ; $4fff
-	jr z, .zero2 ; $5000
+	jr z, .byHandedness ; $5000
 	ld a, $04 ; $5002
 	ld [wDrillLessonResult], a ; $5004
 	jr .notFound ; $5007
-.zero2:
+.byHandedness:
 	ld b, $06 ; $5009
 	ld a, [wStoryMainLeftHanded] ; $500b
 	cpl ; $500e
@@ -541,10 +525,10 @@ ServicePractice2EvaluateResult:
 	add b ; $5010
 	ld [wDrillLessonResult], a ; $5011
 	jr .notFound ; $5014
-.zero3:
+.checkCounter1:
 	ld a, [wDrillCounters + 1] ; $5016
 	or a ; $5019
-	jr z, .zero4 ; $501a
+	jr z, .allPassed ; $501a
 	ld b, $05 ; $501c
 	ld a, [wStoryMainLeftHanded] ; $501e
 	add b ; $5021
@@ -553,7 +537,7 @@ ServicePractice2EvaluateResult:
 .notFound:
 	ld a, $ff ; $5027
 	ret ; $5029
-.zero4:
+.allPassed:
 	xor a ; $502a
 	ld [wDrillLessonResult], a ; $502b
 	ld a, $01 ; $502e

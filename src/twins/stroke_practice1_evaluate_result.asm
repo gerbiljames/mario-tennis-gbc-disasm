@@ -4,12 +4,12 @@
 {TWIN_LABEL}:
 	ld a, [wDrillCounters + 2]
 	cp $04
-	jr nz, .ne04
+	jr nz, .checkCounter1
 	xor a
 	ld [wDrillLessonResult], a
 	ld a, $01
 	ret
-.ne04:
+.checkCounter1:
 	ld a, [wDrillCounters + 1]
 	cp $04
 	jr c, .compare
@@ -18,11 +18,11 @@
 	jr .notFound
 .compare:
 	cp $02
-	jr c, .lt02
+	jr c, .checkCounter2
 	ld a, $02
 	ld [wDrillLessonResult], a
 	jr .notFound
-.lt02:
+.checkCounter2:
 	ld a, [wDrillCounters + 2]
 	or a
 	jr nz, .compare2
@@ -31,11 +31,11 @@
 	jr .notFound
 .compare2:
 	cp $03
-	jr nz, .ne03
+	jr nz, .result4
 	ld a, $05
 	ld [wDrillLessonResult], a
 	jr .notFound
-.ne03:
+.result4:
 	ld a, $04
 	ld [wDrillLessonResult], a
 	jr .notFound

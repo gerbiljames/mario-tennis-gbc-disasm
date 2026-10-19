@@ -232,7 +232,7 @@ StampGlyphTileAtPen:
 	and $20 ; $5f39
 	xor l ; $5f3b
 	jr z, .checkCell ; $5f3c
-	ld hl, $ffe0 ; $5f3e
+	ld hl, -32 ; $5f3e
 	add hl, de ; $5f41
 	ld d, h ; $5f42
 	ld e, l ; $5f43
@@ -319,10 +319,10 @@ TextCodeLiteral_05:
 	inc hl ; $5fbf
 	ld a, [hl] ; $5fc0
 	cp $de ; $5fc1
-	jr z, .eqde ; $5fc3
+	jr z, .applyDiacritic ; $5fc3
 	cp $df ; $5fc5
-	jr nz, .nedf ; $5fc7
-.eqde:
+	jr nz, .nextCell ; $5fc7
+.applyDiacritic:
 	push hl ; $5fc9
 	ld h, d ; $5fca
 	ld l, e ; $5fcb
@@ -338,7 +338,7 @@ TextCodeLiteral_05:
 	ld [hl], a ; $5fd8
 	pop hl ; $5fd9
 	inc hl ; $5fda
-.nedf:
+.nextCell:
 	inc de ; $5fdb
 	ld a, e ; $5fdc
 	and $3f ; $5fdd

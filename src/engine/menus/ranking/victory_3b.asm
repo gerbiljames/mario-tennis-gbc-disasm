@@ -47,8 +47,8 @@ RecordExhibitionVictory:
 	call UpdateMarioCastUnlocks ; $7db2
 	ld hl, wN64RecordsBlock ; $7db5
 	farcall WriteMarioCastVictoryGrid ; $7db8
-.step2:
-	jr nz, .step2 ; $7dbb
+.spin:
+	jr nz, .spin ; $7dbb
 .restore:
 	pop_wram_bank ; $7dbd
 	ret ; $7dc2
@@ -59,9 +59,9 @@ GetVictoryScore:
 	ld hl, VictoryScoreTable ; $7dc5
 	ld a, [wVictoryScoreTableAlt] ; $7dc8
 	or a ; $7dcb
-	jr z, .zero ; $7dcc
+	jr z, .gotTable ; $7dcc
 	ld hl, VictoryScoreTable1 ; $7dce
-.zero:
+.gotTable:
 	ld a, b ; $7dd1
 	add l ; $7dd2
 	ld l, a ; $7dd3
@@ -112,7 +112,7 @@ UpdateMarioCastUnlocks:
 	jr z, .countDone ; $7e09
 	ld a, [hl] ; $7e0b
 	or a ; $7e0c
-	jr z, .zero ; $7e0d
+	jr z, .nextRow ; $7e0d
 .countDone:
 	inc hl ; $7e0f
 	inc b ; $7e10
@@ -122,7 +122,7 @@ UpdateMarioCastUnlocks:
 	ld de, SAVEFLAG_COURT_WAREHOUSE ; $7e16
 	farcall SetSaveFlag ; $7e19
 	jr .done ; $7e1c
-.zero:
+.nextRow:
 	inc c ; $7e1e
 	ld a, c ; $7e1f
 	cp $09 ; $7e20

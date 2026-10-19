@@ -115,7 +115,7 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5ac5
 	ld b, [hl] ; $5ac6
 	ld c, a ; $5ac7
-	ld hl, $fff0 ; $5ac8
+	ld hl, -16 ; $5ac8
 	add hl, bc ; $5acb
 	ld c, l ; $5acc
 	ld b, h ; $5acd

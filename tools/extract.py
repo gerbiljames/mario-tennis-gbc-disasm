@@ -241,7 +241,7 @@ def render_palettes(data: bytes) -> str:
     colours as 5-bit r,g,b components, the decoded RGB in a comment -- or as
     raw `dw` words when a colour uses bit 15, which the macro cannot spell.
     Reassembles identically."""
-    out = ["; GBC palettes, 4 colors each as 5-bit r,g,b (include/macros/ palette)"]
+    out = ["; GBC palettes, 4 colors each as 5-bit r,g,b (include/macros/data.inc palette)"]
     for pi in range(len(data) // 8):
         words = [data[pi * 8 + c * 2] | (data[pi * 8 + c * 2 + 1] << 8)
                  for c in range(4)]

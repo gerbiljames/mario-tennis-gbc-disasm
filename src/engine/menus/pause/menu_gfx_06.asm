@@ -83,11 +83,11 @@ MatchMenuItemGfx_QuitMinigame:
 LoadScoreboardModeGfx:
 	ld a, [wGameMode] ; $5c8a
 	cp GAMEMODE_TRAINING_DRILL ; $5c8d
-	jr z, .eq05 ; $5c8f
+	jr z, .trainingDrill ; $5c8f
 	add a ; $5c91
 	ld_hl_indexed ScoreboardModeGfxPointers ; $5c92
 	jr .checkWramBank ; $5c99
-.eq05:
+.trainingDrill:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b
 	add a ; $5c9e
 	ld_hl_indexed ScoreboardMinigameGfxPointers ; $5c9f

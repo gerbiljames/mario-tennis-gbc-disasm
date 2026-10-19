@@ -485,9 +485,9 @@ SpinServeBriefing_AdvanceAnim2:
 	ld b, $00 ; $5ba9
 	ld a, [wStoryMainLeftHanded] ; $5bab
 	and a ; $5bae
-	jr z, .zero ; $5baf
+	jr z, .rightHanded ; $5baf
 	ld b, $02 ; $5bb1
-.zero:
+.rightHanded:
 	ld a, [wBriefingAnimStep] ; $5bb3
 	add b ; $5bb6
 	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_SwingFrameTable ; $5bb7

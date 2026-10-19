@@ -64,7 +64,7 @@ CheckN64TnmtSecondPage:
 .loop:
 	ld a, [hl] ; $4eeb
 	or a ; $4eec
-	jr z, .zero ; $4eed
+	jr z, .checkOtherColumn ; $4eed
 	add hl, de ; $4eef
 	ld a, c ; $4ef0
 	inc a ; $4ef1
@@ -84,14 +84,14 @@ CheckN64TnmtSecondPage:
 	ld c, a ; $4f06
 	cp $10 ; $4f07
 	jr nz, .loopB ; $4f09
-.zero:
+.checkOtherColumn:
 	ld hl, wN64TnmtTrophyCells + 5 ; $4f0b
 	ld c, $00 ; $4f0e
 	ld de, $000c ; $4f10
 .loop2:
 	ld a, [hl] ; $4f13
 	or a ; $4f14
-	jr z, .zero2 ; $4f15
+	jr z, .returnZero ; $4f15
 	add hl, de ; $4f17
 	ld a, c ; $4f18
 	inc a ; $4f19
@@ -114,7 +114,7 @@ CheckN64TnmtSecondPage:
 .returnOne:
 	ld a, $01 ; $4f33
 	ret ; $4f35
-.zero2:
+.returnZero:
 	xor a ; $4f36
 	ret ; $4f37
 RedrawN64TnmtDataWindow:
@@ -164,7 +164,7 @@ DrawN64TnmtPageLabels:
 	push_wram_bank WRAM_SCREEN ; $4f81
 	ld a, [wDataScreenPage] ; $4f8a
 	or a ; $4f8d
-	jr nz, .nonZero ; $4f8e
+	jr nz, .page1 ; $4f8e
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4f90
 	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 5 ; $4f93
 	rect_size $06, $02 ; $4f96
@@ -182,7 +182,7 @@ DrawN64TnmtPageLabels:
 	rect_size $06, $02 ; $4fbd
 	farcall CopyTilemapRect ; $4fc1
 	jr .restore ; $4fc4
-.nonZero:
+.page1:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 6 ; $4fc6
 	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 5 ; $4fc9
 	rect_size $06, $02 ; $4fcc
@@ -351,7 +351,7 @@ N64TnmtScrollArrowsTask:
 .applyCursorBounceX:
 	ld a, [wDataScreenPage] ; $50fc
 	or a ; $50ff
-	jr z, .zero ; $5100
+	jr z, .checkUpArrow ; $5100
 	ld_xy de, $20, $2f ; $5102
 	ld c, $00 ; $5105
 	call ApplyCursorBounceX ; $5107
@@ -359,10 +359,10 @@ N64TnmtScrollArrowsTask:
 	ld c, $00 ; $510c
 	ld h, $01 ; $510e
 	farcall QueueStackedSpritePair ; $5110
-.zero:
+.checkUpArrow:
 	ld a, [wDataScreenCursorRow] ; $5113
 	or a ; $5116
-	jr z, .zero2 ; $5117
+	jr z, .checkDownArrow ; $5117
 	ld_xy de, $0c, $32 ; $5119
 	ld c, $01 ; $511c
 	call ApplyCursorBounceY ; $511e
@@ -370,7 +370,7 @@ N64TnmtScrollArrowsTask:
 	ld c, $00 ; $5123
 	ld h, $02 ; $5125
 	farcall QueueStackedSpritePair ; $5127
-.zero2:
+.checkDownArrow:
 	ld a, [wDataScreenCursorRow] ; $512a
 	cp $0b ; $512d
 	jr z, .restore ; $512f

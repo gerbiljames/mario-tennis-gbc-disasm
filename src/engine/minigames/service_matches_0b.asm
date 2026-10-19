@@ -1,9 +1,9 @@
-SignedTable_0b_00:
-	; $46f1, 10 bytes (drill_outcomes)
-	drill_outcomes $00, $00, $ff, $00, $ff, $ff, $01, $ff, $ff, $01
-SignedTable_0b_01:
-	; $46fb, 10 bytes (drill_outcomes)
-	drill_outcomes $00, $00, $01, $00, $01, $01, $ff, $01, $01, $ff
+OddRallyVerdicts:
+	; $46f1, 10 bytes (drill_verdicts)
+	drill_verdicts WINLOSE_NONE, WINLOSE_NONE, WINLOSE_LOSE, WINLOSE_NONE, WINLOSE_LOSE, WINLOSE_LOSE, WINLOSE_WIN, WINLOSE_LOSE, WINLOSE_LOSE, WINLOSE_WIN
+EvenRallyVerdicts:
+	; $46fb, 10 bytes (drill_verdicts)
+	drill_verdicts WINLOSE_NONE, WINLOSE_NONE, WINLOSE_WIN, WINLOSE_NONE, WINLOSE_WIN, WINLOSE_WIN, WINLOSE_LOSE, WINLOSE_WIN, WINLOSE_WIN, WINLOSE_LOSE
 RunTrainingDrillByID:
 	push af ; $4705
 	farcall InitMinigameMatchSettings ; $4706
@@ -28,7 +28,7 @@ RunTrainingDrillByID:
 	ld hl, wDrillAbortCountdown ; $4726
 	ld c, $02 ; $4729
 	call ClearMemory16 ; $472b
-	ld a, $ff ; $472e
+	ld a, AISERVEAIM_RANDOM ; $472e
 	ld [wAiServeAimOverride], a ; $4730
 	xor a ; $4733
 	ld hl, wAiServeTargetX ; $4734
@@ -40,7 +40,7 @@ RunTrainingDrillByID:
 	xor a ; $473f
 	ldh [hScrollX], a ; $4740
 	ldh [hScrollY], a ; $4742
-	ld a, $ff ; $4744
+	ld a, AISERVEAIM_RANDOM ; $4744
 	ld [wAiServeAimOverride], a ; $4746
 	xor a ; $4749
 	ld hl, wAiServeTargetX ; $474a
@@ -162,17 +162,7 @@ ServiceMatch1Hook_MinigameStart:
 ServiceMatch1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $484d
 	ret ; $4850
-ServiceMatch1Hook_PointStart:
-	xor a ; $4851
-	ld [wDrillAbortCountdownActive], a ; $4852
-	ld a, $0a ; $4855
-	ld [wDrillAbortCountdown], a ; $4857
-	ASSERT DRILLMSG_NONE == 0
-	xor a ; $485a
-	ld [wDrillMessageId], a ; $485b
-	xor a ; $485e
-	ld [wDrillPointJudgement], a ; $485f
-	ret ; $4862
+	twin_named service_match1_hook_point_start, ServiceMatch1Hook_PointStart ; $4851
 ServiceMatch1Hook_PointEnd:
 	call ServiceMatch1JudgeOnPointEnd ; $4863
 	call ServiceMatch1HandlePointEnd ; $4866
@@ -180,7 +170,7 @@ ServiceMatch1Hook_PointEnd:
 	bit 0, a ; $486c
 	ret nz ; $486e
 	cp $08 ; $486f
-	jr z, .eq08 ; $4871
+	jr z, .finalPoint ; $4871
 	ld hl, wDrillCounters + 1 ; $4873
 	ld a, [hl+] ; $4876
 	ld b, [hl] ; $4877
@@ -189,7 +179,7 @@ ServiceMatch1Hook_PointEnd:
 	ld a, MATCHABORT_MATCH ; $487a
 	ld [wMatchAbortFlag], a ; $487c
 	ret ; $487f
-.eq08:
+.finalPoint:
 	ld hl, wDrillCounters + 2 ; $4880
 	ld a, [hl-] ; $4883
 	sub [hl] ; $4884
@@ -304,7 +294,7 @@ ServiceMatch1JudgePoint:
 	dw ServiceMatch1Cases1.returnZero2 ; $493b jumptable
 .result0:
 	ld a, [wPointOutcome] ; $493d
-	ld hl, ServiceMatch1JudgePointSignedTable ; $4940
+	ld hl, ServiceMatch1JudgePointMessages ; $4940
 	add l ; $4943
 	ld l, a ; $4944
 	jr nc, .readEntry1 ; $4945
@@ -315,7 +305,7 @@ ServiceMatch1JudgePoint:
 	ld b, $06 ; $494a
 	call QueueDrillResultMessage ; $494c
 	ld a, [wPointOutcome] ; $494f
-	ld hl, SignedTable_0b_00 ; $4952
+	ld hl, OddRallyVerdicts ; $4952
 	add l ; $4955
 	ld l, a ; $4956
 	jr nc, .readEntry2 ; $4957
@@ -323,9 +313,9 @@ ServiceMatch1JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $495a
 	ret ; $495b
-ServiceMatch1JudgePointSignedTable:
-	; $495c, 10 bytes (bytes:10)
-	db $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01 ; 0x00
+ServiceMatch1JudgePointMessages:
+	; $495c, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT
 ServiceMatch1Cases1:
 	xor a ; $4966
 	ret ; $4967
@@ -345,7 +335,7 @@ ServiceMatch1Cases1:
 	dw ServiceMatch1Cases2.storeMatchAbortFlag2 ; $4975 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4977
-	ld hl, ServiceMatch1Cases1SignedTable ; $497a
+	ld hl, ServiceMatch1Cases1Messages ; $497a
 	add l ; $497d
 	ld l, a ; $497e
 	jr nc, .read ; $497f
@@ -356,7 +346,7 @@ ServiceMatch1Cases1:
 	ld b, $06 ; $4984
 	call QueueDrillResultMessage ; $4986
 	ld a, [wPointOutcome] ; $4989
-	ld hl, SignedTable_0b_01 ; $498c
+	ld hl, EvenRallyVerdicts ; $498c
 	add l ; $498f
 	ld l, a ; $4990
 	jr nc, .readB ; $4991
@@ -364,9 +354,9 @@ ServiceMatch1Cases1:
 .readB:
 	ld a, [hl] ; $4994
 	ret ; $4995
-ServiceMatch1Cases1SignedTable:
-	; $4996, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
+ServiceMatch1Cases1Messages:
+	; $4996, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_HIDE
 ServiceMatch1Cases2:
 	ld a, [wPointOutcome] ; $49a0
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $49a3
@@ -427,7 +417,7 @@ ServiceMatch2Hook_PointStart:
 	call IndexDrillTableByPoint ; $4a06
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a09
 	srl a ; $4a0c
-	ld hl, ServiceMatch2PointStartTable ; $4a0e
+	ld hl, ServiceMatch2ServeAims ; $4a0e
 	add l ; $4a11
 	ld l, a ; $4a12
 	jr nc, .read ; $4a13
@@ -441,9 +431,9 @@ ServiceMatch2Hook_PointStart:
 	xor a ; $4a1e
 	ld [wDrillPointJudgement], a ; $4a1f
 	ret ; $4a22
-ServiceMatch2PointStartTable:
+ServiceMatch2ServeAims:
 	; $4a23, 4 bytes (bytes:4)
-	db $20, $10, $10, $20 ; 0x00
+	db PADF_LEFT, PADF_RIGHT, PADF_RIGHT, PADF_LEFT
 ServiceMatch2Hook_PointEnd:
 	call ServiceMatch2JudgeOnPointEnd ; $4a27
 	call ServiceMatch2HandlePointEnd ; $4a2a
@@ -451,7 +441,7 @@ ServiceMatch2Hook_PointEnd:
 	bit 0, a ; $4a30
 	ret nz ; $4a32
 	cp $08 ; $4a33
-	jr z, .eq08 ; $4a35
+	jr z, .finalPoint ; $4a35
 	ld hl, wDrillCounters + 1 ; $4a37
 	ld a, [hl+] ; $4a3a
 	ld b, [hl] ; $4a3b
@@ -460,7 +450,7 @@ ServiceMatch2Hook_PointEnd:
 	ld a, MATCHABORT_MATCH ; $4a3e
 	ld [wMatchAbortFlag], a ; $4a40
 	ret ; $4a43
-.eq08:
+.finalPoint:
 	ld hl, wDrillCounters + 2 ; $4a44
 	ld a, [hl-] ; $4a47
 	sub [hl] ; $4a48
@@ -542,7 +532,6 @@ ServiceMatch2HandlePointEnd:
 	farcall StartPointEndReactions ; $4afe
 	call PlayDrillPointEndSequence ; $4b01
 	ret ; $4b04
-; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 	twin_named net_game_match1_award_point_to_side, ServiceMatch2AwardPointToSide ; $4b05
 ServiceMatch2JudgeOnPointEnd:
 	ld a, $00 ; $4b2e
@@ -586,7 +575,7 @@ ServiceMatch2JudgePoint:
 	dw ServiceMatch2Cases1.checkBallHasBouncedFlag ; $4b6c jumptable
 .result0:
 	ld a, [wPointOutcome] ; $4b6e
-	ld hl, ServiceMatch2JudgePointDrillShotTable ; $4b71
+	ld hl, ServiceMatch2JudgePointMessages ; $4b71
 	add l ; $4b74
 	ld l, a ; $4b75
 	jr nc, .readEntry1 ; $4b76
@@ -597,7 +586,7 @@ ServiceMatch2JudgePoint:
 	ld b, $06 ; $4b7b
 	call QueueDrillResultMessage ; $4b7d
 	ld a, [wPointOutcome] ; $4b80
-	ld hl, SignedTable_0b_00 ; $4b83
+	ld hl, OddRallyVerdicts ; $4b83
 	add l ; $4b86
 	ld l, a ; $4b87
 	jr nc, .readEntry2 ; $4b88
@@ -605,9 +594,9 @@ ServiceMatch2JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $4b8b
 	ret ; $4b8c
-ServiceMatch2JudgePointDrillShotTable:
-	; $4b8d, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01
+ServiceMatch2JudgePointMessages:
+	; $4b8d, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT
 ServiceMatch2Cases1:
 	xor a ; $4b97
 	ret ; $4b98
@@ -640,7 +629,7 @@ ServiceMatch2Cases1:
 	dw ServiceMatch2Cases2.storeMatchAbortFlag2 ; $4bc1 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4bc3
-	ld hl, ServiceMatch2Cases1DrillShotTable ; $4bc6
+	ld hl, ServiceMatch2Cases1Messages ; $4bc6
 	add l ; $4bc9
 	ld l, a ; $4bca
 	jr nc, .read ; $4bcb
@@ -651,7 +640,7 @@ ServiceMatch2Cases1:
 	ld b, $06 ; $4bd0
 	call QueueDrillResultMessage ; $4bd2
 	ld a, [wPointOutcome] ; $4bd5
-	ld hl, SignedTable_0b_01 ; $4bd8
+	ld hl, EvenRallyVerdicts ; $4bd8
 	add l ; $4bdb
 	ld l, a ; $4bdc
 	jr nc, .readB ; $4bdd
@@ -659,9 +648,9 @@ ServiceMatch2Cases1:
 .readB:
 	ld a, [hl] ; $4be0
 	ret ; $4be1
-ServiceMatch2Cases1DrillShotTable:
-	; $4be2, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff
+ServiceMatch2Cases1Messages:
+	; $4be2, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_HIDE
 ServiceMatch2Cases2:
 	ld a, [wPointOutcome] ; $4bec
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $4bef

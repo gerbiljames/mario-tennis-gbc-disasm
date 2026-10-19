@@ -289,7 +289,7 @@ RenderNameTwoRows:
 	push hl ; $56cf
 	push de ; $56d0
 	push hl ; $56d1
-	ld hl, $ffe0 ; $56d2
+	ld hl, -32 ; $56d2
 	add hl, de ; $56d5
 	ld d, h ; $56d6
 	ld e, l ; $56d7
@@ -343,7 +343,7 @@ HighlightSinglesRankingRows:
 	ret ; $5730
 .compare:
 	cp $03 ; $5731
-	jr nz, .ne03 ; $5733
+	jr nz, .otherRow ; $5733
 	ld b, $05 ; $5735
 	call HighlightRankingRow ; $5737
 	ld b, $06 ; $573a
@@ -353,7 +353,7 @@ HighlightSinglesRankingRows:
 	ld b, $08 ; $5744
 	call HighlightRankingRow ; $5746
 	ret ; $5749
-.ne03:
+.otherRow:
 	ld b, $0b ; $574a
 	call HighlightRankingRow ; $574c
 	ret ; $574f

@@ -136,7 +136,7 @@ RunMatch:
 	ld hl, wModeScratch ; $41ad
 	ld c, $08 ; $41b0
 	call ClearMemory16 ; $41b2
-	ld a, $ff ; $41b5
+	ld a, AISERVEAIM_RANDOM ; $41b5
 	ld [wAiServeAimOverride], a ; $41b7
 	script_fade_in 32 ; $41ba
 	wram_bank WRAM_ACTORS ; $41bf
@@ -301,7 +301,7 @@ SetCharStateOnBallHit:
 SetCharStateOnBallHitTable:
 	; $431e, 8 bytes (bytes:8)
 	table_width 1
-	db $00, $02, $01, $02, $02, $01, $06, $07 ; 0x00
+	db CHARSTATE_INERT, CHARSTATE_RECOVER, CHARSTATE_RALLY, CHARSTATE_RECOVER, CHARSTATE_RECOVER, CHARSTATE_RALLY, CHARSTATE_WALK, CHARSTATE_POINT_END
 	assert_table_length NUM_CHARSTATES
 DetectServeAceOutcome:
 	ld a, [wRallyLength] ; $4326

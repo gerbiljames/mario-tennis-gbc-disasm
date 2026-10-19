@@ -269,18 +269,18 @@ DecodeTrophyCounts:
 	call FillTrophyCountCells ; $4cd7
 	ld a, [wTrophyCellsMainSet2] ; $4cda
 	or a ; $4cdd
-	jr nz, .step ; $4cde
+	jr nz, .hasSecondSet ; $4cde
 	ld a, [wTrophyCellsMainSet2 + 3] ; $4ce0
 	or a ; $4ce3
-	jr nz, .step ; $4ce4
+	jr nz, .hasSecondSet ; $4ce4
 	ld a, [wTrophyCellsPartnerSet2] ; $4ce6
 	or a ; $4ce9
-	jr nz, .step ; $4cea
+	jr nz, .hasSecondSet ; $4cea
 	ld a, [wTrophyCellsPartnerSet2 + 3] ; $4cec
 	or a ; $4cef
-	jr nz, .step ; $4cf0
+	jr nz, .hasSecondSet ; $4cf0
 	jr .done ; $4cf2
-.step:
+.hasSecondSet:
 	ld a, $01 ; $4cf4
 	ld [wTrophySecondSetPresent], a ; $4cf6
 .done:
@@ -328,7 +328,7 @@ RunN64TnmtData:
 ScrollN64TnmtDataCursor:
 	ld a, [wMenuInputPressed] ; $4d5d
 	bit PADB_LEFT, a ; $4d60
-	jr z, .step ; $4d62
+	jr z, .checkRight ; $4d62
 	ld a, [wDataScreenPage] ; $4d64
 	or a ; $4d67
 	jr z, .done ; $4d68
@@ -337,9 +337,9 @@ ScrollN64TnmtDataCursor:
 	sound SFX_MENU_MOVE ; $4d6e
 	call RedrawN64TnmtDataWindow ; $4d70
 	jr .done ; $4d73
-.step:
+.checkRight:
 	bit 4, a ; $4d75
-	jr z, .bit4Clear ; $4d77
+	jr z, .checkUp ; $4d77
 	ld a, [wScreenScratch] ; $4d79
 	or a ; $4d7c
 	jr z, .done ; $4d7d
@@ -351,9 +351,9 @@ ScrollN64TnmtDataCursor:
 	sound SFX_MENU_MOVE ; $4d8a
 	call RedrawN64TnmtDataWindow ; $4d8c
 	jr .done ; $4d8f
-.bit4Clear:
+.checkUp:
 	bit 6, a ; $4d91
-	jr z, .bit6Clear ; $4d93
+	jr z, .checkDown ; $4d93
 	ld a, [wDataScreenCursorRow] ; $4d95
 	or a ; $4d98
 	jr z, .done ; $4d99
@@ -362,7 +362,7 @@ ScrollN64TnmtDataCursor:
 	sound SFX_MENU_MOVE ; $4d9f
 	call RedrawN64TnmtDataWindow ; $4da1
 	jr .done ; $4da4
-.bit6Clear:
+.checkDown:
 	bit 7, a ; $4da6
 	jr z, .done ; $4da8
 	ld a, [wDataScreenCursorRow] ; $4daa

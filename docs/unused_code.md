@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-882 labels carry an `Unused` prefix: 779 routines and 103 data blobs.
+899 labels carry an `Unused` prefix: 788 routines and 111 data blobs.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A
@@ -13,8 +13,7 @@ direction. Where an unused routine has a live twin, the comment above it in
 
 A dead copy inside a shared `src/twins` file is named per bank
 (`twin_in <file>, <Label>, <bank>`), so it is `Unused_<bank>_…` like any
-other, with "Nothing calls this copy." above its line; the check exempts
-nothing.
+other; the check exempts nothing.
 
 ## Dead roots
 
@@ -161,7 +160,7 @@ nothing loads) are the largest bodies with no live twin at all.
 `UnusedDrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
-**8. Data that came along.** The 103 unused blobs are mostly two things:
+**8. Data that came along.** The 111 unused blobs are mostly two things:
 bank `$0c`, an entire sound bank of 36 channel scripts that the sound-id
 tables never index (`docs/sound_engine.md`), and the Japanese font and
 window tiles in bank `$01` (`UnusedJpFontTiles_01`, 3,136 bytes, and
@@ -204,3 +203,11 @@ into the routine, `Unused_17_DrawWobblingCornerBrackets`,
 `Unused_17_DrawCornerBrackets`). Otherwise, instructions after data with no
 label between are a lone dead `ret` after a jump table, or a dead case inside
 a live routine's own scope.
+
+Two more sat inside palette blobs in bank `$3e`, straight after the last
+palette of each court-select screen: `Unused_3e_DrawCourtSelect4TitleText`
+and `Unused_3e_DrawCourtSelect9TitleText`, an older way of putting the
+cursor's court name into the title row, sharing three helpers and four small
+tables after the first one. `Unused_08_AdvanceCharStatePhase`, a copy of
+`AdvanceCharStatePhase` after `CharPointEndState`'s jump table, had been read
+as two more table entries.

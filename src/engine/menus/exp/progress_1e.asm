@@ -131,13 +131,13 @@ DrawProgressScreenSprites:
 	ld [wCharPosHeight + 1], a ; $7aa0
 .compare:
 	cp b ; $7aa3
-	jr nc, .nonZero ; $7aa4
+	jr nc, .drawUpArrow ; $7aa4
 	ld a, $01 ; $7aa6
 	ld [wCharPosHeight + 2], a ; $7aa8
-.nonZero:
+.drawUpArrow:
 	ld a, [wCharPosHeight + 1] ; $7aab
 	or a ; $7aae
-	jr z, .zero ; $7aaf
+	jr z, .drawDownArrow ; $7aaf
 	ld d, $0a ; $7ab1
 	ld e, $18 ; $7ab3
 	ld c, $00 ; $7ab5
@@ -146,10 +146,10 @@ DrawProgressScreenSprites:
 	ld b, $00 ; $7abc
 	ld h, $02 ; $7abe
 	farcall QueueStackedSpritePair ; $7ac0
-.zero:
+.drawDownArrow:
 	ld a, [wCharPosHeight + 2] ; $7ac3
 	or a ; $7ac6
-	jr z, .zero2 ; $7ac7
+	jr z, .drawIcons ; $7ac7
 	ld d, $0a ; $7ac9
 	ld e, $86 ; $7acb
 	ld c, $01 ; $7acd
@@ -158,7 +158,7 @@ DrawProgressScreenSprites:
 	ld b, $00 ; $7ad4
 	ld h, $03 ; $7ad6
 	farcall QueueStackedSpritePair ; $7ad8
-.zero2:
+.drawIcons:
 	ld hl, wProgressVisibleEntries ; $7adb
 	ld a, [wProgressListIndex] ; $7ade
 	add l ; $7ae1
@@ -186,13 +186,13 @@ DrawProgressScreenSprites:
 	or a ; $7b02
 	jr z, .drawProgressEntryTrophyIcon ; $7b03
 	cp $01 ; $7b05
-	jr z, .eq01 ; $7b07
+	jr z, .drawIcon1 ; $7b07
 	cp $02 ; $7b09
-	jr z, .eq02 ; $7b0b
+	jr z, .drawIcon2 ; $7b0b
 	cp $03 ; $7b0d
-	jr z, .eq03 ; $7b0f
+	jr z, .drawIcon3 ; $7b0f
 	cp $04 ; $7b11
-	jr z, .eq04 ; $7b13
+	jr z, .drawIcon4 ; $7b13
 .drawProgressEntryDefaultIcon:
 	call DrawProgressEntryDefaultIcon ; $7b15
 	jr .next ; $7b18
@@ -202,25 +202,25 @@ DrawProgressScreenSprites:
 	call DrawProgressEntryTrophyIcon ; $7b1d
 	pop bc ; $7b20
 	jr .next ; $7b21
-.eq01:
+.drawIcon1:
 	push bc ; $7b23
 	ld c, $01 ; $7b24
 	call DrawProgressEntryTrophyIcon ; $7b26
 	pop bc ; $7b29
 	jr .next ; $7b2a
-.eq02:
+.drawIcon2:
 	push bc ; $7b2c
 	ld c, $02 ; $7b2d
 	call DrawProgressEntryTrophyIcon ; $7b2f
 	pop bc ; $7b32
 	jr .next ; $7b33
-.eq03:
+.drawIcon3:
 	push bc ; $7b35
 	ld c, $03 ; $7b36
 	call DrawProgressEntryTrophyIcon ; $7b38
 	pop bc ; $7b3b
 	jr .next ; $7b3c
-.eq04:
+.drawIcon4:
 	push bc ; $7b3e
 	ld c, $04 ; $7b3f
 	call DrawProgressEntryTrophyIcon ; $7b41

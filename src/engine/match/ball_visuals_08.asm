@@ -43,11 +43,11 @@ ComputePairSpread:
 	add hl, de ; $509b
 	sra h ; $509c
 	rr l ; $509e
-	ld bc, $ff00 ; $50a0
+	ld bc, -256 ; $50a0
 	add hl, bc ; $50a3
 	ld c, l ; $50a4
 	ld b, h ; $50a5
-	ld hl, $ff00 ; $50a6
+	ld hl, -256 ; $50a6
 	add hl, bc ; $50a9
 	bit 7, h ; $50aa
 	jr z, .compare ; $50ac
@@ -402,7 +402,7 @@ StartLandingMarker:
 	sub h ; $52f9
 	ld h, a ; $52fa
 .checkX:
-	ld bc, $ff80 ; $52fb
+	ld bc, -128 ; $52fb
 	add hl, bc ; $52fe
 	bit 7, h ; $52ff
 	pop hl ; $5301
@@ -419,7 +419,7 @@ StartLandingMarker:
 	sub h ; $530e
 	ld h, a ; $530f
 .checkDepth:
-	ld bc, $ff00 ; $5310
+	ld bc, -256 ; $5310
 	add hl, bc ; $5313
 	bit 7, h ; $5314
 	pop hl ; $5316

@@ -66,7 +66,7 @@ CopyScrolledSceneTilemapToVram:
 	and $3f ; $5c7f
 	jr nz, .attrCheckDestWrap ; $5c81
 	push de ; $5c83
-	ld de, $ffc0 ; $5c84
+	ld de, -64 ; $5c84
 	add hl, de ; $5c87
 	pop de ; $5c88
 	jr .attrWrapDest ; $5c89
@@ -76,7 +76,7 @@ CopyScrolledSceneTilemapToVram:
 	jr nz, .attrNextCell ; $5c8e
 .attrWrapDest:
 	push hl ; $5c90
-	ld hl, $ffe0 ; $5c91
+	ld hl, -32 ; $5c91
 	add hl, de ; $5c94
 	ld e, l ; $5c95
 	ld d, h ; $5c96
@@ -125,7 +125,7 @@ CopyScrolledSceneTilemapToVram:
 	and $3f ; $5ccd
 	jr nz, .tileCheckDestWrap ; $5ccf
 	push de ; $5cd1
-	ld de, $ffc0 ; $5cd2
+	ld de, -64 ; $5cd2
 	add hl, de ; $5cd5
 	pop de ; $5cd6
 	jr .tileWrapDest ; $5cd7
@@ -135,7 +135,7 @@ CopyScrolledSceneTilemapToVram:
 	jr nz, .tileNextCell ; $5cdc
 .tileWrapDest:
 	push hl ; $5cde
-	ld hl, $ffe0 ; $5cdf
+	ld hl, -32 ; $5cdf
 	add hl, de ; $5ce2
 	ld e, l ; $5ce3
 	ld d, h ; $5ce4
