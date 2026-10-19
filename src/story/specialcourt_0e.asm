@@ -171,11 +171,7 @@ UpdateStarWarpTrailSparkles:
 	ld [hl], $10 ; $7277
 	ld a, c ; $7279
 	rlca ; $727a
-	add $14 ; $727b
-	ld l, a ; $727d
-	adc $d0 ; $727e
-	sub l ; $7280
-	ld h, a ; $7281
+	ld_hl_indexed wStarWarpSparklePos ; $727b
 	ld a, [wStarWarpPathY] ; $7282
 	ld [hl+], a ; $7285
 	ld a, [wStarWarpPathX] ; $7286
@@ -211,11 +207,7 @@ UpdateStarWarpTrailSparkles:
 	jr z, .nextSparkle ; $72ac
 	ld a, b ; $72ae
 	rlca ; $72af
-	add $14 ; $72b0
-	ld l, a ; $72b2
-	adc $d0 ; $72b3
-	sub l ; $72b5
-	ld h, a ; $72b6
+	ld_hl_indexed wStarWarpSparklePos ; $72b0
 	ld a, [hl+] ; $72b7
 	ld d, [hl] ; $72b8
 	ld e, a ; $72b9

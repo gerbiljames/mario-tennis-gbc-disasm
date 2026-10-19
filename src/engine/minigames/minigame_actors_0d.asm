@@ -199,14 +199,16 @@ InitMinigame_TennisMachine1:
 	ret ; $4514
 MinigameHooks_TennisMachine1:
 	; $4515, 16 bytes (mode_hooks)
-	dw TennisMachine1Hook_PerFrame ; record 0
-	dw TennisMachine1Hook_PointStart ; record 1
-	dw TennisMachine1Hook_PointEnd ; record 2
-	dw TennisMachine1Hook_MinigameStart ; record 3
-	dw TennisMachine1Hook_BallHit ; record 4
-	dw TennisMachine1Hook_Bounce ; record 5
-	dw TennisMachine1Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw TennisMachine1Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw TennisMachine1Hook_PointStart ; MODEHOOK_POINT_START
+	dw TennisMachine1Hook_PointEnd ; MODEHOOK_POINT_END
+	dw TennisMachine1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw TennisMachine1Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw TennisMachine1Hook_Bounce ; MODEHOOK_BOUNCE
+	dw TennisMachine1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine1_hook_minigame_start, TennisMachine1Hook_MinigameStart ; $4525
 TennisMachine1Hook_PerFrame:
 	call DrawMinigameScoreHud ; $452e

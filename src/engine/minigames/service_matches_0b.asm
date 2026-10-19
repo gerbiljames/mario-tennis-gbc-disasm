@@ -145,14 +145,16 @@ ServiceMatch1Drill:
 	drill_def CHAR_DRILL_SERVICE_MATCH_1, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_MATCH_1, BGM_DRILL_MATCH, CHAR_STORY_MAIN, ServiceMatch1Hooks, MatchDrillPointTable, $0000
 ServiceMatch1Hooks:
 	; $483c, 16 bytes (mode_hooks)
-	dw ServiceMatch1Hook_PerFrame ; record 0
-	dw ServiceMatch1Hook_PointStart ; record 1
-	dw ServiceMatch1Hook_PointEnd ; record 2
-	dw ServiceMatch1Hook_MinigameStart ; record 3
-	dw ServiceMatch1Hook_BallHit ; record 4
-	dw ServiceMatch1Hook_Bounce ; record 5
-	dw ServiceMatch1Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw ServiceMatch1Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw ServiceMatch1Hook_PointStart ; MODEHOOK_POINT_START
+	dw ServiceMatch1Hook_PointEnd ; MODEHOOK_POINT_END
+	dw ServiceMatch1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw ServiceMatch1Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw ServiceMatch1Hook_Bounce ; MODEHOOK_BOUNCE
+	dw ServiceMatch1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 ServiceMatch1Hook_MinigameStart:
 	ret ; $484c
 ServiceMatch1Hook_PerFrame:
@@ -292,7 +294,7 @@ ServiceMatch1JudgePoint:
 	add_hl_a ; $4943
 	ld a, [hl] ; $4948
 	ld a, a ; $4949
-	ld b, $06 ; $494a
+	ld b, DRILLWORDING_SERVICE ; $494a
 	call QueueDrillResultMessage ; $494c
 	ld a, [wPointOutcome] ; $494f
 	ld hl, OddRallyVerdicts ; $4952
@@ -324,7 +326,7 @@ ServiceMatch1Cases1:
 	add_hl_a ; $497d
 	ld a, [hl] ; $4982
 	ld a, a ; $4983
-	ld b, $06 ; $4984
+	ld b, DRILLWORDING_SERVICE ; $4984
 	call QueueDrillResultMessage ; $4986
 	ld a, [wPointOutcome] ; $4989
 	ld hl, EvenRallyVerdicts ; $498c
@@ -340,7 +342,7 @@ ServiceMatch1Cases2:
 	ld a, $00 ; $49a5
 	ret z ; $49a7
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $49a8
-	ld b, $06 ; $49aa
+	ld b, DRILLWORDING_SERVICE ; $49aa
 	call QueueDrillResultMessage ; $49ac
 	jr Unused_0b_StoreMatchAbortFlag_1.storeMatchAbortFlag ; $49af
 .unreachable:
@@ -367,14 +369,16 @@ ServiceMatch2Drill:
 	drill_def CHAR_DRILL_SERVICE_MATCH_2, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_MATCH_2, BGM_DRILL_MATCH, CHAR_STORY_MAIN, ServiceMatch2Hooks, MatchDrillPointTable, $0000
 ServiceMatch2Hooks:
 	; $49d7, 16 bytes (mode_hooks)
-	dw ServiceMatch2Hook_PerFrame ; record 0
-	dw ServiceMatch2Hook_PointStart ; record 1
-	dw ServiceMatch2Hook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw ServiceMatch2Hook_BallHit ; record 4
-	dw ServiceMatch2Hook_Bounce ; record 5
-	dw ServiceMatch2Hook_RallyTick ; record 6
-	dw ServiceMatch2Hook_Draw ; record 7
+	table_width 2
+	dw ServiceMatch2Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw ServiceMatch2Hook_PointStart ; MODEHOOK_POINT_START
+	dw ServiceMatch2Hook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw ServiceMatch2Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw ServiceMatch2Hook_Bounce ; MODEHOOK_BOUNCE
+	dw ServiceMatch2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServiceMatch2Hook_Draw ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 ServiceMatch2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $49e7
 	ret ; $49ea
@@ -546,7 +550,7 @@ ServiceMatch2JudgePoint:
 	add_hl_a ; $4b74
 	ld a, [hl] ; $4b79
 	ld a, a ; $4b7a
-	ld b, $06 ; $4b7b
+	ld b, DRILLWORDING_SERVICE ; $4b7b
 	call QueueDrillResultMessage ; $4b7d
 	ld a, [wPointOutcome] ; $4b80
 	ld hl, OddRallyVerdicts ; $4b83
@@ -568,7 +572,7 @@ ServiceMatch2Cases1:
 	ld a, $00 ; $4b9f
 	ret nz ; $4ba1
 	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAILED ; $4ba2
-	ld b, $06 ; $4ba4
+	ld b, DRILLWORDING_SERVICE ; $4ba4
 	call QueueDrillResultMessage ; $4ba6
 	farcall DidBallCrossGate ; $4ba9
 	jr z, Unused_0b_StoreMatchAbortFlag_2.storeMatchAbortFlag ; $4bac
@@ -591,7 +595,7 @@ ServiceMatch2Cases1:
 	add_hl_a ; $4bc9
 	ld a, [hl] ; $4bce
 	ld a, a ; $4bcf
-	ld b, $06 ; $4bd0
+	ld b, DRILLWORDING_SERVICE ; $4bd0
 	call QueueDrillResultMessage ; $4bd2
 	ld a, [wPointOutcome] ; $4bd5
 	ld hl, EvenRallyVerdicts ; $4bd8
@@ -607,7 +611,7 @@ ServiceMatch2Cases2:
 	ld a, $00 ; $4bf1
 	ret z ; $4bf3
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4bf4
-	ld b, $06 ; $4bf6
+	ld b, DRILLWORDING_SERVICE ; $4bf6
 	call QueueDrillResultMessage ; $4bf8
 	jr Unused_0b_StoreMatchAbortFlag_2.storeMatchAbortFlag ; $4bfb
 .unreachable:

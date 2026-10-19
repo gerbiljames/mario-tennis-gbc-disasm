@@ -360,11 +360,7 @@ CharDataScreen_InputLoop:
 	ld hl, wCharDataPointsLeft ; $5147
 	dec [hl] ; $514a
 	ld a, [wCharDataChoiceCount] ; $514b
-	add $2a ; $514e
-	ld l, a ; $5150
-	adc $d0 ; $5151
-	sub l ; $5153
-	ld h, a ; $5154
+	ld_hl_indexed wCharDataChoiceLog ; $514e
 	ld a, [wCharDataPage] ; $5155
 	ld [hl], a ; $5158
 	ld hl, wCharDataChoiceCount ; $5159

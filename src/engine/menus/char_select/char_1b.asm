@@ -102,11 +102,7 @@ Unused_1b_DrawCharSelectMugshots:
 	call Unused_1b_GetCharSelectRosterField ; $6092
 	ld a, [wCharRecordScratch + 11] ; $6095
 	add a ; $6098
-	add $c1 ; $6099
-	ld c, a ; $609b
-	adc $c7 ; $609c
-	sub c ; $609e
-	ld b, a ; $609f
+	ld_bc_indexed wNewGameRosterFields + 1 ; $6099
 	ld a, [bc] ; $60a0
 	farcall Unused_1b_SetMugshotAttrs ; $60a1
 .step:
@@ -206,11 +202,7 @@ Unused_1b_UpdateCharSelectSelection:
 	add a ; $617d
 	ld hl, wCharSelectCol ; $617e
 	add [hl] ; $6181
-	add $a0 ; $6182
-	ld l, a ; $6184
-	adc $c7 ; $6185
-	sub l ; $6187
-	ld h, a ; $6188
+	ld_hl_indexed wNavGridBuffer ; $6182
 	ld a, [hl] ; $6189
 	cp $ff ; $618a
 .storeCharSelectChar:

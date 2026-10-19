@@ -1,7 +1,8 @@
 ; --- Drill result messages (wDrillMessageId, DrillMessageTextIds_0b) ---
 ; Named after the text each id shows. QueueDrillResultMessage adds an offset
-; in b when the other side served, to reach the same outcome's other
-; wording. Ids 72-86 point past text bank $25 (docs/bugs.md) and get no name.
+; in b (DRILLWORDING_*) when the other side served, to reach the same
+; outcome's other wording. Ids 72-86 point past text bank $25 (docs/bugs.md)
+; and get no name.
 def DRILLMSG_NONE equ $00 ; ShowQueuedDrillMessage substitutes DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE
 def DRILLMSG_HIDE equ $ff ; show nothing
 	const_def $01
@@ -99,6 +100,12 @@ def DRILLMSG_HIDE equ $ff ; show nothing
 	const DRILLMSG_DOUBLE_FAULT_YOUR_POINT                                ; $6a
 	const DRILLMSG_I_RETURNED_YOUR_SERVE_BEFORE_IT_BOUNCED_YOUR_POINT     ; $6b
 	const DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE                      ; $6c
+
+; b for QueueDrillResultMessage and its siblings: "you" wording to "I" wording
+def DRILLWORDING_SAME    equ 0
+def DRILLWORDING_SERVICE equ DRILLMSG_SERVICE_ACE_I_GET_A_POINT - DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $06
+def DRILLWORDING_NET     equ DRILLMSG_NICE_VOLLEY_I_GET_A_POINT - DRILLMSG_NICE_VOLLEY_YOU_GET_A_POINT ; $0d
+def DRILLWORDING_STROKE  equ DRILLMSG_NICE_STROKE_MY_POINT - DRILLMSG_NICE_STROKE_YOUR_POINT ; $07
 
 ; --- Training drill definitions (drill_def rows, read by StartDrillFromDefinition) ---
 	const_def

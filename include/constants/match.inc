@@ -254,3 +254,15 @@ def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 	const MATCHCONTEXT_EXHIBITION ; $00 cleared by RestoreOverworldAfterMatch
 	const MATCHCONTEXT_STORY      ; $01 InitStoryMatchSettings
 	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
+
+; --- Mode hook slots (CallModeHook's d; rows of a mode_hooks table) ---
+	const_def
+	const MODEHOOK_PER_FRAME      ; $00 UpdateMatchFrame, every simulation frame
+	const MODEHOOK_POINT_START    ; $01 RunMinigamePointLoop
+	const MODEHOOK_POINT_END      ; $02 RunMinigamePointLoop
+	const MODEHOOK_MINIGAME_START ; $03 RunMinigamePointLoop, before the first point
+	const MODEHOOK_BALL_HIT       ; $04 HandleBallHitEvent
+	const MODEHOOK_BOUNCE         ; $05 HandleBallBounceEvent
+	const MODEHOOK_RALLY_TICK     ; $06 TickRallyTimers, ball crossed the net
+	const MODEHOOK_DRAW           ; $07 DrawBallAndEffects, extra draw pass
+def NUM_MODEHOOKS equ const_value

@@ -87,11 +87,7 @@ ScoreMinigameTargetHitOrDeflectBall.deflectBall:
 	ld a, [wMinigameLastHitCell] ; $55fd
 	cp $ff ; $5600
 	ret z ; $5602
-	add $c0 ; $5603
-	ld l, a ; $5605
-	adc $c7 ; $5606
-	sub l ; $5608
-	ld h, a ; $5609
+	ld_hl_indexed wMinigameTargetGrid ; $5603
 	ld a, [hl] ; $560a
 	and a ; $560b
 	ret z ; $560c
@@ -130,14 +126,16 @@ BooBlastInitParams:
 	db $00, $00, $00, $dc, $03, $01 ; 0x00
 MinigameHooks_BooBlast:
 	; $5658, 16 bytes (mode_hooks)
-	dw BooBlastHook_PerFrame ; record 0
-	dw BooBlastHook_PointStart ; record 1
-	dw BooBlastHook_PointEnd ; record 2
-	dw BooBlastHook_MinigameStart ; record 3
-	dw BooBlastHook_BallHit ; record 4
-	dw BooBlastHook_Bounce ; record 5
-	dw BooBlastHook_RallyTick ; record 6
-	dw BooBlastHook_Draw ; record 7
+	table_width 2
+	dw BooBlastHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw BooBlastHook_PointStart ; MODEHOOK_POINT_START
+	dw BooBlastHook_PointEnd ; MODEHOOK_POINT_END
+	dw BooBlastHook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw BooBlastHook_BallHit ; MODEHOOK_BALL_HIT
+	dw BooBlastHook_Bounce ; MODEHOOK_BOUNCE
+	dw BooBlastHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw BooBlastHook_Draw ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 BooBlastHook_MinigameStart:
 	call InitMinigameControllerActor ; $5668
 	call InitBooBlastScore ; $566b

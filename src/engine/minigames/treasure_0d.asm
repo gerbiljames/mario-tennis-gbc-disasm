@@ -3,14 +3,16 @@ PerfectShotLevelHasTargets:
 	db $00, $07, $08 ; 0x00
 MinigameHooks_PerfectShot:
 	; $58a6, 16 bytes (mode_hooks)
-	dw PerfectShotHook_PerFrame ; record 0
-	dw PerfectShotHook_PointStart ; record 1
-	dw PerfectShotHook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw PerfectShotHook_BallHit ; record 4
-	dw PerfectShotHook_Bounce ; record 5
-	dw PerfectShotHook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw PerfectShotHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw PerfectShotHook_PointStart ; MODEHOOK_POINT_START
+	dw PerfectShotHook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw PerfectShotHook_BallHit ; MODEHOOK_BALL_HIT
+	dw PerfectShotHook_Bounce ; MODEHOOK_BOUNCE
+	dw PerfectShotHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 PerfectShotHook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $58b6
 	ret ; $58b9
@@ -36,11 +38,7 @@ ProcessTargetTileHit:
 	cp $ff ; $58d7
 	ret z ; $58d9
 	ld b, a ; $58da
-	add $c0 ; $58db
-	ld l, a ; $58dd
-	adc $c7 ; $58de
-	sub l ; $58e0
-	ld h, a ; $58e1
+	ld_hl_indexed wMinigameTargetGrid ; $58db
 	ld a, [hl] ; $58e2
 	cp $01 ; $58e3
 	ret z ; $58e5
@@ -148,14 +146,16 @@ MinigameConfig_TreasureBox:
 	twin_named init_minigame_medallion_match, InitMinigame_TreasureBox ; $59db
 MinigameHooks_TreasureBox:
 	; $59ed, 16 bytes (mode_hooks)
-	dw TreasureBoxHook_PerFrame ; record 0
-	dw TreasureBoxHook_PointStart ; record 1
-	dw TreasureBoxHook_PointEnd ; record 2
-	dw TreasureBoxHook_MinigameStart ; record 3
-	dw TreasureBoxHook_BallHit ; record 4
-	dw TreasureBoxHook_Bounce ; record 5
-	dw TreasureBoxHook_RallyTick ; record 6
-	dw TreasureBoxHook_Draw ; record 7
+	table_width 2
+	dw TreasureBoxHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw TreasureBoxHook_PointStart ; MODEHOOK_POINT_START
+	dw TreasureBoxHook_PointEnd ; MODEHOOK_POINT_END
+	dw TreasureBoxHook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw TreasureBoxHook_BallHit ; MODEHOOK_BALL_HIT
+	dw TreasureBoxHook_Bounce ; MODEHOOK_BOUNCE
+	dw TreasureBoxHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TreasureBoxHook_Draw ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 TreasureBoxHook_MinigameStart:
 	call ClearMinigameActors ; $59fd
 	ld a, $01 ; $5a00

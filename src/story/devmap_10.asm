@@ -1,13 +1,15 @@
 WaterSpriteModeHooks_10:
 	; $4bd8, 16 bytes (mode_hooks)
-	dw Unused_10_WaterSpriteHook_Frame ; record 0
-	dw Unused_10_WaterSpriteHook_PointStart ; record 1
-	dw Unused_10_WaterSpriteHook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw Unused_10_WaterSpriteHook_BallHit ; record 4
-	dw Unused_10_WaterSpriteHook_Bounce ; record 5
-	dw Unused_10_WaterSpriteHook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw Unused_10_WaterSpriteHook_Frame ; MODEHOOK_PER_FRAME
+	dw Unused_10_WaterSpriteHook_PointStart ; MODEHOOK_POINT_START
+	dw Unused_10_WaterSpriteHook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw Unused_10_WaterSpriteHook_BallHit ; MODEHOOK_BALL_HIT
+	dw Unused_10_WaterSpriteHook_Bounce ; MODEHOOK_BOUNCE
+	dw Unused_10_WaterSpriteHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 Unused_10_WaterSpriteHook_Frame:
 	ret ; $4be8
 Unused_10_WaterSpriteHook_RallyTick:

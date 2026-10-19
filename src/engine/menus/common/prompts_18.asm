@@ -17,11 +17,7 @@ Unused_18_InitPlayerRecordForCharacter:
 .storeRecord:
 	pop af ; $4652
 	add a ; $4653
-	add $c0 ; $4654
-	ld l, a ; $4656
-	adc $c7 ; $4657
-	sub l ; $4659
-	ld h, a ; $465a
+	ld_hl_indexed wNewGameRosterFields ; $4654
 	ld d, h ; $465b
 	ld e, l ; $465c
 	push af ; $465d

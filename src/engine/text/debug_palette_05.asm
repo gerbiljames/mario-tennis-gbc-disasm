@@ -42,11 +42,7 @@ DebugDrawColorComponents:
 	ld a, e ; $6994
 	add a ; $6995
 	add e ; $6996
-	add $00 ; $6997
-	ld l, a ; $6999
-	adc $c7 ; $699a
-	sub l ; $699c
-	ld h, a ; $699d
+	ld_hl_indexed wDebugMenuWindowId ; $6997
 	ld [hl], $0d ; $699e
 	xor a ; $69a0
 	ld [wDebugColorDigitsEnd], a ; $69a1

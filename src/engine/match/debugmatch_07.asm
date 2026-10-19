@@ -106,14 +106,16 @@ Unused_07_ResolveTargetModePoint:
 	ret ; $5efb
 ModeHookTable_07:
 	; $5efc, 16 bytes (mode_hooks)
-	dw Unused_07_ModeHookNop ; record 0
-	dw Unused_07_TargetZonePointStartHook ; record 1
-	dw Unused_07_TargetZonePointEndHook ; record 2
-	dw RetStub ; record 3
-	dw Unused_07_TargetZoneBallHitHook ; record 4
-	dw Unused_07_TargetZoneBounceHook ; record 5
-	dw Unused_07_StubNop1 ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw Unused_07_ModeHookNop ; MODEHOOK_PER_FRAME
+	dw Unused_07_TargetZonePointStartHook ; MODEHOOK_POINT_START
+	dw Unused_07_TargetZonePointEndHook ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw Unused_07_TargetZoneBallHitHook ; MODEHOOK_BALL_HIT
+	dw Unused_07_TargetZoneBounceHook ; MODEHOOK_BOUNCE
+	dw Unused_07_StubNop1 ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 Unused_07_ModeHookNop:
 	ret ; $5f0c
 Unused_07_TargetZoneHitStopHook:

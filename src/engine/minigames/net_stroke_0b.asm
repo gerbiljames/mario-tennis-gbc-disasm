@@ -7,14 +7,16 @@ NetGamePractice3DrillInit:
 	ret ; $6163
 NetGamePractice3Hooks:
 	; $6164, 16 bytes (mode_hooks)
-	dw NetGamePractice3Hook_PerFrame ; record 0
-	dw NetGamePractice3Hook_PointStart ; record 1
-	dw NetGamePractice3Hook_PointEnd ; record 2
-	dw NetGamePractice3Hook_MinigameStart ; record 3
-	dw NetGamePractice3Hook_BallHit ; record 4
-	dw NetGamePractice3Hook_Bounce ; record 5
-	dw NetGamePractice3Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw NetGamePractice3Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw NetGamePractice3Hook_PointStart ; MODEHOOK_POINT_START
+	dw NetGamePractice3Hook_PointEnd ; MODEHOOK_POINT_END
+	dw NetGamePractice3Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw NetGamePractice3Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw NetGamePractice3Hook_Bounce ; MODEHOOK_BOUNCE
+	dw NetGamePractice3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 	twin_named net_game_practice2_hook_minigame_start, NetGamePractice3Hook_MinigameStart ; $6174
 NetGamePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6186
@@ -182,7 +184,7 @@ NetGamePractice3JudgePoint:
 	add_hl_a ; $6309
 	ld a, [hl] ; $630e
 	ld a, a ; $630f
-	ld b, $00 ; $6310
+	ld b, DRILLWORDING_SAME ; $6310
 	call QueueDrillResultMessage ; $6312
 	ld a, [wPointOutcome] ; $6315
 	ld hl, OddRallyVerdicts ; $6318
@@ -209,7 +211,7 @@ NetGamePractice3Cases1:
 	ld a, $00 ; $6342
 	ret z ; $6344
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_LONG_DEEP_SERVE_SO_YOU_FAIL ; $6345
-	ld b, $00 ; $6347
+	ld b, DRILLWORDING_SAME ; $6347
 	call QueueDrillResultMessage ; $6349
 	call RecordDrillTargetZoneHit ; $634c
 	call CheckDrillTargetZoneMissed ; $634f
@@ -233,7 +235,7 @@ NetGamePractice3Cases1:
 	add_hl_a ; $636b
 	ld a, [hl] ; $6370
 	ld a, a ; $6371
-	ld b, $00 ; $6372
+	ld b, DRILLWORDING_SAME ; $6372
 	call QueueDrillResultMessage ; $6374
 	ld a, [wPointOutcome] ; $6377
 	ld hl, EvenRallyVerdicts ; $637a
@@ -265,7 +267,7 @@ NetGamePractice3Cases2:
 	add_hl_a ; $63a5
 	ld a, [hl] ; $63aa
 	ld a, a ; $63ab
-	ld b, $00 ; $63ac
+	ld b, DRILLWORDING_SAME ; $63ac
 	call QueueDrillResultMessage ; $63ae
 	ld a, [wPointOutcome] ; $63b1
 	ld hl, OddRallyVerdicts ; $63b4
@@ -277,14 +279,14 @@ NetGamePractice3Cases2Messages:
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_SCORE_WITH_YOUR_DROP_SHOT_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_SCORE_WITH_YOUR_DROP_SHOT_SO_YOU_FAIL, DRILLMSG_NICE_DROP_SHOT_YOU_DID_IT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_NICE_DROP_SHOT_YOU_DID_IT
 NetGamePractice3Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $63c8
-	ld b, $00 ; $63ca
+	ld b, DRILLWORDING_SAME ; $63ca
 	call QueueDrillResultMessage ; $63cc
 	xor a ; $63cf
 	call TestCharStateBit4 ; $63d0
 	or a ; $63d3
 	jp z, Unused_0b_StoreMatchAbortFlag_6.storeMatchAbortFlag ; $63d4
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_DROP_SHOT_SO_YOU_FAIL ; $63d7
-	ld b, $00 ; $63d9
+	ld b, DRILLWORDING_SAME ; $63d9
 	call QueueDrillResultMessage ; $63db
 	ld a, [wCurrentShotType] ; $63de
 	cp SHOTTYPE_DROP ; $63e1
@@ -314,14 +316,16 @@ StrokeMatch1Drill:
 	drill_def CHAR_DRILL_STROKE_MATCH_1, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_STROKE_MATCH_1, BGM_DRILL_MATCH, CHAR_STORY_MAIN, StrokeMatch1Hooks, StrokeMatchPointTable, $0000
 StrokeMatch1Hooks:
 	; $6410, 16 bytes (mode_hooks)
-	dw StrokeMatch1Hook_PerFrame ; record 0
-	dw StrokeMatch1Hook_PointStart ; record 1
-	dw StrokeMatch1Hook_PointEnd ; record 2
-	dw StrokeMatch1Hook_MinigameStart ; record 3
-	dw StrokeMatch1Hook_BallHit ; record 4
-	dw StrokeMatch1Hook_Bounce ; record 5
-	dw StrokeMatch1Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw StrokeMatch1Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw StrokeMatch1Hook_PointStart ; MODEHOOK_POINT_START
+	dw StrokeMatch1Hook_PointEnd ; MODEHOOK_POINT_END
+	dw StrokeMatch1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw StrokeMatch1Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw StrokeMatch1Hook_Bounce ; MODEHOOK_BOUNCE
+	dw StrokeMatch1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 StrokeMatch1Hook_MinigameStart:
 	ld a, SCOREBOARD_POINT_PIPS ; $6420
 	ld [wScoreboardLayout], a ; $6422
@@ -480,7 +484,7 @@ StrokeMatch1JudgePoint:
 	add_hl_a ; $6530
 	ld a, [hl] ; $6535
 	ld a, a ; $6536
-	ld b, $07 ; $6537
+	ld b, DRILLWORDING_STROKE ; $6537
 	call SetDrillMessageByRallyParity ; $6539
 	call SelectStrokeTargetTableByPoint ; $653c
 	ld a, [wPointOutcome] ; $653f
@@ -512,7 +516,7 @@ StrokeMatch1Cases1:
 	add_hl_a ; $656a
 	ld a, [hl] ; $656f
 	ld a, a ; $6570
-	ld b, $07 ; $6571
+	ld b, DRILLWORDING_STROKE ; $6571
 	call SetDrillMessageByRallyParity ; $6573
 	call SelectStrokeTargetTableByPointAlt ; $6576
 	ld a, [wPointOutcome] ; $6579
@@ -526,8 +530,8 @@ StrokeMatch1Cases2:
 	ld a, [wBallBounceCount] ; $658d
 	cp $01 ; $6590
 	ret nz ; $6592
-	ld a, $62 ; $6593
-	ld b, $07 ; $6595
+	ld a, DRILLMSG_YOU_MOVED_PAST_THE_SERVICE_LINE_MY_POINT ; $6593
+	ld b, DRILLWORDING_STROKE ; $6595
 	call SetDrillMessageByRallyParity ; $6597
 	ld a, [wLastShotCharIndex] ; $659a
 	call TestCharStateBit4 ; $659d
@@ -539,8 +543,8 @@ StrokeMatch1Cases2:
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $65a8
 	ld a, $00 ; $65aa
 	ret z ; $65ac
-	ld a, $61 ; $65ad
-	ld b, $07 ; $65af
+	ld a, DRILLMSG_YOUR_BALL_DIDNT_LAND_PAST_MY_SERVICE_LINE_MY_POINT ; $65ad
+	ld b, DRILLWORDING_STROKE ; $65af
 	call SetDrillMessageByRallyParity ; $65b1
 	call TestBallBounceDepth ; $65b4
 	or a ; $65b7
@@ -563,7 +567,7 @@ StrokeMatch1Cases2:
 	add_hl_a ; $65d0
 	ld a, [hl] ; $65d5
 	ld a, a ; $65d6
-	ld b, $07 ; $65d7
+	ld b, DRILLWORDING_STROKE ; $65d7
 	call SetDrillMessageByRallyParity ; $65d9
 	call SelectStrokeTargetTableByPoint ; $65dc
 	ld a, [wPointOutcome] ; $65df
@@ -574,8 +578,8 @@ StrokeMatch1Cases2Messages:
 	; $65e9, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_MY_POINT, DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_MY_POINT, DRILLMSG_NICE_STROKE_YOUR_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_YOUR_POINT
 StrokeMatch1Cases3:
-	ld a, $62 ; $65f3
-	ld b, $07 ; $65f5
+	ld a, DRILLMSG_YOU_MOVED_PAST_THE_SERVICE_LINE_MY_POINT ; $65f3
+	ld b, DRILLWORDING_STROKE ; $65f5
 	call SetDrillMessageByRallyParity ; $65f7
 	ld a, [wLastShotCharIndex] ; $65fa
 	call TestCharStateBit4 ; $65fd
@@ -587,8 +591,8 @@ StrokeMatch1Cases3:
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $6608
 	ld a, $00 ; $660a
 	ret z ; $660c
-	ld a, $61 ; $660d
-	ld b, $07 ; $660f
+	ld a, DRILLMSG_YOUR_BALL_DIDNT_LAND_PAST_MY_SERVICE_LINE_MY_POINT ; $660d
+	ld b, DRILLWORDING_STROKE ; $660f
 	call SetDrillMessageByRallyParity ; $6611
 	call TestBallBounceDepth ; $6614
 	or a ; $6617
@@ -611,7 +615,7 @@ StrokeMatch1Cases3:
 	add_hl_a ; $6630
 	ld a, [hl] ; $6635
 	ld a, a ; $6636
-	ld b, $07 ; $6637
+	ld b, DRILLWORDING_STROKE ; $6637
 	call SetDrillMessageByRallyParity ; $6639
 	call SelectStrokeTargetTableByPointAlt ; $663c
 	ld a, [wPointOutcome] ; $663f
@@ -622,8 +626,8 @@ StrokeMatch1Cases3Messages:
 	; $6649, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_MY_POINT, DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_MY_POINT, DRILLMSG_NICE_STROKE_YOUR_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_YOUR_POINT
 StrokeMatch1Cases4:
-	ld a, $62 ; $6653
-	ld b, $07 ; $6655
+	ld a, DRILLMSG_YOU_MOVED_PAST_THE_SERVICE_LINE_MY_POINT ; $6653
+	ld b, DRILLWORDING_STROKE ; $6655
 	call SetDrillMessageByRallyParity ; $6657
 	ld a, [wLastShotCharIndex] ; $665a
 	call TestCharStateBit4 ; $665d
@@ -635,8 +639,8 @@ StrokeMatch1Cases4:
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $6668
 	ld a, $00 ; $666a
 	ret z ; $666c
-	ld a, $61 ; $666d
-	ld b, $07 ; $666f
+	ld a, DRILLMSG_YOUR_BALL_DIDNT_LAND_PAST_MY_SERVICE_LINE_MY_POINT ; $666d
+	ld b, DRILLWORDING_STROKE ; $666f
 	call SetDrillMessageByRallyParity ; $6671
 	call TestBallBounceDepth ; $6674
 	or a ; $6677

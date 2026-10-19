@@ -115,6 +115,7 @@ Minigames and drills plug in through eight banked callbacks. `SetModeHookTable`
 (`$08:$671a`) stores pointer and bank in `wModeHookTable`/`wModeHookBank`;
 `CallModeHook` (`$08:$66f1`) takes the id in `d` and calls the word at
 `table + id*2` in that bank. `wModeHookBank == 0` (a normal match) disables it.
+The ids are `MODEHOOK_*`, in table order below.
 
 | id | Fired from | When |
 |---|---|---|

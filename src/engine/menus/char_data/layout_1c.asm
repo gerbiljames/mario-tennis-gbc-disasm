@@ -72,11 +72,7 @@ ApplyCharStatLevelUp:
 	jr z, .countDone ; $54ab
 	push bc ; $54ad
 	ld a, b ; $54ae
-	add $2a ; $54af
-	ld l, a ; $54b1
-	adc $d0 ; $54b2
-	sub l ; $54b4
-	ld h, a ; $54b5
+	ld_hl_indexed wCharDataChoiceLog ; $54af
 	ld a, [hl] ; $54b6
 	ld d, a ; $54b7
 	ld a, [wStoryCharacterSlot] ; $54b8

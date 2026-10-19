@@ -33,8 +33,11 @@ wStarWarpFrame:: db
 wStarWarpPathIndex:: db
 ; [8-bit] Frames left in the transition, seeded to $5a; the fade out starts at $1e and the wait loop returns at zero
 wStarWarpCountdown:: db
-; [16 bytes] One life counter per trail sparkle. UpdateStarWarpTrailSparkles sets the first zero one to $10 and seeds that slot's position (two bytes per slot from $d014) from wStarWarpPathX/Y
+; [16 bytes] One life counter per trail sparkle. UpdateStarWarpTrailSparkles sets the first zero one to $10 and seeds that slot's wStarWarpSparklePos from wStarWarpPathX/Y
 wStarWarpSparkleLife:: ds 16
+	ds 1
+; [32 bytes] Y, X of each trail sparkle, indexed by slot*2 in UpdateStarWarpTrailSparkles; runs on past this union to $d033
+wStarWarpSparklePos:: ds 22
 NEXTU
 ; debug character viewer (bank $1a, $6800-$7000)
 ; [8-bit] Debug character viewer row under the cursor, toggled with `xor $01`: 0 = character grid, 1 = palette row

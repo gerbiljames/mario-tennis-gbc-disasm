@@ -46,7 +46,7 @@ NetGameMatch3JudgePoint:
 	add_hl_a ; $5ac5
 	ld a, [hl] ; $5aca
 	ld a, a ; $5acb
-	ld b, $0d ; $5acc
+	ld b, DRILLWORDING_NET ; $5acc
 	call QueueDrillResultMessage ; $5ace
 	ld a, [wPointOutcome] ; $5ad1
 	ld hl, OddRallyVerdicts ; $5ad4
@@ -78,7 +78,7 @@ NetGameMatch3Cases1:
 	add_hl_a ; $5aff
 	ld a, [hl] ; $5b04
 	ld a, a ; $5b05
-	ld b, $0d ; $5b06
+	ld b, DRILLWORDING_NET ; $5b06
 	call QueueDrillResultMessage ; $5b08
 	ld a, [wPointOutcome] ; $5b0b
 	ld hl, EvenRallyVerdicts ; $5b0e
@@ -110,7 +110,7 @@ NetGameMatch3Cases2:
 	add_hl_a ; $5b39
 	ld a, [hl] ; $5b3e
 	ld a, a ; $5b3f
-	ld b, $0d ; $5b40
+	ld b, DRILLWORDING_NET ; $5b40
 	call QueueDrillResultMessage ; $5b42
 	ld a, [wPointOutcome] ; $5b45
 	ld hl, OddRallyVerdicts ; $5b48
@@ -122,7 +122,7 @@ NetGameMatch3Cases2Messages:
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL, DRILLMSG_WAY_TO_PLAY_THE_NET_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_WAY_TO_PLAY_THE_NET_YOU_GET_A_POINT
 NetGameMatch3Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE ; $5b5c
-	ld b, $0d ; $5b5e
+	ld b, DRILLWORDING_NET ; $5b5e
 	call QueueDrillResultMessage ; $5b60
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5b63
 	and $01 ; $5b66
@@ -150,7 +150,7 @@ NetGameMatch3Cases3:
 	add_hl_a ; $5b86
 	ld a, [hl] ; $5b8b
 	ld a, a ; $5b8c
-	ld b, $0d ; $5b8d
+	ld b, DRILLWORDING_NET ; $5b8d
 	call QueueDrillResultMessage ; $5b8f
 	ld a, [wPointOutcome] ; $5b92
 	ld hl, EvenRallyVerdicts ; $5b95
@@ -181,7 +181,7 @@ NetGameMatch3Cases4:
 	ret ; $5bbb
 .rally5FailBallHit:
 	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $5bbc
-	ld b, $0d ; $5bbe
+	ld b, DRILLWORDING_NET ; $5bbe
 	call QueueDrillResultMessage ; $5bc0
 	jp Unused_0b_StoreMatchAbortFlag_5.storeMatchAbortFlag ; $5bc3
 .rally5IgnoreBounce:
@@ -209,14 +209,16 @@ NetGamePractice1DrillInit:
 	ret ; $5bef
 NetGamePractice1Hooks:
 	; $5bf0, 16 bytes (mode_hooks)
-	dw NetGamePractice1Hook_PerFrame ; record 0
-	dw NetGamePractice1Hook_PointStart ; record 1
-	dw NetGamePractice1Hook_PointEnd ; record 2
-	dw NetGamePractice1Hook_MinigameStart ; record 3
-	dw NetGamePractice1Hook_BallHit ; record 4
-	dw NetGamePractice1Hook_Bounce ; record 5
-	dw NetGamePractice1Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw NetGamePractice1Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw NetGamePractice1Hook_PointStart ; MODEHOOK_POINT_START
+	dw NetGamePractice1Hook_PointEnd ; MODEHOOK_POINT_END
+	dw NetGamePractice1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw NetGamePractice1Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw NetGamePractice1Hook_Bounce ; MODEHOOK_BOUNCE
+	dw NetGamePractice1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 NetGamePractice1Hook_MinigameStart:
 	xor a ; $5c00
 	ld [wDrillCounters + DRILLCTR_NETP1_NET_OR_OUT], a ; $5c01
@@ -401,7 +403,7 @@ NetGamePractice1JudgePoint:
 	add_hl_a ; $5d90
 	ld a, [hl] ; $5d95
 	ld a, a ; $5d96
-	ld b, $00 ; $5d97
+	ld b, DRILLWORDING_SAME ; $5d97
 	call QueueDrillResultMessage ; $5d99
 	ld a, [wPointOutcome] ; $5d9c
 	ld hl, OddRallyVerdicts ; $5d9f
@@ -433,7 +435,7 @@ NetGamePractice1Cases1:
 	add_hl_a ; $5dca
 	ld a, [hl] ; $5dcf
 	ld a, a ; $5dd0
-	ld b, $00 ; $5dd1
+	ld b, DRILLWORDING_SAME ; $5dd1
 	call QueueDrillResultMessage ; $5dd3
 	ld a, [wPointOutcome] ; $5dd6
 	ld hl, EvenRallyVerdicts ; $5dd9
@@ -465,7 +467,7 @@ NetGamePractice1Cases2:
 	add_hl_a ; $5e04
 	ld a, [hl] ; $5e09
 	ld a, a ; $5e0a
-	ld b, $00 ; $5e0b
+	ld b, DRILLWORDING_SAME ; $5e0b
 	call QueueDrillResultMessage ; $5e0d
 	ld a, [wPointOutcome] ; $5e10
 	ld hl, NetGamePractice1Cases2Verdicts ; $5e13
@@ -480,14 +482,14 @@ NetGamePractice1Cases2Messages:
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2
 NetGamePractice1Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $5e31
-	ld b, $00 ; $5e33
+	ld b, DRILLWORDING_SAME ; $5e33
 	call QueueDrillResultMessage ; $5e35
 	xor a ; $5e38
 	call TestCharStateBit4 ; $5e39
 	or a ; $5e3c
 	jp z, .storeMatchAbortFlag ; $5e3d
 	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_SO_YOU_FAIL ; $5e40
-	ld b, $00 ; $5e42
+	ld b, DRILLWORDING_SAME ; $5e42
 	call QueueDrillResultMessage ; $5e44
 	ld a, [wShotRecoilVariant] ; $5e47
 	cp $01 ; $5e4a
@@ -505,7 +507,7 @@ NetGamePractice1Cases3:
 	cp POINTOUTCOME_NET ; $5e60
 	jr z, .missedTarget ; $5e62
 	ld a, DRILLMSG_NICE_VOLLEY_YOU_DID_IT ; $5e64
-	ld b, $00 ; $5e66
+	ld b, DRILLWORDING_SAME ; $5e66
 	call QueueDrillResultMessage ; $5e68
 	call RecordDrillTargetZoneHit ; $5e6b
 	call CheckDrillTargetZoneMissed ; $5e6e
@@ -513,7 +515,7 @@ NetGamePractice1Cases3:
 	jp nz, .hitTarget ; $5e72
 .missedTarget:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2 ; $5e75
-	ld b, $00 ; $5e77
+	ld b, DRILLWORDING_SAME ; $5e77
 	call QueueDrillResultMessage ; $5e79
 	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET ; $5e7c
 	inc [hl] ; $5e7f
@@ -540,14 +542,16 @@ NetGamePractice2DrillInit:
 	ret ; $5eaa
 NetGamePractice2Hooks:
 	; $5eab, 16 bytes (mode_hooks)
-	dw NetGamePractice2Hook_PerFrame ; record 0
-	dw NetGamePractice2Hook_PointStart ; record 1
-	dw NetGamePractice2Hook_PointEnd ; record 2
-	dw NetGamePractice2Hook_MinigameStart ; record 3
-	dw NetGamePractice2Hook_BallHit ; record 4
-	dw NetGamePractice2Hook_Bounce ; record 5
-	dw NetGamePractice2Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw NetGamePractice2Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw NetGamePractice2Hook_PointStart ; MODEHOOK_POINT_START
+	dw NetGamePractice2Hook_PointEnd ; MODEHOOK_POINT_END
+	dw NetGamePractice2Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw NetGamePractice2Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw NetGamePractice2Hook_Bounce ; MODEHOOK_BOUNCE
+	dw NetGamePractice2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 	twin_named net_game_practice2_hook_minigame_start, NetGamePractice2Hook_MinigameStart ; $5ebb
 NetGamePractice2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $5ecd
@@ -711,7 +715,7 @@ NetGamePractice2JudgePoint:
 	add_hl_a ; $604a
 	ld a, [hl] ; $604f
 	ld a, a ; $6050
-	ld b, $00 ; $6051
+	ld b, DRILLWORDING_SAME ; $6051
 	call QueueDrillResultMessage ; $6053
 	ld a, [wPointOutcome] ; $6056
 	ld hl, OddRallyVerdicts ; $6059
@@ -742,7 +746,7 @@ NetGamePractice2Cases1:
 	ld a, $00 ; $608b
 	ret z ; $608d
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_LONG_DEEP_SERVE_SO_YOU_FAIL ; $608e
-	ld b, $00 ; $6090
+	ld b, DRILLWORDING_SAME ; $6090
 	call QueueDrillResultMessage ; $6092
 	call RecordDrillTargetZoneHit ; $6095
 	call CheckDrillTargetZoneMissed ; $6098
@@ -766,7 +770,7 @@ NetGamePractice2Cases1:
 	add_hl_a ; $60b4
 	ld a, [hl] ; $60b9
 	ld a, a ; $60ba
-	ld b, $00 ; $60bb
+	ld b, DRILLWORDING_SAME ; $60bb
 	call QueueDrillResultMessage ; $60bd
 	ld a, [wPointOutcome] ; $60c0
 	ld hl, EvenRallyVerdicts ; $60c3
@@ -781,7 +785,7 @@ NetGamePractice2Cases2:
 	or a ; $60da
 	ret z ; $60db
 	ld a, DRILLMSG_I_DIDNT_HIT_A_LOB_SO_YOU_SUCCEED ; $60dc
-	ld b, $00 ; $60de
+	ld b, DRILLWORDING_SAME ; $60de
 	call QueueDrillResultMessage ; $60e0
 	ld a, [wCurrentShotType] ; $60e3
 	cp SHOTTYPE_LOB ; $60e6
@@ -807,7 +811,7 @@ NetGamePractice2Cases2:
 	add_hl_a ; $6102
 	ld a, [hl] ; $6107
 	ld a, a ; $6108
-	ld b, $00 ; $6109
+	ld b, DRILLWORDING_SAME ; $6109
 	call QueueDrillResultMessage ; $610b
 	ld a, [wPointOutcome] ; $610e
 	ld hl, OddRallyVerdicts ; $6111
@@ -819,7 +823,7 @@ NetGamePractice2Cases2Messages:
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_WINNER_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_WINNER_SO_YOU_FAIL, DRILLMSG_NICE_SMASH_YOU_DID_IT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_NICE_SMASH_YOU_DID_IT
 NetGamePractice2Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_SO_YOU_FAIL_2 ; $6125
-	ld b, $00 ; $6127
+	ld b, DRILLWORDING_SAME ; $6127
 	call QueueDrillResultMessage ; $6129
 	ld a, [wCurrentShotType] ; $612c
 	cp SHOTTYPE_SMASH ; $612f

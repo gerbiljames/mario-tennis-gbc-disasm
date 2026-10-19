@@ -92,7 +92,7 @@ DrawBallAndEffects:
 	call DrawSlotSprite ; $641a
 	ld hl, wBallSlot ; $641d
 	call DrawSlotSprite ; $6420
-	ld d, $07 ; $6423
+	ld d, MODEHOOK_DRAW ; $6423
 	call CallModeHook ; $6425
 	ret ; $6428
 DrawActorsByDepth:
@@ -286,7 +286,7 @@ RunMinigamePointLoop:
 	ld [wAiReactionDelayFar], a ; $65cd
 	ld a, $00 ; $65d0
 	ld [wAiAimAwayChance], a ; $65d2
-	ld d, $03 ; $65d5
+	ld d, MODEHOOK_MINIGAME_START ; $65d5
 	call CallModeHook ; $65d7
 	ld a, [wMatchAbortFlag] ; $65da
 	and MATCHABORT_MATCH ; $65dd
@@ -294,7 +294,7 @@ RunMinigamePointLoop:
 .pointLoop:
 	call LoadMinigamePointLayout ; $65e1
 	call ResetPointState ; $65e4
-	ld d, $01 ; $65e7
+	ld d, MODEHOOK_POINT_START ; $65e7
 	call CallModeHook ; $65e9
 	ld a, [wMatchAbortFlag] ; $65ec
 	and MATCHABORT_MATCH ; $65ef
@@ -309,7 +309,7 @@ RunMinigamePointLoop:
 	ld a, [wMatchAbortFlag] ; $6602
 	and MATCHABORT_MATCH ; $6605
 	jr nz, .done ; $6607
-	ld d, $02 ; $6609
+	ld d, MODEHOOK_POINT_END ; $6609
 	call CallModeHook ; $660b
 	ld a, [wMatchAbortFlag] ; $660e
 	and MATCHABORT_MATCH ; $6611

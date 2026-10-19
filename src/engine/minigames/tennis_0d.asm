@@ -78,14 +78,16 @@ InitMinigame_TennisMachine2:
 	ret ; $4973
 MinigameHooks_TennisMachine2:
 	; $4974, 16 bytes (mode_hooks)
-	dw TennisMachine2Hook_PerFrame ; record 0
-	dw TennisMachine2Hook_PointStart ; record 1
-	dw TennisMachine2Hook_PointEnd ; record 2
-	dw TennisMachine2Hook_MinigameStart ; record 3
-	dw TennisMachine2Hook_BallHit ; record 4
-	dw TennisMachine2Hook_Bounce ; record 5
-	dw TennisMachine2Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw TennisMachine2Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw TennisMachine2Hook_PointStart ; MODEHOOK_POINT_START
+	dw TennisMachine2Hook_PointEnd ; MODEHOOK_POINT_END
+	dw TennisMachine2Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw TennisMachine2Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw TennisMachine2Hook_Bounce ; MODEHOOK_BOUNCE
+	dw TennisMachine2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine1_hook_minigame_start, TennisMachine2Hook_MinigameStart ; $4984
 TennisMachine2Hook_PerFrame:
 	call DrawMinigameScoreHud ; $498d
@@ -126,14 +128,16 @@ InitMinigame_TennisMachine3:
 	ret ; $49d0
 MinigameHooks_TennisMachine3:
 	; $49d1, 16 bytes (mode_hooks)
-	dw TennisMachine3Hook_PerFrame ; record 0
-	dw TennisMachine3Hook_PointStart ; record 1
-	dw TennisMachine3Hook_PointEnd ; record 2
-	dw TennisMachine3Hook_MinigameStart ; record 3
-	dw TennisMachine3Hook_BallHit ; record 4
-	dw TennisMachine3Hook_Bounce ; record 5
-	dw TennisMachine3Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw TennisMachine3Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw TennisMachine3Hook_PointStart ; MODEHOOK_POINT_START
+	dw TennisMachine3Hook_PointEnd ; MODEHOOK_POINT_END
+	dw TennisMachine3Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw TennisMachine3Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw TennisMachine3Hook_Bounce ; MODEHOOK_BOUNCE
+	dw TennisMachine3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine3_hook_minigame_start, TennisMachine3Hook_MinigameStart ; $49e1
 TennisMachine3Hook_PerFrame:
 	call DrawMinigameScoreHud ; $49ea
@@ -174,14 +178,16 @@ InitMinigame_TennisMachine4:
 	ret ; $4a2d
 MinigameHooks_TennisMachine4:
 	; $4a2e, 16 bytes (mode_hooks)
-	dw TennisMachine4Hook_PerFrame ; record 0
-	dw TennisMachine4Hook_PointStart ; record 1
-	dw TennisMachine4Hook_PointEnd ; record 2
-	dw TennisMachine4Hook_MinigameStart ; record 3
-	dw TennisMachine4Hook_BallHit ; record 4
-	dw TennisMachine4Hook_Bounce ; record 5
-	dw TennisMachine4Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw TennisMachine4Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw TennisMachine4Hook_PointStart ; MODEHOOK_POINT_START
+	dw TennisMachine4Hook_PointEnd ; MODEHOOK_POINT_END
+	dw TennisMachine4Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw TennisMachine4Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw TennisMachine4Hook_Bounce ; MODEHOOK_BOUNCE
+	dw TennisMachine4Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine3_hook_minigame_start, TennisMachine4Hook_MinigameStart ; $4a3e
 TennisMachine4Hook_PerFrame:
 	call DrawMinigameScoreHud ; $4a47
@@ -213,14 +219,16 @@ InitMinigame_WallPractice1:
 	ret ; $4a92
 MinigameHooks_WallPractice1:
 	; $4a93, 16 bytes (mode_hooks)
-	dw WallPractice1Hook_PerFrame ; record 0
-	dw WallPractice1Hook_PointStart ; record 1
-	dw WallPractice1Hook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw WallPractice1Hook_BallHit ; record 4
-	dw WallPractice1Hook_Bounce ; record 5
-	dw WallPractice1Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw WallPractice1Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw WallPractice1Hook_PointStart ; MODEHOOK_POINT_START
+	dw WallPractice1Hook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw WallPractice1Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw WallPractice1Hook_Bounce ; MODEHOOK_BOUNCE
+	dw WallPractice1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 WallPractice1Hook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4aa3
 	ret ; $4aa6

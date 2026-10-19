@@ -814,7 +814,7 @@ pass:
 | `scopes` | 266 | no global label covers both actor-script bytecode and CPU code |
 | `labels` | 13745 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
-| `literals` | 34200 | no ROM address is written as a number where the source moves |
+| `literals` | 33792 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
 | `gfx` | 2913 | every PNG encodes back to the blob it was decoded from |
 | `gfx-specs` | 126 | no spec-less region is named `*Gfx*`/`*Tiles*`, and no spec-less whole-tile LZ stream is decompressed on to `vTiles` (exceptions allow-listed) |
@@ -822,7 +822,7 @@ pass:
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4876 | a routine is named `Unused` exactly when nothing reachable reaches it |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
-| `raw-ids` | 1154 | a raw `cp` or store on a variable whose other values are named never equals a member of that family (exceptions allow-listed) |
+| `raw-ids` | 1501 | a raw `cp` or store on a variable, or `ld a` straight into a `call`, whose other values are named never equals a member of that family (exceptions allow-listed) |
 
 ---
 

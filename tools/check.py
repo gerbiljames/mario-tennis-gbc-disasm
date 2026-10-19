@@ -715,7 +715,8 @@ def check_literal_pointers(fail):
     ld_*_indexed base that names a routine is a constant (a text id, say)
     that happened to fall on code. A number inside a data table (in ROM0 or
     the same bank) that the next instructions index or dereference is a
-    pointer into that table."""
+    pointer into that table. An add/adc pair spelling a ROM label of the
+    bank, or a WRAM label of any bank, in halves wants ld_*_indexed."""
     banks = [(bank_of(h), [m for m in map(_OPERAND_RE.match, bank_lines(h)[0]) if m])
              for h in holders()]
     kinds = {}
@@ -727,10 +728,12 @@ def check_literal_pointers(fail):
                 k = "num" if _NUM_RE.fullmatch(arg) else "label" if _is_label(arg) else "other"
                 kinds.setdefault((m.group(1), i), set()).add(k)
     label_only = {k for k, v in kinds.items() if "label" in v and "other" not in v}
-    by_addr = {}
+    by_addr, ram_by_addr = {}, {}
     for bank, addr, name in read_sym():
         if not name.startswith(("FarPtr_", "DataPtr_")):
             by_addr.setdefault((bank, addr), name)
+        if 0xc000 <= addr < 0xe000:
+            ram_by_addr.setdefault(addr, name)
     routines, tables = set(), set()
     for h in holders():
         lines = bank_lines(h)[0]
@@ -804,9 +807,10 @@ def check_literal_pointers(fail):
                 split_lo = (int(args[-1][1:], 16), 3)
             elif split_lo and op == "ld" and args[0] == "a" and re.fullmatch(r"\$[4-7][0-9a-fA-F]", args[1]):
                 split_hi = int(args[1][1:], 16)
-            elif split_lo and op == "adc" and re.fullmatch(r"\$[4-7][0-9a-fA-F]", args[-1]):
+            elif split_lo and op == "adc" and re.fullmatch(r"\$[4-7c-dC-D][0-9a-fA-F]", args[-1]):
                 n += 1
-                name = by_addr.get((bank, int(args[-1][1:], 16) << 8 | split_lo[0]))
+                addr = int(args[-1][1:], 16) << 8 | split_lo[0]
+                name = by_addr.get((bank, addr)) if addr < 0x8000 else ram_by_addr.get(addr)
                 if name:
                     fail("literals", f"{where} -- add/adc spells {name} in halves: use ld_hl_indexed")
             elif split_lo and split_hi is not None and op == "adc" and args[-1] == "$00":
@@ -881,23 +885,30 @@ _NUMBER_RE = re.compile(r"(\$[0-9a-fA-F]+|%[01]+|\d+)")
 
 def check_raw_ids(fail):
     """A raw cp/store operand on a variable that names its other values from a
-    constant family must not equal a member of that family."""
+    constant family must not equal a member of that family. A routine's
+    argument in a counts as a variable `Routine(a)`."""
     import consts
     values = consts.constants()
     uses = {}
     for holder in holders():
         lines, origin = bank_lines(holder)
-        src = hl = None
+        src = hl = arg = None
         prev = ""
         for i, line in enumerate(lines):
             if re.match(r"[A-Za-z_.]", line):
-                src = hl = None
+                src = hl = arg = None
                 prev = ""
                 continue
             t = line.split(";")[0].strip()
             if not t:
                 continue
             where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            if (m := re.match(r"call (\w+)$", t)) and arg:
+                uses.setdefault(f"{m.group(1)}(a)", []).append((arg, where))
+            if m := re.match(r"ld a, ([^\[]+)$", t):
+                arg = m.group(1) if m.group(1) not in "bcdehl" else None
+            elif re.match(r"(ldh? \[.+\], a$|ldh? a,|add|adc|sub|sbc|and|or|xor|inc a|dec a|cpl|rl|rr|sl|sr|swap a|pop af|call|rst|jp|jr|ret|daa|ccf|scf)\b", t):
+                arg = None
             if m := re.match(r"ldh? a, \[([wh][A-Z]\w+)\]$", t):
                 src = m.group(1)
             elif m := re.match(r"ld hl, ([wh][A-Z]\w+)$", t):

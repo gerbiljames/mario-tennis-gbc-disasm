@@ -52,11 +52,7 @@ InitCa00RecordFromCharId:
 	swap a ; $408d
 	add a ; $408f
 	add a ; $4090
-	add $00 ; $4091
-	ld l, a ; $4093
-	adc $c9 ; $4094
-	sub l ; $4096
-	ld h, a ; $4097
+	ld_hl_indexed wStoryMain ; $4091
 	ld c, $04 ; $4098
 	call CopyMemoryFast ; $409a
 	ret ; $409d
@@ -202,11 +198,7 @@ GetCa00RecordPtr:
 	swap a ; $4210
 	add a ; $4212
 	add a ; $4213
-	add $00 ; $4214
-	ld c, a ; $4216
-	adc $ca ; $4217
-	sub c ; $4219
-	ld b, a ; $421a
+	ld_bc_indexed wPlayer1Main ; $4214
 	ret ; $421b
 InitStoryModeState:
 	call CacheStorySlotSummaries ; $421c

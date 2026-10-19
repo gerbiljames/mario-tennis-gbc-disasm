@@ -278,7 +278,7 @@ SetDrillMessageByServer:
 	ld [wDrillMessageId], a ; $4554
 	ret ; $4557
 SetDrillMessageByRallyParity:
-	cp $ff ; $4558
+	cp DRILLMSG_HIDE ; $4558
 	jr z, .store ; $455a
 	ld c, a ; $455c
 	ld a, [wTotalPointsScoredInCurrentGame] ; $455d

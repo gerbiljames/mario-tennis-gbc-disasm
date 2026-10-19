@@ -29,7 +29,7 @@ class Source(unittest.TestCase):
     def test_idiom_macro_sites(self):
         self.assertEqual(count(r"^\tpush_wram_bank "), 353)
         self.assertEqual(count(r"^\tpop_wram_bank"), 455)
-        self.assertEqual(count(r"^\tld_hl_indexed "), 424)
+        self.assertEqual(count(r"^\tld_hl_indexed "), 440)
         self.assertEqual(count(r"^\twait_frames "), 79)
         self.assertEqual(count(r"^\tld_story_char_field "), 114)
         self.assertEqual(count(r"^\tneg_(?:hl|de|bc)\b"), 146)

@@ -592,11 +592,7 @@ DrawNextExpAwardMessage:
 	cp $05 ; $59c4
 	jr z, .uploadGlyphBuffer ; $59c6
 	rlca ; $59c8
-	add $52 ; $59c9
-	ld l, a ; $59cb
-	adc $d1 ; $59cc
-	sub l ; $59ce
-	ld h, a ; $59cf
+	ld_hl_indexed wPendingExpAwardAmounts ; $59c9
 	ld a, [hl+] ; $59d0
 	ld b, [hl] ; $59d1
 	or b ; $59d2
@@ -605,11 +601,7 @@ DrawNextExpAwardMessage:
 	ld c, [hl] ; $59d6
 	push bc ; $59d7
 	ld a, [wExpAwardIndex] ; $59d8
-	add $5c ; $59db
-	ld l, a ; $59dd
-	adc $d1 ; $59de
-	sub l ; $59e0
-	ld h, a ; $59e1
+	ld_hl_indexed wPendingExpAwardVariants ; $59db
 	ld a, [hl] ; $59e2
 	ld d, a ; $59e3
 	ld a, [wExpAwardIndex] ; $59e4

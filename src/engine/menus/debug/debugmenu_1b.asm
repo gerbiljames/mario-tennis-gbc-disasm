@@ -353,11 +353,7 @@ Unused_1b_UpdateUnlockDebugSelection:
 	add a ; $67e3
 	ld hl, wCharSelectCol ; $67e4
 	add [hl] ; $67e7
-	add $a0 ; $67e8
-	ld l, a ; $67ea
-	adc $c7 ; $67eb
-	sub l ; $67ed
-	ld h, a ; $67ee
+	ld_hl_indexed wNavGridBuffer ; $67e8
 	ld a, [hl] ; $67ef
 	ld [wCharSelectChar], a ; $67f0
 	ret ; $67f3
