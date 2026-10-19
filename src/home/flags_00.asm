@@ -196,6 +196,7 @@ Unused_00_TickSecondaryTimerCountdown:
 	ret nz ; $2427
 	xor a ; $2428
 	ld hl, wSecondaryTimerMode ; $2429
+	ASSERT wSecondaryTimer == wSecondaryTimerMode + 1, "this code walks from wSecondaryTimerMode into wSecondaryTimer"
 	ld [hl], $ff ; $242c
 	inc hl ; $242e
 	ld [hl+], a ; $242f

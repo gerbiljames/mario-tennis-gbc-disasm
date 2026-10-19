@@ -51,6 +51,7 @@ CheckMatchWon:
 	srl a ; $5cc7
 	ld b, a ; $5cc9
 	ld hl, wPlayer1SetsWon ; $5cca
+	ASSERT wPlayer2SetsWon == wPlayer1SetsWon + 1, "this code walks from wPlayer1SetsWon into wPlayer2SetsWon"
 	ld a, [hl+] ; $5ccd
 	sub [hl] ; $5cce
 	jr z, .undecided ; $5ccf

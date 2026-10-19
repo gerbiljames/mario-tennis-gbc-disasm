@@ -434,6 +434,7 @@ TextCmdWaitButtonPage:
 	call RedrawActiveTextWindow ; $4f82
 	xor a ; $4f85
 	ld hl, wTextArrowBlinkCounter ; $4f86
+	ASSERT wTextArrowCell == wTextArrowBlinkCounter + 1, "this code walks from wTextArrowBlinkCounter into wTextArrowCell"
 	ld [hl+], a ; $4f89
 	ld [hl], e ; $4f8a
 	inc hl ; $4f8b

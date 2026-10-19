@@ -309,6 +309,8 @@ RunMatchMenu:
 	ld [hl], d ; $473e
 	ld a, $40 ; $473f
 	ld hl, wTextRowColumn ; $4741
+	ASSERT wGlyphRowStartCol == wTextRowColumn + 1, "this code walks from wTextRowColumn into wGlyphRowStartCol"
+	ASSERT wGlyphFlushedCol == wTextRowColumn + 2, "this code walks from wTextRowColumn into wGlyphFlushedCol"
 	ld [hl+], a ; $4744
 	ld [hl+], a ; $4745
 	ld [hl+], a ; $4746

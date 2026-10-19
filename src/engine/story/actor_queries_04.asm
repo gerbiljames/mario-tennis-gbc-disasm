@@ -147,6 +147,7 @@ FindActorAtPoint:
 	ld c, l ; $53da
 	ld b, h ; $53db
 	ld hl, wActorQueryPointX ; $53dc
+	ASSERT wActorQueryPointY == wActorQueryPointX + 2, "this code walks from wActorQueryPointX into wActorQueryPointY"
 	ld a, c ; $53df
 	ld [hl+], a ; $53e0
 	ld a, b ; $53e1

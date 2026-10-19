@@ -308,6 +308,7 @@ InitGlyphStreamForWindow:
 	ld e, a ; $756a
 .zero2:
 	ld hl, wTextRowWidth ; $756b
+	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld [hl], d ; $756e
 	inc hl ; $756f
 	ld [hl], e ; $7570
@@ -325,6 +326,7 @@ DrawStreamGlyph:
 	push hl ; $7581
 	push_wram_bank WRAM_TEXT ; $7582
 	ld hl, wTextRowWidth ; $758b
+	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld b, [hl] ; $758e
 	inc hl ; $758f
 	ld c, [hl] ; $7590
@@ -377,6 +379,7 @@ StartGlyphStreamRow:
 	push de ; $75dd
 	push hl ; $75de
 	ld hl, wTextRowWidth ; $75df
+	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld b, [hl] ; $75e2
 	inc hl ; $75e3
 	ld c, [hl] ; $75e4

@@ -43,6 +43,9 @@ Unused_02_DebugStoryStatsScreen:
 	call Unused_00_PrintDecimalWord ; $5004
 	pop de ; $5007
 	ld hl, wPendingExpStory ; $5008
+	ASSERT wPendingExpTrophy == wPendingExpStory + 2, "this code walks from wPendingExpStory into wPendingExpTrophy"
+	ASSERT wN64TransferMarker == wPendingExpStory + 4, "this code walks from wPendingExpStory into wN64TransferMarker"
+	ASSERT wN64TrophyCounts == wPendingExpStory + 5, "this code walks from wPendingExpStory into wN64TrophyCounts"
 	xor a ; $500b
 	ld [hl+], a ; $500c
 	ld [hl+], a ; $500d

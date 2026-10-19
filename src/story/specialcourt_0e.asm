@@ -126,6 +126,7 @@ UpdateStarWarpSprite:
 	add d ; $722a
 	ld d, a ; $722b
 	ld hl, wStarWarpPathY ; $722c
+	ASSERT wStarWarpPathX == wStarWarpPathY + 1, "this code walks from wStarWarpPathY into wStarWarpPathX"
 	ld a, e ; $722f
 	ld [hl+], a ; $7230
 	ld [hl], d ; $7231

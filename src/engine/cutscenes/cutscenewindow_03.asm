@@ -117,6 +117,7 @@ AnimateWindowSlideUpTask:
 	ld d, h ; $72d3
 	ld e, l ; $72d4
 	ld hl, wRasterScrollStartLY ; $72d5
+	ASSERT wRasterScrollEndLY == wRasterScrollStartLY + 1, "this code walks from wRasterScrollStartLY into wRasterScrollEndLY"
 	ld a, e ; $72d8
 	ld [hl+], a ; $72d9
 	ld [hl], d ; $72da

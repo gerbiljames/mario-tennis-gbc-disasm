@@ -1061,6 +1061,8 @@ DrawTennisDictionaryList:
 	ld [wTextRowWidth], a ; $52c6
 	ld a, $36 ; $52c9
 	ld hl, wTextRowColumn ; $52cb
+	ASSERT wGlyphRowStartCol == wTextRowColumn + 1, "this code walks from wTextRowColumn into wGlyphRowStartCol"
+	ASSERT wGlyphFlushedCol == wTextRowColumn + 2, "this code walks from wTextRowColumn into wGlyphFlushedCol"
 	ld [hl+], a ; $52ce
 	ld [hl+], a ; $52cf
 	ld [hl+], a ; $52d0

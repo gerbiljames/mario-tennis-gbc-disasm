@@ -77,6 +77,7 @@ ApplyFallbackBallTrajectory_24:
 	ld [wBallTrailColor], a ; $5803
 	xor a ; $5806
 	ld hl, wBallTopspin ; $5807
+	ASSERT wBallSideSpin == wBallTopspin + 2, "this code walks from wBallTopspin into wBallSideSpin"
 	ld [hl+], a ; $580a
 	ld [hl+], a ; $580b
 	ld [hl+], a ; $580c

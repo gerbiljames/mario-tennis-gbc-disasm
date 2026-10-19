@@ -603,6 +603,7 @@ StepBallPhysics:
 .falling:
 	call ApplyCourtBounceDamping ; $57c6
 	ld hl, wBallHeightFrac ; $57c9
+	ASSERT wBallHeight == wBallHeightFrac + 2, "this code walks from wBallHeightFrac into wBallHeight"
 	ld a, [hl] ; $57cc
 	cpl ; $57cd
 	add $01 ; $57ce
@@ -625,6 +626,7 @@ StepBallPhysics:
 	ld a, $01 ; $57e6
 	ld [wBallBounceEvent], a ; $57e8
 	ld hl, wBallVelocityHeightFrac ; $57eb
+	ASSERT wBallVelocityHeight == wBallVelocityHeightFrac + 1, "this code walks from wBallVelocityHeightFrac into wBallVelocityHeight"
 	ld a, [hl] ; $57ee
 	cpl ; $57ef
 	ld [hl+], a ; $57f0
@@ -644,11 +646,13 @@ StepBallPhysics:
 	jr nz, .done ; $5803
 	xor a ; $5805
 	ld hl, wBallHeightFrac ; $5806
+	ASSERT wBallHeight == wBallHeightFrac + 2, "this code walks from wBallHeightFrac into wBallHeight"
 	ld [hl+], a ; $5809
 	ld [hl+], a ; $580a
 	ld [hl+], a ; $580b
 	ld [hl+], a ; $580c
 	ld hl, wBallVelocityHeightFrac ; $580d
+	ASSERT wBallVelocityHeight == wBallVelocityHeightFrac + 1, "this code walks from wBallVelocityHeightFrac into wBallVelocityHeight"
 	ld [hl+], a ; $5810
 	ld [hl+], a ; $5811
 	ld [hl+], a ; $5812
@@ -684,6 +688,7 @@ HandleBallNetCrossing:
 	ld a, $01 ; $5846
 	ld [wBallHasBouncedFlag], a ; $5848
 	ld hl, wBallDepthFrac ; $584b
+	ASSERT wBallDepth == wBallDepthFrac + 2, "this code walks from wBallDepthFrac into wBallDepth"
 	ld a, [hl] ; $584e
 	cpl ; $584f
 	ld [hl+], a ; $5850
@@ -803,6 +808,7 @@ HandleBallNetCrossing:
 	ret ; $58f4
 .bounceOffNetTop:
 	ld hl, wBallHeightFrac ; $58f5
+	ASSERT wBallHeight == wBallHeightFrac + 2, "this code walks from wBallHeightFrac into wBallHeight"
 	xor a ; $58f8
 	ld [hl+], a ; $58f9
 	ld [hl+], a ; $58fa
@@ -877,6 +883,7 @@ BounceBallOffCourtFences:
 	jr c, .checkSideFences ; $595f
 .bounceDepth:
 	ld hl, wBallVelocityDepthFrac ; $5961
+	ASSERT wBallVelocityDepth == wBallVelocityDepthFrac + 1, "this code walks from wBallVelocityDepthFrac into wBallVelocityDepth"
 	ld a, [hl] ; $5964
 	cpl ; $5965
 	ld [hl+], a ; $5966
@@ -911,6 +918,7 @@ BounceBallOffCourtFences:
 	add hl, de ; $5994
 	jr nc, .done ; $5995
 	ld hl, wBallVelocityXFrac ; $5997
+	ASSERT wBallVelocityX == wBallVelocityXFrac + 1, "this code walks from wBallVelocityXFrac into wBallVelocityX"
 	ld a, [hl] ; $599a
 	cpl ; $599b
 	ld [hl+], a ; $599c

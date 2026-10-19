@@ -228,6 +228,7 @@ Unused_05_RunMenuSelectionShared:
 	call GetTilemapCellAddress ; $4ae2
 	xor a ; $4ae5
 	ld hl, wTextArrowBlinkCounter ; $4ae6
+	ASSERT wTextArrowCell == wTextArrowBlinkCounter + 1, "this code walks from wTextArrowBlinkCounter into wTextArrowCell"
 	ld [hl+], a ; $4ae9
 	ld [hl], e ; $4aea
 	inc hl ; $4aeb

@@ -431,6 +431,8 @@ DisableLCDSafely:
 	call ClearVRAMCopyQueue ; $0369
 	xor a ; $036c
 	ld hl, hBGRowBlitPending ; $036d
+	ASSERT hBGColumnBlitPending == hBGRowBlitPending + 1, "this code walks from hBGRowBlitPending into hBGColumnBlitPending"
+	ASSERT hBGColumnBlitDone == hBGRowBlitPending + 2, "this code walks from hBGRowBlitPending into hBGColumnBlitDone"
 	ld [hl+], a ; $0370
 	ld [hl+], a ; $0371
 	ld [hl+], a ; $0372

@@ -460,6 +460,13 @@ ResetGlyphStream:
 	push hl ; $730e
 	xor a ; $730f
 	ld hl, wGlyphPenX ; $7310
+	ASSERT wTextRowWidth == wGlyphPenX + 2, "this code walks from wGlyphPenX into wTextRowWidth"
+	ASSERT wTextRowColumn == wGlyphPenX + 3, "this code walks from wGlyphPenX into wTextRowColumn"
+	ASSERT wGlyphRowStartCol == wGlyphPenX + 4, "this code walks from wGlyphPenX into wGlyphRowStartCol"
+	ASSERT wGlyphFlushedCol == wGlyphPenX + 5, "this code walks from wGlyphPenX into wGlyphFlushedCol"
+	ASSERT wGlyphUploadCount == wGlyphPenX + 6, "this code walks from wGlyphPenX into wGlyphUploadCount"
+	ASSERT wGlyphUploadFirstTile == wGlyphPenX + 7, "this code walks from wGlyphPenX into wGlyphUploadFirstTile"
+	ASSERT wGlyphUploadVramBank == wGlyphPenX + 8, "this code walks from wGlyphPenX into wGlyphUploadVramBank"
 	ld [hl+], a ; $7313
 	ld [hl+], a ; $7314
 	ld [hl+], a ; $7315

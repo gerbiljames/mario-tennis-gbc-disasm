@@ -542,6 +542,8 @@ Unused_1b_RunDebugSaveDataFlow:
 .step5:
 	xor a ; $63f4
 	ld hl, wPendingExpStory ; $63f5
+	ASSERT wPendingExpTrophy == wPendingExpStory + 2, "this code walks from wPendingExpStory into wPendingExpTrophy"
+	ASSERT wN64TransferMarker == wPendingExpStory + 4, "this code walks from wPendingExpStory into wN64TransferMarker"
 	ld [hl+], a ; $63f8
 	ld [hl+], a ; $63f9
 	ld [hl+], a ; $63fa
