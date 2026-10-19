@@ -148,7 +148,7 @@ class Manifest(unittest.TestCase):
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)
-        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 803)
+        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 858)
 
 
 @needs_rom
