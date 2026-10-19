@@ -210,6 +210,10 @@ ENDM
 ; 5-bit components, as BGR555 words. A palette whose words use bit 15 stays
 ; a plain dw.
 MACRO palette
+	ASSERT _NARG == 12, "palette takes four colours of three components"
+	FOR _CH, 1, 13
+		ASSERT 0 <= (\<_CH>) && (\<_CH>) <= 31, "palette: component {d:_CH} out of 0-31"
+	ENDR
 	dw (\1) | ((\2) << 5) | ((\3) << 10), (\4) | ((\5) << 5) | ((\6) << 10), (\7) | ((\8) << 5) | ((\9) << 10), (\<10>) | ((\<11>) << 5) | ((\<12>) << 10)
 ENDM
 
