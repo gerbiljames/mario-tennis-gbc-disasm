@@ -74,9 +74,7 @@ PlayStarWarpTransition:
 	script_copy_scene_rect 4, 45, 20, 20, 6, 2 ; $71a1
 	script_copy_scene_rect 10, 43, 26, 18, 6, 2 ; $71b0
 	sound BGM_WIN ; $71bf
-	ld a, $01 ; $71c1
-	ld hl, UpdateStarWarpSprite ; $71c3
-	call RegisterFrameTask ; $71c6
+	frame_task UpdateStarWarpSprite ; $71c1
 	wram_bank WRAM_SCENE ; $71c9
 .waitLoop:
 	call AdvanceFrame ; $71cf
@@ -310,11 +308,17 @@ SpecialCourtActors_0e:
 	map_actor_end
 SpecialCourtEntryPoints_0e:
 	; $76d2, 9 bytes (map_entries)
-	map_entry $01, FACE_UP, 5.0, 33.0, $0000
+	map_entry $01, FACE_UP, 5.0, 33.0, $0000, SPECIAL_COURT_SINGLES_HARD
+	entry_id SPECIAL_COURT_SINGLES_INTENSE, $02
+	entry_id SPECIAL_COURT_SINGLES_MAX, $03
+	entry_id SPECIAL_COURT_DOUBLES_HARD, $04
+	entry_id SPECIAL_COURT_DOUBLES_INTENSE, $05
+	entry_id SPECIAL_COURT_DOUBLES_MAX, $06
+	entry_id SPECIAL_COURT_MATCH_RESULT, $0a
 	db $ff
 SpecialCourtExitTriggers_0e:
 	; $76db, 9 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_RESTAURANT_PLAZA, $06
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_TRAINING_COURT, SPECIAL_COURT_DONE
 	db $ff
 SpecialCourtNpcScripts_0e:
 	ds 1, $ff ; $76e4, fill
@@ -324,9 +328,9 @@ SpecialCourtTileTriggers_0e:
 	ds 1, $ff ; $76e6, fill
 SpecialCourtInitScript_0e:
 	ld a, [wStoryModeEntryPoint] ; $76e7
-	cp $07 ; $76ea
+	cp ENTRY_SPECIAL_COURT_DOUBLES_MAX + 1 ; $76ea
 	jr c, .intro ; $76ec
-	cp $0a ; $76ee
+	cp ENTRY_SPECIAL_COURT_MATCH_RESULT ; $76ee
 	jr z, .result ; $76f0
 	ret ; $76f2
 .result:
@@ -373,7 +377,7 @@ ExhibitionMatchIntroCutscene:
 	script_wait_frames 20 ; $77e9
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $77f0
 	jr z, .doubles ; $77f3
-	ld a, $01 ; $77f5
+	ld a, EXIT_SPECIAL_COURT_DONE ; $77f5
 	ld [wUnusedExitTriggerIdMirror], a ; $77f7
 	ld [wStoryModeExitTriggerRequest], a ; $77fa
 	ret ; $77fd
@@ -460,7 +464,7 @@ ExhibitionMatchIntroCutscene:
 	script_wait_frames 20 ; $7a51
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $7a58
 	jr z, .done ; $7a5b
-	ld a, $01 ; $7a5d
+	ld a, EXIT_SPECIAL_COURT_DONE ; $7a5d
 	ld [wUnusedExitTriggerIdMirror], a ; $7a5f
 	ld [wStoryModeExitTriggerRequest], a ; $7a62
 	ret ; $7a65

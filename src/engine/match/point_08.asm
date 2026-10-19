@@ -99,11 +99,11 @@ SetPointSituationBgm:
 AnnouncePointSituation:
 	call EvaluatePointSituation ; $4d8c
 	call SetPointSituationBgm ; $4d8f
-	ld d, $0a ; $4d92
+	ld d, BANNER_MATCH_POINT ; $4d92
 	ld a, [wMatchPointFlag] ; $4d94
 	and a ; $4d97
 	jr nz, .showBanner ; $4d98
-	ld d, $09 ; $4d9a
+	ld d, BANNER_SET_POINT ; $4d9a
 	ld a, [wSetPointFlag] ; $4d9c
 	and a ; $4d9f
 	jr nz, .showBanner ; $4da0
@@ -117,9 +117,9 @@ AnnouncePointSituation:
 	ld a, [wCurrentServingPlayer] ; $4daf
 	xor b ; $4db2
 	and $01 ; $4db3
-	ld d, $08 ; $4db5
+	ld d, BANNER_GAME_POINT ; $4db5
 	jr nz, .showBanner ; $4db7
-	ld d, $07 ; $4db9
+	ld d, BANNER_BREAK_POINT ; $4db9
 .showBanner:
 	ld a, d ; $4dbb
 	farcall ShowCourtBanner ; $4dbc
@@ -160,8 +160,7 @@ ResolvePointOutcome:
 	call StepMatchFrame ; $4e03
 	ld hl, ResolvePointResultSequence ; $4e06
 	push hl ; $4e09
-	ld a, [wPointOutcome] ; $4e0a
-	rst Rst00 ; $4e0d
+	jumptable [wPointOutcome] ; $4e0a
 	dw RetStub ; $4e0e jumptable
 	dw ResolveCalledPoint ; $4e10 jumptable
 	dw ResolveCalledPoint ; $4e12 jumptable
@@ -213,7 +212,7 @@ ResolveWinnerPoint:
 	and a ; $4e70
 	ret z ; $4e71
 	ld a, [wPointWinnerShotType] ; $4e72
-	add $17 ; $4e75
+	add BANNER_SERVICE_ACE - POINTWINNER_SERVICE_ACE ; $4e75
 	farcall ShowCourtBanner ; $4e77
 	ld a, 10 ; $4e7a
 	call StepMatchFrames ; $4e7c
@@ -225,7 +224,7 @@ ResolveWinnerPoint:
 	ret ; $4e8c
 ResolveCalledPoint:
 	ld a, [wPointOutcome] ; $4e8d
-	add $00 ; $4e90
+	add BANNER_FAULT - POINTOUTCOME_FAULT ; $4e90
 	farcall ShowCourtBanner ; $4e92
 	ld a, 30 ; $4e95
 	call StepMatchFrames ; $4e97
@@ -263,17 +262,17 @@ ShowMatchEndSequence:
 	ld a, [wMatchWinLoseFlag] ; $4ed8
 	add a ; $4edb
 	jr nc, .case8 ; $4edc
-	ld d, $17 ; $4ede
+	ld d, BANNER_GAME_OVER ; $4ede
 	farcall ShowMinigamePointResult ; $4ee0
 	ret ; $4ee3
 .case8:
 	ld a, [wMinigameLevel] ; $4ee4
-	add $12 ; $4ee7
+	add BANNER_LEVEL_1_CLEARED ; $4ee7
 	ld d, a ; $4ee9
 	farcall ShowMinigamePointResult ; $4eea
 	ret ; $4eed
 .case9:
-	ld a, $0d ; $4eee
+	ld a, BANNER_MATCH ; $4eee
 	farcall ShowCourtBanner ; $4ef0
 	ld a, 10 ; $4ef3
 	call StepMatchFrames ; $4ef5
@@ -293,7 +292,7 @@ ShowSetEndSequence:
 	ld a, [wPlayer2SetsWon] ; $4f17
 	ld b, $01 ; $4f1a
 	farcall LoadPlayer2ScoreDigitGfx ; $4f1c
-	ld d, $0c ; $4f1f
+	ld d, BANNER_SET ; $4f1f
 	jr ShowGameEndSequence.done ; $4f21
 ShowGameEndSequence:
 	ld a, [wPlayer1GamesWon] ; $4f23
@@ -302,7 +301,7 @@ ShowGameEndSequence:
 	ld a, [wPlayer2GamesWon] ; $4f2b
 	ld b, $01 ; $4f2e
 	farcall LoadPlayer2ScoreDigitGfx ; $4f30
-	ld d, $0b ; $4f33
+	ld d, BANNER_GAME ; $4f33
 	jr .done ; $4f35
 .done:
 	call StepMatchFrame ; $4f37
@@ -404,8 +403,7 @@ CharPointEndReaction:
 	ld [hl+], a ; $4ff3
 	ret ; $4ff4
 SpreadTeammateTargets:
-	ld a, [wOnCourtCharCountMinus1] ; $4ff5
-	rst Rst00 ; $4ff8
+	jumptable [wOnCourtCharCountMinus1] ; $4ff5
 	dw RetStub ; $4ff9 jumptable
 	dw RetStub ; $4ffb jumptable
 	dw SpreadFarTeamPair ; $4ffd jumptable

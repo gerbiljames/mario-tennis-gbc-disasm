@@ -6,12 +6,7 @@
 ; (banks $20, $21, $22, $23, $24, $29, $2a, $2b, $2c).
 
 {TWIN_LABEL}:
-	xor a
-	sub c
-	ld c, a
-	sbc a
-	sub b
-	ld b, a
+	neg_bc
 	ld a, [wShotDistMin]
 	ld e, a
 	ld a, [wShotDistMin + 1]

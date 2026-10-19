@@ -147,7 +147,10 @@ GetClearStatusResultCode:
 	ret ; $4eed
 ClearStatusResultCodeIndexTable:
 	; $4eee, 10 bytes (bytes:10)
-	db $01, $02, $03, $00, $04, $05, $06, $06, $07, $07 ; 0x00
+	db EXIT_TEST_2_TO_SERVE_COACH, EXIT_TEST_2_TO_NET_COACH, EXIT_TEST_2_TO_RETURN_COACH, $00 ; mini-game, by rank
+	db EXIT_TEST_2_TO_JUNIOR_CLASS_COURT_SINGLES, EXIT_TEST_2_TO_JUNIOR_CLASS_COURT_DOUBLES ; then by class, singles / doubles
+	db EXIT_TEST_2_TO_SENIOR_CLASS_COURT, EXIT_TEST_2_TO_SENIOR_CLASS_COURT
+	db EXIT_TEST_2_TO_COURTYARD, EXIT_TEST_2_TO_COURTYARD
 ClearStatusSetupMenuEntry:
 	call RunClearStatusSetupMenu ; $4ef8
 	ret ; $4efb
@@ -186,9 +189,7 @@ RunStoryModeOverworld:
 	ld [wOverworldEnterFlag], a ; $4f2d
 .restart:
 	call ClearFrameTasks ; $4f30
-	ld a, $01 ; $4f33
-	ld hl, DrawPlayerPositionDebugOverlay ; $4f35
-	call RegisterFrameTask ; $4f38
+	frame_task DrawPlayerPositionDebugOverlay ; $4f33
 	call RunStoryLocation ; $4f3b
 	jr .restart ; $4f3e
 RunStoryLocation:

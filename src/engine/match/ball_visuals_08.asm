@@ -1,20 +1,7 @@
 ComputePairSpread:
 	push hl ; $506e
-	ld a, l ; $506f
-	sub e ; $5070
-	ld l, a ; $5071
-	ld a, h ; $5072
-	sbc d ; $5073
-	ld h, a ; $5074
-	bit 7, h ; $5075
-	jr z, .checkRange ; $5077
-	xor a ; $5079
-	sub l ; $507a
-	ld l, a ; $507b
-	sbc a ; $507c
-	sub h ; $507d
-	ld h, a ; $507e
-.checkRange:
+	sub_hl_de ; $506f
+	abs_hl ; $5075
 	ld bc, $fe00 ; $507f
 	add hl, bc ; $5082
 	pop hl ; $5083
@@ -26,18 +13,8 @@ ComputePairSpread:
 	push hl ; $5089
 	bit 7, h ; $508a
 	jr z, .absSecond ; $508c
-	xor a ; $508e
-	sub l ; $508f
-	ld l, a ; $5090
-	sbc a ; $5091
-	sub h ; $5092
-	ld h, a ; $5093
-	xor a ; $5094
-	sub e ; $5095
-	ld e, a ; $5096
-	sbc a ; $5097
-	sub d ; $5098
-	ld d, a ; $5099
+	neg_hl ; $508e
+	neg_de ; $5094
 .absSecond:
 	push hl ; $509a
 	add hl, de ; $509b
@@ -54,12 +31,7 @@ ComputePairSpread:
 	ld bc, $0100 ; $50ae
 .compare:
 	pop hl ; $50b1
-	ld a, l ; $50b2
-	sub e ; $50b3
-	ld l, a ; $50b4
-	ld a, h ; $50b5
-	sbc d ; $50b6
-	ld h, a ; $50b7
+	sub_hl_de ; $50b2
 	jr nc, .useFirst ; $50b8
 	ld hl, $0200 ; $50ba
 	add hl, bc ; $50bd
@@ -77,18 +49,8 @@ ComputePairSpread:
 	pop hl ; $50ca
 	bit 7, h ; $50cb
 	jr z, .done ; $50cd
-	xor a ; $50cf
-	sub c ; $50d0
-	ld c, a ; $50d1
-	sbc a ; $50d2
-	sub b ; $50d3
-	ld b, a ; $50d4
-	xor a ; $50d5
-	sub e ; $50d6
-	ld e, a ; $50d7
-	sbc a ; $50d8
-	sub d ; $50d9
-	ld d, a ; $50da
+	neg_bc ; $50cf
+	neg_de ; $50d5
 .done:
 	ret ; $50db
 BallTrailPalettes:
@@ -344,15 +306,7 @@ BuildNetBallSlot:
 	ld a, [hl+] ; $52a4
 	ld h, [hl] ; $52a5
 	ld l, a ; $52a6
-	bit 7, h ; $52a7
-	jr z, .checkRange ; $52a9
-	xor a ; $52ab
-	sub l ; $52ac
-	ld l, a ; $52ad
-	sbc a ; $52ae
-	sub h ; $52af
-	ld h, a ; $52b0
-.checkRange:
+	abs_hl ; $52a7
 	ld de, $fdc0 ; $52b1
 	add hl, de ; $52b4
 	ret c ; $52b5
@@ -393,15 +347,7 @@ StartLandingMarker:
 	push hl ; $52ee
 	ld l, e ; $52ef
 	ld h, d ; $52f0
-	bit 7, h ; $52f1
-	jr z, .checkX ; $52f3
-	xor a ; $52f5
-	sub l ; $52f6
-	ld l, a ; $52f7
-	sbc a ; $52f8
-	sub h ; $52f9
-	ld h, a ; $52fa
-.checkX:
+	abs_hl ; $52f1
 	ld bc, -128 ; $52fb
 	add hl, bc ; $52fe
 	bit 7, h ; $52ff
@@ -410,15 +356,7 @@ StartLandingMarker:
 	push hl ; $5303
 	ld l, e ; $5304
 	ld h, d ; $5305
-	bit 7, h ; $5306
-	jr z, .checkDepth ; $5308
-	xor a ; $530a
-	sub l ; $530b
-	ld l, a ; $530c
-	sbc a ; $530d
-	sub h ; $530e
-	ld h, a ; $530f
-.checkDepth:
+	abs_hl ; $5306
 	ld bc, -256 ; $5310
 	add hl, bc ; $5313
 	bit 7, h ; $5314

@@ -13,21 +13,8 @@
 	ld a, [hl+]
 	ld h, [hl]
 	ld l, a
-	ld a, l
-	sub e
-	ld l, a
-	ld a, h
-	sbc d
-	ld h, a
-	bit 7, h
-	jr z, .absX
-	xor a
-	sub l
-	ld l, a
-	sbc a
-	sub h
-	ld h, a
-.absX:
+	sub_hl_de
+	abs_hl
 	ld de, $ffa0
 	add hl, de
 	jr c, .returnZero
@@ -39,21 +26,8 @@
 	ld a, [hl+]
 	ld h, [hl]
 	ld l, a
-	ld a, l
-	sub e
-	ld l, a
-	ld a, h
-	sbc d
-	ld h, a
-	bit 7, h
-	jr z, .absDepth
-	xor a
-	sub l
-	ld l, a
-	sbc a
-	sub h
-	ld h, a
-.absDepth:
+	sub_hl_de
+	abs_hl
 	ld de, $ff80
 	add hl, de
 	jr c, .returnZero
@@ -61,15 +35,7 @@
 	ld a, [hl+]
 	ld h, [hl]
 	ld l, a
-	bit 7, h
-	jr z, .absHeight
-	xor a
-	sub l
-	ld l, a
-	sbc a
-	sub h
-	ld h, a
-.absHeight:
+	abs_hl
 	ld de, $ff40
 	add hl, de
 	jr c, .returnZero

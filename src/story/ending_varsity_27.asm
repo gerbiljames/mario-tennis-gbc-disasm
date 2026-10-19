@@ -40,11 +40,11 @@ End10VarsityCourtActors_27:
 	map_actor_end
 End10VarsityCourtEntryPoints_27:
 	; $5608, 9 bytes (map_entries)
-	map_entry $01, FACE_UP, 15.0, 31.0, $0000
+	map_entry $01, FACE_UP, 15.0, 31.0, $0000, END10_VARSITY_COURT_SCENE
 	db $ff
 End10VarsityCourtExitTriggers_27:
 	; $5611, 9 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, $0000, STORYLOC_END10_VARSITY_COURT, $01
+	map_script $01, FACEMASK_ANY, $0000, $0000, STORYLOC_END10_VARSITY_COURT, ENTRY_END10_VARSITY_COURT_SCENE, END10_VARSITY_COURT_DONE
 	db $ff
 End10VarsityCourtNpcScripts_27:
 	ds 1, $ff ; $561a, fill
@@ -54,7 +54,7 @@ End10VarsityCourtTileTriggers_27:
 	ds 1, $ff ; $561c, fill
 End10VarsityCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $561d
-	cp $01 ; $5620
+	cp ENTRY_END10_VARSITY_COURT_SCENE ; $5620
 	jp z, End10VarsityCourtEntry01Scene ; $5622
 	ret ; $5625
 	twin set_partner_obj_def_by_gender, 27 ; $5626 SetPartnerObjDefByGender_27
@@ -135,7 +135,7 @@ End10VarsityCourtEntry01Scene:
 	script_wait_frames 10 ; $580d
 	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_EMILY, ACTOR_PLAYER ; $5814
 	script_wait_frames 10 ; $581c
-	ld a, $01 ; $5823
+	ld a, EXIT_END10_VARSITY_COURT_DONE ; $5823
 	ld [wUnusedExitTriggerIdMirror], a ; $5825
 	ld [wStoryModeExitTriggerRequest], a ; $5828
 	ret ; $582b
@@ -304,7 +304,7 @@ CeremonyDoublesReaction_27:
 	script_wait_frames 10 ; $5c12
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5c19
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5c20
-	ld a, $01 ; $5c27
+	ld a, EXIT_END10_VARSITY_COURT_DONE ; $5c27
 	ld [wUnusedExitTriggerIdMirror], a ; $5c29
 	ld [wStoryModeExitTriggerRequest], a ; $5c2c
 	ret ; $5c2f
@@ -429,11 +429,11 @@ End8SrCourtActorsAlt_27:
 	map_actor_end
 End8SrCourtEntryPoints_27:
 	; $5ec3, 9 bytes (map_entries)
-	map_entry $01, FACE_UP, 36.0, 21.0, $0000
+	map_entry $01, FACE_UP, 36.0, 21.0, $0000, END8_SR_COURT_SCENE
 	db $ff
 End8SrCourtExitTriggers_27:
 	; $5ecc, 9 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END8_SR_COURT, $01
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END8_SR_COURT, ENTRY_END8_SR_COURT_SCENE, END8_SR_COURT_DONE
 	db $ff
 End8SrCourtNpcScripts_27:
 	ds 1, $ff ; $5ed5, fill
@@ -506,7 +506,7 @@ End8SrCourtInitScript_27:
 	script_set_anim ACTOR_END8_SR_COURT_ALT_EMILY, ANIM_NOD ; $6059
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6060
 	script_wait_idle ACTOR_PLAYER ; $6067
-	ld a, $01 ; $606c
+	ld a, EXIT_END8_SR_COURT_DONE ; $606c
 	ld [wUnusedExitTriggerIdMirror], a ; $606e
 	ld [wStoryModeExitTriggerRequest], a ; $6071
 	ret ; $6074
@@ -550,7 +550,7 @@ End8SrCourtInitScript_27:
 	script_set_anim ACTOR_END8_SR_COURT_ALT_EMILY, ANIM_NOD ; $6165
 	script_wait_idle ACTOR_END8_SR_COURT_ALT_EMILY ; $616c
 	script_delay 40 ; $6171
-	ld a, $01 ; $6176
+	ld a, EXIT_END8_SR_COURT_DONE ; $6176
 	ld [wUnusedExitTriggerIdMirror], a ; $6178
 	ld [wStoryModeExitTriggerRequest], a ; $617b
 	ret ; $617e

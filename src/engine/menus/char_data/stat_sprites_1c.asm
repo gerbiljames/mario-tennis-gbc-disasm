@@ -21,6 +21,7 @@ DrawStatValueSprites:
 	or a ; $4e63
 	jr nz, .spinDigits ; $4e64
 	ld a, [wCharDataPage] ; $4e66
+	ASSERT CHARDATAPAGE_SPIN == 0
 	or a ; $4e69
 	jr nz, .spinDigits ; $4e6a
 	inc l ; $4e6c
@@ -70,7 +71,7 @@ DrawStatValueSprites:
 	or a ; $4ebc
 	jr nz, .powerDigits ; $4ebd
 	ld a, [wCharDataPage] ; $4ebf
-	cp $01 ; $4ec2
+	cp CHARDATAPAGE_POWER ; $4ec2
 	jr nz, .powerDigits ; $4ec4
 	inc l ; $4ec6
 	ld b, $0f ; $4ec7
@@ -119,7 +120,7 @@ DrawStatValueSprites:
 	or a ; $4f19
 	jr nz, .controlDigits ; $4f1a
 	ld a, [wCharDataPage] ; $4f1c
-	cp $02 ; $4f1f
+	cp CHARDATAPAGE_CONTROL ; $4f1f
 	jr nz, .controlDigits ; $4f21
 	inc l ; $4f23
 	ld b, $0f ; $4f24
@@ -168,7 +169,7 @@ DrawStatValueSprites:
 	or a ; $4f76
 	jr nz, .speedDigits ; $4f77
 	ld a, [wCharDataPage] ; $4f79
-	cp $03 ; $4f7c
+	cp CHARDATAPAGE_SPEED ; $4f7c
 	jr nz, .speedDigits ; $4f7e
 	inc l ; $4f80
 	ld b, $0f ; $4f81
@@ -231,13 +232,13 @@ GetStatDigitSpritePos:
 RadialOffsetRamps_1c:
 	dw RadialOffsetRamp0_1c, RadialOffsetRamp1_1c, RadialOffsetRamp2_1c, RadialOffsetRamp3_1c ; $4fe9
 RadialOffsetRamp0_1c:
-	INCBIN "data/engine/menus/char_data/RadialOffsetRamp0_1c.bin" ; $4ff1, 22 bytes
+	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp0_1c.asm" ; $4ff1, 22 bytes (bytes:2)
 RadialOffsetRamp1_1c:
-	INCBIN "data/engine/menus/char_data/RadialOffsetRamp1_1c.bin" ; $5007, 22 bytes
+	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp1_1c.asm" ; $5007, 22 bytes (bytes:2)
 RadialOffsetRamp2_1c:
-	INCBIN "data/engine/menus/char_data/RadialOffsetRamp2_1c.bin" ; $501d, 22 bytes
+	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp2_1c.asm" ; $501d, 22 bytes (bytes:2)
 RadialOffsetRamp3_1c:
-	INCBIN "data/engine/menus/char_data/RadialOffsetRamp3_1c.bin" ; $5033, 22 bytes
+	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp3_1c.asm" ; $5033, 22 bytes (bytes:2)
 DrawRemainingPointsSprite:
 	wram_bank WRAM_SCENE ; $5049
 	ld a, [wCharDataPointsLeft] ; $504f
@@ -379,18 +380,7 @@ CharDataScreen_InputLoop:
 .checkStatCap:
 	ld a, [wStoryCharacterSlot] ; $5171
 	push af ; $5174
-	ld hl, wStoryMainName ; $5175
-	ld a, [wStoryCharacterSlot] ; $5178
-	or a ; $517b
-	jr z, .readStatCap ; $517c
-	ld l, $40 ; $517e
-.readStatCap:
-	ld a, l ; $5180
-	add $18 ; $5181
-	ld l, a ; $5183
-	ld a, h ; $5184
-	adc $00 ; $5185
-	ld h, a ; $5187
+	ld_story_char_field CHARREC_LEVEL ; $5175
 	pop af ; $5188
 	ld a, [hl] ; $5189
 	cp $63 ; $518a
@@ -542,9 +532,7 @@ CharDataScreen_InputLoop:
 	ld a, $03 ; $5323
 	ld [wCharDataRevealStep], a ; $5325
 	call FlushCharDataTilemaps ; $5328
-	ld a, $01 ; $532b
-	ld hl, DrawRemainingPointsSprite ; $532d
-	call RegisterFrameTask ; $5330
+	frame_task DrawRemainingPointsSprite ; $532b
 	call RestoreCharDataScreenRow ; $5333
 	call DrawCharStatRows ; $5336
 	ld hl, CharDataBand6RunsStep1_1c ; $5339
@@ -577,7 +565,5 @@ CharDataScreen_InputLoop:
 	call DrawCharStatsAndFlush ; $538f
 	call CharDataScreen_DrawPageColumns ; $5392
 	call FlushCharDataTilemaps ; $5395
-	ld a, $01 ; $5398
-	ld hl, DrawStatArrowIndicators ; $539a
-	call RegisterFrameTask ; $539d
+	frame_task DrawStatArrowIndicators ; $5398
 	jp CharDataScreen_InputLoop ; $53a0

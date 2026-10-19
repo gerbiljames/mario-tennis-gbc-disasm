@@ -370,7 +370,7 @@ DormRoomEntry09Scene:
 	call ShowStoryNarration_13 ; $5a98
 	ld a, STORYLOC_TOURNAMENT_COURTYARD ; $5a9b
 	ld [wStoryModeCurrentLocation], a ; $5a9d
-	ld a, $0f ; $5aa0
+	ld a, ENTRY_TOURNAMENT_COURTYARD_SITE_ARRIVAL ; $5aa0
 	ld [wStoryModeEntryPoint], a ; $5aa2
 	ld a, EXITTRIGGER_DIRECT ; $5aa5
 	ld [wUnusedExitTriggerIdMirror], a ; $5aa7

@@ -29,23 +29,15 @@ RunCharacterSelectScreen:
 	call ClearFrameTasks ; $481e
 	call SetupCharacterSelectScreen ; $4821
 	call DrawCharacterSelectChars ; $4824
-	ld a, $01 ; $4827
-	ld hl, UpdateAnimatedTilesTask_38 ; $4829
-	call RegisterFrameTask ; $482c
-	ld a, $01 ; $482f
-	ld hl, DrawCharacterSelectChars ; $4831
-	call RegisterFrameTask ; $4834
-	ld a, $01 ; $4837
-	ld hl, DrawCharacterSelectCursor ; $4839
-	call RegisterFrameTask ; $483c
+	frame_task UpdateAnimatedTilesTask_38 ; $4827
+	frame_task DrawCharacterSelectChars ; $482f
+	frame_task DrawCharacterSelectCursor ; $4837
 	call EnableLCD ; $483f
 	script_fade_in 8 ; $4842
 	call WaitFadeEnd ; $4847
 	ld hl, rIE ; $484a
 	res B_IE_TIMER, [hl] ; $484d
-	ld a, $01 ; $484f
-	ld hl, TickMenuBgScrollTask_38 ; $4851
-	call RegisterFrameTask ; $4854
+	frame_task TickMenuBgScrollTask_38 ; $484f
 .redraw:
 	ldh a, [hInputPressed] ; $4857
 	ld [wMenuInputPressed], a ; $4859
@@ -85,18 +77,7 @@ RunCharacterSelectScreen:
 	ld a, [wStoryCharacterSlot] ; $489f
 	farcall InitPlayerRecordFromTemplate ; $48a2
 	push af ; $48a5
-	ld hl, wStoryMainName ; $48a6
-	ld a, [wStoryCharacterSlot] ; $48a9
-	or a ; $48ac
-	jr z, .finish ; $48ad
-	ld l, $40 ; $48af
-.finish:
-	ld a, l ; $48b1
-	add $0e ; $48b2
-	ld l, a ; $48b4
-	ld a, h ; $48b5
-	adc $00 ; $48b6
-	ld h, a ; $48b8
+	ld_story_char_field CHARREC_LEFT_HANDED ; $48a6
 	pop af ; $48b9
 	ld a, [wCharSelectHandedness] ; $48ba
 	ld [hl], a ; $48bd

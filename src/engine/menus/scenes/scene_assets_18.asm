@@ -138,7 +138,7 @@ Unused_18_DrawCharSelectCursor:
 	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
 CharSelectCursorAnimTable:
-	INCBIN "data/engine/menus/scenes/CharSelectCursorAnimTable.bin" ; $59fe, 32 bytes
+	INCLUDE "data/engine/menus/scenes/CharSelectCursorAnimTable.asm" ; $59fe, 32 bytes (bytes:16)
 CharSelectCursorTemplatePtrs:
 	; $5a1e, 8 bytes (records:2)
 	dw CharSelectCursorTemplate0 ; record 0
@@ -406,9 +406,7 @@ PlayScreenSequence0:
 	call EnableLCD ; $7703
 	script_fade_in 16 ; $7706
 	call WaitFadeEnd ; $770b
-	ld a, $01 ; $770e
-	ld hl, QueueScreen0Sprites ; $7710
-	call RegisterFrameTask ; $7713
+	frame_task QueueScreen0Sprites ; $770e
 .done:
 	call AdvanceFrame ; $7716
 	ldh a, [hInputPressed] ; $7719

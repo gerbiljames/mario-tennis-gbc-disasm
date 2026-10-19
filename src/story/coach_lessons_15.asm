@@ -8,7 +8,7 @@ WalkToStrokeChallengeCourtCutscene:
 	call PlayerPartnerGestureCutscene ; $6f86
 	ld a, STORYLOC_TRAINING_COURT ; $6f89
 	ld [wStoryModeCurrentLocation], a ; $6f8b
-	ld a, $0a ; $6f8e
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $6f8e
 	ld [wStoryModeEntryPoint], a ; $6f90
 	ld a, EXITTRIGGER_DIRECT ; $6f93
 	ld [wUnusedExitTriggerIdMirror], a ; $6f95
@@ -73,7 +73,7 @@ NetCoachVolleyLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $7047
 	ld a, STORYLOC_TRAINING_COURT ; $704a
 	ld [wStoryModeCurrentLocation], a ; $704c
-	ld a, $09 ; $704f
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $704f
 	ld [wStoryModeEntryPoint], a ; $7051
 	ld a, EXITTRIGGER_DIRECT ; $7054
 	ld [wUnusedExitTriggerIdMirror], a ; $7056
@@ -123,7 +123,7 @@ NetCoachSmashLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $70fc
 	ld a, STORYLOC_TRAINING_COURT ; $70ff
 	ld [wStoryModeCurrentLocation], a ; $7101
-	ld a, $09 ; $7104
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $7104
 	ld [wStoryModeEntryPoint], a ; $7106
 	ld a, EXITTRIGGER_DIRECT ; $7109
 	ld [wUnusedExitTriggerIdMirror], a ; $710b
@@ -167,7 +167,7 @@ NetCoachDropShotLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $719d
 	ld a, STORYLOC_TRAINING_COURT ; $71a0
 	ld [wStoryModeCurrentLocation], a ; $71a2
-	ld a, $09 ; $71a5
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $71a5
 	ld [wStoryModeEntryPoint], a ; $71a7
 	ld a, EXITTRIGGER_DIRECT ; $71aa
 	ld [wUnusedExitTriggerIdMirror], a ; $71ac
@@ -271,8 +271,7 @@ TestStrokeChallengerGameFlagTable:
 	dw $00ce ; record 5
 ServicePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $7290
-	ld a, a ; $7293
-	rst Rst00 ; $7294
+	jumptable a ; $7293
 	dw ServeCoachIntroDialogue_15 ; $7295 jumptable
 	dw ServicePractice1Result1 ; $7297 jumptable
 	dw ServicePractice1Result2 ; $7299 jumptable
@@ -280,8 +279,7 @@ ServicePractice1ResultScene:
 	dw ServicePractice1Result1 ; $729d jumptable
 ServicePractice2ResultScene:
 	ld a, [wDrillLessonResult] ; $729f
-	ld a, a ; $72a2
-	rst Rst00 ; $72a3
+	jumptable a ; $72a2
 	dw ServicePractice2Result0 ; $72a4 jumptable
 	dw ServicePractice1Result1 ; $72a6 jumptable
 	dw ServicePractice1Result2 ; $72a8 jumptable
@@ -292,8 +290,7 @@ ServicePractice2ResultScene:
 	dw ServicePractice1Result1 ; $72b2 jumptable
 ServicePractice3ResultScene:
 	ld a, [wDrillLessonResult] ; $72b4
-	ld a, a ; $72b7
-	rst Rst00 ; $72b8
+	jumptable a ; $72b7
 	dw ServicePractice3Result0 ; $72b9 jumptable
 	dw ServicePractice1Result1 ; $72bb jumptable
 	dw ServicePractice1Result2 ; $72bd jumptable
@@ -471,8 +468,7 @@ InitServeCoachScene:
 	ret ; $7538
 NetGamePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $7539
-	ld a, a ; $753c
-	rst Rst00 ; $753d
+	jumptable a ; $753c
 	dw NetCoachIntroDialogue_15 ; $753e jumptable
 	dw NetGamePractice1Result1 ; $7540 jumptable
 	dw NetGamePractice1Result2 ; $7542 jumptable
@@ -483,8 +479,7 @@ NetGamePractice1ResultScene:
 	dw NetGamePractice1Result1 ; $754c jumptable
 NetGamePractice2ResultScene:
 	ld a, [wDrillLessonResult] ; $754e
-	ld a, a ; $7551
-	rst Rst00 ; $7552
+	jumptable a ; $7551
 	dw NetGamePractice2Result0 ; $7553 jumptable
 	dw NetGamePractice1Result1 ; $7555 jumptable
 	dw NetGamePractice1Result2 ; $7557 jumptable
@@ -495,8 +490,7 @@ NetGamePractice2ResultScene:
 	dw NetGamePractice1Result1 ; $7561 jumptable
 NetGamePractice3ResultScene:
 	ld a, [wDrillLessonResult] ; $7563
-	ld a, a ; $7566
-	rst Rst00 ; $7567
+	jumptable a ; $7566
 	dw NetGamePractice3Result0 ; $7568 jumptable
 	dw NetGamePractice1Result1 ; $756a jumptable
 	dw NetGamePractice1Result2 ; $756c jumptable

@@ -164,15 +164,7 @@ BuildAirborneShadowSlot:
 	ld a, [hl+] ; $7763
 	ld h, [hl] ; $7764
 	ld l, a ; $7765
-	bit 7, h ; $7766
-	jr z, .fillSlot ; $7768
-	xor a ; $776a
-	sub l ; $776b
-	ld l, a ; $776c
-	sbc a ; $776d
-	sub h ; $776e
-	ld h, a ; $776f
-.fillSlot:
+	abs_hl ; $7766
 	ld bc, $ffe0 ; $7770
 	xor a ; $7773
 	add hl, bc ; $7774
@@ -352,8 +344,7 @@ CharInputHandler1_08:
 	ld a, [wCharServeRole] ; $787a
 	and $02 ; $787d
 	jp z, .checkCpu ; $787f
-	ld a, [wCharState] ; $7882
-	rst Rst00 ; $7885
+	jumptable [wCharState] ; $7882
 	dw AiPhaseNoop ; $7886 jumptable
 	dw AiRallyStateNetPlayer ; $7888 jumptable
 	dw AiRecoverStateNetPlayer ; $788a jumptable
@@ -363,8 +354,7 @@ CharInputHandler1_08:
 	dw AiPhaseNoop ; $7892 jumptable
 	dw AiPhaseNoop ; $7894 jumptable
 .checkCpu:
-	ld a, [wCharState] ; $7896
-	rst Rst00 ; $7899
+	jumptable [wCharState] ; $7896
 	dw AiPhaseNoop ; $789a jumptable
 	dw AiRallyStateBaseliner ; $789c jumptable
 	dw AiRecoverStateBaseliner ; $789e jumptable
@@ -374,8 +364,7 @@ CharInputHandler1_08:
 	dw AiPhaseNoop ; $78a6 jumptable
 	dw AiPhaseNoop ; $78a8 jumptable
 .store:
-	ld a, [wCharState] ; $78aa
-	rst Rst00 ; $78ad
+	jumptable [wCharState] ; $78aa
 	dw AiPhaseNoop ; $78ae jumptable
 	dw AiRallyStateSingles ; $78b0 jumptable
 	dw AiRecoverStateSingles ; $78b2 jumptable
@@ -393,21 +382,8 @@ CheckCharNearTarget:
 	ld a, [hl+] ; $78c7
 	ld h, [hl] ; $78c8
 	ld l, a ; $78c9
-	ld a, l ; $78ca
-	sub c ; $78cb
-	ld l, a ; $78cc
-	ld a, h ; $78cd
-	sbc b ; $78ce
-	ld h, a ; $78cf
-	bit 7, h ; $78d0
-	jr z, .absX ; $78d2
-	xor a ; $78d4
-	sub l ; $78d5
-	ld l, a ; $78d6
-	sbc a ; $78d7
-	sub h ; $78d8
-	ld h, a ; $78d9
-.absX:
+	sub_hl_bc ; $78ca
+	abs_hl ; $78d0
 	ld de, -24 ; $78da
 	add hl, de ; $78dd
 	jr c, .tooFar ; $78de
@@ -419,21 +395,8 @@ CheckCharNearTarget:
 	ld a, [hl+] ; $78e9
 	ld h, [hl] ; $78ea
 	ld l, a ; $78eb
-	ld a, l ; $78ec
-	sub c ; $78ed
-	ld l, a ; $78ee
-	ld a, h ; $78ef
-	sbc b ; $78f0
-	ld h, a ; $78f1
-	bit 7, h ; $78f2
-	jr z, .absDepth ; $78f4
-	xor a ; $78f6
-	sub l ; $78f7
-	ld l, a ; $78f8
-	sbc a ; $78f9
-	sub h ; $78fa
-	ld h, a ; $78fb
-.absDepth:
+	sub_hl_bc ; $78ec
+	abs_hl ; $78f2
 	ld de, -24 ; $78fc
 	add hl, de ; $78ff
 	jr c, .tooFar ; $7900
@@ -466,12 +429,7 @@ AiSteerTowardTarget:
 	ld a, [hl+] ; $7923
 	ld h, [hl] ; $7924
 	ld l, a ; $7925
-	ld a, l ; $7926
-	sub c ; $7927
-	ld l, a ; $7928
-	ld a, h ; $7929
-	sbc b ; $792a
-	ld h, a ; $792b
+	sub_hl_bc ; $7926
 	call AngleFromVectorCoarse ; $792c
 	swap a ; $792f
 	and $0f ; $7931

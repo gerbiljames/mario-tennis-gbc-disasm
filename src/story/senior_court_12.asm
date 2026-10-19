@@ -60,13 +60,16 @@ SeniorCourtActorsB_12:
 	map_actor_end
 SeniorCourtEntryPoints_12:
 	; $556f, 17 bytes (map_entries)
-	map_entry $01, FACE_UP, 43.0, 35.0, $0000
-	map_entry $09, FACE_UP, 11.0, 25.0, $0000
+	map_entry $01, FACE_UP, 43.0, 35.0, $0000, SENIOR_CLASS_COURT_FROM_RESTAURANT_PLAZA
+	map_entry $09, FACE_UP, 11.0, 25.0, $0000, SENIOR_CLASS_COURT_PRACTICE_MATCH_RETURN
+	entry_id SENIOR_CLASS_COURT_VICTORY_SCENE, $0d
+	entry_id SENIOR_CLASS_COURT_MATCH_WON, $0e
+	entry_id SENIOR_CLASS_COURT_MATCH_RETURN, $0f
 	db $ff
 SeniorCourtExitTriggers_12:
 	; $5580, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, SeniorCourtExit01_12, STORYLOC_RESTAURANT_PLAZA, $03
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_SENIOR_CLASS_COURT, $0f
+	map_script $01, FACEMASK_ANY, $0000, SeniorCourtExit01_12, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_SENIOR_CLASS_COURT, SENIOR_CLASS_COURT_TO_RESTAURANT_PLAZA
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_SENIOR_CLASS_COURT, ENTRY_SENIOR_CLASS_COURT_MATCH_RETURN, SENIOR_CLASS_COURT_RANKING_MATCH
 	db $ff
 SeniorCourtExit01_12:
 	clear_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5591
@@ -104,7 +107,7 @@ SeniorCourtNpc03_12:
 	ld a, [wMapSceneStage2] ; $55e8
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55eb
 	jr c, SeniorCourtNpc03FaceUpFlag0000_12.checkDoubles ; $55ed
-	cp $09 ; $55ef
+	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55ef
 	jr nc, SeniorCourtExit01_12.loop ; $55f1
 	call SeniorRankOfferScenePrep ; $55f3
 	ret ; $55f6
@@ -112,7 +115,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 	ld a, [wMapSceneStage2] ; $55f7
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55fa
 	jr c, .checkDoubles ; $55fc
-	cp $09 ; $55fe
+	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55fe
 	jr nc, SeniorCourtExit01_12.loop ; $5600
 	call SeniorRankOfferScenePrepFacingUp ; $5602
 	ret ; $5605
@@ -641,7 +644,24 @@ SeniorCourtNpc0CTextIds:
 	dw Text_SeniorEveryoneHasGoals ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0C_12Table:
-	INCBIN "data/story/SeniorCourtNpc0C_12Table.bin" ; $5c2f, 30 bytes
+	; $5c2f, 30 bytes (text_ids)
+	table_width 2
+	dw Text_KateSeniorSingleHandedRangeAlt ; record 0
+	dw Text_KateSeniorSingleHandedRangeAlt ; record 1
+	dw Text_KateSeniorKeepAtItRankings ; record 2
+	dw Text_KateSeniorYouBeatMeToRankings ; record 3
+	dw Text_KateSeniorYouBeatMeToRankings ; record 4
+	dw Text_KateSeniorYouBeatMeToRankings ; record 5
+	dw Text_BobSeniorAlwaysUnranked ; record 6
+	dw Text_EmilyOfferDoublesRanking ; record 7
+	dw Text_EmilyOfferDoublesRanking ; record 8
+	dw Text_KateSeniorFocusOnDoubles ; record 9
+	dw Text_SeniorStandInCoachEmilyAway ; record 10
+	dw Text_KateSeniorWhoCaresRootingForYou ; record 11
+	dw Text_KateSeniorJealousPartnerNoBetter ; record 12
+	dw Text_KateSeniorLuckyChampPartner ; record 13
+	dw Text_SeniorEveryoneHasGoals ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)
 	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_RIGHT, $0840, SeniorCourtNpc03FaceRight_12, NPC_FACE_PLAYER, $00
@@ -712,11 +732,11 @@ SeniorCourtInitScript_12:
 	call SeniorCourtPositionActorsByProgressA ; $5d8d
 	call SetPartnerObjDefByGender_12 ; $5d90
 	ld a, [wStoryModeEntryPoint] ; $5d93
-	cp $0f ; $5d96
+	cp ENTRY_SENIOR_CLASS_COURT_MATCH_RETURN ; $5d96
 	jp z, SeniorCourtPostMatchReturn ; $5d98
-	cp $0e ; $5d9b
+	cp ENTRY_SENIOR_CLASS_COURT_MATCH_WON ; $5d9b
 	jp z, SeniorCourtReloadIntoVictoryScene ; $5d9d
-	cp $0d ; $5da0
+	cp ENTRY_SENIOR_CLASS_COURT_VICTORY_SCENE ; $5da0
 	jp z, SeniorMatchVictorySceneDispatch ; $5da2
 	call SeniorCourtPositionActorsByProgressB ; $5da5
 	farcall EndCutsceneScriptMode ; $5da8
@@ -731,7 +751,7 @@ SeniorCourtPositionActorsByProgressB:
 	ld a, [wMapSceneStage2] ; $5dbe
 	cp SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN ; $5dc1
 	jr c, .checkDoubles ; $5dc3
-	cp $0d ; $5dc5
+	cp SENIORCOURTSTAGE_SINGLES_COMPLETE ; $5dc5
 	jr nc, .checkDoubles ; $5dc7
 	script_get_actor_state ACTOR_SENIOR_COURT_A_EMILY ; $5dc9
 	ld c, l ; $5dce
@@ -773,7 +793,7 @@ SeniorCourtPositionActorsByProgressA:
 	ld a, [wMapSceneStage2] ; $5e38
 	cp SENIORCOURTSTAGE_DOUBLES_RANK2 ; $5e3b
 	jr c, .checkStage10 ; $5e3d
-	cp $09 ; $5e3f
+	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $5e3f
 	jr nc, .checkStage10 ; $5e41
 	script_set_position ACTOR_SENIOR_COURT_A_CURT, 27.0, 11.0 ; $5e43
 	script_set_position ACTOR_SENIOR_COURT_A_BETH, 27.0, 13.0 ; $5e4e

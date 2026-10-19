@@ -61,12 +61,7 @@ DecompressData:
 	ld h, d ; $17e6
 	ld l, e ; $17e7
 	pop de ; $17e8
-	ld a, l ; $17e9
-	sub e ; $17ea
-	ld l, a ; $17eb
-	ld a, h ; $17ec
-	sbc d ; $17ed
-	ld h, a ; $17ee
+	sub_hl_de ; $17e9
 	pop de ; $17ef
 	pop bc ; $17f0
 	pop af ; $17f1

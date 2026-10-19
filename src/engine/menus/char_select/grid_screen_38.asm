@@ -40,8 +40,7 @@ SetCharSelectAnimations:
 	ld d, CHARANIM_STAND ; $4d3b
 	farcall SetCharAnimation ; $4d3d
 	call GetSelectedCharWramBank ; $4d40
-	ld a, b ; $4d43
-	wram_bank ; $4d44
+	wram_bank b ; $4d43
 	ld d, CHARANIM_FOREHAND ; $4d48
 	farcall SetCharAnimation ; $4d4a
 	wram_bank WRAM_ACTORS ; $4d4d
@@ -67,15 +66,13 @@ ReloadSelectedCharGfx:
 	ld c, $0b ; $4d84
 	farcall LoadIndexedPalette ; $4d86
 	call GetSelectedCharWramBank ; $4d89
-	ld a, b ; $4d8c
-	wram_bank ; $4d8d
+	wram_bank b ; $4d8c
 	farcall ReloadCharFrameGfx ; $4d91
 	wram_bank WRAM_CHAR0 ; $4d94
 	ret ; $4d9a
 TickCharSelectIdleAnim:
 	call GetSelectedCharWramBank ; $4d9b
-	ld a, b ; $4d9e
-	wram_bank ; $4d9f
+	wram_bank b ; $4d9e
 	ld bc, wCharPosX ; $4da3
 	ld hl, $002e ; $4da6
 	add hl, bc ; $4da9
@@ -102,8 +99,7 @@ TickCharSelectIdleAnim:
 	xor a ; $4de3
 	ld [wCharSelectIdleTimer], a ; $4de4
 	call GetSelectedCharWramBank ; $4de7
-	ld a, b ; $4dea
-	wram_bank ; $4deb
+	wram_bank b ; $4dea
 	ld d, CHARANIM_OVERHEAD ; $4def
 	farcall SetCharAnimation ; $4df1
 .restore:
@@ -178,9 +174,7 @@ RunExhibitionCharSelectScreen:
 	call WaitFadeEnd ; $4e97
 	ld hl, rIE ; $4e9a
 	res B_IE_TIMER, [hl] ; $4e9d
-	ld a, $01 ; $4e9f
-	ld hl, TickMenuBgScrollTask_38 ; $4ea1
-	call RegisterFrameTask ; $4ea4
+	frame_task TickMenuBgScrollTask_38 ; $4e9f
 	call RefreshCharInfoPanel ; $4ea7
 .frameLoop:
 	call AdvanceFrame ; $4eaa
@@ -369,7 +363,7 @@ CharGridScreenGfx1:
 	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx1.bin" ; $50a7, 74 bytes
 	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx1.inc" ; DEF CharGridScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
 CharGridScreenGfx2:
-	INCBIN "data/engine/menus/char_select/CharGridScreenGfx2.bin" ; $50f1, 8 bytes
+	INCLUDE "data/engine/menus/char_select/CharGridScreenGfx2.asm" ; $50f1, 8 bytes (palettes)
 CharGridScreenGfx3:
 	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx3.bin" ; $50f9, 156 bytes
 	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx3.inc" ; DEF CharGridScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
@@ -697,7 +691,7 @@ CancelCharGridSelection:
 DrawCharGridSlotPrompt:
 	wram_bank WRAM_SCREEN ; $5424
 	ld a, [wCharSelectSlot] ; $542a
-	cp $ff ; $542d
+	cp CHARSELECTSLOT_BACKED_OUT ; $542d
 	ret z ; $542f
 	wram_bank WRAM_SCREEN ; $5430
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $5436

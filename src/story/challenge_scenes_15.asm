@@ -152,7 +152,7 @@ WalkToNetChallengeCourtCutscene:
 	call PlayerPartnerGestureCutscene ; $6b33
 	ld a, STORYLOC_TRAINING_COURT ; $6b36
 	ld [wStoryModeCurrentLocation], a ; $6b38
-	ld a, $0a ; $6b3b
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $6b3b
 	ld [wStoryModeEntryPoint], a ; $6b3d
 	ld a, EXITTRIGGER_DIRECT ; $6b40
 	ld [wUnusedExitTriggerIdMirror], a ; $6b42
@@ -344,7 +344,7 @@ ReturnCoachReturnLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6e2a
 	ld a, STORYLOC_TRAINING_COURT ; $6e2d
 	ld [wStoryModeCurrentLocation], a ; $6e2f
-	ld a, $09 ; $6e32
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6e32
 	ld [wStoryModeEntryPoint], a ; $6e34
 	ld a, EXITTRIGGER_DIRECT ; $6e37
 	ld [wUnusedExitTriggerIdMirror], a ; $6e39
@@ -380,7 +380,7 @@ ReturnCoachLobLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6ead
 	ld a, STORYLOC_TRAINING_COURT ; $6eb0
 	ld [wStoryModeCurrentLocation], a ; $6eb2
-	ld a, $09 ; $6eb5
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6eb5
 	ld [wStoryModeEntryPoint], a ; $6eb7
 	ld a, EXITTRIGGER_DIRECT ; $6eba
 	ld [wUnusedExitTriggerIdMirror], a ; $6ebc
@@ -416,7 +416,7 @@ ReturnCoachPassingShotLessonScene:
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6f30
 	ld a, STORYLOC_TRAINING_COURT ; $6f33
 	ld [wStoryModeCurrentLocation], a ; $6f35
-	ld a, $09 ; $6f38
+	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6f38
 	ld [wStoryModeEntryPoint], a ; $6f3a
 	ld a, EXITTRIGGER_DIRECT ; $6f3d
 	ld [wUnusedExitTriggerIdMirror], a ; $6f3f

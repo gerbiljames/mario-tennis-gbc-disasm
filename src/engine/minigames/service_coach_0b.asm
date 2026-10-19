@@ -56,9 +56,7 @@ ServicePractice2HandlePointEnd:
 	ld b, $01 ; $50c8
 	farcall LoadPlayer2PointsDigitGfx ; $50ca
 	farcall StepMatchFrame ; $50cd
-	ld a, $01 ; $50d0
-	ld hl, SyncPointWinLoseFlagTask ; $50d2
-	call RegisterFrameTask ; $50d5
+	frame_task SyncPointWinLoseFlagTask ; $50d0
 	farcall StartPointEndReactions ; $50d8
 	ld hl, SyncPointWinLoseFlagTask ; $50db
 	call UnregisterFrameTask ; $50de
@@ -69,7 +67,7 @@ ServicePractice2SetupShotTarget:
 	cp $01 ; $50e8
 	ret nz ; $50ea
 	ld a, [wTotalPointsScoredInCurrentGame] ; $50eb
-	cp $04 ; $50ee
+	cp DRILL_LESSON_POINTS ; $50ee
 	ret nc ; $50f0
 	ld hl, ServicePractice2ExpectedServes ; $50f1
 	add_hl_a ; $50f4
@@ -211,7 +209,7 @@ ServicePractice3Hook_Draw:
 ServicePractice3Hook_PointStart:
 	xor a ; $5213
 	ld [wDrillAbortCountdownActive], a ; $5214
-	ld a, $0a ; $5217
+	ld a, DRILL_ABORT_FRAMES ; $5217
 	ld [wDrillAbortCountdown], a ; $5219
 	ld a, $01 ; $521c
 	ld [wTargetZoneEnabled], a ; $521e
@@ -228,7 +226,7 @@ ServicePractice3Hook_PointStart:
 ServicePractice3Hook_PointEnd:
 	call ServicePractice3HandlePointEnd ; $5237
 	ld a, [wTotalPointsScoredInCurrentGame] ; $523a
-	cp $04 ; $523d
+	cp DRILL_LESSON_POINTS ; $523d
 	ret c ; $523f
 	ld a, [wPointWinLoseFlag] ; $5240
 	ASSERT WINLOSE_NONE == 0
@@ -247,41 +245,42 @@ ServicePractice3EvaluateResult:
 	ld a, [wDrillCounters + DRILLCTR_SERVES_SCORED] ; $5259
 	or a ; $525c
 	jr nz, .checkCharacter1DoubleFaults ; $525d
-	ld a, $01 ; $525f
+	ld a, LESSON_SERVE_NO_POINTS ; $525f
 	ld [wDrillLessonResult], a ; $5261
 	jr .notFound ; $5264
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $5266
 	or a ; $5269
 	jr z, .countDrillResultBitsSet ; $526a
-	ld a, $02 ; $526c
+	ld a, LESSON_SERVE_DOUBLE_FAULT ; $526c
 	ld [wDrillLessonResult], a ; $526e
 	jr .notFound ; $5271
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $5273
 	or a ; $5276
 	jr z, .checkCounter1 ; $5277
-	ld a, $03 ; $5279
+	ld a, LESSON_SERVE_MISSED_TARGET ; $5279
 	ld [wDrillLessonResult], a ; $527b
 	jr .notFound ; $527e
 .checkCounter1:
 	ld a, [wDrillCounters + DRILLCTR_TIMED_SERVES_LEFT] ; $5280
 	or a ; $5283
 	jr z, .countDrillResultBitsSetAlt ; $5284
-	ld a, $04 ; $5286
+	ld a, LESSON_SERVE_LINE_TIMING ; $5286
 	ld [wDrillLessonResult], a ; $5288
 	jr .notFound ; $528b
 .countDrillResultBitsSetAlt:
 	call CountDrillResultBitsSetAlt ; $528d
-	cp $04 ; $5290
+	cp DRILL_LESSON_POINTS ; $5290
 	jr z, .allPassed ; $5292
-	ld a, $05 ; $5294
+	ld a, LESSON_SERVE_LINE_NOT_CENTER ; $5294
 	ld [wDrillLessonResult], a ; $5296
 	jr .notFound ; $5299
 .notFound:
 	ld a, $ff ; $529b
 	ret ; $529d
 .allPassed:
+	ASSERT LESSON_PASSED == 0
 	xor a ; $529e
 	ld [wDrillLessonResult], a ; $529f
 	ld a, $01 ; $52a2
@@ -304,7 +303,7 @@ ServicePractice3SetupShotTarget:
 	cp $01 ; $52c6
 	ret nz ; $52c8
 	ld a, [wTotalPointsScoredInCurrentGame] ; $52c9
-	cp $04 ; $52cc
+	cp DRILL_LESSON_POINTS ; $52cc
 	ret nc ; $52ce
 	ld a, [wSpecialShotFlag] ; $52cf
 	or a ; $52d2
@@ -357,9 +356,7 @@ ServicePractice3HandlePointEnd:
 	ld b, $01 ; $535e
 	farcall LoadPlayer2PointsDigitGfx ; $5360
 	farcall StepMatchFrame ; $5363
-	ld a, $01 ; $5366
-	ld hl, SyncPointWinLoseFlagTask ; $5368
-	call RegisterFrameTask ; $536b
+	frame_task SyncPointWinLoseFlagTask ; $5366
 	farcall StartPointEndReactions ; $536e
 	ld hl, SyncPointWinLoseFlagTask ; $5371
 	call UnregisterFrameTask ; $5374

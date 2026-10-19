@@ -25,12 +25,7 @@
 	ld a, [hl+]
 	ld h, [hl]
 	ld l, a
-	ld a, l
-	sub e
-	ld l, a
-	ld a, h
-	sbc d
-	ld h, a
+	sub_hl_de
 	jr nc, .restore
 	ld hl, wShotDistMax
 	ld a, [hl+]

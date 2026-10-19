@@ -3,12 +3,7 @@ SetSpecialShotFlagFromBallHeight:
 	ld a, [hl+] ; $5a04
 	ld h, [hl] ; $5a05
 	ld l, a ; $5a06
-	xor a ; $5a07
-	sub l ; $5a08
-	ld l, a ; $5a09
-	sbc a ; $5a0a
-	sub h ; $5a0b
-	ld h, a ; $5a0c
+	neg_hl ; $5a07
 	add hl, hl ; $5a0d
 	add hl, hl ; $5a0e
 	add hl, hl ; $5a0f
@@ -97,7 +92,7 @@ CharFrameGfxDest_07:
 	dw $a200 ; record 2
 	dw $a300 ; record 3
 SetupCharacterSprite_CharTileBaseTable:
-	INCBIN "data/engine/match/SetupCharacterSprite_CharTileBaseTable.bin" ; $5aaf, 4 bytes
+	INCLUDE "data/engine/match/SetupCharacterSprite_CharTileBaseTable.asm" ; $5aaf, 4 bytes (bytes:4)
 ; Copies one character's attribute record into the per-character struct: the
 ; reach box CheckCharBallContact tests against, the jump-smash and dive speeds,
 ; and the six AI parameters at record +$0f and +$1b-$1f -- home-position

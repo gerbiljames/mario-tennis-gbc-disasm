@@ -76,21 +76,8 @@ IsPointNearPlayer:
 	ld a, [hl+] ; $5382
 	ld h, [hl] ; $5383
 	ld l, a ; $5384
-	ld a, l ; $5385
-	sub e ; $5386
-	ld l, a ; $5387
-	ld a, h ; $5388
-	sbc d ; $5389
-	ld h, a ; $538a
-	bit 7, h ; $538b
-	jr z, .absX ; $538d
-	xor a ; $538f
-	sub l ; $5390
-	ld l, a ; $5391
-	sbc a ; $5392
-	sub h ; $5393
-	ld h, a ; $5394
-.absX:
+	sub_hl_de ; $5385
+	abs_hl ; $538b
 	srl h ; $5395
 	rr l ; $5397
 	ld a, h ; $5399
@@ -104,21 +91,8 @@ IsPointNearPlayer:
 	ld a, [hl+] ; $53a6
 	ld h, [hl] ; $53a7
 	ld l, a ; $53a8
-	ld a, l ; $53a9
-	sub c ; $53aa
-	ld l, a ; $53ab
-	ld a, h ; $53ac
-	sbc b ; $53ad
-	ld h, a ; $53ae
-	bit 7, h ; $53af
-	jr z, .absDepth ; $53b1
-	xor a ; $53b3
-	sub l ; $53b4
-	ld l, a ; $53b5
-	sbc a ; $53b6
-	sub h ; $53b7
-	ld h, a ; $53b8
-.absDepth:
+	sub_hl_bc ; $53a9
+	abs_hl ; $53af
 	srl h ; $53b9
 	rr l ; $53bb
 	ld a, h ; $53bd
@@ -174,21 +148,8 @@ FindActorAtPoint:
 	ld a, [hl+] ; $53fc
 	ld h, [hl] ; $53fd
 	ld l, a ; $53fe
-	ld a, l ; $53ff
-	sub e ; $5400
-	ld l, a ; $5401
-	ld a, h ; $5402
-	sbc d ; $5403
-	ld h, a ; $5404
-	bit 7, h ; $5405
-	jr z, .checkX ; $5407
-	xor a ; $5409
-	sub l ; $540a
-	ld l, a ; $540b
-	sbc a ; $540c
-	sub h ; $540d
-	ld h, a ; $540e
-.checkX:
+	sub_hl_de ; $53ff
+	abs_hl ; $5405
 	ld a, h ; $540f
 	and a ; $5410
 	jr nz, .nextActor ; $5411
@@ -204,21 +165,8 @@ FindActorAtPoint:
 	ld a, [hl+] ; $5422
 	ld h, [hl] ; $5423
 	ld l, a ; $5424
-	ld a, l ; $5425
-	sub e ; $5426
-	ld l, a ; $5427
-	ld a, h ; $5428
-	sbc d ; $5429
-	ld h, a ; $542a
-	bit 7, h ; $542b
-	jr z, .checkDepth ; $542d
-	xor a ; $542f
-	sub l ; $5430
-	ld l, a ; $5431
-	sbc a ; $5432
-	sub h ; $5433
-	ld h, a ; $5434
-.checkDepth:
+	sub_hl_de ; $5425
+	abs_hl ; $542b
 	pop de ; $5435
 	ld a, h ; $5436
 	and a ; $5437
@@ -276,21 +224,8 @@ BuildNearbyActorList:
 	ld a, [hl+] ; $5484
 	ld h, [hl] ; $5485
 	ld l, a ; $5486
-	ld a, l ; $5487
-	sub e ; $5488
-	ld l, a ; $5489
-	ld a, h ; $548a
-	sbc d ; $548b
-	ld h, a ; $548c
-	bit 7, h ; $548d
-	jr z, .withinRange ; $548f
-	xor a ; $5491
-	sub l ; $5492
-	ld l, a ; $5493
-	sbc a ; $5494
-	sub h ; $5495
-	ld h, a ; $5496
-.withinRange:
+	sub_hl_de ; $5487
+	abs_hl ; $548d
 	ld a, h ; $5497
 	and $fe ; $5498
 	jr nz, .done ; $549a
@@ -303,21 +238,8 @@ BuildNearbyActorList:
 	ld a, [hl+] ; $54a6
 	ld h, [hl] ; $54a7
 	ld l, a ; $54a8
-	ld a, l ; $54a9
-	sub e ; $54aa
-	ld l, a ; $54ab
-	ld a, h ; $54ac
-	sbc d ; $54ad
-	ld h, a ; $54ae
-	bit 7, h ; $54af
-	jr z, .next ; $54b1
-	xor a ; $54b3
-	sub l ; $54b4
-	ld l, a ; $54b5
-	sbc a ; $54b6
-	sub h ; $54b7
-	ld h, a ; $54b8
-.next:
+	sub_hl_de ; $54a9
+	abs_hl ; $54af
 	ld a, h ; $54b9
 	and $fe ; $54ba
 	jr nz, .done ; $54bc
@@ -437,18 +359,8 @@ DrawActorSprite:
 	ld l, a ; $5554
 	bit 7, h ; $5555
 	jr z, .offscreen ; $5557
-	xor a ; $5559
-	sub l ; $555a
-	ld l, a ; $555b
-	sbc a ; $555c
-	sub h ; $555d
-	ld h, a ; $555e
-	xor a ; $555f
-	sub e ; $5560
-	ld e, a ; $5561
-	sbc a ; $5562
-	sub d ; $5563
-	ld d, a ; $5564
+	neg_hl ; $5559
+	neg_de ; $555f
 	srl h ; $5565
 	rr l ; $5567
 	add hl, de ; $5569
@@ -459,12 +371,7 @@ DrawActorSprite:
 	ld a, [hl+] ; $5570
 	ld h, [hl] ; $5571
 	ld l, a ; $5572
-	ld a, l ; $5573
-	sub e ; $5574
-	ld l, a ; $5575
-	ld a, h ; $5576
-	sbc d ; $5577
-	ld h, a ; $5578
+	sub_hl_de ; $5573
 	jr .queue ; $5579
 .offscreen:
 	ld hl, ACTORF_Y ; $557b

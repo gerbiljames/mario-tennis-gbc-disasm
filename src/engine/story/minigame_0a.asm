@@ -86,24 +86,14 @@ MoveMinigameTargetTowardGoal:
 	ld a, [hl+] ; $662d
 	ld h, [hl] ; $662e
 	ld l, a ; $662f
-	ld a, l ; $6630
-	sub e ; $6631
-	ld l, a ; $6632
-	ld a, h ; $6633
-	sbc d ; $6634
-	ld h, a ; $6635
+	sub_hl_de ; $6630
 	ld a, h ; $6636
 	or l ; $6637
 	jr z, .depthAxis ; $6638
 	ld de, $0010 ; $663a
 	bit 7, h ; $663d
 	jr z, .stepX ; $663f
-	xor a ; $6641
-	sub e ; $6642
-	ld e, a ; $6643
-	sbc a ; $6644
-	sub d ; $6645
-	ld d, a ; $6646
+	neg_de ; $6641
 .stepX:
 	ld hl, wMinigameTargetWork + MGTARGET_X ; $6647
 	ld a, [hl] ; $664a
@@ -121,24 +111,14 @@ MoveMinigameTargetTowardGoal:
 	ld a, [hl+] ; $6659
 	ld h, [hl] ; $665a
 	ld l, a ; $665b
-	ld a, l ; $665c
-	sub e ; $665d
-	ld l, a ; $665e
-	ld a, h ; $665f
-	sbc d ; $6660
-	ld h, a ; $6661
+	sub_hl_de ; $665c
 	ld a, h ; $6662
 	or l ; $6663
 	jr z, .checkArrived ; $6664
 	ld de, $0010 ; $6666
 	bit 7, h ; $6669
 	jr z, .stepDepth ; $666b
-	xor a ; $666d
-	sub e ; $666e
-	ld e, a ; $666f
-	sbc a ; $6670
-	sub d ; $6671
-	ld d, a ; $6672
+	neg_de ; $666d
 .stepDepth:
 	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $6673
 	ld a, [hl] ; $6676
@@ -156,12 +136,7 @@ MoveMinigameTargetTowardGoal:
 	ld a, [hl+] ; $6685
 	ld h, [hl] ; $6686
 	ld l, a ; $6687
-	ld a, l ; $6688
-	sub e ; $6689
-	ld l, a ; $668a
-	ld a, h ; $668b
-	sbc d ; $668c
-	ld h, a ; $668d
+	sub_hl_de ; $6688
 	ld a, h ; $668e
 	or l ; $668f
 	jr nz, .done ; $6690
@@ -173,12 +148,7 @@ MoveMinigameTargetTowardGoal:
 	ld a, [hl+] ; $669b
 	ld h, [hl] ; $669c
 	ld l, a ; $669d
-	ld a, l ; $669e
-	sub e ; $669f
-	ld l, a ; $66a0
-	ld a, h ; $66a1
-	sbc d ; $66a2
-	ld h, a ; $66a3
+	sub_hl_de ; $669e
 	ld a, h ; $66a4
 	or l ; $66a5
 	jr nz, .done ; $66a6
@@ -230,7 +200,7 @@ MinigameTargetTable:
 	; $66f6, 8 bytes (bytes:8)
 	db $10, $0d, $14, $0f, $18, $0b, $1c, $0e ; 0x00
 DrawMinigameTargetTable:
-	INCBIN "data/engine/story/DrawMinigameTargetTable.bin" ; $66fe, 16 bytes
+	INCLUDE "data/engine/story/DrawMinigameTargetTable.asm" ; $66fe, 16 bytes (bytes:16)
 DrawMinigameTarget_SpriteTemplate:
 	; $670e, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -259,12 +229,7 @@ CheckBallHitsMinigameTarget:
 	ld a, [hl+] ; $673b
 	ld h, [hl] ; $673c
 	ld l, a ; $673d
-	ld a, l ; $673e
-	sub e ; $673f
-	ld l, a ; $6740
-	ld a, h ; $6741
-	sbc d ; $6742
-	ld h, a ; $6743
+	sub_hl_de ; $673e
 	bit 7, h ; $6744
 	jr z, .done ; $6746
 	ld de, $0200 ; $6748
@@ -279,12 +244,7 @@ CheckBallHitsMinigameTarget:
 	ld a, [hl+] ; $6759
 	ld h, [hl] ; $675a
 	ld l, a ; $675b
-	ld a, l ; $675c
-	sub e ; $675d
-	ld l, a ; $675e
-	ld a, h ; $675f
-	sbc d ; $6760
-	ld h, a ; $6761
+	sub_hl_de ; $675c
 	bit 7, h ; $6762
 	jr z, .done ; $6764
 	ld de, $0200 ; $6766
@@ -297,8 +257,7 @@ CheckBallHitsMinigameTarget:
 	ret ; $6773
 DeflectBallOffMinigameTarget:
 	and $03 ; $6774
-	ld a, a ; $6776
-	rst Rst00 ; $6777
+	jumptable a ; $6776
 	dw DeflectBallOffMinigameTarget.pushX ; $6778 jumptable
 	dw DeflectBallOffMinigameTarget.pushUp ; $677a jumptable
 	dw DeflectBallOffMinigameTarget.pushDepth ; $677c jumptable
@@ -693,8 +652,7 @@ MinigameTargetFormation8Script2:
 MinigameTargetFormation8Script3:
 	INCLUDE "data/engine/story/MinigameTargetFormation8Script3.asm" ; $6c71, 10 bytes (target_script)
 SpawnMinigameTargetFormation:
-	ld a, a ; $6c7b
-	rst Rst00 ; $6c7c
+	jumptable a ; $6c7b
 	dw SpawnMinigameTargetFormation0 ; $6c7d jumptable
 	dw SpawnMinigameTargetFormation1 ; $6c7f jumptable
 	dw SpawnMinigameTargetFormation2 ; $6c81 jumptable
@@ -877,7 +835,7 @@ MinigameTargetAltTable:
 	; $6da5, 8 bytes (bytes:8)
 	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
 DrawMinigameTargetAltTable:
-	INCBIN "data/engine/story/DrawMinigameTargetAltTable.bin" ; $6dad, 16 bytes
+	INCLUDE "data/engine/story/DrawMinigameTargetAltTable.asm" ; $6dad, 16 bytes (bytes:16)
 DrawMinigameTargetAlt_SpriteTemplate:
 	; $6dbd, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

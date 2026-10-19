@@ -78,12 +78,8 @@ Unused_38_RunMatchTypeMenu:
 	call DisableLCDSafely ; $4489
 	farcall LoadMenuFontGfx ; $448c
 	call Unused_38_SetupMatchTypeMenuScreen ; $448f
-	ld a, $01 ; $4492
-	ld hl, Unused_38_DrawMatchTypeOptionBoxes ; $4494
-	call RegisterFrameTask ; $4497
-	ld a, $01 ; $449a
-	ld hl, UpdateAnimatedTilesTask_38 ; $449c
-	call RegisterFrameTask ; $449f
+	frame_task Unused_38_DrawMatchTypeOptionBoxes ; $4492
+	frame_task UpdateAnimatedTilesTask_38 ; $449a
 	call EnableLCD ; $44a2
 	script_fade_in 16 ; $44a5
 	call WaitFadeEnd ; $44aa
@@ -125,12 +121,8 @@ Unused_38_RunMatchTypeMenuLink:
 	call ResetSerialState ; $44f4
 	call DisableLCDSafely ; $44f7
 	call Unused_38_SetupMatchTypeMenuScreen ; $44fa
-	ld a, $01 ; $44fd
-	ld hl, Unused_38_DrawMatchTypeOptionBoxes ; $44ff
-	call RegisterFrameTask ; $4502
-	ld a, $01 ; $4505
-	ld hl, UpdateAnimatedTilesTask_38 ; $4507
-	call RegisterFrameTask ; $450a
+	frame_task Unused_38_DrawMatchTypeOptionBoxes ; $44fd
+	frame_task UpdateAnimatedTilesTask_38 ; $4505
 	call EnableLCD ; $450d
 	farcall ResyncLinkSession ; $4510
 	script_fade_in 16 ; $4513

@@ -77,7 +77,7 @@ ApplyCpuDifficultyToCharRecords:
 ; Indexed by wCharSelectSlotDifficulty * 2 in
 ; ApplyCpuDifficultyToCharRecords, then dereferenced to a 6-byte record:
 ; four AI parameters, the difficulty byte copied to
-; wExhibitionMode*CharacterDifficulty, and an EXP tier read only for
+; the records' Difficulty fields, and an EXP tier read only for
 ; characters that are not created ones.
 ;
 ; Records 1-4 are EASY/NORMAL/HARD/INTENSE: reaction delays 28/18/10/2,

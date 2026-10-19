@@ -50,12 +50,7 @@ FaceActorsTowardEachOther:
 	ld d, h ; $46b8
 	ld e, l ; $46b9
 	pop hl ; $46ba
-	ld a, l ; $46bb
-	sub e ; $46bc
-	ld l, a ; $46bd
-	ld a, h ; $46be
-	sbc d ; $46bf
-	ld h, a ; $46c0
+	sub_hl_de ; $46bb
 	ld b, h ; $46c1
 	ld c, l ; $46c2
 	ld hl, hActorPtr ; $46c3
@@ -69,12 +64,7 @@ FaceActorsTowardEachOther:
 	ld d, h ; $46ce
 	ld e, l ; $46cf
 	pop hl ; $46d0
-	ld a, l ; $46d1
-	sub e ; $46d2
-	ld l, a ; $46d3
-	ld a, h ; $46d4
-	sbc d ; $46d5
-	ld h, a ; $46d6
+	sub_hl_de ; $46d1
 	ld d, h ; $46d7
 	ld e, l ; $46d8
 	ld h, b ; $46d9
@@ -413,9 +403,7 @@ SetScreenShake:
 	ld a, [wScreenShakeMagnitude] ; $48cd
 	inc a ; $48d0
 	jr nz, .clampMagnitude ; $48d1
-	ld a, $01 ; $48d3
-	ld hl, UpdateScreenShake ; $48d5
-	call RegisterFrameTask ; $48d8
+	frame_task UpdateScreenShake ; $48d3
 .clampMagnitude:
 	pop af ; $48db
 	cp $04 ; $48dc

@@ -78,9 +78,7 @@ RunExpDistributionLoop:
 	call UpdateExpScreenSelectionPalettes ; $6fda
 	ld hl, SlideExpCursorToPartnerTask ; $6fdd
 	call UnregisterFrameTask ; $6fe0
-	ld a, $01 ; $6fe3
-	ld hl, SlideExpCursorToMainCharTask ; $6fe5
-	call RegisterFrameTask ; $6fe8
+	frame_task SlideExpCursorToMainCharTask ; $6fe3
 	ld hl, wExpCursorChar ; $6feb
 	set 0, [hl] ; $6fee
 	jp RunExpDistributionLoop ; $6ff0
@@ -95,9 +93,7 @@ RunExpDistributionLoop:
 	call UpdateExpScreenSelectionPalettes ; $7007
 	ld hl, SlideExpCursorToMainCharTask ; $700a
 	call UnregisterFrameTask ; $700d
-	ld a, $01 ; $7010
-	ld hl, SlideExpCursorToPartnerTask ; $7012
-	call RegisterFrameTask ; $7015
+	frame_task SlideExpCursorToPartnerTask ; $7010
 	ld hl, wExpCursorChar ; $7018
 	set 0, [hl] ; $701b
 	jp RunExpDistributionLoop ; $701d

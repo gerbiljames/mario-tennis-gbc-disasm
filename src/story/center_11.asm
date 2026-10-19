@@ -24,14 +24,14 @@ CenterCourtActors_11:
 	map_actor_end
 CenterCourtEntryPoints_11:
 	; $4058, 25 bytes (map_entries)
-	map_entry $01, FACE_UP, 12.0, 49.0, $0000
-	map_entry $02, FACE_UP, 36.0, 49.0, $0000
-	map_entry $0f, FACE_UP, 12.0, 49.0, $0000
+	map_entry $01, FACE_UP, 12.0, 49.0, $0000, CENTER_COURT_FROM_TOURNAMENT_WEST
+	map_entry $02, FACE_UP, 36.0, 49.0, $0000, CENTER_COURT_FROM_TOURNAMENT_EAST
+	map_entry $0f, FACE_UP, 12.0, 49.0, $0000, CENTER_COURT_CREDITS
 	db $ff
 CenterCourtExitTriggers_11:
 	; $4071, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_TOURNAMENT, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_TOURNAMENT, $02
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_TOURNAMENT, ENTRY_TOURNAMENT_FROM_CENTER_COURT_WEST, CENTER_COURT_TO_TOURNAMENT_WEST
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_TOURNAMENT, ENTRY_TOURNAMENT_FROM_CENTER_COURT_EAST, CENTER_COURT_TO_TOURNAMENT_EAST
 	db $ff
 CenterCourtNpc03_11:
 	script_set_text Text_CenterCourtStaffFinalOnly ; $4082
@@ -158,7 +158,7 @@ CenterCourtInitScript_11:
 	call SetupCenterCourtSceneVariant ; $41a4
 	call LoadPlayerPartnerObjDefs_11 ; $41a7
 	ld a, [wStoryModeEntryPoint] ; $41aa
-	cp $0f ; $41ad
+	cp ENTRY_CENTER_COURT_CREDITS ; $41ad
 	jp z, CenterCourtEntry0fScene ; $41af
 	call MapArrivalWalk_11 ; $41b2
 	ret ; $41b5
@@ -244,7 +244,7 @@ CenterCourtEntry0fScene:
 	script_move_player 35.0, 36.0 ; $43c8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_01 ; $43d2
 	script_wait_frames 240 ; $43dd
-	ld a, $01 ; $43e4
+	ld a, EXIT_CENTER_COURT_TO_TOURNAMENT_WEST ; $43e4
 	ld [wUnusedExitTriggerIdMirror], a ; $43e6
 	ld [wStoryModeExitTriggerRequest], a ; $43e9
 	ret ; $43ec
@@ -292,18 +292,19 @@ AcademyArrivalActors_11:
 	map_actor_end
 AcademyArrivalEntryPoints_11:
 	; $4515, 33 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 24.0, 17.0, AcademyArrivalArrival01_11
-	map_entry $02, FACE_UP, 24.0, 51.0, MapArrivalWalk_11
-	map_entry $0c, FACE_DOWN, 24.0, 47.0, $0000
-	map_entry $0f, FACE_UP, 24.0, 47.0, $0000
+	map_entry $01, FACE_DOWN, 24.0, 17.0, AcademyArrivalArrival01_11, ACADEMY_ENTRANCE_FROM_ACADEMY_MAIN_BLDG
+	map_entry $02, FACE_UP, 24.0, 51.0, MapArrivalWalk_11, ACADEMY_ENTRANCE_FROM_ISLAND_SKY
+	map_entry $0c, FACE_DOWN, 24.0, 47.0, $0000, ACADEMY_ENTRANCE_DEPART_FOR_PEACHS_CASTLE
+	map_entry $0f, FACE_UP, 24.0, 47.0, $0000, ACADEMY_ENTRANCE_NEW_GAME
+	entry_id ACADEMY_ENTRANCE_DEPART_FOR_ISLAND_OPEN, $0a
 	db $ff
 	twin_named academy_main_bldg_arrival02, AcademyArrivalArrival01_11 ; $4536
 AcademyArrivalExitTriggers_11:
 	; $457c, 33 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ACADEMY_MAIN_BLDG, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ISLAND_SKY, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ISLAND_SKY, $0f
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ACADEMY_MAIN_BLDG, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_FROM_ACADEMY_ENTRANCE, ACADEMY_ENTRANCE_TO_ACADEMY_MAIN_BLDG
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ISLAND_SKY, ENTRY_ISLAND_SKY_TO_ISLAND_OPEN, ACADEMY_ENTRANCE_FLY_TO_ISLAND_OPEN
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ISLAND_SKY, ENTRY_ISLAND_SKY_TO_PEACHS_CASTLE, ACADEMY_ENTRANCE_FLY_TO_PEACHS_CASTLE
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_NEW_STUDENT, ACADEMY_ENTRANCE_TOUR
 	db $ff
 AcademyArrivalNpc03_11:
 	ld a, [wMapSceneStage] ; $459d
@@ -437,11 +438,11 @@ AcademyArrivalInitScript_11:
 	call EnableAcademyCampusExit ; $46b4
 	call MoveCampusGateGuardAside ; $46b7
 	ld a, [wStoryModeEntryPoint] ; $46ba
-	cp $0a ; $46bd
+	cp ENTRY_ACADEMY_ENTRANCE_DEPART_FOR_ISLAND_OPEN ; $46bd
 	jp z, AcademyArrivalInitScript_11.scriptRespawnLocationActors ; $46bf
-	cp $0c ; $46c2
+	cp ENTRY_ACADEMY_ENTRANCE_DEPART_FOR_PEACHS_CASTLE ; $46c2
 	jp z, AcademyArrivalEntry0cScene ; $46c4
-	cp $0f ; $46c7
+	cp ENTRY_ACADEMY_ENTRANCE_NEW_GAME ; $46c7
 	jr nz, .done ; $46c9
 	apcall ApStartNewGame
 	jp nz, ApSkipIntro

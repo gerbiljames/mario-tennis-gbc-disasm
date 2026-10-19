@@ -180,12 +180,8 @@ RunDrillResultInputLoop:
 	call UnregisterFrameTask ; $4cde
 	ld hl, SlideCharDataArrowsInTask ; $4ce1
 	call UnregisterFrameTask ; $4ce4
-	ld a, $01 ; $4ce7
-	ld hl, SlideCharDataArrowsOutTask ; $4ce9
-	call RegisterFrameTask ; $4cec
-	ld a, $01 ; $4cef
-	ld hl, DrawCharStatDigitsTask ; $4cf1
-	call RegisterFrameTask ; $4cf4
+	frame_task SlideCharDataArrowsOutTask ; $4ce7
+	frame_task DrawCharStatDigitsTask ; $4cef
 	wram_bank WRAM_SCENE ; $4cf7
 	ld a, [wCharStatPagePartner] ; $4cfd
 	ld [wCharDataLevels], a ; $4d00
@@ -203,9 +199,7 @@ RunDrillResultInputLoop:
 	wram_bank WRAM_SCENE ; $4d24
 	ld a, $02 ; $4d2a
 	ld [wCharDataPageArrowMode], a ; $4d2c
-	ld a, $01 ; $4d2f
-	ld hl, SlideCharDataArrowsInTask ; $4d31
-	call RegisterFrameTask ; $4d34
+	frame_task SlideCharDataArrowsInTask ; $4d2f
 	jp .partnerPageLoop ; $4d37
 .toMainPage:
 	sound SFX_MENU_MOVE ; $4d3a
@@ -213,12 +207,8 @@ RunDrillResultInputLoop:
 	call UnregisterFrameTask ; $4d3f
 	ld hl, SlideCharDataArrowsInTask ; $4d42
 	call UnregisterFrameTask ; $4d45
-	ld a, $01 ; $4d48
-	ld hl, SlideCharDataArrowsOutTask ; $4d4a
-	call RegisterFrameTask ; $4d4d
-	ld a, $01 ; $4d50
-	ld hl, DrawCharStatDigitsTask ; $4d52
-	call RegisterFrameTask ; $4d55
+	frame_task SlideCharDataArrowsOutTask ; $4d48
+	frame_task DrawCharStatDigitsTask ; $4d50
 	wram_bank WRAM_SCENE ; $4d58
 	ld a, [wCharStatPageMain] ; $4d5e
 	ld [wCharDataLevels], a ; $4d61
@@ -236,9 +226,7 @@ RunDrillResultInputLoop:
 	wram_bank WRAM_SCENE ; $4d85
 	ld a, $01 ; $4d8b
 	ld [wCharDataPageArrowMode], a ; $4d8d
-	ld a, $01 ; $4d90
-	ld hl, SlideCharDataArrowsInTask ; $4d92
-	call RegisterFrameTask ; $4d95
+	frame_task SlideCharDataArrowsInTask ; $4d90
 	jr .mainPageLoop ; $4d98
 .cancel:
 	sound SFX_MENU_CANCEL ; $4d9a
@@ -260,26 +248,16 @@ RunDrillResultInputLoop:
 	sound SFX_MENU_MOVE ; $4db3
 	ld hl, SlideCharDataArrowsInTask ; $4db5
 	call UnregisterFrameTask ; $4db8
-	ld a, $01 ; $4dbb
-	ld hl, SlideCharDataArrowsOutTask ; $4dbd
-	call RegisterFrameTask ; $4dc0
+	frame_task SlideCharDataArrowsOutTask ; $4dbb
 	call SlideFromMainCharStatPage ; $4dc3
 	wram_bank WRAM_SCENE ; $4dc6
 	xor a ; $4dcc
 	ld [wCharDataPageArrowMode], a ; $4dcd
 	call ClearFrameTasks ; $4dd0
-	ld a, $01 ; $4dd3
-	ld hl, CharDataScreenBgScrollTask ; $4dd5
-	call RegisterFrameTask ; $4dd8
-	ld a, $01 ; $4ddb
-	ld hl, SlideCharDataArrowsInTask ; $4ddd
-	call RegisterFrameTask ; $4de0
-	ld a, $01 ; $4de3
-	ld hl, DrawCharDataPageArrowsTask ; $4de5
-	call RegisterFrameTask ; $4de8
-	ld a, $01 ; $4deb
-	ld hl, CharDataValuesSyncTask ; $4ded
-	call RegisterFrameTask ; $4df0
+	frame_task CharDataScreenBgScrollTask ; $4dd3
+	frame_task SlideCharDataArrowsInTask ; $4ddb
+	frame_task DrawCharDataPageArrowsTask ; $4de3
+	frame_task CharDataValuesSyncTask ; $4deb
 	farcall StartCharDataScreenAnimTask ; $4df3
 	jp .overviewLoop ; $4df6
 .mainPageCancel:
@@ -302,26 +280,16 @@ RunDrillResultInputLoop:
 	sound SFX_MENU_MOVE ; $4e12
 	ld hl, SlideCharDataArrowsInTask ; $4e14
 	call UnregisterFrameTask ; $4e17
-	ld a, $01 ; $4e1a
-	ld hl, SlideCharDataArrowsOutTask ; $4e1c
-	call RegisterFrameTask ; $4e1f
+	frame_task SlideCharDataArrowsOutTask ; $4e1a
 	call SlideFromPartnerStatPage ; $4e22
 	wram_bank WRAM_SCENE ; $4e25
 	xor a ; $4e2b
 	ld [wCharDataPageArrowMode], a ; $4e2c
 	call ClearFrameTasks ; $4e2f
-	ld a, $01 ; $4e32
-	ld hl, CharDataScreenBgScrollTask ; $4e34
-	call RegisterFrameTask ; $4e37
-	ld a, $01 ; $4e3a
-	ld hl, SlideCharDataArrowsInTask ; $4e3c
-	call RegisterFrameTask ; $4e3f
-	ld a, $01 ; $4e42
-	ld hl, DrawCharDataPageArrowsTask ; $4e44
-	call RegisterFrameTask ; $4e47
-	ld a, $01 ; $4e4a
-	ld hl, CharDataValuesSyncTask ; $4e4c
-	call RegisterFrameTask ; $4e4f
+	frame_task CharDataScreenBgScrollTask ; $4e32
+	frame_task SlideCharDataArrowsInTask ; $4e3a
+	frame_task DrawCharDataPageArrowsTask ; $4e42
+	frame_task CharDataValuesSyncTask ; $4e4a
 	farcall StartCharDataScreenAnimTask ; $4e52
 	jp .overviewLoop ; $4e55
 .partnerPageCancel:
@@ -353,252 +321,87 @@ SlideCharDataArrowsInTask:
 BuildCharStatDisplay:
 	wram_bank WRAM_SCENE ; $4e8d
 	push af ; $4e93
-	ld hl, wStoryMainName ; $4e94
-	ld a, [wStoryCharacterSlot] ; $4e97
-	or a ; $4e9a
-	jr z, .spinLevelField ; $4e9b
-	ld l, $40 ; $4e9d
-.spinLevelField:
-	ld a, l ; $4e9f
-	add $38 ; $4ea0
-	ld l, a ; $4ea2
-	ld a, h ; $4ea3
-	adc $00 ; $4ea4
-	ld h, a ; $4ea6
+	ld_story_char_field CHARREC_TRAIN_LEVELS ; $4e94
 	pop af ; $4ea7
 	ld a, [hl] ; $4ea8
 	ld [wCharDataLevels], a ; $4ea9
 	push af ; $4eac
-	ld hl, wStoryMainName ; $4ead
-	ld a, [wStoryCharacterSlot] ; $4eb0
-	or a ; $4eb3
-	jr z, .topStatField ; $4eb4
-	ld l, $40 ; $4eb6
-.topStatField:
-	ld a, l ; $4eb8
-	add $20 ; $4eb9
-	ld l, a ; $4ebb
-	ld a, h ; $4ebc
-	adc $00 ; $4ebd
-	ld h, a ; $4ebf
+	ld_story_char_field CHARREC_STAT_TOP ; $4ead
 	pop af ; $4ec0
 	ld a, [hl] ; $4ec1
 	inc a ; $4ec2
 	ld [wCharDataStats], a ; $4ec3
 	push af ; $4ec6
-	ld hl, wStoryMainName ; $4ec7
-	ld a, [wStoryCharacterSlot] ; $4eca
-	or a ; $4ecd
-	jr z, .sliceStatField ; $4ece
-	ld l, $40 ; $4ed0
-.sliceStatField:
-	ld a, l ; $4ed2
-	add $21 ; $4ed3
-	ld l, a ; $4ed5
-	ld a, h ; $4ed6
-	adc $00 ; $4ed7
-	ld h, a ; $4ed9
+	ld_story_char_field CHARREC_STAT_SLICE ; $4ec7
 	pop af ; $4eda
 	ld a, [hl] ; $4edb
 	inc a ; $4edc
 	ld [wCharDataStats + 1], a ; $4edd
 	push af ; $4ee0
-	ld hl, wStoryMainName ; $4ee1
-	ld a, [wStoryCharacterSlot] ; $4ee4
-	or a ; $4ee7
-	jr z, .powerLevelField ; $4ee8
-	ld l, $40 ; $4eea
-.powerLevelField:
-	ld a, l ; $4eec
-	add $39 ; $4eed
-	ld l, a ; $4eef
-	ld a, h ; $4ef0
-	adc $00 ; $4ef1
-	ld h, a ; $4ef3
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $4ee1
 	pop af ; $4ef4
 	ld a, [hl] ; $4ef5
 	ld [wCharDataLevels + 1], a ; $4ef6
 	push af ; $4ef9
-	ld hl, wStoryMainName ; $4efa
-	ld a, [wStoryCharacterSlot] ; $4efd
-	or a ; $4f00
-	jr z, .serveStatField ; $4f01
-	ld l, $40 ; $4f03
-.serveStatField:
-	ld a, l ; $4f05
-	add $22 ; $4f06
-	ld l, a ; $4f08
-	ld a, h ; $4f09
-	adc $00 ; $4f0a
-	ld h, a ; $4f0c
+	ld_story_char_field CHARREC_STAT_SERVE ; $4efa
 	pop af ; $4f0d
 	ld a, [hl] ; $4f0e
 	inc a ; $4f0f
 	ld [wCharDataStats + 2], a ; $4f10
 	push af ; $4f13
-	ld hl, wStoryMainName ; $4f14
-	ld a, [wStoryCharacterSlot] ; $4f17
-	or a ; $4f1a
-	jr z, .strokeStatField ; $4f1b
-	ld l, $40 ; $4f1d
-.strokeStatField:
-	ld a, l ; $4f1f
-	add $23 ; $4f20
-	ld l, a ; $4f22
-	ld a, h ; $4f23
-	adc $00 ; $4f24
-	ld h, a ; $4f26
+	ld_story_char_field CHARREC_STAT_STROKE ; $4f14
 	pop af ; $4f27
 	ld a, [hl] ; $4f28
 	inc a ; $4f29
 	ld [wCharDataStats + 3], a ; $4f2a
 	push af ; $4f2d
-	ld hl, wStoryMainName ; $4f2e
-	ld a, [wStoryCharacterSlot] ; $4f31
-	or a ; $4f34
-	jr z, .volleyStatField ; $4f35
-	ld l, $40 ; $4f37
-.volleyStatField:
-	ld a, l ; $4f39
-	add $24 ; $4f3a
-	ld l, a ; $4f3c
-	ld a, h ; $4f3d
-	adc $00 ; $4f3e
-	ld h, a ; $4f40
+	ld_story_char_field CHARREC_STAT_VOLLEY ; $4f2e
 	pop af ; $4f41
 	ld a, [hl] ; $4f42
 	inc a ; $4f43
 	ld [wCharDataStats + 4], a ; $4f44
 	push af ; $4f47
-	ld hl, wStoryMainName ; $4f48
-	ld a, [wStoryCharacterSlot] ; $4f4b
-	or a ; $4f4e
-	jr z, .controlLevelField ; $4f4f
-	ld l, $40 ; $4f51
-.controlLevelField:
-	ld a, l ; $4f53
-	add $3a ; $4f54
-	ld l, a ; $4f56
-	ld a, h ; $4f57
-	adc $00 ; $4f58
-	ld h, a ; $4f5a
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $4f48
 	pop af ; $4f5b
 	ld a, [hl] ; $4f5c
 	ld [wCharDataLevels + 2], a ; $4f5d
 	push af ; $4f60
-	ld hl, wStoryMainName ; $4f61
-	ld a, [wStoryCharacterSlot] ; $4f64
-	or a ; $4f67
-	jr z, .angleStatField ; $4f68
-	ld l, $40 ; $4f6a
-.angleStatField:
-	ld a, l ; $4f6c
-	add $25 ; $4f6d
-	ld l, a ; $4f6f
-	ld a, h ; $4f70
-	adc $00 ; $4f71
-	ld h, a ; $4f73
+	ld_story_char_field CHARREC_STAT_ANGLE ; $4f61
 	pop af ; $4f74
 	ld a, [hl] ; $4f75
 	inc a ; $4f76
 	ld [wCharDataStats + 5], a ; $4f77
 	push af ; $4f7a
-	ld hl, wStoryMainName ; $4f7b
-	ld a, [wStoryCharacterSlot] ; $4f7e
-	or a ; $4f81
-	jr z, .placementStatField ; $4f82
-	ld l, $40 ; $4f84
-.placementStatField:
-	ld a, l ; $4f86
-	add $26 ; $4f87
-	ld l, a ; $4f89
-	ld a, h ; $4f8a
-	adc $00 ; $4f8b
-	ld h, a ; $4f8d
+	ld_story_char_field CHARREC_STAT_PLACEMENT ; $4f7b
 	pop af ; $4f8e
 	ld a, [hl] ; $4f8f
 	inc a ; $4f90
 	ld [wCharDataStats + 6], a ; $4f91
 	push af ; $4f94
-	ld hl, wStoryMainName ; $4f95
-	ld a, [wStoryCharacterSlot] ; $4f98
-	or a ; $4f9b
-	jr z, .speedLevelField ; $4f9c
-	ld l, $40 ; $4f9e
-.speedLevelField:
-	ld a, l ; $4fa0
-	add $3b ; $4fa1
-	ld l, a ; $4fa3
-	ld a, h ; $4fa4
-	adc $00 ; $4fa5
-	ld h, a ; $4fa7
+	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $4f95
 	pop af ; $4fa8
 	ld a, [hl] ; $4fa9
 	ld [wCharDataLevels + 3], a ; $4faa
 	push af ; $4fad
-	ld hl, wStoryMainName ; $4fae
-	ld a, [wStoryCharacterSlot] ; $4fb1
-	or a ; $4fb4
-	jr z, .speedStatField ; $4fb5
-	ld l, $40 ; $4fb7
-.speedStatField:
-	ld a, l ; $4fb9
-	add $27 ; $4fba
-	ld l, a ; $4fbc
-	ld a, h ; $4fbd
-	adc $00 ; $4fbe
-	ld h, a ; $4fc0
+	ld_story_char_field CHARREC_STAT_SPEED ; $4fae
 	pop af ; $4fc1
 	ld a, [hl] ; $4fc2
 	inc a ; $4fc3
 	ld [wCharDataStats + 7], a ; $4fc4
 	push af ; $4fc7
-	ld hl, wStoryMainName ; $4fc8
-	ld a, [wStoryCharacterSlot] ; $4fcb
-	or a ; $4fce
-	jr z, .dashStatField ; $4fcf
-	ld l, $40 ; $4fd1
-.dashStatField:
-	ld a, l ; $4fd3
-	add $28 ; $4fd4
-	ld l, a ; $4fd6
-	ld a, h ; $4fd7
-	adc $00 ; $4fd8
-	ld h, a ; $4fda
+	ld_story_char_field CHARREC_STAT_DASH ; $4fc8
 	pop af ; $4fdb
 	ld a, [hl] ; $4fdc
 	inc a ; $4fdd
 	ld [wCharDataStats + 8], a ; $4fde
 	push af ; $4fe1
-	ld hl, wStoryMainName ; $4fe2
-	ld a, [wStoryCharacterSlot] ; $4fe5
-	or a ; $4fe8
-	jr z, .reactionStatField ; $4fe9
-	ld l, $40 ; $4feb
-.reactionStatField:
-	ld a, l ; $4fed
-	add $29 ; $4fee
-	ld l, a ; $4ff0
-	ld a, h ; $4ff1
-	adc $00 ; $4ff2
-	ld h, a ; $4ff4
+	ld_story_char_field CHARREC_STAT_REACTION ; $4fe2
 	pop af ; $4ff5
 	ld a, [hl] ; $4ff6
 	inc a ; $4ff7
 	ld [wCharDataStats + 9], a ; $4ff8
 	push af ; $4ffb
-	ld hl, wStoryMainName ; $4ffc
-	ld a, [wStoryCharacterSlot] ; $4fff
-	or a ; $5002
-	jr z, .stopStatField ; $5003
-	ld l, $40 ; $5005
-.stopStatField:
-	ld a, l ; $5007
-	add $2a ; $5008
-	ld l, a ; $500a
-	ld a, h ; $500b
-	adc $00 ; $500c
-	ld h, a ; $500e
+	ld_story_char_field CHARREC_STAT_STOP ; $4ffc
 	pop af ; $500f
 	ld a, [hl] ; $5010
 	inc a ; $5011
@@ -642,36 +445,14 @@ BuildCharStatDisplay:
 	ld [hl+], a ; $504f
 	ld [hl], a ; $5050
 	push af ; $5051
-	ld hl, wStoryMainName ; $5052
-	ld a, [wStoryCharacterSlot] ; $5055
-	or a ; $5058
-	jr z, .nameField ; $5059
-	ld l, $40 ; $505b
-.nameField:
-	ld a, l ; $505d
-	add $00 ; $505e
-	ld l, a ; $5060
-	ld a, h ; $5061
-	adc $00 ; $5062
-	ld h, a ; $5064
+	ld_story_char_field CHARREC_NAME ; $5052
 	pop af ; $5065
 	ld de, wCharDataPagePlane + 8 * TILEMAP_WIDTH + 15 ; $5066
 	ld c, $0e ; $5069
 	call WriteNameStringTiles ; $506b
 	wram_bank WRAM_SCENE ; $506e
 	push af ; $5074
-	ld hl, wStoryMainName ; $5075
-	ld a, [wStoryCharacterSlot] ; $5078
-	or a ; $507b
-	jr z, .levelField ; $507c
-	ld l, $40 ; $507e
-.levelField:
-	ld a, l ; $5080
-	add $18 ; $5081
-	ld l, a ; $5083
-	ld a, h ; $5084
-	adc $00 ; $5085
-	ld h, a ; $5087
+	ld_story_char_field CHARREC_LEVEL ; $5075
 	pop af ; $5088
 	ld a, [hl] ; $5089
 	ld h, $00 ; $508a

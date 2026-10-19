@@ -56,12 +56,8 @@ RunN64ExhibData:
 	call BuildN64ExhibDataScreen ; $44af
 	xor a ; $44b2
 	ld [wAnimatedTileSet], a ; $44b3
-	ld a, $01 ; $44b6
-	ld hl, UpdateAnimatedTilesTask_3b ; $44b8
-	call RegisterFrameTask ; $44bb
-	ld a, $01 ; $44be
-	ld hl, N64ExhibScrollArrowsTask ; $44c0
-	call RegisterFrameTask ; $44c3
+	frame_task UpdateAnimatedTilesTask_3b ; $44b6
+	frame_task N64ExhibScrollArrowsTask ; $44be
 	call EnableLCD ; $44c6
 	script_fade_in 16 ; $44c9
 	call WaitFadeEnd ; $44ce

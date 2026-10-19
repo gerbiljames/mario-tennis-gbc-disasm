@@ -53,9 +53,7 @@ RunMinigameLevelSelect2:
 	ld b, $02 ; $6e5c
 	call SetMenuCursorFromIndex ; $6e5e
 	wram_bank WRAM_SCREEN ; $6e61
-	ld a, $01 ; $6e67
-	ld hl, DrawMinigameLevelSelect2Cursor ; $6e69
-	call RegisterFrameTask ; $6e6c
+	frame_task DrawMinigameLevelSelect2Cursor ; $6e67
 	call RedrawMinigameLevelSelect2 ; $6e6f
 	wram_bank WRAM_SCREEN ; $6e72
 .loop:
@@ -241,9 +239,7 @@ RunMinigameLevelSelect3:
 	ld b, $03 ; $6ffd
 	call SetMenuCursorFromIndex ; $6fff
 	wram_bank WRAM_SCREEN ; $7002
-	ld a, $01 ; $7008
-	ld hl, DrawMinigameLevelSelect3Cursor ; $700a
-	call RegisterFrameTask ; $700d
+	frame_task DrawMinigameLevelSelect3Cursor ; $7008
 	call RedrawMinigameLevelSelect3 ; $7010
 	wram_bank WRAM_SCREEN ; $7013
 .loop:
@@ -416,12 +412,8 @@ RunSavedDataTypeSelect:
 	ld c, a ; $7181
 	ld b, $02 ; $7182
 	call SetMenuCursorFromIndex ; $7184
-	ld a, $01 ; $7187
-	ld hl, TickMenuBgScrollTask_1b ; $7189
-	call RegisterFrameTask ; $718c
-	ld a, $01 ; $718f
-	ld hl, DrawSavedDataTypeSelectCursor ; $7191
-	call RegisterFrameTask ; $7194
+	frame_task TickMenuBgScrollTask_1b ; $7187
+	frame_task DrawSavedDataTypeSelectCursor ; $718f
 	call RedrawSavedDataTypeSelect ; $7197
 	wram_bank WRAM_SCREEN ; $719a
 .loop:

@@ -31,6 +31,17 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tpop_wram_bank"), 455)
         self.assertEqual(count(r"^\tld_hl_indexed "), 421)
         self.assertEqual(count(r"^\twait_frames "), 79)
+        self.assertEqual(count(r"^\tld_story_char_field "), 114)
+        self.assertEqual(count(r"^\tneg_(?:hl|de|bc)\b"), 146)
+        self.assertEqual(count(r"^\tabs_(?:hl|de|bc)\b"), 85)
+        self.assertEqual(count(r"^\tsub_hl_(?:de|bc)\b"), 116)
+        self.assertEqual(count(r"^\tpush_rom_bank "), 13)
+        self.assertEqual(count(r"^\tpop_rom_bank\b"), 20)
+        self.assertEqual(count(r"^\tsram_bank\b"), 49)
+        self.assertEqual(count(r"^\tjumptable\b"), 134)
+        self.assertEqual(count(r"^\tframe_task "), 435)
+        self.assertEqual(count(r"^\t(?:rst Rst00|call RegisterFrameTask|ldh \[h(?:Rom|Sram)Bank\], a)\b"), 0,
+                         "a jump table, frame task or bank switch written out by hand")
         self.assertEqual(count(r"^\tlb (de|bc|hl), "), 0, "a register pair written with lb instead of a named pair macro")
         self.assertEqual(count(r"^\tld_xy de, "), 169)
         self.assertEqual(count(r"^\tld_cell de, "), 160)
@@ -68,13 +79,20 @@ class Source(unittest.TestCase):
 
     def test_named_ids(self):
         self.assertEqual(count(r"ld hl, Text_\w+ ;"), 257)
-        self.assertEqual(count(r"^\tdw Text_\w+"), 737)
+        self.assertEqual(count(r"^\tdw Text_\w+"), 752)
         self.assertGreaterEqual(count(r"\bDRILLMSG_\w+"), 65)
         self.assertGreaterEqual(count(r"\bBEHAVIOR_\w+"), 43)
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n(?:ENDC\n)?\.clearLoop:\n\tpush de ; \$[0-9a-f]{4}\n\tcall ClearGameFlag "),
                          3, "only the three loop bases pass a raw game-flag id")
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n\t(?:far)?call (Set|Clear|Test)GameFlag "),
                          0, "a raw game-flag id passed straight to a flag helper")
+
+    def test_entry_and_exit_ids_are_named(self):
+        self.assertEqual(count(r"^\tld a, \$[0-9a-f]+ ;[^\n]*\n\tld \[wStoryModeEntryPoint\], a"), 0)
+        self.assertEqual(count(r"^\tld a, \$[0-9a-f]+ ;[^\n]*\n\tld \[wUnusedExitTriggerIdMirror\], a"), 2,
+                         "only the two exit ids with no ExitTriggers row stay raw")
+        self.assertEqual(count(r"\bENTRY_\w+"), 302)
+        self.assertEqual(count(r"\bEXIT_\w+"), 85)
 
     def test_sound_ids_are_named(self):
         self.assertEqual(count(r"^\tsound \$"), 0)
@@ -140,10 +158,10 @@ class Manifest(unittest.TestCase):
     def test_counts(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
-        self.assertEqual(len(lines), 4268)
-        self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 839)
+        self.assertEqual(len(lines), 4257)
+        self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 861)
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2698)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2721)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
@@ -151,7 +169,7 @@ class Manifest(unittest.TestCase):
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)
-        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 859)
+        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1002)
 
 
 @needs_rom

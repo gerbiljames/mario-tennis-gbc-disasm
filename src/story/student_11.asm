@@ -378,7 +378,7 @@ FollowGuideIntoAcademy:
 	script_move_target ACTOR_ACADEMY_ARRIVAL_EMILY, 24.0, 14.0 ; $4f97
 	script_move_target ACTOR_PLAYER, 24.0, 14.0 ; $4fa2
 	script_wait_frames 30 ; $4fad
-	ld a, $0f ; $4fb4
+	ld a, EXIT_ACADEMY_ENTRANCE_TOUR ; $4fb4
 	ld [wUnusedExitTriggerIdMirror], a ; $4fb6
 	ld [wStoryModeExitTriggerRequest], a ; $4fb9
 	script_fade_out 4 ; $4fbc
@@ -534,7 +534,7 @@ AcademyArrivalInitScript_11.speak:
 	call WaitFadeEnd ; $5367
 	ld a, STORYLOC_ISLAND_SKY ; $536a
 	ld [wStoryModeCurrentLocation], a ; $536c
-	ld a, $01 ; $536f
+	ld a, ENTRY_ISLAND_SKY_TO_ISLAND_OPEN ; $536f
 	ld [wStoryModeEntryPoint], a ; $5371
 	ld a, EXITTRIGGER_DIRECT ; $5374
 	ld [wUnusedExitTriggerIdMirror], a ; $5376

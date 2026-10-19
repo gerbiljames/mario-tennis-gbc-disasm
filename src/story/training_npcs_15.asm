@@ -409,7 +409,7 @@ TrainingCourtInitScript_15:
 	ld [wMapSceneStage], a ; $533d
 .fromLesson:
 	ld a, [wStoryModeEntryPoint] ; $5340
-	cp $0f ; $5343
+	cp ENTRY_TRAINING_COURT_TOUR ; $5343
 	jr nz, .fromMatch ; $5345
 	call TrainingCourtIntroTourScene ; $5347
 	ret ; $534a
@@ -419,13 +419,13 @@ TrainingCourtInitScript_15:
 	call HideNetChallengerActor ; $5351
 	call PlaceSwingPracticeKidActor ; $5354
 	ld a, [wStoryModeEntryPoint] ; $5357
-	cp $0a ; $535a
+	cp ENTRY_TRAINING_COURT_DRILL_RESULT ; $535a
 	jr nz, .placeActors ; $535c
 	call TrainingCourtResultDispatch ; $535e
 	ret ; $5361
 .placeActors:
 	ld a, [wStoryModeEntryPoint] ; $5362
-	cp $09 ; $5365
+	cp ENTRY_TRAINING_COURT_PENDING_LESSON ; $5365
 	jr nz, .done ; $5367
 	call StartPendingLessonScene ; $5369
 .done:
@@ -443,8 +443,7 @@ TrainingCourtResultDispatch:
 	ret ; $537f
 .dispatchResult:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
-	ld a, a ; $5383
-	rst Rst00 ; $5384
+	jumptable a ; $5383
 	dw ServiceMatch1ResultScene ; $5385 jumptable
 	dw ServiceMatch2ResultScene ; $5387 jumptable
 	dw ServiceMatch3ResultScene ; $5389 jumptable
@@ -465,8 +464,7 @@ TrainingCourtResultDispatch:
 	dw StrokePractice3ResultScene ; $53a7 jumptable
 TrainingCourtReentryDispatch:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $53a9
-	ld a, a ; $53ac
-	rst Rst00 ; $53ad
+	jumptable a ; $53ac
 	dw TrainingCourtReentryDispatch.serveCourt ; $53ae jumptable
 	dw TrainingCourtReentryDispatch.serveCourt ; $53b0 jumptable
 	dw TrainingCourtReentryDispatch.serveCourt ; $53b2 jumptable

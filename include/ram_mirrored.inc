@@ -333,7 +333,7 @@ def wAiReactionDelayFar equ $df7a
 ; [8-bit] How the AI chases the ball -- read by AiTrackBallPhase and the baseliner rally state. Attribute record +$1d
 def wAiTrackingParam equ $df7b
 
-; [8-bit] RNG threshold in AiMaybeAimAwayFromChar: the AI aims away from the opponent when the roll is under it, so a higher value places more shots. Attribute record +$1e
+; [8-bit] RNG threshold in AiRollAimAwayFromChar: the AI aims away from the opponent when the roll is under it, so a higher value places more shots. Attribute record +$1e
 def wAiAimAwayChance equ $df7c
 
 ; [8-bit] AI serve/shot habit: the low nibble indexes ServePressTossPtrs for the toss timing, and AiPickShotButtons reads it too. Attribute record +$1f

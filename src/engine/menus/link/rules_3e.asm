@@ -62,9 +62,7 @@ RunLinkMatchRulesMenu:
 	ld c, $01 ; $44f5
 	farcall LoadMenuSpritePalettePair ; $44f7
 	call DrawMatchRulesInitialState ; $44fa
-	ld a, $01 ; $44fd
-	ld hl, MatchRulesCursorSpriteTask ; $44ff
-	call RegisterFrameTask ; $4502
+	frame_task MatchRulesCursorSpriteTask ; $44fd
 	call DrawMatchRulesCaption ; $4505
 	farcall ResyncLinkSessionWithTimer ; $4508
 	push af ; $450b

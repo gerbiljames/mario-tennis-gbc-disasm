@@ -196,9 +196,7 @@ Unused_6d_ShowIntroCharacterScreen:
 	farcall LoadScreenAssetRecord ; $6a8e
 	farcall LoadIntroTilesAndPalette ; $6a91
 	farcall QueueWram3MapToVRAM ; $6a94
-	ld a, $01 ; $6a97
-	ld hl, Unused_6d_IntroCharacterScreenFrameTask ; $6a99
-	call RegisterFrameTask ; $6a9c
+	frame_task Unused_6d_IntroCharacterScreenFrameTask ; $6a97
 	call EnableLCD ; $6a9f
 	script_fade_in 16 ; $6aa2
 	call WaitFadeEnd ; $6aa7

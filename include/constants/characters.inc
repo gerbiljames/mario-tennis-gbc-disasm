@@ -49,6 +49,7 @@ def CHAR_RECORD_SIZE equ _RS
 	const CHAR_NINA       ; $01
 	const CHAR_HARRY      ; $02
 	const CHAR_KATE       ; $03
+def NUM_STORY_HEROES equ const_value ; the four story heroes, always unlocked
 	const CHAR_ALLIE      ; $04
 	const CHAR_JOY        ; $05
 	const CHAR_BRIAN      ; $06

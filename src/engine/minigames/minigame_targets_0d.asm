@@ -132,8 +132,7 @@ ResetTargetHitState:
 	ld [wMinigameActors + 0 * MGACTOR_SIZE + MGACTOR_STATE], a ; $522d
 	ret ; $5230
 ShootingStarTargetActorHandler:
-	ld a, [wMinigameSceneActor + MGACTOR_STATE] ; $5231
-	rst Rst00 ; $5234
+	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5231
 	dw ShootingStarTargetState0 ; $5235 jumptable
 	dw ShootingStarTargetState1 ; $5237 jumptable
 	dw ShootingStarTargetState2 ; $5239 jumptable
@@ -197,21 +196,8 @@ IsBallInHitZone:
 	ld a, [hl+] ; $52a3
 	ld h, [hl] ; $52a4
 	ld l, a ; $52a5
-	ld a, l ; $52a6
-	sub e ; $52a7
-	ld l, a ; $52a8
-	ld a, h ; $52a9
-	sbc d ; $52aa
-	ld h, a ; $52ab
-	bit 7, h ; $52ac
-	jr z, .absX ; $52ae
-	xor a ; $52b0
-	sub l ; $52b1
-	ld l, a ; $52b2
-	sbc a ; $52b3
-	sub h ; $52b4
-	ld h, a ; $52b5
-.absX:
+	sub_hl_de ; $52a6
+	abs_hl ; $52ac
 	ld de, -128 ; $52b6
 	add hl, de ; $52b9
 	jr c, .returnZero ; $52ba
@@ -223,21 +209,8 @@ IsBallInHitZone:
 	ld a, [hl+] ; $52c5
 	ld h, [hl] ; $52c6
 	ld l, a ; $52c7
-	ld a, l ; $52c8
-	sub e ; $52c9
-	ld l, a ; $52ca
-	ld a, h ; $52cb
-	sbc d ; $52cc
-	ld h, a ; $52cd
-	bit 7, h ; $52ce
-	jr z, .absDepth ; $52d0
-	xor a ; $52d2
-	sub l ; $52d3
-	ld l, a ; $52d4
-	sbc a ; $52d5
-	sub h ; $52d6
-	ld h, a ; $52d7
-.absDepth:
+	sub_hl_de ; $52c8
+	abs_hl ; $52ce
 	ld de, -256 ; $52d8
 	add hl, de ; $52db
 	jr c, .returnZero ; $52dc
@@ -245,15 +218,7 @@ IsBallInHitZone:
 	ld a, [hl+] ; $52e1
 	ld h, [hl] ; $52e2
 	ld l, a ; $52e3
-	bit 7, h ; $52e4
-	jr z, .absHeight ; $52e6
-	xor a ; $52e8
-	sub l ; $52e9
-	ld l, a ; $52ea
-	sbc a ; $52eb
-	sub h ; $52ec
-	ld h, a ; $52ed
-.absHeight:
+	abs_hl ; $52e4
 	ld de, -192 ; $52ee
 	add hl, de ; $52f1
 	jr c, .returnZero ; $52f2
@@ -427,7 +392,7 @@ InitMinigame_BananaBunch:
 	ld a, $01 ; $5509
 	ld [wMinigameUsesWall], a ; $550b
 	ld a, [wMinigameLevel] ; $550e
-	cp $02 ; $5511
+	cp MINIGAMELEVEL_HIGH_SCORE ; $5511
 	jr nz, .done ; $5513
 	ld a, $01 ; $5515
 	ld [wMinigameHighScoreMode], a ; $5517

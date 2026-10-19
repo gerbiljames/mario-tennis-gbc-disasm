@@ -37,8 +37,9 @@ class Static(unittest.TestCase):
 
     def test_routes(self):
         import routes
-        dead, rows = routes.unreached()
-        self.assertEqual((len(dead), len(rows)), (15, 126))
+        dead, rows, bad = routes.unreached()
+        self.assertEqual((len(dead), len(rows), bad), (15, 126, []))
+        self.assertEqual(len(routes.entry_ids()), 137)
 
     def test_coverage_routines(self):
         import coverage

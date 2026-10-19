@@ -136,12 +136,7 @@ Unused_07_TargetZoneBounceHook:
 	ld h, $00 ; $5f2d
 	ld l, a ; $5f2f
 	add hl, hl ; $5f30
-	xor a ; $5f31
-	sub l ; $5f32
-	ld l, a ; $5f33
-	sbc a ; $5f34
-	sub h ; $5f35
-	ld h, a ; $5f36
+	neg_hl ; $5f31
 	ld e, l ; $5f37
 	ld d, h ; $5f38
 	farcall SetTargetZoneCorner1 ; $5f39

@@ -9,21 +9,11 @@ MulHLByASignedFull:
 	bit 7, h ; $0b9d
 	jp z, MulHLByA ; $0b9f
 	push af ; $0ba2
-	xor a ; $0ba3
-	sub l ; $0ba4
-	ld l, a ; $0ba5
-	sbc a ; $0ba6
-	sub h ; $0ba7
-	ld h, a ; $0ba8
+	neg_hl ; $0ba3
 	pop af ; $0ba9
 	call MulHLByA ; $0baa
 	push af ; $0bad
-	xor a ; $0bae
-	sub l ; $0baf
-	ld l, a ; $0bb0
-	sbc a ; $0bb1
-	sub h ; $0bb2
-	ld h, a ; $0bb3
+	neg_hl ; $0bae
 	pop af ; $0bb4
 	ret ; $0bb5
 MulHLByAFracSigned:
@@ -31,21 +21,11 @@ MulHLByAFracSigned:
 	jr z, MulHLByAFrac ; $0bb8
 	push de ; $0bba
 	ld d, a ; $0bbb
-	xor a ; $0bbc
-	sub l ; $0bbd
-	ld l, a ; $0bbe
-	sbc a ; $0bbf
-	sub h ; $0bc0
-	ld h, a ; $0bc1
+	neg_hl ; $0bbc
 	ld a, d ; $0bc2
 	call MulHLByAFrac ; $0bc3
 	ld d, a ; $0bc6
-	xor a ; $0bc7
-	sub l ; $0bc8
-	ld l, a ; $0bc9
-	sbc a ; $0bca
-	sub h ; $0bcb
-	ld h, a ; $0bcc
+	neg_hl ; $0bc7
 	ld a, d ; $0bcd
 	pop de ; $0bce
 	ret ; $0bcf
@@ -174,34 +154,13 @@ Unused_00_MulHLByDEBothSigned:
 	ld a, h ; $0c68
 	xor d ; $0c69
 	ldh [hMathSign], a ; $0c6a
-	bit 7, h ; $0c6c
-	jr z, .positive ; $0c6e
-	xor a ; $0c70
-	sub l ; $0c71
-	ld l, a ; $0c72
-	sbc a ; $0c73
-	sub h ; $0c74
-	ld h, a ; $0c75
-.positive:
-	bit 7, d ; $0c76
-	jr z, .mulHLByDE ; $0c78
-	xor a ; $0c7a
-	sub e ; $0c7b
-	ld e, a ; $0c7c
-	sbc a ; $0c7d
-	sub d ; $0c7e
-	ld d, a ; $0c7f
-.mulHLByDE:
+	abs_hl ; $0c6c
+	abs_de ; $0c76
 	call MulHLByDE ; $0c80
 	ldh a, [hMathSign] ; $0c83
 	bit 7, a ; $0c85
 	ret z ; $0c87
-	xor a ; $0c88
-	sub l ; $0c89
-	ld l, a ; $0c8a
-	sbc a ; $0c8b
-	sub h ; $0c8c
-	ld h, a ; $0c8d
+	neg_hl ; $0c88
 	ret ; $0c8e
 MulHLByDE:
 	push de ; $0c8f
@@ -526,22 +485,12 @@ MulHLByASigned:
 	bit 7, h ; $0dfa
 	jr z, MulPosHLByA ; $0dfc
 	call MulNegHLByA ; $0dfe
-	xor a ; $0e01
-	sub l ; $0e02
-	ld l, a ; $0e03
-	sbc a ; $0e04
-	sub h ; $0e05
-	ld h, a ; $0e06
+	neg_hl ; $0e01
 	ret ; $0e07
 MulNegHLByA:
 	push de ; $0e08
 	ld e, a ; $0e09
-	xor a ; $0e0a
-	sub l ; $0e0b
-	ld l, a ; $0e0c
-	sbc a ; $0e0d
-	sub h ; $0e0e
-	ld h, a ; $0e0f
+	neg_hl ; $0e0a
 	ld a, e ; $0e10
 	jr MulPosHLByA.multiply ; $0e11
 MulPosHLByA:

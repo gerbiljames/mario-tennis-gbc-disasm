@@ -33,9 +33,7 @@ RunMinigameSelect:
 	ld c, a ; $622a
 	ld b, $03 ; $622b
 	call SetMenuCursorFromIndex_3b ; $622d
-	ld a, $01 ; $6230
-	ld hl, MinigameSelectCursorSpriteTask ; $6232
-	call RegisterFrameTask ; $6235
+	frame_task MinigameSelectCursorSpriteTask ; $6230
 	call DrawMinigameSelectCaption ; $6238
 	call CheckMinigameGridExpanded ; $623b
 	or a ; $623e

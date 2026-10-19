@@ -115,8 +115,7 @@ Unused_05_CopyVisibleTilemapToVRAM:
 	push bc ; $4147
 	push de ; $4148
 	push hl ; $4149
-	ld a, b ; $414a
-	wram_bank ; $414b
+	wram_bank b ; $414a
 	ld a, [wCameraY + 1] ; $414f
 	and $1f ; $4152
 	ld l, a ; $4154
@@ -194,8 +193,7 @@ Unused_05_QueueFullTilemapCopy:
 	push bc ; $41c7
 	push de ; $41c8
 	push hl ; $41c9
-	ld a, b ; $41ca
-	wram_bank ; $41cb
+	wram_bank b ; $41ca
 	ld hl, $d000 ; $41cf
 	ld de, vBGMap0 ; $41d2
 	ld c, TILEMAP_AREA / 16 ; $41d5
@@ -210,8 +208,7 @@ Unused_05_QueueFullAttrmapCopy:
 	push bc ; $41e0
 	push de ; $41e1
 	push hl ; $41e2
-	ld a, b ; $41e3
-	wram_bank ; $41e4
+	wram_bank b ; $41e3
 	ld hl, $d400 ; $41e8
 	ld de, vBGMap0 + VRAM_BANK1 ; $41eb
 	ld c, TILEMAP_AREA / 16 ; $41ee
@@ -223,8 +220,7 @@ Unused_05_QueueFullAttrmapCopy:
 	ret ; $41f7
 Unused_05_CopyTilemapRowToVRAM:
 	push af ; $41f8
-	ld a, b ; $41f9
-	wram_bank ; $41fa
+	wram_bank b ; $41f9
 	pop af ; $41fe
 	and $1f ; $41ff
 	ld c, a ; $4201
@@ -263,8 +259,7 @@ Unused_05_CopyTilemapRowsToVRAM:
 	ld a, c ; $423a
 	or a ; $423b
 	jr z, .done ; $423c
-	ld a, b ; $423e
-	wram_bank ; $423f
+	wram_bank b ; $423e
 	ld b, d ; $4243
 	ld a, c ; $4244
 	sla a ; $4245
@@ -434,8 +429,7 @@ WriteWindowCellTileAttr:
 	ldh a, [hWramBank] ; $432a
 	push af ; $432c
 	ld a, [wShadowTilemapBank] ; $432d
-	ld a, a ; $4330
-	wram_bank ; $4331
+	wram_bank a ; $4330
 	add hl, de ; $4335
 	ld [hl], c ; $4336
 	ld de, $0400 ; $4337
@@ -460,8 +454,7 @@ ReadWindowCellTileAttr:
 	ldh a, [hWramBank] ; $4353
 	push af ; $4355
 	ld a, [wShadowTilemapBank] ; $4356
-	ld a, a ; $4359
-	wram_bank ; $435a
+	wram_bank a ; $4359
 	add hl, de ; $435e
 	ld c, [hl] ; $435f
 	ld de, $0400 ; $4360

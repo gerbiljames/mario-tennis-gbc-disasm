@@ -209,8 +209,7 @@ Unused_05_RefreshShadowTilemapFromMapBuffer:
 	ld b, [hl] ; $44be
 	ld c, a ; $44bf
 	pop af ; $44c0
-	ld a, a ; $44c1
-	wram_bank ; $44c2
+	wram_bank a ; $44c1
 	ldh a, [hScrollY] ; $44c6
 	and $f8 ; $44c8
 	ld l, a ; $44ca

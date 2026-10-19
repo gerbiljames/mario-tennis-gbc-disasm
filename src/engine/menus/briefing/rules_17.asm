@@ -94,19 +94,19 @@ ReturnDownLineBriefing_AdvanceAnimTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6ec3, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6ec3, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm" ; $6ed3, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm" ; $6ed3, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6ee3, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $6ee3, 4 bytes (bytes:4)
 ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6ee7, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $6ee7, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.bin" ; $6ef7, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.asm" ; $6ef7, 4 bytes (bytes:4)
 ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.bin" ; $6efb, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.asm" ; $6efb, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.bin" ; $6f0b, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.asm" ; $6f0b, 16 bytes (words:2)
 ShowRulesScreen:
 	push af ; $6f1b
 	wram_bank WRAM_SCREEN ; $6f1c
@@ -128,16 +128,12 @@ ShowRulesScreen:
 	ld [wAnimatedTileSet], a ; $6f4c
 	ld a, $03 ; $6f4f
 	ld [wAnimatedTilePeriod], a ; $6f51
-	ld a, $01 ; $6f54
-	ld hl, UpdateAnimatedTilesTask_17 ; $6f56
-	call RegisterFrameTask ; $6f59
+	frame_task UpdateAnimatedTilesTask_17 ; $6f54
 	call EnableLCD ; $6f5c
 	script_fade_in 32 ; $6f5f
 	call WaitFadeEnd ; $6f64
 	wram_bank WRAM_SCREEN ; $6f67
-	ld a, $01 ; $6f6d
-	ld hl, AdvanceRulesScreenAnimFrame ; $6f6f
-	call RegisterFrameTask ; $6f72
+	frame_task AdvanceRulesScreenAnimFrame ; $6f6d
 	ld a, $01 ; $6f75
 	ld [wRulesAnimEnabled], a ; $6f77
 	xor a ; $6f7a
@@ -267,9 +263,7 @@ MinigameRulesPageLoop:
 	ld a, [hl] ; $70d8
 	cp $ff ; $70d9
 	jr z, .prepareRulesPageTilemap ; $70db
-	ld a, $01 ; $70dd
-	ld hl, DrawRulesNextPageArrow ; $70df
-	call RegisterFrameTask ; $70e2
+	frame_task DrawRulesNextPageArrow ; $70dd
 .prepareRulesPageTilemap:
 	call PrepareRulesPageTilemap ; $70e5
 	ld hl, wRulesPageTextIdBase ; $70e8
@@ -361,9 +355,7 @@ LoadRulesScreen:
 	ld a, e ; $71ae
 	ld [hl+], a ; $71af
 	ld [hl], d ; $71b0
-	ld a, $01 ; $71b1
-	ld hl, DrawRulesScreenCharacters ; $71b3
-	call RegisterFrameTask ; $71b6
+	frame_task DrawRulesScreenCharacters ; $71b1
 	farcall QueueWram3MapToVRAM ; $71b9
 	ret ; $71bc
 ClearRulesScreenTextArea:

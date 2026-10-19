@@ -32,15 +32,18 @@ JuniorClassCourtSinglesActors_11:
 	map_actor_end
 JuniorClassCourtSinglesEntryPoints_11:
 	; $691a, 17 bytes (map_entries)
-	map_entry $01, FACE_UP, 19.0, 29.0, MapArrivalWalk_11
-	map_entry $09, FACE_UP, 45.0, 25.0, $0000
+	map_entry $01, FACE_UP, 19.0, 29.0, MapArrivalWalk_11, JUNIOR_CLASS_COURT_SINGLES_FROM_RESTAURANT_PLAZA
+	map_entry $09, FACE_UP, 45.0, 25.0, $0000, JUNIOR_CLASS_COURT_SINGLES_PRACTICE_MATCH_RETURN
+	entry_id JUNIOR_CLASS_COURT_SINGLES_VICTORY_SCENE, $0d
+	entry_id JUNIOR_CLASS_COURT_SINGLES_MATCH_WON, $0e
+	entry_id JUNIOR_CLASS_COURT_SINGLES_MATCH_RETURN, $0f
 	db $ff
 Unused_11_NullScriptC:
 	ret ; $692b
 JuniorClassCourtSinglesExitTriggers_11:
 	; $692c, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_RESTAURANT_PLAZA, $05
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_JUNIOR_CLASS_COURT, JUNIOR_CLASS_COURT_SINGLES_TO_RESTAURANT_PLAZA
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, ENTRY_JUNIOR_CLASS_COURT_SINGLES_MATCH_RETURN, JUNIOR_CLASS_COURT_SINGLES_RANKING_MATCH
 	db $ff
 	twin_named junior_class_court_singles_npc03_face_up, JuniorClassCourtSinglesNpc03FaceUp_11 ; $693d
 JuniorClassCourtSinglesNpc03_11:
@@ -287,11 +290,11 @@ JuniorClassCourtSinglesInitScript_11:
 	script_face ACTOR_JUNIOR_CLASS_COURT_SINGLES_PAM, FACE_RIGHT ; $6d0e
 .byEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $6d15
-	cp $0f ; $6d18
+	cp ENTRY_JUNIOR_CLASS_COURT_SINGLES_MATCH_RETURN ; $6d18
 	jp z, JuniorClassCourtSinglesMatchReturn ; $6d1a
-	cp $0e ; $6d1d
+	cp ENTRY_JUNIOR_CLASS_COURT_SINGLES_MATCH_WON ; $6d1d
 	jp z, JuniorClassCourtSinglesEntry0eScene ; $6d1f
-	cp $0d ; $6d22
+	cp ENTRY_JUNIOR_CLASS_COURT_SINGLES_VICTORY_SCENE ; $6d22
 	jp z, JuniorClassCourtSinglesEntry0dScene ; $6d24
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1
 	ret z
@@ -418,7 +421,7 @@ JuniorClassCourtSinglesMatchReturn:
 JuniorClassCourtSinglesEntry0eScene:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $6e88
 	ld [wStoryModeCurrentLocation], a ; $6e8a
-	ld a, $0d ; $6e8d
+	ld a, ENTRY_JUNIOR_CLASS_COURT_SINGLES_VICTORY_SCENE ; $6e8d
 	ld [wStoryModeEntryPoint], a ; $6e8f
 	ld a, EXITTRIGGER_DIRECT ; $6e92
 	ld [wUnusedExitTriggerIdMirror], a ; $6e94
@@ -430,8 +433,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	ld [wStoryModeShowLocationName], a ; $6e9f
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6ea2
 	sub $01 ; $6ea5
-	ld a, a ; $6ea7
-	rst Rst00 ; $6ea8
+	jumptable a ; $6ea7
 	dw JuniorClassCourtSinglesEntry0dScene.wonRank4 ; $6ea9 jumptable
 	dw JuniorClassCourtSinglesEntry0dScene.wonRank3 ; $6eab jumptable
 	dw JuniorClassCourtSinglesEntry0dScene.wonRank2 ; $6ead jumptable
@@ -582,7 +584,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $7242
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $7247
 	ld [wStoryModeCurrentLocation], a ; $7249
-	ld a, $01 ; $724c
+	ld a, ENTRY_JUNIOR_CLASS_COURT_SINGLES_FROM_RESTAURANT_PLAZA ; $724c
 	ld [wStoryModeEntryPoint], a ; $724e
 	ld a, EXITTRIGGER_DIRECT ; $7251
 	ld [wUnusedExitTriggerIdMirror], a ; $7253

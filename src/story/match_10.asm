@@ -38,6 +38,7 @@ MatchSelectActors_10:
 MatchSelectEntryPoints_10:
 	; $40a6, 9 bytes (map_entries)
 	map_entry $01, FACE_UP, 10.0, 9.0, $0000 ; debug warp only
+	entry_id TEST_FROM_DEBUG_BOOT, $0a
 	db $ff
 MatchSelectExitTriggers_10:
 	ds 1, $ff ; $40af, fill
@@ -72,9 +73,7 @@ MatchSelectPlayEpilogueScene:
 	script_fade_in 4 ; $40ff
 	call WaitFadeEnd ; $4104
 	sound BGM_COURT_WAREHOUSE ; $4107
-	ld a, $01 ; $4109
-	ld hl, SceneAnimationFrameTask_10 ; $410b
-	call RegisterFrameTask ; $410e
+	frame_task SceneAnimationFrameTask_10 ; $4109
 	wait_frames 120 ; $4111
 	wait_frames 255 ; $4115
 	wait_frames 255 ; $4119
@@ -388,20 +387,14 @@ RunLessonSelectMenu:
 	pop_wram_bank ; $44fd
 	ld l, c ; $4502
 	ld h, b ; $4503
-	ld a, l ; $4504
-	sub e ; $4505
-	ld l, a ; $4506
-	ld a, h ; $4507
-	sbc d ; $4508
-	ld h, a ; $4509
+	sub_hl_de ; $4504
 	ld hl, Text_MenuDrillTypes ; $450a
 	ld de, $0101 ; $450d
 	ld a, $01 ; $4510
 	farcall RunPagedTextMenu ; $4512
 	cp $ff ; $4515
 	jp z, RunDoublesMatchListMenu.done ; $4517
-	ld a, a ; $451a
-	rst Rst00 ; $451b
+	jumptable a ; $451a
 	dw RunServiceLessonMenu ; $451c jumptable
 	dw RunNetLessonMenu ; $451e jumptable
 	dw RunStrokeLessonMenu ; $4520 jumptable

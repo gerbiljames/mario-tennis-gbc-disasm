@@ -5,7 +5,7 @@ SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 ;   $d000-$dfff  cutscene text scroll buffer / character record copy / VRAM staging
 
 ; WRAM bank $01 is VRAM staging: every screen decompresses into it and
-; QueueVRAMCopies out of it, so an offset means whatever the current screen
+; queues VRAM copies out of it, so an offset means whatever the current screen
 ; put there (tile graphics, a tilemap plane, its attribute plane). Offsets
 ; in use are multiples of TILE_SIZE.
 ; The one fixed overlay is bank $1b's character-record copy:

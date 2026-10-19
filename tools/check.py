@@ -11,7 +11,14 @@ after a real defect broke it:
   lz-labels no assembled symbol (build/mariotennis.sym) lands inside a
             compressed stream (a name once truncated two streams by 29 and
             160 bytes)
+  lz-names  no region outside lz_ is an LZ stream: one decoding over exactly
+            its bytes, or on to the end of a later region (stray labels once
+            cut two streams into eleven blobs)
   regions   manifest regions stay inside their bank and do not overlap
+  text      a region without a spec rendered as .asm is NUL-terminated text
+            (49 position tables once rendered as strings)
+  db-words  a label holding only db rows has no little-endian word equal to
+            a label of its bank: a pointer the assembler cannot move
   layout    data/ mirrors src/: a manifest file sits in the folder of the
             source file that INCBINs or INCLUDEs it
   macros    every target_script, move_curve, frame_place, blit_runs and
@@ -209,7 +216,9 @@ def check_stranded_scopes(fail):
 
 _CODE_PREFIXES = ("script_", "farcall", "push_wram_bank", "pop_wram_bank", "wram_bank",
                   "ld_", "rect_", "sprite_", "map_cell", "test_flag", "set_flag",
-                  "clear_flag", "sound", "wait_frames", "lb ", "add_hl_a", "add_de_a", "add_bc_a")
+                  "clear_flag", "sound", "wait_frames", "lb ", "add_hl_a", "add_de_a", "add_bc_a",
+                  "neg_", "abs_", "sub_hl_", "rom_bank", "push_rom_bank", "pop_rom_bank", "sram_bank",
+                  "jumptable", "frame_task")
 _DATA_PREFIXES = ("db", "dw", "INCBIN", "map_actor", "map_actor_end", "map_entry",
                   "map_script", "map_tree", "as_", "anim_", "tilemap_", "oam_",
                   "palette", "snd_", "drill_", "court_", "story_location")
@@ -374,6 +383,118 @@ def check_blob_pointers(rom, manifest, fail):
         if len(heads) >= 2 and all(start <= w < start + length for w in heads[:2]):
             fail("literals", f"{path}: opens with pointers into itself "
                              f"(${heads[0]:04x}, ${heads[1]:04x})")
+    return n
+
+
+# Byte pairs in db blocks that equal a label of their bank by coincidence:
+# (label, byte offset) -> what the bytes really are.
+KNOWN_DB_WORDS = {
+    ("ArcTanTable", 6): "arctangent steps",
+    ("WavePatterns", 30): "wave RAM samples",
+    ("TextPageDescriptors_03", 116): "7-byte records, not word-aligned",
+    ("ShotRecoilTable_07", 2): "recoil speeds",
+    ("TargetShotZoneOverlayTiles", 32): "tile ids",
+    ("StarWarpPathY", 146): "Y coordinates",
+    ("ExtendModifierByteGfx1", 6): "tile data",
+    ("RankingMarkerCoordsTable0Set1", 8): "screen coordinates",
+    ("RankingMarkerCoordsTable1Set1", 8): "screen coordinates",
+    **{(f"CharDataScreenStatBar{n}", 2): "bar tile ids" for n in range(11, 16)},
+    ("NameEntryCursorTable", 54): "cursor y, x pairs",
+}
+
+
+def check_db_pointers(rom, manifest, fail):
+    """A label whose body is only `db` rows (inline, or a `bytes` region it
+    INCLUDEs) holds no little-endian word equal to a label of its own bank:
+    that is a pointer the assembler cannot move. Words are read at even
+    offsets up to the next symbol. The allow-list holds the original layout's
+    coincidences, so an edited build, whose labels sit elsewhere, is skipped."""
+    built = ROOT / "mariotennis.gbc"
+    if not built.exists() or built.read_bytes() != rom:
+        return 0
+    specs = {p: s for p, _o, _n, s in manifest}
+    at, by_addr = {}, {}
+    for line in (ROOT / "build" / "mariotennis.sym").read_text().splitlines():
+        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line, re.I)
+        if m and int(m.group(2), 16) < 0x8000:
+            key = (int(m.group(1), 16), int(m.group(2), 16))
+            at[m.group(3)] = key
+            if not m.group(3).startswith(("FarPtr_", "DataPtr_")):
+                by_addr.setdefault(key, m.group(3))
+    starts = {}
+    for b, a in by_addr:
+        starts.setdefault(b, []).append(a)
+    for v in starts.values():
+        v.sort()
+    found, n = set(), 0
+    for h in holders():
+        name, body = None, []
+        for line in bank_lines(h)[0] + ["End:"]:
+            m = _GLOBAL_RE.match(line)
+            if not m:
+                s = line.split(";")[0].strip()
+                if s and not s.endswith(":"):
+                    body.append(s)
+                continue
+            inc = re.fullmatch(r'INCLUDE "data/([^"]+)"', body[0]) if len(body) == 1 else None
+            if name in at and body and (all(s.startswith("db ") for s in body) or (
+                    inc and (specs.get(inc.group(1)) or "").startswith("bytes"))):
+                n += 1
+                b, a = at[name]
+                nxt = starts[b][bisect.bisect_right(starts[b], a):] or [0x8000 if b else 0x4000]
+                off = a if b == 0 else b * BANK_SIZE + a - 0x4000
+                lo, hi = (0x4000, 0x8000) if b else (0x150, 0x4000)
+                for k in range(0, nxt[0] - a - 1, 2):
+                    w = rom[off + k] | rom[off + k + 1] << 8
+                    if lo <= w < hi and (b, w) in by_addr:
+                        found.add((name, k))
+                        if (name, k) not in KNOWN_DB_WORDS:
+                            fail("db-words", f"${b:02x}: {name}+{k} is ${w:04x}, "
+                                             f"{by_addr[(b, w)]} -- a hidden pointer?")
+            name, body = m.group(1), []
+    for name, k in sorted(set(KNOWN_DB_WORDS) - found):
+        fail("db-words", f"{name}+{k} no longer matches a label -- drop it from KNOWN_DB_WORDS")
+    return n
+
+
+def check_text_regions(rom, manifest, fail):
+    """A spec-less .asm region is rendered as game text, so it must be text:
+    printable characters and text codes in NUL-terminated strings of two or
+    more bytes. Anything else wants a spec."""
+    from extract import SAFE, TEXT_CODES
+    ok = SAFE | set(TEXT_CODES) | {0x01, 0x02, 0x03}
+    n = 0
+    for path, off, length, spec in manifest:
+        if spec or not path.endswith(".asm"):
+            continue
+        n += 1
+        data = rom[off:off + length]
+        strings = data[:-1].split(b"\0")
+        if (not data.endswith(b"\0") or any(len(s) < 2 for s in strings)
+                or any(b not in ok for b in data[:-1] if b)):
+            fail("text", f"{path}: not NUL-terminated text -- give it a render spec")
+    return n
+
+
+def check_unmarked_lz(rom, manifest, fail):
+    """A region not named lz_ is not an LZ stream: one that decodes using
+    exactly its bytes, or that runs on to end exactly where a later region
+    does (a stream split by stray labels), is a stream under the wrong name."""
+    rows = sorted((o, n, p) for p, o, n, _s in manifest)
+    ends = {o + n for o, n, _p in rows}
+    specs = {p: s for p, _o, _n, s in manifest}
+    n = 0
+    for off, length, path in rows:
+        if "/lz_" in path or (specs[path] or "").startswith(("text", "sound", "snd")):
+            continue
+        n += 1
+        try:
+            data, used = decompress(rom, off, (off // BANK_SIZE + 1) * BANK_SIZE)
+        except ValueError:
+            continue
+        if data and (used == length or (used > length and off + used in ends and len(data) >= 16)):
+            fail("lz-names", f"{path}: an LZ stream of {used} bytes "
+                             f"({len(data)} decoded) -- name it lz_")
     return n
 
 
@@ -703,6 +824,73 @@ def check_dma_alignment(fail):
     return n
 
 
+# Variables whose ids name a different family per story location, so a raw
+# value matching some family member there proves nothing.
+_PER_LOCATION_VARS = {"wMapSceneStage", "wMapSceneStage2"}
+# (variable, raw operand): raw values that equal a member of a family the
+# variable also uses, but mean something else.
+KNOWN_RAW_IDS = {
+    ("wMinigameLevel", "$02"),     # Tennis Machine / Wall level 3: an index, not the Mario high-score level
+    ("wPlayer1MainChar", "$3f"),   # debug_02's placeholder record id, not a drill opponent
+}
+_NUMBER_RE = re.compile(r"(\$[0-9a-fA-F]+|%[01]+|\d+)")
+
+
+def check_raw_ids(fail):
+    """A raw cp/store operand on a variable that names its other values from a
+    constant family must not equal a member of that family."""
+    import consts
+    values = consts.constants()
+    uses = {}
+    for holder in holders():
+        lines, origin = bank_lines(holder)
+        src = hl = None
+        prev = ""
+        for i, line in enumerate(lines):
+            if re.match(r"[A-Za-z_.]", line):
+                src = hl = None
+                prev = ""
+                continue
+            t = line.split(";")[0].strip()
+            if not t:
+                continue
+            where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            if m := re.match(r"ldh? a, \[([wh][A-Z]\w+)\]$", t):
+                src = m.group(1)
+            elif m := re.match(r"ld hl, ([wh][A-Z]\w+)$", t):
+                hl = m.group(1)
+            elif (m := re.match(r"cp (.+)$", t)) and src:
+                uses.setdefault(src, []).append((m.group(1), where))
+            elif m := re.match(r"ldh? \[([wh][A-Z]\w+)\], a$", t):
+                if (mm := re.match(r"ld a, ([^\[]+)$", prev)) and mm.group(1) not in "bcdehl":
+                    uses.setdefault(m.group(1), []).append((mm.group(1), where))
+            else:
+                if (m := re.match(r"ld \[hl\], (.+)$", t)) and hl and m.group(1) not in "abcdehl":
+                    uses.setdefault(hl, []).append((m.group(1), where))
+                if not re.match(r"(jr|jp) (n?z|n?c),", t):
+                    src = None
+                if re.match(r"(ld (hl|h|l),|inc hl|dec hl|pop hl|add hl|call|jp|ret|ld a, \[hl[+-]\])", t):
+                    hl = None
+            prev = t
+    n = 0
+    for var, ops in uses.items():
+        if var in _PER_LOCATION_VARS:
+            continue
+        families = {op.split("_")[0] for op, _ in ops if op in values and "_" in op}
+        for op, where in ops:
+            if not _NUMBER_RE.fullmatch(op):
+                continue
+            n += 1
+            v = int(op[1:], 16) if op.startswith("$") else int(op[1:], 2) if op.startswith("%") else int(op)
+            names = [k for k, x in values.items() if x == v and k.split("_")[0] in families
+                     and not k.startswith("NUM_")]
+            if names and (var, op) not in KNOWN_RAW_IDS:
+                fail("raw-ids", f"{where}: {var} {op} -- {names[0]}?")
+    for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
+        fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
+    return n
+
+
 def main():
     global ROOT
     ROOT = Path(__file__).resolve().parent.parent
@@ -718,7 +906,10 @@ def main():
     counts = {
         "lz": check_lz(manifest, fail),
         "lz-labels": check_lz_labels(labels, manifest, fail),
+        "lz-names": check_unmarked_lz(rom, manifest, fail),
         "regions": check_regions(manifest, fail),
+        "text": check_text_regions(rom, manifest, fail),
+        "db-words": check_db_pointers(rom, manifest, fail),
         "layout": check_layout(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
         "traj": check_traj(rom, manifest, fail),
@@ -734,6 +925,7 @@ def main():
         "reach": reach.check(fail),
         "entries": routes.check(fail),
         "progress": progress_reads.check(fail),
+        "raw-ids": check_raw_ids(fail),
     }
     by_check = {}
     for check, msg in failures:

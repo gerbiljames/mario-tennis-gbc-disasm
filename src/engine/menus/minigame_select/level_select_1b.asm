@@ -31,9 +31,7 @@ Unused_1b_LoadUnlockDebugCursorGfx:
 	ld hl, UnlockDebugCursorPalette ; $68f8
 	ld_obj_pals de, 0, 1 ; $68fb
 	call LoadPaletteShadow ; $68fe
-	ld a, $01 ; $6901
-	ld hl, Unused_1b_DrawUnlockDebugFlagSprites ; $6903
-	call RegisterFrameTask ; $6906
+	frame_task Unused_1b_DrawUnlockDebugFlagSprites ; $6901
 	ret ; $6909
 UnlockDebugCursorGfx:
 	INCBIN "data/engine/menus/minigame_select/lz_UnlockDebugCursorGfx.bin" ; $690a, 29 bytes
@@ -95,9 +93,7 @@ Unused_1b_RunStoryDataConfirmMenu:
 	ld [wStubbedPromptTaskState], a ; $69af
 	ld a, $0c ; $69b2
 	ld [wStubbedPromptTaskState + 1], a ; $69b4
-	ld a, $01 ; $69b7
-	ld hl, Unused_1b_StubNop6 ; $69b9
-	call RegisterFrameTask ; $69bc
+	frame_task Unused_1b_StubNop6 ; $69b7
 	ld b, $01 ; $69bf
 	farcall Unused_18_RunTwoOptionSelectB ; $69c1
 	push af ; $69c4
@@ -166,10 +162,10 @@ Unused_1b_DrawIsThisCorrectPrompt:
 	farcall Unused_18_DrawYesNoLabels ; $6a48
 	ret ; $6a4b
 Unused_1b_DrawCharAndItemDataPrompt:
-	ld hl, Text_CharAndItemData ; $6a4c
+	ld hl, Text_StoryMenuCaptions ; $6a4c
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $6a4f
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a52
-	ld hl, Text_CharAndItemData ; $6a55
+	ld hl, Text_StoryMenuCaptions ; $6a55
 	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $6a58
 	farcall Unused_18_RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e

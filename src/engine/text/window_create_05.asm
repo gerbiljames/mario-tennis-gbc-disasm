@@ -240,9 +240,7 @@ RunMenuSelection:
 	ld [hl], e ; $47b7
 	inc hl ; $47b8
 	ld [hl], d ; $47b9
-	ld a, $01 ; $47ba
-	ld hl, AnimateTextArrowTask ; $47bc
-	call RegisterFrameTask ; $47bf
+	frame_task AnimateTextArrowTask ; $47ba
 	pop hl ; $47c2
 	pop de ; $47c3
 	pop bc ; $47c4

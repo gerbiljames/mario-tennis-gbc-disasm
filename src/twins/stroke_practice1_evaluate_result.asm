@@ -3,40 +3,41 @@
 
 {TWIN_LABEL}:
 	ld a, [wDrillCounters + DRILLCTR_STROKE_PASSES]
-	cp $04
+	cp DRILL_LESSON_POINTS
 	jr nz, .checkCounter1
+	ASSERT LESSON_PASSED == 0
 	xor a
 	ld [wDrillLessonResult], a
 	ld a, $01
 	ret
 .checkCounter1:
 	ld a, [wDrillCounters + DRILLCTR_OUTS]
-	cp $04
+	cp DRILL_LESSON_POINTS
 	jr c, .counter1Below4
-	ld a, $01
+	ld a, LESSON_RETURN_ALL_OUT
 	ld [wDrillLessonResult], a
 	jr .notFound
 .counter1Below4:
 	cp $02
 	jr c, .checkCounter2
-	ld a, $02
+	ld a, LESSON_RETURN_INACCURATE
 	ld [wDrillLessonResult], a
 	jr .notFound
 .checkCounter2:
 	ld a, [wDrillCounters + DRILLCTR_STROKE_PASSES]
 	or a
 	jr nz, .counter2NonZero
-	ld a, $03
+	ld a, LESSON_RETURN_NO_PASSES
 	ld [wDrillLessonResult], a
 	jr .notFound
 .counter2NonZero:
-	cp $03
+	cp DRILL_LESSON_POINTS - 1
 	jr nz, .result4
-	ld a, $05
+	ld a, LESSON_RETURN_ALMOST
 	ld [wDrillLessonResult], a
 	jr .notFound
 .result4:
-	ld a, $04
+	ld a, LESSON_RETURN_INCONSISTENT
 	ld [wDrillLessonResult], a
 	jr .notFound
 .notFound:

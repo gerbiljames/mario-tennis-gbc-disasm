@@ -1,4 +1,5 @@
-; Code idioms: far calls, WRAM banking, flags, waits and the paired-operand loads.
+; Code idioms: far calls, jump tables, bank switching, frame tasks, flags,
+; waits, 16-bit arithmetic and the paired-operand loads.
 
 ; Bank-switched call through rst $18 (FarCall, $01b6): two inline operand
 ; bytes select a FarPtr_* entry in the target bank's $4000 pointer table; the
@@ -83,6 +84,62 @@ MACRO pop_wram_bank
 	wram_bank
 ENDM
 
+; ROM bank switch: writes the MBC5 bank register and its shadow hRomBank.
+; The argument, if given, is loaded into a first; push_rom_bank saves the
+; current bank on the stack first and pop_rom_bank restores it.
+MACRO rom_bank
+	IF _NARG == 1
+	ld a, \1
+	ENDC
+	ldh [hRomBank], a
+	ld [rROMB0], a
+ENDM
+
+MACRO push_rom_bank
+	ldh a, [hRomBank]
+	push af
+	rom_bank \1
+ENDM
+
+MACRO pop_rom_bank
+	pop af
+	rom_bank
+ENDM
+
+; SRAM bank switch: writes the MBC5 RAM-bank register and its shadow
+; hSramBank, loading the argument, if given, into a first.
+MACRO sram_bank
+	IF _NARG == 1
+	ld a, \1
+	ENDC
+	ldh [hSramBank], a
+	ld [rRAMB], a
+ENDM
+
+; rst $00 (JumpTableDispatch, $06c4): jump to entry a of the dw table that
+; follows, loading the argument, if given, into a first. A site whose index
+; is already in a has a no-op `ld a, a` there, as if the original's macro
+; took the index the same way; it is written `jumptable a` (likewise
+; `wram_bank a`, `sram_bank a`).
+MACRO jumptable
+	IF _NARG == 1
+	ld a, \1
+	ENDC
+	rst Rst00
+ENDM
+
+; frame_task Handler[, priority]: RegisterFrameTask. AdvanceFrame then calls
+; Handler every frame, lower priorities first; the priority defaults to 1.
+MACRO frame_task
+	IF _NARG == 2
+	ld a, \2
+	ELSE
+	ld a, $01
+	ENDC
+	ld hl, \1
+	call RegisterFrameTask
+ENDM
+
 ; hl = \1 + a: the split-base table index, the address added as two 8-bit
 ; immediates (`sub l` recovers the carry from the low add).
 MACRO ld_hl_indexed
@@ -130,6 +187,90 @@ MACRO add_bc_a
 	ld c, a
 	jr nc, @ + 3
 	inc b
+ENDM
+
+; hl / de / bc = -hl / -de / -bc
+MACRO neg_hl
+	xor a
+	sub l
+	ld l, a
+	sbc a
+	sub h
+	ld h, a
+ENDM
+
+MACRO neg_de
+	xor a
+	sub e
+	ld e, a
+	sbc a
+	sub d
+	ld d, a
+ENDM
+
+MACRO neg_bc
+	xor a
+	sub c
+	ld c, a
+	sbc a
+	sub b
+	ld b, a
+ENDM
+
+; hl / de / bc = |hl| / |de| / |bc|, the sign bit tested and a jr over the
+; negate.
+MACRO abs_hl
+	bit 7, h
+	jr z, @ + 8
+	neg_hl
+ENDM
+
+MACRO abs_de
+	bit 7, d
+	jr z, @ + 8
+	neg_de
+ENDM
+
+MACRO abs_bc
+	bit 7, b
+	jr z, @ + 8
+	neg_bc
+ENDM
+
+; hl -= de / hl -= bc, through a
+MACRO sub_hl_de
+	ld a, l
+	sub e
+	ld l, a
+	ld a, h
+	sbc d
+	ld h, a
+ENDM
+
+MACRO sub_hl_bc
+	ld a, l
+	sub c
+	ld l, a
+	ld a, h
+	sbc b
+	ld h, a
+ENDM
+
+; hl = the field at offset \1 (CHARREC_*) of the story character record
+; wStoryCharacterSlot selects: wStoryMain (0) or wStoryPartner.
+MACRO ld_story_char_field
+	ASSERT HIGH(wStoryPartner) == HIGH(wStoryMain)
+	ld hl, wStoryMain
+	ld a, [wStoryCharacterSlot]
+	or a
+	jr z, @ + 4
+	ld l, LOW(wStoryPartner)
+	ld a, l
+	add \1
+	ld l, a
+	ld a, h
+	adc $00
+	ld h, a
 ENDM
 
 ; WaitFramesCmd takes its frame count as an inline byte after the call.

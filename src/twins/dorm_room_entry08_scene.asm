@@ -5,7 +5,7 @@
 	call ShowStoryNarration_13
 	ld a, STORYLOC_ACADEMY_ENTRANCE
 	ld [wStoryModeCurrentLocation], a
-	ld a, $0a
+	ld a, ENTRY_ACADEMY_ENTRANCE_DEPART_FOR_ISLAND_OPEN
 	ld [wStoryModeEntryPoint], a
 	ld a, EXITTRIGGER_DIRECT
 	ld [wUnusedExitTriggerIdMirror], a

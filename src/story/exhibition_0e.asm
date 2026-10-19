@@ -82,7 +82,7 @@ ExhibitionAcceptedSingles:
 	call PlayStarWarpTransition ; $5ba4
 	ld a, STORYLOC_SPECIAL_COURT ; $5ba7
 	ld [wStoryModeCurrentLocation], a ; $5ba9
-	ld a, $01 ; $5bac
+	ld a, ENTRY_SPECIAL_COURT_SINGLES_HARD ; $5bac
 	ld [wStoryModeEntryPoint], a ; $5bae
 	ld a, EXITTRIGGER_DIRECT ; $5bb1
 	ld [wUnusedExitTriggerIdMirror], a ; $5bb3
@@ -149,7 +149,7 @@ MarioWorldArrivalDoubles:
 	jr z, .done ; $5d30
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_DOWN ; $5d32
 	script_wait_frames 20 ; $5d39
-	ld a, $01 ; $5d40
+	ld a, EXIT_PEACHS_CASTLE_FLY_HOME ; $5d40
 	ld [wUnusedExitTriggerIdMirror], a ; $5d42
 	ld [wStoryModeExitTriggerRequest], a ; $5d45
 	ret ; $5d48
@@ -357,7 +357,7 @@ ExhibitionAcceptedDoubles:
 	call PlayStarWarpTransition ; $62f5
 	ld a, STORYLOC_SPECIAL_COURT ; $62f8
 	ld [wStoryModeCurrentLocation], a ; $62fa
-	ld a, $04 ; $62fd
+	ld a, ENTRY_SPECIAL_COURT_DOUBLES_HARD ; $62fd
 	ld [wStoryModeEntryPoint], a ; $62ff
 	ld a, EXITTRIGGER_DIRECT ; $6302
 	ld [wUnusedExitTriggerIdMirror], a ; $6304

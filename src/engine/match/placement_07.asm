@@ -80,40 +80,43 @@ ComposeLinkStateByte:
 	pop bc ; $4d1f
 	ret ; $4d20
 LinkStateBytePtrs_07:
-	INCBIN "data/engine/match/LinkStateBytePtrs_07.bin" ; $4d21, 16 bytes
+	; $4d21: per hLinkPayloadKind, the sources of the high and low nibble
+	dw hPlayerInputFlags, hInputRisingEdge
+	dw hPlayerInputFlags, hPlayerInputFlags
+	dw hInputPressed, hInputRisingEdge
+	dw hInputPressed, hPlayerInputFlags
 ShotPlacementDataTopspin_07:
-	INCBIN "data/engine/match/ShotPlacementDataTopspin_07.bin" ; $4d31, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataTopspin_07.asm" ; $4d31, 80 bytes (words:4)
 ShotPlacementDataPowerTopspin_07:
-	INCBIN "data/engine/match/ShotPlacementDataPowerTopspin_07.bin" ; $4d81, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataPowerTopspin_07.asm" ; $4d81, 80 bytes (words:4)
 ShotPlacementDataSlice_07:
-	INCBIN "data/engine/match/ShotPlacementDataSlice_07.bin" ; $4dd1, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataSlice_07.asm" ; $4dd1, 80 bytes (words:4)
 ShotPlacementDataPowerSlice_07:
-	INCBIN "data/engine/match/ShotPlacementDataPowerSlice_07.bin" ; $4e21, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataPowerSlice_07.asm" ; $4e21, 80 bytes (words:4)
 ShotPlacementDataNeutral_07:
-	INCBIN "data/engine/match/ShotPlacementDataNeutral_07.bin" ; $4e71, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataNeutral_07.asm" ; $4e71, 80 bytes (words:4)
 ShotPlacementDataSmash_07:
-	INCBIN "data/engine/match/ShotPlacementDataSmash_07.bin" ; $4ec1, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataSmash_07.asm" ; $4ec1, 80 bytes (words:4)
 ShotPlacementDataReachBasic_07:
-	INCBIN "data/engine/match/ShotPlacementDataReachBasic_07.bin" ; $4f11, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataReachBasic_07.asm" ; $4f11, 80 bytes (words:4)
 ShotPlacementDataReachPowerTopspin_07:
-	INCBIN "data/engine/match/ShotPlacementDataReachPowerTopspin_07.bin" ; $4f61, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataReachPowerTopspin_07.asm" ; $4f61, 80 bytes (words:4)
 ShotPlacementDataReachPowerSlice_07:
-	INCBIN "data/engine/match/ShotPlacementDataReachPowerSlice_07.bin" ; $4fb1, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataReachPowerSlice_07.asm" ; $4fb1, 80 bytes (words:4)
 ShotPlacementDataReach_07:
-	INCBIN "data/engine/match/ShotPlacementDataReach_07.bin" ; $5001, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataReach_07.asm" ; $5001, 80 bytes (words:4)
 ShotPlacementDataLob_07:
-	INCBIN "data/engine/match/ShotPlacementDataLob_07.bin" ; $5051, 16 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataLob_07.asm" ; $5051, 16 bytes (words:4)
 ShotPlacementDataDrop_07:
-	INCBIN "data/engine/match/ShotPlacementDataDrop_07.bin" ; $5061, 16 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataDrop_07.asm" ; $5061, 16 bytes (words:4)
 ShotPlacementDataServeTopspin_07:
-	INCBIN "data/engine/match/ShotPlacementDataServeTopspin_07.bin" ; $5071, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataServeTopspin_07.asm" ; $5071, 80 bytes (words:4)
 ShotPlacementDataServeSlice_07:
-	INCBIN "data/engine/match/ShotPlacementDataServeSlice_07.bin" ; $50c1, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataServeSlice_07.asm" ; $50c1, 80 bytes (words:4)
 ShotPlacementDataServeFlat_07:
-	INCBIN "data/engine/match/ShotPlacementDataServeFlat_07.bin" ; $5111, 80 bytes
+	INCLUDE "data/engine/match/ShotPlacementDataServeFlat_07.asm" ; $5111, 80 bytes (words:4)
 ComputeShotPlacement:
-	ld a, [wCurrentShotType] ; $5161
-	rst Rst00 ; $5164
+	jumptable [wCurrentShotType] ; $5161
 	dw ShotPlacementTopspin ; $5165 jumptable
 	dw ShotPlacementPowerTopspin ; $5167 jumptable
 	dw ShotPlacementSlice ; $5169 jumptable
@@ -283,12 +286,7 @@ LoadShotPlacementEntry:
 	ld a, [wShotAimMirror] ; $52b5
 	and a ; $52b8
 	jr z, .storeSideSpin ; $52b9
-	xor a ; $52bb
-	sub c ; $52bc
-	ld c, a ; $52bd
-	sbc a ; $52be
-	sub b ; $52bf
-	ld b, a ; $52c0
+	neg_bc ; $52bb
 .storeSideSpin:
 	ld hl, wBallSideSpin ; $52c1
 	ld a, c ; $52c4
@@ -361,12 +359,7 @@ AddBallSpeedEighth:
 .absSpeed:
 	bit 7, h ; $532f
 	jr nz, .store ; $5331
-	xor a ; $5333
-	sub l ; $5334
-	ld l, a ; $5335
-	sbc a ; $5336
-	sub h ; $5337
-	ld h, a ; $5338
+	neg_hl ; $5333
 .store:
 	ld a, l ; $5339
 	ld [wShotSpeedBallTerm], a ; $533a
@@ -421,12 +414,7 @@ AddPlayerMomentumToShot:
 	ld a, [wCharCourtPos] ; $5389
 	and $02 ; $538c
 	jr nz, .store ; $538e
-	xor a ; $5390
-	sub l ; $5391
-	ld l, a ; $5392
-	sbc a ; $5393
-	sub h ; $5394
-	ld h, a ; $5395
+	neg_hl ; $5390
 .store:
 	ld a, l ; $5396
 	ld [wShotSpeedMomentumTerm], a ; $5397

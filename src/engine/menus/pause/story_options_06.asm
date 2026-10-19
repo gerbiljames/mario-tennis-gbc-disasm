@@ -27,7 +27,7 @@ RunStoryTwoOptionMenu:
 	jr z, .redrawStoryTilemapRows ; $70e4
 	ld hl, wMatchMenuSelection ; $70e6
 	add [hl] ; $70e9
-	ld hl, Text_CharAndItemData ; $70ea
+	ld hl, Text_StoryMenuCaptions ; $70ea
 	add_hl_a ; $70ed
 	ld_cell de, $00, $0e ; $70f2
 	call DrawStoryMenuCaption ; $70f5
@@ -66,7 +66,7 @@ RunStoryTwoOptionMenu:
 	jr z, .loadItemGfx ; $713a
 	ld hl, wMatchMenuSelection ; $713c
 	add [hl] ; $713f
-	ld hl, Text_CharAndItemData ; $7140
+	ld hl, Text_StoryMenuCaptions ; $7140
 	add_hl_a ; $7143
 	ld_cell de, $00, $0e ; $7148
 	call DrawStoryMenuCaption ; $714b
@@ -108,10 +108,10 @@ RunStoryThreeOptionMenu:
 	ld_cell de, $0d, $0a ; $7195
 	call DrawStoryMenuItem ; $7198
 	ld a, [wStoryMenuFirstItem] ; $719b
-	cp $06 ; $719e
+	cp STORYMENUITEM_MSG_SLOW ; $719e (flags unused: add [hl] replaces them)
 	ld hl, wMatchMenuSelection ; $71a0
 	add [hl] ; $71a3
-	ld hl, Text_CharAndItemData ; $71a4
+	ld hl, Text_StoryMenuCaptions ; $71a4
 	add_hl_a ; $71a7
 	ld_cell de, $00, $0e ; $71ac
 	call DrawStoryMenuCaption ; $71af
@@ -145,10 +145,10 @@ RunStoryThreeOptionMenu:
 	ld [wMatchMenuSelection], a ; $71ea
 	sound SFX_MENU_MOVE ; $71ed
 	ld a, [wStoryMenuFirstItem] ; $71ef
-	cp $06 ; $71f2
+	cp STORYMENUITEM_MSG_SLOW ; $71f2 (flags unused: add [hl] replaces them)
 	ld hl, wMatchMenuSelection ; $71f4
 	add [hl] ; $71f7
-	ld hl, Text_CharAndItemData ; $71f8
+	ld hl, Text_StoryMenuCaptions ; $71f8
 	add_hl_a ; $71fb
 	ld_cell de, $00, $0e ; $7200
 	call DrawStoryMenuCaption ; $7203

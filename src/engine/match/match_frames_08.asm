@@ -104,8 +104,7 @@ ReinitPointAfterPause:
 	ld hl, MoveCharToBaseCourtPosition ; $44d3
 	call ForEachCharBank ; $44d6
 	farcall LoadServeGfx ; $44d9
-	ld a, [wServingCharWramBank] ; $44dc
-	wram_bank ; $44df
+	wram_bank [wServingCharWramBank] ; $44dc
 	ld a, CHARSTATE_SERVE ; $44e3
 	call SetCharState ; $44e5
 	wram_bank WRAM_CHAR0 ; $44e8
@@ -168,15 +167,15 @@ SelectScoreboardLayout:
 	ld [wScoreboardLayout], a ; $4559
 	ret ; $455c
 .doubles:
-	ld b, $03 ; $455d
+	ld b, SCOREBOARD_LESSON ; $455d
 	ld a, [wDrillIsPracticeLesson] ; $455f
 	and a ; $4562
 	jr nz, .done ; $4563
-	ld b, $07 ; $4565
+	ld b, SCOREBOARD_HIGH_SCORE ; $4565
 	ld a, [wMinigameHighScoreMode] ; $4567
 	and a ; $456a
 	jr nz, .done ; $456b
-	ld b, $06 ; $456d
+	ld b, SCOREBOARD_SCORE ; $456d
 	ld a, [wMinigameUsesWall] ; $456f
 	and a ; $4572
 	jr nz, .done ; $4573
@@ -186,7 +185,7 @@ SelectScoreboardLayout:
 	ld a, [wMinigameIsBooBlast] ; $457b
 	and a ; $457e
 	jr nz, .done ; $457f
-	ld b, $04 ; $4581
+	ld b, SCOREBOARD_DRILL ; $4581
 .done:
 	ld a, b ; $4583
 	ld [wScoreboardLayout], a ; $4584
@@ -335,15 +334,7 @@ CheckBallOutOfBounds:
 	ld a, [hl+] ; $4645
 	ld h, [hl] ; $4646
 	ld l, a ; $4647
-	bit 7, h ; $4648
-	jr z, .checkDepth ; $464a
-	xor a ; $464c
-	sub l ; $464d
-	ld l, a ; $464e
-	sbc a ; $464f
-	sub h ; $4650
-	ld h, a ; $4651
-.checkDepth:
+	abs_hl ; $4648
 	add hl, bc ; $4652
 	jr nc, .outOfBounds ; $4653
 	set 0, d ; $4655
@@ -356,15 +347,7 @@ CheckBallOutOfBounds:
 	ld a, [hl+] ; $4660
 	ld h, [hl] ; $4661
 	ld l, a ; $4662
-	bit 7, h ; $4663
-	jr z, .inBounds ; $4665
-	xor a ; $4667
-	sub l ; $4668
-	ld l, a ; $4669
-	sbc a ; $466a
-	sub h ; $466b
-	ld h, a ; $466c
-.inBounds:
+	abs_hl ; $4663
 	add hl, bc ; $466d
 	jr nc, .done ; $466e
 	set 1, d ; $4670
@@ -455,20 +438,17 @@ ApplyCourtBounceDamping:
 FindServerCharBank:
 	ld hl, wCharServeRole ; $46e7
 	ld b, $04 ; $46ea
-	ld a, b ; $46ec
-	wram_bank ; $46ed
+	wram_bank b ; $46ec
 	ld a, [hl] ; $46f1
 	and a ; $46f2
 	jr z, .setBank ; $46f3
 	ld b, $05 ; $46f5
-	ld a, b ; $46f7
-	wram_bank ; $46f8
+	wram_bank b ; $46f7
 	ld a, [hl] ; $46fc
 	and a ; $46fd
 	jr z, .setBank ; $46fe
 	ld b, $06 ; $4700
-	ld a, b ; $4702
-	wram_bank ; $4703
+	wram_bank b ; $4702
 	ld a, [hl] ; $4707
 	and a ; $4708
 	jr z, .setBank ; $4709

@@ -9,19 +9,13 @@ RunEraseDataConfirmMenu:
 	call LoadEraseDataConfirmScreen ; $4c27
 	xor a ; $4c2a
 	ld [wAnimatedTileSet], a ; $4c2b
-	ld a, $01 ; $4c2e
-	ld hl, UpdateAnimatedTiles_3e ; $4c30
-	call RegisterFrameTask ; $4c33
-	ld a, $01 ; $4c36
-	ld hl, EraseConfirmCursorSpriteTask ; $4c38
-	call RegisterFrameTask ; $4c3b
+	frame_task UpdateAnimatedTiles_3e ; $4c2e
+	frame_task EraseConfirmCursorSpriteTask ; $4c36
 	call AnimateEraseConfirmPalette ; $4c3e
 	call EnableLCD ; $4c41
 	script_fade_in 8 ; $4c44
 	call WaitFadeEnd ; $4c49
-	ld a, $01 ; $4c4c
-	ld hl, AnimateEraseConfirmPalette ; $4c4e
-	call RegisterFrameTask ; $4c51
+	frame_task AnimateEraseConfirmPalette ; $4c4c
 	wram_bank WRAM_SCREEN ; $4c54
 .loop:
 	call AdvanceFrame ; $4c5a
@@ -273,9 +267,7 @@ RunRacketShoesChoiceMenu:
 	ld c, a ; $4ec4
 	ld b, $02 ; $4ec5
 	call SetMenuCursorFromIndex_3e ; $4ec7
-	ld a, $01 ; $4eca
-	ld hl, ChoiceTabCursorSpriteTask ; $4ecc
-	call RegisterFrameTask ; $4ecf
+	frame_task ChoiceTabCursorSpriteTask ; $4eca
 	call RedrawRacketShoesChoiceMenu ; $4ed2
 	wram_bank WRAM_SCREEN ; $4ed5
 .loop:

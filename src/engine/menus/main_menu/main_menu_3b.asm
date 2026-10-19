@@ -23,9 +23,7 @@ RunMainMenu:
 	ld a, [wMenuSlideDirection] ; $5608
 	ld b, a ; $560b
 	call MainMenuSlideIn ; $560c
-	ld a, $7f ; $560f
-	ld hl, MainMenuCursorSpriteTask ; $5611
-	call RegisterFrameTask ; $5614
+	frame_task MainMenuCursorSpriteTask, $7f ; $560f
 	call DrawMainMenuSelection ; $5617
 	call ResetSerialState ; $561a
 	farcall ResetCheatCodeBuffer ; $561d

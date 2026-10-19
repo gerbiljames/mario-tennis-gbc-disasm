@@ -88,18 +88,7 @@ Unused_1a_ExpScreenNumberTask:
 	call Unused_1a_QueueNumberSpritesShifted ; $4e84
 	wram_bank WRAM_SCENE ; $4e87
 	push af ; $4e8d
-	ld hl, wStoryMainName ; $4e8e
-	ld a, [wStoryCharacterSlot] ; $4e91
-	or a ; $4e94
-	jr z, .readLevel ; $4e95
-	ld l, $40 ; $4e97
-.readLevel:
-	ld a, l ; $4e99
-	add $18 ; $4e9a
-	ld l, a ; $4e9c
-	ld a, h ; $4e9d
-	adc $00 ; $4e9e
-	ld h, a ; $4ea0
+	ld_story_char_field CHARREC_LEVEL ; $4e8e
 	pop af ; $4ea1
 	ld a, [hl] ; $4ea2
 	cp $63 ; $4ea3
@@ -206,12 +195,7 @@ Unused_1a_AdvanceExpGaugeFill:
 	ld a, [hl+] ; $4f4a
 	ld h, [hl] ; $4f4b
 	ld l, a ; $4f4c
-	ld a, l ; $4f4d
-	sub e ; $4f4e
-	ld l, a ; $4f4f
-	ld a, h ; $4f50
-	sbc d ; $4f51
-	ld h, a ; $4f52
+	sub_hl_de ; $4f4d
 	ld a, h ; $4f53
 	or l ; $4f54
 	jr nz, .updateRemaining ; $4f55
@@ -226,12 +210,7 @@ Unused_1a_AdvanceExpGaugeFill:
 	ld a, [hl+] ; $4f65
 	ld h, [hl] ; $4f66
 	ld l, a ; $4f67
-	ld a, l ; $4f68
-	sub c ; $4f69
-	ld l, a ; $4f6a
-	ld a, h ; $4f6b
-	sbc b ; $4f6c
-	ld h, a ; $4f6d
+	sub_hl_bc ; $4f68
 	bit 7, h ; $4f6e
 	jr nz, .clampToZero ; $4f70
 	ld d, h ; $4f72

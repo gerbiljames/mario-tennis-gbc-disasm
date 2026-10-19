@@ -187,36 +187,14 @@ BuildCharDataConfirmScreen:
 	pop af ; $5b21
 	ld [wStoryCharacterSlot], a ; $5b22
 	push af ; $5b25
-	ld hl, wStoryMainName ; $5b26
-	ld a, [wStoryCharacterSlot] ; $5b29
-	or a ; $5b2c
-	jr z, .paletteField ; $5b2d
-	ld l, $40 ; $5b2f
-.paletteField:
-	ld a, l ; $5b31
-	add $0c ; $5b32
-	ld l, a ; $5b34
-	ld a, h ; $5b35
-	adc $00 ; $5b36
-	ld h, a ; $5b38
+	ld_story_char_field CHARREC_PALETTE ; $5b26
 	pop af ; $5b39
 	ld a, [hl] ; $5b3a
 	ld_bg_pals de, 4, 1 ; $5b3b
 	farcall LoadIndexedPaletteThunk ; $5b3e
 	wram_bank WRAM_STAGING ; $5b41
 	push af ; $5b47
-	ld hl, wStoryMainName ; $5b48
-	ld a, [wStoryCharacterSlot] ; $5b4b
-	or a ; $5b4e
-	jr z, .charField ; $5b4f
-	ld l, $40 ; $5b51
-.charField:
-	ld a, l ; $5b53
-	add $0b ; $5b54
-	ld l, a ; $5b56
-	ld a, h ; $5b57
-	adc $00 ; $5b58
-	ld h, a ; $5b5a
+	ld_story_char_field CHARREC_CHAR ; $5b48
 	pop af ; $5b5b
 	ld a, [hl] ; $5b5c
 	ld de, wDecompBuffer ; $5b5d
@@ -287,9 +265,7 @@ DrawCharDataConfirmPrompt:
 	call ApplyTilemapPatchList ; $5c11
 	ret ; $5c14
 StartCharDataValuesSyncTask:
-	ld a, $01 ; $5c15
-	ld hl, CharDataValuesSyncTask ; $5c17
-	call RegisterFrameTask ; $5c1a
+	frame_task CharDataValuesSyncTask ; $5c15
 	ret ; $5c1d
 StopCharDataValuesSyncTask:
 	ld hl, CharDataValuesSyncTask ; $5c1e
@@ -322,9 +298,9 @@ StatPageTilemapPatch4:
 CharDataConfirmScreenTilemapPatch3:
 	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch3.asm" ; $5d59, 37 bytes (blit_runs)
 CharDataSummaryFieldsTilePlot0:
-	INCBIN "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot0.bin" ; $5d7e, 19 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot0.asm" ; $5d7e, 19 bytes (bytes:2)
 CharDataSummaryFieldsTilePlot1:
-	INCBIN "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot1.bin" ; $5d91, 19 bytes
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot1.asm" ; $5d91, 19 bytes (bytes:2)
 MainCharStatPageTilemapPatch00:
 	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch00.asm" ; $5da4, 13 bytes (blit_runs)
 PartnerStatPageTilemapPatch00:

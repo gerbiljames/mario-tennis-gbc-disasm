@@ -114,8 +114,7 @@ ProportionalTextCodeHandler5_05:
 	pop hl ; $5e82
 .glyph:
 	push af ; $5e83
-	ld a, [wShadowTilemapBank] ; $5e84
-	wram_bank ; $5e87
+	wram_bank [wShadowTilemapBank] ; $5e84
 	pop af ; $5e8b
 	call StampGlyphTileAtPen ; $5e8c
 	call DrawInlineGlyph ; $5e8f

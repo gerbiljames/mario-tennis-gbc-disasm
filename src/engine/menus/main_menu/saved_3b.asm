@@ -204,9 +204,7 @@ RunSavedDataSourceSelect:
 	ld c, a ; $67cb
 	ld b, $03 ; $67cc
 	call SetMenuCursorFromIndex_3b ; $67ce
-	ld a, $01 ; $67d1
-	ld hl, SavedDataSourceCursorSpriteTask ; $67d3
-	call RegisterFrameTask ; $67d6
+	frame_task SavedDataSourceCursorSpriteTask ; $67d1
 	call DrawSavedDataSourceGrid ; $67d9
 	wram_bank WRAM_SCREEN ; $67dc
 .loop:

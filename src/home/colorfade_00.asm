@@ -176,9 +176,7 @@ RunFrameTasks:
 	ld e, a ; $1c1c
 	ld a, [hl+] ; $1c1d
 	ld d, a ; $1c1e
-	ld a, [hl] ; $1c1f
-	ldh [hRomBank], a ; $1c20
-	ld [rROMB0], a ; $1c22
+	rom_bank [hl] ; $1c1f
 	ld l, e ; $1c25
 	ld h, d ; $1c26
 	call JumpToHL ; $1c27
@@ -191,11 +189,8 @@ RunFrameTasks:
 	dec c ; $1c2f
 	jr nz, .loop ; $1c30
 	pop de ; $1c32
-	ld a, d ; $1c33
-	ldh [hRomBank], a ; $1c34
-	ld [rROMB0], a ; $1c36
-	ld a, e ; $1c39
-	wram_bank ; $1c3a
+	rom_bank d ; $1c33
+	wram_bank e ; $1c39
 	ret ; $1c3e
 SortFrameTasks:
 	ld c, $0f ; $1c3f

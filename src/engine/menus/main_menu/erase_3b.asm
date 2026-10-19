@@ -41,9 +41,7 @@ RunEraseSavedDataSelect:
 	ld c, $00 ; $6ca3
 	ld b, $03 ; $6ca5
 	call SetMenuCursorFromIndex_3b ; $6ca7
-	ld a, $01 ; $6caa
-	ld hl, EraseSavedDataCursorSpriteTask ; $6cac
-	call RegisterFrameTask ; $6caf
+	frame_task EraseSavedDataCursorSpriteTask ; $6caa
 	call DrawEraseSavedDataGrid ; $6cb2
 	wram_bank WRAM_SCREEN ; $6cb5
 .loop:

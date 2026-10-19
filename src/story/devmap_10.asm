@@ -82,11 +82,11 @@ DevelopmentRespawnActorList_10:
 	map_actor_end
 DevelopmentEntryPoints_10:
 	; $4ced, 9 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 9.0, 9.0, $0000
+	map_entry $01, FACE_DOWN, 9.0, 9.0, $0000, DEVELOPMENT_START
 	db $ff
 DevelopmentExitTriggers_10:
 	; $4cf6, 9 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_DEVELOPMENT, $01
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_DEVELOPMENT, ENTRY_DEVELOPMENT_START, DEVELOPMENT_RELOAD
 	db $ff
 DevelopmentRespawnActors_10:
 	script_fade_out 16 ; $4cff
@@ -198,15 +198,17 @@ MainMenuActors_10:
 	map_actor_end
 MainMenuEntryPoints_10:
 	; $4e84, 9 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 255.0, 255.0, $0000
+	map_entry $01, FACE_DOWN, 255.0, 255.0, $0000, MAIN_MENU_FROM_STORY
+	entry_id MAIN_MENU_INIT, $02
+	entry_id MAIN_MENU_TITLE, $0a
 	db $ff
 MainMenuExitTriggers_10:
 	; $4e8d, 41 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, $0f
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_DORM_ROOM, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_TEST_2, $01
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_WING, $0f
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_PEACHS_CASTLE, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, ENTRY_ACADEMY_ENTRANCE_NEW_GAME, MAIN_MENU_NEW_GAME
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_DORM_ROOM, ENTRY_DORM_ROOM_CONTINUE, MAIN_MENU_CONTINUE
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_TEST_2, ENTRY_TEST_2_SETUP_MENU, MAIN_MENU_TEST_2
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_WING, ENTRY_ACADEMY_WING_ISLAND_OPEN_WON, MAIN_MENU_CONTINUE_ISLAND_OPEN_WON
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_PEACHS_CASTLE, ENTRY_PEACHS_CASTLE_FIRST_VISIT, MAIN_MENU_CONTINUE_TO_PEACHS_CASTLE
 	db $ff
 MainMenuNpcScripts_10:
 	ds 1, $ff ; $4eb6, fill
@@ -256,7 +258,7 @@ RunTitleAndMainMenuLoop:
 	sound BGM_NONE ; $4f10
 	call ResumeBGM ; $4f12
 	ld a, [wStoryModeEntryPoint] ; $4f15
-	cp $0a ; $4f18
+	cp ENTRY_MAIN_MENU_TITLE ; $4f18
 	jr nz, .newGame ; $4f1a
 	call ClearFrameTasks ; $4f1c
 	sound BGM_NONE ; $4f1f
@@ -381,7 +383,7 @@ MatchSelectHandlersBHandler0:
 .restoreReturnPoint:
 	farcall RestoreStoryReturnPoint ; $5030
 	ld b, STORYLOC_DORM_ROOM ; $5033
-	ld c, $01 ; $5035
+	ld c, ENTRY_DORM_ROOM_CONTINUE ; $5035
 	farcall SaveStoryReturnPoint ; $5037
 	farcall SaveStorySlotWithTimer ; $503a
 	farcall EndCutsceneScriptMode ; $503d
@@ -410,12 +412,12 @@ MatchSelectHandlersBHandler0:
 	farcall SaveStorySlotWithTimer ; $5079
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $507c
 	jr nz, .exitToLocation3 ; $507f
-	ld a, $01 ; $5081
+	ld a, EXIT_MAIN_MENU_NEW_GAME ; $5081
 	ld [wUnusedExitTriggerIdMirror], a ; $5083
 	ld [wStoryModeExitTriggerRequest], a ; $5086
 	ret ; $5089
 .exitToLocation3:
-	ld a, $03 ; $508a
+	ld a, EXIT_MAIN_MENU_TEST_2 ; $508a
 	ld [wUnusedExitTriggerIdMirror], a ; $508c
 	ld [wStoryModeExitTriggerRequest], a ; $508f
 	ret ; $5092
@@ -433,7 +435,7 @@ MatchSelectHandlersBHandler0:
 	farcall SaveStorySlotWithTimer ; $50ae
 	call GetStoryContinueDestination ; $50b1
 	ld [wMatchSelectSubState], a ; $50b4
-	cp $04 ; $50b7
+	cp EXIT_MAIN_MENU_CONTINUE_ISLAND_OPEN_WON ; $50b7
 	jr z, .continueStory ; $50b9
 	ld a, [ApOptStoryArcs]
 	and a
@@ -455,7 +457,7 @@ MatchSelectHandlersBHandler0:
 	ld [wGameMode], a ; $50d5
 	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $50d8
 	ld b, STORYLOC_DORM_ROOM ; $50db
-	ld c, $01 ; $50dd
+	ld c, ENTRY_DORM_ROOM_CONTINUE ; $50dd
 	farcall SaveStoryReturnPoint ; $50df
 	farcall SaveStorySlotWithTimer ; $50e2
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $50e5
@@ -466,7 +468,7 @@ MatchSelectHandlersBHandler0:
 	ld [wStoryModeExitTriggerRequest], a ; $50f1
 	ret ; $50f4
 .loadSlot:
-	ld a, $03 ; $50f5
+	ld a, EXIT_MAIN_MENU_TEST_2 ; $50f5
 	ld [wUnusedExitTriggerIdMirror], a ; $50f7
 	ld [wStoryModeExitTriggerRequest], a ; $50fa
 	ret ; $50fd

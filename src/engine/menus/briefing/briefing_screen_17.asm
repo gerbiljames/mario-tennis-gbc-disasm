@@ -64,9 +64,7 @@ ShowDrillBriefingScreen:
 	call EnableLCD ; $44a2
 	xor a ; $44a5
 	ld [wAnimatedTileSet], a ; $44a6
-	ld a, $01 ; $44a9
-	ld hl, UpdateAnimatedTilesTask_17 ; $44ab
-	call RegisterFrameTask ; $44ae
+	frame_task UpdateAnimatedTilesTask_17 ; $44a9
 	ld a, $03 ; $44b1
 	ld [wAnimatedTilePeriod], a ; $44b3
 	script_fade_in 16 ; $44b6
@@ -82,8 +80,7 @@ ShowDrillBriefingScreen:
 	jr c, .dispatch ; $44cf
 	sub $03 ; $44d1
 .dispatch:
-	ld a, a ; $44d3
-	rst Rst00 ; $44d4
+	jumptable a ; $44d3
 	dw DrillBriefing_ServeToTargets ; $44d5 jumptable
 	dw DrillBriefing_SpinServe ; $44d7 jumptable
 	dw DrillBriefing_ServeThroughPoles ; $44d9 jumptable
@@ -102,9 +99,7 @@ Unused_17_ShowCourtDiagramTestScreen:
 	call EnableLCD ; $44f1
 	xor a ; $44f4
 	ld [wAnimatedTileSet], a ; $44f5
-	ld a, $01 ; $44f8
-	ld hl, UpdateAnimatedTilesTask_17 ; $44fa
-	call RegisterFrameTask ; $44fd
+	frame_task UpdateAnimatedTilesTask_17 ; $44f8
 	ld a, $03 ; $4500
 	ld [wAnimatedTilePeriod], a ; $4502
 	script_fade_in 16 ; $4505
@@ -113,48 +108,36 @@ Unused_17_ShowCourtDiagramTestScreen:
 	ld [wBriefingPlayerX], a ; $450f
 	ld a, $40 ; $4512
 	ld [wBriefingPlayerY], a ; $4514
-	ld a, $01 ; $4517
-	ld hl, DrawBriefingPlayerSprite ; $4519
-	call RegisterFrameTask ; $451c
+	frame_task DrawBriefingPlayerSprite ; $4517
 	ld a, $30 ; $451f
 	ld [wBriefingOpponentX], a ; $4521
 	ld a, $20 ; $4524
 	ld [wBriefingOpponentY], a ; $4526
-	ld a, $01 ; $4529
-	ld hl, DrawBriefingOpponentSprite ; $452b
-	call RegisterFrameTask ; $452e
+	frame_task DrawBriefingOpponentSprite ; $4529
 	ld a, $60 ; $4531
 	ld [wBriefingBallX], a ; $4533
 	ld a, $30 ; $4536
 	ld [wBriefingBallY], a ; $4538
-	ld a, $01 ; $453b
-	ld hl, DrawBriefingBallSprite ; $453d
-	call RegisterFrameTask ; $4540
+	frame_task DrawBriefingBallSprite ; $453b
 	ld a, $01 ; $4543
 	ld [wBriefingHMarkerUnflipped], a ; $4545
 	ld a, $60 ; $4548
 	ld [wBriefingHMarkerX], a ; $454a
 	ld a, $40 ; $454d
 	ld [wBriefingHMarkerY], a ; $454f
-	ld a, $01 ; $4552
-	ld hl, DrawBriefingMarkerHFlip ; $4554
-	call RegisterFrameTask ; $4557
+	frame_task DrawBriefingMarkerHFlip ; $4552
 	ld hl, Text_DebugRacketTest ; $455a
 	call DrawBriefingCaption ; $455d
 	call WaitForInputBlinking ; $4560
 	call ClearFrameTasks ; $4563
-	ld a, $01 ; $4566
-	ld hl, UpdateAnimatedTilesTask_17 ; $4568
-	call RegisterFrameTask ; $456b
+	frame_task UpdateAnimatedTilesTask_17 ; $4566
 	ld a, $09 ; $456e
 	ld [wBriefingSwingFrame], a ; $4570
 	ld a, $40 ; $4573
 	ld [wBriefingSwingX], a ; $4575
 	ld a, $32 ; $4578
 	ld [wBriefingSwingY], a ; $457a
-	ld a, $01 ; $457d
-	ld hl, DrawBriefingSwingAnim ; $457f
-	call RegisterFrameTask ; $4582
+	frame_task DrawBriefingSwingAnim ; $457d
 	ld a, $40 ; $4585
 	ld [wBriefingPole1X], a ; $4587
 	ld a, $20 ; $458a
@@ -163,36 +146,28 @@ Unused_17_ShowCourtDiagramTestScreen:
 	ld [wBriefingPole2X], a ; $4591
 	ld a, $20 ; $4594
 	ld [wBriefingPole2Y], a ; $4596
-	ld a, $01 ; $4599
-	ld hl, DrawBriefingPoleSprites ; $459b
-	call RegisterFrameTask ; $459e
+	frame_task DrawBriefingPoleSprites ; $4599
 	ld a, $01 ; $45a1
 	ld [wBriefingVMarkerUpright], a ; $45a3
 	ld a, $30 ; $45a6
 	ld [wBriefingVMarkerX], a ; $45a8
 	ld a, $20 ; $45ab
 	ld [wBriefingVMarkerY], a ; $45ad
-	ld a, $01 ; $45b0
-	ld hl, DrawBriefingMarkerVFlip ; $45b2
-	call RegisterFrameTask ; $45b5
+	frame_task DrawBriefingMarkerVFlip ; $45b0
 	ld a, $01 ; $45b8
 	ld [wBriefingSpinMarkerUnflipped], a ; $45ba
 	ld a, $20 ; $45bd
 	ld [wBriefingSpinMarkerX], a ; $45bf
 	ld a, $40 ; $45c2
 	ld [wBriefingSpinMarkerY], a ; $45c4
-	ld a, $01 ; $45c7
-	ld hl, DrawSpinServeBriefingMarker ; $45c9
-	call RegisterFrameTask ; $45cc
+	frame_task DrawSpinServeBriefingMarker ; $45c7
 	ld a, $03 ; $45cf
 	ld [wBriefingRotMarkerDir], a ; $45d1
 	ld a, $10 ; $45d4
 	ld [wBriefingRotMarkerX], a ; $45d6
 	ld a, $10 ; $45d9
 	ld [wBriefingRotMarkerY], a ; $45db
-	ld a, $01 ; $45de
-	ld hl, DrawBriefingMarkerRotated ; $45e0
-	call RegisterFrameTask ; $45e3
+	frame_task DrawBriefingMarkerRotated ; $45de
 	ld a, $18 ; $45e6
 	ld [wBriefingBracketWidth], a ; $45e8
 	ld a, $08 ; $45eb
@@ -201,21 +176,15 @@ Unused_17_ShowCourtDiagramTestScreen:
 	ld [wBriefingBracketX], a ; $45f2
 	ld a, $40 ; $45f5
 	ld [wBriefingBracketY], a ; $45f7
-	ld a, $01 ; $45fa
-	ld hl, DrawBriefingTargetBrackets ; $45fc
-	call RegisterFrameTask ; $45ff
+	frame_task DrawBriefingTargetBrackets ; $45fa
 	ld hl, Text_DebugTextDisplayTest ; $4602
 	call DrawBriefingCaption ; $4605
 	ld b, $02 ; $4608
 	call DrawDiagramTargetOverlay ; $460a
-	ld a, $01 ; $460d
-	ld hl, CycleDiagramTargetPalette ; $460f
-	call RegisterFrameTask ; $4612
+	frame_task CycleDiagramTargetPalette ; $460d
 	call WaitForInputBlinking ; $4615
 	call ClearFrameTasks ; $4618
-	ld a, $01 ; $461b
-	ld hl, UpdateAnimatedTilesTask_17 ; $461d
-	call RegisterFrameTask ; $4620
+	frame_task UpdateAnimatedTilesTask_17 ; $461b
 	ld b, $00 ; $4623
 	call DrawDiagramTargetOverlay ; $4625
 	ld hl, Text_DebugRacketTest ; $4628
@@ -224,14 +193,10 @@ Unused_17_ShowCourtDiagramTestScreen:
 	ld [wBriefingHMarkerX], a ; $4630
 	ld a, $20 ; $4633
 	ld [wBriefingHMarkerY], a ; $4635
-	ld a, $01 ; $4638
-	ld hl, DrawBriefingMarkerHFlip ; $463a
-	call RegisterFrameTask ; $463d
+	frame_task DrawBriefingMarkerHFlip ; $4638
 	ld b, $05 ; $4640
 	call DrawDiagramTargetOverlay ; $4642
-	ld a, $01 ; $4645
-	ld hl, CycleDiagramTargetPalette ; $4647
-	call RegisterFrameTask ; $464a
+	frame_task CycleDiagramTargetPalette ; $4645
 	call WaitForInputBlinking ; $464d
 	call ClearFrameTasks ; $4650
 	ret ; $4653

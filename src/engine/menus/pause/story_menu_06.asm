@@ -304,8 +304,7 @@ Unused_06_QueueDebugStatsCursorSprites:
 	call QueueSprite ; $6c2e
 	ret ; $6c31
 Unused_06_AdjustSelectedDebugStat:
-	ld a, [wMatchMenuSelection] ; $6c32
-	rst Rst00 ; $6c35
+	jumptable [wMatchMenuSelection] ; $6c32
 	dw Unused_06_AdjustSelectedDebugStat.adjustWordAt0 ; $6c36 jumptable
 	dw Unused_06_AdjustSelectedDebugStat.adjustWordAt4 ; $6c38 jumptable
 	dw Unused_06_AdjustSelectedDebugStat.adjustWordAt6 ; $6c3a jumptable
@@ -462,7 +461,7 @@ RunStoryMenu:
 	push af ; $6d53
 	call LoadStoryMenuItemGfx ; $6d54
 	pop af ; $6d57
-	ld_hl_indexed Text_CharAndItemData ; $6d58
+	ld_hl_indexed Text_StoryMenuCaptions ; $6d58
 	ld_cell de, $00, $0e ; $6d5f
 	call DrawStoryMenuCaption ; $6d62
 	call RedrawStoryTilemapRows ; $6d65
@@ -614,8 +613,7 @@ RunStoryModeMenu:
 	push af ; $6e6c
 	ld hl, StoryPauseMenu_AfterItem ; $6e6d
 	push hl ; $6e70
-	ld a, [wMatchMenuSelection] ; $6e71
-	rst Rst00 ; $6e74
+	jumptable [wMatchMenuSelection] ; $6e71
 	dw StoryPauseMenu_PlayerData ; $6e75 jumptable
 	dw StoryPauseMenu_GameProgress ; $6e77 jumptable
 	dw StoryPauseMenu_Options ; $6e79 jumptable
@@ -692,7 +690,7 @@ Unused_06_StoryMenuRedrawReentry:
 	ld a, [wMatchMenuSelection] ; $6f07
 	call LoadStoryMenuItemGfx ; $6f0a
 	ld a, [wMatchMenuSelection] ; $6f0d
-	ld_hl_indexed Text_CharAndItemData ; $6f10
+	ld_hl_indexed Text_StoryMenuCaptions ; $6f10
 	ld_cell de, $00, $0e ; $6f17
 	call DrawStoryMenuCaption ; $6f1a
 	call RedrawStoryTilemapRows ; $6f1d
@@ -725,8 +723,7 @@ StoryPauseMenu_PlayerData:
 	ld a, [wMatchMenuSelection] ; $6f51
 	cp MATCHMENUSEL_CANCELLED ; $6f54
 	jr z, .restoreStoryTilemapNoPriority ; $6f56
-	ld a, [wMatchMenuSelection] ; $6f58
-	rst Rst00 ; $6f5b
+	jumptable [wMatchMenuSelection] ; $6f58
 	dw StoryPauseMenu_CharPartnerData ; $6f5c jumptable
 	dw StoryPauseMenu_Equipment ; $6f5e jumptable
 .restoreStoryTilemapNoPriority:
@@ -788,8 +785,7 @@ StoryPauseMenu_Options:
 	push af ; $6fd6
 	ld hl, StoryOptionsMenu_AfterItem ; $6fd7
 	push hl ; $6fda
-	ld a, [wMatchMenuSelection] ; $6fdb
-	rst Rst00 ; $6fde
+	jumptable [wMatchMenuSelection] ; $6fdb
 	dw StoryPauseMenu_MessageSpeed ; $6fdf jumptable
 	dw StoryPauseMenu_MusicToggle ; $6fe1 jumptable
 StoryOptionsMenu_AfterItem:
@@ -862,7 +858,7 @@ StoryPauseMenu_SaveQuit:
 	farcall SaveStorySlotWithTimer ; $706d
 	ld a, STORYLOC_MAIN_MENU ; $7070
 	ld [wStoryModeCurrentLocation], a ; $7072
-	ld a, $01 ; $7075
+	ld a, ENTRY_MAIN_MENU_FROM_STORY ; $7075
 	ld [wStoryModeEntryPoint], a ; $7077
 	ld a, EXITTRIGGER_DIRECT ; $707a
 	ld [wUnusedExitTriggerIdMirror], a ; $707c
@@ -877,7 +873,7 @@ StoryPauseMenu_ReturnToMainMenu:
 	ld [wMatchAbortFlag], a ; $7091
 	ld a, STORYLOC_MAIN_MENU ; $7094
 	ld [wStoryModeCurrentLocation], a ; $7096
-	ld a, $01 ; $7099
+	ld a, ENTRY_MAIN_MENU_FROM_STORY ; $7099
 	ld [wStoryModeEntryPoint], a ; $709b
 	ld a, EXITTRIGGER_DIRECT ; $709e
 	ld [wUnusedExitTriggerIdMirror], a ; $70a0

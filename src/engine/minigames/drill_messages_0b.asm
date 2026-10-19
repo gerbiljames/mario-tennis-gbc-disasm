@@ -71,7 +71,7 @@ PlayDrillPointEndSequence:
 	jr z, .showBanner ; $43c6
 	jr .waitBanner ; $43c8
 .showBanner:
-	add $00 ; $43ca
+	add BANNER_FAULT - POINTOUTCOME_FAULT ; $43ca
 	farcall ShowCourtBanner ; $43cc
 .waitBanner:
 	ld a, 30 ; $43cf
@@ -129,8 +129,7 @@ TestCharStateBit4:
 	push af ; $444a
 	ld a, $04 ; $444b
 	add b ; $444d
-	ld a, a ; $444e
-	wram_bank ; $444f
+	wram_bank a ; $444e
 	ld de, wCharPosX ; $4453
 	ld hl, $0050 ; $4456
 	add hl, de ; $4459

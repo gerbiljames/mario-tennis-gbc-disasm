@@ -219,12 +219,7 @@ Unused_07_SendNibbleBlockSlave:
 .checksumOk:
 	push hl ; $44a3
 	push de ; $44a4
-	ld a, l ; $44a5
-	sub e ; $44a6
-	ld l, a ; $44a7
-	ld a, h ; $44a8
-	sbc d ; $44a9
-	ld h, a ; $44aa
+	sub_hl_de ; $44a5
 	ld a, h ; $44ab
 	or l ; $44ac
 	pop de ; $44ad

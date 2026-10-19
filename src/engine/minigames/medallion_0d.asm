@@ -189,8 +189,7 @@ ResetMedallionMatchHitState:
 	ld [wMinigameActors + 5 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5dea
 	ret ; $5ded
 MedallionMatchTargetActorHandler:
-	ld a, [wMinigameSceneActor + MGACTOR_STATE] ; $5dee
-	rst Rst00 ; $5df1
+	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5dee
 	dw MedallionMatchTargetState0 ; $5df2 jumptable
 	dw MedallionMatchTargetState1 ; $5df4 jumptable
 	dw MedallionMatchTargetState2 ; $5df6 jumptable
@@ -303,7 +302,7 @@ InitMinigame_FruitFantasy:
 	ld a, $01 ; $5f4f
 	ld [wMinigameUsesWall], a ; $5f51
 	ld a, [wMinigameLevel] ; $5f54
-	cp $02 ; $5f57
+	cp MINIGAMELEVEL_HIGH_SCORE ; $5f57
 	jr nz, .done ; $5f59
 	ld a, $01 ; $5f5b
 	ld [wMinigameHighScoreMode], a ; $5f5d

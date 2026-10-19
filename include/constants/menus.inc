@@ -133,9 +133,17 @@ def MENUSLIDE_FORWARD        equ $01 ; into a submenu
 
 ; --- Character select slot (wCharSelectSlot) ---
 def CHARSELECTSLOT_DONE equ $04 ; every player slot is filled: the screen shows the wait banner
+def CHARSELECTSLOT_BACKED_OUT equ $ff ; B on the first slot (CharSelectSlotRingTable): leave the screen
 
 ; --- Character-data screen cursor (wCharDataPage) ---
-def CHARDATAPAGE_CONFIRM equ $04 ; the confirm cell, after level-up choices 0-3
+; The four level-up choices (the training levels, CHARREC_TRAIN_LEVELS order),
+; then the confirm cell.
+	const_def
+	const CHARDATAPAGE_SPIN    ; $00
+	const CHARDATAPAGE_POWER   ; $01
+	const CHARDATAPAGE_CONTROL ; $02
+	const CHARDATAPAGE_SPEED   ; $03
+	const CHARDATAPAGE_CONFIRM ; $04
 
 ; --- Tennis Dictionary mode (wTennisDictMode) ---
 def TENNISDICT_INDEX equ $06 ; the 9-cell category index page; modes 0-5 open one category's term list
@@ -160,3 +168,17 @@ def EXPSTAT_SAVED_COLOR  rw   ; $0a BG colour the screen greys out and restores
 def EXPSTAT_EXP          rb 3 ; $0c CHARREC_EXP, copied back to wStory*Exp
 def EXPSTAT_SIZE equ _RS
 	ASSERT EXPSTAT_SIZE == 15
+
+; --- Scoreboard layout (wScoreboardLayout) ---
+; Chosen by SelectScoreboardLayout: wOnCourtCharCount - 2 outside minigame
+; context, else by the drill/minigame flags. Indexes the caption and drawer
+; jumptables and the tilemap and sprite-template tables in bank $06.
+	const_def
+	const SCOREBOARD_SINGLES     ; $00
+	const SCOREBOARD_THREE_CHARS ; $01
+	const SCOREBOARD_DOUBLES     ; $02
+	const SCOREBOARD_LESSON      ; $03 wDrillIsPracticeLesson
+	const SCOREBOARD_DRILL       ; $04 drill matches and the other Mario minigames: result rows
+	const SCOREBOARD_POINT_PIPS  ; $05 Stroke Match 1
+	const SCOREBOARD_SCORE       ; $06 wall, Tennis Machine and Boo Blast: score to a target
+	const SCOREBOARD_HIGH_SCORE  ; $07 wMinigameHighScoreMode

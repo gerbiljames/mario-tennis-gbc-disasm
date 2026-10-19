@@ -60,9 +60,7 @@ IntroCutsceneState18Init_6b:
 	ld a, $48 ; $4b33
 	ld [wCutsceneSpriteAX], a ; $4b35
 	ldh [hScrollY], a ; $4b38
-	ld a, $08 ; $4b3a
-	ld hl, ApplyScrollYFromWram ; $4b3c
-	call RegisterFrameTask ; $4b3f
+	frame_task ApplyScrollYFromWram, $08 ; $4b3a
 	ld hl, wWindowShadowTilemap + 3 * TILEMAP_WIDTH ; $4b42
 	ld de, vBGMap1 + 3 * TILEMAP_WIDTH ; $4b45
 	ld c, 8 * TILEMAP_WIDTH / 16 ; $4b48
@@ -176,19 +174,14 @@ UpdateCutsceneScrollX:
 	ld h, [hl] ; $4cae
 	ld l, a ; $4caf
 	ld d, $00 ; $4cb0
-	ld a, l ; $4cb2
-	sub e ; $4cb3
-	ld l, a ; $4cb4
-	ld a, h ; $4cb5
-	sbc d ; $4cb6
-	ld h, a ; $4cb7
+	sub_hl_de ; $4cb2
 	ld a, h ; $4cb8
 	ld [wIntroCutsceneScrollY + 1], a ; $4cb9
 	ld a, l ; $4cbc
 	ld [wIntroCutsceneScrollY], a ; $4cbd
 	ret ; $4cc0
 CutsceneScrollXTable:
-	INCBIN "data/engine/cutscenes/CutsceneScrollXTable.bin" ; $4cc1, 160 bytes
+	INCLUDE "data/engine/cutscenes/CutsceneScrollXTable.asm" ; $4cc1, 160 bytes (bytes:16)
 UpdateCutsceneScrollY:
 	ld a, [wCutsceneStepTimer] ; $4d61
 	ld hl, CutsceneScrollYTable ; $4d64
@@ -199,19 +192,14 @@ UpdateCutsceneScrollY:
 	ld h, [hl] ; $4d71
 	ld l, a ; $4d72
 	ld d, $00 ; $4d73
-	ld a, l ; $4d75
-	sub e ; $4d76
-	ld l, a ; $4d77
-	ld a, h ; $4d78
-	sbc d ; $4d79
-	ld h, a ; $4d7a
+	sub_hl_de ; $4d75
 	ld a, h ; $4d7b
 	ld [wCutsceneScrollAccum + 1], a ; $4d7c
 	ld a, l ; $4d7f
 	ld [wCutsceneScrollAccum], a ; $4d80
 	ret ; $4d83
 CutsceneScrollYTable:
-	INCBIN "data/engine/cutscenes/CutsceneScrollYTable.bin" ; $4d84, 169 bytes
+	INCLUDE "data/engine/cutscenes/CutsceneScrollYTable.asm" ; $4d84, 169 bytes (bytes:16)
 QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e2d
 	cp $20 ; $4e30
@@ -284,12 +272,7 @@ ApplyCutsceneScrollToSpriteX:
 	ld e, a ; $5196
 	ld h, $00 ; $5197
 	ld l, b ; $5199
-	ld a, l ; $519a
-	sub e ; $519b
-	ld l, a ; $519c
-	ld a, h ; $519d
-	sbc d ; $519e
-	ld h, a ; $519f
+	sub_hl_de ; $519a
 	ld e, l ; $51a0
 	ld d, c ; $51a1
 	pop hl ; $51a2

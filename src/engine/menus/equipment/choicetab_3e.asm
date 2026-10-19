@@ -160,9 +160,7 @@ RunPlayAlonePartnerMenu:
 	ld c, a ; $51b4
 	ld b, $02 ; $51b5
 	call SetMenuCursorFromIndex_3e ; $51b7
-	ld a, $01 ; $51ba
-	ld hl, ChoiceTabCursorSpriteTask ; $51bc
-	call RegisterFrameTask ; $51bf
+	frame_task ChoiceTabCursorSpriteTask ; $51ba
 	call RedrawPlayAlonePartnerMenu ; $51c2
 	wram_bank WRAM_SCREEN ; $51c5
 .loop:

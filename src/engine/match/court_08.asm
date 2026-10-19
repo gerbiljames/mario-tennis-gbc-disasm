@@ -403,7 +403,7 @@ RunChangeoverSequence:
 	and a ; $5f9a
 	jr z, .done ; $5f9b
 	call StepMatchFrame ; $5f9d
-	ld a, $00 ; $5fa0
+	ld a, BANNER_CHANGE_ENDS ; $5fa0
 	farcall ShowCourtBanner ; $5fa2
 	call StepMatchFrame ; $5fa5
 .walkLoop:

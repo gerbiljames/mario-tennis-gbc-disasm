@@ -68,7 +68,7 @@ ENDC
 	ld hl, wStoryModeCurrentLocation ; $40a5
 	ld [hl], STORYLOC_MAIN_MENU ; $40a8
 	ld hl, wStoryModeEntryPoint ; $40aa
-	ld [hl], $0a ; $40ad
+	ld [hl], ENTRY_MAIN_MENU_TITLE ; $40ad
 	farcall RunStoryModeOverworld ; $40af
 .buildStampLoop:
 	ld hl, BuildStamp ; $40b2
@@ -96,7 +96,7 @@ ENDC
 	ld hl, wStoryModeCurrentLocation ; $40dc
 	ld [hl], STORYLOC_MAIN_MENU ; $40df
 	ld hl, wStoryModeEntryPoint ; $40e1
-	ld [hl], $0a ; $40e4
+	ld [hl], ENTRY_MAIN_MENU_TITLE ; $40e4
 	farcall RunStoryModeOverworld ; $40e6
 	jp .buildStampLoop ; $40e9
 Unused_01_DebugBootMenu:
@@ -114,7 +114,7 @@ Unused_01_DebugBootMenu:
 	ld hl, wStoryModeCurrentLocation ; $4103
 	ld [hl], STORYLOC_MAIN_MENU ; $4106
 	ld hl, wStoryModeEntryPoint ; $4108
-	ld [hl], $0a ; $410b
+	ld [hl], ENTRY_MAIN_MENU_TITLE ; $410b
 	farcall RunStoryModeOverworld ; $410d
 	jp InitAndRunGame.runMainMenu ; $4110
 .checkSelect:
@@ -218,7 +218,7 @@ Unused_01_DebugBootMenu.checkRight:
 	ld hl, wStoryModeCurrentLocation ; $41e3
 	ld [hl], STORYLOC_TEST ; $41e6
 	ld hl, wStoryModeEntryPoint ; $41e8
-	ld [hl], $0a ; $41eb
+	ld [hl], ENTRY_TEST_FROM_DEBUG_BOOT ; $41eb
 	ld a, $00 ; $41ed
 	ld [wStoryMainChar], a ; $41ef
 	farcall RunStoryModeOverworld ; $41f2

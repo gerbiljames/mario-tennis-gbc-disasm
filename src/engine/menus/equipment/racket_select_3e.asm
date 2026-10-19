@@ -42,12 +42,8 @@ DrawEquippedShoesPanel:
 RunRacketSelectScreen:
 	call DisableLCDSafely ; $54bd
 	call LoadRacketSelectScreen ; $54c0
-	ld a, $01 ; $54c3
-	ld hl, EquipListCursorSpriteTask ; $54c5
-	call RegisterFrameTask ; $54c8
-	ld a, $01 ; $54cb
-	ld hl, EquippedItemMarkerSpriteTask ; $54cd
-	call RegisterFrameTask ; $54d0
+	frame_task EquipListCursorSpriteTask ; $54c3
+	frame_task EquippedItemMarkerSpriteTask ; $54cb
 	call EnableLCD ; $54d3
 	script_fade_in 16 ; $54d6
 	call WaitFadeEnd ; $54db
@@ -241,12 +237,8 @@ DrawRacketInfoPanel:
 RunShoesSelectScreen:
 	call DisableLCDSafely ; $5645
 	call LoadShoesSelectScreen ; $5648
-	ld a, $01 ; $564b
-	ld hl, EquipListCursorSpriteTask ; $564d
-	call RegisterFrameTask ; $5650
-	ld a, $01 ; $5653
-	ld hl, EquippedItemMarkerSpriteTask ; $5655
-	call RegisterFrameTask ; $5658
+	frame_task EquipListCursorSpriteTask ; $564b
+	frame_task EquippedItemMarkerSpriteTask ; $5653
 	call EnableLCD ; $565b
 	script_fade_in 16 ; $565e
 	call WaitFadeEnd ; $5663

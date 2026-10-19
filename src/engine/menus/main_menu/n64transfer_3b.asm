@@ -105,9 +105,7 @@ RunN64RecordTypeSelect:
 	ld c, a ; $71d4
 	ld b, $03 ; $71d5
 	call SetMenuCursorFromIndex_3b ; $71d7
-	ld a, $01 ; $71da
-	ld hl, N64RecordTypeCursorSpriteTask ; $71dc
-	call RegisterFrameTask ; $71df
+	frame_task N64RecordTypeCursorSpriteTask ; $71da
 	call DrawN64RecordTypeGrid ; $71e2
 	wram_bank WRAM_SCREEN ; $71e5
 .loop:
@@ -486,9 +484,7 @@ RunN64TransferItemSelect:
 	ld c, a ; $74e3
 	ld b, $02 ; $74e4
 	call SetMenuCursorFromIndex_3b ; $74e6
-	ld a, $01 ; $74e9
-	ld hl, N64TransferItemCursorSpriteTask ; $74eb
-	call RegisterFrameTask ; $74ee
+	frame_task N64TransferItemCursorSpriteTask ; $74e9
 	call DrawN64TransferItemGrid ; $74f1
 	wram_bank WRAM_SCREEN ; $74f4
 .loop:

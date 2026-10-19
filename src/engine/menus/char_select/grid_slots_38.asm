@@ -33,7 +33,7 @@ RetreatToPreviousPlayerSlot:
 	dec hl ; $5c7b
 	ld a, [hl] ; $5c7c
 	ld [wCharSelectSlot], a ; $5c7d
-	cp $ff ; $5c80
+	cp CHARSELECTSLOT_BACKED_OUT ; $5c80
 	jr z, .done ; $5c82
 	ld c, a ; $5c84
 	ld a, b ; $5c85

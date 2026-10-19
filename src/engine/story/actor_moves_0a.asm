@@ -122,12 +122,7 @@ Unused_0a_MoveActorTowardPointRaw:
 	ld a, [hl+] ; $447f
 	ld h, [hl] ; $4480
 	ld l, a ; $4481
-	ld a, l ; $4482
-	sub e ; $4483
-	ld l, a ; $4484
-	ld a, h ; $4485
-	sbc d ; $4486
-	ld h, a ; $4487
+	sub_hl_de ; $4482
 	pop de ; $4488
 	push hl ; $4489
 	ld hl, ACTORF_Y ; $448a
@@ -135,12 +130,7 @@ Unused_0a_MoveActorTowardPointRaw:
 	ld a, [hl+] ; $448e
 	ld h, [hl] ; $448f
 	ld l, a ; $4490
-	ld a, l ; $4491
-	sub e ; $4492
-	ld l, a ; $4493
-	ld a, h ; $4494
-	sbc d ; $4495
-	ld h, a ; $4496
+	sub_hl_de ; $4491
 	pop de ; $4497
 	call AngleFromVectorCoarse ; $4498
 	pop hl ; $449b
@@ -444,12 +434,7 @@ FaceActorTowardActor:
 	ld d, h ; $4639
 	ld e, l ; $463a
 	pop hl ; $463b
-	ld a, l ; $463c
-	sub e ; $463d
-	ld l, a ; $463e
-	ld a, h ; $463f
-	sbc d ; $4640
-	ld h, a ; $4641
+	sub_hl_de ; $463c
 	ld b, h ; $4642
 	ld c, l ; $4643
 	ld hl, hActorPtr ; $4644
@@ -463,12 +448,7 @@ FaceActorTowardActor:
 	ld d, h ; $464f
 	ld e, l ; $4650
 	pop hl ; $4651
-	ld a, l ; $4652
-	sub e ; $4653
-	ld l, a ; $4654
-	ld a, h ; $4655
-	sbc d ; $4656
-	ld h, a ; $4657
+	sub_hl_de ; $4652
 	ld d, h ; $4658
 	ld e, l ; $4659
 	ld h, b ; $465a

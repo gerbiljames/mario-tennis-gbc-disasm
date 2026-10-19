@@ -356,12 +356,7 @@ Unused_00_PositionSpriteWorld:
 	ld c, a ; $1f73
 	ld a, [wCameraX + 1] ; $1f74
 	ld b, a ; $1f77
-	ld a, l ; $1f78
-	sub c ; $1f79
-	ld l, a ; $1f7a
-	ld a, h ; $1f7b
-	sbc b ; $1f7c
-	ld h, a ; $1f7d
+	sub_hl_bc ; $1f78
 	ld a, h ; $1f7e
 	inc a ; $1f7f
 	cp $16 ; $1f80
@@ -376,12 +371,7 @@ Unused_00_PositionSpriteWorld:
 	ld c, a ; $1f8e
 	ld l, e ; $1f8f
 	ld h, d ; $1f90
-	ld a, l ; $1f91
-	sub c ; $1f92
-	ld l, a ; $1f93
-	ld a, h ; $1f94
-	sbc b ; $1f95
-	ld h, a ; $1f96
+	sub_hl_bc ; $1f91
 	pop de ; $1f97
 	ld a, h ; $1f98
 	cp $14 ; $1f99
@@ -414,12 +404,7 @@ Unused_00_PositionSpriteWorld2:
 	ld c, a ; $1fb9
 	ld a, [wCameraX + 1] ; $1fba
 	ld b, a ; $1fbd
-	ld a, l ; $1fbe
-	sub c ; $1fbf
-	ld l, a ; $1fc0
-	ld a, h ; $1fc1
-	sbc b ; $1fc2
-	ld h, a ; $1fc3
+	sub_hl_bc ; $1fbe
 	ld a, h ; $1fc4
 	inc a ; $1fc5
 	cp $16 ; $1fc6
@@ -434,12 +419,7 @@ Unused_00_PositionSpriteWorld2:
 	ld c, a ; $1fd4
 	ld l, e ; $1fd5
 	ld h, d ; $1fd6
-	ld a, l ; $1fd7
-	sub c ; $1fd8
-	ld l, a ; $1fd9
-	ld a, h ; $1fda
-	sbc b ; $1fdb
-	ld h, a ; $1fdc
+	sub_hl_bc ; $1fd7
 	pop de ; $1fdd
 	ld a, h ; $1fde
 	cp $13 ; $1fdf

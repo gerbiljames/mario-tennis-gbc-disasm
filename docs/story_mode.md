@@ -26,7 +26,8 @@ See also [`actor_script.md`](actor_script.md), [`save_format.md`](save_format.md
 
 Boot reaches `InitAndRunGame` (`$01:$4018`, from `$00:$262c`), which
 initialises SRAM and story state, sets `wStoryModeCurrentLocation =
-STORYLOC_MAIN_MENU`, `wStoryModeEntryPoint = $0a`, and farcalls
+STORYLOC_MAIN_MENU`, `wStoryModeEntryPoint = ENTRY_MAIN_MENU_TITLE` (`$0a`:
+logo, intro and title first; any other id opens the menu directly), and farcalls
 `RunStoryModeOverworld` (`$0a:$4f2c`). That is an infinite loop: clear the
 frame-task list, register the player-position debug overlay, `call
 RunStoryLocation`. Every location change is a *return* from
@@ -38,13 +39,13 @@ player off-map at `(63.0, 63.0)` and calls `RunTitleAndMainMenuLoop`
 commits. It leaves by writing `wStoryModeExitTriggerRequest`, looked up in
 `MainMenuExitTriggers_10`:
 
-| exit id | destination | when |
+| exit (`EXIT_MAIN_MENU_*`) | destination | when |
 | --- | --- | --- |
-| `$01` | loc `$14` Academy Entrance, entry `$0f` | new game (`$10:$5081`) |
-| `$02` | loc `$0a` Dorm Room, entry `$01` | ordinary continue |
-| `$03` | loc `$04` "Test 2", entry `$01` | `FLAG_DEBUG_SKIP_LOCATION_EXIT` shortcut (Test 2 runs the clear-status setup menu) |
-| `$04` | loc `$06` Academy Wing, entry `$0f` | Island Open final won, story not yet flagged complete |
-| `$05` | loc `$1d` Peach's Castle, entry `$0f` | story complete, Mario World not yet visited |
+| `$01` `NEW_GAME` | `ENTRY_ACADEMY_ENTRANCE_NEW_GAME` | new game (`$10:$5081`) |
+| `$02` `CONTINUE` | `ENTRY_DORM_ROOM_CONTINUE` | ordinary continue |
+| `$03` `TEST_2` | `ENTRY_TEST_2_SETUP_MENU` | `FLAG_DEBUG_SKIP_LOCATION_EXIT` shortcut (Test 2 runs the clear-status setup menu) |
+| `$04` `CONTINUE_ISLAND_OPEN_WON` | `ENTRY_ACADEMY_WING_ISLAND_OPEN_WON` | Island Open final won, story not yet flagged complete |
+| `$05` `CONTINUE_TO_PEACHS_CASTLE` | `ENTRY_PEACHS_CASTLE_FIRST_VISIT` | story complete, Mario World not yet visited |
 
 `GetStoryContinueDestination` (`$10:$5752`) picks `$02`/`$04`/`$05` by
 testing, in order, `FLAG_WON_ISLAND_OPEN_*_FINAL`, `FLAG_STORY_COMPLETE_*`
@@ -194,6 +195,16 @@ script runs for an entry is named `<Location>Entry<id>Scene`
 (`DormRoomEntry0fScene`; `IslandSkyEntry0fAnd0dScene` serves two ids,
 `TennisMachineRoomNoEntryScene` none).
 
+A row's optional last argument names it: `ENTRY_<location>_<name>` (the
+`STORYLOC_*` suffix, then what reaches it or the scene it runs:
+`ENTRY_DORM_ROOM_CONTINUE`, `ENTRY_ACADEMY_MAIN_BLDG_NEW_STUDENT`). An id
+with no row (an init script's scene selector, the main menu's `TITLE`) is
+named by an `entry_id` line in the same table. Stores, compares, return
+points, the ending list and exit rows' `arg1` use the destination's names;
+`make check` `entries` fails a name used for another location's id. The
+fifteen debug-only rows stay unnamed, and so does `$00` in the End11 exit
+(no Restaurant Plaza row; the first one is used).
+
 The entry point is set by an exit's `arg1`, a code warp, the ending's
 (location, entry) table, the return point, or a RAM value (the Training
 Center's `wMapSceneStage2`). `STORYENTRY_NONE` (`$ff`) keeps the saved
@@ -338,7 +349,11 @@ their lines.
 
 * **ExitTriggers** — destination location and entry point, written to
   `wStoryModeCurrentLocation` / `wStoryModeEntryPoint` after the handler
-  (`$0a:$5637`): doors, warps, and the main-menu hand-off.
+  (`$0a:$5637`): doors, warps, and the main-menu hand-off. A seventh argument
+  names the id `EXIT_<location>_<name>` for the scripts that request it
+  (`EXIT_DORM_ROOM_END_OF_DAY`); an ending scene's request is `_DONE`. Two
+  requests stay raw for want of a row: `$0f` in `End3DormEntCutscene_27`
+  and `$0e` in `Unused_10_RequestExitTrigger0e`.
 * **NpcScripts** — `arg0` is a bitmask applied by `RunNpcInteraction`: bit 0
   turns the actor to face the player (player angle `+ $80`), bit 1 restores
   its facing afterwards, bit 3 forces animation 1 for the duration (old one

@@ -8,12 +8,7 @@ LookupBallPosByHeight_{TWIN}:
 	ld a, [hl+]
 	ld h, [hl]
 	ld l, a
-	xor a
-	sub l
-	ld l, a
-	sbc a
-	sub h
-	ld h, a
+	neg_hl
 	add hl, hl
 	add hl, hl
 	add hl, hl

@@ -181,12 +181,7 @@ FormatDecimalNumber:
 	ld h, d ; $1982
 	bit 7, h ; $1983
 	jr z, .positive ; $1985
-	xor a ; $1987
-	sub l ; $1988
-	ld l, a ; $1989
-	sbc a ; $198a
-	sub h ; $198b
-	ld h, a ; $198c
+	neg_hl ; $1987
 	ld e, l ; $198d
 	ld d, h ; $198e
 	ld hl, sp + 11 ; $198f

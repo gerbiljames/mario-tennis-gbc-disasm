@@ -51,7 +51,7 @@ VarsityCourtANpc03_13:
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6d56
 	ld a, STORYLOC_COURTYARD ; $6d5b
 	ld [wStoryModeCurrentLocation], a ; $6d5d
-	ld a, $0d ; $6d60
+	ld a, ENTRY_COURTYARD_VARSITY_MATCH_RETURN ; $6d60
 	ld [wStoryModeEntryPoint], a ; $6d62
 	ld a, EXITTRIGGER_DIRECT ; $6d65
 	ld [wUnusedExitTriggerIdMirror], a ; $6d67
@@ -157,7 +157,7 @@ VarsityCourtBNpc03_13:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $6fc8
 	ld a, STORYLOC_COURTYARD ; $6fcd
 	ld [wStoryModeCurrentLocation], a ; $6fcf
-	ld a, $0d ; $6fd2
+	ld a, ENTRY_COURTYARD_VARSITY_MATCH_RETURN ; $6fd2
 	ld [wStoryModeEntryPoint], a ; $6fd4
 	ld a, EXITTRIGGER_DIRECT ; $6fd7
 	ld [wUnusedExitTriggerIdMirror], a ; $6fd9

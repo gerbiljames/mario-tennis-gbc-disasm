@@ -114,9 +114,7 @@ WaterSpriteSwingContestScene:
 	ld [hl+], a ; $56a7
 	ld a, $01 ; $56a8
 	ld [wSwingContestSwingState], a ; $56aa
-	ld a, $01 ; $56ad
-	ld hl, DrawWaterSpriteMinigameCounters ; $56af
-	call RegisterFrameTask ; $56b2
+	frame_task DrawWaterSpriteMinigameCounters ; $56ad
 	script_wait_frames 50 ; $56b5
 	ld l, $03 ; $56bc
 	ld h, $00 ; $56be
@@ -133,9 +131,7 @@ WaterSpriteSwingContestScene:
 	jp nz, .win ; $56d6
 	sound SFX_COUNTDOWN_GO ; $56d9
 	call TogglePlayerSpriteXFlip ; $56db
-	ld a, $01 ; $56de
-	ld hl, WaterSpriteSwingCountTask ; $56e0
-	call RegisterFrameTask ; $56e3
+	frame_task WaterSpriteSwingCountTask ; $56de
 .reward:
 	call AdvanceFrame ; $56e6
 	ld a, [wSwingContestSwingState] ; $56e9
@@ -272,9 +268,7 @@ InitWaterSpriteMinigameHud:
 	ld [wSwingContestHudMode], a ; $58e9
 	ld a, $a0 ; $58ec
 	ld [wSwingContestHudPage], a ; $58ee
-	ld a, $01 ; $58f1
-	ld hl, QueueWaterSpriteMinigameHudPanels ; $58f3
-	call RegisterFrameTask ; $58f6
+	frame_task QueueWaterSpriteMinigameHudPanels ; $58f1
 	ret ; $58f9
 	; $58fa, 6 bytes (fill)
 	ds 6, $00
@@ -379,7 +373,7 @@ TrainingCourtIntroTourScene:
 	script_wait_frames 90 ; $5c30
 	script_fade_out 8 ; $5c37
 	script_wait_frames 20 ; $5c3c
-	ld a, $0f ; $5c43
+	ld a, EXIT_TRAINING_COURT_TOUR ; $5c43
 	ld [wUnusedExitTriggerIdMirror], a ; $5c45
 	ld [wStoryModeExitTriggerRequest], a ; $5c48
 	farcall EndCutsceneScriptMode ; $5c4b
@@ -427,8 +421,7 @@ ServeChallengerResultScene:
 	ld a, [wPointWinLoseFlag] ; $5d65
 	inc a ; $5d68
 .dispatch:
-	ld a, a ; $5d69
-	rst Rst00 ; $5d6a
+	jumptable a ; $5d69
 	dw ChallengerResultFinish ; $5d6b jumptable
 	dw ChallengerResultLose ; $5d6d jumptable
 	dw ChallengerResultDraw ; $5d6f jumptable

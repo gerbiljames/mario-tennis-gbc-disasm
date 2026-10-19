@@ -342,9 +342,7 @@ InitSceneTileAnimations:
 	dec de ; $6440
 	ld [de], a ; $6441
 .install:
-	ld a, $01 ; $6442
-	ld hl, UpdateSceneTileAnimations ; $6444
-	call RegisterFrameTask ; $6447
+	frame_task UpdateSceneTileAnimations ; $6442
 	add sp, 2 ; $644a
 .done:
 	pop_wram_bank ; $644c

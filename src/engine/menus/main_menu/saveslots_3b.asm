@@ -326,9 +326,7 @@ RunMatchFormatSelect:
 	ld c, $01 ; $5d0f
 	farcall LoadMenuSpritePalettePair ; $5d11
 	call InitMatchFormatOptions ; $5d14
-	ld a, $01 ; $5d17
-	ld hl, MatchFormatCursorSpriteTask ; $5d19
-	call RegisterFrameTask ; $5d1c
+	frame_task MatchFormatCursorSpriteTask ; $5d17
 	call DrawMatchFormatCaption ; $5d1f
 	wram_bank WRAM_SCREEN ; $5d22
 .loop:

@@ -297,24 +297,8 @@ AngleFromVectorCoarse:
 	jr z, .toAngle ; $0a5f
 	push hl ; $0a61
 	push de ; $0a62
-	bit 7, d ; $0a63
-	jr z, .absY ; $0a65
-	xor a ; $0a67
-	sub e ; $0a68
-	ld e, a ; $0a69
-	sbc a ; $0a6a
-	sub d ; $0a6b
-	ld d, a ; $0a6c
-.absY:
-	bit 7, h ; $0a6d
-	jr z, .absX ; $0a6f
-	xor a ; $0a71
-	sub l ; $0a72
-	ld l, a ; $0a73
-	sbc a ; $0a74
-	sub h ; $0a75
-	ld h, a ; $0a76
-.absX:
+	abs_de ; $0a63
+	abs_hl ; $0a6d
 	ld a, h ; $0a77
 	cp $10 ; $0a78
 	jr c, .scaleUp ; $0a7a
@@ -396,12 +380,7 @@ Unused_00_VectorFromSignedLengthAndAngle:
 	bit 7, h ; $0aea
 	jr z, VectorFromLengthAndAngleRaw ; $0aec
 	push af ; $0aee
-	xor a ; $0aef
-	sub l ; $0af0
-	ld l, a ; $0af1
-	sbc a ; $0af2
-	sub h ; $0af3
-	ld h, a ; $0af4
+	neg_hl ; $0aef
 	pop af ; $0af5
 	add $80 ; $0af6
 VectorFromLengthAndAngleRaw:
@@ -419,12 +398,7 @@ MulHLBySin:
 	jr z, MulHLBySinHalf ; $0b05
 	and $7f ; $0b07
 	call MulHLBySinHalf ; $0b09
-	xor a ; $0b0c
-	sub l ; $0b0d
-	ld l, a ; $0b0e
-	sbc a ; $0b0f
-	sub h ; $0b10
-	ld h, a ; $0b11
+	neg_hl ; $0b0c
 	ret ; $0b12
 MulHLBySinHalf:
 	bit 6, a ; $0b13
@@ -451,12 +425,7 @@ MulHLBySinSigned:
 	jr z, MulHLBySinSignedHalf ; $0b34
 	and $7f ; $0b36
 	call MulHLBySinSignedHalf ; $0b38
-	xor a ; $0b3b
-	sub l ; $0b3c
-	ld l, a ; $0b3d
-	sbc a ; $0b3e
-	sub h ; $0b3f
-	ld h, a ; $0b40
+	neg_hl ; $0b3b
 	ret ; $0b41
 MulHLBySinSignedHalf:
 	bit 6, a ; $0b42

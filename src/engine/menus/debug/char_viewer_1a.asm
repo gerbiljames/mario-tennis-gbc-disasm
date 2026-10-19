@@ -68,7 +68,7 @@ DrawCharViewerCursorSpriteTable0:
 	db $50, $78, $50, $80, $50, $88, $58, $38, $58, $40, $58, $48, $58, $50, $58, $58 ; 0x10
 	db $58, $60, $58, $68, $58, $70, $58, $78, $58, $80, $58, $88 ; 0x20
 DrawCharViewerCursorSpriteTable1:
-	INCBIN "data/engine/menus/debug/DrawCharViewerCursorSpriteTable1.bin" ; $6c95, 10 bytes
+	INCLUDE "data/engine/menus/debug/DrawCharViewerCursorSpriteTable1.asm" ; $6c95, 10 bytes (bytes:2)
 Unused_1a_RunCharViewerInputLoop:
 	call Unused_1a_DrawCharViewerCharSprite ; $6c9f
 	wram_bank WRAM_SCENE ; $6ca2

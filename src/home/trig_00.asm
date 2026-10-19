@@ -147,12 +147,7 @@ ENDR
 MulSinCosSigned:
 	bit 7, h ; $1332
 	jr z, MulSinCos ; $1334
-	xor a ; $1336
-	sub l ; $1337
-	ld l, a ; $1338
-	sbc a ; $1339
-	sub h ; $133a
-	ld h, a ; $133b
+	neg_hl ; $1336
 	ld a, $80 ; $133c
 	add b ; $133e
 	ld b, a ; $133f
@@ -175,12 +170,7 @@ MulSin:
 	jr z, MulSinUnsigned ; $1353
 	res 7, b ; $1355
 	call MulSinUnsigned ; $1357
-	xor a ; $135a
-	sub l ; $135b
-	ld l, a ; $135c
-	sbc a ; $135d
-	sub h ; $135e
-	ld h, a ; $135f
+	neg_hl ; $135a
 	ret ; $1360
 MulSinUnsigned:
 	push de ; $1361
@@ -202,16 +192,12 @@ MulSinUnsigned:
 	ld h, a ; $1376
 	ldh a, [hRomBank] ; $1377
 	ld b, a ; $1379
-	ld a, BANK(SineTable) ; $137a
-	ldh [hRomBank], a ; $137c
-	ld [rROMB0], a ; $137e
+	rom_bank BANK(SineTable) ; $137a
 	ld a, [hl+] ; $1381
 	ld h, [hl] ; $1382
 	ld l, a ; $1383
 	call MulHLByDE32 ; $1384
-	ld a, b ; $1387
-	ldh [hRomBank], a ; $1388
-	ld [rROMB0], a ; $138a
+	rom_bank b ; $1387
 	pop de ; $138d
 	ret ; $138e
 VectorLengthFromAngle:
@@ -220,48 +206,16 @@ VectorLengthFromAngle:
 	sub $20 ; $1392
 	cp $40 ; $1394
 	jr c, .viaSin ; $1396
-	bit 7, h ; $1398
-	jr z, .absX ; $139a
-	xor a ; $139c
-	sub l ; $139d
-	ld l, a ; $139e
-	sbc a ; $139f
-	sub h ; $13a0
-	ld h, a ; $13a1
-.absX:
+	abs_hl ; $1398
 	call DivByCos ; $13a2
-	bit 7, h ; $13a5
-	jr z, .doneX ; $13a7
-	xor a ; $13a9
-	sub l ; $13aa
-	ld l, a ; $13ab
-	sbc a ; $13ac
-	sub h ; $13ad
-	ld h, a ; $13ae
-.doneX:
+	abs_hl ; $13a5
 	ret ; $13af
 .viaSin:
 	ld l, e ; $13b0
 	ld h, d ; $13b1
-	bit 7, h ; $13b2
-	jr z, .absY ; $13b4
-	xor a ; $13b6
-	sub l ; $13b7
-	ld l, a ; $13b8
-	sbc a ; $13b9
-	sub h ; $13ba
-	ld h, a ; $13bb
-.absY:
+	abs_hl ; $13b2
 	call DivBySin ; $13bc
-	bit 7, h ; $13bf
-	jr z, .doneY ; $13c1
-	xor a ; $13c3
-	sub l ; $13c4
-	ld l, a ; $13c5
-	sbc a ; $13c6
-	sub h ; $13c7
-	ld h, a ; $13c8
-.doneY:
+	abs_hl ; $13bf
 	ret ; $13c9
 DivByCos:
 	ld a, b ; $13ca
@@ -272,12 +226,7 @@ DivBySin:
 	jr z, DivBySinUnsigned ; $13d0
 	res 7, b ; $13d2
 	call DivBySinUnsigned ; $13d4
-	xor a ; $13d7
-	sub l ; $13d8
-	ld l, a ; $13d9
-	sbc a ; $13da
-	sub h ; $13db
-	ld h, a ; $13dc
+	neg_hl ; $13d7
 	ret ; $13dd
 DivBySinUnsigned:
 	push de ; $13de
@@ -298,9 +247,7 @@ DivBySinUnsigned:
 	ld h, a ; $13f2
 	ldh a, [hRomBank] ; $13f3
 	ld b, a ; $13f5
-	ld a, BANK(CosecantTable) ; $13f6
-	ldh [hRomBank], a ; $13f8
-	ld [rROMB0], a ; $13fa
+	rom_bank BANK(CosecantTable) ; $13f6
 	ld a, [hl+] ; $13fd
 	ld h, [hl] ; $13fe
 	ld l, a ; $13ff
@@ -312,9 +259,7 @@ DivBySinUnsigned:
 	add a ; $1409
 	rl l ; $140a
 	rl h ; $140c
-	ld a, b ; $140e
-	ldh [hRomBank], a ; $140f
-	ld [rROMB0], a ; $1411
+	rom_bank b ; $140e
 	pop de ; $1414
 	ret ; $1415
 AngleFromVector16:
@@ -328,24 +273,8 @@ AngleFromVector16:
 	jp z, .applySignY ; $1422
 	push hl ; $1425
 	push de ; $1426
-	bit 7, d ; $1427
-	jr z, .absY ; $1429
-	xor a ; $142b
-	sub e ; $142c
-	ld e, a ; $142d
-	sbc a ; $142e
-	sub d ; $142f
-	ld d, a ; $1430
-.absY:
-	bit 7, h ; $1431
-	jr z, .absX ; $1433
-	xor a ; $1435
-	sub l ; $1436
-	ld l, a ; $1437
-	sbc a ; $1438
-	sub h ; $1439
-	ld h, a ; $143a
-.absX:
+	abs_de ; $1427
+	abs_hl ; $1431
 	ld a, h ; $143b
 	ld h, l ; $143c
 	ld l, $00 ; $143d
@@ -562,11 +491,6 @@ AngleFromVector16:
 .signYDone:
 	bit 7, h ; $155a
 	jr z, .done ; $155c
-	xor a ; $155e
-	sub c ; $155f
-	ld c, a ; $1560
-	sbc a ; $1561
-	sub b ; $1562
-	ld b, a ; $1563
+	neg_bc ; $155e
 .done:
 	ret ; $1564

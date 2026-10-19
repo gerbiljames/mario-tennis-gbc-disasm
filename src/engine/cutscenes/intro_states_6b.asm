@@ -9,9 +9,7 @@ RunIntroCutscene:
 	ld hl, rLCDC ; $403c
 	res B_LCDC_BG_MAP, [hl] ; $403f
 	sound BGM_INTRO ; $4041
-	ld a, $01 ; $4043
-	ld hl, CheckIntroSkipInput ; $4045
-	call RegisterFrameTask ; $4048
+	frame_task CheckIntroSkipInput ; $4043
 	call DispatchCutsceneStateInit ; $404b
 	script_fade_out 127 ; $404e
 	call WaitFadeEnd ; $4053
@@ -268,9 +266,7 @@ IntroCutsceneState00Exit_6b:
 	script_fade_out 10 ; $41d3
 	call WaitFadeEnd ; $41d8
 	call ClearFrameTasks ; $41db
-	ld a, $01 ; $41de
-	ld hl, CheckIntroSkipInput ; $41e0
-	call RegisterFrameTask ; $41e3
+	frame_task CheckIntroSkipInput ; $41de
 	xor a ; $41e6
 	ldh [hScrollX], a ; $41e7
 	ldh [hScrollY], a ; $41e9
@@ -322,9 +318,7 @@ IntroCutsceneState01Init_6b:
 	ld_slot hl, DataPtr_IntroSwingAttrmap ; $4296
 	ld de, wRulesScreenAnimFrame ; $4299
 	call DecompressDataFromBank ; $429c
-	ld a, $01 ; $429f
-	ld hl, QueueCutsceneSpriteGroupA ; $42a1
-	call RegisterFrameTask ; $42a4
+	frame_task QueueCutsceneSpriteGroupA ; $429f
 	call EnableLCD ; $42a7
 	script_fade_in 64 ; $42aa
 	jp DispatchCutsceneStateInit.runUpdate ; $42af
@@ -420,9 +414,7 @@ IntroCutsceneState03Init_6b:
 	ld_slot hl, DataPtr_IntroCloseupAttrmap ; $4428
 	ld de, wRulesScreenAnimFrame ; $442b
 	call DecompressDataFromBank ; $442e
-	ld a, $01 ; $4431
-	ld hl, QueueCutsceneSpriteGroupB ; $4433
-	call RegisterFrameTask ; $4436
+	frame_task QueueCutsceneSpriteGroupB ; $4431
 	ld a, $a0 ; $4439
 	ld [wCutsceneSpriteBX], a ; $443b
 	ld a, $28 ; $443e
@@ -516,9 +508,7 @@ IntroCutsceneState05Init_6b:
 	ld [wRasterScrollEndLY], a ; $4574
 	xor a ; $4577
 	ld [wRasterScrollX], a ; $4578
-	ld a, $01 ; $457b
-	ld hl, UpdateCutsceneScroll ; $457d
-	call RegisterFrameTask ; $4580
+	frame_task UpdateCutsceneScroll ; $457b
 	ld a, $a0 ; $4583
 	ld [wCutsceneSpriteBX], a ; $4585
 	ld a, $40 ; $4588
@@ -527,12 +517,8 @@ IntroCutsceneState05Init_6b:
 	ld [wCutsceneSpriteAX], a ; $458f
 	ld a, $10 ; $4592
 	ld [wCutsceneSpriteAY], a ; $4594
-	ld a, $01 ; $4597
-	ld hl, QueueCutsceneSpriteGroupA ; $4599
-	call RegisterFrameTask ; $459c
-	ld a, $01 ; $459f
-	ld hl, QueueCutsceneSpriteGroupB ; $45a1
-	call RegisterFrameTask ; $45a4
+	frame_task QueueCutsceneSpriteGroupA ; $4597
+	frame_task QueueCutsceneSpriteGroupB ; $459f
 	call EnableLCD ; $45a7
 	script_fade_in 16 ; $45aa
 	call WaitFadeEnd ; $45af
@@ -605,15 +591,11 @@ IntroCutsceneState07Init_6b:
 	call EnableLCD ; $4674
 	script_fade_in 8 ; $4677
 	call WaitFadeEnd ; $467c
-	ld a, $01 ; $467f
-	ld hl, IntroSequenceTimerTask ; $4681
-	call RegisterFrameTask ; $4684
+	frame_task IntroSequenceTimerTask ; $467f
 	jp DispatchCutsceneStateInit.runUpdate ; $4687
 IntroCutsceneState07Exit_6b:
 	call ClearFrameTasks ; $468a
-	ld a, $01 ; $468d
-	ld hl, CheckIntroSkipInput ; $468f
-	call RegisterFrameTask ; $4692
+	frame_task CheckIntroSkipInput ; $468d
 	xor a ; $4695
 	ldh [hScrollX], a ; $4696
 	ldh [hScrollY], a ; $4698
@@ -699,9 +681,7 @@ IntroCutsceneState08Init_6b:
 	ld [wCutsceneStepTimer], a ; $47a6
 	ld a, $b0 ; $47a9
 	ld [wCutsceneScrollX], a ; $47ab
-	ld a, $01 ; $47ae
-	ld hl, ScrollCutsceneXRightTask ; $47b0
-	call RegisterFrameTask ; $47b3
+	frame_task ScrollCutsceneXRightTask ; $47ae
 	call EnableLCD ; $47b6
 	script_fade_in 16 ; $47b9
 	call WaitFadeEnd ; $47be
@@ -731,9 +711,7 @@ IntroCutsceneState09Init_6b:
 	ldh [hScrollX], a ; $47f7
 	xor a ; $47f9
 	ld [wCutsceneStepTimer], a ; $47fa
-	ld a, $01 ; $47fd
-	ld hl, ScrollCutsceneXLeftTask ; $47ff
-	call RegisterFrameTask ; $4802
+	frame_task ScrollCutsceneXLeftTask ; $47fd
 	call EnableLCD ; $4805
 	script_fade_in 16 ; $4808
 	call WaitFadeEnd ; $480d
@@ -757,9 +735,7 @@ IntroCutsceneState10Init_6b:
 	ldh [hScrollX], a ; $4846
 	xor a ; $4848
 	ld [wCutsceneStepTimer], a ; $4849
-	ld a, $01 ; $484c
-	ld hl, ScrollCutsceneLeftTask ; $484e
-	call RegisterFrameTask ; $4851
+	frame_task ScrollCutsceneLeftTask ; $484c
 	call EnableLCD ; $4854
 	script_fade_in 16 ; $4857
 	call WaitFadeEnd ; $485c

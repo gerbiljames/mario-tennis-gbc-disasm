@@ -4,19 +4,18 @@ PrepareScoreboardGfx:
 	ld a, $02 ; $491a
 	ld [wScoreboardOrigin], a ; $491c
 	ld a, [wScoreboardLayout] ; $491f
-	cp $06 ; $4922
+	cp SCOREBOARD_SCORE ; $4922
 	jr nz, .checkScoreboardLayout ; $4924
 	ld a, $02 ; $4926
 	ld [wScoreboardOrigin + 1], a ; $4928
 .checkScoreboardLayout:
 	ld a, [wScoreboardLayout] ; $492b
-	cp $07 ; $492e
+	cp SCOREBOARD_HIGH_SCORE ; $492e
 	jr nz, .checkOnCourtCharCountMinus1 ; $4930
 	ld a, $02 ; $4932
 	ld [wScoreboardOrigin + 1], a ; $4934
 .checkOnCourtCharCountMinus1:
-	ld a, [wOnCourtCharCountMinus1] ; $4937
-	rst Rst00 ; $493a
+	jumptable [wOnCourtCharCountMinus1] ; $4937
 	dw PrepareScoreboardGfx.reloadOneChar ; $493b jumptable
 	dw PrepareScoreboardGfx.reloadTwoChars ; $493d jumptable
 	dw PrepareScoreboardGfx.reloadThreeChars ; $493f jumptable
@@ -71,8 +70,7 @@ DrawScoreboard:
 	ld l, a ; $49bb
 	call CopyTextRectPair ; $49bc
 	pop bc ; $49bf
-	ld a, [wScoreboardLayout] ; $49c0
-	rst Rst00 ; $49c3
+	jumptable [wScoreboardLayout] ; $49c0
 	dw RetStub ; $49c4 jumptable
 	dw RetStub ; $49c6 jumptable
 	dw RetStub ; $49c8 jumptable
@@ -126,8 +124,7 @@ DrawScoreboardPackedPips:
 	push hl ; $4a21
 	ld a, c ; $4a22
 	and $03 ; $4a23
-	ld a, a ; $4a25
-	rst Rst00 ; $4a26
+	jumptable a ; $4a25
 	dw RetStub ; $4a27 jumptable
 	dw DrawScoreboardPipFilled ; $4a29 jumptable
 	dw DrawScoreboardPipAlt ; $4a2b jumptable
@@ -452,9 +449,9 @@ DrawScoreboardSprites:
 	call QueueSpriteTemplate ; $508c
 	pop de ; $508f
 	ld a, [wScoreboardLayout] ; $5090
-	cp $06 ; $5093
+	cp SCOREBOARD_SCORE ; $5093
 	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5095
-	cp $07 ; $5097
+	cp SCOREBOARD_HIGH_SCORE ; $5097
 	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5099
 	ret ; $509b
 ScoreboardSpriteTemplatePointers:

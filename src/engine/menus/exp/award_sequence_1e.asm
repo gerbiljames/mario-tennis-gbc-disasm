@@ -233,12 +233,7 @@ ProcessMatchRewards:
 	ld h, [hl] ; $65d6
 	ld l, a ; $65d7
 	ld de, $270f ; $65d8
-	ld a, l ; $65db
-	sub e ; $65dc
-	ld l, a ; $65dd
-	ld a, h ; $65de
-	sbc d ; $65df
-	ld h, a ; $65e0
+	sub_hl_de ; $65db
 	ld a, h ; $65e1
 	or l ; $65e2
 	pop hl ; $65e3

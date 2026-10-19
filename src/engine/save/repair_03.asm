@@ -243,12 +243,7 @@ CheckUnlockCondition:
 	ld a, [hl+] ; $5829
 	ld h, [hl] ; $582a
 	ld l, a ; $582b
-	ld a, l ; $582c
-	sub e ; $582d
-	ld l, a ; $582e
-	ld a, h ; $582f
-	sbc d ; $5830
-	ld h, a ; $5831
+	sub_hl_de ; $582c
 	jr c, .locked ; $5832
 	ld b, $01 ; $5834
 	jr .done ; $5836

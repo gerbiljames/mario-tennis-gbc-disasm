@@ -3,15 +3,7 @@ CheckBallContactWindow:
 	ld a, [hl+] ; $6faa
 	ld h, [hl] ; $6fab
 	ld l, a ; $6fac
-	bit 7, h ; $6fad
-	jr z, .checkHeight ; $6faf
-	xor a ; $6fb1
-	sub l ; $6fb2
-	ld l, a ; $6fb3
-	sbc a ; $6fb4
-	sub h ; $6fb5
-	ld h, a ; $6fb6
-.checkHeight:
+	abs_hl ; $6fad
 	ld de, -96 ; $6fb7
 	add hl, de ; $6fba
 	ret c ; $6fbb
@@ -49,21 +41,8 @@ CheckBallContactWindow:
 	ld a, [hl+] ; $6ff0
 	ld h, [hl] ; $6ff1
 	ld l, a ; $6ff2
-	bit 7, h ; $6ff3
-	jr z, .compare ; $6ff5
-	xor a ; $6ff7
-	sub l ; $6ff8
-	ld l, a ; $6ff9
-	sbc a ; $6ffa
-	sub h ; $6ffb
-	ld h, a ; $6ffc
-.compare:
-	ld a, l ; $6ffd
-	sub e ; $6ffe
-	ld l, a ; $6fff
-	ld a, h ; $7000
-	sbc d ; $7001
-	ld h, a ; $7002
+	abs_hl ; $6ff3
+	sub_hl_de ; $6ffd
 	ret nc ; $7003
 	ld hl, wCharReachHeight ; $7004
 	ld a, [hl+] ; $7007
@@ -76,21 +55,8 @@ CheckBallContactWindow:
 	ld a, [hl+] ; $7010
 	ld h, [hl] ; $7011
 	ld l, a ; $7012
-	bit 7, h ; $7013
-	jr z, .done ; $7015
-	xor a ; $7017
-	sub l ; $7018
-	ld l, a ; $7019
-	sbc a ; $701a
-	sub h ; $701b
-	ld h, a ; $701c
-.done:
-	ld a, l ; $701d
-	sub e ; $701e
-	ld l, a ; $701f
-	ld a, h ; $7020
-	sbc d ; $7021
-	ld h, a ; $7022
+	abs_hl ; $7013
+	sub_hl_de ; $701d
 	ret nc ; $7023
 	ld hl, wCharBallReachFlags ; $7024
 	set 1, [hl] ; $7027
@@ -100,15 +66,7 @@ CheckBallInSwingRange:
 	ld a, [hl+] ; $702d
 	ld h, [hl] ; $702e
 	ld l, a ; $702f
-	bit 7, h ; $7030
-	jr z, .checkDepth ; $7032
-	xor a ; $7034
-	sub l ; $7035
-	ld l, a ; $7036
-	sbc a ; $7037
-	sub h ; $7038
-	ld h, a ; $7039
-.checkDepth:
+	abs_hl ; $7030
 	ld de, -160 ; $703a
 	add hl, de ; $703d
 	ret c ; $703e
@@ -127,21 +85,8 @@ CheckBallInSwingRange:
 	ld a, [hl+] ; $7051
 	ld h, [hl] ; $7052
 	ld l, a ; $7053
-	bit 7, h ; $7054
-	jr z, .done ; $7056
-	xor a ; $7058
-	sub l ; $7059
-	ld l, a ; $705a
-	sbc a ; $705b
-	sub h ; $705c
-	ld h, a ; $705d
-.done:
-	ld a, l ; $705e
-	sub e ; $705f
-	ld l, a ; $7060
-	ld a, h ; $7061
-	sbc d ; $7062
-	ld h, a ; $7063
+	abs_hl ; $7054
+	sub_hl_de ; $705e
 	ret nc ; $7064
 	ld hl, wCharBallReachFlags ; $7065
 	set 0, [hl] ; $7068
@@ -231,12 +176,7 @@ PredictBallLateralOffset:
 	ld a, [hl+] ; $70fe
 	ld h, [hl] ; $70ff
 	ld l, a ; $7100
-	xor a ; $7101
-	sub l ; $7102
-	ld l, a ; $7103
-	sbc a ; $7104
-	sub h ; $7105
-	ld h, a ; $7106
+	neg_hl ; $7101
 	call MulHLByTangent ; $7107
 	ld hl, wBallRelCharX ; $710a
 	ld a, [hl+] ; $710d
@@ -379,15 +319,7 @@ HandleServePositioning:
 	ld h, [hl] ; $7204
 	ld l, a ; $7205
 	add hl, bc ; $7206
-	bit 7, h ; $7207
-	jr z, .stepToward ; $7209
-	xor a ; $720b
-	sub l ; $720c
-	ld l, a ; $720d
-	sbc a ; $720e
-	sub h ; $720f
-	ld h, a ; $7210
-.stepToward:
+	abs_hl ; $7207
 	push hl ; $7211
 	ld de, -32 ; $7212
 	add hl, de ; $7215
@@ -423,15 +355,7 @@ HandleServePositioning:
 	ld h, [hl] ; $724a
 	ld l, a ; $724b
 	add hl, bc ; $724c
-	bit 7, h ; $724d
-	jr z, .receiverStep ; $724f
-	xor a ; $7251
-	sub l ; $7252
-	ld l, a ; $7253
-	sbc a ; $7254
-	sub h ; $7255
-	ld h, a ; $7256
-.receiverStep:
+	abs_hl ; $724d
 	ld de, $fe80 ; $7257
 	add hl, de ; $725a
 	jr c, .receiverDone ; $725b

@@ -22,7 +22,7 @@ def B_ equ 11
 ; table and $51-$c1 the 113 of the second. Each entry names a voice count and a
 ; row in bank ($70 | nibble)'s SoundTable_*; the first table's entries are 3-4
 ; voices on channels 2-5 (songs), the second's 1-2 voices on channels 0-1
-; (effects). Id $00 stops the music (StopAllSound clears channels 2-5) and id
+; (effects). Id $00 stops the music (StopMusic clears channels 2-5) and id
 ; $50 the effects (clears channels 0-1). Ids $33-$4f would index past the
 ; first table, but the `sound` macro's handler ($2fb3) claims $40-$4f as
 ; jingles first. That handler also latches every id below $40 into
@@ -154,7 +154,7 @@ def SFX_DEBUG_ALARM            equ $6f ; QueueVRAMCopy on queue overflow, debug 
 def SFX_BEEP                   equ $72 ; link-input decode errors (SerialEncode/DecodeInput), the debug window demo
 def SFX_CAPTION                equ $73 ; an EXP-screen caption appearing (Unused_1a_DrawExpScreenCaption $1a)
 def SFX_BALL_LAUNCH            equ $76 ; the minigame ball launcher (LaunchBall $0d)
-def SFX_MARKER                 equ $78 ; a marker landing: the ranking-board marker (RankingBoardAnimate*), the on-court score digits and banner row 15 (CourtBannerObjTemplates_09)
+def SFX_MARKER                 equ $78 ; a marker landing: the ranking-board marker (RankingAnim*), the on-court score digits and banner row 15 (CourtBannerObjTemplates_09)
 def SFX_FIREWORK_LAUNCH        equ $7a ; the island sky scene: firework ascent, the plane pass (bank $14)
 def SFX_FIREWORK_SPARKLE       equ $7d ; the island sky scene: twinkle and plane cues (bank $14)
 def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingBoard $1b, unless wRankingBoardSilent)

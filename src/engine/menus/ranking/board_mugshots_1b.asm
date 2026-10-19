@@ -319,15 +319,11 @@ BuildRankingBoardScreen:
 	ld hl, RankingBoardScreenPalettes ; $4f52
 	ld_obj_pals de, 0, 6 ; $4f55
 	call LoadPaletteShadow ; $4f58
-	ld a, $01 ; $4f5b
-	ld hl, DrawRankingMarkersTask ; $4f5d
-	call RegisterFrameTask ; $4f60
+	frame_task DrawRankingMarkersTask ; $4f5b
 	ld a, [wRankingBoardMode] ; $4f63
 	cp RANKINGBOARD_CURSOR ; $4f66
 	jr nz, .queueWram3MapToVRAM ; $4f68
-	ld a, $01 ; $4f6a
-	ld hl, RankingCursorBobTask ; $4f6c
-	call RegisterFrameTask ; $4f6f
+	frame_task RankingCursorBobTask ; $4f6a
 .queueWram3MapToVRAM:
 	farcall QueueWram3MapToVRAM ; $4f72
 	ret ; $4f75
@@ -440,9 +436,7 @@ RankingBoardAnimHandlers4_1b:
 	dw RankingAnimDoublesMarkRow3 ; record 3
 	dw RankingAnimDoublesMarkRow4 ; record 4
 RankingAnimSinglesClimbRow01:
-	ld a, $01 ; $5077
-	ld hl, RankingBoardAnimTask_1b ; $5079
-	call RegisterFrameTask ; $507c
+	frame_task RankingBoardAnimTask_1b ; $5077
 	wait_frames 140 ; $507f
 	sound SFX_MARKER ; $5083
 	ld c, $00 ; $5085
@@ -530,9 +524,7 @@ RankingAnimSinglesClimbRow01:
 	ld [wRankingAnimStateDone], a ; $5169
 	jp RankingBoardAnimNop_1b ; $516c
 RankingAnimSinglesClimbRow2:
-	ld a, $01 ; $516f
-	ld hl, RankingBoardAnimTask_1b ; $5171
-	call RegisterFrameTask ; $5174
+	frame_task RankingBoardAnimTask_1b ; $516f
 	wait_frames 140 ; $5177
 	sound SFX_MARKER ; $517b
 	ld c, $00 ; $517d
@@ -623,9 +615,7 @@ RankingAnimSinglesClimbRow2:
 	ld [wRankingAnimStateDone], a ; $526d
 	jp RankingBoardAnimNop_1b ; $5270
 RankingAnimSinglesClimbRow3:
-	ld a, $01 ; $5273
-	ld hl, RankingBoardAnimTask_1b ; $5275
-	call RegisterFrameTask ; $5278
+	frame_task RankingBoardAnimTask_1b ; $5273
 	wait_frames 140 ; $527b
 	sound SFX_MARKER ; $527f
 	ld c, $00 ; $5281
@@ -667,9 +657,7 @@ RankingAnimSinglesClimbRow3:
 	ld [wRankingAnimStateDone], a ; $52e5
 	jp RankingBoardAnimNop_1b ; $52e8
 RankingAnimSinglesClimbRow4:
-	ld a, $01 ; $52eb
-	ld hl, RankingBoardAnimTask_1b ; $52ed
-	call RegisterFrameTask ; $52f0
+	frame_task RankingBoardAnimTask_1b ; $52eb
 	wait_frames 140 ; $52f3
 	ld a, $01 ; $52f7
 	ld [wRankingAnimStateDone], a ; $52f9
@@ -726,9 +714,7 @@ RankingAnimSinglesMarkRow4:
 	call StartRankingMarkerAnim1 ; $5381
 	jp RankingBoardAnimNop_1b ; $5384
 RankingAnimDoublesClimbRow01:
-	ld a, $01 ; $5387
-	ld hl, RankingBoardAnimTask_1b ; $5389
-	call RegisterFrameTask ; $538c
+	frame_task RankingBoardAnimTask_1b ; $5387
 	wait_frames 140 ; $538f
 	sound SFX_MARKER ; $5393
 	ld c, $00 ; $5395
@@ -768,9 +754,7 @@ RankingAnimDoublesClimbRow01:
 	wait_frames 90 ; $53f3
 	jp RankingBoardAnimNop_1b ; $53f7
 RankingAnimDoublesClimbRow2:
-	ld a, $01 ; $53fa
-	ld hl, RankingBoardAnimTask_1b ; $53fc
-	call RegisterFrameTask ; $53ff
+	frame_task RankingBoardAnimTask_1b ; $53fa
 	wait_frames 140 ; $5402
 	sound SFX_MARKER ; $5406
 	ld c, $00 ; $5408
@@ -810,9 +794,7 @@ RankingAnimDoublesClimbRow2:
 	wait_frames 30 ; $5466
 	jp RankingBoardAnimNop_1b ; $546a
 RankingAnimDoublesClimbRow3:
-	ld a, $01 ; $546d
-	ld hl, RankingBoardAnimTask_1b ; $546f
-	call RegisterFrameTask ; $5472
+	frame_task RankingBoardAnimTask_1b ; $546d
 	wait_frames 140 ; $5475
 	sound SFX_MARKER ; $5479
 	ld c, $00 ; $547b

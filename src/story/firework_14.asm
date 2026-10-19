@@ -82,9 +82,9 @@ FireworkPhaseDurations_14:
 	; $64d5, 4 bytes (bytes:4)
 	db $00, $0c, $0e, $10 ; 0x00
 UpdateFirework0_14Table:
-	INCBIN "data/story/UpdateFirework0_14Table.bin" ; $64d9, 4 bytes
+	INCLUDE "data/story/UpdateFirework0_14Table.asm" ; $64d9, 4 bytes (bytes:4)
 UpdateFirework1_14Table:
-	INCBIN "data/story/UpdateFirework1_14Table.bin" ; $64dd, 4 bytes
+	INCLUDE "data/story/UpdateFirework1_14Table.asm" ; $64dd, 4 bytes (bytes:4)
 IslandSkyInitScript_14.scriptRespawnLocationActors:
 	script_respawn_actors FireworkMapActors_14 ; $64e1
 	farcall BeginCutsceneScriptMode ; $64e9
@@ -113,9 +113,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld [wCutsceneObjPhase + 1], a ; $6548
 	ld a, $1e ; $654b
 	ld [wCutsceneObjTimer + 1], a ; $654d
-	ld a, $01 ; $6550
-	ld hl, UpdateFirework1_14 ; $6552
-	call RegisterFrameTask ; $6555
+	frame_task UpdateFirework1_14 ; $6550
 	script_wait_frames 80 ; $6558
 	ld a, $40 ; $655f
 	ld [wCutsceneObjX], a ; $6561
@@ -125,9 +123,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld [wCutsceneObjPhase], a ; $656b
 	ld a, $1e ; $656e
 	ld [wCutsceneObjTimer], a ; $6570
-	ld a, $01 ; $6573
-	ld hl, UpdateFirework0_14 ; $6575
-	call RegisterFrameTask ; $6578
+	frame_task UpdateFirework0_14 ; $6573
 	script_wait_frames 80 ; $657b
 	ld a, $48 ; $6582
 	ld [wCutsceneObjX + 1], a ; $6584
@@ -199,7 +195,7 @@ IslandSkyInitScript_14.placeActors2:
 	jr z, IslandSkyInitScript_14.notDoubles ; $664d
 	ld a, STORYLOC_AWARDS_CEREMONY ; $664f
 	ld [wStoryModeCurrentLocation], a ; $6651
-	ld a, $0b ; $6654
+	ld a, ENTRY_AWARDS_CEREMONY_DOUBLES ; $6654
 	ld [wStoryModeEntryPoint], a ; $6656
 	ld a, EXITTRIGGER_DIRECT ; $6659
 	ld [wUnusedExitTriggerIdMirror], a ; $665b
@@ -208,7 +204,7 @@ IslandSkyInitScript_14.placeActors2:
 IslandSkyInitScript_14.notDoubles:
 	ld a, STORYLOC_AWARDS_CEREMONY ; $6662
 	ld [wStoryModeCurrentLocation], a ; $6664
-	ld a, $0a ; $6667
+	ld a, ENTRY_AWARDS_CEREMONY_SINGLES ; $6667
 	ld [wStoryModeEntryPoint], a ; $6669
 	ld a, EXITTRIGGER_DIRECT ; $666c
 	ld [wUnusedExitTriggerIdMirror], a ; $666e
@@ -335,16 +331,12 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wMapSceneStage], a ; $6f89
 	ld a, $88 ; $6f8c
 	ld [wMapSceneStage2], a ; $6f8e
-	ld a, $01 ; $6f91
-	ld hl, QueuePlaneSpriteByHeight_14 ; $6f93
-	call RegisterFrameTask ; $6f96
+	frame_task QueuePlaneSpriteByHeight_14 ; $6f91
 	ld a, $00 ; $6f99
 	ld [wCutsceneObjLimit], a ; $6f9b
 	ld [wCutsceneObjLimit + 1], a ; $6f9e
 	ld [wCutsceneObjActive], a ; $6fa1
-	ld a, $01 ; $6fa4
-	ld hl, AnimateIslandSkyEffectSprites_14 ; $6fa6
-	call RegisterFrameTask ; $6fa9
+	frame_task AnimateIslandSkyEffectSprites_14 ; $6fa4
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $6fac
 	test_flag FLAG_DOUBLES ; $6fb7
 	jp z, .fadeIn ; $6fba
@@ -438,9 +430,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wCutsceneObjPhase], a ; $70ac
 	ld a, $a8 ; $70af
 	ld [wMapSceneStage2], a ; $70b1
-	ld a, $01 ; $70b4
-	ld hl, QueueDistantPlaneSprite_14 ; $70b6
-	call RegisterFrameTask ; $70b9
+	frame_task QueueDistantPlaneSprite_14 ; $70b4
 	ld h, $50 ; $70bc
 .speak:
 	script_wait_frames 2 ; $70be
@@ -465,11 +455,11 @@ IslandSkyEntry0fAnd0dScene:
 	call PlayTwinkleAnimation_14 ; $70ec
 	script_wait_frames 70 ; $70ef
 	ld a, [wStoryModeEntryPoint] ; $70f6
-	cp $0d ; $70f9
+	cp ENTRY_ISLAND_SKY_CREDITS_TO_PEACHS_CASTLE ; $70f9
 	jp nz, .fadeOut ; $70fb
 	ld a, $01 ; $70fe
 	ld [wCutsceneObjActive], a ; $7100
-	ld a, $01 ; $7103
+	ld a, EXIT_ISLAND_SKY_DONE ; $7103
 	ld [wUnusedExitTriggerIdMirror], a ; $7105
 	ld [wStoryModeExitTriggerRequest], a ; $7108
 	ret ; $710b
@@ -490,14 +480,14 @@ IslandSkyEntry0fAnd0dScene:
 	set_flag FLAG_STORY_COMPLETE_SINGLES ; $7121
 .setLocation:
 	ld b, STORYLOC_PEACHS_CASTLE ; $7124
-	ld c, $0f ; $7126
+	ld c, ENTRY_PEACHS_CASTLE_FIRST_VISIT ; $7126
 	farcall SaveStoryReturnPoint ; $7128
 	farcall SaveStorySlotWithTimer ; $712b
 	script_fade_out 1 ; $712e
 	call WaitFadeEnd ; $7133
 	ld a, STORYLOC_MAIN_MENU ; $7136
 	ld [wStoryModeCurrentLocation], a ; $7138
-	ld a, $0a ; $713b
+	ld a, ENTRY_MAIN_MENU_TITLE ; $713b
 	ld [wStoryModeEntryPoint], a ; $713d
 	ld a, EXITTRIGGER_DIRECT ; $7140
 	ld [wUnusedExitTriggerIdMirror], a ; $7142
@@ -515,7 +505,7 @@ IslandSkyEntry0fAnd0dScene:
 	call WaitFadeEnd ; $715a
 	ld a, STORYLOC_PEACHS_CASTLE ; $715d
 	ld [wStoryModeCurrentLocation], a ; $715f
-	ld a, $01 ; $7162
+	ld a, ENTRY_PEACHS_CASTLE_REVISIT ; $7162
 	ld [wStoryModeEntryPoint], a ; $7164
 	ld a, EXITTRIGGER_DIRECT ; $7167
 	ld [wUnusedExitTriggerIdMirror], a ; $7169
@@ -526,7 +516,7 @@ IslandSkyEntry0fAnd0dScene:
 	call WaitFadeEnd ; $7175
 	ld a, STORYLOC_PEACHS_CASTLE ; $7178
 	ld [wStoryModeCurrentLocation], a ; $717a
-	ld a, $0f ; $717d
+	ld a, ENTRY_PEACHS_CASTLE_FIRST_VISIT ; $717d
 	ld [wStoryModeEntryPoint], a ; $717f
 	ld a, EXITTRIGGER_DIRECT ; $7182
 	ld [wUnusedExitTriggerIdMirror], a ; $7184

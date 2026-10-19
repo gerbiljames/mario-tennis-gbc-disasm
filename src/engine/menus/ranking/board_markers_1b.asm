@@ -148,7 +148,7 @@ RankingBoardAnimTask_1b_SpriteTemplate:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
 RankingBoardAnimTaskTable:
-	INCBIN "data/engine/menus/ranking/RankingBoardAnimTaskTable.bin" ; $597b, 137 bytes
+	INCLUDE "data/engine/menus/ranking/RankingBoardAnimTaskTable.asm" ; $597b, 137 bytes (bytes:16)
 RankingCursorBobTask:
 	ld a, [wRankingBannerAnimFrame] ; $5a04
 	or a ; $5a07
@@ -222,9 +222,7 @@ StartRankingMarkerAnim0:
 	ld [hl], d ; $5a7b
 	xor a ; $5a7c
 	ld [wRankingAnimStepIndex], a ; $5a7d
-	ld a, $01 ; $5a80
-	ld hl, UpdateScriptedOffsetChannel0 ; $5a82
-	call RegisterFrameTask ; $5a85
+	frame_task UpdateScriptedOffsetChannel0 ; $5a80
 	ret ; $5a88
 StartRankingMarkerAnim1:
 	ld b, h ; $5a89
@@ -239,9 +237,7 @@ StartRankingMarkerAnim1:
 	ld [hl], d ; $5a96
 	xor a ; $5a97
 	ld [wRankingAnimStepIndex + 1], a ; $5a98
-	ld a, $01 ; $5a9b
-	ld hl, UpdateScriptedOffsetChannel1 ; $5a9d
-	call RegisterFrameTask ; $5aa0
+	frame_task UpdateScriptedOffsetChannel1 ; $5a9b
 	ret ; $5aa3
 StartRankingMarkerAnim2:
 	ld b, h ; $5aa4
@@ -256,9 +252,7 @@ StartRankingMarkerAnim2:
 	ld [hl], d ; $5ab1
 	xor a ; $5ab2
 	ld [wRankingAnimStepIndex + 2], a ; $5ab3
-	ld a, $01 ; $5ab6
-	ld hl, UpdateScriptedOffsetChannel2 ; $5ab8
-	call RegisterFrameTask ; $5abb
+	frame_task UpdateScriptedOffsetChannel2 ; $5ab6
 	ret ; $5abe
 StartRankingMarkerAnim3:
 	ld b, h ; $5abf
@@ -273,9 +267,7 @@ StartRankingMarkerAnim3:
 	ld [hl], d ; $5acc
 	xor a ; $5acd
 	ld [wRankingAnimStepIndex + 3], a ; $5ace
-	ld a, $01 ; $5ad1
-	ld hl, UpdateScriptedOffsetChannel3 ; $5ad3
-	call RegisterFrameTask ; $5ad6
+	frame_task UpdateScriptedOffsetChannel3 ; $5ad1
 	ret ; $5ad9
 UpdateScriptedOffsetChannel0:
 	ld hl, wRankingAnimScriptPtrs ; $5ada

@@ -365,7 +365,7 @@ MatchSelectRunMatch:
 	farcall SaveStorySlotWithTimer ; $55bf
 	ld a, STORYLOC_MAIN_MENU ; $55c2
 	ld [wStoryModeCurrentLocation], a ; $55c4
-	ld a, $01 ; $55c7
+	ld a, ENTRY_MAIN_MENU_FROM_STORY ; $55c7
 	ld [wStoryModeEntryPoint], a ; $55c9
 	ld a, EXITTRIGGER_DIRECT ; $55cc
 	ld [wUnusedExitTriggerIdMirror], a ; $55ce
@@ -379,17 +379,17 @@ MatchSelectRunMatch:
 	xor a ; $55df
 	ld [wKeepMatchStatsFlag], a ; $55e0
 	ld b, STORYLOC_MAIN_MENU ; $55e3
-	ld c, $01 ; $55e5
+	ld c, ENTRY_MAIN_MENU_FROM_STORY ; $55e5
 	farcall SaveStoryReturnPoint ; $55e7
 	farcall SaveStorySlotWithTimer ; $55ea
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $55ed
 	jr nz, .returnToLocation3 ; $55f0
-	ld a, $02 ; $55f2
+	ld a, EXIT_MAIN_MENU_CONTINUE ; $55f2
 	ld [wUnusedExitTriggerIdMirror], a ; $55f4
 	ld [wStoryModeExitTriggerRequest], a ; $55f7
 	ret ; $55fa
 .returnToLocation3:
-	ld a, $03 ; $55fb
+	ld a, EXIT_MAIN_MENU_TEST_2 ; $55fb
 	ld [wUnusedExitTriggerIdMirror], a ; $55fd
 	ld [wStoryModeExitTriggerRequest], a ; $5600
 	ret ; $5603
@@ -399,7 +399,7 @@ MatchSelectRunMatch:
 	jr c, .below14 ; $5609
 	ld a, STORYLOC_SPECIAL_COURT ; $560b
 	ld [wStoryModeCurrentLocation], a ; $560d
-	ld a, $0a ; $5610
+	ld a, ENTRY_SPECIAL_COURT_MATCH_RESULT ; $5610
 	ld [wStoryModeEntryPoint], a ; $5612
 	ld a, EXITTRIGGER_DIRECT ; $5615
 	ld [wUnusedExitTriggerIdMirror], a ; $5617
@@ -412,7 +412,7 @@ MatchSelectRunMatch:
 	jr nz, .below14Doubles ; $5625
 	ld a, STORYLOC_TOURNAMENT ; $5627
 	ld [wStoryModeCurrentLocation], a ; $5629
-	ld a, $0a ; $562c
+	ld a, ENTRY_TOURNAMENT_AFTER_ROUND_SINGLES ; $562c
 	ld [wStoryModeEntryPoint], a ; $562e
 	ld a, EXITTRIGGER_DIRECT ; $5631
 	ld [wUnusedExitTriggerIdMirror], a ; $5633
@@ -421,7 +421,7 @@ MatchSelectRunMatch:
 .below14Doubles:
 	ld a, STORYLOC_TOURNAMENT ; $563a
 	ld [wStoryModeCurrentLocation], a ; $563c
-	ld a, $0b ; $563f
+	ld a, ENTRY_TOURNAMENT_AFTER_ROUND_DOUBLES ; $563f
 	ld [wStoryModeEntryPoint], a ; $5641
 	ld a, EXITTRIGGER_DIRECT ; $5644
 	ld [wUnusedExitTriggerIdMirror], a ; $5646
@@ -432,7 +432,7 @@ MatchSelectRunMatch:
 	jr c, .below0a ; $564f
 	ld a, STORYLOC_COURTYARD ; $5651
 	ld [wStoryModeCurrentLocation], a ; $5653
-	ld a, $0d ; $5656
+	ld a, ENTRY_COURTYARD_VARSITY_MATCH_RETURN ; $5656
 	ld [wStoryModeEntryPoint], a ; $5658
 	ld a, EXITTRIGGER_DIRECT ; $565b
 	ld [wUnusedExitTriggerIdMirror], a ; $565d
@@ -444,7 +444,7 @@ MatchSelectRunMatch:
 	jr z, .id05 ; $5668
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $566a
 	ld [wStoryModeCurrentLocation], a ; $566c
-	ld a, $0f ; $566f
+	ld a, ENTRY_SENIOR_CLASS_COURT_MATCH_RETURN ; $566f
 	ld [wStoryModeEntryPoint], a ; $5671
 	ld a, EXITTRIGGER_DIRECT ; $5674
 	ld [wUnusedExitTriggerIdMirror], a ; $5676
@@ -453,7 +453,7 @@ MatchSelectRunMatch:
 .id05:
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $567d
 	ld [wStoryModeCurrentLocation], a ; $567f
-	ld a, $09 ; $5682
+	ld a, ENTRY_SENIOR_CLASS_COURT_PRACTICE_MATCH_RETURN ; $5682
 	ld [wStoryModeEntryPoint], a ; $5684
 	ld a, EXITTRIGGER_DIRECT ; $5687
 	ld [wUnusedExitTriggerIdMirror], a ; $5689
@@ -466,7 +466,7 @@ MatchSelectRunMatch:
 	jr z, .practiceRoomAlt ; $5697
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $5699
 	ld [wStoryModeCurrentLocation], a ; $569b
-	ld a, $0f ; $569e
+	ld a, ENTRY_JUNIOR_CLASS_COURT_SINGLES_MATCH_RETURN ; $569e
 	ld [wStoryModeEntryPoint], a ; $56a0
 	ld a, EXITTRIGGER_DIRECT ; $56a3
 	ld [wUnusedExitTriggerIdMirror], a ; $56a5
@@ -475,7 +475,7 @@ MatchSelectRunMatch:
 .practiceRoomAlt:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $56ac
 	ld [wStoryModeCurrentLocation], a ; $56ae
-	ld a, $09 ; $56b1
+	ld a, ENTRY_JUNIOR_CLASS_COURT_SINGLES_PRACTICE_MATCH_RETURN ; $56b1
 	ld [wStoryModeEntryPoint], a ; $56b3
 	ld a, EXITTRIGGER_DIRECT ; $56b6
 	ld [wUnusedExitTriggerIdMirror], a ; $56b8
@@ -486,7 +486,7 @@ MatchSelectRunMatch:
 	jr z, .otherRoomAlt ; $56c1
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56c3
 	ld [wStoryModeCurrentLocation], a ; $56c5
-	ld a, $0f ; $56c8
+	ld a, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_MATCH_RETURN ; $56c8
 	ld [wStoryModeEntryPoint], a ; $56ca
 	ld a, EXITTRIGGER_DIRECT ; $56cd
 	ld [wUnusedExitTriggerIdMirror], a ; $56cf
@@ -495,7 +495,7 @@ MatchSelectRunMatch:
 .otherRoomAlt:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56d6
 	ld [wStoryModeCurrentLocation], a ; $56d8
-	ld a, $09 ; $56db
+	ld a, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_PRACTICE_MATCH_RETURN ; $56db
 	ld [wStoryModeEntryPoint], a ; $56dd
 	ld a, EXITTRIGGER_DIRECT ; $56e0
 	ld [wUnusedExitTriggerIdMirror], a ; $56e2

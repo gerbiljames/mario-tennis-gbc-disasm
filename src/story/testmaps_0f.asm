@@ -130,9 +130,7 @@ SmallCharTestInitScript_0f:
 	ld [wMapSceneStage], a ; $41a5
 	farcall GetObjectDefCount ; $41a8
 	ld [wMapSceneStage2], a ; $41ab
-	ld a, $01 ; $41ae
-	ld hl, SmallCharTestButtonTask_0f ; $41b0
-	call RegisterFrameTask ; $41b3
+	frame_task SmallCharTestButtonTask_0f ; $41ae
 	ret ; $41b6
 SmallCharTestButtonTask_0f:
 	ldh a, [hInputRisingEdge] ; $41b7
@@ -208,8 +206,8 @@ AwardsCeremonyActorsDoubles_0f:
 AwardsCeremonyEntryPoints_0f:
 	; $442d, 25 bytes (map_entries)
 	map_entry $01, FACE_UP, 12.0, 41.0, $0000 ; debug warp only
-	map_entry $0a, FACE_UP, 12.0, 41.0, $0000
-	map_entry $0b, FACE_UP, 11.0, 41.0, $0000
+	map_entry $0a, FACE_UP, 12.0, 41.0, $0000, AWARDS_CEREMONY_SINGLES
+	map_entry $0b, FACE_UP, 11.0, 41.0, $0000, AWARDS_CEREMONY_DOUBLES
 	db $ff
 AwardsCeremonyExitTriggers_0f:
 	ds 1, $ff ; $4446, fill
@@ -618,7 +616,7 @@ AwardsCeremonyTile02_0f:
 	farcall RunStorySceneByMode ; $4e91
 	ld a, STORYLOC_ACADEMY_WING ; $4e94
 	ld [wStoryModeCurrentLocation], a ; $4e96
-	ld a, $0f ; $4e99
+	ld a, ENTRY_ACADEMY_WING_ISLAND_OPEN_WON ; $4e99
 	ld [wStoryModeEntryPoint], a ; $4e9b
 	ld a, EXITTRIGGER_DIRECT ; $4e9e
 	ld [wUnusedExitTriggerIdMirror], a ; $4ea0
@@ -881,7 +879,7 @@ AwardsCeremonyTile02_0f:
 	farcall RunStorySceneByMode ; $556b
 	ld a, STORYLOC_ACADEMY_WING ; $556e
 	ld [wStoryModeCurrentLocation], a ; $5570
-	ld a, $0f ; $5573
+	ld a, ENTRY_ACADEMY_WING_ISLAND_OPEN_WON ; $5573
 	ld [wStoryModeEntryPoint], a ; $5575
 	ld a, EXITTRIGGER_DIRECT ; $5578
 	ld [wUnusedExitTriggerIdMirror], a ; $557a
@@ -905,9 +903,9 @@ AwardsCeremonyInitScript_0f:
 .setObjectDefs:
 	call SetPlayerAndPartnerObjectDefs ; $55c3
 	ld a, [wStoryModeEntryPoint] ; $55c6
-	cp $0a ; $55c9
+	cp ENTRY_AWARDS_CEREMONY_SINGLES ; $55c9
 	jp z, AwardsCeremonyEntry0aScene ; $55cb
-	cp $0b ; $55ce
+	cp ENTRY_AWARDS_CEREMONY_DOUBLES ; $55ce
 	jp z, AwardsCeremonyEntry0bScene ; $55d0
 	call CheckAwardsCeremonyRivalSceneDone ; $55d3
 	and $01 ; $55d6

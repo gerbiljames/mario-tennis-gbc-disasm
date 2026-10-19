@@ -11,7 +11,7 @@ inside a routine is a step of its own. The session is replayed (the same
 eventtest unit, from `eventtest.py --units`) with hooks that steer each
 routine on the chain toward the next: at a conditional branch the flag it
 tests is set so it goes the way that leads on soonest (out of a loop rather
-than round it); at an `rst Rst00` jump table the index is set to the entry
+than round it); at a `jumptable` the index is set to the entry
 that leads on; at an indirect jump through a table of routines (`jp hl`,
 `JumpToHL`, `CallHLInBankA`) HL is set to the next routine. A story
 script's chain starts at the location's own script, replayed in that
@@ -46,6 +46,7 @@ LOCAL = re.compile(r"^(?:[A-Za-z_]\w*)?\.(\w+):")  # `.x:`, or `Routine.x:` afte
 COND = re.compile(r"^(jr|jp) (nz|z|nc|c), (\S+)$")
 RETCC = re.compile(r"^ret (nz|z|nc|c)$")
 JUMP = re.compile(r"^(jr|jp) (\S+)$")
+TABLE = re.compile(r"^jumptable(?: (.+))?$")
 INDIRECT = re.compile(r"^(jp hl|call JumpToHL|jp JumpToHL|call CallHLInBankA|jp CallHLInBankA)$")
 FLAG = {"z": (0x80, True), "nz": (0x80, False), "c": (0x10, True), "nc": (0x10, False)}
 DATA = re.compile(r"(db|dw|dn|ds|map_(?!cell\b)\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|char_stats_row|"
@@ -146,12 +147,16 @@ def cfg(code, name):
             nodes[i] = ("end", [], c)
         elif JUMP.match(c) and not c.startswith("jp hl"):
             nodes[i] = ("jump", [dest(JUMP.match(c).group(2))], None)
-        elif c == "rst Rst00":
+        elif TABLE.match(c):
             tg, j = [], i + 1
             while j < end and re.match(r"\tdw (\S+)", lines[j].split(";")[0]):
                 tg.append(dest(re.match(r"\tdw (\S+)", lines[j].split(";")[0]).group(1)))
                 j += 1
-            nodes[i] = ("table", tg, None)
+            # the rst follows the `ld a, arg` the macro emits first
+            arg = TABLE.match(c).group(1)
+            size = (0 if arg is None else 1 if re.match(r"[abcdehl]$|\[(hl[+-]?|bc|de)\]$", arg)
+                    else 3 if arg.startswith("[") else 2)
+            nodes[i] = ("table", tg, size)
         else:
             nodes[i] = ("step", [nxt(i)], None)
         i += 1
@@ -209,7 +214,7 @@ def steer_plan(code, a, b_name, bsym, via=()):
         c = lines[i].split(";")[0].strip()
         m = re.match(r"(?:jr|jp|call) (nz|z|nc|c), (\S+)$", c)
         if i in special:
-            plan.append((point, special[i]))
+            plan.append(((bank, placed[i] + info) if kind == "table" else point, special[i]))
         elif i in goals and m and code.refers(m.group(2), b_name):
             # the goal is a conditional jump or call to it: take it
             bit, when = FLAG[m.group(1)]
@@ -222,7 +227,7 @@ def steer_plan(code, a, b_name, bsym, via=()):
                 plan.append((point, ("flag", bit, when if d[1] < d[0] else not when)))
         elif kind == "table" and i in reach_goal and i not in goals:
             k = min(range(len(succ)), key=lambda k: dist.get(succ[k], float("inf")))
-            plan.append((point, ("index", k)))
+            plan.append(((bank, placed[i] + info), ("index", k)))
     return plan
 
 

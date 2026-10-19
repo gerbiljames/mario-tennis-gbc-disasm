@@ -40,7 +40,7 @@ MachinePracticeLevelPrompt:
 	call WaitFadeEnd ; $4672
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4675
 	ld [wStoryModeCurrentLocation], a ; $4677
-	ld a, $07 ; $467a
+	ld a, ENTRY_TENNIS_MACHINE_ROOM_PRACTICE_RESULT ; $467a
 	ld [wStoryModeEntryPoint], a ; $467c
 	ld a, EXITTRIGGER_DIRECT ; $467f
 	ld [wUnusedExitTriggerIdMirror], a ; $4681
@@ -147,7 +147,7 @@ MachineCourtRestartLevel:
 	jr z, .storeStoryModeCurrentLocation ; $47d9
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $47db
 	ld [wStoryModeCurrentLocation], a ; $47dd
-	ld a, $07 ; $47e0
+	ld a, ENTRY_TENNIS_MACHINE_ROOM_PRACTICE_RESULT ; $47e0
 	ld [wStoryModeEntryPoint], a ; $47e2
 	ld a, EXITTRIGGER_DIRECT ; $47e5
 	ld [wUnusedExitTriggerIdMirror], a ; $47e7
@@ -156,7 +156,7 @@ MachineCourtRestartLevel:
 .storeStoryModeCurrentLocation:
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $47ef
 	ld [wStoryModeCurrentLocation], a ; $47f1
-	ld a, $05 ; $47f4
+	ld a, ENTRY_TENNIS_MACHINE_ROOM_LEVEL_RESULT ; $47f4
 	ld [wStoryModeEntryPoint], a ; $47f6
 	ld a, EXITTRIGGER_DIRECT ; $47f9
 	ld [wUnusedExitTriggerIdMirror], a ; $47fb
@@ -184,7 +184,7 @@ Unused_14_MachineRecordOverrideAndReturn:
 	pop_wram_bank ; $482a
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $482f
 	ld [wStoryModeCurrentLocation], a ; $4831
-	ld a, $01 ; $4834
+	ld a, ENTRY_TENNIS_MACHINE_ROOM_FROM_TRAINING_CENTER ; $4834
 	ld [wStoryModeEntryPoint], a ; $4836
 	ld a, EXITTRIGGER_DIRECT ; $4839
 	ld [wUnusedExitTriggerIdMirror], a ; $483b
@@ -206,12 +206,7 @@ MachineExpertResultScene:
 	pop_wram_bank ; $4861
 	ld l, c ; $4866
 	ld h, b ; $4867
-	ld a, l ; $4868
-	sub e ; $4869
-	ld l, a ; $486a
-	ld a, h ; $486b
-	sbc d ; $486c
-	ld h, a ; $486d
+	sub_hl_de ; $4868
 	jp nc, MachineExpertRetryPrompt ; $486e
 	ld bc, $270f ; $4871
 	push_wram_bank WRAM_SOUND ; $4874
@@ -224,12 +219,7 @@ MachineExpertResultScene:
 	pop_wram_bank ; $4888
 	ld l, c ; $488d
 	ld h, b ; $488e
-	ld a, l ; $488f
-	sub e ; $4890
-	ld l, a ; $4891
-	ld a, h ; $4892
-	sbc d ; $4893
-	ld h, a ; $4894
+	sub_hl_de ; $488f
 	jp z, MachineExpertRetryPrompt ; $4895
 	ld hl, wMinigamesCurrentScore ; $4898
 	ld a, [hl+] ; $489b
@@ -244,12 +234,7 @@ MachineExpertResultScene:
 	ld l, c ; $48b2
 	ld h, b ; $48b3
 	inc de ; $48b4
-	ld a, l ; $48b5
-	sub e ; $48b6
-	ld l, a ; $48b7
-	ld a, h ; $48b8
-	sbc d ; $48b9
-	ld h, a ; $48ba
+	sub_hl_de ; $48b5
 	jp nc, MachineExpertNewRecordScene ; $48bb
 MachineExpertRetryPrompt:
 	script_set_text Text_MachineExpertRetry ; $48be
@@ -282,12 +267,7 @@ MachineExpertCounterMaxScene:
 	ld l, a ; $490c
 	pop_wram_bank ; $490d
 	ld de, 9999 ; $4912
-	ld a, l ; $4915
-	sub e ; $4916
-	ld l, a ; $4917
-	ld a, h ; $4918
-	sbc d ; $4919
-	ld h, a ; $491a
+	sub_hl_de ; $4915
 	jp z, MachineExpertRetryPrompt ; $491b
 	call SaveMachineExpertRecord ; $491e
 	script_set_text Text_MachineExpertCounterMax ; $4921
@@ -315,12 +295,7 @@ Unused_14_CompareMinigameScoreToRecord:
 	pop_wram_bank ; $4966
 	ld l, c ; $496b
 	ld h, b ; $496c
-	ld a, l ; $496d
-	sub e ; $496e
-	ld l, a ; $496f
-	ld a, h ; $4970
-	sbc d ; $4971
-	ld h, a ; $4972
+	sub_hl_de ; $496d
 	ret ; $4973
 SaveMachineExpertRecord:
 	push_wram_bank WRAM_SOUND ; $4974
@@ -395,13 +370,13 @@ Court2Actors_14:
 	map_actor_end
 Court2EntryPoints_14:
 	; $4b3f, 17 bytes (map_entries)
-	map_entry $01, FACE_LEFT, 37.0, 21.0, $0000
-	map_entry $02, FACE_LEFT, 37.0, 37.0, $0000
+	map_entry $01, FACE_LEFT, 37.0, 21.0, $0000, COURT_2_FROM_TOURNAMENT
+	map_entry $02, FACE_LEFT, 37.0, 37.0, $0000, COURT_2_FROM_TOURNAMENT_COURTYARD
 	db $ff
 Court2ExitTriggers_14:
 	; $4b50, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, $03
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, $02
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, ENTRY_TOURNAMENT_FROM_COURT_2, COURT_2_TO_TOURNAMENT
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, ENTRY_TOURNAMENT_COURTYARD_FROM_COURT_2, COURT_2_TO_TOURNAMENT_COURTYARD
 	db $ff
 Court2Npc03_14:
 	script_set_text Text_Court2StaffCourtNumberTwo ; $4b61

@@ -79,11 +79,7 @@ QueueSpriteBlockPart:
 	inc c ; $2d8a
 	ret ; $2d8b
 ProjectWorldToScreen:
-	ldh a, [hRomBank] ; $2d8c
-	push af ; $2d8e
-	ld a, BANK(ViewScaleTableA) ; $2d8f
-	ldh [hRomBank], a ; $2d91
-	ld [rROMB0], a ; $2d93
+	push_rom_bank BANK(ViewScaleTableA) ; $2d8c
 	push hl ; $2d96
 	push de ; $2d97
 	ld l, e ; $2d98
@@ -110,9 +106,7 @@ ProjectWorldToScreen:
 	ld d, h ; $2db5
 	pop bc ; $2db6
 	pop hl ; $2db7
-	ld a, BANK(PerspectiveScaleTable) ; $2db8
-	ldh [hRomBank], a ; $2dba
-	ld [rROMB0], a ; $2dbc
+	rom_bank BANK(PerspectiveScaleTable) ; $2db8
 	push de ; $2dbf
 	push hl ; $2dc0
 	ld l, e ; $2dc1
@@ -138,9 +132,7 @@ ProjectWorldToScreen:
 	add hl, hl ; $2ddf
 	add hl, hl ; $2de0
 	pop de ; $2de1
-	pop af ; $2de2
-	ldh [hRomBank], a ; $2de3
-	ld [rROMB0], a ; $2de5
+	pop_rom_bank ; $2de2
 	ret ; $2de8
 MulViewScaleA:
 	bit 7, h ; $2de9
@@ -155,12 +147,7 @@ MulViewScaleA:
 	ld l, a ; $2df7
 	ret ; $2df8
 .negative:
-	xor a ; $2df9
-	sub l ; $2dfa
-	ld l, a ; $2dfb
-	sbc a ; $2dfc
-	sub h ; $2dfd
-	ld h, a ; $2dfe
+	neg_hl ; $2df9
 	res 0, l ; $2dff
 	ld a, h ; $2e01
 	and $1f ; $2e02
@@ -169,12 +156,7 @@ MulViewScaleA:
 	ld a, [hl+] ; $2e07
 	ld h, [hl] ; $2e08
 	ld l, a ; $2e09
-	xor a ; $2e0a
-	sub l ; $2e0b
-	ld l, a ; $2e0c
-	sbc a ; $2e0d
-	sub h ; $2e0e
-	ld h, a ; $2e0f
+	neg_hl ; $2e0a
 	ret ; $2e10
 MulViewScaleANeg:
 	bit 7, h ; $2e11
@@ -187,20 +169,10 @@ MulViewScaleANeg:
 	ld a, [hl+] ; $2e1d
 	ld h, [hl] ; $2e1e
 	ld l, a ; $2e1f
-	xor a ; $2e20
-	sub l ; $2e21
-	ld l, a ; $2e22
-	sbc a ; $2e23
-	sub h ; $2e24
-	ld h, a ; $2e25
+	neg_hl ; $2e20
 	ret ; $2e26
 .negative:
-	xor a ; $2e27
-	sub l ; $2e28
-	ld l, a ; $2e29
-	sbc a ; $2e2a
-	sub h ; $2e2b
-	ld h, a ; $2e2c
+	neg_hl ; $2e27
 	res 0, l ; $2e2d
 	ld a, h ; $2e2f
 	and $1f ; $2e30
@@ -223,12 +195,7 @@ MulViewScaleB:
 	ld l, a ; $2e47
 	ret ; $2e48
 .negative:
-	xor a ; $2e49
-	sub l ; $2e4a
-	ld l, a ; $2e4b
-	sbc a ; $2e4c
-	sub h ; $2e4d
-	ld h, a ; $2e4e
+	neg_hl ; $2e49
 	res 0, l ; $2e4f
 	ld a, h ; $2e51
 	and $1f ; $2e52
@@ -237,12 +204,7 @@ MulViewScaleB:
 	ld a, [hl+] ; $2e57
 	ld h, [hl] ; $2e58
 	ld l, a ; $2e59
-	xor a ; $2e5a
-	sub l ; $2e5b
-	ld l, a ; $2e5c
-	sbc a ; $2e5d
-	sub h ; $2e5e
-	ld h, a ; $2e5f
+	neg_hl ; $2e5a
 	ret ; $2e60
 GetPerspectiveScale:
 	ld a, h ; $2e61
@@ -253,11 +215,7 @@ GetPerspectiveScale:
 	ld d, [hl] ; $2e69
 	ret ; $2e6a
 QueueCharFrameTiles:
-	ldh a, [hRomBank] ; $2e6b
-	push af ; $2e6d
-	ld a, [wCharObjectBank] ; $2e6e
-	ldh [hRomBank], a ; $2e71
-	ld [rROMB0], a ; $2e73
+	push_rom_bank [wCharObjectBank] ; $2e6b
 	ld hl, wCharFramePlaceTablePtr ; $2e76
 	ld a, [hl+] ; $2e79
 	ld h, [hl] ; $2e7a
@@ -288,9 +246,7 @@ QueueCharFrameTiles:
 	jr nz, .withShadow ; $2ea1
 	call QueueVRAMCopy ; $2ea3
 .loop:
-	pop af ; $2ea6
-	ldh [hRomBank], a ; $2ea7
-	ld [rROMB0], a ; $2ea9
+	pop_rom_bank ; $2ea6
 	ret ; $2eac
 .withShadow:
 	push de ; $2ead

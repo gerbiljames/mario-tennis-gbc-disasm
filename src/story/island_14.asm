@@ -5,7 +5,7 @@ IslandSkyTilesA_14:
 IslandSkyTilesB_14:
 	INCBIN "data/story/IslandSkyTilesB_14.bin" ; $7290, 192 bytes
 IslandSkySpriteData_14:
-	INCBIN "data/story/IslandSkySpriteData_14.bin" ; $7350, 33 bytes
+	INCLUDE "data/story/IslandSkySpriteData_14.asm" ; $7350, 33 bytes (sprite_template)
 AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 	; $7371, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -167,9 +167,7 @@ IslandSkyEntry0eScene:
 	ld a, $00 ; $76d2
 	ld [wCutsceneObjLimit], a ; $76d4
 	ld [wCutsceneObjLimit + 1], a ; $76d7
-	ld a, $01 ; $76da
-	ld hl, AnimateIslandSkyEffectSprites_14 ; $76dc
-	call RegisterFrameTask ; $76df
+	frame_task AnimateIslandSkyEffectSprites_14 ; $76da
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $76e2
 	test_flag FLAG_DOUBLES ; $76ed
 	jp z, .loadScene ; $76f0
@@ -190,9 +188,7 @@ IslandSkyEntry0eScene:
 	ld [wMapSceneStage], a ; $772a
 	ld a, $58 ; $772d
 	ld [wMapSceneStage2], a ; $772f
-	ld a, $01 ; $7732
-	ld hl, QueueDistantPlaneSprite_14 ; $7734
-	call RegisterFrameTask ; $7737
+	frame_task QueueDistantPlaneSprite_14 ; $7732
 	ld h, $4b ; $773a
 .fadeIn:
 	script_wait_frames 2 ; $773c
@@ -228,9 +224,7 @@ IslandSkyEntry0eScene:
 	ld [wMapSceneStage2], a ; $7790
 	ld a, $3c ; $7793
 	ld [wCutsceneObjX], a ; $7795
-	ld a, $01 ; $7798
-	ld hl, QueuePlaneSpriteByFrameCounter_14 ; $779a
-	call RegisterFrameTask ; $779d
+	frame_task QueuePlaneSpriteByFrameCounter_14 ; $7798
 	ld h, $20 ; $77a0
 .nextBurst:
 	script_wait_frames 2 ; $77a2
@@ -308,7 +302,7 @@ IslandSkyEntry0eScene:
 	call WaitFadeEnd ; $785d
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7860
 	ld [wStoryModeCurrentLocation], a ; $7862
-	ld a, $02 ; $7865
+	ld a, ENTRY_ACADEMY_ENTRANCE_FROM_ISLAND_SKY ; $7865
 	ld [wStoryModeEntryPoint], a ; $7867
 	ld a, EXITTRIGGER_DIRECT ; $786a
 	ld [wUnusedExitTriggerIdMirror], a ; $786c
@@ -319,9 +313,7 @@ PlayTwinkleAnimation_14:
 	xor a ; $787b
 	ld [wCutsceneObjPhase], a ; $787c
 	call AdvanceFrame ; $787f
-	ld a, $01 ; $7882
-	ld hl, QueueTwinkleSprite_14 ; $7884
-	call RegisterFrameTask ; $7887
+	frame_task QueueTwinkleSprite_14 ; $7882
 	sound SFX_TWINKLE ; $788a
 	ld h, $04 ; $788c
 .loop:

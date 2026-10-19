@@ -41,22 +41,22 @@ TournamentActors_0f:
 	map_actor_end
 TournamentEntryPoints_0f:
 	; $6070, 65 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 14.0, 9.0, $0000
-	map_entry $02, FACE_DOWN, 42.0, 9.0, $0000
-	map_entry $03, FACE_RIGHT, 5.0, 11.0, $0000
-	map_entry $04, FACE_LEFT, 51.0, 11.0, $0000
-	map_entry $05, FACE_UP, 28.0, 35.0, $0000
-	map_entry $0a, FACE_DOWN, 37.0, 17.0, $0000
-	map_entry $0b, FACE_DOWN, 35.0, 17.0, $0000
-	map_entry $0f, FACE_UP, 27.0, 49.0, $0000
+	map_entry $01, FACE_DOWN, 14.0, 9.0, $0000, TOURNAMENT_FROM_CENTER_COURT_WEST
+	map_entry $02, FACE_DOWN, 42.0, 9.0, $0000, TOURNAMENT_FROM_CENTER_COURT_EAST
+	map_entry $03, FACE_RIGHT, 5.0, 11.0, $0000, TOURNAMENT_FROM_COURT_2
+	map_entry $04, FACE_LEFT, 51.0, 11.0, $0000, TOURNAMENT_FROM_COURT_1
+	map_entry $05, FACE_UP, 28.0, 35.0, $0000, TOURNAMENT_FROM_TOURNAMENT_COURTYARD
+	map_entry $0a, FACE_DOWN, 37.0, 17.0, $0000, TOURNAMENT_AFTER_ROUND_SINGLES
+	map_entry $0b, FACE_DOWN, 35.0, 17.0, $0000, TOURNAMENT_AFTER_ROUND_DOUBLES
+	map_entry $0f, FACE_UP, 27.0, 49.0, $0000, TOURNAMENT_ARRIVAL
 	db $ff
 TournamentExitTriggers_0f:
 	; $60b1, 41 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_CENTER_COURT, $01
-	map_script $02, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_CENTER_COURT, $02
-	map_script $03, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_COURT_2, $01
-	map_script $04, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_COURT_1, $01
-	map_script $05, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_TOURNAMENT_COURTYARD, $03
+	map_script $01, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_CENTER_COURT, ENTRY_CENTER_COURT_FROM_TOURNAMENT_WEST, TOURNAMENT_TO_CENTER_COURT_WEST
+	map_script $02, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_CENTER_COURT, ENTRY_CENTER_COURT_FROM_TOURNAMENT_EAST, TOURNAMENT_TO_CENTER_COURT_EAST
+	map_script $03, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_COURT_2, ENTRY_COURT_2_FROM_TOURNAMENT, TOURNAMENT_TO_COURT_2
+	map_script $04, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_COURT_1, ENTRY_COURT_1_FROM_TOURNAMENT, TOURNAMENT_TO_COURT_1
+	map_script $05, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_TOURNAMENT_COURTYARD, ENTRY_TOURNAMENT_COURTYARD_FROM_TOURNAMENT, TOURNAMENT_TO_TOURNAMENT_COURTYARD
 	db $ff
 TournamentExit_0f:
 	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $60da
@@ -148,9 +148,7 @@ TournamentTile0F_0f:
 	call IslandOpenRoundCallCutscene ; $620b
 	ret ; $620e
 TournamentInitScript_0f:
-	ld a, $01 ; $620f
-	ld hl, UpdateTournamentActorDrawModes_0f ; $6211
-	call RegisterFrameTask ; $6214
+	frame_task UpdateTournamentActorDrawModes_0f ; $620f
 	ld a, [wStoryModeEntryPoint] ; $6217
 	cp STORYENTRY_NONE ; $621a
 	jr z, .inProgress ; $621c
@@ -204,17 +202,17 @@ TournamentInitScript_0f:
 	ret ; $62ea
 .notInProgress:
 	ld a, [wStoryModeEntryPoint] ; $62eb
-	cp $0f ; $62ee
+	cp ENTRY_TOURNAMENT_ARRIVAL ; $62ee
 	jr nz, .placeActors ; $62f0
 	call IslandOpenArrivalCutscene ; $62f2
 	ret ; $62f5
 .placeActors:
-	cp $0a ; $62f6
+	cp ENTRY_TOURNAMENT_AFTER_ROUND_SINGLES ; $62f6
 	jr nz, .placeActorsDoubles ; $62f8
 	call IslandOpenSinglesMatchReturn ; $62fa
 	ret ; $62fd
 .placeActorsDoubles:
-	cp $0b ; $62fe
+	cp ENTRY_TOURNAMENT_AFTER_ROUND_DOUBLES ; $62fe
 	jr nz, .done ; $6300
 	call IslandOpenDoublesMatchReturn ; $6302
 	ret ; $6305

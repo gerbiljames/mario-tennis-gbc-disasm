@@ -58,17 +58,20 @@ DormRoomActors_13:
 	map_actor_end
 DormRoomEntryPoints_13:
 	; $4e62, 49 bytes (map_entries)
-	map_entry $01, FACE_UP, 11.0, 13.0, $0000
-	map_entry $02, FACE_UP, 11.0, 19.0, $0000
+	map_entry $01, FACE_UP, 11.0, 13.0, $0000, DORM_ROOM_CONTINUE
+	map_entry $02, FACE_UP, 11.0, 19.0, $0000, DORM_ROOM_FROM_DORM_ENTRANCE
 	map_entry $03, FACE_UP, 11.0, 13.0, $0000 ; debug warp only
 	map_entry $04, FACE_UP, 11.0, 13.0, $0000 ; debug warp only
 	map_entry $0e, FACE_UP, 11.0, 13.0, $0000 ; debug warp only
-	map_entry $0f, FACE_UP, 11.0, 13.0, $0000
+	map_entry $0f, FACE_UP, 11.0, 13.0, $0000, DORM_ROOM_TOUR_END
+	entry_id DORM_ROOM_DEPARTURE_MORNING_ALT, $08
+	entry_id DORM_ROOM_ISLAND_OPEN_ARRIVAL, $09
+	entry_id DORM_ROOM_DEPARTURE_MORNING, $0a
 	db $ff
 DormRoomExitTriggers_13:
 	; $4e93, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, $02
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_MAIN_MENU, $01
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, ENTRY_DORM_ENTRANCE_FROM_DORM_ROOM, DORM_ROOM_TO_DORM_ENTRANCE
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_MAIN_MENU, ENTRY_MAIN_MENU_FROM_STORY, DORM_ROOM_END_OF_DAY
 	db $ff
 DormRoomNpc04_13:
 	call AdvanceRandomSeed ; $4ea4
@@ -132,7 +135,7 @@ DormRoomTile0F_13:
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ROOM_KATE ; $4fa9
 	ld a, STORYLOC_ACADEMY_WING ; $4fb1
 	ld [wStoryModeCurrentLocation], a ; $4fb3
-	ld a, $0d ; $4fb6
+	ld a, ENTRY_ACADEMY_WING_ISLAND_OPEN_ENTRANTS ; $4fb6
 	ld [wStoryModeEntryPoint], a ; $4fb8
 	ld a, EXITTRIGGER_DIRECT ; $4fbb
 	ld [wUnusedExitTriggerIdMirror], a ; $4fbd
@@ -151,7 +154,7 @@ DormRoomTile0F_13:
 	script_wait_frames 10 ; $5004
 	ld a, STORYLOC_ACADEMY_WING ; $500b
 	ld [wStoryModeCurrentLocation], a ; $500d
-	ld a, $0d ; $5010
+	ld a, ENTRY_ACADEMY_WING_ISLAND_OPEN_ENTRANTS ; $5010
 	ld [wStoryModeEntryPoint], a ; $5012
 	ld a, EXITTRIGGER_DIRECT ; $5015
 	ld [wUnusedExitTriggerIdMirror], a ; $5017
@@ -163,24 +166,24 @@ DormRoomInitScript_13:
 	xor a ; $502a
 	ld [wStoryModeShowLocationName], a ; $502b
 	ld a, [wStoryModeEntryPoint] ; $502e
-	cp $0a ; $5031
+	cp ENTRY_DORM_ROOM_DEPARTURE_MORNING ; $5031
 	jp z, DormRoomEntry0aScene ; $5033
-	cp $09 ; $5036
+	cp ENTRY_DORM_ROOM_ISLAND_OPEN_ARRIVAL ; $5036
 	jp z, DormRoomEntry09Scene ; $5038
-	cp $08 ; $503b
+	cp ENTRY_DORM_ROOM_DEPARTURE_MORNING_ALT ; $503b
 	jp z, DormRoomEntry08Scene ; $503d
 	call ComputeStoryRankTier_13 ; $5040
 	call SetupDormRoomSceneVariant ; $5043
 	call PlaceDormRoomArrivalActors_13 ; $5046
 	call SetDormRoomEventTriggerCells_13 ; $5049
 	ld a, [wStoryModeEntryPoint] ; $504c
-	cp $0f ; $504f
+	cp ENTRY_DORM_ROOM_TOUR_END ; $504f
 	jp z, DormRoomEntry0fScene ; $5051
 	sound BGM_DORM_ROOM ; $5054
 	ld a, [wStoryModeEntryPoint] ; $5056
-	cp $01 ; $5059
+	cp ENTRY_DORM_ROOM_CONTINUE ; $5059
 	jp z, DormRoomEntry01Scene ; $505b
-	cp $02 ; $505e
+	cp ENTRY_DORM_ROOM_FROM_DORM_ENTRANCE ; $505e
 	jp z, DormRoomEntry02Scene ; $5060
 	farcall EndCutsceneScriptMode ; $5063
 	ret ; $5066
@@ -289,7 +292,7 @@ PlaceDormRoomArrivalActors_13:
 	ld a, [wStoryModeEntryPoint] ; $51b0
 	cp STORYENTRY_NONE ; $51b3
 	jr z, .noEntryPoint ; $51b5
-	cp $01 ; $51b7
+	cp ENTRY_DORM_ROOM_CONTINUE ; $51b7
 	jr z, .entry01 ; $51b9
 	wram_bank WRAM_ACTORS ; $51bb
 	test_flag FLAG_DOUBLES ; $51c1
@@ -621,11 +624,11 @@ DormRoomEntry02Scene:
 	call WaitJingleEnd ; $5671
 	script_fade_out 4 ; $5674
 	call WaitFadeEnd ; $5679
-	ld a, $02 ; $567c
+	ld a, EXIT_DORM_ROOM_END_OF_DAY ; $567c
 	ld [wUnusedExitTriggerIdMirror], a ; $567e
 	ld [wStoryModeExitTriggerRequest], a ; $5681
 	ld b, STORYLOC_DORM_ROOM ; $5684
-	ld c, $01 ; $5686
+	ld c, ENTRY_DORM_ROOM_CONTINUE ; $5686
 	farcall SaveStoryReturnPoint ; $5688
 	farcall SaveStorySlotWithTimer ; $568b
 	ret ; $568e

@@ -172,21 +172,8 @@ TrainingGymRunnerCheckClearance:
 	ld a, [hl+] ; $4d45
 	ld h, [hl] ; $4d46
 	ld l, a ; $4d47
-	ld a, l ; $4d48
-	sub e ; $4d49
-	ld l, a ; $4d4a
-	ld a, h ; $4d4b
-	sbc d ; $4d4c
-	ld h, a ; $4d4d
-	bit 7, h ; $4d4e
-	jr z, .checkX ; $4d50
-	xor a ; $4d52
-	sub l ; $4d53
-	ld l, a ; $4d54
-	sbc a ; $4d55
-	sub h ; $4d56
-	ld h, a ; $4d57
-.checkX:
+	sub_hl_de ; $4d48
+	abs_hl ; $4d4e
 	ld a, h ; $4d58
 	cp $05 ; $4d59
 	jr nc, .outOfRange ; $4d5b
@@ -198,21 +185,8 @@ TrainingGymRunnerCheckClearance:
 	ld a, [hl+] ; $4d66
 	ld h, [hl] ; $4d67
 	ld l, a ; $4d68
-	ld a, l ; $4d69
-	sub e ; $4d6a
-	ld l, a ; $4d6b
-	ld a, h ; $4d6c
-	sbc d ; $4d6d
-	ld h, a ; $4d6e
-	bit 7, h ; $4d6f
-	jr z, .checkDepth ; $4d71
-	xor a ; $4d73
-	sub l ; $4d74
-	ld l, a ; $4d75
-	sbc a ; $4d76
-	sub h ; $4d77
-	ld h, a ; $4d78
-.checkDepth:
+	sub_hl_de ; $4d69
+	abs_hl ; $4d6f
 	ld a, h ; $4d79
 	cp $05 ; $4d7a
 	jr nc, .outOfRange ; $4d7c
@@ -417,14 +391,14 @@ InitEquipmentHandoutDialogue:
 	farcall InitDialogueTextCursor ; $4fbb
 	ret ; $4fbe
 RepairCounterReturnA:
-	ld a, $0b ; $4fbf
+	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A ; $4fbf
 	ld [wMapSceneStage2], a ; $4fc1
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4fc4
 	script_set_position ACTOR_PARTNER, 15.0, 15.0 ; $4fcc
 	jp RepairCounterCheckEquipChanged ; $4fd7
 	ret ; $4fda
 RepairCounterReturnB:
-	ld a, $0c ; $4fdb
+	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B ; $4fdb
 	ld [wMapSceneStage2], a ; $4fdd
 	farcall WaitPlayerMoveDone ; $4fe0
 	script_player_speed 7.5 ; $4fe3

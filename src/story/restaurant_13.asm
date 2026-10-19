@@ -18,14 +18,14 @@ RestaurantPlazaActors_13:
 	map_actor_end
 RestaurantPlazaEntryPoints_13:
 	; $401e, 65 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 7.0, 8.25, RestaurantPlazaArrival01_13
-	map_entry $02, FACE_DOWN, 21.0, 9.25, RestaurantPlazaArrival02_13
-	map_entry $03, FACE_DOWN, 37.0, 8.25, RestaurantPlazaArrivalWalkIn_13
-	map_entry $04, FACE_UP, 50.0, 15.0, RestaurantPlazaArrival04_13
-	map_entry $05, FACE_DOWN, 55.0, 8.25, RestaurantPlazaArrivalWalkIn_13
-	map_entry $06, FACE_LEFT, 60.0, 13.0, RestaurantPlazaArrival06_13
-	map_entry $0e, FACE_LEFT, 59.0, 15.0, $0000
-	map_entry $0f, FACE_LEFT, 50.0, 15.0, $0000
+	map_entry $01, FACE_DOWN, 7.0, 8.25, RestaurantPlazaArrival01_13, RESTAURANT_PLAZA_FROM_DORM_ENTRANCE
+	map_entry $02, FACE_DOWN, 21.0, 9.25, RestaurantPlazaArrival02_13, RESTAURANT_PLAZA_FROM_RESTAURANT
+	map_entry $03, FACE_DOWN, 37.0, 8.25, RestaurantPlazaArrivalWalkIn_13, RESTAURANT_PLAZA_FROM_SENIOR_CLASS_COURT
+	map_entry $04, FACE_UP, 50.0, 15.0, RestaurantPlazaArrival04_13, RESTAURANT_PLAZA_FROM_COURTYARD
+	map_entry $05, FACE_DOWN, 55.0, 8.25, RestaurantPlazaArrivalWalkIn_13, RESTAURANT_PLAZA_FROM_JUNIOR_CLASS_COURT
+	map_entry $06, FACE_LEFT, 60.0, 13.0, RestaurantPlazaArrival06_13, RESTAURANT_PLAZA_FROM_TRAINING_COURT
+	map_entry $0e, FACE_LEFT, 59.0, 15.0, $0000, RESTAURANT_PLAZA_SERVICE_ACE_INTRO
+	map_entry $0f, FACE_LEFT, 50.0, 15.0, $0000, RESTAURANT_PLAZA_COURTS_TOUR
 	db $ff
 	twin_named academy_main_bldg_arrival01, RestaurantPlazaArrival04_13 ; $405f
 	twin_named restaurant_plaza_arrival06, RestaurantPlazaArrival06_13 ; $40a5
@@ -90,15 +90,15 @@ RestaurantPlazaArrivalWalkIn_13:
 	ret ; $4235
 RestaurantPlazaExitTriggers_13:
 	; $4236, 73 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_RESTAURANT, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_SENIOR_CLASS_COURT, $01
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_COURTYARD, $02
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $01
-	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_TRAINING_COURT, $01
-	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, $01
-	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, $0f
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_TRAINING_COURT, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, ENTRY_DORM_ENTRANCE_FROM_RESTAURANT_PLAZA, RESTAURANT_PLAZA_TO_DORM_ENTRANCE
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_RESTAURANT, ENTRY_RESTAURANT_FROM_RESTAURANT_PLAZA, RESTAURANT_PLAZA_TO_RESTAURANT
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_SENIOR_CLASS_COURT, ENTRY_SENIOR_CLASS_COURT_FROM_RESTAURANT_PLAZA, RESTAURANT_PLAZA_TO_SENIOR_CLASS_COURT
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_COURTYARD, ENTRY_COURTYARD_FROM_RESTAURANT_PLAZA, RESTAURANT_PLAZA_TO_COURTYARD
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, ENTRY_JUNIOR_CLASS_COURT_SINGLES_FROM_RESTAURANT_PLAZA, RESTAURANT_PLAZA_TO_JUNIOR_CLASS_COURT_SINGLES
+	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_TRAINING_COURT, ENTRY_TRAINING_COURT_FROM_RESTAURANT_PLAZA, RESTAURANT_PLAZA_TO_TRAINING_COURT
+	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_FROM_RESTAURANT_PLAZA, RESTAURANT_PLAZA_TO_JUNIOR_CLASS_COURT_DOUBLES
+	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, ENTRY_DORM_ENTRANCE_TOUR, RESTAURANT_PLAZA_TOUR_TO_DORM_ENTRANCE
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_TRAINING_COURT, ENTRY_TRAINING_COURT_TOUR, RESTAURANT_PLAZA_TOUR_TO_TRAINING_COURT
 	db $ff
 Unused_13_PlayerSpeaksDefineAce:
 	script_set_text Text_DefineAce ; $427f
@@ -129,7 +129,7 @@ RestaurantPlazaTile01_13:
 	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $42f1
 	script_wait_move ACTOR_PLAYER ; $42fb
 	call StoryActorsWalkOffAndFadeOut_13 ; $4300
-	ld a, $01 ; $4303
+	ld a, EXIT_RESTAURANT_PLAZA_TO_DORM_ENTRANCE ; $4303
 	ld [wUnusedExitTriggerIdMirror], a ; $4305
 	ld [wStoryModeExitTriggerRequest], a ; $4308
 	ret ; $430b
@@ -143,7 +143,7 @@ RestaurantPlazaTile02_13:
 	script_wait_frames 2 ; $433b
 	script_fade_out 16 ; $4342
 	script_wait_frames 30 ; $4347
-	ld a, $02 ; $434e
+	ld a, EXIT_RESTAURANT_PLAZA_TO_RESTAURANT ; $434e
 	ld [wUnusedExitTriggerIdMirror], a ; $4350
 	ld [wStoryModeExitTriggerRequest], a ; $4353
 	ret ; $4356
@@ -157,7 +157,7 @@ RestaurantPlazaTile03_13:
 	call StoryActorsWalkOffAndFadeOut_13 ; $4389
 	script_fade_out 16 ; $438c
 	script_wait_frames 30 ; $4391
-	ld a, $03 ; $4398
+	ld a, EXIT_RESTAURANT_PLAZA_TO_SENIOR_CLASS_COURT ; $4398
 	ld [wUnusedExitTriggerIdMirror], a ; $439a
 	ld [wStoryModeExitTriggerRequest], a ; $439d
 	ret ; $43a0
@@ -168,11 +168,11 @@ RestaurantPlazaTile05_13:
 	script_move_angle ACTOR_PLAYER, FACE_UP, 0.5 ; $43bc
 	call StoryActorsWalkOffAndFadeOut_13 ; $43c6
 	test_flag FLAG_DOUBLES ; $43c9
-	ld a, $05 ; $43cc
+	ld a, EXIT_RESTAURANT_PLAZA_TO_JUNIOR_CLASS_COURT_SINGLES ; $43cc
 	ld [wUnusedExitTriggerIdMirror], a ; $43ce
 	ld [wStoryModeExitTriggerRequest], a ; $43d1
 	jr z, .done ; $43d4
-	ld a, $0d ; $43d6
+	ld a, EXIT_RESTAURANT_PLAZA_TO_JUNIOR_CLASS_COURT_DOUBLES ; $43d6
 	ld [wUnusedExitTriggerIdMirror], a ; $43d8
 	ld [wStoryModeExitTriggerRequest], a ; $43db
 .done:
@@ -185,11 +185,11 @@ RestaurantPlazaTile06_13:
 	script_fade_out 16 ; $4403
 	script_wait_frames 30 ; $4408
 	test_flag FLAG_DOUBLES ; $440f
-	ld a, $06 ; $4412
+	ld a, EXIT_RESTAURANT_PLAZA_TO_TRAINING_COURT ; $4412
 	ld [wUnusedExitTriggerIdMirror], a ; $4414
 	ld [wStoryModeExitTriggerRequest], a ; $4417
 	jr z, RestaurantPlazaTile05_13.done ; $441a
-	ld a, $06 ; $441c
+	ld a, EXIT_RESTAURANT_PLAZA_TO_TRAINING_COURT ; $441c
 	ld [wUnusedExitTriggerIdMirror], a ; $441e
 	ld [wStoryModeExitTriggerRequest], a ; $4421
 	ret ; $4424
@@ -226,11 +226,11 @@ StoryActorsWalkOffAndFadeOutDoubles_13:
 	ret ; $44de
 RestaurantPlazaInitScript_13:
 	ld a, [wStoryModeEntryPoint] ; $44df
-	cp $0f ; $44e2
+	cp ENTRY_RESTAURANT_PLAZA_COURTS_TOUR ; $44e2
 	jr nz, .ne0f ; $44e4
 	call AcademyCourtsTourCutscene ; $44e6
 .ne0f:
-	cp $0e ; $44e9
+	cp ENTRY_RESTAURANT_PLAZA_SERVICE_ACE_INTRO ; $44e9
 	jr nz, .done ; $44eb
 	call ServiceAceCoachIntroCutscene ; $44ed
 .done:
@@ -262,9 +262,7 @@ AcademyCourtsTourCutscene:
 	ld [wMapSceneStage], a ; $4596
 	ld a, $48 ; $4599
 	ld [wMapSceneStage2], a ; $459b
-	ld a, $01 ; $459e
-	ld hl, AnimateTourPointerSprite_13 ; $45a0
-	call RegisterFrameTask ; $45a3
+	frame_task AnimateTourPointerSprite_13 ; $459e
 	script_set_text Text_EmilyJuniorCourtThatWay ; $45a6
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $45ac
 	ld hl, AnimateTourPointerSprite_13 ; $45b1
@@ -288,9 +286,7 @@ AcademyCourtsTourCutscene:
 	ld [wMapSceneStage], a ; $461d
 	ld a, $48 ; $4620
 	ld [wMapSceneStage2], a ; $4622
-	ld a, $01 ; $4625
-	ld hl, AnimateTourPointerSprite_13 ; $4627
-	call RegisterFrameTask ; $462a
+	frame_task AnimateTourPointerSprite_13 ; $4625
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $462d
 	ld hl, AnimateTourPointerSprite_13 ; $4632
 	call UnregisterFrameTask ; $4635
@@ -327,7 +323,7 @@ AcademyCourtsTourCutscene:
 	script_wait_move ACTOR_PLAYER ; $470b
 	script_move_target ACTOR_PLAYER, 65.0, 13.125 ; $4710
 	script_wait_move ACTOR_PLAYER ; $471b
-	ld a, $0f ; $4720
+	ld a, EXIT_RESTAURANT_PLAZA_TOUR_TO_TRAINING_COURT ; $4720
 	ld [wUnusedExitTriggerIdMirror], a ; $4722
 	ld [wStoryModeExitTriggerRequest], a ; $4725
 	farcall EndCutsceneScriptMode ; $4728
@@ -520,7 +516,7 @@ ServiceAceCoachIntroCutscene:
 	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $4c52
 	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, 63.0, 63.0 ; $4c5c
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $4c67
-	ld a, $0e ; $4c72
+	ld a, EXIT_RESTAURANT_PLAZA_TOUR_TO_DORM_ENTRANCE ; $4c72
 	ld [wUnusedExitTriggerIdMirror], a ; $4c74
 	ld [wStoryModeExitTriggerRequest], a ; $4c77
 	farcall EndCutsceneScriptMode ; $4c7a

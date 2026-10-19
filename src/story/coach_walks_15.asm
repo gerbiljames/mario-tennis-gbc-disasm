@@ -36,7 +36,7 @@ ReturnCoachWalkToCourtAndStartLesson:
 	call PlayerPartnerGestureCutscene ; $7c13
 	ld a, STORYLOC_TRAINING_COURT ; $7c16
 	ld [wStoryModeCurrentLocation], a ; $7c18
-	ld a, $0a ; $7c1b
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $7c1b
 	ld [wStoryModeEntryPoint], a ; $7c1d
 	ld a, EXITTRIGGER_DIRECT ; $7c20
 	ld [wUnusedExitTriggerIdMirror], a ; $7c22

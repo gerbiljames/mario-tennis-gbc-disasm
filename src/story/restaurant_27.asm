@@ -80,7 +80,7 @@ End3DormEntActors_27:
 	map_actor_end
 End3DormEntEntryPoints_27:
 	; $6c68, 25 bytes (map_entries)
-	map_entry $01, FACE_UP, 22.0, 27.0, $0000
+	map_entry $01, FACE_UP, 22.0, 27.0, $0000, END3_DORM_ENT_SCENE
 	map_entry $02, FACE_DOWN, 22.0, 13.0, $0000 ; debug warp only
 	map_entry $0f, FACE_UP, 22.0, 27.0, $0000 ; debug warp only
 	db $ff
@@ -95,7 +95,7 @@ End3DormEntTileTriggers_27:
 End3DormEntInitScript_27:
 	farcall BeginCutsceneScriptMode ; $6c85
 	ld a, [wStoryModeEntryPoint] ; $6c88
-	cp $01 ; $6c8b
+	cp ENTRY_END3_DORM_ENT_SCENE ; $6c8b
 	call z, End3DormEntCutscene_27 ; $6c8d
 	farcall EndCutsceneScriptMode ; $6c90
 	ret ; $6c93
@@ -200,19 +200,19 @@ EndRestaurantEntActors_27:
 	map_actor_end
 EndRestaurantEntEntryPoints_27:
 	; $6ef7, 9 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 7.0, 8.25, $0000
+	map_entry $01, FACE_DOWN, 7.0, 8.25, $0000, END_RESTAURANT_ENT_SCENE
 	db $ff
 EndRestaurantEntExitTriggers_27:
 	; $6f00, 73 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_DORM_ENTRANCE, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_SENIOR_CLASS_COURT, $01
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_COURTYARD, $02
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $01
-	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_COURT, $01
-	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, $01
-	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_DORM_ENTRANCE, $0f
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_COURT, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_DORM_ENTRANCE, ENTRY_DORM_ENTRANCE_FROM_RESTAURANT_PLAZA
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT, ENTRY_RESTAURANT_FROM_RESTAURANT_PLAZA
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_SENIOR_CLASS_COURT, ENTRY_SENIOR_CLASS_COURT_FROM_RESTAURANT_PLAZA
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_COURTYARD, ENTRY_COURTYARD_FROM_RESTAURANT_PLAZA
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, ENTRY_JUNIOR_CLASS_COURT_SINGLES_FROM_RESTAURANT_PLAZA
+	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_COURT, ENTRY_TRAINING_COURT_FROM_RESTAURANT_PLAZA
+	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_FROM_RESTAURANT_PLAZA
+	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_DORM_ENTRANCE, ENTRY_DORM_ENTRANCE_TOUR, END_RESTAURANT_ENT_DONE
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_COURT, ENTRY_TRAINING_COURT_TOUR
 	db $ff
 EndRestaurantEntNpcScripts_27:
 	ds 1, $ff ; $6f49, fill
@@ -222,7 +222,7 @@ EndRestaurantEntTileTriggers_27:
 	ds 1, $ff ; $6f4b, fill
 EndRestaurantEntInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6f4c
-	cp $01 ; $6f4f
+	cp ENTRY_END_RESTAURANT_ENT_SCENE ; $6f4f
 	jr nz, .done ; $6f51
 	call EndRestaurantEntCutscene_27 ; $6f53
 .done:
@@ -285,7 +285,7 @@ EndRestaurantEntCutscene_27:
 	script_set_anim ACTOR_END_RESTAURANT_ENT_ALT_EMILY, ANIM_BOUNCE ; $70ee
 	script_wait_idle ACTOR_END_RESTAURANT_ENT_ALT_EMILY ; $70f5
 	script_face ACTOR_END_RESTAURANT_ENT_ALT_MARK, FACE_DOWN ; $70fa
-	ld a, $0e ; $7101
+	ld a, EXIT_END_RESTAURANT_ENT_DONE ; $7101
 	ld [wUnusedExitTriggerIdMirror], a ; $7103
 	ld [wStoryModeExitTriggerRequest], a ; $7106
 	farcall EndCutsceneScriptMode ; $7109
@@ -325,17 +325,17 @@ End1MainBldgActors_27:
 	map_actor_end
 End1MainBldgEntryPoints_27:
 	; $72b7, 25 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 24.0, 17.0, $0000
-	map_entry $02, FACE_UP, 24.0, 17.0, $0000
+	map_entry $01, FACE_DOWN, 24.0, 17.0, $0000, END1_MAIN_BLDG_SCENE
+	map_entry $02, FACE_UP, 24.0, 17.0, $0000, END1_MAIN_BLDG_GROUP_DEPARTURE
 	map_entry $0f, FACE_UP, 24.0, 47.0, $0000 ; debug warp only
 	db $ff
 End1MainBldgExitTriggers_27:
 	; $72d0, 41 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_MAIN_BLDG, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ISLAND_SKY, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ISLAND_SKY, $0f
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END1_MAIN_BLDG, $02
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_MAIN_BLDG, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_FROM_ACADEMY_ENTRANCE, END1_MAIN_BLDG_DONE
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ISLAND_SKY, ENTRY_ISLAND_SKY_TO_ISLAND_OPEN
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ISLAND_SKY, ENTRY_ISLAND_SKY_TO_PEACHS_CASTLE
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END1_MAIN_BLDG, ENTRY_END1_MAIN_BLDG_GROUP_DEPARTURE, END1_MAIN_BLDG_DEPARTURE_DONE
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_NEW_STUDENT
 	db $ff
 End1MainBldgNpcScripts_27:
 	ds 1, $ff ; $72f9, fill
@@ -345,9 +345,9 @@ End1MainBldgTileTriggers_27:
 	ds 1, $ff ; $72fb, fill
 End1MainBldgInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $72fc
-	cp $01 ; $72ff
+	cp ENTRY_END1_MAIN_BLDG_SCENE ; $72ff
 	jp z, .walkOff ; $7301
-	cp $02 ; $7304
+	cp ENTRY_END1_MAIN_BLDG_GROUP_DEPARTURE ; $7304
 	jp z, End1MainBldgGroupDepartureCutscene_27 ; $7306
 	ret ; $7309
 .walkOff:
@@ -436,7 +436,7 @@ End1MainBldgInitScript_27:
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_ELLIPSIS, 63.0, 63.0 ; $7575
 	script_set_anim ACTOR_END1_MAIN_BLDG_HEADMASTER_1, ANIM_BOUNCE ; $7580
 	script_wait_idle ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $7587
-	ld a, $01 ; $758c
+	ld a, EXIT_END1_MAIN_BLDG_DONE ; $758c
 	ld [wUnusedExitTriggerIdMirror], a ; $758e
 	ld [wStoryModeExitTriggerRequest], a ; $7591
 	ret ; $7594

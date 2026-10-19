@@ -333,9 +333,7 @@ IslandSkyEntry02Scene:
 	ld [wMapSceneStage2], a ; $629e
 	ld a, $00 ; $62a1
 	ld [wCutsceneObjX], a ; $62a3
-	ld a, $01 ; $62a6
-	ld hl, QueuePlaneSpriteByFrameCounter_14 ; $62a8
-	call RegisterFrameTask ; $62ab
+	frame_task QueuePlaneSpriteByFrameCounter_14 ; $62a6
 	script_set_active ACTOR_PLAYER, $00 ; $62ae
 	script_set_active ACTOR_ISLAND_SKY_HEADMASTER, $00 ; $62b5
 	test_flag FLAG_DOUBLES ; $62bc
@@ -465,7 +463,7 @@ IslandSkyEntry02Scene:
 	call ClearFrameTasks ; $6409
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $640c
 	ld [wStoryModeCurrentLocation], a ; $640e
-	ld a, $02 ; $6411
+	ld a, ENTRY_ACADEMY_ENTRANCE_FROM_ISLAND_SKY ; $6411
 	ld [wStoryModeEntryPoint], a ; $6413
 	ld a, EXITTRIGGER_DIRECT ; $6416
 	ld [wUnusedExitTriggerIdMirror], a ; $6418

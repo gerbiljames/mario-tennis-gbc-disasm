@@ -256,9 +256,9 @@ wExpLevelUpFanfare:: db
 NEXTU
 ; pending EXP award list (banks $1d/$1e)
 	ds 296
-; [10 bytes] Five 16-bit EXP amounts, one per line of the results award list: 0 story, 1 exhibition, 2 linked, 3 match/minigame, 4 trophy. RecordDrillResult takes the line in b and dispatches through DrillSubHandlers_1d, each storing de at base + 2 * line; ClearDrillResultBuffer zeroes all 15 bytes of the pair. DrawNextExpAwardMessage reads it split-base (`add $52 / adc $d1`) and skips zero lines; HasPendingExpAwards ORs the five words to decide whether to show the screen
+; [10 bytes] Five 16-bit EXP amounts, one per line of the results award list: 0 story, 1 exhibition, 2 linked, 3 match/minigame, 4 trophy. SetPendingExpAward takes the line in b and dispatches through PendingExpAwardSetters_1d, each storing de at base + 2 * line; ClearPendingExpAwards zeroes all 15 bytes of the pair. DrawNextExpAwardMessage reads it split-base (`add $52 / adc $d1`) and skips zero lines; HasPendingExpAwards ORs the five words to decide whether to show the screen
 wPendingExpAwardAmounts:: ds 10
-; [5 bytes] One byte per award line, the c argument of RecordDrillResult, added by DrawNextExpAwardMessage to the line's base text id from DrawNextExpAwardMessageTable to pick a wording. ShowExpAwardForMatch passes 0, 2, 3 or 4 for a normal, Island Open, practice or Dream match; the trophy pass numbers the six trophy groups
+; [5 bytes] One byte per award line, the c argument of SetPendingExpAward, added by DrawNextExpAwardMessage to the line's base text id from DrawNextExpAwardMessageTable to pick a wording. ShowExpAwardForMatch passes 0, 2, 3 or 4 for a normal, Island Open, practice or Dream match; the trophy pass numbers the six trophy groups
 wPendingExpAwardVariants:: ds 5
 NEXTU
 ; EXP award screen (bank $1a)
@@ -380,7 +380,7 @@ w6ClearStatusResultCode:: db
 	ds 144
 NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
-; [NUL-terminated string] Bank 5 buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
+; [NUL-terminated string] Bank 5 buffer PushShortTextArg_12 fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
 w6TextArgFetchBuffer:: db
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
@@ -554,7 +554,7 @@ w6AiReactionDelayNear:: db
 w6AiReactionDelayFar:: db
 ; [8-bit] How the AI chases the ball; read by AiTrackBallPhase and the baseliner rally state. Attribute record +$1d
 w6AiTrackingParam:: db
-; [8-bit] RNG threshold in AiMaybeAimAwayFromChar: the AI aims away from the opponent when the roll is under it. Attribute record +$1e
+; [8-bit] RNG threshold in AiRollAimAwayFromChar: the AI aims away from the opponent when the roll is under it. Attribute record +$1e
 w6AiAimAwayChance:: db
 ; [8-bit] AI serve/shot habit: low nibble indexes ServePressTossPtrs for toss timing; AiPickShotButtons reads it too. Attribute record +$1f
 w6AiServeStyle:: db

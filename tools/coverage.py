@@ -27,6 +27,9 @@ from banksrc import bank_lines, holders
 from reach import MNEMONICS
 
 ROOT = Path(__file__).resolve().parent.parent
+CODE_MACROS = ("farcall", "lb", "ld_slot", "add_hl_a", "add_de_a", "add_bc_a", "neg_hl", "neg_de",
+               "neg_bc", "abs_hl", "abs_de", "abs_bc", "sub_hl_de", "sub_hl_bc", "ld_story_char_field",
+               "rom_bank", "push_rom_bank", "pop_rom_bank", "sram_bank", "jumptable", "frame_task")
 
 
 def routines():
@@ -40,7 +43,7 @@ def routines():
                 continue
             nxt = next((x for x in lines[i + 1:i + 6] if x.strip() and not x.strip().startswith((";", "ASSERT"))), "")
             op = re.match(r"^\t(\w+)", nxt)
-            if op and (op.group(1) in MNEMONICS or op.group(1) in ("farcall", "lb", "ld_slot", "add_hl_a", "add_de_a", "add_bc_a")
+            if op and (op.group(1) in MNEMONICS or op.group(1) in CODE_MACROS
                        or op.group(1).startswith("ld_") and op.group(1).endswith("_indexed")
                        or op.group(1).startswith("script_")):
                 out[m.group(1)] = (origins[i][0].relative_to(ROOT), op.group(1))

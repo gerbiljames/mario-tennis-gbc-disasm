@@ -20,12 +20,8 @@ RunMinigameEndMenu:
 	wram_bank WRAM_COURT_PLANES ; $402b
 	ld b, $00 ; $4031
 	call DrawScoreboard ; $4033
-	ld a, $0a ; $4036
-	ld hl, DrawScoreboardSprites ; $4038
-	call RegisterFrameTask ; $403b
-	ld a, $0a ; $403e
-	ld hl, DrawScoreboardModeTitle ; $4040
-	call RegisterFrameTask ; $4043
+	frame_task DrawScoreboardSprites, $0a ; $4036
+	frame_task DrawScoreboardModeTitle, $0a ; $403e
 .loop:
 	xor a ; $4046
 	ld [wMatchMenuSelection], a ; $4047
@@ -68,12 +64,8 @@ RunMatchPauseMenu:
 .loop:
 	ld b, $00 ; $40a7
 	call DrawScoreboard ; $40a9
-	ld a, $0a ; $40ac
-	ld hl, DrawScoreboardSprites ; $40ae
-	call RegisterFrameTask ; $40b1
-	ld a, $0a ; $40b4
-	ld hl, DrawScoreboardModeTitle ; $40b6
-	call RegisterFrameTask ; $40b9
+	frame_task DrawScoreboardSprites, $0a ; $40ac
+	frame_task DrawScoreboardModeTitle, $0a ; $40b4
 	ld b, MATCHMENU_PAUSE ; $40bc
 	ld a, [wCourtViewLocked] ; $40be
 	and a ; $40c1
@@ -89,8 +81,7 @@ RunMatchPauseMenu:
 	push af ; $40d4
 	ld hl, MatchPauseMenu_AfterItem ; $40d5
 	push hl ; $40d8
-	ld a, [wMatchMenuSelection] ; $40d9
-	rst Rst00 ; $40dc
+	jumptable [wMatchMenuSelection] ; $40d9
 	dw MatchPauseMenu_CheckRules ; $40dd jumptable
 	dw MatchPauseMenu_ReviewControls ; $40df jumptable
 	dw MatchPauseMenu_ChangeOptions ; $40e1 jumptable
@@ -299,9 +290,7 @@ ShowRulesPageSequence:
 	ld a, [hl] ; $431d
 	cp $ff ; $431e
 	jr z, .prepareGlyphBuffer ; $4320
-	ld a, $01 ; $4322
-	ld hl, DrawRulesNextPageArrow_06 ; $4324
-	call RegisterFrameTask ; $4327
+	frame_task DrawRulesNextPageArrow_06 ; $4322
 .prepareGlyphBuffer:
 	farcall PrepareGlyphBuffer ; $432a
 	ld hl, wRulesTitleTextId ; $432d
@@ -404,8 +393,7 @@ MatchPauseMenu_ChangeOptions:
 	push af ; $440a
 	ld hl, MatchOptionsMenu_AfterItem ; $440b
 	push hl ; $440e
-	ld a, [wMatchMenuSelection] ; $440f
-	rst Rst00 ; $4412
+	jumptable [wMatchMenuSelection] ; $440f
 	dw MatchPauseMenu_CameraSelect ; $4413 jumptable
 	dw MatchPauseMenu_MusicToggle ; $4415 jumptable
 MatchOptionsMenu_AfterItem:
@@ -468,8 +456,7 @@ RunMatchQuitMenu:
 	ret z ; $448d
 	call GetMatchMenuItemId ; $448e
 	sub $0a ; $4491
-	ld a, a ; $4493
-	rst Rst00 ; $4494
+	jumptable a ; $4493
 	dw MatchQuitMenu_ReturnToGame ; $4495 jumptable
 	dw MatchQuitMenu_SaveAndQuit ; $4497 jumptable
 	dw MatchQuitMenu_Quit ; $4499 jumptable

@@ -28,9 +28,7 @@ RunCourtSelect9Menu:
 	ld c, a ; $6544
 	ld b, $03 ; $6545
 	call SetMenuCursorFromIndex_3e ; $6547
-	ld a, $01 ; $654a
-	ld hl, CourtSelect9CursorSpriteTask ; $654c
-	call RegisterFrameTask ; $654f
+	frame_task CourtSelect9CursorSpriteTask ; $654a
 	call RedrawCourtSelect9Menu ; $6552
 	wram_bank WRAM_SCREEN ; $6555
 .loop:
@@ -114,9 +112,7 @@ RunLinkCourtSelect9Menu:
 	ld c, a ; $6600
 	ld b, $03 ; $6601
 	call SetMenuCursorFromIndex_3e ; $6603
-	ld a, $01 ; $6606
-	ld hl, CourtSelect9CursorSpriteTask ; $6608
-	call RegisterFrameTask ; $660b
+	frame_task CourtSelect9CursorSpriteTask ; $6606
 	call RedrawCourtSelect9Menu ; $660e
 	farcall ResyncLinkSessionWithTimer ; $6611
 	push af ; $6614
@@ -311,9 +307,9 @@ CourtSelect9CursorSpriteTask:
 CourtSelect9CursorTemplatePtrs_3e:
 	dw CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate1_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e ; $677b
 CourtSelect9CursorTemplate0_3e:
-	INCBIN "data/engine/menus/court_select/CourtSelect9CursorTemplate0_3e.bin" ; $678d, 33 bytes
+	INCLUDE "data/engine/menus/court_select/CourtSelect9CursorTemplate0_3e.asm" ; $678d, 33 bytes (sprite_template)
 CourtSelect9CursorTemplate1_3e:
-	INCBIN "data/engine/menus/court_select/CourtSelect9CursorTemplate1_3e.bin" ; $67ae, 37 bytes
+	INCLUDE "data/engine/menus/court_select/CourtSelect9CursorTemplate1_3e.asm" ; $67ae, 37 bytes (sprite_template)
 CourtSelect9CursorSpriteTask_SpriteTemplate:
 	; $67d3, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

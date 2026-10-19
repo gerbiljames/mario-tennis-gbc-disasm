@@ -287,12 +287,8 @@ RunN64TnmtData:
 	call BuildN64TnmtDataScreen ; $4cff
 	xor a ; $4d02
 	ld [wAnimatedTileSet], a ; $4d03
-	ld a, $01 ; $4d06
-	ld hl, UpdateAnimatedTilesTask_3b ; $4d08
-	call RegisterFrameTask ; $4d0b
-	ld a, $01 ; $4d0e
-	ld hl, N64TnmtScrollArrowsTask ; $4d10
-	call RegisterFrameTask ; $4d13
+	frame_task UpdateAnimatedTilesTask_3b ; $4d06
+	frame_task N64TnmtScrollArrowsTask ; $4d0e
 	call EnableLCD ; $4d16
 	script_fade_in 16 ; $4d19
 	call WaitFadeEnd ; $4d1e

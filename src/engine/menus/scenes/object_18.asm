@@ -181,7 +181,7 @@ ObjectArrayAUpdateCallback_18:
 .done:
 	jp ObjectUpdateLoopTail_18 ; $7e66
 ObjectArrayAWaveTable_18:
-	INCBIN "data/engine/menus/scenes/ObjectArrayAWaveTable_18.bin" ; $7e69, 32 bytes
+	INCLUDE "data/engine/menus/scenes/ObjectArrayAWaveTable_18.asm" ; $7e69, 32 bytes (bytes:16)
 ObjectArrayBUpdateCallback_18:
 	ldh a, [hVBlankCounter] ; $7e89
 	add c ; $7e8b
@@ -222,5 +222,5 @@ ObjectArrayBUpdateCallback_18:
 .done:
 	jp ObjectUpdateLoopTail_18 ; $7ec5
 ObjectArrayBDriftTable_18:
-	INCBIN "data/engine/menus/scenes/ObjectArrayBDriftTable_18.bin" ; $7ec8, 45 bytes
+	INCLUDE "data/engine/menus/scenes/ObjectArrayBDriftTable_18.asm" ; $7ec8, 45 bytes (bytes:16)
 	; $7ef5, 267 bytes fill to bank end (linker-padded)

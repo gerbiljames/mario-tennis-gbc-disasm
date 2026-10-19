@@ -12,7 +12,7 @@ SetPartnerObjDefByGender_12:
 	ret ; $5eaa
 SeniorCourtWalkPlayersOntoCourt:
 	ld a, [wStoryModeEntryPoint] ; $5eab
-	cp $01 ; $5eae
+	cp ENTRY_SENIOR_CLASS_COURT_FROM_RESTAURANT_PLAZA ; $5eae
 	jp nz, .done ; $5eb0
 	test_flag FLAG_DOUBLES ; $5eb3
 	jr z, .walkOff ; $5eb6
@@ -133,7 +133,7 @@ StartSeniorRankingMatch:
 	script_set_speed ACTOR_PARTNER, 1.0 ; $60a8
 	ld a, [wMapSceneStage2] ; $60b0
 	sub SENIORCOURTSTAGE_SINGLES_RANK4 ; $60b3
-	rst Rst00 ; $60b5
+	jumptable ; $60b5
 	dw StartSeniorRankingMatch.singlesRank4 ; $60b6 jumptable
 	dw StartSeniorRankingMatch.singlesRank3 ; $60b8 jumptable
 	dw StartSeniorRankingMatch.singlesRank2 ; $60ba jumptable
@@ -152,7 +152,7 @@ StartSeniorRankingMatch:
 	farcall WaitPlayerMoveDone ; $6108
 	script_wait_actor_script ACTOR_SENIOR_COURT_BETH ; $610b
 	script_wait_frames 30 ; $6110
-	ld a, $0f ; $6117
+	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $6117
 	ld [wUnusedExitTriggerIdMirror], a ; $6119
 	ld [wStoryModeExitTriggerRequest], a ; $611c
 	farcall InitStoryMatchSettings ; $611f
@@ -174,7 +174,7 @@ StartSeniorRankingMatch:
 	farcall WaitPlayerMoveDone ; $6184
 	script_wait_actor_script ACTOR_SENIOR_COURT_BRIAN ; $6187
 	script_wait_frames 30 ; $618c
-	ld a, $0f ; $6193
+	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $6193
 	ld [wUnusedExitTriggerIdMirror], a ; $6195
 	ld [wStoryModeExitTriggerRequest], a ; $6198
 	farcall InitStoryMatchSettings ; $619b
@@ -195,7 +195,7 @@ StartSeniorRankingMatch:
 	farcall WaitPlayerMoveDone ; $6204
 	script_wait_actor_script ACTOR_SENIOR_COURT_B_FAY ; $6207
 	script_wait_frames 30 ; $620c
-	ld a, $0f ; $6213
+	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $6213
 	ld [wUnusedExitTriggerIdMirror], a ; $6215
 	ld [wStoryModeExitTriggerRequest], a ; $6218
 	farcall InitStoryMatchSettings ; $621b
@@ -213,7 +213,7 @@ StartSeniorRankingMatch:
 	farcall WaitPlayerMoveDone ; $625c
 	script_wait_actor_script ACTOR_SENIOR_COURT_BRIAN ; $625f
 	script_wait_frames 30 ; $6264
-	ld a, $0f ; $626b
+	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $626b
 	ld [wUnusedExitTriggerIdMirror], a ; $626d
 	ld [wStoryModeExitTriggerRequest], a ; $6270
 	farcall InitStoryMatchSettings ; $6273
@@ -232,7 +232,7 @@ StartSeniorRankingMatch:
 	farcall WaitPlayerMoveDone ; $62bb
 	script_wait_actor_script ACTOR_SENIOR_COURT_A_JOY ; $62be
 	script_wait_frames 30 ; $62c3
-	ld a, $0f ; $62ca
+	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $62ca
 	ld [wUnusedExitTriggerIdMirror], a ; $62cc
 	ld [wStoryModeExitTriggerRequest], a ; $62cf
 	farcall InitStoryMatchSettings ; $62d2
@@ -251,7 +251,7 @@ StartSeniorRankingMatch:
 	farcall WaitPlayerMoveDone ; $631a
 	script_wait_frames 120 ; $631d
 	script_wait_move ACTOR_PLAYER ; $6324
-	ld a, $0f ; $6329
+	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $6329
 	ld [wUnusedExitTriggerIdMirror], a ; $632b
 	ld [wStoryModeExitTriggerRequest], a ; $632e
 	farcall InitStoryMatchSettings ; $6331
@@ -269,7 +269,7 @@ StartSeniorRankingMatch:
 	script_set_actor_script ACTOR_SENIOR_COURT_A_FAY, ActorScript_12_01 ; $636e
 	farcall WaitPlayerMoveDone ; $6379
 	script_wait_frames 180 ; $637c
-	ld a, $0f ; $6383
+	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $6383
 	ld [wUnusedExitTriggerIdMirror], a ; $6385
 	ld [wStoryModeExitTriggerRequest], a ; $6388
 	farcall InitStoryMatchSettings ; $638b

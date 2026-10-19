@@ -30,7 +30,7 @@ RunStoryMatch:
 	farcall SaveStorySlotWithTimer ; $4976
 	ld a, STORYLOC_MAIN_MENU ; $4979
 	ld [wStoryModeCurrentLocation], a ; $497b
-	ld a, $01 ; $497e
+	ld a, ENTRY_MAIN_MENU_FROM_STORY ; $497e
 	ld [wStoryModeEntryPoint], a ; $4980
 	ld a, EXITTRIGGER_DIRECT ; $4983
 	ld [wUnusedExitTriggerIdMirror], a ; $4985
@@ -346,13 +346,13 @@ RunClearStatusSetupMenu:
 	ld a, [wClearStatusMode] ; $4c22
 	cp $ff ; $4c25
 	jr nz, .checkMode ; $4c27
-	ld a, $08 ; $4c29
+	ld a, EXIT_TEST_2_TO_MAIN_MENU ; $4c29
 	ld [wClearStatusResultCode], a ; $4c2b
 	jp .done ; $4c2e
 .checkMode:
 	or a ; $4c31
 	jp z, .defaultDoubles ; $4c32
-	ld a, $01 ; $4c35
+	ld a, EXIT_TEST_2_TO_SERVE_COACH ; $4c35
 	ld [wClearStatusResultCode], a ; $4c37
 	jp .done ; $4c3a
 .defaultDoubles:

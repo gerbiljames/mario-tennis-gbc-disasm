@@ -312,7 +312,7 @@ ActorScript_12_20:
 SeniorCourtReloadIntoVictoryScene:
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $6d8a
 	ld [wStoryModeCurrentLocation], a ; $6d8c
-	ld a, $0d ; $6d8f
+	ld a, ENTRY_SENIOR_CLASS_COURT_VICTORY_SCENE ; $6d8f
 	ld [wStoryModeEntryPoint], a ; $6d91
 	ld a, EXITTRIGGER_DIRECT ; $6d94
 	ld [wUnusedExitTriggerIdMirror], a ; $6d96

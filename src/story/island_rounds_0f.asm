@@ -133,7 +133,7 @@ IslandOpenRoundCallCutscene:
 	call ShowTournamentRankingBoard_0f ; $71c7
 	ld a, STORYLOC_TOURNAMENT ; $71ca
 	ld [wStoryModeCurrentLocation], a ; $71cc
-	ld a, $0a ; $71cf
+	ld a, ENTRY_TOURNAMENT_AFTER_ROUND_SINGLES ; $71cf
 	ld [wStoryModeEntryPoint], a ; $71d1
 	ld a, EXITTRIGGER_DIRECT ; $71d4
 	ld [wUnusedExitTriggerIdMirror], a ; $71d6
@@ -206,7 +206,7 @@ IslandOpenRoundCallCutscene:
 	call ShowTournamentRankingBoard_0f ; $7367
 	ld a, STORYLOC_TOURNAMENT ; $736a
 	ld [wStoryModeCurrentLocation], a ; $736c
-	ld a, $0b ; $736f
+	ld a, ENTRY_TOURNAMENT_AFTER_ROUND_DOUBLES ; $736f
 	ld [wStoryModeEntryPoint], a ; $7371
 	ld a, EXITTRIGGER_DIRECT ; $7374
 	ld [wUnusedExitTriggerIdMirror], a ; $7376
@@ -321,7 +321,7 @@ CheckIslandOpenVictoryTransition:
 	jp nz, ApSkipAwardsCeremony_0f
 	ld a, STORYLOC_ISLAND_SKY ; $746f
 	ld [wStoryModeCurrentLocation], a ; $7471
-	ld a, $08 ; $7474
+	ld a, ENTRY_ISLAND_SKY_VICTORY_FIREWORKS ; $7474
 	ld [wStoryModeEntryPoint], a ; $7476
 	ld a, EXITTRIGGER_DIRECT ; $7479
 	ld [wUnusedExitTriggerIdMirror], a ; $747b

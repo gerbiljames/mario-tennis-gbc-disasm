@@ -228,7 +228,7 @@ w4ClearStatusResultCode:: db
 	ds 144
 NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
-; [NUL-terminated string] Bank 5 buffer PushTextArgFetchedString fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
+; [NUL-terminated string] Bank 5 buffer PushShortTextArg_12 fills with a short-text string (FetchShortTextToBuffer) and pushes as a text argument; overlaps the idle far-P1 character struct
 w4TextArgFetchBuffer:: db
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
@@ -402,7 +402,7 @@ w4AiReactionDelayNear:: db
 w4AiReactionDelayFar:: db
 ; [8-bit] How the AI chases the ball; read by AiTrackBallPhase and the baseliner rally state. Attribute record +$1d
 w4AiTrackingParam:: db
-; [8-bit] RNG threshold in AiMaybeAimAwayFromChar: the AI aims away from the opponent when the roll is under it. Attribute record +$1e
+; [8-bit] RNG threshold in AiRollAimAwayFromChar: the AI aims away from the opponent when the roll is under it. Attribute record +$1e
 w4AiAimAwayChance:: db
 ; [8-bit] AI serve/shot habit: low nibble indexes ServePressTossPtrs for toss timing; AiPickShotButtons reads it too. Attribute record +$1f
 w4AiServeStyle:: db

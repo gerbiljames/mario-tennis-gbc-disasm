@@ -88,38 +88,28 @@ ServeToTargetsBriefing_AdvanceAnimTable:
 	dw $0054 ; record 6
 	dw $0003 ; record 7
 ServeToTargetsBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BallPosTable.asm" ; $57cb, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BallPosTable.asm" ; $57cb, 16 bytes (words:2)
 ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $57db, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $57db, 4 bytes (bytes:4)
 ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $57df, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $57df, 16 bytes (words:2)
 ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $57ef, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable.asm" ; $57ef, 4 bytes (bytes:4)
 ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $57f3, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $57f3, 16 bytes (words:2)
 ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable.bin" ; $5803, 4 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable.asm" ; $5803, 4 bytes (bytes:4)
 ServeToTargetsBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BracketPosTable.bin" ; $5807, 16 bytes
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BracketPosTable.asm" ; $5807, 16 bytes (words:2)
 DrillBriefing_SpinServe:
 	ld a, $03 ; $5817
 	ld [wBriefingAnimStep], a ; $5819
 	call SpinServeBriefing_AdvanceAnim ; $581c
-	ld a, $01 ; $581f
-	ld hl, DrawBriefingPlayerSprite ; $5821
-	call RegisterFrameTask ; $5824
-	ld a, $01 ; $5827
-	ld hl, DrawBriefingBallSprite ; $5829
-	call RegisterFrameTask ; $582c
-	ld a, $01 ; $582f
-	ld hl, DrawBriefingMarkerHFlip ; $5831
-	call RegisterFrameTask ; $5834
-	ld a, $01 ; $5837
-	ld hl, DrawBriefingMarkerRotated ; $5839
-	call RegisterFrameTask ; $583c
-	ld a, $01 ; $583f
-	ld hl, CycleDiagramTargetPalette ; $5841
-	call RegisterFrameTask ; $5844
+	frame_task DrawBriefingPlayerSprite ; $581f
+	frame_task DrawBriefingBallSprite ; $5827
+	frame_task DrawBriefingMarkerHFlip ; $582f
+	frame_task DrawBriefingMarkerRotated ; $5837
+	frame_task CycleDiagramTargetPalette ; $583f
 	ld hl, Text_BriefSpinServeFourCourts ; $5847
 	call DrawBriefingCaption ; $584a
 	xor a ; $584d
@@ -132,28 +122,18 @@ DrillBriefing_SpinServe:
 	and a ; $585c
 	jp z, .animFirstCaption ; $585d
 	call ClearFrameTasks ; $5860
-	ld a, $01 ; $5863
-	ld hl, UpdateAnimatedTilesTask_17 ; $5865
-	call RegisterFrameTask ; $5868
+	frame_task UpdateAnimatedTilesTask_17 ; $5863
 	ld a, $03 ; $586b
 	ld [wBriefingAnimStep], a ; $586d
 	call SpinServeBriefing_AdvanceAnim ; $5870
-	ld a, $01 ; $5873
-	ld hl, DrawBriefingPlayerSprite ; $5875
-	call RegisterFrameTask ; $5878
-	ld a, $01 ; $587b
-	ld hl, DrawBriefingMarkerHFlip ; $587d
-	call RegisterFrameTask ; $5880
-	ld a, $01 ; $5883
-	ld hl, CycleDiagramTargetPalette ; $5885
-	call RegisterFrameTask ; $5888
+	frame_task DrawBriefingPlayerSprite ; $5873
+	frame_task DrawBriefingMarkerHFlip ; $587b
+	frame_task CycleDiagramTargetPalette ; $5883
 	ld a, $00 ; $588b
 	ld [wBriefingBracketWidth], a ; $588d
 	ld a, $00 ; $5890
 	ld [wBriefingBracketHeight], a ; $5892
-	ld a, $01 ; $5895
-	ld hl, DrawBriefingTargetBrackets ; $5897
-	call RegisterFrameTask ; $589a
+	frame_task DrawBriefingTargetBrackets ; $5895
 	ld hl, Text_BriefSpinServeSmallerTargets ; $589d
 	call DrawBriefingCaption ; $58a0
 	xor a ; $58a3
@@ -166,46 +146,34 @@ DrillBriefing_SpinServe:
 	and a ; $58b2
 	jp z, .animSecondCaption ; $58b3
 	call ClearFrameTasks ; $58b6
-	ld a, $01 ; $58b9
-	ld hl, UpdateAnimatedTilesTask_17 ; $58bb
-	call RegisterFrameTask ; $58be
+	frame_task UpdateAnimatedTilesTask_17 ; $58b9
 	ld a, $52 ; $58c1
 	ld [wBriefingPlayerX], a ; $58c3
 	ld a, $44 ; $58c6
 	ld [wBriefingPlayerY], a ; $58c8
-	ld a, $01 ; $58cb
-	ld hl, DrawBriefingPlayerSprite ; $58cd
-	call RegisterFrameTask ; $58d0
+	frame_task DrawBriefingPlayerSprite ; $58cb
 	ld a, $4e ; $58d3
 	ld [wBriefingBallX], a ; $58d5
 	ld a, $38 ; $58d8
 	ld [wBriefingBallY], a ; $58da
-	ld a, $01 ; $58dd
-	ld hl, DrawBriefingBallSprite ; $58df
-	call RegisterFrameTask ; $58e2
+	frame_task DrawBriefingBallSprite ; $58dd
 	ld a, $00 ; $58e5
 	ld [wBriefingHMarkerUnflipped], a ; $58e7
 	ld a, $3a ; $58ea
 	ld [wBriefingHMarkerX], a ; $58ec
 	ld a, $24 ; $58ef
 	ld [wBriefingHMarkerY], a ; $58f1
-	ld a, $01 ; $58f4
-	ld hl, DrawBriefingMarkerHFlip ; $58f6
-	call RegisterFrameTask ; $58f9
+	frame_task DrawBriefingMarkerHFlip ; $58f4
 	ld a, $03 ; $58fc
 	ld [wBriefingRotMarkerDir], a ; $58fe
 	ld a, $52 ; $5901
 	ld [wBriefingRotMarkerX], a ; $5903
 	ld a, $40 ; $5906
 	ld [wBriefingRotMarkerY], a ; $5908
-	ld a, $01 ; $590b
-	ld hl, DrawBriefingMarkerRotated ; $590d
-	call RegisterFrameTask ; $5910
+	frame_task DrawBriefingMarkerRotated ; $590b
 	ld b, $04 ; $5913
 	call DrawDiagramTargetOverlay ; $5915
-	ld a, $01 ; $5918
-	ld hl, CycleDiagramTargetPalette ; $591a
-	call RegisterFrameTask ; $591d
+	frame_task CycleDiagramTargetPalette ; $5918
 	ld a, $00 ; $5920
 	ld [wBriefingBracketWidth], a ; $5922
 	ld a, $00 ; $5925
@@ -214,81 +182,53 @@ DrillBriefing_SpinServe:
 	ld [wBriefingBracketX], a ; $592c
 	ld a, $24 ; $592f
 	ld [wBriefingBracketY], a ; $5931
-	ld a, $01 ; $5934
-	ld hl, DrawBriefingTargetBrackets ; $5936
-	call RegisterFrameTask ; $5939
+	frame_task DrawBriefingTargetBrackets ; $5934
 	ld hl, Text_BriefSpinServeDiagonally ; $593c
 	call DrawBriefingCaption ; $593f
 	call WaitForInputBlinking ; $5942
 	call ClearFrameTasks ; $5945
-	ld a, $01 ; $5948
-	ld hl, UpdateAnimatedTilesTask_17 ; $594a
-	call RegisterFrameTask ; $594d
+	frame_task UpdateAnimatedTilesTask_17 ; $5948
 	ld a, $52 ; $5950
 	ld [wBriefingPlayerX], a ; $5952
 	ld a, $44 ; $5955
 	ld [wBriefingPlayerY], a ; $5957
-	ld a, $01 ; $595a
-	ld hl, DrawBriefingPlayerSprite ; $595c
-	call RegisterFrameTask ; $595f
+	frame_task DrawBriefingPlayerSprite ; $595a
 	ld a, $46 ; $5962
 	ld [wBriefingBallX], a ; $5964
 	ld a, $28 ; $5967
 	ld [wBriefingBallY], a ; $5969
-	ld a, $01 ; $596c
-	ld hl, DrawBriefingBallSprite ; $596e
-	call RegisterFrameTask ; $5971
+	frame_task DrawBriefingBallSprite ; $596c
 	ld a, $03 ; $5974
 	ld [wBriefingRotMarkerDir], a ; $5976
 	ld a, $49 ; $5979
 	ld [wBriefingRotMarkerX], a ; $597b
 	ld a, $2f ; $597e
 	ld [wBriefingRotMarkerY], a ; $5980
-	ld a, $01 ; $5983
-	ld hl, DrawBriefingMarkerRotated ; $5985
-	call RegisterFrameTask ; $5988
+	frame_task DrawBriefingMarkerRotated ; $5983
 	ld a, $01 ; $598b
 	ld [wBriefingSpinMarkerUnflipped], a ; $598d
 	ld a, $30 ; $5990
 	ld [wBriefingSpinMarkerX], a ; $5992
 	ld a, $22 ; $5995
 	ld [wBriefingSpinMarkerY], a ; $5997
-	ld a, $01 ; $599a
-	ld hl, DrawSpinServeBriefingMarker ; $599c
-	call RegisterFrameTask ; $599f
+	frame_task DrawSpinServeBriefingMarker ; $599a
 	ld b, $04 ; $59a2
 	call DrawDiagramTargetOverlay ; $59a4
-	ld a, $01 ; $59a7
-	ld hl, CycleDiagramTargetPalette ; $59a9
-	call RegisterFrameTask ; $59ac
+	frame_task CycleDiagramTargetPalette ; $59a7
 	ld hl, Text_BriefSpinServeBounceOutCorner ; $59af
 	call DrawBriefingCaption ; $59b2
 	call WaitForInputBlinking ; $59b5
 	call ClearFrameTasks ; $59b8
-	ld a, $01 ; $59bb
-	ld hl, UpdateAnimatedTilesTask_17 ; $59bd
-	call RegisterFrameTask ; $59c0
+	frame_task UpdateAnimatedTilesTask_17 ; $59bb
 	ld a, $00 ; $59c3
 	ld [wBriefingAnimStep], a ; $59c5
 	call SpinServeBriefing_AdvanceAnim2 ; $59c8
-	ld a, $01 ; $59cb
-	ld hl, DrawBriefingPlayerSprite ; $59cd
-	call RegisterFrameTask ; $59d0
-	ld a, $01 ; $59d3
-	ld hl, DrawBriefingBallSprite ; $59d5
-	call RegisterFrameTask ; $59d8
-	ld a, $01 ; $59db
-	ld hl, DrawBriefingMarkerRotated ; $59dd
-	call RegisterFrameTask ; $59e0
-	ld a, $01 ; $59e3
-	ld hl, DrawSpinServeBriefingMarker ; $59e5
-	call RegisterFrameTask ; $59e8
-	ld a, $01 ; $59eb
-	ld hl, DrawBriefingSwingAnim ; $59ed
-	call RegisterFrameTask ; $59f0
-	ld a, $01 ; $59f3
-	ld hl, CycleDiagramTargetPalette ; $59f5
-	call RegisterFrameTask ; $59f8
+	frame_task DrawBriefingPlayerSprite ; $59cb
+	frame_task DrawBriefingBallSprite ; $59d3
+	frame_task DrawBriefingMarkerRotated ; $59db
+	frame_task DrawSpinServeBriefingMarker ; $59e3
+	frame_task DrawBriefingSwingAnim ; $59eb
+	frame_task CycleDiagramTargetPalette ; $59f3
 	ld hl, Text_BriefSpinServeTopspinRight ; $59fb
 	ld a, [wStoryMainLeftHanded] ; $59fe
 	and a ; $5a01
@@ -306,27 +246,15 @@ DrillBriefing_SpinServe:
 	and a ; $5a19
 	jp z, .animSwingCaption ; $5a1a
 	call ClearFrameTasks ; $5a1d
-	ld a, $01 ; $5a20
-	ld hl, UpdateAnimatedTilesTask_17 ; $5a22
-	call RegisterFrameTask ; $5a25
+	frame_task UpdateAnimatedTilesTask_17 ; $5a20
 	ld a, $03 ; $5a28
 	ld [wBriefingAnimStep], a ; $5a2a
 	call SpinServeBriefing_AdvanceAnim ; $5a2d
-	ld a, $01 ; $5a30
-	ld hl, DrawBriefingPlayerSprite ; $5a32
-	call RegisterFrameTask ; $5a35
-	ld a, $01 ; $5a38
-	ld hl, DrawBriefingBallSprite ; $5a3a
-	call RegisterFrameTask ; $5a3d
-	ld a, $01 ; $5a40
-	ld hl, DrawBriefingMarkerRotated ; $5a42
-	call RegisterFrameTask ; $5a45
-	ld a, $01 ; $5a48
-	ld hl, CycleDiagramTargetPalette ; $5a4a
-	call RegisterFrameTask ; $5a4d
-	ld a, $01 ; $5a50
-	ld hl, DrawBriefingTargetBrackets ; $5a52
-	call RegisterFrameTask ; $5a55
+	frame_task DrawBriefingPlayerSprite ; $5a30
+	frame_task DrawBriefingBallSprite ; $5a38
+	frame_task DrawBriefingMarkerRotated ; $5a40
+	frame_task CycleDiagramTargetPalette ; $5a48
+	frame_task DrawBriefingTargetBrackets ; $5a50
 	ld hl, Text_BriefSpinServeHitAllTargets ; $5a58
 	call DrawBriefingCaption ; $5a5b
 	xor a ; $5a5e
@@ -519,29 +447,29 @@ SpinServeBriefing_AdvanceAnimTable:
 	dw $0052 ; record 6
 	dw $0000 ; record 7
 SpinServeBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5bf5, 16 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5bf5, 16 bytes (words:2)
 SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $5c05, 4 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $5c05, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5c09, 16 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5c09, 16 bytes (words:2)
 SpinServeBriefing_RotMarkerDirTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_RotMarkerDirTable.bin" ; $5c19, 4 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_RotMarkerDirTable.asm" ; $5c19, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $5c1d, 16 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $5c1d, 16 bytes (words:2)
 SpinServeBriefing_TargetOverlayTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_TargetOverlayTable.bin" ; $5c2d, 4 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_TargetOverlayTable.asm" ; $5c2d, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BracketPosTable.bin" ; $5c31, 16 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BracketPosTable.asm" ; $5c31, 16 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_BallPosTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_BallPosTable.bin" ; $5c41, 8 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_BallPosTable.asm" ; $5c41, 8 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable.asm" ; $5c49, 8 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable.asm" ; $5c49, 8 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_SpinMarkerUnflippedTable:
 	db $01 ; $5c51
 	db $00 ; $5c52
 SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable.bin" ; $5c53, 8 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable.asm" ; $5c53, 8 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_SwingFrameTable:
-	INCBIN "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingFrameTable.bin" ; $5c5b, 4 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingFrameTable.asm" ; $5c5b, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim2_SwingPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingPosTable.asm" ; $5c5f, 8 bytes
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingPosTable.asm" ; $5c5f, 8 bytes (words:2)

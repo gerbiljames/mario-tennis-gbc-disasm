@@ -438,7 +438,7 @@ UpdateMinigameBestScore:
 	ldh a, [hWramBank] ; $6f38
 	push af ; $6f3a
 	ld a, [wMinigameLevel] ; $6f3b
-	cp $02 ; $6f3e
+	cp MINIGAMELEVEL_HIGH_SCORE ; $6f3e
 	jr nz, .restore ; $6f40
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f42
 	sub MINIGAME_BOO_BLAST ; $6f45
@@ -462,12 +462,7 @@ UpdateMinigameBestScore:
 	ld l, e ; $6f67
 	ld d, b ; $6f68
 	ld e, c ; $6f69
-	ld a, l ; $6f6a
-	sub c ; $6f6b
-	ld l, a ; $6f6c
-	ld a, h ; $6f6d
-	sbc b ; $6f6e
-	ld h, a ; $6f6f
+	sub_hl_bc ; $6f6a
 	bit 7, h ; $6f70
 	jr z, .restore ; $6f72
 	ld hl, wMinigameRecordValue ; $6f74

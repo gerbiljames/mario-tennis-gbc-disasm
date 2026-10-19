@@ -7,15 +7,7 @@ ComputeAimBaseOffset:
 	ld a, [hl+] ; $56c0
 	ld h, [hl] ; $56c1
 	ld l, a ; $56c2
-	bit 7, h ; $56c3
-	jr z, .quarter ; $56c5
-	xor a ; $56c7
-	sub l ; $56c8
-	ld l, a ; $56c9
-	sbc a ; $56ca
-	sub h ; $56cb
-	ld h, a ; $56cc
-.quarter:
+	abs_hl ; $56c3
 	sra h ; $56cd
 	rr l ; $56cf
 	sra h ; $56d1
@@ -35,22 +27,12 @@ ClampShotTargetX:
 	ld l, a ; $56e8
 	ld bc, $0020 ; $56e9
 	add hl, bc ; $56ec
-	xor a ; $56ed
-	sub l ; $56ee
-	ld l, a ; $56ef
-	sbc a ; $56f0
-	sub h ; $56f1
-	ld h, a ; $56f2
+	neg_hl ; $56ed
 	ld c, l ; $56f3
 	ld b, h ; $56f4
 	ld l, e ; $56f5
 	ld h, d ; $56f6
-	ld a, l ; $56f7
-	sub c ; $56f8
-	ld l, a ; $56f9
-	ld a, h ; $56fa
-	sbc b ; $56fb
-	ld h, a ; $56fc
+	sub_hl_bc ; $56f7
 	bit 7, h ; $56fd
 	jr nz, .applyJitter ; $56ff
 	ld e, c ; $5701
@@ -79,12 +61,7 @@ ComputeShotTrajectory:
 	ld a, [wCharCourtPos] ; $571e
 	and $02 ; $5721
 	jr nz, .aimReady ; $5723
-	xor a ; $5725
-	sub c ; $5726
-	ld c, a ; $5727
-	sbc a ; $5728
-	sub b ; $5729
-	ld b, a ; $572a
+	neg_bc ; $5725
 .aimReady:
 	ld hl, wShotAimTargetDepth ; $572b
 	ld a, c ; $572e
@@ -140,27 +117,11 @@ ComputeShotTrajectory:
 	ld a, [hl+] ; $5776
 	ld h, [hl] ; $5777
 	ld l, a ; $5778
-	bit 7, h ; $5779
-	jr z, .absMinDepth ; $577b
-	xor a ; $577d
-	sub l ; $577e
-	ld l, a ; $577f
-	sbc a ; $5780
-	sub h ; $5781
-	ld h, a ; $5782
-.absMinDepth:
+	abs_hl ; $5779
 	ld de, $0140 ; $5783
 	add hl, de ; $5786
 	call DivBySin ; $5787
-	bit 7, h ; $578a
-	jr z, .absMinDist ; $578c
-	xor a ; $578e
-	sub l ; $578f
-	ld l, a ; $5790
-	sbc a ; $5791
-	sub h ; $5792
-	ld h, a ; $5793
-.absMinDist:
+	abs_hl ; $578a
 	ld e, l ; $5794
 	ld d, h ; $5795
 	add hl, hl ; $5796
@@ -179,27 +140,11 @@ ComputeShotTrajectory:
 	ld a, [hl+] ; $57ab
 	ld h, [hl] ; $57ac
 	ld l, a ; $57ad
-	bit 7, h ; $57ae
-	jr z, .absMaxDepth ; $57b0
-	xor a ; $57b2
-	sub l ; $57b3
-	ld l, a ; $57b4
-	sbc a ; $57b5
-	sub h ; $57b6
-	ld h, a ; $57b7
-.absMaxDepth:
+	abs_hl ; $57ae
 	ld de, $0480 ; $57b8
 	add hl, de ; $57bb
 	call DivBySin ; $57bc
-	bit 7, h ; $57bf
-	jr z, .absMaxDist ; $57c1
-	xor a ; $57c3
-	sub l ; $57c4
-	ld l, a ; $57c5
-	sbc a ; $57c6
-	sub h ; $57c7
-	ld h, a ; $57c8
-.absMaxDist:
+	abs_hl ; $57bf
 	ld e, l ; $57c9
 	ld d, h ; $57ca
 	add hl, hl ; $57cb
@@ -217,15 +162,7 @@ ComputeShotTrajectory:
 	ld l, e ; $57dd
 	ld h, d ; $57de
 	call MulSinCos ; $57df
-	bit 7, h ; $57e2
-	jr z, .absSideways ; $57e4
-	xor a ; $57e6
-	sub l ; $57e7
-	ld l, a ; $57e8
-	sbc a ; $57e9
-	sub h ; $57ea
-	ld h, a ; $57eb
-.absSideways:
+	abs_hl ; $57e2
 	ld c, l ; $57ec
 	ld b, h ; $57ed
 	ld hl, -32 ; $57ee
@@ -243,35 +180,17 @@ ComputeShotTrajectory:
 	add $40 ; $5803
 	bit 7, a ; $5805
 	jr z, .absLimitX ; $5807
-	xor a ; $5809
-	sub e ; $580a
-	ld e, a ; $580b
-	sbc a ; $580c
-	sub d ; $580d
-	ld d, a ; $580e
+	neg_de ; $5809
 .absLimitX:
 	ld hl, wBallX ; $580f
 	ld a, [hl+] ; $5812
 	ld h, [hl] ; $5813
 	ld l, a ; $5814
 	add hl, de ; $5815
-	bit 7, h ; $5816
-	jr z, .absBallX ; $5818
-	xor a ; $581a
-	sub l ; $581b
-	ld l, a ; $581c
-	sbc a ; $581d
-	sub h ; $581e
-	ld h, a ; $581f
-.absBallX:
+	abs_hl ; $5816
 	ld e, l ; $5820
 	ld d, h ; $5821
-	ld a, l ; $5822
-	sub c ; $5823
-	ld l, a ; $5824
-	ld a, h ; $5825
-	sbc b ; $5826
-	ld h, a ; $5827
+	sub_hl_bc ; $5822
 	bit 7, h ; $5828
 	jr z, .solveHeight ; $582a
 	push de ; $582c
@@ -302,12 +221,7 @@ ComputeShotTrajectory:
 	ld a, [hl+] ; $5854
 	ld d, [hl] ; $5855
 	ld e, a ; $5856
-	xor a ; $5857
-	sub e ; $5858
-	ld e, a ; $5859
-	sbc a ; $585a
-	sub d ; $585b
-	ld d, a ; $585c
+	neg_de ; $5857
 	ld hl, wShotSolverNegHeight ; $585d
 	ld a, e ; $5860
 	ld [hl+], a ; $5861

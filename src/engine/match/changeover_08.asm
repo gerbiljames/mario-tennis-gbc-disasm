@@ -58,8 +58,7 @@ ParkCharOffCourt:
 CheckAllCharsPhaseDone:
 	ld de, wCharStatePhase ; $6063
 	ld b, $ff ; $6066
-	ld a, [wOnCourtCharCountMinus1] ; $6068
-	rst Rst00 ; $606b
+	jumptable [wOnCourtCharCountMinus1] ; $6068
 	dw CheckAllCharsPhaseDone.char1 ; $606c jumptable
 	dw CheckAllCharsPhaseDone.char2 ; $606e jumptable
 	dw CheckAllCharsPhaseDone.char3 ; $6070 jumptable
@@ -101,22 +100,12 @@ GetCharBaseCourtPosition:
 	ld a, [wCharCourtPos] ; $60ad
 	and $02 ; $60b0
 	jr z, .checkSide ; $60b2
-	xor a ; $60b4
-	sub e ; $60b5
-	ld e, a ; $60b6
-	sbc a ; $60b7
-	sub d ; $60b8
-	ld d, a ; $60b9
+	neg_de ; $60b4
 .checkSide:
 	ld a, [wCharCourtPos] ; $60ba
 	and $01 ; $60bd
 	jr z, .done ; $60bf
-	xor a ; $60c1
-	sub l ; $60c2
-	ld l, a ; $60c3
-	sbc a ; $60c4
-	sub h ; $60c5
-	ld h, a ; $60c6
+	neg_hl ; $60c1
 .done:
 	ret ; $60c7
 GetCharBaseCourtPositionTable:
@@ -143,22 +132,12 @@ GetCharChangeoverPosition:
 	ld a, [wCharCourtPos] ; $60ed
 	and $02 ; $60f0
 	jr z, .checkFlip ; $60f2
-	xor a ; $60f4
-	sub e ; $60f5
-	ld e, a ; $60f6
-	sbc a ; $60f7
-	sub d ; $60f8
-	ld d, a ; $60f9
+	neg_de ; $60f4
 .checkFlip:
 	ld a, [wCourtViewFlipped] ; $60fa
 	and a ; $60fd
 	jr z, .done ; $60fe
-	xor a ; $6100
-	sub l ; $6101
-	ld l, a ; $6102
-	sbc a ; $6103
-	sub h ; $6104
-	ld h, a ; $6105
+	neg_hl ; $6100
 .done:
 	ret ; $6106
 GetCharChangeoverPositionTable:
@@ -291,12 +270,7 @@ UpdateMatchCamera:
 	ld a, [hl+] ; $61fd
 	ld h, [hl] ; $61fe
 	ld l, a ; $61ff
-	ld a, l ; $6200
-	sub c ; $6201
-	ld l, a ; $6202
-	ld a, h ; $6203
-	sbc b ; $6204
-	ld h, a ; $6205
+	sub_hl_bc ; $6200
 	ld e, l ; $6206
 	ld d, h ; $6207
 	ld hl, wMatchCameraY ; $6208
@@ -307,12 +281,7 @@ UpdateMatchCamera:
 	ld a, [hl+] ; $6211
 	ld h, [hl] ; $6212
 	ld l, a ; $6213
-	ld a, l ; $6214
-	sub c ; $6215
-	ld l, a ; $6216
-	ld a, h ; $6217
-	sbc b ; $6218
-	ld h, a ; $6219
+	sub_hl_bc ; $6214
 	push hl ; $621a
 	push de ; $621b
 	call AngleFromVectorCoarse ; $621c
@@ -342,12 +311,7 @@ UpdateMatchCamera:
 	ld a, [hl+] ; $6242
 	ld h, [hl] ; $6243
 	ld l, a ; $6244
-	ld a, l ; $6245
-	sub c ; $6246
-	ld l, a ; $6247
-	ld a, h ; $6248
-	sbc b ; $6249
-	ld h, a ; $624a
+	sub_hl_bc ; $6245
 	pop af ; $624b
 	xor h ; $624c
 	bit 7, a ; $624d
@@ -369,12 +333,7 @@ UpdateMatchCamera:
 	ld a, [hl+] ; $6266
 	ld h, [hl] ; $6267
 	ld l, a ; $6268
-	ld a, l ; $6269
-	sub c ; $626a
-	ld l, a ; $626b
-	ld a, h ; $626c
-	sbc b ; $626d
-	ld h, a ; $626e
+	sub_hl_bc ; $6269
 	pop af ; $626f
 	xor h ; $6270
 	bit 7, a ; $6271
@@ -420,12 +379,7 @@ UpdateMatchCamera:
 	add hl, hl ; $62ae
 	ld a, h ; $62af
 	ldh [hScrollX], a ; $62b0
-	xor a ; $62b2
-	sub e ; $62b3
-	ld e, a ; $62b4
-	sbc a ; $62b5
-	sub d ; $62b6
-	ld d, a ; $62b7
+	neg_de ; $62b2
 	ld hl, $1010 ; $62b8
 	add hl, de ; $62bb
 	ld e, l ; $62bc
@@ -462,12 +416,7 @@ UpdateMatchCamera:
 	add hl, hl ; $62ea
 	ld a, h ; $62eb
 	ldh [hScrollY], a ; $62ec
-	xor a ; $62ee
-	sub e ; $62ef
-	ld e, a ; $62f0
-	sbc a ; $62f1
-	sub d ; $62f2
-	ld d, a ; $62f3
+	neg_de ; $62ee
 	ld hl, $1010 ; $62f4
 	add hl, de ; $62f7
 	ld e, l ; $62f8

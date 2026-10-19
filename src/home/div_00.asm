@@ -2,15 +2,7 @@ DivAHLByDESigned:
 	ld b, a ; $0e6c
 	xor d ; $0e6d
 	ldh [hMathSign], a ; $0e6e
-	bit 7, d ; $0e70
-	jr z, .positive ; $0e72
-	xor a ; $0e74
-	sub e ; $0e75
-	ld e, a ; $0e76
-	sbc a ; $0e77
-	sub d ; $0e78
-	ld d, a ; $0e79
-.positive:
+	abs_de ; $0e70
 	ld a, b ; $0e7a
 	bit 7, b ; $0e7b
 	jr z, .divAHLByDE ; $0e7d

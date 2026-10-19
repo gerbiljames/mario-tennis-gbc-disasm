@@ -152,8 +152,7 @@ InitNetCoachScene:
 	ret ; $77a9
 StrokePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $77aa
-	ld a, a ; $77ad
-	rst Rst00 ; $77ae
+	jumptable a ; $77ad
 	dw ReturnCoachIntroDialogue_15 ; $77af jumptable
 	dw StrokePractice1Result1 ; $77b1 jumptable
 	dw StrokePractice1Result2 ; $77b3 jumptable
@@ -163,8 +162,7 @@ StrokePractice1ResultScene:
 	dw StrokePractice1Result5 ; $77bb jumptable
 StrokePractice2ResultScene:
 	ld a, [wDrillLessonResult] ; $77bd
-	ld a, a ; $77c0
-	rst Rst00 ; $77c1
+	jumptable a ; $77c0
 	dw StrokePractice2Result0 ; $77c2 jumptable
 	dw StrokePractice2Result1 ; $77c4 jumptable
 	dw StrokePractice2Result2 ; $77c6 jumptable
@@ -174,8 +172,7 @@ StrokePractice2ResultScene:
 	dw StrokePractice1Result1 ; $77ce jumptable
 StrokePractice3ResultScene:
 	ld a, [wDrillLessonResult] ; $77d0
-	ld a, a ; $77d3
-	rst Rst00 ; $77d4
+	jumptable a ; $77d3
 	dw StrokePractice3Result0 ; $77d5 jumptable
 	dw StrokePractice3Result1 ; $77d7 jumptable
 	dw StrokePractice3Result2 ; $77d9 jumptable
@@ -403,7 +400,7 @@ ServeCoachWalkToCourtAndStartLesson:
 	call PlayerPartnerGestureCutscene ; $7ae7
 	ld a, STORYLOC_TRAINING_COURT ; $7aea
 	ld [wStoryModeCurrentLocation], a ; $7aec
-	ld a, $0a ; $7aef
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $7aef
 	ld [wStoryModeEntryPoint], a ; $7af1
 	ld a, EXITTRIGGER_DIRECT ; $7af4
 	ld [wUnusedExitTriggerIdMirror], a ; $7af6
@@ -447,7 +444,7 @@ NetCoachWalkToCourtAndStartLesson:
 	call PlayerPartnerGestureCutscene ; $7b7a
 	ld a, STORYLOC_TRAINING_COURT ; $7b7d
 	ld [wStoryModeCurrentLocation], a ; $7b7f
-	ld a, $0a ; $7b82
+	ld a, ENTRY_TRAINING_COURT_DRILL_RESULT ; $7b82
 	ld [wStoryModeEntryPoint], a ; $7b84
 	ld a, EXITTRIGGER_DIRECT ; $7b87
 	ld [wUnusedExitTriggerIdMirror], a ; $7b89

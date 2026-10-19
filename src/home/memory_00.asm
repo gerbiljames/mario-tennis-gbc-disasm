@@ -186,15 +186,9 @@ ClearVRAMCopyQueue:
 	ld c, wVRAMCopyQueue_SIZE / 16 ; $0468
 	jp ClearMemory16 ; $046a
 QueueVRAMCopyFromBank:
-	ldh a, [hRomBank] ; $046d
-	push af ; $046f
-	ld a, b ; $0470
-	ldh [hRomBank], a ; $0471
-	ld [rROMB0], a ; $0473
+	push_rom_bank b ; $046d
 	call QueueVRAMCopy ; $0476
-	pop af ; $0479
-	ldh [hRomBank], a ; $047a
-	ld [rROMB0], a ; $047c
+	pop_rom_bank ; $0479
 	ret ; $047f
 ; The game's only path to VRAM (no code writes $8xxx directly). hl = source,
 ; de = destination, c = length in 16-byte blocks.
@@ -353,12 +347,10 @@ ProcessVRAMCopyQueues:
 	ld a, [hl] ; $0540
 	or a ; $0541
 	jr z, .tileWriteQueue ; $0542
-	ldh [hRomBank], a ; $0544
-	ld [rROMB0], a ; $0546
+	rom_bank ; $0544
 	xor a ; $0549
 	ld [hl+], a ; $054a
-	ld a, [hl+] ; $054b
-	wram_bank ; $054c
+	wram_bank [hl+] ; $054b
 	ld e, $51 ; $0550
 	ld a, [hl+] ; $0552
 	ld [de], a ; $0553
@@ -380,11 +372,8 @@ ProcessVRAMCopyQueues:
 	jr nz, .copyQueueLoop ; $0564
 .tileWriteQueue:
 	pop de ; $0566
-	ld a, e ; $0567
-	wram_bank ; $0568
-	ld a, d ; $056c
-	ldh [hRomBank], a ; $056d
-	ld [rROMB0], a ; $056f
+	wram_bank e ; $0567
+	rom_bank d ; $056c
 	ld hl, wTileWriteQueue ; $0572
 	ld c, $10 ; $0575
 .tileWriteLoop:

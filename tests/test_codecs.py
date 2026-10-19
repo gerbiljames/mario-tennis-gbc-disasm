@@ -277,6 +277,31 @@ class MacroBytes(unittest.TestCase):
         out = self.bytes_of("add_hl_a\nadd_de_a\nadd_bc_a")
         self.assertEqual(out[:15], bytes.fromhex("85" "6f" "3001" "24" "83" "5f" "3001" "14" "81" "4f" "3001" "04"))
 
+    def test_neg_abs_sub_pair(self):
+        out = self.bytes_of("neg_hl\nneg_de\nneg_bc\nabs_hl\nabs_de\nsub_hl_de\nsub_hl_bc")
+        neg_hl, neg_de = bytes.fromhex("af956f9f9467"), bytes.fromhex("af935f9f9257")
+        self.assertEqual(out[:18], neg_hl + neg_de + bytes.fromhex("af914f9f9047"))
+        self.assertEqual(out[18:38], bytes.fromhex("cb7c2806") + neg_hl + bytes.fromhex("cb7a2806") + neg_de)
+        self.assertEqual(out[38:50], bytes.fromhex("7d936f7c9a67" "7d916f7c9867"))
+
+    def test_ld_story_char_field(self):
+        out = self.bytes_of("DEF wStoryMain EQU $c900\nDEF wStoryPartner EQU $c940\n"
+                            "DEF wStoryCharacterSlot EQU $cb00\nld_story_char_field CHARREC_LEVEL")
+        self.assertEqual(out[:19], bytes.fromhex("2100c9" "fa00cb" "b7" "2802" "2e40" "7d" "c618" "6f" "7c" "ce00" "67"))
+
+    def test_rom_sram_bank_forms(self):
+        out = self.bytes_of("DEF hRomBank EQU $ff95\nDEF hSramBank EQU $ff97\n"
+                            "push_rom_bank b\npop_rom_bank\nrom_bank\nsram_bank $01")
+        self.assertEqual(out[:27], bytes.fromhex("f095f578e095ea0020" "f1e095ea0020" "e095ea0020"
+                                                 "3e01e097ea0040"))
+
+    def test_jumptable_and_frame_task(self):
+        out = self.bytes_of("DEF Rst00 EQU $0000\nDEF RegisterFrameTask EQU $1b6a\n"
+                            "jumptable a\njumptable [$c123]\njumptable\nframe_task Task\nframe_task Task, $0a\n"
+                            "Task: ret")
+        self.assertEqual(out[:7], bytes.fromhex("7fc7" "fa23c1c7" "c7"))
+        self.assertEqual(out[7:23], bytes.fromhex("3e01" "211700" "cd6a1b" "3e0a" "211700" "cd6a1b"))
+
     def test_wait_frames_and_lb(self):
         out = self.bytes_of("wait_frames $1e\nlb de, $02, $06\nlb bc, $ff, $00")
         self.assertEqual(out[:4], bytes.fromhex("cd2527" "1e"))   # WaitFramesCmd = $2725

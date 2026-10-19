@@ -214,12 +214,7 @@ IsMinigameTargetReached:
 	ld a, [hl+] ; $41dc
 	ld h, [hl] ; $41dd
 	ld l, a ; $41de
-	ld a, l ; $41df
-	sub e ; $41e0
-	ld l, a ; $41e1
-	ld a, h ; $41e2
-	sbc d ; $41e3
-	ld h, a ; $41e4
+	sub_hl_de ; $41df
 	bit 7, h ; $41e5
 	jr nz, .notReached ; $41e7
 	ld a, $01 ; $41e9
@@ -241,12 +236,7 @@ IsMinigameScoreLimitReached:
 	ld a, [hl+] ; $41ff
 	ld h, [hl] ; $4200
 	ld l, a ; $4201
-	ld a, l ; $4202
-	sub e ; $4203
-	ld l, a ; $4204
-	ld a, h ; $4205
-	sbc d ; $4206
-	ld h, a ; $4207
+	sub_hl_de ; $4202
 	bit 7, h ; $4208
 	jr nz, .returnOne ; $420a
 	xor a ; $420c

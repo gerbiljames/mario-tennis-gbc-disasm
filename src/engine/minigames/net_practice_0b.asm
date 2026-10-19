@@ -1,22 +1,22 @@
 NetGameMatch3JudgeOnPointEnd:
-	ld a, $00 ; $5a78
+	ld a, JUDGEEVENT_POINT_END ; $5a78
 	call NetGameMatch3JudgePoint ; $5a7a
 	ld [wDrillPointJudgement], a ; $5a7d
 	ret ; $5a80
 NetGameMatch3JudgeOnBallHit:
-	ld a, $01 ; $5a81
+	ld a, JUDGEEVENT_BALL_HIT ; $5a81
 	call NetGameMatch3JudgePoint ; $5a83
 	ld [wDrillPointJudgement], a ; $5a86
 	ret ; $5a89
 NetGameMatch3JudgeOnBounce:
 	ret ; $5a8a
-	ld a, $02 ; $5a8b
+	ld a, JUDGEEVENT_BOUNCE ; $5a8b
 	call NetGameMatch3JudgePoint ; $5a8d
 	ld [wDrillPointJudgement], a ; $5a90
 	ret ; $5a93
 NetGameMatch3JudgeOnRallyTick:
 	ret ; $5a94
-	ld a, $03 ; $5a95
+	ld a, JUDGEEVENT_RALLY_TICK ; $5a95
 	call NetGameMatch3JudgePoint ; $5a97
 	ld [wDrillPointJudgement], a ; $5a9a
 	ret ; $5a9d
@@ -27,8 +27,7 @@ NetGameMatch3JudgePoint:
 	ret nz ; $5aa3
 	ld a, [wRallyLength] ; $5aa4
 	dec a ; $5aa7
-	ld a, a ; $5aa8
-	rst Rst00 ; $5aa9
+	jumptable a ; $5aa8
 	dw NetGameMatch3JudgePoint.rally1 ; $5aaa jumptable
 	dw NetGameMatch3Cases1.dispatchResult ; $5aac jumptable
 	dw NetGameMatch3Cases2.dispatchResult ; $5aae jumptable
@@ -36,8 +35,7 @@ NetGameMatch3JudgePoint:
 	dw NetGameMatch3Cases4.dispatchResult ; $5ab2 jumptable
 .rally1:
 	ld a, b ; $5ab4
-	ld a, a ; $5ab5
-	rst Rst00 ; $5ab6
+	jumptable a ; $5ab5
 	dw NetGameMatch3JudgePoint.result0 ; $5ab7 jumptable
 	dw NetGameMatch3Cases1 ; $5ab9 jumptable
 	dw NetGameMatch3Cases1.ignoreBounce ; $5abb jumptable
@@ -69,8 +67,7 @@ NetGameMatch3Cases1:
 	ret ; $5aed
 .dispatchResult:
 	ld a, b ; $5aee
-	ld a, a ; $5aef
-	rst Rst00 ; $5af0
+	jumptable a ; $5aef
 	dw NetGameMatch3Cases1.checkPointOutcome ; $5af1 jumptable
 	dw NetGameMatch3Cases2 ; $5af3 jumptable
 	dw NetGameMatch3Cases2.ignoreBounce ; $5af5 jumptable
@@ -102,8 +99,7 @@ NetGameMatch3Cases2:
 	ret ; $5b27
 .dispatchResult:
 	ld a, b ; $5b28
-	ld a, a ; $5b29
-	rst Rst00 ; $5b2a
+	jumptable a ; $5b29
 	dw NetGameMatch3Cases2.checkPointOutcome ; $5b2b jumptable
 	dw NetGameMatch3Cases3 ; $5b2d jumptable
 	dw NetGameMatch3Cases3.ignoreBounce ; $5b2f jumptable
@@ -143,8 +139,7 @@ NetGameMatch3Cases3:
 	ret ; $5b74
 .dispatchResult:
 	ld a, b ; $5b75
-	ld a, a ; $5b76
-	rst Rst00 ; $5b77
+	jumptable a ; $5b76
 	dw NetGameMatch3Cases3.checkPointOutcome ; $5b78 jumptable
 	dw NetGameMatch3Cases4 ; $5b7a jumptable
 	dw NetGameMatch3Cases4.ignoreBounce ; $5b7c jumptable
@@ -176,8 +171,7 @@ NetGameMatch3Cases4:
 	ret ; $5bae
 .dispatchResult:
 	ld a, b ; $5baf
-	ld a, a ; $5bb0
-	rst Rst00 ; $5bb1
+	jumptable a ; $5bb0
 	dw NetGameMatch3Cases4.rally5IgnorePointEnd ; $5bb2 jumptable
 	dw NetGameMatch3Cases4.rally5FailBallHit ; $5bb4 jumptable
 	dw NetGameMatch3Cases4.rally5IgnoreBounce ; $5bb6 jumptable
@@ -239,7 +233,7 @@ NetGamePractice1Hook_PerFrame:
 NetGamePractice1Hook_PointStart:
 	xor a ; $5c19
 	ld [wDrillAbortCountdownActive], a ; $5c1a
-	ld a, $0a ; $5c1d
+	ld a, DRILL_ABORT_FRAMES ; $5c1d
 	ld [wDrillAbortCountdown], a ; $5c1f
 	xor a ; $5c22
 	ld [wDrillCounters + 6], a ; $5c23
@@ -277,48 +271,49 @@ NetGamePractice1Hook_PointEnd:
 .handlePointEnd:
 	call NetGamePractice1HandlePointEnd ; $5c66
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5c69
-	cp $04 ; $5c6c
+	cp DRILL_LESSON_POINTS ; $5c6c
 	ret c ; $5c6e
 	call NetGamePractice1EvaluateResult ; $5c6f
 	ld [wPointWinLoseFlag], a ; $5c72
 	ret ; $5c75
 NetGamePractice1EvaluateResult:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5c76
-	cp $04 ; $5c79
+	cp DRILL_LESSON_POINTS ; $5c79
 	jr nz, .checkCharacter1DoubleFaults ; $5c7b
+	ASSERT LESSON_PASSED == 0
 	xor a ; $5c7d
 	ld [wDrillLessonResult], a ; $5c7e
 	ld a, $01 ; $5c81
 	ret ; $5c83
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $5c84
-	cp $04 ; $5c87
+	cp DRILL_LESSON_POINTS ; $5c87
 	jr nz, .compare ; $5c89
-	ld a, $01 ; $5c8b
+	ld a, LESSON_NET_ALL_FAULTS ; $5c8b
 	ld [wDrillLessonResult], a ; $5c8d
 	jr .notFound ; $5c90
 .compare:
 	or a ; $5c92
 	jr z, .noDoubleFaults ; $5c93
-	ld a, $02 ; $5c95
+	ld a, LESSON_NET_DOUBLE_FAULT ; $5c95
 	ld [wDrillLessonResult], a ; $5c97
 	jr .notFound ; $5c9a
 .noDoubleFaults:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5c9c
-	cp $03 ; $5c9f
+	cp DRILL_LESSON_POINTS - 1 ; $5c9f
 	jr nz, .checkCounter5 ; $5ca1
-	ld a, $05 ; $5ca3
+	ld a, LESSON_VOLLEY_ALMOST ; $5ca3
 	ld [wDrillLessonResult], a ; $5ca5
 	jr .notFound ; $5ca8
 .checkCounter5:
 	ld a, [wDrillCounters + DRILLCTR_SHOTS_LEFT] ; $5caa
 	or a ; $5cad
 	jr nz, .result3 ; $5cae
-	ld a, $04 ; $5cb0
+	ld a, LESSON_VOLLEY_WRONG_SIDE ; $5cb0
 	ld [wDrillLessonResult], a ; $5cb2
 	jr .notFound ; $5cb5
 .result3:
-	ld a, $03 ; $5cb7
+	ld a, LESSON_VOLLEY_MISSED ; $5cb7
 	ld [wDrillLessonResult], a ; $5cb9
 	jr .notFound ; $5cbc
 .notFound:
@@ -359,17 +354,17 @@ NetGamePractice1Table:
 	dw $ffff ; record 16
 	twin_named net_game_practice1_handle_point_end, NetGamePractice1HandlePointEnd ; $5cf9
 NetGamePractice1JudgeOnPointEnd:
-	ld a, $00 ; $5d48
+	ld a, JUDGEEVENT_POINT_END ; $5d48
 	call NetGamePractice1JudgePoint ; $5d4a
 	ld [wDrillPointJudgement], a ; $5d4d
 	ret ; $5d50
 NetGamePractice1JudgeOnBallHit:
-	ld a, $01 ; $5d51
+	ld a, JUDGEEVENT_BALL_HIT ; $5d51
 	call NetGamePractice1JudgePoint ; $5d53
 	ld [wDrillPointJudgement], a ; $5d56
 	ret ; $5d59
 NetGamePractice1JudgeOnBounce:
-	ld a, $02 ; $5d5a
+	ld a, JUDGEEVENT_BOUNCE ; $5d5a
 	call NetGamePractice1JudgePoint ; $5d5c
 	ld [wDrillPointJudgement], a ; $5d5f
 	ret ; $5d62
@@ -378,7 +373,7 @@ NetGamePractice1JudgeOnBounce:
 ; fourth of this drill's four judges; see docs/bugs.md.
 NetGamePractice1JudgeOnRallyTick:
 	ret ; $5d63
-	ld a, $03 ; $5d64
+	ld a, JUDGEEVENT_RALLY_TICK ; $5d64
 	call NetGamePractice1JudgePoint ; $5d66
 	ld [wDrillPointJudgement], a ; $5d69
 	ret ; $5d6c
@@ -389,15 +384,13 @@ NetGamePractice1JudgePoint:
 	ret nz ; $5d72
 	ld a, [wRallyLength] ; $5d73
 	dec a ; $5d76
-	ld a, a ; $5d77
-	rst Rst00 ; $5d78
+	jumptable a ; $5d77
 	dw NetGamePractice1JudgePoint.rally1 ; $5d79 jumptable
 	dw NetGamePractice1Cases1.dispatchResult ; $5d7b jumptable
 	dw NetGamePractice1Cases2.dispatchResult ; $5d7d jumptable
 .rally1:
 	ld a, b ; $5d7f
-	ld a, a ; $5d80
-	rst Rst00 ; $5d81
+	jumptable a ; $5d80
 	dw NetGamePractice1JudgePoint.result0 ; $5d82 jumptable
 	dw NetGamePractice1Cases1 ; $5d84 jumptable
 	dw NetGamePractice1Cases1.ignoreBounce ; $5d86 jumptable
@@ -429,8 +422,7 @@ NetGamePractice1Cases1:
 	ret ; $5db8
 .dispatchResult:
 	ld a, b ; $5db9
-	ld a, a ; $5dba
-	rst Rst00 ; $5dbb
+	jumptable a ; $5dba
 	dw NetGamePractice1Cases1.checkPointOutcome ; $5dbc jumptable
 	dw NetGamePractice1Cases2 ; $5dbe jumptable
 	dw NetGamePractice1Cases2.ignoreBounce ; $5dc0 jumptable
@@ -462,8 +454,7 @@ NetGamePractice1Cases2:
 	ret ; $5df2
 .dispatchResult:
 	ld a, b ; $5df3
-	ld a, a ; $5df4
-	rst Rst00 ; $5df5
+	jumptable a ; $5df4
 	dw NetGamePractice1Cases2.checkPointOutcome ; $5df6 jumptable
 	dw NetGamePractice1Cases3 ; $5df8 jumptable
 	dw NetGamePractice1Cases3.checkBallBounceCount ; $5dfa jumptable
@@ -564,7 +555,7 @@ NetGamePractice2Hook_PerFrame:
 NetGamePractice2Hook_PointStart:
 	xor a ; $5ed1
 	ld [wDrillAbortCountdownActive], a ; $5ed2
-	ld a, $0a ; $5ed5
+	ld a, DRILL_ABORT_FRAMES ; $5ed5
 	ld [wDrillAbortCountdown], a ; $5ed7
 	xor a ; $5eda
 	ld [wDrillCounters + 1], a ; $5edb
@@ -595,44 +586,45 @@ NetGamePractice2Hook_PointEnd:
 .handlePointEnd:
 	call NetGamePractice2HandlePointEnd ; $5f0e
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5f11
-	cp $04 ; $5f14
+	cp DRILL_LESSON_POINTS ; $5f14
 	ret c ; $5f16
 	call NetGamePractice2EvaluateResult ; $5f17
 	ld [wPointWinLoseFlag], a ; $5f1a
 	ret ; $5f1d
 NetGamePractice2EvaluateResult:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5f1e
-	cp $04 ; $5f21
+	cp DRILL_LESSON_POINTS ; $5f21
 	jr nz, .checkCharacter1DoubleFaults ; $5f23
+	ASSERT LESSON_PASSED == 0
 	xor a ; $5f25
 	ld [wDrillLessonResult], a ; $5f26
 	ld a, $01 ; $5f29
 	ret ; $5f2b
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $5f2c
-	cp $04 ; $5f2f
+	cp DRILL_LESSON_POINTS ; $5f2f
 	jr nz, .compare ; $5f31
-	ld a, $01 ; $5f33
+	ld a, LESSON_NET_ALL_FAULTS ; $5f33
 	ld [wDrillLessonResult], a ; $5f35
 	jr .notFound ; $5f38
 .compare:
 	or a ; $5f3a
 	jr z, .noDoubleFaults ; $5f3b
-	ld a, $02 ; $5f3d
+	ld a, LESSON_NET_DOUBLE_FAULT ; $5f3d
 	ld [wDrillLessonResult], a ; $5f3f
 	jr .notFound ; $5f42
 .noDoubleFaults:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5f44
-	cp $03 ; $5f47
+	cp DRILL_LESSON_POINTS - 1 ; $5f47
 	jr nz, .checkCounter5 ; $5f49
-	ld a, $06 ; $5f4b
+	ld a, LESSON_SMASH_ALMOST ; $5f4b
 	ld [wDrillLessonResult], a ; $5f4d
 	jr .notFound ; $5f50
 .checkCounter5:
 	ld a, [wDrillCounters + DRILLCTR_SHOTS_LEFT] ; $5f52
 	or a ; $5f55
 	jr nz, .checkCounter4Range ; $5f56
-	ld a, $05 ; $5f58
+	ld a, LESSON_SMASH_MISSED ; $5f58
 	ld [wDrillLessonResult], a ; $5f5a
 	jr .notFound ; $5f5d
 .checkCounter4Range:
@@ -641,11 +633,11 @@ NetGamePractice2EvaluateResult:
 	jr c, .result3 ; $5f64
 	cp $03 ; $5f66
 	jr nc, .result3 ; $5f68
-	ld a, $04 ; $5f6a
+	ld a, LESSON_SMASH_JUDGE_POSITION ; $5f6a
 	ld [wDrillLessonResult], a ; $5f6c
 	jr .notFound ; $5f6f
 .result3:
-	ld a, $03 ; $5f71
+	ld a, LESSON_SMASH_NOT_ALL_SIDES ; $5f71
 	ld [wDrillLessonResult], a ; $5f73
 	jr .notFound ; $5f76
 .notFound:
@@ -675,23 +667,23 @@ NetGamePractice2PointStartDrillPositions:
 	db $ff, $ff ; end
 	twin_named net_game_practice1_handle_point_end, NetGamePractice2HandlePointEnd ; $5fb3
 NetGamePractice2JudgeOnPointEnd:
-	ld a, $00 ; $6002
+	ld a, JUDGEEVENT_POINT_END ; $6002
 	call NetGamePractice2JudgePoint ; $6004
 	ld [wDrillPointJudgement], a ; $6007
 	ret ; $600a
 NetGamePractice2JudgeOnBallHit:
-	ld a, $01 ; $600b
+	ld a, JUDGEEVENT_BALL_HIT ; $600b
 	call NetGamePractice2JudgePoint ; $600d
 	ld [wDrillPointJudgement], a ; $6010
 	ret ; $6013
 NetGamePractice2JudgeOnBounce:
-	ld a, $02 ; $6014
+	ld a, JUDGEEVENT_BOUNCE ; $6014
 	call NetGamePractice2JudgePoint ; $6016
 	ld [wDrillPointJudgement], a ; $6019
 	ret ; $601c
 NetGamePractice2JudgeOnRallyTick:
 	ret ; $601d
-	ld a, $03 ; $601e
+	ld a, JUDGEEVENT_RALLY_TICK ; $601e
 	call NetGamePractice2JudgePoint ; $6020
 	ld [wDrillPointJudgement], a ; $6023
 	ret ; $6026
@@ -702,15 +694,13 @@ NetGamePractice2JudgePoint:
 	ret nz ; $602c
 	ld a, [wRallyLength] ; $602d
 	dec a ; $6030
-	ld a, a ; $6031
-	rst Rst00 ; $6032
+	jumptable a ; $6031
 	dw NetGamePractice2JudgePoint.rally1 ; $6033 jumptable
 	dw NetGamePractice2Cases1.dispatchResult ; $6035 jumptable
 	dw NetGamePractice2Cases2.dispatchResult ; $6037 jumptable
 .rally1:
 	ld a, b ; $6039
-	ld a, a ; $603a
-	rst Rst00 ; $603b
+	jumptable a ; $603a
 	dw NetGamePractice2JudgePoint.result0 ; $603c jumptable
 	dw NetGamePractice2Cases1 ; $603e jumptable
 	dw NetGamePractice2Cases1.checkBallBounceCount ; $6040 jumptable
@@ -765,8 +755,7 @@ NetGamePractice2Cases1:
 	ret ; $60a2
 .dispatchResult:
 	ld a, b ; $60a3
-	ld a, a ; $60a4
-	rst Rst00 ; $60a5
+	jumptable a ; $60a4
 	dw NetGamePractice2Cases1.checkPointOutcome ; $60a6 jumptable
 	dw NetGamePractice2Cases2 ; $60a8 jumptable
 	dw NetGamePractice2Cases2.ignoreBounce ; $60aa jumptable
@@ -807,8 +796,7 @@ NetGamePractice2Cases2:
 	ret ; $60f0
 .dispatchResult:
 	ld a, b ; $60f1
-	ld a, a ; $60f2
-	rst Rst00 ; $60f3
+	jumptable a ; $60f2
 	dw NetGamePractice2Cases2.checkPointOutcome ; $60f4 jumptable
 	dw NetGamePractice2Cases3 ; $60f6 jumptable
 	dw NetGamePractice2Cases3.ignoreBounce ; $60f8 jumptable

@@ -96,23 +96,23 @@ AcademyMainBldgActors_10:
 	map_actor_end
 AcademyMainBldgEntryPoints_10:
 	; $74f9, 57 bytes (map_entries)
-	map_entry $01, FACE_UP, 34.0, 33.0, AcademyMainBldgArrival01_10
-	map_entry $02, FACE_DOWN, 34.0, 7.0, AcademyMainBldgArrival02_10
-	map_entry $03, FACE_DOWN, 53.0, 25.0, MapArrivalWalkPair_10
-	map_entry $04, FACE_DOWN, 59.0, 57.0, MapArrivalWalkPair_10
+	map_entry $01, FACE_UP, 34.0, 33.0, AcademyMainBldgArrival01_10, ACADEMY_MAIN_BLDG_FROM_ACADEMY_ENTRANCE
+	map_entry $02, FACE_DOWN, 34.0, 7.0, AcademyMainBldgArrival02_10, ACADEMY_MAIN_BLDG_FROM_COURTYARD
+	map_entry $03, FACE_DOWN, 53.0, 25.0, MapArrivalWalkPair_10, ACADEMY_MAIN_BLDG_UPPER_EAST
+	map_entry $04, FACE_DOWN, 59.0, 57.0, MapArrivalWalkPair_10, ACADEMY_MAIN_BLDG_FROM_WING
 	map_entry $0d, FACE_UP, 33.0, 59.0, $0000 ; debug warp only
 	map_entry $0e, FACE_UP, 34.0, 19.0, $0000 ; debug warp only
-	map_entry $0f, FACE_UP, 34.0, 29.0, $0000
+	map_entry $0f, FACE_UP, 34.0, 29.0, $0000, ACADEMY_MAIN_BLDG_NEW_STUDENT
 	db $ff
 	twin_named academy_main_bldg_arrival02, AcademyMainBldgArrival02_10 ; $7532
 	twin_named academy_main_bldg_arrival01, AcademyMainBldgArrival01_10 ; $7578
 AcademyMainBldgExitTriggers_10:
 	; $75be, 41 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $03
-	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_ACADEMY_WING, $01
-	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, STORYLOC_ACADEMY_MAIN_BLDG, $03
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, ENTRY_ACADEMY_ENTRANCE_FROM_ACADEMY_MAIN_BLDG, ACADEMY_MAIN_BLDG_TO_ACADEMY_ENTRANCE
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, ENTRY_COURTYARD_FROM_ACADEMY_MAIN_BLDG, ACADEMY_MAIN_BLDG_TO_COURTYARD
+	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_ACADEMY_WING, ENTRY_ACADEMY_WING_FROM_MAIN_BLDG, ACADEMY_MAIN_BLDG_TO_WING
+	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_UPPER_EAST, ACADEMY_MAIN_BLDG_TO_UPPER_EAST
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, ENTRY_COURTYARD_TOUR, ACADEMY_MAIN_BLDG_TOUR
 	db $ff
 AcademyMainBldgNpc03_10:
 	ld a, [wMapSceneStage] ; $75e7
@@ -256,11 +256,9 @@ AcademyMainBldgInitScript_10:
 	jr nz, .notSeniorChamp ; $7721
 	script_set_actor_script ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_1, ActorScript_10_1 ; $7723
 .notSeniorChamp:
-	ld a, $01 ; $772e
-	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730
-	call RegisterFrameTask ; $7733
+	frame_task UpdatePlayerPairTileAnimState_10 ; $772e
 	ld a, [wStoryModeEntryPoint] ; $7736
-	cp $0f ; $7739
+	cp ENTRY_ACADEMY_MAIN_BLDG_NEW_STUDENT ; $7739
 	jr nz, .done ; $773b
 	call AcademyMainBldgNewStudentCutscene_10 ; $773d
 .done:
@@ -355,7 +353,7 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_move_player 34.0, 3.0 ; $795a
 	script_move_target ACTOR_PLAYER, 34.0, 3.0 ; $7964
 	script_wait_move ACTOR_PLAYER ; $796f
-	ld a, $0f ; $7974
+	ld a, EXIT_ACADEMY_MAIN_BLDG_TOUR ; $7974
 	ld [wUnusedExitTriggerIdMirror], a ; $7976
 	ld [wStoryModeExitTriggerRequest], a ; $7979
 	farcall EndCutsceneScriptMode ; $797c

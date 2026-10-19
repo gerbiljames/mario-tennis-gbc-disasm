@@ -1,7 +1,7 @@
 RelaunchWallPracticeMasterLevel:
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $49cd
 	ld [wStoryModeCurrentLocation], a ; $49cf
-	ld a, $0a ; $49d2
+	ld a, ENTRY_WALL_PRACTICE_ROOM_MINIGAME_RESULT ; $49d2
 	ld [wStoryModeEntryPoint], a ; $49d4
 	ld a, EXITTRIGGER_DIRECT ; $49d7
 	ld [wUnusedExitTriggerIdMirror], a ; $49d9
@@ -62,8 +62,7 @@ WallPracticeLevelResultScript:
 	jp nz, .checkLevel ; $4abe
 	ld a, [wMapSceneStage] ; $4ac1
 	sub $01 ; $4ac4
-	ld a, a ; $4ac6
-	rst Rst00 ; $4ac7
+	jumptable a ; $4ac6
 	dw WallPracticeLevelResultScript.variant4 ; $4ac8 jumptable
 	dw WallPracticeLevelResultScript.variant3 ; $4aca jumptable
 	dw WallPracticeLevelResultScript.variant2 ; $4acc jumptable
@@ -220,7 +219,7 @@ WallPracticeRoomTile03_12:
 	call WaitFadeEnd ; $4d7a
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4d7d
 	ld [wStoryModeCurrentLocation], a ; $4d7f
-	ld a, $0b ; $4d82
+	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4d82
 	ld [wStoryModeEntryPoint], a ; $4d84
 	ld a, EXITTRIGGER_DIRECT ; $4d87
 	ld [wUnusedExitTriggerIdMirror], a ; $4d89
@@ -250,7 +249,7 @@ WallPracticeRoomTile04_12:
 	call WaitFadeEnd ; $4def
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4df2
 	ld [wStoryModeCurrentLocation], a ; $4df4
-	ld a, $0b ; $4df7
+	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4df7
 	ld [wStoryModeEntryPoint], a ; $4df9
 	ld a, EXITTRIGGER_DIRECT ; $4dfc
 	ld [wUnusedExitTriggerIdMirror], a ; $4dfe
@@ -280,7 +279,7 @@ WallPracticeRoomTile05_12:
 	call WaitFadeEnd ; $4e64
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4e67
 	ld [wStoryModeCurrentLocation], a ; $4e69
-	ld a, $0b ; $4e6c
+	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4e6c
 	ld [wStoryModeEntryPoint], a ; $4e6e
 	ld a, EXITTRIGGER_DIRECT ; $4e71
 	ld [wUnusedExitTriggerIdMirror], a ; $4e73
@@ -310,7 +309,7 @@ WallPracticeRoomTile06_12:
 	call WaitFadeEnd ; $4ed9
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4edc
 	ld [wStoryModeCurrentLocation], a ; $4ede
-	ld a, $0b ; $4ee1
+	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4ee1
 	ld [wStoryModeEntryPoint], a ; $4ee3
 	ld a, EXITTRIGGER_DIRECT ; $4ee6
 	ld [wUnusedExitTriggerIdMirror], a ; $4ee8
@@ -340,9 +339,9 @@ WallPracticeRoomInitScript_12:
 	call EnableLCD ; $4f22
 	call SetupWallPracticeLevelSigns ; $4f25
 	ld a, [wStoryModeEntryPoint] ; $4f28
-	cp $0a ; $4f2b
+	cp ENTRY_WALL_PRACTICE_ROOM_MINIGAME_RESULT ; $4f2b
 	jp z, .fromMatch ; $4f2d
-	cp $0b ; $4f30
+	cp ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4f30
 	jp z, .reentry ; $4f32
 	call RestoreWallPracticeRoomActors ; $4f35
 	ret ; $4f38
@@ -427,7 +426,7 @@ WallPracticeRoomInitScript_12:
 	call WaitFadeEnd ; $5043
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5046
 	ld [wStoryModeCurrentLocation], a ; $5048
-	ld a, $0b ; $504b
+	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $504b
 	ld [wStoryModeEntryPoint], a ; $504d
 	ld a, EXITTRIGGER_DIRECT ; $5050
 	ld [wUnusedExitTriggerIdMirror], a ; $5052
@@ -599,7 +598,7 @@ LaunchWallPracticeMinigame:
 	call WaitFadeEnd ; $5292
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5295
 	ld [wStoryModeCurrentLocation], a ; $5297
-	ld a, $0a ; $529a
+	ld a, ENTRY_WALL_PRACTICE_ROOM_MINIGAME_RESULT ; $529a
 	ld [wStoryModeEntryPoint], a ; $529c
 	ld a, EXITTRIGGER_DIRECT ; $529f
 	ld [wUnusedExitTriggerIdMirror], a ; $52a1

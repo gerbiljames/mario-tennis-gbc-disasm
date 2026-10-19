@@ -96,8 +96,7 @@ LoadMatchVariantGraphics:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5efb
 	sub MINIGAME_TENNIS_MACHINE_1 ; $5efe
 	jr c, .loadMapsA ; $5f00
-	ld a, a ; $5f02
-	rst Rst00 ; $5f03
+	jumptable a ; $5f02
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f04 jumptable
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f06 jumptable
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f08 jumptable
@@ -387,7 +386,7 @@ Padding_28_1:
 MatchGfxTilesB_28:
 	INCBIN "data/engine/match/lz_MatchGfxTilesB_28.bin" ; $6180, 2964 bytes
 Unused_28_MatchGfxPalette:
-	INCBIN "data/engine/match/Unused_28_MatchGfxPalette.bin" ; $6d14, 8 bytes
+	INCLUDE "data/engine/match/Unused_28_MatchGfxPalette.asm" ; $6d14, 8 bytes (palettes)
 MatchGfxPalettesC_28:
 	INCLUDE "data/engine/match/MatchGfxPalettesC_28.asm" ; $6d1c, 56 bytes (palettes)
 MatchStoryGfxPalettes:

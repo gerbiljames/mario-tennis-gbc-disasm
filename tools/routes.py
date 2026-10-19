@@ -10,6 +10,12 @@ table row, or `SaveStoryReturnPoint`'s `b`/`c`. A value loaded from RAM counts
 as any entry of its location. The debug warp menu, which retail never opens,
 is not a way in. `make check` (`entries`) holds every row without one to a
 `; debug warp only` comment, and every such comment to a row without one.
+
+Entry ids may be written as ENTRY_<location>_<name> (a `map_entry` row's
+name, or an `entry_id` line in the location's EntryPoints table); the check
+also fails a name that starts with another location, or that stands for
+another location's entry (in a way in, or a `cp` on wStoryModeEntryPoint in a
+routine named for its location).
 """
 import re
 import sys
@@ -24,9 +30,28 @@ MARK = "debug warp only"
 DEBUG = {"RunDebugWarpMenu"}
 
 
+_ID = r"(\$[0-9a-f]+|ENTRY_\w+)"
+
+
+def entry_ids():
+    """{ENTRY_ name: id} over the `map_entry` row names and `entry_id` lines."""
+    out = {}
+    for f in sorted((ROOT / "src").rglob("*.asm")):
+        for line in f.read_text().split("\n"):
+            args = [a.strip() for a in line.split(";")[0].split(",")]
+            if line.startswith("\tmap_entry ") and len(args) > 5:
+                out["ENTRY_" + args[5]] = int(args[0].split("$")[1], 16)
+            m = re.match(r"\tentry_id (\w+), \$([0-9a-f]+)", line)
+            if m:
+                out["ENTRY_" + m.group(1)] = int(m.group(2), 16)
+    return out
+
+
 def scan():
-    """(rows, ways): rows = [(loc, entry, file, line, marked)], ways = {(loc, entry or None)}."""
+    """(rows, ways, bad): rows = [(loc, entry, file, line, marked)],
+    ways = {(loc, entry or None)}, bad = [(file, line, message)]."""
     locs = {k: v for k, v in consts.constants().items() if k.startswith("STORYLOC_")}
+    locname = {v: k[len("STORYLOC_"):] for k, v in locs.items()}
     lines, origin = [], []
     for h in holders():
         L, O = bank_lines(h)
@@ -65,51 +90,83 @@ def scan():
         hits = [(len(p), loc) for p, loc in prefix.items() if name and name.startswith(p)]
         return max(hits)[1] if hits else None
 
-    rows = []
+    rows, names, bad = [], {}, []
     for loc, tree in trees.items():
         table = slot(tree, 0)
         i = starts.get(table)
         if i is None:
             continue
         for j in range(i + 1, len(lines)):
+            if re.match(r"^[A-Za-z_]\w*:", lines[j]):
+                break
             m = re.match(r"\tmap_entry \$([0-9a-f]+),", lines[j])
-            if not m:
-                if re.match(r"^[A-Za-z_]\w*:", lines[j]):
-                    break
+            e = re.match(r"\tentry_id (\w+), \$([0-9a-f]+)", lines[j])
+            if m:
+                rows.append((loc, int(m.group(1), 16), origin[j][0], origin[j][1], MARK in lines[j]))
+                args = lines[j].split(";")[0].split(",")
+                name, value = (args[5].strip() if len(args) > 5 else None), int(m.group(1), 16)
+            elif e:
+                name, value = e.group(1), int(e.group(2), 16)
+            else:
                 continue
-            rows.append((loc, int(m.group(1), 16), origin[j][0], origin[j][1], MARK in lines[j]))
+            if name:
+                names["ENTRY_" + name] = (loc, value)
+                if not name.startswith(locname[loc] + "_"):
+                    bad.append((*origin[j], f"ENTRY_{name} is not named for STORYLOC_{locname[loc]}"))
+
+    def entry(tok, loc, j):
+        """The id `tok` ($nn or an ENTRY_ name) stands for, used as location `loc`'s."""
+        if tok.startswith("$"):
+            return int(tok[1:], 16)
+        owner, value = names.get(tok, (None, None))
+        if owner is None:
+            bad.append((*origin[j], f"{tok} is not an entry name"))
+        elif loc is not None and owner != loc:
+            bad.append((*origin[j], f"{tok} is STORYLOC_{locname[owner]}'s, used for STORYLOC_{locname[loc]}"))
+        return value
 
     ways = set()
     for loc, tree in trees.items():
-        for line in body(slot(tree, 1)):
-            m = re.match(r"\tmap_script [^,]+, [^,]+, [^,]+, [^,]+, (STORYLOC_\w+), \$([0-9a-f]+)", line)
+        i = starts.get(slot(tree, 1))
+        for j in range(i + 1, len(lines)) if i is not None else ():
+            if re.match(r"^[A-Za-z_]\w*:", lines[j]):
+                break
+            m = re.match(r"\tmap_script [^,]+, [^,]+, [^,]+, [^,]+, (STORYLOC_\w+), " + _ID, lines[j])
             if m:
-                ways.add((locs[m.group(1)], int(m.group(2), 16)))
+                ways.add((locs[m.group(1)], entry(m.group(2), locs[m.group(1)], j)))
     for i, line in enumerate(lines):
-        m = re.match(r"\tdb (STORYLOC_\w+), \$([0-9a-f]+)", line)
+        m = re.match(r"\tdb (STORYLOC_\w+), " + _ID, line)
         if m:
-            ways.add((locs[m.group(1)], int(m.group(2), 16)))
+            ways.add((locs[m.group(1)], entry(m.group(2), locs[m.group(1)], i)))
         if re.match(r"\tcall SaveStoryReturnPoint\b|\tfarcall SaveStoryReturnPoint\b", line):
             b = c = None
-            for prev in lines[max(0, i - 6):i]:
-                mb = re.match(r"\tld b, (STORYLOC_\w+)", prev)
-                mc = re.match(r"\tld c, \$([0-9a-f]+)", prev)
+            for k in range(max(0, i - 6), i):
+                mb = re.match(r"\tld b, (STORYLOC_\w+)", lines[k])
+                mc = re.match(r"\tld c, " + _ID, lines[k])
                 b = locs[mb.group(1)] if mb else b
-                c = int(mc.group(1), 16) if mc else c
+                c = (mc.group(1), k) if mc else c
             if b is not None and c is not None:
-                ways.add((b, c))
+                ways.add((b, entry(c[0], b, c[1])))
+        if re.match(r"\tld a, \[wStoryModeEntryPoint\]", line) and loc_of(owner[i]) is not None:
+            for k in range(i + 1, len(lines)):
+                m = re.match(r"\tcp (ENTRY_\w+)", lines[k])
+                if m:
+                    entry(m.group(1), loc_of(owner[i]), k)
+                elif not re.match(r"\t(cp|jp|jr|call|ret)\b|\.\w+:", lines[k]):
+                    break
         if not re.match(r"\tld \[wStoryModeEntryPoint\], a", line) or owner[i] in DEBUG:
             continue
         value, loc = None, None
-        for prev in reversed(lines[max(0, i - 10):i]):
+        for k in range(i - 1, max(0, i - 10) - 1, -1):
+            prev = lines[k]
             if re.match(r"^[A-Za-z_.]", prev):
                 break
             if value is None:
-                m = re.match(r"\tld a, (\$[0-9a-f]+|\[\w+)", prev)
+                m = re.match(r"\tld a, (\$[0-9a-f]+|ENTRY_\w+|\[\w+)", prev)
                 if m:
-                    value = int(m.group(1)[1:], 16) if m.group(1).startswith("$") else "ram"
+                    value = "ram" if m.group(1).startswith("[") else (m.group(1), k)
                 elif re.match(r"\txor a\b", prev):
-                    value = 0
+                    value = ("$00", k)
         for prev in reversed(lines[max(0, i - 14):i]):
             if re.match(r"^[A-Za-z_]", prev):
                 break
@@ -119,17 +176,19 @@ def scan():
                 break
         loc = loc if loc is not None else loc_of(owner[i])
         if loc is not None and value is not None:
-            ways.add((loc, None if value == "ram" else value))
-    return rows, ways
+            ways.add((loc, None if value == "ram" else entry(*value[:1], loc, value[1])))
+    return rows, ways, bad
 
 
 def unreached():
-    rows, ways = scan()
-    return [r for r in rows if (r[0], r[1]) not in ways and (r[0], None) not in ways], rows
+    rows, ways, bad = scan()
+    return [r for r in rows if (r[0], r[1]) not in ways and (r[0], None) not in ways], rows, bad
 
 
 def check(fail):
-    dead, rows = unreached()
+    dead, rows, bad = unreached()
+    for f, ln, msg in bad:
+        fail("entries", f"{Path(f).relative_to(ROOT)}:{ln}: {msg}")
     dead = {(r[0], r[1]) for r in dead}
     for loc, entry, f, ln, marked in rows:
         where = f"{Path(f).relative_to(ROOT)}:{ln}"
@@ -141,7 +200,9 @@ def check(fail):
 
 
 def main():
-    dead, rows = unreached()
+    dead, rows, bad = unreached()
+    for f, ln, msg in bad:
+        print(f"{Path(f).relative_to(ROOT)}:{ln}: {msg}")
     for loc, entry, f, ln, _ in dead:
         print(f"{Path(f).relative_to(ROOT)}:{ln}: location ${loc:02x} entry ${entry:02x}")
     print(f"{len(dead)} of {len(rows)} map_entry rows have no way in")

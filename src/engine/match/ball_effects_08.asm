@@ -153,8 +153,7 @@ DrawBallTouchCharEffect:
 	ret z ; $5486
 	ld a, [wBallTouchCharIndex] ; $5487
 	call CharIndexToWramBank ; $548a
-	ld a, a ; $548d
-	wram_bank ; $548e
+	wram_bank a ; $548d
 	ld a, [wCharScreenX] ; $5492
 	add $08 ; $5495
 	ld d, a ; $5497
@@ -422,12 +421,7 @@ ApplyBallSpin:
 	sbc a ; $5695
 	ld d, a ; $5696
 	ld e, h ; $5697
-	xor a ; $5698
-	sub e ; $5699
-	ld e, a ; $569a
-	sbc a ; $569b
-	sub d ; $569c
-	ld d, a ; $569d
+	neg_de ; $5698
 	add hl, de ; $569e
 	add hl, de ; $569f
 	add hl, de ; $56a0
@@ -472,12 +466,7 @@ ApplyBallSpin:
 	ld hl, hMathSign ; $56df
 	bit 7, [hl] ; $56e2
 	jr nz, .applyTopspin ; $56e4
-	xor a ; $56e6
-	sub e ; $56e7
-	ld e, a ; $56e8
-	sbc a ; $56e9
-	sub d ; $56ea
-	ld d, a ; $56eb
+	neg_de ; $56e6
 .applyTopspin:
 	push de ; $56ec
 	ld hl, wBallSpeedHorizontal ; $56ed
@@ -546,12 +535,7 @@ ApplyBallSpin:
 	sbc a ; $5752
 	ld d, a ; $5753
 	ld e, h ; $5754
-	xor a ; $5755
-	sub e ; $5756
-	ld e, a ; $5757
-	sbc a ; $5758
-	sub d ; $5759
-	ld d, a ; $575a
+	neg_de ; $5755
 	add hl, de ; $575b
 	add hl, de ; $575c
 	add hl, de ; $575d
@@ -729,12 +713,7 @@ HandleBallNetCrossing:
 	ld a, [hl+] ; $5887
 	ld d, [hl] ; $5888
 	ld e, a ; $5889
-	xor a ; $588a
-	sub e ; $588b
-	ld e, a ; $588c
-	sbc a ; $588d
-	sub d ; $588e
-	ld d, a ; $588f
+	neg_de ; $588a
 	sra d ; $5890
 	rr e ; $5892
 	sra d ; $5894
@@ -758,15 +737,7 @@ HandleBallNetCrossing:
 	rr e ; $58af
 	sra d ; $58b1
 	rr e ; $58b3
-	bit 7, d ; $58b5
-	jr z, .jitter ; $58b7
-	xor a ; $58b9
-	sub e ; $58ba
-	ld e, a ; $58bb
-	sbc a ; $58bc
-	sub d ; $58bd
-	ld d, a ; $58be
-.jitter:
+	abs_de ; $58b5
 	call AdvanceMatchRng ; $58bf
 	ld h, $00 ; $58c2
 	ld l, a ; $58c4
@@ -775,12 +746,7 @@ HandleBallNetCrossing:
 	add hl, de ; $58c7
 	ld e, l ; $58c8
 	ld d, h ; $58c9
-	xor a ; $58ca
-	sub e ; $58cb
-	ld e, a ; $58cc
-	sbc a ; $58cd
-	sub d ; $58ce
-	ld d, a ; $58cf
+	neg_de ; $58ca
 	ld hl, wBallVelocityHeight ; $58d0
 	ld a, e ; $58d3
 	ld [hl+], a ; $58d4
@@ -789,12 +755,7 @@ HandleBallNetCrossing:
 	ld a, [hl+] ; $58d9
 	ld d, [hl] ; $58da
 	ld e, a ; $58db
-	xor a ; $58dc
-	sub e ; $58dd
-	ld e, a ; $58de
-	sbc a ; $58df
-	sub d ; $58e0
-	ld d, a ; $58e1
+	neg_de ; $58dc
 	sra d ; $58e2
 	rr e ; $58e4
 	sra d ; $58e6
@@ -826,15 +787,7 @@ HandleBallNetCrossing:
 	rr e ; $590d
 	sra d ; $590f
 	rr e ; $5911
-	bit 7, d ; $5913
-	jr z, .store ; $5915
-	xor a ; $5917
-	sub e ; $5918
-	ld e, a ; $5919
-	sbc a ; $591a
-	sub d ; $591b
-	ld d, a ; $591c
-.store:
+	abs_de ; $5913
 	call AdvanceMatchRng ; $591d
 	ld h, $00 ; $5920
 	ld l, a ; $5922
@@ -843,12 +796,7 @@ HandleBallNetCrossing:
 	add hl, de ; $5925
 	ld e, l ; $5926
 	ld d, h ; $5927
-	xor a ; $5928
-	sub e ; $5929
-	ld e, a ; $592a
-	sbc a ; $592b
-	sub d ; $592c
-	ld d, a ; $592d
+	neg_de ; $5928
 	ld hl, wBallVelocityHeight ; $592e
 	ld a, e ; $5931
 	ld [hl+], a ; $5932
@@ -905,15 +853,7 @@ BounceBallOffCourtFences:
 	ld a, [hl+] ; $5984
 	ld h, [hl] ; $5985
 	ld l, a ; $5986
-	bit 7, h ; $5987
-	jr z, .checkFarSide ; $5989
-	xor a ; $598b
-	sub l ; $598c
-	ld l, a ; $598d
-	sbc a ; $598e
-	sub h ; $598f
-	ld h, a ; $5990
-.checkFarSide:
+	abs_hl ; $5987
 	ld de, $fc60 ; $5991
 	add hl, de ; $5994
 	jr nc, .done ; $5995

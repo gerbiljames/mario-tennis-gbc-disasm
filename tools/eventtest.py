@@ -64,6 +64,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from banksrc import bank_lines, build_addresses, holders, placed_original
 from reach import MNEMONICS
+import routes
 
 ROOT = Path(__file__).resolve().parent.parent
 SINGLES = [80, 81, 82, 83, 84, 85, 86, 87, 88, 174, 63, 62, 61, 60, 185, 176, 183, 178, 59]
@@ -77,7 +78,9 @@ NOT_HOOKED = {"OAMDMARoutine"}
 NOT_HOOKED |= {"VBlankInterrupt", "LCDStatInterrupt", "TimerInterrupt", "SerialInterrupt",
                "JoypadInterrupt"}
 CODE_MACROS = {"farcall", "lb", "ld_slot", "ld_hl_indexed", "ld_de_indexed", "ld_bc_indexed",
-               "add_hl_a", "add_de_a", "add_bc_a"}
+               "add_hl_a", "add_de_a", "add_bc_a", "neg_hl", "neg_de", "neg_bc", "abs_hl", "abs_de",
+               "abs_bc", "sub_hl_de", "sub_hl_bc", "ld_story_char_field", "rom_bank", "push_rom_bank",
+               "pop_rom_bank", "sram_bank", "jumptable", "frame_task"}
 BUTTONS = {"a": 0x01, "b": 0x02, "select": 0x04, "start": 0x08, "right": 0x10, "left": 0x20, "up": 0x40, "down": 0x80}
 # (label, offset) of the points the sync hooks, taken from the base build:
 # after ReadJoypad stores the pad, where AdvanceFrame, WaitVBlank and
@@ -128,7 +131,8 @@ def code_labels():
             op = re.match(r"^\t(\w+)", nxt)
             # PyBoy can wedge when the single step past one breakpoint lands
             # on another, so a routine that opens by jumping is not hooked.
-            if op and op.group(1) in ("call", "jp", "jr", "rst", "farcall"):
+            if op and op.group(1) in ("call", "jp", "jr", "rst", "farcall") \
+                    or nxt.split(";")[0].strip() == "jumptable":
                 continue
             if op and (op.group(1) in MNEMONICS or op.group(1) in CODE_MACROS) \
                     and m.group(1) not in NOT_HOOKED and m.group(1) not in audio:
@@ -643,10 +647,10 @@ def handler_rows():
         # an init script that stays only for one entry point (and otherwise
         # sends the player straight out) is entered by that one
         init = slots.get("InitScript")
-        m = init and re.search(rf"^{init}:\n\tld a, \[wStoryModeEntryPoint\][^\n]*\n\tcp (\$[0-9a-f]+)[^\n]*\n"
+        m = init and re.search(rf"^{init}:\n\tld a, \[wStoryModeEntryPoint\][^\n]*\n\tcp (\$[0-9a-f]+|ENTRY_\w+)[^\n]*\n"
                                rf"\tret z", text, re.M)
         if m:
-            entry = int(m.group(1)[1:], 16)
+            entry = int(m.group(1)[1:], 16) if m.group(1).startswith("$") else routes.entry_ids()[m.group(1)]
         tables = [(kind, slots.get(role)) for kind, role in
                   (("npc", "NpcScripts"), ("facing", "FacingScripts"), ("tile", "TileTriggers"))]
         extra = sorted({t for (_, t, _) in flow.visits.get(tree, ())

@@ -215,7 +215,7 @@ engine's bank and WRAM bank `$07`); the rest stay numeric.
 | +$040 | partner character record (0x40 bytes) |
 | +$1c0 | `wGameFlags` array (`$c9c0`, the `set_flag`/`test_flag` bits — story progress) |
 
-Character record (matches the `wStoryModeMainCharacter*` WRAM map):
+Character record (matches the `wStoryMain*` WRAM map):
 
 | off | field |
 |---|---|

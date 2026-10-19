@@ -166,8 +166,7 @@ TextCmdPrintArgString:
 	and $0f ; $50c5
 	or $d0 ; $50c7
 	ld h, a ; $50c9
-	ld a, b ; $50ca
-	wram_bank ; $50cb
+	wram_bank b ; $50ca
 	jr .copyMemoryBC ; $50cf
 .wram0String:
 	ld b, a ; $50d1
@@ -380,8 +379,7 @@ MeasureNextArgStringWidth:
 	and $0f ; $5229
 	or $d0 ; $522b
 	ld h, a ; $522d
-	ld a, b ; $522e
-	wram_bank ; $522f
+	wram_bank b ; $522e
 	jr .copyMemoryBC ; $5233
 .wram0String:
 	ld b, a ; $5235
@@ -389,8 +387,7 @@ MeasureNextArgStringWidth:
 	and $0f ; $5237
 	or $c0 ; $5239
 	ld h, a ; $523b
-	ld a, b ; $523c
-	wram_bank ; $523d
+	wram_bank b ; $523c
 .copyMemoryBC:
 	push de ; $5241
 	ld de, wInlineTextBuffer ; $5242

@@ -335,8 +335,7 @@ RunMatchMenu:
 	farcall StepMatchFrame ; $4776
 	ret ; $4779
 DrawScoreboardCaption:
-	ld a, [wScoreboardLayout] ; $477a
-	rst Rst00 ; $477d
+	jumptable [wScoreboardLayout] ; $477a
 	dw ScoreboardCaption_SetGamePoint ; $477e jumptable
 	dw ScoreboardCaption_SetGamePoint ; $4780 jumptable
 	dw ScoreboardCaption_SetGamePoint ; $4782 jumptable
@@ -535,12 +534,8 @@ ShowMatchScoreboardScreen:
 	farcall PrepareGlyphBuffer ; $48c6
 	call DrawScoreboardCaption ; $48c9
 	farcall UploadGlyphBuffer ; $48cc
-	ld a, $0a ; $48cf
-	ld hl, DrawScoreboardSprites ; $48d1
-	call RegisterFrameTask ; $48d4
-	ld a, $0a ; $48d7
-	ld hl, DrawScoreboardModeTitle ; $48d9
-	call RegisterFrameTask ; $48dc
+	frame_task DrawScoreboardSprites, $0a ; $48cf
+	frame_task DrawScoreboardModeTitle, $0a ; $48d7
 	farcall StepMatchFrame ; $48df
 	call FlushTilemapToVram ; $48e2
 	farcall StepMatchFrame ; $48e5

@@ -151,6 +151,70 @@ def DRILLCTR_OFF_TARGET          rb ; $03 shots that missed the target area (als
 def DRILLCTR_LOB_PASSES          rb ; $07 StrokePractice2's DRILLCTR_STROKE_PASSES
 def DRILLCTR_TARGET_ZONE_DELAY   rb ; $08 frames until wTargetZoneEnabled is set
 
+; --- Drill length (wTotalPointsScoredInCurrentGame) ---
+def DRILL_LESSON_POINTS equ 4 ; a practice lesson's points; all of them passed clears it
+def DRILL_MATCH_POINTS  equ 8 ; a drill match's points, the serve alternating on bit 0
+
+; --- Drill abort countdown (wDrillAbortCountdown) ---
+def DRILL_ABORT_FRAMES equ 10 ; frames, once armed, before a drill point is given up
+
+; --- Drill judge events (a to each *JudgePoint) ---
+; Each drill's four *JudgeOn* hooks pass one; JudgePoint jumptables on it.
+	const_def
+	const JUDGEEVENT_POINT_END  ; $00
+	const JUDGEEVENT_BALL_HIT   ; $01
+	const JUDGEEVENT_BOUNCE     ; $02
+	const JUDGEEVENT_RALLY_TICK ; $03
+
+; --- Lesson result (wDrillLessonResult) ---
+; Set by each lesson's *EvaluateResult; the coach's *ResultScene in bank $15
+; jumptables on it for the follow-up line, which the names paraphrase. Only
+; LESSON_PASSED is common; past the codes a coach shares, each lesson numbers
+; its own.
+def LESSON_PASSED equ $00
+; Curt's serve lessons (ServicePractice1-3)
+	const_def $01
+	const LESSON_SERVE_NO_POINTS       ; $01 "You missed everyone!"
+	const LESSON_SERVE_DOUBLE_FAULT    ; $02
+	const LESSON_SERVE_MISSED_TARGET   ; $03
+	const LESSON_SPIN_NO_SPIN          ; $04 ServicePractice2: neither spin served
+	const LESSON_SPIN_LEFT_ONLY        ; $05 only the left corner cleared (+ wStoryMainLeftHanded)
+	const LESSON_SPIN_RIGHT_ONLY       ; $06 only the right (- wStoryMainLeftHanded)
+	const_def $04
+	const LESSON_SERVE_LINE_TIMING     ; $04 ServicePractice3: serves not timed
+	const LESSON_SERVE_LINE_NOT_CENTER ; $05 not served from the center
+; Beth's net lessons (NetGamePractice1-3)
+	const_def $01
+	const LESSON_NET_ALL_FAULTS        ; $01 a double fault every point
+	const LESSON_NET_DOUBLE_FAULT      ; $02
+	const LESSON_VOLLEY_MISSED         ; $03 NetGamePractice1: slow off the serve
+	const LESSON_VOLLEY_WRONG_SIDE     ; $04 volleyed, but not to the opposite side
+	const LESSON_VOLLEY_ALMOST         ; $05 one point short
+	const_def $03
+	const LESSON_SMASH_NOT_ALL_SIDES   ; $03 NetGamePractice2
+	const LESSON_SMASH_JUDGE_POSITION  ; $04
+	const LESSON_SMASH_MISSED          ; $05 slow off the serve
+	const LESSON_SMASH_ALMOST          ; $06
+	const_def $03
+	const LESSON_DROP_SERVE_SHALLOW    ; $03 NetGamePractice3: serve deeper
+	const LESSON_DROP_NOT_ALL_SIDES    ; $04
+	const LESSON_DROP_TIMING           ; $05
+	const LESSON_DROP_MISSED           ; $06 slow off the serve, serving shallow
+	const LESSON_DROP_ALMOST           ; $07
+; The return coach's stroke lessons (StrokePractice1-3)
+	const_def $01
+	const LESSON_RETURN_ALL_OUT        ; $01 StrokePractice1/3: four or more out
+	const LESSON_RETURN_INACCURATE     ; $02 two or three out
+	const LESSON_RETURN_NO_PASSES      ; $03
+	const LESSON_RETURN_INCONSISTENT   ; $04
+	const LESSON_RETURN_ALMOST         ; $05
+	const_def $01
+	const LESSON_LOB_TOO_FEW           ; $01 StrokePractice2: "You're not even hitting lobs!"
+	const LESSON_LOB_VOLLEYED          ; $02
+	const LESSON_LOB_SMASHED           ; $03 too short
+	const LESSON_LOB_NO_CONTROL        ; $04
+	const LESSON_LOB_ALMOST            ; $05
+
 ; --- Game mode (wGameMode) ---
 ; What kind of tennis is being played, $00-$0a. Indexes
 ; SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers (whose word art spells
@@ -281,6 +345,9 @@ def NUM_GAMEMODES equ const_value
 	const MARIOGAME_MEDALLION_MATCH ; $07 Waluigi
 	const MARIOGAME_TWO_ON_ONE      ; $08 Bowser
 def NUM_MARIOGAMES equ const_value
+
+; --- Minigame level (wMinigameLevel, level - 1) ---
+def MINIGAMELEVEL_HIGH_SCORE equ $02 ; a Mario minigame's third level sets wMinigameHighScoreMode
 
 ; --- Minigame actor fields (wMinigameActors, wMinigameSceneActor) ---
 ; UpdateMinigameActor copies each live record into wMinigameSceneActor, runs

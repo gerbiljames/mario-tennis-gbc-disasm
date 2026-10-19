@@ -56,33 +56,33 @@ GetStoryContinueDestination:
 	test_flag FLAG_DOUBLES ; $5752
 	jr nz, .checkFlag ; $5755
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $5757
-	ld a, $02 ; $575a
+	ld a, EXIT_MAIN_MENU_CONTINUE ; $575a
 	jr z, .done ; $575c
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $575e
-	ld a, $04 ; $5761
+	ld a, EXIT_MAIN_MENU_CONTINUE_ISLAND_OPEN_WON ; $5761
 	jr z, .done ; $5763
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5765
 	jr nz, .dormSingles
 	ap_pass AP_ARC_SINGLES, 4
-	ld a, $05 ; $5768
+	ld a, EXIT_MAIN_MENU_CONTINUE_TO_PEACHS_CASTLE ; $5768
 	jr nz, .done
 .dormSingles:
-	ld a, $02 ; $576c
+	ld a, EXIT_MAIN_MENU_CONTINUE ; $576c
 	jr .done ; $576e
 .checkFlag:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5770
-	ld a, $02 ; $5773
+	ld a, EXIT_MAIN_MENU_CONTINUE ; $5773
 	jr z, .done ; $5775
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5777
-	ld a, $04 ; $577a
+	ld a, EXIT_MAIN_MENU_CONTINUE_ISLAND_OPEN_WON ; $577a
 	jr z, .done ; $577c
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $577e
 	jr nz, .dormDoubles
 	ap_pass AP_ARC_DOUBLES, 4
-	ld a, $05 ; $5781
+	ld a, EXIT_MAIN_MENU_CONTINUE_TO_PEACHS_CASTLE ; $5781
 	jr nz, .done
 .dormDoubles:
-	ld a, $02 ; $5785
+	ld a, EXIT_MAIN_MENU_CONTINUE ; $5785
 	jr .done ; $5787
 .done:
 	ret ; $5789
@@ -173,11 +173,11 @@ CafeteriaActors_10:
 	map_actor_end
 CafeteriaEntryPoints_10:
 	; $5870, 9 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 39.0, 55.0, $0000
+	map_entry $01, FACE_DOWN, 39.0, 55.0, $0000, CAFETERIA_FROM_RESTAURANT
 	db $ff
 CafeteriaExitTriggers_10:
 	; $5879, 9 bytes (map_scripts:exit)
-	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, STORYLOC_RESTAURANT, $02
+	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, STORYLOC_RESTAURANT, ENTRY_RESTAURANT_FROM_CAFETERIA, CAFETERIA_TO_RESTAURANT
 	db $ff
 CafeteriaNpc03_10:
 	ld a, [wMapSceneStage] ; $5882
@@ -445,14 +445,14 @@ RestaurantActors_10:
 	map_actor_end
 RestaurantEntryPoints_10:
 	; $5b86, 17 bytes (map_entries)
-	map_entry $01, FACE_UP, 12.0, 33.0, RestaurantArrival01_10
-	map_entry $02, FACE_DOWN, 5.0, 23.0, MapArrivalWalkPair_10
+	map_entry $01, FACE_UP, 12.0, 33.0, RestaurantArrival01_10, RESTAURANT_FROM_RESTAURANT_PLAZA
+	map_entry $02, FACE_DOWN, 5.0, 23.0, MapArrivalWalkPair_10, RESTAURANT_FROM_CAFETERIA
 	db $ff
 	twin_named academy_main_bldg_arrival01, RestaurantArrival01_10 ; $5b97
 RestaurantExitTriggers_10:
 	; $5bdd, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, RestaurantExit01_10, STORYLOC_RESTAURANT_PLAZA, $02
-	map_script $02, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_CAFETERIA, $01
+	map_script $01, FACEMASK_ANY, $0000, RestaurantExit01_10, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_RESTAURANT, RESTAURANT_TO_RESTAURANT_PLAZA
+	map_script $02, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_CAFETERIA, ENTRY_CAFETERIA_FROM_RESTAURANT, RESTAURANT_TO_CAFETERIA
 	db $ff
 RestaurantExit01_10:
 	clear_flag FLAG_RESTAURANT_NPC08_MOVED ; $5bee
@@ -798,7 +798,7 @@ RestaurantNpc0C_10:
 	ld a, [wMapSceneStage2] ; $5f80
 	cp STORYTIER_ACADEMY ; $5f83
 	jr z, .speak ; $5f85
-	cp $03 ; $5f87
+	cp STORYTIER_ISLAND_OPEN ; $5f87
 	jr nc, .islandOpenOrLater ; $5f89
 	script_speak_restore ACTOR_RESTAURANT_STUDENT_CAP_BOY_2 ; $5f8b
 	farcall RunDialogueYesNoPrompt ; $5f90
