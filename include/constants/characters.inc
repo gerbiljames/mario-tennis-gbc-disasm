@@ -2,37 +2,40 @@
 ; The $40-byte record of the story characters ($c900/$c940, mirrored at
 ; $c800/$c840) and the four on-court match records ($ca00-$cac0), which bank
 ; $02 reaches as `ld hl, CHARREC_* / add hl, bc` with the record in bc.
-def CHARREC_NAME             equ $00 ; 7 bytes, then padding
-	const_def 10
-	const CHARREC_LINK_COURT_MASK ; $0a name padding; ExchangeLinkUnlockFlags borrows the main records' byte
-	const CHARREC_CHAR            ; $0b CHAR_* id
-	const CHARREC_PALETTE         ; $0c
-	const CHARREC_GENDER          ; $0d 0 male, 1 female
-	const CHARREC_LEFT_HANDED     ; $0e becomes the OAM X-flip on court
-	const CHARREC_PHYSICS         ; $0f
-	const CHARREC_REACH           ; $10 8 bytes: the reach box
-def CHARREC_LEVEL            equ $18 ; 1-99; each level-up also raises one of CHARREC_TRAIN_LEVELS
-def CHARREC_SWING            equ $19 ; word
-def CHARREC_AI_PARAMS        equ $1b ; 4 bytes: reaction delays near and far, tracking, aim-away chance
-	const_def 31
-	const CHARREC_DIFFICULTY     ; $1f CPU difficulty 0 easy - 3 intense, the AI's serve style on court
-	const CHARREC_STAT_TOP       ; $20 the eleven 0-9 stats, in this order
-	const CHARREC_STAT_SLICE     ; $21
-	const CHARREC_STAT_SERVE     ; $22
-	const CHARREC_STAT_STROKE    ; $23
-	const CHARREC_STAT_VOLLEY    ; $24
-	const CHARREC_STAT_ANGLE     ; $25
-	const CHARREC_STAT_PLACEMENT ; $26
-	const CHARREC_STAT_SPEED     ; $27
-	const CHARREC_STAT_DASH      ; $28
-	const CHARREC_STAT_REACTION  ; $29
-	const CHARREC_STAT_STOP      ; $2a
-	const CHARREC_SPEED_BONUS    ; $2b added to the Speed stat for the shot-placement row
-	const CHARREC_EXP            ; $2c 3-byte accumulator, capped at 99999
-def CHARREC_BUILD_KIND        equ $2f ; written by InitCa00RecordFromCharId ($03 main, $02 roster), read by nothing
-def CHARREC_PHYSICS_TEMPLATE equ $30 ; four words
-def CHARREC_TRAIN_LEVELS     equ $38 ; four levels, spin first
-def CHARREC_EQUIPMENT        equ $3c ; racket (low nibble) and shoes (high)
+	rsreset
+def CHARREC_NAME             rb 7 ; $00 then padding
+	rb_skip 3                        ; $07
+def CHARREC_LINK_COURT_MASK  rb   ; $0a name padding; ExchangeLinkUnlockFlags borrows the main records' byte
+def CHARREC_CHAR             rb   ; $0b CHAR_* id
+def CHARREC_PALETTE          rb   ; $0c
+def CHARREC_GENDER           rb   ; $0d 0 male, 1 female
+def CHARREC_LEFT_HANDED      rb   ; $0e becomes the OAM X-flip on court
+def CHARREC_PHYSICS          rb   ; $0f
+def CHARREC_REACH            rb 8 ; $10 the reach box
+def CHARREC_LEVEL            rb   ; $18 1-99; each level-up also raises one of CHARREC_TRAIN_LEVELS
+def CHARREC_SWING            rw   ; $19
+def CHARREC_AI_PARAMS        rb 4 ; $1b reaction delays near and far, tracking, aim-away chance
+def CHARREC_DIFFICULTY       rb   ; $1f CPU difficulty 0 easy - 3 intense, the AI's serve style on court
+def CHARREC_STAT_TOP         rb   ; $20 the eleven 0-9 stats, in this order
+def CHARREC_STAT_SLICE       rb   ; $21
+def CHARREC_STAT_SERVE       rb   ; $22
+def CHARREC_STAT_STROKE      rb   ; $23
+def CHARREC_STAT_VOLLEY      rb   ; $24
+def CHARREC_STAT_ANGLE       rb   ; $25
+def CHARREC_STAT_PLACEMENT   rb   ; $26
+def CHARREC_STAT_SPEED       rb   ; $27
+def CHARREC_STAT_DASH        rb   ; $28
+def CHARREC_STAT_REACTION    rb   ; $29
+def CHARREC_STAT_STOP        rb   ; $2a
+def CHARREC_SPEED_BONUS      rb   ; $2b added to the Speed stat for the shot-placement row
+def CHARREC_EXP              rb 3 ; $2c accumulator, capped at 99999
+def CHARREC_BUILD_KIND       rb   ; $2f written by InitCa00RecordFromCharId ($03 main, $02 roster), read by nothing
+def CHARREC_PHYSICS_TEMPLATE rw 4 ; $30
+def CHARREC_TRAIN_LEVELS     rb 4 ; $38 spin first
+def CHARREC_EQUIPMENT        rb   ; $3c racket (low nibble) and shoes (high)
+	rb_skip 3                        ; $3d
+def CHAR_RECORD_SIZE equ _RS
+	ASSERT CHAR_RECORD_SIZE == $40
 
 ; --- Character ids (character record byte +$0b, wMatchPlayerChar/OpponentChar) ---
 ; The 32-entry roster, in the order every character-indexed table takes:
@@ -82,7 +85,7 @@ def CHARREC_EQUIPMENT        equ $3c ; racket (low nibble) and shoes (high)
 ; (NameTextRemap_02). Records $36 and up have no name in the pool. $36,
 ; $49-$53, $57 and $5a are unnamed because nothing loads them; their stats are
 ; all zero.
-	const_def 32
+	const_def $20
 	const CHAR_RANKER_32 ; $20
 	const CHAR_RANKER_33 ; $21
 	const CHAR_RANKER_34 ; $22
@@ -108,7 +111,7 @@ def CHARREC_EQUIPMENT        equ $3c ; racket (low nibble) and shoes (high)
 ; Two match drills swap their opponent's record by server at each point
 ; (LoadDrillOpponentBySide): the net-game matches use these on the points the
 ; opponent serves, the stroke matches on the points the player serves.
-	const_def 84
+	const_def $54
 	const CHAR_DRILL_NET_GAME_MATCH_1_SERVING ; $54
 	const CHAR_DRILL_NET_GAME_MATCH_2_SERVING ; $55
 	const CHAR_DRILL_NET_GAME_MATCH_3_SERVING ; $56
@@ -118,7 +121,7 @@ def CHAR_DRILL_STROKE_MATCH_2_RECEIVING   equ $58
 def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 ; Records $5b-$60 are the Dream Match opponents' records, in the match
 ; settings rows of STORYMATCH_DREAM_HARD/_INTENSE/_MAX (singles, then doubles).
-	const_def 91
+	const_def $5b
 	const CHAR_DREAM_HARD            ; $5b
 	const CHAR_DREAM_INTENSE         ; $5c
 	const CHAR_DREAM_MAX             ; $5d
@@ -127,13 +130,13 @@ def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 	const CHAR_DREAM_DOUBLES_MAX     ; $60
 ; ... and their doubles partners, which DoublesPartnerTable_0a pairs with
 ; them (AssignStoryMatchCharacters loads the partner from the opponent's id).
-	const_def 97
+	const_def $61
 	const CHAR_DREAM_DOUBLES_HARD_PARTNER    ; $61
 	const CHAR_DREAM_DOUBLES_INTENSE_PARTNER ; $62
 	const CHAR_DREAM_DOUBLES_MAX_PARTNER     ; $63
 ; Records $37-$48 are the drill partners, one per training drill in
 ; MINIGAME_* order: each drill_def names its own as the opponent.
-	const_def 55
+	const_def $37
 	const CHAR_DRILL_SERVICE_MATCH_1     ; $37
 	const CHAR_DRILL_SERVICE_MATCH_2     ; $38
 	const CHAR_DRILL_SERVICE_MATCH_3     ; $39

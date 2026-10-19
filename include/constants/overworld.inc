@@ -1,9 +1,3 @@
-; --- Overworld actor slot stride ---
-; wActors is 24 records of this size in WRAM bank $04. The engine walks them
-; with `ld de, $0040 / add hl, de`, and SpawnActor turns an actor id into a
-; slot with two `srl h / rra` pairs (id * 64).
-def ACTOR_SIZE equ $40
-
 ; --- Story-map behaviour cells (wBehaviorMap, docs/story_mode.md) ---
 ; A cell is `id << 4 | kind`: the low nibble says what the cell does, the high
 ; nibble which script, exit or facing handler it names.
@@ -28,47 +22,54 @@ def SPEAKER_NONE equ $80
 ; --- Overworld actor record fields ---
 ; Offsets into one wActors record, which the engine and the story scripts
 ; reach as `ld hl, ACTORF_* / add hl, bc` with the record in bc.
-def ACTORF_SCRIPT       equ $00 ; word: the actor script's next opcode
-def ACTORF_SCRIPT_BANK  equ $02
-def ACTORF_WAIT         equ $03 ; as_wait counter
-def ACTORF_FLAGS        equ $05 ; bit 0 paused, bit 7 moving; bits 3 and 4 set at spawn
-def ACTORF_SPEED        equ $06 ; word: step length per frame (1/256 tile)
-def ACTORF_TARGET_X     equ $08 ; word: where the actor is walking to
-def ACTORF_TARGET_Y     equ $0a ; word
-def ACTORF_X            equ $0c ; word: world position (1/256 tile)
-def ACTORF_Y            equ $0e ; word
-def ACTORF_HEIGHT       equ $10 ; word: height above the ground, negative = up (64 = 1 px)
-def ACTORF_JUMP_VEL     equ $12 ; word: added to ACTORF_HEIGHT each update; gravity adds $10
-	const_def 20
-	const ACTORF_HEADING   ; $14 movement direction, a full angle byte
-	const ACTORF_TURN_RATE ; $15 largest heading change per step toward the target
-	const ACTORF_ANCHOR    ; $16 word: record this actor follows (as_follow_wp, as_step); as_begin_path's home tile
-def ACTORF_ANIM_RATE    equ $18 ; subtracted from ACTORF_ANIM_DELAY each frame while standing
-def ACTORF_ANIM_RATE_MOVING equ $19 ; the same while ACTORFLAGB_MOVING is set
-	const_def 32
-	const ACTORF_MODE        ; $20 SetActorMode / script_set_active
-	const ACTORF_OBJECT      ; $21 OBJ_* id (LoadActorObjectDef)
-	const ACTORF_OBJECT_BANK ; $22 bank of the object header and its frame and animation tables
-def ACTORF_FRAME_TABLE  equ $24 ; word: object header's frame array
-def ACTORF_VRAM_TILES   equ $26 ; word: the slot's 4 sprite tiles in VRAM bank 1
-def ACTORF_ANIM_TABLE   equ $28 ; word: object header's animation scripts
-def ACTORF_ANIM_SCRIPT  equ $2a ; word: start of the current animation script
-def ACTORF_ANIM_PTR     equ $2c ; word: its next command
-	const_def 46
-	const ACTORF_ANIM         ; $2e ANIM_* id playing
-	const ACTORF_ANIM_DELAY   ; $2f ticks left on the frame shown; $ff = held
-	const ACTORF_STATUS       ; $30 bit 0 facing locked, bit 6 frame dirty, bit 7 live
-	const ACTORF_DRAW_DELAY   ; $31 frames DrawActors waits before the first draw: spawn staggers slots
-	const ACTORF_DRAWN_FACING ; $32 FACE_*: ACTORF_FACING quantised by DirectionToFacing_04
-	const ACTORF_ANIM_FRAME   ; $33 frame the animation script shows
-	const ACTORF_FACING       ; $34 angle byte: follows ACTORF_HEADING unless locked
-	const ACTORF_FACING_COUNT ; $35 object header byte 1; 1 = one facing only
-	const ACTORF_TILE         ; $36 OAM tile of the slot's tiles; read as a word with ACTORF_OAM_ATTR
-	const ACTORF_OAM_ATTR     ; $37 object header byte 0, or the map_actor palette override
-	const ACTORF_SHADOW_TABLE ; $38 word: per-frame placement records
+	rsreset
+def ACTORF_SCRIPT           rw ; $00 the actor script's next opcode
+def ACTORF_SCRIPT_BANK      rb ; $02
+def ACTORF_WAIT             rb ; $03 as_wait counter
+	rb_skip                       ; $04
+def ACTORF_FLAGS            rb ; $05 bit 0 paused, bit 7 moving; bits 3 and 4 set at spawn
+def ACTORF_SPEED            rw ; $06 step length per frame (1/256 tile)
+def ACTORF_TARGET_X         rw ; $08 where the actor is walking to
+def ACTORF_TARGET_Y         rw ; $0a
+def ACTORF_X                rw ; $0c world position (1/256 tile)
+def ACTORF_Y                rw ; $0e
+def ACTORF_HEIGHT           rw ; $10 height above the ground, negative = up (64 = 1 px)
+def ACTORF_JUMP_VEL         rw ; $12 added to ACTORF_HEIGHT each update; gravity adds $10
+def ACTORF_HEADING          rb ; $14 movement direction, a full angle byte
+def ACTORF_TURN_RATE        rb ; $15 largest heading change per step toward the target
+def ACTORF_ANCHOR           rw ; $16 record this actor follows (as_follow_wp, as_step); as_begin_path's home tile
+def ACTORF_ANIM_RATE        rb ; $18 subtracted from ACTORF_ANIM_DELAY each frame while standing
+def ACTORF_ANIM_RATE_MOVING rb ; $19 the same while ACTORFLAGB_MOVING is set
+	rb_skip 6                     ; $1a
+def ACTORF_MODE             rb ; $20 SetActorMode / script_set_active
+def ACTORF_OBJECT           rb ; $21 OBJ_* id (LoadActorObjectDef)
+def ACTORF_OBJECT_BANK      rb ; $22 bank of the object header and its frame and animation tables
+	rb_skip                       ; $23
+def ACTORF_FRAME_TABLE      rw ; $24 object header's frame array
+def ACTORF_VRAM_TILES       rw ; $26 the slot's 4 sprite tiles in VRAM bank 1
+def ACTORF_ANIM_TABLE       rw ; $28 object header's animation scripts
+def ACTORF_ANIM_SCRIPT      rw ; $2a start of the current animation script
+def ACTORF_ANIM_PTR         rw ; $2c its next command
+def ACTORF_ANIM             rb ; $2e ANIM_* id playing
+def ACTORF_ANIM_DELAY       rb ; $2f ticks left on the frame shown; $ff = held
+def ACTORF_STATUS           rb ; $30 bit 0 facing locked, bit 6 frame dirty, bit 7 live
+def ACTORF_DRAW_DELAY       rb ; $31 frames DrawActors waits before the first draw: spawn staggers slots
+def ACTORF_DRAWN_FACING     rb ; $32 FACE_*: ACTORF_FACING quantised by DirectionToFacing_04
+def ACTORF_ANIM_FRAME       rb ; $33 frame the animation script shows
+def ACTORF_FACING           rb ; $34 angle byte: follows ACTORF_HEADING unless locked
+def ACTORF_FACING_COUNT     rb ; $35 object header byte 1; 1 = one facing only
+def ACTORF_TILE             rb ; $36 OAM tile of the slot's tiles; read as a word with ACTORF_OAM_ATTR
+def ACTORF_OAM_ATTR         rb ; $37 object header byte 0, or the map_actor palette override
+def ACTORF_SHADOW_TABLE     rw ; $38 per-frame placement records
+	rb_skip 6                     ; $3a
+; wActors is 24 records of this size in WRAM bank $04. The engine walks them
+; with `ld de, $0040 / add hl, de`, and SpawnActor turns an actor id into a
+; slot with two `srl h / rra` pairs (id * 64).
+def ACTOR_SIZE equ _RS
+	ASSERT ACTOR_SIZE == $40
 ; ACTORF_FLAGS bits
 def ACTORFLAGB_PAUSED   equ 0 ; StepActorScript yields without running the script
-	const_def 2
+	const_def $02
 	const ACTORFLAGB_YIELD    ; $02 a move stops short when it would step next to the player
 	const ACTORFLAGB_SOLID    ; $03 BuildNearbyActorList: blocks the player (IsPointBlocked)
 	const ACTORFLAGB_TALKABLE ; $04 BuildActorQueryList: FindActorFacingPlayer can pick it
@@ -155,7 +156,7 @@ def ANIM_DISTANT        equ $08 ; Alex, Nina, Harry, Kate, Emily, Luigi, DK, Bab
 def ANIM_TROPHY_SMALL   equ $08 ; OBJ_TROPHY frames 4-5: the small trophy, glinting
 def ANIM_OVERHEAD_SWING equ $08 ; Bob and OBJ_WALK_71_05-07: racket held overhead, a quick swing, the
                                 ; follow-through held, looped
-	const_def 9
+	const_def $09
 	const ANIM_SWING_BACK    ; $09 the twelve-animation sprites: the backswing pose, held
 	const ANIM_SWING_THROUGH ; $0a the twelve-animation sprites: the follow-through pose, held
 	const ANIM_SIDESTEP      ; $0b Alex and Nina: a lean to the side, twice, then held

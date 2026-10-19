@@ -24,7 +24,7 @@ def LINKREADY_SLAVE  equ $0a
 ; --- Link control tokens (the serial byte, $07 link routines) ---
 ; LINKTAG_MASK's fourth value, kept free for in-band control. Per-frame play
 ; bytes never use these.
-	const_def 192
+	const_def $c0
 	const LINKMSG_NONE          ; $c0 nothing to say: sent after the handshake and on a reset
 	const LINKMSG_PROBE         ; $c1 the master's handshake probe (TryLinkHandshakeMaster)
 	const LINKMSG_PROBE_REPLY   ; $c2 the slave's answer (TryLinkHandshakeSlave)
@@ -32,7 +32,7 @@ def LINKREADY_SLAVE  equ $0a
 	const LINKMSG_SYNC_SLAVE    ; $c4 block start, slave side
 	const LINKMSG_BLOCK_END     ; $c5 the sender's last nibble has gone
 	const LINKMSG_BLOCK_END_ACK ; $c6 the receiver's echo of that
-	const_def 203
+	const_def $cb
 	const LINKMSG_CHECKSUM_BAD ; $cb checksums differ: retransmit the whole block
 	const LINKMSG_CHECKSUM     ; $cc compare checksums now
 	const LINKMSG_BLOCK_OK     ; $cd block accepted

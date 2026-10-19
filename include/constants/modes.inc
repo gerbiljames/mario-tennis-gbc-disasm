@@ -4,7 +4,7 @@
 ; wording. Ids 72-86 point past text bank $25 (docs/bugs.md) and get no name.
 def DRILLMSG_NONE equ $00 ; ShowQueuedDrillMessage substitutes DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE
 def DRILLMSG_HIDE equ $ff ; show nothing
-	const_def 1
+	const_def $01
 	const DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT                         ; $01
 	const DRILLMSG_DOUBLE_FAULT_YOU_FAILED                             ; $02
 	const DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAILED    ; $03
@@ -76,7 +76,7 @@ def DRILLMSG_HIDE equ $ff ; show nothing
 	const DRILLMSG_I_HIT_A_SMASH_SO_YOU_FAIL                           ; $45
 	const DRILLMSG_I_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2     ; $46
 	const DRILLMSG_YOU_RETURNED_MY_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL ; $47
-	const_def 87
+	const_def $57
 	const DRILLMSG_NICE_RETURN_YOU_DID_IT                                 ; $57
 	const DRILLMSG_NICE_LOB_YOU_DID_IT                                    ; $58
 	const DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL                        ; $59
@@ -163,12 +163,12 @@ def NUM_GAMEMODES equ const_value
 	const STORYMATCH_VARSITY_3        ; $0c
 	const STORYMATCH_VARSITY_2        ; $0d
 	const STORYMATCH_VARSITY_1        ; $0e
-	const_def 16
+	const_def $10
 	const STORYMATCH_ISLAND_OPEN_ROUND_1   ; $10
 	const STORYMATCH_ISLAND_OPEN_ROUND_2   ; $11
 	const STORYMATCH_ISLAND_OPEN_SEMIFINAL ; $12
 	const STORYMATCH_ISLAND_OPEN_FINAL     ; $13
-	const_def 22
+	const_def $16
 	const STORYMATCH_DREAM_MAX     ; $16
 	const STORYMATCH_DREAM_INTENSE ; $17
 	const STORYMATCH_DREAM_HARD    ; $18

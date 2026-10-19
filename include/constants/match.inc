@@ -1,24 +1,23 @@
 ; --- Match object slot fields ---
 ; Offsets into one 16-byte wObjSlot record (ram/wram/ has the full
 ; description), which the bank $09 object engine reaches with the slot in bc.
-def OBJSLOT_SIZE            equ $10
-	const_def
-	const OBJSLOT_ID              ; $00 $ff = free
-	const OBJSLOT_FLAGS           ; $01 bit 0 draw this frame; LoadObjTemplate_09 sets bit 7
-	const OBJSLOT_SPRITE_TEMPLATE ; $02 word
-	const_def 4
-	const OBJSLOT_OAM_ATTR ; $04
-	const OBJSLOT_TILE     ; $05
-	const OBJSLOT_X        ; $06
-	const OBJSLOT_Y        ; $07
-	const OBJSLOT_HANDLER  ; $08 word
-	const_def 10
-	const OBJSLOT_CURVE_X    ; $0a
-	const OBJSLOT_CURVE_Y    ; $0b
-	const OBJSLOT_STATE      ; $0c the handler's RST00 sub-state
-	const OBJSLOT_CURVE_STEP ; $0d
-	const OBJSLOT_CURVE      ; $0e MoveCurveTable_09 index
-	const OBJSLOT_ANCHOR     ; $0f 1 = relative to the serving character
+	rsreset
+def OBJSLOT_ID              rb ; $00 $ff = free
+def OBJSLOT_FLAGS           rb ; $01 bit 0 draw this frame; LoadObjTemplate_09 sets bit 7
+def OBJSLOT_SPRITE_TEMPLATE rw ; $02
+def OBJSLOT_OAM_ATTR        rb ; $04
+def OBJSLOT_TILE            rb ; $05
+def OBJSLOT_X               rb ; $06
+def OBJSLOT_Y               rb ; $07
+def OBJSLOT_HANDLER         rw ; $08
+def OBJSLOT_CURVE_X         rb ; $0a
+def OBJSLOT_CURVE_Y         rb ; $0b
+def OBJSLOT_STATE           rb ; $0c the handler's RST00 sub-state
+def OBJSLOT_CURVE_STEP      rb ; $0d
+def OBJSLOT_CURVE           rb ; $0e MoveCurveTable_09 index
+def OBJSLOT_ANCHOR          rb ; $0f 1 = relative to the serving character
+def OBJSLOT_SIZE equ _RS
+	ASSERT OBJSLOT_SIZE == $10
 
 ; --- Shot types (wCurrentShotType) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
@@ -49,11 +48,11 @@ def NUM_SHOTTYPES equ const_value
 ; AI shot habits (CharGroupTable_02, one 16-entry row per serve style;
 ; AiPickShotButtons draws one by AdvanceMatchRng & $0f): the stroke's two
 ; button presses as nibbles, first press high -- 1 = A, 2 = B, 3 = A+B.
-	const_def 16
+	const_def $10
 	const AISHOT_TOPSPIN       ; $10 A
 	const AISHOT_POWER_TOPSPIN ; $11 A -> A
 	const AISHOT_LOB           ; $12 A -> B
-	const_def 32
+	const_def $20
 	const AISHOT_SLICE       ; $20 B
 	const AISHOT_DROP        ; $21 B -> A
 	const AISHOT_POWER_SLICE ; $22 B -> B
@@ -63,7 +62,7 @@ def AISHOT_NEUTRAL             equ $30 ; A+B, a smash when the ball is in range
 ; ResolvePointOutcome dispatches `rst Rst00` on wPointOutcome: 1-5 ->
 ; ShowCourtBanner(wPointOutcome) (banner id == the value), 6 -> the winner
 ; banner ShowCourtBanner(wPointWinnerShotType + $17), 7/8 -> text popups.
-	const_def 1
+	const_def $01
 	const POINTOUTCOME_FAULT        ; $01
 	const POINTOUTCOME_DOUBLE_FAULT ; $02
 	const POINTOUTCOME_LET          ; $03
@@ -74,7 +73,7 @@ def AISHOT_NEUTRAL             equ $30 ; A+B, a smash when the ball is in range
 ; --- Winning-shot type (wPointWinnerShotType) ---
 ; Set by the Record*Stat functions; the winner court banner is
 ; ShowCourtBanner(value + $17) -> banner ids 24-28.
-	const_def 1
+	const_def $01
 	const POINTWINNER_SERVICE_ACE ; $01
 	const POINTWINNER_RETURN_ACE  ; $02
 	const POINTWINNER_SMASH_ACE   ; $03
@@ -181,7 +180,7 @@ def NUM_CHARSTATES equ const_value
 	const CHARB_RECOIL   ; $00 set by ApplyShotRecoil after every stroke and by CheckCharBallContact on a body hit; UpdateCharVelocityFromInput drops the steering intent
 	const CHARB_DIVING   ; $01 StartCharSwing.dive sets it. Widens the contact window to 1.25x wCharReachX, flattens the brake, freezes the facing ease, costs -$0c00 shot speed, and turns both power strokes back into their base shots
 	const CHARB_AIRBORNE ; $02 set for the smash jump, cleared by StepCharJumpPhysics on landing; also picks the airborne shadow over the ground one
-	const_def 4
+	const_def $04
 	const CHARB_MOVING       ; $04 the velocity came out nonzero this frame (or MoveCharTowardTarget stepped); UpdateCharRunAnimation reads it to choose run over idle
 	const CHARB_CHARGING     ; $05 a swing is winding up: StepCharMovement divides both velocities by 8
 	const CHARB_MOVE_BLOCKED ; $06 StepCharMovement refused an axis at the court bound instead of clamping it. Never read
@@ -199,7 +198,7 @@ def MATCHABORTB_MATCH        equ 7   ; bit-index form of MATCHABORT_MATCH
 ; The ResolvePointOutcome jumptable has ten entries ($00-$09); 7 and 8 show a
 ; text popup rather than a court banner. $0b is minigame-only and never
 ; reaches that jumptable.
-	const_def 7
+	const_def $07
 	const POINTOUTCOME_SERVE_VOLLEYED  ; $07 the receiver hit the serve before it bounced; text id $0174 "Return the serve after it bounces."
 	const POINTOUTCOME_WRONG_RECEIVER  ; $08 the wrong player of a doubles pair returned; text id $0175 "Only the receiving player may return the ball."
 	const POINTOUTCOME_BALL_HIT_PLAYER ; $09 the ball reached a character's body (ApplyBallTouchOutcome)

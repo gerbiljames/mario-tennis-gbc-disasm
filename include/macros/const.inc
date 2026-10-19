@@ -26,3 +26,13 @@ MACRO const_skip
 		DEF const_value += const_inc
 	ENDC
 ENDM
+
+; Record layouts: `rsreset`, then `def FIELD rb [n]` / `rw` per field, and
+; `rb_skip [n]` over bytes nothing names; `_RS` is then the record's size.
+MACRO rb_skip
+	IF _NARG >= 1
+		RSSET _RS + (\1)
+	ELSE
+		RSSET _RS + 1
+	ENDC
+ENDM

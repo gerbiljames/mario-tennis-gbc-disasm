@@ -36,7 +36,7 @@ def B_ equ 11
 ; SetPointSituationBgm.
 def BGM_NONE                 equ $00 ; silence: stops the four music channels
 def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing (the location loop skips the start)
-	const_def 1
+	const_def $01
 	const BGM_INTRO                 ; $01 RunIntroCutscene
 	const BGM_TITLE_SCREEN          ; $02 RunTitleScreen
 	const BGM_MENU                  ; $03 shared theme of ~20 menu screens (main menu, character/court/format select, save and N64 flows)
@@ -59,7 +59,7 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_COURT_WAREHOUSE       ; $14 row 8; MinigameConfig_TreasureBox
 	const BGM_TWO_ON_ONE            ; $15 RunDoublesDrillMatch
 	const BGM_COURT_JUNGLE          ; $16 row 7; MinigameConfig_BananaBunch
-	const_def 25
+	const_def $19
 	const BGM_TARGET_MINIGAMES      ; $19 the drill_defs of Medallion Match, Shooting Star and Target Shot
 	const BGM_ACADEMY_BUILDING      ; $1a story_location: the Academy Main Building and the Academy Wing
 	const BGM_ACADEMY_OUTDOORS      ; $1b story_location: the courtyards, entrances, class courts, Court #1/#2, the awards ceremony and the island flyover (13 locations)
@@ -96,7 +96,7 @@ def SFX_STOP                 equ $50 ; silences the two effect channels
 ; The racket-contact sounds, one per shot type in ShotTypePresets_07
 ; (ApplyShotTypePresets plays the row's first byte at contact), named for the
 ; stroke family that uses each; the smash shares the slice sound.
-	const_def 81
+	const_def $51
 	const SFX_HIT_TOPSPIN ; $51 topspin, power topspin, neutral and the reach strokes
 	const SFX_HIT_DROP    ; $52
 	const SFX_HIT_LOB     ; $53
@@ -105,7 +105,7 @@ def SFX_HIT_SLICE            equ $57 ; slice, power slice and the smash
 def SFX_BALL_BOUNCE          equ $5b ; HandleBallBounceEvent
 def SFX_SWING                equ $5c ; racket swing (StartCharSwing)
 def SFX_BALL_CONTACT         equ $77 ; the ball connecting with a scoring object: HandleBallTouchCharEvent, HandleMinigameTargetHit, MinigameTargetTypeScores
-	const_def 94
+	const_def $5e
 	const SFX_MENU_MOVE   ; $5e every menu's "the cursor moved" branch
 	const SFX_MENU_SELECT ; $5f A accepted, menu continues
 	const SFX_MENU_DECIDE ; $60 A accepted the screen's final choice (fades out after it)
@@ -139,11 +139,11 @@ def SFX_SWING_CHARGE           equ $59 ; a character starting a swing windup (Ch
 def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNetCrossing $08)
 ; The on-court object cues, from the *ObjTemplate* tables of bank $09 (the
 ; sound field LoadObjTemplate_09 plays as the object appears).
-	const_def 102
+	const_def $66
 	const SFX_SCORE_DISPLAY          ; $66 the point-score digit objects appearing (ObjTemplates_09, the game-score display)
 	const SFX_BANNER_WINNER          ; $67 the SERVICE/RETURN/SMASH ACE, LOB and DROP SHOT banners (rows 24-28)
 	const SFX_BANNER_POINT_SITUATION ; $68 the BREAK/GAME/SET/MATCH POINT banners (rows 7-10)
-	const_def 106
+	const_def $6a
 	const SFX_BANNER_FAULT    ; $6a the FAULT and DOUBLE FAULT banners (rows 1-2)
 	const SFX_BANNER_GAME_WON ; $6b the GAME, SET MATCH and MATCH banners (rows 11-13)
 	const SFX_BANNER_CALL     ; $6c the LET, NET, OUT and START banners (rows 3-6)
@@ -160,20 +160,20 @@ def SFX_FIREWORK_SPARKLE       equ $7d ; the island sky scene: twinkle and plane
 def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingBoard $1b, unless wRankingBoardSilent)
 def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingBoardAnimState_* $1b)
 def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (CutsceneStompScreenShake $0f)
-	const_def 134
+	const_def $86
 	const SFX_THUD               ; $86 a minigame hit scored (ScoreBallHit $0d) and a Mario World NPC landing from a jump
 	const SFX_VOICE_YOSHI        ; $87 Yoshi speaking in Mario World (MarioWorldNpc09Yoshi_0e)
 	const SFX_PEACH_FANFARE      ; $88 before "Princess Peach!" in Mario World (MarioWorldNpc0C_0e)
 	const SFX_VOICE_BABY_MARIO   ; $89 Baby Mario speaking in Mario World (MarioWorldNpc0ABabyMario_0e)
 	const SFX_WATER_SPRITE_MAGIC ; $8a the water sprite's palette flash (WaterSpriteRacketRewardScene $15)
-	const_def 140
+	const_def $8c
 	const SFX_CONTEST_WIN         ; $8c winning the water-sprite swing contest (WaterSpriteSwingContestScene $15)
 	const SFX_CONTEST_FINISH      ; $8d the swing contest ending (WaterSpriteSwingContestScene $15)
 	const SFX_WATER_SPRITE_APPEAR ; $8e the water sprite appearing after the fade (WaterSpriteRacketRewardScene $15)
 	const SFX_WATER_SPRITE_FLY    ; $8f the water sprite flying off (WaterSpriteRacketRewardScene $15)
 	const SFX_RACKET_GET          ; $90 receiving the water sprite's racket (WaterSpriteRacketRewardScene $15)
 def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTargetGridClear $0d)
-	const_def 150
+	const_def $96
 	const SFX_APPEAR2 ; $96 the second of the two pop sounds cutscenes alternate as actors are placed one by one (arrivals, match returns, academy init)
 	const SFX_CHIME   ; $97 a minigame target hit / score popup, and a success cue in cutscenes
 	const SFX_EMOTE   ; $98 an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)

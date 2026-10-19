@@ -39,7 +39,7 @@ def SAVEDIR_TAG         equ 8 ; word, high byte first
 	const SAVEBLOCK_SPARE10     ; $0a
 	const SAVEBLOCK_N64_RECORDS ; $0b Transfer Pak records and the unlock flags
 def SAVEBLOCK_BACKUP            equ $1b
-	const_def 54
+	const_def $36
 	const SAVEBLOCK_EXHIBITION        ; $36 save-and-quit resume image of wStorySlotData
 	const SAVEBLOCK_EXHIBITION_BACKUP ; $37
 	const SAVEBLOCK_MINIGAME_RECORDS  ; $38 + story slot; backups at + 3
@@ -48,11 +48,7 @@ def SAVEBLOCK_STAR_GRID         equ $3e ; star-character exhibition victory grid
 ; One VRAM bank: the three tile blocks and both maps.
 def VRAM_SIZE equ $2000
 
-; --- Character records ---
-; A character is a $40-byte record: the story pair at $c900/$c940 (main,
-; partner), their saved-slot mirror at $c800/$c840, and the four match
-; records at $ca00-$caff. The pairs are copied together, two records at once.
-def CHAR_RECORD_SIZE equ $40
+; --- Match statistics (match_stats in ram/wram/wram0_records.asm) ---
 def MATCH_STATS_STRIDE equ 8 ; wCharacter1ServiceAces + character index * 8
 
 ; --- VRAM bank in a copy destination ---
@@ -89,7 +85,7 @@ def NO_BOX equ $0000
 ; Banks 1-3 and 5-7 each have one main owner; 4-7 also hold the four
 ; on-court character structs at $df00, one per wCharIndex, which the match
 ; engine selects with WRAM_CHARn. Same numbers, different use.
-	const_def 1
+	const_def $01
 	const WRAM_STAGING      ; $01 VRAM staging: wDecompBuffer, which every screen decompresses into
 	const WRAM_COURT_PLANES ; $02 the court's tile and attribute planes; the overworld scroll buffer's attribute half; the char-data screen's attribute pages
 	const WRAM_SCREEN       ; $03 wShadowTilemap, the full-screen UIs' tile plane; the scroll buffer's tile half; the char-data screen's tile pages
@@ -97,7 +93,7 @@ def NO_BOX equ $0000
 	const WRAM_TEXT         ; $05 the text and window engine and wWindowShadowTilemap
 	const WRAM_SCENE        ; $06 the story scene's collision and behaviour maps, scene loading, and the per-screen scratch overlays
 	const WRAM_SOUND        ; $07 the sound driver; glyph tiles and save-block staging
-	const_def 4
+	const_def $04
 	const WRAM_CHAR0 ; $04 on-court character 0's struct (wCharIndex 0)
 	const WRAM_CHAR1 ; $05
 	const WRAM_CHAR2 ; $06
