@@ -10,6 +10,7 @@ ENDM
 INCLUDE "macros/const.inc"
 INCLUDE "constants/memory.inc"
 INCLUDE "constants/characters.inc"
+INCLUDE "flag_constants.inc"
 INCLUDE "macros/ram.inc"
 
 INCLUDE "ram/sram.asm"

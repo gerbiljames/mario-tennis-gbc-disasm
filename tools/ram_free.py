@@ -25,6 +25,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
+import consts  # noqa: E402
 # The stack grows down from STACK_TOP ($d000, include/constants/) and has
 # no symbol; the deepest reach observed (a doubles match, the overworld) is
 # $cf34, so the top 512 bytes of WRAM0 are reserved for it, not free.
@@ -62,6 +63,9 @@ def _expand(path, macros=None):
         mm = re.match(r"^\t(\w+) (\w+)\s*(?:;.*)?$", line)
         if m:
             out += _expand(ROOT / m.group(1), macros)
+        elif re.match(r"^\w+::\s*flag_array \w+", line):
+            name, count = re.match(r"^(\w+::)\s*flag_array (\w+)", line).groups()
+            out.append(f"{name} ds {(consts.constants()[count] + 7) // 8}")
         elif mm and mm.group(1) in macros:
             out += [x.replace("\\1", mm.group(2)) for x in macros[mm.group(1)]]
         else:

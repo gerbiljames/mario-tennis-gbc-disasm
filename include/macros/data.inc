@@ -190,6 +190,7 @@ ENDM
 ; Usage: `flag_id FLAG_NAME` or `flag_id byte_index, bit`.
 MACRO flag_id
 IF _NARG == 1
+	ASSERT (\1) < NUM_GAME_FLAGS, "game flag \1 is past wGameFlags"
 	dw (((\1) / 8) << 8) | (((\1) % 8) << 5)
 ELSE
 	dw ((\1) << 8) | ((\2) << 5)

@@ -31,6 +31,7 @@ ENDM
 MACRO set_flag
 	rst Rst20
 IF _NARG == 1
+	ASSERT (\1) < NUM_GAME_FLAGS, "game flag \1 is past wGameFlags"
 	db ((\1) % 8) << 5, (\1) / 8
 ELSE
 	db (\2) << 5, \1
@@ -40,6 +41,7 @@ ENDM
 MACRO clear_flag
 	rst Rst28
 IF _NARG == 1
+	ASSERT (\1) < NUM_GAME_FLAGS, "game flag \1 is past wGameFlags"
 	db ((\1) % 8) << 5, (\1) / 8
 ELSE
 	db (\2) << 5, \1
@@ -49,6 +51,7 @@ ENDM
 MACRO test_flag
 	rst Rst30
 IF _NARG == 1
+	ASSERT (\1) < NUM_GAME_FLAGS, "game flag \1 is past wGameFlags"
 	db ((\1) % 8) << 5, (\1) / 8
 ELSE
 	db (\2) << 5, \1
@@ -213,6 +216,7 @@ ENDM
 ; flag that Set/Clear/TestGameFlag take in de, from the flag number the
 ; *ByNumber helpers and set_flag/test_flag use.
 MACRO ld_flag_id
+	ASSERT (\2) < NUM_GAME_FLAGS, "game flag \2 is past wGameFlags"
 	ld \1, ((((\2) / 8) << 8) | (((\2) % 8) << 5))
 ENDM
 

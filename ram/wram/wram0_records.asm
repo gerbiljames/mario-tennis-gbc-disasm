@@ -303,7 +303,10 @@ wN64TrophyCounts:: dw
 	ds 9
 
 ; [32 bytes] Per-story-slot progress flags, $c9c0-$c9df, saved as the slot's +$1c0 block. rst $20/$28/$30 (SetGameFlag/ClearGameFlag/TestGameFlag) take d = byte index, e = bit << 5 and apply mask $80 >> bit; the *GameFlagByNumber wrappers take the flat number byte * 8 + bit, as held by the FLAG_* constants in include/flag_constants.inc. The array is only accessed through these, so the named entries below are views of the same storage: byte $05 = doubles, $06/$07 = Island Open + Dream Match, $08-$0b = class rank wins, $0c/$0d = equipment owned, $18-$1b = training-drill clears, $1c-$1f = temporary (wGameFlagsTemp)
-wGameFlags:: ds 5
+UNION
+wGameFlags:: flag_array NUM_GAME_FLAGS
+NEXTU
+	ds 5
 
 ; [8-bit] Singles/Doubles Indicator (Story & Exhibition Mode)
 ;
@@ -432,6 +435,7 @@ wStoryModeMinigameCompletionFlags4:: db
 
 ; [4 bytes] wGameFlags bytes $1c-$1f (flags $e0-$ff), temporary: ClearTemporaryStoryFlags zeroes them at the top of RunStoryLocation, so they last until the next location load. Used for per-location NPC/scene-variant state ($1c) and the screen-mode bits the progress and results screens set and clear ($1f)
 wGameFlagsTemp:: ds 4
+ENDU
 	ds 32
 
 ; The four on-court records: player 1's main character and partner, then

@@ -4,6 +4,8 @@
 ; mask $80 >> bit to wGameFlags[byte]. Pass it to `set_flag`/`clear_flag`/
 ; `test_flag`/`flag_id` (one-argument form) or to *GameFlagByNumber.
 
+def NUM_GAME_FLAGS equ 256 ; 32 bytes
+
 def FLAG_NEW_GAME_CLEARED_BIT equ 14 ; wGameFlags byte $01 bit 6
 def FLAG_NEW_GAME_SET_BIT equ 15 ; wGameFlags byte $01 bit 7
 

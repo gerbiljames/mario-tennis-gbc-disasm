@@ -1,5 +1,10 @@
 ; RAM structures declared once and laid out per copy.
 
+; A bit array for `\1` flags.
+MACRO flag_array
+	ds ((\1) + 7) / 8
+ENDM
+
 ; One $40-byte character record (the CHARREC_* fields), labelled
 ; <prefix><Field>; each field is checked against its CHARREC_* offset.
 MACRO char_record
