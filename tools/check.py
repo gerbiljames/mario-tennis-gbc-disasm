@@ -42,6 +42,10 @@ after a real defect broke it:
             dispatch to another routine's local that starts after a ret/jp
             (a case is a routine of its own), and no unreferenced label sits
             where code falls into it (it would split a routine in two)
+  gfx-specs graphics carry a gfx spec, so they get a PNG: no spec-less
+            region named *Gfx*/*Tiles*, and no spec-less LZ stream of whole
+            tiles that the source decompresses on to vTiles (192 graphics blobs
+            once had no PNG)
   reach     a routine is named Unused exactly when nothing reachable from
             the reset, interrupt and rst vectors reaches it (tools/reach.py)
   slots     every ACTOR_<list>_<object> name a story script uses holds that
@@ -561,6 +565,64 @@ def check_gfx(manifest, fail):
     return n
 
 
+# Spec-less regions named like graphics that are not tiles, with the reason.
+# Empty while every Gfx/Tiles name is tagged; an entry that stops matching
+# fails, so the list cannot go stale.
+UNTAGGED_GFX_NAMES = {}
+
+_VRAM_DEST_RE = re.compile(r"^\tld de, vTiles")
+_LOAD_HL_RE = re.compile(r"^\tld hl, (\w+)")
+
+
+def check_gfx_specs(rom, manifest, fail):
+    """Graphics get a gfx spec, so they get a PNG: a spec-less region named
+    *Gfx* or *Tiles* fails, and so does a spec-less LZ stream decoding to
+    whole tiles that the source loads with `ld hl, Stream` and then, before
+    the next ROM pointer or `ret`, sends to `ld de, vTiles*`."""
+    untagged = {}
+    for path, off, length, spec in manifest:
+        if spec:
+            continue
+        stem = Path(path).stem
+        untagged[stem.removeprefix("lz_")] = (path, off, length)
+    seen = set()
+    for label, (path, off, length) in untagged.items():
+        if "Gfx" not in label and "Tiles" not in label:
+            continue
+        if label in UNTAGGED_GFX_NAMES:
+            seen.add(label)
+            continue
+        fail("gfx-specs", f"{path}: named as graphics but has no gfx spec")
+    for label in sorted(set(UNTAGGED_GFX_NAMES) - seen):
+        fail("gfx-specs", f"{label}: no longer a spec-less graphics name -- "
+                          "drop it from UNTAGGED_GFX_NAMES")
+    streams = {}
+    for label, (path, off, length) in untagged.items():
+        if "/lz_" not in path:
+            continue
+        try:
+            data, _used = decompress(rom, off, off + length)
+        except ValueError:
+            continue
+        if data and len(data) % 16 == 0:
+            streams[label] = path
+    for f in sorted((ROOT / "src").rglob("*.asm")):
+        lines = f.read_text().splitlines()
+        for i, line in enumerate(lines):
+            m = _LOAD_HL_RE.match(line)
+            if not m or m.group(1) not in streams:
+                continue
+            for nxt in lines[i + 1:i + 12]:
+                m2 = _LOAD_HL_RE.match(nxt)
+                if nxt.startswith("\tret") or (m2 and not m2.group(1).startswith("w")):
+                    break
+                if _VRAM_DEST_RE.match(nxt):
+                    fail("gfx-specs", f"{streams[m.group(1)]}: decompressed to "
+                                      f"VRAM tiles ({f.relative_to(ROOT)}) but has no gfx spec")
+                    break
+    return len(untagged)
+
+
 def check_tilemaps(manifest, fail):
     """Every tilemap:W blob with a grid beside it encodes back to the bytes
     the grid was decoded from."""
@@ -901,6 +963,7 @@ def main():
         "literals": check_literal_pointers(fail) + check_blob_pointers(rom, manifest, fail),
         "dma": check_dma_alignment(fail),
         "gfx": check_gfx(manifest, fail),
+        "gfx-specs": check_gfx_specs(rom, manifest, fail),
         "tilemap": check_tilemaps(manifest, fail),
         "slots": actorslots.check(fail),
         "reach": reach.check(fail),

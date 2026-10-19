@@ -58,9 +58,11 @@ PRELUDE := include/hardware.inc include/macros.inc include/constants.inc include
 
 # Each assembly also writes the files it read to a .d file (-M), included
 # below, so an edit to any include rebuilds the object; -MP keeps a deleted
-# one from stopping make.
+# one from stopping make. data/ files are left to deps.mk: a renamed data file
+# would otherwise match the data/ pattern rules and be "rebuilt" from nothing.
 $(BUILD)/main.o: main.asm $(PRELUDE) | $(BUILD)/rgbdscheck.o
 	$(RGBASM) -E $(ASDEFS) -I include $(PRELUDE:%=-P %) -M $(BUILD)/main.d -MP -o $@ $<
+	sed -e '/data\//d' $(BUILD)/main.d > $(BUILD)/main.d.tmp && mv $(BUILD)/main.d.tmp $(BUILD)/main.d
 
 $(BUILD)/ram.o: $(RAM_SRCS) | $(BUILD)/rgbdscheck.o
 	$(RGBASM) -E $(ASDEFS) -I include -I . -M $(BUILD)/ram.d -MP -o $@ ram.asm

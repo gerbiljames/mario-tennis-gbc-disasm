@@ -223,7 +223,7 @@ LoadTennisDictionaryAssetsDefault:
 	ld_bg_pals de, 0, 8 ; $4287
 	call LoadPalettesMasterOnly ; $428a
 	wram_bank WRAM_COURT_PLANES ; $428d
-	ld hl, TennisDictionaryListDataDefault ; $4293
+	ld hl, TennisDictionaryAttrmapDefault ; $4293
 	ld de, wScreenAttrmap ; $4296
 	call DecompressData ; $4299
 	call ClearTennisDictionaryTilemap ; $429c
@@ -245,7 +245,7 @@ LoadTennisDictionaryAssetsChar6:
 	ld_bg_pals de, 0, 8 ; $42c8
 	call LoadPalettesMasterOnly ; $42cb
 	wram_bank WRAM_COURT_PLANES ; $42ce
-	ld hl, TennisDictionaryListDataChar6 ; $42d4
+	ld hl, TennisDictionaryAttrmapChar6 ; $42d4
 	ld de, wScreenAttrmap ; $42d7
 	call DecompressData ; $42da
 	ret ; $42dd
@@ -352,7 +352,7 @@ LoadTennisDictionaryScreen:
 	call LoadTennisDictionaryAssetsDefault ; $43ca
 .decompressData:
 	wram_bank WRAM_SCREEN ; $43cd
-	ld hl, TennisDictionaryListData ; $43d3
+	ld hl, TennisDictionaryTilemap ; $43d3
 	ld de, wShadowTilemap ; $43d6
 	call DecompressData ; $43d9
 	wram_bank WRAM_SCREEN ; $43dc
@@ -447,14 +447,14 @@ TennisDictionaryClearList2:
 	dw wShadowTilemap + 30 * TILEMAP_WIDTH + 15, $0010 ; record 11
 	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 16, $0001 ; record 12
 	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 30, $0001 ; record 13
-TennisDictionaryListDataChar6:
-	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListDataChar6.bin" ; $44bf, 130 bytes
-TennisDictionaryListDataDefault:
-	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListDataDefault.bin" ; $4541, 91 bytes
-TennisDictionaryListData:
-	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListData.bin" ; $459c, 367 bytes
-TennisDictionaryListDataAlt:
-	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryListDataAlt.bin" ; $470b, 163 bytes
+TennisDictionaryAttrmapChar6:
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryAttrmapChar6.bin" ; $44bf, 130 bytes
+TennisDictionaryAttrmapDefault:
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryAttrmapDefault.bin" ; $4541, 91 bytes
+TennisDictionaryTilemap:
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTilemap.bin" ; $459c, 367 bytes
+TennisDictionaryTilemapAlt:
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTilemapAlt.bin" ; $470b, 163 bytes
 TennisDictionaryPalettesChar6:
 	INCLUDE "data/engine/menus/dictionary/TennisDictionaryPalettesChar6.asm" ; $47ae, 72 bytes (palettes)
 TennisDictionaryPalettesDefault:

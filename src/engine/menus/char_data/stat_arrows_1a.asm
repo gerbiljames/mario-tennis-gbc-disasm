@@ -109,14 +109,14 @@ RunCharDataConfirmScreen:
 	farcall InitCharDataScreenVideo ; $7945
 	farcall LoadCharDataScreenTilemaps ; $7948
 	wram_bank WRAM_STAGING ; $794b
-	ld hl, CharDataConfirmScreenGfx1 ; $7951
+	ld hl, CharDataConfirmScreenTopTilemap ; $7951
 	ld de, wTextTileBuffer tile 106 ; $7954
 	call DecompressData ; $7957
 	ld hl, wTextTileBuffer tile 106 ; $795a
 	ld bc, $002a ; $795d
 	call CopyBank1ToBank3BufferAlt ; $7960
 	wram_bank WRAM_STAGING ; $7963
-	ld hl, CharDataConfirmScreenGfx2 ; $7969
+	ld hl, CharDataConfirmScreenTopAttrmap ; $7969
 	ld de, wTextTileBuffer tile 106 ; $796c
 	call DecompressData ; $796f
 	ld hl, wTextTileBuffer tile 106 ; $7972
@@ -739,10 +739,10 @@ OffsetStatArrowSpriteX:
 CharDataConfirmScreenTable0:
 	; $7e46, 13 bytes (bytes:13)
 	db $00, $00, $00, $0e, $00, $20, $0e, $0e, $00, $40, $1c, $0e, $ff ; 0x00
-CharDataConfirmScreenGfx1:
-	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenGfx1.bin" ; $7e53, 34 bytes
-CharDataConfirmScreenGfx2:
-	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenGfx2.bin" ; $7e75, 9 bytes
+CharDataConfirmScreenTopTilemap:
+	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenTopTilemap.bin" ; $7e53, 34 bytes
+CharDataConfirmScreenTopAttrmap:
+	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenTopAttrmap.bin" ; $7e75, 9 bytes
 CharDataScreen_LoadPalette:
 	INCLUDE "data/engine/menus/char_data/CharDataScreen_LoadPalette.asm" ; $7e7e, 16 bytes (palettes)
 CharDataScreenGfx0:

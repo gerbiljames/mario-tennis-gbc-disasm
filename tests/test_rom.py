@@ -103,7 +103,7 @@ class Source(unittest.TestCase):
         self.assertLessEqual(count(r"^\tld (?:de|hl|bc), \$[89][0-9a-f]{3} ;"), 60)
 
     def test_copy_lengths_follow_their_blobs(self):
-        self.assertEqual(count(r"^\tld c, \((?!WRAMX_END|[whs][A-Z])\w+ - \w+\) / 16 ;"), 34)
+        self.assertEqual(count(r"^\tld c, \((?!WRAMX_END|[whs][A-Z])\w+ - \w+\) / 16 ;"), 35)
         n = count(r"^\tld b?c, (\w+)_SIZE / 16 ;")
         self.assertGreaterEqual(n, 299)
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob
@@ -111,7 +111,7 @@ class Source(unittest.TestCase):
         used = set(re.findall(r"\bld b?c, (?![whs][A-Z]|(?:WRAMX|VRAM|CHAR_RECORD)_SIZE)(\w+)_SIZE / 16", whole))
         have = set(re.findall(r'INCLUDE "data/(?:\w+/)+lz_(\w+)\.inc"', whole))
         self.assertEqual(used - have, set())
-        self.assertGreaterEqual(count(r"^\tld c, \d+ ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 39)
+        self.assertGreaterEqual(count(r"^\tld c, \d+ ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 38)
         # a VRAM copy's count is a size, a row count or a decimal tile count
         for name, text in SRC:
             lines = text.split("\n")
@@ -158,18 +158,19 @@ class Manifest(unittest.TestCase):
     def test_counts(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
-        self.assertEqual(len(lines), 4257)
-        self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 861)
+        self.assertEqual(len(lines), 4267)
+        self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 863)
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2721)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2913)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
-        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 231)
+        self.assertEqual(sum(s == "gfx:4x4" for s in specs), 4)
+        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 237)
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)
-        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1002)
+        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1012)
 
 
 @needs_rom
