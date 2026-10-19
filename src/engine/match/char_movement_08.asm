@@ -118,7 +118,7 @@ StepCharMovement:
 	call AddDEToMem24IntoBC ; $735a
 	bit 7, b ; $735d
 	jr nz, .farSide ; $735f
-	ld hl, $ff70 ; $7361
+	ld hl, -144 ; $7361
 	add hl, bc ; $7364
 	jr nc, .blockDepth ; $7365
 	ld hl, $f920 ; $7367
@@ -160,7 +160,7 @@ StepCharMovement:
 	call AddDEToMem24IntoBC ; $73a8
 	bit 7, b ; $73ab
 	jr nz, .unclampedFarSide ; $73ad
-	ld hl, $ff70 ; $73af
+	ld hl, -144 ; $73af
 	add hl, bc ; $73b2
 	jr nc, .doneUnclamped ; $73b3
 	jr .applyDepthUnclamped ; $73b5

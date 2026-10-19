@@ -110,7 +110,7 @@ Unused_00_CopyTextString:
 .applyMark:
 	push hl ; $2aba
 	ld b, a ; $2abb
-	ld hl, $ffdf ; $2abc
+	ld hl, -33 ; $2abc
 	add hl, de ; $2abf
 	ld a, [hl] ; $2ac0
 	cp $03 ; $2ac1

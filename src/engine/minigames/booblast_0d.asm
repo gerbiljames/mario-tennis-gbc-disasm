@@ -266,7 +266,7 @@ BooBlastControllerState2:
 	ld h, $00 ; $574a
 	ld l, a ; $574c
 	add hl, hl ; $574d
-	ld de, $ff00 ; $574e
+	ld de, -256 ; $574e
 	add hl, de ; $5751
 	ld de, $0000 ; $5752
 	call SetMinigameActorWorldPos ; $5755
@@ -298,7 +298,7 @@ IsBallWithinTargetZone:
 	sub h ; $5779
 	ld h, a ; $577a
 .positive:
-	ld de, $ff80 ; $577b
+	ld de, -128 ; $577b
 	add hl, de ; $577e
 	jr c, .returnZero ; $577f
 	ld hl, wMinigameSceneActor + 8 ; $5781
@@ -340,7 +340,7 @@ IsBallWithinTargetZone:
 	sub h ; $57b1
 	ld h, a ; $57b2
 .positive3:
-	ld de, $ff00 ; $57b3
+	ld de, -256 ; $57b3
 	add hl, de ; $57b6
 	jr c, .returnZero ; $57b7
 	ld a, $01 ; $57b9

@@ -78,7 +78,7 @@ Unused_00_AngleFromVector:
 	ld hl, $0180 ; $10d7
 	jr .offset ; $10da
 .overshoot4:
-	ld hl, $ff80 ; $10dc
+	ld hl, -128 ; $10dc
 .offset:
 	add hl, de ; $10df
 	srl h ; $10e0
@@ -93,7 +93,7 @@ Unused_00_AngleFromVector:
 	ld hl, $0060 ; $10ed
 	jr .offset2 ; $10f0
 .overshoot5:
-	ld hl, $ffe0 ; $10f2
+	ld hl, -32 ; $10f2
 .offset2:
 	add hl, de ; $10f5
 	srl h ; $10f6
@@ -108,7 +108,7 @@ Unused_00_AngleFromVector:
 	ld hl, $0018 ; $1103
 	jr .offset3 ; $1106
 .overshoot6:
-	ld hl, $fff8 ; $1108
+	ld hl, -8 ; $1108
 .offset3:
 	add hl, de ; $110b
 	srl h ; $110c
@@ -123,7 +123,7 @@ Unused_00_AngleFromVector:
 	ld hl, $0006 ; $1119
 	jr .offset4 ; $111c
 .overshoot7:
-	ld hl, hIsCGB ; $111e
+	ld hl, -2 ; $111e
 .offset4:
 	add hl, de ; $1121
 	srl h ; $1122

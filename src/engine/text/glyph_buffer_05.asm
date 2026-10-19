@@ -148,7 +148,7 @@ UploadGlyphBufferFull:
 	ld hl, vTiles1 tile $40 + VRAM_BANK1 ; $7451
 .pushPageDests:
 	push hl ; $7454
-	ld de, $ff00 ; $7455
+	ld de, -256 ; $7455
 	add hl, de ; $7458
 	push hl ; $7459
 	add hl, de ; $745a

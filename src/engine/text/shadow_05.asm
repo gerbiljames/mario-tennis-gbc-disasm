@@ -344,7 +344,7 @@ Unused_05_DrawTileAttrRect:
 	and $1f ; $4571
 	cp $1f ; $4573
 	jr nz, .nextCell ; $4575
-	ld hl, $ffe0 ; $4577
+	ld hl, -32 ; $4577
 	add hl, de ; $457a
 	ld d, h ; $457b
 	ld e, l ; $457c

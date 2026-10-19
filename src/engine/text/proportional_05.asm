@@ -232,7 +232,7 @@ StampGlyphTileAtPen:
 	and $20 ; $5f39
 	xor l ; $5f3b
 	jr z, .checkCell ; $5f3c
-	ld hl, $ffe0 ; $5f3e
+	ld hl, -32 ; $5f3e
 	add hl, de ; $5f41
 	ld d, h ; $5f42
 	ld e, l ; $5f43

@@ -151,7 +151,7 @@ ShootingStarTargetState0:
 	ld h, $00 ; $524d
 	ld l, a ; $524f
 	add hl, hl ; $5250
-	ld de, $ff00 ; $5251
+	ld de, -256 ; $5251
 	add hl, de ; $5254
 	ld de, $fdc0 ; $5255
 	call SetMinigameActorWorldPos ; $5258
@@ -177,7 +177,7 @@ ShootingStarTargetState2:
 	ld h, $00 ; $527d
 	ld l, a ; $527f
 	add hl, hl ; $5280
-	ld de, $ff00 ; $5281
+	ld de, -256 ; $5281
 	add hl, de ; $5284
 	ld de, $fdc0 ; $5285
 	call SetMinigameActorWorldPos ; $5288
@@ -212,7 +212,7 @@ IsBallInHitZone:
 	sub h ; $52b4
 	ld h, a ; $52b5
 .positive:
-	ld de, $ff80 ; $52b6
+	ld de, -128 ; $52b6
 	add hl, de ; $52b9
 	jr c, .returnZero ; $52ba
 	ld hl, wMinigameSceneActor + 8 ; $52bc
@@ -238,7 +238,7 @@ IsBallInHitZone:
 	sub h ; $52d6
 	ld h, a ; $52d7
 .positive2:
-	ld de, $ff00 ; $52d8
+	ld de, -256 ; $52d8
 	add hl, de ; $52db
 	jr c, .returnZero ; $52dc
 	ld hl, wBallHeight ; $52de
@@ -254,7 +254,7 @@ IsBallInHitZone:
 	sub h ; $52ec
 	ld h, a ; $52ed
 .positive3:
-	ld de, $ff40 ; $52ee
+	ld de, -192 ; $52ee
 	add hl, de ; $52f1
 	jr c, .returnZero ; $52f2
 	ld a, $01 ; $52f4

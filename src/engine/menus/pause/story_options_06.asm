@@ -476,7 +476,7 @@ CopyTileRectToShadowTilemap:
 	jr nz, .restore ; $788c
 	ld h, d ; $788e
 	ld l, e ; $788f
-	ld de, $ffe0 ; $7890
+	ld de, -32 ; $7890
 	add hl, de ; $7893
 	ld d, h ; $7894
 	ld e, l ; $7895
@@ -512,7 +512,7 @@ CopyTileRectToShadowAttrmap:
 	jr nz, .restore ; $78b5
 	ld h, d ; $78b7
 	ld l, e ; $78b8
-	ld de, $ffe0 ; $78b9
+	ld de, -32 ; $78b9
 	add hl, de ; $78bc
 	ld d, h ; $78bd
 	ld e, l ; $78be

@@ -191,7 +191,7 @@ ShotBallPathSmash:
 	ld a, [hl+] ; $66e7
 	ld d, [hl] ; $66e8
 	ld e, a ; $66e9
-	ld hl, $ff00 ; $66ea
+	ld hl, -256 ; $66ea
 	add hl, de ; $66ed
 	call SetBallTargetFromAim_24 ; $66ee
 	ret ; $66f1

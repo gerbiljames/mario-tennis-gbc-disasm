@@ -320,7 +320,7 @@ LoadShotPlacementEntry:
 FinalizeShotSpeed:
 	call AddPlayerMomentumToShot ; $52d7
 	call ApplyCharFlagShotSpeedPenalty ; $52da
-	ld hl, $ff00 ; $52dd
+	ld hl, -256 ; $52dd
 	add hl, bc ; $52e0
 	bit 7, h ; $52e1
 	jr z, .store ; $52e3
@@ -392,7 +392,7 @@ AddChargeSpeedBonus:
 	ld a, [wShotChargeLevel] ; $5345
 	ld l, a ; $5348
 	ld h, $00 ; $5349
-	ld de, $ffe0 ; $534b
+	ld de, -32 ; $534b
 	add hl, de ; $534e
 	ld a, $80 ; $534f
 	bit 7, h ; $5351
@@ -405,7 +405,7 @@ AddChargeSpeedBonusHalf:
 	ld a, [wShotChargeLevel] ; $535c
 	ld l, a ; $535f
 	ld h, $00 ; $5360
-	ld de, $ffe0 ; $5362
+	ld de, -32 ; $5362
 	add hl, de ; $5365
 	ld a, $40 ; $5366
 	bit 7, h ; $5368

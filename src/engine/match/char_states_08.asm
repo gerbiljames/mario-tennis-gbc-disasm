@@ -365,7 +365,7 @@ CheckCharBallContact:
 	sub h ; $6ee3
 	ld h, a ; $6ee4
 .checkHeight:
-	ld de, $fff0 ; $6ee5
+	ld de, -16 ; $6ee5
 	add hl, de ; $6ee8
 	ret c ; $6ee9
 	ld hl, wCharReachX ; $6eea

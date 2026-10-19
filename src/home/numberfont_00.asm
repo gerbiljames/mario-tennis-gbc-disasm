@@ -397,7 +397,7 @@ BlitBGRowFrom64:
 	and $3f ; $2264
 	jr nz, .nextCell ; $2266
 	ld a, c ; $2268
-	ld bc, $ffc0 ; $2269
+	ld bc, -64 ; $2269
 	add hl, bc ; $226c
 	ld c, a ; $226d
 .nextCell:
@@ -418,7 +418,7 @@ BlitBGRowFrom64:
 	and $3f ; $2284
 	jr nz, .nextCell2 ; $2286
 	ld a, c ; $2288
-	ld bc, $ffc0 ; $2289
+	ld bc, -64 ; $2289
 	add hl, bc ; $228c
 	ld c, a ; $228d
 .nextCell2:

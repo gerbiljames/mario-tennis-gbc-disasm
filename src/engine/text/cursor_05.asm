@@ -312,7 +312,7 @@ TextInterpreterLoop:
 	push de ; $4ec2
 	ld h, d ; $4ec3
 	ld l, e ; $4ec4
-	ld de, $ffe0 ; $4ec5
+	ld de, -32 ; $4ec5
 	add hl, de ; $4ec8
 	ld d, h ; $4ec9
 	ld e, l ; $4eca

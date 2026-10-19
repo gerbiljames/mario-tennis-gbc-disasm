@@ -280,7 +280,7 @@ TreasureBoxTargetState0:
 	ld a, [hl+] ; $5ae6
 	ld h, [hl] ; $5ae7
 	ld l, a ; $5ae8
-	ld de, $fff5 ; $5ae9
+	ld de, -11 ; $5ae9
 	add hl, de ; $5aec
 	bit 7, h ; $5aed
 	ld hl, TreasureBoxTypePoolLate ; $5aef

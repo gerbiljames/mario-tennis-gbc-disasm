@@ -107,7 +107,7 @@ ScaleStatForBarLevel:
 	sbc d ; $44cb
 	ld h, a ; $44cc
 	push hl ; $44cd
-	ld de, $ff81 ; $44ce
+	ld de, -127 ; $44ce
 	add hl, de ; $44d1
 	bit 7, h ; $44d2
 	pop hl ; $44d4

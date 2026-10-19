@@ -12,7 +12,7 @@ CheckBallContactWindow:
 	sub h ; $6fb5
 	ld h, a ; $6fb6
 .checkHeight:
-	ld de, $ffa0 ; $6fb7
+	ld de, -96 ; $6fb7
 	add hl, de ; $6fba
 	ret c ; $6fbb
 	ld hl, wCharReachX ; $6fbc
@@ -109,7 +109,7 @@ CheckBallInSwingRange:
 	sub h ; $7038
 	ld h, a ; $7039
 .checkDepth:
-	ld de, $ff60 ; $703a
+	ld de, -160 ; $703a
 	add hl, de ; $703d
 	ret c ; $703e
 	ld hl, wCharReachX ; $703f
@@ -387,7 +387,7 @@ HandleServePositioning:
 	ld h, a ; $7210
 .stepToward:
 	push hl ; $7211
-	ld de, $ffe0 ; $7212
+	ld de, -32 ; $7212
 	add hl, de ; $7215
 	pop hl ; $7216
 	jr nc, .done ; $7217

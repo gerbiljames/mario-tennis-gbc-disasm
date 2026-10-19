@@ -402,7 +402,7 @@ RenderInlineString:
 	push hl ; $54e9
 	ld h, d ; $54ea
 	ld l, e ; $54eb
-	ld de, $ffe0 ; $54ec
+	ld de, -32 ; $54ec
 	add hl, de ; $54ef
 	ld d, h ; $54f0
 	ld e, l ; $54f1
@@ -433,7 +433,7 @@ RenderInlineString:
 	push bc ; $551c
 	ld h, d ; $551d
 	ld l, e ; $551e
-	ld bc, $ffe0 ; $551f
+	ld bc, -32 ; $551f
 	add hl, bc ; $5522
 	push af ; $5523
 	ld a, [wShadowTilemapPtr + 1] ; $5524
@@ -465,7 +465,7 @@ RenderInlineString:
 	push hl ; $5547
 	ld h, d ; $5548
 	ld l, e ; $5549
-	ld de, $ffe0 ; $554a
+	ld de, -32 ; $554a
 	add hl, de ; $554d
 	ld d, h ; $554e
 	ld e, l ; $554f

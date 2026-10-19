@@ -323,7 +323,7 @@ WrapCellPtrToRowStart:
 	and $1f ; $6f2c
 	jr nz, .done ; $6f2e
 	push bc ; $6f30
-	ld bc, $ffe0 ; $6f31
+	ld bc, -32 ; $6f31
 	add hl, bc ; $6f34
 	pop bc ; $6f35
 .done:

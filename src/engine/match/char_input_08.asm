@@ -408,7 +408,7 @@ CheckCharNearTarget:
 	sub h ; $78d8
 	ld h, a ; $78d9
 .absX:
-	ld de, $ffe8 ; $78da
+	ld de, -24 ; $78da
 	add hl, de ; $78dd
 	jr c, .tooFar ; $78de
 	ld hl, wCharPosDepth + 1 ; $78e0
@@ -434,7 +434,7 @@ CheckCharNearTarget:
 	sub h ; $78fa
 	ld h, a ; $78fb
 .absDepth:
-	ld de, $ffe8 ; $78fc
+	ld de, -24 ; $78fc
 	add hl, de ; $78ff
 	jr c, .tooFar ; $7900
 	ld a, $01 ; $7902

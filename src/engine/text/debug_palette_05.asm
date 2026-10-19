@@ -343,7 +343,7 @@ Unused_05_WriteStringToTilemap:
 	push bc ; $6b94
 	ld h, d ; $6b95
 	ld l, e ; $6b96
-	ld bc, $ffe0 ; $6b97
+	ld bc, -32 ; $6b97
 	add hl, bc ; $6b9a
 	ld b, a ; $6b9b
 	ld a, [hl] ; $6b9c
@@ -390,7 +390,7 @@ Unused_05_WriteStringToTilemapAlt:
 	push bc ; $6bcb
 	ld h, d ; $6bcc
 	ld l, e ; $6bcd
-	ld bc, $ffe0 ; $6bce
+	ld bc, -32 ; $6bce
 	add hl, bc ; $6bd1
 	ld b, a ; $6bd2
 	ld a, [hl] ; $6bd3
@@ -486,7 +486,7 @@ Unused_05_WriteStringToTilemapStreamed:
 	push bc ; $6c54
 	ld h, d ; $6c55
 	ld l, e ; $6c56
-	ld bc, $ffe0 ; $6c57
+	ld bc, -32 ; $6c57
 	add hl, bc ; $6c5a
 	ld b, a ; $6c5b
 	ld a, [hl] ; $6c5c

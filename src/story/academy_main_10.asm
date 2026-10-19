@@ -394,7 +394,7 @@ UpdateActorTileAnimState_10:
 	ld a, [hl+] ; $79fb
 	ld h, [hl] ; $79fc
 	ld l, a ; $79fd
-	ld de, $ffb0 ; $79fe
+	ld de, -80 ; $79fe
 	add hl, de ; $7a01
 	ld d, h ; $7a02
 	ld hl, ACTORF_Y ; $7a03
@@ -462,7 +462,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	ld a, [hl+] ; $7a71
 	ld h, [hl] ; $7a72
 	ld l, a ; $7a73
-	ld de, $ffb0 ; $7a74
+	ld de, -80 ; $7a74
 	add hl, de ; $7a77
 	ld d, h ; $7a78
 	ld hl, ACTORF_Y ; $7a79

@@ -44,7 +44,7 @@ Unused_16_CourtDiagramBaseTask:
 	push bc ; $440d
 	ld h, d ; $440e
 	ld l, e ; $440f
-	ld bc, $ffe0 ; $4410
+	ld bc, -32 ; $4410
 	add hl, bc ; $4413
 	ld b, a ; $4414
 	ld a, [hl] ; $4415

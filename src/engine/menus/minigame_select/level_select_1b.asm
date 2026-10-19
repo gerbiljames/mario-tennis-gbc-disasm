@@ -238,7 +238,7 @@ Unused_1b_CopyMainCharNameWithDiacritics:
 .dakuten:
 	push de ; $6ac5
 	push hl ; $6ac6
-	ld hl, $ffdf ; $6ac7
+	ld hl, -33 ; $6ac7
 	add hl, de ; $6aca
 	ld [hl], $0e ; $6acb
 	pop hl ; $6acd
@@ -247,7 +247,7 @@ Unused_1b_CopyMainCharNameWithDiacritics:
 .handakuten:
 	push de ; $6ad1
 	push hl ; $6ad2
-	ld hl, $ffdf ; $6ad3
+	ld hl, -33 ; $6ad3
 	add hl, de ; $6ad6
 	ld [hl], $0f ; $6ad7
 	pop hl ; $6ad9

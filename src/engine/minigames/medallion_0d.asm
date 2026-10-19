@@ -226,7 +226,7 @@ MedallionMatchTargetState2:
 	ld h, $00 ; $5e25
 	ld l, a ; $5e27
 	add hl, hl ; $5e28
-	ld bc, $ff00 ; $5e29
+	ld bc, -256 ; $5e29
 	add hl, bc ; $5e2c
 	call SetMinigameActorWorldPos ; $5e2d
 	jp AdvanceMedallionMatchActorState ; $5e30

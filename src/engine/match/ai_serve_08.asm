@@ -15,7 +15,7 @@ AiRushToBallLanding:
 	push hl ; $797d
 	ld l, e ; $797e
 	ld h, d ; $797f
-	ld bc, $ff00 ; $7980
+	ld bc, -256 ; $7980
 	add hl, bc ; $7983
 	bit 7, h ; $7984
 	jr z, .setTarget ; $7986

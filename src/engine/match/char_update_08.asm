@@ -127,7 +127,7 @@ IsBallInTargetZone:
 	ld a, [hl+] ; $67ce
 	ld d, [hl] ; $67cf
 	ld e, a ; $67d0
-	ld hl, $fff0 ; $67d1
+	ld hl, -16 ; $67d1
 	add hl, de ; $67d4
 	ld e, l ; $67d5
 	ld d, h ; $67d6
@@ -167,7 +167,7 @@ IsBallInTargetZone:
 	ld a, [hl+] ; $6806
 	ld d, [hl] ; $6807
 	ld e, a ; $6808
-	ld hl, $fff0 ; $6809
+	ld hl, -16 ; $6809
 	add hl, de ; $680c
 	ld e, l ; $680d
 	ld d, h ; $680e

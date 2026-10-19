@@ -249,7 +249,7 @@ SetActorDrawModeFromSceneTile_0f:
 	ld a, [hl+] ; $633b
 	ld h, [hl] ; $633c
 	ld l, a ; $633d
-	ld de, $ffb0 ; $633e
+	ld de, -80 ; $633e
 	add hl, de ; $6341
 	ld d, h ; $6342
 	ld hl, ACTORF_Y ; $6343
@@ -317,7 +317,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ld a, [hl+] ; $63b1
 	ld h, [hl] ; $63b2
 	ld l, a ; $63b3
-	ld de, $ffb0 ; $63b4
+	ld de, -80 ; $63b4
 	add hl, de ; $63b7
 	ld d, h ; $63b8
 	ld hl, ACTORF_Y ; $63b9
