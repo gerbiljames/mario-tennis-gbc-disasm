@@ -146,16 +146,16 @@ NetGameMatch1JudgePoint:
 	rst Rst00 ; $5511
 	dw NetGameMatch1JudgePoint.result0 ; $5512 jumptable
 	dw NetGameMatch1Cases1 ; $5514 jumptable
-	dw NetGameMatch1Cases1.returnZero ; $5516 jumptable
-	dw NetGameMatch1Cases1.returnZero2 ; $5518 jumptable
+	dw NetGameMatch1Cases1.ignoreBounce ; $5516 jumptable
+	dw NetGameMatch1Cases1.ignoreRallyTick ; $5518 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $551a
 	ld hl, NetGameMatch1JudgePointMessages ; $551d
 	add l ; $5520
 	ld l, a ; $5521
-	jr nc, .readEntry1 ; $5522
+	jr nc, .readMessage ; $5522
 	inc h ; $5524
-.readEntry1:
+.readMessage:
 	ld a, [hl] ; $5525
 	ld a, a ; $5526
 	ld b, $0d ; $5527
@@ -164,9 +164,9 @@ NetGameMatch1JudgePoint:
 	ld hl, OddRallyVerdicts ; $552f
 	add l ; $5532
 	ld l, a ; $5533
-	jr nc, .readEntry2 ; $5534
+	jr nc, .readResult ; $5534
 	inc h ; $5536
-.readEntry2:
+.readResult:
 	ld a, [hl] ; $5537
 	ret ; $5538
 NetGameMatch1JudgePointMessages:
@@ -175,10 +175,10 @@ NetGameMatch1JudgePointMessages:
 NetGameMatch1Cases1:
 	xor a ; $5543
 	ret ; $5544
-.returnZero:
+.ignoreBounce:
 	xor a ; $5545
 	ret ; $5546
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $5547
 	ret ; $5548
 .dispatchResult:
@@ -187,8 +187,8 @@ NetGameMatch1Cases1:
 	rst Rst00 ; $554b
 	dw NetGameMatch1Cases1.checkPointOutcome ; $554c jumptable
 	dw NetGameMatch1Cases2 ; $554e jumptable
-	dw NetGameMatch1Cases2.returnZero ; $5550 jumptable
-	dw NetGameMatch1Cases2.returnZero2 ; $5552 jumptable
+	dw NetGameMatch1Cases2.ignoreBounce ; $5550 jumptable
+	dw NetGameMatch1Cases2.ignoreRallyTick ; $5552 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5554
 	ld hl, NetGameMatch1Cases1Messages ; $5557
@@ -216,10 +216,10 @@ NetGameMatch1Cases1Messages:
 NetGameMatch1Cases2:
 	xor a ; $557d
 	ret ; $557e
-.returnZero:
+.ignoreBounce:
 	xor a ; $557f
 	ret ; $5580
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $5581
 	ret ; $5582
 .dispatchResult:
@@ -228,8 +228,8 @@ NetGameMatch1Cases2:
 	rst Rst00 ; $5585
 	dw NetGameMatch1Cases2.checkPointOutcome ; $5586 jumptable
 	dw NetGameMatch1Cases3 ; $5588 jumptable
-	dw NetGameMatch1Cases3.returnZero ; $558a jumptable
-	dw NetGameMatch1Cases3.returnZero2 ; $558c jumptable
+	dw NetGameMatch1Cases3.ignoreBounce ; $558a jumptable
+	dw NetGameMatch1Cases3.ignoreRallyTick ; $558c jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $558e
 	ld hl, NetGameMatch1Cases2Messages ; $5591
@@ -271,10 +271,10 @@ NetGameMatch1Cases3:
 	jp nz, UnusedStoreMatchAbortFlag_4.storeMatchAbortFlag ; $55d6
 	xor a ; $55d9
 	ret ; $55da
-.returnZero:
+.ignoreBounce:
 	xor a ; $55db
 	ret ; $55dc
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $55dd
 	ret ; $55de
 .dispatchResult:
@@ -283,8 +283,8 @@ NetGameMatch1Cases3:
 	rst Rst00 ; $55e1
 	dw NetGameMatch1Cases3.checkPointOutcome ; $55e2 jumptable
 	dw NetGameMatch1Cases4 ; $55e4 jumptable
-	dw NetGameMatch1Cases4.noAction ; $55e6 jumptable
-	dw NetGameMatch1Cases4.noAction2 ; $55e8 jumptable
+	dw NetGameMatch1Cases4.ignoreBounce ; $55e6 jumptable
+	dw NetGameMatch1Cases4.ignoreRallyTick ; $55e8 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $55ea
 	ld hl, NetGameMatch1Cases3Messages ; $55ed
@@ -312,32 +312,32 @@ NetGameMatch1Cases3Messages:
 NetGameMatch1Cases4:
 	xor a ; $5613
 	ret ; $5614
-.noAction:
+.ignoreBounce:
 	xor a ; $5615
 	ret ; $5616
-.noAction2:
+.ignoreRallyTick:
 	xor a ; $5617
 	ret ; $5618
 .dispatchResult:
 	ld a, b ; $5619
 	ld a, a ; $561a
 	rst Rst00 ; $561b
-	dw NetGameMatch1Cases4.queueDrillResultMessage2 ; $561c jumptable
-	dw NetGameMatch1Cases4.queueDrillResultMessage ; $561e jumptable
-	dw NetGameMatch1Cases4.noAction3 ; $5620 jumptable
-	dw NetGameMatch1Cases4.storeMatchAbortFlag2 ; $5622 jumptable
-.queueDrillResultMessage2:
+	dw NetGameMatch1Cases4.rally5IgnorePointEnd ; $561c jumptable
+	dw NetGameMatch1Cases4.rally5FailBallHit ; $561e jumptable
+	dw NetGameMatch1Cases4.rally5IgnoreBounce ; $5620 jumptable
+	dw NetGameMatch1Cases4.rally5IgnoreRallyTick ; $5622 jumptable
+.rally5IgnorePointEnd:
 	xor a ; $5624
 	ret ; $5625
-.queueDrillResultMessage:
+.rally5FailBallHit:
 	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $5626
 	ld b, $0d ; $5628
 	call QueueDrillResultMessage ; $562a
 	jp UnusedStoreMatchAbortFlag_4.storeMatchAbortFlag ; $562d
-.noAction3:
+.rally5IgnoreBounce:
 	xor a ; $5630
 	ret ; $5631
-.storeMatchAbortFlag2:
+.rally5IgnoreRallyTick:
 	xor a ; $5632
 	ret ; $5633
 UnusedStoreMatchAbortFlag_4:
@@ -508,16 +508,16 @@ NetGameMatch2JudgePoint:
 	rst Rst00 ; $578b
 	dw NetGameMatch2JudgePoint.result0 ; $578c jumptable
 	dw NetGameMatch2Cases1 ; $578e jumptable
-	dw NetGameMatch2Cases1.returnZero ; $5790 jumptable
-	dw NetGameMatch2Cases1.returnZero2 ; $5792 jumptable
+	dw NetGameMatch2Cases1.ignoreBounce ; $5790 jumptable
+	dw NetGameMatch2Cases1.ignoreRallyTick ; $5792 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $5794
 	ld hl, NetGameMatch2JudgePointMessages ; $5797
 	add l ; $579a
 	ld l, a ; $579b
-	jr nc, .readEntry1 ; $579c
+	jr nc, .readMessage ; $579c
 	inc h ; $579e
-.readEntry1:
+.readMessage:
 	ld a, [hl] ; $579f
 	ld a, a ; $57a0
 	ld b, $0d ; $57a1
@@ -526,9 +526,9 @@ NetGameMatch2JudgePoint:
 	ld hl, OddRallyVerdicts ; $57a9
 	add l ; $57ac
 	ld l, a ; $57ad
-	jr nc, .readEntry2 ; $57ae
+	jr nc, .readResult ; $57ae
 	inc h ; $57b0
-.readEntry2:
+.readResult:
 	ld a, [hl] ; $57b1
 	ret ; $57b2
 NetGameMatch2JudgePointMessages:
@@ -537,10 +537,10 @@ NetGameMatch2JudgePointMessages:
 NetGameMatch2Cases1:
 	xor a ; $57bd
 	ret ; $57be
-.returnZero:
+.ignoreBounce:
 	xor a ; $57bf
 	ret ; $57c0
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $57c1
 	ret ; $57c2
 .dispatchResult:
@@ -549,8 +549,8 @@ NetGameMatch2Cases1:
 	rst Rst00 ; $57c5
 	dw NetGameMatch2Cases1.checkPointOutcome ; $57c6 jumptable
 	dw NetGameMatch2Cases2 ; $57c8 jumptable
-	dw NetGameMatch2Cases2.returnZero ; $57ca jumptable
-	dw NetGameMatch2Cases2.returnZero2 ; $57cc jumptable
+	dw NetGameMatch2Cases2.ignoreBounce ; $57ca jumptable
+	dw NetGameMatch2Cases2.ignoreRallyTick ; $57cc jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $57ce
 	ld hl, NetGameMatch2Cases1Messages ; $57d1
@@ -584,13 +584,13 @@ NetGameMatch2Cases2:
 	call QueueDrillResultMessage ; $5800
 	ld a, [wCurrentShotType] ; $5803
 	cp SHOTTYPE_LOB ; $5806
-	jp nz, NetGameMatch2Cases4.storeMatchAbortFlag ; $5808
+	jp nz, NetGameMatch2Cases4.abortWin ; $5808
 	xor a ; $580b
 	ret ; $580c
-.returnZero:
+.ignoreBounce:
 	xor a ; $580d
 	ret ; $580e
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $580f
 	ret ; $5810
 .dispatchResult:
@@ -599,8 +599,8 @@ NetGameMatch2Cases2:
 	rst Rst00 ; $5813
 	dw NetGameMatch2Cases2.checkPointOutcome ; $5814 jumptable
 	dw NetGameMatch2Cases3 ; $5816 jumptable
-	dw NetGameMatch2Cases3.returnZero ; $5818 jumptable
-	dw NetGameMatch2Cases3.returnZero2 ; $581a jumptable
+	dw NetGameMatch2Cases3.ignoreBounce ; $5818 jumptable
+	dw NetGameMatch2Cases3.ignoreRallyTick ; $581a jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $581c
 	ld hl, NetGameMatch2Cases2Messages ; $581f
@@ -631,13 +631,13 @@ NetGameMatch2Cases3:
 	call QueueDrillResultMessage ; $5849
 	ld a, [wShotRecoilVariant] ; $584c
 	cp $02 ; $584f
-	jp nz, NetGameMatch2Cases4.storeMatchAbortFlag2 ; $5851
+	jp nz, NetGameMatch2Cases4.abortLose ; $5851
 	xor a ; $5854
 	ret ; $5855
-.returnZero:
+.ignoreBounce:
 	xor a ; $5856
 	ret ; $5857
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $5858
 	ret ; $5859
 .dispatchResult:
@@ -646,8 +646,8 @@ NetGameMatch2Cases3:
 	rst Rst00 ; $585c
 	dw NetGameMatch2Cases3.checkPointOutcome ; $585d jumptable
 	dw NetGameMatch2Cases4 ; $585f jumptable
-	dw NetGameMatch2Cases4.noAction ; $5861 jumptable
-	dw NetGameMatch2Cases4.noAction2 ; $5863 jumptable
+	dw NetGameMatch2Cases4.ignoreBounce ; $5861 jumptable
+	dw NetGameMatch2Cases4.ignoreRallyTick ; $5863 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5865
 	ld hl, NetGameMatch2Cases3Messages ; $5868
@@ -675,40 +675,40 @@ NetGameMatch2Cases3Messages:
 NetGameMatch2Cases4:
 	xor a ; $588e
 	ret ; $588f
-.noAction:
+.ignoreBounce:
 	xor a ; $5890
 	ret ; $5891
-.noAction2:
+.ignoreRallyTick:
 	xor a ; $5892
 	ret ; $5893
 .dispatchResult:
 	ld a, b ; $5894
 	ld a, a ; $5895
 	rst Rst00 ; $5896
-	dw NetGameMatch2Cases4.queueDrillResultMessage2 ; $5897 jumptable
-	dw NetGameMatch2Cases4.queueDrillResultMessage ; $5899 jumptable
-	dw NetGameMatch2Cases4.noAction3 ; $589b jumptable
-	dw NetGameMatch2Cases4.storeMatchAbortFlag3 ; $589d jumptable
-.queueDrillResultMessage2:
+	dw NetGameMatch2Cases4.rally5IgnorePointEnd ; $5897 jumptable
+	dw NetGameMatch2Cases4.rally5FailBallHit ; $5899 jumptable
+	dw NetGameMatch2Cases4.rally5IgnoreBounce ; $589b jumptable
+	dw NetGameMatch2Cases4.rally5IgnoreRallyTick ; $589d jumptable
+.rally5IgnorePointEnd:
 	xor a ; $589f
 	ret ; $58a0
-.queueDrillResultMessage:
+.rally5FailBallHit:
 	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $58a1
 	ld b, $0d ; $58a3
 	call QueueDrillResultMessage ; $58a5
-	jp .storeMatchAbortFlag2 ; $58a8
-.noAction3:
+	jp .abortLose ; $58a8
+.rally5IgnoreBounce:
 	xor a ; $58ab
 	ret ; $58ac
-.storeMatchAbortFlag3:
+.rally5IgnoreRallyTick:
 	xor a ; $58ad
 	ret ; $58ae
-.storeMatchAbortFlag:
+.abortWin:
 	ld a, MATCHABORT_POINT ; $58af
 	ld [wMatchAbortFlag], a ; $58b1
 	ld a, $01 ; $58b4
 	ret ; $58b6
-.storeMatchAbortFlag2:
+.abortLose:
 	ld a, MATCHABORT_POINT ; $58b7
 	ld [wMatchAbortFlag], a ; $58b9
 	ld a, $ff ; $58bc
@@ -845,22 +845,22 @@ UnusedNetGameMatch3JudgePoint:
 	ld l, a ; $59b2
 	jp hl ; $59b3
 NetGameMatch3HandlePointEndTable:
-	dw UnusedNetGameMatch3JudgePoint.queueDrillResultMessage ; $59b4 jumptable
-	dw UnusedNetGameMatch3JudgePoint.queueDrillResultMessage3 ; $59b6 jumptable
-	dw UnusedNetGameMatch3JudgePoint.queueDrillResultMessage2 ; $59b8 jumptable
-	dw UnusedNetGameMatch3JudgePoint.queueDrillResultMessage4 ; $59ba jumptable
-UnusedNetGameMatch3JudgePoint.queueDrillResultMessage:
+	dw UnusedNetGameMatch3JudgePoint.judgeRally1 ; $59b4 jumptable
+	dw UnusedNetGameMatch3JudgePoint.judgeRally2 ; $59b6 jumptable
+	dw UnusedNetGameMatch3JudgePoint.judgeRally3 ; $59b8 jumptable
+	dw UnusedNetGameMatch3JudgePoint.judgeRally4 ; $59ba jumptable
+UnusedNetGameMatch3JudgePoint.judgeRally1:
 	ld a, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT ; $59bc
 	ld b, $0d ; $59be
 	call QueueDrillResultMessage ; $59c0
 	ld a, [wPointOutcome] ; $59c3
 	cp POINTOUTCOME_WINNER ; $59c6
-	jr z, UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame ; $59c8
+	jr z, UnusedNetGameMatch3JudgePoint.player1Point ; $59c8
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_3 ; $59ca
 	ld b, $0d ; $59cc
 	call QueueDrillResultMessage ; $59ce
-	jp UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame2 ; $59d1
-UnusedNetGameMatch3JudgePoint.queueDrillResultMessage2:
+	jp UnusedNetGameMatch3JudgePoint.player2Point ; $59d1
+UnusedNetGameMatch3JudgePoint.judgeRally3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE ; $59d4
 	ld b, $0d ; $59d6
 	call QueueDrillResultMessage ; $59d8
@@ -874,51 +874,51 @@ UnusedNetGameMatch3JudgePoint.queueDrillResultMessage2:
 UnusedNetGameMatch3JudgePoint.readB:
 	ld a, [hl] ; $59e8
 	or a ; $59e9
-	jr z, UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame2 ; $59ea
+	jr z, UnusedNetGameMatch3JudgePoint.player2Point ; $59ea
 	ld a, DRILLMSG_WAY_TO_PLAY_THE_NET_YOU_GET_A_POINT ; $59ec
 	ld b, $0d ; $59ee
 	call QueueDrillResultMessage ; $59f0
 	ld a, [wPointOutcome] ; $59f3
 	cp POINTOUTCOME_WINNER ; $59f6
-	jr z, UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame ; $59f8
-	jr UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame2 ; $59fa
-UnusedNetGameMatch3JudgePoint.queueDrillResultMessage3:
+	jr z, UnusedNetGameMatch3JudgePoint.player1Point ; $59f8
+	jr UnusedNetGameMatch3JudgePoint.player2Point ; $59fa
+UnusedNetGameMatch3JudgePoint.judgeRally2:
 	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $59fc
 	ld b, $0d ; $59fe
 	call QueueDrillResultMessage ; $5a00
 	ld a, [wPointOutcome] ; $5a03
 	cp POINTOUTCOME_WINNER ; $5a06
-	jr z, UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame2 ; $5a08
+	jr z, UnusedNetGameMatch3JudgePoint.player2Point ; $5a08
 	push af ; $5a0a
 	ld a, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET_2 ; $5a0b
 	ld b, $0d ; $5a0d
 	call QueueDrillResultMessage ; $5a0f
 	pop af ; $5a12
 	cp $07 ; $5a13
-	jr z, UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame ; $5a15
+	jr z, UnusedNetGameMatch3JudgePoint.player1Point ; $5a15
 	ld a, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT ; $5a17
 	ld b, $0d ; $5a19
 	call QueueDrillResultMessage ; $5a1b
-	jr UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame ; $5a1e
-UnusedNetGameMatch3JudgePoint.queueDrillResultMessage4:
+	jr UnusedNetGameMatch3JudgePoint.player1Point ; $5a1e
+UnusedNetGameMatch3JudgePoint.judgeRally4:
 	ld a, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT ; $5a20
 	ld b, $0d ; $5a22
 	call QueueDrillResultMessage ; $5a24
 	ld a, [wPointOutcome] ; $5a27
 	or a ; $5a2a
-	jr nz, UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame ; $5a2b
+	jr nz, UnusedNetGameMatch3JudgePoint.player1Point ; $5a2b
 	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $5a2d
 	ld b, $0d ; $5a2f
 	call QueueDrillResultMessage ; $5a31
-	jr UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame2 ; $5a34
-UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame:
+	jr UnusedNetGameMatch3JudgePoint.player2Point ; $5a34
+UnusedNetGameMatch3JudgePoint.player1Point:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5a36
 	and $01 ; $5a39
 	xor $01 ; $5a3b
 	add a ; $5a3d
 	dec a ; $5a3e
 	ret ; $5a3f
-UnusedNetGameMatch3JudgePoint.checkTotalPointsScoredInCurrentGame2:
+UnusedNetGameMatch3JudgePoint.player2Point:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5a40
 	and $01 ; $5a43
 	add a ; $5a45

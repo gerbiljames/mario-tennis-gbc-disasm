@@ -53,12 +53,12 @@ Unused_00_BlitBGStrip:
 	ld [de], a ; $2349
 	ld a, l ; $234a
 	and $1f ; $234b
-	jr nz, .maskSet ; $234d
+	jr nz, .attrNoWrap ; $234d
 	ld a, c ; $234f
 	ld bc, -32 ; $2350
 	add hl, bc ; $2353
 	ld c, a ; $2354
-.maskSet:
+.attrNoWrap:
 	inc e ; $2355
 	res 5, e ; $2356
 	dec c ; $2358
@@ -74,12 +74,12 @@ Unused_00_BlitBGStrip:
 	ld [de], a ; $2369
 	ld a, l ; $236a
 	and $1f ; $236b
-	jr nz, .maskSet2 ; $236d
+	jr nz, .tileNoWrap ; $236d
 	ld a, c ; $236f
 	ld bc, -32 ; $2370
 	add hl, bc ; $2373
 	ld c, a ; $2374
-.maskSet2:
+.tileNoWrap:
 	inc e ; $2375
 	res 5, e ; $2376
 	dec c ; $2378

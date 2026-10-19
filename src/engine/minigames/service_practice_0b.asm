@@ -150,16 +150,16 @@ ServiceMatch3JudgePoint:
 	rst Rst00 ; $4d4f
 	dw ServiceMatch3JudgePoint.result0 ; $4d50 jumptable
 	dw ServiceMatch3Cases1 ; $4d52 jumptable
-	dw ServiceMatch3Cases1.returnZero ; $4d54 jumptable
-	dw ServiceMatch3Cases1.returnZero2 ; $4d56 jumptable
+	dw ServiceMatch3Cases1.ignoreBounce ; $4d54 jumptable
+	dw ServiceMatch3Cases1.ignoreRallyTick ; $4d56 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $4d58
 	ld hl, ServiceMatch3JudgePointMessages ; $4d5b
 	add l ; $4d5e
 	ld l, a ; $4d5f
-	jr nc, .readEntry1 ; $4d60
+	jr nc, .readMessage ; $4d60
 	inc h ; $4d62
-.readEntry1:
+.readMessage:
 	ld a, [hl] ; $4d63
 	ld a, a ; $4d64
 	ld b, $06 ; $4d65
@@ -168,9 +168,9 @@ ServiceMatch3JudgePoint:
 	ld hl, OddRallyVerdicts ; $4d6d
 	add l ; $4d70
 	ld l, a ; $4d71
-	jr nc, .readEntry2 ; $4d72
+	jr nc, .readResult ; $4d72
 	inc h ; $4d74
-.readEntry2:
+.readResult:
 	ld a, [hl] ; $4d75
 	ret ; $4d76
 ServiceMatch3JudgePointMessages:
@@ -179,10 +179,10 @@ ServiceMatch3JudgePointMessages:
 ServiceMatch3Cases1:
 	xor a ; $4d81
 	ret ; $4d82
-.returnZero:
+.ignoreBounce:
 	xor a ; $4d83
 	ret ; $4d84
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $4d85
 	ret ; $4d86
 .dispatchResult:
@@ -191,8 +191,8 @@ ServiceMatch3Cases1:
 	rst Rst00 ; $4d89
 	dw ServiceMatch3Cases1.checkPointOutcome ; $4d8a jumptable
 	dw ServiceMatch3Cases2 ; $4d8c jumptable
-	dw ServiceMatch3Cases2.returnZero ; $4d8e jumptable
-	dw ServiceMatch3Cases2.storeMatchAbortFlag2 ; $4d90 jumptable
+	dw ServiceMatch3Cases2.ignoreBounce ; $4d8e jumptable
+	dw ServiceMatch3Cases2.ignoreRallyTick ; $4d90 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4d92
 	ld hl, ServiceMatch3Cases1Messages ; $4d95
@@ -229,10 +229,10 @@ ServiceMatch3Cases2:
 .unreachable:
 	xor a ; $4dcc
 	ret ; $4dcd
-.returnZero:
+.ignoreBounce:
 	xor a ; $4dce
 	ret ; $4dcf
-.storeMatchAbortFlag2:
+.ignoreRallyTick:
 	xor a ; $4dd0
 	ret ; $4dd1
 UnusedStoreMatchAbortFlag_3:

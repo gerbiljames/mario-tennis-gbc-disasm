@@ -290,14 +290,14 @@ IsBallWithinTargetZone:
 	sbc d ; $576f
 	ld h, a ; $5770
 	bit 7, h ; $5771
-	jr z, .positive ; $5773
+	jr z, .absX ; $5773
 	xor a ; $5775
 	sub l ; $5776
 	ld l, a ; $5777
 	sbc a ; $5778
 	sub h ; $5779
 	ld h, a ; $577a
-.positive:
+.absX:
 	ld de, -128 ; $577b
 	add hl, de ; $577e
 	jr c, .returnZero ; $577f
@@ -316,14 +316,14 @@ IsBallWithinTargetZone:
 	sbc d ; $5791
 	ld h, a ; $5792
 	bit 7, h ; $5793
-	jr z, .positive2 ; $5795
+	jr z, .absDepth ; $5795
 	xor a ; $5797
 	sub l ; $5798
 	ld l, a ; $5799
 	sbc a ; $579a
 	sub h ; $579b
 	ld h, a ; $579c
-.positive2:
+.absDepth:
 	ld de, $fec0 ; $579d
 	add hl, de ; $57a0
 	jr c, .returnZero ; $57a1
@@ -332,14 +332,14 @@ IsBallWithinTargetZone:
 	ld h, [hl] ; $57a7
 	ld l, a ; $57a8
 	bit 7, h ; $57a9
-	jr z, .positive3 ; $57ab
+	jr z, .absHeight ; $57ab
 	xor a ; $57ad
 	sub l ; $57ae
 	ld l, a ; $57af
 	sbc a ; $57b0
 	sub h ; $57b1
 	ld h, a ; $57b2
-.positive3:
+.absHeight:
 	ld de, -256 ; $57b3
 	add hl, de ; $57b6
 	jr c, .returnZero ; $57b7

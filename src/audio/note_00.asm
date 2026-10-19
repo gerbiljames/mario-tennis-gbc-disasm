@@ -81,11 +81,11 @@ SndTriggerNote:
 	ld e, a ; $38ba
 	ldh a, [hSndToneCtrl] ; $38bb
 	and $10 ; $38bd
-	jr z, .maskClear ; $38bf
+	jr z, .lookupPeriod ; $38bf
 	ld a, e ; $38c1
 	add $18 ; $38c2
 	ld e, a ; $38c4
-.maskClear:
+.lookupPeriod:
 	ld d, $00 ; $38c5
 	ld hl, NotePeriodTable ; $38c7
 	add hl, de ; $38ca
@@ -95,14 +95,14 @@ SndTriggerNote:
 	ld a, b ; $38ce
 	swap a ; $38cf
 	and $0f ; $38d1
-	jr z, .maskClear2 ; $38d3
+	jr z, .toPeriodReg ; $38d3
 	ld b, a ; $38d5
 .shiftPeriod:
 	srl h ; $38d6
 	rr l ; $38d8
 	dec b ; $38da
 	jr nz, .shiftPeriod ; $38db
-.maskClear2:
+.toPeriodReg:
 	ld a, $00 ; $38dd
 	sub l ; $38df
 	ld l, a ; $38e0

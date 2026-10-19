@@ -21,7 +21,7 @@
 	ld hl, wDrillCounters + 3
 	inc [hl]
 	jp .storeMatchAbortFlag
-.storeMatchAbortFlag2:
+.ignoreRallyTick:
 	xor a
 	ret
 .hitTarget:

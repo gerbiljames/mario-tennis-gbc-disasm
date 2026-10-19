@@ -204,14 +204,14 @@ IsBallInHitZone:
 	sbc d ; $52aa
 	ld h, a ; $52ab
 	bit 7, h ; $52ac
-	jr z, .positive ; $52ae
+	jr z, .absX ; $52ae
 	xor a ; $52b0
 	sub l ; $52b1
 	ld l, a ; $52b2
 	sbc a ; $52b3
 	sub h ; $52b4
 	ld h, a ; $52b5
-.positive:
+.absX:
 	ld de, -128 ; $52b6
 	add hl, de ; $52b9
 	jr c, .returnZero ; $52ba
@@ -230,14 +230,14 @@ IsBallInHitZone:
 	sbc d ; $52cc
 	ld h, a ; $52cd
 	bit 7, h ; $52ce
-	jr z, .positive2 ; $52d0
+	jr z, .absDepth ; $52d0
 	xor a ; $52d2
 	sub l ; $52d3
 	ld l, a ; $52d4
 	sbc a ; $52d5
 	sub h ; $52d6
 	ld h, a ; $52d7
-.positive2:
+.absDepth:
 	ld de, -256 ; $52d8
 	add hl, de ; $52db
 	jr c, .returnZero ; $52dc
@@ -246,14 +246,14 @@ IsBallInHitZone:
 	ld h, [hl] ; $52e2
 	ld l, a ; $52e3
 	bit 7, h ; $52e4
-	jr z, .positive3 ; $52e6
+	jr z, .absHeight ; $52e6
 	xor a ; $52e8
 	sub l ; $52e9
 	ld l, a ; $52ea
 	sbc a ; $52eb
 	sub h ; $52ec
 	ld h, a ; $52ed
-.positive3:
+.absHeight:
 	ld de, -192 ; $52ee
 	add hl, de ; $52f1
 	jr c, .returnZero ; $52f2

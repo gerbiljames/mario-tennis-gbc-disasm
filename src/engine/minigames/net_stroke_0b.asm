@@ -40,14 +40,14 @@ NetGamePractice3Hook_PointEnd:
 	call NetGamePractice3JudgeOnPointEnd ; $61ac
 	ld a, [wPointOutcome] ; $61af
 	cp POINTOUTCOME_NET ; $61b2
-	jr z, .netGamePractice3HandlePointEnd2 ; $61b4
+	jr z, .countNetOrOut ; $61b4
 	cp POINTOUTCOME_OUT ; $61b6
-	jr z, .netGamePractice3HandlePointEnd2 ; $61b8
-	jr .netGamePractice3HandlePointEnd ; $61ba
-.netGamePractice3HandlePointEnd2:
+	jr z, .countNetOrOut ; $61b8
+	jr .handlePointEnd ; $61ba
+.countNetOrOut:
 	ld hl, wDrillCounters + 3 ; $61bc
 	inc [hl] ; $61bf
-.netGamePractice3HandlePointEnd:
+.handlePointEnd:
 	call NetGamePractice3HandlePointEnd ; $61c0
 	ld a, [wTotalPointsScoredInCurrentGame] ; $61c3
 	cp $04 ; $61c6
@@ -176,15 +176,15 @@ NetGamePractice3JudgePoint:
 	dw NetGamePractice3JudgePoint.result0 ; $62fb jumptable
 	dw NetGamePractice3Cases1 ; $62fd jumptable
 	dw NetGamePractice3Cases1.checkBallBounceCount ; $62ff jumptable
-	dw NetGamePractice3Cases1.returnZero ; $6301 jumptable
+	dw NetGamePractice3Cases1.ignoreRallyTick ; $6301 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6303
 	ld hl, NetGamePractice3JudgePointMessages ; $6306
 	add l ; $6309
 	ld l, a ; $630a
-	jr nc, .readEntry1 ; $630b
+	jr nc, .readMessage ; $630b
 	inc h ; $630d
-.readEntry1:
+.readMessage:
 	ld a, [hl] ; $630e
 	ld a, a ; $630f
 	ld b, $00 ; $6310
@@ -193,9 +193,9 @@ NetGamePractice3JudgePoint:
 	ld hl, OddRallyVerdicts ; $6318
 	add l ; $631b
 	ld l, a ; $631c
-	jr nc, .readEntry2 ; $631d
+	jr nc, .readResult ; $631d
 	inc h ; $631f
-.readEntry2:
+.readResult:
 	ld a, [hl] ; $6320
 	ret ; $6321
 NetGamePractice3JudgePointMessages:
@@ -226,7 +226,7 @@ NetGamePractice3Cases1:
 	jp z, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $6353
 	xor a ; $6356
 	ret ; $6357
-.returnZero:
+.ignoreRallyTick:
 	xor a ; $6358
 	ret ; $6359
 .dispatchResult:
@@ -235,8 +235,8 @@ NetGamePractice3Cases1:
 	rst Rst00 ; $635c
 	dw NetGamePractice3Cases1.checkPointOutcome ; $635d jumptable
 	dw NetGamePractice3Cases2 ; $635f jumptable
-	dw NetGamePractice3Cases2.returnZero ; $6361 jumptable
-	dw NetGamePractice3Cases2.returnZero2 ; $6363 jumptable
+	dw NetGamePractice3Cases2.ignoreBounce ; $6361 jumptable
+	dw NetGamePractice3Cases2.ignoreRallyTick ; $6363 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6365
 	ld hl, NetGamePractice3Cases1Messages ; $6368
@@ -264,10 +264,10 @@ NetGamePractice3Cases1Messages:
 NetGamePractice3Cases2:
 	xor a ; $638e
 	ret ; $638f
-.returnZero:
+.ignoreBounce:
 	xor a ; $6390
 	ret ; $6391
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $6392
 	ret ; $6393
 .dispatchResult:
@@ -276,8 +276,8 @@ NetGamePractice3Cases2:
 	rst Rst00 ; $6396
 	dw NetGamePractice3Cases2.checkPointOutcome ; $6397 jumptable
 	dw NetGamePractice3Cases3 ; $6399 jumptable
-	dw NetGamePractice3Cases3.returnZero ; $639b jumptable
-	dw NetGamePractice3Cases3.storeMatchAbortFlag2 ; $639d jumptable
+	dw NetGamePractice3Cases3.ignoreBounce ; $639b jumptable
+	dw NetGamePractice3Cases3.ignoreRallyTick ; $639d jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $639f
 	ld hl, NetGamePractice3Cases2Messages ; $63a2
@@ -320,10 +320,10 @@ NetGamePractice3Cases3:
 	dec [hl] ; $63e9
 	xor a ; $63ea
 	ret ; $63eb
-.returnZero:
+.ignoreBounce:
 	xor a ; $63ec
 	ret ; $63ed
-.storeMatchAbortFlag2:
+.ignoreRallyTick:
 	xor a ; $63ee
 	ret ; $63ef
 UnusedStoreMatchAbortFlag_6:
@@ -500,16 +500,16 @@ StrokeMatch1JudgePoint:
 	rst Rst00 ; $6521
 	dw StrokeMatch1JudgePoint.rally1 ; $6522 jumptable
 	dw StrokeMatch1Cases1 ; $6524 jumptable
-	dw StrokeMatch1Cases1.returnZero ; $6526 jumptable
-	dw StrokeMatch1Cases1.returnZero2 ; $6528 jumptable
+	dw StrokeMatch1Cases1.ignoreBounce ; $6526 jumptable
+	dw StrokeMatch1Cases1.ignoreRallyTick ; $6528 jumptable
 .rally1:
 	ld a, [wPointOutcome] ; $652a
 	ld hl, StrokeMatch1JudgePointMessages ; $652d
 	add l ; $6530
 	ld l, a ; $6531
-	jr nc, .readEntry1 ; $6532
+	jr nc, .readMessage ; $6532
 	inc h ; $6534
-.readEntry1:
+.readMessage:
 	ld a, [hl] ; $6535
 	ld a, a ; $6536
 	ld b, $07 ; $6537
@@ -518,9 +518,9 @@ StrokeMatch1JudgePoint:
 	ld a, [wPointOutcome] ; $653f
 	add l ; $6542
 	ld l, a ; $6543
-	jr nc, .readEntry2 ; $6544
+	jr nc, .readResult ; $6544
 	inc h ; $6546
-.readEntry2:
+.readResult:
 	ld a, [hl] ; $6547
 	ret ; $6548
 StrokeMatch1JudgePointMessages:
@@ -529,10 +529,10 @@ StrokeMatch1JudgePointMessages:
 StrokeMatch1Cases1:
 	xor a ; $6553
 	ret ; $6554
-.returnZero:
+.ignoreBounce:
 	xor a ; $6555
 	ret ; $6556
-.returnZero2:
+.ignoreRallyTick:
 	xor a ; $6557
 	ret ; $6558
 .rally2:
@@ -541,8 +541,8 @@ StrokeMatch1Cases1:
 	rst Rst00 ; $655b
 	dw StrokeMatch1Cases1.checkPointOutcome ; $655c jumptable
 	dw StrokeMatch1Cases2 ; $655e jumptable
-	dw StrokeMatch1Cases2.checkPointOutcome ; $6560 jumptable
-	dw StrokeMatch1Cases2.returnZero ; $6562 jumptable
+	dw StrokeMatch1Cases2.judgeBounce ; $6560 jumptable
+	dw StrokeMatch1Cases2.ignoreRallyTick ; $6562 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6564
 	ld hl, StrokeMatch1Cases1Messages ; $6567
@@ -576,10 +576,10 @@ StrokeMatch1Cases2:
 	call SetDrillMessageByRallyParity ; $6597
 	ld a, [wLastShotCharIndex] ; $659a
 	call TestCharStateBit4 ; $659d
-	jp nz, StrokeMatch1Cases4.storeMatchAbortFlag2 ; $65a0
+	jp nz, StrokeMatch1Cases4.abortLose ; $65a0
 	xor a ; $65a3
 	ret ; $65a4
-.checkPointOutcome:
+.judgeBounce:
 	ld a, [wPointOutcome] ; $65a5
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $65a8
 	ld a, $00 ; $65aa
@@ -589,10 +589,10 @@ StrokeMatch1Cases2:
 	call SetDrillMessageByRallyParity ; $65b1
 	call TestBallBounceDepth ; $65b4
 	or a ; $65b7
-	jp z, StrokeMatch1Cases4.storeMatchAbortFlag2 ; $65b8
+	jp z, StrokeMatch1Cases4.abortLose ; $65b8
 	xor a ; $65bb
 	ret ; $65bc
-.returnZero:
+.ignoreRallyTick:
 	xor a ; $65bd
 	ret ; $65be
 .maskClear:
@@ -601,8 +601,8 @@ StrokeMatch1Cases2:
 	rst Rst00 ; $65c1
 	dw StrokeMatch1Cases2.queuePointOutcomeMessage ; $65c2 jumptable
 	dw StrokeMatch1Cases3 ; $65c4 jumptable
-	dw StrokeMatch1Cases3.checkPointOutcome ; $65c6 jumptable
-	dw StrokeMatch1Cases3.returnZero ; $65c8 jumptable
+	dw StrokeMatch1Cases3.judgeBounce ; $65c6 jumptable
+	dw StrokeMatch1Cases3.ignoreRallyTick ; $65c8 jumptable
 .queuePointOutcomeMessage:
 	ld a, [wPointOutcome] ; $65ca
 	ld hl, StrokeMatch1Cases2Messages ; $65cd
@@ -633,10 +633,10 @@ StrokeMatch1Cases3:
 	call SetDrillMessageByRallyParity ; $65f7
 	ld a, [wLastShotCharIndex] ; $65fa
 	call TestCharStateBit4 ; $65fd
-	jp nz, StrokeMatch1Cases4.storeMatchAbortFlag ; $6600
+	jp nz, StrokeMatch1Cases4.abortWin ; $6600
 	xor a ; $6603
 	ret ; $6604
-.checkPointOutcome:
+.judgeBounce:
 	ld a, [wPointOutcome] ; $6605
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $6608
 	ld a, $00 ; $660a
@@ -646,10 +646,10 @@ StrokeMatch1Cases3:
 	call SetDrillMessageByRallyParity ; $6611
 	call TestBallBounceDepth ; $6614
 	or a ; $6617
-	jp z, StrokeMatch1Cases4.storeMatchAbortFlag ; $6618
+	jp z, StrokeMatch1Cases4.abortWin ; $6618
 	xor a ; $661b
 	ret ; $661c
-.returnZero:
+.ignoreRallyTick:
 	xor a ; $661d
 	ret ; $661e
 .dispatchResult:
@@ -659,7 +659,7 @@ StrokeMatch1Cases3:
 	dw StrokeMatch1Cases3.queuePointOutcomeMessage ; $6622 jumptable
 	dw StrokeMatch1Cases4 ; $6624 jumptable
 	dw StrokeMatch1Cases4.checkPointOutcome ; $6626 jumptable
-	dw StrokeMatch1Cases4.storeMatchAbortFlag3 ; $6628 jumptable
+	dw StrokeMatch1Cases4.ignoreRallyTick ; $6628 jumptable
 .queuePointOutcomeMessage:
 	ld a, [wPointOutcome] ; $662a
 	ld hl, StrokeMatch1Cases3Messages ; $662d
@@ -690,7 +690,7 @@ StrokeMatch1Cases4:
 	call SetDrillMessageByRallyParity ; $6657
 	ld a, [wLastShotCharIndex] ; $665a
 	call TestCharStateBit4 ; $665d
-	jp nz, .storeMatchAbortFlag2 ; $6660
+	jp nz, .abortLose ; $6660
 	xor a ; $6663
 	ret ; $6664
 .checkPointOutcome:
@@ -703,18 +703,18 @@ StrokeMatch1Cases4:
 	call SetDrillMessageByRallyParity ; $6671
 	call TestBallBounceDepth ; $6674
 	or a ; $6677
-	jp z, .storeMatchAbortFlag2 ; $6678
+	jp z, .abortLose ; $6678
 	xor a ; $667b
 	ret ; $667c
-.storeMatchAbortFlag3:
+.ignoreRallyTick:
 	xor a ; $667d
 	ret ; $667e
-.storeMatchAbortFlag:
+.abortWin:
 	ld a, MATCHABORT_POINT ; $667f
 	ld [wMatchAbortFlag], a ; $6681
 	ld a, $01 ; $6684
 	ret ; $6686
-.storeMatchAbortFlag2:
+.abortLose:
 	ld a, MATCHABORT_POINT ; $6687
 	ld [wMatchAbortFlag], a ; $6689
 	ld a, $ff ; $668c
