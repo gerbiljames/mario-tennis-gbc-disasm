@@ -816,6 +816,73 @@ def check_dma_alignment(fail):
     return n
 
 
+# Variables whose ids name a different family per story location, so a raw
+# value matching some family member there proves nothing.
+_PER_LOCATION_VARS = {"wMapSceneStage", "wMapSceneStage2"}
+# (variable, raw operand): raw values that equal a member of a family the
+# variable also uses, but mean something else.
+KNOWN_RAW_IDS = {
+    ("wMinigameLevel", "$02"),     # Tennis Machine / Wall level 3: an index, not the Mario high-score level
+    ("wPlayer1MainChar", "$3f"),   # debug_02's placeholder record id, not a drill opponent
+}
+_NUMBER_RE = re.compile(r"(\$[0-9a-fA-F]+|%[01]+|\d+)")
+
+
+def check_raw_ids(fail):
+    """A raw cp/store operand on a variable that names its other values from a
+    constant family must not equal a member of that family."""
+    import consts
+    values = consts.constants()
+    uses = {}
+    for holder in holders():
+        lines, origin = bank_lines(holder)
+        src = hl = None
+        prev = ""
+        for i, line in enumerate(lines):
+            if re.match(r"[A-Za-z_.]", line):
+                src = hl = None
+                prev = ""
+                continue
+            t = line.split(";")[0].strip()
+            if not t:
+                continue
+            where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            if m := re.match(r"ldh? a, \[([wh][A-Z]\w+)\]$", t):
+                src = m.group(1)
+            elif m := re.match(r"ld hl, ([wh][A-Z]\w+)$", t):
+                hl = m.group(1)
+            elif (m := re.match(r"cp (.+)$", t)) and src:
+                uses.setdefault(src, []).append((m.group(1), where))
+            elif m := re.match(r"ldh? \[([wh][A-Z]\w+)\], a$", t):
+                if (mm := re.match(r"ld a, ([^\[]+)$", prev)) and mm.group(1) not in "bcdehl":
+                    uses.setdefault(m.group(1), []).append((mm.group(1), where))
+            else:
+                if (m := re.match(r"ld \[hl\], (.+)$", t)) and hl and m.group(1) not in "abcdehl":
+                    uses.setdefault(hl, []).append((m.group(1), where))
+                if not re.match(r"(jr|jp) (n?z|n?c),", t):
+                    src = None
+                if re.match(r"(ld (hl|h|l),|inc hl|dec hl|pop hl|add hl|call|jp|ret|ld a, \[hl[+-]\])", t):
+                    hl = None
+            prev = t
+    n = 0
+    for var, ops in uses.items():
+        if var in _PER_LOCATION_VARS:
+            continue
+        families = {op.split("_")[0] for op, _ in ops if op in values and "_" in op}
+        for op, where in ops:
+            if not _NUMBER_RE.fullmatch(op):
+                continue
+            n += 1
+            v = int(op[1:], 16) if op.startswith("$") else int(op[1:], 2) if op.startswith("%") else int(op)
+            names = [k for k, x in values.items() if x == v and k.split("_")[0] in families
+                     and not k.startswith("NUM_")]
+            if names and (var, op) not in KNOWN_RAW_IDS:
+                fail("raw-ids", f"{where}: {var} {op} -- {names[0]}?")
+    for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
+        fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
+    return n
+
+
 def main():
     global ROOT
     ROOT = Path(__file__).resolve().parent.parent
@@ -849,6 +916,7 @@ def main():
         "slots": actorslots.check(fail),
         "reach": reach.check(fail),
         "entries": routes.check(fail),
+        "raw-ids": check_raw_ids(fail),
     }
     by_check = {}
     for check, msg in failures:

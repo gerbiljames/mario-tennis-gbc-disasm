@@ -451,7 +451,7 @@ DrawScoreboardSprites:
 	ld a, [wScoreboardLayout] ; $5090
 	cp SCOREBOARD_SCORE ; $5093
 	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5095
-	cp $07 ; $5097
+	cp SCOREBOARD_HIGH_SCORE ; $5097
 	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5099
 	ret ; $509b
 ScoreboardSpriteTemplatePointers:

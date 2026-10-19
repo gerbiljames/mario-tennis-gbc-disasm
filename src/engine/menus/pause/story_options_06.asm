@@ -108,7 +108,7 @@ RunStoryThreeOptionMenu:
 	ld_cell de, $0d, $0a ; $7195
 	call DrawStoryMenuItem ; $7198
 	ld a, [wStoryMenuFirstItem] ; $719b
-	cp $06 ; $719e (flags unused: add [hl] replaces them)
+	cp STORYMENUITEM_MSG_SLOW ; $719e (flags unused: add [hl] replaces them)
 	ld hl, wMatchMenuSelection ; $71a0
 	add [hl] ; $71a3
 	ld hl, Text_StoryMenuCaptions ; $71a4
@@ -145,7 +145,7 @@ RunStoryThreeOptionMenu:
 	ld [wMatchMenuSelection], a ; $71ea
 	sound SFX_MENU_MOVE ; $71ed
 	ld a, [wStoryMenuFirstItem] ; $71ef
-	cp $06 ; $71f2 (flags unused: add [hl] replaces them)
+	cp STORYMENUITEM_MSG_SLOW ; $71f2 (flags unused: add [hl] replaces them)
 	ld hl, wMatchMenuSelection ; $71f4
 	add [hl] ; $71f7
 	ld hl, Text_StoryMenuCaptions ; $71f8

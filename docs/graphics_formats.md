@@ -796,7 +796,7 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All twenty
+the source claims is true, not just that the bytes come back. All twenty-one
 pass:
 
 | check | count | what it asserts |
@@ -821,6 +821,7 @@ pass:
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4876 | a routine is named `Unused` exactly when nothing reachable reaches it |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
+| `raw-ids` | 1381 | a raw `cp` or store on a variable whose other values are named never equals a member of that family (exceptions allow-listed) |
 
 ---
 

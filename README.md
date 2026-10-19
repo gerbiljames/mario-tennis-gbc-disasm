@@ -249,7 +249,7 @@ nothing.
 
 ## Tools
 
-- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, actor-slot names hold, `Unused` names match `reach.py`, `; debug warp only` entries match `routes.py`.
+- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, actor-slot names hold, `Unused` names match `reach.py`, `; debug warp only` entries match `routes.py`, no raw value where the variable's constant family has a name for it.
 - `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts); the README and STATUS figures against `tools/stats.py`.
 - `tools/extract.py` -- `data.manifest` + base ROM -> `data/`.
 - `tools/mods.py` -- copies `mods/` over `data/`; collects edited data files into `mods/`.
