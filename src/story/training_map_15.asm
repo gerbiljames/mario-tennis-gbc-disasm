@@ -74,7 +74,7 @@ TournamentCourtyardNpc05TextIds:
 	dw Text_UnionFanAllLostRoundOne ; record 1
 	dw Text_UnionFanAllLostRoundOne ; record 2
 	dw Text_UnionFanAllLostRoundOne ; record 3
-	dw Text_UnionFanSammieAndSean ; record 4
+	dw Text_UnionFanSammiAndSean ; record 4
 	dw Text_UnionFanOnlyTeamLost ; record 5
 	dw Text_UnionFanWonderWhyWeLost ; record 6
 TournamentCourtyardNpcScripts_15:
@@ -178,14 +178,14 @@ InitTournamentSiteSceneVariant:
 	ret ; $42d3
 .doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $42d4
-	jr z, .done ; $42d7
+	jr z, .doublesRound1 ; $42d7
 	ld hl, TournamentSiteDoublesSemifinalNpcScripts_15 ; $42d9
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $42dc
 	farcall WriteStoryStateWord ; $42df
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $42e2
 	ld [wMapSceneStage], a ; $42e4
 	ret ; $42e7
-.done:
+.doublesRound1:
 	ld hl, TournamentSiteDoublesRound1NpcScripts_15 ; $42e8
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $42eb
 	farcall WriteStoryStateWord ; $42ee

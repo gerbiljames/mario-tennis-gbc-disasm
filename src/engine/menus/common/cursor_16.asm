@@ -106,11 +106,11 @@ Unused_16_MoveMenuCursorGrid:
 	ld a, [wMenuCursorX] ; $4107
 	inc a ; $410a
 	add a ; $410b
-	jr nc, .wrapRight ; $410c
+	jr nc, .checkMaxRight ; $410c
 	ld a, b ; $410e
 	dec a ; $410f
 	jr .storeRight ; $4110
-.wrapRight:
+.checkMaxRight:
 	rra ; $4112
 	cp b ; $4113
 	jr c, .storeRight ; $4114
@@ -124,11 +124,11 @@ Unused_16_MoveMenuCursorGrid:
 	ld a, [wMenuCursorX] ; $4120
 	dec a ; $4123
 	add a ; $4124
-	jr nc, .wrapLeft ; $4125
+	jr nc, .checkMaxLeft ; $4125
 	ld a, b ; $4127
 	dec a ; $4128
 	jr .storeLeft ; $4129
-.wrapLeft:
+.checkMaxLeft:
 	rra ; $412b
 	cp b ; $412c
 	jr c, .storeLeft ; $412d
@@ -142,11 +142,11 @@ Unused_16_MoveMenuCursorGrid:
 	ld a, [wMenuCursorY] ; $4139
 	dec a ; $413c
 	add a ; $413d
-	jr nc, .wrapUp ; $413e
+	jr nc, .checkMaxUp ; $413e
 	ld a, c ; $4140
 	dec a ; $4141
 	jr .storeUp ; $4142
-.wrapUp:
+.checkMaxUp:
 	rra ; $4144
 	cp c ; $4145
 	jr c, .storeUp ; $4146
@@ -160,11 +160,11 @@ Unused_16_MoveMenuCursorGrid:
 	ld a, [wMenuCursorY] ; $4152
 	inc a ; $4155
 	add a ; $4156
-	jr nc, .wrapDown ; $4157
+	jr nc, .checkMaxDown ; $4157
 	ld a, c ; $4159
 	dec a ; $415a
 	jr .storeDown ; $415b
-.wrapDown:
+.checkMaxDown:
 	rra ; $415d
 	cp c ; $415e
 	jr c, .storeDown ; $415f

@@ -108,7 +108,7 @@ JuniorClassCourtSinglesNpc07_11:
 JuniorClassCourtSinglesNpc08_11:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6a0f
 	jr z, .altText ; $6a12
-	script_set_text Text_BrianJuniorSinglesYouRankedFirst ; $6a14
+	script_set_text Text_BrianJuniorSinglesYouRankedBeforeMe ; $6a14
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a1a
 	ret ; $6a1f
 .altText:
@@ -522,7 +522,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	script_fade_in 4 ; $70c2
 	call WaitFadeEnd ; $70c7
 	script_wait_frames 60 ; $70ca
-	script_set_text Text_JuniorCoachSinglesNowSenior ; $70d1
+	script_set_text Text_BobJuniorSinglesYouWonNowSenior ; $70d1
 	script_move_target ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 26.0, 13.0 ; $70d7
 	script_wait_move ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $70e2
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_BOUNCE ; $70e7

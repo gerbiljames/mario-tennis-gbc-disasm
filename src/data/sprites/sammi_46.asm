@@ -4,7 +4,7 @@ SammiSpriteDesc:
 	dw SammiSpriteFrames ; $4006 frame table
 	dw SammiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw SammiSpriteOam ; $400c per-slot OAM data
+	dw SammiFramePlace ; $400c per-frame placement records
 SammiSpriteFrames:
 	dw SammiSpriteFrame00 ; $400e
 	dw SammiSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ SammiSpriteFramesUnused:
 	INCBIN "data/sprites/SammiSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/SammiSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/SammiSpriteFrame06.bin" ; $7bf0, 240 bytes
-SammiSpriteOam:
-	INCLUDE "data/sprites/SammiSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+SammiFramePlace:
+	INCLUDE "data/sprites/SammiFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 SammiSpriteAnims:
 	dw SammiSpriteAnim00 ; $7f24
 	dw SammiSpriteAnim01 ; $7f26

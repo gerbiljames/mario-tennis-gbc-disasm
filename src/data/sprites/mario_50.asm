@@ -4,7 +4,7 @@ MarioSpriteDesc:
 	dw MarioSpriteFrames ; $4006 frame table
 	dw MarioSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw MarioSpriteOam ; $400c per-slot OAM data
+	dw MarioFramePlace ; $400c per-frame placement records
 MarioSpriteFrames:
 	dw MarioSpriteFrame00 ; $400e
 	dw MarioSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ MarioSpriteFramesUnused:
 	INCBIN "data/sprites/MarioSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/MarioSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/MarioSpriteFrame06.bin" ; $7bf0, 240 bytes
-MarioSpriteOam:
-	INCLUDE "data/sprites/MarioSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+MarioFramePlace:
+	INCLUDE "data/sprites/MarioFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 MarioSpriteAnims:
 	dw MarioSpriteAnim00 ; $7f24
 	dw MarioSpriteAnim01 ; $7f26

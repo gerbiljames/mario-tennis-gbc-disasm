@@ -4,7 +4,7 @@ NinaSpriteDesc:
 	dw NinaSpriteFrames ; $4006 frame table
 	dw NinaSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw NinaSpriteOam ; $400c per-slot OAM data
+	dw NinaFramePlace ; $400c per-frame placement records
 NinaSpriteFrames:
 	dw NinaSpriteFrame00 ; $400e
 	dw NinaSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ NinaSpriteFramesUnused:
 	INCBIN "data/sprites/NinaSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/NinaSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/NinaSpriteFrame06.bin" ; $7bf0, 240 bytes
-NinaSpriteOam:
-	INCLUDE "data/sprites/NinaSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+NinaFramePlace:
+	INCLUDE "data/sprites/NinaFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 NinaSpriteAnims:
 	dw NinaSpriteAnim00 ; $7f24
 	dw NinaSpriteAnim01 ; $7f26

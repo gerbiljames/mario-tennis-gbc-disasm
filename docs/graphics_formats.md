@@ -459,7 +459,7 @@ is the on-court equivalent:
 | +4,+5 | +$24 | `wCharFrameTablePtr` | frame-pointer array |
 | +6,+7 | +$28 | `wCharAnimTablePtr` | **animation-script pointer table** |
 | +8,+9 | — | — | palette pointer, only when byte 0 == `$63` |
-| +10,+11 | +$38 | `wCharShadowTablePtr` | per-frame 4-byte placement/upload records |
+| +10,+11 | +$38 | `wCharFramePlaceTablePtr` | per-frame 4-byte placement/upload records |
 
 Frames are 64 bytes per facing (256 for 4 facings).
 `QueueActorFrameTileCopy` (`$04:$56c3`) indexes the frame table by
@@ -514,9 +514,9 @@ a commented `db`:
 | delay tick | `[+$2f] -= [+$18]` (or `[+$19]` when `bit 7,[+$05]`), clamped — a per-actor animation *speed* | plain `dec wCharAnimDelay`, 1 per frame |
 | frame change | stores to `+$33`, sets bit 6 of `+$30` | stores to `wCharAnimFrame`, sets bit 6 of `wCharSpriteDirty` |
 
-The character banks `$40`-`$5d` also carry `*SpriteOam` (e.g. `AlexSpriteOam`,
+The character banks `$40`-`$5d` also carry `*FramePlace` (e.g. `AlexFramePlace`,
 580 bytes = 145 × 4): per-frame placement records
-`{x offset, y offset, size flag, tile count}`, not OAM rows, read at
+`{x offset, y offset, size flag, tile count}`, read at
 `$00:$2e7e`-`$2e8a`. `DrawCharSprite` (`$08:$650a`) dispatches on the size flag
 to `QueueSprite24x32` (0) or `QueueSprite32x32`. Every record is `-4, -15`
 with the flag and count of a 24- or 32-pixel frame, written `frame_place -4,
@@ -756,7 +756,7 @@ extracted regions.
 | `blit_runs` | 84* | `blit_run col, row, src, length` runs and the `$ff` end (`screens_and_ui.md` §3.2) |
 | `target_script` | 57* | `tgt_*` commands (`include/macros/minigame_targets.inc`) |
 | `scoreboard_columns` | 32* | a court's `SceneConfig` (tiles) or `ScoreboardColumnAttrs`: four 2x5 `tilemap_begin` blocks (§3.4) |
-| `frame_place` | 30* | `*SpriteOam` rows (§4.5) |
+| `frame_place` | 30* | `*FramePlace` rows (§4.5) |
 | `scene_config` | 21* | a story `SceneConfig`: `scene_bounds` and the unread bytes |
 | `move_curve` | 16* | bank `$09` X-offset curves, `move_curve_hold`/`_end` |
 | one each | | `cart_header`, `squares`, `story_locations`, `location_entries`, `minigame_configs`, `tilemap_scripts`, `gfx_ptr_table`, `lz_ptr_table`, `char_lz_ptr_table`, `mugshot_ptr_table`, `tilemap_dispatch` |

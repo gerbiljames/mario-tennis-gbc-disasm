@@ -4,7 +4,7 @@ LuigiSpriteDesc:
 	dw LuigiSpriteFrames ; $4006 frame table
 	dw LuigiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw LuigiSpriteOam ; $400c per-slot OAM data
+	dw LuigiFramePlace ; $400c per-frame placement records
 LuigiSpriteFrames:
 	dw LuigiSpriteFrame00 ; $400e
 	dw LuigiSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ LuigiSpriteFramesUnused:
 	INCBIN "data/sprites/LuigiSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/LuigiSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/LuigiSpriteFrame06.bin" ; $7bf0, 240 bytes
-LuigiSpriteOam:
-	INCLUDE "data/sprites/LuigiSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+LuigiFramePlace:
+	INCLUDE "data/sprites/LuigiFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 LuigiSpriteAnims:
 	dw LuigiSpriteAnim00 ; $7f24
 	dw LuigiSpriteAnim01 ; $7f26

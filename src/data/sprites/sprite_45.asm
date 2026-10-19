@@ -4,7 +4,7 @@ MarkSpriteDesc:
 	dw MarkSpriteFrames ; $4006 frame table
 	dw MarkSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw MarkSpriteOam ; $400c per-slot OAM data
+	dw MarkFramePlace ; $400c per-frame placement records
 MarkSpriteFrames:
 	dw MarkSpriteFrame00 ; $400e
 	dw MarkSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ MarkSpriteFramesUnused:
 	INCBIN "data/sprites/MarkSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/MarkSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/MarkSpriteFrame06.bin" ; $7bf0, 240 bytes
-MarkSpriteOam:
-	INCLUDE "data/sprites/MarkSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+MarkFramePlace:
+	INCLUDE "data/sprites/MarkFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 MarkSpriteAnims:
 	dw MarkSpriteAnim00 ; $7f24
 	dw MarkSpriteAnim01 ; $7f26

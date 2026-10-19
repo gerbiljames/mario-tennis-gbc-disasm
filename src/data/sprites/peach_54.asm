@@ -4,7 +4,7 @@ PeachSpriteDesc:
 	dw PeachSpriteFrames ; $4006 frame table
 	dw PeachSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw PeachSpriteOam ; $400c per-slot OAM data
+	dw PeachFramePlace ; $400c per-frame placement records
 PeachSpriteFrames:
 	dw PeachSpriteFrame00 ; $400e
 	dw PeachSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ PeachSpriteFramesUnused:
 	INCBIN "data/sprites/PeachSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/PeachSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/PeachSpriteFrame06.bin" ; $7bf0, 240 bytes
-PeachSpriteOam:
-	INCLUDE "data/sprites/PeachSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+PeachFramePlace:
+	INCLUDE "data/sprites/PeachFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 PeachSpriteAnims:
 	dw PeachSpriteAnim00 ; $7f24
 	dw PeachSpriteAnim01 ; $7f26

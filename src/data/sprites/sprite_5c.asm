@@ -4,7 +4,7 @@ DKSpriteDesc:
 	dw DKSpriteFrames ; $4006 frame table
 	dw DKSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw DKSpriteOam ; $400c per-slot OAM data
+	dw DKFramePlace ; $400c per-frame placement records
 DKSpriteFrames:
 	dw DKSpriteFrame00 ; $400e
 	dw DKSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ DKSpriteFramesUnused:
 	INCBIN "data/sprites/DKSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/DKSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/DKSpriteFrame06.bin" ; $7bf0, 240 bytes
-DKSpriteOam:
-	INCLUDE "data/sprites/DKSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+DKFramePlace:
+	INCLUDE "data/sprites/DKFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 DKSpriteAnims:
 	dw DKSpriteAnim00 ; $7f24
 	dw DKSpriteAnim01 ; $7f26

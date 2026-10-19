@@ -4,7 +4,7 @@ AlexSpriteDesc:
 	dw AlexSpriteFrames ; $4006 frame table
 	dw AlexSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw AlexSpriteOam ; $400c per-slot OAM data
+	dw AlexFramePlace ; $400c per-frame placement records
 AlexSpriteFrames:
 	dw AlexSpriteFrame00 ; $400e
 	dw AlexSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ AlexSpriteFramesUnused:
 	INCBIN "data/sprites/AlexSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/AlexSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/AlexSpriteFrame06.bin" ; $7bf0, 240 bytes
-AlexSpriteOam:
-	INCLUDE "data/sprites/AlexSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+AlexFramePlace:
+	INCLUDE "data/sprites/AlexFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 AlexSpriteAnims:
 	dw AlexSpriteAnim00 ; $7f24
 	dw AlexSpriteAnim01 ; $7f26

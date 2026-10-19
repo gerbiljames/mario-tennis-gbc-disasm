@@ -8,8 +8,9 @@ MACRO tgt_end          ; $00 stop: the script stays on this command
 	db $00
 ENDM
 
-MACRO tgt_wait         ; $01 yield for \1 frames
-	db $01, \1
+MACRO tgt_wait         ; $01 yield for \1 frames, 1-256
+	ASSERT (\1) >= 1 && (\1) <= 256, "tgt_wait: \1 frames is out of range"
+	db $01, LOW(\1)
 ENDM
 
 MACRO tgt_jump         ; $02 continue at \1 (stored relative to the operand)
@@ -17,7 +18,7 @@ MACRO tgt_jump         ; $02 continue at \1 (stored relative to the operand)
 	dw (\1) - @
 ENDM
 
-MACRO tgt_call         ; $03 call native routine \1, then continue
+MACRO tgt_call         ; $03 call native routine \1; continue if it returns a nonzero, else yield
 	db $03
 	dw \1
 ENDM

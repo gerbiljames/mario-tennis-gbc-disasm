@@ -382,61 +382,61 @@ Unused_0f_ComputeRankingProgressIndex:
 	jr nz, .doubles ; $7d46
 	ld a, STORYRANK_SINGLES_ACADEMY ; $7d48
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d4a
-	jr z, .loop ; $7d4d
+	jr z, .store ; $7d4d
 	ld a, STORYRANK_SINGLES_JUNIOR_CHAMP ; $7d4f
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d51
-	jr z, .loop ; $7d54
+	jr z, .store ; $7d54
 	ld a, STORYRANK_SINGLES_SENIOR_CHAMP ; $7d56
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d58
-	jr z, .loop ; $7d5b
+	jr z, .store ; $7d5b
 	ld a, STORYRANK_SINGLES_ISLAND_OPEN ; $7d5d
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7d5f
-	jr z, .loop ; $7d62
+	jr z, .store ; $7d62
 	ld a, STORYRANK_SINGLES_COMPLETE ; $7d64
-.loop:
+.store:
 	ld [wMapSceneStage], a ; $7d66
 	ret ; $7d69
 .doubles:
 	ld a, STORYRANK_DOUBLES_ACADEMY ; $7d6a
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7d6c
-	jr z, .loop ; $7d6f
+	jr z, .store ; $7d6f
 	ld a, STORYRANK_DOUBLES_JUNIOR_CHAMP ; $7d71
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7d73
-	jr z, .loop ; $7d76
+	jr z, .store ; $7d76
 	ld a, STORYRANK_DOUBLES_SENIOR_CHAMP ; $7d78
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7d7a
-	jr z, .loop ; $7d7d
+	jr z, .store ; $7d7d
 	ld a, STORYRANK_DOUBLES_ISLAND_OPEN ; $7d7f
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7d81
-	jr z, .loop ; $7d84
+	jr z, .store ; $7d84
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7d86
-	jr .loop ; $7d88
+	jr .store ; $7d88
 ; This bank's copy of ComputeStoryRankTier_13.
 Unused_0f_ComputeStoryRankTier:
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c
-	jr z, .loop ; $7d8f
+	jr z, .storeIsland ; $7d8f
 	inc a ; $7d91
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d92
-	jr z, .loop ; $7d95
+	jr z, .storeIsland ; $7d95
 	inc a ; $7d97
 	test_flag FLAG_DOUBLES ; $7d98
 	jr nz, .doublesIsland ; $7d9b
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d9d
-	jr z, .loop ; $7da0
+	jr z, .storeIsland ; $7da0
 	inc a ; $7da2
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7da3
-	jr z, .loop ; $7da6
+	jr z, .storeIsland ; $7da6
 	inc a ; $7da8
-.loop:
+.storeIsland:
 	ld [wMapSceneStage], a ; $7da9
 	ret ; $7dac
 .doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dad
-	jr z, .loop ; $7db0
+	jr z, .storeIsland ; $7db0
 	inc a ; $7db2
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7db3
-	jr z, .loop ; $7db6
+	jr z, .storeIsland ; $7db6
 	inc a ; $7db8
-	jr .loop ; $7db9
+	jr .storeIsland ; $7db9
 	; $7dbb, 581 bytes fill to bank end (linker-padded)

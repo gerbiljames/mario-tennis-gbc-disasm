@@ -14,9 +14,8 @@ the soft reset.
 - `Rst18` jumps to `FarCall` (`$01b6`, the `farcall` macro): it reads two
   inline bytes after the `rst` -- a slot in the target bank's `$4000` pointer
   table, then the bank -- and calls through that slot, saving and restoring
-  the ROM bank shadow at `$ff95` and the `$2000` MBC register. The bytes at
-  `$0010` are also a `jp FarCall`, but they sit unlabelled in the padding
-  under `Rst08` and nothing executes `rst $10`. `CopyDataFromBank` and
+  the ROM bank shadow at `$ff95` and the `$2000` MBC register. `Unused_00_Rst10`
+  at `$0010` is a second `jp FarCall`, but nothing executes `rst $10`. `CopyDataFromBank` and
   `DecompressDataFromBank` are the same pattern with the bank in `h` and the
   slot in `l` instead of inline bytes, fetching a `CopyMemoryBC` /
   `DecompressData` routine's arguments from another bank.

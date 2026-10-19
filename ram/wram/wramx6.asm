@@ -426,7 +426,7 @@ w6CharState:: db
 w6CharStatePhase:: db
 ; [8-bit] Sub-step of the AI state machine, advanced by AiAdvancePhase
 w6AiPhase:: db
-; [3 bytes] Current sprite frame pointer (hi/lo) + h-flip flag, used by DrawCharSprite
+; [3 bytes] The current frame's placement, copied from its *FramePlace record by QueueCharFrameTiles: X offset, Y offset, then the size flag DrawCharSprite dispatches on (1 = 32 wide)
 w6CharSpriteFrame:: ds 3
 ; [8-bit] Which input drives this character; ReadCharInput indexes CharInputPtrs with it (pad, CPU and link handlers)
 w6CharInputSource:: db
@@ -464,8 +464,8 @@ w6CharAnimFrame:: db
 w6CharTileBase:: db
 ; [8-bit] OAM attribute byte. The low three bits are the CGB OBJ palette (wCharIndex + 4) and also the tile block ReloadCharFrameGfx uploads into (& $07, + $08); the high bits are the flip bits the animation's $fb command toggles, cleared by SetCharAnimation (`and $0f`)
 w6CharSpriteAttr:: db
-; [16-bit] Pointer (in wCharObjectBank) to the per-frame shadow/scale table GetPerspectiveScale reads
-w6CharShadowTablePtr:: dw
+; [16-bit] Pointer (in wCharObjectBank) to the character's *FramePlace table, read by QueueCharFrameTiles
+w6CharFramePlaceTablePtr:: dw
 ; [8-bit] ROM bank of the character's frame graphics; ReloadCharFrameGfx and LoadCharChargeFlashGfx pass it to the far-call vector at $0110
 w6CharGfxBank:: db
 	ds 5

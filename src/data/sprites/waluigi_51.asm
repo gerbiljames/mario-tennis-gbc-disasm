@@ -4,7 +4,7 @@ WaluigiSpriteDesc:
 	dw WaluigiSpriteFrames ; $4006 frame table
 	dw WaluigiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw WaluigiSpriteOam ; $400c per-slot OAM data
+	dw WaluigiFramePlace ; $400c per-frame placement records
 WaluigiSpriteFrames:
 	dw WaluigiSpriteFrame00 ; $400e
 	dw WaluigiSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ WaluigiSpriteFramesUnused:
 	INCBIN "data/sprites/WaluigiSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/WaluigiSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/WaluigiSpriteFrame06.bin" ; $7bf0, 240 bytes
-WaluigiSpriteOam:
-	INCLUDE "data/sprites/WaluigiSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+WaluigiFramePlace:
+	INCLUDE "data/sprites/WaluigiFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 WaluigiSpriteAnims:
 	dw WaluigiSpriteAnim00 ; $7f24
 	dw WaluigiSpriteAnim01 ; $7f26

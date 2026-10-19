@@ -4,7 +4,7 @@ BethSpriteDesc:
 	dw BethSpriteFrames ; $4006 frame table
 	dw BethSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw BethSpriteOam ; $400c per-slot OAM data
+	dw BethFramePlace ; $400c per-frame placement records
 BethSpriteFrames:
 	dw BethSpriteFrame00 ; $400e
 	dw BethSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ BethSpriteFramesUnused:
 	INCBIN "data/sprites/BethSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/BethSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BethSpriteFrame06.bin" ; $7bf0, 240 bytes
-BethSpriteOam:
-	INCLUDE "data/sprites/BethSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+BethFramePlace:
+	INCLUDE "data/sprites/BethFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BethSpriteAnims:
 	dw BethSpriteAnim00 ; $7f24
 	dw BethSpriteAnim01 ; $7f26

@@ -4,7 +4,7 @@ CurtSpriteDesc:
 	dw CurtSpriteFrames ; $4006 frame table
 	dw CurtSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw CurtSpriteOam ; $400c per-slot OAM data
+	dw CurtFramePlace ; $400c per-frame placement records
 CurtSpriteFrames:
 	dw CurtSpriteFrame00 ; $400e
 	dw CurtSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ CurtSpriteFramesUnused:
 	INCBIN "data/sprites/CurtSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/CurtSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/CurtSpriteFrame06.bin" ; $7bf0, 240 bytes
-CurtSpriteOam:
-	INCLUDE "data/sprites/CurtSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+CurtFramePlace:
+	INCLUDE "data/sprites/CurtFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 CurtSpriteAnims:
 	dw CurtSpriteAnim00 ; $7f24
 	dw CurtSpriteAnim01 ; $7f26

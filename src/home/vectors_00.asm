@@ -256,7 +256,7 @@ ClearBothVRAMBanks:
 	ld hl, vTiles0 ; $025e
 	ld bc, VRAM_SIZE / 16 ; $0261
 	jp ClearMemoryBC16 ; $0264
-.loop:
+.clearBGMaps:
 	ld a, $01 ; $0267
 	ldh [rVBK], a ; $0269
 	ld hl, vBGMap0 ; $026b
@@ -457,7 +457,7 @@ ClearVRAMBank:
 Unused_00_ClearBGMap:
 	ldh a, [hIsCGB] ; $0393
 	and a ; $0395
-	jp nz, ClearBothVRAMBanks.loop ; $0396
+	jp nz, ClearBothVRAMBanks.clearBGMaps ; $0396
 	ld hl, vBGMap0 ; $0399
 	ld bc, $0400 ; $039c
 .loop:

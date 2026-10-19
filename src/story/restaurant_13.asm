@@ -101,7 +101,7 @@ RestaurantPlazaExitTriggers_13:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_TRAINING_COURT, $0f
 	db $ff
 Unused_13_PlayerSpeaksDefineAce:
-	script_set_text Text_HeadmasterDefineAce ; $427f
+	script_set_text Text_DefineAce ; $427f
 	script_speak ACTOR_PLAYER ; $4285
 	ret ; $428a
 RestaurantPlazaNpcScripts_13:

@@ -1328,7 +1328,7 @@ sprites/AlexSpriteFrame52.bin 103290 f0 gfx:3x4+3
 sprites/AlexSpriteFrame53.bin 103380 f0 gfx:3x4+3
 sprites/AlexSpriteFrame54.bin 103470 f0 gfx:3x4+3
 sprites/AlexSpriteFrame55.bin 103560 f0 gfx:3x4+3
-sprites/AlexSpriteOam.asm 103ce0 244 frame_place
+sprites/AlexFramePlace.asm 103ce0 244 frame_place
 sprites/NinaSpriteFrame00.bin 104130 f0 gfx:3x4+3
 sprites/NinaSpriteFrame01.bin 104220 f0 gfx:3x4+3
 sprites/NinaSpriteFrame02.bin 104310 f0 gfx:3x4+3
@@ -1385,7 +1385,7 @@ sprites/NinaSpriteFrame52.bin 107290 f0 gfx:3x4+3
 sprites/NinaSpriteFrame53.bin 107380 f0 gfx:3x4+3
 sprites/NinaSpriteFrame54.bin 107470 f0 gfx:3x4+3
 sprites/NinaSpriteFrame55.bin 107560 f0 gfx:3x4+3
-sprites/NinaSpriteOam.asm 107ce0 244 frame_place
+sprites/NinaFramePlace.asm 107ce0 244 frame_place
 sprites/KateSpriteFrame00.bin 108130 f0 gfx:3x4+3
 sprites/KateSpriteFrame01.bin 108220 f0 gfx:3x4+3
 sprites/KateSpriteFrame02.bin 108310 f0 gfx:3x4+3
@@ -1442,7 +1442,7 @@ sprites/KateSpriteFrame52.bin 10b290 f0 gfx:3x4+3
 sprites/KateSpriteFrame53.bin 10b380 f0 gfx:3x4+3
 sprites/KateSpriteFrame54.bin 10b470 f0 gfx:3x4+3
 sprites/KateSpriteFrame55.bin 10b560 f0 gfx:3x4+3
-sprites/KateSpriteOam.asm 10bce0 244 frame_place
+sprites/KateFramePlace.asm 10bce0 244 frame_place
 sprites/HarrySpriteFrame00.bin 10c130 f0 gfx:3x4+3
 sprites/HarrySpriteFrame01.bin 10c220 f0 gfx:3x4+3
 sprites/HarrySpriteFrame02.bin 10c310 f0 gfx:3x4+3
@@ -1499,7 +1499,7 @@ sprites/HarrySpriteFrame52.bin 10f290 f0 gfx:3x4+3
 sprites/HarrySpriteFrame53.bin 10f380 f0 gfx:3x4+3
 sprites/HarrySpriteFrame54.bin 10f470 f0 gfx:3x4+3
 sprites/HarrySpriteFrame55.bin 10f560 f0 gfx:3x4+3
-sprites/HarrySpriteOam.asm 10fce0 244 frame_place
+sprites/HarryFramePlace.asm 10fce0 244 frame_place
 sprites/EmilySpriteFrame00.bin 110130 f0 gfx:3x4+3
 sprites/EmilySpriteFrame01.bin 110220 f0 gfx:3x4+3
 sprites/EmilySpriteFrame02.bin 110310 f0 gfx:3x4+3
@@ -1556,7 +1556,7 @@ sprites/EmilySpriteFrame52.bin 113290 f0 gfx:3x4+3
 sprites/EmilySpriteFrame53.bin 113380 f0 gfx:3x4+3
 sprites/EmilySpriteFrame54.bin 113470 f0 gfx:3x4+3
 sprites/EmilySpriteFrame55.bin 113560 f0 gfx:3x4+3
-sprites/EmilySpriteOam.asm 113ce0 244 frame_place
+sprites/EmilyFramePlace.asm 113ce0 244 frame_place
 sprites/MarkSpriteFrame00.bin 114130 f0 gfx:3x4+3
 sprites/MarkSpriteFrame01.bin 114220 f0 gfx:3x4+3
 sprites/MarkSpriteFrame02.bin 114310 f0 gfx:3x4+3
@@ -1613,7 +1613,7 @@ sprites/MarkSpriteFrame52.bin 117290 f0 gfx:3x4+3
 sprites/MarkSpriteFrame53.bin 117380 f0 gfx:3x4+3
 sprites/MarkSpriteFrame54.bin 117470 f0 gfx:3x4+3
 sprites/MarkSpriteFrame55.bin 117560 f0 gfx:3x4+3
-sprites/MarkSpriteOam.asm 117ce0 244 frame_place
+sprites/MarkFramePlace.asm 117ce0 244 frame_place
 sprites/SammiSpriteFrame00.bin 118130 f0 gfx:3x4+3
 sprites/SammiSpriteFrame01.bin 118220 f0 gfx:3x4+3
 sprites/SammiSpriteFrame02.bin 118310 f0 gfx:3x4+3
@@ -1670,7 +1670,7 @@ sprites/SammiSpriteFrame52.bin 11b290 f0 gfx:3x4+3
 sprites/SammiSpriteFrame53.bin 11b380 f0 gfx:3x4+3
 sprites/SammiSpriteFrame54.bin 11b470 f0 gfx:3x4+3
 sprites/SammiSpriteFrame55.bin 11b560 f0 gfx:3x4+3
-sprites/SammiSpriteOam.asm 11bce0 244 frame_place
+sprites/SammiFramePlace.asm 11bce0 244 frame_place
 sprites/SeanSpriteFrame00.bin 11c130 f0 gfx:3x4+3
 sprites/SeanSpriteFrame01.bin 11c220 f0 gfx:3x4+3
 sprites/SeanSpriteFrame02.bin 11c310 f0 gfx:3x4+3
@@ -1727,7 +1727,7 @@ sprites/SeanSpriteFrame52.bin 11f290 f0 gfx:3x4+3
 sprites/SeanSpriteFrame53.bin 11f380 f0 gfx:3x4+3
 sprites/SeanSpriteFrame54.bin 11f470 f0 gfx:3x4+3
 sprites/SeanSpriteFrame55.bin 11f560 f0 gfx:3x4+3
-sprites/SeanSpriteOam.asm 11fce0 244 frame_place
+sprites/SeanFramePlace.asm 11fce0 244 frame_place
 sprites/SpikeSpriteFrame00.bin 120130 f0 gfx:3x4+3
 sprites/SpikeSpriteFrame01.bin 120220 f0 gfx:3x4+3
 sprites/SpikeSpriteFrame02.bin 120310 f0 gfx:3x4+3
@@ -1784,7 +1784,7 @@ sprites/SpikeSpriteFrame52.bin 123290 f0 gfx:3x4+3
 sprites/SpikeSpriteFrame53.bin 123380 f0 gfx:3x4+3
 sprites/SpikeSpriteFrame54.bin 123470 f0 gfx:3x4+3
 sprites/SpikeSpriteFrame55.bin 123560 f0 gfx:3x4+3
-sprites/SpikeSpriteOam.asm 123ce0 244 frame_place
+sprites/SpikeFramePlace.asm 123ce0 244 frame_place
 sprites/EldenSpriteFrame00.bin 124130 f0 gfx:3x4+3
 sprites/EldenSpriteFrame01.bin 124220 f0 gfx:3x4+3
 sprites/EldenSpriteFrame02.bin 124310 f0 gfx:3x4+3
@@ -1841,7 +1841,7 @@ sprites/EldenSpriteFrame52.bin 127290 f0 gfx:3x4+3
 sprites/EldenSpriteFrame53.bin 127380 f0 gfx:3x4+3
 sprites/EldenSpriteFrame54.bin 127470 f0 gfx:3x4+3
 sprites/EldenSpriteFrame55.bin 127560 f0 gfx:3x4+3
-sprites/EldenSpriteOam.asm 127ce0 244 frame_place
+sprites/EldenFramePlace.asm 127ce0 244 frame_place
 sprites/ACozSpriteFrame00.bin 128130 f0 gfx:3x4+3
 sprites/ACozSpriteFrame01.bin 128220 f0 gfx:3x4+3
 sprites/ACozSpriteFrame02.bin 128310 f0 gfx:3x4+3
@@ -1898,7 +1898,7 @@ sprites/ACozSpriteFrame52.bin 12b290 f0 gfx:3x4+3
 sprites/ACozSpriteFrame53.bin 12b380 f0 gfx:3x4+3
 sprites/ACozSpriteFrame54.bin 12b470 f0 gfx:3x4+3
 sprites/ACozSpriteFrame55.bin 12b560 f0 gfx:3x4+3
-sprites/ACozSpriteOam.asm 12bce0 244 frame_place
+sprites/ACozFramePlace.asm 12bce0 244 frame_place
 sprites/BCozSpriteFrame00.bin 12c130 f0 gfx:3x4+3
 sprites/BCozSpriteFrame01.bin 12c220 f0 gfx:3x4+3
 sprites/BCozSpriteFrame02.bin 12c310 f0 gfx:3x4+3
@@ -1955,7 +1955,7 @@ sprites/BCozSpriteFrame52.bin 12f290 f0 gfx:3x4+3
 sprites/BCozSpriteFrame53.bin 12f380 f0 gfx:3x4+3
 sprites/BCozSpriteFrame54.bin 12f470 f0 gfx:3x4+3
 sprites/BCozSpriteFrame55.bin 12f560 f0 gfx:3x4+3
-sprites/BCozSpriteOam.asm 12fce0 244 frame_place
+sprites/BCozFramePlace.asm 12fce0 244 frame_place
 sprites/AllieSpriteFrame00.bin 130130 f0 gfx:3x4+3
 sprites/AllieSpriteFrame01.bin 130220 f0 gfx:3x4+3
 sprites/AllieSpriteFrame02.bin 130310 f0 gfx:3x4+3
@@ -2012,7 +2012,7 @@ sprites/AllieSpriteFrame52.bin 133290 f0 gfx:3x4+3
 sprites/AllieSpriteFrame53.bin 133380 f0 gfx:3x4+3
 sprites/AllieSpriteFrame54.bin 133470 f0 gfx:3x4+3
 sprites/AllieSpriteFrame55.bin 133560 f0 gfx:3x4+3
-sprites/AllieSpriteOam.asm 133ce0 244 frame_place
+sprites/AllieFramePlace.asm 133ce0 244 frame_place
 sprites/BrianSpriteFrame00.bin 134130 f0 gfx:3x4+3
 sprites/BrianSpriteFrame01.bin 134220 f0 gfx:3x4+3
 sprites/BrianSpriteFrame02.bin 134310 f0 gfx:3x4+3
@@ -2069,7 +2069,7 @@ sprites/BrianSpriteFrame52.bin 137290 f0 gfx:3x4+3
 sprites/BrianSpriteFrame53.bin 137380 f0 gfx:3x4+3
 sprites/BrianSpriteFrame54.bin 137470 f0 gfx:3x4+3
 sprites/BrianSpriteFrame55.bin 137560 f0 gfx:3x4+3
-sprites/BrianSpriteOam.asm 137ce0 244 frame_place
+sprites/BrianFramePlace.asm 137ce0 244 frame_place
 sprites/CurtSpriteFrame00.bin 138130 f0 gfx:3x4+3
 sprites/CurtSpriteFrame01.bin 138220 f0 gfx:3x4+3
 sprites/CurtSpriteFrame02.bin 138310 f0 gfx:3x4+3
@@ -2126,7 +2126,7 @@ sprites/CurtSpriteFrame52.bin 13b290 f0 gfx:3x4+3
 sprites/CurtSpriteFrame53.bin 13b380 f0 gfx:3x4+3
 sprites/CurtSpriteFrame54.bin 13b470 f0 gfx:3x4+3
 sprites/CurtSpriteFrame55.bin 13b560 f0 gfx:3x4+3
-sprites/CurtSpriteOam.asm 13bce0 244 frame_place
+sprites/CurtFramePlace.asm 13bce0 244 frame_place
 sprites/BobSpriteFrame00.bin 13c130 f0 gfx:3x4+3
 sprites/BobSpriteFrame01.bin 13c220 f0 gfx:3x4+3
 sprites/BobSpriteFrame02.bin 13c310 f0 gfx:3x4+3
@@ -2183,7 +2183,7 @@ sprites/BobSpriteFrame52.bin 13f290 f0 gfx:3x4+3
 sprites/BobSpriteFrame53.bin 13f380 f0 gfx:3x4+3
 sprites/BobSpriteFrame54.bin 13f470 f0 gfx:3x4+3
 sprites/BobSpriteFrame55.bin 13f560 f0 gfx:3x4+3
-sprites/BobSpriteOam.asm 13fce0 244 frame_place
+sprites/BobFramePlace.asm 13fce0 244 frame_place
 sprites/MarioSpriteFrame00.bin 140130 f0 gfx:3x4+3
 sprites/MarioSpriteFrame01.bin 140220 f0 gfx:3x4+3
 sprites/MarioSpriteFrame02.bin 140310 f0 gfx:3x4+3
@@ -2240,7 +2240,7 @@ sprites/MarioSpriteFrame52.bin 143290 f0 gfx:3x4+3
 sprites/MarioSpriteFrame53.bin 143380 f0 gfx:3x4+3
 sprites/MarioSpriteFrame54.bin 143470 f0 gfx:3x4+3
 sprites/MarioSpriteFrame55.bin 143560 f0 gfx:3x4+3
-sprites/MarioSpriteOam.asm 143ce0 244 frame_place
+sprites/MarioFramePlace.asm 143ce0 244 frame_place
 sprites/WaluigiSpriteFrame00.bin 144130 f0 gfx:3x4+3
 sprites/WaluigiSpriteFrame01.bin 144220 f0 gfx:3x4+3
 sprites/WaluigiSpriteFrame02.bin 144310 f0 gfx:3x4+3
@@ -2297,7 +2297,7 @@ sprites/WaluigiSpriteFrame52.bin 147290 f0 gfx:3x4+3
 sprites/WaluigiSpriteFrame53.bin 147380 f0 gfx:3x4+3
 sprites/WaluigiSpriteFrame54.bin 147470 f0 gfx:3x4+3
 sprites/WaluigiSpriteFrame55.bin 147560 f0 gfx:3x4+3
-sprites/WaluigiSpriteOam.asm 147ce0 244 frame_place
+sprites/WaluigiFramePlace.asm 147ce0 244 frame_place
 sprites/YoshiSpriteFrame00.bin 148130 f0 gfx:3x4+3
 sprites/YoshiSpriteFrame01.bin 148220 f0 gfx:3x4+3
 sprites/YoshiSpriteFrame02.bin 148310 f0 gfx:3x4+3
@@ -2354,7 +2354,7 @@ sprites/YoshiSpriteFrame52.bin 14b290 f0 gfx:3x4+3
 sprites/YoshiSpriteFrame53.bin 14b380 f0 gfx:3x4+3
 sprites/YoshiSpriteFrame54.bin 14b470 f0 gfx:3x4+3
 sprites/YoshiSpriteFrame55.bin 14b560 f0 gfx:3x4+3
-sprites/YoshiSpriteOam.asm 14bce0 244 frame_place
+sprites/YoshiFramePlace.asm 14bce0 244 frame_place
 sprites/BowserSpriteFrame00.bin 14c130 f0 gfx:3x4+3
 sprites/BowserSpriteFrame01.bin 14c220 f0 gfx:3x4+3
 sprites/BowserSpriteFrame02.bin 14c310 f0 gfx:3x4+3
@@ -2411,7 +2411,7 @@ sprites/BowserSpriteFrame52.bin 14f290 f0 gfx:3x4+3
 sprites/BowserSpriteFrame53.bin 14f380 f0 gfx:3x4+3
 sprites/BowserSpriteFrame54.bin 14f470 f0 gfx:3x4+3
 sprites/BowserSpriteFrame55.bin 14f560 f0 gfx:3x4+3
-sprites/BowserSpriteOam.asm 14fce0 244 frame_place
+sprites/BowserFramePlace.asm 14fce0 244 frame_place
 sprites/PeachSpriteFrame00.bin 150130 f0 gfx:3x4+3
 sprites/PeachSpriteFrame01.bin 150220 f0 gfx:3x4+3
 sprites/PeachSpriteFrame02.bin 150310 f0 gfx:3x4+3
@@ -2468,7 +2468,7 @@ sprites/PeachSpriteFrame52.bin 153290 f0 gfx:3x4+3
 sprites/PeachSpriteFrame53.bin 153380 f0 gfx:3x4+3
 sprites/PeachSpriteFrame54.bin 153470 f0 gfx:3x4+3
 sprites/PeachSpriteFrame55.bin 153560 f0 gfx:3x4+3
-sprites/PeachSpriteOam.asm 153ce0 244 frame_place
+sprites/PeachFramePlace.asm 153ce0 244 frame_place
 sprites/WarioSpriteFrame00.bin 154130 f0 gfx:3x4+3
 sprites/WarioSpriteFrame01.bin 154220 f0 gfx:3x4+3
 sprites/WarioSpriteFrame02.bin 154310 f0 gfx:3x4+3
@@ -2525,7 +2525,7 @@ sprites/WarioSpriteFrame52.bin 157290 f0 gfx:3x4+3
 sprites/WarioSpriteFrame53.bin 157380 f0 gfx:3x4+3
 sprites/WarioSpriteFrame54.bin 157470 f0 gfx:3x4+3
 sprites/WarioSpriteFrame55.bin 157560 f0 gfx:3x4+3
-sprites/WarioSpriteOam.asm 157ce0 244 frame_place
+sprites/WarioFramePlace.asm 157ce0 244 frame_place
 sprites/JoySpriteFrame00.bin 158130 f0 gfx:3x4+3
 sprites/JoySpriteFrame01.bin 158220 f0 gfx:3x4+3
 sprites/JoySpriteFrame02.bin 158310 f0 gfx:3x4+3
@@ -2582,7 +2582,7 @@ sprites/JoySpriteFrame52.bin 15b290 f0 gfx:3x4+3
 sprites/JoySpriteFrame53.bin 15b380 f0 gfx:3x4+3
 sprites/JoySpriteFrame54.bin 15b470 f0 gfx:3x4+3
 sprites/JoySpriteFrame55.bin 15b560 f0 gfx:3x4+3
-sprites/JoySpriteOam.asm 15bce0 244 frame_place
+sprites/JoyFramePlace.asm 15bce0 244 frame_place
 sprites/PamSpriteFrame00.bin 15c130 f0 gfx:3x4+3
 sprites/PamSpriteFrame01.bin 15c220 f0 gfx:3x4+3
 sprites/PamSpriteFrame02.bin 15c310 f0 gfx:3x4+3
@@ -2639,7 +2639,7 @@ sprites/PamSpriteFrame52.bin 15f290 f0 gfx:3x4+3
 sprites/PamSpriteFrame53.bin 15f380 f0 gfx:3x4+3
 sprites/PamSpriteFrame54.bin 15f470 f0 gfx:3x4+3
 sprites/PamSpriteFrame55.bin 15f560 f0 gfx:3x4+3
-sprites/PamSpriteOam.asm 15fce0 244 frame_place
+sprites/PamFramePlace.asm 15fce0 244 frame_place
 sprites/BethSpriteFrame00.bin 160130 f0 gfx:3x4+3
 sprites/BethSpriteFrame01.bin 160220 f0 gfx:3x4+3
 sprites/BethSpriteFrame02.bin 160310 f0 gfx:3x4+3
@@ -2696,7 +2696,7 @@ sprites/BethSpriteFrame52.bin 163290 f0 gfx:3x4+3
 sprites/BethSpriteFrame53.bin 163380 f0 gfx:3x4+3
 sprites/BethSpriteFrame54.bin 163470 f0 gfx:3x4+3
 sprites/BethSpriteFrame55.bin 163560 f0 gfx:3x4+3
-sprites/BethSpriteOam.asm 163ce0 244 frame_place
+sprites/BethFramePlace.asm 163ce0 244 frame_place
 sprites/FaySpriteFrame00.bin 164130 f0 gfx:3x4+3
 sprites/FaySpriteFrame01.bin 164220 f0 gfx:3x4+3
 sprites/FaySpriteFrame02.bin 164310 f0 gfx:3x4+3
@@ -2753,7 +2753,7 @@ sprites/FaySpriteFrame52.bin 167290 f0 gfx:3x4+3
 sprites/FaySpriteFrame53.bin 167380 f0 gfx:3x4+3
 sprites/FaySpriteFrame54.bin 167470 f0 gfx:3x4+3
 sprites/FaySpriteFrame55.bin 167560 f0 gfx:3x4+3
-sprites/FaySpriteOam.asm 167ce0 244 frame_place
+sprites/FayFramePlace.asm 167ce0 244 frame_place
 sprites/BallMachineSpriteFrame00.bin 168130 f0 gfx:3x4+3
 sprites/BallMachineSpriteFrame01.bin 168220 f0 gfx:3x4+3
 sprites/BallMachineSpriteFrame02.bin 168310 f0 gfx:3x4+3
@@ -2810,7 +2810,7 @@ sprites/BallMachineSpriteFrame52.bin 16b290 f0 gfx:3x4+3
 sprites/BallMachineSpriteFrame53.bin 16b380 f0 gfx:3x4+3
 sprites/BallMachineSpriteFrame54.bin 16b470 f0 gfx:3x4+3
 sprites/BallMachineSpriteFrame55.bin 16b560 f0 gfx:3x4+3
-sprites/BallMachineSpriteOam.asm 16bce0 244 frame_place
+sprites/BallMachineFramePlace.asm 16bce0 244 frame_place
 sprites/LuigiSpriteFrame00.bin 16c130 f0 gfx:3x4+3
 sprites/LuigiSpriteFrame01.bin 16c220 f0 gfx:3x4+3
 sprites/LuigiSpriteFrame02.bin 16c310 f0 gfx:3x4+3
@@ -2867,7 +2867,7 @@ sprites/LuigiSpriteFrame52.bin 16f290 f0 gfx:3x4+3
 sprites/LuigiSpriteFrame53.bin 16f380 f0 gfx:3x4+3
 sprites/LuigiSpriteFrame54.bin 16f470 f0 gfx:3x4+3
 sprites/LuigiSpriteFrame55.bin 16f560 f0 gfx:3x4+3
-sprites/LuigiSpriteOam.asm 16fce0 244 frame_place
+sprites/LuigiFramePlace.asm 16fce0 244 frame_place
 sprites/DKSpriteFrame00.bin 170130 f0 gfx:3x4+3
 sprites/DKSpriteFrame01.bin 170220 f0 gfx:3x4+3
 sprites/DKSpriteFrame02.bin 170310 f0 gfx:3x4+3
@@ -2924,7 +2924,7 @@ sprites/DKSpriteFrame52.bin 173290 f0 gfx:3x4+3
 sprites/DKSpriteFrame53.bin 173380 f0 gfx:3x4+3
 sprites/DKSpriteFrame54.bin 173470 f0 gfx:3x4+3
 sprites/DKSpriteFrame55.bin 173560 f0 gfx:3x4+3
-sprites/DKSpriteOam.asm 173ce0 244 frame_place
+sprites/DKFramePlace.asm 173ce0 244 frame_place
 sprites/BabyMarioSpriteFrame00.bin 174130 f0 gfx:3x4+3
 sprites/BabyMarioSpriteFrame01.bin 174220 f0 gfx:3x4+3
 sprites/BabyMarioSpriteFrame02.bin 174310 f0 gfx:3x4+3
@@ -2981,7 +2981,7 @@ sprites/BabyMarioSpriteFrame52.bin 177290 f0 gfx:3x4+3
 sprites/BabyMarioSpriteFrame53.bin 177380 f0 gfx:3x4+3
 sprites/BabyMarioSpriteFrame54.bin 177470 f0 gfx:3x4+3
 sprites/BabyMarioSpriteFrame55.bin 177560 f0 gfx:3x4+3
-sprites/BabyMarioSpriteOam.asm 177ce0 244 frame_place
+sprites/BabyMarioFramePlace.asm 177ce0 244 frame_place
 text/TextStrings_5e.asm 17828a 2c05 text_pool
 scenes/MinigameCourtPalettes.asm 17c020 40 palettes
 scenes/lz_MinigameCourtTiles.bin 17c060 7f5 gfx

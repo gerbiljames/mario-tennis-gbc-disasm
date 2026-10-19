@@ -4,7 +4,7 @@ BobSpriteDesc:
 	dw BobSpriteFrames ; $4006 frame table
 	dw BobSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw BobSpriteOam ; $400c per-slot OAM data
+	dw BobFramePlace ; $400c per-frame placement records
 BobSpriteFrames:
 	dw BobSpriteFrame00 ; $400e
 	dw BobSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ BobSpriteFramesUnused:
 	INCBIN "data/sprites/BobSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/BobSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/BobSpriteFrame06.bin" ; $7bf0, 240 bytes
-BobSpriteOam:
-	INCLUDE "data/sprites/BobSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+BobFramePlace:
+	INCLUDE "data/sprites/BobFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BobSpriteAnims:
 	dw BobSpriteAnim00 ; $7f24
 	dw BobSpriteAnim01 ; $7f26

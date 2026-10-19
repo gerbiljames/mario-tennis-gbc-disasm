@@ -67,7 +67,7 @@ IslandOpenDoublesVictory:
 	script_wait_idle ACTOR_PLAYER ; $723d
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $7242
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $7249
-	script_set_text Text_SeniorCoachChampionMedal ; $724e
+	script_set_text Text_EmilyChampionMedal ; $724e
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $7254
 	script_move_target ACTOR_SENIOR_COURT_A_EMILY, 37.0, 29.0 ; $7259
 	script_wait_move ACTOR_SENIOR_COURT_A_EMILY ; $7264
@@ -162,7 +162,7 @@ SeniorSinglesRank2Victory:
 	script_speak ACTOR_SENIOR_COURT_A_JOY ; $7472
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $7477
 	script_wait_jump ACTOR_SENIOR_COURT_A_EMILY ; $747f
-	script_set_text Text_SeniorCoachNowRankedThird ; $7484
+	script_set_text Text_EmilyNowRankedThird ; $7484
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $748a
 	script_set_actor_script ACTOR_SENIOR_COURT_A_JOY, ActorScript_12_07 ; $748f
 	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $749a
@@ -182,7 +182,7 @@ SeniorSinglesRank1Victory:
 	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $74e4
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $74e9
 	script_wait_jump ACTOR_SENIOR_COURT_A_EMILY ; $74f1
-	script_set_text Text_SeniorCoachNowRankedSecond ; $74f6
+	script_set_text Text_EmilyNowRankedSecond ; $74f6
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $74fc
 	script_set_actor_script ACTOR_SENIOR_COURT_A_ALLIE, ActorScript_12_10 ; $7501
 	script_move_target ACTOR_PLAYER, 45.0, 27.0 ; $750c

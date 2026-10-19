@@ -631,8 +631,8 @@ SeniorCourtNpc0CTextIds:
 	dw Text_KateSeniorHappyRankedPartner ; record 4
 	dw Text_KateSeniorHappyRankedPartner ; record 5
 	dw Text_BobSeniorAlwaysUnranked ; record 6
-	dw Text_SeniorCoachOfferDoublesRanking ; record 7
-	dw Text_SeniorCoachOfferDoublesRanking ; record 8
+	dw Text_EmilyOfferDoublesRanking ; record 7
+	dw Text_EmilyOfferDoublesRanking ; record 8
 	dw Text_KateSeniorWorkOnDoubles ; record 9
 	dw Text_SeniorStandInCoachEmilyAway ; record 10
 	dw Text_KateSeniorRootingForYou ; record 11

@@ -4,7 +4,7 @@ KateSpriteDesc:
 	dw KateSpriteFrames ; $4006 frame table
 	dw KateSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw KateSpriteOam ; $400c per-slot OAM data
+	dw KateFramePlace ; $400c per-frame placement records
 KateSpriteFrames:
 	dw KateSpriteFrame00 ; $400e
 	dw KateSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ KateSpriteFramesUnused:
 	INCBIN "data/sprites/KateSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/KateSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/KateSpriteFrame06.bin" ; $7bf0, 240 bytes
-KateSpriteOam:
-	INCLUDE "data/sprites/KateSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+KateFramePlace:
+	INCLUDE "data/sprites/KateFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 KateSpriteAnims:
 	dw KateSpriteAnim00 ; $7f24
 	dw KateSpriteAnim01 ; $7f26

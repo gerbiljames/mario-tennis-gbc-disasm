@@ -4,7 +4,7 @@ YoshiSpriteDesc:
 	dw YoshiSpriteFrames ; $4006 frame table
 	dw YoshiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw YoshiSpriteOam ; $400c per-slot OAM data
+	dw YoshiFramePlace ; $400c per-frame placement records
 YoshiSpriteFrames:
 	dw YoshiSpriteFrame00 ; $400e
 	dw YoshiSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ YoshiSpriteFramesUnused:
 	INCBIN "data/sprites/YoshiSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/YoshiSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/YoshiSpriteFrame06.bin" ; $7bf0, 240 bytes
-YoshiSpriteOam:
-	INCLUDE "data/sprites/YoshiSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+YoshiFramePlace:
+	INCLUDE "data/sprites/YoshiFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 YoshiSpriteAnims:
 	dw YoshiSpriteAnim00 ; $7f24
 	dw YoshiSpriteAnim01 ; $7f26

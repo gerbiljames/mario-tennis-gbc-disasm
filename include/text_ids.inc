@@ -1479,7 +1479,7 @@ def Text_ScoreboardTotal equ Text_30_347
 def Text_ScoreboardScore equ Text_30_348
 def Text_ScoreboardTarget equ Text_30_349
 def Text_ScoreboardHigh equ Text_30_350
-def Text_TrainingFailedErrorCode equ Text_30_351
+def Text_TrainingFailedOrPassed equ Text_30_351
 def Text_TestMapMiniGameNumber equ Text_30_353
 def Text_CharAndItemData equ Text_30_354
 def Text_StoryMenuSaveProgress equ Text_30_370
@@ -1680,7 +1680,7 @@ def Text_JuniorChampMustAcceptChallenges equ Text_32_48
 def Text_JuniorRankFourLostYoureFourth equ Text_32_51
 def Text_JuniorCoachSinglesUpToThird equ Text_32_53
 def Text_JuniorCoachSinglesUpToSecond equ Text_32_54
-def Text_JuniorCoachSinglesNowSenior equ Text_32_55
+def Text_BobJuniorSinglesYouWonNowSenior equ Text_32_55
 def Text_BobJuniorSinglesNowSeniorNoDropping equ Text_32_62
 def Text_BethJuniorSinglesBackToThird equ Text_32_65
 def Text_BethJuniorSinglesWinByTwoTip equ Text_32_69
@@ -1690,7 +1690,7 @@ def Text_BrianJuniorSinglesPracticeMatchOffer equ Text_32_77
 def Text_FayJuniorSinglesRaiseRankingFirst equ Text_32_81
 def Text_AllieJuniorSinglesBlistersNoPractice equ Text_32_82
 def Text_JoyJuniorSinglesScoringRomantic equ Text_32_83
-def Text_BrianJuniorSinglesYouRankedFirst equ Text_32_86
+def Text_BrianJuniorSinglesYouRankedBeforeMe equ Text_32_86
 def Text_FayJuniorSinglesGiftedRankIn equ Text_32_87
 def Text_AllieJuniorSinglesUnfairStillUnranked equ Text_32_88
 def Text_JoyJuniorSinglesLoveLiftedYou equ Text_32_89
@@ -1946,16 +1946,16 @@ def Text_KateSeniorHappyRankedPartner equ Text_34_52
 def Text_SeniorRankOneTicketToVarsity equ Text_34_54
 def Text_SeniorRankTwoGotSomeNerve equ Text_34_56
 def Text_SeniorRankThreeNotThatEasy equ Text_34_58
-def Text_SeniorCoachOfferSinglesRanking equ Text_34_60
-def Text_SeniorCoachSinglesPracticeFirst equ Text_34_62
-def Text_SeniorCoachPlayFourthFirst equ Text_34_64
+def Text_EmilyOfferSinglesRanking equ Text_34_60
+def Text_EmilySinglesPracticeFirst equ Text_34_62
+def Text_EmilyPlayFourthFirst equ Text_34_64
 def Text_SeniorSinglesMatchRules equ Text_34_68
 def Text_SeniorSinglesTakeTheCourt equ Text_34_70
 def Text_SeniorSinglesCallItOff equ Text_34_71
 def Text_SeniorSinglesConfirmPracticeFirst equ Text_34_72
 def Text_SeniorRankFourSpotIsYours equ Text_34_74
-def Text_SeniorCoachNowRankedThird equ Text_34_76
-def Text_SeniorCoachNowRankedSecond equ Text_34_77
+def Text_EmilyNowRankedThird equ Text_34_76
+def Text_EmilyNowRankedSecond equ Text_34_77
 def Text_SeniorChampHandledHardStroke equ Text_34_78
 def Text_FaySeniorDoublesChamps equ Text_34_85
 def Text_FaySeniorDoublesNewTeamSecond equ Text_34_86
@@ -1975,9 +1975,9 @@ def Text_BobSeniorDoublesPracticeOffer equ Text_34_102
 def Text_PamSeniorNeedExperience equ Text_34_107
 def Text_BobSeniorAlwaysUnranked equ Text_34_108
 def Text_PamSeniorRankedTeamwork equ Text_34_109
-def Text_SeniorCoachOfferDoublesRanking equ Text_34_110
-def Text_SeniorCoachDoublesTrainFirst equ Text_34_112
-def Text_SeniorCoachFirstVsThirdTeam equ Text_34_113
+def Text_EmilyOfferDoublesRanking equ Text_34_110
+def Text_EmilyDoublesTrainFirst equ Text_34_112
+def Text_EmilyFirstVsThirdTeam equ Text_34_113
 def Text_SeniorDoublesMatchRules equ Text_34_116
 def Text_SeniorDoublesGamesBegin equ Text_34_118
 def Text_SeniorDoublesCallItOff equ Text_34_119
@@ -1985,10 +1985,10 @@ def Text_SeniorDoublesSoYouWillPlay equ Text_34_121
 def Text_SeniorDoublesRankOneSoonerThanExpected equ Text_34_122
 def Text_SeniorDoublesRankTwoAwesomeCombo equ Text_34_124
 def Text_SeniorDoublesRankThreeShowYou equ Text_34_126
-def Text_SeniorCoachDoublesNowThird equ Text_34_128
-def Text_SeniorCoachDoublesNowSecond equ Text_34_129
+def Text_EmilyDoublesNowThird equ Text_34_128
+def Text_EmilyDoublesNowSecond equ Text_34_129
 def Text_SeniorDoublesChampsWeLost equ Text_34_130
-def Text_SeniorCoachChampionMedal equ Text_34_135
+def Text_EmilyChampionMedal equ Text_34_135
 def Text_EmilyMakeTravelingTeamFirst equ Text_34_141
 def Text_AllieSeniorAlreadyVarsity equ Text_34_142
 def Text_JoySeniorYoullMakeTravelingTeam equ Text_34_143
@@ -2045,7 +2045,7 @@ def Text_ClearStatusChooseMode equ Text_34_228
 def Text_ClearStatusChooseClass equ Text_34_229
 def Text_ClearStatusChooseGame equ Text_34_230
 def Text_ClearStatusSetOrHandOver equ Text_34_232
-def Text_HeadmasterDefineAce equ Text_35_48
+def Text_DefineAce equ Text_35_48
 def Text_DefineDoublesBackPlayer equ Text_35_55
 def Text_TennisDictionaryLetterA equ Text_35_143
 def Text_GymLifterTooMuchMuscleSlows equ Text_35_169
@@ -2221,8 +2221,8 @@ def Text_CourtStrokeStudentPressureServer equ Text_36_666
 def Text_CourtStrokeStudentPassingShotAim equ Text_36_667
 def Text_CourtStrokeStudentPassingShot equ Text_36_668
 def Text_SwingStudentPracticeSwing equ Text_36_671
-def Text_WaterSpriteSwingContestRules equ Text_36_675
-def Text_WaterSpriteSwingContestCount equ Text_36_676
+def Text_SwingContestRules equ Text_36_675
+def Text_SwingContestCount equ Text_36_676
 def Text_WaterSpriteTryingHardest equ Text_36_677
 def Text_WaterSpriteRacketToRepair equ Text_36_683
 def Text_BriefTargetServeFourCourts equ Text_36_688
@@ -2465,7 +2465,7 @@ def Text_EmpireFanCountingOnYou equ Text_1f_54
 def Text_CourtyardFanUpsetOverEmily equ Text_1f_55
 def Text_CourtyardGirlYouMadeFinals equ Text_1f_56
 def Text_SouvenirSellerHopeForSales equ Text_1f_57
-def Text_UnionFanSammieAndSean equ Text_1f_58
+def Text_UnionFanSammiAndSean equ Text_1f_58
 def Text_FactoryFanCozBrothersDoubles equ Text_1f_60
 def Text_EmpireFanAcademyNoChanceDoubles equ Text_1f_61
 def Text_CourtyardFanDoublesStrategic equ Text_1f_62
@@ -2543,7 +2543,7 @@ def Text_KevinSeededYoureUpNow equ Text_1f_159
 def Text_MarkSeedingPressure equ Text_1f_160
 def Text_EmilyFirstRoundRhythm equ Text_1f_161
 def Text_SpikeIntroSeededPlayer equ Text_1f_162
-def Text_SammieIntroPlayYouFirst equ Text_1f_163
+def Text_SammiIntroPlayYouFirst equ Text_1f_163
 def Text_EldenIntroBeatACoz equ Text_1f_166
 def Text_ACozIntroDominateRoundOne equ Text_1f_167
 def Text_BCozIntroUntilMyBrother equ Text_1f_168
@@ -2556,7 +2556,7 @@ def Text_TournamentStaffWaitInCircles equ Text_1f_178
 def Text_KevinRoundTwoYouPlaySpike equ Text_1f_182
 def Text_MarkRoundTwoPlayACoz equ Text_1f_183
 def Text_EmilyRoundTwoNotGonnaLose equ Text_1f_184
-def Text_SammieRoundTwoLostToPlayer equ Text_1f_185
+def Text_SammiRoundTwoLostToPlayer equ Text_1f_185
 def Text_SpikeRoundTwoSeededNoThreat equ Text_1f_186
 def Text_EldenRoundTwoAvengeHonor equ Text_1f_187
 def Text_ACozRoundTwoLoseToNoOne equ Text_1f_188
@@ -2566,7 +2566,7 @@ def Text_FrankRoundTwoPlaceholder equ Text_1f_191
 def Text_EllisRoundTwoPlaceholder equ Text_1f_192
 def Text_KevinSemifinalEmilyOpponent equ Text_25_4
 def Text_MarkSemifinalPressureGotToMe equ Text_25_5
-def Text_SammieSemifinalLostToPlayer equ Text_25_6
+def Text_SammiSemifinalLostToPlayer equ Text_25_6
 def Text_SpikeSemifinalSilence equ Text_25_7
 def Text_EmilySemifinalYoureMyOpponent equ Text_25_8
 def Text_EldenSemifinalHaveRevenge equ Text_25_9
@@ -2577,7 +2577,7 @@ def Text_FrankSemifinalACozOnlyLeft equ Text_25_13
 def Text_EllisSemifinalThoughtSpikeWins equ Text_25_14
 def Text_KevinFinalOpponentACoz equ Text_25_15
 def Text_MarkFinalPressureGotToMe equ Text_25_16
-def Text_SammieFinalLostToPlayer equ Text_25_17
+def Text_SammiFinalLostToPlayer equ Text_25_17
 def Text_SpikeFinalSilence equ Text_25_18
 def Text_ACozFinalUpsetOverEmily equ Text_25_19
 def Text_EmilyFinalJustDoYourBest equ Text_25_20
@@ -2590,7 +2590,7 @@ def Text_KevinDoublesRoundOnePlayUnion equ Text_25_26
 def Text_EmilyDoublesRoundOneUnionFirst equ Text_25_27
 def Text_SpikeDoublesRoundOneIntro equ Text_25_28
 def Text_EldenDoublesRoundOnePlayOurTeam equ Text_25_29
-def Text_SammieDoublesRoundOneIntro equ Text_25_30
+def Text_SammiDoublesRoundOneIntro equ Text_25_30
 def Text_SeanDoublesRoundOneIntro equ Text_25_33
 def Text_ACozDoublesRoundOneBornToFight equ Text_25_36
 def Text_BCozDoublesRoundOneTimeToPlay equ Text_25_37
@@ -2598,7 +2598,7 @@ def Text_EllisDoublesRoundOneBadFeeling equ Text_25_40
 def Text_EdgarDoublesRoundOneWildBrother equ Text_25_41
 def Text_KevinDoublesSemifinalPlayEmpire equ Text_25_42
 def Text_EmilyDoublesSemifinalTeamwork equ Text_25_43
-def Text_SammieDoublesSemifinalWeLost equ Text_25_44
+def Text_SammiDoublesSemifinalWeLost equ Text_25_44
 def Text_SeanDoublesSemifinalBetterToLose equ Text_25_47
 def Text_SpikeDoublesSemifinalCantWait equ Text_25_48
 def Text_EldenDoublesSemifinalLendCourage equ Text_25_49
@@ -2612,7 +2612,7 @@ def Text_SpikeDoublesFinalSilence equ Text_25_58
 def Text_EldenDoublesFinalNewChapter equ Text_25_59
 def Text_ACozDoublesFinalLoseToNoOne equ Text_25_60
 def Text_BCozDoublesFinalIsNextFinal equ Text_25_61
-def Text_SammieDoublesFinalWeLost equ Text_25_64
+def Text_SammiDoublesFinalWeLost equ Text_25_64
 def Text_SeanDoublesFinalBetterToLose equ Text_25_67
 def Text_EllisDoublesFinalWorstNightmare equ Text_25_68
 def Text_EdgarDoublesFinalWildAnimals equ Text_25_69
@@ -2635,7 +2635,7 @@ def Text_StaffRoundEndedShortBreak equ Text_25_105
 def Text_AwardsKevinCongrats equ Text_25_107
 def Text_AwardsACozDestroyYou equ Text_25_115
 def Text_AwardsMarkYouWonIslandOpen equ Text_25_121
-def Text_AwardsSammieUnknownWinner equ Text_25_122
+def Text_AwardsSammiUnknownWinner equ Text_25_122
 def Text_AwardsEmilyKeptMySeed equ Text_25_123
 def Text_AwardsSeanAcceptAcademyChamp equ Text_25_124
 def Text_AwardsSpikeSilence equ Text_25_125
@@ -2649,7 +2649,7 @@ def Text_AwardsPartnerCongrats equ Text_25_151
 def Text_CostellosYouTwoAreGood equ Text_25_164
 def Text_AwardsACozRuinReputation equ Text_25_165
 def Text_AwardsBCozBackFromDead equ Text_25_166
-def Text_AwardsSammieAmazedYouBeatThem equ Text_25_175
+def Text_AwardsSammiAmazedYouBeatThem equ Text_25_175
 def Text_AwardsEmilyAvengingMyLoss equ Text_25_176
 def Text_AwardsSeanCostellosFreaky equ Text_25_177
 def Text_AwardsSpikeSureOfFinals equ Text_25_180

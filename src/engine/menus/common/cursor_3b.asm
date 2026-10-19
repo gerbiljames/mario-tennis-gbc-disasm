@@ -313,13 +313,13 @@ Unused_3b_MoveMenuCursorLinkLocal:
 .checkMoved:
 	ld a, [wMenuCursorX] ; $42df
 	cp d ; $42e2
-	jr nz, .checkMenuCursor2X ; $42e3
+	jr nz, .returnOne ; $42e3
 	ld a, [wMenuCursorY] ; $42e5
 	cp e ; $42e8
-	jr nz, .checkMenuCursor2X ; $42e9
+	jr nz, .returnOne ; $42e9
 	xor a ; $42eb
 	ret ; $42ec
-.checkMenuCursor2X:
+.returnOne:
 	ld a, $01 ; $42ed
 	ret ; $42ef
 Unused_3b_MoveMenuCursorLinkRemote:
@@ -360,7 +360,7 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	xor a ; $4327
 .storeRight:
 	ld [wMenuCursor2X], a ; $4328
-	jr .checkMenuCursor2X ; $432b
+	jr .checkMoved ; $432b
 .checkLeft:
 	bit 5, a ; $432d
 	jr z, .checkUp ; $432f
@@ -378,7 +378,7 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	xor a ; $4340
 .storeLeft:
 	ld [wMenuCursor2X], a ; $4341
-	jr .checkMenuCursor2X ; $4344
+	jr .checkMoved ; $4344
 .checkUp:
 	bit 6, a ; $4346
 	jr z, .checkDown ; $4348
@@ -396,7 +396,7 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	xor a ; $4359
 .storeUp:
 	ld [wMenuCursor2Y], a ; $435a
-	jr .checkMenuCursor2X ; $435d
+	jr .checkMoved ; $435d
 .checkDown:
 	bit 7, a ; $435f
 	jr z, .checkA ; $4361
@@ -414,22 +414,22 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	xor a ; $4372
 .storeDown:
 	ld [wMenuCursor2Y], a ; $4373
-	jr .checkMenuCursor2X ; $4376
+	jr .checkMoved ; $4376
 .checkA:
 	bit 0, a ; $4378
 	jr z, .checkB ; $437a
 	ld a, [wMenuCursorLockFlags] ; $437c
 	ld b, a ; $437f
 	and $02 ; $4380
-	jr nz, .checkMenuCursor2X ; $4382
+	jr nz, .checkMoved ; $4382
 	sound SFX_MENU_SELECT ; $4384
 	ld a, b ; $4386
 	or $02 ; $4387
 	ld [wMenuCursorLockFlags], a ; $4389
-	jr .checkMenuCursor2X ; $438c
+	jr .checkMoved ; $438c
 .checkB:
 	bit 1, a ; $438e
-	jr z, .checkMenuCursor2X ; $4390
+	jr z, .checkMoved ; $4390
 	sound SFX_MENU_CANCEL ; $4392
 	ld a, [wMenuCursorLockFlags] ; $4394
 	ld b, a ; $4397
@@ -443,16 +443,16 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	and $fd ; $43a3
 .storeLockFlags:
 	ld [wMenuCursorLockFlags], a ; $43a5
-.checkMenuCursor2X:
+.checkMoved:
 	ld a, [wMenuCursor2X] ; $43a8
 	cp d ; $43ab
-	jr nz, .checkMenuCursorY ; $43ac
+	jr nz, .returnOne ; $43ac
 	ld a, [wMenuCursor2Y] ; $43ae
 	cp e ; $43b1
-	jr nz, .checkMenuCursorY ; $43b2
+	jr nz, .returnOne ; $43b2
 	xor a ; $43b4
 	ret ; $43b5
-.checkMenuCursorY:
+.returnOne:
 	ld a, $01 ; $43b6
 	ret ; $43b8
 	twin_in get_menu_cursor_index, GetMenuCursorIndex_3b, 3b ; $43b9 GetMenuCursorIndex_3b

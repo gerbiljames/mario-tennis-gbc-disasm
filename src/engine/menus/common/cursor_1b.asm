@@ -273,7 +273,7 @@ Unused_1b_MoveMenuCursor2GridRemote:
 	xor a ; $432f
 .storeRight:
 	ld [wMenuCursor2X], a ; $4330
-	jr .checkMenuCursor2X ; $4333
+	jr .checkMoved ; $4333
 .checkLeft:
 	bit 5, a ; $4335
 	jr z, .checkUp ; $4337
@@ -291,7 +291,7 @@ Unused_1b_MoveMenuCursor2GridRemote:
 	xor a ; $4348
 .storeLeft:
 	ld [wMenuCursor2X], a ; $4349
-	jr .checkMenuCursor2X ; $434c
+	jr .checkMoved ; $434c
 .checkUp:
 	bit 6, a ; $434e
 	jr z, .checkDown ; $4350
@@ -309,7 +309,7 @@ Unused_1b_MoveMenuCursor2GridRemote:
 	xor a ; $4361
 .storeUp:
 	ld [wMenuCursor2Y], a ; $4362
-	jr .checkMenuCursor2X ; $4365
+	jr .checkMoved ; $4365
 .checkDown:
 	bit 7, a ; $4367
 	jr z, .checkA ; $4369
@@ -327,22 +327,22 @@ Unused_1b_MoveMenuCursor2GridRemote:
 	xor a ; $437a
 .storeDown:
 	ld [wMenuCursor2Y], a ; $437b
-	jr .checkMenuCursor2X ; $437e
+	jr .checkMoved ; $437e
 .checkA:
 	bit 0, a ; $4380
 	jr z, .checkB ; $4382
 	ld a, [wMenuCursorLockFlags] ; $4384
 	ld b, a ; $4387
 	and $02 ; $4388
-	jr nz, .checkMenuCursor2X ; $438a
+	jr nz, .checkMoved ; $438a
 	sound SFX_MENU_SELECT ; $438c
 	ld a, b ; $438e
 	or $02 ; $438f
 	ld [wMenuCursorLockFlags], a ; $4391
-	jr .checkMenuCursor2X ; $4394
+	jr .checkMoved ; $4394
 .checkB:
 	bit 1, a ; $4396
-	jr z, .checkMenuCursor2X ; $4398
+	jr z, .checkMoved ; $4398
 	sound SFX_MENU_CANCEL ; $439a
 	ld a, [wMenuCursorLockFlags] ; $439c
 	ld b, a ; $439f
@@ -356,16 +356,16 @@ Unused_1b_MoveMenuCursor2GridRemote:
 	and $fd ; $43ab
 .storeLockFlags:
 	ld [wMenuCursorLockFlags], a ; $43ad
-.checkMenuCursor2X:
+.checkMoved:
 	ld a, [wMenuCursor2X] ; $43b0
 	cp d ; $43b3
-	jr nz, .checkMenuCursorY ; $43b4
+	jr nz, .returnOne ; $43b4
 	ld a, [wMenuCursor2Y] ; $43b6
 	cp e ; $43b9
-	jr nz, .checkMenuCursorY ; $43ba
+	jr nz, .returnOne ; $43ba
 	xor a ; $43bc
 	ret ; $43bd
-.checkMenuCursorY:
+.returnOne:
 	ld a, $01 ; $43be
 	ret ; $43c0
 	twin_in get_menu_cursor_index, GetMenuCursorIndex_1b, 1b ; $43c1 GetMenuCursorIndex_1b

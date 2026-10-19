@@ -4,7 +4,7 @@ WarioSpriteDesc:
 	dw WarioSpriteFrames ; $4006 frame table
 	dw WarioSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw WarioSpriteOam ; $400c per-slot OAM data
+	dw WarioFramePlace ; $400c per-frame placement records
 WarioSpriteFrames:
 	dw WarioSpriteFrame00 ; $400e
 	dw WarioSpriteFrame01 ; $4010
@@ -329,8 +329,8 @@ WarioSpriteFramesUnused:
 	INCBIN "data/sprites/WarioSpriteFrame04.bin" ; $7a10, 240 bytes
 	INCBIN "data/sprites/WarioSpriteFrame05.bin" ; $7b00, 240 bytes
 	INCBIN "data/sprites/WarioSpriteFrame06.bin" ; $7bf0, 240 bytes
-WarioSpriteOam:
-	INCLUDE "data/sprites/WarioSpriteOam.asm" ; $7ce0, 580 bytes (frame_place)
+WarioFramePlace:
+	INCLUDE "data/sprites/WarioFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 WarioSpriteAnims:
 	dw WarioSpriteAnim00 ; $7f24
 	dw WarioSpriteAnim01 ; $7f26

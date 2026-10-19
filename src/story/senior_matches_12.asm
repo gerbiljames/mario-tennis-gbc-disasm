@@ -369,7 +369,7 @@ SeniorDoublesRank2Victory:
 	script_face ACTOR_SENIOR_COURT_A_BETH, FACE_DOWN ; $6e3b
 	script_set_position ACTOR_SENIOR_COURT_B_CURT, 35.0, 15.0 ; $6e42
 	script_face ACTOR_SENIOR_COURT_B_CURT, FACE_DOWN ; $6e4d
-	script_set_text Text_SeniorCoachDoublesNowThird ; $6e54
+	script_set_text Text_EmilyDoublesNowThird ; $6e54
 	script_set_position ACTOR_PLAYER, 37.0, 27.0 ; $6e5a
 	script_set_position ACTOR_PARTNER, 35.0, 27.0 ; $6e65
 	script_face ACTOR_PLAYER, FACE_UP ; $6e70
@@ -418,7 +418,7 @@ SeniorDoublesRank1Victory:
 	script_face ACTOR_PLAYER, FACE_UP ; $6fb0
 	script_face ACTOR_PARTNER, FACE_UP ; $6fb7
 	call FadeInSeniorCourtNearPairB ; $6fbe
-	script_set_text Text_SeniorCoachDoublesNowSecond ; $6fc1
+	script_set_text Text_EmilyDoublesNowSecond ; $6fc1
 	script_wait_frames 40 ; $6fc7
 	script_set_anim ACTOR_SENIOR_COURT_A_BRIAN, ANIM_BOUNCE ; $6fce
 	script_wait_idle ACTOR_SENIOR_COURT_A_BRIAN ; $6fd5
