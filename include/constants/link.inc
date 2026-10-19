@@ -21,6 +21,22 @@ def LINKTAG_SLAVE   equ $80
 def LINKREADY_MASTER equ $0b
 def LINKREADY_SLAVE  equ $0a
 
+; --- Link character-select codes (hLinkRemoteInput during link character select) ---
+; UpdateMenuCursorFromLinkInput turns the buttons into one code;
+; ProcessLinkSelectCommand acts on the peer's. A code below $20 is the character
+; under the peer's cursor, kept in wLinkSelectCmdChar for the pick that follows.
+	const_def $20
+	const LINKSEL_RESET            ; $20 A+B+Select+Start: soft reset
+	const LINKSEL_PICK             ; $21 A on the character in wLinkSelectCmdChar
+	const LINKSEL_NONE             ; $22 nothing: also the cursor code of an empty or taken cell
+	const LINKSEL_CANCEL           ; $23 B: step back a slot
+	const LINKSEL_CPU_LEVEL_1      ; $24 the peer's CPU partner difficulty, 1-4
+	const LINKSEL_CPU_LEVEL_2      ; $25
+	const LINKSEL_CPU_LEVEL_3      ; $26
+	const LINKSEL_CPU_LEVEL_4      ; $27
+	const LINKSEL_PICK_LEFT_HANDED ; $28 A with the left-handed star on
+	const LINKSEL_IGNORED          ; $29 accepted and dropped
+
 ; --- Link control tokens (the serial byte, $07 link routines) ---
 ; LINKTAG_MASK's fourth value, kept free for in-band control. Per-frame play
 ; bytes never use these.

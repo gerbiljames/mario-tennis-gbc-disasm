@@ -343,35 +343,35 @@ RunLinkCharSelectScreen:
 	ret ; $6527
 ProcessLinkSelectCommand:
 	ldh a, [hLinkRemoteInput] ; $6528
-	cp $20 ; $652a
-	jr nz, .cmd21 ; $652c
+	cp LINKSEL_RESET ; $652a
+	jr nz, .checkPick ; $652c
 	call JumpSoftReset ; $652e
 	jp .done ; $6531
-.cmd21:
-	cp $21 ; $6534
-	jr nz, .cmd23 ; $6536
+.checkPick:
+	cp LINKSEL_PICK ; $6534
+	jr nz, .checkCancel ; $6536
 	ld a, [wCharSelectRemoteSlot] ; $6538
 	cp $02 ; $653b
 	jp z, .done ; $653d
 	ld a, [wLinkSelectCmdChar] ; $6540
-	cp $22 ; $6543
+	cp LINKSEL_NONE ; $6543
 	jp z, .done ; $6545
 	ld c, a ; $6548
 	call ApplyRemoteCharSelection ; $6549
 	jp .done ; $654c
-.cmd23:
-	cp $23 ; $654f
-	jr nz, .cmd28 ; $6551
+.checkCancel:
+	cp LINKSEL_CANCEL ; $654f
+	jr nz, .checkPickLeftHanded ; $6551
 	call ApplyRemoteCharCancel ; $6553
 	jp .done ; $6556
-.cmd28:
-	cp $28 ; $6559
-	jr nz, .cmd29 ; $655b
+.checkPickLeftHanded:
+	cp LINKSEL_PICK_LEFT_HANDED ; $6559
+	jr nz, .checkIgnored ; $655b
 	ld a, [wCharSelectRemoteSlot] ; $655d
 	cp $02 ; $6560
 	jp z, .done ; $6562
 	ld a, [wLinkSelectCmdChar] ; $6565
-	cp $22 ; $6568
+	cp LINKSEL_NONE ; $6568
 	jp z, .done ; $656a
 	ld a, [wLinkSelectCmdChar] ; $656d
 	ld c, a ; $6570
@@ -398,13 +398,13 @@ ProcessLinkSelectCommand:
 	ld c, a ; $65a1
 	call ApplyRemoteCharSelection ; $65a2
 	jr .done ; $65a5
-.cmd29:
-	cp $29 ; $65a7
-	jr nz, .cmd24 ; $65a9
+.checkIgnored:
+	cp LINKSEL_IGNORED ; $65a7
+	jr nz, .checkCpuLevel1 ; $65a9
 	jr .done ; $65ab
-.cmd24:
-	cp $24 ; $65ad
-	jr nz, .cmd25 ; $65af
+.checkCpuLevel1:
+	cp LINKSEL_CPU_LEVEL_1 ; $65ad
+	jr nz, .checkCpuLevel2 ; $65af
 	ld c, $01 ; $65b1
 	call StoreRemoteCpuDifficulty ; $65b3
 	ld a, [wCharSelectRemoteChars + 1] ; $65b6
@@ -413,9 +413,9 @@ ProcessLinkSelectCommand:
 	xor a ; $65bd
 	ld [wLinkSelectCmdResult], a ; $65be
 	jr .done ; $65c1
-.cmd25:
-	cp $25 ; $65c3
-	jr nz, .cmd26 ; $65c5
+.checkCpuLevel2:
+	cp LINKSEL_CPU_LEVEL_2 ; $65c3
+	jr nz, .checkCpuLevel3 ; $65c5
 	ld c, $02 ; $65c7
 	call StoreRemoteCpuDifficulty ; $65c9
 	ld a, [wCharSelectRemoteChars + 1] ; $65cc
@@ -424,9 +424,9 @@ ProcessLinkSelectCommand:
 	xor a ; $65d3
 	ld [wLinkSelectCmdResult], a ; $65d4
 	jr .done ; $65d7
-.cmd26:
-	cp $26 ; $65d9
-	jr nz, .cmd27 ; $65db
+.checkCpuLevel3:
+	cp LINKSEL_CPU_LEVEL_3 ; $65d9
+	jr nz, .checkCpuLevel4 ; $65db
 	ld c, $03 ; $65dd
 	call StoreRemoteCpuDifficulty ; $65df
 	ld a, [wCharSelectRemoteChars + 1] ; $65e2
@@ -435,8 +435,8 @@ ProcessLinkSelectCommand:
 	xor a ; $65e9
 	ld [wLinkSelectCmdResult], a ; $65ea
 	jr .done ; $65ed
-.cmd27:
-	cp $27 ; $65ef
+.checkCpuLevel4:
+	cp LINKSEL_CPU_LEVEL_4 ; $65ef
 	jr nz, .unknownCmd ; $65f1
 	ld c, $04 ; $65f3
 	call StoreRemoteCpuDifficulty ; $65f5

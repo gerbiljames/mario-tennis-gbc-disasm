@@ -362,7 +362,7 @@ GetLinkCursorSelectionCode:
 	ld a, [hl] ; $6c71
 	cp $ff ; $6c72
 	jr nz, .checkTaken ; $6c74
-	ld a, $22 ; $6c76
+	ld a, LINKSEL_NONE ; $6c76
 	jr .done ; $6c78
 .checkTaken:
 	inc hl ; $6c7a
@@ -374,7 +374,7 @@ GetLinkCursorSelectionCode:
 	ld a, b ; $6c80
 	or a ; $6c81
 	jr z, .useCode ; $6c82
-	ld a, $22 ; $6c84
+	ld a, LINKSEL_NONE ; $6c84
 	jr .done ; $6c86
 .useCode:
 	ld a, c ; $6c88
@@ -390,7 +390,7 @@ UpdateMenuCursorFromLinkInput:
 	ld a, b ; $6c9c
 	xor $0f ; $6c9d
 	jr nz, .checkButtons ; $6c9f
-	ld b, $20 ; $6ca1
+	ld b, LINKSEL_RESET ; $6ca1
 	jr .storeCommand ; $6ca3
 .checkButtons:
 	ld a, b ; $6ca5
@@ -403,15 +403,15 @@ UpdateMenuCursorFromLinkInput:
 	ld a, [wCharGridHandedness] ; $6cb0
 	cp HAND_LEFT ; $6cb3
 	jr nz, .sendSelect ; $6cb5
-	ld b, $28 ; $6cb7
+	ld b, LINKSEL_PICK_LEFT_HANDED ; $6cb7
 	jr .storeCommand ; $6cb9
 .sendSelect:
-	ld b, $21 ; $6cbb
+	ld b, LINKSEL_PICK ; $6cbb
 	jr .storeCommand ; $6cbd
 .checkB:
 	bit 1, a ; $6cbf
 	jr z, .checkRight ; $6cc1
-	ld b, $23 ; $6cc3
+	ld b, LINKSEL_CANCEL ; $6cc3
 	jr .storeCommand ; $6cc5
 .checkRight:
 	bit 4, a ; $6cc7
