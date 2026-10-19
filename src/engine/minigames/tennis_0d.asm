@@ -25,7 +25,7 @@ PlayMinigameCountdown:
 	jr nz, .showDigit ; $48f2
 	sound SFX_COUNTDOWN ; $48f4
 .showDigit:
-	ld a, $11 ; $48f6
+	ld a, BANNER_COUNTDOWN_DIGIT ; $48f6
 	farcall SpawnCourtBannerObj ; $48f8
 	ld a, 40 ; $48fb
 	farcall StepMatchFrames ; $48fd
@@ -37,7 +37,7 @@ PlayMinigameCountdown:
 	jr nz, .showGo ; $4908
 	sound SFX_COUNTDOWN_GO ; $490a
 .showGo:
-	ld a, $10 ; $490c
+	ld a, BANNER_START ; $490c
 	farcall ShowCourtBanner ; $490e
 	ld a, 40 ; $4911
 	farcall StepMatchFrames ; $4913

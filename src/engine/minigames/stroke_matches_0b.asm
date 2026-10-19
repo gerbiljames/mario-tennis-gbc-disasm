@@ -35,7 +35,7 @@ StrokeMatch2Hook_PerFrame:
 StrokeMatch2Hook_PointStart:
 	xor a ; $6700
 	ld [wDrillAbortCountdownActive], a ; $6701
-	ld a, $0a ; $6704
+	ld a, DRILL_ABORT_FRAMES ; $6704
 	ld [wDrillAbortCountdown], a ; $6706
 	ld hl, StrokeMatch2DrillOpponent ; $6709
 	call LoadDrillOpponentBySide ; $670c
@@ -91,7 +91,7 @@ StrokeMatch2Hook_PointEnd:
 	ret ; $676a
 .checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $676b
-	cp $08 ; $676e
+	cp DRILL_MATCH_POINTS ; $676e
 	ret nz ; $6770
 	ld a, WINLOSE_NONE ; $6771
 	ld [wPointWinLoseFlag], a ; $6773
@@ -135,23 +135,23 @@ StrokeMatch2HandlePointEnd:
 	ret ; $67c1
 	twin_named net_game_match1_award_point_to_side, StrokeMatch2AwardPointToSide ; $67c2
 StrokeMatch2JudgeOnPointEnd:
-	ld a, $00 ; $67eb
+	ld a, JUDGEEVENT_POINT_END ; $67eb
 	call StrokeMatch2JudgePoint ; $67ed
 	ld [wDrillPointJudgement], a ; $67f0
 	ret ; $67f3
 StrokeMatch2JudgeOnBallHit:
-	ld a, $01 ; $67f4
+	ld a, JUDGEEVENT_BALL_HIT ; $67f4
 	call StrokeMatch2JudgePoint ; $67f6
 	ld [wDrillPointJudgement], a ; $67f9
 	ret ; $67fc
 StrokeMatch2JudgeOnBounce:
-	ld a, $02 ; $67fd
+	ld a, JUDGEEVENT_BOUNCE ; $67fd
 	call StrokeMatch2JudgePoint ; $67ff
 	ld [wDrillPointJudgement], a ; $6802
 	ret ; $6805
 StrokeMatch2JudgeOnRallyTick:
 	ret ; $6806
-	ld a, $03 ; $6807
+	ld a, JUDGEEVENT_RALLY_TICK ; $6807
 	call StrokeMatch2JudgePoint ; $6809
 	ld [wDrillPointJudgement], a ; $680c
 	ret ; $680f
@@ -333,7 +333,7 @@ StrokeMatch3Hook_PerFrame:
 StrokeMatch3Hook_PointStart:
 	xor a ; $694b
 	ld [wDrillAbortCountdownActive], a ; $694c
-	ld a, $0a ; $694f
+	ld a, DRILL_ABORT_FRAMES ; $694f
 	ld [wDrillAbortCountdown], a ; $6951
 	ld hl, StrokeMatch3DrillOpponent ; $6954
 	call LoadDrillOpponentBySide ; $6957
@@ -389,7 +389,7 @@ StrokeMatch3Hook_PointEnd:
 	ret ; $69b5
 .checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $69b6
-	cp $08 ; $69b9
+	cp DRILL_MATCH_POINTS ; $69b9
 	ret nz ; $69bb
 	ld a, WINLOSE_NONE ; $69bc
 	ld [wPointWinLoseFlag], a ; $69be
@@ -433,23 +433,23 @@ StrokeMatch3HandlePointEnd:
 	ret ; $6a0c
 	twin_named net_game_match1_award_point_to_side, StrokeMatch3AwardPointToSide ; $6a0d
 StrokeMatch3JudgeOnPointEnd:
-	ld a, $00 ; $6a36
+	ld a, JUDGEEVENT_POINT_END ; $6a36
 	call StrokeMatch3JudgePoint ; $6a38
 	ld [wDrillPointJudgement], a ; $6a3b
 	ret ; $6a3e
 StrokeMatch3JudgeOnBallHit:
-	ld a, $01 ; $6a3f
+	ld a, JUDGEEVENT_BALL_HIT ; $6a3f
 	call StrokeMatch3JudgePoint ; $6a41
 	ld [wDrillPointJudgement], a ; $6a44
 	ret ; $6a47
 StrokeMatch3JudgeOnBounce:
-	ld a, $02 ; $6a48
+	ld a, JUDGEEVENT_BOUNCE ; $6a48
 	call StrokeMatch3JudgePoint ; $6a4a
 	ld [wDrillPointJudgement], a ; $6a4d
 	ret ; $6a50
 StrokeMatch3JudgeOnRallyTick:
 	ret ; $6a51
-	ld a, $03 ; $6a52
+	ld a, JUDGEEVENT_RALLY_TICK ; $6a52
 	call StrokeMatch3JudgePoint ; $6a54
 	ld [wDrillPointJudgement], a ; $6a57
 	ret ; $6a5a
@@ -625,7 +625,7 @@ StrokePractice1Hook_PerFrame:
 StrokePractice1Hook_PointStart:
 	xor a ; $6b94
 	ld [wDrillAbortCountdownActive], a ; $6b95
-	ld a, $0a ; $6b98
+	ld a, DRILL_ABORT_FRAMES ; $6b98
 	ld [wDrillAbortCountdown], a ; $6b9a
 	xor a ; $6b9d
 	ld [wTargetZoneEnabled], a ; $6b9e

@@ -168,3 +168,17 @@ def EXPSTAT_SAVED_COLOR  rw   ; $0a BG colour the screen greys out and restores
 def EXPSTAT_EXP          rb 3 ; $0c CHARREC_EXP, copied back to wStory*Exp
 def EXPSTAT_SIZE equ _RS
 	ASSERT EXPSTAT_SIZE == 15
+
+; --- Scoreboard layout (wScoreboardLayout) ---
+; Chosen by SelectScoreboardLayout: wOnCourtCharCount - 2 outside minigame
+; context, else by the drill/minigame flags. Indexes the caption and drawer
+; jumptables and the tilemap and sprite-template tables in bank $06.
+	const_def
+	const SCOREBOARD_SINGLES     ; $00
+	const SCOREBOARD_THREE_CHARS ; $01
+	const SCOREBOARD_DOUBLES     ; $02
+	const SCOREBOARD_LESSON      ; $03 wDrillIsPracticeLesson
+	const SCOREBOARD_DRILL       ; $04 drill matches and the other Mario minigames: result rows
+	const SCOREBOARD_POINT_PIPS  ; $05 Stroke Match 1
+	const SCOREBOARD_SCORE       ; $06 wall, Tennis Machine and Boo Blast: score to a target
+	const SCOREBOARD_HIGH_SCORE  ; $07 wMinigameHighScoreMode

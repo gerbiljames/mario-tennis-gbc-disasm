@@ -66,7 +66,7 @@ CheckSetComplete:
 	ld a, $01 ; $478a
 	ld [wChangeoverSkipBanner], a ; $478c
 	sound BGM_TIEBREAK ; $478f
-	ld a, $0f ; $4791
+	ld a, BANNER_TIEBREAK ; $4791
 	farcall ShowCourtBanner ; $4793
 	ld a, 80 ; $4796
 	call StepMatchFrames ; $4798

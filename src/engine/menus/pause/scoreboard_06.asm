@@ -4,13 +4,13 @@ PrepareScoreboardGfx:
 	ld a, $02 ; $491a
 	ld [wScoreboardOrigin], a ; $491c
 	ld a, [wScoreboardLayout] ; $491f
-	cp $06 ; $4922
+	cp SCOREBOARD_SCORE ; $4922
 	jr nz, .checkScoreboardLayout ; $4924
 	ld a, $02 ; $4926
 	ld [wScoreboardOrigin + 1], a ; $4928
 .checkScoreboardLayout:
 	ld a, [wScoreboardLayout] ; $492b
-	cp $07 ; $492e
+	cp SCOREBOARD_HIGH_SCORE ; $492e
 	jr nz, .checkOnCourtCharCountMinus1 ; $4930
 	ld a, $02 ; $4932
 	ld [wScoreboardOrigin + 1], a ; $4934
@@ -449,7 +449,7 @@ DrawScoreboardSprites:
 	call QueueSpriteTemplate ; $508c
 	pop de ; $508f
 	ld a, [wScoreboardLayout] ; $5090
-	cp $06 ; $5093
+	cp SCOREBOARD_SCORE ; $5093
 	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5095
 	cp $07 ; $5097
 	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5099

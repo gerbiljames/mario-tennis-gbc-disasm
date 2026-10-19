@@ -4,7 +4,7 @@
 	ld a, $01
 	ld [wMinigameUsesTennisMachine], a
 	ld a, [wMinigameLevel]
-	cp $02
+	cp MINIGAMELEVEL_HIGH_SCORE
 	jr nz, .done
 	ld a, $01
 	ld [wMinigameHighScoreMode], a

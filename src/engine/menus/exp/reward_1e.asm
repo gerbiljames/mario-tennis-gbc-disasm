@@ -428,7 +428,7 @@ UpdateMinigameBestScore:
 	ldh a, [hWramBank] ; $6f38
 	push af ; $6f3a
 	ld a, [wMinigameLevel] ; $6f3b
-	cp $02 ; $6f3e
+	cp MINIGAMELEVEL_HIGH_SCORE ; $6f3e
 	jr nz, .restore ; $6f40
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f42
 	sub MINIGAME_BOO_BLAST ; $6f45

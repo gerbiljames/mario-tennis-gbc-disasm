@@ -19,7 +19,7 @@ StrokePractice1Hook_PointEnd:
 .strokePractice1HandlePointEnd:
 	call StrokePractice1HandlePointEnd ; $6bf1
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bf4
-	cp $04 ; $6bf7
+	cp DRILL_LESSON_POINTS ; $6bf7
 	ret c ; $6bf9
 	call StrokePractice1EvaluateResult ; $6bfa
 	ld [wPointWinLoseFlag], a ; $6bfd
@@ -59,17 +59,17 @@ StrokePractice1Table:
 	dw $ffff ; record 16
 	twin_named stroke_practice1_handle_point_end, StrokePractice1HandlePointEnd ; $6c81
 StrokePractice1JudgeOnPointEnd:
-	ld a, $00 ; $6cd0
+	ld a, JUDGEEVENT_POINT_END ; $6cd0
 	call StrokePractice1JudgePoint ; $6cd2
 	ld [wDrillPointJudgement], a ; $6cd5
 	ret ; $6cd8
 StrokePractice1JudgeOnBallHit:
-	ld a, $01 ; $6cd9
+	ld a, JUDGEEVENT_BALL_HIT ; $6cd9
 	call StrokePractice1JudgePoint ; $6cdb
 	ld [wDrillPointJudgement], a ; $6cde
 	ret ; $6ce1
 StrokePractice1JudgeOnBounce:
-	ld a, $02 ; $6ce2
+	ld a, JUDGEEVENT_BOUNCE ; $6ce2
 	call StrokePractice1JudgePoint ; $6ce4
 	ld [wDrillPointJudgement], a ; $6ce7
 	ret ; $6cea
@@ -78,7 +78,7 @@ StrokePractice1JudgeOnBounce:
 ; fourth of this drill's four judges; see docs/bugs.md.
 StrokePractice1JudgeOnRallyTick:
 	ret ; $6ceb
-	ld a, $03 ; $6cec
+	ld a, JUDGEEVENT_RALLY_TICK ; $6cec
 	call StrokePractice1JudgePoint ; $6cee
 	ld [wDrillPointJudgement], a ; $6cf1
 	ret ; $6cf4
@@ -176,7 +176,7 @@ StrokePractice2Hook_PerFrame:
 StrokePractice2Hook_PointStart:
 	xor a ; $6de0
 	ld [wDrillAbortCountdownActive], a ; $6de1
-	ld a, $0a ; $6de4
+	ld a, DRILL_ABORT_FRAMES ; $6de4
 	ld [wDrillAbortCountdown], a ; $6de6
 	xor a ; $6de9
 	ld [wTargetZoneEnabled], a ; $6dea
@@ -212,31 +212,32 @@ StrokePractice2Hook_PointEnd:
 	call StrokePractice2JudgeOnPointEnd ; $6e2d
 	call StrokePractice2HandlePointEnd ; $6e30
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e33
-	cp $04 ; $6e36
+	cp DRILL_LESSON_POINTS ; $6e36
 	ret c ; $6e38
 	call StrokePractice2EvaluateResult ; $6e39
 	ld [wPointWinLoseFlag], a ; $6e3c
 	ret ; $6e3f
 StrokePractice2EvaluateResult:
 	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6e40
-	cp $04 ; $6e43
+	cp DRILL_LESSON_POINTS ; $6e43
 	jr nz, .checkCounter7 ; $6e45
+	ASSERT LESSON_PASSED == 0
 	xor a ; $6e47
 	ld [wDrillLessonResult], a ; $6e48
 	ld a, $01 ; $6e4b
 	ret ; $6e4d
 .checkCounter7:
 	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6e4e
-	cp $03 ; $6e51
+	cp DRILL_LESSON_POINTS - 1 ; $6e51
 	jr c, .checkCounter2 ; $6e53
-	ld a, $05 ; $6e55
+	ld a, LESSON_LOB_ALMOST ; $6e55
 	ld [wDrillLessonResult], a ; $6e57
 	jr .notFound ; $6e5a
 .checkCounter2:
 	ld a, [wDrillCounters + DRILLCTR_LOBS] ; $6e5c
-	cp $04 ; $6e5f
+	cp DRILL_LESSON_POINTS ; $6e5f
 	jr nc, .checkRallyLength ; $6e61
-	ld a, $01 ; $6e63
+	ld a, LESSON_LOB_TOO_FEW ; $6e63
 	ld [wDrillLessonResult], a ; $6e65
 	jr .notFound ; $6e68
 .checkRallyLength:
@@ -246,17 +247,17 @@ StrokePractice2EvaluateResult:
 	ld a, [wShotRecoilVariant] ; $6e71
 	cp $01 ; $6e74
 	jr nz, .compare ; $6e76
-	ld a, $02 ; $6e78
+	ld a, LESSON_LOB_VOLLEYED ; $6e78
 	ld [wDrillLessonResult], a ; $6e7a
 	jr .notFound ; $6e7d
 .compare:
 	cp $02 ; $6e7f
 	jr nz, .result4 ; $6e81
-	ld a, $03 ; $6e83
+	ld a, LESSON_LOB_SMASHED ; $6e83
 	ld [wDrillLessonResult], a ; $6e85
 	jr .notFound ; $6e88
 .result4:
-	ld a, $04 ; $6e8a
+	ld a, LESSON_LOB_NO_CONTROL ; $6e8a
 	ld [wDrillLessonResult], a ; $6e8c
 .notFound:
 	ld a, $ff ; $6e8f
@@ -313,23 +314,23 @@ StrokePractice2HandlePointEnd:
 	call PlayDrillPointEndSequence ; $6f14
 	ret ; $6f17
 StrokePractice2JudgeOnPointEnd:
-	ld a, $00 ; $6f18
+	ld a, JUDGEEVENT_POINT_END ; $6f18
 	call StrokePractice2JudgePoint ; $6f1a
 	ld [wDrillPointJudgement], a ; $6f1d
 	ret ; $6f20
 StrokePractice2JudgeOnBallHit:
-	ld a, $01 ; $6f21
+	ld a, JUDGEEVENT_BALL_HIT ; $6f21
 	call StrokePractice2JudgePoint ; $6f23
 	ld [wDrillPointJudgement], a ; $6f26
 	ret ; $6f29
 StrokePractice2JudgeOnBounce:
-	ld a, $02 ; $6f2a
+	ld a, JUDGEEVENT_BOUNCE ; $6f2a
 	call StrokePractice2JudgePoint ; $6f2c
 	ld [wDrillPointJudgement], a ; $6f2f
 	ret ; $6f32
 StrokePractice2JudgeOnRallyTick:
 	ret ; $6f33
-	ld a, $03 ; $6f34
+	ld a, JUDGEEVENT_RALLY_TICK ; $6f34
 	call StrokePractice2JudgePoint ; $6f36
 	ld [wDrillPointJudgement], a ; $6f39
 	ret ; $6f3c
@@ -467,7 +468,7 @@ StrokePractice3Hook_PerFrame:
 StrokePractice3Hook_PointStart:
 	xor a ; $7045
 	ld [wDrillAbortCountdownActive], a ; $7046
-	ld a, $0a ; $7049
+	ld a, DRILL_ABORT_FRAMES ; $7049
 	ld [wDrillAbortCountdown], a ; $704b
 	xor a ; $704e
 	ld [wTargetZoneEnabled], a ; $704f
@@ -503,7 +504,7 @@ StrokePractice3Hook_PointEnd:
 	call StrokePractice3JudgeOnPointEnd ; $7092
 	call StrokePractice3HandlePointEnd ; $7095
 	ld a, [wTotalPointsScoredInCurrentGame] ; $7098
-	cp $04 ; $709b
+	cp DRILL_LESSON_POINTS ; $709b
 	ret c ; $709d
 	call StrokePractice3EvaluateResult ; $709e
 	ld [wPointWinLoseFlag], a ; $70a1
@@ -535,23 +536,23 @@ StrokePractice3PointStartDrillPositions:
 	db $ff, $ff ; end
 	twin_named stroke_practice1_handle_point_end, StrokePractice3HandlePointEnd ; $712b
 StrokePractice3JudgeOnPointEnd:
-	ld a, $00 ; $717a
+	ld a, JUDGEEVENT_POINT_END ; $717a
 	call StrokePractice3JudgePoint ; $717c
 	ld [wDrillPointJudgement], a ; $717f
 	ret ; $7182
 StrokePractice3JudgeOnBallHit:
-	ld a, $01 ; $7183
+	ld a, JUDGEEVENT_BALL_HIT ; $7183
 	call StrokePractice3JudgePoint ; $7185
 	ld [wDrillPointJudgement], a ; $7188
 	ret ; $718b
 StrokePractice3JudgeOnBounce:
-	ld a, $02 ; $718c
+	ld a, JUDGEEVENT_BOUNCE ; $718c
 	call StrokePractice3JudgePoint ; $718e
 	ld [wDrillPointJudgement], a ; $7191
 	ret ; $7194
 StrokePractice3JudgeOnRallyTick:
 	ret ; $7195
-	ld a, $03 ; $7196
+	ld a, JUDGEEVENT_RALLY_TICK ; $7196
 	call StrokePractice3JudgePoint ; $7198
 	ld [wDrillPointJudgement], a ; $719b
 	ret ; $719e

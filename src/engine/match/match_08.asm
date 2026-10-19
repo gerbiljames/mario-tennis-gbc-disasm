@@ -263,7 +263,7 @@ HandleBallHitEvent:
 	ld a, [wSpecialShotFlag] ; $42d4
 	and a ; $42d7
 	jr z, .done ; $42d8
-	ld a, $0e ; $42da
+	ld a, BANNER_POWER_SERVE ; $42da
 	farcall ShowCourtBanner ; $42dc
 	ld a, [wServingCharCourtPos] ; $42df
 	and $02 ; $42e2

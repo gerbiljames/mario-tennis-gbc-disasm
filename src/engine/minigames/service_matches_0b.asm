@@ -239,12 +239,12 @@ ServiceMatch1HandlePointEnd:
 	call PlayDrillPointEndSequence ; $48f8
 	ret ; $48fb
 ServiceMatch1JudgeOnPointEnd:
-	ld a, $00 ; $48fc
+	ld a, JUDGEEVENT_POINT_END ; $48fc
 	call ServiceMatch1JudgePoint ; $48fe
 	ld [wDrillPointJudgement], a ; $4901
 	ret ; $4904
 ServiceMatch1JudgeOnBallHit:
-	ld a, $01 ; $4905
+	ld a, JUDGEEVENT_BALL_HIT ; $4905
 	call ServiceMatch1JudgePoint ; $4907
 	ld [wDrillPointJudgement], a ; $490a
 	ret ; $490d
@@ -259,13 +259,13 @@ ServiceMatch1JudgeOnBallHit:
 ; scores on its own subset of events. See docs/bugs.md.
 ServiceMatch1JudgeOnBounce:
 	ret ; $490e
-	ld a, $02 ; $490f
+	ld a, JUDGEEVENT_BOUNCE ; $490f
 	call ServiceMatch1JudgePoint ; $4911
 	ld [wDrillPointJudgement], a ; $4914
 	ret ; $4917
 ServiceMatch1JudgeOnRallyTick:
 	ret ; $4918
-	ld a, $03 ; $4919
+	ld a, JUDGEEVENT_RALLY_TICK ; $4919
 	call ServiceMatch1JudgePoint ; $491b
 	ld [wDrillPointJudgement], a ; $491e
 	ret ; $4921
@@ -386,7 +386,7 @@ ServiceMatch2Hook_PointStart:
 	xor a ; $49f2
 	ld [wDrillAbortCountdownActive], a ; $49f3
 	ld [wUnusedDrillPointStartByte], a ; $49f6
-	ld a, $0a ; $49f9
+	ld a, DRILL_ABORT_FRAMES ; $49f9
 	ld [wDrillAbortCountdown], a ; $49fb
 	ld a, $01 ; $49fe
 	ld [wDrillGateActive], a ; $4a00
@@ -503,23 +503,23 @@ ServiceMatch2HandlePointEnd:
 	ret ; $4b04
 	twin_named net_game_match1_award_point_to_side, ServiceMatch2AwardPointToSide ; $4b05
 ServiceMatch2JudgeOnPointEnd:
-	ld a, $00 ; $4b2e
+	ld a, JUDGEEVENT_POINT_END ; $4b2e
 	call ServiceMatch2JudgePoint ; $4b30
 	ld [wDrillPointJudgement], a ; $4b33
 	ret ; $4b36
 ServiceMatch2JudgeOnBallHit:
-	ld a, $01 ; $4b37
+	ld a, JUDGEEVENT_BALL_HIT ; $4b37
 	call ServiceMatch2JudgePoint ; $4b39
 	ld [wDrillPointJudgement], a ; $4b3c
 	ret ; $4b3f
 ServiceMatch2JudgeOnBounce:
 	ret ; $4b40
-	ld a, $02 ; $4b41
+	ld a, JUDGEEVENT_BOUNCE ; $4b41
 	call ServiceMatch2JudgePoint ; $4b43
 	ld [wDrillPointJudgement], a ; $4b46
 	ret ; $4b49
 ServiceMatch2JudgeOnRallyTick:
-	ld a, $03 ; $4b4a
+	ld a, JUDGEEVENT_RALLY_TICK ; $4b4a
 	call ServiceMatch2JudgePoint ; $4b4c
 	ld [wDrillPointJudgement], a ; $4b4f
 	ret ; $4b52

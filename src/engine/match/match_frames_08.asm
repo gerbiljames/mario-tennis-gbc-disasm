@@ -167,15 +167,15 @@ SelectScoreboardLayout:
 	ld [wScoreboardLayout], a ; $4559
 	ret ; $455c
 .doubles:
-	ld b, $03 ; $455d
+	ld b, SCOREBOARD_LESSON ; $455d
 	ld a, [wDrillIsPracticeLesson] ; $455f
 	and a ; $4562
 	jr nz, .done ; $4563
-	ld b, $07 ; $4565
+	ld b, SCOREBOARD_HIGH_SCORE ; $4565
 	ld a, [wMinigameHighScoreMode] ; $4567
 	and a ; $456a
 	jr nz, .done ; $456b
-	ld b, $06 ; $456d
+	ld b, SCOREBOARD_SCORE ; $456d
 	ld a, [wMinigameUsesWall] ; $456f
 	and a ; $4572
 	jr nz, .done ; $4573
@@ -185,7 +185,7 @@ SelectScoreboardLayout:
 	ld a, [wMinigameIsBooBlast] ; $457b
 	and a ; $457e
 	jr nz, .done ; $457f
-	ld b, $04 ; $4581
+	ld b, SCOREBOARD_DRILL ; $4581
 .done:
 	ld a, b ; $4583
 	ld [wScoreboardLayout], a ; $4584

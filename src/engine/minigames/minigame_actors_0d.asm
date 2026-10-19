@@ -7,7 +7,7 @@ ShowPointOutcomeBanner:
 	cp POINTOUTCOME_MINIGAME_CLEARED ; $43c5
 	jr z, .done ; $43c7
 	ld a, [wPointOutcome] ; $43c9
-	add $00 ; $43cc
+	add BANNER_FAULT - POINTOUTCOME_FAULT ; $43cc
 	farcall ShowCourtBanner ; $43ce
 	ld a, 30 ; $43d1
 	farcall StepMatchFrames ; $43d3
@@ -33,18 +33,18 @@ DetermineMinigamePointResult:
 	ld a, WINLOSE_WIN ; $43f6
 	ld [wPointWinLoseFlag], a ; $43f8
 	ld a, [wMinigameLevel] ; $43fb
-	add $12 ; $43fe
+	add BANNER_LEVEL_1_CLEARED ; $43fe
 	ld d, a ; $4400
 	ret ; $4401
 .scoreLimitReached:
 	ld a, WINLOSE_WIN ; $4402
 	ld [wPointWinLoseFlag], a ; $4404
-	ld d, $16 ; $4407
+	ld d, BANNER_HIGH_SCORE ; $4407
 	ret ; $4409
 .storePointWinLoseFlag:
 	ld a, WINLOSE_LOSE ; $440a
 	ld [wPointWinLoseFlag], a ; $440c
-	ld d, $17 ; $440f
+	ld d, BANNER_GAME_OVER ; $440f
 	ret ; $4411
 ShowMinigamePointResult:
 	ld a, [wPointWinLoseFlag] ; $4412

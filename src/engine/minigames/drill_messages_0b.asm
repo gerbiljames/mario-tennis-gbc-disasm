@@ -71,7 +71,7 @@ PlayDrillPointEndSequence:
 	jr z, .showBanner ; $43c6
 	jr .waitBanner ; $43c8
 .showBanner:
-	add $00 ; $43ca
+	add BANNER_FAULT - POINTOUTCOME_FAULT ; $43ca
 	farcall ShowCourtBanner ; $43cc
 .waitBanner:
 	ld a, 30 ; $43cf
