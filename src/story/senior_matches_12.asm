@@ -10,6 +10,7 @@ ResumeSeniorOpponentScripts:
 	ret ; $6a54
 ResumeSeniorOpponentScriptsPtrs:
 	; $6a55, 14 bytes (records:2)
+	table_width 2
 	dw ResumeSeniorSinglesRank4Opponents ; record 0
 	dw ResumeSeniorSinglesRank3Opponents ; record 1
 	dw ResumeSeniorSinglesRank2Opponents ; record 2
@@ -17,6 +18,7 @@ ResumeSeniorOpponentScriptsPtrs:
 	dw ResumeSeniorDoublesRank3Opponents ; record 4
 	dw ResumeSeniorDoublesRank2Opponents ; record 5
 	dw ResumeSeniorDoublesRank1Opponents ; record 6
+	assert_table_length SENIORCOURTSTAGE_DOUBLES_RANK1 + 1 - SENIORCOURTSTAGE_SINGLES_RANK4
 ResumeSeniorDoublesRank3Opponents:
 	script_set_actor_script ACTOR_SENIOR_COURT_B_CURT, ActorScript_12_23 ; $6a63
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BETH, ActorScript_12_27 ; $6a6e

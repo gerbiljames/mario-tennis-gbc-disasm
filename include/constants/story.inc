@@ -82,6 +82,7 @@ def STORYRANK_SINGLES_ISLAND_OPEN  equ $06 ; FLAG_REACHED_ISLAND_OPEN_SINGLES
 def STORYRANK_DOUBLES_ISLAND_OPEN  equ $07
 def STORYRANK_SINGLES_COMPLETE     equ $08 ; FLAG_STORY_COMPLETE_SINGLES
 def STORYRANK_DOUBLES_COMPLETE     equ $09
+def NUM_STORYRANKS equ $0a
 
 ; --- Story tier (STORYRANK_* >> 1) ---
 ; STORYRANK_* with the singles/doubles bit shifted out (`sra a`): a
@@ -93,6 +94,7 @@ def STORYTIER_JUNIOR_CHAMP   equ $01
 def STORYTIER_SENIOR_CHAMP   equ $02
 def STORYTIER_ISLAND_OPEN    equ $03
 def STORYTIER_COMPLETE       equ $04
+def NUM_STORYTIERS equ $05
 
 ; --- Senior Class Court stage (wMapSceneStage2 in bank $12) ---
 ; Written by ComputeSeniorCourtStage. StartSeniorRankingMatch does `sub $02`
@@ -114,6 +116,7 @@ def SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN  equ $0b
 def SENIORCOURTSTAGE_DOUBLES_ISLAND_OPEN  equ $0c
 def SENIORCOURTSTAGE_SINGLES_COMPLETE     equ $0d
 def SENIORCOURTSTAGE_DOUBLES_COMPLETE     equ $0e
+def NUM_SENIORCOURTSTAGES equ $0f
 
 ; --- Wall Practice stage (wMapSceneStage in the Wall Practice Room) ---
 ; SetupWallPracticeLevelSigns is the only writer: it walks the
@@ -127,6 +130,7 @@ def WALLPRACTICESTAGE_LEVEL4   equ $03
 def WALLPRACTICESTAGE_MASTER   equ $04 ; all four levels cleared; the score-attack Master level is next
 def WALLPRACTICESTAGE_EXPERT   equ $05 ; FLAG_CLEARED_WALL_MASTER; Npc07 shows the record
 def WALLPRACTICESTAGE_COMPLETE equ $06 ; FLAG_CLEARED_WALL_EXPERT
+def NUM_WALLPRACTICESTAGES equ $07
 
 ; --- Machine Court stage (wMapSceneStage in the Tennis Machine Room) ---
 ; ComputeMachineCourtProgress is the only writer, the machine-room twin of
@@ -139,6 +143,7 @@ def MACHINECOURTSTAGE_LEVEL4   equ $03
 def MACHINECOURTSTAGE_MASTER   equ $04 ; all four levels cleared; Master next
 def MACHINECOURTSTAGE_EXPERT   equ $05 ; FLAG_CLEARED_MACHINE_MASTER; Npc05 shows the record
 def MACHINECOURTSTAGE_COMPLETE equ $06 ; FLAG_CLEARED_MACHINE_EXPERT
+def NUM_MACHINECOURTSTAGES equ $07
 
 ; --- Island Open bracket position ---
 ; Both count the bracket flags that are set and name the match that comes
@@ -152,6 +157,7 @@ def ISLANDOPENSTAGE_SINGLES_FINAL     equ $03
 def ISLANDOPENSTAGE_DOUBLES_ROUND1    equ $04
 def ISLANDOPENSTAGE_DOUBLES_SEMIFINAL equ $05
 def ISLANDOPENSTAGE_DOUBLES_FINAL     equ $06
+def NUM_ISLANDOPENSTAGES equ $07
 def ISLANDOPENROUND_ROUND1            equ $00
 def ISLANDOPENROUND_ROUND2            equ $01 ; singles only -- doubles goes straight to the semi-final
 def ISLANDOPENROUND_SEMIFINAL         equ $02

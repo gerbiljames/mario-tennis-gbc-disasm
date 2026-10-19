@@ -54,6 +54,7 @@ TennisMachineRoomNpc03_14:
 	ret ; $40a5
 TennisMachineRoomNpc03TextIds:
 	; $40a6, 14 bytes (text_ids)
+	table_width 2
 	dw Text_6e_167 ; record 0
 	dw Text_6e_176 ; record 1
 	dw Text_6e_185 ; record 2
@@ -61,6 +62,7 @@ TennisMachineRoomNpc03TextIds:
 	dw Text_6e_199 ; record 4
 	dw Text_6e_207 ; record 5
 	dw Text_6e_214 ; record 6
+	assert_table_length NUM_MACHINECOURTSTAGES
 TennisMachineRoomNpc04_14:
 	ld a, [wMapSceneStage] ; $40b4
 	add a ; $40b7
@@ -86,6 +88,7 @@ TennisMachineRoomNpc04_14:
 	ret ; $40eb
 TennisMachineRoomNpc04TextIds:
 	; $40ec, 14 bytes (text_ids)
+	table_width 2
 	dw Text_6e_168 ; record 0
 	dw Text_6e_177 ; record 1
 	dw Text_6e_186 ; record 2
@@ -93,6 +96,7 @@ TennisMachineRoomNpc04TextIds:
 	dw Text_6e_200 ; record 4
 	dw Text_6e_208 ; record 5
 	dw Text_6e_215 ; record 6
+	assert_table_length NUM_MACHINECOURTSTAGES
 TennisMachineRoomNpcScripts_14:
 	; $40fa, 25 bytes (map_scripts)
 	map_script ACTOR_TENNIS_MACHINE_ROOM_WALK_72_06_1, FACEMASK_ANY, $0000, TennisMachineRoomNpc03_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00

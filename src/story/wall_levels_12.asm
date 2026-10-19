@@ -572,6 +572,7 @@ WallPracticeRoomNpc07_12:
 	ret ; $5270
 WallPracticeRoomNpc07TextIds:
 	; $5271, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_238 ; record 0
 	dw Text_35_261 ; record 1
 	dw Text_36_3 ; record 2
@@ -579,8 +580,10 @@ WallPracticeRoomNpc07TextIds:
 	dw Text_36_25 ; record 4
 	dw Text_36_30 ; record 5
 	dw Text_36_35 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc07TextIds2:
 	; $527f, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_240 ; record 0
 	dw Text_35_263 ; record 1
 	dw Text_36_5 ; record 2
@@ -588,6 +591,7 @@ WallPracticeRoomNpc07TextIds2:
 	dw Text_36_27 ; record 4
 	dw Text_36_32 ; record 5
 	dw Text_36_37 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 LaunchWallPracticeMinigame:
 	script_fade_out 4 ; $528d
 	call WaitFadeEnd ; $5292
@@ -606,7 +610,9 @@ LaunchWallPracticeMinigame:
 	ret ; $52b8
 LaunchWallPracticeMinigameTable:
 	; $52b9, 7 bytes (bytes:16)
+	table_width 1
 	db $16, $17, $18, $19, $1b, $1b, $1b ; 0x00
+	assert_table_length NUM_WALLPRACTICESTAGES
 RestoreWallPracticeRoomActors:
 	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $52c0
 	jr z, .done ; $52c3

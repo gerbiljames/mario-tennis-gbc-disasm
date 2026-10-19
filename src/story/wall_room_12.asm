@@ -346,6 +346,7 @@ WallPracticeRoomNpc03_12:
 	ret ; $4772
 WallPracticeRoomNpc03TextIds:
 	; $4773, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_231 ; record 0
 	dw Text_35_256 ; record 1
 	dw Text_35_266 ; record 2
@@ -353,6 +354,7 @@ WallPracticeRoomNpc03TextIds:
 	dw Text_36_21 ; record 4
 	dw Text_36_21 ; record 5
 	dw Text_36_44 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc04_12:
 	ld a, [wMapSceneStage] ; $4781
 	add a ; $4784
@@ -365,6 +367,7 @@ WallPracticeRoomNpc04_12:
 	ret ; $4797
 WallPracticeRoomNpc04TextIds:
 	; $4798, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_234 ; record 0
 	dw Text_35_257 ; record 1
 	dw Text_35_269 ; record 2
@@ -372,6 +375,7 @@ WallPracticeRoomNpc04TextIds:
 	dw Text_36_22 ; record 4
 	dw Text_36_22 ; record 5
 	dw Text_36_45 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc05_12:
 	ld a, [wMapSceneStage] ; $47a6
 	add a ; $47a9
@@ -394,6 +398,7 @@ WallPracticeRoomNpc05_12:
 	ret ; $47e4
 WallPracticeRoomNpc05TextIds:
 	; $47e5, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_235 ; record 0
 	dw Text_35_258 ; record 1
 	dw Text_35_270 ; record 2
@@ -401,6 +406,7 @@ WallPracticeRoomNpc05TextIds:
 	dw Text_36_23 ; record 4
 	dw Text_36_23 ; record 5
 	dw Text_36_46 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc06_12:
 	ld a, [wMapSceneStage] ; $47f3
 	add a ; $47f6
@@ -413,6 +419,7 @@ WallPracticeRoomNpc06_12:
 	ret ; $4809
 WallPracticeRoomNpc06TextIds:
 	; $480a, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_237 ; record 0
 	dw Text_35_260 ; record 1
 	dw Text_35_272 ; record 2
@@ -420,6 +427,7 @@ WallPracticeRoomNpc06TextIds:
 	dw Text_36_24 ; record 4
 	dw Text_36_24 ; record 5
 	dw Text_36_47 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpcScripts_12:
 	; $4818, 41 bytes (map_scripts)
 	map_script ACTOR_WALL_PRACTICE_ROOM_WALK_72_02, FACEMASK_ANY, $0000, WallPracticeRoomNpc03_12, NPC_FACE_PLAYER, $00

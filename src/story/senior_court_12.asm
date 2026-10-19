@@ -96,12 +96,14 @@ SeniorCourtExit01_12:
 	ret ; $55db
 SeniorCourtExit01TextIds:
 	; $55dc, 12 bytes (text_ids)
+	table_width 2
 	dw Text_34_141 ; record 0
 	dw Text_34_151 ; record 1
 	dw Text_34_158 ; record 2
 	dw Text_34_168 ; record 3
 	dw Text_34_176 ; record 4
 	dw Text_34_186 ; record 5
+	assert_table_length NUM_SENIORCOURTSTAGES - SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP
 SeniorCourtNpc03_12:
 	ld a, [wMapSceneStage2] ; $55e8
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55eb
@@ -273,6 +275,7 @@ SeniorCourtNpc05_12:
 	ret ; $5894
 SeniorCourtNpc05TextIds_12:
 	; $5895, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_15 ; record 0
 	dw Text_34_24 ; record 1
 	dw Text_34_28 ; record 2
@@ -288,6 +291,7 @@ SeniorCourtNpc05TextIds_12:
 	dw Text_34_168 ; record 12
 	dw Text_34_177 ; record 13
 	dw Text_34_186 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc06_12:
 	ld a, [wMapSceneStage2] ; $58b3
 	add a ; $58b6
@@ -318,6 +322,7 @@ SeniorCourtNpc06_12:
 	ret ; $58f7
 SeniorCourtNpc06TextIds_12:
 	; $58f8, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_16 ; record 0
 	dw Text_34_16 ; record 1
 	dw Text_34_33 ; record 2
@@ -333,6 +338,7 @@ SeniorCourtNpc06TextIds_12:
 	dw Text_34_169 ; record 12
 	dw Text_34_178 ; record 13
 	dw Text_34_187 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc07_12:
 	ld a, [wMapSceneStage2] ; $5916
 	add a ; $5919
@@ -345,6 +351,7 @@ SeniorCourtNpc07_12:
 	ret ; $592c
 SeniorCourtNpc07TextIds:
 	; $592d, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_17 ; record 0
 	dw Text_34_25 ; record 1
 	dw Text_34_37 ; record 2
@@ -360,6 +367,7 @@ SeniorCourtNpc07TextIds:
 	dw Text_34_170 ; record 12
 	dw Text_34_179 ; record 13
 	dw Text_34_188 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc08_12:
 	ld a, [wMapSceneStage2] ; $594b
 	add a ; $594e
@@ -422,6 +430,7 @@ SeniorCourtNpc08_12:
 	ret ; $5a2a
 SeniorCourtNpc08TextIds:
 	; $5a2b, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_18 ; record 0
 	dw Text_34_18 ; record 1
 	dw Text_34_39 ; record 2
@@ -437,6 +446,7 @@ SeniorCourtNpc08TextIds:
 	dw Text_34_171 ; record 12
 	dw Text_34_180 ; record 13
 	dw Text_34_189 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc09_12:
 	ld a, [wMapSceneStage2] ; $5a49
 	add a ; $5a4c
@@ -454,6 +464,7 @@ SeniorCourtNpc09_12:
 	ret ; $5a6d
 SeniorCourtNpc09TextIds:
 	; $5a6e, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_19 ; record 0
 	dw Text_34_19 ; record 1
 	dw Text_34_43 ; record 2
@@ -469,6 +480,7 @@ SeniorCourtNpc09TextIds:
 	dw Text_34_172 ; record 12
 	dw Text_34_181 ; record 13
 	dw Text_34_190 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0A_12:
 	ld a, [wMapSceneStage2] ; $5a8c
 	add a ; $5a8f
@@ -534,6 +546,7 @@ SeniorCourtNpc0A_12:
 	ret ; $5b74
 SeniorCourtNpc0ATextIds:
 	; $5b75, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_20 ; record 0
 	dw Text_34_20 ; record 1
 	dw Text_34_44 ; record 2
@@ -549,6 +562,7 @@ SeniorCourtNpc0ATextIds:
 	dw Text_34_173 ; record 12
 	dw Text_34_182 ; record 13
 	dw Text_34_191 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0B_12:
 	ld a, [wMapSceneStage2] ; $5b93
 	add a ; $5b96
@@ -571,6 +585,7 @@ SeniorCourtNpc0B_12:
 	ret ; $5bbe
 SeniorCourtNpc0BTextIds:
 	; $5bbf, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_21 ; record 0
 	dw Text_34_21 ; record 1
 	dw Text_34_45 ; record 2
@@ -586,6 +601,7 @@ SeniorCourtNpc0BTextIds:
 	dw Text_34_174 ; record 12
 	dw Text_34_183 ; record 13
 	dw Text_34_174 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0C_12:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bdd
 	or a ; $5be0
@@ -611,6 +627,7 @@ SeniorCourtNpc0C_12:
 	ret ; $5c10
 SeniorCourtNpc0CTextIds:
 	; $5c11, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_22 ; record 0
 	dw Text_34_22 ; record 1
 	dw Text_34_46 ; record 2
@@ -626,6 +643,7 @@ SeniorCourtNpc0CTextIds:
 	dw Text_34_175 ; record 12
 	dw Text_34_184 ; record 13
 	dw Text_34_186 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0C_12Table:
 	INCBIN "data/story/SeniorCourtNpc0C_12Table.bin" ; $5c2f, 30 bytes
 SeniorCourtNpcScripts_12:

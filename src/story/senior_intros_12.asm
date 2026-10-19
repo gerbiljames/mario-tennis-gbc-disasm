@@ -337,6 +337,7 @@ RunSeniorRankingMatchIntro:
 	ret ; $64f1
 SeniorRankingMatchIntroPtrs:
 	; $64f2, 14 bytes (records:2)
+	table_width 2
 	dw SeniorSinglesRank4Intro ; record 0
 	dw SeniorSinglesRank3Intro ; record 1
 	dw SeniorSinglesRank2Intro ; record 2
@@ -344,6 +345,7 @@ SeniorRankingMatchIntroPtrs:
 	dw SeniorDoublesRank3Intro ; record 4
 	dw SeniorDoublesRank2Intro ; record 5
 	dw SeniorDoublesRank1Intro ; record 6
+	assert_table_length SENIORCOURTSTAGE_DOUBLES_RANK1 + 1 - SENIORCOURTSTAGE_SINGLES_RANK4
 SeniorDoublesRank3Intro:
 	script_wait_frames 15 ; $6500
 	script_face_toward ACTOR_SENIOR_COURT_B_CURT, ACTOR_SENIOR_COURT_A_EMILY ; $6507

@@ -488,11 +488,13 @@ TrainingCourtNpc03_15:
 	ret ; $4990
 TrainingCourtNpc03TextIds:
 	; $4991, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_633 ; record 0
 	dw Text_36_636 ; record 1
 	dw Text_36_639 ; record 2
 	dw Text_36_639 ; record 3
 	dw Text_36_639 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc04_15:
 	ld a, [wMapSceneStage] ; $499b
 	add a ; $499e
@@ -505,11 +507,13 @@ TrainingCourtNpc04_15:
 	ret ; $49b1
 TrainingCourtNpc04TextIds:
 	; $49b2, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_634 ; record 0
 	dw Text_36_637 ; record 1
 	dw Text_36_640 ; record 2
 	dw Text_36_640 ; record 3
 	dw Text_36_640 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc05_15:
 	ld a, [wMapSceneStage] ; $49bc
 	add a ; $49bf
@@ -522,11 +526,13 @@ TrainingCourtNpc05_15:
 	ret ; $49d2
 TrainingCourtNpc05TextIds:
 	; $49d3, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_635 ; record 0
 	dw Text_36_638 ; record 1
 	dw Text_36_641 ; record 2
 	dw Text_36_641 ; record 3
 	dw Text_36_641 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc08_15:
 	ld a, [wMapSceneStage] ; $49dd
 	add a ; $49e0
@@ -539,11 +545,13 @@ TrainingCourtNpc08_15:
 	ret ; $49f3
 TrainingCourtNpc08TextIds:
 	; $49f4, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_655 ; record 0
 	dw Text_36_661 ; record 1
 	dw Text_36_665 ; record 2
 	dw Text_36_665 ; record 3
 	dw Text_36_665 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc09_15:
 	ld a, [wMapSceneStage] ; $49fe
 	add a ; $4a01
@@ -556,11 +564,13 @@ TrainingCourtNpc09_15:
 	ret ; $4a14
 TrainingCourtNpc09TextIds_15:
 	; $4a15, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_656 ; record 0
 	dw Text_36_662 ; record 1
 	dw Text_36_666 ; record 2
 	dw Text_36_666 ; record 3
 	dw Text_36_666 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0A_15:
 	ld a, [wMapSceneStage] ; $4a1f
 	add a ; $4a22
@@ -573,11 +583,13 @@ TrainingCourtNpc0A_15:
 	ret ; $4a35
 TrainingCourtNpc0ATextIds:
 	; $4a36, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_657 ; record 0
 	dw Text_36_663 ; record 1
 	dw Text_36_667 ; record 2
 	dw Text_36_667 ; record 3
 	dw Text_36_667 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0B_15:
 	ld a, [wMapSceneStage] ; $4a40
 	add a ; $4a43
@@ -601,11 +613,13 @@ TrainingCourtNpc0B_15:
 	ret ; $4a75
 TrainingCourtNpc0BTextIds:
 	; $4a76, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_658 ; record 0
 	dw Text_36_664 ; record 1
 	dw Text_36_668 ; record 2
 	dw Text_36_668 ; record 3
 	dw Text_36_668 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0E_15:
 	ld a, [wMapSceneStage] ; $4a80
 	add a ; $4a83
@@ -618,11 +632,13 @@ TrainingCourtNpc0E_15:
 	ret ; $4a96
 TrainingCourtNpc0ETextIds:
 	; $4a97, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_642 ; record 0
 	dw Text_36_647 ; record 1
 	dw Text_36_650 ; record 2
 	dw Text_36_650 ; record 3
 	dw Text_36_650 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0F_15:
 	ld a, [wMapSceneStage] ; $4aa1
 	add a ; $4aa4
@@ -646,11 +662,13 @@ TrainingCourtNpc0F_15:
 	ret ; $4ad6
 TrainingCourtNpc0FTextIds:
 	; $4ad7, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_643 ; record 0
 	dw Text_36_648 ; record 1
 	dw Text_36_651 ; record 2
 	dw Text_36_651 ; record 3
 	dw Text_36_651 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc10_15:
 	ld a, [wMapSceneStage] ; $4ae1
 	add a ; $4ae4
@@ -674,11 +692,13 @@ TrainingCourtNpc10_15:
 	ret ; $4b16
 TrainingCourtNpc10TextIds_15:
 	; $4b17, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_646 ; record 0
 	dw Text_36_649 ; record 1
 	dw Text_36_652 ; record 2
 	dw Text_36_652 ; record 3
 	dw Text_36_652 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc13_15:
 	script_move_player_to_actor ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4b21
 	farcall WaitPlayerMoveDone ; $4b28

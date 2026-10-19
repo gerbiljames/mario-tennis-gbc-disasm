@@ -414,6 +414,7 @@ Court2Npc04_14:
 	ret ; $4b83
 Court2Npc04TextIds:
 	; $4b84, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_146 ; record 0
 	dw Text_1f_146 ; record 1
 	dw Text_1f_146 ; record 2
@@ -421,6 +422,7 @@ Court2Npc04TextIds:
 	dw Text_1f_146 ; record 4
 	dw Text_1f_146 ; record 5
 	dw Text_1f_151 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court2Npc05_14:
 	ld a, [wMapSceneStage] ; $4b92
 	add a ; $4b95
@@ -433,6 +435,7 @@ Court2Npc05_14:
 	ret ; $4ba8
 Court2Npc05TextIds:
 	; $4ba9, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_147 ; record 0
 	dw Text_1f_147 ; record 1
 	dw Text_1f_149 ; record 2
@@ -440,6 +443,7 @@ Court2Npc05TextIds:
 	dw Text_1f_153 ; record 4
 	dw Text_1f_155 ; record 5
 	dw Text_1f_157 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court2Npc06_14:
 	ld a, [wMapSceneStage] ; $4bb7
 	add a ; $4bba
@@ -452,6 +456,7 @@ Court2Npc06_14:
 	ret ; $4bcd
 Court2Npc06TextIds:
 	; $4bce, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_148 ; record 0
 	dw Text_1f_148 ; record 1
 	dw Text_1f_150 ; record 2
@@ -459,6 +464,7 @@ Court2Npc06TextIds:
 	dw Text_1f_154 ; record 4
 	dw Text_1f_156 ; record 5
 	dw Text_1f_158 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court2SpectatorChat_14:
 	test_flag FLAG_DOUBLES ; $4bdc
 	jr z, .checkFlag ; $4bdf
@@ -531,6 +537,7 @@ Court2SpectatorChat_14:
 	ret ; $4d5e
 Court2SpectatorChatTextIds:
 	; $4d5f, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_107 ; record 0
 	dw Text_1f_107 ; record 1
 	dw Text_1f_107 ; record 2
@@ -538,6 +545,7 @@ Court2SpectatorChatTextIds:
 	dw Text_1f_120 ; record 4
 	dw Text_1f_120 ; record 5
 	dw Text_1f_126 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court2SpectatorsRepeatChat:
 	script_set_anim ACTOR_COURT2_WALK_72_02_3, ANIM_BOUNCE ; $4d6d
 	script_wait_idle ACTOR_COURT2_WALK_72_02_3 ; $4d74

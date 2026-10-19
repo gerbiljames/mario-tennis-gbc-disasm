@@ -189,6 +189,7 @@ CafeteriaNpc03_10:
 	ret ; $5898
 CafeteriaNpc03TextIds:
 	; $5899, 20 bytes (text_ids)
+	table_width 2
 	dw Text_33_59 ; record 0
 	dw Text_33_60 ; record 1
 	dw Text_33_98 ; record 2
@@ -199,6 +200,7 @@ CafeteriaNpc03TextIds:
 	dw Text_33_183 ; record 7
 	dw Text_33_218 ; record 8
 	dw Text_33_218 ; record 9
+	assert_table_length NUM_STORYRANKS
 CafeteriaNpc04_10:
 	ld a, [wMapSceneStage2] ; $58ad
 	add a ; $58b0
@@ -244,11 +246,13 @@ CafeteriaNpc04_10:
 	ret ; $5920
 CafeteriaNpc04TextIds:
 	; $5921, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_61 ; record 0
 	dw Text_33_100 ; record 1
 	dw Text_33_144 ; record 2
 	dw Text_33_184 ; record 3
 	dw Text_33_219 ; record 4
+	assert_table_length NUM_STORYTIERS
 CafeteriaNpc05_10:
 	ld a, [wMapSceneStage2] ; $592b
 	add a ; $592e
@@ -272,11 +276,13 @@ CafeteriaNpc05_10:
 	ret ; $5960
 CafeteriaNpc05TextIds:
 	; $5961, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_62 ; record 0
 	dw Text_33_101 ; record 1
 	dw Text_33_145 ; record 2
 	dw Text_33_187 ; record 3
 	dw Text_33_223 ; record 4
+	assert_table_length NUM_STORYTIERS
 CafeteriaNpc06_10:
 	ld a, [wMapSceneStage] ; $596b
 	add a ; $596e
@@ -289,6 +295,7 @@ CafeteriaNpc06_10:
 	ret ; $5981
 CafeteriaNpc06TextIds:
 	; $5982, 20 bytes (text_ids)
+	table_width 2
 	dw Text_33_63 ; record 0
 	dw Text_33_63 ; record 1
 	dw Text_33_104 ; record 2
@@ -299,6 +306,7 @@ CafeteriaNpc06TextIds:
 	dw Text_33_189 ; record 7
 	dw Text_33_188 ; record 8
 	dw Text_33_189 ; record 9
+	assert_table_length NUM_STORYRANKS
 CafeteriaNpc07_10:
 	ld a, [wMapSceneStage] ; $5996
 	add a ; $5999
@@ -311,6 +319,7 @@ CafeteriaNpc07_10:
 	ret ; $59ac
 CafeteriaNpc07TextIds:
 	; $59ad, 20 bytes (text_ids)
+	table_width 2
 	dw Text_33_64 ; record 0
 	dw Text_33_64 ; record 1
 	dw Text_33_106 ; record 2
@@ -321,6 +330,7 @@ CafeteriaNpc07TextIds:
 	dw Text_33_191 ; record 7
 	dw Text_33_190 ; record 8
 	dw Text_33_191 ; record 9
+	assert_table_length NUM_STORYRANKS
 CafeteriaNpc08_10:
 	ld a, [wMapSceneStage] ; $59c1
 	add a ; $59c4
@@ -333,6 +343,7 @@ CafeteriaNpc08_10:
 	ret ; $59d7
 CafeteriaNpc08TextIds:
 	; $59d8, 20 bytes (text_ids)
+	table_width 2
 	dw Text_33_65 ; record 0
 	dw Text_33_65 ; record 1
 	dw Text_33_108 ; record 2
@@ -343,6 +354,7 @@ CafeteriaNpc08TextIds:
 	dw Text_33_193 ; record 7
 	dw Text_33_224 ; record 8
 	dw Text_33_193 ; record 9
+	assert_table_length NUM_STORYRANKS
 CafeteriaNpc09_10:
 	ld a, [wMapSceneStage] ; $59ec
 	add a ; $59ef
@@ -355,6 +367,7 @@ CafeteriaNpc09_10:
 	ret ; $5a02
 CafeteriaNpc09TextIds:
 	; $5a03, 20 bytes (text_ids)
+	table_width 2
 	dw Text_33_66 ; record 0
 	dw Text_33_66 ; record 1
 	dw Text_33_109 ; record 2
@@ -365,6 +378,7 @@ CafeteriaNpc09TextIds:
 	dw Text_33_195 ; record 7
 	dw Text_33_194 ; record 8
 	dw Text_33_195 ; record 9
+	assert_table_length NUM_STORYRANKS
 CafeteriaNpcScripts_10:
 	; $5a17, 57 bytes (map_scripts)
 	map_script ACTOR_CAFETERIA_WALK_71_03_1, FACEMASK_ANY, $0000, CafeteriaNpc03_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -459,11 +473,13 @@ RestaurantNpc03_10:
 	ret ; $5c12
 RestaurantNpc03TextIds:
 	; $5c13, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_33 ; record 0
 	dw Text_33_68 ; record 1
 	dw Text_33_111 ; record 2
 	dw Text_33_153 ; record 3
 	dw Text_33_196 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc04_10:
 	ld a, [wMapSceneStage2] ; $5c1d
 	add a ; $5c20
@@ -476,11 +492,13 @@ RestaurantNpc04_10:
 	ret ; $5c33
 RestaurantNpc04TextIds:
 	; $5c34, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_34 ; record 0
 	dw Text_33_70 ; record 1
 	dw Text_33_112 ; record 2
 	dw Text_33_154 ; record 3
 	dw Text_33_197 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc05_10:
 	script_face_toward ACTOR_PLAYER, ACTOR_RESTAURANT_WALK_71_03_1 ; $5c3e
 	ld a, [wMapSceneStage] ; $5c46
@@ -504,6 +522,7 @@ RestaurantNpc05_10:
 	ret ; $5c9b
 RestaurantNpc05TextIds:
 	; $5c9c, 20 bytes (text_ids)
+	table_width 2
 	dw Text_33_35 ; record 0
 	dw Text_33_35 ; record 1
 	dw Text_33_71 ; record 2
@@ -514,6 +533,7 @@ RestaurantNpc05TextIds:
 	dw Text_33_158 ; record 7
 	dw Text_33_198 ; record 8
 	dw Text_33_198 ; record 9
+	assert_table_length NUM_STORYRANKS
 RestaurantNpc06_10:
 	script_set_anim ACTOR_RESTAURANT_WALK_71_04, ANIM_SHAKE ; $5cb0
 	script_wait_idle ACTOR_RESTAURANT_WALK_71_04 ; $5cb7
@@ -542,11 +562,13 @@ RestaurantNpc06_10:
 	ret ; $5cfa
 RestaurantNpc06TextIds_10:
 	; $5cfb, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_38 ; record 0
 	dw Text_33_74 ; record 1
 	dw Text_33_119 ; record 2
 	dw Text_33_161 ; record 3
 	dw Text_33_201 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc12_10:
 	call TestRestaurantNpc12StageFlag_10 ; $5d05
 	jp nz, .speak ; $5d08
@@ -609,11 +631,13 @@ RestaurantNpc12_10:
 	ret ; $5ddb
 RestaurantNpc12TextIds:
 	; $5ddc, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_40 ; record 0
 	dw Text_33_76 ; record 1
 	dw Text_33_123 ; record 2
 	dw Text_33_163 ; record 3
 	dw Text_33_203 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc08FaceDown_10:
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $5de6
 RestaurantNpc08_10:
@@ -662,11 +686,13 @@ RestaurantNpc08_10:
 	ret ; $5e80
 RestaurantNpc08TextIds:
 	; $5e81, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_43 ; record 0
 	dw Text_33_79 ; record 1
 	dw Text_33_126 ; record 2
 	dw Text_33_166 ; record 3
 	dw Text_33_206 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc09_10:
 	ld a, [wMapSceneStage] ; $5e8b
 	add a ; $5e8e
@@ -700,6 +726,7 @@ RestaurantNpc09_10:
 	ret ; $5edd
 RestaurantNpc09TextIds:
 	; $5ede, 20 bytes (text_ids)
+	table_width 2
 	dw Text_33_45 ; record 0
 	dw Text_33_45 ; record 1
 	dw Text_33_81 ; record 2
@@ -710,6 +737,7 @@ RestaurantNpc09TextIds:
 	dw Text_33_168 ; record 7
 	dw Text_33_208 ; record 8
 	dw Text_33_208 ; record 9
+	assert_table_length NUM_STORYRANKS
 RestaurantNpc0A_10:
 	script_face_toward ACTOR_PLAYER, ACTOR_RESTAURANT_WALK_71_03_2 ; $5ef2
 	ld a, [wMapSceneStage] ; $5efa
@@ -734,6 +762,7 @@ RestaurantNpc0A_10:
 	ret ; $5f2f
 RestaurantNpc0ATextIds:
 	; $5f30, 20 bytes (text_ids)
+	table_width 2
 	dw Text_33_46 ; record 0
 	dw Text_33_49 ; record 1
 	dw Text_33_83 ; record 2
@@ -744,6 +773,7 @@ RestaurantNpc0ATextIds:
 	dw Text_33_172 ; record 7
 	dw Text_33_209 ; record 8
 	dw Text_33_209 ; record 9
+	assert_table_length NUM_STORYRANKS
 RestaurantNpc0B_10:
 	ld a, [wMapSceneStage2] ; $5f44
 	add a ; $5f47
@@ -761,11 +791,13 @@ RestaurantNpc0B_10:
 	ret ; $5f64
 RestaurantNpc0BTextIds:
 	; $5f65, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_52 ; record 0
 	dw Text_33_89 ; record 1
 	dw Text_33_133 ; record 2
 	dw Text_33_173 ; record 3
 	dw Text_33_210 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc0C_10:
 	ld a, [wMapSceneStage2] ; $5f6f
 	add a ; $5f72
@@ -801,11 +833,13 @@ RestaurantNpc0C_10:
 	ret ; $5fbe
 RestaurantNpc0CTextIds:
 	; $5fbf, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_54 ; record 0
 	dw Text_33_90 ; record 1
 	dw Text_33_134 ; record 2
 	dw Text_33_174 ; record 3
 	dw Text_33_211 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc0D_10:
 	ld a, [wMapSceneStage2] ; $5fc9
 	add a ; $5fcc
@@ -834,11 +868,13 @@ RestaurantNpc0D_10:
 	ret ; $6008
 RestaurantNpc0DTextIds:
 	; $6009, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_55 ; record 0
 	dw Text_33_93 ; record 1
 	dw Text_33_138 ; record 2
 	dw Text_33_176 ; record 3
 	dw Text_33_213 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc0E_10:
 	ld a, [wMapSceneStage2] ; $6013
 	add a ; $6016
@@ -851,11 +887,13 @@ RestaurantNpc0E_10:
 	ret ; $6029
 RestaurantNpc0ETextIds:
 	; $602a, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_56 ; record 0
 	dw Text_33_95 ; record 1
 	dw Text_33_139 ; record 2
 	dw Text_33_179 ; record 3
 	dw Text_33_214 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc0F_10:
 	ld a, [wMapSceneStage2] ; $6034
 	add a ; $6037
@@ -868,11 +906,13 @@ RestaurantNpc0F_10:
 	ret ; $604a
 RestaurantNpc0FTextIds:
 	; $604b, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_57 ; record 0
 	dw Text_33_96 ; record 1
 	dw Text_33_140 ; record 2
 	dw Text_33_180 ; record 3
 	dw Text_33_215 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpc10_10:
 	ld a, [wMapSceneStage2] ; $6055
 	add a ; $6058
@@ -885,11 +925,13 @@ RestaurantNpc10_10:
 	ret ; $606b
 RestaurantNpc10TextIds:
 	; $606c, 10 bytes (text_ids)
+	table_width 2
 	dw Text_33_58 ; record 0
 	dw Text_33_97 ; record 1
 	dw Text_33_142 ; record 2
 	dw Text_33_182 ; record 3
 	dw Text_33_217 ; record 4
+	assert_table_length NUM_STORYTIERS
 RestaurantNpcScripts_10:
 	; $6076, 121 bytes (map_scripts)
 	map_script ACTOR_RESTAURANT_WALK_71_02_1, FACEMASK_ANY, $0000, RestaurantNpc03_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -953,11 +995,13 @@ SetRestaurantNpc12StageFlag_10:
 	ret ; $614f
 RestaurantNpc12StageFlagTable_10:
 	; $6150, 10 bytes (flag numbers, for *GameFlagByNumber)
+	table_width 2
 	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_0 ; 0
 	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_1 ; 1
 	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_2 ; 2
 	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_3 ; 3
 	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_4 ; 4
+	assert_table_length NUM_STORYTIERS
 RestaurantShowActor11NearPlayer_10:
 	wram_bank WRAM_ACTORS ; $615a
 	script_get_actor_state ACTOR_PLAYER ; $6160

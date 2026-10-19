@@ -49,6 +49,7 @@ Court1Npc05_14:
 	ret ; $5092
 Court1Npc05TextIds:
 	; $5093, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_134 ; record 0
 	dw Text_1f_134 ; record 1
 	dw Text_1f_137 ; record 2
@@ -56,6 +57,7 @@ Court1Npc05TextIds:
 	dw Text_1f_134 ; record 4
 	dw Text_1f_141 ; record 5
 	dw Text_1f_143 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court1Npc06_14:
 	ld a, [wMapSceneStage] ; $50a1
 	add a ; $50a4
@@ -68,6 +70,7 @@ Court1Npc06_14:
 	ret ; $50b7
 Court1Npc06TextIds:
 	; $50b8, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_135 ; record 0
 	dw Text_1f_136 ; record 1
 	dw Text_1f_138 ; record 2
@@ -75,6 +78,7 @@ Court1Npc06TextIds:
 	dw Text_1f_135 ; record 4
 	dw Text_1f_142 ; record 5
 	dw Text_1f_144 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court1NpcScripts_14:
 	; $50c6, 33 bytes (map_scripts)
 	map_script ACTOR_COURT1_WALK_6F_07_1, FACEMASK_ANY, $0000, Court1Npc03_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
