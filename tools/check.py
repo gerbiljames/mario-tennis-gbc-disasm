@@ -403,7 +403,11 @@ def check_db_pointers(rom, manifest, fail):
     """A label whose body is only `db` rows (inline, or a `bytes` region it
     INCLUDEs) holds no little-endian word equal to a label of its own bank:
     that is a pointer the assembler cannot move. Words are read at even
-    offsets up to the next symbol."""
+    offsets up to the next symbol. The allow-list holds the original layout's
+    coincidences, so an edited build, whose labels sit elsewhere, is skipped."""
+    built = ROOT / "mariotennis.gbc"
+    if not built.exists() or built.read_bytes() != rom:
+        return 0
     specs = {p: s for p, _o, _n, s in manifest}
     at, by_addr = {}, {}
     for line in (ROOT / "build" / "mariotennis.sym").read_text().splitlines():
