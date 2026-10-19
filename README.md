@@ -57,7 +57,7 @@ tilemaps and text.
 | source-spelled bytes | 848,059 bytes, 40.4% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
 | labels | 30,436: 14,408 routines and tables and 14,416 locals in ROM, 1,612 RAM names |
 | compressed graphics | 839 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 779 routines and 103 blobs nothing live reaches (`docs/unused_code.md`) |
+| `Unused_` routines | 788 routines and 111 blobs nothing live reaches (`docs/unused_code.md`) |
 
 Every `INCBIN` is classified (graphics, audio, text, a resource descriptor,
 a record array or fill). Structure is rendered as source -- farcall slot
