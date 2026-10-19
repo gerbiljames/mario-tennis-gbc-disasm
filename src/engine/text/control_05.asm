@@ -80,54 +80,54 @@ MeasureNextArgNumberWidth:
 	ld d, [hl] ; $531a
 	ld h, d ; $531b
 	ld l, e ; $531c
-	ld bc, $d8f0 ; $531d
-	ld de, $2710 ; $5320
+	ld bc, -10000 ; $531d
+	ld de, 10000 ; $5320
 	add hl, bc ; $5323
 	ld a, $05 ; $5324
 	bit 7, h ; $5326
-	jr z, IsTileBlockedAt.sumDigitWidths ; $5328
+	jr z, .sumDigitWidths ; $5328
 	add hl, de ; $532a
-.loop:
+.loopTenThousands:
 	add hl, bc ; $532b
 	bit 7, h ; $532c
-	jr z, .loop ; $532e
+	jr z, .loopTenThousands ; $532e
 	add hl, de ; $5330
-	ld bc, $fc18 ; $5331
-	ld de, $03e8 ; $5334
+	ld bc, -1000 ; $5331
+	ld de, 1000 ; $5334
 	add hl, bc ; $5337
 	ld a, $04 ; $5338
 	bit 7, h ; $533a
-	jr z, IsTileBlockedAt.sumDigitWidths ; $533c
+	jr z, .sumDigitWidths ; $533c
 	add hl, de ; $533e
-.loopB:
+.loopThousands:
 	add hl, bc ; $533f
 	bit 7, h ; $5340
-	jr z, .loopB ; $5342
+	jr z, .loopThousands ; $5342
 	add hl, de ; $5344
-	ld bc, hSpriteQueueBase ; $5345
-	ld de, $0064 ; $5348
-IsTileBlockedAt:
+	ld bc, -100 ; $5345
+	ld de, 100 ; $5348
+.hundreds:
 	add hl, bc ; $534b
 	ld a, $03 ; $534c
 	bit 7, h ; $534e
 	jr z, .sumDigitWidths ; $5350
 	add hl, de ; $5352
-.loop:
+.loopHundreds:
 	add hl, bc ; $5353
 	bit 7, h ; $5354
-	jr z, .loop ; $5356
+	jr z, .loopHundreds ; $5356
 	add hl, de ; $5358
-	ld bc, $fff6 ; $5359
-	ld de, $000a ; $535c
+	ld bc, -10 ; $5359
+	ld de, 10 ; $535c
 	add hl, bc ; $535f
 	ld a, $02 ; $5360
 	bit 7, h ; $5362
 	jr z, .sumDigitWidths ; $5364
 	add hl, de ; $5366
-.loopB:
+.loopTens:
 	add hl, bc ; $5367
 	bit 7, h ; $5368
-	jr z, .loopB ; $536a
+	jr z, .loopTens ; $536a
 	add hl, de ; $536c
 	ld a, $01 ; $536d
 .sumDigitWidths:
