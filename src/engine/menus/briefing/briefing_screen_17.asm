@@ -290,9 +290,8 @@ CycleDiagramTargetPalette:
 	call LoadPaletteShadow ; $46b9
 	pop_wram_bank ; $46bc
 	ret ; $46c1
-Unused_17:
-	; $46c2, 8 bytes (bytes:8)
-	db $00, $00, $f9, $67, $98, $00, $1f, $03 ; 0x00
+Unused_17_Palette:
+	INCLUDE "data/engine/menus/briefing/Unused_17_Palette.asm" ; $46c2, 8 bytes (palettes)
 DiagramTargetPaletteRamp_17:
 	; $46ca, 24 bytes (records:2)
 	dw $001f ; record 0

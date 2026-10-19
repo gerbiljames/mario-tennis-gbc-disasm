@@ -1,7 +1,9 @@
 StoryCharGenderTable:
 	; $441b, 4 bytes (bytes:4)
 	db $00, $01, $00, $01 ; 0x00
-Unused_02:
+; 28 more 0/1 bytes after the four StoryCharGenderTable is read for (id & 3);
+; past Kate they do not follow the roster's genders.
+Unused_02_StoryCharGenderTableTail:
 	; $441f, 28 bytes (bytes:16)
 	db $00, $01, $00, $00, $00, $01, $00, $01, $00, $01, $00, $00, $00, $00, $00, $01 ; 0x00
 	db $00, $01, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00 ; 0x10

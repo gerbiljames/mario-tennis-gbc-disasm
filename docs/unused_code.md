@@ -129,7 +129,7 @@ are complete developer screens: the save-slot editor
 sixteen `Restore/Clear/InvalidateBlock…` helpers), the save-data debug flow
 (`Unused_1b_RunDebugSaveDataFlow`, 180 instructions, with its menu, the
 minigame-flags screen and the nav-grid loader), the character-select loop,
-the window demo, the scene viewer, and `Unused_01_MenuRedraw`, which calls
+the window demo, the scene viewer, and `Unused_01_DebugBootMenu`, which calls
 `Unused_07_RunDebugTestMatch`. They are self-consistent and call live helpers; only
 the menu that would launch them is unreachable (the retail build never sets
 `hDebugStepMode`, see `docs/screens_and_ui.md`). The developer "Test" map

@@ -99,7 +99,7 @@ ENDC
 	ld [hl], $0a ; $40e4
 	farcall RunStoryModeOverworld ; $40e6
 	jp .loopB ; $40e9
-Unused_01_MenuRedraw:
+Unused_01_DebugBootMenu:
 	ld hl, BuildStamp ; $40ec
 	ld_cell de, $05, $11 ; $40ef
 	call PrintString ; $40f2
@@ -108,7 +108,7 @@ Unused_01_MenuRedraw:
 .loop:
 	ldh a, [hInputPressed] ; $40f9
 	bit PADB_START, a ; $40fb
-	jr z, .runSoundTest ; $40fd
+	jr z, .checkSelect ; $40fd
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $40ff
 	ldh [hDebugStepMode], a ; $4101
 	ld hl, wStoryModeCurrentLocation ; $4103
@@ -117,7 +117,7 @@ Unused_01_MenuRedraw:
 	ld [hl], $0a ; $410b
 	farcall RunStoryModeOverworld ; $410d
 	jp InitAndRunGame.loop ; $4110
-.runSoundTest:
+.checkSelect:
 	bit 2, a ; $4113
 	jr z, .checkA ; $4115
 	farcall Unused_01_RunSoundTest ; $4117
@@ -140,7 +140,7 @@ Unused_01_MenuRedraw:
 	jp .matchLoop ; $4135
 .checkUp:
 	bit 6, a ; $4138
-	jp z, Unused_01_MatchSetup.checkDown ; $413a
+	jp z, Unused_01_DebugBootMenu.checkDown ; $413a
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $413d
 	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
@@ -181,7 +181,7 @@ Unused_01_MenuRedraw:
 	inc a ; $4198
 	ld [wCurrentMinigameStoryMatch + 1], a ; $4199
 	jr .winLoseLoop ; $419c
-Unused_01_MatchSetup:
+Unused_01_ScreenTestSequence:
 	farcall ShowEquipmentStatusScreen ; $419e
 	ld de, FLAG_DOUBLES ; $41a1
 	call ClearGameFlagByNumber ; $41a4
@@ -195,24 +195,24 @@ Unused_01_MatchSetup:
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41bb
 	ldh [hDebugStepMode], a ; $41bd
 	farcall Unused_1a_RunDebugCharViewer ; $41bf
-.checkDown:
+Unused_01_DebugBootMenu.checkDown:
 	bit 7, a ; $41c2
-	jr z, Unused_01.positive ; $41c4
+	jr z, Unused_01_DebugBootMenu.checkRight ; $41c4
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41c6
 	ldh [hDebugStepMode], a ; $41c8
 	ld a, DEBUGSTEP_OFF ; $41ca
 	ldh [hDebugStepMode], a ; $41cc
-.loop:
+Unused_01_DebugBootMenu.introLoop:
 	farcall RunIntroCutscene ; $41ce
 	farcall RunTitleScreen ; $41d1
-	jr .loop ; $41d4
-Unused_01:
+	jr Unused_01_DebugBootMenu.introLoop ; $41d4
+Unused_01_JumpToMainMenu:
 	jp InitAndRunGame.loop ; $41d6
 	db $18 ; $41d9
 	db $ef ; $41da
-.positive:
+Unused_01_DebugBootMenu.checkRight:
 	bit 4, a ; $41db
-	jr z, .checkLeft ; $41dd
+	jr z, Unused_01_DebugBootMenu.checkLeft ; $41dd
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41df
 	ldh [hDebugStepMode], a ; $41e1
 	ld hl, wStoryModeCurrentLocation ; $41e3
@@ -222,20 +222,20 @@ Unused_01:
 	ld a, $00 ; $41ed
 	ld [wStoryMainChar], a ; $41ef
 	farcall RunStoryModeOverworld ; $41f2
-.checkLeft:
+Unused_01_DebugBootMenu.checkLeft:
 	bit 5, a ; $41f5
-	jr z, .advanceFrame ; $41f7
+	jr z, Unused_01_DebugBootMenu.advanceFrame ; $41f7
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41f9
 	ldh [hDebugStepMode], a ; $41fb
 	farcall Unused_1a_RunDebugCharViewer ; $41fd
 	ld a, DEBUGSTEP_OFF ; $4200
 	ldh [hDebugStepMode], a ; $4202
-.loop:
+Unused_01_DebugBootMenu.haltLoop:
 	call AdvanceFrame ; $4204
-	jr .loop ; $4207
-.advanceFrame:
+	jr Unused_01_DebugBootMenu.haltLoop ; $4207
+Unused_01_DebugBootMenu.advanceFrame:
 	call AdvanceFrame ; $4209
-	jp Unused_01_MenuRedraw.loop ; $420c
+	jp Unused_01_DebugBootMenu.loop ; $420c
 	db $00 ; $420f
 	ds ALIGN[4]
 MenuWindowTiles_01:

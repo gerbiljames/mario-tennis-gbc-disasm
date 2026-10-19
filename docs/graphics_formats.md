@@ -17,8 +17,7 @@ Cross-references: `docs/bank0_notes.md` (ROM0 helpers), `docs/ram_map.md`
 
 Every file under `data/` is named after its label in the source
 (`data/sprites/AlexSpriteFrame00.bin`; an `lz_` prefix marks a compressed
-stream, `lz_DmgLockoutTilesLZ_01.bin`; a blob nothing names keeps an
-address name, `d_000b.bin`). Every blob the manifest tags `gfx` (a whole
+stream, `lz_DmgLockoutTilesLZ_01.bin`). Every blob the manifest tags `gfx` (a whole
 number of 8x8 tiles) is extracted to a PNG beside its `.bin`: tiles in blob
 order, sixteen per row, four-colour indexed, with the tile count in the file.
 `make` re-encodes any blob whose PNG is newer (`tools/gfx.py encode`, then
