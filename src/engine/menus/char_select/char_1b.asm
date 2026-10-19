@@ -156,7 +156,7 @@ Unused_1b_RunCharSelectLoop:
 	script_fade_in 32 ; $610e
 	call WaitFadeEnd ; $6113
 	call Unused_1b_StartCharSelectCursorTask ; $6116
-.loopB:
+.loop:
 	wram_bank WRAM_STAGING ; $6119
 	ldh a, [hInputRisingEdge] ; $611f
 	and PADF_START ; $6121
@@ -192,7 +192,7 @@ Unused_1b_RunCharSelectLoop:
 	ld a, [wCharSelectChar] ; $615e
 	farcall LoadCharacterRecordToBuffer ; $6161
 	call AdvanceFrame ; $6164
-	jr .loopB ; $6167
+	jr .loop ; $6167
 .returnSelection:
 	ld hl, wCharSelectCol ; $6169
 	ld d, [hl] ; $616c

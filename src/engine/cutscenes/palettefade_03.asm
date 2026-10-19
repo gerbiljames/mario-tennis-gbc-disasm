@@ -17,10 +17,10 @@ Unused_03_InitBlackPaletteFade:
 	xor a ; $75d3
 	ld hl, wPaletteFadeMask ; $75d4
 	ld b, $10 ; $75d7
-.loopB:
+.loop:
 	ld [hl+], a ; $75d9
 	dec b ; $75da
-	jr nz, .loopB ; $75db
+	jr nz, .loop ; $75db
 	call CopyMasterPalettesToFadeBuffers ; $75dd
 	call Unused_03_ClearFadeTargetPalettes ; $75e0
 	pop_wram_bank ; $75e3

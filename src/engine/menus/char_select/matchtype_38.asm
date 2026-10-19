@@ -12,10 +12,10 @@ Unused_38_ClearWram3Row64Alt:
 	push_wram_bank WRAM_SCREEN ; $43f1
 	ld a, $00 ; $43fa
 	ld c, $40 ; $43fc
-.loopB:
+.loop:
 	ld [hl+], a ; $43fe
 	dec c ; $43ff
-	jr nz, .loopB ; $4400
+	jr nz, .loop ; $4400
 	pop_wram_bank ; $4402
 	ret ; $4407
 UpdateAnimatedTilesTask_38:

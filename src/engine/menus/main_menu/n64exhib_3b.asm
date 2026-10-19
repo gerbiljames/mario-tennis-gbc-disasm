@@ -205,7 +205,7 @@ Unused_3b_FillN64RecordsPalettes:
 	wram_bank WRAM_SCREEN ; $48b8
 	ld hl, wN64RecordsBlock + 216 ; $48be
 	ld c, $00 ; $48c1
-.loopB:
+.loop:
 	ld a, $2c ; $48c3
 	ld a, $ff ; $48c5
 	ld [hl+], a ; $48c7
@@ -233,7 +233,7 @@ Unused_3b_FillN64RecordsPalettes:
 	inc c ; $48eb
 	ld a, c ; $48ec
 	cp $08 ; $48ed
-	jr nz, .loopB ; $48ef
+	jr nz, .loop ; $48ef
 	ret ; $48f1
 LoadChartWindowTiles:
 	ld b, TILEBLOCK_MugshotTiles ; $48f2

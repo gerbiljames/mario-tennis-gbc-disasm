@@ -336,10 +336,10 @@ Unused_00_SwitchCPUSpeedSingle:
 	ld a, JOYP_GET_NONE ; $02d6
 	ldh [rJOYP], a ; $02d8
 	stop ; $02da
-.loopB:
+.loop:
 	ldh a, [rSPD] ; $02dc
 	bit B_SPD_DOUBLE, a ; $02de
-	jr nz, .loopB ; $02e0
+	jr nz, .loop ; $02e0
 	xor a ; $02e2
 	ldh [rJOYP], a ; $02e3
 	ldh [rIF], a ; $02e5

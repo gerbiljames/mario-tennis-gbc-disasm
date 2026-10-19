@@ -415,28 +415,28 @@ Unused_0f_ComputeRankingProgressIndex:
 Unused_0f_ComputeStoryRankTier:
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c
-	jr z, .loopB ; $7d8f
+	jr z, .loop ; $7d8f
 	inc a ; $7d91
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d92
-	jr z, .loopB ; $7d95
+	jr z, .loop ; $7d95
 	inc a ; $7d97
 	test_flag FLAG_DOUBLES ; $7d98
 	jr nz, .doublesIsland ; $7d9b
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d9d
-	jr z, .loopB ; $7da0
+	jr z, .loop ; $7da0
 	inc a ; $7da2
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7da3
-	jr z, .loopB ; $7da6
+	jr z, .loop ; $7da6
 	inc a ; $7da8
-.loopB:
+.loop:
 	ld [wMapSceneStage], a ; $7da9
 	ret ; $7dac
 .doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dad
-	jr z, .loopB ; $7db0
+	jr z, .loop ; $7db0
 	inc a ; $7db2
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7db3
-	jr z, .loopB ; $7db6
+	jr z, .loop ; $7db6
 	inc a ; $7db8
-	jr .loopB ; $7db9
+	jr .loop ; $7db9
 	; $7dbb, 581 bytes fill to bank end (linker-padded)

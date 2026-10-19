@@ -387,12 +387,12 @@ SetMenuCursorFromIndex:
 Unused_1b_SetMenuCursorFromIndexToPtr:
 	ld d, $00 ; $43f5
 	ld a, c ; $43f7
-.loopB:
+.loop:
 	cp b ; $43f8
 	jr c, .storeXY ; $43f9
 	inc d ; $43fb
 	sub b ; $43fc
-	jr .loopB ; $43fd
+	jr .loop ; $43fd
 .storeXY:
 	ld [hl+], a ; $43ff
 	ld a, d ; $4400

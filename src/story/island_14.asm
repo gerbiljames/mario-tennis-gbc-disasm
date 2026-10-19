@@ -564,28 +564,28 @@ ActorScript_14_4:
 Unused_14_ComputeStoryRankTier:
 	ld a, $00 ; $7ae4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6
-	jr z, .loopB ; $7ae9
+	jr z, .loop ; $7ae9
 	inc a ; $7aeb
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7aec
-	jr z, .loopB ; $7aef
+	jr z, .loop ; $7aef
 	inc a ; $7af1
 	test_flag FLAG_DOUBLES ; $7af2
 	jr nz, .checkFlag ; $7af5
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7af7
-	jr z, .loopB ; $7afa
+	jr z, .loop ; $7afa
 	inc a ; $7afc
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7afd
-	jr z, .loopB ; $7b00
+	jr z, .loop ; $7b00
 	inc a ; $7b02
-.loopB:
+.loop:
 	ld [wMapSceneStage], a ; $7b03
 	ret ; $7b06
 .checkFlag:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7b07
-	jr z, .loopB ; $7b0a
+	jr z, .loop ; $7b0a
 	inc a ; $7b0c
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7b0d
-	jr z, .loopB ; $7b10
+	jr z, .loop ; $7b10
 	inc a ; $7b12
-	jr .loopB ; $7b13
+	jr .loop ; $7b13
 	; $7b15, 1259 bytes fill to bank end (linker-padded)
