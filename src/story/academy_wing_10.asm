@@ -791,21 +791,8 @@ AcademyWingEntry0fScene:
 	ld [wUnusedExitTriggerIdMirror], a ; $7332
 	ld [wStoryModeExitTriggerRequest], a ; $7335
 	ret ; $7338
-AcademyWingOpenDoor_10:
-	script_wait_frames 10 ; $7339
-	sound SFX_DOOR_ALT ; $7340
-	script_copy_scene_rect 7, 56, 32, 56, 2, 2 ; $7342
-	script_wait_frames 2 ; $7351
-	script_copy_scene_rect 11, 56, 32, 56, 2, 2 ; $7358
-	script_wait_frames 4 ; $7367
-	ret ; $736e
-AcademyWingCloseDoor_10:
-	sound SFX_DOOR_ALT ; $736f
-	script_copy_scene_rect 7, 56, 32, 56, 2, 2 ; $7371
-	script_wait_frames 2 ; $7380
-	script_copy_scene_rect 3, 56, 32, 56, 2, 2 ; $7387
-	script_wait_frames 4 ; $7396
-	ret ; $739d
+	twin academy_wing_open_door, 10 ; $7339 AcademyWingOpenDoor_10
+	twin academy_wing_close_door, 10 ; $736f AcademyWingCloseDoor_10
 AcademyWingInitActors1_10:
 	; $739e, 80 bytes (map_actors)
 	map_actor $0000, ActorScript_10_2, 32.0, 48.0, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, ACADEMY_WING_INIT1_WALK_75_06

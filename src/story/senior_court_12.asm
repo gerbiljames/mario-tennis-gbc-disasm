@@ -91,7 +91,7 @@ SeniorCourtExit01_12:
 	jr nc, .pushTextArgFetchedString ; $55d0
 	inc h ; $55d2
 .pushTextArgFetchedString:
-	call PushTextArgFetchedString ; $55d3
+	call PushShortTextArg_12 ; $55d3
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $55d6
 	ret ; $55db
 SeniorCourtExit01TextIds:

@@ -393,7 +393,6 @@ NetGamePractice1Table:
 	dw $01b0 ; record 14
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
-; Instruction-identical to NetGamePractice2HandlePointEnd and NetGamePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
 	twin_named net_game_practice1_handle_point_end, NetGamePractice1HandlePointEnd ; $5cf9
 NetGamePractice1JudgeOnPointEnd:
 	ld a, $00 ; $5d48
@@ -618,15 +617,7 @@ NetGamePractice2Hooks:
 	dw NetGamePractice2Hook_Bounce ; record 5
 	dw NetGamePractice2Hook_RallyTick ; record 6
 	dw RetStub ; record 7
-NetGamePractice2Hook_MinigameStart:
-	xor a ; $5ebb
-	ld [wDrillCounters + 3], a ; $5ebc
-	ld [wDrillCounters + 4], a ; $5ebf
-	ld a, $04 ; $5ec2
-	ld [wDrillCounters + 5], a ; $5ec4
-	ld a, $01 ; $5ec7
-	ld [wDrillIsPracticeLesson], a ; $5ec9
-	ret ; $5ecc
+	twin_named net_game_practice2_hook_minigame_start, NetGamePractice2Hook_MinigameStart ; $5ebb
 NetGamePractice2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $5ecd
 	ret ; $5ed0
@@ -742,7 +733,6 @@ NetGamePractice2PointStartDrillPositions:
 	drill_gates $0000, $01c0, $01b0, $02a0 ; point 2
 	drill_gates $fe50, $01c0, $0000, $02a0 ; point 3
 	db $ff, $ff ; end
-; Instruction-identical to NetGamePractice1HandlePointEnd and NetGamePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
 	twin_named net_game_practice1_handle_point_end, NetGamePractice2HandlePointEnd ; $5fb3
 NetGamePractice2JudgeOnPointEnd:
 	ld a, $00 ; $6002

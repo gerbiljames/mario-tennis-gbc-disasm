@@ -191,7 +191,6 @@ PromptCharDataConfirm:
 	wram_bank WRAM_SCENE ; $5af0
 	ld a, [wCharDataConfirmState] ; $5af6
 	ret ; $5af9
-; Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1c (one copy per bank); a change here belongs in every copy.
 	twin draw_confirm_selection_cursor, 1d ; $5afa DrawConfirmSelectionCursor_1d
 BuildCharDataConfirmScreen:
 	push af ; $5b1a

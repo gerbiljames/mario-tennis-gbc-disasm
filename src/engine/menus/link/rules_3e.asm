@@ -1,10 +1,5 @@
-; Instruction-identical to Unused_16_GetCellIndexFromCursorPtr and Unused_3b_GetCellIndexFromCursorPtr (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in get_cell_index_from_cursor_ptr, Unused_3e_GetCellIndexFromCursorPtr, 3e ; $43db Unused_3e_GetCellIndexFromCursorPtr
-; Instruction-identical to Unused_16_SetMenuCursorFromIndex, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3b (one copy per bank); a change here belongs in every copy.
 	twin_in set_menu_cursor_from_index, SetMenuCursorFromIndex_3e, 3e ; $43eb SetMenuCursorFromIndex_3e
-; Instruction-identical to Unused_16_SetMenuCursorFromIndexToPtr and Unused_38_SetMenuCursorFromIndexToPtr (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in set_menu_cursor_from_index_to_ptr, Unused_3e_SetMenuCursorFromIndexToPtr, 3e ; $43fd Unused_3e_SetMenuCursorFromIndexToPtr
 Unused_3e_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $440b
@@ -29,11 +24,7 @@ Unused_3e_ClearWram3Row64Alt:
 UpdateAnimatedTiles_3e:
 	farcall UpdateAnimatedTiles ; $4438
 	ret ; $443b
-; Instruction-identical to Unused_17_DrawNameWithDiacritics and DrawNameWithDiacritics_1b (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_name_with_diacritics, Unused_3e_DrawNameWithDiacritics, 3e ; $443c Unused_3e_DrawNameWithDiacritics
-; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_1b_DrawDecimalNumber and Unused_3b_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_3e_DrawDecimalNumber, 3e ; $4475 Unused_3e_DrawDecimalNumber
 Unused_3e_DrawAsciiDigitString:
 	ld a, [hl+] ; $4496
@@ -43,7 +34,6 @@ Unused_3e_DrawAsciiDigitString:
 	jr Unused_3e_DrawAsciiDigitString ; $449d
 .done:
 	ret ; $449f
-; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_17_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar and Unused_3b_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
 	twin_in draw_ascii_digit_char, Unused_3e_DrawAsciiDigitChar, 3e ; $44a0 Unused_3e_DrawAsciiDigitChar
 RestoreMenuScreenAndFadeIn:
 	call DisableLCDSafely ; $44b9
@@ -348,7 +338,6 @@ OpenMatchRulesPanel:
 	jr nz, .loopB ; $4726
 	call AdvanceFrame ; $4728
 	ret ; $472b
-; Instruction-identical to MatchFormatSlideOut (one copy per bank); a change here belongs in every copy.
 	twin_named match_format_slide_out, CloseMatchRulesPanel ; $472c
 HandleMatchRulesToggleInput:
 	ld a, [wMenuInputPressed] ; $475d

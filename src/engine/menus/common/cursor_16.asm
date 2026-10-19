@@ -57,12 +57,10 @@ Unused_16_DrawWobblingCornerBrackets:
 	call QueueSprite ; $4064
 	pop de ; $4067
 	ret ; $4068
-; Instruction-identical to Unused_17_ApplySpriteWobbleX (one copy per bank); a change here belongs in every copy.
 	twin_in apply_sprite_wobble_x, Unused_16_ApplySpriteWobbleX, 16 ; $4069 Unused_16_ApplySpriteWobbleX
 SpriteWobbleXTable_16:
 	; $4083, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-; Instruction-identical to ApplySpriteWobbleY_17 (one copy per bank); a change here belongs in every copy.
 	twin_in apply_sprite_wobble_y, Unused_16_ApplySpriteWobbleY, 16 ; $4093 Unused_16_ApplySpriteWobbleY
 SpriteWobbleYTable_16:
 	; $40ad, 32 bytes (bytes:16)
@@ -185,15 +183,7 @@ Unused_16_MoveMenuCursorGrid:
 .moved:
 	ld a, $01 ; $4173
 	ret ; $4175
-; Instruction-identical to Unused_38_MoveMenuCursorGridFromLinkInput and Unused_3e_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_from_link_input, Unused_16_MoveMenuCursorGridFromLinkInput, 16 ; $4176 Unused_16_MoveMenuCursorGridFromLinkInput
-; Instruction-identical to Unused_38_MoveMenuCursorGridRemote and Unused_3e_MoveMenuCursorGridRemote (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_remote, Unused_16_MoveMenuCursorGridRemote, 16 ; $41f3 Unused_16_MoveMenuCursorGridRemote
-; Instruction-identical to Unused_3e_MoveMenuCursor2GridRemote (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in move_menu_cursor2_grid_remote, Unused_16_MoveMenuCursor2GridRemote, 16 ; $42be Unused_16_MoveMenuCursor2GridRemote
-; Instruction-identical to GetMenuCursorIndex_1b, GetMenuCursorIndex_38, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in get_menu_cursor_index, Unused_16_GetMenuCursorIndex, 16 ; $4387 Unused_16_GetMenuCursorIndex

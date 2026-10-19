@@ -10,30 +10,8 @@ SetRoommateDoublesNoReplyText_13:
 	script_set_text Text_31_270 ; $5ba0
 .done:
 	ret ; $5ba6
-SetRoommateSinglesNoReplyText_13:
-	call GetDormRoomStoryStage_13 ; $5ba7
-	cp $01 ; $5baa
-	jp nz, .done ; $5bac
-	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5baf
-	jr z, .setText ; $5bb2
-	script_set_text Text_31_276 ; $5bb4
-	jr .done ; $5bba
-.setText:
-	script_set_text Text_31_271 ; $5bbc
-.done:
-	ret ; $5bc2
-SetRoommateSinglesYesReplyText_13:
-	call GetDormRoomStoryStage_13 ; $5bc3
-	cp $01 ; $5bc6
-	jp nz, .done ; $5bc8
-	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5bcb
-	jr z, .setText ; $5bce
-	script_set_text Text_31_276 ; $5bd0
-	jr .done ; $5bd6
-.setText:
-	script_set_text Text_31_271 ; $5bd8
-.done:
-	ret ; $5bde
+	twin_named set_roommate_singles_no_reply_text, SetRoommateSinglesNoReplyText_13 ; $5ba7
+	twin_named set_roommate_singles_no_reply_text, SetRoommateSinglesYesReplyText_13 ; $5bc3
 SetRoommateDoublesYesReplyText_13:
 	call GetDormRoomStoryStage_13 ; $5bdf
 	cp $01 ; $5be2

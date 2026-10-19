@@ -106,9 +106,7 @@ ApplyCursorBounceY:
 CursorBounceYTable:
 	; $40df, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-; Instruction-identical to Unused_1b_DrawCornerBrackets, Unused_38_DrawCornerBrackets and Unused_3e_DrawCornerBrackets (one copy per bank); a change here belongs in every copy.
 	twin_in draw_corner_brackets, Unused_3b_DrawCornerBrackets, 3b ; $40ef Unused_3b_DrawCornerBrackets
-; Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3e (one copy per bank); a change here belongs in every copy.
 	twin move_menu_cursor_grid, 3b ; $412a MoveMenuCursorGrid_3b
 Unused_3b_MoveMenuCursorRepeat:
 	ld a, [wMenuCursorX] ; $41a8
@@ -465,5 +463,4 @@ Unused_3b_MoveMenuCursorLinkRemote:
 .checkMenuCursorY:
 	ld a, $01 ; $43b6
 	ret ; $43b8
-; Instruction-identical to Unused_16_GetMenuCursorIndex, GetMenuCursorIndex_1b, GetMenuCursorIndex_38 and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
 	twin_in get_menu_cursor_index, GetMenuCursorIndex_3b, 3b ; $43b9 GetMenuCursorIndex_3b

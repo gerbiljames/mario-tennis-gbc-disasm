@@ -59,16 +59,7 @@ MinigameTargetZoneBounds:
 MinigameConfig_ShootingStar:
 	; $5194, 16 bytes
 	drill_def CHAR_UNUSED_15, COURT_SHOOTING_STAR, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_SHOOTING_STAR, BGM_TARGET_MINIGAMES, CHAR_LUIGI, MinigameHooks_ShootingStar, MinigamePointLayoutDuo, InitMinigame_ShootingStar
-InitMinigame_ShootingStar:
-	ld a, $01 ; $51a4
-	ld [wMinigameUsesTennisMachine], a ; $51a6
-	ld a, [wMinigameLevel] ; $51a9
-	cp $02 ; $51ac
-	jr nz, .done ; $51ae
-	ld a, $01 ; $51b0
-	ld [wMinigameHighScoreMode], a ; $51b2
-.done:
-	ret ; $51b5
+	twin_named init_minigame_medallion_match, InitMinigame_ShootingStar ; $51a4
 MinigameHooks_ShootingStar:
 	; $51b6, 16 bytes (mode_hooks)
 	dw ShootingStarHook_PerFrame ; record 0

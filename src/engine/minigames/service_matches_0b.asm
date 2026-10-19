@@ -162,17 +162,7 @@ ServiceMatch1Hook_MinigameStart:
 ServiceMatch1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $484d
 	ret ; $4850
-ServiceMatch1Hook_PointStart:
-	xor a ; $4851
-	ld [wDrillAbortCountdownActive], a ; $4852
-	ld a, $0a ; $4855
-	ld [wDrillAbortCountdown], a ; $4857
-	ASSERT DRILLMSG_NONE == 0
-	xor a ; $485a
-	ld [wDrillMessageId], a ; $485b
-	xor a ; $485e
-	ld [wDrillPointJudgement], a ; $485f
-	ret ; $4862
+	twin_named service_match1_hook_point_start, ServiceMatch1Hook_PointStart ; $4851
 ServiceMatch1Hook_PointEnd:
 	call ServiceMatch1JudgeOnPointEnd ; $4863
 	call ServiceMatch1HandlePointEnd ; $4866
@@ -542,7 +532,6 @@ ServiceMatch2HandlePointEnd:
 	farcall StartPointEndReactions ; $4afe
 	call PlayDrillPointEndSequence ; $4b01
 	ret ; $4b04
-; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 	twin_named net_game_match1_award_point_to_side, ServiceMatch2AwardPointToSide ; $4b05
 ServiceMatch2JudgeOnPointEnd:
 	ld a, $00 ; $4b2e

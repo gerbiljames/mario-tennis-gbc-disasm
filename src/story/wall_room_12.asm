@@ -26,9 +26,7 @@ DormEntranceEntryPoints_12:
 	map_entry $02, FACE_DOWN, 22.0, 13.0, DormEntranceArrival02_12
 	map_entry $0f, FACE_UP, 22.0, 27.0, $0000
 	db $ff
-; Instruction-identical to AcademyMainBldgArrival02_10 and AcademyArrivalArrival01_11 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival02, DormEntranceArrival02_12 ; $406f
-; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, MapArrivalWalk_11 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival01, DormEntranceArrival01_12 ; $40b5
 DormEntranceExitTriggers_12:
 	; $40fb, 25 bytes (map_scripts:exit)

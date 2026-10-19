@@ -471,8 +471,4 @@ IslandSkyEntry02Scene:
 	ld [wUnusedExitTriggerIdMirror], a ; $6418
 	ld [wStoryModeExitTriggerRequest], a ; $641b
 	ret ; $641e
-AdvancePlaneFrameCounter_14:
-	ld a, [wCutsceneObjX] ; $641f
-	inc a ; $6422
-	ld [wCutsceneObjX], a ; $6423
-	ret ; $6426
+	twin_named advance_plane_frame_counter, AdvancePlaneFrameCounter_14 ; $641f

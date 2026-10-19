@@ -104,9 +104,7 @@ AcademyMainBldgEntryPoints_10:
 	map_entry $0e, FACE_UP, 34.0, 19.0, $0000 ; debug warp only
 	map_entry $0f, FACE_UP, 34.0, 29.0, $0000
 	db $ff
-; Instruction-identical to AcademyArrivalArrival01_11 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival02, AcademyMainBldgArrival02_10 ; $7532
-; Instruction-identical to RestaurantArrival01_10, MapArrivalWalk_11, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival01, AcademyMainBldgArrival01_10 ; $7578
 AcademyMainBldgExitTriggers_10:
 	; $75be, 41 bytes (map_scripts:exit)

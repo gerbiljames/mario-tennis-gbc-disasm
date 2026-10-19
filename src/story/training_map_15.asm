@@ -105,7 +105,7 @@ TournamentCourtyardInitScript_15:
 	jr nz, .ne0f ; $41ab
 	jp TournamentSiteArrivalScene ; $41ad
 .ne0f:
-	call SetPlayerPartnerActorSprites ; $41b0
+	call LoadPlayerPartnerObjDefs_15 ; $41b0
 	call InitTournamentSiteSceneVariant ; $41b3
 	call TournamentSiteEntryWalkIn ; $41b6
 	ret ; $41b9
@@ -348,7 +348,7 @@ TournamentSiteArrivalScene:
 	call WaitFadeEnd ; $46b3
 	ret ; $46b6
 SetupTournamentSitePartnerActor:
-	call SetPlayerPartnerActorSprites ; $46b7
+	call LoadPlayerPartnerObjDefs_15 ; $46b7
 	test_flag FLAG_DOUBLES ; $46ba
 	jr z, .noPartner ; $46bd
 	ld a, [wStoryPartnerGender] ; $46bf
@@ -401,8 +401,7 @@ TournamentSiteEntryWalkIn:
 TournamentSiteEntryWalkInFacings:
 	; $4757, 8 bytes (enum:FACE:8)
 	db FACE_LEFT, FACE_RIGHT, FACE_DOWN, FACE_UP, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_DOWN ; 0x00
-; Instruction-identical to LoadCourtPlayerPartnerObjDefs_14 (one copy per bank); a change here belongs in every copy.
-	twin_named load_court_player_partner_obj_defs, SetPlayerPartnerActorSprites ; $475f
+	twin load_player_partner_obj_defs, 15 ; $475f LoadPlayerPartnerObjDefs_15
 TrainingCourtMapScripts_15:
 	; $4796, 14 bytes (map_tree)
 	dw TrainingCourtEntryPoints_15 ; slot 0 EntryPoints

@@ -584,7 +584,6 @@ MatchFormatSlideIn:
 	cp $ff ; $5f06
 	jr nz, .loopB ; $5f08
 	ret ; $5f0a
-; Instruction-identical to CloseMatchRulesPanel (one copy per bank); a change here belongs in every copy.
 	twin_named match_format_slide_out, MatchFormatSlideOut ; $5f0b
 HandleMatchFormatInput:
 	ld a, [wMenuInputPressed] ; $5f3c
@@ -775,7 +774,6 @@ FillMatchFormatOptionCellTable:
 MatchFormatOptionCellTable:
 	; $6093, 7 bytes (bytes:8)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
-; Instruction-identical to FlushMatchRuleRowAttrs (one copy per bank); a change here belongs in every copy.
 	twin_named flush_match_format_row_to_vram, FlushMatchFormatRowToVram ; $609a
 MatchFormatCursorSpriteTask:
 	farcall TickMenuBgScroll ; $60d0

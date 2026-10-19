@@ -84,7 +84,6 @@ MatchRuleOptionAttrAddrs_3e:
 MatchRuleOptionAttrWidths_3e:
 	; $48b4, 7 bytes (bytes:7)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
-; Instruction-identical to FlushMatchFormatRowToVram (one copy per bank); a change here belongs in every copy.
 	twin_named flush_match_format_row_to_vram, FlushMatchRuleRowAttrs ; $48bb
 MatchRulesCursorSpriteTask:
 	ld c, $01 ; $48f1
@@ -445,9 +444,4 @@ ClearLinkMessageWindow:
 	ld h, $20 ; $4c00
 	farcall FillTilemapRect ; $4c02
 	ret ; $4c05
-FlushLinkMessageRows:
-	ld hl, wShadowTilemap + 11 * TILEMAP_WIDTH ; $4c06
-	ld de, vBGMap0 + 11 * TILEMAP_WIDTH ; $4c09
-	ld c, 6 * TILEMAP_WIDTH / 16 ; $4c0c
-	call QueueVRAMCopy ; $4c0e
-	ret ; $4c11
+	twin_named queue_caption_row_to_vram, FlushLinkMessageRows ; $4c06

@@ -49,11 +49,7 @@ BananaBunchHook_BallHit:
 UpdateBananaBunchTargetHits:
 	call ScoreMinigameTargetHitOrDeflectBall ; $55a6
 	ret ; $55a9
-BananaBunchReflectBallAndRecordCell:
-	call ReflectBallVelocity ; $55aa
-	call GetMinigameGridCellIndex ; $55ad
-	ld [wMinigameLastHitCell], a ; $55b0
-	ret ; $55b3
+	twin_named banana_bunch_reflect_ball_and_record_cell, BananaBunchReflectBallAndRecordCell ; $55aa
 CopyMinigameTilemapBlock:
 	wram_bank WRAM_COURT_PLANES ; $55b4
 	ld de, wMinigameTargetGrid ; $55ba

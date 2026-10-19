@@ -66,7 +66,6 @@ GetMinigameCharCoordsEntry:
 	ld l, c ; $4937
 	ld h, b ; $4938
 	ret ; $4939
-; Instruction-identical to SnapCameraTo (one copy per bank); a change here belongs in every copy.
 	twin_named snap_camera_to, SnapCameraTo_0d ; $493a
 MinigameConfig_TennisMachine2:
 	; $4959, 16 bytes
@@ -87,11 +86,7 @@ MinigameHooks_TennisMachine2:
 	dw TennisMachine2Hook_Bounce ; record 5
 	dw TennisMachine2Hook_RallyTick ; record 6
 	dw RetStub ; record 7
-TennisMachine2Hook_MinigameStart:
-	ld a, $01 ; $4984
-	ld [wMinigameServeSlot], a ; $4986
-	call StartMinigameMatch ; $4989
-	ret ; $498c
+	twin_named tennis_machine1_hook_minigame_start, TennisMachine2Hook_MinigameStart ; $4984
 TennisMachine2Hook_PerFrame:
 	call DrawMinigameScoreHud ; $498d
 	ret ; $4990
@@ -139,11 +134,7 @@ MinigameHooks_TennisMachine3:
 	dw TennisMachine3Hook_Bounce ; record 5
 	dw TennisMachine3Hook_RallyTick ; record 6
 	dw RetStub ; record 7
-TennisMachine3Hook_MinigameStart:
-	ld a, $04 ; $49e1
-	ld [wMinigameServeSlot], a ; $49e3
-	call StartMinigameMatch ; $49e6
-	ret ; $49e9
+	twin_named tennis_machine3_hook_minigame_start, TennisMachine3Hook_MinigameStart ; $49e1
 TennisMachine3Hook_PerFrame:
 	call DrawMinigameScoreHud ; $49ea
 	ret ; $49ed
@@ -191,15 +182,10 @@ MinigameHooks_TennisMachine4:
 	dw TennisMachine4Hook_Bounce ; record 5
 	dw TennisMachine4Hook_RallyTick ; record 6
 	dw RetStub ; record 7
-TennisMachine4Hook_MinigameStart:
-	ld a, $04 ; $4a3e
-	ld [wMinigameServeSlot], a ; $4a40
-	call StartMinigameMatch ; $4a43
-	ret ; $4a46
+	twin_named tennis_machine3_hook_minigame_start, TennisMachine4Hook_MinigameStart ; $4a3e
 TennisMachine4Hook_PerFrame:
 	call DrawMinigameScoreHud ; $4a47
 	ret ; $4a4a
-; Instruction-identical to TennisMachineHighScoreHook_PointStart (in this bank); a change here belongs in every copy.
 	twin_named tennis_machine4_hook__point_start, TennisMachine4Hook_PointStart ; $4a4b
 TennisMachine4Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4a60

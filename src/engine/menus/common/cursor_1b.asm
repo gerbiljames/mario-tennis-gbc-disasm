@@ -106,12 +106,8 @@ ApplyArrowBobOffset:
 ArrowBobOffsetTable_1b:
 	; $40e7, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-; Instruction-identical to Unused_38_DrawCornerBrackets, Unused_3b_DrawCornerBrackets and Unused_3e_DrawCornerBrackets (one copy per bank); a change here belongs in every copy.
 	twin_in draw_corner_brackets, Unused_1b_DrawCornerBrackets, 1b ; $40f7 Unused_1b_DrawCornerBrackets
-; Instruction-identical to Unused_17_MoveMenuCursorGrid (one copy per bank); a change here belongs in every copy.
 	twin_in move_menu_cursor_grid_17, MoveMenuCursorGrid_1b, 1b ; $4132 MoveMenuCursorGrid_1b
-; Instruction-identical to Unused_17_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_from_link_input_17, Unused_1b_MoveMenuCursorGridFromLinkInput, 1b ; $41b0 Unused_1b_MoveMenuCursorGridFromLinkInput
 Unused_1b_MoveMenuCursorGridRemote:
 	ld a, [wMenuCursorX] ; $422d
@@ -380,10 +376,7 @@ Unused_1b_MoveMenuCursor2GridRemote:
 .checkMenuCursorY:
 	ld a, $01 ; $43be
 	ret ; $43c0
-; Instruction-identical to Unused_16_GetMenuCursorIndex, GetMenuCursorIndex_38, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
 	twin_in get_menu_cursor_index, GetMenuCursorIndex_1b, 1b ; $43c1 GetMenuCursorIndex_1b
-; Instruction-identical to Unused_38_GetMenuCursorIndexFromPtr (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in get_menu_cursor_index_from_ptr, Unused_1b_GetMenuCursorIndexFromPtr, 1b ; $43d3 Unused_1b_GetMenuCursorIndexFromPtr
 SetMenuCursorFromIndex:
 	ld d, $00 ; $43e3

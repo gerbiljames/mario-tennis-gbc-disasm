@@ -13,8 +13,7 @@ direction. Where an unused routine has a live twin, the comment above it in
 
 A dead copy inside a shared `src/twins` file is named per bank
 (`twin_in <file>, <Label>, <bank>`), so it is `Unused_<bank>_…` like any
-other, with "Nothing calls this copy." above its line; the check exempts
-nothing.
+other; the check exempts nothing.
 
 ## Dead roots
 

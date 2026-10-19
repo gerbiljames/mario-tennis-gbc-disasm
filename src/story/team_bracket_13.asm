@@ -34,7 +34,7 @@ RunTravelingTeamBracketIfWon_13:
 .isDoubles:
 	script_respawn_actors DoublesTravelingTeamActors_13 ; $79e5
 	farcall BeginCutsceneScriptMode ; $79ed
-	call ApplyPartnerCharacterVariant_13 ; $79f0
+	call SetPartnerObjDefByGender_13 ; $79f0
 	script_null_script ACTOR_PARTNER ; $79f3
 	script_null_script ACTOR_PLAYER_SHADOW ; $79f8
 	script_player_speed 2.0 ; $79fd
@@ -371,8 +371,6 @@ ActorScript_13_30:
 	as_wait 140
 	as_anim ANIM_NOD
 	as_jump .Ld
-; Instruction-identical to Unused_14_ComputeRankingProgressIndex and Unused_15_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
 	twin_in compute_ranking_progress_index_13, Unused_13_ComputeRankingProgressIndex, 13 ; $7d11 Unused_13_ComputeRankingProgressIndex
-; Instruction-identical to ComputeStoryRankTier_15 (one copy per bank); a change here belongs in every copy.
 	twin compute_story_rank_tier, 13 ; $7d58 ComputeStoryRankTier_13
 	; $7d89, 631 bytes fill to bank end (linker-padded)

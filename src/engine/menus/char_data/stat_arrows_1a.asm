@@ -180,7 +180,6 @@ RunCharDataConfirmScreen:
 	wram_bank WRAM_SCENE ; $7a13
 	ld a, [wCharDataConfirmState] ; $7a19
 	ret ; $7a1c
-; Instruction-identical to DrawConfirmSelectionCursor_1c and DrawConfirmSelectionCursor_1d (one copy per bank); a change here belongs in every copy.
 	twin draw_confirm_selection_cursor, 1a ; $7a1d DrawConfirmSelectionCursor_1a
 CopyBank1ToBank3BufferAlt:
 	wram_bank WRAM_STAGING ; $7a3d

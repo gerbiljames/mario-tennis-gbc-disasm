@@ -24,7 +24,6 @@ StrokePractice1Hook_PointEnd:
 	call StrokePractice1EvaluateResult ; $6bfa
 	ld [wPointWinLoseFlag], a ; $6bfd
 	ret ; $6c00
-; Instruction-identical to StrokePractice3EvaluateResult (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_evaluate_result, StrokePractice1EvaluateResult ; $6c01
 StrokePractice1Hook_RallyTick:
 	call StrokePractice1JudgeOnRallyTick ; $6c4a
@@ -58,7 +57,6 @@ StrokePractice1Table:
 	dw $0000 ; record 14
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
-; Instruction-identical to StrokePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_handle_point_end, StrokePractice1HandlePointEnd ; $6c81
 StrokePractice1JudgeOnPointEnd:
 	ld a, $00 ; $6cd0
@@ -168,7 +166,6 @@ StrokePractice1Cases1:
 StrokePractice1Cases1Messages:
 	; $6d69, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT
-; Instruction-identical to StrokePractice3Cases2 (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_cases2, StrokePractice1Cases2 ; $6d73
 StrokePractice2Drill:
 	; $6dae, 16 bytes
@@ -509,13 +506,7 @@ StrokePractice3Hooks:
 	dw StrokePractice3Hook_Bounce ; record 5
 	dw StrokePractice3Hook_RallyTick ; record 6
 	dw RetStub ; record 7
-StrokePractice3Hook_MinigameStart:
-	ld a, $01 ; $7034
-	ld [wDrillIsPracticeLesson], a ; $7036
-	xor a ; $7039
-	ld [wDrillCounters + 2], a ; $703a
-	ld [wDrillCounters + 1], a ; $703d
-	ret ; $7040
+	twin_named stroke_practice1_hook_minigame_start, StrokePractice3Hook_MinigameStart ; $7034
 StrokePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $7041
 	ret ; $7044
@@ -569,7 +560,6 @@ StrokePractice3Hook_PointEnd:
 	call StrokePractice3EvaluateResult ; $709e
 	ld [wPointWinLoseFlag], a ; $70a1
 	ret ; $70a4
-; Instruction-identical to StrokePractice1EvaluateResult (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_evaluate_result, StrokePractice3EvaluateResult ; $70a5
 StrokePractice3Hook_RallyTick:
 	call StrokePractice3JudgeOnRallyTick ; $70ee
@@ -595,7 +585,6 @@ StrokePractice3PointStartDrillPositions:
 	drill_gates $fe50, $02a0, $fee0, $04e0 ; point 2
 	drill_gates $0120, $02a0, $01b0, $04e0 ; point 3
 	db $ff, $ff ; end
-; Instruction-identical to StrokePractice1HandlePointEnd (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_handle_point_end, StrokePractice3HandlePointEnd ; $712b
 StrokePractice3JudgeOnPointEnd:
 	ld a, $00 ; $717a
@@ -702,7 +691,6 @@ StrokePractice3Cases1:
 StrokePractice3Cases1Messages:
 	; $7213, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_RETURN_IT_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_YOU_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_DID_IT
-; Instruction-identical to StrokePractice1Cases2 (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_cases2, StrokePractice3Cases2 ; $721d
 RunDoublesDrillMatch:
 	ASSERT MATCHCONTEXT_EXHIBITION == 0

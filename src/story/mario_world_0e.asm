@@ -75,7 +75,7 @@ RepairCounterReopenServiceMenu:
 	ld [wStoryModeShowLocationName], a ; $50de
 	script_set_text Text_6e_239 ; $50e1
 	ld hl, $00e6 ; $50e7
-	call FetchAndPushShortTextArg ; $50ea
+	call PushShortTextArg_0e ; $50ea
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $50ed
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $50f0
 	script_fade_in 8 ; $50f8
@@ -163,7 +163,6 @@ ActorScript_0e_04:
 	as_anim ANIM_WALK
 	as_wait 1
 	as_jump ActorScript_0e_04
-; Instruction-identical to TogglePlayerSpriteXFlip (one copy per bank); a change here belongs in every copy.
 	twin_named mirror_player_sprite_if_left_handed, MirrorPlayerSpriteIfLeftHanded ; $520f
 ActorScript_0e_05:
 	; $5225, 35 bytes (actor_script)

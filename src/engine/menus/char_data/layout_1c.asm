@@ -1,4 +1,3 @@
-; Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1d (one copy per bank); a change here belongs in every copy.
 	twin draw_confirm_selection_cursor, 1c ; $53a3 DrawConfirmSelectionCursor_1c
 MoveCharDataScreenSelection:
 	wram_bank WRAM_SCENE ; $53c3

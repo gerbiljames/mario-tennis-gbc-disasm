@@ -1,5 +1,4 @@
 	farptr RunTrainingDrillByID ; $4000
-; Instruction-identical to InitMinigameFromConfig (one copy per bank); a change here belongs in every copy.
 	twin_named start_drill_from_definition, StartDrillFromDefinition ; $4002
 RecordDrillPointResultBits:
 	ld a, [wPointWinLoseFlag] ; $407b

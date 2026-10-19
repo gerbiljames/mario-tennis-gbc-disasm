@@ -363,7 +363,6 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ld a, $02 ; $6404
 	ld [hl], a ; $6406
 	ret ; $6407
-; Instruction-identical to ReadSceneTilemapTile_10 (one copy per bank); a change here belongs in every copy.
 	twin read_scene_tilemap_tile, 0f ; $6408 ReadSceneTilemapTile_0f
 IslandOpenArrivalCutscene:
 	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $6426
@@ -699,7 +698,6 @@ IslandOpenRound1DoublesNpc0A_0f:
 .speak:
 	script_speak ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_SAMMI ; $6bf8
 	ret ; $6bfd
-; Instruction-identical to IslandOpenFinalDoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0B_0f:
 	script_set_text Text_25_33 ; $6bfe
 	script_speak_restore ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_SEAN ; $6c04
@@ -712,7 +710,6 @@ IslandOpenRound1DoublesNpc0B_0f:
 .speak:
 	script_speak ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_SEAN ; $6c1c
 	ret ; $6c21
-; Instruction-identical to IslandOpenSemifinalDoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0D_0f:
 	script_set_text Text_25_37 ; $6c22
 	script_speak_restore ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_B_COZ ; $6c28
@@ -768,7 +765,6 @@ IslandOpenSemifinalDoublesNpc08_0f:
 .speak:
 	script_speak ACTOR_ISLAND_OPEN_SEMIFINAL_DOUBLES_SAMMI ; $6d85
 	ret ; $6d8a
-; Instruction-identical to IslandOpenRound1DoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenSemifinalDoublesNpc0D_0f:
 	script_set_text Text_25_51 ; $6d8b
 	script_speak_restore ACTOR_ISLAND_OPEN_SEMIFINAL_DOUBLES_B_COZ ; $6d91
@@ -824,7 +820,6 @@ IslandOpenFinalDoublesNpc0C_0f:
 .speak:
 	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_SAMMI ; $6eee
 	ret ; $6ef3
-; Instruction-identical to IslandOpenRound1DoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenFinalDoublesNpc0B_0f:
 	script_set_text Text_25_61 ; $6ef4
 	script_speak_restore ACTOR_ISLAND_OPEN_FINAL_DOUBLES_B_COZ ; $6efa

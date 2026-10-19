@@ -180,13 +180,7 @@ WallPracticeRoomFacingScripts_12:
 	; $4ca0, 9 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, WallPracticeRoomFacing01_12, $00, $00
 	db $ff
-WallPracticeRoomFacing01_12:
-	farcall BeginCutsceneScriptMode ; $4ca9
-	script_fade_in 16 ; $4cac
-	script_set_text Text_31_131 ; $4cb1
-	script_speak ACTOR_PLAYER ; $4cb7
-	farcall EndCutsceneScriptMode ; $4cbc
-	ret ; $4cbf
+	twin_named development_facing01, WallPracticeRoomFacing01_12 ; $4ca9
 WallPracticeRoomTileTriggers_12:
 	; $4cc0, 41 bytes (map_scripts)
 	map_script $02, FACEMASK_ANY, $9c00, WallPracticeRoomTile02_12, $00, $00

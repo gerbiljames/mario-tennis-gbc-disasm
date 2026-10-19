@@ -146,7 +146,6 @@ StrokeMatch2HandlePointEnd:
 	farcall StartPointEndReactions ; $67bb
 	call PlayDrillPointEndSequence ; $67be
 	ret ; $67c1
-; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 	twin_named net_game_match1_award_point_to_side, StrokeMatch2AwardPointToSide ; $67c2
 StrokeMatch2JudgeOnPointEnd:
 	ld a, $00 ; $67eb
@@ -474,7 +473,6 @@ StrokeMatch3HandlePointEnd:
 	farcall StartPointEndReactions ; $6a06
 	call PlayDrillPointEndSequence ; $6a09
 	ret ; $6a0c
-; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide and StrokeMatch2AwardPointToSide (in this bank); a change here belongs in every copy.
 	twin_named net_game_match1_award_point_to_side, StrokeMatch3AwardPointToSide ; $6a0d
 StrokeMatch3JudgeOnPointEnd:
 	ld a, $00 ; $6a36
@@ -691,13 +689,7 @@ StrokePractice1Hooks:
 	dw StrokePractice1Hook_Bounce ; record 5
 	dw StrokePractice1Hook_RallyTick ; record 6
 	dw RetStub ; record 7
-StrokePractice1Hook_MinigameStart:
-	ld a, $01 ; $6b83
-	ld [wDrillIsPracticeLesson], a ; $6b85
-	xor a ; $6b88
-	ld [wDrillCounters + 2], a ; $6b89
-	ld [wDrillCounters + 1], a ; $6b8c
-	ret ; $6b8f
+	twin_named stroke_practice1_hook_minigame_start, StrokePractice1Hook_MinigameStart ; $6b83
 StrokePractice1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6b90
 	ret ; $6b93

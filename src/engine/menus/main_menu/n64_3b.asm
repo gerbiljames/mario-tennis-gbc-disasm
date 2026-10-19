@@ -1,7 +1,4 @@
-; Instruction-identical to Unused_16_GetCellIndexFromCursorPtr and Unused_3e_GetCellIndexFromCursorPtr (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in get_cell_index_from_cursor_ptr, Unused_3b_GetCellIndexFromCursorPtr, 3b ; $43cb Unused_3b_GetCellIndexFromCursorPtr
-; Instruction-identical to Unused_16_SetMenuCursorFromIndex, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
 	twin_in set_menu_cursor_from_index, SetMenuCursorFromIndex_3b, 3b ; $43db SetMenuCursorFromIndex_3b
 Unused_3b_StoreCellIndexToCursorPtr:
 	ld d, $00 ; $43ed
@@ -40,10 +37,7 @@ Unused_3b_ClearWram3Row64Alt:
 UpdateAnimatedTilesTask_3b:
 	farcall UpdateAnimatedTiles ; $4428
 	ret ; $442b
-; Instruction-identical to DrawNameWithDiacritics_38 (one copy per bank); a change here belongs in every copy.
 	twin draw_name_with_diacritics_38, 3b ; $442c DrawNameWithDiacritics_3b
-; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_1b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_3b_DrawDecimalNumber, 3b ; $4465 Unused_3b_DrawDecimalNumber
 Unused_3b_DrawAsciiDigitString:
 	ld a, [hl+] ; $4486
@@ -53,7 +47,6 @@ Unused_3b_DrawAsciiDigitString:
 	jr Unused_3b_DrawAsciiDigitString ; $448d
 .done:
 	ret ; $448f
-; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_17_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
 	twin_in draw_ascii_digit_char, Unused_3b_DrawAsciiDigitChar, 3b ; $4490 Unused_3b_DrawAsciiDigitChar
 Unused_3b_StubNop:
 	ret ; $44a9

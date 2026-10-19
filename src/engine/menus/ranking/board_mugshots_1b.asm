@@ -21,10 +21,7 @@ Unused_1b_ClearWram3Row64Alt:
 UpdateAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $4430
 	ret ; $4433
-; Instruction-identical to Unused_17_DrawNameWithDiacritics and Unused_3e_DrawNameWithDiacritics (one copy per bank); a change here belongs in every copy.
 	twin_in draw_name_with_diacritics, DrawNameWithDiacritics_1b, 1b ; $4434 DrawNameWithDiacritics_1b
-; Instruction-identical to Unused_17_DrawDecimalNumber, Unused_3b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_1b_DrawDecimalNumber, 1b ; $446d Unused_1b_DrawDecimalNumber
 Unused_1b_DrawAsciiDigitString:
 	ld a, [hl+] ; $448e
@@ -34,7 +31,6 @@ Unused_1b_DrawAsciiDigitString:
 	jr Unused_1b_DrawAsciiDigitString ; $4495
 .done:
 	ret ; $4497
-; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_17_DrawAsciiDigitChar, Unused_3b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
 	twin_in draw_ascii_digit_char, Unused_1b_DrawAsciiDigitChar, 1b ; $4498 Unused_1b_DrawAsciiDigitChar
 MugshotGfxAlex_1b:
 	INCBIN "data/engine/menus/ranking/lz_MugshotGfxAlex_1b.bin" ; $44b1, 158 bytes

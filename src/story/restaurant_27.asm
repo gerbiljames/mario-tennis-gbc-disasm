@@ -299,26 +299,8 @@ EndRestaurantEntActorsAlt_27:
 	map_actor $0000, ActorScript_27_27, 21.0, 13.0, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, END_RESTAURANT_ENT_ALT_MARK
 	map_actor $0000, ActorScript_27_27, 19.0, 13.0, FACE_DOWN, OBJ_KEVIN, ANIM_WALK, $00, END_RESTAURANT_ENT_ALT_KEVIN
 	map_actor_end
-OpenRestaurantEntDoor_27:
-	sound SFX_DOOR ; $716b
-	script_copy_scene_rect 20, 8, 6, 21, 2, 2 ; $716d
-	script_copy_scene_rect 0, 21, 20, 8, 2, 2 ; $717c
-	script_wait_frames 2 ; $718b
-	script_copy_scene_rect 2, 21, 20, 8, 2, 2 ; $7192
-	script_wait_frames 2 ; $71a1
-	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $71a8
-	script_wait_frames 2 ; $71b7
-	ret ; $71be
-CloseRestaurantEntDoor_27:
-	sound SFX_DOOR ; $71bf
-	script_copy_scene_rect 4, 21, 20, 8, 2, 2 ; $71c1
-	script_wait_frames 1 ; $71d0
-	script_copy_scene_rect 2, 21, 20, 8, 2, 2 ; $71d7
-	script_wait_frames 1 ; $71e6
-	script_copy_scene_rect 0, 21, 20, 8, 2, 2 ; $71ed
-	script_wait_frames 1 ; $71fc
-	script_copy_scene_rect 6, 21, 20, 8, 2, 2 ; $7203
-	ret ; $7212
+	twin open_restaurant_ent_door, 27 ; $716b OpenRestaurantEntDoor_27
+	twin close_restaurant_ent_door, 27 ; $71bf CloseRestaurantEntDoor_27
 End1MainBldgMapScripts_27:
 	; $7213, 14 bytes (map_tree)
 	dw End1MainBldgEntryPoints_27 ; slot 0 EntryPoints

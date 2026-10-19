@@ -9,7 +9,7 @@ QueueFinishedRoundNameText:
 	jr nc, .queue ; $78fa
 	inc h ; $78fc
 .queue:
-	call QueueShortText ; $78fd
+	call PushShortTextArg_0f ; $78fd
 	ret ; $7900
 .doubles:
 	ld a, [wMapSceneStage] ; $7901
@@ -20,7 +20,7 @@ QueueFinishedRoundNameText:
 	jr nc, .queueDoubles ; $790a
 	inc h ; $790c
 .queueDoubles:
-	call QueueShortText ; $790d
+	call PushShortTextArg_0f ; $790d
 	ret ; $7910
 IslandOpenBreakCutscene:
 	script_set_position ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_1, 21.0, 23.0 ; $7911
@@ -51,7 +51,7 @@ IslandOpenBreakCutscene:
 	jr nc, .queue ; $79ae
 	inc h ; $79b0
 .queue:
-	call QueueShortText ; $79b1
+	call PushShortTextArg_0f ; $79b1
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_1 ; $79b4
 	script_face_pair ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_2, ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_6F_07_1 ; $79b9
 	script_wait_frames 20 ; $79c1
@@ -115,15 +115,7 @@ ActorScript_0f_08:
 	as_wait_move
 	as_wait 120
 	as_jump .L8
-QueueShortText:
-	push_wram_bank WRAM_CHAR3 ; $7a8e
-	ld de, wTextArgFetchBuffer ; $7a97
-	wram_bank WRAM_CHAR1 ; $7a9a
-	farcall FetchShortTextToBuffer ; $7aa0
-	ld hl, wTextArgFetchBuffer ; $7aa3
-	farcall PushTextArgString ; $7aa6
-	pop_wram_bank ; $7aa9
-	ret ; $7aae
+	twin push_short_text_arg, 0f ; $7a8e PushShortTextArg_0f
 WalkActorsInFromEntryPoint_0f:
 	ld a, [wStoryModeEntryPoint] ; $7aaf
 	cp STORYENTRY_NONE ; $7ab2

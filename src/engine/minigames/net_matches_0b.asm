@@ -87,7 +87,6 @@ NetGameMatch1HandlePointEnd:
 	farcall StartPointEndReactions ; $548a
 	call PlayDrillPointEndSequence ; $548d
 	ret ; $5490
-; Instruction-identical to NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 	twin_named net_game_match1_award_point_to_side, NetGameMatch1AwardPointToSide ; $5491
 NetGameMatch1DecideWinner:
 	ld a, [wPlayer1PointsWon] ; $54ba
@@ -466,7 +465,6 @@ NetGameMatch2HandlePointEnd:
 	farcall StartPointEndReactions ; $571d
 	call PlayDrillPointEndSequence ; $5720
 	ret ; $5723
-; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 	twin_named net_game_match1_award_point_to_side, NetGameMatch2AwardPointToSide ; $5724
 NetGameMatch2JudgeOnPointEnd:
 	ld a, $00 ; $574d
@@ -931,5 +929,4 @@ UnusedNetGameMatch3JudgePoint.checkPointWinLoseFlag:
 	ld [wDrillMessageId], a ; $5a4a
 	xor a ; $5a4d
 	ret ; $5a4e
-; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 	twin_named net_game_match1_award_point_to_side, NetGameMatch3AwardPointToSide ; $5a4f

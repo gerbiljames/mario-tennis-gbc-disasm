@@ -176,23 +176,12 @@ DevelopmentFacingScripts_10:
 	; $4e30, 9 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, DevelopmentFacing01_10, $00, $00
 	db $ff
-DevelopmentFacing01_10:
-	farcall BeginCutsceneScriptMode ; $4e39
-	script_fade_in 16 ; $4e3c
-	script_set_text Text_31_131 ; $4e41
-	script_speak ACTOR_PLAYER ; $4e47
-	farcall EndCutsceneScriptMode ; $4e4c
-	ret ; $4e4f
+	twin_named development_facing01, DevelopmentFacing01_10 ; $4e39
 DevelopmentTileTriggers_10:
 	; $4e50, 9 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, DevelopmentTile01_10, $00, $00
 	db $ff
-DevelopmentTile01_10:
-	farcall BeginCutsceneScriptMode ; $4e59
-	script_set_text Text_31_128 ; $4e5c
-	script_speak ACTOR_PLAYER ; $4e62
-	farcall EndCutsceneScriptMode ; $4e67
-	ret ; $4e6a
+	twin_named development_tile01, DevelopmentTile01_10 ; $4e59
 DevelopmentInitScript_10:
 	ret ; $4e6b
 MainMenuMapScripts_10:

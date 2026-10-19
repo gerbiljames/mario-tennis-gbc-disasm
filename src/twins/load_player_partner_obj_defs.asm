@@ -1,7 +1,6 @@
-; Shared by LoadCourtPlayerPartnerObjDefs_14, SetPlayerPartnerActorSprites
-; (banks $14, $15).
+; LoadPlayerPartnerObjDefs_<bank>, one copy in each of banks $11, $14, $15.
 
-{TWIN_LABEL}:
+LoadPlayerPartnerObjDefs_{TWIN}:
 	test_flag FLAG_DOUBLES
 	jp z, .notDoubles
 	ld a, [wStoryPartnerGender]

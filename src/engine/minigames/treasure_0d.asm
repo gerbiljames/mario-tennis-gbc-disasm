@@ -145,16 +145,7 @@ AreAllTargetsHit:
 MinigameConfig_TreasureBox:
 	; $59cb, 16 bytes
 	drill_def CHAR_WALUIGI, COURT_TREASURE_BOX, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_TREASURE_BOX, BGM_COURT_WAREHOUSE, CHAR_WARIO, MinigameHooks_TreasureBox, MinigamePointLayoutDuo, InitMinigame_TreasureBox
-InitMinigame_TreasureBox:
-	ld a, $01 ; $59db
-	ld [wMinigameUsesTennisMachine], a ; $59dd
-	ld a, [wMinigameLevel] ; $59e0
-	cp $02 ; $59e3
-	jr nz, .done ; $59e5
-	ld a, $01 ; $59e7
-	ld [wMinigameHighScoreMode], a ; $59e9
-.done:
-	ret ; $59ec
+	twin_named init_minigame_medallion_match, InitMinigame_TreasureBox ; $59db
 MinigameHooks_TreasureBox:
 	; $59ed, 16 bytes (mode_hooks)
 	dw TreasureBoxHook_PerFrame ; record 0
@@ -392,5 +383,4 @@ TreasureBoxSpawnPoints4:
 	db $00, $00, $80, $fe ; 0x04
 	db $00, $01, $c0, $fd ; 0x08
 	db $00, $ff, $c0, $fd ; 0x0c
-; Instruction-identical to IsBallInMedallionMatchHitZone (in this bank); a change here belongs in every copy.
 	twin_named is_ball_in_medallion_match_hit_zone, IsBallInTreasureBoxHitZone ; $5bc5

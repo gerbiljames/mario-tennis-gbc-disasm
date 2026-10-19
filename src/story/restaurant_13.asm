@@ -27,9 +27,7 @@ RestaurantPlazaEntryPoints_13:
 	map_entry $0e, FACE_LEFT, 59.0, 15.0, $0000
 	map_entry $0f, FACE_LEFT, 50.0, 15.0, $0000
 	db $ff
-; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, MapArrivalWalk_11 and DormEntranceArrival01_12 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival01, RestaurantPlazaArrival04_13 ; $405f
-; Instruction-identical to Court2EntryWalkIn (one copy per bank); a change here belongs in every copy.
 	twin_named restaurant_plaza_arrival06, RestaurantPlazaArrival06_13 ; $40a5
 RestaurantPlazaArrival01_13:
 	ld a, [wStoryModeEntryPoint] ; $40eb
@@ -69,7 +67,7 @@ RestaurantPlazaArrival02_13:
 	jr z, .notDoubles ; $41c2
 	script_wait_frames 12 ; $41c4
 .notDoubles:
-	call AnimateDoorClose_13 ; $41cb
+	call CloseRestaurantEntDoor_13 ; $41cb
 	ret ; $41ce
 RestaurantPlazaArrivalWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $41cf
@@ -140,7 +138,7 @@ RestaurantPlazaTile02_13:
 	script_move_target ACTOR_PARTNER, 21.0, 13.0 ; $4314
 	script_move_angle ACTOR_PLAYER, $c2, 2.0 ; $431f
 	script_wait_move ACTOR_PLAYER ; $4329
-	call AnimateDoorOpen_13 ; $432e
+	call OpenRestaurantEntDoor_13 ; $432e
 	script_move_angle ACTOR_PLAYER, $c2, 2.0 ; $4331
 	script_wait_frames 2 ; $433b
 	script_fade_out 16 ; $4342
@@ -370,7 +368,7 @@ ServiceAceCoachIntroCutscene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $482f
 	script_wait_idle ACTOR_PLAYER ; $4836
 	script_wait_frames 30 ; $483b
-	call AnimateDoorOpen_13 ; $4842
+	call OpenRestaurantEntDoor_13 ; $4842
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_MARK ; $4845
 	script_wait_frames 15 ; $484a
 	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_EXCLAIM, 28.0, 11.0 ; $4851
@@ -393,7 +391,7 @@ ServiceAceCoachIntroCutscene:
 	script_set_speed ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, 0.5 ; $48d9
 	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, 21.0, 11.0 ; $48e1
 	script_wait_move ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $48ec
-	call AnimateDoorClose_13 ; $48f1
+	call CloseRestaurantEntDoor_13 ; $48f1
 	script_face ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, FACE_RIGHT ; $48f4
 	script_wait_frames 15 ; $48fb
 	script_set_anim ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ANIM_BOUNCE ; $4902
@@ -463,7 +461,7 @@ ServiceAceCoachIntroCutscene:
 	script_speak ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN ; $4a90
 	script_wait_frames 90 ; $4a95
 	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, 21.0, 9.5 ; $4a9c
-	call AnimateDoorOpen_13 ; $4aa7
+	call OpenRestaurantEntDoor_13 ; $4aa7
 	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, 20.75, 9.0 ; $4aaa
 	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_MARK, 21.0, 11.0 ; $4ab5
 	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_KEVIN, 63.0, 63.0 ; $4ac0
@@ -476,7 +474,7 @@ ServiceAceCoachIntroCutscene:
 	script_move_target ACTOR_SERVICE_ACE_COACH_INTRO_MARK, 20.75, 9.0 ; $4af4
 	script_wait_frames 15 ; $4aff
 	script_set_position ACTOR_SERVICE_ACE_COACH_INTRO_MARK, 63.0, 63.0 ; $4b06
-	call AnimateDoorClose_13 ; $4b11
+	call CloseRestaurantEntDoor_13 ; $4b11
 	script_move_player 27.0, 13.0 ; $4b14
 	script_wait_frames 60 ; $4b1e
 	script_face_toward ACTOR_SERVICE_ACE_COACH_INTRO_EMILY, ACTOR_PLAYER ; $4b25

@@ -1,9 +1,7 @@
-; Instruction-identical to Unused_16_ApplySpriteWobbleX (one copy per bank); a change here belongs in every copy.
 	twin_in apply_sprite_wobble_x, Unused_17_ApplySpriteWobbleX, 17 ; $4079 Unused_17_ApplySpriteWobbleX
 SpriteWobbleXTable_17:
 	; $4093, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-; Instruction-identical to Unused_16_ApplySpriteWobbleY (one copy per bank); a change here belongs in every copy.
 	twin_in apply_sprite_wobble_y, ApplySpriteWobbleY_17, 17 ; $40a3 ApplySpriteWobbleY_17
 SpriteWobbleYTable_17:
 	; $40bd, 16 bytes (bytes:16)
@@ -48,11 +46,7 @@ Unused_17_DrawCornerBrackets:
 	call QueueSprite ; $4103
 	pop de ; $4106
 	ret ; $4107
-; Instruction-identical to MoveMenuCursorGrid_1b (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_17, Unused_17_MoveMenuCursorGrid, 17 ; $4108 Unused_17_MoveMenuCursorGrid
-; Instruction-identical to Unused_1b_MoveMenuCursorGridFromLinkInput (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in move_menu_cursor_grid_from_link_input_17, Unused_17_MoveMenuCursorGridFromLinkInput, 17 ; $4186 Unused_17_MoveMenuCursorGridFromLinkInput
 Unused_17_MoveMenuCursorGridRemote:
 	ld a, [wMenuCursorX] ; $4203

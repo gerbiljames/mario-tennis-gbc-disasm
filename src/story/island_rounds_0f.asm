@@ -315,7 +315,7 @@ QueueUpcomingRoundNameText:
 	jr nc, .queue ; $7455
 	inc h ; $7457
 .queue:
-	call QueueShortText ; $7458
+	call PushShortTextArg_0f ; $7458
 	ret ; $745b
 CheckIslandOpenVictoryTransition:
 	test_flag FLAG_DOUBLES ; $745c
@@ -410,7 +410,7 @@ IslandOpenSinglesMatchReturn:
 	jr nc, .done ; $756e
 	inc h ; $7570
 .done:
-	call QueueShortText ; $7571
+	call PushShortTextArg_0f ; $7571
 	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACE_UP ; $7574
 	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_08, FACE_RIGHT ; $757b
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, ACTOR_PLAYER ; $7582
@@ -437,7 +437,6 @@ IslandOpenRoundNpcScriptsSingles_0f:
 	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
-; Instruction-identical to IslandOpenRoundDoublesNpc04_0f (in this bank); a change here belongs in every copy.
 	twin_named island_open_round_doubles_npc04, IslandOpenRoundSinglesNpc04_0f ; $762e
 IslandOpenRoundSinglesNpc03_0f:
 	ld a, [wMapSceneStage] ; $7649
@@ -571,7 +570,7 @@ IslandOpenDoublesMatchReturn:
 	jr nc, .done ; $780e
 	inc h ; $7810
 .done:
-	call QueueShortText ; $7811
+	call PushShortTextArg_0f ; $7811
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PLAYER ; $7814
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PARTNER ; $781c
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08 ; $7824
@@ -598,7 +597,6 @@ IslandOpenRoundNpcScriptsDoubles_0f:
 	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
-; Instruction-identical to IslandOpenRoundSinglesNpc04_0f (in this bank); a change here belongs in every copy.
 	twin_named island_open_round_doubles_npc04, IslandOpenRoundDoublesNpc04_0f ; $78b1
 IslandOpenRoundDoublesNpc03_0f:
 	ld a, [wMapSceneStage] ; $78cc

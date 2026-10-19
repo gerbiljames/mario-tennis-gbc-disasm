@@ -312,12 +312,7 @@ ServicePractice3EvaluateResult:
 	ret ; $52a4
 ServicePractice3Hook_RallyTick:
 	ret ; $52a5
-ServicePractice3Hook_Bounce:
-	ld a, [wRallyLength] ; $52a6
-	cp $01 ; $52a9
-	ret nz ; $52ab
-	call RecordDrillTargetZoneHitIfInPlay ; $52ac
-	ret ; $52af
+	twin_named service_practice1_hook_bounce, ServicePractice3Hook_Bounce ; $52a6
 ServicePractice3Hook_BallHit:
 	call ServicePractice3SetupShotTarget ; $52b0
 	ld a, [wRallyLength] ; $52b3

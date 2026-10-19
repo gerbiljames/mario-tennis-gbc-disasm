@@ -1,7 +1,6 @@
 	farptr StartMinigameByID ; $4000
 	farptr GetDefaultMinigameRecordValue ; $4002
 	farptr ShowMinigamePointResult ; $4004
-; Instruction-identical to StartDrillFromDefinition (one copy per bank); a change here belongs in every copy.
 	twin_named start_drill_from_definition, InitMinigameFromConfig ; $4006
 StartMinigameByID:
 	sub MINIGAME_TENNIS_MACHINE_1 ; $407f

@@ -156,7 +156,7 @@ CenterCourtTile01_11:
 	ret ; $41a3
 CenterCourtInitScript_11:
 	call SetupCenterCourtSceneVariant ; $41a4
-	call SetPlayerAndPartnerObjectDefs_11 ; $41a7
+	call LoadPlayerPartnerObjDefs_11 ; $41a7
 	ld a, [wStoryModeEntryPoint] ; $41aa
 	cp $0f ; $41ad
 	jp z, CenterCourtEntry0fScene ; $41af
@@ -224,31 +224,8 @@ CenterCourtSceneVariantActors_11:
 	map_actor $0000, ActorScript_11_45, 43.0, 30.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_BETH
 	map_actor $0000, ActorScript_11_45, 39.0, 29.0, FACE_LEFT, OBJ_PAM, ANIM_WALK, $04, CENTER_COURT_SCENE_VARIANT_PAM
 	map_actor_end
-; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival01, MapArrivalWalk_11 ; $42fd
-SetPlayerAndPartnerObjectDefs_11:
-	test_flag FLAG_DOUBLES ; $4343
-	jp z, .notDoubles ; $4346
-	ld a, [wStoryPartnerGender] ; $4349
-	ld d, OBJ_HARRY_B ; $434c
-	add d ; $434e
-	ld d, a ; $434f
-	script_get_actor_state ACTOR_PARTNER ; $4350
-	ld c, l ; $4355
-	ld b, h ; $4356
-	farcall LoadActorObjectDefIfValid ; $4357
-	script_set_anim ACTOR_PARTNER, ANIM_WALK ; $435a
-.notDoubles:
-	ld a, [wStoryMainGender] ; $4361
-	ld d, OBJ_ALEX_B ; $4364
-	add d ; $4366
-	ld d, a ; $4367
-	script_get_actor_state ACTOR_PLAYER ; $4368
-	ld c, l ; $436d
-	ld b, h ; $436e
-	farcall LoadActorObjectDefIfValid ; $436f
-	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $4372
-	ret ; $4379
+	twin load_player_partner_obj_defs, 11 ; $4343 LoadPlayerPartnerObjDefs_11
 CenterCourtEntry0fScene:
 	script_set_position $0a, 37.0, 36.0 ; $437a
 	test_flag FLAG_DOUBLES ; $4385
@@ -320,7 +297,6 @@ AcademyArrivalEntryPoints_11:
 	map_entry $0c, FACE_DOWN, 24.0, 47.0, $0000
 	map_entry $0f, FACE_UP, 24.0, 47.0, $0000
 	db $ff
-; Instruction-identical to AcademyMainBldgArrival02_10 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival02, AcademyArrivalArrival01_11 ; $4536
 AcademyArrivalExitTriggers_11:
 	; $457c, 33 bytes (map_scripts:exit)

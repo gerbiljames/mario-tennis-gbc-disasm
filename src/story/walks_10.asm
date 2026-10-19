@@ -1,4 +1,3 @@
-; Instruction-identical to ReadSceneTilemapTile_0f (one copy per bank); a change here belongs in every copy.
 	twin read_scene_tilemap_tile, 10 ; $7ac8 ReadSceneTilemapTile_10
 MapExitWalkCurveRight_10:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $7ae6

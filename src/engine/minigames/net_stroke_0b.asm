@@ -15,15 +15,7 @@ NetGamePractice3Hooks:
 	dw NetGamePractice3Hook_Bounce ; record 5
 	dw NetGamePractice3Hook_RallyTick ; record 6
 	dw RetStub ; record 7
-NetGamePractice3Hook_MinigameStart:
-	xor a ; $6174
-	ld [wDrillCounters + 3], a ; $6175
-	ld [wDrillCounters + 4], a ; $6178
-	ld a, $04 ; $617b
-	ld [wDrillCounters + 5], a ; $617d
-	ld a, $01 ; $6180
-	ld [wDrillIsPracticeLesson], a ; $6182
-	ret ; $6185
+	twin_named net_game_practice2_hook_minigame_start, NetGamePractice3Hook_MinigameStart ; $6174
 NetGamePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6186
 	ret ; $6189
@@ -143,7 +135,6 @@ NetGamePractice3PointStartDrillPositions:
 	drill_gates $0000, $01c0, $01b0, $02a0 ; point 2
 	drill_gates $fe50, $01c0, $0000, $02a0 ; point 3
 	db $ff, $ff ; end
-; Instruction-identical to NetGamePractice1HandlePointEnd and NetGamePractice2HandlePointEnd (in this bank); a change here belongs in every copy.
 	twin_named net_game_practice1_handle_point_end, NetGamePractice3HandlePointEnd ; $6272
 NetGamePractice3JudgeOnPointEnd:
 	ld a, $00 ; $62c1

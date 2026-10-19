@@ -42,13 +42,7 @@ JuniorClassCourtSinglesExitTriggers_11:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_RESTAURANT_PLAZA, $05
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $0f
 	db $ff
-JuniorClassCourtSinglesNpc03FaceUp_11:
-	script_set_speed ACTOR_PLAYER, 0.25 ; $693d
-	script_lock_facing ACTOR_PLAYER ; $6945
-	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $694c
-	script_wait_move ACTOR_PLAYER ; $6957
-	script_unlock_facing ACTOR_PLAYER ; $695c
-	script_face ACTOR_PLAYER, FACE_UP ; $6963
+	twin_named junior_class_court_singles_npc03_face_up, JuniorClassCourtSinglesNpc03FaceUp_11 ; $693d
 JuniorClassCourtSinglesNpc03_11:
 	call OfferSinglesRankingMatch ; $696a
 	ret ; $696d

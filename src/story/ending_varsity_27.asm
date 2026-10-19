@@ -62,15 +62,7 @@ End10VarsityCourtInitScript_27:
 	cp $01 ; $5620
 	jp z, End10VarsityCourtEntry01Scene ; $5622
 	ret ; $5625
-SetPartnerObjDefByGender_27:
-	ld a, [wStoryPartnerGender] ; $5626
-	or a ; $5629
-	jr nz, .done ; $562a
-	script_set_objdef OBJ_HARRY, $0d ; $562c
-	script_set_anim $0d, ANIM_WALK ; $5638
-	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $563f
-.done:
-	ret ; $5642
+	twin set_partner_obj_def_by_gender, 27 ; $5626 SetPartnerObjDefByGender_27
 End10VarsityCourtEntry01Scene:
 	test_flag FLAG_DOUBLES ; $5643
 	jr z, .notDoubles ; $5646

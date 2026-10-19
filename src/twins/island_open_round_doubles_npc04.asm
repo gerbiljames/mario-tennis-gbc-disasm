@@ -11,6 +11,6 @@
 	jr nc, .queue
 	inc h
 .queue:
-	call QueueShortText
+	call PushShortTextArg_0f
 	script_speak ACTOR_ROLE_ISLAND_OPEN_ROUND_B_COZ
 	ret

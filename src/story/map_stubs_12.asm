@@ -1,15 +1,7 @@
 Unclassified_12:
 	; $7a65, 3 bytes (bytes:3)
 	db $fa, $4d, $c9 ; 0x00
-PushTextArgFetchedString:
-	push_wram_bank WRAM_CHAR3 ; $7a68
-	ld de, wTextArgFetchBuffer ; $7a71
-	wram_bank WRAM_CHAR1 ; $7a74
-	farcall FetchShortTextToBuffer ; $7a7a
-	ld hl, wTextArgFetchBuffer ; $7a7d
-	farcall PushTextArgString ; $7a80
-	pop_wram_bank ; $7a83
-	ret ; $7a88
+	twin push_short_text_arg, 12 ; $7a68 PushShortTextArg_12
 ActorScript_12_51:
 	; $7a89, 10 bytes (actor_script)
 	as_halt
@@ -235,7 +227,6 @@ ActorScript_12_58:
 	as_wait 140
 	as_anim ANIM_NOD
 	as_jump ActorScript_12_58
-; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and Unused_27_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
 	twin_in compute_ranking_progress_index, ComputeRankingProgressIndex_12, 12 ; $7c75 ComputeRankingProgressIndex_12
 ; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_12_ComputeStoryRankTier:

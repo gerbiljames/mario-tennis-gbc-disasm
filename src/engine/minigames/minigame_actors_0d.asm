@@ -207,11 +207,7 @@ MinigameHooks_TennisMachine1:
 	dw TennisMachine1Hook_Bounce ; record 5
 	dw TennisMachine1Hook_RallyTick ; record 6
 	dw RetStub ; record 7
-TennisMachine1Hook_MinigameStart:
-	ld a, $01 ; $4525
-	ld [wMinigameServeSlot], a ; $4527
-	call StartMinigameMatch ; $452a
-	ret ; $452d
+	twin_named tennis_machine1_hook_minigame_start, TennisMachine1Hook_MinigameStart ; $4525
 TennisMachine1Hook_PerFrame:
 	call DrawMinigameScoreHud ; $452e
 	ret ; $4531

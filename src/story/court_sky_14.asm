@@ -100,7 +100,7 @@ Court1Tile01_14:
 	ret ; $50fa
 Court1InitScript_14:
 	call InitCourt1SceneVariant ; $50fb
-	call LoadCourtPlayerPartnerObjDefs_14 ; $50fe
+	call LoadPlayerPartnerObjDefs_14 ; $50fe
 	call Court1EntryWalkIn ; $5101
 	ret ; $5104
 InitCourt1SceneVariant:
@@ -169,8 +169,7 @@ Court1EntryWalkIn:
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 2.0 ; $51df
 .done:
 	ret ; $51e9
-; Instruction-identical to SetPlayerPartnerActorSprites (one copy per bank); a change here belongs in every copy.
-	twin_named load_court_player_partner_obj_defs, LoadCourtPlayerPartnerObjDefs_14 ; $51ea
+	twin load_player_partner_obj_defs, 14 ; $51ea LoadPlayerPartnerObjDefs_14
 IslandSkyMapScripts_14:
 	; $5221, 14 bytes (map_tree)
 	dw IslandSkyEntryPoints_14 ; slot 0 EntryPoints

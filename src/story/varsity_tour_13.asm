@@ -1,12 +1,4 @@
-ApplyPartnerCharacterVariant_13:
-	ld a, [wStoryPartnerGender] ; $62be
-	or a ; $62c1
-	jr nz, .done ; $62c2
-	script_set_objdef OBJ_HARRY, $0d ; $62c4
-	script_set_anim $0d, ANIM_WALK ; $62d0
-	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62d7
-.done:
-	ret ; $62da
+	twin set_partner_obj_def_by_gender, 13 ; $62be SetPartnerObjDefByGender_13
 Unused_13_ActorScriptHopNod:
 	; $62db, 25 bytes (actor_script)
 	as_set_field ACTORF_JUMP_VEL, -$80

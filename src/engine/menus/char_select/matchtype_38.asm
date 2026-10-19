@@ -21,7 +21,6 @@ Unused_38_ClearWram3Row64Alt:
 UpdateAnimatedTilesTask_38:
 	farcall UpdateAnimatedTiles ; $4408
 	ret ; $440b
-; Instruction-identical to DrawNameWithDiacritics_3b (one copy per bank); a change here belongs in every copy.
 	twin draw_name_with_diacritics_38, 38 ; $440c DrawNameWithDiacritics_38
 DrawDecimalNumber:
 	push af ; $4445

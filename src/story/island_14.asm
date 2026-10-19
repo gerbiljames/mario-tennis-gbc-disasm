@@ -314,11 +314,7 @@ IslandSkyEntry0eScene:
 	ld [wUnusedExitTriggerIdMirror], a ; $786c
 	ld [wStoryModeExitTriggerRequest], a ; $786f
 	ret ; $7872
-AdvancePlaneFrameCounter2_14:
-	ld a, [wCutsceneObjX] ; $7873
-	inc a ; $7876
-	ld [wCutsceneObjX], a ; $7877
-	ret ; $787a
+	twin_named advance_plane_frame_counter, AdvancePlaneFrameCounter2_14 ; $7873
 PlayTwinkleAnimation_14:
 	xor a ; $787b
 	ld [wCutsceneObjPhase], a ; $787c
@@ -563,7 +559,6 @@ ActorScript_14_4:
 	as_wait 140
 	as_anim ANIM_NOD
 	as_jump .L1a7
-; Instruction-identical to Unused_13_ComputeRankingProgressIndex and Unused_15_ComputeRankingProgressIndex (one copy per bank); a change here belongs in every copy.
 	twin_in compute_ranking_progress_index_13, Unused_14_ComputeRankingProgressIndex, 14 ; $7a9d Unused_14_ComputeRankingProgressIndex
 ; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_14_ComputeStoryRankTier:

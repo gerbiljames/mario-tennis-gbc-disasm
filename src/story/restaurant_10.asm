@@ -446,7 +446,6 @@ RestaurantEntryPoints_10:
 	map_entry $01, FACE_UP, 12.0, 33.0, RestaurantArrival01_10
 	map_entry $02, FACE_DOWN, 5.0, 23.0, MapArrivalWalkPair_10
 	db $ff
-; Instruction-identical to AcademyMainBldgArrival01_10, MapArrivalWalk_11, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 	twin_named academy_main_bldg_arrival01, RestaurantArrival01_10 ; $5b97
 RestaurantExitTriggers_10:
 	; $5bdd, 17 bytes (map_scripts:exit)

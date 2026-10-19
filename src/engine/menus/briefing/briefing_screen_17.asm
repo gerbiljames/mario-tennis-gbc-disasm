@@ -38,11 +38,7 @@ Unused_17_ClearWram3Row64Alt:
 UpdateAnimatedTilesTask_17:
 	farcall UpdateAnimatedTiles ; $4406
 	ret ; $4409
-; Instruction-identical to DrawNameWithDiacritics_1b and Unused_3e_DrawNameWithDiacritics (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_name_with_diacritics, Unused_17_DrawNameWithDiacritics, 17 ; $440a Unused_17_DrawNameWithDiacritics
-; Instruction-identical to Unused_1b_DrawDecimalNumber, Unused_3b_DrawDecimalNumber and Unused_3e_DrawDecimalNumber (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in draw_decimal_number, Unused_17_DrawDecimalNumber, 17 ; $4443 Unused_17_DrawDecimalNumber
 Unused_17_DrawAsciiDigitString:
 	ld a, [hl+] ; $4464
@@ -52,7 +48,6 @@ Unused_17_DrawAsciiDigitString:
 	jr Unused_17_DrawAsciiDigitString ; $446b
 .done:
 	ret ; $446d
-; Instruction-identical to Unused_16_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar, Unused_3b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
 	twin_in draw_ascii_digit_char, Unused_17_DrawAsciiDigitChar, 17 ; $446e Unused_17_DrawAsciiDigitChar
 ShowDrillBriefingScreen:
 	xor a ; $4487

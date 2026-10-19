@@ -249,7 +249,6 @@ GetServeCameraTarget:
 .done:
 	ld hl, $0000 ; $61a6
 	ret ; $61a9
-; Instruction-identical to SnapCameraTo_0d (one copy per bank); a change here belongs in every copy.
 	twin_named snap_camera_to, SnapCameraTo ; $61aa
 SetCameraTarget:
 	ld c, l ; $61c9

@@ -1,6 +1,18 @@
-; FetchText_<bank>, one copy in each of banks $1f, $25, $26, $30, $31, $32,
+; FetchDialogueText, FetchShortText and FetchText_<bank>, one copy in each of banks $1f, $25, $26, $30, $31, $32,
 ; $33, $34, $35, $36, $37, $5e, $6e.
 
+FetchDialogueText_{TWIN}:
+	push af
+	ld a, $00
+	call FetchText_{TWIN}
+	pop af
+	ret
+FetchShortText_{TWIN}:
+	push af
+	ld a, $01
+	call FetchText_{TWIN}
+	pop af
+	ret
 FetchText_{TWIN}:
 	push bc
 	push de

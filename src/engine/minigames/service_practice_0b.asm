@@ -24,17 +24,7 @@ ServiceMatch3Hooks:
 ServiceMatch3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $4c33
 	ret ; $4c36
-ServiceMatch3Hook_PointStart:
-	xor a ; $4c37
-	ld [wDrillAbortCountdownActive], a ; $4c38
-	ld a, $0a ; $4c3b
-	ld [wDrillAbortCountdown], a ; $4c3d
-	ASSERT DRILLMSG_NONE == 0
-	xor a ; $4c40
-	ld [wDrillMessageId], a ; $4c41
-	xor a ; $4c44
-	ld [wDrillPointJudgement], a ; $4c45
-	ret ; $4c48
+	twin_named service_match1_hook_point_start, ServiceMatch3Hook_PointStart ; $4c37
 ServiceMatch3Hook_PointEnd:
 	call ServiceMatch3JudgeOnPointEnd ; $4c49
 	call ServiceMatch3HandlePointEnd ; $4c4c
@@ -120,7 +110,6 @@ ServiceMatch3HandlePointEnd:
 	farcall StartPointEndReactions ; $4ce7
 	call PlayDrillPointEndSequence ; $4cea
 	ret ; $4ced
-; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 	twin_named net_game_match1_award_point_to_side, ServiceMatch3AwardPointToSide ; $4cee
 ServiceMatch3JudgeOnPointEnd:
 	ld a, $00 ; $4d17
@@ -338,12 +327,7 @@ ServicePractice1EvaluateResult:
 	ret ; $4e73
 ServicePractice1Hook_RallyTick:
 	ret ; $4e74
-ServicePractice1Hook_Bounce:
-	ld a, [wRallyLength] ; $4e75
-	cp $01 ; $4e78
-	ret nz ; $4e7a
-	call RecordDrillTargetZoneHitIfInPlay ; $4e7b
-	ret ; $4e7e
+	twin_named service_practice1_hook_bounce, ServicePractice1Hook_Bounce ; $4e75
 UnusedServeSecondBounceSound_1:
 	ld a, [wBallBounceCount] ; $4e7f
 	cp $02 ; $4e82

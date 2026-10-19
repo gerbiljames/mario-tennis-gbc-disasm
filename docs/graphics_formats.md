@@ -435,7 +435,7 @@ Named walk sprites:
   (`OBJ_ALEX`, `OBJ_MARIO`, `OBJ_YOSHI`, …; the two unused roster slots share
   `OBJ_BALLOON_ELLIPSIS`). Ids `$56`-`$59` are `OBJ_ALEX_B`, `OBJ_NINA_B`,
   `OBJ_HARRY_B`, `OBJ_KATE_B`: the same drawings with fewer frames, loaded as
-  `base + gender` by `LoadCourtPlayerPartnerObjDefs_14` and the ending scenes.
+  `base + gender` by `LoadPlayerPartnerObjDefs_14` and the ending scenes.
 * **22 from their graphics**: eight speech balloons (`OBJ_BALLOON_EXCLAIM`,
   `_QUESTION`, `_ANGRY`, `_ELLIPSIS`, `_SCRIBBLE`, `_MUSIC`, `_SHOCK`,
   `_SWEAT`), `OBJ_RACKET`, `OBJ_TROPHY` (handed over at the awards ceremony by

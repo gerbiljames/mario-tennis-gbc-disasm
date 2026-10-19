@@ -290,14 +290,7 @@ FormatDecimalNumber:
 	pop bc ; $1a1c
 	add sp, 6 ; $1a1d
 	ret ; $1a1f
-ExtractDecimalDigit:
-	xor a ; $1a20
-.loop:
-	inc a ; $1a21
-	add hl, bc ; $1a22
-	jr c, .loop ; $1a23
-	dec a ; $1a25
-	ret ; $1a26
+	twin_named extract_decimal_digit, ExtractDecimalDigit ; $1a20
 FormatDecimalNumberUnsigned:
 	add sp, -6 ; $1a27
 	push bc ; $1a29
@@ -395,14 +388,7 @@ FormatDecimalNumberUnsigned:
 	pop bc ; $1aac
 	add sp, 6 ; $1aad
 	ret ; $1aaf
-ExtractDecimalDigitUnsigned:
-	xor a ; $1ab0
-.loop:
-	inc a ; $1ab1
-	add hl, bc ; $1ab2
-	jr c, .loop ; $1ab3
-	dec a ; $1ab5
-	ret ; $1ab6
+	twin_named extract_decimal_digit, ExtractDecimalDigitUnsigned ; $1ab0
 PrintHexByte:
 	push af ; $1ab7
 	push bc ; $1ab8

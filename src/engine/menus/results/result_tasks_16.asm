@@ -1,11 +1,5 @@
-; Instruction-identical to Unused_3b_GetCellIndexFromCursorPtr and Unused_3e_GetCellIndexFromCursorPtr (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in get_cell_index_from_cursor_ptr, Unused_16_GetCellIndexFromCursorPtr, 16 ; $4399 Unused_16_GetCellIndexFromCursorPtr
-; Instruction-identical to SetMenuCursorFromIndex_38, SetMenuCursorFromIndex_3b and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in set_menu_cursor_from_index, Unused_16_SetMenuCursorFromIndex, 16 ; $43a9 Unused_16_SetMenuCursorFromIndex
-; Instruction-identical to Unused_38_SetMenuCursorFromIndexToPtr and Unused_3e_SetMenuCursorFromIndexToPtr (one copy per bank); a change here belongs in every copy.
-; Nothing calls this copy.
 	twin_in set_menu_cursor_from_index_to_ptr, Unused_16_SetMenuCursorFromIndexToPtr, 16 ; $43bb Unused_16_SetMenuCursorFromIndexToPtr
 Unused_16_ClearWram3Row64:
 	push_wram_bank WRAM_SCREEN ; $43c9
@@ -116,7 +110,6 @@ Unused_16_PrintNumberString:
 	jr Unused_16_PrintNumberString ; $445b
 .done:
 	ret ; $445d
-; Instruction-identical to Unused_17_DrawAsciiDigitChar, Unused_1b_DrawAsciiDigitChar, Unused_3b_DrawAsciiDigitChar and Unused_3e_DrawAsciiDigitChar (one copy per bank); a change here belongs in every copy.
 	twin_in draw_ascii_digit_char, Unused_16_DrawAsciiDigitChar, 16 ; $445e Unused_16_DrawAsciiDigitChar
 RunMatchWinLoseScreen:
 	ld a, [wMatchAbortFlag] ; $4477
