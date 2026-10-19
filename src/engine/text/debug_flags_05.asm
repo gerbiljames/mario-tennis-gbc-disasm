@@ -285,7 +285,7 @@ RunDebugMenu:
 	push de ; $66a6
 	push hl ; $66a7
 .loop:
-	ld hl, Text_30_311 ; $66a8
+	ld hl, Text_MenuDebugTools ; $66a8
 	ld_cell de, $0a, $01 ; $66ab
 	call CreateMenuWindowFromText ; $66ae
 	ld [wDebugMenuWindowId], a ; $66b1

@@ -342,7 +342,7 @@ Unused_0a_SceneViewerSelectScene:
 	ld [wUnusedPrevSceneIndex], a ; $5e31
 	call StopSceneTileAnimations ; $5e34
 	pop af ; $5e37
-	ld hl, Text_30_374 ; $5e38
+	ld hl, Text_MenuSceneViewerScenes ; $5e38
 	farcall RunPagedTextMenu ; $5e3b
 	ld [wCurrentScene], a ; $5e3e
 	cp $ff ; $5e41
@@ -354,7 +354,7 @@ Unused_0a_SceneViewerSelectScene:
 .done:
 	ret ; $5e51
 UnusedSceneViewerSelectSceneMenu:
-	ld hl, Text_30_374 ; $5e52
+	ld hl, Text_MenuSceneViewerScenes ; $5e52
 	ld d, $01 ; $5e55
 	ld e, $01 ; $5e57
 	farcall CreateMenuWindowFromText ; $5e59
@@ -396,7 +396,7 @@ Unused_0a_RunSceneSelectDebugMenu:
 	ld [wUnusedPrevSceneIndex], a ; $5ea4
 	call StopSceneTileAnimations ; $5ea7
 	pop af ; $5eaa
-	ld hl, Text_30_374 ; $5eab
+	ld hl, Text_MenuSceneViewerScenes ; $5eab
 	farcall RunPagedTextMenu ; $5eae
 	ld [wCurrentScene], a ; $5eb1
 	cp $ff ; $5eb4

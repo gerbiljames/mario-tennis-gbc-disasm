@@ -30,14 +30,14 @@ ObjectIdList_04:
 	object_id MATCH_LUIGI, DataPtr_LuigiSpriteDesc ; $1b
 	object_id MATCH_DK, DataPtr_DKSpriteDesc ; $1c
 	object_id MATCH_BABY_MARIO, DataPtr_BabyMarioSpriteDesc ; $1d
-	object_id WALK_6F_00, DataPtr_WalkSprite_6f_00 ; $1e
-	object_id WALK_6F_01, DataPtr_WalkSprite_6f_01 ; $1f
+	object_id FRANK, DataPtr_WalkSprite_6f_00 ; $1e
+	object_id ELLIS, DataPtr_WalkSprite_6f_01 ; $1f
 	object_id WALK_6F_02, DataPtr_WalkSprite_6f_02 ; $20
-	object_id WALK_6F_03, DataPtr_WalkSprite_6f_03 ; $21
-	object_id WALK_6F_04, DataPtr_WalkSprite_6f_04 ; $22
-	object_id WALK_6F_05, DataPtr_WalkSprite_6f_05 ; $23
-	object_id WALK_6F_06, DataPtr_WalkSprite_6f_06 ; $24
-	object_id WALK_6F_07, DataPtr_WalkSprite_6f_07 ; $25
+	object_id PROGRAM_SELLER, DataPtr_WalkSprite_6f_03 ; $21
+	object_id SOUVENIR_SELLER, DataPtr_WalkSprite_6f_04 ; $22
+	object_id ISLAND_SPECTATOR_A, DataPtr_WalkSprite_6f_05 ; $23
+	object_id ISLAND_SPECTATOR_B, DataPtr_WalkSprite_6f_06 ; $24
+	object_id TOURNAMENT_STAFF, DataPtr_WalkSprite_6f_07 ; $25
 	object_id ALEX, DataPtr_WalkSprite_70_00 ; $26
 	object_id NINA, DataPtr_WalkSprite_70_01 ; $27
 	object_id HARRY, DataPtr_WalkSprite_70_02 ; $28
@@ -47,25 +47,25 @@ ObjectIdList_04:
 	object_id YOSHI, DataPtr_WalkSprite_70_06 ; $2c
 	object_id BOWSER, DataPtr_WalkSprite_71_00 ; $2d
 	object_id PEACH, DataPtr_WalkSprite_71_01 ; $2e
-	object_id WALK_71_02, DataPtr_WalkSprite_71_02 ; $2f
-	object_id WALK_71_03, DataPtr_WalkSprite_71_03 ; $30
-	object_id WALK_71_04, DataPtr_WalkSprite_71_04 ; $31
-	object_id WALK_71_05, DataPtr_WalkSprite_71_05 ; $32
-	object_id WALK_71_06, DataPtr_WalkSprite_71_06 ; $33
-	object_id WALK_71_07, DataPtr_WalkSprite_71_07 ; $34
+	object_id RESTAURANT_SERVER, DataPtr_WalkSprite_71_02 ; $2f
+	object_id STUDENT_LONG_HAIR, DataPtr_WalkSprite_71_03 ; $30
+	object_id CHEF, DataPtr_WalkSprite_71_04 ; $31
+	object_id STUDENT_PONYTAIL_GIRL, DataPtr_WalkSprite_71_05 ; $32
+	object_id STUDENT_CAP_BOY, DataPtr_WalkSprite_71_06 ; $33
+	object_id STUDENT_WAVY_HAIR_GIRL, DataPtr_WalkSprite_71_07 ; $34
 	object_id RACKET, DataPtr_WalkSprite_71_08 ; $35
 	object_id INVISIBLE, DataPtr_WalkSprite_71_09 ; $36
-	object_id WALK_72_00, DataPtr_WalkSprite_72_00 ; $37
+	object_id JUNIOR_COACH, DataPtr_WalkSprite_72_00 ; $37
 	object_id WALK_72_01, DataPtr_WalkSprite_72_01 ; $38
-	object_id WALK_72_02, DataPtr_WalkSprite_72_02 ; $39
-	object_id WALK_72_03, DataPtr_WalkSprite_72_03 ; $3a
-	object_id WALK_72_04, DataPtr_WalkSprite_72_04 ; $3b
-	object_id WALK_72_05, DataPtr_WalkSprite_72_05 ; $3c
-	object_id WALK_72_06, DataPtr_WalkSprite_72_06 ; $3d
-	object_id WALK_72_07, DataPtr_WalkSprite_72_07 ; $3e
-	object_id WALK_72_08, DataPtr_WalkSprite_72_08 ; $3f
-	object_id WALK_73_00, DataPtr_WalkSprite_73_00 ; $40
-	object_id WALK_73_01, DataPtr_WalkSprite_73_01 ; $41
+	object_id STUDENT_SIDE_PART_BOY, DataPtr_WalkSprite_72_02 ; $39
+	object_id STUDENT_PIGTAILS_GIRL, DataPtr_WalkSprite_72_03 ; $3a
+	object_id STUDENT_BLACK_HAIR_BOY, DataPtr_WalkSprite_72_04 ; $3b
+	object_id STUDENT_HEADBAND_BOY, DataPtr_WalkSprite_72_05 ; $3c
+	object_id MACHINE_ENGINEER, DataPtr_WalkSprite_72_06 ; $3d
+	object_id MACHINE_ATTENDANT, DataPtr_WalkSprite_72_07 ; $3e
+	object_id RECEPTIONIST, DataPtr_WalkSprite_72_08 ; $3f
+	object_id ACADEMY_TEACHER, DataPtr_WalkSprite_73_00 ; $40
+	object_id OLD_MAN, DataPtr_WalkSprite_73_01 ; $41
 	object_id WEIGHTLIFTER_A, DataPtr_WalkSprite_73_02 ; $42
 	object_id SITUPS_A, DataPtr_WalkSprite_73_03 ; $43
 	object_id SITUPS_B, DataPtr_WalkSprite_73_04 ; $44
@@ -90,16 +90,16 @@ ObjectIdList_04:
 	object_id NINA_B, DataPtr_WalkSprite_74_03 ; $57
 	object_id HARRY_B, DataPtr_WalkSprite_74_04 ; $58
 	object_id KATE_B, DataPtr_WalkSprite_74_05 ; $59
-	object_id WALK_74_06, DataPtr_WalkSprite_74_06 ; $5a
-	object_id WALK_74_07, DataPtr_WalkSprite_74_07 ; $5b
-	object_id WALK_74_08, DataPtr_WalkSprite_74_08 ; $5c
+	object_id EMILY_SWEATS, DataPtr_WalkSprite_74_06 ; $5a
+	object_id MARK_SWEATS, DataPtr_WalkSprite_74_07 ; $5b
+	object_id KEVIN_SWEATS, DataPtr_WalkSprite_74_08 ; $5c
 	object_id SAMMI, DataPtr_WalkSprite_75_00 ; $5d
 	object_id SEAN, DataPtr_WalkSprite_75_01 ; $5e
 	object_id SPIKE, DataPtr_WalkSprite_75_02 ; $5f
 	object_id ELDEN, DataPtr_WalkSprite_75_03 ; $60
 	object_id A_COZ, DataPtr_WalkSprite_75_04 ; $61
 	object_id B_COZ, DataPtr_WalkSprite_75_05 ; $62
-	object_id WALK_75_06, DataPtr_WalkSprite_75_06 ; $63
+	object_id HEADMASTER, DataPtr_WalkSprite_75_06 ; $63
 	object_id ALLIE, DataPtr_WalkSprite_75_07 ; $64
 	object_id FAY, DataPtr_WalkSprite_75_08 ; $65
 	object_id BRIAN, DataPtr_WalkSprite_76_00 ; $66
@@ -108,13 +108,13 @@ ObjectIdList_04:
 	object_id JOY, DataPtr_WalkSprite_76_03 ; $69
 	object_id PAM, DataPtr_WalkSprite_76_04 ; $6a
 	object_id BETH, DataPtr_WalkSprite_76_05 ; $6b
-	object_id WALK_76_06, DataPtr_WalkSprite_76_06 ; $6c
+	object_id WATER_SPRITE, DataPtr_WalkSprite_76_06 ; $6c
 	object_id LUIGI, DataPtr_WalkSprite_77_00 ; $6d
 	object_id DK, DataPtr_WalkSprite_77_01 ; $6e
 	object_id BABY_MARIO, DataPtr_WalkSprite_77_02 ; $6f
 	object_id TOAD, DataPtr_WalkSprite_77_03 ; $70
 	object_id BOB_OMB, DataPtr_WalkSprite_77_04 ; $71
-	object_id WALK_77_05, DataPtr_WalkSprite_77_05 ; $72
+	object_id MARIO_WORLD_HOSTESS, DataPtr_WalkSprite_77_05 ; $72
 	object_id BOO, DataPtr_WalkSprite_77_06 ; $73
 	object_id TROPHY, DataPtr_WalkSprite_77_07 ; $74
 	db $00, $00 ; end: GetObjectDefCount counts rows up to here

@@ -9,7 +9,7 @@ SetupGymActorsForProgress:
 	jr z, .done ; $4690
 	ret ; $4692
 .stage1:
-	script_set_objdef OBJ_WALK_71_07, ACTOR_TRAINING_GYM_WEIGHTLIFTER_B ; $4693
+	script_set_objdef OBJ_STUDENT_WAVY_HAIR_GIRL, ACTOR_TRAINING_GYM_WEIGHTLIFTER_B ; $4693
 	script_set_anim ACTOR_TRAINING_GYM_WEIGHTLIFTER_A, ANIM_WALK ; $469f
 	script_set_position ACTOR_TRAINING_GYM_WEIGHTLIFTER_B, 39.0, 15.0 ; $46a6
 	script_face ACTOR_TRAINING_GYM_WEIGHTLIFTER_B, FACE_RIGHT ; $46b1

@@ -257,7 +257,7 @@ ShowYesNoPromptWindow:
 .open:
 	pop_wram_bank ; $427f
 	ld d, $02 ; $4284
-	ld hl, Text_30_26 ; $4286
+	ld hl, Text_MenuYesNo ; $4286
 	farcall CreateMenuWindowFromText ; $4289
 	pop hl ; $428c
 	pop de ; $428d

@@ -273,7 +273,7 @@ Unused_05_RunFixedTextMenu:
 	push hl ; $4510
 	ldh a, [hWramBank] ; $4511
 	push af ; $4513
-	ld hl, Text_30_26 ; $4514
+	ld hl, Text_MenuYesNo ; $4514
 	call CreateMenuWindowFromText ; $4517
 	call RestoreShadowTilemap ; $451a
 	call Unused_05_StubNop_05_0 ; $451d

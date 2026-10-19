@@ -26,7 +26,7 @@ RepairCounterCheckEquipChanged:
 .askRepair:
 	farcall InitDialogueTextCursor ; $5034
 	call PushEquipmentNameTextArg ; $5037
-	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $503a
+	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $503a
 	farcall RunDialogueYesNoPrompt ; $503f
 	farcall ScriptCloseDialogueWindow ; $5042
 	script_wait_frames 5 ; $5045
@@ -38,16 +38,16 @@ RepairCounterCheckEquipChanged:
 	ld a, [wStoryMainEquipment] ; $5056
 	ld [wMapScratch + 8], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c
-	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $505f
+	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $505f
 	call ShowEquipChangeConfirmation ; $5064
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $5067
-	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $506a
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $506a
 	script_set_text Text_6e_241 ; $5072
 	call PushEquipmentNameTextArg ; $5078
-	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $507b
+	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $507b
 .noChange:
 	script_set_text Text_6e_242 ; $5080
-	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $5086
+	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5086
 	farcall RunDialogueYesNoPrompt ; $508b
 	farcall ScriptCloseDialogueWindow ; $508e
 	script_wait_frames 5 ; $5091
@@ -77,10 +77,10 @@ RepairCounterReopenServiceMenu:
 	ld hl, $00e6 ; $50e7
 	call PushShortTextArg_0e ; $50ea
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $50ed
-	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_WALK_72_02_2 ; $50f0
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $50f0
 	script_fade_in 8 ; $50f8
 	call WaitFadeEnd ; $50fd
-	ld hl, Text_6e_236 ; $5100
+	ld hl, Text_MenuEquipChange ; $5100
 	ld_cell de, $01, $01 ; $5103
 	farcall RunMenuFromText ; $5106
 	ld [wMapScratch + 10], a ; $5109
@@ -93,16 +93,16 @@ RepairCounterReopenServiceMenu:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $511b
 	jp nz, RepairCounterChangeShoes ; $511e
 	script_set_text Text_6e_232 ; $5121
-	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $5127
+	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5127
 	script_set_text Text_6e_242 ; $512c
-	script_speak_restore ACTOR_TRAINING_GYM_WALK_72_02_2 ; $5132
+	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5132
 	farcall RunDialogueYesNoPrompt ; $5137
 	farcall ScriptCloseDialogueWindow ; $513a
 	script_wait_frames 5 ; $513d
 	and a ; $5144
 	jp z, RepairCounterServiceMenu ; $5145
 	jp RepairCounterFarewell ; $5148
-	script_face ACTOR_TRAINING_GYM_WALK_72_02_2, FACE_RIGHT ; $514b
+	script_face ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, FACE_RIGHT ; $514b
 	ret ; $5152
 ShowEquipChangeConfirmation:
 	ld a, [wMapScratch + 10] ; $5153
@@ -124,7 +124,7 @@ ShowEquipChangeConfirmation:
 	script_speak SPEAKER_NONE | 12 ; $5186
 	script_null_script ACTOR_PLAYER ; $518b
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $5190
-	script_face_toward ACTOR_TRAINING_GYM_WALK_72_02_2, ACTOR_PLAYER ; $5197
+	script_face_toward ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, ACTOR_PLAYER ; $5197
 	call MirrorPlayerSpriteIfLeftHanded ; $519f
 	ret ; $51a2
 .handOver:
@@ -134,7 +134,7 @@ ShowEquipChangeConfirmation:
 	script_null_script ACTOR_PLAYER ; $51ba
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $51bf
 	script_set_speed ACTOR_PLAYER, 1.0 ; $51c6
-	script_face_toward ACTOR_TRAINING_GYM_WALK_72_02_2, ACTOR_PLAYER ; $51ce
+	script_face_toward ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, ACTOR_PLAYER ; $51ce
 	ret ; $51d6
 ActorScript_0e_03:
 	; $51d7, 13 bytes (actor_script)
@@ -203,7 +203,7 @@ MarioWorldActors_0e:
 	map_actor $0000, ActorScript_0e_22, 12.0, 17.0, FACE_DOWN, OBJ_WALUIGI, ANIM_WALK, $00, MARIO_WORLD_WALUIGI
 	map_actor $0000, ActorScript_0e_22, 12.0, 15.0, FACE_DOWN, OBJ_BOWSER, ANIM_WALK, $00, MARIO_WORLD_BOWSER
 	map_actor $0000, ActorScript_0e_22, 12.0, 13.0, FACE_DOWN, OBJ_WARIO, ANIM_WALK, $00, MARIO_WORLD_WARIO
-	map_actor $0000, ActorScript_0e_22, 14.0, 11.0, FACE_DOWN, OBJ_WALK_77_05, ANIM_WALK, $00, MARIO_WORLD_WALK_77_05
+	map_actor $0000, ActorScript_0e_22, 14.0, 11.0, FACE_DOWN, OBJ_MARIO_WORLD_HOSTESS, ANIM_WALK, $00, MARIO_WORLD_MARIO_WORLD_HOSTESS
 	map_actor $0000, ActorScript_0e_22, 22.0, 11.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00, MARIO_WORLD_MARIO
 	map_actor $0000, ActorScript_0e_22, 15.0, 31.0, FACE_DOWN, OBJ_TOAD, ANIM_WALK, $00, MARIO_WORLD_TOAD
 	map_actor $0000, ActorScript_0e_22, 21.0, 31.0, FACE_DOWN, OBJ_BOB_OMB, ANIM_WALK, $00, MARIO_WORLD_BOB_OMB
@@ -233,7 +233,7 @@ MarioWorldNpc11_0e:
 	inc h ; $53a4
 .speak:
 	farcall InitDialogueTextCursor ; $53a5
-	script_speak ACTOR_MARIO_WORLD_WALK_77_05 ; $53a8
+	script_speak ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS ; $53a8
 	ret ; $53ad
 MarioWorldNpc0BLuigi_0e:
 	ld hl, Text_5e_147 ; $53ae
@@ -313,7 +313,7 @@ MarioWorldNpcScripts_0e:
 	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_LEFT, $0000, MarioWorldNpc08FaceLeft_0e, $00, $00
 	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_UP, $0000, MarioWorldNpc08FaceUp_0e, $00, $00
 	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_DOWN, $0000, MarioWorldNpc08FaceDown_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_MARIO_WORLD_WALK_77_05, FACEMASK_ANY, $0000, MarioWorldNpc11_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS, FACEMASK_ANY, $0000, MarioWorldNpc11_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_LUIGI, FACEMASK_ANY, $0000, MarioWorldNpc0BLuigi_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_YOSHI, FACEMASK_ANY, $0000, MarioWorldNpc09Yoshi_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_BABY_MARIO, FACEMASK_ANY, $0000, MarioWorldNpc0ABabyMario_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -528,7 +528,7 @@ MarioWorldArrivalSingles:
 	script_set_speed ACTOR_MARIO_WORLD_PEACH, 1.0 ; $588f
 	script_move_target ACTOR_MARIO_WORLD_PEACH, 18.0, 11.0 ; $5897
 	script_wait_move ACTOR_MARIO_WORLD_PEACH ; $58a2
-	script_face ACTOR_MARIO_WORLD_WALK_77_05, FACE_DOWN ; $58a7
+	script_face ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS, FACE_DOWN ; $58a7
 	script_face ACTOR_MARIO_WORLD_MARIO, FACE_DOWN ; $58ae
 	script_set_position ACTOR_MARIO_WORLD_BALLOON_SWEAT_1, 63.0, 63.0 ; $58b5
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $58c0

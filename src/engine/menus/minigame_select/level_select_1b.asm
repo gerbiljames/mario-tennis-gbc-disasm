@@ -285,7 +285,7 @@ Unused_1b_ShowNoN64DataFoundScreen:
 	ld hl, Text_31_123 ; $6b2f
 	ld de, wTextTileBuffer tile 8 + 3 ; $6b32
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b35
-	ld hl, Text_31_124 ; $6b38
+	ld hl, Text_MenuLevelUpStatusTrophies ; $6b38
 	ld de, wTextTileBuffer tile 12 + 3 ; $6b3b
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b3e
 	farcall Unused_18_ForceFlushBgMapToVram ; $6b41

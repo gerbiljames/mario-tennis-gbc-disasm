@@ -1396,3 +1396,24 @@ def Text_5e_169 equ $30a9
 def Text_5e_170 equ $30aa
 def Text_5e_320 equ $3140
 def Text_5e_322 equ $3142
+
+; Menu option lists, named for what they offer (the coordinates above stay the
+; strings.py lookup).
+def Text_MenuYesNo equ Text_30_26
+def Text_MenuDebugTools equ Text_30_311
+def Text_MenuSceneViewerScenes equ Text_30_374
+def Text_MenuLevelUpStatusTrophies equ Text_31_124
+def Text_MenuJuniorSinglesRanks equ Text_31_132
+def Text_MenuJuniorDoublesRanks equ Text_31_137
+def Text_MenuServiceMatches equ Text_31_141
+def Text_MenuMarioCast equ Text_31_150
+def Text_MenuLevels equ Text_31_153
+def Text_MenuSetContinue equ Text_34_215
+def Text_MenuMinigameOrRanking equ Text_34_217
+def Text_MenuClasses equ Text_34_218
+def Text_MenuDrillTypes equ Text_37_12
+def Text_MenuServiceDrills equ Text_37_13
+def Text_MenuNetDrills equ Text_37_14
+def Text_MenuStrokeDrills equ Text_37_15
+def Text_MenuCpuDifficulty equ Text_5e_136
+def Text_MenuEquipChange equ Text_6e_236
