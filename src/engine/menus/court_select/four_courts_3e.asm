@@ -329,7 +329,7 @@ GetCourtThumbnailPtr:
 OpenCourtSelect4Panel:
 	ld a, b ; $5e2a
 	or a ; $5e2b
-	jr z, .zero ; $5e2c
+	jr z, .reverse ; $5e2c
 	ld c, $00 ; $5e2e
 .loop:
 	call AdvanceFrame ; $5e30
@@ -344,7 +344,7 @@ OpenCourtSelect4Panel:
 	jr nz, .loop ; $5e42
 	call AdvanceFrame ; $5e44
 	ret ; $5e47
-.zero:
+.reverse:
 	ld c, $0a ; $5e48
 .loopB:
 	call AdvanceFrame ; $5e4a
@@ -829,10 +829,10 @@ DrawCourtNameTiles:
 DrawCourtNameLeft:
 	ld a, b ; $64a6
 	cp $ff ; $64a7
-	jr nz, .neff ; $64a9
+	jr nz, .lookupCourt ; $64a9
 	ld b, $ac ; $64ab
 	jr .fillIncrementingBytes ; $64ad
-.neff:
+.lookupCourt:
 	ld hl, CourtNameLeftIndices_3e ; $64af
 	ld a, b ; $64b2
 	add l ; $64b3
@@ -855,10 +855,10 @@ CourtNameLeftIndices_3e:
 DrawCourtNameRight:
 	ld a, b ; $64cf
 	cp $ff ; $64d0
-	jr nz, .neff ; $64d2
+	jr nz, .lookupCourt ; $64d2
 	ld b, $b1 ; $64d4
 	jr .fillIncrementingBytes ; $64d6
-.neff:
+.lookupCourt:
 	ld hl, CourtNameRightIndices_3e ; $64d8
 	ld a, b ; $64db
 	add l ; $64dc

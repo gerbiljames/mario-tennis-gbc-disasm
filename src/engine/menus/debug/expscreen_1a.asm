@@ -9,9 +9,9 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	ld hl, wStoryMainName ; $4b2d
 	ld a, [wStoryCharacterSlot] ; $4b30
 	or a ; $4b33
-	jr z, .zero ; $4b34
+	jr z, .readName ; $4b34
 	ld l, $40 ; $4b36
-.zero:
+.readName:
 	ld a, l ; $4b38
 	add $00 ; $4b39
 	ld l, a ; $4b3b
@@ -25,9 +25,9 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	ld hl, wStoryMainName ; $4b48
 	ld a, [wStoryCharacterSlot] ; $4b4b
 	or a ; $4b4e
-	jr z, .zero2 ; $4b4f
+	jr z, .readLevel ; $4b4f
 	ld l, $40 ; $4b51
-.zero2:
+.readLevel:
 	ld a, l ; $4b53
 	add $18 ; $4b54
 	ld l, a ; $4b56
@@ -90,12 +90,12 @@ Unused_1a_ClearExpScreenNameBox:
 .loopB:
 	ld a, b ; $4ba3
 	cp $0d ; $4ba4
-	jr z, .eq0d ; $4ba6
+	jr z, .nextRow ; $4ba6
 	ld de, $2000 ; $4ba8
 	call Unused_1a_WriteTileBufferCell ; $4bab
 	inc b ; $4bae
 	jr .loopB ; $4baf
-.eq0d:
+.nextRow:
 	inc c ; $4bb1
 	jr .loop ; $4bb2
 .restore:
@@ -238,7 +238,7 @@ Unused_1a_WriteStatModifierToTileBuffer:
 	ld de, $0000 ; $4c68
 	call Unused_1a_CompareBCToDE ; $4c6b
 	cp $00 ; $4c6e
-	jr z, .zero ; $4c70
+	jr z, .blankSign ; $4c70
 	bit 7, h ; $4c72
 	jr nz, .negative ; $4c74
 	ld a, $2b ; $4c76
@@ -246,7 +246,7 @@ Unused_1a_WriteStatModifierToTileBuffer:
 .negative:
 	ld a, $2d ; $4c7a
 	jr .writeSign ; $4c7c
-.zero:
+.blankSign:
 	ld a, $60 ; $4c7e
 .writeSign:
 	pop de ; $4c80
@@ -336,13 +336,13 @@ Unused_1a_CompareBCToDE:
 	jr nz, .negative ; $4cf7
 	ld a, h ; $4cf9
 	cp $00 ; $4cfa
-	jr nz, .step ; $4cfc
+	jr nz, .greater ; $4cfc
 	ld a, l ; $4cfe
 	cp $00 ; $4cff
-	jr nz, .step ; $4d01
+	jr nz, .greater ; $4d01
 	ld a, $00 ; $4d03
 	jr .restore ; $4d05
-.step:
+.greater:
 	ld a, $01 ; $4d07
 	jr .restore ; $4d09
 .negative:

@@ -11,7 +11,7 @@ VBlankHandler:
 	call ApplyPendingPaletteUpdates ; $2756
 	ldh a, [hVBlankOccurred] ; $2759
 	or a ; $275b
-	jr nz, .nonZero2 ; $275c
+	jr nz, .skipVideo ; $275c
 	ldh a, [hShowDebugConsole] ; $275e
 	or a ; $2760
 	jr nz, .compare ; $2761
@@ -25,7 +25,7 @@ VBlankHandler:
 	jr .checkSpriteBufferPage ; $2771
 .compare:
 	cp $01 ; $2773
-	jr nz, .ne01 ; $2775
+	jr nz, .keepBgMap ; $2775
 	xor a ; $2777
 	ldh [rSCX], a ; $2778
 	ld a, $40 ; $277a
@@ -34,7 +34,7 @@ VBlankHandler:
 	or LCDC_BG_MAP ; $2780
 	ldh [rLCDC], a ; $2782
 	jr .checkSpriteBufferPage ; $2784
-.ne01:
+.keepBgMap:
 	ldh a, [hScrollX] ; $2786
 	ldh [rSCX], a ; $2788
 	ldh a, [hScrollY] ; $278a
@@ -46,20 +46,20 @@ VBlankHandler:
 	call hOAMDMARoutine ; $2795
 	call ProcessBGBlitQueue ; $2798
 	or a ; $279b
-	jr nz, .nonZero ; $279c
+	jr nz, .skipVramCopies ; $279c
 	call ProcessVRAMCopyQueues ; $279e
-.nonZero:
+.skipVramCopies:
 	ldh a, [hDebugStepMode] ; $27a1
 	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $27a3
-	jr z, .zero ; $27a4
+	jr z, .markVBlank ; $27a4
 	call UpdateDebugOverlay ; $27a6
-.zero:
+.markVBlank:
 	ld a, $01 ; $27a9
 	ldh [hVBlankOccurred], a ; $27ab
 	ld hl, hVBlankCounter ; $27ad
 	inc [hl] ; $27b0
-.nonZero2:
+.skipVideo:
 	ldh a, [hLinkExchangeActive] ; $27b1
 	or a ; $27b3
 	jr nz, .updateGameTimer ; $27b4
@@ -85,11 +85,11 @@ TimerHandler:
 	push af ; $27d7
 	ldh a, [hLinkState] ; $27d8
 	cp LINKSTATE_SLAVE ; $27da
-	jr nz, .ne02 ; $27dc
+	jr nz, .checkLcd ; $27dc
 	ldh a, [rIF] ; $27de
 	and IF_SERIAL ; $27e0
 	jr nz, .restore ; $27e2
-.ne02:
+.checkLcd:
 	ldh a, [rLCDC] ; $27e4
 	bit B_LCDC_ENABLE, a ; $27e6
 	jr nz, .restore ; $27e8
@@ -196,35 +196,35 @@ SerialHandler:
 	push hl ; $2864
 	ldh a, [hLinkShiftQueue] ; $2865
 	add a ; $2867
-	jr c, .carry ; $2868
+	jr c, .checkMaster ; $2868
 	ldh a, [rSB] ; $286a
 	ld b, a ; $286c
 	ldh [hLinkRxByte], a ; $286d
-.carry:
+.checkMaster:
 	ldh a, [hLinkState] ; $286f
 	cp LINKSTATE_MASTER ; $2871
-	jr nz, .ne01 ; $2873
+	jr nz, .slave ; $2873
 	ldh [hLinkTransferDone], a ; $2875
 	pop hl ; $2877
 	pop de ; $2878
 	pop bc ; $2879
 	pop af ; $287a
 	reti ; $287b
-.ne01:
+.slave:
 	ldh a, [hLinkAckRequired] ; $287c
 	or a ; $287e
-	jr z, .step4 ; $287f
+	jr z, .shiftQueue ; $287f
 	ldh a, [hLinkTxPending] ; $2881
 	or a ; $2883
-	jr z, .zero ; $2884
+	jr z, .queueAck ; $2884
 	xor a ; $2886
 	ldh [hLinkTxPending], a ; $2887
-	jr .step4 ; $2889
-.zero:
+	jr .shiftQueue ; $2889
+.queueAck:
 	ldh a, [hLinkShiftQueue] ; $288b
 	ld a, $40 ; $288d
 	ldh [hLinkShiftQueue], a ; $288f
-.step4:
+.shiftQueue:
 	ldh a, [hLinkShiftQueue] ; $2891
 	add a ; $2893
 	ldh [hLinkShiftQueue], a ; $2894

@@ -41,15 +41,15 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	bit 0, b ; $4cb8
 	jr z, .checkFlag ; $4cba
 	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4cbc
-	jp nz, .step5 ; $4cbf
+	jp nz, .onAdjustRow ; $4cbf
 	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4cc2
-	jp nz, .step5 ; $4cc5
+	jp nz, .onAdjustRow ; $4cc5
 .checkFlag:
 	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4cc8
 	jr nz, .isPauseOptionsMenuOpen ; $4ccb
 	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4ccd
 	jp nz, .isMinigamePauseMenuOpen ; $4cd0
-	jp .step3 ; $4cd3
+	jp .blinkArrow ; $4cd3
 .isPauseOptionsMenuOpen:
 	ld l, $20 ; $4cd6
 	ld_cell de, $0b, $01 ; $4cd8
@@ -57,7 +57,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld l, $20 ; $4cde
 	ld_cell de, $0b, $03 ; $4ce0
 	farcall Unused_1a_QueueWindowTileWrite ; $4ce3
-	jr .step3 ; $4ce6
+	jr .blinkArrow ; $4ce6
 .isMinigamePauseMenuOpen:
 	ld l, $20 ; $4ce8
 	ld_cell de, $0d, $05 ; $4cea
@@ -65,16 +65,16 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld l, $20 ; $4cf0
 	ld_cell de, $0d, $07 ; $4cf2
 	farcall Unused_1a_QueueWindowTileWrite ; $4cf5
-	jr .step3 ; $4cf8
-.step3:
+	jr .blinkArrow ; $4cf8
+.blinkArrow:
 	ld hl, wTextArrowBlinkCounter ; $4cfa
 	ld a, [hl+] ; $4cfd
 	and $10 ; $4cfe
 	or a ; $4d00
-	jr z, .zero ; $4d01
+	jr z, .evenPhase ; $4d01
 	ld a, $20 ; $4d03
 	jr .read ; $4d05
-.zero:
+.evenPhase:
 	ld a, $0d ; $4d07
 .read:
 	ld e, [hl] ; $4d09
@@ -110,10 +110,10 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld [wTextArrowEraseAddr + 1], a ; $4d3b
 .done:
 	ret ; $4d3e
-.step5:
+.onAdjustRow:
 	ld a, [wTextArrowEraseAddr + 1] ; $4d3f
 	or a ; $4d42
-	jr z, .zero2 ; $4d43
+	jr z, .noErase ; $4d43
 	ld d, a ; $4d45
 	ld a, [wTextArrowEraseAddr] ; $4d46
 	ld e, a ; $4d49
@@ -123,7 +123,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	call QueueBGTileWrite ; $4d4f
 	xor a ; $4d52
 	ld [wTextArrowEraseAddr + 1], a ; $4d53
-.zero2:
+.noErase:
 	wram_bank WRAM_TEXT ; $4d56
 	ld hl, wTextArrowBlinkCounter ; $4d5c
 	inc [hl] ; $4d5f
@@ -218,7 +218,7 @@ RenderTextString:
 	push bc ; $4e23
 	ld a, [wTextResumePtr + 1] ; $4e24
 	or a ; $4e27
-	jr z, .zero ; $4e28
+	jr z, .noResume ; $4e28
 	ld bc, $3a00 ; $4e2a
 	add hl, bc ; $4e2d
 	ld b, h ; $4e2e
@@ -230,7 +230,7 @@ RenderTextString:
 	add hl, bc ; $4e36
 	xor a ; $4e37
 	ld [wTextResumePtr + 1], a ; $4e38
-.zero:
+.noResume:
 	ld a, [wGlyphWindowId] ; $4e3b
 	or a ; $4e3e
 	jr nz, .initGlyphStreamForWindow ; $4e3f
@@ -250,14 +250,14 @@ RenderTextString:
 TextInterpreterLoop:
 	ld a, [wTextPageBreakRequest] ; $4e5d
 	or a ; $4e60
-	jr z, .zero ; $4e61
+	jr z, .readChar ; $4e61
 	ld a, l ; $4e63
 	ld [wTextResumePtr], a ; $4e64
 	ld a, h ; $4e67
 	ld [wTextResumePtr + 1], a ; $4e68
 	pop bc ; $4e6b
 	ret ; $4e6c
-.zero:
+.readChar:
 	ld a, l ; $4e6d
 	ld [wTextStreamPtr], a ; $4e6e
 	ld a, h ; $4e71
@@ -275,21 +275,21 @@ TextInterpreterLoop:
 	ret ; $4e84
 .compare:
 	cp $de ; $4e85
-	jr z, .eqde ; $4e87
+	jr z, .dakuten ; $4e87
 	cp $df ; $4e89
-	jr z, .eqdf ; $4e8b
+	jr z, .handakuten ; $4e8b
 	cp $0e ; $4e8d
-	jr z, .eq0e ; $4e8f
+	jr z, .charNameArg ; $4e8f
 	cp $20 ; $4e91
-	jr nc, .ge20 ; $4e93
+	jr nc, .printGlyph ; $4e93
 	jr .dispatchControlCode ; $4e95
-.eqde:
+.dakuten:
 	ld a, $1e ; $4e97
 	jr .dispatchControlCode ; $4e99
-.eqdf:
+.handakuten:
 	ld a, $1f ; $4e9b
 	jr .dispatchControlCode ; $4e9d
-.eq0e:
+.charNameArg:
 	push af ; $4e9f
 	ld a, [hl+] ; $4ea0
 	ld [wTextCharNameArg], a ; $4ea1
@@ -298,7 +298,7 @@ TextInterpreterLoop:
 	call DispatchControlCode ; $4ea5
 	call RedrawActiveTextWindow ; $4ea8
 	jr TextInterpreterLoop ; $4eab
-.ge20:
+.printGlyph:
 	ld a, b ; $4ead
 	call WrapTextCellPointer ; $4eae
 	call DrawStreamGlyph ; $4eb1
@@ -385,13 +385,13 @@ TextCmdDelay30:
 	push af ; $4f32
 	ld a, [wTextRedrawGuard] ; $4f33
 	or a ; $4f36
-	jr nz, .nonZero ; $4f37
+	jr nz, .startDelay ; $4f37
 	ld a, $01 ; $4f39
 	ld [wTextRedrawGuard], a ; $4f3b
 	call RedrawActiveTextWindow ; $4f3e
 	xor a ; $4f41
 	ld [wTextRedrawGuard], a ; $4f42
-.nonZero:
+.startDelay:
 	ld a, $1e ; $4f45
 .loop:
 	call AdvanceFrame ; $4f47
@@ -404,13 +404,13 @@ TextCmdDelay15Skippable:
 	push bc ; $4f50
 	ld a, [wTextRedrawGuard] ; $4f51
 	or a ; $4f54
-	jr nz, .nonZero ; $4f55
+	jr nz, .startDelay ; $4f55
 	ld a, $01 ; $4f57
 	ld [wTextRedrawGuard], a ; $4f59
 	call RedrawActiveTextWindow ; $4f5c
 	xor a ; $4f5f
 	ld [wTextRedrawGuard], a ; $4f60
-.nonZero:
+.startDelay:
 	ld b, $0f ; $4f63
 .loop:
 	call AdvanceFrame ; $4f65

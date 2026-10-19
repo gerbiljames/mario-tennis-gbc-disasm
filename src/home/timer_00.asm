@@ -101,13 +101,13 @@ Unused_00_CopyTextString:
 	cp $00 ; $2aaa
 	jr z, .restore ; $2aac
 	cp $de ; $2aae
-	jr z, .step ; $2ab0
+	jr z, .applyMark ; $2ab0
 	cp $df ; $2ab2
-	jr z, .step ; $2ab4
+	jr z, .applyMark ; $2ab4
 	ld [de], a ; $2ab6
 	inc de ; $2ab7
 	jr .loop ; $2ab8
-.step:
+.applyMark:
 	push hl ; $2aba
 	ld b, a ; $2abb
 	ld hl, $ffdf ; $2abc
@@ -362,20 +362,20 @@ DrawWindowFrameBottom:
 	ret ; $2bea
 Unused_00_MoveCoordsByDpad:
 	bit 5, a ; $2beb
-	jr z, .bit5Clear ; $2bed
+	jr z, .checkRight ; $2bed
 	dec d ; $2bef
 	ret ; $2bf0
-.bit5Clear:
+.checkRight:
 	bit 4, a ; $2bf1
-	jr z, .bit4Clear ; $2bf3
+	jr z, .checkUp ; $2bf3
 	inc d ; $2bf5
 	ret ; $2bf6
-.bit4Clear:
+.checkUp:
 	bit 6, a ; $2bf7
-	jr z, .bit6Clear ; $2bf9
+	jr z, .checkDown ; $2bf9
 	dec e ; $2bfb
 	ret ; $2bfc
-.bit6Clear:
+.checkDown:
 	bit 7, a ; $2bfd
 	jr z, .done ; $2bff
 	inc e ; $2c01
@@ -419,7 +419,7 @@ TickTimer:
 	ret ; $2c2a
 QueueSprite24x32:
 	bit 5, b ; $2c2b
-	jr nz, .bit5Set ; $2c2d
+	jr nz, .flipped ; $2c2d
 	ld a, h ; $2c2f
 	add d ; $2c30
 	ld d, a ; $2c31
@@ -502,7 +502,7 @@ QueueSprite24x32:
 	ld a, l ; $2c89
 	ldh [hSpriteQueueIndex], a ; $2c8a
 	ret ; $2c8c
-.bit5Set:
+.flipped:
 	ld a, d ; $2c8d
 	sub h ; $2c8e
 	add $08 ; $2c8f

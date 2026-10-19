@@ -36,10 +36,10 @@ TextContinueArrowBlinkTask:
 	ld a, [hl+] ; $4ff0
 	and $10 ; $4ff1
 	or a ; $4ff3
-	jr z, .zero ; $4ff4
+	jr z, .evenPhase ; $4ff4
 	ld a, $08 ; $4ff6
 	jr .read ; $4ff8
-.zero:
+.evenPhase:
 	ld a, $01 ; $4ffa
 .read:
 	ld e, [hl] ; $4ffc
@@ -108,13 +108,13 @@ TextCmdDelay150Skippable:
 	push bc ; $5065
 	ld a, [wTextRedrawGuard] ; $5066
 	or a ; $5069
-	jr nz, .nonZero ; $506a
+	jr nz, .startDelay ; $506a
 	ld a, $01 ; $506c
 	ld [wTextRedrawGuard], a ; $506e
 	call RedrawActiveTextWindow ; $5071
 	xor a ; $5074
 	ld [wTextRedrawGuard], a ; $5075
-.nonZero:
+.startDelay:
 	ld b, $96 ; $5078
 .loop:
 	call AdvanceFrame ; $507a
@@ -160,7 +160,7 @@ TextCmdPrintArgString:
 	sra a ; $50bc
 	sra a ; $50be
 	or a ; $50c0
-	jr z, .zero ; $50c1
+	jr z, .wram0String ; $50c1
 	ld b, a ; $50c3
 	ld a, h ; $50c4
 	and $0f ; $50c5
@@ -169,7 +169,7 @@ TextCmdPrintArgString:
 	ld a, b ; $50ca
 	wram_bank ; $50cb
 	jr .copyMemoryBC ; $50cf
-.zero:
+.wram0String:
 	ld b, a ; $50d1
 	ld a, h ; $50d2
 	and $0f ; $50d3
@@ -303,10 +303,10 @@ TextCmdApplyDakuten:
 	call WrapTextCellPointerPrevRow ; $51b1
 	ld a, [de] ; $51b4
 	cp $03 ; $51b5
-	jr nz, .ne03 ; $51b7
+	jr nz, .plainDakuten ; $51b7
 	ld a, $0e ; $51b9
 	jr .store ; $51bb
-.ne03:
+.plainDakuten:
 	ld a, $de ; $51bd
 .store:
 	ld [de], a ; $51bf
@@ -325,10 +325,10 @@ TextCmdApplyHandakuten:
 	call WrapTextCellPointerPrevRow ; $51d1
 	ld a, [de] ; $51d4
 	cp $03 ; $51d5
-	jr nz, .ne03 ; $51d7
+	jr nz, .plainHandakuten ; $51d7
 	ld a, $0f ; $51d9
 	jr .store ; $51db
-.ne03:
+.plainHandakuten:
 	ld a, $df ; $51dd
 .store:
 	ld [de], a ; $51df
@@ -374,7 +374,7 @@ MeasureNextArgStringWidth:
 	sra a ; $5220
 	sra a ; $5222
 	or a ; $5224
-	jr z, .zero ; $5225
+	jr z, .wram0String ; $5225
 	ld b, a ; $5227
 	ld a, h ; $5228
 	and $0f ; $5229
@@ -383,7 +383,7 @@ MeasureNextArgStringWidth:
 	ld a, b ; $522e
 	wram_bank ; $522f
 	jr .copyMemoryBC ; $5233
-.zero:
+.wram0String:
 	ld b, a ; $5235
 	ld a, h ; $5236
 	and $0f ; $5237
@@ -403,13 +403,13 @@ MeasureNextArgStringWidth:
 .loop:
 	ld a, [hl+] ; $5257
 	or a ; $5258
-	jr z, .zero2 ; $5259
+	jr z, .done ; $5259
 	call GetGlyphWidth ; $525b
 	ld a, c ; $525e
 	add b ; $525f
 	ld b, a ; $5260
 	jr .loop ; $5261
-.zero2:
+.done:
 	ld a, b ; $5263
 	pop hl ; $5264
 	pop bc ; $5265
@@ -422,13 +422,13 @@ MeasureMainCharacterNameWidth:
 .loop:
 	ld a, [hl+] ; $526e
 	cp $00 ; $526f
-	jr z, .eq00 ; $5271
+	jr z, .done ; $5271
 	call GetGlyphWidth ; $5273
 	ld a, c ; $5276
 	add b ; $5277
 	ld b, a ; $5278
 	jr .loop ; $5279
-.eq00:
+.done:
 	ld a, b ; $527b
 	pop hl ; $527c
 	pop bc ; $527d
@@ -441,13 +441,13 @@ MeasurePartnerCharacterNameWidth:
 .loop:
 	ld a, [hl+] ; $5286
 	cp $00 ; $5287
-	jr z, .eq00 ; $5289
+	jr z, .done ; $5289
 	call GetGlyphWidth ; $528b
 	ld a, c ; $528e
 	add b ; $528f
 	ld b, a ; $5290
 	jr .loop ; $5291
-.eq00:
+.done:
 	ld a, b ; $5293
 	pop hl ; $5294
 	pop bc ; $5295

@@ -349,7 +349,7 @@ DrawCharStatDigitsTask:
 	ld a, [wCharDataLevels] ; $57da
 	ld l, a ; $57dd
 	cp $0a ; $57de
-	jr c, .lt0a ; $57e0
+	jr c, .singleDigit1 ; $57e0
 	push bc ; $57e2
 	ld h, $00 ; $57e3
 	ld a, $02 ; $57e5
@@ -377,7 +377,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $5812
 	call QueueSprite ; $5815
 	jr .stat2 ; $5818
-.lt0a:
+.singleDigit1:
 	ld a, l ; $581a
 	rlca ; $581b
 	ld c, a ; $581c
@@ -391,7 +391,7 @@ DrawCharStatDigitsTask:
 	ld a, [wCharDataLevels + 1] ; $582c
 	ld l, a ; $582f
 	cp $0a ; $5830
-	jr c, .lt0a2 ; $5832
+	jr c, .singleDigit2 ; $5832
 	push bc ; $5834
 	ld h, $00 ; $5835
 	ld a, $02 ; $5837
@@ -419,7 +419,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $5866
 	call QueueSprite ; $5869
 	jr .stat3 ; $586c
-.lt0a2:
+.singleDigit2:
 	ld a, l ; $586e
 	rlca ; $586f
 	ld c, a ; $5870
@@ -433,7 +433,7 @@ DrawCharStatDigitsTask:
 	ld a, [wCharDataLevels + 2] ; $5881
 	ld l, a ; $5884
 	cp $0a ; $5885
-	jr c, .lt0a3 ; $5887
+	jr c, .singleDigit3 ; $5887
 	push bc ; $5889
 	ld h, $00 ; $588a
 	ld a, $02 ; $588c
@@ -461,7 +461,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $58bb
 	call QueueSprite ; $58be
 	jr .stat4 ; $58c1
-.lt0a3:
+.singleDigit3:
 	ld a, l ; $58c3
 	rlca ; $58c4
 	ld c, a ; $58c5
@@ -475,7 +475,7 @@ DrawCharStatDigitsTask:
 	ld a, [wCharDataLevels + 3] ; $58d6
 	ld l, a ; $58d9
 	cp $0a ; $58da
-	jr c, .lt0a4 ; $58dc
+	jr c, .singleDigit4 ; $58dc
 	push bc ; $58de
 	ld h, $00 ; $58df
 	ld a, $02 ; $58e1
@@ -503,7 +503,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $5910
 	call QueueSprite ; $5913
 	jr .getCharDataDigitSprite ; $5916
-.lt0a4:
+.singleDigit4:
 	ld a, l ; $5918
 	rlca ; $5919
 	ld c, a ; $591a
@@ -515,40 +515,40 @@ DrawCharStatDigitsTask:
 .getCharDataDigitSprite:
 	ld a, [wCharStatPageShown + 1] ; $5929
 	cp $20 ; $592c
-	jr z, .eq20 ; $592e
+	jr z, .digit2 ; $592e
 	call GetCharDataDigitSprite ; $5930
 	ld_xy de, $29, $84 ; $5933
 	ld hl, wCharDataStatsSlideX ; $5936
 	call ApplySlideOffsetToSpriteX ; $5939
 	call QueueSprite ; $593c
-.eq20:
+.digit2:
 	ld a, [wCharStatPageShown + 2] ; $593f
 	cp $20 ; $5942
-	jr z, .eq202 ; $5944
+	jr z, .digit3 ; $5944
 	call GetCharDataDigitSprite ; $5946
 	ld_xy de, $31, $84 ; $5949
 	ld hl, wCharDataStatsSlideX ; $594c
 	call ApplySlideOffsetToSpriteX ; $594f
 	call QueueSprite ; $5952
-.eq202:
+.digit3:
 	ld a, [wCharStatPageShown + 3] ; $5955
 	cp $20 ; $5958
-	jr z, .eq203 ; $595a
+	jr z, .digit4 ; $595a
 	call GetCharDataDigitSprite ; $595c
 	ld_xy de, $39, $84 ; $595f
 	ld hl, wCharDataStatsSlideX ; $5962
 	call ApplySlideOffsetToSpriteX ; $5965
 	call QueueSprite ; $5968
-.eq203:
+.digit4:
 	ld a, [wCharStatPageShown + 4] ; $596b
 	cp $20 ; $596e
-	jr z, .eq204 ; $5970
+	jr z, .digit5 ; $5970
 	call GetCharDataDigitSprite ; $5972
 	ld_xy de, $41, $84 ; $5975
 	ld hl, wCharDataStatsSlideX ; $5978
 	call ApplySlideOffsetToSpriteX ; $597b
 	call QueueSprite ; $597e
-.eq204:
+.digit5:
 	ld a, [wCharStatPageShown + 5] ; $5981
 	call GetCharDataDigitSprite ; $5984
 	ld_xy de, $49, $84 ; $5987

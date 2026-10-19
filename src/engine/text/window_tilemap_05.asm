@@ -315,15 +315,15 @@ Unused_05_CopyTilemapRowsAnimated:
 	ld d, a ; $4288
 	ld a, c ; $4289
 	sub $07 ; $428a
-	jr c, .step ; $428c
-	jr z, .step ; $428e
+	jr c, .undoSubtract ; $428c
+	jr z, .undoSubtract ; $428e
 	sub $07 ; $4290
-	jr c, .step ; $4292
-	jr z, .step ; $4294
-	jr .step2 ; $4296
-.step:
+	jr c, .undoSubtract ; $4292
+	jr z, .undoSubtract ; $4294
+	jr .storeRemainder ; $4296
+.undoSubtract:
 	add $07 ; $4298
-.step2:
+.storeRemainder:
 	ld e, a ; $429a
 	ld a, c ; $429b
 	ld c, $00 ; $429c
@@ -342,12 +342,12 @@ Unused_05_CopyTilemapRowsAnimated:
 	ld b, c ; $42ac
 	ld c, e ; $42ad
 	cp $01 ; $42ae
-	jr z, .eq01 ; $42b0
+	jr z, .gotChunkRows ; $42b0
 	ld c, $07 ; $42b2
-.eq01:
+.gotChunkRows:
 	ld a, d ; $42b4
 	cp $20 ; $42b5
-	jr nc, .ge20 ; $42b7
+	jr nc, .copyRows ; $42b7
 	push af ; $42b9
 	add c ; $42ba
 	cp $20 ; $42bb
@@ -365,7 +365,7 @@ Unused_05_CopyTilemapRowsAnimated:
 	ld c, a ; $42cd
 .restore:
 	pop af ; $42ce
-.ge20:
+.copyRows:
 	and $1f ; $42cf
 	ld b, $05 ; $42d1
 	call Unused_05_CopyTilemapRowsToVRAM ; $42d3

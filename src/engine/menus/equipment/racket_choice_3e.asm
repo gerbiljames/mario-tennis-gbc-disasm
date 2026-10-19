@@ -137,7 +137,7 @@ LoadEraseDataConfirmScreen:
 	jp .renderProportionalTextAt ; $4d7b
 .compare:
 	or a ; $4d7e
-	jr z, .zero ; $4d7f
+	jr z, .eraseAll ; $4d7f
 	ld hl, Text_30_216 ; $4d81
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4d84
 	ld c, $0e ; $4d87
@@ -159,7 +159,7 @@ LoadEraseDataConfirmScreen:
 	ld de, vTiles0 ; $4db1
 	farcall LoadCompressedTileBlock ; $4db4
 	jr .renderProportionalTextAt ; $4db7
-.zero:
+.eraseAll:
 	ld hl, Text_30_214 ; $4db9
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4dbc
 	ld c, $0e ; $4dbf
@@ -225,16 +225,16 @@ AnimateEraseConfirmPalette:
 	srl a ; $4e4d
 	srl a ; $4e4f
 	add a ; $4e51
-	jr nc, .noCarry ; $4e52
+	jr nc, .checkMax ; $4e52
 	ld a, $0c ; $4e54
 	dec a ; $4e56
-	jr .step2 ; $4e57
-.noCarry:
+	jr .readColor ; $4e57
+.checkMax:
 	rra ; $4e59
 	cp $0c ; $4e5a
-	jr c, .step2 ; $4e5c
+	jr c, .readColor ; $4e5c
 	xor a ; $4e5e
-.step2:
+.readColor:
 	add a ; $4e5f
 	ld hl, EraseConfirmFlashColors_3e ; $4e60
 	add l ; $4e63

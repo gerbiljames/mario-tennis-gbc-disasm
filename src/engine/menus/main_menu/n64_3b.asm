@@ -93,7 +93,7 @@ RunN64ExhibData:
 ScrollN64ExhibDataCursor:
 	ld a, [wMenuInputPressed] ; $450d
 	bit PADB_LEFT, a ; $4510
-	jr z, .step ; $4512
+	jr z, .checkRight ; $4512
 	ld a, [wN64ExhibPage] ; $4514
 	or a ; $4517
 	jr z, .done ; $4518
@@ -102,9 +102,9 @@ ScrollN64ExhibDataCursor:
 	sound SFX_MENU_MOVE ; $451e
 	call RedrawN64ExhibDataWindow ; $4520
 	jr .done ; $4523
-.step:
+.checkRight:
 	bit 4, a ; $4525
-	jr z, .bit4Clear ; $4527
+	jr z, .checkUp ; $4527
 	ld a, [wN64ExhibPage] ; $4529
 	cp $09 ; $452c
 	jr z, .done ; $452e
@@ -113,9 +113,9 @@ ScrollN64ExhibDataCursor:
 	sound SFX_MENU_MOVE ; $4534
 	call RedrawN64ExhibDataWindow ; $4536
 	jr .done ; $4539
-.bit4Clear:
+.checkUp:
 	bit 6, a ; $453b
-	jr z, .bit6Clear ; $453d
+	jr z, .checkDown ; $453d
 	ld a, [wN64ExhibCursorRow] ; $453f
 	or a ; $4542
 	jr z, .done ; $4543
@@ -124,7 +124,7 @@ ScrollN64ExhibDataCursor:
 	sound SFX_MENU_MOVE ; $4549
 	call RedrawN64ExhibDataWindow ; $454b
 	jr .done ; $454e
-.bit6Clear:
+.checkDown:
 	bit 7, a ; $4550
 	jr z, .done ; $4552
 	ld a, [wN64ExhibCursorRow] ; $4554
@@ -141,7 +141,7 @@ N64ExhibScrollArrowsTask:
 	push_wram_bank WRAM_SCREEN ; $4567
 	ld a, [wN64ExhibPage] ; $4570
 	cp $09 ; $4573
-	jr z, .eq09 ; $4575
+	jr z, .checkLeftArrow ; $4575
 	ld_xy de, $93, $2f ; $4577
 	ld c, $01 ; $457a
 	call ApplyCursorBounceX ; $457c
@@ -149,10 +149,10 @@ N64ExhibScrollArrowsTask:
 	ld c, $00 ; $4581
 	ld h, $00 ; $4583
 	farcall QueueStackedSpritePair ; $4585
-.eq09:
+.checkLeftArrow:
 	ld a, [wN64ExhibPage] ; $4588
 	or a ; $458b
-	jr z, .zero ; $458c
+	jr z, .checkUpArrow ; $458c
 	ld_xy de, $08, $2f ; $458e
 	ld c, $00 ; $4591
 	call ApplyCursorBounceX ; $4593
@@ -160,10 +160,10 @@ N64ExhibScrollArrowsTask:
 	ld c, $00 ; $4598
 	ld h, $01 ; $459a
 	farcall QueueStackedSpritePair ; $459c
-.zero:
+.checkUpArrow:
 	ld a, [wN64ExhibCursorRow] ; $459f
 	or a ; $45a2
-	jr z, .zero2 ; $45a3
+	jr z, .checkDownArrow ; $45a3
 	ld_xy de, $0a, $20 ; $45a5
 	ld c, $01 ; $45a8
 	call ApplyCursorBounceY ; $45aa
@@ -171,7 +171,7 @@ N64ExhibScrollArrowsTask:
 	ld c, $00 ; $45af
 	ld h, $02 ; $45b1
 	farcall QueueStackedSpritePair ; $45b3
-.zero2:
+.checkDownArrow:
 	ld a, [wN64ExhibCursorRow] ; $45b6
 	cp $0c ; $45b9
 	jr z, .restore ; $45bb

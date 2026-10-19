@@ -23,12 +23,12 @@ UpdateDebugOverlay:
 	cp DEBUGSTEP_CONSOLE_ON ; $18aa
 	jr z, .storeShowDebugConsole2 ; $18ac
 	cp DEBUGSTEP_CONSOLE_OFF ; $18ae
-	jr z, .eq01 ; $18b0
+	jr z, .consoleOff ; $18b0
 	ldh a, [hVBlankCounter] ; $18b2
 	and $01 ; $18b4
 	jr z, .storeShowDebugConsole2 ; $18b6
 	jr .storeShowDebugConsole ; $18b8
-.eq01:
+.consoleOff:
 	ldh a, [hPlayerInputFlags] ; $18ba
 	bit PADB_SELECT, a ; $18bc
 .storeShowDebugConsole:
@@ -115,7 +115,6 @@ PrintString:
 .terminated:
 	dec hl ; $191e
 	ld a, $01 ; $191f
-.markDirty:
 	ldh [hDebugTextDirty], a ; $1921
 	pop af ; $1923
 	ret ; $1924

@@ -267,7 +267,7 @@ SetDormRoomEventTriggerCells_13:
 SetupDormRoomSceneVariant:
 	ld a, [wStoryPartnerGender] ; $5130
 	or a ; $5133
-	jr nz, .nonZero ; $5134
+	jr nz, .partnerFemale ; $5134
 	farcall WaitPlayerMoveDone ; $5136
 	ld b, $20 ; $5139
 	ld c, $00 ; $513b
@@ -302,7 +302,7 @@ SetupDormRoomSceneVariant:
 	farcall CopyScrolledSceneTilemapToVram ; $51a5
 	call EnableLCD ; $51a8
 	ret ; $51ab
-.nonZero:
+.partnerFemale:
 	call SetRandomDormRoomNpc04Script_13 ; $51ac
 	ret ; $51af
 PlaceDormRoomArrivalActors_13:

@@ -260,7 +260,7 @@ TangentTable:
 GetTangent:
 	add hl, hl ; $1767
 	add hl, hl ; $1768
-	jr c, .carry ; $1769
+	jr c, .negative ; $1769
 	ld a, h ; $176b
 	cpl ; $176c
 	ld l, a ; $176d
@@ -275,7 +275,7 @@ GetTangent:
 	ret nc ; $1779
 	ld hl, $7fff ; $177a
 	ret ; $177d
-.carry:
+.negative:
 	ld l, h ; $177e
 	ld h, $00 ; $177f
 	inc l ; $1781

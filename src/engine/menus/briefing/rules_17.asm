@@ -407,7 +407,7 @@ PrepareRulesPageTilemap:
 	farcall FillTilemapRect ; $7220
 	ld a, [wRulesIsMinigame] ; $7223
 	or a ; $7226
-	jr nz, .nonZero ; $7227
+	jr nz, .matchRules ; $7227
 	ld a, [wRulesMinigameLevel] ; $7229
 	add $03 ; $722c
 	ld h, a ; $722e
@@ -415,7 +415,7 @@ PrepareRulesPageTilemap:
 	rect_size $10, $01 ; $7232
 	farcall FillTilemapRect ; $7236
 	jr .restore ; $7239
-.nonZero:
+.matchRules:
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; $723b
 	rect_size $10, $01 ; $723e
 	ld h, $00 ; $7242
@@ -426,13 +426,13 @@ PrepareRulesPageTilemap:
 QueueRulesPageToVRAM:
 	ld a, [wRulesIsMinigame] ; $724d
 	or a ; $7250
-	jr nz, .nonZero ; $7251
+	jr nz, .matchRules ; $7251
 	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH ; $7253
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $7256
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $7259
 	call QueueVRAMCopy ; $725b
 	jr .queueVRAMCopy ; $725e
-.nonZero:
+.matchRules:
 	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $7260
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $7263
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $7266
@@ -593,7 +593,7 @@ AdvanceRulesScreenAnimFrame:
 	ld [wRulesAnimCounter], a ; $742d
 	ld a, [wRulesAnimEnabled] ; $7430
 	or a ; $7433
-	jr z, .zero ; $7434
+	jr z, .slowAnim ; $7434
 	ldh a, [hVBlankCounter] ; $7436
 	srl a ; $7438
 	srl a ; $743a
@@ -607,8 +607,8 @@ AdvanceRulesScreenAnimFrame:
 .read:
 	ld a, [hl] ; $7448
 	ld [wRulesScreenAnimFrame], a ; $7449
-	jr .step2 ; $744c
-.zero:
+	jr .checkAnimEnd ; $744c
+.slowAnim:
 	ldh a, [hVBlankCounter] ; $744e
 	srl a ; $7450
 	srl a ; $7452
@@ -623,8 +623,8 @@ AdvanceRulesScreenAnimFrame:
 .readB:
 	ld a, [hl] ; $7462
 	ld [wRulesScreenAnimFrame], a ; $7463
-	jr .step2 ; $7466
-.step2:
+	jr .checkAnimEnd ; $7466
+.checkAnimEnd:
 	ld a, [wRulesAnimEnabled] ; $7468
 	or a ; $746b
 	jr z, .restore ; $746c

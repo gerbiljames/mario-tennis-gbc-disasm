@@ -450,9 +450,9 @@ ServeCoachTwoStageRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $74a2
 	script_wait_frames 5 ; $74a5
 	and a ; $74ac
-	jp nz, .nonZero ; $74ad
+	jp nz, .secondPrompt ; $74ad
 	farcall AdvanceDialogueTextCursor ; $74b0
-.nonZero:
+.secondPrompt:
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $74b3
 	farcall RunDialogueYesNoPrompt ; $74b8
 	farcall ScriptCloseDialogueWindow ; $74bb

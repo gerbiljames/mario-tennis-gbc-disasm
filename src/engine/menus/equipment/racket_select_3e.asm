@@ -59,11 +59,11 @@ RunRacketSelectScreen:
 	inc a ; $54e7
 	ld [wEquipSelectExitTimer], a ; $54e8
 	cp $14 ; $54eb
-	jr nc, .ge14 ; $54ed
+	jr nc, .exit ; $54ed
 .advanceFrame:
 	call AdvanceFrame ; $54ef
 	jr .loop ; $54f2
-.ge14:
+.exit:
 	push af ; $54f4
 	script_fade_out 16 ; $54f5
 	call WaitFadeEnd ; $54fa
@@ -165,11 +165,11 @@ HandleEquipSelectInput:
 	ldh a, [hInputPressed] ; $55af
 	ld [wMenuInputPressed], a ; $55b1
 	bit PADB_A, a ; $55b4
-	jr nz, .step ; $55b6
+	jr nz, .pressedA ; $55b6
 	bit PADB_B, a ; $55b8
 	jr nz, .playSfx ; $55ba
 	jr .moveMenuCursorGrid ; $55bc
-.step:
+.pressedA:
 	ld a, [wEquipSelectExitTimer] ; $55be
 	or a ; $55c1
 	jr nz, .moveMenuCursorGrid ; $55c2
@@ -262,11 +262,11 @@ RunShoesSelectScreen:
 	inc a ; $566f
 	ld [wEquipSelectExitTimer], a ; $5670
 	cp $14 ; $5673
-	jr nc, .ge14 ; $5675
+	jr nc, .exit ; $5675
 .advanceFrame:
 	call AdvanceFrame ; $5677
 	jr .loop ; $567a
-.ge14:
+.exit:
 	push af ; $567c
 	script_fade_out 16 ; $567d
 	call WaitFadeEnd ; $5682

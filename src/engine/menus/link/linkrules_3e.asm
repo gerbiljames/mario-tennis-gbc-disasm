@@ -91,17 +91,17 @@ MatchRulesCursorSpriteTask:
 	or a ; $48f6
 	jr nz, .compare ; $48f7
 	ld a, [wMatchFormatDoubles] ; $48f9
-	jr .step ; $48fc
+	jr .gotRuleValue ; $48fc
 .compare:
 	cp $01 ; $48fe
 	jr nz, .checkMatchFormatSets ; $4900
 	ld a, [wMatchFormatGames] ; $4902
 	add $02 ; $4905
-	jr .step ; $4907
+	jr .gotRuleValue ; $4907
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $4909
 	add $04 ; $490c
-.step:
+.gotRuleValue:
 	push af ; $490e
 	ld hl, MatchRulesCursorTiles_3e ; $490f
 	add l ; $4912
@@ -360,16 +360,16 @@ AnimateLinkErrorPalette:
 	srl a ; $4b50
 	srl a ; $4b52
 	add a ; $4b54
-	jr nc, .noCarry ; $4b55
+	jr nc, .notNegative ; $4b55
 	ld a, $0c ; $4b57
 	dec a ; $4b59
-	jr .step2 ; $4b5a
-.noCarry:
+	jr .gotFlashIndex ; $4b5a
+.notNegative:
 	rra ; $4b5c
 	cp $0c ; $4b5d
-	jr c, .step2 ; $4b5f
+	jr c, .gotFlashIndex ; $4b5f
 	xor a ; $4b61
-.step2:
+.gotFlashIndex:
 	add a ; $4b62
 	ld hl, LinkErrorFlashColors_3e ; $4b63
 	add l ; $4b66
@@ -404,17 +404,17 @@ ShowLinkStatusMessage:
 	pop bc ; $4bb6
 	ld a, c ; $4bb7
 	or a ; $4bb8
-	jr z, .zero ; $4bb9
+	jr z, .message0 ; $4bb9
 	cp $01 ; $4bbb
-	jr z, .eq01 ; $4bbd
+	jr z, .message1 ; $4bbd
 	jr .renderProportionalTextAt ; $4bbf
-.zero:
+.message0:
 	ld hl, Text_30_297 ; $4bc1
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bc4
 	ld c, $12 ; $4bc7
 	farcall RenderProportionalTextAt ; $4bc9
 	jr .uploadGlyphBuffer ; $4bcc
-.eq01:
+.message1:
 	ld hl, Text_30_298 ; $4bce
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bd1
 	ld c, $12 ; $4bd4

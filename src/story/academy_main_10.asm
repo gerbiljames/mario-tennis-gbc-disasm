@@ -126,10 +126,10 @@ AcademyMainBldgNpc03_10:
 	ld a, [wMapSceneStage] ; $75fa
 	sra a ; $75fd
 	cp STORYTIER_ISLAND_OPEN ; $75ff
-	jr z, .eq03 ; $7601
+	jr z, .islandOpen ; $7601
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1 ; $7603
 	ret ; $7608
-.eq03:
+.islandOpen:
 	script_speak_restore ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1 ; $7609
 	farcall RunDialogueYesNoPrompt ; $760e
 	farcall ScriptCloseDialogueWindow ; $7611
@@ -253,9 +253,9 @@ AcademyMainBldgInitScript_10:
 	ld a, [wMapSceneStage] ; $771a
 	sra a ; $771d
 	cp STORYTIER_SENIOR_CHAMP ; $771f
-	jr nz, .ne02 ; $7721
+	jr nz, .notSeniorChamp ; $7721
 	script_set_actor_script ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1, ActorScript_10_1 ; $7723
-.ne02:
+.notSeniorChamp:
 	ld a, $01 ; $772e
 	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730
 	call RegisterFrameTask ; $7733

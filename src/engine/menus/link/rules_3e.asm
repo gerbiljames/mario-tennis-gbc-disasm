@@ -88,10 +88,10 @@ RunLinkMatchRulesMenu:
 	ld c, $03 ; $4532
 	call MoveMenuCursorGrid_3e ; $4534
 	or a ; $4537
-	jr z, .zero ; $4538
+	jr z, .cursorUnmoved ; $4538
 	sound SFX_MENU_MOVE ; $453a
 	call DrawMatchRulesCaption ; $453c
-.zero:
+.cursorUnmoved:
 	push af ; $453f
 	farcall RunLinkInputFrame ; $4540
 	pop af ; $4543
@@ -305,7 +305,7 @@ MatchRulesMenuTable:
 OpenMatchRulesPanel:
 	ld a, b ; $46f4
 	or a ; $46f5
-	jr z, .zero ; $46f6
+	jr z, .slideBack ; $46f6
 	ld c, $00 ; $46f8
 .loop:
 	call AdvanceFrame ; $46fa
@@ -320,7 +320,7 @@ OpenMatchRulesPanel:
 	jr nz, .loop ; $470c
 	call AdvanceFrame ; $470e
 	ret ; $4711
-.zero:
+.slideBack:
 	ld c, $0a ; $4712
 .loopB:
 	call AdvanceFrame ; $4714
@@ -372,11 +372,11 @@ HandleMatchRulesToggleInput:
 	ld a, [wMatchFormatSets] ; $479f
 	dec a ; $47a2
 	add a ; $47a3
-	jr nc, .noCarry ; $47a4
+	jr nc, .noUnderflow ; $47a4
 	ld a, $03 ; $47a6
 	dec a ; $47a8
 	jr .store ; $47a9
-.noCarry:
+.noUnderflow:
 	rra ; $47ab
 	cp $03 ; $47ac
 	jr c, .store ; $47ae
@@ -417,11 +417,11 @@ HandleMatchRulesToggleInput:
 	ld a, [wMatchFormatSets] ; $47f6
 	inc a ; $47f9
 	add a ; $47fa
-	jr nc, .noCarry2 ; $47fb
+	jr nc, .noUnderflow2 ; $47fb
 	ld a, $03 ; $47fd
 	dec a ; $47ff
 	jr .store2 ; $4800
-.noCarry2:
+.noUnderflow2:
 	rra ; $4802
 	cp $03 ; $4803
 	jr c, .store2 ; $4805

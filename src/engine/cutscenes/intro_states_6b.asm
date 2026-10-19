@@ -635,11 +635,11 @@ IntroCutsceneState07Update_6b:
 .checkCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $46c0
 	cp $01 ; $46c3
-	jr z, .eq01 ; $46c5
+	jr z, .scrollCamera ; $46c5
 	inc a ; $46c7
 	ld [wCutsceneStepTimer], a ; $46c8
 	jp DispatchCutsceneStateInit.loop ; $46cb
-.eq01:
+.scrollCamera:
 	ld a, [wCameraX + 1] ; $46ce
 	ld h, a ; $46d1
 	ld a, [wCameraX] ; $46d2

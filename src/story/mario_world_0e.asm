@@ -168,7 +168,7 @@ ActorScript_0e_05:
 	; $5225, 35 bytes (actor_script)
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_field ACTORF_SPEED, $0010
-.L8:
+.pace:
 	as_target_rel -2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
@@ -177,7 +177,7 @@ ActorScript_0e_05:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait 75
-	as_jump .L8
+	as_jump .pace
 MarioWorldMapScripts_0e:
 	; $5248, 14 bytes (map_tree)
 	dw MarioWorldEntryPoints_0e ; slot 0 EntryPoints

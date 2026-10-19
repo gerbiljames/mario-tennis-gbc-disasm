@@ -11,9 +11,9 @@ StrokePractice1Hook_PointEnd:
 	call StrokePractice1JudgeOnPointEnd ; $6be1
 	ld a, [wPointOutcome] ; $6be4
 	cp POINTOUTCOME_OUT ; $6be7
-	jr z, .eq05 ; $6be9
+	jr z, .ballOut ; $6be9
 	jr .strokePractice1HandlePointEnd ; $6beb
-.eq05:
+.ballOut:
 	ld hl, wDrillCounters + 1 ; $6bed
 	inc [hl] ; $6bf0
 .strokePractice1HandlePointEnd:
@@ -245,19 +245,19 @@ StrokePractice2Hook_PointEnd:
 StrokePractice2EvaluateResult:
 	ld a, [wDrillCounters + 7] ; $6e40
 	cp $04 ; $6e43
-	jr nz, .ne04 ; $6e45
+	jr nz, .checkCounter7 ; $6e45
 	xor a ; $6e47
 	ld [wDrillLessonResult], a ; $6e48
 	ld a, $01 ; $6e4b
 	ret ; $6e4d
-.ne04:
+.checkCounter7:
 	ld a, [wDrillCounters + 7] ; $6e4e
 	cp $03 ; $6e51
-	jr c, .lt03 ; $6e53
+	jr c, .checkCounter2 ; $6e53
 	ld a, $05 ; $6e55
 	ld [wDrillLessonResult], a ; $6e57
 	jr .notFound ; $6e5a
-.lt03:
+.checkCounter2:
 	ld a, [wDrillCounters + 2] ; $6e5c
 	cp $04 ; $6e5f
 	jr nc, .checkRallyLength ; $6e61
@@ -267,7 +267,7 @@ StrokePractice2EvaluateResult:
 .checkRallyLength:
 	ld a, [wRallyLength] ; $6e6a
 	cp $03 ; $6e6d
-	jr nc, .step3 ; $6e6f
+	jr nc, .result4 ; $6e6f
 	ld a, [wShotRecoilVariant] ; $6e71
 	cp $01 ; $6e74
 	jr nz, .compare ; $6e76
@@ -276,11 +276,11 @@ StrokePractice2EvaluateResult:
 	jr .notFound ; $6e7d
 .compare:
 	cp $02 ; $6e7f
-	jr nz, .step3 ; $6e81
+	jr nz, .result4 ; $6e81
 	ld a, $03 ; $6e83
 	ld [wDrillLessonResult], a ; $6e85
 	jr .notFound ; $6e88
-.step3:
+.result4:
 	ld a, $04 ; $6e8a
 	ld [wDrillLessonResult], a ; $6e8c
 .notFound:
@@ -469,7 +469,7 @@ StrokePractice2Cases2:
 	call RecordDrillTargetZoneHit ; $6fe4
 	call CheckDrillTargetZoneMissed ; $6fe7
 	or a ; $6fea
-	jp nz, .nonZero ; $6feb
+	jp nz, .hitTarget ; $6feb
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3 ; $6fee
 	ld b, $00 ; $6ff0
 	call QueueDrillResultMessage ; $6ff2
@@ -479,7 +479,7 @@ StrokePractice2Cases2:
 .storeMatchAbortFlag2:
 	xor a ; $6ffc
 	ret ; $6ffd
-.nonZero:
+.hitTarget:
 	ld a, MATCHABORT_POINT ; $6ffe
 	ld [wMatchAbortFlag], a ; $7000
 	ld a, $01 ; $7003

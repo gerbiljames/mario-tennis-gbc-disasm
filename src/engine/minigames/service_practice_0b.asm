@@ -306,21 +306,21 @@ ServicePractice1EvaluateResult:
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $4e52
 	or a ; $4e55
-	jr z, .zero ; $4e56
+	jr z, .noDoubleFaults ; $4e56
 	ld a, $02 ; $4e58
 	ld [wDrillLessonResult], a ; $4e5a
 	jr .notFound ; $4e5d
-.zero:
+.noDoubleFaults:
 	ld a, b ; $4e5f
 	or a ; $4e60
-	jr z, .zero2 ; $4e61
+	jr z, .allPassed ; $4e61
 	ld a, $03 ; $4e63
 	ld [wDrillLessonResult], a ; $4e65
 	jr .notFound ; $4e68
 .notFound:
 	ld a, $ff ; $4e6a
 	ret ; $4e6c
-.zero2:
+.allPassed:
 	xor a ; $4e6d
 	ld [wDrillLessonResult], a ; $4e6e
 	ld a, $01 ; $4e71
@@ -397,39 +397,39 @@ UnusedStoreDrillServeTargetResult:
 ServicePractice1QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $4f22
 	cp POINTOUTCOME_FAULT ; $4f25
-	jp z, .step4 ; $4f27
+	jp z, .hide ; $4f27
 	cp POINTOUTCOME_LET ; $4f2a
-	jp z, .step4 ; $4f2c
+	jp z, .hide ; $4f2c
 	ld a, [wPointOutcome] ; $4f2f
 	cp POINTOUTCOME_DOUBLE_FAULT ; $4f32
-	jr z, .eq02 ; $4f34
+	jr z, .doubleFault ; $4f34
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4f36
 	ld b, $00 ; $4f38
 	call QueueDrillResultMessage ; $4f3a
 	call CheckDrillTargetZoneMissed ; $4f3d
 	or a ; $4f40
-	jr z, .zero ; $4f41
+	jr z, .missed ; $4f41
 	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $4f43
 	ld b, $00 ; $4f45
 	call QueueDrillResultMessage ; $4f47
-	jr .step2 ; $4f4a
-.eq02:
+	jr .targetHit ; $4f4a
+.doubleFault:
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $4f4c
 	ld b, $00 ; $4f4e
 	call QueueDrillResultMessage ; $4f50
 	ld a, $ff ; $4f53
 	ret ; $4f55
 .unreachable:
-	jr .zero ; $4f56
-.step2:
+	jr .missed ; $4f56
+.targetHit:
 	ld hl, wDrillCounters ; $4f58
 	inc [hl] ; $4f5b
 	ld a, $01 ; $4f5c
 	ret ; $4f5e
-.zero:
+.missed:
 	ld a, $ff ; $4f5f
 	ret ; $4f61
-.step4:
+.hide:
 	ld a, DRILLMSG_HIDE ; $4f62
 	ld [wDrillMessageId], a ; $4f64
 	xor a ; $4f67
@@ -503,21 +503,21 @@ ServicePractice2EvaluateResult:
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $4fe9
 	or a ; $4fec
-	jr z, .zero ; $4fed
+	jr z, .checkCounter2 ; $4fed
 	ld a, $03 ; $4fef
 	ld [wDrillLessonResult], a ; $4ff1
 	jr .notFound ; $4ff4
-.zero:
+.checkCounter2:
 	ld a, [wDrillCounters + 2] ; $4ff6
 	or a ; $4ff9
-	jr z, .zero3 ; $4ffa
+	jr z, .checkCounter1 ; $4ffa
 	ld a, [wDrillCounters + 1] ; $4ffc
 	or a ; $4fff
-	jr z, .zero2 ; $5000
+	jr z, .byHandedness ; $5000
 	ld a, $04 ; $5002
 	ld [wDrillLessonResult], a ; $5004
 	jr .notFound ; $5007
-.zero2:
+.byHandedness:
 	ld b, $06 ; $5009
 	ld a, [wStoryMainLeftHanded] ; $500b
 	cpl ; $500e
@@ -525,10 +525,10 @@ ServicePractice2EvaluateResult:
 	add b ; $5010
 	ld [wDrillLessonResult], a ; $5011
 	jr .notFound ; $5014
-.zero3:
+.checkCounter1:
 	ld a, [wDrillCounters + 1] ; $5016
 	or a ; $5019
-	jr z, .zero4 ; $501a
+	jr z, .allPassed ; $501a
 	ld b, $05 ; $501c
 	ld a, [wStoryMainLeftHanded] ; $501e
 	add b ; $5021
@@ -537,7 +537,7 @@ ServicePractice2EvaluateResult:
 .notFound:
 	ld a, $ff ; $5027
 	ret ; $5029
-.zero4:
+.allPassed:
 	xor a ; $502a
 	ld [wDrillLessonResult], a ; $502b
 	ld a, $01 ; $502e

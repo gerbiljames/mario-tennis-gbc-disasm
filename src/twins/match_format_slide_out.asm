@@ -3,7 +3,7 @@
 {TWIN_LABEL}:
 	ld a, b
 	or a
-	jr z, .zero
+	jr z, .countDown
 	ld c, $00
 .loop:
 	call AdvanceFrame
@@ -17,7 +17,7 @@
 	cp $0b
 	jr nz, .loop
 	ret
-.zero:
+.countDown:
 	ld c, $0d
 .loopB:
 	call AdvanceFrame

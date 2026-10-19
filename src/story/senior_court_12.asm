@@ -230,9 +230,9 @@ SeniorCourtNpc04_12:
 	script_speak ACTOR_ROLE_SENIOR_COURT_FAY ; $5831
 	ld a, [wMapSceneStage2] ; $5836
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $5839
-	jr nc, .ge02 ; $583b
+	jr nc, .atLeastSinglesRank4 ; $583b
 	jr .done ; $583d
-.ge02:
+.atLeastSinglesRank4:
 	ld a, [wMapSceneStage2] ; $583f
 	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $5842
 	jr c, .done ; $5844
@@ -259,10 +259,10 @@ SeniorCourtNpc05_12:
 	farcall InitDialogueTextCursor ; $5867
 	ld a, [wMapSceneStage2] ; $586a
 	cp SENIORCOURTSTAGE_SINGLES_RANK2 ; $586d
-	jr z, .eq04 ; $586f
+	jr z, .singlesRank2 ; $586f
 	script_speak ACTOR_SENIOR_COURT_ALLIE ; $5871
 	ret ; $5876
-.eq04:
+.singlesRank2:
 	script_speak_restore ACTOR_SENIOR_COURT_A_ALLIE ; $5877
 	farcall RunDialogueYesNoPrompt ; $587c
 	farcall ScriptCloseDialogueWindow ; $587f
@@ -302,10 +302,10 @@ SeniorCourtNpc06_12:
 	farcall InitDialogueTextCursor ; $58c1
 	ld a, [wMapSceneStage2] ; $58c4
 	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $58c7
-	jr z, .eq06 ; $58c9
+	jr z, .doublesRank3 ; $58c9
 	script_speak ACTOR_ROLE_SENIOR_COURT_JOY ; $58cb
 	ret ; $58d0
-.eq06:
+.doublesRank3:
 	script_speak_restore ACTOR_SENIOR_COURT_B_JOY ; $58d1
 	farcall RunDialogueYesNoPrompt ; $58d6
 	farcall ScriptCloseDialogueWindow ; $58d9
@@ -605,7 +605,7 @@ SeniorCourtNpc0BTextIds:
 SeniorCourtNpc0C_12:
 	ld a, [wStoryPartnerGender] ; $5bdd
 	or a ; $5be0
-	jr nz, .nonZero ; $5be1
+	jr nz, .partnerFemale ; $5be1
 	ld a, [wMapSceneStage2] ; $5be3
 	add a ; $5be6
 	ld_hl_indexed SeniorCourtNpc0C_12Table ; $5be7
@@ -615,7 +615,7 @@ SeniorCourtNpc0C_12:
 	farcall InitDialogueTextCursor ; $5bf1
 	script_speak ACTOR_SENIOR_COURT_KATE ; $5bf4
 	ret ; $5bf9
-.nonZero:
+.partnerFemale:
 	ld a, [wMapSceneStage2] ; $5bfa
 	add a ; $5bfd
 	ld_hl_indexed SeniorCourtNpc0CTextIds ; $5bfe

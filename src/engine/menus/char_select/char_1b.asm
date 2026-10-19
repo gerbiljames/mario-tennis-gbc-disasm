@@ -79,9 +79,9 @@ Unused_1b_DrawCharSelectPrompt:
 	ld hl, $0470 ; $605c
 	ld a, [wStoryCharacterSlot] ; $605f
 	or a ; $6062
-	jr z, .zero ; $6063
+	jr z, .drawPrompt ; $6063
 	ld hl, Text_31_123 ; $6065
-.zero:
+.drawPrompt:
 	ld de, $da01 ; $6068
 	farcall Unused_18_RenderProportionalTextAt32 ; $606b
 	ret ; $606e
@@ -171,7 +171,7 @@ Unused_1b_RunCharSelectLoop:
 	farcall Unused_18_InitPlayerRecordForCharacter ; $612c
 	sound SFX_MENU_SELECT ; $612f
 	ld a, $fe ; $6131
-	jr .step4 ; $6133
+	jr .returnSelection ; $6133
 .checkInputRisingEdge:
 	ldh a, [hInputRisingEdge] ; $6135
 	and PADF_A ; $6137
@@ -182,14 +182,14 @@ Unused_1b_RunCharSelectLoop:
 	farcall Unused_18_InitPlayerRecordForCharacter ; $6142
 	sound SFX_MENU_SELECT ; $6145
 	ld a, [wCharSelectChar] ; $6147
-	jr .step4 ; $614a
+	jr .returnSelection ; $614a
 .checkInputRisingEdge2:
 	ldh a, [hInputRisingEdge] ; $614c
 	and PADF_B ; $614e
 	jr z, .moveCharSelectCursor ; $6150
 	sound SFX_MENU_CANCEL ; $6152
 	ld a, $ff ; $6154
-	jr .step4 ; $6156
+	jr .returnSelection ; $6156
 .moveCharSelectCursor:
 	call Unused_1b_MoveCharSelectCursor ; $6158
 	call Unused_1b_UpdateCharSelectSelection ; $615b
@@ -197,7 +197,7 @@ Unused_1b_RunCharSelectLoop:
 	farcall LoadCharacterRecordToBuffer ; $6161
 	call AdvanceFrame ; $6164
 	jr .loopB ; $6167
-.step4:
+.returnSelection:
 	ld hl, wCharSelectCol ; $6169
 	ld d, [hl] ; $616c
 	ld hl, wCharSelectRow ; $616d
@@ -309,9 +309,9 @@ RunNewGameSetup:
 	ld hl, wStoryMainName ; $6231
 	ld a, [wStoryCharacterSlot] ; $6234
 	or a ; $6237
-	jr z, .zero ; $6238
+	jr z, .charField ; $6238
 	ld l, $40 ; $623a
-.zero:
+.charField:
 	ld a, l ; $623c
 	add $0b ; $623d
 	ld l, a ; $623f
@@ -344,9 +344,9 @@ RunNewGameSetup:
 	ld hl, wStoryMainName ; $6271
 	ld a, [wStoryCharacterSlot] ; $6274
 	or a ; $6277
-	jr z, .zero2 ; $6278
+	jr z, .charField2 ; $6278
 	ld l, $40 ; $627a
-.zero2:
+.charField2:
 	ld a, l ; $627c
 	add $0b ; $627d
 	ld l, a ; $627f
@@ -392,9 +392,9 @@ RunNewGameSetup:
 	ld hl, wStoryMainName ; $62c2
 	ld a, [wStoryCharacterSlot] ; $62c5
 	or a ; $62c8
-	jr z, .zero3 ; $62c9
+	jr z, .charField3 ; $62c9
 	ld l, $40 ; $62cb
-.zero3:
+.charField3:
 	ld a, l ; $62cd
 	add $0b ; $62ce
 	ld l, a ; $62d0
@@ -449,27 +449,27 @@ Unused_1b_RunDebugSaveDataFlow:
 	cp $ff ; $6332
 	jr z, Unused_1b_RunDebugSaveDataFlow ; $6334
 	cp $01 ; $6336
-	jp z, .eq01 ; $6338
+	jp z, .minigameFlags ; $6338
 	cp $ff ; $633b
 	jr z, .loop ; $633d
 	or a ; $633f
-	jr nz, .nonZero ; $6340
+	jr nz, .slotPicked ; $6340
 	or a ; $6342
 	jr nz, .loop ; $6343
 	farcall ReinitSaveRamPreservingBlock6 ; $6345
 	ld b, $01 ; $6348
 	jr .loop ; $634a
-.nonZero:
+.slotPicked:
 	and $3f ; $634c
 	ld b, a ; $634e
 	ld hl, wPlayer1MainName ; $634f
 	ld [wCurrentStorySlot], a ; $6352
 	farcall CheckStorySlot ; $6355
 	or a ; $6358
-	jr z, .zero ; $6359
+	jr z, .slotOk ; $6359
 	sound SFX_MENU_CANCEL ; $635b
 	jr .loop ; $635d
-.zero:
+.slotOk:
 	push bc ; $635f
 	call Unused_1b_StubNop_1b_09 ; $6360
 	pop bc ; $6363
@@ -496,7 +496,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	farcall EraseStorySlotSaveData ; $6386
 	ld b, $01 ; $6389
 	jp .loop ; $638b
-.eq01:
+.minigameFlags:
 	ld a, $00 ; $638e
 	ld [wUnlockDebugSelection], a ; $6390
 	farcall Unused_1b_RunMinigameFlagsDebugScreen ; $6393
@@ -511,7 +511,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld d, [hl] ; $63a6
 	ld e, a ; $63a7
 	or d ; $63a8
-	jr z, .step4 ; $63a9
+	jr z, .checkTrophyExp ; $63a9
 	push_wram_bank WRAM_SCENE ; $63ab
 	xor a ; $63b4
 	ld [$d000], a ; $63b5
@@ -522,13 +522,13 @@ Unused_1b_RunDebugSaveDataFlow:
 	farcall Unused_1a_ShowExpGainScreen ; $63c3
 	ld c, $00 ; $63c6
 	farcall CharDataScreen_Show ; $63c8
-.step4:
+.checkTrophyExp:
 	ld hl, wPendingExpTrophy ; $63cb
 	ld a, [hl+] ; $63ce
 	ld d, [hl] ; $63cf
 	ld e, a ; $63d0
 	or d ; $63d1
-	jr z, .step5 ; $63d2
+	jr z, .clearPendingExp ; $63d2
 	push_wram_bank WRAM_SCENE ; $63d4
 	xor a ; $63dd
 	ld [$d000], a ; $63de
@@ -539,7 +539,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	farcall Unused_1a_ShowExpGainScreen ; $63ec
 	ld c, $01 ; $63ef
 	farcall CharDataScreen_Show ; $63f1
-.step5:
+.clearPendingExp:
 	xor a ; $63f4
 	ld hl, wPendingExpStory ; $63f5
 	ASSERT wPendingExpTrophy == wPendingExpStory + 2, "this code walks from wPendingExpStory into wPendingExpTrophy"

@@ -87,20 +87,20 @@ RunDebugColorEditor:
 	jr nz, .closeWindow ; $69ec
 	ldh a, [hPlayerInputFlags] ; $69ee
 	bit PADB_LEFT, a ; $69f0
-	jr z, .step ; $69f2
+	jr z, .checkRight ; $69f2
 	dec e ; $69f4
-	jr .step4 ; $69f5
-.step:
+	jr .wrapComponent ; $69f5
+.checkRight:
 	bit 4, a ; $69f7
-	jr z, .bit4Clear ; $69f9
+	jr z, .checkUp ; $69f9
 	inc e ; $69fb
-	jr .step4 ; $69fc
-.bit4Clear:
+	jr .wrapComponent ; $69fc
+.checkUp:
 	bit 6, a ; $69fe
-	jr z, .bit6Clear ; $6a00
+	jr z, .checkDown ; $6a00
 	ld d, $01 ; $6a02
 	jr .getSelectedBGPaletteColorPtr ; $6a04
-.bit6Clear:
+.checkDown:
 	bit 7, a ; $6a06
 	jr z, .advanceFrame ; $6a08
 	ld d, $ff ; $6a0a
@@ -108,7 +108,7 @@ RunDebugColorEditor:
 .advanceFrame:
 	call AdvanceFrame ; $6a0e
 	jr .loop ; $6a11
-.step4:
+.wrapComponent:
 	ld a, e ; $6a13
 	cp $ff ; $6a14
 	jr nz, .compare ; $6a16
@@ -200,34 +200,34 @@ RunDebugPaletteViewer:
 	bit PADB_B, a ; $6ab4
 	jr nz, .closeWindow ; $6ab6
 	bit PADB_A, a ; $6ab8
-	jr z, .bit0Clear ; $6aba
+	jr z, .moveCursor ; $6aba
 	call RunDebugColorEditor ; $6abc
-.bit0Clear:
+.moveCursor:
 	ld a, [wDebugPaletteColorIndex] ; $6abf
 	ld d, a ; $6ac2
 	ld a, [wDebugPaletteIndex] ; $6ac3
 	ld e, a ; $6ac6
 	ldh a, [hInputPressed] ; $6ac7
 	bit PADB_LEFT, a ; $6ac9
-	jr z, .step2 ; $6acb
+	jr z, .checkRight ; $6acb
 	dec d ; $6acd
-	jr .step5 ; $6ace
-.step2:
+	jr .wrapCursor ; $6ace
+.checkRight:
 	bit 4, a ; $6ad0
-	jr z, .bit4Clear ; $6ad2
+	jr z, .checkUp ; $6ad2
 	inc d ; $6ad4
-	jr .step5 ; $6ad5
-.bit4Clear:
+	jr .wrapCursor ; $6ad5
+.checkUp:
 	bit 6, a ; $6ad7
-	jr z, .bit6Clear ; $6ad9
+	jr z, .checkDown ; $6ad9
 	dec e ; $6adb
-	jr .step5 ; $6adc
-.bit6Clear:
+	jr .wrapCursor ; $6adc
+.checkDown:
 	bit 7, a ; $6ade
-	jr z, .step5 ; $6ae0
+	jr z, .wrapCursor ; $6ae0
 	inc e ; $6ae2
-	jr .step5 ; $6ae3
-.step5:
+	jr .wrapCursor ; $6ae3
+.wrapCursor:
 	ld a, d ; $6ae5
 	and $03 ; $6ae6
 	ld [wDebugPaletteColorIndex], a ; $6ae8
@@ -335,10 +335,10 @@ Unused_05_WriteStringToTilemap:
 	inc hl ; $6b89
 	ld a, [hl] ; $6b8a
 	cp $de ; $6b8b
-	jr z, .eqde ; $6b8d
+	jr z, .applyDiacritic ; $6b8d
 	cp $df ; $6b8f
-	jr nz, .nedf ; $6b91
-.eqde:
+	jr nz, .nextCell ; $6b91
+.applyDiacritic:
 	push hl ; $6b93
 	push bc ; $6b94
 	ld h, d ; $6b95
@@ -356,7 +356,7 @@ Unused_05_WriteStringToTilemap:
 	pop bc ; $6ba5
 	pop hl ; $6ba6
 	inc hl ; $6ba7
-.nedf:
+.nextCell:
 	inc de ; $6ba8
 	ld a, e ; $6ba9
 	and $1f ; $6baa
@@ -382,10 +382,10 @@ Unused_05_WriteStringToTilemapAlt:
 	inc hl ; $6bc0
 	ld a, [hl] ; $6bc1
 	cp $de ; $6bc2
-	jr z, .eqde ; $6bc4
+	jr z, .applyDiacritic ; $6bc4
 	cp $df ; $6bc6
-	jr nz, .nedf ; $6bc8
-.eqde:
+	jr nz, .nextCell ; $6bc8
+.applyDiacritic:
 	push hl ; $6bca
 	push bc ; $6bcb
 	ld h, d ; $6bcc
@@ -403,7 +403,7 @@ Unused_05_WriteStringToTilemapAlt:
 	pop bc ; $6bdc
 	pop hl ; $6bdd
 	inc hl ; $6bde
-.nedf:
+.nextCell:
 	inc de ; $6bdf
 	ld a, e ; $6be0
 	and $1f ; $6be1
@@ -432,7 +432,7 @@ Unused_05_WriteStringToTilemapStreamed:
 	cp $00 ; $6bfe
 	jr z, .restore ; $6c00
 	cp $01 ; $6c02
-	jr nz, .ne01 ; $6c04
+	jr nz, .notNewline ; $6c04
 	ld c, a ; $6c06
 	ld a, [$dc05] ; $6c07
 	ld d, a ; $6c0a
@@ -454,10 +454,10 @@ Unused_05_WriteStringToTilemapStreamed:
 	ld a, c ; $6c22
 	inc hl ; $6c23
 	ld a, [hl] ; $6c24
-.ne01:
+.notNewline:
 	ld c, $00 ; $6c25
 	cp $02 ; $6c27
-	jr nz, .ne02 ; $6c29
+	jr nz, .notPageBreak ; $6c29
 	ld a, $01 ; $6c2b
 	ld [$dc09], a ; $6c2d
 	inc hl ; $6c30
@@ -466,7 +466,7 @@ Unused_05_WriteStringToTilemapStreamed:
 	ld a, l ; $6c35
 	ld [$dc08], a ; $6c36
 	jr .restore ; $6c39
-.ne02:
+.notPageBreak:
 	ld c, $01 ; $6c3b
 	cp $03 ; $6c3d
 	jr nz, .store ; $6c3f
@@ -478,10 +478,10 @@ Unused_05_WriteStringToTilemapStreamed:
 	inc hl ; $6c49
 	ld a, [hl] ; $6c4a
 	cp $de ; $6c4b
-	jr z, .eqde ; $6c4d
+	jr z, .applyDiacritic ; $6c4d
 	cp $df ; $6c4f
-	jr nz, .nedf ; $6c51
-.eqde:
+	jr nz, .nextCell ; $6c51
+.applyDiacritic:
 	push hl ; $6c53
 	push bc ; $6c54
 	ld h, d ; $6c55
@@ -499,7 +499,7 @@ Unused_05_WriteStringToTilemapStreamed:
 	pop bc ; $6c65
 	pop hl ; $6c66
 	inc hl ; $6c67
-.nedf:
+.nextCell:
 	inc de ; $6c68
 	ld a, e ; $6c69
 	and $1f ; $6c6a
@@ -567,10 +567,10 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	inc hl ; $6cd7
 	ld a, [hl] ; $6cd8
 	cp $de ; $6cd9
-	jr z, .eqde2 ; $6cdb
+	jr z, .applyDiacritic ; $6cdb
 	cp $df ; $6cdd
-	jr nz, .nedf2 ; $6cdf
-.eqde2:
+	jr nz, .nextCell ; $6cdf
+.applyDiacritic:
 	push hl ; $6ce1
 	ld h, d ; $6ce2
 	ld l, e ; $6ce3
@@ -586,7 +586,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld [hl], a ; $6cf0
 	pop hl ; $6cf1
 	inc hl ; $6cf2
-.nedf2:
+.nextCell:
 	inc de ; $6cf3
 	ld a, e ; $6cf4
 	and $3f ; $6cf5

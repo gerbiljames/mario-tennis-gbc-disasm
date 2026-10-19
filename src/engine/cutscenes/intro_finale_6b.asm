@@ -358,9 +358,9 @@ ScrollOutIntroLogo:
 	inc a ; $51f1
 	ld [wCutsceneStepTimer], a ; $51f2
 	cp $3e ; $51f5
-	jr z, .eq3e ; $51f7
+	jr z, .fadeOut ; $51f7
 	jr .loop ; $51f9
-.eq3e:
+.fadeOut:
 	script_fade_out 16 ; $51fb
 	call WaitFadeEnd ; $5200
 	call DisableLCDSafely ; $5203

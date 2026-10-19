@@ -530,9 +530,9 @@ CopyTileRectToShadowAttrmap:
 .gotPtr:
 	ld a, d ; $78cc
 	cp $d8 ; $78cd
-	jr c, .ltd8 ; $78cf
+	jr c, .nextRow ; $78cf
 	ld d, $d4 ; $78d1
-.ltd8:
+.nextRow:
 	dec c ; $78d3
 	jr nz, CopyTileRectToShadowAttrmap ; $78d4
 	ret ; $78d6

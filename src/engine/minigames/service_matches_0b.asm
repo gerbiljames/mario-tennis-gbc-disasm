@@ -170,7 +170,7 @@ ServiceMatch1Hook_PointEnd:
 	bit 0, a ; $486c
 	ret nz ; $486e
 	cp $08 ; $486f
-	jr z, .eq08 ; $4871
+	jr z, .finalPoint ; $4871
 	ld hl, wDrillCounters + 1 ; $4873
 	ld a, [hl+] ; $4876
 	ld b, [hl] ; $4877
@@ -179,7 +179,7 @@ ServiceMatch1Hook_PointEnd:
 	ld a, MATCHABORT_MATCH ; $487a
 	ld [wMatchAbortFlag], a ; $487c
 	ret ; $487f
-.eq08:
+.finalPoint:
 	ld hl, wDrillCounters + 2 ; $4880
 	ld a, [hl-] ; $4883
 	sub [hl] ; $4884
@@ -441,7 +441,7 @@ ServiceMatch2Hook_PointEnd:
 	bit 0, a ; $4a30
 	ret nz ; $4a32
 	cp $08 ; $4a33
-	jr z, .eq08 ; $4a35
+	jr z, .finalPoint ; $4a35
 	ld hl, wDrillCounters + 1 ; $4a37
 	ld a, [hl+] ; $4a3a
 	ld b, [hl] ; $4a3b
@@ -450,7 +450,7 @@ ServiceMatch2Hook_PointEnd:
 	ld a, MATCHABORT_MATCH ; $4a3e
 	ld [wMatchAbortFlag], a ; $4a40
 	ret ; $4a43
-.eq08:
+.finalPoint:
 	ld hl, wDrillCounters + 2 ; $4a44
 	ld a, [hl-] ; $4a47
 	sub [hl] ; $4a48

@@ -148,28 +148,28 @@ ActorScript_0e_22:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 	as_begin_path
-.Lb:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wander
 	as_begin_path
-.L15:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L15
+	as_jump .wanderNarrow
 	as_begin_path
-.L1f:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L1f
+	as_jump .wanderSmall
 MapScriptNop_0e:
 	ret ; $7c96
 Unused_0e_MapScriptClearActiveFlag:

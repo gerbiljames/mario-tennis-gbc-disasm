@@ -121,30 +121,30 @@ ActorScript_15_22:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_15_23:
 	; $7d77, 30 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 	as_begin_path
-.Lb:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderNarrow
 	as_begin_path
-.L15:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L15
+	as_jump .wanderSmall
 MapScriptNop_15:
 	ret ; $7d95
 Unused_15_MapScriptClearActiveFlag:
@@ -199,7 +199,7 @@ ActorScript_15_24:
 	as_jump ActorScript_15_24
 	as_anim ANIM_STILL
 	as_wait 60
-.L67:
+.swingUpLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -236,10 +236,10 @@ ActorScript_15_24:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L67
+	as_jump .swingUpLoop
 	as_anim ANIM_STILL
 	as_wait 30
-.Lce:
+.swingDownLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -276,11 +276,11 @@ ActorScript_15_24:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .Lce
+	as_jump .swingDownLoop
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L137:
+.swingUpLoop2:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -317,7 +317,7 @@ ActorScript_15_24:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L137
+	as_jump .swingUpLoop2
 ActorScript_15_25:
 	; $7f3d, 28 bytes (actor_script)
 	as_wait 240
@@ -326,14 +326,14 @@ ActorScript_15_25:
 	as_anim ANIM_NOD
 	as_wait 60
 	as_jump ActorScript_15_25
-.Ld:
+.shakeHeadLoop:
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_NOD
-	as_jump .Ld
+	as_jump .shakeHeadLoop
 	twin_in compute_ranking_progress_index_13, Unused_15_ComputeRankingProgressIndex, 15 ; $7f59 Unused_15_ComputeRankingProgressIndex
 	twin compute_story_rank_tier, 15 ; $7fa0 ComputeStoryRankTier_15
 	; $7fd1, 47 bytes fill to bank end (linker-padded)

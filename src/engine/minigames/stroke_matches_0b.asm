@@ -313,7 +313,7 @@ StrokeMatch2Cases3:
 	xor $01 ; $68ec
 	call TestCharStateBit4 ; $68ee
 	or a ; $68f1
-	jp z, .zero ; $68f2
+	jp z, .pointWon ; $68f2
 	xor a ; $68f5
 	ret ; $68f6
 .noAction:
@@ -344,7 +344,7 @@ StrokeMatch2Cases3:
 .storeMatchAbortFlag2:
 	xor a ; $6914
 	ret ; $6915
-.zero:
+.pointWon:
 	ld a, MATCHABORT_POINT ; $6916
 	ld [wMatchAbortFlag], a ; $6918
 	ld a, $01 ; $691b
@@ -631,7 +631,7 @@ StrokeMatch3Cases3:
 	xor $01 ; $6b23
 	call TestCharStateBit4 ; $6b25
 	or a ; $6b28
-	jp z, .zero ; $6b29
+	jp z, .pointWon ; $6b29
 	xor a ; $6b2c
 	ret ; $6b2d
 .noAction:
@@ -662,7 +662,7 @@ StrokeMatch3Cases3:
 .storeMatchAbortFlag2:
 	xor a ; $6b4b
 	ret ; $6b4c
-.zero:
+.pointWon:
 	ld a, MATCHABORT_POINT ; $6b4d
 	ld [wMatchAbortFlag], a ; $6b4f
 	ld a, $01 ; $6b52

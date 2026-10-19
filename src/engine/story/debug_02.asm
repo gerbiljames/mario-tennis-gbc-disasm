@@ -14,14 +14,14 @@ Unused_02_DebugStoryStatsScreen:
 .loop:
 	farcall CheckStorySlot ; $4fcb
 	or a ; $4fce
-	jr z, .zero ; $4fcf
+	jr z, .slotOk ; $4fcf
 	push de ; $4fd1
 	ld hl, MenuTilemaps_02 ; $4fd2
 	ld_cell de, $08, $02 ; $4fd5
 	call PrintString ; $4fd8
 	pop de ; $4fdb
 	jp .printString ; $4fdc
-.zero:
+.slotOk:
 	ld hl, DebugStoryStatsScreenString0 ; $4fdf
 	ld_cell de, $08, $02 ; $4fe2
 	call PrintString ; $4fe5
@@ -212,7 +212,7 @@ Unused_02_DebugStoryStatsScreen:
 	jp .loopB ; $5156
 .levelUpPlayer:
 	bit 5, a ; $5159
-	jr z, .bit5Clear ; $515b
+	jr z, .checkRight ; $515b
 	push de ; $515d
 	ld a, $00 ; $515e
 	ld d, $01 ; $5160
@@ -220,9 +220,9 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $5165
 	sound SFX_MENU_MOVE ; $5166
 	jp .loopB ; $5168
-.bit5Clear:
+.checkRight:
 	bit 4, a ; $516b
-	jr z, .bit4Clear ; $516d
+	jr z, .checkDown ; $516d
 	push de ; $516f
 	ld a, $00 ; $5170
 	ld d, $02 ; $5172
@@ -230,7 +230,7 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $5177
 	sound SFX_MENU_MOVE ; $5178
 	jp .loopB ; $517a
-.bit4Clear:
+.checkDown:
 	bit 7, a ; $517d
 	jr z, .positive ; $517f
 	push de ; $5181
@@ -242,7 +242,7 @@ Unused_02_DebugStoryStatsScreen:
 	jp .loopB ; $518c
 .positive:
 	bit 1, a ; $518f
-	jr z, .bit1Clear ; $5191
+	jr z, .checkA ; $5191
 	push de ; $5193
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $5194
 	ldh [hDebugStepMode], a ; $5196
@@ -251,9 +251,9 @@ Unused_02_DebugStoryStatsScreen:
 	ldh [hDebugStepMode], a ; $519c
 	pop de ; $519e
 	jp .loopB ; $519f
-.bit1Clear:
+.checkA:
 	bit 0, a ; $51a2
-	jr z, .bit0Clear ; $51a4
+	jr z, .checkSelect ; $51a4
 	push af ; $51a6
 	push bc ; $51a7
 	push de ; $51a8
@@ -277,9 +277,9 @@ Unused_02_DebugStoryStatsScreen:
 	ld a, $01 ; $51c3
 	ld [wStoryMainLeftHanded], a ; $51c5
 	jp .loopB ; $51c8
-.bit0Clear:
+.checkSelect:
 	bit 2, a ; $51cb
-	jr z, .bit2Clear ; $51cd
+	jr z, .checkStart ; $51cd
 	sound SFX_MENU_SELECT ; $51cf
 	ld a, [wCurrentStorySlot] ; $51d1
 	inc a ; $51d4
@@ -289,7 +289,7 @@ Unused_02_DebugStoryStatsScreen:
 .store:
 	ld [wCurrentStorySlot], a ; $51da
 	jp .loop ; $51dd
-.bit2Clear:
+.checkStart:
 	bit 3, a ; $51e0
 	jr z, .skipSave ; $51e2
 	sound SFX_MENU_SELECT ; $51e4
@@ -325,7 +325,7 @@ LoadStorySlot:
 	pop bc ; $5254
 	pop de ; $5255
 	or a ; $5256
-	jr z, .zero ; $5257
+	jr z, .slotOk ; $5257
 	ld a, [wLinkSessionActive] ; $5259
 	or a ; $525c
 	ld a, h ; $525d
@@ -341,7 +341,7 @@ LoadStorySlot:
 	ld a, CHAR_NONE ; $526f
 	ld [wPlayer1MainChar], a ; $5271
 	ret ; $5274
-.zero:
+.slotOk:
 	push bc ; $5275
 	push de ; $5276
 	xor a ; $5277
@@ -362,12 +362,12 @@ Unused_02_StorySlotVariant:
 	pop bc ; $5291
 	pop de ; $5292
 	or a ; $5293
-	jr z, .zero ; $5294
+	jr z, .slotOk ; $5294
 	ld a, CHAR_NONE ; $5296
 	ld [wPlayer1MainChar], a ; $5298
 	ld a, $ff ; $529b
 	ret ; $529d
-.zero:
+.slotOk:
 	push bc ; $529e
 	push de ; $529f
 	ld bc, $8000 ; $52a0
@@ -543,12 +543,12 @@ Unused_02_CharGroupFind:
 .loop:
 	ld a, [hl+] ; $5ed5
 	cp $30 ; $5ed6
-	jr z, .eq30 ; $5ed8
+	jr z, .found ; $5ed8
 	dec b ; $5eda
 	jr nz, .loop ; $5edb
 	xor a ; $5edd
 	ret ; $5ede
-.eq30:
+.found:
 	ld a, $01 ; $5edf
 	ret ; $5ee1
 DoesCharGroupRowContain:
@@ -561,12 +561,12 @@ DoesCharGroupRowContain:
 .loop:
 	ld a, [hl+] ; $5eef
 	cp b ; $5ef0
-	jr z, .zero ; $5ef1
+	jr z, .found ; $5ef1
 	dec c ; $5ef3
 	jr nz, .loop ; $5ef4
 	xor a ; $5ef6
 	ret ; $5ef7
-.zero:
+.found:
 	ld a, $01 ; $5ef8
 	ret ; $5efa
 	; $5efb, 8453 bytes fill to bank end (linker-padded)

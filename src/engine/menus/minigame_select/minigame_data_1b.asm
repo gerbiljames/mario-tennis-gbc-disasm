@@ -437,11 +437,11 @@ DrawMinigameDataMugshotsScrolled:
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7614
 	pop bc ; $7617
 	cp CHAR_UNUSED_15 ; $7618
-	jr nz, .ne15 ; $761a
+	jr nz, .unlocked ; $761a
 	push bc ; $761c
 	ld c, $09 ; $761d
 	jr .drawMinigameDataMugshot ; $761f
-.ne15:
+.unlocked:
 	push bc ; $7621
 .drawMinigameDataMugshot:
 	call DrawMinigameDataMugshot ; $7622
@@ -463,11 +463,11 @@ DrawMinigameDataMugshotsStatic:
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7642
 	pop bc ; $7645
 	cp CHAR_UNUSED_15 ; $7646
-	jr nz, .ne15 ; $7648
+	jr nz, .unlocked ; $7648
 	push bc ; $764a
 	ld c, $09 ; $764b
 	jr .drawMinigameDataMugshot ; $764d
-.ne15:
+.unlocked:
 	push bc ; $764f
 .drawMinigameDataMugshot:
 	call DrawMinigameDataMugshot ; $7650

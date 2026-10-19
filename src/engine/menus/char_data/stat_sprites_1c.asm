@@ -28,7 +28,7 @@ DrawStatValueSprites:
 .digits1:
 	ld a, l ; $4e6f
 	cp $0a ; $4e70
-	jr c, .lt0a ; $4e72
+	jr c, .singleDigit1 ; $4e72
 	push bc ; $4e74
 	ld h, $00 ; $4e75
 	ld a, $02 ; $4e77
@@ -54,7 +54,7 @@ DrawStatValueSprites:
 	call GetStatDigitSpritePos ; $4e9e
 	call QueueSprite ; $4ea1
 	jr .stat2 ; $4ea4
-.lt0a:
+.singleDigit1:
 	ld a, l ; $4ea6
 	rlca ; $4ea7
 	ld c, a ; $4ea8
@@ -77,7 +77,7 @@ DrawStatValueSprites:
 .digits2:
 	ld a, l ; $4ec9
 	cp $0a ; $4eca
-	jr c, .lt0a2 ; $4ecc
+	jr c, .singleDigit2 ; $4ecc
 	push bc ; $4ece
 	ld h, $00 ; $4ecf
 	ld a, $02 ; $4ed1
@@ -103,7 +103,7 @@ DrawStatValueSprites:
 	call GetStatDigitSpritePos ; $4efa
 	call QueueSprite ; $4efd
 	jr .stat3 ; $4f00
-.lt0a2:
+.singleDigit2:
 	ld a, l ; $4f02
 	rlca ; $4f03
 	ld c, a ; $4f04
@@ -126,7 +126,7 @@ DrawStatValueSprites:
 .digits3:
 	ld a, l ; $4f26
 	cp $0a ; $4f27
-	jr c, .lt0a3 ; $4f29
+	jr c, .singleDigit3 ; $4f29
 	push bc ; $4f2b
 	ld h, $00 ; $4f2c
 	ld a, $02 ; $4f2e
@@ -152,7 +152,7 @@ DrawStatValueSprites:
 	call GetStatDigitSpritePos ; $4f57
 	call QueueSprite ; $4f5a
 	jr .stat4 ; $4f5d
-.lt0a3:
+.singleDigit3:
 	ld a, l ; $4f5f
 	rlca ; $4f60
 	ld c, a ; $4f61
@@ -175,7 +175,7 @@ DrawStatValueSprites:
 .digits4:
 	ld a, l ; $4f83
 	cp $0a ; $4f84
-	jr c, .lt0a4 ; $4f86
+	jr c, .singleDigit4 ; $4f86
 	push bc ; $4f88
 	ld h, $00 ; $4f89
 	ld a, $02 ; $4f8b
@@ -201,7 +201,7 @@ DrawStatValueSprites:
 	call GetStatDigitSpritePos ; $4fb4
 	call QueueSprite ; $4fb7
 	jr .drawStatChangeArrows ; $4fba
-.lt0a4:
+.singleDigit4:
 	ld a, l ; $4fbc
 	rlca ; $4fbd
 	ld c, a ; $4fbe
@@ -246,7 +246,7 @@ DrawRemainingPointsSprite:
 	wram_bank WRAM_SCENE ; $5049
 	ld a, [wCharDataPointsLeft] ; $504f
 	cp $0a ; $5052
-	jr c, .lt0a ; $5054
+	jr c, .singleDigit ; $5054
 	ld h, $00 ; $5056
 	ld l, a ; $5058
 	ld a, $02 ; $5059
@@ -269,7 +269,7 @@ DrawRemainingPointsSprite:
 	ld b, OAM_BANK1 | 7 ; $5080
 	call QueueSprite ; $5082
 	ret ; $5085
-.lt0a:
+.singleDigit:
 	rlca ; $5086
 	ld c, a ; $5087
 	ld_xy de, $18, $7f ; $5088

@@ -71,9 +71,9 @@ ProcessTargetTileHit:
 	ld hl, wTargetTileHit ; $591d
 	ld a, [hl] ; $5920
 	cp $09 ; $5921
-	jr nc, .ge09 ; $5923
+	jr nc, .clearGrid ; $5923
 	inc [hl] ; $5925
-.ge09:
+.clearGrid:
 	push_wram_bank WRAM_COURT_PLANES ; $5926
 	ld a, $01 ; $592f
 	ld [wMatchSimFrozen], a ; $5931
@@ -109,7 +109,7 @@ AnimateTargetGridClear:
 .loop:
 	ld a, [hl+] ; $5997
 	cp $00 ; $5998
-	jr z, .eq00 ; $599a
+	jr z, .nextCell ; $599a
 	push bc ; $599c
 	push hl ; $599d
 	ld b, a ; $599e
@@ -121,7 +121,7 @@ AnimateTargetGridClear:
 	farcall StepMatchFrames ; $59aa
 	pop hl ; $59ad
 	pop bc ; $59ae
-.eq00:
+.nextCell:
 	inc c ; $59af
 	dec b ; $59b0
 	jr nz, .loop ; $59b1
@@ -134,12 +134,12 @@ AreAllTargetsHit:
 .loop:
 	ld a, [hl+] ; $59bd
 	cp $01 ; $59be
-	jr nz, .ne01 ; $59c0
+	jr nz, .notAllHit ; $59c0
 	dec c ; $59c2
 	jr nz, .loop ; $59c3
 	ld a, $01 ; $59c5
 	ret ; $59c7
-.ne01:
+.notAllHit:
 	ld a, $00 ; $59c8
 	ret ; $59ca
 MinigameConfig_TreasureBox:
@@ -239,10 +239,10 @@ SelectRandomTreasureBoxTargetZone:
 	call LoadTargetZoneConfig ; $5a8f
 	ld a, [wMinigameHitScored] ; $5a92
 	and a ; $5a95
-	jr nz, .nonZero ; $5a96
+	jr nz, .clearHitScored ; $5a96
 	xor a ; $5a98
 	ld [wMinigameHitStreak], a ; $5a99
-.nonZero:
+.clearHitScored:
 	xor a ; $5a9c
 	ld [wMinigameHitScored], a ; $5a9d
 	xor a ; $5aa0

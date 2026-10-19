@@ -109,12 +109,12 @@ Unused_1a_RunDebugExpEditor:
 Unused_1a_DebugAddExp:
 	ld a, c ; $4473
 	or a ; $4474
-	jr nz, .nonZero ; $4475
+	jr nz, .identicalBranch ; $4475
 	push bc ; $4477
 	farcall AddPlayerExp ; $4478
 	pop bc ; $447b
 	ret ; $447c
-.nonZero:
+.identicalBranch:
 	push bc ; $447d
 	farcall AddPlayerExp ; $447e
 	pop bc ; $4481

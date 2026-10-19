@@ -47,19 +47,19 @@ AnimateIslandSkyEffectSprites_14:
 	ld hl, IslandSkySpriteData_14 ; $73e8
 	ld a, [wCutsceneObjActive] ; $73eb
 	and a ; $73ee
-	jr nz, .nonZero ; $73ef
+	jr nz, .noTick ; $73ef
 	ld a, [wCutsceneObjLimit] ; $73f1
 	inc a ; $73f4
 	ld [wCutsceneObjLimit], a ; $73f5
-.nonZero:
+.noTick:
 	ld a, [wCutsceneObjLimit] ; $73f8
 	swap a ; $73fb
 	and $03 ; $73fd
 	cp $03 ; $73ff
-	jr nz, .ne03 ; $7401
+	jr nz, .noWrap ; $7401
 	ld a, $00 ; $7403
 	ld [wCutsceneObjLimit], a ; $7405
-.ne03:
+.noWrap:
 	inc a ; $7408
 	ld b, a ; $7409
 	call QueueSpriteTemplate ; $740a
@@ -347,30 +347,30 @@ ActorScript_14_2:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_14_3:
 	; $78bb, 30 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 	as_begin_path
-.Lb:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderNarrow
 	as_begin_path
-.L15:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L15
+	as_jump .wanderSmall
 MapScriptNop_14:
 	ret ; $78d9
 Unused_14_MapScriptClearActiveFlag:
@@ -425,7 +425,7 @@ ActorScript_14_4:
 	as_jump ActorScript_14_4
 	as_anim ANIM_STILL
 	as_wait 60
-.L67:
+.swingUpLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -462,10 +462,10 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L67
+	as_jump .swingUpLoop
 	as_anim ANIM_STILL
 	as_wait 30
-.Lce:
+.swingDownLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -502,11 +502,11 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .Lce
+	as_jump .swingDownLoop
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L137:
+.swingUpLoop2:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -543,22 +543,22 @@ ActorScript_14_4:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L137
-.L19a:
+	as_jump .swingUpLoop2
+.nodLoop:
 	as_wait 240
 	as_anim ANIM_NOD
 	as_wait 80
 	as_anim ANIM_NOD
 	as_wait 60
-	as_jump .L19a
-.L1a7:
+	as_jump .nodLoop
+.shakeHeadLoop:
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_NOD
-	as_jump .L1a7
+	as_jump .shakeHeadLoop
 	twin_in compute_ranking_progress_index_13, Unused_14_ComputeRankingProgressIndex, 14 ; $7a9d Unused_14_ComputeRankingProgressIndex
 ; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction; only bank $13's copy is called (by Unused_27_SetStoryRankTier). Nothing calls this one.
 Unused_14_ComputeStoryRankTier:

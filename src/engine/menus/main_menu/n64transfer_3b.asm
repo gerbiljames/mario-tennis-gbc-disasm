@@ -8,7 +8,7 @@ DrawEraseSavedDataCaption:
 	call GetMenuCursorIndex_3b ; $710b
 	ld b, a ; $710e
 	cp $03 ; $710f
-	jp nc, .ge03 ; $7111
+	jp nc, .nonSlotItem ; $7111
 	add a ; $7114
 	add a ; $7115
 	add a ; $7116
@@ -23,7 +23,7 @@ DrawEraseSavedDataCaption:
 	add hl, bc ; $7123
 	ld a, [hl] ; $7124
 	cp $3f ; $7125
-	jr z, .eq3f ; $7127
+	jr z, .emptySlot ; $7127
 	ld hl, $0003 ; $7129
 	add hl, bc ; $712c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $712d
@@ -76,13 +76,13 @@ DrawEraseSavedDataCaption:
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 16], a ; $7182
 	pop_wram_bank ; $7185
 	ret ; $718a
-.eq3f:
+.emptySlot:
 	ld hl, Text_30_206 ; $718b
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $718e
 	ld c, $20 ; $7191
 	farcall RenderTextToBuffer64 ; $7193
 	jr .restore ; $7196
-.ge03:
+.nonSlotItem:
 	ld hl, Text_30_204 ; $7198
 	sub $03 ; $719b
 	add l ; $719d
@@ -257,7 +257,7 @@ N64RecordTypeTable1:
 N64RecordTypeSlideIn:
 	ld a, b ; $72ec
 	or a ; $72ed
-	jr z, .zero ; $72ee
+	jr z, .slideBack ; $72ee
 	ld c, $00 ; $72f0
 .loop:
 	call AdvanceFrame ; $72f2
@@ -271,7 +271,7 @@ N64RecordTypeSlideIn:
 	cp $0d ; $7302
 	jr nz, .loop ; $7304
 	ret ; $7306
-.zero:
+.slideBack:
 	ld c, $0a ; $7307
 .loopB:
 	call AdvanceFrame ; $7309
@@ -424,12 +424,12 @@ FillN64RecordTypeCell:
 	push hl ; $742b
 	ld a, c ; $742c
 	or a ; $742d
-	jr z, .zero ; $742e
+	jr z, .unhighlighted ; $742e
 	ld h, $0c ; $7430
-	jr .step2 ; $7432
-.zero:
+	jr .fill ; $7432
+.unhighlighted:
 	ld h, $0d ; $7434
-.step2:
+.fill:
 	push hl ; $7436
 	ld hl, FillN64RecordTypeCellTable ; $7437
 	ld a, b ; $743a

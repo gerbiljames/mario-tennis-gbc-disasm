@@ -45,10 +45,10 @@ TestStorySlotFlagB:
 	ld d, [hl] ; $4ce0
 	ld e, a ; $4ce1
 	farcall TestSaveFlag ; $4ce2
-	jr z, .zero ; $4ce5
+	jr z, .notSet ; $4ce5
 	ld a, $01 ; $4ce7
 	ret ; $4ce9
-.zero:
+.notSet:
 	ld a, $00 ; $4cea
 	ret ; $4cec
 SetStorySlotFlagA:
@@ -81,10 +81,10 @@ TestStorySlotFlagA:
 	ld d, [hl] ; $4d1c
 	ld e, a ; $4d1d
 	farcall TestSaveFlag ; $4d1e
-	jr z, .zero ; $4d21
+	jr z, .notSet ; $4d21
 	ld a, $01 ; $4d23
 	ret ; $4d25
-.zero:
+.notSet:
 	ld a, $00 ; $4d26
 	ret ; $4d28
 ; The gate on awarding EXP: Unused_02_AddExpToCa00RecordChecked calls it and returns on
@@ -178,7 +178,7 @@ HasReachedNextLevelExp:
 	add hl, bc ; $4d9f
 	ld a, [hl] ; $4da0
 	cp $63 ; $4da1
-	jp nc, .ge63 ; $4da3
+	jp nc, .maxLevel ; $4da3
 	ld h, $00 ; $4da6
 	ld l, a ; $4da8
 	ld d, h ; $4da9
@@ -203,7 +203,7 @@ HasReachedNextLevelExp:
 	ld e, a ; $4dbf
 	ld d, b ; $4dc0
 	jp Compare24Bit ; $4dc1
-.ge63:
+.maxLevel:
 	ld a, $80 ; $4dc4
 	or a ; $4dc6
 	ret ; $4dc7
@@ -259,7 +259,7 @@ GetExpProgressInCurrentLevel:
 	add hl, bc ; $4e08
 	ld a, [hl] ; $4e09
 	cp $63 ; $4e0a
-	jr nc, .ge63 ; $4e0c
+	jr nc, .maxLevel ; $4e0c
 	dec a ; $4e0e
 	ld h, $00 ; $4e0f
 	ld l, a ; $4e11
@@ -295,7 +295,7 @@ GetExpProgressInCurrentLevel:
 	sbc d ; $4e33
 	ld h, a ; $4e34
 	ret ; $4e35
-.ge63:
+.maxLevel:
 	ld hl, $0000 ; $4e36
 	ret ; $4e39
 GetExpRequiredForLevel:

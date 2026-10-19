@@ -41,9 +41,9 @@ ApplyCharStatLevelUp:
 	ld hl, wStoryMainName ; $5416
 	ld a, [wStoryCharacterSlot] ; $5419
 	or a ; $541c
-	jr z, .zero ; $541d
+	jr z, .levelField ; $541d
 	ld l, $40 ; $541f
-.zero:
+.levelField:
 	ld a, l ; $5421
 	add $18 ; $5422
 	ld l, a ; $5424
@@ -57,9 +57,9 @@ ApplyCharStatLevelUp:
 	ld hl, wStoryMainName ; $542f
 	ld a, [wStoryCharacterSlot] ; $5432
 	or a ; $5435
-	jr z, .zero2 ; $5436
+	jr z, .spinLevelField ; $5436
 	ld l, $40 ; $5438
-.zero2:
+.spinLevelField:
 	ld a, l ; $543a
 	add $38 ; $543b
 	ld l, a ; $543d
@@ -74,9 +74,9 @@ ApplyCharStatLevelUp:
 	ld hl, wStoryMainName ; $544b
 	ld a, [wStoryCharacterSlot] ; $544e
 	or a ; $5451
-	jr z, .zero3 ; $5452
+	jr z, .powerLevelField ; $5452
 	ld l, $40 ; $5454
-.zero3:
+.powerLevelField:
 	ld a, l ; $5456
 	add $39 ; $5457
 	ld l, a ; $5459
@@ -91,9 +91,9 @@ ApplyCharStatLevelUp:
 	ld hl, wStoryMainName ; $5467
 	ld a, [wStoryCharacterSlot] ; $546a
 	or a ; $546d
-	jr z, .zero4 ; $546e
+	jr z, .controlLevelField ; $546e
 	ld l, $40 ; $5470
-.zero4:
+.controlLevelField:
 	ld a, l ; $5472
 	add $3a ; $5473
 	ld l, a ; $5475
@@ -108,9 +108,9 @@ ApplyCharStatLevelUp:
 	ld hl, wStoryMainName ; $5483
 	ld a, [wStoryCharacterSlot] ; $5486
 	or a ; $5489
-	jr z, .zero5 ; $548a
+	jr z, .speedLevelField ; $548a
 	ld l, $40 ; $548c
-.zero5:
+.speedLevelField:
 	ld a, l ; $548e
 	add $3b ; $548f
 	ld l, a ; $5491

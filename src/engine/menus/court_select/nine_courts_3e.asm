@@ -198,7 +198,7 @@ RunLinkCourtSelect9Menu:
 OpenCourtSelect9Panel:
 	ld a, b ; $66ab
 	or a ; $66ac
-	jr z, .zero ; $66ad
+	jr z, .reverse ; $66ad
 	ld c, $00 ; $66af
 .loop:
 	call AdvanceFrame ; $66b1
@@ -213,7 +213,7 @@ OpenCourtSelect9Panel:
 	jr nz, .loop ; $66c3
 	call AdvanceFrame ; $66c5
 	ret ; $66c8
-.zero:
+.reverse:
 	ld c, $09 ; $66c9
 .loopB:
 	call AdvanceFrame ; $66cb
@@ -231,7 +231,7 @@ OpenCourtSelect9Panel:
 CloseCourtSelect9Panel:
 	ld a, b ; $66e3
 	or a ; $66e4
-	jr z, .zero ; $66e5
+	jr z, .reverse ; $66e5
 	ld c, $00 ; $66e7
 .loop:
 	call AdvanceFrame ; $66e9
@@ -245,7 +245,7 @@ CloseCourtSelect9Panel:
 	cp $0b ; $66f9
 	jr nz, .loop ; $66fb
 	ret ; $66fd
-.zero:
+.reverse:
 	ld c, $0e ; $66fe
 .loopB:
 	call AdvanceFrame ; $6700
@@ -360,11 +360,11 @@ AdjustCursorForLockedCourt:
 	ld b, a ; $6813
 	call IsCourtUnlocked ; $6814
 	or a ; $6817
-	jr z, .zero ; $6818
+	jr z, .locked ; $6818
 	pop hl ; $681a
 	pop bc ; $681b
 	ret ; $681c
-.zero:
+.locked:
 	ld c, $40 ; $681d
 	ld b, $00 ; $681f
 	pop hl ; $6821
@@ -424,12 +424,12 @@ SetCourtSelect9TabAttrRect:
 	push hl ; $688e
 	ld a, c ; $688f
 	or a ; $6890
-	jr z, .zero ; $6891
+	jr z, .unselected ; $6891
 	ld h, $0c ; $6893
-	jr .step2 ; $6895
-.zero:
+	jr .fillRect ; $6895
+.unselected:
 	ld h, $0d ; $6897
-.step2:
+.fillRect:
 	push hl ; $6899
 	ld hl, CourtSelect9TabAttrAddrs_3e ; $689a
 	ld a, b ; $689d
@@ -578,10 +578,10 @@ ComputeUnlockedCourtFlags:
 	inc a ; $69bb
 	ld c, a ; $69bc
 	cp $05 ; $69bd
-	jr z, .eq05 ; $69bf
+	jr z, .done ; $69bf
 	sla b ; $69c1
 	jr .loop ; $69c3
-.eq05:
+.done:
 	ld a, b ; $69c5
 	ld [wUnlockedCourtMask], a ; $69c6
 	ret ; $69c9

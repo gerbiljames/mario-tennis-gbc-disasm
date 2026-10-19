@@ -185,10 +185,10 @@ UnusedQueueDrillOutcomeMessage:
 	jr nz, .checkPointOutcome ; $44b4
 	ld a, [wServiceAceFlag] ; $44b6
 	or a ; $44b9
-	jr z, .zero ; $44ba
+	jr z, .notAce ; $44ba
 	ld a, $01 ; $44bc
 	jr .checkCurrentServingPlayer ; $44be
-.zero:
+.notAce:
 	ld a, $02 ; $44c0
 	jr .checkCurrentServingPlayer ; $44c2
 .checkPointOutcome:
@@ -210,9 +210,9 @@ UnusedQueueDrillOutcomeMessage:
 	ld b, a ; $44de
 	ld a, [wCurrentServingPlayer] ; $44df
 	or a ; $44e2
-	jr z, .zero2 ; $44e3
+	jr z, .storeMessage ; $44e3
 	ld a, $06 ; $44e5
-.zero2:
+.storeMessage:
 	add b ; $44e7
 	ld [wDrillMessageId], a ; $44e8
 	ret ; $44eb
@@ -223,9 +223,9 @@ UnusedQueueDrillOutcomeMessage:
 QueueDrillOutcomeMessage:
 	ld a, [wPointOutcome] ; $44f2
 	cp POINTOUTCOME_FAULT ; $44f5
-	jr z, .step3 ; $44f7
+	jr z, .hide ; $44f7
 	cp POINTOUTCOME_LET ; $44f9
-	jr z, .step3 ; $44fb
+	jr z, .hide ; $44fb
 	call CheckDrillTargetZoneMissed ; $44fd
 	or a ; $4500
 	jr nz, .checkRallyLength ; $4501
@@ -237,25 +237,25 @@ QueueDrillOutcomeMessage:
 	jr nz, .checkPointOutcome ; $450c
 	ld a, [wServiceAceFlag] ; $450e
 	or a ; $4511
-	jr z, .zero ; $4512
+	jr z, .notAce ; $4512
 	ld a, $0d ; $4514
 	jr .store ; $4516
-.zero:
+.notAce:
 	ld a, $0e ; $4518
 	jr .store ; $451a
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $451c
 	or a ; $451f
-	jr nz, .nonZero ; $4520
+	jr nz, .otherOutcome ; $4520
 	ld a, $10 ; $4522
 	jr .store ; $4524
-.nonZero:
+.otherOutcome:
 	ld a, $10 ; $4526
 	jr .store ; $4528
 .store:
 	ld [wDrillMessageId], a ; $452a
 	ret ; $452d
-.step3:
+.hide:
 	ld a, DRILLMSG_HIDE ; $452e
 	ld [wDrillMessageId], a ; $4530
 	ret ; $4533

@@ -1,12 +1,12 @@
 CheckAwardsCeremonyRivalSceneDone:
 	test_flag FLAG_DOUBLES ; $5f7a
-	jr z, .zero ; $5f7d
+	jr z, .singles ; $5f7d
 	ld a, $00 ; $5f7f
 	test_flag FLAG_AWARDS_CEREMONY_SEEN_DOUBLES ; $5f81
 	jr z, .done ; $5f84
 	ld a, $01 ; $5f86
 	jr .done ; $5f88
-.zero:
+.singles:
 	ld a, $00 ; $5f8a
 	test_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES ; $5f8c
 	jr z, .done ; $5f8f

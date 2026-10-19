@@ -259,10 +259,10 @@ Unused_1a_MusicSettingHandler0:
 	jr z, .storeMenuInitialRow ; $41ea
 	sound SFX_OPTION_TOGGLE ; $41ec
 	bit 0, a ; $41ee
-	jr z, .bit0Clear ; $41f0
+	jr z, .toggleOn ; $41f0
 	res 0, a ; $41f2
 	jr .storeMenuInitialRow ; $41f4
-.bit0Clear:
+.toggleOn:
 	set 0, a ; $41f6
 .storeMenuInitialRow:
 	ld a, [wPauseMenuOptionBits] ; $41f8
@@ -282,10 +282,10 @@ Unused_1a_MusicSettingHandler1:
 	jr z, .storeMenuInitialRow2 ; $4219
 	sound SFX_OPTION_TOGGLE ; $421b
 	bit 1, a ; $421d
-	jr z, .bit1Clear ; $421f
+	jr z, .toggleOn ; $421f
 	res 1, a ; $4221
 	jr .storeMenuInitialRow2 ; $4223
-.bit1Clear:
+.toggleOn:
 	set 1, a ; $4225
 .storeMenuInitialRow2:
 	ld a, [wPauseMenuOptionBits] ; $4227
@@ -330,12 +330,12 @@ Unused_1a_AdjustMessageSpeedSetting:
 	inc a ; $4282
 	ld b, a ; $4283
 	sub $03 ; $4284
-	jr z, .zero ; $4286
+	jr z, .wrapToZero ; $4286
 	ld a, b ; $4288
 	or $80 ; $4289
 	ld [hl], a ; $428b
 	jr .done ; $428c
-.zero:
+.wrapToZero:
 	ld a, $80 ; $428e
 	ld [hl], a ; $4290
 	jr .done ; $4291

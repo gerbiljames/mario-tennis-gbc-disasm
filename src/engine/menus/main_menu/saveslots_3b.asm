@@ -75,9 +75,9 @@ DrawMainMenuCaption:
 	call GetMenuCursorIndex_3b ; $5b49
 	ld b, a ; $5b4c
 	cp $06 ; $5b4d
-	jp nc, .step3 ; $5b4f
+	jp nc, .fixedCaption ; $5b4f
 	cp $03 ; $5b52
-	jp c, .step3 ; $5b54
+	jp c, .fixedCaption ; $5b54
 	sub $03 ; $5b57
 	add a ; $5b59
 	add a ; $5b5a
@@ -93,7 +93,7 @@ DrawMainMenuCaption:
 	add hl, bc ; $5b68
 	ld a, [hl] ; $5b69
 	cp $3f ; $5b6a
-	jr z, .eq3f ; $5b6c
+	jr z, .emptySlot ; $5b6c
 	ld hl, $0003 ; $5b6e
 	add hl, bc ; $5b71
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5b72
@@ -146,13 +146,13 @@ DrawMainMenuCaption:
 	ld a, $3a ; $5bca
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 16], a ; $5bcc
 	ret ; $5bcf
-.eq3f:
+.emptySlot:
 	ld hl, Text_30_124 ; $5bd0
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5bd3
 	ld c, $20 ; $5bd6
 	farcall RenderTextToBuffer64 ; $5bd8
 	jr .restore ; $5bdb
-.step3:
+.fixedCaption:
 	ld b, a ; $5bdd
 	ld a, b ; $5bde
 	add a ; $5bdf
@@ -253,15 +253,15 @@ TryMainMenuLinkHandshake:
 	ei ; $5c5d
 	ld a, [wMenuCursorX] ; $5c5e
 	cp $02 ; $5c61
-	jr nz, .ne02 ; $5c63
+	jr nz, .notLinkItem ; $5c63
 	ld a, [wMenuCursorY] ; $5c65
 	cp $00 ; $5c68
-	jr z, .eq00 ; $5c6a
-.ne02:
+	jr z, .linkItem ; $5c6a
+.notLinkItem:
 	scf ; $5c6c
 	ccf ; $5c6d
 	jr .done ; $5c6e
-.eq00:
+.linkItem:
 	di ; $5c70
 	ldh a, [hLinkRxByte] ; $5c71
 	ei ; $5c73
@@ -273,14 +273,14 @@ TryMainMenuLinkHandshake:
 	push af ; $5c7e
 	jr nc, .beginFadeOut ; $5c7f
 	or a ; $5c81
-	jr nz, .nonZero ; $5c82
+	jr nz, .showMessage1 ; $5c82
 	ldh a, [hWramBank] ; $5c84
 	push af ; $5c86
 	ld c, $00 ; $5c87
 	farcall ShowLinkStatusMessage ; $5c89
 	pop_wram_bank ; $5c8c
 	jr .animateLinkStatusPalette ; $5c91
-.nonZero:
+.showMessage1:
 	ldh a, [hWramBank] ; $5c93
 	push af ; $5c95
 	ld c, $01 ; $5c96
@@ -553,7 +553,7 @@ MatchFormatTable1:
 MatchFormatSlideIn:
 	ld a, b ; $5ed9
 	or a ; $5eda
-	jr z, .zero ; $5edb
+	jr z, .slideBack ; $5edb
 	ld c, $00 ; $5edd
 .loop:
 	call AdvanceFrame ; $5edf
@@ -567,7 +567,7 @@ MatchFormatSlideIn:
 	cp $0e ; $5eef
 	jr nz, .loop ; $5ef1
 	ret ; $5ef3
-.zero:
+.slideBack:
 	ld c, $0a ; $5ef4
 .loopB:
 	call AdvanceFrame ; $5ef6
@@ -618,11 +618,11 @@ HandleMatchFormatInput:
 	ld a, [wMatchFormatSets] ; $5f7e
 	dec a ; $5f81
 	add a ; $5f82
-	jr nc, .noCarry ; $5f83
+	jr nc, .noUnderflow ; $5f83
 	ld a, $03 ; $5f85
 	dec a ; $5f87
 	jr .store ; $5f88
-.noCarry:
+.noUnderflow:
 	rra ; $5f8a
 	cp $03 ; $5f8b
 	jr c, .store ; $5f8d
@@ -663,11 +663,11 @@ HandleMatchFormatInput:
 	ld a, [wMatchFormatSets] ; $5fd5
 	inc a ; $5fd8
 	add a ; $5fd9
-	jr nc, .noCarry2 ; $5fda
+	jr nc, .noUnderflow2 ; $5fda
 	ld a, $03 ; $5fdc
 	dec a ; $5fde
 	jr .store2 ; $5fdf
-.noCarry2:
+.noUnderflow2:
 	rra ; $5fe1
 	cp $03 ; $5fe2
 	jr c, .store2 ; $5fe4
@@ -779,17 +779,17 @@ MatchFormatCursorSpriteTask:
 	or a ; $60d8
 	jr nz, .compare ; $60d9
 	ld a, [wMatchFormatDoubles] ; $60db
-	jr .step ; $60de
+	jr .gotRuleValue ; $60de
 .compare:
 	cp $01 ; $60e0
 	jr nz, .checkMatchFormatSets ; $60e2
 	ld a, [wMatchFormatGames] ; $60e4
 	add $02 ; $60e7
-	jr .step ; $60e9
+	jr .gotRuleValue ; $60e9
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $60eb
 	add $04 ; $60ee
-.step:
+.gotRuleValue:
 	push af ; $60f0
 	ld hl, MatchFormatCursorSpriteTaskTable1 ; $60f1
 	add l ; $60f4

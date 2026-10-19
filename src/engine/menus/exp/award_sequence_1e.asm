@@ -58,11 +58,11 @@ CountUpExpTotal:
 	call AdvanceFrame ; $5b75
 	ldh a, [hInputRisingEdge] ; $5b78
 	and PADF_A | PADF_B ; $5b7a
-	jr nz, .step ; $5b7c
+	jr nz, .skipCount ; $5b7c
 	call AdvanceFrame ; $5b7e
 	ldh a, [hInputRisingEdge] ; $5b81
 	and PADF_A | PADF_B ; $5b83
-	jr nz, .step ; $5b85
+	jr nz, .skipCount ; $5b85
 	dec hl ; $5b87
 	dec de ; $5b88
 	ld a, e ; $5b89
@@ -79,7 +79,7 @@ CountUpExpTotal:
 	ld [hl], d ; $5b96
 	sound SFX_MENU_MOVE ; $5b97
 	jr CountUpExpTotal ; $5b99
-.step:
+.skipCount:
 	ld hl, wExpAwardRunningTotal ; $5b9b
 	ld a, [hl+] ; $5b9e
 	ld h, [hl] ; $5b9f
@@ -165,7 +165,7 @@ ProcessMatchRewards:
 	cp GAMEMODE_MARIO_MINIGAME ; $654d
 	jp z, .updateMinigameBestScore ; $654f
 	cp GAMEMODE_LINK_MATCH ; $6552
-	jp z, .eq09 ; $6554
+	jp z, .linkMatch ; $6554
 	cp GAMEMODE_TENNIS_MACHINE ; $6557
 	jp z, .checkMatchExitRequest ; $6559
 	cp GAMEMODE_WALL_PRACTICE ; $655c
@@ -173,7 +173,7 @@ ProcessMatchRewards:
 	cp GAMEMODE_DREAM_MATCH ; $6561
 	jp z, .computeMatchStatsReward ; $6563
 	cp GAMEMODE_EXHIBITION ; $6566
-	jp z, .eq04 ; $6568
+	jp z, .exhibition ; $6568
 	jp c, .computeMatchStatsReward ; $656b
 	ld a, [wPointWinLoseFlag] ; $656e
 	cp WINLOSE_WIN ; $6571
@@ -221,10 +221,10 @@ ProcessMatchRewards:
 	cp GAMEMODE_TENNIS_MACHINE ; $65c3
 	jr nz, .checkFlag ; $65c5
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $65c7
-	jr .step ; $65ca
+	jr .checkMasterCleared ; $65ca
 .checkFlag:
 	test_flag FLAG_CLEARED_WALL_MASTER ; $65cc
-.step:
+.checkMasterCleared:
 	jr z, .getFirstClearRewardExp ; $65cf
 	push hl ; $65d1
 	ld hl, wMinigamesCurrentScore ; $65d2
@@ -278,7 +278,7 @@ ProcessMatchRewards:
 	pop hl ; $662a
 	call ApplyClassProgressFlags ; $662b
 	jr .runExpDistributionFlow ; $662e
-.eq04:
+.exhibition:
 	wram_bank WRAM_ACTORS ; $6630
 	call ComputeMatchStatsReward ; $6636
 	ld a, [wPlayer1MainEquipment] ; $6639
@@ -286,10 +286,10 @@ ProcessMatchRewards:
 	call ApplyMatchSettingsExpBonus ; $663d
 	call AwardExhibitionMatchExp ; $6640
 	ret ; $6643
-.eq09:
+.linkMatch:
 	ld a, [wLinkMatchRole] ; $6644
 	cp LINKSTATE_SLAVE ; $6647
-	jr z, .eq02 ; $6649
+	jr z, .asSlave ; $6649
 	wram_bank WRAM_ACTORS ; $664b
 	call ComputeMatchStatsReward ; $6651
 	ld a, [wPlayer1MainEquipment] ; $6654
@@ -297,9 +297,9 @@ ProcessMatchRewards:
 	call ApplyMatchSettingsExpBonus ; $6658
 	ld a, [wMatchWinLoseFlag] ; $665b
 	cp WINLOSE_WIN ; $665e
-	jr z, .step6 ; $6660
+	jr z, .winBonus ; $6660
 	jr .awardLinkedPlayMatchExp ; $6662
-.eq02:
+.asSlave:
 	wram_bank WRAM_TEXT ; $6664
 	call ComputeMatchStatsReward ; $666a
 	ld a, [wPlayer2MainEquipment] ; $666d
@@ -307,9 +307,9 @@ ProcessMatchRewards:
 	call ApplyMatchSettingsExpBonus ; $6671
 	ld a, [wMatchWinLoseFlag] ; $6674
 	cp WINLOSE_LOSE ; $6677
-	jr z, .step6 ; $6679
+	jr z, .winBonus ; $6679
 	jr .awardLinkedPlayMatchExp ; $667b
-.step6:
+.winBonus:
 	ld e, l ; $667d
 	ld d, h ; $667e
 	sra d ; $667f

@@ -7,30 +7,30 @@ ActorScript_12_51:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_12_52:
 	; $7a93, 30 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 	as_begin_path
-.Lb:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderNarrow
 	as_begin_path
-.L15:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L15
+	as_jump .wanderSmall
 MapScriptNop_12:
 	ret ; $7ab1
 Unused_12_MapScriptClearActiveFlag:
@@ -87,7 +87,7 @@ ActorScript_12_54:
 	; $7b22, 103 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 60
-.L4:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -124,12 +124,12 @@ ActorScript_12_54:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L4
+	as_jump .swingLoop
 ActorScript_12_55:
 	; $7b89, 103 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 30
-.L4:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -166,13 +166,13 @@ ActorScript_12_55:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L4
+	as_jump .swingLoop
 ActorScript_12_56:
 	; $7bf0, 105 bytes (actor_script)
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L6:
+.swingLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -209,7 +209,7 @@ ActorScript_12_56:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L6
+	as_jump .swingLoop
 ActorScript_12_57:
 	; $7c59, 13 bytes (actor_script)
 	as_wait 240

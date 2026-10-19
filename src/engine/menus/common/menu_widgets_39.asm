@@ -9,12 +9,12 @@ FillMenuGridCellTile:
 	ld c, $03 ; $6dca
 	ld a, d ; $6dcc
 	or a ; $6dcd
-	jr z, .zero ; $6dce
+	jr z, .unselected ; $6dce
 	ld h, $0c ; $6dd0
-	jr .step2 ; $6dd2
-.zero:
+	jr .fillRect ; $6dd2
+.unselected:
 	ld h, $0d ; $6dd4
-.step2:
+.fillRect:
 	push hl ; $6dd6
 	ld hl, FillMenuGridCellTileTable ; $6dd7
 	ld a, e ; $6dda
@@ -61,16 +61,16 @@ MoveMinigameGridCursor:
 	ld a, [wMenuCursorX] ; $6e16
 	inc a ; $6e19
 	add a ; $6e1a
-	jr nc, .noCarry ; $6e1b
+	jr nc, .checkMaxRight ; $6e1b
 	ld a, $03 ; $6e1d
 	dec a ; $6e1f
-	jr .store ; $6e20
-.noCarry:
+	jr .storeX ; $6e20
+.checkMaxRight:
 	rra ; $6e22
 	cp $03 ; $6e23
-	jr c, .store ; $6e25
+	jr c, .storeX ; $6e25
 	xor a ; $6e27
-.store:
+.storeX:
 	ld [wMenuCursorX], a ; $6e28
 	ld a, $01 ; $6e2b
 	jp .done ; $6e2d
@@ -78,16 +78,16 @@ MoveMinigameGridCursor:
 	ld a, [wMenuCursorX] ; $6e30
 	dec a ; $6e33
 	add a ; $6e34
-	jr nc, .noCarry2 ; $6e35
+	jr nc, .checkMaxLeft ; $6e35
 	ld a, $03 ; $6e37
 	dec a ; $6e39
-	jr .store2 ; $6e3a
-.noCarry2:
+	jr .storeX2 ; $6e3a
+.checkMaxLeft:
 	rra ; $6e3c
 	cp $03 ; $6e3d
-	jr c, .store2 ; $6e3f
+	jr c, .storeX2 ; $6e3f
 	xor a ; $6e41
-.store2:
+.storeX2:
 	ld [wMenuCursorX], a ; $6e42
 	ld a, $01 ; $6e45
 	jr .done ; $6e47
@@ -121,24 +121,24 @@ MoveMinigameGridCursor:
 .checkMenuCursorX4:
 	ld a, [wMenuCursorX] ; $6e7a
 	or a ; $6e7d
-	jr z, .zero ; $6e7e
+	jr z, .rightToCol2 ; $6e7e
 	xor a ; $6e80
-	jr .store3 ; $6e81
-.zero:
+	jr .storeX3 ; $6e81
+.rightToCol2:
 	ld a, $02 ; $6e83
-.store3:
+.storeX3:
 	ld [wMenuCursorX], a ; $6e85
 	ld a, $01 ; $6e88
 	jr .done ; $6e8a
 .checkMenuCursorX5:
 	ld a, [wMenuCursorX] ; $6e8c
 	or a ; $6e8f
-	jr z, .zero2 ; $6e90
+	jr z, .leftToCol2 ; $6e90
 	xor a ; $6e92
-	jr .store4 ; $6e93
-.zero2:
+	jr .storeX4 ; $6e93
+.leftToCol2:
 	ld a, $02 ; $6e95
-.store4:
+.storeX4:
 	ld [wMenuCursorX], a ; $6e97
 	ld a, $01 ; $6e9a
 	jr .done ; $6e9c
@@ -274,7 +274,7 @@ UpdateCheatCodeEntry:
 	jr nz, .restore ; $6f74
 	ldh a, [hInputRisingEdge] ; $6f76
 	bit PADB_A, a ; $6f78
-	jr z, .zero ; $6f7a
+	jr z, .recordInput ; $6f7a
 	ld c, $00 ; $6f7c
 .loop:
 	ld hl, wDecompBuffer ; $6f7e
@@ -303,7 +303,7 @@ UpdateCheatCodeEntry:
 	ld a, $01 ; $6f9e
 	ld [wCheatUnlockTriggered], a ; $6fa0
 	jr .restore ; $6fa3
-.zero:
+.recordInput:
 	ldh a, [hInputRisingEdge] ; $6fa5
 	or a ; $6fa7
 	jr z, .restore ; $6fa8

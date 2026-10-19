@@ -36,10 +36,10 @@ UnusedDrawCourtDiagramMarkers:
 	ld a, [hl] ; $4403
 	cp $de ; $4404
 Unused_16_CourtDiagramBaseTask:
-	jr z, .eqde ; $4406
+	jr z, .diacritic ; $4406
 	cp $df ; $4408
-	jr nz, .nedf ; $440a
-.eqde:
+	jr nz, .nextCell ; $440a
+.diacritic:
 	push hl ; $440c
 	push bc ; $440d
 	ld h, d ; $440e
@@ -57,7 +57,7 @@ Unused_16_CourtDiagramBaseTask:
 	pop bc ; $441e
 	pop hl ; $441f
 	inc hl ; $4420
-.nedf:
+.nextCell:
 	inc de ; $4421
 	ld a, e ; $4422
 	and $1f ; $4423
@@ -120,11 +120,11 @@ RunMatchWinLoseScreen:
 	wram_bank WRAM_SCREEN ; $4483
 	ld a, [wGameMode] ; $4489
 	cp GAMEMODE_EXHIBITION ; $448c
-	jr z, .step ; $448e
+	jr z, .versusMatch ; $448e
 	cp GAMEMODE_LINK_MATCH ; $4490
-	jr z, .step ; $4492
+	jr z, .versusMatch ; $4492
 	jr .checkMatchWinLoseFlag ; $4494
-.step:
+.versusMatch:
 	ld a, $01 ; $4496
 	jr .store ; $4498
 .checkMatchWinLoseFlag:
@@ -185,7 +185,7 @@ RunMatchWinLoseScreen:
 	bit PADB_B, a ; $4513
 	jr nz, .playSfx2 ; $4515
 	bit PADB_RIGHT, a ; $4517
-	jr nz, .bit4Set ; $4519
+	jr nz, .pressedRight ; $4519
 	jr .loop ; $451b
 .playSfx2:
 	sound SFX_MENU_SELECT ; $451d
@@ -199,7 +199,7 @@ RunMatchWinLoseScreen:
 	ld a, [wMatchWinLoseState] ; $4534
 	ld [wMatchWinLoseFlag], a ; $4537
 	ret ; $453a
-.bit4Set:
+.pressedRight:
 	script_fade_out 64 ; $453b
 	call WaitFadeEnd ; $4540
 	ld hl, rIE ; $4543
@@ -301,11 +301,11 @@ MatchWinLoseScreenPalettes:
 LoadWinLoseScreenAssets:
 	ld a, [wResultScreenWon] ; $490c
 	or a ; $490f
-	jr z, .zero ; $4910
+	jr z, .nonVersus ; $4910
 	ld c, SCREENASSET_MatchStats2 ; $4912
 	farcall LoadScreenAssetRecord ; $4914
 	jr .testGameFlagByNumber ; $4917
-.zero:
+.nonVersus:
 	ld c, SCREENASSET_MatchStats ; $4919
 	farcall LoadScreenAssetRecord ; $491b
 	jr .testGameFlagByNumber ; $491e
@@ -335,10 +335,10 @@ LoadWinLoseScreenAssets:
 SetWinLosePortraitPaletteAttrs:
 	ld a, [wResultScreenMode] ; $4963
 	or a ; $4966
-	jr nz, .nonZero ; $4967
+	jr nz, .versusMatch ; $4967
 	ld de, FLAG_DOUBLES ; $4969
 	call TestGameFlagByNumber ; $496c
-	jr z, .zero ; $496f
+	jr z, .singles ; $496f
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 11 ; $4971
 	rect_size $04, $04 ; $4974
 	ld h, $0c ; $4978
@@ -356,7 +356,7 @@ SetWinLosePortraitPaletteAttrs:
 	ld h, $0f ; $499c
 	farcall FillTilemapRect ; $499e
 	jr .done ; $49a1
-.zero:
+.singles:
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 13 ; $49a3
 	rect_size $04, $04 ; $49a6
 	ld h, $0c ; $49aa
@@ -367,7 +367,7 @@ SetWinLosePortraitPaletteAttrs:
 	farcall FillTilemapRect ; $49b8
 .done:
 	ret ; $49bb
-.nonZero:
+.versusMatch:
 	ld de, FLAG_DOUBLES ; $49bc
 	call TestGameFlagByNumber ; $49bf
 	jr z, .fillTilemapRect ; $49c2

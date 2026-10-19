@@ -123,17 +123,17 @@ ServicePractice2ServeCounterPtrs:
 ServicePractice2QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $513f
 	cp POINTOUTCOME_FAULT ; $5142
-	jp z, .step4 ; $5144
+	jp z, .hide ; $5144
 	cp POINTOUTCOME_LET ; $5147
-	jp z, .step4 ; $5149
+	jp z, .hide ; $5149
 	ld a, [wPointOutcome] ; $514c
 	cp POINTOUTCOME_DOUBLE_FAULT ; $514f
-	jr nz, .ne02 ; $5151
+	jr nz, .notDoubleFault ; $5151
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $5153
 	ld b, $00 ; $5155
 	call QueueDrillResultMessage ; $5157
 	jr .notFound ; $515a
-.ne02:
+.notDoubleFault:
 	ld a, DRILLMSG_YOU_DIDNT_USE_TOPSPIN_TO_BOUNCE_IT_OUT_OF_BOUNDS ; $515c
 	ld b, $00 ; $515e
 	call QueueDrillResultMessage ; $5160
@@ -176,12 +176,12 @@ ServicePractice2QueueOutcomeMessage:
 	call QueueDrillResultMessage ; $51a4
 	ld a, [wPointOutcome] ; $51a7
 	cp POINTOUTCOME_WINNER ; $51aa
-	jr z, .eq06 ; $51ac
+	jr z, .winner ; $51ac
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $51ae
 	ld b, $00 ; $51b0
 	call QueueDrillResultMessage ; $51b2
 	jr .notFound ; $51b5
-.eq06:
+.winner:
 	ld hl, wDrillCounters ; $51b7
 	inc [hl] ; $51ba
 	ld a, $01 ; $51bb
@@ -189,7 +189,7 @@ ServicePractice2QueueOutcomeMessage:
 .notFound:
 	ld a, $ff ; $51be
 	ret ; $51c0
-.step4:
+.hide:
 	ld a, DRILLMSG_HIDE ; $51c1
 	ld [wDrillMessageId], a ; $51c3
 	xor a ; $51c6
@@ -284,11 +284,11 @@ ServicePractice3EvaluateResult:
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $5273
 	or a ; $5276
-	jr z, .zero ; $5277
+	jr z, .checkCounter1 ; $5277
 	ld a, $03 ; $5279
 	ld [wDrillLessonResult], a ; $527b
 	jr .notFound ; $527e
-.zero:
+.checkCounter1:
 	ld a, [wDrillCounters + 1] ; $5280
 	or a ; $5283
 	jr z, .countDrillResultBitsSetAlt ; $5284
@@ -298,14 +298,14 @@ ServicePractice3EvaluateResult:
 .countDrillResultBitsSetAlt:
 	call CountDrillResultBitsSetAlt ; $528d
 	cp $04 ; $5290
-	jr z, .eq04 ; $5292
+	jr z, .allPassed ; $5292
 	ld a, $05 ; $5294
 	ld [wDrillLessonResult], a ; $5296
 	jr .notFound ; $5299
 .notFound:
 	ld a, $ff ; $529b
 	ret ; $529d
-.eq04:
+.allPassed:
 	xor a ; $529e
 	ld [wDrillLessonResult], a ; $529f
 	ld a, $01 ; $52a2
@@ -332,11 +332,11 @@ ServicePractice3SetupShotTarget:
 	ret nc ; $52ce
 	ld a, [wSpecialShotFlag] ; $52cf
 	or a ; $52d2
-	jr nz, .nonZero ; $52d3
+	jr nz, .niceTiming ; $52d3
 	ld a, DRILLMSG_YOU_DIDNT_SERVE_WITH_NICE_TIMING_SO_YOU_FAIL ; $52d5
 	ld [wDrillMessageId], a ; $52d7
 	ret ; $52da
-.nonZero:
+.niceTiming:
 	ld hl, wDrillCounters + 1 ; $52db
 	dec [hl] ; $52de
 	ret ; $52df
@@ -392,12 +392,12 @@ ServicePractice3HandlePointEnd:
 ServicePractice3QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $537b
 	cp POINTOUTCOME_FAULT ; $537e
-	jp z, .step4 ; $5380
+	jp z, .hide ; $5380
 	cp POINTOUTCOME_LET ; $5383
-	jp z, .step4 ; $5385
+	jp z, .hide ; $5385
 	ld a, [wPointOutcome] ; $5388
 	cp POINTOUTCOME_DOUBLE_FAULT ; $538b
-	jr z, .eq02 ; $538d
+	jr z, .doubleFault ; $538d
 	ld a, DRILLMSG_YOU_DIDNT_SERVE_WITH_NICE_TIMING_SO_YOU_FAIL ; $538f
 	ld b, $00 ; $5391
 	call QueueDrillResultMessage ; $5393
@@ -420,13 +420,13 @@ ServicePractice3QueueOutcomeMessage:
 	call QueueDrillResultMessage ; $53b9
 	ld a, [wPointOutcome] ; $53bc
 	cp POINTOUTCOME_WINNER ; $53bf
-	jr z, .eq06 ; $53c1
-.eq02:
+	jr z, .winner ; $53c1
+.doubleFault:
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $53c3
 	ld b, $00 ; $53c5
 	call QueueDrillResultMessage ; $53c7
 	jr .notFound ; $53ca
-.eq06:
+.winner:
 	ld hl, wDrillCounters ; $53cc
 	inc [hl] ; $53cf
 	ld a, $01 ; $53d0
@@ -434,7 +434,7 @@ ServicePractice3QueueOutcomeMessage:
 .notFound:
 	ld a, $ff ; $53d3
 	ret ; $53d5
-.step4:
+.hide:
 	ld a, DRILLMSG_HIDE ; $53d6
 	ld [wDrillMessageId], a ; $53d8
 	xor a ; $53db

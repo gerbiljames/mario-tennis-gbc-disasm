@@ -122,10 +122,10 @@ InitBallTargetActor:
 ResetTargetHitState:
 	ld a, [wMinigameHitScored] ; $521e
 	and a ; $5221
-	jr nz, .nonZero ; $5222
+	jr nz, .clearHitScored ; $5222
 	xor a ; $5224
 	ld [wMinigameHitStreak], a ; $5225
-.nonZero:
+.clearHitScored:
 	xor a ; $5228
 	ld [wMinigameHitScored], a ; $5229
 	xor a ; $522c
@@ -146,7 +146,7 @@ AdvanceTargetActorState:
 ShootingStarTargetState0:
 	ld a, [wMinigameSceneActor + 3] ; $5244
 	and a ; $5247
-	jr z, .zero ; $5248
+	jr z, .advance ; $5248
 	farcall AdvanceMatchRng ; $524a
 	ld h, $00 ; $524d
 	ld l, a ; $524f
@@ -155,7 +155,7 @@ ShootingStarTargetState0:
 	add hl, de ; $5254
 	ld de, $fdc0 ; $5255
 	call SetMinigameActorWorldPos ; $5258
-.zero:
+.advance:
 	xor a ; $525b
 	ld [wMinigameSceneActor + 3], a ; $525c
 	call AdvanceTargetActorState ; $525f

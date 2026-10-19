@@ -115,7 +115,7 @@ RunPlayDoublesTodayPrompt:
 ActorScript_13_00:
 	; $585f, 24 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_DOWN
@@ -124,7 +124,7 @@ ActorScript_13_00:
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait 180
-	as_jump .L1
+	as_jump .wander
 ActorScript_13_01:
 	; $5877, 10 bytes (actor_script)
 	as_set_pos 15.25, 14.875
@@ -140,7 +140,7 @@ ActorScript_13_03:
 	as_set_pos 3.0, 7.0
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_begin_path
-.La:
+.pace:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 180
 	as_set_target 3.0, 8.0
@@ -154,7 +154,7 @@ ActorScript_13_03:
 	as_wait 240
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait 18
-	as_jump .La
+	as_jump .pace
 RunAcademyQuestionsMenu:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58be
 	jr z, .variantB ; $58c1

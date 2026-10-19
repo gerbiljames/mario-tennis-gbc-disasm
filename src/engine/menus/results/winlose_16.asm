@@ -197,9 +197,9 @@ DecompressWinLosePortraitVariant:
 	ld a, c ; $60da
 	cp $01 ; $60db
 	ld a, b ; $60dd
-	jr z, .eq01 ; $60de
+	jr z, .gotVariant ; $60de
 	inc a ; $60e0
-.eq01:
+.gotVariant:
 	ld hl, WinLosePortraitVariantTable_16 ; $60e1
 	add a ; $60e4
 	add l ; $60e5

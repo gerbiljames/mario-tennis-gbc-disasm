@@ -77,8 +77,8 @@ DrawExpProgressBarTiles:
 .loop:
 	ld a, b ; $5a03
 	sub $08 ; $5a04
-	jr c, .carry ; $5a06
-	jr z, .zero ; $5a08
+	jr c, .partialCell ; $5a06
+	jr z, .lastFullCell ; $5a08
 	ld b, a ; $5a0a
 	ld a, $08 ; $5a0b
 	rlca ; $5a0d
@@ -97,7 +97,7 @@ DrawExpProgressBarTiles:
 	pop de ; $5a21
 	inc de ; $5a22
 	jr .loop ; $5a23
-.carry:
+.partialCell:
 	add $08 ; $5a25
 	rlca ; $5a27
 	ld_hl_indexed DrawExpProgressBarTilesTable ; $5a28
@@ -112,7 +112,7 @@ DrawExpProgressBarTiles:
 	ld a, [hl] ; $5a38
 	ld [de], a ; $5a39
 	ret ; $5a3a
-.zero:
+.lastFullCell:
 	ld a, $08 ; $5a3b
 	rlca ; $5a3d
 	ld_hl_indexed DrawExpProgressBarTilesTable ; $5a3e
@@ -202,9 +202,9 @@ BuildCharDataConfirmScreen:
 	ld hl, wStoryMainName ; $5b26
 	ld a, [wStoryCharacterSlot] ; $5b29
 	or a ; $5b2c
-	jr z, .zero ; $5b2d
+	jr z, .paletteField ; $5b2d
 	ld l, $40 ; $5b2f
-.zero:
+.paletteField:
 	ld a, l ; $5b31
 	add $0c ; $5b32
 	ld l, a ; $5b34
@@ -220,9 +220,9 @@ BuildCharDataConfirmScreen:
 	ld hl, wStoryMainName ; $5b48
 	ld a, [wStoryCharacterSlot] ; $5b4b
 	or a ; $5b4e
-	jr z, .zero2 ; $5b4f
+	jr z, .charField ; $5b4f
 	ld l, $40 ; $5b51
-.zero2:
+.charField:
 	ld a, l ; $5b53
 	add $0b ; $5b54
 	ld l, a ; $5b56

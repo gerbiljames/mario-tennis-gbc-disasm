@@ -9,7 +9,7 @@ RelaunchWallPracticeMasterLevel:
 	ld a, MINIGAME_WALL_PRACTICE_HIGH_SCORE ; $49df
 	farcall RunTrainingDrillByID ; $49e1
 	ret ; $49e4
-.carry:
+.saveMaxRecord:
 	push_wram_bank WRAM_SOUND ; $49e5
 	ld hl, wMinigamesCurrentScore ; $49ee
 	ld a, [hl+] ; $49f1

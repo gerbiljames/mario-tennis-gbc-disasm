@@ -71,9 +71,9 @@ DebugDrawFlagCursor:
 	and $03 ; $64f1
 	add $01 ; $64f3
 	cp $03 ; $64f5
-	jr c, .lt03 ; $64f7
+	jr c, .gotRow ; $64f7
 	inc a ; $64f9
-.lt03:
+.gotRow:
 	ld e, a ; $64fa
 	ld hl, wDebugFlagWindow1Id ; $64fb
 	ld a, [wDebugFlagByte] ; $64fe
@@ -102,9 +102,9 @@ DebugEraseFlagCursor:
 	and $03 ; $6522
 	add $01 ; $6524
 	cp $03 ; $6526
-	jr c, .lt03 ; $6528
+	jr c, .gotRow ; $6528
 	inc a ; $652a
-.lt03:
+.gotRow:
 	ld e, a ; $652b
 	ld hl, wDebugFlagWindow1Id ; $652c
 	ld a, [wDebugFlagByte] ; $652f
@@ -134,24 +134,24 @@ DebugMoveFlagCursor:
 	bit PADB_LEFT, a ; $6554
 	jr nz, .next ; $6556
 	bit PADB_RIGHT, a ; $6558
-	jr nz, .bit4Set ; $655a
+	jr nz, .right ; $655a
 	bit PADB_UP, a ; $655c
-	jr nz, .bit6Set ; $655e
+	jr nz, .up ; $655e
 	bit PADB_DOWN, a ; $6560
 	jr nz, .negative ; $6562
-	jr .step5 ; $6564
+	jr .wrapCursor ; $6564
 .next:
 	dec d ; $6566
-	jr .step5 ; $6567
-.bit4Set:
+	jr .wrapCursor ; $6567
+.right:
 	inc d ; $6569
-	jr .step5 ; $656a
-.bit6Set:
+	jr .wrapCursor ; $656a
+.up:
 	dec e ; $656c
-	jr .step5 ; $656d
+	jr .wrapCursor ; $656d
 .negative:
 	inc e ; $656f
-.step5:
+.wrapCursor:
 	ld a, d ; $6570
 	and $07 ; $6571
 	ld [wDebugFlagBit], a ; $6573
@@ -451,16 +451,16 @@ RunDebugWarpMenu:
 .checkInputPressed:
 	ldh a, [hInputPressed] ; $6815
 	and PADF_UP | PADF_DOWN ; $6817
-	jr z, .step2 ; $6819
+	jr z, .adjustValue ; $6819
 	ld hl, wDebugWarpCursorRow ; $681b
 	ld a, [hl] ; $681e
 	xor $01 ; $681f
 	ld [hl], a ; $6821
 	call DebugDrawWarpMenu ; $6822
-.step2:
+.adjustValue:
 	ld a, [wDebugWarpCursorRow] ; $6825
 	cp $01 ; $6828
-	jr z, .eq01 ; $682a
+	jr z, .adjustEntryPoint ; $682a
 	ld a, [wDebugWarpLocationCount] ; $682c
 	ld d, a ; $682f
 	ld hl, wDebugMenuWindowId ; $6830
@@ -471,7 +471,7 @@ RunDebugWarpMenu:
 	ld [hl], a ; $683a
 	call DebugDrawWarpMenu ; $683b
 	jr .advanceFrame ; $683e
-.eq01:
+.adjustEntryPoint:
 	ld d, $10 ; $6840
 	ld hl, wDebugWarpEntryPoint ; $6842
 	ld a, [hl] ; $6845
@@ -499,24 +499,24 @@ DebugStepValueWithDpad:
 	bit PADB_RIGHT, a ; $6866
 	jr nz, .next ; $6868
 	bit PADB_LEFT, a ; $686a
-	jr nz, .bit5Set ; $686c
+	jr nz, .decrement ; $686c
 	ld a, b ; $686e
 	pop bc ; $686f
 	ret ; $6870
 .next:
 	inc b ; $6871
-	jr .step3 ; $6872
-.bit5Set:
+	jr .wrapValue ; $6872
+.decrement:
 	dec b ; $6874
-	jr .step3 ; $6875
-.step3:
+	jr .wrapValue ; $6875
+.wrapValue:
 	ld a, b ; $6877
 	add a ; $6878
-	jr nc, .noCarry ; $6879
+	jr nc, .notNegative ; $6879
 	ld a, d ; $687b
 	dec a ; $687c
 	jr .restore ; $687d
-.noCarry:
+.notNegative:
 	rra ; $687f
 	cp d ; $6880
 	jr c, .restore ; $6881

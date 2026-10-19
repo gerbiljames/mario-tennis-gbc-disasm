@@ -273,12 +273,12 @@ LoadBGPaletteData:
 	ld a, BGPI_AUTOINC ; $027f
 	ldh [rBGPI], a ; $0281
 	ld c, LOW(rBGPD) ; $0283
-	jr LoadOBJPaletteData.step ; $0285
+	jr LoadOBJPaletteData.load ; $0285
 LoadOBJPaletteData:
 	ld a, OBPI_AUTOINC ; $0287
 	ldh [rOBPI], a ; $0289
 	ld c, LOW(rOBPD) ; $028b
-.step:
+.load:
 	ld b, $08 ; $028d
 .loop:
 	ld a, [hl+] ; $028f
@@ -382,11 +382,11 @@ ReadJoypad:
 	jr z, .setInputRepeatTimer ; $031f
 	ldh a, [hInputRepeatButtons] ; $0321
 	and b ; $0323
-	jr nz, .nonZero ; $0324
+	jr nz, .tickRepeat ; $0324
 	ldh a, [hInputRepeatButtons] ; $0326
 	cp b ; $0328
 	jr nz, .setInputRepeatTimer ; $0329
-.nonZero:
+.tickRepeat:
 	ldh a, [hInputRepeatTimer] ; $032b
 	dec a ; $032d
 	jr nz, .store ; $032e

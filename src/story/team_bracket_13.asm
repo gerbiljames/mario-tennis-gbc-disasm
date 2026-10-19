@@ -10,9 +10,9 @@ RunTravelingTeamBracketIfWon_13:
 	wram_bank WRAM_ACTORS ; $7995
 	ld a, [wMatchWinLoseFlag] ; $799b
 	cp WINLOSE_WIN ; $799e
-	jp z, .eq01 ; $79a0
+	jp z, .won ; $79a0
 	ret ; $79a3
-.eq01:
+.won:
 	ld a, STORYLOC_COURTYARD ; $79a4
 	ld [wStoryModeCurrentLocation], a ; $79a6
 	ld a, $0e ; $79a9
@@ -158,30 +158,30 @@ ActorScript_13_27:
 	as_halt
 	as_anim ANIM_STILL
 	as_halt
-.L4:
+.stepLoop:
 	as_step
 	as_wait 1
-	as_jump .L4
+	as_jump .stepLoop
 ActorScript_13_28:
 	; $7b2f, 30 bytes (actor_script)
 	as_begin_path
-.L1:
+.wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .L1
+	as_jump .wander
 	as_begin_path
-.Lb:
+.wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
-	as_jump .Lb
+	as_jump .wanderNarrow
 	as_begin_path
-.L15:
+.wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait 40
-	as_jump .L15
+	as_jump .wanderSmall
 MapScriptNop_13:
 	ret ; $7b4d
 Unused_13_MapScriptClearActiveFlag:
@@ -236,7 +236,7 @@ ActorScript_13_29:
 	as_jump ActorScript_13_29
 	as_anim ANIM_STILL
 	as_wait 60
-.L67:
+.swingUpLoop:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
 	as_wait_move
@@ -273,10 +273,10 @@ ActorScript_13_29:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L67
+	as_jump .swingUpLoop
 	as_anim ANIM_STILL
 	as_wait 30
-.Lce:
+.swingDownLoop:
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
 	as_wait_move
@@ -313,11 +313,11 @@ ActorScript_13_29:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .Lce
+	as_jump .swingDownLoop
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-.L137:
+.swingUpLoop2:
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
 	as_wait_move
@@ -354,7 +354,7 @@ ActorScript_13_29:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump .L137
+	as_jump .swingUpLoop2
 ActorScript_13_30:
 	; $7cf5, 28 bytes (actor_script)
 	as_wait 240
@@ -363,14 +363,14 @@ ActorScript_13_30:
 	as_anim ANIM_NOD
 	as_wait 60
 	as_jump ActorScript_13_30
-.Ld:
+.shakeHeadLoop:
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_NOD
-	as_jump .Ld
+	as_jump .shakeHeadLoop
 	twin_in compute_ranking_progress_index_13, Unused_13_ComputeRankingProgressIndex, 13 ; $7d11 Unused_13_ComputeRankingProgressIndex
 	twin compute_story_rank_tier, 13 ; $7d58 ComputeStoryRankTier_13
 	; $7d89, 631 bytes fill to bank end (linker-padded)

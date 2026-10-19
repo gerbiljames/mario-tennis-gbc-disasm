@@ -193,7 +193,7 @@ LoadEraseSavedDataGfx:
 SavedDataPickerSlideIn:
 	ld a, b ; $6e24
 	or a ; $6e25
-	jr z, .zero ; $6e26
+	jr z, .slideBack ; $6e26
 	ld c, $00 ; $6e28
 .loop:
 	call AdvanceFrame ; $6e2a
@@ -207,7 +207,7 @@ SavedDataPickerSlideIn:
 	cp $0f ; $6e3a
 	jr nz, .loop ; $6e3c
 	ret ; $6e3e
-.zero:
+.slideBack:
 	ld c, $0b ; $6e3f
 .loopB:
 	call AdvanceFrame ; $6e41
@@ -271,11 +271,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorX] ; $6ea4
 	inc a ; $6ea7
 	add a ; $6ea8
-	jr nc, .noCarry ; $6ea9
+	jr nc, .noUnderflow ; $6ea9
 	ld a, $03 ; $6eab
 	dec a ; $6ead
 	jr .store ; $6eae
-.noCarry:
+.noUnderflow:
 	rra ; $6eb0
 	cp $03 ; $6eb1
 	jr c, .store ; $6eb3
@@ -288,11 +288,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorX] ; $6ebe
 	dec a ; $6ec1
 	add a ; $6ec2
-	jr nc, .noCarry2 ; $6ec3
+	jr nc, .noUnderflow2 ; $6ec3
 	ld a, $03 ; $6ec5
 	dec a ; $6ec7
 	jr .store2 ; $6ec8
-.noCarry2:
+.noUnderflow2:
 	rra ; $6eca
 	cp $03 ; $6ecb
 	jr c, .store2 ; $6ecd
@@ -332,11 +332,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorX] ; $6f08
 	inc a ; $6f0b
 	add a ; $6f0c
-	jr nc, .noCarry3 ; $6f0d
+	jr nc, .noUnderflow3 ; $6f0d
 	ld a, $02 ; $6f0f
 	dec a ; $6f11
 	jr .store3 ; $6f12
-.noCarry3:
+.noUnderflow3:
 	rra ; $6f14
 	cp $02 ; $6f15
 	jr c, .store3 ; $6f17
@@ -349,11 +349,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorX] ; $6f21
 	dec a ; $6f24
 	add a ; $6f25
-	jr nc, .noCarry4 ; $6f26
+	jr nc, .noUnderflow4 ; $6f26
 	ld a, $02 ; $6f28
 	dec a ; $6f2a
 	jr .store4 ; $6f2b
-.noCarry4:
+.noUnderflow4:
 	rra ; $6f2d
 	cp $02 ; $6f2e
 	jr c, .store4 ; $6f30
@@ -521,22 +521,22 @@ FillEraseSavedDataCell:
 	ld e, b ; $7090
 	ld a, b ; $7091
 	cp $03 ; $7092
-	jr nc, .ge03 ; $7094
+	jr nc, .wideCell ; $7094
 	ld b, $03 ; $7096
 	ld c, $03 ; $7098
-	jr .step2 ; $709a
-.ge03:
+	jr .pickAttr ; $709a
+.wideCell:
 	ld b, $05 ; $709c
 	ld c, $03 ; $709e
-.step2:
+.pickAttr:
 	ld a, d ; $70a0
 	or a ; $70a1
-	jr z, .zero ; $70a2
+	jr z, .unhighlighted ; $70a2
 	ld h, $0c ; $70a4
-	jr .step4 ; $70a6
-.zero:
+	jr .fill ; $70a6
+.unhighlighted:
 	ld h, $0d ; $70a8
-.step4:
+.fill:
 	push hl ; $70aa
 	ld hl, FillEraseSavedDataCellTable ; $70ab
 	ld a, e ; $70ae

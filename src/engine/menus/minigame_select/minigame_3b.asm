@@ -51,7 +51,7 @@ RunMinigameSelect:
 	ld [wMenuInputPressed], a ; $6251
 	call CheckMinigameGridExpanded ; $6254
 	or a ; $6257
-	jr nz, .nonZero ; $6258
+	jr nz, .moveGrid9Cursor ; $6258
 	farcall MoveMinigameGridCursor ; $625a
 	or a ; $625d
 	jr z, .advanceFrame ; $625e
@@ -59,7 +59,7 @@ RunMinigameSelect:
 	call DrawMinigameSelectCaption ; $6262
 	call DrawMinigameSelectGrid6 ; $6265
 	jr .advanceFrame ; $6268
-.nonZero:
+.moveGrid9Cursor:
 	ld b, $03 ; $626a
 	ld c, $03 ; $626c
 	call MoveMenuCursorGrid_3b ; $626e
@@ -92,11 +92,11 @@ RunMinigameSelect:
 	set B_IE_TIMER, [hl] ; $62a5
 	call CheckMinigameGridExpanded ; $62a7
 	or a ; $62aa
-	jr nz, .nonZero2 ; $62ab
+	jr nz, .slideOutGrid9 ; $62ab
 	ld b, $01 ; $62ad
 	call MinigameSelectSlideOut6 ; $62af
 	jr .storeMenuSlideDirection ; $62b2
-.nonZero2:
+.slideOutGrid9:
 	ld b, $01 ; $62b4
 	call MinigameSelectSlideOut9 ; $62b6
 .storeMenuSlideDirection:
@@ -115,11 +115,11 @@ RunMinigameSelect:
 	set B_IE_TIMER, [hl] ; $62d3
 	call CheckMinigameGridExpanded ; $62d5
 	or a ; $62d8
-	jr nz, .nonZero3 ; $62d9
+	jr nz, .slideBackGrid9 ; $62d9
 	ld b, $00 ; $62db
 	call MinigameSelectSlideOut6 ; $62dd
 	jr .storeMenuSlideDirection2 ; $62e0
-.nonZero3:
+.slideBackGrid9:
 	ld b, $00 ; $62e2
 	call MinigameSelectSlideOut9 ; $62e4
 .storeMenuSlideDirection2:
@@ -255,7 +255,7 @@ MinigameSelectTable:
 MinigameSelectSlideIn9:
 	ld a, b ; $640a
 	or a ; $640b
-	jr z, .zero ; $640c
+	jr z, .slideBack ; $640c
 	ld c, $00 ; $640e
 .loop:
 	call AdvanceFrame ; $6410
@@ -269,7 +269,7 @@ MinigameSelectSlideIn9:
 	cp $0e ; $6420
 	jr nz, .loop ; $6422
 	ret ; $6424
-.zero:
+.slideBack:
 	ld c, $0c ; $6425
 .loopB:
 	call AdvanceFrame ; $6427
@@ -286,7 +286,7 @@ MinigameSelectSlideIn9:
 MinigameSelectSlideOut9:
 	ld a, b ; $643c
 	or a ; $643d
-	jr z, .zero ; $643e
+	jr z, .slideBack ; $643e
 	ld c, $00 ; $6440
 .loop:
 	call AdvanceFrame ; $6442
@@ -300,7 +300,7 @@ MinigameSelectSlideOut9:
 	cp $0b ; $6452
 	jr nz, .loop ; $6454
 	ret ; $6456
-.zero:
+.slideBack:
 	ld c, $0d ; $6457
 .loopB:
 	call AdvanceFrame ; $6459
@@ -416,12 +416,12 @@ OverrideMinigameCursorIfLocked:
 	ld c, a ; $6555
 	call GetUnlockedMarioCastCharAtGridSlot ; $6556
 	cp CHAR_UNUSED_15 ; $6559
-	jr z, .eq15 ; $655b
+	jr z, .locked ; $655b
 	pop de ; $655d
 	pop hl ; $655e
 	pop bc ; $655f
 	ret ; $6560
-.eq15:
+.locked:
 	ld c, $50 ; $6561
 	ld b, $00 ; $6563
 	pop de ; $6565
@@ -538,12 +538,12 @@ FillMinigameSelectCell:
 	ld c, $03 ; $663d
 	ld a, d ; $663f
 	or a ; $6640
-	jr z, .zero ; $6641
+	jr z, .unhighlighted ; $6641
 	ld h, $0c ; $6643
-	jr .step2 ; $6645
-.zero:
+	jr .fill ; $6645
+.unhighlighted:
 	ld h, $0d ; $6647
-.step2:
+.fill:
 	push hl ; $6649
 	ld hl, FillMinigameSelectCellTable ; $664a
 	ld a, e ; $664d

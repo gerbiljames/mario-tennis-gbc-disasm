@@ -77,9 +77,9 @@ RunMatchPauseMenu:
 	ld b, MATCHMENU_PAUSE ; $40bc
 	ld a, [wCourtViewLocked] ; $40be
 	and a ; $40c1
-	jr z, .zero ; $40c2
+	jr z, .storeMenuId ; $40c2
 	ld b, MATCHMENU_PAUSE_FIXED_VIEW ; $40c4
-.zero:
+.storeMenuId:
 	ld a, b ; $40c6
 	ld [wPauseMenuId], a ; $40c7
 	call RunMatchMenu ; $40ca

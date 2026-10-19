@@ -27,11 +27,11 @@ FetchText_{TWIN}:
 	ld hl, TextStrings_{TWIN}
 	add hl, de
 	or a
-	jr nz, .nonZero
+	jr nz, .shortText
 	ld de, wTextBuffer
 	ld c, wTextBuffer_SIZE
 	jr .loop
-.nonZero:
+.shortText:
 	ld de, wShortTextBuffer
 	ld c, wShortTextBuffer_SIZE
 .loop:

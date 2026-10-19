@@ -323,11 +323,11 @@ SeniorCourtPostMatchReturn:
 	wram_bank WRAM_ACTORS ; $6da0
 	ld a, [wMatchExitRequest] ; $6da6
 	cp $01 ; $6da9
-	jr z, .eq01 ; $6dab
+	jr z, .lostOrQuit ; $6dab
 	ld a, [wMatchWinLoseFlag] ; $6dad
 	cp WINLOSE_WIN ; $6db0
 	jp z, SeniorMatchVictorySceneDispatch ; $6db2
-.eq01:
+.lostOrQuit:
 	script_player_speed 2.0 ; $6db5
 	script_move_player 45.0, 27.0 ; $6dbb
 	script_set_position ACTOR_PLAYER, 45.0, 27.0 ; $6dc5

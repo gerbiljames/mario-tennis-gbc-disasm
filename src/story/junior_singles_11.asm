@@ -380,7 +380,7 @@ ActorScript_11_29:
 	; $6e16, 55 bytes (actor_script)
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_field ACTORF_SPEED, $0008
-.L8:
+.pace:
 	as_set_target 45.0, 7.0
 	as_wait_move2
 	as_set_field ACTORF_HEADING, FACE_DOWN
@@ -397,16 +397,16 @@ ActorScript_11_29:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 240
 	as_wait 240
-	as_jump .L8
+	as_jump .pace
 JuniorClassCourtSinglesMatchReturn:
 	wram_bank WRAM_ACTORS ; $6e4d
 	ld a, [wMatchExitRequest] ; $6e53
 	cp $01 ; $6e56
-	jr z, .eq01 ; $6e58
+	jr z, .lostOrQuit ; $6e58
 	ld a, [wMatchWinLoseFlag] ; $6e5a
 	cp WINLOSE_WIN ; $6e5d
 	jp z, JuniorClassCourtSinglesEntry0eScene ; $6e5f
-.eq01:
+.lostOrQuit:
 	script_player_speed 2.0 ; $6e62
 	script_move_player 19.0, 21.0 ; $6e68
 	script_set_position ACTOR_PLAYER, 19.0, 21.0 ; $6e72

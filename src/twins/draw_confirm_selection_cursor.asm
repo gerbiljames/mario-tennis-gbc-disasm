@@ -4,12 +4,12 @@ DrawConfirmSelectionCursor_{TWIN}:
 	wram_bank WRAM_SCENE
 	ld a, [wCharDataConfirmState]
 	or a
-	jr nz, .nonZero
+	jr nz, .secondOption
 	ld_oam bc, OAM_BANK1 | 7, $d4
 	ld_xy de, $7a, $0c
 	call QueueSprite
 	ret
-.nonZero:
+.secondOption:
 	ld_oam bc, OAM_BANK1 | 7, $d4
 	ld_xy de, $7a, $14
 	call QueueSprite

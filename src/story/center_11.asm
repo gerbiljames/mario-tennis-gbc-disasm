@@ -89,10 +89,10 @@ CenterCourtNpc05_11:
 	farcall InitDialogueTextCursor ; $410e
 	ld a, [wMapSceneStage] ; $4111
 	cp ISLANDOPENSTAGE_SINGLES_FINAL ; $4114
-	jr z, .eq03 ; $4116
+	jr z, .singlesFinal ; $4116
 	script_speak ACTOR_CENTER_COURT_WALK_72_02 ; $4118
 	ret ; $411d
-.eq03:
+.singlesFinal:
 	script_speak_restore ACTOR_CENTER_COURT_WALK_72_02 ; $411e
 	farcall RunDialogueYesNoPrompt ; $4123
 	farcall ScriptCloseDialogueWindow ; $4126

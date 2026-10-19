@@ -66,7 +66,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 	ld [hl], $00 ; $55d0
 	ld a, [wMinigameHitTargetType] ; $55d2
 	cp $ff ; $55d5
-	jr z, ScoreMinigameTargetHitOrDeflectBall.eqff ; $55d7
+	jr z, ScoreMinigameTargetHitOrDeflectBall.deflectBall ; $55d7
 	ld a, [wMinigameHitTargetType] ; $55d9
 	ld_hl_indexed MinigameTargetTypeScores ; $55dc
 	ld e, [hl] ; $55e3
@@ -83,7 +83,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 MinigameTargetTypeScores:
 	; $55f9, 4 bytes (bytes:4)
 	db $01, $03, $05, $03 ; 0x00
-ScoreMinigameTargetHitOrDeflectBall.eqff:
+ScoreMinigameTargetHitOrDeflectBall.deflectBall:
 	ld a, [wMinigameLastHitCell] ; $55fd
 	cp $ff ; $5600
 	ret z ; $5602
@@ -107,10 +107,10 @@ InitMinigame_BooBlast:
 	ld [wMinigameIsBooBlast], a ; $5627
 	ld a, [wMinigameLevel] ; $562a
 	cp $02 ; $562d
-	jr nz, .ne02 ; $562f
+	jr nz, .loadParams ; $562f
 	ld a, $01 ; $5631
 	ld [wMinigameHighScoreMode], a ; $5633
-.ne02:
+.loadParams:
 	ld hl, BooBlastInitParams ; $5636
 	ld a, [hl+] ; $5639
 	ld [wPlayer2MainAiParams], a ; $563a
@@ -216,7 +216,7 @@ UpdateBooBlastHitStreak:
 	jr nz, .maskSet ; $56f5
 	ld a, [wMinigameHitScored] ; $56f7
 	and a ; $56fa
-	jr z, .step3 ; $56fb
+	jr z, .clearHitScored ; $56fb
 	jr .incrementCappedCounter ; $56fd
 .maskSet:
 	ld a, [wMinigameHitScored] ; $56ff
@@ -224,11 +224,11 @@ UpdateBooBlastHitStreak:
 	jr nz, .incrementCappedCounter ; $5703
 	xor a ; $5705
 	ld [wMinigameHitStreak], a ; $5706
-	jr .step3 ; $5709
+	jr .clearHitScored ; $5709
 .incrementCappedCounter:
 	ld b, $07 ; $570b
 	call IncrementCappedCounter ; $570d
-.step3:
+.clearHitScored:
 	xor a ; $5710
 	ld [wMinigameHitScored], a ; $5711
 	xor a ; $5714

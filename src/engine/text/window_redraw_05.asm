@@ -418,7 +418,7 @@ Unused_05_ChooseSpeechBubbleHalf:
 	and $3f ; $6390
 	ld e, a ; $6392
 	rl b ; $6393
-	jr c, .step2 ; $6395
+	jr c, .storeBubbleHalf ; $6395
 	call GetObjectSlotPointer ; $6397
 	ld a, [wCameraY + 1] ; $639a
 	ld b, a ; $639d
@@ -436,14 +436,14 @@ Unused_05_ChooseSpeechBubbleHalf:
 	ld a, [hl] ; $63b3
 	sub b ; $63b4
 	cp $0a ; $63b5
-	jr c, .lt0a ; $63b7
+	jr c, .lowerHalf ; $63b7
 	ld e, $00 ; $63b9
 	ld b, $00 ; $63bb
-	jr .step2 ; $63bd
-.lt0a:
+	jr .storeBubbleHalf ; $63bd
+.lowerHalf:
 	ld e, $0b ; $63bf
 	ld b, $01 ; $63c1
-.step2:
+.storeBubbleHalf:
 	wram_bank WRAM_TEXT ; $63c3
 	ld a, b ; $63c9
 	ld [wSpeechBubbleLowerHalf], a ; $63ca

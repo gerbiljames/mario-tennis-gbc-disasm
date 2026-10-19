@@ -23,11 +23,11 @@ PlotTilesAtOffsets:
 	ret ; $4792
 DrawFourTileFlagLabel:
 	or a ; $4793
-	jr nz, .nonZero ; $4794
+	jr nz, .flagSet ; $4794
 	wram_bank WRAM_SCREEN ; $4796
 	ld a, $01 ; $479c
 	jr .store ; $479e
-.nonZero:
+.flagSet:
 	wram_bank WRAM_SCREEN ; $47a0
 	ld a, $05 ; $47a6
 .store:
@@ -62,7 +62,7 @@ WriteNameStringTiles:
 	wram_bank WRAM_SCREEN ; $47d3
 	ld a, [de] ; $47d9
 	or a ; $47da
-	jr z, .zero ; $47db
+	jr z, .emptyAbove ; $47db
 	ld a, b ; $47dd
 	sub $30 ; $47de
 	ld [de], a ; $47e0
@@ -71,7 +71,7 @@ WriteNameStringTiles:
 	ld [de], a ; $47e9
 	call NameTilePtrDownOneRow ; $47ea
 	jr WriteNameStringTiles ; $47ed
-.zero:
+.emptyAbove:
 	ld a, b ; $47ef
 	ld [de], a ; $47f0
 	wram_bank WRAM_COURT_PLANES ; $47f1
@@ -119,18 +119,18 @@ FormatExp24BitDecimal:
 	ld de, wCharDataNumberBuffer + 5 ; $482d
 	ld a, [de] ; $4830
 	sub $20 ; $4831
-	jr z, .zero ; $4833
+	jr z, .addOnes ; $4833
 	sub $10 ; $4835
-.zero:
+.addOnes:
 	add $06 ; $4837
 	cp $0a ; $4839
-	jr c, .lt0a ; $483b
+	jr c, .storeOnes ; $483b
 	sub $0a ; $483d
 	ld b, a ; $483f
 	ld a, $01 ; $4840
 	ld [hl], a ; $4842
 	ld a, b ; $4843
-.lt0a:
+.storeOnes:
 	add $30 ; $4844
 	ld [de], a ; $4846
 	ld de, wCharDataNumberBuffer + 4 ; $4847
@@ -141,18 +141,18 @@ FormatExp24BitDecimal:
 	ld [hl], a ; $484e
 	ld a, b ; $484f
 	sub $20 ; $4850
-	jr z, .zero2 ; $4852
+	jr z, .addTens ; $4852
 	sub $10 ; $4854
-.zero2:
+.addTens:
 	add $03 ; $4856
 	cp $0a ; $4858
-	jr c, .lt0a2 ; $485a
+	jr c, .storeTens ; $485a
 	sub $0a ; $485c
 	ld b, a ; $485e
 	ld a, $01 ; $485f
 	ld [hl], a ; $4861
 	ld a, b ; $4862
-.lt0a2:
+.storeTens:
 	add $30 ; $4863
 	ld [de], a ; $4865
 	ld de, wCharDataNumberBuffer + 3 ; $4866
@@ -163,18 +163,18 @@ FormatExp24BitDecimal:
 	ld [hl], a ; $486d
 	ld a, b ; $486e
 	sub $20 ; $486f
-	jr z, .zero3 ; $4871
+	jr z, .addHundreds ; $4871
 	sub $10 ; $4873
-.zero3:
+.addHundreds:
 	add $05 ; $4875
 	cp $0a ; $4877
-	jr c, .lt0a3 ; $4879
+	jr c, .storeHundreds ; $4879
 	sub $0a ; $487b
 	ld b, a ; $487d
 	ld a, $01 ; $487e
 	ld [hl], a ; $4880
 	ld a, b ; $4881
-.lt0a3:
+.storeHundreds:
 	add $30 ; $4882
 	ld [de], a ; $4884
 	ld de, wCharDataNumberBuffer + 2 ; $4885
@@ -185,18 +185,18 @@ FormatExp24BitDecimal:
 	ld [hl], a ; $488c
 	ld a, b ; $488d
 	sub $20 ; $488e
-	jr z, .zero4 ; $4890
+	jr z, .addThousands ; $4890
 	sub $10 ; $4892
-.zero4:
+.addThousands:
 	add $05 ; $4894
 	cp $0a ; $4896
-	jr c, .lt0a4 ; $4898
+	jr c, .storeThousands ; $4898
 	sub $0a ; $489a
 	ld b, a ; $489c
 	ld a, $01 ; $489d
 	ld [hl], a ; $489f
 	ld a, b ; $48a0
-.lt0a4:
+.storeThousands:
 	add $30 ; $48a1
 	ld [de], a ; $48a3
 	ld de, wCharDataNumberBuffer + 1 ; $48a4
@@ -207,16 +207,16 @@ FormatExp24BitDecimal:
 	ld [hl], a ; $48ab
 	ld a, b ; $48ac
 	sub $20 ; $48ad
-	jr z, .zero5 ; $48af
+	jr z, .addTenThousands ; $48af
 	sub $10 ; $48b1
-.zero5:
+.addTenThousands:
 	add $05 ; $48b3
 	ld hl, wCharDataNumberBuffer ; $48b5
 	add [hl] ; $48b8
 	cp $0a ; $48b9
-	jr c, .lt0a5 ; $48bb
+	jr c, .storeTenThousands ; $48bb
 	ld a, $09 ; $48bd
-.lt0a5:
+.storeTenThousands:
 	add $30 ; $48bf
 	ld [de], a ; $48c1
 	dec c ; $48c2
@@ -226,12 +226,12 @@ CharDataValuesSyncTask:
 	wram_bank WRAM_SCENE ; $48c7
 	ld a, [wCharDataSyncSource] ; $48cd
 	or a ; $48d0
-	jr nz, .nonZero ; $48d1
+	jr nz, .fromGameTimer ; $48d1
 	ld hl, wCharDataSyncValues ; $48d3
-	jr .step2 ; $48d6
-.nonZero:
+	jr .copyPair ; $48d6
+.fromGameTimer:
 	ld hl, wGameTimer + 2 ; $48d8
-.step2:
+.copyPair:
 	ld de, wCharDataSyncPair ; $48db
 	ld a, [hl+] ; $48de
 	ld [de], a ; $48df
@@ -246,13 +246,13 @@ CharDataValuesSyncTask:
 	call FormatDecimalNumberUnsigned ; $48ee
 	ld a, [wCharDataNumberBuffer] ; $48f1
 	cp $20 ; $48f4
-	jr z, .eq20 ; $48f6
+	jr z, .onesDigit ; $48f6
 	call GetCharDataDigitSprite ; $48f8
 	ld_xy de, $5d, $88 ; $48fb
 	ld hl, wCharDataValuesSlideX ; $48fe
 	call ApplySlideOffsetToSpriteX ; $4901
 	call QueueSprite ; $4904
-.eq20:
+.onesDigit:
 	ld a, [wCharDataNumberBuffer + 1] ; $4907
 	call GetCharDataDigitSprite ; $490a
 	ld_xy de, $65, $88 ; $490d
@@ -267,9 +267,9 @@ CharDataValuesSyncTask:
 	call FormatDecimalNumberUnsigned ; $4924
 	ld a, [wCharDataNumberBuffer] ; $4927
 	cp $20 ; $492a
-	jr z, .eq202 ; $492c
+	jr z, .zeroPadTens ; $492c
 	jr .getCharDataDigitSprite ; $492e
-.eq202:
+.zeroPadTens:
 	ld a, $30 ; $4930
 .getCharDataDigitSprite:
 	call GetCharDataDigitSprite ; $4932
@@ -286,49 +286,49 @@ CharDataValuesSyncTask:
 	wram_bank WRAM_SCENE ; $4953
 	ld a, [wCharStatPageMain + 10] ; $4959
 	cp $20 ; $495c
-	jr z, .eq203 ; $495e
+	jr z, .mainExpDigit2 ; $495e
 	call GetSummaryExpDigitSprite ; $4960
 	ld_xy de, $08, $64 ; $4963
 	ld hl, wCharDataValuesSlideX ; $4966
 	call ApplySlideOffsetToSpriteX ; $4969
 	call QueueSprite ; $496c
-.eq203:
+.mainExpDigit2:
 	ld a, [wCharStatPageMain + 11] ; $496f
 	cp $20 ; $4972
-	jr z, .eq204 ; $4974
+	jr z, .mainExpDigit3 ; $4974
 	call GetSummaryExpDigitSprite ; $4976
 	ld_xy de, $0d, $64 ; $4979
 	ld hl, wCharDataValuesSlideX ; $497c
 	call ApplySlideOffsetToSpriteX ; $497f
 	call QueueSprite ; $4982
-.eq204:
+.mainExpDigit3:
 	ld a, [wCharStatPageMain + 12] ; $4985
 	cp $20 ; $4988
-	jr z, .eq205 ; $498a
+	jr z, .partnerExpDigit1 ; $498a
 	call GetSummaryExpDigitSprite ; $498c
 	ld_xy de, $12, $64 ; $498f
 	ld hl, wCharDataValuesSlideX ; $4992
 	call ApplySlideOffsetToSpriteX ; $4995
 	call QueueSprite ; $4998
-.eq205:
+.partnerExpDigit1:
 	ld a, [wCharStatPagePartner + 10] ; $499b
 	cp $20 ; $499e
-	jr z, .eq206 ; $49a0
+	jr z, .partnerExpDigit2 ; $49a0
 	call GetSummaryExpDigitSprite ; $49a2
 	ld_xy de, $58, $64 ; $49a5
 	ld hl, wCharDataValuesSlideX ; $49a8
 	call ApplySlideOffsetToSpriteX ; $49ab
 	call QueueSprite ; $49ae
-.eq206:
+.partnerExpDigit2:
 	ld a, [wCharStatPagePartner + 11] ; $49b1
 	cp $20 ; $49b4
-	jr z, .eq207 ; $49b6
+	jr z, .partnerExpDigit3 ; $49b6
 	call GetSummaryExpDigitSprite ; $49b8
 	ld_xy de, $5d, $64 ; $49bb
 	ld hl, wCharDataValuesSlideX ; $49be
 	call ApplySlideOffsetToSpriteX ; $49c1
 	call QueueSprite ; $49c4
-.eq207:
+.partnerExpDigit3:
 	ld a, [wCharStatPagePartner + 12] ; $49c7
 	cp $20 ; $49ca
 	jr z, .checkEquippedRacket ; $49cc

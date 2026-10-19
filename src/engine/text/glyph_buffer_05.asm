@@ -25,13 +25,13 @@ PlotGlyphRow:
 	ld c, a ; $7397
 	or a ; $7398
 	ld a, b ; $7399
-	jr z, .zero ; $739a
+	jr z, .noShift ; $739a
 .loopB:
 	sla a ; $739c
 	sla d ; $739e
 	dec c ; $73a0
 	jr nz, .loopB ; $73a1
-.zero:
+.noShift:
 	ld c, a ; $73a3
 	ld b, h ; $73a4
 	ld h, d ; $73a5
@@ -280,13 +280,13 @@ InitGlyphStreamForWindow:
 	ld de, $0000 ; $753a
 	ld a, [wGlyphWindowId] ; $753d
 	or a ; $7540
-	jr z, .zero ; $7541
+	jr z, .storePenX ; $7541
 	ld a, [wGlyphRowStartCol] ; $7543
 	ld d, a ; $7546
 	ld e, $00 ; $7547
 	sra d ; $7549
 	rr e ; $754b
-.zero:
+.storePenX:
 	ld hl, wGlyphPenX ; $754d
 	ld [hl], e ; $7550
 	inc hl ; $7551
@@ -302,11 +302,11 @@ InitGlyphStreamForWindow:
 	ld e, a ; $755f
 	ld a, [wGlyphWindowId] ; $7560
 	or a ; $7563
-	jr z, .zero2 ; $7564
+	jr z, .storeRowWidth ; $7564
 	ld a, [wGlyphRowStartCol] ; $7566
 	add e ; $7569
 	ld e, a ; $756a
-.zero2:
+.storeRowWidth:
 	ld hl, wTextRowWidth ; $756b
 	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld [hl], d ; $756e
@@ -340,11 +340,11 @@ DrawStreamGlyph:
 	ld l, a ; $759c
 	ld a, [hl+] ; $759d
 	cp $02 ; $759e
-	jr z, .step2 ; $75a0
+	jr z, .storePenX ; $75a0
 	cp $03 ; $75a2
-	jr z, .step2 ; $75a4
+	jr z, .storePenX ; $75a4
 	cp $01 ; $75a6
-	jr nz, .ne01 ; $75a8
+	jr nz, .drawGlyph ; $75a8
 	ld e, $00 ; $75aa
 	ld d, c ; $75ac
 	sra d ; $75ad
@@ -352,13 +352,13 @@ DrawStreamGlyph:
 	ld a, c ; $75b1
 	add b ; $75b2
 	ld [wTextRowColumn], a ; $75b3
-	jr .step2 ; $75b6
-.ne01:
+	jr .storePenX ; $75b6
+.drawGlyph:
 	push af ; $75b8
 	wram_bank WRAM_SOUND ; $75b9
 	pop af ; $75bf
 	call DrawGlyph ; $75c0
-.step2:
+.storePenX:
 	ld hl, wGlyphPenX ; $75c3
 	ld a, e ; $75c6
 	ld [hl+], a ; $75c7
@@ -439,12 +439,12 @@ UploadLastGlyphTiles:
 	push_wram_bank WRAM_SOUND ; $7631
 	ld a, [wKeepMatchStatsFlag] ; $763a
 	or a ; $763d
-	jr z, .zero ; $763e
+	jr z, .defaultLimit ; $763e
 	ld b, $5f ; $7640
-	jr .step3 ; $7642
-.zero:
+	jr .checkLimit ; $7642
+.defaultLimit:
 	ld b, $7f ; $7644
-.step3:
+.checkLimit:
 	ld a, [wGlyphRowStartCol] ; $7646
 	cp b ; $7649
 	jr nc, .restore2 ; $764a

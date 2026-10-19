@@ -139,12 +139,12 @@ Unused_00_RenderTextToTiles:
 	and a ; $20ea
 	jr z, .restore ; $20eb
 	sub $30 ; $20ed
-	jr nc, .noCarry ; $20ef
+	jr nc, .renderGlyph ; $20ef
 	ld a, b ; $20f1
 	add $06 ; $20f2
 	ld b, a ; $20f4
 	jr .loop ; $20f5
-.noCarry:
+.renderGlyph:
 	push hl ; $20f7
 	and $1f ; $20f8
 	add a ; $20fa
@@ -257,7 +257,7 @@ ProcessBGBlitQueue:
 	ldh [hBGColumnBlitDone], a ; $218e
 	ldh a, [hBGRowBlitPending] ; $2190
 	or a ; $2192
-	jr z, .zero ; $2193
+	jr z, .checkColumnBlit ; $2193
 	ld a, $01 ; $2195
 	ldh [rVBK], a ; $2197
 	ld bc, wBGRowBlitAttrs ; $2199
@@ -294,10 +294,10 @@ ProcessBGBlitQueue:
 	ld [hl], e ; $21c7
 	inc hl ; $21c8
 	ld [hl], a ; $21c9
-.zero:
+.checkColumnBlit:
 	ldh a, [hBGColumnBlitPending] ; $21ca
 	or a ; $21cc
-	jr z, .zero2 ; $21cd
+	jr z, .clearPending ; $21cd
 	ld a, $01 ; $21cf
 	ldh [hBGColumnBlitDone], a ; $21d1
 	ldh [rVBK], a ; $21d3
@@ -333,7 +333,7 @@ ProcessBGBlitQueue:
 	ld b, a ; $2202
 	dec b ; $2203
 	jr nz, .loopB ; $2204
-.zero2:
+.clearPending:
 	xor a ; $2206
 	ldh [hBGRowBlitPending], a ; $2207
 	ldh [hBGColumnBlitPending], a ; $2209

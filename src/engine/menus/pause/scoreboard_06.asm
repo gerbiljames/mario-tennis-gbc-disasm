@@ -36,7 +36,7 @@ PrepareScoreboardGfx:
 	farcall StepMatchFrame ; $4967
 	ld a, [wMatchContext] ; $496a
 	cp MATCHCONTEXT_MINIGAME ; $496d
-	jr z, .eq02 ; $496f
+	jr z, .minigame ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
 	ld b, $01 ; $4974
 	ld de, vTiles0 tile $70 ; $4976
@@ -54,7 +54,7 @@ PrepareScoreboardGfx:
 	ld de, vTiles0 tile $6c ; $4997
 	farcall LoadScoreDigitGfx ; $499a
 	farcall StepMatchFrame ; $499d
-.eq02:
+.minigame:
 	wram_bank WRAM_COURT_PLANES ; $49a0
 	ret ; $49a6
 DrawScoreboard:

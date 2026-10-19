@@ -22,7 +22,7 @@ ActorScript_27_03:
 	as_halt
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_field ACTORF_SPEED, $0010
-.L21:
+.pace:
 	as_target_rel -2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
@@ -31,7 +31,7 @@ ActorScript_27_03:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 75
-	as_jump .L21
+	as_jump .pace
 End12PrincipalsOfficeMapScripts_27:
 	; $4bbc, 14 bytes (map_tree)
 	dw End12PrincipalsOfficeEntryPoints_27 ; slot 0 EntryPoints
@@ -82,7 +82,7 @@ End12PrincipalsOfficeInitScript_27:
 	call EnableLCD ; $4c7d
 	ld a, [wStoryModeEntryPoint] ; $4c80
 	cp $02 ; $4c83
-	jp z, .eq02 ; $4c85
+	jp z, .altScene ; $4c85
 	jp .clearStoryModeShowLocationName ; $4c88
 	ret ; $4c8b
 .clearStoryModeShowLocationName:
@@ -222,7 +222,7 @@ End12PrincipalsOfficeInitScript_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $4fe9
 	ld [wStoryModeExitTriggerRequest], a ; $4fec
 	ret ; $4fef
-.eq02:
+.altScene:
 	script_respawn_actors End12PrincipalsOfficeActorsAlt_27 ; $4ff0
 	farcall BeginCutsceneScriptMode ; $4ff8
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, ANIM_TROPHY_SINGLES ; $4ffb
@@ -343,7 +343,7 @@ End11TrainingCourtInitScript_27:
 	cp $01 ; $5273
 	jp z, .checkDoubles ; $5275
 	cp $02 ; $5278
-	jp z, .eq02 ; $527a
+	jp z, .altScene ; $527a
 	ret ; $527d
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $527e
@@ -434,7 +434,7 @@ End11TrainingCourtInitScript_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $53f2
 	ld [wStoryModeExitTriggerRequest], a ; $53f5
 	ret ; $53f8
-.eq02:
+.altScene:
 	script_respawn_actors End11TrainingCourtActorsAlt_27 ; $53f9
 	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $5401
 	farcall BeginCutsceneScriptMode ; $540c

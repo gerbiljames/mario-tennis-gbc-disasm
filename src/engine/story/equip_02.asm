@@ -514,7 +514,7 @@ Unused_02_ListForEach:
 	ld a, [hl+] ; $4bda
 .loop3:
 	or a ; $4bdb
-	jr z, .zero ; $4bdc
+	jr z, .stat3Done ; $4bdc
 	push af ; $4bde
 	push hl ; $4bdf
 	ld d, $03 ; $4be0
@@ -523,7 +523,7 @@ Unused_02_ListForEach:
 	pop af ; $4be6
 	dec a ; $4be7
 	jr .loop3 ; $4be8
-.zero:
+.stat3Done:
 	xor a ; $4bea
 	ld hl, CharDataPtr_02 ; $4beb
 	add l ; $4bee

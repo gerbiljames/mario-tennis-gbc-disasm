@@ -14,7 +14,7 @@
 	call RecordDrillTargetZoneHit
 	call CheckDrillTargetZoneMissed
 	or a
-	jp nz, .nonZero
+	jp nz, .hitTarget
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3
 	ld b, $00
 	call QueueDrillResultMessage
@@ -24,7 +24,7 @@
 .storeMatchAbortFlag2:
 	xor a
 	ret
-.nonZero:
+.hitTarget:
 	ld a, MATCHABORT_POINT
 	ld [wMatchAbortFlag], a
 	ld a, $01

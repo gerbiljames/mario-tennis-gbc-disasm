@@ -4,9 +4,9 @@ DrawSpinServeBriefingMarker:
 	ld b, $09 ; $484e
 	ld a, [wBriefingSpinMarkerUnflipped] ; $4850
 	cp $01 ; $4853
-	jr z, .eq01 ; $4855
+	jr z, .gotAttr ; $4855
 	ld b, OAM_BANK1 | OAM_XFLIP | 1 ; $4857
-.eq01:
+.gotAttr:
 	ld a, [wBriefingSpinMarkerX] ; $4859
 	ld d, a ; $485c
 	ld a, [wBriefingSpinMarkerY] ; $485d

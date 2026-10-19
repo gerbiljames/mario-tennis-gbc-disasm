@@ -25,11 +25,11 @@ FetchSRAMText:
 	ld hl, $a800 ; $6d49
 	add hl, de ; $6d4c
 	or a ; $6d4d
-	jr nz, .nonZero ; $6d4e
+	jr nz, .shortText ; $6d4e
 	ld de, wTextBuffer ; $6d50
 	ld bc, $0180 ; $6d53 384 bytes into the 160-byte buffer (docs/bugs.md)
 	jr .copyMemoryBC ; $6d56
-.nonZero:
+.shortText:
 	ld de, wShortTextBuffer ; $6d58
 	ld bc, $0020 ; $6d5b 32 bytes into the 16-byte buffer
 .copyMemoryBC:
@@ -95,20 +95,20 @@ Unused_05_RunDebugWindowDemo:
 	ldh a, [hPlayerInputFlags] ; $6de3
 	ld hl, hScrollX ; $6de5
 	bit PADB_RIGHT, a ; $6de8
-	jr z, .step ; $6dea
+	jr z, .checkLeft ; $6dea
 	inc [hl] ; $6dec
-	jr .step2 ; $6ded
-.step:
+	jr .scrollY ; $6ded
+.checkLeft:
 	bit 5, a ; $6def
-	jr z, .step2 ; $6df1
+	jr z, .scrollY ; $6df1
 	dec [hl] ; $6df3
-.step2:
+.scrollY:
 	ld hl, hScrollY ; $6df4
 	bit 6, a ; $6df7
-	jr z, .bit6Clear ; $6df9
+	jr z, .checkDown ; $6df9
 	dec [hl] ; $6dfb
 	jr .advanceFrame ; $6dfc
-.bit6Clear:
+.checkDown:
 	bit 7, a ; $6dfe
 	jr z, .advanceFrame ; $6e00
 	inc [hl] ; $6e02
@@ -210,13 +210,13 @@ AllocWindowId:
 	ld c, $01 ; $6e9e
 .loop:
 	rrca ; $6ea0
-	jr nc, .step ; $6ea1
+	jr nc, .claimSlot ; $6ea1
 	sla c ; $6ea3
 	dec b ; $6ea5
 	jr nz, .loop ; $6ea6
 	ld a, $ff ; $6ea8
 	jr .restore ; $6eaa
-.step:
+.claimSlot:
 	ld a, [wWindowSlotMask] ; $6eac
 	or c ; $6eaf
 	ld [wWindowSlotMask], a ; $6eb0

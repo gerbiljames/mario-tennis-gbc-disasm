@@ -31,7 +31,7 @@ ShowTournamentBracket:
 BuildTournamentBracketScreen:
 	ld a, [wScreenScratch] ; $77a7
 	or a ; $77aa
-	jr nz, .nonZero ; $77ab
+	jr nz, .doubles ; $77ab
 	ld c, SCREENASSET_VarsityTeamChart ; $77ad
 	farcall LoadScreenAssetRecord ; $77af
 	ld b, TILEBLOCK_TournamentBracketGfx ; $77b2
@@ -45,7 +45,7 @@ BuildTournamentBracketScreen:
 	call HighlightBracketPlayerRow ; $77cb
 	farcall QueueWram3MapToVRAM ; $77ce
 	ret ; $77d1
-.nonZero:
+.doubles:
 	ld c, SCREENASSET_VarsityTeamChart2 ; $77d2
 	farcall LoadScreenAssetRecord ; $77d4
 	ld b, TILEBLOCK_TournamentBracketGfx ; $77d7
@@ -68,7 +68,7 @@ ClearTournamentBracketAttrs:
 DrawTournamentBracketNameBoxes:
 	ld a, [wScreenScratch] ; $7804
 	or a ; $7807
-	jr nz, .nonZero ; $7808
+	jr nz, .doubles ; $7808
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 9 ; $780a
 	rect_size $07, $08 ; $780d
 	ld h, $20 ; $7811
@@ -90,7 +90,7 @@ DrawTournamentBracketNameBoxes:
 	ld h, $03 ; $7841
 	farcall FillTilemapRect ; $7843
 	ret ; $7846
-.nonZero:
+.doubles:
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 9 ; $7847
 	rect_size $07, $08 ; $784a
 	ld h, $20 ; $784e
@@ -151,7 +151,7 @@ WriteBracketEntrantName:
 	push de ; $78a5
 	push hl ; $78a6
 	or a ; $78a7
-	jr z, .zero ; $78a8
+	jr z, .player ; $78a8
 	ld hl, $004b ; $78aa
 	dec a ; $78ad
 	add l ; $78ae
@@ -179,7 +179,7 @@ WriteBracketEntrantName:
 	pop bc ; $78c9
 	pop af ; $78ca
 	ret ; $78cb
-.zero:
+.player:
 	ld hl, WriteBracketEntrantNameTable ; $78cc
 	ld a, b ; $78cf
 	add a ; $78d0
@@ -207,7 +207,7 @@ WriteBracketEntrantNameTable:
 WriteBracketDoublesNames:
 	ld a, [wDataScreenPage] ; $78ec
 	cp $01 ; $78ef
-	jr nz, .ne01 ; $78f1
+	jr nz, .playerBelow ; $78f1
 	ld hl, wStoryMainName ; $78f3
 	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH + 9 ; $78f6
 	call DrawNameWithDiacritics_3b ; $78f9
@@ -223,7 +223,7 @@ WriteBracketDoublesNames:
 	ld c, $20 ; $7916
 	farcall RenderTextToBuffer64 ; $7918
 	ret ; $791b
-.ne01:
+.playerBelow:
 	ld hl, wStoryMainName ; $791c
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 9 ; $791f
 	call DrawNameWithDiacritics_3b ; $7922
@@ -242,7 +242,7 @@ WriteBracketDoublesNames:
 HighlightBracketPlayerRow:
 	ld a, [wScreenScratch] ; $7945
 	or a ; $7948
-	jr nz, .nonZero ; $7949
+	jr nz, .doubles ; $7949
 	ld a, [wDataScreenPage] ; $794b
 	ld hl, HighlightBracketPlayerRowTable ; $794e
 	add a ; $7951
@@ -272,13 +272,13 @@ HighlightBracketPlayerRow:
 	ld c, $02 ; $7974
 	ld a, [wDataScreenPage] ; $7976
 	cp $04 ; $7979
-	jr nz, .ne04 ; $797b
+	jr nz, .fillMarker ; $797b
 	ld c, $01 ; $797d
-.ne04:
+.fillMarker:
 	ld h, $0d ; $797f
 	farcall FillTilemapRect ; $7981
 	ret ; $7984
-.nonZero:
+.doubles:
 	ld a, [wDataScreenPage] ; $7985
 	ld hl, BracketPlayerRowTable1 ; $7988
 	add a ; $798b
@@ -435,7 +435,7 @@ MarioCastChartScrollArrowsTask:
 .checkMenuCursorY2:
 	ld a, [wMenuCursorY] ; $7ac2
 	cp $05 ; $7ac5
-	jr z, .eq05 ; $7ac7
+	jr z, .atBottomRow ; $7ac7
 	ld_xy de, $0a, $78 ; $7ac9
 	ld c, $00 ; $7acc
 	call ApplyCursorBounceY ; $7ace
@@ -443,7 +443,7 @@ MarioCastChartScrollArrowsTask:
 	ld c, $00 ; $7ad3
 	ld h, $03 ; $7ad5
 	farcall QueueStackedSpritePair ; $7ad7
-.eq05:
+.atBottomRow:
 	jr .restore ; $7ada
 .checkMenuCursorY3:
 	ld a, [wMenuCursorY] ; $7adc
@@ -507,7 +507,7 @@ ScrollMarioCastChartCursorFull:
 	jr .done ; $7b68
 .checkMenuCursorX:
 	bit 4, a ; $7b6a
-	jr z, .bit4Clear ; $7b6c
+	jr z, .checkUp ; $7b6c
 	ld a, [wMenuCursorX] ; $7b6e
 	cp $02 ; $7b71
 	jr z, .done ; $7b73
@@ -517,9 +517,9 @@ ScrollMarioCastChartCursorFull:
 	call RedrawMarioCastChartWindow ; $7b7b
 	call FlushMarioCastChartWindowToVram ; $7b7e
 	jr .done ; $7b81
-.bit4Clear:
+.checkUp:
 	bit 6, a ; $7b83
-	jr z, .bit6Clear ; $7b85
+	jr z, .checkDown ; $7b85
 	ld a, [wMenuCursorY] ; $7b87
 	or a ; $7b8a
 	jr z, .done ; $7b8b
@@ -529,7 +529,7 @@ ScrollMarioCastChartCursorFull:
 	call RedrawMarioCastChartWindow ; $7b93
 	call FlushMarioCastChartWindowToVram ; $7b96
 	jr .done ; $7b99
-.bit6Clear:
+.checkDown:
 	bit 7, a ; $7b9b
 	jr z, .done ; $7b9d
 	ld a, [wMenuCursorY] ; $7b9f
@@ -700,12 +700,12 @@ BuildMarioCastChartColumnList:
 	ld a, d ; $7cd9
 	or e ; $7cda
 	cp $ff ; $7cdb
-	jr z, .step ; $7cdd
+	jr z, .unlocked ; $7cdd
 	farcall TestSaveFlag ; $7cdf
-	jr nz, .step ; $7ce2
+	jr nz, .unlocked ; $7ce2
 	ld b, $10 ; $7ce4
-	jr .step2 ; $7ce6
-.step:
+	jr .storeColumn ; $7ce6
+.unlocked:
 	ld hl, MarioCastChartColumnTable ; $7ce8
 	ld a, c ; $7ceb
 	add l ; $7cec
@@ -714,7 +714,7 @@ BuildMarioCastChartColumnList:
 	inc h ; $7cf0
 .readB:
 	ld b, [hl] ; $7cf1
-.step2:
+.storeColumn:
 	ld hl, wChartColumnList ; $7cf2
 	ld a, c ; $7cf5
 	add l ; $7cf6

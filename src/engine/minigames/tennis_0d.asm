@@ -22,9 +22,9 @@ PlayMinigameCountdown:
 	farcall LoadScoreDigitGfx ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee
 	and a ; $48f1
-	jr nz, .nonZero ; $48f2
+	jr nz, .showDigit ; $48f2
 	sound SFX_COUNTDOWN ; $48f4
-.nonZero:
+.showDigit:
 	ld a, $11 ; $48f6
 	farcall SpawnCourtBannerObj ; $48f8
 	ld a, 40 ; $48fb
@@ -34,9 +34,9 @@ PlayMinigameCountdown:
 	jr nz, .loop ; $4902
 	ld a, [wMatchFramesAbort] ; $4904
 	and a ; $4907
-	jr nz, .nonZero2 ; $4908
+	jr nz, .showGo ; $4908
 	sound SFX_COUNTDOWN_GO ; $490a
-.nonZero2:
+.showGo:
 	ld a, $10 ; $490c
 	farcall ShowCourtBanner ; $490e
 	ld a, 40 ; $4911

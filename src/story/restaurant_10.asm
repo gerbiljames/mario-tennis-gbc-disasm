@@ -809,7 +809,7 @@ RestaurantNpc0C_10:
 	cp STORYTIER_ACADEMY ; $5f83
 	jr z, .speak ; $5f85
 	cp $03 ; $5f87
-	jr nc, .ge03 ; $5f89
+	jr nc, .islandOpenOrLater ; $5f89
 	script_speak_restore ACTOR_RESTAURANT_WALK_71_06_2 ; $5f8b
 	farcall RunDialogueYesNoPrompt ; $5f90
 	farcall ScriptCloseDialogueWindow ; $5f93
@@ -822,7 +822,7 @@ RestaurantNpc0C_10:
 	jr nz, .speak ; $5fa8
 	farcall AdvanceDialogueTextCursor ; $5faa
 	jr .speak ; $5fad
-.ge03:
+.islandOpenOrLater:
 	ld a, [wMapSceneStage] ; $5faf
 	and $01 ; $5fb2
 	jr z, .speak ; $5fb4

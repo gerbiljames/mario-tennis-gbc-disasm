@@ -18,13 +18,13 @@ DrawInlineGlyph:
 	pop hl ; $7695
 	ld a, [hl+] ; $7696
 	cp $02 ; $7697
-	jr z, .step3 ; $7699
+	jr z, .storePenX ; $7699
 	cp $03 ; $769b
-	jr z, .step3 ; $769d
+	jr z, .storePenX ; $769d
 	cp $01 ; $769f
-	jr z, .eq01 ; $76a1
+	jr z, .newline ; $76a1
 	jr .drawGlyph ; $76a3
-.eq01:
+.newline:
 	ld e, $00 ; $76a5
 	ld d, c ; $76a7
 	sra d ; $76a8
@@ -33,13 +33,13 @@ DrawInlineGlyph:
 	add b ; $76ad
 	ld [wTextRowColumn], a ; $76ae
 	ld [wGlyphRowStartCol], a ; $76b1
-	jr .step3 ; $76b4
+	jr .storePenX ; $76b4
 .drawGlyph:
 	push af ; $76b6
 	wram_bank WRAM_SOUND ; $76b7
 	pop af ; $76bd
 	call DrawGlyph ; $76be
-.step3:
+.storePenX:
 	ld hl, wGlyphPenX ; $76c1
 	ld a, e ; $76c4
 	ld [hl+], a ; $76c5
@@ -134,13 +134,13 @@ InitGlyphStreamAt:
 	ld b, a ; $7740
 	ld a, [wWindowId] ; $7741
 	cp b ; $7744
-	jr nz, .step ; $7745
+	jr nz, .setRowStart ; $7745
 	test_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7747
-	jr nz, .step ; $774a
+	jr nz, .setRowStart ; $774a
 	inc d ; $774c
 	ld e, c ; $774d
 	inc c ; $774e
-.step:
+.setRowStart:
 	ld b, e ; $774f
 	ld e, $00 ; $7750
 	ld hl, wGlyphRowStartCol ; $7752
@@ -219,16 +219,16 @@ FlushGlyphRow:
 	bit 7, a ; $77b2
 	jr nz, .uploadGlyphBufferQueued ; $77b4
 	and $7f ; $77b6
-	jr nz, .step2 ; $77b8
+	jr nz, .advanceRow ; $77b8
 .uploadGlyphBufferQueued:
 	ldh a, [rLCDC] ; $77ba
 	bit B_LCDC_ENABLE, a ; $77bc
 	jr z, .uploadGlyphBufferDMA ; $77be
 	call UploadGlyphBufferQueued ; $77c0
-	jr .step2 ; $77c3
+	jr .advanceRow ; $77c3
 .uploadGlyphBufferDMA:
 	call UploadGlyphBufferDMA ; $77c5
-.step2:
+.advanceRow:
 	ld hl, wTextRowWidth ; $77c8
 	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld b, [hl] ; $77cb
@@ -254,12 +254,12 @@ UploadGlyphBufferQueued:
 	wram_bank WRAM_SOUND ; $77e7
 	ld a, [wKeepMatchStatsFlag] ; $77ed
 	or a ; $77f0
-	jr z, .zero ; $77f1
+	jr z, .defaultLimit ; $77f1
 	ld b, $60 ; $77f3
-	jr .step2 ; $77f5
-.zero:
+	jr .clampColumn ; $77f5
+.defaultLimit:
 	ld b, $80 ; $77f7
-.step2:
+.clampColumn:
 	ld a, [wGlyphRowStartCol] ; $77f9
 	inc a ; $77fc
 	cp b ; $77fd
@@ -270,9 +270,9 @@ UploadGlyphBufferQueued:
 .loop:
 	inc b ; $7803
 	sub $12 ; $7804
-	jr c, .carry ; $7806
+	jr c, .gotRowCount ; $7806
 	jr .loop ; $7808
-.carry:
+.gotRowCount:
 	push bc ; $780a
 	ld hl, $0000 ; $780b
 	ld b, h ; $780e
@@ -341,10 +341,10 @@ UploadGlyphBufferDMA:
 .loop:
 	inc b ; $787b
 	sub $20 ; $787c
-	jr z, .step ; $787e
-	jr c, .step ; $7880
+	jr z, .gotRowCount ; $787e
+	jr c, .gotRowCount ; $7880
 	jr .loop ; $7882
-.step:
+.gotRowCount:
 	ld hl, wGlyphTileBuffer ; $7884
 	ld de, vTiles1 ; $7887
 	ld c, $20 ; $788a
@@ -389,10 +389,10 @@ Unused_05_UploadGlyphTileRange:
 	add hl, de ; $78c8
 	ld a, [wGlyphUploadVramBank] ; $78c9
 	or a ; $78cc
-	jr z, .zero ; $78cd
+	jr z, .vramBank0 ; $78cd
 	ld de, $2000 ; $78cf
 	add hl, de ; $78d2
-.zero:
+.vramBank0:
 	push hl ; $78d3
 	ld h, b ; $78d4
 	ld l, c ; $78d5
@@ -401,9 +401,9 @@ Unused_05_UploadGlyphTileRange:
 	pop de ; $78da
 	ld a, [wGlyphUploadCount] ; $78db
 	cp $20 ; $78de
-	jr c, .lt20 ; $78e0
+	jr c, .copyTiles ; $78e0
 	ld a, $20 ; $78e2
-.lt20:
+.copyTiles:
 	ld c, a ; $78e4
 	call QueueVRAMCopy ; $78e5
 	ld b, a ; $78e8

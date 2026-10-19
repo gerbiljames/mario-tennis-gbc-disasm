@@ -224,14 +224,14 @@ ShiftDestForLongName:
 .loop:
 	ld a, [hl+] ; $4688
 	or a ; $4689
-	jr z, .zero ; $468a
+	jr z, .counted ; $468a
 	cp $de ; $468c
 	jr z, .loop ; $468e
 	cp $df ; $4690
 	jr z, .loop ; $4692
 	inc c ; $4694
 	jr .loop ; $4695
-.zero:
+.counted:
 	ld a, $05 ; $4697
 	cp c ; $4699
 	ret nc ; $469a

@@ -72,11 +72,11 @@ NetGamePractice3EvaluateResult:
 	jr .notFound ; $61ea
 .compare:
 	or a ; $61ec
-	jr z, .zero ; $61ed
+	jr z, .noDoubleFaults ; $61ed
 	ld a, $02 ; $61ef
 	ld [wDrillLessonResult], a ; $61f1
 	jr .notFound ; $61f4
-.zero:
+.noDoubleFaults:
 	ld a, [wDrillCounters + 4] ; $61f6
 	cp $03 ; $61f9
 	jr nz, .countDrillResultBitsSet ; $61fb
@@ -86,27 +86,27 @@ NetGamePractice3EvaluateResult:
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $6204
 	or a ; $6207
-	jr z, .zero2 ; $6208
+	jr z, .checkCounter5 ; $6208
 	ld a, $03 ; $620a
 	ld [wDrillLessonResult], a ; $620c
 	jr .notFound ; $620f
-.zero2:
+.checkCounter5:
 	ld a, [wDrillCounters + 5] ; $6211
 	or a ; $6214
-	jr nz, .nonZero ; $6215
+	jr nz, .checkCounter4Range ; $6215
 	ld a, $06 ; $6217
 	ld [wDrillLessonResult], a ; $6219
 	jr .notFound ; $621c
-.nonZero:
+.checkCounter4Range:
 	ld a, [wDrillCounters + 4] ; $621e
 	cp $01 ; $6221
-	jr c, .step4 ; $6223
+	jr c, .result4 ; $6223
 	cp $03 ; $6225
-	jr nc, .step4 ; $6227
+	jr nc, .result4 ; $6227
 	ld a, $05 ; $6229
 	ld [wDrillLessonResult], a ; $622b
 	jr .notFound ; $622e
-.step4:
+.result4:
 	ld a, $04 ; $6230
 	ld [wDrillLessonResult], a ; $6232
 	jr .notFound ; $6235
@@ -448,10 +448,10 @@ StrokeMatch1AwardPointToSide:
 	inc a ; $64c8
 	srl a ; $64c9
 	or a ; $64cb
-	jr nz, .nonZero ; $64cc
+	jr nz, .player1Point ; $64cc
 	ld hl, wPlayer2PointsWon ; $64ce
 	jr .bump ; $64d1
-.nonZero:
+.player1Point:
 	ld hl, wPlayer1PointsWon ; $64d3
 .bump:
 	inc [hl] ; $64d6
@@ -490,7 +490,7 @@ StrokeMatch1JudgePoint:
 	dec a ; $650e
 	jp z, .branch13 ; $650f
 	cp $01 ; $6512
-	jp z, StrokeMatch1Cases1.eq01 ; $6514
+	jp z, StrokeMatch1Cases1.rally2 ; $6514
 	and $01 ; $6517
 	jp z, StrokeMatch1Cases2.maskClear ; $6519
 	jp StrokeMatch1Cases3.dispatchResult ; $651c
@@ -535,7 +535,7 @@ StrokeMatch1Cases1:
 .returnZero2:
 	xor a ; $6557
 	ret ; $6558
-.eq01:
+.rally2:
 	ld a, b ; $6559
 	ld a, a ; $655a
 	rst Rst00 ; $655b
@@ -724,10 +724,10 @@ SelectStrokeTargetTableByPoint:
 	and $01 ; $6692
 	ld a, $00 ; $6694
 	or a ; $6696
-	jr nz, .nonZero ; $6697
+	jr nz, .oddVerdicts ; $6697
 	ld hl, EvenRallyVerdicts ; $6699
 	jr .done ; $669c
-.nonZero:
+.oddVerdicts:
 	ld hl, OddRallyVerdicts ; $669e
 .done:
 	ret ; $66a1
@@ -736,10 +736,10 @@ SelectStrokeTargetTableByPointAlt:
 	and $01 ; $66a5
 	ld a, $00 ; $66a7
 	or a ; $66a9
-	jr nz, .nonZero ; $66aa
+	jr nz, .evenVerdicts ; $66aa
 	ld hl, OddRallyVerdicts ; $66ac
 	jr .done ; $66af
-.nonZero:
+.evenVerdicts:
 	ld hl, EvenRallyVerdicts ; $66b1
 .done:
 	ret ; $66b4

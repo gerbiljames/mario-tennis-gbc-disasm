@@ -22,21 +22,21 @@ DetermineMinigamePointResult:
 	jr nz, .isMinigameScoreLimitReached ; $43e3
 	ld a, [wPointOutcome] ; $43e5
 	cp POINTOUTCOME_MINIGAME_CLEARED ; $43e8
-	jr z, .eq0b ; $43ea
+	jr z, .cleared ; $43ea
 	jr .storePointWinLoseFlag ; $43ec
 .isMinigameScoreLimitReached:
 	call IsMinigameScoreLimitReached ; $43ee
 	and a ; $43f1
-	jr nz, .nonZero ; $43f2
+	jr nz, .scoreLimitReached ; $43f2
 	jr .storePointWinLoseFlag ; $43f4
-.eq0b:
+.cleared:
 	ld a, WINLOSE_WIN ; $43f6
 	ld [wPointWinLoseFlag], a ; $43f8
 	ld a, [wMinigameLevel] ; $43fb
 	add $12 ; $43fe
 	ld d, a ; $4400
 	ret ; $4401
-.nonZero:
+.scoreLimitReached:
 	ld a, WINLOSE_WIN ; $4402
 	ld [wPointWinLoseFlag], a ; $4404
 	ld d, $16 ; $4407

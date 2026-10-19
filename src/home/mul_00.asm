@@ -45,46 +45,46 @@ MulHLByA:
 	jr z, .mul128 ; $0944
 	add hl, hl ; $0946
 	add a ; $0947
-	jr nc, .step6 ; $0948
+	jr nc, .shiftAdd6 ; $0948
 	add hl, de ; $094a
 .top6:
 	jr z, .finish6 ; $094b
-.step6:
+.shiftAdd6:
 	add hl, hl ; $094d
 	add a ; $094e
-	jr nc, .step5 ; $094f
+	jr nc, .shiftAdd5 ; $094f
 	add hl, de ; $0951
 .top5:
 	jr z, .finish5 ; $0952
-.step5:
+.shiftAdd5:
 	add hl, hl ; $0954
 	add a ; $0955
-	jr nc, .step4 ; $0956
+	jr nc, .shiftAdd4 ; $0956
 	add hl, de ; $0958
 .top4:
 	jr z, .finish4 ; $0959
-.step4:
+.shiftAdd4:
 	add hl, hl ; $095b
 	add a ; $095c
-	jr nc, .step3 ; $095d
+	jr nc, .shiftAdd3 ; $095d
 	add hl, de ; $095f
 .top3:
 	jr z, .finish3 ; $0960
-.step3:
+.shiftAdd3:
 	add hl, hl ; $0962
 	add a ; $0963
-	jr nc, .step2 ; $0964
+	jr nc, .shiftAdd2 ; $0964
 	add hl, de ; $0966
 .top2:
 	jr z, .finish2 ; $0967
-.step2:
+.shiftAdd2:
 	add hl, hl ; $0969
 	add a ; $096a
-	jr nc, .step1 ; $096b
+	jr nc, .shiftAdd1 ; $096b
 	add hl, de ; $096d
 .top1:
 	jr z, .finish1 ; $096e
-.step1:
+.shiftAdd1:
 	add hl, hl ; $0970
 	add hl, de ; $0971
 	pop de ; $0972
@@ -428,10 +428,10 @@ MulHLBySin:
 	ret ; $0b12
 MulHLBySinHalf:
 	bit 6, a ; $0b13
-	jr z, .bit6Clear ; $0b15
+	jr z, .lookup ; $0b15
 	cpl ; $0b17
 	add $81 ; $0b18
-.bit6Clear:
+.lookup:
 	push bc ; $0b1a
 	ld_bc_indexed QuarterSineTable ; $0b1b
 	ld a, [bc] ; $0b22
@@ -460,10 +460,10 @@ MulHLBySinSigned:
 	ret ; $0b41
 MulHLBySinSignedHalf:
 	bit 6, a ; $0b42
-	jr z, .bit6Clear ; $0b44
+	jr z, .lookup ; $0b44
 	cpl ; $0b46
 	add $81 ; $0b47
-.bit6Clear:
+.lookup:
 	push bc ; $0b49
 	ld_bc_indexed QuarterSineTable ; $0b4a
 	ld a, [bc] ; $0b51

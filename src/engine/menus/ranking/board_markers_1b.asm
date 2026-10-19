@@ -5,13 +5,13 @@ HighlightDoublesRankingRows:
 	cp $01 ; $582e
 	ret z ; $5830
 	cp $02 ; $5831
-	jr nz, .ne02 ; $5833
+	jr nz, .otherRow ; $5833
 	ld b, $01 ; $5835
 	call HighlightDoublesRankingRow ; $5837
 	ld b, $02 ; $583a
 	call HighlightDoublesRankingRow ; $583c
 	ret ; $583f
-.ne02:
+.otherRow:
 	ld b, $05 ; $5840
 	call HighlightDoublesRankingRow ; $5842
 	ret ; $5845
@@ -109,10 +109,10 @@ PushRankingBoardTilemapRows:
 RankingBoardAnimTask_1b:
 	ld a, [wRankingBannerAnimFrame] ; $5912
 	or a ; $5915
-	jr nz, .nonZero ; $5916
+	jr nz, .advance ; $5916
 	ld a, $a0 ; $5918
 	ld [wRankingBannerX], a ; $591a
-.nonZero:
+.advance:
 	ld a, [wRankingBannerAnimFrame] ; $591d
 	ld hl, RankingBoardAnimTaskTable ; $5920
 	add l ; $5923
@@ -128,9 +128,9 @@ RankingBoardAnimTask_1b:
 	ld e, $40 ; $5933
 	ld a, [wRankingBoardDoubles] ; $5935
 	or a ; $5938
-	jr z, .zero ; $5939
+	jr z, .drawBanner ; $5939
 	ld e, $50 ; $593b
-.zero:
+.drawBanner:
 	ld a, [wRankingBannerX] ; $593d
 	ld d, a ; $5940
 	sprite_tile_attr $10, OAM_BANK1 | 4 ; $5941
@@ -190,14 +190,14 @@ DrawRankingMarkersTask:
 	call GetRankingMarkerSlot ; $5a47
 	ld a, [hl+] ; $5a4a
 	cp $ff ; $5a4b
-	jr z, .eqff ; $5a4d
+	jr z, .nextSlot ; $5a4d
 	ld b, a ; $5a4f
 	ld a, [hl+] ; $5a50
 	ld d, a ; $5a51
 	ld a, [hl+] ; $5a52
 	ld e, a ; $5a53
 	call QueueRankingMarkerSprite ; $5a54
-.eqff:
+.nextSlot:
 	ld a, c ; $5a57
 	inc a ; $5a58
 	ld c, a ; $5a59
@@ -296,7 +296,7 @@ UpdateScriptedOffsetChannel0:
 	add hl, de ; $5ae6
 	ld a, [hl] ; $5ae7
 	cp $40 ; $5ae8
-	jr z, .eq40 ; $5aea
+	jr z, .scriptEnd ; $5aea
 	ld c, a ; $5aec
 	ld hl, wRankingAnimSlotPtrs ; $5aed
 	ld a, [hl+] ; $5af0
@@ -307,7 +307,7 @@ UpdateScriptedOffsetChannel0:
 	add c ; $5af5
 	ld [hl], a ; $5af6
 	jr .checkTextPageBreakRequest ; $5af7
-.eq40:
+.scriptEnd:
 	ld hl, UpdateScriptedOffsetChannel0 ; $5af9
 	call UnregisterFrameTask ; $5afc
 	ret ; $5aff
@@ -327,7 +327,7 @@ UpdateScriptedOffsetChannel1:
 	add hl, de ; $5b14
 	ld a, [hl] ; $5b15
 	cp $40 ; $5b16
-	jr z, .eq40 ; $5b18
+	jr z, .scriptEnd ; $5b18
 	ld c, a ; $5b1a
 	ld hl, wRankingAnimSlotPtrs + 2 ; $5b1b
 	ld a, [hl+] ; $5b1e
@@ -337,12 +337,12 @@ UpdateScriptedOffsetChannel1:
 	ld a, [hl] ; $5b22
 	add c ; $5b23
 	ld [hl], a ; $5b24
-	jr .step2 ; $5b25
-.eq40:
+	jr .nextStep ; $5b25
+.scriptEnd:
 	ld hl, UpdateScriptedOffsetChannel1 ; $5b27
 	call UnregisterFrameTask ; $5b2a
 	ret ; $5b2d
-.step2:
+.nextStep:
 	ld a, [wRankingAnimStepIndex + 1] ; $5b2e
 	inc a ; $5b31
 	ld [wRankingAnimStepIndex + 1], a ; $5b32
@@ -358,7 +358,7 @@ UpdateScriptedOffsetChannel2:
 	add hl, de ; $5b42
 	ld a, [hl] ; $5b43
 	cp $40 ; $5b44
-	jr z, .eq40 ; $5b46
+	jr z, .scriptEnd ; $5b46
 	ld c, a ; $5b48
 	ld hl, wRankingAnimSlotPtrs + 4 ; $5b49
 	ld a, [hl+] ; $5b4c
@@ -369,12 +369,12 @@ UpdateScriptedOffsetChannel2:
 	ld a, [hl] ; $5b51
 	add c ; $5b52
 	ld [hl], a ; $5b53
-	jr .step2 ; $5b54
-.eq40:
+	jr .nextStep ; $5b54
+.scriptEnd:
 	ld hl, UpdateScriptedOffsetChannel2 ; $5b56
 	call UnregisterFrameTask ; $5b59
 	ret ; $5b5c
-.step2:
+.nextStep:
 	ld a, [wRankingAnimStepIndex + 2] ; $5b5d
 	inc a ; $5b60
 	ld [wRankingAnimStepIndex + 2], a ; $5b61
@@ -390,7 +390,7 @@ UpdateScriptedOffsetChannel3:
 	add hl, de ; $5b71
 	ld a, [hl] ; $5b72
 	cp $40 ; $5b73
-	jr z, .eq40 ; $5b75
+	jr z, .scriptEnd ; $5b75
 	ld c, a ; $5b77
 	ld hl, wRankingAnimSlotPtrs + 6 ; $5b78
 	ld a, [hl+] ; $5b7b
@@ -401,12 +401,12 @@ UpdateScriptedOffsetChannel3:
 	ld a, [hl] ; $5b80
 	add c ; $5b81
 	ld [hl], a ; $5b82
-	jr .step2 ; $5b83
-.eq40:
+	jr .nextStep ; $5b83
+.scriptEnd:
 	ld hl, UpdateScriptedOffsetChannel3 ; $5b85
 	call UnregisterFrameTask ; $5b88
 	ret ; $5b8b
-.step2:
+.nextStep:
 	ld a, [wRankingAnimStepIndex + 3] ; $5b8c
 	inc a ; $5b8f
 	ld [wRankingAnimStepIndex + 3], a ; $5b90
@@ -477,13 +477,13 @@ ClearRankingMarkerSlots:
 LoadRankingMarkerCoords:
 	ld a, [wRankingBoardDoubles] ; $5c3b
 	or a ; $5c3e
-	jr nz, .nonZero ; $5c3f
+	jr nz, .doubles ; $5c3f
 	ld hl, RankingMarkerCoordsTable ; $5c41
 	ld a, [wRankingBoardMode] ; $5c44
 	or a ; $5c47
-	jr z, .zero ; $5c48
+	jr z, .gotTable ; $5c48
 	ld hl, RankingMarkerCoordsTable0 ; $5c4a
-.zero:
+.gotTable:
 	ld a, [wRankingBoardPlayerRow] ; $5c4d
 	add a ; $5c50
 	add l ; $5c51
@@ -502,13 +502,13 @@ LoadRankingMarkerCoords:
 	ld bc, $0030 ; $5c60
 	call CopyMemoryBC ; $5c63
 	ret ; $5c66
-.nonZero:
+.doubles:
 	ld hl, RankingMarkerCoordsTable2 ; $5c67
 	ld a, [wRankingBoardMode] ; $5c6a
 	or a ; $5c6d
-	jr z, .zero2 ; $5c6e
+	jr z, .gotDoublesTable ; $5c6e
 	ld hl, RankingMarkerCoordsTable1 ; $5c70
-.zero2:
+.gotDoublesTable:
 	ld a, [wRankingBoardPlayerRow] ; $5c73
 	add a ; $5c76
 	add l ; $5c77

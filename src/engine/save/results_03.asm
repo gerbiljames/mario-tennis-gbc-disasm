@@ -144,7 +144,7 @@ Unused_03_SaveSlotDebugEditor:
 .loop:
 	call Unused_03_ReadCurrentSlotBlock ; $5344
 	or a ; $5347
-	jr z, .zero ; $5348
+	jr z, .loaded ; $5348
 	push de ; $534a
 	ld hl, SaveResultFailedString_03 ; $534b
 	ld_cell de, $05, $11 ; $534e
@@ -154,7 +154,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld c, $30 ; $5358
 	call ClearMemory16 ; $535a
 	jp .loopB ; $535d
-.zero:
+.loaded:
 	ld hl, SaveResultLoadedString_03 ; $5360
 	ld_cell de, $05, $11 ; $5363
 	call PrintString ; $5366
@@ -227,11 +227,11 @@ Unused_03_SaveSlotDebugEditor:
 .loop5:
 	ldh a, [hPlayerInputFlags] ; $53c8
 	bit PADB_A, a ; $53ca
-	jr nz, .step2 ; $53cc
+	jr nz, .drawCursor ; $53cc
 	ldh a, [hVBlankCounter] ; $53ce
 	bit 3, a ; $53d0
 	jr z, .advanceFrame ; $53d2
-.step2:
+.drawCursor:
 	push de ; $53d4
 	ldh a, [hSaveEditorCursor] ; $53d5
 	ld e, a ; $53d7
@@ -264,19 +264,19 @@ Unused_03_SaveSlotDebugEditor:
 	jp .loopB ; $5409
 .moveSaveEditorCursor:
 	bit 5, a ; $540c
-	jr z, .bit5Clear ; $540e
+	jr z, .checkRight ; $540e
 	ld bc, $ffff ; $5410
 	call Unused_03_MoveSaveEditorCursor ; $5413
 	jr z, .loop4 ; $5416
 	jp .loopB ; $5418
-.bit5Clear:
+.checkRight:
 	bit 4, a ; $541b
-	jr z, .bit4Clear ; $541d
+	jr z, .checkDown ; $541d
 	ld bc, $0101 ; $541f
 	call Unused_03_MoveSaveEditorCursor ; $5422
 	jr z, .loop4 ; $5425
 	jp .loopB ; $5427
-.bit4Clear:
+.checkDown:
 	bit 7, a ; $542a
 	jr z, .positive ; $542c
 	ld bc, $1008 ; $542e
@@ -285,7 +285,7 @@ Unused_03_SaveSlotDebugEditor:
 	jp .loopB ; $5437
 .positive:
 	bit 1, a ; $543a
-	jr z, .bit1Clear ; $543c
+	jr z, .checkSelect ; $543c
 	ld a, [wCurrentStorySlot] ; $543e
 	push af ; $5441
 	ld a, STORYSLOT_NONE ; $5442
@@ -313,22 +313,22 @@ Unused_03_SaveSlotDebugEditor:
 	pop af ; $5466
 	ld [wCurrentStorySlot], a ; $5467
 	jp .loop ; $546a
-.bit1Clear:
+.checkSelect:
 	bit 2, a ; $546d
-	jr z, .bit2Clear ; $546f
+	jr z, .checkStart ; $546f
 	sound SFX_MENU_SELECT ; $5471
 	ld a, [wCurrentStorySlot] ; $5473
 	inc a ; $5476
 	and $03 ; $5477
 	ld [wCurrentStorySlot], a ; $5479
 	jp .loop ; $547c
-.bit2Clear:
+.checkStart:
 	bit 3, a ; $547f
 	jr z, .skipSave ; $5481
 	sound SFX_MENU_SELECT ; $5483
 	ldh a, [hPlayerInputFlags] ; $5485
 	bit PADB_A, a ; $5487
-	jr nz, .bit3Set ; $5489
+	jr nz, .deleteSlot ; $5489
 	push de ; $548b
 	ld hl, SaveResultSavedString_03 ; $548c
 	ld_cell de, $05, $11 ; $548f
@@ -336,7 +336,7 @@ Unused_03_SaveSlotDebugEditor:
 	call Unused_03_WriteCurrentSlotBlock ; $5495
 	pop de ; $5498
 	jp .loop4 ; $5499
-.bit3Set:
+.deleteSlot:
 	push de ; $549c
 	ld hl, SaveResultDeletedString_03 ; $549d
 	ld_cell de, $05, $11 ; $54a0
@@ -412,13 +412,13 @@ Unused_03_RestoreBlockOrClear:
 	ld b, a ; $5555
 	call ReadSaveBlock ; $5556
 	or a ; $5559
-	jr nz, .nonZero ; $555a
+	jr nz, .clearBlock ; $555a
 	pop bc ; $555c
 	ld hl, $d000 ; $555d
 	ld de, $0000 ; $5560
 	call WriteSaveBlock ; $5563
 	ret ; $5566
-.nonZero:
+.clearBlock:
 	push bc ; $5567
 	ld hl, $d000 ; $5568
 	ld c, $20 ; $556b
@@ -437,13 +437,13 @@ Unused_03_RestoreBlock06FromBackup:
 	ld b, SAVEBLOCK_PRESERVED + SAVEBLOCK_BACKUP ; $5586
 	call ReadSaveBlock ; $5588
 	or a ; $558b
-	jr nz, .nonZero2 ; $558c
+	jr nz, .invalidateBoth ; $558c
 	ld b, SAVEBLOCK_PRESERVED ; $558e
 	ld hl, $d000 ; $5590
 	ld de, $0000 ; $5593
 	call WriteSaveBlock ; $5596
 	ret ; $5599
-.nonZero2:
+.invalidateBoth:
 	ld b, SAVEBLOCK_PRESERVED ; $559a
 	call InvalidateSaveBlock ; $559c
 	ld b, SAVEBLOCK_PRESERVED + SAVEBLOCK_BACKUP ; $559f
@@ -458,13 +458,13 @@ Unused_03_RestoreBlock07FromBackup:
 	ld b, SAVEBLOCK_SPARE7 + SAVEBLOCK_BACKUP ; $55b0
 	call ReadSaveBlock ; $55b2
 	or a ; $55b5
-	jr nz, .nonZero3 ; $55b6
+	jr nz, .invalidateBoth ; $55b6
 	ld b, SAVEBLOCK_SPARE7 ; $55b8
 	ld hl, $d000 ; $55ba
 	ld de, $0000 ; $55bd
 	call WriteSaveBlock ; $55c0
 	ret ; $55c3
-.nonZero3:
+.invalidateBoth:
 	ld b, SAVEBLOCK_SPARE7 ; $55c4
 	call InvalidateSaveBlock ; $55c6
 	ld b, SAVEBLOCK_SPARE7 + SAVEBLOCK_BACKUP ; $55c9
@@ -479,13 +479,13 @@ Unused_03_RestoreBlock08FromBackup:
 	ld b, SAVEBLOCK_SPARE8 + SAVEBLOCK_BACKUP ; $55da
 	call ReadSaveBlock ; $55dc
 	or a ; $55df
-	jr nz, .nonZero4 ; $55e0
+	jr nz, .invalidateBoth ; $55e0
 	ld b, SAVEBLOCK_SPARE8 ; $55e2
 	ld hl, $d000 ; $55e4
 	ld de, $0000 ; $55e7
 	call WriteSaveBlock ; $55ea
 	ret ; $55ed
-.nonZero4:
+.invalidateBoth:
 	ld b, SAVEBLOCK_SPARE8 ; $55ee
 	call InvalidateSaveBlock ; $55f0
 	ld b, SAVEBLOCK_SPARE8 + SAVEBLOCK_BACKUP ; $55f3
@@ -500,13 +500,13 @@ Unused_03_RestoreBlock09FromBackup:
 	ld b, SAVEBLOCK_SPARE9 + SAVEBLOCK_BACKUP ; $5604
 	call ReadSaveBlock ; $5606
 	or a ; $5609
-	jr nz, .nonZero5 ; $560a
+	jr nz, .invalidateBoth ; $560a
 	ld b, SAVEBLOCK_SPARE9 ; $560c
 	ld hl, $d000 ; $560e
 	ld de, $0000 ; $5611
 	call WriteSaveBlock ; $5614
 	ret ; $5617
-.nonZero5:
+.invalidateBoth:
 	ld b, SAVEBLOCK_SPARE9 ; $5618
 	call InvalidateSaveBlock ; $561a
 	ld b, SAVEBLOCK_SPARE9 + SAVEBLOCK_BACKUP ; $561d
@@ -521,13 +521,13 @@ Unused_03_RestoreBlock0aFromBackup:
 	ld b, SAVEBLOCK_SPARE10 + SAVEBLOCK_BACKUP ; $562e
 	call ReadSaveBlock ; $5630
 	or a ; $5633
-	jr nz, .nonZero6 ; $5634
+	jr nz, .invalidateBoth ; $5634
 	ld b, SAVEBLOCK_SPARE10 ; $5636
 	ld hl, $d000 ; $5638
 	ld de, $0000 ; $563b
 	call WriteSaveBlock ; $563e
 	ret ; $5641
-.nonZero6:
+.invalidateBoth:
 	ld b, SAVEBLOCK_SPARE10 ; $5642
 	call InvalidateSaveBlock ; $5644
 	ld b, SAVEBLOCK_SPARE10 + SAVEBLOCK_BACKUP ; $5647

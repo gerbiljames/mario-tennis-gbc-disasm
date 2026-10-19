@@ -57,7 +57,7 @@ Unused_1a_RunDebugCharViewer:
 	farcall ResetTextWindowState ; $67ff
 	call Unused_1a_RunCharViewerSelectGrid ; $6802
 	cp $ff ; $6805
-	jr z, .eqff ; $6807
+	jr z, .cancelled ; $6807
 	script_fade_out 64 ; $6809
 	call WaitFadeEnd ; $680e
 	call DisableLCDSafely ; $6811
@@ -81,7 +81,7 @@ Unused_1a_RunDebugCharViewer:
 	call Unused_1a_RunCharViewerInputLoop ; $684b
 	ld hl, Unused_1a_DrawCharViewerCursorSprite ; $684e
 	call UnregisterFrameTask ; $6851
-.eqff:
+.cancelled:
 	script_fade_out 16 ; $6854
 	call WaitFadeEnd ; $6859
 	call DisableLCDSafely ; $685c
@@ -143,9 +143,9 @@ Unused_1a_RunCharViewerSelectGrid:
 	bit PADB_RIGHT, a ; $68ff
 	jr nz, .checkDebugCharViewerIndex5 ; $6901
 	bit PADB_A, a ; $6903
-	jp nz, .bit0Set ; $6905
+	jp nz, .pressedA ; $6905
 	bit PADB_B, a ; $6908
-	jp nz, .bit1Set ; $690a
+	jp nz, .pressedB ; $690a
 	jr .loop ; $690d
 	script_fade_out 16 ; $690f
 	call WaitFadeEnd ; $6914
@@ -155,12 +155,12 @@ Unused_1a_RunCharViewerSelectGrid:
 	ld a, [wDebugCharViewerIndex] ; $691b
 	dec a ; $691e
 	cp $ff ; $691f
-	jr z, .eqff ; $6921
+	jr z, .wrapUpLeftColumn ; $6921
 	cp $07 ; $6923
 	jr nz, .store ; $6925
 	ld a, $0f ; $6927
 	jr .store ; $6929
-.eqff:
+.wrapUpLeftColumn:
 	ld a, $07 ; $692b
 .store:
 	ld [wDebugCharViewerIndex], a ; $692d
@@ -170,12 +170,12 @@ Unused_1a_RunCharViewerSelectGrid:
 	ld a, [wDebugCharViewerIndex] ; $6934
 	inc a ; $6937
 	cp $08 ; $6938
-	jr z, .eq08 ; $693a
+	jr z, .wrapDownLeftColumn ; $693a
 	cp $10 ; $693c
 	jr nz, .store2 ; $693e
 	ld a, $08 ; $6940
 	jr .store2 ; $6942
-.eq08:
+.wrapDownLeftColumn:
 	xor a ; $6944
 .store2:
 	ld [wDebugCharViewerIndex], a ; $6945
@@ -238,7 +238,7 @@ Unused_1a_RunCharViewerSelectGrid:
 	call QueueVRAMCopy ; $69bf
 	call AdvanceFrame ; $69c2
 	jp .loop ; $69c5
-.bit0Set:
+.pressedA:
 	ld hl, Unused_1a_DrawCharViewerGridCursor ; $69c8
 	call UnregisterFrameTask ; $69cb
 	sound SFX_MENU_SELECT ; $69ce
@@ -252,7 +252,7 @@ Unused_1a_RunCharViewerSelectGrid:
 	add b ; $69db
 	ld [wCharViewerCharId], a ; $69dc
 	ret ; $69df
-.bit1Set:
+.pressedB:
 	ld hl, Unused_1a_DrawCharViewerGridCursor ; $69e0
 	call UnregisterFrameTask ; $69e3
 	sound SFX_MENU_CANCEL ; $69e6
@@ -296,13 +296,13 @@ Unused_1a_LoadCharViewerGridTilemap:
 	ret ; $6a39
 Unused_1a_DrawCharViewerPageNames:
 	or a ; $6a3a
-	jr z, .zero ; $6a3b
+	jr z, .page0 ; $6a3b
 	dec a ; $6a3d
-	jr z, .countDone ; $6a3e
+	jr z, .page1 ; $6a3e
 	dec a ; $6a40
-	jr z, .countDone2 ; $6a41
+	jr z, .page2 ; $6a41
 	ret ; $6a43
-.zero:
+.page0:
 	wram_bank WRAM_SCREEN ; $6a44
 	ld hl, Text_30_27 ; $6a4a
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 3 ; $6a4d
@@ -313,7 +313,7 @@ Unused_1a_DrawCharViewerPageNames:
 	ld c, $08 ; $6a5b
 	call Unused_1a_RenderTextColumnToBuffer64 ; $6a5d
 	ret ; $6a60
-.countDone:
+.page1:
 	wram_bank WRAM_SCREEN ; $6a61
 	ld hl, Text_30_43 ; $6a67
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 3 ; $6a6a
@@ -324,7 +324,7 @@ Unused_1a_DrawCharViewerPageNames:
 	ld c, $08 ; $6a78
 	call Unused_1a_RenderTextColumnToBuffer64 ; $6a7a
 	ret ; $6a7d
-.countDone2:
+.page2:
 	wram_bank WRAM_SCREEN ; $6a7e
 	ld hl, Text_30_59 ; $6a84
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 3 ; $6a87

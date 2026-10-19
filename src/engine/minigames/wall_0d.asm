@@ -330,7 +330,7 @@ LookupMinigameShotResult:
 .loop:
 	ld a, [hl+] ; $4e99
 	cp $ff ; $4e9a
-	jr z, .eqff2 ; $4e9c
+	jr z, .noMatch ; $4e9c
 	ld e, a ; $4e9e
 	ld a, [hl+] ; $4e9f
 	ld d, a ; $4ea0
@@ -346,14 +346,14 @@ LookupMinigameShotResult:
 	jr nz, .loop ; $4eaf
 	ld a, c ; $4eb1
 	cp $ff ; $4eb2
-	jr z, .eqff ; $4eb4
+	jr z, .matched ; $4eb4
 	ld a, [wCurrentShotType] ; $4eb6
 	cp c ; $4eb9
 	jr nz, .loop ; $4eba
-.eqff:
+.matched:
 	ld a, b ; $4ebc
 	ret ; $4ebd
-.eqff2:
+.noMatch:
 	ld a, $01 ; $4ebe
 	ret ; $4ec0
 TargetShotScoreRules:

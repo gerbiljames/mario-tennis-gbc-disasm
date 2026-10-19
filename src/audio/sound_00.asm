@@ -15,9 +15,9 @@ PlaySoundCmd:
 	ld [hl], d ; $2fc1
 .loop:
 	cp $50 ; $2fc2
-	jr nc, PlaySoundCmd.ge50 ; $2fc4
+	jr nc, PlaySoundCmd.playSfx ; $2fc4
 	cp $40 ; $2fc6
-	jr c, PlaySoundCmd.lt40 ; $2fc8
+	jr c, PlaySoundCmd.playBGM ; $2fc8
 	ld hl, hMusic ; $2fca
 	bit 0, [hl] ; $2fcd
 	jr nz, PlaySoundCmd.restore ; $2fcf
@@ -30,24 +30,24 @@ PlaySoundCmd:
 	inc h ; $2fdc
 .read:
 	ld a, [hl] ; $2fdd
-	jr PlaySoundCmd.step3 ; $2fde
+	jr PlaySoundCmd.play ; $2fde
 JingleSoundIds:
 	INCLUDE "data/audio/JingleSoundIds.asm" ; $2fe0, 6 bytes (sound_data)
-PlaySoundCmd.lt40:
+PlaySoundCmd.playBGM:
 	ld d, a ; $2fe6
 	ldh a, [hActiveJingle] ; $2fe7
 	or a ; $2fe9
 	ld a, d ; $2fea
-	jr z, PlaySoundCmd.zero ; $2feb
+	jr z, PlaySoundCmd.startBGM ; $2feb
 	ld hl, wCurrentBGM ; $2fed
 	ld [hl], a ; $2ff0
 	jr PlaySoundCmd.restore ; $2ff1
-PlaySoundCmd.zero:
+PlaySoundCmd.startBGM:
 	ld hl, wCurrentBGM ; $2ff3
 	cp [hl] ; $2ff6
 	jr z, PlaySoundCmd.restore ; $2ff7
 	ld [hl], a ; $2ff9
-PlaySoundCmd.step3:
+PlaySoundCmd.play:
 	ld hl, hMusic ; $2ffa
 	bit 0, [hl] ; $2ffd
 	jr nz, PlaySoundCmd.restore ; $2fff
@@ -58,7 +58,7 @@ PlaySoundCmd.step3:
 	call PlaySound ; $3006
 	pop_wram_bank ; $3009
 	jr PlaySoundCmd.restore ; $300e
-PlaySoundCmd.ge50:
+PlaySoundCmd.playSfx:
 	ld h, a ; $3010
 	ldh a, [hWramBank] ; $3011
 	push af ; $3013
@@ -90,11 +90,11 @@ WaitJingleEnd:
 	call AdvanceFrame ; $3033
 	ldh a, [hPlayerInputFlags] ; $3036
 	or a ; $3038
-	jr nz, .nonZero ; $3039
+	jr nz, .stopJingle ; $3039
 	ldh a, [hActiveJingle] ; $303b
 	or a ; $303d
 	jr nz, .loop ; $303e
-.nonZero:
+.stopJingle:
 	xor a ; $3040
 	ldh [hActiveJingle], a ; $3041
 	ld hl, hMusic ; $3043
@@ -197,12 +197,12 @@ ApplyChannelUpdateRequest:
 .loop:
 	srl a ; $30ed
 	ld [wSndUpdateReqAck], a ; $30ef
-	jr nc, .noCarry ; $30f2
+	jr nc, .nextChannel ; $30f2
 	ld a, [hl] ; $30f4
 	and $f0 ; $30f5
 	or b ; $30f7
 	ld [hl], a ; $30f8
-.noCarry:
+.nextChannel:
 	ld a, l ; $30f9
 	add $20 ; $30fa
 	ld l, a ; $30fc
@@ -354,7 +354,7 @@ StartSoundChannel:
 	add hl, bc ; $331c
 	ld a, [hl] ; $331d
 	cp $ff ; $331e
-	jr z, .eqff ; $3320
+	jr z, .initChannel ; $3320
 	inc hl ; $3322
 	ld a, [hl-] ; $3323
 	ld b, $ee ; $3324
@@ -371,7 +371,7 @@ StartSoundChannel:
 	ld a, [wSndPanShadow] ; $3338
 	and b ; $333b
 	ld [wSndPanShadow], a ; $333c
-.eqff:
+.initChannel:
 	xor a ; $333f
 	ld [hl+], a ; $3340
 	ld [hl+], a ; $3341
@@ -479,7 +479,7 @@ UpdateSoundChannels:
 	ldh a, [hSndScriptPtr + 1] ; $33dc
 	or b ; $33de
 	and a ; $33df
-	jp z, .zero2 ; $33e0
+	jp z, .loadHeader ; $33e0
 	call TickVibrato ; $33e3
 	call TickInstrumentEnvelope ; $33e6
 	ldh a, [hSndEnvLength] ; $33e9
@@ -505,13 +505,13 @@ UpdateSoundChannels:
 	call TickVolumeSlide ; $3407
 	ldh a, [hSndNoteLenTimer] ; $340a
 	and a ; $340c
-	jr z, .zero ; $340d
+	jr z, .tickNoteTimer ; $340d
 	dec a ; $340f
 	ldh [hSndNoteLenTimer], a ; $3410
-.zero:
+.tickNoteTimer:
 	ldh a, [hSndNoteTimer] ; $3412
 	and a ; $3414
-	jr nz, .nonZero ; $3415
+	jr nz, .countdownNote ; $3415
 	ldh a, [hSndEchoCtrl] ; $3417
 	and $f0 ; $3419
 	jr z, .loop2 ; $341b
@@ -542,7 +542,7 @@ UpdateSoundChannels:
 	ldh a, [hSndVolume] ; $3446
 	call ApplyChannelEnvelope ; $3448
 	jr .checkSndWaveReloadPending ; $344b
-.nonZero:
+.countdownNote:
 	dec a ; $344d
 	ldh [hSndNoteTimer], a ; $344e
 	push af ; $3450
@@ -620,9 +620,8 @@ UpdateSoundChannels:
 	ldh [hRomBank], a ; $34d5
 	ld [rROMB0], a ; $34d7
 	jp ApplyChannelUpdateRequest ; $34da
-.zero2:
+.loadHeader:
 	ldh a, [hSndDataPtr] ; $34dd
-.step6:
 	ld l, a ; $34df
 	ldh a, [hSndDataPtr + 1] ; $34e0
 	ld h, a ; $34e2
@@ -645,7 +644,7 @@ UpdateSoundChannels:
 	ldh [hSndVolume], a ; $34fb
 	ld a, [wSndChannelType] ; $34fd
 	cp SNDCHANTYPE_WAVE ; $3500
-	jr z, .eq02 ; $3502
+	jr z, .loadWaveRam ; $3502
 	ld a, [hl+] ; $3504
 	ldh [hSndWaveId], a ; $3505
 .loop5:
@@ -666,7 +665,7 @@ UpdateSoundChannels:
 	ldh [hSndEnvLength], a ; $351f
 	ld a, d ; $3521
 	jr .loop4 ; $3522
-.eq02:
+.loadWaveRam:
 	xor a ; $3524
 	ldh [rAUD3ENA], a ; $3525
 	ld d, a ; $3527

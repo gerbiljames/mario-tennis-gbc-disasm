@@ -290,9 +290,9 @@ RestoreCharData:
 	ld hl, wStoryMainName ; $734d
 	ld a, [wStoryCharacterSlot] ; $7350
 	or a ; $7353
-	jr z, .zero ; $7354
+	jr z, .levelField ; $7354
 	ld l, $40 ; $7356
-.zero:
+.levelField:
 	ld a, l ; $7358
 	add $18 ; $7359
 	ld l, a ; $735b
@@ -306,9 +306,9 @@ RestoreCharData:
 	ld hl, wStoryMainName ; $7366
 	ld a, [wStoryCharacterSlot] ; $7369
 	or a ; $736c
-	jr z, .zero2 ; $736d
+	jr z, .spinLevelField ; $736d
 	ld l, $40 ; $736f
-.zero2:
+.spinLevelField:
 	ld a, l ; $7371
 	add $38 ; $7372
 	ld l, a ; $7374
@@ -323,9 +323,9 @@ RestoreCharData:
 	ld hl, wStoryMainName ; $7382
 	ld a, [wStoryCharacterSlot] ; $7385
 	or a ; $7388
-	jr z, .zero3 ; $7389
+	jr z, .powerLevelField ; $7389
 	ld l, $40 ; $738b
-.zero3:
+.powerLevelField:
 	ld a, l ; $738d
 	add $39 ; $738e
 	ld l, a ; $7390
@@ -340,9 +340,9 @@ RestoreCharData:
 	ld hl, wStoryMainName ; $739e
 	ld a, [wStoryCharacterSlot] ; $73a1
 	or a ; $73a4
-	jr z, .zero4 ; $73a5
+	jr z, .controlLevelField ; $73a5
 	ld l, $40 ; $73a7
-.zero4:
+.controlLevelField:
 	ld a, l ; $73a9
 	add $3a ; $73aa
 	ld l, a ; $73ac
@@ -357,9 +357,9 @@ RestoreCharData:
 	ld hl, wStoryMainName ; $73ba
 	ld a, [wStoryCharacterSlot] ; $73bd
 	or a ; $73c0
-	jr z, .zero5 ; $73c1
+	jr z, .speedLevelField ; $73c1
 	ld l, $40 ; $73c3
-.zero5:
+.speedLevelField:
 	ld a, l ; $73c5
 	add $3b ; $73c6
 	ld l, a ; $73c8
@@ -446,9 +446,9 @@ LoadCharDataScreenMugshots:
 	ld hl, wStoryMainName ; $7492
 	ld a, [wStoryCharacterSlot] ; $7495
 	or a ; $7498
-	jr z, .zero ; $7499
+	jr z, .paletteField ; $7499
 	ld l, $40 ; $749b
-.zero:
+.paletteField:
 	ld a, l ; $749d
 	add $0c ; $749e
 	ld l, a ; $74a0
@@ -464,9 +464,9 @@ LoadCharDataScreenMugshots:
 	ld hl, wStoryMainName ; $74b4
 	ld a, [wStoryCharacterSlot] ; $74b7
 	or a ; $74ba
-	jr z, .zero2 ; $74bb
+	jr z, .charField ; $74bb
 	ld l, $40 ; $74bd
-.zero2:
+.charField:
 	ld a, l ; $74bf
 	add $0b ; $74c0
 	ld l, a ; $74c2
@@ -487,9 +487,9 @@ LoadCharDataScreenMugshots:
 	ld hl, wStoryMainName ; $74e0
 	ld a, [wStoryCharacterSlot] ; $74e3
 	or a ; $74e6
-	jr z, .zero3 ; $74e7
+	jr z, .paletteField2 ; $74e7
 	ld l, $40 ; $74e9
-.zero3:
+.paletteField2:
 	ld a, l ; $74eb
 	add $0c ; $74ec
 	ld l, a ; $74ee
@@ -505,9 +505,9 @@ LoadCharDataScreenMugshots:
 	ld hl, wStoryMainName ; $7502
 	ld a, [wStoryCharacterSlot] ; $7505
 	or a ; $7508
-	jr z, .zero4 ; $7509
+	jr z, .charField2 ; $7509
 	ld l, $40 ; $750b
-.zero4:
+.charField2:
 	ld a, l ; $750d
 	add $0b ; $750e
 	ld l, a ; $7510

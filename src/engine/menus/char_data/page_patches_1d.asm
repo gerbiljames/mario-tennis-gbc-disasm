@@ -255,7 +255,7 @@ InitLevelUpScreenState:
 	wram_bank WRAM_SCENE ; $6934
 	ld a, [wCharDataViewOnly] ; $693a
 	or a ; $693d
-	jr nz, .nonZero ; $693e
+	jr nz, .resetCursor ; $693e
 	ld a, l ; $6940
 	ld [wExpPoolRemaining], a ; $6941
 	ld [wExpPoolTotal], a ; $6944
@@ -272,7 +272,7 @@ InitLevelUpScreenState:
 	ld [wExpInputRepeating], a ; $695f
 	ld a, $08 ; $6962
 	ld [wExpRepeatDelay], a ; $6964
-.nonZero:
+.resetCursor:
 	xor a ; $6967
 	ld [wExpCursorChar], a ; $6968
 	ld [wExpCursorSlide], a ; $696b
@@ -437,7 +437,7 @@ DrawExpPoolGauge:
 .loop:
 	ld a, b ; $6b1e
 	sub $08 ; $6b1f
-	jr c, .carry ; $6b21
+	jr c, .partialCell ; $6b21
 	ld b, a ; $6b23
 	ld a, $08 ; $6b24
 	rlca ; $6b26
@@ -452,7 +452,7 @@ DrawExpPoolGauge:
 	ret z ; $6b35
 	call ExpGaugePtrUpOneRow ; $6b36
 	jr .loop ; $6b39
-.carry:
+.partialCell:
 	add $08 ; $6b3b
 	rlca ; $6b3d
 	ld_hl_indexed ExpPoolGaugeTilePairTable ; $6b3e
@@ -508,9 +508,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6b8d
 	ld a, [wStoryCharacterSlot] ; $6b90
 	or a ; $6b93
-	jr z, .zero ; $6b94
+	jr z, .nameField ; $6b94
 	ld l, $40 ; $6b96
-.zero:
+.nameField:
 	ld a, l ; $6b98
 	add $00 ; $6b99
 	ld l, a ; $6b9b
@@ -526,9 +526,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6bb0
 	ld a, [wStoryCharacterSlot] ; $6bb3
 	or a ; $6bb6
-	jr z, .zero2 ; $6bb7
+	jr z, .levelField ; $6bb7
 	ld l, $40 ; $6bb9
-.zero2:
+.levelField:
 	ld a, l ; $6bbb
 	add $18 ; $6bbc
 	ld l, a ; $6bbe
@@ -572,9 +572,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6c08
 	ld a, [wStoryCharacterSlot] ; $6c0b
 	or a ; $6c0e
-	jr z, .zero3 ; $6c0f
+	jr z, .expField ; $6c0f
 	ld l, $40 ; $6c11
-.zero3:
+.expField:
 	ld a, l ; $6c13
 	add $2c ; $6c14
 	ld l, a ; $6c16
@@ -594,9 +594,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6c2e
 	ld a, [wStoryCharacterSlot] ; $6c31
 	or a ; $6c34
-	jr z, .zero4 ; $6c35
+	jr z, .nameField2 ; $6c35
 	ld l, $40 ; $6c37
-.zero4:
+.nameField2:
 	ld a, l ; $6c39
 	add $00 ; $6c3a
 	ld l, a ; $6c3c
@@ -612,9 +612,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6c51
 	ld a, [wStoryCharacterSlot] ; $6c54
 	or a ; $6c57
-	jr z, .zero5 ; $6c58
+	jr z, .levelField2 ; $6c58
 	ld l, $40 ; $6c5a
-.zero5:
+.levelField2:
 	ld a, l ; $6c5c
 	add $18 ; $6c5d
 	ld l, a ; $6c5f
@@ -658,9 +658,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6cab
 	ld a, [wStoryCharacterSlot] ; $6cae
 	or a ; $6cb1
-	jr z, .zero6 ; $6cb2
+	jr z, .expField2 ; $6cb2
 	ld l, $40 ; $6cb4
-.zero6:
+.expField2:
 	ld a, l ; $6cb6
 	add $2c ; $6cb7
 	ld l, a ; $6cb9
@@ -682,9 +682,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6cd1
 	ld a, [wStoryCharacterSlot] ; $6cd4
 	or a ; $6cd7
-	jr z, .zero7 ; $6cd8
+	jr z, .nameField3 ; $6cd8
 	ld l, $40 ; $6cda
-.zero7:
+.nameField3:
 	ld a, l ; $6cdc
 	add $00 ; $6cdd
 	ld l, a ; $6cdf
@@ -700,9 +700,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6cf4
 	ld a, [wStoryCharacterSlot] ; $6cf7
 	or a ; $6cfa
-	jr z, .zero8 ; $6cfb
+	jr z, .levelField3 ; $6cfb
 	ld l, $40 ; $6cfd
-.zero8:
+.levelField3:
 	ld a, l ; $6cff
 	add $18 ; $6d00
 	ld l, a ; $6d02
@@ -724,9 +724,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6d20
 	ld a, [wStoryCharacterSlot] ; $6d23
 	or a ; $6d26
-	jr z, .zero9 ; $6d27
+	jr z, .nameField4 ; $6d27
 	ld l, $40 ; $6d29
-.zero9:
+.nameField4:
 	ld a, l ; $6d2b
 	add $00 ; $6d2c
 	ld l, a ; $6d2e
@@ -742,9 +742,9 @@ InitExpScreenCharStats:
 	ld hl, wStoryMainName ; $6d43
 	ld a, [wStoryCharacterSlot] ; $6d46
 	or a ; $6d49
-	jr z, .zero10 ; $6d4a
+	jr z, .levelField4 ; $6d4a
 	ld l, $40 ; $6d4c
-.zero10:
+.levelField4:
 	ld a, l ; $6d4e
 	add $18 ; $6d4f
 	ld l, a ; $6d51
@@ -840,17 +840,17 @@ DrawExpScreenLevelNumber:
 	wram_bank WRAM_SCENE ; $6de7
 	ld a, [wStoryCharacterSlot] ; $6ded
 	or a ; $6df0
-	jr nz, .nonZero ; $6df1
+	jr nz, .partner ; $6df1
 	ld a, [wExpScreenCharStats] ; $6df3
 	ld de, wCharDataScreenCell + 4 * TILEMAP_WIDTH + 17 ; $6df6
 	jr .clearExpScreenLevelDigits ; $6df9
-.nonZero:
+.partner:
 	ld a, [wExpScreenCharStats + 15] ; $6dfb
 	ld de, wCharDataScreenCell + 13 * TILEMAP_WIDTH + 17 ; $6dfe
 .clearExpScreenLevelDigits:
 	call ClearExpScreenLevelDigits ; $6e01
 	cp $64 ; $6e04
-	jr nc, .ge64 ; $6e06
+	jr nc, .drawMax ; $6e06
 	push de ; $6e08
 	ld h, $00 ; $6e09
 	ld l, a ; $6e0b
@@ -861,15 +861,15 @@ DrawExpScreenLevelNumber:
 	ld hl, wCharDataNumberBuffer ; $6e15
 	ld a, [hl] ; $6e18
 	cp $20 ; $6e19
-	jr z, .eq20 ; $6e1b
+	jr z, .onesDigit ; $6e1b
 	call DrawExpScreenLevelDigit ; $6e1d
-.eq20:
+.onesDigit:
 	inc de ; $6e20
 	inc hl ; $6e21
 	ld a, [hl] ; $6e22
 	call DrawExpScreenLevelDigit ; $6e23
 	ret ; $6e26
-.ge64:
+.drawMax:
 	wram_bank WRAM_SCREEN ; $6e27
 	ld h, d ; $6e2d
 	ld l, e ; $6e2e
@@ -957,15 +957,15 @@ DrawExpScreenLevelBar:
 	wram_bank WRAM_SCENE ; $6ea2
 	ld a, [wStoryCharacterSlot] ; $6ea8
 	or a ; $6eab
-	jr nz, .nonZero ; $6eac
+	jr nz, .partner ; $6eac
 	ld a, [wExpScreenCharStats] ; $6eae
 	cp $64 ; $6eb1
-	jr c, .lt64 ; $6eb3
+	jr c, .scaleMainBar ; $6eb3
 	xor a ; $6eb5
 	ld [wExpScreenCharStats + 3], a ; $6eb6
 	ld de, wCharDataRevealStep ; $6eb9
-	jr .step4 ; $6ebc
-.lt64:
+	jr .drawBar ; $6ebc
+.scaleMainBar:
 	ld hl, wExpScreenCharStats + 4 ; $6ebe
 	ld a, [hl+] ; $6ec1
 	ld d, [hl] ; $6ec2
@@ -978,16 +978,16 @@ DrawExpScreenLevelBar:
 	call ScaleValueToBar ; $6ecc
 	ld [wExpScreenCharStats + 3], a ; $6ecf
 	ld de, wCharDataRevealStep ; $6ed2
-	jr .step4 ; $6ed5
-.nonZero:
+	jr .drawBar ; $6ed5
+.partner:
 	ld a, [wExpScreenCharStats + 15] ; $6ed7
 	cp $64 ; $6eda
-	jr c, .lt642 ; $6edc
+	jr c, .scalePartnerBar ; $6edc
 	xor a ; $6ede
 	ld [wExpScreenCharStats + 18], a ; $6edf
 	ld de, wCharDataValuesSlideX ; $6ee2
-	jr .step4 ; $6ee5
-.lt642:
+	jr .drawBar ; $6ee5
+.scalePartnerBar:
 	ld hl, wExpScreenCharStats + 19 ; $6ee7
 	ld a, [hl+] ; $6eea
 	ld d, [hl] ; $6eeb
@@ -1000,14 +1000,14 @@ DrawExpScreenLevelBar:
 	call ScaleValueToBar ; $6ef5
 	ld [wExpScreenCharStats + 18], a ; $6ef8
 	ld de, wCharDataValuesSlideX ; $6efb
-.step4:
+.drawBar:
 	ld b, a ; $6efe
 	ld c, $08 ; $6eff
 	wram_bank WRAM_SCREEN ; $6f01
 .loop:
 	ld a, b ; $6f07
 	sub $08 ; $6f08
-	jr c, .carry ; $6f0a
+	jr c, .partialCell ; $6f0a
 	ld b, a ; $6f0c
 	ld a, $08 ; $6f0d
 	ld_hl_indexed ExpBarFillTiles_1d ; $6f0f
@@ -1017,7 +1017,7 @@ DrawExpScreenLevelBar:
 	ret z ; $6f19
 	inc de ; $6f1a
 	jr .loop ; $6f1b
-.carry:
+.partialCell:
 	add $08 ; $6f1d
 	ld_hl_indexed ExpBarFillTiles_1d ; $6f1f
 	ld a, [hl] ; $6f26
