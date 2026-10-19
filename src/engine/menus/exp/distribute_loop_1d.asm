@@ -46,11 +46,11 @@ RunExpDistributionLoop:
 	bit PADB_SELECT, a
 	jp nz, ApAssignAllExp
 	ld a, b
-	bit 5, a ; $6f92
+	bit PADB_LEFT, a ; $6f92
 	jp nz, .decrease ; $6f94
-	bit 4, a ; $6f97
+	bit PADB_RIGHT, a ; $6f97
 	jp nz, .increase ; $6f99
-	bit 0, a ; $6f9c
+	bit PADB_A, a ; $6f9c
 	jp nz, .increase ; $6f9e
 	wram_bank WRAM_SCENE ; $6fa1
 	ld a, $a8 ; $6fa7
@@ -64,7 +64,7 @@ RunExpDistributionLoop:
 	ldh a, [hInputRisingEdge] ; $6fba
 	bit PADB_UP, a ; $6fbc
 	jr nz, .selectMainChar ; $6fbe
-	bit 7, a ; $6fc0
+	bit PADB_DOWN, a ; $6fc0
 	jr nz, .selectPartner ; $6fc2
 	jp RunExpDistributionLoop ; $6fc4
 .selectMainChar:
@@ -272,10 +272,10 @@ GetExpBarSweepStep:
 	ld b, a ; $7187
 	ret ; $7188
 UpdateExpScreenSelectionPalettes:
-	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $7189
+	ld a, [wStoryMainPalette] ; $7189
 	ld_bg_pals de, 1, 1 ; $718c
 	farcall LoadIndexedPaletteThunk ; $718f
-	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7192
+	ld a, [wStoryPartnerPalette] ; $7192
 	ld_bg_pals de, 2, 1 ; $7195
 	farcall LoadIndexedPaletteThunk ; $7198
 	wram_bank WRAM_SCENE ; $719b

@@ -37,6 +37,7 @@ ServicePractice2HandlePointEnd:
 	call CountDrillShotSuccesses ; $509b
 	ld [wDrillCounters + 6], a ; $509e
 	ld a, [wDrillMessageId] ; $50a1
+	ASSERT DRILLMSG_NONE == 0
 	or a ; $50a4
 	jr nz, .showDrillMessageByIndex ; $50a5
 	call QueueDrillOutcomeMessage ; $50a7
@@ -76,7 +77,7 @@ ServicePractice2SetupShotTarget:
 	jr nc, .checkStoryModeMainCharacterLeftHanded ; $50f6
 	inc h ; $50f8
 .checkStoryModeMainCharacterLeftHanded:
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $50f9
+	ld a, [wStoryMainLeftHanded] ; $50f9
 	add l ; $50fc
 	ld l, a ; $50fd
 	jr nc, .read ; $50fe
@@ -95,7 +96,7 @@ ServicePractice2SetupShotTarget:
 	jr nc, .checkStoryModeMainCharacterLeftHanded2 ; $5114
 	inc h ; $5116
 .checkStoryModeMainCharacterLeftHanded2:
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5117
+	ld a, [wStoryMainLeftHanded] ; $5117
 	add a ; $511a
 	add l ; $511b
 	ld l, a ; $511c
@@ -136,7 +137,7 @@ ServicePractice2QueueOutcomeMessage:
 	ld a, DRILLMSG_YOU_DIDNT_USE_TOPSPIN_TO_BOUNCE_IT_OUT_OF_BOUNDS ; $515c
 	ld b, $00 ; $515e
 	call QueueDrillResultMessage ; $5160
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5163
+	ld a, [wStoryMainLeftHanded] ; $5163
 	and $01 ; $5166
 	ld b, a ; $5168
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5169
@@ -147,7 +148,7 @@ ServicePractice2QueueOutcomeMessage:
 	ld a, [wDrillMessageId] ; $5172
 	add b ; $5175
 	ld [wDrillMessageId], a ; $5176
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5179
+	ld a, [wStoryMainLeftHanded] ; $5179
 	ld hl, ServicePractice2QueueOutcomeMessageDrillShotTable ; $517c
 	add l ; $517f
 	ld l, a ; $5180
@@ -244,6 +245,7 @@ ServicePractice3Hook_PointStart:
 	ld [wDrillGateActive], a ; $5229
 	ld hl, ServicePractice3PointStartDrillPositions ; $522c
 	call IndexDrillTableByPoint ; $522f
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $5232
 	ld [wDrillMessageId], a ; $5233
 	ret ; $5236
@@ -253,6 +255,7 @@ ServicePractice3Hook_PointEnd:
 	cp $04 ; $523d
 	ret c ; $523f
 	ld a, [wPointWinLoseFlag] ; $5240
+	ASSERT WINLOSE_NONE == 0
 	or a ; $5243
 	ret z ; $5244
 	call ServicePractice3EvaluateResult ; $5245

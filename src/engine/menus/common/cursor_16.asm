@@ -103,7 +103,7 @@ Unused_16_MoveMenuCursorGrid:
 	ld a, [wMenuCursorY] ; $40fc
 	ld e, a ; $40ff
 	ld a, [wMenuInputPressed] ; $4100
-	bit 4, a ; $4103
+	bit PADB_RIGHT, a ; $4103
 	jr z, .checkLeft ; $4105
 	ld a, [wMenuCursorX] ; $4107
 	inc a ; $410a

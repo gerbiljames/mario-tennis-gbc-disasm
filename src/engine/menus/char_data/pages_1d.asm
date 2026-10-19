@@ -17,8 +17,7 @@ ShowCharDataScreen:
 	sound BGM_STATUS_SCREEN ; $4021
 	farcall RefreshMainCharacterStats ; $4023
 	call EnableLCD ; $4026
-	ld c, 127 ; $4029
-	call BeginFadeOut ; $402b
+	script_fade_out 127 ; $4029
 	call WaitFadeEnd ; $402e
 	call InitCharDataScreenVideo ; $4031
 	ld hl, CharDataScreenPalettes ; $4034
@@ -29,7 +28,7 @@ ShowCharDataScreen:
 	ld de, wDecompBuffer ; $4046
 	call DecompressData ; $4049
 	ld hl, wDecompBuffer ; $404c
-	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $404f
+	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $404f
 	ld c, CharDataScreenGfx14_SIZE / 16 ; $4052
 	call QueueVRAMCopy ; $4054
 	farcall InitMenuBgScroll ; $4057
@@ -45,7 +44,7 @@ ShowCharDataScreen:
 	ld a, $60 ; $4070
 	ld [wMenuBgScrollTile + 1], a ; $4072
 	ld hl, rIE ; $4075
-	res 2, [hl] ; $4078
+	res B_IE_TIMER, [hl] ; $4078
 	call EnableLCD ; $407a
 	call AdvanceFrame ; $407d
 	ld a, $01 ; $4080
@@ -62,9 +61,8 @@ ShowCharDataScreen:
 	call WaitFadeEnd ; $40a0
 	call RunDrillResultInputLoop ; $40a3
 	ld hl, rIE ; $40a6
-	set 2, [hl] ; $40a9
-	ld c, 16 ; $40ab
-	call BeginFadeOut ; $40ad
+	set B_IE_TIMER, [hl] ; $40a9
+	script_fade_out 16 ; $40ab
 	call WaitFadeEnd ; $40b0
 	ld hl, DrawCharDataPageArrowsTask ; $40b3
 	call UnregisterFrameTask ; $40b6
@@ -147,7 +145,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $417e
 	call DecompressData ; $4181
 	ld hl, wDecompBuffer ; $4184
-	ld de, vTiles0 + $14 * TILE_SIZE + VRAM_BANK1 ; $4187
+	ld de, vTiles0 tile $14 + VRAM_BANK1 ; $4187
 	ld c, CharDataScreenPageGfx14_SIZE / 16 ; $418a
 	call QueueVRAMCopy ; $418c
 	wram_bank WRAM_STAGING ; $418f
@@ -155,7 +153,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $4198
 	call DecompressData ; $419b
 	ld hl, wDecompBuffer ; $419e
-	ld de, vTiles0 + $1e * TILE_SIZE + VRAM_BANK1 ; $41a1
+	ld de, vTiles0 tile $1e + VRAM_BANK1 ; $41a1
 	ld c, CharDataScreenPageGraphicsGfx0_SIZE / 16 ; $41a4
 	call QueueVRAMCopy ; $41a6
 	wram_bank WRAM_STAGING ; $41a9
@@ -163,7 +161,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $41b2
 	call DecompressData ; $41b5
 	ld hl, wDecompBuffer ; $41b8
-	ld de, vTiles0 + $28 * TILE_SIZE + VRAM_BANK1 ; $41bb
+	ld de, vTiles0 tile $28 + VRAM_BANK1 ; $41bb
 	ld c, CharDataScreenPageGraphicsGfx1_SIZE / 16 ; $41be
 	call QueueVRAMCopy ; $41c0
 	wram_bank WRAM_STAGING ; $41c3
@@ -171,7 +169,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $41cc
 	call DecompressData ; $41cf
 	ld hl, wDecompBuffer ; $41d2
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $41d5
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $41d5
 	ld c, 8 ; $41d8
 	call QueueVRAMCopy ; $41da
 	wram_bank WRAM_STAGING ; $41dd
@@ -263,14 +261,14 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $4306
 	call DecompressData ; $4309
 	ld hl, wDecompBuffer ; $430c
-	ld de, vTiles0 + $38 * TILE_SIZE + VRAM_BANK1 ; $430f
+	ld de, vTiles0 tile $38 + VRAM_BANK1 ; $430f
 	ld c, CharDataScreenPageGfx10_SIZE / 16 ; $4312
 	call QueueVRAMCopy ; $4314
 	ld hl, CharDataScreenPageGfx13 ; $4317
 	ld de, wDecompBuffer ; $431a
 	call DecompressData ; $431d
 	ld hl, wDecompBuffer ; $4320
-	ld de, vTiles0 + $4c * TILE_SIZE + VRAM_BANK1 ; $4323
+	ld de, vTiles0 tile $4c + VRAM_BANK1 ; $4323
 	ld c, CharDataScreenPageGfx13_SIZE / 16 ; $4326
 	call QueueVRAMCopy ; $4328
 	wram_bank WRAM_STAGING ; $432b
@@ -290,7 +288,7 @@ LoadCharDataScreenPageGraphics:
 	xor a ; $435b
 	ld [wStoryCharacterSlot], a ; $435c
 	push af ; $435f
-	ld hl, wStoryModeNameOfMainCharacter ; $4360
+	ld hl, wStoryMainName ; $4360
 	ld a, [wStoryCharacterSlot] ; $4363
 	or a ; $4366
 	jr z, .zero ; $4367
@@ -308,7 +306,7 @@ LoadCharDataScreenPageGraphics:
 	farcall LoadIndexedPaletteThunk ; $4378
 	wram_bank WRAM_STAGING ; $437b
 	push af ; $4381
-	ld hl, wStoryModeNameOfMainCharacter ; $4382
+	ld hl, wStoryMainName ; $4382
 	ld a, [wStoryCharacterSlot] ; $4385
 	or a ; $4388
 	jr z, .zero2 ; $4389
@@ -325,21 +323,21 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $4397
 	farcall DecompressCharMugshot ; $439a
 	ld hl, wDecompBuffer ; $439d
-	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $43a0
+	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $43a0
 	ld c, 3 ; $43a3
 	call QueueVRAMCopy ; $43a5
-	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $43a8
-	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $43ab
+	ld hl, wDecompBuffer tile 3 ; $43a8
+	ld de, vTiles2 tile $30 + VRAM_BANK1 ; $43ab
 	ld c, 3 ; $43ae
 	call QueueVRAMCopy ; $43b0
-	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $43b3
-	ld de, vTiles2 + $40 * TILE_SIZE + VRAM_BANK1 ; $43b6
+	ld hl, wDecompBuffer tile 6 ; $43b3
+	ld de, vTiles2 tile $40 + VRAM_BANK1 ; $43b6
 	ld c, 3 ; $43b9
 	call QueueVRAMCopy ; $43bb
 	ld a, $01 ; $43be
 	ld [wStoryCharacterSlot], a ; $43c0
 	push af ; $43c3
-	ld hl, wStoryModeNameOfMainCharacter ; $43c4
+	ld hl, wStoryMainName ; $43c4
 	ld a, [wStoryCharacterSlot] ; $43c7
 	or a ; $43ca
 	jr z, .zero3 ; $43cb
@@ -357,7 +355,7 @@ LoadCharDataScreenPageGraphics:
 	farcall LoadIndexedPaletteThunk ; $43dc
 	wram_bank WRAM_STAGING ; $43df
 	push af ; $43e5
-	ld hl, wStoryModeNameOfMainCharacter ; $43e6
+	ld hl, wStoryMainName ; $43e6
 	ld a, [wStoryCharacterSlot] ; $43e9
 	or a ; $43ec
 	jr z, .zero4 ; $43ed
@@ -374,15 +372,15 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $43fb
 	farcall DecompressCharMugshot ; $43fe
 	ld hl, wDecompBuffer ; $4401
-	ld de, vTiles2 + $23 * TILE_SIZE + VRAM_BANK1 ; $4404
+	ld de, vTiles2 tile $23 + VRAM_BANK1 ; $4404
 	ld c, 3 ; $4407
 	call QueueVRAMCopy ; $4409
-	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $440c
-	ld de, vTiles2 + $33 * TILE_SIZE + VRAM_BANK1 ; $440f
+	ld hl, wDecompBuffer tile 3 ; $440c
+	ld de, vTiles2 tile $33 + VRAM_BANK1 ; $440f
 	ld c, 3 ; $4412
 	call QueueVRAMCopy ; $4414
-	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $4417
-	ld de, vTiles2 + $43 * TILE_SIZE + VRAM_BANK1 ; $441a
+	ld hl, wDecompBuffer tile 6 ; $4417
+	ld de, vTiles2 tile $43 + VRAM_BANK1 ; $441a
 	ld c, 3 ; $441d
 	call QueueVRAMCopy ; $441f
 	ret ; $4422
@@ -412,7 +410,7 @@ BuildCharDataSummaryFields:
 	xor a ; $444d
 	ld [wStoryCharacterSlot], a ; $444e
 	push af ; $4451
-	ld hl, wStoryModeNameOfMainCharacter ; $4452
+	ld hl, wStoryMainName ; $4452
 	ld a, [wStoryCharacterSlot] ; $4455
 	or a ; $4458
 	jr z, .zero ; $4459
@@ -433,7 +431,7 @@ BuildCharDataSummaryFields:
 	ld b, $0c ; $4474
 	call PlotTilesAtOffsets ; $4476
 	push af ; $4479
-	ld hl, wStoryModeNameOfMainCharacter ; $447a
+	ld hl, wStoryMainName ; $447a
 	ld a, [wStoryCharacterSlot] ; $447d
 	or a ; $4480
 	jr z, .zero2 ; $4481
@@ -451,7 +449,7 @@ BuildCharDataSummaryFields:
 	call DrawFourTileFlagLabel ; $4492
 	wram_bank WRAM_SCENE ; $4495
 	push af ; $449b
-	ld hl, wStoryModeNameOfMainCharacter ; $449c
+	ld hl, wStoryMainName ; $449c
 	ld a, [wStoryCharacterSlot] ; $449f
 	or a ; $44a2
 	jr z, .zero3 ; $44a3
@@ -474,7 +472,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $44bf
 	wram_bank WRAM_SCENE ; $44c2
 	push af ; $44c8
-	ld hl, wStoryModeNameOfMainCharacter ; $44c9
+	ld hl, wStoryMainName ; $44c9
 	ld a, [wStoryCharacterSlot] ; $44cc
 	or a ; $44cf
 	jr z, .zero4 ; $44d0
@@ -497,7 +495,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $44ec
 	wram_bank WRAM_SCENE ; $44ef
 	push af ; $44f5
-	ld hl, wStoryModeNameOfMainCharacter ; $44f6
+	ld hl, wStoryMainName ; $44f6
 	ld a, [wStoryCharacterSlot] ; $44f9
 	or a ; $44fc
 	jr z, .zero5 ; $44fd
@@ -520,7 +518,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4519
 	wram_bank WRAM_SCENE ; $451c
 	push af ; $4522
-	ld hl, wStoryModeNameOfMainCharacter ; $4523
+	ld hl, wStoryMainName ; $4523
 	ld a, [wStoryCharacterSlot] ; $4526
 	or a ; $4529
 	jr z, .zero6 ; $452a
@@ -543,7 +541,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4546
 	wram_bank WRAM_SCENE ; $4549
 	push af ; $454f
-	ld hl, wStoryModeNameOfMainCharacter ; $4550
+	ld hl, wStoryMainName ; $4550
 	ld a, [wStoryCharacterSlot] ; $4553
 	or a ; $4556
 	jr z, .zero7 ; $4557
@@ -585,7 +583,7 @@ BuildCharDataSummaryFields:
 	ld [de], a ; $459e
 	wram_bank WRAM_SCENE ; $459f
 	push af ; $45a5
-	ld hl, wStoryModeNameOfMainCharacter ; $45a6
+	ld hl, wStoryMainName ; $45a6
 	ld a, [wStoryCharacterSlot] ; $45a9
 	or a ; $45ac
 	jr z, .zero8 ; $45ad
@@ -622,7 +620,7 @@ BuildCharDataSummaryFields:
 	ld a, $01 ; $45db
 	ld [wStoryCharacterSlot], a ; $45dd
 	push af ; $45e0
-	ld hl, wStoryModeNameOfMainCharacter ; $45e1
+	ld hl, wStoryMainName ; $45e1
 	ld a, [wStoryCharacterSlot] ; $45e4
 	or a ; $45e7
 	jr z, .zero9 ; $45e8
@@ -644,7 +642,7 @@ BuildCharDataSummaryFields:
 	ld b, $09 ; $4609
 	call PlotTilesAtOffsets ; $460b
 	push af ; $460e
-	ld hl, wStoryModeNameOfMainCharacter ; $460f
+	ld hl, wStoryMainName ; $460f
 	ld a, [wStoryCharacterSlot] ; $4612
 	or a ; $4615
 	jr z, .zero10 ; $4616
@@ -662,7 +660,7 @@ BuildCharDataSummaryFields:
 	call DrawFourTileFlagLabel ; $4627
 	wram_bank WRAM_SCENE ; $462a
 	push af ; $4630
-	ld hl, wStoryModeNameOfMainCharacter ; $4631
+	ld hl, wStoryMainName ; $4631
 	ld a, [wStoryCharacterSlot] ; $4634
 	or a ; $4637
 	jr z, .zero11 ; $4638
@@ -685,7 +683,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4654
 	wram_bank WRAM_SCENE ; $4657
 	push af ; $465d
-	ld hl, wStoryModeNameOfMainCharacter ; $465e
+	ld hl, wStoryMainName ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
 	or a ; $4664
 	jr z, .zero12 ; $4665
@@ -708,7 +706,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4681
 	wram_bank WRAM_SCENE ; $4684
 	push af ; $468a
-	ld hl, wStoryModeNameOfMainCharacter ; $468b
+	ld hl, wStoryMainName ; $468b
 	ld a, [wStoryCharacterSlot] ; $468e
 	or a ; $4691
 	jr z, .zero13 ; $4692
@@ -731,7 +729,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $46ae
 	wram_bank WRAM_SCENE ; $46b1
 	push af ; $46b7
-	ld hl, wStoryModeNameOfMainCharacter ; $46b8
+	ld hl, wStoryMainName ; $46b8
 	ld a, [wStoryCharacterSlot] ; $46bb
 	or a ; $46be
 	jr z, .zero14 ; $46bf
@@ -754,7 +752,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $46db
 	wram_bank WRAM_SCENE ; $46de
 	push af ; $46e4
-	ld hl, wStoryModeNameOfMainCharacter ; $46e5
+	ld hl, wStoryMainName ; $46e5
 	ld a, [wStoryCharacterSlot] ; $46e8
 	or a ; $46eb
 	jr z, .zero15 ; $46ec
@@ -796,7 +794,7 @@ BuildCharDataSummaryFields:
 	ld [de], a ; $4734
 	wram_bank WRAM_SCENE ; $4735
 	push af ; $473b
-	ld hl, wStoryModeNameOfMainCharacter ; $473c
+	ld hl, wStoryMainName ; $473c
 	ld a, [wStoryCharacterSlot] ; $473f
 	or a ; $4742
 	jr z, .zero16 ; $4743

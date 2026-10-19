@@ -538,7 +538,7 @@ Unused_00_CopyMapToScrollBuffers:
 	ld de, wMapScrollPlane0 ; $088d
 	call Unused_00_CopyMapRows32To64 ; $0890
 	wram_bank WRAM_STAGING ; $0893
-	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $0899
+	ld hl, wDecompBuffer tile 32 ; $0899
 	ld de, wTextBuffer ; $089c
 	ld c, $20 ; $089f
 	call CopyMemoryFast ; $08a1
@@ -550,7 +550,7 @@ Unused_00_CopyMapToScrollBuffers:
 	ld c, (WRAMX_END - wMapScrollPlane1) / 16 ; $08b6
 	call ClearMemory16 ; $08b8
 	wram_bank WRAM_STAGING ; $08bb
-	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $08c1
+	ld hl, wDecompBuffer tile 64 ; $08c1
 	ld de, wTextBuffer ; $08c4
 	ld c, $20 ; $08c7
 	call CopyMemoryFast ; $08c9
@@ -559,7 +559,7 @@ Unused_00_CopyMapToScrollBuffers:
 	ld de, wShadowTilemap ; $08d5
 	call Unused_00_CopyMapRows32To64 ; $08d8
 	wram_bank WRAM_STAGING ; $08db
-	ld hl, wDecompBuffer + 96 * TILE_SIZE ; $08e1
+	ld hl, wDecompBuffer tile 96 ; $08e1
 	ld de, wTextBuffer ; $08e4
 	ld c, $20 ; $08e7
 	call CopyMemoryFast ; $08e9

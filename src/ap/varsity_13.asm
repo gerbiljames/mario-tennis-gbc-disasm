@@ -16,18 +16,14 @@ ApReturnToCourtyard_13:
 ; The Varsity court once its match is won, until the arc's third pass opens
 ; the Island Open
 ApVarsityWonSingles_13:
-	ldh a, [hRomBank]
-	ld hl, VarsityCourtActorsA_13
-	farcall ScriptRespawnLocationActors
+	script_respawn_actors VarsityCourtActorsA_13
 	ld hl, ApVarsityWonNpcScriptsA_13
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation
 	farcall WriteStoryStateWord
 	ret
 
 ApVarsityWonDoubles_13:
-	ldh a, [hRomBank]
-	ld hl, VarsityCourtActorsB_13
-	farcall ScriptRespawnLocationActors
+	script_respawn_actors VarsityCourtActorsB_13
 	ld hl, ApVarsityWonNpcScriptsB_13
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation
 	farcall WriteStoryStateWord

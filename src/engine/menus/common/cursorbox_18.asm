@@ -53,7 +53,7 @@ Unused_18_FlushBgMapShadowToVram:
 	ld a, [wBgMapShadowDirty] ; $4365
 	and $f0 ; $4368
 	jr z, .done ; $436a
-	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $436c
+	ld hl, wTextTileBuffer tile 64 ; $436c
 	ld de, vBGMap0 + VRAM_BANK1 ; $436f
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4372
 	call QueueVRAMCopy ; $4374

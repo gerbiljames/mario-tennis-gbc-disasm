@@ -100,7 +100,7 @@ ResetMatchState:
 InitMatchScene:
 	call ClearFrameTasks ; $4145
 	farcall ResetTextWindowState ; $4148
-	ld a, $02 ; $414b
+	ld a, WRAM_COURT_PLANES ; $414b
 	ld [wShadowTilemapBank], a ; $414d
 	ld a, $00 ; $4150
 	ld [wWindowTileAttr], a ; $4152
@@ -124,8 +124,7 @@ InitMatchScene:
 	wram_bank WRAM_CHAR0 ; $4189
 	ret ; $418f
 RunMatch:
-	ld c, 32 ; $4190
-	call BeginFadeOut ; $4192
+	script_fade_out 32 ; $4190
 	call WaitFadeEnd ; $4195
 	call AdvanceFrame ; $4198
 	call DisableLCDSafely ; $419b
@@ -151,8 +150,7 @@ RunMatch:
 	ld a, [wGameMode] ; $41d7
 	cp GAMEMODE_MARIO_MINIGAME ; $41da
 	call z, ShowMatchResultScreens ; $41dc
-	ld c, 32 ; $41df
-	call BeginFadeOut ; $41e1
+	script_fade_out 32 ; $41df
 	call WaitFadeEnd ; $41e4
 	call AdvanceFrame ; $41e7
 	farcall RunMatchWinLoseScreen ; $41ea
@@ -302,7 +300,9 @@ SetCharStateOnBallHit:
 	ret ; $431d
 SetCharStateOnBallHitTable:
 	; $431e, 8 bytes (bytes:8)
+	table_width 1
 	db $00, $02, $01, $02, $02, $01, $06, $07 ; 0x00
+	assert_table_length NUM_CHARSTATES
 DetectServeAceOutcome:
 	ld a, [wRallyLength] ; $4326
 	cp $02 ; $4329

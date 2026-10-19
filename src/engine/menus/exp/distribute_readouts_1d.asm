@@ -229,10 +229,10 @@ CheckExpLevelDown:
 	ld [wBGPalettes + 34], a ; $7473
 	ld a, [wExpScreenCharStats + 26] ; $7476
 	ld [wBGPalettes + 35], a ; $7479
-	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $747c
+	ld a, [wStoryMainPalette] ; $747c
 	ld_bg_pals de, 1, 1 ; $747f
 	farcall LoadIndexedPaletteThunk ; $7482
-	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7485
+	ld a, [wStoryPartnerPalette] ; $7485
 	ld_bg_pals de, 2, 1 ; $7488
 	farcall LoadIndexedPaletteThunk ; $748b
 	ld hl, hPaletteDirtyFlags ; $748e
@@ -292,11 +292,11 @@ UploadExpPromptWindowRows:
 	ldh a, [hInputRisingEdge] ; $7531
 	bit PADB_UP, a ; $7533
 	jr nz, DrawExpPromptCursor.playSfx ; $7535
-	bit 7, a ; $7537
+	bit PADB_DOWN, a ; $7537
 	jr nz, DrawExpPromptCursor.playSfx ; $7539
-	bit 0, a ; $753b
+	bit PADB_A, a ; $753b
 	jr nz, DrawExpPromptCursor.bit0Set ; $753d
-	bit 1, a ; $753f
+	bit PADB_B, a ; $753f
 	jr nz, DrawExpPromptCursor.playSfx2 ; $7541
 	jr .loop ; $7543
 UploadExpPromptWindowRowsClosing:

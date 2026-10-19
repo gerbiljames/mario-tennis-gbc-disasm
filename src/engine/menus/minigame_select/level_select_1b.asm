@@ -28,7 +28,7 @@ Unused_1b_LoadUnlockDebugCursorGfx:
 	ld de, wDecompBuffer ; $68e2
 	call DecompressData ; $68e5
 	ld hl, wDecompBuffer ; $68e8
-	ld de, vTiles0 + $50 * TILE_SIZE ; $68eb
+	ld de, vTiles0 tile $50 ; $68eb
 	ld c, UnlockDebugCursorGfx_SIZE / 16 ; $68ee
 	call QueueVRAMCopy ; $68f0
 	pop_wram_bank ; $68f3
@@ -88,8 +88,7 @@ Unused_1b_QueueBobbingFlagSprite:
 	ret ; $6981
 Unused_1b_RunStoryDataConfirmMenu:
 	wram_bank WRAM_STAGING ; $6982
-	ld c, 32 ; $6988
-	call BeginFadeOut ; $698a
+	script_fade_out 32 ; $6988
 	call WaitFadeEnd ; $698d
 	call DisableLCDSafely ; $6990
 	xor a ; $6993
@@ -131,8 +130,7 @@ Unused_1b_ShowHighScoreConfirmScreen:
 	ld hl, wMinigameHighScoreMode ; $69d9
 	ld [hl], $01 ; $69dc
 	wram_bank WRAM_STAGING ; $69de
-	ld c, 32 ; $69e4
-	call BeginFadeOut ; $69e6
+	script_fade_out 32 ; $69e4
 	call WaitFadeEnd ; $69e9
 	call DisableLCDSafely ; $69ec
 	farcall Unused_18_InitConfirmScreen ; $69ef
@@ -222,7 +220,7 @@ Unused_1b_StubNop_1b_10:
 	ret ; $6aad
 Unused_1b_CopyMainCharNameWithDiacritics:
 	push de ; $6aae
-	ld hl, wStoryModeNameOfMainCharacter ; $6aaf
+	ld hl, wStoryMainName ; $6aaf
 	pop de ; $6ab2
 .loop:
 	ld a, [hl+] ; $6ab3
@@ -259,37 +257,36 @@ Unused_1b_CopyMainCharNameWithDiacritics:
 	ret ; $6add
 Unused_1b_ShowNoN64DataFoundScreen:
 	wram_bank WRAM_STAGING ; $6ade
-	ld c, 32 ; $6ae4
-	call BeginFadeOut ; $6ae6
+	script_fade_out 32 ; $6ae4
 	call WaitFadeEnd ; $6ae9
 	call DisableLCDSafely ; $6aec
 	ld a, $20 ; $6aef
-	ld hl, wTextTileBuffer + 6 * TILE_SIZE + 2 ; $6af1
+	ld hl, wTextTileBuffer tile 6 + 2 ; $6af1
 	call Unused_1b_FillTilemapRow17 ; $6af4
-	ld hl, wTextTileBuffer + 8 * TILE_SIZE + 2 ; $6af7
+	ld hl, wTextTileBuffer tile 8 + 2 ; $6af7
 	call Unused_1b_FillTilemapRow17 ; $6afa
-	ld hl, wTextTileBuffer + 10 * TILE_SIZE + 2 ; $6afd
+	ld hl, wTextTileBuffer tile 10 + 2 ; $6afd
 	call Unused_1b_FillTilemapRow17 ; $6b00
-	ld hl, wTextTileBuffer + 12 * TILE_SIZE + 2 ; $6b03
+	ld hl, wTextTileBuffer tile 12 + 2 ; $6b03
 	call Unused_1b_FillTilemapRow17 ; $6b06
-	ld hl, wTextTileBuffer + 14 * TILE_SIZE + 2 ; $6b09
+	ld hl, wTextTileBuffer tile 14 + 2 ; $6b09
 	call Unused_1b_FillTilemapRow17 ; $6b0c
 	ld a, $00 ; $6b0f
-	ld hl, wTextTileBuffer + 70 * TILE_SIZE + 2 ; $6b11
+	ld hl, wTextTileBuffer tile 70 + 2 ; $6b11
 	call Unused_1b_FillTilemapRow17 ; $6b14
-	ld hl, wTextTileBuffer + 72 * TILE_SIZE + 2 ; $6b17
+	ld hl, wTextTileBuffer tile 72 + 2 ; $6b17
 	call Unused_1b_FillTilemapRow17 ; $6b1a
-	ld hl, wTextTileBuffer + 74 * TILE_SIZE + 2 ; $6b1d
+	ld hl, wTextTileBuffer tile 74 + 2 ; $6b1d
 	call Unused_1b_FillTilemapRow17 ; $6b20
-	ld hl, wTextTileBuffer + 76 * TILE_SIZE + 2 ; $6b23
+	ld hl, wTextTileBuffer tile 76 + 2 ; $6b23
 	call Unused_1b_FillTilemapRow17 ; $6b26
-	ld hl, wTextTileBuffer + 78 * TILE_SIZE + 2 ; $6b29
+	ld hl, wTextTileBuffer tile 78 + 2 ; $6b29
 	call Unused_1b_FillTilemapRow17 ; $6b2c
 	ld hl, Text_31_123 ; $6b2f
-	ld de, wTextTileBuffer + 8 * TILE_SIZE + 3 ; $6b32
+	ld de, wTextTileBuffer tile 8 + 3 ; $6b32
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b35
 	ld hl, Text_31_124 ; $6b38
-	ld de, wTextTileBuffer + 12 * TILE_SIZE + 3 ; $6b3b
+	ld de, wTextTileBuffer tile 12 + 3 ; $6b3b
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b3e
 	farcall Unused_18_ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44
@@ -325,8 +322,7 @@ Unused_1b_FillTilemapRow17:
 	ret ; $6b6e
 Unused_1b_ShowTrophiesPlaceholderScreen:
 	wram_bank WRAM_STAGING ; $6b6f
-	ld c, 32 ; $6b75
-	call BeginFadeOut ; $6b77
+	script_fade_out 32 ; $6b75
 	call WaitFadeEnd ; $6b7a
 	call DisableLCDSafely ; $6b7d
 	farcall Unused_18_ForceFlushBgMapToVram ; $6b80
@@ -554,17 +550,17 @@ LoadMinigameLevelSelectGfx:
 	ld b, TILEBLOCK_SharedMenuGfx111 ; $6cec
 .loadCompressedTileBlock:
 	ld c, SharedMenuGfx111_SIZE / 16 ; $6cee
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6cf0
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6cf0
 	farcall LoadCompressedTileBlock ; $6cf3
 	call AdvanceFrame ; $6cf6
 	ld b, TILEBLOCK_MinigameLevelSelectGfx1 ; $6cf9
 	ld c, MinigameLevelSelectGfx1_SIZE / 16 ; $6cfb
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $6cfd
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6cfd
 	farcall LoadCompressedTileBlock ; $6d00
 	call AdvanceFrame ; $6d03
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $6d06
 	ld c, SharedMenuGfx27_SIZE / 16 ; $6d08
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $6d0a
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $6d0a
 	farcall LoadCompressedTileBlock ; $6d0d
 	call AdvanceFrame ; $6d10
 	ld b, TILEBLOCK_MinigameLevelSelectGfx2Alias16 ; $6d13

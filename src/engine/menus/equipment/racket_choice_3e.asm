@@ -1,6 +1,6 @@
 RunEraseDataConfirmMenu:
 	ld hl, rIE ; $4c12
-	res 2, [hl] ; $4c15
+	res B_IE_TIMER, [hl] ; $4c15
 	wram_bank WRAM_SCREEN ; $4c17
 	ld a, b ; $4c1d
 	ld [wScreenScratch], a ; $4c1e
@@ -29,11 +29,11 @@ RunEraseDataConfirmMenu:
 	ld [wMenuInputPressed], a ; $4c5f
 	bit PADB_A, a ; $4c62
 	jr nz, .checkMenuCursorY2 ; $4c64
-	bit 1, a ; $4c66
+	bit PADB_B, a ; $4c66
 	jr nz, .playSfx ; $4c68
-	bit 6, a ; $4c6a
+	bit PADB_UP, a ; $4c6a
 	jr nz, .checkMenuCursorY ; $4c6c
-	bit 7, a ; $4c6e
+	bit PADB_DOWN, a ; $4c6e
 	jr nz, .checkMenuCursorY ; $4c70
 	jr .loop ; $4c72
 .checkMenuCursorY:
@@ -48,20 +48,18 @@ RunEraseDataConfirmMenu:
 	jr nz, .playSfx ; $4c84
 	sound SFX_MENU_DECIDE ; $4c86
 	ld hl, rIE ; $4c88
-	set 2, [hl] ; $4c8b
+	set B_IE_TIMER, [hl] ; $4c8b
 	call ClearFrameTasks ; $4c8d
-	ld c, 16 ; $4c90
-	call BeginFadeOut ; $4c92
+	script_fade_out 16 ; $4c90
 	call WaitFadeEnd ; $4c95
 	ld a, $01 ; $4c98
 	ret ; $4c9a
 .playSfx:
 	sound SFX_MENU_CANCEL ; $4c9b
 	ld hl, rIE ; $4c9d
-	set 2, [hl] ; $4ca0
+	set B_IE_TIMER, [hl] ; $4ca0
 	call ClearFrameTasks ; $4ca2
-	ld c, 16 ; $4ca5
-	call BeginFadeOut ; $4ca7
+	script_fade_out 16 ; $4ca5
 	call WaitFadeEnd ; $4caa
 	xor a ; $4cad
 	ret ; $4cae
@@ -93,7 +91,7 @@ LoadEraseDataConfirmScreen:
 	ld de, vTiles2 ; $4cf3
 	farcall LoadCompressedTileBlock ; $4cf6
 	wram_bank WRAM_TEXT ; $4cf9
-	ld a, $03 ; $4cff
+	ld a, WRAM_SCREEN ; $4cff
 	ld [wShadowTilemapBank], a ; $4d01
 	ld a, $00 ; $4d04
 	ld [wWindowTileAttr], a ; $4d06
@@ -266,7 +264,7 @@ EraseConfirmFlashColors_3e:
 RunRacketShoesChoiceMenu:
 	sound BGM_MENU ; $4ea0
 	ld hl, rIE ; $4ea2
-	res 2, [hl] ; $4ea5
+	res B_IE_TIMER, [hl] ; $4ea5
 	call LoadRacketShoesChoiceGraphics ; $4ea7
 	wram_bank WRAM_SCREEN ; $4eaa
 	ld a, [wMenuSlideDirection] ; $4eb0
@@ -300,14 +298,14 @@ RunRacketShoesChoiceMenu:
 	ld a, [wMenuInputPressed] ; $4ef2
 	bit PADB_A, a ; $4ef5
 	jr nz, .playSfx ; $4ef7
-	bit 1, a ; $4ef9
+	bit PADB_B, a ; $4ef9
 	jr nz, .playSfx2 ; $4efb
 	jr .loop ; $4efd
 .playSfx:
 	sound SFX_MENU_SELECT ; $4eff
 	call ClearFrameTasks ; $4f01
 	ld hl, rIE ; $4f04
-	set 2, [hl] ; $4f07
+	set B_IE_TIMER, [hl] ; $4f07
 	ld b, $01 ; $4f09
 	call CloseChoiceTabPanel ; $4f0b
 	ld a, MENUSLIDE_FORWARD ; $4f0e
@@ -320,7 +318,7 @@ RunRacketShoesChoiceMenu:
 	sound SFX_MENU_CANCEL ; $4f1c
 	call ClearFrameTasks ; $4f1e
 	ld hl, rIE ; $4f21
-	set 2, [hl] ; $4f24
+	set B_IE_TIMER, [hl] ; $4f24
 	ld b, $00 ; $4f26
 	call CloseChoiceTabPanel ; $4f28
 	ld a, MENUSLIDE_BACK ; $4f2b
@@ -388,12 +386,12 @@ LoadRacketShoesChoiceGraphics:
 	call AdvanceFrame ; $4f8c
 	ld b, TILEBLOCK_RacketShoesChoiceGfx1 ; $4f8f
 	ld c, RacketShoesChoiceGfx1_SIZE / 16 ; $4f91
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4f93
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4f93
 	farcall LoadCompressedTileBlock ; $4f96
 	call AdvanceFrame ; $4f99
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $4f9c
 	ld c, SharedMenuGfx27_SIZE / 16 ; $4f9e
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $4fa0
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $4fa0
 	farcall LoadCompressedTileBlock ; $4fa3
 	call AdvanceFrame ; $4fa6
 	ld b, TILEBLOCK_RacketShoesChoiceGfx2 ; $4fa9

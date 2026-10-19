@@ -71,7 +71,7 @@ UpdateScorePanelDisplay:
 	ret ; $40b4
 LoadOnCourtCharacterGfx:
 	ld a, $ff ; $40b5
-	ld de, vTiles0 + $14 * TILE_SIZE ; $40b7
+	ld de, vTiles0 tile $14 ; $40b7
 	farcall LoadOnCourtCharTilesB ; $40ba
 	ld a, [wOnCourtCharCountMinus1] ; $40bd
 	rst Rst00 ; $40c0
@@ -82,26 +82,26 @@ LoadOnCourtCharacterGfx:
 .char2:
 	wram_bank WRAM_CHAR2 ; $40c9
 	ld a, [wCharSpriteSetId] ; $40cf
-	ld de, vTiles0 + $10 * TILE_SIZE ; $40d2
+	ld de, vTiles0 tile $10 ; $40d2
 	farcall LoadOnCourtCharTilesA ; $40d5
 	ld a, [wCharSpriteSetId] ; $40d8
-	ld de, vTiles0 + $14 * TILE_SIZE ; $40db
+	ld de, vTiles0 tile $14 ; $40db
 	farcall LoadOnCourtCharTilesB ; $40de
 .char3:
 	wram_bank WRAM_CHAR3 ; $40e1
 	ld a, [wCharSpriteSetId] ; $40e7
-	ld de, vTiles0 + $18 * TILE_SIZE ; $40ea
+	ld de, vTiles0 tile $18 ; $40ea
 	farcall LoadOnCourtCharTilesA ; $40ed
 	ld a, [wCharSpriteSetId] ; $40f0
-	ld de, vTiles0 + $1c * TILE_SIZE ; $40f3
+	ld de, vTiles0 tile $1c ; $40f3
 	farcall LoadOnCourtCharTilesB ; $40f6
 .char4:
 	wram_bank WRAM_CHAR1 ; $40f9
 	ld a, [wCharSpriteSetId] ; $40ff
-	ld de, vTiles0 + $08 * TILE_SIZE ; $4102
+	ld de, vTiles0 tile $08 ; $4102
 	farcall LoadOnCourtCharTilesA ; $4105
 	ld a, [wCharSpriteSetId] ; $4108
-	ld de, vTiles0 + $0c * TILE_SIZE ; $410b
+	ld de, vTiles0 tile $0c ; $410b
 	farcall LoadOnCourtCharTilesB ; $410e
 .done:
 	wram_bank WRAM_CHAR0 ; $4111
@@ -109,7 +109,7 @@ LoadOnCourtCharacterGfx:
 	ld de, vTiles0 ; $411a
 	farcall LoadOnCourtCharTilesA ; $411d
 	ld a, [wCharSpriteSetId] ; $4120
-	ld de, vTiles0 + $04 * TILE_SIZE ; $4123
+	ld de, vTiles0 tile $04 ; $4123
 	farcall LoadOnCourtCharTilesB ; $4126
 	ret ; $4129
 SpawnGameScoreDisplayObjs:

@@ -407,7 +407,7 @@ Unused_0a_RunSceneSelectDebugMenu:
 	call InitSceneScroll ; $5ec1
 	ld a, [wCurrentScene] ; $5ec4
 	call LoadStorySceneGraphics ; $5ec7
-	ld a, $00 ; $5eca
+	ld a, SCENECOPY_FROM_PLAYER ; $5eca
 	farcall CopyScrolledSceneTilemapToVram ; $5ecc
 	call EnableLCD ; $5ecf
 	ld a, [wCurrentScene] ; $5ed2

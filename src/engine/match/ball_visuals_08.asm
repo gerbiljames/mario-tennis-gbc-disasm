@@ -114,6 +114,11 @@ ResetBallState:
 	call SetBallPosition ; $5132
 	xor a ; $5135
 	ld hl, wBallVelocityXFrac ; $5136
+	ASSERT wBallVelocityX == wBallVelocityXFrac + 1, "this code walks from wBallVelocityXFrac into wBallVelocityX"
+	ASSERT wBallVelocityDepthFrac == wBallVelocityXFrac + 3, "this code walks from wBallVelocityXFrac into wBallVelocityDepthFrac"
+	ASSERT wBallVelocityDepth == wBallVelocityXFrac + 4, "this code walks from wBallVelocityXFrac into wBallVelocityDepth"
+	ASSERT wBallVelocityHeightFrac == wBallVelocityXFrac + 6, "this code walks from wBallVelocityXFrac into wBallVelocityHeightFrac"
+	ASSERT wBallVelocityHeight == wBallVelocityXFrac + 7, "this code walks from wBallVelocityXFrac into wBallVelocityHeight"
 	ld [hl+], a ; $5139
 	ld [hl+], a ; $513a
 	ld [hl+], a ; $513b
@@ -124,6 +129,7 @@ ResetBallState:
 	ld [hl+], a ; $5140
 	ld [hl+], a ; $5141
 	ld hl, wBallTopspin ; $5142
+	ASSERT wBallSideSpin == wBallTopspin + 2, "this code walks from wBallTopspin into wBallSideSpin"
 	ld [hl+], a ; $5145
 	ld [hl+], a ; $5146
 	ld [hl+], a ; $5147
@@ -145,6 +151,7 @@ UpdateBallVisuals:
 	and a ; $5168
 	jr nz, .shiftHistory ; $5169
 	ldh a, [hDebugStepMode] ; $516b
+	ASSERT DEBUGSTEP_OFF == 0
 	and a ; $516d
 	jr z, .shiftHistory ; $516e
 .shiftHistory:
@@ -421,7 +428,7 @@ StartLandingMarker:
 	bit 7, a ; $531c
 	ld de, $0100 ; $531e
 	jr z, .done ; $5321
-	ld de, rJOYP ; $5323
+	ld de, $ff00 ; $5323
 .done:
 	ld bc, $0000 ; $5326
 	call ProjectWorldToScreen_08 ; $5329

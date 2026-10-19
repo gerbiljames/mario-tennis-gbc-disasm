@@ -307,6 +307,7 @@ SetDrillMessageByRallyParity:
 	ret ; $4573
 ShowQueuedDrillMessage:
 	ld a, [wDrillMessageId] ; $4574
+	ASSERT DRILLMSG_NONE == 0
 	or a ; $4577
 	jr nz, .show ; $4578
 	ld a, DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE ; $457a

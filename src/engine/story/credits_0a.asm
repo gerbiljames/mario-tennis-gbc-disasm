@@ -75,8 +75,7 @@ EndingCutsceneLocationList:
 EndingCreditsSequencePalette:
 	INCLUDE "data/engine/story/EndingCreditsSequencePalette.asm" ; $6e6c, 8 bytes (palettes)
 RunEndingCreditsSequence:
-	ld c, 4 ; $6e74
-	call BeginFadeOut ; $6e76
+	script_fade_out 4 ; $6e74
 	call WaitFadeEnd ; $6e79
 	set_flag FLAG_ENDING_CREDITS_RUNNING ; $6e7c
 	sound BGM_CREDITS ; $6e7f
@@ -96,7 +95,7 @@ RunEndingCreditsSequence:
 	jr z, .done ; $6ea2
 	and a ; $6ea4
 	jr nz, .setLocation ; $6ea5
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $6ea7
+	ld a, [wStoryMainChar] ; $6ea7
 	add a ; $6eaa
 	ld a, [hl+] ; $6eab
 .setLocation:
@@ -123,14 +122,14 @@ RunEndingCreditsSequence:
 	farcall PlayScrollingStoryCutscene ; $6ee0
 .fadeOut:
 	clear_flag FLAG_ENDING_CREDITS_PENDING ; $6ee3
-	ld c, 4 ; $6ee6
-	call BeginFadeOut ; $6ee8
+	script_fade_out 4 ; $6ee6
 	call WaitFadeEnd ; $6eeb
-	ld a, $90 ; $6eee
+	ld a, SCREEN_HEIGHT_PX ; $6eee
 	ldh [rWY], a ; $6ef0
 	ld hl, wStoryCharacterSlot ; $6ef2
 	inc [hl] ; $6ef5
 	ldh a, [hDebugStepMode] ; $6ef6
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $6ef8
 	jr z, .nextScene ; $6ef9
 	ldh a, [hPlayerInputFlags] ; $6efb
@@ -140,8 +139,7 @@ RunEndingCreditsSequence:
 	jr .sceneLoop ; $6f01
 .done:
 	farcall ShowStoryResultScreen ; $6f03
-	ld c, 8 ; $6f06
-	call BeginFadeOut ; $6f08
+	script_fade_out 8 ; $6f06
 	call WaitFadeEnd ; $6f0b
 	xor a ; $6f0e
 	ldh [hScrollX], a ; $6f0f
@@ -160,12 +158,12 @@ FreezeAllActors:
 	dec e ; $6f2a
 	or a ; $6f2b
 	jp z, .next ; $6f2c
-	ld hl, $0005 ; $6f2f
+	ld hl, ACTORF_FLAGS ; $6f2f
 	add hl, de ; $6f32
 	set 0, [hl] ; $6f33
 	set 1, [hl] ; $6f35
 .next:
-	ld hl, $0040 ; $6f37
+	ld hl, ACTOR_SIZE ; $6f37
 	add hl, de ; $6f3a
 	ld e, l ; $6f3b
 	ld d, h ; $6f3c

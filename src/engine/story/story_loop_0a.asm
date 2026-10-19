@@ -200,8 +200,7 @@ RunStoryLocation:
 	push bc ; $4f41
 	push de ; $4f42
 	push hl ; $4f43
-	ld c, 12 ; $4f44
-	call BeginFadeOut ; $4f46
+	script_fade_out 12 ; $4f44
 	call ClearTemporaryStoryFlags ; $4f49
 	call ClearStoryEventRequests ; $4f4c
 	call LoadStoryLocationHeader ; $4f4f
@@ -225,7 +224,7 @@ RunStoryLocation:
 	ld a, [wStoryLocationBank] ; $4f78
 	call InitLocationActors ; $4f7b
 	ld hl, wActors ; $4f7e
-	ld de, $0018 ; $4f81
+	ld de, ACTORF_ANIM_RATE ; $4f81
 	add hl, de ; $4f84
 	ld [hl], $01 ; $4f85
 	set_flag FLAG_HIDE_OVERWORLD_ACTORS ; $4f87
@@ -237,7 +236,7 @@ RunStoryLocation:
 	farcall InitSceneScroll ; $4f99
 	ld a, [wStoryLocationScene] ; $4f9c
 	farcall LoadStorySceneGraphics ; $4f9f
-	ld a, $00 ; $4fa2
+	ld a, SCENECOPY_FROM_PLAYER ; $4fa2
 	farcall CopyScrolledSceneTilemapToVram ; $4fa4
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4fa7
 	jr nz, .enableLcd ; $4faa
@@ -286,7 +285,7 @@ RunStoryLocation:
 	ldh a, [hRomBank] ; $5008
 	farcall SetActorScript ; $500a
 	ld hl, wActors ; $500d
-	ld de, $0018 ; $5010
+	ld de, ACTORF_ANIM_RATE ; $5010
 	add hl, de ; $5013
 	ld [hl], $01 ; $5014
 	ld hl, wStoryModeTriggerScript ; $5016
@@ -373,6 +372,7 @@ RunStoryLocation:
 	and a ; $50b7
 	jr nz, .nextFrame ; $50b8
 	ldh a, [hDebugStepMode] ; $50ba
+	ASSERT DEBUGSTEP_OFF == 0
 	and a ; $50bc
 	jr z, .nextFrame ; $50bd
 	call WaitPlayerMoveDone ; $50bf

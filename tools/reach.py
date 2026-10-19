@@ -39,6 +39,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from banksrc import bank_lines, holders  # noqa: E402
+import consts  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 ROOTS = ["EntryPoint", "VBlankInterrupt", "LCDStatInterrupt", "TimerInterrupt", "SerialInterrupt",
@@ -63,8 +64,8 @@ DATA_FLAGS = {
                                 "xor a clears (docs/bugs.md)"),
     "wGlyphBufferHoldCount": ("dead", "PrepareGlyphBuffer's keep branch; nothing ever raises the "
                                       "count (docs/bugs.md)"),
-    "wStoryModeGenderOfMainCharacter": ("live", "a story record field, copied in with the record"),
-    "wStoryModeGenderOfPartnerCharacter": ("live", "a story record field, copied in with the record"),
+    "wStoryMainGender": ("live", "a story record field, copied in with the record"),
+    "wStoryPartnerGender": ("live", "a story record field, copied in with the record"),
     "wStoryLocationBGM": ("live", "copied from the location header by LoadStoryLocationHeader"),
     "wCurrentMinigameStoryMatch": ("live", "the match launchers store the (list, index) word through "
                                            "a pointer; the doubles lists are odd"),
@@ -276,11 +277,7 @@ class Graph:
 
 
 def constants():
-    out = {}
-    for inc in (ROOT / "include").rglob("*.inc"):
-        for m in re.finditer(r"^def (\w+)\s+equ \$([0-9a-f]+)", inc.read_text(), re.M | re.I):
-            out[m.group(1)] = int(m.group(2), 16)
-    return out
+    return consts.constants()
 
 
 def number(tok, consts):

@@ -248,7 +248,7 @@ Unused_06_RunDebugStatsEditor:
 	farcall StepMatchFrame ; $6bb4
 .loop:
 	farcall ReadMatchInputPressed ; $6bb7
-	and $0d ; $6bba
+	and PADF_A | PADF_SELECT | PADF_START ; $6bba
 	jr nz, .maskSet ; $6bbc
 	call Unused_06_HandleDebugStatsInput ; $6bbe
 	call Unused_06_FlushTilemapToVramIfDirty ; $6bc1
@@ -368,7 +368,7 @@ Unused_06_AdjustDebugStatByte:
 	ldh a, [hInputPressed] ; $6ca8
 	bit PADB_LEFT, a ; $6caa
 	jr nz, .read ; $6cac
-	bit 4, a ; $6cae
+	bit PADB_RIGHT, a ; $6cae
 	jr nz, .readB ; $6cb0
 	ret ; $6cb2
 .read:
@@ -385,7 +385,7 @@ Unused_06_AdjustDebugStatWord:
 	ldh a, [hInputPressed] ; $6cbb
 	bit PADB_LEFT, a ; $6cbd
 	jr nz, .read ; $6cbf
-	bit 4, a ; $6cc1
+	bit PADB_RIGHT, a ; $6cc1
 	jr nz, .readB ; $6cc3
 	ret ; $6cc5
 .read:
@@ -418,12 +418,14 @@ Unused_06_AdjustDebugStatWord:
 	ret ; $6cdf
 StoryMenuDefs:
 	; $6ce0, 48 bytes (menu_def:STORYMENUITEM)
-	menu_def STORYMENUITEM_STATUS, STORYMENUITEM_CLEAR_STATUS, STORYMENUITEM_OPTIONS, STORYMENUITEM_SAVE ; menu 0
-	menu_def STORYMENUITEM_CHAR_DATA, STORYMENUITEM_ITEMS ; menu 1
-	menu_def STORYMENUITEM_MESSAGES, STORYMENUITEM_MUSIC ; menu 2
-	menu_def STORYMENUITEM_MSG_SLOW, STORYMENUITEM_MSG_NORMAL, STORYMENUITEM_MSG_FAST ; menu 3
-	menu_def STORYMENUITEM_MUSIC_ON, STORYMENUITEM_MUSIC_OFF ; menu 4
-	menu_def STORYMENUITEM_SAVE_GAME, STORYMENUITEM_TO_MAIN_MENU, STORYMENUITEM_CANCEL ; menu 5
+	table_width 8
+	menu_def STORYMENUITEM_STATUS, STORYMENUITEM_CLEAR_STATUS, STORYMENUITEM_OPTIONS, STORYMENUITEM_SAVE ; STORYMENU_PAUSE
+	menu_def STORYMENUITEM_CHAR_DATA, STORYMENUITEM_ITEMS ; STORYMENU_STATUS
+	menu_def STORYMENUITEM_MESSAGES, STORYMENUITEM_MUSIC ; STORYMENU_OPTIONS
+	menu_def STORYMENUITEM_MSG_SLOW, STORYMENUITEM_MSG_NORMAL, STORYMENUITEM_MSG_FAST ; STORYMENU_MESSAGE_SPEED
+	menu_def STORYMENUITEM_MUSIC_ON, STORYMENUITEM_MUSIC_OFF ; STORYMENU_MUSIC
+	menu_def STORYMENUITEM_SAVE_GAME, STORYMENUITEM_TO_MAIN_MENU, STORYMENUITEM_CANCEL ; STORYMENU_SAVE_QUIT
+	assert_table_length NUM_STORYMENUS
 RunStoryMenu:
 	call GetStoryMenuItemCount ; $6d10
 	ld [wPauseMenuItemCount], a ; $6d13
@@ -431,7 +433,7 @@ RunStoryMenu:
 	jr .redraw ; $6d19
 .inputLoop:
 	farcall ReadMatchInputPressed ; $6d1b
-	and $0a ; $6d1e
+	and PADF_B | PADF_START ; $6d1e
 	jr z, .checkA ; $6d20
 	sound SFX_MENU_CANCEL ; $6d22
 	ld a, MATCHMENUSEL_CANCELLED ; $6d24
@@ -439,13 +441,13 @@ RunStoryMenu:
 	jr .done ; $6d29
 .checkA:
 	farcall ReadMatchInputPressed ; $6d2b
-	and $01 ; $6d2e
+	and PADF_A ; $6d2e
 	jr z, .checkLeftRight ; $6d30
 	sound SFX_MENU_SELECT ; $6d32
 	jr .done ; $6d34
 .checkLeftRight:
 	farcall ReadMatchInputRepeat ; $6d36
-	and $30 ; $6d39
+	and PADF_RIGHT | PADF_LEFT ; $6d39
 	jr z, .drawCursor ; $6d3b
 	ld b, a ; $6d3d
 	ld a, [wPauseMenuItemCount] ; $6d3e
@@ -608,10 +610,10 @@ RunStoryModeMenu:
 	wram_bank WRAM_TEXT ; $6e4c
 .loop:
 	ld hl, ScoreboardModeGfxTail ; $6e52
-	ld de, vTiles0 + $64 * TILE_SIZE ; $6e55
+	ld de, vTiles0 tile $64 ; $6e55
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6e58
 	call QueueVRAMCopy ; $6e5a
-	ld a, $00 ; $6e5d
+	ld a, STORYMENU_PAUSE ; $6e5d
 	ld [wPauseMenuId], a ; $6e5f
 	call RunStoryMenu ; $6e62
 	ld a, [wMatchMenuSelection] ; $6e65
@@ -666,13 +668,13 @@ StoryPauseMenu_AfterItem:
 UnusedStoryMenuRedrawReentry:
 	call Unused_06_DrawStoryMenuItemRow ; $6ec7
 	ld hl, ScoreboardModeGfxTail ; $6eca
-	ld de, vTiles0 + $64 * TILE_SIZE ; $6ecd
+	ld de, vTiles0 tile $64 ; $6ecd
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6ed0
 	call QueueVRAMCopy ; $6ed2
 	jr .checkMatchMenuSelection ; $6ed5
 .loop:
 	farcall ReadMatchInputPressed ; $6ed7
-	and $0e ; $6eda
+	and PADF_B | PADF_SELECT | PADF_START ; $6eda
 	jr z, .readMatchInputPressed ; $6edc
 	sound SFX_MENU_CANCEL ; $6ede
 	ld a, MATCHMENUSEL_CANCELLED ; $6ee0
@@ -680,13 +682,13 @@ UnusedStoryMenuRedrawReentry:
 	jr .advanceFrame ; $6ee5
 .readMatchInputPressed:
 	farcall ReadMatchInputPressed ; $6ee7
-	and $01 ; $6eea
+	and PADF_A ; $6eea
 	jr z, .readMatchInputRepeat ; $6eec
 	sound SFX_MENU_SELECT ; $6eee
 	jr .advanceFrame ; $6ef0
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $6ef2
-	and $30 ; $6ef5
+	and PADF_RIGHT | PADF_LEFT ; $6ef5
 	jr z, .checkMatchMenuSelection2 ; $6ef7
 	ld b, a ; $6ef9
 	ld c, $04 ; $6efa
@@ -725,7 +727,7 @@ StoryPauseMenu_PlayerData:
 	call RestoreStoryTilemapNoPriority ; $6f42
 	xor a ; $6f45
 	ld [wMatchMenuSelection], a ; $6f46
-	ld a, $01 ; $6f49
+	ld a, STORYMENU_STATUS ; $6f49
 	ld [wPauseMenuId], a ; $6f4b
 	call RunStoryMenu ; $6f4e
 	ld a, [wMatchMenuSelection] ; $6f51
@@ -785,7 +787,7 @@ StoryPauseMenu_Options:
 	xor a ; $6fc3
 	ld [wMatchMenuSelection], a ; $6fc4
 .loop:
-	ld a, $02 ; $6fc7
+	ld a, STORYMENU_OPTIONS ; $6fc7
 	ld [wPauseMenuId], a ; $6fc9
 	call RunStoryMenu ; $6fcc
 	ld a, [wMatchMenuSelection] ; $6fcf
@@ -807,7 +809,7 @@ StoryOptionsMenu_AfterItem:
 UnusedRunStoryPlayerDataMenu:
 	ld a, STORYMENUITEM_CHAR_DATA ; $6fea
 	ld [wStoryMenuFirstItem], a ; $6fec
-	ld a, $01 ; $6fef
+	ld a, STORYMENU_STATUS ; $6fef
 	ld [wPauseMenuId], a ; $6ff1
 	jp RunStoryMenu ; $6ff4
 StoryPauseMenu_MessageSpeed:
@@ -847,7 +849,7 @@ StoryPauseMenu_SaveQuit:
 	call DrawStoryMenuCaption ; $7038
 	ld a, $02 ; $703b
 	ld [wMatchMenuSelection], a ; $703d
-	ld a, $05 ; $7040
+	ld a, STORYMENU_SAVE_QUIT ; $7040
 	ld [wPauseMenuId], a ; $7042
 	call RunStoryMenu ; $7045
 	ld a, [wMatchMenuSelection] ; $7048

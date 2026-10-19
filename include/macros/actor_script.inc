@@ -55,11 +55,11 @@ MACRO as_rand_box    ; $09 pick a random reachable point in a box (gated on +$30
 	db $09, \1, \2
 ENDM
 
-MACRO as_step        ; $0a step one tick toward the target waypoint (+$16), then yield
+MACRO as_step        ; $0a trail the ACTORF_ANCHOR actor (2 tiles behind, its speed), then yield
 	db $0a
 ENDM
 
-MACRO as_follow_wp   ; $0b advance along the waypoint list at +$16, then yield
+MACRO as_follow_wp   ; $0b head for the ACTORF_ANCHOR actor's position, then yield
 	db $0b
 ENDM
 
@@ -68,7 +68,7 @@ MACRO as_jump        ; $0c jump to `target` (signed rel16, relative to the opera
 	dw \1 - @
 ENDM
 
-MACRO as_set_field   ; $0d write a state field (selector byte, value word; type table $04:$47fd). Selector $14 = facing (FACE_* value)
+MACRO as_set_field   ; $0d write a state field (selector byte, value word; type table $04:$47fd). selector = ACTORF_* offset
 	db $0d, \1
 	dw \2
 ENDM

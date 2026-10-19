@@ -19,6 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 from ap_export import read_ids, read_syms, rom_offset  # noqa: E402
+import consts  # noqa: E402
 
 BUTTONS = {"a": "a", "b": "b", "start": "start", "select": "select",
            "up": "up", "down": "down", "left": "left", "right": "right"}
@@ -26,30 +27,18 @@ BUTTONS = {"a": "a", "b": "b", "start": "start", "select": "select",
 
 def constants():
     """LOC_* / ITEM_* / MINIGAME_* values from the includes."""
-    import re
     out = {}
     locations, items = read_ids()
     out.update({c: i - 1 for i, c, _ in locations})
     out.update({c: i for i, c, _ in items})
-    for line in (ROOT / "include" / "constants" / "modes.inc").read_text().splitlines():
-        m = re.match(r"def (MINIGAME_\w+)\s+equ \$([0-9a-f]+)", line)
-        if m:
-            out[m.group(1)] = int(m.group(2), 16)
+    out.update({k: v for k, v in consts.constants().items() if k.startswith("MINIGAME_")})
     return out
 
 
 def include_value(name):
     """A `def NAME equ value` constant from include/ (also the mirrored WRAM
     symbols, which are not in the .sym file)."""
-    import re
-    pattern = re.compile(rf"^def {re.escape(name)}\s+equ\s+(\$[0-9a-fA-F]+|\d+)\b", re.I)
-    for path in sorted((ROOT / "include").rglob("*.inc")):
-        for line in path.read_text().splitlines():
-            m = pattern.match(line.strip())
-            if m:
-                v = m.group(1)
-                return int(v[1:], 16) if v.startswith("$") else int(v)
-    raise KeyError(name)
+    return consts.constants()[name]
 
 
 def with_ledger(save, sym, auth=bytes(16)):
@@ -630,7 +619,7 @@ def word(g, label):
 
 def total_exp(g):
     """The main character's and the partner's EXP together."""
-    rec = g.addr("wStoryModeNameOfMainCharacter")
+    rec = g.addr("wStoryMainName")
     return sum(g.mem[rec + slot * 0x40 + CHARREC_EXP + i] << 8 * i for slot in (0, 1) for i in range(3))
 
 
@@ -1184,7 +1173,7 @@ def pool_left(g, where):
 
 @test
 def exp_select_assigns_all(g, c):
-    saved = exp24(g, "wStoryMainCharExp")
+    saved = exp24(g, "wStoryMainExp")
     pool, award = at_distribution_screen(g)
     bank, stats = g.sym["wExpScreenCharStats"]
     gained = lambda: g.mem[bank, stats + 6] | g.mem[bank, stats + 7] << 8
@@ -1199,7 +1188,7 @@ def exp_select_assigns_all(g, c):
             break
         g.press("a", wait=30)
     assert not g.awaiting, "the rewards never finished after Select"
-    assert exp24(g, "wStoryMainCharExp") == saved + award, "the award was not saved to the character"
+    assert exp24(g, "wStoryMainExp") == saved + award, "the award was not saved to the character"
 
 
 exp_select_assigns_all.tokens = lambda c: {"ApOptExpModifier": b"\x0a"}
@@ -1248,7 +1237,7 @@ def island_open_won(g, doubles=False, frames=12000):
 @test
 def ceremony_skipped(g, c):
     scene, warp = island_open_won(g)
-    gender = g.mem[g.addr("wStoryModeGenderOfMainCharacter")]
+    gender = g.mem[g.addr("wStoryMainGender")]
     assert scene == (1, gender + 4), f"the congratulations scene ran as {scene}"
     assert warp == (include_value("STORYLOC_ACADEMY_WING"), 0x0f), f"warped to {warp}"
     n = include_value("FLAG_AWARDS_CEREMONY_SEEN_SINGLES")
@@ -1261,8 +1250,8 @@ ceremony_skipped.tokens = lambda c: {"ApOptSkipCeremony": b"\x01"}
 @test
 def ceremony_skipped_doubles(g, c):
     scene, warp = island_open_won(g, doubles=True)
-    main = g.mem[g.addr("wStoryModeGenderOfMainCharacter")]
-    partner = g.mem[g.addr("wStoryModeGenderOfPartnerCharacter")]
+    main = g.mem[g.addr("wStoryMainGender")]
+    partner = g.mem[g.addr("wStoryPartnerGender")]
     assert scene == (1, main << 1 | (main ^ partner)), f"the congratulations scene ran as {scene}"
     assert warp == (include_value("STORYLOC_ACADEMY_WING"), 0x0f), f"warped to {warp}"
 

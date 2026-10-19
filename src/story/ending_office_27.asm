@@ -20,8 +20,8 @@ ActorScript_27_03:
 	as_set_target 14.0, 7.0
 	as_wait_move
 	as_halt
-	as_flag $01, $05, $02
-	as_set_field $06, $0010
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
+	as_set_field ACTORF_SPEED, $0010
 .L21:
 	as_target_rel -2.0, 0.0
 	as_wait_move
@@ -77,7 +77,7 @@ End12PrincipalsOfficeInitScript_27:
 	ld a, $3e ; $4c70
 	ld [wMapHeightTiles], a ; $4c72
 	call DisableLCDSafely ; $4c75
-	ld a, $00 ; $4c78
+	ld a, SCENECOPY_FROM_PLAYER ; $4c78
 	farcall CopyScrolledSceneTilemapToVram ; $4c7a
 	call EnableLCD ; $4c7d
 	ld a, [wStoryModeEntryPoint] ; $4c80
@@ -223,9 +223,7 @@ End12PrincipalsOfficeInitScript_27:
 	ld [wStoryModeExitTriggerRequest], a ; $4fec
 	ret ; $4fef
 .eq02:
-	ldh a, [hRomBank] ; $4ff0
-	ld hl, End12PrincipalsOfficeActorsAlt_27 ; $4ff2
-	farcall ScriptRespawnLocationActors ; $4ff5
+	script_respawn_actors End12PrincipalsOfficeActorsAlt_27 ; $4ff0
 	farcall BeginCutsceneScriptMode ; $4ff8
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, ANIM_TROPHY_SINGLES ; $4ffb
 	test_flag FLAG_DOUBLES ; $5002
@@ -289,8 +287,7 @@ End12PrincipalsOfficeInitScript_27:
 	call ClosePrincipalsOfficeDoor_27 ; $514f
 	script_delay 60 ; $5152
 	set_flag FLAG_ENDING_CREDITS_PENDING ; $5157
-	ld c, 4 ; $515a
-	call BeginFadeOut ; $515c
+	script_fade_out 4 ; $515a
 	call WaitFadeEnd ; $515f
 	ld a, $01 ; $5162
 	ld [wUnusedExitTriggerIdMirror], a ; $5164
@@ -367,7 +364,7 @@ End11TrainingCourtInitScript_27:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_27 ; $5283
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $528e
 .checkStoryModeMainCharacterLeftHanded:
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5299
+	ld a, [wStoryMainLeftHanded] ; $5299
 	and a ; $529c
 	jr z, .face ; $529d
 	script_get_actor_state ACTOR_PLAYER ; $529f
@@ -389,7 +386,7 @@ End11TrainingCourtInitScript_27:
 	ld a, $01 ; $52d3
 	ld e, l ; $52d5
 	ld d, h ; $52d6
-	ld hl, $0018 ; $52d7
+	ld hl, ACTORF_ANIM_RATE ; $52d7
 	add hl, de ; $52da
 	ld [hl], a ; $52db
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $52dc
@@ -444,17 +441,14 @@ End11TrainingCourtInitScript_27:
 	script_delay 20 ; $53d1
 	script_jump_velocity ACTOR_END11_TRAINING_COURT_BALLOON_EXCLAIM, -3.0 ; $53d6
 	script_jump_velocity ACTOR_PLAYER, -3.0 ; $53de
-	ld a, $00 ; $53e6
-	farcall ScriptWaitActorJumpDone ; $53e8
+	script_wait_jump ACTOR_PLAYER ; $53e6
 	script_delay 30 ; $53eb
 	ld a, $01 ; $53f0
 	ld [wUnusedExitTriggerIdMirror], a ; $53f2
 	ld [wStoryModeExitTriggerRequest], a ; $53f5
 	ret ; $53f8
 .eq02:
-	ldh a, [hRomBank] ; $53f9
-	ld hl, End11TrainingCourtActorsAlt_27 ; $53fb
-	farcall ScriptRespawnLocationActors ; $53fe
+	script_respawn_actors End11TrainingCourtActorsAlt_27 ; $53f9
 	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $5401
 	farcall BeginCutsceneScriptMode ; $540c
 	script_face ACTOR_PLAYER, FACE_UP ; $540f
@@ -484,7 +478,7 @@ End11TrainingCourtInitScript_27:
 	ld a, $04 ; $54b3
 	ld e, l ; $54b5
 	ld d, h ; $54b6
-	ld hl, $0018 ; $54b7
+	ld hl, ACTORF_ANIM_RATE ; $54b7
 	add hl, de ; $54ba
 	ld [hl], a ; $54bb
 	script_move_target ACTOR_END11_TRAINING_COURT_ALT_BOB, 31.0, 11.0 ; $54bc

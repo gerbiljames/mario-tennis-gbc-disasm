@@ -24,7 +24,7 @@ InitGameProgressScreen:
 	ld a, e ; $7293
 	ld [hl+], a ; $7294
 	ld [hl], d ; $7295
-	ld a, $05 ; $7296
+	ld a, WRAM_TEXT ; $7296
 	ld [wShadowTilemapBank], a ; $7298
 	ld a, $00 ; $729b
 	ld [wWindowTileAttr], a ; $729d
@@ -39,8 +39,7 @@ InitGameProgressScreen:
 	ret ; $72ae
 BuildGameProgressScreen:
 	push_wram_bank WRAM_TEXT ; $72af
-	ld c, 16 ; $72b8
-	call BeginFadeOut ; $72ba
+	script_fade_out 16 ; $72b8
 	call WaitFadeEnd ; $72bd
 	call DisableLCDSafely ; $72c0
 	call InitGameProgressScreen ; $72c3
@@ -428,11 +427,11 @@ LoadGameProgressScreenTiles:
 	ld c, (GameProgressScreenPalettes1 - GameProgressScreenTiles0) / 16 ; $7578
 	call QueueVRAMCopy ; $757a
 	ld hl, GameProgressScreenTiles2 ; $757d
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $7580
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $7580
 	ld c, 4 ; $7583 -- 4 of GameProgressScreenTiles2's 8 tiles
 	call QueueVRAMCopy ; $7585
 	ld hl, GameProgressScreenTiles1 ; $7588
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $758b
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $758b
 	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
 	ld hl, GameProgressScreenPalettes1 ; $7593

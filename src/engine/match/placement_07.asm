@@ -6,7 +6,7 @@ Unused_07_AdvanceLinkPlayerCount:
 	cp b ; $4cb8
 	ldh a, [hLinkTxInput] ; $4cb9
 	jr c, .maskHigh ; $4cbb
-	and $0f ; $4cbd
+	and PADF_BUTTONS ; $4cbd
 	ldh [hLinkTxInput], a ; $4cbf
 	jr .checkJoin ; $4cc1
 .maskHigh:

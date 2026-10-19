@@ -442,6 +442,7 @@ CheckCharBallContact:
 	ld [hl+], a ; $6f53
 	ld [hl], d ; $6f54
 	ld hl, wBallVelocityDepthFrac ; $6f55
+	ASSERT wBallVelocityDepth == wBallVelocityDepthFrac + 1, "this code walks from wBallVelocityDepthFrac into wBallVelocityDepth"
 	ld a, [hl] ; $6f58
 	cpl ; $6f59
 	ld [hl+], a ; $6f5a

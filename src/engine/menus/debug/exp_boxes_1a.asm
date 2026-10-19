@@ -11,7 +11,7 @@ Unused_1a_ExpScreenDrawTask:
 	jr nz, .checkStoryModeMainCharacterOverworldSprite ; $478b
 	ld de, vTiles0 + VRAM_BANK1 ; $478d
 .checkStoryModeMainCharacterOverworldSprite:
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4790
+	ld a, [wStoryMainChar] ; $4790
 	rlca ; $4793
 	ld_hl_indexed ExpScreenDrawTaskTable ; $4794
 	ld a, [hl+] ; $479b
@@ -94,24 +94,24 @@ Unused_1a_LoadExpScreenGfx:
 	ld_bg_pals de, 0, 8 ; $487b
 	call LoadPalettesMasterOnly ; $487e
 	wram_bank WRAM_STAGING ; $4881
-	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $4887
+	ld a, [wStoryMainPalette] ; $4887
 	ld d, $0e ; $488a
 	farcall LoadIndexedPalette_18 ; $488c
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $488f
+	ld a, [wStoryMainChar] ; $488f
 	ld b, $00 ; $4892
 	wram_bank WRAM_STAGING ; $4894
 	ld hl, ExpScreenGfx6 ; $489a
 	ld de, wDecompBuffer ; $489d
 	call DecompressData ; $48a0
 	ld hl, wDecompBuffer ; $48a3
-	ld de, vTiles1 + $40 * TILE_SIZE + VRAM_BANK1 ; $48a6
+	ld de, vTiles1 tile $40 + VRAM_BANK1 ; $48a6
 	ld c, ExpScreenGfx6_SIZE / 16 ; $48a9
 	call QueueVRAMCopy ; $48ab
 	ld hl, ExpScreenGfx7 ; $48ae
 	ld de, wDecompBuffer ; $48b1
 	call DecompressData ; $48b4
 	ld hl, wDecompBuffer ; $48b7
-	ld de, vTiles1 + $44 * TILE_SIZE + VRAM_BANK1 ; $48ba
+	ld de, vTiles1 tile $44 + VRAM_BANK1 ; $48ba
 	ld c, ExpScreenGfx7_SIZE / 16 ; $48bd
 	call QueueVRAMCopy ; $48bf
 	ld hl, ExpScreenGfxPalettes2 ; $48c2
@@ -125,7 +125,7 @@ Unused_1a_LoadExpScreenGfx:
 	ld de, wDecompBuffer ; $48d4
 	call DecompressData ; $48d7
 	ld hl, wDecompBuffer ; $48da
-	ld de, vTiles1 + $48 * TILE_SIZE + VRAM_BANK1 ; $48dd
+	ld de, vTiles1 tile $48 + VRAM_BANK1 ; $48dd
 	ld c, ExpScreenGfx5_SIZE / 16 ; $48e0
 	call QueueVRAMCopy ; $48e2
 	ld hl, ExpScreenGfxPalettes1 ; $48e5
@@ -139,10 +139,10 @@ Unused_1a_LoadExpScreenGfx:
 	call LoadPalettesMasterOnly ; $48f9
 	wram_bank WRAM_STAGING ; $48fc
 	ld hl, ExpScreenGfx8 ; $4902
-	ld de, wTextTileBuffer + 96 * TILE_SIZE ; $4905
+	ld de, wTextTileBuffer tile 96 ; $4905
 	call DecompressData ; $4908
-	ld hl, wTextTileBuffer + 96 * TILE_SIZE ; $490b
-	ld de, vTiles1 + $4a * TILE_SIZE + VRAM_BANK1 ; $490e
+	ld hl, wTextTileBuffer tile 96 ; $490b
+	ld de, vTiles1 tile $4a + VRAM_BANK1 ; $490e
 	ld c, 20 ; $4911
 	call QueueVRAMCopy ; $4913
 	wram_bank WRAM_STAGING ; $4916
@@ -151,7 +151,7 @@ Unused_1a_LoadExpScreenGfx:
 	ld c, (ExpScreenGfx3 - ExpScreenGfx2) / 16 ; $4922
 	call CopyMemoryFast ; $4924
 	ld hl, ExpScreenGfx1 ; $4927
-	ld de, wDecompBuffer + 64 * TILE_SIZE ; $492a
+	ld de, wDecompBuffer tile 64 ; $492a
 	ld c, (ExpScreenGfx2 - ExpScreenGfx1) / 16 ; $492d
 	call CopyMemoryFast ; $492f
 	ret ; $4932
@@ -162,7 +162,7 @@ Unused_1a_LoadExpScreenGfx:
 	ld c, (ExpScreenGfxPalettes0 - ExpScreenGfx4) / 16 ; $493f
 	call CopyMemoryFast ; $4941
 	ld hl, ExpScreenGfx3 ; $4944
-	ld de, wDecompBuffer + 64 * TILE_SIZE ; $4947
+	ld de, wDecompBuffer tile 64 ; $4947
 	ld c, (ExpScreenGfx4 - ExpScreenGfx3) / 16 ; $494a
 	call CopyMemoryFast ; $494c
 	ret ; $494f

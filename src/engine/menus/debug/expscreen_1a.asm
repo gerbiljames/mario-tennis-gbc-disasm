@@ -6,7 +6,7 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	call Unused_1a_ClearExpScreenNameBox ; $4b23
 	wram_bank WRAM_STAGING ; $4b26
 	push af ; $4b2c
-	ld hl, wStoryModeNameOfMainCharacter ; $4b2d
+	ld hl, wStoryMainName ; $4b2d
 	ld a, [wStoryCharacterSlot] ; $4b30
 	or a ; $4b33
 	jr z, .zero ; $4b34
@@ -19,10 +19,10 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	adc $00 ; $4b3d
 	ld h, a ; $4b3f
 	pop af ; $4b40
-	ld de, wDecompBuffer + 76 * TILE_SIZE + 7 ; $4b41
+	ld de, wDecompBuffer tile 76 + 7 ; $4b41
 	call Unused_1a_CopyNameToTileBuffer ; $4b44
 	push af ; $4b47
-	ld hl, wStoryModeNameOfMainCharacter ; $4b48
+	ld hl, wStoryMainName ; $4b48
 	ld a, [wStoryCharacterSlot] ; $4b4b
 	or a ; $4b4e
 	jr z, .zero2 ; $4b4f
@@ -39,7 +39,7 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	ld l, a ; $4b5d
 	ld h, $00 ; $4b5e
 	farcall PushTextArgNumber ; $4b60
-	ld de, wDecompBuffer + 80 * TILE_SIZE + 7 ; $4b63
+	ld de, wDecompBuffer tile 80 + 7 ; $4b63
 	ld hl, Text_31_237 ; $4b66
 	ld c, $20 ; $4b69
 	farcall RenderProportionalTextAt ; $4b6b

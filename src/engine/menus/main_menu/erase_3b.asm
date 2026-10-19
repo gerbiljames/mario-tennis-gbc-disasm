@@ -26,7 +26,7 @@ CheckN64DataPresent:
 	ret ; $6c7e
 RunEraseSavedDataSelect:
 	ld hl, rIE ; $6c7f
-	res 2, [hl] ; $6c82
+	res B_IE_TIMER, [hl] ; $6c82
 	sound BGM_MENU ; $6c84
 	call BuildSaveSlotSummaries ; $6c86
 	call LoadEraseSavedDataGfx ; $6c89
@@ -59,7 +59,7 @@ RunEraseSavedDataSelect:
 	ld a, [wMenuInputPressed] ; $6cce
 	bit PADB_A, a ; $6cd1
 	jr nz, .getMenuCursorCellIndex ; $6cd3
-	bit 1, a ; $6cd5
+	bit PADB_B, a ; $6cd5
 	jr nz, .playSfx3 ; $6cd7
 	jr .loop ; $6cd9
 .getMenuCursorCellIndex:
@@ -90,7 +90,7 @@ RunEraseSavedDataSelect:
 	sound SFX_MENU_SELECT ; $6d00
 	call ClearFrameTasks ; $6d02
 	ld hl, rIE ; $6d05
-	set 2, [hl] ; $6d08
+	set B_IE_TIMER, [hl] ; $6d08
 	ld b, $01 ; $6d0a
 	call SavedDataPickerSlideOut ; $6d0c
 	ld a, MENUSLIDE_FORWARD ; $6d0f
@@ -102,7 +102,7 @@ RunEraseSavedDataSelect:
 	sound SFX_MENU_CANCEL ; $6d1a
 	call ClearFrameTasks ; $6d1c
 	ld hl, rIE ; $6d1f
-	set 2, [hl] ; $6d22
+	set B_IE_TIMER, [hl] ; $6d22
 	ld b, $00 ; $6d24
 	call SavedDataPickerSlideOut ; $6d26
 	ld a, MENUSLIDE_BACK ; $6d29
@@ -116,7 +116,7 @@ LoadEraseSavedDataGfx:
 	ld [wCurrentStorySlot], a ; $6d42
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $6d45
 	farcall LoadCharMugshotToBuffer ; $6d48
-	ld de, vTiles2 + $68 * TILE_SIZE + VRAM_BANK1 ; $6d4b
+	ld de, vTiles2 tile $68 + VRAM_BANK1 ; $6d4b
 	farcall CopyMugshotBufferToVram ; $6d4e
 	call AdvanceFrame ; $6d51
 	wram_bank WRAM_SCREEN ; $6d54
@@ -124,7 +124,7 @@ LoadEraseSavedDataGfx:
 	ld [wCurrentStorySlot], a ; $6d5c
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $6d5f
 	farcall LoadCharMugshotToBuffer ; $6d62
-	ld de, vTiles2 + $71 * TILE_SIZE + VRAM_BANK1 ; $6d65
+	ld de, vTiles2 tile $71 + VRAM_BANK1 ; $6d65
 	farcall CopyMugshotBufferToVram ; $6d68
 	call AdvanceFrame ; $6d6b
 	wram_bank WRAM_SCREEN ; $6d6e
@@ -132,7 +132,7 @@ LoadEraseSavedDataGfx:
 	ld [wCurrentStorySlot], a ; $6d76
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $6d79
 	farcall LoadCharMugshotToBuffer ; $6d7c
-	ld de, vTiles1 + $70 * TILE_SIZE + VRAM_BANK1 ; $6d7f
+	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $6d7f
 	farcall CopyMugshotBufferToVram ; $6d82
 	call AdvanceFrame ; $6d85
 	wram_bank WRAM_STAGING ; $6d88
@@ -148,7 +148,7 @@ LoadEraseSavedDataGfx:
 	ld de, wDecompBuffer ; $6da8
 	call DecompressDataFromBank ; $6dab
 	ld hl, wDecompBuffer ; $6dae
-	ld de, vTiles1 + $10 * TILE_SIZE + VRAM_BANK1 ; $6db1
+	ld de, vTiles1 tile $10 + VRAM_BANK1 ; $6db1
 	ld c, 16 ; $6db4
 	call QueueVRAMCopy ; $6db6
 	call AdvanceFrame ; $6db9
@@ -159,27 +159,27 @@ LoadEraseSavedDataGfx:
 	call AdvanceFrame ; $6dc6
 	ld b, TILEBLOCK_EraseSavedDataGfx1 ; $6dc9
 	ld c, EraseSavedDataGfx1_SIZE / 16 ; $6dcb
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6dcd
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6dcd
 	farcall LoadCompressedTileBlock ; $6dd0
 	call AdvanceFrame ; $6dd3
 	ld b, TILEBLOCK_EraseSavedDataGfx2 ; $6dd6
 	ld c, EraseSavedDataGfx2_SIZE / 16 ; $6dd8
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $6dda
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6dda
 	farcall LoadCompressedTileBlock ; $6ddd
 	call AdvanceFrame ; $6de0
 	ld b, TILEBLOCK_EraseSavedDataGfx3 ; $6de3
 	ld c, EraseSavedDataGfx3_SIZE / 16 ; $6de5
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6de7
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6de7
 	farcall LoadCompressedTileBlock ; $6dea
 	call AdvanceFrame ; $6ded
 	ld b, TILEBLOCK_EraseSavedDataGfx4 ; $6df0
 	ld c, EraseSavedDataGfx4_SIZE / 16 ; $6df2
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $6df4
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $6df4
 	farcall LoadCompressedTileBlock ; $6df7
 	call AdvanceFrame ; $6dfa
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $6dfd
 	ld c, SharedMenuGfx27_SIZE / 16 ; $6dff
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $6e01
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $6e01
 	farcall LoadCompressedTileBlock ; $6e04
 	call AdvanceFrame ; $6e07
 	ld b, TILEBLOCK_SharedMenuGfx65 ; $6e0a
@@ -261,11 +261,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuInputPressed] ; $6e8d
 	bit PADB_RIGHT, a ; $6e90
 	jr nz, .checkMenuCursorX ; $6e92
-	bit 5, a ; $6e94
+	bit PADB_LEFT, a ; $6e94
 	jr nz, .checkMenuCursorX2 ; $6e96
-	bit 6, a ; $6e98
+	bit PADB_UP, a ; $6e98
 	jr nz, .checkMenuCursorX3 ; $6e9a
-	bit 7, a ; $6e9c
+	bit PADB_DOWN, a ; $6e9c
 	jr nz, .checkMenuCursorX3 ; $6e9e
 	xor a ; $6ea0
 	jp .done ; $6ea1
@@ -322,11 +322,11 @@ MoveSavedDataPickerCursor:
 	ld a, [wMenuInputPressed] ; $6ef2
 	bit PADB_RIGHT, a ; $6ef5
 	jr nz, .checkMenuCursorX4 ; $6ef7
-	bit 5, a ; $6ef9
+	bit PADB_LEFT, a ; $6ef9
 	jr nz, .checkMenuCursorX5 ; $6efb
-	bit 6, a ; $6efd
+	bit PADB_UP, a ; $6efd
 	jr nz, .checkMenuCursorX6 ; $6eff
-	bit 7, a ; $6f01
+	bit PADB_DOWN, a ; $6f01
 	jr nz, .checkMenuCursorX6 ; $6f03
 	xor a ; $6f05
 	jr .done ; $6f06

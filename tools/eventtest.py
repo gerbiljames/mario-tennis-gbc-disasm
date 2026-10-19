@@ -123,7 +123,7 @@ def code_labels():
             m = re.match(r"^([A-Za-z_]\w*):", line)
             if not m:
                 continue
-            nxt = next((x for x in lines[i + 1:i + 6] if x.strip() and not x.strip().startswith(";")), "")
+            nxt = next((x for x in lines[i + 1:i + 6] if x.strip() and not x.strip().startswith((";", "ASSERT"))), "")
             op = re.match(r"^\t(\w+)", nxt)
             # PyBoy can wedge when the single step past one breakpoint lands
             # on another, so a routine that opens by jumping is not hooked.

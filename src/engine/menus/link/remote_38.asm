@@ -132,7 +132,7 @@ CheckLinkSelectionComplete:
 	ld a, [wCharSelectRemoteSlot] ; $66f9
 	cp $02 ; $66fc
 	jr nz, .checkSlots ; $66fe
-	ld a, $01 ; $6700
+	ld a, CHARSELECT_DONE ; $6700
 	ld [wCharSelectExitCode], a ; $6702
 .checkSlots:
 	ld a, [wCharSelectSlot] ; $6705
@@ -143,21 +143,21 @@ CheckLinkSelectionComplete:
 	jr z, .allChosen ; $6711
 	jr .done ; $6713
 .allChosen:
-	ld a, $02 ; $6715
+	ld a, CHARSELECT_CANCELLED ; $6715
 	ld [wCharSelectExitCode], a ; $6717
 .done:
 	pop_wram_bank ; $671a
 	ret ; $671f
 HandleLinkGridButtons:
 	ld a, [wMenuInputPressed] ; $6720
-	and $f0 ; $6723
+	and PADF_DPAD ; $6723
 	ret nz ; $6725
 	ld a, [wMenuInputPressed] ; $6726
 	bit PADB_A, a ; $6729
 	jr nz, .confirm ; $672b
-	bit 1, a ; $672d
+	bit PADB_B, a ; $672d
 	jr nz, .cancel ; $672f
-	bit 3, a ; $6731
+	bit PADB_START, a ; $6731
 	jr nz, .toggleHandedness ; $6733
 	ret ; $6735
 .confirm:
@@ -184,14 +184,14 @@ HandleLinkGridButtons:
 	jr z, .done ; $6752
 	sound SFX_MENU_MOVE ; $6754
 	ld a, [wCharGridHandedness] ; $6756
-	cp $02 ; $6759
+	cp HAND_UNCHOSEN ; $6759
 	jr z, .starChar ; $675b
 	xor $01 ; $675d
 	ld [wCharGridHandedness], a ; $675f
 	call RefreshCharInfoPanel ; $6762
 	ret ; $6765
 .starChar:
-	ld a, $01 ; $6766
+	ld a, HAND_LEFT ; $6766
 	ld [wCharGridHandedness], a ; $6768
 	call RefreshCharInfoPanel ; $676b
 .done:
@@ -236,7 +236,7 @@ ConfirmLinkGridSelection:
 	or a ; $67b6
 	jr z, .emptyCell ; $67b7
 	ld a, [wCharGridHandedness] ; $67b9
-	cp $01 ; $67bc
+	cp HAND_LEFT ; $67bc
 	jr nz, .emptyCell ; $67be
 	ld a, [wCharSelectSlot] ; $67c0
 	ld hl, wCharSelectSlotLeftHanded ; $67c3
@@ -522,12 +522,14 @@ GetRemoteSlotBoxAddress:
 ; $0000 for slots that have no box.
 RemoteSlotBoxAddrPtrs_38:
 	; $69c1, 12 bytes (records:2)
+	table_width 2
 	dw RemoteSlotBoxAddrs0 ; record 0
 	dw RemoteSlotBoxAddrs0 ; record 1
 	dw RemoteSlotBoxAddrs1 ; record 2
 	dw RemoteSlotBoxAddrs0 ; record 3
 	dw RemoteSlotBoxAddrs3 ; record 4
 	dw RemoteSlotBoxAddrs2 ; record 5
+	assert_table_length NUM_CHARSELECTMODES
 RemoteSlotBoxAddrs0:
 	; $69cd, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 0

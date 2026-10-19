@@ -4,9 +4,9 @@ ApplyStatGapProgressFlag:
 	jr nz, .isWonSeniorSinglesRank1 ; $6c65
 	ret ; $6c67
 .isWonSeniorSinglesRank1:
-	ld a, [wStoryMainCharPowerLevel] ; $6c68
+	ld a, [wStoryMainPowerLevel] ; $6c68
 	ld b, a ; $6c6b
-	ld a, [wStoryMainCharSpinLevel] ; $6c6c
+	ld a, [wStoryMainSpinLevel] ; $6c6c
 	sub b ; $6c6f
 	bit 7, a ; $6c70
 	ret nz ; $6c72

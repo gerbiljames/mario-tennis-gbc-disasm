@@ -3,6 +3,7 @@ RunMatchPlayLoop:
 	cp GAMEMODE_ISLAND_OPEN ; $4717
 	jr z, .markChangeEnds ; $4719
 	ld a, [wMatchContext] ; $471b
+	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	and a ; $471e
 	jr nz, .setLoop ; $471f
 .markChangeEnds:
@@ -14,6 +15,7 @@ RunMatchPlayLoop:
 	and MATCHABORT_MATCH ; $472c
 	jr nz, .done ; $472e
 	ld a, [wMatchWinLoseFlag] ; $4730
+	ASSERT WINLOSE_NONE == 0
 	and a ; $4733
 	jr z, .setLoop ; $4734
 .done:

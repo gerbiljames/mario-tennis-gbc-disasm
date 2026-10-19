@@ -50,7 +50,7 @@ Unused_1a_RunDebugCharViewer:
 	ld [wCameraX + 1], a ; $67ec
 	ld [wCameraY], a ; $67ef
 	ld [wCameraY + 1], a ; $67f2
-	ld a, $90 ; $67f5
+	ld a, SCREEN_HEIGHT_PX ; $67f5
 	ldh [rWY], a ; $67f7
 	call ClearSpriteQueue ; $67f9
 	farcall InitActorEngine ; $67fc
@@ -58,8 +58,7 @@ Unused_1a_RunDebugCharViewer:
 	call Unused_1a_RunCharViewerSelectGrid ; $6802
 	cp $ff ; $6805
 	jr z, .eqff ; $6807
-	ld c, 64 ; $6809
-	call BeginFadeOut ; $680b
+	script_fade_out 64 ; $6809
 	call WaitFadeEnd ; $680e
 	call DisableLCDSafely ; $6811
 	call Unused_1a_InitCharViewerState ; $6814
@@ -74,7 +73,7 @@ Unused_1a_RunDebugCharViewer:
 	call AdvanceFrame ; $682e
 	wram_bank WRAM_SCENE ; $6831
 	ld a, [wCharViewerCharId] ; $6837
-	ld de, vTiles0 + $70 * TILE_SIZE ; $683a
+	ld de, vTiles0 tile $70 ; $683a
 	farcall LoadOnCourtCharTilesA ; $683d
 	call AdvanceFrame ; $6840
 	script_fade_in 16 ; $6843
@@ -83,8 +82,7 @@ Unused_1a_RunDebugCharViewer:
 	ld hl, Unused_1a_DrawCharViewerCursorSprite ; $684e
 	call UnregisterFrameTask ; $6851
 .eqff:
-	ld c, 16 ; $6854
-	call BeginFadeOut ; $6856
+	script_fade_out 16 ; $6854
 	call WaitFadeEnd ; $6859
 	call DisableLCDSafely ; $685c
 	farcall LoadMenuFontGfx ; $685f
@@ -138,19 +136,18 @@ Unused_1a_RunCharViewerSelectGrid:
 	ldh a, [hInputPressed] ; $68f1
 	bit PADB_UP, a ; $68f3
 	jr nz, .checkDebugCharViewerIndex ; $68f5
-	bit 7, a ; $68f7
+	bit PADB_DOWN, a ; $68f7
 	jr nz, .checkDebugCharViewerIndex2 ; $68f9
-	bit 5, a ; $68fb
+	bit PADB_LEFT, a ; $68fb
 	jr nz, .checkDebugCharViewerIndex3 ; $68fd
-	bit 4, a ; $68ff
+	bit PADB_RIGHT, a ; $68ff
 	jr nz, .checkDebugCharViewerIndex5 ; $6901
-	bit 0, a ; $6903
+	bit PADB_A, a ; $6903
 	jp nz, .bit0Set ; $6905
-	bit 1, a ; $6908
+	bit PADB_B, a ; $6908
 	jp nz, .bit1Set ; $690a
 	jr .loop ; $690d
-	ld c, 16 ; $690f
-	call BeginFadeOut ; $6911
+	script_fade_out 16 ; $690f
 	call WaitFadeEnd ; $6914
 	call DisableLCDSafely ; $6917
 	ret ; $691a

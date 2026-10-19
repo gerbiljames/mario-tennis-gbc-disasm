@@ -16,40 +16,40 @@ def SRAM_BASE           equ $a000
 def SRAM_BANK_SIZE      equ $2000
 def SAVE_HEADER_CHUNK   equ $200
 def SAVEDIR_ENTRY_SIZE  equ 16
-def SAVEDIR_VALID       equ 0 ; 1 = in use
-def SAVEDIR_BANK        equ 1 ; SRAM bank of the data
-def SAVEDIR_OFFSET      equ 2 ; word, from SRAM_BASE
+	const_def
+	const SAVEDIR_VALID  ; $00 1 = in use
+	const SAVEDIR_BANK   ; $01 SRAM bank of the data
+	const SAVEDIR_OFFSET ; $02 word, from SRAM_BASE
 def SAVEDIR_LENGTH      equ 4 ; word
 def SAVEDIR_CHECKSUM    equ 6 ; word, byte-sum of the data
 def SAVEDIR_TAG         equ 8 ; word, high byte first
 ; Block ids (WriteSaveBlock/ReadSaveBlock and friends take one in b). The
 ; bank-1 backup of block n (n <= $0a) is n + SAVEBLOCK_BACKUP.
-def SAVEBLOCK_SLOT0             equ $00 ; story slot primary: image of $c800-$caff
-def SAVEBLOCK_SLOT0_EXTRA       equ $01 ; story slot secondary block
-def SAVEBLOCK_SLOT1             equ $02
-def SAVEBLOCK_SLOT1_EXTRA       equ $03
-def SAVEBLOCK_SLOT2             equ $04
-def SAVEBLOCK_SLOT2_EXTRA       equ $05
-def SAVEBLOCK_PRESERVED         equ $06 ; kept across a full save wipe
-def SAVEBLOCK_SPARE7            equ $07 ; $07-$0a: small records only unreachable code touches
-def SAVEBLOCK_SPARE8            equ $08
-def SAVEBLOCK_SPARE9            equ $09
-def SAVEBLOCK_SPARE10           equ $0a
-def SAVEBLOCK_N64_RECORDS       equ $0b ; Transfer Pak records and the unlock flags
+	const_def
+	const SAVEBLOCK_SLOT0       ; $00 story slot primary: image of $c800-$caff
+	const SAVEBLOCK_SLOT0_EXTRA ; $01 story slot secondary block
+	const SAVEBLOCK_SLOT1       ; $02
+	const SAVEBLOCK_SLOT1_EXTRA ; $03
+	const SAVEBLOCK_SLOT2       ; $04
+	const SAVEBLOCK_SLOT2_EXTRA ; $05
+	const SAVEBLOCK_PRESERVED   ; $06 kept across a full save wipe
+	const SAVEBLOCK_SPARE7      ; $07 $07-$0a: small records only unreachable code touches
+	const SAVEBLOCK_SPARE8      ; $08
+	const SAVEBLOCK_SPARE9      ; $09
+	const SAVEBLOCK_SPARE10     ; $0a
+	const SAVEBLOCK_N64_RECORDS ; $0b Transfer Pak records and the unlock flags
 def SAVEBLOCK_BACKUP            equ $1b
-def SAVEBLOCK_EXHIBITION        equ $36 ; save-and-quit resume image of wStorySlotData
-def SAVEBLOCK_EXHIBITION_BACKUP equ $37
-def SAVEBLOCK_MINIGAME_RECORDS  equ $38 ; + story slot; backups at + 3
+	const_def $36
+	const SAVEBLOCK_EXHIBITION        ; $36 save-and-quit resume image of wStorySlotData
+	const SAVEBLOCK_EXHIBITION_BACKUP ; $37
+	const SAVEBLOCK_MINIGAME_RECORDS  ; $38 + story slot; backups at + 3
 def SAVEBLOCK_STAR_GRID         equ $3e ; star-character exhibition victory grid
 
 ; One VRAM bank: the three tile blocks and both maps.
 def VRAM_SIZE equ $2000
 
-; --- Character records ---
-; A character is a $40-byte record: the story pair at $c900/$c940 (main,
-; partner), their saved-slot mirror at $c800/$c840, and the four match
-; records at $ca00-$caff. The pairs are copied together, two records at once.
-def CHAR_RECORD_SIZE equ $40
+; --- Match statistics (match_stats in ram/wram/wram0_records.asm) ---
+def MATCH_STATS_STRIDE equ 8 ; wCharacter1ServiceAces + character index * 8
 
 ; --- VRAM bank in a copy destination ---
 ; QueueVRAMCopy takes its destination in de and carries the VRAM bank in bit 13
@@ -65,7 +65,7 @@ def SLOT_TABLE_PAGE equ HIGH($4000)
 
 ; --- VRAM regions ---
 ; The three 128-tile blocks and the two background maps, so a copy destination
-; reads as a place: `vTiles0 + $10 * TILE_SIZE` is tile $10 of the sprite
+; reads as a place: `vTiles0 tile $10` is tile $10 of the sprite
 ; block, `vBGMap0 + 15 * TILEMAP_WIDTH + 4` is map cell (4, 15). The BG uses
 ; $8800 addressing (ids $80-$ff in vTiles1, $00-$7f in vTiles2); objects use
 ; $8000 addressing (ids $00-$7f in vTiles0, $80-$ff in vTiles1).
@@ -85,17 +85,19 @@ def NO_BOX equ $0000
 ; Banks 1-3 and 5-7 each have one main owner; 4-7 also hold the four
 ; on-court character structs at $df00, one per wCharIndex, which the match
 ; engine selects with WRAM_CHARn. Same numbers, different use.
-def WRAM_STAGING      equ 1 ; VRAM staging: wDecompBuffer, which every screen decompresses into
-def WRAM_COURT_PLANES equ 2 ; the court's tile and attribute planes; the overworld scroll buffer's attribute half; the char-data screen's attribute pages
-def WRAM_SCREEN       equ 3 ; wShadowTilemap, the full-screen UIs' tile plane; the scroll buffer's tile half; the char-data screen's tile pages
-def WRAM_ACTORS       equ 4 ; overworld actors and the actor engine; minigame targets
-def WRAM_TEXT         equ 5 ; the text and window engine and wWindowShadowTilemap
-def WRAM_SCENE        equ 6 ; the story scene's collision and behaviour maps, scene loading, and the per-screen scratch overlays
-def WRAM_SOUND        equ 7 ; the sound driver; glyph tiles and save-block staging
-def WRAM_CHAR0        equ 4 ; on-court character 0's struct (wCharIndex 0)
-def WRAM_CHAR1        equ 5
-def WRAM_CHAR2        equ 6
-def WRAM_CHAR3        equ 7
+	const_def $01
+	const WRAM_STAGING      ; $01 VRAM staging: wDecompBuffer, which every screen decompresses into
+	const WRAM_COURT_PLANES ; $02 the court's tile and attribute planes; the overworld scroll buffer's attribute half; the char-data screen's attribute pages
+	const WRAM_SCREEN       ; $03 wShadowTilemap, the full-screen UIs' tile plane; the scroll buffer's tile half; the char-data screen's tile pages
+	const WRAM_ACTORS       ; $04 overworld actors and the actor engine; minigame targets
+	const WRAM_TEXT         ; $05 the text and window engine and wWindowShadowTilemap
+	const WRAM_SCENE        ; $06 the story scene's collision and behaviour maps, scene loading, and the per-screen scratch overlays
+	const WRAM_SOUND        ; $07 the sound driver; glyph tiles and save-block staging
+	const_def $04
+	const WRAM_CHAR0 ; $04 on-court character 0's struct (wCharIndex 0)
+	const WRAM_CHAR1 ; $05
+	const WRAM_CHAR2 ; $06
+	const WRAM_CHAR3 ; $07
 
 ; --- Background tile attribute (wWindowTileAttr) ---
 ; A CGB background attribute byte, stamped into the attribute plane of a text

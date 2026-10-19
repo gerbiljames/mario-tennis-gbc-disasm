@@ -1,21 +1,23 @@
 ; --- Match object slot fields ---
 ; Offsets into one 16-byte wObjSlot record (ram/wram/ has the full
 ; description), which the bank $09 object engine reaches with the slot in bc.
-def OBJSLOT_SIZE            equ $10
-def OBJSLOT_ID              equ $00 ; $ff = free
-def OBJSLOT_FLAGS           equ $01 ; bit 0 draw this frame; LoadObjTemplate_09 sets bit 7
-def OBJSLOT_SPRITE_TEMPLATE equ $02 ; word
-def OBJSLOT_OAM_ATTR        equ $04
-def OBJSLOT_TILE            equ $05
-def OBJSLOT_X               equ $06
-def OBJSLOT_Y               equ $07
-def OBJSLOT_HANDLER         equ $08 ; word
-def OBJSLOT_CURVE_X         equ $0a
-def OBJSLOT_CURVE_Y         equ $0b
-def OBJSLOT_STATE           equ $0c ; the handler's RST00 sub-state
-def OBJSLOT_CURVE_STEP      equ $0d
-def OBJSLOT_CURVE           equ $0e ; MoveCurveTable_09 index
-def OBJSLOT_ANCHOR          equ $0f ; 1 = relative to the serving character
+	rsreset
+def OBJSLOT_ID              rb ; $00 $ff = free
+def OBJSLOT_FLAGS           rb ; $01 bit 0 draw this frame; LoadObjTemplate_09 sets bit 7
+def OBJSLOT_SPRITE_TEMPLATE rw ; $02
+def OBJSLOT_OAM_ATTR        rb ; $04
+def OBJSLOT_TILE            rb ; $05
+def OBJSLOT_X               rb ; $06
+def OBJSLOT_Y               rb ; $07
+def OBJSLOT_HANDLER         rw ; $08
+def OBJSLOT_CURVE_X         rb ; $0a
+def OBJSLOT_CURVE_Y         rb ; $0b
+def OBJSLOT_STATE           rb ; $0c the handler's RST00 sub-state
+def OBJSLOT_CURVE_STEP      rb ; $0d
+def OBJSLOT_CURVE           rb ; $0e MoveCurveTable_09 index
+def OBJSLOT_ANCHOR          rb ; $0f 1 = relative to the serving character
+def OBJSLOT_SIZE equ _RS
+	ASSERT OBJSLOT_SIZE == $10
 
 ; --- Shot types (wCurrentShotType) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
@@ -25,52 +27,58 @@ def OBJSLOT_ANCHOR          equ $0f ; 1 = relative to the serving character
 ; (wCharBallReachFlags bit 4) the ground strokes are swapped for their "reach"
 ; variants ($06/$07/$08, dispatched to bank $2c's ProjectShotPlacement0-2).
 ; Serves by first button: A -> topspin, B -> slice, A+B -> flat.
-def SHOTTYPE_TOPSPIN            equ $00 ; A
-def SHOTTYPE_POWER_TOPSPIN      equ $01 ; A -> A
-def SHOTTYPE_SLICE              equ $02 ; B
-def SHOTTYPE_POWER_SLICE        equ $03 ; B -> B
-def SHOTTYPE_NEUTRAL            equ $04 ; no valid button combo (table fallback)
-def SHOTTYPE_REACH              equ $05 ; reach attempted, ball not in smash range
-def SHOTTYPE_REACH_POWER_TOPSPIN equ $06 ; A -> A, ball smashable
-def SHOTTYPE_REACH_POWER_SLICE equ $07 ; B -> B, ball smashable
-def SHOTTYPE_REACH_BASIC       equ $08 ; A / B, ball smashable
-def SHOTTYPE_SMASH             equ $09 ; A + B
-def SHOTTYPE_LOB               equ $0a ; A -> B
-def SHOTTYPE_DROP              equ $0b ; B -> A
-def SHOTTYPE_SERVE_TOPSPIN     equ $0c ; serve, A
-def SHOTTYPE_SERVE_SLICE       equ $0d ; serve, B
-def SHOTTYPE_SERVE_FLAT        equ $0e ; serve, A+B
+	const_def
+	const SHOTTYPE_TOPSPIN             ; $00 A
+	const SHOTTYPE_POWER_TOPSPIN       ; $01 A -> A
+	const SHOTTYPE_SLICE               ; $02 B
+	const SHOTTYPE_POWER_SLICE         ; $03 B -> B
+	const SHOTTYPE_NEUTRAL             ; $04 no valid button combo (table fallback)
+	const SHOTTYPE_REACH               ; $05 reach attempted, ball not in smash range
+	const SHOTTYPE_REACH_POWER_TOPSPIN ; $06 A -> A, ball smashable
+	const SHOTTYPE_REACH_POWER_SLICE   ; $07 B -> B, ball smashable
+	const SHOTTYPE_REACH_BASIC         ; $08 A / B, ball smashable
+	const SHOTTYPE_SMASH               ; $09 A + B
+	const SHOTTYPE_LOB                 ; $0a A -> B
+	const SHOTTYPE_DROP                ; $0b B -> A
+	const SHOTTYPE_SERVE_TOPSPIN       ; $0c serve, A
+	const SHOTTYPE_SERVE_SLICE         ; $0d serve, B
+	const SHOTTYPE_SERVE_FLAT          ; $0e serve, A+B
+def NUM_SHOTTYPES equ const_value
 
 ; AI shot habits (CharGroupTable_02, one 16-entry row per serve style;
 ; AiPickShotButtons draws one by AdvanceMatchRng & $0f): the stroke's two
 ; button presses as nibbles, first press high -- 1 = A, 2 = B, 3 = A+B.
-def AISHOT_TOPSPIN             equ $10 ; A
-def AISHOT_POWER_TOPSPIN       equ $11 ; A -> A
-def AISHOT_LOB                 equ $12 ; A -> B
-def AISHOT_SLICE               equ $20 ; B
-def AISHOT_DROP                equ $21 ; B -> A
-def AISHOT_POWER_SLICE         equ $22 ; B -> B
+	const_def $10
+	const AISHOT_TOPSPIN       ; $10 A
+	const AISHOT_POWER_TOPSPIN ; $11 A -> A
+	const AISHOT_LOB           ; $12 A -> B
+	const_def $20
+	const AISHOT_SLICE       ; $20 B
+	const AISHOT_DROP        ; $21 B -> A
+	const AISHOT_POWER_SLICE ; $22 B -> B
 def AISHOT_NEUTRAL             equ $30 ; A+B, a smash when the ball is in range
 
 ; --- Point outcome (wPointOutcome) — MATCH context ---
 ; ResolvePointOutcome dispatches `rst Rst00` on wPointOutcome: 1-5 ->
 ; ShowCourtBanner(wPointOutcome) (banner id == the value), 6 -> the winner
 ; banner ShowCourtBanner(wPointWinnerShotType + $17), 7/8 -> text popups.
-def POINTOUTCOME_FAULT          equ 1
-def POINTOUTCOME_DOUBLE_FAULT   equ 2
-def POINTOUTCOME_LET            equ 3
-def POINTOUTCOME_NET            equ 4
-def POINTOUTCOME_OUT            equ 5
-def POINTOUTCOME_WINNER         equ 6
+	const_def $01
+	const POINTOUTCOME_FAULT        ; $01
+	const POINTOUTCOME_DOUBLE_FAULT ; $02
+	const POINTOUTCOME_LET          ; $03
+	const POINTOUTCOME_NET          ; $04
+	const POINTOUTCOME_OUT          ; $05
+	const POINTOUTCOME_WINNER       ; $06
 
 ; --- Winning-shot type (wPointWinnerShotType) ---
 ; Set by the Record*Stat functions; the winner court banner is
 ; ShowCourtBanner(value + $17) -> banner ids 24-28.
-def POINTWINNER_SERVICE_ACE     equ 1
-def POINTWINNER_RETURN_ACE      equ 2
-def POINTWINNER_SMASH_ACE       equ 3
-def POINTWINNER_LOB             equ 4
-def POINTWINNER_DROP_SHOT       equ 5
+	const_def $01
+	const POINTWINNER_SERVICE_ACE ; $01
+	const POINTWINNER_RETURN_ACE  ; $02
+	const POINTWINNER_SMASH_ACE   ; $03
+	const POINTWINNER_LOB         ; $04
+	const POINTWINNER_DROP_SHOT   ; $05
 
 ; --- Court ids (wCurrentlyUsedCourt) ---
 ; Read only by LoadCourtSceneData, which takes row (id * 4) of the 25-row
@@ -79,31 +87,33 @@ def POINTWINNER_DROP_SHOT       equ 5
 ; surface ($0d is $02's row byte for byte). IsCourtUnlocked reads byte
 ; (id - 4) of the unlock bits, so ids 4-8 are SAVEFLAG_COURT_STAR..._WAREHOUSE;
 ; ids $00-$03 are always available.
-def COURT_HARD              equ $00
-def COURT_CLAY              equ $01
-def COURT_GRASS             equ $02
-def COURT_COMPOSITION       equ $03
-def COURT_STAR              equ $04 ; first of the five unlockable bonus courts
-def COURT_CASTLE            equ $05 ; also the Dream Match court
-def COURT_TROPICS           equ $06
-def COURT_JUNGLE            equ $07
-def COURT_WAREHOUSE         equ $08
-def COURT_TRAINING_PRACTICE equ $09 ; Training Court, Practice drills
-def COURT_TENNIS_MACHINE    equ $0a
-def COURT_WALL_PRACTICE     equ $0b
-def COURT_CENTER            equ $0c ; Island Open final
-def COURT_GRASS_ISLAND_OPEN equ $0d ; Island Open early rounds; $02's surface
-def COURT_UNUSED_0E         equ $0e ; no code or table ever selects it
-def COURT_TARGET_SHOT       equ $0f
-def COURT_SHOOTING_STAR     equ $10
-def COURT_BANANA_BUNCH      equ $11
-def COURT_BOO_BLAST         equ $12
-def COURT_PERFECT_SHOT      equ $13
-def COURT_TREASURE_BOX      equ $14
-def COURT_MEDALLION_MATCH   equ $15
-def COURT_FRUIT_FANTASY     equ $16
-def COURT_TWO_ON_ONE        equ $17
-def COURT_TRAINING_MATCH    equ $18 ; Training Court, Match drills
+	const_def
+	const COURT_HARD              ; $00
+	const COURT_CLAY              ; $01
+	const COURT_GRASS             ; $02
+	const COURT_COMPOSITION       ; $03
+	const COURT_STAR              ; $04 first of the five unlockable bonus courts
+	const COURT_CASTLE            ; $05 also the Dream Match court
+	const COURT_TROPICS           ; $06
+	const COURT_JUNGLE            ; $07
+	const COURT_WAREHOUSE         ; $08
+	const COURT_TRAINING_PRACTICE ; $09 Training Court, Practice drills
+	const COURT_TENNIS_MACHINE    ; $0a
+	const COURT_WALL_PRACTICE     ; $0b
+	const COURT_CENTER            ; $0c Island Open final
+	const COURT_GRASS_ISLAND_OPEN ; $0d Island Open early rounds; $02's surface
+	const COURT_UNUSED_0E         ; $0e no code or table ever selects it
+	const COURT_TARGET_SHOT       ; $0f
+	const COURT_SHOOTING_STAR     ; $10
+	const COURT_BANANA_BUNCH      ; $11
+	const COURT_BOO_BLAST         ; $12
+	const COURT_PERFECT_SHOT      ; $13
+	const COURT_TREASURE_BOX      ; $14
+	const COURT_MEDALLION_MATCH   ; $15
+	const COURT_FRUIT_FANTASY     ; $16
+	const COURT_TWO_ON_ONE        ; $17
+	const COURT_TRAINING_MATCH    ; $18 Training Court, Match drills
+def NUM_COURTS equ const_value
 
 ; --- On-court character animation ids (wCharAnimId, wCharSwingAnim) ---
 ; SetCharAnimation stores its argument in wCharAnimId and indexes
@@ -123,25 +133,26 @@ def COURT_TRAINING_MATCH    equ $18 ; Training Court, Match drills
 ; CharRallyEndState tests the set $05 $06 $07 $09 $0a $0b $12: a ground
 ; swing (charged or quick) or a dive still playing. The smash is covered by
 ; the airborne bit (wCharFlags bit 2) tested on the next line.
-def CHARANIM_STAND           equ $00 ; frame 0, held; the parked pose on the character-select screen
-def CHARANIM_IDLE            equ $01 ; the ready bob; UpdateCharRunAnimation's not-moving case, and what every swing chains back to
-def CHARANIM_RUN             equ $02 ; UpdateCharRunAnimation's moving case (wCharFlags bit 4)
-def CHARANIM_CELEBRATE       equ $03 ; CharPointReactionPhase, wCharPointResult >= 0; also both characters on the results screen
-def CHARANIM_DEJECTED        equ $04 ; CharPointReactionPhase, wCharPointResult < 0
-def CHARANIM_FOREHAND        equ $05 ; SelectForehandBackhand
-def CHARANIM_BACKHAND        equ $06 ; SelectForehandBackhand; ExecuteShot counts it toward wShotAimMirror
-def CHARANIM_OVERHEAD        equ $07 ; the high ground stroke and the serve swing
-def CHARANIM_SMASH           equ $08 ; the jumping smash; the script holds its last frame until the character lands
-def CHARANIM_FOREHAND_QUICK  equ $09
-def CHARANIM_BACKHAND_QUICK  equ $0a ; counted toward wShotAimMirror alongside $06
-def CHARANIM_OVERHEAD_QUICK  equ $0b
-def CHARANIM_SMASH_QUICK     equ $0c ; only ResetSwingAnimation and the debug viewer reach it -- StartCharSwing returns before the +$04 step on the smash path
-def CHARANIM_FOREHAND_READY  equ $0d
-def CHARANIM_BACKHAND_READY  equ $0e
-def CHARANIM_OVERHEAD_READY  equ $0f ; also the serve toss pose (CharServeTossPhase)
-def CHARANIM_SERVE_READY     equ $10 ; held serve stance; CharServeWaitAnimPhase and AiServeWalkToSpot both block until it is current
-def CHARANIM_SERVE_PREP      equ $11 ; the pre-serve flourish, which ends in an anim_set to $10
-def CHARANIM_DIVE            equ $12 ; StartCharSwing.dive
+	const_def
+	const CHARANIM_STAND          ; $00 frame 0, held; the parked pose on the character-select screen
+	const CHARANIM_IDLE           ; $01 the ready bob; UpdateCharRunAnimation's not-moving case, and what every swing chains back to
+	const CHARANIM_RUN            ; $02 UpdateCharRunAnimation's moving case (wCharFlags bit 4)
+	const CHARANIM_CELEBRATE      ; $03 CharPointReactionPhase, wCharPointResult >= 0; also both characters on the results screen
+	const CHARANIM_DEJECTED       ; $04 CharPointReactionPhase, wCharPointResult < 0
+	const CHARANIM_FOREHAND       ; $05 SelectForehandBackhand
+	const CHARANIM_BACKHAND       ; $06 SelectForehandBackhand; ExecuteShot counts it toward wShotAimMirror
+	const CHARANIM_OVERHEAD       ; $07 the high ground stroke and the serve swing
+	const CHARANIM_SMASH          ; $08 the jumping smash; the script holds its last frame until the character lands
+	const CHARANIM_FOREHAND_QUICK ; $09
+	const CHARANIM_BACKHAND_QUICK ; $0a counted toward wShotAimMirror alongside $06
+	const CHARANIM_OVERHEAD_QUICK ; $0b
+	const CHARANIM_SMASH_QUICK    ; $0c only ResetSwingAnimation and the debug viewer reach it -- StartCharSwing returns before the +$04 step on the smash path
+	const CHARANIM_FOREHAND_READY ; $0d
+	const CHARANIM_BACKHAND_READY ; $0e
+	const CHARANIM_OVERHEAD_READY ; $0f also the serve toss pose (CharServeTossPhase)
+	const CHARANIM_SERVE_READY    ; $10 held serve stance; CharServeWaitAnimPhase and AiServeWalkToSpot both block until it is current
+	const CHARANIM_SERVE_PREP     ; $11 the pre-serve flourish, which ends in an anim_set to $10
+	const CHARANIM_DIVE           ; $12 StartCharSwing.dive
 
 ; --- On-court character state (wCharState) ---
 ; The index UpdateCharStateMachine dispatches on through the 8-entry
@@ -151,24 +162,28 @@ def CHARANIM_DIVE            equ $12 ; StartCharSwing.dive
 ; Two `db` tables map into this space: ServeRoleCharStateTable_08 (serve role
 ; -> state at the start of a point) and SetCharStateOnBallHitTable (the state
 ; every character is remapped through on every strike).
-def CHARSTATE_INERT          equ 0 ; slot points at the shared `ret` -- InitChar, ResetCharForPoint, and a character the ball hits
-def CHARSTATE_RALLY          equ 1 ; CharRallyState: ready -> windup -> contact
-def CHARSTATE_RECOVER        equ 2 ; CharRecoverState: let the swing finish, then movement only. Whoever struck the ball is put here
-def CHARSTATE_SERVE          equ 3 ; CharServeState: indicator, toss, swing window, strike
-def CHARSTATE_AWAIT_SERVE    equ 4 ; CharAwaitServeState
-def CHARSTATE_STANDBY        equ 5 ; CharStandbyState: end-state, then state 4's movement phase
-def CHARSTATE_WALK           equ 6 ; CharWalkState: the scripted changeover and walk-off walks
-def CHARSTATE_POINT_END      equ 7 ; CharPointEndState: walk to target, then the win/lose reaction
+	const_def
+	const CHARSTATE_INERT       ; $00 slot points at the shared `ret` -- InitChar, ResetCharForPoint, and a character the ball hits
+	const CHARSTATE_RALLY       ; $01 CharRallyState: ready -> windup -> contact
+	const CHARSTATE_RECOVER     ; $02 CharRecoverState: let the swing finish, then movement only. Whoever struck the ball is put here
+	const CHARSTATE_SERVE       ; $03 CharServeState: indicator, toss, swing window, strike
+	const CHARSTATE_AWAIT_SERVE ; $04 CharAwaitServeState
+	const CHARSTATE_STANDBY     ; $05 CharStandbyState: end-state, then state 4's movement phase
+	const CHARSTATE_WALK        ; $06 CharWalkState: the scripted changeover and walk-off walks
+	const CHARSTATE_POINT_END   ; $07 CharPointEndState: walk to target, then the win/lose reaction
+def NUM_CHARSTATES equ const_value
 
 ; --- On-court character flags (wCharFlags) ---
 ; Bit indices only (every site is a `bit`/`res`/`set`). Bits 3 and 7 are
 ; never touched.
-def CHARB_RECOIL             equ 0 ; set by ApplyShotRecoil after every stroke and by CheckCharBallContact on a body hit; UpdateCharVelocityFromInput drops the steering intent
-def CHARB_DIVING             equ 1 ; StartCharSwing.dive sets it. Widens the contact window to 1.25x wCharReachX, flattens the brake, freezes the facing ease, costs -$0c00 shot speed, and turns both power strokes back into their base shots
-def CHARB_AIRBORNE           equ 2 ; set for the smash jump, cleared by StepCharJumpPhysics on landing; also picks the airborne shadow over the ground one
-def CHARB_MOVING             equ 4 ; the velocity came out nonzero this frame (or MoveCharTowardTarget stepped); UpdateCharRunAnimation reads it to choose run over idle
-def CHARB_CHARGING           equ 5 ; a swing is winding up: StepCharMovement divides both velocities by 8
-def CHARB_MOVE_BLOCKED       equ 6 ; StepCharMovement refused an axis at the court bound instead of clamping it. Never read
+	const_def
+	const CHARB_RECOIL   ; $00 set by ApplyShotRecoil after every stroke and by CheckCharBallContact on a body hit; UpdateCharVelocityFromInput drops the steering intent
+	const CHARB_DIVING   ; $01 StartCharSwing.dive sets it. Widens the contact window to 1.25x wCharReachX, flattens the brake, freezes the facing ease, costs -$0c00 shot speed, and turns both power strokes back into their base shots
+	const CHARB_AIRBORNE ; $02 set for the smash jump, cleared by StepCharJumpPhysics on landing; also picks the airborne shadow over the ground one
+	const_def $04
+	const CHARB_MOVING       ; $04 the velocity came out nonzero this frame (or MoveCharTowardTarget stepped); UpdateCharRunAnimation reads it to choose run over idle
+	const CHARB_CHARGING     ; $05 a swing is winding up: StepCharMovement divides both velocities by 8
+	const CHARB_MOVE_BLOCKED ; $06 StepCharMovement refused an axis at the court bound instead of clamping it. Never read
 
 ; --- Match abort flag (wMatchAbortFlag) ---
 ; Two independent bits rather than a code: every reader is an `and` (or one
@@ -183,9 +198,10 @@ def MATCHABORTB_MATCH        equ 7   ; bit-index form of MATCHABORT_MATCH
 ; The ResolvePointOutcome jumptable has ten entries ($00-$09); 7 and 8 show a
 ; text popup rather than a court banner. $0b is minigame-only and never
 ; reaches that jumptable.
-def POINTOUTCOME_SERVE_VOLLEYED equ 7  ; the receiver hit the serve before it bounced; text id $0174 "Return the serve after it bounces."
-def POINTOUTCOME_WRONG_RECEIVER equ 8  ; the wrong player of a doubles pair returned; text id $0175 "Only the receiving player may return the ball."
-def POINTOUTCOME_BALL_HIT_PLAYER equ 9 ; the ball reached a character's body (ApplyBallTouchOutcome)
+	const_def $07
+	const POINTOUTCOME_SERVE_VOLLEYED  ; $07 the receiver hit the serve before it bounced; text id $0174 "Return the serve after it bounces."
+	const POINTOUTCOME_WRONG_RECEIVER  ; $08 the wrong player of a doubles pair returned; text id $0175 "Only the receiving player may return the ball."
+	const POINTOUTCOME_BALL_HIT_PLAYER ; $09 the ball reached a character's body (ApplyBallTouchOutcome)
 def POINTOUTCOME_MINIGAME_CLEARED equ $0b ; bank $0d only, set right after IsMinigameTargetReached; DetermineMinigamePointResult turns it into a WINLOSE_WIN
 
 ; --- Win/lose sign (wPointWinLoseFlag, wMatchWinLoseFlag) ---
@@ -197,6 +213,7 @@ def WINLOSE_WIN              equ $01 ; the player-1 side took it
 def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 
 ; --- Match context (wMatchContext) ---
-def MATCHCONTEXT_EXHIBITION  equ $00 ; cleared by RestoreOverworldAfterMatch
-def MATCHCONTEXT_STORY       equ $01 ; InitStoryMatchSettings
-def MATCHCONTEXT_MINIGAME    equ $02 ; InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
+	const_def
+	const MATCHCONTEXT_EXHIBITION ; $00 cleared by RestoreOverworldAfterMatch
+	const MATCHCONTEXT_STORY      ; $01 InitStoryMatchSettings
+	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard

@@ -20,11 +20,11 @@ IslandSkyPalettes_14:
 LoadIslandSkyEffectObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $73aa
 	ld hl, IslandSkyTilesA_14 ; $73b3
-	ld de, vTiles0 + $10 * TILE_SIZE ; $73b6
+	ld de, vTiles0 tile $10 ; $73b6
 	ld c, 64 ; $73b9
 	call QueueVRAMCopy ; $73bb
 	ld hl, IslandSkyTilesB_14 ; $73be
-	ld de, vTiles0 + $20 * TILE_SIZE ; $73c1
+	ld de, vTiles0 tile $20 ; $73c1
 	ld c, 48 ; $73c4
 	call QueueVRAMCopy ; $73c6
 	ld hl, IslandSkyPalettes_14 ; $73c9
@@ -304,8 +304,7 @@ IslandSkyEntry0eScene:
 	jr nz, .done ; $784d
 	sound SFX_FIREWORK_SPARKLE ; $784f
 	script_wait_frames 70 ; $7851
-	ld c, 4 ; $7858
-	call BeginFadeOut ; $785a
+	script_fade_out 4 ; $7858
 	call WaitFadeEnd ; $785d
 	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7860
 	ld [wStoryModeCurrentLocation], a ; $7862

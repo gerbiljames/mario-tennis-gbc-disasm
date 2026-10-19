@@ -8,7 +8,7 @@ AwardsCeremonyNpc08_0f:
 	script_speak ACTOR_AWARDS_CEREMONY_SPIKE ; $563b
 	ret ; $5640
 ReplacePlayerWithStandInActor:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $5641
+	ld a, [wStoryMainGender] ; $5641
 	ld d, OBJ_ALEX_B ; $5644
 	add d ; $5646
 	ld d, a ; $5647
@@ -28,25 +28,17 @@ ActorScript_0f_00:
 	as_set_target 17.0, 15.0
 	as_wait_move
 	as_halt
-DelayFrames:
-	push af ; $5678
-	ld a, a ; $5679
-	farcall WaitScriptFrames ; $567a
-	pop af ; $567d
-	ret ; $567e
+	twin wait_script_frames_save_a, 0f ; $5678 WaitScriptFramesSaveA_0f
 CutsceneStompScreenShake:
 	script_jump_velocity ACTOR_AWARDS_CEREMONY_SPIKE, -2.0 ; $567f
-	ld a, $08 ; $5687
-	farcall ScriptWaitActorJumpDone ; $5689
+	script_wait_jump ACTOR_AWARDS_CEREMONY_DOUBLES_SPIKE ; $5687
 	sound SFX_STOMP ; $568c
 	ld a, $02 ; $568e
 	farcall SetScreenShake ; $5690
-	ld a, 8 ; $5693
-	call DelayFrames ; $5695
+	script_delay 8 ; $5693
 	ld a, $01 ; $5698
 	farcall SetScreenShake ; $569a
-	ld a, 8 ; $569d
-	call DelayFrames ; $569f
+	script_delay 8 ; $569d
 	ld a, $00 ; $56a2
 	farcall SetScreenShake ; $56a4
 	ret ; $56a7
@@ -55,8 +47,7 @@ AwardsCeremonyEntry0aScene:
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_74_08, ANIM_BOUNCE ; $56ab
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $56b2
 	script_face_toward ACTOR_PLAYER, ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $56b7
-	ld a, 10 ; $56bf
-	call DelayFrames ; $56c1
+	script_delay 10 ; $56bf
 	script_set_text Text_25_107 ; $56c4
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $56ca
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_74_08, ANIM_NOD ; $56cf
@@ -70,8 +61,7 @@ AwardsCeremonyEntry0aScene:
 	script_speak ACTOR_AWARDS_CEREMONY_A_COZ ; $5700
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 12.5, 37.5 ; $5705
 	sound SFX_APPEAR1 ; $5710
-	ld a, 60 ; $5712
-	call DelayFrames ; $5714
+	script_delay 60 ; $5712
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 63.0, 63.0 ; $5717
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_74_08, ANIM_BOUNCE ; $5722
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $5729
@@ -80,35 +70,28 @@ AwardsCeremonyEntry0aScene:
 	script_set_anim ACTOR_AWARDS_CEREMONY_A_COZ, ANIM_BOUNCE ; $573b
 	script_wait_idle ACTOR_AWARDS_CEREMONY_A_COZ ; $5742
 	script_speak ACTOR_AWARDS_CEREMONY_A_COZ ; $5747
-	ld a, 30 ; $574c
-	call DelayFrames ; $574e
+	script_delay 30 ; $574c
 	script_face_pair ACTOR_PLAYER, ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $5751
-	ld a, 80 ; $5759
-	call DelayFrames ; $575b
+	script_delay 80 ; $5759
 	script_face_toward ACTOR_AWARDS_CEREMONY_A_COZ, ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $575e
 	script_face_pair ACTOR_AWARDS_CEREMONY_A_COZ, ACTOR_PLAYER ; $5766
-	ld a, 30 ; $576e
-	call DelayFrames ; $5770
+	script_delay 30 ; $576e
 	script_set_anim ACTOR_AWARDS_CEREMONY_A_COZ, ANIM_SHAKE ; $5773
 	script_wait_idle ACTOR_AWARDS_CEREMONY_A_COZ ; $577a
 	script_speak ACTOR_AWARDS_CEREMONY_A_COZ ; $577f
-	ld a, 40 ; $5784
-	call DelayFrames ; $5786
+	script_delay 40 ; $5784
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $5789
 	script_face ACTOR_AWARDS_CEREMONY_WALK_74_08, FACE_UP ; $578e
 	script_face ACTOR_AWARDS_CEREMONY_A_COZ, FACE_UP ; $5795
-	ld a, 20 ; $579c
-	call DelayFrames ; $579e
+	script_delay 20 ; $579c
 	script_player_speed 0.75 ; $57a1
 	script_move_player 12.0, 19.0 ; $57a7
 	farcall WaitPlayerMoveDone ; $57b1
-	ld a, 30 ; $57b4
-	call DelayFrames ; $57b6
+	script_delay 30 ; $57b4
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, ANIM_BOUNCE ; $57b9
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $57c0
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $57c5
-	ld a, 40 ; $57ca
-	call DelayFrames ; $57cc
+	script_delay 40 ; $57ca
 	script_move_player 12.0, 41.0 ; $57cf
 	farcall WaitPlayerMoveDone ; $57d9
 	script_face ACTOR_AWARDS_CEREMONY_A_COZ, FACE_DOWN ; $57dc
@@ -123,12 +106,10 @@ AwardsCeremonyEntry0aScene:
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $5813
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 14.5, 37.5 ; $5818
 	sound SFX_APPEAR1 ; $5823
-	ld a, 60 ; $5825
-	call DelayFrames ; $5827
+	script_delay 60 ; $5825
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 63.0, 63.0 ; $582a
 	script_face ACTOR_AWARDS_CEREMONY_A_COZ, FACE_UP ; $5835
-	ld a, 40 ; $583c
-	call DelayFrames ; $583e
+	script_delay 40 ; $583c
 	script_face ACTOR_AWARDS_CEREMONY_WALK_74_08, FACE_DOWN ; $5841
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $5848
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_74_08, ANIM_BOUNCE ; $584d
@@ -139,11 +120,7 @@ AwardsCeremonyEntry0aScene:
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $586a
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $586f
 	script_wait_idle ACTOR_PLAYER ; $5876
-	script_get_actor_state ACTOR_AWARDS_CEREMONY_WALK_74_08 ; $587b
-	ld c, l ; $5880
-	ld b, h ; $5881
-	ld de, wActors ; $5882
-	farcall AttachActorStepMover ; $5885
+	script_follow ACTOR_AWARDS_CEREMONY_WALK_74_08, ACTOR_PLAYER ; $587b
 	ret ; $5888
 AwardsCeremonyEntry0bScene:
 	script_null_script ACTOR_PARTNER ; $5889
@@ -163,8 +140,7 @@ AwardsCeremonyEntry0bScene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $58da
 	script_wait_idle ACTOR_PLAYER ; $58e1
 	script_face_toward ACTOR_PARTNER, ACTOR_AWARDS_CEREMONY_A_COZ ; $58e6
-	ld a, 10 ; $58ee
-	call DelayFrames ; $58f0
+	script_delay 10 ; $58ee
 	script_set_anim ACTOR_AWARDS_CEREMONY_A_COZ, ANIM_BOUNCE ; $58f3
 	script_wait_idle ACTOR_AWARDS_CEREMONY_A_COZ ; $58fa
 	script_speak ACTOR_AWARDS_CEREMONY_A_COZ ; $58ff
@@ -172,8 +148,7 @@ AwardsCeremonyEntry0bScene:
 	script_speak ACTOR_AWARDS_CEREMONY_B_COZ ; $590c
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_QUESTION, 12.5, 37.5 ; $5911
 	sound SFX_EMOTE ; $591c
-	ld a, 60 ; $591e
-	call DelayFrames ; $5920
+	script_delay 60 ; $591e
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_QUESTION, 63.0, 63.0 ; $5923
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $592e
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5935
@@ -185,38 +160,31 @@ AwardsCeremonyEntry0bScene:
 	script_set_anim ACTOR_AWARDS_CEREMONY_B_COZ, ANIM_BOUNCE ; $5955
 	script_wait_idle ACTOR_AWARDS_CEREMONY_B_COZ ; $595c
 	script_speak ACTOR_AWARDS_CEREMONY_B_COZ ; $5961
-	ld a, 30 ; $5966
-	call DelayFrames ; $5968
+	script_delay 30 ; $5966
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $596b
-	ld a, 60 ; $5973
-	call DelayFrames ; $5975
+	script_delay 60 ; $5973
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5978
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $597f
-	ld a, 30 ; $5986
-	call DelayFrames ; $5988
+	script_delay 30 ; $5986
 	script_face ACTOR_AWARDS_CEREMONY_A_COZ, FACE_DOWN ; $598b
 	script_set_anim ACTOR_AWARDS_CEREMONY_A_COZ, ANIM_SHAKE ; $5992
 	script_wait_idle ACTOR_AWARDS_CEREMONY_A_COZ ; $5999
 	script_speak ACTOR_AWARDS_CEREMONY_A_COZ ; $599e
-	ld a, 40 ; $59a3
-	call DelayFrames ; $59a5
+	script_delay 40 ; $59a3
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $59a8
 	script_face ACTOR_PLAYER, FACE_UP ; $59ad
 	script_face ACTOR_PARTNER, FACE_UP ; $59b4
 	script_face ACTOR_AWARDS_CEREMONY_A_COZ, FACE_UP ; $59bb
 	script_face ACTOR_AWARDS_CEREMONY_B_COZ, FACE_UP ; $59c2
-	ld a, 20 ; $59c9
-	call DelayFrames ; $59cb
+	script_delay 20 ; $59c9
 	script_player_speed 0.75 ; $59ce
 	script_move_player 12.0, 19.0 ; $59d4
 	farcall WaitPlayerMoveDone ; $59de
-	ld a, 30 ; $59e1
-	call DelayFrames ; $59e3
+	script_delay 30 ; $59e1
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, ANIM_BOUNCE ; $59e6
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $59ed
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $59f2
-	ld a, 40 ; $59f7
-	call DelayFrames ; $59f9
+	script_delay 40 ; $59f7
 	script_move_player 12.0, 41.0 ; $59fc
 	farcall WaitPlayerMoveDone ; $5a06
 	script_face ACTOR_AWARDS_CEREMONY_A_COZ, FACE_LEFT ; $5a09
@@ -235,17 +203,14 @@ AwardsCeremonyEntry0bScene:
 	call SpeakPartnerVariantLine ; $5a58
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 14.5, 37.5 ; $5a5b
 	sound SFX_APPEAR1 ; $5a66
-	ld a, 60 ; $5a68
-	call DelayFrames ; $5a6a
+	script_delay 60 ; $5a68
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 14.5, 39.5 ; $5a6d
 	sound SFX_APPEAR1 ; $5a78
-	ld a, 60 ; $5a7a
-	call DelayFrames ; $5a7c
+	script_delay 60 ; $5a7a
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, 63.0, 63.0 ; $5a7f
 	script_face ACTOR_AWARDS_CEREMONY_A_COZ, FACE_UP ; $5a8a
 	script_face ACTOR_AWARDS_CEREMONY_B_COZ, FACE_UP ; $5a91
-	ld a, 30 ; $5a98
-	call DelayFrames ; $5a9a
+	script_delay 30 ; $5a98
 	script_face_pair ACTOR_PLAYER, ACTOR_PARTNER ; $5a9d
 	call SpeakPartnerVariantLine ; $5aa5
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5aa8
@@ -258,14 +223,10 @@ AwardsCeremonyEntry0bScene:
 	call SpeakPartnerVariantLine ; $5acf
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5ad2
 	script_wait_idle ACTOR_PLAYER ; $5ad9
-	script_get_actor_state ACTOR_PARTNER ; $5ade
-	ld c, l ; $5ae3
-	ld b, h ; $5ae4
-	ld de, wActors ; $5ae5
-	farcall AttachActorStepMover ; $5ae8
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5ade
 	ret ; $5aeb
 SpeakPartnerVariantLine:
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5aec
+	ld a, [wStoryPartnerGender] ; $5aec
 	and a ; $5aef
 	jr nz, .femalePartner ; $5af0
 	script_speak ACTOR_PARTNER ; $5af2
@@ -307,8 +268,7 @@ AwardsCeremonyArrivalIntro:
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, ANIM_SHAKE ; $5bc0
 	script_wait_idle ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5bc7
 	script_jump_velocity ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, -2.0 ; $5bcc
-	ld a, $13 ; $5bd4
-	farcall ScriptWaitActorJumpDone ; $5bd6
+	script_wait_jump ACTOR_AWARDS_CEREMONY_DOUBLES_BALLOON_ANGRY ; $5bd4
 	script_set_speed ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 1.0 ; $5bd9
 	script_move_target ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 15.0, 7.5 ; $5be1
 	script_wait_move ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT ; $5bec
@@ -317,8 +277,7 @@ AwardsCeremonyArrivalIntro:
 	script_player_speed 0.5 ; $5c00
 	script_move_player_to_actor ACTOR_PLAYER ; $5c06
 	farcall WaitPlayerMoveDone ; $5c0d
-	ld a, 30 ; $5c10
-	call DelayFrames ; $5c12
+	script_delay 30 ; $5c10
 	script_set_objdef OBJ_BALLOON_ANGRY, ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5c15
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, ANIM_WALK ; $5c21
 	script_set_objdef OBJ_BALLOON_SWEAT, ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT ; $5c28
@@ -328,14 +287,12 @@ AwardsCeremonyArrivalIntro:
 	ret ; $5c51
 AnnounceWinnersToPodiums:
 	script_face_pair ACTOR_AWARDS_CEREMONY_WALK_75_06, ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $5c52
-	ld a, 30 ; $5c5a
-	call DelayFrames ; $5c5c
+	script_delay 30 ; $5c5a
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, ANIM_NOD ; $5c5f
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $5c66
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_75_06, ANIM_NOD ; $5c6b
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $5c72
-	ld a, 30 ; $5c77
-	call DelayFrames ; $5c79
+	script_delay 30 ; $5c77
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, FACE_RIGHT ; $5c7c
 	script_face ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_RIGHT ; $5c83
 	script_set_text Text_25_133 ; $5c8a
@@ -352,14 +309,12 @@ FaceAwardsCeremonyCrowdUp:
 	script_face ACTOR_AWARDS_CEREMONY_WALK_74_07, FACE_UP ; $5cc7
 	ret ; $5cce
 AwardsCeremonyChairmanSpeech:
-	ld a, 30 ; $5ccf
-	call DelayFrames ; $5cd1
+	script_delay 30 ; $5ccf
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $5cd4
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, ANIM_NOD ; $5cd9
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $5ce0
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, FACE_UP ; $5ce5
-	ld a, 30 ; $5cec
-	call DelayFrames ; $5cee
+	script_delay 30 ; $5cec
 	script_lock_facing ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $5cf1
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, 7.0, 27.0 ; $5cf8
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $5d03
@@ -368,8 +323,7 @@ AwardsCeremonyChairmanSpeech:
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, 8.0, 25.0 ; $5d16
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $5d21
 	script_face ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_RIGHT ; $5d26
-	ld a, 30 ; $5d2d
-	call DelayFrames ; $5d2f
+	script_delay 30 ; $5d2d
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_75_06, ANIM_NOD ; $5d32
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $5d39
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $5d3e
@@ -387,16 +341,14 @@ AwardsCeremonyChairmanSpeech:
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $5d82
 	script_set_anim ACTOR_AWARDS_CEREMONY_WALK_75_06, ANIM_NOD ; $5d87
 	script_wait_idle ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $5d8e
-	ld a, 60 ; $5d93
-	call DelayFrames ; $5d95
+	script_delay 60 ; $5d93
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, 8.0, 23.0 ; $5d98
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $5da3
 	script_face ACTOR_AWARDS_CEREMONY_WALK_75_06, FACE_RIGHT ; $5da8
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, 8.0, 25.0 ; $5daf
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $5dba
 	script_face ACTOR_AWARDS_CEREMONY_WALK_6F_07_1, FACE_RIGHT ; $5dbf
-	ld a, 30 ; $5dc6
-	call DelayFrames ; $5dc8
+	script_delay 30 ; $5dc6
 	script_speak ACTOR_AWARDS_CEREMONY_WALK_6F_07_1 ; $5dcb
 	script_set_objdef OBJ_WALK_71_03, ACTOR_AWARDS_CEREMONY_SEAN ; $5dd0
 	script_set_anim ACTOR_AWARDS_CEREMONY_SEAN, ANIM_WALK ; $5ddc
@@ -406,8 +358,7 @@ AwardsCeremonyChairmanSpeech:
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 15.0, 7.5 ; $5e01
 	script_face ACTOR_AWARDS_CEREMONY_SEAN, FACE_DOWN ; $5e0c
 	script_face ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, FACE_DOWN ; $5e13
-	ld a, 30 ; $5e1a
-	call DelayFrames ; $5e1c
+	script_delay 30 ; $5e1a
 	script_move_player 12.0, 17.0 ; $5e1f
 	script_move_target ACTOR_AWARDS_CEREMONY_WALK_75_06, 12.0, 23.0 ; $5e29
 	script_wait_move ACTOR_AWARDS_CEREMONY_WALK_75_06 ; $5e34

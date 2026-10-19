@@ -60,13 +60,13 @@ LoadResultScreenPortraits:
 	cp LINKSTATE_SLAVE ; $5ff5
 	jr z, .checkPlayer1CurrentMainCharacter2 ; $5ff7
 .checkPlayer1CurrentMainCharacter:
-	ld a, [wPlayer1CurrentMainCharacter] ; $5ff9
+	ld a, [wPlayer1MainChar] ; $5ff9
 	ld d, a ; $5ffc
 	ld a, [wPlayer1MainPalette] ; $5ffd
 	ld b, a ; $6000
 	ld c, $00 ; $6001
 	call LoadResultPortraitSlot ; $6003
-	ld a, [wPlayer2CurrentMainCharacter] ; $6006
+	ld a, [wPlayer2MainChar] ; $6006
 	ld d, a ; $6009
 	ld a, [wPlayer2MainPalette] ; $600a
 	ld b, a ; $600d
@@ -75,13 +75,13 @@ LoadResultScreenPortraits:
 	ld de, FLAG_DOUBLES ; $6013
 	call TestGameFlagByNumber ; $6016
 	jr z, .done ; $6019
-	ld a, [wPlayer1CurrentPartnerCharacter] ; $601b
+	ld a, [wPlayer1PartnerChar] ; $601b
 	ld d, a ; $601e
 	ld a, [wPlayer1PartnerPalette] ; $601f
 	ld b, a ; $6022
 	ld c, $01 ; $6023
 	call LoadResultPortraitSlot ; $6025
-	ld a, [wPlayer2CurrentPartnerCharacter] ; $6028
+	ld a, [wPlayer2PartnerChar] ; $6028
 	ld d, a ; $602b
 	ld a, [wPlayer2PartnerPalette] ; $602c
 	ld b, a ; $602f
@@ -90,13 +90,13 @@ LoadResultScreenPortraits:
 .done:
 	ret ; $6035
 .checkPlayer1CurrentMainCharacter2:
-	ld a, [wPlayer1CurrentMainCharacter] ; $6036
+	ld a, [wPlayer1MainChar] ; $6036
 	ld d, a ; $6039
 	ld a, [wPlayer1MainPalette] ; $603a
 	ld b, a ; $603d
 	ld c, $02 ; $603e
 	call LoadResultPortraitSlot ; $6040
-	ld a, [wPlayer2CurrentMainCharacter] ; $6043
+	ld a, [wPlayer2MainChar] ; $6043
 	ld d, a ; $6046
 	ld a, [wPlayer2MainPalette] ; $6047
 	ld b, a ; $604a
@@ -105,13 +105,13 @@ LoadResultScreenPortraits:
 	ld de, FLAG_DOUBLES ; $6050
 	call TestGameFlagByNumber ; $6053
 	jr z, .doneB ; $6056
-	ld a, [wPlayer1CurrentPartnerCharacter] ; $6058
+	ld a, [wPlayer1PartnerChar] ; $6058
 	ld d, a ; $605b
 	ld a, [wPlayer1PartnerPalette] ; $605c
 	ld b, a ; $605f
 	ld c, $03 ; $6060
 	call LoadResultPortraitSlot ; $6062
-	ld a, [wPlayer2CurrentPartnerCharacter] ; $6065
+	ld a, [wPlayer2PartnerChar] ; $6065
 	ld d, a ; $6068
 	ld a, [wPlayer2PartnerPalette] ; $6069
 	ld b, a ; $606c
@@ -169,10 +169,10 @@ LoadResultPortraitSlot:
 	ret ; $60b6
 ResultPortraitSlotTable:
 	; $60b7, 9 bytes (records:2)
-	dw vTiles1 + $40 * TILE_SIZE ; record 0
-	dw vTiles1 + $50 * TILE_SIZE ; record 1
-	dw vTiles1 + $60 * TILE_SIZE ; record 2
-	dw vTiles1 + $70 * TILE_SIZE ; record 3
+	dw vTiles1 tile $40 ; record 0
+	dw vTiles1 tile $50 ; record 1
+	dw vTiles1 tile $60 ; record 2
+	dw vTiles1 tile $70 ; record 3
 	db $c9
 DecompressResultPortrait:
 	ld a, c ; $60c0

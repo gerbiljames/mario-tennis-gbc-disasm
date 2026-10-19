@@ -594,11 +594,11 @@ return address, indexes `ControlCodeHandlers_05` (`$05:$548f`, 32 records, codes
 | `$04` | `TextCmdPrintArgString` | pop the string queue → `wInlineTextBuffer` → `RenderInlineString` |
 | `$05` | `TextCmdDelay30` | 30 frames, not skippable |
 | `$06` | `TextCmdDelay15Skippable` | 15 frames, aborts on input |
-| `$07` | `TextCmdPrintPlayerName` | `wStoryModeNameOfMainCharacter` |
+| `$07` | `TextCmdPrintPlayerName` | `wStoryMainName` |
 | `$08` | `TextCmdNop2` | `ret`, but the measuring pass treats `$08` as a short-text argument (§7.4) |
 | `$09` | `TextCmdPrintArgNumber` | pop the number queue → `RenderInlineNumber` |
 | `$0a` | `TextCmdNop` | `ret` |
-| `$0b` | `TextCmdPrintPartnerName` | `wStoryModeNameOfPartnerCharacter` |
+| `$0b` | `TextCmdPrintPartnerName` | `wStoryPartnerName` |
 | `$0c` | `TextCmdDelay150Skippable` | 150 frames, skippable |
 | `$0d` | `TextCmdNextGlyphStreamRow` | glyph write pointer += `$40` (two tilemap rows) |
 | `$0e` | `TextCmdPrintShortText` | **+1 operand**: short-text id `$001b + operand` (the 27-entry roster bias) → `wInlineTextBuffer` |

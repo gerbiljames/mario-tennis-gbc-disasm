@@ -38,10 +38,11 @@ def routines():
             m = re.match(r"^([A-Za-z_]\w*):", line)
             if not m:
                 continue
-            nxt = next((x for x in lines[i + 1:i + 6] if x.strip() and not x.strip().startswith(";")), "")
+            nxt = next((x for x in lines[i + 1:i + 6] if x.strip() and not x.strip().startswith((";", "ASSERT"))), "")
             op = re.match(r"^\t(\w+)", nxt)
             if op and (op.group(1) in MNEMONICS or op.group(1) in ("farcall", "lb", "ld_slot")
-                       or op.group(1).startswith("ld_") and op.group(1).endswith("_indexed")):
+                       or op.group(1).startswith("ld_") and op.group(1).endswith("_indexed")
+                       or op.group(1).startswith("script_")):
                 out[m.group(1)] = (origins[i][0].relative_to(ROOT), op.group(1))
     return out
 

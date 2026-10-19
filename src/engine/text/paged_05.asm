@@ -228,6 +228,7 @@ Unused_05_RunMenuSelectionShared:
 	call GetTilemapCellAddress ; $4ae2
 	xor a ; $4ae5
 	ld hl, wTextArrowBlinkCounter ; $4ae6
+	ASSERT wTextArrowCell == wTextArrowBlinkCounter + 1, "this code walks from wTextArrowBlinkCounter into wTextArrowCell"
 	ld [hl+], a ; $4ae9
 	ld [hl], e ; $4aea
 	inc hl ; $4aeb
@@ -246,7 +247,7 @@ Unused_05_RunMenuSelectionShared:
 	ldh a, [hInputPressed] ; $4b00
 	bit PADB_A, a ; $4b02
 	jp nz, Unused_05_LoadOverworldSpriteDef.isCursorOnAdjustRow ; $4b04
-	bit 6, a ; $4b07
+	bit PADB_UP, a ; $4b07
 	jr z, .bit6Clear ; $4b09
 	dec b ; $4b0b
 	bit 7, b ; $4b0c

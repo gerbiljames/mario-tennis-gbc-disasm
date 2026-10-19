@@ -34,8 +34,8 @@ MapArrivalWalkPair_10:
 	ret ; $7b8a
 ActorScript_10_1:
 	; $7b8b, 43 bytes (actor_script)
-	as_set_field $06, $0018
-	as_flag $01, $05, $02
+	as_set_field ACTORF_SPEED, $0018
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 .L8:
 	as_set_target 27.0, 23.125
 	as_wait_move2

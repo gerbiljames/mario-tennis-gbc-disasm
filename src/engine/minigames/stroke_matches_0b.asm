@@ -52,6 +52,7 @@ StrokeMatch2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $6706
 	ld hl, StrokeMatch2DrillOpponent ; $6709
 	call LoadDrillOpponentBySide ; $670c
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $670f
 	ld [wDrillMessageId], a ; $6710
 	xor a ; $6713
@@ -379,6 +380,7 @@ StrokeMatch3Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $6951
 	ld hl, StrokeMatch3DrillOpponent ; $6954
 	call LoadDrillOpponentBySide ; $6957
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $695a
 	ld [wDrillMessageId], a ; $695b
 	xor a ; $695e
@@ -708,6 +710,7 @@ StrokePractice1Hook_PointStart:
 	ld [wTargetZoneEnabled], a ; $6b9e
 	ld hl, StrokePractice1Table ; $6ba1
 	call SetDrillTargetZoneForPoint ; $6ba4
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $6ba7
 	ld [wDrillMessageId], a ; $6ba8
 	xor a ; $6bab

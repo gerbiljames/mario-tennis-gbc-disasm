@@ -59,6 +59,7 @@ UpdateCameraFromPlayer:
 	ld d, h ; $628d
 	ld e, l ; $628e
 	ld hl, wCameraX ; $628f
+	ASSERT wCameraY == wCameraX + 2, "this code walks from wCameraX into wCameraY"
 	ld a, c ; $6292
 	ld [hl+], a ; $6293
 	ld a, b ; $6294
@@ -228,6 +229,7 @@ InitSceneTileAnimations:
 	ld a, $ff ; $63a8
 	ld b, $01 ; $63aa
 	ld hl, wSceneTileAnimState ; $63ac
+	ASSERT wSceneTileAnimStart == wSceneTileAnimState + 8, "this code walks from wSceneTileAnimState into wSceneTileAnimStart"
 	ld [hl+], a ; $63af
 	ld [hl], b ; $63b0
 	inc hl ; $63b1

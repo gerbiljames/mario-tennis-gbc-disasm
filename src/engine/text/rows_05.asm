@@ -133,7 +133,7 @@ FlushDirtyRowsPerFrame:
 	call CopyDirtyRowSpanToVRAM ; $7130
 	push af ; $7133
 	ldh a, [rLCDC] ; $7134
-	bit 7, a ; $7136
+	bit B_LCDC_ENABLE, a ; $7136
 	jr z, .restore ; $7138
 	call AdvanceFrame ; $713a
 .restore:
@@ -168,7 +168,7 @@ FlushDirtyRowsNow:
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7163
 	push af ; $7166
 	ldh a, [rLCDC] ; $7167
-	bit 7, a ; $7169
+	bit B_LCDC_ENABLE, a ; $7169
 	jr z, .restore ; $716b
 	call AdvanceFrame ; $716d
 .restore:
@@ -460,6 +460,13 @@ ResetGlyphStream:
 	push hl ; $730e
 	xor a ; $730f
 	ld hl, wGlyphPenX ; $7310
+	ASSERT wTextRowWidth == wGlyphPenX + 2, "this code walks from wGlyphPenX into wTextRowWidth"
+	ASSERT wTextRowColumn == wGlyphPenX + 3, "this code walks from wGlyphPenX into wTextRowColumn"
+	ASSERT wGlyphRowStartCol == wGlyphPenX + 4, "this code walks from wGlyphPenX into wGlyphRowStartCol"
+	ASSERT wGlyphFlushedCol == wGlyphPenX + 5, "this code walks from wGlyphPenX into wGlyphFlushedCol"
+	ASSERT wGlyphUploadCount == wGlyphPenX + 6, "this code walks from wGlyphPenX into wGlyphUploadCount"
+	ASSERT wGlyphUploadFirstTile == wGlyphPenX + 7, "this code walks from wGlyphPenX into wGlyphUploadFirstTile"
+	ASSERT wGlyphUploadVramBank == wGlyphPenX + 8, "this code walks from wGlyphPenX into wGlyphUploadVramBank"
 	ld [hl+], a ; $7313
 	ld [hl+], a ; $7314
 	ld [hl+], a ; $7315

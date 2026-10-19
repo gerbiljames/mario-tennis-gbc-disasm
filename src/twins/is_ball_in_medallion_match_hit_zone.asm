@@ -1,7 +1,5 @@
-; One body under 2 names (banks $0d, $0d), assembled through
-; `twin_named is_ball_in_medallion_match_hit_zone, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by IsBallInTreasureBoxHitZone, IsBallInMedallionMatchHitZone (bank
+; $0d).
 
 {TWIN_LABEL}:
 	ld a, [wLastShotCharIndex]

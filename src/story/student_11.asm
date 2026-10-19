@@ -49,8 +49,7 @@ LateStudentCrashCutscene:
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4824
 	script_face ACTOR_ACADEMY_ARRIVAL_WALK_75_06, FACE_DOWN ; $4829
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4830
-	ld a, $11 ; $4838
-	farcall ScriptWaitActorJumpDone ; $483a
+	script_wait_jump ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4838
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 23.0 ; $483d
 	script_wait_move ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4848
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_QUESTION, 25.5, 21.75 ; $484d
@@ -73,15 +72,10 @@ LateStudentCrashCutscene:
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, 63.0, 63.0 ; $48cc
 	script_set_speed ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 1.0 ; $48d7
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $48df
-	ld a, $11 ; $48e7
-	farcall ScriptWaitActorJumpDone ; $48e9
+	script_wait_jump ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $48e7
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 32.0 ; $48ec
 	script_wait_frames 30 ; $48f7
-	ld bc, wActors + 1 * ACTOR_SIZE ; $48fe
-	script_get_actor_state ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4901
-	ld e, l ; $4906
-	ld d, h ; $4907
-	farcall AttachActorWaypointFollower ; $4908
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $48fe
 	script_move_target ACTOR_PLAYER, 24.0, 30.0 ; $490b
 	script_wait_frames 20 ; $4916
 	call LateStudentCrashImpact ; $491d
@@ -183,8 +177,7 @@ LateStudentCrashCutscene:
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, 26.5, 33.75 ; $4b9e
 	sound SFX_CHIME ; $4ba9
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4bab
-	ld a, $11 ; $4bb3
-	farcall ScriptWaitActorJumpDone ; $4bb5
+	script_wait_jump ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4bb3
 	script_wait_frames 10 ; $4bb8
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, 63.0, 63.0 ; $4bbf
 	script_speak ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4bca
@@ -226,8 +219,7 @@ LateStudentCrashCutscene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4cb9
 	script_wait_idle ACTOR_PLAYER ; $4cc0
 	script_jump_velocity ACTOR_ACADEMY_ARRIVAL_WALK_75_06, -2.0 ; $4cc5
-	ld a, $11 ; $4ccd
-	farcall ScriptWaitActorJumpDone ; $4ccf
+	script_wait_jump ACTOR_ACADEMY_ARRIVAL_WALK_75_06 ; $4ccd
 	script_move_target ACTOR_ACADEMY_ARRIVAL_WALK_75_06, 24.0, 51.0 ; $4cd2
 	script_wait_frames 20 ; $4cdd
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4ce4
@@ -290,7 +282,7 @@ AcademyArrivalGreetingScene:
 	script_wait_frames 120 ; $4dd5
 	script_set_position ACTOR_ACADEMY_ARRIVAL_EMILY, 24.0, 15.0 ; $4ddc
 	script_wait_move ACTOR_PLAYER ; $4de7
-	ld a, [wStoryModeGenderOfMainCharacter] ; $4dec
+	ld a, [wStoryMainGender] ; $4dec
 	or a ; $4def
 	jr z, .doubles ; $4df0
 	farcall AdvanceDialogueTextCursor ; $4df2
@@ -389,23 +381,20 @@ FollowGuideIntoAcademy:
 	ld a, $0f ; $4fb4
 	ld [wUnusedExitTriggerIdMirror], a ; $4fb6
 	ld [wStoryModeExitTriggerRequest], a ; $4fb9
-	ld c, 4 ; $4fbc
-	call BeginFadeOut ; $4fbe
+	script_fade_out 4 ; $4fbc
 	call WaitFadeEnd ; $4fc1
 	ret ; $4fc4
 AcademyArrivalInitScriptActorListEnd_11:
 	; $4fc5, 10 bytes (bytes:10)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x00
 AcademyArrivalInitScript_11.scriptRespawnLocationActors:
-	ldh a, [hRomBank] ; $4fcf
-	ld hl, ActorList_11_0 ; $4fd1
-	farcall ScriptRespawnLocationActors ; $4fd4
+	script_respawn_actors ActorList_11_0 ; $4fcf
 	farcall BeginCutsceneScriptMode ; $4fd7
 	test_flag FLAG_DOUBLES ; $4fda
 	jp z, AcademyArrivalInitScript_11.notDoubles ; $4fdd
 	script_null_script ACTOR_PARTNER ; $4fe0
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $4fe5
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4ff0
+	ld a, [wStoryPartnerGender] ; $4ff0
 	ld d, OBJ_HARRY_B ; $4ff3
 	add d ; $4ff5
 	ld d, a ; $4ff6
@@ -417,7 +406,7 @@ AcademyArrivalInitScript_11.scriptRespawnLocationActors:
 	script_set_position ACTOR_LIST_11_0_MARK, 26.0, 17.0 ; $5008
 	script_face ACTOR_LIST_11_0_MARK, FACE_DOWN ; $5013
 AcademyArrivalInitScript_11.notDoubles:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $501a
+	ld a, [wStoryMainGender] ; $501a
 	ld d, OBJ_ALEX_B ; $501d
 	add d ; $501f
 	ld d, a ; $5020
@@ -541,8 +530,7 @@ AcademyArrivalInitScript_11.speak:
 	script_move_target ACTOR_LIST_11_0_WALK_74_08, 25.0, 57.0 ; $5347
 	script_move_target ACTOR_LIST_11_0_WALK_75_06, 24.0, 61.0 ; $5352
 	script_wait_move ACTOR_LIST_11_0_WALK_75_06 ; $535d
-	ld c, 4 ; $5362
-	call BeginFadeOut ; $5364
+	script_fade_out 4 ; $5362
 	call WaitFadeEnd ; $5367
 	ld a, STORYLOC_ISLAND_SKY ; $536a
 	ld [wStoryModeCurrentLocation], a ; $536c

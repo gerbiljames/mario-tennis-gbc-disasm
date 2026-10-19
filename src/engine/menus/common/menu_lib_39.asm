@@ -403,7 +403,7 @@ ResetScreenAndTextWindows:
 	ld de, vTiles2 ; $4c0d
 	farcall LoadCompressedTileBlock ; $4c10
 	wram_bank WRAM_TEXT ; $4c13
-	ld a, $03 ; $4c19
+	ld a, WRAM_SCREEN ; $4c19
 	ld [wShadowTilemapBank], a ; $4c1b
 	ld a, $00 ; $4c1e
 	ld [wWindowTileAttr], a ; $4c20

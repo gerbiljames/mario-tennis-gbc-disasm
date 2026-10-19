@@ -1,7 +1,4 @@
-; One body under 2 names (banks $0b, $0b), assembled through
-; `twin_named stroke_practice1_cases2, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by StrokePractice1Cases2, StrokePractice3Cases2 (bank $0b).
 
 {TWIN_LABEL}:
 	xor a

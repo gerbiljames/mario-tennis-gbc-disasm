@@ -18,15 +18,14 @@ ShowTournamentBracket:
 	ldh a, [hInputPressed] ; $778a
 	bit PADB_A, a ; $778c
 	jr nz, .playSfx ; $778e
-	bit 1, a ; $7790
+	bit PADB_B, a ; $7790
 	jr nz, .playSfx ; $7792
 	call AdvanceFrame ; $7794
 	jr .loop ; $7797
 .playSfx:
 	sound SFX_MENU_SELECT ; $7799
 	call ClearFrameTasks ; $779b
-	ld c, 16 ; $779e
-	call BeginFadeOut ; $77a0
+	script_fade_out 16 ; $779e
 	call WaitFadeEnd ; $77a3
 	ret ; $77a6
 BuildTournamentBracketScreen:
@@ -192,7 +191,7 @@ WriteBracketEntrantName:
 	ld a, [hl+] ; $78d6
 	ld d, [hl] ; $78d7
 	ld e, a ; $78d8
-	ld hl, wStoryModeNameOfMainCharacter ; $78d9
+	ld hl, wStoryMainName ; $78d9
 	call DrawNameWithDiacritics_3b ; $78dc
 	pop hl ; $78df
 	pop de ; $78e0
@@ -209,10 +208,10 @@ WriteBracketDoublesNames:
 	ld a, [wDataScreenPage] ; $78ec
 	cp $01 ; $78ef
 	jr nz, .ne01 ; $78f1
-	ld hl, wStoryModeNameOfMainCharacter ; $78f3
+	ld hl, wStoryMainName ; $78f3
 	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH + 9 ; $78f6
 	call DrawNameWithDiacritics_3b ; $78f9
-	ld hl, wStoryModeNameOfPartnerCharacter ; $78fc
+	ld hl, wStoryPartnerName ; $78fc
 	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 9 ; $78ff
 	call DrawNameWithDiacritics_3b ; $7902
 	ld hl, Text_30_75 ; $7905
@@ -225,10 +224,10 @@ WriteBracketDoublesNames:
 	farcall RenderTextToBuffer64 ; $7918
 	ret ; $791b
 .ne01:
-	ld hl, wStoryModeNameOfMainCharacter ; $791c
+	ld hl, wStoryMainName ; $791c
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 9 ; $791f
 	call DrawNameWithDiacritics_3b ; $7922
-	ld hl, wStoryModeNameOfPartnerCharacter ; $7925
+	ld hl, wStoryPartnerName ; $7925
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 9 ; $7928
 	call DrawNameWithDiacritics_3b ; $792b
 	ld hl, Text_30_75 ; $792e
@@ -382,20 +381,18 @@ RunMarioCastExhibResults:
 	ld a, [wMenuInputPressed] ; $7a42
 	bit PADB_A, a ; $7a45
 	jr nz, .playSfx ; $7a47
-	bit 1, a ; $7a49
+	bit PADB_B, a ; $7a49
 	jr nz, .playSfx2 ; $7a4b
 	jr .loop ; $7a4d
 .playSfx:
 	sound SFX_MENU_SELECT ; $7a4f
-	ld c, 16 ; $7a51
-	call BeginFadeOut ; $7a53
+	script_fade_out 16 ; $7a51
 	call WaitFadeEnd ; $7a56
 	call ClearFrameTasks ; $7a59
 	ret ; $7a5c
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $7a5d
-	ld c, 16 ; $7a5f
-	call BeginFadeOut ; $7a61
+	script_fade_out 16 ; $7a5f
 	call WaitFadeEnd ; $7a64
 	call ClearFrameTasks ; $7a67
 	ld a, $ff ; $7a6a
@@ -482,7 +479,7 @@ BuildMarioCastExhibScreen:
 	ld [wN64ExhibPage], a ; $7b1b
 	ld c, SCREENASSET_ExhibitionMenu ; $7b1e
 	farcall LoadScreenAssetRecord ; $7b20
-	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $7b23
+	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $7b23
 	call LoadChartWindowTiles ; $7b26
 	ld de, vTiles0 + VRAM_BANK1 ; $7b29
 	farcall LoadMenuArrowSpriteTiles ; $7b2c

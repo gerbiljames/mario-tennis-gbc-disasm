@@ -29,7 +29,7 @@ WalkCharsOffCourt:
 .waitLoop:
 	call StepMatchFrame ; $6025
 	call ReadMatchInputPressed ; $6028
-	and $0b ; $602b
+	and PADF_A | PADF_B | PADF_START ; $602b
 	jr nz, .settle ; $602d
 	call CheckAllCharsPhaseDone ; $602f
 	jr z, .waitLoop ; $6032
@@ -171,6 +171,7 @@ GetCharChangeoverPositionTable:
 PlayCourtIntro:
 	ld b, $44 ; $6117
 	ld a, [wMatchContext] ; $6119
+	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	and a ; $611c
 	jr z, .playFanfare ; $611d
 	ld b, $45 ; $611f
@@ -181,6 +182,7 @@ PlayCourtIntro:
 	cp GAMEMODE_ISLAND_OPEN ; $6128
 	jr z, .panCamera ; $612a
 	ld a, [wMatchContext] ; $612c
+	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	and a ; $612f
 	jr nz, .done ; $6130
 .panCamera:
@@ -227,7 +229,7 @@ PanCamera:
 	add l ; $6182
 	ld e, a ; $6183
 	call ReadMatchInputPressed ; $6184
-	and $0b ; $6187
+	and PADF_A | PADF_B | PADF_START ; $6187
 	jr nz, .done ; $6189
 	call StepMatchFrame ; $618b
 	dec b ; $618e

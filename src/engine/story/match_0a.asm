@@ -1,6 +1,6 @@
 InitStoryMatchSettings:
 	farcall InitDefaultMatchSettings ; $4931
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4934
+	ld a, [wStoryMainChar] ; $4934
 	ld [wMatchPlayerChar], a ; $4937
 	xor a ; $493a
 	ld [wMatchIsDoubles], a ; $493b
@@ -20,8 +20,7 @@ InitStoryMatchSettings:
 	ld [wMatchContext], a ; $495e
 	ret ; $4961
 RunStoryMatch:
-	ld c, 16 ; $4962
-	call BeginFadeOut ; $4964
+	script_fade_out 16 ; $4962
 	call WaitFadeEnd ; $4967
 	call AssignStoryMatchCharacters ; $496a
 	farcall RunMatch ; $496d
@@ -42,13 +41,13 @@ RunStoryMatch:
 	ld [wKeepMatchStatsFlag], a ; $498d
 	ret ; $4990
 RestoreOverworldAfterMatch:
-	ld c, 16 ; $4991
-	call BeginFadeOut ; $4993
+	script_fade_out 16 ; $4991
 	call WaitFadeEnd ; $4996
 	farcall LoadStoryObjPalettes ; $4999
 	call DisableLCDSafely ; $499c
 	farcall LoadMenuFontGfx ; $499f
 	call EnableLCD ; $49a2
+	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	xor a ; $49a5
 	ld [wMatchContext], a ; $49a6
 	ret ; $49a9

@@ -150,8 +150,13 @@ wStoryModeMenuRequest:: db
 ; [8-bit] Scene stage of the loaded location, derived from save flags by the map's init script (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, ComputeRankingProgressIndex_27, ...). NPC scripts index per-stage text-id tables with it. Values are per location. First byte of the $c2b0-$c2bf per-location scratch block
 wMapSceneStage:: db
 
-; [8-bit] Second per-location scene stage, set by map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, TrainingCourtReentryDispatch, the challenger result scenes) and read by that location's NPC scripts to pick a text id
+UNION
+; [8-bit] Second per-location scene stage, set by map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, ComputeSeniorCourtStage) and read by that location's NPC scripts to pick a text id
 wMapSceneStage2:: db
+NEXTU
+; [8-bit] Training Court (bank $15): the actor slot of the challenger a result scene walks on, from TrainingCourtReentryDispatch or the scene itself: $06 Bob (serve), $0c Allie (stroke), $11 Brian (net)
+wChallengerActor:: db
+ENDU
 
 ; Per-location scratch, rest of $c2b0-$c2bf. Bank $14's island cutscenes
 ; keep two sprite slots here as parallel byte arrays, and bank $15's
@@ -226,10 +231,10 @@ wStoryModeShowLocationName:: db
 ; [16-bit] Text id of the location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set
 wStoryModeLocationNameTextId:: dw
 
-; [8-bit] The talked-to actor's +$19 byte, saved by RunNpcInteraction while it forces it to 1 for the script, restored afterwards
-wStoryScriptSavedActorBusy:: db
+; [8-bit] The talked-to actor's ACTORF_ANIM_RATE_MOVING, saved by RunNpcInteraction while it forces it to 1 for the script, restored afterwards
+wStoryScriptSavedActorAnimRate:: db
 
-; [8-bit] The talked-to actor's +$2e animation, saved by RunNpcInteraction when the handler's arg0 has bit 3 set and restored with SetActorAnimationChecked afterwards
+; [8-bit] The talked-to actor's ACTORF_ANIM, saved by RunNpcInteraction when the handler's arg0 has bit 3 set and restored with SetActorAnimationChecked afterwards
 wStoryScriptSavedActorAnim:: db
 
 ; [8-bit] Set to 1 by RunStoryScriptOrDialogue when it dispatches a location script; the overworld loop clears it before checking interactions and stops looking for triggers this frame once set
@@ -248,7 +253,7 @@ wDrillAbortCountdownActive:: db
 ; [8-bit] Cleared by ServiceMatch2Hook_PointStart and read by nothing
 wUnusedDrillPointStartByte:: db
 
-; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (0 = passed, 1 = no points won, 2 = double fault, 3 = target missed, 4+ = partial, offset by wStoryModeMainCharacterLeftHanded). The bank $15 training-court coaches pick their follow-up dialogue on it
+; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (0 = passed, 1 = no points won, 2 = double fault, 3 = target missed, 4+ = partial, offset by wStoryMainLeftHanded). The bank $15 training-court coaches pick their follow-up dialogue on it
 wDrillLessonResult:: db
 
 ; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneHit when the ball bounced inside the target zone; CountDrillResultBitsSet and CheckDrillTargetZoneMissed read it back

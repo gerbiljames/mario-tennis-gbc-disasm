@@ -403,7 +403,7 @@ RunLocationInitScript:
 	push hl ; $5498
 	ldh a, [hWramBank] ; $5499
 	push af ; $549b
-	ld a, $90 ; $549c
+	ld a, SCREEN_HEIGHT_PX ; $549c
 	ldh [rWY], a ; $549e
 	ld hl, wMapInitScriptPtr ; $54a0
 	ld a, [hl+] ; $54a3
@@ -446,16 +446,16 @@ RunNpcInteraction:
 	call GetActorStateAddr ; $54ea
 	ld e, l ; $54ed
 	ld d, h ; $54ee
-	ld hl, $0019 ; $54ef
+	ld hl, ACTORF_ANIM_RATE_MOVING ; $54ef
 	add hl, de ; $54f2
 	ld a, [hl] ; $54f3
-	ld [wStoryScriptSavedActorBusy], a ; $54f4
+	ld [wStoryScriptSavedActorAnimRate], a ; $54f4
 	ld a, $01 ; $54f7
 	ld [hl], a ; $54f9
 	ld a, b ; $54fa
 	and NPC_IDLE_ANIM ; $54fb
 	jr z, .applyFlags ; $54fd
-	ld hl, $002e ; $54ff
+	ld hl, ACTORF_ANIM ; $54ff
 	add hl, de ; $5502
 	ld a, [hl] ; $5503
 	ld [wStoryScriptSavedActorAnim], a ; $5504
@@ -472,14 +472,14 @@ RunNpcInteraction:
 	ld a, b ; $5514
 	and NPC_FREEZE ; $5515
 	jr z, .faceThePlayer ; $5517
-	ld hl, $0005 ; $5519
+	ld hl, ACTORF_FLAGS ; $5519
 	add hl, de ; $551c
 	set 0, [hl] ; $551d
 	set 1, [hl] ; $551f
 .faceThePlayer:
 	bit NPCB_FACE_PLAYER, b ; $5521
 	jr z, .runScript ; $5523
-	ld hl, $0014 ; $5525
+	ld hl, ACTORF_HEADING ; $5525
 	add hl, de ; $5528
 	ld c, [hl] ; $5529
 	ld a, [wPlayerMoveAngle] ; $552a
@@ -496,14 +496,14 @@ RunNpcInteraction:
 	pop de ; $553d
 	bit NPCB_RESTORE_FACING, b ; $553e
 	jr z, .restoreFlags ; $5540
-	ld hl, $0014 ; $5542
+	ld hl, ACTORF_HEADING ; $5542
 	add hl, de ; $5545
 	ld [hl], c ; $5546
 .restoreFlags:
 	ld a, b ; $5547
 	and NPC_FREEZE ; $5548
 	jr z, .restoreAnim ; $554a
-	ld hl, $0005 ; $554c
+	ld hl, ACTORF_FLAGS ; $554c
 	add hl, de ; $554f
 	res 0, [hl] ; $5550
 	res 1, [hl] ; $5552
@@ -521,9 +521,9 @@ RunNpcInteraction:
 	pop de ; $5564
 	pop bc ; $5565
 .clearBusy:
-	ld hl, $0019 ; $5566
+	ld hl, ACTORF_ANIM_RATE_MOVING ; $5566
 	add hl, de ; $5569
-	ld a, [wStoryScriptSavedActorBusy] ; $556a
+	ld a, [wStoryScriptSavedActorAnimRate] ; $556a
 	ld [hl], a ; $556d
 .checkRespawn:
 	pop hl ; $556e

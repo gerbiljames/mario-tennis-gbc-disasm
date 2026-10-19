@@ -412,7 +412,7 @@ LoadStorySceneGraphics:
 	ld de, wDecompBuffer ; $58f0
 	ld bc, $0040 ; $58f3
 	call CopyDataFromBank ; $58f6
-	ld hl, wDecompBuffer + 1 * TILE_SIZE ; $58f9
+	ld hl, wDecompBuffer tile 1 ; $58f9
 	ld_bg_pals de, 2, 6 ; $58fc
 	call LoadPaletteShadow ; $58ff
 	wram_bank WRAM_SCENE ; $5902
@@ -527,6 +527,7 @@ UpdateSceneScroll:
 	ret ; $59d8
 SceneGfxSlotTable:
 	; $59d9, 592 bytes (37 records x 8 slot words)
+	table_width 16
 	dslot DataPtr_MinigameCourtSceneConfig, DataPtr_MinigameCourtPalettes, DataPtr_MinigameCourtTilemap, DataPtr_MinigameCourtAttrmap, DataPtr_MinigameCourtSceneConfigAlias1, DataPtr_MinigameCourtScoreboardColumnAttrs, DataPtr_TargetShotCourtPalettes, DataPtr_MinigameCourtTiles ; record 0 SCENE_MINIGAME_COURT
 	dslot DataPtr_TargetShotCourtSceneConfig, DataPtr_TargetShotCourtPalettesAlias1, DataPtr_TargetShotCourtTilemap, DataPtr_TargetShotCourtAttrmap, DataPtr_TargetShotCourtSceneConfigAlias1, DataPtr_TargetShotCourtScoreboardColumnAttrs, DataPtr_TargetShotCourtSceneUnusedSlot, DataPtr_TargetShotCourtTiles ; record 1 SCENE_TARGET_SHOT_COURT
 	dslot DataPtr_GrassCourtSceneConfig, DataPtr_GrassCourtPalettes, DataPtr_GrassCourtTilemap, DataPtr_GrassCourtAttrmap, DataPtr_GrassCourtSceneConfigAlias1, DataPtr_GrassCourtScoreboardColumnAttrs, DataPtr_TrainingCourtPalettes, DataPtr_GrassCourtTiles ; record 2 SCENE_GRASS_COURT
@@ -564,3 +565,4 @@ SceneGfxSlotTable:
 	dslot DataPtr_TrainingCenterSceneConfig, DataPtr_TrainingCenterPalettes, DataPtr_TrainingCenterTilemap, DataPtr_TrainingCenterAttrmap, DataPtr_TrainingCenterCollisionMap, DataPtr_TrainingCenterBehaviorMap, DataPtr_TournamentSceneConfig, DataPtr_TrainingCenterTiles ; record 34 SCENE_TRAINING_CENTER
 	dslot DataPtr_TournamentSceneConfigAlias1, DataPtr_TournamentPalettes, DataPtr_TournamentTilemap, DataPtr_TournamentAttrmap, DataPtr_TournamentCollisionMap, DataPtr_TournamentBehaviorMap, DataPtr_AwardsCeremonySceneConfig, DataPtr_TournamentTiles ; record 35 SCENE_TOURNAMENT
 	dslot DataPtr_AwardsCeremonySceneConfigAlias1, DataPtr_AwardsCeremonyPalettes, DataPtr_AwardsCeremonyTilemap, DataPtr_AwardsCeremonyAttrmap, DataPtr_AwardsCeremonyCollisionMap, DataPtr_AwardsCeremonyBehaviorMap, DataPtr_AwardsCeremonySceneUnusedSlot, DataPtr_AwardsCeremonyTiles ; record 36 SCENE_AWARDS_CEREMONY
+	assert_table_length NUM_SCENES

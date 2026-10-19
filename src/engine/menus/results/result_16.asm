@@ -399,13 +399,13 @@ LoadResultScreenTileGraphics:
 	or a ; $4e35
 	jr z, LoadMatchResultGfxSet ; $4e36
 	ld hl, MatchResultGfxA2 ; $4e38
-	ld de, vTiles1 + $10 * TILE_SIZE ; $4e3b
+	ld de, vTiles1 tile $10 ; $4e3b
 	call DecompressData ; $4e3e
 	ld hl, MatchResultGfxB4 ; $4e41
-	ld de, vTiles1 + $24 * TILE_SIZE ; $4e44
+	ld de, vTiles1 tile $24 ; $4e44
 	call DecompressData ; $4e47
 	ld hl, MatchResultGfxC9 ; $4e4a
-	ld de, vTiles2 + $14 * TILE_SIZE ; $4e4d
+	ld de, vTiles2 tile $14 ; $4e4d
 	call DecompressData ; $4e50
 	ret ; $4e53
 LoadMatchResultGfxSet:
@@ -425,7 +425,7 @@ LoadMatchResultGfxSet:
 	ld a, [hl+] ; $4e67
 	ld h, [hl] ; $4e68
 	ld l, a ; $4e69
-	ld de, vTiles1 + $10 * TILE_SIZE ; $4e6a
+	ld de, vTiles1 tile $10 ; $4e6a
 	call DecompressData ; $4e6d
 	pop hl ; $4e70
 	inc hl ; $4e71
@@ -434,7 +434,7 @@ LoadMatchResultGfxSet:
 	ld a, [hl+] ; $4e74
 	ld h, [hl] ; $4e75
 	ld l, a ; $4e76
-	ld de, vTiles1 + $24 * TILE_SIZE ; $4e77
+	ld de, vTiles1 tile $24 ; $4e77
 	call DecompressData ; $4e7a
 	pop hl ; $4e7d
 	inc hl ; $4e7e
@@ -442,6 +442,6 @@ LoadMatchResultGfxSet:
 	ld a, [hl+] ; $4e80
 	ld h, [hl] ; $4e81
 	ld l, a ; $4e82
-	ld de, vTiles2 + $14 * TILE_SIZE ; $4e83
+	ld de, vTiles2 tile $14 ; $4e83
 	call DecompressData ; $4e86
 	ret ; $4e89

@@ -3,7 +3,7 @@ EnableTimerInterrupt:
 	xor a ; $2a0f
 	ldh [rIF], a ; $2a10
 	ldh a, [rIE] ; $2a12
-	or $04 ; $2a14
+	or IE_TIMER ; $2a14
 	ldh [rIE], a ; $2a16
 	ei ; $2a18
 	ret ; $2a19
@@ -12,7 +12,7 @@ Unused_00_SetInterruptsVBlankTimerSerial:
 	di ; $2a1a
 	xor a ; $2a1b
 	ldh [rIF], a ; $2a1c
-	ld a, $0d ; $2a1e
+	ld a, IE_SERIAL | IE_TIMER | IE_VBLANK ; $2a1e
 	ldh [rIE], a ; $2a20
 	ei ; $2a22
 	ret ; $2a23
@@ -21,7 +21,7 @@ Unused_00_SetInterruptsVBlankSerial:
 	di ; $2a24
 	xor a ; $2a25
 	ldh [rIF], a ; $2a26
-	ld a, $09 ; $2a28
+	ld a, IE_SERIAL | IE_VBLANK ; $2a28
 	ldh [rIE], a ; $2a2a
 	ei ; $2a2c
 	ret ; $2a2d

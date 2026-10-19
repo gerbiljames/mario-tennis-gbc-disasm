@@ -14,7 +14,7 @@ TryPickRandomReachableTarget:
 	push hl ; $48da
 	ld e, d ; $48db
 	ld d, h ; $48dc
-	ld hl, $0016 ; $48dd
+	ld hl, ACTORF_ANCHOR ; $48dd
 	add hl, bc ; $48e0
 	ld a, [hl+] ; $48e1
 	ld b, [hl] ; $48e2
@@ -81,14 +81,14 @@ ActorScriptOp_WaitMove2:
 	ld hl, hActorPtr ; $4949
 	ld a, [hl+] ; $494c
 	ld h, [hl] ; $494d
-	add $05 ; $494e
+	add ACTORF_FLAGS ; $494e
 	ld l, a ; $4950
 	bit 7, [hl] ; $4951
 	jr nz, .setWait ; $4953
 	ld hl, hActorPtr ; $4955
 	ld a, [hl+] ; $4958
 	ld h, [hl] ; $4959
-	add $03 ; $495a
+	add ACTORF_WAIT ; $495a
 	ld l, a ; $495c
 	ld [hl], $28 ; $495d
 	inc de ; $495f
@@ -97,14 +97,14 @@ ActorScriptOp_WaitMove2:
 	ld hl, hActorPtr ; $4962
 	ld a, [hl+] ; $4965
 	ld h, [hl] ; $4966
-	add $05 ; $4967
+	add ACTORF_FLAGS ; $4967
 	ld l, a ; $4969
 	bit 6, [hl] ; $496a
 	jr z, .done ; $496c
 	ld hl, hActorPtr ; $496e
 	ld a, [hl+] ; $4971
 	ld h, [hl] ; $4972
-	add $03 ; $4973
+	add ACTORF_WAIT ; $4973
 	ld l, a ; $4975
 	ld [hl], $0a ; $4976
 	inc de ; $4978
@@ -162,7 +162,7 @@ Unused_04_ActorScriptOpMoveVector:
 	ld hl, hActorPtr ; $49bf
 	ld a, [hl+] ; $49c2
 	ld h, [hl] ; $49c3
-	add $08 ; $49c4
+	add ACTORF_TARGET_X ; $49c4
 	ld l, a ; $49c6
 	ld [hl], c ; $49c7
 	inc hl ; $49c8
@@ -310,7 +310,7 @@ DrawActors:
 	dec c ; $4a96
 	or a ; $4a97
 	jr z, .next ; $4a98
-	ld hl, $0031 ; $4a9a
+	ld hl, ACTORF_DRAW_DELAY ; $4a9a
 	add hl, bc ; $4a9d
 	ld a, [hl] ; $4a9e
 	and a ; $4a9f
@@ -319,7 +319,7 @@ DrawActors:
 	jr .next ; $4aa3
 .drawActor:
 	push de ; $4aa5
-	ld hl, $0022 ; $4aa6
+	ld hl, ACTORF_OBJECT_BANK ; $4aa6
 	add hl, bc ; $4aa9
 	ld a, [hl] ; $4aaa
 	ld [wActorScriptBank], a ; $4aab
@@ -330,7 +330,7 @@ DrawActors:
 	call z, DrawAndAnimateActor ; $4ab5
 	pop de ; $4ab8
 .next:
-	ld hl, $0040 ; $4ab9
+	ld hl, ACTOR_SIZE ; $4ab9
 	add hl, bc ; $4abc
 	ld c, l ; $4abd
 	ld b, h ; $4abe
@@ -355,7 +355,7 @@ LoadActorObjectDef:
 	ld a, [hl+] ; $4add
 	ld h, [hl] ; $4ade
 	ld l, a ; $4adf
-	ld a, $22 ; $4ae0
+	ld a, ACTORF_OBJECT_BANK ; $4ae0
 	add c ; $4ae2
 	ld e, a ; $4ae3
 	ld d, b ; $4ae4
@@ -403,7 +403,7 @@ LoadActorObjectDef:
 	ld a, [hl+] ; $4b35
 	ld h, [hl] ; $4b36
 	ld l, a ; $4b37
-	ld a, $22 ; $4b38
+	ld a, ACTORF_OBJECT_BANK ; $4b38
 	add c ; $4b3a
 	ld e, a ; $4b3b
 	ld d, b ; $4b3c

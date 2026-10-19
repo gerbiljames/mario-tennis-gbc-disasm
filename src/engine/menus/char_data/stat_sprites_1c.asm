@@ -301,17 +301,17 @@ CharDataScreen_InputLoop:
 	jp .finish ; $50ba
 .readInput:
 	pop af ; $50bd
-	bit 0, a ; $50be
+	bit PADB_A, a ; $50be
 	jr nz, .pressA ; $50c0
-	bit 1, a ; $50c2
+	bit PADB_B, a ; $50c2
 	jr nz, .pressB ; $50c4
-	bit 4, a ; $50c6
+	bit PADB_RIGHT, a ; $50c6
 	jr nz, .moveRight ; $50c8
-	bit 5, a ; $50ca
+	bit PADB_LEFT, a ; $50ca
 	jr nz, .moveLeft ; $50cc
-	bit 7, a ; $50ce
+	bit PADB_DOWN, a ; $50ce
 	jr nz, .moveDown ; $50d0
-	bit 6, a ; $50d2
+	bit PADB_UP, a ; $50d2
 	jr nz, .moveUp ; $50d4
 	jr CharDataScreen_InputLoop ; $50d6
 .moveUp:
@@ -383,7 +383,7 @@ CharDataScreen_InputLoop:
 .checkStatCap:
 	ld a, [wStoryCharacterSlot] ; $5171
 	push af ; $5174
-	ld hl, wStoryModeNameOfMainCharacter ; $5175
+	ld hl, wStoryMainName ; $5175
 	ld a, [wStoryCharacterSlot] ; $5178
 	or a ; $517b
 	jr z, .readStatCap ; $517c
@@ -493,9 +493,9 @@ CharDataScreen_InputLoop:
 	ldh a, [hInputRisingEdge] ; $5297
 	bit PADB_A, a ; $5299
 	jr nz, .confirmA ; $529b
-	bit 1, a ; $529d
+	bit PADB_B, a ; $529d
 	jr nz, .cancel ; $529f
-	and $c0 ; $52a1
+	and PADF_UP | PADF_DOWN ; $52a1
 	jr z, .confirmLoop ; $52a3
 	sound SFX_MENU_MOVE ; $52a5
 	ld a, [wCharDataConfirmState] ; $52a7

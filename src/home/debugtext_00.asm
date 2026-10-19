@@ -20,9 +20,9 @@ UpdateDebugOverlay:
 	ld [de], a ; $18a6
 	inc de ; $18a7
 	ldh a, [hDebugStepMode] ; $18a8
-	cp $03 ; $18aa
+	cp DEBUGSTEP_CONSOLE_ON ; $18aa
 	jr z, .storeShowDebugConsole2 ; $18ac
-	cp $01 ; $18ae
+	cp DEBUGSTEP_CONSOLE_OFF ; $18ae
 	jr z, .eq01 ; $18b0
 	ldh a, [hVBlankCounter] ; $18b2
 	and $01 ; $18b4

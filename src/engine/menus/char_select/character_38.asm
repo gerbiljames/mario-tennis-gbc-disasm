@@ -42,7 +42,7 @@ RunCharacterSelectScreen:
 	script_fade_in 8 ; $4842
 	call WaitFadeEnd ; $4847
 	ld hl, rIE ; $484a
-	res 2, [hl] ; $484d
+	res B_IE_TIMER, [hl] ; $484d
 	ld a, $01 ; $484f
 	ld hl, TickMenuBgScrollTask_38 ; $4851
 	call RegisterFrameTask ; $4854
@@ -60,15 +60,14 @@ RunCharacterSelectScreen:
 	ldh a, [hInputPressed] ; $486c
 	bit PADB_A, a ; $486e
 	jr nz, .confirm ; $4870
-	bit 1, a ; $4872
+	bit PADB_B, a ; $4872
 	jr nz, .cancel ; $4874
-	bit 3, a ; $4876
+	bit PADB_START, a ; $4876
 	jr nz, .viewStats ; $4878
 	jr .redraw ; $487a
 .confirm:
 	sound SFX_MENU_SELECT ; $487c
-	ld c, 16 ; $487e
-	call BeginFadeOut ; $4880
+	script_fade_out 16 ; $487e
 	call WaitFadeEnd ; $4883
 	ld c, $02 ; $4886
 	call GetMenuCursorIndex_38 ; $4888
@@ -86,7 +85,7 @@ RunCharacterSelectScreen:
 	ld a, [wStoryCharacterSlot] ; $489f
 	farcall InitPlayerRecordFromTemplate ; $48a2
 	push af ; $48a5
-	ld hl, wStoryModeNameOfMainCharacter ; $48a6
+	ld hl, wStoryMainName ; $48a6
 	ld a, [wStoryCharacterSlot] ; $48a9
 	or a ; $48ac
 	jr z, .finish ; $48ad
@@ -105,7 +104,7 @@ RunCharacterSelectScreen:
 	push af ; $48bf
 	call ClearFrameTasks ; $48c0
 	ld hl, rIE ; $48c3
-	set 2, [hl] ; $48c6
+	set B_IE_TIMER, [hl] ; $48c6
 	call DisableLCDSafely ; $48c8
 	farcall LoadMenuFontGfx ; $48cb
 	call EnableLCD ; $48ce
@@ -113,12 +112,11 @@ RunCharacterSelectScreen:
 	ret ; $48d2
 .cancel:
 	sound SFX_MENU_CANCEL ; $48d3
-	ld c, 16 ; $48d5
-	call BeginFadeOut ; $48d7
+	script_fade_out 16 ; $48d5
 	call WaitFadeEnd ; $48da
 	call ClearFrameTasks ; $48dd
 	ld hl, rIE ; $48e0
-	set 2, [hl] ; $48e3
+	set B_IE_TIMER, [hl] ; $48e3
 	call DisableLCDSafely ; $48e5
 	farcall LoadMenuFontGfx ; $48e8
 	call EnableLCD ; $48eb
@@ -206,7 +204,7 @@ SetupCharacterSelectScreen:
 	ld [wCameraX + 1], a ; $498d
 	ld [wCameraY], a ; $4990
 	ld [wCameraY + 1], a ; $4993
-	ld a, $90 ; $4996
+	ld a, SCREEN_HEIGHT_PX ; $4996
 	ldh [rWY], a ; $4998
 	call ClearSpriteQueue ; $499a
 	ld a, $02 ; $499d
@@ -225,7 +223,7 @@ SetupCharacterSelectScreen:
 	ld de, vTiles2 ; $49be
 	farcall LoadCompressedTileBlock ; $49c1
 	wram_bank WRAM_TEXT ; $49c4
-	ld a, $03 ; $49ca
+	ld a, WRAM_SCREEN ; $49ca
 	ld [wShadowTilemapBank], a ; $49cc
 	ld a, $00 ; $49cf
 	ld [wWindowTileAttr], a ; $49d1
@@ -248,11 +246,11 @@ SetupCharacterSelectScreen:
 	farcall UploadGlyphBuffer ; $4a08
 	ld a, CHAR_ALEX ; $4a0b
 	farcall LoadCharMugshotToBuffer ; $4a0d
-	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $4a10
+	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $4a10
 	farcall CopyMugshotBufferToVram ; $4a13
 	ld a, CHAR_NINA ; $4a16
 	farcall LoadCharMugshotToBuffer ; $4a18
-	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $4a1b
+	ld de, vTiles2 tile $30 + VRAM_BANK1 ; $4a1b
 	farcall CopyMugshotBufferToVram ; $4a1e
 	wram_bank WRAM_COURT_PLANES ; $4a21
 	ld a, [wCharSelectIsPartner] ; $4a27
@@ -260,11 +258,11 @@ SetupCharacterSelectScreen:
 	jr z, .secondRow ; $4a2b
 	ld a, CHAR_HARRY ; $4a2d
 	farcall LoadCharMugshotToBuffer ; $4a2f
-	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $4a32
+	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $4a32
 	farcall CopyMugshotBufferToVram ; $4a35
 	ld a, CHAR_KATE ; $4a38
 	farcall LoadCharMugshotToBuffer ; $4a3a
-	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $4a3d
+	ld de, vTiles2 tile $30 + VRAM_BANK1 ; $4a3d
 	farcall CopyMugshotBufferToVram ; $4a40
 	wram_bank WRAM_SCREEN ; $4a43
 	ld b, $03 ; $4a49
@@ -300,7 +298,7 @@ SetupCharacterSelectScreen:
 	ld [wMenuBgScrollTile + 1], a ; $4a94
 	ld b, TILEBLOCK_SharedMenuGfx72 ; $4a97
 	ld c, SharedMenuGfx72_SIZE / 16 ; $4a99
-	ld de, vTiles0 + $10 * TILE_SIZE ; $4a9b
+	ld de, vTiles0 tile $10 ; $4a9b
 	farcall LoadCompressedTileBlock ; $4a9e
 	call LoadCharSelectCharPalettes ; $4aa1
 	call LoadHighlightedCharPalette ; $4aa4

@@ -80,7 +80,7 @@ wCharDataNewLevels:: ds 4
 wCharDataPointsLeft:: db
 ; [4 bytes] Spin/Power/Control/Speed levels as loaded from record +$38-$3b (LoadCharStats / LoadCharStatsWithLevelUpDeltas)
 wCharDataLevels:: ds 4
-; [11 bytes] The eleven displayed stats, record +$20-$2a plus 1 each (order as wStoryMainCharStats)
+; [11 bytes] The eleven displayed stats, record +$20-$2a plus 1 each (order as wStoryMainStats)
 wCharDataStats:: ds 11
 ; [11 bytes] Per-stat change the pending level-up would apply, from ComputeLevelUpStatDeltas (cleared when wCharDataPage is $04); DrawStatArrowIndicators draws an up/down arrow per stat
 wCharDataStatDeltas:: ds 11
@@ -162,7 +162,7 @@ wCharDataNumberBuffer:: ds 6
 	ds 11
 ; [8-bit] Cleared by CharDataScreen_InitState with the rest of the screen state; nothing reads it
 wCharDataRevealDone:: db
-; [11 bytes] The eleven stats recomputed without the racket, to show what the equipment is worth. Filled by CharDataScreen_BuildStats from wStoryMainCharStats after RecomputeStatsWithoutRacket; untouched when nothing is equipped
+; [11 bytes] The eleven stats recomputed without the racket, to show what the equipment is worth. Filled by CharDataScreen_BuildStats from wStoryMainStats after RecomputeStatsWithoutRacket; untouched when nothing is equipped
 wCharDataStatsNoRacket:: ds 11
 ; [11 bytes] Per-stat difference the equipped racket makes, zeroed first so an unequipped character shows no arrows; read by DrawStatChangeArrows with wCharDataStatsNoRacket
 wCharDataRacketDeltas:: ds 11

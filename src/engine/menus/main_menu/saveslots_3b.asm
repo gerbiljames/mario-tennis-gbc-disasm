@@ -31,22 +31,22 @@ BuildSaveSlotSummaries:
 	ld c, l ; $5af5
 	jr .restore ; $5af6
 .checkStoryModeMainCharacterOverworldSprite:
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $5af8
+	ld a, [wStoryMainChar] ; $5af8
 	ld [hl], a ; $5afb
 	ld hl, $0001 ; $5afc
 	add hl, bc ; $5aff
-	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $5b00
+	ld a, [wStoryMainPalette] ; $5b00
 	ld [hl], a ; $5b03
 	ld hl, $0002 ; $5b04
 	add hl, bc ; $5b07
-	ld a, [wStoryMainCharExpTier] ; $5b08
+	ld a, [wStoryMainLevel] ; $5b08
 	ld [hl], a ; $5b0b
 	push bc ; $5b0c
 	ld a, $03 ; $5b0d
 	add c ; $5b0f
 	ld e, a ; $5b10
 	ld d, b ; $5b11
-	ld hl, wStoryModeNameOfMainCharacter ; $5b12
+	ld hl, wStoryMainName ; $5b12
 	ld bc, $000b ; $5b15
 	call CopyMemoryBC ; $5b18
 	pop bc ; $5b1b
@@ -248,7 +248,7 @@ TryMainMenuLinkHandshake:
 	xor a ; $5c54
 	ldh [rIF], a ; $5c55
 	ldh a, [rIE] ; $5c57
-	and $09 ; $5c59
+	and IE_SERIAL | IE_VBLANK ; $5c59
 	ldh [rIE], a ; $5c5b
 	ei ; $5c5d
 	ld a, [wMenuCursorX] ; $5c5e
@@ -295,15 +295,14 @@ TryMainMenuLinkHandshake:
 	ldh a, [hInputPressed] ; $5cac
 	bit PADB_A, a ; $5cae
 	jr nz, .beginFadeOut ; $5cb0
-	bit 1, a ; $5cb2
+	bit PADB_B, a ; $5cb2
 	jr nz, .beginFadeOut ; $5cb4
 	dec de ; $5cb6
 	ld a, d ; $5cb7
 	or e ; $5cb8
 	jr nz, .loopB ; $5cb9
 .beginFadeOut:
-	ld c, 64 ; $5cbb
-	call BeginFadeOut ; $5cbd
+	script_fade_out 64 ; $5cbb
 	call WaitFadeEnd ; $5cc0
 	call DisableLCDSafely ; $5cc3
 	farcall ResetScreenAndTextWindows ; $5cc6
@@ -327,7 +326,7 @@ Unused_3b_RestoreScreenAfterLinkAttempt:
 	ret ; $5cf2
 RunMatchFormatSelect:
 	ld hl, rIE ; $5cf3
-	res 2, [hl] ; $5cf6
+	res B_IE_TIMER, [hl] ; $5cf6
 	sound BGM_MENU ; $5cf8
 	call LoadMatchFormatGfx ; $5cfa
 	wram_bank WRAM_SCREEN ; $5cfd
@@ -360,13 +359,13 @@ RunMatchFormatSelect:
 	ld a, [wMenuInputPressed] ; $5d42
 	bit PADB_A, a ; $5d45
 	jr nz, .playSfx ; $5d47
-	bit 1, a ; $5d49
+	bit PADB_B, a ; $5d49
 	jr nz, .playSfx2 ; $5d4b
 	jr .loop ; $5d4d
 .playSfx:
 	sound SFX_MENU_SELECT ; $5d4f
 	ld hl, rIE ; $5d51
-	set 2, [hl] ; $5d54
+	set B_IE_TIMER, [hl] ; $5d54
 	call ClearFrameTasks ; $5d56
 	ld b, $01 ; $5d59
 	call MatchFormatSlideOut ; $5d5b
@@ -378,7 +377,7 @@ RunMatchFormatSelect:
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $5d69
 	ld hl, rIE ; $5d6b
-	set 2, [hl] ; $5d6e
+	set B_IE_TIMER, [hl] ; $5d6e
 	call ClearFrameTasks ; $5d70
 	ld b, $00 ; $5d73
 	call MatchFormatSlideOut ; $5d75
@@ -493,37 +492,37 @@ LoadMatchFormatGfx:
 	call AdvanceFrame ; $5e45
 	ld b, TILEBLOCK_SharedMenuGfx36 ; $5e48
 	ld c, SharedMenuGfx36_SIZE / 16 ; $5e4a
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5e4c
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5e4c
 	farcall LoadCompressedTileBlock ; $5e4f
 	call AdvanceFrame ; $5e52
 	ld b, TILEBLOCK_SharedMenuGfx37 ; $5e55
 	ld c, SharedMenuGfx37_SIZE / 16 ; $5e57
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5e59
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5e59
 	farcall LoadCompressedTileBlock ; $5e5c
 	call AdvanceFrame ; $5e5f
 	ld b, TILEBLOCK_SharedMenuGfx38 ; $5e62
 	ld c, SharedMenuGfx38_SIZE / 16 ; $5e64
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $5e66
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5e66
 	farcall LoadCompressedTileBlock ; $5e69
 	call AdvanceFrame ; $5e6c
 	ld b, TILEBLOCK_SharedMenuGfx39 ; $5e6f
 	ld c, SharedMenuGfx39_SIZE / 16 ; $5e71
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $5e73
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $5e73
 	farcall LoadCompressedTileBlock ; $5e76
 	call AdvanceFrame ; $5e79
 	ld b, TILEBLOCK_SharedMenuGfx40 ; $5e7c
 	ld c, SharedMenuGfx40_SIZE / 16 ; $5e7e
-	ld de, vTiles0 + $50 * TILE_SIZE + VRAM_BANK1 ; $5e80
+	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $5e80
 	farcall LoadCompressedTileBlock ; $5e83
 	call AdvanceFrame ; $5e86
 	ld b, TILEBLOCK_SharedMenuGfx41 ; $5e89
 	ld c, SharedMenuGfx41_SIZE / 16 ; $5e8b
-	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $5e8d
+	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $5e8d
 	farcall LoadCompressedTileBlock ; $5e90
 	call AdvanceFrame ; $5e93
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $5e96
 	ld c, SharedMenuGfx27_SIZE / 16 ; $5e98
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $5e9a
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $5e9a
 	farcall LoadCompressedTileBlock ; $5e9d
 	call AdvanceFrame ; $5ea0
 	ld b, TILEBLOCK_SharedMenuGfx63 ; $5ea3
@@ -591,7 +590,7 @@ HandleMatchFormatInput:
 	ld a, [wMenuInputPressed] ; $5f3c
 	bit PADB_LEFT, a ; $5f3f
 	jr nz, .playSfx ; $5f41
-	bit 4, a ; $5f43
+	bit PADB_RIGHT, a ; $5f43
 	jr nz, .playSfx2 ; $5f45
 	ret ; $5f47
 .playSfx:

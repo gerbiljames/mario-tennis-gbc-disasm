@@ -39,6 +39,7 @@ BeginCutsceneScriptMode:
 	ld a, $01 ; $40ee
 	call SetActorNullScript ; $40f0
 	ldh a, [hDebugStepMode] ; $40f3
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $40f5
 	jr z, .done ; $40f6
 	ld a, $01 ; $40f8
@@ -240,7 +241,7 @@ ShowYesNoPromptWindow:
 	ld hl, hActorPtr ; $4268
 	ld a, [hl+] ; $426b
 	ld h, [hl] ; $426c
-	add $0c ; $426d
+	add ACTORF_X ; $426d
 	ld l, a ; $426f
 	inc hl ; $4270
 	inc hl ; $4271
@@ -362,7 +363,7 @@ GetActorStateAddr:
 .haveAddr:
 	wram_bank WRAM_ACTORS ; $4326
 	push hl ; $432c
-	ld a, $20 ; $432d
+	ld a, ACTORF_MODE ; $432d
 	add l ; $432f
 	ld l, a ; $4330
 	jr nc, .readActive ; $4331
@@ -378,7 +379,7 @@ ScriptSetActorMoveSpeed:
 	call GetActorStateAddr ; $433b
 	ret z ; $433e
 	wram_bank WRAM_ACTORS ; $433f
-	ld a, $06 ; $4345
+	ld a, ACTORF_SPEED ; $4345
 	add l ; $4347
 	ld l, a ; $4348
 	jr nc, .store ; $4349

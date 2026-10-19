@@ -177,20 +177,18 @@ ShowMinigameDataScreen:
 	ld a, [wMenuInputPressed] ; $741e
 	bit PADB_A, a ; $7421
 	jr nz, .playSfx ; $7423
-	bit 1, a ; $7425
+	bit PADB_B, a ; $7425
 	jr nz, .playSfx2 ; $7427
 	jr .loop ; $7429
 .playSfx:
 	sound SFX_MENU_SELECT ; $742b
-	ld c, 16 ; $742d
-	call BeginFadeOut ; $742f
+	script_fade_out 16 ; $742d
 	call WaitFadeEnd ; $7432
 	call ClearFrameTasks ; $7435
 	ret ; $7438
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $7439
-	ld c, 16 ; $743b
-	call BeginFadeOut ; $743d
+	script_fade_out 16 ; $743b
 	call WaitFadeEnd ; $7440
 	call ClearFrameTasks ; $7443
 	ld a, $ff ; $7446
@@ -203,14 +201,14 @@ BuildMinigameDataScreen:
 	ld [wMenuCursorY], a ; $7452
 	wram_bank WRAM_SCREEN ; $7455
 	call LoadMinigameDataState ; $745b
-	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $745e
+	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $745e
 	farcall LoadChartWindowTiles ; $7461
 	ld de, vTiles0 + VRAM_BANK1 ; $7464
 	farcall LoadMenuArrowSpriteTiles ; $7467
 	ld b, $08 ; $746a
 	ld c, $0f ; $746c
 	farcall LoadIndexedPalette ; $746e
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $7471
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $7471
 	ld b, $09 ; $7474
 	ld c, $00 ; $7476
 	farcall InitNumberSpriteGfx ; $7478
@@ -237,7 +235,7 @@ ScrollMinigameDataList:
 	ld a, [wMenuInputPressed] ; $74a2
 	bit PADB_DOWN, a ; $74a5
 	jr nz, .checkMenuCursorY ; $74a7
-	bit 6, a ; $74a9
+	bit PADB_UP, a ; $74a9
 	jr nz, .checkMenuCursorY2 ; $74ab
 	ret ; $74ad
 .checkMenuCursorY:

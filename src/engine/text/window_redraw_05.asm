@@ -15,7 +15,7 @@ GetSpeakerVoice:
 	ld hl, hActorPtr ; $60a5
 	ld a, [hl+] ; $60a8
 	ld h, [hl] ; $60a9
-	add $21 ; $60aa
+	add ACTORF_OBJECT ; $60aa
 	ld l, a ; $60ac
 	ld a, [hl] ; $60ad
 	ld c, a ; $60ae
@@ -233,18 +233,18 @@ UploadGlyphTilesPartial:
 	call QueueVRAMCopy ; $623f
 	push af ; $6242
 	ldh a, [rLCDC] ; $6243
-	bit 7, a ; $6245
+	bit B_LCDC_ENABLE, a ; $6245
 	jr z, .restore ; $6247
 	call AdvanceFrame ; $6249
 .restore:
 	pop af ; $624c
-	ld hl, wGlyphTileBuffer + 27 * TILE_SIZE ; $624d
-	ld de, vTiles1 + $1b * TILE_SIZE ; $6250
+	ld hl, wGlyphTileBuffer tile 27 ; $624d
+	ld de, vTiles1 tile $1b ; $6250
 	ld c, 27 ; $6253
 	call QueueVRAMCopy ; $6255
 	push af ; $6258
 	ldh a, [rLCDC] ; $6259
-	bit 7, a ; $625b
+	bit B_LCDC_ENABLE, a ; $625b
 	jr z, .restore2 ; $625d
 	call AdvanceFrame ; $625f
 .restore2:
@@ -430,7 +430,7 @@ Unused_05_ChooseSpeechBubbleHalf:
 	ld hl, hActorPtr ; $63aa
 	ld a, [hl+] ; $63ad
 	ld h, [hl] ; $63ae
-	add $0e ; $63af
+	add ACTORF_Y ; $63af
 	ld l, a ; $63b1
 	inc hl ; $63b2
 	ld a, [hl] ; $63b3

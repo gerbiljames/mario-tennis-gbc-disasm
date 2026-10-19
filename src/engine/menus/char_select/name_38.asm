@@ -199,7 +199,7 @@ RunNameEntryScreen:
 	script_fade_in 16 ; $6e46
 	call WaitFadeEnd ; $6e4b
 	ld hl, rIE ; $6e4e
-	res 2, [hl] ; $6e51
+	res B_IE_TIMER, [hl] ; $6e51
 	ld a, $01 ; $6e53
 	ld hl, TickMenuBgScrollTask_38 ; $6e55
 	call RegisterFrameTask ; $6e58
@@ -225,9 +225,9 @@ RunNameEntryScreen:
 	ld a, [wMenuInputPressed] ; $6e7e
 	bit PADB_A, a ; $6e81
 	jr nz, .pressA ; $6e83
-	bit 1, a ; $6e85
+	bit PADB_B, a ; $6e85
 	jr nz, .pressB ; $6e87
-	bit 2, a ; $6e89
+	bit PADB_SELECT, a ; $6e89
 	jr nz, .beep ; $6e8b
 	jr .redraw ; $6e8d
 .pressA:
@@ -262,12 +262,11 @@ RunNameEntryScreen:
 	jr .redraw ; $6ecc
 .cancel:
 	sound SFX_MENU_CANCEL ; $6ece
-	ld c, 16 ; $6ed0
-	call BeginFadeOut ; $6ed2
+	script_fade_out 16 ; $6ed0
 	call WaitFadeEnd ; $6ed5
 	call ClearFrameTasks ; $6ed8
 	ld hl, rIE ; $6edb
-	set 2, [hl] ; $6ede
+	set B_IE_TIMER, [hl] ; $6ede
 	ld a, $ff ; $6ee0
 	ret ; $6ee2
 .accept:
@@ -287,12 +286,11 @@ RunNameEntryScreen:
 	ld bc, wNameEntryBuffer_SIZE ; $6f0b
 	call CopyMemoryBC ; $6f0e
 	sound SFX_MENU_SELECT ; $6f11
-	ld c, 16 ; $6f13
-	call BeginFadeOut ; $6f15
+	script_fade_out 16 ; $6f13
 	call WaitFadeEnd ; $6f18
 	call ClearFrameTasks ; $6f1b
 	ld hl, rIE ; $6f1e
-	set 2, [hl] ; $6f21
+	set B_IE_TIMER, [hl] ; $6f21
 	ld a, $00 ; $6f23
 	ret ; $6f25
 .storeName:
@@ -316,18 +314,17 @@ RunNameEntryScreen:
 	call QueueVRAMCopy ; $6f53
 	call AdvanceFrame ; $6f56
 	sound SFX_MENU_SELECT ; $6f59
-	ld c, 16 ; $6f5b
-	call BeginFadeOut ; $6f5d
+	script_fade_out 16 ; $6f5b
 	call WaitFadeEnd ; $6f60
 	call ClearFrameTasks ; $6f63
 	ld hl, rIE ; $6f66
-	set 2, [hl] ; $6f69
+	set B_IE_TIMER, [hl] ; $6f69
 	ld a, $00 ; $6f6b
 	ret ; $6f6d
 SetupNameEntryScreen:
 	ld b, TILEBLOCK_NameEntryGfx ; $6f6e
 	ld c, NameEntryGfx_SIZE / 16 ; $6f70
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6f72
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6f72
 	farcall LoadCompressedTileBlock ; $6f75
 	ld hl, vTiles0 + VRAM_BANK1 ; $6f78
 	ld de, $0801 ; $6f7b
@@ -343,7 +340,7 @@ SetupNameEntryScreen:
 	ld de, vTiles2 ; $6f94
 	farcall LoadCompressedTileBlock ; $6f97
 	wram_bank WRAM_TEXT ; $6f9a
-	ld a, $03 ; $6fa0
+	ld a, WRAM_SCREEN ; $6fa0
 	ld [wShadowTilemapBank], a ; $6fa2
 	ld a, $00 ; $6fa5
 	ld [wWindowTileAttr], a ; $6fa7
@@ -371,7 +368,7 @@ SetupNameEntryScreen:
 	push_wram_bank WRAM_COURT_PLANES ; $6fed
 	ld a, [wScreenAttrmap + 1] ; $6ff6
 	farcall LoadCharMugshotToBuffer ; $6ff9
-	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $6ffc
+	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $6ffc
 	farcall CopyMugshotBufferToVram ; $6fff
 	wram_bank WRAM_COURT_PLANES ; $7002
 	call GetActiveStoryNameBuffer ; $7008
@@ -390,7 +387,7 @@ SetupNameEntryScreen:
 	ld [wMenuBgScrollTile + 1], a ; $7029
 	ld b, TILEBLOCK_SharedMenuGfx72 ; $702c
 	ld c, SharedMenuGfx72_SIZE / 16 ; $702e
-	ld de, vTiles0 + $10 * TILE_SIZE ; $7030
+	ld de, vTiles0 tile $10 ; $7030
 	farcall LoadCompressedTileBlock ; $7033
 	push_wram_bank WRAM_COURT_PLANES ; $7036
 	xor a ; $703f
@@ -423,7 +420,7 @@ HandleNameEntryCursorMove:
 	ldh a, [hInputPressed] ; $707b
 	bit PADB_RIGHT, a ; $707d
 	jr nz, .snapRight ; $707f
-	bit 5, a ; $7081
+	bit PADB_LEFT, a ; $7081
 	jr nz, .snapLeft ; $7083
 	jr .done ; $7085
 .snapRight:

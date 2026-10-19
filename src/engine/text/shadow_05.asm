@@ -30,7 +30,7 @@ RestoreAllShadowTilemapRows:
 	jr nz, .loopB ; $4397
 	push af ; $4399
 	ldh a, [rLCDC] ; $439a
-	bit 7, a ; $439c
+	bit B_LCDC_ENABLE, a ; $439c
 	jr z, .restore ; $439e
 	call AdvanceFrame ; $43a0
 .restore:

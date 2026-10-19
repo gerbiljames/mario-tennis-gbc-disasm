@@ -1,7 +1,7 @@
 LoadFireworkObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $6427
 	ld hl, FireworkObjTiles_14 ; $6430
-	ld de, vTiles0 + $10 * TILE_SIZE ; $6433
+	ld de, vTiles0 tile $10 ; $6433
 	ld c, (SpriteTemplate_14_2 - FireworkObjTiles_14) / 16 ; $6436
 	call QueueVRAMCopy ; $6438
 	ld hl, FireworkObjPalettes_14 ; $643b
@@ -86,9 +86,7 @@ UpdateFirework0_14Table:
 UpdateFirework1_14Table:
 	INCBIN "data/story/UpdateFirework1_14Table.bin" ; $64dd, 4 bytes
 IslandSkyInitScript_14.scriptRespawnLocationActors:
-	ldh a, [hRomBank] ; $64e1
-	ld hl, FireworkMapActors_14 ; $64e3
-	farcall ScriptRespawnLocationActors ; $64e6
+	script_respawn_actors FireworkMapActors_14 ; $64e1
 	farcall BeginCutsceneScriptMode ; $64e9
 	call DisableLCDSafely ; $64ec
 	call LoadFireworkObjGfx_14 ; $64ef
@@ -194,8 +192,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld a, $1c ; $6633
 	ld [wCutsceneObjTimer + 1], a ; $6635
 	script_wait_frames 72 ; $6638
-	ld c, 4 ; $663f
-	call BeginFadeOut ; $6641
+	script_fade_out 4 ; $663f
 	call WaitFadeEnd ; $6644
 	call ClearFrameTasks ; $6647
 	test_flag FLAG_DOUBLES ; $664a
@@ -240,7 +237,7 @@ FireworkObjPalettes_14:
 ; Sits after FireworkObjPalettes_14's four palettes, unreferenced: when hInputRisingEdge bit 1 is newly pressed it resets both cutscene firework objects -- X $40/$68, Y $30/$38, phase 0, timer $1e each -- and returns. Nothing calls or jumps to it; UpdateFirework1_14, which follows, is the live routine.
 Unused_14_ResetFireworkObjOnButton:
 	ldh a, [hInputRisingEdge] ; $6ec1
-	and $02 ; $6ec3
+	and PADF_B ; $6ec3
 	jr z, .done ; $6ec5
 	ld a, $40 ; $6ec7
 	ld [wCutsceneObjX], a ; $6ec9
@@ -496,8 +493,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld c, $0f ; $7126
 	farcall SaveStoryReturnPoint ; $7128
 	farcall SaveStorySlotWithTimer ; $712b
-	ld c, 1 ; $712e
-	call BeginFadeOut ; $7130
+	script_fade_out 1 ; $712e
 	call WaitFadeEnd ; $7133
 	ld a, STORYLOC_MAIN_MENU ; $7136
 	ld [wStoryModeCurrentLocation], a ; $7138
@@ -515,8 +511,7 @@ IslandSkyEntry0fAnd0dScene:
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $7150
 	jr z, .done ; $7153
 .finish:
-	ld c, 4 ; $7155
-	call BeginFadeOut ; $7157
+	script_fade_out 4 ; $7155
 	call WaitFadeEnd ; $715a
 	ld a, STORYLOC_PEACHS_CASTLE ; $715d
 	ld [wStoryModeCurrentLocation], a ; $715f
@@ -527,8 +522,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wStoryModeExitTriggerRequest], a ; $716c
 	ret ; $716f
 .done:
-	ld c, 4 ; $7170
-	call BeginFadeOut ; $7172
+	script_fade_out 4 ; $7170
 	call WaitFadeEnd ; $7175
 	ld a, STORYLOC_PEACHS_CASTLE ; $7178
 	ld [wStoryModeCurrentLocation], a ; $717a

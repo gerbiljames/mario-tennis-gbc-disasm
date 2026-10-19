@@ -190,6 +190,7 @@ ENDM
 ; Usage: `flag_id FLAG_NAME` or `flag_id byte_index, bit`.
 MACRO flag_id
 IF _NARG == 1
+	ASSERT (\1) < NUM_GAME_FLAGS, "game flag \1 is past wGameFlags"
 	dw (((\1) / 8) << 8) | (((\1) % 8) << 5)
 ELSE
 	dw ((\1) << 8) | ((\2) << 5)
@@ -209,6 +210,10 @@ ENDM
 ; 5-bit components, as BGR555 words. A palette whose words use bit 15 stays
 ; a plain dw.
 MACRO palette
+	ASSERT _NARG == 12, "palette takes four colours of three components"
+	FOR _CH, 1, 13
+		ASSERT 0 <= (\<_CH>) && (\<_CH>) <= 31, "palette: component {d:_CH} out of 0-31"
+	ENDR
 	dw (\1) | ((\2) << 5) | ((\3) << 10), (\4) | ((\5) << 5) | ((\6) << 10), (\7) | ((\8) << 5) | ((\9) << 10), (\<10>) | ((\<11>) << 5) | ((\<12>) << 10)
 ENDM
 

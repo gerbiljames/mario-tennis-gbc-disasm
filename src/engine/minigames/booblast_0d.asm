@@ -125,9 +125,9 @@ InitMinigame_BooBlast:
 	ld a, [hl+] ; $5645
 	ld [wPlayer2MainAiParams + 3], a ; $5646
 	ld a, [hl+] ; $5649
-	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $564a
+	ld [wPlayer2MainDifficulty], a ; $564a
 	ld a, [hl+] ; $564d
-	ld [wPlayer2MainInitByte], a ; $564e
+	ld [wPlayer2MainPhysics], a ; $564e
 	ret ; $5651
 BooBlastInitParams:
 	; $5652, 6 bytes (bytes:6)

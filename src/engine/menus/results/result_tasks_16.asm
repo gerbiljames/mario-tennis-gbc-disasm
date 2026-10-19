@@ -162,10 +162,10 @@ RunMatchWinLoseScreen:
 	call EnableLCD ; $44cf
 	script_fade_in 16 ; $44d2
 	call WaitFadeEnd ; $44d7
-	ld a, $08 ; $44da
+	ld a, STAT_MODE_0 ; $44da
 	ldh [rSTAT], a ; $44dc
 	ld hl, rIE ; $44de
-	set 1, [hl] ; $44e1
+	set B_IE_STAT, [hl] ; $44e1
 	ld a, $48 ; $44e3
 	ld [wRasterScrollStartLY], a ; $44e5
 	ld a, $57 ; $44e8
@@ -189,30 +189,28 @@ RunMatchWinLoseScreen:
 	ld [wMenuInputPressed], a ; $450c
 	bit PADB_A, a ; $450f
 	jr nz, .playSfx2 ; $4511
-	bit 1, a ; $4513
+	bit PADB_B, a ; $4513
 	jr nz, .playSfx2 ; $4515
-	bit 4, a ; $4517
+	bit PADB_RIGHT, a ; $4517
 	jr nz, .bit4Set ; $4519
 	jr .loop ; $451b
 .playSfx2:
 	sound SFX_MENU_SELECT ; $451d
 	call ClearFrameTasks ; $451f
-	ld c, 64 ; $4522
-	call BeginFadeOut ; $4524
+	script_fade_out 64 ; $4522
 	call WaitFadeEnd ; $4527
 	ld hl, rIE ; $452a
-	res 1, [hl] ; $452d
+	res B_IE_STAT, [hl] ; $452d
 	ld a, $03 ; $452f
 	ld [wAnimatedTilePeriod], a ; $4531
 	ld a, [wMatchWinLoseState] ; $4534
 	ld [wMatchWinLoseFlag], a ; $4537
 	ret ; $453a
 .bit4Set:
-	ld c, 64 ; $453b
-	call BeginFadeOut ; $453d
+	script_fade_out 64 ; $453b
 	call WaitFadeEnd ; $4540
 	ld hl, rIE ; $4543
-	res 1, [hl] ; $4546
+	res B_IE_STAT, [hl] ; $4546
 	call ClearFrameTasks ; $4548
 	call RunMatchStatsScreen ; $454b
 	push af ; $454e
@@ -222,11 +220,10 @@ RunMatchWinLoseScreen:
 	cp $ff ; $4556
 	jp nz, RunMatchWinLoseScreen ; $4558
 	call ClearFrameTasks ; $455b
-	ld c, 8 ; $455e
-	call BeginFadeOut ; $4560
+	script_fade_out 8 ; $455e
 	call WaitFadeEnd ; $4563
 	ld hl, rIE ; $4566
-	res 1, [hl] ; $4569
+	res B_IE_STAT, [hl] ; $4569
 	ld a, $03 ; $456b
 	ld [wAnimatedTilePeriod], a ; $456d
 	ret ; $4570
@@ -271,7 +268,7 @@ InitMatchWinLoseScreen:
 	ld de, wDecompBuffer ; $45db
 	call DecompressData ; $45de
 	ld hl, wDecompBuffer ; $45e1
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $45e4
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $45e4
 	ld c, 32 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
@@ -279,7 +276,7 @@ InitMatchWinLoseScreen:
 	call LoadPaletteShadow ; $45f2
 	ld b, TILEBLOCK_MatchWinLoseGfx ; $45f5
 	ld c, MatchWinLoseGfx_SIZE / 16 ; $45f7
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $45f9
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $45f9
 	farcall LoadCompressedTileBlock ; $45fc
 	pop_wram_bank ; $45ff
 	farcall QueueWram3MapToVRAM ; $4604

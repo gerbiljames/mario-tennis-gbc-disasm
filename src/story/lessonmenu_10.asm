@@ -15,8 +15,7 @@ RunStrokeLessonMenu:
 	ld [wStoryModeEntryPoint], a ; $45b7
 	ld [wUnusedExitTriggerIdMirror], a ; $45ba
 	ld [wStoryModeExitTriggerRequest], a ; $45bd
-	ld c, 16 ; $45c0
-	call BeginFadeOut ; $45c2
+	script_fade_out 16 ; $45c0
 	call WaitFadeEnd ; $45c5
 	farcall ShowDrillBriefingScreen ; $45c8
 	ret ; $45cb
@@ -29,8 +28,7 @@ ShowRankingBoardSamples:
 	ld [wStoryModeEntryPoint], a ; $45da
 	ld [wUnusedExitTriggerIdMirror], a ; $45dd
 	ld [wStoryModeExitTriggerRequest], a ; $45e0
-	ld c, 16 ; $45e3
-	call BeginFadeOut ; $45e5
+	script_fade_out 16 ; $45e3
 	call WaitFadeEnd ; $45e8
 	call ClearFrameTasks ; $45eb
 	xor a ; $45ee

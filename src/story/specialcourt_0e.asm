@@ -43,7 +43,7 @@ PlayStarWarpTransition:
 	ld c, (StarWarpSparkleTiles - StarWarpTiles) / 16 ; $7162
 	call QueueVRAMCopy ; $7164
 	ld hl, StarWarpSparkleTiles ; $7167
-	ld de, vTiles0 + $18 * TILE_SIZE + VRAM_BANK1 ; $716a
+	ld de, vTiles0 tile $18 + VRAM_BANK1 ; $716a
 	ld c, (StarWarpFrameSprites - StarWarpSparkleTiles) / 16 ; $716d
 	call QueueVRAMCopy ; $716f
 	wram_bank WRAM_SCENE ; $7172
@@ -88,8 +88,7 @@ PlayStarWarpTransition:
 	pop_wram_bank ; $71dc
 	ret ; $71e1
 .startFade:
-	ld c, 3 ; $71e2
-	call BeginFadeOut ; $71e4
+	script_fade_out 3 ; $71e2
 	jr .waitLoop ; $71e7
 UpdateStarWarpSprite:
 	wram_bank WRAM_SCENE ; $71e9
@@ -127,6 +126,7 @@ UpdateStarWarpSprite:
 	add d ; $722a
 	ld d, a ; $722b
 	ld hl, wStarWarpPathY ; $722c
+	ASSERT wStarWarpPathX == wStarWarpPathY + 1, "this code walks from wStarWarpPathY into wStarWarpPathX"
 	ld a, e ; $722f
 	ld [hl+], a ; $7230
 	ld [hl], d ; $7231

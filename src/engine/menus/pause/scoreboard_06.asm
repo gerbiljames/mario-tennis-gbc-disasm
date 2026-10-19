@@ -39,19 +39,19 @@ PrepareScoreboardGfx:
 	jr z, .eq02 ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
 	ld b, $01 ; $4974
-	ld de, vTiles0 + $70 * TILE_SIZE ; $4976
+	ld de, vTiles0 tile $70 ; $4976
 	farcall LoadScoreDigitGfx ; $4979
 	ld a, [wPlayer1SetsWon] ; $497c
 	ld b, $01 ; $497f
-	ld de, vTiles0 + $68 * TILE_SIZE ; $4981
+	ld de, vTiles0 tile $68 ; $4981
 	farcall LoadScoreDigitGfx ; $4984
 	ld a, [wPlayer2GamesWon] ; $4987
 	ld b, $01 ; $498a
-	ld de, vTiles0 + $74 * TILE_SIZE ; $498c
+	ld de, vTiles0 tile $74 ; $498c
 	farcall LoadScoreDigitGfx ; $498f
 	ld a, [wPlayer2SetsWon] ; $4992
 	ld b, $01 ; $4995
-	ld de, vTiles0 + $6c * TILE_SIZE ; $4997
+	ld de, vTiles0 tile $6c ; $4997
 	farcall LoadScoreDigitGfx ; $499a
 	farcall StepMatchFrame ; $499d
 .eq02:

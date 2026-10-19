@@ -1,6 +1,6 @@
 ActorScript_15_01:
 	; $55e2, 4 bytes (actor_script)
-	as_set_field $18, $0004
+	as_set_field ACTORF_ANIM_RATE, $0004
 ActorScript_15_02:
 	; $55e6, 3 bytes (actor_script)
 	as_anim ANIM_SWING_LOOP
@@ -69,7 +69,7 @@ WaterSpriteSwingCountTask:
 	ld [wSwingContestSwingState], a ; $5646
 	ret ; $5649
 WaterSpriteSwingContestScene:
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $564a
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $564a
 	ld b, $0a ; $564d
 	ld c, $01 ; $564f
 	farcall InitNumberSpriteGfx ; $5651
@@ -290,9 +290,7 @@ WaterSpriteRacketRewardScenePalettes2:
 TrainingCourtIntroTourScene:
 	xor a ; $59c0
 	ld [wStoryModeShowLocationName], a ; $59c1
-	ldh a, [hRomBank] ; $59c4
-	ld hl, TrainingCourtTourActors_15 ; $59c6
-	farcall ScriptRespawnLocationActors ; $59c9
+	script_respawn_actors TrainingCourtTourActors_15 ; $59c4
 	farcall BeginCutsceneScriptMode ; $59cc
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $59cf
 	script_set_position ACTOR_TRAINING_COURT_TOUR_EMILY, 63.0, 63.0 ; $59da
@@ -380,8 +378,7 @@ TrainingCourtIntroTourScene:
 	script_wait_move ACTOR_PLAYER ; $5c20
 	script_move_target ACTOR_PLAYER, 3.0, 55.0 ; $5c25
 	script_wait_frames 90 ; $5c30
-	ld c, 8 ; $5c37
-	call BeginFadeOut ; $5c39
+	script_fade_out 8 ; $5c37
 	script_wait_frames 20 ; $5c3c
 	ld a, $0f ; $5c43
 	ld [wUnusedExitTriggerIdMirror], a ; $5c45
@@ -406,16 +403,11 @@ ServeChallengerResultScene:
 	xor a ; $5cf3
 	ld [wStoryModeShowLocationName], a ; $5cf4
 	ld a, $06 ; $5cf7
-	ld [wMapSceneStage2], a ; $5cf9
+	ld [wChallengerActor], a ; $5cf9
 	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $5cfc
 	script_face ACTOR_PLAYER, FACE_UP ; $5d07
-	ld a, [wMapSceneStage2] ; $5d0e
-	ld bc, $1800 ; $5d11
-	ld de, $0d00 ; $5d14
-	farcall ScriptSetActorPosition ; $5d17
-	ld a, [wMapSceneStage2] ; $5d1a
-	ld b, $40 ; $5d1d
-	farcall SetActorFacing ; $5d1f
+	script_set_position [wChallengerActor], 24.0, 13.0 ; $5d0e
+	script_face [wChallengerActor], FACE_DOWN ; $5d1a
 	script_null_script ACTOR_PARTNER ; $5d22
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5d27
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5d32

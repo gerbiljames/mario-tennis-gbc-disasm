@@ -154,7 +154,7 @@ Unused_1b_SetMugshotAttrs:
 	and $07 ; $4e1b
 	add $03 ; $4e1d
 	or $08 ; $4e1f
-	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $4e21
+	ld hl, wTextTileBuffer tile 64 ; $4e21
 	add hl, de ; $4e24
 	ld de, $001d ; $4e25
 	ld [hl+], a ; $4e28
@@ -350,14 +350,14 @@ LoadRankingBoardTiles:
 	ld de, wDecompBuffer ; $4fc6
 	call DecompressDataFromBank ; $4fc9
 	ld hl, wDecompBuffer ; $4fcc
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4fcf
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4fcf
 	ld c, 16 ; $4fd2
 	call QueueVRAMCopy ; $4fd4
 	ld_slot hl, DataPtr_BracketCharIcon02 ; $4fd7
 	ld de, wDecompBuffer ; $4fda
 	call DecompressDataFromBank ; $4fdd
 	ld hl, wDecompBuffer ; $4fe0
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $4fe3
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $4fe3
 	ld c, 16 ; $4fe6
 	call QueueVRAMCopy ; $4fe8
 	pop_wram_bank ; $4feb

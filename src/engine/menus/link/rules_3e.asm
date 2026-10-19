@@ -87,7 +87,7 @@ RunLinkMatchRulesMenu:
 	farcall RunLinkInputFrame ; $4516
 	pop af ; $4519
 	ld hl, rIE ; $451a
-	res 2, [hl] ; $451d
+	res B_IE_TIMER, [hl] ; $451d
 	wram_bank WRAM_SCREEN ; $451f
 .loop:
 	farcall TickMenuBgScroll ; $4525
@@ -108,7 +108,7 @@ RunLinkMatchRulesMenu:
 	ld a, [wMenuInputPressed] ; $4544
 	bit PADB_A, a ; $4547
 	jr nz, .playSfx ; $4549
-	bit 1, a ; $454b
+	bit PADB_B, a ; $454b
 	jr nz, .playSfx2 ; $454d
 	jr .loop ; $454f
 .playSfx:
@@ -128,7 +128,7 @@ RunLinkMatchRulesMenu:
 	ld c, $03 ; $456e
 	call GetMenuCursorIndex_3e ; $4570
 	ld hl, rIE ; $4573
-	set 2, [hl] ; $4576
+	set B_IE_TIMER, [hl] ; $4576
 	ret ; $4578
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $4579
@@ -144,7 +144,7 @@ RunLinkMatchRulesMenu:
 	ld a, MENUSLIDE_BACK ; $458e
 	ld [wMenuSlideDirection], a ; $4590
 	ld hl, rIE ; $4593
-	set 2, [hl] ; $4596
+	set B_IE_TIMER, [hl] ; $4596
 	ld a, $ff ; $4598
 	ret ; $459a
 DrawMatchRulesInitialState:
@@ -254,37 +254,37 @@ LoadMatchRulesMenuGraphics:
 	call AdvanceFrame ; $4660
 	ld b, TILEBLOCK_SharedMenuGfx36 ; $4663
 	ld c, SharedMenuGfx36_SIZE / 16 ; $4665
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4667
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4667
 	farcall LoadCompressedTileBlock ; $466a
 	call AdvanceFrame ; $466d
 	ld b, TILEBLOCK_SharedMenuGfx37 ; $4670
 	ld c, SharedMenuGfx37_SIZE / 16 ; $4672
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $4674
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $4674
 	farcall LoadCompressedTileBlock ; $4677
 	call AdvanceFrame ; $467a
 	ld b, TILEBLOCK_SharedMenuGfx38 ; $467d
 	ld c, SharedMenuGfx38_SIZE / 16 ; $467f
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $4681
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $4681
 	farcall LoadCompressedTileBlock ; $4684
 	call AdvanceFrame ; $4687
 	ld b, TILEBLOCK_SharedMenuGfx39 ; $468a
 	ld c, SharedMenuGfx39_SIZE / 16 ; $468c
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $468e
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $468e
 	farcall LoadCompressedTileBlock ; $4691
 	call AdvanceFrame ; $4694
 	ld b, TILEBLOCK_SharedMenuGfx40 ; $4697
 	ld c, SharedMenuGfx40_SIZE / 16 ; $4699
-	ld de, vTiles0 + $50 * TILE_SIZE + VRAM_BANK1 ; $469b
+	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $469b
 	farcall LoadCompressedTileBlock ; $469e
 	call AdvanceFrame ; $46a1
 	ld b, TILEBLOCK_SharedMenuGfx41 ; $46a4
 	ld c, SharedMenuGfx41_SIZE / 16 ; $46a6
-	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $46a8
+	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $46a8
 	farcall LoadCompressedTileBlock ; $46ab
 	call AdvanceFrame ; $46ae
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $46b1
 	ld c, SharedMenuGfx27_SIZE / 16 ; $46b3
-	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $46b5
+	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $46b5
 	farcall LoadCompressedTileBlock ; $46b8
 	call AdvanceFrame ; $46bb
 	ld b, TILEBLOCK_SharedMenuGfx63 ; $46be
@@ -354,7 +354,7 @@ HandleMatchRulesToggleInput:
 	ld a, [wMenuInputPressed] ; $475d
 	bit PADB_LEFT, a ; $4760
 	jr nz, .playSfx ; $4762
-	bit 4, a ; $4764
+	bit PADB_RIGHT, a ; $4764
 	jr nz, .playSfx2 ; $4766
 	ret ; $4768
 .playSfx:

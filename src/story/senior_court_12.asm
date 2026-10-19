@@ -72,8 +72,7 @@ SeniorCourtExit01_12:
 	clear_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5591
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, 2.0 ; $5594
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, 2.0 ; $559e
-	ld c, 16 ; $55a8
-	call BeginFadeOut ; $55aa
+	script_fade_out 16 ; $55a8
 	script_wait_frames 30 ; $55ad
 	ret ; $55b4
 .loop:
@@ -85,7 +84,7 @@ SeniorCourtExit01_12:
 	ld h, [hl] ; $55c3
 	ld l, a ; $55c4
 	farcall InitDialogueTextCursor ; $55c5
-	ld a, [wStoryModeGenderOfMainCharacter] ; $55c8
+	ld a, [wStoryMainGender] ; $55c8
 	ld hl, $001d ; $55cb
 	add l ; $55ce
 	ld l, a ; $55cf
@@ -97,12 +96,14 @@ SeniorCourtExit01_12:
 	ret ; $55db
 SeniorCourtExit01TextIds:
 	; $55dc, 12 bytes (text_ids)
+	table_width 2
 	dw Text_34_141 ; record 0
 	dw Text_34_151 ; record 1
 	dw Text_34_158 ; record 2
 	dw Text_34_168 ; record 3
 	dw Text_34_176 ; record 4
 	dw Text_34_186 ; record 5
+	assert_table_length NUM_SENIORCOURTSTAGES - SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP
 SeniorCourtNpc03_12:
 	ld a, [wMapSceneStage2] ; $55e8
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55eb
@@ -193,7 +194,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_face ACTOR_PLAYER, FACE_UP ; $5785
 	script_set_text Text_34_7 ; $578c
 	set_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5792
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5795
+	ld a, [wStoryPartnerGender] ; $5795
 	or a ; $5798
 	jr nz, .speak ; $5799
 	script_set_text Text_34_11 ; $579b
@@ -216,11 +217,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $57ff
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5806
 	script_wait_idle ACTOR_PARTNER ; $580d
-	script_get_actor_state ACTOR_PARTNER ; $5812
-	ld c, l ; $5817
-	ld b, h ; $5818
-	ld de, wActors ; $5819
-	farcall AttachActorStepMover ; $581c
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5812
 	ret ; $581f
 SeniorCourtNpc04_12:
 	ld a, [wMapSceneStage2] ; $5820
@@ -278,6 +275,7 @@ SeniorCourtNpc05_12:
 	ret ; $5894
 SeniorCourtNpc05TextIds_12:
 	; $5895, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_15 ; record 0
 	dw Text_34_24 ; record 1
 	dw Text_34_28 ; record 2
@@ -293,6 +291,7 @@ SeniorCourtNpc05TextIds_12:
 	dw Text_34_168 ; record 12
 	dw Text_34_177 ; record 13
 	dw Text_34_186 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc06_12:
 	ld a, [wMapSceneStage2] ; $58b3
 	add a ; $58b6
@@ -314,7 +313,7 @@ SeniorCourtNpc06_12:
 	and a ; $58e3
 	jr z, .speak ; $58e4
 	farcall AdvanceDialogueTextCursor ; $58e6
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $58e9
+	ld a, [wStoryPartnerGender] ; $58e9
 	or a ; $58ec
 	jr nz, .speak ; $58ed
 	farcall AdvanceDialogueTextCursor ; $58ef
@@ -323,6 +322,7 @@ SeniorCourtNpc06_12:
 	ret ; $58f7
 SeniorCourtNpc06TextIds_12:
 	; $58f8, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_16 ; record 0
 	dw Text_34_16 ; record 1
 	dw Text_34_33 ; record 2
@@ -338,6 +338,7 @@ SeniorCourtNpc06TextIds_12:
 	dw Text_34_169 ; record 12
 	dw Text_34_178 ; record 13
 	dw Text_34_187 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc07_12:
 	ld a, [wMapSceneStage2] ; $5916
 	add a ; $5919
@@ -350,6 +351,7 @@ SeniorCourtNpc07_12:
 	ret ; $592c
 SeniorCourtNpc07TextIds:
 	; $592d, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_17 ; record 0
 	dw Text_34_25 ; record 1
 	dw Text_34_37 ; record 2
@@ -365,6 +367,7 @@ SeniorCourtNpc07TextIds:
 	dw Text_34_170 ; record 12
 	dw Text_34_179 ; record 13
 	dw Text_34_188 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc08_12:
 	apcall ApSeniorBethStage
 	add a ; $594e
@@ -427,6 +430,7 @@ SeniorCourtNpc08_12:
 	ret ; $5a2a
 SeniorCourtNpc08TextIds:
 	; $5a2b, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_18 ; record 0
 	dw Text_34_18 ; record 1
 	dw Text_34_39 ; record 2
@@ -442,6 +446,7 @@ SeniorCourtNpc08TextIds:
 	dw Text_34_171 ; record 12
 	dw Text_34_180 ; record 13
 	dw Text_34_189 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc09_12:
 	ld a, [wMapSceneStage2] ; $5a49
 	add a ; $5a4c
@@ -459,6 +464,7 @@ SeniorCourtNpc09_12:
 	ret ; $5a6d
 SeniorCourtNpc09TextIds:
 	; $5a6e, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_19 ; record 0
 	dw Text_34_19 ; record 1
 	dw Text_34_43 ; record 2
@@ -474,6 +480,7 @@ SeniorCourtNpc09TextIds:
 	dw Text_34_172 ; record 12
 	dw Text_34_181 ; record 13
 	dw Text_34_190 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0A_12:
 	apcall ApSeniorBobStage
 	add a ; $5a8f
@@ -510,7 +517,7 @@ SeniorCourtNpc0A_12:
 	script_get_actor_state ACTOR_ROLE_SENIOR_COURT_BOB ; $5ae3
 	ld e, l ; $5ae8
 	ld d, h ; $5ae9
-	ld hl, $0005 ; $5aea
+	ld hl, ACTORF_FLAGS ; $5aea
 	add hl, de ; $5aed
 	res 0, [hl] ; $5aee
 	res 1, [hl] ; $5af0
@@ -539,6 +546,7 @@ SeniorCourtNpc0A_12:
 	ret ; $5b74
 SeniorCourtNpc0ATextIds:
 	; $5b75, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_20 ; record 0
 	dw Text_34_20 ; record 1
 	dw Text_34_44 ; record 2
@@ -554,6 +562,7 @@ SeniorCourtNpc0ATextIds:
 	dw Text_34_173 ; record 12
 	dw Text_34_182 ; record 13
 	dw Text_34_191 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0B_12:
 	ld a, [wMapSceneStage2] ; $5b93
 	add a ; $5b96
@@ -567,7 +576,7 @@ SeniorCourtNpc0B_12:
 	jr c, .speak ; $5ba9
 	test_flag FLAG_DOUBLES ; $5bab
 	jr z, .speak ; $5bae
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bb0
+	ld a, [wStoryPartnerGender] ; $5bb0
 	and a ; $5bb3
 	jr nz, .speak ; $5bb4
 	farcall AdvanceDialogueTextCursor ; $5bb6
@@ -576,6 +585,7 @@ SeniorCourtNpc0B_12:
 	ret ; $5bbe
 SeniorCourtNpc0BTextIds:
 	; $5bbf, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_21 ; record 0
 	dw Text_34_21 ; record 1
 	dw Text_34_45 ; record 2
@@ -591,8 +601,9 @@ SeniorCourtNpc0BTextIds:
 	dw Text_34_174 ; record 12
 	dw Text_34_183 ; record 13
 	dw Text_34_174 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0C_12:
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bdd
+	ld a, [wStoryPartnerGender] ; $5bdd
 	or a ; $5be0
 	jr nz, .nonZero ; $5be1
 	ld a, [wMapSceneStage2] ; $5be3
@@ -616,6 +627,7 @@ SeniorCourtNpc0C_12:
 	ret ; $5c10
 SeniorCourtNpc0CTextIds:
 	; $5c11, 30 bytes (text_ids)
+	table_width 2
 	dw Text_34_22 ; record 0
 	dw Text_34_22 ; record 1
 	dw Text_34_46 ; record 2
@@ -631,6 +643,7 @@ SeniorCourtNpc0CTextIds:
 	dw Text_34_175 ; record 12
 	dw Text_34_184 ; record 13
 	dw Text_34_186 ; record 14
+	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0C_12Table:
 	INCBIN "data/story/SeniorCourtNpc0C_12Table.bin" ; $5c2f, 30 bytes
 SeniorCourtNpcScripts_12:
@@ -698,9 +711,7 @@ SeniorCourtInitScript_12:
 	jr nz, .done ; $5d7e
 	ap_pass AP_ARC_SINGLES, 1
 	jr z, .placeActors ; $5d83
-	ldh a, [hRomBank] ; $5d85
-	ld hl, SeniorCourtActorsA_12 ; $5d87
-	farcall ScriptRespawnLocationActors ; $5d8a
+	script_respawn_actors SeniorCourtActorsA_12 ; $5d85
 .placeActors:
 	call SeniorCourtPositionActorsByProgressA ; $5d8d
 	call SetPartnerObjDefByGender_12 ; $5d90
@@ -718,9 +729,7 @@ SeniorCourtInitScript_12:
 .done:
 	ap_pass AP_ARC_DOUBLES, 1
 	jr z, .placeActors ; $5db2
-	ldh a, [hRomBank] ; $5db4
-	ld hl, SeniorCourtActorsB_12 ; $5db6
-	farcall ScriptRespawnLocationActors ; $5db9
+	script_respawn_actors SeniorCourtActorsB_12 ; $5db4
 	jr .placeActors ; $5dbc
 SeniorCourtPositionActorsByProgressB:
 	ld a, [wMapSceneStage2] ; $5dbe

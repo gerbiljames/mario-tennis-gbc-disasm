@@ -3,6 +3,7 @@
 	twin_named start_drill_from_definition, StartDrillFromDefinition ; $4002
 RecordDrillPointResultBits:
 	ld a, [wPointWinLoseFlag] ; $407b
+	ASSERT WINLOSE_NONE == 0
 	or a ; $407e
 	ret z ; $407f
 	and $03 ; $4080

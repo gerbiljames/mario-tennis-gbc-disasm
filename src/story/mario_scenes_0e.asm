@@ -112,11 +112,7 @@ PromptExhibitionMatch:
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $6629
 	test_flag FLAG_DOUBLES ; $662e
 	jr z, .declined ; $6631
-	script_get_actor_state ACTOR_PARTNER ; $6633
-	ld c, l ; $6638
-	ld b, h ; $6639
-	ld de, wActors ; $663a
-	farcall AttachActorStepMover ; $663d
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6633
 .declined:
 	farcall EndCutsceneScriptMode ; $6640
 	ret ; $6643
@@ -338,7 +334,7 @@ MarioWorldArrivalIntroCutscene:
 	script_set_speed ACTOR_MARIO_WORLD_TOAD, 2.0 ; $6ab4
 	ld a, $13 ; $6abc
 	ld bc, $0300 ; $6abe
-	ld de, rJOYP ; $6ac1
+	ld de, $ff00 ; $6ac1
 	farcall MoveActorByDelta ; $6ac4
 	script_wait_move ACTOR_MARIO_WORLD_TOAD ; $6ac7
 	script_face ACTOR_MARIO_WORLD_TOAD, FACE_DOWN ; $6acc

@@ -270,12 +270,12 @@ ClearBothVRAMBanks:
 	call ClearMemory16 ; $027b
 	ret ; $027e
 LoadBGPaletteData:
-	ld a, $80 ; $027f
+	ld a, BGPI_AUTOINC ; $027f
 	ldh [rBGPI], a ; $0281
-	ld c, $69 ; $0283
+	ld c, LOW(rBGPD) ; $0283
 	jr LoadOBJPaletteData.step ; $0285
 LoadOBJPaletteData:
-	ld a, $80 ; $0287
+	ld a, OBPI_AUTOINC ; $0287
 	ldh [rOBPI], a ; $0289
 	ld c, LOW(rOBPD) ; $028b
 .step:
@@ -302,20 +302,20 @@ LoadOBJPaletteData:
 	ret ; $02a2
 SwitchCPUSpeed:
 	ldh a, [rSPD] ; $02a3
-	bit 7, a ; $02a5
+	bit B_SPD_DOUBLE, a ; $02a5
 	ret nz ; $02a7
-	ld a, $01 ; $02a8
+	ld a, SPD_PREPARE ; $02a8
 	ldh [rSPD], a ; $02aa
 	ldh a, [rIE] ; $02ac
 	push af ; $02ae
 	xor a ; $02af
 	ldh [rIE], a ; $02b0
-	ld a, $30 ; $02b2
+	ld a, JOYP_GET_NONE ; $02b2
 	ldh [rJOYP], a ; $02b4
 	stop ; $02b6
 .loop:
 	ldh a, [rSPD] ; $02b8
-	bit 7, a ; $02ba
+	bit B_SPD_DOUBLE, a ; $02ba
 	jr z, .loop ; $02bc
 	xor a ; $02be
 	ldh [rJOYP], a ; $02bf
@@ -326,20 +326,20 @@ SwitchCPUSpeed:
 ; SwitchCPUSpeed with its two branch conditions inverted (ret z / jr nz where the live one has ret nz / jr z): the single-speed direction the game never asks for. Nothing calls it.
 Unused_00_SwitchCPUSpeedSingle:
 	ldh a, [rSPD] ; $02c7
-	bit 7, a ; $02c9
+	bit B_SPD_DOUBLE, a ; $02c9
 	ret z ; $02cb
-	ld a, $01 ; $02cc
+	ld a, SPD_PREPARE ; $02cc
 	ldh [rSPD], a ; $02ce
 	ldh a, [rIE] ; $02d0
 	push af ; $02d2
 	xor a ; $02d3
 	ldh [rIE], a ; $02d4
-	ld a, $30 ; $02d6
+	ld a, JOYP_GET_NONE ; $02d6
 	ldh [rJOYP], a ; $02d8
 	stop ; $02da
 .loopB:
 	ldh a, [rSPD] ; $02dc
-	bit 7, a ; $02de
+	bit B_SPD_DOUBLE, a ; $02de
 	jr nz, .loopB ; $02e0
 	xor a ; $02e2
 	ldh [rJOYP], a ; $02e3
@@ -348,15 +348,15 @@ Unused_00_SwitchCPUSpeedSingle:
 	ldh [rIE], a ; $02e8
 	ret ; $02ea
 ReadJoypad:
-	ld a, $20 ; $02eb
+	ld a, JOYP_GET_CTRL_PAD ; $02eb
 	ldh [rJOYP], a ; $02ed
 	ldh a, [rJOYP] ; $02ef
 	ldh a, [rJOYP] ; $02f1
 	cpl ; $02f3
-	and $0f ; $02f4
+	and JOYP_INPUTS ; $02f4
 	swap a ; $02f6
 	ld b, a ; $02f8
-	ld a, $10 ; $02f9
+	ld a, JOYP_GET_BUTTONS ; $02f9
 	ldh [rJOYP], a ; $02fb
 	ldh a, [rJOYP] ; $02fd
 	ldh a, [rJOYP] ; $02ff
@@ -365,7 +365,7 @@ ReadJoypad:
 	ldh a, [rJOYP] ; $0305
 	ldh a, [rJOYP] ; $0307
 	cpl ; $0309
-	and $0f ; $030a
+	and JOYP_INPUTS ; $030a
 	or b ; $030c
 	ld c, a ; $030d
 	ldh a, [hPlayerInputFlags] ; $030e
@@ -374,7 +374,7 @@ ReadJoypad:
 	ldh [hInputRisingEdge], a ; $0312
 	ld a, c ; $0314
 	ldh [hPlayerInputFlags], a ; $0315
-	ld a, $30 ; $0317
+	ld a, JOYP_GET_NONE ; $0317
 	ldh [rJOYP], a ; $0319
 	ldh a, [hPlayerInputFlags] ; $031b
 	ld b, a ; $031d
@@ -408,18 +408,18 @@ ReadJoypad:
 	ret ; $0345
 DisableLCDSafely:
 	ldh a, [rLCDC] ; $0346
-	bit 7, a ; $0348
+	bit B_LCDC_ENABLE, a ; $0348
 	jr z, .clearQueues ; $034a
 	ldh a, [rIE] ; $034c
 	ldh [hSavedIE], a ; $034e
-	res 0, a ; $0350
+	res B_IE_VBLANK, a ; $0350
 	ldh [rIE], a ; $0352
 .waitVBlank:
 	ldh a, [rLY] ; $0354
-	cp $91 ; $0356
+	cp LY_VBLANK + 1 ; $0356
 	jr nz, .waitVBlank ; $0358
 	ldh a, [rLCDC] ; $035a
-	and $7f ; $035c
+	and ~LCDC_ENABLE ; $035c
 	ldh [rLCDC], a ; $035e
 	xor a ; $0360
 	ldh [rIF], a ; $0361
@@ -431,6 +431,8 @@ DisableLCDSafely:
 	call ClearVRAMCopyQueue ; $0369
 	xor a ; $036c
 	ld hl, hBGRowBlitPending ; $036d
+	ASSERT hBGColumnBlitPending == hBGRowBlitPending + 1, "this code walks from hBGRowBlitPending into hBGColumnBlitPending"
+	ASSERT hBGColumnBlitDone == hBGRowBlitPending + 2, "this code walks from hBGRowBlitPending into hBGColumnBlitDone"
 	ld [hl+], a ; $0370
 	ld [hl+], a ; $0371
 	ld [hl+], a ; $0372
@@ -439,7 +441,7 @@ DisableLCDSafely:
 	ret ; $0375
 EnableLCD:
 	ldh a, [rLCDC] ; $0376
-	or $80 ; $0378
+	or LCDC_ENABLE ; $0378
 	ldh [rLCDC], a ; $037a
 	call ClearUnusedSprites ; $037c
 	xor a ; $037f

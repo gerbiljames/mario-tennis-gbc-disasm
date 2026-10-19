@@ -54,14 +54,14 @@ PrimeSlaveSerialReply:
 PrepareLinkStatePayload:
 	push af ; $49f7
 	ldh a, [hLinkTxByte] ; $49f8
-	and $c0 ; $49fa
-	xor $c0 ; $49fc
+	and LINKTAG_MASK ; $49fa
+	xor LINKTAG_MASK ; $49fc
 	ldh [hLinkTxSeqBits], a ; $49fe
 	ldh a, [hLinkTxInput] ; $4a00
 	ldh [hLinkRemoteInputBuf], a ; $4a02
 	call ReadJoypadThunk ; $4a04
 	ldh a, [hPlayerInputFlags] ; $4a07
-	and $f0 ; $4a09
+	and PADF_DPAD ; $4a09
 	ld c, a ; $4a0b
 	call ComposeLinkStateByte ; $4a0c
 	ldh [hLinkTxInput], a ; $4a0f
@@ -70,8 +70,8 @@ PrepareLinkStatePayload:
 PrepareLinkInputPayload:
 	push af ; $4a13
 	ldh a, [hLinkTxByte] ; $4a14
-	and $c0 ; $4a16
-	xor $c0 ; $4a18
+	and LINKTAG_MASK ; $4a16
+	xor LINKTAG_MASK ; $4a18
 	ldh [hLinkTxSeqBits], a ; $4a1a
 	ldh a, [hLinkTxInput] ; $4a1c
 	ldh [hLinkRemoteInputBuf], a ; $4a1e
@@ -118,7 +118,7 @@ ResyncLinkSession:
 	xor a ; $4a52
 	ldh [rIF], a ; $4a53
 	ldh a, [rIE] ; $4a55
-	and $09 ; $4a57
+	and IE_SERIAL | IE_VBLANK ; $4a57
 	ldh [rIE], a ; $4a59
 	ei ; $4a5b
 	call DisableLCDSafely ; $4a5c
@@ -164,7 +164,7 @@ ResyncLinkSessionWithTimer:
 	xor a ; $4aaa
 	ldh [rIF], a ; $4aab
 	ldh a, [rIE] ; $4aad
-	and $09 ; $4aaf
+	and IE_SERIAL | IE_VBLANK ; $4aaf
 	ldh [rIE], a ; $4ab1
 	ei ; $4ab3
 	ld a, $01 ; $4ab4
@@ -211,7 +211,7 @@ TryLinkHandshakeSlave:
 	call EnableSerialAndVBlankInterrupts ; $4b01
 	di ; $4b04
 	ldh a, [rIF] ; $4b05
-	and $f7 ; $4b07
+	and ~IF_SERIAL ; $4b07
 	ldh [rIF], a ; $4b09
 	xor a ; $4b0b
 	ldh [hLinkTransferDone], a ; $4b0c
@@ -223,13 +223,13 @@ TryLinkHandshakeSlave:
 	jr c, .failed ; $4b18
 	di ; $4b1a
 	ldh a, [hLinkRxByte] ; $4b1b
-	cp $c2 ; $4b1d
+	cp LINKMSG_PROBE_REPLY ; $4b1d
 	jr z, .failed ; $4b1f
 	cp $00 ; $4b21
 	jr z, .failed ; $4b23
 	cp $ff ; $4b25
 	jr z, .failed ; $4b27
-	cp $c1 ; $4b29
+	cp LINKMSG_PROBE ; $4b29
 	jr z, .success ; $4b2b
 	ei ; $4b2d
 .failed:
@@ -251,7 +251,7 @@ TryLinkHandshakeMaster:
 	call EnableSerialAndVBlankInterrupts ; $4b3b
 	di ; $4b3e
 	ldh a, [rSC] ; $4b3f
-	and $7f ; $4b41
+	and ~SC_START ; $4b41
 	ldh [rSC], a ; $4b43
 	ei ; $4b45
 	ld a, LINKMSG_PROBE ; $4b46
@@ -263,7 +263,7 @@ TryLinkHandshakeMaster:
 	cp $8c ; $4b52
 	jr nz, .pollLoop ; $4b54
 	ldh a, [rSC] ; $4b56
-	bit 7, a ; $4b58
+	bit B_SC_START, a ; $4b58
 	jr nz, .pollLoop ; $4b5a
 	di ; $4b5c
 	ldh a, [hLinkTxByte] ; $4b5d
@@ -281,11 +281,11 @@ TryLinkHandshakeMaster:
 	farcall AnimateLinkStatusPalette ; $4b72
 	farcall UpdateAnimatedTiles ; $4b75
 	jr c, .sendReady ; $4b78
-	cp $c1 ; $4b7a
+	cp LINKMSG_PROBE ; $4b7a
 	jr z, .sendReady ; $4b7c
 	cp $ff ; $4b7e
 	jr z, .sendReady ; $4b80
-	cp $c2 ; $4b82
+	cp LINKMSG_PROBE_REPLY ; $4b82
 	jr z, .failed ; $4b84
 	ld a, d ; $4b86
 	cp $03 ; $4b87
@@ -433,7 +433,7 @@ SerialDecodeCommand:
 	push bc ; $4c6a
 	ldh a, [hLinkRxByte] ; $4c6b
 	ld b, a ; $4c6d
-	and $c0 ; $4c6e
+	and LINKTAG_MASK ; $4c6e
 	cp $80 ; $4c70
 	jr z, .decode ; $4c72
 	cp $40 ; $4c74
@@ -444,7 +444,7 @@ SerialDecodeCommand:
 	jr .done ; $4c7d
 .decode:
 	ld a, b ; $4c7f
-	and $3f ; $4c80
+	and LINKTAG_PAYLOAD ; $4c80
 	ldh [hLinkRemoteInput], a ; $4c82
 	ldh a, [hLinkState] ; $4c84
 	cp LINKSTATE_MASTER ; $4c86

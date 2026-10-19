@@ -168,7 +168,7 @@ Unused_07_TargetZonePointStartHook:
 	ld de, $fd60 ; $5f62
 	farcall SetTargetZoneCorner1 ; $5f65
 	ld hl, $0000 ; $5f68
-	ld de, rJOYP ; $5f6b
+	ld de, $ff00 ; $5f6b
 	farcall SetTargetZoneCorner2 ; $5f6e
 	call Unused_07_StubNop_07_0 ; $5f71
 	ret ; $5f74

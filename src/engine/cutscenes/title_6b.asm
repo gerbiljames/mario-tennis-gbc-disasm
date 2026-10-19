@@ -46,12 +46,10 @@ RunTitleScreen:
 	ld [wTitleSpriteTimer], a ; $75c3
 	ld a, $98 ; $75c6
 	ld [wScreenScratch], a ; $75c8
-	ld c, 127 ; $75cb
-	call BeginFadeOut ; $75cd
+	script_fade_out 127 ; $75cb
 	call WaitFadeEnd ; $75d0
 	call DisableLCDSafely ; $75d3
-	ld c, 127 ; $75d6
-	call BeginFadeOut ; $75d8
+	script_fade_out 127 ; $75d6
 	call WaitFadeEnd ; $75db
 	ld c, SCREENASSET_TitleScreen ; $75de
 	farcall LoadScreenAssetRecord ; $75e0
@@ -62,15 +60,15 @@ RunTitleScreen:
 	farcall LoadCompressedTileBlock ; $75ed
 	ld c, TitleGfx1_SIZE / 16 ; $75f0
 	ld b, TILEBLOCK_TitleGfx1 ; $75f2
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $75f4
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $75f4
 	farcall LoadCompressedTileBlock ; $75f7
 	ld c, TitleGfx2_SIZE / 16 ; $75fa
 	ld b, TILEBLOCK_TitleGfx2 ; $75fc
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $75fe
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $75fe
 	farcall LoadCompressedTileBlock ; $7601
 	ld c, TitleGfx3_SIZE / 16 ; $7604
 	ld b, TILEBLOCK_TitleGfx3 ; $7606
-	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $7608
+	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $7608
 	farcall LoadCompressedTileBlock ; $760b
 	ld c, TitleGfx4_SIZE / 16 ; $760e
 	ld b, TILEBLOCK_TitleGfx4 ; $7610
@@ -78,15 +76,15 @@ RunTitleScreen:
 	farcall LoadCompressedTileBlock ; $7615
 	ld c, TitleGfx5_SIZE / 16 ; $7618
 	ld b, TILEBLOCK_TitleGfx5 ; $761a
-	ld de, vTiles0 + $20 * TILE_SIZE ; $761c
+	ld de, vTiles0 tile $20 ; $761c
 	farcall LoadCompressedTileBlock ; $761f
 	ld c, TitleGfx6_SIZE / 16 ; $7622
 	ld b, TILEBLOCK_TitleGfx6 ; $7624
-	ld de, vTiles0 + $40 * TILE_SIZE ; $7626
+	ld de, vTiles0 tile $40 ; $7626
 	farcall LoadCompressedTileBlock ; $7629
 	ld c, TitleGfx7_SIZE / 16 ; $762c
 	ld b, TILEBLOCK_TitleGfx7 ; $762e
-	ld de, vTiles0 + $60 * TILE_SIZE ; $7630
+	ld de, vTiles0 tile $60 ; $7630
 	farcall LoadCompressedTileBlock ; $7633
 	ld hl, Palettes_6b_11 ; $7636
 	ld_obj_pals de, 0, 1 ; $7639
@@ -107,7 +105,7 @@ RunTitleScreen:
 	ldh a, [hInputRisingEdge] ; $7665
 	bit PADB_A, a ; $7667
 	jr nz, .playSfx ; $7669
-	bit 3, a ; $766b
+	bit PADB_START, a ; $766b
 	jr nz, .playSfx ; $766d
 	ldh a, [hVBlankCounter] ; $766f
 	and $07 ; $7671
@@ -121,25 +119,22 @@ RunTitleScreen:
 	sound BGM_NONE ; $7680
 	sound SFX_MENU_DECIDE ; $7682
 	call ClearFrameTasks ; $7684
-	ld c, 16 ; $7687
-	call BeginFadeOut ; $7689
+	script_fade_out 16 ; $7687
 	call WaitFadeEnd ; $768c
 	xor a ; $768f
 	ret ; $7690
 	sound BGM_NONE ; $7691
 	call ClearFrameTasks ; $7693
-	ld c, 32 ; $7696
-	call BeginFadeOut ; $7698
+	script_fade_out 32 ; $7696
 	call WaitFadeEnd ; $769b
 	ld hl, rIE ; $769e
-	res 1, [hl] ; $76a1
+	res B_IE_STAT, [hl] ; $76a1
 	ld a, $01 ; $76a3
 	ret ; $76a5
 .playSfx2:
 	sound BGM_NONE ; $76a6
 	call ClearFrameTasks ; $76a8
-	ld c, 8 ; $76ab
-	call BeginFadeOut ; $76ad
+	script_fade_out 8 ; $76ab
 	call WaitFadeEnd ; $76b0
 	ld a, $ff ; $76b3
 	ret ; $76b5

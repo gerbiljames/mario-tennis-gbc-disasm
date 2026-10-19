@@ -32,11 +32,7 @@ RunPlayDoublesTodayPrompt:
 	ld [wMatchIsDoubles], a ; $5716
 	call SetDormRoomEventTriggerCells_13 ; $5719
 	script_wait_frames 5 ; $571c
-	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5723
-	ld c, l ; $5728
-	ld b, h ; $5729
-	ld de, wActors ; $572a
-	farcall AttachActorStepMover ; $572d
+	script_follow ACTOR_DORM_ROOM_KATE, ACTOR_PLAYER ; $5723
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5730
 	ld c, l ; $5735
 	ld b, h ; $5736
@@ -113,11 +109,7 @@ RunPlayDoublesTodayPrompt:
 	ld [wMatchIsDoubles], a ; $5834
 	set_flag FLAG_DOUBLES ; $5837
 	call SetDormRoomEventTriggerCells_13 ; $583a
-	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $583d
-	ld c, l ; $5842
-	ld b, h ; $5843
-	ld de, wActors ; $5844
-	farcall AttachActorStepMover ; $5847
+	script_follow ACTOR_DORM_ROOM_KATE, ACTOR_PLAYER ; $583d
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $584a
 	ld c, l ; $584f
 	ld b, h ; $5850
@@ -475,11 +467,7 @@ DormRoomArrivalCutscene_13:
 	script_wait_idle ACTOR_PLAYER ; $5b4b
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5b50
 	script_wait_frames 5 ; $5b57
-	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5b5e
-	ld c, l ; $5b63
-	ld b, h ; $5b64
-	ld de, wActors ; $5b65
-	farcall AttachActorStepMover ; $5b68
+	script_follow ACTOR_DORM_ROOM_KATE, ACTOR_PLAYER ; $5b5e
 	script_get_actor_state ACTOR_DORM_ROOM_KATE ; $5b6b
 	ld c, l ; $5b70
 	ld b, h ; $5b71

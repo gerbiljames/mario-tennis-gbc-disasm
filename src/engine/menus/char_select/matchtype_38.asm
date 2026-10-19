@@ -103,21 +103,19 @@ Unused_38_RunMatchTypeMenu:
 	ld a, [wMenuInputPressed] ; $44c5
 	bit PADB_A, a ; $44c8
 	jr nz, .confirm ; $44ca
-	bit 1, a ; $44cc
+	bit PADB_B, a ; $44cc
 	jr nz, .done ; $44ce
 	jr .inputLoop ; $44d0
 .confirm:
 	sound SFX_MENU_SELECT ; $44d2
-	ld c, 16 ; $44d4
-	call BeginFadeOut ; $44d6
+	script_fade_out 16 ; $44d4
 	call WaitFadeEnd ; $44d9
 	call ClearFrameTasks ; $44dc
 	xor a ; $44df
 	ret ; $44e0
 .done:
 	sound SFX_MENU_CANCEL ; $44e1
-	ld c, 16 ; $44e3
-	call BeginFadeOut ; $44e5
+	script_fade_out 16 ; $44e3
 	call WaitFadeEnd ; $44e8
 	call ClearFrameTasks ; $44eb
 	ld a, $ff ; $44ee
@@ -164,7 +162,7 @@ Unused_38_RunMatchTypeMenuLink:
 	ld a, [wMenuInputPressed] ; $4543
 	bit PADB_A, a ; $4546
 	jr nz, .confirm ; $4548
-	bit 1, a ; $454a
+	bit PADB_B, a ; $454a
 	jr nz, .done ; $454c
 	jr .inputLoop ; $454e
 .confirm:
@@ -175,8 +173,7 @@ Unused_38_RunMatchTypeMenuLink:
 	xor a ; $4557
 	ldh [hLinkExchangeActive], a ; $4558
 	call ResetSerialState ; $455a
-	ld c, 16 ; $455d
-	call BeginFadeOut ; $455f
+	script_fade_out 16 ; $455d
 	call WaitFadeEnd ; $4562
 	sound BGM_NONE ; $4565
 	sound SFX_STOP ; $4567
@@ -191,8 +188,7 @@ Unused_38_RunMatchTypeMenuLink:
 	xor a ; $4575
 	ldh [hLinkExchangeActive], a ; $4576
 	call ResetSerialState ; $4578
-	ld c, 16 ; $457b
-	call BeginFadeOut ; $457d
+	script_fade_out 16 ; $457b
 	call WaitFadeEnd ; $4580
 	sound BGM_NONE ; $4583
 	sound SFX_STOP ; $4585
@@ -289,7 +285,7 @@ Unused_38_SetupMatchTypeMenuScreen:
 	ld de, vTiles2 ; $4624
 	farcall LoadCompressedTileBlock ; $4627
 	wram_bank WRAM_TEXT ; $462a
-	ld a, $03 ; $4630
+	ld a, WRAM_SCREEN ; $4630
 	ld [wShadowTilemapBank], a ; $4632
 	ld a, $00 ; $4635
 	ld [wWindowTileAttr], a ; $4637
@@ -360,7 +356,7 @@ Unused_38_AdjustMatchTypeSetting:
 	ld a, [wMenuInputPressed] ; $474f
 	bit PADB_LEFT, a ; $4752
 	jr nz, .decrease ; $4754
-	bit 4, a ; $4756
+	bit PADB_RIGHT, a ; $4756
 	jr nz, .increase ; $4758
 	ret ; $475a
 .decrease:

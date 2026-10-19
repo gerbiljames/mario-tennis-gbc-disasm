@@ -21,8 +21,7 @@ Unused_1b_RunLevelUpStatusTrophiesMenu:
 	call WaitFadeEnd ; $649a
 	farcall RunMenuSelection ; $649d
 	ld b, a ; $64a0
-	ld c, 32 ; $64a1
-	call BeginFadeOut ; $64a3
+	script_fade_out 32 ; $64a1
 	call WaitFadeEnd ; $64a6
 	ld a, [wMenuWindowId] ; $64a9
 	farcall CloseWindow ; $64ac
@@ -65,8 +64,7 @@ Unused_1b_RunDebugSaveDataMenu:
 	call WaitFadeEnd ; $64ff
 	farcall RunMenuSelection ; $6502
 	ld b, a ; $6505
-	ld c, 32 ; $6506
-	call BeginFadeOut ; $6508
+	script_fade_out 32 ; $6506
 	call WaitFadeEnd ; $650b
 	ld a, [wMenuWindowId] ; $650e
 	farcall CloseWindow ; $6511
@@ -165,7 +163,7 @@ Unused_1b_LoadUnlockDebugScreenGfx:
 	ld c, wTextTileBuffer_SIZE / 16 ; $6629
 	call QueueVRAMCopy ; $662b
 	ld hl, UnlockDebugNavGridTable ; $662e
-	ld de, wTextTileBuffer + 64 * TILE_SIZE ; $6631
+	ld de, wTextTileBuffer tile 64 ; $6631
 	call DecompressData ; $6634
 	ld hl, UnlockDebugNavGridTable ; $6637
 	ld de, wTextTileBuffer ; $663a
@@ -182,7 +180,7 @@ Unused_1b_LoadUnlockDebugNavGridGfx:
 	ld de, $d000 ; $664e
 	call DecompressData ; $6651
 	ld hl, $d000 ; $6654
-	ld de, vTiles0 + $50 * TILE_SIZE ; $6657
+	ld de, vTiles0 tile $50 ; $6657
 	ld c, 40 ; $665a
 	call QueueVRAMCopy ; $665c
 	ld hl, UnlockDebugNavGridTable ; $665f
@@ -288,8 +286,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	ld a, [wCharSelectChar] ; $6731
 	ld [wCharSelectPrevChar], a ; $6734
 	call Unused_1b_ReadUnlockFlagsSaveBlock ; $6737
-	ld c, 32 ; $673a
-	call BeginFadeOut ; $673c
+	script_fade_out 32 ; $673a
 	call WaitFadeEnd ; $673f
 	call DisableLCDSafely ; $6742
 	call Unused_1b_LoadUnlockDebugNavGridGfx ; $6745
@@ -297,7 +294,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	call Unused_1b_LoadUnlockDebugScreenGfx ; $674b
 	call Unused_1b_DrawUnlockDebugMugshots ; $674e
 	call Unused_1b_UpdateUnlockDebugSelectedMugshot ; $6751
-	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $6754
+	ld hl, wTextTileBuffer tile 64 ; $6754
 	ld de, vBGMap0 + VRAM_BANK1 ; $6757
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $675a
 	call QueueVRAMCopy ; $675c
@@ -351,8 +348,7 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	call AdvanceFrame ; $67c1
 	jr .loop ; $67c4
 .beginFadeOut:
-	ld c, 8 ; $67c6
-	call BeginFadeOut ; $67c8
+	script_fade_out 8 ; $67c6
 	call WaitFadeEnd ; $67cb
 	call Unused_1b_WriteUnlockFlagsSaveBlock ; $67ce
 	call AdvanceFrame ; $67d1
@@ -378,7 +374,7 @@ Unused_1b_UpdateUnlockDebugSelection:
 Unused_1b_MoveUnlockDebugCursor:
 	ldh a, [hInputPressed] ; $67f4
 	ld b, a ; $67f6
-	and $f0 ; $67f7
+	and PADF_DPAD ; $67f7
 	jr z, .done ; $67f9
 	sound SFX_MENU_MOVE ; $67fb
 	ld a, [wCharSelectCol] ; $67fd

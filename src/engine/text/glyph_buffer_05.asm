@@ -135,17 +135,17 @@ UploadGlyphBufferFull:
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $7433
 	push af ; $7436
 	ldh a, [rLCDC] ; $7437
-	bit 7, a ; $7439
+	bit B_LCDC_ENABLE, a ; $7439
 	jr z, .lcdSettled ; $743b
 	call AdvanceFrame ; $743d
 .lcdSettled:
 	pop af ; $7440
-	ld hl, vTiles1 + $40 * TILE_SIZE ; $7441
+	ld hl, vTiles1 tile $40 ; $7441
 	wram_bank WRAM_TEXT ; $7444
 	ld a, [wWindowTileAttr] ; $744a
 	bit 3, a ; $744d
 	jr z, .pushPageDests ; $744f
-	ld hl, vTiles1 + $40 * TILE_SIZE + VRAM_BANK1 ; $7451
+	ld hl, vTiles1 tile $40 + VRAM_BANK1 ; $7451
 .pushPageDests:
 	push hl ; $7454
 	ld de, $ff00 ; $7455
@@ -164,40 +164,40 @@ UploadGlyphBufferFull:
 	call QueueVRAMCopy ; $746c
 	push af ; $746f
 	ldh a, [rLCDC] ; $7470
-	bit 7, a ; $7472
+	bit B_LCDC_ENABLE, a ; $7472
 	jr z, .page2 ; $7474
 	call AdvanceFrame ; $7476
 .page2:
 	pop af ; $7479
-	ld hl, wGlyphTileBuffer + 16 * TILE_SIZE ; $747a
+	ld hl, wGlyphTileBuffer tile 16 ; $747a
 	pop de ; $747d
 	ld c, 16 ; $747e
 	call QueueVRAMCopy ; $7480
 	push af ; $7483
 	ldh a, [rLCDC] ; $7484
-	bit 7, a ; $7486
+	bit B_LCDC_ENABLE, a ; $7486
 	jr z, .page3 ; $7488
 	call AdvanceFrame ; $748a
 .page3:
 	pop af ; $748d
-	ld hl, wGlyphTileBuffer + 32 * TILE_SIZE ; $748e
+	ld hl, wGlyphTileBuffer tile 32 ; $748e
 	pop de ; $7491
 	ld c, 16 ; $7492
 	call QueueVRAMCopy ; $7494
 	push af ; $7497
 	ldh a, [rLCDC] ; $7498
-	bit 7, a ; $749a
+	bit B_LCDC_ENABLE, a ; $749a
 	jr z, .page4 ; $749c
 	call AdvanceFrame ; $749e
 .page4:
 	pop af ; $74a1
-	ld hl, wGlyphTileBuffer + 48 * TILE_SIZE ; $74a2
+	ld hl, wGlyphTileBuffer tile 48 ; $74a2
 	pop de ; $74a5
 	ld c, 16 ; $74a6
 	call QueueVRAMCopy ; $74a8
 	push af ; $74ab
 	ldh a, [rLCDC] ; $74ac
-	bit 7, a ; $74ae
+	bit B_LCDC_ENABLE, a ; $74ae
 	jr z, .page5 ; $74b0
 	call AdvanceFrame ; $74b2
 .page5:
@@ -207,12 +207,12 @@ UploadGlyphBufferFull:
 	jr z, .uploadPage5 ; $74bb
 	ld c, $07 ; $74bd
 .uploadPage5:
-	ld hl, wGlyphTileBuffer + 64 * TILE_SIZE ; $74bf
+	ld hl, wGlyphTileBuffer tile 64 ; $74bf
 	pop de ; $74c2
 	call QueueVRAMCopy ; $74c3
 	push af ; $74c6
 	ldh a, [rLCDC] ; $74c7
-	bit 7, a ; $74c9
+	bit B_LCDC_ENABLE, a ; $74c9
 	jr z, .done ; $74cb
 	call AdvanceFrame ; $74cd
 .done:
@@ -308,6 +308,7 @@ InitGlyphStreamForWindow:
 	ld e, a ; $756a
 .zero2:
 	ld hl, wTextRowWidth ; $756b
+	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld [hl], d ; $756e
 	inc hl ; $756f
 	ld [hl], e ; $7570
@@ -325,6 +326,7 @@ DrawStreamGlyph:
 	push hl ; $7581
 	push_wram_bank WRAM_TEXT ; $7582
 	ld hl, wTextRowWidth ; $758b
+	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld b, [hl] ; $758e
 	inc hl ; $758f
 	ld c, [hl] ; $7590
@@ -377,6 +379,7 @@ StartGlyphStreamRow:
 	push de ; $75dd
 	push hl ; $75de
 	ld hl, wTextRowWidth ; $75df
+	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld b, [hl] ; $75e2
 	inc hl ; $75e3
 	ld c, [hl] ; $75e4

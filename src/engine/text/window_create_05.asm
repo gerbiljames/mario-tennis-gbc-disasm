@@ -247,6 +247,7 @@ RunMenuSelection:
 	call GetTilemapCellAddress ; $47af
 	xor a ; $47b2
 	ld hl, wTextArrowBlinkCounter ; $47b3
+	ASSERT wTextArrowCell == wTextArrowBlinkCounter + 1, "this code walks from wTextArrowBlinkCounter into wTextArrowCell"
 	ld [hl+], a ; $47b6
 	ld [hl], e ; $47b7
 	inc hl ; $47b8

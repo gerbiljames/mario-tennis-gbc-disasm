@@ -36,8 +36,7 @@ MachinePracticeLevelPrompt:
 	script_wait_move ACTOR_PLAYER ; $4658
 	script_move_target ACTOR_PLAYER, 53.0, 53.0 ; $465d
 	script_wait_move ACTOR_PLAYER ; $4668
-	ld c, 8 ; $466d
-	call BeginFadeOut ; $466f
+	script_fade_out 8 ; $466d
 	call WaitFadeEnd ; $4672
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4675
 	ld [wStoryModeCurrentLocation], a ; $4677
@@ -137,11 +136,7 @@ MachineCourtHandleRetryChoice:
 	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 43.0 ; $47a8
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $47b3
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $47b8
-	script_get_actor_state ACTOR_PARTNER ; $47bf
-	ld c, l ; $47c4
-	ld b, h ; $47c5
-	ld de, wActors ; $47c6
-	farcall AttachActorStepMover ; $47c9
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $47bf
 	ret ; $47cc
 MachineCourtRestartLevel:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
@@ -275,11 +270,7 @@ MachineExpertNewRecordScene:
 	farcall PushTextArgNumber ; $48e0
 	call MachineCourtWalkToAttendantCutscene ; $48e3
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $48e6
-	script_get_actor_state ACTOR_PARTNER ; $48eb
-	ld c, l ; $48f0
-	ld b, h ; $48f1
-	ld de, wActors ; $48f2
-	farcall AttachActorStepMover ; $48f5
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $48eb
 	ret ; $48f8
 MachineExpertCounterMaxScene:
 	push_wram_bank WRAM_SOUND ; $48f9
@@ -309,11 +300,7 @@ MachineExpertCounterMaxScene:
 	call MachineCourtWalkToAttendantCutscene ; $4936
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4939
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $493e
-	script_get_actor_state ACTOR_PARTNER ; $4943
-	ld c, l ; $4948
-	ld b, h ; $4949
-	ld de, wActors ; $494a
-	farcall AttachActorStepMover ; $494d
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4943
 	ret ; $4950
 Unused_14_CompareMinigameScoreToRecord:
 	ld hl, wMinigamesCurrentScore ; $4951
@@ -432,6 +419,7 @@ Court2Npc04_14:
 	ret ; $4b83
 Court2Npc04TextIds:
 	; $4b84, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_146 ; record 0
 	dw Text_1f_146 ; record 1
 	dw Text_1f_146 ; record 2
@@ -439,6 +427,7 @@ Court2Npc04TextIds:
 	dw Text_1f_146 ; record 4
 	dw Text_1f_146 ; record 5
 	dw Text_1f_151 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court2Npc05_14:
 	ld a, [wMapSceneStage] ; $4b92
 	add a ; $4b95
@@ -451,6 +440,7 @@ Court2Npc05_14:
 	ret ; $4ba8
 Court2Npc05TextIds:
 	; $4ba9, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_147 ; record 0
 	dw Text_1f_147 ; record 1
 	dw Text_1f_149 ; record 2
@@ -458,6 +448,7 @@ Court2Npc05TextIds:
 	dw Text_1f_153 ; record 4
 	dw Text_1f_155 ; record 5
 	dw Text_1f_157 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court2Npc06_14:
 	ld a, [wMapSceneStage] ; $4bb7
 	add a ; $4bba
@@ -470,6 +461,7 @@ Court2Npc06_14:
 	ret ; $4bcd
 Court2Npc06TextIds:
 	; $4bce, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_148 ; record 0
 	dw Text_1f_148 ; record 1
 	dw Text_1f_150 ; record 2
@@ -477,6 +469,7 @@ Court2Npc06TextIds:
 	dw Text_1f_154 ; record 4
 	dw Text_1f_156 ; record 5
 	dw Text_1f_158 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court2SpectatorChat_14:
 	test_flag FLAG_DOUBLES ; $4bdc
 	jr z, .checkFlag ; $4bdf
@@ -549,6 +542,7 @@ Court2SpectatorChat_14:
 	ret ; $4d5e
 Court2SpectatorChatTextIds:
 	; $4d5f, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_107 ; record 0
 	dw Text_1f_107 ; record 1
 	dw Text_1f_107 ; record 2
@@ -556,6 +550,7 @@ Court2SpectatorChatTextIds:
 	dw Text_1f_120 ; record 4
 	dw Text_1f_120 ; record 5
 	dw Text_1f_126 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court2SpectatorsRepeatChat:
 	script_set_anim ACTOR_COURT2_WALK_72_02_3, ANIM_BOUNCE ; $4d6d
 	script_wait_idle ACTOR_COURT2_WALK_72_02_3 ; $4d74
@@ -626,9 +621,7 @@ InitCourt2SceneVariant:
 	jr nz, .doubles ; $4e68
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4e6a
 	jr z, .stage1 ; $4e6d
-	ldh a, [hRomBank] ; $4e6f
-	ld hl, Court2ActorsAlt_14 ; $4e71
-	farcall ScriptRespawnLocationActors ; $4e74
+	script_respawn_actors Court2ActorsAlt_14 ; $4e6f
 	farcall BeginCutsceneScriptMode ; $4e77
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $4e7a
 	jr .stage3 ; $4e7c
@@ -648,9 +641,7 @@ InitCourt2SceneVariant:
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $4e92
 	jr z, .doublesStage2 ; $4e95
-	ldh a, [hRomBank] ; $4e97
-	ld hl, Court2ActorsAlt_14 ; $4e99
-	farcall ScriptRespawnLocationActors ; $4e9c
+	script_respawn_actors Court2ActorsAlt_14 ; $4e97
 	farcall BeginCutsceneScriptMode ; $4e9f
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $4ea2
 	jr .stage3 ; $4ea4

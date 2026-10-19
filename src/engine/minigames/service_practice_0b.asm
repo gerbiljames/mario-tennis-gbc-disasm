@@ -29,6 +29,7 @@ ServiceMatch3Hook_PointStart:
 	ld [wDrillAbortCountdownActive], a ; $4c38
 	ld a, $0a ; $4c3b
 	ld [wDrillAbortCountdown], a ; $4c3d
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $4c40
 	ld [wDrillMessageId], a ; $4c41
 	xor a ; $4c44
@@ -38,6 +39,7 @@ ServiceMatch3Hook_PointEnd:
 	call ServiceMatch3JudgeOnPointEnd ; $4c49
 	call ServiceMatch3HandlePointEnd ; $4c4c
 	ld a, [wPointWinLoseFlag] ; $4c4f
+	ASSERT WINLOSE_NONE == 0
 	or a ; $4c52
 	ret z ; $4c53
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4c54
@@ -279,6 +281,7 @@ ServicePractice1Hook_PointStart:
 	ld [wDrillAbortCountdownActive], a ; $4e0d
 	ld a, $0a ; $4e10
 	ld [wDrillAbortCountdown], a ; $4e12
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $4e15
 	ld [wDrillMessageId], a ; $4e16
 	ld a, $01 ; $4e19
@@ -292,6 +295,7 @@ ServicePractice1Hook_PointEnd:
 	cp $04 ; $4e2b
 	ret c ; $4e2d
 	ld a, [wPointWinLoseFlag] ; $4e2e
+	ASSERT WINLOSE_NONE == 0
 	or a ; $4e31
 	ret z ; $4e32
 	call ServicePractice1EvaluateResult ; $4e33
@@ -480,6 +484,7 @@ ServicePractice2Hook_PointStart:
 	ld [wTargetZoneEnabled], a ; $4fa7
 	ld hl, ServicePractice2PointStartDrillPositions ; $4faa
 	call SetDrillTargetZoneForPoint ; $4fad
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $4fb0
 	ld [wDrillMessageId], a ; $4fb1
 	ret ; $4fb4
@@ -489,6 +494,7 @@ ServicePractice2Hook_PointEnd:
 	cp $04 ; $4fbb
 	ret c ; $4fbd
 	ld a, [wPointWinLoseFlag] ; $4fbe
+	ASSERT WINLOSE_NONE == 0
 	or a ; $4fc1
 	ret z ; $4fc2
 	call ServicePractice2EvaluateResult ; $4fc3
@@ -529,7 +535,7 @@ ServicePractice2EvaluateResult:
 	jr .notFound ; $5007
 .zero2:
 	ld b, $06 ; $5009
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $500b
+	ld a, [wStoryMainLeftHanded] ; $500b
 	cpl ; $500e
 	inc a ; $500f
 	add b ; $5010
@@ -540,7 +546,7 @@ ServicePractice2EvaluateResult:
 	or a ; $5019
 	jr z, .zero4 ; $501a
 	ld b, $05 ; $501c
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $501e
+	ld a, [wStoryMainLeftHanded] ; $501e
 	add b ; $5021
 	ld [wDrillLessonResult], a ; $5022
 	jr .notFound ; $5025

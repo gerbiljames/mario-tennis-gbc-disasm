@@ -136,8 +136,7 @@ IslandOpenRoundCallCutscene:
 	farcall WaitPlayerMoveDone ; $71b5
 	script_wait_frames 60 ; $71b8
 .startMatch:
-	ld c, 16 ; $71bf
-	call BeginFadeOut ; $71c1
+	script_fade_out 16 ; $71bf
 	call WaitFadeEnd ; $71c4
 	call ShowTournamentRankingBoard_0f ; $71c7
 	ld a, STORYLOC_TOURNAMENT ; $71ca
@@ -210,8 +209,7 @@ IslandOpenRoundCallCutscene:
 	farcall WaitPlayerMoveDone ; $7355
 	script_wait_frames 60 ; $7358
 .walkOff:
-	ld c, 16 ; $735f
-	call BeginFadeOut ; $7361
+	script_fade_out 16 ; $735f
 	call WaitFadeEnd ; $7364
 	call ShowTournamentRankingBoard_0f ; $7367
 	ld a, STORYLOC_TOURNAMENT ; $736a
@@ -365,9 +363,7 @@ IslandOpenSinglesMatchReturn:
 	jr z, .returnToSite ; $74ad
 	ret ; $74af
 .returnToSite:
-	ldh a, [hRomBank] ; $74b0
-	ld hl, IslandOpenRoundActorsSingles_0f ; $74b2
-	farcall ScriptRespawnLocationActors ; $74b5
+	script_respawn_actors IslandOpenRoundActorsSingles_0f ; $74b0
 	ld hl, IslandOpenRoundNpcScriptsSingles_0f ; $74b8
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $74bb
 	farcall WriteStoryStateWord ; $74be
@@ -468,8 +464,7 @@ IslandOpenRoundSinglesNpc05_0f:
 	ld l, a ; $767a
 	farcall InitDialogueTextCursor ; $767b
 	script_jump_velocity ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07, -2.0 ; $767e
-	ld a, $05 ; $7686
-	farcall ScriptWaitActorJumpDone ; $7688
+	script_wait_jump ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07 ; $7686
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_07 ; $768b
 	ret ; $7690
 IslandOpenRoundSinglesNpc05_0fTable:
@@ -510,9 +505,7 @@ IslandOpenDoublesMatchReturn:
 	jr z, .accepted ; $76f3
 	ret ; $76f5
 .accepted:
-	ldh a, [hRomBank] ; $76f6
-	ld hl, IslandOpenRoundActorsDoubles_0f ; $76f8
-	farcall ScriptRespawnLocationActors ; $76fb
+	script_respawn_actors IslandOpenRoundActorsDoubles_0f ; $76f6
 	farcall BeginCutsceneScriptMode ; $76fe
 	ld hl, IslandOpenRoundNpcScriptsDoubles_0f ; $7701
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $7704
@@ -536,7 +529,7 @@ IslandOpenDoublesMatchReturn:
 	ld h, [hl] ; $774f
 	ld l, a ; $7750
 	farcall InitDialogueTextCursor ; $7751
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7754
+	ld a, [wStoryPartnerGender] ; $7754
 	or a ; $7757
 	jr nz, .declined ; $7758
 	farcall AdvanceDialogueTextCursor ; $775a
@@ -553,8 +546,7 @@ IslandOpenDoublesMatchReturn:
 	ld [hl], a ; $7771
 	script_face_toward ACTOR_PLAYER, ACTOR_PARTNER ; $7772
 	script_jump_velocity ACTOR_PARTNER, -2.0 ; $777a
-	ld a, $02 ; $7782
-	farcall ScriptWaitActorJumpDone ; $7784
+	script_wait_jump ACTOR_PARTNER ; $7782
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7787
 	script_speak ACTOR_PARTNER ; $778f
 	script_set_position ACTOR_ISLAND_OPEN_ROUND_DOUBLES_BALLOON_EXCLAIM, 32.0, 15.5 ; $7794
@@ -587,11 +579,7 @@ IslandOpenDoublesMatchReturn:
 	script_face_toward ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_06, ACTOR_PARTNER ; $781c
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_WALK_74_08 ; $7824
 	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $7829
-	script_get_actor_state ACTOR_PARTNER ; $782c
-	ld c, l ; $7831
-	ld b, h ; $7832
-	ld de, wActors ; $7833
-	farcall AttachActorStepMover ; $7836
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $782c
 	ret ; $7839
 IslandOpenRoundSinglesNpc05TextIds:
 	; $783a, 8 bytes (text_ids)

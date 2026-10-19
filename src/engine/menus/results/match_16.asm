@@ -164,21 +164,19 @@ RunMatchStatsScreen:
 	ldh a, [hInputPressed] ; $5c62
 	bit PADB_LEFT, a ; $5c64
 	jr nz, .beginFadeOut ; $5c66
-	bit 0, a ; $5c68
+	bit PADB_A, a ; $5c68
 	jr nz, .beginFadeOut2 ; $5c6a
-	bit 1, a ; $5c6c
+	bit PADB_B, a ; $5c6c
 	jr nz, .beginFadeOut2 ; $5c6e
 	call AdvanceFrame ; $5c70
 	jr .loop ; $5c73
 .beginFadeOut:
-	ld c, 64 ; $5c75
-	call BeginFadeOut ; $5c77
+	script_fade_out 64 ; $5c75
 	call WaitFadeEnd ; $5c7a
 	xor a ; $5c7d
 	ret ; $5c7e
 .beginFadeOut2:
-	ld c, 32 ; $5c7f
-	call BeginFadeOut ; $5c81
+	script_fade_out 32 ; $5c7f
 	call WaitFadeEnd ; $5c84
 	ld a, $ff ; $5c87
 	ret ; $5c89

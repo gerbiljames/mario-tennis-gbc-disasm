@@ -105,6 +105,7 @@ CenterCourtNpc05_11:
 	ret ; $413b
 CenterCourtNpc05TextIds:
 	; $413c, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_85 ; record 0
 	dw Text_1f_87 ; record 1
 	dw Text_1f_89 ; record 2
@@ -112,6 +113,7 @@ CenterCourtNpc05TextIds:
 	dw Text_1f_97 ; record 4
 	dw Text_1f_99 ; record 5
 	dw Text_1f_102 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 CenterCourtNpc06_11:
 	ld a, [wMapSceneStage] ; $414a
 	add a ; $414d
@@ -124,6 +126,7 @@ CenterCourtNpc06_11:
 	ret ; $4160
 CenterCourtNpc06TextIds:
 	; $4161, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_86 ; record 0
 	dw Text_1f_88 ; record 1
 	dw Text_1f_90 ; record 2
@@ -131,6 +134,7 @@ CenterCourtNpc06TextIds:
 	dw Text_1f_98 ; record 4
 	dw Text_1f_100 ; record 5
 	dw Text_1f_103 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 CenterCourtNpcScripts_11:
 	; $416f, 33 bytes (map_scripts)
 	map_script ACTOR_CENTER_COURT_WALK_6F_07_1, FACEMASK_ANY, $0000, CenterCourtNpc03_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -167,9 +171,7 @@ SetupCenterCourtSceneVariant:
 	jr z, .stage1 ; $41c3
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $41c5
 	ld [wMapSceneStage], a ; $41c7
-	ldh a, [hRomBank] ; $41ca
-	ld hl, CenterCourtSceneVariantActors_11 ; $41cc
-	farcall ScriptRespawnLocationActors ; $41cf
+	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41ca
 	farcall BeginCutsceneScriptMode ; $41d2
 	ret ; $41d5
 .stage1:
@@ -190,9 +192,7 @@ SetupCenterCourtSceneVariant:
 	jr z, .stage4 ; $41ef
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $41f1
 	ld [wMapSceneStage], a ; $41f3
-	ldh a, [hRomBank] ; $41f6
-	ld hl, CenterCourtSceneVariantActors_11 ; $41f8
-	farcall ScriptRespawnLocationActors ; $41fb
+	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41f6
 	farcall BeginCutsceneScriptMode ; $41fe
 	ret ; $4201
 .stage4:
@@ -229,7 +229,7 @@ CenterCourtSceneVariantActors_11:
 SetPlayerAndPartnerObjectDefs_11:
 	test_flag FLAG_DOUBLES ; $4343
 	jp z, .notDoubles ; $4346
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4349
+	ld a, [wStoryPartnerGender] ; $4349
 	ld d, OBJ_HARRY_B ; $434c
 	add d ; $434e
 	ld d, a ; $434f
@@ -239,7 +239,7 @@ SetPlayerAndPartnerObjectDefs_11:
 	farcall LoadActorObjectDefIfValid ; $4357
 	script_set_anim ACTOR_PARTNER, ANIM_WALK ; $435a
 .notDoubles:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $4361
+	ld a, [wStoryMainGender] ; $4361
 	ld d, OBJ_ALEX_B ; $4364
 	add d ; $4366
 	ld d, a ; $4367
@@ -360,6 +360,7 @@ AcademyArrivalNpc03_11:
 	ret ; $45e0
 AcademyArrivalNpc03TextIds:
 	; $45e1, 20 bytes (text_ids)
+	table_width 2
 	dw Text_36_54 ; record 0
 	dw Text_36_57 ; record 1
 	dw Text_36_63 ; record 2
@@ -370,6 +371,7 @@ AcademyArrivalNpc03TextIds:
 	dw Text_36_71 ; record 7
 	dw Text_36_76 ; record 8
 	dw Text_36_76 ; record 9
+	assert_table_length NUM_STORYRANKS
 AcademyArrivalNpc04_11:
 	ld a, [wMapSceneStage] ; $45f5
 	add a ; $45f8
@@ -382,6 +384,7 @@ AcademyArrivalNpc04_11:
 	ret ; $460b
 AcademyArrivalNpc04TextIds:
 	; $460c, 20 bytes (text_ids)
+	table_width 2
 	dw Text_36_60 ; record 0
 	dw Text_36_61 ; record 1
 	dw Text_36_64 ; record 2
@@ -392,6 +395,7 @@ AcademyArrivalNpc04TextIds:
 	dw Text_36_74 ; record 7
 	dw Text_36_77 ; record 8
 	dw Text_36_77 ; record 9
+	assert_table_length NUM_STORYRANKS
 AcademyArrivalNpc05_11:
 	ld a, [wMapSceneStage] ; $4620
 	sra a ; $4623
@@ -405,11 +409,13 @@ AcademyArrivalNpc05_11:
 	ret ; $4638
 AcademyArrivalNpc05TextIds:
 	; $4639, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_62 ; record 0
 	dw Text_36_65 ; record 1
 	dw Text_36_70 ; record 2
 	dw Text_36_75 ; record 3
 	dw Text_36_78 ; record 4
+	assert_table_length NUM_STORYTIERS
 AcademyArrivalNpc14_11:
 	script_set_text Text_36_96 ; $4643
 	test_flag FLAG_DOUBLES ; $4649

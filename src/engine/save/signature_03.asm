@@ -219,7 +219,7 @@ ValidateSaveRam:
 	push hl ; $495d
 	push de ; $495e
 	push bc ; $495f
-	ld a, $0a ; $4960
+	ld a, RAMG_SRAM_ENABLE ; $4960
 	ld [rRAMG], a ; $4962
 	ld a, $00 ; $4965
 	ldh [hSramBank], a ; $4967
@@ -317,7 +317,7 @@ ENDC
 	pop hl ; $4a3a
 	ret ; $4a3b
 EraseAndInitSaveRam:
-	ld a, $0a ; $4a3c
+	ld a, RAMG_SRAM_ENABLE ; $4a3c
 	ld [rRAMG], a ; $4a3e
 	ld a, $00 ; $4a41
 	ldh [hSramBank], a ; $4a43
@@ -382,7 +382,7 @@ WriteSaveBlock:
 	push hl ; $4a89
 	push de ; $4a8a
 	push bc ; $4a8b
-	ld a, $0a ; $4a8c
+	ld a, RAMG_SRAM_ENABLE ; $4a8c
 	ld [rRAMG], a ; $4a8e
 	ld a, $00 ; $4a91
 	ldh [hSramBank], a ; $4a93

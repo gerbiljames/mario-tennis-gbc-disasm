@@ -20,7 +20,7 @@ VBlankHandler:
 	ldh a, [hScrollY] ; $2767
 	ldh [rSCY], a ; $2769
 	ldh a, [rLCDC] ; $276b
-	and $f7 ; $276d
+	and ~LCDC_BG_MAP ; $276d
 	ldh [rLCDC], a ; $276f
 	jr .checkSpriteBufferPage ; $2771
 .compare:
@@ -31,7 +31,7 @@ VBlankHandler:
 	ld a, $40 ; $277a
 	ldh [rSCY], a ; $277c
 	ldh a, [rLCDC] ; $277e
-	or $08 ; $2780
+	or LCDC_BG_MAP ; $2780
 	ldh [rLCDC], a ; $2782
 	jr .checkSpriteBufferPage ; $2784
 .ne01:
@@ -50,6 +50,7 @@ VBlankHandler:
 	call ProcessVRAMCopyQueues ; $279e
 .nonZero:
 	ldh a, [hDebugStepMode] ; $27a1
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $27a3
 	jr z, .zero ; $27a4
 	call UpdateDebugOverlay ; $27a6
@@ -64,7 +65,7 @@ VBlankHandler:
 	jr nz, .updateGameTimer ; $27b4
 	call ReadJoypad ; $27b6
 	ldh a, [hPlayerInputFlags] ; $27b9
-	cp $0f ; $27bb
+	cp PADF_BUTTONS ; $27bb
 	jp z, SoftReset ; $27bd
 	call AdvanceRandomSeed ; $27c0
 .updateGameTimer:
@@ -86,11 +87,11 @@ TimerHandler:
 	cp LINKSTATE_SLAVE ; $27da
 	jr nz, .ne02 ; $27dc
 	ldh a, [rIF] ; $27de
-	and $08 ; $27e0
+	and IF_SERIAL ; $27e0
 	jr nz, .restore ; $27e2
 .ne02:
 	ldh a, [rLCDC] ; $27e4
-	bit 7, a ; $27e6
+	bit B_LCDC_ENABLE, a ; $27e6
 	jr nz, .restore ; $27e8
 	push bc ; $27ea
 	push de ; $27eb
@@ -263,6 +264,7 @@ InitSerialLink:
 	ldh [rSC], a ; $28c6
 	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $28c8
 	ldh [rSC], a ; $28ca
+	ASSERT LINKSTATE_IDLE == 0
 	xor a ; $28cc
 	ldh [hLinkState], a ; $28cd
 	ldh [hLinkErrorFlags], a ; $28cf
@@ -321,8 +323,8 @@ SerialEncodeInput:
 	push hl ; $2925
 	ldh a, [hLinkTxInput] ; $2926
 	ld b, a ; $2928
-	and $0f ; $2929
-	cp $0f ; $292b
+	and PADF_BUTTONS ; $2929
+	cp PADF_BUTTONS ; $292b
 	jr nz, .checkBit3 ; $292d
 	ld a, $3f ; $292f
 	ld b, $0f ; $2931
@@ -466,7 +468,7 @@ Unused_00_EnableSerialInterrupt:
 	xor a ; $29f7
 	ldh [rIF], a ; $29f8
 	ldh a, [rIE] ; $29fa
-	or $08 ; $29fc
+	or IE_SERIAL ; $29fc
 	ldh [rIE], a ; $29fe
 	ei ; $2a00
 	ret ; $2a01
@@ -476,7 +478,7 @@ Unused_00_EnableVBlankInterrupt:
 	xor a ; $2a03
 	ldh [rIF], a ; $2a04
 	ldh a, [rIE] ; $2a06
-	or $01 ; $2a08
+	or IE_VBLANK ; $2a08
 	ldh [rIE], a ; $2a0a
 	ei ; $2a0c
 	ret ; $2a0d

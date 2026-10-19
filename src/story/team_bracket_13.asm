@@ -23,9 +23,7 @@ RunTravelingTeamBracketIfWon_13:
 	ret
 	test_flag FLAG_DOUBLES ; $79b6
 	jr nz, .isDoubles ; $79b9
-	ldh a, [hRomBank] ; $79bb
-	ld hl, SinglesTravelingTeamActors_13 ; $79bd
-	farcall ScriptRespawnLocationActors ; $79c0
+	script_respawn_actors SinglesTravelingTeamActors_13 ; $79bb
 	farcall BeginCutsceneScriptMode ; $79c3
 	script_fade_in 4 ; $79c6
 	call WaitFadeEnd ; $79cb
@@ -35,9 +33,7 @@ RunTravelingTeamBracketIfWon_13:
 	call ShowStoryTournamentBracket_13 ; $79e1
 	ret ; $79e4
 .isDoubles:
-	ldh a, [hRomBank] ; $79e5
-	ld hl, DoublesTravelingTeamActors_13 ; $79e7
-	farcall ScriptRespawnLocationActors ; $79ea
+	script_respawn_actors DoublesTravelingTeamActors_13 ; $79e5
 	farcall BeginCutsceneScriptMode ; $79ed
 	call ApplyPartnerCharacterVariant_13 ; $79f0
 	script_null_script ACTOR_PARTNER ; $79f3
@@ -124,8 +120,7 @@ ActorScript_13_26:
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
 ShowStoryTournamentBracket_13:
-	ld c, 8 ; $7ae0
-	call BeginFadeOut ; $7ae2
+	script_fade_out 8 ; $7ae0
 	call WaitFadeEnd ; $7ae5
 	xor a ; $7ae8
 	ldh [hBGColumnBlitPending], a ; $7ae9

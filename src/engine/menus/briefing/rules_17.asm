@@ -120,8 +120,7 @@ ShowRulesScreen:
 	ld [wRulesAnimCounter], a ; $6f33
 	ld [wRulesIsMinigame], a ; $6f36
 	ld [wRulesScreenAnimFrame], a ; $6f39
-	ld c, 32 ; $6f3c
-	call BeginFadeOut ; $6f3e
+	script_fade_out 32 ; $6f3c
 	call WaitFadeEnd ; $6f41
 	call DisableLCDSafely ; $6f44
 	call LoadRulesScreen ; $6f47
@@ -144,8 +143,7 @@ ShowRulesScreen:
 	xor a ; $6f7a
 	ld [wRulesAnimCounter], a ; $6f7b
 	call RunMinigameRulesPages ; $6f7e
-	ld c, 32 ; $6f81
-	call BeginFadeOut ; $6f83
+	script_fade_out 32 ; $6f81
 	call WaitFadeEnd ; $6f86
 	call ClearFrameTasks ; $6f89
 	ld a, [wRulesExitCode] ; $6f8c
@@ -186,6 +184,7 @@ RunMinigameRulesPages:
 	ret ; $6fda
 MinigameRulesTextIdBases_17:
 	; $6fdb, 18 bytes (records:2)
+	table_width 2
 	dw $2cc6 ; record 0
 	dw $2cd0 ; record 1
 	dw $2cda ; record 2
@@ -195,6 +194,7 @@ MinigameRulesTextIdBases_17:
 	dw $3007 ; record 6
 	dw $3017 ; record 7
 	dw $3026 ; record 8
+	assert_table_length NUM_MARIOGAMES
 MinigameRulesPageLists_17:
 	; $6fed, 174 bytes (rules_pages:6)
 	rules_pages_stride 6
@@ -298,11 +298,11 @@ MinigameRulesPageLoop:
 	ldh a, [hInputRisingEdge] ; $710a
 	bit PADB_A, a ; $710c
 	jr nz, .playSfx ; $710e
-	bit 7, a ; $7110
+	bit PADB_DOWN, a ; $7110
 	jr nz, .playSfx ; $7112
-	bit 1, a ; $7114
+	bit PADB_B, a ; $7114
 	jr nz, .playSfx2 ; $7116
-	bit 3, a ; $7118
+	bit PADB_START, a ; $7118
 	jr nz, .restore2 ; $711a
 	jr .loopB ; $711c
 .playSfx:
@@ -343,7 +343,7 @@ LoadRulesScreen:
 	push af ; $7164
 	farcall InitTextWindows ; $7165
 	wram_bank WRAM_TEXT ; $7168
-	ld a, $03 ; $716e
+	ld a, WRAM_SCREEN ; $716e
 	ld [wShadowTilemapBank], a ; $7170
 	ld a, $00 ; $7173
 	ld [wWindowTileAttr], a ; $7175
@@ -362,7 +362,7 @@ LoadRulesScreen:
 	ld c, SharedMenuGfx17_SIZE / 16 ; $719b
 	ld de, vTiles2 ; $719d
 	farcall LoadCompressedTileBlock ; $71a0
-	ld a, $03 ; $71a3
+	ld a, WRAM_SCREEN ; $71a3
 	ld [wShadowTilemapBank], a ; $71a5
 	ld hl, wShadowTilemapPtr ; $71a8
 	ld de, wDecompBuffer ; $71ab
@@ -463,126 +463,126 @@ LoadRulesBorderAnimTiles:
 	ld bc, RulesBorderAnimTiles0_SIZE / 16 ; $72a8
 	call QueueVRAMCopy ; $72ab
 	ld hl, wDecompBuffer ; $72ae
-	ld de, vTiles0 + $24 * TILE_SIZE ; $72b1
+	ld de, vTiles0 tile $24 ; $72b1
 	ld bc, RulesBorderAnimTiles0_SIZE / 16 ; $72b4
 	call QueueVRAMCopy ; $72b7
 	ld hl, wDecompBuffer ; $72ba
-	ld de, vTiles0 + $48 * TILE_SIZE ; $72bd
+	ld de, vTiles0 tile $48 ; $72bd
 	ld bc, RulesBorderAnimTiles0_SIZE / 16 ; $72c0
 	call QueueVRAMCopy ; $72c3
 	ld hl, wDecompBuffer ; $72c6
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $72c9
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $72c9
 	ld bc, 18 ; $72cc
 	call QueueVRAMCopy ; $72cf
 	ld hl, wDecompBuffer ; $72d2
-	ld de, vTiles0 + $34 * TILE_SIZE + VRAM_BANK1 ; $72d5
+	ld de, vTiles0 tile $34 + VRAM_BANK1 ; $72d5
 	ld bc, 18 ; $72d8
 	call QueueVRAMCopy ; $72db
 	ld hl, wDecompBuffer ; $72de
-	ld de, vTiles0 + $58 * TILE_SIZE + VRAM_BANK1 ; $72e1
+	ld de, vTiles0 tile $58 + VRAM_BANK1 ; $72e1
 	ld bc, 18 ; $72e4
 	call QueueVRAMCopy ; $72e7
 	ld hl, RulesBorderAnimTiles1 ; $72ea
 	ld de, wDecompBuffer ; $72ed
 	call DecompressData ; $72f0
 	ld hl, wDecompBuffer ; $72f3
-	ld de, vTiles0 + $4a * TILE_SIZE ; $72f6
+	ld de, vTiles0 tile $4a ; $72f6
 	ld bc, RulesBorderAnimTiles1_SIZE / 16 ; $72f9
 	call QueueVRAMCopy ; $72fc
 	ld hl, wDecompBuffer ; $72ff
-	ld de, vTiles0 + $12 * TILE_SIZE + VRAM_BANK1 ; $7302
+	ld de, vTiles0 tile $12 + VRAM_BANK1 ; $7302
 	ld bc, RulesBorderAnimTiles1_SIZE / 16 ; $7305
 	call QueueVRAMCopy ; $7308
 	ld hl, wDecompBuffer ; $730b
-	ld de, vTiles0 + $36 * TILE_SIZE + VRAM_BANK1 ; $730e
+	ld de, vTiles0 tile $36 + VRAM_BANK1 ; $730e
 	ld bc, RulesBorderAnimTiles1_SIZE / 16 ; $7311
 	call QueueVRAMCopy ; $7314
 	ld hl, wDecompBuffer ; $7317
-	ld de, vTiles0 + $5a * TILE_SIZE + VRAM_BANK1 ; $731a
+	ld de, vTiles0 tile $5a + VRAM_BANK1 ; $731a
 	ld bc, 2 ; $731d
 	call QueueVRAMCopy ; $7320
 	ld hl, RulesBorderAnimTiles2 ; $7323
 	ld de, wDecompBuffer ; $7326
 	call DecompressData ; $7329
-	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $732c
-	ld de, vTiles0 + $2c * TILE_SIZE ; $732f
+	ld hl, wDecompBuffer tile 2 ; $732c
+	ld de, vTiles0 tile $2c ; $732f
 	ld bc, 1 ; $7332
 	call QueueVRAMCopy ; $7335
-	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $7338
-	ld de, vTiles0 + $18 * TILE_SIZE + VRAM_BANK1 ; $733b
+	ld hl, wDecompBuffer tile 2 ; $7338
+	ld de, vTiles0 tile $18 + VRAM_BANK1 ; $733b
 	ld bc, 1 ; $733e
 	call QueueVRAMCopy ; $7341
 	ld hl, wDecompBuffer ; $7344
-	ld de, vTiles0 + $3c * TILE_SIZE + VRAM_BANK1 ; $7347
+	ld de, vTiles0 tile $3c + VRAM_BANK1 ; $7347
 	ld bc, 1 ; $734a
 	call QueueVRAMCopy ; $734d
-	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $7350
-	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $7353
+	ld hl, wDecompBuffer tile 4 ; $7350
+	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $7353
 	ld bc, 1 ; $7356
 	call QueueVRAMCopy ; $7359
 	ld hl, RulesBorderAnimTiles3 ; $735c
 	ld de, wDecompBuffer ; $735f
 	call DecompressData ; $7362
 	ld hl, wDecompBuffer ; $7365
-	ld de, vTiles0 + $12 * TILE_SIZE ; $7368
+	ld de, vTiles0 tile $12 ; $7368
 	ld bc, RulesBorderAnimTiles3_SIZE / 16 ; $736b
 	call QueueVRAMCopy ; $736e
 	ld hl, wDecompBuffer ; $7371
-	ld de, vTiles0 + $36 * TILE_SIZE ; $7374
+	ld de, vTiles0 tile $36 ; $7374
 	ld bc, RulesBorderAnimTiles3_SIZE / 16 ; $7377
 	call QueueVRAMCopy ; $737a
 	ld hl, wDecompBuffer ; $737d
-	ld de, vTiles0 + $5a * TILE_SIZE ; $7380
+	ld de, vTiles0 tile $5a ; $7380
 	ld bc, RulesBorderAnimTiles3_SIZE / 16 ; $7383
 	call QueueVRAMCopy ; $7386
 	ld hl, wDecompBuffer ; $7389
-	ld de, vTiles0 + $22 * TILE_SIZE + VRAM_BANK1 ; $738c
+	ld de, vTiles0 tile $22 + VRAM_BANK1 ; $738c
 	ld bc, 18 ; $738f
 	call QueueVRAMCopy ; $7392
 	ld hl, wDecompBuffer ; $7395
-	ld de, vTiles0 + $46 * TILE_SIZE + VRAM_BANK1 ; $7398
+	ld de, vTiles0 tile $46 + VRAM_BANK1 ; $7398
 	ld bc, 18 ; $739b
 	call QueueVRAMCopy ; $739e
 	ld hl, wDecompBuffer ; $73a1
-	ld de, vTiles0 + $6a * TILE_SIZE + VRAM_BANK1 ; $73a4
+	ld de, vTiles0 tile $6a + VRAM_BANK1 ; $73a4
 	ld bc, 18 ; $73a7
 	call QueueVRAMCopy ; $73aa
 	ld hl, RulesBorderAnimTiles4 ; $73ad
 	ld de, wDecompBuffer ; $73b0
 	call DecompressData ; $73b3
 	ld hl, wDecompBuffer ; $73b6
-	ld de, vTiles0 + $5c * TILE_SIZE ; $73b9
+	ld de, vTiles0 tile $5c ; $73b9
 	ld bc, RulesBorderAnimTiles4_SIZE / 16 ; $73bc
 	call QueueVRAMCopy ; $73bf
 	ld hl, wDecompBuffer ; $73c2
-	ld de, vTiles0 + $24 * TILE_SIZE + VRAM_BANK1 ; $73c5
+	ld de, vTiles0 tile $24 + VRAM_BANK1 ; $73c5
 	ld bc, RulesBorderAnimTiles4_SIZE / 16 ; $73c8
 	call QueueVRAMCopy ; $73cb
 	ld hl, wDecompBuffer ; $73ce
-	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $73d1
+	ld de, vTiles0 tile $48 + VRAM_BANK1 ; $73d1
 	ld bc, RulesBorderAnimTiles4_SIZE / 16 ; $73d4
 	call QueueVRAMCopy ; $73d7
 	ld hl, wDecompBuffer ; $73da
-	ld de, vTiles0 + $6c * TILE_SIZE + VRAM_BANK1 ; $73dd
+	ld de, vTiles0 tile $6c + VRAM_BANK1 ; $73dd
 	ld bc, 2 ; $73e0
 	call QueueVRAMCopy ; $73e3
 	ld hl, RulesBorderAnimTiles5 ; $73e6
 	ld de, wDecompBuffer ; $73e9
 	call DecompressData ; $73ec
-	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $73ef
-	ld de, vTiles0 + $3e * TILE_SIZE ; $73f2
+	ld hl, wDecompBuffer tile 2 ; $73ef
+	ld de, vTiles0 tile $3e ; $73f2
 	ld bc, 1 ; $73f5
 	call QueueVRAMCopy ; $73f8
-	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $73fb
-	ld de, vTiles0 + $2a * TILE_SIZE + VRAM_BANK1 ; $73fe
+	ld hl, wDecompBuffer tile 2 ; $73fb
+	ld de, vTiles0 tile $2a + VRAM_BANK1 ; $73fe
 	ld bc, 1 ; $7401
 	call QueueVRAMCopy ; $7404
 	ld hl, wDecompBuffer ; $7407
-	ld de, vTiles0 + $4e * TILE_SIZE + VRAM_BANK1 ; $740a
+	ld de, vTiles0 tile $4e + VRAM_BANK1 ; $740a
 	ld bc, 1 ; $740d
 	call QueueVRAMCopy ; $7410
-	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $7413
-	ld de, vTiles0 + $72 * TILE_SIZE + VRAM_BANK1 ; $7416
+	ld hl, wDecompBuffer tile 4 ; $7413
+	ld de, vTiles0 tile $72 + VRAM_BANK1 ; $7416
 	ld bc, 1 ; $7419
 	call QueueVRAMCopy ; $741c
 	ret ; $741f

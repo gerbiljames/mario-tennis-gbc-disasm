@@ -20,13 +20,13 @@ ApplyCpuDifficultyToCharRecords:
 	ld a, [hl+] ; $5f70
 	ld [wPlayer1PartnerAiParams + 3], a ; $5f71
 	ld a, [hl+] ; $5f74
-	ld [wExhibitionModePlayerPartnerCharacterDifficulty], a ; $5f75
-	ld a, [wPlayer1CurrentPartnerCharacter] ; $5f78
+	ld [wPlayer1PartnerDifficulty], a ; $5f75
+	ld a, [wPlayer1PartnerChar] ; $5f78
 	call IsCreatedCharId ; $5f7b
 	or a ; $5f7e
 	jr nz, .slot2 ; $5f7f
 	ld a, [hl+] ; $5f81
-	ld [wPlayer1PartnerExpTier], a ; $5f82
+	ld [wPlayer1PartnerLevel], a ; $5f82
 .slot2:
 	ld a, [wCharSelectSlotDifficulty + 2] ; $5f85
 	ld hl, CpuDifficultyParamPtrs_38 ; $5f88
@@ -48,13 +48,13 @@ ApplyCpuDifficultyToCharRecords:
 	ld a, [hl+] ; $5fa0
 	ld [wPlayer2MainAiParams + 3], a ; $5fa1
 	ld a, [hl+] ; $5fa4
-	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $5fa5
-	ld a, [wPlayer2CurrentMainCharacter] ; $5fa8
+	ld [wPlayer2MainDifficulty], a ; $5fa5
+	ld a, [wPlayer2MainChar] ; $5fa8
 	call IsCreatedCharId ; $5fab
 	or a ; $5fae
 	jr nz, .slot3 ; $5faf
 	ld a, [hl+] ; $5fb1
-	ld [wPlayer2MainExpTier], a ; $5fb2
+	ld [wPlayer2MainLevel], a ; $5fb2
 .slot3:
 	ld a, [wCharSelectSlotDifficulty + 3] ; $5fb5
 	ld hl, CpuDifficultyParamPtrs_38 ; $5fb8
@@ -76,13 +76,13 @@ ApplyCpuDifficultyToCharRecords:
 	ld a, [hl+] ; $5fd0
 	ld [wPlayer2PartnerAiParams + 3], a ; $5fd1
 	ld a, [hl+] ; $5fd4
-	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $5fd5
-	ld a, [wPlayer2CurrentPartnerCharacter] ; $5fd8
+	ld [wPlayer2PartnerDifficulty], a ; $5fd5
+	ld a, [wPlayer2PartnerChar] ; $5fd8
 	call IsCreatedCharId ; $5fdb
 	or a ; $5fde
 	jr nz, .done ; $5fdf
 	ld a, [hl+] ; $5fe1
-	ld [wPlayer2PartnerExpTier], a ; $5fe2
+	ld [wPlayer2PartnerLevel], a ; $5fe2
 .done:
 	pop_wram_bank ; $5fe5
 	ret ; $5fea
@@ -162,22 +162,22 @@ CacheStorySlotNames:
 	ld a, $00 ; $6068
 	ld [wCurrentStorySlot], a ; $606a
 	farcall CheckStorySlot ; $606d
-	ld hl, wStoryModeNameOfMainCharacter ; $6070
+	ld hl, wStoryMainName ; $6070
 	ld de, wDecompBuffer ; $6073
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $6076
 	call CopyMemoryFast ; $6079
 	ld a, $01 ; $607c
 	ld [wCurrentStorySlot], a ; $607e
 	farcall CheckStorySlot ; $6081
-	ld hl, wStoryModeNameOfMainCharacter ; $6084
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $6087
+	ld hl, wStoryMainName ; $6084
+	ld de, wDecompBuffer tile 16 ; $6087
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $608a
 	call CopyMemoryFast ; $608d
 	ld a, $02 ; $6090
 	ld [wCurrentStorySlot], a ; $6092
 	farcall CheckStorySlot ; $6095
-	ld hl, wStoryModeNameOfMainCharacter ; $6098
-	ld de, wDecompBuffer + 32 * TILE_SIZE ; $609b
+	ld hl, wStoryMainName ; $6098
+	ld de, wDecompBuffer tile 32 ; $609b
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $609e
 	call CopyMemoryFast ; $60a1
 	pop_wram_bank ; $60a4
@@ -207,7 +207,7 @@ LoadCachedStorySlotName:
 	ld a, [hl+] ; $60d0
 	ld h, [hl] ; $60d1
 	ld l, a ; $60d2
-	ld de, wStoryModeNameOfMainCharacter ; $60d3
+	ld de, wStoryMainName ; $60d3
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $60d6
 	call CopyMemoryFast ; $60d9
 	pop_wram_bank ; $60dc

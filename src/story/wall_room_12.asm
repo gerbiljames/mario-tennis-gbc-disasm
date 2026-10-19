@@ -51,11 +51,10 @@ DormEntranceTile01_12:
 	script_player_speed 0.5 ; $4136
 	script_move_player 22.0, 8.0 ; $413c
 	script_wait_frames 15 ; $4146
-	ld c, 4 ; $414d
-	call BeginFadeOut ; $414f
+	script_fade_out 4 ; $414d
 	farcall WaitPlayerMoveDone ; $4152
 	call WaitFadeEnd ; $4155
-	ld a, [wStoryModeGenderOfMainCharacter] ; $4158
+	ld a, [wStoryMainGender] ; $4158
 	or a ; $415b
 	jr nz, .nonZero ; $415c
 	ld a, $01 ; $415e
@@ -144,12 +143,11 @@ DormEntranceEntry0fScene:
 	script_speak ACTOR_DORM_ENTRANCE_EMILY ; $4366
 	script_move_target ACTOR_PLAYER, 22.5, 18.0 ; $436b
 	script_jump_velocity ACTOR_PLAYER, -2.0 ; $4376
-	ld a, $00 ; $437e
-	farcall ScriptWaitActorJumpDone ; $4380
+	script_wait_jump ACTOR_PLAYER ; $437e
 	script_face ACTOR_PLAYER, FACE_UP ; $4383
 	script_set_active ACTOR_DORM_ENTRANCE_EMILY, $02 ; $438a
 	script_set_position ACTOR_DORM_ENTRANCE_EMILY, 21.0, 11.0 ; $4391
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $439c
+	ld a, [wStoryPartnerGender] ; $439c
 	or a ; $439f
 	jr nz, .doubles ; $43a0
 	script_set_text Text_31_92 ; $43a2
@@ -268,8 +266,7 @@ DormEntranceEntry0fScene:
 	farcall EraseStorySlotSaveData ; $4663
 	farcall SaveStorySlotWithTimer ; $4666
 	sound BGM_NONE ; $4669
-	ld c, 4 ; $466b
-	call BeginFadeOut ; $466d
+	script_fade_out 4 ; $466b
 	call WaitFadeEnd ; $4670
 	ld a, $0f ; $4673
 	ld [wUnusedExitTriggerIdMirror], a ; $4675
@@ -349,6 +346,7 @@ WallPracticeRoomNpc03_12:
 	ret ; $4772
 WallPracticeRoomNpc03TextIds:
 	; $4773, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_231 ; record 0
 	dw Text_35_256 ; record 1
 	dw Text_35_266 ; record 2
@@ -356,6 +354,7 @@ WallPracticeRoomNpc03TextIds:
 	dw Text_36_21 ; record 4
 	dw Text_36_21 ; record 5
 	dw Text_36_44 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc04_12:
 	ld a, [wMapSceneStage] ; $4781
 	add a ; $4784
@@ -368,6 +367,7 @@ WallPracticeRoomNpc04_12:
 	ret ; $4797
 WallPracticeRoomNpc04TextIds:
 	; $4798, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_234 ; record 0
 	dw Text_35_257 ; record 1
 	dw Text_35_269 ; record 2
@@ -375,6 +375,7 @@ WallPracticeRoomNpc04TextIds:
 	dw Text_36_22 ; record 4
 	dw Text_36_22 ; record 5
 	dw Text_36_45 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc05_12:
 	ld a, [wMapSceneStage] ; $47a6
 	add a ; $47a9
@@ -397,6 +398,7 @@ WallPracticeRoomNpc05_12:
 	ret ; $47e4
 WallPracticeRoomNpc05TextIds:
 	; $47e5, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_235 ; record 0
 	dw Text_35_258 ; record 1
 	dw Text_35_270 ; record 2
@@ -404,6 +406,7 @@ WallPracticeRoomNpc05TextIds:
 	dw Text_36_23 ; record 4
 	dw Text_36_23 ; record 5
 	dw Text_36_46 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc06_12:
 	ld a, [wMapSceneStage] ; $47f3
 	add a ; $47f6
@@ -416,6 +419,7 @@ WallPracticeRoomNpc06_12:
 	ret ; $4809
 WallPracticeRoomNpc06TextIds:
 	; $480a, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_237 ; record 0
 	dw Text_35_260 ; record 1
 	dw Text_35_272 ; record 2
@@ -423,6 +427,7 @@ WallPracticeRoomNpc06TextIds:
 	dw Text_36_24 ; record 4
 	dw Text_36_24 ; record 5
 	dw Text_36_47 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpcScripts_12:
 	; $4818, 41 bytes (map_scripts)
 	map_script ACTOR_WALL_PRACTICE_ROOM_WALK_72_02, FACEMASK_ANY, $0000, WallPracticeRoomNpc03_12, NPC_FACE_PLAYER, $00

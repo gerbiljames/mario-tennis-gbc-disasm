@@ -1,10 +1,11 @@
-; One body under 7 names (banks $0b, $0b, $0b, $0b, $0b, $0b, $0b), assembled through
-; `twin_named net_game_match1_award_point_to_side, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide,
+; NetGameMatch3AwardPointToSide, ServiceMatch3AwardPointToSide,
+; ServiceMatch2AwardPointToSide, StrokeMatch2AwardPointToSide,
+; StrokeMatch3AwardPointToSide (bank $0b).
 
 {TWIN_LABEL}:
 	ld a, [wPointWinLoseFlag]
+	ASSERT WINLOSE_NONE == 0
 	or a
 	ret z
 	inc a

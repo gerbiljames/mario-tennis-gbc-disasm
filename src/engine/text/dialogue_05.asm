@@ -133,7 +133,7 @@ OpenSpeechBubble:
 	ld hl, hActorPtr ; $5ad5
 	ld a, [hl+] ; $5ad8
 	ld h, [hl] ; $5ad9
-	add $0e ; $5ada
+	add ACTORF_Y ; $5ada
 	ld l, a ; $5adc
 	inc hl ; $5add
 	ld a, [hl] ; $5ade

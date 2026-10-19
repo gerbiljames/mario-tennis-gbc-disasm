@@ -371,7 +371,7 @@ HandleTennisDictionaryListInput:
 .resetTextWindowsAndRestoreMap:
 	push hl ; $564e
 	farcall ResetTextWindowsAndRestoreMap ; $564f
-	ld a, $05 ; $5652
+	ld a, WRAM_TEXT ; $5652
 	ld [wShadowTilemapBank], a ; $5654
 	pop hl ; $5657
 	ld d, $00 ; $5658
@@ -495,30 +495,30 @@ HandleTennisDictionaryListInput:
 	ret ; $5748
 QueueTennisDictionaryGlyphTiles:
 	push_wram_bank WRAM_SOUND ; $5749
-	ld hl, wGlyphTileBuffer + 54 * TILE_SIZE ; $5752
-	ld de, vTiles1 + $36 * TILE_SIZE ; $5755
+	ld hl, wGlyphTileBuffer tile 54 ; $5752
+	ld de, vTiles1 tile $36 ; $5755
 	ld c, 24 ; $5758
 	call QueueVRAMCopy ; $575a
 	push af ; $575d
 	ldh a, [rLCDC] ; $575e
-	bit 7, a ; $5760
+	bit B_LCDC_ENABLE, a ; $5760
 	jr z, .restore ; $5762
 	call AdvanceFrame ; $5764
 .restore:
 	pop af ; $5767
-	ld hl, wGlyphTileBuffer + 78 * TILE_SIZE ; $5768
-	ld de, vTiles1 + $4e * TILE_SIZE ; $576b
+	ld hl, wGlyphTileBuffer tile 78 ; $5768
+	ld de, vTiles1 tile $4e ; $576b
 	ld c, 24 ; $576e
 	call QueueVRAMCopy ; $5770
 	push af ; $5773
 	ldh a, [rLCDC] ; $5774
-	bit 7, a ; $5776
+	bit B_LCDC_ENABLE, a ; $5776
 	jr z, .restore2 ; $5778
 	call AdvanceFrame ; $577a
 .restore2:
 	pop af ; $577d
-	ld hl, wGlyphTileBuffer + 102 * TILE_SIZE ; $577e
-	ld de, vTiles1 + $66 * TILE_SIZE ; $5781
+	ld hl, wGlyphTileBuffer tile 102 ; $577e
+	ld de, vTiles1 tile $66 ; $5781
 	ld c, 24 ; $5784
 	call QueueVRAMCopy ; $5786
 	pop_wram_bank ; $5789
@@ -551,7 +551,7 @@ QueueTennisDictionaryListRows:
 	call QueueVRAMCopy ; $57d7
 	push af ; $57da
 	ldh a, [rLCDC] ; $57db
-	bit 7, a ; $57dd
+	bit B_LCDC_ENABLE, a ; $57dd
 	jr z, .restore ; $57df
 	call AdvanceFrame ; $57e1
 .restore:

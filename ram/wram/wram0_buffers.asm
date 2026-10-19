@@ -141,7 +141,7 @@ wScorePanelBobStep:: db
 ; [8-bit] Raised by Unused_18_DrawScoreNumbersTask around drawing the wScorePanelScore digits; Unused_18_DrawGlyphSprite then adds a per-glyph Y offset from UnusedBobRamp_18
 wScorePanelBobActive:: db
 	ds 6
-; [8-bit] Snapshot of wStoryMainCharExpTier taken by Unused_18_LoadScorePanelValue, drawn by Unused_18_DrawScoreNumbersTask
+; [8-bit] Snapshot of wStoryMainLevel taken by Unused_18_LoadScorePanelValue, drawn by Unused_18_DrawScoreNumbersTask
 wScorePanelExpTier:: db
 ; [8-bit named; read as a 16-bit word] Unused_18_DrawScoreNumbersTask draws $c78b-$c78c as a 3-digit sprite number beside wScorePanelExpTier. Nothing in bank $18 writes it and the high byte is wTargetZoneEnabled, so it reads whatever the mode-page clear left (0)
 wScorePanelScore:: db

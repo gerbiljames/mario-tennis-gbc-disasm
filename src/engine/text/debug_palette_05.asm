@@ -199,7 +199,7 @@ RunDebugPaletteViewer:
 	ldh a, [hInputRisingEdge] ; $6ab2
 	bit PADB_B, a ; $6ab4
 	jr nz, .closeWindow ; $6ab6
-	bit 0, a ; $6ab8
+	bit PADB_A, a ; $6ab8
 	jr z, .bit0Clear ; $6aba
 	call RunDebugColorEditor ; $6abc
 .bit0Clear:
@@ -317,7 +317,7 @@ DrawPaletteCursorSprites:
 	ret ; $6b6b
 StartDebugPaletteEditor:
 	ld hl, PaletteEditorCursorTiles_05 ; $6b6c
-	ld de, vTiles0 + $60 * TILE_SIZE ; $6b6f
+	ld de, vTiles0 tile $60 ; $6b6f
 	ld c, (GetSelectedBGPaletteColorPtr - PaletteEditorCursorTiles_05) / 16 ; $6b72
 	call QueueVRAMCopy ; $6b74
 	xor a ; $6b77

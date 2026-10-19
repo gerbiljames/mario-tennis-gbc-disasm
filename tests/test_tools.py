@@ -29,7 +29,7 @@ class Static(unittest.TestCase):
 
     def test_ram_free(self):
         import ram_free
-        self.assertEqual(sum(e - s for _, _, s, e in ram_free.free_ranges()), 4232)
+        self.assertEqual(sum(e - s for _, _, s, e in ram_free.free_ranges()), 4228)
 
     def test_twins(self):
         import twins
@@ -42,7 +42,7 @@ class Static(unittest.TestCase):
 
     def test_coverage_routines(self):
         import coverage
-        self.assertGreaterEqual(len(coverage.routines()), 3996)
+        self.assertGreaterEqual(len(coverage.routines()), 4249)
 
     def test_eventtest_plan(self):
         import eventtest

@@ -431,9 +431,7 @@ SetupVarsityCourtSceneVariant:
 .stage1:
 	ap_pass AP_ARC_SINGLES, 3
 	jp z, ApVarsityWonSingles_13
-	ldh a, [hRomBank] ; $61e6
-	ld hl, VarsityCourtActorsC_13 ; $61e8
-	farcall ScriptRespawnLocationActors ; $61eb
+	script_respawn_actors VarsityCourtActorsC_13 ; $61e6
 	ld hl, VarsityCourtNpcScriptsC_13 ; $61ee
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $61f1
 	farcall WriteStoryStateWord ; $61f4
@@ -447,9 +445,7 @@ SetupVarsityCourtSceneVariant:
 .stage2:
 	ap_pass AP_ARC_SINGLES, 2
 	jp z, .done ; $620d
-	ldh a, [hRomBank] ; $6210
-	ld hl, VarsityCourtActorsA_13 ; $6212
-	farcall ScriptRespawnLocationActors ; $6215
+	script_respawn_actors VarsityCourtActorsA_13 ; $6210
 	ld hl, VarsityCourtNpcScriptsA_13 ; $6218
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $621b
 	farcall WriteStoryStateWord ; $621e
@@ -459,9 +455,7 @@ SetupVarsityCourtSceneVariant:
 	jp z, .stage5
 	ap_pass AP_ARC_DOUBLES, 4
 	jr z, .stage4 ; $6225
-	ldh a, [hRomBank] ; $6227
-	ld hl, VarsityCourtActorsB_13 ; $6229
-	farcall ScriptRespawnLocationActors ; $622c
+	script_respawn_actors VarsityCourtActorsB_13 ; $6227
 	ld hl, VarsityCourtNpcScriptsE_13 ; $622f
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6232
 	farcall WriteStoryStateWord ; $6235
@@ -480,9 +474,7 @@ SetupVarsityCourtSceneVariant:
 .stage4:
 	ap_pass AP_ARC_DOUBLES, 3
 	jp z, ApVarsityWonDoubles_13
-	ldh a, [hRomBank] ; $6283
-	ld hl, VarsityCourtActorsD_13 ; $6285
-	farcall ScriptRespawnLocationActors ; $6288
+	script_respawn_actors VarsityCourtActorsD_13 ; $6283
 	ld hl, VarsityCourtNpcScriptsC_13 ; $628b
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $628e
 	farcall WriteStoryStateWord ; $6291
@@ -496,9 +488,7 @@ SetupVarsityCourtSceneVariant:
 .stage5:
 	ap_pass AP_ARC_DOUBLES, 2
 	jr z, .done ; $62aa
-	ldh a, [hRomBank] ; $62ac
-	ld hl, VarsityCourtActorsB_13 ; $62ae
-	farcall ScriptRespawnLocationActors ; $62b1
+	script_respawn_actors VarsityCourtActorsB_13 ; $62ac
 	ld hl, VarsityCourtNpcScriptsB_13 ; $62b4
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $62b7
 	farcall WriteStoryStateWord ; $62ba

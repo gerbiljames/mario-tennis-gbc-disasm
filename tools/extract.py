@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 import tilemap  # noqa: E402
+import consts  # noqa: E402
 
 # Printable ASCII safe inside an rgbasm string literal: excludes the quote,
 # backslash, and the {} symbol-interpolation characters.
@@ -64,10 +65,9 @@ def _char_names():
     name), so the pools spell it with the character's name."""
     names = {}
     try:
-        for line in "\n".join(f.read_text() for f in sorted((ROOT / "include" / "constants").glob("*.inc"))).splitlines():
-            m = re.match(r"def (CHAR_\w+)\s+equ \$([0-9a-f]{2})\b", line)
-            if m and int(m.group(2), 16) < 0x20:
-                names.setdefault(int(m.group(2), 16), m.group(1))
+        for name, value in consts.constants(sorted((ROOT / "include" / "constants").glob("*.inc"))).items():
+            if name.startswith("CHAR_") and value < 0x20:
+                names.setdefault(value, name)
     except OSError:
         pass
     return names

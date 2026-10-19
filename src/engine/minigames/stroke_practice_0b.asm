@@ -204,6 +204,7 @@ StrokePractice2Hook_PointStart:
 	ld [wTargetZoneEnabled], a ; $6dea
 	ld hl, StrokePractice2PointStartDrillPositions ; $6ded
 	call SetDrillTargetZoneForPoint ; $6df0
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $6df3
 	ld [wDrillMessageId], a ; $6df4
 	xor a ; $6df7
@@ -527,6 +528,7 @@ StrokePractice3Hook_PointStart:
 	ld [wTargetZoneEnabled], a ; $704f
 	ld hl, StrokePractice3PointStartDrillPositions ; $7052
 	call SetDrillTargetZoneForPoint ; $7055
+	ASSERT DRILLMSG_NONE == 0
 	xor a ; $7058
 	ld [wDrillMessageId], a ; $7059
 	xor a ; $705c
@@ -703,6 +705,7 @@ StrokePractice3Cases1DrillShotTable:
 ; Instruction-identical to StrokePractice1Cases2 (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_cases2, StrokePractice3Cases2 ; $721d
 RunDoublesDrillMatch:
+	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	xor a ; $7258
 	ld [wMatchContext], a ; $7259
 	ld a, GAMEMODE_MARIO_MINIGAME ; $725c
@@ -757,7 +760,7 @@ RunDoublesDrillMatch:
 	ld a, [hl+] ; $72bf
 	ld [wPlayer2MainAiParams + 3], a ; $72c0
 	ld a, [hl+] ; $72c3
-	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $72c4
+	ld [wPlayer2MainDifficulty], a ; $72c4
 	pop hl ; $72c7
 	ld a, [hl+] ; $72c8
 	ld [wPlayer2PartnerAiParams], a ; $72c9
@@ -768,7 +771,7 @@ RunDoublesDrillMatch:
 	ld a, [hl+] ; $72d4
 	ld [wPlayer2PartnerAiParams + 3], a ; $72d5
 	ld a, [hl+] ; $72d8
-	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
+	ld [wPlayer2PartnerDifficulty], a ; $72d9
 	farcall RunMatch ; $72dc
 	ret ; $72df
 ; Per Two-on-One level: games per set, sets, then the four AI bytes and the

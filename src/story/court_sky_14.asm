@@ -49,6 +49,7 @@ Court1Npc05_14:
 	ret ; $5092
 Court1Npc05TextIds:
 	; $5093, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_134 ; record 0
 	dw Text_1f_134 ; record 1
 	dw Text_1f_137 ; record 2
@@ -56,6 +57,7 @@ Court1Npc05TextIds:
 	dw Text_1f_134 ; record 4
 	dw Text_1f_141 ; record 5
 	dw Text_1f_143 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court1Npc06_14:
 	ld a, [wMapSceneStage] ; $50a1
 	add a ; $50a4
@@ -68,6 +70,7 @@ Court1Npc06_14:
 	ret ; $50b7
 Court1Npc06TextIds:
 	; $50b8, 14 bytes (text_ids)
+	table_width 2
 	dw Text_1f_135 ; record 0
 	dw Text_1f_136 ; record 1
 	dw Text_1f_138 ; record 2
@@ -75,6 +78,7 @@ Court1Npc06TextIds:
 	dw Text_1f_135 ; record 4
 	dw Text_1f_142 ; record 5
 	dw Text_1f_144 ; record 6
+	assert_table_length NUM_ISLANDOPENSTAGES
 Court1NpcScripts_14:
 	; $50c6, 33 bytes (map_scripts)
 	map_script ACTOR_COURT1_WALK_6F_07_1, FACEMASK_ANY, $0000, Court1Npc03_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -108,9 +112,7 @@ InitCourt1SceneVariant:
 	jr z, .stage1 ; $5112
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $5114
 	ld [wMapSceneStage], a ; $5116
-	ldh a, [hRomBank] ; $5119
-	ld hl, Court1ActorsAlt_14 ; $511b
-	farcall ScriptRespawnLocationActors ; $511e
+	script_respawn_actors Court1ActorsAlt_14 ; $5119
 	farcall BeginCutsceneScriptMode ; $5121
 	ret ; $5124
 .stage1:
@@ -131,9 +133,7 @@ InitCourt1SceneVariant:
 	jr z, .doublesStage2 ; $513e
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $5140
 	ld [wMapSceneStage], a ; $5142
-	ldh a, [hRomBank] ; $5145
-	ld hl, Court1ActorsAlt_14 ; $5147
-	farcall ScriptRespawnLocationActors ; $514a
+	script_respawn_actors Court1ActorsAlt_14 ; $5145
 	farcall BeginCutsceneScriptMode ; $514d
 	ret ; $5150
 .doublesStage2:
@@ -245,7 +245,7 @@ IslandSkyInitScript_14:
 	jp z, .setPlayerObjDef ; $5327
 	script_null_script ACTOR_PARTNER ; $532a
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $532f
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $533a
+	ld a, [wStoryPartnerGender] ; $533a
 	ld d, OBJ_HARRY_B ; $533d
 	add d ; $533f
 	ld d, a ; $5340
@@ -255,7 +255,7 @@ IslandSkyInitScript_14:
 	farcall LoadActorObjectDefIfValid ; $5348
 	script_set_anim ACTOR_ISLAND_SKY_WALK_74_07, ANIM_WALK ; $534b
 .setPlayerObjDef:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $5352
+	ld a, [wStoryMainGender] ; $5352
 	ld d, OBJ_ALEX_B ; $5355
 	add d ; $5357
 	ld d, a ; $5358
@@ -397,8 +397,7 @@ IslandSkyInitScript_14:
 .fadeOut:
 	set_flag FLAG_REACHED_ISLAND_OPEN_SINGLES
 .transition:
-	ld c, 4 ; $54c1
-	call BeginFadeOut ; $54c3
+	script_fade_out 4 ; $54c1
 	call WaitFadeEnd ; $54c6
 	call ClearFrameTasks ; $54c9
 	ld a, STORYLOC_TOURNAMENT_COURTYARD ; $54cc
@@ -474,8 +473,7 @@ IslandSkyInitScript_14:
 	script_move_target ACTOR_PLAYER, 11.0, 39.0 ; $5603
 	script_wait_move ACTOR_PLAYER ; $560e
 	script_set_active ACTOR_PLAYER, $00 ; $5613
-	ld c, 4 ; $561a
-	call BeginFadeOut ; $561c
+	script_fade_out 4 ; $561a
 	call WaitFadeEnd ; $561f
 	call WaitFadeEnd ; $5622
 	call ClearFrameTasks ; $5625

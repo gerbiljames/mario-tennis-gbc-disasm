@@ -24,8 +24,7 @@ ShowMatchResultsScreen:
 	jr z, .showResults ; $402c
 	jp ShowExpAwardScreen ; $402e
 .showResults:
-	ld c, 16 ; $4031
-	call BeginFadeOut ; $4033
+	script_fade_out 16 ; $4031
 	call WaitFadeEnd ; $4036
 	sound BGM_MENU ; $4039
 	push bc ; $403b
@@ -42,7 +41,7 @@ ShowMatchResultsScreen:
 	ld [wCameraX + 1], a ; $4055
 	ld [wCameraY], a ; $4058
 	ld [wCameraY + 1], a ; $405b
-	ld a, $90 ; $405e
+	ld a, SCREEN_HEIGHT_PX ; $405e
 	ldh [rWY], a ; $4060
 	call ClearSpriteQueue ; $4062
 	farcall InitActorEngine ; $4065
@@ -58,8 +57,7 @@ ShowMatchResultsScreen:
 	script_fade_in 16 ; $4080
 	call WaitFadeEnd ; $4085
 	call RunContinuePrompt ; $4088
-	ld c, 16 ; $408b
-	call BeginFadeOut ; $408d
+	script_fade_out 16 ; $408b
 	call WaitFadeEnd ; $4090
 	ld hl, DrawResultsCharSprites ; $4093
 	call UnregisterFrameTask ; $4096
@@ -82,7 +80,7 @@ InitResultsPromptState:
 BuildResultsScreenTilemap:
 	call LoadResultsScreenGraphics ; $40be
 	ld hl, Text_31_210 ; $40c1
-	ld de, wDecompBuffer + 4 * TILE_SIZE + 1 ; $40c4
+	ld de, wDecompBuffer tile 4 + 1 ; $40c4
 	ld bc, $0020 ; $40c7
 	call DrawProportionalTextLine ; $40ca
 	ld hl, Text_31_211 ; $40cd
@@ -305,6 +303,7 @@ BuildResultsScreenPanels:
 	ld c, $06 ; $4314
 	call FillMemoryC ; $4316
 	ld a, [wGameMode] ; $4319
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $431c
 	jp z, DrawStoryResultsHeader ; $431d
 	cp GAMEMODE_EXHIBITION ; $4320

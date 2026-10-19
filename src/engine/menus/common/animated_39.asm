@@ -204,11 +204,11 @@ UpdateAnimatedTiles:
 	ld de, wDecompBuffer ; $439f
 	call DecompressDataFromBank ; $43a2
 	ld hl, wDecompBuffer ; $43a5
-	ld de, vTiles2 + $2e * TILE_SIZE + VRAM_BANK1 ; $43a8
+	ld de, vTiles2 tile $2e + VRAM_BANK1 ; $43a8
 	ld c, 2 ; $43ab
 	call QueueVRAMCopy ; $43ad
-	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $43b0
-	ld de, vTiles2 + $3e * TILE_SIZE + VRAM_BANK1 ; $43b3
+	ld hl, wDecompBuffer tile 2 ; $43b0
+	ld de, vTiles2 tile $3e + VRAM_BANK1 ; $43b3
 	ld c, 2 ; $43b6
 	call QueueVRAMCopy ; $43b8
 .frameB:
@@ -239,14 +239,14 @@ UpdateAnimatedTiles:
 	ld a, [hl+] ; $43da
 	ld h, [hl] ; $43db
 	ld l, a ; $43dc
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $43dd
+	ld de, wDecompBuffer tile 16 ; $43dd
 	call DecompressDataFromBank ; $43e0
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $43e3
-	ld de, vTiles2 + $4e * TILE_SIZE + VRAM_BANK1 ; $43e6
+	ld hl, wDecompBuffer tile 16 ; $43e3
+	ld de, vTiles2 tile $4e + VRAM_BANK1 ; $43e6
 	ld c, 2 ; $43e9
 	call QueueVRAMCopy ; $43eb
-	ld hl, wDecompBuffer + 18 * TILE_SIZE ; $43ee
-	ld de, vTiles2 + $5e * TILE_SIZE + VRAM_BANK1 ; $43f1
+	ld hl, wDecompBuffer tile 18 ; $43ee
+	ld de, vTiles2 tile $5e + VRAM_BANK1 ; $43f1
 	ld c, 2 ; $43f4
 	call QueueVRAMCopy ; $43f6
 .done:

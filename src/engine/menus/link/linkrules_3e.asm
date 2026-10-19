@@ -238,7 +238,7 @@ LoadLinkMessageScreen:
 	ld de, vTiles2 ; $4a20
 	farcall LoadCompressedTileBlock ; $4a23
 	wram_bank WRAM_TEXT ; $4a26
-	ld a, $03 ; $4a2c
+	ld a, WRAM_SCREEN ; $4a2c
 	ld [wShadowTilemapBank], a ; $4a2e
 	ld a, $00 ; $4a31
 	ld [wWindowTileAttr], a ; $4a33
@@ -332,7 +332,7 @@ LoadLinkErrorScreen:
 	ld de, vTiles2 ; $4aea
 	farcall LoadCompressedTileBlock ; $4aed
 	wram_bank WRAM_TEXT ; $4af0
-	ld a, $03 ; $4af6
+	ld a, WRAM_SCREEN ; $4af6
 	ld [wShadowTilemapBank], a ; $4af8
 	ld a, $00 ; $4afb
 	ld [wWindowTileAttr], a ; $4afd

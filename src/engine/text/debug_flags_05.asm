@@ -133,11 +133,11 @@ DebugMoveFlagCursor:
 	ldh a, [hPlayerInputFlags] ; $6552
 	bit PADB_LEFT, a ; $6554
 	jr nz, .next ; $6556
-	bit 4, a ; $6558
+	bit PADB_RIGHT, a ; $6558
 	jr nz, .bit4Set ; $655a
-	bit 6, a ; $655c
+	bit PADB_UP, a ; $655c
 	jr nz, .bit6Set ; $655e
-	bit 7, a ; $6560
+	bit PADB_DOWN, a ; $6560
 	jr nz, .negative ; $6562
 	jr .step5 ; $6564
 .next:
@@ -247,7 +247,7 @@ RunDebugFlagEditor:
 	call RedrawWindowRows ; $6659
 .checkPlayerInputFlags:
 	ldh a, [hPlayerInputFlags] ; $665c
-	and $f0 ; $665e
+	and PADF_DPAD ; $665e
 	jr z, .advanceFrame ; $6660
 	call DebugEraseFlagCursor ; $6662
 	call DebugMoveFlagCursor ; $6665
@@ -277,6 +277,7 @@ RunDebugFlagEditor:
 	ret ; $669f
 RunDebugMenu:
 	ldh a, [hDebugStepMode] ; $66a0
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $66a2
 	ret z ; $66a3
 	push af ; $66a4
@@ -325,8 +326,7 @@ RunDebugWarpMenuThunk:
 	call RunDebugWarpMenu ; $66e6
 	jr RunDebugMenu.loop ; $66e9
 TextSubcmdHandler1:
-	ld c, 16 ; $66eb
-	call BeginFadeOut ; $66ed
+	script_fade_out 16 ; $66eb
 	call WaitFadeEnd ; $66f0
 	ld hl, wStoryModePlayersXPosition ; $66f3
 	ld de, wStoryModeSpawnPosition ; $66f6
@@ -498,7 +498,7 @@ DebugStepValueWithDpad:
 	ldh a, [hInputPressed] ; $6864
 	bit PADB_RIGHT, a ; $6866
 	jr nz, .next ; $6868
-	bit 5, a ; $686a
+	bit PADB_LEFT, a ; $686a
 	jr nz, .bit5Set ; $686c
 	ld a, b ; $686e
 	pop bc ; $686f

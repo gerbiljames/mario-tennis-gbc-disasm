@@ -162,9 +162,7 @@ TournamentInitScript_0f:
 	ld a, [wMapSceneStage] ; $622a
 	and a ; $622d
 	jr nz, .singles ; $622e
-	ldh a, [hRomBank] ; $6230
-	ld hl, IslandOpenRoundActors_0f ; $6232
-	farcall ScriptRespawnLocationActors ; $6235
+	script_respawn_actors IslandOpenRoundActors_0f ; $6230
 	ld hl, IslandOpenRoundNpcScripts_0f ; $6238
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $623b
 	farcall WriteStoryStateWord ; $623e
@@ -184,9 +182,7 @@ TournamentInitScript_0f:
 .singles:
 	test_flag FLAG_DOUBLES ; $628e
 	jr nz, .doubles ; $6291
-	ldh a, [hRomBank] ; $6293
-	ld hl, IslandOpenRoundActorsSingles_0f ; $6295
-	farcall ScriptRespawnLocationActors ; $6298
+	script_respawn_actors IslandOpenRoundActorsSingles_0f ; $6293
 	ld hl, IslandOpenRoundNpcScriptsSingles_0f ; $629b
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $629e
 	farcall WriteStoryStateWord ; $62a1
@@ -197,9 +193,7 @@ TournamentInitScript_0f:
 	script_face ACTOR_ISLAND_OPEN_ROUND_SINGLES_WALK_74_06, FACE_LEFT ; $62bc
 	ret ; $62c3
 .doubles:
-	ldh a, [hRomBank] ; $62c4
-	ld hl, IslandOpenRoundActorsDoubles_0f ; $62c6
-	farcall ScriptRespawnLocationActors ; $62c9
+	script_respawn_actors IslandOpenRoundActorsDoubles_0f ; $62c4
 	ld hl, IslandOpenRoundNpcScriptsDoubles_0f ; $62cc
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $62cf
 	farcall WriteStoryStateWord ; $62d2
@@ -373,9 +367,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	twin read_scene_tilemap_tile, 0f ; $6408 ReadSceneTilemapTile_0f
 IslandOpenArrivalCutscene:
 	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $6426
-	ldh a, [hRomBank] ; $6429
-	ld hl, IslandOpenRoundActors_0f ; $642b
-	farcall ScriptRespawnLocationActors ; $642e
+	script_respawn_actors IslandOpenRoundActors_0f ; $6429
 	ld hl, IslandOpenRoundNpcScripts_0f ; $6431
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6434
 	farcall WriteStoryStateWord ; $6437
@@ -437,11 +429,7 @@ IslandOpenArrivalCutscene:
 	script_set_anim ACTOR_ISLAND_OPEN_ROUND_WALK_74_06, ANIM_NOD ; $6585
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_WALK_74_06 ; $658c
 	script_speak ACTOR_ISLAND_OPEN_ROUND_WALK_74_06 ; $6591
-	script_get_actor_state ACTOR_ISLAND_OPEN_ROUND_WALK_74_07 ; $6596
-	ld c, l ; $659b
-	ld b, h ; $659c
-	ld de, wActors ; $659d
-	farcall AttachActorStepMover ; $65a0
+	script_follow ACTOR_ISLAND_OPEN_ROUND_WALK_74_07, ACTOR_PLAYER ; $6596
 	set_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $65a3
 .walkOn:
 	script_player_speed 0.75 ; $65a6
@@ -509,9 +497,7 @@ LoadIslandOpenRoundNpcs:
 	farcall WriteBehaviorMapCell ; $6661
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6664
 	jr z, .round2 ; $6667
-	ldh a, [hRomBank] ; $6669
-	ld hl, IslandOpenFinalActors_0f ; $666b
-	farcall ScriptRespawnLocationActors ; $666e
+	script_respawn_actors IslandOpenFinalActors_0f ; $6669
 	ld hl, IslandOpenFinalNpcScripts_0f ; $6671
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6674
 	farcall WriteStoryStateWord ; $6677
@@ -521,9 +507,7 @@ LoadIslandOpenRoundNpcs:
 .round2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $6680
 	jr z, .round1 ; $6683
-	ldh a, [hRomBank] ; $6685
-	ld hl, IslandOpenSemifinalActors_0f ; $6687
-	farcall ScriptRespawnLocationActors ; $668a
+	script_respawn_actors IslandOpenSemifinalActors_0f ; $6685
 	ld hl, IslandOpenSemifinalNpcScripts_0f ; $668d
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6690
 	farcall WriteStoryStateWord ; $6693
@@ -533,9 +517,7 @@ LoadIslandOpenRoundNpcs:
 .round1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $669c
 	jr z, .done ; $669f
-	ldh a, [hRomBank] ; $66a1
-	ld hl, IslandOpenRound2Actors_0f ; $66a3
-	farcall ScriptRespawnLocationActors ; $66a6
+	script_respawn_actors IslandOpenRound2Actors_0f ; $66a1
 	ld hl, IslandOpenRound2NpcScripts_0f ; $66a9
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $66ac
 	farcall WriteStoryStateWord ; $66af
@@ -552,9 +534,7 @@ LoadIslandOpenRoundNpcsDoubles:
 	farcall WriteBehaviorMapCell ; $66c7
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $66ca
 	jr z, .round2 ; $66cd
-	ldh a, [hRomBank] ; $66cf
-	ld hl, IslandOpenFinalActorsDoubles_0f ; $66d1
-	farcall ScriptRespawnLocationActors ; $66d4
+	script_respawn_actors IslandOpenFinalActorsDoubles_0f ; $66cf
 	ld hl, IslandOpenFinalNpcScriptsDoubles_0f ; $66d7
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $66da
 	farcall WriteStoryStateWord ; $66dd
@@ -564,9 +544,7 @@ LoadIslandOpenRoundNpcsDoubles:
 .round2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $66e6
 	jr z, .round1 ; $66e9
-	ldh a, [hRomBank] ; $66eb
-	ld hl, IslandOpenSemifinalActorsDoubles_0f ; $66ed
-	farcall ScriptRespawnLocationActors ; $66f0
+	script_respawn_actors IslandOpenSemifinalActorsDoubles_0f ; $66eb
 	ld hl, IslandOpenSemifinalNpcScriptsDoubles_0f ; $66f3
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $66f6
 	farcall WriteStoryStateWord ; $66f9
@@ -574,9 +552,7 @@ LoadIslandOpenRoundNpcsDoubles:
 	ld [wMapSceneStage], a ; $66fe
 	ret ; $6701
 .round1:
-	ldh a, [hRomBank] ; $6702
-	ld hl, IslandOpenRound1ActorsDoubles_0f ; $6704
-	farcall ScriptRespawnLocationActors ; $6707
+	script_respawn_actors IslandOpenRound1ActorsDoubles_0f ; $6702
 	ld hl, IslandOpenRound1NpcScriptsDoubles_0f ; $670a
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $670d
 	farcall WriteStoryStateWord ; $6710

@@ -171,11 +171,11 @@ RunDrillResultInputLoop:
 	ldh a, [hInputRisingEdge] ; $4cc2
 	bit PADB_RIGHT, a ; $4cc4
 	jr nz, .playSfx ; $4cc6
-	bit 5, a ; $4cc8
+	bit PADB_LEFT, a ; $4cc8
 	jp nz, .playSfx2 ; $4cca
-	bit 1, a ; $4ccd
+	bit PADB_B, a ; $4ccd
 	jp nz, .playSfx3 ; $4ccf
-	bit 0, a ; $4cd2
+	bit PADB_A, a ; $4cd2
 	jp nz, .playSfx4 ; $4cd4
 	jr .loop ; $4cd7
 .playSfx:
@@ -255,9 +255,9 @@ RunDrillResultInputLoop:
 	ldh a, [hInputRisingEdge] ; $4da3
 	bit PADB_RIGHT, a ; $4da5
 	jr nz, .playSfx5 ; $4da7
-	bit 1, a ; $4da9
+	bit PADB_B, a ; $4da9
 	jr nz, .playSfx6 ; $4dab
-	bit 0, a ; $4dad
+	bit PADB_A, a ; $4dad
 	jr nz, .playSfx7 ; $4daf
 	jr .loopB ; $4db1
 .playSfx5:
@@ -297,9 +297,9 @@ RunDrillResultInputLoop:
 	ldh a, [hInputRisingEdge] ; $4e02
 	bit PADB_LEFT, a ; $4e04
 	jr nz, .playSfx8 ; $4e06
-	bit 1, a ; $4e08
+	bit PADB_B, a ; $4e08
 	jr nz, .playSfx9 ; $4e0a
-	bit 0, a ; $4e0c
+	bit PADB_A, a ; $4e0c
 	jr nz, .playSfx10 ; $4e0e
 	jr .loop2 ; $4e10
 .playSfx8:
@@ -357,7 +357,7 @@ SlideCharDataArrowsInTask:
 BuildCharStatDisplay:
 	wram_bank WRAM_SCENE ; $4e8d
 	push af ; $4e93
-	ld hl, wStoryModeNameOfMainCharacter ; $4e94
+	ld hl, wStoryMainName ; $4e94
 	ld a, [wStoryCharacterSlot] ; $4e97
 	or a ; $4e9a
 	jr z, .zero ; $4e9b
@@ -373,7 +373,7 @@ BuildCharStatDisplay:
 	ld a, [hl] ; $4ea8
 	ld [wCharDataLevels], a ; $4ea9
 	push af ; $4eac
-	ld hl, wStoryModeNameOfMainCharacter ; $4ead
+	ld hl, wStoryMainName ; $4ead
 	ld a, [wStoryCharacterSlot] ; $4eb0
 	or a ; $4eb3
 	jr z, .zero2 ; $4eb4
@@ -390,7 +390,7 @@ BuildCharStatDisplay:
 	inc a ; $4ec2
 	ld [wCharDataStats], a ; $4ec3
 	push af ; $4ec6
-	ld hl, wStoryModeNameOfMainCharacter ; $4ec7
+	ld hl, wStoryMainName ; $4ec7
 	ld a, [wStoryCharacterSlot] ; $4eca
 	or a ; $4ecd
 	jr z, .zero3 ; $4ece
@@ -407,7 +407,7 @@ BuildCharStatDisplay:
 	inc a ; $4edc
 	ld [wCharDataStats + 1], a ; $4edd
 	push af ; $4ee0
-	ld hl, wStoryModeNameOfMainCharacter ; $4ee1
+	ld hl, wStoryMainName ; $4ee1
 	ld a, [wStoryCharacterSlot] ; $4ee4
 	or a ; $4ee7
 	jr z, .zero4 ; $4ee8
@@ -423,7 +423,7 @@ BuildCharStatDisplay:
 	ld a, [hl] ; $4ef5
 	ld [wCharDataLevels + 1], a ; $4ef6
 	push af ; $4ef9
-	ld hl, wStoryModeNameOfMainCharacter ; $4efa
+	ld hl, wStoryMainName ; $4efa
 	ld a, [wStoryCharacterSlot] ; $4efd
 	or a ; $4f00
 	jr z, .zero5 ; $4f01
@@ -440,7 +440,7 @@ BuildCharStatDisplay:
 	inc a ; $4f0f
 	ld [wCharDataStats + 2], a ; $4f10
 	push af ; $4f13
-	ld hl, wStoryModeNameOfMainCharacter ; $4f14
+	ld hl, wStoryMainName ; $4f14
 	ld a, [wStoryCharacterSlot] ; $4f17
 	or a ; $4f1a
 	jr z, .zero6 ; $4f1b
@@ -457,7 +457,7 @@ BuildCharStatDisplay:
 	inc a ; $4f29
 	ld [wCharDataStats + 3], a ; $4f2a
 	push af ; $4f2d
-	ld hl, wStoryModeNameOfMainCharacter ; $4f2e
+	ld hl, wStoryMainName ; $4f2e
 	ld a, [wStoryCharacterSlot] ; $4f31
 	or a ; $4f34
 	jr z, .zero7 ; $4f35
@@ -474,7 +474,7 @@ BuildCharStatDisplay:
 	inc a ; $4f43
 	ld [wCharDataStats + 4], a ; $4f44
 	push af ; $4f47
-	ld hl, wStoryModeNameOfMainCharacter ; $4f48
+	ld hl, wStoryMainName ; $4f48
 	ld a, [wStoryCharacterSlot] ; $4f4b
 	or a ; $4f4e
 	jr z, .zero8 ; $4f4f
@@ -490,7 +490,7 @@ BuildCharStatDisplay:
 	ld a, [hl] ; $4f5c
 	ld [wCharDataLevels + 2], a ; $4f5d
 	push af ; $4f60
-	ld hl, wStoryModeNameOfMainCharacter ; $4f61
+	ld hl, wStoryMainName ; $4f61
 	ld a, [wStoryCharacterSlot] ; $4f64
 	or a ; $4f67
 	jr z, .zero9 ; $4f68
@@ -507,7 +507,7 @@ BuildCharStatDisplay:
 	inc a ; $4f76
 	ld [wCharDataStats + 5], a ; $4f77
 	push af ; $4f7a
-	ld hl, wStoryModeNameOfMainCharacter ; $4f7b
+	ld hl, wStoryMainName ; $4f7b
 	ld a, [wStoryCharacterSlot] ; $4f7e
 	or a ; $4f81
 	jr z, .zero10 ; $4f82
@@ -524,7 +524,7 @@ BuildCharStatDisplay:
 	inc a ; $4f90
 	ld [wCharDataStats + 6], a ; $4f91
 	push af ; $4f94
-	ld hl, wStoryModeNameOfMainCharacter ; $4f95
+	ld hl, wStoryMainName ; $4f95
 	ld a, [wStoryCharacterSlot] ; $4f98
 	or a ; $4f9b
 	jr z, .zero11 ; $4f9c
@@ -540,7 +540,7 @@ BuildCharStatDisplay:
 	ld a, [hl] ; $4fa9
 	ld [wCharDataLevels + 3], a ; $4faa
 	push af ; $4fad
-	ld hl, wStoryModeNameOfMainCharacter ; $4fae
+	ld hl, wStoryMainName ; $4fae
 	ld a, [wStoryCharacterSlot] ; $4fb1
 	or a ; $4fb4
 	jr z, .zero12 ; $4fb5
@@ -557,7 +557,7 @@ BuildCharStatDisplay:
 	inc a ; $4fc3
 	ld [wCharDataStats + 7], a ; $4fc4
 	push af ; $4fc7
-	ld hl, wStoryModeNameOfMainCharacter ; $4fc8
+	ld hl, wStoryMainName ; $4fc8
 	ld a, [wStoryCharacterSlot] ; $4fcb
 	or a ; $4fce
 	jr z, .zero13 ; $4fcf
@@ -574,7 +574,7 @@ BuildCharStatDisplay:
 	inc a ; $4fdd
 	ld [wCharDataStats + 8], a ; $4fde
 	push af ; $4fe1
-	ld hl, wStoryModeNameOfMainCharacter ; $4fe2
+	ld hl, wStoryMainName ; $4fe2
 	ld a, [wStoryCharacterSlot] ; $4fe5
 	or a ; $4fe8
 	jr z, .zero14 ; $4fe9
@@ -591,7 +591,7 @@ BuildCharStatDisplay:
 	inc a ; $4ff7
 	ld [wCharDataStats + 9], a ; $4ff8
 	push af ; $4ffb
-	ld hl, wStoryModeNameOfMainCharacter ; $4ffc
+	ld hl, wStoryMainName ; $4ffc
 	ld a, [wStoryCharacterSlot] ; $4fff
 	or a ; $5002
 	jr z, .zero15 ; $5003
@@ -646,7 +646,7 @@ BuildCharStatDisplay:
 	ld [hl+], a ; $504f
 	ld [hl], a ; $5050
 	push af ; $5051
-	ld hl, wStoryModeNameOfMainCharacter ; $5052
+	ld hl, wStoryMainName ; $5052
 	ld a, [wStoryCharacterSlot] ; $5055
 	or a ; $5058
 	jr z, .zero16 ; $5059
@@ -664,7 +664,7 @@ BuildCharStatDisplay:
 	call WriteNameStringTiles ; $506b
 	wram_bank WRAM_SCENE ; $506e
 	push af ; $5074
-	ld hl, wStoryModeNameOfMainCharacter ; $5075
+	ld hl, wStoryMainName ; $5075
 	ld a, [wStoryCharacterSlot] ; $5078
 	or a ; $507b
 	jr z, .zero17 ; $507c

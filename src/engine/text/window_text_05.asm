@@ -349,7 +349,7 @@ DelayTextCharacter:
 .waitFrame:
 	call AdvanceFrame ; $57d1
 	ldh a, [hPlayerInputFlags] ; $57d4
-	and $f3 ; $57d6
+	and ~(PADF_SELECT | PADF_START) ; $57d6
 	jr nz, .restore ; $57d8
 	dec b ; $57da
 	jr nz, .waitFrame ; $57db

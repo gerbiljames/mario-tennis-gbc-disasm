@@ -142,7 +142,7 @@ PromptCharDataConfirm:
 	ld [wCameraX + 1], a ; $5a72
 	ld [wCameraY], a ; $5a75
 	ld [wCameraY + 1], a ; $5a78
-	ld a, $90 ; $5a7b
+	ld a, SCREEN_HEIGHT_PX ; $5a7b
 	ldh [rWY], a ; $5a7d
 	call ClearSpriteQueue ; $5a7f
 	call InitDrillWorkRam ; $5a82
@@ -162,9 +162,9 @@ PromptCharDataConfirm:
 	ldh a, [hInputRisingEdge] ; $5aab
 	bit PADB_A, a ; $5aad
 	jr nz, .step ; $5aaf
-	bit 1, a ; $5ab1
+	bit PADB_B, a ; $5ab1
 	jr nz, .beginFadeOut2 ; $5ab3
-	and $c0 ; $5ab5
+	and PADF_UP | PADF_DOWN ; $5ab5
 	jr z, .loop ; $5ab7
 	sound SFX_MENU_MOVE ; $5ab9
 	ld a, [wCharDataConfirmState] ; $5abb
@@ -184,8 +184,7 @@ PromptCharDataConfirm:
 	ld [wCharDataConfirmState], a ; $5add
 	sound SFX_MENU_CANCEL ; $5ae0
 .beginFadeOut:
-	ld c, 16 ; $5ae2
-	call BeginFadeOut ; $5ae4
+	script_fade_out 16 ; $5ae2
 	call WaitFadeEnd ; $5ae7
 	farcall StopCharDataScreenAnimTask ; $5aea
 	call ClearFrameTasks ; $5aed
@@ -201,7 +200,7 @@ BuildCharDataConfirmScreen:
 	pop af ; $5b21
 	ld [wStoryCharacterSlot], a ; $5b22
 	push af ; $5b25
-	ld hl, wStoryModeNameOfMainCharacter ; $5b26
+	ld hl, wStoryMainName ; $5b26
 	ld a, [wStoryCharacterSlot] ; $5b29
 	or a ; $5b2c
 	jr z, .zero ; $5b2d
@@ -219,7 +218,7 @@ BuildCharDataConfirmScreen:
 	farcall LoadIndexedPaletteThunk ; $5b3e
 	wram_bank WRAM_STAGING ; $5b41
 	push af ; $5b47
-	ld hl, wStoryModeNameOfMainCharacter ; $5b48
+	ld hl, wStoryMainName ; $5b48
 	ld a, [wStoryCharacterSlot] ; $5b4b
 	or a ; $5b4e
 	jr z, .zero2 ; $5b4f
@@ -236,15 +235,15 @@ BuildCharDataConfirmScreen:
 	ld de, wDecompBuffer ; $5b5d
 	farcall DecompressCharMugshot ; $5b60
 	ld hl, wDecompBuffer ; $5b63
-	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $5b66
+	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $5b66
 	ld c, 3 ; $5b69
 	call QueueVRAMCopy ; $5b6b
-	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $5b6e
-	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $5b71
+	ld hl, wDecompBuffer tile 3 ; $5b6e
+	ld de, vTiles2 tile $30 + VRAM_BANK1 ; $5b71
 	ld c, 3 ; $5b74
 	call QueueVRAMCopy ; $5b76
-	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $5b79
-	ld de, vTiles2 + $40 * TILE_SIZE + VRAM_BANK1 ; $5b7c
+	ld hl, wDecompBuffer tile 6 ; $5b79
+	ld de, vTiles2 tile $40 + VRAM_BANK1 ; $5b7c
 	ld c, 3 ; $5b7f
 	call QueueVRAMCopy ; $5b81
 	call BuildCharStatDisplay ; $5b84
@@ -288,7 +287,7 @@ InitCharDataScreenVideo:
 	ld [wCameraX + 1], a ; $5bf1
 	ld [wCameraY], a ; $5bf4
 	ld [wCameraY + 1], a ; $5bf7
-	ld a, $90 ; $5bfa
+	ld a, SCREEN_HEIGHT_PX ; $5bfa
 	ldh [rWY], a ; $5bfc
 	call ClearSpriteQueue ; $5bfe
 	farcall LoadMenuFontGfx ; $5c01

@@ -25,7 +25,7 @@ SpawnActor:
 	ld a, [hl-] ; $4064
 	or a ; $4065
 	jr z, .initSlot ; $4066
-	ld de, $0040 ; $4068
+	ld de, ACTOR_SIZE ; $4068
 	add hl, de ; $406b
 	dec c ; $406c
 	jr nz, .findSlot ; $406d
@@ -41,7 +41,7 @@ SpawnActor:
 	add hl, de ; $407b
 	ld e, l ; $407c
 	ld d, h ; $407d
-	ld hl, $0026 ; $407e
+	ld hl, ACTORF_VRAM_TILES ; $407e
 	add hl, bc ; $4081
 	ld a, e ; $4082
 	ld [hl+], a ; $4083
@@ -53,16 +53,16 @@ SpawnActor:
 	add hl, hl ; $4089
 	add hl, hl ; $408a
 	ld a, h ; $408b
-	ld hl, $0036 ; $408c
+	ld hl, ACTORF_TILE ; $408c
 	add hl, bc ; $408f
 	ld [hl], a ; $4090
 	ld hl, ACTORF_MODE ; $4091
 	add hl, bc ; $4094
 	ld [hl], $00 ; $4095
-	ld hl, $0015 ; $4097
+	ld hl, ACTORF_TURN_RATE ; $4097
 	add hl, bc ; $409a
 	ld [hl], $10 ; $409b
-	ld hl, $0006 ; $409d
+	ld hl, ACTORF_SPEED ; $409d
 	add hl, bc ; $40a0
 	ld a, $20 ; $40a1
 	ld [hl+], a ; $40a3
@@ -235,7 +235,7 @@ AttachActorWaypointFollower:
 	push de ; $417f
 	push hl ; $4180
 	wram_bank WRAM_ACTORS ; $4181
-	ld hl, $0016 ; $4187
+	ld hl, ACTORF_ANCHOR ; $4187
 	add hl, bc ; $418a
 	ld a, e ; $418b
 	ld [hl+], a ; $418c
@@ -246,7 +246,7 @@ AttachActorWaypointFollower:
 	ld hl, ACTORF_MODE ; $4196
 	add hl, bc ; $4199
 	ld [hl], $01 ; $419a
-	ld hl, $0015 ; $419c
+	ld hl, ACTORF_TURN_RATE ; $419c
 	add hl, bc ; $419f
 	ld [hl], $40 ; $41a0
 	pop hl ; $41a2
@@ -260,7 +260,7 @@ AttachActorStepMover:
 	push af ; $41a9
 	push de ; $41aa
 	push hl ; $41ab
-	ld hl, $0016 ; $41ac
+	ld hl, ACTORF_ANCHOR ; $41ac
 	add hl, bc ; $41af
 	ld a, e ; $41b0
 	ld [hl+], a ; $41b1
@@ -271,7 +271,7 @@ AttachActorStepMover:
 	ld hl, ACTORF_FLAGS ; $41bb
 	add hl, bc ; $41be
 	res ACTORFLAGB_SOLID, [hl] ; $41bf
-	ld hl, $0015 ; $41c1
+	ld hl, ACTORF_TURN_RATE ; $41c1
 	add hl, bc ; $41c4
 	ld [hl], $40 ; $41c5
 	ld hl, ACTORF_FLAGS ; $41c7
@@ -325,7 +325,7 @@ UpdateActors:
 	pop hl ; $420d
 	pop bc ; $420e
 .next:
-	ld de, $0040 ; $420f
+	ld de, ACTOR_SIZE ; $420f
 	add hl, de ; $4212
 	dec c ; $4213
 	jr nz, .actorLoop ; $4214
@@ -400,7 +400,7 @@ UpdateActorJumpPhysics:
 	or e ; $427e
 	jr z, .done ; $427f
 	push hl ; $4281
-	ld hl, ACTORF_HEIGHT ; $4282
+	ld hl, $0010 ; $4282
 	add hl, de ; $4285
 	ld e, l ; $4286
 	ld d, h ; $4287
@@ -436,7 +436,7 @@ UpdateActorJumpPhysics:
 AdvanceActorTowardTarget:
 	ld hl, ACTORF_FLAGS ; $42ae
 	add hl, bc ; $42b1
-	res 6, [hl] ; $42b2
+	res ACTORFLAGB_BLOCKED, [hl] ; $42b2
 	bit 1, [hl] ; $42b4
 	ret nz ; $42b6
 	bit 7, [hl] ; $42b7
@@ -518,7 +518,7 @@ AdvanceActorTowardTarget:
 	dec hl ; $4319
 	ld [hl], a ; $431a
 	ld e, a ; $431b
-	ld hl, $0006 ; $431c
+	ld hl, ACTORF_SPEED ; $431c
 	add hl, bc ; $431f
 	ld a, [hl+] ; $4320
 	ld h, [hl] ; $4321
@@ -532,7 +532,7 @@ AdvanceActorTowardTarget:
 	ld c, a ; $432d
 	ld hl, ACTORF_FLAGS ; $432e
 	add hl, bc ; $4331
-	bit 2, [hl] ; $4332
+	bit ACTORFLAGB_YIELD, [hl] ; $4332
 	pop hl ; $4334
 	jr z, .arrived ; $4335
 	push de ; $4337
@@ -564,7 +564,7 @@ AdvanceActorTowardTarget:
 	jr z, .arrived ; $4357
 	ld hl, ACTORF_FLAGS ; $4359
 	add hl, bc ; $435c
-	set 6, [hl] ; $435d
+	set ACTORFLAGB_BLOCKED, [hl] ; $435d
 	pop af ; $435f
 	pop hl ; $4360
 	pop de ; $4361
@@ -581,7 +581,7 @@ AdvanceActorTowardTarget:
 	ld hl, hActorPtr ; $4371
 	ld a, [hl+] ; $4374
 	ld h, [hl] ; $4375
-	add $0e ; $4376
+	add ACTORF_Y ; $4376
 	ld l, a ; $4378
 	push hl ; $4379
 	ld a, [hl+] ; $437a
@@ -598,7 +598,7 @@ AdvanceActorTowardTarget:
 	ld hl, hActorPtr ; $4385
 	ld a, [hl+] ; $4388
 	ld h, [hl] ; $4389
-	add $0a ; $438a
+	add ACTORF_TARGET_Y ; $438a
 	ld l, a ; $438c
 	ld a, [hl+] ; $438d
 	ld d, [hl] ; $438e
@@ -626,7 +626,7 @@ AdvanceActorTowardTarget:
 	ld hl, hActorPtr ; $43a7
 	ld a, [hl+] ; $43aa
 	ld h, [hl] ; $43ab
-	add $0c ; $43ac
+	add ACTORF_X ; $43ac
 	ld l, a ; $43ae
 	push hl ; $43af
 	ld a, [hl+] ; $43b0
@@ -643,7 +643,7 @@ AdvanceActorTowardTarget:
 	ld hl, hActorPtr ; $43bb
 	ld a, [hl+] ; $43be
 	ld h, [hl] ; $43bf
-	add $08 ; $43c0
+	add ACTORF_TARGET_X ; $43c0
 	ld l, a ; $43c2
 	ld a, [hl+] ; $43c3
 	ld d, [hl] ; $43c4

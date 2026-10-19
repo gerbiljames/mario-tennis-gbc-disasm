@@ -43,7 +43,7 @@ RunStoryTwoOptionMenu:
 	call LoadStoryMenuItemGfx ; $7102
 .loop:
 	farcall ReadMatchInputPressed ; $7105
-	and $02 ; $7108
+	and PADF_B ; $7108
 	jr z, .readMatchInputPressed ; $710a
 	sound SFX_MENU_CANCEL ; $710c
 	ld a, MATCHMENUSEL_CANCELLED ; $710e
@@ -51,13 +51,13 @@ RunStoryTwoOptionMenu:
 	jr .advanceFrame ; $7113
 .readMatchInputPressed:
 	farcall ReadMatchInputPressed ; $7115
-	and $01 ; $7118
+	and PADF_A ; $7118
 	jr z, .readMatchInputRepeat ; $711a
 	sound SFX_MENU_SELECT ; $711c
 	jr .advanceFrame ; $711e
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $7120
-	and $30 ; $7123
+	and PADF_RIGHT | PADF_LEFT ; $7123
 	jr z, .checkMatchMenuSelection2 ; $7125
 	ld b, a ; $7127
 	ld c, $02 ; $7128
@@ -134,7 +134,7 @@ RunStoryThreeOptionMenu:
 	call LoadStoryMenuItemGfx ; $71bc
 .loop:
 	farcall ReadMatchInputPressed ; $71bf
-	and $02 ; $71c2
+	and PADF_B ; $71c2
 	jr z, .readMatchInputPressed ; $71c4
 	sound SFX_MENU_CANCEL ; $71c6
 	ld a, MATCHMENUSEL_CANCELLED ; $71c8
@@ -142,13 +142,13 @@ RunStoryThreeOptionMenu:
 	jr .restoreStoryTilemapNoPriority ; $71cd
 .readMatchInputPressed:
 	farcall ReadMatchInputPressed ; $71cf
-	and $01 ; $71d2
+	and PADF_A ; $71d2
 	jr z, .readMatchInputRepeat ; $71d4
 	sound SFX_MENU_SELECT ; $71d6
 	jr .restoreStoryTilemapNoPriority ; $71d8
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $71da
-	and $30 ; $71dd
+	and PADF_RIGHT | PADF_LEFT ; $71dd
 	jr z, .checkMatchMenuSelection ; $71df
 	ld b, a ; $71e1
 	ld c, $03 ; $71e2
@@ -245,13 +245,14 @@ LoadStoryMenuItemGfx:
 	push_wram_bank WRAM_STAGING ; $7291
 	call DecompressData ; $729a
 	ld hl, wDecompBuffer ; $729d
-	ld de, vTiles0 + $70 * TILE_SIZE ; $72a0
+	ld de, vTiles0 tile $70 ; $72a0
 	ld c, 16 ; $72a3
 	call QueueVRAMCopy ; $72a5
 	pop_wram_bank ; $72a8
 	ret ; $72ad
 StoryMenuItemGfxPointers:
 	; $72ae, 32 bytes (records:2)
+	table_width 2
 	dw StoryMenuItemGfx_Status ; record 0
 	dw StoryMenuItemGfx_ClearStatus ; record 1
 	dw MatchMenuItemGfx_Options ; record 2
@@ -268,6 +269,7 @@ StoryMenuItemGfxPointers:
 	dw MatchMenuItemGfx_Cancel ; record 13
 	dw StoryMenuItemGfx_CharData ; record 14
 	dw StoryMenuItemGfx_Items ; record 15
+	assert_table_length NUM_STORYMENUITEMS
 QueueStoryMenuCursorSprite:
 	ld a, d ; $72ce
 	add $fc ; $72cf
@@ -328,6 +330,7 @@ DrawStoryMenuItem:
 	ret ; $77ca
 StoryMenuItemRectPointers:
 	; $77cb, 32 bytes (records:2)
+	table_width 2
 	dw StoryMenuItemRect_Status ; record 0
 	dw StoryMenuItemRect_ClearStatus ; record 1
 	dw StoryMenuItemRect_Options ; record 2
@@ -344,6 +347,7 @@ StoryMenuItemRectPointers:
 	dw StoryMenuItemRect_Cancel ; record 13
 	dw StoryMenuItemRect_CharData ; record 14
 	dw StoryMenuItemRect_Items ; record 15
+	assert_table_length NUM_STORYMENUITEMS
 StoryMenuItemRect_Status:
 	; $77eb, 6 bytes (tilemap:3)
 	tilemap_begin 3, 2

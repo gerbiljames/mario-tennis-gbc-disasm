@@ -54,6 +54,7 @@ TennisMachineRoomNpc03_14:
 	ret ; $40a5
 TennisMachineRoomNpc03TextIds:
 	; $40a6, 14 bytes (text_ids)
+	table_width 2
 	dw Text_6e_167 ; record 0
 	dw Text_6e_176 ; record 1
 	dw Text_6e_185 ; record 2
@@ -61,6 +62,7 @@ TennisMachineRoomNpc03TextIds:
 	dw Text_6e_199 ; record 4
 	dw Text_6e_207 ; record 5
 	dw Text_6e_214 ; record 6
+	assert_table_length NUM_MACHINECOURTSTAGES
 TennisMachineRoomNpc04_14:
 	ld a, [wMapSceneStage] ; $40b4
 	add a ; $40b7
@@ -86,6 +88,7 @@ TennisMachineRoomNpc04_14:
 	ret ; $40eb
 TennisMachineRoomNpc04TextIds:
 	; $40ec, 14 bytes (text_ids)
+	table_width 2
 	dw Text_6e_168 ; record 0
 	dw Text_6e_177 ; record 1
 	dw Text_6e_186 ; record 2
@@ -93,6 +96,7 @@ TennisMachineRoomNpc04TextIds:
 	dw Text_6e_200 ; record 4
 	dw Text_6e_208 ; record 5
 	dw Text_6e_215 ; record 6
+	assert_table_length NUM_MACHINECOURTSTAGES
 TennisMachineRoomNpcScripts_14:
 	; $40fa, 25 bytes (map_scripts)
 	map_script ACTOR_TENNIS_MACHINE_ROOM_WALK_72_06_1, FACEMASK_ANY, $0000, TennisMachineRoomNpc03_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -113,11 +117,7 @@ MachineLevel1ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $412b
 	script_set_text Text_6e_175 ; $412e
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4134
-	script_get_actor_state ACTOR_PARTNER ; $4139
-	ld c, l ; $413e
-	ld b, h ; $413f
-	ld de, wActors ; $4140
-	farcall AttachActorStepMover ; $4143
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4139
 	ret ; $4146
 MachineLevel2FailedPrompt:
 	script_set_text Text_6e_219 ; $4147
@@ -134,11 +134,7 @@ MachineLevel2ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4160
 	script_set_text Text_6e_183 ; $4163
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4169
-	script_get_actor_state ACTOR_PARTNER ; $416e
-	ld c, l ; $4173
-	ld b, h ; $4174
-	ld de, wActors ; $4175
-	farcall AttachActorStepMover ; $4178
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $416e
 	ret ; $417b
 MachineLevel3FailedPrompt:
 	script_set_text Text_6e_219 ; $417c
@@ -155,11 +151,7 @@ MachineLevel3ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4195
 	script_set_text Text_6e_190 ; $4198
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $419e
-	script_get_actor_state ACTOR_PARTNER ; $41a3
-	ld c, l ; $41a8
-	ld b, h ; $41a9
-	ld de, wActors ; $41aa
-	farcall AttachActorStepMover ; $41ad
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $41a3
 	ret ; $41b0
 MachineLevel4FailedPrompt:
 	script_set_text Text_6e_219 ; $41b1
@@ -176,11 +168,7 @@ MachineLevel4ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $41ca
 	script_set_text Text_6e_197 ; $41cd
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $41d3
-	script_get_actor_state ACTOR_PARTNER ; $41d8
-	ld c, l ; $41dd
-	ld b, h ; $41de
-	ld de, wActors ; $41df
-	farcall AttachActorStepMover ; $41e2
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $41d8
 	ret ; $41e5
 TennisMachineRoomFacingScripts_14:
 	ds 1, $ff ; $41e6, fill
@@ -217,11 +205,7 @@ TennisMachineRoomTile01_14:
 	script_wait_frames 5 ; $424d
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $4254
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $425b
-	script_get_actor_state ACTOR_PARTNER ; $4262
-	ld c, l ; $4267
-	ld b, h ; $4268
-	ld de, wActors ; $4269
-	farcall AttachActorStepMover ; $426c
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4262
 	ret ; $426f
 Unused_14_TableAfterTennisMachineRoomTile01:
 	; $4270, 8 bytes (bytes:16)
@@ -236,7 +220,7 @@ TennisMachineRoomInitScript_14:
 	ld a, $3c ; $4287
 	ld [wMapHeightTiles], a ; $4289
 	call DisableLCDSafely ; $428c
-	ld a, $00 ; $428f
+	ld a, SCENECOPY_FROM_PLAYER ; $428f
 	farcall CopyScrolledSceneTilemapToVram ; $4291
 	call EnableLCD ; $4294
 	call ComputeMachineCourtProgress ; $4297
@@ -309,11 +293,7 @@ MachineCourtGameOverExitScene:
 	script_move_target ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, 45.0, 43.0 ; $437f
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $438a
 	script_face ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07, FACE_LEFT ; $438f
-	script_get_actor_state ACTOR_PARTNER ; $4396
-	ld c, l ; $439b
-	ld b, h ; $439c
-	ld de, wActors ; $439d
-	farcall AttachActorStepMover ; $43a0
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4396
 	ret ; $43a3
 ComputeMachineCourtProgress:
 	ld a, MACHINECOURTSTAGE_LEVEL1 ; $43a4
@@ -445,8 +425,7 @@ MachineCourtStartLevelScene:
 	script_set_text Text_6e_204 ; $456c
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_WALK_72_07 ; $4572
 .lt04:
-	ld c, 6 ; $4577
-	call BeginFadeOut ; $4579
+	script_fade_out 6 ; $4577
 	call WaitFadeEnd ; $457c
 	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $457f
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4582

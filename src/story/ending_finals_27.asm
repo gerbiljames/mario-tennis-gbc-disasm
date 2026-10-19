@@ -54,9 +54,7 @@ End17AwardCeremonyTileTriggers_27:
 End17AwardCeremonyInitScript_27:
 	test_flag FLAG_DOUBLES ; $419f
 	jr z, .animate ; $41a2
-	ldh a, [hRomBank] ; $41a4
-	ld hl, End17AwardCeremonyActorsAlt_27 ; $41a6
-	farcall ScriptRespawnLocationActors ; $41a9
+	script_respawn_actors End17AwardCeremonyActorsAlt_27 ; $41a4
 	script_copy_scene_rect 26, 13, 8, 13, 8, 3 ; $41ac
 	farcall BeginCutsceneScriptMode ; $41bb
 	jr .setEnd17CeremonyObjectDefs ; $41be
@@ -124,7 +122,7 @@ End17AwardCeremonyInitScript_27:
 	script_delay 60 ; $436b
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 11.25, 12.25 ; $4370
 .loop:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $437b
+	ld a, [wStoryMainGender] ; $437b
 	ld d, OBJ_ALEX ; $437e
 	add d ; $4380
 	ld d, a ; $4381
@@ -215,7 +213,7 @@ End17AwardCeremonyInitScript_27:
 SetEnd17CeremonyObjectDefs_27:
 	test_flag FLAG_DOUBLES ; $45be
 	jp z, .checkStoryModeGenderOfMainCharacter ; $45c1
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $45c4
+	ld a, [wStoryPartnerGender] ; $45c4
 	ld d, OBJ_HARRY_B ; $45c7
 	add d ; $45c9
 	ld d, a ; $45ca
@@ -228,7 +226,7 @@ SetEnd17CeremonyObjectDefs_27:
 	script_set_position ACTOR_PARTNER, 15.0, 13.375 ; $45e1
 	script_face ACTOR_PARTNER, FACE_DOWN ; $45ec
 .checkStoryModeGenderOfMainCharacter:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $45f3
+	ld a, [wStoryMainGender] ; $45f3
 	ld d, OBJ_ALEX_B ; $45f6
 	add d ; $45f8
 	ld d, a ; $45f9
@@ -281,15 +279,11 @@ End16BeforeFinalsTileTriggers_27:
 End16BeforeFinalsInitScript_27:
 	test_flag FLAG_DOUBLES ; $46fd
 	jr nz, .isDoubles ; $4700
-	ldh a, [hRomBank] ; $4702
-	ld hl, End16BeforeFinalsActorsAlt_27 ; $4704
-	farcall ScriptRespawnLocationActors ; $4707
+	script_respawn_actors End16BeforeFinalsActorsAlt_27 ; $4702
 	call End16BeforeFinalsCutscene_27 ; $470a
 	ret ; $470d
 .isDoubles:
-	ldh a, [hRomBank] ; $470e
-	ld hl, End16BeforeFinalsActorsAltB_27 ; $4710
-	farcall ScriptRespawnLocationActors ; $4713
+	script_respawn_actors End16BeforeFinalsActorsAltB_27 ; $470e
 	call End16BeforeFinalsCutscene_27 ; $4716
 	ret ; $4719
 End16BeforeFinalsActorsAlt_27:

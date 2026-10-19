@@ -1,7 +1,4 @@
-; One body under 2 names (banks $0b, $0d), assembled through
-; `twin_named start_drill_from_definition, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by StartDrillFromDefinition, InitMinigameFromConfig (banks $0b, $0d).
 
 {TWIN_LABEL}:
 	ld hl, DRILLDEF_OPPONENT
@@ -36,7 +33,7 @@
 	ld b, [hl]
 	ld c, $00
 	farcall InitCa00RecordFromCharId
-	ld a, [wStoryModeMainCharacterOverworldSprite]
+	ld a, [wStoryMainChar]
 	ld [wMatchPlayerChar], a
 	ld a, [wMatchOpponentChar]
 	cp CHAR_NONE

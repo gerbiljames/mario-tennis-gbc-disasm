@@ -81,20 +81,18 @@ RunN64ExhibData:
 	ld a, [wMenuInputPressed] ; $44e2
 	bit PADB_A, a ; $44e5
 	jr nz, .playSfx ; $44e7
-	bit 1, a ; $44e9
+	bit PADB_B, a ; $44e9
 	jr nz, .playSfx2 ; $44eb
 	jr .loop ; $44ed
 .playSfx:
 	sound SFX_MENU_SELECT ; $44ef
-	ld c, 16 ; $44f1
-	call BeginFadeOut ; $44f3
+	script_fade_out 16 ; $44f1
 	call WaitFadeEnd ; $44f6
 	call ClearFrameTasks ; $44f9
 	ret ; $44fc
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $44fd
-	ld c, 16 ; $44ff
-	call BeginFadeOut ; $4501
+	script_fade_out 16 ; $44ff
 	call WaitFadeEnd ; $4504
 	call ClearFrameTasks ; $4507
 	ld a, $ff ; $450a
@@ -201,7 +199,7 @@ BuildN64ExhibDataScreen:
 	ld [wN64ExhibPage], a ; $45de
 	ld c, SCREENASSET_ExhibitionMenu ; $45e1
 	farcall LoadScreenAssetRecord ; $45e3
-	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $45e6
+	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $45e6
 	call LoadChartWindowTiles ; $45e9
 	ld de, vTiles0 + VRAM_BANK1 ; $45ec
 	farcall LoadMenuArrowSpriteTiles ; $45ef

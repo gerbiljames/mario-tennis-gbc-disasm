@@ -20,7 +20,7 @@ StepMatchFramesSkippable:
 	jr nz, .done ; $443b
 	call StepMatchFrame ; $443d
 	call ReadMatchInputHeld ; $4440
-	and $03 ; $4443
+	and PADF_A | PADF_B ; $4443
 	jr nz, .done ; $4445
 	ld a, [wDebugMatchFlags] ; $4447
 	bit 0, a ; $444a
@@ -35,7 +35,7 @@ RunMatchFramesUntilInput:
 	jr nz, .done ; $4456
 	call StepMatchFrame ; $4458
 	call ReadMatchInputHeld ; $445b
-	and $f3 ; $445e
+	and ~(PADF_SELECT | PADF_START) ; $445e
 	jr nz, .done ; $4460
 	jr RunMatchFramesUntilInput ; $4462
 .done:
@@ -72,12 +72,13 @@ StepMatchFrame:
 	ret ; $4495
 HandlePauseMenu:
 	call ReadMatchInputPressed ; $4496
-	and $08 ; $4499
+	and PADF_START ; $4499
 	ret z ; $449b
 	ld a, [wPauseDisabled] ; $449c
 	and a ; $449f
 	ret nz ; $44a0
 	ld a, [wMatchWinLoseFlag] ; $44a1
+	ASSERT WINLOSE_NONE == 0
 	and a ; $44a4
 	ret nz ; $44a5
 	ld a, $ff ; $44a6
@@ -112,9 +113,10 @@ ReinitPointAfterPause:
 CheckDebugStatsEditorHotkey:
 	ret ; $44ef
 	call ReadMatchInputPressed ; $44f0
-	and $04 ; $44f3
+	and PADF_SELECT ; $44f3
 	ret z ; $44f5
 	ldh a, [hDebugStepMode] ; $44f6
+	ASSERT DEBUGSTEP_OFF == 0
 	and a ; $44f8
 	ret z ; $44f9
 	ld a, $ff ; $44fa
@@ -195,6 +197,7 @@ SetBallPosition:
 	push hl ; $458b
 	xor a ; $458c
 	ld hl, wBallHeightFrac ; $458d
+	ASSERT wBallHeight == wBallHeightFrac + 2, "this code walks from wBallHeightFrac into wBallHeight"
 	ld [hl+], a ; $4590
 	ld [hl+], a ; $4591
 	ld a, c ; $4592
@@ -202,6 +205,7 @@ SetBallPosition:
 	ld [hl], b ; $4594
 	xor a ; $4595
 	ld hl, wBallDepthFrac ; $4596
+	ASSERT wBallDepth == wBallDepthFrac + 2, "this code walks from wBallDepthFrac into wBallDepth"
 	ld [hl+], a ; $4599
 	ld [hl+], a ; $459a
 	ld a, e ; $459b
@@ -210,6 +214,7 @@ SetBallPosition:
 	pop de ; $459e
 	xor a ; $459f
 	ld hl, wBallXFrac ; $45a0
+	ASSERT wBallX == wBallXFrac + 2, "this code walks from wBallXFrac into wBallX"
 	ld [hl+], a ; $45a3
 	ld [hl+], a ; $45a4
 	ld a, e ; $45a5
@@ -227,6 +232,7 @@ SetBallVelocityPolar:
 	ld b, h ; $45b6
 	xor a ; $45b7
 	ld hl, wBallVelocityHeightFrac ; $45b8
+	ASSERT wBallVelocityHeight == wBallVelocityHeightFrac + 1, "this code walks from wBallVelocityHeightFrac into wBallVelocityHeight"
 	ld [hl+], a ; $45bb
 	ld a, e ; $45bc
 	ld [hl+], a ; $45bd
@@ -239,12 +245,14 @@ SetBallVelocityPolar:
 	ld b, h ; $45c6
 	xor a ; $45c7
 	ld hl, wBallVelocityXFrac ; $45c8
+	ASSERT wBallVelocityX == wBallVelocityXFrac + 1, "this code walks from wBallVelocityXFrac into wBallVelocityX"
 	ld [hl+], a ; $45cb
 	ld a, c ; $45cc
 	ld [hl+], a ; $45cd
 	ld [hl], b ; $45ce
 	xor a ; $45cf
 	ld hl, wBallVelocityDepthFrac ; $45d0
+	ASSERT wBallVelocityDepth == wBallVelocityDepthFrac + 1, "this code walks from wBallVelocityDepthFrac into wBallVelocityDepth"
 	ld [hl+], a ; $45d3
 	ld a, e ; $45d4
 	ld [hl+], a ; $45d5
@@ -286,6 +294,7 @@ UpdateBallAnglesAndSpeed:
 	ld e, l ; $4609
 	ld d, h ; $460a
 	ld hl, wBallSpeedHorizontalFrac ; $460b
+	ASSERT wBallSpeedHorizontal == wBallSpeedHorizontalFrac + 1, "this code walks from wBallSpeedHorizontalFrac into wBallSpeedHorizontal"
 	xor a ; $460e
 	ld [hl+], a ; $460f
 	ld a, e ; $4610
@@ -365,6 +374,7 @@ CheckBallOutOfBounds:
 	ret ; $4676
 GetBallHeightSign:
 	ld hl, wBallHeightFrac ; $4677
+	ASSERT wBallHeight == wBallHeightFrac + 2, "this code walks from wBallHeightFrac into wBallHeight"
 	ld a, [hl+] ; $467a
 	or [hl] ; $467b
 	inc hl ; $467c
@@ -413,6 +423,7 @@ ApplyCourtBounceDamping:
 	ld b, a ; $46b6
 	call MulMem24ByFrac ; $46b7
 	ld hl, wBallVelocityXFrac ; $46ba
+	ASSERT wBallVelocityX == wBallVelocityXFrac + 1, "this code walks from wBallVelocityXFrac into wBallVelocityX"
 	ld [hl+], a ; $46bd
 	ld a, e ; $46be
 	ld [hl+], a ; $46bf
@@ -423,6 +434,7 @@ ApplyCourtBounceDamping:
 	ld b, a ; $46c8
 	call MulMem24ByFrac ; $46c9
 	ld hl, wBallVelocityDepthFrac ; $46cc
+	ASSERT wBallVelocityDepth == wBallVelocityDepthFrac + 1, "this code walks from wBallVelocityDepthFrac into wBallVelocityDepth"
 	ld [hl+], a ; $46cf
 	ld a, e ; $46d0
 	ld [hl+], a ; $46d1
@@ -433,6 +445,7 @@ ApplyCourtBounceDamping:
 	ld b, a ; $46da
 	call MulMem24ByFrac ; $46db
 	ld hl, wBallVelocityHeightFrac ; $46de
+	ASSERT wBallVelocityHeight == wBallVelocityHeightFrac + 1, "this code walks from wBallVelocityHeightFrac into wBallVelocityHeight"
 	ld [hl+], a ; $46e1
 	ld a, e ; $46e2
 	ld [hl+], a ; $46e3

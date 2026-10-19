@@ -8,13 +8,14 @@ LoadMatchMenuItemGfx:
 	push_wram_bank WRAM_STAGING ; $5227
 	call DecompressData ; $5230
 	ld hl, wDecompBuffer ; $5233
-	ld de, vTiles0 + $40 * TILE_SIZE ; $5236
+	ld de, vTiles0 tile $40 ; $5236
 	ld c, 16 ; $5239
 	call QueueVRAMCopy ; $523b
 	pop_wram_bank ; $523e
 	ret ; $5243
 MatchMenuItemGfxPointers:
 	; $5244, 48 bytes (records:2)
+	table_width 2
 	dw MatchMenuItemGfx_Rules ; record 0
 	dw MatchMenuItemGfx_Controls ; record 1
 	dw MatchMenuItemGfx_Options ; record 2
@@ -39,6 +40,7 @@ MatchMenuItemGfxPointers:
 	dw MatchMenuItemGfx_QuitMinigame ; record 21
 	dw MatchMenuItemGfx_QuitMinigame ; record 22
 	dw MatchMenuItemGfx_QuitMinigame ; record 23
+	assert_table_length NUM_MATCHMENUITEMS
 	; $5274, 12 bytes (bytes:12)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	ds ALIGN[4]
@@ -97,13 +99,14 @@ LoadScoreboardModeGfx:
 	ld de, wDecompBuffer ; $5cb2
 	call DecompressData ; $5cb5
 	ld hl, wDecompBuffer ; $5cb8
-	ld de, vTiles0 + $50 * TILE_SIZE ; $5cbb
+	ld de, vTiles0 tile $50 ; $5cbb
 	ld c, 20 ; $5cbe
 	call QueueVRAMCopy ; $5cc0
 	pop_wram_bank ; $5cc3
 	ret ; $5cc8
 ScoreboardModeGfxPointers:
 	; $5cc9, 22 bytes (records:2)
+	table_width 2
 	dw ScoreboardModeGfx_RankingMatch ; record 0
 	dw ScoreboardModeGfx_RankingMatch ; record 1
 	dw ScoreboardModeGfx_IslandOpen ; record 2
@@ -115,6 +118,7 @@ ScoreboardModeGfxPointers:
 	dw ScoreboardModeGfx_MarioMiniGames ; record 8
 	dw ScoreboardModeGfx_LinkedMatch ; record 9
 	dw ScoreboardModeGfx_Exhibition ; record 10
+	assert_table_length NUM_GAMEMODES
 ScoreboardMinigameGfxPointers:
 	; $5cdf, 84 bytes (records:2)
 	dw ScoreboardModeGfx_ServiceMatch ; record 0
@@ -221,6 +225,7 @@ DrawMatchMenuItem:
 	ret ; $6834
 MatchMenuItemRectPointers:
 	; $6835, 96 bytes (rect_ptrs)
+	table_width 4
 	rect_ptrs MatchMenuItemRect_Rules, MatchMenuItemAttr_Rules ; item 0
 	rect_ptrs MatchMenuItemRect_Controls, MatchMenuItemAttr_Controls ; item 1
 	rect_ptrs MatchMenuItemRect_Options, MatchMenuItemAttr_Options ; item 2
@@ -245,6 +250,7 @@ MatchMenuItemRectPointers:
 	rect_ptrs MatchMenuItemRect_Quit, MatchMenuItemAttr_Quit ; item 21
 	rect_ptrs MatchMenuItemRect_Quit, MatchMenuItemAttr_Quit ; item 22
 	rect_ptrs MatchMenuItemRect_Quit, MatchMenuItemAttr_Quit ; item 23
+	assert_table_length NUM_MATCHMENUITEMS
 MatchMenuItemRect_Rules:
 	; $6895, 6 bytes (tilemap:3)
 	tilemap_begin 3, 2

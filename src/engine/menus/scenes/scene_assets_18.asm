@@ -38,13 +38,13 @@ Unused_18_ClearTileVramBothBanks:
 	ld c, $80 ; $55de
 	call ClearMemory16 ; $55e0
 	ldh a, [rVBK] ; $55e3
-	xor $01 ; $55e5
+	xor VBK_BANK ; $55e5
 	ldh [rVBK], a ; $55e7
 	ld hl, vTiles0 ; $55e9
 	ld c, $80 ; $55ec
 	call ClearMemory16 ; $55ee
 	ldh a, [rVBK] ; $55f1
-	xor $01 ; $55f3
+	xor VBK_BANK ; $55f3
 	ldh [rVBK], a ; $55f5
 	ret ; $55f7
 Unused_18_LoadConfirmScreenSpriteGfx:
@@ -62,7 +62,7 @@ Unused_18_LoadConfirmScreenSpriteGfx:
 	ld de, wDecompBuffer ; $5618
 	call DecompressData ; $561b
 	ld hl, wDecompBuffer ; $561e
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5621
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5621
 	ld c, 12 ; $5624
 	call QueueVRAMCopy ; $5626
 	ld hl, ConfirmScreenSpritePalette1 ; $5629
@@ -110,7 +110,7 @@ CharSelectCursorPalette:
 	INCLUDE "data/engine/menus/scenes/CharSelectCursorPalette.asm" ; $59b9, 8 bytes (palettes)
 Unused_18_LoadCharSelectCursorGfx:
 	ld hl, CharSelectCursorGfx ; $59c1
-	ld de, vTiles0 + $40 * TILE_SIZE ; $59c4
+	ld de, vTiles0 tile $40 ; $59c4
 	ld c, 12 ; $59c7 -- 12 of CharSelectCursorGfx's 13 tiles
 	call QueueVRAMCopy ; $59c9
 	ld hl, CharSelectCursorPalette ; $59cc
@@ -320,8 +320,7 @@ RunStorySceneByMode:
 	ret ; $7631
 FadeOutAndResetScreen:
 	call EnableLCD ; $7632
-	ld c, 16 ; $7635
-	call BeginFadeOut ; $7637
+	script_fade_out 16 ; $7635
 	call WaitFadeEnd ; $763a
 	call DisableLCDSafely ; $763d
 	call ClearFrameTasks ; $7640
@@ -350,8 +349,7 @@ Unused_18_DebugScreenAssetViewer:
 .loadScreen:
 	ld c, [hl] ; $7668
 	push bc ; $7669
-	ld c, 16 ; $766a
-	call BeginFadeOut ; $766c
+	script_fade_out 16 ; $766a
 	call WaitFadeEnd ; $766f
 	call DisableLCDSafely ; $7672
 	pop bc ; $7675
@@ -405,8 +403,7 @@ PlayScreenSequence0:
 	ldh a, [hInputPressed] ; $76ef
 	and PADF_A | PADF_B ; $76f1
 	jr z, .waitInput ; $76f3
-	ld c, 16 ; $76f5
-	call BeginFadeOut ; $76f7
+	script_fade_out 16 ; $76f5
 	call WaitFadeEnd ; $76fa
 	call DisableLCDSafely ; $76fd
 	call FillAllBgPalettes ; $7700

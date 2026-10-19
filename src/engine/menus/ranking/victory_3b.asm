@@ -6,20 +6,20 @@ RecordExhibitionVictory:
 	ld de, FLAG_DOUBLES ; $7d67
 	call TestGameFlagByNumber ; $7d6a
 	jr nz, .restore ; $7d6d
-	ld a, [wPlayer1CurrentMainCharacter] ; $7d6f
+	ld a, [wPlayer1MainChar] ; $7d6f
 	ld c, a ; $7d72
 	farcall IsMarioCastCharacter ; $7d73
 	or a ; $7d76
 	jr z, .restore ; $7d77
-	ld a, [wPlayer2CurrentMainCharacter] ; $7d79
+	ld a, [wPlayer2MainChar] ; $7d79
 	ld c, a ; $7d7c
 	farcall IsMarioCastCharacter ; $7d7d
 	or a ; $7d80
 	jr z, .restore ; $7d81
-	ld a, [wPlayer1CurrentMainCharacter] ; $7d83
+	ld a, [wPlayer1MainChar] ; $7d83
 	call GetMarioCastIndex ; $7d86
 	ld d, a ; $7d89
-	ld a, [wPlayer2CurrentMainCharacter] ; $7d8a
+	ld a, [wPlayer2MainChar] ; $7d8a
 	call GetMarioCastIndex ; $7d8d
 	ld e, a ; $7d90
 	ld hl, wN64RecordsBlock ; $7d91
@@ -38,7 +38,7 @@ RecordExhibitionVictory:
 .checkExhibitionModeCPUMainCharacterDifficulty:
 	push hl ; $7da5
 	ld d, [hl] ; $7da6
-	ld a, [wExhibitionModeCPUMainCharacterDifficulty] ; $7da7
+	ld a, [wPlayer2MainDifficulty] ; $7da7
 	call GetVictoryScore ; $7daa
 	pop hl ; $7dad
 	cp d ; $7dae

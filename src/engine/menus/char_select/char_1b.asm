@@ -142,8 +142,7 @@ Unused_1b_RunCharSelectLoop:
 	farcall Unused_1b_UpdateCharSelectSelection ; $60d8
 	ld a, [wCharSelectChar] ; $60db
 	ld [wCharSelectPrevChar], a ; $60de
-	ld c, 32 ; $60e1
-	call BeginFadeOut ; $60e3
+	script_fade_out 32 ; $60e1
 	call WaitFadeEnd ; $60e6
 	call DisableLCDSafely ; $60e9
 	call Unused_1b_LoadCharSelectScreenGfx ; $60ec
@@ -227,7 +226,7 @@ Unused_1b_UpdateCharSelectSelection:
 Unused_1b_MoveCharSelectCursor:
 	ldh a, [hInputPressed] ; $6192
 	ld b, a ; $6194
-	and $f0 ; $6195
+	and PADF_DPAD ; $6195
 	jr z, .done ; $6197
 	sound SFX_MENU_MOVE ; $6199
 	ld a, [wCharSelectCol] ; $619b
@@ -307,7 +306,7 @@ RunNewGameSetup:
 	xor a ; $622c
 	ld [wStoryCharacterSlot], a ; $622d
 	push af ; $6230
-	ld hl, wStoryModeNameOfMainCharacter ; $6231
+	ld hl, wStoryMainName ; $6231
 	ld a, [wStoryCharacterSlot] ; $6234
 	or a ; $6237
 	jr z, .zero ; $6238
@@ -335,14 +334,14 @@ RunNewGameSetup:
 	farcall TestSaveFlag ; $625e
 	jr nz, .loop4 ; $6261
 	push af ; $6263
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $6264
+	ld a, [wStoryMainChar] ; $6264
 	inc a ; $6267
 	inc a ; $6268
 	ld d, a ; $6269
 	ld a, [wStoryCharacterSlot] ; $626a
 	farcall InitPlayerRecordFromTemplate ; $626d
 	push af ; $6270
-	ld hl, wStoryModeNameOfMainCharacter ; $6271
+	ld hl, wStoryMainName ; $6271
 	ld a, [wStoryCharacterSlot] ; $6274
 	or a ; $6277
 	jr z, .zero2 ; $6278
@@ -390,7 +389,7 @@ RunNewGameSetup:
 	and a ; $62be
 	jr nz, .loop4 ; $62bf
 	push af ; $62c1
-	ld hl, wStoryModeNameOfMainCharacter ; $62c2
+	ld hl, wStoryMainName ; $62c2
 	ld a, [wStoryCharacterSlot] ; $62c5
 	or a ; $62c8
 	jr z, .zero3 ; $62c9
@@ -411,14 +410,13 @@ RunNewGameSetup:
 .restore:
 	pop af ; $62df
 	ld [wStoryCharacterSlot], a ; $62e0
-	ld hl, wStoryModeNameOfMainCharacter ; $62e3
+	ld hl, wStoryMainName ; $62e3
 	ld de, wStorySlotData ; $62e6
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $62e9
 	call CopyMemoryFast ; $62eb
 	xor a ; $62ee
 .beginFadeOut:
-	ld c, 32 ; $62ef
-	call BeginFadeOut ; $62f1
+	script_fade_out 32 ; $62ef
 	call WaitFadeEnd ; $62f4
 	ret ; $62f7
 Unused_1b_RunDebugSaveDataFlow:
@@ -544,6 +542,8 @@ Unused_1b_RunDebugSaveDataFlow:
 .step5:
 	xor a ; $63f4
 	ld hl, wPendingExpStory ; $63f5
+	ASSERT wPendingExpTrophy == wPendingExpStory + 2, "this code walks from wPendingExpStory into wPendingExpTrophy"
+	ASSERT wN64TransferMarker == wPendingExpStory + 4, "this code walks from wPendingExpStory into wN64TransferMarker"
 	ld [hl+], a ; $63f8
 	ld [hl+], a ; $63f9
 	ld [hl+], a ; $63fa

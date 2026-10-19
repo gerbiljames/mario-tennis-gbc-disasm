@@ -125,8 +125,7 @@ IslandOpenDoublesVictory:
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $7393
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $739a
 	script_wait_frames 30 ; $739f
-	ld c, 8 ; $73a6
-	call BeginFadeOut ; $73a8
+	script_fade_out 8 ; $73a6
 	call WaitFadeEnd ; $73ab
 	farcall EndCutsceneScriptMode ; $73ae
 	ret ; $73b1
@@ -137,8 +136,7 @@ SeniorSinglesRank4And3Victory:
 	script_set_text Text_34_74 ; $73c7
 	script_speak ACTOR_SENIOR_COURT_A_BRIAN ; $73cd
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $73d2
-	ld a, $03 ; $73da
-	farcall ScriptWaitActorJumpDone ; $73dc
+	script_wait_jump ACTOR_SENIOR_COURT_A_EMILY ; $73da
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $73df
 	script_set_actor_script ACTOR_SENIOR_COURT_A_BRIAN, ActorScript_12_03 ; $73e4
 	script_wait_frames 60 ; $73ef
@@ -163,8 +161,7 @@ SeniorSinglesRank2Victory:
 	script_set_text Text_34_35 ; $746c
 	script_speak ACTOR_SENIOR_COURT_A_JOY ; $7472
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $7477
-	ld a, $03 ; $747f
-	farcall ScriptWaitActorJumpDone ; $7481
+	script_wait_jump ACTOR_SENIOR_COURT_A_EMILY ; $747f
 	script_set_text Text_34_76 ; $7484
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $748a
 	script_set_actor_script ACTOR_SENIOR_COURT_A_JOY, ActorScript_12_07 ; $748f
@@ -184,8 +181,7 @@ SeniorSinglesRank1Victory:
 	script_set_text Text_34_32 ; $74de
 	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $74e4
 	script_jump_velocity ACTOR_SENIOR_COURT_A_EMILY, -2.0 ; $74e9
-	ld a, $03 ; $74f1
-	farcall ScriptWaitActorJumpDone ; $74f3
+	script_wait_jump ACTOR_SENIOR_COURT_A_EMILY ; $74f1
 	script_set_text Text_34_77 ; $74f6
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $74fc
 	script_set_actor_script ACTOR_SENIOR_COURT_A_ALLIE, ActorScript_12_10 ; $7501
@@ -281,8 +277,7 @@ SeniorSharedVictoryScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7737
 	script_wait_idle ACTOR_PLAYER ; $773e
 	script_wait_frames 30 ; $7743
-	ld c, 8 ; $774a
-	call BeginFadeOut ; $774c
+	script_fade_out 8 ; $774a
 	call WaitFadeEnd ; $774f
 	farcall EndCutsceneScriptMode ; $7752
 	ret ; $7755

@@ -23,12 +23,14 @@ RetreatRemotePlayerSlot:
 	ret ; $6a26
 RemotePlayerSlotLists_38:
 	; $6a27, 12 bytes (records:2)
+	table_width 2
 	dw RemotePlayerSlotList0 ; record 0
 	dw RemotePlayerSlotList0 ; record 1
 	dw RemotePlayerSlotList0 ; record 2
 	dw RemotePlayerSlotList0 ; record 3
 	dw RemotePlayerSlotList1 ; record 4
 	dw RemotePlayerSlotList1 ; record 5
+	assert_table_length NUM_CHARSELECTMODES
 RemotePlayerSlotList0:
 	; $6a33, 4 bytes (bytes:4)
 	db $ff, $00, $02, $ff ; 0x00
@@ -227,13 +229,13 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	ret ; $6b78
 Unused_38_HandleLinkCpuDifficultyInput:
 	ldh a, [hLinkRemoteInput] ; $6b79
-	bit 5, a ; $6b7b
+	bit PADB_LEFT, a ; $6b7b
 	jr nz, .decrease ; $6b7d
-	bit 4, a ; $6b7f
+	bit PADB_RIGHT, a ; $6b7f
 	jr nz, .increase ; $6b81
-	bit 0, a ; $6b83
+	bit PADB_A, a ; $6b83
 	jr nz, .confirm ; $6b85
-	bit 1, a ; $6b87
+	bit PADB_B, a ; $6b87
 	jr nz, .cancel ; $6b89
 	ret ; $6b8b
 .decrease:
@@ -307,7 +309,7 @@ Unused_38_RunLinkCpuDifficultySubmenu:
 	ld a, [wMenuInputPressed] ; $6bf7
 	bit PADB_A, a ; $6bfa
 	jr nz, .confirm ; $6bfc
-	bit 1, a ; $6bfe
+	bit PADB_B, a ; $6bfe
 	jr nz, .cancel ; $6c00
 	jr .done ; $6c02
 .cancel:
@@ -411,7 +413,7 @@ UpdateMenuCursorFromLinkInput:
 	bit 0, a ; $6cac
 	jr z, .checkB ; $6cae
 	ld a, [wCharGridHandedness] ; $6cb0
-	cp $01 ; $6cb3
+	cp HAND_LEFT ; $6cb3
 	jr nz, .sendSelect ; $6cb5
 	ld b, $28 ; $6cb7
 	jr .storeCommand ; $6cb9

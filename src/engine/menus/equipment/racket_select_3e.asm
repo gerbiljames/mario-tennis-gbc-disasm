@@ -1,5 +1,5 @@
 DrawEquippedRacketPanel:
-	ld a, $00 ; $5458
+	ld a, EQUIPKIND_RACKETS ; $5458
 	ld [wEquipItemKind], a ; $545a
 	call MarkOwnedRackets ; $545d
 	call BuildOwnedItemList ; $5460
@@ -21,7 +21,7 @@ DrawEquippedShoesPanel:
 	ld hl, wEquipItemList ; $5486
 	ld bc, $0003 ; $5489
 	call ClearMemory16 ; $548c
-	ld a, $01 ; $548f
+	ld a, EQUIPKIND_SHOES ; $548f
 	ld [wEquipItemKind], a ; $5491
 	call MarkOwnedShoes ; $5494
 	call BuildOwnedItemList ; $5497
@@ -65,8 +65,7 @@ RunRacketSelectScreen:
 	jr .loop ; $54f2
 .ge14:
 	push af ; $54f4
-	ld c, 16 ; $54f5
-	call BeginFadeOut ; $54f7
+	script_fade_out 16 ; $54f5
 	call WaitFadeEnd ; $54fa
 	call ClearFrameTasks ; $54fd
 	pop af ; $5500
@@ -90,7 +89,7 @@ LoadRacketSelectScreen:
 	ld hl, wEquipItemList ; $5525
 	ld bc, $0002 ; $5528
 	call ClearMemory16 ; $552b
-	ld a, $00 ; $552e
+	ld a, EQUIPKIND_RACKETS ; $552e
 	ld [wEquipItemKind], a ; $5530
 	ld a, $00 ; $5533
 	ld [wEquipStatRowSet], a ; $5535
@@ -100,7 +99,7 @@ LoadRacketSelectScreen:
 	call DrawRacketInfoPanel ; $5541
 	ld b, TILEBLOCK_SharedMenuGfx99 ; $5544
 	ld c, SharedMenuGfx99_SIZE / 16 ; $5546
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5548
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5548
 	farcall LoadCompressedTileBlock ; $554b
 	ld hl, Palette_3e ; $554e
 	ld_obj_pals de, 1, 1 ; $5551
@@ -132,6 +131,7 @@ DrawItemIcon2x2:
 	push hl ; $557d
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $557e
 	ld a, [wEquipItemKind] ; $5581
+	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $5584
 	jr z, .gotBase ; $5585
 	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH ; $5587
@@ -166,7 +166,7 @@ HandleEquipSelectInput:
 	ld [wMenuInputPressed], a ; $55b1
 	bit PADB_A, a ; $55b4
 	jr nz, .step ; $55b6
-	bit 1, a ; $55b8
+	bit PADB_B, a ; $55b8
 	jr nz, .playSfx ; $55ba
 	jr .moveMenuCursorGrid ; $55bc
 .step:
@@ -183,22 +183,22 @@ HandleEquipSelectInput:
 	call GetEquippedItemId ; $55d5
 	ld b, a ; $55d8
 	ld a, [wEquipItemKind] ; $55d9
-	cp $00 ; $55dc
+	cp EQUIPKIND_RACKETS ; $55dc
 	ld a, b ; $55de
 	jr z, .checkEquippedRacket ; $55df
 	swap a ; $55e1
 	ld b, a ; $55e3
-	ld a, [wEquippedRacket] ; $55e4
+	ld a, [wStoryMainEquipment] ; $55e4
 	and $0f ; $55e7
 	or b ; $55e9
-	ld [wEquippedRacket], a ; $55ea
+	ld [wStoryMainEquipment], a ; $55ea
 	ret ; $55ed
 .checkEquippedRacket:
 	ld b, a ; $55ee
-	ld a, [wEquippedRacket] ; $55ef
+	ld a, [wStoryMainEquipment] ; $55ef
 	and $f0 ; $55f2
 	or b ; $55f4
-	ld [wEquippedRacket], a ; $55f5
+	ld [wStoryMainEquipment], a ; $55f5
 	ret ; $55f8
 .playSfx:
 	sound SFX_MENU_CANCEL ; $55f9
@@ -215,6 +215,7 @@ HandleEquipSelectInput:
 	sound SFX_MENU_MOVE ; $560d
 	call ClearEquipSelectTextRows ; $560f
 	ld a, [wEquipItemKind] ; $5612
+	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $5615
 	jr z, .drawRacketInfoPanel ; $5616
 	call DrawShoesInfoPanel ; $5618
@@ -267,8 +268,7 @@ RunShoesSelectScreen:
 	jr .loop ; $567a
 .ge14:
 	push af ; $567c
-	ld c, 16 ; $567d
-	call BeginFadeOut ; $567f
+	script_fade_out 16 ; $567d
 	call WaitFadeEnd ; $5682
 	call ClearFrameTasks ; $5685
 	pop af ; $5688
@@ -302,7 +302,7 @@ LoadShoesSelectScreen:
 	ld hl, wEquipItemList ; $56ce
 	ld bc, $0002 ; $56d1
 	call ClearMemory16 ; $56d4
-	ld a, $01 ; $56d7
+	ld a, EQUIPKIND_SHOES ; $56d7
 	ld [wEquipItemKind], a ; $56d9
 	ld a, $00 ; $56dc
 	ld [wEquipStatRowSet], a ; $56de
@@ -312,7 +312,7 @@ LoadShoesSelectScreen:
 	call DrawShoesInfoPanel ; $56ea
 	ld b, TILEBLOCK_SharedMenuGfx99 ; $56ed
 	ld c, SharedMenuGfx99_SIZE / 16 ; $56ef
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $56f1
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $56f1
 	farcall LoadCompressedTileBlock ; $56f4
 	ld hl, Palette_3e ; $56f7
 	ld_obj_pals de, 1, 1 ; $56fa
@@ -398,7 +398,7 @@ MarkOwnedRackets:
 	ld c, a ; $5784
 	cp $06 ; $5785
 	jr nz, .loop ; $5787
-	ld a, [wEquippedRacket] ; $5789
+	ld a, [wStoryMainEquipment] ; $5789
 	and $0f ; $578c
 	ld hl, wEquipOwnedMap ; $578e
 	add l ; $5791
@@ -446,7 +446,7 @@ MarkOwnedShoes:
 	ld c, a ; $57d2
 	cp $02 ; $57d3
 	jr nz, .loop ; $57d5
-	ld a, [wEquippedRacket] ; $57d7
+	ld a, [wStoryMainEquipment] ; $57d7
 	and $f0 ; $57da
 	swap a ; $57dc
 	ld hl, wEquipOwnedMap ; $57de

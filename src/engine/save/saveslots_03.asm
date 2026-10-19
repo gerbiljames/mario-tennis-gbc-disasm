@@ -3,7 +3,7 @@ EraseStorySlotSaveData:
 	push de ; $4e14
 	push hl ; $4e15
 	ld h, a ; $4e16
-	ld a, $0a ; $4e17
+	ld a, RAMG_SRAM_ENABLE ; $4e17
 	ld [rRAMG], a ; $4e19
 	call InitSaveHeader ; $4e1c
 	ld a, [wCurrentStorySlot] ; $4e1f
@@ -331,7 +331,7 @@ ClearSaveBlock11:
 	push bc ; $4ffe
 	push de ; $4fff
 	push hl ; $5000
-	ld a, $0a ; $5001
+	ld a, RAMG_SRAM_ENABLE ; $5001
 	ld [rRAMG], a ; $5003
 	ld b, SAVEBLOCK_N64_RECORDS ; $5006
 	call ClearSaveBlockData ; $5008

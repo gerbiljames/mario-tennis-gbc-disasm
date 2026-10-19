@@ -167,11 +167,7 @@ DrawRankingOpponentInfo:
 	script_player_speed 1.0 ; $75b5
 	script_move_player_to_actor ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $75bb
 	farcall WaitPlayerMoveDone ; $75c2
-	ld bc, wActors + 1 * ACTOR_SIZE ; $75c5
-	script_get_actor_state ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $75c8
-	ld e, l ; $75cd
-	ld d, h ; $75ce
-	farcall AttachActorWaypointFollower ; $75cf
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $75c5
 	script_face_toward ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $75d2
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ANIM_NOD ; $75da
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $75e1

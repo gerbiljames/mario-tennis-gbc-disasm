@@ -411,20 +411,18 @@ RunN64RingShotData:
 	ld a, [wMenuInputPressed] ; $5188
 	bit PADB_A, a ; $518b
 	jr nz, .playSfx ; $518d
-	bit 1, a ; $518f
+	bit PADB_B, a ; $518f
 	jr nz, .playSfx2 ; $5191
 	jr .loop ; $5193
 .playSfx:
 	sound SFX_MENU_SELECT ; $5195
-	ld c, 16 ; $5197
-	call BeginFadeOut ; $5199
+	script_fade_out 16 ; $5197
 	call WaitFadeEnd ; $519c
 	call ClearFrameTasks ; $519f
 	ret ; $51a2
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $51a3
-	ld c, 16 ; $51a5
-	call BeginFadeOut ; $51a7
+	script_fade_out 16 ; $51a5
 	call WaitFadeEnd ; $51aa
 	call ClearFrameTasks ; $51ad
 	ld a, $ff ; $51b0
@@ -438,14 +436,14 @@ BuildN64RingShotScreen:
 	wram_bank WRAM_SCREEN ; $51bf
 	call LoadN64RingShotRecords ; $51c5
 	wram_bank WRAM_SCREEN ; $51c8
-	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $51ce
+	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $51ce
 	call LoadChartWindowTiles ; $51d1
 	ld de, vTiles0 + VRAM_BANK1 ; $51d4
 	farcall LoadMenuArrowSpriteTiles ; $51d7
 	ld b, $08 ; $51da
 	ld c, $0f ; $51dc
 	farcall LoadIndexedPalette ; $51de
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $51e1
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $51e1
 	ld b, $09 ; $51e4
 	ld c, $00 ; $51e6
 	farcall InitNumberSpriteGfx ; $51e8

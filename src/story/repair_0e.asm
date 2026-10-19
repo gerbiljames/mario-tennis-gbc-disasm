@@ -313,7 +313,7 @@ RepairCounterServiceMenu:
 	script_face ACTOR_TRAINING_GYM_WALK_72_02_2, FACE_RIGHT ; $4eaa
 	ret ; $4eb1
 PrepareEquipmentSelectScreen:
-	ld a, [wEquippedRacket] ; $4eb2
+	ld a, [wStoryMainEquipment] ; $4eb2
 	ld [wMapScratch + 8], a ; $4eb5
 	ld a, STORYLOC_TRAINING_CENTER ; $4eb8
 	ld [wStoryModeCurrentLocation], a ; $4eba
@@ -322,8 +322,7 @@ PrepareEquipmentSelectScreen:
 	ld a, $ff ; $4ec3
 	ld [wUnusedExitTriggerIdMirror], a ; $4ec5
 	ld [wStoryModeExitTriggerRequest], a ; $4ec8
-	ld c, 16 ; $4ecb
-	call BeginFadeOut ; $4ecd
+	script_fade_out 16 ; $4ecb
 	call WaitFadeEnd ; $4ed0
 	call ClearFrameTasks ; $4ed3
 	call DisableLCDSafely ; $4ed6
@@ -383,11 +382,11 @@ GetEquippedRacketNibble:
 	jr z, .lowNibble ; $4f61
 	jr .highNibble ; $4f63
 .lowNibble:
-	ld a, [wEquippedRacket] ; $4f65
+	ld a, [wStoryMainEquipment] ; $4f65
 	and $0f ; $4f68
 	ret ; $4f6a
 .highNibble:
-	ld a, [wEquippedRacket] ; $4f6b
+	ld a, [wStoryMainEquipment] ; $4f6b
 	and $f0 ; $4f6e
 	swap a ; $4f70
 	ret ; $4f72

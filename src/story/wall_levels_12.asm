@@ -45,11 +45,7 @@ RelaunchWallPracticeMasterLevel:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a87
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4a8e
 	script_wait_idle ACTOR_PARTNER ; $4a95
-	script_get_actor_state ACTOR_PARTNER ; $4a9a
-	ld c, l ; $4a9f
-	ld b, h ; $4aa0
-	ld de, wActors ; $4aa1
-	farcall AttachActorStepMover ; $4aa4
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4a9a
 	script_wait_frames 40 ; $4aa7
 .done:
 	ret ; $4aae
@@ -117,11 +113,7 @@ WallPracticeExitCourtScript:
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4b7b
 	test_flag FLAG_DOUBLES ; $4b82
 	jr z, .done ; $4b85
-	script_get_actor_state ACTOR_PARTNER ; $4b87
-	ld c, l ; $4b8c
-	ld b, h ; $4b8d
-	ld de, wActors ; $4b8e
-	farcall AttachActorStepMover ; $4b91
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4b87
 .done:
 	script_wait_frames 10 ; $4b94
 	ret ; $4b9b
@@ -179,11 +171,7 @@ WallPracticeLevelResultScript.speakAndLeave:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4c71
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4c78
 	script_wait_idle ACTOR_PARTNER ; $4c7f
-	script_get_actor_state ACTOR_PARTNER ; $4c84
-	ld c, l ; $4c89
-	ld b, h ; $4c8a
-	ld de, wActors ; $4c8b
-	farcall AttachActorStepMover ; $4c8e
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4c84
 	script_wait_frames 20 ; $4c91
 WallPracticeLevelResultScript.wait:
 	script_wait_frames 10 ; $4c98
@@ -217,11 +205,7 @@ WallPracticeRoomTile02_12:
 	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4d13
 	test_flag FLAG_DOUBLES ; $4d16
 	jr z, .done ; $4d19
-	script_get_actor_state ACTOR_PARTNER ; $4d1b
-	ld c, l ; $4d20
-	ld b, h ; $4d21
-	ld de, wActors ; $4d22
-	farcall AttachActorStepMover ; $4d25
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4d1b
 .done:
 	ret ; $4d28
 WallPracticeRoomTile03_12:
@@ -238,8 +222,7 @@ WallPracticeRoomTile03_12:
 	script_move_target ACTOR_PLAYER, 3.0, 49.0 ; $4d5a
 	script_wait_move ACTOR_PLAYER ; $4d65
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4d6a
-	ld c, 4 ; $4d75
-	call BeginFadeOut ; $4d77
+	script_fade_out 4 ; $4d75
 	call WaitFadeEnd ; $4d7a
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4d7d
 	ld [wStoryModeCurrentLocation], a ; $4d7f
@@ -269,8 +252,7 @@ WallPracticeRoomTile04_12:
 	script_move_target ACTOR_PLAYER, 7.0, 49.0 ; $4dcf
 	script_wait_move ACTOR_PLAYER ; $4dda
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4ddf
-	ld c, 4 ; $4dea
-	call BeginFadeOut ; $4dec
+	script_fade_out 4 ; $4dea
 	call WaitFadeEnd ; $4def
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4df2
 	ld [wStoryModeCurrentLocation], a ; $4df4
@@ -300,8 +282,7 @@ WallPracticeRoomTile05_12:
 	script_move_target ACTOR_PLAYER, 17.0, 49.0 ; $4e44
 	script_wait_move ACTOR_PLAYER ; $4e4f
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4e54
-	ld c, 4 ; $4e5f
-	call BeginFadeOut ; $4e61
+	script_fade_out 4 ; $4e5f
 	call WaitFadeEnd ; $4e64
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4e67
 	ld [wStoryModeCurrentLocation], a ; $4e69
@@ -331,8 +312,7 @@ WallPracticeRoomTile06_12:
 	script_move_target ACTOR_PLAYER, 21.0, 49.0 ; $4eb9
 	script_wait_move ACTOR_PLAYER ; $4ec4
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $4ec9
-	ld c, 4 ; $4ed4
-	call BeginFadeOut ; $4ed6
+	script_fade_out 4 ; $4ed4
 	call WaitFadeEnd ; $4ed9
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4edc
 	ld [wStoryModeCurrentLocation], a ; $4ede
@@ -361,7 +341,7 @@ WallPracticeRoomInitScript_12:
 	ld a, $3c ; $4f15
 	ld [wMapHeightTiles], a ; $4f17
 	call DisableLCDSafely ; $4f1a
-	ld a, $00 ; $4f1d
+	ld a, SCENECOPY_FROM_PLAYER ; $4f1d
 	farcall CopyScrolledSceneTilemapToVram ; $4f1f
 	call EnableLCD ; $4f22
 	call SetupWallPracticeLevelSigns ; $4f25
@@ -449,8 +429,7 @@ WallPracticeRoomInitScript_12:
 	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $502b
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $5032
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5039
-	ld c, 4 ; $503e
-	call BeginFadeOut ; $5040
+	script_fade_out 4 ; $503e
 	call WaitFadeEnd ; $5043
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5046
 	ld [wStoryModeCurrentLocation], a ; $5048
@@ -593,6 +572,7 @@ WallPracticeRoomNpc07_12:
 	ret ; $5270
 WallPracticeRoomNpc07TextIds:
 	; $5271, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_238 ; record 0
 	dw Text_35_261 ; record 1
 	dw Text_36_3 ; record 2
@@ -600,8 +580,10 @@ WallPracticeRoomNpc07TextIds:
 	dw Text_36_25 ; record 4
 	dw Text_36_30 ; record 5
 	dw Text_36_35 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpc07TextIds2:
 	; $527f, 14 bytes (text_ids)
+	table_width 2
 	dw Text_35_240 ; record 0
 	dw Text_35_263 ; record 1
 	dw Text_36_5 ; record 2
@@ -609,6 +591,7 @@ WallPracticeRoomNpc07TextIds2:
 	dw Text_36_27 ; record 4
 	dw Text_36_32 ; record 5
 	dw Text_36_37 ; record 6
+	assert_table_length NUM_WALLPRACTICESTAGES
 LaunchWallPracticeMinigame:
 	ld a, [wMapSceneStage]
 	ld e, a
@@ -618,8 +601,7 @@ LaunchWallPracticeMinigame:
 	call WallPracticeLevelLockedScript
 	jp WallPracticeExitCourtScript
 .launch:
-	ld c, 4 ; $528d
-	call BeginFadeOut ; $528f
+	script_fade_out 4 ; $528d
 	call WaitFadeEnd ; $5292
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5295
 	ld [wStoryModeCurrentLocation], a ; $5297
@@ -636,7 +618,9 @@ LaunchWallPracticeMinigame:
 	ret ; $52b8
 LaunchWallPracticeMinigameTable:
 	; $52b9, 7 bytes (bytes:16)
+	table_width 1
 	db $16, $17, $18, $19, $1b, $1b, $1b ; 0x00
+	assert_table_length NUM_WALLPRACTICESTAGES
 RestoreWallPracticeRoomActors:
 	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $52c0
 	jr z, .done ; $52c3

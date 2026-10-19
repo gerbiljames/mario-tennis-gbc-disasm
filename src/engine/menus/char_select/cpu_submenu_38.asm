@@ -13,7 +13,7 @@ RunCpuDifficultySubmenu:
 	ld a, [wMenuInputPressed] ; $6236
 	bit PADB_A, a ; $6239
 	jr nz, .confirm ; $623b
-	bit 1, a ; $623d
+	bit PADB_B, a ; $623d
 	jr nz, .cancel ; $623f
 	jr .done ; $6241
 .cancel:
@@ -81,7 +81,7 @@ RunCpuDifficultySubmenu:
 	call AdvanceToNextPlayerSlot ; $62a8
 	cp $ff ; $62ab
 	jr nz, .advanceSlot ; $62ad
-	ld a, $01 ; $62af
+	ld a, CHARSELECT_DONE ; $62af
 	ld [wCharSelectExitCode], a ; $62b1
 .advanceSlot:
 	call DrawCharGridSlotPrompt ; $62b4
@@ -122,7 +122,7 @@ HandleCpuDifficultyInput:
 	ld a, [wMenuInputPressed] ; $630f
 	bit PADB_LEFT, a ; $6312
 	jr nz, .decrease ; $6314
-	bit 4, a ; $6316
+	bit PADB_RIGHT, a ; $6316
 	jr nz, .increase ; $6318
 	ret ; $631a
 .decrease:
@@ -216,7 +216,7 @@ RunLinkCharSelectScreen:
 	call EnableTimerInterrupt ; $63cd
 	sound BGM_MENU ; $63d0
 	wram_bank WRAM_SCREEN ; $63d2
-	ld a, $02 ; $63d8
+	ld a, HAND_UNCHOSEN ; $63d8
 	ld [wCharGridHandedness], a ; $63da
 	ld a, [wMatchIsDoubles] ; $63dd
 	or a ; $63e0
@@ -322,9 +322,9 @@ RunLinkCharSelectScreen:
 	ld b, a ; $64b9
 	pop_wram_bank ; $64ba
 	ld a, b ; $64bf
-	cp $01 ; $64c0
+	cp CHARSELECT_DONE ; $64c0
 	jr z, .checkDone ; $64c2
-	cp $02 ; $64c4
+	cp CHARSELECT_CANCELLED ; $64c4
 	jr z, .done ; $64c6
 	jp .frameLoop ; $64c8
 .checkDone:
@@ -347,11 +347,10 @@ RunLinkCharSelectScreen:
 	jr nz, .finish ; $64f1
 	call WaitVBlank ; $64f3
 .finish:
-	ld c, 8 ; $64f6
-	call BeginFadeOut ; $64f8
+	script_fade_out 8 ; $64f6
 	call WaitFadeEnd ; $64fb
 	ld hl, rIE ; $64fe
-	set 2, [hl] ; $6501
+	set B_IE_TIMER, [hl] ; $6501
 	xor a ; $6503
 	ret ; $6504
 .done:
@@ -363,12 +362,11 @@ RunLinkCharSelectScreen:
 	xor a ; $650f
 	ldh [hLinkExchangeActive], a ; $6510
 	call ResetSerialState ; $6512
-	ld c, 16 ; $6515
-	call BeginFadeOut ; $6517
+	script_fade_out 16 ; $6515
 	call WaitFadeEnd ; $651a
 	call ClearFrameTasks ; $651d
 	ld hl, rIE ; $6520
-	set 2, [hl] ; $6523
+	set B_IE_TIMER, [hl] ; $6523
 	ld a, $ff ; $6525
 	ret ; $6527
 ProcessLinkSelectCommand:

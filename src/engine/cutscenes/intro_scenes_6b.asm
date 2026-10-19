@@ -1,6 +1,6 @@
 CheckIntroSkipInput:
 	ldh a, [hInputRisingEdge] ; $53f1
-	and $09 ; $53f3
+	and PADF_A | PADF_START ; $53f3
 	ret z ; $53f5
 	ld a, $01 ; $53f6
 	ld [wIntroCutsceneCheck], a ; $53f8
@@ -34,7 +34,7 @@ InitCutsceneSceneA:
 	ld [wCameraX], a ; $544c
 	ld a, $24 ; $544f
 	ld [wCameraY + 1], a ; $5451
-	ld a, $01 ; $5454
+	ld a, SCENECOPY_FROM_CAMERA ; $5454
 	farcall CopyScrolledSceneTilemapToVram ; $5456
 	xor a ; $5459
 	ld [wCameraY + 1], a ; $545a
@@ -67,7 +67,7 @@ Unused_6b_InitCutsceneSceneB:
 	ld [wCameraY], a ; $54ab
 	ld a, $24 ; $54ae
 	ld [wCameraY + 1], a ; $54b0
-	ld a, $01 ; $54b3
+	ld a, SCENECOPY_FROM_CAMERA ; $54b3
 	farcall CopyScrolledSceneTilemapToVram ; $54b5
 	ret ; $54b8
 InitCutsceneSceneC:
@@ -101,7 +101,7 @@ InitCutsceneSceneC:
 	ld [wCameraY], a ; $550f
 	ld a, $24 ; $5512
 	ld [wCameraY + 1], a ; $5514
-	ld a, $01 ; $5517
+	ld a, SCENECOPY_FROM_CAMERA ; $5517
 	farcall CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
 CutsceneSceneAGfx0:
@@ -123,27 +123,27 @@ LoadIntroTilesAndPalette:
 	farcall LoadCompressedTileBlock ; $607c
 	ld b, TILEBLOCK_IntroGfx1 ; $607f
 	ld c, IntroGfx1_SIZE / 16 ; $6081
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6083
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6083
 	farcall LoadCompressedTileBlock ; $6086
 	ld b, TILEBLOCK_IntroGfx2 ; $6089
 	ld c, IntroGfx2_SIZE / 16 ; $608b
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $608d
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $608d
 	farcall LoadCompressedTileBlock ; $6090
 	ld b, TILEBLOCK_IntroGfx3 ; $6093
 	ld c, IntroGfx3_SIZE / 16 ; $6095
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6097
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6097
 	farcall LoadCompressedTileBlock ; $609a
 	ld b, TILEBLOCK_IntroGfx4 ; $609d
 	ld c, IntroGfx4_SIZE / 16 ; $609f
-	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $60a1
+	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $60a1
 	farcall LoadCompressedTileBlock ; $60a4
 	ld b, TILEBLOCK_IntroGfx5 ; $60a7
 	ld c, IntroGfx5_SIZE / 16 ; $60a9
-	ld de, vTiles0 + $44 * TILE_SIZE + VRAM_BANK1 ; $60ab
+	ld de, vTiles0 tile $44 + VRAM_BANK1 ; $60ab
 	farcall LoadCompressedTileBlock ; $60ae
 	ld b, TILEBLOCK_IntroGfx6 ; $60b1
 	ld c, 4 ; $60b3 -- 4 of IntroGfx6's 2 tiles
-	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $60b5
+	ld de, vTiles0 tile $48 + VRAM_BANK1 ; $60b5
 	farcall LoadCompressedTileBlock ; $60b8
 	ld hl, IntroPalettes ; $60bb
 	ld_obj_pals de, 0, 2 ; $60be
@@ -283,7 +283,7 @@ InitTitleSceneGraphics:
 	ld [wCameraX], a ; $61d7
 	ld [wCameraY], a ; $61da
 	ld [wCameraY + 1], a ; $61dd
-	ld a, $01 ; $61e0
+	ld a, SCENECOPY_FROM_CAMERA ; $61e0
 	farcall CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
 TitleSceneGraphicsGfx0:

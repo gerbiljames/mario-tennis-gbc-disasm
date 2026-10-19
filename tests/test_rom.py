@@ -37,7 +37,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tld_size bc, "), 24)
         self.assertEqual(count(r"^\tld_tile_run bc, "), 63)
         # map positions are tiles with a point (map_pos), never raw 1/256-tile words
-        self.assertEqual(count(r"^\t(?:map_entry|map_actor|script_move_target|script_set_position|script_move_player|as_set_target|as_set_pos) [^;\n]*\b\d+\.\d+"), 3056)
+        self.assertEqual(count(r"^\t(?:map_entry|map_actor|script_move_target|script_set_position|script_move_player|as_set_target|as_set_pos) [^;\n]*\b\d+\.\d+"), 3075)
         self.assertEqual(count(r"^\t(?:map_entry \S+, \S+,|map_actor \S+, \S+,|script_move_target \S+,|script_set_position \S+,|script_move_player|as_set_target|as_set_pos) \$[0-9a-f]{4}\b"), 0)
         # register pairs loaded with two instructions, named by the split-pair macros
         for mac, n in (("rect_size", 198), ("rect_cell", 24), ("map_cell", 38), ("sprite_xy", 60),
@@ -50,6 +50,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tscript_(?:set|player)_speed [^;\n]*\$[0-9a-f]{4}"), 0)
         self.assertEqual(count(r"^\tscript_move_angle [^;\n]*\$[0-9a-f]{4}"), 0)
         self.assertEqual(count(r"^\tscript_fade_in \$"), 0)
+        self.assertEqual(count(r"^\tscript_fade_out \$"), 0)
         # frame counts are decimal
         self.assertEqual(count(r"^\t(?:wait_frames|script_wait_frames|script_delay|as_wait) \$"), 0)
         # VRAM copies of whole tilemap rows count rows

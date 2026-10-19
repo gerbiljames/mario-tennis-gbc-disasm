@@ -219,7 +219,7 @@ and are marked `; debug warp only` (`tools/routes.py` finds them; `make check`
 `SpawnActorsFromList` (`$04:$4cf7`) walks 14 bytes at a time and stops when
 byte +9 is `$ff`; `map_actor_end` emits nine zero bytes plus that sentinel. A
 slot may hold several back-to-back lists: scene variants swapped in by
-`ScriptRespawnLocationActors` (`$0a:$4152`, which re-runs
+`script_respawn_actors` (`ScriptRespawnLocationActors`, `$0a:$4152`, which re-runs
 `InitLocationActors` with another list pointer).
 
 Slots are fixed (`include/constants/`): `$00` `ACTOR_PLAYER`, `$01`
@@ -241,7 +241,7 @@ A slot is named only where the active list is certain at that line.
 
 * a location starts with its default list and table; the arrival script runs
   next, then the init script, each from what the previous step can leave;
-* `ScriptRespawnLocationActors` replaces the list, and `WriteStoryStateWord`
+* `script_respawn_actors` replaces the list, and `WriteStoryStateWord`
   into `wMapNpcScriptsPtr` the table, on that path only; a callee's installs
   reach its caller;
 * the pairs active under player control are everything the init script and
@@ -333,9 +333,9 @@ their lines.
 * **NpcScripts** — `arg0` is a bitmask applied by `RunNpcInteraction`: bit 0
   turns the actor to face the player (player angle `+ $80`), bit 1 restores
   its facing afterwards, bit 3 forces animation 1 for the duration (old one
-  in `wStoryScriptSavedActorAnim`), bit 4 sets state bits 0/1 at `+$05`
-  (freeze). The actor's `+$19` busy byte is forced to 1 and restored after
-  (`wStoryScriptSavedActorBusy`).
+  in `wStoryScriptSavedActorAnim`), bit 4 sets `ACTORF_FLAGS` bits 0/1
+  (freeze). The actor's `ACTORF_ANIM_RATE_MOVING` is forced to 1 and restored
+  after (`wStoryScriptSavedActorAnimRate`).
 * **TileTriggers via `RunQueuedTriggerScript`** — `arg0 == $01` makes the
   queued trigger a no-op (`$0a:$55c6`): live for an A-press, inert when
   walked over.
@@ -631,7 +631,10 @@ montage (`PlayScrollingStoryCutscene`).
 
 ## The character record
 
-`$40` bytes, one layout in four places:
+`$40` bytes, one layout in four places, each copy declared by `char_record`
+(`include/macros/ram.inc`) as `<prefix><Field>`: `wSavedMain`, `wSavedPartner`,
+`wStoryMain`, `wStoryPartner`, `wPlayer1Main`, `wPlayer1Partner`, `wPlayer2Main`,
+`wPlayer2Partner`.
 
 | base | what |
 | --- | --- |
@@ -649,7 +652,8 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$0c | palette index (`GetCharPaletteIndex`) |
 | +$0d | gender (0 male, 1 female) |
 | +$0e | left-handed flag |
-| +$0f-$1f | AI / physics attributes (reach windows, smash and dive speeds, reaction delays, swing word) |
+| +$0f-$1e | AI / physics attributes (reach windows, smash and dive speeds, reaction delays, swing word) |
+| +$1f | CPU difficulty (0 easy - 3 intense), the AI's serve style on court |
 | +$18 | level for player characters (1-99, capped `$63`), class tier for roster NPCs |
 | +$20-$2a | eleven stat bars, 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop |
 | +$2b | speed bonus, added to Speed by `LoadCharacterAttributes` |
@@ -660,8 +664,8 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$3c | equipment: low nibble racket, high nibble shoes |
 | +$3d-$3f | never written or read |
 
-`ram/wram/` names `+$18` `wStoryModeMainCharacterLevel` at `$c818` but
-`wStoryMainCharExpTier` at `$c918`; for player characters the byte is a
+`ram/wram/` names `+$18` `wSavedMainLevel` at `$c818` but
+`wStoryMainLevel` at `$c918`; for player characters the byte is a
 level, and `LookupExpTierForChar` (`$1e:$693e`,
 `src/engine/menus/exp/award_calc_1e.asm`) derives the coarse 0-6 tier from it.
 
@@ -751,7 +755,7 @@ notes are in `ram/wram/`.
 Other addresses: `$c295` `wStoryModeEntryPoint`, `$c296`
 `wStoryModeSpawnPosition` (5 bytes), `$c29c` `wStoryArrivalScript`, `$c2c0`
 `wStoryMapRecord` (8 bytes, the matched `map_entry`/`map_script`),
-`$c2d5`-`$c2d7` the name popup, `$c2d8`-`$c2da` `wStoryScriptSavedActorBusy`
+`$c2d5`-`$c2d7` the name popup, `$c2d8`-`$c2da` `wStoryScriptSavedActorAnimRate`
 / `…Anim` / `wStoryScriptRan`; `$c294` `wUnusedExitTriggerIdMirror` and `$c2db`
 `wUnusedStoryScriptId` (write-only); `$c2b2`-`$c2bf` per-location scratch;
 `$c2d0`-`$c2d4` `wStoryModePlayersXPosition`/`…YPosition`/`wStoryModePlayerFacing`

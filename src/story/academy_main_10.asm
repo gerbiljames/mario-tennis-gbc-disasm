@@ -144,11 +144,13 @@ AcademyMainBldgNpc03_10:
 	ret ; $7626
 AcademyMainBldgNpc03TextIds:
 	; $7627, 10 bytes (text_ids)
+	table_width 2
 	dw Text_30_440 ; record 0
 	dw Text_30_443 ; record 1
 	dw Text_30_446 ; record 2
 	dw Text_30_452 ; record 3
 	dw Text_30_457 ; record 4
+	assert_table_length NUM_STORYTIERS
 AcademyMainBldgNpc04_10:
 	ld a, [wMapSceneStage] ; $7631
 	sra a ; $7634
@@ -162,11 +164,13 @@ AcademyMainBldgNpc04_10:
 	ret ; $7649
 AcademyMainBldgNpc04TextIds:
 	; $764a, 10 bytes (text_ids)
+	table_width 2
 	dw Text_30_441 ; record 0
 	dw Text_30_444 ; record 1
 	dw Text_30_447 ; record 2
 	dw Text_30_455 ; record 3
 	dw Text_30_458 ; record 4
+	assert_table_length NUM_STORYTIERS
 AcademyMainBldgNpc05_10:
 	script_set_text Text_30_462 ; $7654
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_2 ; $765a
@@ -189,11 +193,13 @@ AcademyMainBldgNpc05_10:
 	ret ; $7697
 AcademyMainBldgNpc05TextIds:
 	; $7698, 10 bytes (text_ids)
+	table_width 2
 	dw Text_30_464 ; record 0
 	dw Text_30_465 ; record 1
 	dw Text_30_466 ; record 2
 	dw Text_30_467 ; record 3
 	dw Text_30_468 ; record 4
+	assert_table_length NUM_STORYTIERS
 AcademyMainBldgNpc05_10.setText:
 	script_set_text Text_30_469 ; $76a2
 	script_wait_frames 20 ; $76a8
@@ -226,11 +232,13 @@ AcademyMainBldgNpc06_10:
 	ret ; $76e9
 AcademyMainBldgNpc06TextIds:
 	; $76ea, 10 bytes (text_ids)
+	table_width 2
 	dw Text_30_442 ; record 0
 	dw Text_30_445 ; record 1
 	dw Text_30_448 ; record 2
 	dw Text_30_456 ; record 3
 	dw Text_30_459 ; record 4
+	assert_table_length NUM_STORYTIERS
 AcademyMainBldgNpcScripts_10:
 	; $76f4, 33 bytes (map_scripts)
 	map_script ACTOR_ACADEMY_MAIN_BLDG_WALK_72_08_1, FACEMASK_ANY, $0000, AcademyMainBldgNpc03_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
@@ -260,9 +268,7 @@ AcademyMainBldgInitScript_10:
 .done:
 	ret ; $7740
 AcademyMainBldgNewStudentCutscene_10:
-	ldh a, [hRomBank] ; $7741
-	ld hl, AcademyMainBldgNewStudentActors_10 ; $7743
-	farcall ScriptRespawnLocationActors ; $7746
+	script_respawn_actors AcademyMainBldgNewStudentActors_10 ; $7741
 	farcall BeginCutsceneScriptMode ; $7749
 	script_set_position ACTOR_PLAYER, 34.0, 37.5 ; $774c
 	script_set_position ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY, 34.0, 36.0 ; $7757
@@ -299,13 +305,13 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_wait_frames 50 ; $782e
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $7835
 	script_wait_frames 30 ; $783d
-	ld a, [wStoryModeGenderOfMainCharacter] ; $7844
+	ld a, [wStoryMainGender] ; $7844
 	or a ; $7847
 	jr z, .speak ; $7848
 	farcall AdvanceDialogueTextCursor ; $784a
 .speak:
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $784d
-	ld a, [wStoryModeGenderOfMainCharacter] ; $7852
+	ld a, [wStoryMainGender] ; $7852
 	or a ; $7855
 	jr nz, .wait ; $7856
 	farcall AdvanceDialogueTextCursor ; $7858

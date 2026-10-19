@@ -1,7 +1,7 @@
 CompareEquippedRacketToMinigameFlag:
 	ld a, [wMapScratch + 8] ; $5005
 	ld b, a ; $5008
-	ld a, [wEquippedRacket] ; $5009
+	ld a, [wStoryMainEquipment] ; $5009
 	cp b ; $500c
 	jr z, .failed ; $500d
 	ld a, $00 ; $500f
@@ -35,7 +35,7 @@ RepairCounterCheckEquipChanged:
 	ld a, [wMapScratch + 10] ; $5050
 	jp RepairCounterServiceMenu.loop ; $5053
 .repairRacket:
-	ld a, [wEquippedRacket] ; $5056
+	ld a, [wStoryMainEquipment] ; $5056
 	ld [wMapScratch + 8], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c
 	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $505f
@@ -169,8 +169,8 @@ ActorScript_0e_04:
 	twin_named mirror_player_sprite_if_left_handed, MirrorPlayerSpriteIfLeftHanded ; $520f
 ActorScript_0e_05:
 	; $5225, 35 bytes (actor_script)
-	as_flag $01, $05, $02
-	as_set_field $06, $0010
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
+	as_set_field ACTORF_SPEED, $0010
 .L8:
 	as_target_rel -2.0, 0.0
 	as_wait_move

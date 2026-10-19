@@ -13,7 +13,7 @@ RunMinigameEndMenu:
 	farcall StepMatchFrame ; $4017
 	call LoadScoreboardModeGfx ; $401a
 	ld hl, ScoreboardModeGfxTail ; $401d
-	ld de, vTiles0 + $64 * TILE_SIZE ; $4020
+	ld de, vTiles0 tile $64 ; $4020
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4023
 	call QueueVRAMCopy ; $4025
 	farcall StepMatchFrame ; $4028
@@ -29,7 +29,7 @@ RunMinigameEndMenu:
 .loop:
 	xor a ; $4046
 	ld [wMatchMenuSelection], a ; $4047
-	ld a, $0e ; $404a
+	ld a, MATCHMENU_MINIGAME_END ; $404a
 	ld [wPauseMenuId], a ; $404c
 	call RunMatchQuitMenu ; $404f
 	ld a, [wMatchMenuSelection] ; $4052
@@ -60,7 +60,7 @@ RunMatchPauseMenu:
 	farcall StepMatchFrame ; $408d
 	call LoadScoreboardModeGfx ; $4090
 	ld hl, ScoreboardModeGfxTail ; $4093
-	ld de, vTiles0 + $64 * TILE_SIZE ; $4096
+	ld de, vTiles0 tile $64 ; $4096
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4099
 	call QueueVRAMCopy ; $409b
 	farcall StepMatchFrame ; $409e
@@ -74,11 +74,11 @@ RunMatchPauseMenu:
 	ld a, $0a ; $40b4
 	ld hl, DrawScoreboardModeTitle ; $40b6
 	call RegisterFrameTask ; $40b9
-	ld b, $00 ; $40bc
+	ld b, MATCHMENU_PAUSE ; $40bc
 	ld a, [wCourtViewLocked] ; $40be
 	and a ; $40c1
 	jr z, .zero ; $40c2
-	ld b, $01 ; $40c4
+	ld b, MATCHMENU_PAUSE_FIXED_VIEW ; $40c4
 .zero:
 	ld a, b ; $40c6
 	ld [wPauseMenuId], a ; $40c7
@@ -249,6 +249,7 @@ ShowMinigameRulesPages:
 	ret ; $4261
 MinigameRulesTextIdBases:
 	; $4262, 18 bytes (records:2)
+	table_width 2
 	dw $2c87 ; record 0
 	dw $2c8d ; record 1
 	dw $2c92 ; record 2
@@ -258,6 +259,7 @@ MinigameRulesTextIdBases:
 	dw $2ca5 ; record 6
 	dw $2cb1 ; record 7
 	dw $2cbd ; record 8
+	assert_table_length NUM_MARIOGAMES
 MinigameRulesPageLists:
 	; $4274, 162 bytes (rules_pages:6)
 	rules_pages_stride 6
@@ -329,7 +331,7 @@ ShowRulesPageSequence:
 .loop:
 	farcall StepMatchFrame ; $435d
 	farcall ReadMatchInputPressed ; $4360
-	and $03 ; $4363
+	and PADF_A | PADF_B ; $4363
 	jr z, .loop ; $4365
 	sound SFX_MENU_SELECT ; $4367
 	ld hl, DrawRulesNextPageArrow_06 ; $4369
@@ -366,12 +368,13 @@ MatchPauseMenu_ReviewControls:
 	farcall StepMatchFrame ; $43b6
 .loop:
 	farcall ReadMatchInputPressed ; $43b9
-	and $03 ; $43bc
+	and PADF_A | PADF_B ; $43bc
 	jr nz, .restoreBgTilemap ; $43be
 	farcall ReadMatchInputPressed ; $43c0
-	and $40 ; $43c3
+	and PADF_UP ; $43c3
 	jr z, .stepMatchFrame ; $43c5
 	ldh a, [hDebugStepMode] ; $43c7
+	ASSERT DEBUGSTEP_OFF == 0
 	and a ; $43c9
 	jr z, .stepMatchFrame ; $43ca
 	push_wram_bank WRAM_CHAR0 ; $43cc
@@ -396,7 +399,7 @@ MatchPauseMenu_ChangeOptions:
 	xor a ; $43f7
 	ld [wMatchMenuSelection], a ; $43f8
 .loop:
-	ld a, $02 ; $43fb
+	ld a, MATCHMENU_OPTIONS ; $43fb
 	ld [wPauseMenuId], a ; $43fd
 	call RunMatchMenu ; $4400
 	ld a, [wMatchMenuSelection] ; $4403
@@ -418,7 +421,7 @@ MatchOptionsMenu_AfterItem:
 MatchPauseMenu_CameraSelect:
 	ld a, [wCourtViewOption] ; $441e
 	ld [wMatchMenuSelection], a ; $4421
-	ld a, $03 ; $4424
+	ld a, MATCHMENU_CAMERA ; $4424
 	ld [wPauseMenuId], a ; $4426
 	call RunMatchMenu ; $4429
 	ld a, [wMatchMenuSelection] ; $442c
@@ -432,7 +435,7 @@ MatchPauseMenu_MusicToggle:
 	ldh a, [hMusic] ; $443a
 	and $01 ; $443c
 	ld [wMatchMenuSelection], a ; $443e
-	ld a, $04 ; $4441
+	ld a, MATCHMENU_MUSIC ; $4441
 	ld [wPauseMenuId], a ; $4443
 	call RunMatchMenu ; $4446
 	ld a, [wMatchMenuSelection] ; $4449
@@ -456,7 +459,7 @@ MatchPauseMenu_SaveQuit:
 	ld a, [wDrillIsPracticeLesson] ; $4473
 	and a ; $4476
 	jr z, .getMatchMenuItemCount ; $4477
-	ld a, $08 ; $4479
+	ld a, MATCHMENU_QUIT_LESSON ; $4479
 	ld [wPauseMenuId], a ; $447b
 .getMatchMenuItemCount:
 	call GetMatchMenuItemCount ; $447e

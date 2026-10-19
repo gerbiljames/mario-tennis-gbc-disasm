@@ -2,7 +2,7 @@ RunMainMenu:
 	call InitSerialLink ; $55d1
 	sound BGM_MENU ; $55d4
 	ld hl, rIE ; $55d6
-	res 2, [hl] ; $55d9
+	res B_IE_TIMER, [hl] ; $55d9
 	call BuildSaveSlotSummaries ; $55db
 	xor a ; $55de
 	ld [wCheatCodeLength], a ; $55df
@@ -48,9 +48,9 @@ RunMainMenu:
 	ld a, [wMenuInputPressed] ; $5642
 	bit PADB_A, a ; $5645
 	jr nz, .clearFrameTasks ; $5647
-	bit 1, a ; $5649
+	bit PADB_B, a ; $5649
 	jr nz, .playSfx2 ; $564b
-	bit 2, a ; $564d
+	bit PADB_SELECT, a ; $564d
 	jr nz, .bit2Set ; $564f
 	jr .loop ; $5651
 .bit2Set:
@@ -61,7 +61,7 @@ RunMainMenu:
 	sound SFX_MENU_SELECT ; $565a
 	call ClearFrameTasks ; $565c
 	ld hl, rIE ; $565f
-	set 2, [hl] ; $5662
+	set B_IE_TIMER, [hl] ; $5662
 	ld b, $01 ; $5664
 	call MainMenuSlideOut ; $5666
 	ld a, [wMenuCursorX] ; $5669
@@ -88,7 +88,7 @@ RunMainMenu:
 	call ResetSerialState ; $5698
 	call ClearFrameTasks ; $569b
 	ld hl, rIE ; $569e
-	set 2, [hl] ; $56a1
+	set B_IE_TIMER, [hl] ; $56a1
 	ld b, $00 ; $56a3
 	call MainMenuSlideOut ; $56a5
 	ld a, MENUSLIDE_BACK ; $56a8
@@ -170,7 +170,7 @@ LoadMainMenuGfx:
 	ld [wCurrentStorySlot], a ; $571b
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $571e
 	farcall LoadCharMugshotToBuffer ; $5721
-	ld de, vTiles2 + $68 * TILE_SIZE + VRAM_BANK1 ; $5724
+	ld de, vTiles2 tile $68 + VRAM_BANK1 ; $5724
 	farcall CopyMugshotBufferToVram ; $5727
 	call AdvanceFrame ; $572a
 	wram_bank WRAM_SCREEN ; $572d
@@ -178,7 +178,7 @@ LoadMainMenuGfx:
 	ld [wCurrentStorySlot], a ; $5735
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $5738
 	farcall LoadCharMugshotToBuffer ; $573b
-	ld de, vTiles2 + $71 * TILE_SIZE + VRAM_BANK1 ; $573e
+	ld de, vTiles2 tile $71 + VRAM_BANK1 ; $573e
 	farcall CopyMugshotBufferToVram ; $5741
 	call AdvanceFrame ; $5744
 	wram_bank WRAM_SCREEN ; $5747
@@ -186,7 +186,7 @@ LoadMainMenuGfx:
 	ld [wCurrentStorySlot], a ; $574f
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $5752
 	farcall LoadCharMugshotToBuffer ; $5755
-	ld de, vTiles1 + $70 * TILE_SIZE + VRAM_BANK1 ; $5758
+	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $5758
 	farcall CopyMugshotBufferToVram ; $575b
 	call AdvanceFrame ; $575e
 	ld b, TILEBLOCK_MainMenuGfx0 ; $5761
@@ -196,37 +196,37 @@ LoadMainMenuGfx:
 	call AdvanceFrame ; $576b
 	ld b, TILEBLOCK_SharedMenuGfx29 ; $576e
 	ld c, SharedMenuGfx29_SIZE / 16 ; $5770
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5772
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5772
 	farcall LoadCompressedTileBlock ; $5775
 	call AdvanceFrame ; $5778
 	ld b, TILEBLOCK_SharedMenuGfx30 ; $577b
 	ld c, SharedMenuGfx30_SIZE / 16 ; $577d
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $577f
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $577f
 	farcall LoadCompressedTileBlock ; $5782
 	call AdvanceFrame ; $5785
 	ld b, TILEBLOCK_MainMenuGfx1 ; $5788
 	ld c, MainMenuGfx1_SIZE / 16 ; $578a
-	ld de, vTiles0 + $32 * TILE_SIZE + VRAM_BANK1 ; $578c
+	ld de, vTiles0 tile $32 + VRAM_BANK1 ; $578c
 	farcall LoadCompressedTileBlock ; $578f
 	call AdvanceFrame ; $5792
 	ld b, TILEBLOCK_MainMenuGfx2 ; $5795
 	ld c, MainMenuGfx2_SIZE / 16 ; $5797
-	ld de, vTiles0 + $42 * TILE_SIZE + VRAM_BANK1 ; $5799
+	ld de, vTiles0 tile $42 + VRAM_BANK1 ; $5799
 	farcall LoadCompressedTileBlock ; $579c
 	call AdvanceFrame ; $579f
 	ld b, TILEBLOCK_MainMenuGfx3 ; $57a2
 	ld c, MainMenuGfx3_SIZE / 16 ; $57a4
-	ld de, vTiles0 + $52 * TILE_SIZE + VRAM_BANK1 ; $57a6
+	ld de, vTiles0 tile $52 + VRAM_BANK1 ; $57a6
 	farcall LoadCompressedTileBlock ; $57a9
 	call AdvanceFrame ; $57ac
 	ld b, TILEBLOCK_MainMenuGfx4 ; $57af
 	ld c, MainMenuGfx4_SIZE / 16 ; $57b1
-	ld de, vTiles0 + $62 * TILE_SIZE + VRAM_BANK1 ; $57b3
+	ld de, vTiles0 tile $62 + VRAM_BANK1 ; $57b3
 	farcall LoadCompressedTileBlock ; $57b6
 	call AdvanceFrame ; $57b9
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $57bc
 	ld c, SharedMenuGfx27_SIZE / 16 ; $57be
-	ld de, vTiles0 + $72 * TILE_SIZE + VRAM_BANK1 ; $57c0
+	ld de, vTiles0 tile $72 + VRAM_BANK1 ; $57c0
 	farcall LoadCompressedTileBlock ; $57c3
 	ld b, $08 ; $57c6
 	ld c, $10 ; $57c8

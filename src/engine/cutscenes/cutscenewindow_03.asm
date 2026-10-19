@@ -17,7 +17,7 @@ PlayScrollingStoryCutscene:
 	ld a, b ; $6fff
 	push af ; $7000
 	ld hl, WindowSolidTile_03 ; $7001
-	ld de, vTiles1 + $7f * TILE_SIZE ; $7004
+	ld de, vTiles1 tile $7f ; $7004
 	ld c, 1 ; $7007
 	call QueueVRAMCopy ; $7009
 	ld hl, WindowAttrMap_03 ; $700c
@@ -30,7 +30,7 @@ PlayScrollingStoryCutscene:
 	call QueueVRAMCopy ; $701f
 	call AdvanceFrame ; $7022
 	farcall StopSceneScrollTask ; $7025
-	ld a, $90 ; $7028
+	ld a, SCREEN_HEIGHT_PX ; $7028
 	ldh [rWY], a ; $702a
 	wram_bank WRAM_SCENE ; $702c
 	xor a ; $7032
@@ -117,6 +117,7 @@ AnimateWindowSlideUpTask:
 	ld d, h ; $72d3
 	ld e, l ; $72d4
 	ld hl, wRasterScrollStartLY ; $72d5
+	ASSERT wRasterScrollEndLY == wRasterScrollStartLY + 1, "this code walks from wRasterScrollStartLY into wRasterScrollEndLY"
 	ld a, e ; $72d8
 	ld [hl+], a ; $72d9
 	ld [hl], d ; $72da
@@ -126,7 +127,7 @@ AnimateWindowSlideUpTask:
 	ld [wCutsceneSlideTimer], a ; $72df
 	and $3f ; $72e2
 	ld b, a ; $72e4
-	ld a, $90 ; $72e5
+	ld a, SCREEN_HEIGHT_PX ; $72e5
 	sub b ; $72e7
 	ldh [rWY], a ; $72e8
 	ld a, b ; $72ea

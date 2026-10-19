@@ -2,7 +2,7 @@ RunCourtSelect4Menu:
 	sound BGM_MENU ; $5b99
 	call ClearFrameTasks ; $5b9b
 	ld hl, rIE ; $5b9e
-	res 2, [hl] ; $5ba1
+	res B_IE_TIMER, [hl] ; $5ba1
 	farcall InitMenuBgScroll ; $5ba3
 	ld b, $01 ; $5ba6
 	ld c, $01 ; $5ba8
@@ -36,14 +36,14 @@ RunCourtSelect4Menu:
 	ld a, [wMenuInputPressed] ; $5bee
 	bit PADB_A, a ; $5bf1
 	jr nz, .playSfx ; $5bf3
-	bit 1, a ; $5bf5
+	bit PADB_B, a ; $5bf5
 	jr nz, .playSfx2 ; $5bf7
 	jr .loop ; $5bf9
 .playSfx:
 	sound SFX_MENU_DECIDE ; $5bfb
 	call ClearFrameTasks ; $5bfd
 	ld hl, rIE ; $5c00
-	set 2, [hl] ; $5c03
+	set B_IE_TIMER, [hl] ; $5c03
 	ld b, $01 ; $5c05
 	call CloseCourtSelect4Panel ; $5c07
 	ld a, MENUSLIDE_FORWARD ; $5c0a
@@ -60,7 +60,7 @@ RunCourtSelect4Menu:
 	sound SFX_MENU_CANCEL ; $5c1e
 	call ClearFrameTasks ; $5c20
 	ld hl, rIE ; $5c23
-	set 2, [hl] ; $5c26
+	set B_IE_TIMER, [hl] ; $5c26
 	ld b, $00 ; $5c28
 	call CloseCourtSelect4Panel ; $5c2a
 	ld a, MENUSLIDE_BACK ; $5c2d
@@ -120,7 +120,7 @@ RunLinkCourtSelect4Menu:
 	ld a, [wMenuInputPressed] ; $5ca5
 	bit PADB_A, a ; $5ca8
 	jr nz, .playSfx ; $5caa
-	bit 1, a ; $5cac
+	bit PADB_B, a ; $5cac
 	jr nz, .playSfx2 ; $5cae
 	jr .loop ; $5cb0
 .playSfx:
@@ -156,8 +156,7 @@ RunLinkCourtSelect4Menu:
 	call CloseCourtSelect4Panel ; $5ceb
 	ld a, MENUSLIDE_BACK ; $5cee
 	ld [wMenuSlideDirection], a ; $5cf0
-	ld c, 16 ; $5cf3
-	call BeginFadeOut ; $5cf5
+	script_fade_out 16 ; $5cf3
 	call WaitFadeEnd ; $5cf8
 	ld a, $ff ; $5cfb
 	ret ; $5cfd
@@ -241,43 +240,43 @@ LoadCourtSelectGraphics:
 	farcall LoadCompressedTileBlock ; $5d73
 	ld b, TILEBLOCK_CourtSelectGfx2 ; $5d76
 	ld c, 18 ; $5d78 -- 18 of CourtSelectGfx2's 16 tiles
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5d7a
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5d7a
 	farcall LoadCompressedTileBlock ; $5d7d
 	ld b, TILEBLOCK_CourtSelectGfx3 ; $5d80
 	ld c, 18 ; $5d82 -- 18 of CourtSelectGfx3's 16 tiles
-	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5d84
+	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5d84
 	farcall LoadCompressedTileBlock ; $5d87
 	ld b, TILEBLOCK_CourtSelectGfx4 ; $5d8a
 	ld c, 20 ; $5d8c -- 20 of CourtSelectGfx4's 18 tiles
-	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $5d8e
+	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5d8e
 	farcall LoadCompressedTileBlock ; $5d91
 	ld b, TILEBLOCK_CourtSelectGfx5Alias16 ; $5d94
 	ld c, 18 ; $5d96 -- 18 of CourtSelectGfx5's 16 tiles
-	ld de, vTiles0 + $42 * TILE_SIZE + VRAM_BANK1 ; $5d98
+	ld de, vTiles0 tile $42 + VRAM_BANK1 ; $5d98
 	farcall LoadCompressedTileBlock ; $5d9b
 	ld b, TILEBLOCK_CourtSelectGfx6 ; $5d9e
 	ld c, 18 ; $5da0 -- 18 of CourtSelectGfx6's 16 tiles
-	ld de, vTiles0 + $52 * TILE_SIZE + VRAM_BANK1 ; $5da2
+	ld de, vTiles0 tile $52 + VRAM_BANK1 ; $5da2
 	farcall LoadCompressedTileBlock ; $5da5
 	ld b, TILEBLOCK_CourtSelectGfx7 ; $5da8
 	ld c, 18 ; $5daa -- 18 of CourtSelectGfx7's 16 tiles
-	ld de, vTiles0 + $62 * TILE_SIZE + VRAM_BANK1 ; $5dac
+	ld de, vTiles0 tile $62 + VRAM_BANK1 ; $5dac
 	farcall LoadCompressedTileBlock ; $5daf
 	ld b, TILEBLOCK_CourtSelectGfx8 ; $5db2
 	ld c, 18 ; $5db4 -- 18 of CourtSelectGfx8's 16 tiles
-	ld de, vTiles0 + $20 * TILE_SIZE ; $5db6
+	ld de, vTiles0 tile $20 ; $5db6
 	farcall LoadCompressedTileBlock ; $5db9
 	ld b, TILEBLOCK_CourtSelectGfx9 ; $5dbc
 	ld c, 18 ; $5dbe -- 18 of CourtSelectGfx9's 16 tiles
-	ld de, vTiles0 + $30 * TILE_SIZE ; $5dc0
+	ld de, vTiles0 tile $30 ; $5dc0
 	farcall LoadCompressedTileBlock ; $5dc3
 	ld b, TILEBLOCK_SharedMenuGfx111 ; $5dc6
 	ld c, 18 ; $5dc8 -- 18 of SharedMenuGfx111's 16 tiles
-	ld de, vTiles0 + $40 * TILE_SIZE ; $5dca
+	ld de, vTiles0 tile $40 ; $5dca
 	farcall LoadCompressedTileBlock ; $5dcd
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $5dd0
 	ld c, SharedMenuGfx27_SIZE / 16 ; $5dd2
-	ld de, vTiles0 + $72 * TILE_SIZE + VRAM_BANK1 ; $5dd4
+	ld de, vTiles0 tile $72 + VRAM_BANK1 ; $5dd4
 	farcall LoadCompressedTileBlock ; $5dd7
 	ld b, TILEBLOCK_CourtSelectGfx0 ; $5dda
 	ld c, CourtSelectGfx0_SIZE / 16 ; $5ddc
@@ -710,24 +709,24 @@ LoadCourtSelectTitleTiles:
 	ld de, wDecompBuffer ; $6195
 	call DecompressData ; $6198
 	ld hl, wDecompBuffer ; $619b
-	ld de, vTiles2 + $30 * TILE_SIZE ; $619e
+	ld de, vTiles2 tile $30 ; $619e
 	ld bc, CourtSelectTitleTiles_SIZE / 16 ; $61a1
 	call QueueVRAMCopy ; $61a4
 	ret ; $61a7
 LoadCourtSelectTitleTiles2:
 	ld hl, CourtSelectTitleTiles2Gfx ; $61a8
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $61ab
+	ld de, wDecompBuffer tile 16 ; $61ab
 	call DecompressData ; $61ae
-	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $61b1
-	ld de, vTiles2 + $40 * TILE_SIZE ; $61b4
+	ld hl, wDecompBuffer tile 16 ; $61b1
+	ld de, vTiles2 tile $40 ; $61b4
 	ld bc, 5 ; $61b7
 	call QueueVRAMCopy ; $61ba
 	ret ; $61bd
 LoadCourtSelectPanelTiles:
 	ld hl, CourtSelectPanelTiles ; $61be
-	ld de, wDecompBuffer + 32 * TILE_SIZE ; $61c1
+	ld de, wDecompBuffer tile 32 ; $61c1
 	call DecompressData ; $61c4
-	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $61c7
+	ld hl, wDecompBuffer tile 32 ; $61c7
 	ld de, vTiles1 ; $61ca
 	ld bc, 55 ; $61cd
 	call QueueVRAMCopy ; $61d0

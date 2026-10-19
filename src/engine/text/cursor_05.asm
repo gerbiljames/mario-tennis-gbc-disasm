@@ -415,7 +415,7 @@ TextCmdDelay15Skippable:
 .loop:
 	call AdvanceFrame ; $4f65
 	ldh a, [hInputPressed] ; $4f68
-	and $f3 ; $4f6a
+	and ~(PADF_SELECT | PADF_START) ; $4f6a
 	jr nz, .restore ; $4f6c
 	dec b ; $4f6e
 	jr nz, .loop ; $4f6f
@@ -434,6 +434,7 @@ TextCmdWaitButtonPage:
 	call RedrawActiveTextWindow ; $4f82
 	xor a ; $4f85
 	ld hl, wTextArrowBlinkCounter ; $4f86
+	ASSERT wTextArrowCell == wTextArrowBlinkCounter + 1, "this code walks from wTextArrowBlinkCounter into wTextArrowCell"
 	ld [hl+], a ; $4f89
 	ld [hl], e ; $4f8a
 	inc hl ; $4f8b

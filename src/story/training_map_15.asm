@@ -253,9 +253,7 @@ TournamentSiteDoublesFinalNpcScripts_15:
 	map_script ACTOR_TOURNAMENT_COURTYARD_WALK_72_03, FACEMASK_ANY, $0000, Text_1f_79, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 TournamentSiteArrivalScene:
-	ldh a, [hRomBank] ; $444d
-	ld hl, TournamentSiteRespawnActors_15 ; $444f
-	farcall ScriptRespawnLocationActors ; $4452
+	script_respawn_actors TournamentSiteRespawnActors_15 ; $444d
 	farcall BeginCutsceneScriptMode ; $4455
 	call SetupTournamentSitePartnerActor ; $4458
 	script_player_speed 7.96875 ; $445b
@@ -346,15 +344,14 @@ TournamentSiteArrivalScene:
 	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_08, FACE_UP, 10.0 ; $4693
 	script_move_angle ACTOR_PLAYER, FACE_UP, 10.0 ; $469d
 	script_wait_frames 30 ; $46a7
-	ld c, 8 ; $46ae
-	call BeginFadeOut ; $46b0
+	script_fade_out 8 ; $46ae
 	call WaitFadeEnd ; $46b3
 	ret ; $46b6
 SetupTournamentSitePartnerActor:
 	call SetPlayerPartnerActorSprites ; $46b7
 	test_flag FLAG_DOUBLES ; $46ba
 	jr z, .noPartner ; $46bd
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $46bf
+	ld a, [wStoryPartnerGender] ; $46bf
 	or a ; $46c2
 	jr nz, .female ; $46c3
 	ld d, $58 ; $46c5
@@ -384,18 +381,13 @@ TournamentSiteEntryWalkIn:
 	dec a ; $4708
 	ld_hl_indexed TournamentSiteEntryWalkInFacings + 4 ; $4709
 	ld b, [hl] ; $4710
-	ld a, $02 ; $4711
-	ld b, b ; $4713
-	ld de, $0200 ; $4714
-	farcall MoveActorByAngle ; $4717
+	script_move_angle ACTOR_PARTNER, b, 2.0 ; $4711
 	script_wait_move ACTOR_PARTNER ; $471a
 	ld a, [wStoryModeEntryPoint] ; $471f
 	dec a ; $4722
 	ld_hl_indexed TournamentSiteEntryWalkInFacings ; $4723
 	ld b, [hl] ; $472a
-	ld a, $02 ; $472b
-	ld b, b ; $472d
-	farcall SetActorFacing ; $472e
+	script_face ACTOR_PARTNER, b ; $472b
 	script_set_speed ACTOR_PARTNER, 0.5 ; $4731
 .walkOff:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $4739
@@ -403,10 +395,7 @@ TournamentSiteEntryWalkIn:
 	dec a ; $4744
 	ld_hl_indexed TournamentSiteEntryWalkInFacings ; $4745
 	ld b, [hl] ; $474c
-	ld a, $00 ; $474d
-	ld b, b ; $474f
-	ld de, $0200 ; $4750
-	farcall MoveActorByAngle ; $4753
+	script_move_angle ACTOR_PLAYER, b, 2.0 ; $474d
 .done:
 	ret ; $4756
 TournamentSiteEntryWalkInFacings:
@@ -499,11 +488,13 @@ TrainingCourtNpc03_15:
 	ret ; $4990
 TrainingCourtNpc03TextIds:
 	; $4991, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_633 ; record 0
 	dw Text_36_636 ; record 1
 	dw Text_36_639 ; record 2
 	dw Text_36_639 ; record 3
 	dw Text_36_639 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc04_15:
 	ld a, [wMapSceneStage] ; $499b
 	add a ; $499e
@@ -516,11 +507,13 @@ TrainingCourtNpc04_15:
 	ret ; $49b1
 TrainingCourtNpc04TextIds:
 	; $49b2, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_634 ; record 0
 	dw Text_36_637 ; record 1
 	dw Text_36_640 ; record 2
 	dw Text_36_640 ; record 3
 	dw Text_36_640 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc05_15:
 	ld a, [wMapSceneStage] ; $49bc
 	add a ; $49bf
@@ -533,11 +526,13 @@ TrainingCourtNpc05_15:
 	ret ; $49d2
 TrainingCourtNpc05TextIds:
 	; $49d3, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_635 ; record 0
 	dw Text_36_638 ; record 1
 	dw Text_36_641 ; record 2
 	dw Text_36_641 ; record 3
 	dw Text_36_641 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc08_15:
 	ld a, [wMapSceneStage] ; $49dd
 	add a ; $49e0
@@ -550,11 +545,13 @@ TrainingCourtNpc08_15:
 	ret ; $49f3
 TrainingCourtNpc08TextIds:
 	; $49f4, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_655 ; record 0
 	dw Text_36_661 ; record 1
 	dw Text_36_665 ; record 2
 	dw Text_36_665 ; record 3
 	dw Text_36_665 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc09_15:
 	ld a, [wMapSceneStage] ; $49fe
 	add a ; $4a01
@@ -567,11 +564,13 @@ TrainingCourtNpc09_15:
 	ret ; $4a14
 TrainingCourtNpc09TextIds_15:
 	; $4a15, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_656 ; record 0
 	dw Text_36_662 ; record 1
 	dw Text_36_666 ; record 2
 	dw Text_36_666 ; record 3
 	dw Text_36_666 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0A_15:
 	ld a, [wMapSceneStage] ; $4a1f
 	add a ; $4a22
@@ -584,11 +583,13 @@ TrainingCourtNpc0A_15:
 	ret ; $4a35
 TrainingCourtNpc0ATextIds:
 	; $4a36, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_657 ; record 0
 	dw Text_36_663 ; record 1
 	dw Text_36_667 ; record 2
 	dw Text_36_667 ; record 3
 	dw Text_36_667 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0B_15:
 	ld a, [wMapSceneStage] ; $4a40
 	add a ; $4a43
@@ -612,11 +613,13 @@ TrainingCourtNpc0B_15:
 	ret ; $4a75
 TrainingCourtNpc0BTextIds:
 	; $4a76, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_658 ; record 0
 	dw Text_36_664 ; record 1
 	dw Text_36_668 ; record 2
 	dw Text_36_668 ; record 3
 	dw Text_36_668 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0E_15:
 	ld a, [wMapSceneStage] ; $4a80
 	add a ; $4a83
@@ -629,11 +632,13 @@ TrainingCourtNpc0E_15:
 	ret ; $4a96
 TrainingCourtNpc0ETextIds:
 	; $4a97, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_642 ; record 0
 	dw Text_36_647 ; record 1
 	dw Text_36_650 ; record 2
 	dw Text_36_650 ; record 3
 	dw Text_36_650 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc0F_15:
 	ld a, [wMapSceneStage] ; $4aa1
 	add a ; $4aa4
@@ -657,11 +662,13 @@ TrainingCourtNpc0F_15:
 	ret ; $4ad6
 TrainingCourtNpc0FTextIds:
 	; $4ad7, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_643 ; record 0
 	dw Text_36_648 ; record 1
 	dw Text_36_651 ; record 2
 	dw Text_36_651 ; record 3
 	dw Text_36_651 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc10_15:
 	ld a, [wMapSceneStage] ; $4ae1
 	add a ; $4ae4
@@ -685,11 +692,13 @@ TrainingCourtNpc10_15:
 	ret ; $4b16
 TrainingCourtNpc10TextIds_15:
 	; $4b17, 10 bytes (text_ids)
+	table_width 2
 	dw Text_36_646 ; record 0
 	dw Text_36_649 ; record 1
 	dw Text_36_652 ; record 2
 	dw Text_36_652 ; record 3
 	dw Text_36_652 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingCourtNpc13_15:
 	script_move_player_to_actor ACTOR_TRAINING_COURT_WALK_71_06_3 ; $4b21
 	farcall WaitPlayerMoveDone ; $4b28
@@ -697,7 +706,7 @@ TrainingCourtNpc13_15:
 	ld a, $01 ; $4b30
 	ld e, l ; $4b32
 	ld d, h ; $4b33
-	ld hl, $0018 ; $4b34
+	ld hl, ACTORF_ANIM_RATE ; $4b34
 	add hl, de ; $4b37
 	ld [hl], a ; $4b38
 	script_set_text Text_36_671 ; $4b39
@@ -723,7 +732,7 @@ TrainingCourtNpc13_15:
 	ld a, $02 ; $4b95
 	ld e, l ; $4b97
 	ld d, h ; $4b98
-	ld hl, $0018 ; $4b99
+	ld hl, ACTORF_ANIM_RATE ; $4b99
 	add hl, de ; $4b9c
 	ld [hl], a ; $4b9d
 	script_set_anim ACTOR_TRAINING_COURT_WALK_71_06_3, ANIM_BOUNCE ; $4b9e
@@ -732,7 +741,7 @@ TrainingCourtNpc13_15:
 	ld a, $01 ; $4baf
 	ld e, l ; $4bb1
 	ld d, h ; $4bb2
-	ld hl, $0018 ; $4bb3
+	ld hl, ACTORF_ANIM_RATE ; $4bb3
 	add hl, de ; $4bb6
 	ld [hl], a ; $4bb7
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 54.5, 13.5 ; $4bb8
@@ -780,7 +789,7 @@ TrainingCourtNpc13_15:
 	ld a, $02 ; $4ce3
 	ld e, l ; $4ce5
 	ld d, h ; $4ce6
-	ld hl, $0018 ; $4ce7
+	ld hl, ACTORF_ANIM_RATE ; $4ce7
 	add hl, de ; $4cea
 	ld [hl], a ; $4ceb
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4cec

@@ -309,20 +309,18 @@ RunN64TnmtData:
 	ld a, [wMenuInputPressed] ; $4d32
 	bit PADB_A, a ; $4d35
 	jr nz, .playSfx ; $4d37
-	bit 1, a ; $4d39
+	bit PADB_B, a ; $4d39
 	jr nz, .playSfx2 ; $4d3b
 	jr .loop ; $4d3d
 .playSfx:
 	sound SFX_MENU_SELECT ; $4d3f
-	ld c, 16 ; $4d41
-	call BeginFadeOut ; $4d43
+	script_fade_out 16 ; $4d41
 	call WaitFadeEnd ; $4d46
 	call ClearFrameTasks ; $4d49
 	ret ; $4d4c
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $4d4d
-	ld c, 16 ; $4d4f
-	call BeginFadeOut ; $4d51
+	script_fade_out 16 ; $4d4f
 	call WaitFadeEnd ; $4d54
 	call ClearFrameTasks ; $4d57
 	ld a, $ff ; $4d5a
@@ -389,7 +387,7 @@ BuildN64TnmtDataScreen:
 	ld [wDataScreenCursorRow], a ; $4dd3
 	call LoadN64TnmtDataRecords ; $4dd6
 	wram_bank WRAM_SCREEN ; $4dd9
-	ld de, vTiles1 + $2c * TILE_SIZE + VRAM_BANK1 ; $4ddf
+	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $4ddf
 	call LoadChartWindowTiles ; $4de2
 	ld de, vTiles0 + VRAM_BANK1 ; $4de5
 	farcall LoadMenuArrowSpriteTiles ; $4de8

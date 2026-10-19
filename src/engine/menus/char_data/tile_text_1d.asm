@@ -338,7 +338,7 @@ CharDataValuesSyncTask:
 	call ApplySlideOffsetToSpriteX ; $49d7
 	call QueueSprite ; $49da
 .checkEquippedRacket:
-	ld a, [wEquippedRacket] ; $49dd
+	ld a, [wStoryMainEquipment] ; $49dd
 	push af ; $49e0
 	and $0f ; $49e1
 	jr z, .restore ; $49e3

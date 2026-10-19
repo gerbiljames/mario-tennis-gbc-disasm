@@ -112,6 +112,7 @@ the `Npc0D` pair, set different text ids.
 | `src/twins/stroke_practice1_evaluate_result.asm` | `StrokePractice1EvaluateResult`, `StrokePractice3EvaluateResult` | $0b |
 | `src/twins/stroke_practice1_handle_point_end.asm` | `StrokePractice1HandlePointEnd`, `StrokePractice3HandlePointEnd` | $0b |
 | `src/twins/tennis_machine4_hook__point_start.asm` | `TennisMachine4Hook_PointStart`, `TennisMachineHighScoreHook_PointStart` | $0d |
+| `src/twins/wait_script_frames_save_a.asm` | `WaitScriptFramesSaveA_<bank>` (five instructions, under the floor; `script_delay` picks its bank's copy) | $0f, $27 |
 
 ## The families
 

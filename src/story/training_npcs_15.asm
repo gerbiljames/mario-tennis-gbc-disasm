@@ -3,7 +3,7 @@ RunWaterSpriteSwingContestAndReward:
 	ld a, $01 ; $4d0c
 	ld e, l ; $4d0e
 	ld d, h ; $4d0f
-	ld hl, $0018 ; $4d10
+	ld hl, ACTORF_ANIM_RATE ; $4d10
 	add hl, de ; $4d13
 	ld [hl], a ; $4d14
 	script_move_player_to_actor ACTOR_PLAYER ; $4d15
@@ -71,8 +71,7 @@ Unused_15_WaterSpriteRacketRewardScene:
 	script_wait_frames 20 ; $4e7a
 	script_jump_velocity ACTOR_TRAINING_COURT_WALK_71_06_3, -3.0 ; $4e81
 	script_jump_velocity ACTOR_PLAYER, -3.0 ; $4e89
-	ld a, $00 ; $4e91
-	farcall ScriptWaitActorJumpDone ; $4e93
+	script_wait_jump ACTOR_PLAYER ; $4e91
 	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, 63.0, 63.0 ; $4e96
 	script_set_anim ACTOR_TRAINING_COURT_WALK_76_06, ANIM_NOD ; $4ea1
 	script_wait_idle ACTOR_TRAINING_COURT_WALK_76_06 ; $4ea8
@@ -103,14 +102,13 @@ Unused_15_WaterSpriteRacketRewardScene:
 	ld a, $04 ; $4ef2
 	ld b, a ; $4ef4
 .speak:
-	ld a, [wEquippedRacket] ; $4ef5
+	ld a, [wStoryMainEquipment] ; $4ef5
 	and $f0 ; $4ef8
 	or b ; $4efa
-	ld [wEquippedRacket], a ; $4efb
+	ld [wStoryMainEquipment], a ; $4efb
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4efe
 	script_wait_frames 10 ; $4f03
-	ld c, 3 ; $4f0a
-	call BeginFadeOut ; $4f0c
+	script_fade_out 3 ; $4f0a
 	call WaitFadeEnd ; $4f0f
 	sound SFX_WATER_SPRITE_APPEAR ; $4f12
 	script_set_position ACTOR_TRAINING_COURT_RACKET, 51.0, 9.0 ; $4f14
@@ -491,16 +489,11 @@ TrainingCourtReentryDispatch:
 	xor a ; $53d2
 	ld [wStoryModeShowLocationName], a ; $53d3
 	ld a, $06 ; $53d6
-	ld [wMapSceneStage2], a ; $53d8
+	ld [wChallengerActor], a ; $53d8
 	script_set_position ACTOR_PLAYER, 24.0, 17.0 ; $53db
 	script_face ACTOR_PLAYER, FACE_UP ; $53e6
-	ld a, [wMapSceneStage2] ; $53ed
-	ld bc, $1800 ; $53f0
-	ld de, $0d00 ; $53f3
-	farcall ScriptSetActorPosition ; $53f6
-	ld a, [wMapSceneStage2] ; $53f9
-	ld b, $40 ; $53fc
-	farcall SetActorFacing ; $53fe
+	script_set_position [wChallengerActor], 24.0, 13.0 ; $53ed
+	script_face [wChallengerActor], FACE_DOWN ; $53f9
 	script_null_script ACTOR_PARTNER ; $5401
 	script_set_position ACTOR_PARTNER, 19.0, 17.0 ; $5406
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5411
@@ -529,16 +522,11 @@ TrainingCourtReentryDispatch:
 	xor a ; $5482
 	ld [wStoryModeShowLocationName], a ; $5483
 	ld a, $11 ; $5486
-	ld [wMapSceneStage2], a ; $5488
+	ld [wChallengerActor], a ; $5488
 	script_set_position ACTOR_PLAYER, 40.0, 42.0 ; $548b
 	script_face ACTOR_PLAYER, FACE_UP ; $5496
-	ld a, [wMapSceneStage2] ; $549d
-	ld bc, $2800 ; $54a0
-	ld de, $2500 ; $54a3
-	farcall ScriptSetActorPosition ; $54a6
-	ld a, [wMapSceneStage2] ; $54a9
-	ld b, $40 ; $54ac
-	farcall SetActorFacing ; $54ae
+	script_set_position [wChallengerActor], 40.0, 37.0 ; $549d
+	script_face [wChallengerActor], FACE_DOWN ; $54a9
 	script_null_script ACTOR_PARTNER ; $54b1
 	script_set_position ACTOR_PARTNER, 45.0, 45.0 ; $54b6
 	script_face ACTOR_PARTNER, FACE_LEFT ; $54c1
@@ -567,16 +555,11 @@ TrainingCourtReentryDispatch:
 	xor a ; $5532
 	ld [wStoryModeShowLocationName], a ; $5533
 	ld a, $0c ; $5536
-	ld [wMapSceneStage2], a ; $5538
+	ld [wChallengerActor], a ; $5538
 	script_set_position ACTOR_PLAYER, 24.0, 42.0 ; $553b
 	script_face ACTOR_PLAYER, FACE_UP ; $5546
-	ld a, [wMapSceneStage2] ; $554d
-	ld bc, $1800 ; $5550
-	ld de, $2500 ; $5553
-	farcall ScriptSetActorPosition ; $5556
-	ld a, [wMapSceneStage2] ; $5559
-	ld b, $40 ; $555c
-	farcall SetActorFacing ; $555e
+	script_set_position [wChallengerActor], 24.0, 37.0 ; $554d
+	script_face [wChallengerActor], FACE_DOWN ; $5559
 	script_null_script ACTOR_PARTNER ; $5561
 	script_set_position ACTOR_PARTNER, 19.0, 45.0 ; $5566
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5571

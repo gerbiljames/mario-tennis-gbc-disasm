@@ -35,10 +35,10 @@ DrawPlayerNameAndLevel:
 	ld de, wDecompBuffer ; $48aa
 	call DecompressData ; $48ad
 	ld hl, ResultsPlayerPanelAttrmap_1e ; $48b0
-	ld de, wDecompBuffer + 12 * TILE_SIZE + 8 ; $48b3
+	ld de, wDecompBuffer tile 12 + 8 ; $48b3
 	call DecompressData ; $48b6
 	ld hl, wDecompBuffer ; $48b9
-	ld de, wDecompBuffer + 10 * TILE_SIZE ; $48bc
+	ld de, wDecompBuffer tile 10 ; $48bc
 	ld c, $08 ; $48bf
 	call CopyTilesAndAttrsRun ; $48c1
 	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH ; $48c4
@@ -63,7 +63,7 @@ DrawPlayerNameAndLevel:
 	call Fill7Bytes ; $48fb
 	ld hl, wShadowTilemap + 8 * TILEMAP_WIDTH ; $48fe
 	call Fill7Bytes ; $4901
-	ld hl, wStoryModeNameOfMainCharacter ; $4904
+	ld hl, wStoryMainName ; $4904
 	call CopyStringToTextBuffer ; $4907
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $490a
 	ld bc, $0020 ; $490d
@@ -72,7 +72,7 @@ DrawPlayerNameAndLevel:
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $4916
 	ld bc, $0020 ; $4919
 	call FetchAndDrawDialogueText ; $491c
-	ld a, [wStoryMainCharExpTier] ; $491f
+	ld a, [wStoryMainLevel] ; $491f
 	ld h, $00 ; $4922
 	ld l, a ; $4924
 	ld a, $02 ; $4925
@@ -134,11 +134,12 @@ InitResultsScreenCharacters:
 	wram_bank ; $4997
 	ld bc, wCharPosX ; $499b
 	ld a, [wGameMode] ; $499e
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $49a1
 	jr nz, .nonZero ; $49a2
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $49a4
+	ld a, [wStoryMainChar] ; $49a4
 	ld d, a ; $49a7
-	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $49a8
+	ld a, [wStoryMainPalette] ; $49a8
 	ld e, a ; $49ab
 	jr .initChar ; $49ac
 .nonZero:
@@ -146,13 +147,13 @@ InitResultsScreenCharacters:
 	srl a ; $49b1
 	or a ; $49b3
 	jr nz, .checkPlayer2CurrentMainCharacter ; $49b4
-	ld a, [wPlayer1CurrentMainCharacter] ; $49b6
+	ld a, [wPlayer1MainChar] ; $49b6
 	ld d, a ; $49b9
 	ld a, [wPlayer1MainPalette] ; $49ba
 	ld e, a ; $49bd
 	jr .initChar ; $49be
 .checkPlayer2CurrentMainCharacter:
-	ld a, [wPlayer2CurrentMainCharacter] ; $49c0
+	ld a, [wPlayer2MainChar] ; $49c0
 	ld d, a ; $49c3
 	ld a, [wPlayer2MainPalette] ; $49c4
 	ld e, a ; $49c7
@@ -192,11 +193,12 @@ InitResultsScreenCharacters:
 	wram_bank ; $4a12
 	ld bc, wCharPosX ; $4a16
 	ld a, [wGameMode] ; $4a19
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $4a1c
 	jr nz, .nonZero3 ; $4a1d
-	ld a, [wStoryModePartnerCharacterOverworldSprite] ; $4a1f
+	ld a, [wStoryPartnerChar] ; $4a1f
 	ld d, a ; $4a22
-	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $4a23
+	ld a, [wStoryPartnerPalette] ; $4a23
 	ld e, a ; $4a26
 	jr .initChar2 ; $4a27
 .nonZero3:
@@ -204,13 +206,13 @@ InitResultsScreenCharacters:
 	srl a ; $4a2c
 	or a ; $4a2e
 	jr nz, .checkPlayer2CurrentPartnerCharacter ; $4a2f
-	ld a, [wPlayer1CurrentPartnerCharacter] ; $4a31
+	ld a, [wPlayer1PartnerChar] ; $4a31
 	ld d, a ; $4a34
 	ld a, [wPlayer1PartnerPalette] ; $4a35
 	ld e, a ; $4a38
 	jr .initChar2 ; $4a39
 .checkPlayer2CurrentPartnerCharacter:
-	ld a, [wPlayer2CurrentPartnerCharacter] ; $4a3b
+	ld a, [wPlayer2PartnerChar] ; $4a3b
 	ld d, a ; $4a3e
 	ld a, [wPlayer2PartnerPalette] ; $4a3f
 	ld e, a ; $4a42
@@ -221,7 +223,7 @@ InitResultsScreenCharacters:
 	farcall InitChar ; $4a47
 	ld a, $0e ; $4a4a
 	ld [wCharSpriteAttr], a ; $4a4c
-	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4a4f
+	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4a4f
 	ld hl, wCharFrameVramDest ; $4a52
 	ld a, e ; $4a55
 	ld [hl+], a ; $4a56
@@ -345,11 +347,11 @@ RunContinuePrompt:
 	ldh a, [hInputRisingEdge] ; $4b32
 	bit PADB_UP, a ; $4b34
 	jr nz, DrawContinuePromptCursor.playSfx ; $4b36
-	bit 7, a ; $4b38
+	bit PADB_DOWN, a ; $4b38
 	jr nz, DrawContinuePromptCursor.playSfx ; $4b3a
-	bit 0, a ; $4b3c
+	bit PADB_A, a ; $4b3c
 	jr nz, DrawContinuePromptCursor.playSfx2 ; $4b3e
-	bit 1, a ; $4b40
+	bit PADB_B, a ; $4b40
 	jr nz, DrawContinuePromptCursor.playSfx3 ; $4b42
 	jr RunContinuePrompt ; $4b44
 DrawContinuePromptCursor:

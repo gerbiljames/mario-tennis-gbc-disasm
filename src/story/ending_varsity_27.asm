@@ -5,7 +5,7 @@ ActorScript_27_05:
 	as_jump ActorScript_27_05
 ActorScript_27_06:
 	; $555e, 18 bytes (actor_script)
-	as_set_field $18, $0006
+	as_set_field ACTORF_ANIM_RATE, $0006
 	as_anim ANIM_SWING_LOOP
 	as_halt
 	as_halt
@@ -63,7 +63,7 @@ End10VarsityCourtInitScript_27:
 	jp z, End10VarsityCourtEntry01Scene ; $5622
 	ret ; $5625
 SetPartnerObjDefByGender_27:
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5626
+	ld a, [wStoryPartnerGender] ; $5626
 	or a ; $5629
 	jr nz, .done ; $562a
 	script_set_objdef OBJ_HARRY, $0d ; $562c
@@ -77,9 +77,7 @@ End10VarsityCourtEntry01Scene:
 	jp .scriptRespawnLocationActors ; $5648
 .notDoubles:
 	wram_bank WRAM_SCENE ; $564b
-	ldh a, [hRomBank] ; $5651
-	ld hl, End10VarsityCourtActorsAlt_27 ; $5653
-	farcall ScriptRespawnLocationActors ; $5656
+	script_respawn_actors End10VarsityCourtActorsAlt_27 ; $5651
 	script_null_script ACTOR_PLAYER_SHADOW ; $5659
 	script_player_speed 7.5 ; $565e
 	call SetPartnerObjDefByGender_27 ; $5664
@@ -155,9 +153,7 @@ End10VarsityCourtEntry01Scene:
 	ld [wStoryModeExitTriggerRequest], a ; $5828
 	ret ; $582b
 .scriptRespawnLocationActors:
-	ldh a, [hRomBank] ; $582c
-	ld hl, End10VarsityCourtActorsAltB_27 ; $582e
-	farcall ScriptRespawnLocationActors ; $5831
+	script_respawn_actors End10VarsityCourtActorsAltB_27 ; $582c
 	farcall BeginCutsceneScriptMode ; $5834
 	call SetPartnerObjDefByGender_27 ; $5837
 	script_null_script ACTOR_PARTNER ; $583a
@@ -209,7 +205,7 @@ End10VarsityCourtEntry01Scene:
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $5973
 	script_wait_move ACTOR_PLAYER ; $597d
 	script_get_actor_state ACTOR_PARTNER ; $5982
-	ld de, $0018 ; $5987
+	ld de, ACTORF_ANIM_RATE ; $5987
 	add hl, de ; $598a
 	ld [hl], $04 ; $598b
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $598d
@@ -228,7 +224,7 @@ End10VarsityCourtEntry01Scene:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $59de
 	script_wait_idle ACTOR_PARTNER ; $59e5
 	script_get_actor_state ACTOR_PARTNER ; $59ea
-	ld de, $0018 ; $59ef
+	ld de, ACTORF_ANIM_RATE ; $59ef
 	add hl, de ; $59f2
 	ld [hl], $01 ; $59f3
 	script_face ACTOR_PARTNER, FACE_LEFT ; $59f5
@@ -257,7 +253,7 @@ CeremonyDoublesReaction_27:
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $5a88
 	script_wait_move ACTOR_PLAYER ; $5a92
 	script_get_actor_state ACTOR_PARTNER ; $5a97
-	ld de, $0018 ; $5a9c
+	ld de, ACTORF_ANIM_RATE ; $5a9c
 	add hl, de ; $5a9f
 	ld [hl], $03 ; $5aa0
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5aa2
@@ -269,7 +265,7 @@ CeremonyDoublesReaction_27:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5ac8
 	script_wait_idle ACTOR_PARTNER ; $5acf
 	script_get_actor_state ACTOR_PARTNER ; $5ad4
-	ld de, $0018 ; $5ad9
+	ld de, ACTORF_ANIM_RATE ; $5ad9
 	add hl, de ; $5adc
 	ld [hl], $01 ; $5add
 	script_face ACTOR_PARTNER, FACE_LEFT ; $5adf
@@ -461,9 +457,7 @@ End8SrCourtTileTriggers_27:
 End8SrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $5ed8
 	jp z, .notDoubles ; $5edb
-	ldh a, [hRomBank] ; $5ede
-	ld hl, End8SrCourtActorsAlt_27 ; $5ee0
-	farcall ScriptRespawnLocationActors ; $5ee3
+	script_respawn_actors End8SrCourtActorsAlt_27 ; $5ede
 	farcall BeginCutsceneScriptMode ; $5ee6
 	jr .step ; $5ee9
 	ret ; $5eeb

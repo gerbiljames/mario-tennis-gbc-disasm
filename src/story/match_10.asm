@@ -43,13 +43,11 @@ MatchSelectExitTriggers_10:
 	ds 1, $ff ; $40af, fill
 MatchSelectRunCharacterSelect:
 	farcall BeginCutsceneScriptMode ; $40b0
-	ld c, 16 ; $40b3
-	call BeginFadeOut ; $40b5
+	script_fade_out 16 ; $40b3
 	call WaitFadeEnd ; $40b8
 	ld b, $00 ; $40bb
 	farcall RunCharacterSelectScreen ; $40bd
-	ld c, 16 ; $40c0
-	call BeginFadeOut ; $40c2
+	script_fade_out 16 ; $40c0
 	call WaitFadeEnd ; $40c5
 	farcall LoadStoryObjPalettes ; $40c8
 	call DisableLCDSafely ; $40cb
@@ -425,8 +423,7 @@ RunServiceLessonMenu:
 	ld [wStoryModeEntryPoint], a ; $4547
 	ld [wUnusedExitTriggerIdMirror], a ; $454a
 	ld [wStoryModeExitTriggerRequest], a ; $454d
-	ld c, 16 ; $4550
-	call BeginFadeOut ; $4552
+	script_fade_out 16 ; $4550
 	call WaitFadeEnd ; $4555
 	farcall ShowDrillBriefingScreen ; $4558
 	ret ; $455b
@@ -447,8 +444,7 @@ RunNetLessonMenu:
 	ld [wStoryModeEntryPoint], a ; $457f
 	ld [wUnusedExitTriggerIdMirror], a ; $4582
 	ld [wStoryModeExitTriggerRequest], a ; $4585
-	ld c, 16 ; $4588
-	call BeginFadeOut ; $458a
+	script_fade_out 16 ; $4588
 	call WaitFadeEnd ; $458d
 	farcall ShowDrillBriefingScreen ; $4590
 	ret ; $4593

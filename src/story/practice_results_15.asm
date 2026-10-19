@@ -347,7 +347,7 @@ Table_15:
 	db $03, $00, $2f, $00, $01, $01, $03, $03, $00, $2f, $00, $07, $01, $03, $0c, $f1, $ff ; 0x00
 	db $03, $00, $2f, $00, $01, $01, $05, $03, $00, $2f, $00, $07, $01, $05, $0c, $f1, $ff ; 0x11
 PlaceSwingPracticeKidActor:
-	ld a, [wEquippedRacket] ; $7a4b
+	ld a, [wStoryMainEquipment] ; $7a4b
 	and $0f ; $7a4e
 	cp $03 ; $7a50
 	jp nz, .done ; $7a52

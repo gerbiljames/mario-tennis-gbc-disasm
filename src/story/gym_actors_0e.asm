@@ -22,7 +22,7 @@ SetupGymActorsForProgress:
 	ld a, $01 ; $46df
 	ld e, l ; $46e1
 	ld d, h ; $46e2
-	ld hl, $0018 ; $46e3
+	ld hl, ACTORF_ANIM_RATE ; $46e3
 	add hl, de ; $46e6
 	ld [hl], a ; $46e7
 	ret ; $46e8
@@ -40,7 +40,7 @@ ActorScript_0e_00:
 	as_set_target 33.0, 14.0
 	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
-	as_flag $01, $05, $02
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_target 33.0, 15.0
 	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
@@ -188,7 +188,7 @@ ActorScript_0e_01:
 	as_set_target 42.0, 11.0
 	as_call TrainingGymRunner0BWaitWaypointClear
 	as_wait_move
-	as_flag $01, $05, $02
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_target 41.0, 11.0
 	as_call TrainingGymRunner0BWaitWaypointClear
 	as_wait_move
@@ -336,7 +336,7 @@ ActorScript_0e_02:
 	as_set_target 45.375, 21.0
 	as_call TrainingGymRunner0CWaitWaypointClear
 	as_wait_move
-	as_flag $01, $05, $02
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_target 45.375, 20.0
 	as_call TrainingGymRunner0CWaitWaypointClear
 	as_wait_move

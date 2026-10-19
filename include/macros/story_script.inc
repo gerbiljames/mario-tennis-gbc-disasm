@@ -190,6 +190,46 @@ MACRO script_wait_move
 	farcall ScriptWaitActorMoveDone
 ENDM
 
+; Makes `actor` trail its leader: once more than about 2.8 tiles away, it walks
+; at the leader's speed toward a point 2 tiles behind it
+; (AttachActorStepMover, as_step).
+; Usage: script_follow actor, leader
+MACRO script_follow
+	script_get_actor_state \1
+	ld c, l
+	ld b, h
+	ld de, wActors + (\2) * ACTOR_SIZE
+	farcall AttachActorStepMover
+ENDM
+
+; Makes `actor` walk to where `target` stands, every frame
+; (AttachActorWaypointFollower, as_follow_wp).
+; Usage: script_walk_to_actor actor, target
+MACRO script_walk_to_actor
+	ld bc, wActors + (\1) * ACTOR_SIZE
+	script_get_actor_state \2
+	ld e, l
+	ld d, h
+	farcall AttachActorWaypointFollower
+ENDM
+
+; Replaces the location's actor list with `list` (a map_actors table in this
+; bank) and respawns every actor from it.
+; Usage: script_respawn_actors list
+MACRO script_respawn_actors
+	ldh a, [hRomBank]
+	ld hl, \1
+	farcall ScriptRespawnLocationActors
+ENDM
+
+; Blocks until the jump script_jump_velocity started on `actor` has landed,
+; advancing a frame each poll, with a 180-frame timeout.
+; Usage: script_wait_jump actor
+MACRO script_wait_jump
+	ld a, \1
+	farcall ScriptWaitActorJumpDone
+ENDM
+
 ; Blocks the cutscene until `actor`'s script finishes (CheckActorScriptEnd),
 ; advancing a frame each poll, with a ~600-frame timeout.
 ; Usage: script_wait_actor_script actor
@@ -230,11 +270,13 @@ MACRO script_copy_scene_rect
 	farcall CopySceneTilemapRect
 ENDM
 
-; Wait `frames` frames through WaitScriptFramesSaveA (preserves af).
+; Wait `frames` frames through the bank's own WaitScriptFramesSaveA_<bank>
+; copy (preserves af).
 ; Usage: script_delay frames
 MACRO script_delay
 	ld a, \1
-	call WaitScriptFramesSaveA
+	REDEF _SCRIPT_DELAY_BANK EQU BANK(@)
+	call WaitScriptFramesSaveA_{02x:_SCRIPT_DELAY_BANK}
 ENDM
 
 ; Start a screen fade-in (BeginFadeIn; speed 0 is treated as 1).
@@ -242,6 +284,13 @@ ENDM
 MACRO script_fade_in
 	ld c, \1
 	call BeginFadeIn
+ENDM
+
+; Start a screen fade-out (BeginFadeOut; does nothing if already faded out).
+; Usage: script_fade_out speed
+MACRO script_fade_out
+	ld c, \1
+	call BeginFadeOut
 ENDM
 
 ; Set actor `actor`'s script to `script`, a code pointer in the current bank

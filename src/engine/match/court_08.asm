@@ -51,6 +51,7 @@ CheckMatchWon:
 	srl a ; $5cc7
 	ld b, a ; $5cc9
 	ld hl, wPlayer1SetsWon ; $5cca
+	ASSERT wPlayer2SetsWon == wPlayer1SetsWon + 1, "this code walks from wPlayer1SetsWon into wPlayer2SetsWon"
 	ld a, [hl+] ; $5ccd
 	sub [hl] ; $5cce
 	jr z, .undecided ; $5ccf
@@ -210,6 +211,7 @@ ResolvePointWinner:
 	ret ; $5dc3
 CourtSceneDataTable:
 	; $5dc4, 100 bytes (court_scene)
+	table_width 4
 ; court_scene friction, bounce, scene, unused
 	court_scene $cd, $cd, SCENE_HARD_COURT, $21 ; $00 COURT_HARD
 	court_scene $b3, $99, SCENE_CLAY_COURT, $22 ; $01 COURT_CLAY
@@ -236,6 +238,7 @@ CourtSceneDataTable:
 	court_scene $cd, $b3, SCENE_MINIGAME_COURT, $13 ; $16 Fruit Fantasy
 	court_scene $b3, $cd, SCENE_WAREHOUSE_COURT, $15 ; $17 Two-On-One
 	court_scene $cd, $b3, SCENE_TRAINING_COURT, $24 ; $18 Training Court (match)
+	assert_table_length NUM_COURTS
 LoadCourtSceneData:
 	ldh a, [hWramBank] ; $5e28
 	push af ; $5e2a
@@ -444,7 +447,7 @@ WalkCharsToNewEnds:
 .waitLoop:
 	call StepMatchFrame ; $5fcf
 	call ReadMatchInputPressed ; $5fd2
-	and $0b ; $5fd5
+	and PADF_A | PADF_B | PADF_START ; $5fd5
 	jr nz, .settle ; $5fd7
 	call CheckAllCharsPhaseDone ; $5fd9
 	jr z, .waitLoop ; $5fdc

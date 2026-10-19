@@ -19,7 +19,7 @@ The analysis follows control flow through the story code carrying the set of
 * a location loads with its default list and NpcScripts table; the entry
   point's arrival script runs next, then the init script, each from what the
   step before can leave;
-* `ScriptRespawnLocationActors` after `ld hl, <list>` replaces the list on
+* `script_respawn_actors <list>` (ScriptRespawnLocationActors) replaces the list on
   that path, and `WriteStoryStateWord` into `wMapNpcScriptsPtr` the table; a
   callee's effect on the pair reaches its caller (per-routine summaries);
 * what the player can be walking around under is what the init script and
@@ -51,6 +51,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from banksrc import bank_lines, bank_of, build_addresses, holders  # noqa: E402
+import consts  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 ANY = "*"
@@ -63,7 +64,8 @@ ACTOR_ARGS = {
     ("script_null_script", 0), ("script_jump_velocity", 0), ("script_face_pair", 0),
     ("script_face_pair", 1), ("script_move_player_to_actor", 0), ("script_set_active", 0),
     ("script_move_angle", 0), ("script_set_objdef", 1), ("script_lock_facing", 0),
-    ("script_unlock_facing", 0),
+    ("script_unlock_facing", 0), ("script_wait_jump", 0), ("script_follow", 0), ("script_follow", 1),
+    ("script_walk_to_actor", 0), ("script_walk_to_actor", 1),
 }
 FIXED = {"ACTOR_PLAYER", "ACTOR_PLAYER_SHADOW", "ACTOR_PARTNER"}
 # The Senior Court's init script picks its list from the same story flags
@@ -100,11 +102,7 @@ TILE_LISTS = {
 
 
 def constants():
-    out = {}
-    for inc in (ROOT / "include").rglob("*.inc"):
-        for m in re.finditer(r"^def (\w+)\s+equ \$([0-9a-f]+)", inc.read_text(), re.M | re.I):
-            out[m.group(1)] = int(m.group(2), 16)
-    return out
+    return consts.constants()
 
 
 def stage_filter(st, var, ok):
@@ -316,6 +314,9 @@ class Flow:
             if tg and base is not None:
                 tg = [(t, (base[0], base[1] + k)) for k, t in enumerate(tg)]
             return ("multitail", tg) if tg else ("jump_out", None)
+        m = re.match(r"script_respawn_actors (\w+)$", code)
+        if m:
+            return ("install", m.group(1) if m.group(1) in s.lists else ANY)
         m = re.match(r"(call|farcall) (\w+(?:\.\w+)?)$", code)
         if m:
             t = m.group(2)

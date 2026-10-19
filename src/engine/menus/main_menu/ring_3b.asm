@@ -239,11 +239,11 @@ ScrollRingShotCursor:
 	ld a, [wMenuInputPressed] ; $53c6
 	bit PADB_RIGHT, a ; $53c9
 	jr nz, .checkMenuCursorX ; $53cb
-	bit 5, a ; $53cd
+	bit PADB_LEFT, a ; $53cd
 	jr nz, .checkMenuCursorX2 ; $53cf
-	bit 6, a ; $53d1
+	bit PADB_UP, a ; $53d1
 	jr nz, .checkMenuCursorY ; $53d3
-	bit 7, a ; $53d5
+	bit PADB_DOWN, a ; $53d5
 	jr nz, .checkMenuCursorY2 ; $53d7
 	ret ; $53d9
 .checkMenuCursorX:

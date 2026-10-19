@@ -161,7 +161,7 @@ End3DormEntCutscene_27:
 	script_face ACTOR_PLAYER, FACE_UP ; $6e36
 	script_set_active ACTOR_END3_DORM_ENT_EMILY, $02 ; $6e3d
 	script_set_position ACTOR_END3_DORM_ENT_EMILY, 21.0, 11.0 ; $6e44
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $6e4f
+	ld a, [wStoryPartnerGender] ; $6e4f
 	or a ; $6e52
 	jr nz, .walk ; $6e53
 	script_set_objdef OBJ_HARRY, ACTOR_END3_DORM_ENT_KATE ; $6e55
@@ -228,9 +228,7 @@ EndRestaurantEntInitScript_27:
 .done:
 	ret ; $6f56
 EndRestaurantEntCutscene_27:
-	ldh a, [hRomBank] ; $6f57
-	ld hl, EndRestaurantEntActorsAlt_27 ; $6f59
-	farcall ScriptRespawnLocationActors ; $6f5c
+	script_respawn_actors EndRestaurantEntActorsAlt_27 ; $6f57
 	farcall BeginCutsceneScriptMode ; $6f5f
 	test_flag FLAG_DOUBLES ; $6f62
 	jr z, .placeActors ; $6f65
@@ -406,8 +404,7 @@ End1MainBldgInitScript_27:
 	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 1.0 ; $73f4
 	script_face ACTOR_END1_MAIN_BLDG_WALK_75_06_1, FACE_DOWN ; $73fc
 	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, -2.0 ; $7403
-	ld a, $06 ; $740b
-	farcall ScriptWaitActorJumpDone ; $740d
+	script_wait_jump ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $740b
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 23.0 ; $7410
 	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $741b
 	sound SFX_EMOTE ; $7420
@@ -428,15 +425,10 @@ End1MainBldgInitScript_27:
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_EXCLAIM, 63.0, 63.0 ; $7495
 	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 1.0 ; $74a0
 	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, -2.0 ; $74a8
-	ld a, $06 ; $74b0
-	farcall ScriptWaitActorJumpDone ; $74b2
+	script_wait_jump ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74b0
 	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 32.0 ; $74b5
 	script_wait_frames 30 ; $74c0
-	ld bc, wActors + 1 * ACTOR_SIZE ; $74c7
-	script_get_actor_state ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74ca
-	ld e, l ; $74cf
-	ld d, h ; $74d0
-	farcall AttachActorWaypointFollower ; $74d1
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74c7
 	script_move_target ACTOR_PLAYER, 24.0, 30.0 ; $74d4
 	script_wait_frames 20 ; $74df
 	call End1MainBldgKnockdown_27 ; $74e6

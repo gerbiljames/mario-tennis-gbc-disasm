@@ -4,40 +4,46 @@
 ; story_location records. Each scene's blob family (SceneConfig, Palettes,
 ; Tiles, Tilemap, ...) carries the same name in CamelCase: SCENE_RESTAURANT's
 ; tilemap is RestaurantTilemap.
-def SCENE_MINIGAME_COURT     equ $00 ; Banana Bunch, Perfect Shot, Fruit Fantasy, and the unused court $0e
-def SCENE_TARGET_SHOT_COURT  equ $01
-def SCENE_GRASS_COURT        equ $02 ; COURT_GRASS and COURT_GRASS_ISLAND_OPEN
-def SCENE_TRAINING_COURT     equ $03 ; COURT_TRAINING_PRACTICE and the training match court
-def SCENE_CLAY_COURT         equ $04
-def SCENE_HARD_COURT         equ $05
-def SCENE_MACHINE_COURT      equ $06
-def SCENE_CENTER_COURT       equ $07
-def SCENE_COMPOSITION_COURT  equ $08
-def SCENE_TROPICS_COURT      equ $09 ; Yoshi's court
-def SCENE_STAR_COURT         equ $0a ; also Shooting Star and Boo Blast
-def SCENE_BOWSER_COURT       equ $0b ; no court row selects it
-def SCENE_WAREHOUSE_COURT    equ $0c ; Wario's court; also Treasure Box, Medallion Match, Two-On-One
-def SCENE_CASTLE_COURT       equ $0d ; Peach's court
-def SCENE_WALL_PRACTICE      equ $0e
-def SCENE_JUNGLE_COURT       equ $0f ; DK's court
-def SCENE_STAR_PATTERN_BG    equ $10 ; the main menu and the developer test locations
-def SCENE_ACADEMY_MAIN_BLDG  equ $11
-def SCENE_DORM_ROOM          equ $12
-def SCENE_RESTAURANT_PLAZA   equ $13
-def SCENE_COURTYARD          equ $14 ; the Academy courtyard and the Varsity Court
-def SCENE_ISLAND_SKY         equ $15
-def SCENE_SPECIAL_COURT      equ $16
-def SCENE_SENIOR_CLASS_COURT equ $17
-def SCENE_JUNIOR_CLASS_COURT equ $18
-def SCENE_RESTAURANT         equ $19 ; and the cafeteria
-def SCENE_ACADEMY_ENTRANCE   equ $1a
-def SCENE_DORM_ENTRANCE      equ $1b
-def SCENE_TOURNAMENT_COURTYARD equ $1c
-def SCENE_COURT_1            equ $1d
-def SCENE_TRAINING_COURT_MAP equ $1e ; the overworld view of the Training Court
-def SCENE_COURT_2            equ $1f
-def SCENE_CENTER_COURT_MAP   equ $20 ; the overworld view of the Center Court
-def SCENE_PEACHS_CASTLE      equ $21
-def SCENE_TRAINING_CENTER    equ $22 ; also the machine and wall practice rooms
-def SCENE_TOURNAMENT         equ $23
-def SCENE_AWARDS_CEREMONY    equ $24
+	const_def
+	const SCENE_MINIGAME_COURT       ; $00 Banana Bunch, Perfect Shot, Fruit Fantasy, and the unused court $0e
+	const SCENE_TARGET_SHOT_COURT    ; $01
+	const SCENE_GRASS_COURT          ; $02 COURT_GRASS and COURT_GRASS_ISLAND_OPEN
+	const SCENE_TRAINING_COURT       ; $03 COURT_TRAINING_PRACTICE and the training match court
+	const SCENE_CLAY_COURT           ; $04
+	const SCENE_HARD_COURT           ; $05
+	const SCENE_MACHINE_COURT        ; $06
+	const SCENE_CENTER_COURT         ; $07
+	const SCENE_COMPOSITION_COURT    ; $08
+	const SCENE_TROPICS_COURT        ; $09 Yoshi's court
+	const SCENE_STAR_COURT           ; $0a also Shooting Star and Boo Blast
+	const SCENE_BOWSER_COURT         ; $0b no court row selects it
+	const SCENE_WAREHOUSE_COURT      ; $0c Wario's court; also Treasure Box, Medallion Match, Two-On-One
+	const SCENE_CASTLE_COURT         ; $0d Peach's court
+	const SCENE_WALL_PRACTICE        ; $0e
+	const SCENE_JUNGLE_COURT         ; $0f DK's court
+	const SCENE_STAR_PATTERN_BG      ; $10 the main menu and the developer test locations
+	const SCENE_ACADEMY_MAIN_BLDG    ; $11
+	const SCENE_DORM_ROOM            ; $12
+	const SCENE_RESTAURANT_PLAZA     ; $13
+	const SCENE_COURTYARD            ; $14 the Academy courtyard and the Varsity Court
+	const SCENE_ISLAND_SKY           ; $15
+	const SCENE_SPECIAL_COURT        ; $16
+	const SCENE_SENIOR_CLASS_COURT   ; $17
+	const SCENE_JUNIOR_CLASS_COURT   ; $18
+	const SCENE_RESTAURANT           ; $19 and the cafeteria
+	const SCENE_ACADEMY_ENTRANCE     ; $1a
+	const SCENE_DORM_ENTRANCE        ; $1b
+	const SCENE_TOURNAMENT_COURTYARD ; $1c
+	const SCENE_COURT_1              ; $1d
+	const SCENE_TRAINING_COURT_MAP   ; $1e the overworld view of the Training Court
+	const SCENE_COURT_2              ; $1f
+	const SCENE_CENTER_COURT_MAP     ; $20 the overworld view of the Center Court
+	const SCENE_PEACHS_CASTLE        ; $21
+	const SCENE_TRAINING_CENTER      ; $22 also the machine and wall practice rooms
+	const SCENE_TOURNAMENT           ; $23
+	const SCENE_AWARDS_CEREMONY      ; $24
+def NUM_SCENES equ const_value
+
+; --- Scene tilemap copy origin (a for CopyScrolledSceneTilemapToVram) ---
+def SCENECOPY_FROM_PLAYER equ $00 ; re-centre the camera on the player first
+def SCENECOPY_FROM_CAMERA equ $01 ; any nonzero: copy around wCameraX/wCameraY as they stand

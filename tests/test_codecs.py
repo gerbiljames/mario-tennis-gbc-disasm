@@ -290,7 +290,7 @@ class MacroBytes(unittest.TestCase):
     def test_palette_and_vram_names(self):
         out = self.bytes_of("palette  0,31,31,  31,31,26,  24,18, 7,   0, 0, 0\n"
                             "ld de, vBGMap0 + 15 * TILEMAP_WIDTH + 4\n"
-                            "ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1")
+                            "ld de, vTiles0 tile $10 + VRAM_BANK1")
         self.assertEqual(out[:8], bytes.fromhex("e07f" "ff6b" "581e" "0000"))
         self.assertEqual(out[8:14], bytes.fromhex("11e499" "1100a1"))
 

@@ -4,62 +4,116 @@
 ; the list) and the item caption at text id $013f + id (bank $30, 319+id).
 ; Names follow the captions; the comment gives the word art, which several
 ; ids share.
-def MATCHMENUITEM_RULES              equ $00 ; "RULES"
-def MATCHMENUITEM_CONTROLS           equ $01 ; "CONTROLS"
-def MATCHMENUITEM_OPTIONS            equ $02 ; "OPTIONS"
-def MATCHMENUITEM_SAVE               equ $03 ; "SAVE" (opens the save/quit menu)
-def MATCHMENUITEM_CAMERA_MODE        equ $04 ; "CAMERA MODE"
-def MATCHMENUITEM_MUSIC              equ $05 ; "MUSIC"
-def MATCHMENUITEM_CAMERA_NORMAL      equ $06 ; "NORMAL"
-def MATCHMENUITEM_CAMERA_PLAYER      equ $07 ; "PLAYER"
-def MATCHMENUITEM_MUSIC_ON           equ $08 ; "ON"
-def MATCHMENUITEM_MUSIC_OFF          equ $09 ; "OFF"
-def MATCHMENUITEM_CANCEL             equ $0a ; "CANCEL"
-def MATCHMENUITEM_SAVE_GAME          equ $0b ; "SAVE" (narrow; performs the save)
-def MATCHMENUITEM_TO_MAIN_MENU       equ $0c ; "TO MAIN MENU"
-def MATCHMENUITEM_TO_LEVEL_SELECT    equ $0d ; "TO LEVEL SELECT"
-def MATCHMENUITEM_RETRY_MINIGAME     equ $0e ; "TRY AGAIN"
-def MATCHMENUITEM_RETRY_PRACTICE     equ $0f ; "TRY AGAIN"
-def MATCHMENUITEM_RETRY_MACHINE      equ $10 ; "TRY AGAIN"
-def MATCHMENUITEM_RETRY_PRACTICE_ALT equ $11 ; "TRY AGAIN"
-def MATCHMENUITEM_RETRY_GAME         equ $12 ; "TRY AGAIN"
-def MATCHMENUITEM_QUIT_GAME          equ $13 ; "QUIT MATCH"
-def MATCHMENUITEM_QUIT_MATCH         equ $14 ; "QUIT MINI-GAME"
-def MATCHMENUITEM_QUIT_PRACTICE      equ $15 ; "QUIT MINI-GAME"
-def MATCHMENUITEM_QUIT_MACHINE       equ $16 ; "QUIT MINI-GAME"
-def MATCHMENUITEM_QUIT_PRACTICE_ALT  equ $17 ; "QUIT MINI-GAME"
+	const_def
+	const MATCHMENUITEM_RULES              ; $00 "RULES"
+	const MATCHMENUITEM_CONTROLS           ; $01 "CONTROLS"
+	const MATCHMENUITEM_OPTIONS            ; $02 "OPTIONS"
+	const MATCHMENUITEM_SAVE               ; $03 "SAVE" (opens the save/quit menu)
+	const MATCHMENUITEM_CAMERA_MODE        ; $04 "CAMERA MODE"
+	const MATCHMENUITEM_MUSIC              ; $05 "MUSIC"
+	const MATCHMENUITEM_CAMERA_NORMAL      ; $06 "NORMAL"
+	const MATCHMENUITEM_CAMERA_PLAYER      ; $07 "PLAYER"
+	const MATCHMENUITEM_MUSIC_ON           ; $08 "ON"
+	const MATCHMENUITEM_MUSIC_OFF          ; $09 "OFF"
+	const MATCHMENUITEM_CANCEL             ; $0a "CANCEL"
+	const MATCHMENUITEM_SAVE_GAME          ; $0b "SAVE" (narrow; performs the save)
+	const MATCHMENUITEM_TO_MAIN_MENU       ; $0c "TO MAIN MENU"
+	const MATCHMENUITEM_TO_LEVEL_SELECT    ; $0d "TO LEVEL SELECT"
+	const MATCHMENUITEM_RETRY_MINIGAME     ; $0e "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_PRACTICE     ; $0f "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_MACHINE      ; $10 "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_PRACTICE_ALT ; $11 "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_GAME         ; $12 "TRY AGAIN"
+	const MATCHMENUITEM_QUIT_GAME          ; $13 "QUIT MATCH"
+	const MATCHMENUITEM_QUIT_MATCH         ; $14 "QUIT MINI-GAME"
+	const MATCHMENUITEM_QUIT_PRACTICE      ; $15 "QUIT MINI-GAME"
+	const MATCHMENUITEM_QUIT_MACHINE       ; $16 "QUIT MINI-GAME"
+	const MATCHMENUITEM_QUIT_PRACTICE_ALT  ; $17 "QUIT MINI-GAME"
+def NUM_MATCHMENUITEMS equ const_value
+
+; --- Match pause menus (wPauseMenuId, rows of MatchMenuDefs) ---
+; The save/quit menu comes from SaveQuitMenuIdByGameMode, indexed by wGameMode.
+	const_def
+	const MATCHMENU_PAUSE            ; $00 free camera: RULES / CONTROLS / OPTIONS / SAVE
+	const MATCHMENU_PAUSE_FIXED_VIEW ; $01 wCourtViewLocked: MUSIC replaces OPTIONS
+	const MATCHMENU_OPTIONS          ; $02
+	const MATCHMENU_CAMERA           ; $03
+	const MATCHMENU_MUSIC            ; $04
+	const MATCHMENU_QUIT_STORY       ; $05 story matches
+	const MATCHMENU_QUIT_EXHIBITION  ; $06
+	const MATCHMENU_QUIT_DRILL       ; $07
+	const MATCHMENU_QUIT_LESSON      ; $08 wDrillIsPracticeLesson
+	const MATCHMENU_QUIT_MACHINE     ; $09
+	const MATCHMENU_QUIT_WALL        ; $0a
+	const MATCHMENU_QUIT_MINIGAME    ; $0b
+	const MATCHMENU_QUIT_LINK        ; $0c
+	const MATCHMENU_QUIT_NO_MODE     ; $0d GAMEMODE_NONE
+	const MATCHMENU_MINIGAME_END     ; $0e RunMinigameEndMenu: no CANCEL
+def NUM_MATCHMENUS equ const_value
+
+; --- Story pause menus (wPauseMenuId, rows of StoryMenuDefs) ---
+	const_def
+	const STORYMENU_PAUSE         ; $00
+	const STORYMENU_STATUS        ; $01 CHAR. DATA / ITEMS
+	const STORYMENU_OPTIONS       ; $02
+	const STORYMENU_MESSAGE_SPEED ; $03
+	const STORYMENU_MUSIC         ; $04
+	const STORYMENU_SAVE_QUIT     ; $05
+def NUM_STORYMENUS equ const_value
 
 ; --- Story pause-menu item ids (StoryMenuDefs) ---
 ; Same shape for the story-mode pause menu: StoryMenuItemGfxPointers,
 ; StoryMenuItemRectPointers, caption at text id $0162 + id (bank $30, 354+id).
-def STORYMENUITEM_STATUS        equ $00 ; "STATUS"
-def STORYMENUITEM_CLEAR_STATUS  equ $01 ; "CLEAR STATUS" (game progress)
-def STORYMENUITEM_OPTIONS       equ $02 ; "OPTIONS"
-def STORYMENUITEM_SAVE          equ $03 ; "SAVE" (opens the save/quit menu)
-def STORYMENUITEM_MESSAGES      equ $04 ; "MESSAGES"
-def STORYMENUITEM_MUSIC         equ $05 ; "MUSIC"
-def STORYMENUITEM_MSG_SLOW      equ $06 ; "SLOW"
-def STORYMENUITEM_MSG_NORMAL    equ $07 ; "NORMAL"
-def STORYMENUITEM_MSG_FAST      equ $08 ; "FAST"
-def STORYMENUITEM_MUSIC_ON      equ $09 ; "ON"
-def STORYMENUITEM_MUSIC_OFF     equ $0a ; "OFF"
-def STORYMENUITEM_SAVE_GAME     equ $0b ; "SAVE" (narrow; performs the save)
-def STORYMENUITEM_TO_MAIN_MENU  equ $0c ; "TO MAIN MENU"
-def STORYMENUITEM_CANCEL        equ $0d ; "CANCEL" (continue game)
-def STORYMENUITEM_CHAR_DATA     equ $0e ; "CHAR. DATA"
-def STORYMENUITEM_ITEMS         equ $0f ; "ITEMS"
+	const_def
+	const STORYMENUITEM_STATUS       ; $00 "STATUS"
+	const STORYMENUITEM_CLEAR_STATUS ; $01 "CLEAR STATUS" (game progress)
+	const STORYMENUITEM_OPTIONS      ; $02 "OPTIONS"
+	const STORYMENUITEM_SAVE         ; $03 "SAVE" (opens the save/quit menu)
+	const STORYMENUITEM_MESSAGES     ; $04 "MESSAGES"
+	const STORYMENUITEM_MUSIC        ; $05 "MUSIC"
+	const STORYMENUITEM_MSG_SLOW     ; $06 "SLOW"
+	const STORYMENUITEM_MSG_NORMAL   ; $07 "NORMAL"
+	const STORYMENUITEM_MSG_FAST     ; $08 "FAST"
+	const STORYMENUITEM_MUSIC_ON     ; $09 "ON"
+	const STORYMENUITEM_MUSIC_OFF    ; $0a "OFF"
+	const STORYMENUITEM_SAVE_GAME    ; $0b "SAVE" (narrow; performs the save)
+	const STORYMENUITEM_TO_MAIN_MENU ; $0c "TO MAIN MENU"
+	const STORYMENUITEM_CANCEL       ; $0d "CANCEL" (continue game)
+	const STORYMENUITEM_CHAR_DATA    ; $0e "CHAR. DATA"
+	const STORYMENUITEM_ITEMS        ; $0f "ITEMS"
+def NUM_STORYMENUITEMS equ const_value
 
 ; --- Character-select mode (wCharSelectMode) ---
 ; Six modes, indexing four parallel 6-record tables (CharSelectSlotRing0-5
 ; and friends). RunExhibitionCharSelectScreen takes modes 0-1 in b from
 ; wMatchFormatDoubles; RunLinkCharSelectScreen stores the link modes from
 ; wMatchIsDoubles and hLinkState. The P2 modes start the cursor at seat 2.
-def CHARSELECTMODE_EXHIBITION_SINGLES equ $00
-def CHARSELECTMODE_EXHIBITION_DOUBLES equ $01
-def CHARSELECTMODE_LINK_SINGLES_P1    equ $02
-def CHARSELECTMODE_LINK_SINGLES_P2    equ $03
-def CHARSELECTMODE_LINK_DOUBLES_P1    equ $04
-def CHARSELECTMODE_LINK_DOUBLES_P2    equ $05
+	const_def
+	const CHARSELECTMODE_EXHIBITION_SINGLES ; $00
+	const CHARSELECTMODE_EXHIBITION_DOUBLES ; $01
+	const CHARSELECTMODE_LINK_SINGLES_P1    ; $02
+	const CHARSELECTMODE_LINK_SINGLES_P2    ; $03
+	const CHARSELECTMODE_LINK_DOUBLES_P1    ; $04
+	const CHARSELECTMODE_LINK_DOUBLES_P2    ; $05
+def NUM_CHARSELECTMODES equ const_value
+
+; --- Character-grid handedness (wCharGridHandedness) ---
+; START toggles it with `xor 1` (unchosen becomes left) for Mario-cast
+; characters; the label under the portrait reads it.
+	const_def
+	const HAND_RIGHT    ; $00
+	const HAND_LEFT     ; $01
+	const HAND_UNCHOSEN ; $02
+
+; --- Character-select result (wCharSelectExitCode), polled by the frame loop ---
+	const_def
+	const CHARSELECT_RUNNING   ; $00
+	const CHARSELECT_DONE      ; $01
+	const CHARSELECT_CANCELLED ; $02
+
+; --- Equipment screen item kind (wEquipItemKind) ---
+def EQUIPKIND_RACKETS equ $00
+def EQUIPKIND_SHOES   equ $01
 
 ; --- Menu selection sentinel (wMatchMenuSelection) ---
 ; A row in whatever menu is up (match pause, story pause, debug stats), not an

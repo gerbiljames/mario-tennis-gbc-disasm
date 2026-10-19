@@ -6,24 +6,23 @@ ApSkipAwardsCeremony_0f:
 	test_flag FLAG_DOUBLES
 	jr nz, .doubles
 	set_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES
-	ld a, [wStoryModeGenderOfMainCharacter]
+	ld a, [wStoryMainGender]
 	add $04
 	ld c, a
 	jr .scene
 .doubles:
 	set_flag FLAG_AWARDS_CEREMONY_SEEN_DOUBLES
-	ld a, [wStoryModeGenderOfMainCharacter]
+	ld a, [wStoryMainGender]
 	ld d, a
 	sla a
 	ld c, a
-	ld a, [wStoryModeGenderOfPartnerCharacter]
+	ld a, [wStoryPartnerGender]
 	xor d
 	or c
 	ld c, a
 .scene:
 	push bc
-	ld c, 1
-	call BeginFadeOut
+	script_fade_out 1
 	call WaitFadeEnd
 	pop bc
 	ld b, $01

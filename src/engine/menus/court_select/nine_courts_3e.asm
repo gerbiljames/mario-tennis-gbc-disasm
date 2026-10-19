@@ -1,7 +1,6 @@
 FadeOutAndResetMenuScreen:
 	push_wram_bank WRAM_SCREEN ; $64f8
-	ld c, 16 ; $6501
-	call BeginFadeOut ; $6503
+	script_fade_out 16 ; $6501
 	call WaitFadeEnd ; $6506
 	call DisableLCDSafely ; $6509
 	farcall LoadMenuFontGfx ; $650c
@@ -15,7 +14,7 @@ RunCourtSelect9Menu:
 	sound BGM_MENU ; $651f
 	call ClearFrameTasks ; $6521
 	ld hl, rIE ; $6524
-	res 2, [hl] ; $6527
+	res B_IE_TIMER, [hl] ; $6527
 	farcall InitMenuBgScroll ; $6529
 	ld b, $01 ; $652c
 	ld c, $01 ; $652e
@@ -49,7 +48,7 @@ RunCourtSelect9Menu:
 	ld a, [wMenuInputPressed] ; $6572
 	bit PADB_A, a ; $6575
 	jr nz, .getMenuCursorIndex ; $6577
-	bit 1, a ; $6579
+	bit PADB_B, a ; $6579
 	jr nz, .playSfx2 ; $657b
 	jr .loop ; $657d
 .getMenuCursorIndex:
@@ -65,7 +64,7 @@ RunCourtSelect9Menu:
 	sound SFX_MENU_DECIDE ; $658f
 	call ClearFrameTasks ; $6591
 	ld hl, rIE ; $6594
-	set 2, [hl] ; $6597
+	set B_IE_TIMER, [hl] ; $6597
 	ld b, $01 ; $6599
 	call CloseCourtSelect9Panel ; $659b
 	ld a, MENUSLIDE_FORWARD ; $659e
@@ -82,7 +81,7 @@ RunCourtSelect9Menu:
 	sound SFX_MENU_CANCEL ; $65b2
 	call ClearFrameTasks ; $65b4
 	ld hl, rIE ; $65b7
-	set 2, [hl] ; $65ba
+	set B_IE_TIMER, [hl] ; $65ba
 	ld b, $00 ; $65bc
 	call CloseCourtSelect9Panel ; $65be
 	ld a, MENUSLIDE_BACK ; $65c1
@@ -147,7 +146,7 @@ RunLinkCourtSelect9Menu:
 	ld a, [wMenuInputPressed] ; $6642
 	bit PADB_A, a ; $6645
 	jr nz, .getMenuCursorIndex ; $6647
-	bit 1, a ; $6649
+	bit PADB_B, a ; $6649
 	jr nz, .playSfx2 ; $664b
 	jr .loop ; $664d
 .getMenuCursorIndex:
@@ -192,8 +191,7 @@ RunLinkCourtSelect9Menu:
 	call CloseCourtSelect9Panel ; $6698
 	ld a, MENUSLIDE_BACK ; $669b
 	ld [wMenuSlideDirection], a ; $669d
-	ld c, 16 ; $66a0
-	call BeginFadeOut ; $66a2
+	script_fade_out 16 ; $66a0
 	call WaitFadeEnd ; $66a5
 	ld a, $ff ; $66a8
 	ret ; $66aa

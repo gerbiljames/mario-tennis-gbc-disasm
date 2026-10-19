@@ -119,8 +119,7 @@ TrainingGymExit02_0e:
 	script_copy_scene_rect 61, 10, 10, 10, 2, 2 ; $42e7
 	script_wait_frames 2 ; $42f6
 	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $42fd
-	ld c, 8 ; $4307
-	call BeginFadeOut ; $4309
+	script_fade_out 8 ; $4307
 	script_unlock_facing ACTOR_PLAYER ; $430c
 	script_wait_frames 10 ; $4313
 	ret ; $431a
@@ -139,8 +138,7 @@ TrainingGymExit03_0e:
 	script_copy_scene_rect 61, 10, 20, 10, 2, 2 ; $4372
 	script_wait_frames 2 ; $4381
 	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $4388
-	ld c, 8 ; $4392
-	call BeginFadeOut ; $4394
+	script_fade_out 8 ; $4392
 	script_unlock_facing ACTOR_PLAYER ; $4397
 	script_wait_frames 10 ; $439e
 	ret ; $43a5
@@ -156,6 +154,7 @@ TrainingGymNpc03_0e:
 	ret ; $43bc
 TrainingGymNpc03TextIds:
 	; $43bd, 20 bytes (text_ids)
+	table_width 2
 	dw Text_35_169 ; record 0
 	dw Text_35_169 ; record 1
 	dw Text_35_179 ; record 2
@@ -166,6 +165,7 @@ TrainingGymNpc03TextIds:
 	dw Text_35_204 ; record 7
 	dw Text_35_219 ; record 8
 	dw Text_35_219 ; record 9
+	assert_table_length NUM_STORYRANKS
 TrainingGymNpc04_0e:
 	ld a, [wMapSceneStage] ; $43d1
 	sra a ; $43d4
@@ -179,11 +179,13 @@ TrainingGymNpc04_0e:
 	ret ; $43e9
 TrainingGymNpc04TextIds:
 	; $43ea, 10 bytes (text_ids)
+	table_width 2
 	dw Text_35_170 ; record 0
 	dw Text_35_180 ; record 1
 	dw Text_35_191 ; record 2
 	dw Text_35_205 ; record 3
 	dw Text_35_220 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingGymNpc05_0e:
 	ld a, [wMapSceneStage] ; $43f4
 	add a ; $43f7
@@ -196,6 +198,7 @@ TrainingGymNpc05_0e:
 	ret ; $440a
 TrainingGymNpc05TextIds:
 	; $440b, 20 bytes (text_ids)
+	table_width 2
 	dw Text_35_171 ; record 0
 	dw Text_35_171 ; record 1
 	dw Text_35_181 ; record 2
@@ -206,6 +209,7 @@ TrainingGymNpc05TextIds:
 	dw Text_35_207 ; record 7
 	dw Text_35_221 ; record 8
 	dw Text_35_221 ; record 9
+	assert_table_length NUM_STORYRANKS
 TrainingGymNpc06_0e:
 	ld a, [wMapSceneStage] ; $441f
 	add a ; $4422
@@ -218,6 +222,7 @@ TrainingGymNpc06_0e:
 	ret ; $4435
 TrainingGymNpc06TextIds:
 	; $4436, 20 bytes (text_ids)
+	table_width 2
 	dw Text_35_172 ; record 0
 	dw Text_35_172 ; record 1
 	dw Text_35_182 ; record 2
@@ -228,6 +233,7 @@ TrainingGymNpc06TextIds:
 	dw Text_35_209 ; record 7
 	dw Text_35_222 ; record 8
 	dw Text_35_222 ; record 9
+	assert_table_length NUM_STORYRANKS
 TrainingGymNpc07_0e:
 	ld a, [wMapSceneStage] ; $444a
 	sra a ; $444d
@@ -243,11 +249,13 @@ TrainingGymNpc07_0e:
 	ret ; $4466
 TrainingGymNpc07TextIds:
 	; $4467, 10 bytes (text_ids)
+	table_width 2
 	dw Text_35_173 ; record 0
 	dw Text_35_183 ; record 1
 	dw Text_35_195 ; record 2
 	dw Text_35_210 ; record 3
 	dw Text_35_223 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingGymNpc07_0e.speak:
 	script_set_text Text_35_210 ; $4471
 	script_speak_restore ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1 ; $4477
@@ -273,11 +281,13 @@ TrainingGymNpc08_0e:
 	ret ; $44ad
 TrainingGymNpc08TextIds:
 	; $44ae, 10 bytes (text_ids)
+	table_width 2
 	dw Text_35_174 ; record 0
 	dw Text_35_184 ; record 1
 	dw Text_35_196 ; record 2
 	dw Text_35_213 ; record 3
 	dw Text_35_224 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingGymNpc09_0e:
 	ld a, [wMapSceneStage] ; $44b8
 	sra a ; $44bb
@@ -291,11 +301,13 @@ TrainingGymNpc09_0e:
 	ret ; $44d0
 TrainingGymNpc09TextIds:
 	; $44d1, 10 bytes (text_ids)
+	table_width 2
 	dw Text_35_175 ; record 0
 	dw Text_35_185 ; record 1
 	dw Text_35_197 ; record 2
 	dw Text_35_214 ; record 3
 	dw Text_35_225 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingGymNpc0A_0e:
 	ld a, [wMapSceneStage] ; $44db
 	add a ; $44de
@@ -308,6 +320,7 @@ TrainingGymNpc0A_0e:
 	ret ; $44f1
 TrainingGymNpc0ATextIds:
 	; $44f2, 20 bytes (text_ids)
+	table_width 2
 	dw Text_35_176 ; record 0
 	dw Text_35_176 ; record 1
 	dw Text_35_186 ; record 2
@@ -318,6 +331,7 @@ TrainingGymNpc0ATextIds:
 	dw Text_35_215 ; record 7
 	dw Text_35_226 ; record 8
 	dw Text_35_227 ; record 9
+	assert_table_length NUM_STORYRANKS
 TrainingGymNpc0B_0e:
 	ld a, [wMapSceneStage] ; $4506
 	add a ; $4509
@@ -330,6 +344,7 @@ TrainingGymNpc0B_0e:
 	ret ; $451c
 TrainingGymNpc0BTextIds:
 	; $451d, 20 bytes (text_ids)
+	table_width 2
 	dw Text_35_177 ; record 0
 	dw Text_35_177 ; record 1
 	dw Text_35_187 ; record 2
@@ -340,6 +355,7 @@ TrainingGymNpc0BTextIds:
 	dw Text_35_217 ; record 7
 	dw Text_35_228 ; record 8
 	dw Text_35_229 ; record 9
+	assert_table_length NUM_STORYRANKS
 TrainingGymNpc0C_0e:
 	ld a, [wMapSceneStage] ; $4531
 	sra a ; $4534
@@ -353,11 +369,13 @@ TrainingGymNpc0C_0e:
 	ret ; $4549
 TrainingGymNpc0CTextIds:
 	; $454a, 10 bytes (text_ids)
+	table_width 2
 	dw Text_35_178 ; record 0
 	dw Text_35_188 ; record 1
 	dw Text_35_201 ; record 2
 	dw Text_35_218 ; record 3
 	dw Text_35_230 ; record 4
+	assert_table_length NUM_STORYTIERS
 TrainingGymNpcScripts_0e:
 	; $4554, 89 bytes (map_scripts)
 	map_script ACTOR_TRAINING_GYM_WEIGHTLIFTER_A, FACEMASK_ANY, $0000, TrainingGymNpc03_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -414,21 +432,21 @@ TrainingGymInitScript_0e:
 	ld a, $03 ; $4621
 	ld e, l ; $4623
 	ld d, h ; $4624
-	ld hl, $0018 ; $4625
+	ld hl, ACTORF_ANIM_RATE ; $4625
 	add hl, de ; $4628
 	ld [hl], a ; $4629
 	script_get_actor_state ACTOR_TRAINING_GYM_JUMPING_JACKS_A ; $462a
 	ld a, $03 ; $462f
 	ld e, l ; $4631
 	ld d, h ; $4632
-	ld hl, $0018 ; $4633
+	ld hl, ACTORF_ANIM_RATE ; $4633
 	add hl, de ; $4636
 	ld [hl], a ; $4637
 	script_get_actor_state ACTOR_TRAINING_GYM_JUMPING_JACKS_B_2 ; $4638
 	ld a, $03 ; $463d
 	ld e, l ; $463f
 	ld d, h ; $4640
-	ld hl, $0018 ; $4641
+	ld hl, ACTORF_ANIM_RATE ; $4641
 	add hl, de ; $4644
 	ld [hl], a ; $4645
 	script_set_anim ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1, ANIM_EXERCISE ; $4646

@@ -80,11 +80,11 @@ LoadObjectSceneBTiles:
 	farcall LoadCompressedTileBlock ; $7d23
 	ld b, TILEBLOCK_ObjectSceneBGfx1 ; $7d26
 	ld c, ObjectSceneBGfx1_SIZE / 16 ; $7d28
-	ld de, vTiles0 + $10 * TILE_SIZE ; $7d2a
+	ld de, vTiles0 tile $10 ; $7d2a
 	farcall LoadCompressedTileBlock ; $7d2d
 	ld b, TILEBLOCK_ObjectSceneBGfx2 ; $7d30
 	ld c, ObjectSceneBGfx2_SIZE / 16 ; $7d32
-	ld de, vTiles0 + $20 * TILE_SIZE ; $7d34
+	ld de, vTiles0 tile $20 ; $7d34
 	farcall LoadCompressedTileBlock ; $7d37
 	ld hl, ObjectSceneBPalette ; $7d3a
 	ld_obj_pals de, 1, 3 ; $7d3d

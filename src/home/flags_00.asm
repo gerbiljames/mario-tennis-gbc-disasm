@@ -196,6 +196,7 @@ Unused_00_TickSecondaryTimerCountdown:
 	ret nz ; $2427
 	xor a ; $2428
 	ld hl, wSecondaryTimerMode ; $2429
+	ASSERT wSecondaryTimer == wSecondaryTimerMode + 1, "this code walks from wSecondaryTimerMode into wSecondaryTimer"
 	ld [hl], $ff ; $242c
 	inc hl ; $242e
 	ld [hl+], a ; $242f
@@ -480,6 +481,7 @@ SoftReset:
 	ld [rRAMG], a ; $25b5
 	call CopyOAMDMARoutineToHRAM ; $25b8
 	call ClearVRAMBank ; $25bb
+	ASSERT DEBUGSTEP_OFF == 0
 	xor a ; $25be
 	ldh [hDebugStepMode], a ; $25bf
 	call SwitchCPUSpeed ; $25c1
@@ -494,17 +496,17 @@ SoftReset:
 	call ClearMemory16 ; $25df
 	call InitAudioEngine ; $25e2
 	pop_wram_bank ; $25e5
-	ld a, $07 ; $25ea
+	ld a, WX_OFS ; $25ea
 	ldh [rWX], a ; $25ec
-	ld a, $90 ; $25ee
+	ld a, SCREEN_HEIGHT_PX ; $25ee
 	ldh [rWY], a ; $25f0
 	ld hl, rTMA ; $25f2
 	ld a, $77 ; $25f5
 	ld [hl+], a ; $25f7
 	xor a ; $25f8
 	ld [hl], a ; $25f9
-	set 2, [hl] ; $25fa
-	ld a, $08 ; $25fc
+	set B_TAC_START, [hl] ; $25fa
+	ld a, STAT_MODE_0 ; $25fc
 	ldh [rSTAT], a ; $25fe
 	ld a, $50 ; $2600
 	ldh [rLYC], a ; $2602
@@ -516,9 +518,9 @@ SoftReset:
 	ldh [rSC], a ; $260d
 	xor a ; $260f
 	ldh [rIF], a ; $2610
-	ld a, $0d ; $2612
+	ld a, IE_SERIAL | IE_TIMER | IE_VBLANK ; $2612
 	ldh [rIE], a ; $2614
-	ld a, $e7 ; $2616
+	ld a, LCDC_ON | LCDC_WIN_9C00 | LCDC_WIN_ON | LCDC_OBJ_16 | LCDC_OBJ_ON | LCDC_PRIO_ON ; $2616
 	ldh [rLCDC], a ; $2618
 	ei ; $261a
 	xor a ; $261b
@@ -583,6 +585,7 @@ AdvanceFrame:
 	ld de, wDebugPeakLYText ; $267e
 	call FormatHexWord ; $2681
 	ldh a, [hDebugStepMode] ; $2684
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $2686
 	jp z, .waitFrame ; $2687
 	ldh a, [hLinkExchangeActive] ; $268a
@@ -605,9 +608,9 @@ AdvanceFrame:
 	jr z, .checkStepExit ; $26a6
 	ldh a, [hDebugStepMode] ; $26a8
 	inc a ; $26aa
-	cp $04 ; $26ab
+	cp NUM_DEBUGSTEP_MODES ; $26ab
 	jr c, .storeStepMode ; $26ad
-	ld a, $01 ; $26af
+	ld a, DEBUGSTEP_CONSOLE_OFF ; $26af
 .storeStepMode:
 	ldh [hDebugStepMode], a ; $26b1
 	jr .stepWaitFrame ; $26b3
@@ -615,14 +618,14 @@ AdvanceFrame:
 	ldh a, [hPlayerInputFlags] ; $26b5
 	bit PADB_START, a ; $26b7
 	jr z, .stepWaitFrame ; $26b9
-	bit 2, a ; $26bb
+	bit PADB_SELECT, a ; $26bb
 	jr nz, .stepWaitFrame ; $26bd
 	xor a ; $26bf
 	ldh [hDebugStepPaused], a ; $26c0
 	jr .waitFrame ; $26c2
 .stepWaitFrame:
 	ldh a, [hInputPressed] ; $26c4
-	and $f3 ; $26c6
+	and ~(PADF_SELECT | PADF_START) ; $26c6
 	jr nz, .waitFrame ; $26c8
 	ldh a, [hLinkExchangeActive] ; $26ca
 	or a ; $26cc

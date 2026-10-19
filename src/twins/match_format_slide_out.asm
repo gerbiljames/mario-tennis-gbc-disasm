@@ -1,7 +1,4 @@
-; One body under 2 names (banks $3b, $3e), assembled through
-; `twin_named match_format_slide_out, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by MatchFormatSlideOut, CloseMatchRulesPanel (banks $3b, $3e).
 
 {TWIN_LABEL}:
 	ld a, b

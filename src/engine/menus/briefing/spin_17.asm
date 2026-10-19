@@ -290,7 +290,7 @@ DrillBriefing_SpinServe:
 	ld hl, CycleDiagramTargetPalette ; $59f5
 	call RegisterFrameTask ; $59f8
 	ld hl, Text_36_696 ; $59fb
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $59fe
+	ld a, [wStoryMainLeftHanded] ; $59fe
 	and a ; $5a01
 	jr z, .drawBriefingCaption ; $5a02
 	ld hl, Text_36_697 ; $5a04
@@ -483,7 +483,7 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ba5
 	ld [wBriefingSpinMarkerY], a ; $5ba6
 	ld b, $00 ; $5ba9
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5bab
+	ld a, [wStoryMainLeftHanded] ; $5bab
 	and a ; $5bae
 	jr z, .zero ; $5baf
 	ld b, $02 ; $5bb1

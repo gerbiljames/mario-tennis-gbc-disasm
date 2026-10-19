@@ -35,7 +35,7 @@ ShowExpAwardScreen:
 	ld [wCameraX + 1], a ; $5459
 	ld [wCameraY], a ; $545c
 	ld [wCameraY + 1], a ; $545f
-	ld a, $90 ; $5462
+	ld a, SCREEN_HEIGHT_PX ; $5462
 	ldh [rWY], a ; $5464
 	call ClearSpriteQueue ; $5466
 	farcall InitActorEngine ; $5469
@@ -54,8 +54,7 @@ ShowExpAwardScreen:
 	call WaitFadeEnd ; $5490
 	wait_frames 20 ; $5493
 	call RunExpAwardSequence ; $5497
-	ld c, 16 ; $549a
-	call BeginFadeOut ; $549c
+	script_fade_out 16 ; $549a
 	call WaitFadeEnd ; $549f
 	ld hl, DrawExpScreenCharSprites ; $54a2
 	call UnregisterFrameTask ; $54a5
@@ -157,7 +156,7 @@ LoadExpAwardScreenGraphics:
 	ld de, wDecompBuffer ; $55a8
 	call DecompressData ; $55ab
 	ld hl, wDecompBuffer ; $55ae
-	ld de, vTiles0 + $6c * TILE_SIZE + VRAM_BANK1 ; $55b1
+	ld de, vTiles0 tile $6c + VRAM_BANK1 ; $55b1
 	ld c, ExpDigitSpriteGfx_1e_SIZE / 16 ; $55b4
 	call QueueVRAMCopy ; $55b6
 	ret ; $55b9
@@ -232,7 +231,7 @@ DrawExpSinglesPlayerPanel:
 	jr nz, .ne02 ; $564d
 	ld bc, wPlayer2MainName ; $564f
 	ld a, [wLinkMatchCharLevel] ; $5652
-	ld [wPlayer2MainExpTier], a ; $5655
+	ld [wPlayer2MainLevel], a ; $5655
 .ne02:
 	push bc ; $5658
 	ld hl, CHARREC_NAME ; $5659
@@ -296,9 +295,10 @@ DrawExpDoublesPlayerPanel:
 	ld_tile_run bc, $09, $01 ; $56f6
 	call FillTilemapRun ; $56f9
 	ld a, [wGameMode] ; $56fc
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $56ff
 	jr nz, .nonZero ; $5700
-	ld bc, wStoryModeNameOfMainCharacter ; $5702
+	ld bc, wStoryMainName ; $5702
 	jr .copyStringToTextBuffer ; $5705
 .nonZero:
 	ld bc, wPlayer1MainName ; $5707
@@ -307,7 +307,7 @@ DrawExpDoublesPlayerPanel:
 	jr nz, .copyStringToTextBuffer ; $570f
 	ld bc, wPlayer2MainName ; $5711
 	ld a, [wLinkMatchCharLevel] ; $5714
-	ld [wPlayer2MainExpTier], a ; $5717
+	ld [wPlayer2MainLevel], a ; $5717
 .copyStringToTextBuffer:
 	push bc ; $571a
 	ld hl, CHARREC_NAME ; $571b
@@ -372,9 +372,10 @@ DrawExpDoublesPartnerPanel:
 	ld_tile_run bc, $09, $01 ; $57bb
 	call FillTilemapRun ; $57be
 	ld a, [wGameMode] ; $57c1
+	ASSERT GAMEMODE_NONE == 0
 	or a ; $57c4
 	jr nz, .nonZero ; $57c5
-	ld bc, wStoryModeNameOfPartnerCharacter ; $57c7
+	ld bc, wStoryPartnerName ; $57c7
 	jr .copyStringToTextBuffer ; $57ca
 .nonZero:
 	ld bc, wPlayer1PartnerName ; $57cc
@@ -502,6 +503,7 @@ FillTilemapRun:
 DrawExpScreenCharSprites:
 	ld b, $04 ; $5914
 	ld a, [wLinkMatchRole] ; $5916
+	ASSERT LINKSTATE_IDLE == 0
 	or a ; $5919
 	jr z, .zero ; $591a
 	srl a ; $591c

@@ -5,6 +5,7 @@ Unused_18_InitPlayerRecordForCharacter:
 	bit PADB_SELECT, a ; $463f
 	jr z, .fromTemplate ; $4641
 	ldh a, [hDebugStepMode] ; $4643
+	ASSERT DEBUGSTEP_OFF == 0
 	or a ; $4645
 	jr z, .fromTemplate ; $4646
 	ld a, b ; $4648
@@ -24,7 +25,7 @@ Unused_18_InitPlayerRecordForCharacter:
 	ld d, h ; $465b
 	ld e, l ; $465c
 	push af ; $465d
-	ld hl, wStoryModeNameOfMainCharacter ; $465e
+	ld hl, wStoryMainName ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
 	or a ; $4664
 	jr z, .partnerSlot ; $4665
@@ -103,7 +104,7 @@ Unused_18_InitConfirmScreen:
 	ld_bg_pals de, 0, 8 ; $5313
 	call LoadPaletteShadow ; $5316
 	ld hl, ConfirmScreenGfx2 ; $5319
-	ld de, wTextTileBuffer + 64 * TILE_SIZE ; $531c
+	ld de, wTextTileBuffer tile 64 ; $531c
 	call DecompressData ; $531f
 	ld hl, ConfirmScreenGfx1 ; $5322
 	ld de, wTextTileBuffer ; $5325
@@ -114,13 +115,13 @@ Unused_18_InitConfirmScreen:
 	ld de, wDecompBuffer ; $5334
 	call DecompressData ; $5337
 	ld hl, wDecompBuffer ; $533a
-	ld de, vTiles0 + $30 * TILE_SIZE ; $533d
+	ld de, vTiles0 tile $30 ; $533d
 	ld c, ConfirmScreenGfx3_SIZE / 16 ; $5340
 	call QueueVRAMCopy ; $5342
 	ld hl, ConfirmScreenPalette1 ; $5345
 	ld_obj_pals de, 1, 3 ; $5348
 	call LoadPaletteShadow ; $534b
-	ld hl, vTiles0 + $50 * TILE_SIZE ; $534e
+	ld hl, vTiles0 tile $50 ; $534e
 	ld de, $0e01 ; $5351
 	call LoadMenuHandCursorGfx ; $5354
 	call Unused_18_LoadConfirmScreenSpriteGfx ; $5357
@@ -130,13 +131,13 @@ Unused_18_InitConfirmScreen:
 	call Unused_18_StubNop_18_1 ; $5361
 	ret ; $5364
 Unused_18_DrawConfirmScreenBox:
-	ld hl, wTextTileBuffer + 26 * TILE_SIZE ; $5365
-	ld de, wTextTileBuffer + 90 * TILE_SIZE ; $5368
+	ld hl, wTextTileBuffer tile 26 ; $5365
+	ld de, wTextTileBuffer tile 90 ; $5368
 	ld bc, $0e05 ; $536b
 	call Unused_18_DrawBox ; $536e
 	ret ; $5371
 Unused_18_LoadScorePanelValue:
-	ld a, [wStoryMainCharExpTier] ; $5372
+	ld a, [wStoryMainLevel] ; $5372
 	ld [wScorePanelExpTier], a ; $5375
 	ret ; $5378
 Unused_18_StubNop_18_1:
@@ -144,19 +145,19 @@ Unused_18_StubNop_18_1:
 Unused_18_SetupScoreboardDisplay:
 	ld a, [wScorePanelValues] ; $537a
 	call Unused_18_GetTextSlotPointer ; $537d
-	ld de, wTextTileBuffer + 4 * TILE_SIZE + 11 ; $5380
+	ld de, wTextTileBuffer tile 4 + 11 ; $5380
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $5383
 	ld a, [wScorePanelValues + 1] ; $5386
 	call Unused_18_GetTextSlotPointer ; $5389
-	ld de, wTextTileBuffer + 8 * TILE_SIZE + 11 ; $538c
+	ld de, wTextTileBuffer tile 8 + 11 ; $538c
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $538f
 	ld a, [wScorePanelValues + 2] ; $5392
 	call Unused_18_GetTextSlotPointer ; $5395
-	ld de, wTextTileBuffer + 12 * TILE_SIZE + 11 ; $5398
+	ld de, wTextTileBuffer tile 12 + 11 ; $5398
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $539b
 	ld a, [wTargetZoneX1] ; $539e
 	call Unused_18_GetTextSlotPointer ; $53a1
-	ld de, wTextTileBuffer + 16 * TILE_SIZE + 11 ; $53a4
+	ld de, wTextTileBuffer tile 16 + 11 ; $53a4
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $53a7
 	ld a, $0a ; $53aa
 	ld hl, Unused_18_DrawScoreNumbersTask ; $53ac

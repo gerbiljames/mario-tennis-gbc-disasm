@@ -18,7 +18,7 @@ PlayMinigameCountdown:
 .loop:
 	push af ; $48e5
 	ld b, $01 ; $48e6
-	ld de, vTiles0 + $20 * TILE_SIZE ; $48e8
+	ld de, vTiles0 tile $20 ; $48e8
 	farcall LoadScoreDigitGfx ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee
 	and a ; $48f1
@@ -255,6 +255,7 @@ WallPractice1Hook_BallHit:
 	ret ; $4aba
 UpdateMinigameHudAndBallTrail:
 	ld a, [wPointWinLoseFlag] ; $4abb
+	ASSERT WINLOSE_NONE == 0
 	and a ; $4abe
 	jr nz, .trail ; $4abf
 	ld_xy de, $84, $84 ; $4ac1
@@ -336,6 +337,7 @@ ReflectBallVelocity:
 	xor $02 ; $4b80
 	ld [hl], a ; $4b82
 	ld hl, wBallDepthFrac ; $4b83
+	ASSERT wBallDepth == wBallDepthFrac + 2, "this code walks from wBallDepthFrac into wBallDepth"
 	ld a, [hl] ; $4b86
 	cpl ; $4b87
 	ld [hl+], a ; $4b88
@@ -349,6 +351,7 @@ ReflectBallVelocity:
 	cpl ; $4b90
 	ld [hl+], a ; $4b91
 	ld hl, wBallVelocityDepthFrac ; $4b92
+	ASSERT wBallVelocityDepth == wBallVelocityDepthFrac + 1, "this code walks from wBallVelocityDepthFrac into wBallVelocityDepth"
 	ld a, [hl] ; $4b95
 	cpl ; $4b96
 	ld [hl+], a ; $4b97
@@ -362,6 +365,7 @@ ReflectBallVelocity:
 	ld b, $e6 ; $4ba1
 	farcall MulMem24ByFrac ; $4ba3
 	ld hl, wBallVelocityDepthFrac ; $4ba6
+	ASSERT wBallVelocityDepth == wBallVelocityDepthFrac + 1, "this code walks from wBallVelocityDepthFrac into wBallVelocityDepth"
 	ld [hl+], a ; $4ba9
 	ld a, e ; $4baa
 	ld [hl+], a ; $4bab

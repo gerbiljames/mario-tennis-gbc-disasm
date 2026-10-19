@@ -196,11 +196,7 @@ VarsityCourtBNpc03_13:
 	ret ; $707c
 .stage3:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $707d
-	script_get_actor_state ACTOR_PARTNER ; $7082
-	ld c, l ; $7087
-	ld b, h ; $7088
-	ld de, wActors ; $7089
-	farcall AttachActorStepMover ; $708c
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $7082
 	ret ; $708f
 .speak:
 	farcall AdvanceDialogueTextCursor ; $7090
@@ -216,11 +212,7 @@ VarsityCourtBNpc03_13:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $70ac
 	call ReturnVarsityCourtBNpcsToSpawn_13 ; $70b1
 	script_wait_frames 60 ; $70b4
-	script_get_actor_state ACTOR_PARTNER ; $70bb
-	ld c, l ; $70c0
-	ld b, h ; $70c1
-	ld de, wActors ; $70c2
-	farcall AttachActorStepMover ; $70c5
+	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $70bb
 	ret ; $70c8
 ReturnVarsityCourtANpc04ToSpawn_13:
 	script_set_actor_script ACTOR_VARSITY_COURT_A_BOB, ActorScript_13_17 ; $70c9
@@ -237,9 +229,7 @@ Unused_13_RunSinglesTravelingTeamVictoryIfWon:
 	ret ; $70fa
 SinglesTravelingTeamVictoryCutscene:
 	wram_bank WRAM_SCENE ; $70fb
-	ldh a, [hRomBank] ; $7101
-	ld hl, SinglesTravelingTeamActors_13 ; $7103
-	farcall ScriptRespawnLocationActors ; $7106
+	script_respawn_actors SinglesTravelingTeamActors_13 ; $7101
 	script_null_script ACTOR_PLAYER_SHADOW ; $7109
 	script_player_speed 2.0 ; $710e
 	call ApplyPartnerCharacterVariant_13 ; $7114
@@ -340,11 +330,10 @@ SinglesTravelingTeamVictoryCutscene:
 	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ACTOR_PLAYER ; $7360
 	script_wait_frames 10 ; $7368
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $736f
-	ld c, 2 ; $7376
-	call BeginFadeOut ; $7378
+	script_fade_out 2 ; $7376
 	call WaitFadeEnd ; $737b
 	ld b, $00 ; $737e
-	ld a, [wStoryModeGenderOfMainCharacter] ; $7380
+	ld a, [wStoryMainGender] ; $7380
 	add $04 ; $7383
 	ld c, a ; $7385
 	farcall RunStorySceneByMode ; $7386
@@ -371,9 +360,7 @@ Unused_13_RunDoublesTravelingTeamVictoryIfWon:
 	ret ; $744e
 DoublesTravelingTeamVictoryCutscene:
 	script_set_text Text_31_22 ; $744f
-	ldh a, [hRomBank] ; $7455
-	ld hl, DoublesTravelingTeamActors_13 ; $7457
-	farcall ScriptRespawnLocationActors ; $745a
+	script_respawn_actors DoublesTravelingTeamActors_13 ; $7455
 	farcall BeginCutsceneScriptMode ; $745d
 	call ApplyPartnerCharacterVariant_13 ; $7460
 	script_null_script ACTOR_PARTNER ; $7463
@@ -432,7 +419,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $75c0
 	script_wait_move ACTOR_PLAYER ; $75ca
 	script_get_actor_state ACTOR_PARTNER ; $75cf
-	ld de, $0018 ; $75d4
+	ld de, ACTORF_ANIM_RATE ; $75d4
 	add hl, de ; $75d7
 	ld [hl], $04 ; $75d8
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $75da
@@ -451,7 +438,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $762b
 	script_wait_idle ACTOR_PARTNER ; $7632
 	script_get_actor_state ACTOR_PARTNER ; $7637
-	ld de, $0018 ; $763c
+	ld de, ACTORF_ANIM_RATE ; $763c
 	add hl, de ; $763f
 	ld [hl], $01 ; $7640
 	script_face ACTOR_PARTNER, FACE_LEFT ; $7642
@@ -483,7 +470,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, 1.0 ; $76e5
 	script_wait_move ACTOR_PLAYER ; $76ef
 	script_get_actor_state ACTOR_PARTNER ; $76f4
-	ld de, $0018 ; $76f9
+	ld de, ACTORF_ANIM_RATE ; $76f9
 	add hl, de ; $76fc
 	ld [hl], $03 ; $76fd
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $76ff
@@ -495,7 +482,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $7725
 	script_wait_idle ACTOR_PARTNER ; $772c
 	script_get_actor_state ACTOR_PARTNER ; $7731
-	ld de, $0018 ; $7736
+	ld de, ACTORF_ANIM_RATE ; $7736
 	add hl, de ; $7739
 	ld [hl], $01 ; $773a
 	script_face ACTOR_PARTNER, FACE_LEFT ; $773c
@@ -554,18 +541,17 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_frames 10 ; $7891
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7898
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $789f
-	ld c, 2 ; $78a6
-	call BeginFadeOut ; $78a8
+	script_fade_out 2 ; $78a6
 	call WaitFadeEnd ; $78ab
 	call PlayDoublesTravelingTeamScreenSequence_13 ; $78ae
 	jp ApReturnToCourtyard_13
 PlayDoublesTravelingTeamScreenSequence_13:
 	ld b, $00 ; $78c4
-	ld a, [wStoryModeGenderOfMainCharacter] ; $78c6
+	ld a, [wStoryMainGender] ; $78c6
 	ld d, a ; $78c9
 	sla a ; $78ca
 	ld c, a ; $78cc
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $78cd
+	ld a, [wStoryPartnerGender] ; $78cd
 	xor d ; $78d0
 	or c ; $78d1
 	ld c, a ; $78d2

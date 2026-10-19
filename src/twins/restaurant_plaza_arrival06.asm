@@ -1,7 +1,4 @@
-; One body under 2 names (banks $13, $14), assembled through
-; `twin_named restaurant_plaza_arrival06, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by Court2EntryWalkIn, RestaurantPlazaArrival06_13 (banks $13, $14).
 
 {TWIN_LABEL}:
 	ld a, [wStoryModeEntryPoint]

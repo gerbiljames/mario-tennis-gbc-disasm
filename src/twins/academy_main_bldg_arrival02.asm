@@ -1,7 +1,5 @@
-; One body under 3 names (banks $10, $11, $12), assembled through
-; `twin_named academy_main_bldg_arrival02, <Label>` -- {TWIN_LABEL} is the label the bank gives it.
-; No per-instruction addresses: the `twin_named` line carries the member's.
-; A fix here lands in every copy.
+; Shared by AcademyMainBldgArrival02_10, AcademyArrivalArrival01_11,
+; DormEntranceArrival02_12 (banks $10, $11, $12).
 
 {TWIN_LABEL}:
 	ld a, [wStoryModeEntryPoint]

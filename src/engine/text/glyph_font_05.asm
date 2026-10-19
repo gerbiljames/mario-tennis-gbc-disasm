@@ -7,6 +7,7 @@ DrawInlineGlyph:
 	push af ; $7687
 	push hl ; $7688
 	ld hl, wTextRowWidth ; $7689
+	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld b, [hl] ; $768c
 	inc hl ; $768d
 	ld c, [hl] ; $768e
@@ -58,6 +59,10 @@ Unused_05_ResetGlyphPen_1:
 	push af ; $76d7
 	xor a ; $76d8
 	ld hl, wGlyphPenX ; $76d9
+	ASSERT wTextRowWidth == wGlyphPenX + 2, "this code walks from wGlyphPenX into wTextRowWidth"
+	ASSERT wTextRowColumn == wGlyphPenX + 3, "this code walks from wGlyphPenX into wTextRowColumn"
+	ASSERT wGlyphRowStartCol == wGlyphPenX + 4, "this code walks from wGlyphPenX into wGlyphRowStartCol"
+	ASSERT wGlyphFlushedCol == wGlyphPenX + 5, "this code walks from wGlyphPenX into wGlyphFlushedCol"
 	ld [hl+], a ; $76dc
 	ld [hl+], a ; $76dd
 	ld [hl+], a ; $76de
@@ -81,6 +86,10 @@ Unused_05_ResetGlyphPen_2:
 	push af ; $76fb
 	xor a ; $76fc
 	ld hl, wGlyphPenX ; $76fd
+	ASSERT wTextRowWidth == wGlyphPenX + 2, "this code walks from wGlyphPenX into wTextRowWidth"
+	ASSERT wTextRowColumn == wGlyphPenX + 3, "this code walks from wGlyphPenX into wTextRowColumn"
+	ASSERT wGlyphRowStartCol == wGlyphPenX + 4, "this code walks from wGlyphPenX into wGlyphRowStartCol"
+	ASSERT wGlyphFlushedCol == wGlyphPenX + 5, "this code walks from wGlyphPenX into wGlyphFlushedCol"
 	ld [hl+], a ; $7700
 	ld [hl+], a ; $7701
 	ld [hl+], a ; $7702
@@ -104,6 +113,10 @@ InitGlyphStreamAt:
 	push_wram_bank WRAM_TEXT ; $771f
 	xor a ; $7728
 	ld hl, wGlyphPenX ; $7729
+	ASSERT wTextRowWidth == wGlyphPenX + 2, "this code walks from wGlyphPenX into wTextRowWidth"
+	ASSERT wGlyphUploadCount == wGlyphPenX + 6, "this code walks from wGlyphPenX into wGlyphUploadCount"
+	ASSERT wGlyphUploadFirstTile == wGlyphPenX + 7, "this code walks from wGlyphPenX into wGlyphUploadFirstTile"
+	ASSERT wGlyphUploadVramBank == wGlyphPenX + 8, "this code walks from wGlyphPenX into wGlyphUploadVramBank"
 	ld [hl+], a ; $772c
 	ld [hl+], a ; $772d
 	ld [hl+], a ; $772e
@@ -131,6 +144,7 @@ InitGlyphStreamAt:
 	ld b, e ; $774f
 	ld e, $00 ; $7750
 	ld hl, wGlyphRowStartCol ; $7752
+	ASSERT wGlyphFlushedCol == wGlyphRowStartCol + 1, "this code walks from wGlyphRowStartCol into wGlyphFlushedCol"
 	ld [hl], d ; $7755
 	inc hl ; $7756
 	ld [hl], d ; $7757
@@ -141,6 +155,7 @@ InitGlyphStreamAt:
 	inc hl ; $7760
 	ld [hl], d ; $7761
 	ld hl, wTextRowWidth ; $7762
+	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld [hl], b ; $7765
 	inc hl ; $7766
 	ld a, [hl] ; $7767
@@ -162,6 +177,9 @@ SaveGlyphPenColumns:
 	cp b ; $777e
 	jr z, .restore ; $777f
 	ld hl, wGlyphRowStartCol ; $7781
+	ASSERT wGlyphFlushedCol == wGlyphRowStartCol + 1, "this code walks from wGlyphRowStartCol into wGlyphFlushedCol"
+	ASSERT wGlyphUploadCount == wGlyphRowStartCol + 2, "this code walks from wGlyphRowStartCol into wGlyphUploadCount"
+	ASSERT wGlyphUploadFirstTile == wGlyphRowStartCol + 3, "this code walks from wGlyphRowStartCol into wGlyphUploadFirstTile"
 	ld a, [hl+] ; $7784
 	ld b, [hl] ; $7785
 	ld c, a ; $7786
@@ -180,7 +198,7 @@ SaveGlyphPenColumns:
 UploadGlyphBuffer:
 	push af ; $7792
 	ldh a, [rLCDC] ; $7793
-	bit 7, a ; $7795
+	bit B_LCDC_ENABLE, a ; $7795
 	jr z, .lcdOff ; $7797
 	call UploadGlyphBufferQueued ; $7799
 	jr .done ; $779c
@@ -204,7 +222,7 @@ FlushGlyphRow:
 	jr nz, .step2 ; $77b8
 .uploadGlyphBufferQueued:
 	ldh a, [rLCDC] ; $77ba
-	bit 7, a ; $77bc
+	bit B_LCDC_ENABLE, a ; $77bc
 	jr z, .uploadGlyphBufferDMA ; $77be
 	call UploadGlyphBufferQueued ; $77c0
 	jr .step2 ; $77c3
@@ -212,6 +230,7 @@ FlushGlyphRow:
 	call UploadGlyphBufferDMA ; $77c5
 .step2:
 	ld hl, wTextRowWidth ; $77c8
+	ASSERT wTextRowColumn == wTextRowWidth + 1, "this code walks from wTextRowWidth into wTextRowColumn"
 	ld b, [hl] ; $77cb
 	inc hl ; $77cc
 	ld c, [hl] ; $77cd

@@ -141,7 +141,7 @@ MedallionMatchHook_BallHit:
 SpawnMedallionMatchTargets:
 	call ClearMinigameActors ; $5d65
 	ld hl, $0040 ; $5d68
-	ld de, rJOYP ; $5d6b
+	ld de, $ff00 ; $5d6b
 	ld bc, wMinigameActors ; $5d6e
 	ld a, $00 ; $5d71
 	call InitMedallionMatchTargetActor ; $5d73
@@ -156,7 +156,7 @@ SpawnMedallionMatchTargets:
 	ld a, $02 ; $5d8d
 	call InitMedallionMatchTargetActor ; $5d8f
 	ld hl, $ffc0 ; $5d92
-	ld de, rJOYP ; $5d95
+	ld de, $ff00 ; $5d95
 	ld bc, wMinigameActors + 48 ; $5d98
 	ld a, $03 ; $5d9b
 	call InitMedallionMatchTargetActor ; $5d9d
@@ -165,7 +165,7 @@ SpawnMedallionMatchTargets:
 	ld bc, wMinigameActors + 64 ; $5da6
 	ld a, $04 ; $5da9
 	call InitMedallionMatchTargetActor ; $5dab
-	ld hl, rLCDC ; $5dae
+	ld hl, $ff40 ; $5dae
 	ld de, $fd80 ; $5db1
 	ld bc, wMinigameActors + 80 ; $5db4
 	ld a, $05 ; $5db7

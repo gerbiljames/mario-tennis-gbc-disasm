@@ -70,7 +70,7 @@ End7TrainingCtrEntry01Scene:
 	ld a, $3c ; $627f
 	ld [wMapHeightTiles], a ; $6281
 	call DisableLCDSafely ; $6284
-	ld a, $00 ; $6287
+	ld a, SCENECOPY_FROM_PLAYER ; $6287
 	farcall CopyScrolledSceneTilemapToVram ; $6289
 	call EnableLCD ; $628c
 	call ComputeMachineCourtProgress_27 ; $628f
@@ -287,9 +287,7 @@ End4JrCourtTileTriggers_27:
 End4JrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $67f8
 	jr z, .checkStoryModeEntryPoint ; $67fb
-	ldh a, [hRomBank] ; $67fd
-	ld hl, End4JrCourtActorsAlt_27 ; $67ff
-	farcall ScriptRespawnLocationActors ; $6802
+	script_respawn_actors End4JrCourtActorsAlt_27 ; $67fd
 	farcall BeginCutsceneScriptMode ; $6805
 .checkStoryModeEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $6808
@@ -314,8 +312,8 @@ ActorScript_27_15:
 	as_halt
 ActorScript_27_16:
 	; $682f, 55 bytes (actor_script)
-	as_flag $01, $05, $02
-	as_set_field $06, $0008
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
+	as_set_field ACTORF_SPEED, $0008
 .L8:
 	as_set_target 45.0, 7.0
 	as_wait_move2
