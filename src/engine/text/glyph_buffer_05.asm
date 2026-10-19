@@ -12,11 +12,11 @@ PlotGlyphRow:
 	or a ; $7387
 	ld a, b ; $7388
 	jr z, .restore ; $7389
-.loop:
+.shiftRightLoop:
 	srl a ; $738b
 	srl e ; $738d
 	dec c ; $738f
-	jr nz, .loop ; $7390
+	jr nz, .shiftRightLoop ; $7390
 .restore:
 	pop bc ; $7392
 	ld h, a ; $7393
@@ -26,11 +26,11 @@ PlotGlyphRow:
 	or a ; $7398
 	ld a, b ; $7399
 	jr z, .noShift ; $739a
-.loopB:
+.shiftLeftLoop:
 	sla a ; $739c
 	sla d ; $739e
 	dec c ; $73a0
-	jr nz, .loopB ; $73a1
+	jr nz, .shiftLeftLoop ; $73a1
 .noShift:
 	ld c, a ; $73a3
 	ld b, h ; $73a4

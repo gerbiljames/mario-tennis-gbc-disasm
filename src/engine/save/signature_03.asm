@@ -2,14 +2,14 @@ SaveSignature:
 	INCLUDE "data/engine/save/SaveSignature.asm" ; $47e9, 16 bytes
 WipeAllSaveRam:
 	ld e, $00 ; $47f9
-.loop:
+.bankLoop:
 	ld a, e ; $47fb
 	ldh [hSramBank], a ; $47fc
 	ld [rRAMB], a ; $47fe
 	ld bc, $0200 ; $4801
 	ld hl, SRAM_BASE ; $4804
 	xor a ; $4807
-.loopB:
+.clearLoop:
 	ld [hl+], a ; $4808
 	ld [hl+], a ; $4809
 	ld [hl+], a ; $480a
@@ -27,13 +27,13 @@ WipeAllSaveRam:
 	ld [hl+], a ; $4816
 	ld [hl+], a ; $4817
 	dec c ; $4818
-	jr nz, .loopB ; $4819
+	jr nz, .clearLoop ; $4819
 	dec b ; $481b
-	jr nz, .loopB ; $481c
+	jr nz, .clearLoop ; $481c
 	inc e ; $481e
 	ld a, e ; $481f
 	cp $04 ; $4820
-	jr c, .loop ; $4822
+	jr c, .bankLoop ; $4822
 	ret ; $4824
 Unused_03_ClearSaveFlagsArea:
 	xor a ; $4825

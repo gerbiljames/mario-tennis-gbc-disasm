@@ -191,7 +191,7 @@ SavedDataPickerSlideIn:
 	or a ; $6e25
 	jr z, .slideBack ; $6e26
 	ld c, $00 ; $6e28
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6e2a
 	ld b, $08 ; $6e2d
 	farcall RestoreMenuBgAndDrawPanel ; $6e2f
@@ -201,11 +201,11 @@ SavedDataPickerSlideIn:
 	inc a ; $6e38
 	ld c, a ; $6e39
 	cp $0f ; $6e3a
-	jr nz, .loop ; $6e3c
+	jr nz, .slideForwardLoop ; $6e3c
 	ret ; $6e3e
 .slideBack:
 	ld c, $0b ; $6e3f
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $6e41
 	ld b, $09 ; $6e44
 	farcall RestoreMenuBgAndDrawPanel ; $6e46
@@ -215,7 +215,7 @@ SavedDataPickerSlideIn:
 	dec a ; $6e4f
 	ld c, a ; $6e50
 	cp $ff ; $6e51
-	jr nz, .loopB ; $6e53
+	jr nz, .slideBackLoop ; $6e53
 	ret ; $6e55
 SavedDataPickerSlideOut:
 	ld a, b ; $6e56

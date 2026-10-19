@@ -306,7 +306,7 @@ ProcessBGBlitQueue:
 	ld l, a ; $21db
 	ld h, $98 ; $21dc
 	ld b, $20 ; $21de
-.loop:
+.attrLoop:
 	ld a, [de] ; $21e0
 	inc de ; $21e1
 	ld [hl], a ; $21e2
@@ -315,7 +315,7 @@ ProcessBGBlitQueue:
 	add hl, bc ; $21e7
 	ld b, a ; $21e8
 	dec b ; $21e9
-	jr nz, .loop ; $21ea
+	jr nz, .attrLoop ; $21ea
 	xor a ; $21ec
 	ldh [rVBK], a ; $21ed
 	ld de, wBGColumnBlitTiles ; $21ef
@@ -323,7 +323,7 @@ ProcessBGBlitQueue:
 	ld l, a ; $21f5
 	ld h, $98 ; $21f6
 	ld b, $20 ; $21f8
-.loopB:
+.tileLoop:
 	ld a, [de] ; $21fa
 	inc de ; $21fb
 	ld [hl], a ; $21fc
@@ -332,7 +332,7 @@ ProcessBGBlitQueue:
 	add hl, bc ; $2201
 	ld b, a ; $2202
 	dec b ; $2203
-	jr nz, .loopB ; $2204
+	jr nz, .tileLoop ; $2204
 .clearPending:
 	xor a ; $2206
 	ldh [hBGRowBlitPending], a ; $2207

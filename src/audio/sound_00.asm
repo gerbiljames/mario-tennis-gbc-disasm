@@ -137,20 +137,20 @@ InitAudioEngine:
 	ld hl, wSndChannels ; $3092
 	ld b, $06 ; $3095
 	ld a, $ff ; $3097
-.loop:
+.resetChannelsLoop:
 	ld [hl+], a ; $3099
 	ld [hl-], a ; $309a
 	ld de, $0020 ; $309b
 	add hl, de ; $309e
 	dec b ; $309f
-	jr nz, .loop ; $30a0
+	jr nz, .resetChannelsLoop ; $30a0
 	ld hl, wSndLoopSlots ; $30a2
 	ld b, $48 ; $30a5
 	xor a ; $30a7
-.loopB:
+.clearLoopSlotsLoop:
 	ld [hl+], a ; $30a8
 	dec b ; $30a9
-	jr nz, .loopB ; $30aa
+	jr nz, .clearLoopSlotsLoop ; $30aa
 	xor a ; $30ac
 	ld [wSndFirstChannel], a ; $30ad
 	ld [wSndWaveReloadPending], a ; $30b0

@@ -74,7 +74,7 @@ LoadResultScreenPortraits:
 	call LoadResultPortraitSlot ; $6010
 	ld de, FLAG_DOUBLES ; $6013
 	call TestGameFlagByNumber ; $6016
-	jr z, .done ; $6019
+	jr z, .doneNormalOrder ; $6019
 	ld a, [wPlayer1PartnerChar] ; $601b
 	ld d, a ; $601e
 	ld a, [wPlayer1PartnerPalette] ; $601f
@@ -87,7 +87,7 @@ LoadResultScreenPortraits:
 	ld b, a ; $602f
 	ld c, $03 ; $6030
 	call LoadResultPortraitSlot ; $6032
-.done:
+.doneNormalOrder:
 	ret ; $6035
 .swappedOrder:
 	ld a, [wPlayer1MainChar] ; $6036
@@ -104,7 +104,7 @@ LoadResultScreenPortraits:
 	call LoadResultPortraitSlot ; $604d
 	ld de, FLAG_DOUBLES ; $6050
 	call TestGameFlagByNumber ; $6053
-	jr z, .doneB ; $6056
+	jr z, .doneSwappedOrder ; $6056
 	ld a, [wPlayer1PartnerChar] ; $6058
 	ld d, a ; $605b
 	ld a, [wPlayer1PartnerPalette] ; $605c
@@ -117,7 +117,7 @@ LoadResultScreenPortraits:
 	ld b, a ; $606c
 	ld c, $01 ; $606d
 	call LoadResultPortraitSlot ; $606f
-.doneB:
+.doneSwappedOrder:
 	ret ; $6072
 LoadResultPortraitSlot:
 	push de ; $6073

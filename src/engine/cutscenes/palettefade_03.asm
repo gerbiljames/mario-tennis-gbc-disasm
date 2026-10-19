@@ -29,21 +29,21 @@ CopyMasterPalettesToFadeBuffers:
 	ld hl, wMasterPalettes ; $75e9
 	ld de, wPaletteFadeLive ; $75ec
 	ld b, $80 ; $75ef
-.loop:
+.copyLiveLoop:
 	ld a, [hl+] ; $75f1
 	ld [de], a ; $75f2
 	inc de ; $75f3
 	dec b ; $75f4
-	jr nz, .loop ; $75f5
+	jr nz, .copyLiveLoop ; $75f5
 	ld hl, wMasterPalettes ; $75f7
 	ld de, wPaletteFadeTarget ; $75fa
 	ld b, $80 ; $75fd
-.loopB:
+.copyTargetLoop:
 	ld a, [hl+] ; $75ff
 	ld [de], a ; $7600
 	inc de ; $7601
 	dec b ; $7602
-	jr nz, .loopB ; $7603
+	jr nz, .copyTargetLoop ; $7603
 	ret ; $7605
 Unused_03_ClearFadeTargetPalettes:
 	ld hl, wPaletteFadeTarget ; $7606

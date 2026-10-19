@@ -434,7 +434,7 @@ DrawExpPoolGauge:
 	ld b, a ; $6b15
 	ld c, $0b ; $6b16
 	wram_bank WRAM_SCREEN ; $6b18
-.loop:
+.fullCellLoop:
 	ld a, b ; $6b1e
 	sub $08 ; $6b1f
 	jr c, .partialCell ; $6b21
@@ -451,7 +451,7 @@ DrawExpPoolGauge:
 	dec c ; $6b34
 	ret z ; $6b35
 	call ExpGaugePtrUpOneRow ; $6b36
-	jr .loop ; $6b39
+	jr .fullCellLoop ; $6b39
 .partialCell:
 	add $08 ; $6b3b
 	rlca ; $6b3d
@@ -465,7 +465,7 @@ DrawExpPoolGauge:
 	dec c ; $6b4b
 	ret z ; $6b4c
 	call ExpGaugePtrUpOneRow ; $6b4d
-.loopB:
+.emptyCellLoop:
 	ld hl, ExpPoolGaugeTilePairTable ; $6b50
 	ld a, [hl+] ; $6b53
 	ld [de], a ; $6b54
@@ -476,7 +476,7 @@ DrawExpPoolGauge:
 	dec c ; $6b59
 	ret z ; $6b5a
 	call ExpGaugePtrUpOneRow ; $6b5b
-	jr .loopB ; $6b5e
+	jr .emptyCellLoop ; $6b5e
 ExpGaugePtrUpOneRow:
 	push bc ; $6b60
 	ld c, $20 ; $6b61
@@ -988,7 +988,7 @@ DrawExpScreenLevelBar:
 	ld b, a ; $6efe
 	ld c, $08 ; $6eff
 	wram_bank WRAM_SCREEN ; $6f01
-.loop:
+.fullCellLoop:
 	ld a, b ; $6f07
 	sub $08 ; $6f08
 	jr c, .partialCell ; $6f0a
@@ -1000,7 +1000,7 @@ DrawExpScreenLevelBar:
 	dec c ; $6f18
 	ret z ; $6f19
 	inc de ; $6f1a
-	jr .loop ; $6f1b
+	jr .fullCellLoop ; $6f1b
 .partialCell:
 	add $08 ; $6f1d
 	ld_hl_indexed ExpBarFillTiles_1d ; $6f1f
@@ -1009,11 +1009,11 @@ DrawExpScreenLevelBar:
 	dec c ; $6f28
 	ret z ; $6f29
 	inc de ; $6f2a
-.loopB:
+.emptyCellLoop:
 	ld hl, ExpBarFillTiles_1d ; $6f2b
 	ld a, [hl] ; $6f2e
 	ld [de], a ; $6f2f
 	inc de ; $6f30
 	dec c ; $6f31
 	ret z ; $6f32
-	jr .loopB ; $6f33
+	jr .emptyCellLoop ; $6f33

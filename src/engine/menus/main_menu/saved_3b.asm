@@ -84,7 +84,7 @@ MinigameSelectSlideIn6:
 	or a ; $6701
 	jr z, .slideBack ; $6702
 	ld c, $00 ; $6704
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6706
 	ld b, $16 ; $6709
 	farcall RestoreMenuBgAndDrawPanel ; $670b
@@ -94,11 +94,11 @@ MinigameSelectSlideIn6:
 	inc a ; $6714
 	ld c, a ; $6715
 	cp $0e ; $6716
-	jr nz, .loop ; $6718
+	jr nz, .slideForwardLoop ; $6718
 	ret ; $671a
 .slideBack:
 	ld c, $0c ; $671b
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $671d
 	ld b, $17 ; $6720
 	farcall RestoreMenuBgAndDrawPanel ; $6722
@@ -108,14 +108,14 @@ MinigameSelectSlideIn6:
 	dec a ; $672b
 	ld c, a ; $672c
 	cp $ff ; $672d
-	jr nz, .loopB ; $672f
+	jr nz, .slideBackLoop ; $672f
 	ret ; $6731
 MinigameSelectSlideOut6:
 	ld a, b ; $6732
 	or a ; $6733
 	jr z, .slideBack ; $6734
 	ld c, $00 ; $6736
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6738
 	ld b, $17 ; $673b
 	farcall RestoreMenuBgAndDrawPanel ; $673d
@@ -125,11 +125,11 @@ MinigameSelectSlideOut6:
 	inc a ; $6746
 	ld c, a ; $6747
 	cp $0b ; $6748
-	jr nz, .loop ; $674a
+	jr nz, .slideForwardLoop ; $674a
 	ret ; $674c
 .slideBack:
 	ld c, $0d ; $674d
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $674f
 	ld b, $16 ; $6752
 	farcall RestoreMenuBgAndDrawPanel ; $6754
@@ -139,7 +139,7 @@ MinigameSelectSlideOut6:
 	dec a ; $675d
 	ld c, a ; $675e
 	or a ; $675f
-	jr nz, .loopB ; $6760
+	jr nz, .slideBackLoop ; $6760
 	ret ; $6762
 DrawMinigameSelectGrid6:
 	wram_bank WRAM_SCREEN ; $6763
@@ -367,7 +367,7 @@ Unused_3b_SlideMenuPanel_1:
 	or a ; $697a
 	jr z, .slideBack ; $697b
 	ld c, $00 ; $697d
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $697f
 	ld b, $06 ; $6982
 	farcall RestoreMenuBgAndDrawPanel ; $6984
@@ -377,11 +377,11 @@ Unused_3b_SlideMenuPanel_1:
 	inc a ; $698d
 	ld c, a ; $698e
 	cp $0c ; $698f
-	jr nz, .loop ; $6991
+	jr nz, .slideForwardLoop ; $6991
 	ret ; $6993
 .slideBack:
 	ld c, $0a ; $6994
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $6996
 	ld b, $07 ; $6999
 	farcall RestoreMenuBgAndDrawPanel ; $699b
@@ -391,7 +391,7 @@ Unused_3b_SlideMenuPanel_1:
 	dec a ; $69a4
 	ld c, a ; $69a5
 	cp $ff ; $69a6
-	jr nz, .loopB ; $69a8
+	jr nz, .slideBackLoop ; $69a8
 	ret ; $69aa
 ; MainMenuSlideOut with different start columns, end test (`cp $0d`) and row count: the slide-out matching Unused_3b_SlideMenuPanel_1. Nothing calls it.
 Unused_3b_SlideMenuPanel_2:

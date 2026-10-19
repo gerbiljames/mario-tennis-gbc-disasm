@@ -39,16 +39,16 @@ FillProgressListRowAttrs:
 	add hl, de ; $7a1d
 	ld a, $09 ; $7a1e
 	ld e, $12 ; $7a20
-.loop:
+.rowLoop:
 	ld c, $14 ; $7a22
-.loopB:
+.columnLoop:
 	ld [hl+], a ; $7a24
 	dec c ; $7a25
-	jr nz, .loopB ; $7a26
+	jr nz, .columnLoop ; $7a26
 	ld bc, $000c ; $7a28
 	add hl, bc ; $7a2b
 	dec e ; $7a2c
-	jr nz, .loop ; $7a2d
+	jr nz, .rowLoop ; $7a2d
 	ret ; $7a2f
 Unused_1e_CopyProgressListTilemap:
 	ld hl, $d060 ; $7a30

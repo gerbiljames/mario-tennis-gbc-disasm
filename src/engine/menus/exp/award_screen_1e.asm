@@ -700,11 +700,11 @@ DrawExpTotalDigits:
 .fourDigits4:
 	ld a, [wTextBuffer + 3] ; $5a98
 	cp $20 ; $5a9b
-	jr z, .done ; $5a9d
+	jr z, .doneFourDigits ; $5a9d
 	call GetDigitSpriteTile ; $5a9f
 	ld_xy de, $83, $77 ; $5aa2
 	call QueueSprite ; $5aa5
-.done:
+.doneFourDigits:
 	ret ; $5aa8
 .fiveDigits:
 	ld a, [wTextBuffer] ; $5aa9
@@ -737,9 +737,9 @@ DrawExpTotalDigits:
 .fiveDigits5:
 	ld a, [wTextBuffer + 4] ; $5ae9
 	cp $20 ; $5aec
-	jr z, .doneB ; $5aee
+	jr z, .doneFiveDigits ; $5aee
 	call GetDigitSpriteTile ; $5af0
 	ld_xy de, $87, $77 ; $5af3
 	call QueueSprite ; $5af6
-.doneB:
+.doneFiveDigits:
 	ret ; $5af9

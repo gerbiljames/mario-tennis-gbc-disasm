@@ -319,7 +319,7 @@ OpenCourtSelect4Panel:
 	or a ; $5e2b
 	jr z, .reverse ; $5e2c
 	ld c, $00 ; $5e2e
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $5e30
 	ld b, $12 ; $5e33
 	farcall RestoreMenuBgAndDrawPanel ; $5e35
@@ -329,12 +329,12 @@ OpenCourtSelect4Panel:
 	inc a ; $5e3e
 	ld c, a ; $5e3f
 	cp $0d ; $5e40
-	jr nz, .loop ; $5e42
+	jr nz, .slideForwardLoop ; $5e42
 	call AdvanceFrame ; $5e44
 	ret ; $5e47
 .reverse:
 	ld c, $0a ; $5e48
-.loopB:
+.slideReverseLoop:
 	call AdvanceFrame ; $5e4a
 	ld b, $13 ; $5e4d
 	farcall RestoreMenuBgAndDrawPanel ; $5e4f
@@ -344,7 +344,7 @@ OpenCourtSelect4Panel:
 	dec a ; $5e58
 	ld c, a ; $5e59
 	cp $ff ; $5e5a
-	jr nz, .loopB ; $5e5c
+	jr nz, .slideReverseLoop ; $5e5c
 	call AdvanceFrame ; $5e5e
 	ret ; $5e61
 CloseCourtSelect4Panel:

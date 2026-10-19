@@ -251,7 +251,7 @@ MainMenuSlideIn:
 	or a ; $5801
 	jr z, .slideBack ; $5802
 	ld c, $00 ; $5804
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $5806
 	ld b, $00 ; $5809
 	farcall RestoreMenuBgAndDrawPanel ; $580b
@@ -261,11 +261,11 @@ MainMenuSlideIn:
 	inc a ; $5814
 	ld c, a ; $5815
 	cp $10 ; $5816
-	jr nz, .loop ; $5818
+	jr nz, .slideForwardLoop ; $5818
 	ret ; $581a
 .slideBack:
 	ld c, $09 ; $581b
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $581d
 	ld b, $01 ; $5820
 	farcall RestoreMenuBgAndDrawPanel ; $5822
@@ -275,14 +275,14 @@ MainMenuSlideIn:
 	dec a ; $582b
 	ld c, a ; $582c
 	cp $ff ; $582d
-	jr nz, .loopB ; $582f
+	jr nz, .slideBackLoop ; $582f
 	ret ; $5831
 MainMenuSlideOut:
 	ld a, b ; $5832
 	or a ; $5833
 	jr z, .slideBack ; $5834
 	ld c, $00 ; $5836
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $5838
 	ld b, $01 ; $583b
 	farcall RestoreMenuBgAndDrawPanel ; $583d
@@ -292,11 +292,11 @@ MainMenuSlideOut:
 	inc a ; $5846
 	ld c, a ; $5847
 	cp $0c ; $5848
-	jr nz, .loop ; $584a
+	jr nz, .slideForwardLoop ; $584a
 	ret ; $584c
 .slideBack:
 	ld c, $0f ; $584d
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $584f
 	ld b, $00 ; $5852
 	farcall RestoreMenuBgAndDrawPanel ; $5854
@@ -306,7 +306,7 @@ MainMenuSlideOut:
 	dec a ; $585d
 	ld c, a ; $585e
 	or a ; $585f
-	jr nz, .loopB ; $5860
+	jr nz, .slideBackLoop ; $5860
 	ret ; $5862
 MainMenuCursorSpriteTask:
 	farcall TickMenuBgScroll ; $5863

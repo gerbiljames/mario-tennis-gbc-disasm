@@ -29,10 +29,10 @@ Unused_1a_ExpScreenDrawTask:
 	ld a, $01 ; $47ba
 	ld hl, wCharDataPageSlot1 + 1 * TILEMAP_WIDTH ; $47bc
 	ld b, $40 ; $47bf
-.loop:
+.fillAttrsLoop:
 	ld [hl+], a ; $47c1
 	dec b ; $47c2
-	jr nz, .loop ; $47c3
+	jr nz, .fillAttrsLoop ; $47c3
 	ld hl, wCharDataPageSlot1 + 1 * TILEMAP_WIDTH ; $47c5
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH + VRAM_BANK1 ; $47c8
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $47cb
@@ -41,10 +41,10 @@ Unused_1a_ExpScreenDrawTask:
 	ld a, $20 ; $47d6
 	ld hl, wScreenScratch ; $47d8
 	ld b, $40 ; $47db
-.loopB:
+.clearTilesLoop:
 	ld [hl+], a ; $47dd
 	dec b ; $47de
-	jr nz, .loopB ; $47df
+	jr nz, .clearTilesLoop ; $47df
 	ld a, $03 ; $47e1
 	call Unused_1a_DrawExpScreenCaption ; $47e3
 	ld hl, wScreenScratch ; $47e6
@@ -275,12 +275,12 @@ Unused_1a_DrawExpScreenMessageBox:
 	push hl ; $4a1b
 	ld c, $00 ; $4a1c
 	ld hl, ExpScreenMessageBoxTilemap ; $4a1e
-.loop:
+.rowLoop:
 	ld a, c ; $4a21
 	cp $05 ; $4a22
 	jr z, .restore ; $4a24
 	ld b, $00 ; $4a26
-.loopB:
+.columnLoop:
 	ld a, b ; $4a28
 	cp $14 ; $4a29
 	jr z, .nextRow ; $4a2b
@@ -292,10 +292,10 @@ Unused_1a_DrawExpScreenMessageBox:
 	call Unused_1a_WriteTileBufferCell ; $4a32
 	inc hl ; $4a35
 	inc b ; $4a36
-	jr .loopB ; $4a37
+	jr .columnLoop ; $4a37
 .nextRow:
 	inc c ; $4a39
-	jr .loop ; $4a3a
+	jr .rowLoop ; $4a3a
 .restore:
 	pop hl ; $4a3c
 	pop de ; $4a3d
@@ -342,12 +342,12 @@ Unused_1a_DrawExpScreenYesNoBox:
 	ld bc, $0005 ; $4a81
 	ld a, $00 ; $4a84
 	ld hl, ExpScreenYesNoBoxTilemap ; $4a86
-.loop:
+.rowLoop:
 	ld a, c ; $4a89
 	cp $0a ; $4a8a
 	jr z, .drawText ; $4a8c
 	ld b, $00 ; $4a8e
-.loopB:
+.columnLoop:
 	ld a, b ; $4a90
 	cp $06 ; $4a91
 	jr z, .nextRow ; $4a93
@@ -359,10 +359,10 @@ Unused_1a_DrawExpScreenYesNoBox:
 	call Unused_1a_WriteTileBufferCell ; $4a9a
 	inc hl ; $4a9d
 	inc b ; $4a9e
-	jr .loopB ; $4a9f
+	jr .columnLoop ; $4a9f
 .nextRow:
 	inc c ; $4aa1
-	jr .loop ; $4aa2
+	jr .rowLoop ; $4aa2
 .drawText:
 	ld de, wCharDataPagePlane + 6 * TILEMAP_WIDTH + 2 ; $4aa4
 	ld hl, Text_MenuYesNoExpScreen ; $4aa7

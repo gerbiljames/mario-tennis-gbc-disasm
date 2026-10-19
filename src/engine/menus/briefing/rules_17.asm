@@ -230,9 +230,9 @@ MinigameRulesPageLoop:
 	add b ; $709e
 	add l ; $709f
 	ld l, a ; $70a0
-	jr nc, .loop ; $70a1
+	jr nc, .pageLoop ; $70a1
 	inc h ; $70a3
-.loop:
+.pageLoop:
 	ld a, [hl+] ; $70a4
 	cp $ff ; $70a5
 	jp z, .endOfPages ; $70a7
@@ -285,7 +285,7 @@ MinigameRulesPageLoop:
 	farcall RenderProportionalTextAt ; $70fe
 	farcall UploadGlyphBuffer ; $7101
 	call QueueRulesPageToVRAM ; $7104
-.loopB:
+.waitInputLoop:
 	call AdvanceFrame ; $7107
 	ldh a, [hInputRisingEdge] ; $710a
 	bit PADB_A, a ; $710c
@@ -296,7 +296,7 @@ MinigameRulesPageLoop:
 	jr nz, .cancel ; $7116
 	bit PADB_START, a ; $7118
 	jr nz, .startPressed ; $711a
-	jr .loopB ; $711c
+	jr .waitInputLoop ; $711c
 .nextPage:
 	sound SFX_MENU_SELECT ; $711e
 	ld hl, DrawRulesNextPageArrow ; $7120
@@ -309,7 +309,7 @@ MinigameRulesPageLoop:
 	xor a ; $7134
 	ld [wRulesAnimCounter], a ; $7135
 	pop hl ; $7138
-	jp .loop ; $7139
+	jp .pageLoop ; $7139
 .cancel:
 	sound SFX_MENU_CANCEL ; $713c
 	ld hl, DrawRulesNextPageArrow ; $713e

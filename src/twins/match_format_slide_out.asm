@@ -5,7 +5,7 @@
 	or a
 	jr z, .countDown
 	ld c, $00
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame
 	ld b, $03
 	farcall RestoreMenuBgAndDrawPanel
@@ -15,11 +15,11 @@
 	inc a
 	ld c, a
 	cp $0b
-	jr nz, .loop
+	jr nz, .slideForwardLoop
 	ret
 .countDown:
 	ld c, $0d
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame
 	ld b, $02
 	farcall RestoreMenuBgAndDrawPanel
@@ -29,5 +29,5 @@
 	dec a
 	ld c, a
 	or a
-	jr nz, .loopB
+	jr nz, .slideBackLoop
 	ret

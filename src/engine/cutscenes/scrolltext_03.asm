@@ -78,7 +78,7 @@ RunScrollingTextScreen:
 	ld c, $08 ; $59f7
 	call ForceFadeIn ; $59f9
 	call WaitFadeEnd ; $59fc
-.loop:
+.mainLoop:
 	wram_bank WRAM_SCENE ; $59ff
 	ld a, [wScrollTextDelay] ; $5a05
 	dec a ; $5a08
@@ -149,11 +149,11 @@ RunScrollingTextScreen:
 	xor a ; $5a8d
 	ld b, $40 ; $5a8e
 	ld hl, wShadowTilemap ; $5a90
-.loopB:
+.clearShadowLoop:
 	ld [hl+], a ; $5a93
 	inc b ; $5a94
-	jr nz, .loopB ; $5a95
-	jp .loop ; $5a97
+	jr nz, .clearShadowLoop ; $5a95
+	jp .mainLoop ; $5a97
 .maskSet:
 	script_fade_out 1 ; $5a9a
 	call WaitFadeEnd ; $5a9f

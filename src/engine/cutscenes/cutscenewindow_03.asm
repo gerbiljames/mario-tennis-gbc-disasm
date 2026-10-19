@@ -42,17 +42,17 @@ PlayScrollingStoryCutscene:
 	ld a, $01 ; $703e
 	ld hl, AnimateWindowSlideUpTask ; $7040
 	call RegisterFrameTask ; $7043
-.loop:
+.waitSlideLoop:
 	call AdvanceFrame ; $7046
 	ld a, [wCutsceneSlideDone] ; $7049
 	or a ; $704c
-	jr z, .loop ; $704d
+	jr z, .waitSlideLoop ; $704d
 	ld a, $20 ; $704f
-.loopB:
+.delayLoop:
 	call AdvanceFrame ; $7051
 	dec a ; $7054
 	or a ; $7055
-	jr nz, .loopB ; $7056
+	jr nz, .delayLoop ; $7056
 	wram_bank WRAM_STAGING ; $7058
 	ld hl, wDecompBuffer ; $705e
 	ld b, $20 ; $7061
@@ -320,11 +320,11 @@ BlitCutsceneTextWindow:
 	add_hl_a ; $749b
 	ld b, $08 ; $74a0
 	ld de, wWindowShadowTilemap ; $74a2
-.loop:
+.rowLoop:
 	ld c, $14 ; $74a5
 	push hl ; $74a7
 	push de ; $74a8
-.loopB:
+.columnLoop:
 	wram_bank WRAM_STAGING ; $74a9
 	ld a, [hl+] ; $74af
 	push hl ; $74b0
@@ -337,7 +337,7 @@ BlitCutsceneTextWindow:
 	inc de ; $74bc
 	pop hl ; $74bd
 	dec c ; $74be
-	jr nz, .loopB ; $74bf
+	jr nz, .columnLoop ; $74bf
 	pop de ; $74c1
 	pop hl ; $74c2
 	ld a, $50 ; $74c3
@@ -345,7 +345,7 @@ BlitCutsceneTextWindow:
 	ld a, $20 ; $74ca
 	add_de_a ; $74cc
 	dec b ; $74d1
-	jr nz, .loop ; $74d2
+	jr nz, .rowLoop ; $74d2
 	wram_bank WRAM_TEXT ; $74d4
 	ld hl, wWindowShadowTilemap ; $74da
 	ld de, vBGMap1 ; $74dd

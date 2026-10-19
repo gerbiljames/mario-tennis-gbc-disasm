@@ -81,7 +81,7 @@ MarioCastOrderTable:
 	db $08, $06, $02 ; 0x06
 UpdateMarioCastUnlocks:
 	ld c, $00 ; $7df6
-.loop:
+.rowLoop:
 	ld hl, wN64RecordsBlock ; $7df8
 	ld a, c ; $7dfb
 	add a ; $7dfc
@@ -90,7 +90,7 @@ UpdateMarioCastUnlocks:
 	add c ; $7dff
 	add_hl_a ; $7e00
 	ld b, $00 ; $7e05
-.loopB:
+.columnLoop:
 	ld a, c ; $7e07
 	cp b ; $7e08
 	jr z, .countDone ; $7e09
@@ -102,7 +102,7 @@ UpdateMarioCastUnlocks:
 	inc b ; $7e10
 	ld a, b ; $7e11
 	cp $09 ; $7e12
-	jr nz, .loopB ; $7e14
+	jr nz, .columnLoop ; $7e14
 	ld de, SAVEFLAG_COURT_WAREHOUSE ; $7e16
 	farcall SetSaveFlag ; $7e19
 	jr .done ; $7e1c
@@ -110,7 +110,7 @@ UpdateMarioCastUnlocks:
 	inc c ; $7e1e
 	ld a, c ; $7e1f
 	cp $09 ; $7e20
-	jr nz, .loop ; $7e22
+	jr nz, .rowLoop ; $7e22
 .done:
 	ret ; $7e24
 CheckMarioCastChartExpanded:

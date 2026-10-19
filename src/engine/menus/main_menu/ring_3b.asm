@@ -104,7 +104,7 @@ DefaultRingShot1:
 BuildRingShotResultsGrid:
 	ld de, wChartRows ; $5319
 	ld c, $00 ; $531c
-.loop:
+.clearsLoop:
 	ld hl, RingShotResultsGridTable ; $531e
 	ld a, c ; $5321
 	add_hl_a ; $5322
@@ -118,10 +118,10 @@ BuildRingShotResultsGrid:
 	inc a ; $5332
 	ld c, a ; $5333
 	cp $10 ; $5334
-	jr nz, .loop ; $5336
+	jr nz, .clearsLoop ; $5336
 	ld de, wChartRows + 4 ; $5338
 	ld c, $00 ; $533b
-.loopB:
+.scoresLoop:
 	ld hl, RingShotResultsGridTable ; $533d
 	ld a, c ; $5340
 	add_hl_a ; $5341
@@ -135,7 +135,7 @@ BuildRingShotResultsGrid:
 	inc a ; $5351
 	ld c, a ; $5352
 	cp $10 ; $5353
-	jr nz, .loopB ; $5355
+	jr nz, .scoresLoop ; $5355
 	ret ; $5357
 RingShotResultsGridTable:
 	; $5358, 16 bytes (bytes:16)
@@ -361,17 +361,17 @@ DrawRingShotClearMarks:
 	ld a, [wMenuCursorY] ; $54fe
 	ld hl, wChartRows ; $5501
 	ld bc, $000c ; $5504
-.loop:
+.seekRowLoop:
 	or a ; $5507
 	jr z, .checkMenuCursorX ; $5508
 	add hl, bc ; $550a
 	dec a ; $550b
-	jr .loop ; $550c
+	jr .seekRowLoop ; $550c
 .checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $550e
 	add_hl_a ; $5511
 	ld b, $00 ; $5516
-.loopB:
+.rowLoop:
 	ld a, [hl] ; $5518
 	ld c, a ; $5519
 	call DrawRingShotClearMarkRow ; $551a
@@ -381,7 +381,7 @@ DrawRingShotClearMarks:
 	inc a ; $5522
 	ld b, a ; $5523
 	cp $05 ; $5524
-	jr nz, .loopB ; $5526
+	jr nz, .rowLoop ; $5526
 	ret ; $5528
 DrawRingShotClearMarkRow:
 	push af ; $5529
@@ -396,7 +396,7 @@ DrawRingShotClearMarkRow:
 	ld d, [hl] ; $5538
 	ld e, a ; $5539
 	ld b, c ; $553a
-.loop:
+.clearedMarkLoop:
 	ld a, b ; $553b
 	or a ; $553c
 	jr z, .drawRemainingMarks ; $553d
@@ -407,12 +407,12 @@ DrawRingShotClearMarkRow:
 	inc de ; $5546
 	ld b, h ; $5547
 	dec b ; $5548
-	jr .loop ; $5549
+	jr .clearedMarkLoop ; $5549
 .drawRemainingMarks:
 	ld a, $05 ; $554b
 	sub c ; $554d
 	ld b, a ; $554e
-.loopB:
+.unclearedMarkLoop:
 	ld a, b ; $554f
 	or a ; $5550
 	jr z, .restore ; $5551
@@ -423,7 +423,7 @@ DrawRingShotClearMarkRow:
 	inc de ; $555a
 	ld b, h ; $555b
 	dec b ; $555c
-	jr .loopB ; $555d
+	jr .unclearedMarkLoop ; $555d
 .restore:
 	pop hl ; $555f
 	pop de ; $5560
@@ -464,12 +464,12 @@ RingShotScoreDrawTask:
 	ld a, [wMenuCursorY] ; $558f
 	ld hl, wChartRows ; $5592
 	ld bc, $000c ; $5595
-.loop:
+.seekRowLoop:
 	or a ; $5598
 	jr z, .gotRow ; $5599
 	add hl, bc ; $559b
 	dec a ; $559c
-	jr .loop ; $559d
+	jr .seekRowLoop ; $559d
 .gotRow:
 	ld a, $04 ; $559f
 	add_hl_a ; $55a1
@@ -478,7 +478,7 @@ RingShotScoreDrawTask:
 	add_hl_a ; $55aa
 	ld_xy de, $8a, $35 ; $55af
 	ld c, $00 ; $55b2
-.loopB:
+.scoreLoop:
 	push hl ; $55b4
 	ld a, [hl+] ; $55b5
 	ld h, [hl] ; $55b6
@@ -495,5 +495,5 @@ RingShotScoreDrawTask:
 	inc a ; $55ca
 	ld c, a ; $55cb
 	cp $05 ; $55cc
-	jr nz, .loopB ; $55ce
+	jr nz, .scoreLoop ; $55ce
 	ret ; $55d0

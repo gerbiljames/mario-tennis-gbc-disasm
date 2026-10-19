@@ -267,11 +267,11 @@ UploadGlyphBufferQueued:
 	ld a, b ; $7800
 .countLeft:
 	ld b, $00 ; $7801
-.loop:
+.countRowsLoop:
 	inc b ; $7803
 	sub $12 ; $7804
 	jr c, .gotRowCount ; $7806
-	jr .loop ; $7808
+	jr .countRowsLoop ; $7808
 .gotRowCount:
 	push bc ; $780a
 	ld hl, $0000 ; $780b
@@ -295,7 +295,7 @@ UploadGlyphBufferQueued:
 	pop de ; $7834
 	pop bc ; $7835
 	ld c, $12 ; $7836
-.loopB:
+.uploadRowLoop:
 	push bc ; $7838
 	push hl ; $7839
 	push de ; $783a
@@ -317,7 +317,7 @@ UploadGlyphBufferQueued:
 	farcall StepMatchFrame ; $7853
 .next:
 	dec b ; $7856
-	jr nz, .loopB ; $7857
+	jr nz, .uploadRowLoop ; $7857
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7859
 	pop_wram_bank ; $785c
 	pop hl ; $7861
@@ -338,17 +338,17 @@ UploadGlyphBufferDMA:
 	wram_bank WRAM_SOUND ; $7872
 	ld a, b ; $7878
 	ld b, $00 ; $7879
-.loop:
+.countRowsLoop:
 	inc b ; $787b
 	sub $20 ; $787c
 	jr z, .gotRowCount ; $787e
 	jr c, .gotRowCount ; $7880
-	jr .loop ; $7882
+	jr .countRowsLoop ; $7882
 .gotRowCount:
 	ld hl, wGlyphTileBuffer ; $7884
 	ld de, vTiles1 ; $7887
 	ld c, $20 ; $788a
-.loopB:
+.uploadRowLoop:
 	push bc ; $788c
 	push hl ; $788d
 	push de ; $788e
@@ -364,7 +364,7 @@ UploadGlyphBufferDMA:
 	add hl, bc ; $789e
 	pop bc ; $789f
 	dec b ; $78a0
-	jr nz, .loopB ; $78a1
+	jr nz, .uploadRowLoop ; $78a1
 	pop_wram_bank ; $78a3
 	pop hl ; $78a8
 	pop de ; $78a9

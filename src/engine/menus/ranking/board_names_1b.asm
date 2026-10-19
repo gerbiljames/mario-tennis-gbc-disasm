@@ -82,7 +82,7 @@ ClearSinglesRankingNameRects:
 	push hl ; $5591
 	ld b, $00 ; $5592
 	ld de, wShadowAttrmap + 1 ; $5594
-.loop:
+.leftColumnLoop:
 	push bc ; $5597
 	ld h, $00 ; $5598
 	rect_size $05, $02 ; $559a
@@ -96,10 +96,10 @@ ClearSinglesRankingNameRects:
 	inc a ; $55a9
 	ld b, a ; $55aa
 	cp $06 ; $55ab
-	jr nz, .loop ; $55ad
+	jr nz, .leftColumnLoop ; $55ad
 	ld de, wShadowAttrmap + 14 ; $55af
 	ld b, $00 ; $55b2
-.loopB:
+.rightColumnLoop:
 	push bc ; $55b4
 	ld h, $01 ; $55b5
 	rect_size $05, $02 ; $55b7
@@ -113,7 +113,7 @@ ClearSinglesRankingNameRects:
 	inc a ; $55c6
 	ld b, a ; $55c7
 	cp $06 ; $55c8
-	jr nz, .loopB ; $55ca
+	jr nz, .rightColumnLoop ; $55ca
 	pop hl ; $55cc
 	pop de ; $55cd
 	pop bc ; $55ce
@@ -201,7 +201,7 @@ ClearDoublesRankingNameRects:
 	push hl ; $565c
 	ld b, $00 ; $565d
 	ld de, wShadowAttrmap + 1 * TILEMAP_WIDTH + 1 ; $565f
-.loop:
+.leftColumnLoop:
 	push bc ; $5662
 	ld h, $00 ; $5663
 	rect_size $05, $04 ; $5665
@@ -215,10 +215,10 @@ ClearDoublesRankingNameRects:
 	inc a ; $5674
 	ld b, a ; $5675
 	cp $03 ; $5676
-	jr nz, .loop ; $5678
+	jr nz, .leftColumnLoop ; $5678
 	ld de, wShadowAttrmap + 1 * TILEMAP_WIDTH + 14 ; $567a
 	ld b, $00 ; $567d
-.loopB:
+.rightColumnLoop:
 	push bc ; $567f
 	ld h, $01 ; $5680
 	rect_size $05, $04 ; $5682
@@ -232,7 +232,7 @@ ClearDoublesRankingNameRects:
 	inc a ; $5691
 	ld b, a ; $5692
 	cp $03 ; $5693
-	jr nz, .loopB ; $5695
+	jr nz, .rightColumnLoop ; $5695
 	pop hl ; $5697
 	pop de ; $5698
 	pop bc ; $5699

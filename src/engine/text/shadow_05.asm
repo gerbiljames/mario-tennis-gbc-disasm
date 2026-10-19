@@ -16,9 +16,9 @@ RestoreAllShadowTilemapRows:
 	ld a, [wCameraY + 1] ; $4383
 	and $3f ; $4386
 	ld c, $04 ; $4388
-.loop:
+.frameLoop:
 	ld b, $05 ; $438a
-.loopB:
+.rowLoop:
 	push af ; $438c
 	push bc ; $438d
 	call RestoreShadowTilemapRow ; $438e
@@ -27,7 +27,7 @@ RestoreAllShadowTilemapRows:
 	inc a ; $4393
 	and $3f ; $4394
 	dec b ; $4396
-	jr nz, .loopB ; $4397
+	jr nz, .rowLoop ; $4397
 	push af ; $4399
 	ldh a, [rLCDC] ; $439a
 	bit B_LCDC_ENABLE, a ; $439c
@@ -36,7 +36,7 @@ RestoreAllShadowTilemapRows:
 .restore:
 	pop af ; $43a3
 	dec c ; $43a4
-	jr nz, .loop ; $43a5
+	jr nz, .frameLoop ; $43a5
 	ret ; $43a7
 RestoreTilemapUnderWindow:
 	push af ; $43a8
@@ -318,11 +318,11 @@ Unused_05_DrawTileAttrRect:
 	ld c, [hl] ; $455d
 	inc hl ; $455e
 	push af ; $455f
-.loop:
+.rowLoop:
 	push de ; $4560
 	push bc ; $4561
 	call GetTilemapCellAddress ; $4562
-.loopB:
+.columnLoop:
 	ld a, [hl] ; $4565
 	inc hl ; $4566
 	ld [de], a ; $4567
@@ -344,14 +344,14 @@ Unused_05_DrawTileAttrRect:
 	inc de ; $457d
 	pop hl ; $457e
 	dec b ; $457f
-	jr nz, .loopB ; $4580
+	jr nz, .columnLoop ; $4580
 	ld a, c ; $4582
 	pop bc ; $4583
 	ld c, a ; $4584
 	pop de ; $4585
 	inc e ; $4586
 	dec c ; $4587
-	jr nz, .loop ; $4588
+	jr nz, .rowLoop ; $4588
 	pop af ; $458a
 	pop hl ; $458b
 	pop de ; $458c

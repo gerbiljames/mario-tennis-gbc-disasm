@@ -355,7 +355,7 @@ SetWinLosePortraitPaletteAttrs:
 	rect_size $03, $03 ; $4998
 	ld h, $0f ; $499c
 	farcall FillTilemapRect ; $499e
-	jr .done ; $49a1
+	jr .doneResult ; $49a1
 .singles:
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 13 ; $49a3
 	rect_size $04, $04 ; $49a6
@@ -365,7 +365,7 @@ SetWinLosePortraitPaletteAttrs:
 	rect_size $03, $03 ; $49b2
 	ld h, $0e ; $49b6
 	farcall FillTilemapRect ; $49b8
-.done:
+.doneResult:
 	ret ; $49bb
 .versusMatch:
 	ld de, FLAG_DOUBLES ; $49bc
@@ -387,7 +387,7 @@ SetWinLosePortraitPaletteAttrs:
 	rect_size $03, $03 ; $49eb
 	ld h, $0f ; $49ef
 	farcall FillTilemapRect ; $49f1
-	jr .doneB ; $49f4
+	jr .doneVersus ; $49f4
 .fillTilemapRect:
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 13 ; $49f6
 	rect_size $03, $03 ; $49f9
@@ -397,5 +397,5 @@ SetWinLosePortraitPaletteAttrs:
 	rect_size $03, $03 ; $4a05
 	ld h, $0e ; $4a09
 	farcall FillTilemapRect ; $4a0b
-.doneB:
+.doneVersus:
 	ret ; $4a0e

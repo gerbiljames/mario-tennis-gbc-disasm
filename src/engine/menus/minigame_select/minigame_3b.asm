@@ -253,7 +253,7 @@ MinigameSelectSlideIn9:
 	or a ; $640b
 	jr z, .slideBack ; $640c
 	ld c, $00 ; $640e
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6410
 	ld b, $04 ; $6413
 	farcall RestoreMenuBgAndDrawPanel ; $6415
@@ -263,11 +263,11 @@ MinigameSelectSlideIn9:
 	inc a ; $641e
 	ld c, a ; $641f
 	cp $0e ; $6420
-	jr nz, .loop ; $6422
+	jr nz, .slideForwardLoop ; $6422
 	ret ; $6424
 .slideBack:
 	ld c, $0c ; $6425
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $6427
 	ld b, $05 ; $642a
 	farcall RestoreMenuBgAndDrawPanel ; $642c
@@ -277,14 +277,14 @@ MinigameSelectSlideIn9:
 	dec a ; $6435
 	ld c, a ; $6436
 	cp $ff ; $6437
-	jr nz, .loopB ; $6439
+	jr nz, .slideBackLoop ; $6439
 	ret ; $643b
 MinigameSelectSlideOut9:
 	ld a, b ; $643c
 	or a ; $643d
 	jr z, .slideBack ; $643e
 	ld c, $00 ; $6440
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6442
 	ld b, $05 ; $6445
 	farcall RestoreMenuBgAndDrawPanel ; $6447
@@ -294,11 +294,11 @@ MinigameSelectSlideOut9:
 	inc a ; $6450
 	ld c, a ; $6451
 	cp $0b ; $6452
-	jr nz, .loop ; $6454
+	jr nz, .slideForwardLoop ; $6454
 	ret ; $6456
 .slideBack:
 	ld c, $0d ; $6457
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $6459
 	ld b, $04 ; $645c
 	farcall RestoreMenuBgAndDrawPanel ; $645e
@@ -308,7 +308,7 @@ MinigameSelectSlideOut9:
 	dec a ; $6467
 	ld c, a ; $6468
 	or a ; $6469
-	jr nz, .loopB ; $646a
+	jr nz, .slideBackLoop ; $646a
 	ret ; $646c
 MinigameSelectCursorSpriteTask:
 	farcall TickMenuBgScroll ; $646d

@@ -6,17 +6,17 @@ DrawTennisDictionaryLetterLabels:
 	ld e, a ; $533c
 	ld hl, SelectionMaskGrid_3f ; $533d
 	ld d, $00 ; $5340
-.loop:
+.findSelectedLoop:
 	ld a, [hl+] ; $5342
 	cp $00 ; $5343
 	jr nz, .testCategory ; $5345
 	inc d ; $5347
-	jr .loop ; $5348
+	jr .findSelectedLoop ; $5348
 .testCategory:
 	and e ; $534a
-	jr z, .loop ; $534b
+	jr z, .findSelectedLoop ; $534b
 	dec b ; $534d
-	jr nz, .loop ; $534e
+	jr nz, .findSelectedLoop ; $534e
 	wram_bank WRAM_SCREEN ; $5350
 	ld a, d ; $5356
 	dec a ; $5357
@@ -43,7 +43,7 @@ DrawTennisDictionaryLetterLabels:
 	farcall RenderTextToBuffer64 ; $5382
 	ld a, $06 ; $5385
 	ld [wShadowTilemap + 2 * TILEMAP_WIDTH], a ; $5387
-.loopB:
+.waitQueueLoop:
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 16 ; $538a
 	ld de, vBGMap0 + 1 * TILEMAP_WIDTH + 16 ; $538d
 	ld c, 1 ; $5390
@@ -51,7 +51,7 @@ DrawTennisDictionaryLetterLabels:
 	or a ; $5395
 	jr nz, .done ; $5396
 	call AdvanceFrame ; $5398
-	jr .loopB ; $539b
+	jr .waitQueueLoop ; $539b
 .done:
 	ret ; $539d
 SelectionMaskGrid_3f:

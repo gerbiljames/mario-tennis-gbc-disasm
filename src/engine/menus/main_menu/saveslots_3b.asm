@@ -255,7 +255,7 @@ TryMainMenuLinkHandshake:
 	ei ; $5c73
 	cp $c1 ; $5c74
 	jr z, .waitFramesCmd ; $5c76
-.loop:
+.linkAttemptLoop:
 	farcall ShowLinkMessageScreen ; $5c78
 	farcall TryEstablishLink ; $5c7b
 	push af ; $5c7e
@@ -276,7 +276,7 @@ TryMainMenuLinkHandshake:
 	pop_wram_bank ; $5c9b
 .animateLinkStatusPalette:
 	ld de, $01f4 ; $5ca0
-.loopB:
+.statusWaitLoop:
 	farcall AnimateLinkStatusPalette ; $5ca3
 	farcall UpdateAnimatedTiles ; $5ca6
 	call AdvanceFrame ; $5ca9
@@ -288,7 +288,7 @@ TryMainMenuLinkHandshake:
 	dec de ; $5cb6
 	ld a, d ; $5cb7
 	or e ; $5cb8
-	jr nz, .loopB ; $5cb9
+	jr nz, .statusWaitLoop ; $5cb9
 .beginFadeOut:
 	script_fade_out 64 ; $5cbb
 	call WaitFadeEnd ; $5cc0
@@ -302,7 +302,7 @@ TryMainMenuLinkHandshake:
 .waitFramesCmd:
 	wait_frames 6 ; $5cd7
 	farcall TryEstablishLink ; $5cdb
-	jr c, .loop ; $5cde
+	jr c, .linkAttemptLoop ; $5cde
 .done:
 	ret ; $5ce0
 Unused_3b_RestoreScreenAfterLinkAttempt:
@@ -535,7 +535,7 @@ MatchFormatSlideIn:
 	or a ; $5eda
 	jr z, .slideBack ; $5edb
 	ld c, $00 ; $5edd
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $5edf
 	ld b, $02 ; $5ee2
 	farcall RestoreMenuBgAndDrawPanel ; $5ee4
@@ -545,11 +545,11 @@ MatchFormatSlideIn:
 	inc a ; $5eed
 	ld c, a ; $5eee
 	cp $0e ; $5eef
-	jr nz, .loop ; $5ef1
+	jr nz, .slideForwardLoop ; $5ef1
 	ret ; $5ef3
 .slideBack:
 	ld c, $0a ; $5ef4
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $5ef6
 	ld b, $03 ; $5ef9
 	farcall RestoreMenuBgAndDrawPanel ; $5efb
@@ -559,7 +559,7 @@ MatchFormatSlideIn:
 	dec a ; $5f04
 	ld c, a ; $5f05
 	cp $ff ; $5f06
-	jr nz, .loopB ; $5f08
+	jr nz, .slideBackLoop ; $5f08
 	ret ; $5f0a
 	twin_named match_format_slide_out, MatchFormatSlideOut ; $5f0b
 HandleMatchFormatInput:

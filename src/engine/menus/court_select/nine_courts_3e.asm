@@ -200,7 +200,7 @@ OpenCourtSelect9Panel:
 	or a ; $66ac
 	jr z, .reverse ; $66ad
 	ld c, $00 ; $66af
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $66b1
 	ld b, $14 ; $66b4
 	farcall RestoreMenuBgAndDrawPanel ; $66b6
@@ -210,12 +210,12 @@ OpenCourtSelect9Panel:
 	inc a ; $66bf
 	ld c, a ; $66c0
 	cp $0f ; $66c1
-	jr nz, .loop ; $66c3
+	jr nz, .slideForwardLoop ; $66c3
 	call AdvanceFrame ; $66c5
 	ret ; $66c8
 .reverse:
 	ld c, $09 ; $66c9
-.loopB:
+.slideReverseLoop:
 	call AdvanceFrame ; $66cb
 	ld b, $15 ; $66ce
 	farcall RestoreMenuBgAndDrawPanel ; $66d0
@@ -225,7 +225,7 @@ OpenCourtSelect9Panel:
 	dec a ; $66d9
 	ld c, a ; $66da
 	cp $ff ; $66db
-	jr nz, .loopB ; $66dd
+	jr nz, .slideReverseLoop ; $66dd
 	call AdvanceFrame ; $66df
 	ret ; $66e2
 CloseCourtSelect9Panel:
@@ -233,7 +233,7 @@ CloseCourtSelect9Panel:
 	or a ; $66e4
 	jr z, .reverse ; $66e5
 	ld c, $00 ; $66e7
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $66e9
 	ld b, $15 ; $66ec
 	farcall RestoreMenuBgAndDrawPanel ; $66ee
@@ -243,11 +243,11 @@ CloseCourtSelect9Panel:
 	inc a ; $66f7
 	ld c, a ; $66f8
 	cp $0b ; $66f9
-	jr nz, .loop ; $66fb
+	jr nz, .slideForwardLoop ; $66fb
 	ret ; $66fd
 .reverse:
 	ld c, $0e ; $66fe
-.loopB:
+.slideReverseLoop:
 	call AdvanceFrame ; $6700
 	ld b, $14 ; $6703
 	farcall RestoreMenuBgAndDrawPanel ; $6705
@@ -257,7 +257,7 @@ CloseCourtSelect9Panel:
 	dec a ; $670e
 	ld c, a ; $670f
 	or a ; $6710
-	jr nz, .loopB ; $6711
+	jr nz, .slideReverseLoop ; $6711
 	ret ; $6713
 CourtSelect9CursorSpriteTask:
 	farcall TickMenuBgScroll ; $6714

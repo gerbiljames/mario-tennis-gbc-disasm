@@ -243,7 +243,7 @@ N64RecordTypeSlideIn:
 	or a ; $72ed
 	jr z, .slideBack ; $72ee
 	ld c, $00 ; $72f0
-.loop:
+.slideForwardLoop:
 	call AdvanceFrame ; $72f2
 	ld b, $0a ; $72f5
 	farcall RestoreMenuBgAndDrawPanel ; $72f7
@@ -253,11 +253,11 @@ N64RecordTypeSlideIn:
 	inc a ; $7300
 	ld c, a ; $7301
 	cp $0d ; $7302
-	jr nz, .loop ; $7304
+	jr nz, .slideForwardLoop ; $7304
 	ret ; $7306
 .slideBack:
 	ld c, $0a ; $7307
-.loopB:
+.slideBackLoop:
 	call AdvanceFrame ; $7309
 	ld b, $0b ; $730c
 	farcall RestoreMenuBgAndDrawPanel ; $730e
@@ -267,7 +267,7 @@ N64RecordTypeSlideIn:
 	dec a ; $7317
 	ld c, a ; $7318
 	cp $ff ; $7319
-	jr nz, .loopB ; $731b
+	jr nz, .slideBackLoop ; $731b
 	ret ; $731d
 N64RecordTypeSlideOut:
 	ld a, b ; $731e

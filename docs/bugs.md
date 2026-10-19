@@ -881,13 +881,13 @@ and no amount of play can prove them.
 `InitAndRunGame` (`$01:$4018`) is the retail boot routine: `SoftReset` farcalls
 it unconditionally (`$00:$262c`, followed by `stop`), and it clears WRAM banks
 1-6, validates and repairs SRAM, applies the unlock flags, initialises story
-state and match settings, enables the LCD, and at `.loop` (`$40a5`) sets
+state and match settings, enables the LCD, and at `.runMainMenu` (`$40a5`) sets
 `wStoryModeCurrentLocation` to `STORYLOC_MAIN_MENU` and calls
 `RunStoryModeOverworld` — the entire game.
 
-Past that call, `.loopB` (`$40b2`-`$40eb`) prints the build stamp, sets
+Past that call, `.buildStampLoop` (`$40b2`-`$40eb`) prints the build stamp, sets
 `hDebugStepMode` to 3, sets the save flag on A and reruns the overworld on
-START, ending in `jp .loopB`. After it sits a **complete debug dispatcher**
+START, ending in `jp .buildStampLoop`. After it sits a **complete debug dispatcher**
 (`$01:$40ec` onward) that polls `hInputPressed`:
 
 | bit | button | what it runs |
@@ -908,20 +908,20 @@ runs `ShowEquipmentStatusScreen`, `RunMatchStatsScreen`, `ShowLinkErrorScreen`,
 the character viewer.
 
 **Nothing reaches any of it.** No instruction jumps to `$40ec`, and nothing
-falls into it: the code above ends `jp .loopB` (`$40e9`). `.loopB` itself runs
+falls into it: the code above ends `jp .buildStampLoop` (`$40e9`). `.buildStampLoop` itself runs
 only if the `farcall RunStoryModeOverworld` at `$40af` returns, which it never
 does in normal play. Hence the `Unused_01_*` names.
 
 `SAVEFLAG_DEBUG_TEST_MENU` (#63) has exactly two references, both here: it is
 **cleared** unconditionally at boot (`$401c`) and **set** if A is held at
-`$40c6`, inside `.loopB`. No instruction tests it, so the "hold A to enable the
+`$40c6`, inside `.buildStampLoop`. No instruction tests it, so the "hold A to enable the
 test menu next boot" gesture would store a bit in SRAM that nothing reads.
 
 The *in-game* debug menu is reached differently: `RunStoryLocation`'s frame
 loop calls `RunDebugMenu` (`$05:$66a0`) whenever `hDebugStepMode` is nonzero
 and no script or tile trigger is active (`$0a:$50b4`). That one is live, with a
 warp menu, a text subcommand, a palette editor and a game-flag editor. But only
-`InitAndRunGame`'s `.loopB` (`$01:$40bd`) and the `Unused` debug screens set
+`InitAndRunGame`'s `.buildStampLoop` (`$01:$40bd`) and the `Unused` debug screens set
 `hDebugStepMode`, so it is unreachable in practice too — by one byte, not by a
 missing jump.
 

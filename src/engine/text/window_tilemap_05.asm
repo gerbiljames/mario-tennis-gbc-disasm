@@ -327,13 +327,13 @@ Unused_05_CopyTilemapRowsAnimated:
 	ld e, a ; $429a
 	ld a, c ; $429b
 	ld c, $00 ; $429c
-.loop:
+.countChunksLoop:
 	inc c ; $429e
 	sub $07 ; $429f
-	jr c, .loopB ; $42a1
-	jr z, .loopB ; $42a3
-	jr .loop ; $42a5
-.loopB:
+	jr c, .chunkLoop ; $42a1
+	jr z, .chunkLoop ; $42a3
+	jr .countChunksLoop ; $42a5
+.chunkLoop:
 	push af ; $42a7
 	push bc ; $42a8
 	push de ; $42a9
@@ -378,7 +378,7 @@ Unused_05_CopyTilemapRowsAnimated:
 	add $07 ; $42de
 	ld d, a ; $42e0
 	dec c ; $42e1
-	jr nz, .loopB ; $42e2
+	jr nz, .chunkLoop ; $42e2
 	pop hl ; $42e4
 	pop de ; $42e5
 	pop bc ; $42e6

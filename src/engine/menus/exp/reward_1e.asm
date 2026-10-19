@@ -98,15 +98,15 @@ GetRewardTableIndex:
 	ret c ; $6d01
 	jr nz, .checkFlag ; $6d02
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $6d04
-	jr z, .done ; $6d07
+	jr z, .doneMachineMaster ; $6d07
 	add $02 ; $6d09
-.done:
+.doneMachineMaster:
 	ret ; $6d0b
 .checkFlag:
 	test_flag FLAG_CLEARED_WALL_MASTER ; $6d0c
-	jr z, .doneB ; $6d0f
+	jr z, .doneWallMaster ; $6d0f
 	add $02 ; $6d11
-.doneB:
+.doneWallMaster:
 	ret ; $6d13
 RewardFlagListPtrs_1e:
 	; $6d14, 8 bytes (records:2)
