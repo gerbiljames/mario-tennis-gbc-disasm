@@ -412,7 +412,7 @@ HandleTennisDictionaryListInput:
 	pop af ; $56a8
 	sound SFX_MENU_CANCEL ; $56a9
 	ld a, [wTennisDictMode] ; $56ab
-	cp $06 ; $56ae
+	cp TENNISDICT_INDEX ; $56ae
 	jr z, .backToChar6Page ; $56b0
 	ld a, $01 ; $56b2
 	push af ; $56b4

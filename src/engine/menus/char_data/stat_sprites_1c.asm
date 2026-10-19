@@ -333,7 +333,7 @@ CharDataScreen_InputLoop:
 .pressB:
 	wram_bank WRAM_SCENE ; $50f9
 	ld a, [wCharDataPage] ; $50ff
-	cp $04 ; $5102
+	cp CHARDATAPAGE_CONFIRM ; $5102
 	jr nz, .selectConfirmCell ; $5104
 	call ApplyCharStatLevelUp ; $5106
 	or a ; $5109
@@ -341,7 +341,7 @@ CharDataScreen_InputLoop:
 	ld a, $01 ; $510d
 	ret ; $510f
 .selectConfirmCell:
-	ld a, $04 ; $5110
+	ld a, CHARDATAPAGE_CONFIRM ; $5110
 	ld [wCharDataPage], a ; $5112
 	call RestoreCharDataScreenRow ; $5115
 	call LoadCharStats ; $5118
@@ -353,7 +353,7 @@ CharDataScreen_InputLoop:
 .pressA:
 	wram_bank WRAM_SCENE ; $512a
 	ld a, [wCharDataPage] ; $5130
-	cp $04 ; $5133
+	cp CHARDATAPAGE_CONFIRM ; $5133
 	jp z, CharDataScreen_InputLoop ; $5135
 	sound SFX_MENU_SELECT ; $5138
 	ld d, a ; $513a
@@ -372,7 +372,7 @@ CharDataScreen_InputLoop:
 	ld [hl], a ; $5158
 	ld hl, wCharDataChoiceCount ; $5159
 	inc [hl] ; $515c
-	ld a, $04 ; $515d
+	ld a, CHARDATAPAGE_CONFIRM ; $515d
 	ld [wCharDataPage], a ; $515f
 	test_flag FLAG_CHAR_DATA_START_EXITS ; $5162
 	jr nz, .checkStatCap ; $5165

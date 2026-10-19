@@ -309,7 +309,7 @@ RunLinkCharSelectScreen:
 	push_wram_bank WRAM_SCREEN ; $6495
 	call CheckLinkSelectionComplete ; $649e
 	ld a, [wCharSelectSlot] ; $64a1
-	cp $04 ; $64a4
+	cp CHARSELECTSLOT_DONE ; $64a4
 	jr z, .waitBanner ; $64a6
 	call DrawCharGridCursorBox ; $64a8
 	call DrawCharGridCharSprites ; $64ab

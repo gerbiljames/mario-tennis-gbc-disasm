@@ -305,7 +305,7 @@ RefreshCharInfoPanel:
 	ld h, $20 ; $577e
 	farcall FillTilemapRect ; $5780
 	ld a, [wCharSelectSlot] ; $5783
-	cp $04 ; $5786
+	cp CHARSELECTSLOT_DONE ; $5786
 	jr nz, .haveSlot ; $5788
 	jr .done ; $578a
 .haveSlot:

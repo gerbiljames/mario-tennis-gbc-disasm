@@ -248,7 +248,7 @@ ShowRankingBoard:
 	ld [wRankingBoardSilent], a ; $4ea1
 .checkFanfare:
 	ld a, [wRankingBoardMode] ; $4ea4
-	cp $01 ; $4ea7
+	cp RANKINGBOARD_FANFARE ; $4ea7
 	jr nz, .checkSecondFanfare ; $4ea9
 	sound BGM_ISLAND_OPEN_WIN ; $4eab
 	jr .draw ; $4ead
@@ -323,7 +323,7 @@ BuildRankingBoardScreen:
 	ld hl, DrawRankingMarkersTask ; $4f5d
 	call RegisterFrameTask ; $4f60
 	ld a, [wRankingBoardMode] ; $4f63
-	cp $02 ; $4f66
+	cp RANKINGBOARD_CURSOR ; $4f66
 	jr nz, .queueWram3MapToVRAM ; $4f68
 	ld a, $01 ; $4f6a
 	ld hl, RankingCursorBobTask ; $4f6c
@@ -363,7 +363,7 @@ DispatchRankingBoardAnim:
 	or a ; $4ff4
 	ret nz ; $4ff5
 	ld a, [wRankingBoardMode] ; $4ff6
-	cp $02 ; $4ff9
+	cp RANKINGBOARD_CURSOR ; $4ff9
 	ret z ; $4ffb
 	ld a, [wRankingBoardDoubles] ; $4ffc
 	or a ; $4fff

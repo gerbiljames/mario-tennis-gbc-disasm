@@ -127,7 +127,7 @@ Unused_38_CopyRemoteCharsToSlots:
 CheckLinkSelectionComplete:
 	push_wram_bank WRAM_SCREEN ; $66e9
 	ld a, [wCharSelectSlot] ; $66f2
-	cp $04 ; $66f5
+	cp CHARSELECTSLOT_DONE ; $66f5
 	jr nz, .checkSlots ; $66f7
 	ld a, [wCharSelectRemoteSlot] ; $66f9
 	cp $02 ; $66fc
@@ -199,7 +199,7 @@ HandleLinkGridButtons:
 ConfirmLinkGridSelection:
 	push_wram_bank WRAM_SCREEN ; $676f
 	ld a, [wCharSelectSlot] ; $6778
-	cp $04 ; $677b
+	cp CHARSELECTSLOT_DONE ; $677b
 	jr z, .allSlotsFilled ; $677d
 	ldh a, [hLinkRemoteInput] ; $677f
 	cp $21 ; $6781

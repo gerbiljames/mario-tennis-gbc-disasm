@@ -116,7 +116,7 @@ Unused_00_SetSpriteQueueBase:
 	ret ; $1e54
 QueueSprite16:
 	ldh a, [hSpriteQueueIndex] ; $1e55
-	cp $a0 ; $1e57
+	cp OAM_SIZE ; $1e57
 	ret z ; $1e59
 	ld l, a ; $1e5a
 	ld a, [wSpriteBufferPage] ; $1e5b
@@ -283,7 +283,7 @@ Unused_00_QueueSpriteGrid:
 	push hl ; $1f1a
 .colLoop:
 	ldh a, [hSpriteQueueIndex] ; $1f1b
-	cp $a0 ; $1f1d
+	cp OAM_SIZE ; $1f1d
 	jr nz, .store ; $1f1f
 	add sp, 4 ; $1f21
 	pop hl ; $1f23
@@ -328,7 +328,7 @@ Unused_00_QueueSpriteGrid:
 	ret ; $1f50
 QueueSprite:
 	ldh a, [hSpriteQueueIndex] ; $1f51
-	cp $a0 ; $1f53
+	cp OAM_SIZE ; $1f53
 	ret z ; $1f55
 	ld l, a ; $1f56
 	ld a, [wSpriteBufferPage] ; $1f57

@@ -56,7 +56,7 @@ TennisDictionaryScreen:
 	xor a ; $40e9
 	ld [wTennisDictSingleEntry], a ; $40ea
 	ld a, [wTennisDictMode] ; $40ed
-	cp $06 ; $40f0
+	cp TENNISDICT_INDEX ; $40f0
 	jr z, .disableLCDSafely ; $40f2
 	call AdvanceFrame ; $40f4
 	call DrawTennisDictionaryList ; $40f7
@@ -78,7 +78,7 @@ TennisDictionaryScreen:
 	call RegisterFrameTask ; $4121
 	wram_bank WRAM_SCENE ; $4124
 	ld a, [wTennisDictMode] ; $412a
-	cp $06 ; $412d
+	cp TENNISDICT_INDEX ; $412d
 	jr nz, .checkTennisDictFlags ; $412f
 	wram_bank WRAM_SCENE ; $4131
 	ld a, [wTennisDictFlags] ; $4137
@@ -277,7 +277,7 @@ ClearTennisDictionaryTilemap:
 LoadTennisDictionaryScreen:
 	wram_bank WRAM_SCENE ; $42fe
 	ld a, [wTennisDictMode] ; $4304
-	cp $06 ; $4307
+	cp TENNISDICT_INDEX ; $4307
 	jr nz, .defaultScrollX ; $4309
 	ld a, $21 ; $430b
 	jr .store ; $430d
@@ -346,7 +346,7 @@ LoadTennisDictionaryScreen:
 	call LoadPalettesMasterOnly ; $43b5
 	wram_bank WRAM_SCENE ; $43b8
 	ld a, [wTennisDictMode] ; $43be
-	cp $06 ; $43c1
+	cp TENNISDICT_INDEX ; $43c1
 	jr nz, .loadTennisDictionaryAssetsDefault ; $43c3
 	call LoadTennisDictionaryAssetsChar6 ; $43c5
 	jr .decompressData ; $43c8
@@ -540,7 +540,7 @@ UpdateTennisDictionarySprites:
 	ld [wTennisDictAnimTimer], a ; $4ed1
 .checkTennisDictMode:
 	ld a, [wTennisDictMode] ; $4ed4
-	cp $06 ; $4ed7
+	cp TENNISDICT_INDEX ; $4ed7
 	jp nz, .checkTennisDictFlags ; $4ed9
 	ld a, [wTennisDictSpriteTimer] ; $4edc
 	dec a ; $4edf

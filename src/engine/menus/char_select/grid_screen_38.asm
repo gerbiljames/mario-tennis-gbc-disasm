@@ -219,7 +219,7 @@ RunExhibitionCharSelectScreen:
 	ldh [hInputPressed], a ; $4ee1
 	push_wram_bank WRAM_SCREEN ; $4ee3
 	ld a, [wCharSelectSlot] ; $4eec
-	cp $04 ; $4eef
+	cp CHARSELECTSLOT_DONE ; $4eef
 	jr z, .cancel ; $4ef1
 	call DrawCharGridCursorBox ; $4ef3
 	call DrawCharGridCharSprites ; $4ef6
@@ -388,7 +388,7 @@ CharGridScreenGfx3:
 HandleCharGridDpad:
 	push_wram_bank WRAM_SCREEN ; $5195
 	ld a, [wCharSelectSlot] ; $519e
-	cp $04 ; $51a1
+	cp CHARSELECTSLOT_DONE ; $51a1
 	jr z, .done ; $51a3
 	ld a, [wMenuInputPressed] ; $51a5
 	ldh a, [hInputPressed] ; $51a8
@@ -815,7 +815,7 @@ DrawCharGridWaitBanner_SpriteTemplate:
 DrawCharGridScrollArrows:
 	push_wram_bank WRAM_SCREEN ; $54cc
 	ld a, [wCharSelectSlot] ; $54d5
-	cp $04 ; $54d8
+	cp CHARSELECTSLOT_DONE ; $54d8
 	jr z, .done ; $54da
 	ld de, $0245 ; $54dc
 	ld c, $01 ; $54df
