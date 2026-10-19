@@ -929,6 +929,7 @@ shots/BallPosDataReach_24.asm 092707 1000 traj:4:64
 shots/BallPosHeightOffsetsReach_24.asm 093719 40 words:1
 text/TextStrings_25.asm 09421a 391e text_pool
 text/TextStrings_26.asm 0981f6 3921 text_pool
+story/Unused_27_Palettes.asm 09d570 10 palettes
 story/End11TrainingCourtInitScriptPalette0_27.asm 09d580 40 palettes
 story/End11TrainingCourtInitScriptPalette1_27.asm 09d5c0 30 palettes
 engine/match/MatchGraphicsGfx.bin 0a0020 340 gfx

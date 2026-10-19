@@ -19,14 +19,9 @@ ActorScript_27_06:
 	as_halt
 	as_halt
 	as_halt
-; Sixteen bytes: $0080, $5520, $7ea0, $4460, then $2508 four times, read
-; as words. Three of those look like bank-$27 addresses but each lands
-; mid-object rather than on any labelled start, so it is not a pointer
-; record. Contents unknown.
-; Nothing reads it.
-Unused_27_Record:
-	; $5570, 16 bytes (bytes:16)
-	db $80, $00, $20, $55, $a0, $7e, $60, $44, $08, $25, $08, $25, $08, $25, $08, $25 ; 0x00
+; Two palettes nothing loads, in front of the scene's own.
+Unused_27_Palettes:
+	INCLUDE "data/story/Unused_27_Palettes.asm" ; $5570, 16 bytes (palettes)
 End11TrainingCourtInitScriptPalette0_27:
 	INCLUDE "data/story/End11TrainingCourtInitScriptPalette0_27.asm" ; $5580, 64 bytes (palettes)
 End11TrainingCourtInitScriptPalette1_27:
