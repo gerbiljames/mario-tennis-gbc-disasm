@@ -71,7 +71,7 @@ ServicePractice2SetupShotTarget:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $50eb
 	cp $04 ; $50ee
 	ret nc ; $50f0
-	ld hl, Table_0b_2 ; $50f1
+	ld hl, ServicePractice2ExpectedServes ; $50f1
 	add l ; $50f4
 	ld l, a ; $50f5
 	jr nc, .checkStoryModeMainCharacterLeftHanded ; $50f6
@@ -90,7 +90,7 @@ ServicePractice2SetupShotTarget:
 	jr nz, .checkTotalPointsScoredInCurrentGame ; $5109
 	ld a, [wTotalPointsScoredInCurrentGame] ; $510b
 	add a ; $510e
-	ld hl, ServicePractice2SetupShotTargetTable ; $510f
+	ld hl, ServicePractice2ServeCounterPtrs ; $510f
 	add l ; $5112
 	ld l, a ; $5113
 	jr nc, .checkStoryModeMainCharacterLeftHanded2 ; $5114
@@ -114,12 +114,12 @@ ServicePractice2SetupShotTarget:
 	add $11 ; $512a
 	ld [wDrillMessageId], a ; $512c
 	ret ; $512f
-Table_0b_2:
-	; $5130, 5 bytes (bytes:15)
-	db $0d, $0c, $0d, $0c, $0d ; 0x00
-ServicePractice2SetupShotTargetTable:
-	; $5135, 10 bytes (bytes:15)
-	db $e9, $c2, $e8, $c2, $e9, $c2, $e8, $c2, $e9, $c2 ; 0x00
+ServicePractice2ExpectedServes:
+	; $5130, 5 bytes (shot_types)
+	db SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE
+ServicePractice2ServeCounterPtrs:
+	; $5135, 10 bytes (pointers)
+	dw wDrillCounters + 2, wDrillCounters + 1, wDrillCounters + 2, wDrillCounters + 1, wDrillCounters + 2
 ServicePractice2QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $513f
 	cp POINTOUTCOME_FAULT ; $5142
@@ -149,7 +149,7 @@ ServicePractice2QueueOutcomeMessage:
 	add b ; $5175
 	ld [wDrillMessageId], a ; $5176
 	ld a, [wStoryMainLeftHanded] ; $5179
-	ld hl, ServicePractice2QueueOutcomeMessageDrillShotTable ; $517c
+	ld hl, ServicePractice2OutcomeExpectedServes ; $517c
 	add l ; $517f
 	ld l, a ; $5180
 	jr nc, .checkTotalPointsScoredInCurrentGame ; $5181
@@ -194,9 +194,9 @@ ServicePractice2QueueOutcomeMessage:
 	ld [wDrillMessageId], a ; $51c3
 	xor a ; $51c6
 	ret ; $51c7
-ServicePractice2QueueOutcomeMessageDrillShotTable:
-	; $51c8, 5 bytes (bytes:5)
-	db $0d, $0c, $0d, $0c, $0d ; 0x00
+ServicePractice2OutcomeExpectedServes:
+	; $51c8, 5 bytes (shot_types)
+	db SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE
 ServicePractice3Drill:
 	; $51cd, 16 bytes
 	drill_def CHAR_DRILL_SERVICE_PRACTICE_3, COURT_TRAINING_PRACTICE, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_PRACTICE_3, BGM_DRILL_PRACTICE, CHAR_STORY_MAIN, ServicePractice3Hooks, PracticeDrillPointTable, ServicePractice3DrillInit

@@ -15,7 +15,7 @@ PlaneObjTiles_14:
 	ds ALIGN[4]
 IslandObjTiles_14:
 	INCBIN "data/story/IslandObjTiles_14.bin" ; $5a50, 1024 bytes
-SpriteTemplate_14_0:
+PlaneSpriteTemplate_14:
 	; $5e50, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -61,7 +61,7 @@ QueuePlaneSpriteByHeight_14:
 	ld b, $10 ; $5ec2
 .queueSpriteTemplate:
 	ld c, b ; $5ec4
-	ld hl, SpriteTemplate_14_0 ; $5ec5
+	ld hl, PlaneSpriteTemplate_14 ; $5ec5
 	ld b, OAM_BANK1 ; $5ec8
 	call QueueSpriteTemplate ; $5eca
 	ret ; $5ecd
@@ -70,7 +70,7 @@ QueuePlaneSpriteByHeight_14:
 	ds ALIGN[4]
 WaterSplashObjGfx:
 	INCBIN "data/story/WaterSplashObjGfx.bin" ; $5ed0, 448 bytes
-SpriteTemplate_14_1:
+WaterSplashSpriteTemplate_14:
 	; $6090, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -81,7 +81,7 @@ LoadWaterSplashObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $60a1
 	ld hl, WaterSplashObjGfx ; $60aa
 	ld de, vTiles0 tile $20 ; $60ad
-	ld c, (SpriteTemplate_14_1 - WaterSplashObjGfx) / 16 ; $60b0
+	ld c, (WaterSplashSpriteTemplate_14 - WaterSplashObjGfx) / 16 ; $60b0
 	call QueueVRAMCopy ; $60b2
 	ld hl, WaterSplashObjPalette_14 ; $60b5
 	ld_obj_pals de, 1, 1 ; $60b8
@@ -171,7 +171,7 @@ UpdateWaterSplash0_14:
 	ld a, [wCutsceneObjPhase] ; $615c
 	add $20 ; $615f
 	ld c, a ; $6161
-	ld hl, SpriteTemplate_14_1 ; $6162
+	ld hl, WaterSplashSpriteTemplate_14 ; $6162
 	ld b, 1 ; $6165
 	call QueueSpriteTemplate ; $6167
 .done:
@@ -270,7 +270,7 @@ UpdateWaterSplash1_14:
 	ld a, [wCutsceneObjPhase + 1] ; $6216
 	add $20 ; $6219
 	ld c, a ; $621b
-	ld hl, SpriteTemplate_14_1 ; $621c
+	ld hl, WaterSplashSpriteTemplate_14 ; $621c
 	ld b, 1 ; $621f
 	call QueueSpriteTemplate ; $6221
 .done:
@@ -318,7 +318,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld b, $00 ; $627f
 .queue:
 	ld c, b ; $6281
-	ld hl, SpriteTemplate_14_0 ; $6282
+	ld hl, PlaneSpriteTemplate_14 ; $6282
 	ld b, OAM_BANK1 ; $6285
 	call QueueSpriteTemplate ; $6287
 	ret ; $628a

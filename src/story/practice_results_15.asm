@@ -342,10 +342,20 @@ InitReturnCoachScene:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7a16
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7a1b
 	ret ; $7a22
-Table_15:
-	; $7a23, 34 bytes (bytes:17)
-	db $03, $00, $2f, $00, $01, $01, $03, $03, $00, $2f, $00, $07, $01, $03, $0c, $f1, $ff ; 0x00
-	db $03, $00, $2f, $00, $01, $01, $05, $03, $00, $2f, $00, $07, $01, $05, $0c, $f1, $ff ; 0x11
+Unused_15_ActorScriptBlink3:
+	; $7a23, 17 bytes (actor_script)
+	as_set_pos 47.0, 1.0
+	as_wait 3
+	as_set_pos 47.0, 7.0
+	as_wait 3
+	as_jump Unused_15_ActorScriptBlink3
+Unused_15_ActorScriptBlink5:
+	; $7a34, 17 bytes (actor_script)
+	as_set_pos 47.0, 1.0
+	as_wait 5
+	as_set_pos 47.0, 7.0
+	as_wait 5
+	as_jump Unused_15_ActorScriptBlink5
 PlaceSwingPracticeKidActor:
 	test_flag FLAG_DOUBLES ; $7a45
 	jp nz, .done ; $7a48

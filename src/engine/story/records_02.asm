@@ -164,7 +164,7 @@ Unused_02_AddExpToCa00Record:
 	jp AddExpCapped ; $4d7b
 Unused_02_StubNop:
 	ret ; $4d7e
-Table_02:
+Unused_02_Table:
 	; $4d7f, 16 bytes (bytes:16)
 	db $02, $02, $03, $04, $05, $07, $07, $07, $02, $02, $02, $03, $02, $02, $02, $02 ; 0x00
 AddPlayerExp:

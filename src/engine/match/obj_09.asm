@@ -181,7 +181,7 @@ ObjTemplates_09:
 	obj_template $30, $34, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, SFX_SCORE_DISPLAY, 0 ; record 3
 GameScoreDisplayObjsObjTemplate:
 	; $41fc, 16 bytes (obj_template)
-	obj_template $40, $40, SpriteTemplate_09_8, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_SCORE_DISPLAY, 0 ; record 0
+	obj_template $40, $40, GameScoreDisplaySpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_SCORE_DISPLAY, 0 ; record 0
 SpawnGameScoreDisplayObjsObjTemplate:
 	; $420c, 32 bytes (obj_template)
 	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateShow, 0, ObjUpdateHide, 0, SFX_SCORE_DISPLAY, 0 ; record 0

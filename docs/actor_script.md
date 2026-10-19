@@ -109,10 +109,11 @@ points.
 ## Unreferenced script-shaped blobs
 
 Five story-bank blobs decode as clean looping scripts with no outside
-reference. Two are rendered as scripts, referenced only by their own
-`as_jump`: `ActorScript_0e_23` (`$0e:$7ca4`) and `ActorScript_14_4`
-(`$14:$78e7`). Three stay `db` rows: `Table_13` (`$13:$62db`), `Table_15`
-(`$15:$7a23`), `Unused_27_ActorLists` (`$27:$4b41`).
+reference. Four are rendered as scripts, referenced only by their own
+`as_jump`: `ActorScript_0e_23` (`$0e:$7ca4`), `ActorScript_14_4`
+(`$14:$78e7`), `Unused_13_ActorScriptHopNod`/`BounceShake` (`$13:$62db`) and
+`Unused_15_ActorScriptBlink3`/`5` (`$15:$7a23`). `Unused_27_ActorLists`
+(`$27:$4b41`) stays `db` rows.
 
 ## What follows a script
 

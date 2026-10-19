@@ -165,7 +165,7 @@ ServiceMatch3JudgePoint:
 	dw ServiceMatch3Cases1.returnZero2 ; $4d56 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $4d58
-	ld hl, ServiceMatch3JudgePointDrillShotTable ; $4d5b
+	ld hl, ServiceMatch3JudgePointMessages ; $4d5b
 	add l ; $4d5e
 	ld l, a ; $4d5f
 	jr nc, .readEntry1 ; $4d60
@@ -176,7 +176,7 @@ ServiceMatch3JudgePoint:
 	ld b, $06 ; $4d65
 	call QueueDrillResultMessage ; $4d67
 	ld a, [wPointOutcome] ; $4d6a
-	ld hl, SignedTable_0b_00 ; $4d6d
+	ld hl, OddRallyVerdicts ; $4d6d
 	add l ; $4d70
 	ld l, a ; $4d71
 	jr nc, .readEntry2 ; $4d72
@@ -184,9 +184,9 @@ ServiceMatch3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $4d75
 	ret ; $4d76
-ServiceMatch3JudgePointDrillShotTable:
-	; $4d77, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01
+ServiceMatch3JudgePointMessages:
+	; $4d77, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT
 ServiceMatch3Cases1:
 	xor a ; $4d81
 	ret ; $4d82
@@ -206,7 +206,7 @@ ServiceMatch3Cases1:
 	dw ServiceMatch3Cases2.storeMatchAbortFlag2 ; $4d90 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4d92
-	ld hl, ServiceMatch3Cases1DrillShotTable ; $4d95
+	ld hl, ServiceMatch3Cases1Messages ; $4d95
 	add l ; $4d98
 	ld l, a ; $4d99
 	jr nc, .read ; $4d9a
@@ -217,7 +217,7 @@ ServiceMatch3Cases1:
 	ld b, $06 ; $4d9f
 	call QueueDrillResultMessage ; $4da1
 	ld a, [wPointOutcome] ; $4da4
-	ld hl, SignedTable_0b_01 ; $4da7
+	ld hl, EvenRallyVerdicts ; $4da7
 	add l ; $4daa
 	ld l, a ; $4dab
 	jr nc, .readB ; $4dac
@@ -225,9 +225,9 @@ ServiceMatch3Cases1:
 .readB:
 	ld a, [hl] ; $4daf
 	ret ; $4db0
-ServiceMatch3Cases1DrillShotTable:
-	; $4db1, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff
+ServiceMatch3Cases1Messages:
+	; $4db1, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_HIDE
 ServiceMatch3Cases2:
 	ld a, [wPointOutcome] ; $4dbb
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $4dbe

@@ -87,7 +87,7 @@ AnimateIslandSkyEffectSprites_14:
 	ds ALIGN[4]
 DistantPlaneObjGfx:
 	INCBIN "data/story/DistantPlaneObjGfx.bin" ; $7430, 256 bytes
-SpriteTemplate_14_3:
+DistantPlaneSpriteTemplate_14:
 	; $7530, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -96,7 +96,7 @@ LoadDistantPlaneObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $7539
 	ld hl, DistantPlaneObjGfx ; $7542
 	ld de, vTiles0 + VRAM_BANK1 ; $7545
-	ld c, (SpriteTemplate_14_3 - DistantPlaneObjGfx) / 16 ; $7548
+	ld c, (DistantPlaneSpriteTemplate_14 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
 	ld hl, IslandObjPalette_14 ; $754d
 	ld_obj_pals de, 0, 1 ; $7550
@@ -108,7 +108,7 @@ QueueDistantPlaneSprite_14:
 	ld a, [wCutsceneObjPhase] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
-	ld hl, SpriteTemplate_14_3 ; $7564
+	ld hl, DistantPlaneSpriteTemplate_14 ; $7564
 	ld b, OAM_BANK1 ; $7567
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
@@ -155,7 +155,7 @@ QueueTwinkleSprite_14:
 	ld e, a ; $76b8
 	ld a, [wCutsceneObjPhase] ; $76b9
 	ld c, a ; $76bc
-	ld hl, SpriteTemplate_14_3 ; $76bd
+	ld hl, DistantPlaneSpriteTemplate_14 ; $76bd
 	ld b, OAM_BANK1 ; $76c0
 	call QueueSpriteTemplate ; $76c2
 	ret ; $76c5

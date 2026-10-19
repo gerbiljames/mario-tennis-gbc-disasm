@@ -22,7 +22,7 @@ DrawSavedDataCursorOption0:
 	ld c, $70 ; $72ca
 	ld_xy de, $24, $48 ; $72cc
 	farcall ApplySpriteBobOffset ; $72cf
-	ld hl, SpriteTemplate_1b ; $72d2
+	ld hl, DrawSavedDataCursor_SpriteTemplate ; $72d2
 	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
 DrawSavedDataCursorOption1:
@@ -36,7 +36,7 @@ DrawSavedDataCursorOption1:
 	ld c, $70 ; $72eb
 	ld_xy de, $6c, $48 ; $72ed
 	farcall ApplySpriteBobOffset ; $72f0
-	ld hl, SpriteTemplate_1b ; $72f3
+	ld hl, DrawSavedDataCursor_SpriteTemplate ; $72f3
 	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
 DrawSavedDataCursorOption0_SpriteTemplate:
@@ -62,7 +62,7 @@ DrawSavedDataCursorOption1_SpriteTemplate:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite $10, $48, $10, $00
 	oam_sprite_end
-SpriteTemplate_1b:
+DrawSavedDataCursor_SpriteTemplate:
 	; $7340, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

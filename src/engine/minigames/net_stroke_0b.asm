@@ -188,7 +188,7 @@ NetGamePractice3JudgePoint:
 	dw NetGamePractice3Cases1.returnZero ; $6301 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6303
-	ld hl, NetGamePractice3JudgePointDrillShotTable ; $6306
+	ld hl, NetGamePractice3JudgePointMessages ; $6306
 	add l ; $6309
 	ld l, a ; $630a
 	jr nc, .readEntry1 ; $630b
@@ -199,7 +199,7 @@ NetGamePractice3JudgePoint:
 	ld b, $00 ; $6310
 	call QueueDrillResultMessage ; $6312
 	ld a, [wPointOutcome] ; $6315
-	ld hl, SignedTable_0b_00 ; $6318
+	ld hl, OddRallyVerdicts ; $6318
 	add l ; $631b
 	ld l, a ; $631c
 	jr nc, .readEntry2 ; $631d
@@ -207,9 +207,9 @@ NetGamePractice3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6320
 	ret ; $6321
-NetGamePractice3JudgePointDrillShotTable:
-	; $6322, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $33, $ff, $ff, $38, $31, $ff, $ff, $31
+NetGamePractice3JudgePointMessages:
+	; $6322, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED
 NetGamePractice3Cases1:
 	xor a ; $632c
 	ret ; $632d
@@ -248,7 +248,7 @@ NetGamePractice3Cases1:
 	dw NetGamePractice3Cases2.returnZero2 ; $6363 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6365
-	ld hl, NetGamePractice3Cases1DrillShotTable ; $6368
+	ld hl, NetGamePractice3Cases1Messages ; $6368
 	add l ; $636b
 	ld l, a ; $636c
 	jr nc, .read ; $636d
@@ -259,7 +259,7 @@ NetGamePractice3Cases1:
 	ld b, $00 ; $6372
 	call QueueDrillResultMessage ; $6374
 	ld a, [wPointOutcome] ; $6377
-	ld hl, SignedTable_0b_01 ; $637a
+	ld hl, EvenRallyVerdicts ; $637a
 	add l ; $637d
 	ld l, a ; $637e
 	jr nc, .readB ; $637f
@@ -267,9 +267,9 @@ NetGamePractice3Cases1:
 .readB:
 	ld a, [hl] ; $6382
 	ret ; $6383
-NetGamePractice3Cases1DrillShotTable:
-	; $6384, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $31, $31, $39, $31, $31, $39
+NetGamePractice3Cases1Messages:
+	; $6384, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_YOU_DIDNT_HIT_A_DROP_SHOT_SO_YOU_FAIL, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_YOU_DIDNT_HIT_A_DROP_SHOT_SO_YOU_FAIL
 NetGamePractice3Cases2:
 	xor a ; $638e
 	ret ; $638f
@@ -289,7 +289,7 @@ NetGamePractice3Cases2:
 	dw NetGamePractice3Cases3.storeMatchAbortFlag2 ; $639d jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $639f
-	ld hl, NetGamePractice3Cases2DrillShotTable ; $63a2
+	ld hl, NetGamePractice3Cases2Messages ; $63a2
 	add l ; $63a5
 	ld l, a ; $63a6
 	jr nc, .read ; $63a7
@@ -300,7 +300,7 @@ NetGamePractice3Cases2:
 	ld b, $00 ; $63ac
 	call QueueDrillResultMessage ; $63ae
 	ld a, [wPointOutcome] ; $63b1
-	ld hl, SignedTable_0b_00 ; $63b4
+	ld hl, OddRallyVerdicts ; $63b4
 	add l ; $63b7
 	ld l, a ; $63b8
 	jr nc, .readB ; $63b9
@@ -308,9 +308,9 @@ NetGamePractice3Cases2:
 .readB:
 	ld a, [hl] ; $63bc
 	ret ; $63bd
-NetGamePractice3Cases2DrillShotTable:
-	; $63be, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $3c, $3c, $30, $ff, $ff, $30
+NetGamePractice3Cases2Messages:
+	; $63be, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_SCORE_WITH_YOUR_DROP_SHOT_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_SCORE_WITH_YOUR_DROP_SHOT_SO_YOU_FAIL, DRILLMSG_NICE_DROP_SHOT_YOU_DID_IT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_NICE_DROP_SHOT_YOU_DID_IT
 NetGamePractice3Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $63c8
 	ld b, $00 ; $63ca
@@ -513,7 +513,7 @@ StrokeMatch1JudgePoint:
 	dw StrokeMatch1Cases1.returnZero2 ; $6528 jumptable
 .rally1:
 	ld a, [wPointOutcome] ; $652a
-	ld hl, StrokeMatch1JudgePointDrillShotTable ; $652d
+	ld hl, StrokeMatch1JudgePointMessages ; $652d
 	add l ; $6530
 	ld l, a ; $6531
 	jr nc, .readEntry1 ; $6532
@@ -532,9 +532,9 @@ StrokeMatch1JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6547
 	ret ; $6548
-StrokeMatch1JudgePointDrillShotTable:
-	; $6549, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $63, $ff, $ff, $ff, $60, $ff, $ff, $60
+StrokeMatch1JudgePointMessages:
+	; $6549, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_MY_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_YOUR_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_YOUR_POINT
 StrokeMatch1Cases1:
 	xor a ; $6553
 	ret ; $6554
@@ -554,7 +554,7 @@ StrokeMatch1Cases1:
 	dw StrokeMatch1Cases2.returnZero ; $6562 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6564
-	ld hl, StrokeMatch1Cases1DrillShotTable ; $6567
+	ld hl, StrokeMatch1Cases1Messages ; $6567
 	add l ; $656a
 	ld l, a ; $656b
 	jr nc, .read ; $656c
@@ -573,9 +573,9 @@ StrokeMatch1Cases1:
 .readB:
 	ld a, [hl] ; $6581
 	ret ; $6582
-StrokeMatch1Cases1DrillShotTable:
-	; $6583, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $60, $60, $5e, $64, $64, $60
+StrokeMatch1Cases1Messages:
+	; $6583, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_YOUR_POINT, DRILLMSG_I_DIDNT_RETURN_IT_YOUR_POINT, DRILLMSG_NICE_STROKE_YOUR_POINT, DRILLMSG_YOU_RETURNED_MY_SERVE_BEFORE_IT_BOUNCED_MY_POINT, DRILLMSG_YOU_RETURNED_MY_SERVE_BEFORE_IT_BOUNCED_MY_POINT, DRILLMSG_I_DIDNT_RETURN_IT_YOUR_POINT
 StrokeMatch1Cases2:
 	ld a, [wBallBounceCount] ; $658d
 	cp $01 ; $6590
@@ -614,7 +614,7 @@ StrokeMatch1Cases2:
 	dw StrokeMatch1Cases3.returnZero ; $65c8 jumptable
 .checkPointOutcome2:
 	ld a, [wPointOutcome] ; $65ca
-	ld hl, StrokeMatch1Cases2DrillShotTable ; $65cd
+	ld hl, StrokeMatch1Cases2Messages ; $65cd
 	add l ; $65d0
 	ld l, a ; $65d1
 	jr nc, .read ; $65d2
@@ -633,9 +633,9 @@ StrokeMatch1Cases2:
 .readB:
 	ld a, [hl] ; $65e7
 	ret ; $65e8
-StrokeMatch1Cases2DrillShotTable:
-	; $65e9, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60
+StrokeMatch1Cases2Messages:
+	; $65e9, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_MY_POINT, DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_MY_POINT, DRILLMSG_NICE_STROKE_YOUR_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_YOUR_POINT
 StrokeMatch1Cases3:
 	ld a, $62 ; $65f3
 	ld b, $07 ; $65f5
@@ -671,7 +671,7 @@ StrokeMatch1Cases3:
 	dw StrokeMatch1Cases4.storeMatchAbortFlag3 ; $6628 jumptable
 .checkPointOutcome2:
 	ld a, [wPointOutcome] ; $662a
-	ld hl, StrokeMatch1Cases3DrillShotTable ; $662d
+	ld hl, StrokeMatch1Cases3Messages ; $662d
 	add l ; $6630
 	ld l, a ; $6631
 	jr nc, .read ; $6632
@@ -690,9 +690,9 @@ StrokeMatch1Cases3:
 .readB:
 	ld a, [hl] ; $6647
 	ret ; $6648
-StrokeMatch1Cases3DrillShotTable:
-	; $6649, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60
+StrokeMatch1Cases3Messages:
+	; $6649, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_MY_POINT, DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_MY_POINT, DRILLMSG_NICE_STROKE_YOUR_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_YOUR_POINT
 StrokeMatch1Cases4:
 	ld a, $62 ; $6653
 	ld b, $07 ; $6655
@@ -734,10 +734,10 @@ SelectStrokeTargetTableByPoint:
 	ld a, $00 ; $6694
 	or a ; $6696
 	jr nz, .nonZero ; $6697
-	ld hl, SignedTable_0b_01 ; $6699
+	ld hl, EvenRallyVerdicts ; $6699
 	jr .done ; $669c
 .nonZero:
-	ld hl, SignedTable_0b_00 ; $669e
+	ld hl, OddRallyVerdicts ; $669e
 .done:
 	ret ; $66a1
 SelectStrokeTargetTableByPointAlt:
@@ -746,9 +746,9 @@ SelectStrokeTargetTableByPointAlt:
 	ld a, $00 ; $66a7
 	or a ; $66a9
 	jr nz, .nonZero ; $66aa
-	ld hl, SignedTable_0b_00 ; $66ac
+	ld hl, OddRallyVerdicts ; $66ac
 	jr .done ; $66af
 .nonZero:
-	ld hl, SignedTable_0b_01 ; $66b1
+	ld hl, EvenRallyVerdicts ; $66b1
 .done:
 	ret ; $66b4

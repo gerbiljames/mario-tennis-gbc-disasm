@@ -44,7 +44,7 @@ NetGameMatch3JudgePoint:
 	dw NetGameMatch3Cases1.returnZero2 ; $5abd jumptable
 .result0:
 	ld a, [wPointOutcome] ; $5abf
-	ld hl, NetGameMatch3JudgePointDrillShotTable ; $5ac2
+	ld hl, NetGameMatch3JudgePointMessages ; $5ac2
 	add l ; $5ac5
 	ld l, a ; $5ac6
 	jr nc, .readEntry1 ; $5ac7
@@ -55,7 +55,7 @@ NetGameMatch3JudgePoint:
 	ld b, $0d ; $5acc
 	call QueueDrillResultMessage ; $5ace
 	ld a, [wPointOutcome] ; $5ad1
-	ld hl, SignedTable_0b_00 ; $5ad4
+	ld hl, OddRallyVerdicts ; $5ad4
 	add l ; $5ad7
 	ld l, a ; $5ad8
 	jr nc, .readEntry2 ; $5ad9
@@ -63,9 +63,9 @@ NetGameMatch3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $5adc
 	ret ; $5add
-NetGameMatch3JudgePointDrillShotTable:
-	; $5ade, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $19, $ff, $ff, $1d, $17, $ff, $ff, $17
+NetGameMatch3JudgePointMessages:
+	; $5ade, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_3, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT
 NetGameMatch3Cases1:
 	xor a ; $5ae8
 	ret ; $5ae9
@@ -85,7 +85,7 @@ NetGameMatch3Cases1:
 	dw NetGameMatch3Cases2.returnZero2 ; $5af7 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5af9
-	ld hl, NetGameMatch3Cases1DrillShotTable ; $5afc
+	ld hl, NetGameMatch3Cases1Messages ; $5afc
 	add l ; $5aff
 	ld l, a ; $5b00
 	jr nc, .read ; $5b01
@@ -96,7 +96,7 @@ NetGameMatch3Cases1:
 	ld b, $0d ; $5b06
 	call QueueDrillResultMessage ; $5b08
 	ld a, [wPointOutcome] ; $5b0b
-	ld hl, SignedTable_0b_01 ; $5b0e
+	ld hl, EvenRallyVerdicts ; $5b0e
 	add l ; $5b11
 	ld l, a ; $5b12
 	jr nc, .readB ; $5b13
@@ -104,9 +104,9 @@ NetGameMatch3Cases1:
 .readB:
 	ld a, [hl] ; $5b16
 	ret ; $5b17
-NetGameMatch3Cases1DrillShotTable:
-	; $5b18, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $17, $17, $20, $1e, $1e, $20
+NetGameMatch3Cases1Messages:
+	; $5b18, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT, DRILLMSG_I_DIDNT_RETURN_THE_BALL_SO_YOU_GET_A_POINT, DRILLMSG_YOU_DIDNT_PLAY_THE_NET_SO_YOU_FAIL, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET_2, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET_2, DRILLMSG_YOU_DIDNT_PLAY_THE_NET_SO_YOU_FAIL
 NetGameMatch3Cases2:
 	xor a ; $5b22
 	ret ; $5b23
@@ -126,7 +126,7 @@ NetGameMatch3Cases2:
 	dw NetGameMatch3Cases3.returnZero2 ; $5b31 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5b33
-	ld hl, NetGameMatch3Cases2DrillShotTable ; $5b36
+	ld hl, NetGameMatch3Cases2Messages ; $5b36
 	add l ; $5b39
 	ld l, a ; $5b3a
 	jr nc, .read ; $5b3b
@@ -137,7 +137,7 @@ NetGameMatch3Cases2:
 	ld b, $0d ; $5b40
 	call QueueDrillResultMessage ; $5b42
 	ld a, [wPointOutcome] ; $5b45
-	ld hl, SignedTable_0b_00 ; $5b48
+	ld hl, OddRallyVerdicts ; $5b48
 	add l ; $5b4b
 	ld l, a ; $5b4c
 	jr nc, .readB ; $5b4d
@@ -145,9 +145,9 @@ NetGameMatch3Cases2:
 .readB:
 	ld a, [hl] ; $5b50
 	ret ; $5b51
-NetGameMatch3Cases2DrillShotTable:
-	; $5b52, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $1d, $1d, $16, $ff, $ff, $16
+NetGameMatch3Cases2Messages:
+	; $5b52, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL, DRILLMSG_WAY_TO_PLAY_THE_NET_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_WAY_TO_PLAY_THE_NET_YOU_GET_A_POINT
 NetGameMatch3Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE ; $5b5c
 	ld b, $0d ; $5b5e
@@ -175,7 +175,7 @@ NetGameMatch3Cases3:
 	dw NetGameMatch3Cases4.noAction2 ; $5b7e jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5b80
-	ld hl, NetGameMatch3Cases3DrillShotTable ; $5b83
+	ld hl, NetGameMatch3Cases3Messages ; $5b83
 	add l ; $5b86
 	ld l, a ; $5b87
 	jr nc, .read ; $5b88
@@ -186,7 +186,7 @@ NetGameMatch3Cases3:
 	ld b, $0d ; $5b8d
 	call QueueDrillResultMessage ; $5b8f
 	ld a, [wPointOutcome] ; $5b92
-	ld hl, SignedTable_0b_01 ; $5b95
+	ld hl, EvenRallyVerdicts ; $5b95
 	add l ; $5b98
 	ld l, a ; $5b99
 	jr nc, .readB ; $5b9a
@@ -194,9 +194,9 @@ NetGameMatch3Cases3:
 .readB:
 	ld a, [hl] ; $5b9d
 	ret ; $5b9e
-NetGameMatch3Cases3DrillShotTable:
-	; $5b9f, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $16, $16, $1d, $ff, $ff, $1d
+NetGameMatch3Cases3Messages:
+	; $5b9f, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_WAY_TO_PLAY_THE_NET_YOU_GET_A_POINT, DRILLMSG_WAY_TO_PLAY_THE_NET_YOU_GET_A_POINT, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL
 NetGameMatch3Cases4:
 	xor a ; $5ba9
 	ret ; $5baa
@@ -441,7 +441,7 @@ NetGamePractice1JudgePoint:
 	dw NetGamePractice1Cases1.returnZero2 ; $5d88 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $5d8a
-	ld hl, NetGamePractice1JudgePointSignedTable ; $5d8d
+	ld hl, NetGamePractice1JudgePointMessages ; $5d8d
 	add l ; $5d90
 	ld l, a ; $5d91
 	jr nc, .readEntry1 ; $5d92
@@ -452,7 +452,7 @@ NetGamePractice1JudgePoint:
 	ld b, $00 ; $5d97
 	call QueueDrillResultMessage ; $5d99
 	ld a, [wPointOutcome] ; $5d9c
-	ld hl, SignedTable_0b_00 ; $5d9f
+	ld hl, OddRallyVerdicts ; $5d9f
 	add l ; $5da2
 	ld l, a ; $5da3
 	jr nc, .readEntry2 ; $5da4
@@ -460,9 +460,9 @@ NetGamePractice1JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $5da7
 	ret ; $5da8
-NetGamePractice1JudgePointSignedTable:
-	; $5da9, 10 bytes (bytes:10)
-	db $ff, $ff, $33, $ff, $ff, $38, $31, $ff, $ff, $31 ; 0x00
+NetGamePractice1JudgePointMessages:
+	; $5da9, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED
 NetGamePractice1Cases1:
 	xor a ; $5db3
 	ret ; $5db4
@@ -482,7 +482,7 @@ NetGamePractice1Cases1:
 	dw NetGamePractice1Cases2.returnZero2 ; $5dc2 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5dc4
-	ld hl, NetGamePractice1Cases1SignedTable ; $5dc7
+	ld hl, NetGamePractice1Cases1Messages ; $5dc7
 	add l ; $5dca
 	ld l, a ; $5dcb
 	jr nc, .read ; $5dcc
@@ -493,7 +493,7 @@ NetGamePractice1Cases1:
 	ld b, $00 ; $5dd1
 	call QueueDrillResultMessage ; $5dd3
 	ld a, [wPointOutcome] ; $5dd6
-	ld hl, SignedTable_0b_01 ; $5dd9
+	ld hl, EvenRallyVerdicts ; $5dd9
 	add l ; $5ddc
 	ld l, a ; $5ddd
 	jr nc, .readB ; $5dde
@@ -501,9 +501,9 @@ NetGamePractice1Cases1:
 .readB:
 	ld a, [hl] ; $5de1
 	ret ; $5de2
-NetGamePractice1Cases1SignedTable:
-	; $5de3, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $31, $31, $3a, $31, $31, $3a ; 0x00
+NetGamePractice1Cases1Messages:
+	; $5de3, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_YOU_DIDNT_VOLLEY_SO_YOU_FAIL, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_YOU_DIDNT_VOLLEY_SO_YOU_FAIL
 NetGamePractice1Cases2:
 	xor a ; $5ded
 	ret ; $5dee
@@ -523,7 +523,7 @@ NetGamePractice1Cases2:
 	dw NetGamePractice1Cases3.storeMatchAbortFlag2 ; $5dfc jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5dfe
-	ld hl, NetGamePractice1Cases2SignedTable1 ; $5e01
+	ld hl, NetGamePractice1Cases2Messages ; $5e01
 	add l ; $5e04
 	ld l, a ; $5e05
 	jr nc, .read ; $5e06
@@ -534,7 +534,7 @@ NetGamePractice1Cases2:
 	ld b, $00 ; $5e0b
 	call QueueDrillResultMessage ; $5e0d
 	ld a, [wPointOutcome] ; $5e10
-	ld hl, NetGamePractice1Cases2SignedTable0 ; $5e13
+	ld hl, NetGamePractice1Cases2Verdicts ; $5e13
 	add l ; $5e16
 	ld l, a ; $5e17
 	jr nc, .readB ; $5e18
@@ -542,12 +542,12 @@ NetGamePractice1Cases2:
 .readB:
 	ld a, [hl] ; $5e1b
 	ret ; $5e1c
-NetGamePractice1Cases2SignedTable0:
-	; $5e1d, 10 bytes (bytes:10)
-	db $00, $00, $ff, $00, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
-NetGamePractice1Cases2SignedTable1:
-	; $5e27, 10 bytes (bytes:10)
-	db $ff, $ff, $ff, $ff, $38, $38, $38, $ff, $ff, $38 ; 0x00
+NetGamePractice1Cases2Verdicts:
+	; $5e1d, 10 bytes (drill_verdicts)
+	drill_verdicts WINLOSE_NONE, WINLOSE_NONE, WINLOSE_LOSE, WINLOSE_NONE, WINLOSE_LOSE, WINLOSE_LOSE, WINLOSE_LOSE, WINLOSE_LOSE, WINLOSE_LOSE, WINLOSE_LOSE
+NetGamePractice1Cases2Messages:
+	; $5e27, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_2
 NetGamePractice1Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $5e31
 	ld b, $00 ; $5e33
@@ -787,7 +787,7 @@ NetGamePractice2JudgePoint:
 	dw NetGamePractice2Cases1.returnZero ; $6042 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6044
-	ld hl, NetGamePractice2JudgePointDrillShotTable ; $6047
+	ld hl, NetGamePractice2JudgePointMessages ; $6047
 	add l ; $604a
 	ld l, a ; $604b
 	jr nc, .readEntry1 ; $604c
@@ -798,7 +798,7 @@ NetGamePractice2JudgePoint:
 	ld b, $00 ; $6051
 	call QueueDrillResultMessage ; $6053
 	ld a, [wPointOutcome] ; $6056
-	ld hl, SignedTable_0b_00 ; $6059
+	ld hl, OddRallyVerdicts ; $6059
 	add l ; $605c
 	ld l, a ; $605d
 	jr nc, .readEntry2 ; $605e
@@ -806,9 +806,9 @@ NetGamePractice2JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6061
 	ret ; $6062
-NetGamePractice2JudgePointDrillShotTable:
-	; $6063, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $33, $ff, $ff, $3b, $31, $ff, $ff, $31
+NetGamePractice2JudgePointMessages:
+	; $6063, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_A_LONG_DEEP_SERVE_SO_YOU_FAIL, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED
 NetGamePractice2Cases1:
 	xor a ; $606d
 	ret ; $606e
@@ -851,7 +851,7 @@ NetGamePractice2Cases1:
 	dw NetGamePractice2Cases2.returnZero2 ; $60ac jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $60ae
-	ld hl, NetGamePractice2Cases1DrillShotTable ; $60b1
+	ld hl, NetGamePractice2Cases1Messages ; $60b1
 	add l ; $60b4
 	ld l, a ; $60b5
 	jr nc, .read ; $60b6
@@ -862,7 +862,7 @@ NetGamePractice2Cases1:
 	ld b, $00 ; $60bb
 	call QueueDrillResultMessage ; $60bd
 	ld a, [wPointOutcome] ; $60c0
-	ld hl, SignedTable_0b_01 ; $60c3
+	ld hl, EvenRallyVerdicts ; $60c3
 	add l ; $60c6
 	ld l, a ; $60c7
 	jr nc, .readB ; $60c8
@@ -870,9 +870,9 @@ NetGamePractice2Cases1:
 .readB:
 	ld a, [hl] ; $60cb
 	ret ; $60cc
-NetGamePractice2Cases1DrillShotTable:
-	; $60cd, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $31, $31, $36, $31, $31, $36
+NetGamePractice2Cases1Messages:
+	; $60cd, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_SO_YOU_FAIL_2, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_I_DIDNT_RETURN_IT_SO_YOU_SUCCEED, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_SO_YOU_FAIL_2
 NetGamePractice2Cases2:
 	ld a, [wBallBounceCount] ; $60d7
 	or a ; $60da
@@ -901,7 +901,7 @@ NetGamePractice2Cases2:
 	dw NetGamePractice2Cases3.storeMatchAbortFlag2 ; $60fa jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $60fc
-	ld hl, NetGamePractice2Cases2DrillShotTable ; $60ff
+	ld hl, NetGamePractice2Cases2Messages ; $60ff
 	add l ; $6102
 	ld l, a ; $6103
 	jr nc, .read ; $6104
@@ -912,7 +912,7 @@ NetGamePractice2Cases2:
 	ld b, $00 ; $6109
 	call QueueDrillResultMessage ; $610b
 	ld a, [wPointOutcome] ; $610e
-	ld hl, SignedTable_0b_00 ; $6111
+	ld hl, OddRallyVerdicts ; $6111
 	add l ; $6114
 	ld l, a ; $6115
 	jr nc, .readB ; $6116
@@ -920,9 +920,9 @@ NetGamePractice2Cases2:
 .readB:
 	ld a, [hl] ; $6119
 	ret ; $611a
-NetGamePractice2Cases2DrillShotTable:
-	; $611b, 10 bytes (drill_outcomes)
-	drill_outcomes $ff, $ff, $ff, $ff, $37, $37, $2f, $ff, $ff, $2f
+NetGamePractice2Cases2Messages:
+	; $611b, 10 bytes (drill_messages)
+	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_WINNER_SO_YOU_FAIL, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_WINNER_SO_YOU_FAIL, DRILLMSG_NICE_SMASH_YOU_DID_IT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_NICE_SMASH_YOU_DID_IT
 NetGamePractice2Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_SO_YOU_FAIL_2 ; $6125
 	ld b, $00 ; $6127
