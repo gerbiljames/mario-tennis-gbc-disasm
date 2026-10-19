@@ -390,7 +390,7 @@ DormRoomEntry09Scene:
 	ld [wStoryModeCurrentLocation], a ; $5a9d
 	ld a, $0f ; $5aa0
 	ld [wStoryModeEntryPoint], a ; $5aa2
-	ld a, $ff ; $5aa5
+	ld a, EXITTRIGGER_DIRECT ; $5aa5
 	ld [wUnusedExitTriggerIdMirror], a ; $5aa7
 	ld [wStoryModeExitTriggerRequest], a ; $5aaa
 	ret ; $5aad

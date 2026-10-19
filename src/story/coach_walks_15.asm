@@ -38,7 +38,7 @@ ReturnCoachWalkToCourtAndStartLesson:
 	ld [wStoryModeCurrentLocation], a ; $7c18
 	ld a, $0a ; $7c1b
 	ld [wStoryModeEntryPoint], a ; $7c1d
-	ld a, $ff ; $7c20
+	ld a, EXITTRIGGER_DIRECT ; $7c20
 	ld [wUnusedExitTriggerIdMirror], a ; $7c22
 	ld [wStoryModeExitTriggerRequest], a ; $7c25
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7c28

@@ -262,7 +262,7 @@ PromptExhibitionMatch:
 	ld [wStoryModeCurrentLocation], a ; $6972
 	ld a, [wMapScratch + 2] ; $6975
 	ld [wStoryModeEntryPoint], a ; $6978
-	ld a, $ff ; $697b
+	ld a, EXITTRIGGER_DIRECT ; $697b
 	ld [wUnusedExitTriggerIdMirror], a ; $697d
 	ld [wStoryModeExitTriggerRequest], a ; $6980
 	farcall EndCutsceneScriptMode ; $6983

@@ -54,7 +54,7 @@ PrepareStoryMatch:
 	ld [wStoryModeCurrentLocation], a ; $7b81
 	ld a, $0a ; $7b84
 	ld [wStoryModeEntryPoint], a ; $7b86
-	ld a, $ff ; $7b89
+	ld a, EXITTRIGGER_DIRECT ; $7b89
 	ld [wUnusedExitTriggerIdMirror], a ; $7b8b
 	ld [wStoryModeExitTriggerRequest], a ; $7b8e
 	farcall InitStoryMatchSettings ; $7b91
@@ -110,7 +110,7 @@ HandleExhibitionMatchResult:
 	ld [wStoryModeCurrentLocation], a ; $7c26
 	ld a, $0e ; $7c29
 	ld [wStoryModeEntryPoint], a ; $7c2b
-	ld a, $ff ; $7c2e
+	ld a, EXITTRIGGER_DIRECT ; $7c2e
 	ld [wUnusedExitTriggerIdMirror], a ; $7c30
 	ld [wStoryModeExitTriggerRequest], a ; $7c33
 	ret ; $7c36
@@ -139,7 +139,7 @@ HandleExhibitionMatchResult:
 	ld [wStoryModeCurrentLocation], a ; $7c5d
 	ld a, $0a ; $7c60
 	ld [wStoryModeEntryPoint], a ; $7c62
-	ld a, $ff ; $7c65
+	ld a, EXITTRIGGER_DIRECT ; $7c65
 	ld [wUnusedExitTriggerIdMirror], a ; $7c67
 	ld [wStoryModeExitTriggerRequest], a ; $7c6a
 	ret ; $7c6d

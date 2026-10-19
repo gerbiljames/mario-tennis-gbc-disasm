@@ -154,7 +154,7 @@ WalkToNetChallengeCourtCutscene:
 	ld [wStoryModeCurrentLocation], a ; $6b38
 	ld a, $0a ; $6b3b
 	ld [wStoryModeEntryPoint], a ; $6b3d
-	ld a, $ff ; $6b40
+	ld a, EXITTRIGGER_DIRECT ; $6b40
 	ld [wUnusedExitTriggerIdMirror], a ; $6b42
 	ld [wStoryModeExitTriggerRequest], a ; $6b45
 	ret ; $6b48
@@ -346,7 +346,7 @@ ReturnCoachReturnLessonScene:
 	ld [wStoryModeCurrentLocation], a ; $6e2f
 	ld a, $09 ; $6e32
 	ld [wStoryModeEntryPoint], a ; $6e34
-	ld a, $ff ; $6e37
+	ld a, EXITTRIGGER_DIRECT ; $6e37
 	ld [wUnusedExitTriggerIdMirror], a ; $6e39
 	ld [wStoryModeExitTriggerRequest], a ; $6e3c
 	script_fade_out 16 ; $6e3f
@@ -382,7 +382,7 @@ ReturnCoachLobLessonScene:
 	ld [wStoryModeCurrentLocation], a ; $6eb2
 	ld a, $09 ; $6eb5
 	ld [wStoryModeEntryPoint], a ; $6eb7
-	ld a, $ff ; $6eba
+	ld a, EXITTRIGGER_DIRECT ; $6eba
 	ld [wUnusedExitTriggerIdMirror], a ; $6ebc
 	ld [wStoryModeExitTriggerRequest], a ; $6ebf
 	script_fade_out 16 ; $6ec2
@@ -418,7 +418,7 @@ ReturnCoachPassingShotLessonScene:
 	ld [wStoryModeCurrentLocation], a ; $6f35
 	ld a, $09 ; $6f38
 	ld [wStoryModeEntryPoint], a ; $6f3a
-	ld a, $ff ; $6f3d
+	ld a, EXITTRIGGER_DIRECT ; $6f3d
 	ld [wUnusedExitTriggerIdMirror], a ; $6f3f
 	ld [wStoryModeExitTriggerRequest], a ; $6f42
 	script_fade_out 16 ; $6f45

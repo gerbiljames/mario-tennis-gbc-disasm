@@ -34,7 +34,7 @@ AcademyArrivalEntry0cScene:
 	ld [wStoryModeCurrentLocation], a ; $5459
 	ld a, $0f ; $545c
 	ld [wStoryModeEntryPoint], a ; $545e
-	ld a, $ff ; $5461
+	ld a, EXITTRIGGER_DIRECT ; $5461
 	ld [wUnusedExitTriggerIdMirror], a ; $5463
 	ld [wStoryModeExitTriggerRequest], a ; $5466
 	ret ; $5469

@@ -229,7 +229,7 @@ ServiceAceMatchChallengeScene:
 	ld [wStoryModeCurrentLocation], a ; $648c
 	ld a, $0a ; $648f
 	ld [wStoryModeEntryPoint], a ; $6491
-	ld a, $ff ; $6494
+	ld a, EXITTRIGGER_DIRECT ; $6494
 	ld [wUnusedExitTriggerIdMirror], a ; $6496
 	ld [wStoryModeExitTriggerRequest], a ; $6499
 	ld a, MINIGAME_SERVICE_MATCH_1 ; $649c
@@ -282,7 +282,7 @@ CenterLineServeMatchChallengeScene:
 	ld [wStoryModeCurrentLocation], a ; $6570
 	ld a, $0a ; $6573
 	ld [wStoryModeEntryPoint], a ; $6575
-	ld a, $ff ; $6578
+	ld a, EXITTRIGGER_DIRECT ; $6578
 	ld [wUnusedExitTriggerIdMirror], a ; $657a
 	ld [wStoryModeExitTriggerRequest], a ; $657d
 	ld a, MINIGAME_SERVICE_MATCH_2 ; $6580
@@ -327,7 +327,7 @@ AcademyRulesServeMatchChallengeScene:
 	ld [wStoryModeCurrentLocation], a ; $6631
 	ld a, $0a ; $6634
 	ld [wStoryModeEntryPoint], a ; $6636
-	ld a, $ff ; $6639
+	ld a, EXITTRIGGER_DIRECT ; $6639
 	ld [wUnusedExitTriggerIdMirror], a ; $663b
 	ld [wStoryModeExitTriggerRequest], a ; $663e
 	ld a, MINIGAME_SERVICE_MATCH_3 ; $6641
@@ -415,7 +415,7 @@ ServeCoachJuniorLessonScene:
 	ld [wStoryModeCurrentLocation], a ; $6762
 	ld a, $09 ; $6765
 	ld [wStoryModeEntryPoint], a ; $6767
-	ld a, $ff ; $676a
+	ld a, EXITTRIGGER_DIRECT ; $676a
 	ld [wUnusedExitTriggerIdMirror], a ; $676c
 	ld [wStoryModeExitTriggerRequest], a ; $676f
 	script_fade_out 16 ; $6772
@@ -450,7 +450,7 @@ ServeCoachSeniorLessonScene:
 	ld [wStoryModeCurrentLocation], a ; $67e0
 	ld a, $09 ; $67e3
 	ld [wStoryModeEntryPoint], a ; $67e5
-	ld a, $ff ; $67e8
+	ld a, EXITTRIGGER_DIRECT ; $67e8
 	ld [wUnusedExitTriggerIdMirror], a ; $67ea
 	ld [wStoryModeExitTriggerRequest], a ; $67ed
 	script_fade_out 16 ; $67f0
@@ -485,7 +485,7 @@ ServeCoachVarsityLessonScene:
 	ld [wStoryModeCurrentLocation], a ; $685e
 	ld a, $09 ; $6861
 	ld [wStoryModeEntryPoint], a ; $6863
-	ld a, $ff ; $6866
+	ld a, EXITTRIGGER_DIRECT ; $6866
 	ld [wUnusedExitTriggerIdMirror], a ; $6868
 	ld [wStoryModeExitTriggerRequest], a ; $686b
 	script_fade_out 16 ; $686e

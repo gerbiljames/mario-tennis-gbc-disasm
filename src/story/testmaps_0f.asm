@@ -620,7 +620,7 @@ AwardsCeremonyTile02_0f:
 	ld [wStoryModeCurrentLocation], a ; $4e96
 	ld a, $0f ; $4e99
 	ld [wStoryModeEntryPoint], a ; $4e9b
-	ld a, $ff ; $4e9e
+	ld a, EXITTRIGGER_DIRECT ; $4e9e
 	ld [wUnusedExitTriggerIdMirror], a ; $4ea0
 	ld [wStoryModeExitTriggerRequest], a ; $4ea3
 	ret ; $4ea6
@@ -883,7 +883,7 @@ AwardsCeremonyTile02_0f:
 	ld [wStoryModeCurrentLocation], a ; $5570
 	ld a, $0f ; $5573
 	ld [wStoryModeEntryPoint], a ; $5575
-	ld a, $ff ; $5578
+	ld a, EXITTRIGGER_DIRECT ; $5578
 	ld [wUnusedExitTriggerIdMirror], a ; $557a
 	ld [wStoryModeExitTriggerRequest], a ; $557d
 	ret ; $5580

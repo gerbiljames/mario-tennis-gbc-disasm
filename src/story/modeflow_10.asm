@@ -371,7 +371,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $55c4
 	ld a, $01 ; $55c7
 	ld [wStoryModeEntryPoint], a ; $55c9
-	ld a, $ff ; $55cc
+	ld a, EXITTRIGGER_DIRECT ; $55cc
 	ld [wUnusedExitTriggerIdMirror], a ; $55ce
 	ld [wStoryModeExitTriggerRequest], a ; $55d1
 	ret ; $55d4
@@ -405,7 +405,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $560d
 	ld a, $0a ; $5610
 	ld [wStoryModeEntryPoint], a ; $5612
-	ld a, $ff ; $5615
+	ld a, EXITTRIGGER_DIRECT ; $5615
 	ld [wUnusedExitTriggerIdMirror], a ; $5617
 	ld [wStoryModeExitTriggerRequest], a ; $561a
 	ret ; $561d
@@ -418,7 +418,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $5629
 	ld a, $0a ; $562c
 	ld [wStoryModeEntryPoint], a ; $562e
-	ld a, $ff ; $5631
+	ld a, EXITTRIGGER_DIRECT ; $5631
 	ld [wUnusedExitTriggerIdMirror], a ; $5633
 	ld [wStoryModeExitTriggerRequest], a ; $5636
 	ret ; $5639
@@ -427,7 +427,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $563c
 	ld a, $0b ; $563f
 	ld [wStoryModeEntryPoint], a ; $5641
-	ld a, $ff ; $5644
+	ld a, EXITTRIGGER_DIRECT ; $5644
 	ld [wUnusedExitTriggerIdMirror], a ; $5646
 	ld [wStoryModeExitTriggerRequest], a ; $5649
 	ret ; $564c
@@ -438,7 +438,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $5653
 	ld a, $0d ; $5656
 	ld [wStoryModeEntryPoint], a ; $5658
-	ld a, $ff ; $565b
+	ld a, EXITTRIGGER_DIRECT ; $565b
 	ld [wUnusedExitTriggerIdMirror], a ; $565d
 	ld [wStoryModeExitTriggerRequest], a ; $5660
 	ret ; $5663
@@ -450,7 +450,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $566c
 	ld a, $0f ; $566f
 	ld [wStoryModeEntryPoint], a ; $5671
-	ld a, $ff ; $5674
+	ld a, EXITTRIGGER_DIRECT ; $5674
 	ld [wUnusedExitTriggerIdMirror], a ; $5676
 	ld [wStoryModeExitTriggerRequest], a ; $5679
 	ret ; $567c
@@ -459,7 +459,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $567f
 	ld a, $09 ; $5682
 	ld [wStoryModeEntryPoint], a ; $5684
-	ld a, $ff ; $5687
+	ld a, EXITTRIGGER_DIRECT ; $5687
 	ld [wUnusedExitTriggerIdMirror], a ; $5689
 	ld [wStoryModeExitTriggerRequest], a ; $568c
 	ret ; $568f
@@ -472,7 +472,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $569b
 	ld a, $0f ; $569e
 	ld [wStoryModeEntryPoint], a ; $56a0
-	ld a, $ff ; $56a3
+	ld a, EXITTRIGGER_DIRECT ; $56a3
 	ld [wUnusedExitTriggerIdMirror], a ; $56a5
 	ld [wStoryModeExitTriggerRequest], a ; $56a8
 	ret ; $56ab
@@ -481,7 +481,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $56ae
 	ld a, $09 ; $56b1
 	ld [wStoryModeEntryPoint], a ; $56b3
-	ld a, $ff ; $56b6
+	ld a, EXITTRIGGER_DIRECT ; $56b6
 	ld [wUnusedExitTriggerIdMirror], a ; $56b8
 	ld [wStoryModeExitTriggerRequest], a ; $56bb
 	ret ; $56be
@@ -492,7 +492,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $56c5
 	ld a, $0f ; $56c8
 	ld [wStoryModeEntryPoint], a ; $56ca
-	ld a, $ff ; $56cd
+	ld a, EXITTRIGGER_DIRECT ; $56cd
 	ld [wUnusedExitTriggerIdMirror], a ; $56cf
 	ld [wStoryModeExitTriggerRequest], a ; $56d2
 	ret ; $56d5
@@ -501,7 +501,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeCurrentLocation], a ; $56d8
 	ld a, $09 ; $56db
 	ld [wStoryModeEntryPoint], a ; $56dd
-	ld a, $ff ; $56e0
+	ld a, EXITTRIGGER_DIRECT ; $56e0
 	ld [wUnusedExitTriggerIdMirror], a ; $56e2
 	ld [wStoryModeExitTriggerRequest], a ; $56e5
 	ret ; $56e8

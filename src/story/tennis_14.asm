@@ -427,7 +427,7 @@ MachineCourtStartLevelScene:
 	ld [wStoryModeCurrentLocation], a ; $4584
 	ld a, $05 ; $4587
 	ld [wStoryModeEntryPoint], a ; $4589
-	ld a, $ff ; $458c
+	ld a, EXITTRIGGER_DIRECT ; $458c
 	ld [wUnusedExitTriggerIdMirror], a ; $458e
 	ld [wStoryModeExitTriggerRequest], a ; $4591
 	ld a, [wMapSceneStage] ; $4594

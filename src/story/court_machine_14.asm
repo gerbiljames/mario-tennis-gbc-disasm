@@ -37,7 +37,7 @@ MachinePracticeLevelPrompt:
 	ld [wStoryModeCurrentLocation], a ; $4677
 	ld a, $07 ; $467a
 	ld [wStoryModeEntryPoint], a ; $467c
-	ld a, $ff ; $467f
+	ld a, EXITTRIGGER_DIRECT ; $467f
 	ld [wUnusedExitTriggerIdMirror], a ; $4681
 	ld [wStoryModeExitTriggerRequest], a ; $4684
 	ld a, [wMapScratch + 6] ; $4687
@@ -144,7 +144,7 @@ MachineCourtRestartLevel:
 	ld [wStoryModeCurrentLocation], a ; $47dd
 	ld a, $07 ; $47e0
 	ld [wStoryModeEntryPoint], a ; $47e2
-	ld a, $ff ; $47e5
+	ld a, EXITTRIGGER_DIRECT ; $47e5
 	ld [wUnusedExitTriggerIdMirror], a ; $47e7
 	ld [wStoryModeExitTriggerRequest], a ; $47ea
 	jr .runTrainingDrillByID ; $47ed
@@ -153,7 +153,7 @@ MachineCourtRestartLevel:
 	ld [wStoryModeCurrentLocation], a ; $47f1
 	ld a, $05 ; $47f4
 	ld [wStoryModeEntryPoint], a ; $47f6
-	ld a, $ff ; $47f9
+	ld a, EXITTRIGGER_DIRECT ; $47f9
 	ld [wUnusedExitTriggerIdMirror], a ; $47fb
 	ld [wStoryModeExitTriggerRequest], a ; $47fe
 .runTrainingDrillByID:
@@ -181,7 +181,7 @@ UnusedMachineRecordOverrideAndReturn_14:
 	ld [wStoryModeCurrentLocation], a ; $4831
 	ld a, $01 ; $4834
 	ld [wStoryModeEntryPoint], a ; $4836
-	ld a, $ff ; $4839
+	ld a, EXITTRIGGER_DIRECT ; $4839
 	ld [wUnusedExitTriggerIdMirror], a ; $483b
 	ld [wStoryModeExitTriggerRequest], a ; $483e
 	ret ; $4841

@@ -326,7 +326,7 @@ PrepareEquipmentSelectScreen:
 	ld [wStoryModeCurrentLocation], a ; $4eba
 	ld a, [wMapSceneStage2] ; $4ebd
 	ld [wStoryModeEntryPoint], a ; $4ec0
-	ld a, $ff ; $4ec3
+	ld a, EXITTRIGGER_DIRECT ; $4ec3
 	ld [wUnusedExitTriggerIdMirror], a ; $4ec5
 	ld [wStoryModeExitTriggerRequest], a ; $4ec8
 	script_fade_out 16 ; $4ecb
@@ -369,7 +369,7 @@ RestoreScreenAfterEquipSelect:
 	ld [wStoryModeCurrentLocation], a ; $4f27
 	ld a, [wMapSceneStage2] ; $4f2a
 	ld [wStoryModeEntryPoint], a ; $4f2d
-	ld a, $ff ; $4f30
+	ld a, EXITTRIGGER_DIRECT ; $4f30
 	ld [wUnusedExitTriggerIdMirror], a ; $4f32
 	ld [wStoryModeExitTriggerRequest], a ; $4f35
 	call RestoreScreenAfterEquipSelect ; $4f38

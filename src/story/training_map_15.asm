@@ -336,7 +336,7 @@ TournamentSiteArrivalScene:
 	ld [wStoryModeCurrentLocation], a ; $466f
 	ld a, $0f ; $4672
 	ld [wStoryModeEntryPoint], a ; $4674
-	ld a, $ff ; $4677
+	ld a, EXITTRIGGER_DIRECT ; $4677
 	ld [wUnusedExitTriggerIdMirror], a ; $4679
 	ld [wStoryModeExitTriggerRequest], a ; $467c
 	script_move_angle ACTOR_TOURNAMENT_SITE_RESPAWN_WALK_74_06, FACE_UP, 10.0 ; $467f

@@ -201,7 +201,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld [wStoryModeCurrentLocation], a ; $6651
 	ld a, $0b ; $6654
 	ld [wStoryModeEntryPoint], a ; $6656
-	ld a, $ff ; $6659
+	ld a, EXITTRIGGER_DIRECT ; $6659
 	ld [wUnusedExitTriggerIdMirror], a ; $665b
 	ld [wStoryModeExitTriggerRequest], a ; $665e
 	ret ; $6661
@@ -210,7 +210,7 @@ IslandSkyInitScript_14.notDoubles:
 	ld [wStoryModeCurrentLocation], a ; $6664
 	ld a, $0a ; $6667
 	ld [wStoryModeEntryPoint], a ; $6669
-	ld a, $ff ; $666c
+	ld a, EXITTRIGGER_DIRECT ; $666c
 	ld [wUnusedExitTriggerIdMirror], a ; $666e
 	ld [wStoryModeExitTriggerRequest], a ; $6671
 	ret ; $6674
@@ -495,7 +495,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wStoryModeCurrentLocation], a ; $7138
 	ld a, $0a ; $713b
 	ld [wStoryModeEntryPoint], a ; $713d
-	ld a, $ff ; $7140
+	ld a, EXITTRIGGER_DIRECT ; $7140
 	ld [wUnusedExitTriggerIdMirror], a ; $7142
 	ld [wStoryModeExitTriggerRequest], a ; $7145
 	ret ; $7148
@@ -513,7 +513,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wStoryModeCurrentLocation], a ; $715f
 	ld a, $01 ; $7162
 	ld [wStoryModeEntryPoint], a ; $7164
-	ld a, $ff ; $7167
+	ld a, EXITTRIGGER_DIRECT ; $7167
 	ld [wUnusedExitTriggerIdMirror], a ; $7169
 	ld [wStoryModeExitTriggerRequest], a ; $716c
 	ret ; $716f
@@ -524,7 +524,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wStoryModeCurrentLocation], a ; $717a
 	ld a, $0f ; $717d
 	ld [wStoryModeEntryPoint], a ; $717f
-	ld a, $ff ; $7182
+	ld a, EXITTRIGGER_DIRECT ; $7182
 	ld [wUnusedExitTriggerIdMirror], a ; $7184
 	ld [wStoryModeExitTriggerRequest], a ; $7187
 	ret ; $718a

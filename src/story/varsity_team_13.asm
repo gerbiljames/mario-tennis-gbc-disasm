@@ -53,7 +53,7 @@ VarsityCourtANpc03_13:
 	ld [wStoryModeCurrentLocation], a ; $6d5d
 	ld a, $0d ; $6d60
 	ld [wStoryModeEntryPoint], a ; $6d62
-	ld a, $ff ; $6d65
+	ld a, EXITTRIGGER_DIRECT ; $6d65
 	ld [wUnusedExitTriggerIdMirror], a ; $6d67
 	ld [wStoryModeExitTriggerRequest], a ; $6d6a
 	script_null_script ACTOR_VARSITY_COURT_A_BETH ; $6d6d
@@ -159,7 +159,7 @@ VarsityCourtBNpc03_13:
 	ld [wStoryModeCurrentLocation], a ; $6fcf
 	ld a, $0d ; $6fd2
 	ld [wStoryModeEntryPoint], a ; $6fd4
-	ld a, $ff ; $6fd7
+	ld a, EXITTRIGGER_DIRECT ; $6fd7
 	ld [wUnusedExitTriggerIdMirror], a ; $6fd9
 	ld [wStoryModeExitTriggerRequest], a ; $6fdc
 	script_set_speed ACTOR_PLAYER, 1.0 ; $6fdf
@@ -329,7 +329,7 @@ SinglesTravelingTeamVictoryCutscene:
 	ld [wStoryModeCurrentLocation], a ; $738b
 	ld a, $0a ; $738e
 	ld [wStoryModeEntryPoint], a ; $7390
-	ld a, $ff ; $7393
+	ld a, EXITTRIGGER_DIRECT ; $7393
 	ld [wUnusedExitTriggerIdMirror], a ; $7395
 	ld [wStoryModeExitTriggerRequest], a ; $7398
 	ret ; $739b
@@ -543,7 +543,7 @@ DoublesTravelingTeamVictoryCutscene:
 	ld [wStoryModeCurrentLocation], a ; $78b3
 	ld a, $0a ; $78b6
 	ld [wStoryModeEntryPoint], a ; $78b8
-	ld a, $ff ; $78bb
+	ld a, EXITTRIGGER_DIRECT ; $78bb
 	ld [wUnusedExitTriggerIdMirror], a ; $78bd
 	ld [wStoryModeExitTriggerRequest], a ; $78c0
 	ret ; $78c3

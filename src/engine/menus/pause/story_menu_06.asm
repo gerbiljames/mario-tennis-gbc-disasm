@@ -870,7 +870,7 @@ StoryPauseMenu_SaveQuit:
 	ld [wStoryModeCurrentLocation], a ; $7072
 	ld a, $01 ; $7075
 	ld [wStoryModeEntryPoint], a ; $7077
-	ld a, $ff ; $707a
+	ld a, EXITTRIGGER_DIRECT ; $707a
 	ld [wUnusedExitTriggerIdMirror], a ; $707c
 	ld [wStoryModeExitTriggerRequest], a ; $707f
 	ld a, $01 ; $7082
@@ -885,7 +885,7 @@ StoryPauseMenu_ReturnToMainMenu:
 	ld [wStoryModeCurrentLocation], a ; $7096
 	ld a, $01 ; $7099
 	ld [wStoryModeEntryPoint], a ; $709b
-	ld a, $ff ; $709e
+	ld a, EXITTRIGGER_DIRECT ; $709e
 	ld [wUnusedExitTriggerIdMirror], a ; $70a0
 	ld [wStoryModeExitTriggerRequest], a ; $70a3
 	ld a, $01 ; $70a6

@@ -398,7 +398,7 @@ Unused_1a_RestoreMessageSpeed:
 	ld [wStoryModeCurrentLocation], a ; $4304
 	ld a, $01 ; $4307
 	ld [wStoryModeEntryPoint], a ; $4309
-	ld a, $ff ; $430c
+	ld a, EXITTRIGGER_DIRECT ; $430c
 	ld [wUnusedExitTriggerIdMirror], a ; $430e
 	ld [wStoryModeExitTriggerRequest], a ; $4311
 	jp Unused_1a_RunPauseMenuWindow.done ; $4314
@@ -429,7 +429,7 @@ Unused_1a_RestoreMessageSpeed:
 	ld [wStoryModeCurrentLocation], a ; $4353
 	ld a, STORYENTRY_NONE ; $4356
 	ld [wStoryModeEntryPoint], a ; $4358
-	ld a, $ff ; $435b
+	ld a, EXITTRIGGER_DIRECT ; $435b
 	ld [wUnusedExitTriggerIdMirror], a ; $435d
 	ld [wStoryModeExitTriggerRequest], a ; $4360
 	jp Unused_1a_RunPauseMenuWindow.done ; $4363

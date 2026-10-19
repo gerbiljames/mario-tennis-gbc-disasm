@@ -17,7 +17,7 @@ RunTravelingTeamBracketIfWon_13:
 	ld [wStoryModeCurrentLocation], a ; $79a6
 	ld a, $0e ; $79a9
 	ld [wStoryModeEntryPoint], a ; $79ab
-	ld a, $ff ; $79ae
+	ld a, EXITTRIGGER_DIRECT ; $79ae
 	ld [wUnusedExitTriggerIdMirror], a ; $79b0
 	ld [wStoryModeExitTriggerRequest], a ; $79b3
 	test_flag FLAG_DOUBLES ; $79b6

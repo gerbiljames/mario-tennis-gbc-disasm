@@ -134,7 +134,7 @@ DormRoomTile0F_13:
 	ld [wStoryModeCurrentLocation], a ; $4fb3
 	ld a, $0d ; $4fb6
 	ld [wStoryModeEntryPoint], a ; $4fb8
-	ld a, $ff ; $4fbb
+	ld a, EXITTRIGGER_DIRECT ; $4fbb
 	ld [wUnusedExitTriggerIdMirror], a ; $4fbd
 	ld [wStoryModeExitTriggerRequest], a ; $4fc0
 	script_fade_out 4 ; $4fc3
@@ -153,7 +153,7 @@ DormRoomTile0F_13:
 	ld [wStoryModeCurrentLocation], a ; $500d
 	ld a, $0d ; $5010
 	ld [wStoryModeEntryPoint], a ; $5012
-	ld a, $ff ; $5015
+	ld a, EXITTRIGGER_DIRECT ; $5015
 	ld [wUnusedExitTriggerIdMirror], a ; $5017
 	ld [wStoryModeExitTriggerRequest], a ; $501a
 	script_fade_out 4 ; $501d

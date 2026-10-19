@@ -444,7 +444,7 @@ RunDebugWarpMenu:
 	ld [wStoryModeCurrentLocation], a ; $6802
 	ld a, [wDebugWarpEntryPoint] ; $6805
 	ld [wStoryModeEntryPoint], a ; $6808
-	ld a, $ff ; $680b
+	ld a, EXITTRIGGER_DIRECT ; $680b
 	ld [wUnusedExitTriggerIdMirror], a ; $680d
 	ld [wStoryModeExitTriggerRequest], a ; $6810
 	jr .closeWindow ; $6813

@@ -310,7 +310,7 @@ IslandSkyEntry0eScene:
 	ld [wStoryModeCurrentLocation], a ; $7862
 	ld a, $02 ; $7865
 	ld [wStoryModeEntryPoint], a ; $7867
-	ld a, $ff ; $786a
+	ld a, EXITTRIGGER_DIRECT ; $786a
 	ld [wUnusedExitTriggerIdMirror], a ; $786c
 	ld [wStoryModeExitTriggerRequest], a ; $786f
 	ret ; $7872

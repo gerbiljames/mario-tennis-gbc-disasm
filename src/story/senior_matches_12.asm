@@ -314,7 +314,7 @@ SeniorCourtReloadIntoVictoryScene:
 	ld [wStoryModeCurrentLocation], a ; $6d8c
 	ld a, $0d ; $6d8f
 	ld [wStoryModeEntryPoint], a ; $6d91
-	ld a, $ff ; $6d94
+	ld a, EXITTRIGGER_DIRECT ; $6d94
 	ld [wUnusedExitTriggerIdMirror], a ; $6d96
 	ld [wStoryModeExitTriggerRequest], a ; $6d99
 	farcall StubNop_1e ; $6d9c

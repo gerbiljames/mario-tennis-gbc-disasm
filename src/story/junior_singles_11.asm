@@ -418,7 +418,7 @@ JuniorClassCourtSinglesEntry0eScene:
 	ld [wStoryModeCurrentLocation], a ; $6e8a
 	ld a, $0d ; $6e8d
 	ld [wStoryModeEntryPoint], a ; $6e8f
-	ld a, $ff ; $6e92
+	ld a, EXITTRIGGER_DIRECT ; $6e92
 	ld [wUnusedExitTriggerIdMirror], a ; $6e94
 	ld [wStoryModeExitTriggerRequest], a ; $6e97
 	farcall StubNop_1e ; $6e9a
@@ -582,7 +582,7 @@ JuniorClassCourtSinglesEntry0dScene:
 	ld [wStoryModeCurrentLocation], a ; $7249
 	ld a, $01 ; $724c
 	ld [wStoryModeEntryPoint], a ; $724e
-	ld a, $ff ; $7251
+	ld a, EXITTRIGGER_DIRECT ; $7251
 	ld [wUnusedExitTriggerIdMirror], a ; $7253
 	ld [wStoryModeExitTriggerRequest], a ; $7256
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_WALK_72_00, ANIM_NOD ; $7259

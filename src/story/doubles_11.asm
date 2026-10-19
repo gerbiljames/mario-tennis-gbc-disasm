@@ -20,7 +20,7 @@ JuniorClassCourtDoublesEntry0eScene:
 	ld [wStoryModeCurrentLocation], a ; $5d87
 	ld a, $0d ; $5d8a
 	ld [wStoryModeEntryPoint], a ; $5d8c
-	ld a, $ff ; $5d8f
+	ld a, EXITTRIGGER_DIRECT ; $5d8f
 	ld [wUnusedExitTriggerIdMirror], a ; $5d91
 	ld [wStoryModeExitTriggerRequest], a ; $5d94
 	farcall StubNop_1e ; $5d97
@@ -218,7 +218,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	ld [wStoryModeCurrentLocation], a ; $6277
 	ld a, $01 ; $627a
 	ld [wStoryModeEntryPoint], a ; $627c
-	ld a, $ff ; $627f
+	ld a, EXITTRIGGER_DIRECT ; $627f
 	ld [wUnusedExitTriggerIdMirror], a ; $6281
 	ld [wStoryModeExitTriggerRequest], a ; $6284
 	script_wait_frames 60 ; $6287

@@ -407,7 +407,7 @@ ServeCoachWalkToCourtAndStartLesson:
 	ld [wStoryModeCurrentLocation], a ; $7aec
 	ld a, $0a ; $7aef
 	ld [wStoryModeEntryPoint], a ; $7af1
-	ld a, $ff ; $7af4
+	ld a, EXITTRIGGER_DIRECT ; $7af4
 	ld [wUnusedExitTriggerIdMirror], a ; $7af6
 	ld [wStoryModeExitTriggerRequest], a ; $7af9
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7afc
@@ -451,7 +451,7 @@ NetCoachWalkToCourtAndStartLesson:
 	ld [wStoryModeCurrentLocation], a ; $7b7f
 	ld a, $0a ; $7b82
 	ld [wStoryModeEntryPoint], a ; $7b84
-	ld a, $ff ; $7b87
+	ld a, EXITTRIGGER_DIRECT ; $7b87
 	ld [wUnusedExitTriggerIdMirror], a ; $7b89
 	ld [wStoryModeExitTriggerRequest], a ; $7b8c
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7b8f

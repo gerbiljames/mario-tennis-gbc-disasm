@@ -119,7 +119,7 @@ IslandOpenDoublesVictory:
 	ld [wStoryModeCurrentLocation], a ; $7383
 	ld a, $01 ; $7386
 	ld [wStoryModeEntryPoint], a ; $7388
-	ld a, $ff ; $738b
+	ld a, EXITTRIGGER_DIRECT ; $738b
 	ld [wUnusedExitTriggerIdMirror], a ; $738d
 	ld [wStoryModeExitTriggerRequest], a ; $7390
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $7393
@@ -269,7 +269,7 @@ SeniorSharedVictoryScene:
 	ld [wStoryModeCurrentLocation], a ; $771b
 	ld a, $01 ; $771e
 	ld [wStoryModeEntryPoint], a ; $7720
-	ld a, $ff ; $7723
+	ld a, EXITTRIGGER_DIRECT ; $7723
 	ld [wUnusedExitTriggerIdMirror], a ; $7725
 	ld [wStoryModeExitTriggerRequest], a ; $7728
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $772b

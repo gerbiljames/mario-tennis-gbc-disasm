@@ -609,7 +609,7 @@ AcademyWingInitScript_10:
 	ld [wStoryModeCurrentLocation], a ; $6f34
 	ld a, $0a ; $6f37
 	ld [wStoryModeEntryPoint], a ; $6f39
-	ld a, $ff ; $6f3c
+	ld a, EXITTRIGGER_DIRECT ; $6f3c
 	ld [wUnusedExitTriggerIdMirror], a ; $6f3e
 	ld [wStoryModeExitTriggerRequest], a ; $6f41
 	ret ; $6f44
@@ -787,7 +787,7 @@ AcademyWingEntry0fScene:
 	ld [wStoryModeCurrentLocation], a ; $7328
 	ld a, $0c ; $732b
 	ld [wStoryModeEntryPoint], a ; $732d
-	ld a, $ff ; $7330
+	ld a, EXITTRIGGER_DIRECT ; $7330
 	ld [wUnusedExitTriggerIdMirror], a ; $7332
 	ld [wStoryModeExitTriggerRequest], a ; $7335
 	ret ; $7338

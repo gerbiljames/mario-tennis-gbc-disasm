@@ -405,7 +405,7 @@ IslandSkyInitScript_14:
 	ld [wStoryModeCurrentLocation], a ; $54ce
 	ld a, $04 ; $54d1
 	ld [wStoryModeEntryPoint], a ; $54d3
-	ld a, $ff ; $54d6
+	ld a, EXITTRIGGER_DIRECT ; $54d6
 	ld [wUnusedExitTriggerIdMirror], a ; $54d8
 	ld [wStoryModeExitTriggerRequest], a ; $54db
 	ret ; $54de
@@ -482,7 +482,7 @@ IslandSkyInitScript_14:
 	ld [wStoryModeCurrentLocation], a ; $562a
 	ld a, $09 ; $562d
 	ld [wStoryModeEntryPoint], a ; $562f
-	ld a, $ff ; $5632
+	ld a, EXITTRIGGER_DIRECT ; $5632
 	ld [wUnusedExitTriggerIdMirror], a ; $5634
 	ld [wStoryModeExitTriggerRequest], a ; $5637
 	ret ; $563a

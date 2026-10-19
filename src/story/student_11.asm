@@ -536,7 +536,7 @@ AcademyArrivalInitScript_11.speak:
 	ld [wStoryModeCurrentLocation], a ; $536c
 	ld a, $01 ; $536f
 	ld [wStoryModeEntryPoint], a ; $5371
-	ld a, $ff ; $5374
+	ld a, EXITTRIGGER_DIRECT ; $5374
 	ld [wUnusedExitTriggerIdMirror], a ; $5376
 	ld [wStoryModeExitTriggerRequest], a ; $5379
 	ret ; $537c

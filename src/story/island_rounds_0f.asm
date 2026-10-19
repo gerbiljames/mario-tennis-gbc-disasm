@@ -143,7 +143,7 @@ IslandOpenRoundCallCutscene:
 	ld [wStoryModeCurrentLocation], a ; $71cc
 	ld a, $0a ; $71cf
 	ld [wStoryModeEntryPoint], a ; $71d1
-	ld a, $ff ; $71d4
+	ld a, EXITTRIGGER_DIRECT ; $71d4
 	ld [wUnusedExitTriggerIdMirror], a ; $71d6
 	ld [wStoryModeExitTriggerRequest], a ; $71d9
 	farcall InitStoryMatchSettings ; $71dc
@@ -216,7 +216,7 @@ IslandOpenRoundCallCutscene:
 	ld [wStoryModeCurrentLocation], a ; $736c
 	ld a, $0b ; $736f
 	ld [wStoryModeEntryPoint], a ; $7371
-	ld a, $ff ; $7374
+	ld a, EXITTRIGGER_DIRECT ; $7374
 	ld [wUnusedExitTriggerIdMirror], a ; $7376
 	ld [wStoryModeExitTriggerRequest], a ; $7379
 	farcall InitStoryMatchSettings ; $737c
@@ -332,7 +332,7 @@ CheckIslandOpenVictoryTransition:
 	ld [wStoryModeCurrentLocation], a ; $7471
 	ld a, $08 ; $7474
 	ld [wStoryModeEntryPoint], a ; $7476
-	ld a, $ff ; $7479
+	ld a, EXITTRIGGER_DIRECT ; $7479
 	ld [wUnusedExitTriggerIdMirror], a ; $747b
 	ld [wStoryModeExitTriggerRequest], a ; $747e
 	ld a, $01 ; $7481
