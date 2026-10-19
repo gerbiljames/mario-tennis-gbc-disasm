@@ -200,7 +200,7 @@ BuildCharDataConfirmScreen:
 	pop af ; $5b21
 	ld [wStoryCharacterSlot], a ; $5b22
 	push af ; $5b25
-	ld hl, wStoryModeNameOfMainCharacter ; $5b26
+	ld hl, wStoryMainName ; $5b26
 	ld a, [wStoryCharacterSlot] ; $5b29
 	or a ; $5b2c
 	jr z, .zero ; $5b2d
@@ -218,7 +218,7 @@ BuildCharDataConfirmScreen:
 	farcall LoadIndexedPaletteThunk ; $5b3e
 	wram_bank WRAM_STAGING ; $5b41
 	push af ; $5b47
-	ld hl, wStoryModeNameOfMainCharacter ; $5b48
+	ld hl, wStoryMainName ; $5b48
 	ld a, [wStoryCharacterSlot] ; $5b4b
 	or a ; $5b4e
 	jr z, .zero2 ; $5b4f

@@ -24,7 +24,7 @@ Unused_1a_RunDebugExpEditor:
 	farcall Unused_05_StubNop_05_0 ; $43c6
 	ld c, $00 ; $43c9
 .loop:
-	ld hl, wStoryMainCharExp ; $43cb
+	ld hl, wStoryMainExp ; $43cb
 	ld a, [hl+] ; $43ce
 	ld h, [hl] ; $43cf
 	ld l, a ; $43d0
@@ -35,7 +35,7 @@ Unused_1a_RunDebugExpEditor:
 	ld_cell de, $08, $01 ; $43dc
 	ld a, [wPauseMenuWindowId] ; $43df
 	farcall WriteStringToWindow ; $43e2
-	ld hl, wStoryPartnerCharExp ; $43e5
+	ld hl, wStoryPartnerExp ; $43e5
 	ld a, [hl+] ; $43e8
 	ld h, [hl] ; $43e9
 	ld l, a ; $43ea
@@ -87,13 +87,13 @@ Unused_1a_RunDebugExpEditor:
 	jp z, .loop ; $444a
 	ld a, [wPauseMenuWindowId] ; $444d
 	farcall CloseWindow ; $4450
-	ld hl, wStoryMainCharExp ; $4453
+	ld hl, wStoryMainExp ; $4453
 	ld a, [hl+] ; $4456
 	ld d, [hl] ; $4457
 	ld e, a ; $4458
 	ld l, $00 ; $4459
 	call Unused_1a_ResetCharDataScreenAnim ; $445b
-	ld hl, wStoryPartnerCharExp ; $445e
+	ld hl, wStoryPartnerExp ; $445e
 	ld a, [hl+] ; $4461
 	ld d, [hl] ; $4462
 	ld e, a ; $4463
@@ -184,7 +184,7 @@ Unused_1a_ShowExpGainScreen:
 	call Unused_1a_DrawExpScreenCaption ; $4535
 	wram_bank WRAM_SCENE ; $4538
 	push af ; $453e
-	ld hl, wStoryModeNameOfMainCharacter ; $453f
+	ld hl, wStoryMainName ; $453f
 	ld a, [wStoryCharacterSlot] ; $4542
 	or a ; $4545
 	jr z, .gotRecord ; $4546

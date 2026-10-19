@@ -19,13 +19,13 @@ ShoeStatDeltas_02:
 	equip_stat_deltas 0, 0, 0, 0, 0, 0, 0, -2, -2, -2, -2 ; 1 Iron
 	equip_stat_deltas 0, 0, 0, 0, 0, 0, 0, 2, 2, -2, -2 ; 2 Light
 RefreshMainCharacterStats:
-	ld bc, wStoryModeNameOfMainCharacter ; $478f
+	ld bc, wStoryMainName ; $478f
 	call RecomputeCharacterStats ; $4792
-	ld hl, wStoryModeNameOfMainCharacter ; $4795
+	ld hl, wStoryMainName ; $4795
 	ld de, wStorySlotData ; $4798
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $479b
 	call CopyMemoryFast ; $479d
-	ld a, [wMainCharEquipmentBits] ; $47a0
+	ld a, [wSavedMainEquipment] ; $47a0
 	ld b, a ; $47a3
 	and $0f ; $47a4
 	cp $03 ; $47a6
@@ -44,20 +44,20 @@ RefreshMainCharacterStats:
 	ld b, a ; $47ba
 .store:
 	ld a, b ; $47bb
-	ld [wMainCharEquipmentBits], a ; $47bc
+	ld [wSavedMainEquipment], a ; $47bc
 	ld bc, wStorySlotData ; $47bf
 	call RecomputeCharacterStats ; $47c2
 	ret ; $47c5
 RecomputeStatsWithoutRacket:
-	ld hl, wEquippedRacket ; $47c6
+	ld hl, wStoryMainEquipment ; $47c6
 	ld a, [hl] ; $47c9
 	push af ; $47ca
 	xor a ; $47cb
 	ld [hl], a ; $47cc
-	ld bc, wStoryModeNameOfMainCharacter ; $47cd
+	ld bc, wStoryMainName ; $47cd
 	call RecomputeCharacterStats ; $47d0
 	pop af ; $47d3
-	ld [wEquippedRacket], a ; $47d4
+	ld [wStoryMainEquipment], a ; $47d4
 	ret ; $47d7
 EquipData_02:
 	; $47d8, 26 bytes (bytes:16)

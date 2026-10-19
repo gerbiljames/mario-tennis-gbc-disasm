@@ -306,7 +306,7 @@ RunNewGameSetup:
 	xor a ; $622c
 	ld [wStoryCharacterSlot], a ; $622d
 	push af ; $6230
-	ld hl, wStoryModeNameOfMainCharacter ; $6231
+	ld hl, wStoryMainName ; $6231
 	ld a, [wStoryCharacterSlot] ; $6234
 	or a ; $6237
 	jr z, .zero ; $6238
@@ -334,14 +334,14 @@ RunNewGameSetup:
 	farcall TestSaveFlag ; $625e
 	jr nz, .loop4 ; $6261
 	push af ; $6263
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $6264
+	ld a, [wStoryMainChar] ; $6264
 	inc a ; $6267
 	inc a ; $6268
 	ld d, a ; $6269
 	ld a, [wStoryCharacterSlot] ; $626a
 	farcall InitPlayerRecordFromTemplate ; $626d
 	push af ; $6270
-	ld hl, wStoryModeNameOfMainCharacter ; $6271
+	ld hl, wStoryMainName ; $6271
 	ld a, [wStoryCharacterSlot] ; $6274
 	or a ; $6277
 	jr z, .zero2 ; $6278
@@ -389,7 +389,7 @@ RunNewGameSetup:
 	and a ; $62be
 	jr nz, .loop4 ; $62bf
 	push af ; $62c1
-	ld hl, wStoryModeNameOfMainCharacter ; $62c2
+	ld hl, wStoryMainName ; $62c2
 	ld a, [wStoryCharacterSlot] ; $62c5
 	or a ; $62c8
 	jr z, .zero3 ; $62c9
@@ -410,7 +410,7 @@ RunNewGameSetup:
 .restore:
 	pop af ; $62df
 	ld [wStoryCharacterSlot], a ; $62e0
-	ld hl, wStoryModeNameOfMainCharacter ; $62e3
+	ld hl, wStoryMainName ; $62e3
 	ld de, wStorySlotData ; $62e6
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $62e9
 	call CopyMemoryFast ; $62eb

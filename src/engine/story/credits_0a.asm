@@ -95,7 +95,7 @@ RunEndingCreditsSequence:
 	jr z, .done ; $6ea2
 	and a ; $6ea4
 	jr nz, .setLocation ; $6ea5
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $6ea7
+	ld a, [wStoryMainChar] ; $6ea7
 	add a ; $6eaa
 	ld a, [hl+] ; $6eab
 .setLocation:

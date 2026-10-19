@@ -187,17 +187,17 @@ HandleEquipSelectInput:
 	jr z, .checkEquippedRacket ; $55df
 	swap a ; $55e1
 	ld b, a ; $55e3
-	ld a, [wEquippedRacket] ; $55e4
+	ld a, [wStoryMainEquipment] ; $55e4
 	and $0f ; $55e7
 	or b ; $55e9
-	ld [wEquippedRacket], a ; $55ea
+	ld [wStoryMainEquipment], a ; $55ea
 	ret ; $55ed
 .checkEquippedRacket:
 	ld b, a ; $55ee
-	ld a, [wEquippedRacket] ; $55ef
+	ld a, [wStoryMainEquipment] ; $55ef
 	and $f0 ; $55f2
 	or b ; $55f4
-	ld [wEquippedRacket], a ; $55f5
+	ld [wStoryMainEquipment], a ; $55f5
 	ret ; $55f8
 .playSfx:
 	sound SFX_MENU_CANCEL ; $55f9
@@ -396,7 +396,7 @@ MarkOwnedRackets:
 	ld c, a ; $5784
 	cp $06 ; $5785
 	jr nz, .loop ; $5787
-	ld a, [wEquippedRacket] ; $5789
+	ld a, [wStoryMainEquipment] ; $5789
 	and $0f ; $578c
 	ld hl, wEquipOwnedMap ; $578e
 	add l ; $5791
@@ -444,7 +444,7 @@ MarkOwnedShoes:
 	ld c, a ; $57d2
 	cp $02 ; $57d3
 	jr nz, .loop ; $57d5
-	ld a, [wEquippedRacket] ; $57d7
+	ld a, [wStoryMainEquipment] ; $57d7
 	and $f0 ; $57da
 	swap a ; $57dc
 	ld hl, wEquipOwnedMap ; $57de

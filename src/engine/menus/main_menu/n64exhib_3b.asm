@@ -424,11 +424,11 @@ BuildTrophiesScreen:
 	ld a, [wTrophySecondSetPresent] ; $4a09
 	or a ; $4a0c
 	jr nz, .nonZero2 ; $4a0d
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4a0f
+	ld a, [wStoryMainChar] ; $4a0f
 	ld c, a ; $4a12
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 2 ; $4a13
 	call DrawTrophiesCharSprite ; $4a16
-	ld a, [wStoryModePartnerCharacterOverworldSprite] ; $4a19
+	ld a, [wStoryPartnerChar] ; $4a19
 	ld c, a ; $4a1c
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 2 ; $4a1d
 	call DrawTrophiesCharSprite ; $4a20
@@ -446,19 +446,19 @@ BuildTrophiesScreen:
 	ld c, $03 ; $4a3d
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 2 ; $4a3f
 	call DrawTrophiesCharSprite ; $4a42
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4a45
+	ld a, [wStoryMainChar] ; $4a45
 	ld c, a ; $4a48
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 2 ; $4a49
 	call DrawTrophiesCharSprite ; $4a4c
-	ld a, [wStoryModePartnerCharacterOverworldSprite] ; $4a4f
+	ld a, [wStoryPartnerChar] ; $4a4f
 	ld c, a ; $4a52
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 2 ; $4a53
 	call DrawTrophiesCharSprite ; $4a56
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4a59
+	ld a, [wStoryMainChar] ; $4a59
 	ld c, a ; $4a5c
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 2 ; $4a5d
 	call DrawTrophiesCharSprite ; $4a60
-	ld a, [wStoryModePartnerCharacterOverworldSprite] ; $4a63
+	ld a, [wStoryPartnerChar] ; $4a63
 	ld c, a ; $4a66
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 2 ; $4a67
 	call DrawTrophiesCharSprite ; $4a6a

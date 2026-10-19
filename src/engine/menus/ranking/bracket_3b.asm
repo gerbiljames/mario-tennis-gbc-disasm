@@ -191,7 +191,7 @@ WriteBracketEntrantName:
 	ld a, [hl+] ; $78d6
 	ld d, [hl] ; $78d7
 	ld e, a ; $78d8
-	ld hl, wStoryModeNameOfMainCharacter ; $78d9
+	ld hl, wStoryMainName ; $78d9
 	call DrawNameWithDiacritics_3b ; $78dc
 	pop hl ; $78df
 	pop de ; $78e0
@@ -208,10 +208,10 @@ WriteBracketDoublesNames:
 	ld a, [wDataScreenPage] ; $78ec
 	cp $01 ; $78ef
 	jr nz, .ne01 ; $78f1
-	ld hl, wStoryModeNameOfMainCharacter ; $78f3
+	ld hl, wStoryMainName ; $78f3
 	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH + 9 ; $78f6
 	call DrawNameWithDiacritics_3b ; $78f9
-	ld hl, wStoryModeNameOfPartnerCharacter ; $78fc
+	ld hl, wStoryPartnerName ; $78fc
 	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 9 ; $78ff
 	call DrawNameWithDiacritics_3b ; $7902
 	ld hl, Text_30_75 ; $7905
@@ -224,10 +224,10 @@ WriteBracketDoublesNames:
 	farcall RenderTextToBuffer64 ; $7918
 	ret ; $791b
 .ne01:
-	ld hl, wStoryModeNameOfMainCharacter ; $791c
+	ld hl, wStoryMainName ; $791c
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 9 ; $791f
 	call DrawNameWithDiacritics_3b ; $7922
-	ld hl, wStoryModeNameOfPartnerCharacter ; $7925
+	ld hl, wStoryPartnerName ; $7925
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 9 ; $7928
 	call DrawNameWithDiacritics_3b ; $792b
 	ld hl, Text_30_75 ; $792e

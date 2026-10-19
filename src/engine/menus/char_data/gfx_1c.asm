@@ -287,7 +287,7 @@ RestoreCharData:
 	ld a, [wCharDataPointsWorking] ; $7346
 	ld [wCharDataPointsLeft], a ; $7349
 	push af ; $734c
-	ld hl, wStoryModeNameOfMainCharacter ; $734d
+	ld hl, wStoryMainName ; $734d
 	ld a, [wStoryCharacterSlot] ; $7350
 	or a ; $7353
 	jr z, .zero ; $7354
@@ -303,7 +303,7 @@ RestoreCharData:
 	ld a, [wCharDataLevel] ; $7361
 	ld [hl], a ; $7364
 	push af ; $7365
-	ld hl, wStoryModeNameOfMainCharacter ; $7366
+	ld hl, wStoryMainName ; $7366
 	ld a, [wStoryCharacterSlot] ; $7369
 	or a ; $736c
 	jr z, .zero2 ; $736d
@@ -320,7 +320,7 @@ RestoreCharData:
 	ld [hl], a ; $737d
 	ld [wCharDataLevels], a ; $737e
 	push af ; $7381
-	ld hl, wStoryModeNameOfMainCharacter ; $7382
+	ld hl, wStoryMainName ; $7382
 	ld a, [wStoryCharacterSlot] ; $7385
 	or a ; $7388
 	jr z, .zero3 ; $7389
@@ -337,7 +337,7 @@ RestoreCharData:
 	ld [hl], a ; $7399
 	ld [wCharDataLevels + 1], a ; $739a
 	push af ; $739d
-	ld hl, wStoryModeNameOfMainCharacter ; $739e
+	ld hl, wStoryMainName ; $739e
 	ld a, [wStoryCharacterSlot] ; $73a1
 	or a ; $73a4
 	jr z, .zero4 ; $73a5
@@ -354,7 +354,7 @@ RestoreCharData:
 	ld [hl], a ; $73b5
 	ld [wCharDataLevels + 2], a ; $73b6
 	push af ; $73b9
-	ld hl, wStoryModeNameOfMainCharacter ; $73ba
+	ld hl, wStoryMainName ; $73ba
 	ld a, [wStoryCharacterSlot] ; $73bd
 	or a ; $73c0
 	jr z, .zero5 ; $73c1
@@ -443,7 +443,7 @@ LoadCharDataScreenMugshots:
 	xor a ; $748d
 	ld [wStoryCharacterSlot], a ; $748e
 	push af ; $7491
-	ld hl, wStoryModeNameOfMainCharacter ; $7492
+	ld hl, wStoryMainName ; $7492
 	ld a, [wStoryCharacterSlot] ; $7495
 	or a ; $7498
 	jr z, .zero ; $7499
@@ -461,7 +461,7 @@ LoadCharDataScreenMugshots:
 	farcall LoadIndexedPaletteThunk ; $74aa
 	wram_bank WRAM_STAGING ; $74ad
 	push af ; $74b3
-	ld hl, wStoryModeNameOfMainCharacter ; $74b4
+	ld hl, wStoryMainName ; $74b4
 	ld a, [wStoryCharacterSlot] ; $74b7
 	or a ; $74ba
 	jr z, .zero2 ; $74bb
@@ -484,7 +484,7 @@ LoadCharDataScreenMugshots:
 	ld a, $01 ; $74da
 	ld [wStoryCharacterSlot], a ; $74dc
 	push af ; $74df
-	ld hl, wStoryModeNameOfMainCharacter ; $74e0
+	ld hl, wStoryMainName ; $74e0
 	ld a, [wStoryCharacterSlot] ; $74e3
 	or a ; $74e6
 	jr z, .zero3 ; $74e7
@@ -502,7 +502,7 @@ LoadCharDataScreenMugshots:
 	farcall LoadIndexedPaletteThunk ; $74f8
 	wram_bank WRAM_STAGING ; $74fb
 	push af ; $7501
-	ld hl, wStoryModeNameOfMainCharacter ; $7502
+	ld hl, wStoryMainName ; $7502
 	ld a, [wStoryCharacterSlot] ; $7505
 	or a ; $7508
 	jr z, .zero4 ; $7509

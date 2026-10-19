@@ -110,10 +110,10 @@ WaterSpriteRacketRewardScene:
 	ld a, $04 ; $4ef2
 	ld b, a ; $4ef4
 .speak:
-	ld a, [wEquippedRacket] ; $4ef5
+	ld a, [wStoryMainEquipment] ; $4ef5
 	and $f0 ; $4ef8
 	or b ; $4efa
-	ld [wEquippedRacket], a ; $4efb
+	ld [wStoryMainEquipment], a ; $4efb
 	script_speak ACTOR_TRAINING_COURT_WALK_76_06 ; $4efe
 	script_wait_frames 10 ; $4f03
 	script_fade_out 3 ; $4f0a

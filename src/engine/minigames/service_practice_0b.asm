@@ -529,7 +529,7 @@ ServicePractice2EvaluateResult:
 	jr .notFound ; $5007
 .zero2:
 	ld b, $06 ; $5009
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $500b
+	ld a, [wStoryMainLeftHanded] ; $500b
 	cpl ; $500e
 	inc a ; $500f
 	add b ; $5010
@@ -540,7 +540,7 @@ ServicePractice2EvaluateResult:
 	or a ; $5019
 	jr z, .zero4 ; $501a
 	ld b, $05 ; $501c
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $501e
+	ld a, [wStoryMainLeftHanded] ; $501e
 	add b ; $5021
 	ld [wDrillLessonResult], a ; $5022
 	jr .notFound ; $5025

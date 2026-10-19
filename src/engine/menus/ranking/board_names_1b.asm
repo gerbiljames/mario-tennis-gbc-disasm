@@ -8,7 +8,7 @@ DrawSinglesRankingNames:
 	call InitRankingNameRender ; $5511
 	wram_bank WRAM_SCREEN ; $5514
 	call ClearSinglesRankingNameRects ; $551a
-	ld hl, wStoryModeNameOfMainCharacter ; $551d
+	ld hl, wStoryMainName ; $551d
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; $5520
 	call RenderPlayerNameFitted ; $5523
 	ld b, $01 ; $5526
@@ -131,10 +131,10 @@ DrawDoublesRankingNames:
 	call InitRankingNameRender ; $55d1
 	wram_bank WRAM_SCREEN ; $55d4
 	call ClearDoublesRankingNameRects ; $55da
-	ld hl, wStoryModeNameOfMainCharacter ; $55dd
+	ld hl, wStoryMainName ; $55dd
 	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $55e0
 	call RenderPlayerNameFitted ; $55e3
-	ld hl, wStoryModeNameOfPartnerCharacter ; $55e6
+	ld hl, wStoryPartnerName ; $55e6
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 1 ; $55e9
 	call RenderPlayerNameFitted ; $55ec
 	ld b, $02 ; $55ef

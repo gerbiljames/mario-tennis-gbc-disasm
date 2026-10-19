@@ -3,6 +3,7 @@
 ; $c800/$c840) and the four on-court match records ($ca00-$cac0), which bank
 ; $02 reaches as `ld hl, CHARREC_* / add hl, bc` with the record in bc.
 def CHARREC_NAME             equ $00 ; 7 bytes, then padding
+def CHARREC_LINK_COURT_MASK  equ $0a ; name padding; ExchangeLinkUnlockFlags borrows the main records' byte
 def CHARREC_CHAR             equ $0b ; CHAR_* id
 def CHARREC_PALETTE          equ $0c
 def CHARREC_GENDER           equ $0d ; 0 male, 1 female
@@ -11,7 +12,8 @@ def CHARREC_PHYSICS          equ $0f
 def CHARREC_REACH            equ $10 ; 8 bytes: the reach box
 def CHARREC_LEVEL            equ $18 ; 1-99; each level-up also raises one of CHARREC_TRAIN_LEVELS
 def CHARREC_SWING            equ $19 ; word
-def CHARREC_AI_PARAMS        equ $1b ; 5 bytes
+def CHARREC_AI_PARAMS        equ $1b ; 4 bytes: reaction delays near and far, tracking, aim-away chance
+def CHARREC_DIFFICULTY       equ $1f ; CPU difficulty 0 easy - 3 intense, the AI's serve style on court
 def CHARREC_STAT_TOP         equ $20 ; the eleven 0-9 stats, in this order
 def CHARREC_STAT_SLICE       equ $21
 def CHARREC_STAT_SERVE       equ $22

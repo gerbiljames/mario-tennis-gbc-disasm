@@ -1,7 +1,7 @@
 CompareEquippedRacketToMinigameFlag:
 	ld a, [wMapScratch + 8] ; $5005
 	ld b, a ; $5008
-	ld a, [wEquippedRacket] ; $5009
+	ld a, [wStoryMainEquipment] ; $5009
 	cp b ; $500c
 	jr z, .failed ; $500d
 	ld a, $00 ; $500f
@@ -35,7 +35,7 @@ RepairCounterCheckEquipChanged:
 	ld a, [wMapScratch + 10] ; $5050
 	jp RepairCounterServiceMenu.loop ; $5053
 .repairRacket:
-	ld a, [wEquippedRacket] ; $5056
+	ld a, [wStoryMainEquipment] ; $5056
 	ld [wMapScratch + 8], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c
 	script_speak ACTOR_TRAINING_GYM_WALK_72_02_2 ; $505f

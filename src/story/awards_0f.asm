@@ -8,7 +8,7 @@ AwardsCeremonyNpc08_0f:
 	script_speak ACTOR_AWARDS_CEREMONY_SPIKE ; $563b
 	ret ; $5640
 ReplacePlayerWithStandInActor:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $5641
+	ld a, [wStoryMainGender] ; $5641
 	ld d, OBJ_ALEX_B ; $5644
 	add d ; $5646
 	ld d, a ; $5647
@@ -226,7 +226,7 @@ AwardsCeremonyEntry0bScene:
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5ade
 	ret ; $5aeb
 SpeakPartnerVariantLine:
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5aec
+	ld a, [wStoryPartnerGender] ; $5aec
 	and a ; $5aef
 	jr nz, .femalePartner ; $5af0
 	script_speak ACTOR_PARTNER ; $5af2

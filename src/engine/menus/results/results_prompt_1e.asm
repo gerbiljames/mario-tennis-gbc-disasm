@@ -63,7 +63,7 @@ DrawPlayerNameAndLevel:
 	call Fill7Bytes ; $48fb
 	ld hl, wShadowTilemap + 8 * TILEMAP_WIDTH ; $48fe
 	call Fill7Bytes ; $4901
-	ld hl, wStoryModeNameOfMainCharacter ; $4904
+	ld hl, wStoryMainName ; $4904
 	call CopyStringToTextBuffer ; $4907
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $490a
 	ld bc, $0020 ; $490d
@@ -72,7 +72,7 @@ DrawPlayerNameAndLevel:
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $4916
 	ld bc, $0020 ; $4919
 	call FetchAndDrawDialogueText ; $491c
-	ld a, [wStoryMainCharExpTier] ; $491f
+	ld a, [wStoryMainLevel] ; $491f
 	ld h, $00 ; $4922
 	ld l, a ; $4924
 	ld a, $02 ; $4925
@@ -136,9 +136,9 @@ InitResultsScreenCharacters:
 	ld a, [wGameMode] ; $499e
 	or a ; $49a1
 	jr nz, .nonZero ; $49a2
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $49a4
+	ld a, [wStoryMainChar] ; $49a4
 	ld d, a ; $49a7
-	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $49a8
+	ld a, [wStoryMainPalette] ; $49a8
 	ld e, a ; $49ab
 	jr .initChar ; $49ac
 .nonZero:
@@ -146,13 +146,13 @@ InitResultsScreenCharacters:
 	srl a ; $49b1
 	or a ; $49b3
 	jr nz, .checkPlayer2CurrentMainCharacter ; $49b4
-	ld a, [wPlayer1CurrentMainCharacter] ; $49b6
+	ld a, [wPlayer1MainChar] ; $49b6
 	ld d, a ; $49b9
 	ld a, [wPlayer1MainPalette] ; $49ba
 	ld e, a ; $49bd
 	jr .initChar ; $49be
 .checkPlayer2CurrentMainCharacter:
-	ld a, [wPlayer2CurrentMainCharacter] ; $49c0
+	ld a, [wPlayer2MainChar] ; $49c0
 	ld d, a ; $49c3
 	ld a, [wPlayer2MainPalette] ; $49c4
 	ld e, a ; $49c7
@@ -194,9 +194,9 @@ InitResultsScreenCharacters:
 	ld a, [wGameMode] ; $4a19
 	or a ; $4a1c
 	jr nz, .nonZero3 ; $4a1d
-	ld a, [wStoryModePartnerCharacterOverworldSprite] ; $4a1f
+	ld a, [wStoryPartnerChar] ; $4a1f
 	ld d, a ; $4a22
-	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $4a23
+	ld a, [wStoryPartnerPalette] ; $4a23
 	ld e, a ; $4a26
 	jr .initChar2 ; $4a27
 .nonZero3:
@@ -204,13 +204,13 @@ InitResultsScreenCharacters:
 	srl a ; $4a2c
 	or a ; $4a2e
 	jr nz, .checkPlayer2CurrentPartnerCharacter ; $4a2f
-	ld a, [wPlayer1CurrentPartnerCharacter] ; $4a31
+	ld a, [wPlayer1PartnerChar] ; $4a31
 	ld d, a ; $4a34
 	ld a, [wPlayer1PartnerPalette] ; $4a35
 	ld e, a ; $4a38
 	jr .initChar2 ; $4a39
 .checkPlayer2CurrentPartnerCharacter:
-	ld a, [wPlayer2CurrentPartnerCharacter] ; $4a3b
+	ld a, [wPlayer2PartnerChar] ; $4a3b
 	ld d, a ; $4a3e
 	ld a, [wPlayer2PartnerPalette] ; $4a3f
 	ld e, a ; $4a42

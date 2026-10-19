@@ -38,12 +38,34 @@ def _num(s):
     return int(s[1:], 16) if s.startswith("$") else int(s)
 
 
-def _expand(path):
-    """The file's lines with its `INCLUDE "ram/..."` lines expanded in place."""
+def _ram_macros():
+    """{name: body lines} of the RAM structure macros (include/macros/ram.inc)."""
+    macros, cur = {}, None
+    for line in (ROOT / "include" / "macros" / "ram.inc").read_text().splitlines():
+        m = re.match(r"^MACRO (\w+)", line)
+        if m:
+            cur = macros.setdefault(m.group(1), [])
+        elif line.strip() == "ENDM":
+            cur = None
+        elif cur is not None and not line.strip().startswith("ASSERT"):
+            cur.append(line)
+    return macros
+
+
+def _expand(path, macros=None):
+    """The file's lines with its `INCLUDE "ram/..."` lines and RAM structure
+    macros expanded in place."""
+    macros = _ram_macros() if macros is None else macros
     out = []
     for line in path.read_text().splitlines():
         m = re.match(r'^INCLUDE "(ram/[^"]+)"', line)
-        out += _expand(ROOT / m.group(1)) if m else [line]
+        mm = re.match(r"^\t(\w+) (\w+)\s*(?:;.*)?$", line)
+        if m:
+            out += _expand(ROOT / m.group(1), macros)
+        elif mm and mm.group(1) in macros:
+            out += [x.replace("\\1", mm.group(2)) for x in macros[mm.group(1)]]
+        else:
+            out.append(line)
     return out
 
 

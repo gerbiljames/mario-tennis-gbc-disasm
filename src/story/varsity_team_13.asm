@@ -333,7 +333,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_fade_out 2 ; $7376
 	call WaitFadeEnd ; $737b
 	ld b, $00 ; $737e
-	ld a, [wStoryModeGenderOfMainCharacter] ; $7380
+	ld a, [wStoryMainGender] ; $7380
 	add $04 ; $7383
 	ld c, a ; $7385
 	farcall RunStorySceneByMode ; $7386
@@ -561,11 +561,11 @@ DoublesTravelingTeamVictoryCutscene:
 	ret ; $78c3
 PlayDoublesTravelingTeamScreenSequence_13:
 	ld b, $00 ; $78c4
-	ld a, [wStoryModeGenderOfMainCharacter] ; $78c6
+	ld a, [wStoryMainGender] ; $78c6
 	ld d, a ; $78c9
 	sla a ; $78ca
 	ld c, a ; $78cc
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $78cd
+	ld a, [wStoryPartnerGender] ; $78cd
 	xor d ; $78d0
 	or c ; $78d1
 	ld c, a ; $78d2

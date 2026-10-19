@@ -231,7 +231,7 @@ DrawExpSinglesPlayerPanel:
 	jr nz, .ne02 ; $564d
 	ld bc, wPlayer2MainName ; $564f
 	ld a, [wLinkMatchCharLevel] ; $5652
-	ld [wPlayer2MainExpTier], a ; $5655
+	ld [wPlayer2MainLevel], a ; $5655
 .ne02:
 	push bc ; $5658
 	ld hl, CHARREC_NAME ; $5659
@@ -297,7 +297,7 @@ DrawExpDoublesPlayerPanel:
 	ld a, [wGameMode] ; $56fc
 	or a ; $56ff
 	jr nz, .nonZero ; $5700
-	ld bc, wStoryModeNameOfMainCharacter ; $5702
+	ld bc, wStoryMainName ; $5702
 	jr .copyStringToTextBuffer ; $5705
 .nonZero:
 	ld bc, wPlayer1MainName ; $5707
@@ -306,7 +306,7 @@ DrawExpDoublesPlayerPanel:
 	jr nz, .copyStringToTextBuffer ; $570f
 	ld bc, wPlayer2MainName ; $5711
 	ld a, [wLinkMatchCharLevel] ; $5714
-	ld [wPlayer2MainExpTier], a ; $5717
+	ld [wPlayer2MainLevel], a ; $5717
 .copyStringToTextBuffer:
 	push bc ; $571a
 	ld hl, CHARREC_NAME ; $571b
@@ -373,7 +373,7 @@ DrawExpDoublesPartnerPanel:
 	ld a, [wGameMode] ; $57c1
 	or a ; $57c4
 	jr nz, .nonZero ; $57c5
-	ld bc, wStoryModeNameOfPartnerCharacter ; $57c7
+	ld bc, wStoryPartnerName ; $57c7
 	jr .copyStringToTextBuffer ; $57ca
 .nonZero:
 	ld bc, wPlayer1PartnerName ; $57cc

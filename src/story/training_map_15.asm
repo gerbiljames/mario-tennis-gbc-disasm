@@ -351,7 +351,7 @@ SetupTournamentSitePartnerActor:
 	call SetPlayerPartnerActorSprites ; $46b7
 	test_flag FLAG_DOUBLES ; $46ba
 	jr z, .noPartner ; $46bd
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $46bf
+	ld a, [wStoryPartnerGender] ; $46bf
 	or a ; $46c2
 	jr nz, .female ; $46c3
 	ld d, $58 ; $46c5

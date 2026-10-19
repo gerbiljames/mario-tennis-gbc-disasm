@@ -63,7 +63,7 @@ End10VarsityCourtInitScript_27:
 	jp z, End10VarsityCourtEntry01Scene ; $5622
 	ret ; $5625
 SetPartnerObjDefByGender_27:
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5626
+	ld a, [wStoryPartnerGender] ; $5626
 	or a ; $5629
 	jr nz, .done ; $562a
 	script_set_objdef OBJ_HARRY, $0d ; $562c

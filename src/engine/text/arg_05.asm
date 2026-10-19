@@ -339,7 +339,7 @@ TextCmdApplyHandakuten:
 TextCmdPrintPlayerName:
 	push af ; $51e8
 	push bc ; $51e9
-	ld hl, wStoryModeNameOfMainCharacter ; $51ea
+	ld hl, wStoryMainName ; $51ea
 	call RenderInlineString ; $51ed
 	pop bc ; $51f0
 	pop af ; $51f1
@@ -347,7 +347,7 @@ TextCmdPrintPlayerName:
 TextCmdPrintPartnerName:
 	push af ; $51f3
 	push bc ; $51f4
-	ld hl, wStoryModeNameOfPartnerCharacter ; $51f5
+	ld hl, wStoryPartnerName ; $51f5
 	call RenderInlineString ; $51f8
 	pop bc ; $51fb
 	pop af ; $51fc
@@ -417,7 +417,7 @@ MeasureNextArgStringWidth:
 MeasureMainCharacterNameWidth:
 	push bc ; $5267
 	push hl ; $5268
-	ld hl, wStoryModeNameOfMainCharacter ; $5269
+	ld hl, wStoryMainName ; $5269
 	ld b, $00 ; $526c
 .loop:
 	ld a, [hl+] ; $526e
@@ -436,7 +436,7 @@ MeasureMainCharacterNameWidth:
 MeasurePartnerCharacterNameWidth:
 	push bc ; $527f
 	push hl ; $5280
-	ld hl, wStoryModeNameOfPartnerCharacter ; $5281
+	ld hl, wStoryPartnerName ; $5281
 	ld b, $00 ; $5284
 .loop:
 	ld a, [hl+] ; $5286

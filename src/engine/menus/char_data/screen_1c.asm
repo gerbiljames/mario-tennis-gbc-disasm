@@ -75,7 +75,7 @@ CharDataScreen_Show:
 	push af ; $40b5
 	script_fade_out 16 ; $40b6
 	call WaitFadeEnd ; $40bb
-	ld hl, wStoryModeNameOfMainCharacter ; $40be
+	ld hl, wStoryMainName ; $40be
 	ld de, wStorySlotData ; $40c1
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $40c4
 	call CopyMemoryFast ; $40c6
@@ -128,7 +128,7 @@ CharDataScreen_InitState:
 	xor a ; $4135
 	ld [wCharDataPointsWorking], a ; $4136
 	push af ; $4139
-	ld hl, wStoryModeNameOfMainCharacter ; $413a
+	ld hl, wStoryMainName ; $413a
 	ld a, [wStoryCharacterSlot] ; $413d
 	or a ; $4140
 	jr z, .zero ; $4141
@@ -144,7 +144,7 @@ CharDataScreen_InitState:
 	ld a, [hl] ; $414e
 	ld [wCharDataLevel], a ; $414f
 	push af ; $4152
-	ld hl, wStoryModeNameOfMainCharacter ; $4153
+	ld hl, wStoryMainName ; $4153
 	ld a, [wStoryCharacterSlot] ; $4156
 	or a ; $4159
 	jr z, .zero2 ; $415a
@@ -161,7 +161,7 @@ CharDataScreen_InitState:
 	ld [wCharDataNewLevels], a ; $4168
 	ld [wCharDataLevels], a ; $416b
 	push af ; $416e
-	ld hl, wStoryModeNameOfMainCharacter ; $416f
+	ld hl, wStoryMainName ; $416f
 	ld a, [wStoryCharacterSlot] ; $4172
 	or a ; $4175
 	jr z, .zero3 ; $4176
@@ -178,7 +178,7 @@ CharDataScreen_InitState:
 	ld [wCharDataNewLevels + 1], a ; $4184
 	ld [wCharDataLevels + 1], a ; $4187
 	push af ; $418a
-	ld hl, wStoryModeNameOfMainCharacter ; $418b
+	ld hl, wStoryMainName ; $418b
 	ld a, [wStoryCharacterSlot] ; $418e
 	or a ; $4191
 	jr z, .zero4 ; $4192
@@ -195,7 +195,7 @@ CharDataScreen_InitState:
 	ld [wCharDataNewLevels + 2], a ; $41a0
 	ld [wCharDataLevels + 2], a ; $41a3
 	push af ; $41a6
-	ld hl, wStoryModeNameOfMainCharacter ; $41a7
+	ld hl, wStoryMainName ; $41a7
 	ld a, [wStoryCharacterSlot] ; $41aa
 	or a ; $41ad
 	jr z, .zero5 ; $41ae
@@ -637,7 +637,7 @@ CharDataScreen_DrawStatBarTable1:
 	dw CharDataScreenStatBar32 ; record 10
 CharDataScreen_DrawPortrait:
 	push af ; $459a
-	ld hl, wStoryModeNameOfMainCharacter ; $459b
+	ld hl, wStoryMainName ; $459b
 	ld a, [wStoryCharacterSlot] ; $459e
 	or a ; $45a1
 	jr z, .zero ; $45a2
@@ -655,7 +655,7 @@ CharDataScreen_DrawPortrait:
 	farcall LoadIndexedPaletteThunk ; $45b3
 	wram_bank WRAM_STAGING ; $45b6
 	push af ; $45bc
-	ld hl, wStoryModeNameOfMainCharacter ; $45bd
+	ld hl, wStoryMainName ; $45bd
 	ld a, [wStoryCharacterSlot] ; $45c0
 	or a ; $45c3
 	jr z, .zero2 ; $45c4

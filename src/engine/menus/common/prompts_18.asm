@@ -24,7 +24,7 @@ Unused_18_InitPlayerRecordForCharacter:
 	ld d, h ; $465b
 	ld e, l ; $465c
 	push af ; $465d
-	ld hl, wStoryModeNameOfMainCharacter ; $465e
+	ld hl, wStoryMainName ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
 	or a ; $4664
 	jr z, .partnerSlot ; $4665
@@ -136,7 +136,7 @@ Unused_18_DrawConfirmScreenBox:
 	call Unused_18_DrawBox ; $536e
 	ret ; $5371
 Unused_18_LoadScorePanelValue:
-	ld a, [wStoryMainCharExpTier] ; $5372
+	ld a, [wStoryMainLevel] ; $5372
 	ld [wScorePanelExpTier], a ; $5375
 	ret ; $5378
 Unused_18_StubNop_18_1:

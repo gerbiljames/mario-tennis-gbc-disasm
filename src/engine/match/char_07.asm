@@ -297,7 +297,7 @@ LoadCharacterAttributes:
 	add hl, de ; $5c0c
 	ld a, [hl] ; $5c0d
 	ld [wAiAimAwayChance], a ; $5c0e
-	ld hl, CHARREC_AI_PARAMS + 4 ; $5c11
+	ld hl, CHARREC_DIFFICULTY ; $5c11
 	add hl, de ; $5c14
 	ld a, [hl] ; $5c15
 	ld [wAiServeStyle], a ; $5c16

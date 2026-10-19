@@ -31,22 +31,22 @@ BuildSaveSlotSummaries:
 	ld c, l ; $5af5
 	jr .restore ; $5af6
 .checkStoryModeMainCharacterOverworldSprite:
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $5af8
+	ld a, [wStoryMainChar] ; $5af8
 	ld [hl], a ; $5afb
 	ld hl, $0001 ; $5afc
 	add hl, bc ; $5aff
-	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $5b00
+	ld a, [wStoryMainPalette] ; $5b00
 	ld [hl], a ; $5b03
 	ld hl, $0002 ; $5b04
 	add hl, bc ; $5b07
-	ld a, [wStoryMainCharExpTier] ; $5b08
+	ld a, [wStoryMainLevel] ; $5b08
 	ld [hl], a ; $5b0b
 	push bc ; $5b0c
 	ld a, $03 ; $5b0d
 	add c ; $5b0f
 	ld e, a ; $5b10
 	ld d, b ; $5b11
-	ld hl, wStoryModeNameOfMainCharacter ; $5b12
+	ld hl, wStoryMainName ; $5b12
 	ld bc, $000b ; $5b15
 	call CopyMemoryBC ; $5b18
 	pop bc ; $5b1b

@@ -1,6 +1,6 @@
 InitStoryMatchSettings:
 	farcall InitDefaultMatchSettings ; $4931
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4934
+	ld a, [wStoryMainChar] ; $4934
 	ld [wMatchPlayerChar], a ; $4937
 	xor a ; $493a
 	ld [wMatchIsDoubles], a ; $493b

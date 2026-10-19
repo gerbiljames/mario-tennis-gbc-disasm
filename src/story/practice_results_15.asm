@@ -349,7 +349,7 @@ Table_15:
 PlaceSwingPracticeKidActor:
 	test_flag FLAG_DOUBLES ; $7a45
 	jp nz, .done ; $7a48
-	ld a, [wEquippedRacket] ; $7a4b
+	ld a, [wStoryMainEquipment] ; $7a4b
 	and $0f ; $7a4e
 	cp $03 ; $7a50
 	jp nz, .done ; $7a52

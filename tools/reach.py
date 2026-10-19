@@ -63,8 +63,8 @@ DATA_FLAGS = {
                                 "xor a clears (docs/bugs.md)"),
     "wGlyphBufferHoldCount": ("dead", "PrepareGlyphBuffer's keep branch; nothing ever raises the "
                                       "count (docs/bugs.md)"),
-    "wStoryModeGenderOfMainCharacter": ("live", "a story record field, copied in with the record"),
-    "wStoryModeGenderOfPartnerCharacter": ("live", "a story record field, copied in with the record"),
+    "wStoryMainGender": ("live", "a story record field, copied in with the record"),
+    "wStoryPartnerGender": ("live", "a story record field, copied in with the record"),
     "wStoryLocationBGM": ("live", "copied from the location header by LoadStoryLocationHeader"),
     "wCurrentMinigameStoryMatch": ("live", "the match launchers store the (list, index) word through "
                                            "a pointer; the doubles lists are odd"),

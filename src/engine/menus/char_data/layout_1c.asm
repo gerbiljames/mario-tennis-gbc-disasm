@@ -39,7 +39,7 @@ ApplyCharStatLevelUp:
 	ld hl, wCharDataPointsLeft ; $5411
 	inc [hl] ; $5414
 	push af ; $5415
-	ld hl, wStoryModeNameOfMainCharacter ; $5416
+	ld hl, wStoryMainName ; $5416
 	ld a, [wStoryCharacterSlot] ; $5419
 	or a ; $541c
 	jr z, .zero ; $541d
@@ -55,7 +55,7 @@ ApplyCharStatLevelUp:
 	ld a, [wCharDataLevel] ; $542a
 	ld [hl], a ; $542d
 	push af ; $542e
-	ld hl, wStoryModeNameOfMainCharacter ; $542f
+	ld hl, wStoryMainName ; $542f
 	ld a, [wStoryCharacterSlot] ; $5432
 	or a ; $5435
 	jr z, .zero2 ; $5436
@@ -72,7 +72,7 @@ ApplyCharStatLevelUp:
 	ld [hl], a ; $5446
 	ld [wCharDataLevels], a ; $5447
 	push af ; $544a
-	ld hl, wStoryModeNameOfMainCharacter ; $544b
+	ld hl, wStoryMainName ; $544b
 	ld a, [wStoryCharacterSlot] ; $544e
 	or a ; $5451
 	jr z, .zero3 ; $5452
@@ -89,7 +89,7 @@ ApplyCharStatLevelUp:
 	ld [hl], a ; $5462
 	ld [wCharDataLevels + 1], a ; $5463
 	push af ; $5466
-	ld hl, wStoryModeNameOfMainCharacter ; $5467
+	ld hl, wStoryMainName ; $5467
 	ld a, [wStoryCharacterSlot] ; $546a
 	or a ; $546d
 	jr z, .zero4 ; $546e
@@ -106,7 +106,7 @@ ApplyCharStatLevelUp:
 	ld [hl], a ; $547e
 	ld [wCharDataLevels + 2], a ; $547f
 	push af ; $5482
-	ld hl, wStoryModeNameOfMainCharacter ; $5483
+	ld hl, wStoryMainName ; $5483
 	ld a, [wStoryCharacterSlot] ; $5486
 	or a ; $5489
 	jr z, .zero5 ; $548a

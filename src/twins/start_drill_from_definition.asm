@@ -33,7 +33,7 @@
 	ld b, [hl]
 	ld c, $00
 	farcall InitCa00RecordFromCharId
-	ld a, [wStoryModeMainCharacterOverworldSprite]
+	ld a, [wStoryMainChar]
 	ld [wMatchPlayerChar], a
 	ld a, [wMatchOpponentChar]
 	cp CHAR_NONE

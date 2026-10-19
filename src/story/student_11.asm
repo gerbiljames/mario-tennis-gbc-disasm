@@ -282,7 +282,7 @@ AcademyArrivalGreetingScene:
 	script_wait_frames 120 ; $4dd5
 	script_set_position ACTOR_ACADEMY_ARRIVAL_EMILY, 24.0, 15.0 ; $4ddc
 	script_wait_move ACTOR_PLAYER ; $4de7
-	ld a, [wStoryModeGenderOfMainCharacter] ; $4dec
+	ld a, [wStoryMainGender] ; $4dec
 	or a ; $4def
 	jr z, .doubles ; $4df0
 	farcall AdvanceDialogueTextCursor ; $4df2
@@ -394,7 +394,7 @@ AcademyArrivalInitScript_11.scriptRespawnLocationActors:
 	jp z, AcademyArrivalInitScript_11.notDoubles ; $4fdd
 	script_null_script ACTOR_PARTNER ; $4fe0
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $4fe5
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4ff0
+	ld a, [wStoryPartnerGender] ; $4ff0
 	ld d, OBJ_HARRY_B ; $4ff3
 	add d ; $4ff5
 	ld d, a ; $4ff6
@@ -406,7 +406,7 @@ AcademyArrivalInitScript_11.scriptRespawnLocationActors:
 	script_set_position ACTOR_LIST_11_0_MARK, 26.0, 17.0 ; $5008
 	script_face ACTOR_LIST_11_0_MARK, FACE_DOWN ; $5013
 AcademyArrivalInitScript_11.notDoubles:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $501a
+	ld a, [wStoryMainGender] ; $501a
 	ld d, OBJ_ALEX_B ; $501d
 	add d ; $501f
 	ld d, a ; $5020

@@ -631,9 +631,9 @@ ApplyPendingExpAwards:
 	xor a ; $6c07
 	ret ; $6c08
 ScaleExpByPlayerLevel:
-	ld a, [wStoryMainCharExpTier] ; $6c09
+	ld a, [wStoryMainLevel] ; $6c09
 	ld b, a ; $6c0c
-	ld a, [wStoryPartnerCharExpTier] ; $6c0d
+	ld a, [wStoryPartnerLevel] ; $6c0d
 	add b ; $6c10
 	srl a ; $6c11
 	cp $0a ; $6c13

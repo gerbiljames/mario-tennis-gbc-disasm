@@ -54,7 +54,7 @@ DormEntranceTile01_12:
 	script_fade_out 4 ; $414d
 	farcall WaitPlayerMoveDone ; $4152
 	call WaitFadeEnd ; $4155
-	ld a, [wStoryModeGenderOfMainCharacter] ; $4158
+	ld a, [wStoryMainGender] ; $4158
 	or a ; $415b
 	jr nz, .nonZero ; $415c
 	ld a, $01 ; $415e
@@ -147,7 +147,7 @@ DormEntranceEntry0fScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $4383
 	script_set_active ACTOR_DORM_ENTRANCE_EMILY, $02 ; $438a
 	script_set_position ACTOR_DORM_ENTRANCE_EMILY, 21.0, 11.0 ; $4391
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $439c
+	ld a, [wStoryPartnerGender] ; $439c
 	or a ; $439f
 	jr nz, .doubles ; $43a0
 	script_set_text Text_31_92 ; $43a2

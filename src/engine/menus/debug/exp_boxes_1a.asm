@@ -11,7 +11,7 @@ Unused_1a_ExpScreenDrawTask:
 	jr nz, .checkStoryModeMainCharacterOverworldSprite ; $478b
 	ld de, vTiles0 + VRAM_BANK1 ; $478d
 .checkStoryModeMainCharacterOverworldSprite:
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4790
+	ld a, [wStoryMainChar] ; $4790
 	rlca ; $4793
 	ld_hl_indexed ExpScreenDrawTaskTable ; $4794
 	ld a, [hl+] ; $479b
@@ -94,10 +94,10 @@ Unused_1a_LoadExpScreenGfx:
 	ld_bg_pals de, 0, 8 ; $487b
 	call LoadPalettesMasterOnly ; $487e
 	wram_bank WRAM_STAGING ; $4881
-	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $4887
+	ld a, [wStoryMainPalette] ; $4887
 	ld d, $0e ; $488a
 	farcall LoadIndexedPalette_18 ; $488c
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $488f
+	ld a, [wStoryMainChar] ; $488f
 	ld b, $00 ; $4892
 	wram_bank WRAM_STAGING ; $4894
 	ld hl, ExpScreenGfx6 ; $489a

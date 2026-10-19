@@ -383,7 +383,7 @@ CharDataScreen_InputLoop:
 .checkStatCap:
 	ld a, [wStoryCharacterSlot] ; $5171
 	push af ; $5174
-	ld hl, wStoryModeNameOfMainCharacter ; $5175
+	ld hl, wStoryMainName ; $5175
 	ld a, [wStoryCharacterSlot] ; $5178
 	or a ; $517b
 	jr z, .readStatCap ; $517c

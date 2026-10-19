@@ -84,7 +84,7 @@ SeniorCourtExit01_12:
 	ld h, [hl] ; $55c3
 	ld l, a ; $55c4
 	farcall InitDialogueTextCursor ; $55c5
-	ld a, [wStoryModeGenderOfMainCharacter] ; $55c8
+	ld a, [wStoryMainGender] ; $55c8
 	ld hl, $001d ; $55cb
 	add l ; $55ce
 	ld l, a ; $55cf
@@ -194,7 +194,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_face ACTOR_PLAYER, FACE_UP ; $5785
 	script_set_text Text_34_7 ; $578c
 	set_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5792
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5795
+	ld a, [wStoryPartnerGender] ; $5795
 	or a ; $5798
 	jr nz, .speak ; $5799
 	script_set_text Text_34_11 ; $579b
@@ -313,7 +313,7 @@ SeniorCourtNpc06_12:
 	and a ; $58e3
 	jr z, .speak ; $58e4
 	farcall AdvanceDialogueTextCursor ; $58e6
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $58e9
+	ld a, [wStoryPartnerGender] ; $58e9
 	or a ; $58ec
 	jr nz, .speak ; $58ed
 	farcall AdvanceDialogueTextCursor ; $58ef
@@ -576,7 +576,7 @@ SeniorCourtNpc0B_12:
 	jr c, .speak ; $5ba9
 	test_flag FLAG_DOUBLES ; $5bab
 	jr z, .speak ; $5bae
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bb0
+	ld a, [wStoryPartnerGender] ; $5bb0
 	and a ; $5bb3
 	jr nz, .speak ; $5bb4
 	farcall AdvanceDialogueTextCursor ; $5bb6
@@ -603,7 +603,7 @@ SeniorCourtNpc0BTextIds:
 	dw Text_34_174 ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpc0C_12:
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bdd
+	ld a, [wStoryPartnerGender] ; $5bdd
 	or a ; $5be0
 	jr nz, .nonZero ; $5be1
 	ld a, [wMapSceneStage2] ; $5be3

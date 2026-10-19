@@ -355,7 +355,7 @@ SpawnMainCharacterActor:
 	wram_bank WRAM_ACTORS ; $4e6f
 	push hl ; $4e75
 	push bc ; $4e76
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4e77
+	ld a, [wStoryMainChar] ; $4e77
 	and $03 ; $4e7a
 	add a ; $4e7c
 	ld_hl_indexed ScriptedActorListPtrs_04 ; $4e7d
@@ -383,7 +383,7 @@ SpawnMainCharacterActor:
 	pop hl ; $4eb0
 	pop de ; $4eb1
 	call SetActorPosition ; $4eb2
-	ld hl, wStoryModeMainCharacterOverworldSpriteColor ; $4eb5
+	ld hl, wStoryMainPalette ; $4eb5
 	ld a, [hl] ; $4eb8
 	add $03 ; $4eb9
 	ld bc, wActors ; $4ebb
@@ -413,7 +413,7 @@ SpawnCompanionActor:
 	push de ; $4f12
 	push hl ; $4f13
 	wram_bank WRAM_ACTORS ; $4f14
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f1a
+	ld a, [wStoryPartnerGender] ; $4f1a
 	or a ; $4f1d
 	jr nz, .partnerSlot ; $4f1e
 	ld hl, CompanionActorPartnerActorList0 ; $4f20

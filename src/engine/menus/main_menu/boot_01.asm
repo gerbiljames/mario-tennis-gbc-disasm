@@ -161,13 +161,13 @@ Unused_01_MenuRedraw:
 	ld [wCurrentStorySlot], a ; $4168
 	farcall CheckStorySlot ; $416b
 	ld a, CHAR_LUIGI ; $416e
-	ld [wPlayer1CurrentMainCharacter], a ; $4170
+	ld [wPlayer1MainChar], a ; $4170
 	ld a, CHAR_DK ; $4173
-	ld [wPlayer1CurrentPartnerCharacter], a ; $4175
+	ld [wPlayer1PartnerChar], a ; $4175
 	ld a, CHAR_BABY_MARIO ; $4178
-	ld [wPlayer2CurrentMainCharacter], a ; $417a
+	ld [wPlayer2MainChar], a ; $417a
 	ld a, CHAR_MARIO ; $417d
-	ld [wPlayer2CurrentPartnerCharacter], a ; $417f
+	ld [wPlayer2PartnerChar], a ; $417f
 	ld a, $03 ; $4182
 	ld [wAnimatedTilePeriod], a ; $4184
 	ld de, FLAG_DOUBLES ; $4187
@@ -219,7 +219,7 @@ Unused_01:
 	ld hl, wStoryModeEntryPoint ; $41e8
 	ld [hl], $0a ; $41eb
 	ld a, $00 ; $41ed
-	ld [wStoryModeMainCharacterOverworldSprite], a ; $41ef
+	ld [wStoryMainChar], a ; $41ef
 	farcall RunStoryModeOverworld ; $41f2
 .bit4Clear:
 	bit 5, a ; $41f5

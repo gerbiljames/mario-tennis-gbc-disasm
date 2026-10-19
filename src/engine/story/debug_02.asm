@@ -64,7 +64,7 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $5029
 .loopB:
 	push de ; $502a
-	ld bc, wStoryModeNameOfMainCharacter ; $502b
+	ld bc, wStoryMainName ; $502b
 	ld a, [wCurrentStorySlot] ; $502e
 	ld_cell de, $02, $02 ; $5031
 	call PrintDecimalByte ; $5034
@@ -272,7 +272,7 @@ Unused_02_DebugStoryStatsScreen:
 	bit 2, d ; $51be
 	jp z, .loopB ; $51c0
 	ld a, $01 ; $51c3
-	ld [wStoryModeMainCharacterLeftHanded], a ; $51c5
+	ld [wStoryMainLeftHanded], a ; $51c5
 	jp .loopB ; $51c8
 .bit0Clear:
 	bit 2, a ; $51cb
@@ -328,7 +328,7 @@ LoadStorySlot:
 	ld a, h ; $525d
 	jr nz, .storePlayer1CurrentMainCharacter ; $525e
 	ld a, $3f ; $5260
-	ld [wPlayer1CurrentMainCharacter], a ; $5262
+	ld [wPlayer1MainChar], a ; $5262
 	ld a, $03 ; $5265
 	ld [wPlayer1MainPalette], a ; $5267
 	ld a, b ; $526a
@@ -336,7 +336,7 @@ LoadStorySlot:
 	ret ; $526e
 .storePlayer1CurrentMainCharacter:
 	ld a, CHAR_NONE ; $526f
-	ld [wPlayer1CurrentMainCharacter], a ; $5271
+	ld [wPlayer1MainChar], a ; $5271
 	ret ; $5274
 .zero:
 	push bc ; $5275
@@ -361,7 +361,7 @@ Unused_02_StorySlotVariant:
 	or a ; $5293
 	jr z, .zero ; $5294
 	ld a, CHAR_NONE ; $5296
-	ld [wPlayer1CurrentMainCharacter], a ; $5298
+	ld [wPlayer1MainChar], a ; $5298
 	ld a, $ff ; $529b
 	ret ; $529d
 .zero:

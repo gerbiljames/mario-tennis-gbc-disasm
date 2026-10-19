@@ -85,7 +85,7 @@ RunCharacterSelectScreen:
 	ld a, [wStoryCharacterSlot] ; $489f
 	farcall InitPlayerRecordFromTemplate ; $48a2
 	push af ; $48a5
-	ld hl, wStoryModeNameOfMainCharacter ; $48a6
+	ld hl, wStoryMainName ; $48a6
 	ld a, [wStoryCharacterSlot] ; $48a9
 	or a ; $48ac
 	jr z, .finish ; $48ad

@@ -122,7 +122,7 @@ End17AwardCeremonyInitScript_27:
 	script_delay 60 ; $436b
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 11.25, 12.25 ; $4370
 .loop:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $437b
+	ld a, [wStoryMainGender] ; $437b
 	ld d, OBJ_ALEX ; $437e
 	add d ; $4380
 	ld d, a ; $4381
@@ -213,7 +213,7 @@ End17AwardCeremonyInitScript_27:
 SetEnd17CeremonyObjectDefs_27:
 	test_flag FLAG_DOUBLES ; $45be
 	jp z, .checkStoryModeGenderOfMainCharacter ; $45c1
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $45c4
+	ld a, [wStoryPartnerGender] ; $45c4
 	ld d, OBJ_HARRY_B ; $45c7
 	add d ; $45c9
 	ld d, a ; $45ca
@@ -226,7 +226,7 @@ SetEnd17CeremonyObjectDefs_27:
 	script_set_position ACTOR_PARTNER, 15.0, 13.375 ; $45e1
 	script_face ACTOR_PARTNER, FACE_DOWN ; $45ec
 .checkStoryModeGenderOfMainCharacter:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $45f3
+	ld a, [wStoryMainGender] ; $45f3
 	ld d, OBJ_ALEX_B ; $45f6
 	add d ; $45f8
 	ld d, a ; $45f9

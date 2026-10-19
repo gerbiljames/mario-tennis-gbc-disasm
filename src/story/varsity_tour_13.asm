@@ -1,5 +1,5 @@
 ApplyPartnerCharacterVariant_13:
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $62be
+	ld a, [wStoryPartnerGender] ; $62be
 	or a ; $62c1
 	jr nz, .done ; $62c2
 	script_set_objdef OBJ_HARRY, $0d ; $62c4

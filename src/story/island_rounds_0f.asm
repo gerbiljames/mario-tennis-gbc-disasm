@@ -526,7 +526,7 @@ IslandOpenDoublesMatchReturn:
 	ld h, [hl] ; $774f
 	ld l, a ; $7750
 	farcall InitDialogueTextCursor ; $7751
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7754
+	ld a, [wStoryPartnerGender] ; $7754
 	or a ; $7757
 	jr nz, .declined ; $7758
 	farcall AdvanceDialogueTextCursor ; $775a

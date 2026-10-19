@@ -2,7 +2,7 @@
 ; $0e, $15).
 
 {TWIN_LABEL}:
-	ld a, [wStoryModeMainCharacterLeftHanded]
+	ld a, [wStoryMainLeftHanded]
 	and a
 	jr z, .done
 	script_get_actor_state ACTOR_PLAYER

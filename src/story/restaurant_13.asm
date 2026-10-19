@@ -424,7 +424,7 @@ ServiceAceCoachIntroCutscene:
 	script_face_toward ACTOR_PLAYER, ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $49a1
 	script_wait_frames 50 ; $49a9
 	script_face_toward ACTOR_SERVICE_ACE_COACH_INTRO_MARK, ACTOR_SERVICE_ACE_COACH_INTRO_EMILY ; $49b0
-	ld a, [wStoryModeGenderOfMainCharacter] ; $49b8
+	ld a, [wStoryMainGender] ; $49b8
 	or a ; $49bb
 	jr z, .speak ; $49bc
 	farcall AdvanceDialogueTextCursor ; $49be

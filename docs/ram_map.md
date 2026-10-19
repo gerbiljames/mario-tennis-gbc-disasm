@@ -285,7 +285,7 @@ screen or match init. Eight bytes or longer:
 | WRAM0 | `$c778-$c77f` | 8 | boot / screen init |
 | WRAM0 | `$c7d8-$c7ff` | 40 | boot / screen init; `$c7d8-$c7f7` holds data (save staging) |
 | WRAM0 | `$c892-$c8a2` | 17 | boot / screen init |
-| WRAM0 | `$c97c-$c9af` | 52 | boot / screen init |
+| WRAM0 | `$c97d-$c9af` | 51 | boot / screen init |
 | WRAM0 | `$c9b7-$c9bf` | 9 | boot / screen init |
 | WRAM0 | `$c9e0-$c9ff` | 32 | boot / screen init |
 | WRAM5 | `$d810-$d81f` | 16 | ResetTextWindowState, boot |

@@ -67,7 +67,7 @@ InitCa00RecordFromCharId:
 	ld c, $04 ; $40a0
 	call ClearMemory16 ; $40a2
 	pop de ; $40a5
-	ld a, [wStoryModeNameOfMainCharacter] ; $40a6
+	ld a, [wStoryMainName] ; $40a6
 	ld [hl], a ; $40a9
 	push de ; $40aa
 	ld h, d ; $40ab
@@ -200,7 +200,7 @@ GetStoryCharacterRecordPtr:
 	pop af ; $4204
 	ret ; $4205
 GetPlayerRecordPtr:
-	ld bc, wStoryModeNameOfMainCharacter ; $4206
+	ld bc, wStoryMainName ; $4206
 	or a ; $4209
 	ret z ; $420a
 	ld c, $40 ; $420b
@@ -503,7 +503,7 @@ InitPlayerRecordFromTemplate:
 	jr nz, .copyLoop ; $4409
 	pop bc ; $440b
 	call RecomputeCharacterStats ; $440c
-	ld hl, wStoryModeNameOfMainCharacter ; $440f
+	ld hl, wStoryMainName ; $440f
 	ld de, wStorySlotData ; $4412
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $4415
 	call CopyMemoryFast ; $4417

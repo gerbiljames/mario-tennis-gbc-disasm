@@ -752,7 +752,7 @@ RunDoublesDrillMatch:
 	ld a, [hl+] ; $72bf
 	ld [wPlayer2MainAiParams + 3], a ; $72c0
 	ld a, [hl+] ; $72c3
-	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $72c4
+	ld [wPlayer2MainDifficulty], a ; $72c4
 	pop hl ; $72c7
 	ld a, [hl+] ; $72c8
 	ld [wPlayer2PartnerAiParams], a ; $72c9
@@ -763,7 +763,7 @@ RunDoublesDrillMatch:
 	ld a, [hl+] ; $72d4
 	ld [wPlayer2PartnerAiParams + 3], a ; $72d5
 	ld a, [hl+] ; $72d8
-	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
+	ld [wPlayer2PartnerDifficulty], a ; $72d9
 	farcall RunMatch ; $72dc
 	ret ; $72df
 ; Per Two-on-One level: games per set, sets, then the four AI bytes and the

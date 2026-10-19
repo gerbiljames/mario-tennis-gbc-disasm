@@ -320,7 +320,7 @@ RepairCounterServiceMenu:
 	script_face ACTOR_TRAINING_GYM_WALK_72_02_2, FACE_RIGHT ; $4eaa
 	ret ; $4eb1
 PrepareEquipmentSelectScreen:
-	ld a, [wEquippedRacket] ; $4eb2
+	ld a, [wStoryMainEquipment] ; $4eb2
 	ld [wMapScratch + 8], a ; $4eb5
 	ld a, STORYLOC_TRAINING_CENTER ; $4eb8
 	ld [wStoryModeCurrentLocation], a ; $4eba
@@ -389,11 +389,11 @@ GetEquippedRacketNibble:
 	jr z, .lowNibble ; $4f61
 	jr .highNibble ; $4f63
 .lowNibble:
-	ld a, [wEquippedRacket] ; $4f65
+	ld a, [wStoryMainEquipment] ; $4f65
 	and $0f ; $4f68
 	ret ; $4f6a
 .highNibble:
-	ld a, [wEquippedRacket] ; $4f6b
+	ld a, [wStoryMainEquipment] ; $4f6b
 	and $f0 ; $4f6e
 	swap a ; $4f70
 	ret ; $4f72

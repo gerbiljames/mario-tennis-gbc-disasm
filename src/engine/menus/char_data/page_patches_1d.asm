@@ -170,7 +170,7 @@ RunExpDistributionFlow:
 .loop2:
 	wram_bank WRAM_SCENE ; $6873
 	ld hl, wExpScreenCharStats + 12 ; $6879
-	ld de, wStoryMainCharExp ; $687c
+	ld de, wStoryMainExp ; $687c
 	ld a, [hl+] ; $687f
 	ld [de], a ; $6880
 	inc de ; $6881
@@ -180,7 +180,7 @@ RunExpDistributionFlow:
 	ld a, [hl] ; $6885
 	ld [de], a ; $6886
 	ld hl, wExpScreenCharStats + 27 ; $6887
-	ld de, wStoryPartnerCharExp ; $688a
+	ld de, wStoryPartnerExp ; $688a
 	ld a, [hl+] ; $688d
 	ld [de], a ; $688e
 	inc de ; $688f
@@ -505,7 +505,7 @@ InitExpScreenCharStats:
 	xor a ; $6b88
 	ld [wStoryCharacterSlot], a ; $6b89
 	push af ; $6b8c
-	ld hl, wStoryModeNameOfMainCharacter ; $6b8d
+	ld hl, wStoryMainName ; $6b8d
 	ld a, [wStoryCharacterSlot] ; $6b90
 	or a ; $6b93
 	jr z, .zero ; $6b94
@@ -523,7 +523,7 @@ InitExpScreenCharStats:
 	call WriteExpScreenStringTiles ; $6ba6
 	wram_bank WRAM_SCENE ; $6ba9
 	push af ; $6baf
-	ld hl, wStoryModeNameOfMainCharacter ; $6bb0
+	ld hl, wStoryMainName ; $6bb0
 	ld a, [wStoryCharacterSlot] ; $6bb3
 	or a ; $6bb6
 	jr z, .zero2 ; $6bb7
@@ -569,7 +569,7 @@ InitExpScreenCharStats:
 	ld a, h ; $6c03
 	ld [wExpScreenCharStats + 9], a ; $6c04
 	push af ; $6c07
-	ld hl, wStoryModeNameOfMainCharacter ; $6c08
+	ld hl, wStoryMainName ; $6c08
 	ld a, [wStoryCharacterSlot] ; $6c0b
 	or a ; $6c0e
 	jr z, .zero3 ; $6c0f
@@ -591,7 +591,7 @@ InitExpScreenCharStats:
 	ld a, $01 ; $6c28
 	ld [wStoryCharacterSlot], a ; $6c2a
 	push af ; $6c2d
-	ld hl, wStoryModeNameOfMainCharacter ; $6c2e
+	ld hl, wStoryMainName ; $6c2e
 	ld a, [wStoryCharacterSlot] ; $6c31
 	or a ; $6c34
 	jr z, .zero4 ; $6c35
@@ -609,7 +609,7 @@ InitExpScreenCharStats:
 	call WriteExpScreenStringTiles ; $6c47
 	wram_bank WRAM_SCENE ; $6c4a
 	push af ; $6c50
-	ld hl, wStoryModeNameOfMainCharacter ; $6c51
+	ld hl, wStoryMainName ; $6c51
 	ld a, [wStoryCharacterSlot] ; $6c54
 	or a ; $6c57
 	jr z, .zero5 ; $6c58
@@ -655,7 +655,7 @@ InitExpScreenCharStats:
 	ld a, h ; $6ca6
 	ld [wExpScreenCharStats + 24], a ; $6ca7
 	push af ; $6caa
-	ld hl, wStoryModeNameOfMainCharacter ; $6cab
+	ld hl, wStoryMainName ; $6cab
 	ld a, [wStoryCharacterSlot] ; $6cae
 	or a ; $6cb1
 	jr z, .zero6 ; $6cb2
@@ -679,7 +679,7 @@ InitExpScreenCharStats:
 	xor a ; $6ccc
 	ld [wStoryCharacterSlot], a ; $6ccd
 	push af ; $6cd0
-	ld hl, wStoryModeNameOfMainCharacter ; $6cd1
+	ld hl, wStoryMainName ; $6cd1
 	ld a, [wStoryCharacterSlot] ; $6cd4
 	or a ; $6cd7
 	jr z, .zero7 ; $6cd8
@@ -697,7 +697,7 @@ InitExpScreenCharStats:
 	call WriteExpScreenStringTiles ; $6cea
 	wram_bank WRAM_SCENE ; $6ced
 	push af ; $6cf3
-	ld hl, wStoryModeNameOfMainCharacter ; $6cf4
+	ld hl, wStoryMainName ; $6cf4
 	ld a, [wStoryCharacterSlot] ; $6cf7
 	or a ; $6cfa
 	jr z, .zero8 ; $6cfb
@@ -721,7 +721,7 @@ InitExpScreenCharStats:
 	ld a, $01 ; $6d1a
 	ld [wStoryCharacterSlot], a ; $6d1c
 	push af ; $6d1f
-	ld hl, wStoryModeNameOfMainCharacter ; $6d20
+	ld hl, wStoryMainName ; $6d20
 	ld a, [wStoryCharacterSlot] ; $6d23
 	or a ; $6d26
 	jr z, .zero9 ; $6d27
@@ -739,7 +739,7 @@ InitExpScreenCharStats:
 	call WriteExpScreenStringTiles ; $6d39
 	wram_bank WRAM_SCENE ; $6d3c
 	push af ; $6d42
-	ld hl, wStoryModeNameOfMainCharacter ; $6d43
+	ld hl, wStoryMainName ; $6d43
 	ld a, [wStoryCharacterSlot] ; $6d46
 	or a ; $6d49
 	jr z, .zero10 ; $6d4a

@@ -220,7 +220,7 @@ Unused_1b_StubNop_1b_10:
 	ret ; $6aad
 Unused_1b_CopyMainCharNameWithDiacritics:
 	push de ; $6aae
-	ld hl, wStoryModeNameOfMainCharacter ; $6aaf
+	ld hl, wStoryMainName ; $6aaf
 	pop de ; $6ab2
 .loop:
 	ld a, [hl+] ; $6ab3

@@ -260,7 +260,7 @@ AwardsCeremonyTile01_0f:
 	script_wait_move ACTOR_PLAYER ; $4502
 	call ReplacePlayerWithStandInActor ; $4507
 	script_set_position ACTOR_AWARDS_CEREMONY_ALEX, 11.0, 27.0 ; $450a
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4515
+	ld a, [wStoryPartnerGender] ; $4515
 	ld d, OBJ_HARRY_B ; $4518
 	add d ; $451a
 	ld d, a ; $451b
@@ -594,7 +594,7 @@ AwardsCeremonyTile02_0f:
 	script_face ACTOR_AWARDS_CEREMONY_WALK_74_07, FACE_LEFT ; $4e2b
 	script_face ACTOR_AWARDS_CEREMONY_WALK_74_06, FACE_RIGHT ; $4e32
 	script_delay 60 ; $4e39
-	ld a, [wStoryModeGenderOfMainCharacter] ; $4e3e
+	ld a, [wStoryMainGender] ; $4e3e
 	ld d, OBJ_ALEX ; $4e41
 	add d ; $4e43
 	ld d, a ; $4e44
@@ -612,7 +612,7 @@ AwardsCeremonyTile02_0f:
 	script_fade_out 1 ; $4e81
 	call WaitFadeEnd ; $4e86
 	ld b, $01 ; $4e89
-	ld a, [wStoryModeGenderOfMainCharacter] ; $4e8b
+	ld a, [wStoryMainGender] ; $4e8b
 	add $04 ; $4e8e
 	ld c, a ; $4e90
 	farcall RunStorySceneByMode ; $4e91
@@ -659,7 +659,7 @@ AwardsCeremonyTile02_0f:
 	script_delay 180 ; $4f6b
 	call ReplacePlayerWithStandInActor ; $4f70
 	script_set_position ACTOR_AWARDS_CEREMONY_ALEX, 13.0, 13.375 ; $4f73
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f7e
+	ld a, [wStoryPartnerGender] ; $4f7e
 	ld d, OBJ_HARRY_B ; $4f81
 	add d ; $4f83
 	ld d, a ; $4f84
@@ -852,7 +852,7 @@ AwardsCeremonyTile02_0f:
 	script_face ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, FACE_RIGHT ; $54fe
 	script_face ACTOR_AWARDS_CEREMONY_BALLOON_QUESTION, FACE_RIGHT ; $5505
 	script_delay 60 ; $550c
-	ld a, [wStoryModeGenderOfMainCharacter] ; $5511
+	ld a, [wStoryMainGender] ; $5511
 	ld d, OBJ_ALEX ; $5514
 	add d ; $5516
 	ld d, a ; $5517
@@ -870,11 +870,11 @@ AwardsCeremonyTile02_0f:
 	script_fade_out 1 ; $5554
 	call WaitFadeEnd ; $5559
 	ld b, $01 ; $555c
-	ld a, [wStoryModeGenderOfMainCharacter] ; $555e
+	ld a, [wStoryMainGender] ; $555e
 	ld d, a ; $5561
 	sla a ; $5562
 	ld c, a ; $5564
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5565
+	ld a, [wStoryPartnerGender] ; $5565
 	xor d ; $5568
 	or c ; $5569
 	ld c, a ; $556a

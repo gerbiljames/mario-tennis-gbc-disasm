@@ -6,7 +6,7 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	call Unused_1a_ClearExpScreenNameBox ; $4b23
 	wram_bank WRAM_STAGING ; $4b26
 	push af ; $4b2c
-	ld hl, wStoryModeNameOfMainCharacter ; $4b2d
+	ld hl, wStoryMainName ; $4b2d
 	ld a, [wStoryCharacterSlot] ; $4b30
 	or a ; $4b33
 	jr z, .zero ; $4b34
@@ -22,7 +22,7 @@ Unused_1a_DrawExpScreenNameAndLevel:
 	ld de, wDecompBuffer + 76 * TILE_SIZE + 7 ; $4b41
 	call Unused_1a_CopyNameToTileBuffer ; $4b44
 	push af ; $4b47
-	ld hl, wStoryModeNameOfMainCharacter ; $4b48
+	ld hl, wStoryMainName ; $4b48
 	ld a, [wStoryCharacterSlot] ; $4b4b
 	or a ; $4b4e
 	jr z, .zero2 ; $4b4f

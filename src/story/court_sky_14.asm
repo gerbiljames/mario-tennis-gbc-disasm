@@ -245,7 +245,7 @@ IslandSkyInitScript_14:
 	jp z, .setPlayerObjDef ; $5327
 	script_null_script ACTOR_PARTNER ; $532a
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $532f
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $533a
+	ld a, [wStoryPartnerGender] ; $533a
 	ld d, OBJ_HARRY_B ; $533d
 	add d ; $533f
 	ld d, a ; $5340
@@ -255,7 +255,7 @@ IslandSkyInitScript_14:
 	farcall LoadActorObjectDefIfValid ; $5348
 	script_set_anim ACTOR_ISLAND_SKY_WALK_74_07, ANIM_WALK ; $534b
 .setPlayerObjDef:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $5352
+	ld a, [wStoryMainGender] ; $5352
 	ld d, OBJ_ALEX_B ; $5355
 	add d ; $5357
 	ld d, a ; $5358

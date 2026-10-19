@@ -70,7 +70,7 @@ ReplacePartnerWithStandInActor:
 	call SetPlayerAndPartnerObjectDefs ; $7a17
 	test_flag FLAG_DOUBLES ; $7a1a
 	jr z, .noPartner ; $7a1d
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7a1f
+	ld a, [wStoryPartnerGender] ; $7a1f
 	or a ; $7a22
 	jr nz, .female ; $7a23
 	ld d, $58 ; $7a25
@@ -158,7 +158,7 @@ WalkActorsInFromEntryPointFacings_0f:
 SetPlayerAndPartnerObjectDefs:
 	test_flag FLAG_DOUBLES ; $7b20
 	jp z, .mainChar ; $7b23
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7b26
+	ld a, [wStoryPartnerGender] ; $7b26
 	ld d, OBJ_HARRY_B ; $7b29
 	add d ; $7b2b
 	ld d, a ; $7b2c
@@ -168,7 +168,7 @@ SetPlayerAndPartnerObjectDefs:
 	farcall LoadActorObjectDefIfValid ; $7b34
 	script_set_anim ACTOR_PARTNER, ANIM_WALK ; $7b37
 .mainChar:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $7b3e
+	ld a, [wStoryMainGender] ; $7b3e
 	ld d, OBJ_ALEX_B ; $7b41
 	add d ; $7b43
 	ld d, a ; $7b44

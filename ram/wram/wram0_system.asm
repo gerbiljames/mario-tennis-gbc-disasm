@@ -253,7 +253,7 @@ wDrillAbortCountdownActive:: db
 ; [8-bit] Cleared by ServiceMatch2Hook_PointStart and read by nothing
 wUnusedDrillPointStartByte:: db
 
-; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (0 = passed, 1 = no points won, 2 = double fault, 3 = target missed, 4+ = partial, offset by wStoryModeMainCharacterLeftHanded). The bank $15 training-court coaches pick their follow-up dialogue on it
+; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (0 = passed, 1 = no points won, 2 = double fault, 3 = target missed, 4+ = partial, offset by wStoryMainLeftHanded). The bank $15 training-court coaches pick their follow-up dialogue on it
 wDrillLessonResult:: db
 
 ; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneHit when the ball bounced inside the target zone; CountDrillResultBitsSet and CheckDrillTargetZoneMissed read it back

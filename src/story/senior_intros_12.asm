@@ -1,5 +1,5 @@
 SetPartnerObjDefByGender_12:
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5e91
+	ld a, [wStoryPartnerGender] ; $5e91
 	or a ; $5e94
 	jr nz, .done ; $5e95
 	script_get_actor_state ACTOR_SENIOR_COURT_A_KATE ; $5e97

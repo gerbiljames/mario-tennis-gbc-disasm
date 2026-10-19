@@ -329,7 +329,7 @@ WriteCharStatsToDisplayBuffer:
 	ld a, [wCharDataPointsWorking] ; $49f1
 	ld [wCharDataPointsLeft], a ; $49f4
 	push af ; $49f7
-	ld hl, wStoryModeNameOfMainCharacter ; $49f8
+	ld hl, wStoryMainName ; $49f8
 	ld a, [wStoryCharacterSlot] ; $49fb
 	or a ; $49fe
 	jr z, .zero ; $49ff
@@ -345,7 +345,7 @@ WriteCharStatsToDisplayBuffer:
 	ld a, [wCharDataLevel] ; $4a0c
 	ld [hl], a ; $4a0f
 	push af ; $4a10
-	ld hl, wStoryModeNameOfMainCharacter ; $4a11
+	ld hl, wStoryMainName ; $4a11
 	ld a, [wStoryCharacterSlot] ; $4a14
 	or a ; $4a17
 	jr z, .zero2 ; $4a18
@@ -362,7 +362,7 @@ WriteCharStatsToDisplayBuffer:
 	ld [hl], a ; $4a28
 	ld [wCharDataLevels], a ; $4a29
 	push af ; $4a2c
-	ld hl, wStoryModeNameOfMainCharacter ; $4a2d
+	ld hl, wStoryMainName ; $4a2d
 	ld a, [wStoryCharacterSlot] ; $4a30
 	or a ; $4a33
 	jr z, .zero3 ; $4a34
@@ -379,7 +379,7 @@ WriteCharStatsToDisplayBuffer:
 	ld [hl], a ; $4a44
 	ld [wCharDataLevels + 1], a ; $4a45
 	push af ; $4a48
-	ld hl, wStoryModeNameOfMainCharacter ; $4a49
+	ld hl, wStoryMainName ; $4a49
 	ld a, [wStoryCharacterSlot] ; $4a4c
 	or a ; $4a4f
 	jr z, .zero4 ; $4a50
@@ -396,7 +396,7 @@ WriteCharStatsToDisplayBuffer:
 	ld [hl], a ; $4a60
 	ld [wCharDataLevels + 2], a ; $4a61
 	push af ; $4a64
-	ld hl, wStoryModeNameOfMainCharacter ; $4a65
+	ld hl, wStoryMainName ; $4a65
 	ld a, [wStoryCharacterSlot] ; $4a68
 	or a ; $4a6b
 	jr z, .zero5 ; $4a6c
@@ -429,7 +429,7 @@ LoadCharStatsWithLevelUpDeltas:
 	or a ; $4a9d
 	ret nz ; $4a9e
 	push af ; $4a9f
-	ld hl, wStoryModeNameOfMainCharacter ; $4aa0
+	ld hl, wStoryMainName ; $4aa0
 	ld a, [wStoryCharacterSlot] ; $4aa3
 	or a ; $4aa6
 	jr z, .zero ; $4aa7
@@ -445,7 +445,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [hl] ; $4ab4
 	ld [wCharDataLevels], a ; $4ab5
 	push af ; $4ab8
-	ld hl, wStoryModeNameOfMainCharacter ; $4ab9
+	ld hl, wStoryMainName ; $4ab9
 	ld a, [wStoryCharacterSlot] ; $4abc
 	or a ; $4abf
 	jr z, .zero2 ; $4ac0
@@ -462,7 +462,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4ace
 	ld [wCharDataStats], a ; $4acf
 	push af ; $4ad2
-	ld hl, wStoryModeNameOfMainCharacter ; $4ad3
+	ld hl, wStoryMainName ; $4ad3
 	ld a, [wStoryCharacterSlot] ; $4ad6
 	or a ; $4ad9
 	jr z, .zero3 ; $4ada
@@ -479,7 +479,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4ae8
 	ld [wCharDataStats + 1], a ; $4ae9
 	push af ; $4aec
-	ld hl, wStoryModeNameOfMainCharacter ; $4aed
+	ld hl, wStoryMainName ; $4aed
 	ld a, [wStoryCharacterSlot] ; $4af0
 	or a ; $4af3
 	jr z, .zero4 ; $4af4
@@ -495,7 +495,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [hl] ; $4b01
 	ld [wCharDataLevels + 1], a ; $4b02
 	push af ; $4b05
-	ld hl, wStoryModeNameOfMainCharacter ; $4b06
+	ld hl, wStoryMainName ; $4b06
 	ld a, [wStoryCharacterSlot] ; $4b09
 	or a ; $4b0c
 	jr z, .zero5 ; $4b0d
@@ -512,7 +512,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4b1b
 	ld [wCharDataStats + 2], a ; $4b1c
 	push af ; $4b1f
-	ld hl, wStoryModeNameOfMainCharacter ; $4b20
+	ld hl, wStoryMainName ; $4b20
 	ld a, [wStoryCharacterSlot] ; $4b23
 	or a ; $4b26
 	jr z, .zero6 ; $4b27
@@ -529,7 +529,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4b35
 	ld [wCharDataStats + 3], a ; $4b36
 	push af ; $4b39
-	ld hl, wStoryModeNameOfMainCharacter ; $4b3a
+	ld hl, wStoryMainName ; $4b3a
 	ld a, [wStoryCharacterSlot] ; $4b3d
 	or a ; $4b40
 	jr z, .zero7 ; $4b41
@@ -546,7 +546,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4b4f
 	ld [wCharDataStats + 4], a ; $4b50
 	push af ; $4b53
-	ld hl, wStoryModeNameOfMainCharacter ; $4b54
+	ld hl, wStoryMainName ; $4b54
 	ld a, [wStoryCharacterSlot] ; $4b57
 	or a ; $4b5a
 	jr z, .zero8 ; $4b5b
@@ -562,7 +562,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [hl] ; $4b68
 	ld [wCharDataLevels + 2], a ; $4b69
 	push af ; $4b6c
-	ld hl, wStoryModeNameOfMainCharacter ; $4b6d
+	ld hl, wStoryMainName ; $4b6d
 	ld a, [wStoryCharacterSlot] ; $4b70
 	or a ; $4b73
 	jr z, .zero9 ; $4b74
@@ -579,7 +579,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4b82
 	ld [wCharDataStats + 5], a ; $4b83
 	push af ; $4b86
-	ld hl, wStoryModeNameOfMainCharacter ; $4b87
+	ld hl, wStoryMainName ; $4b87
 	ld a, [wStoryCharacterSlot] ; $4b8a
 	or a ; $4b8d
 	jr z, .zero10 ; $4b8e
@@ -596,7 +596,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4b9c
 	ld [wCharDataStats + 6], a ; $4b9d
 	push af ; $4ba0
-	ld hl, wStoryModeNameOfMainCharacter ; $4ba1
+	ld hl, wStoryMainName ; $4ba1
 	ld a, [wStoryCharacterSlot] ; $4ba4
 	or a ; $4ba7
 	jr z, .zero11 ; $4ba8
@@ -612,7 +612,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ld a, [hl] ; $4bb5
 	ld [wCharDataLevels + 3], a ; $4bb6
 	push af ; $4bb9
-	ld hl, wStoryModeNameOfMainCharacter ; $4bba
+	ld hl, wStoryMainName ; $4bba
 	ld a, [wStoryCharacterSlot] ; $4bbd
 	or a ; $4bc0
 	jr z, .zero12 ; $4bc1
@@ -629,7 +629,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4bcf
 	ld [wCharDataStats + 7], a ; $4bd0
 	push af ; $4bd3
-	ld hl, wStoryModeNameOfMainCharacter ; $4bd4
+	ld hl, wStoryMainName ; $4bd4
 	ld a, [wStoryCharacterSlot] ; $4bd7
 	or a ; $4bda
 	jr z, .zero13 ; $4bdb
@@ -646,7 +646,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4be9
 	ld [wCharDataStats + 8], a ; $4bea
 	push af ; $4bed
-	ld hl, wStoryModeNameOfMainCharacter ; $4bee
+	ld hl, wStoryMainName ; $4bee
 	ld a, [wStoryCharacterSlot] ; $4bf1
 	or a ; $4bf4
 	jr z, .zero14 ; $4bf5
@@ -663,7 +663,7 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4c03
 	ld [wCharDataStats + 9], a ; $4c04
 	push af ; $4c07
-	ld hl, wStoryModeNameOfMainCharacter ; $4c08
+	ld hl, wStoryMainName ; $4c08
 	ld a, [wStoryCharacterSlot] ; $4c0b
 	or a ; $4c0e
 	jr z, .zero15 ; $4c0f
@@ -705,7 +705,7 @@ LoadCharStatsWithLevelUpDeltas:
 LoadCharStats:
 	wram_bank WRAM_SCENE ; $4c43
 	push af ; $4c49
-	ld hl, wStoryModeNameOfMainCharacter ; $4c4a
+	ld hl, wStoryMainName ; $4c4a
 	ld a, [wStoryCharacterSlot] ; $4c4d
 	or a ; $4c50
 	jr z, .field38 ; $4c51
@@ -721,7 +721,7 @@ LoadCharStats:
 	ld a, [hl] ; $4c5e
 	ld [wCharDataLevels], a ; $4c5f
 	push af ; $4c62
-	ld hl, wStoryModeNameOfMainCharacter ; $4c63
+	ld hl, wStoryMainName ; $4c63
 	ld a, [wStoryCharacterSlot] ; $4c66
 	or a ; $4c69
 	jr z, .field20 ; $4c6a
@@ -738,7 +738,7 @@ LoadCharStats:
 	inc a ; $4c78
 	ld [wCharDataStats], a ; $4c79
 	push af ; $4c7c
-	ld hl, wStoryModeNameOfMainCharacter ; $4c7d
+	ld hl, wStoryMainName ; $4c7d
 	ld a, [wStoryCharacterSlot] ; $4c80
 	or a ; $4c83
 	jr z, .field21 ; $4c84
@@ -755,7 +755,7 @@ LoadCharStats:
 	inc a ; $4c92
 	ld [wCharDataStats + 1], a ; $4c93
 	push af ; $4c96
-	ld hl, wStoryModeNameOfMainCharacter ; $4c97
+	ld hl, wStoryMainName ; $4c97
 	ld a, [wStoryCharacterSlot] ; $4c9a
 	or a ; $4c9d
 	jr z, .field39 ; $4c9e
@@ -771,7 +771,7 @@ LoadCharStats:
 	ld a, [hl] ; $4cab
 	ld [wCharDataLevels + 1], a ; $4cac
 	push af ; $4caf
-	ld hl, wStoryModeNameOfMainCharacter ; $4cb0
+	ld hl, wStoryMainName ; $4cb0
 	ld a, [wStoryCharacterSlot] ; $4cb3
 	or a ; $4cb6
 	jr z, .field22 ; $4cb7
@@ -788,7 +788,7 @@ LoadCharStats:
 	inc a ; $4cc5
 	ld [wCharDataStats + 2], a ; $4cc6
 	push af ; $4cc9
-	ld hl, wStoryModeNameOfMainCharacter ; $4cca
+	ld hl, wStoryMainName ; $4cca
 	ld a, [wStoryCharacterSlot] ; $4ccd
 	or a ; $4cd0
 	jr z, .field23 ; $4cd1
@@ -805,7 +805,7 @@ LoadCharStats:
 	inc a ; $4cdf
 	ld [wCharDataStats + 3], a ; $4ce0
 	push af ; $4ce3
-	ld hl, wStoryModeNameOfMainCharacter ; $4ce4
+	ld hl, wStoryMainName ; $4ce4
 	ld a, [wStoryCharacterSlot] ; $4ce7
 	or a ; $4cea
 	jr z, .field24 ; $4ceb
@@ -822,7 +822,7 @@ LoadCharStats:
 	inc a ; $4cf9
 	ld [wCharDataStats + 4], a ; $4cfa
 	push af ; $4cfd
-	ld hl, wStoryModeNameOfMainCharacter ; $4cfe
+	ld hl, wStoryMainName ; $4cfe
 	ld a, [wStoryCharacterSlot] ; $4d01
 	or a ; $4d04
 	jr z, .field3a ; $4d05
@@ -838,7 +838,7 @@ LoadCharStats:
 	ld a, [hl] ; $4d12
 	ld [wCharDataLevels + 2], a ; $4d13
 	push af ; $4d16
-	ld hl, wStoryModeNameOfMainCharacter ; $4d17
+	ld hl, wStoryMainName ; $4d17
 	ld a, [wStoryCharacterSlot] ; $4d1a
 	or a ; $4d1d
 	jr z, .field25 ; $4d1e
@@ -855,7 +855,7 @@ LoadCharStats:
 	inc a ; $4d2c
 	ld [wCharDataStats + 5], a ; $4d2d
 	push af ; $4d30
-	ld hl, wStoryModeNameOfMainCharacter ; $4d31
+	ld hl, wStoryMainName ; $4d31
 	ld a, [wStoryCharacterSlot] ; $4d34
 	or a ; $4d37
 	jr z, .field26 ; $4d38
@@ -872,7 +872,7 @@ LoadCharStats:
 	inc a ; $4d46
 	ld [wCharDataStats + 6], a ; $4d47
 	push af ; $4d4a
-	ld hl, wStoryModeNameOfMainCharacter ; $4d4b
+	ld hl, wStoryMainName ; $4d4b
 	ld a, [wStoryCharacterSlot] ; $4d4e
 	or a ; $4d51
 	jr z, .field3b ; $4d52
@@ -888,7 +888,7 @@ LoadCharStats:
 	ld a, [hl] ; $4d5f
 	ld [wCharDataLevels + 3], a ; $4d60
 	push af ; $4d63
-	ld hl, wStoryModeNameOfMainCharacter ; $4d64
+	ld hl, wStoryMainName ; $4d64
 	ld a, [wStoryCharacterSlot] ; $4d67
 	or a ; $4d6a
 	jr z, .field27 ; $4d6b
@@ -905,7 +905,7 @@ LoadCharStats:
 	inc a ; $4d79
 	ld [wCharDataStats + 7], a ; $4d7a
 	push af ; $4d7d
-	ld hl, wStoryModeNameOfMainCharacter ; $4d7e
+	ld hl, wStoryMainName ; $4d7e
 	ld a, [wStoryCharacterSlot] ; $4d81
 	or a ; $4d84
 	jr z, .field28 ; $4d85
@@ -922,7 +922,7 @@ LoadCharStats:
 	inc a ; $4d93
 	ld [wCharDataStats + 8], a ; $4d94
 	push af ; $4d97
-	ld hl, wStoryModeNameOfMainCharacter ; $4d98
+	ld hl, wStoryMainName ; $4d98
 	ld a, [wStoryCharacterSlot] ; $4d9b
 	or a ; $4d9e
 	jr z, .field29 ; $4d9f
@@ -939,7 +939,7 @@ LoadCharStats:
 	inc a ; $4dad
 	ld [wCharDataStats + 9], a ; $4dae
 	push af ; $4db1
-	ld hl, wStoryModeNameOfMainCharacter ; $4db2
+	ld hl, wStoryMainName ; $4db2
 	ld a, [wStoryCharacterSlot] ; $4db5
 	or a ; $4db8
 	jr z, .field2a ; $4db9

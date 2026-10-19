@@ -94,9 +94,9 @@ NEXTU
 wMinigameDataClearFlags:: ds 7
 NEXTU
 ; trophies screen (bank $3b, $49e5-$4cfa)
-; [6 bytes] One trophy row: six cells, each 0 or 1, one icon per set cell drawn by DrawTrophyRowPair (three, a gap, three). DecodeTrophyCounts fills the first three from wN64TrophyCounts bits 0-1 and the next three from bits 4-5, one 1 per unit of the 0-3 count. The main character's first set, drawn beside wStoryModeMainCharacterOverworldSprite
+; [6 bytes] One trophy row: six cells, each 0 or 1, one icon per set cell drawn by DrawTrophyRowPair (three, a gap, three). DecodeTrophyCounts fills the first three from wN64TrophyCounts bits 0-1 and the next three from bits 4-5, one 1 per unit of the 0-3 count. The main character's first set, drawn beside wStoryMainChar
 wTrophyCellsMainSet1:: ds 6
-; [6 bytes] The partner's first-set row, from wN64TrophyCounts + 1 bits 0-1 and 4-5; drawn beside wStoryModePartnerCharacterOverworldSprite
+; [6 bytes] The partner's first-set row, from wN64TrophyCounts + 1 bits 0-1 and 4-5; drawn beside wStoryPartnerChar
 wTrophyCellsPartnerSet1:: ds 6
 ; [4 of 6 bytes] The main character's second-set row, from wN64TrophyCounts bits 2-3 and 6-7; drawn only when wTrophySecondSetPresent (four rows instead of two). The row runs to $d811, into the $d810 block
 wTrophyCellsMainSet2:: ds 4

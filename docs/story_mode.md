@@ -631,7 +631,10 @@ montage (`PlayScrollingStoryCutscene`).
 
 ## The character record
 
-`$40` bytes, one layout in four places:
+`$40` bytes, one layout in four places, each copy declared by `char_record`
+(`include/macros/ram.inc`) as `<prefix><Field>`: `wSavedMain`, `wSavedPartner`,
+`wStoryMain`, `wStoryPartner`, `wPlayer1Main`, `wPlayer1Partner`, `wPlayer2Main`,
+`wPlayer2Partner`.
 
 | base | what |
 | --- | --- |
@@ -649,7 +652,8 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$0c | palette index (`GetCharPaletteIndex`) |
 | +$0d | gender (0 male, 1 female) |
 | +$0e | left-handed flag |
-| +$0f-$1f | AI / physics attributes (reach windows, smash and dive speeds, reaction delays, swing word) |
+| +$0f-$1e | AI / physics attributes (reach windows, smash and dive speeds, reaction delays, swing word) |
+| +$1f | CPU difficulty (0 easy - 3 intense), the AI's serve style on court |
 | +$18 | level for player characters (1-99, capped `$63`), class tier for roster NPCs |
 | +$20-$2a | eleven stat bars, 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop |
 | +$2b | speed bonus, added to Speed by `LoadCharacterAttributes` |
@@ -660,8 +664,8 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$3c | equipment: low nibble racket, high nibble shoes |
 | +$3d-$3f | never written or read |
 
-`ram/wram/` names `+$18` `wStoryModeMainCharacterLevel` at `$c818` but
-`wStoryMainCharExpTier` at `$c918`; for player characters the byte is a
+`ram/wram/` names `+$18` `wSavedMainLevel` at `$c818` but
+`wStoryMainLevel` at `$c918`; for player characters the byte is a
 level, and `LookupExpTierForChar` (`$1e:$693e`,
 `src/engine/menus/exp/award_calc_1e.asm`) derives the coarse 0-6 tier from it.
 

@@ -305,13 +305,13 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_wait_frames 50 ; $782e
 	script_face_toward ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_WALK_72_08, ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $7835
 	script_wait_frames 30 ; $783d
-	ld a, [wStoryModeGenderOfMainCharacter] ; $7844
+	ld a, [wStoryMainGender] ; $7844
 	or a ; $7847
 	jr z, .speak ; $7848
 	farcall AdvanceDialogueTextCursor ; $784a
 .speak:
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_NEW_STUDENT_EMILY ; $784d
-	ld a, [wStoryModeGenderOfMainCharacter] ; $7852
+	ld a, [wStoryMainGender] ; $7852
 	or a ; $7855
 	jr nz, .wait ; $7856
 	farcall AdvanceDialogueTextCursor ; $7858

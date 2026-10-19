@@ -4,7 +4,7 @@
 {TWIN_LABEL}:
 	test_flag FLAG_DOUBLES
 	jp z, .notDoubles
-	ld a, [wStoryModeGenderOfPartnerCharacter]
+	ld a, [wStoryPartnerGender]
 	ld d, OBJ_HARRY_B
 	add d
 	ld d, a
@@ -14,7 +14,7 @@
 	farcall LoadActorObjectDefIfValid
 	script_set_anim ACTOR_PARTNER, ANIM_WALK
 .notDoubles:
-	ld a, [wStoryModeGenderOfMainCharacter]
+	ld a, [wStoryMainGender]
 	ld d, OBJ_ALEX_B
 	add d
 	ld d, a

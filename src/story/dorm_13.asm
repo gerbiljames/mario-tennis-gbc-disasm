@@ -289,7 +289,7 @@ SetDormRoomEventTriggerCells_13:
 	farcall WriteBehaviorMapCell ; $512c
 	ret ; $512f
 SetupDormRoomSceneVariant:
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5130
+	ld a, [wStoryPartnerGender] ; $5130
 	or a ; $5133
 	jr nz, .nonZero ; $5134
 	farcall WaitPlayerMoveDone ; $5136

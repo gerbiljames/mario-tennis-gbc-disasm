@@ -88,7 +88,7 @@ Unused_1a_ExpScreenNumberTask:
 	call Unused_1a_QueueNumberSpritesShifted ; $4e84
 	wram_bank WRAM_SCENE ; $4e87
 	push af ; $4e8d
-	ld hl, wStoryModeNameOfMainCharacter ; $4e8e
+	ld hl, wStoryMainName ; $4e8e
 	ld a, [wStoryCharacterSlot] ; $4e91
 	or a ; $4e94
 	jr z, .zero ; $4e95

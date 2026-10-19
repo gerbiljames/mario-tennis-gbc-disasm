@@ -161,7 +161,7 @@ End3DormEntCutscene_27:
 	script_face ACTOR_PLAYER, FACE_UP ; $6e36
 	script_set_active ACTOR_END3_DORM_ENT_EMILY, $02 ; $6e3d
 	script_set_position ACTOR_END3_DORM_ENT_EMILY, 21.0, 11.0 ; $6e44
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $6e4f
+	ld a, [wStoryPartnerGender] ; $6e4f
 	or a ; $6e52
 	jr nz, .walk ; $6e53
 	script_set_objdef OBJ_HARRY, ACTOR_END3_DORM_ENT_KATE ; $6e55

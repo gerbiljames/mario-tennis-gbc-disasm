@@ -364,7 +364,7 @@ End11TrainingCourtInitScript_27:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_27 ; $5283
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $528e
 .checkStoryModeMainCharacterLeftHanded:
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5299
+	ld a, [wStoryMainLeftHanded] ; $5299
 	and a ; $529c
 	jr z, .face ; $529d
 	script_get_actor_state ACTOR_PLAYER ; $529f

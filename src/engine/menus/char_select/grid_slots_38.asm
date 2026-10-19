@@ -252,38 +252,38 @@ BuildCreatedCharRecords:
 	ld c, l ; $5dc5
 	jp .next ; $5dc6
 .createdChar:
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $5dc9
+	ld a, [wStoryMainChar] ; $5dc9
 	ld [hl], a ; $5dcc
 	ld hl, $0001 ; $5dcd
 	add hl, bc ; $5dd0
-	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $5dd1
+	ld a, [wStoryMainPalette] ; $5dd1
 	ld [hl], a ; $5dd4
 	ld hl, $0002 ; $5dd5
 	add hl, bc ; $5dd8
-	ld a, [wStoryMainCharExpTier] ; $5dd9
+	ld a, [wStoryMainLevel] ; $5dd9
 	ld [hl], a ; $5ddc
 	ld hl, $0003 ; $5ddd
 	add hl, bc ; $5de0
-	ld a, [wStoryMainCharSpinLevel] ; $5de1
+	ld a, [wStoryMainSpinLevel] ; $5de1
 	ld [hl], a ; $5de4
 	ld hl, $0004 ; $5de5
 	add hl, bc ; $5de8
-	ld a, [wStoryMainCharPowerLevel] ; $5de9
+	ld a, [wStoryMainPowerLevel] ; $5de9
 	ld [hl], a ; $5dec
 	ld hl, $0005 ; $5ded
 	add hl, bc ; $5df0
-	ld a, [wStoryMainCharControlLevel] ; $5df1
+	ld a, [wStoryMainControlLevel] ; $5df1
 	ld [hl], a ; $5df4
 	ld hl, $0006 ; $5df5
 	add hl, bc ; $5df8
-	ld a, [wStoryMainCharSpeedLevel] ; $5df9
+	ld a, [wStoryMainSpeedLevel] ; $5df9
 	ld [hl], a ; $5dfc
 	push bc ; $5dfd
 	ld a, $07 ; $5dfe
 	add c ; $5e00
 	ld e, a ; $5e01
 	ld d, b ; $5e02
-	ld hl, wStoryModeNameOfMainCharacter ; $5e03
+	ld hl, wStoryMainName ; $5e03
 	ld bc, $000b ; $5e06
 	call CopyMemoryBC ; $5e09
 	pop bc ; $5e0c
@@ -291,38 +291,38 @@ BuildCreatedCharRecords:
 	add hl, bc ; $5e10
 	ld b, h ; $5e11
 	ld c, l ; $5e12
-	ld a, [wStoryModePartnerCharacterOverworldSprite] ; $5e13
+	ld a, [wStoryPartnerChar] ; $5e13
 	ld [hl], a ; $5e16
 	ld hl, $0001 ; $5e17
 	add hl, bc ; $5e1a
-	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $5e1b
+	ld a, [wStoryPartnerPalette] ; $5e1b
 	ld [hl], a ; $5e1e
 	ld hl, $0002 ; $5e1f
 	add hl, bc ; $5e22
-	ld a, [wStoryPartnerCharExpTier] ; $5e23
+	ld a, [wStoryPartnerLevel] ; $5e23
 	ld [hl], a ; $5e26
 	ld hl, $0003 ; $5e27
 	add hl, bc ; $5e2a
-	ld a, [wStoryPartnerCharSpinLevel] ; $5e2b
+	ld a, [wStoryPartnerSpinLevel] ; $5e2b
 	ld [hl], a ; $5e2e
 	ld hl, $0004 ; $5e2f
 	add hl, bc ; $5e32
-	ld a, [wStoryPartnerCharPowerLevel] ; $5e33
+	ld a, [wStoryPartnerPowerLevel] ; $5e33
 	ld [hl], a ; $5e36
 	ld hl, $0005 ; $5e37
 	add hl, bc ; $5e3a
-	ld a, [wStoryPartnerCharControlLevel] ; $5e3b
+	ld a, [wStoryPartnerControlLevel] ; $5e3b
 	ld [hl], a ; $5e3e
 	ld hl, $0006 ; $5e3f
 	add hl, bc ; $5e42
-	ld a, [wStoryPartnerCharSpeedLevel] ; $5e43
+	ld a, [wStoryPartnerSpeedLevel] ; $5e43
 	ld [hl], a ; $5e46
 	push bc ; $5e47
 	ld a, $07 ; $5e48
 	add c ; $5e4a
 	ld e, a ; $5e4b
 	ld d, b ; $5e4c
-	ld hl, wStoryModeNameOfPartnerCharacter ; $5e4d
+	ld hl, wStoryPartnerName ; $5e4d
 	ld bc, $000b ; $5e50
 	call CopyMemoryBC ; $5e53
 	pop bc ; $5e56

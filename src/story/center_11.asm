@@ -229,7 +229,7 @@ CenterCourtSceneVariantActors_11:
 SetPlayerAndPartnerObjectDefs_11:
 	test_flag FLAG_DOUBLES ; $4343
 	jp z, .notDoubles ; $4346
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4349
+	ld a, [wStoryPartnerGender] ; $4349
 	ld d, OBJ_HARRY_B ; $434c
 	add d ; $434e
 	ld d, a ; $434f
@@ -239,7 +239,7 @@ SetPlayerAndPartnerObjectDefs_11:
 	farcall LoadActorObjectDefIfValid ; $4357
 	script_set_anim ACTOR_PARTNER, ANIM_WALK ; $435a
 .notDoubles:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $4361
+	ld a, [wStoryMainGender] ; $4361
 	ld d, OBJ_ALEX_B ; $4364
 	add d ; $4366
 	ld d, a ; $4367

@@ -76,7 +76,7 @@ ServicePractice2SetupShotTarget:
 	jr nc, .checkStoryModeMainCharacterLeftHanded ; $50f6
 	inc h ; $50f8
 .checkStoryModeMainCharacterLeftHanded:
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $50f9
+	ld a, [wStoryMainLeftHanded] ; $50f9
 	add l ; $50fc
 	ld l, a ; $50fd
 	jr nc, .read ; $50fe
@@ -95,7 +95,7 @@ ServicePractice2SetupShotTarget:
 	jr nc, .checkStoryModeMainCharacterLeftHanded2 ; $5114
 	inc h ; $5116
 .checkStoryModeMainCharacterLeftHanded2:
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5117
+	ld a, [wStoryMainLeftHanded] ; $5117
 	add a ; $511a
 	add l ; $511b
 	ld l, a ; $511c
@@ -136,7 +136,7 @@ ServicePractice2QueueOutcomeMessage:
 	ld a, DRILLMSG_YOU_DIDNT_USE_TOPSPIN_TO_BOUNCE_IT_OUT_OF_BOUNDS ; $515c
 	ld b, $00 ; $515e
 	call QueueDrillResultMessage ; $5160
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5163
+	ld a, [wStoryMainLeftHanded] ; $5163
 	and $01 ; $5166
 	ld b, a ; $5168
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5169
@@ -147,7 +147,7 @@ ServicePractice2QueueOutcomeMessage:
 	ld a, [wDrillMessageId] ; $5172
 	add b ; $5175
 	ld [wDrillMessageId], a ; $5176
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5179
+	ld a, [wStoryMainLeftHanded] ; $5179
 	ld hl, ServicePractice2QueueOutcomeMessageDrillShotTable ; $517c
 	add l ; $517f
 	ld l, a ; $5180

@@ -276,11 +276,11 @@ CharDataScreen_BuildStats:
 	ld [hl+], a ; $7acc
 	ld [hl+], a ; $7acd
 	ld [hl+], a ; $7ace
-	ld a, [wEquippedRacket] ; $7acf
+	ld a, [wStoryMainEquipment] ; $7acf
 	or a ; $7ad2
 	ret z ; $7ad3
 	farcall RecomputeStatsWithoutRacket ; $7ad4
-	ld hl, wStoryMainCharStats ; $7ad7
+	ld hl, wStoryMainStats ; $7ad7
 	ld de, wCharDataStatsNoRacket ; $7ada
 	ld a, [hl+] ; $7add
 	ld [de], a ; $7ade
