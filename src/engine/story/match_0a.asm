@@ -341,7 +341,7 @@ RunClearStatusSetupMenu:
 	farcall RenderProportionalTextAt ; $4bfd
 	ld a, [wClearStatusWindowId] ; $4c00
 	farcall RedrawWindowRows ; $4c03
-	ld hl, Text_34_215 ; $4c06
+	ld hl, Text_MenuSetContinue ; $4c06
 	ld d, $01 ; $4c09
 	ld e, $00 ; $4c0b
 	farcall CreateMenuWindowFromText ; $4c0d
@@ -380,7 +380,7 @@ RunClearStatusSetupMenu:
 	farcall RenderProportionalTextAt ; $4c56
 	ld a, [wClearStatusWindowId] ; $4c59
 	farcall RedrawWindowRows ; $4c5c
-	ld hl, Text_34_217 ; $4c5f
+	ld hl, Text_MenuMinigameOrRanking ; $4c5f
 	ld d, $03 ; $4c62
 	ld e, $00 ; $4c64
 	farcall CreateMenuWindowFromText ; $4c66
@@ -401,7 +401,7 @@ RunClearStatusSetupMenu:
 	farcall RenderProportionalTextAt ; $4c8f
 	ld a, [wClearStatusWindowId] ; $4c92
 	farcall RedrawWindowRows ; $4c95
-	ld hl, Text_34_218 ; $4c98
+	ld hl, Text_MenuClasses ; $4c98
 	ld d, $05 ; $4c9b
 	ld e, $00 ; $4c9d
 	farcall CreateMenuWindowFromText ; $4c9f

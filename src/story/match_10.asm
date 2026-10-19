@@ -30,7 +30,7 @@ MatchSelectActors_10:
 	map_actor $0000, ActorScript_10_2, 13.0, 7.0, FACE_LEFT, OBJ_JUMPING_JACKS_B, ANIM_WALK, $03, MATCH_SELECT_JUMPING_JACKS_B
 	map_actor $0000, ActorScript_10_2, 7.0, 11.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $03, MATCH_SELECT_RACKET_STUDENT
 	map_actor $0000, ActorScript_10_2, 13.0, 11.0, FACE_DOWN, OBJ_CAT, ANIM_WALK, $03, MATCH_SELECT_CAT
-	map_actor $0000, ActorScript_10_2, 13.0, 17.0, FACE_DOWN, OBJ_WALK_76_06, ANIM_WALK, $05, MATCH_SELECT_WALK_76_06
+	map_actor $0000, ActorScript_10_2, 13.0, 17.0, FACE_DOWN, OBJ_WATER_SPRITE, ANIM_WALK, $05, MATCH_SELECT_WATER_SPRITE
 	map_actor $0000, ActorScript_10_2, 5.0, 14.0, FACE_DOWN, OBJ_SITUPS_A, ANIM_WALK, $03, MATCH_SELECT_SITUPS_A_1
 	map_actor $0000, ActorScript_10_2, 17.0, 14.0, FACE_DOWN, OBJ_SITUPS_A, ANIM_WALK, $03, MATCH_SELECT_SITUPS_A_2
 	map_actor $0000, ActorScript_10_2, 17.0, 12.0, FACE_DOWN, OBJ_SITUPS_A, ANIM_WALK, $03, MATCH_SELECT_SITUPS_A_3
@@ -101,7 +101,7 @@ MatchSelectHandlerTable_10:
 	map_script ACTOR_MATCH_SELECT_JUMPING_JACKS_B, FACEMASK_ANY, $0000, RunDoublesMatchListMenu, $00, $00
 	map_script ACTOR_MATCH_SELECT_RACKET_STUDENT, FACEMASK_ANY, $0000, RunDrillMatchListMenu, $00, $00
 	map_script ACTOR_MATCH_SELECT_CAT, FACEMASK_ANY, $0000, MatchSelectCharDataOptionDisabled, $00, $00
-	map_script ACTOR_MATCH_SELECT_WALK_76_06, FACEMASK_ANY, $0000, RunLessonSelectMenu, $00, $00
+	map_script ACTOR_MATCH_SELECT_WATER_SPRITE, FACEMASK_ANY, $0000, RunLessonSelectMenu, $00, $00
 	map_script ACTOR_MATCH_SELECT_SITUPS_A_1, FACEMASK_ANY, $0000, RunMinigameSelectMenu, $00, $00
 	map_script ACTOR_MATCH_SELECT_SITUPS_A_2, FACEMASK_ANY, $0000, MatchSelectPlayEpilogueScene, $00, $00
 	map_script ACTOR_MATCH_SELECT_SITUPS_A_3, FACEMASK_ANY, $0000, MatchSelectRunEndingCredits, $00, $00
@@ -115,7 +115,7 @@ MatchSelectInitScript_10:
 	ld [wStoryModeShowLocationName], a ; $4191
 	ret ; $4194
 RunSinglesMatchListMenu:
-	ld hl, Text_31_132 ; $4195
+	ld hl, Text_MenuJuniorSinglesRanks ; $4195
 	ld de, $0101 ; $4198
 	ld a, $05 ; $419b
 	farcall RunPagedTextMenu ; $419d
@@ -142,7 +142,7 @@ RunSinglesMatchListMenu:
 	farcall RestoreOverworldAfterMatch ; $41d6
 	ret ; $41d9
 RunDoublesMatchListMenu:
-	ld hl, Text_31_137 ; $41da
+	ld hl, Text_MenuJuniorDoublesRanks ; $41da
 	ld de, $0101 ; $41dd
 	ld a, $04 ; $41e0
 	farcall RunPagedTextMenu ; $41e2
@@ -317,7 +317,7 @@ LoadMatchDoublesVarsityPractice:
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_VARSITY_PRACTICE ; $4442
 	ret ; $444f
 RunDrillMatchListMenu:
-	ld hl, Text_31_141 ; $4450
+	ld hl, Text_MenuServiceMatches ; $4450
 	ld a, $09 ; $4453
 	farcall RunPagedTextMenu ; $4455
 	cp $ff ; $4458
@@ -394,7 +394,7 @@ RunLessonSelectMenu:
 	ld a, h ; $4507
 	sbc d ; $4508
 	ld h, a ; $4509
-	ld hl, Text_37_12 ; $450a
+	ld hl, Text_MenuDrillTypes ; $450a
 	ld de, $0101 ; $450d
 	ld a, $01 ; $4510
 	farcall RunPagedTextMenu ; $4512
@@ -407,7 +407,7 @@ RunLessonSelectMenu:
 	dw RunStrokeLessonMenu ; $4520 jumptable
 	dw ShowRankingBoardSamples ; $4522 jumptable
 RunServiceLessonMenu:
-	ld hl, Text_37_13 ; $4524
+	ld hl, Text_MenuServiceDrills ; $4524
 	ld de, $0101 ; $4527
 	ld a, $01 ; $452a
 	farcall RunPagedTextMenu ; $452c
@@ -428,7 +428,7 @@ RunServiceLessonMenu:
 	farcall ShowDrillBriefingScreen ; $4558
 	ret ; $455b
 RunNetLessonMenu:
-	ld hl, Text_37_14 ; $455c
+	ld hl, Text_MenuNetDrills ; $455c
 	ld de, $0101 ; $455f
 	ld a, $01 ; $4562
 	farcall RunPagedTextMenu ; $4564

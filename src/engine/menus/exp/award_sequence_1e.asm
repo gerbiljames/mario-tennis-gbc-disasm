@@ -220,10 +220,10 @@ ProcessMatchRewards:
 	jr z, .getFirstClearRewardExp ; $65be
 	ld a, [wGameMode] ; $65c0
 	cp GAMEMODE_TENNIS_MACHINE ; $65c3
-	jr nz, .checkFlag ; $65c5
+	jr nz, .testWallMaster ; $65c5
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $65c7
 	jr .checkMasterCleared ; $65ca
-.checkFlag:
+.testWallMaster:
 	test_flag FLAG_CLEARED_WALL_MASTER ; $65cc
 .checkMasterCleared:
 	jr z, .getFirstClearRewardExp ; $65cf
@@ -357,12 +357,12 @@ ProcessMatchRewards:
 	ld a, GAMEMODE_NONE ; $66ac
 	ld [wGameMode], a ; $66ae
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $66b1
-	jr z, .checkFlag2 ; $66b4
+	jr z, .checkDreamDoubles ; $66b4
 	push de ; $66b6
 	ld de, SAVEFLAG_UNLOCKED_SAMMI ; $66b7
 	farcall SetSaveFlag ; $66ba
 	pop de ; $66bd
-.checkFlag2:
+.checkDreamDoubles:
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $66be
 	jr z, .checkAllProgressComplete ; $66c1
 	push de ; $66c3

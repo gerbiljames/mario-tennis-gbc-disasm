@@ -5,5 +5,5 @@
 	inc a
 	ld [wCutsceneStepTimer], a
 	cp $70
-	jp z, DispatchCutsceneStateInit.loopB
-	jp DispatchCutsceneStateInit.loop
+	jp z, DispatchCutsceneStateInit.runExit
+	jp DispatchCutsceneStateInit.runUpdate

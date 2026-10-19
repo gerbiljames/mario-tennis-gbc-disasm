@@ -52,14 +52,14 @@ PrintMatchSetScores:
 LoadResultScreenPortraits:
 	ld a, c ; $5fe7
 	or a ; $5fe8
-	jr nz, .checkPlayer1CurrentMainCharacter ; $5fe9
+	jr nz, .normalOrder ; $5fe9
 	ld a, [wGameMode] ; $5feb
 	cp GAMEMODE_LINK_MATCH ; $5fee
-	jr nz, .checkPlayer1CurrentMainCharacter ; $5ff0
+	jr nz, .normalOrder ; $5ff0
 	ld a, [wLinkMatchRole] ; $5ff2
 	cp LINKSTATE_SLAVE ; $5ff5
-	jr z, .checkPlayer1CurrentMainCharacter2 ; $5ff7
-.checkPlayer1CurrentMainCharacter:
+	jr z, .swappedOrder ; $5ff7
+.normalOrder:
 	ld a, [wPlayer1MainChar] ; $5ff9
 	ld d, a ; $5ffc
 	ld a, [wPlayer1MainPalette] ; $5ffd
@@ -89,7 +89,7 @@ LoadResultScreenPortraits:
 	call LoadResultPortraitSlot ; $6032
 .done:
 	ret ; $6035
-.checkPlayer1CurrentMainCharacter2:
+.swappedOrder:
 	ld a, [wPlayer1MainChar] ; $6036
 	ld d, a ; $6039
 	ld a, [wPlayer1MainPalette] ; $603a

@@ -363,7 +363,7 @@ PlaceSwingPracticeKidActor:
 	jp nz, .done ; $7a52
 	test_flag FLAG_SWING_PRACTICE_KID_PLACED ; $7a55
 	jp nz, .done ; $7a58
-	script_set_position ACTOR_TRAINING_COURT_WALK_71_06_3, 53.0, 15.0 ; $7a5b
+	script_set_position ACTOR_TRAINING_COURT_STUDENT_CAP_BOY_3, 53.0, 15.0 ; $7a5b
 .done:
 	ret ; $7a66
 StartPendingLessonScene:

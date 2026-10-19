@@ -163,17 +163,17 @@ RunDebugPaletteViewer:
 	ld h, $10 ; $6a6e
 	ld_cell de, $01, $01 ; $6a70
 	ld bc, $0030 ; $6a73
-.loop:
+.indexColumnLoop:
 	call WriteWindowCellTileAttr ; $6a76
 	inc e ; $6a79
 	inc c ; $6a7a
 	res 3, c ; $6a7b
 	dec h ; $6a7d
-	jr nz, .loop ; $6a7e
+	jr nz, .indexColumnLoop ; $6a7e
 	ld h, $08 ; $6a80
 	ld e, $01 ; $6a82
 	ld b, $00 ; $6a84
-.loopB:
+.swatchRowLoop:
 	ld d, $02 ; $6a86
 	ld c, $a0 ; $6a88
 	call WriteWindowCellTileAttr ; $6a8a
@@ -189,13 +189,13 @@ RunDebugPaletteViewer:
 	inc e ; $6a9f
 	inc b ; $6aa0
 	dec h ; $6aa1
-	jr nz, .loopB ; $6aa2
+	jr nz, .swatchRowLoop ; $6aa2
 	ld a, [wDebugPaletteViewerWindowId] ; $6aa4
 	call RedrawWindowRows ; $6aa7
 	ld a, $0f ; $6aaa
 	ld hl, DrawPaletteCursorSprites ; $6aac
 	call RegisterFrameTask ; $6aaf
-.loop2:
+.inputLoop:
 	ldh a, [hInputRisingEdge] ; $6ab2
 	bit PADB_B, a ; $6ab4
 	jr nz, .closeWindow ; $6ab6
@@ -235,7 +235,7 @@ RunDebugPaletteViewer:
 	and $0f ; $6aec
 	ld [wDebugPaletteIndex], a ; $6aee
 	call AdvanceFrame ; $6af1
-	jr .loop2 ; $6af4
+	jr .inputLoop ; $6af4
 .closeWindow:
 	ld a, [wDebugPaletteViewerWindowId] ; $6af6
 	call CloseWindow ; $6af9
@@ -469,11 +469,11 @@ Unused_05_WriteStringToTilemapStreamed:
 .notPageBreak:
 	ld c, $01 ; $6c3b
 	cp $03 ; $6c3d
-	jr nz, .store ; $6c3f
+	jr nz, .storeChar ; $6c3f
 	ld a, $01 ; $6c41
 	ld [$dc0a], a ; $6c43
 	jr .restore ; $6c46
-.store:
+.storeChar:
 	ld [de], a ; $6c48
 	inc hl ; $6c49
 	ld a, [hl] ; $6c4a
@@ -492,9 +492,9 @@ Unused_05_WriteStringToTilemapStreamed:
 	ld a, [hl] ; $6c5c
 	cp $0e ; $6c5d
 	ld a, b ; $6c5f
-	jr nz, .store2 ; $6c60
+	jr nz, .storeDiacritic ; $6c60
 	sub $82 ; $6c62
-.store2:
+.storeDiacritic:
 	ld [hl], a ; $6c64
 	pop bc ; $6c65
 	pop hl ; $6c66
@@ -543,7 +543,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	call FetchDialogueText ; $6cae
 	ld hl, wTextBuffer ; $6cb1
 	pop_wram_bank ; $6cb4
-.loopB:
+.charLoop:
 	ld a, [hl] ; $6cb9
 	or a ; $6cba
 	jr z, .checkWramBank ; $6cbb
@@ -556,13 +556,13 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	pop af ; $6cc7
 	jr .dispatchControlCode ; $6cc8
 	cp $01 ; $6cca
-	jr nz, .store3 ; $6ccc
+	jr nz, .storeChar ; $6ccc
 	ld a, $0d ; $6cce
 .dispatchControlCode:
 	call DispatchControlCode ; $6cd0
 	inc hl ; $6cd3
-	jr .loopB ; $6cd4
-.store3:
+	jr .charLoop ; $6cd4
+.storeChar:
 	ld [de], a ; $6cd6
 	inc hl ; $6cd7
 	ld a, [hl] ; $6cd8
@@ -580,9 +580,9 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	cp $0e ; $6ce7
 	ld a, b ; $6ce9
 	ld b, $ff ; $6cea
-	jr nz, .store4 ; $6cec
+	jr nz, .storeDiacritic ; $6cec
 	sub $82 ; $6cee
-.store4:
+.storeDiacritic:
 	ld [hl], a ; $6cf0
 	pop hl ; $6cf1
 	inc hl ; $6cf2
@@ -590,7 +590,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	inc de ; $6cf3
 	ld a, e ; $6cf4
 	and $3f ; $6cf5
-	jr nz, .loopB ; $6cf7
+	jr nz, .charLoop ; $6cf7
 	push hl ; $6cf9
 	ld h, d ; $6cfa
 	ld l, e ; $6cfb
@@ -598,7 +598,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld d, h ; $6cfd
 	ld e, l ; $6cfe
 	pop hl ; $6cff
-	jr .loopB ; $6d00
+	jr .charLoop ; $6d00
 .checkWramBank:
 	push_wram_bank WRAM_TEXT ; $6d02
 	xor a ; $6d0b

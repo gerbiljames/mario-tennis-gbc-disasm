@@ -149,25 +149,25 @@ CombineExhibCellBits:
 	ld hl, wExhibCellBits ; $483a
 	add l ; $483d
 	ld l, a ; $483e
-	jr nc, .read ; $483f
+	jr nc, .readBit0 ; $483f
 	inc h ; $4841
-.read:
+.readBit0:
 	ld c, [hl] ; $4842
 	ld a, $10 ; $4843
 	add l ; $4845
 	ld l, a ; $4846
-	jr nc, .readB ; $4847
+	jr nc, .readBit1 ; $4847
 	inc h ; $4849
-.readB:
+.readBit1:
 	ld a, [hl] ; $484a
 	sla a ; $484b
 	ld d, a ; $484d
 	ld a, $10 ; $484e
 	add l ; $4850
 	ld l, a ; $4851
-	jr nc, .read2 ; $4852
+	jr nc, .readBit2 ; $4852
 	inc h ; $4854
-.read2:
+.readBit2:
 	ld a, [hl] ; $4855
 	sla a ; $4856
 	sla a ; $4858
@@ -175,9 +175,9 @@ CombineExhibCellBits:
 	ld a, $10 ; $485b
 	add l ; $485d
 	ld l, a ; $485e
-	jr nc, .read3 ; $485f
+	jr nc, .readBit3 ; $485f
 	inc h ; $4861
-.read3:
+.readBit3:
 	ld a, [hl] ; $4862
 	sla a ; $4863
 	sla a ; $4865

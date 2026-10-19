@@ -28,21 +28,21 @@ RunEraseDataConfirmMenu:
 	ldh a, [hInputPressed] ; $4c5d
 	ld [wMenuInputPressed], a ; $4c5f
 	bit PADB_A, a ; $4c62
-	jr nz, .checkMenuCursorY2 ; $4c64
+	jr nz, .pressedA ; $4c64
 	bit PADB_B, a ; $4c66
 	jr nz, .playSfx ; $4c68
 	bit PADB_UP, a ; $4c6a
-	jr nz, .checkMenuCursorY ; $4c6c
+	jr nz, .toggleChoice ; $4c6c
 	bit PADB_DOWN, a ; $4c6e
-	jr nz, .checkMenuCursorY ; $4c70
+	jr nz, .toggleChoice ; $4c70
 	jr .loop ; $4c72
-.checkMenuCursorY:
+.toggleChoice:
 	ld a, [wMenuCursorY] ; $4c74
 	xor $01 ; $4c77
 	ld [wMenuCursorY], a ; $4c79
 	sound SFX_MENU_MOVE ; $4c7c
 	jr .loop ; $4c7e
-.checkMenuCursorY2:
+.pressedA:
 	ld a, [wMenuCursorY] ; $4c80
 	or a ; $4c83
 	jr nz, .playSfx ; $4c84

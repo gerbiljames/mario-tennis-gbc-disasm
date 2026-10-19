@@ -740,7 +740,7 @@ SeniorCourtPositionActorsByProgressB:
 	script_get_actor_state ACTOR_SENIOR_COURT_A_EMILY ; $5dc9
 	ld c, l ; $5dce
 	ld b, h ; $5dcf
-	ld d, OBJ_WALK_72_04 ; $5dd0
+	ld d, OBJ_STUDENT_BLACK_HAIR_BOY ; $5dd0
 	farcall LoadActorObjectDefIfValid ; $5dd2
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_WALK ; $5dd5
 .checkDoubles:

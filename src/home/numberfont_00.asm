@@ -194,37 +194,37 @@ Unused_00_RenderGlyphToTiles:
 	add hl, de ; $2143
 	pop de ; $2144
 	ld c, $80 ; $2145
-.loop:
+.rowLoop:
 	push hl ; $2147
 	ld a, [wGlyphBlitDestMask] ; $2148
 	ld b, a ; $214b
 	ld a, [wGlyphBlitWidth] ; $214c
-.loopB:
+.pixelLoop:
 	push af ; $214f
 	ld a, [de] ; $2150
 	and c ; $2151
-	jr z, .clearPixel ; $2152
+	jr z, .clearLowPixel ; $2152
 	ld a, b ; $2154
 	or [hl] ; $2155
-	jr .store ; $2156
-.clearPixel:
+	jr .storeLowPlane ; $2156
+.clearLowPixel:
 	ld a, b ; $2158
 	cpl ; $2159
 	and [hl] ; $215a
-.store:
+.storeLowPlane:
 	ld [hl+], a ; $215b
 	rrc c ; $215c
 	ld a, [de] ; $215e
 	and c ; $215f
-	jr z, .clearPixel2 ; $2160
+	jr z, .clearHighPixel ; $2160
 	ld a, b ; $2162
 	or [hl] ; $2163
-	jr .store2 ; $2164
-.clearPixel2:
+	jr .storeHighPlane ; $2164
+.clearHighPixel:
 	ld a, b ; $2166
 	cpl ; $2167
 	and [hl] ; $2168
-.store2:
+.storeHighPlane:
 	ld [hl-], a ; $2169
 	rrc c ; $216a
 	jr nc, .nextBit ; $216c
@@ -240,13 +240,13 @@ Unused_00_RenderGlyphToTiles:
 .restore:
 	pop af ; $217a
 	dec a ; $217b
-	jp nz, .loopB ; $217c
+	jp nz, .pixelLoop ; $217c
 	ld hl, wGlyphBlitRowsLeft ; $217f
 	dec [hl] ; $2182
 	pop hl ; $2183
 	inc hl ; $2184
 	inc hl ; $2185
-	jr nz, .loop ; $2186
+	jr nz, .rowLoop ; $2186
 	pop hl ; $2188
 	pop de ; $2189
 	pop bc ; $218a

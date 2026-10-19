@@ -76,7 +76,7 @@ ENDC
 	call PrintString ; $40b8
 	ld a, DEBUGSTEP_CONSOLE_ON ; $40bb
 	ldh [hDebugStepMode], a ; $40bd
-.loop2:
+.waitStartLoop:
 	ldh a, [hInputPressed] ; $40bf
 	bit PADB_A, a ; $40c1
 	jr z, .advanceFrame ; $40c3
@@ -89,7 +89,7 @@ ENDC
 	bit 3, a ; $40cf
 	jr nz, .setDebugStepMode ; $40d1
 	call AdvanceFrame ; $40d3
-	jr .loop2 ; $40d6
+	jr .waitStartLoop ; $40d6
 .setDebugStepMode:
 	ld a, DEBUGSTEP_OFF ; $40d8
 	ldh [hDebugStepMode], a ; $40da
@@ -126,18 +126,18 @@ Unused_01_MenuRedraw:
 	jr z, .checkB ; $411c
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $411e
 	ldh [hDebugStepMode], a ; $4120
-.loopB:
+.debugMatchLoop:
 	farcall Unused_07_RunDebugTestMatch ; $4122
-	jr .loopB ; $4125
+	jr .debugMatchLoop ; $4125
 .checkB:
 	bit 1, a ; $4127
 	jr z, .checkUp ; $4129
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $412b
 	ldh [hDebugStepMode], a ; $412d
-.loop2:
+.matchLoop:
 	farcall Unused_3b_StubNop ; $412f
 	farcall RunMatch ; $4132
-	jp .loop2 ; $4135
+	jp .matchLoop ; $4135
 .checkUp:
 	bit 6, a ; $4138
 	jp z, Unused_01_MatchSetup.checkDown ; $413a
@@ -175,12 +175,12 @@ Unused_01_MenuRedraw:
 	call SetGameFlagByNumber ; $418a
 	ld a, $00 ; $418d
 	ld [wCurrentMinigameStoryMatch + 1], a ; $418f
-.loop3:
+.winLoseLoop:
 	farcall RunMatchWinLoseScreen ; $4192
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4195
 	inc a ; $4198
 	ld [wCurrentMinigameStoryMatch + 1], a ; $4199
-	jr .loop3 ; $419c
+	jr .winLoseLoop ; $419c
 Unused_01_MatchSetup:
 	farcall ShowEquipmentStatusScreen ; $419e
 	ld de, FLAG_DOUBLES ; $41a1

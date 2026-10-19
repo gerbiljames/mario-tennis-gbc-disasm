@@ -143,18 +143,18 @@ def TILETRIGGER_PRESS_ONLY equ $01
 ; Ids 5 and up, each named for the sprites whose AnimPtrs table gives it that
 ; meaning; the same id is something else in other sprites, or reads past the
 ; end of their frame array. The twelve-animation sprites are OBJ_ALEX,
-; OBJ_NINA, the WALK_6F_* students, Toad, Bob-omb, Boo and OBJ_WALK_77_05;
+; OBJ_NINA, the WALK_6F_* students, Toad, Bob-omb, Boo and OBJ_MARIO_WORLD_HOSTESS;
 ; only Alex and Nina have the frames their ids 8 and 11 show.
 def ANIM_EXERCISE       equ $05 ; OBJ_JUMPING_JACKS_A/_B: the exercise, four poses held $30 frames each, looped
-def ANIM_HOP            equ $05 ; OBJ_WALK_75_06: one quick crouch, then ANIM_WALK
+def ANIM_HOP            equ $05 ; OBJ_HEADMASTER: one quick crouch, then ANIM_WALK
 def ANIM_SWING_LOOP     equ $06 ; the racket holders (the twelve-animation sprites, Bob, Pam, Beth, Fay,
-                                ; OBJ_WALK_72_02, OBJ_WALK_71_05-07): backswing, follow-through, repeated
+                                ; OBJ_STUDENT_SIDE_PART_BOY, OBJ_STUDENT_PONYTAIL_GIRL-07): backswing, follow-through, repeated
 def ANIM_TROPHY_SINGLES equ $06 ; OBJ_TROPHY frames 2-3: the singles cup (ANIM_WALK shows the doubles trophy)
 def ANIM_DISTANT        equ $08 ; Alex, Nina, Harry, Kate, Emily, Luigi, DK, Baby Mario: a smaller figure
                                 ; stepping, as if far off (walking away through a doorway); Alex's and
                                 ; Nina's sideways facings show a full-size front view instead
 def ANIM_TROPHY_SMALL   equ $08 ; OBJ_TROPHY frames 4-5: the small trophy, glinting
-def ANIM_OVERHEAD_SWING equ $08 ; Bob and OBJ_WALK_71_05-07: racket held overhead, a quick swing, the
+def ANIM_OVERHEAD_SWING equ $08 ; Bob and OBJ_STUDENT_PONYTAIL_GIRL-07: racket held overhead, a quick swing, the
                                 ; follow-through held, looped
 	const_def $09
 	const ANIM_SWING_BACK    ; $09 the twelve-animation sprites: the backswing pose, held

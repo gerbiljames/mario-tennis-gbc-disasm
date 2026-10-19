@@ -337,12 +337,12 @@ Unused_03_ReadSaveBlockTagWord:
 	ld e, a ; $4cf3
 	ld d, b ; $4cf4
 	ld c, $02 ; $4cf5
-.loop2:
+.copyTagLoop:
 	ld a, [de] ; $4cf7
 	ld [hl+], a ; $4cf8
 	inc de ; $4cf9
 	dec c ; $4cfa
-	jr nz, .loop2 ; $4cfb
+	jr nz, .copyTagLoop ; $4cfb
 	xor a ; $4cfd
 	push af ; $4cfe
 	xor a ; $4cff

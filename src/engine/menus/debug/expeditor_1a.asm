@@ -52,37 +52,37 @@ Unused_1a_RunDebugExpEditor:
 	call AdvanceFrame ; $4405
 	ldh a, [hPlayerInputFlags] ; $4408
 	and PADF_A ; $440a
-	jr z, .checkPlayerInputFlags ; $440c
+	jr z, .checkRight ; $440c
 	sound SFX_MENU_SELECT ; $440e
 	ld de, $0064 ; $4410
 	call Unused_1a_DebugAddExp ; $4413
 	jr .loop ; $4416
-.checkPlayerInputFlags:
+.checkRight:
 	ldh a, [hPlayerInputFlags] ; $4418
 	and PADF_RIGHT ; $441a
-	jr z, .checkPlayerInputFlags2 ; $441c
+	jr z, .checkLeft ; $441c
 	sound SFX_MENU_MOVE ; $441e
 	ld de, $000a ; $4420
 	call Unused_1a_DebugAddExp ; $4423
 	jr .loop ; $4426
-.checkPlayerInputFlags2:
+.checkLeft:
 	ldh a, [hPlayerInputFlags] ; $4428
 	and PADF_LEFT ; $442a
-	jr z, .checkPlayerInputFlags3 ; $442c
+	jr z, .checkUpDown ; $442c
 	sound SFX_MENU_MOVE ; $442e
 	ld de, $0001 ; $4430
 	call Unused_1a_DebugAddExp ; $4433
 	jr .loop ; $4436
-.checkPlayerInputFlags3:
+.checkUpDown:
 	ldh a, [hPlayerInputFlags] ; $4438
 	and PADF_UP | PADF_DOWN ; $443a
-	jr z, .checkPlayerInputFlags4 ; $443c
+	jr z, .checkB ; $443c
 	sound SFX_MENU_CANCEL ; $443e
 	ld a, c ; $4440
 	xor $01 ; $4441
 	ld c, a ; $4443
 	jr .loop ; $4444
-.checkPlayerInputFlags4:
+.checkB:
 	ldh a, [hPlayerInputFlags] ; $4446
 	and PADF_B ; $4448
 	jp z, .loop ; $444a

@@ -192,18 +192,7 @@ class Game:
         copy = self.tmp / "rom.gbc"
         shutil.copy(rom, copy)
         shutil.copy(save, str(copy) + ".ram")
-        if "ApBootLedger.erase" in self.sym:
-            # an Archipelago build erases a save its ledger was not sealed
-            # for, the test save among them: skip that call (the ledger is
-            # still sealed for this seed) so the story file survives
-            b, a = self.sym["ApBootLedger.erase"]
-            at = b * 0x4000 + a - 0x4000 + 8
-            data = bytearray(copy.read_bytes())
-            target = self.sym["CallHLInBankA"][1]
-            if data[at:at + 3] != bytes([0xcd, target & 0xff, target >> 8]):
-                sys.exit("eventtest: ApBootLedger's erase call moved; update the patch")
-            data[at:at + 3] = b"\x00\x00\x00"
-            copy.write_bytes(data)
+        keep_ap_save(copy, self.sym)
         self.pb = pb = PyBoy(str(copy), window="null", sound_emulated=False, log_level="ERROR")
         pb.set_emulation_speed(0)
         self.rf, self.mem = pb.register_file, pb.memory
@@ -445,12 +434,33 @@ class Game:
         shutil.rmtree(self.tmp)
 
 
-def boot(rom, sym, save, out, menu=False):
-    # the button presses below assume this tree's menus: a ROM left over from
-    # another branch's build (git checkout does not rebuild) lands elsewhere
+def keep_ap_save(path, sym):
+    """An Archipelago build erases a save its ledger was not sealed for, the
+    test save among them: skip that call in the ROM copy at path (the ledger
+    is still sealed for this seed) so the story file survives."""
+    if "ApBootLedger.erase" not in sym:
+        return
+    b, a = sym["ApBootLedger.erase"]
+    at = b * 0x4000 + a - 0x4000 + 8
+    data = bytearray(Path(path).read_bytes())
+    target = sym["CallHLInBankA"][1]
+    if data[at:at + 3] != bytes([0xcd, target & 0xff, target >> 8]):
+        sys.exit("eventtest: ApBootLedger's erase call moved; update the patch")
+    data[at:at + 3] = b"\x00\x00\x00"
+    Path(path).write_bytes(data)
+
+
+def check_build(rom):
+    """Stop on a mariotennis.gbc older than the checkout: scripted inputs
+    assume this tree's menus, and a ROM left over from another branch's build
+    (git checkout does not rebuild) lands elsewhere."""
     if Path(rom).resolve() == ROOT / "mariotennis.gbc" and \
             subprocess.run(["make", "-q", "mariotennis.gbc"], cwd=ROOT, capture_output=True).returncode:
         raise SystemExit("mariotennis.gbc is out of date for this checkout: run make first")
+
+
+def boot(rom, sym, save, out, menu=False):
+    check_build(rom)
     g = Game(rom, sym, save, 10 ** 9, learn_irq=True)
     presses = [(950, "start"), (90, "a")]
     if not menu:

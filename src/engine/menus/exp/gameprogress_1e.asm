@@ -55,25 +55,25 @@ BuildGameProgressScreen:
 	call RunRewardCategoryList ; $72d7
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $72da
 	jr nz, .isWonJuniorSinglesRank1 ; $72dd
-	jr .checkFlag ; $72df
+	jr .checkSeniorSingles ; $72df
 .isWonJuniorSinglesRank1:
 	ld a, $01 ; $72e1
 	call RunRewardCategoryList ; $72e3
-.checkFlag:
+.checkSeniorSingles:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $72e6
 	jr nz, .isWonSeniorSinglesRank1 ; $72e9
-	jr .checkFlag2 ; $72eb
+	jr .checkVarsitySingles ; $72eb
 .isWonSeniorSinglesRank1:
 	ld a, $02 ; $72ed
 	call RunRewardCategoryList ; $72ef
-.checkFlag2:
+.checkVarsitySingles:
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $72f2
 	jr nz, .isWonVarsitySinglesRank4 ; $72f5
-	jr .checkFlag3 ; $72f7
+	jr .checkIslandOpen ; $72f7
 .isWonVarsitySinglesRank4:
 	ld a, $03 ; $72f9
 	call RunRewardCategoryList ; $72fb
-.checkFlag3:
+.checkIslandOpen:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $72fe
 	jr nz, .isWonIslandOpenSinglesFinal ; $7301
 	jr .buildProgressEntryEarnedTable ; $7303

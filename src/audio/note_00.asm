@@ -97,11 +97,11 @@ SndTriggerNote:
 	and $0f ; $38d1
 	jr z, .maskClear2 ; $38d3
 	ld b, a ; $38d5
-.loop:
+.shiftPeriod:
 	srl h ; $38d6
 	rr l ; $38d8
 	dec b ; $38da
-	jr nz, .loop ; $38db
+	jr nz, .shiftPeriod ; $38db
 .maskClear2:
 	ld a, $00 ; $38dd
 	sub l ; $38df
@@ -146,17 +146,17 @@ SndTriggerNote:
 	cp SNDCHANTYPE_WAVE ; $3923
 	jr z, .waveTrigger ; $3925
 	cp SNDCHANTYPE_WAVE ; $3927
-	jr nc, .loopB ; $3929
+	jr nc, .triggerPeriodHi ; $3929
 	ldh a, [hSndToneCtrl] ; $392b
 	and $c0 ; $392d
 	or $3f ; $392f
 	ld c, $11 ; $3931
 	call WriteChannelReg ; $3933
-.loopB:
+.triggerPeriodHi:
 	ld a, h ; $3936
 	and $07 ; $3937
 	or $80 ; $3939
-.loop2:
+.writePeriodHi:
 	or $20 ; $393b
 	ldh [hSndPeriodHi], a ; $393d
 	ld c, $14 ; $393f
@@ -180,10 +180,10 @@ SndTriggerNote:
 	ldh [rAUD3LEN], a ; $395b
 	ldh a, [rAUDENA] ; $395d
 	and AUDENA_CH3_ON ; $395f
-	jr z, .loopB ; $3961
+	jr z, .triggerPeriodHi ; $3961
 	ld a, h ; $3963
 	and $07 ; $3964
-	jr .loop2 ; $3966
+	jr .writePeriodHi ; $3966
 TickVolumeSlide:
 	ld a, [wSndChannelType] ; $3968
 	cp SNDCHANTYPE_WAVE ; $396b

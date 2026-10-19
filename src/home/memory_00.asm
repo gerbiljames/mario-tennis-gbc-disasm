@@ -349,10 +349,10 @@ ProcessVRAMCopyQueues:
 	ld d, a ; $053c
 	push de ; $053d
 	ld d, $ff ; $053e
-.loop:
+.copyQueueLoop:
 	ld a, [hl] ; $0540
 	or a ; $0541
-	jr z, .loopB ; $0542
+	jr z, .tileWriteQueue ; $0542
 	ldh [hRomBank], a ; $0544
 	ld [rROMB0], a ; $0546
 	xor a ; $0549
@@ -377,8 +377,8 @@ ProcessVRAMCopyQueues:
 	ld a, [hl+] ; $0561
 	ld [de], a ; $0562
 	dec c ; $0563
-	jr nz, .loop ; $0564
-.loopB:
+	jr nz, .copyQueueLoop ; $0564
+.tileWriteQueue:
 	pop de ; $0566
 	ld a, e ; $0567
 	wram_bank ; $0568
@@ -387,7 +387,7 @@ ProcessVRAMCopyQueues:
 	ld [rROMB0], a ; $056f
 	ld hl, wTileWriteQueue ; $0572
 	ld c, $10 ; $0575
-.loop2:
+.tileWriteLoop:
 	ld a, [hl] ; $0577
 	or a ; $0578
 	jr z, .done ; $0579
@@ -411,11 +411,11 @@ ProcessVRAMCopyQueues:
 	ld [de], a ; $058f
 	pop bc ; $0590
 	dec c ; $0591
-	jr nz, .loop2 ; $0592
+	jr nz, .tileWriteLoop ; $0592
 .done:
 	ret ; $0594
 	dec c ; $0595
-	jr z, .loopB ; $0596
+	jr z, .tileWriteQueue ; $0596
 	ld a, c ; $0598
 	add a ; $0599
 	add a ; $059a
@@ -426,15 +426,15 @@ ProcessVRAMCopyQueues:
 	and $f8 ; $05a0
 	ld l, a ; $05a2
 	ld de, wVRAMCopyQueue ; $05a3
-.loop3:
+.compactQueueLoop:
 	ld a, [hl+] ; $05a6
 	ld [de], a ; $05a7
 	inc e ; $05a8
 	dec c ; $05a9
-	jr nz, .loop3 ; $05aa
+	jr nz, .compactQueueLoop ; $05aa
 	xor a ; $05ac
 	ld [de], a ; $05ad
-	jr .loopB ; $05ae
+	jr .tileWriteQueue ; $05ae
 LoadPaletteShadow:
 	ldh a, [hFadedOut] ; $05b0
 	and a ; $05b2

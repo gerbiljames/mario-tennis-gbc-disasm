@@ -192,14 +192,14 @@ Unused_03_EraseSaveBlock:
 	pop hl ; $4f28
 	push hl ; $4f29
 	push bc ; $4f2a
-.loop2:
+.clearDataLoop:
 	xor a ; $4f2b
 	ld [de], a ; $4f2c
 	inc de ; $4f2d
 	dec bc ; $4f2e
 	ld a, b ; $4f2f
 	or c ; $4f30
-	jr nz, .loop2 ; $4f31
+	jr nz, .clearDataLoop ; $4f31
 	pop bc ; $4f33
 	pop hl ; $4f34
 	ld de, $0000 ; $4f35
@@ -216,11 +216,11 @@ Unused_03_EraseSaveBlock:
 	ld [hl], d ; $4f49
 	inc hl ; $4f4a
 	ld c, $08 ; $4f4b
-.loop3:
+.clearTagLoop:
 	xor a ; $4f4d
 	ld [hl+], a ; $4f4e
 	dec c ; $4f4f
-	jr nz, .loop3 ; $4f50
+	jr nz, .clearTagLoop ; $4f50
 	xor a ; $4f52
 	pop bc ; $4f53
 	pop de ; $4f54

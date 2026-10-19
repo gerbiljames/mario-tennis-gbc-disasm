@@ -444,7 +444,7 @@ UpdateSoundChannels:
 	ld hl, wSndFrameCounter ; $339f
 	inc [hl] ; $33a2
 	ld hl, wSndChannels ; $33a3
-.loop:
+.channelLoop:
 	ld a, [hl+] ; $33a6
 	ld b, a ; $33a7
 	ld a, [hl-] ; $33a8
@@ -468,10 +468,10 @@ UpdateSoundChannels:
 	ld [wSndRegBase], a ; $33c9
 	inc b ; $33cc
 	ld a, $88 ; $33cd
-.loopB:
+.shiftChannelBit:
 	rlca ; $33cf
 	dec b ; $33d0
-	jr nz, .loopB ; $33d1
+	jr nz, .shiftChannelBit ; $33d1
 	ld [wSndChannelBits], a ; $33d3
 	ld [wSndChannelPanMask], a ; $33d6
 	ldh a, [hSndScriptPtr] ; $33d9
@@ -487,20 +487,20 @@ UpdateSoundChannels:
 	ldh a, [hSndEnvPos] ; $33ec
 	inc a ; $33ee
 	cp b ; $33ef
-	jr c, .store ; $33f0
+	jr c, .storeEnvPos ; $33f0
 	ld a, b ; $33f2
-.store:
+.storeEnvPos:
 	ldh [hSndEnvPos], a ; $33f3
 	ld hl, hSndLengthAccum ; $33f5
 	ldh a, [hSndToneCtrl] ; $33f8
 	and $0f ; $33fa
 	add [hl] ; $33fc
 	cp $10 ; $33fd
-	jr c, .store2 ; $33ff
+	jr c, .storeLengthAccum ; $33ff
 	sub $10 ; $3401
 	ld [hl], a ; $3403
 	jr .checkSndWaveReloadPending ; $3404
-.store2:
+.storeLengthAccum:
 	ld [hl], a ; $3406
 	call TickVolumeSlide ; $3407
 	ldh a, [hSndNoteLenTimer] ; $340a
@@ -514,7 +514,7 @@ UpdateSoundChannels:
 	jr nz, .countdownNote ; $3415
 	ldh a, [hSndEchoCtrl] ; $3417
 	and $f0 ; $3419
-	jr z, .loop2 ; $341b
+	jr z, .markUpdated ; $341b
 	ld hl, hSndEchoTimer ; $341d
 	dec [hl] ; $3420
 	jr nz, .countLeft ; $3421
@@ -525,9 +525,9 @@ UpdateSoundChannels:
 	and $0f ; $342a
 	or c ; $342c
 	ldh [hSndVolume], a ; $342d
-.loop2:
+.markUpdated:
 	call MarkCurrentChannelUpdated ; $342f
-.loop3:
+.runScript:
 	ldh a, [hSndNoteLenReload] ; $3432
 	ldh [hSndNoteLenTimer], a ; $3434
 	call RunSoundChannelScript ; $3436
@@ -557,7 +557,7 @@ UpdateSoundChannels:
 	ldh a, [hSndEchoCtrl] ; $345c
 	and $f0 ; $345e
 	jr nz, .checkSndWaveReloadPending ; $3460
-	jr .loop2 ; $3462
+	jr .markUpdated ; $3462
 .checkSndWaveReloadPending:
 	ld a, [wSndWaveReloadPending] ; $3464
 	and a ; $3467
@@ -609,7 +609,7 @@ UpdateSoundChannels:
 	inc a ; $34be
 	ld [wSndChannelIndex], a ; $34bf
 	cp $06 ; $34c2
-	jp c, .loop ; $34c4
+	jp c, .channelLoop ; $34c4
 	ld a, [wSndActiveMask] ; $34c7
 	ld b, a ; $34ca
 	ld a, [wSndPanShadow] ; $34cb
@@ -631,13 +631,13 @@ UpdateSoundChannels:
 	ldh [hSndLengthAccum], a ; $34e7
 	ld a, [wSndChannelType] ; $34e9
 	cp SNDCHANTYPE_WAVE ; $34ec
-	jr z, .read ; $34ee
+	jr z, .readEnvLength ; $34ee
 	ld a, [hl+] ; $34f0
 	rrca ; $34f1
 	rrca ; $34f2
 	and $c0 ; $34f3
 	or d ; $34f5
-.loop4:
+.storeToneCtrl:
 	ldh [hSndToneCtrl], a ; $34f6
 	ld a, [hl+] ; $34f8
 	swap a ; $34f9
@@ -647,7 +647,7 @@ UpdateSoundChannels:
 	jr z, .loadWaveRam ; $3502
 	ld a, [hl+] ; $3504
 	ldh [hSndWaveId], a ; $3505
-.loop5:
+.resetChannelState:
 	ld a, $ff ; $3507
 	ldh [hSndNoteOffset], a ; $3509
 	xor a ; $350b
@@ -659,12 +659,12 @@ UpdateSoundChannels:
 	ldh [hSndPanMask], a ; $3515
 	ld a, $02 ; $3517
 	ldh [hSndScriptPtr], a ; $3519
-	jp .loop3 ; $351b
-.read:
+	jp .runScript ; $351b
+.readEnvLength:
 	ld a, [hl+] ; $351e
 	ldh [hSndEnvLength], a ; $351f
 	ld a, d ; $3521
-	jr .loop4 ; $3522
+	jr .storeToneCtrl ; $3522
 .loadWaveRam:
 	xor a ; $3524
 	ldh [rAUD3ENA], a ; $3525
@@ -672,11 +672,11 @@ UpdateSoundChannels:
 	ldh a, [hSndWaveId] ; $3528
 	ld e, a ; $352a
 	cp $ff ; $352b
-	jr nz, .store3 ; $352d
+	jr nz, .storeLoadedWave ; $352d
 	ld e, [hl] ; $352f
 	ld a, e ; $3530
 	ldh [hSndWaveId], a ; $3531
-.store3:
+.storeLoadedWave:
 	ld [wSndLoadedWaveId], a ; $3533
 	swap e ; $3536
 	ld hl, WavePatternTable ; $3538
@@ -695,13 +695,13 @@ UpdateSoundChannels:
 	add hl, de ; $354b
 	ld c, LOW(_AUD3WAVERAM) ; $354c
 	ld b, $10 ; $354e
-.loop6:
+.copyWaveLoop:
 	ld a, [hl+] ; $3550
 	ldh [c], a ; $3551
 	inc c ; $3552
 	dec b ; $3553
-	jr nz, .loop6 ; $3554
-	jr .loop5 ; $3556
+	jr nz, .copyWaveLoop ; $3554
+	jr .resetChannelState ; $3556
 RunSoundChannelScript:
 	ldh a, [hSndScriptPtr] ; $3558
 	ld l, a ; $355a

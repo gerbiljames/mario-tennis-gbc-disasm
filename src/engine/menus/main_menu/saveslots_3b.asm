@@ -605,7 +605,7 @@ HandleMatchFormatInput:
 	ret ; $5f65
 .compare:
 	cp $01 ; $5f66
-	jr nz, .checkMatchFormatSets ; $5f68
+	jr nz, .decSets ; $5f68
 	ld a, [wMatchFormatGames] ; $5f6a
 	xor $01 ; $5f6d
 	ld [wMatchFormatGames], a ; $5f6f
@@ -614,20 +614,20 @@ HandleMatchFormatInput:
 	call RedrawMatchFormatGamesRow ; $5f77
 	call DrawMatchFormatCaption ; $5f7a
 	ret ; $5f7d
-.checkMatchFormatSets:
+.decSets:
 	ld a, [wMatchFormatSets] ; $5f7e
 	dec a ; $5f81
 	add a ; $5f82
 	jr nc, .noUnderflow ; $5f83
 	ld a, $03 ; $5f85
 	dec a ; $5f87
-	jr .store ; $5f88
+	jr .storeDecSets ; $5f88
 .noUnderflow:
 	rra ; $5f8a
 	cp $03 ; $5f8b
-	jr c, .store ; $5f8d
+	jr c, .storeDecSets ; $5f8d
 	xor a ; $5f8f
-.store:
+.storeDecSets:
 	ld [wMatchFormatSets], a ; $5f90
 	ld b, $02 ; $5f93
 	call FlushMatchFormatRowToVram ; $5f95
@@ -650,7 +650,7 @@ HandleMatchFormatInput:
 	ret ; $5fbc
 .compare2:
 	cp $01 ; $5fbd
-	jr nz, .checkMatchFormatSets2 ; $5fbf
+	jr nz, .incSets ; $5fbf
 	ld a, [wMatchFormatGames] ; $5fc1
 	xor $01 ; $5fc4
 	ld [wMatchFormatGames], a ; $5fc6
@@ -659,20 +659,20 @@ HandleMatchFormatInput:
 	call RedrawMatchFormatGamesRow ; $5fce
 	call DrawMatchFormatCaption ; $5fd1
 	ret ; $5fd4
-.checkMatchFormatSets2:
+.incSets:
 	ld a, [wMatchFormatSets] ; $5fd5
 	inc a ; $5fd8
 	add a ; $5fd9
 	jr nc, .noUnderflow2 ; $5fda
 	ld a, $03 ; $5fdc
 	dec a ; $5fde
-	jr .store2 ; $5fdf
+	jr .storeIncSets ; $5fdf
 .noUnderflow2:
 	rra ; $5fe1
 	cp $03 ; $5fe2
-	jr c, .store2 ; $5fe4
+	jr c, .storeIncSets ; $5fe4
 	xor a ; $5fe6
-.store2:
+.storeIncSets:
 	ld [wMatchFormatSets], a ; $5fe7
 	ld b, $02 ; $5fea
 	call FlushMatchFormatRowToVram ; $5fec

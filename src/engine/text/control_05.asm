@@ -132,7 +132,7 @@ MeasureNextArgNumberWidth:
 	ld a, $01 ; $536d
 .sumDigitWidths:
 	ld b, $00 ; $536f
-.loop2:
+.digitLoop:
 	push af ; $5371
 	push hl ; $5372
 	dec a ; $5373
@@ -148,7 +148,7 @@ MeasureNextArgNumberWidth:
 	ld e, a ; $537f
 	pop hl ; $5380
 	xor a ; $5381
-.loop3:
+.subtractPowerLoop:
 	ld a, l ; $5382
 	sub e ; $5383
 	ld l, a ; $5384
@@ -158,7 +158,7 @@ MeasureNextArgNumberWidth:
 	bit 7, h ; $5388
 	jr nz, .offset ; $538a
 	inc a ; $538c
-	jr .loop3 ; $538d
+	jr .subtractPowerLoop ; $538d
 .offset:
 	add hl, de ; $538f
 	ld c, $30 ; $5390
@@ -169,7 +169,7 @@ MeasureNextArgNumberWidth:
 	ld b, a ; $5398
 	pop af ; $5399
 	dec a ; $539a
-	jr nz, .loop2 ; $539b
+	jr nz, .digitLoop ; $539b
 	ld a, b ; $539d
 	pop de ; $539e
 	pop bc ; $539f

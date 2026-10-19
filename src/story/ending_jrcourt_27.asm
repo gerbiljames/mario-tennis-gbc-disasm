@@ -9,11 +9,11 @@ End7TrainingCtrMapScripts_27:
 	dw End7TrainingCtrInitScript_27 ; slot 6 InitScript
 End7TrainingCtrActors_27:
 	; $618d, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, 43.0, 51.0, FACE_RIGHT, OBJ_WALK_72_06, ANIM_WALK, $00, END7_TRAINING_CTR_WALK_72_06_1
-	map_actor $0000, ActorScript_27_27, 43.0, 49.0, FACE_RIGHT, OBJ_WALK_72_06, ANIM_WALK, $00, END7_TRAINING_CTR_WALK_72_06_2
-	map_actor $0000, ActorScript_27_27, 45.0, 43.0, FACE_LEFT, OBJ_WALK_72_07, ANIM_WALK, $00, END7_TRAINING_CTR_WALK_72_07
-	map_actor $0000, ActorScript_27_27, 25.0, 17.0, FACE_UP, OBJ_WALK_72_02, ANIM_WALK, $06, END7_TRAINING_CTR_WALK_72_02_1
-	map_actor $0000, ActorScript_27_27, 13.0, 19.0, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $07, END7_TRAINING_CTR_WALK_72_02_2
+	map_actor $0000, ActorScript_27_27, 43.0, 51.0, FACE_RIGHT, OBJ_MACHINE_ENGINEER, ANIM_WALK, $00, END7_TRAINING_CTR_MACHINE_ENGINEER_1
+	map_actor $0000, ActorScript_27_27, 43.0, 49.0, FACE_RIGHT, OBJ_MACHINE_ENGINEER, ANIM_WALK, $00, END7_TRAINING_CTR_MACHINE_ENGINEER_2
+	map_actor $0000, ActorScript_27_27, 45.0, 43.0, FACE_LEFT, OBJ_MACHINE_ATTENDANT, ANIM_WALK, $00, END7_TRAINING_CTR_MACHINE_ATTENDANT
+	map_actor $0000, ActorScript_27_27, 25.0, 17.0, FACE_UP, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, END7_TRAINING_CTR_STUDENT_SIDE_PART_BOY_1
+	map_actor $0000, ActorScript_27_27, 13.0, 19.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $07, END7_TRAINING_CTR_STUDENT_SIDE_PART_BOY_2
 	map_actor_end
 End7TrainingCtrEntryPoints_27:
 	; $61dd, 17 bytes (map_entries)
@@ -86,11 +86,11 @@ End7TrainingCtrEntry01Scene:
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $62da
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $62e1
 	script_wait_frames 30 ; $62e8
-	script_set_anim ACTOR_END7_TRAINING_CTR_WALK_72_07, ANIM_NOD ; $62ef
-	script_wait_idle ACTOR_END7_TRAINING_CTR_WALK_72_07 ; $62f6
-	script_move_target ACTOR_END7_TRAINING_CTR_WALK_72_07, 45.0, 41.0 ; $62fb
-	script_wait_move ACTOR_END7_TRAINING_CTR_WALK_72_07 ; $6306
-	script_face ACTOR_END7_TRAINING_CTR_WALK_72_07, FACE_DOWN ; $630b
+	script_set_anim ACTOR_END7_TRAINING_CTR_MACHINE_ATTENDANT, ANIM_NOD ; $62ef
+	script_wait_idle ACTOR_END7_TRAINING_CTR_MACHINE_ATTENDANT ; $62f6
+	script_move_target ACTOR_END7_TRAINING_CTR_MACHINE_ATTENDANT, 45.0, 41.0 ; $62fb
+	script_wait_move ACTOR_END7_TRAINING_CTR_MACHINE_ATTENDANT ; $6306
+	script_face ACTOR_END7_TRAINING_CTR_MACHINE_ATTENDANT, FACE_DOWN ; $630b
 	script_null_script ACTOR_PARTNER ; $6312
 	script_set_speed ACTOR_PLAYER, 1.0 ; $6317
 	script_move_player 56.0, 51.0 ; $631f
@@ -117,19 +117,19 @@ End7TrainingCtrEntry02Scene:
 	script_move_player 15.0, 19.0 ; $63a5
 	script_move_target ACTOR_PLAYER, 17.0, 19.0 ; $63af
 	script_wait_move ACTOR_PLAYER ; $63ba
-	script_face_toward ACTOR_PLAYER, ACTOR_END7_TRAINING_CTR_WALK_72_02_2 ; $63bf
+	script_face_toward ACTOR_PLAYER, ACTOR_END7_TRAINING_CTR_STUDENT_SIDE_PART_BOY_2 ; $63bf
 	script_wait_frames 20 ; $63c7
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $63ce
 	script_wait_idle ACTOR_PLAYER ; $63d5
-	script_set_anim ACTOR_END7_TRAINING_CTR_WALK_72_02_2, ANIM_NOD ; $63da
-	script_wait_idle ACTOR_END7_TRAINING_CTR_WALK_72_02_2 ; $63e1
+	script_set_anim ACTOR_END7_TRAINING_CTR_STUDENT_SIDE_PART_BOY_2, ANIM_NOD ; $63da
+	script_wait_idle ACTOR_END7_TRAINING_CTR_STUDENT_SIDE_PART_BOY_2 ; $63e1
 	script_face ACTOR_PLAYER, FACE_DOWN ; $63e6
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_13 ; $63ed
 	script_wait_frames 120 ; $63f8
 	script_null_script ACTOR_PLAYER ; $63ff
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $6404
 	script_set_speed ACTOR_PLAYER, 1.0 ; $640b
-	script_face_toward ACTOR_END7_TRAINING_CTR_WALK_72_02_2, ACTOR_PLAYER ; $6413
+	script_face_toward ACTOR_END7_TRAINING_CTR_STUDENT_SIDE_PART_BOY_2, ACTOR_PLAYER ; $6413
 	ld a, $01 ; $641b
 	ld [wUnusedExitTriggerIdMirror], a ; $641d
 	ld [wStoryModeExitTriggerRequest], a ; $6420
@@ -160,22 +160,22 @@ End5ServiceAceMapScripts_27:
 	dw End5ServiceAceInitScript_27 ; slot 6 InitScript
 End5ServiceAceActors_27:
 	; $6455, 248 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, 17.0, 25.0, FACE_LEFT, OBJ_WALK_71_02, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_71_02_1
-	map_actor $0000, ActorScript_27_27, 33.0, 21.0, FACE_UP, OBJ_WALK_71_02, ANIM_WALK, $07, END5_SERVICE_ACE_WALK_71_02_2
-	map_actor $0000, ActorScript_27_27, 22.0, 19.0, FACE_DOWN, OBJ_WALK_71_03, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_71_03_1
-	map_actor $0000, ActorScript_27_27, 29.0, 23.0, FACE_UP, OBJ_WALK_71_04, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_71_04
+	map_actor $0000, ActorScript_27_27, 17.0, 25.0, FACE_LEFT, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00, END5_SERVICE_ACE_RESTAURANT_SERVER_1
+	map_actor $0000, ActorScript_27_27, 33.0, 21.0, FACE_UP, OBJ_RESTAURANT_SERVER, ANIM_WALK, $07, END5_SERVICE_ACE_RESTAURANT_SERVER_2
+	map_actor $0000, ActorScript_27_27, 22.0, 19.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $00, END5_SERVICE_ACE_STUDENT_LONG_HAIR_1
+	map_actor $0000, ActorScript_27_27, 29.0, 23.0, FACE_UP, OBJ_CHEF, ANIM_WALK, $00, END5_SERVICE_ACE_CHEF
 	map_actor $0000, ActorScript_27_27, 41.0, 41.0, FACE_RIGHT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END5_SERVICE_ACE_BALLOON_EXCLAIM
-	map_actor $0000, ActorScript_27_27, 33.0, 17.0, FACE_RIGHT, OBJ_WALK_71_06, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_71_06_1
-	map_actor $0000, ActorScript_27_27, 9.0, 15.0, FACE_RIGHT, OBJ_WALK_71_07, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_71_07
-	map_actor $0000, ActorScript_27_28, 11.0, 25.0, FACE_LEFT, OBJ_WALK_71_03, ANIM_WALK, $06, END5_SERVICE_ACE_WALK_71_03_2
-	map_actor $0000, ActorScript_27_27, 13.0, 15.0, FACE_LEFT, OBJ_WALK_72_03, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_72_03_1
-	map_actor $0000, ActorScript_27_27, 21.0, 11.0, FACE_LEFT, OBJ_WALK_71_06, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_71_06_2
-	map_actor $0000, ActorScript_27_27, 29.0, 11.0, FACE_LEFT, OBJ_WALK_72_05, ANIM_WALK, $04, END5_SERVICE_ACE_WALK_72_05_1
-	map_actor $0000, ActorScript_27_27, 27.0, 9.0, FACE_DOWN, OBJ_WALK_72_04, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_72_04_1
-	map_actor $0000, ActorScript_27_27, 29.0, 15.0, FACE_LEFT, OBJ_WALK_72_05, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_72_05_2
-	map_actor $0000, ActorScript_27_27, 25.0, 15.0, FACE_RIGHT, OBJ_WALK_72_04, ANIM_WALK, $06, END5_SERVICE_ACE_WALK_72_04_2
+	map_actor $0000, ActorScript_27_27, 33.0, 17.0, FACE_RIGHT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, END5_SERVICE_ACE_STUDENT_CAP_BOY_1
+	map_actor $0000, ActorScript_27_27, 9.0, 15.0, FACE_RIGHT, OBJ_STUDENT_WAVY_HAIR_GIRL, ANIM_WALK, $00, END5_SERVICE_ACE_STUDENT_WAVY_HAIR_GIRL
+	map_actor $0000, ActorScript_27_28, 11.0, 25.0, FACE_LEFT, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $06, END5_SERVICE_ACE_STUDENT_LONG_HAIR_2
+	map_actor $0000, ActorScript_27_27, 13.0, 15.0, FACE_LEFT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $00, END5_SERVICE_ACE_STUDENT_PIGTAILS_GIRL_1
+	map_actor $0000, ActorScript_27_27, 21.0, 11.0, FACE_LEFT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, END5_SERVICE_ACE_STUDENT_CAP_BOY_2
+	map_actor $0000, ActorScript_27_27, 29.0, 11.0, FACE_LEFT, OBJ_STUDENT_HEADBAND_BOY, ANIM_WALK, $04, END5_SERVICE_ACE_STUDENT_HEADBAND_BOY_1
+	map_actor $0000, ActorScript_27_27, 27.0, 9.0, FACE_DOWN, OBJ_STUDENT_BLACK_HAIR_BOY, ANIM_WALK, $00, END5_SERVICE_ACE_STUDENT_BLACK_HAIR_BOY_1
+	map_actor $0000, ActorScript_27_27, 29.0, 15.0, FACE_LEFT, OBJ_STUDENT_HEADBAND_BOY, ANIM_WALK, $00, END5_SERVICE_ACE_STUDENT_HEADBAND_BOY_2
+	map_actor $0000, ActorScript_27_27, 25.0, 15.0, FACE_RIGHT, OBJ_STUDENT_BLACK_HAIR_BOY, ANIM_WALK, $06, END5_SERVICE_ACE_STUDENT_BLACK_HAIR_BOY_2
 	map_actor $0000, ActorScript_27_27, 41.0, 41.0, FACE_RIGHT, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, END5_SERVICE_ACE_BALLOON_ELLIPSIS
-	map_actor $0000, ActorScript_27_27, 27.0, 18.0, FACE_DOWN, OBJ_WALK_72_03, ANIM_WALK, $00, END5_SERVICE_ACE_WALK_72_03_2
+	map_actor $0000, ActorScript_27_27, 27.0, 18.0, FACE_DOWN, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $00, END5_SERVICE_ACE_STUDENT_PIGTAILS_GIRL_2
 	map_actor $0000, ActorScript_27_27, 25.0, 9.0, FACE_DOWN, OBJ_RACKET, ANIM_WALK, $00, END5_SERVICE_ACE_RACKET
 	map_actor_end
 End5ServiceAceEntryPoints_27:
@@ -205,11 +205,11 @@ End5ServiceAceCutscene_27:
 	script_move_target ACTOR_PLAYER, 25.0, 17.0 ; $65cf
 	script_wait_move ACTOR_PLAYER ; $65da
 	script_wait_frames 20 ; $65df
-	script_face ACTOR_END5_SERVICE_ACE_WALK_72_03_2, FACE_LEFT ; $65e6
+	script_face ACTOR_END5_SERVICE_ACE_STUDENT_PIGTAILS_GIRL_2, FACE_LEFT ; $65e6
 	script_wait_frames 40 ; $65ed
 	sound SFX_CHIME ; $65f4
 	script_set_position ACTOR_END5_SERVICE_ACE_BALLOON_EXCLAIM, 28.0, 17.0 ; $65f6
-	script_set_anim ACTOR_END5_SERVICE_ACE_WALK_72_03_2, ANIM_BOUNCE ; $6601
+	script_set_anim ACTOR_END5_SERVICE_ACE_STUDENT_PIGTAILS_GIRL_2, ANIM_BOUNCE ; $6601
 	script_wait_frames 60 ; $6608
 	ld a, $01 ; $660f
 	ld [wUnusedExitTriggerIdMirror], a ; $6611
@@ -236,7 +236,7 @@ End4JrCourtMapScripts_27:
 	dw End4JrCourtInitScript_27 ; slot 6 InitScript
 End4JrCourtActors_27:
 	; $6630, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, 19.0, 19.0, FACE_DOWN, OBJ_WALK_72_00, ANIM_WALK, $00, END4_JR_COURT_WALK_72_00
+	map_actor $0000, ActorScript_27_27, 19.0, 19.0, FACE_DOWN, OBJ_JUNIOR_COACH, ANIM_WALK, $00, END4_JR_COURT_JUNIOR_COACH
 	map_actor $0000, ActorScript_27_27, 35.0, 23.0, FACE_LEFT, OBJ_BOB, ANIM_WALK, $05, END4_JR_COURT_BOB
 	map_actor $0000, ActorScript_27_27, 5.0, 21.0, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $04, END4_JR_COURT_BETH
 	map_actor $0000, ActorScript_27_27, 19.0, 13.0, FACE_RIGHT, OBJ_CURT, ANIM_WALK, $07, END4_JR_COURT_CURT
@@ -255,7 +255,7 @@ End4JrCourtActors_27:
 	map_actor_end
 End4JrCourtActorsAlt_27:
 	; $671a, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, 19.0, 19.0, FACE_DOWN, OBJ_WALK_72_00, ANIM_WALK, $00, END4_JR_COURT_ALT_WALK_72_00
+	map_actor $0000, ActorScript_27_27, 19.0, 19.0, FACE_DOWN, OBJ_JUNIOR_COACH, ANIM_WALK, $00, END4_JR_COURT_ALT_JUNIOR_COACH
 	map_actor $0000, ActorScript_27_27, 35.0, 23.0, FACE_LEFT, OBJ_BOB, ANIM_WALK, $05, END4_JR_COURT_ALT_BOB
 	map_actor $0000, ActorScript_27_27, 5.0, 21.0, FACE_RIGHT, OBJ_BETH, ANIM_WALK, $04, END4_JR_COURT_ALT_BETH
 	map_actor $0000, ActorScript_27_27, 33.0, 21.0, FACE_DOWN, OBJ_CURT, ANIM_WALK, $07, END4_JR_COURT_ALT_CURT
@@ -334,14 +334,14 @@ ActorScript_27_16:
 	as_jump .pace
 End4JrCourtApproachSingles_27:
 	script_wait_frames 15 ; $6866
-	script_face_toward ACTOR_END4_JR_COURT_ALT_PAM, ACTOR_END4_JR_COURT_ALT_WALK_72_00 ; $686d
+	script_face_toward ACTOR_END4_JR_COURT_ALT_PAM, ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH ; $686d
 	script_wait_frames 10 ; $6875
 	script_face_toward ACTOR_END4_JR_COURT_ALT_PAM, ACTOR_PLAYER ; $687c
 	script_wait_frames 30 ; $6884
 	script_player_speed 1.0 ; $688b
 	script_move_player_to_actor ACTOR_END4_JR_COURT_ALT_PAM ; $6891
 	farcall WaitPlayerMoveDone ; $6898
-	script_face_toward ACTOR_END4_JR_COURT_ALT_WALK_72_00, ACTOR_END4_JR_COURT_ALT_PAM ; $689b
+	script_face_toward ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ACTOR_END4_JR_COURT_ALT_PAM ; $689b
 	script_set_anim ACTOR_END4_JR_COURT_ALT_PAM, ANIM_NOD ; $68a3
 	script_wait_idle ACTOR_END4_JR_COURT_ALT_PAM ; $68aa
 	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_DOWN ; $68af
@@ -349,7 +349,7 @@ End4JrCourtApproachSingles_27:
 	script_set_actor_script ACTOR_END4_JR_COURT_ALT_PAM, ActorScript_27_17 ; $68bd
 	script_wait_frames 20 ; $68c8
 	script_move_player_to_actor ACTOR_PLAYER ; $68cf
-	script_face ACTOR_END4_JR_COURT_ALT_WALK_72_00, FACE_DOWN ; $68d6
+	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_DOWN ; $68d6
 	script_move_player_to_actor ACTOR_PLAYER ; $68dd
 	script_wait_actor_script ACTOR_END4_JR_COURT_ALT_PAM ; $68e4
 	script_face_toward ACTOR_PLAYER, ACTOR_END4_JR_COURT_ALT_PAM ; $68e9
@@ -388,13 +388,13 @@ ActorScript_27_19:
 	as_halt
 End4JrCourtSceneSingles_27:
 	farcall BeginCutsceneScriptMode ; $6951
-	script_face ACTOR_END4_JR_COURT_ALT_WALK_72_00, FACE_DOWN ; $6954
+	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_DOWN ; $6954
 	call End4JrCourtApproachSingles_27 ; $695b
 	script_face ACTOR_PLAYER, FACE_UP ; $695e
 	script_wait_frames 15 ; $6965
-	script_set_anim ACTOR_END4_JR_COURT_ALT_WALK_72_00, ANIM_BOUNCE ; $696c
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_WALK_72_00 ; $6973
-	script_face ACTOR_END4_JR_COURT_ALT_WALK_72_00, FACE_RIGHT ; $6978
+	script_set_anim ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ANIM_BOUNCE ; $696c
+	script_wait_idle ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH ; $6973
+	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_RIGHT ; $6978
 	script_wait_frames 15 ; $697f
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6986
 	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_RIGHT ; $698d
@@ -414,15 +414,15 @@ End4JrCourtSceneSingles_27:
 	ret ; $69ed
 .loop:
 	farcall BeginCutsceneScriptMode ; $69ee
-	script_face_toward ACTOR_END4_JR_COURT_ALT_WALK_72_00, ACTOR_PLAYER ; $69f1
+	script_face_toward ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ACTOR_PLAYER ; $69f1
 	script_wait_frames 30 ; $69f9
-	script_face_toward ACTOR_PLAYER, ACTOR_END4_JR_COURT_ALT_WALK_72_00 ; $6a00
+	script_face_toward ACTOR_PLAYER, ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH ; $6a00
 	call End4JrCourtApproachDoubles_27 ; $6a08
 	script_face ACTOR_PLAYER, FACE_UP ; $6a0b
 	script_wait_frames 15 ; $6a12
-	script_set_anim ACTOR_END4_JR_COURT_ALT_WALK_72_00, ANIM_BOUNCE ; $6a19
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_WALK_72_00 ; $6a20
-	script_face ACTOR_END4_JR_COURT_ALT_WALK_72_00, FACE_RIGHT ; $6a25
+	script_set_anim ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ANIM_BOUNCE ; $6a19
+	script_wait_idle ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH ; $6a20
+	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_RIGHT ; $6a25
 	script_wait_frames 15 ; $6a2c
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6a33
 	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_RIGHT ; $6a3a
@@ -443,7 +443,7 @@ End4JrCourtSceneSingles_27:
 	ret ; $6a7c
 End4JrCourtApproachDoubles_27:
 	script_player_speed 1.0 ; $6a7d
-	script_face ACTOR_END4_JR_COURT_ALT_WALK_72_00, FACE_RIGHT ; $6a83
+	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_RIGHT ; $6a83
 	script_move_player_to_actor ACTOR_END4_JR_COURT_ALT_BRIAN ; $6a8a
 	farcall WaitPlayerMoveDone ; $6a91
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6a94
@@ -457,7 +457,7 @@ End4JrCourtApproachDoubles_27:
 	script_move_target ACTOR_END4_JR_COURT_ALT_FAY, 21.0, 23.0 ; $6acc
 	script_wait_move ACTOR_END4_JR_COURT_ALT_FAY ; $6ad7
 	script_face ACTOR_END4_JR_COURT_ALT_FAY, FACE_LEFT ; $6adc
-	script_face ACTOR_END4_JR_COURT_ALT_WALK_72_00, FACE_DOWN ; $6ae3
+	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_DOWN ; $6ae3
 	script_set_anim ACTOR_END4_JR_COURT_ALT_BRIAN, ANIM_BOUNCE ; $6aea
 	script_wait_idle ACTOR_END4_JR_COURT_ALT_BRIAN ; $6af1
 	script_set_anim ACTOR_END4_JR_COURT_ALT_FAY, ANIM_NOD ; $6af6
@@ -468,7 +468,7 @@ End4JrCourtApproachDoubles_27:
 	script_face ACTOR_END4_JR_COURT_ALT_FAY, FACE_UP ; $6b19
 	ret ; $6b20
 End4JrCourtDepartureDoubles_27:
-	script_face ACTOR_END4_JR_COURT_ALT_WALK_72_00, FACE_RIGHT ; $6b21
+	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_RIGHT ; $6b21
 	script_wait_frames 30 ; $6b28
 	script_null_script ACTOR_PARTNER ; $6b2f
 	script_move_player 25.0, 17.0 ; $6b34

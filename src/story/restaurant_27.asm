@@ -315,12 +315,12 @@ End1MainBldgActors_27:
 	map_actor $0000, ActorScript_27_27, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, END1_MAIN_BLDG_BALLOON_QUESTION
 	map_actor $0000, ActorScript_27_27, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END1_MAIN_BLDG_BALLOON_EXCLAIM
 	map_actor $0000, ActorScript_27_27, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END1_MAIN_BLDG_BALLOON_SWEAT
-	map_actor $0000, ActorScript_27_27, 21.0, 61.0, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, END1_MAIN_BLDG_WALK_75_06_1
+	map_actor $0000, ActorScript_27_27, 21.0, 61.0, FACE_DOWN, OBJ_HEADMASTER, ANIM_WALK, $00, END1_MAIN_BLDG_HEADMASTER_1
 	map_actor $0000, ActorScript_27_27, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, END1_MAIN_BLDG_BALLOON_ELLIPSIS
-	map_actor $0000, ActorScript_27_27, 24.0, 17.0, FACE_DOWN, OBJ_WALK_75_06, ANIM_WALK, $00, END1_MAIN_BLDG_WALK_75_06_2
-	map_actor $0000, ActorScript_27_27, 26.0, 21.0, FACE_UP, OBJ_WALK_74_08, ANIM_WALK, $00, END1_MAIN_BLDG_WALK_74_08
-	map_actor $0000, ActorScript_27_27, 22.0, 21.0, FACE_UP, OBJ_WALK_74_07, ANIM_WALK, $00, END1_MAIN_BLDG_WALK_74_07
-	map_actor $0000, ActorScript_27_27, 25.0, 23.0, FACE_UP, OBJ_WALK_74_06, ANIM_WALK, $00, END1_MAIN_BLDG_WALK_74_06
+	map_actor $0000, ActorScript_27_27, 24.0, 17.0, FACE_DOWN, OBJ_HEADMASTER, ANIM_WALK, $00, END1_MAIN_BLDG_HEADMASTER_2
+	map_actor $0000, ActorScript_27_27, 26.0, 21.0, FACE_UP, OBJ_KEVIN_SWEATS, ANIM_WALK, $00, END1_MAIN_BLDG_KEVIN_SWEATS
+	map_actor $0000, ActorScript_27_27, 22.0, 21.0, FACE_UP, OBJ_MARK_SWEATS, ANIM_WALK, $00, END1_MAIN_BLDG_MARK_SWEATS
+	map_actor $0000, ActorScript_27_27, 25.0, 23.0, FACE_UP, OBJ_EMILY_SWEATS, ANIM_WALK, $00, END1_MAIN_BLDG_EMILY_SWEATS
 	map_actor $0000, ActorScript_27_27, 1.0, 25.0, FACE_UP, OBJ_MARK, ANIM_WALK, $00, END1_MAIN_BLDG_MARK
 	map_actor_end
 End1MainBldgEntryPoints_27:
@@ -354,12 +354,12 @@ End1MainBldgInitScript_27:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $730a
 	xor a ; $7312
 	ld [wStoryModeShowLocationName], a ; $7313
-	script_set_position ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 13.0 ; $7316
+	script_set_position ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 24.0, 13.0 ; $7316
 	script_set_position ACTOR_PLAYER, 24.0, 55.0 ; $7321
-	script_set_position ACTOR_END1_MAIN_BLDG_WALK_74_06, 63.0, 63.0 ; $732c
-	script_set_position ACTOR_END1_MAIN_BLDG_WALK_74_07, 63.0, 63.0 ; $7337
-	script_set_position ACTOR_END1_MAIN_BLDG_WALK_74_08, 63.0, 63.0 ; $7342
-	script_set_position ACTOR_END1_MAIN_BLDG_WALK_75_06_2, 63.0, 63.0 ; $734d
+	script_set_position ACTOR_END1_MAIN_BLDG_EMILY_SWEATS, 63.0, 63.0 ; $732c
+	script_set_position ACTOR_END1_MAIN_BLDG_MARK_SWEATS, 63.0, 63.0 ; $7337
+	script_set_position ACTOR_END1_MAIN_BLDG_KEVIN_SWEATS, 63.0, 63.0 ; $7342
+	script_set_position ACTOR_END1_MAIN_BLDG_HEADMASTER_2, 63.0, 63.0 ; $734d
 	script_set_position ACTOR_END1_MAIN_BLDG_MARK, 63.0, 63.0 ; $7358
 	test_flag FLAG_DOUBLES ; $7363
 	jr z, .notDoubles ; $7366
@@ -375,67 +375,67 @@ End1MainBldgInitScript_27:
 	script_wait_frames 20 ; $73a4
 	script_set_position ACTOR_PLAYER, 24.0, 32.0 ; $73ab
 	script_face ACTOR_PLAYER, FACE_UP ; $73b6
-	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 1.125 ; $73bd
-	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 20.0 ; $73c5
-	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $73d0
-	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, ANIM_SHAKE ; $73d5
-	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $73dc
-	script_face ACTOR_END1_MAIN_BLDG_WALK_75_06_1, FACE_UP ; $73e1
-	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, ANIM_NOD ; $73e8
-	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $73ef
-	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 1.0 ; $73f4
-	script_face ACTOR_END1_MAIN_BLDG_WALK_75_06_1, FACE_DOWN ; $73fc
-	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, -2.0 ; $7403
-	script_wait_jump ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $740b
-	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 23.0 ; $7410
-	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $741b
+	script_set_speed ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 1.125 ; $73bd
+	script_move_target ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 24.0, 20.0 ; $73c5
+	script_wait_move ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $73d0
+	script_set_anim ACTOR_END1_MAIN_BLDG_HEADMASTER_1, ANIM_SHAKE ; $73d5
+	script_wait_idle ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $73dc
+	script_face ACTOR_END1_MAIN_BLDG_HEADMASTER_1, FACE_UP ; $73e1
+	script_set_anim ACTOR_END1_MAIN_BLDG_HEADMASTER_1, ANIM_NOD ; $73e8
+	script_wait_idle ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $73ef
+	script_set_speed ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 1.0 ; $73f4
+	script_face ACTOR_END1_MAIN_BLDG_HEADMASTER_1, FACE_DOWN ; $73fc
+	script_jump_velocity ACTOR_END1_MAIN_BLDG_HEADMASTER_1, -2.0 ; $7403
+	script_wait_jump ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $740b
+	script_move_target ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 24.0, 23.0 ; $7410
+	script_wait_move ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $741b
 	sound SFX_EMOTE ; $7420
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_QUESTION, 25.5, 21.75 ; $7422
-	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 0.5 ; $742d
+	script_set_speed ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 0.5 ; $742d
 	script_set_speed ACTOR_END1_MAIN_BLDG_BALLOON_QUESTION, 0.5 ; $7435
 	script_move_target ACTOR_END1_MAIN_BLDG_BALLOON_QUESTION, 25.5, 24.75 ; $743d
-	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 26.0 ; $7448
-	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7453
+	script_move_target ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 24.0, 26.0 ; $7448
+	script_wait_move ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $7453
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_QUESTION, 63.0, 63.0 ; $7458
-	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 22.0 ; $7463
-	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $746e
+	script_move_target ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 24.0, 22.0 ; $7463
+	script_wait_move ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $746e
 	script_wait_frames 30 ; $7473
-	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, ANIM_BOUNCE ; $747a
+	script_set_anim ACTOR_END1_MAIN_BLDG_HEADMASTER_1, ANIM_BOUNCE ; $747a
 	sound SFX_CHIME ; $7481
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_EXCLAIM, 25.5, 20.75 ; $7483
 	script_wait_frames 20 ; $748e
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_EXCLAIM, 63.0, 63.0 ; $7495
-	script_set_speed ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 1.0 ; $74a0
-	script_jump_velocity ACTOR_END1_MAIN_BLDG_WALK_75_06_1, -2.0 ; $74a8
-	script_wait_jump ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74b0
-	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 24.0, 32.0 ; $74b5
+	script_set_speed ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 1.0 ; $74a0
+	script_jump_velocity ACTOR_END1_MAIN_BLDG_HEADMASTER_1, -2.0 ; $74a8
+	script_wait_jump ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $74b0
+	script_move_target ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 24.0, 32.0 ; $74b5
 	script_wait_frames 30 ; $74c0
-	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74c7
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $74c7
 	script_move_target ACTOR_PLAYER, 24.0, 30.0 ; $74d4
 	script_wait_frames 20 ; $74df
 	call End1MainBldgKnockdown_27 ; $74e6
-	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $74e9
-	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, ANIM_BOUNCE ; $74ee
+	script_wait_move ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $74e9
+	script_set_anim ACTOR_END1_MAIN_BLDG_HEADMASTER_1, ANIM_BOUNCE ; $74ee
 	sound SFX_APPEAR2 ; $74f5
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_SWEAT, 25.0, 30.0 ; $74f7
 	script_wait_frames 60 ; $7502
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_SWEAT, 63.0, 63.0 ; $7509
-	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 23.0, 34.0 ; $7514
-	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $751f
-	script_face_toward ACTOR_PLAYER, ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7524
+	script_move_target ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 23.0, 34.0 ; $7514
+	script_wait_move ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $751f
+	script_face_toward ACTOR_PLAYER, ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $7524
 	script_wait_frames 20 ; $752c
-	script_move_target ACTOR_END1_MAIN_BLDG_WALK_75_06_1, 25.0, 36.0 ; $7533
-	script_wait_move ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $753e
+	script_move_target ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 25.0, 36.0 ; $7533
+	script_wait_move ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $753e
 	script_null_script ACTOR_PLAYER_SHADOW ; $7543
-	script_face_toward ACTOR_PLAYER, ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7548
-	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, ANIM_BOUNCE ; $7550
-	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7557
+	script_face_toward ACTOR_PLAYER, ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $7548
+	script_set_anim ACTOR_END1_MAIN_BLDG_HEADMASTER_1, ANIM_BOUNCE ; $7550
+	script_wait_idle ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $7557
 	script_wait_frames 20 ; $755c
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_ELLIPSIS, 26.5, 34.5 ; $7563
 	script_wait_frames 60 ; $756e
 	script_set_position ACTOR_END1_MAIN_BLDG_BALLOON_ELLIPSIS, 63.0, 63.0 ; $7575
-	script_set_anim ACTOR_END1_MAIN_BLDG_WALK_75_06_1, ANIM_BOUNCE ; $7580
-	script_wait_idle ACTOR_END1_MAIN_BLDG_WALK_75_06_1 ; $7587
+	script_set_anim ACTOR_END1_MAIN_BLDG_HEADMASTER_1, ANIM_BOUNCE ; $7580
+	script_wait_idle ACTOR_END1_MAIN_BLDG_HEADMASTER_1 ; $7587
 	ld a, $01 ; $758c
 	ld [wUnusedExitTriggerIdMirror], a ; $758e
 	ld [wStoryModeExitTriggerRequest], a ; $7591

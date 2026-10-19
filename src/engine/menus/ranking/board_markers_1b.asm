@@ -411,60 +411,60 @@ UpdateScriptedOffsetChannel3:
 	inc a ; $5b8f
 	ld [wRankingAnimStepIndex + 3], a ; $5b90
 	ret ; $5b93
-RankingBoardAnimState_5077Table0:
+RankingAnimSinglesClimbRow01Table0:
 	; $5b94, 1 bytes (bytes:1)
 	db $01 ; 0x00
-RankingBoardAnimState_5077Table1:
+RankingAnimSinglesClimbRow01Table1:
 	; $5b95, 3 bytes (bytes:3)
 	db $01, $01, $01 ; 0x00
-RankingBoardAnimState_546dTable:
+RankingAnimDoublesClimbRow3Table:
 	; $5b98, 5 bytes (bytes:5)
 	db $01, $01, $01, $01, $40 ; 0x00
-RankingBoardAnimState_5077Table2:
+RankingAnimSinglesClimbRow01Table2:
 	; $5b9d, 8 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingBoardAnimState_5077Table3:
+RankingAnimSinglesClimbRow01Table3:
 	; $5ba5, 13 bytes (bytes:13)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $40 ; 0x00
-RankingBoardAnimState_5077Table4:
+RankingAnimSinglesClimbRow01Table4:
 	; $5bb2, 9 bytes (bytes:9)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingBoardAnimState_516fTable0:
+RankingAnimSinglesClimbRow2Table0:
 	; $5bbb, 1 bytes (bytes:1)
 	db $01 ; 0x00
-RankingBoardAnimState_516fTable1:
+RankingAnimSinglesClimbRow2Table1:
 	; $5bbc, 7 bytes (bytes:7)
 	db $01, $01, $01, $01, $01, $01, $01 ; 0x00
-RankingBoardAnimState_516fTable2:
+RankingAnimSinglesClimbRow2Table2:
 	; $5bc3, 2 bytes (bytes:2)
 	db $01, $01 ; 0x00
-RankingBoardAnimState_5387Table0:
+RankingAnimDoublesClimbRow01Table0:
 	; $5bc5, 7 bytes (bytes:7)
 	db $01, $01, $01, $01, $01, $01, $40 ; 0x00
-RankingBoardAnimState_516fTable3:
+RankingAnimSinglesClimbRow2Table3:
 	ds 1, $ff ; $5bcc, fill
-RankingBoardAnimState_516fTable4:
+RankingAnimSinglesClimbRow2Table4:
 	ds 7, $ff ; $5bcd, fill
-RankingBoardAnimState_516fTable5:
+RankingAnimSinglesClimbRow2Table5:
 	; $5bd4, 9 bytes (bytes:9)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingBoardAnimState_5368Table0:
+RankingAnimSinglesMarkRow4Table0:
 	; $5bdd, 5 bytes (bytes:5)
 	db $01, $01, $01, $01, $40 ; 0x00
-RankingBoardAnimState_5368Table1:
+RankingAnimSinglesMarkRow4Table1:
 	; $5be2, 5 bytes (bytes:5)
 	db $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingBoardAnimState_5273Table0:
+RankingAnimSinglesClimbRow3Table0:
 	; $5be7, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
-RankingBoardAnimState_53faTable:
+RankingAnimDoublesClimbRow2Table:
 	; $5bef, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
-RankingBoardAnimState_5387Table1:
+RankingAnimDoublesClimbRow01Table1:
 	; $5bf7, 21 bytes (bytes:16)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
 	db $01, $01, $01, $01, $40 ; 0x10
-RankingBoardAnimState_5273Table1:
+RankingAnimSinglesClimbRow3Table1:
 	; $5c0c, 37 bytes (bytes:16)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10

@@ -1,39 +1,39 @@
 UpdatePointDigitsDisplay:
 	ld a, [wTiebreakerIndicator] ; $4036
 	and a ; $4039
-	jr nz, .drawPlayer2 ; $403a
+	jr nz, .tiebreakDigits ; $403a
 	ld a, [wPlayer2PointsWon] ; $403c
 	cp $04 ; $403f
 	ld a, [wPlayer1PointsWon] ; $4041
-	jr nz, .drawPlayer1 ; $4044
+	jr nz, .loadPlayer1Digit ; $4044
 	ld a, $05 ; $4046
-.drawPlayer1:
+.loadPlayer1Digit:
 	ld b, $00 ; $4048
 	call LoadPlayer1PointsDigitGfx ; $404a
 	ld a, [wPlayer1PointsWon] ; $404d
 	cp $04 ; $4050
 	ld a, [wPlayer2PointsWon] ; $4052
-	jr nz, .checkPlayer2 ; $4055
+	jr nz, .loadPlayer2Digit ; $4055
 	ld a, $05 ; $4057
-.checkPlayer2:
+.loadPlayer2Digit:
 	ld b, $00 ; $4059
 	call LoadPlayer2PointsDigitGfx ; $405b
 	ret ; $405e
-.drawPlayer2:
+.tiebreakDigits:
 	ld a, [wPlayer2PointsWon] ; $405f
 	cp $07 ; $4062
 	ld a, [wPlayer1PointsWon] ; $4064
-	jr nz, .checkAdvantage ; $4067
+	jr nz, .loadPlayer1TiebreakDigit ; $4067
 	ld a, $08 ; $4069
-.checkAdvantage:
+.loadPlayer1TiebreakDigit:
 	ld b, $01 ; $406b
 	call LoadPlayer1PointsDigitGfx ; $406d
 	ld a, [wPlayer1PointsWon] ; $4070
 	cp $07 ; $4073
 	ld a, [wPlayer2PointsWon] ; $4075
-	jr nz, .done ; $4078
+	jr nz, .loadPlayer2TiebreakDigit ; $4078
 	ld a, $08 ; $407a
-.done:
+.loadPlayer2TiebreakDigit:
 	ld b, $01 ; $407c
 	call LoadPlayer2PointsDigitGfx ; $407e
 	ret ; $4081

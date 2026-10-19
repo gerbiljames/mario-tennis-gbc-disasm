@@ -6,7 +6,7 @@
 	inc a
 	ld [wCutsceneStepTimer], a
 	cp $80
-	jp z, DispatchCutsceneStateInit.loopB
+	jp z, DispatchCutsceneStateInit.runExit
 	cp $64
 	jr nc, .updateCutsceneScrollY
 	call AdvanceSpriteAnimTimer
@@ -16,4 +16,4 @@
 	call SetCameraYFromScrollPos
 	call QueueScrollingSprite
 	call QueueCutsceneAnimatedSprites
-	jp DispatchCutsceneStateInit.loop
+	jp DispatchCutsceneStateInit.runUpdate

@@ -4,31 +4,31 @@ FillProgressListRowTiles:
 	ld h, [hl] ; $79ec
 	ld l, a ; $79ed
 	ld e, $09 ; $79ee
-.loop:
+.rowLoop:
 	ld a, $2e ; $79f0
 	ld b, $2f ; $79f2
 	ld c, $0a ; $79f4
-.loopB:
+.topTileLoop:
 	ld [hl+], a ; $79f6
 	ld [hl], b ; $79f7
 	inc hl ; $79f8
 	dec c ; $79f9
-	jr nz, .loopB ; $79fa
+	jr nz, .topTileLoop ; $79fa
 	ld bc, $000c ; $79fc
 	add hl, bc ; $79ff
 	ld a, $3e ; $7a00
 	ld b, $3f ; $7a02
 	ld c, $0a ; $7a04
-.loop2:
+.bottomTileLoop:
 	ld [hl+], a ; $7a06
 	ld [hl], b ; $7a07
 	inc hl ; $7a08
 	dec c ; $7a09
-	jr nz, .loop2 ; $7a0a
+	jr nz, .bottomTileLoop ; $7a0a
 	ld bc, $000c ; $7a0c
 	add hl, bc ; $7a0f
 	dec e ; $7a10
-	jr nz, .loop ; $7a11
+	jr nz, .rowLoop ; $7a11
 	ret ; $7a13
 FillProgressListRowAttrs:
 	ld hl, wShadowTilemapPtr ; $7a14

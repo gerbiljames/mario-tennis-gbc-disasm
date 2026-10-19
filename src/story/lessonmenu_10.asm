@@ -1,5 +1,5 @@
 RunStrokeLessonMenu:
-	ld hl, Text_37_15 ; $4594
+	ld hl, Text_MenuStrokeDrills ; $4594
 	ld de, $0101 ; $4597
 	ld a, $01 ; $459a
 	farcall RunPagedTextMenu ; $459c
@@ -69,7 +69,7 @@ ShowRankingBoardSamples:
 	farcall ShowRankingBoard ; $463c
 	ret ; $463f
 RunMinigameSelectMenu:
-	ld hl, Text_31_150 ; $4640
+	ld hl, Text_MenuMarioCast ; $4640
 	ld a, $03 ; $4643
 	farcall RunPagedTextMenu ; $4645
 	cp $ff ; $4648
@@ -80,7 +80,7 @@ RunMinigameSelectMenu:
 	jr nc, .runPagedTextMenu ; $4652
 	inc d ; $4654
 .runPagedTextMenu:
-	ld hl, Text_31_153 ; $4655
+	ld hl, Text_MenuLevels ; $4655
 	ld a, $01 ; $4658
 	farcall RunPagedTextMenu ; $465a
 	cp $ff ; $465d
@@ -120,14 +120,14 @@ Test2Actors_10:
 	map_actor $0000, ActorScript_10_2, 5.0, 13.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $07, TEST2_MARIO
 	map_actor $0000, ActorScript_10_2, 5.0, 11.0, FACE_DOWN, OBJ_BOWSER, ANIM_WALK, $00, TEST2_BOWSER
 	map_actor $0000, ActorScript_10_2, 5.0, 17.0, FACE_DOWN, OBJ_WALUIGI, ANIM_WALK, $00, TEST2_WALUIGI
-	map_actor $0000, ActorScript_10_2, 13.0, 3.0, FACE_DOWN, OBJ_WALK_71_02, ANIM_WALK, $00, TEST2_WALK_71_02_1
-	map_actor $0000, ActorScript_10_2, 13.0, 5.0, FACE_DOWN, OBJ_WALK_71_02, ANIM_WALK, $07, TEST2_WALK_71_02_2
-	map_actor $0000, ActorScript_10_2, 13.0, 7.0, FACE_DOWN, OBJ_WALK_71_03, ANIM_WALK, $00, TEST2_WALK_71_03_1
-	map_actor $0000, ActorScript_10_2, 13.0, 9.0, FACE_DOWN, OBJ_WALK_71_03, ANIM_WALK, $05, TEST2_WALK_71_03_2
-	map_actor $0000, ActorScript_10_2, 13.0, 11.0, FACE_DOWN, OBJ_WALK_71_02, ANIM_WALK, $00, TEST2_WALK_71_02_3
-	map_actor $0000, ActorScript_10_2, 13.0, 13.0, FACE_DOWN, OBJ_WALK_71_02, ANIM_WALK, $07, TEST2_WALK_71_02_4
-	map_actor $0000, ActorScript_10_2, 13.0, 15.0, FACE_DOWN, OBJ_WALK_71_03, ANIM_WALK, $00, TEST2_WALK_71_03_3
-	map_actor $0000, ActorScript_10_2, 13.0, 17.0, FACE_DOWN, OBJ_WALK_71_03, ANIM_WALK, $00, TEST2_WALK_71_03_4
+	map_actor $0000, ActorScript_10_2, 13.0, 3.0, FACE_DOWN, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00, TEST2_RESTAURANT_SERVER_1
+	map_actor $0000, ActorScript_10_2, 13.0, 5.0, FACE_DOWN, OBJ_RESTAURANT_SERVER, ANIM_WALK, $07, TEST2_RESTAURANT_SERVER_2
+	map_actor $0000, ActorScript_10_2, 13.0, 7.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $00, TEST2_STUDENT_LONG_HAIR_1
+	map_actor $0000, ActorScript_10_2, 13.0, 9.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $05, TEST2_STUDENT_LONG_HAIR_2
+	map_actor $0000, ActorScript_10_2, 13.0, 11.0, FACE_DOWN, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00, TEST2_RESTAURANT_SERVER_3
+	map_actor $0000, ActorScript_10_2, 13.0, 13.0, FACE_DOWN, OBJ_RESTAURANT_SERVER, ANIM_WALK, $07, TEST2_RESTAURANT_SERVER_4
+	map_actor $0000, ActorScript_10_2, 13.0, 15.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $00, TEST2_STUDENT_LONG_HAIR_3
+	map_actor $0000, ActorScript_10_2, 13.0, 17.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $00, TEST2_STUDENT_LONG_HAIR_4
 	map_actor_end
 Test2EntryPoints_10:
 	; $4785, 9 bytes (map_entries)
@@ -433,14 +433,14 @@ Test2NpcScripts_10:
 	map_script ACTOR_TEST2_MARIO, FACEMASK_ANY, $0000, Text_33_38, $00, $00
 	map_script ACTOR_TEST2_BOWSER, FACEMASK_ANY, $0000, Text_33_39, $00, $00
 	map_script ACTOR_TEST2_WALUIGI, FACEMASK_ANY, $0000, Text_33_40, $00, $00
-	map_script ACTOR_TEST2_WALK_71_02_1, FACEMASK_ANY, $0000, Test2Npc0B_10, $00, $00
-	map_script ACTOR_TEST2_WALK_71_02_2, FACEMASK_ANY, $0000, Test2Npc0C_10, $00, $00
-	map_script ACTOR_TEST2_WALK_71_03_1, FACEMASK_ANY, $0000, Test2Npc0D_10, $00, $00
-	map_script ACTOR_TEST2_WALK_71_03_2, FACEMASK_ANY, $0000, Test2Npc0E_10, $00, $00
-	map_script ACTOR_TEST2_WALK_71_02_3, FACEMASK_ANY, $0000, Test2Npc0F_10, $00, $00
-	map_script ACTOR_TEST2_WALK_71_02_4, FACEMASK_ANY, $0000, Test2Npc10_10, $00, $00
-	map_script ACTOR_TEST2_WALK_71_03_3, FACEMASK_ANY, $0000, Test2Npc11_10, $00, $00
-	map_script ACTOR_TEST2_WALK_71_03_4, FACEMASK_ANY, $0000, Test2Npc12_10, $00, $00
+	map_script ACTOR_TEST2_RESTAURANT_SERVER_1, FACEMASK_ANY, $0000, Test2Npc0B_10, $00, $00
+	map_script ACTOR_TEST2_RESTAURANT_SERVER_2, FACEMASK_ANY, $0000, Test2Npc0C_10, $00, $00
+	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_1, FACEMASK_ANY, $0000, Test2Npc0D_10, $00, $00
+	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_2, FACEMASK_ANY, $0000, Test2Npc0E_10, $00, $00
+	map_script ACTOR_TEST2_RESTAURANT_SERVER_3, FACEMASK_ANY, $0000, Test2Npc0F_10, $00, $00
+	map_script ACTOR_TEST2_RESTAURANT_SERVER_4, FACEMASK_ANY, $0000, Test2Npc10_10, $00, $00
+	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_3, FACEMASK_ANY, $0000, Test2Npc11_10, $00, $00
+	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_4, FACEMASK_ANY, $0000, Test2Npc12_10, $00, $00
 	db $ff
 Test2FacingScripts_10:
 	; $4b60, 9 bytes (map_scripts)

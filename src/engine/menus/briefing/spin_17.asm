@@ -125,12 +125,12 @@ DrillBriefing_SpinServe:
 	xor a ; $584d
 	ld [wBriefingAnimTimer], a ; $584e
 	ld [wBriefingAnimStep], a ; $5851
-.loop:
+.animFirstCaption:
 	call SpinServeBriefing_TickAnim ; $5854
 	ld c, $00 ; $5857
 	call AdvanceFrameCheckInput ; $5859
 	and a ; $585c
-	jp z, .loop ; $585d
+	jp z, .animFirstCaption ; $585d
 	call ClearFrameTasks ; $5860
 	ld a, $01 ; $5863
 	ld hl, UpdateAnimatedTilesTask_17 ; $5865
@@ -159,12 +159,12 @@ DrillBriefing_SpinServe:
 	xor a ; $58a3
 	ld [wBriefingAnimTimer], a ; $58a4
 	ld [wBriefingAnimStep], a ; $58a7
-.loopB:
+.animSecondCaption:
 	call SpinServeBriefing_TickAnim ; $58aa
 	ld c, $00 ; $58ad
 	call AdvanceFrameCheckInput ; $58af
 	and a ; $58b2
-	jp z, .loopB ; $58b3
+	jp z, .animSecondCaption ; $58b3
 	call ClearFrameTasks ; $58b6
 	ld a, $01 ; $58b9
 	ld hl, UpdateAnimatedTilesTask_17 ; $58bb
@@ -299,12 +299,12 @@ DrillBriefing_SpinServe:
 	xor a ; $5a0a
 	ld [wBriefingAnimTimer], a ; $5a0b
 	ld [wBriefingAnimStep], a ; $5a0e
-.loop2:
+.animSwingCaption:
 	call SpinServeBriefing_TickAnim2 ; $5a11
 	ld c, $00 ; $5a14
 	call AdvanceFrameCheckInput ; $5a16
 	and a ; $5a19
-	jp z, .loop2 ; $5a1a
+	jp z, .animSwingCaption ; $5a1a
 	call ClearFrameTasks ; $5a1d
 	ld a, $01 ; $5a20
 	ld hl, UpdateAnimatedTilesTask_17 ; $5a22
@@ -332,12 +332,12 @@ DrillBriefing_SpinServe:
 	xor a ; $5a5e
 	ld [wBriefingAnimTimer], a ; $5a5f
 	ld [wBriefingAnimStep], a ; $5a62
-.loop3:
+.animLastCaption:
 	call SpinServeBriefing_TickAnim ; $5a65
 	ld c, $01 ; $5a68
 	call AdvanceFrameCheckInput ; $5a6a
 	and a ; $5a6d
-	jp z, .loop3 ; $5a6e
+	jp z, .animLastCaption ; $5a6e
 	call ClearFrameTasks ; $5a71
 	ret ; $5a74
 SpinServeBriefing_TickAnim:

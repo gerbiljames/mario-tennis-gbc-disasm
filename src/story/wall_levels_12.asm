@@ -28,14 +28,14 @@ RelaunchWallPracticeMasterLevel:
 	script_move_player 5.0, 55.0 ; $4a1c
 	script_move_target ACTOR_PLAYER, 5.0, 57.0 ; $4a26
 	script_wait_move ACTOR_PLAYER ; $4a31
-	script_move_target ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 5.0, 55.0 ; $4a36
-	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4a41
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4a46
+	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 5.0, 55.0 ; $4a36
+	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4a41
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_DOWN ; $4a46
 	script_face ACTOR_PLAYER, FACE_UP ; $4a4d
 	script_wait_frames 50 ; $4a54
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4a5b
-	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4a62
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4a67
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $4a5b
+	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4a62
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4a67
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $4a6c
 	jr z, .done ; $4a6f
@@ -89,28 +89,28 @@ WallPracticeLevelResultScript:
 	ld l, a ; $4afe
 	farcall InitDialogueTextCursor ; $4aff
 .speak:
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4b02
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4b02
 	farcall RunDialogueYesNoPrompt ; $4b07
 	farcall ScriptCloseDialogueWindow ; $4b0a
 	script_wait_frames 5 ; $4b0d
 	and a ; $4b14
 	jp nz, WallPracticeExitCourtScript ; $4b15
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4b18
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4b1f
-	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4b26
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $4b18
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $4b1f
+	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4b26
 	jp LaunchWallPracticeMinigame ; $4b2b
 WallPracticeExitCourtScript:
 	script_set_text Text_35_251 ; $4b2e
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4b34
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4b34
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4b39
 	script_move_target ACTOR_PLAYER, 5.0, 49.0 ; $4b41
 	script_wait_move ACTOR_PLAYER ; $4b4c
 	script_move_player 5.0, 55.0 ; $4b51
 	script_move_target ACTOR_PLAYER, 5.0, 57.0 ; $4b5b
 	script_wait_move ACTOR_PLAYER ; $4b66
-	script_move_target ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 5.0, 55.0 ; $4b6b
-	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4b76
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4b7b
+	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 5.0, 55.0 ; $4b6b
+	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4b76
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_DOWN ; $4b7b
 	test_flag FLAG_DOUBLES ; $4b82
 	jr z, .done ; $4b85
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4b87
@@ -151,18 +151,18 @@ WallPracticeLevelResultScript.variant4:
 	script_fade_in 6 ; $4bf4
 	call WaitFadeEnd ; $4bf9
 WallPracticeLevelResultScript.speakAndLeave:
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4bfc
-	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c03
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c08
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $4bfc
+	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4c03
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4c08
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4c0d
 	script_move_target ACTOR_PLAYER, 5.0, 49.0 ; $4c15
 	script_wait_move ACTOR_PLAYER ; $4c20
 	script_move_player 5.0, 55.0 ; $4c25
 	script_move_target ACTOR_PLAYER, 5.0, 57.0 ; $4c2f
 	script_wait_move ACTOR_PLAYER ; $4c3a
-	script_move_target ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 5.0, 55.0 ; $4c3f
-	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4c4a
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4c4f
+	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 5.0, 55.0 ; $4c3f
+	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4c4a
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_DOWN ; $4c4f
 	test_flag FLAG_DOUBLES ; $4c56
 	jr z, WallPracticeLevelResultScript.wait ; $4c59
 	script_wait_frames 30 ; $4c5b
@@ -192,9 +192,9 @@ WallPracticeRoomTileTriggers_12:
 WallPracticeRoomTile02_12:
 	script_move_target ACTOR_PLAYER, 5.0, 57.0 ; $4ce9
 	script_wait_move ACTOR_PLAYER ; $4cf4
-	script_move_target ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 5.0, 55.0 ; $4cf9
-	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4d04
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $4d09
+	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 5.0, 55.0 ; $4cf9
+	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4d04
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_DOWN ; $4d09
 	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $4d10
 	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4d13
 	test_flag FLAG_DOUBLES ; $4d16
@@ -204,14 +204,14 @@ WallPracticeRoomTile02_12:
 	ret ; $4d28
 WallPracticeRoomTile03_12:
 	script_set_text Text_36_48 ; $4d29
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4d2f
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4d2f
 	farcall RunDialogueYesNoPrompt ; $4d34
 	farcall ScriptCloseDialogueWindow ; $4d37
 	script_wait_frames 5 ; $4d3a
 	and a ; $4d41
 	jr nz, .done ; $4d42
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4d44
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4d4b
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $4d44
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $4d4b
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4d52
 	script_move_target ACTOR_PLAYER, 3.0, 49.0 ; $4d5a
 	script_wait_move ACTOR_PLAYER ; $4d65
@@ -234,14 +234,14 @@ WallPracticeRoomTile04_12:
 	ap_has ITEM_WALL_PRACTICE, 1
 	jp z, WallPracticeLevelLockedScript ; $4d9b
 	script_set_text Text_36_49 ; $4d9e
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4da4
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4da4
 	farcall RunDialogueYesNoPrompt ; $4da9
 	farcall ScriptCloseDialogueWindow ; $4dac
 	script_wait_frames 5 ; $4daf
 	and a ; $4db6
 	jr nz, .done ; $4db7
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4db9
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4dc0
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $4db9
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $4dc0
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4dc7
 	script_move_target ACTOR_PLAYER, 7.0, 49.0 ; $4dcf
 	script_wait_move ACTOR_PLAYER ; $4dda
@@ -264,14 +264,14 @@ WallPracticeRoomTile05_12:
 	ap_has ITEM_WALL_PRACTICE, 2
 	jp z, WallPracticeLevelLockedScript ; $4e10
 	script_set_text Text_36_50 ; $4e13
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4e19
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4e19
 	farcall RunDialogueYesNoPrompt ; $4e1e
 	farcall ScriptCloseDialogueWindow ; $4e21
 	script_wait_frames 5 ; $4e24
 	and a ; $4e2b
 	jr nz, .done ; $4e2c
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4e2e
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4e35
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $4e2e
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $4e35
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4e3c
 	script_move_target ACTOR_PLAYER, 17.0, 49.0 ; $4e44
 	script_wait_move ACTOR_PLAYER ; $4e4f
@@ -294,14 +294,14 @@ WallPracticeRoomTile06_12:
 	ap_has ITEM_WALL_PRACTICE, 3
 	jp z, WallPracticeLevelLockedScript ; $4e85
 	script_set_text Text_36_51 ; $4e88
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4e8e
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4e8e
 	farcall RunDialogueYesNoPrompt ; $4e93
 	farcall ScriptCloseDialogueWindow ; $4e96
 	script_wait_frames 5 ; $4e99
 	and a ; $4ea0
 	jr nz, .done ; $4ea1
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $4ea3
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $4eaa
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $4ea3
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $4eaa
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4eb1
 	script_move_target ACTOR_PLAYER, 21.0, 49.0 ; $4eb9
 	script_wait_move ACTOR_PLAYER ; $4ec4
@@ -322,7 +322,7 @@ WallPracticeRoomTile06_12:
 	ret ; $4ef6
 WallPracticeLevelLockedScript:
 	script_set_text Text_36_52 ; $4ef7
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4efd
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4efd
 	ret ; $4f02
 WallPracticeRoomInitScript_12:
 	farcall WaitPlayerMoveDone ; $4f03
@@ -353,8 +353,8 @@ WallPracticeRoomInitScript_12:
 	script_set_position ACTOR_PARTNER, 7.0, 57.0 ; $4f43
 	script_face ACTOR_PARTNER, FACE_UP ; $4f4e
 .placeNpc:
-	script_set_position ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 3.0, 55.0 ; $4f55
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_RIGHT ; $4f60
+	script_set_position ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 3.0, 55.0 ; $4f55
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_RIGHT ; $4f60
 	ld a, [wMatchExitRequest] ; $4f67
 	cp $01 ; $4f6a
 	jp nz, .showResult ; $4f6c
@@ -377,8 +377,8 @@ WallPracticeRoomInitScript_12:
 	script_face ACTOR_PARTNER, FACE_UP ; $4f9f
 .reentryPlaceNpc:
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $4fa6
-	script_set_position ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 3.0, 55.0 ; $4fa9
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_RIGHT ; $4fb4
+	script_set_position ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 3.0, 55.0 ; $4fa9
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_RIGHT ; $4fb4
 	script_fade_in 6 ; $4fbb
 	call WaitFadeEnd ; $4fc0
 	xor a ; $4fc3
@@ -390,7 +390,7 @@ WallPracticeRoomInitScript_12:
 	cp WINLOSE_WIN ; $4fd2
 	jr nz, .checkSession ; $4fd4
 	script_set_text Text_36_53 ; $4fd6
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $4fdc
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4fdc
 	farcall RunDialogueYesNoPrompt ; $4fe1
 	farcall ScriptCloseDialogueWindow ; $4fe4
 	script_wait_frames 5 ; $4fe7
@@ -413,16 +413,16 @@ WallPracticeRoomInitScript_12:
 	ld l, a ; $5011
 	farcall InitDialogueTextCursor ; $5012
 .normalEntry:
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5015
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5015
 	farcall RunDialogueYesNoPrompt ; $501a
 	farcall ScriptCloseDialogueWindow ; $501d
 	script_wait_frames 5 ; $5020
 	and a ; $5027
 	jp nz, .done ; $5028
 .placeActors:
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $502b
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $5032
-	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5039
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $502b
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $5032
+	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5039
 	script_fade_out 4 ; $503e
 	call WaitFadeEnd ; $5043
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5046
@@ -467,7 +467,7 @@ WallPracticeRoomNpc07_12:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $50cc
 	jr z, .scoreLine ; $50cf
 	script_set_text Text_35_264 ; $50d1
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $50d7
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $50d7
 	ret ; $50dc
 .scoreLine:
 	ld a, [wMapSceneStage] ; $50dd
@@ -490,7 +490,7 @@ WallPracticeRoomNpc07_12:
 	pop_wram_bank ; $5109
 	farcall PushTextArgNumber ; $510e
 .prompt:
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5111
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5111
 	farcall RunDialogueYesNoPrompt ; $5116
 	farcall ScriptCloseDialogueWindow ; $5119
 	script_wait_frames 5 ; $511c
@@ -503,7 +503,7 @@ WallPracticeRoomNpc07_12:
 	ld h, [hl] ; $5133
 	ld l, a ; $5134
 	farcall InitDialogueTextCursor ; $5135
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5138
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5138
 	farcall RunDialogueYesNoPrompt ; $513d
 	farcall ScriptCloseDialogueWindow ; $5140
 	script_wait_frames 5 ; $5143
@@ -512,10 +512,10 @@ WallPracticeRoomNpc07_12:
 	ld a, [wMapSceneStage] ; $514e
 	and a ; $5151
 	jp z, .speakDeclined ; $5152
-	script_move_target ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 3.0, 55.0 ; $5155
-	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $5160
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_RIGHT ; $5165
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $516c
+	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 3.0, 55.0 ; $5155
+	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5160
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_RIGHT ; $5165
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $516c
 	test_flag FLAG_DOUBLES ; $5171
 	jr z, .walkToCourt ; $5174
 	script_null_script ACTOR_PARTNER ; $5176
@@ -532,15 +532,15 @@ WallPracticeRoomNpc07_12:
 .declined:
 	farcall AdvanceDialogueTextCursor ; $51b1
 .speakDeclined:
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $51b4
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51b4
 	ret ; $51b9
 .doublesDeclined:
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_NOD ; $51ba
-	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $51c1
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $51c6
-	script_move_target ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 3.0, 55.0 ; $51cb
-	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $51d6
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_RIGHT ; $51db
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_NOD ; $51ba
+	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51c1
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51c6
+	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 3.0, 55.0 ; $51cb
+	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51d6
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_RIGHT ; $51db
 	test_flag FLAG_DOUBLES ; $51e2
 	jr z, .done ; $51e5
 	script_wait_frames 20 ; $51e7
@@ -559,8 +559,8 @@ WallPracticeRoomNpc07_12:
 	script_wait_move ACTOR_PLAYER ; $523f
 	script_move_target ACTOR_PLAYER, 5.0, 49.0 ; $5244
 	script_wait_move ACTOR_PLAYER ; $524f
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $5254
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $525b
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $5254
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $525b
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $5262
 	jp LaunchWallPracticeMinigame ; $526d
 	ret ; $5270
@@ -619,8 +619,8 @@ RestoreWallPracticeRoomActors:
 	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $52c0
 	jr z, .done ; $52c3
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $52c5
-	script_set_position ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 3.0, 55.0 ; $52c8
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_RIGHT ; $52d3
+	script_set_position ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 3.0, 55.0 ; $52c8
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_RIGHT ; $52d3
 	test_flag FLAG_DOUBLES ; $52da
 	jr z, .done ; $52dd
 	script_null_script ACTOR_PARTNER ; $52df

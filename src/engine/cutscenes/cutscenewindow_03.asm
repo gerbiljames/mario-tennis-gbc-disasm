@@ -301,23 +301,23 @@ ScrollCutsceneTextWindow:
 	ld b, a ; $7468
 	ld d, $00 ; $7469
 	ld c, $00 ; $746b
-.loop:
+.scrollRowLoop:
 	call AdvanceFrame ; $746d
 	ld e, $14 ; $7470
-.loopB:
+.blitLoop:
 	call BlitCutsceneTextWindow ; $7472
 	inc c ; $7475
 	dec e ; $7476
-	jr nz, .loopB ; $7477
+	jr nz, .blitLoop ; $7477
 	ld e, $ff ; $7479
-.loop2:
+.pauseLoop:
 	call AdvanceFrame ; $747b
 	dec e ; $747e
-	jr nz, .loop2 ; $747f
+	jr nz, .pauseLoop ; $747f
 	inc d ; $7481
 	ld a, d ; $7482
 	cp b ; $7483
-	jr nz, .loop ; $7484
+	jr nz, .scrollRowLoop ; $7484
 	pop_wram_bank ; $7486
 	pop hl ; $748b
 	pop de ; $748c

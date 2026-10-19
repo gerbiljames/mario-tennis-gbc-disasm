@@ -322,9 +322,9 @@ MinigameSelectCursorSpriteTask:
 	ld hl, MinigameSelectCursorSpriteTaskTable1 ; $6476
 	add l ; $6479
 	ld l, a ; $647a
-	jr nc, .read ; $647b
+	jr nc, .readTile ; $647b
 	inc h ; $647d
-.read:
+.readTile:
 	ld c, [hl] ; $647e
 	pop af ; $647f
 	push af ; $6480
@@ -332,9 +332,9 @@ MinigameSelectCursorSpriteTask:
 	add a ; $6484
 	add l ; $6485
 	ld l, a ; $6486
-	jr nc, .readB ; $6487
+	jr nc, .readPosition ; $6487
 	inc h ; $6489
-.readB:
+.readPosition:
 	ld a, [hl+] ; $648a
 	ld d, [hl] ; $648b
 	ld e, a ; $648c
@@ -343,9 +343,9 @@ MinigameSelectCursorSpriteTask:
 	ld hl, MinigameSelectCursorSpriteTaskTable0 ; $6491
 	add l ; $6494
 	ld l, a ; $6495
-	jr nc, .read2 ; $6496
+	jr nc, .readAttr ; $6496
 	inc h ; $6498
-.read2:
+.readAttr:
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
 	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate0 ; $649d

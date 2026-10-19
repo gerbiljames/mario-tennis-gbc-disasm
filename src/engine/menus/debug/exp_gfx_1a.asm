@@ -135,13 +135,13 @@ Unused_1a_RunCharViewerSelectGrid:
 	call AdvanceFrame ; $68ee
 	ldh a, [hInputPressed] ; $68f1
 	bit PADB_UP, a ; $68f3
-	jr nz, .checkDebugCharViewerIndex ; $68f5
+	jr nz, .moveUp ; $68f5
 	bit PADB_DOWN, a ; $68f7
-	jr nz, .checkDebugCharViewerIndex2 ; $68f9
+	jr nz, .moveDown ; $68f9
 	bit PADB_LEFT, a ; $68fb
-	jr nz, .checkDebugCharViewerIndex3 ; $68fd
+	jr nz, .moveLeft ; $68fd
 	bit PADB_RIGHT, a ; $68ff
-	jr nz, .checkDebugCharViewerIndex5 ; $6901
+	jr nz, .moveRight ; $6901
 	bit PADB_A, a ; $6903
 	jp nz, .pressedA ; $6905
 	bit PADB_B, a ; $6908
@@ -151,77 +151,77 @@ Unused_1a_RunCharViewerSelectGrid:
 	call WaitFadeEnd ; $6914
 	call DisableLCDSafely ; $6917
 	ret ; $691a
-.checkDebugCharViewerIndex:
+.moveUp:
 	ld a, [wDebugCharViewerIndex] ; $691b
 	dec a ; $691e
 	cp $ff ; $691f
 	jr z, .wrapUpLeftColumn ; $6921
 	cp $07 ; $6923
-	jr nz, .store ; $6925
+	jr nz, .storeUp ; $6925
 	ld a, $0f ; $6927
-	jr .store ; $6929
+	jr .storeUp ; $6929
 .wrapUpLeftColumn:
 	ld a, $07 ; $692b
-.store:
+.storeUp:
 	ld [wDebugCharViewerIndex], a ; $692d
 	sound SFX_MENU_MOVE ; $6930
 	jr .loop ; $6932
-.checkDebugCharViewerIndex2:
+.moveDown:
 	ld a, [wDebugCharViewerIndex] ; $6934
 	inc a ; $6937
 	cp $08 ; $6938
 	jr z, .wrapDownLeftColumn ; $693a
 	cp $10 ; $693c
-	jr nz, .store2 ; $693e
+	jr nz, .storeDown ; $693e
 	ld a, $08 ; $6940
-	jr .store2 ; $6942
+	jr .storeDown ; $6942
 .wrapDownLeftColumn:
 	xor a ; $6944
-.store2:
+.storeDown:
 	ld [wDebugCharViewerIndex], a ; $6945
 	sound SFX_MENU_MOVE ; $6948
 	jr .loop ; $694a
-.checkDebugCharViewerIndex3:
+.moveLeft:
 	ld a, [wDebugCharViewerIndex] ; $694c
 	sub $08 ; $694f
-	jr nc, .store3 ; $6951
+	jr nc, .storeLeft ; $6951
 	add $10 ; $6953
 	ld [wDebugCharViewerIndex], a ; $6955
 	ld a, [wDebugCharViewerPage] ; $6958
 	or a ; $695b
-	jr z, .checkDebugCharViewerIndex4 ; $695c
+	jr z, .leftAtFirstPage ; $695c
 	dec a ; $695e
 	ld [wDebugCharViewerPage], a ; $695f
 	sound SFX_MENU_MOVE ; $6962
 	jr .loadCharViewerGridTilemap ; $6964
-.store3:
+.storeLeft:
 	ld [wDebugCharViewerIndex], a ; $6966
 	sound SFX_MENU_MOVE ; $6969
 	jp .loop ; $696b
-.checkDebugCharViewerIndex4:
+.leftAtFirstPage:
 	ld a, [wDebugCharViewerIndex] ; $696e
 	sub $08 ; $6971
 	ld [wDebugCharViewerIndex], a ; $6973
 	jp .loop ; $6976
-.checkDebugCharViewerIndex5:
+.moveRight:
 	ld a, [wDebugCharViewerIndex] ; $6979
 	add $08 ; $697c
 	cp $10 ; $697e
-	jr c, .store4 ; $6980
+	jr c, .storeRight ; $6980
 	sub $10 ; $6982
 	ld [wDebugCharViewerIndex], a ; $6984
 	ld a, [wDebugCharViewerPage] ; $6987
 	cp $01 ; $698a
-	jr z, .checkDebugCharViewerIndex6 ; $698c
+	jr z, .rightAtLastPage ; $698c
 	inc a ; $698e
 	ld [wDebugCharViewerPage], a ; $698f
 	sound SFX_MENU_MOVE ; $6992
 	jr .loadCharViewerGridTilemap ; $6994
-.store4:
+.storeRight:
 	ld [wDebugCharViewerIndex], a ; $6996
 	sound SFX_MENU_MOVE ; $6999
 	jp .loop ; $699b
-.checkDebugCharViewerIndex6:
+.rightAtLastPage:
 	ld a, [wDebugCharViewerIndex] ; $699e
 	add $08 ; $69a1
 	ld [wDebugCharViewerIndex], a ; $69a3

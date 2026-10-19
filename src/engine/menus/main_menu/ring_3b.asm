@@ -238,15 +238,15 @@ CountConsecutiveSetBits:
 ScrollRingShotCursor:
 	ld a, [wMenuInputPressed] ; $53c6
 	bit PADB_RIGHT, a ; $53c9
-	jr nz, .checkMenuCursorX ; $53cb
+	jr nz, .moveRight ; $53cb
 	bit PADB_LEFT, a ; $53cd
-	jr nz, .checkMenuCursorX2 ; $53cf
+	jr nz, .moveLeft ; $53cf
 	bit PADB_UP, a ; $53d1
-	jr nz, .checkMenuCursorY ; $53d3
+	jr nz, .moveUp ; $53d3
 	bit PADB_DOWN, a ; $53d5
-	jr nz, .checkMenuCursorY2 ; $53d7
+	jr nz, .moveDown ; $53d7
 	ret ; $53d9
-.checkMenuCursorX:
+.moveRight:
 	ld a, [wMenuCursorX] ; $53da
 	cp $03 ; $53dd
 	jr z, .done ; $53df
@@ -254,7 +254,7 @@ ScrollRingShotCursor:
 	ld [wMenuCursorX], a ; $53e2
 	call RedrawRingShotWindow ; $53e5
 	jr .done ; $53e8
-.checkMenuCursorX2:
+.moveLeft:
 	ld a, [wMenuCursorX] ; $53ea
 	or a ; $53ed
 	jr z, .done ; $53ee
@@ -262,7 +262,7 @@ ScrollRingShotCursor:
 	ld [wMenuCursorX], a ; $53f1
 	call RedrawRingShotWindow ; $53f4
 	jr .done ; $53f7
-.checkMenuCursorY:
+.moveUp:
 	ld a, [wMenuCursorY] ; $53f9
 	or a ; $53fc
 	jr z, .done ; $53fd
@@ -270,7 +270,7 @@ ScrollRingShotCursor:
 	ld [wMenuCursorY], a ; $5400
 	call RedrawRingShotWindow ; $5403
 	jr .done ; $5406
-.checkMenuCursorY2:
+.moveDown:
 	ld a, [wMenuCursorY] ; $5408
 	cp $0b ; $540b
 	jr z, .done ; $540d
@@ -337,7 +337,7 @@ RingShotScrollArrowsTask:
 	push_wram_bank WRAM_SCREEN ; $5491
 	ld a, [wMenuCursorX] ; $549a
 	cp $03 ; $549d
-	jr z, .checkMenuCursorX ; $549f
+	jr z, .checkLeftArrow ; $549f
 	ld_xy de, $78, $12 ; $54a1
 	ld c, $01 ; $54a4
 	call ApplyCursorBounceX ; $54a6
@@ -345,10 +345,10 @@ RingShotScrollArrowsTask:
 	ld c, $00 ; $54ab
 	ld h, $00 ; $54ad
 	farcall QueueStackedSpritePair ; $54af
-.checkMenuCursorX:
+.checkLeftArrow:
 	ld a, [wMenuCursorX] ; $54b2
 	or a ; $54b5
-	jr z, .checkMenuCursorY ; $54b6
+	jr z, .checkUpArrow ; $54b6
 	ld_xy de, $23, $12 ; $54b8
 	ld c, $00 ; $54bb
 	call ApplyCursorBounceX ; $54bd
@@ -356,10 +356,10 @@ RingShotScrollArrowsTask:
 	ld c, $00 ; $54c2
 	ld h, $01 ; $54c4
 	farcall QueueStackedSpritePair ; $54c6
-.checkMenuCursorY:
+.checkUpArrow:
 	ld a, [wMenuCursorY] ; $54c9
 	or a ; $54cc
-	jr z, .checkMenuCursorY2 ; $54cd
+	jr z, .checkDownArrow ; $54cd
 	ld_xy de, $0c, $26 ; $54cf
 	ld c, $01 ; $54d2
 	call ApplyCursorBounceY ; $54d4
@@ -367,7 +367,7 @@ RingShotScrollArrowsTask:
 	ld c, $00 ; $54d9
 	ld h, $02 ; $54db
 	farcall QueueStackedSpritePair ; $54dd
-.checkMenuCursorY2:
+.checkDownArrow:
 	ld a, [wMenuCursorY] ; $54e0
 	cp $0b ; $54e3
 	jr z, .restore ; $54e5

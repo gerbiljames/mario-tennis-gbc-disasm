@@ -217,7 +217,7 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	ld a, [wMenuCursorLockFlags] ; $4241
 	and $01 ; $4244
 	ld a, h ; $4246
-	jr nz, .checkMenuCursorLockFlags2 ; $4247
+	jr nz, .checkA ; $4247
 	bit 4, a ; $4249
 	jr z, .checkLeft ; $424b
 	ld a, [wMenuCursorX] ; $424d
@@ -273,7 +273,7 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	jr .checkMoved ; $4292
 .checkDown:
 	bit 7, a ; $4294
-	jr z, .checkMenuCursorLockFlags2 ; $4296
+	jr z, .checkA ; $4296
 	ld a, [wMenuCursorY] ; $4298
 	inc a ; $429b
 	add a ; $429c
@@ -289,7 +289,7 @@ Unused_3b_MoveMenuCursorLinkLocal:
 .storeY2:
 	ld [wMenuCursorY], a ; $42a8
 	jr .checkMoved ; $42ab
-.checkMenuCursorLockFlags2:
+.checkA:
 	bit 0, a ; $42ad
 	jr z, .checkB ; $42af
 	sound SFX_MENU_SELECT ; $42b1
@@ -310,13 +310,13 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	ld b, a ; $42ce
 	and $03 ; $42cf
 	ld a, b ; $42d1
-	jr nz, .storeMenuCursorLockFlags ; $42d2
+	jr nz, .unlock ; $42d2
 	and $fa ; $42d4
 	or $04 ; $42d6
-	jr .store5 ; $42d8
-.storeMenuCursorLockFlags:
+	jr .storeLockFlags ; $42d8
+.unlock:
 	and $fe ; $42da
-.store5:
+.storeLockFlags:
 	ld [wMenuCursorLockFlags], a ; $42dc
 .checkMoved:
 	ld a, [wMenuCursorX] ; $42df
@@ -351,7 +351,7 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	ld a, [wMenuCursorLockFlags] ; $430c
 	and $02 ; $430f
 	ld a, h ; $4311
-	jr nz, .checkMenuCursorLockFlags2 ; $4312
+	jr nz, .checkA ; $4312
 	bit 4, a ; $4314
 	jr z, .checkLeft ; $4316
 	ld a, [wMenuCursor2X] ; $4318
@@ -360,13 +360,13 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	jr nc, .checkMaxRight ; $431d
 	ld a, b ; $431f
 	dec a ; $4320
-	jr .store ; $4321
+	jr .storeRight ; $4321
 .checkMaxRight:
 	rra ; $4323
 	cp b ; $4324
-	jr c, .store ; $4325
+	jr c, .storeRight ; $4325
 	xor a ; $4327
-.store:
+.storeRight:
 	ld [wMenuCursor2X], a ; $4328
 	jr .checkMenuCursor2X ; $432b
 .checkLeft:
@@ -378,13 +378,13 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	jr nc, .checkMaxLeft ; $4336
 	ld a, b ; $4338
 	dec a ; $4339
-	jr .store2 ; $433a
+	jr .storeLeft ; $433a
 .checkMaxLeft:
 	rra ; $433c
 	cp b ; $433d
-	jr c, .store2 ; $433e
+	jr c, .storeLeft ; $433e
 	xor a ; $4340
-.store2:
+.storeLeft:
 	ld [wMenuCursor2X], a ; $4341
 	jr .checkMenuCursor2X ; $4344
 .checkUp:
@@ -396,34 +396,34 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	jr nc, .checkMaxUp ; $434f
 	ld a, c ; $4351
 	dec a ; $4352
-	jr .store3 ; $4353
+	jr .storeUp ; $4353
 .checkMaxUp:
 	rra ; $4355
 	cp c ; $4356
-	jr c, .store3 ; $4357
+	jr c, .storeUp ; $4357
 	xor a ; $4359
-.store3:
+.storeUp:
 	ld [wMenuCursor2Y], a ; $435a
 	jr .checkMenuCursor2X ; $435d
 .checkDown:
 	bit 7, a ; $435f
-	jr z, .checkMenuCursorLockFlags2 ; $4361
+	jr z, .checkA ; $4361
 	ld a, [wMenuCursor2Y] ; $4363
 	inc a ; $4366
 	add a ; $4367
 	jr nc, .checkMaxDown ; $4368
 	ld a, c ; $436a
 	dec a ; $436b
-	jr .store4 ; $436c
+	jr .storeDown ; $436c
 .checkMaxDown:
 	rra ; $436e
 	cp c ; $436f
-	jr c, .store4 ; $4370
+	jr c, .storeDown ; $4370
 	xor a ; $4372
-.store4:
+.storeDown:
 	ld [wMenuCursor2Y], a ; $4373
 	jr .checkMenuCursor2X ; $4376
-.checkMenuCursorLockFlags2:
+.checkA:
 	bit 0, a ; $4378
 	jr z, .checkB ; $437a
 	ld a, [wMenuCursorLockFlags] ; $437c
@@ -443,13 +443,13 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	ld b, a ; $4397
 	and $03 ; $4398
 	ld a, b ; $439a
-	jr nz, .storeMenuCursorLockFlags ; $439b
+	jr nz, .unlock ; $439b
 	and $f5 ; $439d
 	or $08 ; $439f
-	jr .store5 ; $43a1
-.storeMenuCursorLockFlags:
+	jr .storeLockFlags ; $43a1
+.unlock:
 	and $fd ; $43a3
-.store5:
+.storeLockFlags:
 	ld [wMenuCursorLockFlags], a ; $43a5
 .checkMenuCursor2X:
 	ld a, [wMenuCursor2X] ; $43a8

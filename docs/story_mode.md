@@ -230,7 +230,7 @@ Slots are fixed (`include/constants/`): `$00` `ACTOR_PLAYER`, `$01`
 
 A row keeps its slot whatever its condition, so row order is the slot map.
 Each `map_actor` row ends in a name, and the macro defines `ACTOR_<name>` as
-`3 + row` (`ACTOR_MARIO_WORLD_PEACH`, `ACTOR_TRAINING_GYM_WALK_72_04_1`):
+`3 + row` (`ACTOR_MARIO_WORLD_PEACH`, `ACTOR_TRAINING_GYM_STUDENT_BLACK_HAIR_BOY_1`):
 location plus object (`OBJ_*` without the prefix), numbered when a list holds
 the same object twice. Scripts use these names, so inserting or reordering
 rows renumbers every reference.

@@ -135,124 +135,124 @@ Unused_38_MoveMenuCursor2GridRemote:
 	call LinkErrorReset ; $42e2
 .asMaster:
 	ldh a, [hLinkRemoteInput] ; $42e5
-	jr .haveInput2 ; $42e7
+	jr .haveInput ; $42e7
 .asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $42e9
-.haveInput2:
+.haveInput:
 	ld h, a ; $42eb
 	ld a, [wMenuCursorLockFlags] ; $42ec
 	and $02 ; $42ef
 	ld a, h ; $42f1
-	jr nz, .checkLock2 ; $42f2
+	jr nz, .checkLock ; $42f2
 	bit 4, a ; $42f4
-	jr z, .checkLeft2 ; $42f6
+	jr z, .checkLeft ; $42f6
 	ld a, [wMenuCursor2X] ; $42f8
 	inc a ; $42fb
 	add a ; $42fc
-	jr nc, .wrapRight2 ; $42fd
+	jr nc, .wrapRight ; $42fd
 	ld a, b ; $42ff
 	dec a ; $4300
-	jr .storeRight2 ; $4301
-.wrapRight2:
+	jr .storeRight ; $4301
+.wrapRight:
 	rra ; $4303
 	cp b ; $4304
-	jr c, .storeRight2 ; $4305
+	jr c, .storeRight ; $4305
 	xor a ; $4307
-.storeRight2:
+.storeRight:
 	ld [wMenuCursor2X], a ; $4308
-	jr .compare2 ; $430b
-.checkLeft2:
+	jr .compare ; $430b
+.checkLeft:
 	bit 5, a ; $430d
-	jr z, .checkUp2 ; $430f
+	jr z, .checkUp ; $430f
 	ld a, [wMenuCursor2X] ; $4311
 	dec a ; $4314
 	add a ; $4315
-	jr nc, .wrapLeft2 ; $4316
+	jr nc, .wrapLeft ; $4316
 	ld a, b ; $4318
 	dec a ; $4319
-	jr .storeLeft2 ; $431a
-.wrapLeft2:
+	jr .storeLeft ; $431a
+.wrapLeft:
 	rra ; $431c
 	cp b ; $431d
-	jr c, .storeLeft2 ; $431e
+	jr c, .storeLeft ; $431e
 	xor a ; $4320
-.storeLeft2:
+.storeLeft:
 	ld [wMenuCursor2X], a ; $4321
-	jr .compare2 ; $4324
-.checkUp2:
+	jr .compare ; $4324
+.checkUp:
 	bit 6, a ; $4326
-	jr z, .checkDown2 ; $4328
+	jr z, .checkDown ; $4328
 	ld a, [wMenuCursor2Y] ; $432a
 	dec a ; $432d
 	add a ; $432e
-	jr nc, .wrapUp2 ; $432f
+	jr nc, .wrapUp ; $432f
 	ld a, c ; $4331
 	dec a ; $4332
-	jr .storeUp2 ; $4333
-.wrapUp2:
+	jr .storeUp ; $4333
+.wrapUp:
 	rra ; $4335
 	cp c ; $4336
-	jr c, .storeUp2 ; $4337
+	jr c, .storeUp ; $4337
 	xor a ; $4339
-.storeUp2:
+.storeUp:
 	ld [wMenuCursor2Y], a ; $433a
-	jr .compare2 ; $433d
-.checkDown2:
+	jr .compare ; $433d
+.checkDown:
 	bit 7, a ; $433f
-	jr z, .checkLock2 ; $4341
+	jr z, .checkLock ; $4341
 	ld a, [wMenuCursor2Y] ; $4343
 	inc a ; $4346
 	add a ; $4347
-	jr nc, .wrapDown2 ; $4348
+	jr nc, .wrapDown ; $4348
 	ld a, c ; $434a
 	dec a ; $434b
-	jr .storeDown2 ; $434c
-.wrapDown2:
+	jr .storeDown ; $434c
+.wrapDown:
 	rra ; $434e
 	cp c ; $434f
-	jr c, .storeDown2 ; $4350
+	jr c, .storeDown ; $4350
 	xor a ; $4352
-.storeDown2:
+.storeDown:
 	ld [wMenuCursor2Y], a ; $4353
-	jr .compare2 ; $4356
-.checkLock2:
+	jr .compare ; $4356
+.checkLock:
 	bit 0, a ; $4358
-	jr z, .checkUnlock2 ; $435a
+	jr z, .checkUnlock ; $435a
 	ld a, [wMenuCursorLockFlags] ; $435c
 	ld b, a ; $435f
 	and $02 ; $4360
-	jr nz, .compare2 ; $4362
+	jr nz, .compare ; $4362
 	sound SFX_MENU_SELECT ; $4364
 	ld a, b ; $4366
 	or $02 ; $4367
 	ld [wMenuCursorLockFlags], a ; $4369
-	jr .compare2 ; $436c
-.checkUnlock2:
+	jr .compare ; $436c
+.checkUnlock:
 	bit 1, a ; $436e
-	jr z, .compare2 ; $4370
+	jr z, .compare ; $4370
 	sound SFX_MENU_CANCEL ; $4372
 	ld a, [wMenuCursorLockFlags] ; $4374
 	ld b, a ; $4377
 	and $03 ; $4378
 	ld a, b ; $437a
-	jr nz, .clearLock2 ; $437b
+	jr nz, .clearLock ; $437b
 	and $f5 ; $437d
 	or $08 ; $437f
-	jr .storeLock2 ; $4381
-.clearLock2:
+	jr .storeLock ; $4381
+.clearLock:
 	and $fd ; $4383
-.storeLock2:
+.storeLock:
 	ld [wMenuCursorLockFlags], a ; $4385
-.compare2:
+.compare:
 	ld a, [wMenuCursor2X] ; $4388
 	cp d ; $438b
-	jr nz, .moved2 ; $438c
+	jr nz, .moved ; $438c
 	ld a, [wMenuCursor2Y] ; $438e
 	cp e ; $4391
-	jr nz, .moved2 ; $4392
+	jr nz, .moved ; $4392
 	xor a ; $4394
 	ret ; $4395
-.moved2:
+.moved:
 	ld a, $01 ; $4396
 	ret ; $4398
 	twin_in get_menu_cursor_index, GetMenuCursorIndex_38, 38 ; $4399 GetMenuCursorIndex_38

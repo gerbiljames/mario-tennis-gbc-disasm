@@ -571,7 +571,7 @@ ServiceMatch2JudgePoint:
 	rst Rst00 ; $4b65
 	dw ServiceMatch2JudgePoint.result0 ; $4b66 jumptable
 	dw ServiceMatch2Cases1 ; $4b68 jumptable
-	dw ServiceMatch2Cases1.checkBallHasBouncedFlag2 ; $4b6a jumptable
+	dw ServiceMatch2Cases1.returnZero ; $4b6a jumptable
 	dw ServiceMatch2Cases1.checkBallHasBouncedFlag ; $4b6c jumptable
 .result0:
 	ld a, [wPointOutcome] ; $4b6e
@@ -600,7 +600,7 @@ ServiceMatch2JudgePointMessages:
 ServiceMatch2Cases1:
 	xor a ; $4b97
 	ret ; $4b98
-.checkBallHasBouncedFlag2:
+.returnZero:
 	xor a ; $4b99
 	ret ; $4b9a
 .checkBallHasBouncedFlag:

@@ -431,7 +431,7 @@ Unused_3b_SlideMenuPanel_2:
 	or a ; $69ac
 	jr z, .slideBack ; $69ad
 	ld c, $00 ; $69af
-.loop2:
+.slideForwardLoop:
 	call AdvanceFrame ; $69b1
 	ld b, $07 ; $69b4
 	farcall RestoreMenuBgAndDrawPanel ; $69b6
@@ -441,11 +441,11 @@ Unused_3b_SlideMenuPanel_2:
 	inc a ; $69bf
 	ld c, a ; $69c0
 	cp $0d ; $69c1
-	jr nz, .loop2 ; $69c3
+	jr nz, .slideForwardLoop ; $69c3
 	ret ; $69c5
 .slideBack:
 	ld c, $0c ; $69c6
-.loop3:
+.slideBackLoop:
 	call AdvanceFrame ; $69c8
 	ld b, $06 ; $69cb
 	farcall RestoreMenuBgAndDrawPanel ; $69cd
@@ -455,7 +455,7 @@ Unused_3b_SlideMenuPanel_2:
 	dec a ; $69d6
 	ld c, a ; $69d7
 	or a ; $69d8
-	jr nz, .loop3 ; $69d9
+	jr nz, .slideBackLoop ; $69d9
 	ret ; $69db
 SavedDataSourceCursorSpriteTask:
 	farcall TickMenuBgScroll ; $69dc

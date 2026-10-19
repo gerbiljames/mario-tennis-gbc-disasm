@@ -45,19 +45,19 @@ FillMenuGridCellTileTable:
 MoveMinigameGridCursor:
 	ld a, [wMenuCursorY] ; $6df9
 	or a ; $6dfc
-	jr nz, .checkMenuInputPressed ; $6dfd
+	jr nz, .bottomRow ; $6dfd
 	ld a, [wMenuInputPressed] ; $6dff
 	bit PADB_RIGHT, a ; $6e02
-	jr nz, .checkMenuCursorX ; $6e04
+	jr nz, .topRight ; $6e04
 	bit PADB_LEFT, a ; $6e06
-	jr nz, .checkMenuCursorX2 ; $6e08
+	jr nz, .topLeft ; $6e08
 	bit PADB_UP, a ; $6e0a
-	jr nz, .checkMenuCursorX3 ; $6e0c
+	jr nz, .topVertical ; $6e0c
 	bit PADB_DOWN, a ; $6e0e
-	jr nz, .checkMenuCursorX3 ; $6e10
+	jr nz, .topVertical ; $6e10
 	xor a ; $6e12
 	jp .done ; $6e13
-.checkMenuCursorX:
+.topRight:
 	ld a, [wMenuCursorX] ; $6e16
 	inc a ; $6e19
 	add a ; $6e1a
@@ -74,7 +74,7 @@ MoveMinigameGridCursor:
 	ld [wMenuCursorX], a ; $6e28
 	ld a, $01 ; $6e2b
 	jp .done ; $6e2d
-.checkMenuCursorX2:
+.topLeft:
 	ld a, [wMenuCursorX] ; $6e30
 	dec a ; $6e33
 	add a ; $6e34
@@ -91,7 +91,7 @@ MoveMinigameGridCursor:
 	ld [wMenuCursorX], a ; $6e42
 	ld a, $01 ; $6e45
 	jr .done ; $6e47
-.checkMenuCursorX3:
+.topVertical:
 	ld a, [wMenuCursorX] ; $6e49
 	ld hl, MoveMinigameGridCursorTable0 ; $6e4c
 	add l ; $6e4f
@@ -106,19 +106,19 @@ MoveMinigameGridCursor:
 	ld [wMenuCursorY], a ; $6e5d
 	ld a, $01 ; $6e60
 	jr .done ; $6e62
-.checkMenuInputPressed:
+.bottomRow:
 	ld a, [wMenuInputPressed] ; $6e64
 	bit PADB_RIGHT, a ; $6e67
-	jr nz, .checkMenuCursorX4 ; $6e69
+	jr nz, .bottomRight ; $6e69
 	bit PADB_LEFT, a ; $6e6b
-	jr nz, .checkMenuCursorX5 ; $6e6d
+	jr nz, .bottomLeft ; $6e6d
 	bit PADB_UP, a ; $6e6f
-	jr nz, .checkMenuCursorX6 ; $6e71
+	jr nz, .bottomVertical ; $6e71
 	bit PADB_DOWN, a ; $6e73
-	jr nz, .checkMenuCursorX6 ; $6e75
+	jr nz, .bottomVertical ; $6e75
 	xor a ; $6e77
 	jr .done ; $6e78
-.checkMenuCursorX4:
+.bottomRight:
 	ld a, [wMenuCursorX] ; $6e7a
 	or a ; $6e7d
 	jr z, .rightToCol2 ; $6e7e
@@ -130,7 +130,7 @@ MoveMinigameGridCursor:
 	ld [wMenuCursorX], a ; $6e85
 	ld a, $01 ; $6e88
 	jr .done ; $6e8a
-.checkMenuCursorX5:
+.bottomLeft:
 	ld a, [wMenuCursorX] ; $6e8c
 	or a ; $6e8f
 	jr z, .leftToCol2 ; $6e90
@@ -142,7 +142,7 @@ MoveMinigameGridCursor:
 	ld [wMenuCursorX], a ; $6e97
 	ld a, $01 ; $6e9a
 	jr .done ; $6e9c
-.checkMenuCursorX6:
+.bottomVertical:
 	ld a, [wMenuCursorX] ; $6e9e
 	ld hl, MoveMinigameGridCursorTable1 ; $6ea1
 	add l ; $6ea4

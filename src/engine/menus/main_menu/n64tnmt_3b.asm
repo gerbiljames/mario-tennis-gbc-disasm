@@ -61,7 +61,7 @@ CheckN64TnmtSecondPage:
 	ld hl, wN64TnmtTrophyCells + 2 ; $4ee3
 	ld c, $00 ; $4ee6
 	ld de, $000c ; $4ee8
-.loop:
+.scanCol2Full:
 	ld a, [hl] ; $4eeb
 	or a ; $4eec
 	jr z, .checkOtherColumn ; $4eed
@@ -70,11 +70,11 @@ CheckN64TnmtSecondPage:
 	inc a ; $4ef1
 	ld c, a ; $4ef2
 	cp $0e ; $4ef3
-	jr nz, .loop ; $4ef5
+	jr nz, .scanCol2Full ; $4ef5
 	ld hl, wN64TnmtTrophyCells + 5 ; $4ef7
 	ld c, $00 ; $4efa
 	ld de, $000c ; $4efc
-.loopB:
+.scanCol5Any:
 	ld a, [hl] ; $4eff
 	or a ; $4f00
 	jr nz, .returnOne ; $4f01
@@ -83,12 +83,12 @@ CheckN64TnmtSecondPage:
 	inc a ; $4f05
 	ld c, a ; $4f06
 	cp $10 ; $4f07
-	jr nz, .loopB ; $4f09
+	jr nz, .scanCol5Any ; $4f09
 .checkOtherColumn:
 	ld hl, wN64TnmtTrophyCells + 5 ; $4f0b
 	ld c, $00 ; $4f0e
 	ld de, $000c ; $4f10
-.loop2:
+.scanCol5Full:
 	ld a, [hl] ; $4f13
 	or a ; $4f14
 	jr z, .returnZero ; $4f15
@@ -97,11 +97,11 @@ CheckN64TnmtSecondPage:
 	inc a ; $4f19
 	ld c, a ; $4f1a
 	cp $0e ; $4f1b
-	jr nz, .loop2 ; $4f1d
+	jr nz, .scanCol5Full ; $4f1d
 	ld hl, wN64TnmtTrophyCells + 2 ; $4f1f
 	ld c, $00 ; $4f22
 	ld de, $000c ; $4f24
-.loop3:
+.scanCol2Any:
 	ld a, [hl] ; $4f27
 	or a ; $4f28
 	jr nz, .returnOne ; $4f29
@@ -110,7 +110,7 @@ CheckN64TnmtSecondPage:
 	inc a ; $4f2d
 	ld c, a ; $4f2e
 	cp $10 ; $4f2f
-	jr nz, .loop3 ; $4f31
+	jr nz, .scanCol2Any ; $4f31
 .returnOne:
 	ld a, $01 ; $4f33
 	ret ; $4f35
@@ -253,40 +253,40 @@ DrawN64TnmtTrophyRow:
 	push de ; $5044
 	push hl ; $5045
 	ld c, $00 ; $5046
-.loop:
+.leftCellLoop:
 	ld a, [hl+] ; $5048
 	or a ; $5049
 	jr z, .drawEmptyTrophyCell ; $504a
 	call DrawWonTrophyIcon ; $504c
-	jr .next ; $504f
+	jr .nextLeftCell ; $504f
 .drawEmptyTrophyCell:
 	call DrawEmptyTrophyCell ; $5051
-.next:
+.nextLeftCell:
 	inc de ; $5054
 	inc de ; $5055
 	ld a, c ; $5056
 	inc a ; $5057
 	ld c, a ; $5058
 	cp $03 ; $5059
-	jr nz, .loop ; $505b
+	jr nz, .leftCellLoop ; $505b
 	inc de ; $505d
 	ld c, $00 ; $505e
-.loopB:
+.rightCellLoop:
 	ld a, [hl+] ; $5060
 	or a ; $5061
 	jr z, .drawEmptyTrophyCell2 ; $5062
 	call DrawWonTrophyIcon ; $5064
-	jr .next2 ; $5067
+	jr .nextRightCell ; $5067
 .drawEmptyTrophyCell2:
 	call DrawEmptyTrophyCell ; $5069
-.next2:
+.nextRightCell:
 	inc de ; $506c
 	inc de ; $506d
 	ld a, c ; $506e
 	inc a ; $506f
 	ld c, a ; $5070
 	cp $03 ; $5071
-	jr nz, .loopB ; $5073
+	jr nz, .rightCellLoop ; $5073
 	pop hl ; $5075
 	pop de ; $5076
 	pop bc ; $5077

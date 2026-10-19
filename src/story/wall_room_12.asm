@@ -281,11 +281,11 @@ WallPracticeRoomMapScripts_12:
 	dw WallPracticeRoomInitScript_12 ; slot 6 InitScript
 WallPracticeRoomActors_12:
 	; $468a, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_12_51, 3.0, 57.0, FACE_RIGHT, OBJ_WALK_72_02, ANIM_WALK, $00, WALL_PRACTICE_ROOM_WALK_72_02
-	map_actor $0000, ActorScript_12_51, 8.0, 55.0, FACE_UP, OBJ_WALK_71_05, ANIM_WALK, $00, WALL_PRACTICE_ROOM_WALK_71_05
-	map_actor $0000, ActorScript_12_51, 13.0, 55.0, FACE_UP, OBJ_WALK_71_03, ANIM_WALK, $00, WALL_PRACTICE_ROOM_WALK_71_03
-	map_actor $0000, ActorScript_12_51, 19.0, 57.0, FACE_RIGHT, OBJ_WALK_72_07, ANIM_WALK, $00, WALL_PRACTICE_ROOM_WALK_72_07
-	map_actor $0000, ActorScript_12_51, 5.0, 55.0, FACE_DOWN, OBJ_WALK_72_06, ANIM_WALK, $00, WALL_PRACTICE_ROOM_WALK_72_06
+	map_actor $0000, ActorScript_12_51, 3.0, 57.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $00, WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY
+	map_actor $0000, ActorScript_12_51, 8.0, 55.0, FACE_UP, OBJ_STUDENT_PONYTAIL_GIRL, ANIM_WALK, $00, WALL_PRACTICE_ROOM_STUDENT_PONYTAIL_GIRL
+	map_actor $0000, ActorScript_12_51, 13.0, 55.0, FACE_UP, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $00, WALL_PRACTICE_ROOM_STUDENT_LONG_HAIR
+	map_actor $0000, ActorScript_12_51, 19.0, 57.0, FACE_RIGHT, OBJ_MACHINE_ATTENDANT, ANIM_WALK, $00, WALL_PRACTICE_ROOM_MACHINE_ATTENDANT
+	map_actor $0000, ActorScript_12_51, 5.0, 55.0, FACE_DOWN, OBJ_MACHINE_ENGINEER, ANIM_WALK, $00, WALL_PRACTICE_ROOM_MACHINE_ENGINEER
 	map_actor_end
 WallPracticeRoomEntryPoints_12:
 	; $46da, 25 bytes (map_entries)
@@ -327,7 +327,7 @@ WallPracticeRoomNpc03_12:
 	dw WallPracticeRoomNpc03_12.done ; $473f jumptable
 	dw WallPracticeRoomNpc03_12.speak ; $4741 jumptable
 .altText:
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_02 ; $4743
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY ; $4743
 	farcall RunDialogueYesNoPrompt ; $4748
 	farcall ScriptCloseDialogueWindow ; $474b
 	script_wait_frames 5 ; $474e
@@ -335,12 +335,12 @@ WallPracticeRoomNpc03_12:
 	jr z, .speak ; $4756
 	farcall AdvanceDialogueTextCursor ; $4758
 .speak:
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_02 ; $475b
+	script_speak ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY ; $475b
 	ret ; $4760
 .done:
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_02, ANIM_BOUNCE ; $4761
-	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_02 ; $4768
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_02 ; $476d
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY, ANIM_BOUNCE ; $4761
+	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY ; $4768
+	script_speak ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY ; $476d
 	ret ; $4772
 WallPracticeRoomNpc03TextIds:
 	; $4773, 14 bytes (text_ids)
@@ -361,7 +361,7 @@ WallPracticeRoomNpc04_12:
 	ld h, [hl] ; $478d
 	ld l, a ; $478e
 	farcall InitDialogueTextCursor ; $478f
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_71_05 ; $4792
+	script_speak ACTOR_WALL_PRACTICE_ROOM_STUDENT_PONYTAIL_GIRL ; $4792
 	ret ; $4797
 WallPracticeRoomNpc04TextIds:
 	; $4798, 14 bytes (text_ids)
@@ -385,14 +385,14 @@ WallPracticeRoomNpc05_12:
 	ld a, [wMapSceneStage] ; $47b7
 	cp WALLPRACTICESTAGE_MASTER ; $47ba
 	jr c, .face ; $47bc
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_71_03 ; $47be
+	script_speak ACTOR_WALL_PRACTICE_ROOM_STUDENT_LONG_HAIR ; $47be
 	ret ; $47c3
 .face:
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_71_03, FACE_UP ; $47c4
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_71_03 ; $47cb
-	script_face_toward ACTOR_PLAYER, ACTOR_WALL_PRACTICE_ROOM_WALK_71_03 ; $47d0
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_71_03 ; $47d8
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_71_03, FACE_UP ; $47dd
+	script_face ACTOR_WALL_PRACTICE_ROOM_STUDENT_LONG_HAIR, FACE_UP ; $47c4
+	script_speak ACTOR_WALL_PRACTICE_ROOM_STUDENT_LONG_HAIR ; $47cb
+	script_face_toward ACTOR_PLAYER, ACTOR_WALL_PRACTICE_ROOM_STUDENT_LONG_HAIR ; $47d0
+	script_speak ACTOR_WALL_PRACTICE_ROOM_STUDENT_LONG_HAIR ; $47d8
+	script_face ACTOR_WALL_PRACTICE_ROOM_STUDENT_LONG_HAIR, FACE_UP ; $47dd
 	ret ; $47e4
 WallPracticeRoomNpc05TextIds:
 	; $47e5, 14 bytes (text_ids)
@@ -413,7 +413,7 @@ WallPracticeRoomNpc06_12:
 	ld h, [hl] ; $47ff
 	ld l, a ; $4800
 	farcall InitDialogueTextCursor ; $4801
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_07 ; $4804
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ATTENDANT ; $4804
 	ret ; $4809
 WallPracticeRoomNpc06TextIds:
 	; $480a, 14 bytes (text_ids)
@@ -428,11 +428,11 @@ WallPracticeRoomNpc06TextIds:
 	assert_table_length NUM_WALLPRACTICESTAGES
 WallPracticeRoomNpcScripts_12:
 	; $4818, 41 bytes (map_scripts)
-	map_script ACTOR_WALL_PRACTICE_ROOM_WALK_72_02, FACEMASK_ANY, $0000, WallPracticeRoomNpc03_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_WALL_PRACTICE_ROOM_WALK_71_05, FACEMASK_ANY, $0000, WallPracticeRoomNpc04_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_WALL_PRACTICE_ROOM_WALK_71_03, FACEMASK_ANY, $0000, WallPracticeRoomNpc05_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_WALL_PRACTICE_ROOM_WALK_72_07, FACEMASK_ANY, $0000, WallPracticeRoomNpc06_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACEMASK_ANY, $0000, WallPracticeRoomNpc07_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, WallPracticeRoomNpc03_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_WALL_PRACTICE_ROOM_STUDENT_PONYTAIL_GIRL, FACEMASK_ANY, $0000, WallPracticeRoomNpc04_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_WALL_PRACTICE_ROOM_STUDENT_LONG_HAIR, FACEMASK_ANY, $0000, WallPracticeRoomNpc05_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_WALL_PRACTICE_ROOM_MACHINE_ATTENDANT, FACEMASK_ANY, $0000, WallPracticeRoomNpc06_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACEMASK_ANY, $0000, WallPracticeRoomNpc07_12, NPC_FACE_PLAYER, $00
 	db $ff
 WallPracticeMasterResultScript:
 	script_fade_in 6 ; $4841
@@ -492,15 +492,15 @@ WallPracticeScoreRetryPrompt:
 	ld h, [hl] ; $48b9
 	ld l, a ; $48ba
 	farcall PushTextArgNumber ; $48bb
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $48be
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $48be
 	farcall RunDialogueYesNoPrompt ; $48c3
 	farcall ScriptCloseDialogueWindow ; $48c6
 	script_wait_frames 5 ; $48c9
 	and a ; $48d0
 	jp nz, WallPracticeExitCourtScript ; $48d1
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_UP ; $48d4
-	script_set_anim ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, ANIM_BOUNCE ; $48db
-	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $48e2
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $48d4
+	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $48db
+	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $48e2
 	jp LaunchWallPracticeMinigame ; $48e7
 	ret ; $48ea
 WallPracticeNewRecordScript:
@@ -523,7 +523,7 @@ WallPracticeNewRecordScript:
 	ld h, [hl] ; $4917
 	ld l, a ; $4918
 	farcall PushTextArgNumber ; $4919
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $491c
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $491c
 	farcall RunDialogueYesNoPrompt ; $4921
 	farcall ScriptCloseDialogueWindow ; $4924
 	script_wait_frames 5 ; $4927
@@ -533,7 +533,7 @@ WallPracticeNewRecordScript:
 	ret ; $4935
 WallPracticeMaxScoreScript:
 	script_set_text Text_36_41 ; $4936
-	script_speak ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $493c
+	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $493c
 	push_wram_bank WRAM_SOUND ; $4941
 	ld a, $00 ; $494a
 	farcall ReadMinigameRecord ; $494c
@@ -551,7 +551,7 @@ WallPracticeMaxScoreScript:
 	ld h, a ; $4962
 	jp c, RelaunchWallPracticeMasterLevel.saveMaxRecord ; $4963
 	script_set_text Text_36_43 ; $4966
-	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $496c
+	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $496c
 	farcall RunDialogueYesNoPrompt ; $4971
 	farcall ScriptCloseDialogueWindow ; $4974
 	script_wait_frames 5 ; $4977
@@ -563,7 +563,7 @@ WallPracticeMaxScoreScript:
 	script_move_player 5.0, 55.0 ; $4999
 	script_move_target ACTOR_PLAYER, 5.0, 57.0 ; $49a3
 	script_wait_move ACTOR_PLAYER ; $49ae
-	script_move_target ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, 5.0, 55.0 ; $49b3
-	script_wait_move ACTOR_WALL_PRACTICE_ROOM_WALK_72_06 ; $49be
-	script_face ACTOR_WALL_PRACTICE_ROOM_WALK_72_06, FACE_DOWN ; $49c3
+	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 5.0, 55.0 ; $49b3
+	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $49be
+	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_DOWN ; $49c3
 	jp RelaunchWallPracticeMasterLevel.checkDoubles ; $49ca

@@ -22,12 +22,12 @@ DrillBriefing_ServeThroughPoles:
 	xor a ; $5c9d
 	ld [wBriefingAnimTimer], a ; $5c9e
 	ld [wBriefingAnimStep], a ; $5ca1
-.loop:
+.animFirstCaption:
 	call PoleServeBriefing_TickAnim ; $5ca4
 	ld c, $00 ; $5ca7
 	call AdvanceFrameCheckInput ; $5ca9
 	and a ; $5cac
-	jp z, .loop ; $5cad
+	jp z, .animFirstCaption ; $5cad
 	call ClearFrameTasks ; $5cb0
 	ld a, $01 ; $5cb3
 	ld hl, UpdateAnimatedTilesTask_17 ; $5cb5
@@ -56,7 +56,7 @@ DrillBriefing_ServeThroughPoles:
 	xor a ; $5cf3
 	ld [wBriefingAnimTimer], a ; $5cf4
 	ld [wBriefingAnimStep], a ; $5cf7
-.loopB:
+.animSecondCaption:
 	call PoleServeBriefing_TickAnim2 ; $5cfa
 	ld a, [wBriefingAnimStep] ; $5cfd
 	sla a ; $5d00
@@ -73,7 +73,7 @@ DrillBriefing_ServeThroughPoles:
 	ld c, $00 ; $5d17
 	call AdvanceFrameCheckInput ; $5d19
 	and a ; $5d1c
-	jp z, .loopB ; $5d1d
+	jp z, .animSecondCaption ; $5d1d
 	call ClearFrameTasks ; $5d20
 	ld a, $01 ; $5d23
 	ld hl, UpdateAnimatedTilesTask_17 ; $5d25
@@ -134,12 +134,12 @@ DrillBriefing_ServeThroughPoles:
 	call RegisterFrameTask ; $5db7
 	ld hl, Text_36_702 ; $5dba
 	call DrawBriefingCaption ; $5dbd
-.loop2:
+.animLastCaption:
 	call PoleServeBriefing_TickAnim2 ; $5dc0
 	ld c, $01 ; $5dc3
 	call AdvanceFrameCheckInput ; $5dc5
 	and a ; $5dc8
-	jp z, .loop2 ; $5dc9
+	jp z, .animLastCaption ; $5dc9
 	call ClearFrameTasks ; $5dcc
 	ret ; $5dcf
 PoleServeBriefing_TickAnim:

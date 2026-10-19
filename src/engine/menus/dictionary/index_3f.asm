@@ -437,10 +437,10 @@ HandleTennisDictionaryListInput:
 	ld a, [wTennisDictScrollTop] ; $56d6
 	dec a ; $56d9
 	cp $ff ; $56da
-	jr nz, .store ; $56dc
+	jr nz, .storeScrollUp ; $56dc
 	ld a, [wTennisDictEntryCount] ; $56de
 	dec a ; $56e1
-.store:
+.storeScrollUp:
 	ld [wTennisDictScrollTop], a ; $56e2
 	call DrawTennisDictionaryList ; $56e5
 	jr .restore ; $56e8
@@ -461,9 +461,9 @@ HandleTennisDictionaryListInput:
 	ld a, [wTennisDictScrollTop] ; $5704
 	inc a ; $5707
 	cp b ; $5708
-	jr nz, .store2 ; $5709
+	jr nz, .storeScrollDown ; $5709
 	xor a ; $570b
-.store2:
+.storeScrollDown:
 	ld [wTennisDictScrollTop], a ; $570c
 	call DrawTennisDictionaryList ; $570f
 	jr .restore ; $5712

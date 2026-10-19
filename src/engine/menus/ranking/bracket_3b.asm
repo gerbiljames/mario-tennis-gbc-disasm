@@ -248,9 +248,9 @@ HighlightBracketPlayerRow:
 	add a ; $7951
 	add l ; $7952
 	ld l, a ; $7953
-	jr nc, .read ; $7954
+	jr nc, .readSinglesRow ; $7954
 	inc h ; $7956
-.read:
+.readSinglesRow:
 	ld a, [hl+] ; $7957
 	ld d, [hl] ; $7958
 	ld e, a ; $7959
@@ -262,9 +262,9 @@ HighlightBracketPlayerRow:
 	add a ; $7969
 	add l ; $796a
 	ld l, a ; $796b
-	jr nc, .readB ; $796c
+	jr nc, .readSinglesMarker ; $796c
 	inc h ; $796e
-.readB:
+.readSinglesMarker:
 	ld a, [hl+] ; $796f
 	ld d, [hl] ; $7970
 	ld e, a ; $7971
@@ -284,9 +284,9 @@ HighlightBracketPlayerRow:
 	add a ; $798b
 	add l ; $798c
 	ld l, a ; $798d
-	jr nc, .read2 ; $798e
+	jr nc, .readDoublesRow ; $798e
 	inc h ; $7990
-.read2:
+.readDoublesRow:
 	ld a, [hl+] ; $7991
 	ld d, [hl] ; $7992
 	ld e, a ; $7993
@@ -298,9 +298,9 @@ HighlightBracketPlayerRow:
 	add a ; $79a3
 	add l ; $79a4
 	ld l, a ; $79a5
-	jr nc, .read3 ; $79a6
+	jr nc, .readDoublesMarker ; $79a6
 	inc h ; $79a8
-.read3:
+.readDoublesMarker:
 	ld a, [hl+] ; $79a9
 	ld d, [hl] ; $79aa
 	ld e, a ; $79ab
@@ -399,10 +399,10 @@ MarioCastChartScrollArrowsTask:
 	push_wram_bank WRAM_SCREEN ; $7a6d
 	call CheckMarioCastChartExpanded ; $7a76
 	or a ; $7a79
-	jr z, .checkMenuCursorY3 ; $7a7a
+	jr z, .collapsedUpArrow ; $7a7a
 	ld a, [wMenuCursorX] ; $7a7c
 	cp $02 ; $7a7f
-	jr z, .checkMenuCursorX ; $7a81
+	jr z, .checkLeftArrow ; $7a81
 	ld_xy de, $93, $2f ; $7a83
 	ld c, $01 ; $7a86
 	call ApplyCursorBounceX ; $7a88
@@ -410,10 +410,10 @@ MarioCastChartScrollArrowsTask:
 	ld c, $00 ; $7a8d
 	ld h, $00 ; $7a8f
 	farcall QueueStackedSpritePair ; $7a91
-.checkMenuCursorX:
+.checkLeftArrow:
 	ld a, [wMenuCursorX] ; $7a94
 	or a ; $7a97
-	jr z, .checkMenuCursorY ; $7a98
+	jr z, .checkUpArrow ; $7a98
 	ld_xy de, $08, $2f ; $7a9a
 	ld c, $00 ; $7a9d
 	call ApplyCursorBounceX ; $7a9f
@@ -421,10 +421,10 @@ MarioCastChartScrollArrowsTask:
 	ld c, $00 ; $7aa4
 	ld h, $01 ; $7aa6
 	farcall QueueStackedSpritePair ; $7aa8
-.checkMenuCursorY:
+.checkUpArrow:
 	ld a, [wMenuCursorY] ; $7aab
 	or a ; $7aae
-	jr z, .checkMenuCursorY2 ; $7aaf
+	jr z, .checkDownArrow ; $7aaf
 	ld_xy de, $0a, $20 ; $7ab1
 	ld c, $01 ; $7ab4
 	call ApplyCursorBounceY ; $7ab6
@@ -432,7 +432,7 @@ MarioCastChartScrollArrowsTask:
 	ld c, $00 ; $7abb
 	ld h, $02 ; $7abd
 	farcall QueueStackedSpritePair ; $7abf
-.checkMenuCursorY2:
+.checkDownArrow:
 	ld a, [wMenuCursorY] ; $7ac2
 	cp $05 ; $7ac5
 	jr z, .atBottomRow ; $7ac7
@@ -445,10 +445,10 @@ MarioCastChartScrollArrowsTask:
 	farcall QueueStackedSpritePair ; $7ad7
 .atBottomRow:
 	jr .restore ; $7ada
-.checkMenuCursorY3:
+.collapsedUpArrow:
 	ld a, [wMenuCursorY] ; $7adc
 	or a ; $7adf
-	jr z, .checkMenuCursorY4 ; $7ae0
+	jr z, .collapsedDownArrow ; $7ae0
 	ld_xy de, $1a, $20 ; $7ae2
 	ld c, $01 ; $7ae5
 	call ApplyCursorBounceY ; $7ae7
@@ -456,7 +456,7 @@ MarioCastChartScrollArrowsTask:
 	ld c, $00 ; $7aec
 	ld h, $02 ; $7aee
 	farcall QueueStackedSpritePair ; $7af0
-.checkMenuCursorY4:
+.collapsedDownArrow:
 	ld a, [wMenuCursorY] ; $7af3
 	cp $01 ; $7af6
 	jr z, .restore ; $7af8

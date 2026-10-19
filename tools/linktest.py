@@ -87,8 +87,10 @@ class Side:
 
 def boot_to_menu(rom, save, out):
     from pyboy import PyBoy
+    E.check_build(rom)
     tmp = Path(tempfile.mkdtemp(dir=ROOT / "build"))
     shutil.copy(rom, tmp / "r.gbc")
+    E.keep_ap_save(tmp / "r.gbc", E.symbols(ROOT / "build" / "mariotennis.sym"))
     shutil.copy(save, tmp / "r.gbc.ram")
     pb = PyBoy(str(tmp / "r.gbc"), window="null", sound_emulated=False, log_level="ERROR")
     for wait, button in ((950, "start"), (90, "a")):
@@ -188,6 +190,7 @@ def session(rom, sym_path, save, seed, frames, lag, settle, menu_state, keys=KEY
         d = tmp / name
         d.mkdir()
         shutil.copy(rom, d / "r.gbc")
+        E.keep_ap_save(d / "r.gbc", sym)
         shutil.copy(save, d / "r.gbc.ram")
         pb = PyBoy(str(d / "r.gbc"), window="null", sound_emulated=False, log_level="ERROR")
         pb.set_emulation_speed(0)

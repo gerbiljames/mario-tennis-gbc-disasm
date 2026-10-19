@@ -120,7 +120,7 @@ Unused_05_RunPagedTextMenuAutoSize:
 	ld a, $01 ; $4a1b
 	ld hl, Unused_05_PagedMenuFrameTask ; $4a1d
 	call RegisterFrameTask ; $4a20
-.loop:
+.pageLoop:
 	call FetchDialogueText ; $4a23
 	call MeasureTextDimensions ; $4a26
 	ld a, $01 ; $4a29
@@ -153,34 +153,34 @@ Unused_05_RunPagedTextMenuAutoSize:
 	sla a ; $4a5f
 	sla a ; $4a61
 	add b ; $4a63
-	jr .store3 ; $4a64
+	jr .storeSelection ; $4a64
 .compare:
 	cp $ff ; $4a66
-	jr z, .store3 ; $4a68
+	jr z, .storeSelection ; $4a68
 	cp $fe ; $4a6a
 	jr nz, .nextPage ; $4a6c
 	ld a, [wMenuPage] ; $4a6e
 	dec a ; $4a71
 	cp $ff ; $4a72
-	jr nz, .store ; $4a74
+	jr nz, .storePrevPage ; $4a74
 	ld hl, sp + 2 ; $4a76
 	ld a, [hl] ; $4a78
 	dec a ; $4a79
-.store:
+.storePrevPage:
 	ld [wMenuPage], a ; $4a7a
-	jr .loop ; $4a7d
+	jr .pageLoop ; $4a7d
 .nextPage:
 	ld a, [wMenuPage] ; $4a7f
 	inc a ; $4a82
 	ld hl, sp + 2 ; $4a83
 	ld b, [hl] ; $4a85
 	cp b ; $4a86
-	jr c, .store2 ; $4a87
+	jr c, .storeNextPage ; $4a87
 	xor a ; $4a89
-.store2:
+.storeNextPage:
 	ld [wMenuPage], a ; $4a8a
-	jp .loop ; $4a8d
-.store3:
+	jp .pageLoop ; $4a8d
+.storeSelection:
 	ld [wMenuCursorRow], a ; $4a90
 	add sp, 3 ; $4a93
 	push af ; $4a95
