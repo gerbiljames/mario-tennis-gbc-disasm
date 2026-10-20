@@ -390,13 +390,13 @@ LoadResultScreenTileGraphics:
 	ld a, [wResultScreenWon] ; $4e32
 	or a ; $4e35
 	jr z, LoadMatchResultGfxSet ; $4e36
-	ld hl, MatchResultGfxA2 ; $4e38
+	ld hl, ResultExhibitionBannerHeadGfx ; $4e38
 	ld de, vTiles1 tile $10 ; $4e3b
 	call DecompressData ; $4e3e
-	ld hl, MatchResultGfxB4 ; $4e41
+	ld hl, ResultExhibitionBannerTailGfx ; $4e41
 	ld de, vTiles1 tile $24 ; $4e44
 	call DecompressData ; $4e47
-	ld hl, MatchResultGfxC9 ; $4e4a
+	ld hl, ResultBlankLabelGfx ; $4e4a
 	ld de, vTiles2 tile $14 ; $4e4d
 	call DecompressData ; $4e50
 	ret ; $4e53
@@ -404,7 +404,7 @@ LoadMatchResultGfxSet:
 	ld a, [wCurrentMatchIndex] ; $4e54
 	call RemapDoublesMatchGfxIndex ; $4e57
 	add a ; $4e5a
-	ld hl, GfxSetPointerTable_16 ; $4e5b
+	ld hl, MatchResultBannerSetTable ; $4e5b
 	add_hl_a ; $4e5e
 	ld a, [hl+] ; $4e63
 	ld h, [hl] ; $4e64

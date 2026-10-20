@@ -11,7 +11,7 @@ RemapDoublesMatchGfxIndex:
 .restore:
 	pop af ; $4e9b
 	ret ; $4e9c
-GfxSetPointerTable_16:
+MatchResultBannerSetTable:
 	; $4e9d, 176 bytes (gfx_ptr_table)
 	dw .juniorPractice ; 0
 	dw .junior4 ; 1
@@ -28,7 +28,7 @@ GfxSetPointerTable_16:
 	dw .varsity3 ; 12
 	dw .varsity2 ; 13
 	dw .varsity1 ; 14
-	dw .grassPractice0f ; 15
+	dw .islandOpenPractice ; 15
 	dw .islandOpenRound1 ; 16
 	dw .islandOpenRound2 ; 17
 	dw .islandOpenSemifinal ; 18
@@ -39,89 +39,89 @@ GfxSetPointerTable_16:
 	dw .dreamMatches ; 23
 	dw .dreamMatches ; 24
 .juniorPractice:
-	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC8
+	gfx_set ResultTennisAcademyBannerGfx, ResultJuniorTeamBannerGfx, ResultPracticeMatchLabelGfx
 .junior4:
-	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC7
+	gfx_set ResultTennisAcademyBannerGfx, ResultJuniorTeamBannerGfx, ResultRanking4LabelGfx
 .junior3:
-	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC6
+	gfx_set ResultTennisAcademyBannerGfx, ResultJuniorTeamBannerGfx, ResultRanking3LabelGfx
 .junior2:
-	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC5
+	gfx_set ResultTennisAcademyBannerGfx, ResultJuniorTeamBannerGfx, ResultRanking2LabelGfx
 .junior1:
-	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC4
+	gfx_set ResultTennisAcademyBannerGfx, ResultJuniorTeamBannerGfx, ResultRanking1LabelGfx
 .seniorPractice:
-	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC8
+	gfx_set ResultTennisAcademyBannerGfx, ResultSeniorTeamBannerGfx, ResultPracticeMatchLabelGfx
 .senior4:
-	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC7
+	gfx_set ResultTennisAcademyBannerGfx, ResultSeniorTeamBannerGfx, ResultRanking4LabelGfx
 .senior3:
-	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC6
+	gfx_set ResultTennisAcademyBannerGfx, ResultSeniorTeamBannerGfx, ResultRanking3LabelGfx
 .senior2:
-	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC5
+	gfx_set ResultTennisAcademyBannerGfx, ResultSeniorTeamBannerGfx, ResultRanking2LabelGfx
 .senior1:
-	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC4
+	gfx_set ResultTennisAcademyBannerGfx, ResultSeniorTeamBannerGfx, ResultRanking1LabelGfx
 .varsityPractice:
-	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC8
+	gfx_set ResultTennisAcademyBannerGfx, ResultVarsityTeamBannerGfx, ResultPracticeMatchLabelGfx
 .varsity4:
-	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC7
+	gfx_set ResultTennisAcademyBannerGfx, ResultVarsityTeamBannerGfx, ResultRanking4LabelGfx
 .varsity3:
-	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC6
+	gfx_set ResultTennisAcademyBannerGfx, ResultVarsityTeamBannerGfx, ResultRanking3LabelGfx
 .varsity2:
-	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC5
+	gfx_set ResultTennisAcademyBannerGfx, ResultVarsityTeamBannerGfx, ResultRanking2LabelGfx
 .varsity1:
-	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC4
-.grassPractice0f:
-	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC8
+	gfx_set ResultTennisAcademyBannerGfx, ResultVarsityTeamBannerGfx, ResultRanking1LabelGfx
+.islandOpenPractice:
+	gfx_set ResultIslandOpenBannerGfx, ResultTournamentBannerGfx, ResultPracticeMatchLabelGfx
 .islandOpenRound1:
-	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC2
+	gfx_set ResultIslandOpenBannerGfx, ResultTournamentBannerGfx, ResultFirstMatchLabelGfx
 .islandOpenRound2:
-	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC3
+	gfx_set ResultIslandOpenBannerGfx, ResultTournamentBannerGfx, ResultSecondMatchLabelGfx
 .islandOpenSemifinal:
-	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC1
+	gfx_set ResultIslandOpenBannerGfx, ResultTournamentBannerGfx, ResultSemifinalLabelGfx
 .islandOpenFinal:
-	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC0
+	gfx_set ResultIslandOpenBannerGfx, ResultTournamentBannerGfx, ResultFinalLabelGfx
 .dreamMatches:
-	gfx_set MatchResultGfxA2, MatchResultGfxB4, MatchResultGfxC9
-MatchResultGfxA0:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxA0.bin" ; $4f4d, 199 bytes
-MatchResultGfxB0:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxB0.bin" ; $5014, 127 bytes
-MatchResultGfxA1:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxA1.bin" ; $5093, 205 bytes
-MatchResultGfxB1:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxB1.bin" ; $5160, 178 bytes
-MatchResultGfxB2:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxB2.bin" ; $5212, 171 bytes
-MatchResultGfxB3:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxB3.bin" ; $52bd, 154 bytes
-MatchResultGfxA2:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxA2.bin" ; $5357, 106 bytes
-MatchResultGfxB4:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxB4.bin" ; $53c1, 109 bytes
+	gfx_set ResultExhibitionBannerHeadGfx, ResultExhibitionBannerTailGfx, ResultBlankLabelGfx
+ResultIslandOpenBannerGfx:
+	INCBIN "data/engine/menus/results/lz_ResultIslandOpenBannerGfx.bin" ; $4f4d, 199 bytes
+ResultTournamentBannerGfx:
+	INCBIN "data/engine/menus/results/lz_ResultTournamentBannerGfx.bin" ; $5014, 127 bytes
+ResultTennisAcademyBannerGfx:
+	INCBIN "data/engine/menus/results/lz_ResultTennisAcademyBannerGfx.bin" ; $5093, 205 bytes
+ResultVarsityTeamBannerGfx:
+	INCBIN "data/engine/menus/results/lz_ResultVarsityTeamBannerGfx.bin" ; $5160, 178 bytes
+ResultSeniorTeamBannerGfx:
+	INCBIN "data/engine/menus/results/lz_ResultSeniorTeamBannerGfx.bin" ; $5212, 171 bytes
+ResultJuniorTeamBannerGfx:
+	INCBIN "data/engine/menus/results/lz_ResultJuniorTeamBannerGfx.bin" ; $52bd, 154 bytes
+ResultExhibitionBannerHeadGfx:
+	INCBIN "data/engine/menus/results/lz_ResultExhibitionBannerHeadGfx.bin" ; $5357, 106 bytes
+ResultExhibitionBannerTailGfx:
+	INCBIN "data/engine/menus/results/lz_ResultExhibitionBannerTailGfx.bin" ; $53c1, 109 bytes
 MatchResultTitleGfx:
 	INCBIN "data/engine/menus/results/lz_MatchResultTitleGfx.bin" ; $542e, 143 bytes
 MatchResultTitleGfxAlt:
 	INCBIN "data/engine/menus/results/lz_MatchResultTitleGfxAlt.bin" ; $54bd, 132 bytes
-MatchResultGfxC0:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC0.bin" ; $5541, 93 bytes
-MatchResultGfxC1:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC1.bin" ; $559e, 164 bytes
-MatchResultGfxC2:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC2.bin" ; $5642, 176 bytes
-MatchResultGfxC3:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC3.bin" ; $56f2, 186 bytes
-MatchResultGfxC4:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC4.bin" ; $57ac, 161 bytes
-MatchResultGfxC5:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC5.bin" ; $584d, 173 bytes
-MatchResultGfxC6:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC6.bin" ; $58fa, 172 bytes
-MatchResultGfxC7:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC7.bin" ; $59a6, 169 bytes
-MatchResultGfxC8:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC8.bin" ; $5a4f, 192 bytes
-Unused_16_MatchResultGfxC:
-	INCBIN "data/engine/menus/results/lz_Unused_16_MatchResultGfxC.bin" ; $5b0f, 230 bytes
-MatchResultGfxC9:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxC9.bin" ; $5bf5, 28 bytes
+ResultFinalLabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultFinalLabelGfx.bin" ; $5541, 93 bytes
+ResultSemifinalLabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultSemifinalLabelGfx.bin" ; $559e, 164 bytes
+ResultFirstMatchLabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultFirstMatchLabelGfx.bin" ; $5642, 176 bytes
+ResultSecondMatchLabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultSecondMatchLabelGfx.bin" ; $56f2, 186 bytes
+ResultRanking1LabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultRanking1LabelGfx.bin" ; $57ac, 161 bytes
+ResultRanking2LabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultRanking2LabelGfx.bin" ; $584d, 173 bytes
+ResultRanking3LabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultRanking3LabelGfx.bin" ; $58fa, 172 bytes
+ResultRanking4LabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultRanking4LabelGfx.bin" ; $59a6, 169 bytes
+ResultPracticeMatchLabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultPracticeMatchLabelGfx.bin" ; $5a4f, 192 bytes
+Unused_16_DoubleFaultsLabelGfx:
+	INCBIN "data/engine/menus/results/lz_Unused_16_DoubleFaultsLabelGfx.bin" ; $5b0f, 230 bytes
+ResultBlankLabelGfx:
+	INCBIN "data/engine/menus/results/lz_ResultBlankLabelGfx.bin" ; $5bf5, 28 bytes
 ApplyLinkRoleToWinLoseFlag:
 	ld a, [wGameMode] ; $5c11
 	cp GAMEMODE_LINK_MATCH ; $5c14

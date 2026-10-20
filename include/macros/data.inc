@@ -280,8 +280,8 @@ ENDM
 
 ; Match-result graphics set (bank $16 loader): three LZ tile streams
 ; decompressed to VRAM $8900, $8a40, $9140 (20 tiles each). Records live in
-; GfxSetPointerTable_16 and are selected by the remapped match gfx index.
-; Usage: gfx_set tiles_lo, tiles_mid, tiles_hi
+; MatchResultBannerSetTable and are selected by the remapped match gfx index.
+; Usage: gfx_set series_line, event_line, round_label
 MACRO gfx_set
 	dw \1, \2, \3
 ENDM
