@@ -936,7 +936,7 @@ Framework-wide addresses not given above; `ram/*.asm` is authoritative.
 | `$ff8c`/`$ff8d` | `hVBlankCounter` / `hVBlankOccurred` | frame counter; barrier flag |
 | `$ff8f` | `hFrameTasksReady` | §1.3 |
 | `$ff92`/`$ff93`/`$ffa6` | `hInputRepeatButtons` / `hInputRepeatTimer` / `hInputRepeatDelay` | §1.4 |
-| `$ff95`/`$ff96`/`$ff97` | `hRomBank` / `hWramBank` / `hSramBank` | bank shadows; helpers save and restore them |
+| `$ff95`/`$ff96`/`$ff97` | `hRomBank` / `hWramBank` / `hSramBank` | bank shadows; helpers save and restore the ROM and WRAM ones, `hSramBank` is written and never read |
 | `$ff98` | `hBGViewMode` | §1.2 |
 | `$ff99` | `hVRAMQueueDirty` | copies pending; also set on overflow |
 | `$ff9e`/`$ff9a` | `hDebugStepMode` / `hDebugStepPaused` | §1.5 |
