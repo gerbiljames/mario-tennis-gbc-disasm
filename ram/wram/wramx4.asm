@@ -183,12 +183,13 @@ wBallTrailSlots:: ds 20
 
 	ds 96
 
-; Pre-rendered scoreboard columns for the flipped court. LoadCourtSceneGraphics
-; copies two $28-byte blocks here from the scene record;
-; RefreshCourtScoreboardFlipped feeds them to CopyScoreboardTileColumn, which
-; reads under WRAM bank $04 and writes under bank $02.
-; court scoreboard columns (banks $08/$0a)
-; [40 bytes] Tile half of the scoreboard columns for a court played from the far side. RefreshCourtScoreboardFlipped copies it (and the row at $de9e) into wCourtTilemapBase; $de94 is the second column
+; Pre-rendered court scoreboard columns (banks $08/$0a), copied here from the
+; scene record by LoadCourtSceneGraphics. Each half holds four 2x5 blocks:
+; flipped-view left, normal-view left, normal-view right, flipped-view right.
+; RefreshCourtScoreboard copies +10/+20 and RefreshCourtScoreboardFlipped
+; +0/+30 to tilemap row 12, columns 4 and 26, via CopyScoreboardTileColumn,
+; which reads under WRAM bank $04 and writes under bank $02.
+; [40 bytes] Tile half of the scoreboard columns, copied into wCourtTilemapBase
 wScoreboardColumnTiles:: ds 40
 	export_size wScoreboardColumnTiles
 ; [40 bytes] Attribute half of the same columns, cell for cell with wScoreboardColumnTiles, copied into wCourtAttrmapBase

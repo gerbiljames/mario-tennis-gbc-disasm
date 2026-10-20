@@ -38,9 +38,10 @@ Companion documents: `ram/*.asm` (per-address RAM notes), `save_format.md`,
 | `$04` | Not match AI. Its only match contribution is `SetupCharSpriteFromObjectDef` (`src/engine/story/actor_objdefs_04.asm`), which fills a character's sprite/animation pointers. |
 
 The engine's public API is bank `$08`'s 56-slot farptr header at `$08:$4000`
-(`src/engine/match/slots_08.asm`). Callers are the exhibition and story menus
-(`$10`, `$0a`, `$0b`, `$38`, `$01`) plus the unreachable
-`Unused_07_RunDebugTestMatch` (`$07:$5df9`).
+(`src/engine/match/slots_08.asm`), called from most banks, the shot banks
+`$20`-`$2c` included. `RunMatch`/`RunMinigameMatch` are entered from the
+exhibition and story menus (`$10`, `$0a`, `$0b`, `$38`, `$01`) plus the
+unreachable `Unused_07_RunDebugTestMatch` (`$07:$5df9`).
 
 ## How a match runs
 
