@@ -16,13 +16,13 @@ ClearRoundLabelRow:
 	ret ; $4880
 DrawPracticeMatchLabel:
 	ld hl, Text_ResultsPracticeMatch ; $4881
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 11 ; $4884
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 11 ; $4884
 	ld bc, $0020 ; $4887
 	call DrawProportionalTextLine ; $488a
 	ret ; $488d
 DrawMarioExhibitionLabel:
 	ld hl, Text_ResultsMarioExhibition ; $488e
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $4891
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4891
 	ld bc, $0020 ; $4894
 	call DrawProportionalTextLine ; $4897
 	ret ; $489a
@@ -38,19 +38,19 @@ DrawPlayerNameAndLevel:
 	ld de, wDecompBuffer tile 12 + 8 ; $48b3
 	call DecompressData ; $48b6
 	ld hl, wDecompBuffer ; $48b9
-	ld de, wDecompBuffer tile 10 ; $48bc
+	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH ; $48bc
 	ld c, $08 ; $48bf
 	call CopyTilesAndAttrsRun ; $48c1
-	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH ; $48c4
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $48c4
 	ld c, $08 ; $48c7
 	call CopyTilesAndAttrsRun ; $48c9
-	ld de, wScreenAttrmap + 7 * TILEMAP_WIDTH ; $48cc
+	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH ; $48cc
 	ld c, $08 ; $48cf
 	call CopyTilesAndAttrsRun ; $48d1
-	ld de, wScreenAttrmap + 8 * TILEMAP_WIDTH ; $48d4
+	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH ; $48d4
 	ld c, $08 ; $48d7
 	call CopyTilesAndAttrsRun ; $48d9
-	ld de, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $48dc
+	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH ; $48dc
 	ld c, $08 ; $48df
 	call CopyTilesAndAttrsRun ; $48e1
 	wram_bank WRAM_SCREEN ; $48e4
@@ -419,9 +419,9 @@ RefreshContinuePromptText:
 	xor a ; $4bd0
 	ld [wContinuePromptRow], a ; $4bd1
 	call ClearContinuePromptRows ; $4bd4
-	ld hl, wContinuePromptTilemapRow2 + 1 ; $4bd7
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $4bd7
 	call DrawContinuePromptText ; $4bda
-	ld hl, wContinuePromptKind ; $4bdd
+	ld hl, wShadowTilemap ; $4bdd
 	ld de, vBGMap0 ; $4be0
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4be3
 	call QueueVRAMCopy ; $4be5
@@ -431,11 +431,11 @@ RefreshContinuePromptText:
 	ld a, $01 ; $4bef
 	ld [wContinuePromptRow], a ; $4bf1
 	call ClearContinuePromptRows ; $4bf4
-	ld hl, wContinuePromptTilemapRow1 + 1 ; $4bf7
+	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; $4bf7
 	call DrawSaveWarningTextLine1 ; $4bfa
-	ld hl, wContinuePromptTilemapRow3 + 1 ; $4bfd
+	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4bfd
 	call DrawSaveWarningTextLine2 ; $4c00
-	ld hl, wContinuePromptKind ; $4c03
+	ld hl, wShadowTilemap ; $4c03
 	ld de, vBGMap0 ; $4c06
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4c09
 	call QueueVRAMCopy ; $4c0b

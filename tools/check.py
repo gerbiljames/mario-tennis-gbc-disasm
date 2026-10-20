@@ -134,7 +134,9 @@ after a real defect broke it:
   wram-ptrs a `ld de/hl, wX` on a banked WRAMX symbol is not dereferenced
             (`[de]`, `[hl]`, `[hl+]`, `[hl-]`, before de/hl is rewritten)
             after a `wram_bank` selecting another bank (char-data bars drew
-            through bank 6 names as wShadowTilemap cursors)
+            through bank 6 names as wShadowTilemap cursors), nor passed by
+            `call` to a listed tile-plane writer unless it is a bank-3 name
+            (results/award text went to wScreenAttrmap names)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -2036,6 +2038,18 @@ _PTR_KEEPS = {"cp", "bit", "push", "nop", "jr", "halt", "di", "ei", "ldh", "cpl"
 _PTR_WRITES = {"ld", "pop", "add", "adc", "sub", "sbc", "inc", "dec", "swap", "srl", "rr",
                "rl", "rrc", "rlc", "sla", "sra", "res", "set", "xor", "or", "and"}
 
+# Routines that select WRAM_SCREEN themselves and write tile ids through the
+# register (most also the attribute, under WRAM_COURT_PLANES at the same address), so
+# a WRAMX destination passed in must be a bank-3 name. ShiftDestForLongName
+# only steps de back before WriteTextToTilemap.
+_TILE_PLANE_WRITERS = {
+    "DrawProportionalTextLine": "de", "WriteTextToTilemap": "de", "FetchAndDrawDialogueText": "de",
+    "FormatAndDrawNumber": "de", "CopyLabelTilesToTilemap": "de", "CopyTilesAndAttrsRun": "de",
+    "WriteNameStringTiles": "de", "PlotTilesAtOffsets": "de", "ShiftDestForLongName": "de",
+    "DrawContinuePromptText": "hl", "DrawSaveWarningTextLine1": "hl", "DrawSaveWarningTextLine2": "hl",
+    "FillTilemapRun": "hl", "DrawFourTileFlagLabel": "hl",
+}
+
 
 def check_wram_pointers(fail):
     """`ld de/hl, wX` with wX in one WRAMX bank, then `[de]`/`[hl]` in
@@ -2077,11 +2091,19 @@ def check_wram_pointers(fail):
                                           f"dereferenced with bank {cur} selected")
                         del ptr[rr]
             op, _, args = code.partition(" ")
+            rr = _TILE_PLANE_WRITERS.get(args) if op in ("call", "farcall") else None
+            if rr in ptr:
+                sym, b, (f, ln) = ptr[rr]
+                if b != consts["WRAM_SCREEN"]:
+                    fail("wram-ptrs", f"{Path(f).relative_to(ROOT)}:{ln}: {sym} (WRAM bank {b}) "
+                                      f"passed to {args}, which writes the WRAM_SCREEN tile plane")
             if op in _PTR_WRITES:
                 dst = args.split(",")[0].strip()
                 for rr in ("de", "hl"):
                     if dst in (rr[0], rr[1]) or (dst == rr and op not in ("inc", "dec")):
                         ptr.pop(rr, None)
+            elif op in ("lb", "ld_tile_run"):
+                ptr.pop(args.split(",")[0].strip(), None)
             elif op == "ld_hl_indexed":
                 ptr.pop("hl", None)
             elif op == "ld_de_indexed":

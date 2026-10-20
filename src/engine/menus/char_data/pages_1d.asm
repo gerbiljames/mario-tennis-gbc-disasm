@@ -362,18 +362,18 @@ BuildCharDataSummaryFields:
 	push af ; $4451
 	ld_story_char_field CHARREC_NAME ; $4452
 	pop af ; $4465
-	ld de, wScreenAttrmap + 30 * TILEMAP_WIDTH + 11 ; $4466
+	ld de, wCharDataScreenCell + 30 * TILEMAP_WIDTH + 11 ; $4466
 	ld c, $0a ; $4469
 	call WriteNameStringTiles ; $446b
 	ld hl, CharDataSummaryFieldsTilePlot0 ; $446e
-	ld de, wScreenAttrmap + 30 * TILEMAP_WIDTH ; $4471
+	ld de, wCharDataScreenCell + 30 * TILEMAP_WIDTH ; $4471
 	ld b, $0c ; $4474
 	call PlotTilesAtOffsets ; $4476
 	push af ; $4479
 	ld_story_char_field CHARREC_LEFT_HANDED ; $447a
 	pop af ; $448d
 	ld a, [hl] ; $448e
-	ld hl, wScreenAttrmap + 31 * TILEMAP_WIDTH + 3 ; $448f
+	ld hl, wCharDataScreenCell + 31 * TILEMAP_WIDTH + 3 ; $448f
 	call DrawFourTileFlagLabel ; $4492
 	wram_bank WRAM_SCENE ; $4495
 	push af ; $449b

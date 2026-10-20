@@ -62,9 +62,6 @@ wContinuePromptRow:: db
 wContinuePromptPage:: db
 ; [8-bit] What the prompt returned: 1 confirm, $ff cancel, or wContinuePromptPage - 1
 wContinuePromptResult:: db
-	ds 28
-; [10 bytes] Row 1 of the four-row tilemap strip the continue prompt queues to $9800 from wContinuePromptKind (row 0 holds the prompt's variables). Runs on to $d03f; DrawSaveWarningTextLine1 writes it from column 1
-wContinuePromptTilemapRow1:: ds 10
 NEXTU
 ; character-data screen (banks $1a/$1c/$1d)
 ; [8-bit] Free-running counter CharDataScreenAnimTask steps each idle frame; low nibble indexes the animation table
@@ -131,14 +128,6 @@ ENDU
 ; start at the same address. The same offsets in WRAM bank $07 are the
 ; sound driver's channel state.
 UNION
-; results continue prompt rows (bank $1e)
-	ds 22
-; [32 bytes] Row 2 of the continue prompt's tilemap strip; DrawContinuePromptText writes from column 1
-wContinuePromptTilemapRow2:: ds 32
-; [32 bytes] Row 3 of the strip; DrawSaveWarningTextLine2 writes the second warning line from column 1
-wContinuePromptTilemapRow3:: ds 32
-	ds 410
-NEXTU
 ; star warp transition (bank $0e)
 	ds 22
 ; [8-bit] Y of the point the star has reached, copied into each sparkle as it spawns
@@ -270,7 +259,7 @@ NEXTU
 wExpScreenFlags:: db
 ENDU
 
-	ds 22
+	ds 49
 
 ; Scrolling text screen (the staff-roll crawl), owned by bank $03's
 ; RunScrollingTextScreen. The bank $1a EXP award screen keeps its gauge
