@@ -2,7 +2,7 @@
 """Play two builds through the story under the same inputs and report where
 the game's own events stop agreeing.
 
-The dynamic half of `make shift-test`: build a padded ROM with
+What `make event-test` runs: build a padded ROM with
 `tools/shifttest.py --out padded.gbc` (which writes padded.sym beside it),
 then
 
@@ -971,6 +971,8 @@ def main():
             res = chunk(rom, sym, args.save, state_file, int(si), int(li), args.frames, args.cap, skip)
             Path(out).write_text(json.dumps(res))
         return 0
+    if not args.rom:
+        ap.error("the rom argument is required")
     try:
         import pyboy  # noqa: F401
     except ImportError:

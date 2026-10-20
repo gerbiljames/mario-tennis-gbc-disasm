@@ -12,7 +12,7 @@ class Overlay(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         root = Path(self.tmp.name)
-        self.saved = (mods.MODS, mods.DATA, mods.PRISTINE)
+        self.saved = (mods.MODS, mods.DATA, mods.PRISTINE, mods.MANIFEST)
         mods.MODS, mods.DATA = root / "mods", root / "data"
         mods.PRISTINE = mods.DATA / ".mods-pristine"
         self.rel = Path("bank_030") / "TextStrings_30.asm"
@@ -20,7 +20,7 @@ class Overlay(unittest.TestCase):
         (mods.DATA / self.rel).write_text("extracted\n")
 
     def tearDown(self):
-        mods.MODS, mods.DATA, mods.PRISTINE = self.saved
+        mods.MODS, mods.DATA, mods.PRISTINE, mods.MANIFEST = self.saved
         self.tmp.cleanup()
 
     def mod(self, text):
@@ -62,6 +62,48 @@ class Overlay(unittest.TestCase):
         (mods.MODS / self.rel).unlink()
         self.assertEqual(mods.restore(), 1)
         self.assertEqual((mods.DATA / self.rel).read_text(), "extracted\n")
+
+    def collect_against(self, extracted, manifest):
+        """collect with extraction faked to write `extracted` {rel: bytes}."""
+        mods.MANIFEST = Path(self.tmp.name) / "data.manifest"
+        mods.MANIFEST.write_text(manifest)
+        for rel, data in extracted.items():
+            if not (mods.DATA / rel).exists():
+                (mods.DATA / rel).parent.mkdir(parents=True, exist_ok=True)
+                (mods.DATA / rel).write_bytes(data)
+
+        def fake_extract(args, **kw):
+            for rel, data in extracted.items():
+                out = Path(args[4]) / rel
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_bytes(data)
+        real = mods.subprocess.run
+        mods.subprocess.run = fake_extract
+        try:
+            return mods.collect("baserom.gbc")
+        finally:
+            mods.subprocess.run = real
+
+    def test_collect_gfx_png_edit(self):
+        png, tiles = Path("gfx") / "Tiles.png", Path("gfx") / "Tiles.bin"
+        for rel, data in ((png, b"edited png"), (tiles, b"re-encoded")):
+            (mods.DATA / rel).parent.mkdir(parents=True, exist_ok=True)
+            (mods.DATA / rel).write_bytes(data)
+        n = self.collect_against({self.rel: b"extracted\n", png: b"png", tiles: b"tiles"},
+                                 "gfx/Tiles.bin 000000 40 gfx\n")
+        self.assertEqual(n, 1)
+        self.assertEqual((mods.MODS / png).read_bytes(), b"edited png")
+        self.assertFalse((mods.MODS / tiles).exists())
+
+    def test_collect_specless_bin_edit(self):
+        blob = Path("audio") / "Blob.bin"
+        (mods.DATA / blob).parent.mkdir(parents=True)
+        (mods.DATA / blob).write_bytes(b"edited")
+        n = self.collect_against({self.rel: b"extracted\n", blob: b"rom bytes"},
+                                 "audio/Blob.bin 000000 9\n")
+        self.assertEqual(n, 1)
+        self.assertEqual((mods.MODS / blob).read_bytes(), b"edited")
+        self.assertEqual((mods.PRISTINE / blob).read_bytes(), b"rom bytes")
 
     def test_apply_is_idempotent(self):
         self.mod("edited\n")

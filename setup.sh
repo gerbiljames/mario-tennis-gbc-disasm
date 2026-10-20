@@ -33,5 +33,9 @@ if [ "$BASEROM" != "baserom.gbc" ]; then
     cp "$BASEROM" baserom.gbc
 fi
 
-python3 tools/extract.py baserom.gbc data.manifest data/
+PYTHON=python3
+if [ -x .venv/bin/python ]; then
+    PYTHON=.venv/bin/python
+fi
+"$PYTHON" tools/extract.py baserom.gbc data.manifest data/
 echo "setup complete: data extracted to data/"

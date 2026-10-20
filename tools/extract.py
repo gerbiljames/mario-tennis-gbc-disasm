@@ -6,7 +6,6 @@ Lines starting with # are comments. Entries ending in .asm are rendered as
 readable `db` source (game text) instead of raw bytes; like every other file
 under data/, they are generated from the user's ROM and never committed.
 """
-import math
 import sys
 import re
 from pathlib import Path
@@ -680,6 +679,7 @@ def main() -> int:
             png = dest.with_suffix(".png")
             grid = dest.with_suffix(".tilemap")
             if (_gfx_edited(dest, png, data, gfx) if is_gfx and gfx_ok
+                    else _edited(dest, data) if is_gfx
                     else _grid_edited(dest, grid, data) if is_grid
                     else _edited(dest, (data if not spec and not path.endswith(".asm")
                                         else (render_spec(data, spec, dest.stem, off) if spec

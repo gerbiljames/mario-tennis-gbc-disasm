@@ -26,10 +26,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 MODS, DATA = ROOT / "mods", ROOT / "data"
+MANIFEST = ROOT / "data.manifest"
 # The extracted files the overlay has covered, kept so that removing a mod
 # restores what extraction gave rather than leaving the edit in data/.
 PRISTINE = DATA / ".mods-pristine"
-SIDECARS = (".bin", ".inc", ".preview.png")   # generated from the file beside them
+SIDECARS = (".inc", ".preview.png")   # generated from the file beside them
 
 
 def overlay_files():
@@ -66,17 +67,35 @@ def restore():
     return n
 
 
+def derived_bins(manifest):
+    """The .bin files make encodes from a PNG or tilemap grid beside them."""
+    out = set()
+    for line in manifest.read_text().splitlines():
+        parts = line.split()
+        if (len(parts) > 3 and not parts[0].startswith("#") and parts[0].endswith(".bin")
+                and parts[3].partition(":")[0] in ("gfx", "tilemap")):
+            out.add(Path(parts[0]))
+    return out
+
+
 def collect(baserom):
+    try:
+        import PIL  # noqa: F401
+    except ImportError:
+        sys.exit("mods: collect needs Pillow to compare graphics PNGs "
+                 "(run it with .venv/bin/python)")
+    derived = derived_bins(MANIFEST)
     with tempfile.TemporaryDirectory() as tmp:
         subprocess.run([sys.executable, str(ROOT / "tools" / "extract.py"), baserom,
-                        str(ROOT / "data.manifest"), tmp], check=True, capture_output=True)
+                        str(MANIFEST), tmp], check=True, capture_output=True)
         fresh = Path(tmp)
         n = 0
         for p in sorted(DATA.rglob("*")):
             if not p.is_file():
                 continue
             rel = p.relative_to(DATA)
-            if str(rel).endswith(SIDECARS) or rel.parts[0] in ("gfx", PRISTINE.name):
+            if (str(rel).endswith(SIDECARS) or rel in derived
+                    or rel.parts[0] == PRISTINE.name):
                 continue
             ref = fresh / rel
             if ref.exists() and ref.read_bytes() == p.read_bytes():

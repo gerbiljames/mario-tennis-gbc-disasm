@@ -184,7 +184,7 @@ class TileImages(unittest.TestCase):
             with open(grid) as f:
                 gtext = f.read()
             with open(grid, "w") as f:
-                f.write(gtext.replace("tilemap_row $", "tilemap_row $ff, $", 1).replace("$ff, $", "$ff,$", 0))
+                f.write(gtext.replace("tilemap_row $", "tilemap_row $ff, $", 1))
             stale = os.path.join(out, "bank_000", "old.bin")
             with open(stale, "wb") as f:
                 f.write(b"x")

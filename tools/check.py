@@ -605,7 +605,6 @@ KNOWN_COLLAPSED_BRANCHES = {
 _GLOBAL_RE = re.compile(r"^([A-Za-z_][\w]*):$")
 _LOCAL_RE = re.compile(r"^(\.[A-Za-z_][\w.]*):$")
 _ADDR_RE = re.compile(r"; \$([0-9a-f]{4})\s*$")
-_BRANCH_RE = re.compile(r"^\t(jr|jp) (nz|z|nc|c), ([.A-Za-z_][\w.]*) ; \$([0-9a-f]{4})$")
 
 
 def check_layout(manifest, fail):
@@ -656,6 +655,9 @@ def check_gfx(manifest, fail):
         if got != want:
             fail("gfx", f"{path}: PNG does not encode back to the blob "
                         f"({len(got)} vs {len(want)} bytes)")
+    if not n and any(spec == "gfx" or (spec or "").startswith("gfx:")
+                     for _p, _o, _l, spec in manifest):
+        fail("gfx", "no graphics PNGs in data/ (extract with Pillow: ./setup.sh)")
     return n
 
 
@@ -837,6 +839,12 @@ _SLOT_CONSUMERS = frozenset(
     "Unused_00_FarReadPtrIndexed".split())
 
 
+def _drop_unresolved(names, list_name, check, fail):
+    syms = {name for _bank, _addr, name in read_sym()}
+    for name in sorted(set(names) - syms):
+        fail(check, f"{name}: no longer a symbol -- drop it from {list_name}")
+
+
 def _is_label(arg):
     return arg.startswith(".") or (arg[0].isupper() and any(c.islower() for c in arg))
 
@@ -867,6 +875,7 @@ def check_literal_pointers(fail):
                 k = "num" if _NUM_RE.fullmatch(arg) else "label" if _is_label(arg) else "other"
                 kinds.setdefault((m.group(1), i), set()).add(k)
     label_only = {k for k, v in kinds.items() if "label" in v and "other" not in v}
+    _drop_unresolved(_SLOT_CONSUMERS, "_SLOT_CONSUMERS", "literals", fail)
     by_addr, ram_by_addr = {}, {}
     for bank, addr, name in read_sym():
         if not name.startswith(("FarPtr_", "DataPtr_")):
@@ -977,6 +986,7 @@ _DMA_ROUTINES = frozenset({"QueueVRAMCopy", "StartVRAMDMATransfer", "StartVRAMDM
 def check_dma_alignment(fail):
     """A label passed as the source of a VRAM DMA must be declared aligned."""
     aligned, lines_of = set(), []
+    _drop_unresolved(_DMA_ROUTINES, "_DMA_ROUTINES", "dma", fail)
     for h in holders():
         lines = bank_lines(h)[0]
         lines_of.append((bank_of(h), lines))
@@ -995,7 +1005,7 @@ def check_dma_alignment(fail):
     n = 0
     for bank, lines in lines_of:
         for i, line in enumerate(lines):
-            m = re.match(r"\tld hl, ([A-Z]\w*)(?: \+ [^;]+)? ;", line)
+            m = re.match(r"\tld hl, ([A-Z]\w*)(?: \+ [^;]+)?(?: ;|$)", line)
             if not m or m.group(1).startswith(("w", "v", "h")):
                 continue
             for nxt in lines[i + 1:i + 6]:
@@ -1158,9 +1168,9 @@ def _raw_id_uses():
     return uses
 
 
-def _raw_data_ids():
+def _raw_data_ids(seen):
     """[(family prefix, operand, where)] over the data rows RAW_ID_MACRO_ARGS,
-    RAW_ID_TABLE_KINDS and RAW_ID_TABLES name."""
+    RAW_ID_TABLE_KINDS and RAW_ID_TABLES name; `seen` gets the keys used."""
     out = []
     for holder in holders():
         lines, origin = bank_lines(holder)
@@ -1168,10 +1178,14 @@ def _raw_data_ids():
         for i, line in enumerate(lines):
             if m := _GLOBAL_RE.match(line):
                 table = RAW_ID_TABLES.get(m.group(1))
-                if not table and i + 1 < len(lines):
+                if table:
+                    seen.add(m.group(1))
+                elif i + 1 < len(lines):
                     kind = re.search(r"\(([^)]*)\)\s*$", lines[i + 1])
-                    table = kind and next((p for k, p in RAW_ID_TABLE_KINDS.items()
-                                           if kind.group(1).startswith(k)), None)
+                    key = kind and next((k for k in RAW_ID_TABLE_KINDS
+                                         if kind.group(1).startswith(k)), None)
+                    table = key and RAW_ID_TABLE_KINDS[key]
+                    seen.add(key)
                 continue
             t = line.split(";")[0].strip()
             if not t:
@@ -1216,7 +1230,8 @@ def check_raw_ids(fail):
             names = names_of(_number(op), families)
             if names and (var, op) not in KNOWN_RAW_IDS:
                 fail("raw-ids", f"{where}: {var} {op} -- {names[0]}?")
-    for prefix, op, where in _raw_data_ids():
+    seen = set()
+    for prefix, op, where in _raw_data_ids(seen):
         n += 1
         if _NUMBER_RE.fullmatch(op):
             names = [k for k, x in values.items() if x == _number(op) and k.startswith(prefix)]
@@ -1224,6 +1239,10 @@ def check_raw_ids(fail):
                 fail("raw-ids", f"{where}: {op} -- {names[0]}?")
         elif op not in values or not op.startswith(prefix):
             fail("raw-ids", f"{where}: {op} is not a {prefix}* id")
+    for key in sorted((set(RAW_ID_TABLES) | set(RAW_ID_TABLE_KINDS)) - seen):
+        fail("raw-ids", f"{key}: matches no table -- drop it from RAW_ID_TABLES/_KINDS")
+    for var in sorted(set(RAW_ID_FAMILIES) - set(uses)):
+        fail("raw-ids", f"{var} is no longer used -- drop it from RAW_ID_FAMILIES")
     for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
         fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
     return n
