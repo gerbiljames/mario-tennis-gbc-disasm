@@ -5,7 +5,7 @@ RecordReturnAceStat:
 	ld a, POINTWINNER_RETURN_ACE ; $5c74
 	ld [wPointWinnerShotType], a ; $5c76
 	ld hl, wCharacter1ReturnAces ; $5c79
-	jp RecordDropShotWinnerStat.bumpStat ; $5c7c
+	jp BumpCharStat ; $5c7c
 RecordSmashAceStat:
 	ld a, [wCurrentShotType] ; $5c7f
 	cp SHOTTYPE_SMASH ; $5c82
@@ -13,7 +13,7 @@ RecordSmashAceStat:
 	ld a, POINTWINNER_SMASH_ACE ; $5c85
 	ld [wPointWinnerShotType], a ; $5c87
 	ld hl, wCharacter1SmashAces ; $5c8a
-	jp RecordDropShotWinnerStat.bumpStat ; $5c8d
+	jp BumpCharStat ; $5c8d
 RecordLobWinnerStat:
 	ld a, [wCurrentShotType] ; $5c90
 	cp SHOTTYPE_LOB ; $5c93
@@ -21,7 +21,7 @@ RecordLobWinnerStat:
 	ld a, POINTWINNER_LOB ; $5c96
 	ld [wPointWinnerShotType], a ; $5c98
 	ld hl, wCharacter1LobShotWinners ; $5c9b
-	jp RecordDropShotWinnerStat.bumpStat ; $5c9e
+	jp BumpCharStat ; $5c9e
 RecordDropShotWinnerStat:
 	ld a, [wCurrentShotType] ; $5ca1
 	cp SHOTTYPE_DROP ; $5ca4
@@ -29,8 +29,8 @@ RecordDropShotWinnerStat:
 	ld a, POINTWINNER_DROP_SHOT ; $5ca7
 	ld [wPointWinnerShotType], a ; $5ca9
 	ld hl, wCharacter1DropShotWinners ; $5cac
-	jp .bumpStat ; $5caf
-.bumpStat:
+	jp BumpCharStat ; $5caf
+BumpCharStat:
 	ld a, [wLastShotCharIndex] ; $5cb2
 	add a ; $5cb5
 	add a ; $5cb6

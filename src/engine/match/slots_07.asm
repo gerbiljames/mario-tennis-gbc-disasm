@@ -17,8 +17,8 @@
 	farptr RunLinkInputFrame ; $4020
 	farptr UpdateLinkSession ; $4022
 	farptr EndLinkSession ; $4024
-	farptr Unused_07_ExchangeHandshakeBlockMaster ; $4026
-	farptr Unused_07_ExchangeHandshakeBlockSlave ; $4028
+	farptr Unused_07_ExchangeTestBlockMaster ; $4026
+	farptr Unused_07_ExchangeTestBlockSlave ; $4028
 	farptr Unused_07_ExchangeLinkBlockToWram5 ; $402a
 	farptr PrimeSlaveSerialReply ; $402c
 	farptr PrepareLinkStatePayload ; $402e

@@ -169,7 +169,7 @@ UpdateMatchFrame:
 	call HandleBallHitEvent ; $420c
 	call HandleBallTouchCharEvent ; $420f
 	call UpdateBallVisuals ; $4212
-	call TickRallyTimers ; $4215
+	call HandleBallNetCrossEvent ; $4215
 	call HandleBallBounceEvent ; $4218
 	ld d, MODEHOOK_PER_FRAME ; $421b
 	call CallModeHook ; $421d
@@ -192,11 +192,11 @@ UpdateMatchFrame:
 	call DrawMarkersAndShadows ; $423e
 .done:
 	ret ; $4241
-TickRallyTimers:
+HandleBallNetCrossEvent:
 	ld a, [wBallCrossedNetFlag] ; $4242
 	and a ; $4245
 	ret z ; $4246
-	ld hl, wRallyNetFrames ; $4247
+	ld hl, wRallyNetCrossings ; $4247
 	ld a, [hl] ; $424a
 	cp $64 ; $424b
 	jr nc, .checkFirstShot ; $424d
@@ -207,20 +207,20 @@ TickRallyTimers:
 	jr nz, .modeHook ; $4255
 	ld a, [wPointOutcome] ; $4257
 	and a ; $425a
-	jr nz, .checkBounce ; $425b
+	jr nz, .checkNetCord ; $425b
 	ld a, $01 ; $425d
 	ld [wCameraFollowBall], a ; $425f
-.checkBounce:
+.checkNetCord:
 	ld a, [wBallTouchedNetFlag] ; $4262
 	and a ; $4265
 	jr z, .modeHook ; $4266
-	ld hl, SetCharStateForRallyTick ; $4268
+	ld hl, SetCharStandbyAfterServeNetCord ; $4268
 	call ForEachCharBank ; $426b
 .modeHook:
-	ld d, MODEHOOK_RALLY_TICK ; $426e
+	ld d, MODEHOOK_NET_CROSS ; $426e
 	call CallModeHook ; $4270
 	ret ; $4273
-SetCharStateForRallyTick:
+SetCharStandbyAfterServeNetCord:
 	ld a, CHARSTATE_STANDBY ; $4274
 	call SetCharState ; $4276
 	ret ; $4279
@@ -260,7 +260,7 @@ HandleBallHitEvent:
 	jr z, .resetCourtLimits ; $42d1
 	ret ; $42d3
 .specialShot:
-	ld a, [wSpecialShotFlag] ; $42d4
+	ld a, [wPowerServeFlag] ; $42d4
 	and a ; $42d7
 	jr z, .done ; $42d8
 	ld a, BANNER_POWER_SERVE ; $42da
@@ -433,18 +433,18 @@ AdvanceMatchRng:
 ReadMatchInputHeld:
 	ldh a, [hLinkExchangeActive] ; $440d
 	and a ; $440f
-	jr nz, ReadScriptedMatchInput ; $4410
+	jr nz, ReadLinkMatchInput ; $4410
 	ldh a, [hPlayerInputFlags] ; $4412
 	ret ; $4414
 ReadMatchInputPressed:
 	ldh a, [hLinkExchangeActive] ; $4415
 	and a ; $4417
-	jr nz, ReadScriptedMatchInput ; $4418
+	jr nz, ReadLinkMatchInput ; $4418
 	ldh a, [hInputRisingEdge] ; $441a
 	ret ; $441c
 ReadMatchInputRepeat:
 	ldh a, [hLinkExchangeActive] ; $441d
 	and a ; $441f
-	jr nz, ReadScriptedMatchInput ; $4420
+	jr nz, ReadLinkMatchInput ; $4420
 	ldh a, [hInputPressed] ; $4422
 	ret ; $4424

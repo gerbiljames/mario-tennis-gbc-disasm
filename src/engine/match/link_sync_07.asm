@@ -61,7 +61,7 @@ ExchangeLinkFrameByteMaster:
 	jr z, .checkDuplicate ; $46ad
 .badReply:
 	call LinkErrorReset ; $46af
-	ld hl, hLinkCounter ; $46b2
+	ld hl, hLinkRetryCount ; $46b2
 	inc [hl] ; $46b5
 	ld a, [hl] ; $46b6
 	cp $0a ; $46b7
@@ -77,7 +77,7 @@ ExchangeLinkFrameByteMaster:
 	cp b ; $46c9
 	jr nz, .store ; $46ca
 	and LINKTAG_PAYLOAD ; $46cc
-	ld hl, hLinkCounter ; $46ce
+	ld hl, hLinkRetryCount ; $46ce
 	inc [hl] ; $46d1
 	ld a, [hl] ; $46d2
 	cp $02 ; $46d3
@@ -93,7 +93,7 @@ ExchangeLinkFrameByteMaster:
 	ldh [hLinkLastRxByte], a ; $46e7
 	ldh [hLinkLastRxMirror], a ; $46e9
 	xor a ; $46eb
-	ldh [hLinkCounter], a ; $46ec
+	ldh [hLinkRetryCount], a ; $46ec
 	ret ; $46ee
 ExchangeLinkFrameByteSlave:
 	call AwaitSerialByte ; $46ef
@@ -126,7 +126,7 @@ ExchangeLinkFrameByteSlave:
 	ldh [hLinkLastRxByte], a ; $471c
 	ldh [hLinkLastRxMirror], a ; $471e
 	xor a ; $4720
-	ldh [hLinkCounter], a ; $4721
+	ldh [hLinkRetryCount], a ; $4721
 	ei ; $4723
 	ret ; $4724
 SyncLinkFrameMaster:
@@ -403,7 +403,7 @@ EndLinkSession:
 	ld [wLinkSessionActive], a ; $48f7
 	call InitSerialLink ; $48fa
 	ret ; $48fd
-Unused_07_ExchangeHandshakeBlockMaster:
+Unused_07_ExchangeTestBlockMaster:
 	ld hl, wTextBuffer ; $48fe
 	ld c, $28 ; $4901
 	ld a, $02 ; $4903
@@ -415,7 +415,7 @@ Unused_07_ExchangeHandshakeBlockMaster:
 	ld c, $28 ; $490c
 	call ExchangeNibbleBlockMaster ; $490e
 	ret ; $4911
-Unused_07_ExchangeHandshakeBlockSlave:
+Unused_07_ExchangeTestBlockSlave:
 	ld hl, wTextBuffer ; $4912
 	ld c, $28 ; $4915
 	ld a, $08 ; $4917
@@ -446,10 +446,10 @@ Unused_07_ExchangeLinkBlockToWram5:
 	jr z, .asMaster ; $4945
 	call LinkErrorReset ; $4947
 .asMaster:
-	call Unused_07_ExchangeHandshakeBlockMaster ; $494a
+	call Unused_07_ExchangeTestBlockMaster ; $494a
 	jr .copyToWram ; $494d
 .asSlave:
-	call Unused_07_ExchangeHandshakeBlockSlave ; $494f
+	call Unused_07_ExchangeTestBlockSlave ; $494f
 .copyToWram:
 	wram_bank WRAM_TEXT ; $4952
 	ld hl, wTextBuffer + 80 ; $4958

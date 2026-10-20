@@ -1,6 +1,6 @@
 ResetPointState:
 	xor a ; $4cb9
-	ld [wRallyNetFrames], a ; $4cba
+	ld [wRallyNetCrossings], a ; $4cba
 	ld [wBallBounceCount], a ; $4cbd
 	ld [wRallyLength], a ; $4cc0
 	ld [wBallHitEvent], a ; $4cc3
@@ -244,10 +244,10 @@ ShowPointScoreSequence:
 	call StepMatchFramesSkippable ; $4eb2
 	ld a, [wDeuceIndicator] ; $4eb5
 	and a ; $4eb8
-	jr z, .case6 ; $4eb9
+	jr z, .updateScore ; $4eb9
 	sound SFX_DEUCE ; $4ebb
 	call StepMatchFrame ; $4ebd
-.case6:
+.updateScore:
 	farcall UpdateScorePanelDisplay ; $4ec0
 	ld a, 10 ; $4ec3
 	call StepMatchFrames ; $4ec5
@@ -258,20 +258,20 @@ ShowPointScoreSequence:
 ShowMatchEndSequence:
 	ld a, [wGameMode] ; $4ed1
 	cp GAMEMODE_MARIO_MINIGAME ; $4ed4
-	jr nz, .case9 ; $4ed6
+	jr nz, .tennisMatch ; $4ed6
 	ld a, [wMatchWinLoseFlag] ; $4ed8
 	add a ; $4edb
-	jr nc, .case8 ; $4edc
+	jr nc, .levelCleared ; $4edc
 	ld d, BANNER_GAME_OVER ; $4ede
 	farcall ShowMinigamePointResult ; $4ee0
 	ret ; $4ee3
-.case8:
+.levelCleared:
 	ld a, [wMinigameLevel] ; $4ee4
 	add BANNER_LEVEL_1_CLEARED ; $4ee7
 	ld d, a ; $4ee9
 	farcall ShowMinigamePointResult ; $4eea
 	ret ; $4eed
-.case9:
+.tennisMatch:
 	ld a, BANNER_MATCH ; $4eee
 	farcall ShowCourtBanner ; $4ef0
 	ld a, 10 ; $4ef3
@@ -406,7 +406,7 @@ SpreadTeammateTargets:
 	jumptable [wOnCourtCharCountMinus1] ; $4ff5
 	dw RetStub ; $4ff9 jumptable
 	dw RetStub ; $4ffb jumptable
-	dw SpreadFarTeamPair ; $4ffd jumptable
+	dw SpreadPlayer2TeamPair ; $4ffd jumptable
 	dw SpreadBothTeamPairs ; $4fff jumptable
 SpreadBothTeamPairs:
 	wram_bank WRAM_CHAR0 ; $5001
@@ -430,7 +430,7 @@ SpreadBothTeamPairs:
 	ld a, c ; $5031
 	ld [hl+], a ; $5032
 	ld [hl], b ; $5033
-SpreadFarTeamPair:
+SpreadPlayer2TeamPair:
 	wram_bank WRAM_CHAR1 ; $5034
 	ld hl, wCharPosDepth + 1 ; $503a
 	ld a, [hl+] ; $503d

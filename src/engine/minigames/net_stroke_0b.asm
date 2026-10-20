@@ -14,7 +14,7 @@ NetGamePractice3Hooks:
 	dw NetGamePractice3Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw NetGamePractice3Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw NetGamePractice3Hook_Bounce ; MODEHOOK_BOUNCE
-	dw NetGamePractice3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw NetGamePractice3Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named net_game_practice2_hook_minigame_start, NetGamePractice3Hook_MinigameStart ; $6174
@@ -116,8 +116,8 @@ NetGamePractice3EvaluateResult:
 .lessonFailed:
 	ld a, WINLOSE_LOSE ; $6237
 	ret ; $6239
-NetGamePractice3Hook_RallyTick:
-	call NetGamePractice3JudgeOnRallyTick ; $623a
+NetGamePractice3Hook_NetCross:
+	call NetGamePractice3JudgeOnNetCross ; $623a
 	ret ; $623d
 NetGamePractice3Hook_Bounce:
 	call NetGamePractice3JudgeOnBounce ; $623e
@@ -154,9 +154,9 @@ NetGamePractice3JudgeOnBounce:
 	call NetGamePractice3JudgePoint ; $62d5
 	ld [wDrillPointJudgement], a ; $62d8
 	ret ; $62db
-NetGamePractice3JudgeOnRallyTick:
+NetGamePractice3JudgeOnNetCross:
 	ret ; $62dc
-	ld a, JUDGEEVENT_RALLY_TICK ; $62dd
+	ld a, JUDGEEVENT_NET_CROSS ; $62dd
 	call NetGamePractice3JudgePoint ; $62df
 	ld [wDrillPointJudgement], a ; $62e2
 	ret ; $62e5
@@ -177,7 +177,7 @@ NetGamePractice3JudgePoint:
 	dw NetGamePractice3JudgePoint.result0 ; $62fb jumptable
 	dw NetGamePractice3Cases1 ; $62fd jumptable
 	dw NetGamePractice3Cases1.checkBallBounceCount ; $62ff jumptable
-	dw NetGamePractice3Cases1.ignoreRallyTick ; $6301 jumptable
+	dw NetGamePractice3Cases1.ignoreNetCross ; $6301 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6303
 	ld hl, NetGamePractice3JudgePointMessages ; $6306
@@ -219,7 +219,7 @@ NetGamePractice3Cases1:
 	jp z, DrillPointLost_6 ; $6353
 	xor a ; $6356
 	ret ; $6357
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $6358
 	ret ; $6359
 .dispatchResult:
@@ -228,7 +228,7 @@ NetGamePractice3Cases1:
 	dw NetGamePractice3Cases1.checkPointOutcome ; $635d jumptable
 	dw NetGamePractice3Cases2 ; $635f jumptable
 	dw NetGamePractice3Cases2.ignoreBounce ; $6361 jumptable
-	dw NetGamePractice3Cases2.ignoreRallyTick ; $6363 jumptable
+	dw NetGamePractice3Cases2.ignoreNetCross ; $6363 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6365
 	ld hl, NetGamePractice3Cases1Messages ; $6368
@@ -251,7 +251,7 @@ NetGamePractice3Cases2:
 .ignoreBounce:
 	xor a ; $6390
 	ret ; $6391
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $6392
 	ret ; $6393
 .dispatchResult:
@@ -260,7 +260,7 @@ NetGamePractice3Cases2:
 	dw NetGamePractice3Cases2.checkPointOutcome ; $6397 jumptable
 	dw NetGamePractice3Cases3 ; $6399 jumptable
 	dw NetGamePractice3Cases3.ignoreBounce ; $639b jumptable
-	dw NetGamePractice3Cases3.ignoreRallyTick ; $639d jumptable
+	dw NetGamePractice3Cases3.ignoreNetCross ; $639d jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $639f
 	ld hl, NetGamePractice3Cases2Messages ; $63a2
@@ -298,7 +298,7 @@ NetGamePractice3Cases3:
 .ignoreBounce:
 	xor a ; $63ec
 	ret ; $63ed
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $63ee
 	ret ; $63ef
 Unused_0b_DrillPointWon_6:
@@ -323,7 +323,7 @@ StrokeMatch1Hooks:
 	dw StrokeMatch1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw StrokeMatch1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw StrokeMatch1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw StrokeMatch1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw StrokeMatch1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 StrokeMatch1Hook_MinigameStart:
@@ -382,8 +382,8 @@ StrokeMatch1Hook_PointEnd:
 	ld a, MATCHABORT_MATCH ; $6477
 	ld [wMatchAbortFlag], a ; $6479
 	ret ; $647c
-StrokeMatch1Hook_RallyTick:
-	call StrokeMatch1JudgeOnRallyTick ; $647d
+StrokeMatch1Hook_NetCross:
+	call StrokeMatch1JudgeOnNetCross ; $647d
 	ret ; $6480
 StrokeMatch1Hook_Bounce:
 	call StrokeMatch1JudgeOnBounce ; $6481
@@ -452,9 +452,9 @@ StrokeMatch1JudgeOnBounce:
 	call StrokeMatch1JudgePoint ; $64f4
 	ld [wDrillPointJudgement], a ; $64f7
 	ret ; $64fa
-StrokeMatch1JudgeOnRallyTick:
+StrokeMatch1JudgeOnNetCross:
 	ret ; $64fb
-	ld a, JUDGEEVENT_RALLY_TICK ; $64fc
+	ld a, JUDGEEVENT_NET_CROSS ; $64fc
 	call StrokeMatch1JudgePoint ; $64fe
 	ld [wDrillPointJudgement], a ; $6501
 	ret ; $6504
@@ -477,7 +477,7 @@ StrokeMatch1JudgePoint:
 	dw StrokeMatch1JudgePoint.rally1 ; $6522 jumptable
 	dw StrokeMatch1Cases1 ; $6524 jumptable
 	dw StrokeMatch1Cases1.ignoreBounce ; $6526 jumptable
-	dw StrokeMatch1Cases1.ignoreRallyTick ; $6528 jumptable
+	dw StrokeMatch1Cases1.ignoreNetCross ; $6528 jumptable
 .rally1:
 	ld a, [wPointOutcome] ; $652a
 	ld hl, StrokeMatch1JudgePointMessages ; $652d
@@ -500,7 +500,7 @@ StrokeMatch1Cases1:
 .ignoreBounce:
 	xor a ; $6555
 	ret ; $6556
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $6557
 	ret ; $6558
 .rally2:
@@ -509,7 +509,7 @@ StrokeMatch1Cases1:
 	dw StrokeMatch1Cases1.checkPointOutcome ; $655c jumptable
 	dw StrokeMatch1Cases2 ; $655e jumptable
 	dw StrokeMatch1Cases2.judgeBounce ; $6560 jumptable
-	dw StrokeMatch1Cases2.ignoreRallyTick ; $6562 jumptable
+	dw StrokeMatch1Cases2.ignoreNetCross ; $6562 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6564
 	ld hl, StrokeMatch1Cases1Messages ; $6567
@@ -551,7 +551,7 @@ StrokeMatch1Cases2:
 	jp z, StrokeMatch1Cases4.abortLose ; $65b8
 	xor a ; $65bb
 	ret ; $65bc
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $65bd
 	ret ; $65be
 .maskClear:
@@ -560,7 +560,7 @@ StrokeMatch1Cases2:
 	dw StrokeMatch1Cases2.queuePointOutcomeMessage ; $65c2 jumptable
 	dw StrokeMatch1Cases3 ; $65c4 jumptable
 	dw StrokeMatch1Cases3.judgeBounce ; $65c6 jumptable
-	dw StrokeMatch1Cases3.ignoreRallyTick ; $65c8 jumptable
+	dw StrokeMatch1Cases3.ignoreNetCross ; $65c8 jumptable
 .queuePointOutcomeMessage:
 	ld a, [wPointOutcome] ; $65ca
 	ld hl, StrokeMatch1Cases2Messages ; $65cd
@@ -599,7 +599,7 @@ StrokeMatch1Cases3:
 	jp z, StrokeMatch1Cases4.abortWin ; $6618
 	xor a ; $661b
 	ret ; $661c
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $661d
 	ret ; $661e
 .dispatchResult:
@@ -608,7 +608,7 @@ StrokeMatch1Cases3:
 	dw StrokeMatch1Cases3.queuePointOutcomeMessage ; $6622 jumptable
 	dw StrokeMatch1Cases4 ; $6624 jumptable
 	dw StrokeMatch1Cases4.checkPointOutcome ; $6626 jumptable
-	dw StrokeMatch1Cases4.ignoreRallyTick ; $6628 jumptable
+	dw StrokeMatch1Cases4.ignoreNetCross ; $6628 jumptable
 .queuePointOutcomeMessage:
 	ld a, [wPointOutcome] ; $662a
 	ld hl, StrokeMatch1Cases3Messages ; $662d
@@ -647,7 +647,7 @@ StrokeMatch1Cases4:
 	jp z, .abortLose ; $6678
 	xor a ; $667b
 	ret ; $667c
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $667d
 	ret ; $667e
 .abortWin:

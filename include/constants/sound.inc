@@ -142,7 +142,7 @@ def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNe
 ; The on-court object cues, from the *ObjTemplate* tables of bank $09 (the
 ; sound field LoadObjTemplate_09 plays as the object appears).
 	const_def $66
-	const SFX_SCORE_DISPLAY          ; $66 the point-score digit objects appearing (ObjTemplates_09, the game-score display)
+	const SFX_SCORE_DISPLAY          ; $66 the score panel's objects appearing (ScorePanelCharIconObjTemplates_09, ScoreDigitsObjTemplates_09)
 	const SFX_BANNER_WINNER          ; $67 the SERVICE/RETURN/SMASH ACE, LOB and DROP SHOT banners (rows 24-28)
 	const SFX_BANNER_POINT_SITUATION ; $68 the BREAK/GAME/SET/MATCH POINT banners (rows 7-10)
 	const_def $6a

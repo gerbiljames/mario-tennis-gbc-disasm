@@ -35,14 +35,14 @@ ClearSpriteSlots:
 	ld [wCharAirShadowSlot], a ; $6366
 	ld [wCharGroundShadowSlot], a ; $6369
 	ret ; $636c
-DrawNearTeamChars:
+DrawPlayer1TeamChars:
 	ld hl, wCharDepthKey ; $636d
 	wram_bank WRAM_CHAR2 ; $6370
 	ld b, [hl] ; $6376
 	wram_bank WRAM_CHAR0 ; $6377
 	ld a, [hl] ; $637d
 	cp b ; $637e
-	jr c, DrawNearTeamCharsSwapped ; $637f
+	jr c, DrawPlayer1TeamCharsSwapped ; $637f
 	wram_bank WRAM_CHAR0 ; $6381
 	ld hl, wCharSpriteSlot ; $6387
 	call DrawCharSprite ; $638a
@@ -51,7 +51,7 @@ DrawNearTeamChars:
 	call DrawCharSprite ; $6396
 	wram_bank WRAM_CHAR0 ; $6399
 	ret ; $639f
-DrawNearTeamCharsSwapped:
+DrawPlayer1TeamCharsSwapped:
 	wram_bank WRAM_CHAR2 ; $63a0
 	ld hl, wCharSpriteSlot ; $63a6
 	call DrawCharSprite ; $63a9
@@ -60,14 +60,14 @@ DrawNearTeamCharsSwapped:
 	call DrawCharSprite ; $63b5
 	wram_bank WRAM_CHAR0 ; $63b8
 	ret ; $63be
-DrawFarTeamChars:
+DrawPlayer2TeamChars:
 	ld hl, wCharDepthKey ; $63bf
 	wram_bank WRAM_CHAR3 ; $63c2
 	ld b, [hl] ; $63c8
 	wram_bank WRAM_CHAR1 ; $63c9
 	ld a, [hl] ; $63cf
 	cp b ; $63d0
-	jr c, DrawFarTeamCharsSwapped ; $63d1
+	jr c, DrawPlayer2TeamCharsSwapped ; $63d1
 	wram_bank WRAM_CHAR1 ; $63d3
 	ld hl, wCharSpriteSlot ; $63d9
 	call DrawCharSprite ; $63dc
@@ -76,7 +76,7 @@ DrawFarTeamChars:
 	call DrawCharSprite ; $63e8
 	wram_bank WRAM_CHAR0 ; $63eb
 	ret ; $63f1
-DrawFarTeamCharsSwapped:
+DrawPlayer2TeamCharsSwapped:
 	wram_bank WRAM_CHAR3 ; $63f2
 	ld hl, wCharSpriteSlot ; $63f8
 	call DrawCharSprite ; $63fb
@@ -105,36 +105,36 @@ DrawActorsByDepth:
 	wram_bank WRAM_CHAR0 ; $6439
 	ld a, [hl] ; $643f
 	cp b ; $6440
-	jr nc, .nearFirst ; $6441
+	jr nc, .player1First ; $6441
 	ld a, [wPointOutcome] ; $6443
 	and a ; $6446
-	jr z, .farBallNear ; $6447
-	call DrawFarTeamChars ; $6449
-	call DrawNearTeamChars ; $644c
+	jr z, .player2BallPlayer1 ; $6447
+	call DrawPlayer2TeamChars ; $6449
+	call DrawPlayer1TeamChars ; $644c
 	call DrawBallAndEffects ; $644f
 	ret ; $6452
-.farBallNear:
-	call DrawFarTeamChars ; $6453
+.player2BallPlayer1:
+	call DrawPlayer2TeamChars ; $6453
 	call DrawBallAndEffects ; $6456
-	call DrawNearTeamChars ; $6459
+	call DrawPlayer1TeamChars ; $6459
 	ret ; $645c
-.nearFirst:
+.player1First:
 	ld a, [wPointOutcome] ; $645d
 	and a ; $6460
-	jr z, .nearBallFar ; $6461
-	call DrawNearTeamChars ; $6463
-	call DrawFarTeamChars ; $6466
+	jr z, .player1BallPlayer2 ; $6461
+	call DrawPlayer1TeamChars ; $6463
+	call DrawPlayer2TeamChars ; $6466
 	call DrawBallAndEffects ; $6469
 	ret ; $646c
-.nearBallFar:
-	call DrawNearTeamChars ; $646d
+.player1BallPlayer2:
+	call DrawPlayer1TeamChars ; $646d
 	call DrawBallAndEffects ; $6470
-	call DrawFarTeamChars ; $6473
+	call DrawPlayer2TeamChars ; $6473
 	ret ; $6476
 .fixedOrder:
-	call DrawNearTeamChars ; $6477
+	call DrawPlayer1TeamChars ; $6477
 	call DrawBallAndEffects ; $647a
-	call DrawFarTeamChars ; $647d
+	call DrawPlayer2TeamChars ; $647d
 	ret ; $6480
 DrawMarkersAndShadows:
 	call DrawTargetZone ; $6481
@@ -231,7 +231,7 @@ InitMinigameMatchSettings:
 	ld a, MATCHCONTEXT_MINIGAME ; $6547
 	ld [wMatchContext], a ; $6549
 	ld a, DIGITGFX_NUMERALS ; $654c
-	ld [wScoreDisplayIsTiebreak], a ; $654e
+	ld [wScoreDigitGfxStyle], a ; $654e
 	ld a, AISERVEAIM_RANDOM ; $6551
 	ld [wAiServeAimOverride], a ; $6553
 	ret ; $6556

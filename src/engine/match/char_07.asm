@@ -1,4 +1,4 @@
-SetSpecialShotFlagFromBallHeight:
+SetPowerServeFlagFromTossHeight:
 	ld hl, wBallHeight ; $5a01
 	ld a, [hl+] ; $5a04
 	ld h, [hl] ; $5a05
@@ -10,12 +10,12 @@ SetSpecialShotFlagFromBallHeight:
 	add hl, hl ; $5a10
 	ld a, h ; $5a11
 	and $1f ; $5a12
-	ld_hl_indexed SpecialShotFlagTable_07 ; $5a14
+	ld_hl_indexed PowerServeTossHeightBands_07 ; $5a14
 	ld a, [hl] ; $5a1b
-	ld [wSpecialShotFlag], a ; $5a1c
+	ld [wPowerServeFlag], a ; $5a1c
 	ld [wLastShotWasPowerShot], a ; $5a1f
 	ret ; $5a22
-SpecialShotFlagTable_07:
+PowerServeTossHeightBands_07:
 	; $5a23, 32 bytes (bytes:16)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	db $00, $00, $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x10
@@ -94,7 +94,7 @@ CharFrameGfxDest_07:
 SetupCharacterSprite_CharTileBaseTable:
 	INCLUDE "data/engine/match/SetupCharacterSprite_CharTileBaseTable.asm" ; $5aaf, 4 bytes (bytes:4)
 ; Copies one character's attribute record into the per-character struct: the
-; reach box CheckCharBallContact tests against, the jump-smash and dive speeds,
+; reach box CheckBallHitsCharBody tests against, the jump-smash and dive speeds,
 ; and the six AI parameters at record +$0f and +$1b-$1f -- home-position
 ; strategy, the two reaction delays, ball tracking, aim-away chance and serve
 ; style. OverrideCharStatsForDebug rewrites those six and wCharAimJitterScale.
@@ -149,12 +149,12 @@ LoadCharacterAttributes:
 	ld a, c ; $5afe
 	ld [hl+], a ; $5aff
 	ld [hl], b ; $5b00
-	ld hl, CHARREC_SWING ; $5b01
+	ld hl, CHARREC_SKILL_ICONS ; $5b01
 	add hl, de ; $5b04
 	ld a, [hl+] ; $5b05
 	ld b, [hl] ; $5b06
 	ld c, a ; $5b07
-	ld hl, wCharSwingAttrWord ; $5b08
+	ld hl, wCharSkillIcons ; $5b08
 	ld a, c ; $5b0b
 	ld [hl+], a ; $5b0c
 	ld [hl], b ; $5b0d
@@ -272,7 +272,7 @@ LoadCharacterAttributes:
 	add hl, de ; $5be4
 	ld a, [hl] ; $5be5
 	ld [wTopspinPlacementIndex], a ; $5be6
-	ld hl, CHARREC_PHYSICS ; $5be9
+	ld hl, CHARREC_AI_POSITION ; $5be9
 	add hl, de ; $5bec
 	ld a, [hl] ; $5bed
 	ld [wAiPositionStrategy], a ; $5bee
@@ -295,16 +295,16 @@ LoadCharacterAttributes:
 	ld hl, CHARREC_DIFFICULTY ; $5c11
 	add hl, de ; $5c14
 	ld a, [hl] ; $5c15
-	ld [wAiServeStyle], a ; $5c16
+	ld [wAiPlayStyle], a ; $5c16
 	ld a, $00 ; $5c19
-	ld hl, wCharSwingAttrWord + 1 ; $5c1b
+	ld hl, wCharSkillIcons + 1 ; $5c1b
 	bit 0, [hl] ; $5c1e
 	jr z, .storeLobIndex ; $5c20
 	ld a, $01 ; $5c22
 .storeLobIndex:
 	ld [wLobPlacementIndex], a ; $5c24
 	ld a, $00 ; $5c27
-	ld hl, wCharSwingAttrWord + 1 ; $5c29
+	ld hl, wCharSkillIcons + 1 ; $5c29
 	bit 1, [hl] ; $5c2c
 	jr z, .storeDropIndex ; $5c2e
 	ld a, $01 ; $5c30
@@ -385,7 +385,7 @@ OverrideCharStatsForDebug:
 	ld a, $ff ; $5d04
 	ld [wAiAimAwayChance], a ; $5d06
 	ld a, $02 ; $5d09
-	ld [wAiServeStyle], a ; $5d0b
+	ld [wAiPlayStyle], a ; $5d0b
 	ld a, $00 ; $5d0e
 	ld [wCharAimJitterScale], a ; $5d10
 	ld a, $01 ; $5d13

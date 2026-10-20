@@ -133,10 +133,10 @@ AiServePressToss:
 	ld a, [wServeFaultFlag] ; $7a6a
 	and a ; $7a6d
 	jr nz, .release ; $7a6e
-	ld a, [wAiServeStyle] ; $7a70
+	ld a, [wAiPlayStyle] ; $7a70
 	and $0f ; $7a73
 	add a ; $7a75
-	ld_hl_indexed ServePressTossPtrs ; $7a76
+	ld_hl_indexed AiServeQuickStrikeChancePtrs ; $7a76
 	ld a, [hl+] ; $7a7d
 	ld h, [hl] ; $7a7e
 	ld l, a ; $7a7f
@@ -154,34 +154,34 @@ AiServePressToss:
 	ld [wAiActionTimer], a ; $7a97
 .done:
 	jp AiAdvancePhase ; $7a9a
-ServePressTossPtrs:
+AiServeQuickStrikeChancePtrs:
 	; $7a9d, 32 bytes (records:2)
-	dw ServePressToss0 ; record 0
-	dw ServePressToss1 ; record 1
-	dw ServePressToss2 ; record 2
-	dw ServePressToss3 ; record 3
-	dw ServePressToss2 ; record 4
-	dw ServePressToss2 ; record 5
-	dw ServePressToss2 ; record 6
-	dw ServePressToss2 ; record 7
-	dw ServePressToss2 ; record 8
-	dw ServePressToss2 ; record 9
-	dw ServePressToss2 ; record 10
-	dw ServePressToss2 ; record 11
-	dw ServePressToss2 ; record 12
-	dw ServePressToss2 ; record 13
-	dw ServePressToss2 ; record 14
-	dw ServePressToss2 ; record 15
-ServePressToss0:
+	dw AiServeQuickStrikeChance0 ; record 0
+	dw AiServeQuickStrikeChance1 ; record 1
+	dw AiServeQuickStrikeChance2 ; record 2
+	dw AiServeQuickStrikeChance3 ; record 3
+	dw AiServeQuickStrikeChance2 ; record 4
+	dw AiServeQuickStrikeChance2 ; record 5
+	dw AiServeQuickStrikeChance2 ; record 6
+	dw AiServeQuickStrikeChance2 ; record 7
+	dw AiServeQuickStrikeChance2 ; record 8
+	dw AiServeQuickStrikeChance2 ; record 9
+	dw AiServeQuickStrikeChance2 ; record 10
+	dw AiServeQuickStrikeChance2 ; record 11
+	dw AiServeQuickStrikeChance2 ; record 12
+	dw AiServeQuickStrikeChance2 ; record 13
+	dw AiServeQuickStrikeChance2 ; record 14
+	dw AiServeQuickStrikeChance2 ; record 15
+AiServeQuickStrikeChance0:
 	; $7abd, 8 bytes (bytes:8)
 	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
-ServePressToss1:
+AiServeQuickStrikeChance1:
 	; $7ac5, 8 bytes (bytes:8)
 	db $00, $00, $00, $00, $00, $01, $01, $01 ; 0x00
-ServePressToss2:
+AiServeQuickStrikeChance2:
 	; $7acd, 8 bytes (bytes:8)
 	db $00, $00, $01, $01, $01, $01, $01, $01 ; 0x00
-ServePressToss3:
+AiServeQuickStrikeChance3:
 	; $7ad5, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
 AiServeStrike:
@@ -276,8 +276,8 @@ AiPickShotButtons:
 	and a ; $7b7e
 	jr z, .tryLob ; $7b7f
 	ld b, AISHOT_NEUTRAL ; $7b81
-	ld a, [wAiServeStyle] ; $7b83
-	farcall DoesCharGroupRowContain ; $7b86
+	ld a, [wAiPlayStyle] ; $7b83
+	farcall AiShotMixRowContains ; $7b86
 	and a ; $7b89
 	jr z, .tryLob ; $7b8a
 	ld a, AISHOT_NEUTRAL ; $7b8c
@@ -297,8 +297,8 @@ AiPickShotButtons:
 	bit 7, h ; $7bad
 	jr nz, .randomStyleShot ; $7baf
 	ld b, AISHOT_LOB ; $7bb1
-	ld a, [wAiServeStyle] ; $7bb3
-	farcall DoesCharGroupRowContain ; $7bb6
+	ld a, [wAiPlayStyle] ; $7bb3
+	farcall AiShotMixRowContains ; $7bb6
 	and a ; $7bb9
 	jr z, .randomStyleShot ; $7bba
 	ld a, [wMatchIsDoubles] ; $7bbc
@@ -334,8 +334,8 @@ AiPickShotButtons:
 	call AdvanceMatchRng ; $7c00
 	and $0f ; $7c03
 	ld b, a ; $7c05
-	ld a, [wAiServeStyle] ; $7c06
-	farcall GetCharGroupEntry ; $7c09
+	ld a, [wAiPlayStyle] ; $7c06
+	farcall GetAiShotMixEntry ; $7c09
 	ld [wAiShotButtons], a ; $7c0c
 	ret ; $7c0f
 AiPressFirstShotButton:

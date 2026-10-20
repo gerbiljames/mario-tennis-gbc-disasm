@@ -21,7 +21,7 @@
 	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET
 	inc [hl]
 	jp .missedTarget
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a
 	ret
 .hitTarget:

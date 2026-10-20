@@ -1,4 +1,4 @@
-ApplyCharFlagShotSpeedPenalty:
+ApplyDiveShotSpeedPenalty:
 	ld hl, wCharFlags ; $53a2
 	bit CHARB_DIVING, [hl] ; $53a5
 	jr z, .done ; $53a7
@@ -31,7 +31,7 @@ ExecuteShot:
 	ld a, [wBallCourtQuadrant] ; $53df
 	ld [wBallQuadrantAtHit], a ; $53e2
 	xor a ; $53e5
-	ld [wSpecialShotFlag], a ; $53e6
+	ld [wPowerServeFlag], a ; $53e6
 	ld [wLastShotWasPowerShot], a ; $53e9
 	ld [wFallbackTrajectoryFlag], a ; $53ec
 	ld b, $00 ; $53ef
@@ -303,8 +303,8 @@ ShotTypePresets_07:
 	shot_preset SFX_HIT_SERVE, 4, 2, $02a0 ; SHOTTYPE_SERVE_SLICE
 	shot_preset SFX_HIT_SERVE, 4, 3, $02a0 ; SHOTTYPE_SERVE_FLAT
 	assert_table_length NUM_SHOTTYPES
-GetShotAimOffsetForSide:
-	ld hl, WallShotAimOffsets ; $55e9
+GetServeTargetX:
+	ld hl, WallServeAimX ; $55e9
 	ld a, [wMinigameUsesWall] ; $55ec
 	and a ; $55ef
 	jr nz, .readAim ; $55f0
@@ -313,7 +313,7 @@ GetShotAimOffsetForSide:
 	add a ; $55f7
 	add a ; $55f8
 	add a ; $55f9
-	ld_hl_indexed ShotAimOffsetsBySide ; $55fa
+	ld_hl_indexed ServeAimXBySide ; $55fa
 .readAim:
 	ld a, [wCharAimOffset] ; $5601
 	inc a ; $5604
@@ -339,35 +339,35 @@ GetShotAimOffsetForSide:
 	ld e, l ; $562b
 	ld d, h ; $562c
 	ret ; $562d
-ShotAimOffsetsBySide:
+ServeAimXBySide:
 	; $562e, 16 bytes (records:2)
 ; a row per court side (wCharCourtPos bit 0), indexed by wCharAimOffset + 1
 	dw $fe60, $ff20, $ffdc, $0000 ; side 0
 	dw $0024, $00e0, $01a0, $0000 ; side 1
-WallShotAimOffsets:
+WallServeAimX:
 	; $563e, 8 bytes (records:2)
 	dw $ff20, $0000, $00e0, $0000
 ComputeShotTargetX:
 	ld a, [wRallyLength] ; $5646
 	and a ; $5649
-	jr z, GetShotAimOffsetForSide ; $564a
+	jr z, GetServeTargetX ; $564a
 	call ComputeAimBaseOffset ; $564c
 	ld a, [wCharAimOffset] ; $564f
 	add $02 ; $5652
 	and $07 ; $5654
 	jumptable a ; $5656
-	dw ComputeShotTargetX.fromBallX ; $5658 jumptable
-	dw ComputeShotTargetX.halveShort ; $565a jumptable
+	dw ComputeShotTargetX.aimFarLeft ; $5658 jumptable
+	dw ComputeShotTargetX.aimLeft ; $565a jumptable
 	dw ComputeShotTargetX.straight ; $565c jumptable
-	dw ComputeShotTargetX.halveLong ; $565e jumptable
-	dw ComputeShotTargetX.fromBallXLong ; $5660 jumptable
+	dw ComputeShotTargetX.aimRight ; $565e jumptable
+	dw ComputeShotTargetX.aimFarRight ; $5660 jumptable
 	dw ComputeShotTargetX.straight ; $5662 jumptable
 	dw ComputeShotTargetX.straight ; $5664 jumptable
 	dw ComputeShotTargetX.straight ; $5666 jumptable
-.halveShort:
+.aimLeft:
 	sra d ; $5668
 	rr e ; $566a
-.fromBallX:
+.aimFarLeft:
 	ld hl, wBallX ; $566c
 	ld a, [hl+] ; $566f
 	ld h, [hl] ; $5670
@@ -379,10 +379,10 @@ ComputeShotTargetX:
 	call ClampShotTargetX ; $567b
 	neg_de ; $567e
 	ret ; $5684
-.halveLong:
+.aimRight:
 	sra d ; $5685
 	rr e ; $5687
-.fromBallXLong:
+.aimFarRight:
 	ld hl, wBallX ; $5689
 	ld a, [hl+] ; $568c
 	ld h, [hl] ; $568d

@@ -1,12 +1,12 @@
 	farptr LoadMatchGraphics ; $4000
 	farptr LoadMatchVariantGraphics ; $4002
 	farptr LoadSpecialHitEffectTiles ; $4004
-	farptr LoadBallTouchCharEffectTilesA ; $4006
-	farptr LoadBallTouchCharEffectTilesB ; $4008
+	farptr LoadBallTouchCharEffectTiles ; $4006
+	farptr LoadLandingMarkerTiles ; $4008
 	farptr LoadStoryPauseMenuGfx ; $400a
-	farptr QueueMatchSpriteFrameA ; $400c
-	farptr LoadEffectFrameTiles_28 ; $400e
-	farptr QueueMatchSpriteFrameB ; $4010
+	farptr LoadTargetStarFrameTiles ; $400c
+	farptr LoadTreasureBoxFrameTiles ; $400e
+	farptr LoadBooFrameTiles ; $4010
 Padding_28_0:
 	; $4012, 14 bytes (fill)
 	ds 14, $00
@@ -17,17 +17,17 @@ BallObjTiles:
 SpecialHitEffectTiles_28:
 	INCBIN "data/engine/match/SpecialHitEffectTiles_28.bin" ; $4360, 256 bytes
 	ds ALIGN[4]
-BallTouchCharEffectTilesA_28:
-	INCBIN "data/engine/match/BallTouchCharEffectTilesA_28.bin" ; $4460, 256 bytes
+BallTouchCharEffectTiles_28:
+	INCBIN "data/engine/match/BallTouchCharEffectTiles_28.bin" ; $4460, 256 bytes
 	ds ALIGN[4]
-BallTouchCharEffectTilesB_28:
-	INCBIN "data/engine/match/BallTouchCharEffectTilesB_28.bin" ; $4560, 128 bytes
+LandingMarkerTiles_28:
+	INCBIN "data/engine/match/LandingMarkerTiles_28.bin" ; $4560, 128 bytes
 MatchMenuIconGfx:
 	INCBIN "data/engine/match/lz_MatchMenuIconGfx.bin" ; $45e0, 1472 bytes
-MatchGfxPalettesA_28:
-	INCLUDE "data/engine/match/MatchGfxPalettesA_28.asm" ; $4ba0, 64 bytes (palettes)
-MatchGraphicsPalettes:
-	INCLUDE "data/engine/match/MatchGraphicsPalettes.asm" ; $4be0, 16 bytes (palettes)
+MatchObjPalettes_28:
+	INCLUDE "data/engine/match/MatchObjPalettes_28.asm" ; $4ba0, 64 bytes (palettes)
+MatchBGPalettes:
+	INCLUDE "data/engine/match/MatchBGPalettes.asm" ; $4be0, 16 bytes (palettes)
 	ds ALIGN[4]
 MinigameObjTiles_28:
 	INCBIN "data/engine/match/MinigameObjTiles_28.bin" ; $4bf0, 320 bytes
@@ -39,7 +39,10 @@ FruitObjTiles:
 	INCBIN "data/engine/match/FruitObjTiles.bin" ; $4e30, 768 bytes
 	ds ALIGN[4]
 BananaBunchObjTiles:
-	INCBIN "data/engine/match/BananaBunchObjTiles.bin" ; $5130, 832 bytes
+	INCBIN "data/engine/match/BananaBunchObjTiles.bin" ; $5130, 256 bytes
+	ds ALIGN[4]
+TargetStarObjTiles:
+	INCBIN "data/engine/match/TargetStarObjTiles.bin" ; $5230, 576 bytes
 	ds ALIGN[4]
 BonusStarObjTiles:
 	INCBIN "data/engine/match/BonusStarObjTiles.bin" ; $5470, 32 bytes
@@ -47,8 +50,8 @@ BonusStarObjTiles:
 MedallionObjTiles:
 	INCBIN "data/engine/match/MedallionObjTiles.bin" ; $5490, 256 bytes
 	ds ALIGN[4]
-MatchSharedTiles_28:
-	INCBIN "data/engine/match/MatchSharedTiles_28.bin" ; $5590, 2208 bytes
+MinigameScoreAndTargetTiles_28:
+	INCBIN "data/engine/match/MinigameScoreAndTargetTiles_28.bin" ; $5590, 2208 bytes
 ShotDirectionArrowBluePalette:
 	INCLUDE "data/engine/match/ShotDirectionArrowBluePalette.asm" ; $5e30, 8 bytes (palettes)
 ShotDirectionArrowPalettes:
@@ -61,16 +64,16 @@ MedallionMatchPalettes:
 	INCLUDE "data/engine/match/MedallionMatchPalettes.asm" ; $5e78, 8 bytes (palettes)
 TreasureBoxPalettes0:
 	INCLUDE "data/engine/match/TreasureBoxPalettes0.asm" ; $5e80, 24 bytes (palettes)
-TreasureBoxPalettes1:
-	INCLUDE "data/engine/match/TreasureBoxPalettes1.asm" ; $5e98, 8 bytes (palettes)
+TreasureBoxChestPalette:
+	INCLUDE "data/engine/match/TreasureBoxChestPalette.asm" ; $5e98, 8 bytes (palettes)
 BooBlastPalettes:
 	INCLUDE "data/engine/match/BooBlastPalettes.asm" ; $5ea0, 16 bytes (palettes)
 LoadMatchGraphics:
 	wram_bank WRAM_STAGING ; $5eb0
-	ld hl, MatchGfxPalettesA_28 ; $5eb6
+	ld hl, MatchObjPalettes_28 ; $5eb6
 	ld_obj_pals de, 0, 3 ; $5eb9
 	call LoadPaletteShadow ; $5ebc
-	ld hl, MatchGraphicsPalettes ; $5ebf
+	ld hl, MatchBGPalettes ; $5ebf
 	ld_bg_pals de, 0, 2 ; $5ec2
 	call LoadPaletteShadow ; $5ec5
 	ld hl, BallObjTiles ; $5ec8
@@ -171,7 +174,7 @@ LoadMatchVariantGraphics:
 	call LoadPaletteShadow ; $5fa0
 	ld hl, MedallionObjTiles ; $5fa3
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5fa6
-	ld c, (MatchSharedTiles_28 - MedallionObjTiles) / 16 ; $5fa9
+	ld c, (MinigameScoreAndTargetTiles_28 - MedallionObjTiles) / 16 ; $5fa9
 	call QueueVRAMCopy ; $5fab
 	ld hl, BonusStarObjTiles ; $5fae
 	ld de, vTiles0 tile $3c + VRAM_BANK1 ; $5fb1
@@ -187,7 +190,7 @@ LoadMatchVariantGraphics:
 	ld hl, TreasureBoxPalettes0 ; $5fc8
 	ld_obj_pals de, 6, 1 ; $5fcb
 	call LoadPaletteShadow ; $5fce
-	ld hl, TreasureBoxPalettes1 ; $5fd1
+	ld hl, TreasureBoxChestPalette ; $5fd1
 	ld_obj_pals de, 7, 1 ; $5fd4
 	call LoadPaletteShadow ; $5fd7
 	ld hl, BonusStarObjTiles ; $5fda
@@ -206,7 +209,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5ffa
 	ld hl, BananaBunchObjTiles ; $5ffd
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6000
-	ld c, 16 ; $6003 -- 16 of BananaBunchObjTiles's 52 tiles
+	ld c, (TargetStarObjTiles - BananaBunchObjTiles) / 16 ; $6003
 	call QueueVRAMCopy ; $6005
 	call LoadMinigameScoreDigitTiles ; $6008
 	ret ; $600b
@@ -221,9 +224,9 @@ LoadMatchVariantGraphics:
 	call LoadMinigameScoreDigitTiles ; $6020
 	ret ; $6023
 LoadMinigameScoreDigitTiles:
-	ld hl, MatchSharedTiles_28 ; $6024
+	ld hl, MinigameScoreAndTargetTiles_28 ; $6024
 	ld de, vTiles0 tile $08 ; $6027
-	ld c, 20 ; $602a -- 20 of MatchSharedTiles_28's 138 tiles
+	ld c, 20 ; $602a -- 20 of MinigameScoreAndTargetTiles_28's 138 tiles
 	call QueueVRAMCopy ; $602c
 	ret ; $602f
 LoadSpecialHitEffectTiles:
@@ -235,27 +238,27 @@ LoadSpecialHitEffectTiles:
 	ld c, 4 ; $603e
 	call QueueVRAMCopy ; $6040
 	ret ; $6043
-LoadBallTouchCharEffectTilesA:
+LoadBallTouchCharEffectTiles:
 	rrca ; $6044
 	rrca ; $6045
 	and $40 ; $6046
-	ld_hl_indexed BallTouchCharEffectTilesA_28 ; $6048
+	ld_hl_indexed BallTouchCharEffectTiles_28 ; $6048
 	ld de, vTiles0 tile $78 + VRAM_BANK1 ; $604f
 	ld c, 4 ; $6052
 	call QueueVRAMCopy ; $6054
 	ret ; $6057
-LoadBallTouchCharEffectTilesB:
+LoadLandingMarkerTiles:
 	rrca ; $6058
 	rrca ; $6059
 	and $40 ; $605a
-	ld_hl_indexed BallTouchCharEffectTilesB_28 ; $605c
+	ld_hl_indexed LandingMarkerTiles_28 ; $605c
 	ld de, vTiles0 tile $7c + VRAM_BANK1 ; $6063
 	ld c, 4 ; $6066
 	call QueueVRAMCopy ; $6068
 	ret ; $606b
-QueueMatchSpriteFrameA:
+LoadTargetStarFrameTiles:
 	add a ; $606c
-	ld_hl_indexed QueueMatchSpriteFrameATable ; $606d
+	ld_hl_indexed TargetStarFrameTilePtrs ; $606d
 	ld a, [hl+] ; $6074
 	ld h, [hl] ; $6075
 	ld l, a ; $6076
@@ -263,14 +266,14 @@ QueueMatchSpriteFrameA:
 	ld c, 12 ; $607a
 	call QueueVRAMCopy ; $607c
 	ret ; $607f
-QueueMatchSpriteFrameATable:
+TargetStarFrameTilePtrs:
 	; $6080, 6 bytes (records:2)
-	dw BananaBunchObjTiles tile 16 ; record 0
-	dw BananaBunchObjTiles tile 28 ; record 1
-	dw BananaBunchObjTiles tile 40 ; record 2
-QueueMatchSpriteFrameB:
+	dw TargetStarObjTiles tile 0 ; record 0
+	dw TargetStarObjTiles tile 12 ; record 1
+	dw TargetStarObjTiles tile 24 ; record 2
+LoadBooFrameTiles:
 	add a ; $6086
-	ld_hl_indexed QueueMatchSpriteFrameBTable ; $6087
+	ld_hl_indexed BooFrameTilePtrs ; $6087
 	ld a, [hl+] ; $608e
 	ld h, [hl] ; $608f
 	ld l, a ; $6090
@@ -278,12 +281,12 @@ QueueMatchSpriteFrameB:
 	ld c, 12 ; $6094
 	call QueueVRAMCopy ; $6096
 	ret ; $6099
-QueueMatchSpriteFrameBTable:
+BooFrameTilePtrs:
 	; $609a, 6 bytes (records:2)
-	dw MatchSharedTiles_28 tile 102 ; record 0
-	dw MatchSharedTiles_28 tile 114 ; record 1
-	dw MatchSharedTiles_28 tile 126 ; record 2
-LoadEffectFrameTiles_28:
+	dw MinigameScoreAndTargetTiles_28 tile 102 ; record 0
+	dw MinigameScoreAndTargetTiles_28 tile 114 ; record 1
+	dw MinigameScoreAndTargetTiles_28 tile 126 ; record 2
+LoadTreasureBoxFrameTiles:
 	ld h, $00 ; $60a0
 	ld l, a ; $60a2
 	add hl, hl ; $60a3
@@ -296,7 +299,7 @@ LoadEffectFrameTiles_28:
 	ld d, h ; $60aa
 	ld a, b ; $60ab
 	add a ; $60ac
-	ld_hl_indexed LoadEffectFrameTiles_28Table ; $60ad
+	ld_hl_indexed TreasureBoxFrameTilePtrs ; $60ad
 	ld a, [hl+] ; $60b4
 	ld h, [hl] ; $60b5
 	ld l, a ; $60b6
@@ -305,12 +308,12 @@ LoadEffectFrameTiles_28:
 	ld c, 4 ; $60bb
 	call QueueVRAMCopy ; $60bd
 	ret ; $60c0
-LoadEffectFrameTiles_28Table:
+TreasureBoxFrameTilePtrs:
 	; $60c1, 8 bytes (records:2)
-	dw MatchSharedTiles_28 tile 20 ; record 0
-	dw MatchSharedTiles_28 tile 40 ; record 1
-	dw MatchSharedTiles_28 tile 60 ; record 2
-	dw MatchSharedTiles_28 tile 80 ; record 3
+	dw MinigameScoreAndTargetTiles_28 tile 20 ; record 0
+	dw MinigameScoreAndTargetTiles_28 tile 40 ; record 1
+	dw MinigameScoreAndTargetTiles_28 tile 60 ; record 2
+	dw MinigameScoreAndTargetTiles_28 tile 80 ; record 3
 LoadStoryPauseMenuGfx:
 	wram_bank WRAM_STAGING ; $60c9
 	ld hl, StoryPauseMenuObjPalettes ; $60cf

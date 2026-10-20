@@ -221,7 +221,7 @@ wTargetGridClearCount:: db
 ; [8-bit] 1 when the opponent is CHAR_UNUSED_15 (the ball launcher of Tennis Machine, Target Shot and Shooting Star), set by StartMinigameMatch: DrawMinigameScoreHud then unflips its sprite and LaunchMinigameServe waits 15 frames before the launch
 wMinigameServerIsMachine:: db
 
-; [8-bit] Nonzero makes AiServePressToss release the serve at once instead of running the wAiServeStyle toss table (the coach drills' plain feed). The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch
+; [8-bit] Nonzero makes AiServePressToss release the serve at once instead of running the wAiPlayStyle toss table (the coach drills' plain feed). The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch
 wAiServeSkipToss:: db
 	ds 7
 
@@ -255,8 +255,8 @@ wDrillIsPracticeLesson:: db
 ; [8-bit] Set to 1 for a high-score attempt: outright by the InitMinigame_*HighScore entries, and by ordinary minigames at wMinigameLevel 2. SelectScoreboardLayout picks layout 7
 wMinigameHighScoreMode:: db
 
-; [8-bit] Passed in b to LoadPlayer1ScoreDigitGfx/LoadPlayer2ScoreDigitGfx so the score panel shows tiebreak counts instead of 0/15/30/40. CheckSetComplete sets it entering a tiebreak and clears it at the start of an ordinary game
-wScoreDisplayIsTiebreak:: db
+; [8-bit] DIGITGFX_* glyph set passed in b to LoadPlayer1ScoreDigitGfx/LoadPlayer2ScoreDigitGfx for the score panel. PlayTiebreakGame and InitMinigameMatchSettings set DIGITGFX_NUMERALS; PlayGame resets it to DIGITGFX_TENNIS_CALLS
+wScoreDigitGfxStyle:: db
 
 ; Mode-local scratch above the named mode flags; as with the $c780 block,
 ; each mode reuses the bytes; variants belong to the owning bank.

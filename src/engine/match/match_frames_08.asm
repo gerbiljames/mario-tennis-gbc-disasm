@@ -1,4 +1,4 @@
-ReadScriptedMatchInput:
+ReadLinkMatchInput:
 	ldh a, [hLinkInput] ; $4425
 	ret ; $4427
 StepMatchFrames:

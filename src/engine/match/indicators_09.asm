@@ -310,10 +310,10 @@ GetPlayer1ServeIndicatorSprites:
 	ret ; $7111
 Player1ServeIndicatorSpritePtrs_09:
 	; $7112, 8 bytes (records:2)
-	dw Player1ServeIndicatorSpriteTemplate0_09 ; record 0
-	dw Player1ServeIndicatorSpriteTemplate0_09 ; record 1
-	dw Player1ServeIndicatorSpriteTemplate0_09 ; record 2
-	dw Player1ServeIndicatorSpriteTemplate1_09 ; record 3
+	dw Player1ServeIndicatorSoloSpriteTemplate_09 ; record 0
+	dw Player1ServeIndicatorSoloSpriteTemplate_09 ; record 1
+	dw Player1ServeIndicatorSoloSpriteTemplate_09 ; record 2
+	dw Player1ServeIndicatorDuoSpriteTemplate_09 ; record 3
 GetPlayer2ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $711a
 	add a ; $711d
@@ -324,11 +324,11 @@ GetPlayer2ServeIndicatorSprites:
 	ret ; $7128
 Player2ServeIndicatorSpritePtrs_09:
 	; $7129, 8 bytes (records:2)
-	dw Player2ServeIndicatorSpriteTemplate0_09 ; record 0
-	dw Player2ServeIndicatorSpriteTemplate0_09 ; record 1
-	dw Player2ServeIndicatorSpriteTemplate1_09 ; record 2
-	dw Player2ServeIndicatorSpriteTemplate1_09 ; record 3
-Player1ServeIndicatorSpriteTemplate0_09:
+	dw Player2ServeIndicatorSoloSpriteTemplate_09 ; record 0
+	dw Player2ServeIndicatorSoloSpriteTemplate_09 ; record 1
+	dw Player2ServeIndicatorDuoSpriteTemplate_09 ; record 2
+	dw Player2ServeIndicatorDuoSpriteTemplate_09 ; record 3
+Player1ServeIndicatorSoloSpriteTemplate_09:
 	; $7131, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $14, $00
 	oam_sprite $10, $10, $04, $04
@@ -337,7 +337,7 @@ Player1ServeIndicatorSpriteTemplate0_09:
 	oam_sprite $10, $28, $78, $01
 	oam_sprite $10, $30, $7a, $01
 	oam_sprite_end
-Player1ServeIndicatorSpriteTemplate1_09:
+Player1ServeIndicatorDuoSpriteTemplate_09:
 	; $714a, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $04, $04
 	oam_sprite $10, $10, $06, $04
@@ -346,7 +346,7 @@ Player1ServeIndicatorSpriteTemplate1_09:
 	oam_sprite $10, $28, $78, $01
 	oam_sprite $10, $30, $7a, $01
 	oam_sprite_end
-Player2ServeIndicatorSpriteTemplate0_09:
+Player2ServeIndicatorSoloSpriteTemplate_09:
 	; $7163, 25 bytes (sprite_template)
 	oam_sprite $20, $08, $14, $00
 	oam_sprite $20, $10, $0c, $05
@@ -355,7 +355,7 @@ Player2ServeIndicatorSpriteTemplate0_09:
 	oam_sprite $20, $28, $7c, $01
 	oam_sprite $20, $30, $7e, $01
 	oam_sprite_end
-Player2ServeIndicatorSpriteTemplate1_09:
+Player2ServeIndicatorDuoSpriteTemplate_09:
 	; $717c, 25 bytes (sprite_template)
 	oam_sprite $20, $08, $0c, $05
 	oam_sprite $20, $10, $0e, $05
@@ -374,10 +374,10 @@ GetPlayer1CharIconSprites:
 	ret ; $71a3
 Player1CharIconSpritePtrs_09:
 	; $71a4, 8 bytes (records:2)
-	dw Player1CharIconSpriteTemplate0_09 ; record 0
-	dw Player1CharIconSpriteTemplate0_09 ; record 1
-	dw Player1CharIconSpriteTemplate0_09 ; record 2
-	dw Player1CharIconSpriteTemplate1_09 ; record 3
+	dw Player1CharIconSoloSpriteTemplate_09 ; record 0
+	dw Player1CharIconSoloSpriteTemplate_09 ; record 1
+	dw Player1CharIconSoloSpriteTemplate_09 ; record 2
+	dw Player1CharIconDuoSpriteTemplate_09 ; record 3
 GetPlayer2CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $71ac
 	add a ; $71af
@@ -388,35 +388,35 @@ GetPlayer2CharIconSprites:
 	ret ; $71ba
 Player2CharIconSpritePtrs_09:
 	; $71bb, 8 bytes (records:2)
-	dw Player2CharIconSpriteTemplate0_09 ; record 0
-	dw Player2CharIconSpriteTemplate0_09 ; record 1
-	dw Player2CharIconSpriteTemplate1_09 ; record 2
-	dw Player2CharIconSpriteTemplate1_09 ; record 3
-Player1CharIconSpriteTemplate0_09:
+	dw Player2CharIconSoloSpriteTemplate_09 ; record 0
+	dw Player2CharIconSoloSpriteTemplate_09 ; record 1
+	dw Player2CharIconDuoSpriteTemplate_09 ; record 2
+	dw Player2CharIconDuoSpriteTemplate_09 ; record 3
+Player1CharIconSoloSpriteTemplate_09:
 	; $71c3, 9 bytes (sprite_template)
 	oam_sprite $10, $10, $00, $04
 	oam_sprite $10, $18, $02, $04
 	oam_sprite_end
-Player1CharIconSpriteTemplate1_09:
+Player1CharIconDuoSpriteTemplate_09:
 	; $71cc, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $04
 	oam_sprite $10, $10, $02, $04
 	oam_sprite $10, $18, $10, $06
 	oam_sprite $10, $20, $12, $06
 	oam_sprite_end
-Player2CharIconSpriteTemplate0_09:
+Player2CharIconSoloSpriteTemplate_09:
 	; $71dd, 9 bytes (sprite_template)
 	oam_sprite $10, $10, $08, $05
 	oam_sprite $10, $18, $0a, $05
 	oam_sprite_end
-Player2CharIconSpriteTemplate1_09:
+Player2CharIconDuoSpriteTemplate_09:
 	; $71e6, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $08, $05
 	oam_sprite $10, $10, $0a, $05
 	oam_sprite $10, $18, $18, $07
 	oam_sprite $10, $20, $1a, $07
 	oam_sprite_end
-GameScoreDisplaySpriteTemplate_09:
+LessonScorePanelSpriteTemplate_09:
 	; $71f7, 33 bytes (sprite_template)
 	oam_sprite $08, $18, $00, $04
 	oam_sprite $08, $20, $02, $04

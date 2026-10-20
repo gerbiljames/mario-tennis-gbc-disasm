@@ -69,7 +69,7 @@ MinigameHooks_ShootingStar:
 	dw ShootingStarHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw ShootingStarHook_BallHit ; MODEHOOK_BALL_HIT
 	dw ShootingStarHook_Bounce ; MODEHOOK_BOUNCE
-	dw ShootingStarHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ShootingStarHook_NetCross ; MODEHOOK_NET_CROSS
 	dw ShootingStarHook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ShootingStarHook_MinigameStart:
@@ -102,7 +102,7 @@ ShootingStarHook_PointStart:
 ShootingStarHook_PointEnd:
 	call EndMinigamePoint ; $51f5
 	ret ; $51f8
-ShootingStarHook_RallyTick:
+ShootingStarHook_NetCross:
 	call KeepMinigameCameraFixed ; $51f9
 	ret ; $51fc
 ShootingStarHook_Bounce:
@@ -283,7 +283,7 @@ DrawTargetReticleSprite:
 	ld a, [hl] ; $5376
 	cp $ff ; $5377
 	ret z ; $5379
-	farcall QueueMatchSpriteFrameA ; $537a
+	farcall LoadTargetStarFrameTiles ; $537a
 	ret ; $537d
 TargetReticleAnimFrames:
 	; $537e, 32 bytes (bytes:8)
@@ -409,6 +409,6 @@ MinigameHooks_BananaBunch:
 	dw BananaBunchHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw BananaBunchHook_BallHit ; MODEHOOK_BALL_HIT
 	dw BananaBunchHook_Bounce ; MODEHOOK_BOUNCE
-	dw BananaBunchHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw BananaBunchHook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS

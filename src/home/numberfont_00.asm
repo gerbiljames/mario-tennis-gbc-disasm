@@ -68,7 +68,7 @@ NumberFontGlyph_9:
 	db $ef, $be, $fb ; #o##o# #o##o#
 	db $da, $bf, $fb ; #+ooo# ####o#
 	db $da, $73, $fc ; #+oo+# .####.
-NumberFontGlyph_0a:
+NumberFontGlyphQuestion:
 	; $2083, 14 bytes (font_glyph)
 	db $06, $08 ; 6 x 8, 2bpp
 	db $3f, $cd, $a7 ; .####. #+oo+#
@@ -87,12 +87,12 @@ NumberFontGlyphPtrs:
 	dw NumberFontGlyph_7 ; record 7
 	dw NumberFontGlyph_8 ; record 8
 	dw NumberFontGlyph_9 ; record 9
-	dw NumberFontGlyph_0a ; record 10
-	dw NumberFontGlyph_0a ; record 11
-	dw NumberFontGlyph_0a ; record 12
-	dw NumberFontGlyph_0a ; record 13
-	dw NumberFontGlyph_0a ; record 14
-	dw NumberFontGlyph_0a ; record 15
+	dw NumberFontGlyphQuestion ; record 10
+	dw NumberFontGlyphQuestion ; record 11
+	dw NumberFontGlyphQuestion ; record 12
+	dw NumberFontGlyphQuestion ; record 13
+	dw NumberFontGlyphQuestion ; record 14
+	dw NumberFontGlyphQuestion ; record 15
 Unused_00_RenderNumberToTiles:
 	push af ; $20b1
 	push bc ; $20b2

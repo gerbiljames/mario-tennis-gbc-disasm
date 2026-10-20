@@ -14,9 +14,9 @@ NetGameMatch3JudgeOnBounce:
 	call NetGameMatch3JudgePoint ; $5a8d
 	ld [wDrillPointJudgement], a ; $5a90
 	ret ; $5a93
-NetGameMatch3JudgeOnRallyTick:
+NetGameMatch3JudgeOnNetCross:
 	ret ; $5a94
-	ld a, JUDGEEVENT_RALLY_TICK ; $5a95
+	ld a, JUDGEEVENT_NET_CROSS ; $5a95
 	call NetGameMatch3JudgePoint ; $5a97
 	ld [wDrillPointJudgement], a ; $5a9a
 	ret ; $5a9d
@@ -39,7 +39,7 @@ NetGameMatch3JudgePoint:
 	dw NetGameMatch3JudgePoint.result0 ; $5ab7 jumptable
 	dw NetGameMatch3Cases1 ; $5ab9 jumptable
 	dw NetGameMatch3Cases1.ignoreBounce ; $5abb jumptable
-	dw NetGameMatch3Cases1.ignoreRallyTick ; $5abd jumptable
+	dw NetGameMatch3Cases1.ignoreNetCross ; $5abd jumptable
 .result0:
 	ld a, [wPointOutcome] ; $5abf
 	ld hl, NetGameMatch3JudgePointMessages ; $5ac2
@@ -62,7 +62,7 @@ NetGameMatch3Cases1:
 .ignoreBounce:
 	xor a ; $5aea
 	ret ; $5aeb
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $5aec
 	ret ; $5aed
 .dispatchResult:
@@ -71,7 +71,7 @@ NetGameMatch3Cases1:
 	dw NetGameMatch3Cases1.checkPointOutcome ; $5af1 jumptable
 	dw NetGameMatch3Cases2 ; $5af3 jumptable
 	dw NetGameMatch3Cases2.ignoreBounce ; $5af5 jumptable
-	dw NetGameMatch3Cases2.ignoreRallyTick ; $5af7 jumptable
+	dw NetGameMatch3Cases2.ignoreNetCross ; $5af7 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5af9
 	ld hl, NetGameMatch3Cases1Messages ; $5afc
@@ -94,7 +94,7 @@ NetGameMatch3Cases2:
 .ignoreBounce:
 	xor a ; $5b24
 	ret ; $5b25
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $5b26
 	ret ; $5b27
 .dispatchResult:
@@ -103,7 +103,7 @@ NetGameMatch3Cases2:
 	dw NetGameMatch3Cases2.checkPointOutcome ; $5b2b jumptable
 	dw NetGameMatch3Cases3 ; $5b2d jumptable
 	dw NetGameMatch3Cases3.ignoreBounce ; $5b2f jumptable
-	dw NetGameMatch3Cases3.ignoreRallyTick ; $5b31 jumptable
+	dw NetGameMatch3Cases3.ignoreNetCross ; $5b31 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5b33
 	ld hl, NetGameMatch3Cases2Messages ; $5b36
@@ -134,7 +134,7 @@ NetGameMatch3Cases3:
 .ignoreBounce:
 	xor a ; $5b71
 	ret ; $5b72
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $5b73
 	ret ; $5b74
 .dispatchResult:
@@ -143,7 +143,7 @@ NetGameMatch3Cases3:
 	dw NetGameMatch3Cases3.checkPointOutcome ; $5b78 jumptable
 	dw NetGameMatch3Cases4 ; $5b7a jumptable
 	dw NetGameMatch3Cases4.ignoreBounce ; $5b7c jumptable
-	dw NetGameMatch3Cases4.ignoreRallyTick ; $5b7e jumptable
+	dw NetGameMatch3Cases4.ignoreNetCross ; $5b7e jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5b80
 	ld hl, NetGameMatch3Cases3Messages ; $5b83
@@ -166,7 +166,7 @@ NetGameMatch3Cases4:
 .ignoreBounce:
 	xor a ; $5bab
 	ret ; $5bac
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $5bad
 	ret ; $5bae
 .dispatchResult:
@@ -175,7 +175,7 @@ NetGameMatch3Cases4:
 	dw NetGameMatch3Cases4.rally5IgnorePointEnd ; $5bb2 jumptable
 	dw NetGameMatch3Cases4.rally5FailBallHit ; $5bb4 jumptable
 	dw NetGameMatch3Cases4.rally5IgnoreBounce ; $5bb6 jumptable
-	dw NetGameMatch3Cases4.rally5IgnoreRallyTick ; $5bb8 jumptable
+	dw NetGameMatch3Cases4.rally5IgnoreNetCross ; $5bb8 jumptable
 .rally5IgnorePointEnd:
 	xor a ; $5bba
 	ret ; $5bbb
@@ -187,7 +187,7 @@ NetGameMatch3Cases4:
 .rally5IgnoreBounce:
 	xor a ; $5bc6
 	ret ; $5bc7
-.rally5IgnoreRallyTick:
+.rally5IgnoreNetCross:
 	xor a ; $5bc8
 	ret ; $5bc9
 Unused_0b_DrillPointWon_5:
@@ -216,7 +216,7 @@ NetGamePractice1Hooks:
 	dw NetGamePractice1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw NetGamePractice1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw NetGamePractice1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw NetGamePractice1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw NetGamePractice1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 NetGamePractice1Hook_MinigameStart:
@@ -321,8 +321,8 @@ NetGamePractice1EvaluateResult:
 .lessonFailed:
 	ld a, WINLOSE_LOSE ; $5cbe
 	ret ; $5cc0
-NetGamePractice1Hook_RallyTick:
-	call NetGamePractice1JudgeOnRallyTick ; $5cc1
+NetGamePractice1Hook_NetCross:
+	call NetGamePractice1JudgeOnNetCross ; $5cc1
 	ret ; $5cc4
 NetGamePractice1Hook_Bounce:
 	call NetGamePractice1JudgeOnBounce ; $5cc5
@@ -371,11 +371,11 @@ NetGamePractice1JudgeOnBounce:
 	ld [wDrillPointJudgement], a ; $5d5f
 	ret ; $5d62
 ; Judges the point on the rally-tick event -- except that the leading `ret`
-; means the body never runs. Called from NetGamePractice1Hook_RallyTick, the
+; means the body never runs. Called from NetGamePractice1Hook_NetCross, the
 ; fourth of this drill's four judges; see docs/bugs.md.
-NetGamePractice1JudgeOnRallyTick:
+NetGamePractice1JudgeOnNetCross:
 	ret ; $5d63
-	ld a, JUDGEEVENT_RALLY_TICK ; $5d64
+	ld a, JUDGEEVENT_NET_CROSS ; $5d64
 	call NetGamePractice1JudgePoint ; $5d66
 	ld [wDrillPointJudgement], a ; $5d69
 	ret ; $5d6c
@@ -396,7 +396,7 @@ NetGamePractice1JudgePoint:
 	dw NetGamePractice1JudgePoint.result0 ; $5d82 jumptable
 	dw NetGamePractice1Cases1 ; $5d84 jumptable
 	dw NetGamePractice1Cases1.ignoreBounce ; $5d86 jumptable
-	dw NetGamePractice1Cases1.ignoreRallyTick ; $5d88 jumptable
+	dw NetGamePractice1Cases1.ignoreNetCross ; $5d88 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $5d8a
 	ld hl, NetGamePractice1JudgePointMessages ; $5d8d
@@ -419,7 +419,7 @@ NetGamePractice1Cases1:
 .ignoreBounce:
 	xor a ; $5db5
 	ret ; $5db6
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $5db7
 	ret ; $5db8
 .dispatchResult:
@@ -428,7 +428,7 @@ NetGamePractice1Cases1:
 	dw NetGamePractice1Cases1.checkPointOutcome ; $5dbc jumptable
 	dw NetGamePractice1Cases2 ; $5dbe jumptable
 	dw NetGamePractice1Cases2.ignoreBounce ; $5dc0 jumptable
-	dw NetGamePractice1Cases2.ignoreRallyTick ; $5dc2 jumptable
+	dw NetGamePractice1Cases2.ignoreNetCross ; $5dc2 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5dc4
 	ld hl, NetGamePractice1Cases1Messages ; $5dc7
@@ -451,7 +451,7 @@ NetGamePractice1Cases2:
 .ignoreBounce:
 	xor a ; $5def
 	ret ; $5df0
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $5df1
 	ret ; $5df2
 .dispatchResult:
@@ -460,7 +460,7 @@ NetGamePractice1Cases2:
 	dw NetGamePractice1Cases2.checkPointOutcome ; $5df6 jumptable
 	dw NetGamePractice1Cases3 ; $5df8 jumptable
 	dw NetGamePractice1Cases3.checkBallBounceCount ; $5dfa jumptable
-	dw NetGamePractice1Cases3.ignoreRallyTick ; $5dfc jumptable
+	dw NetGamePractice1Cases3.ignoreNetCross ; $5dfc jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5dfe
 	ld hl, NetGamePractice1Cases2Messages ; $5e01
@@ -520,7 +520,7 @@ NetGamePractice1Cases3:
 	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET ; $5e7c
 	inc [hl] ; $5e7f
 	jp .pointLost ; $5e80
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $5e83
 	ret ; $5e84
 .hitTarget:
@@ -549,7 +549,7 @@ NetGamePractice2Hooks:
 	dw NetGamePractice2Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw NetGamePractice2Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw NetGamePractice2Hook_Bounce ; MODEHOOK_BOUNCE
-	dw NetGamePractice2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw NetGamePractice2Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named net_game_practice2_hook_minigame_start, NetGamePractice2Hook_MinigameStart ; $5ebb
@@ -647,8 +647,8 @@ NetGamePractice2EvaluateResult:
 .lessonFailed:
 	ld a, WINLOSE_LOSE ; $5f78
 	ret ; $5f7a
-NetGamePractice2Hook_RallyTick:
-	call NetGamePractice2JudgeOnRallyTick ; $5f7b
+NetGamePractice2Hook_NetCross:
+	call NetGamePractice2JudgeOnNetCross ; $5f7b
 	ret ; $5f7e
 NetGamePractice2Hook_Bounce:
 	call NetGamePractice2JudgeOnBounce ; $5f7f
@@ -685,9 +685,9 @@ NetGamePractice2JudgeOnBounce:
 	call NetGamePractice2JudgePoint ; $6016
 	ld [wDrillPointJudgement], a ; $6019
 	ret ; $601c
-NetGamePractice2JudgeOnRallyTick:
+NetGamePractice2JudgeOnNetCross:
 	ret ; $601d
-	ld a, JUDGEEVENT_RALLY_TICK ; $601e
+	ld a, JUDGEEVENT_NET_CROSS ; $601e
 	call NetGamePractice2JudgePoint ; $6020
 	ld [wDrillPointJudgement], a ; $6023
 	ret ; $6026
@@ -708,7 +708,7 @@ NetGamePractice2JudgePoint:
 	dw NetGamePractice2JudgePoint.result0 ; $603c jumptable
 	dw NetGamePractice2Cases1 ; $603e jumptable
 	dw NetGamePractice2Cases1.checkBallBounceCount ; $6040 jumptable
-	dw NetGamePractice2Cases1.ignoreRallyTick ; $6042 jumptable
+	dw NetGamePractice2Cases1.ignoreNetCross ; $6042 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6044
 	ld hl, NetGamePractice2JudgePointMessages ; $6047
@@ -754,7 +754,7 @@ NetGamePractice2Cases1:
 	jp z, NetGamePractice2Cases3.pointLost ; $609c
 	xor a ; $609f
 	ret ; $60a0
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $60a1
 	ret ; $60a2
 .dispatchResult:
@@ -763,7 +763,7 @@ NetGamePractice2Cases1:
 	dw NetGamePractice2Cases1.checkPointOutcome ; $60a6 jumptable
 	dw NetGamePractice2Cases2 ; $60a8 jumptable
 	dw NetGamePractice2Cases2.ignoreBounce ; $60aa jumptable
-	dw NetGamePractice2Cases2.ignoreRallyTick ; $60ac jumptable
+	dw NetGamePractice2Cases2.ignoreNetCross ; $60ac jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $60ae
 	ld hl, NetGamePractice2Cases1Messages ; $60b1
@@ -795,7 +795,7 @@ NetGamePractice2Cases2:
 .ignoreBounce:
 	xor a ; $60ed
 	ret ; $60ee
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $60ef
 	ret ; $60f0
 .dispatchResult:
@@ -804,7 +804,7 @@ NetGamePractice2Cases2:
 	dw NetGamePractice2Cases2.checkPointOutcome ; $60f4 jumptable
 	dw NetGamePractice2Cases3 ; $60f6 jumptable
 	dw NetGamePractice2Cases3.ignoreBounce ; $60f8 jumptable
-	dw NetGamePractice2Cases3.ignoreRallyTick ; $60fa jumptable
+	dw NetGamePractice2Cases3.ignoreNetCross ; $60fa jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $60fc
 	ld hl, NetGamePractice2Cases2Messages ; $60ff
@@ -835,7 +835,7 @@ NetGamePractice2Cases3:
 .ignoreBounce:
 	xor a ; $613a
 	ret ; $613b
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $613c
 	ret ; $613d
 .pointWon:

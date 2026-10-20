@@ -113,7 +113,7 @@ ModeHookTable_07:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw Unused_07_TargetZoneBallHitHook ; MODEHOOK_BALL_HIT
 	dw Unused_07_TargetZoneBounceHook ; MODEHOOK_BOUNCE
-	dw Unused_07_StubNop1 ; MODEHOOK_RALLY_TICK
+	dw Unused_07_StubNop1 ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 Unused_07_ModeHookNop:

@@ -245,12 +245,12 @@ SerialHandler:
 	pop af ; $28ac
 	pop af ; $28ad
 	reti ; $28ae
-IncrementLinkFrameCounter:
-	ldh a, [hLinkCounter] ; $28af
+IncrementLinkRetryCount:
+	ldh a, [hLinkRetryCount] ; $28af
 	inc a ; $28b1
 	cp $08 ; $28b2
 	jr z, .done ; $28b4
-	ldh [hLinkCounter], a ; $28b6
+	ldh [hLinkRetryCount], a ; $28b6
 .done:
 	ret ; $28b8
 InitSerialLink:
@@ -269,7 +269,7 @@ InitSerialLink:
 	ldh [hLinkState], a ; $28cd
 	ldh [hLinkErrorFlags], a ; $28cf
 	ldh [hUnusedLinkByte], a ; $28d1
-	ldh [hLinkCounter], a ; $28d3
+	ldh [hLinkRetryCount], a ; $28d3
 	ldh [hLinkInput], a ; $28d5
 	ldh [hLinkRemoteInput], a ; $28d7
 	ldh [hLinkRemoteInputBuf], a ; $28d9
@@ -294,7 +294,7 @@ ResetSerialState:
 	ldh [hLinkTxByte], a ; $28fb
 	ldh [hLinkErrorFlags], a ; $28fd
 	ldh [hUnusedLinkByte], a ; $28ff
-	ldh [hLinkCounter], a ; $2901
+	ldh [hLinkRetryCount], a ; $2901
 	ldh [hLinkInput], a ; $2903
 	ldh [hLinkRemoteInput], a ; $2905
 	ldh [hLinkRemoteInputBuf], a ; $2907
@@ -413,15 +413,15 @@ SerialDecodeInput:
 	ld a, b ; $29aa
 	and $3f ; $29ab
 	cp $3f ; $29ad
-	jr nz, .checkLeftRight ; $29af
+	jr nz, .checkStart ; $29af
 	ld a, $0f ; $29b1
 	jr .storeRemote ; $29b3
-.checkLeftRight:
+.checkStart:
 	cp $30 ; $29b5
-	jr nz, .checkUpDown ; $29b7
+	jr nz, .checkSelect ; $29b7
 	ld a, $08 ; $29b9
 	jr .storeRemote ; $29bb
-.checkUpDown:
+.checkSelect:
 	cp $0c ; $29bd
 	jr nz, .unpackPair ; $29bf
 	ld a, $04 ; $29c1

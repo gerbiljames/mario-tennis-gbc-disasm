@@ -206,7 +206,7 @@ Unused_00_FarCopyIndexed:
 	pop bc ; $0723
 	pop af ; $0724
 	ret ; $0725
-Unused_00_FarCallIndexed1:
+Unused_00_FarQueueVRAMCopyIndexed:
 	push af ; $0726
 	push bc ; $0727
 	push de ; $0728
@@ -234,7 +234,7 @@ Unused_00_FarCallIndexed1:
 	pop bc ; $074f
 	pop af ; $0750
 	ret ; $0751
-Unused_00_FarCallIndexed2:
+Unused_00_FarVRAMDMAIndexed:
 	push af ; $0752
 	push bc ; $0753
 	push de ; $0754
@@ -262,7 +262,7 @@ Unused_00_FarCallIndexed2:
 	pop bc ; $077b
 	pop af ; $077c
 	ret ; $077d
-Unused_00_FarCallIndexed3:
+Unused_00_FarCopyMemoryFastIndexed:
 	push af ; $077e
 	push bc ; $077f
 	push de ; $0780

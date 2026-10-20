@@ -187,7 +187,7 @@ ServicePractice3Hooks:
 	dw ServicePractice3Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw ServicePractice3Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServicePractice3Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServicePractice3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServicePractice3Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw ServicePractice3Hook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServicePractice3Hook_MinigameStart:
@@ -287,7 +287,7 @@ ServicePractice3EvaluateResult:
 	ld [wDrillLessonResult], a ; $529f
 	ld a, WINLOSE_WIN ; $52a2
 	ret ; $52a4
-ServicePractice3Hook_RallyTick:
+ServicePractice3Hook_NetCross:
 	ret ; $52a5
 	twin_named service_practice1_hook_bounce, ServicePractice3Hook_Bounce ; $52a6
 ServicePractice3Hook_BallHit:
@@ -307,7 +307,7 @@ CheckServicePractice3ServeTiming:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $52c9
 	cp DRILL_LESSON_POINTS ; $52cc
 	ret nc ; $52ce
-	ld a, [wSpecialShotFlag] ; $52cf
+	ld a, [wPowerServeFlag] ; $52cf
 	or a ; $52d2
 	jr nz, .niceTiming ; $52d3
 	ld a, DRILLMSG_YOU_DIDNT_SERVE_WITH_NICE_TIMING_SO_YOU_FAIL ; $52d5
@@ -376,7 +376,7 @@ ServicePractice3QueueOutcomeMessage:
 	ld a, DRILLMSG_YOU_DIDNT_SERVE_WITH_NICE_TIMING_SO_YOU_FAIL ; $538f
 	ld b, DRILLWORDING_SAME ; $5391
 	call QueueDrillResultMessage ; $5393
-	ld a, [wSpecialShotFlag] ; $5396
+	ld a, [wPowerServeFlag] ; $5396
 	or a ; $5399
 	jr z, .serveFailed ; $539a
 	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAIL ; $539c

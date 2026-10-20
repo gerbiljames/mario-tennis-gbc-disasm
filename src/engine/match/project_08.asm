@@ -397,13 +397,13 @@ RecordFaultStat:
 	cp POINTOUTCOME_FAULT ; $5c4a
 	ret nz ; $5c4c
 	ld hl, wCharacter1Faults ; $5c4d
-	jp RecordDropShotWinnerStat.bumpStat ; $5c50
+	jp BumpCharStat ; $5c50
 RecordDoubleFaultStat:
 	ld a, [wPointOutcome] ; $5c53
 	cp POINTOUTCOME_DOUBLE_FAULT ; $5c56
 	ret nz ; $5c58
 	ld hl, wCharacter1DoubleFaults ; $5c59
-	jp RecordDropShotWinnerStat.bumpStat ; $5c5c
+	jp BumpCharStat ; $5c5c
 RecordServiceAceStat:
 	ld a, [wServiceAceFlag] ; $5c5f
 	and a ; $5c62
@@ -411,4 +411,4 @@ RecordServiceAceStat:
 	ld a, POINTWINNER_SERVICE_ACE ; $5c64
 	ld [wPointWinnerShotType], a ; $5c66
 	ld hl, wCharacter1ServiceAces ; $5c69
-	jp RecordDropShotWinnerStat.bumpStat ; $5c6c
+	jp BumpCharStat ; $5c6c

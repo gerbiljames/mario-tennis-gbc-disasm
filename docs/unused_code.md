@@ -31,8 +31,8 @@ data label only dead code names (`FontTiles`, read by a routine after a
 ## Dead roots
 
 Many `Unused` routines have no reference at all: ROM0 spares
-(`Unused_00_FarCallIndexed1`-`3`, `Unused_00_FarCopyIndexed`,
-`Unused_00_AngleFromVector`, …), the save-repair block helpers, per-bank
+(`Unused_00_FarQueueVRAMCopyIndexed`, `_FarVRAMDMAIndexed`, `_FarCopyMemoryFastIndexed`, `Unused_00_FarCopyIndexed`,
+`Unused_00_SqrtHL`, …), the save-repair block helpers, per-bank
 map-script helpers no bank calls, menu-cursor variants, `ret`-only stubs,
 and dead copies in `src/twins` groups (the trajectory helpers in banks
 `$20`-`$2c`, the menu-cursor and decimal-number copies).
@@ -66,7 +66,7 @@ it reached must be named `Unused`) or **live**, with how it is written;
 `make check` fails on an unreviewed one. The four dead ones:
 
 * `hFadeState` bit 7, which only an unreferenced routine sets, so
-  `Unused_00_ApplyWhiteFade` never runs (`docs/bugs.md`);
+  `Unused_00_ApplyPackedFade` never runs (`docs/bugs.md`);
 * `wSecondaryTimerMode`: `UpdateGameTimer` runs
   `Unused_00_TickSecondaryTimer` when it is 1, and the only store to it is
   `Unused_00_TickSecondaryTimerCountdown` writing `$ff`;
@@ -133,7 +133,7 @@ mostly small, all siblings of live ones: `Unused_00_ForceFadeOut` is
 / `_EnableVBlankInterrupt` / two `SetInterrupts…` variants are the interrupt
 helpers the game never selects, `Unused_00_SwitchCPUSpeedSingle`,
 `_FarDecompressData` (94% of `FarCopyBytes`), `_ReadFarVectorEntry`,
-`_MulHLByDEBothSigned`, `_PrintDecimalByteSigned`, `_BeginWhiteFadeOut`.
+`_MulHLByDEBothSigned`, `_PrintDecimalByteSigned`, `_BeginPackedFadeOut`.
 The engine was written as a library and the game used the subset it needed.
 
 **4. Debug tooling whose entry point is gone.** The largest unused routines

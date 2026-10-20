@@ -107,7 +107,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\t(?:ld (?:de|hl|bc),|dw) \$[ab][0-9a-f]{3}\b"), 0)
 
     def test_copy_lengths_follow_their_blobs(self):
-        self.assertEqual(count(r"^\tld c, \((?!WRAMX_END|[whs][A-Z])\w+ - \w+\) / 16 ;"), 37)
+        self.assertEqual(count(r"^\tld c, \((?!WRAMX_END|[whs][A-Z])\w+ - \w+\) / 16 ;"), 38)
         n = count(r"^\tld b?c, (\w+)_SIZE / 16 ;")
         self.assertGreaterEqual(n, 299)
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob
@@ -115,7 +115,7 @@ class Source(unittest.TestCase):
         used = set(re.findall(r"\bld b?c, (?![whs][A-Z]|(?:WRAMX|VRAM|CHAR_RECORD)_SIZE)(\w+)_SIZE / 16", whole))
         have = set(re.findall(r'INCLUDE "data/(?:\w+/)+lz_(\w+)\.inc"', whole))
         self.assertEqual(used - have, set())
-        self.assertGreaterEqual(count(r"^\tld c, \d+ ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 38)
+        self.assertGreaterEqual(count(r"^\tld c, \d+ ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 37)
         # a VRAM copy's count is a size, a row count or a decimal tile count;
         # a decimal count reading past its ROM source is a label span or
         # carries a note naming the source's own tile count
@@ -280,11 +280,11 @@ class Manifest(unittest.TestCase):
     def test_counts(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
-        self.assertEqual(len(lines), 4275)
+        self.assertEqual(len(lines), 4276)
         streams = sum(1 for f in lines if "/lz_" in f[0])
         self.assertEqual(streams, 863)
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2897)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2898)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)

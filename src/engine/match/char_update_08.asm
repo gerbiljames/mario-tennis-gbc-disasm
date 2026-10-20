@@ -288,7 +288,7 @@ UpdateChar:
 	call UpdateCharBallGeometry ; $695d
 	call ReadCharInput ; $6960
 	call UpdateCharStateMachine ; $6963
-	call CheckCharBallContact ; $6966
+	call CheckBallHitsCharBody ; $6966
 	call UpdateCharVelocityFromInput ; $6969
 	call StepCharMovement ; $696c
 	call StepCharJumpPhysics ; $696f
@@ -460,7 +460,7 @@ AdvanceCharStatePhase:
 	inc [hl] ; $6a8e
 .done:
 	ret ; $6a8f
-CharRallyEndState:
+CharFinishSwingPhase:
 	ld a, [wCharAnimId] ; $6a90
 	cp CHARANIM_FOREHAND ; $6a93
 	jr z, .clearShot ; $6a95
@@ -619,7 +619,7 @@ CharServeStrikePhase:
 	ret ; $6bd8
 CharRecoverState:
 	jumptable [wCharStatePhase] ; $6bd9
-	dw CharRallyEndState ; $6bdd jumptable
+	dw CharFinishSwingPhase ; $6bdd jumptable
 	dw CharRecoverMovementPhase ; $6bdf jumptable
 	dw AdvanceCharStatePhase.done ; $6be1 jumptable
 CharRecoverMovementPhase:
@@ -628,7 +628,7 @@ CharRecoverMovementPhase:
 	ret ; $6be9
 CharRallyState:
 	jumptable [wCharStatePhase] ; $6bea
-	dw CharRallyEndState ; $6bee jumptable
+	dw CharFinishSwingPhase ; $6bee jumptable
 	dw CharRallyReadyPhase ; $6bf0 jumptable
 	dw CharSwingWindupPhase ; $6bf2 jumptable
 	dw CharSwingContactPhase ; $6bf4 jumptable
@@ -664,7 +664,7 @@ CharSwingWindupPhase:
 	inc [hl] ; $6c32
 	call ApplyCharMovementInput ; $6c33
 	call BufferShotButtonPress ; $6c36
-	call CheckSwingRelease ; $6c39
+	call CheckSwingCancel ; $6c39
 	and a ; $6c3c
 	jr nz, .abort ; $6c3d
 	ld hl, wCharBallReachFlags ; $6c3f

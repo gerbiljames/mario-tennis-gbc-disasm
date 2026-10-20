@@ -160,14 +160,14 @@ def wAiReactionDelayNear equ $df79
 def wAiReactionDelayFar equ $df7a
 def wAiTrackingParam equ $df7b
 def wAiAimAwayChance equ $df7c
-def wAiServeStyle equ $df7d
+def wAiPlayStyle equ $df7d
 def wCharSpriteSetId equ $df7e
 def wAiPositionStrategy equ $df7f
 def wCharSpriteSlot equ $df80
 def wCharSpriteSlotFrame equ $df84
 def wCharAirShadowSlot equ $df88
 def wCharGroundShadowSlot equ $df8c
-def wCharSwingAttrWord equ $df90
+def wCharSkillIcons equ $df90
 def wLobPlacementIndex equ $df92
 def wDropPlacementIndex equ $df93
 def wCharMirrorAttrMask equ $df94

@@ -7,12 +7,12 @@ WaterSpriteModeHooks_10:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw Unused_10_WaterSpriteHook_BallHit ; MODEHOOK_BALL_HIT
 	dw Unused_10_WaterSpriteHook_Bounce ; MODEHOOK_BOUNCE
-	dw Unused_10_WaterSpriteHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw Unused_10_WaterSpriteHook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 Unused_10_WaterSpriteHook_Frame:
 	ret ; $4be8
-Unused_10_WaterSpriteHook_RallyTick:
+Unused_10_WaterSpriteHook_NetCross:
 	ret ; $4be9
 Unused_10_WaterSpriteHook_Bounce:
 	ret ; $4bea

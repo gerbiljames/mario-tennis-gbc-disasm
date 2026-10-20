@@ -75,7 +75,7 @@ def SPRSLOT_SIZE equ _RS
 	const SHOTTYPE_SERVE_FLAT          ; $0e serve, A+B
 def NUM_SHOTTYPES equ const_value
 
-; AI shot habits (CharGroupTable_02, one 16-entry row per serve style;
+; AI shot habits (AiShotMixTable_02, one 16-entry row per AI play style;
 ; AiPickShotButtons draws one by AdvanceMatchRng & $0f): the stroke's two
 ; button presses as nibbles, first press high -- 1 = A, 2 = B, 3 = A+B.
 	const_def $10
@@ -128,7 +128,7 @@ def BANNER_OUT             equ POINTOUTCOME_OUT
 	const BANNER_GAME            ; $0b game won
 	const BANNER_SET             ; $0c
 	const BANNER_MATCH           ; $0d
-	const BANNER_POWER_SERVE     ; $0e wSpecialShotFlag on the serve
+	const BANNER_POWER_SERVE     ; $0e wPowerServeFlag on the serve
 	const BANNER_TIEBREAK        ; $0f
 	const BANNER_START           ; $10 end of the minigame countdown
 	const BANNER_COUNTDOWN_DIGIT ; $11 SpawnCourtBannerObj only: the digit tiles come from LoadScoreDigitGfx
@@ -195,7 +195,7 @@ def NUM_COURTS equ const_value
 ;                 adds 4 when fewer than 5 windup frames elapsed;
 ;                 the *QuickAnim scripts are the first frame of the full
 ;                 swing alone before chaining back to idle.
-; CharRallyEndState tests the set $05 $06 $07 $09 $0a $0b $12: a ground
+; CharFinishSwingPhase tests the set $05 $06 $07 $09 $0a $0b $12: a ground
 ; swing (charged or quick) or a dive still playing. The smash is covered by
 ; the airborne bit (wCharFlags bit 2) tested on the next line.
 	const_def
@@ -242,7 +242,7 @@ def NUM_CHARSTATES equ const_value
 ; Bit indices only (every site is a `bit`/`res`/`set`). Bits 3 and 7 are
 ; never touched.
 	const_def
-	const CHARB_RECOIL   ; $00 set by ApplyShotRecoil after every stroke and by CheckCharBallContact on a body hit; UpdateCharVelocityFromInput drops the steering intent
+	const CHARB_RECOIL   ; $00 set by ApplyShotRecoil after every stroke and by CheckBallHitsCharBody on a body hit; UpdateCharVelocityFromInput drops the steering intent
 	const CHARB_DIVING   ; $01 StartCharSwing.dive sets it. Widens the contact window to 1.25x wCharReachX, flattens the brake, freezes the facing ease, costs -$0c00 shot speed, and turns both power strokes back into their base shots
 	const CHARB_AIRBORNE ; $02 set for the smash jump, cleared by StepCharJumpPhysics on landing; also picks the airborne shadow over the ground one
 	const_def $04
@@ -259,14 +259,14 @@ def CHARSPRITEB_RELOAD_TILES equ 6 ; the facing octant or animation frame change
 	const_def
 	const BALLREACHB_SWING_RANGE ; $00 CheckBallInSwingRange: the ball is within swing range
 	const BALLREACHB_CONTACT     ; $01 CheckBallContactWindow: the ball is inside the contact window
-	const BALLREACHB_BODY_HIT    ; $02 CheckCharBallContact: the ball hit the character's body
+	const BALLREACHB_BODY_HIT    ; $02 CheckBallHitsCharBody: the ball hit the character's body
 	const_def $04
 	const BALLREACHB_NEAR_NET    ; $04 the character's own |depth| < $2a0: picks RallyReachShotTypeTable and wAiReactionDelayNear
 	const_def $06
 	const BALLREACHB_STEER_X     ; $06 ApplyCharMovementInput: left/right held; UpdateCharVelocityFromInput accelerates X
 	const BALLREACHB_STEER_DEPTH ; $07 the same for up/down and depth
 
-; --- Court position (wCharCourtPos, wServingCharCourtPos, wPrevCourtPos) ---
+; --- Court position (wCharCourtPos, wServingCharCourtPos, wPlayer1PrevCourtPos) ---
 ; Bit 1 is the end, bit 0 the screen half with the near end at the bottom:
 ; a near server on the right is in the deuce court. GetCharBaseCourtPosition
 ; negates the depth for the far end and the X for the left half.
@@ -328,7 +328,7 @@ def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 	const MATCHCONTEXT_STORY      ; $01 InitStoryMatchSettings
 	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
 
-; --- Score-digit glyph set (b of the Load*DigitGfx loaders, wScoreDisplayIsTiebreak) ---
+; --- Score-digit glyph set (b of the Load*DigitGfx loaders, wScoreDigitGfxStyle) ---
 ; GetGfxSourcePtr's index into ScoreDigitGfxPtrs_09 / Player1ScoreDigitGfxSource /
 ; Player2ScoreDigitGfxSource.
 def DIGITGFX_TENNIS_CALLS    equ $00 ; 0/15/30/40/Ad: a normal game's points
@@ -342,6 +342,6 @@ def DIGITGFX_NUMERALS        equ $01 ; plain numbers: tiebreak points, minigame 
 	const MODEHOOK_MINIGAME_START ; $03 RunMinigamePointLoop, before the first point
 	const MODEHOOK_BALL_HIT       ; $04 HandleBallHitEvent
 	const MODEHOOK_BOUNCE         ; $05 HandleBallBounceEvent
-	const MODEHOOK_RALLY_TICK     ; $06 TickRallyTimers, ball crossed the net
+	const MODEHOOK_NET_CROSS     ; $06 HandleBallNetCrossEvent, ball crossed the net
 	const MODEHOOK_DRAW           ; $07 DrawBallAndEffects, extra draw pass
 def NUM_MODEHOOKS equ const_value

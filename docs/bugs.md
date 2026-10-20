@@ -93,7 +93,7 @@ the fixed build restores the header from the mirror and keeps every block.
 `AdvanceFrame` (ROM0, `$2631`) guards every frame with:
 
 ```
-        ldh a, [hLinkCounter]
+        ldh a, [hLinkRetryCount]
         or a
         jr z, .linkOk
         ldh a, [hLinkErrorFlags]
@@ -178,7 +178,7 @@ open question in `docs/story_mode.md`).
 cell `ReadCollisionMapCell` returns. No shipped collision map has a `$0b`
 cell, so the fix only shows on an edited map.
 
-### The white fade can never be selected
+### The packed fade curve can never be selected
 
 `UpdateFadeOut` and `UpdateFadeIn` share a tail that picks a palette-scaling
 method on bit 7 of `hFadeState`:
@@ -188,13 +188,13 @@ method on bit 7 of `hFadeState`:
         add a
         jr nc, .adjustBrightness ; -> AdjustColorsBrightness
         ld a, c / and $04
-        call z, Unused_00_ApplyWhiteFade
+        call z, Unused_00_ApplyPackedFade
 ```
 
 Of `hFadeState`'s five writers (`$1d28` stores `$01`, `$1d36` `$02`, `$1d97`
 and `$261e` `$00`), only `$1d1b` sets bit 7 — with `or $80`, inside
-`Unused_00_BeginWhiteFadeOut` (`$00:$1d0f`), which nothing references. So
-`Unused_00_ApplyWhiteFade` (`$00:$1dcc`) never runs despite a live `call z`:
+`Unused_00_BeginPackedFadeOut` (`$00:$1d0f`), which nothing references. So
+`Unused_00_ApplyPackedFade` (`$00:$1dcc`) never runs despite a live `call z`:
 a flag with no writer, like the link-error check.
 
 The live fade, `AdjustColorsBrightness`, adds a clamped delta to each
@@ -494,7 +494,7 @@ frame the ball is in swing range (`$08:$6ebb`), loads the X half-width from
 .checkX:
 ```
 
-All four arms target `$6fed`, the fall-through. `CharRallyEndState`
+All four arms target `$6fed`, the fall-through. `CharFinishSwingPhase`
 (`$08:$6a90`) tests the same membership (`$05`, `$06`, `$07`, `$09`, `$0a`,
 `$0b`, `$12`) with a real body; the ids are swing animations (`$05`/`$06` are
 the forehand and backhand `$08:$6e58`/`$6e5e` select into `wCharSwingAnim`).
@@ -726,7 +726,7 @@ shot-placement row (`CHARREC_SPEED_BONUS`).
 | `hUnusedLinkByte`, `hUnusedLinkSlot` | serial init | cleared by both link init routines, read by nothing |
 | `hLinkLastRxMirror` | serial init, bank `$07` | written beside `hLinkLastRxByte`, never compared |
 | `hUnusedLinkSelectByte` | bank `$38` | written twice by `RunLinkCharSelectScreen` |
-| `wCharSwingHoldFrames` | bank `$08` | `CheckSwingRelease` increments it once per windup frame (`ld hl, wCharSwingHoldFrames` / `inc [hl]`) and zeroes it on release; no site reads the count, so the charge mechanic it fed is gone |
+| `wCharSwingHoldFrames` | bank `$08` | `CheckSwingCancel` increments it once per windup frame (`ld hl, wCharSwingHoldFrames` / `inc [hl]`) and zeroes it on release; no site reads the count, so the charge mechanic it fed is gone |
 | `wCharSwingHoldButton` | bank `$08` | written on three paths beside the frame count, consumed on none |
 | `wCharWalkTargetFlag` | bank `$08` | zeroed immediately after each write of `wCharWalkTargetX`/`Depth`, at `$69bc` and `$7c82` |
 
@@ -851,17 +851,17 @@ event code to that drill's `JudgePoint`:
 | `<Drill>JudgeOnPointEnd` | `<Drill>Hook_PointEnd` | 0 |
 | `<Drill>JudgeOnBallHit` | `<Drill>Hook_BallHit` | 1 |
 | `<Drill>JudgeOnBounce` | `<Drill>Hook_Bounce` | 2 |
-| `<Drill>JudgeOnRallyTick` | `<Drill>Hook_RallyTick` | 3 |
+| `<Drill>JudgeOnNetCross` | `<Drill>Hook_NetCross` | 3 |
 
 `JudgePoint` dispatches on `wRallyLength` and then on the event code, and
 returns early if `wDrillPointJudgement` is already set, so the first event to
 judge a point wins. Of the fifteen drills' 60 judges, 20 begin with `ret`:
 
-* 9 drills disable `JudgeOnRallyTick` only (`StrokeMatch1`-`3`,
+* 9 drills disable `JudgeOnNetCross` only (`StrokeMatch1`-`3`,
   `StrokePractice1`-`3`, `NetGamePractice1`-`3`);
-* 5 disable `JudgeOnBounce` and `JudgeOnRallyTick` (`ServiceMatch1`/`3`,
+* 5 disable `JudgeOnBounce` and `JudgeOnNetCross` (`ServiceMatch1`/`3`,
   `NetGameMatch1`/`2`/`3`);
-* 1 disables `JudgeOnBounce` while leaving `JudgeOnRallyTick` live
+* 1 disables `JudgeOnBounce` while leaving `JudgeOnNetCross` live
   (`ServiceMatch2`).
 
 No drill disables `JudgeOnPointEnd` or `JudgeOnBallHit`. The effect is a
@@ -877,8 +877,8 @@ are named for the body, with the leading `ret` recorded in the note:
 
 | routine | body |
 | --- | --- |
-| `NetGamePractice1JudgeOnRallyTick` | the drill's fourth judge |
-| `StrokePractice1JudgeOnRallyTick` | the drill's fourth judge |
+| `NetGamePractice1JudgeOnNetCross` | the drill's fourth judge |
+| `StrokePractice1JudgeOnNetCross` | the drill's fourth judge |
 | `Unused_18_LoadFontTiles` | copies `FontTiles` to `$9000` |
 | `Unused_1b_LoadUnlockDebugNavGridGfx` | decompresses and uploads debug-screen artwork |
 | `Unused_02_CheckExpAwardAllowed` | the EXP-award gate — see below |

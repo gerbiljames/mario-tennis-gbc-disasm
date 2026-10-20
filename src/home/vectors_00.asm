@@ -418,7 +418,7 @@ EnableLCD:
 	xor a ; $037f
 	ldh [hVBlankOccurred], a ; $0380
 	ret ; $0382
-ClearVRAMBank:
+ClearVRAM:
 	ldh a, [hIsCGB] ; $0383
 	and a ; $0385
 	jp nz, ClearBothVRAMBanks ; $0386
