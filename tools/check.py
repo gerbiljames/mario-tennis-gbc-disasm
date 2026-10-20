@@ -92,7 +92,8 @@ after a real defect broke it:
             from hInput* / wCharInputBits, or tested with a PADB_ bit before)
             leaves n raw, nor does a bit/set/res on a FLAG_BYTES byte
             (wCharFlags, wCharBallReachFlags, wExpScreenBusyFlags, ...) or
-            a FLAG_FIELDS record field use anything but its family, and no Text_* id is the X of
+            a FLAG_FIELDS record field (also via `ld a, FIELD / add l /
+            ld l, a`) use anything but its family, and no Text_* id is the X of
             `ld hl, X / add hl, rr / ld e, l / ld d, h` (five scoreboard
             caption cells were)
   fields    a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
@@ -121,7 +122,10 @@ after a real defect broke it:
             it leaves (22 were alternate branches or placement cases), and
             the z target after RunDialogueYesNoPrompt (0 = yes) is not named
             .declined / .no / .refuse*, nor the nz one .accepted / .yes* (two
-            were swapped; one confirms a decline)
+            were swapped; one confirms a decline), and a local whose
+            straight-line path returns a = 0 has no positive name (busy,
+            found, ...), nor one returning 1 a negative name (none, idle,
+            no*, ...) (two were swapped; two return a status or a score)
   mirrors   a direct `[wX]` operand on a ram_mirrored.inc symbol whose banks
             are listed does not follow (with no pop_wram_bank between) a
             `wram_bank` selecting a bank that lacks it (four read
@@ -1156,10 +1160,13 @@ KNOWN_RAW_IDS = {
     ("wMinigameLevel", "$02"),     # Tennis Machine / Wall level 3: an index, not the Mario high-score level
     ("QueueSprite(b)", "0"),       # no attribute bits; OAM_PAL0 is the DMG palette bit, unused on CGB
 }
-# Data rows whose values are ids: a macro's argument by position, and tables
+# Data rows whose values are ids: a macro's argument by position (a macro
+# keyed "<macro> <first arg>" counts only with that first argument), and tables
 # by label or by the kind their header comment names.
 RAW_ID_MACRO_ARGS = {
     ("story_location", 0): "STORYLOC_",
+    ("script_set_active", 1): "ACTORMODE_",
+    ("as_set_field ACTORF_MODE", 1): "ACTORMODE_",
     **{("court_positions", k): "COURTPOS_" for k in range(4)},
     **{("court_positions", k): "SERVEROLE_" for k in range(4, 8)},
 }
@@ -1526,7 +1533,7 @@ def _raw_data_ids(seen):
             elif word not in ("db", "dw", "table_width", "assert_table_length"):
                 table = None
             for (macro, k), prefix in RAW_ID_MACRO_ARGS.items():
-                if word == macro and k < len(args):
+                if macro in (word, f"{word} {args[0] if args else ''}") and k < len(args):
                     out.append((prefix, args[k], where))
     return out
 
@@ -1617,8 +1624,8 @@ FLAG_BYTES = {
     "wSoundOptionBits": "SOUNDOPTB_",
     "wCharSpriteDirty": "CHARSPRITEB_",
 }
-# Record fields of the same kind, reached through `ld hl, FIELD / add hl, rr`
-# or `ld hl, wRecord + FIELD`.
+# Record fields of the same kind, reached through `ld hl, FIELD / add hl, rr`,
+# `ld hl, wRecord + FIELD` or `ld a, FIELD / add l / ld l, a`.
 FLAG_FIELDS = {
     "ACTORF_FLAGS": "ACTORFLAGB_",
     "ACTORF_STATUS": "ACTORSTATUSB_",
@@ -1630,6 +1637,9 @@ FLAG_FIELDS = {
 KNOWN_RAW_FIELD_BITS = {("ACTORF_FLAGS", "1"), ("ACTORF_STATUS", "1"), ("ACTORF_STATUS", "3")}
 _FLAG_NAMES = "|".join(FLAG_BYTES)
 _FLAG_FIELD_RE = re.compile(rf"ld hl, (?:\w+ \+ )?({'|'.join(FLAG_FIELDS)})")
+_FLAG_FIELD_A_RE = re.compile(rf"ld a, ({'|'.join(FLAG_FIELDS)})")
+# Calls that leave hl alone, so a tracked [hl] survives them.
+HL_KEEPING_CALLS = {"WaitScriptFrames"}
 _FLAG_LOAD_RE = re.compile(rf"ldh? ([abcdehl]), \[({_FLAG_NAMES})\]")
 _FLAG_HL_RE = re.compile(rf"ld hl, ({_FLAG_NAMES})\b.*")
 _FLAG_STORE_RE = re.compile(rf"ldh? \[({_FLAG_NAMES})\], ([abcdehl])")
@@ -1647,6 +1657,7 @@ def _raw_flag_bits(fail):
         lines, origin = bank_lines(h)
         scope = owner = None
         state, built, pending = {}, {}, {}
+        field_off = None
         for i, line in enumerate(lines):
             if m := _GLOBAL_RE.match(line):
                 scope = owner = m.group(1)
@@ -1660,6 +1671,15 @@ def _raw_flag_bits(fail):
             if not ins:
                 continue
             where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            off, field_off = field_off, None
+            if m := _FLAG_FIELD_A_RE.fullmatch(ins):
+                field_off = (FLAG_FIELDS[m.group(1)], False)
+            elif off and ins == "add l" and not off[1]:
+                field_off = (off[0], True)
+            elif off and ins == "ld l, a" and off[1]:
+                state["[hl]"] = off[0]
+                state.pop("h", None), state.pop("l", None)
+                continue
 
             def judge(op, prefix):
                 nonlocal n
@@ -1704,7 +1724,8 @@ def _raw_flag_bits(fail):
                     state, built = {}, {}
                 continue
             if ins in ("ret", "reti", "jp hl") or ins.startswith(("call", "farcall", "rst")):
-                state, built = {}, {}
+                keep = ins.split(" ")[-1] in HL_KEEPING_CALLS and "[hl]" in state
+                state, built = ({"[hl]": state["[hl]"]} if keep else {}), {}
                 continue
             if (m := re.fullmatch(r"ld ([abcde]), \[hl\]", ins)) and "[hl]" in state:
                 state[m.group(1)] = state["[hl]"]
@@ -2095,6 +2116,15 @@ _NO_NAME_RE = re.compile(r"\.(?:declined|no(?![a-z])|refuse)")
 _STORE_LOCAL_RE = re.compile(r"\.store(?![a-z])")
 _STORE_RE = re.compile(r"^\s*(?:ldh?\s+\[|ld\s+\[|(?:inc|dec)\s+\[hl\]|(?:set|res)\s+\w+\s*,\s*\[hl\])")
 _CHECK_LOCAL_RE = re.compile(r"\.check([A-Z]\w*?)\d*$")
+# Locals whose return value contradicts their name, but hold anyway: (routine, local) -> why.
+KNOWN_RETURN_NAMES = {
+    ("EraseStorySlotSaveData", ".ok"): "a status code: 0 is success, .badSlot returns 1",
+    ("LookupMinigameShotResult", ".noMatch"): "a is the score, 1 point when no rule matches",
+}
+_POS_WORDS = {"busy", "found", "reached", "pending", "selected", "yes", "accepted", "success", "valid", "taken",
+              "ok", "hit", "active", "ready", "true", "allowed"}
+_NEG_WORDS = {"none", "idle", "fail", "failed", "empty", "invalid", "miss", "missed", "false", "free", "skip",
+              "declined", "inactive"}
 
 
 def check_local_names(fail):
@@ -2106,14 +2136,15 @@ def check_local_names(fail):
     `.done` / `.exit` / `.finish` local the line above does not fall into
     runs no dialogue, movement or prompt macro before it leaves. The `jr z`
     target after a yes/no prompt is not named as a no, nor the `jr nz` one
-    as a yes."""
+    as a yes, and a local's constant 0 / 1 return agrees with its name."""
     ram = {name for _, addr, name in read_sym() if addr >= 0x8000 and "." not in name}
     ram |= set(re.findall(r"^def (\w+) equ", (ROOT / "include" / "ram_mirrored.inc").read_text(), re.M))
-    n, seen, yes_no_used = 0, set(), set()
+    n, seen, yes_no_used, return_used = 0, set(), set(), set()
     for h in holders():
         bank = bank_of(h)
         lines = bank_lines(h)[0]
         n += _yes_no_branch_names(fail, bank, lines, yes_no_used)
+        n += _return_value_names(fail, bank, lines, return_used)
         labels, scope = {}, None
         for k, line in enumerate(lines):
             g = _GLOBAL_RE.match(line)
@@ -2182,8 +2213,81 @@ def check_local_names(fail):
                 fail("localnames", f"${bank:02x}: {owner}{local} does not read {syms[0]}")
             elif named and key in KNOWN_LOCAL_NAMES:
                 fail("localnames", f"{owner}{local} now reads {syms[0]} -- drop it from KNOWN_LOCAL_NAMES")
+    for key in KNOWN_RETURN_NAMES.keys() - return_used:
+        fail("localnames", f"{key[0]}{key[1]} no longer contradicts its return value -- drop it from KNOWN_RETURN_NAMES")
     for key in KNOWN_YES_NO_NAMES.keys() - yes_no_used:
         fail("localnames", f"{key[0]}{key[1]} is no longer a misnamed yes/no branch -- drop it from KNOWN_YES_NO_NAMES")
+    return n
+
+
+def _straight_return(lines, start, labels, owner):
+    """The constant a (0 or 1) a local's straight-line path returns with, or
+    None: the path follows fall-through and unconditional local jumps and
+    gives up at a conditional branch, call or macro."""
+    k, val, seen = start + 1, None, set()
+    while k < len(lines) and k not in seen:
+        seen.add(k)
+        code = lines[k].split(";")[0].strip()
+        k += 1
+        if not code or code.endswith(":"):
+            continue
+        if code == "ret":
+            return val
+        if m := re.fullmatch(r"j[rp] (\.\w+)", code):
+            k = labels.get(owner + m.group(1))
+            if k is None:
+                return None
+            continue
+        if code in ("xor a", "ld a, $00", "ld a, 0"):
+            val = 0
+        elif code in ("ld a, $01", "ld a, 1"):
+            val = 1
+        elif re.fullmatch(r"(?:pop (?:bc|de|hl)|push (?:af|bc|de|hl)|ld [bcdehl], [bcdehl]|ld \[\w+(?: \+ \w+)?\], a|nop)", code):
+            continue
+        elif re.fullmatch(r"(?:ldh?|inc|dec|add|adc|sub|sbc|and|or|xor|cpl|rlca|rrca|rla|rra|swap|res|set|bit|cp) .*", code) \
+                and not re.match(r"(?:ldh? a|inc a|dec a|add|adc|sub|sbc|and|or|xor|cpl|rlca|rrca|rla|rra|swap a|pop af)\b", code):
+            continue
+        else:
+            return None
+    return None
+
+
+def _name_words(local):
+    words = [w.lower() for w in re.findall(r"[a-z]+|[A-Z][a-z]*", local[1:])]
+    if words and words[0] in ("clear", "reset", "set", "mark", "store", "check", "test"):
+        return False, False
+    neg = bool(words) and (words[0] in ("no", "not") or any(w in _NEG_WORDS for w in words))
+    pos = not neg and any(w in _POS_WORDS for w in words)
+    return pos, neg
+
+
+def _return_value_names(fail, bank, lines, used):
+    """A local whose straight-line path returns a = 0 is not named as a
+    positive (busy, found, ...), nor one returning a = 1 as a negative (none,
+    idle, notFound, ...)."""
+    labels, scope, locs = {}, None, []
+    for k, line in enumerate(lines):
+        if g := _GLOBAL_RE.match(line):
+            scope = g.group(1)
+            labels[scope] = k
+            continue
+        if lm := re.match(r"^(\w+)?(\.\w+):", line):
+            key = (lm.group(1) or scope, lm.group(2))
+            labels[key[0] + key[1]] = k
+            locs.append((k, key))
+    n = 0
+    for k, key in locs:
+        pos, neg = _name_words(key[1])
+        if not (pos or neg):
+            continue
+        val = _straight_return(lines, k, labels, key[0])
+        if val is None:
+            continue
+        n += 1
+        if (val == 0 and pos) or (val == 1 and neg):
+            used.add(key)
+            if key not in KNOWN_RETURN_NAMES:
+                fail("localnames", f"${bank:02x}: {key[0]}{key[1]} returns a = {val}")
     return n
 
 

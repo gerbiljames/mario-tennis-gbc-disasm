@@ -439,7 +439,7 @@ SetActorDrawModeFromSceneTile_10:
 	wram_bank WRAM_ACTORS ; $7a48
 	ld hl, ACTORF_MODE ; $7a4e
 	add hl, bc ; $7a51
-	ld a, $02 ; $7a52
+	ld a, ACTORMODE_VISIBLE ; $7a52
 	ld [hl], a ; $7a54
 	ret ; $7a55
 ; SetActorDrawModeFromSceneTile_10 without the push af / pop af / or a / jr z zero-argument guard. Nothing calls it.
@@ -503,6 +503,6 @@ Unused_10_SetActorDrawModeFromSceneTileSingle:
 	wram_bank WRAM_ACTORS ; $7aba
 	ld hl, ACTORF_MODE ; $7ac0
 	add hl, bc ; $7ac3
-	ld a, $02 ; $7ac4
+	ld a, ACTORMODE_VISIBLE ; $7ac4
 	ld [hl], a ; $7ac6
 	ret ; $7ac7

@@ -172,6 +172,7 @@ AddPlayerExp:
 	ld hl, CHARREC_EXP ; $4d92
 	add hl, bc ; $4d95
 	jp AddExpCapped ; $4d96
+; z when character a's exp has reached the next level (nz at MAX_LEVEL)
 HasReachedNextLevelExp:
 	call GetPlayerRecordPtr ; $4d99
 	ld hl, CHARREC_LEVEL ; $4d9c

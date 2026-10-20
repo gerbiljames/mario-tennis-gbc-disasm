@@ -316,7 +316,7 @@ DrawActors:
 	ld hl, ACTORF_MODE ; $4aae
 	add hl, bc ; $4ab1
 	ld a, [hl] ; $4ab2
-	cp $02 ; $4ab3
+	cp ACTORMODE_VISIBLE ; $4ab3
 	call z, DrawAndAnimateActor ; $4ab5
 	pop de ; $4ab8
 .next:
@@ -408,7 +408,7 @@ LoadActorObjectDef:
 .initFields:
 	ld hl, ACTORF_MODE ; $4b51
 	add hl, bc ; $4b54
-	ld [hl], $02 ; $4b55
+	ld [hl], ACTORMODE_VISIBLE ; $4b55
 	ld hl, ACTORF_DRAWN_FACING ; $4b57
 	add hl, bc ; $4b5a
 	ld a, $ff ; $4b5b

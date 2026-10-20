@@ -149,8 +149,8 @@ MACRO script_unlock_facing
 	farcall ScriptSetActorFacingLock
 ENDM
 
-; Writes `state` to the actor's activity byte (state struct +$20).
-; Usage: script_set_active actor, state
+; Sets the actor's ACTORF_MODE to an ACTORMODE_* value.
+; Usage: script_set_active actor, mode
 MACRO script_set_active
 	ld a, \1
 	ld b, \2

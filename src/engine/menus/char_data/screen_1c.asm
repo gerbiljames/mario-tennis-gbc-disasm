@@ -22,7 +22,7 @@ CharDataScreen_Show:
 	push bc ; $402f
 	ld a, c ; $4030
 	farcall HasReachedNextLevelExp ; $4031
-	jp nz, .levelUpPending ; $4034
+	jp nz, .noLevelUp ; $4034
 	pop bc ; $4037
 .show:
 	call ClearFrameTasks ; $4038
@@ -86,7 +86,7 @@ CharDataScreen_Show:
 	pop_wram_bank ; $40ea
 	ld a, b ; $40ef
 	ret ; $40f0
-.levelUpPending:
+.noLevelUp:
 	pop bc ; $40f1
 	pop bc ; $40f2
 	pop_wram_bank ; $40f3

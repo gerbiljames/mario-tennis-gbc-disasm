@@ -170,7 +170,7 @@ Unused_0a_ActorScriptFollowWaypoints2:
 ActorScript_0a:
 	; $4766, 6 bytes (actor_script)
 	as_halt
-	as_set_field ACTORF_MODE, $0000
+	as_set_field ACTORF_MODE, ACTORMODE_HIDDEN
 	as_halt
 IsActorBusy:
 	xor a ; $476c
@@ -183,13 +183,13 @@ IsActorBusy:
 	ld de, ACTORF_ANIM ; $4778
 	add hl, de ; $477b
 	ld a, [hl] ; $477c
-	cp $00 ; $477d
-	jr z, .busy ; $477f
-	cp $01 ; $4781
-	jr z, .busy ; $4783
+	cp ANIM_STILL ; $477d
+	jr z, .idle ; $477f
+	cp ANIM_WALK ; $4781
+	jr z, .idle ; $4783
 	ld a, $01 ; $4785
 	jr .done ; $4787
-.busy:
+.idle:
 	xor a ; $4789
 .done:
 	pop hl ; $478a
@@ -376,17 +376,17 @@ WaitPlayerMoveDone:
 	ld a, ACTORF_FLAGS ; $48a7
 	add l ; $48a9
 	ld l, a ; $48aa
-	jr nc, .teleport ; $48ab
+	jr nc, .poll ; $48ab
 	inc h ; $48ad
-.teleport:
+.poll:
 	ld a, $01 ; $48ae
 	call WaitScriptFrames ; $48b0
-	bit 7, [hl] ; $48b3
+	bit ACTORFLAGB_MOVING, [hl] ; $48b3
 	jr z, .done ; $48b5
 	dec bc ; $48b7
 	ld a, c ; $48b8
 	or b ; $48b9
-	jr nz, .teleport ; $48ba
+	jr nz, .poll ; $48ba
 .done:
 	pop hl ; $48bc
 	pop bc ; $48bd

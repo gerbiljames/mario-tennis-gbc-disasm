@@ -294,7 +294,7 @@ SetActorDrawModeFromSceneTile_0f:
 	wram_bank WRAM_ACTORS ; $6388
 	ld hl, ACTORF_MODE ; $638e
 	add hl, bc ; $6391
-	ld a, $02 ; $6392
+	ld a, ACTORMODE_VISIBLE ; $6392
 	ld [hl], a ; $6394
 	ret ; $6395
 ; SetActorDrawModeFromSceneTile_0f without the push af / pop af / or a / jr z that makes the live one skip on a zero argument. Nothing calls it.
@@ -358,7 +358,7 @@ Unused_0f_SetActorDrawModeFromSceneTileSingle:
 	wram_bank WRAM_ACTORS ; $63fa
 	ld hl, ACTORF_MODE ; $6400
 	add hl, bc ; $6403
-	ld a, $02 ; $6404
+	ld a, ACTORMODE_VISIBLE ; $6404
 	ld [hl], a ; $6406
 	ret ; $6407
 	twin read_scene_tilemap_tile, 0f ; $6408 ReadSceneTilemapTile_0f

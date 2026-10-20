@@ -45,7 +45,7 @@ WaterSpriteRacketRewardScene:
 	sound SFX_EMOTE ; $4ddf
 	script_wait_frames 60 ; $4de1
 	script_set_position ACTOR_TRAINING_COURT_WATER_SPRITE, 51.0, 7.0 ; $4de8
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $00 ; $4df3
+	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4df3
 	script_player_speed 0.5 ; $4dfa
 	script_move_player_to_actor ACTOR_TRAINING_COURT_WATER_SPRITE ; $4e00
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4e07
@@ -59,9 +59,9 @@ WaterSpriteRacketRewardScene:
 	ld a, $10 ; $4e22
 .handOver:
 	ld d, a ; $4e24
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $02 ; $4e25
+	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4e25
 	script_wait_frames 4 ; $4e2c
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $00 ; $4e33
+	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4e33
 	push af ; $4e3a
 	ld a, d ; $4e3b
 	farcall WaitScriptFrames ; $4e3c
@@ -69,7 +69,7 @@ WaterSpriteRacketRewardScene:
 	ld a, d ; $4e40
 	sub $02 ; $4e41
 	jp nz, .handOver ; $4e43
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $02 ; $4e46
+	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4e46
 	script_wait_frames 60 ; $4e4d
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4e54
 	script_face ACTOR_PLAYER, FACE_UP ; $4e5f
@@ -143,9 +143,9 @@ WaterSpriteRacketRewardScene:
 	sound SFX_RACKET_GET ; $4f9b
 	ld d, $10 ; $4f9d
 .flickerLoop:
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $00 ; $4f9f
+	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4f9f
 	script_wait_frames 4 ; $4fa6
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $02 ; $4fad
+	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4fad
 	push af ; $4fb4
 	ld a, d ; $4fb5
 	farcall WaitScriptFrames ; $4fb6
@@ -154,7 +154,7 @@ WaterSpriteRacketRewardScene:
 	sub $02 ; $4fbb
 	ld d, a ; $4fbd
 	jp nz, .flickerLoop ; $4fbe
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $00 ; $4fc1
+	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4fc1
 	script_wait_frames 30 ; $4fc8
 	script_set_position ACTOR_TRAINING_COURT_WATER_SPRITE, 51.0, 11.0 ; $4fcf
 	script_speak ACTOR_TRAINING_COURT_WATER_SPRITE ; $4fda

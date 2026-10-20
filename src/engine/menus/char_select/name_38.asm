@@ -127,7 +127,7 @@ Unused_38_ConfirmRemoteGridSelection:
 	ld e, a ; $6dd2
 	call TestAndSetGridEntryTaken ; $6dd3
 	or a ; $6dd6
-	jr nz, .done ; $6dd7
+	jr nz, .noSelection ; $6dd7
 	call GetGridSlotFromCursor ; $6dd9
 	ld b, a ; $6ddc
 	ld hl, wCharGridEntries ; $6ddd
@@ -136,18 +136,18 @@ Unused_38_ConfirmRemoteGridSelection:
 	add_hl_a ; $6de2
 	ld a, [hl] ; $6de7
 	cp $ff ; $6de8
-	jr z, .done ; $6dea
+	jr z, .noSelection ; $6dea
 	ld a, [wCharSelectSlot] ; $6dec
 	ld hl, wCharSelectSlotChars ; $6def
 	add_hl_a ; $6df2
 	ld [hl], b ; $6df7
 	ld a, $01 ; $6df8
 	ld [wLinkSelectSlotState], a ; $6dfa
-	jr .noSelection ; $6dfd
-.done:
+	jr .done ; $6dfd
+.noSelection:
 	xor a ; $6dff
 	ret ; $6e00
-.noSelection:
+.done:
 	ld a, $01 ; $6e01
 	ret ; $6e03
 WaitLinkSelectStartupFrames:

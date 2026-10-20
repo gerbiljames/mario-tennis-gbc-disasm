@@ -54,7 +54,7 @@ SpawnActor:
 	ld [hl], a ; $4090
 	ld hl, ACTORF_MODE ; $4091
 	add hl, bc ; $4094
-	ld [hl], $00 ; $4095
+	ld [hl], ACTORMODE_HIDDEN ; $4095
 	ld hl, ACTORF_TURN_RATE ; $4097
 	add hl, bc ; $409a
 	ld [hl], $10 ; $409b
@@ -241,7 +241,7 @@ AttachActorWaypointFollower:
 	call SetActorScript ; $4193
 	ld hl, ACTORF_MODE ; $4196
 	add hl, bc ; $4199
-	ld [hl], $01 ; $419a
+	ld [hl], ACTORMODE_CAMERA ; $419a
 	ld hl, ACTORF_TURN_RATE ; $419c
 	add hl, bc ; $419f
 	ld [hl], $40 ; $41a0
@@ -295,7 +295,7 @@ ActorScript_StepToTarget:
 	as_jump ActorScript_StepToTarget
 ActorScript_Deactivate:
 	; $41e2, 5 bytes (actor_script)
-	as_set_field ACTORF_MODE, $0000
+	as_set_field ACTORF_MODE, ACTORMODE_HIDDEN
 	as_halt
 UpdateActors:
 	wram_bank WRAM_ACTORS ; $41e7

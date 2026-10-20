@@ -205,11 +205,11 @@ LateStudentCrashCutscene:
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_BOUNCE ; $4c56
 	script_move_player 24.0, 11.0 ; $4c5d
 	farcall WaitPlayerMoveDone ; $4c67
-	script_set_active ACTOR_ACADEMY_ARRIVAL_HEADMASTER, $00 ; $4c6a
+	script_set_active ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ACTORMODE_HIDDEN ; $4c6a
 	script_set_position ACTOR_ACADEMY_ARRIVAL_HEADMASTER, 25.0, 6.0 ; $4c71
 	script_speak ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4c7c
 	script_set_position ACTOR_ACADEMY_ARRIVAL_HEADMASTER, 25.0, 36.0 ; $4c81
-	script_set_active ACTOR_ACADEMY_ARRIVAL_HEADMASTER, $02 ; $4c8c
+	script_set_active ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ACTORMODE_VISIBLE ; $4c8c
 	script_move_player 24.0, 36.0 ; $4c93
 	farcall WaitPlayerMoveDone ; $4c9d
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4ca0

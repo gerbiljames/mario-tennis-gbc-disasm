@@ -365,7 +365,7 @@ GetActorStateAddr:
 	ld a, ACTORF_MODE ; $432d
 	add_hl_a ; $432f
 	ld a, [hl] ; $4334
-	cp $00 ; $4335
+	cp ACTORMODE_HIDDEN ; $4335
 	pop hl ; $4337
 	inc h ; $4338
 	dec h ; $4339

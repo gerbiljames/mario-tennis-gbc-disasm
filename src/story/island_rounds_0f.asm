@@ -482,9 +482,9 @@ IslandOpenDoublesMatchReturn:
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $76ec
 	call CheckIslandOpenVictoryTransition ; $76ef
 	and a ; $76f2
-	jr z, .accepted ; $76f3
+	jr z, .returnToSite ; $76f3
 	ret ; $76f5
-.accepted:
+.returnToSite:
 	script_respawn_actors IslandOpenRoundActorsDoubles_0f ; $76f6
 	farcall BeginCutsceneScriptMode ; $76fe
 	ld hl, IslandOpenRoundNpcScriptsDoubles_0f ; $7701

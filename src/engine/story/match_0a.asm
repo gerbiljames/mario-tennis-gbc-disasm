@@ -26,7 +26,7 @@ RunStoryMatch:
 	farcall RunMatch ; $496d
 	ld a, [wSaveAndQuitRequest] ; $4970
 	or a ; $4973
-	jr z, .matchAborted ; $4974
+	jr z, .matchFinished ; $4974
 	farcall SaveStorySlotWithTimer ; $4976
 	ld a, STORYLOC_MAIN_MENU ; $4979
 	ld [wStoryModeCurrentLocation], a ; $497b
@@ -36,7 +36,7 @@ RunStoryMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $4985
 	ld [wStoryModeExitTriggerRequest], a ; $4988
 	ret ; $498b
-.matchAborted:
+.matchFinished:
 	xor a ; $498c
 	ld [wKeepMatchStatsFlag], a ; $498d
 	ret ; $4990

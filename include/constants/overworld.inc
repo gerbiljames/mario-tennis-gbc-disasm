@@ -41,7 +41,7 @@ def ACTORF_ANCHOR           rw ; $16 record this actor follows (as_follow_wp, as
 def ACTORF_ANIM_RATE        rb ; $18 subtracted from ACTORF_ANIM_DELAY each frame while standing
 def ACTORF_ANIM_RATE_MOVING rb ; $19 the same while ACTORFLAGB_MOVING is set
 	rb_skip 6                     ; $1a
-def ACTORF_MODE             rb ; $20 SetActorMode / script_set_active
+def ACTORF_MODE             rb ; $20 ACTORMODE_*: SetActorMode / script_set_active
 def ACTORF_OBJECT           rb ; $21 OBJ_* id (LoadActorObjectDef)
 def ACTORF_OBJECT_BANK      rb ; $22 bank of the object header and its frame and animation tables
 	rb_skip                       ; $23
@@ -79,6 +79,11 @@ def ACTORFLAGB_MOVING   equ 7
 def ACTORSTATUSB_FACING_LOCKED equ 0 ; ACTORF_FACING stops following ACTORF_HEADING
 def ACTORSTATUSB_FRAME_DIRTY   equ 6 ; ACTORF_DRAWN_FACING changed: upload the frame again
 def ACTORSTATUSB_LIVE          equ 7
+; ACTORF_MODE values
+	const_def
+	const ACTORMODE_HIDDEN  ; $00 not drawn (SpawnActor)
+	const ACTORMODE_CAMERA  ; $01 not drawn; the camera follows it (the hidden player slot)
+	const ACTORMODE_VISIBLE ; $02 DrawActors draws only this mode
 
 ; --- Overworld actor facing (map_actor `facing`, map_entry `sprite`) ---
 ; The facing byte stored in an actor's state ($daXX). Its top 2 bits are a

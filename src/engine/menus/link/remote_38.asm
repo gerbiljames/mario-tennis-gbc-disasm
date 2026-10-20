@@ -180,13 +180,13 @@ ConfirmLinkGridSelection:
 	push_wram_bank WRAM_SCREEN ; $676f
 	ld a, [wCharSelectSlot] ; $6778
 	cp CHARSELECTSLOT_DONE ; $677b
-	jr z, .allSlotsFilled ; $677d
+	jr z, .emptyCell ; $677d
 	ldh a, [hLinkRemoteInput] ; $677f
 	cp LINKSEL_PICK ; $6781
 	jr nz, .readEntry ; $6783
 	ld a, LINKSEL_NONE ; $6785
 	ldh [hLinkRemoteInput], a ; $6787
-	jr .allSlotsFilled ; $6789
+	jr .emptyCell ; $6789
 .readEntry:
 	ld a, [wCharGridPage] ; $678b
 	ld c, a ; $678e
@@ -196,7 +196,7 @@ ConfirmLinkGridSelection:
 	ld e, a ; $6796
 	call TestAndSetGridEntryTaken ; $6797
 	or a ; $679a
-	jr nz, .allSlotsFilled ; $679b
+	jr nz, .emptyCell ; $679b
 	sound SFX_MENU_SELECT ; $679d
 	call GetGridSlotFromCursor ; $679f
 	ld b, a ; $67a2
@@ -206,27 +206,27 @@ ConfirmLinkGridSelection:
 	add_hl_a ; $67a8
 	ld a, [hl] ; $67ad
 	cp $ff ; $67ae
-	jr z, .allSlotsFilled ; $67b0
+	jr z, .emptyCell ; $67b0
 	ld c, a ; $67b2
 	call IsMarioCastCharacter ; $67b3
 	or a ; $67b6
-	jr z, .emptyCell ; $67b7
+	jr z, .drawPortrait ; $67b7
 	ld a, [wCharGridHandedness] ; $67b9
 	cp HAND_LEFT ; $67bc
-	jr nz, .emptyCell ; $67be
+	jr nz, .drawPortrait ; $67be
 	ld a, [wCharSelectSlot] ; $67c0
 	ld hl, wCharSelectSlotLeftHanded ; $67c3
 	add_hl_a ; $67c6
 	ld a, $01 ; $67cb
 	ld [hl], a ; $67cd
-.emptyCell:
+.drawPortrait:
 	ld a, [wCharSelectSlot] ; $67ce
 	ld hl, wCharSelectSlotChars ; $67d1
 	add_hl_a ; $67d4
 	ld [hl], b ; $67d9
 	call DrawPlayerSlotPortrait ; $67da
 	jr .refresh ; $67dd
-.allSlotsFilled:
+.emptyCell:
 	sound SFX_MENU_CANCEL ; $67df
 	pop_wram_bank ; $67e1
 	ret ; $67e6

@@ -2,7 +2,7 @@ UpdateCameraIfActorIsCameraTarget:
 	ld hl, ACTORF_MODE ; $4402
 	add hl, bc ; $4405
 	ld a, [hl] ; $4406
-	cp $01 ; $4407
+	cp ACTORMODE_CAMERA ; $4407
 	ret nz ; $4409
 UpdateCameraToActor:
 	push af ; $440a

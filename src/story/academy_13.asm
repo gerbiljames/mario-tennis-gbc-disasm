@@ -350,8 +350,8 @@ ShowStoryNarration_13:
 	sound BGM_NONE ; $5a28
 	script_set_position ACTOR_DORM_ROOM_KATE, 63.0, 63.0 ; $5a2a
 	script_set_position ACTOR_DORM_ROOM_CAT, 63.0, 63.0 ; $5a35
-	script_set_active ACTOR_PLAYER, $00 ; $5a40
-	script_set_active ACTOR_PARTNER, $00 ; $5a47
+	script_set_active ACTOR_PLAYER, ACTORMODE_HIDDEN ; $5a40
+	script_set_active ACTOR_PARTNER, ACTORMODE_HIDDEN ; $5a47
 	script_copy_scene_rect 0, 32, 0, 0, 22, 24 ; $5a4e
 	script_fade_in 8 ; $5a5d
 	script_wait_frames 4 ; $5a62

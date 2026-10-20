@@ -369,6 +369,7 @@ SpawnMainCharacterActor:
 	ldh a, [hRomBank] ; $4e9d
 	ld de, ActorScript_Idle ; $4e9f
 	call SpawnActor ; $4ea2
+	; ignored: SetActorMode stores d; AttachActorWaypointFollower sets ACTORMODE_CAMERA
 	ld a, $01 ; $4ea5
 	call SetActorMode ; $4ea7
 	ld de, wActors ; $4eaa

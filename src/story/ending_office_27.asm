@@ -395,7 +395,7 @@ End11TrainingCourtInitScript_27:
 	script_set_position ACTOR_END11_TRAINING_COURT_BALLOON_QUESTION, 52.5, 11.5 ; $5337
 	script_delay 60 ; $5342
 	script_set_position ACTOR_END11_TRAINING_COURT_WATER_SPRITE, 51.0, 7.0 ; $5347
-	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, $00 ; $5352
+	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $5352
 	script_player_speed 0.5 ; $5359
 	script_move_player_to_actor ACTOR_END11_TRAINING_COURT_WATER_SPRITE ; $535f
 	ld hl, End11TrainingCourtInitScriptPalette0_27 ; $5366
@@ -408,9 +408,9 @@ End11TrainingCourtInitScript_27:
 	ld a, $10 ; $537d
 .loop:
 	ld d, a ; $537f
-	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, $02 ; $5380
+	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $5380
 	script_wait_frames 4 ; $5387
-	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, $00 ; $538e
+	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $538e
 	push af ; $5395
 	ld a, d ; $5396
 	farcall WaitScriptFrames ; $5397
@@ -418,7 +418,7 @@ End11TrainingCourtInitScript_27:
 	ld a, d ; $539b
 	sub $02 ; $539c
 	jp nz, .loop ; $539e
-	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, $02 ; $53a1
+	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $53a1
 	script_delay 60 ; $53a8
 	script_set_position ACTOR_END11_TRAINING_COURT_BALLOON_QUESTION, 63.0, 63.0 ; $53ad
 	script_face ACTOR_PLAYER, FACE_UP ; $53b8

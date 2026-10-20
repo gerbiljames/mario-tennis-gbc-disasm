@@ -432,8 +432,8 @@ A full table still drops the new task silently, as it always did in effect.
 struct and should report whether the actor is active:
 
 ```
-        ld a, [hl]               ; the actor's activity byte, struct + $20
-        cp $00
+        ld a, [hl]               ; ACTORF_MODE, struct + $20
+        cp ACTORMODE_HIDDEN
         pop hl
         inc h                    ; <- clobbers Z
         dec h
@@ -454,7 +454,7 @@ Eleven call sites — `ScriptSetActorMoveSpeed` (`$433b`),
 — do `ret z` or `jr z, .done` right after the call. All those guards are dead,
 so the script engine writes into inactive actors' state. Nothing visible
 follows: the draw loop (`$04:$4aae`) calls `DrawAndAnimateActor` only when the
-activity byte is `$02`, so an inactive actor given a move target walks
+mode is `ACTORMODE_VISIBLE`, so an inactive actor given a move target walks
 invisibly and is re-initialised when it next spawns. An id of `$18` or more
 would alias the player via `wActors`, but the highest actor id any `script_*`
 command names is `$17` (`$15:$4f5e`).
