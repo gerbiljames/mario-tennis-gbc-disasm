@@ -45,7 +45,8 @@ after a real defect broke it:
   gfx-specs graphics carry a gfx spec, so they get a PNG: no spec-less
             region named *Gfx*/*Tiles*, and no spec-less LZ stream of whole
             tiles that the source decompresses on to vTiles (192 graphics blobs
-            once had no PNG)
+            once had no PNG); a gfx-tagged region the source indexes, reads
+            element by element or decompresses into a tilemap row fails
   reach     a routine is named Unused exactly when nothing reachable from
             the reset, interrupt and rst vectors reaches it (tools/reach.py)
   unnamed   a data label no other label names is Unused_ (a slot-table
@@ -623,7 +624,49 @@ def check_gfx_specs(rom, manifest, fail):
                     fail("gfx-specs", f"{streams[m.group(1)]}: decompressed to "
                                       f"VRAM tiles ({f.relative_to(ROOT)}) but has no gfx spec")
                     break
+    check_gfx_tables(manifest, fail)
     return len(untagged)
+
+
+# gfx-tagged regions the source reads as a table, with the reason.
+TABLE_READ_GFX = {}
+
+_TABLE_READ_RE = re.compile(r"^\t(add_hl_a\b|add hl, |ld \w, \[hl\+?\]|"
+                            r"ld de, wDecompBuffer \+ .*TILEMAP_WIDTH)")
+_SCAN_END_RE = re.compile(r"^\t(call|ret|jp|jr|rst)\b|^\tld hl, |^\S")
+
+
+def check_gfx_tables(manifest, fail):
+    """A gfx spec is for tiles: a gfx-tagged region the source loads with
+    `ld hl, Label` and then indexes or reads element by element (add_hl_a,
+    add hl, ld r,[hl]/[hl+]) before the next call, jump or `ld hl` is a
+    table, and one decompressed to wDecompBuffer + n * TILEMAP_WIDTH is a
+    tilemap."""
+    gfx = {}
+    for path, off, length, spec in manifest:
+        if spec == "gfx" or (spec or "").startswith("gfx:"):
+            gfx[Path(path).stem.removeprefix("lz_")] = path
+    seen = set()
+    for f in sorted((ROOT / "src").rglob("*.asm")):
+        lines = f.read_text().splitlines()
+        for i, line in enumerate(lines):
+            m = _LOAD_HL_RE.match(line)
+            if not m or m.group(1) not in gfx:
+                continue
+            label = m.group(1)
+            for nxt in lines[i + 1:i + 8]:
+                if _SCAN_END_RE.match(nxt):
+                    break
+                if _TABLE_READ_RE.match(nxt):
+                    if label in TABLE_READ_GFX:
+                        seen.add(label)
+                    else:
+                        fail("gfx-specs", f"{gfx[label]}: tagged gfx but read as "
+                                          f"a table or tilemap ({f.relative_to(ROOT)}:{i + 1})")
+                    break
+    for label in sorted(set(TABLE_READ_GFX) - seen):
+        fail("gfx-specs", f"{label}: no longer read as a table -- "
+                          "drop it from TABLE_READ_GFX")
 
 
 def check_tilemaps(manifest, fail):

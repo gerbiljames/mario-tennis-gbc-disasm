@@ -83,7 +83,7 @@ engine/cutscenes/lz_CutsceneAnimFrameLZ_32.bin 00ee1d 16 gfx
 engine/cutscenes/lz_CutsceneAnimFrameLZ_33.bin 00ee33 16 gfx
 engine/cutscenes/lz_CutsceneAnimFrameLZ_34.bin 00ee49 16 gfx
 engine/cutscenes/lz_CutsceneAnimFrameLZ_35.bin 00ee5f 16 gfx
-engine/text/HexDigitChars_05.bin 016488 10 gfx
+engine/text/HexDigitChars_05.asm 016488 10 bytes:16
 engine/text/PaletteEditorCursorTiles_05.bin 016890 c0 gfx
 engine/text/FontGlyphs.bin 017920 660 gfx
 engine/menus/pause/ScoreboardModeGfxTail.bin 019280 40 gfx
@@ -877,8 +877,8 @@ engine/menus/exp/ExpLevelDownTilemapPatch1.asm 0777f6 11 blit_runs
 engine/menus/exp/ExpLevelDownTilemapPatch2.asm 077807 d blit_runs
 engine/menus/exp/ExpLevelDownTilemapPatch3.asm 077814 9 blit_runs
 engine/menus/exp/ExpLevelDownTilemapPatch4.asm 07781d 5 blit_runs
-engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.bin 077822 2f gfx
-engine/menus/exp/lz_ExpDistributionScreenPatchAttrmap.bin 077851 25 gfx
+engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.bin 077822 2f tilemap:32
+engine/menus/exp/lz_ExpDistributionScreenPatchAttrmap.bin 077851 25 tilemap:32
 engine/menus/exp/lz_ExpDistributionScreenGfx7.bin 077876 19 gfx
 engine/menus/exp/ExpDistributionScreenPalettes.asm 07788f 18 palettes
 engine/menus/exp/lz_ExpDistributionScreenGfx8.bin 0778a7 89 gfx
@@ -979,7 +979,7 @@ text/TextStrings_37.asm 0dc204 391a text_pool
 engine/menus/char_select/Unused_38_MatchTypeLabelSpriteLayouts.bin 0e0695 8d
 engine/menus/char_select/CharGridScreenPalettes.asm 0e107f 28 palettes
 engine/menus/char_select/lz_CharGridScreenGfx1.bin 0e10a7 4a gfx
-engine/menus/char_select/CharGridScreenGfx2.asm 0e10f1 8 palettes
+engine/menus/char_select/CharGridScreenObjPalette.asm 0e10f1 8 palettes
 engine/menus/char_select/lz_CharGridScreenGfx3.bin 0e10f9 9c gfx
 engine/menus/char_select/NameEntryCursorTable.asm 0e30a5 b4 bytes:30
 engine/menus/char_select/EnterNameText_38.asm 0e3171 b
@@ -1224,8 +1224,8 @@ engine/menus/dictionary/lz_TennisDictionaryTilesA000.bin 0fcbd5 b4 gfx
 engine/menus/dictionary/lz_TennisDictionaryTilesA200.bin 0fcc89 102 gfx
 engine/menus/dictionary/lz_TennisDictionaryTilesA400.bin 0fcd8b ae gfx
 engine/menus/dictionary/TennisDictionaryPalettes.asm 0fce39 30 palettes
-engine/menus/dictionary/TennisDictionarySprites1.bin 0fd028 50 gfx
-engine/menus/dictionary/TennisDictionarySprites2.bin 0fd078 58
+engine/menus/dictionary/TennisDictDemoAnimFrames.asm 0fd028 50 bytes:16
+engine/menus/dictionary/TennisDictDemoFrameOam.asm 0fd078 58 bytes:8
 engine/menus/dictionary/SelectionMaskGrid_3f.bin 0fd39e 79
 engine/menus/dictionary/lz_HardCourtLabelTiles.bin 0fd7eb c1 gfx
 engine/menus/dictionary/lz_ClayCourtLabelTiles.bin 0fd8ac c8 gfx
@@ -3269,9 +3269,9 @@ engine/cutscenes/IntroCutsceneState16InitPalettes_6b.asm 1aca58 40 palettes
 engine/cutscenes/Palettes_6b_03.asm 1acc00 38 palettes
 engine/cutscenes/CutsceneScrollXTable.asm 1accc1 a0 bytes:16
 engine/cutscenes/CutsceneScrollYTable.asm 1acd84 a9 bytes:16
-engine/cutscenes/CutsceneAnimatedSprites0.bin 1acea5 f0 gfx
-engine/cutscenes/CutsceneAnimatedSprites1.bin 1acf95 d8
-engine/cutscenes/CutsceneAnimatedSprites2.bin 1ad06d 120 gfx
+engine/cutscenes/CutsceneSpritePath0.asm 1acea5 f0 words:8
+engine/cutscenes/CutsceneSpritePath1.asm 1acf95 d8 words:8
+engine/cutscenes/CutsceneSpritePath2.asm 1ad06d 120 words:8
 engine/cutscenes/CutsceneTilesetPalettes.asm 1ad25a 10 palettes
 engine/cutscenes/lz_CutsceneSceneAGfx0.bin 1ad51d 4ba gfx
 engine/cutscenes/lz_CutsceneSceneBGfx0.bin 1ad9d7 200 gfx

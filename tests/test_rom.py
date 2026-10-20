@@ -170,6 +170,50 @@ class Source(unittest.TestCase):
                 ("docs/unused_code.md", f"the {blobs} unused blobs")):
             self.assertIn(quote, (ROOT / doc).read_text(), doc)
 
+    def test_doc_drifting_figures(self):
+        """Counts docs quote that edits elsewhere keep moving."""
+        def text(doc):
+            return re.sub(r"\s+", " ", (ROOT / doc).read_text())
+        sys.path.insert(0, str(ROOT / "tools"))
+        import ram_free
+        ranges = ram_free.free_ranges()
+        hram = [r for r in ranges if r[0] == "h"]
+        self.assertIn(f"**Totals: {sum(e - s for _, _, s, e in ranges):,} free bytes in "
+                      f"{len(ranges)} ranges, {sum(e - s for _, _, s, e in hram)} of them HRAM "
+                      f"bytes in {len(hram)} ranges", text("docs/ram_map.md"))
+        regions = {k: count(rf"^\t; \$[0-9a-f]+, \d+ bytes \({k}\)$")
+                   + count(rf"^\t\w+ \".*\" ; \$[0-9a-f]+, \d+ bytes \({k}\)$")
+                   for k in ("sprite_template", "actor_script")}
+        self.assertIn(f"e.g. {regions['sprite_template']} `sprite_template` and "
+                      f"{regions['actor_script']} `actor_script` regions",
+                      text("docs/graphics_formats.md"))
+        twins = {}
+        for src in (ROOT / "src").rglob("*.asm"):
+            for f, name in re.findall(r"^\ttwin\w* (\w+), (\w+)", src.read_text(), re.M):
+                twins.setdefault(f, []).append(name)
+        dead = sorted(f for f, names in twins.items() if all(n.startswith("Unused") for n in names))
+        m = re.search(r"included too\. (.*?) have no live copy at all", text("docs/duplicated_code.md"))
+        self.assertEqual(sorted(re.findall(r"`(\w+)`", m.group(1))), dead)
+
+    def test_mirrored_char_struct(self):
+        """ram_mirrored.inc's untagged $df00 names sit where match_char_struct
+        puts each bank's tagged copy, and name the same fields."""
+        sym = ROOT / "build" / "mariotennis.sym"
+        if not sym.exists():
+            self.skipTest("build/mariotennis.sym not present: run make first")
+        tagged = {}
+        for line in sym.read_text().splitlines():
+            m = re.match(r"0([4-7]):([0-9a-f]{4}) w\1(\w+)$", line)
+            if m:
+                tagged.setdefault(m.group(3), set()).add((m.group(1), int(m.group(2), 16)))
+        for name, sites in tagged.items():
+            self.assertEqual({b for b, _ in sites}, set("4567"), name)
+            self.assertEqual(len({a for _, a in sites}), 1, name)
+        inc = (ROOT / "include" / "ram_mirrored.inc").read_text()
+        block = inc[inc.index("; $df00-$df96"):inc.index("; The game progress screen")]
+        untagged = {n: int(a, 16) for n, a in re.findall(r"^def w(\w+) equ \$([0-9a-f]+)$", block, re.M)}
+        self.assertEqual(untagged, {n: min(sites)[1] for n, sites in tagged.items()})
+
     def test_unused_routine_notes(self):
         # every Unused routine with a live twin carries the note that says so
         self.assertGreaterEqual(count(r"^; .*Nothing calls (it|this one|or jumps to it|this copy)\b"), 35)
@@ -180,18 +224,20 @@ class Manifest(unittest.TestCase):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
         self.assertEqual(len(lines), 4267)
-        self.assertEqual(sum(1 for f in lines if "/lz_" in f[0]), 863)
+        streams = sum(1 for f in lines if "/lz_" in f[0])
+        self.assertEqual(streams, 863)
+        self.assertIn(f"round-tripping all {streams} streams", (ROOT / "tools" / "lz.py").read_text())
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2913)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2907)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
         self.assertEqual(sum(s == "gfx:4x4" for s in specs), 4)
-        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 237)
+        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 239)
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)
-        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1012)
+        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1018)
 
 
 @needs_rom

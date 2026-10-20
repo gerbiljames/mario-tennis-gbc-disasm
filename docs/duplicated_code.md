@@ -36,8 +36,9 @@ included too. `apply_sprite_wobble_x`, `draw_ascii_digit_char`,
 `draw_corner_brackets`, `draw_decimal_number`,
 `compute_ranking_progress_index_13`, `get_cell_index_from_cursor_ptr`,
 `get_menu_cursor_index_from_ptr`, `set_menu_cursor_from_index_to_ptr`,
-`move_menu_cursor2_grid_remote`, `move_menu_cursor_grid_remote` and both
-`move_menu_cursor_grid_from_link_input` files have no live copy at all.
+`lookup_ball_pos_by_aim`, `move_menu_cursor2_grid_remote`,
+`move_menu_cursor_grid_remote`, `move_menu_cursor_grid_from_link_input` and
+`move_menu_cursor_grid_from_link_input_17` have no live copy at all.
 
 Four look-alikes stay separate because they differ: the Island Open NPC
 scripts `IslandOpenFinalDoublesNpc0B_0f` / `IslandOpenRound1DoublesNpc0B_0f`,
@@ -56,30 +57,30 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/apply_ball_trajectory6.asm` | `ApplyBallTrajectory6_<bank>` | $20-$24, $29-$2c |
 | `src/twins/apply_ball_trajectory6_capped.asm` | `ApplyBallTrajectory6Capped_<bank>` | $20-$24, $29-$2c |
 | `src/twins/apply_ball_trajectory_capped.asm` | `ApplyBallTrajectoryCapped_<bank>` | $20-$24, $2a-$2c |
-| `src/twins/apply_sprite_wobble_x.asm` | `ApplySpriteWobbleX_<bank>` | $16, $17 |
+| `src/twins/apply_sprite_wobble_x.asm` | `Unused_<bank>_ApplySpriteWobbleX` | $16, $17 |
 | `src/twins/apply_sprite_wobble_y.asm` | `ApplySpriteWobbleY_<bank>` | $16, $17 |
 | `src/twins/ball_traj_entry_ptr4.asm` | `BallTrajEntryPtr4_<bank>` | $20-$24, $29-$2c |
 | `src/twins/ball_traj_entry_ptr6.asm` | `BallTrajEntryPtr6_<bank>` | $20-$24, $29-$2c |
 | `src/twins/banana_bunch_reflect_ball_and_record_cell.asm` | `BananaBunchReflectBallAndRecordCell`, `FruitFantasyReflectBallAndRecordCell` | $0d |
 | `src/twins/close_restaurant_ent_door.asm` | `CloseRestaurantEntDoor_<bank>` | $13, $27 |
 | `src/twins/compute_ranking_progress_index.asm` | `ComputeRankingProgressIndex_<bank>` | $0e, $11, $12, $27 |
-| `src/twins/compute_ranking_progress_index_13.asm` | `ComputeRankingProgressIndex_<bank>` | $13, $14, $15 |
+| `src/twins/compute_ranking_progress_index_13.asm` | `Unused_<bank>_ComputeRankingProgressIndex` | $13, $14, $15 |
 | `src/twins/compute_story_rank_tier.asm` | `ComputeStoryRankTier_<bank>` | $13, $15 |
 | `src/twins/development_facing01.asm` | `DevelopmentFacing01_10`, `Test2Facing01_10`, `WallPracticeRoomFacing01_12`, `DormRoomFacing01_13` | $10, $10, $12, $13 |
 | `src/twins/development_tile01.asm` | `DevelopmentTile01_10`, `Test2Tile01_10` | $10 |
 | `src/twins/dorm_room_entry08_scene.asm` | `DormRoomEntry08Scene`, `DormRoomEntry0aScene` | $13 |
-| `src/twins/draw_ascii_digit_char.asm` | `DrawAsciiDigitChar_<bank>` | $16, $17, $1b, $3b, $3e |
+| `src/twins/draw_ascii_digit_char.asm` | `Unused_<bank>_DrawAsciiDigitChar` | $16, $17, $1b, $3b, $3e |
 | `src/twins/draw_confirm_selection_cursor.asm` | `DrawConfirmSelectionCursor_<bank>` | $1a, $1c, $1d |
-| `src/twins/draw_corner_brackets.asm` | `DrawCornerBrackets_<bank>` | $1b, $38, $3b, $3e |
-| `src/twins/draw_decimal_number.asm` | `DrawDecimalNumber_<bank>` | $17, $1b, $3b, $3e |
+| `src/twins/draw_corner_brackets.asm` | `Unused_<bank>_DrawCornerBrackets` | $1b, $38, $3b, $3e |
+| `src/twins/draw_decimal_number.asm` | `Unused_<bank>_DrawDecimalNumber` | $17, $1b, $3b, $3e |
 | `src/twins/draw_name_with_diacritics.asm` | `DrawNameWithDiacritics_<bank>` | $17, $1b, $3e |
 | `src/twins/draw_name_with_diacritics_38.asm` | `DrawNameWithDiacritics_<bank>` | $38, $3b |
 | `src/twins/extract_decimal_digit.asm` | `ExtractDecimalDigit`, `ExtractDecimalDigitUnsigned` | $00 |
 | `src/twins/fetch_text.asm` | `FetchText_<bank>` | the thirteen text banks |
 | `src/twins/flush_match_format_row_to_vram.asm` | `FlushMatchFormatRowToVram`, `FlushMatchRuleRowAttrs` | $3b, $3e |
-| `src/twins/get_cell_index_from_cursor_ptr.asm` | `GetCellIndexFromCursorPtr_<bank>` | $16, $3b, $3e |
+| `src/twins/get_cell_index_from_cursor_ptr.asm` | `Unused_<bank>_GetCellIndexFromCursorPtr` | $16, $3b, $3e |
 | `src/twins/get_menu_cursor_index.asm` | `GetMenuCursorIndex_<bank>` | $16, $1b, $38, $3b, $3e |
-| `src/twins/get_menu_cursor_index_from_ptr.asm` | `GetMenuCursorIndexFromPtr_<bank>` | $1b, $38 |
+| `src/twins/get_menu_cursor_index_from_ptr.asm` | `Unused_<bank>_GetMenuCursorIndexFromPtr` | $1b, $38 |
 | `src/twins/init_minigame_medallion_match.asm` | the four `InitMinigame_*` tennis-machine setups | $0d |
 | `src/twins/intro_cutscene_state00_update.asm` | `IntroCutsceneState00Update_6b`, `IntroCutsceneState19Update_6b` | $6b |
 | `src/twins/intro_cutscene_state02_exit.asm` | `IntroCutsceneState02Exit_6b`, `IntroCutsceneState04Exit_6b` | $6b |
@@ -90,18 +91,18 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/island_open_round_doubles_npc04.asm` | `IslandOpenRoundSinglesNpc04_0f`, `IslandOpenRoundDoublesNpc04_0f` | $0f |
 | `src/twins/junior_class_court_singles_npc03_face_up.asm` | `JuniorClassCourtSinglesNpc03FaceUp_11`, `JuniorClassCourtDoublesNpc03FaceUp_11` | $11 |
 | `src/twins/load_player_partner_obj_defs.asm` | `LoadPlayerPartnerObjDefs_<bank>` | $11, $14, $15 |
-| `src/twins/lookup_ball_pos_by_aim.asm` | `LookupBallPosByAim_<bank>` | $20-$23, $29-$2b |
+| `src/twins/lookup_ball_pos_by_aim.asm` | `Unused_<bank>_LookupBallPosByAim` | $20-$23, $29-$2b |
 | `src/twins/lookup_ball_pos_by_aim_24.asm` | `LookupBallPosByAim_<bank>` | $24, $2c |
 | `src/twins/lookup_ball_pos_by_height.asm` | `LookupBallPosByHeight_<bank>` | $20-$24, $29-$2c |
 | `src/twins/lookup_ball_pos_by_shot_index.asm` | `LookupBallPosByShotIndex_<bank>` | $20-$24, $29-$2b |
 | `src/twins/match_format_slide_out.asm` | `MatchFormatSlideOut`, `CloseMatchRulesPanel` | $3b, $3e |
 | `src/twins/mirror_player_sprite_if_left_handed.asm` | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` | $0e, $15 |
-| `src/twins/move_menu_cursor2_grid_remote.asm` | `MoveMenuCursor2GridRemote_<bank>` | $16, $3e |
+| `src/twins/move_menu_cursor2_grid_remote.asm` | `Unused_<bank>_MoveMenuCursor2GridRemote` | $16, $3e |
 | `src/twins/move_menu_cursor_grid.asm` | `MoveMenuCursorGrid_<bank>` | $38, $3b, $3e |
 | `src/twins/move_menu_cursor_grid_17.asm` | `MoveMenuCursorGrid_<bank>` | $17, $1b |
-| `src/twins/move_menu_cursor_grid_from_link_input.asm` | `MoveMenuCursorGridFromLinkInput_<bank>` | $16, $38, $3e |
-| `src/twins/move_menu_cursor_grid_from_link_input_17.asm` | `MoveMenuCursorGridFromLinkInput_<bank>` | $17, $1b |
-| `src/twins/move_menu_cursor_grid_remote.asm` | `MoveMenuCursorGridRemote_<bank>` | $16, $38, $3e |
+| `src/twins/move_menu_cursor_grid_from_link_input.asm` | `Unused_<bank>_MoveMenuCursorGridFromLinkInput` | $16, $38, $3e |
+| `src/twins/move_menu_cursor_grid_from_link_input_17.asm` | `Unused_<bank>_MoveMenuCursorGridFromLinkInput` | $17, $1b |
+| `src/twins/move_menu_cursor_grid_remote.asm` | `Unused_<bank>_MoveMenuCursorGridRemote` | $16, $38, $3e |
 | `src/twins/net_game_match1_award_point_to_side.asm` | the seven `*AwardPointToSide` minigame handlers | $0b |
 | `src/twins/net_game_practice1_handle_point_end.asm` | `NetGamePractice1/2/3HandlePointEnd` | $0b |
 | `src/twins/net_game_practice2_hook_minigame_start.asm` | `NetGamePractice2/3Hook_MinigameStart` | $0b |
@@ -120,7 +121,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/set_ball_velocity_from_entry4.asm` | `SetBallVelocityFromEntry4_<bank>` | $20-$24, $29-$2c |
 | `src/twins/set_ball_velocity_from_entry6.asm` | `SetBallVelocityFromEntry6_<bank>` | $20-$24, $29-$2c |
 | `src/twins/set_menu_cursor_from_index.asm` | `SetMenuCursorFromIndex_<bank>` | $16, $38, $3b, $3e |
-| `src/twins/set_menu_cursor_from_index_to_ptr.asm` | `SetMenuCursorFromIndexToPtr_<bank>` | $16, $38, $3e |
+| `src/twins/set_menu_cursor_from_index_to_ptr.asm` | `Unused_<bank>_SetMenuCursorFromIndexToPtr` | $16, $38, $3e |
 | `src/twins/set_partner_obj_def_by_gender.asm` | `SetPartnerObjDefByGender_<bank>` | $13, $27 |
 | `src/twins/set_roommate_singles_no_reply_text.asm` | `SetRoommateSinglesNoReplyText_13`, `SetRoommateSinglesYesReplyText_13` | $13 |
 | `src/twins/shot_ball_path_slice.asm` | `ShotBallPathSlice`, `ShotBallPathPowerSlice` (`twin_in`) | $20, $21 |

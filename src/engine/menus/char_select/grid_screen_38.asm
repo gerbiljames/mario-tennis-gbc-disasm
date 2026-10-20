@@ -280,7 +280,7 @@ SetupCharGridScreen:
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4f9c
 	ld c, CharGridScreenGfx1_SIZE / 16 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
-	ld hl, CharGridScreenGfx2 ; $4fa4
+	ld hl, CharGridScreenObjPalette ; $4fa4
 	ld_obj_pals de, 1, 1 ; $4fa7
 	call LoadPalettesMasterOnly ; $4faa
 	wram_bank WRAM_STAGING ; $4fad
@@ -362,8 +362,8 @@ CharGridScreenPalettes:
 CharGridScreenGfx1:
 	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx1.bin" ; $50a7, 74 bytes
 	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx1.inc" ; DEF CharGridScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
-CharGridScreenGfx2:
-	INCLUDE "data/engine/menus/char_select/CharGridScreenGfx2.asm" ; $50f1, 8 bytes (palettes)
+CharGridScreenObjPalette:
+	INCLUDE "data/engine/menus/char_select/CharGridScreenObjPalette.asm" ; $50f1, 8 bytes (palettes)
 CharGridScreenGfx3:
 	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx3.bin" ; $50f9, 156 bytes
 	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx3.inc" ; DEF CharGridScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make

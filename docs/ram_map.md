@@ -67,7 +67,9 @@ one: one address, several banks, one routine.
 A genuinely replicated structure -- the match engine's per-character struct
 in each of WRAM banks 4-7 -- gets both forms: each bank declares its copy
 under a bank-tagged name (`w4CharPosX`, `w5CharPosX`, ...) in its own
-`BANK[n]` section, and the untagged EQU `wCharPosX` is what the code uses,
+`BANK[n]` section, all four from one macro (`match_char_struct`,
+`include/macros/ram.inc`, where the fields are documented), and the
+untagged EQU `wCharPosX` is what the code uses,
 since the bank selected at run time decides which copy a site means. The
 tagged labels put the structure in `build/mariotennis.sym` (EQUs do not
 reach it), so an emulator debugger resolves the right name in whichever bank
@@ -129,7 +131,7 @@ ladders at `$6063`/`$4ff5` indexed by `wOnCourtCharCountMinus1`:
 
 The fields are the untagged `wChar*` EQUs in `include/ram_mirrored.inc`
 (used where the WRAM bank is 4-7 or inside match banks `$07`/`$08`), with
-`w4Char*`...`w7Char*` in `ram/wram/` for the symbol file;
+`w4Char*`...`w7Char*` from `match_char_struct` for the symbol file;
 `docs/match_engine.md` describes them. Other WRAM banks reuse `$dfxx` for
 unrelated data (bank `$38`'s non-char accesses stay numeric; the menu banks'
 text-arg scratch at `$df00` is `wTextArgFetchBuffer`). The main fields:
@@ -215,8 +217,10 @@ minigames, link sessions, the N64 Transfer Pak record screens, both unlock
 codes and every `NpcScripts` handler (237 flows; runs that crash, such as
 impossible warps, are left out).
 
-**Totals: 4,360 free bytes -- 2,704 untouched, 1,598 cleared only, 58
-holding data, all explained.** No flow reads a free byte; the only poison
+**Totals: 4,475 free bytes in 110 ranges, 27 of them HRAM bytes in 9
+ranges (`ram_free.py`).** The last audit split the bytes listed then into
+untouched, cleared only and holding data, all explained; ranges freed since
+are not yet in the tables below. No flow reads a free byte; the only poison
 read ever seen, besides the since-declared speed bonus below, was in the
 Test 2 map's debug scratch at `$c71a-$c75f`.
 
@@ -258,8 +262,7 @@ bytes or more:
 | WRAM7 | `$dde2-$ddff` | 30 |
 | WRAM7 | `$de02-$deff` | 254 |
 
-plus 29 shorter gaps (63 bytes) and 23 bytes of HRAM in twelve
-one-to-four-byte holes. The bank `$06`/`$07` ranges at `$dc90-$deff` mirror
+plus shorter gaps and the HRAM holes. The bank `$06`/`$07` ranges at `$dc90-$deff` mirror
 bank `$04`'s ball and minigame slots and stay untouched even in a doubles
 match; `$d690-$d7ff` in bank `$04` is untouched everywhere.
 

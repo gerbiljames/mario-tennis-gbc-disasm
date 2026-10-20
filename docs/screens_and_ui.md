@@ -559,7 +559,7 @@ text banks** using per-bank string counts (`AddTextIdOffsetWordLookupTable`,
 
 `include/text_ids.inc` defines `Text_<bank>_<index> equ <raw id>` and an alias
 named for the text, which operands use;
-`tools/strings.py --index --bank XX` dumps `bank:index → text` from
+`tools/strings.py baserom.gbc --index --bank XX` dumps `bank:index → text` from
 `data/text/TextStrings_XX.asm`.
 
 ### 7.2 The interpreter

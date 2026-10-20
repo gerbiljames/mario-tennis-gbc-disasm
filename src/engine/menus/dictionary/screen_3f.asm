@@ -554,7 +554,7 @@ UpdateTennisDictionarySprites:
 .store:
 	ld [wTennisDictSpritePhase], a ; $4ef3
 .countLeft:
-	ld hl, TennisDictionarySprites1 ; $4ef6
+	ld hl, TennisDictDemoAnimFrames ; $4ef6
 	ld a, [wTennisDictAnimState] ; $4ef9
 	add a ; $4efc
 	add a ; $4efd
@@ -569,7 +569,7 @@ UpdateTennisDictionarySprites:
 	add a ; $4f10
 	push af ; $4f11
 	pop af ; $4f12
-	ld hl, TennisDictionarySprites2 ; $4f13
+	ld hl, TennisDictDemoFrameOam ; $4f13
 	add_hl_a ; $4f16
 	ld a, [hl+] ; $4f1b
 	ld c, a ; $4f1c
@@ -706,10 +706,10 @@ UpdateTennisDictionarySprites_SpriteTemplate1:
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
 	oam_sprite_end
-TennisDictionarySprites1:
-	INCBIN "data/engine/menus/dictionary/TennisDictionarySprites1.bin" ; $5028, 80 bytes
-TennisDictionarySprites2:
-	INCBIN "data/engine/menus/dictionary/TennisDictionarySprites2.bin" ; $5078, 88 bytes
+TennisDictDemoAnimFrames:
+	INCLUDE "data/engine/menus/dictionary/TennisDictDemoAnimFrames.asm" ; $5028, 80 bytes (bytes:16)
+TennisDictDemoFrameOam:
+	INCLUDE "data/engine/menus/dictionary/TennisDictDemoFrameOam.asm" ; $5078, 88 bytes (bytes:8)
 UpdateTennisDictionarySprites_SpriteTemplate2:
 	; $50d0, 9 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00

@@ -207,7 +207,7 @@ QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e33
 	sub $20 ; $4e36
 	add a ; $4e38
-	ld hl, CutsceneAnimatedSprites2 ; $4e39
+	ld hl, CutsceneSpritePath2 ; $4e39
 	add_hl_a ; $4e3c
 	ld a, [hl+] ; $4e41
 	ld d, [hl] ; $4e42
@@ -219,7 +219,7 @@ QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e51
 	sub $20 ; $4e54
 	add a ; $4e56
-	ld hl, CutsceneAnimatedSprites1 ; $4e57
+	ld hl, CutsceneSpritePath1 ; $4e57
 	add_hl_a ; $4e5a
 	ld a, [hl+] ; $4e5f
 	ld d, [hl] ; $4e60
@@ -231,7 +231,7 @@ QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e6f
 	sub $20 ; $4e72
 	add a ; $4e74
-	ld hl, CutsceneAnimatedSprites0 ; $4e75
+	ld hl, CutsceneSpritePath0 ; $4e75
 	add_hl_a ; $4e78
 	ld a, [hl+] ; $4e7d
 	ld d, [hl] ; $4e7e
@@ -255,12 +255,12 @@ QueueCutsceneAnimatedSprites_SpriteTemplate2:
 	; $4ea0, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-CutsceneAnimatedSprites0:
-	INCBIN "data/engine/cutscenes/CutsceneAnimatedSprites0.bin" ; $4ea5, 240 bytes
-CutsceneAnimatedSprites1:
-	INCBIN "data/engine/cutscenes/CutsceneAnimatedSprites1.bin" ; $4f95, 216 bytes
-CutsceneAnimatedSprites2:
-	INCBIN "data/engine/cutscenes/CutsceneAnimatedSprites2.bin" ; $506d, 288 bytes
+CutsceneSpritePath0:
+	INCLUDE "data/engine/cutscenes/CutsceneSpritePath0.asm" ; $4ea5, 240 bytes (words:8)
+CutsceneSpritePath1:
+	INCLUDE "data/engine/cutscenes/CutsceneSpritePath1.asm" ; $4f95, 216 bytes (words:8)
+CutsceneSpritePath2:
+	INCLUDE "data/engine/cutscenes/CutsceneSpritePath2.asm" ; $506d, 288 bytes (words:8)
 ApplyCutsceneScrollToSpriteX:
 	push bc ; $518d
 	push hl ; $518e

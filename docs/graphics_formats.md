@@ -719,8 +719,8 @@ Each structured data region's first line names the spec it was rendered from
 (`kind` or `kind:param`): `; $46ef, 112 bytes (bytes:16)`. The source is now
 edited directly as those macro rows; the retired generator and its
 `data_tables.json` are at git tag `generator-final`. Counts below are the
-2,751 declarations at that tag (today's source differs, e.g. 170
-`sprite_template` and 262 `actor_script` regions; `*` counts are today's,
+2,751 declarations at that tag (today's source differs, e.g. 173
+`sprite_template` and 269 `actor_script` regions; `*` counts are today's,
 for kinds added since). `data.manifest` holds the
 extracted regions.
 
@@ -796,7 +796,7 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All twenty-two
+the source claims is true, not just that the bytes come back. All twenty-three
 pass:
 
 | check | count | what it asserts |
@@ -806,21 +806,22 @@ pass:
 | `lz-names` | 3066 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
 | `regions` | 4267 | manifest regions stay inside their bank and do not overlap |
 | `text` | 21 | a spec-less `.asm` region is NUL-terminated text |
-| `db-words` | 561 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
+| `db-words` | 559 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
 | `layout` | 4267 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
-| `scopes` | 266 | no global label covers both actor-script bytecode and CPU code |
+| `scopes` | 269 | no global label covers both actor-script bytecode and CPU code |
 | `labels` | 13745 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
-| `literals` | 33792 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
+| `literals` | 33797 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
-| `gfx` | 2913 | every PNG encodes back to the blob it was decoded from |
-| `gfx-specs` | 126 | no spec-less region is named `*Gfx*`/`*Tiles*`, and no spec-less whole-tile LZ stream is decompressed on to `vTiles` (exceptions allow-listed) |
-| `tilemap` | 237 | every tilemap grid encodes back to its blob |
+| `gfx` | 2907 | every PNG encodes back to the blob it was decoded from |
+| `gfx-specs` | 124 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
+| `tilemap` | 239 | every tilemap grid encodes back to its blob |
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
-| `reach` | 4876 | a routine is named `Unused` exactly when nothing reachable reaches it |
+| `reach` | 4879 | a routine is named `Unused` exactly when nothing reachable reaches it |
+| `unnamed` | 8866 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
 | `raw-ids` | 1501 | a raw `cp` or store on a variable, or `ld a` straight into a `call`, whose other values are named never equals a member of that family (exceptions allow-listed) |
 
