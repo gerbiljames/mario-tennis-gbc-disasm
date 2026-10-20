@@ -185,7 +185,7 @@ DormEntranceEntry0fScene:
 	script_set_anim ACTOR_DORM_ENTRANCE_KATE, ANIM_NOD ; $4482
 	script_wait_idle ACTOR_DORM_ENTRANCE_KATE ; $4489
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ENTRANCE_KATE ; $448e
-	script_speak_restore $04 ; $4496
+	script_speak_restore ACTOR_DORM_ENTRANCE_KATE ; $4496
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ENTRANCE_EMILY ; $449b
 	farcall RunDialogueYesNoPrompt ; $44a3
 	farcall ScriptCloseDialogueWindow ; $44a6
