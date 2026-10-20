@@ -290,7 +290,7 @@ LoadCharacterRecordToBuffer:
 	push de ; $450d
 	push hl ; $450e
 	farcall LoadPlayer2MainRecord ; $450f
-	ld hl, wPlayer2MainName ; $4512
+	ld hl, wPlayer2Main ; $4512
 	ld de, wCharRecordScratch ; $4515
 	ld c, wCharRecordScratch_SIZE / 16 ; $4518
 	call CopyMemoryFast ; $451a

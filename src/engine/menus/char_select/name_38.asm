@@ -348,7 +348,7 @@ SetupNameEntryScreen:
 	farcall CopyMugshotBufferToVram ; $6fff
 	wram_bank WRAM_COURT_PLANES ; $7002
 	call GetActiveStoryNameBuffer ; $7008
-	ld hl, $000c ; $700b
+	ld hl, CHARREC_PALETTE ; $700b
 	add hl, bc ; $700e
 	ld a, [hl] ; $700f
 	ld d, $04 ; $7010

@@ -1930,6 +1930,55 @@ def check_field_offsets(fail):
                 fail("fields", f"{where}: {name} adds raw {op} to a record -- a field name?")
     for name, op in sorted(set(KNOWN_RAW_FIELD_OFFSETS) - seen):
         fail("fields", f"{name} {op} is no longer added raw -- drop it from KNOWN_RAW_FIELD_OFFSETS")
+    return n + _char_record_bases(fail)
+
+
+_CHARREC_NAME_RE = re.compile(r"ld (bc|de|hl), ((?:wStory|wPlayer[12])(?:Main|Partner))Name")
+_REG_COPIES = {("ld b, h", "ld c, l"): ("hl", "bc"), ("ld d, h", "ld e, l"): ("hl", "de"),
+               ("ld h, b", "ld l, c"): ("bc", "hl"), ("ld h, d", "ld l, e"): ("de", "hl"),
+               ("ld d, b", "ld e, c"): ("bc", "de"), ("ld b, d", "ld c, e"): ("de", "bc")}
+# Routines that take a whole char record in a register.
+_CHARREC_ARG_ROUTINES = {"RecomputeCharacterStats": "bc"}
+
+
+def _char_record_bases(fail):
+    """A `...Name` char-record operand is the name: one copied or cleared by
+    CHAR_RECORD_SIZE, passed to a _CHARREC_ARG_ROUTINES routine or with a
+    CHARREC_* field added to it within the next dozen instructions, is the
+    whole record and takes the base label."""
+    n = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        code = [(i, c) for i, c in ((i, l.split(";")[0].strip()) for i, l in enumerate(lines))
+                if c and not c.endswith(":")]
+        for k, (i, t) in enumerate(code):
+            m = _CHARREC_NAME_RE.fullmatch(t)
+            if not m:
+                continue
+            n += 1
+            regs, why = {m.group(1)}, None
+            window = [u for _, u in code[k + 1:k + 13]]
+            for j, u in enumerate(window):
+                if j < 3 and "CHAR_RECORD_SIZE" in u:
+                    why = "is copied or cleared as a whole record"
+                    break
+                if src_dst := _REG_COPIES.get((u, window[j + 1] if j + 1 < len(window) else "")):
+                    if src_dst[0] in regs:
+                        regs.add(src_dst[1])
+                    continue
+                if (f := re.fullmatch(r"(?:far)?call (\w+)", u)) and _CHARREC_ARG_ROUTINES.get(f.group(1)) in regs:
+                    why = f"is passed to {f.group(1)}"
+                    break
+                nxt = window[j + 1] if j + 1 < len(window) else ""
+                if (f := re.fullmatch(r"ld hl, (CHARREC_\w+)", u)) and nxt in {f"add hl, {r}" for r in regs}:
+                    why = f"has {f.group(1)} added"
+                    break
+                if (f := re.fullmatch(r"ld a, (CHARREC_\w+)", u)) and nxt == "add_hl_a" and "hl" in regs:
+                    why = f"has {f.group(1)} added"
+                    break
+            if why:
+                fail("fields", f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}: "
+                               f"{m.group(2)}Name {why} -- {m.group(2)}?")
     return n
 
 _TEMPLATE_HL_RE = re.compile(r"\tld hl, ([A-Za-z_]\w*)(?: ;|$)")

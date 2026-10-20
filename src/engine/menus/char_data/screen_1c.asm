@@ -67,7 +67,7 @@ CharDataScreen_Show:
 	push af ; $40b5
 	script_fade_out 16 ; $40b6
 	call WaitFadeEnd ; $40bb
-	ld hl, wStoryMainName ; $40be
+	ld hl, wStoryMain ; $40be
 	ld de, wStorySlotData ; $40c1
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $40c4
 	call CopyMemoryFast ; $40c6

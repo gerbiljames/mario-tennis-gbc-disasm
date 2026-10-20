@@ -318,10 +318,10 @@ LoadCharacterAttributes:
 	ret ; $5c41
 CharAttrStructPtrs_07:
 	; $5c42, 8 bytes (ram_ptrs:0)
-	dw wPlayer1MainName ; record 0
-	dw wPlayer2MainName ; record 1
-	dw wPlayer1PartnerName ; record 2
-	dw wPlayer2PartnerName ; record 3
+	dw wPlayer1Main ; record 0
+	dw wPlayer2Main ; record 1
+	dw wPlayer1Partner ; record 2
+	dw wPlayer2Partner ; record 3
 CharStatTable_07_0:
 	; $5c4a, 20 bytes (records:2)
 	dw $0a00 ; record 0

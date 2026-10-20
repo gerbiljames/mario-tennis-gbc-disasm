@@ -221,11 +221,11 @@ DrawExpSinglesPlayerPanel:
 	ld b, $09 ; $563e
 	ld c, $01 ; $5640
 	call FillTilemapRun ; $5642
-	ld bc, wPlayer1MainName ; $5645
+	ld bc, wPlayer1Main ; $5645
 	ld a, [wLinkMatchRole] ; $5648
 	cp LINKSTATE_SLAVE ; $564b
 	jr nz, .drawName ; $564d
-	ld bc, wPlayer2MainName ; $564f
+	ld bc, wPlayer2Main ; $564f
 	ld a, [wLinkMatchCharLevel] ; $5652
 	ld [wPlayer2MainLevel], a ; $5655
 .drawName:
@@ -294,14 +294,14 @@ DrawExpDoublesPlayerPanel:
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $56ff
 	jr nz, .useMatchRecord ; $5700
-	ld bc, wStoryMainName ; $5702
+	ld bc, wStoryMain ; $5702
 	jr .copyStringToTextBuffer ; $5705
 .useMatchRecord:
-	ld bc, wPlayer1MainName ; $5707
+	ld bc, wPlayer1Main ; $5707
 	ld a, [wLinkMatchRole] ; $570a
 	cp LINKSTATE_SLAVE ; $570d
 	jr nz, .copyStringToTextBuffer ; $570f
-	ld bc, wPlayer2MainName ; $5711
+	ld bc, wPlayer2Main ; $5711
 	ld a, [wLinkMatchCharLevel] ; $5714
 	ld [wPlayer2MainLevel], a ; $5717
 .copyStringToTextBuffer:
@@ -371,14 +371,14 @@ DrawExpDoublesPartnerPanel:
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $57c4
 	jr nz, .useMatchRecord ; $57c5
-	ld bc, wStoryPartnerName ; $57c7
+	ld bc, wStoryPartner ; $57c7
 	jr .copyStringToTextBuffer ; $57ca
 .useMatchRecord:
-	ld bc, wPlayer1PartnerName ; $57cc
+	ld bc, wPlayer1Partner ; $57cc
 	ld a, [wLinkMatchRole] ; $57cf
 	cp LINKSTATE_SLAVE ; $57d2
 	jr nz, .copyStringToTextBuffer ; $57d4
-	ld bc, wPlayer2PartnerName ; $57d6
+	ld bc, wPlayer2Partner ; $57d6
 .copyStringToTextBuffer:
 	push bc ; $57d9
 	ld hl, CHARREC_NAME ; $57da
