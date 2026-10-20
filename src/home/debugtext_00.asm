@@ -35,9 +35,9 @@ UpdateDebugOverlay:
 	xor a ; $18be
 	jr .store ; $18bf
 .showConsole:
-	ld a, $01 ; $18c1
+	ld a, BGVIEW_DEBUG_CONSOLE ; $18c1
 .store:
-	ldh [hShowDebugConsole], a ; $18c3
+	ldh [hBGViewMode], a ; $18c3
 	ldh a, [hDebugTextDirty] ; $18c5
 	or a ; $18c7
 	ret z ; $18c8

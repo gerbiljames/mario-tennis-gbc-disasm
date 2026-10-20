@@ -181,6 +181,15 @@ def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTarget
 def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_MusicSettingHandler0/1 $1a)
 def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries
 
+; --- Music flags (hMusicFlags) ---
+def MUSICB_MUTED equ 0 ; PlaySoundCmd drops BGM and jingle requests
+def MUSICF_MUTED equ 1 << MUSICB_MUTED
+
+; --- Sound options (wSoundOptionBits) ---
+; Unused_00_SyncMusicMuteOption copies bit 0 into MUSICB_MUTED.
+def SOUNDOPTB_MUSIC_OFF equ 0
+def SOUNDOPTF_MUSIC_OFF equ 1 << SOUNDOPTB_MUSIC_OFF
+
 ; --- Sound channel type (wSndChannelType) ---
 ; `hSndChannelType & 3` (snd_channel's second operand), latched by
 ; UpdateSoundChannels with `wSndRegBase = type * 5` (the stride of the four

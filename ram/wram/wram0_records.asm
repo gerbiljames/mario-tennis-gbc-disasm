@@ -21,7 +21,7 @@ wStorySlotBlockTag:: ds 3
 wSavedGameTimer:: ds 4
 	ds 17
 
-; [8-bit] Sound options. Bit 0 mutes the music: Unused_1a_ToggleMusicSetting flips it and Unused_00_SyncMusicMuteOption copies it into hMusic bit 0 (1 = off), stopping the BGM when set. Other bits are preserved
+; [8-bit] Sound options. SOUNDOPTB_MUSIC_OFF: Unused_1a_ToggleMusicSetting flips it and Unused_00_SyncMusicMuteOption copies it into hMusicFlags' MUSICB_MUTED, stopping the BGM when set. Other bits are preserved
 wSoundOptionBits:: db
 
 ; [8-bit] Message speed: MSGSPEED_FAST/NORMAL/SLOW in bits 0-6 (ApplyMessageSpeed). Bit 7, MSGSPEEDB_INSTANT, draws text at once whatever the speed: set by ShowLocationNamePopup, the Tennis Dictionary redraw, Unused_1a_ForceInstantMessageSpeed and ToggleCutsceneFastForward (as it clears FLAG_CUTSCENE_FAST_FORWARD), tested by ApplyMessageSpeed, FlushGlyphRow and UploadLastGlyphTiles, and cleared before saving

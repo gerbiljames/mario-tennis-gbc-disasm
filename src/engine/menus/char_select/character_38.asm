@@ -441,16 +441,16 @@ DrawCharacterSelectChars:
 	jr z, .drawSprites ; $4c7a
 	wram_bank WRAM_CHAR0 ; $4c7c
 	ld hl, wCharSpriteSlot + 1 ; $4c82
-	set 5, [hl] ; $4c85
+	set B_OAM_XFLIP, [hl] ; $4c85
 	wram_bank WRAM_CHAR1 ; $4c87
 	ld hl, wCharSpriteSlot + 1 ; $4c8d
-	set 5, [hl] ; $4c90
+	set B_OAM_XFLIP, [hl] ; $4c90
 	wram_bank WRAM_CHAR2 ; $4c92
 	ld hl, wCharSpriteSlot + 1 ; $4c98
-	set 5, [hl] ; $4c9b
+	set B_OAM_XFLIP, [hl] ; $4c9b
 	wram_bank WRAM_CHAR3 ; $4c9d
 	ld hl, wCharSpriteSlot + 1 ; $4ca3
-	set 5, [hl] ; $4ca6
+	set B_OAM_XFLIP, [hl] ; $4ca6
 .drawSprites:
 	wram_bank WRAM_CHAR0 ; $4ca8
 	ld hl, wCharSpriteSlot ; $4cae

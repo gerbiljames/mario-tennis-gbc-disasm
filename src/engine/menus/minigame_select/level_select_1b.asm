@@ -6,7 +6,7 @@ Unused_1b_ToggleSelectedUnlockFlag:
 	jr c, .playSfx ; $68b5
 	cp CHAR_PEACH + 1 ; $68b7
 	jr nc, .playSfx ; $68b9
-	sub $18 ; $68bb
+	sub CHAR_MARIO - N64REC_UNLOCK_MARIO ; $68bb
 	add_hl_a ; $68bd
 	ld a, [hl] ; $68c2
 	xor $01 ; $68c3

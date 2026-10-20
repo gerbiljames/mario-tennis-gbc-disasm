@@ -57,8 +57,8 @@ hWramBank:: db
 ; [8-bit] Shadow of the current SRAM bank (always written together with the MBC RAM-bank register at $4000)
 hSramBank:: db
 
-; [8-bit] 1 = VBlank switches BG map to the debug console view
-hShowDebugConsole:: db
+; [8-bit] BGVIEW_*: how VBlank sets the BG map and scroll
+hBGViewMode:: db
 
 ; [8-bit] Nonzero = VRAM copy / tile-write queues have pending entries
 hVRAMQueueDirty:: db
@@ -176,8 +176,8 @@ hLinkCounter:: db
 ; [8-bit] Jingle sound id currently overriding BGM (0 = none)
 hActiveJingle:: db
 
-; [8-bit] Music (0x00 - on, 0x01 - off)
-hMusic:: db
+; [8-bit] Bit 0 = MUSICB_MUTED: set by SetMusicMuted (the pause menus' music toggle), cleared by ResumeBGM. Other bits are preserved
+hMusicFlags:: db
 	ds 1
 
 ; Shared HRAM scratch pool: the serial-link input path, the bank-0 sound

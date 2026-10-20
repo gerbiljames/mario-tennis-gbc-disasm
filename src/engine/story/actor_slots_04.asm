@@ -435,7 +435,7 @@ AdvanceActorTowardTarget:
 	res ACTORFLAGB_BLOCKED, [hl] ; $42b2
 	bit 1, [hl] ; $42b4
 	ret nz ; $42b6
-	bit 7, [hl] ; $42b7
+	bit ACTORFLAGB_MOVING, [hl] ; $42b7
 	ret z ; $42b9
 	push bc ; $42ba
 	ld hl, ACTORF_TARGET_X ; $42bb

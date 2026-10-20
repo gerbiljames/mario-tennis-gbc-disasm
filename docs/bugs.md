@@ -323,7 +323,7 @@ is shown:
 .showConsole:
         ld a, $01
 .store:
-        ldh [hShowDebugConsole], a
+        ldh [hBGViewMode], a
 ```
 
 The `jr nz, .showConsole` after the `bit` is missing, so in step
@@ -484,7 +484,7 @@ All four arms target `$6fed`, the fall-through. `CharRallyEndState`
 (`$08:$6a90`) tests the same membership (`$05`, `$06`, `$07`, `$09`, `$0a`,
 `$0b`, `$12`) with a real body; the ids are swing animations (`$05`/`$06` are
 the forehand and backhand `$08:$6e58`/`$6e5e` select into `wCharSwingAnim`).
-So the contact window is `wCharReachX` (1.25x when `wCharFlags` bit 1 is set)
+So the contact window is `wCharReachX` (1.25x when `CHARB_DIVING` is set in `wCharFlags`)
 in every state. What the swing states were meant to change is not in the ROM.
 Same shape as `Unused_6b_RewriteCutsceneCameraY` below, but live on the rally
 path.

@@ -314,10 +314,10 @@ ResumeBGM:
 	push bc ; $2f33
 	push de ; $2f34
 	push hl ; $2f35
-	ld hl, hMusic ; $2f36
-	bit 0, [hl] ; $2f39
+	ld hl, hMusicFlags ; $2f36
+	bit MUSICB_MUTED, [hl] ; $2f39
 	jr z, .done ; $2f3b
-	res 0, [hl] ; $2f3d
+	res MUSICB_MUTED, [hl] ; $2f3d
 	ldh a, [hWramBank] ; $2f3f
 	push af ; $2f41
 	ld a, [wCurrentBGM] ; $2f42
@@ -331,10 +331,10 @@ ResumeBGM:
 	ret ; $2f51
 Unused_00_UnmuteToSilence:
 	push hl ; $2f52
-	ld hl, hMusic ; $2f53
-	bit 0, [hl] ; $2f56
+	ld hl, hMusicFlags ; $2f53
+	bit MUSICB_MUTED, [hl] ; $2f56
 	jr z, .done ; $2f58
-	res 0, [hl] ; $2f5a
+	res MUSICB_MUTED, [hl] ; $2f5a
 	sound BGM_NONE ; $2f5c
 .done:
 	pop hl ; $2f5e
@@ -345,13 +345,13 @@ Unused_00_SyncMusicMuteOption:
 	push de ; $2f62
 	push hl ; $2f63
 	ld a, [wSoundOptionBits] ; $2f64
-	and $01 ; $2f67
+	and SOUNDOPTF_MUSIC_OFF ; $2f67
 	ld c, a ; $2f69
-	ldh a, [hMusic] ; $2f6a
-	and $fe ; $2f6c
+	ldh a, [hMusicFlags] ; $2f6a
+	and ~MUSICF_MUTED ; $2f6c
 	or c ; $2f6e
-	ldh [hMusic], a ; $2f6f
-	bit 0, a ; $2f71
+	ldh [hMusicFlags], a ; $2f6f
+	bit MUSICB_MUTED, a ; $2f71
 	jr z, .done ; $2f73
 	ldh a, [hWramBank] ; $2f75
 	push af ; $2f77
@@ -375,13 +375,13 @@ SetMusicMuted:
 	ldh a, [hWramBank] ; $2f8e
 	push af ; $2f90
 	ld a, b ; $2f91
-	and $01 ; $2f92
+	and MUSICF_MUTED ; $2f92
 	ld c, a ; $2f94
-	ldh a, [hMusic] ; $2f95
-	and $fe ; $2f97
+	ldh a, [hMusicFlags] ; $2f95
+	and ~MUSICF_MUTED ; $2f97
 	or c ; $2f99
-	ldh [hMusic], a ; $2f9a
-	bit 0, a ; $2f9c
+	ldh [hMusicFlags], a ; $2f9a
+	bit MUSICB_MUTED, a ; $2f9c
 	jr nz, .mute ; $2f9e
 	ld a, [wCurrentBGM] ; $2fa0
 	jr .apply ; $2fa3

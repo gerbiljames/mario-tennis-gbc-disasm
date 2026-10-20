@@ -38,12 +38,12 @@ GetUnlockedMarioCastCharAtGridSlot:
 	call GetMarioCastCharAtGridSlot ; $66b5
 	cp CHAR_LUIGI ; $66b8
 	ret z ; $66ba
-	cp $19 ; $66bb
+	cp CHAR_BABY_MARIO ; $66bb
 	ret z ; $66bd
-	cp $18 ; $66be
+	cp CHAR_DK ; $66be
 	ret z ; $66c0
 	ld d, a ; $66c1
-	sub $1a ; $66c2
+	sub CHAR_MARIO ; $66c2
 	ld hl, UnlockedMarioCastCharAtGridSlotTable ; $66c4
 	add_hl_a ; $66c7
 	ld b, [hl] ; $66cc

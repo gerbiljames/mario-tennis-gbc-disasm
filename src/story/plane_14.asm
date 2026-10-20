@@ -94,7 +94,7 @@ UpdateWaterSplash0_14:
 	ld a, [wCutsceneObjX] ; $60c7
 	sub b ; $60ca
 	ld d, a ; $60cb
-	ld a, [wCutsceneObjActive] ; $60cc
+	ld a, [wCutsceneObjHalt] ; $60cc
 	and a ; $60cf
 	jr nz, .computeScreenY ; $60d0
 	call AdvanceWaterSplash0Rise_14 ; $60d2
@@ -105,7 +105,7 @@ UpdateWaterSplash0_14:
 	add $20 ; $60db
 	sub b ; $60dd
 	ld e, a ; $60de
-	ld a, [wCutsceneObjActive] ; $60df
+	ld a, [wCutsceneObjHalt] ; $60df
 	and a ; $60e2
 	jp z, .checkRising ; $60e3
 	ld a, [wCutsceneObjLimit] ; $60e6
@@ -193,7 +193,7 @@ UpdateWaterSplash1_14:
 	ld a, [wCutsceneObjX + 1] ; $6181
 	sub b ; $6184
 	ld d, a ; $6185
-	ld a, [wCutsceneObjActive + 1] ; $6186
+	ld a, [wCutsceneObjHalt + 1] ; $6186
 	and a ; $6189
 	jr nz, .computeScreenY ; $618a
 	call AdvanceWaterSplash1Rise_14 ; $618c
@@ -204,7 +204,7 @@ UpdateWaterSplash1_14:
 	add $20 ; $6195
 	sub b ; $6197
 	ld e, a ; $6198
-	ld a, [wCutsceneObjActive + 1] ; $6199
+	ld a, [wCutsceneObjHalt + 1] ; $6199
 	and a ; $619c
 	jp z, .checkRising ; $619d
 	ld a, [wCutsceneObjLimit + 1] ; $61a0

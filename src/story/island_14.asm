@@ -45,7 +45,7 @@ AnimateIslandSkyEffectSprites_14:
 	ld e, a ; $73e5
 	ld c, $10 ; $73e6
 	ld hl, IslandSkySpriteData_14 ; $73e8
-	ld a, [wCutsceneObjActive] ; $73eb
+	ld a, [wCutsceneObjHalt] ; $73eb
 	and a ; $73ee
 	jr nz, .noTick ; $73ef
 	ld a, [wCutsceneObjLimit] ; $73f1

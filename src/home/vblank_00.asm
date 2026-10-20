@@ -12,9 +12,9 @@ VBlankHandler:
 	ldh a, [hVBlankOccurred] ; $2759
 	or a ; $275b
 	jr nz, .skipVideo ; $275c
-	ldh a, [hShowDebugConsole] ; $275e
+	ldh a, [hBGViewMode] ; $275e
 	or a ; $2760
-	jr nz, .compare ; $2761
+	jr nz, .checkMode ; $2761
 	ldh a, [hScrollX] ; $2763
 	ldh [rSCX], a ; $2765
 	ldh a, [hScrollY] ; $2767
@@ -23,8 +23,8 @@ VBlankHandler:
 	and ~LCDC_BG_MAP ; $276d
 	ldh [rLCDC], a ; $276f
 	jr .checkSpriteBufferPage ; $2771
-.compare:
-	cp $01 ; $2773
+.checkMode:
+	cp BGVIEW_DEBUG_CONSOLE ; $2773
 	jr nz, .keepBgMap ; $2775
 	xor a ; $2777
 	ldh [rSCX], a ; $2778

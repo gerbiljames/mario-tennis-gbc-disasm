@@ -492,7 +492,7 @@ LoadObjTemplate_09:
 	ld [hl+], a ; $4650
 	ld hl, OBJSLOT_FLAGS ; $4651
 	add hl, bc ; $4654
-	set 7, [hl] ; $4655
+	set OBJSLOTB_LOADED, [hl] ; $4655
 	ret ; $4657
 StartObjExitAnim:
 	ld a, OBJSLOT_FLAGS ; $4658
@@ -500,9 +500,9 @@ StartObjExitAnim:
 	ld e, a ; $465b
 	ld d, b ; $465c
 	ld a, [de] ; $465d
-	bit 7, a ; $465e
+	bit OBJSLOTB_LOADED, a ; $465e
 	ret z ; $4660
-	res 7, a ; $4661
+	res OBJSLOTB_LOADED, a ; $4661
 	ld [de], a ; $4663
 	ld a, OBJSLOT_ID ; $4664
 	add c ; $4666
@@ -595,7 +595,7 @@ FinishObjSlotUpdate:
 	ret ; $46ef
 .drawAtOffset:
 	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $46f0
-	bit 0, [hl] ; $46f3
+	bit OBJSLOTB_VISIBLE, [hl] ; $46f3
 	ret z ; $46f5
 	ld hl, wObjSlotWork + OBJSLOT_X ; $46f6
 	ld a, [wObjSlotWork + OBJSLOT_CURVE_X] ; $46f9
@@ -617,7 +617,7 @@ FinishObjSlotUpdate:
 	ret ; $4717
 .drawOnServer:
 	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $4718
-	bit 0, [hl] ; $471b
+	bit OBJSLOTB_VISIBLE, [hl] ; $471b
 	ret z ; $471d
 	farcall FindServerCharBank ; $471e
 	wram_bank b ; $4721
@@ -648,11 +648,11 @@ FinishObjSlotUpdate:
 	ret ; $4757
 ObjUpdateShow:
 	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $4758
-	set 0, [hl] ; $475b
+	set OBJSLOTB_VISIBLE, [hl] ; $475b
 	ret ; $475d
 ObjUpdateHide:
 	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $475e
-	res 0, [hl] ; $4761
+	res OBJSLOTB_VISIBLE, [hl] ; $4761
 	ret ; $4763
 ObjUpdateRunCurve:
 	jumptable [wObjSlotWork + OBJSLOT_STATE] ; $4764
@@ -660,12 +660,12 @@ ObjUpdateRunCurve:
 	dw ObjUpdateRunCurve.done ; $476a jumptable
 .stepCurve:
 	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $476c
-	set 0, [hl] ; $476f
+	set OBJSLOTB_VISIBLE, [hl] ; $476f
 	call GetNextMoveCurveValue ; $4771
 	jp z, .advanceState ; $4774
 	ret ; $4777
 	ld hl, wObjSlotWork + OBJSLOT_FLAGS ; $4778
-	res 0, [hl] ; $477b
+	res OBJSLOTB_VISIBLE, [hl] ; $477b
 .advanceState:
 	ld hl, wObjSlotWork + OBJSLOT_STATE ; $477d
 	inc [hl] ; $4780

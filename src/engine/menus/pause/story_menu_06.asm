@@ -815,16 +815,16 @@ StoryPauseMenu_MessageSpeed:
 .done:
 	ret ; $7012
 StoryPauseMenu_MusicToggle:
-	ldh a, [hMusic] ; $7013
-	and $01 ; $7015
+	ldh a, [hMusicFlags] ; $7013
+	and MUSICF_MUTED ; $7015
 	ld [wMatchMenuSelection], a ; $7017
 	call RunMusicOnOffMenu ; $701a
 	ld a, [wMatchMenuSelection] ; $701d
 	cp MATCHMENUSEL_CANCELLED ; $7020
 	jr z, .done ; $7022
 	call SetMusicMuted ; $7024
-	ldh a, [hMusic] ; $7027
-	and $01 ; $7029
+	ldh a, [hMusicFlags] ; $7027
+	and MUSICF_MUTED ; $7029
 	farcall SetStorySlotFlagA ; $702b
 .done:
 	ret ; $702e

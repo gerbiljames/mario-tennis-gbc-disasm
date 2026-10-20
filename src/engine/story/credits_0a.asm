@@ -35,7 +35,7 @@ CheckBallHitsMinigameTargetAlt:
 	bit 7, h ; $6e36
 	jr nz, .done ; $6e38
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6e3a
-	set 2, [hl] ; $6e3d
+	set MGTARGETB_HIT, [hl] ; $6e3d
 .done:
 	ret ; $6e3f
 EndingCutsceneLocationList:

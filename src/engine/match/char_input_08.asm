@@ -193,7 +193,7 @@ BuildAirborneShadowSlot:
 ; Interprets the animation script at wCharAnimScriptPtr, one command per frame
 ; once wCharAnimDelay expires. Commands are words: below $f0 is [delay, frame],
 ; $ff rewinds to wCharAnimScriptBase + d, $fe switches animation, $fb toggles
-; the flip bits of wCharSpriteAttr. A frame change sets bit 6 of
+; the flip bits of wCharSpriteAttr. A frame change sets CHARSPRITEB_RELOAD_TILES in
 ; wCharSpriteDirty so ReloadCharFacingTiles uploads new tiles.
 StepCharAnimation:
 	ld a, [wCharAnimDelay] ; $7791
@@ -267,7 +267,7 @@ StepCharAnimation:
 	jr z, .done ; $7803
 	ld [hl], e ; $7805
 	ld hl, wCharSpriteDirty ; $7806
-	set 6, [hl] ; $7809
+	set CHARSPRITEB_RELOAD_TILES, [hl] ; $7809
 .done:
 	ret ; $780b
 ReadCharInput:

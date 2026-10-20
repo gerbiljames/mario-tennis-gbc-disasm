@@ -108,6 +108,12 @@ def vTiles2 equ $9000
 def vBGMap0 equ $9800
 def vBGMap1 equ $9c00
 
+; --- BG view mode (hBGViewMode, read by the VBlank handler) ---
+	const_def
+	const BGVIEW_NORMAL        ; $00 BG map vBGMap0, SCX/SCY from hScrollX/hScrollY
+	const BGVIEW_DEBUG_CONSOLE ; $01 BG map vBGMap1 at SCX 0, SCY $40: the debug console
+	const BGVIEW_KEEP_MAP      ; $02 any other value: rLCDC's map bit is left alone, scroll copied
+
 ; --- Absent cell in a table of tilemap addresses ---
 ; The character-select PlayerSlotBoxAddrs* tables hold one shadow-tilemap cell
 ; per player slot, and a layout that does not show a slot stores zero for it.

@@ -129,8 +129,8 @@ IntroCutsceneState18Exit_6b:
 	ld hl, ApplyScrollYFromWram ; $4bed
 	call UnregisterFrameTask ; $4bf0
 	wram_bank WRAM_SCREEN ; $4bf3
-	ld a, $00 ; $4bf9
-	ldh [hShowDebugConsole], a ; $4bfb
+	ld a, BGVIEW_NORMAL ; $4bf9
+	ldh [hBGViewMode], a ; $4bfb
 	jp DispatchCutsceneStateInit.nextState ; $4bfd
 Palettes_6b_03:
 	INCLUDE "data/engine/cutscenes/Palettes_6b_03.asm" ; $4c00, 56 bytes (palettes)

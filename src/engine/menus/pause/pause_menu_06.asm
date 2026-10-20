@@ -416,8 +416,8 @@ MatchPauseMenu_CameraSelect:
 .done:
 	ret ; $4439
 MatchPauseMenu_MusicToggle:
-	ldh a, [hMusic] ; $443a
-	and $01 ; $443c
+	ldh a, [hMusicFlags] ; $443a
+	and MUSICF_MUTED ; $443c
 	ld [wMatchMenuSelection], a ; $443e
 	ld a, MATCHMENU_MUSIC ; $4441
 	ld [wPauseMenuId], a ; $4443
@@ -429,8 +429,8 @@ MatchPauseMenu_MusicToggle:
 	ld a, [wGameMode] ; $4453
 	cp GAMEMODE_LINK_MATCH ; $4456
 	jr z, .done ; $4458
-	ldh a, [hMusic] ; $445a
-	and $01 ; $445c
+	ldh a, [hMusicFlags] ; $445a
+	and MUSICF_MUTED ; $445c
 	farcall SetStorySlotFlagA ; $445e
 .done:
 	ret ; $4461

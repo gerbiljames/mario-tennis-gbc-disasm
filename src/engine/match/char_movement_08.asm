@@ -544,14 +544,14 @@ UpdateCharFacingOctant:
 	jr z, .unchanged ; $7618
 	ld [hl], d ; $761a
 	ld hl, wCharSpriteDirty ; $761b
-	set 6, [hl] ; $761e
+	set CHARSPRITEB_RELOAD_TILES, [hl] ; $761e
 .unchanged:
 	ret ; $7620
 ReloadCharFacingTiles:
 	ld hl, wCharSpriteDirty ; $7621
-	bit 6, [hl] ; $7624
+	bit CHARSPRITEB_RELOAD_TILES, [hl] ; $7624
 	ret z ; $7626
-	res 6, [hl] ; $7627
+	res CHARSPRITEB_RELOAD_TILES, [hl] ; $7627
 	ld a, d ; $7629
 	ld_hl_indexed ReloadCharFacingTilesTable ; $762a
 	ld d, [hl] ; $7631

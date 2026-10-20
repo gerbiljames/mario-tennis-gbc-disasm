@@ -91,8 +91,8 @@ after a real defect broke it:
             two or more sites is passed no raw number there, and no `bit n, r` on a joypad byte (loaded
             from hInput* / wCharInputBits, or tested with a PADB_ bit before)
             leaves n raw, nor does a bit/set/res on a FLAG_BYTES byte
-            (wCharFlags, wCharBallReachFlags, wExpScreenBusyFlags) use
-            anything but its family, and no Text_* id is the X of
+            (wCharFlags, wCharBallReachFlags, wExpScreenBusyFlags, ...) or
+            a FLAG_FIELDS record field use anything but its family, and no Text_* id is the X of
             `ld hl, X / add hl, rr / ld e, l / ld d, h` (five scoreboard
             caption cells were)
   fields    a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
@@ -1613,8 +1613,23 @@ FLAG_BYTES = {
     "wServingCharCourtPos": "COURTPOSB_",
     "wPrevCourtPos": "COURTPOSB_",
     "wCharServeRole": "SERVEROLEB_",
+    "hMusicFlags": "MUSICB_",
+    "wSoundOptionBits": "SOUNDOPTB_",
+    "wCharSpriteDirty": "CHARSPRITEB_",
 }
+# Record fields of the same kind, reached through `ld hl, FIELD / add hl, rr`
+# or `ld hl, wRecord + FIELD`.
+FLAG_FIELDS = {
+    "ACTORF_FLAGS": "ACTORFLAGB_",
+    "ACTORF_STATUS": "ACTORSTATUSB_",
+    "MGTARGET_FLAGS": "MGTARGETB_",
+    "OBJSLOT_FLAGS": "OBJSLOTB_",
+    "MGACTOR_FLAGS": "MGACTORB_",
+}
+# (field, bit) pairs still tested raw: the bit has no known meaning yet.
+KNOWN_RAW_FIELD_BITS = {("ACTORF_FLAGS", "1"), ("ACTORF_STATUS", "1"), ("ACTORF_STATUS", "3")}
 _FLAG_NAMES = "|".join(FLAG_BYTES)
+_FLAG_FIELD_RE = re.compile(rf"ld hl, (?:\w+ \+ )?({'|'.join(FLAG_FIELDS)})")
 _FLAG_LOAD_RE = re.compile(rf"ldh? ([abcdehl]), \[({_FLAG_NAMES})\]")
 _FLAG_HL_RE = re.compile(rf"ld hl, ({_FLAG_NAMES})\b.*")
 _FLAG_STORE_RE = re.compile(rf"ldh? \[({_FLAG_NAMES})\], ([abcdehl])")
@@ -1624,8 +1639,10 @@ _FLAG_HL_WRITE_RE = re.compile(r"(?:ld|pop|inc|dec) hl\b.*|ld [hl], .*|.*\[hl[+-
 
 def _raw_flag_bits(fail):
     """A bit/set/res on a FLAG_BYTES byte names its bit from the byte's
-    family. State follows branches to local labels and is dropped at calls."""
+    family. State follows branches to local labels and is dropped at calls.
+    FLAG_FIELDS record fields count the same way."""
     n = 0
+    seen = set()
     for h in holders():
         lines, origin = bank_lines(h)
         scope = owner = None
@@ -1647,7 +1664,10 @@ def _raw_flag_bits(fail):
             def judge(op, prefix):
                 nonlocal n
                 n += 1
-                if not op.startswith(prefix):
+                field = next((f for f, p in FLAG_FIELDS.items() if p == prefix), None)
+                if (field, op) in KNOWN_RAW_FIELD_BITS:
+                    seen.add((field, op))
+                elif not op.startswith(prefix):
                     fail("raw-ids", f"{where}: {owner} bit {op} on a {prefix}* byte -- a {prefix} name?")
 
             if m := _FLAG_LOAD_RE.fullmatch(ins):
@@ -1658,6 +1678,10 @@ def _raw_flag_bits(fail):
                 state["[hl]"] = FLAG_BYTES[m.group(1)]
                 state.pop("h", None), state.pop("l", None)
                 continue
+            if m := _FLAG_FIELD_RE.fullmatch(ins):
+                state["[hl]"] = FLAG_FIELDS[m.group(1)]
+                state.pop("h", None), state.pop("l", None)
+                continue
             if m := _FLAG_STORE_RE.fullmatch(ins):
                 for op, w in built.pop(m.group(2), []):
                     where = w
@@ -1665,7 +1689,7 @@ def _raw_flag_bits(fail):
                 continue
             if (m := re.fullmatch(r"(?:and|or|xor) (.+)", ins)) and "a" in state and m.group(1) not in _REGS8:
                 n += 1
-                if not m.group(1).startswith(state["a"].split("B_")[0]):
+                if not m.group(1).lstrip("~").startswith(state["a"].split("B_")[0]):
                     fail("raw-ids", f"{where}: {owner} mask {m.group(1)} on a {state['a']}* byte -- a name?")
             if m := _FLAG_BIT_RE.fullmatch(ins):
                 if m.group(3) in state:
@@ -1702,6 +1726,8 @@ def _raw_flag_bits(fail):
                 if m.group(1) or m.group(3) or m.group(4) is not None:
                     for r in regs:
                         built.pop(r, None)
+    for key in sorted(KNOWN_RAW_FIELD_BITS - seen):
+        fail("raw-ids", f"{key} is no longer tested raw -- drop it from KNOWN_RAW_FIELD_BITS")
     return n
 
 

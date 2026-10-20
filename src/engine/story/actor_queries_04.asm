@@ -600,7 +600,7 @@ QueueActorFrameTileCopy:
 	add hl, bc ; $56ca
 	bit ACTORSTATUSB_FRAME_DIRTY, [hl] ; $56cb
 	ret z ; $56cd
-	res 6, [hl] ; $56ce
+	res ACTORSTATUSB_FRAME_DIRTY, [hl] ; $56ce
 	push bc ; $56d0
 	ld hl, ACTORF_FRAME_TABLE ; $56d1
 	add hl, bc ; $56d4
@@ -680,7 +680,7 @@ IsActorMoving:
 	wram_bank WRAM_ACTORS ; $573c
 	ld a, ACTORF_FLAGS ; $5742
 	add_hl_a ; $5744
-	bit 7, [hl] ; $5749
+	bit ACTORFLAGB_MOVING, [hl] ; $5749
 	jr z, .idle ; $574b
 	ld a, $01 ; $574d
 	jr .done ; $574f

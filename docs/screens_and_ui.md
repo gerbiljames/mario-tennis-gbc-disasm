@@ -56,10 +56,13 @@ barrier (420 call sites). Per call it:
 | 10 | `UpdateFadeOut`, `UpdateFadeIn` | `$27c6` | palettes for the *next* frame (§6.3) |
 | 11 | `UpdateSoundEngine` | `$27cc` | |
 
-Step 2 normally copies `hScrollX`/`hScrollY` to `rSCX`/`rSCY` and clears `rLCDC`
-bit 3 (BG map `$9800`); when `hShowDebugConsole == 1` it forces `SCX = 0`,
-`SCY = $40` and sets bit 3, showing the debug console from `$9c00`
-(`$2773`-`$2784`; `wDebugTextBuffer` at `$cc00` goes to the `$9d00` rows).
+Step 2 reads `hBGViewMode`. At `BGVIEW_NORMAL` (0) it copies
+`hScrollX`/`hScrollY` to `rSCX`/`rSCY` and clears `rLCDC` bit 3 (BG map
+`$9800`); at `BGVIEW_DEBUG_CONSOLE` (1) it forces `SCX = 0`, `SCY = $40` and
+sets bit 3, showing the debug console from `$9c00` (`$2773`-`$2784`;
+`wDebugTextBuffer` at `$cc00` goes to the `$9d00` rows); any other value
+(`BGVIEW_KEEP_MAP`, which the intro uses after setting bit 3 itself) copies the
+scroll and leaves the map bit alone.
 
 Step 5's suppression is the only VBlank budget mechanism: the column blit uses
 CPU stores, so when it runs it sets `hBGColumnBlitDone` (`$21d1`) and the VRAM
@@ -933,7 +936,7 @@ Framework-wide addresses not given above; `ram/*.asm` is authoritative.
 | `$ff8f` | `hFrameTasksReady` | §1.3 |
 | `$ff92`/`$ff93`/`$ffa6` | `hInputRepeatButtons` / `hInputRepeatTimer` / `hInputRepeatDelay` | §1.4 |
 | `$ff95`/`$ff96`/`$ff97` | `hRomBank` / `hWramBank` / `hSramBank` | bank shadows; helpers save and restore them |
-| `$ff98` | `hShowDebugConsole` | §1.2 |
+| `$ff98` | `hBGViewMode` | §1.2 |
 | `$ff99` | `hVRAMQueueDirty` | copies pending; also set on overflow |
 | `$ff9e`/`$ff9a` | `hDebugStepMode` / `hDebugStepPaused` | §1.5 |
 | `$ffa0`/`$ffa1` | `hPeakLY` / `hPeakLYFrames` | CPU load meter |

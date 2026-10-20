@@ -5,7 +5,7 @@ RunIntroCutscene:
 	ld [wIntroCutsceneCheck], a ; $4031
 	ld [wCutsceneScrollX], a ; $4034
 	ld [wCutsceneReverseScrollX], a ; $4037
-	ldh [hShowDebugConsole], a ; $403a
+	ldh [hBGViewMode], a ; $403a
 	ld hl, rLCDC ; $403c
 	res B_LCDC_BG_MAP, [hl] ; $403f
 	sound BGM_INTRO ; $4041
@@ -17,7 +17,7 @@ RunIntroCutscene:
 	ld hl, rIE ; $4059
 	res B_IE_STAT, [hl] ; $405c
 	xor a ; $405e
-	ldh [hShowDebugConsole], a ; $405f
+	ldh [hBGViewMode], a ; $405f
 	ld hl, rLCDC ; $4061
 	res B_LCDC_BG_MAP, [hl] ; $4064
 	call ClearDebugTextBuffer ; $4066
@@ -753,8 +753,8 @@ Unused_6b_IntroCutsceneState11Init:
 	call DisableLCDSafely ; $4885
 	ld c, SCREENASSET_DecompressIntroTitleTilesPtrs ; $4888
 	farcall LoadScreenAssetRecord ; $488a
-	ld a, $01 ; $488d
-	ldh [hShowDebugConsole], a ; $488f
+	ld a, BGVIEW_DEBUG_CONSOLE ; $488d
+	ldh [hBGViewMode], a ; $488f
 	ld hl, rLCDC ; $4891
 	set B_LCDC_BG_MAP, [hl] ; $4894
 	wram_bank WRAM_SCREEN ; $4896
@@ -775,8 +775,8 @@ Unused_6b_IntroCutsceneState11Init:
 	ld [wCutsceneStepTimer], a ; $48c4
 	jp DispatchCutsceneStateInit.runUpdate ; $48c7
 Unused_6b_IntroCutsceneState11Exit:
-	ld a, $00 ; $48ca
-	ldh [hShowDebugConsole], a ; $48cc
+	ld a, BGVIEW_NORMAL ; $48ca
+	ldh [hBGViewMode], a ; $48cc
 	ld hl, rLCDC ; $48ce
 	res B_LCDC_BG_MAP, [hl] ; $48d1
 	ld hl, Palette_6b_1 ; $48d3
@@ -846,8 +846,8 @@ IntroCutsceneState16Init_6b:
 	call DisableLCDSafely ; $4960
 	call InitCutsceneSceneA ; $4963
 	call LoadIntroTilesAndPalette ; $4966
-	ld a, $02 ; $4969
-	ldh [hShowDebugConsole], a ; $496b
+	ld a, BGVIEW_KEEP_MAP ; $4969
+	ldh [hBGViewMode], a ; $496b
 	ld hl, rLCDC ; $496d
 	set B_LCDC_BG_MAP, [hl] ; $4970
 	wram_bank WRAM_STAGING ; $4972

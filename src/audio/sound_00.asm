@@ -18,8 +18,8 @@ PlaySoundCmd:
 	jr nc, PlaySoundCmd.playSfx ; $2fc4
 	cp $40 ; $2fc6
 	jr c, PlaySoundCmd.playBGM ; $2fc8
-	ld hl, hMusic ; $2fca
-	bit 0, [hl] ; $2fcd
+	ld hl, hMusicFlags ; $2fca
+	bit MUSICB_MUTED, [hl] ; $2fcd
 	jr nz, PlaySoundCmd.restore ; $2fcf
 	ldh [hActiveJingle], a ; $2fd1
 	sub $40 ; $2fd3
@@ -44,8 +44,8 @@ PlaySoundCmd.startBGM:
 	jr z, PlaySoundCmd.restore ; $2ff7
 	ld [hl], a ; $2ff9
 PlaySoundCmd.play:
-	ld hl, hMusic ; $2ffa
-	bit 0, [hl] ; $2ffd
+	ld hl, hMusicFlags ; $2ffa
+	bit MUSICB_MUTED, [hl] ; $2ffd
 	jr nz, PlaySoundCmd.restore ; $2fff
 	ld h, a ; $3001
 	ldh a, [hWramBank] ; $3002
@@ -93,8 +93,8 @@ WaitJingleEnd:
 .stopJingle:
 	xor a ; $3040
 	ldh [hActiveJingle], a ; $3041
-	ld hl, hMusic ; $3043
-	bit 0, [hl] ; $3046
+	ld hl, hMusicFlags ; $3043
+	bit MUSICB_MUTED, [hl] ; $3046
 	jr nz, .restore ; $3048
 	ldh a, [hWramBank] ; $304a
 	push af ; $304c
@@ -118,8 +118,8 @@ ResumeBGMAfterJingle:
 	ret nz ; $3068
 	xor a ; $3069
 	ldh [hActiveJingle], a ; $306a
-	ld hl, hMusic ; $306c
-	bit 0, [hl] ; $306f
+	ld hl, hMusicFlags ; $306c
+	bit MUSICB_MUTED, [hl] ; $306f
 	ret nz ; $3071
 	ld a, [wCurrentBGM] ; $3072
 	jp PlaySound ; $3075

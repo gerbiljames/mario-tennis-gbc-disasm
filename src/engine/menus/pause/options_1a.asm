@@ -106,7 +106,7 @@ Unused_1a_DrawPauseMenuSettingValues:
 	ld l, $72 ; $40ca
 	ld_cell de, $0c, $05 ; $40cc
 	call Unused_1a_QueueWindowTileWrite ; $40cf
-	jr .checkMusic ; $40d2
+	jr .checkMusicFlags ; $40d2
 .countDone:
 	ld l, $8c ; $40d4
 	ld_cell de, $0a, $05 ; $40d6
@@ -117,7 +117,7 @@ Unused_1a_DrawPauseMenuSettingValues:
 	ld l, $73 ; $40e4
 	ld_cell de, $0c, $05 ; $40e6
 	call Unused_1a_QueueWindowTileWrite ; $40e9
-	jr .checkMusic ; $40ec
+	jr .checkMusicFlags ; $40ec
 .maskClear:
 	ld l, $8a ; $40ee
 	ld_cell de, $0a, $05 ; $40f0
@@ -128,9 +128,9 @@ Unused_1a_DrawPauseMenuSettingValues:
 	ld l, $72 ; $40fe
 	ld_cell de, $0c, $05 ; $4100
 	call Unused_1a_QueueWindowTileWrite ; $4103
-	jr .checkMusic ; $4106
-.checkMusic:
-	ldh a, [hMusic] ; $4108
+	jr .checkMusicFlags ; $4106
+.checkMusicFlags:
+	ldh a, [hMusicFlags] ; $4108
 	push af ; $410a
 	push bc ; $410b
 	push de ; $410c
@@ -355,11 +355,11 @@ Unused_1a_ToggleMusicSetting:
 	sound SFX_MENU_MOVE ; $42a9
 	ld a, [wSoundOptionBits] ; $42ab
 	ld b, a ; $42ae
-	and $01 ; $42af
-	xor $01 ; $42b1
+	and SOUNDOPTF_MUSIC_OFF ; $42af
+	xor SOUNDOPTF_MUSIC_OFF ; $42b1
 	ld c, a ; $42b3
 	ld a, b ; $42b4
-	and $fe ; $42b5
+	and ~SOUNDOPTF_MUSIC_OFF ; $42b5
 	or c ; $42b7
 	ld [wSoundOptionBits], a ; $42b8
 	ret ; $42bb

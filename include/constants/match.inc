@@ -3,7 +3,7 @@
 ; description), which the bank $09 object engine reaches with the slot in bc.
 	rsreset
 def OBJSLOT_ID              rb ; $00 $ff = free
-def OBJSLOT_FLAGS           rb ; $01 bit 0 draw this frame; LoadObjTemplate_09 sets bit 7
+def OBJSLOT_FLAGS           rb ; $01 OBJSLOTB_*
 def OBJSLOT_SPRITE_TEMPLATE rw ; $02
 def OBJSLOT_OAM_ATTR        rb ; $04
 def OBJSLOT_TILE            rb ; $05
@@ -18,6 +18,9 @@ def OBJSLOT_CURVE           rb ; $0e MoveCurveTable_09 index
 def OBJSLOT_ANCHOR          rb ; $0f 1 = relative to the serving character
 def OBJSLOT_SIZE equ _RS
 	ASSERT OBJSLOT_SIZE == $10
+; OBJSLOT_FLAGS bits
+def OBJSLOTB_VISIBLE equ 0 ; FinishObjSlotUpdate draws the slot
+def OBJSLOTB_LOADED  equ 7 ; set by LoadObjTemplate_09; StartObjExitAnim clears it and plays the template's exit animation only if it was set
 
 ; --- Shot types (wCurrentShotType) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
@@ -221,6 +224,9 @@ def NUM_CHARSTATES equ const_value
 	const CHARB_MOVING       ; $04 the velocity came out nonzero this frame (or MoveCharTowardTarget stepped); UpdateCharRunAnimation reads it to choose run over idle
 	const CHARB_CHARGING     ; $05 a swing is winding up: StepCharMovement divides both velocities by 8
 	const CHARB_MOVE_BLOCKED ; $06 StepCharMovement refused an axis at the court bound instead of clamping it. Never read
+
+; --- On-court character sprite flags (wCharSpriteDirty) ---
+def CHARSPRITEB_RELOAD_TILES equ 6 ; the facing octant or animation frame changed: ReloadCharFacingTiles uploads new tiles
 
 ; --- Ball-geometry and steering flags (wCharBallReachFlags) ---
 ; UpdateCharBallGeometry rewrites the byte each frame with only bit 4, then

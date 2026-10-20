@@ -84,8 +84,8 @@ SetMinigameActorHandler:
 	ld [hl], d ; $445b
 	ld hl, MGACTOR_FLAGS ; $445c
 	add hl, bc ; $445f
-	set 0, [hl] ; $4460
-	set 1, [hl] ; $4462
+	set MGACTORB_ENABLED, [hl] ; $4460
+	set MGACTORB_HAS_HANDLER, [hl] ; $4462
 	ret ; $4464
 SetMinigameActorPosition:
 	wram_bank WRAM_ACTORS ; $4465
@@ -164,7 +164,7 @@ UpdateMinigameActors:
 	jr nz, .actorLoop ; $44d0
 	ret ; $44d2
 UpdateMinigameActor:
-	bit 0, [hl] ; $44d3
+	bit MGACTORB_ENABLED, [hl] ; $44d3
 	ret z ; $44d5
 	push af ; $44d6
 	push bc ; $44d7
@@ -320,7 +320,7 @@ DrawMinigameScoreHud:
 	jr z, .done ; $46e1
 	push_wram_bank WRAM_CHAR1 ; $46e3
 	ld hl, wCharSpriteSlot + 1 ; $46ec
-	res 5, [hl] ; $46ef
+	res B_OAM_XFLIP, [hl] ; $46ef
 	pop_wram_bank ; $46f1
 .done:
 	ret ; $46f6

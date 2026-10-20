@@ -185,8 +185,8 @@ wCutsceneObjTimer:: dw
 wCutsceneObjLimit:: dw
 ; [2 bytes] Frames left in the rise, counted down by AdvanceWaterSplash0Rise_14 / AdvanceWaterSplash1Rise_14, which also lift wCutsceneObjY by 2 per frame
 wCutsceneObjRiseTimer:: dw
-; [2 bytes] Per-slot active flag; 0 = still rising, hit test skipped
-wCutsceneObjActive:: dw
+; [2 bytes] Per-slot halt flag: 0 while the effect runs (cleared when it starts), 1 set just before the scene exits. Nonzero skips the rise step and the island anim tick, and lets a splash finish instead of respawning
+wCutsceneObjHalt:: dw
 NEXTU
 ; water-sprite swing contest (bank $15)
 	ds 2

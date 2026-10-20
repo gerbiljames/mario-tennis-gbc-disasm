@@ -379,7 +379,7 @@ def MINIGAMELEVEL_HIGH_SCORE equ $02 ; a Mario minigame's third level sets wMini
 ; UpdateMinigameActor copies each live record into wMinigameSceneActor, runs
 ; its handler on that copy, and copies it back.
 	rsreset
-def MGACTOR_FLAGS    rb ; $00 bit 0 enabled, bit 1 has a handler
+def MGACTOR_FLAGS    rb ; $00 MGACTORB_*
 def MGACTOR_SUBTYPE  rb ; $01 per minigame: the treasure box type, the medallion index
 def MGACTOR_STATE    rb ; $02 the handler's RST00 sub-state
 def MGACTOR_TIMER    rb ; $03
@@ -391,12 +391,16 @@ def MGACTOR_SCREEN_Y rw ; $0c
 def MGACTOR_HANDLER  rw ; $0e
 def MGACTOR_SIZE equ _RS
 	ASSERT MGACTOR_SIZE == $10
+; MGACTOR_FLAGS bits
+	const_def
+	const MGACTORB_ENABLED     ; $00 UpdateMinigameActor runs the handler
+	const MGACTORB_HAS_HANDLER ; $01 set with MGACTOR_HANDLER. Never read
 
 ; --- Minigame target fields (wMinigameTargets, wMinigameTargetWork) ---
 ; UpdateMinigameTarget copies each live record into wMinigameTargetWork, runs
 ; its script, movement, draw and hit checks there, and copies it back.
 	rsreset
-def MGTARGET_FLAGS        rb ; $00 bit 0 live, bit 1 moving toward the goal, bit 2 hit by the ball
+def MGTARGET_FLAGS        rb ; $00 MGTARGETB_*
 def MGTARGET_KIND         rb ; $01 0-3: sprite, deflection, wMinigameHitTargetType
 def MGTARGET_HIT_TIMER    rb ; $02 $20 on a hit, counts down; the low nibble shakes the sprite
 def MGTARGET_SCRIPT_DELAY rb ; $03 frames before the script runs again
@@ -407,3 +411,8 @@ def MGTARGET_GOAL_X       rw ; $0a MoveMinigameTargetTowardGoal steps $10 a fram
 def MGTARGET_GOAL_DEPTH   rw ; $0c
 def MGTARGET_SIZE equ _RS
 	ASSERT MGTARGET_SIZE == 14
+; MGTARGET_FLAGS bits
+	const_def
+	const MGTARGETB_LIVE   ; $00
+	const MGTARGETB_MOVING ; $01 moving toward the goal
+	const MGTARGETB_HIT    ; $02 hit by the ball

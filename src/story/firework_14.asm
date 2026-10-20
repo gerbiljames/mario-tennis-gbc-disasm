@@ -335,7 +335,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld a, $00 ; $6f99
 	ld [wCutsceneObjLimit], a ; $6f9b
 	ld [wCutsceneObjLimit + 1], a ; $6f9e
-	ld [wCutsceneObjActive], a ; $6fa1
+	ld [wCutsceneObjHalt], a ; $6fa1
 	frame_task AnimateIslandSkyEffectSprites_14 ; $6fa4
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $6fac
 	test_flag FLAG_DOUBLES ; $6fb7
@@ -458,7 +458,7 @@ IslandSkyEntry0fAnd0dScene:
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_PEACHS_CASTLE ; $70f9
 	jp nz, .markStoryComplete ; $70fb
 	ld a, $01 ; $70fe
-	ld [wCutsceneObjActive], a ; $7100
+	ld [wCutsceneObjHalt], a ; $7100
 	ld a, EXIT_ISLAND_SKY_DONE ; $7103
 	ld [wUnusedExitTriggerIdMirror], a ; $7105
 	ld [wStoryModeExitTriggerRequest], a ; $7108

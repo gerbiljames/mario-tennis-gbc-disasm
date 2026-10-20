@@ -418,7 +418,7 @@ IslandSkyInitScript_14:
 	ld a, $10 ; $54ed
 	ld [wCutsceneObjRiseTimer], a ; $54ef
 	ld a, $00 ; $54f2
-	ld [wCutsceneObjActive], a ; $54f4
+	ld [wCutsceneObjHalt], a ; $54f4
 	frame_task UpdateWaterSplash0_14 ; $54f7
 	script_wait_frames 10 ; $54ff
 	ld a, $50 ; $5506
@@ -430,7 +430,7 @@ IslandSkyInitScript_14:
 	ld a, $10 ; $5514
 	ld [wCutsceneObjRiseTimer + 1], a ; $5516
 	ld a, $00 ; $5519
-	ld [wCutsceneObjActive + 1], a ; $551b
+	ld [wCutsceneObjHalt + 1], a ; $551b
 	frame_task UpdateWaterSplash1_14 ; $551e
 	script_wait_frames 80 ; $5526
 	script_set_position ACTOR_ISLAND_SKY_HEADMASTER, 6.0, 41.0 ; $552d
@@ -459,8 +459,8 @@ IslandSkyInitScript_14:
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $55ee
 	jr nz, .toDormRoom ; $55f0
 	ld a, $01 ; $55f2
-	ld [wCutsceneObjActive], a ; $55f4
-	ld [wCutsceneObjActive + 1], a ; $55f7
+	ld [wCutsceneObjHalt], a ; $55f4
+	ld [wCutsceneObjHalt + 1], a ; $55f7
 	ld a, EXIT_ISLAND_SKY_DONE ; $55fa
 	ld [wUnusedExitTriggerIdMirror], a ; $55fc
 	ld [wStoryModeExitTriggerRequest], a ; $55ff
