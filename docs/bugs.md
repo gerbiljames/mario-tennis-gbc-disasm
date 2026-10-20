@@ -778,6 +778,17 @@ in object field `+$07` every 8 frames. Callback A does it correctly:
 Callback B ends the identical sequence with `ld [hl], d` (`$7ec4`), storing the
 new low nibble alone, so the field's high nibble is zeroed every time.
 
+### `SetActorAnimation` clears a match character's flip bits
+
+`SetActorAnimation` (`$04:$4bd6`) was copied from `SetCharAnimation`, which on a
+new animation clears the flip bits of `wCharSpriteAttr` (`and $0f`) for the
+`$fb` flip command to rebuild. The copy kept the absolute operand: it masks
+`$df37` in WRAM bank `$04`, on-court character 0's attribute byte, not the
+slot's `ACTORF_OAM_ATTR`, and `AdvanceActorAnimation` has no `$fb` command
+to need it. Outside a match nothing reads that byte; the one scene with both
+live, the unreachable character viewer (`$1a:$6f78`), sets the attribute after
+its `SetActorAnimationChecked` calls.
+
 ### The text interpreter's column-32 wrap is popped away
 
 After drawing a printable glyph, the text interpreter (`$05:$4eba`) steps the

@@ -16,6 +16,7 @@ SetActorAnimation:
 	ld hl, ACTORF_ANIM_DELAY ; $4bd0
 	add hl, bc ; $4bd3
 	ld [hl], $00 ; $4bd4
+; Copied from SetCharAnimation: masks match char 0's attribute, not the slot's (docs/bugs.md).
 	ld hl, wCharSpriteAttr ; $4bd6
 	ld a, [hl] ; $4bd9
 	and $0f ; $4bda

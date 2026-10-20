@@ -222,13 +222,13 @@ CheckExpLevelDown:
 	set EXPBUSYB_CONFIRM_OPEN, [hl] ; $745c
 	wram_bank WRAM_SCENE ; $745e
 	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR] ; $7464
-	ld [wBGPalettes + 58], a ; $7467
+	ld [wBGPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE], a ; $7467
 	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR + 1] ; $746a
-	ld [wBGPalettes + 59], a ; $746d
+	ld [wBGPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $746d
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR] ; $7470
-	ld [wBGPalettes + 34], a ; $7473
+	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE], a ; $7473
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR + 1] ; $7476
-	ld [wBGPalettes + 35], a ; $7479
+	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $7479
 	ld a, [wStoryMainPalette] ; $747c
 	ld_bg_pals de, 1, 1 ; $747f
 	farcall LoadIndexedPaletteThunk ; $7482

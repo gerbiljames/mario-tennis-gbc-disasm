@@ -334,17 +334,17 @@ LoadCharDataScreenBgAndPalettes:
 	ld_obj_pals de, 0, 8 ; $7407
 	call LoadPaletteShadow ; $740a
 	wram_bank WRAM_SCENE ; $740d
-	ld a, [wMasterPalettes + 58] ; $7413
+	ld a, [wMasterPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE] ; $7413
 	ld [wExpScreenCharStats + EXPSTAT_SAVED_COLOR], a ; $7416
-	ld a, [wMasterPalettes + 59] ; $7419
+	ld a, [wMasterPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE + 1] ; $7419
 	ld [wExpScreenCharStats + EXPSTAT_SAVED_COLOR + 1], a ; $741c
-	ld a, [wMasterPalettes + 34] ; $741f
+	ld a, [wMasterPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE] ; $741f
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR], a ; $7422
-	ld a, [wMasterPalettes + 35] ; $7425
+	ld a, [wMasterPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE + 1] ; $7425
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR + 1], a ; $7428
-	ld hl, wMasterPalettes + 34 ; $742b
+	ld hl, wMasterPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE ; $742b
 	farcall GrayscalePaletteColorInPlace ; $742e
-	ld hl, wMasterPalettes + 34 ; $7431
+	ld hl, wMasterPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE ; $7431
 	farcall GrayscalePaletteColorInPlace ; $7434
 	wram_bank WRAM_STAGING ; $7437
 	ld hl, CharDataScreenBgGfx ; $743d
@@ -412,13 +412,13 @@ LoadCharDataScreenMugshots:
 	ld de, vTiles1 tile $40 + VRAM_BANK1 ; $7520
 	ld c, 9 ; $7523
 	call QueueVRAMCopy ; $7525
-	ld hl, wMasterPalettes + 16 ; $7528
+	ld hl, wMasterPalettes + 2 * PAL_SIZE + 0 * COLOR_SIZE ; $7528
 	farcall GrayscalePaletteColorInPlace ; $752b
-	ld hl, wMasterPalettes + 18 ; $752e
+	ld hl, wMasterPalettes + 2 * PAL_SIZE + 1 * COLOR_SIZE ; $752e
 	farcall GrayscalePaletteColorInPlace ; $7531
-	ld hl, wMasterPalettes + 20 ; $7534
+	ld hl, wMasterPalettes + 2 * PAL_SIZE + 2 * COLOR_SIZE ; $7534
 	farcall GrayscalePaletteColorInPlace ; $7537
-	ld hl, wMasterPalettes + 22 ; $753a
+	ld hl, wMasterPalettes + 2 * PAL_SIZE + 3 * COLOR_SIZE ; $753a
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
 CharDataScreenBgAndPalettes:
