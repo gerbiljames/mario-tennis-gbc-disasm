@@ -289,7 +289,7 @@ wBallBounceCount:: db
 ; [8-bit] Per-frame bounce event, cleared at the top of StepBallPhysics: 1 = ball reached the ground, 2 = ball bounced off a court fence/wall (BounceBallOffCourtFences). HandleBallBounceEvent returns at once on 0
 wBallBounceEvent:: db
 
-; [8-bit] 1 for the single frame the ball crosses the net plane; set and cleared by HandleBallNetCrossing. Read by TickRallyTimers, AiTrackBallPhase and CheckBallHitsMinigameTarget / CheckBallHitsMinigameTargetAlt
+; [8-bit] 1 for the single frame the ball crosses the net plane; set and cleared by HandleBallNetCrossing. Read by TickRallyTimers, AiTrackBallPhase and CheckBallHitsMinigameTarget / CheckBallHitsScoringMinigameTarget
 wBallCrossedNetFlag:: db
 
 ; [8-bit] Frames the ball has spent past the net this point: TickRallyTimers increments it while wBallCrossedNetFlag is set, capped at $64; ResetPointState clears it. Read only by its own cap test

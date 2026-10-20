@@ -6,8 +6,8 @@
 
 def NUM_GAME_FLAGS equ 256 ; 32 bytes
 
-def FLAG_NEW_GAME_CLEARED_BIT equ 14 ; wGameFlags byte $01 bit 6
-def FLAG_NEW_GAME_SET_BIT equ 15 ; wGameFlags byte $01 bit 7
+def FLAG_ALWAYS_CLEAR equ 14 ; wGameFlags byte $01 bit 6
+def FLAG_ALWAYS_SET equ 15 ; wGameFlags byte $01 bit 7
 
 def FLAG_DEBUG_NOCLIP equ 16 ; wGameFlags byte $02 bit 0
 def FLAG_PLAYER_RUNNING equ 17 ; wGameFlags byte $02 bit 1

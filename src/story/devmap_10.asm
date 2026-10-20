@@ -557,7 +557,7 @@ RunExhibitionModeFlow:
 	pop af ; $5136
 .freshExhibition:
 	xor a ; $5137
-	ld [wVictoryScoreTableAlt], a ; $5138
+	ld [wExhibitionSaveQuitUsed], a ; $5138
 	ld a, STORYSLOT_NONE ; $513b
 	ld [wCurrentStorySlot], a ; $513d
 	farcall InitStoryModeState ; $5140
@@ -635,7 +635,7 @@ RunExhibitionModeFlow:
 	or a ; $51f2
 	jr z, .done ; $51f3
 	ld a, $01 ; $51f5
-	ld [wVictoryScoreTableAlt], a ; $51f7
+	ld [wExhibitionSaveQuitUsed], a ; $51f7
 	farcall WriteExhibitionSaveBlock ; $51fa
 .done:
 	ld a, MENUSLIDE_FORWARD ; $51fd

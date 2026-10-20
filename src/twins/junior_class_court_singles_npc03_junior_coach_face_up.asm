@@ -1,4 +1,4 @@
-; Shared by JuniorClassCourtSinglesNpc03FaceUp_11, JuniorClassCourtDoublesNpc03FaceUp_11 (bank $11).
+; Shared by JuniorClassCourtSinglesNpc03JuniorCoachFaceUp_11, JuniorClassCourtDoublesNpc03JuniorCoachFaceUp_11 (bank $11).
 
 {TWIN_LABEL}:
 	script_set_speed ACTOR_PLAYER, 0.25

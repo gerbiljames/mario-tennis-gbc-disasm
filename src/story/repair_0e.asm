@@ -258,12 +258,12 @@ RunRepairCounterDialogue:
 	farcall ScriptCloseDialogueWindow ; $4e36
 	script_wait_frames 5 ; $4e39
 	and a ; $4e40
-	jr z, RepairCounterFarewell.altLine ; $4e41
+	jr z, RepairCounterAskWhatToDo ; $4e41
 RepairCounterFarewell:
 	script_set_text Text_RepairCounterComeBackAnytime ; $4e43
 	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e49
 	ret ; $4e4e
-.altLine:
+RepairCounterAskWhatToDo:
 	script_set_text Text_RepairCounterWhatCanIDo ; $4e4f
 	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e55
 	script_wait_frames 5 ; $4e5a
@@ -283,7 +283,7 @@ RepairCounterServiceMenu:
 	jp nz, RepairCounterChangeShoes ; $4e7f
 	script_set_text Text_RepairCounterNormalShoesOnly ; $4e82
 	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e88
-	script_set_text Text_RepairCounterBlank ; $4e8d
+	script_set_text Text_RepairCounterPastTextTable ; $4e8d
 	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e93
 	farcall RunDialogueYesNoPrompt ; $4e98
 	farcall ScriptCloseDialogueWindow ; $4e9b

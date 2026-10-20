@@ -400,7 +400,7 @@ CompanionKateActorList:
 	map_actor_end
 CompanionSinglesDummyActorList:
 	; $4ef8, 24 bytes (actor_list)
-	map_actor FLAG_NEW_GAME_SET_BIT, ActorScript_Deactivate, 1.0, 1.0, FACE_DOWN, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00
+	map_actor FLAG_ALWAYS_SET, ActorScript_Deactivate, 1.0, 1.0, FACE_DOWN, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00
 	map_actor_end
 SpawnCompanionActor:
 	push af ; $4f10

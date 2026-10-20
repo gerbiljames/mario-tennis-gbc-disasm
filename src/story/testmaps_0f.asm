@@ -59,7 +59,7 @@ SmallCharTestApplyStage_0f:
 	ld [hl], a ; $40ef
 	call SetPlayerActorObjectDef ; $40f0
 	ret ; $40f3
-SmallCharTestNpc03_0f:
+SmallCharTestCyclePlayerObjDef_0f:
 	ld hl, wMapSceneStage ; $40f4
 	ld a, [hl] ; $40f7
 	inc [hl] ; $40f8
@@ -67,7 +67,7 @@ SmallCharTestNpc03_0f:
 	add $26 ; $40fb
 	call SetPlayerActorObjectDef ; $40fd
 	ret ; $4100
-SmallCharTestNpc04_0f:
+SmallCharTestStageStepUp_0f:
 	ld hl, wMapSceneStage ; $4101
 	ld a, [hl] ; $4104
 	inc a ; $4105
@@ -94,20 +94,20 @@ Unused_0f_SmallCharTestApplyStage:
 	ld [hl], a ; $4122
 	call SetPlayerActorObjectDef ; $4123
 	ret ; $4126
-SmallCharTestNpc05_0f:
+SmallCharTestPlayerNod_0f:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4127
 	ret ; $412e
-SmallCharTestNpc06_0f:
+SmallCharTestPlayerShake_0f:
 	script_set_anim ACTOR_PLAYER, ANIM_SHAKE ; $412f
 	ret ; $4136
 MapScriptNop_0f:
 	ret ; $4137
 SmallCharTestNpcScripts_0f:
 	; $4138, 97 bytes (map_scripts)
-	map_script ACTOR_SMALL_CHAR_TEST_ALEX, FACEMASK_ANY, $0000, SmallCharTestNpc03_0f, $00, $00
-	map_script ACTOR_SMALL_CHAR_TEST_WALUIGI_1, FACEMASK_ANY, $0000, SmallCharTestNpc04_0f, $00, $00
-	map_script ACTOR_SMALL_CHAR_TEST_YOSHI, FACEMASK_ANY, $0000, SmallCharTestNpc05_0f, $00, $00
-	map_script ACTOR_SMALL_CHAR_TEST_BOWSER, FACEMASK_ANY, $0000, SmallCharTestNpc06_0f, $00, $00
+	map_script ACTOR_SMALL_CHAR_TEST_ALEX, FACEMASK_ANY, $0000, SmallCharTestCyclePlayerObjDef_0f, $00, $00
+	map_script ACTOR_SMALL_CHAR_TEST_WALUIGI_1, FACEMASK_ANY, $0000, SmallCharTestStageStepUp_0f, $00, $00
+	map_script ACTOR_SMALL_CHAR_TEST_YOSHI, FACEMASK_ANY, $0000, SmallCharTestPlayerNod_0f, $00, $00
+	map_script ACTOR_SMALL_CHAR_TEST_BOWSER, FACEMASK_ANY, $0000, SmallCharTestPlayerShake_0f, $00, $00
 	map_script ACTOR_SMALL_CHAR_TEST_TOAD, FACEMASK_ANY, $0000, MapScriptNop_0f, NPC_FACE_PLAYER, $00
 	map_script ACTOR_SMALL_CHAR_TEST_BOB_OMB, FACEMASK_ANY, $0000, MapScriptNop_0f, NPC_FACE_PLAYER, $00
 	map_script ACTOR_SMALL_CHAR_TEST_MARIO_WORLD_HOSTESS, FACEMASK_ANY, $0000, MapScriptNop_0f, NPC_FACE_PLAYER, $00
@@ -218,7 +218,7 @@ AwardsCeremonyNpcScripts_0f:
 	map_script ACTOR_AWARDS_CEREMONY_B_COZ, FACEMASK_ANY, $0000, Text_AwardsBCozWilderNextYear, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_SAMMI, FACEMASK_ANY, $0000, Text_AwardsSammiUnknownWinner, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_SEAN, FACEMASK_ANY, $0000, Text_AwardsSeanAcceptAcademyChamp, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_SPIKE, FACEMASK_ANY, $0000, AwardsCeremonyNpc08_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_SPIKE, FACEMASK_ANY, $0000, AwardsCeremonyNpc08Spike_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_ISLAND_SPECTATOR_B, FACEMASK_ANY, $0000, Text_AwardsSpectatorExcitingMatch, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_ISLAND_SPECTATOR_A, FACEMASK_ANY, $0000, Text_AwardsSpectatorEveryMonth, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_MARK_SWEATS, FACEMASK_ANY, $0000, Text_AwardsMarkYouWonIslandOpen, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00

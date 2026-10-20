@@ -1,4 +1,4 @@
-CheckBallHitsMinigameTargetAlt:
+CheckBallHitsScoringMinigameTarget:
 	ld a, [wBallCrossedNetFlag] ; $6df4
 	and a ; $6df7
 	ret z ; $6df8

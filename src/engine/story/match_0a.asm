@@ -350,11 +350,11 @@ RunClearStatusSetupMenu:
 	jp .done ; $4c2e
 .checkMode:
 	or a ; $4c31
-	jp z, .defaultDoubles ; $4c32
+	jp z, .setStatus ; $4c32
 	ld a, EXIT_TEST_2_TO_SERVE_COACH ; $4c35
 	ld [wClearStatusResultCode], a ; $4c37
 	jp .done ; $4c3a
-.defaultDoubles:
+.setStatus:
 	test_flag FLAG_DOUBLES ; $4c3d
 	jr nz, .doubles ; $4c40
 	xor a ; $4c42

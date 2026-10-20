@@ -2,20 +2,20 @@ SpeakHeadmasterSinglesOrDoublesLine_10:
 	test_flag FLAG_DOUBLES ; $73ee
 	jr z, .singles ; $73f1
 	farcall AdvanceDialogueTextCursor ; $73f3
-	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $73f6
+	script_speak ACTOR_ACADEMY_WING_OPEN_WON_HEADMASTER ; $73f6
 	ret ; $73fb
 .singles:
-	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $73fc
+	script_speak ACTOR_ACADEMY_WING_OPEN_WON_HEADMASTER ; $73fc
 	farcall AdvanceDialogueTextCursor ; $7401
 	ret ; $7404
 ShowHeadmasterSinglesOrDoublesPrompt_10:
 	test_flag FLAG_DOUBLES ; $7405
 	jr z, .notDoubles ; $7408
 	farcall AdvanceDialogueTextCursor ; $740a
-	script_speak_restore ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $740d
+	script_speak_restore ACTOR_ACADEMY_WING_OPEN_WON_HEADMASTER ; $740d
 	ret ; $7412
 .notDoubles:
-	script_speak_restore ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $7413
+	script_speak_restore ACTOR_ACADEMY_WING_OPEN_WON_HEADMASTER ; $7413
 	farcall AdvanceDialogueTextCursor ; $7418
 	ret ; $741b
 ActorScript_10_0:
@@ -38,23 +38,23 @@ AcademyWingInstallDoorTriggers_10:
 .done:
 	ret ; $7442
 AcademyWingHideUnwonTrophy_10:
-	script_set_anim ACTOR_ACADEMY_WING_INIT1_TROPHY_1, ANIM_TROPHY_SINGLES ; $7443
+	script_set_anim ACTOR_ACADEMY_WING_OPEN_WON_TROPHY_1, ANIM_TROPHY_SINGLES ; $7443
 	test_flag FLAG_DOUBLES ; $744a
-	jr z, .checkFlag ; $744d
+	jr z, .singles ; $744d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $744f
 	jr nz, .done ; $7452
-	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_1, 1.0, 1.0 ; $7454
+	script_set_position ACTOR_ACADEMY_WING_OPEN_WON_TROPHY_1, 1.0, 1.0 ; $7454
 	jr .done ; $745f
-.checkFlag:
+.singles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7461
 	jr nz, .done ; $7464
-	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_2, 1.0, 1.0 ; $7466
+	script_set_position ACTOR_ACADEMY_WING_OPEN_WON_TROPHY_2, 1.0, 1.0 ; $7466
 .done:
 	ret ; $7471
 SetAcademyWingDialogueStage_10:
 	ld a, ACADEMYWINGSTAGE_PRE_SENIOR_CHAMP ; $7472
 	test_flag FLAG_DOUBLES ; $7474
-	jr z, .checkFlag ; $7477
+	jr z, .singles ; $7477
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7479
 	jr z, .step ; $747c
 	ld a, ACADEMYWINGSTAGE_SENIOR_CHAMP ; $747e
@@ -65,7 +65,7 @@ SetAcademyWingDialogueStage_10:
 	jr z, .step ; $748a
 	ld a, ACADEMYWINGSTAGE_COMPLETE ; $748c
 	jr .step ; $748e
-.checkFlag:
+.singles:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7490
 	jr z, .step ; $7493
 	ld a, ACADEMYWINGSTAGE_SENIOR_CHAMP ; $7495
@@ -414,7 +414,7 @@ SetActorDrawModeFromSceneTile_10:
 	pop de ; $7a19
 	and $87 ; $7a1a
 	cp $06 ; $7a1c
-	jr nz, .checkBelow ; $7a1e
+	jr nz, .checkRight ; $7a1e
 	wram_bank WRAM_ACTORS ; $7a20
 	ld hl, ACTORF_MODE ; $7a26
 	add hl, bc ; $7a29
@@ -422,7 +422,7 @@ SetActorDrawModeFromSceneTile_10:
 	xor $01 ; $7a2b
 	ld [hl], a ; $7a2d
 	ret ; $7a2e
-.checkBelow:
+.checkRight:
 	inc d ; $7a2f
 	call ReadSceneTilemapTile_10 ; $7a30
 	and $07 ; $7a33

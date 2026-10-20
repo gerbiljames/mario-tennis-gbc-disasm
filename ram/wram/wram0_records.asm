@@ -51,7 +51,7 @@ wGameMode:: db
 wMatchSuspendedFlag:: db
 
 ; [8-bit] Nonzero selects VictoryScoreTableSaveQuit over VictoryScoreTable in GetVictoryScore; RunExhibitionModeFlow sets it when an exhibition match ends by Save & Quit and clears it when a fresh exhibition starts
-wVictoryScoreTableAlt:: db
+wExhibitionSaveQuitUsed:: db
 
 ; [8-bit] Location SaveStoryReturnPoint recorded to return to; called with b = $ff it snapshots the live position instead of a door
 wStoryReturnLocation:: db

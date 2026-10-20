@@ -491,7 +491,7 @@ An NPC is a `map_actor` (position, sprite, script) plus an `NpcScripts`
 record keyed on its slot. The handler is usually a small routine that
 indexes a per-NPC table of text ids by `wMapSceneStage` (`$c2b0`) and calls
 `script_speak`. `wMapSceneStage` is per-location, derived from save flags by
-the init script (`SetupCenterCourtSceneVariant`,
+the init script (`SetupCenterCourtStage`,
 `InitTournamentSiteSceneVariant`, `ComputeIslandOpenRound`, …);
 `wMapSceneStage2` (`$c2b1`) is a second selector some locations use.
 
@@ -604,7 +604,7 @@ progression flag exists in both.
    (`FLAG_WON_DREAM_MATCH_*`, granting `SAVEFLAG_UNLOCKED_MARIO`/`_PEACH`).
 
 Stages read back as scene variation: `InitTournamentSiteSceneVariant`
-(`$15:$4271`) and `SetupCenterCourtSceneVariant` (`$11:$41b6`) test the
+(`$15:$4271`) and `SetupCenterCourtStage` (`$11:$41b6`) test the
 bracket flags in descending order to derive `wMapSceneStage`;
 `TournamentInitScript_0f` (`$0f:$620f`) derives the round with
 `ComputeIslandOpenRound` and installs its actor list and `NpcScripts` table

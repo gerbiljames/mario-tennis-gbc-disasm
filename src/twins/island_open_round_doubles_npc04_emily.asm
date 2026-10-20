@@ -1,4 +1,4 @@
-; Shared by IslandOpenRoundSinglesNpc04_0f, IslandOpenRoundDoublesNpc04_0f
+; Shared by IslandOpenRoundSinglesNpc04Emily_0f, IslandOpenRoundDoublesNpc04Emily_0f
 ; (bank $0f).
 
 {TWIN_LABEL}:

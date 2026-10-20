@@ -1,5 +1,5 @@
-; Instruction-for-instruction the same as TournamentNpc0A_0f: the handler assembled a second time. Nothing points at this copy.
-Unused_0f_TournamentNpc0A:
+; Instruction-for-instruction the same as TournamentNpc0ASammi_0f: the handler assembled a second time. Nothing points at this copy.
+Unused_0f_TournamentNpc0ASammi:
 	script_set_text Text_SammiIntroPlayYouFirst ; $6f18
 	script_speak_restore $0b ; $6f1e
 	farcall RunDialogueYesNoPrompt ; $6f23
@@ -18,10 +18,10 @@ TournamentNpc03_0f:
 	farcall ScriptCloseDialogueWindow ; $6f4a
 	script_wait_frames 5 ; $6f4d
 	and a ; $6f54
-	jr nz, .altLine ; $6f55
+	jr nz, .declined ; $6f55
 	script_speak ACTOR_TOURNAMENT_STAFF_1 ; $6f57
 	ret ; $6f5c
-.altLine:
+.declined:
 	ld hl, Text_TournamentStaffRoundOneJoinOthers ; $6f5d
 	ld a, [wMapSceneStage] ; $6f60
 	add_hl_a ; $6f63
@@ -218,10 +218,10 @@ IslandOpenRoundCallCutscene:
 	jr .done ; $7392
 .doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $7394
-	jp z, .doublesRound2Settings ; $7397
+	jp z, .doublesRound1Settings ; $7397
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_SEMIFINAL ; $739a
 	jp .done ; $73a7
-.doublesRound2Settings:
+.doublesRound1Settings:
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $73aa
 .done:
 	farcall RunStoryMatch ; $73b7
@@ -417,12 +417,12 @@ IslandOpenRoundActorsSingles_0f:
 	map_actor_end
 IslandOpenRoundNpcScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
-	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_EMILY_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_MARK_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc03Kevin_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_EMILY_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04Emily_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_MARK_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05Mark_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
-	twin_named island_open_round_doubles_npc04, IslandOpenRoundSinglesNpc04_0f ; $762e
-IslandOpenRoundSinglesNpc03_0f:
+	twin_named island_open_round_doubles_npc04_emily, IslandOpenRoundSinglesNpc04Emily_0f ; $762e
+IslandOpenRoundSinglesNpc03Kevin_0f:
 	ld a, [wMapSceneStage] ; $7649
 	add a ; $764c
 	ld_hl_indexed IslandOpenSinglesStageTextPtrs_0f ; $764d
@@ -434,7 +434,7 @@ IslandOpenRoundSinglesNpc03_0f:
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_SINGLES_KEVIN_SWEATS ; $7661
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_KEVIN_SWEATS ; $7666
 	ret ; $766b
-IslandOpenRoundSinglesNpc05_0f:
+IslandOpenRoundSinglesNpc05Mark_0f:
 	ld a, [wMapSceneStage] ; $766c
 	dec a ; $766f
 	add a ; $7670
@@ -511,11 +511,11 @@ IslandOpenDoublesMatchReturn:
 	farcall InitDialogueTextCursor ; $7751
 	ld a, [wStoryPartnerGender] ; $7754
 	or a ; $7757
-	jr nz, .femalePartner ; $7758
+	jr nz, .partnerTextReady ; $7758
 	farcall AdvanceDialogueTextCursor ; $775a
 	farcall AdvanceDialogueTextCursor ; $775d
 	farcall AdvanceDialogueTextCursor ; $7760
-.femalePartner:
+.partnerTextReady:
 	script_get_actor_state ACTOR_ISLAND_OPEN_ROUND_DOUBLES_BALLOON_EXCLAIM ; $7763
 	ld c, l ; $7768
 	ld b, h ; $7769
@@ -574,22 +574,22 @@ IslandOpenRoundActorsDoubles_0f:
 	map_actor_end
 IslandOpenRoundNpcScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)
-	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_EMILY_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03Kevin_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_EMILY_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04Emily_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
-	twin_named island_open_round_doubles_npc04, IslandOpenRoundDoublesNpc04_0f ; $78b1
-IslandOpenRoundDoublesNpc03_0f:
+	twin_named island_open_round_doubles_npc04_emily, IslandOpenRoundDoublesNpc04Emily_0f ; $78b1
+IslandOpenRoundDoublesNpc03Kevin_0f:
 	ld a, [wMapSceneStage] ; $78cc
 	dec a ; $78cf
 	add a ; $78d0
-	ld_hl_indexed IslandOpenRoundDoublesNpc03TextIds ; $78d1
+	ld_hl_indexed IslandOpenRoundDoublesNpc03KevinTextIds ; $78d1
 	ld a, [hl+] ; $78d8
 	ld h, [hl] ; $78d9
 	ld l, a ; $78da
 	farcall InitDialogueTextCursor ; $78db
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_KEVIN_SWEATS ; $78de
 	ret ; $78e3
-IslandOpenRoundDoublesNpc03TextIds:
+IslandOpenRoundDoublesNpc03KevinTextIds:
 	; $78e4, 8 bytes (text_ids)
 	dw Text_KevinDoublesOnToSemifinals ; record 0
 	dw Text_KevinDoublesOnToSemifinals ; record 1

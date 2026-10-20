@@ -16,7 +16,7 @@ ActorScript_0e_13:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait 30
 	as_halt
-MarioWorldNpc08FaceRight_0e:
+MarioWorldNpc08PeachFaceRight_0e:
 	script_set_speed ACTOR_PLAYER, 0.75 ; $64a4
 	script_set_speed ACTOR_PARTNER, 0.75 ; $64ac
 	test_flag FLAG_DOUBLES ; $64b4
@@ -56,7 +56,7 @@ ActorScript_0e_15:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait 30
 	as_halt
-MarioWorldNpc08FaceLeft_0e:
+MarioWorldNpc08PeachFaceLeft_0e:
 	script_set_speed ACTOR_PLAYER, 0.75 ; $654f
 	script_set_speed ACTOR_PARTNER, 0.75 ; $6557
 	test_flag FLAG_DOUBLES ; $655f

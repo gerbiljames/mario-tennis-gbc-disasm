@@ -42,7 +42,7 @@ RepairCounterCheckEquipChanged:
 	call PushEquipmentNameTextArg ; $5078
 	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $507b
 .noChange:
-	script_set_text Text_RepairCounterBlank ; $5080
+	script_set_text Text_RepairCounterPastTextTable ; $5080
 	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5086
 	farcall RunDialogueYesNoPrompt ; $508b
 	farcall ScriptCloseDialogueWindow ; $508e
@@ -51,13 +51,13 @@ RepairCounterCheckEquipChanged:
 	jp z, RepairCounterServiceMenu ; $5099
 	jp RepairCounterFarewell ; $509c
 RepairCounterChangedReturnA:
-	ld a, $0b ; $509f
+	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A ; $509f
 	ld [wMapSceneStage2], a ; $50a1
 	script_set_position ACTOR_PARTNER, 15.0, 15.0 ; $50a4
 	jp RepairCounterReopenServiceMenu ; $50af
 	ret ; $50b2
 RepairCounterChangedReturnB:
-	ld a, $0c ; $50b3
+	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B ; $50b3
 	ld [wMapSceneStage2], a ; $50b5
 	farcall WaitPlayerMoveDone ; $50b8
 	script_player_speed 7.5 ; $50bb
@@ -90,7 +90,7 @@ RepairCounterReopenServiceMenu:
 	jp nz, RepairCounterChangeShoes ; $511e
 	script_set_text Text_RepairCounterNormalShoesOnly ; $5121
 	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5127
-	script_set_text Text_RepairCounterBlank ; $512c
+	script_set_text Text_RepairCounterPastTextTable ; $512c
 	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5132
 	farcall RunDialogueYesNoPrompt ; $5137
 	farcall ScriptCloseDialogueWindow ; $513a
@@ -108,7 +108,7 @@ ShowEquipChangeConfirmation:
 	call PushEquipmentNameTextArg ; $5161
 	ld a, [wRepairCounterChoice] ; $5164
 	and a ; $5167
-	jr nz, .handOver ; $5168
+	jr nz, .shoes ; $5168
 	call MirrorPlayerSpriteIfLeftHanded ; $516a
 	script_set_anim ACTOR_PLAYER, ANIM_SWING_BACK ; $516d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5174
@@ -119,7 +119,7 @@ ShowEquipChangeConfirmation:
 	script_face_toward ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, ACTOR_PLAYER ; $5197
 	call MirrorPlayerSpriteIfLeftHanded ; $519f
 	ret ; $51a2
-.handOver:
+.shoes:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $51a3
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_04 ; $51aa
 	script_speak SPEAKER_NONE | 12 ; $51b5
@@ -281,10 +281,10 @@ MarioWorldNpc14BobOmb_0e:
 	ret ; $544d
 MarioWorldNpcScripts_0e:
 	; $544e, 129 bytes (map_scripts)
-	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_RIGHT, $0000, MarioWorldNpc08FaceRight_0e, $00, $00
-	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_LEFT, $0000, MarioWorldNpc08FaceLeft_0e, $00, $00
-	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_UP, $0000, MarioWorldNpc08FaceUp_0e, $00, $00
-	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_DOWN, $0000, MarioWorldNpc08FaceDown_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_RIGHT, $0000, MarioWorldNpc08PeachFaceRight_0e, $00, $00
+	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_LEFT, $0000, MarioWorldNpc08PeachFaceLeft_0e, $00, $00
+	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_UP, $0000, MarioWorldNpc08PeachFaceUp_0e, $00, $00
+	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_DOWN, $0000, MarioWorldNpc08PeachFaceDown_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_HOSTESS, FACEMASK_ANY, $0000, MarioWorldNpc11Hostess_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_LUIGI, FACEMASK_ANY, $0000, MarioWorldNpc0BLuigi_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_YOSHI, FACEMASK_ANY, $0000, MarioWorldNpc09Yoshi_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -308,11 +308,11 @@ MarioWorldInitScript_0e:
 	call ComputeMarioWorldProgressIndex ; $54d2
 	ld a, [wStoryModeEntryPoint] ; $54d5
 	cp ENTRY_PEACHS_CASTLE_CREDITS ; $54d8
-	jp z, MarioWorldArrivalSingles ; $54da
+	jp z, MarioWorldArrival ; $54da
 	cp ENTRY_PEACHS_CASTLE_AFTER_EXHIBITION ; $54dd
 	jp z, MarioWorldAfterExhibitionScene ; $54df
 	cp ENTRY_PEACHS_CASTLE_FIRST_VISIT ; $54e2
-	jp z, MarioWorldArrivalSingles ; $54e4
+	jp z, MarioWorldArrival ; $54e4
 	test_flag FLAG_DOUBLES ; $54e7
 	jr nz, .doubles ; $54ea
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $54ec
@@ -372,7 +372,7 @@ ComputeMarioWorldProgressIndex:
 	inc a ; $5575
 	jr .store ; $5576
 	ret ; $5578
-MarioWorldArrivalSingles:
+MarioWorldArrival:
 	test_flag FLAG_DOUBLES ; $5579
 	jp nz, MarioWorldArrivalDoubles ; $557c
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $557f

@@ -155,23 +155,23 @@ CenterCourtTileTriggers_11:
 CenterCourtTile01_11:
 	ret ; $41a3
 CenterCourtInitScript_11:
-	call SetupCenterCourtSceneVariant ; $41a4
+	call SetupCenterCourtStage ; $41a4
 	call LoadPlayerPartnerObjDefs_11 ; $41a7
 	ld a, [wStoryModeEntryPoint] ; $41aa
 	cp ENTRY_CENTER_COURT_CREDITS ; $41ad
 	jp z, CenterCourtCreditsScene ; $41af
 	call MapArrivalWalk_11 ; $41b2
 	ret ; $41b5
-SetupCenterCourtSceneVariant:
+SetupCenterCourtStage:
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND1 ; $41b6
 	ld [wMapSceneStage], a ; $41b8
 	test_flag FLAG_DOUBLES ; $41bb
-	jr nz, .doneEarly ; $41be
+	jr nz, .doubles ; $41be
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $41c0
 	jr z, .checkRound2 ; $41c3
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $41c5
 	ld [wMapSceneStage], a ; $41c7
-	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41ca
+	script_respawn_actors CenterCourtFinalCrowdActors_11 ; $41ca
 	farcall BeginCutsceneScriptMode ; $41d2
 	ret ; $41d5
 .checkRound2:
@@ -187,42 +187,42 @@ SetupCenterCourtSceneVariant:
 	ld [wMapSceneStage], a ; $41e8
 .keepRound1:
 	ret ; $41eb
-.doneEarly:
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $41ec
 	jr z, .doublesCheckRound1 ; $41ef
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $41f1
 	ld [wMapSceneStage], a ; $41f3
-	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41f6
+	script_respawn_actors CenterCourtFinalCrowdActors_11 ; $41f6
 	farcall BeginCutsceneScriptMode ; $41fe
 	ret ; $4201
 .doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4202
-	jr z, .done ; $4205
+	jr z, .doublesRound1 ; $4205
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $4207
 	ld [wMapSceneStage], a ; $4209
 	ret ; $420c
-.done:
+.doublesRound1:
 	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $420d
 	ld [wMapSceneStage], a ; $420f
 	ret ; $4212
-CenterCourtSceneVariantActors_11:
+CenterCourtFinalCrowdActors_11:
 	; $4213, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, 15.0, 46.0, FACE_LEFT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_TOURNAMENT_STAFF_1
-	map_actor $0000, ActorScript_11_45, 13.0, 39.0, FACE_DOWN, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_TOURNAMENT_STAFF_2
-	map_actor $0000, ActorScript_11_45, 37.0, 36.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $07, CENTER_COURT_SCENE_VARIANT_STUDENT_SIDE_PART_BOY_1
-	map_actor $0000, ActorScript_11_45, 35.0, 33.0, FACE_LEFT, OBJ_STUDENT_PONYTAIL_GIRL, ANIM_WALK, $07, CENTER_COURT_SCENE_VARIANT_STUDENT_PONYTAIL_GIRL
-	map_actor $0000, ActorScript_11_45, 39.0, 35.0, FACE_LEFT, OBJ_ISLAND_SPECTATOR_A, ANIM_WALK, $04, CENTER_COURT_SCENE_VARIANT_ISLAND_SPECTATOR_A
-	map_actor $0000, ActorScript_11_45, 39.0, 33.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, CENTER_COURT_SCENE_VARIANT_STUDENT_SIDE_PART_BOY_2
-	map_actor $0000, ActorScript_11_45, 37.0, 32.0, FACE_LEFT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $03, CENTER_COURT_SCENE_VARIANT_STUDENT_PIGTAILS_GIRL_1
-	map_actor $0000, ActorScript_11_45, 11.0, 36.0, FACE_RIGHT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_STUDENT_CAP_BOY_1
-	map_actor $0000, ActorScript_11_45, 13.0, 33.0, FACE_RIGHT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $04, CENTER_COURT_SCENE_VARIANT_STUDENT_PIGTAILS_GIRL_2
-	map_actor $0000, ActorScript_11_45, 9.0, 35.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $03, CENTER_COURT_SCENE_VARIANT_STUDENT_SIDE_PART_BOY_3
-	map_actor $0000, ActorScript_11_45, 5.0, 32.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, CENTER_COURT_SCENE_VARIANT_STUDENT_SIDE_PART_BOY_4
-	map_actor $0000, ActorScript_11_45, 9.0, 33.0, FACE_RIGHT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $03, CENTER_COURT_SCENE_VARIANT_STUDENT_PIGTAILS_GIRL_3
-	map_actor $0000, ActorScript_11_45, 43.0, 34.0, FACE_LEFT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_STUDENT_CAP_BOY_2
-	map_actor $0000, ActorScript_11_45, 43.0, 32.0, FACE_LEFT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $04, CENTER_COURT_SCENE_VARIANT_STUDENT_PIGTAILS_GIRL_4
-	map_actor $0000, ActorScript_11_45, 43.0, 30.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_BETH
-	map_actor $0000, ActorScript_11_45, 39.0, 29.0, FACE_LEFT, OBJ_PAM, ANIM_WALK, $04, CENTER_COURT_SCENE_VARIANT_PAM
+	map_actor $0000, ActorScript_11_45, 15.0, 46.0, FACE_LEFT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_TOURNAMENT_STAFF_1
+	map_actor $0000, ActorScript_11_45, 13.0, 39.0, FACE_DOWN, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_TOURNAMENT_STAFF_2
+	map_actor $0000, ActorScript_11_45, 37.0, 36.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $07, CENTER_COURT_FINAL_CROWD_STUDENT_SIDE_PART_BOY_1
+	map_actor $0000, ActorScript_11_45, 35.0, 33.0, FACE_LEFT, OBJ_STUDENT_PONYTAIL_GIRL, ANIM_WALK, $07, CENTER_COURT_FINAL_CROWD_STUDENT_PONYTAIL_GIRL
+	map_actor $0000, ActorScript_11_45, 39.0, 35.0, FACE_LEFT, OBJ_ISLAND_SPECTATOR_A, ANIM_WALK, $04, CENTER_COURT_FINAL_CROWD_ISLAND_SPECTATOR_A
+	map_actor $0000, ActorScript_11_45, 39.0, 33.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, CENTER_COURT_FINAL_CROWD_STUDENT_SIDE_PART_BOY_2
+	map_actor $0000, ActorScript_11_45, 37.0, 32.0, FACE_LEFT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $03, CENTER_COURT_FINAL_CROWD_STUDENT_PIGTAILS_GIRL_1
+	map_actor $0000, ActorScript_11_45, 11.0, 36.0, FACE_RIGHT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_STUDENT_CAP_BOY_1
+	map_actor $0000, ActorScript_11_45, 13.0, 33.0, FACE_RIGHT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $04, CENTER_COURT_FINAL_CROWD_STUDENT_PIGTAILS_GIRL_2
+	map_actor $0000, ActorScript_11_45, 9.0, 35.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $03, CENTER_COURT_FINAL_CROWD_STUDENT_SIDE_PART_BOY_3
+	map_actor $0000, ActorScript_11_45, 5.0, 32.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, CENTER_COURT_FINAL_CROWD_STUDENT_SIDE_PART_BOY_4
+	map_actor $0000, ActorScript_11_45, 9.0, 33.0, FACE_RIGHT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $03, CENTER_COURT_FINAL_CROWD_STUDENT_PIGTAILS_GIRL_3
+	map_actor $0000, ActorScript_11_45, 43.0, 34.0, FACE_LEFT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_STUDENT_CAP_BOY_2
+	map_actor $0000, ActorScript_11_45, 43.0, 32.0, FACE_LEFT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $04, CENTER_COURT_FINAL_CROWD_STUDENT_PIGTAILS_GIRL_4
+	map_actor $0000, ActorScript_11_45, 43.0, 30.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_BETH
+	map_actor $0000, ActorScript_11_45, 39.0, 29.0, FACE_LEFT, OBJ_PAM, ANIM_WALK, $04, CENTER_COURT_FINAL_CROWD_PAM
 	map_actor_end
 	twin_named academy_main_bldg_arrival01, MapArrivalWalk_11 ; $42fd
 	twin load_player_partner_obj_defs, 11 ; $4343 LoadPlayerPartnerObjDefs_11
@@ -396,7 +396,7 @@ AcademyEntranceNpc05TextIds:
 AcademyEntranceNpc14_11:
 	script_set_text Text_ArrivalStudentNoLeavingCampus ; $4643
 	test_flag FLAG_DOUBLES ; $4649
-	jr nz, .checkFlag ; $464c
+	jr nz, .doubles ; $464c
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $464e
 	jr z, .speak ; $4651
 	farcall AdvanceDialogueTextCursor ; $4653
@@ -408,7 +408,7 @@ AcademyEntranceNpc14_11:
 	script_wait_idle ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_2 ; $4665
 	script_speak ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_2 ; $466a
 	ret ; $466f
-.checkFlag:
+.doubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $4670
 	jr z, .speak ; $4673
 	farcall AdvanceDialogueTextCursor ; $4675

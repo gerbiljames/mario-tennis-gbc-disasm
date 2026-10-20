@@ -2564,7 +2564,7 @@ def Text_RepairCounterWhichRacket equ Text_6e_237
 def Text_RepairCounterWhichShoes equ Text_6e_238
 def Text_RepairCounterPlayerEquipped equ Text_6e_239
 def Text_RepairCounterHopeItHelps equ Text_6e_241
-def Text_RepairCounterBlank equ Text_6e_242
+def Text_RepairCounterPastTextTable equ Text_6e_242 ; past the 242-entry offset table; points into cart RAM
 def Text_RepairCounterAlreadyUsingRacket equ Text_1f_1
 def Text_EquipHandoutNormalRacket equ Text_1f_3
 def Text_EquipHandoutNormalShoes equ Text_1f_10

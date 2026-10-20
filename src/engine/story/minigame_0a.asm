@@ -55,15 +55,15 @@ UpdateMinigameTarget:
 	call MoveMinigameTargetTowardGoal ; $65f3
 	ld a, [wMinigameTargetsScoreMode] ; $65f6
 	and a ; $65f9
-	jr nz, .altMode ; $65fa
+	jr nz, .scoringTargets ; $65fa
 	call DrawMinigameTarget ; $65fc
 	call CheckBallHitsMinigameTarget ; $65ff
 	call HandleMinigameTargetHit ; $6602
 	jr .done ; $6605
-.altMode:
-	call DrawMinigameTargetAlt ; $6607
-	call CheckBallHitsMinigameTargetAlt ; $660a
-	call HandleMinigameTargetHitAlt ; $660d
+.scoringTargets:
+	call DrawScoringMinigameTarget ; $6607
+	call CheckBallHitsScoringMinigameTarget ; $660a
+	call HandleScoringMinigameTargetHit ; $660d
 .done:
 	pop de ; $6610
 	ld hl, wMinigameTargetWork ; $6611
@@ -537,250 +537,250 @@ MinigameTargetScriptOpReturn:
 	and a ; $68dd
 	jr nz, RunMinigameTargetScript.dispatchOp ; $68de
 	ret ; $68e0
-MinigameTargetFormation0Script0:
-	INCLUDE "data/engine/story/MinigameTargetFormation0Script0.asm" ; $68e1, 10 bytes (target_script)
-MinigameTargetFormation0Script1:
-	INCLUDE "data/engine/story/MinigameTargetFormation0Script1.asm" ; $68eb, 10 bytes (target_script)
-MinigameTargetFormation0Script2:
-	INCLUDE "data/engine/story/MinigameTargetFormation0Script2.asm" ; $68f5, 10 bytes (target_script)
-MinigameTargetFormation0Script3:
-	INCLUDE "data/engine/story/MinigameTargetFormation0Script3.asm" ; $68ff, 33 bytes (target_script)
-MinigameTargetFormation1Script0:
-	INCLUDE "data/engine/story/MinigameTargetFormation1Script0.asm" ; $6920, 10 bytes (target_script)
-MinigameTargetFormation1Script1:
-	INCLUDE "data/engine/story/MinigameTargetFormation1Script1.asm" ; $692a, 10 bytes (target_script)
-MinigameTargetFormation1Script2:
-	INCLUDE "data/engine/story/MinigameTargetFormation1Script2.asm" ; $6934, 10 bytes (target_script)
-MinigameTargetFormation1Script3:
-	INCLUDE "data/engine/story/MinigameTargetFormation1Script3.asm" ; $693e, 10 bytes (target_script)
-MinigameTargetFormation1Script4:
-	INCLUDE "data/engine/story/MinigameTargetFormation1Script4.asm" ; $6948, 10 bytes (target_script)
-MinigameTargetFormation1Script5:
-	INCLUDE "data/engine/story/MinigameTargetFormation1Script5.asm" ; $6952, 10 bytes (target_script)
-MinigameTargetFormation1Script6:
-	INCLUDE "data/engine/story/MinigameTargetFormation1Script6.asm" ; $695c, 10 bytes (target_script)
-MinigameTargetFormation1Script7:
-	INCLUDE "data/engine/story/MinigameTargetFormation1Script7.asm" ; $6966, 33 bytes (target_script)
-MinigameTargetFormation2Script0:
-	INCLUDE "data/engine/story/MinigameTargetFormation2Script0.asm" ; $6987, 10 bytes (target_script)
-MinigameTargetFormation2Script1:
-	INCLUDE "data/engine/story/MinigameTargetFormation2Script1.asm" ; $6991, 10 bytes (target_script)
-MinigameTargetFormation2Script2:
-	INCLUDE "data/engine/story/MinigameTargetFormation2Script2.asm" ; $699b, 10 bytes (target_script)
-MinigameTargetFormation2Script3:
-	INCLUDE "data/engine/story/MinigameTargetFormation2Script3.asm" ; $69a5, 10 bytes (target_script)
-MinigameTargetFormation2Script4:
-	INCLUDE "data/engine/story/MinigameTargetFormation2Script4.asm" ; $69af, 10 bytes (target_script)
-MinigameTargetFormation2Script5:
-	INCLUDE "data/engine/story/MinigameTargetFormation2Script5.asm" ; $69b9, 10 bytes (target_script)
-MinigameTargetFormation2Script6:
-	INCLUDE "data/engine/story/MinigameTargetFormation2Script6.asm" ; $69c3, 10 bytes (target_script)
-MinigameTargetFormation2Script7:
-	INCLUDE "data/engine/story/MinigameTargetFormation2Script7.asm" ; $69cd, 144 bytes (target_script)
-MinigameTargetFormation3Script00:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script00.asm" ; $6a5d, 10 bytes (target_script)
-MinigameTargetFormation3Script01:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script01.asm" ; $6a67, 10 bytes (target_script)
-MinigameTargetFormation3Script02:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script02.asm" ; $6a71, 10 bytes (target_script)
-MinigameTargetFormation3Script03:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script03.asm" ; $6a7b, 10 bytes (target_script)
-MinigameTargetFormation3Script04:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script04.asm" ; $6a85, 10 bytes (target_script)
-MinigameTargetFormation3Script05:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script05.asm" ; $6a8f, 10 bytes (target_script)
-MinigameTargetFormation3Script06:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script06.asm" ; $6a99, 10 bytes (target_script)
-MinigameTargetFormation3Script07:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script07.asm" ; $6aa3, 10 bytes (target_script)
-MinigameTargetFormation3Script08:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script08.asm" ; $6aad, 10 bytes (target_script)
-MinigameTargetFormation3Script09:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script09.asm" ; $6ab7, 10 bytes (target_script)
-MinigameTargetFormation3Script10:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script10.asm" ; $6ac1, 10 bytes (target_script)
-MinigameTargetFormation3Script11:
-	INCLUDE "data/engine/story/MinigameTargetFormation3Script11.asm" ; $6acb, 70 bytes (target_script)
-MinigameTargetFormation4Script00:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script00.asm" ; $6b11, 10 bytes (target_script)
-MinigameTargetFormation4Script01:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script01.asm" ; $6b1b, 10 bytes (target_script)
-MinigameTargetFormation4Script02:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script02.asm" ; $6b25, 10 bytes (target_script)
-MinigameTargetFormation4Script03:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script03.asm" ; $6b2f, 10 bytes (target_script)
-MinigameTargetFormation4Script04:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script04.asm" ; $6b39, 10 bytes (target_script)
-MinigameTargetFormation4Script05:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script05.asm" ; $6b43, 10 bytes (target_script)
-MinigameTargetFormation4Script06:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script06.asm" ; $6b4d, 10 bytes (target_script)
-MinigameTargetFormation4Script07:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script07.asm" ; $6b57, 10 bytes (target_script)
-MinigameTargetFormation4Script08:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script08.asm" ; $6b61, 10 bytes (target_script)
-MinigameTargetFormation4Script09:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script09.asm" ; $6b6b, 10 bytes (target_script)
-MinigameTargetFormation4Script10:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script10.asm" ; $6b75, 10 bytes (target_script)
-MinigameTargetFormation4Script11:
-	INCLUDE "data/engine/story/MinigameTargetFormation4Script11.asm" ; $6b7f, 42 bytes (target_script)
-MinigameTargetFormation5Script0:
-	INCLUDE "data/engine/story/MinigameTargetFormation5Script0.asm" ; $6ba9, 10 bytes (target_script)
-MinigameTargetFormation5Script1:
-	INCLUDE "data/engine/story/MinigameTargetFormation5Script1.asm" ; $6bb3, 35 bytes (target_script)
-MinigameTargetFormation6Script0:
-	INCLUDE "data/engine/story/MinigameTargetFormation6Script0.asm" ; $6bd6, 10 bytes (target_script)
-MinigameTargetFormation6Script1:
-	INCLUDE "data/engine/story/MinigameTargetFormation6Script1.asm" ; $6be0, 10 bytes (target_script)
-MinigameTargetFormation6Script2:
-	INCLUDE "data/engine/story/MinigameTargetFormation6Script2.asm" ; $6bea, 38 bytes (target_script)
-MinigameTargetFormation7Script0:
-	INCLUDE "data/engine/story/MinigameTargetFormation7Script0.asm" ; $6c10, 10 bytes (target_script)
-MinigameTargetFormation7Script1:
-	INCLUDE "data/engine/story/MinigameTargetFormation7Script1.asm" ; $6c1a, 10 bytes (target_script)
-MinigameTargetFormation7Script2:
-	INCLUDE "data/engine/story/MinigameTargetFormation7Script2.asm" ; $6c24, 10 bytes (target_script)
-MinigameTargetFormation7Script3:
-	INCLUDE "data/engine/story/MinigameTargetFormation7Script3.asm" ; $6c2e, 37 bytes (target_script)
-MinigameTargetFormation8Script0:
-	INCLUDE "data/engine/story/MinigameTargetFormation8Script0.asm" ; $6c53, 10 bytes (target_script)
-MinigameTargetFormation8Script1:
-	INCLUDE "data/engine/story/MinigameTargetFormation8Script1.asm" ; $6c5d, 10 bytes (target_script)
-MinigameTargetFormation8Script2:
-	INCLUDE "data/engine/story/MinigameTargetFormation8Script2.asm" ; $6c67, 10 bytes (target_script)
-MinigameTargetFormation8Script3:
-	INCLUDE "data/engine/story/MinigameTargetFormation8Script3.asm" ; $6c71, 10 bytes (target_script)
+MinigameTargetFormationWallPractice1Script0:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice1Script0.asm" ; $68e1, 10 bytes (target_script)
+MinigameTargetFormationWallPractice1Script1:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice1Script1.asm" ; $68eb, 10 bytes (target_script)
+MinigameTargetFormationWallPractice1Script2:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice1Script2.asm" ; $68f5, 10 bytes (target_script)
+MinigameTargetFormationWallPractice1Script3:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice1Script3.asm" ; $68ff, 33 bytes (target_script)
+MinigameTargetFormationWallPractice2Script0:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice2Script0.asm" ; $6920, 10 bytes (target_script)
+MinigameTargetFormationWallPractice2Script1:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice2Script1.asm" ; $692a, 10 bytes (target_script)
+MinigameTargetFormationWallPractice2Script2:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice2Script2.asm" ; $6934, 10 bytes (target_script)
+MinigameTargetFormationWallPractice2Script3:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice2Script3.asm" ; $693e, 10 bytes (target_script)
+MinigameTargetFormationWallPractice2Script4:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice2Script4.asm" ; $6948, 10 bytes (target_script)
+MinigameTargetFormationWallPractice2Script5:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice2Script5.asm" ; $6952, 10 bytes (target_script)
+MinigameTargetFormationWallPractice2Script6:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice2Script6.asm" ; $695c, 10 bytes (target_script)
+MinigameTargetFormationWallPractice2Script7:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice2Script7.asm" ; $6966, 33 bytes (target_script)
+MinigameTargetFormationWallPractice3Script0:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice3Script0.asm" ; $6987, 10 bytes (target_script)
+MinigameTargetFormationWallPractice3Script1:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice3Script1.asm" ; $6991, 10 bytes (target_script)
+MinigameTargetFormationWallPractice3Script2:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice3Script2.asm" ; $699b, 10 bytes (target_script)
+MinigameTargetFormationWallPractice3Script3:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice3Script3.asm" ; $69a5, 10 bytes (target_script)
+MinigameTargetFormationWallPractice3Script4:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice3Script4.asm" ; $69af, 10 bytes (target_script)
+MinigameTargetFormationWallPractice3Script5:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice3Script5.asm" ; $69b9, 10 bytes (target_script)
+MinigameTargetFormationWallPractice3Script6:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice3Script6.asm" ; $69c3, 10 bytes (target_script)
+MinigameTargetFormationWallPractice3Script7:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice3Script7.asm" ; $69cd, 144 bytes (target_script)
+MinigameTargetFormationWallPractice4Script00:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script00.asm" ; $6a5d, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script01:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script01.asm" ; $6a67, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script02:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script02.asm" ; $6a71, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script03:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script03.asm" ; $6a7b, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script04:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script04.asm" ; $6a85, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script05:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script05.asm" ; $6a8f, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script06:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script06.asm" ; $6a99, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script07:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script07.asm" ; $6aa3, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script08:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script08.asm" ; $6aad, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script09:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script09.asm" ; $6ab7, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script10:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script10.asm" ; $6ac1, 10 bytes (target_script)
+MinigameTargetFormationWallPractice4Script11:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPractice4Script11.asm" ; $6acb, 70 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript00:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript00.asm" ; $6b11, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript01:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript01.asm" ; $6b1b, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript02:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript02.asm" ; $6b25, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript03:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript03.asm" ; $6b2f, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript04:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript04.asm" ; $6b39, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript05:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript05.asm" ; $6b43, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript06:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript06.asm" ; $6b4d, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript07:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript07.asm" ; $6b57, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript08:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript08.asm" ; $6b61, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript09:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript09.asm" ; $6b6b, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript10:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript10.asm" ; $6b75, 10 bytes (target_script)
+MinigameTargetFormationWallPracticeHighScoreScript11:
+	INCLUDE "data/engine/story/MinigameTargetFormationWallPracticeHighScoreScript11.asm" ; $6b7f, 42 bytes (target_script)
+MinigameTargetFormationBananaBunchScript0:
+	INCLUDE "data/engine/story/MinigameTargetFormationBananaBunchScript0.asm" ; $6ba9, 10 bytes (target_script)
+MinigameTargetFormationBananaBunchScript1:
+	INCLUDE "data/engine/story/MinigameTargetFormationBananaBunchScript1.asm" ; $6bb3, 35 bytes (target_script)
+MinigameTargetFormationFruitFantasyScript0:
+	INCLUDE "data/engine/story/MinigameTargetFormationFruitFantasyScript0.asm" ; $6bd6, 10 bytes (target_script)
+MinigameTargetFormationFruitFantasyScript1:
+	INCLUDE "data/engine/story/MinigameTargetFormationFruitFantasyScript1.asm" ; $6be0, 10 bytes (target_script)
+MinigameTargetFormationFruitFantasyScript2:
+	INCLUDE "data/engine/story/MinigameTargetFormationFruitFantasyScript2.asm" ; $6bea, 38 bytes (target_script)
+MinigameTargetFormationPerfectShotLevel2Script0:
+	INCLUDE "data/engine/story/MinigameTargetFormationPerfectShotLevel2Script0.asm" ; $6c10, 10 bytes (target_script)
+MinigameTargetFormationPerfectShotLevel2Script1:
+	INCLUDE "data/engine/story/MinigameTargetFormationPerfectShotLevel2Script1.asm" ; $6c1a, 10 bytes (target_script)
+MinigameTargetFormationPerfectShotLevel2Script2:
+	INCLUDE "data/engine/story/MinigameTargetFormationPerfectShotLevel2Script2.asm" ; $6c24, 10 bytes (target_script)
+MinigameTargetFormationPerfectShotLevel2Script3:
+	INCLUDE "data/engine/story/MinigameTargetFormationPerfectShotLevel2Script3.asm" ; $6c2e, 37 bytes (target_script)
+MinigameTargetFormationPerfectShotLevel3Script0:
+	INCLUDE "data/engine/story/MinigameTargetFormationPerfectShotLevel3Script0.asm" ; $6c53, 10 bytes (target_script)
+MinigameTargetFormationPerfectShotLevel3Script1:
+	INCLUDE "data/engine/story/MinigameTargetFormationPerfectShotLevel3Script1.asm" ; $6c5d, 10 bytes (target_script)
+MinigameTargetFormationPerfectShotLevel3Script2:
+	INCLUDE "data/engine/story/MinigameTargetFormationPerfectShotLevel3Script2.asm" ; $6c67, 10 bytes (target_script)
+MinigameTargetFormationPerfectShotLevel3Script3:
+	INCLUDE "data/engine/story/MinigameTargetFormationPerfectShotLevel3Script3.asm" ; $6c71, 10 bytes (target_script)
 SpawnMinigameTargetFormation:
 	jumptable a ; $6c7b
-	dw SpawnMinigameTargetFormation0 ; $6c7d jumptable
-	dw SpawnMinigameTargetFormation1 ; $6c7f jumptable
-	dw SpawnMinigameTargetFormation2 ; $6c81 jumptable
-	dw SpawnMinigameTargetFormation3 ; $6c83 jumptable
-	dw SpawnMinigameTargetFormation4 ; $6c85 jumptable
-	dw SpawnMinigameTargetFormation5 ; $6c87 jumptable
-	dw SpawnMinigameTargetFormation6 ; $6c89 jumptable
-	dw SpawnMinigameTargetFormation7 ; $6c8b jumptable
-	dw SpawnMinigameTargetFormation8 ; $6c8d jumptable
-SpawnMinigameTargetFormation0:
-	ld hl, MinigameTargetFormation0ScriptPtrs ; $6c8f
+	dw SpawnMinigameTargetFormationWallPractice1 ; $6c7d jumptable
+	dw SpawnMinigameTargetFormationWallPractice2 ; $6c7f jumptable
+	dw SpawnMinigameTargetFormationWallPractice3 ; $6c81 jumptable
+	dw SpawnMinigameTargetFormationWallPractice4 ; $6c83 jumptable
+	dw SpawnMinigameTargetFormationWallPracticeHighScore ; $6c85 jumptable
+	dw SpawnMinigameTargetFormationBananaBunch ; $6c87 jumptable
+	dw SpawnMinigameTargetFormationFruitFantasy ; $6c89 jumptable
+	dw SpawnMinigameTargetFormationPerfectShotLevel2 ; $6c8b jumptable
+	dw SpawnMinigameTargetFormationPerfectShotLevel3 ; $6c8d jumptable
+SpawnMinigameTargetFormationWallPractice1:
+	ld hl, MinigameTargetFormationWallPractice1ScriptPtrs ; $6c8f
 	call SpawnMinigameTargetsFromList ; $6c92
 	ret ; $6c95
-MinigameTargetFormation0ScriptPtrs:
+MinigameTargetFormationWallPractice1ScriptPtrs:
 	; $6c96, 10 bytes (records:2)
-	dw MinigameTargetFormation0Script0 ; record 0
-	dw MinigameTargetFormation0Script1 ; record 1
-	dw MinigameTargetFormation0Script2 ; record 2
-	dw MinigameTargetFormation0Script3 ; record 3
+	dw MinigameTargetFormationWallPractice1Script0 ; record 0
+	dw MinigameTargetFormationWallPractice1Script1 ; record 1
+	dw MinigameTargetFormationWallPractice1Script2 ; record 2
+	dw MinigameTargetFormationWallPractice1Script3 ; record 3
 	dw $0000 ; record 4
-SpawnMinigameTargetFormation1:
-	ld hl, MinigameTargetFormation1ScriptPtrs ; $6ca0
+SpawnMinigameTargetFormationWallPractice2:
+	ld hl, MinigameTargetFormationWallPractice2ScriptPtrs ; $6ca0
 	call SpawnMinigameTargetsFromList ; $6ca3
 	ret ; $6ca6
-MinigameTargetFormation1ScriptPtrs:
+MinigameTargetFormationWallPractice2ScriptPtrs:
 	; $6ca7, 18 bytes (records:2)
-	dw MinigameTargetFormation1Script0 ; record 0
-	dw MinigameTargetFormation1Script1 ; record 1
-	dw MinigameTargetFormation1Script2 ; record 2
-	dw MinigameTargetFormation1Script3 ; record 3
-	dw MinigameTargetFormation1Script4 ; record 4
-	dw MinigameTargetFormation1Script5 ; record 5
-	dw MinigameTargetFormation1Script6 ; record 6
-	dw MinigameTargetFormation1Script7 ; record 7
+	dw MinigameTargetFormationWallPractice2Script0 ; record 0
+	dw MinigameTargetFormationWallPractice2Script1 ; record 1
+	dw MinigameTargetFormationWallPractice2Script2 ; record 2
+	dw MinigameTargetFormationWallPractice2Script3 ; record 3
+	dw MinigameTargetFormationWallPractice2Script4 ; record 4
+	dw MinigameTargetFormationWallPractice2Script5 ; record 5
+	dw MinigameTargetFormationWallPractice2Script6 ; record 6
+	dw MinigameTargetFormationWallPractice2Script7 ; record 7
 	dw $0000 ; record 8
-SpawnMinigameTargetFormation2:
-	ld hl, MinigameTargetFormation2ScriptPtrs ; $6cb9
+SpawnMinigameTargetFormationWallPractice3:
+	ld hl, MinigameTargetFormationWallPractice3ScriptPtrs ; $6cb9
 	call SpawnMinigameTargetsFromList ; $6cbc
 	ret ; $6cbf
-MinigameTargetFormation2ScriptPtrs:
+MinigameTargetFormationWallPractice3ScriptPtrs:
 	; $6cc0, 18 bytes (records:2)
-	dw MinigameTargetFormation2Script0 ; record 0
-	dw MinigameTargetFormation2Script1 ; record 1
-	dw MinigameTargetFormation2Script2 ; record 2
-	dw MinigameTargetFormation2Script3 ; record 3
-	dw MinigameTargetFormation2Script4 ; record 4
-	dw MinigameTargetFormation2Script5 ; record 5
-	dw MinigameTargetFormation2Script6 ; record 6
-	dw MinigameTargetFormation2Script7 ; record 7
+	dw MinigameTargetFormationWallPractice3Script0 ; record 0
+	dw MinigameTargetFormationWallPractice3Script1 ; record 1
+	dw MinigameTargetFormationWallPractice3Script2 ; record 2
+	dw MinigameTargetFormationWallPractice3Script3 ; record 3
+	dw MinigameTargetFormationWallPractice3Script4 ; record 4
+	dw MinigameTargetFormationWallPractice3Script5 ; record 5
+	dw MinigameTargetFormationWallPractice3Script6 ; record 6
+	dw MinigameTargetFormationWallPractice3Script7 ; record 7
 	dw $0000 ; record 8
-SpawnMinigameTargetFormation3:
-	ld hl, MinigameTargetFormation3ScriptPtrs ; $6cd2
+SpawnMinigameTargetFormationWallPractice4:
+	ld hl, MinigameTargetFormationWallPractice4ScriptPtrs ; $6cd2
 	call SpawnMinigameTargetsFromList ; $6cd5
 	ret ; $6cd8
-MinigameTargetFormation3ScriptPtrs:
+MinigameTargetFormationWallPractice4ScriptPtrs:
 	; $6cd9, 26 bytes (records:2)
-	dw MinigameTargetFormation3Script00 ; record 0
-	dw MinigameTargetFormation3Script01 ; record 1
-	dw MinigameTargetFormation3Script02 ; record 2
-	dw MinigameTargetFormation3Script03 ; record 3
-	dw MinigameTargetFormation3Script04 ; record 4
-	dw MinigameTargetFormation3Script05 ; record 5
-	dw MinigameTargetFormation3Script06 ; record 6
-	dw MinigameTargetFormation3Script07 ; record 7
-	dw MinigameTargetFormation3Script08 ; record 8
-	dw MinigameTargetFormation3Script09 ; record 9
-	dw MinigameTargetFormation3Script10 ; record 10
-	dw MinigameTargetFormation3Script11 ; record 11
+	dw MinigameTargetFormationWallPractice4Script00 ; record 0
+	dw MinigameTargetFormationWallPractice4Script01 ; record 1
+	dw MinigameTargetFormationWallPractice4Script02 ; record 2
+	dw MinigameTargetFormationWallPractice4Script03 ; record 3
+	dw MinigameTargetFormationWallPractice4Script04 ; record 4
+	dw MinigameTargetFormationWallPractice4Script05 ; record 5
+	dw MinigameTargetFormationWallPractice4Script06 ; record 6
+	dw MinigameTargetFormationWallPractice4Script07 ; record 7
+	dw MinigameTargetFormationWallPractice4Script08 ; record 8
+	dw MinigameTargetFormationWallPractice4Script09 ; record 9
+	dw MinigameTargetFormationWallPractice4Script10 ; record 10
+	dw MinigameTargetFormationWallPractice4Script11 ; record 11
 	dw $0000 ; record 12
-SpawnMinigameTargetFormation4:
-	ld hl, MinigameTargetFormation4ScriptPtrs ; $6cf3
+SpawnMinigameTargetFormationWallPracticeHighScore:
+	ld hl, MinigameTargetFormationWallPracticeHighScoreScriptPtrs ; $6cf3
 	call SpawnMinigameTargetsFromList ; $6cf6
 	ret ; $6cf9
-MinigameTargetFormation4ScriptPtrs:
+MinigameTargetFormationWallPracticeHighScoreScriptPtrs:
 	; $6cfa, 26 bytes (records:2)
-	dw MinigameTargetFormation4Script00 ; record 0
-	dw MinigameTargetFormation4Script01 ; record 1
-	dw MinigameTargetFormation4Script02 ; record 2
-	dw MinigameTargetFormation4Script03 ; record 3
-	dw MinigameTargetFormation4Script04 ; record 4
-	dw MinigameTargetFormation4Script05 ; record 5
-	dw MinigameTargetFormation4Script06 ; record 6
-	dw MinigameTargetFormation4Script07 ; record 7
-	dw MinigameTargetFormation4Script08 ; record 8
-	dw MinigameTargetFormation4Script09 ; record 9
-	dw MinigameTargetFormation4Script10 ; record 10
-	dw MinigameTargetFormation4Script11 ; record 11
+	dw MinigameTargetFormationWallPracticeHighScoreScript00 ; record 0
+	dw MinigameTargetFormationWallPracticeHighScoreScript01 ; record 1
+	dw MinigameTargetFormationWallPracticeHighScoreScript02 ; record 2
+	dw MinigameTargetFormationWallPracticeHighScoreScript03 ; record 3
+	dw MinigameTargetFormationWallPracticeHighScoreScript04 ; record 4
+	dw MinigameTargetFormationWallPracticeHighScoreScript05 ; record 5
+	dw MinigameTargetFormationWallPracticeHighScoreScript06 ; record 6
+	dw MinigameTargetFormationWallPracticeHighScoreScript07 ; record 7
+	dw MinigameTargetFormationWallPracticeHighScoreScript08 ; record 8
+	dw MinigameTargetFormationWallPracticeHighScoreScript09 ; record 9
+	dw MinigameTargetFormationWallPracticeHighScoreScript10 ; record 10
+	dw MinigameTargetFormationWallPracticeHighScoreScript11 ; record 11
 	dw $0000 ; record 12
-SpawnMinigameTargetFormation5:
-	ld hl, MinigameTargetFormation5ScriptPtrs ; $6d14
+SpawnMinigameTargetFormationBananaBunch:
+	ld hl, MinigameTargetFormationBananaBunchScriptPtrs ; $6d14
 	call SpawnMinigameTargetsFromList ; $6d17
 	ret ; $6d1a
-MinigameTargetFormation5ScriptPtrs:
+MinigameTargetFormationBananaBunchScriptPtrs:
 	; $6d1b, 6 bytes (records:2)
-	dw MinigameTargetFormation5Script0 ; record 0
-	dw MinigameTargetFormation5Script1 ; record 1
+	dw MinigameTargetFormationBananaBunchScript0 ; record 0
+	dw MinigameTargetFormationBananaBunchScript1 ; record 1
 	dw $0000 ; record 2
-SpawnMinigameTargetFormation6:
-	ld hl, MinigameTargetFormation6ScriptPtrs ; $6d21
+SpawnMinigameTargetFormationFruitFantasy:
+	ld hl, MinigameTargetFormationFruitFantasyScriptPtrs ; $6d21
 	call SpawnMinigameTargetsFromList ; $6d24
 	ret ; $6d27
-MinigameTargetFormation6ScriptPtrs:
+MinigameTargetFormationFruitFantasyScriptPtrs:
 	; $6d28, 8 bytes (records:2)
-	dw MinigameTargetFormation6Script0 ; record 0
-	dw MinigameTargetFormation6Script1 ; record 1
-	dw MinigameTargetFormation6Script2 ; record 2
+	dw MinigameTargetFormationFruitFantasyScript0 ; record 0
+	dw MinigameTargetFormationFruitFantasyScript1 ; record 1
+	dw MinigameTargetFormationFruitFantasyScript2 ; record 2
 	dw $0000 ; record 3
-SpawnMinigameTargetFormation7:
-	ld hl, MinigameTargetFormation7ScriptPtrs ; $6d30
+SpawnMinigameTargetFormationPerfectShotLevel2:
+	ld hl, MinigameTargetFormationPerfectShotLevel2ScriptPtrs ; $6d30
 	call SpawnMinigameTargetsFromList ; $6d33
 	ret ; $6d36
-MinigameTargetFormation7ScriptPtrs:
+MinigameTargetFormationPerfectShotLevel2ScriptPtrs:
 	; $6d37, 10 bytes (records:2)
-	dw MinigameTargetFormation7Script0 ; record 0
-	dw MinigameTargetFormation7Script1 ; record 1
-	dw MinigameTargetFormation7Script2 ; record 2
-	dw MinigameTargetFormation7Script3 ; record 3
+	dw MinigameTargetFormationPerfectShotLevel2Script0 ; record 0
+	dw MinigameTargetFormationPerfectShotLevel2Script1 ; record 1
+	dw MinigameTargetFormationPerfectShotLevel2Script2 ; record 2
+	dw MinigameTargetFormationPerfectShotLevel2Script3 ; record 3
 	dw $0000 ; record 4
-SpawnMinigameTargetFormation8:
-	ld hl, MinigameTargetFormation8ScriptPtrs ; $6d41
+SpawnMinigameTargetFormationPerfectShotLevel3:
+	ld hl, MinigameTargetFormationPerfectShotLevel3ScriptPtrs ; $6d41
 	call SpawnMinigameTargetsFromList ; $6d44
 	ret ; $6d47
-MinigameTargetFormation8ScriptPtrs:
+MinigameTargetFormationPerfectShotLevel3ScriptPtrs:
 	; $6d48, 10 bytes (records:2)
-	dw MinigameTargetFormation8Script0 ; record 0
-	dw MinigameTargetFormation8Script1 ; record 1
-	dw MinigameTargetFormation8Script2 ; record 2
-	dw MinigameTargetFormation8Script3 ; record 3
+	dw MinigameTargetFormationPerfectShotLevel3Script0 ; record 0
+	dw MinigameTargetFormationPerfectShotLevel3Script1 ; record 1
+	dw MinigameTargetFormationPerfectShotLevel3Script2 ; record 2
+	dw MinigameTargetFormationPerfectShotLevel3Script3 ; record 3
 	dw $0000 ; record 4
 SpawnMinigameTargetsFromList:
 	ld bc, wMinigameTargets ; $6d52
@@ -802,7 +802,7 @@ SpawnMinigameTargetsFromList:
 	jr .spawnLoop ; $6d6b
 .done:
 	ret ; $6d6d
-DrawMinigameTargetAlt:
+DrawScoringMinigameTarget:
 	ld hl, wMinigameTargetWork + MGTARGET_DEPTH ; $6d6e
 	ld a, [hl+] ; $6d71
 	ld b, [hl] ; $6d72
@@ -817,26 +817,26 @@ DrawMinigameTargetAlt:
 	ld a, [wMinigameTargetWork + MGTARGET_HIT_TIMER] ; $6d7f
 	and $0f ; $6d82
 	jr z, .readSprite ; $6d84
-	ld_hl_indexed MinigameTargetAltHitSwayOffsets ; $6d86
+	ld_hl_indexed ScoringMinigameTargetHitSwayOffsets ; $6d86
 	ld a, [hl] ; $6d8d
 	add d ; $6d8e
 	ld d, a ; $6d8f
 .readSprite:
 	ld a, [wMinigameTargetWork + MGTARGET_KIND] ; $6d90
 	add a ; $6d93
-	ld_hl_indexed MinigameTargetAltKindSprites ; $6d94
+	ld_hl_indexed ScoringMinigameTargetKindSprites ; $6d94
 	ld a, [hl+] ; $6d9b
 	ld b, [hl] ; $6d9c
 	ld c, a ; $6d9d
-	ld hl, DrawMinigameTargetAlt_SpriteTemplate ; $6d9e
+	ld hl, DrawScoringMinigameTarget_SpriteTemplate ; $6d9e
 	call QueueSpriteTemplate ; $6da1
 	ret ; $6da4
-MinigameTargetAltKindSprites:
+ScoringMinigameTargetKindSprites:
 	; $6da5, 8 bytes (bytes:8)
 	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
-MinigameTargetAltHitSwayOffsets:
-	INCLUDE "data/engine/story/MinigameTargetAltHitSwayOffsets.asm" ; $6dad, 16 bytes (bytes:16)
-DrawMinigameTargetAlt_SpriteTemplate:
+ScoringMinigameTargetHitSwayOffsets:
+	INCLUDE "data/engine/story/ScoringMinigameTargetHitSwayOffsets.asm" ; $6dad, 16 bytes (bytes:16)
+DrawScoringMinigameTarget_SpriteTemplate:
 	; $6dbd, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -847,7 +847,7 @@ DrawMinigameTargetAlt_SpriteTemplate:
 	oam_sprite $10, $20, $0c, $00
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
-HandleMinigameTargetHitAlt:
+HandleScoringMinigameTargetHit:
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6dde
 	bit MGTARGETB_HIT, [hl] ; $6de1
 	ret z ; $6de3

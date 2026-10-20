@@ -148,7 +148,7 @@ wStoryModeMenuRequest:: db
 	ds 10
 
 UNION
-; [8-bit] Scene stage of the loaded location, derived from save flags by the map's init script (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, Unused_27_ComputeRankingProgressIndex, ...). NPC scripts index per-stage text-id tables with it. Values are per location. First byte of the $c2b0-$c2bf per-location scratch block
+; [8-bit] Scene stage of the loaded location, derived from save flags by the map's init script (SetupCenterCourtStage, InitCourt1SceneVariant, ComputeIslandOpenRound, Unused_27_ComputeRankingProgressIndex, ...). NPC scripts index per-stage text-id tables with it. Values are per location. First byte of the $c2b0-$c2bf per-location scratch block
 wMapSceneStage:: db
 ; [8-bit] Second per-location scene stage, set by map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, ComputeSeniorCourtStage) and read by that location's NPC scripts to pick a text id
 wMapSceneStage2:: db

@@ -61,7 +61,7 @@ ReplacePartnerWithStandInActor:
 	ld a, [wStoryPartnerGender] ; $7a1f
 	or a ; $7a22
 	jr nz, .female ; $7a23
-	ld d, $58 ; $7a25
+	ld d, OBJ_HARRY_B ; $7a25
 	jr .apply ; $7a27
 .noPartner:
 	ret ; $7a29

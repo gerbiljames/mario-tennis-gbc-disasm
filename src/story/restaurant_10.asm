@@ -686,10 +686,10 @@ RestaurantNpc09_10:
 	farcall InitDialogueTextCursor ; $5e99
 	ld a, [wMapSceneStage] ; $5e9c
 	cp STORYRANK_SINGLES_ISLAND_OPEN ; $5e9f
-	jr nc, .altText ; $5ea1
+	jr nc, .askYesNo ; $5ea1
 	script_speak ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ea3
 	ret ; $5ea8
-.altText:
+.askYesNo:
 	script_speak_restore ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ea9
 	farcall RunDialogueYesNoPrompt ; $5eae
 	farcall ScriptCloseDialogueWindow ; $5eb1

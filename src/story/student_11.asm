@@ -151,11 +151,11 @@ LateHeadmasterCrashCutscene:
 	farcall ScriptCloseDialogueWindow ; $4b02
 	script_wait_frames 5 ; $4b05
 	and a ; $4b0c
-	jr z, .setText ; $4b0d
+	jr z, .forgiven ; $4b0d
 	script_set_anim ACTOR_ACADEMY_ENTRANCE_HEADMASTER, ANIM_BOUNCE ; $4b0f
 	script_speak ACTOR_ACADEMY_ENTRANCE_HEADMASTER ; $4b16
 	jr .loop ; $4b1b
-.setText:
+.forgiven:
 	script_set_text Text_LateHeadmasterThankYou ; $4b1d
 	script_set_anim ACTOR_ACADEMY_ENTRANCE_HEADMASTER, ANIM_NOD ; $4b23
 	script_wait_idle ACTOR_ACADEMY_ENTRANCE_HEADMASTER ; $4b2a
@@ -388,7 +388,7 @@ Unused_11_AcademyEntranceActorListTail:
 	; $4fc5, 10 bytes (bytes:10)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x00
 IslandOpenSendOffScene:
-	script_respawn_actors ActorList_11_0 ; $4fcf
+	script_respawn_actors IslandOpenSendOffActors_11 ; $4fcf
 	farcall BeginCutsceneScriptMode ; $4fd7
 	test_flag FLAG_DOUBLES ; $4fda
 	jp z, .notDoubles ; $4fdd
@@ -398,13 +398,13 @@ IslandOpenSendOffScene:
 	ld d, OBJ_HARRY_B ; $4ff3
 	add d ; $4ff5
 	ld d, a ; $4ff6
-	script_get_actor_state ACTOR_LIST_11_0_MARK_SWEATS ; $4ff7
+	script_get_actor_state ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS ; $4ff7
 	ld c, l ; $4ffc
 	ld b, h ; $4ffd
 	farcall LoadActorObjectDefIfValid ; $4ffe
-	script_set_anim ACTOR_LIST_11_0_MARK_SWEATS, ANIM_WALK ; $5001
-	script_set_position ACTOR_LIST_11_0_MARK, 26.0, 17.0 ; $5008
-	script_face ACTOR_LIST_11_0_MARK, FACE_DOWN ; $5013
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, ANIM_WALK ; $5001
+	script_set_position ACTOR_ISLAND_OPEN_SEND_OFF_MARK, 26.0, 17.0 ; $5008
+	script_face ACTOR_ISLAND_OPEN_SEND_OFF_MARK, FACE_DOWN ; $5013
 .notDoubles:
 	ld a, [wStoryMainGender] ; $501a
 	ld d, OBJ_ALEX_B ; $501d
@@ -417,119 +417,119 @@ IslandOpenSendOffScene:
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $502b
 	script_set_position ACTOR_PLAYER, 23.0, 23.0 ; $5032
 	script_face ACTOR_PLAYER, FACE_UP ; $503d
-	script_move_player_to_actor ACTOR_LIST_11_0_HEADMASTER ; $5044
+	script_move_player_to_actor ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $5044
 	farcall WaitPlayerMoveDone ; $504b
 	script_fade_in 8 ; $504e
 	call WaitFadeEnd ; $5053
 	script_wait_frames 60 ; $5056
 	script_set_text Text_HeadmasterAllReady ; $505d
-	script_speak ACTOR_LIST_11_0_HEADMASTER ; $5063
+	script_speak ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $5063
 	test_flag FLAG_DOUBLES ; $5068
 	jp z, .singles ; $506b
-	script_set_anim ACTOR_LIST_11_0_KEVIN_SWEATS, ANIM_NOD ; $506e
-	script_set_anim ACTOR_LIST_11_0_EMILY_SWEATS, ANIM_NOD ; $5075
-	script_wait_idle ACTOR_LIST_11_0_EMILY_SWEATS ; $507c
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS, ANIM_NOD ; $506e
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, ANIM_NOD ; $5075
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS ; $507c
 	script_wait_frames 30 ; $5081
-	script_face_pair ACTOR_LIST_11_0_MARK_SWEATS, ACTOR_PLAYER ; $5088
+	script_face_pair ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, ACTOR_PLAYER ; $5088
 	script_wait_frames 30 ; $5090
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5097
-	script_set_anim ACTOR_LIST_11_0_MARK_SWEATS, ANIM_NOD ; $509e
-	script_wait_idle ACTOR_LIST_11_0_MARK_SWEATS ; $50a5
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, ANIM_NOD ; $509e
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS ; $50a5
 	script_wait_frames 30 ; $50aa
-	script_face ACTOR_LIST_11_0_MARK_SWEATS, FACE_UP ; $50b1
+	script_face ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, FACE_UP ; $50b1
 	script_wait_frames 30 ; $50b8
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $50bf
-	script_set_anim ACTOR_LIST_11_0_MARK_SWEATS, ANIM_NOD ; $50c6
-	script_wait_idle ACTOR_LIST_11_0_MARK_SWEATS ; $50cd
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, ANIM_NOD ; $50c6
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS ; $50cd
 	script_wait_frames 30 ; $50d2
-	script_set_anim ACTOR_LIST_11_0_HEADMASTER, ANIM_NOD ; $50d9
-	script_wait_idle ACTOR_LIST_11_0_HEADMASTER ; $50e0
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER, ANIM_NOD ; $50d9
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $50e0
 	script_wait_frames 10 ; $50e5
-	script_set_anim ACTOR_LIST_11_0_MARK, ANIM_BOUNCE ; $50ec
-	script_wait_idle ACTOR_LIST_11_0_MARK ; $50f3
-	script_speak ACTOR_LIST_11_0_MARK ; $50f8
-	script_set_anim ACTOR_LIST_11_0_KEVIN_SWEATS, ANIM_NOD ; $50fd
-	script_set_anim ACTOR_LIST_11_0_MARK_SWEATS, ANIM_NOD ; $5104
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_MARK, ANIM_BOUNCE ; $50ec
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_MARK ; $50f3
+	script_speak ACTOR_ISLAND_OPEN_SEND_OFF_MARK ; $50f8
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS, ANIM_NOD ; $50fd
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, ANIM_NOD ; $5104
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $510b
-	script_set_anim ACTOR_LIST_11_0_EMILY_SWEATS, ANIM_NOD ; $5112
-	script_wait_idle ACTOR_LIST_11_0_EMILY_SWEATS ; $5119
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, ANIM_NOD ; $5112
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS ; $5119
 	script_wait_frames 30 ; $511e
-	script_face_pair ACTOR_LIST_11_0_MARK, ACTOR_LIST_11_0_HEADMASTER ; $5125
-	script_set_anim ACTOR_LIST_11_0_HEADMASTER, ANIM_NOD ; $512d
-	script_set_anim ACTOR_LIST_11_0_MARK, ANIM_NOD ; $5134
-	script_wait_idle ACTOR_LIST_11_0_MARK ; $513b
-	script_face ACTOR_LIST_11_0_MARK, FACE_DOWN ; $5140
-	script_face ACTOR_LIST_11_0_HEADMASTER, FACE_DOWN ; $5147
+	script_face_pair ACTOR_ISLAND_OPEN_SEND_OFF_MARK, ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $5125
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER, ANIM_NOD ; $512d
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_MARK, ANIM_NOD ; $5134
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_MARK ; $513b
+	script_face ACTOR_ISLAND_OPEN_SEND_OFF_MARK, FACE_DOWN ; $5140
+	script_face ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER, FACE_DOWN ; $5147
 	script_wait_frames 30 ; $514e
 	jp .speak ; $5155
 .singles:
-	script_set_anim ACTOR_LIST_11_0_KEVIN_SWEATS, ANIM_NOD ; $5158
-	script_set_anim ACTOR_LIST_11_0_MARK_SWEATS, ANIM_NOD ; $515f
-	script_wait_idle ACTOR_LIST_11_0_MARK_SWEATS ; $5166
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS, ANIM_NOD ; $5158
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, ANIM_NOD ; $515f
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS ; $5166
 	script_wait_frames 30 ; $516b
-	script_face_pair ACTOR_LIST_11_0_EMILY_SWEATS, ACTOR_PLAYER ; $5172
+	script_face_pair ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, ACTOR_PLAYER ; $5172
 	script_wait_frames 30 ; $517a
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5181
-	script_set_anim ACTOR_LIST_11_0_EMILY_SWEATS, ANIM_NOD ; $5188
-	script_wait_idle ACTOR_LIST_11_0_EMILY_SWEATS ; $518f
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, ANIM_NOD ; $5188
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS ; $518f
 	script_wait_frames 30 ; $5194
 	script_face ACTOR_PLAYER, FACE_UP ; $519b
-	script_face ACTOR_LIST_11_0_EMILY_SWEATS, FACE_UP ; $51a2
+	script_face ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, FACE_UP ; $51a2
 	script_wait_frames 30 ; $51a9
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $51b0
-	script_set_anim ACTOR_LIST_11_0_EMILY_SWEATS, ANIM_NOD ; $51b7
-	script_wait_idle ACTOR_LIST_11_0_EMILY_SWEATS ; $51be
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, ANIM_NOD ; $51b7
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS ; $51be
 	script_wait_frames 30 ; $51c3
-	script_set_anim ACTOR_LIST_11_0_HEADMASTER, ANIM_NOD ; $51ca
-	script_wait_idle ACTOR_LIST_11_0_HEADMASTER ; $51d1
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER, ANIM_NOD ; $51ca
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $51d1
 	farcall AdvanceDialogueTextCursor ; $51d6
 .speak:
-	script_speak ACTOR_LIST_11_0_HEADMASTER ; $51d9
+	script_speak ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $51d9
 	script_wait_frames 30 ; $51de
-	script_set_anim ACTOR_LIST_11_0_KEVIN_SWEATS, ANIM_NOD ; $51e5
-	script_set_anim ACTOR_LIST_11_0_MARK_SWEATS, ANIM_NOD ; $51ec
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS, ANIM_NOD ; $51e5
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, ANIM_NOD ; $51ec
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $51f3
-	script_set_anim ACTOR_LIST_11_0_EMILY_SWEATS, ANIM_NOD ; $51fa
-	script_wait_idle ACTOR_LIST_11_0_EMILY_SWEATS ; $5201
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, ANIM_NOD ; $51fa
+	script_wait_idle ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS ; $5201
 	script_wait_frames 20 ; $5206
-	script_face_pair ACTOR_LIST_11_0_EMILY_SWEATS, ACTOR_PLAYER ; $520d
-	script_face_pair ACTOR_LIST_11_0_KEVIN_SWEATS, ACTOR_LIST_11_0_MARK_SWEATS ; $5215
+	script_face_pair ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, ACTOR_PLAYER ; $520d
+	script_face_pair ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS, ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS ; $5215
 	script_wait_frames 10 ; $521d
 	script_lock_facing ACTOR_PLAYER ; $5224
-	script_lock_facing ACTOR_LIST_11_0_EMILY_SWEATS ; $522b
-	script_lock_facing ACTOR_LIST_11_0_MARK_SWEATS ; $5232
-	script_lock_facing ACTOR_LIST_11_0_KEVIN_SWEATS ; $5239
+	script_lock_facing ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS ; $522b
+	script_lock_facing ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS ; $5232
+	script_lock_facing ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS ; $5239
 	script_move_target ACTOR_PLAYER, 22.0, 23.0 ; $5240
-	script_move_target ACTOR_LIST_11_0_EMILY_SWEATS, 26.0, 23.0 ; $524b
-	script_move_target ACTOR_LIST_11_0_MARK_SWEATS, 21.0, 21.0 ; $5256
-	script_move_target ACTOR_LIST_11_0_KEVIN_SWEATS, 27.0, 21.0 ; $5261
-	script_wait_move ACTOR_LIST_11_0_KEVIN_SWEATS ; $526c
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, 26.0, 23.0 ; $524b
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, 21.0, 21.0 ; $5256
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS, 27.0, 21.0 ; $5261
+	script_wait_move ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS ; $526c
 	script_move_player 24.0, 47.0 ; $5271
-	script_move_target ACTOR_LIST_11_0_HEADMASTER, 24.0, 25.0 ; $527b
-	script_wait_move ACTOR_LIST_11_0_HEADMASTER ; $5286
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER, 24.0, 25.0 ; $527b
+	script_wait_move ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $5286
 	script_unlock_facing ACTOR_PLAYER ; $528b
-	script_unlock_facing ACTOR_LIST_11_0_EMILY_SWEATS ; $5292
-	script_unlock_facing ACTOR_LIST_11_0_MARK_SWEATS ; $5299
-	script_unlock_facing ACTOR_LIST_11_0_KEVIN_SWEATS ; $52a0
+	script_unlock_facing ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS ; $5292
+	script_unlock_facing ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS ; $5299
+	script_unlock_facing ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS ; $52a0
 	script_move_target ACTOR_PLAYER, 22.0, 43.0 ; $52a7
-	script_move_target ACTOR_LIST_11_0_EMILY_SWEATS, 26.0, 43.0 ; $52b2
-	script_move_target ACTOR_LIST_11_0_MARK_SWEATS, 21.0, 41.0 ; $52bd
-	script_move_target ACTOR_LIST_11_0_KEVIN_SWEATS, 27.0, 41.0 ; $52c8
-	script_move_target ACTOR_LIST_11_0_HEADMASTER, 24.0, 45.0 ; $52d3
-	script_wait_move ACTOR_LIST_11_0_HEADMASTER ; $52de
-	script_set_anim ACTOR_LIST_11_0_STUDENT_LONG_HAIR, ANIM_NOD ; $52e3
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, 26.0, 43.0 ; $52b2
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, 21.0, 41.0 ; $52bd
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS, 27.0, 41.0 ; $52c8
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER, 24.0, 45.0 ; $52d3
+	script_wait_move ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $52de
+	script_set_anim ACTOR_ISLAND_OPEN_SEND_OFF_STUDENT_LONG_HAIR, ANIM_NOD ; $52e3
 	script_move_target ACTOR_PLAYER, 23.0, 47.0 ; $52ea
-	script_move_target ACTOR_LIST_11_0_EMILY_SWEATS, 25.0, 47.0 ; $52f5
-	script_move_target ACTOR_LIST_11_0_MARK_SWEATS, 23.0, 45.0 ; $5300
-	script_move_target ACTOR_LIST_11_0_KEVIN_SWEATS, 25.0, 45.0 ; $530b
-	script_move_target ACTOR_LIST_11_0_HEADMASTER, 24.0, 49.0 ; $5316
-	script_wait_move ACTOR_LIST_11_0_HEADMASTER ; $5321
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, 25.0, 47.0 ; $52f5
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, 23.0, 45.0 ; $5300
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS, 25.0, 45.0 ; $530b
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER, 24.0, 49.0 ; $5316
+	script_wait_move ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $5321
 	script_move_target ACTOR_PLAYER, 23.0, 59.0 ; $5326
-	script_move_target ACTOR_LIST_11_0_EMILY_SWEATS, 25.0, 59.0 ; $5331
-	script_move_target ACTOR_LIST_11_0_MARK_SWEATS, 23.0, 57.0 ; $533c
-	script_move_target ACTOR_LIST_11_0_KEVIN_SWEATS, 25.0, 57.0 ; $5347
-	script_move_target ACTOR_LIST_11_0_HEADMASTER, 24.0, 61.0 ; $5352
-	script_wait_move ACTOR_LIST_11_0_HEADMASTER ; $535d
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_EMILY_SWEATS, 25.0, 59.0 ; $5331
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_MARK_SWEATS, 23.0, 57.0 ; $533c
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_KEVIN_SWEATS, 25.0, 57.0 ; $5347
+	script_move_target ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER, 24.0, 61.0 ; $5352
+	script_wait_move ACTOR_ISLAND_OPEN_SEND_OFF_HEADMASTER ; $535d
 	script_fade_out 4 ; $5362
 	call WaitFadeEnd ; $5367
 	ld a, STORYLOC_ISLAND_SKY ; $536a

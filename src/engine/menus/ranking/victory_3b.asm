@@ -53,7 +53,7 @@ Unused_3b_StubNop6:
 GetVictoryScore:
 	ld b, a ; $7dc4
 	ld hl, VictoryScoreTable ; $7dc5
-	ld a, [wVictoryScoreTableAlt] ; $7dc8
+	ld a, [wExhibitionSaveQuitUsed] ; $7dc8
 	or a ; $7dcb
 	jr z, .gotTable ; $7dcc
 	ld hl, VictoryScoreTableSaveQuit ; $7dce

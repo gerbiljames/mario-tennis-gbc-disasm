@@ -41,7 +41,7 @@ included too. `apply_sprite_wobble_x`, `draw_ascii_digit_char`,
 `move_menu_cursor_grid_from_link_input_17` have no live copy at all.
 
 Four look-alikes stay separate because they differ: the Island Open NPC
-scripts `IslandOpenFinalDoublesNpc0B_0f` / `IslandOpenRound1DoublesNpc0B_0f`,
+scripts `IslandOpenFinalDoublesNpc0BBCoz_0f` / `IslandOpenRound1DoublesNpc0BSean_0f`,
 and the `Npc0D` pair, set different text ids. The table also has the
 families under the ten-instruction floor (`twins.py --min 4`).
 
@@ -88,8 +88,8 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/intro_cutscene_state11_update.asm` | `IntroCutsceneState11Update_6b`, `IntroCutsceneState12Update_6b` | $6b |
 | `src/twins/intro_cutscene_state13_update.asm` | `IntroCutsceneState13Update_6b`, `IntroCutsceneState14Update_6b` | $6b |
 | `src/twins/is_ball_in_medallion_match_hit_zone.asm` | `IsBallInTreasureBoxHitZone`, `IsBallInMedallionMatchHitZone` | $0d |
-| `src/twins/island_open_round_doubles_npc04.asm` | `IslandOpenRoundSinglesNpc04_0f`, `IslandOpenRoundDoublesNpc04_0f` | $0f |
-| `src/twins/junior_class_court_singles_npc03_face_up.asm` | `JuniorClassCourtSinglesNpc03FaceUp_11`, `JuniorClassCourtDoublesNpc03FaceUp_11` | $11 |
+| `src/twins/island_open_round_doubles_npc04_emily.asm` | `IslandOpenRoundSinglesNpc04Emily_0f`, `IslandOpenRoundDoublesNpc04Emily_0f` | $0f |
+| `src/twins/junior_class_court_singles_npc03_junior_coach_face_up.asm` | `JuniorClassCourtSinglesNpc03JuniorCoachFaceUp_11`, `JuniorClassCourtDoublesNpc03JuniorCoachFaceUp_11` | $11 |
 | `src/twins/load_player_partner_obj_defs.asm` | `LoadPlayerPartnerObjDefs_<bank>` | $11, $14, $15 |
 | `src/twins/lookup_ball_pos_by_aim.asm` | `Unused_<bank>_LookupBallPosByAim` | $20-$23, $29-$2b |
 | `src/twins/lookup_ball_pos_by_aim_24.asm` | `LookupBallPosByAim_<bank>` | $24, $2c |
@@ -192,7 +192,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 10 | $13 | `DormRoomDepartureMorningAltScene`, `DormRoomDepartureMorningScene` |
 | 2 | 14 | $6b | `IntroCutsceneState00Update_6b`, `IntroCutsceneState16Update_6b` |
 | 2 | 72 | $0d | `IsBallInMedallionMatchHitZone`, `IsBallInTreasureBoxHitZone` |
-| 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04_0f`, `IslandOpenRoundSinglesNpc04_0f` |
+| 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04Emily_0f`, `IslandOpenRoundSinglesNpc04Emily_0f` |
 | 3 | 21 | $11, $14, $15 | `LoadPlayerPartnerObjDefs_11`, `LoadPlayerPartnerObjDefs_14`, `LoadPlayerPartnerObjDefs_15` |
 | 2 | 27 | $3b, $3e | `MatchFormatSlideOut`, `CloseLinkMatchFormatPanel` |
 | 2 | 12 | $0e, $15 | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` |

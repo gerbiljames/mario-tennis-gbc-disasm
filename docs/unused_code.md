@@ -156,9 +156,9 @@ the text engine's unused API: `Unused_05_RenderInlineHexByte` / `HexWord` /
 `Unused_05_WriteDialogueToTilemapStreamed`) and the
 whole-plane queue helpers. Same shape as pattern 3, one bank up.
 
-**6. Templates and stubs.** `Unused_10_Test2Npc04`-`0A` are seven
+**6. Templates and stubs.** `Unused_10_Test2Npc04ServiceMatch3`-`Npc0ANetGameMatch3` are seven
 drill-launcher handlers for the "Test 2" debug map, the template of its live
-NPCs `0B`-`0D` with their own test number and minigame id; three lone `ret`s in bank `$11` sit after list terminators
+NPCs `0B`-`12` with their own test number and minigame id; three lone `ret`s in bank `$11` sit after list terminators
 (`Unused_11_NullScriptA`-`C`) and three more after the last row of a table
 (`Unused_16_StubRet`, `Unused_1b_StubRet3`, `Unused_38_StubRet`); `Unused_17_StubRet`, `Unused_18_StubRet3`
 and the `Unused_1b_StubRet1`/`2` pair; `Unused_39_PushPopNop_1`/`_2` and
@@ -219,7 +219,7 @@ Eight routines had no label to classify: each sits straight after a table
 (a `dw` jump table, a farcall slot list, a record array), where nothing
 falls through, and no pointer anywhere in the ROM holds its address:
 `Unused_00_RenderNumberToTiles`, `Unused_08_DrawShotAimMarker`,
-`Unused_0b_GetBallXAndDepth`, `Unused_10_Test2Npc03` (the first of the Test 2
+`Unused_0b_GetBallXAndDepth`, `Unused_10_Test2Npc03ServiceMatch2` (the first of the Test 2
 map's drill-launcher NPC handlers), `Unused_38_GetGridEntryAtCursor`, and the
 corner-bracket drawers of banks `$16` and `$17`
 (`Unused_16_DrawWobblingCornerBrackets`, whose old label sat sixteen bytes

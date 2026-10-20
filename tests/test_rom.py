@@ -93,7 +93,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tld a, \$[0-9a-f]+ ;[^\n]*\n\tld \[wStoryModeEntryPoint\], a"), 0)
         self.assertEqual(count(r"^\tld a, \$[0-9a-f]+ ;[^\n]*\n\tld \[wUnusedExitTriggerIdMirror\], a"), 2,
                          "only the two exit ids with no ExitTriggers row stay raw")
-        self.assertEqual(count(r"\bENTRY_\w+"), 306)
+        self.assertEqual(count(r"\bENTRY_\w+"), 308)
         self.assertEqual(count(r"\bEXIT_\w+"), 85)
 
     def test_sound_ids_are_named(self):
