@@ -544,10 +544,10 @@ LoadMinigameLevelSelectGfx:
 	ret ; $6d2c
 MinigameLevelSelectGfxTable:
 	; $6d2d, 8 bytes (records:2)
-	dslot DataPtr_MinigameLabelTiles0 ; record 0
-	dslot DataPtr_MinigameLabelTiles1 ; record 1
-	dslot DataPtr_MinigameLabelTiles2 ; record 2
-	dslot DataPtr_MinigameLabelTiles3 ; record 3
+	dslot DataPtr_Level1FlagIconTiles ; record 0
+	dslot DataPtr_Level2FlagIconTiles ; record 1
+	dslot DataPtr_Level3FlagIconTiles ; record 2
+	dslot DataPtr_LockedLevelFlagIconTiles ; record 3
 MinigameLevelSelectTable:
 	; $6d35, 8 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0

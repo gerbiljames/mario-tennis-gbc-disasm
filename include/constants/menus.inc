@@ -201,8 +201,8 @@ def BRIEFPROMPT_NONE equ $01 ; last caption: no prompt
 	const PANELANIM_UNUSED_PANEL_OUT      ; $07
 	const PANELANIM_SAVED_DATA_PICKER_IN  ; $08
 	const PANELANIM_SAVED_DATA_PICKER_OUT ; $09
-	const PANELANIM_N64_RECORD_TYPE_IN    ; $0a
-	const PANELANIM_N64_RECORD_TYPE_OUT   ; $0b
+	const PANELANIM_THREE_CHOICE_IN       ; $0a
+	const PANELANIM_THREE_CHOICE_OUT      ; $0b
 	const_skip 4                          ; $0c-$0f never passed: copies of CHOICE_TAB_IN
 	const PANELANIM_CHOICE_TAB_IN         ; $10
 	const PANELANIM_CHOICE_TAB_OUT        ; $11

@@ -1,11 +1,11 @@
-DataPtr_N64ItemLabelTiles0:
-	dw N64ItemLabelTiles0 ; $4000
-DataPtr_N64ItemLabelTiles1:
-	dw N64ItemLabelTiles1 ; $4002
-DataPtr_N64ItemLabelTiles2:
-	dw N64ItemLabelTiles2 ; $4004
-DataPtr_N64ItemLabelTiles3:
-	dw N64ItemLabelTiles3 ; $4006
+DataPtr_N64TournamentsIconTiles:
+	dw N64TournamentsIconTiles ; $4000
+DataPtr_CharacterDataIconTiles:
+	dw CharacterDataIconTiles ; $4002
+DataPtr_SetItemsIconTiles:
+	dw SetItemsIconTiles ; $4004
+DataPtr_ClearStatusIconTiles:
+	dw ClearStatusIconTiles ; $4006
 DataPtr_N64TransferItemGfx0:
 	dw N64TransferItemGfx0 ; $4008
 DataPtr_N64TransferItemGfx1:
@@ -108,14 +108,14 @@ DataPtr_TournamentBracketDoublesTilemap:
 	dw TournamentBracketDoublesTilemap ; $406a
 DataPtr_TournamentBracketDoublesAttrmap:
 	dw TournamentBracketDoublesAttrmap ; $406c
-N64ItemLabelTiles0:
-	INCBIN "data/gfx/lz_N64ItemLabelTiles0.bin" ; $406e, 257 bytes
-N64ItemLabelTiles1:
-	INCBIN "data/gfx/lz_N64ItemLabelTiles1.bin" ; $416f, 258 bytes
-N64ItemLabelTiles2:
-	INCBIN "data/gfx/lz_N64ItemLabelTiles2.bin" ; $4271, 256 bytes
-N64ItemLabelTiles3:
-	INCBIN "data/gfx/lz_N64ItemLabelTiles3.bin" ; $4371, 246 bytes
+N64TournamentsIconTiles:
+	INCBIN "data/gfx/lz_N64TournamentsIconTiles.bin" ; $406e, 257 bytes
+CharacterDataIconTiles:
+	INCBIN "data/gfx/lz_CharacterDataIconTiles.bin" ; $416f, 258 bytes
+SetItemsIconTiles:
+	INCBIN "data/gfx/lz_SetItemsIconTiles.bin" ; $4271, 256 bytes
+ClearStatusIconTiles:
+	INCBIN "data/gfx/lz_ClearStatusIconTiles.bin" ; $4371, 246 bytes
 N64TransferItemGfx0:
 	INCBIN "data/gfx/lz_N64TransferItemGfx0.bin" ; $4467, 180 bytes
 N64TransferItemGfx1:

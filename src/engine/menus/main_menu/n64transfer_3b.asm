@@ -100,7 +100,7 @@ RunN64RecordTypeSelect:
 	wram_bank WRAM_SCREEN ; $71c4
 	ld a, [wMenuSlideDirection] ; $71ca
 	ld b, a ; $71cd
-	call N64RecordTypeSlideIn ; $71ce
+	call ThreeChoiceSlideIn ; $71ce
 	ld a, [wSubMenuCursor] ; $71d1
 	ld c, a ; $71d4
 	ld b, $03 ; $71d5
@@ -132,7 +132,7 @@ RunN64RecordTypeSelect:
 	ld hl, rIE ; $7214
 	set B_IE_TIMER, [hl] ; $7217
 	ld b, MENUSLIDE_FORWARD ; $7219
-	call N64RecordTypeSlideOut ; $721b
+	call ThreeChoiceSlideOut ; $721b
 	ld a, MENUSLIDE_FORWARD ; $721e
 	ld [wMenuSlideDirection], a ; $7220
 	ld c, $03 ; $7223
@@ -145,7 +145,7 @@ RunN64RecordTypeSelect:
 	ld hl, rIE ; $7231
 	set B_IE_TIMER, [hl] ; $7234
 	ld b, MENUSLIDE_BACK ; $7236
-	call N64RecordTypeSlideOut ; $7238
+	call ThreeChoiceSlideOut ; $7238
 	ld a, MENUSLIDE_BACK ; $723b
 	ld [wMenuSlideDirection], a ; $723d
 	ld a, $ff ; $7240
@@ -236,14 +236,14 @@ N64RecordTypeLabelTileVramDests:
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
 	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
-N64RecordTypeSlideIn:
+ThreeChoiceSlideIn:
 	ld a, b ; $72ec
 	or a ; $72ed
 	jr z, .slideBack ; $72ee
 	ld c, $00 ; $72f0
 .slideForwardLoop:
 	call AdvanceFrame ; $72f2
-	ld b, PANELANIM_N64_RECORD_TYPE_IN ; $72f5
+	ld b, PANELANIM_THREE_CHOICE_IN ; $72f5
 	farcall RestoreMenuBgAndDrawPanel ; $72f7
 	ld b, MAPROWS_BAND_7 ; $72fa
 	farcall FlushWram3MapRows ; $72fc
@@ -257,7 +257,7 @@ N64RecordTypeSlideIn:
 	ld c, $0a ; $7307
 .slideBackLoop:
 	call AdvanceFrame ; $7309
-	ld b, PANELANIM_N64_RECORD_TYPE_OUT ; $730c
+	ld b, PANELANIM_THREE_CHOICE_OUT ; $730c
 	farcall RestoreMenuBgAndDrawPanel ; $730e
 	ld b, MAPROWS_BAND_7 ; $7311
 	farcall FlushWram3MapRows ; $7313
@@ -267,14 +267,14 @@ N64RecordTypeSlideIn:
 	cp $ff ; $7319
 	jr nz, .slideBackLoop ; $731b
 	ret ; $731d
-N64RecordTypeSlideOut:
+ThreeChoiceSlideOut:
 	ld a, b ; $731e
 	or a ; $731f
 	jr z, .slideBack ; $7320
 	ld c, $00 ; $7322
 .slideForwardLoop:
 	call AdvanceFrame ; $7324
-	ld b, PANELANIM_N64_RECORD_TYPE_OUT ; $7327
+	ld b, PANELANIM_THREE_CHOICE_OUT ; $7327
 	farcall RestoreMenuBgAndDrawPanel ; $7329
 	ld b, MAPROWS_BAND_7 ; $732c
 	farcall FlushWram3MapRows ; $732e
@@ -288,7 +288,7 @@ N64RecordTypeSlideOut:
 	ld c, $0c ; $7339
 .slideBackLoop:
 	call AdvanceFrame ; $733b
-	ld b, PANELANIM_N64_RECORD_TYPE_IN ; $733e
+	ld b, PANELANIM_THREE_CHOICE_IN ; $733e
 	farcall RestoreMenuBgAndDrawPanel ; $7340
 	ld b, MAPROWS_BAND_7 ; $7343
 	farcall FlushWram3MapRows ; $7345
@@ -612,10 +612,10 @@ LoadN64TransferItemGfx:
 	ret ; $75fb
 N64TransferItemLabelTilePtrs:
 	; $75fc, 4 slot words
-	dslot DataPtr_N64ItemLabelTiles1 ; record 0
-	dslot DataPtr_N64ItemLabelTiles3 ; record 1
-	dslot DataPtr_N64ItemLabelTiles0 ; record 2
-	dslot DataPtr_N64ItemLabelTiles2 ; record 3
+	dslot DataPtr_CharacterDataIconTiles ; record 0
+	dslot DataPtr_ClearStatusIconTiles ; record 1
+	dslot DataPtr_N64TournamentsIconTiles ; record 2
+	dslot DataPtr_SetItemsIconTiles ; record 3
 N64TransferItemLabelTileVramDests:
 	; $7604, 8 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0

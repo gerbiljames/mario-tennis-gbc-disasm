@@ -13,8 +13,8 @@
 	farptr RunN64TransferItemSelect ; $4018
 	farptr PrintNumberRightAligned ; $401a
 	farptr ShowTournamentBracket ; $401c
-	farptr N64RecordTypeSlideIn ; $401e
-	farptr N64RecordTypeSlideOut ; $4020
+	farptr ThreeChoiceSlideIn ; $401e
+	farptr ThreeChoiceSlideOut ; $4020
 	farptr SavedDataPickerSlideIn ; $4022
 	farptr SavedDataPickerSlideOut ; $4024
 	farptr MoveSavedDataPickerCursor ; $4026

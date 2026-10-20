@@ -385,7 +385,7 @@ RacketShoesChoiceGfxParams_3e:
 	; $4fc3, 3 slot words
 	dslot DataPtr_RacketIconTiles ; record 0
 	dslot DataPtr_ShoesIconTiles ; record 1
-	dslot DataPtr_N64ItemLabelTiles2 ; record 2
+	dslot DataPtr_SetItemsIconTiles ; record 2
 RacketShoesChoiceGfxDests_3e:
 	; $4fc9, 6 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0

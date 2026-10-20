@@ -278,8 +278,8 @@ MatchRulesMenuGraphicsTable:
 	; $46d8, 14 bytes (7 records x 1 slot words)
 	dslot DataPtr_SinglesIconTiles ; record 0
 	dslot DataPtr_DoublesIconTiles ; record 1
-	dslot DataPtr_GamesLabelTiles ; record 2
-	dslot DataPtr_GamesLabelTiles2 ; record 3
+	dslot DataPtr_TwoGamesLabelTiles ; record 2
+	dslot DataPtr_SixGamesLabelTiles ; record 3
 	dslot DataPtr_OneSetLabelTiles ; record 4
 	dslot DataPtr_ThreeSetsLabelTiles ; record 5
 	dslot DataPtr_FiveSetsLabelTiles ; record 6
