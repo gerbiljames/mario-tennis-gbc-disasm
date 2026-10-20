@@ -234,7 +234,7 @@ LoadCourtSelectGraphics:
 	ld c, 20 ; $5d8c -- 20 of CompositionCourtNameGfx's 18 tiles
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5d8e
 	farcall LoadCompressedTileBlock ; $5d91
-	ld b, TILEBLOCK_StarCourtNameGfxAlias16 ; $5d94
+	ld b, TILEBLOCK_StarCourtNameGfx ; $5d94
 	ld c, 18 ; $5d96 -- 18 of StarCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $42 + VRAM_BANK1 ; $5d98
 	farcall LoadCompressedTileBlock ; $5d9b

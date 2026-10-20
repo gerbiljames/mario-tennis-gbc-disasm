@@ -256,7 +256,7 @@ Unused_38_SetupMatchTypeMenuScreen:
 	ld a, [wMainMenuCursor] ; $4611
 	ld c, a ; $4614
 	call SetMenuCursorFromIndex_38 ; $4615
-	ld c, SCREENASSET_MatchTypeMenu ; $4618
+	ld c, SCREENASSET_Placeholder0 ; $4618
 	farcall LoadScreenAssetRecord ; $461a
 	farcall ResetTextWindowState ; $461d
 	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $4620

@@ -218,7 +218,7 @@ LoadMainMenuGfx:
 	ld c, $10 ; $57c8
 	farcall LoadIndexedPalette ; $57ca
 	call AdvanceFrame ; $57cd
-	ld b, TILEBLOCK_MainMenuTitleGfxAlias4 ; $57d0
+	ld b, TILEBLOCK_MainMenuTitleGfx ; $57d0
 	ld c, MainMenuTitleGfx_SIZE / 16 ; $57d2
 	ld de, vTiles0 ; $57d4
 	farcall LoadCompressedTileBlock ; $57d7

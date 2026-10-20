@@ -186,7 +186,7 @@ BuildN64ExhibDataScreen:
 	xor a ; $45da
 	ld [wN64ExhibCursorRow], a ; $45db
 	ld [wN64ExhibPage], a ; $45de
-	ld c, SCREENASSET_ExhibitionMenu ; $45e1
+	ld c, SCREENASSET_ExhibitionRecords ; $45e1
 	farcall LoadScreenAssetRecord ; $45e3
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $45e6
 	call LoadChartWindowTiles ; $45e9

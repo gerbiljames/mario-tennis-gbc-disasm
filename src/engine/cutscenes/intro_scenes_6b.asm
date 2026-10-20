@@ -117,20 +117,20 @@ CutsceneSceneAAttrmap:
 CutsceneSceneATilemap:
 	INCBIN "data/engine/cutscenes/lz_CutsceneSceneATilemap.bin" ; $5ea8, 461 bytes
 LoadIntroTilesAndPalette:
-	ld b, TILEBLOCK_IntroGfx0 ; $6075
-	ld c, IntroGfx0_SIZE / 16 ; $6077
+	ld b, TILEBLOCK_IntroSpinningBallFrame0 ; $6075
+	ld c, IntroSpinningBallFrame0_SIZE / 16 ; $6077
 	ld de, vTiles0 + VRAM_BANK1 ; $6079
 	farcall LoadCompressedTileBlock ; $607c
-	ld b, TILEBLOCK_IntroGfx1 ; $607f
-	ld c, IntroGfx1_SIZE / 16 ; $6081
+	ld b, TILEBLOCK_IntroSpinningBallFrame1 ; $607f
+	ld c, IntroSpinningBallFrame1_SIZE / 16 ; $6081
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6083
 	farcall LoadCompressedTileBlock ; $6086
-	ld b, TILEBLOCK_IntroGfx2 ; $6089
-	ld c, IntroGfx2_SIZE / 16 ; $608b
+	ld b, TILEBLOCK_IntroSpinningBallFrame2 ; $6089
+	ld c, IntroSpinningBallFrame2_SIZE / 16 ; $608b
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $608d
 	farcall LoadCompressedTileBlock ; $6090
-	ld b, TILEBLOCK_IntroGfx3 ; $6093
-	ld c, IntroGfx3_SIZE / 16 ; $6095
+	ld b, TILEBLOCK_IntroSpinningBallFrame3 ; $6093
+	ld c, IntroSpinningBallFrame3_SIZE / 16 ; $6095
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6097
 	farcall LoadCompressedTileBlock ; $609a
 	ld b, TILEBLOCK_IntroGfx4 ; $609d

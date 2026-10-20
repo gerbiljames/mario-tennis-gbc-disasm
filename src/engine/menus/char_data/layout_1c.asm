@@ -237,42 +237,42 @@ CharDataPageLeftTargets_1c:
 CharDataPageRightTargets_1c:
 	; $5674, 5 bytes (bytes:5)
 	db $02, $03, $ff, $ff, $03 ; 0x00
-CharDataShiftGfxFramesA:
+CharDataBallAnimFramesA:
 	; $5679, 32 bytes (records:2)
-	dw CharDataShiftGfx00 ; record 0
-	dw CharDataShiftGfx01 ; record 1
-	dw CharDataShiftGfx02 ; record 2
-	dw CharDataShiftGfx03 ; record 3
-	dw CharDataShiftGfx04 ; record 4
-	dw CharDataShiftGfx05 ; record 5
-	dw CharDataShiftGfx06 ; record 6
-	dw CharDataShiftGfx07 ; record 7
-	dw CharDataShiftGfx08 ; record 8
-	dw CharDataShiftGfx09 ; record 9
-	dw CharDataShiftGfx10 ; record 10
-	dw CharDataShiftGfx11 ; record 11
-	dw CharDataShiftGfx12 ; record 12
-	dw CharDataShiftGfx13 ; record 13
-	dw CharDataShiftGfx14 ; record 14
-	dw CharDataShiftGfx15 ; record 15
-CharDataShiftGfxFramesB:
+	dw CharDataBallAnimFrame00 ; record 0
+	dw CharDataBallAnimFrame01 ; record 1
+	dw CharDataBallAnimFrame02 ; record 2
+	dw CharDataBallAnimFrame03 ; record 3
+	dw CharDataBallAnimFrame04 ; record 4
+	dw CharDataBallAnimFrame05 ; record 5
+	dw CharDataBallAnimFrame06 ; record 6
+	dw CharDataBallAnimFrame07 ; record 7
+	dw CharDataBallAnimFrame08 ; record 8
+	dw CharDataBallAnimFrame09 ; record 9
+	dw CharDataBallAnimFrame10 ; record 10
+	dw CharDataBallAnimFrame11 ; record 11
+	dw CharDataBallAnimFrame12 ; record 12
+	dw CharDataBallAnimFrame13 ; record 13
+	dw CharDataBallAnimFrame14 ; record 14
+	dw CharDataBallAnimFrame15 ; record 15
+CharDataBallAnimFramesB:
 	; $5699, 32 bytes (records:2)
-	dw CharDataShiftGfx16 ; record 0
-	dw CharDataShiftGfx17 ; record 1
-	dw CharDataShiftGfx18 ; record 2
-	dw CharDataShiftGfx19 ; record 3
-	dw CharDataShiftGfx20 ; record 4
-	dw CharDataShiftGfx21 ; record 5
-	dw CharDataShiftGfx22 ; record 6
-	dw CharDataShiftGfx23 ; record 7
-	dw CharDataShiftGfx24 ; record 8
-	dw CharDataShiftGfx25 ; record 9
-	dw CharDataShiftGfx26 ; record 10
-	dw CharDataShiftGfx27 ; record 11
-	dw CharDataShiftGfx28 ; record 12
-	dw CharDataShiftGfx29 ; record 13
-	dw CharDataShiftGfx30 ; record 14
-	dw CharDataShiftGfx31 ; record 15
+	dw CharDataBallAnimFrame16 ; record 0
+	dw CharDataBallAnimFrame17 ; record 1
+	dw CharDataBallAnimFrame18 ; record 2
+	dw CharDataBallAnimFrame19 ; record 3
+	dw CharDataBallAnimFrame20 ; record 4
+	dw CharDataBallAnimFrame21 ; record 5
+	dw CharDataBallAnimFrame22 ; record 6
+	dw CharDataBallAnimFrame23 ; record 7
+	dw CharDataBallAnimFrame24 ; record 8
+	dw CharDataBallAnimFrame25 ; record 9
+	dw CharDataBallAnimFrame26 ; record 10
+	dw CharDataBallAnimFrame27 ; record 11
+	dw CharDataBallAnimFrame28 ; record 12
+	dw CharDataBallAnimFrame29 ; record 13
+	dw CharDataBallAnimFrame30 ; record 14
+	dw CharDataBallAnimFrame31 ; record 15
 CharDataBand0RunsStep7_1c:
 	; $56b9, 22 bytes (blit_runs)
 	blit_run 0, 3, 0, 10

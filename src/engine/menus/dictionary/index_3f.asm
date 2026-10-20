@@ -557,44 +557,44 @@ MugshotTiles:
 	INCBIN "data/engine/menus/dictionary/lz_MugshotTiles.bin" ; $6c03, 1000 bytes
 TournamentBracketTiles:
 	INCBIN "data/engine/menus/dictionary/lz_TournamentBracketTiles.bin" ; $6feb, 1224 bytes
-BracketCharIcon00:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon00.bin" ; $74b3, 31 bytes
-BracketCharIcon01:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon01.bin" ; $74d2, 210 bytes
-BracketCharIcon02:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon02.bin" ; $75a4, 213 bytes
-BracketCharIcon03:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon03.bin" ; $7679, 74 bytes
-BracketCharIcon04:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon04.bin" ; $76c3, 75 bytes
-BracketCharIcon05:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon05.bin" ; $770e, 73 bytes
-BracketCharIcon06:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon06.bin" ; $7757, 70 bytes
-BracketCharIcon07:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon07.bin" ; $779d, 67 bytes
-BracketCharIcon08:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon08.bin" ; $77e0, 70 bytes
-BracketCharIcon09:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon09.bin" ; $7826, 74 bytes
-BracketCharIcon10:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon10.bin" ; $7870, 74 bytes
-BracketCharIcon11:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon11.bin" ; $78ba, 74 bytes
-BracketCharIcon12:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon12.bin" ; $7904, 75 bytes
-BracketCharIcon13:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon13.bin" ; $794f, 73 bytes
-BracketCharIcon14:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon14.bin" ; $7998, 67 bytes
-BracketCharIcon15:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon15.bin" ; $79db, 66 bytes
-BracketExtraIcon0:
-	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon0.bin" ; $7a1d, 70 bytes
-BracketExtraIcon1:
-	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon1.bin" ; $7a63, 74 bytes
-BracketExtraIcon2:
-	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon2.bin" ; $7aad, 74 bytes
+RankingBoardBallMarkerTiles:
+	INCBIN "data/engine/menus/dictionary/lz_RankingBoardBallMarkerTiles.bin" ; $74b3, 31 bytes
+CongratulationsSpriteTiles:
+	INCBIN "data/engine/menus/dictionary/lz_CongratulationsSpriteTiles.bin" ; $74d2, 210 bytes
+GameOverSpriteTiles:
+	INCBIN "data/engine/menus/dictionary/lz_GameOverSpriteTiles.bin" ; $75a4, 213 bytes
+StarAnimFrame00:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame00.bin" ; $7679, 74 bytes
+StarAnimFrame01:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame01.bin" ; $76c3, 75 bytes
+StarAnimFrame02:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame02.bin" ; $770e, 73 bytes
+StarAnimFrame03:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame03.bin" ; $7757, 70 bytes
+StarAnimFrame04:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame04.bin" ; $779d, 67 bytes
+StarAnimFrame05:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame05.bin" ; $77e0, 70 bytes
+StarAnimFrame06:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame06.bin" ; $7826, 74 bytes
+StarAnimFrame07:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame07.bin" ; $7870, 74 bytes
+StarAnimFrame08:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame08.bin" ; $78ba, 74 bytes
+StarAnimFrame09:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame09.bin" ; $7904, 75 bytes
+StarAnimFrame10:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame10.bin" ; $794f, 73 bytes
+StarAnimFrame11:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame11.bin" ; $7998, 67 bytes
+StarAnimFrame12:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame12.bin" ; $79db, 66 bytes
+StarAnimFrame13:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame13.bin" ; $7a1d, 70 bytes
+StarAnimFrame14:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame14.bin" ; $7a63, 74 bytes
+StarAnimFrame15:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame15.bin" ; $7aad, 74 bytes
 SelectALevelTitleGfx:
 	INCBIN "data/engine/menus/dictionary/lz_SelectALevelTitleGfx.bin" ; $7af7, 153 bytes
 MarioCharactersTitleGfx:

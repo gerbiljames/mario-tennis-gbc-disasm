@@ -880,7 +880,7 @@ IntroCutsceneState13Init_6b:
 	ld_bg_pals de, 0, 8 ; $49c2
 	call LoadPaletteShadow ; $49c5
 	wram_bank WRAM_STAGING ; $49c8
-	ld_slot hl, DataPtr_IntroCharactersTiles ; $49ce
+	ld_slot hl, DataPtr_IntroMarioTiles ; $49ce
 	ld de, wDecompBuffer ; $49d1
 	call DecompressDataFromBank ; $49d4
 	ld hl, wDecompBuffer ; $49d7
@@ -892,17 +892,17 @@ IntroCutsceneState13Init_6b:
 	ld c, wDecompBufferHigh_SIZE / 16 ; $49e8
 	call QueueVRAMCopy ; $49ea
 	wram_bank WRAM_ACTORS ; $49ed
-	ld_slot hl, DataPtr_IntroCharactersTilemap ; $49f3
-	ld de, wIntroCharactersTilemap ; $49f6
+	ld_slot hl, DataPtr_IntroMarioTilemap ; $49f3
+	ld de, wIntroMarioTilemap ; $49f6
 	call DecompressDataFromBank ; $49f9
-	ld_slot hl, DataPtr_IntroCharactersAttrmap ; $49fc
-	ld de, wIntroCharactersAttrmap ; $49ff
+	ld_slot hl, DataPtr_IntroMarioAttrmap ; $49fc
+	ld de, wIntroMarioAttrmap ; $49ff
 	call DecompressDataFromBank ; $4a02
 	wram_bank WRAM_TEXT ; $4a05
-	ld_slot hl, DataPtr_IntroCharactersTilemap2 ; $4a0b
+	ld_slot hl, DataPtr_IntroMarioTilemap2 ; $4a0b
 	ld de, wWindowShadowTilemap ; $4a0e
 	call DecompressDataFromBank ; $4a11
-	ld_slot hl, DataPtr_IntroCharactersAttrmap2 ; $4a14
+	ld_slot hl, DataPtr_IntroMarioAttrmap2 ; $4a14
 	ld de, wWindowShadowAttrmap ; $4a17
 	call DecompressDataFromBank ; $4a1a
 	wram_bank WRAM_STAGING ; $4a1d

@@ -1,19 +1,19 @@
-DataPtr_TitleGfx0:
-	dw TitleGfx0 ; $4000
-DataPtr_TitleGfx1:
-	dw TitleGfx1 ; $4002
-DataPtr_TitleGfx2:
-	dw TitleGfx2 ; $4004
-DataPtr_TitleGfx3:
-	dw TitleGfx3 ; $4006
-DataPtr_TitleGfx4:
-	dw TitleGfx4 ; $4008
-DataPtr_TitleGfx5:
-	dw TitleGfx5 ; $400a
-DataPtr_TitleGfx6:
-	dw TitleGfx6 ; $400c
-DataPtr_TitleGfx7:
-	dw TitleGfx7 ; $400e
+DataPtr_TitleStartTextFrame0:
+	dw TitleStartTextFrame0 ; $4000
+DataPtr_TitleStartTextFrame1:
+	dw TitleStartTextFrame1 ; $4002
+DataPtr_TitleStartTextFrame2:
+	dw TitleStartTextFrame2 ; $4004
+DataPtr_TitleStartTextFrame3:
+	dw TitleStartTextFrame3 ; $4006
+DataPtr_TitleStartTextFrame4:
+	dw TitleStartTextFrame4 ; $4008
+DataPtr_TitleStartTextFrame5:
+	dw TitleStartTextFrame5 ; $400a
+DataPtr_TitleStartTextFrame6:
+	dw TitleStartTextFrame6 ; $400c
+DataPtr_TitleStartTextFrame7:
+	dw TitleStartTextFrame7 ; $400e
 DataPtr_IntroAwesomeTiles:
 	dw IntroAwesomeTiles ; $4010
 DataPtr_IntroGreatestPlayerTiles:
@@ -24,94 +24,94 @@ DataPtr_IntroGreatestPlayerAttrmap:
 	dw IntroGreatestPlayerAttrmap ; $4016
 DataPtr_IntroGreatestPlayerPalettes:
 	dw IntroGreatestPlayerPalettes ; $4018
-DataPtr_IntroCharactersTiles:
-	dw IntroCharactersTiles ; $401a
-DataPtr_IntroCharactersTilemap:
-	dw IntroCharactersTilemap ; $401c
-DataPtr_IntroCharactersAttrmap:
-	dw IntroCharactersAttrmap ; $401e
-DataPtr_IntroCharactersPalettes:
-	dw IntroCharactersPalettes ; $4020
-DataPtr_IntroCharactersTilemap2:
-	dw IntroCharactersTilemap2 ; $4022
-DataPtr_IntroCharactersAttrmap2:
-	dw IntroCharactersAttrmap2 ; $4024
-	farptr Unused_6d_ShowIntroCharacterScreen ; $4026
-DataPtr_IntroCharacterIcon00:
-	dw IntroCharacterIcon00 ; $4028
-DataPtr_IntroCharacterIcon00Alias1:
-	dw IntroCharacterIcon00 ; $402a
-DataPtr_IntroCharacterIcon00Alias2:
-	dw IntroCharacterIcon00 ; $402c
-DataPtr_IntroCharacterIcon00Alias3:
-	dw IntroCharacterIcon00 ; $402e
+DataPtr_IntroMarioTiles:
+	dw IntroMarioTiles ; $401a
+DataPtr_IntroMarioTilemap:
+	dw IntroMarioTilemap ; $401c
+DataPtr_IntroMarioAttrmap:
+	dw IntroMarioAttrmap ; $401e
+DataPtr_IntroMarioPalettes:
+	dw IntroMarioPalettes ; $4020
+DataPtr_IntroMarioTilemap2:
+	dw IntroMarioTilemap2 ; $4022
+DataPtr_IntroMarioAttrmap2:
+	dw IntroMarioAttrmap2 ; $4024
+	farptr Unused_6d_ShowPlaceholderScreen ; $4026
+DataPtr_Unused_6d_FillerSlot_4028:
+	dw TennisBallAnimFrame00 ; $4028
+DataPtr_Unused_6d_FillerSlot_402a:
+	dw TennisBallAnimFrame00 ; $402a
+DataPtr_Unused_6d_FillerSlot_402c:
+	dw TennisBallAnimFrame00 ; $402c
+DataPtr_Unused_6d_FillerSlot_402e:
+	dw TennisBallAnimFrame00 ; $402e
 DataPtr_TitleScreenTiles:
 	dw TitleScreenTiles ; $4030
-DataPtr_IntroCharacterIcon00Alias4:
-	dw IntroCharacterIcon00 ; $4032
-DataPtr_IntroCharacterIcon01:
-	dw IntroCharacterIcon01 ; $4034
-DataPtr_IntroCharacterIcon02:
-	dw IntroCharacterIcon02 ; $4036
-DataPtr_IntroCharacterIcon03:
-	dw IntroCharacterIcon03 ; $4038
-DataPtr_IntroCharacterIcon04:
-	dw IntroCharacterIcon04 ; $403a
-DataPtr_IntroCharacterIcon05:
-	dw IntroCharacterIcon05 ; $403c
-DataPtr_IntroCharacterIcon06:
-	dw IntroCharacterIcon06 ; $403e
-DataPtr_IntroCharacterIcon07:
-	dw IntroCharacterIcon07 ; $4040
-DataPtr_IntroCharacterIcon08:
-	dw IntroCharacterIcon08 ; $4042
-DataPtr_IntroCharacterIcon09:
-	dw IntroCharacterIcon09 ; $4044
-DataPtr_IntroCharacterIcon10:
-	dw IntroCharacterIcon10 ; $4046
-DataPtr_IntroCharacterIcon11:
-	dw IntroCharacterIcon11 ; $4048
-DataPtr_IntroCharacterIcon12:
-	dw IntroCharacterIcon12 ; $404a
-DataPtr_IntroCharacterIcon13:
-	dw IntroCharacterIcon13 ; $404c
-DataPtr_IntroCharacterIcon14:
-	dw IntroCharacterIcon14 ; $404e
-DataPtr_IntroCharacterIcon15:
-	dw IntroCharacterIcon15 ; $4050
-DataPtr_StarCourtNameGfx:
+DataPtr_TennisBallAnimFrame00:
+	dw TennisBallAnimFrame00 ; $4032
+DataPtr_TennisBallAnimFrame01:
+	dw TennisBallAnimFrame01 ; $4034
+DataPtr_TennisBallAnimFrame02:
+	dw TennisBallAnimFrame02 ; $4036
+DataPtr_TennisBallAnimFrame03:
+	dw TennisBallAnimFrame03 ; $4038
+DataPtr_TennisBallAnimFrame04:
+	dw TennisBallAnimFrame04 ; $403a
+DataPtr_TennisBallAnimFrame05:
+	dw TennisBallAnimFrame05 ; $403c
+DataPtr_TennisBallAnimFrame06:
+	dw TennisBallAnimFrame06 ; $403e
+DataPtr_TennisBallAnimFrame07:
+	dw TennisBallAnimFrame07 ; $4040
+DataPtr_TennisBallAnimFrame08:
+	dw TennisBallAnimFrame08 ; $4042
+DataPtr_TennisBallAnimFrame09:
+	dw TennisBallAnimFrame09 ; $4044
+DataPtr_TennisBallAnimFrame10:
+	dw TennisBallAnimFrame10 ; $4046
+DataPtr_TennisBallAnimFrame11:
+	dw TennisBallAnimFrame11 ; $4048
+DataPtr_TennisBallAnimFrame12:
+	dw TennisBallAnimFrame12 ; $404a
+DataPtr_TennisBallAnimFrame13:
+	dw TennisBallAnimFrame13 ; $404c
+DataPtr_TennisBallAnimFrame14:
+	dw TennisBallAnimFrame14 ; $404e
+DataPtr_TennisBallAnimFrame15:
+	dw TennisBallAnimFrame15 ; $4050
+DataPtr_Unused_6d_FillerSlot_4052:
 	dw StarCourtNameGfx ; $4052
-DataPtr_StarCourtNameGfxAlias1:
+DataPtr_Unused_6d_FillerSlot_4054:
 	dw StarCourtNameGfx ; $4054
-DataPtr_StarCourtNameGfxAlias2:
+DataPtr_Unused_6d_FillerSlot_4056:
 	dw StarCourtNameGfx ; $4056
-DataPtr_StarCourtNameGfxAlias3:
+DataPtr_Unused_6d_FillerSlot_4058:
 	dw StarCourtNameGfx ; $4058
-DataPtr_StarCourtNameGfxAlias4:
+DataPtr_Unused_6d_FillerSlot_405a:
 	dw StarCourtNameGfx ; $405a
-DataPtr_StarCourtNameGfxAlias5:
+DataPtr_Unused_6d_FillerSlot_405c:
 	dw StarCourtNameGfx ; $405c
-DataPtr_StarCourtNameGfxAlias6:
+DataPtr_Unused_6d_FillerSlot_405e:
 	dw StarCourtNameGfx ; $405e
-DataPtr_StarCourtNameGfxAlias7:
+DataPtr_Unused_6d_FillerSlot_4060:
 	dw StarCourtNameGfx ; $4060
-DataPtr_StarCourtNameGfxAlias8:
+DataPtr_Unused_6d_FillerSlot_4062:
 	dw StarCourtNameGfx ; $4062
-DataPtr_StarCourtNameGfxAlias9:
+DataPtr_Unused_6d_FillerSlot_4064:
 	dw StarCourtNameGfx ; $4064
-DataPtr_StarCourtNameGfxAlias10:
+DataPtr_Unused_6d_FillerSlot_4066:
 	dw StarCourtNameGfx ; $4066
-DataPtr_StarCourtNameGfxAlias11:
+DataPtr_Unused_6d_FillerSlot_4068:
 	dw StarCourtNameGfx ; $4068
-DataPtr_StarCourtNameGfxAlias12:
+DataPtr_Unused_6d_FillerSlot_406a:
 	dw StarCourtNameGfx ; $406a
-DataPtr_StarCourtNameGfxAlias13:
+DataPtr_Unused_6d_FillerSlot_406c:
 	dw StarCourtNameGfx ; $406c
-DataPtr_StarCourtNameGfxAlias14:
+DataPtr_Unused_6d_FillerSlot_406e:
 	dw StarCourtNameGfx ; $406e
-DataPtr_StarCourtNameGfxAlias15:
+DataPtr_Unused_6d_FillerSlot_4070:
 	dw StarCourtNameGfx ; $4070
-DataPtr_StarCourtNameGfxAlias16:
+DataPtr_StarCourtNameGfx:
 	dw StarCourtNameGfx ; $4072
 DataPtr_CastleCourtNameGfx:
 	dw CastleCourtNameGfx ; $4074
@@ -145,22 +145,22 @@ DataPtr_LockedLevelFlagIconTiles:
 	dw LockedLevelFlagIconTiles ; $4090
 DataPtr_MarioMiniGamesTiles:
 	dw MarioMiniGamesTiles ; $4092
-TitleGfx0:
-	INCBIN "data/gfx/lz_TitleGfx0.bin" ; $4094, 180 bytes
-TitleGfx1:
-	INCBIN "data/gfx/lz_TitleGfx1.bin" ; $4148, 205 bytes
-TitleGfx2:
-	INCBIN "data/gfx/lz_TitleGfx2.bin" ; $4215, 206 bytes
-TitleGfx3:
-	INCBIN "data/gfx/lz_TitleGfx3.bin" ; $42e3, 229 bytes
-TitleGfx4:
-	INCBIN "data/gfx/lz_TitleGfx4.bin" ; $43c8, 224 bytes
-TitleGfx5:
-	INCBIN "data/gfx/lz_TitleGfx5.bin" ; $44a8, 217 bytes
-TitleGfx6:
-	INCBIN "data/gfx/lz_TitleGfx6.bin" ; $4581, 213 bytes
-TitleGfx7:
-	INCBIN "data/gfx/lz_TitleGfx7.bin" ; $4656, 190 bytes
+TitleStartTextFrame0:
+	INCBIN "data/gfx/lz_TitleStartTextFrame0.bin" ; $4094, 180 bytes
+TitleStartTextFrame1:
+	INCBIN "data/gfx/lz_TitleStartTextFrame1.bin" ; $4148, 205 bytes
+TitleStartTextFrame2:
+	INCBIN "data/gfx/lz_TitleStartTextFrame2.bin" ; $4215, 206 bytes
+TitleStartTextFrame3:
+	INCBIN "data/gfx/lz_TitleStartTextFrame3.bin" ; $42e3, 229 bytes
+TitleStartTextFrame4:
+	INCBIN "data/gfx/lz_TitleStartTextFrame4.bin" ; $43c8, 224 bytes
+TitleStartTextFrame5:
+	INCBIN "data/gfx/lz_TitleStartTextFrame5.bin" ; $44a8, 217 bytes
+TitleStartTextFrame6:
+	INCBIN "data/gfx/lz_TitleStartTextFrame6.bin" ; $4581, 213 bytes
+TitleStartTextFrame7:
+	INCBIN "data/gfx/lz_TitleStartTextFrame7.bin" ; $4656, 190 bytes
 IntroAwesomeTiles:
 	INCBIN "data/gfx/lz_IntroAwesomeTiles.bin" ; $4714, 1577 bytes
 IntroGreatestPlayerTiles:
@@ -171,32 +171,32 @@ IntroGreatestPlayerAttrmap:
 	INCBIN "data/gfx/lz_IntroGreatestPlayerAttrmap.bin" ; $546b, 72 bytes
 IntroGreatestPlayerPalettes:
 	INCLUDE "data/gfx/IntroGreatestPlayerPalettes.asm" ; $54b3, 64 bytes (palettes)
-IntroCharactersTiles:
-	INCBIN "data/gfx/lz_IntroCharactersTiles.bin" ; $54f3, 2597 bytes
-IntroCharactersTilemap:
-	INCBIN "data/gfx/lz_IntroCharactersTilemap.bin" ; $5f18, 329 bytes
-IntroCharactersAttrmap:
-	INCBIN "data/gfx/lz_IntroCharactersAttrmap.bin" ; $6061, 163 bytes
-IntroCharactersPalettes:
-	INCLUDE "data/gfx/IntroCharactersPalettes.asm" ; $6104, 64 bytes (palettes)
-IntroCharactersTilemap2:
-	INCBIN "data/gfx/lz_IntroCharactersTilemap2.bin" ; $6144, 268 bytes
-IntroCharactersAttrmap2:
-	INCBIN "data/gfx/lz_IntroCharactersAttrmap2.bin" ; $6250, 133 bytes
+IntroMarioTiles:
+	INCBIN "data/gfx/lz_IntroMarioTiles.bin" ; $54f3, 2597 bytes
+IntroMarioTilemap:
+	INCBIN "data/gfx/lz_IntroMarioTilemap.bin" ; $5f18, 329 bytes
+IntroMarioAttrmap:
+	INCBIN "data/gfx/lz_IntroMarioAttrmap.bin" ; $6061, 163 bytes
+IntroMarioPalettes:
+	INCLUDE "data/gfx/IntroMarioPalettes.asm" ; $6104, 64 bytes (palettes)
+IntroMarioTilemap2:
+	INCBIN "data/gfx/lz_IntroMarioTilemap2.bin" ; $6144, 268 bytes
+IntroMarioAttrmap2:
+	INCBIN "data/gfx/lz_IntroMarioAttrmap2.bin" ; $6250, 133 bytes
 TitleScreenTiles:
 	INCBIN "data/gfx/lz_TitleScreenTiles.bin" ; $62d5, 1962 bytes
-Unused_6d_ShowIntroCharacterScreen:
+Unused_6d_ShowPlaceholderScreen:
 	sound BGM_SENIOR_RANKING ; $6a7f
 	call DisableLCDSafely ; $6a81
 	call ClearFrameTasks ; $6a84
 	xor a ; $6a87
 	ldh [hScrollY], a ; $6a88
 	ldh [hScrollX], a ; $6a8a
-	ld c, SCREENASSET_IntroCharacterIcon ; $6a8c
+	ld c, SCREENASSET_Placeholder40 ; $6a8c
 	farcall LoadScreenAssetRecord ; $6a8e
 	farcall LoadIntroTilesAndPalette ; $6a91
 	farcall QueueWram3MapToVRAM ; $6a94
-	frame_task Unused_6d_IntroCharacterScreenFrameTask ; $6a97
+	frame_task Unused_6d_PlaceholderScreenFrameTask ; $6a97
 	call EnableLCD ; $6a9f
 	script_fade_in 16 ; $6aa2
 	call WaitFadeEnd ; $6aa7
@@ -209,43 +209,43 @@ Unused_6d_ShowIntroCharacterScreen:
 	call WaitFadeEnd ; $6ab8
 	call ClearFrameTasks ; $6abb
 	ret ; $6abe
-Unused_6d_IntroCharacterScreenFrameTask:
+Unused_6d_PlaceholderScreenFrameTask:
 	ld de, $4020 ; $6abf
 	ld c, $03 ; $6ac2
 	farcall QueueIntroSpriteBlock ; $6ac4
 	ret ; $6ac7
-IntroCharacterIcon00:
-	INCBIN "data/gfx/lz_IntroCharacterIcon00.bin" ; $6ac8, 75 bytes
-IntroCharacterIcon01:
-	INCBIN "data/gfx/lz_IntroCharacterIcon01.bin" ; $6b13, 72 bytes
-IntroCharacterIcon02:
-	INCBIN "data/gfx/lz_IntroCharacterIcon02.bin" ; $6b5b, 71 bytes
-IntroCharacterIcon03:
-	INCBIN "data/gfx/lz_IntroCharacterIcon03.bin" ; $6ba2, 67 bytes
-IntroCharacterIcon04:
-	INCBIN "data/gfx/lz_IntroCharacterIcon04.bin" ; $6be5, 65 bytes
-IntroCharacterIcon05:
-	INCBIN "data/gfx/lz_IntroCharacterIcon05.bin" ; $6c26, 67 bytes
-IntroCharacterIcon06:
-	INCBIN "data/gfx/lz_IntroCharacterIcon06.bin" ; $6c69, 71 bytes
-IntroCharacterIcon07:
-	INCBIN "data/gfx/lz_IntroCharacterIcon07.bin" ; $6cb0, 72 bytes
-IntroCharacterIcon08:
-	INCBIN "data/gfx/lz_IntroCharacterIcon08.bin" ; $6cf8, 73 bytes
-IntroCharacterIcon09:
-	INCBIN "data/gfx/lz_IntroCharacterIcon09.bin" ; $6d41, 72 bytes
-IntroCharacterIcon10:
-	INCBIN "data/gfx/lz_IntroCharacterIcon10.bin" ; $6d89, 72 bytes
-IntroCharacterIcon11:
-	INCBIN "data/gfx/lz_IntroCharacterIcon11.bin" ; $6dd1, 69 bytes
-IntroCharacterIcon12:
-	INCBIN "data/gfx/lz_IntroCharacterIcon12.bin" ; $6e16, 67 bytes
-IntroCharacterIcon13:
-	INCBIN "data/gfx/lz_IntroCharacterIcon13.bin" ; $6e59, 69 bytes
-IntroCharacterIcon14:
-	INCBIN "data/gfx/lz_IntroCharacterIcon14.bin" ; $6e9e, 72 bytes
-IntroCharacterIcon15:
-	INCBIN "data/gfx/lz_IntroCharacterIcon15.bin" ; $6ee6, 72 bytes
+TennisBallAnimFrame00:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame00.bin" ; $6ac8, 75 bytes
+TennisBallAnimFrame01:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame01.bin" ; $6b13, 72 bytes
+TennisBallAnimFrame02:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame02.bin" ; $6b5b, 71 bytes
+TennisBallAnimFrame03:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame03.bin" ; $6ba2, 67 bytes
+TennisBallAnimFrame04:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame04.bin" ; $6be5, 65 bytes
+TennisBallAnimFrame05:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame05.bin" ; $6c26, 67 bytes
+TennisBallAnimFrame06:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame06.bin" ; $6c69, 71 bytes
+TennisBallAnimFrame07:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame07.bin" ; $6cb0, 72 bytes
+TennisBallAnimFrame08:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame08.bin" ; $6cf8, 73 bytes
+TennisBallAnimFrame09:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame09.bin" ; $6d41, 72 bytes
+TennisBallAnimFrame10:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame10.bin" ; $6d89, 72 bytes
+TennisBallAnimFrame11:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame11.bin" ; $6dd1, 69 bytes
+TennisBallAnimFrame12:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame12.bin" ; $6e16, 67 bytes
+TennisBallAnimFrame13:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame13.bin" ; $6e59, 69 bytes
+TennisBallAnimFrame14:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame14.bin" ; $6e9e, 72 bytes
+TennisBallAnimFrame15:
+	INCBIN "data/gfx/lz_TennisBallAnimFrame15.bin" ; $6ee6, 72 bytes
 StarCourtNameGfx:
 	INCBIN "data/gfx/lz_StarCourtNameGfx.bin" ; $6f2e, 165 bytes
 CastleCourtNameGfx:

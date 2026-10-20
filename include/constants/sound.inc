@@ -69,7 +69,7 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_WALL_PRACTICE         ; $1f the Wall Practice Room's drill_defs
 	const BGM_PRACTICE_MATCH        ; $20 the story practice matches (GAMEMODE_PRACTICE_MATCH rows of the match settings tables)
 	const BGM_JUNIOR_RANKING        ; $21 the Junior class ranking matches (hard court)
-	const BGM_SENIOR_RANKING        ; $22 MatchSettingsTable records 6-9; reused by the intro character showcase and the trophy cheat screen
+	const BGM_SENIOR_RANKING        ; $22 MatchSettingsTable records 6-9; reused by the trophy cheat screen and the unused placeholder screen (Unused_6d_ShowPlaceholderScreen)
 	const BGM_VARSITY_RANKING       ; $23 the Varsity ranking matches (composition court)
 	const BGM_DRILL_MATCH           ; $24 the match drills' drill_def (COURT_TRAINING_MATCH)
 	const BGM_DRILL_PRACTICE        ; $25 the practice drills' drill_def (COURT_TRAINING_PRACTICE)

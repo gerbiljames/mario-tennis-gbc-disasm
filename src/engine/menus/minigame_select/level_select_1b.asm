@@ -532,7 +532,7 @@ LoadMinigameLevelSelectGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $6d0a
 	farcall LoadCompressedTileBlock ; $6d0d
 	call AdvanceFrame ; $6d10
-	ld b, TILEBLOCK_SelectALevelTitleGfxAlias16 ; $6d13
+	ld b, TILEBLOCK_SelectALevelTitleGfx ; $6d13
 	ld c, SelectALevelTitleGfx_SIZE / 16 ; $6d15
 	ld de, vTiles0 ; $6d17
 	farcall LoadCompressedTileBlock ; $6d1a

@@ -41,14 +41,14 @@ Unused_18_InitPlayerRecordForCharacter:
 	add hl, bc ; $4677
 	ld [hl], a ; $4678
 	ret ; $4679
-ConfirmScreenBgTiles:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenBgTiles.bin" ; $467a, 2233 bytes
-ConfirmScreenBgPalettes:
-	INCLUDE "data/engine/menus/common/ConfirmScreenBgPalettes.asm" ; $4f33, 64 bytes (palettes)
-ConfirmScreenTilemap:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenTilemap.bin" ; $4f73, 347 bytes
-ConfirmScreenAttrmap:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenAttrmap.bin" ; $50ce, 138 bytes
+Unused_18_JpLevelUpScreenBgTiles:
+	INCBIN "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenBgTiles.bin" ; $467a, 2233 bytes
+Unused_18_JpLevelUpScreenBgPalettes:
+	INCLUDE "data/engine/menus/common/Unused_18_JpLevelUpScreenBgPalettes.asm" ; $4f33, 64 bytes (palettes)
+Unused_18_JpLevelUpScreenTilemap:
+	INCBIN "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenTilemap.bin" ; $4f73, 347 bytes
+Unused_18_JpLevelUpScreenAttrmap:
+	INCBIN "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenAttrmap.bin" ; $50ce, 138 bytes
 ThreeOptionLabelTilesTop:
 	INCLUDE "data/engine/menus/common/ThreeOptionLabelTilesTop.asm" ; $5158, 16 bytes (bytes:16)
 ThreeOptionLabelTilesMiddle:
@@ -73,11 +73,11 @@ YesNoLabelAttrsTop:
 YesNoLabelAttrsBottom:
 	; $51e8, 16 bytes (bytes:16)
 	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
-ConfirmScreenObjTiles:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenObjTiles.bin" ; $51f8, 206 bytes
-	INCLUDE "data/engine/menus/common/lz_ConfirmScreenObjTiles.inc" ; DEF ConfirmScreenObjTiles_SIZE EQU its decoded length, generated from the .bin by make
-ConfirmScreenObjPalettes:
-	INCLUDE "data/engine/menus/common/ConfirmScreenObjPalettes.asm" ; $52c6, 24 bytes (palettes)
+Unused_18_JpLevelUpScreenObjTiles:
+	INCBIN "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenObjTiles.bin" ; $51f8, 206 bytes
+	INCLUDE "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenObjTiles.inc" ; DEF Unused_18_JpLevelUpScreenObjTiles_SIZE EQU its decoded length, generated from the .bin by make
+Unused_18_JpLevelUpScreenObjPalettes:
+	INCLUDE "data/engine/menus/common/Unused_18_JpLevelUpScreenObjPalettes.asm" ; $52c6, 24 bytes (palettes)
 Unused_18_InitConfirmScreen:
 	call ClearFrameTasks ; $52de
 	call ClearSpriteQueue ; $52e1
@@ -86,42 +86,42 @@ Unused_18_InitConfirmScreen:
 	xor a ; $52ea
 	ld [wScorePanelBobActive], a ; $52eb
 	ld [wScorePanelBobStep], a ; $52ee
-	ld hl, ConfirmScreenBgTiles ; $52f1
+	ld hl, Unused_18_JpLevelUpScreenBgTiles ; $52f1
 	ld de, wDecompBuffer ; $52f4
 	call DecompressData ; $52f7
 	ld hl, wDecompBuffer ; $52fa
 	ld de, vTiles2 + VRAM_BANK1 ; $52fd
-	ld c, 128 ; $5300 -- 128 of ConfirmScreenBgTiles's 256 tiles
+	ld c, 128 ; $5300 -- 128 of Unused_18_JpLevelUpScreenBgTiles's 256 tiles
 	call QueueVRAMCopy ; $5302
 	ld hl, wDecompBufferHigh ; $5305
 	ld de, vTiles1 + VRAM_BANK1 ; $5308
 	ld c, wDecompBufferHigh_SIZE / 16 ; $530b
 	call QueueVRAMCopy ; $530d
-	ld hl, ConfirmScreenBgPalettes ; $5310
+	ld hl, Unused_18_JpLevelUpScreenBgPalettes ; $5310
 	ld_bg_pals de, 0, 8 ; $5313
 	call LoadPaletteShadow ; $5316
-	ld hl, ConfirmScreenAttrmap ; $5319
+	ld hl, Unused_18_JpLevelUpScreenAttrmap ; $5319
 	ld de, wStagedAttrmap ; $531c
 	call DecompressData ; $531f
-	ld hl, ConfirmScreenTilemap ; $5322
+	ld hl, Unused_18_JpLevelUpScreenTilemap ; $5322
 	ld de, wStagedTilemap ; $5325
 	call DecompressData ; $5328
 	call Unused_18_LoadFontTiles ; $532b
 	call Unused_18_DrawConfirmScreenBox ; $532e
-	ld hl, ConfirmScreenObjTiles ; $5331
+	ld hl, Unused_18_JpLevelUpScreenObjTiles ; $5331
 	ld de, wDecompBuffer ; $5334
 	call DecompressData ; $5337
 	ld hl, wDecompBuffer ; $533a
 	ld de, vTiles0 tile $30 ; $533d
-	ld c, ConfirmScreenObjTiles_SIZE / 16 ; $5340
+	ld c, Unused_18_JpLevelUpScreenObjTiles_SIZE / 16 ; $5340
 	call QueueVRAMCopy ; $5342
-	ld hl, ConfirmScreenObjPalettes ; $5345
+	ld hl, Unused_18_JpLevelUpScreenObjPalettes ; $5345
 	ld_obj_pals de, 1, 3 ; $5348
 	call LoadPaletteShadow ; $534b
 	ld hl, vTiles0 tile $50 ; $534e
 	ld_obj_pals de, 6, 1 ; $5351
 	call LoadMenuHandCursorGfx ; $5354
-	call Unused_18_LoadConfirmScreenSpriteGfx ; $5357
+	call Unused_18_LoadJpLevelUpSpriteGfx ; $5357
 	call Unused_18_SetupScoreboardDisplay ; $535a
 	ld hl, wMinigameHighScoreMode ; $535d
 	ld b, [hl] ; $5360

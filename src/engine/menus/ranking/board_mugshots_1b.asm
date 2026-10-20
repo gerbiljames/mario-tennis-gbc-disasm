@@ -331,21 +331,21 @@ RankingBoardScreenPalettes:
 	INCLUDE "data/engine/menus/ranking/RankingBoardScreenPalettes.asm" ; $4f76, 48 bytes (palettes)
 LoadRankingBoardTiles:
 	push_wram_bank WRAM_STAGING ; $4fa6
-	ld_slot hl, DataPtr_BracketCharIcon00 ; $4faf
+	ld_slot hl, DataPtr_RankingBoardBallMarkerTiles ; $4faf
 	ld de, wDecompBuffer ; $4fb2
 	call DecompressDataFromBank ; $4fb5
 	ld hl, wDecompBuffer ; $4fb8
 	ld de, vTiles0 + VRAM_BANK1 ; $4fbb
 	ld c, 16 ; $4fbe
 	call QueueVRAMCopy ; $4fc0
-	ld_slot hl, DataPtr_BracketCharIcon01 ; $4fc3
+	ld_slot hl, DataPtr_CongratulationsSpriteTiles ; $4fc3
 	ld de, wDecompBuffer ; $4fc6
 	call DecompressDataFromBank ; $4fc9
 	ld hl, wDecompBuffer ; $4fcc
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4fcf
 	ld c, 16 ; $4fd2
 	call QueueVRAMCopy ; $4fd4
-	ld_slot hl, DataPtr_BracketCharIcon02 ; $4fd7
+	ld_slot hl, DataPtr_GameOverSpriteTiles ; $4fd7
 	ld de, wDecompBuffer ; $4fda
 	call DecompressDataFromBank ; $4fdd
 	ld hl, wDecompBuffer ; $4fe0

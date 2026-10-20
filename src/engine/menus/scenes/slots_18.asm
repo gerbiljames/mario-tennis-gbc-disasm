@@ -34,70 +34,70 @@
 	farptr Unused_18_DrawTileBlock6x2ToTilemap ; $4042
 	farptr LoadOnCourtCharTilesA ; $4044
 	farptr LoadOnCourtCharTilesB ; $4046
-DataPtr_CharRosterIcon00:
-	dw CharRosterIcon00 ; $4048
-DataPtr_CharRosterIcon01:
-	dw CharRosterIcon01 ; $404a
-DataPtr_CharRosterIcon02:
-	dw CharRosterIcon02 ; $404c
-DataPtr_CharRosterIcon03:
-	dw CharRosterIcon03 ; $404e
-DataPtr_CharRosterIcon04:
-	dw CharRosterIcon04 ; $4050
-DataPtr_CharRosterIcon05:
-	dw CharRosterIcon05 ; $4052
-DataPtr_CharRosterIcon06:
-	dw CharRosterIcon06 ; $4054
-DataPtr_CharRosterIcon07:
-	dw CharRosterIcon07 ; $4056
-DataPtr_CharRosterIcon08:
-	dw CharRosterIcon08 ; $4058
-DataPtr_CharRosterIcon09:
-	dw CharRosterIcon09 ; $405a
-DataPtr_CharRosterIcon10:
-	dw CharRosterIcon10 ; $405c
-DataPtr_CharRosterIcon11:
-	dw CharRosterIcon11 ; $405e
-DataPtr_CharRosterIcon12:
-	dw CharRosterIcon12 ; $4060
-DataPtr_CharRosterIcon13:
-	dw CharRosterIcon13 ; $4062
-DataPtr_CharRosterIcon14:
-	dw CharRosterIcon14 ; $4064
-DataPtr_CharRosterIcon15:
-	dw CharRosterIcon15 ; $4066
-DataPtr_CharRosterIcon16:
-	dw CharRosterIcon16 ; $4068
-DataPtr_CharRosterIcon17:
-	dw CharRosterIcon17 ; $406a
-DataPtr_CharRosterIcon18:
-	dw CharRosterIcon18 ; $406c
-DataPtr_CharRosterIcon19:
-	dw CharRosterIcon19 ; $406e
-DataPtr_CharRosterIcon20:
-	dw CharRosterIcon20 ; $4070
-DataPtr_CharRosterIcon21:
-	dw CharRosterIcon21 ; $4072
-DataPtr_CharRosterIcon22:
-	dw CharRosterIcon22 ; $4074
-DataPtr_CharRosterIcon23:
-	dw CharRosterIcon23 ; $4076
-DataPtr_CharRosterIcon24:
-	dw CharRosterIcon24 ; $4078
-DataPtr_CharRosterIcon25:
-	dw CharRosterIcon25 ; $407a
-DataPtr_CharRosterIcon26:
-	dw CharRosterIcon26 ; $407c
-DataPtr_CharRosterIcon27:
-	dw CharRosterIcon27 ; $407e
-DataPtr_CharRosterIcon28:
-	dw CharRosterIcon28 ; $4080
-DataPtr_CharRosterIcon29:
-	dw CharRosterIcon29 ; $4082
-DataPtr_CharRosterIcon30:
-	dw CharRosterIcon30 ; $4084
-DataPtr_CharRosterIcon31:
-	dw CharRosterIcon31 ; $4086
+DataPtr_MushroomAnimFrame00:
+	dw MushroomAnimFrame00 ; $4048
+DataPtr_MushroomAnimFrame01:
+	dw MushroomAnimFrame01 ; $404a
+DataPtr_MushroomAnimFrame02:
+	dw MushroomAnimFrame02 ; $404c
+DataPtr_MushroomAnimFrame03:
+	dw MushroomAnimFrame03 ; $404e
+DataPtr_MushroomAnimFrame04:
+	dw MushroomAnimFrame04 ; $4050
+DataPtr_MushroomAnimFrame05:
+	dw MushroomAnimFrame05 ; $4052
+DataPtr_MushroomAnimFrame06:
+	dw MushroomAnimFrame06 ; $4054
+DataPtr_MushroomAnimFrame07:
+	dw MushroomAnimFrame07 ; $4056
+DataPtr_MushroomAnimFrame08:
+	dw MushroomAnimFrame08 ; $4058
+DataPtr_MushroomAnimFrame09:
+	dw MushroomAnimFrame09 ; $405a
+DataPtr_MushroomAnimFrame10:
+	dw MushroomAnimFrame10 ; $405c
+DataPtr_MushroomAnimFrame11:
+	dw MushroomAnimFrame11 ; $405e
+DataPtr_MushroomAnimFrame12:
+	dw MushroomAnimFrame12 ; $4060
+DataPtr_MushroomAnimFrame13:
+	dw MushroomAnimFrame13 ; $4062
+DataPtr_MushroomAnimFrame14:
+	dw MushroomAnimFrame14 ; $4064
+DataPtr_MushroomAnimFrame15:
+	dw MushroomAnimFrame15 ; $4066
+DataPtr_InvertedStarAnimFrame00:
+	dw InvertedStarAnimFrame00 ; $4068
+DataPtr_InvertedStarAnimFrame01:
+	dw InvertedStarAnimFrame01 ; $406a
+DataPtr_InvertedStarAnimFrame02:
+	dw InvertedStarAnimFrame02 ; $406c
+DataPtr_InvertedStarAnimFrame03:
+	dw InvertedStarAnimFrame03 ; $406e
+DataPtr_InvertedStarAnimFrame04:
+	dw InvertedStarAnimFrame04 ; $4070
+DataPtr_InvertedStarAnimFrame05:
+	dw InvertedStarAnimFrame05 ; $4072
+DataPtr_InvertedStarAnimFrame06:
+	dw InvertedStarAnimFrame06 ; $4074
+DataPtr_InvertedStarAnimFrame07:
+	dw InvertedStarAnimFrame07 ; $4076
+DataPtr_InvertedStarAnimFrame08:
+	dw InvertedStarAnimFrame08 ; $4078
+DataPtr_InvertedStarAnimFrame09:
+	dw InvertedStarAnimFrame09 ; $407a
+DataPtr_InvertedStarAnimFrame10:
+	dw InvertedStarAnimFrame10 ; $407c
+DataPtr_InvertedStarAnimFrame11:
+	dw InvertedStarAnimFrame11 ; $407e
+DataPtr_InvertedStarAnimFrame12:
+	dw InvertedStarAnimFrame12 ; $4080
+DataPtr_InvertedStarAnimFrame13:
+	dw InvertedStarAnimFrame13 ; $4082
+DataPtr_InvertedStarAnimFrame14:
+	dw InvertedStarAnimFrame14 ; $4084
+DataPtr_InvertedStarAnimFrame15:
+	dw InvertedStarAnimFrame15 ; $4086
 DataPtr_MarioMiniGamesTilemap:
 	dw MarioMiniGamesTilemap ; $4088
 DataPtr_MarioMiniGamesAttrmap:

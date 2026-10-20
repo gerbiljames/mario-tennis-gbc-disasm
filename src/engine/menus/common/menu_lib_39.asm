@@ -107,7 +107,7 @@ TileBlockPtrs_39:
 	tileblock CharacterDataLabelGfx ; record 59
 	tileblock N64TournamentsLabelGfx ; record 60
 	tileblock SetItemsLabelGfx ; record 61
-	tileblock MainMenuTitleGfxAlias4 ; record 62
+	tileblock MainMenuTitleGfx ; record 62
 	tileblock PlayMenuTitleGfx ; record 63
 	tileblock SelectACourtHeadingGfx ; record 64
 	tileblock SavedDataTitleGfx ; record 65
@@ -122,28 +122,28 @@ TileBlockPtrs_39:
 	tileblock SelectRacketLabelGfx ; record 74
 	tileblock SelectShoesLabelGfx ; record 75
 	tileblock SetItemsTitleGfx ; record 76
-	tileblock CutsceneGfx0 ; record 77
-	tileblock CutsceneGfx1 ; record 78
-	tileblock CutsceneGfx2 ; record 79
-	tileblock CutsceneGfx3 ; record 80
-	tileblock CutsceneGfx4 ; record 81
-	tileblock CutsceneGfx5 ; record 82
+	tileblock IntroRalliesAlexGfx0 ; record 77
+	tileblock IntroRalliesAlexGfx1 ; record 78
+	tileblock IntroRalliesAlexGfx2 ; record 79
+	tileblock IntroRalliesNinaGfx0 ; record 80
+	tileblock IntroRalliesNinaGfx1 ; record 81
+	tileblock IntroRalliesNinaGfx2 ; record 82
 	tileblock CutsceneGfx6 ; record 83
-	tileblock IntroGfx0 ; record 84
-	tileblock IntroGfx1 ; record 85
-	tileblock IntroGfx2 ; record 86
-	tileblock IntroGfx3 ; record 87
+	tileblock IntroSpinningBallFrame0 ; record 84
+	tileblock IntroSpinningBallFrame1 ; record 85
+	tileblock IntroSpinningBallFrame2 ; record 86
+	tileblock IntroSpinningBallFrame3 ; record 87
 	tileblock IntroGfx4 ; record 88
 	tileblock IntroGfx5 ; record 89
 	tileblock IntroGfx6 ; record 90
-	tileblock TitleGfx0 ; record 91
-	tileblock TitleGfx1 ; record 92
-	tileblock TitleGfx2 ; record 93
-	tileblock TitleGfx3 ; record 94
-	tileblock TitleGfx4 ; record 95
-	tileblock TitleGfx5 ; record 96
-	tileblock TitleGfx6 ; record 97
-	tileblock TitleGfx7 ; record 98
+	tileblock TitleStartTextFrame0 ; record 91
+	tileblock TitleStartTextFrame1 ; record 92
+	tileblock TitleStartTextFrame2 ; record 93
+	tileblock TitleStartTextFrame3 ; record 94
+	tileblock TitleStartTextFrame4 ; record 95
+	tileblock TitleStartTextFrame5 ; record 96
+	tileblock TitleStartTextFrame6 ; record 97
+	tileblock TitleStartTextFrame7 ; record 98
 	tileblock SharedMenuGfx99 ; record 99
 	tileblock CharGridGfx1 ; record 100
 	tileblock HardCourtNameGfx ; record 101
@@ -151,7 +151,7 @@ TileBlockPtrs_39:
 	tileblock GrassCourtNameGfx ; record 103
 	tileblock CompositionCourtNameGfx ; record 104
 	tileblock TournamentBracketGfx ; record 105
-	tileblock StarCourtNameGfxAlias16 ; record 106
+	tileblock StarCourtNameGfx ; record 106
 	tileblock CastleCourtNameGfx ; record 107
 	tileblock TropicsCourtNameGfx ; record 108
 	tileblock JungleCourtNameGfx ; record 109
@@ -164,7 +164,7 @@ TileBlockPtrs_39:
 	tileblock MarioStarGetsLabelGfx ; record 116
 	tileblock CharGridStatLabelSpriteGfx ; record 117
 	tileblock MarioCharactersLabelGfx ; record 118
-	tileblock SelectALevelTitleGfxAlias16 ; record 119
+	tileblock SelectALevelTitleGfx ; record 119
 	tileblock MarioCharactersTitleGfx ; record 120
 	tileblock DigitFontTiles ; record 121
 SharedMenuGfx17:

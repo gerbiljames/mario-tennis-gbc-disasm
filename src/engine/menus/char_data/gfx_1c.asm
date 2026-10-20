@@ -1,99 +1,99 @@
 	ds ALIGN[4]
-CharDataShiftGfx00:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx00.bin" ; $6880, 64 bytes
+CharDataBallAnimFrame00:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame00.bin" ; $6880, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx01:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx01.bin" ; $68c0, 64 bytes
+CharDataBallAnimFrame01:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame01.bin" ; $68c0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx02:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx02.bin" ; $6900, 64 bytes
+CharDataBallAnimFrame02:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame02.bin" ; $6900, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx03:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx03.bin" ; $6940, 64 bytes
+CharDataBallAnimFrame03:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame03.bin" ; $6940, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx04:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx04.bin" ; $6980, 64 bytes
+CharDataBallAnimFrame04:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame04.bin" ; $6980, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx05:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx05.bin" ; $69c0, 64 bytes
+CharDataBallAnimFrame05:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame05.bin" ; $69c0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx06:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx06.bin" ; $6a00, 64 bytes
+CharDataBallAnimFrame06:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame06.bin" ; $6a00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx07:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx07.bin" ; $6a40, 64 bytes
+CharDataBallAnimFrame07:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame07.bin" ; $6a40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx08:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx08.bin" ; $6a80, 64 bytes
+CharDataBallAnimFrame08:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame08.bin" ; $6a80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx09:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx09.bin" ; $6ac0, 64 bytes
+CharDataBallAnimFrame09:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame09.bin" ; $6ac0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx10:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx10.bin" ; $6b00, 64 bytes
+CharDataBallAnimFrame10:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame10.bin" ; $6b00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx11:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx11.bin" ; $6b40, 64 bytes
+CharDataBallAnimFrame11:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame11.bin" ; $6b40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx12:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx12.bin" ; $6b80, 64 bytes
+CharDataBallAnimFrame12:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame12.bin" ; $6b80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx13:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx13.bin" ; $6bc0, 64 bytes
+CharDataBallAnimFrame13:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame13.bin" ; $6bc0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx14:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx14.bin" ; $6c00, 64 bytes
+CharDataBallAnimFrame14:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame14.bin" ; $6c00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx15:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx15.bin" ; $6c40, 64 bytes
+CharDataBallAnimFrame15:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame15.bin" ; $6c40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx16:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx16.bin" ; $6c80, 64 bytes
+CharDataBallAnimFrame16:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame16.bin" ; $6c80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx17:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx17.bin" ; $6cc0, 64 bytes
+CharDataBallAnimFrame17:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame17.bin" ; $6cc0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx18:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx18.bin" ; $6d00, 64 bytes
+CharDataBallAnimFrame18:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame18.bin" ; $6d00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx19:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx19.bin" ; $6d40, 64 bytes
+CharDataBallAnimFrame19:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame19.bin" ; $6d40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx20:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx20.bin" ; $6d80, 64 bytes
+CharDataBallAnimFrame20:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame20.bin" ; $6d80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx21:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx21.bin" ; $6dc0, 64 bytes
+CharDataBallAnimFrame21:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame21.bin" ; $6dc0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx22:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx22.bin" ; $6e00, 64 bytes
+CharDataBallAnimFrame22:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame22.bin" ; $6e00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx23:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx23.bin" ; $6e40, 64 bytes
+CharDataBallAnimFrame23:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame23.bin" ; $6e40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx24:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx24.bin" ; $6e80, 64 bytes
+CharDataBallAnimFrame24:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame24.bin" ; $6e80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx25:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx25.bin" ; $6ec0, 64 bytes
+CharDataBallAnimFrame25:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame25.bin" ; $6ec0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx26:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx26.bin" ; $6f00, 64 bytes
+CharDataBallAnimFrame26:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame26.bin" ; $6f00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx27:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx27.bin" ; $6f40, 64 bytes
+CharDataBallAnimFrame27:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame27.bin" ; $6f40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx28:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx28.bin" ; $6f80, 64 bytes
+CharDataBallAnimFrame28:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame28.bin" ; $6f80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx29:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx29.bin" ; $6fc0, 64 bytes
+CharDataBallAnimFrame29:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame29.bin" ; $6fc0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx30:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx30.bin" ; $7000, 64 bytes
+CharDataBallAnimFrame30:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame30.bin" ; $7000, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx31:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx31.bin" ; $7040, 64 bytes
+CharDataBallAnimFrame31:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame31.bin" ; $7040, 64 bytes
 CharDataLargeDigitGfx:
 	INCBIN "data/engine/menus/char_data/lz_CharDataLargeDigitGfx.bin" ; $7080, 150 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataLargeDigitGfx.inc" ; DEF CharDataLargeDigitGfx_SIZE EQU its decoded length, generated from the .bin by make

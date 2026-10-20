@@ -47,33 +47,33 @@ Unused_18_ClearTileVramBothBanks:
 	xor VBK_BANK ; $55f3
 	ldh [rVBK], a ; $55f5
 	ret ; $55f7
-Unused_18_LoadConfirmScreenSpriteGfx:
-	ld hl, ConfirmScreenSpriteGfx0 ; $55f8
+Unused_18_LoadJpLevelUpSpriteGfx:
+	ld hl, Unused_18_JpLevelUpBannerGfx ; $55f8
 	ld de, wDecompBuffer ; $55fb
 	call DecompressData ; $55fe
 	ld hl, wDecompBuffer ; $5601
 	ld de, vTiles0 + VRAM_BANK1 ; $5604
-	ld c, ConfirmScreenSpriteGfx0_SIZE / 16 ; $5607
+	ld c, Unused_18_JpLevelUpBannerGfx_SIZE / 16 ; $5607
 	call QueueVRAMCopy ; $5609
-	ld hl, ConfirmScreenSpritePalette0 ; $560c
+	ld hl, Unused_18_JpLevelUpBannerPalette ; $560c
 	ld_obj_pals de, 4, 3 ; $560f
 	call LoadPalettesImmediate ; $5612
-	ld hl, ConfirmScreenSpriteGfx1 ; $5615
+	ld hl, Unused_18_JpLevelUpSparkleGfx ; $5615
 	ld de, wDecompBuffer ; $5618
 	call DecompressData ; $561b
 	ld hl, wDecompBuffer ; $561e
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5621
-	ld c, ConfirmScreenSpriteGfx1_SIZE / 16 ; $5624
+	ld c, Unused_18_JpLevelUpSparkleGfx_SIZE / 16 ; $5624
 	call QueueVRAMCopy ; $5626
-	ld hl, ConfirmScreenSpritePalette1 ; $5629
+	ld hl, Unused_18_JpLevelUpSparklePalette ; $5629
 	ld_obj_pals de, 0, 1 ; $562c
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
-ConfirmScreenSpriteGfx0:
-	INCBIN "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.bin" ; $5633, 449 bytes
-	INCLUDE "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.inc" ; DEF ConfirmScreenSpriteGfx0_SIZE EQU its decoded length, generated from the .bin by make
+Unused_18_JpLevelUpBannerGfx:
+	INCBIN "data/engine/menus/scenes/lz_Unused_18_JpLevelUpBannerGfx.bin" ; $5633, 449 bytes
+	INCLUDE "data/engine/menus/scenes/lz_Unused_18_JpLevelUpBannerGfx.inc" ; DEF Unused_18_JpLevelUpBannerGfx_SIZE EQU its decoded length, generated from the .bin by make
 ; A QueueSpriteTemplate list: 14 records of (dy $10, dx $08+8n, tile 2n, attr 0) then the $80 terminator -- one horizontal strip of 14 sprites. Nothing references it.
-Unused_18_ConfirmScreenSpriteTemplate:
+Unused_18_JpLevelUpBannerTemplate:
 	; $57f4, 57 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -90,13 +90,13 @@ Unused_18_ConfirmScreenSpriteTemplate:
 	oam_sprite $10, $68, $18, $00
 	oam_sprite $10, $70, $1a, $00
 	oam_sprite_end
-ConfirmScreenSpritePalette0:
-	INCLUDE "data/engine/menus/scenes/ConfirmScreenSpritePalette0.asm" ; $582d, 24 bytes (palettes)
-ConfirmScreenSpriteGfx1:
-	INCBIN "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx1.bin" ; $5845, 104 bytes
-	INCLUDE "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx1.inc" ; DEF ConfirmScreenSpriteGfx1_SIZE EQU its decoded length, generated from the .bin by make
-ConfirmScreenSpritePalette1:
-	INCLUDE "data/engine/menus/scenes/ConfirmScreenSpritePalette1.asm" ; $58ad, 48 bytes (palettes)
+Unused_18_JpLevelUpBannerPalette:
+	INCLUDE "data/engine/menus/scenes/Unused_18_JpLevelUpBannerPalette.asm" ; $582d, 24 bytes (palettes)
+Unused_18_JpLevelUpSparkleGfx:
+	INCBIN "data/engine/menus/scenes/lz_Unused_18_JpLevelUpSparkleGfx.bin" ; $5845, 104 bytes
+	INCLUDE "data/engine/menus/scenes/lz_Unused_18_JpLevelUpSparkleGfx.inc" ; DEF Unused_18_JpLevelUpSparkleGfx_SIZE EQU its decoded length, generated from the .bin by make
+Unused_18_JpLevelUpSparklePalette:
+	INCLUDE "data/engine/menus/scenes/Unused_18_JpLevelUpSparklePalette.asm" ; $58ad, 48 bytes (palettes)
 Padding_18_1:
 	; $58dd, 3 bytes (fill)
 	ds 3, $00
@@ -221,7 +221,7 @@ LoadOnCourtCharTilesB:
 	ret ; $5ae6
 LoadOnCourtCharTilesFallback:
 	ld hl, OnCourtCharTilesFallbackGfx ; $5ae7
-	ld c, (CharRosterIcon00 - OnCourtCharTilesFallbackGfx) / 16 ; $5aea
+	ld c, (MushroomAnimFrame00 - OnCourtCharTilesFallbackGfx) / 16 ; $5aea
 	call QueueVRAMCopy ; $5aec
 	ret ; $5aef
 	ds ALIGN[4]
@@ -233,70 +233,70 @@ OnCourtCharTilesBGfx:
 	ds ALIGN[4]
 OnCourtCharTilesFallbackGfx:
 	INCBIN "data/engine/menus/scenes/OnCourtCharTilesFallbackGfx.bin" ; $6af0, 64 bytes
-CharRosterIcon00:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon00.bin" ; $6b30, 67 bytes
-CharRosterIcon01:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon01.bin" ; $6b73, 66 bytes
-CharRosterIcon02:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon02.bin" ; $6bb5, 62 bytes
-CharRosterIcon03:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon03.bin" ; $6bf3, 48 bytes
-CharRosterIcon04:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon04.bin" ; $6c23, 44 bytes
-CharRosterIcon05:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon05.bin" ; $6c4f, 46 bytes
-CharRosterIcon06:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon06.bin" ; $6c7d, 59 bytes
-CharRosterIcon07:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon07.bin" ; $6cb8, 65 bytes
-CharRosterIcon08:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon08.bin" ; $6cf9, 67 bytes
-CharRosterIcon09:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon09.bin" ; $6d3c, 65 bytes
-CharRosterIcon10:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon10.bin" ; $6d7d, 60 bytes
-CharRosterIcon11:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon11.bin" ; $6db9, 50 bytes
-CharRosterIcon12:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon12.bin" ; $6deb, 45 bytes
-CharRosterIcon13:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon13.bin" ; $6e18, 51 bytes
-CharRosterIcon14:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon14.bin" ; $6e4b, 61 bytes
-CharRosterIcon15:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon15.bin" ; $6e88, 66 bytes
-CharRosterIcon16:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon16.bin" ; $6eca, 73 bytes
-CharRosterIcon17:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon17.bin" ; $6f13, 68 bytes
-CharRosterIcon18:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon18.bin" ; $6f57, 64 bytes
-CharRosterIcon19:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon19.bin" ; $6f97, 59 bytes
-CharRosterIcon20:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon20.bin" ; $6fd2, 53 bytes
-CharRosterIcon21:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon21.bin" ; $7007, 57 bytes
-CharRosterIcon22:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon22.bin" ; $7040, 66 bytes
-CharRosterIcon23:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon23.bin" ; $7082, 73 bytes
-CharRosterIcon24:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon24.bin" ; $70cb, 71 bytes
-CharRosterIcon25:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon25.bin" ; $7112, 68 bytes
-CharRosterIcon26:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon26.bin" ; $7156, 66 bytes
-CharRosterIcon27:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon27.bin" ; $7198, 64 bytes
-CharRosterIcon28:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon28.bin" ; $71d8, 58 bytes
-CharRosterIcon29:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon29.bin" ; $7212, 60 bytes
-CharRosterIcon30:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon30.bin" ; $724e, 68 bytes
-CharRosterIcon31:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon31.bin" ; $7292, 73 bytes
+MushroomAnimFrame00:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame00.bin" ; $6b30, 67 bytes
+MushroomAnimFrame01:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame01.bin" ; $6b73, 66 bytes
+MushroomAnimFrame02:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame02.bin" ; $6bb5, 62 bytes
+MushroomAnimFrame03:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame03.bin" ; $6bf3, 48 bytes
+MushroomAnimFrame04:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame04.bin" ; $6c23, 44 bytes
+MushroomAnimFrame05:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame05.bin" ; $6c4f, 46 bytes
+MushroomAnimFrame06:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame06.bin" ; $6c7d, 59 bytes
+MushroomAnimFrame07:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame07.bin" ; $6cb8, 65 bytes
+MushroomAnimFrame08:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame08.bin" ; $6cf9, 67 bytes
+MushroomAnimFrame09:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame09.bin" ; $6d3c, 65 bytes
+MushroomAnimFrame10:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame10.bin" ; $6d7d, 60 bytes
+MushroomAnimFrame11:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame11.bin" ; $6db9, 50 bytes
+MushroomAnimFrame12:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame12.bin" ; $6deb, 45 bytes
+MushroomAnimFrame13:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame13.bin" ; $6e18, 51 bytes
+MushroomAnimFrame14:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame14.bin" ; $6e4b, 61 bytes
+MushroomAnimFrame15:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame15.bin" ; $6e88, 66 bytes
+InvertedStarAnimFrame00:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame00.bin" ; $6eca, 73 bytes
+InvertedStarAnimFrame01:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame01.bin" ; $6f13, 68 bytes
+InvertedStarAnimFrame02:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame02.bin" ; $6f57, 64 bytes
+InvertedStarAnimFrame03:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame03.bin" ; $6f97, 59 bytes
+InvertedStarAnimFrame04:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame04.bin" ; $6fd2, 53 bytes
+InvertedStarAnimFrame05:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame05.bin" ; $7007, 57 bytes
+InvertedStarAnimFrame06:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame06.bin" ; $7040, 66 bytes
+InvertedStarAnimFrame07:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame07.bin" ; $7082, 73 bytes
+InvertedStarAnimFrame08:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame08.bin" ; $70cb, 71 bytes
+InvertedStarAnimFrame09:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame09.bin" ; $7112, 68 bytes
+InvertedStarAnimFrame10:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame10.bin" ; $7156, 66 bytes
+InvertedStarAnimFrame11:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame11.bin" ; $7198, 64 bytes
+InvertedStarAnimFrame12:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame12.bin" ; $71d8, 58 bytes
+InvertedStarAnimFrame13:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame13.bin" ; $7212, 60 bytes
+InvertedStarAnimFrame14:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame14.bin" ; $724e, 68 bytes
+InvertedStarAnimFrame15:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame15.bin" ; $7292, 73 bytes
 MarioMiniGamesTilemap:
 	INCBIN "data/engine/menus/scenes/lz_MarioMiniGamesTilemap.bin" ; $72db, 304 bytes
 MarioMiniGamesAttrmap:

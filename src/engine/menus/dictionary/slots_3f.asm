@@ -45,77 +45,77 @@ DataPtr_MugshotTiles:
 	dw MugshotTiles ; $402c
 DataPtr_TournamentBracketTiles:
 	dw TournamentBracketTiles ; $402e
-DataPtr_BracketCharIcon00:
-	dw BracketCharIcon00 ; $4030
-DataPtr_BracketCharIcon01:
-	dw BracketCharIcon01 ; $4032
-DataPtr_BracketCharIcon02:
-	dw BracketCharIcon02 ; $4034
-DataPtr_BracketCharIcon03:
-	dw BracketCharIcon03 ; $4036
-DataPtr_BracketCharIcon04:
-	dw BracketCharIcon04 ; $4038
-DataPtr_BracketCharIcon05:
-	dw BracketCharIcon05 ; $403a
-DataPtr_BracketCharIcon06:
-	dw BracketCharIcon06 ; $403c
-DataPtr_BracketCharIcon07:
-	dw BracketCharIcon07 ; $403e
-DataPtr_BracketCharIcon08:
-	dw BracketCharIcon08 ; $4040
-DataPtr_BracketCharIcon09:
-	dw BracketCharIcon09 ; $4042
-DataPtr_BracketCharIcon10:
-	dw BracketCharIcon10 ; $4044
-DataPtr_BracketCharIcon11:
-	dw BracketCharIcon11 ; $4046
-DataPtr_BracketCharIcon12:
-	dw BracketCharIcon12 ; $4048
-DataPtr_BracketCharIcon13:
-	dw BracketCharIcon13 ; $404a
-DataPtr_BracketCharIcon14:
-	dw BracketCharIcon14 ; $404c
-DataPtr_BracketCharIcon15:
-	dw BracketCharIcon15 ; $404e
-DataPtr_BracketExtraIcon0:
-	dw BracketExtraIcon0 ; $4050
-DataPtr_BracketExtraIcon1:
-	dw BracketExtraIcon1 ; $4052
-DataPtr_BracketExtraIcon2:
-	dw BracketExtraIcon2 ; $4054
-DataPtr_SelectALevelTitleGfx:
+DataPtr_RankingBoardBallMarkerTiles:
+	dw RankingBoardBallMarkerTiles ; $4030
+DataPtr_CongratulationsSpriteTiles:
+	dw CongratulationsSpriteTiles ; $4032
+DataPtr_GameOverSpriteTiles:
+	dw GameOverSpriteTiles ; $4034
+DataPtr_StarAnimFrame00:
+	dw StarAnimFrame00 ; $4036
+DataPtr_StarAnimFrame01:
+	dw StarAnimFrame01 ; $4038
+DataPtr_StarAnimFrame02:
+	dw StarAnimFrame02 ; $403a
+DataPtr_StarAnimFrame03:
+	dw StarAnimFrame03 ; $403c
+DataPtr_StarAnimFrame04:
+	dw StarAnimFrame04 ; $403e
+DataPtr_StarAnimFrame05:
+	dw StarAnimFrame05 ; $4040
+DataPtr_StarAnimFrame06:
+	dw StarAnimFrame06 ; $4042
+DataPtr_StarAnimFrame07:
+	dw StarAnimFrame07 ; $4044
+DataPtr_StarAnimFrame08:
+	dw StarAnimFrame08 ; $4046
+DataPtr_StarAnimFrame09:
+	dw StarAnimFrame09 ; $4048
+DataPtr_StarAnimFrame10:
+	dw StarAnimFrame10 ; $404a
+DataPtr_StarAnimFrame11:
+	dw StarAnimFrame11 ; $404c
+DataPtr_StarAnimFrame12:
+	dw StarAnimFrame12 ; $404e
+DataPtr_StarAnimFrame13:
+	dw StarAnimFrame13 ; $4050
+DataPtr_StarAnimFrame14:
+	dw StarAnimFrame14 ; $4052
+DataPtr_StarAnimFrame15:
+	dw StarAnimFrame15 ; $4054
+DataPtr_Unused_3f_FillerSlot_4056:
 	dw SelectALevelTitleGfx ; $4056
-DataPtr_SelectALevelTitleGfxAlias1:
+DataPtr_Unused_3f_FillerSlot_4058:
 	dw SelectALevelTitleGfx ; $4058
-DataPtr_SelectALevelTitleGfxAlias2:
+DataPtr_Unused_3f_FillerSlot_405a:
 	dw SelectALevelTitleGfx ; $405a
-DataPtr_SelectALevelTitleGfxAlias3:
+DataPtr_Unused_3f_FillerSlot_405c:
 	dw SelectALevelTitleGfx ; $405c
-DataPtr_SelectALevelTitleGfxAlias4:
+DataPtr_Unused_3f_FillerSlot_405e:
 	dw SelectALevelTitleGfx ; $405e
-DataPtr_SelectALevelTitleGfxAlias5:
+DataPtr_Unused_3f_FillerSlot_4060:
 	dw SelectALevelTitleGfx ; $4060
-DataPtr_SelectALevelTitleGfxAlias6:
+DataPtr_Unused_3f_FillerSlot_4062:
 	dw SelectALevelTitleGfx ; $4062
-DataPtr_SelectALevelTitleGfxAlias7:
+DataPtr_Unused_3f_FillerSlot_4064:
 	dw SelectALevelTitleGfx ; $4064
-DataPtr_SelectALevelTitleGfxAlias8:
+DataPtr_Unused_3f_FillerSlot_4066:
 	dw SelectALevelTitleGfx ; $4066
-DataPtr_SelectALevelTitleGfxAlias9:
+DataPtr_Unused_3f_FillerSlot_4068:
 	dw SelectALevelTitleGfx ; $4068
-DataPtr_SelectALevelTitleGfxAlias10:
+DataPtr_Unused_3f_FillerSlot_406a:
 	dw SelectALevelTitleGfx ; $406a
-DataPtr_SelectALevelTitleGfxAlias11:
+DataPtr_Unused_3f_FillerSlot_406c:
 	dw SelectALevelTitleGfx ; $406c
-DataPtr_SelectALevelTitleGfxAlias12:
+DataPtr_Unused_3f_FillerSlot_406e:
 	dw SelectALevelTitleGfx ; $406e
-DataPtr_SelectALevelTitleGfxAlias13:
+DataPtr_Unused_3f_FillerSlot_4070:
 	dw SelectALevelTitleGfx ; $4070
-DataPtr_SelectALevelTitleGfxAlias14:
+DataPtr_Unused_3f_FillerSlot_4072:
 	dw SelectALevelTitleGfx ; $4072
-DataPtr_SelectALevelTitleGfxAlias15:
+DataPtr_Unused_3f_FillerSlot_4074:
 	dw SelectALevelTitleGfx ; $4074
-DataPtr_SelectALevelTitleGfxAlias16:
+DataPtr_SelectALevelTitleGfx:
 	dw SelectALevelTitleGfx ; $4076
 DataPtr_MarioCharactersTitleGfx:
 	dw MarioCharactersTitleGfx ; $4078
