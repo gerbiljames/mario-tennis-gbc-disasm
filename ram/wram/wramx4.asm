@@ -124,7 +124,7 @@ wMinigameTargetWork:: ds 16
 
 ; Match ball-visuals history ring (bank $08 renderer).
 ; match ball history ring (WRAM bank 4)
-; [36 bytes] Ball position-history ring: six 6-byte records [projX word, projY word, tile+8, attr]; UpdateBallVisuals shifts it down one record per frame and BuildBallSlot writes the newest at +$1e
+; [36 bytes] Ball position-history ring: NUM_BALLHIST BALLHIST_* records, oldest first; UpdateBallVisuals shifts it down one record per frame and BuildBallSlot writes the newest at BALLHIST_NEWEST
 wBallHistory:: ds 36
 
 	ds 92

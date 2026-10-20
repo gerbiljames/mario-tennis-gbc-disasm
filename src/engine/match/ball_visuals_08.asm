@@ -117,9 +117,9 @@ UpdateBallVisuals:
 	and a ; $516d
 	jr z, .shiftHistory ; $516e
 .shiftHistory:
-	ld hl, wBallHistory + 6 ; $5170
+	ld hl, wBallHistory + 1 * BALLHIST_SIZE ; $5170
 	ld de, wBallHistory ; $5173
-	ld bc, $001e ; $5176
+	ld bc, (NUM_BALLHIST - 1) * BALLHIST_SIZE ; $5176
 	call CopyMemoryBC ; $5179
 	ld hl, wBounceEffectTimer ; $517c
 	call TickTimer ; $517f
@@ -152,11 +152,11 @@ BuildBallSlot:
 	push de ; $51b2
 	ld e, l ; $51b3
 	ld d, h ; $51b4
-	ld hl, wBallHistory + 30 ; $51b5
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $51b5
 	ld a, e ; $51b8
 	ld [hl+], a ; $51b9
 	ld [hl], d ; $51ba
-	ld hl, wBallHistory + 32 ; $51bb
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_Y ; $51bb
 	ld a, c ; $51be
 	ld [hl+], a ; $51bf
 	ld [hl], b ; $51c0
@@ -193,7 +193,7 @@ BuildBallSlot:
 	ld [hl+], a ; $51f2
 	ld [hl], d ; $51f3
 .done:
-	ld hl, wBallHistory + 34 ; $51f4
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_TILE ; $51f4
 	ld a, c ; $51f7
 	add $08 ; $51f8
 	ld [hl+], a ; $51fa
@@ -203,19 +203,19 @@ BuildBallTrailSlots:
 	ld a, [wBallTrailEnabled] ; $51fd
 	and a ; $5200
 	jr z, .done ; $5201
-	ld hl, wBallHistory + 24 ; $5203
+	ld hl, wBallHistory + 4 * BALLHIST_SIZE ; $5203
 	ld de, wBallTrailSlots ; $5206
 	call BuildTrailSlot ; $5209
-	ld hl, wBallHistory + 18 ; $520c
+	ld hl, wBallHistory + 3 * BALLHIST_SIZE ; $520c
 	ld de, wBallTrailSlots + 4 ; $520f
 	call BuildTrailSlot ; $5212
 	ld a, [wBallTrailColor] ; $5215
 	and a ; $5218
 	jr z, .done ; $5219
-	ld hl, wBallHistory + 12 ; $521b
+	ld hl, wBallHistory + 2 * BALLHIST_SIZE ; $521b
 	ld de, wBallTrailSlots + 8 ; $521e
 	call BuildTrailSlot ; $5221
-	ld hl, wBallHistory + 6 ; $5224
+	ld hl, wBallHistory + 1 * BALLHIST_SIZE ; $5224
 	ld de, wBallTrailSlots + 12 ; $5227
 	call BuildTrailSlot ; $522a
 	ld hl, wBallHistory ; $522d
@@ -310,7 +310,7 @@ BuildNetBallSlot:
 	ld de, $fdc0 ; $52b1
 	add hl, de ; $52b4
 	ret c ; $52b5
-	ld hl, wBallHistory + 30 ; $52b6
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $52b6
 	ld a, [hl+] ; $52b9
 	ld h, [hl] ; $52ba
 	ld l, a ; $52bb

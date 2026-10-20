@@ -250,7 +250,7 @@ IsNewMinigameHighScore:
 	ret ; $4210
 StartScorePopup:
 	push_wram_bank WRAM_ACTORS ; $4211
-	ld hl, wBallHistory + 30 ; $421a
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $421a
 	ld de, wScorePopupSource ; $421d
 	ld a, [hl+] ; $4220
 	ld [de], a ; $4221
@@ -335,11 +335,11 @@ MinigameGridCellAttrs:
 	db $0c, $0c, $0c, $0c ; 0x1c
 GetMinigameGridCellIndex:
 	push_wram_bank WRAM_ACTORS ; $42bf
-	ld hl, wBallHistory + 30 ; $42c8
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $42c8
 	ld a, [hl+] ; $42cb
 	ld d, [hl] ; $42cc
 	ld e, a ; $42cd
-	ld hl, wBallHistory + 32 ; $42ce
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_Y ; $42ce
 	ld a, [hl+] ; $42d1
 	ld b, [hl] ; $42d2
 	ld c, a ; $42d3

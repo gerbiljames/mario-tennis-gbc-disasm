@@ -1878,6 +1878,7 @@ INDEXED_ARRAYS = {
     "wCharDataStatsNoEquipment": "CHARSTAT_",
     "wCharDataEquipmentDeltas": "CHARSTAT_",
     "wActorObjDef": "OBJDEF_",
+    "wBallHistory": "BALLHIST_",
 }
 _INDEXED_ARRAY_RE = re.compile(rf"\b({'|'.join(INDEXED_ARRAYS)}) \+ ([^\],;]+)")
 _FIELD_A_RE = re.compile(r"ld a, ([^,]+)")
@@ -1897,7 +1898,8 @@ def check_field_offsets(fail):
         for i, line in enumerate(lines):
             for m in _INDEXED_ARRAY_RE.finditer(line.split(";")[0]):
                 n += 1
-                if not m.group(2).strip().startswith(INDEXED_ARRAYS[m.group(1)]):
+                off = re.sub(r"^\d+ \* ", "", m.group(2).strip())
+                if not off.startswith(INDEXED_ARRAYS[m.group(1)]):
                     where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
                     fail("fields", f"{where}: {m.group(1)} + {m.group(2).strip()} -- "
                                    f"a {INDEXED_ARRAYS[m.group(1)]}* entry?")

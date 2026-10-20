@@ -256,10 +256,10 @@ UpdateMinigameHudAndBallTrail:
 	call DrawMinigameScore ; $4ac4
 .trail:
 	push_wram_bank WRAM_ACTORS ; $4ac7
-	ld hl, wBallHistory + 12 ; $4ad0
+	ld hl, wBallHistory + 2 * BALLHIST_SIZE ; $4ad0
 	ld de, wBallTrailSlots + 8 ; $4ad3
 	call MarkMinigameObjectOffscreen ; $4ad6
-	ld hl, wBallHistory + 6 ; $4ad9
+	ld hl, wBallHistory + 1 * BALLHIST_SIZE ; $4ad9
 	ld de, wBallTrailSlots + 12 ; $4adc
 	call MarkMinigameObjectOffscreen ; $4adf
 	ld hl, wBallHistory ; $4ae2

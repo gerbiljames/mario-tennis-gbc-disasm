@@ -4,7 +4,7 @@ CheckBallHitsMinigameTargetAlt:
 	ret z ; $6df8
 	ld a, $01 ; $6df9
 	ld [wMinigameHitPending], a ; $6dfb
-	ld hl, wBallHistory + 30 ; $6dfe
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $6dfe
 	ld a, [hl+] ; $6e01
 	ld d, [hl] ; $6e02
 	ld e, a ; $6e03
@@ -19,7 +19,7 @@ CheckBallHitsMinigameTargetAlt:
 	add hl, de ; $6e17
 	bit 7, h ; $6e18
 	jr nz, .done ; $6e1a
-	ld hl, wBallHistory + 32 ; $6e1c
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_Y ; $6e1c
 	ld a, [hl+] ; $6e1f
 	ld d, [hl] ; $6e20
 	ld e, a ; $6e21
