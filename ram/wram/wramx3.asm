@@ -246,8 +246,8 @@ wCharSelectRemoteChars:: dw
 wLinkSelectCmdChar:: db
 ; [8-bit] Link character-select: $ff from RunLinkCharSelectScreen, 1 from Unused_38_ConfirmRemoteGridSelection, 2 from Unused_38_RetreatLinkGridSelection; nothing reads it
 wLinkSelectSlotState:: db
-; [8-bit] Character-select grid: entries present in the nine created-character rows at $da00
-wCharGridCreatedCount:: db
+; [8-bit] Character-select grid: Mario-cast entries present in grid entries 0-8; the page-down checks need 7 or more for a second Mario-cast page
+wCharGridMarioCastCount:: db
 ; [8-bit] Set when the slot just filled needs the CPU-difficulty submenu; the frame loop then runs RunCpuDifficultySubmenu instead of normal input
 wCpuDifficultyPrompt:: db
 ; [8-bit] Set once OpenCpuDifficultyPanel has drawn the panel, so it is drawn only on the first pass
@@ -259,7 +259,7 @@ wCpuDifficultyCursor:: db
 wCharSelectSlotDifficulty:: ds 4
 ; [4 bytes] Left-handed flag per player slot, toggled with START on the grid (Mario-cast characters only). ApplyHandednessToCharRecords copies it to the match records' +$0e, which LoadCharacterAttributes turns into wCharMirrorAttrMask: OAM X-flip plus the forehand/backhand swap in SelectForehandBackhand
 wCharSelectSlotLeftHanded:: ds 4
-; [8-bit] Link character-select: cleared by RunLinkCharSelectScreen, set by ProcessLinkSelectCommand for commands $24-$27. Write-only
+; [8-bit] Link character-select: zeroed by RunLinkCharSelectScreen and by ProcessLinkSelectCommand after each CPU-level command; nothing reads it
 wLinkSelectCmdResult:: db
 ; [8-bit] Link character-select: CPU difficulty for the link match, stepped by Unused_38_HandleLinkCpuDifficultyInput
 wLinkCpuDifficulty:: db
@@ -273,7 +273,7 @@ wEquipEquippedIndex:: db
 wEquipSelectExitTimer:: db
 ; [8-bit] 0 = rackets, 1 = shoes; selects the icon set, the info panel and which stat-modifier table GetItemStatModListPtr reads
 wEquipItemKind:: db
-; [8-bit] Which row-address table GetStatModRowAddr uses for the stat-modifier panel; both loaders set it to 0
+; [8-bit] Which row-address table GetStatModRowAddr uses for the stat-modifier panel: 0 on the select screens, 1 from DrawEquippedRacketPanel, 2 from DrawEquippedShoesPanel
 wEquipStatRowSet:: db
 NEXTU
 ; match results (bank $16)
@@ -438,7 +438,7 @@ wCharGridRightPressCount:: db
 ; Character-select handedness, bank $38. The same address is the
 ; per-character match struct in WRAM banks $04-$07.
 ; character select (bank $38)
-; [8-bit] Handedness the exhibition and link character grids offer for the highlighted character: 0 right, 1 left, 2 not yet chosen. START toggles it (`xor $01`, 2 becomes 1) only when IsMarioCastCharacter passes. DrawCharSelectSlotLabel picks label 30:150/151/152 ("START: Right-Handed" / "START: Left-Handed" / "START: Change Hands") from it. The story screen uses wCharSelectHandedness instead
+; [8-bit] Handedness the exhibition and link character grids offer for the highlighted character: 0 right, 1 left, 2 not yet chosen. START toggles it (`xor $01`, 2 becomes 1) only when IsMarioCastCharacter passes. DrawCharGridHandednessLabel picks label 30:150/151/152 ("START: Right-Handed" / "START: Left-Handed" / "START: Change Hands") from it. The story screen uses wCharSelectHandedness instead
 wCharGridHandedness:: db
 NEXTU
 ; intro swing scene (bank $6b)

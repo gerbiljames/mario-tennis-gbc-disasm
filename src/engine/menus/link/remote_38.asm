@@ -454,7 +454,7 @@ GetRemoteSlotBoxAddress:
 ; The remote-player twin of PlayerSlotBoxAddrPtrs_38: indexed in
 ; GetRemoteSlotBoxAddress, dereferenced, then indexed again by
 ; wCharSelectRemoteSlot * 2 to read one shadow-tilemap address. The
-; targets are ram_ptrs tables exactly like PlayerSlotBoxAddrs0-5, with
+; targets are ram_ptrs tables exactly like the PlayerSlotBoxAddrs* tables, with
 ; $0000 for slots that have no box.
 RemoteSlotBoxAddrPtrs_38:
 	; $69c1, 12 bytes (records:2)

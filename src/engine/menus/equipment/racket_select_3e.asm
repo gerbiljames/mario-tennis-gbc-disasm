@@ -159,7 +159,7 @@ HandleEquipSelectInput:
 	bit PADB_A, a ; $55b4
 	jr nz, .pressedA ; $55b6
 	bit PADB_B, a ; $55b8
-	jr nz, .playSfx ; $55ba
+	jr nz, .cancel ; $55ba
 	jr .moveMenuCursorGrid ; $55bc
 .pressedA:
 	ld a, [wEquipSelectExitTimer] ; $55be
@@ -177,7 +177,7 @@ HandleEquipSelectInput:
 	ld a, [wEquipItemKind] ; $55d9
 	cp EQUIPKIND_RACKETS ; $55dc
 	ld a, b ; $55de
-	jr z, .checkEquippedRacket ; $55df
+	jr z, .storeRacket ; $55df
 	swap a ; $55e1
 	ld b, a ; $55e3
 	ld a, [wStoryMainEquipment] ; $55e4
@@ -185,14 +185,14 @@ HandleEquipSelectInput:
 	or b ; $55e9
 	ld [wStoryMainEquipment], a ; $55ea
 	ret ; $55ed
-.checkEquippedRacket:
+.storeRacket:
 	ld b, a ; $55ee
 	ld a, [wStoryMainEquipment] ; $55ef
 	and $f0 ; $55f2
 	or b ; $55f4
 	ld [wStoryMainEquipment], a ; $55f5
 	ret ; $55f8
-.playSfx:
+.cancel:
 	sound SFX_MENU_CANCEL ; $55f9
 	ld a, $44 ; $55fb
 	ld [wEquipSelectExitTimer], a ; $55fd
@@ -372,10 +372,10 @@ MarkOwnedRackets:
 	ld e, [hl] ; $5777
 	pop hl ; $5778
 	call TestGameFlagByNumber ; $5779
-	jr z, .countDone ; $577c
+	jr z, .nextFlag ; $577c
 	ld a, $01 ; $577e
 	ld [hl], a ; $5780
-.countDone:
+.nextFlag:
 	inc hl ; $5781
 	ld a, c ; $5782
 	inc a ; $5783
@@ -412,10 +412,10 @@ MarkOwnedShoes:
 	ld e, [hl] ; $57c5
 	pop hl ; $57c6
 	call TestGameFlagByNumber ; $57c7
-	jr z, .countDone ; $57ca
+	jr z, .nextFlag ; $57ca
 	ld a, $01 ; $57cc
 	ld [hl], a ; $57ce
-.countDone:
+.nextFlag:
 	inc hl ; $57cf
 	ld a, c ; $57d0
 	inc a ; $57d1

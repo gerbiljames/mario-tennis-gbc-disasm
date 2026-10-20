@@ -205,8 +205,8 @@ Unused_1b_UpdateCharSelectSelection:
 	ld_hl_indexed wNavGridBuffer ; $6182
 	ld a, [hl] ; $6189
 	cp $ff ; $618a
-.storeCharSelectChar:
-	jr z, .storeCharSelectChar ; $618c
+.hangOnEmptyCell:
+	jr z, .hangOnEmptyCell ; $618c
 	ld [wCharSelectChar], a ; $618e
 	ret ; $6191
 Unused_1b_MoveCharSelectCursor:
@@ -464,7 +464,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld d, [hl] ; $63a6
 	ld e, a ; $63a7
 	or d ; $63a8
-	jr z, .checkTrophyExp ; $63a9
+	jr z, .checkPartnerExp ; $63a9
 	push_wram_bank WRAM_SCENE ; $63ab
 	xor a ; $63b4
 	ld [wCharDataAnimCounter], a ; $63b5
@@ -475,7 +475,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	farcall Unused_1a_ShowExpGainScreen ; $63c3
 	ld c, STORYREC_MAIN ; $63c6
 	farcall CharDataScreen_Show ; $63c8
-.checkTrophyExp:
+.checkPartnerExp:
 	ld hl, wN64TransferPartnerExp ; $63cb
 	ld a, [hl+] ; $63ce
 	ld d, [hl] ; $63cf

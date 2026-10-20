@@ -61,7 +61,7 @@ WriteDecimalDigitTile:
 	push hl ; $4470
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4471
 	sub $30 ; $4474
-	jr c, .skipOperand ; $4476
+	jr c, .skipNonDigit ; $4476
 	add $30 ; $4478
 	ld b, a ; $447a
 	wram_bank WRAM_SCREEN ; $447b
@@ -70,7 +70,7 @@ WriteDecimalDigitTile:
 	inc de ; $4483
 	pop hl ; $4484
 	ret ; $4485
-.skipOperand:
+.skipNonDigit:
 	inc de ; $4486
 	pop hl ; $4487
 	ret ; $4488
@@ -99,7 +99,7 @@ Unused_38_RunMatchTypeMenu:
 	bit PADB_A, a ; $44c8
 	jr nz, .confirm ; $44ca
 	bit PADB_B, a ; $44cc
-	jr nz, .done ; $44ce
+	jr nz, .cancel ; $44ce
 	jr .inputLoop ; $44d0
 .confirm:
 	sound SFX_MENU_SELECT ; $44d2
@@ -108,7 +108,7 @@ Unused_38_RunMatchTypeMenu:
 	call ClearFrameTasks ; $44dc
 	xor a ; $44df
 	ret ; $44e0
-.done:
+.cancel:
 	sound SFX_MENU_CANCEL ; $44e1
 	script_fade_out 16 ; $44e3
 	call WaitFadeEnd ; $44e8

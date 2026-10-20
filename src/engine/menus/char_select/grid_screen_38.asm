@@ -124,11 +124,11 @@ GetSelectedCharWramBank:
 SelectedCharWramBankTable:
 	; $4e1f, 4 bytes (bytes:4)
 	db $04, $05, $06, $07 ; 0x00
-DrawCharacterSelectCursor:
+DrawCharSelectHandednessMarker:
 	ld c, $02 ; $4e23
 	call GetMenuCursorIndex_38 ; $4e25
 	add a ; $4e28
-	ld hl, CharacterSelectCursorTable ; $4e29
+	ld hl, CharSelectHandednessMarkerPositions ; $4e29
 	add_hl_a ; $4e2c
 	ld a, [hl+] ; $4e31
 	ld d, [hl] ; $4e32
@@ -137,13 +137,13 @@ DrawCharacterSelectCursor:
 	ld c, $00 ; $4e3a
 	ld a, [wCharSelectHandedness] ; $4e3c
 	or a ; $4e3f
-	jr nz, .gotColumn ; $4e40
+	jr nz, .gotTile ; $4e40
 	ld c, $02 ; $4e42
-.gotColumn:
+.gotTile:
 	ld b, 0 ; $4e44
 	call QueueSprite ; $4e46
 	ret ; $4e49
-CharacterSelectCursorTable:
+CharSelectHandednessMarkerPositions:
 	; $4e4a, 8 bytes (bytes:8)
 	db $54, $2c, $54, $6d, $6d, $2c, $6d, $6d ; 0x00
 TickMenuBgScrollTask_38:
@@ -191,13 +191,13 @@ RunExhibitionCharSelectScreen:
 	pop de ; $4ec5
 	ld a, [wCpuDifficultyPrompt] ; $4ec6
 	or a ; $4ec9
-	jr z, .confirm ; $4eca
+	jr z, .handleInput ; $4eca
 	call DrawCharGridCharSprites ; $4ecc
 	call RunCpuDifficultySubmenu ; $4ecf
 	ldh a, [hWramBank] ; $4ed2
 	push af ; $4ed4
-	jr .redraw ; $4ed5
-.confirm:
+	jr .checkExit ; $4ed5
+.handleInput:
 	call HandleCharGridDpad ; $4ed7
 	call HandleCharGridButtons ; $4eda
 	xor a ; $4edd
@@ -206,14 +206,14 @@ RunExhibitionCharSelectScreen:
 	push_wram_bank WRAM_SCREEN ; $4ee3
 	ld a, [wCharSelectSlot] ; $4eec
 	cp CHARSELECTSLOT_DONE ; $4eef
-	jr z, .cancel ; $4ef1
+	jr z, .waitBanner ; $4ef1
 	call DrawCharGridCursorBox ; $4ef3
 	call DrawCharGridCharSprites ; $4ef6
 	call DrawCharGridScrollArrows ; $4ef9
-	jr .redraw ; $4efc
-.cancel:
+	jr .checkExit ; $4efc
+.waitBanner:
 	call DrawCharGridWaitBanner ; $4efe
-.redraw:
+.checkExit:
 	ld a, [wCharSelectExitCode] ; $4f01
 	ld b, a ; $4f04
 	pop_wram_bank ; $4f05
@@ -221,7 +221,7 @@ RunExhibitionCharSelectScreen:
 	cp CHARSELECT_DONE ; $4f0b
 	jr z, .finish ; $4f0d
 	cp CHARSELECT_CANCELLED ; $4f0f
-	jr z, .done ; $4f11
+	jr z, .cancelled ; $4f11
 	jr .frameLoop ; $4f13
 .finish:
 	script_fade_out 8 ; $4f15
@@ -236,7 +236,7 @@ RunExhibitionCharSelectScreen:
 	set B_IE_TIMER, [hl] ; $4f32
 	xor a ; $4f34
 	ret ; $4f35
-.done:
+.cancelled:
 	sound SFX_MENU_CANCEL ; $4f36
 	script_fade_out 16 ; $4f38
 	call WaitFadeEnd ; $4f3d
@@ -449,7 +449,7 @@ MoveCharGridCursorDown:
 	jr nc, .checkLastPage ; $5230
 	cp $01 ; $5232
 	ret z ; $5234
-	ld a, [wCharGridCreatedCount] ; $5235
+	ld a, [wCharGridMarioCastCount] ; $5235
 	cp $07 ; $5238
 	jr c, .refresh ; $523a
 	ld a, $01 ; $523c
@@ -553,12 +553,12 @@ HandleCharGridButtons:
 	sound SFX_MENU_MOVE ; $52e7
 	ld a, [wCharGridHandedness] ; $52e9
 	cp HAND_UNCHOSEN ; $52ec
-	jr z, .starChar ; $52ee
+	jr z, .fromUnchosen ; $52ee
 	xor $01 ; $52f0
 	ld [wCharGridHandedness], a ; $52f2
 	call RefreshCharInfoPanel ; $52f5
 	ret ; $52f8
-.starChar:
+.fromUnchosen:
 	ld a, HAND_LEFT ; $52f9
 	ld [wCharGridHandedness], a ; $52fb
 	call RefreshCharInfoPanel ; $52fe
@@ -771,21 +771,21 @@ DrawCharGridScrollArrows:
 	call QueueSprite ; $54f7
 	ld a, [wCharGridPage] ; $54fa
 	or a ; $54fd
-	jr z, .checkUpArrow ; $54fe
+	jr z, .checkDownArrow ; $54fe
 	cp $03 ; $5500
-	jr z, .checkUpArrow ; $5502
+	jr z, .checkDownArrow ; $5502
 	ld de, $2a25 ; $5504
 	ld c, BOBDIR_POS ; $5507
 	call ApplySpriteBobOffsetY ; $5509
 	sprite_tile_attr $14, OAM_BANK1 | 7 ; $550c
 	call QueueSprite ; $5510
-.checkUpArrow:
+.checkDownArrow:
 	ld a, [wCharGridPage] ; $5513
 	cp $01 ; $5516
 	jr z, .done ; $5518
 	or a ; $551a
 	jr nz, .drawDownArrow ; $551b
-	ld a, [wCharGridCreatedCount] ; $551d
+	ld a, [wCharGridMarioCastCount] ; $551d
 	cp $07 ; $5520
 	jr c, .done ; $5522
 .drawDownArrow:
@@ -812,7 +812,7 @@ DrawCharGridCharSprites:
 	push hl ; $5553
 	ld a, c ; $5554
 	add a ; $5555
-	ld hl, CharGridCharSprites ; $5556
+	ld hl, CharGridCharSpritePositions ; $5556
 	add_hl_a ; $5559
 	ld a, [hl+] ; $555e
 	ld d, [hl] ; $555f
@@ -836,7 +836,7 @@ DrawCharGridCharSprites:
 	jr nz, .slotLoop ; $5575
 	pop_wram_bank ; $5577
 	ret ; $557c
-CharGridCharSprites:
+CharGridCharSpritePositions:
 	; $557d, 12 bytes (bytes:12)
 	db $33, $0e, $33, $26, $33, $3e, $4e, $0e, $4e, $26, $4e, $3e ; 0x00
 QueueCharGridCharSprite:

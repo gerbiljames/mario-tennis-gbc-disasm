@@ -149,10 +149,10 @@ TennisDictionaryLetterRowTable:
 	db $05, $05, $06, $06, $06, $07, $07, $07, $08, $08, $08 ; 0x10
 DrawTennisDictionaryIndexCursor:
 	or a ; $54c8
-	jr z, .compactTiles ; $54c9
+	jr z, .normalTiles ; $54c9
 	ld hl, TennisDictionaryIndexCursorHighlightTiles ; $54cb
 	jr .gotTiles ; $54ce
-.compactTiles:
+.normalTiles:
 	ld hl, TennisDictionaryIndexCursorNormalTiles ; $54d0
 .gotTiles:
 	wram_bank WRAM_SCREEN ; $54d3

@@ -48,29 +48,29 @@ RetreatToPreviousPlayerSlot:
 CharSelectSlotRingTable:
 	; $5c8f, 12 bytes (records:2)
 	table_width 2
-	dw CharSelectSlotRing0 ; record 0
-	dw CharSelectSlotRing1 ; record 1
-	dw CharSelectSlotRing2 ; record 2
-	dw CharSelectSlotRing3 ; record 3
-	dw CharSelectSlotRing4 ; record 4
-	dw CharSelectSlotRing5 ; record 5
+	dw CharSelectSlotRingExhibSingles ; record 0
+	dw CharSelectSlotRingExhibDoubles ; record 1
+	dw CharSelectSlotRingLinkSinglesP1 ; record 2
+	dw CharSelectSlotRingLinkSinglesP2 ; record 3
+	dw CharSelectSlotRingLinkDoublesP1 ; record 4
+	dw CharSelectSlotRingLinkDoublesP2 ; record 5
 	assert_table_length NUM_CHARSELECTMODES
-CharSelectSlotRing0:
+CharSelectSlotRingExhibSingles:
 	; $5c9b, 4 bytes (bytes:4)
 	db $ff, $00, $02, $ff ; 0x00
-CharSelectSlotRing1:
+CharSelectSlotRingExhibDoubles:
 	; $5c9f, 6 bytes (bytes:6)
 	db $ff, $00, $01, $02, $03, $ff ; 0x00
-CharSelectSlotRing2:
+CharSelectSlotRingLinkSinglesP1:
 	; $5ca5, 4 bytes (bytes:4)
 	db $ff, $00, $04, $ff ; 0x00
-CharSelectSlotRing3:
+CharSelectSlotRingLinkSinglesP2:
 	; $5ca9, 4 bytes (bytes:4)
 	db $ff, $02, $04, $ff ; 0x00
-CharSelectSlotRing4:
+CharSelectSlotRingLinkDoublesP1:
 	; $5cad, 5 bytes (bytes:5)
 	db $ff, $00, $01, $04, $ff ; 0x00
-CharSelectSlotRing5:
+CharSelectSlotRingLinkDoublesP2:
 	; $5cb2, 5 bytes (bytes:5)
 	db $ff, $02, $03, $04, $ff ; 0x00
 GetGridSlotFromCursor:
@@ -217,7 +217,7 @@ BuildCreatedCharRecords:
 	farcall CheckCharacterUnlocked ; $5da2
 	ld hl, CREATEDCHAR_CHAR ; $5da5
 	add hl, bc ; $5da8
-	ld a, [wShadowAttrmap + 12 * TILEMAP_WIDTH + 11] ; $5da9
+	ld a, [wCharRecordScratchChar] ; $5da9
 	cp $04 ; $5dac
 	jr c, .createdChar ; $5dae
 	ld a, $ff ; $5db0
@@ -359,24 +359,24 @@ ResolveSelectedCharIds:
 	ret ; $5ea5
 InitMatchCharsFromSelection:
 	push_wram_bank WRAM_SCREEN ; $5ea6
-	call CacheStorySlotNames ; $5eaf
+	call CacheStorySlotRecords ; $5eaf
 	ld a, [wCharSelectSlotChars] ; $5eb2
 	cp CHAR_NONE ; $5eb5
 	jr z, .slot2 ; $5eb7
 	cp CHAR_STORY_MAIN ; $5eb9
-	jr c, .slot1Created ; $5ebb
+	jr c, .slot1RosterChar ; $5ebb
 	ld c, a ; $5ebd
 	and $07 ; $5ebe
 	srl a ; $5ec0
 	ld b, a ; $5ec2
 	ld a, c ; $5ec3
-	call LoadCachedStorySlotName ; $5ec4
+	call LoadCachedStorySlotRecords ; $5ec4
 	and $81 ; $5ec7
 	ld b, a ; $5ec9
 	ld c, MATCHREC_P1_MAIN ; $5eca
 	farcall InitMatchRecordFromCharId ; $5ecc
 	jr .slot2 ; $5ecf
-.slot1Created:
+.slot1RosterChar:
 	ld b, a ; $5ed1
 	ld c, MATCHREC_P1_MAIN ; $5ed2
 	farcall InitMatchRecordFromCharId ; $5ed4
@@ -385,19 +385,19 @@ InitMatchCharsFromSelection:
 	cp CHAR_NONE ; $5eda
 	jr z, .slot3 ; $5edc
 	cp CHAR_STORY_MAIN ; $5ede
-	jr c, .slot2Created ; $5ee0
+	jr c, .slot2RosterChar ; $5ee0
 	ld c, a ; $5ee2
 	and $07 ; $5ee3
 	srl a ; $5ee5
 	ld b, a ; $5ee7
 	ld a, c ; $5ee8
-	call LoadCachedStorySlotName ; $5ee9
+	call LoadCachedStorySlotRecords ; $5ee9
 	and $81 ; $5eec
 	ld b, a ; $5eee
 	ld c, MATCHREC_P1_PARTNER ; $5eef
 	farcall InitMatchRecordFromCharId ; $5ef1
 	jr .slot3 ; $5ef4
-.slot2Created:
+.slot2RosterChar:
 	ld b, a ; $5ef6
 	ld c, MATCHREC_P1_PARTNER ; $5ef7
 	farcall InitMatchRecordFromCharId ; $5ef9
@@ -406,19 +406,19 @@ InitMatchCharsFromSelection:
 	cp CHAR_NONE ; $5eff
 	jr z, .slot4 ; $5f01
 	cp CHAR_STORY_MAIN ; $5f03
-	jr c, .slot3Created ; $5f05
+	jr c, .slot3RosterChar ; $5f05
 	ld c, a ; $5f07
 	and $07 ; $5f08
 	srl a ; $5f0a
 	ld b, a ; $5f0c
 	ld a, c ; $5f0d
-	call LoadCachedStorySlotName ; $5f0e
+	call LoadCachedStorySlotRecords ; $5f0e
 	and $81 ; $5f11
 	ld b, a ; $5f13
 	ld c, MATCHREC_P2_MAIN ; $5f14
 	farcall InitMatchRecordFromCharId ; $5f16
 	jr .slot4 ; $5f19
-.slot3Created:
+.slot3RosterChar:
 	ld b, a ; $5f1b
 	ld c, MATCHREC_P2_MAIN ; $5f1c
 	farcall InitMatchRecordFromCharId ; $5f1e
@@ -427,19 +427,19 @@ InitMatchCharsFromSelection:
 	cp CHAR_NONE ; $5f24
 	jr z, .done ; $5f26
 	cp CHAR_STORY_MAIN ; $5f28
-	jr c, .slot4Created ; $5f2a
+	jr c, .slot4RosterChar ; $5f2a
 	ld c, a ; $5f2c
 	and $07 ; $5f2d
 	srl a ; $5f2f
 	ld b, a ; $5f31
 	ld a, c ; $5f32
-	call LoadCachedStorySlotName ; $5f33
+	call LoadCachedStorySlotRecords ; $5f33
 	and $81 ; $5f36
 	ld b, a ; $5f38
 	ld c, MATCHREC_P2_PARTNER ; $5f39
 	farcall InitMatchRecordFromCharId ; $5f3b
 	jr .done ; $5f3e
-.slot4Created:
+.slot4RosterChar:
 	ld b, a ; $5f40
 	ld c, MATCHREC_P2_PARTNER ; $5f41
 	farcall InitMatchRecordFromCharId ; $5f43

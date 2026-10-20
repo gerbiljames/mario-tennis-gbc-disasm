@@ -1190,8 +1190,8 @@ engine/menus/link/LinkErrorPalette_3e.asm 0f8b83 8 palettes
 engine/menus/link/LinkErrorFlashColors_3e.asm 0f8b8b 18 palettes
 engine/menus/equipment/EraseConfirmPalette_3e.asm 0f8e80 8 palettes
 engine/menus/equipment/EraseConfirmFlashColors_3e.asm 0f8e88 18 palettes
-engine/menus/equipment/RacketShoesChoicePalette0.asm 0f905d 8 palettes
-engine/menus/equipment/RacketShoesChoicePalette1.asm 0f9065 8 palettes
+engine/menus/equipment/RacketShoesChoicePaletteRacket.asm 0f905d 8 palettes
+engine/menus/equipment/RacketShoesChoicePaletteShoes.asm 0f9065 8 palettes
 engine/menus/equipment/PlayAlonePartnerPalette.asm 0f9345 10 palettes
 engine/menus/equipment/EquipmentSelectObjPalette.asm 0f955b 8 palettes
 engine/menus/court_select/CourtSelect4HardPalette.asm 0fa003 8 palettes

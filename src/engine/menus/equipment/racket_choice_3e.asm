@@ -24,7 +24,7 @@ RunEraseDataConfirmMenu:
 	bit PADB_A, a ; $4c62
 	jr nz, .pressedA ; $4c64
 	bit PADB_B, a ; $4c66
-	jr nz, .playSfx ; $4c68
+	jr nz, .cancel ; $4c68
 	bit PADB_UP, a ; $4c6a
 	jr nz, .toggleChoice ; $4c6c
 	bit PADB_DOWN, a ; $4c6e
@@ -39,7 +39,7 @@ RunEraseDataConfirmMenu:
 .pressedA:
 	ld a, [wMenuCursorY] ; $4c80
 	or a ; $4c83
-	jr nz, .playSfx ; $4c84
+	jr nz, .cancel ; $4c84
 	sound SFX_MENU_DECIDE ; $4c86
 	ld hl, rIE ; $4c88
 	set B_IE_TIMER, [hl] ; $4c8b
@@ -48,7 +48,7 @@ RunEraseDataConfirmMenu:
 	call WaitFadeEnd ; $4c95
 	ld a, $01 ; $4c98
 	ret ; $4c9a
-.playSfx:
+.cancel:
 	sound SFX_MENU_CANCEL ; $4c9b
 	ld hl, rIE ; $4c9d
 	set B_IE_TIMER, [hl] ; $4ca0
@@ -107,7 +107,7 @@ LoadEraseDataConfirmScreen:
 	wram_bank WRAM_SCREEN ; $4d38
 	ld a, [wScreenScratch] ; $4d3e
 	cp $02 ; $4d41
-	jr nz, .compare ; $4d43
+	jr nz, .notCurrentGame ; $4d43
 	ld hl, Text_EraseCurrentGame ; $4d45
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4d48
 	ld c, $0e ; $4d4b
@@ -128,8 +128,8 @@ LoadEraseDataConfirmScreen:
 	ld c, SavedDataTitleGfx_SIZE / 16 ; $4d73
 	ld de, vTiles0 ; $4d75
 	farcall LoadCompressedTileBlock ; $4d78
-	jp .renderProportionalTextAt ; $4d7b
-.compare:
+	jp .drawYesNo ; $4d7b
+.notCurrentGame:
 	or a ; $4d7e
 	jr z, .eraseAll ; $4d7f
 	ld hl, Text_EraseAllN64Data ; $4d81
@@ -152,7 +152,7 @@ LoadEraseDataConfirmScreen:
 	ld c, EraseN64DataTitleGfx_SIZE / 16 ; $4daf
 	ld de, vTiles0 ; $4db1
 	farcall LoadCompressedTileBlock ; $4db4
-	jr .renderProportionalTextAt ; $4db7
+	jr .drawYesNo ; $4db7
 .eraseAll:
 	ld hl, Text_EraseAllSavedData ; $4db9
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4dbc
@@ -174,7 +174,7 @@ LoadEraseDataConfirmScreen:
 	ld c, EraseAllTitleGfx_SIZE / 16 ; $4de7
 	ld de, vTiles0 ; $4de9
 	farcall LoadCompressedTileBlock ; $4dec
-.renderProportionalTextAt:
+.drawYesNo:
 	ld hl, Text_EraseConfirmYes ; $4def
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 16 ; $4df2
 	ld c, $04 ; $4df5
@@ -445,19 +445,19 @@ SetRacketShoesChoicePalette:
 	ret ; $504a
 RacketShoesChoicePalettePtrs:
 	; $504b, 18 bytes (records:2)
-	dw RacketShoesChoicePalette0 ; record 0
-	dw RacketShoesChoicePalette1 ; record 1
-	dw RacketShoesChoicePalette0 ; record 2
-	dw RacketShoesChoicePalette0 ; record 3
-	dw RacketShoesChoicePalette0 ; record 4
-	dw RacketShoesChoicePalette0 ; record 5
-	dw RacketShoesChoicePalette0 ; record 6
-	dw RacketShoesChoicePalette0 ; record 7
-	dw RacketShoesChoicePalette0 ; record 8
-RacketShoesChoicePalette0:
-	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePalette0.asm" ; $505d, 8 bytes (palettes)
-RacketShoesChoicePalette1:
-	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePalette1.asm" ; $5065, 8 bytes (palettes)
+	dw RacketShoesChoicePaletteRacket ; record 0
+	dw RacketShoesChoicePaletteShoes ; record 1
+	dw RacketShoesChoicePaletteRacket ; record 2
+	dw RacketShoesChoicePaletteRacket ; record 3
+	dw RacketShoesChoicePaletteRacket ; record 4
+	dw RacketShoesChoicePaletteRacket ; record 5
+	dw RacketShoesChoicePaletteRacket ; record 6
+	dw RacketShoesChoicePaletteRacket ; record 7
+	dw RacketShoesChoicePaletteRacket ; record 8
+RacketShoesChoicePaletteRacket:
+	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePaletteRacket.asm" ; $505d, 8 bytes (palettes)
+RacketShoesChoicePaletteShoes:
+	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePaletteShoes.asm" ; $5065, 8 bytes (palettes)
 DrawRacketShoesChoiceCaption:
 	push_wram_bank WRAM_SCREEN ; $506d
 	ld c, $02 ; $5076

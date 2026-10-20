@@ -8,7 +8,7 @@ DrawCharNameAndType:
 	farcall RenderTextToBuffer64 ; $58dc
 	pop bc ; $58df
 	ld a, c ; $58e0
-	ld hl, CharNameAndTypeTable ; $58e1
+	ld hl, CharPlayTypeTable ; $58e1
 	add_hl_a ; $58e4
 	ld a, [hl] ; $58e9
 	ld hl, Text_CharTypePower ; $58ea
@@ -17,14 +17,14 @@ DrawCharNameAndType:
 	ld c, $20 ; $58f5
 	farcall RenderTextToBuffer64 ; $58f7
 	ret ; $58fa
-CharNameAndTypeTable:
+CharPlayTypeTable:
 	; $58fb, 32 bytes (bytes:16)
 	db $00, $00, $00, $00, $04, $01, $02, $02, $00, $04, $00, $03, $02, $02, $01, $04 ; 0x00
 	db $02, $04, $00, $03, $05, $05, $05, $02, $00, $04, $02, $01, $04, $00, $00, $01 ; 0x10
-DrawCharSelectSlotLabel:
+DrawCharGridHandednessLabel:
 	ld a, [wCharGridPage] ; $591b
 	cp $02 ; $591e
-	jr nc, .drawName ; $5920
+	jr nc, .setLabelAttrs ; $5920
 	ld a, [wCharGridHandedness] ; $5922
 	ASSERT HAND_RIGHT == 0
 	or a ; $5925
@@ -37,7 +37,7 @@ DrawCharSelectSlotLabel:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5938
 	rect_size $05, $01 ; $593b
 	farcall CopyTilemapRect ; $593f
-	jr .drawName ; $5942
+	jr .setLabelAttrs ; $5942
 .notRightHanded:
 	cp $01 ; $5944
 	jr nz, .handsNotChosen ; $5946
@@ -49,7 +49,7 @@ DrawCharSelectSlotLabel:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5958
 	rect_size $05, $01 ; $595b
 	farcall CopyTilemapRect ; $595f
-	jr .drawName ; $5962
+	jr .setLabelAttrs ; $5962
 .handsNotChosen:
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5964
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $5967
@@ -59,7 +59,7 @@ DrawCharSelectSlotLabel:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5974
 	rect_size $08, $01 ; $5977
 	farcall CopyTilemapRect ; $597b
-.drawName:
+.setLabelAttrs:
 	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH + 1 ; $597e
 	ld h, $08 ; $5981
 	rect_size $12, $01 ; $5983
@@ -247,14 +247,14 @@ BuildCharUnlockFlags:
 	ld e, a ; $5aea
 	call TestGameFlag ; $5aeb
 	jr nz, .markChar ; $5aee
-	jr .nextSlot ; $5af0
+	jr .nextChar ; $5af0
 .markChar:
 	ld hl, wCharUnlockFlags + 18 ; $5af2
 	ld a, b ; $5af5
 	add_hl_a ; $5af6
 	ld a, $01 ; $5afb
 	ld [hl], a ; $5afd
-.nextSlot:
+.nextChar:
 	ld a, b ; $5afe
 	inc a ; $5aff
 	ld b, a ; $5b00
@@ -306,7 +306,7 @@ BuildCharGridFromUnlockFlags:
 	or a ; $5b4e
 	jr z, .storeEmpty ; $5b4f
 	push hl ; $5b51
-	ld hl, CharGridFromUnlockFlagsTable ; $5b52
+	ld hl, CharGridSlotCharIds ; $5b52
 	ld a, c ; $5b55
 	add_hl_a ; $5b56
 	ld a, [hl] ; $5b5b
@@ -330,14 +330,14 @@ BuildCharGridFromUnlockFlags:
 ; A 32-entry byte mask in exactly the format BuildCharGridFromUnlockFlags
 ; reads through hl -- one byte per grid slot, nonzero meaning unlocked --
 ; sitting immediately in front of that routine's own
-; CharGridFromUnlockFlagsTable. Slots $09-$0e are zero and the rest are
+; CharGridSlotCharIds. Slots $09-$0e are zero and the rest are
 ; $01. Nothing loads its address.
 Unused_38_CharGridUnlockMask:
 	; $5b6f, 36 bytes (bytes:16)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01 ; 0x00
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x10
 	db $00, $00, $00, $00 ; 0x20
-CharGridFromUnlockFlagsTable:
+CharGridSlotCharIds:
 	; $5b93, 36 bytes (bytes:16)
 	table_width 1
 	db CHAR_MARIO, CHAR_LUIGI, CHAR_PEACH, CHAR_BABY_MARIO, CHAR_YOSHI, CHAR_DK, CHAR_WARIO, CHAR_WALUIGI

@@ -24,7 +24,7 @@ ClearPlayerSlotPortrait:
 	ld [hl], a ; $55d3
 	ld a, [wCharSelectSlot] ; $55d4
 	cp $02 ; $55d7
-	jr nc, .slot0 ; $55d9
+	jr nc, .lowerRow ; $55d9
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $55db
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $55de
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $55e1
@@ -34,7 +34,7 @@ ClearPlayerSlotPortrait:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $55ec
 	call QueueVRAMCopy ; $55ee
 	jr .done ; $55f1
-.slot0:
+.lowerRow:
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $55f3
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $55f6
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $55f9
@@ -49,7 +49,7 @@ ClearPlayerSlotPortrait:
 ; 16, the four player slots -- behind ClearPlayerSlotPortrait, which
 ; writes its cell addresses out longhand instead. Byte-identical to
 ; Unused_38_PortraitCellAddrs1. The live equivalent is the
-; PlayerSlotBoxAddrs0-5 family (columns 13 and 17, NO_BOX for unused
+; PlayerSlotBoxAddrs* family (columns 13 and 17, NO_BOX for unused
 ; slots). Nothing references it.
 Unused_38_PortraitCellAddrs0:
 	; $560a, 8 bytes (ram_ptrs:3)
@@ -84,7 +84,7 @@ DrawPlayerSlotPortrait:
 	call DrawPlayerSlotDifficultyMark ; $5639
 	ld a, [wCharSelectSlot] ; $563c
 	cp $02 ; $563f
-	jr nc, .slot0 ; $5641
+	jr nc, .lowerRow ; $5641
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $5643
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $5646
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $5649
@@ -94,7 +94,7 @@ DrawPlayerSlotPortrait:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $5654
 	call QueueVRAMCopy ; $5656
 	jr .done ; $5659
-.slot0:
+.lowerRow:
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $565b
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $565e
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $5661
@@ -159,49 +159,49 @@ GetPlayerSlotBoxAddress:
 PlayerSlotBoxAddrPtrs_38:
 	; $56c9, 12 bytes (records:2)
 	table_width 2
-	dw PlayerSlotBoxAddrs0 ; record 0
-	dw PlayerSlotBoxAddrs1 ; record 1
-	dw PlayerSlotBoxAddrs2 ; record 2
-	dw PlayerSlotBoxAddrs3 ; record 3
-	dw PlayerSlotBoxAddrs4 ; record 4
-	dw PlayerSlotBoxAddrs5 ; record 5
+	dw PlayerSlotBoxAddrsExhibSingles ; record 0
+	dw PlayerSlotBoxAddrsExhibDoubles ; record 1
+	dw PlayerSlotBoxAddrsLinkSinglesP1 ; record 2
+	dw PlayerSlotBoxAddrsLinkSinglesP2 ; record 3
+	dw PlayerSlotBoxAddrsLinkDoublesP1 ; record 4
+	dw PlayerSlotBoxAddrsLinkDoublesP2 ; record 5
 	assert_table_length NUM_CHARSELECTMODES
-PlayerSlotBoxAddrs0:
+PlayerSlotBoxAddrsExhibSingles:
 	; $56d5, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 0
 	dw NO_BOX ; record 1
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; record 2
 	dw NO_BOX ; record 3
 	dw NO_BOX ; record 4
-PlayerSlotBoxAddrs1:
+PlayerSlotBoxAddrsExhibDoubles:
 	; $56df, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 13 ; record 0
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 17 ; record 1
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 13 ; record 2
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 17 ; record 3
 	dw NO_BOX ; record 4
-PlayerSlotBoxAddrs2:
+PlayerSlotBoxAddrsLinkSinglesP1:
 	; $56e9, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 0
 	dw NO_BOX ; record 1
 	dw NO_BOX ; record 2
 	dw NO_BOX ; record 3
 	dw NO_BOX ; record 4
-PlayerSlotBoxAddrs3:
+PlayerSlotBoxAddrsLinkSinglesP2:
 	; $56f3, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw NO_BOX ; record 1
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; record 2
 	dw NO_BOX ; record 3
 	dw NO_BOX ; record 4
-PlayerSlotBoxAddrs4:
+PlayerSlotBoxAddrsLinkDoublesP1:
 	; $56fd, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 13 ; record 0
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 17 ; record 1
 	dw NO_BOX ; record 2
 	dw NO_BOX ; record 3
 	dw NO_BOX ; record 4
-PlayerSlotBoxAddrs5:
+PlayerSlotBoxAddrsLinkDoublesP2:
 	; $5707, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw NO_BOX ; record 1
@@ -314,7 +314,7 @@ RefreshCharInfoPanel:
 	push bc ; $57af
 	call DrawCharNameAndType ; $57b0
 	pop bc ; $57b3
-	call DrawCharSelectSlotLabel ; $57b4
+	call DrawCharGridHandednessLabel ; $57b4
 .done:
 	ld hl, wShadowTilemap + 12 * TILEMAP_WIDTH ; $57b7
 	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $57ba
@@ -356,7 +356,7 @@ DrawCreatedCharStats:
 	ld c, l ; $57f9
 	ld a, [hl] ; $57fa
 	cp $ff ; $57fb
-	jp z, .drawName ; $57fd
+	jp z, .clearAttrRow ; $57fd
 	push af ; $5800
 	push bc ; $5801
 	push de ; $5802
@@ -440,7 +440,7 @@ DrawCreatedCharStats:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 15 ; $58af
 	ld a, $02 ; $58b2
 	call DrawDecimalNumber ; $58b4
-.drawName:
+.clearAttrRow:
 	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH + 1 ; $58b7
 	ld h, $00 ; $58ba
 	rect_size $12, $01 ; $58bc

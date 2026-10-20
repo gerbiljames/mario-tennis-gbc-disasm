@@ -31,7 +31,7 @@ RunCharacterSelectScreen:
 	call DrawCharacterSelectChars ; $4824
 	frame_task UpdateAnimatedTilesTask_38 ; $4827
 	frame_task DrawCharacterSelectChars ; $482f
-	frame_task DrawCharacterSelectCursor ; $4837
+	frame_task DrawCharSelectHandednessMarker ; $4837
 	call EnableLCD ; $483f
 	script_fade_in 8 ; $4842
 	call WaitFadeEnd ; $4847
@@ -55,7 +55,7 @@ RunCharacterSelectScreen:
 	bit PADB_B, a ; $4872
 	jr nz, .cancel ; $4874
 	bit PADB_START, a ; $4876
-	jr nz, .viewStats ; $4878
+	jr nz, .toggleHandedness ; $4878
 	jr .redraw ; $487a
 .confirm:
 	sound SFX_MENU_SELECT ; $487c
@@ -103,7 +103,7 @@ RunCharacterSelectScreen:
 	call EnableLCD ; $48eb
 	ld a, $ff ; $48ee
 	ret ; $48f0
-.viewStats:
+.toggleHandedness:
 	sound SFX_MENU_MOVE ; $48f1
 	push_wram_bank WRAM_COURT_PLANES ; $48f3
 	ld a, [wCharSelectHandedness] ; $48fc
@@ -116,7 +116,7 @@ Unused_38_DrawCharSelectCursorBox:
 	ld c, $02 ; $490c
 	call GetMenuCursorIndex_38 ; $490e
 	add a ; $4911
-	ld hl, CharacterSelectScreenTable ; $4912
+	ld hl, CharSelectCursorBoxPositions ; $4912
 	add_hl_a ; $4915
 	ld a, [hl+] ; $491a
 	ld d, [hl] ; $491b
@@ -124,7 +124,7 @@ Unused_38_DrawCharSelectCursorBox:
 	ld bc, $3018 ; $491d
 	call DrawSelectedOptionBox ; $4920
 	ret ; $4923
-CharacterSelectScreenTable:
+CharSelectCursorBoxPositions:
 	; $4924, 8 bytes (bytes:8)
 	db $20, $08, $20, $68, $40, $08, $40, $68 ; 0x00
 LoadCharSelectCharPalettes:
@@ -232,7 +232,7 @@ SetupCharacterSelectScreen:
 	wram_bank WRAM_COURT_PLANES ; $4a21
 	ld a, [wCharSelectIsPartner] ; $4a27
 	or a ; $4a2a
-	jr z, .secondRow ; $4a2b
+	jr z, .loadHandednessGfx ; $4a2b
 	ld a, CHAR_HARRY ; $4a2d
 	farcall LoadCharMugshotToBuffer ; $4a2f
 	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $4a32
@@ -252,7 +252,7 @@ SetupCharacterSelectScreen:
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH + 14 ; $4a59
 	ld h, $0f ; $4a5c
 	farcall FillTilemapRect ; $4a5e
-.secondRow:
+.loadHandednessGfx:
 	ld b, TILEBLOCK_HandednessLRSpriteGfx ; $4a61
 	ld c, HandednessLRSpriteGfx_SIZE / 16 ; $4a63
 	ld de, vTiles0 ; $4a65
@@ -301,20 +301,20 @@ DrawCharacterSelectPrompt:
 	push_wram_bank WRAM_COURT_PLANES ; $4ad3
 	ld a, [wCharSelectIsPartner] ; $4adc
 	or a ; $4adf
-	jr nz, .altRow ; $4ae0
+	jr nz, .choosePartnerPrompt ; $4ae0
 	wram_bank WRAM_SCREEN ; $4ae2
 	ld hl, Text_CharSelectPickCharacter ; $4ae8
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4aeb
 	ld c, $12 ; $4aee
 	farcall RenderProportionalTextAt ; $4af0
-	jr .nextRow ; $4af3
-.altRow:
+	jr .drawChangeHandsHint ; $4af3
+.choosePartnerPrompt:
 	wram_bank WRAM_SCREEN ; $4af5
 	ld hl, Text_CharSelectChoosePartner ; $4afb
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $4afe
 	ld c, $12 ; $4b01
 	farcall RenderProportionalTextAt ; $4b03
-.nextRow:
+.drawChangeHandsHint:
 	wram_bank WRAM_SCREEN ; $4b06
 	ld hl, Text_CharSelectStartChangeHands ; $4b0c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b0f
