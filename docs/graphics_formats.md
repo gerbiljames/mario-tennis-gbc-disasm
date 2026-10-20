@@ -803,8 +803,8 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All thirty
-pass:
+the source claims is true, not just that the bytes come back. All
+thirty-three pass:
 
 | check | count | what it asserts |
 |---|---|---|
@@ -813,16 +813,17 @@ pass:
 | `lz-names` | 3066 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
 | `regions` | 4275 | manifest regions stay inside their bank and do not overlap |
 | `text` | 28 | a spec-less `.asm` region is NUL-terminated text; a `text` one holds only text bytes and NULs |
-| `db-words` | 525 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
-| `addr-words` | 320 | a raw-`db` label's words are not all VRAM- (either bank) or WRAM-shaped: an address table is `dw` of symbols (exceptions allow-listed) |
-| `records` | 514 | a `records:N` or word-table region is whole records or ends in a `$ff` terminator (exceptions allow-listed) |
+| `db-words` | 520 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
+| `addr-words` | 315 | a raw-`db` label's words are not all VRAM- (either bank) or WRAM-shaped: an address table is `dw` of symbols (exceptions allow-listed) |
+| `db-ptrs` | 315 | a raw-`db` label whose words all point inside labelled blobs of its bank, or are all ROMX addresses read as a word (`ld a, [hl+]` / `ld h, [hl]` after loading it into `hl`), is `dw Label + n` rows |
+| `records` | 528 | a `records:N` or word-table region is whole records or ends in a `$ff` terminator (exceptions allow-listed) |
 | `layout` | 4275 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
 | `scopes` | 269 | no global label covers both actor-script bytecode and CPU code |
-| `labels` | 13781 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
-| `headers` | 3103 | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted) |
+| `labels` | 13790 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `headers` | 3112 | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted) |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33806 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
@@ -831,7 +832,7 @@ pass:
 | `tilemap` | 243 | every tilemap grid encodes back to its blob |
 | `slots` | 5494 | every `ACTOR_*` slot name names a row of a list that can be active there and holds its actor in every such list, and no `map_actor` row name repeats a word run (`TOURNAMENT_TOURNAMENT_STAFF`) |
 | `reach` | 4904 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
-| `unnamed` | 8877 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
+| `unnamed` | 8886 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
 | `raw-ids` | 7568 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`, `wVar + FIELD` is its own), or an immediate left in a register for a `call`/`farcall` (also one every jump into a label loads into `a`), whose other values are named (a `*_SIZE` names no family) never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; a routine passed `Text_*` in `hl`/`de` at two or more sites is passed no raw number; a `bit` test on a joypad byte (loaded from `hInput*`/`wCharInputBits`, or already tested with a `PADB_` bit) names its bit, and a `bit`/`set`/`res` on a flag byte (`wCharFlags`, `wCharBallReachFlags`, `wExpScreenBusyFlags`, `wTennisDictFlags`, `wMessageSpeed`, `hMusicFlags`, `wSoundOptionBits`, `wCharSpriteDirty`, the court-position and serve-role bytes) or a flag field reached by `ld hl, FIELD / add hl, rr`, `ld hl, wX + FIELD` or `ld a, FIELD / add l / ld l, a` (`ACTORF_FLAGS`, `ACTORF_STATUS`, `MGTARGET_FLAGS`, `OBJSLOT_FLAGS`, `MGACTOR_FLAGS`) names its bit, an `and`/`or`/`xor` mask on one a name of its family; no `Text_*` id is the `X` of `ld hl, X / add hl, rr / ld e, l / ld d, h`; listed id tables, `story_location` and `court_positions` rows and the mode of `script_set_active` / `as_set_field ACTORF_MODE` name their ids; a `map_script` / `map_actor` flag condition is 0 or a `FLAG_`/`~FLAG_` name (exceptions allow-listed) |
 | `fields` | 918 | a routine that names a `CHARREC_*`/`CREATEDCHAR_*`/`SLOTSUM_*`/`ACTORF_*`/`OBJSLOT_*`/`SCENEOBJ_*`/`WINDOW_*` field adds no raw offset under `$100` to a record pointer (`ld hl, n / add hl, rr`, `ld a, n / add_hl_a`, `ld a, n / add c / ld e, a`) (exceptions allow-listed); an offset into `CHARREC_TRAIN_LEVELS`, `wCharDataLevels` or `wCharDataNewLevels` is a `TRAINSTAT_*`, into `wCharDataStats` and its three sibling stat arrays a `CHARSTAT_*`, into `wActorObjDef` an `OBJDEF_*`, into `wBallHistory` a `BALLHIST_*` (or `n * BALLHIST_SIZE`), into `wBGPalettes`/`wOBPalettes`/`wMasterPalettes` an `n * PAL_SIZE + n * COLOR_SIZE`; a `...Name` char-record operand (`wStoryMainName`, `wPlayer1PartnerName`, ...) is not copied or cleared by `CHAR_RECORD_SIZE`, passed to `RecomputeCharacterStats` or given a `CHARREC_*` field add in the next dozen instructions: that is the whole record, `wStoryMain` etc.; likewise a `wCharPosX` operand copied or cleared (`CopyMemoryFast`/`ClearMemory16`), passed to `SetCharAnimation`/`StepCharAnimation`/`UpdateCharSelectCharSprite`, offset with `add hl`, or subtracted from a field is the whole `$df00` struct, `wCharStruct` |

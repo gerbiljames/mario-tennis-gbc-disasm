@@ -23,6 +23,11 @@ after a real defect broke it:
             all VRAM- or WRAM-shaped ($80-$bf / $c0-$df high bytes, $a0-$bf
             being VRAM bank 1): such a table is addresses, written
             `dw wShadowAttrmap + ...` or `dw vTiles1 + VRAM_BANK1`
+  db-ptrs   a raw-db label whose words all point inside labelled blobs
+            of its bank, or are all ROMX addresses read as a word (`ld a,
+            [hl+] / ld h, [hl]` after loading it into hl), is `dw Label + n`
+            rows
+            (three bank $28 tile-frame tables were db byte pairs)
   records   a (records:N) region, or a word table (words, text_ids,
             ram_ptrs, save_flag_ids, mode_hooks), is whole records or ends in
             a $ff terminator (three stray `ret`s once sat after word tables)
@@ -604,6 +609,88 @@ def check_addr_shaped(rom, manifest, fail):
             name, body = m.group(1), []
     for name in sorted(set(KNOWN_ADDR_SHAPED) - found):
         fail("addr-words", f"{name} is no longer address-shaped -- drop it from KNOWN_ADDR_SHAPED")
+    return n
+
+
+KNOWN_DB_PTR_TABLES = {}
+_HL_TABLE_RE = re.compile(r"^\s*(?:ld_hl_indexed|ld hl,)\s+([A-Za-z_]\w*)\s*(?:;|$)")
+
+
+def _word_deref_tables(lines):
+    """Labels loaded into hl (`ld hl, T` / `ld_hl_indexed T`) that the code
+    after reads as a word: `ld a, [hl+] / ld h, [hl]`, before the next global
+    label or a ret, jp or call."""
+    out = set()
+    for i, line in enumerate(lines):
+        m = _HL_TABLE_RE.match(line)
+        if not m:
+            continue
+        prev = ""
+        for nxt in lines[i + 1:i + 16]:
+            if _GLOBAL_RE.match(nxt):
+                break
+            code = nxt.split(";")[0].strip()
+            if not code or code.endswith(":"):
+                continue
+            if prev == "ld a, [hl+]" and code == "ld h, [hl]":
+                out.add(m.group(1))
+                break
+            if re.match(r"(ret|reti|jp|call|farcall)\b", code):
+                break
+            prev = code
+    return out
+
+
+def check_db_word_tables(rom, manifest, fail):
+    """A table of raw bytes (inline `db` rows or a `bytes` region) whose
+    words all address the inside of a labelled blob of its own bank, or that
+    the code reads as a word (`ld a, [hl+] / ld h, [hl]` after loading it
+    into hl) and whose words are all ROMX addresses, is a pointer table the assembler cannot move: it
+    wants `dw Label + n` rows. db-words only sees words equal to a label;
+    these point past one (three bank $28 frame tables once did)."""
+    built = ROOT / "mariotennis.gbc"
+    out = built.read_bytes() if built.exists() else b""
+    if hashlib.sha1(out).hexdigest() != USA_SHA1:
+        return Skipped("mariotennis.gbc is not the byte-perfect USA build")
+    specs = {p: s for p, _o, _n, s in manifest}
+    offsets = {p: (o, n) for p, o, n, _s in manifest}
+    starts = {}
+    for bank, addr, name in read_sym(rom_only=True):
+        if "." not in name and not name.startswith(("FarPtr_", "DataPtr_")):
+            starts.setdefault(bank, {}).setdefault(addr, name)
+    starts = {b: sorted(v.items()) for b, v in starts.items()}
+    found, n = set(), 0
+    for h in holders():
+        b = h.bank
+        lines = bank_lines(h)[0]
+        deref = _word_deref_tables(lines)
+        lo, hi = (0x4000, 0x8000) if b else (0x150, 0x4000)
+        keys = [a for a, _ in starts.get(b, [])]
+        name, body = None, []
+        for line in lines + ["End:"]:
+            m = _GLOBAL_RE.match(line)
+            if not m:
+                s = line.split(";")[0].strip()
+                if s and not s.endswith(":"):
+                    body.append(s)
+                continue
+            data = _db_bytes(body, specs, rom, offsets) if name and body else None
+            if data and len(data) % 2 == 0:
+                n += 1
+                words = [data[k] | data[k + 1] << 8 for k in range(0, len(data), 2)]
+                owners = []
+                for w in words:
+                    i = bisect.bisect_right(keys, w) - 1
+                    owners.append(starts[b][i] if lo <= w < hi and i >= 0 else None)
+                if all(owners) or name in deref and all(0x4000 <= w < 0x8000 for w in words):
+                    found.add(name)
+                    if name not in KNOWN_DB_PTR_TABLES:
+                        rows = ", ".join(f"{o[1]} + ${w - o[0]:x}" if o else f"${w:04x}"
+                                         for w, o in zip(words[:4], owners))
+                        fail("db-ptrs", f"${b:02x}: {name} is {rows} -- `dw Label + n`, not db")
+            name, body = m.group(1), []
+    for name in sorted(set(KNOWN_DB_PTR_TABLES) - found):
+        fail("db-ptrs", f"{name} no longer reads as pointers -- drop it from KNOWN_DB_PTR_TABLES")
     return n
 
 
@@ -2853,6 +2940,7 @@ def main():
         "text": check_text_regions(rom, manifest, fail),
         "db-words": check_db_pointers(manifest, fail),
         "addr-words": check_addr_shaped(rom, manifest, fail),
+        "db-ptrs": check_db_word_tables(rom, manifest, fail),
         "records": check_record_tails(rom, fail),
         "layout": check_layout(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
