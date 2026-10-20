@@ -1,4 +1,4 @@
-IslandOpenDoublesVictory:
+SeniorDoublesRank1Victory:
 	script_set_position ACTOR_SENIOR_COURT_B_CURT, 27.0, 11.0 ; $7071
 	script_set_position ACTOR_SENIOR_COURT_B_BETH, 27.0, 13.0 ; $707c
 	script_face ACTOR_SENIOR_COURT_B_CURT, FACE_LEFT ; $7087
@@ -129,7 +129,7 @@ IslandOpenDoublesVictory:
 	call WaitFadeEnd ; $73ab
 	farcall EndCutsceneScriptMode ; $73ae
 	ret ; $73b1
-SeniorSinglesRank4And3Victory:
+SeniorSinglesRank4Victory:
 	script_set_position ACTOR_SENIOR_COURT_A_BRIAN, 35.0, 15.0 ; $73b2
 	script_face ACTOR_SENIOR_COURT_A_BRIAN, FACE_DOWN ; $73bd
 	call FadeInSeniorCourtNearPairA ; $73c4
@@ -152,7 +152,7 @@ SeniorSinglesRank4And3Victory:
 	script_wait_frames 1 ; $743e
 	farcall EndCutsceneScriptMode ; $7445
 	ret ; $7448
-SeniorSinglesRank2Victory:
+SeniorSinglesRank3Victory:
 	set_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $7449
 	script_set_position ACTOR_SENIOR_COURT_A_JOY, 51.0, 15.0 ; $744c
 	script_face ACTOR_SENIOR_COURT_A_JOY, FACE_DOWN ; $7457
@@ -171,7 +171,7 @@ SeniorSinglesRank2Victory:
 	call StartSeniorCourtPairBRally ; $74b1
 	farcall EndCutsceneScriptMode ; $74b4
 	ret ; $74b7
-SeniorSinglesRank1Victory:
+SeniorSinglesRank2Victory:
 	set_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $74b8
 	call PlaceSeniorCourtPairB ; $74bb
 	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, 51.0, 15.0 ; $74be
@@ -191,7 +191,7 @@ SeniorSinglesRank1Victory:
 	call StartSeniorCourtPairBRally ; $7523
 	farcall EndCutsceneScriptMode ; $7526
 	ret ; $7529
-SeniorSharedVictoryScene:
+SeniorSinglesRank1Victory:
 	script_player_speed 2.0 ; $752a
 	script_set_speed ACTOR_ROLE_SENIOR_COURT_FAY, 0.75 ; $7530
 	script_set_position ACTOR_SENIOR_COURT_A_EMILY, 43.0, 39.0 ; $7538

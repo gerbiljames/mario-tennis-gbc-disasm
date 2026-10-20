@@ -1,4 +1,4 @@
-; Shared by VarsityCourtANpc03FaceUp_13, VarsityCourtBNpc03FaceUp_13 (bank $13).
+; Shared by VarsityCourtSinglesNpc03FaceUp_13, VarsityCourtDoublesNpc03FaceUp_13 (bank $13).
 
 {TWIN_LABEL}:
 	script_set_speed ACTOR_PLAYER, 0.25

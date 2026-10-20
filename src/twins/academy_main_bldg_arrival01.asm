@@ -1,5 +1,5 @@
 ; Shared by AcademyMainBldgArrival01_10, MapArrivalWalk_11,
-; RestaurantArrival01_10, RestaurantPlazaArrival04_13,
+; RestaurantArrival01_10, RestaurantPlazaFromCourtyard_13,
 ; DormEntranceArrival01_12 (banks $10, $11, $12, $13).
 
 {TWIN_LABEL}:

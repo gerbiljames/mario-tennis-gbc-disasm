@@ -47,7 +47,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 
 | file | routine | banks |
 |---|---|---|
-| `src/twins/academy_main_bldg_arrival01.asm` | `RestaurantArrival01_10`, `AcademyMainBldgArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaArrival04_13` | $10, $10, $11, $12, $13 |
+| `src/twins/academy_main_bldg_arrival01.asm` | `RestaurantArrival01_10`, `AcademyMainBldgArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaFromCourtyard_13` | $10, $10, $11, $12, $13 |
 | `src/twins/academy_main_bldg_arrival02.asm` | `AcademyMainBldgArrival02_10`, `AcademyArrivalArrival01_11`, `DormEntranceArrival02_12` | $10, $11, $12 |
 | `src/twins/academy_wing_close_door.asm` | `AcademyWingCloseDoor_<bank>` | $10, $27 |
 | `src/twins/academy_wing_open_door.asm` | `AcademyWingOpenDoor_<bank>` | $10, $27 |
@@ -68,7 +68,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/compute_story_rank_tier.asm` | `ComputeStoryRankTier_<bank>` | $13, $15 |
 | `src/twins/development_facing01.asm` | `DevelopmentFacing01_10`, `Test2Facing01_10`, `WallPracticeRoomFacing01_12`, `DormRoomFacing01_13` | $10, $10, $12, $13 |
 | `src/twins/development_tile01.asm` | `DevelopmentTile01_10`, `Test2Tile01_10` | $10 |
-| `src/twins/dorm_room_entry08_scene.asm` | `DormRoomEntry08Scene`, `DormRoomEntry0aScene` | $13 |
+| `src/twins/dorm_room_departure_morning_scene.asm` | `DormRoomDepartureMorningAltScene`, `DormRoomDepartureMorningScene` | $13 |
 | `src/twins/draw_ascii_digit_char.asm` | `Unused_<bank>_DrawAsciiDigitChar` | $16, $17, $1b, $3b, $3e |
 | `src/twins/draw_confirm_selection_cursor.asm` | `DrawConfirmSelectionCursor_<bank>` | $1a, $1c, $1d |
 | `src/twins/draw_corner_brackets.asm` | `Unused_<bank>_DrawCornerBrackets` | $1b, $38, $3b, $3e |
@@ -111,7 +111,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/push_short_text_arg.asm` | `PushShortTextArg_<bank>` | $0e, $0f, $12 |
 | `src/twins/queue_caption_row_to_vram.asm` | `QueueCaptionRowToVRAM`, `FlushLinkMessageRows` | $17, $3e |
 | `src/twins/read_scene_tilemap_tile.asm` | `ReadSceneTilemapTile_<bank>` | $0f, $10 |
-| `src/twins/restaurant_plaza_arrival06.asm` | `RestaurantPlazaArrival06_13`, `Court2EntryWalkIn` | $13, $14 |
+| `src/twins/restaurant_plaza_from_training_court.asm` | `RestaurantPlazaFromTrainingCourt_13`, `Court2EntryWalkIn` | $13, $14 |
 | `src/twins/seek_ball_traj_entry4.asm` | `SeekBallTrajEntry4_<bank>` | $20-$24, $29-$2c |
 | `src/twins/seek_ball_traj_entry6.asm` | `SeekBallTrajEntry6_<bank>` | $20-$24, $29-$2c |
 | `src/twins/service_match1_hook_point_start.asm` | `ServiceMatch1/3Hook_PointStart` | $0b |
@@ -135,7 +135,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/tennis_machine1_hook_minigame_start.asm` | `TennisMachine1/2Hook_MinigameStart` | $0d |
 | `src/twins/tennis_machine3_hook_minigame_start.asm` | `TennisMachine3/4Hook_MinigameStart`, `TennisMachineHighScoreHook_MinigameStart` | $0d |
 | `src/twins/tennis_machine4_hook__point_start.asm` | `TennisMachine4Hook_PointStart`, `TennisMachineHighScoreHook_PointStart` | $0d |
-| `src/twins/varsity_court_npc03_face_up.asm` | `VarsityCourtANpc03FaceUp_13`, `VarsityCourtBNpc03FaceUp_13` | $13 |
+| `src/twins/varsity_court_npc03_face_up.asm` | `VarsityCourtSinglesNpc03FaceUp_13`, `VarsityCourtDoublesNpc03FaceUp_13` | $13 |
 | `src/twins/wait_script_frames_save_a.asm` | `WaitScriptFramesSaveA_<bank>` (five instructions, under the floor; `script_delay` picks its bank's copy) | $0f, $27 |
 
 ## The families
@@ -175,7 +175,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 6 | 15 | $20, $21, $22, $23, $24, $2c | `BallTrajEntryPtr6_*` |
 | 6 | 30 | $20, $21, $22, $23, $24, $2c | `SetBallTargetFromAim_*` |
 | 6 | 32 | $20, $21, $22, $23, $24, $2c | `SetBallVelocityFromEntry6_*` |
-| 5 | 13 | $10, $11, $12, $13 | `AcademyMainBldgArrival01_10`, `RestaurantArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaArrival04_13` |
+| 5 | 13 | $10, $11, $12, $13 | `AcademyMainBldgArrival01_10`, `RestaurantArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaFromCourtyard_13` |
 | 5 | 22 | $20, $21, $22, $23, $2c | `SeekBallTrajEntry6_*` |
 | 4 | 12 | $1b, $38, $3b, $3e | `GetMenuCursorIndex_*` |
 | 3 | 13 | $10, $11, $12 | `AcademyMainBldgArrival02_10`, `AcademyArrivalArrival01_11`, `DormEntranceArrival02_12` |
@@ -189,7 +189,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 24 | $13, $15 | `ComputeStoryRankTier_*` |
 | 2 | 43 | $38, $3b | `DrawNameWithDiacritics_*` |
 | 2 | 28 | $3b, $3e | `FlushMatchFormatRowToVram`, `FlushLinkMatchFormatRowAttrs` |
-| 2 | 10 | $13 | `DormRoomEntry08Scene`, `DormRoomEntry0aScene` |
+| 2 | 10 | $13 | `DormRoomDepartureMorningAltScene`, `DormRoomDepartureMorningScene` |
 | 2 | 14 | $6b | `IntroCutsceneState00Update_6b`, `IntroCutsceneState19Update_6b` |
 | 2 | 72 | $0d | `IsBallInMedallionMatchHitZone`, `IsBallInTreasureBoxHitZone` |
 | 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04_0f`, `IslandOpenRoundSinglesNpc04_0f` |
@@ -198,7 +198,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 12 | $0e, $15 | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` |
 | 2 | 14 | $0d | `ProjectMedallionMatchWorldPosition`, `ProjectTreasureBoxWorldPosition` |
 | 2 | 19 | $0f, $10 | `ReadSceneTilemapTile_*` |
-| 2 | 13 | $13, $14 | `RestaurantPlazaArrival06_13`, `Court2EntryWalkIn` |
+| 2 | 13 | $13, $14 | `RestaurantPlazaFromTrainingCourt_13`, `Court2EntryWalkIn` |
 | 2 | 22 | $24, $2c | `SeekBallTrajEntry4_*` |
 | 2 | 16 | $24, $2c | `SetBallVelocityFromEntry4_*` |
 | 2 | 11 | $20, $21 | `ShotBallPathSlice`, `ShotBallPathPowerSlice` |

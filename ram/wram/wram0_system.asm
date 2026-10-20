@@ -250,7 +250,7 @@ wExhibitionPromptTextId:: dw
 ; [8-bit] ENTRY_SPECIAL_COURT_* the warp enters by; the Special Court intro rewrites it as entry - 1, PrepareStoryMatchTable's index
 wExhibitionMatchEntry:: db
 NEXTU
-; roommate dialogue (bank $13: DormRoomEntry02Scene, RunAcademyQuestionsMenu)
+; roommate dialogue (bank $13: DormRoomReturnFromEntranceScene, RunAcademyQuestionsMenu)
 ; [16-bit] First text id of the scene's dialogue variant; the scene and the AcademyTopic* handlers add line offsets to it
 wRoommateTextIdBase:: dw
 NEXTU

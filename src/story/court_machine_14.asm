@@ -639,4 +639,4 @@ Court2ActorsAlt_14:
 	map_actor $0000, ActorScript_14_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, COURT2_ALT_BALLOON_SWEAT
 	map_actor $0000, ActorScript_14_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, COURT2_ALT_BALLOON_QUESTION
 	map_actor_end
-	twin_named restaurant_plaza_arrival06, Court2EntryWalkIn ; $4f66
+	twin_named restaurant_plaza_from_training_court, Court2EntryWalkIn ; $4f66

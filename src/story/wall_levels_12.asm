@@ -9,7 +9,7 @@ RelaunchWallPracticeMasterLevel:
 	ld a, MINIGAME_WALL_PRACTICE_HIGH_SCORE ; $49df
 	farcall RunTrainingDrillByID ; $49e1
 	ret ; $49e4
-.saveMaxRecord:
+WallPracticeMaxScoreScript.saveMaxRecord:
 	push_wram_bank WRAM_SOUND ; $49e5
 	ld hl, wMinigamesCurrentScore ; $49ee
 	ld a, [hl+] ; $49f1
@@ -36,9 +36,9 @@ RelaunchWallPracticeMasterLevel:
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $4a5b
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4a62
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4a67
-.checkDoubles:
+WallPracticeMaxScoreScript.checkDoubles:
 	test_flag FLAG_DOUBLES ; $4a6c
-	jr z, .done ; $4a6f
+	jr z, WallPracticeMaxScoreScript.done ; $4a6f
 	script_wait_frames 40 ; $4a71
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4a78
 	script_wait_frames 30 ; $4a80
@@ -47,7 +47,7 @@ RelaunchWallPracticeMasterLevel:
 	script_wait_idle ACTOR_PARTNER ; $4a95
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4a9a
 	script_wait_frames 40 ; $4aa7
-.done:
+WallPracticeMaxScoreScript.done:
 	ret ; $4aae
 WallPracticeScoreRetryPromptTextIds:
 	; $4aaf, 6 bytes (text_ids)
@@ -63,10 +63,10 @@ WallPracticeLevelResultScript:
 	ld a, [wMapSceneStage] ; $4ac1
 	sub $01 ; $4ac4
 	jumptable a ; $4ac6
-	dw WallPracticeLevelResultScript.variant4 ; $4ac8 jumptable
-	dw WallPracticeLevelResultScript.variant3 ; $4aca jumptable
-	dw WallPracticeLevelResultScript.variant2 ; $4acc jumptable
-	dw WallPracticeLevelResultScript.variant1 ; $4ace jumptable
+	dw WallPracticeLevelResultScript.clearedLevel1 ; $4ac8 jumptable
+	dw WallPracticeLevelResultScript.clearedLevel2 ; $4aca jumptable
+	dw WallPracticeLevelResultScript.clearedLevel3 ; $4acc jumptable
+	dw WallPracticeLevelResultScript.clearedLevel4 ; $4ace jumptable
 .checkLevel:
 	ld a, [wMapSceneStage] ; $4ad0
 	cp WALLPRACTICESTAGE_MASTER ; $4ad3
@@ -121,12 +121,12 @@ WallPracticeLevelResultScriptTextIds:
 	dw Text_WallGameOverNetRetry ; record 0
 	dw Text_WallGameOverOutRetry ; record 1
 	dw Text_WallGameOverDoubleBounceRetry ; record 2
-WallPracticeLevelResultScript.variant1:
+WallPracticeLevelResultScript.clearedLevel4:
 	script_set_text Text_WallClearedFourthLevel ; $4ba2
 	script_fade_in 6 ; $4ba8
 	call WaitFadeEnd ; $4bad
 	jr WallPracticeLevelResultScript.speakAndLeave ; $4bb0
-WallPracticeLevelResultScript.variant2:
+WallPracticeLevelResultScript.clearedLevel3:
 	push_wram_bank WRAM_SOUND ; $4bb2
 	ld de, $0032 ; $4bbb
 	ld hl, wMinigameRecordValue ; $4bbe
@@ -140,12 +140,12 @@ WallPracticeLevelResultScript.variant2:
 	script_fade_in 6 ; $4bd4
 	call WaitFadeEnd ; $4bd9
 	jr WallPracticeLevelResultScript.speakAndLeave ; $4bdc
-WallPracticeLevelResultScript.variant3:
+WallPracticeLevelResultScript.clearedLevel2:
 	script_set_text Text_WallClearedSecondLevel ; $4bde
 	script_fade_in 6 ; $4be4
 	call WaitFadeEnd ; $4be9
 	jr WallPracticeLevelResultScript.speakAndLeave ; $4bec
-WallPracticeLevelResultScript.variant4:
+WallPracticeLevelResultScript.clearedLevel1:
 	script_set_text Text_WallClearedFirstLevel ; $4bee
 	script_fade_in 6 ; $4bf4
 	call WaitFadeEnd ; $4bf9
@@ -387,7 +387,7 @@ WallPracticeRoomInitScript_12:
 	jp z, .done ; $4fcc
 	ld a, [wPointWinLoseFlag] ; $4fcf
 	cp WINLOSE_WIN ; $4fd2
-	jr nz, .checkSession ; $4fd4
+	jr nz, .lost ; $4fd4
 	script_set_text Text_WallTrySameLevelAgain ; $4fd6
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4fdc
 	farcall RunDialogueYesNoPrompt ; $4fe1
@@ -395,14 +395,14 @@ WallPracticeRoomInitScript_12:
 	script_wait_frames 5 ; $4fe7
 	and a ; $4fee
 	jr nz, .done ; $4fef
-	jr .placeActors ; $4ff1
-.checkSession:
+	jr .relaunchDrill ; $4ff1
+.lost:
 	ld a, [wPointOutcome] ; $4ff3
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4ff6
-	jr nz, .sessionActive ; $4ff8
+	jr nz, .outcomeText ; $4ff8
 	script_set_text Text_WallGameOverHitYouRetry ; $4ffa
-	jr .normalEntry ; $5000
-.sessionActive:
+	jr .retryPrompt ; $5000
+.outcomeText:
 	ld a, [wPointOutcome] ; $5002
 	and $03 ; $5005
 	add a ; $5007
@@ -411,14 +411,14 @@ WallPracticeRoomInitScript_12:
 	ld h, [hl] ; $5010
 	ld l, a ; $5011
 	farcall InitDialogueTextCursor ; $5012
-.normalEntry:
+.retryPrompt:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5015
 	farcall RunDialogueYesNoPrompt ; $501a
 	farcall ScriptCloseDialogueWindow ; $501d
 	script_wait_frames 5 ; $5020
 	and a ; $5027
 	jp nz, .done ; $5028
-.placeActors:
+.relaunchDrill:
 	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $502b
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $5032
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5039
